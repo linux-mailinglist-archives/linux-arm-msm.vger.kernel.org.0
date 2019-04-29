@@ -2,140 +2,116 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id D354BE2AC
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Apr 2019 14:32:09 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B10D8E5E9
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Apr 2019 17:16:22 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728125AbfD2McA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 29 Apr 2019 08:32:00 -0400
-Received: from mail-wr1-f68.google.com ([209.85.221.68]:40626 "EHLO
-        mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728047AbfD2McA (ORCPT
+        id S1728550AbfD2PQL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 29 Apr 2019 11:16:11 -0400
+Received: from mail-it1-f196.google.com ([209.85.166.196]:55212 "EHLO
+        mail-it1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728436AbfD2PQL (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 29 Apr 2019 08:32:00 -0400
-Received: by mail-wr1-f68.google.com with SMTP id h4so15770037wre.7
-        for <linux-arm-msm@vger.kernel.org>; Mon, 29 Apr 2019 05:31:59 -0700 (PDT)
+        Mon, 29 Apr 2019 11:16:11 -0400
+Received: by mail-it1-f196.google.com with SMTP id a190so16718566ite.4;
+        Mon, 29 Apr 2019 08:16:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=J+R3ULFuivqCroDmyHdR6QeN5i6XybMa9wYXAD9HdoI=;
-        b=FhjN1q4D9xSQdKRvKqLb6bXiE4x8oKWApJ29y4vHLBKgXmgz/mvifY8jTyLX9LKKOK
-         FFpa8rkgEQ1oXBrAb/K59Q/0KVoNsLIftYHqK7KxMhWKW2CKe6eEcCKdA1okcKsd7EUl
-         rvKEnvGKtF8H+fRnT6Phc80jJj0a6hs02LBsJKgBLWET6tCQE37IKZL3spAPNTXqBO88
-         TeEwb2BSHa5CN1ciFqzdaZdhDt9VzyqaJTE4bROGhFwz+rXDtKMc08DrZKde+/FOWgiC
-         AdsvmfHZrsHWCfXQiX6B3eLWz1+30BdOmaSgoGg2+udivvgyGrsYfT9OhzKvSIsgivBh
-         R8PQ==
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=b6ajSVLv5SWPLweJxZ32fnsUz0bwEwPWJw0yNaApLQM=;
+        b=qON+5q8bwMnoIt5MFuP4w4ha3JLYR7M19gqhd5cN1jR6eQ0dj6d+apoaqSAhWwys+X
+         GN7pohkQhOsuDE++0RpOFxPCRafFPVpt/yHNJNSK7JJljeK0erecmC8l665wQhrqTT3E
+         bgYB9fHg70spPs0jcgt6Cabh651D4cdX/usCKLk2d3v9b2gViIQc89MQbRG2IvB+lQWx
+         YyrXxBQj9xix9JIylamMLuNN3D+Jys2VNVujHss9/AsRV4zHxRYW1kqlq30UcszoNcwK
+         5Y9CqdCBMnMHMYNqKt7Z+XfRroM6OjmZCkcImIUexticUrTAXPZTUpRoaPEJfoil83lR
+         UvJQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=J+R3ULFuivqCroDmyHdR6QeN5i6XybMa9wYXAD9HdoI=;
-        b=Y121Ji3ttwh+8TEZ4YKGDrWu6YghxGxvy5iQetwAlmcTkd+OexVpSY04wD7TUAJeuy
-         JTfdfdjbYFcMn1dJO1Nl3bxp8YRs3QGzie2AT43XbZn3idD5/sp9O5Ia7ocpSs+z2H4q
-         L+PSc/LdvQ4+SwgrRRLQccYMCbLEofBXFGZb+HAR+TVIcZlIsOEykJvAG8Xtbcr43yRz
-         jXyZjLsc4qX3nd/4YGVBLs9VkHROeicsFPLP44dMditFS1x8zxZN6Y5CnsWtrsaELF7z
-         WGtC/KzUngyYvTDCJSOQSbC0hbjFWvvY1jcoqyoFAVcoNJpqYWrLTIyK1hsQ+ayLSx6T
-         RQLw==
-X-Gm-Message-State: APjAAAV//kdYSVlZQmfrGtme8wjzcXwrr9DRGOfMrSJqoMUK5TjKLyla
-        HPIBZ8lWsXjtu/rX8Ut4S8tykkClw88=
-X-Google-Smtp-Source: APXvYqzJTCXEuZ49M7Ut3ACdg7WkhG5ySWXB30Pkc5rXI9tabDQxJUF/Ps+PvdWhhZ9XTwdMl0EnaA==
-X-Received: by 2002:a05:6000:c2:: with SMTP id q2mr3339535wrx.324.1556541118263;
-        Mon, 29 Apr 2019 05:31:58 -0700 (PDT)
-Received: from [192.168.1.2] (200.red-83-34-200.dynamicip.rima-tde.net. [83.34.200.200])
-        by smtp.gmail.com with ESMTPSA id j13sm24846129wrd.88.2019.04.29.05.31.56
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 29 Apr 2019 05:31:57 -0700 (PDT)
-Subject: Re: [PATCH 2/3] drivers: regulator: qcom: add PMS405 SPMI regulator
-To:     Mark Brown <broonie@kernel.org>
-Cc:     lgirdwood@gmail.com, robh+dt@kernel.org, mark.rutland@arm.com,
-        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
-        bjorn.andersson@linaro.org, vinod.koul@linaro.org,
-        niklas.cassel@linaro.org, khasim.mohammed@linaro.org,
-        linux-arm-kernel@lists.infradead.org, linux-arm-msm@vger.kernel.org
-References: <1548675904-18324-1-git-send-email-jorge.ramirez-ortiz@linaro.org>
- <1548675904-18324-3-git-send-email-jorge.ramirez-ortiz@linaro.org>
- <20190204090301.GC23441@sirena.org.uk>
- <95276ca0-6896-a595-867a-184a518fa31f@linaro.org>
- <20190425183736.GF23183@sirena.org.uk>
- <022b3c6a-e356-3c5a-3c46-c6edcf4f8cd5@linaro.org>
- <20190427182113.GL14916@sirena.org.uk>
-From:   Jorge Ramirez <jorge.ramirez-ortiz@linaro.org>
-Message-ID: <a3c281d5-d30e-294f-71ab-957decde2ba0@linaro.org>
-Date:   Mon, 29 Apr 2019 14:31:55 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.2.1
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=b6ajSVLv5SWPLweJxZ32fnsUz0bwEwPWJw0yNaApLQM=;
+        b=DxVTIWAIqmEpd9lqDVtAXykmDsXiodX0wF7rWpX8a/R81f2BM+zokdDPnRiO9EKuEi
+         Yi/DC2XWY8RLxCJxTLeefT/4PiHj/DT9dO8SWw+SLHyOQ+bSVuLXbMuQnEDRq+MSrH3v
+         JihXyGJHX/xQWIBBQuEIApZWkyYA4yQ87iSq1YbM/D+BSKWijqeVjN7qq9fsHZweXeLX
+         XysCrkv94aoyaPqCpF6KwgUMRBmOoPDD00SjZuDyBz+fpMproTN7T7o81PCEY9nVjRkq
+         0NPkAcYws8w/c8LBvReP1WO9/7SzXJkyNxEdL6Gq/h/yZOy2jJCtK7hTXddWgz3gCsKh
+         a7LA==
+X-Gm-Message-State: APjAAAWyC2KfVYOz+1507xcWSbC1d0uJilWS4kiVi5cji/rZ5si/LKMk
+        SLB8B6DHAIhWR9rDReHm6uLqDnjjMonqZrzIGx4=
+X-Google-Smtp-Source: APXvYqxLUPuI3K0KG2ObUi7BQFAJyD7FeLAYMT6+GngM9oDcmjrnr4k7Xp2ffhdrTEjnnkTTXOPes9k8UZgyuEJJZos=
+X-Received: by 2002:a02:1142:: with SMTP id 63mr35498389jaf.19.1556550969659;
+ Mon, 29 Apr 2019 08:16:09 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <20190427182113.GL14916@sirena.org.uk>
-Content-Type: text/plain; charset=windows-1252
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+References: <20190415160915.16324-1-jeffrey.l.hugo@gmail.com>
+ <20190415161055.16372-1-jeffrey.l.hugo@gmail.com> <CAO-hwJJ_BRRHL44yaZ=d_K-9iq1cyONn0rR+VW3ukW1M2Ma0ug@mail.gmail.com>
+ <20190426224908.GA30389@bogus>
+In-Reply-To: <20190426224908.GA30389@bogus>
+From:   Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
+Date:   Mon, 29 Apr 2019 09:15:59 -0600
+Message-ID: <CAOCk7No6xyA+kjXqdWLTKjoK39yBqGuuirWV-J8raoCVGfTgnA@mail.gmail.com>
+Subject: Re: [PATCH v3 1/3] dt-bindings: input: add Elan 400 combo
+ keyboard/touchpad over i2c
+To:     Rob Herring <robh@kernel.org>
+Cc:     Benjamin Tissoires <benjamin.tissoires@redhat.com>,
+        Mark Rutland <mark.rutland@arm.com>,
+        Lee Jones <lee.jones@linaro.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Dmitry Torokhov <dmitry.torokhov@gmail.com>,
+        Andy Gross <agross@kernel.org>,
+        David Brown <david.brown@linaro.org>,
+        Jiri Kosina <jikos@kernel.org>,
+        "open list:HID CORE LAYER" <linux-input@vger.kernel.org>,
+        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        lkml <linux-kernel@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 4/27/19 20:21, Mark Brown wrote:
-> On Thu, Apr 25, 2019 at 09:44:00PM +0200, Jorge Ramirez wrote:
-> 
->> the way I see it, if I follow your suggestion and since we are not
->> allowed to extend spmi_regulator_find_range(), the only options are:
-> 
->> 1) duplicate verbatim this whole function
->> (spmi_regulator_select_voltage_same_range) with a minor change (this
->> amount of code duplication in the kernel seems rather unnecessary to me)
-> 
->> 2) modify the struct spmi_regulator definition with a new operation that
->> calls a different implementation of find range (seems a massive overkill)
-> 
-> Since the point of this change is AFAICT that this regulator only has a
-> single linear range it seems like it should just be able to use the
-> existing generic functions shouldn't it?  
+On Fri, Apr 26, 2019 at 4:49 PM Rob Herring <robh@kernel.org> wrote:
+>
+> On Thu, Apr 18, 2019 at 11:35:42AM +0200, Benjamin Tissoires wrote:
+> > On Mon, Apr 15, 2019 at 6:11 PM Jeffrey Hugo <jeffrey.l.hugo@gmail.com> wrote:
+> > >
+> > > The Elan 400 combo keyboard/touchpad over i2c device is a distinct device
+> > > from the Elan 400 standalone touchpad device.  The combo device has been
+> > > found in the Lenovo Miix 630 and HP Envy x2 laptops.
+> > >
+> > > Signed-off-by: Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
+> > > ---
+> >
+> > With my comments in 2/3, I wonder if you need this patch at all then.
+>
+> I don't really follow the discussion in 2/3, but you should still have
+> specific compatibles even if right now you don't need them.
+>
+> >
+> > Cheers,
+> > Benjamin
+> >
+> > >  .../devicetree/bindings/input/elan,combo400-i2c.txt   | 11 +++++++++++
+> > >  1 file changed, 11 insertions(+)
+> > >  create mode 100644 Documentation/devicetree/bindings/input/elan,combo400-i2c.txt
+> > >
+> > > diff --git a/Documentation/devicetree/bindings/input/elan,combo400-i2c.txt b/Documentation/devicetree/bindings/input/elan,combo400-i2c.txt
+> > > new file mode 100644
+> > > index 000000000000..fb700a29148d
+> > > --- /dev/null
+> > > +++ b/Documentation/devicetree/bindings/input/elan,combo400-i2c.txt
+> > > @@ -0,0 +1,11 @@
+> > > +Elantech 0400 I2C combination Keyboard/Touchpad
+> > > +
+> > > +This binding describes an Elan device with pid 0x0400, that is a combination
+> > > +keyboard + touchpad device.  This binding does not cover an Elan device with
+> > > +pid 0x0400 that is solely a standalone touchpad device.
+> > > +
+> > > +Required properties:
+> > > +- compatible: should be "elan,combo400-i2c"
+> > > +
+> > > +This binding is compatible with the HID over I2C binding, which is specified
+> > > +in hid-over-i2c.txt in this directory.
+>
+> Separate is fine, but we've been adding compatibles to hid-over-i2c.txt.
 
-yes that would have been ideal but it does not seem to be the case for
-this hardware.
-
-The register that stores the voltage range for all other SPMI regulators
-(SPMI_COMMON_REG_VOLTAGE_RANGE 0x40) is used by something else in the
-HFS430: SPMI_HFS430_REG_VOLTAGE_LB 0x40 stores the voltage level in two
-bytes 0x40 and 0x41;
-
-This overlap really what is creating the pain: HFS430 cant use 0x40 to
-store the range (even if it is only one)
-
-so yeah, most of the changes in the patch are working around this fact.
-
-enum spmi_common_regulator_registers {
-	SPMI_COMMON_REG_DIG_MAJOR_REV		= 0x01,
-	SPMI_COMMON_REG_TYPE			= 0x04,
-	SPMI_COMMON_REG_SUBTYPE			= 0x05,
-	SPMI_COMMON_REG_VOLTAGE_RANGE		= 0x40, ******
-	SPMI_COMMON_REG_VOLTAGE_SET		= 0x41,
-	SPMI_COMMON_REG_MODE			= 0x45,
-	SPMI_COMMON_REG_ENABLE			= 0x46,
-	SPMI_COMMON_REG_PULL_DOWN		= 0x48,
-	SPMI_COMMON_REG_SOFT_START		= 0x4c,
-	SPMI_COMMON_REG_STEP_CTRL		= 0x61,
-};
-
-enum spmi_hfs430_registers {
-	SPMI_HFS430_REG_VOLTAGE_LB		= 0x40, *******
-	SPMI_HFS430_REG_VOLTAGE_VALID_LB	= 0x42,
-	SPMI_HFS430_REG_MODE			= 0x45,
-};
-
-It just needs it's own
-> set/get_voltage_sel() operations.  As far as I can see the main thing
-> the driver is doing with the custom stuff is handling the fact that
-> there's multiple ranges but that's not an issue for this regulator.
-> It's possible I'm missing something there but that was the main thing
-> (and we do have some generic support for multiple linear ranges in the
-> helper code already, can't remember why this driver isn't using that -
-> the ranges overlap IIRC?).
-> 
-> TBH looking at the uses of find_range() I'm not sure they're 100%
-> sensible as they are - the existing _time_sel() is assuming we only need
-> to work out the ramp time between voltages in the same range which is
-> going to have trouble.
-> 
-
+Are you just referring to "wacom,w9013" ?
