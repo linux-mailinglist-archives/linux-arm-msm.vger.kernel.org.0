@@ -2,103 +2,99 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 1A61AE5EE
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Apr 2019 17:17:13 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id EF936E859
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Apr 2019 19:08:06 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728366AbfD2PRB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 29 Apr 2019 11:17:01 -0400
-Received: from mail-io1-f65.google.com ([209.85.166.65]:38312 "EHLO
-        mail-io1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728431AbfD2PRB (ORCPT
+        id S1728865AbfD2RH6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 29 Apr 2019 13:07:58 -0400
+Received: from mail-lj1-f195.google.com ([209.85.208.195]:37678 "EHLO
+        mail-lj1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728847AbfD2RHz (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 29 Apr 2019 11:17:01 -0400
-Received: by mail-io1-f65.google.com with SMTP id y6so9274547ior.5;
-        Mon, 29 Apr 2019 08:17:00 -0700 (PDT)
+        Mon, 29 Apr 2019 13:07:55 -0400
+Received: by mail-lj1-f195.google.com with SMTP id b12so8885546lji.4
+        for <linux-arm-msm@vger.kernel.org>; Mon, 29 Apr 2019 10:07:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=eG/LJFcnFIeMvEc4NiVulsT3hs2bq4D8LBXeVGHg9Vc=;
-        b=PEOpD+Y6h802ikNpfNFdgVMVgFdb32ihBGzQ2h9+IatXRt4/Bp69TuK984AhPSepGD
-         XTrHjYObJOC2wY3Pbbmhw4oLdAXAPx16MtYrIHpJH6BijcMLGVEqNE5qPvC2Jd0Z/hSo
-         xXaFfTGu5Xgg22kx1+vD2fDBac0+VkVK2QG7C71kKzUBXi4KzRWlkl5JoyFPNnLDZ1dQ
-         DtKZ4/b++Sprpqw/1w9NaEblZHNd+1EQZKigkmOqL7cjwurAv+Zoswoo9w3bjQH/rB6Y
-         n+J3eUdj7R6cG6ux3gp1y51ZHomejr8KvwW3A1ikmeaQFYLx4um/OYWQo297yGEBDXCh
-         cBxQ==
+        d=lixom-net.20150623.gappssmtp.com; s=20150623;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=6ehK/YFhlb7ZxAagjUyzZkge5JL22b1s+yiy6nCuiSk=;
+        b=bOzaUCnxgAM5TOc+qPRvdsMIzXt+4DNke7FgxBySdG9v93p4OxCB18BJJNmwDv0des
+         aKsVWZgKYeRTI2qt0Su/FcsVsuJtbCi7+A7leHMJ/qUPQIdlGNPMLzJR2flFoicfkqNl
+         AsUi25cxz8MVUgnJ4OMjjjp3uSkByI5odZLxBnq6F7n9oAXBpoTO7a+QF1ITvp4bqhBt
+         VIBdYTMXWNh1xI1N0TdSmrwKjVzKZhr7W0oRKDTve1hkzOZhUHoRZirYEGIqsqF2y249
+         TrmecpX8cAH2nJ2LTc42VPzNVeDNSxJmvDG83NIyi++BM6IMJeX7zztLOwva6RFEOPsO
+         QblA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=eG/LJFcnFIeMvEc4NiVulsT3hs2bq4D8LBXeVGHg9Vc=;
-        b=U83QXW5Ih7j2v3MeEhq8eY+nTKVbXZcpncHBk2FTyNMNLEOdxbfXLQDCtJ31Y7pb0U
-         t8Dy4FlsXBDuVqHbSjq4oESMY0AwWUNlCGW8RyfehQAaEN1s2+AngVzaFXnzgYNIUqd8
-         rD1eV5fOlhMO19yDtXhNUM6P4yl2TMxNWfDeWuEd7SlLg7MLP4PowL4GuO/QSisd9yAk
-         Pcj0o3/Rp94+hWavC7cB/vcQkpy2gItAlqvUaU4nkg6jml3zpd90WR6xaEfGV/nS8GIY
-         GXSI9NzMCzZxS5JDAC6z0ASfxsYholjBFJ4leHYDEEzcsU2BR6npnrh/A7k7WA1QGXiF
-         Xvgw==
-X-Gm-Message-State: APjAAAXG04R9bAeHxqpBYxg11sdIycr8c+rRto6gewbk+lEb+wA/MQ9T
-        3Qmfp0kBIgUv9qWNeLd/7aDaxpme8F5M9vzmqJRy5w==
-X-Google-Smtp-Source: APXvYqy5cYf6zFE2DLDGSznIaowj/24wI72Tmg6kzBejCH9QUEgxmz+ekdIHkQAcq0KLCUUZMj5cfM/u7zhQHyZsjCI=
-X-Received: by 2002:a5e:d611:: with SMTP id w17mr27273404iom.277.1556551020433;
- Mon, 29 Apr 2019 08:17:00 -0700 (PDT)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=6ehK/YFhlb7ZxAagjUyzZkge5JL22b1s+yiy6nCuiSk=;
+        b=IjVW9rKMk6PxmsfgJYninNzh5wxKSBcXFQFH8a7P/wbP1aI/bK0lLQGMSy6uT3UEim
+         EOeP/S2TZtCLLHM2Uyqf68asRVO/lRQeWBLbYeLduPESnaYcXBmHqxE/mLcFq11grmqT
+         ndxlcZub6w+D/uxB2/T9nwC2p3vrl2fIyCgSx4O1KFjZIfLoLFTSBJC8bC3ci+sG0axZ
+         NV9H1QvZWniqL0Y5e8HT6ysw/gaCP4AkTm7Kp+xOKkU2DjPk9LqKhFUMV3dYuAsVyhNz
+         sQ5meZvuvy0WaqOcSux5Z6y4nK7ZyHkBgkvdKq3vR/+dezwGyHfepg4bqxgtxMNlUBuV
+         pq7A==
+X-Gm-Message-State: APjAAAWnh2yrr5bGf47HatGA3xPr5qNDc/aIief46ah753LABHH5t0v5
+        GXMH2iQoeYJXAH0BmHBP7JCQ8A==
+X-Google-Smtp-Source: APXvYqwVrWESZs1otXMX9r4FErLdlXN+Vn5pyw32HfFs5QqWMDqyrTYf3l6xwugBOsqP7bysU0VMsw==
+X-Received: by 2002:a2e:9956:: with SMTP id r22mr17859685ljj.143.1556557673502;
+        Mon, 29 Apr 2019 10:07:53 -0700 (PDT)
+Received: from localhost (h85-30-9-151.cust.a3fiber.se. [85.30.9.151])
+        by smtp.gmail.com with ESMTPSA id w198sm7449083lff.10.2019.04.29.10.07.51
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Mon, 29 Apr 2019 10:07:51 -0700 (PDT)
+Date:   Mon, 29 Apr 2019 09:39:32 -0700
+From:   Olof Johansson <olof@lixom.net>
+To:     Andy Gross <andygro@gmail.com>
+Cc:     arm@kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Arnd Bergmann <arnd@arndb.de>,
+        Kevin Hilman <khilman@baylibre.com>
+Subject: Re: [GIT PULL] Qualcomm ARM64 Defconfig updates for 5.2
+Message-ID: <20190429163932.itif6tddapf4flek@localhost>
+References: <1555997248-11513-1-git-send-email-agross@kernel.org>
 MIME-Version: 1.0
-References: <20190415160915.16324-1-jeffrey.l.hugo@gmail.com>
- <20190415161115.16466-1-jeffrey.l.hugo@gmail.com> <20190427044245.GD3137@builder>
-In-Reply-To: <20190427044245.GD3137@builder>
-From:   Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
-Date:   Mon, 29 Apr 2019 09:16:49 -0600
-Message-ID: <CAOCk7Nqa_nXkOJeoOg2n2UMrkdYfT6jEBpVcPh2zTE+NJLe8FA@mail.gmail.com>
-Subject: Re: [PATCH v3 3/3] arm64: dts: qcom: Add Lenovo Miix 630
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     Rob Herring <robh+dt@kernel.org>,
-        Mark Rutland <mark.rutland@arm.com>,
-        Andy Gross <agross@kernel.org>,
-        David Brown <david.brown@linaro.org>,
-        Lee Jones <lee.jones@linaro.org>,
-        Dmitry Torokhov <dmitry.torokhov@gmail.com>,
-        Jiri Kosina <jikos@kernel.org>,
-        Benjamin Tissoires <benjamin.tissoires@redhat.com>,
-        "open list:HID CORE LAYER" <linux-input@vger.kernel.org>,
-        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        lkml <linux-kernel@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <1555997248-11513-1-git-send-email-agross@kernel.org>
+User-Agent: NeoMutt/20170113 (1.7.2)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, Apr 26, 2019 at 10:42 PM Bjorn Andersson
-<bjorn.andersson@linaro.org> wrote:
->
-> On Mon 15 Apr 09:11 PDT 2019, Jeffrey Hugo wrote:
-> > diff --git a/arch/arm64/boot/dts/qcom/msm8998-clamshell.dtsi b/arch/arm64/boot/dts/qcom/msm8998-clamshell.dtsi
-> [..]
-> > +     thermal-zones {
-> > +             battery-thermal {
-> > +                     polling-delay-passive = <250>;
-> > +                     polling-delay = <1000>;
-> > +
-> > +                     thermal-sensors = <&tsens0 0>;
->
-> I guess you inherited the battery and skin thermal nodes from my MTP
-> dts. Unfortunately after talking to Amit I think I got these wrong, and
-> they should be &pmi8998_adc 0 and 5 instead.
->
-> Can you confirm this?
+On Tue, Apr 23, 2019 at 12:27:24AM -0500, Andy Gross wrote:
+> The following changes since commit 9e98c678c2d6ae3a17cb2de55d17f69dddaa231b:
+> 
+>   Linux 5.1-rc1 (2019-03-17 14:22:26 -0700)
+> 
+> are available in the git repository at:
+> 
+>   git://git.kernel.org/pub/scm/linux/kernel/git/agross/linux.git tags/qcom-arm64-defconfig-for-5.2
+> 
+> for you to fetch changes up to 2e8382955a3efa133c2e9d8e154681a8aa2cd92d:
+> 
+>   arm64: defconfig: Enable stmmac qualcomm ethernet config (2019-04-18 23:32:25 -0500)
+> 
+> ----------------------------------------------------------------
+> Qualcomm ARM64 Based defconfig Updates for v5.2
+> 
+> * Enable stmmac qualcomm ethernet
+> 
+> ----------------------------------------------------------------
+> Vinod Koul (1):
+>       arm64: defconfig: Enable stmmac qualcomm ethernet config
 
-Yeah, I pulled thermal from the MTP.  Someone pointed this out on the
-v4 series.  I haven't circled back to it yet.
+CONFIG_NET_DSA is a tristate, and you're enabling the driver as a module
+already. CONFIG_NET_DSA should be =m as well to avoid bloating the main
+kernel for non-rootfs-critical drivers.
 
->
-> > +
-> > +                     trips {
-> > +                             battery_crit: trip0 {
-> > +                                     temperature = <60000>;
-> > +                                     hysteresis = <2000>;
-> > +                                     type = "critical";
-> > +                             };
-> > +                     };
-> > +             };
->
-> Regards,
-> Bjorn
+Mind respinning?
+
+
+Thanks,
+
+-Olof
