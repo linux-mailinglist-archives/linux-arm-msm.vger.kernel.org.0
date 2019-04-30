@@ -2,351 +2,174 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 99F2DF0F9
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Apr 2019 09:15:03 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E5C1BF526
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Apr 2019 13:12:29 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725996AbfD3HPC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 30 Apr 2019 03:15:02 -0400
-Received: from mail-pl1-f195.google.com ([209.85.214.195]:35200 "EHLO
-        mail-pl1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725769AbfD3HPC (ORCPT
+        id S1726915AbfD3LM3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 30 Apr 2019 07:12:29 -0400
+Received: from bombadil.infradead.org ([198.137.202.133]:48492 "EHLO
+        bombadil.infradead.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726646AbfD3LM3 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 30 Apr 2019 03:15:02 -0400
-Received: by mail-pl1-f195.google.com with SMTP id w24so6321156plp.2;
-        Tue, 30 Apr 2019 00:15:01 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=RsHBTisSuQ7+0nqw471B/2w56soH4fHyxAYYtLk4NVc=;
-        b=Rte8mMyPPB1QKQ5iXUnRCwIKood1FeAkyzaer8LJKG2J2EJkdmGkc8oNET0cNu6QjK
-         0CQq3Gxn+Q/OD2FSJlz+BJh7oKVipZ1STI3WS39chsM+yhKU1zR1h6DRFumcuKflk0YD
-         JpKxkIpxHUe3/gGfE9ZIU5zOBfG3GQCXRU+I8RyAi06MH6jztHjWqTIu6kPjJjWaXsco
-         dD9liXoeRkHOa9leYYCbinRWA5qjgqUHw3KdrBoa6HLHk+HtejYl4trskfDgE4Db1he+
-         WDUyTZPXcmOiM51r5pm8LxcopSPfMkpq8yRNrjRq/XBAX2/91XDEyZWw8hpboYmcmfgC
-         doXA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=RsHBTisSuQ7+0nqw471B/2w56soH4fHyxAYYtLk4NVc=;
-        b=P69ttEz0MdZkNTLO8CHjEdBmidVedYLo3uGwpxqXnSmbvkkZliI7q5mFIZA+SrqAAG
-         Mb5m64ESsOECaHuTIkjGfhd/crA13NQoEMVcMNLoa9LKjZ/6Gj4Zi+Or1Sd0nYlQvsIc
-         sS6kfKNuQAVRmaqmc2UC3w9WXDN5IFrCwcONYGm886pquIkkCBrYkSLLcqIMxR4+Vs8e
-         Z1iqfubonqaN5F20Zon2IMh0kjC0kRz/FhH24ch6POY9Zhy1I5foFlzqrk23CLBbSFX7
-         hvnsuJXGYtCTroR4XKHsXypEfkVF4OHjdhK6NeSZteHggyP5bpVka05tl3FdFCxqxEgp
-         X4rg==
-X-Gm-Message-State: APjAAAU35HboxNynK6JvrQIImQ1BZtEPetNPR6q0NzWSyeK51hpM7hCu
-        05cB/IJjkEm9L/BctSG4Uno=
-X-Google-Smtp-Source: APXvYqwKuLXac/TZUzLFky20KYr8k+Av/WaFPLa7cMgq0NOaxnGWSHEo+tqrqzkUHFr5f2MopRPhSg==
-X-Received: by 2002:a17:902:8490:: with SMTP id c16mr14442896plo.240.1556608500936;
-        Tue, 30 Apr 2019 00:15:00 -0700 (PDT)
-Received: from dtor-ws ([2620:15c:202:201:3adc:b08c:7acc:b325])
-        by smtp.gmail.com with ESMTPSA id h187sm60188287pfc.52.2019.04.30.00.14.59
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Tue, 30 Apr 2019 00:14:59 -0700 (PDT)
-Date:   Tue, 30 Apr 2019 00:14:57 -0700
-From:   Dmitry Torokhov <dmitry.torokhov@gmail.com>
-To:     Luca Weiss <luca@z3ntu.xyz>
-Cc:     Rob Herring <robh+dt@kernel.org>,
-        Mark Rutland <mark.rutland@arm.com>,
-        Mauro Carvalho Chehab <mchehab+samsung@kernel.org>,
-        Pascal PAILLET-LME <p.paillet@st.com>,
-        Coly Li <colyli@suse.de>, Lee Jones <lee.jones@linaro.org>,
-        Xiaotong Lu <xiaotong.lu@spreadtrum.com>,
-        Brian Masney <masneyb@onstation.org>,
-        Rob Herring <robh@kernel.org>,
-        Baolin Wang <baolin.wang@linaro.org>,
+        Tue, 30 Apr 2019 07:12:29 -0400
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+        d=infradead.org; s=bombadil.20170209; h=In-Reply-To:Content-Type:MIME-Version
+        :References:Message-ID:Subject:Cc:To:From:Date:Sender:Reply-To:
+        Content-Transfer-Encoding:Content-ID:Content-Description:Resent-Date:
+        Resent-From:Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:List-Id:
+        List-Help:List-Unsubscribe:List-Subscribe:List-Post:List-Owner:List-Archive;
+         bh=3b8GPUegqQUF4wDq195k1NdogdhAOi+jHdkKbAeMNXk=; b=F3/ToI/cGQpIQDelBBhQYnWX+
+        j/xuGx+L1kIm2FSTo7U3U03O465noF7Ch5TSDDM86npY3ruQIM9sll9MuG7K/+YYh8X4jSIhuLeEO
+        pAXjK4deVUdabsxwofOwGjKigeBSNURJk0377mkTSV6sVoLDBF57Hl+SF3+fJXOjUb/H6BizwrgKI
+        /GLoWLA+/q2gzGn8tXJsI2rhxWV6/isd0OZwI6N500QaWB+T5QtXI2RDHsnpPv9LQ4/VC5sWfoTRZ
+        NfaA0c3rbTb0/Oh0cAJfITFvaLZF0KhntbFaqWGerxOD1HdKGVcG8oK5fvZgQWW3V1qxC1Q7Iv6Sz
+        H2jNgcYYw==;
+Received: from hch by bombadil.infradead.org with local (Exim 4.90_1 #2 (Red Hat Linux))
+        id 1hLQgR-0005Dn-0q; Tue, 30 Apr 2019 11:12:23 +0000
+Date:   Tue, 30 Apr 2019 04:12:22 -0700
+From:   Christoph Hellwig <hch@infradead.org>
+To:     Tom Murphy <tmurphy@arista.com>
+Cc:     iommu@lists.linux-foundation.org, Heiko Stuebner <heiko@sntech.de>,
+        Will Deacon <will.deacon@arm.com>,
         David Brown <david.brown@linaro.org>,
-        "open list:ARM/QUALCOMM SUPPORT" <linux-arm-msm@vger.kernel.org>,
-        "open list:INPUT (KEYBOARD, MOUSE, JOYSTICK, TOUCHSCREEN)..." 
-        <linux-input@vger.kernel.org>,
-        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
-        <devicetree@vger.kernel.org>,
-        open list <linux-kernel@vger.kernel.org>
-Subject: Re: [PATCH v5 2/3] Input: add a driver for GPIO controllable
- vibrators
-Message-ID: <20190430071457.GA148015@dtor-ws>
-References: <20190426194747.22256-1-luca@z3ntu.xyz>
- <20190426194747.22256-2-luca@z3ntu.xyz>
+        Thierry Reding <thierry.reding@gmail.com>,
+        linux-s390@vger.kernel.org, linux-samsung-soc@vger.kernel.org,
+        Krzysztof Kozlowski <krzk@kernel.org>,
+        Jonathan Hunter <jonathanh@nvidia.com>,
+        linux-rockchip@lists.infradead.org, Kukjin Kim <kgene@kernel.org>,
+        Gerald Schaefer <gerald.schaefer@de.ibm.com>,
+        Andy Gross <andy.gross@linaro.org>,
+        linux-tegra@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-mediatek@lists.infradead.org,
+        Matthias Brugger <matthias.bgg@gmail.com>,
+        linux-arm-kernel@lists.infradead.org,
+        Robin Murphy <robin.murphy@arm.com>,
+        linux-kernel@vger.kernel.org, murphyt7@tcd.ie,
+        David Woodhouse <dwmw2@infradead.org>
+Subject: Re: [PATCH v2 3/4] iommu/dma-iommu: Use the dev->coherent_dma_mask
+Message-ID: <20190430111222.GA3191@infradead.org>
+References: <20190430002952.18909-1-tmurphy@arista.com>
+ <20190430002952.18909-4-tmurphy@arista.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20190426194747.22256-2-luca@z3ntu.xyz>
-User-Agent: Mutt/1.10.1 (2018-07-13)
+In-Reply-To: <20190430002952.18909-4-tmurphy@arista.com>
+User-Agent: Mutt/1.9.2 (2017-12-15)
+X-SRS-Rewrite: SMTP reverse-path rewritten from <hch@infradead.org> by bombadil.infradead.org. See http://www.infradead.org/rpr.html
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, Apr 26, 2019 at 09:47:46PM +0200, Luca Weiss wrote:
-> Provide a simple driver for GPIO controllable vibrators.
-> It will be used by the Fairphone 2.
-> 
-> Signed-off-by: Luca Weiss <luca@z3ntu.xyz>
+>  static dma_addr_t __iommu_dma_map(struct device *dev, phys_addr_t phys,
+> -		size_t size, int prot, struct iommu_domain *domain)
+> +		size_t size, int prot, struct iommu_domain *domain,
+> +		dma_addr_t dma_limit)
 
-Applied, thank you.
+Can we just call this dma_mask?
 
-> ---
->  drivers/input/misc/Kconfig      |  12 ++
->  drivers/input/misc/Makefile     |   1 +
->  drivers/input/misc/gpio-vibra.c | 209 ++++++++++++++++++++++++++++++++
->  3 files changed, 222 insertions(+)
->  create mode 100644 drivers/input/misc/gpio-vibra.c
-> 
-> diff --git a/drivers/input/misc/Kconfig b/drivers/input/misc/Kconfig
-> index e15ed1bb8558..6dfe9e2fe5b1 100644
-> --- a/drivers/input/misc/Kconfig
-> +++ b/drivers/input/misc/Kconfig
-> @@ -290,6 +290,18 @@ config INPUT_GPIO_DECODER
->  	 To compile this driver as a module, choose M here: the module
->  	 will be called gpio_decoder.
+>  static void iommu_dma_unmap_resource(struct device *dev, dma_addr_t handle,
+> @@ -1250,7 +1251,8 @@ static struct iommu_dma_msi_page *iommu_dma_get_msi_page(struct device *dev,
+>  	if (!msi_page)
+>  		return NULL;
 >  
-> +config INPUT_GPIO_VIBRA
-> +	tristate "GPIO vibrator support"
-> +	depends on GPIOLIB || COMPILE_TEST
-> +	select INPUT_FF_MEMLESS
-> +	help
-> +	  Say Y here to get support for GPIO based vibrator devices.
-> +
-> +	  If unsure, say N.
-> +
-> +	  To compile this driver as a module, choose M here: the module will be
-> +	  called gpio-vibra.
-> +
->  config INPUT_IXP4XX_BEEPER
->  	tristate "IXP4XX Beeper support"
->  	depends on ARCH_IXP4XX
-> diff --git a/drivers/input/misc/Makefile b/drivers/input/misc/Makefile
-> index b936c5b1d4ac..f38ebbdb05e2 100644
-> --- a/drivers/input/misc/Makefile
-> +++ b/drivers/input/misc/Makefile
-> @@ -36,6 +36,7 @@ obj-$(CONFIG_INPUT_DRV2667_HAPTICS)	+= drv2667.o
->  obj-$(CONFIG_INPUT_GP2A)		+= gp2ap002a00f.o
->  obj-$(CONFIG_INPUT_GPIO_BEEPER)		+= gpio-beeper.o
->  obj-$(CONFIG_INPUT_GPIO_DECODER)	+= gpio_decoder.o
-> +obj-$(CONFIG_INPUT_GPIO_VIBRA)		+= gpio-vibra.o
->  obj-$(CONFIG_INPUT_HISI_POWERKEY)	+= hisi_powerkey.o
->  obj-$(CONFIG_HP_SDC_RTC)		+= hp_sdc_rtc.o
->  obj-$(CONFIG_INPUT_IMS_PCU)		+= ims-pcu.o
-> diff --git a/drivers/input/misc/gpio-vibra.c b/drivers/input/misc/gpio-vibra.c
-> new file mode 100644
-> index 000000000000..b76c81015de9
-> --- /dev/null
-> +++ b/drivers/input/misc/gpio-vibra.c
-> @@ -0,0 +1,209 @@
-> +// SPDX-License-Identifier: GPL-2.0+
-> +/*
-> + *  GPIO vibrator driver
-> + *
-> + *  Copyright (C) 2019 Luca Weiss <luca@z3ntu.xyz>
-> + *
-> + *  Based on PWM vibrator driver:
-> + *  Copyright (C) 2017 Collabora Ltd.
-> + *
-> + *  Based on previous work from:
-> + *  Copyright (C) 2012 Dmitry Torokhov <dmitry.torokhov@gmail.com>
-> + *
-> + *  Based on PWM beeper driver:
-> + *  Copyright (C) 2010, Lars-Peter Clausen <lars@metafoo.de>
-> + */
-> +
-> +#include <linux/gpio/consumer.h>
-> +#include <linux/input.h>
-> +#include <linux/kernel.h>
-> +#include <linux/module.h>
-> +#include <linux/of_device.h>
-> +#include <linux/platform_device.h>
-> +#include <linux/property.h>
-> +#include <linux/regulator/consumer.h>
-> +#include <linux/slab.h>
-> +
-> +struct gpio_vibrator {
-> +	struct input_dev *input;
-> +	struct gpio_desc *gpio;
-> +	struct regulator *vcc;
-> +
-> +	struct work_struct play_work;
-> +	bool running;
-> +	bool vcc_on;
-> +};
-> +
-> +static int gpio_vibrator_start(struct gpio_vibrator *vibrator)
-> +{
-> +	struct device *pdev = vibrator->input->dev.parent;
-> +	int err;
-> +
-> +	if (!vibrator->vcc_on) {
-> +		err = regulator_enable(vibrator->vcc);
-> +		if (err) {
-> +			dev_err(pdev, "failed to enable regulator: %d\n", err);
-> +			return err;
-> +		}
-> +		vibrator->vcc_on = true;
-> +	}
-> +
-> +	gpiod_set_value_cansleep(vibrator->gpio, 1);
-> +
-> +	return 0;
-> +}
-> +
-> +static void gpio_vibrator_stop(struct gpio_vibrator *vibrator)
-> +{
-> +	gpiod_set_value_cansleep(vibrator->gpio, 0);
-> +
-> +	if (vibrator->vcc_on) {
-> +		regulator_disable(vibrator->vcc);
-> +		vibrator->vcc_on = false;
-> +	}
-> +}
-> +
-> +static void gpio_vibrator_play_work(struct work_struct *work)
-> +{
-> +	struct gpio_vibrator *vibrator =
-> +		container_of(work, struct gpio_vibrator, play_work);
-> +
-> +	if (vibrator->running)
-> +		gpio_vibrator_start(vibrator);
-> +	else
-> +		gpio_vibrator_stop(vibrator);
-> +}
-> +
-> +static int gpio_vibrator_play_effect(struct input_dev *dev, void *data,
-> +				     struct ff_effect *effect)
-> +{
-> +	struct gpio_vibrator *vibrator = input_get_drvdata(dev);
-> +
-> +	int level = effect->u.rumble.strong_magnitude;
-> +
-> +	if (!level)
-> +		level = effect->u.rumble.weak_magnitude;
-> +
-> +	if (level)
-> +		vibrator->running = true;
-> +	else
-> +		vibrator->running = false;
-> +
-> +	schedule_work(&vibrator->play_work);
-> +
-> +	return 0;
-> +}
-> +
-> +static void gpio_vibrator_close(struct input_dev *input)
-> +{
-> +	struct gpio_vibrator *vibrator = input_get_drvdata(input);
-> +
-> +	cancel_work_sync(&vibrator->play_work);
-> +	gpio_vibrator_stop(vibrator);
-> +	vibrator->running = false;
-> +}
-> +
-> +static int gpio_vibrator_probe(struct platform_device *pdev)
-> +{
-> +	struct gpio_vibrator *vibrator;
-> +	int err;
-> +
-> +	vibrator = devm_kzalloc(&pdev->dev, sizeof(*vibrator), GFP_KERNEL);
-> +	if (!vibrator)
-> +		return -ENOMEM;
-> +
-> +	vibrator->input = devm_input_allocate_device(&pdev->dev);
-> +	if (!vibrator->input)
-> +		return -ENOMEM;
-> +
-> +	vibrator->vcc = devm_regulator_get(&pdev->dev, "vcc");
-> +	err = PTR_ERR_OR_ZERO(vibrator->vcc);
-> +	if (err) {
-> +		if (err != -EPROBE_DEFER)
-> +			dev_err(&pdev->dev, "Failed to request regulator: %d\n",
-> +				err);
-> +		return err;
-> +	}
-> +
-> +	vibrator->gpio = devm_gpiod_get(&pdev->dev, "enable", GPIOD_OUT_LOW);
-> +	err = PTR_ERR_OR_ZERO(vibrator->gpio);
-> +	if (err) {
-> +		if (err != -EPROBE_DEFER)
-> +			dev_err(&pdev->dev, "Failed to request main gpio: %d\n",
-> +				err);
-> +		return err;
-> +	}
-> +
-> +	INIT_WORK(&vibrator->play_work, gpio_vibrator_play_work);
-> +
-> +	vibrator->input->name = "gpio-vibrator";
-> +	vibrator->input->id.bustype = BUS_HOST;
-> +	vibrator->input->close = gpio_vibrator_close;
-> +
-> +	input_set_drvdata(vibrator->input, vibrator);
-> +	input_set_capability(vibrator->input, EV_FF, FF_RUMBLE);
-> +
-> +	err = input_ff_create_memless(vibrator->input, NULL,
-> +				      gpio_vibrator_play_effect);
-> +	if (err) {
-> +		dev_err(&pdev->dev, "Couldn't create FF dev: %d\n", err);
-> +		return err;
-> +	}
-> +
-> +	err = input_register_device(vibrator->input);
-> +	if (err) {
-> +		dev_err(&pdev->dev, "Couldn't register input dev: %d\n", err);
-> +		return err;
-> +	}
-> +
-> +	platform_set_drvdata(pdev, vibrator);
-> +
-> +	return 0;
-> +}
-> +
-> +static int __maybe_unused gpio_vibrator_suspend(struct device *dev)
-> +{
-> +	struct gpio_vibrator *vibrator = dev_get_drvdata(dev);
-> +
-> +	cancel_work_sync(&vibrator->play_work);
-> +	if (vibrator->running)
-> +		gpio_vibrator_stop(vibrator);
-> +
-> +	return 0;
-> +}
-> +
-> +static int __maybe_unused gpio_vibrator_resume(struct device *dev)
-> +{
-> +	struct gpio_vibrator *vibrator = dev_get_drvdata(dev);
-> +
-> +	if (vibrator->running)
-> +		gpio_vibrator_start(vibrator);
-> +
-> +	return 0;
-> +}
-> +
-> +static SIMPLE_DEV_PM_OPS(gpio_vibrator_pm_ops,
-> +			 gpio_vibrator_suspend, gpio_vibrator_resume);
-> +
-> +#ifdef CONFIG_OF
-> +static const struct of_device_id gpio_vibra_dt_match_table[] = {
-> +	{ .compatible = "gpio-vibrator" },
-> +	{}
-> +};
-> +MODULE_DEVICE_TABLE(of, gpio_vibra_dt_match_table);
-> +#endif
-> +
-> +static struct platform_driver gpio_vibrator_driver = {
-> +	.probe	= gpio_vibrator_probe,
-> +	.driver	= {
-> +		.name	= "gpio-vibrator",
-> +		.pm	= &gpio_vibrator_pm_ops,
-> +		.of_match_table = of_match_ptr(gpio_vibra_dt_match_table),
-> +	},
-> +};
-> +module_platform_driver(gpio_vibrator_driver);
-> +
-> +MODULE_AUTHOR("Luca Weiss <luca@z3ntu.xy>");
-> +MODULE_DESCRIPTION("GPIO vibrator driver");
-> +MODULE_LICENSE("GPL");
-> +MODULE_ALIAS("platform:gpio-vibrator");
-> -- 
-> 2.21.0
-> 
+> -	iova = __iommu_dma_map(dev, msi_addr, size, prot, domain);
+> +	iova = __iommu_dma_map(dev, msi_addr, size, prot, domain,
+> +			dma_get_mask(dev));
 
+Hmm, I don't think we need the DMA mask for the MSI mapping, this
+should probably always use a 64-bit mask.  Or we could just untangle
+it from the DMA mapping fast path entire, something like:
+
+---
+From 0debafc85174ca830f2e371ff8e8f7465bde3ad8 Mon Sep 17 00:00:00 2001
+From: Christoph Hellwig <hch@lst.de>
+Date: Tue, 30 Apr 2019 07:06:23 -0400
+Subject: iommu/dma: opencode __iommu_dma_map in iommu_dma_get_msi_page
+
+The MSI page mapping really is a little different from the normal DMA
+mappings and doesn't need to look at the DMA mask.  Just open code
+it instead of trying to squeeze the behavior into the DMA path helpers.
+
+Signed-off-by: Christoph Hellwig <hch@lst.de>
+---
+ drivers/iommu/dma-iommu.c | 27 +++++++--------------------
+ 1 file changed, 7 insertions(+), 20 deletions(-)
+
+diff --git a/drivers/iommu/dma-iommu.c b/drivers/iommu/dma-iommu.c
+index 58c35bab7626..2ac0df0879d7 100644
+--- a/drivers/iommu/dma-iommu.c
++++ b/drivers/iommu/dma-iommu.c
+@@ -358,11 +358,6 @@ static dma_addr_t iommu_dma_alloc_iova(struct iommu_domain *domain,
+ 	struct iova_domain *iovad = &cookie->iovad;
+ 	unsigned long shift, iova_len, iova = 0;
+ 
+-	if (cookie->type == IOMMU_DMA_MSI_COOKIE) {
+-		cookie->msi_iova += size;
+-		return cookie->msi_iova - size;
+-	}
+-
+ 	shift = iova_shift(iovad);
+ 	iova_len = size >> shift;
+ 	/*
+@@ -397,10 +392,7 @@ static void iommu_dma_free_iova(struct iommu_dma_cookie *cookie,
+ {
+ 	struct iova_domain *iovad = &cookie->iovad;
+ 
+-	/* The MSI case is only ever cleaning up its most recent allocation */
+-	if (cookie->type == IOMMU_DMA_MSI_COOKIE)
+-		cookie->msi_iova -= size;
+-	else if (cookie->fq_domain)	/* non-strict mode */
++	if (cookie->fq_domain)	/* non-strict mode */
+ 		queue_iova(iovad, iova_pfn(iovad, iova),
+ 				size >> iova_shift(iovad), 0);
+ 	else
+@@ -430,14 +422,10 @@ static dma_addr_t __iommu_dma_map(struct device *dev, phys_addr_t phys,
+ {
+ 	struct iommu_domain *domain = iommu_get_dma_domain(dev);
+ 	struct iommu_dma_cookie *cookie = domain->iova_cookie;
+-	size_t iova_off = 0;
++	size_t iova_off = iova_offset(&cookie->iovad, phys);
+ 	dma_addr_t iova;
+ 
+-	if (cookie->type == IOMMU_DMA_IOVA_COOKIE) {
+-		iova_off = iova_offset(&cookie->iovad, phys);
+-		size = iova_align(&cookie->iovad, size + iova_off);
+-	}
+-
++	size = iova_align(&cookie->iovad, size + iova_off);
+ 	iova = iommu_dma_alloc_iova(domain, size, dma_get_mask(dev), dev);
+ 	if (!iova)
+ 		return DMA_MAPPING_ERROR;
+@@ -1121,7 +1109,6 @@ static struct iommu_dma_msi_page *iommu_dma_get_msi_page(struct device *dev,
+ {
+ 	struct iommu_dma_cookie *cookie = domain->iova_cookie;
+ 	struct iommu_dma_msi_page *msi_page;
+-	dma_addr_t iova;
+ 	int prot = IOMMU_WRITE | IOMMU_NOEXEC | IOMMU_MMIO;
+ 	size_t size = cookie_msi_granule(cookie);
+ 
+@@ -1134,16 +1121,16 @@ static struct iommu_dma_msi_page *iommu_dma_get_msi_page(struct device *dev,
+ 	if (!msi_page)
+ 		return NULL;
+ 
+-	iova = __iommu_dma_map(dev, msi_addr, size, prot);
+-	if (iova == DMA_MAPPING_ERROR)
++	if (iommu_map(domain, cookie->msi_iova, msi_addr, size, prot))
+ 		goto out_free_page;
+ 
+ 	INIT_LIST_HEAD(&msi_page->list);
+ 	msi_page->phys = msi_addr;
+-	msi_page->iova = iova;
++	msi_page->iova = cookie->msi_iova;
+ 	list_add(&msi_page->list, &cookie->msi_page_list);
+-	return msi_page;
+ 
++	cookie->msi_iova += size;
++	return msi_page;
+ out_free_page:
+ 	kfree(msi_page);
+ 	return NULL;
 -- 
-Dmitry
+2.20.1
+
