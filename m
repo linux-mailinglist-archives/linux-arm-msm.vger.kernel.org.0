@@ -2,90 +2,76 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 1AF04FB07
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Apr 2019 16:07:02 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 251D4FB0B
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Apr 2019 16:07:04 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726563AbfD3OGP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 30 Apr 2019 10:06:15 -0400
-Received: from foss.arm.com ([217.140.101.70]:48028 "EHLO foss.arm.com"
+        id S1727727AbfD3OG1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 30 Apr 2019 10:06:27 -0400
+Received: from foss.arm.com ([217.140.101.70]:48040 "EHLO foss.arm.com"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726436AbfD3OGP (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 30 Apr 2019 10:06:15 -0400
+        id S1726436AbfD3OG0 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 30 Apr 2019 10:06:26 -0400
 Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.72.51.249])
-        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id D411280D;
-        Tue, 30 Apr 2019 07:06:14 -0700 (PDT)
-Received: from [10.1.196.50] (e108454-lin.cambridge.arm.com [10.1.196.50])
-        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 8F43F3F719;
-        Tue, 30 Apr 2019 07:06:13 -0700 (PDT)
-Subject: qcom_scm: Incompatible pointer type build failure
-To:     Ian Jackson <ian.jackson@citrix.com>,
-        Stefano Stabellini <sstabellini@kernel.org>
-Cc:     xen-devel@lists.xenproject.org, andy.gross@linaro.org,
-        david.brown@linaro.org, linux-arm-msm@vger.kernel.org,
-        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>
-References: <osstest-135420-mainreport@xen.org>
- <23752.17186.527512.614163@mariner.uk.xensource.com>
-From:   Julien Grall <julien.grall@arm.com>
-Message-ID: <87d9fbc1-5956-2b7b-0b9a-6368e378d0f6@arm.com>
-Date:   Tue, 30 Apr 2019 15:06:12 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.6.1
+        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 64DCD80D;
+        Tue, 30 Apr 2019 07:06:26 -0700 (PDT)
+Received: from e121166-lin.cambridge.arm.com (e121166-lin.cambridge.arm.com [10.1.196.255])
+        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 85A763F719;
+        Tue, 30 Apr 2019 07:06:24 -0700 (PDT)
+Date:   Tue, 30 Apr 2019 15:06:21 +0100
+From:   Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>
+To:     Marc Gonzalez <marc.w.gonzalez@free.fr>
+Cc:     Stanimir Varbanov <svarbanov@mm-sol.com>,
+        Bjorn Helgaas <bhelgaas@google.com>,
+        Andy Gross <andy.gross@linaro.org>,
+        David Brown <david.brown@linaro.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        PCI <linux-pci@vger.kernel.org>,
+        MSM <linux-arm-msm@vger.kernel.org>,
+        LKML <linux-kernel@vger.kernel.org>,
+        Jeffrey Hugo <jhugo@codeaurora.org>
+Subject: Re: [RFC PATCH v1] PCI: qcom: Use quirk to override incorrect device
+ class
+Message-ID: <20190430140621.GB18742@e121166-lin.cambridge.arm.com>
+References: <94bb3f22-c5a7-1891-9d89-42a520e9a592@free.fr>
+ <65321fe3-ca29-c454-63ae-98a46c2e5158@mm-sol.com>
+ <1205cbfb-ac06-63a5-9401-75d4e68b15b5@free.fr>
+ <38ad143b-3b07-4d19-8ccd-ca39fb51e53d@free.fr>
 MIME-Version: 1.0
-In-Reply-To: <23752.17186.527512.614163@mariner.uk.xensource.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <38ad143b-3b07-4d19-8ccd-ca39fb51e53d@free.fr>
+User-Agent: Mutt/1.9.4 (2018-02-28)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Ian,
-
-Thank you for the report.
-
-On 30/04/2019 13:44, Ian Jackson wrote:
-> osstest service owner writes ("[linux-4.19 test] 135420: regressions - FAIL"):
->> flight 135420 linux-4.19 real [real]
->> http://logs.test-lab.xenproject.org/osstest/logs/135420/
->>
->> Regressions :-(
->>
->> Tests which did not succeed and are blocking,
->> including tests which could not be run:
->>   build-armhf-pvops             6 kernel-build             fail REGR. vs. 129313
+On Tue, Mar 12, 2019 at 06:34:55PM +0100, Marc Gonzalez wrote:
+> On 12/03/2019 18:18, Marc Gonzalez wrote:
 > 
-> http://logs.test-lab.xenproject.org/osstest/logs/135420/build-armhf-pvops/6.ts-kernel-build.log
+> > On 12/03/2019 13:42, Stanimir Varbanov wrote:
+> > 
+> >> I wonder, in case that dw_pcie_setup_rc() already has a write to
+> >> PCI_CLASS_DEVICE configuration register to set it as a bridge do we
+> >> still need to do the above fixup?
+> > 
+> > I don't know, I don't have an affected device. Unless the msm8998 /is/ affected,
+> > and dw_pcie_setup_rc() actually fixes it?
 > 
->    drivers/firmware/qcom_scm.c: In function â€˜qcom_scm_assign_memâ€™:
->    drivers/firmware/qcom_scm.c:469:47: error: passing argument 3 of â€˜dma_alloc_coherentâ€™ from incompatible pointer type [-Werror=incompatible-pointer-types]
->      ptr = dma_alloc_coherent(__scm->dev, ptr_sz, &ptr_phys, GFP_KERNEL);
->                                                   ^
->    In file included from drivers/firmware/qcom_scm.c:21:0:
->    ./include/linux/dma-mapping.h:560:21: note: expected â€˜dma_addr_t * {aka long long unsigned int *}â€™ but argument is of type â€˜phys_addr_t * {aka unsigned int *}â€™
->     static inline void *dma_alloc_coherent(struct device *dev, size_t size,
->                         ^~~~~~~~~~~~~~~~~~
->    cc1: some warnings being treated as errors
->    scripts/Makefile.build:303: recipe for target 'drivers/firmware/qcom_scm.o' failed
->    make[2]: *** [drivers/firmware/qcom_scm.o] Error 1
->    scripts/Makefile.build:544: recipe for target 'drivers/firmware' failed
->    make[1]: *** [drivers/firmware] Error 2
->    make[1]: *** Waiting for unfinished jobs....
+> I think you hit the nail on the head...
 > 
-> I think this build failure is probably a regression; rather it is due
-> to the stretch update which brings in a new compiler.
+> If I comment out
+> //dw_pcie_wr_own_conf(pp, PCI_CLASS_DEVICE, 2, PCI_CLASS_BRIDGE_PCI);
+> from dw_pcie_setup_rc()
+> then pci_class() returns 0xff000000 instead of 0x6040000
+> 
+> So perhaps you're right: the quirk can be omitted altogether.
+> Unless it is not possible to program the device class on older chips?
 
-The bug has always been present (and still present in master), it is possible 
-the compiler became smarter with the upgrade to stretch.
+Marc,
 
-The problem is similar to [1] and happen when the size of phys_addr_t is 
-different to dma_addr_t.
+I would drop this patch from the PCI queue since in a different
+form it was already merged, please let me know if I am wrong.
 
-I have CCed the maintainers of this file.
-
-Cheers,
-
-[1] https://lists.xenproject.org/archives/html/xen-devel/2019-04/msg00940.html
-
--- 
-Julien Grall
+Thanks,
+Lorenzo
