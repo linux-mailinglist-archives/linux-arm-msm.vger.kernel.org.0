@@ -2,96 +2,132 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id DF0A0105E8
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  1 May 2019 09:39:45 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 202D8108E3
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  1 May 2019 16:17:14 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726137AbfEAHjp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 1 May 2019 03:39:45 -0400
-Received: from mail-pg1-f196.google.com ([209.85.215.196]:43326 "EHLO
-        mail-pg1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726014AbfEAHjo (ORCPT
+        id S1726473AbfEAORN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 1 May 2019 10:17:13 -0400
+Received: from smtp.codeaurora.org ([198.145.29.96]:57958 "EHLO
+        smtp.codeaurora.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726165AbfEAORN (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 1 May 2019 03:39:44 -0400
-Received: by mail-pg1-f196.google.com with SMTP id t22so4987834pgi.10;
-        Wed, 01 May 2019 00:39:44 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:mime-version:content-disposition
-         :user-agent;
-        bh=TY9nANZTsmFVcCEMn85U2AmDbTx1OVF1fP/JuxE6pck=;
-        b=L/RKIVSWyF8E4KtcOIV387q6/Tb86laQX7r3pD8SEuiLby2nB+ssYbl2j3oWjXg516
-         evecBrJyE4S8sG0P2qInrFLGWFURALtdaL3J1DRk2l3BJc4LNjtc5i9y+rAnQk3XTa5b
-         D7ZjAya502/1Y89T/nZqe9m3yinY+GtZg6fY/VQh1+ubllLlFFC0LTe9wg5+q8tvLIeU
-         IsRgfcvWsZyrpflV6O2BI7MqTjgRVCQKSt5Wfg45WEk4HQ8n12s9K3u/uVSLsE6FyP/v
-         DEPJxkvrLYXvEVftwxV84HWy7W15Uih+qDnYDzuP5muEopHSgllaxvtTl2M4DjDBHwd9
-         JbSw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:mime-version
-         :content-disposition:user-agent;
-        bh=TY9nANZTsmFVcCEMn85U2AmDbTx1OVF1fP/JuxE6pck=;
-        b=V0w4++SdTsivfTBq1H2U6tolkkaHfekdLNva+awZtWOmNDt5iMTqXotqIpya2Pn+Ri
-         Ob3yCbDfMKXJhYSMFTGce9OM/2czpiI9HaVSJd0PaPrYL1bYFQibbsOExm98RXCGzfTe
-         svphFNQ5dVAVTSbL3vE2o/f8GwVhrSLaz9xzCT3BHa0FVKV8+fVO39qRfj5S/U5qBCx6
-         D02xIQ5FbRlLR03EmjhrTb4sikDsFNy9p660dIXGzpuXRgEcq6IsvF475x0qnQ0ErDqW
-         VV+EF165NCb6/oKDALvQ6RTi+/sTcr519HDlN3ZjPklKetk4gNqFo4WHescOf6t/ZbOD
-         Xelw==
-X-Gm-Message-State: APjAAAX7xuucLVJGtEDpn+Ul3D/Tc/3gjt7spwAQSxfoHLsnAgNz4vu1
-        s/rIW/T6Awbh+afpwiK7/Tg=
-X-Google-Smtp-Source: APXvYqwOkqeKyBWwXnCc2ePCnLepyeUhDiRTUrFqALdmmw1N9z2v+VQh9bPszUu6ke+HkIJjXYGs4g==
-X-Received: by 2002:a63:28c8:: with SMTP id o191mr30982923pgo.164.1556696384089;
-        Wed, 01 May 2019 00:39:44 -0700 (PDT)
-Received: from nishad ([106.51.235.3])
-        by smtp.gmail.com with ESMTPSA id f87sm65341453pff.56.2019.05.01.00.39.40
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 01 May 2019 00:39:43 -0700 (PDT)
-Date:   Wed, 1 May 2019 13:09:36 +0530
-From:   Nishad Kamdar <nishadkamdar@gmail.com>
-To:     Andy Gross <agross@kernel.org>,
-        David Brown <david.brown@linaro.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>
-Cc:     Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Joe Perches <joe@perches.com>,
-        Uwe =?utf-8?Q?Kleine-K=C3=B6nig?= 
-        <u.kleine-koenig@pengutronix.de>, linux-arm-msm@vger.kernel.org,
-        linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: [PATCH] clk: qcom: Use the correct style for SPDX License Identifier
-Message-ID: <20190501073932.GA6925@nishad>
+        Wed, 1 May 2019 10:17:13 -0400
+Received: by smtp.codeaurora.org (Postfix, from userid 1000)
+        id A11AD60452; Wed,  1 May 2019 14:17:11 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
+        s=default; t=1556720231;
+        bh=d6UUKM7/SG8Hy+mLxnm6Mk0DPCGJl1FTJg3uSxE3ecU=;
+        h=Subject:To:Cc:References:From:Date:In-Reply-To:From;
+        b=WFZP/jMkk8dr94XkDB0jzb9l/YW4WlvFQSUVwwUxP4thdC3KQsymridmRG9kL387n
+         6gr9pnFcjObbGHnUuwWl9UIVW3dkX5sX324dhtkdMm3Hla6rpE7+R8jI7E7NF9CP8v
+         XPYrlsiiMqM9kc9DhJwSsp6fbSxzTu9A2u7tggVw=
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        pdx-caf-mail.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.7 required=2.0 tests=ALL_TRUSTED,BAYES_00,
+        DKIM_INVALID,DKIM_SIGNED autolearn=no autolearn_force=no version=3.4.0
+Received: from [10.226.58.28] (i-global254.qualcomm.com [199.106.103.254])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: jhugo@smtp.codeaurora.org)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 745BE602F8;
+        Wed,  1 May 2019 14:17:09 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
+        s=default; t=1556720230;
+        bh=d6UUKM7/SG8Hy+mLxnm6Mk0DPCGJl1FTJg3uSxE3ecU=;
+        h=Subject:To:Cc:References:From:Date:In-Reply-To:From;
+        b=j11ayQuR2WWeXLjnF2qzTelbpemno5LaE5FmMR5ThsiM+sSohRMyhZKv+n1WDeRTB
+         oTg+DPEeba189RF6FvTjTmnisqU5IovRKLRJ4yuq/knAyXxqRDK4ACSWni6LhyihD9
+         fVichSYoX4sdm77M0bcC36ps6b0T5L7Ez3iGwDyQ=
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 745BE602F8
+Authentication-Results: pdx-caf-mail.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: pdx-caf-mail.web.codeaurora.org; spf=none smtp.mailfrom=jhugo@codeaurora.org
+Subject: Re: [PATCH v3 1/6] dt-bindings: clock: Document external clocks for
+ MSM8998 gcc
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     mturquette@baylibre.com, sboyd@kernel.org, robh+dt@kernel.org,
+        mark.rutland@arm.com, agross@kernel.org, marc.w.gonzalez@free.fr,
+        david.brown@linaro.org, linux-arm-msm@vger.kernel.org,
+        linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org,
+        devicetree@vger.kernel.org
+References: <1556677404-29194-1-git-send-email-jhugo@codeaurora.org>
+ <1556677473-29242-1-git-send-email-jhugo@codeaurora.org>
+ <20190501033430.GB2938@tuxbook-pro>
+From:   Jeffrey Hugo <jhugo@codeaurora.org>
+Message-ID: <807e0789-6a7d-28b5-2811-df8e7e4ae393@codeaurora.org>
+Date:   Wed, 1 May 2019 08:17:09 -0600
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:60.0) Gecko/20100101
+ Thunderbird/60.6.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-User-Agent: Mutt/1.9.4 (2018-02-28)
+In-Reply-To: <20190501033430.GB2938@tuxbook-pro>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-This patch corrects the SPDX License Identifier style
-in clk-regmap-mux-div.h. For C header files
-Documentation/process/license-rules.rst mandates C-like
-comments (opposed to C source files where C++ style
-should be used)
+On 4/30/2019 9:34 PM, Bjorn Andersson wrote:
+> On Tue 30 Apr 19:24 PDT 2019, Jeffrey Hugo wrote:
+> 
+>> The global clock controller on MSM8998 can consume a number of external
+>> clocks.  Document them.
+>>
+>> Signed-off-by: Jeffrey Hugo <jhugo@codeaurora.org>
+>> ---
+>>   Documentation/devicetree/bindings/clock/qcom,gcc.txt | 10 ++++++++++
+>>   1 file changed, 10 insertions(+)
+>>
+>> diff --git a/Documentation/devicetree/bindings/clock/qcom,gcc.txt b/Documentation/devicetree/bindings/clock/qcom,gcc.txt
+>> index 8661c3c..7d45323 100644
+>> --- a/Documentation/devicetree/bindings/clock/qcom,gcc.txt
+>> +++ b/Documentation/devicetree/bindings/clock/qcom,gcc.txt
+>> @@ -28,6 +28,16 @@ Required properties :
+>>   - #clock-cells : shall contain 1
+>>   - #reset-cells : shall contain 1
+>>   
+>> +For MSM8998 only:
+>> +	- clocks: a list of phandles and clock-specifier pairs,
+>> +		  one for each entry in clock-names.
+>> +	- clock-names: "xo" (required)
+>> +		       "usb3_pipe" (optional)
+>> +		       "ufs_rx_symbol0" (optional)
+>> +		       "ufs_rx_symbol1" (optional)
+>> +		       "ufs_tx_symbol0" (optional)
+>> +		       "pcie0_pipe" (optional)
+> 
+> The optional clocks here comes from hardware blocks that in turn depends
+> on the gcc, so we would need to resolve them lazily (in contrast to xo).
+> 
+> We typically don't list these in DT, but if this is close to the
+> complete list of incoming clocks then I like the explicitness of it.
 
-Changes made by using a script provided by Joe Perches here:
-https://lkml.org/lkml/2019/2/7/46
+I reviewed the hardware documentation, and this is a complete list, 
+except for some "aud_ref_clk" which I can't tell exactly where it comes 
+from, and I see no use for it.  As near as I can tell, this list should 
+cover all the needs going forward.
 
-Suggested-by: Joe Perches <joe@perches.com>
-Signed-off-by: Nishad Kamdar <nishadkamdar@gmail.com>
----
- drivers/clk/qcom/clk-regmap-mux-div.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+> 
+> Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+> 
+> Regards,
+> Bjorn
+> 
+>> +
+>>   Optional properties :
+>>   - #power-domain-cells : shall contain 1
+>>   - Qualcomm TSENS (thermal sensor device) on some devices can
+>> -- 
+>> Qualcomm Datacenter Technologies as an affiliate of Qualcomm Technologies, Inc.
+>> Qualcomm Technologies, Inc. is a member of the
+>> Code Aurora Forum, a Linux Foundation Collaborative Project.
+>>
 
-diff --git a/drivers/clk/qcom/clk-regmap-mux-div.h b/drivers/clk/qcom/clk-regmap-mux-div.h
-index 6cd6261be7ac..4df6c8d24c24 100644
---- a/drivers/clk/qcom/clk-regmap-mux-div.h
-+++ b/drivers/clk/qcom/clk-regmap-mux-div.h
-@@ -1,4 +1,4 @@
--// SPDX-License-Identifier: GPL-2.0
-+/* SPDX-License-Identifier: GPL-2.0 */
- /*
-  * Copyright (c) 2017, Linaro Limited
-  * Author: Georgi Djakov <georgi.djakov@linaro.org>
+
 -- 
-2.17.1
-
+Jeffrey Hugo
+Qualcomm Datacenter Technologies as an affiliate of Qualcomm 
+Technologies, Inc.
+Qualcomm Technologies, Inc. is a member of the
+Code Aurora Forum, a Linux Foundation Collaborative Project.
