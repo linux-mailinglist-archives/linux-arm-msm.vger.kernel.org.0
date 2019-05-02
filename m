@@ -2,137 +2,81 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 7E191120F7
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  2 May 2019 19:27:05 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 54158122F1
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  2 May 2019 21:55:58 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726245AbfEBR1E (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 2 May 2019 13:27:04 -0400
-Received: from ns.iliad.fr ([212.27.33.1]:52522 "EHLO ns.iliad.fr"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726196AbfEBR1E (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 2 May 2019 13:27:04 -0400
-Received: from ns.iliad.fr (localhost [127.0.0.1])
-        by ns.iliad.fr (Postfix) with ESMTP id 0D2B82170C;
-        Thu,  2 May 2019 19:27:02 +0200 (CEST)
-Received: from [192.168.108.49] (freebox.vlq16.iliad.fr [213.36.7.13])
-        by ns.iliad.fr (Postfix) with ESMTP id F3A822163C;
-        Thu,  2 May 2019 19:27:01 +0200 (CEST)
-Subject: Re: [PATCH] arm64/io: Don't use WZR in writel
-To:     Robin Murphy <robin.murphy@arm.com>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     Will Deacon <will.deacon@arm.com>,
-        Catalin Marinas <catalin.marinas@arm.com>,
+        id S1726175AbfEBTzt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 2 May 2019 15:55:49 -0400
+Received: from mail-ot1-f68.google.com ([209.85.210.68]:33474 "EHLO
+        mail-ot1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726121AbfEBTzs (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 2 May 2019 15:55:48 -0400
+Received: by mail-ot1-f68.google.com with SMTP id s11so3284001otp.0;
+        Thu, 02 May 2019 12:55:48 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        bh=dfR3x3hstUPTqdrAbnZLIHv3xXGIWPlsZu8Q4UGru+0=;
+        b=lQGePnslo5AsBbp4Ke12zFlgQWJ4FbEYf05DZ86J2wo5pyBP9mwBHfaZF6/TBZqSP9
+         +SBQL9hyNXRBxRiw9gDHDIXcelKUz6Vz4ib10tesDou3wyIiNLtkgi7W/vbca0/MqqFu
+         x+y1mGhs4WGYgLT6EN1nKTYDrLed2jzcP+Xi1fLGvv35PRtd75wbaU+CokH1hyiY06bM
+         Aw9lNIuQQ6eFmZ1o/Am2eER946hudoM1VIB7QNhfWoAbebWG5KP5Wpa7z00CuHYYBsil
+         ToOT+KmJQWGHVcWeT470NQMYBI3j2F32VHlGCZcqzf24kNSk8AzkmmXInfVgWmJeoZ7W
+         u1FQ==
+X-Gm-Message-State: APjAAAXAMDgXFdQFSgwYz9oNfTr2BeSXH6PDFZRON/qrTsQrIciAUN3s
+        56UjUdlRpp/yu4ZB5x96J4UoW5w=
+X-Google-Smtp-Source: APXvYqyJ46V/sup1mO2TC0Nk8Rr1keP20TQdh2EDygYMpUGVsCUg35clCqSiDOMw/AQC+4zVwSHhtQ==
+X-Received: by 2002:a05:6830:12:: with SMTP id c18mr4135762otp.26.1556826947997;
+        Thu, 02 May 2019 12:55:47 -0700 (PDT)
+Received: from localhost (24-155-109-49.dyn.grandenetworks.net. [24.155.109.49])
+        by smtp.gmail.com with ESMTPSA id n11sm2499369otk.4.2019.05.02.12.55.46
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Thu, 02 May 2019 12:55:47 -0700 (PDT)
+Date:   Thu, 2 May 2019 14:55:46 -0500
+From:   Rob Herring <robh@kernel.org>
+To:     Christian Lamparter <chunkeey@gmail.com>
+Cc:     Jonathan =?iso-8859-1?Q?Neusch=E4fer?= <j.neuschaefer@gmx.net>,
+        linux-arm-msm@vger.kernel.org, Andy Gross <andy.gross@linaro.org>,
+        David Brown <david.brown@linaro.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Linus Walleij <linus.walleij@linaro.org>,
         Mark Rutland <mark.rutland@arm.com>,
-        Marc Zyngier <marc.zyngier@arm.com>,
-        Linux ARM <linux-arm-kernel@lists.infradead.org>,
-        MSM <linux-arm-msm@vger.kernel.org>,
-        Jeffrey Hugo <jhugo@codeaurora.org>,
-        AngeloGioacchino Del Regno <kholk11@gmail.com>
-References: <68b71c15f32341468a868f6418e4fcb375bc49ba.camel@gmail.com>
- <20190211105755.GB30880@fuggles.cambridge.arm.com>
- <38d8965a-cd41-17cf-1b95-8dd58c079be4@arm.com>
- <874c702b8af760aa8fae38d478c79e3ecba00515.camel@gmail.com>
- <235d20ef-3054-69d9-975d-25aebf32aad3@arm.com>
- <20190223181254.GC572@tuxbook-pro> <86zhqm8i6d.wl-marc.zyngier@arm.com>
- <20190224035356.GD572@tuxbook-pro>
- <33d765b5-1807-fa6c-1ceb-99f09f7c8d5a@free.fr>
- <8eb4f446-6152-ffb6-9529-77fb0bcc307f@arm.com>
- <7b5e8bb1-d339-07f7-66f6-7f09df2107c4@free.fr>
- <3757fc2d-0587-be46-8f75-6d79906be8bd@arm.com>
-From:   Marc Gonzalez <marc.w.gonzalez@free.fr>
-Message-ID: <190e3c4f-7486-f56c-b3e1-7ee07da88395@free.fr>
-Date:   Thu, 2 May 2019 19:27:01 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.6.1
+        linux-gpio@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: Re: [PATCH] dt-bindings: pinctrl: Fix spelling of bias-pull-up
+Message-ID: <20190502195546.GA24769@bogus>
+References: <20190428150822.13935-1-j.neuschaefer@gmx.net>
+ <2683948.V7X3pFLLSZ@debian64>
 MIME-Version: 1.0
-In-Reply-To: <3757fc2d-0587-be46-8f75-6d79906be8bd@arm.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
-X-Virus-Scanned: ClamAV using ClamSMTP ; ns.iliad.fr ; Thu May  2 19:27:02 2019 +0200 (CEST)
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <2683948.V7X3pFLLSZ@debian64>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 02/05/2019 18:33, Robin Murphy wrote:
-
-> Both Angelo's and your reports strongly imply that the previous 
-> constant-folding debate was a red herring and the trivial fix[1] should 
-> still be sufficient, but nobody's given me actual confirmation of 
-> whether it is or isn't :(
+On Tue, Apr 30, 2019 at 11:32:17PM +0200, Christian Lamparter wrote:
+> On Sunday, April 28, 2019 5:08:22 PM CEST Jonathan Neuschäfer wrote:
+> > The property is spelled 'bias-pull-up', as documented in
+> > pinctrl-bindings.txt.
+> > 
 > 
-> Robin.
+> I also sent out a patch for that... back in 2017:
 > 
-> [1] 
-> http://linux-arm.org/git?p=linux-rm.git;a=commitdiff;h=a13e3239f0c543f1f61ce5f7f5c06320e521701c
->
->
-> Apparently some Qualcomm arm64 platforms which appear to expose their
-
-I'd write qcom. I don't think they deserve to be named & capitalized :'p
-
-> SMMU global register space are still in fact using a hypervisor to
-> mediate it by trapping and emulating register accesses. Sadly, some
-> deployed versions of said trapping code have bugs wherein they go
-> horribly wrong for stores using r31 (i.e. XZR/WZR) as the source
-> register.
+> https://patchwork.ozlabs.org/patch/763151/
 > 
-> While this can be mitigated for GCC today by tweaking the constraints
-> for the implementation of writel_relaxed(), to avoid any potential arms
-> race with future compilers compilers more aggressively optimising
-
-"compilers compilers" ... typo?
-
-> register allocation the simple way is to just remove all the problematic
-> constant zeros. For the write-only TLB operations, the actual value is
-> irrelevant anyway and any old nearby variable will provide a suitable
-> GPR to encode. The one point at which we really do need a zero to clear
-> a context bank happens before any of the TLB maintenance where hangs
-> have been reported, so is apparently not a problem... :/
+> It's marked Accepted and Archived.
 > 
-> Reported-by: Angelo G. Del Regno <kholk11@gmail.com>
-> Reported-by: Marc Gonzalez <marc.w.gonzalez@free.fr>
-> Signed-off-by: Robin Murphy <robin.murphy@arm.com>
-> 
-> diff --git a/drivers/iommu/arm-smmu.c b/drivers/iommu/arm-smmu.c
-> index 045d938..80bf29e 100644 (file)
-> --- a/drivers/iommu/arm-smmu.c
-> +++ b/drivers/iommu/arm-smmu.c
-> @@ -422,7 +422,7 @@ static void __arm_smmu_tlb_sync(struct arm_smmu_device *smmu,
->  {
->         unsigned int spin_cnt, delay;
->  
-> -       writel_relaxed(0, sync);
-> +       writel_relaxed((unsigned long)sync, sync);
+> @rob ?
 
-You don't think this might deserve a comment explaining that the value
-is irrelevant? (On top of the commit message, I mean.)
+No idea what happened besides a problem between the screen and keyboard.
 
->         for (delay = 1; delay < TLB_LOOP_TIMEOUT; delay *= 2) {
->                 for (spin_cnt = TLB_SPIN_COUNT; spin_cnt > 0; spin_cnt--) {
->                         if (!(readl_relaxed(status) & sTLBGSTATUS_GSACTIVE))
-> @@ -1760,8 +1760,8 @@ static void arm_smmu_device_reset(struct arm_smmu_device *smmu)
->         }
->  
->         /* Invalidate the TLB, just in case */
-> -       writel_relaxed(0, gr0_base + ARM_SMMU_GR0_TLBIALLH);
-> -       writel_relaxed(0, gr0_base + ARM_SMMU_GR0_TLBIALLNSNH);
-> +       writel_relaxed(reg, gr0_base + ARM_SMMU_GR0_TLBIALLH);
-> +       writel_relaxed(reg, gr0_base + ARM_SMMU_GR0_TLBIALLNSNH);
+Let me try again...
 
-Same here?
-
-Anyway, your solution works on msm8998, therefore you have my
-
-Tested-by: Marc Gonzalez <marc.w.gonzalez@free.fr>
-
-and you can throw in my
-
-Reviewed-by: Marc Gonzalez <marc.w.gonzalez@free.fr>
-
-for good measure ;-)
-
-All that's left now is to submit it to Linus during the merge window :-p
-
-Regards.
+Rob
