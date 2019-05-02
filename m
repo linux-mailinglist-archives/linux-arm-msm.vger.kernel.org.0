@@ -2,73 +2,73 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 8625B1238E
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  2 May 2019 22:43:48 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 09ABB12435
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  2 May 2019 23:36:45 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726145AbfEBUnr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 2 May 2019 16:43:47 -0400
-Received: from mail.kernel.org ([198.145.29.99]:54394 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1725962AbfEBUnr (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 2 May 2019 16:43:47 -0400
-Received: from localhost (unknown [104.132.0.70])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id BE2D52081C;
-        Thu,  2 May 2019 20:43:46 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1556829826;
-        bh=L/uUYW5vLxR98baFOMyoQD9iYylHnteOXlwFU+2+IYw=;
-        h=In-Reply-To:References:To:Cc:From:Subject:Date:From;
-        b=EaeKe+n3NxQDSiV89AeuqufG4jIjiCfu2O9QzaOu08OmrJGDhDL4p9U/en2USFQw1
-         9EoQ+IAFqr3cLt4zeKvCvHaO5qYuGkO2ns5vMjpwHdZv+C+6nuMU4GLATQMYOvjgtn
-         2XLALOgOwuLXffpoMVSxbRHmbS9p4ANCa4lXWEcw=
-Content-Type: text/plain; charset="utf-8"
+        id S1726193AbfEBVgn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 2 May 2019 17:36:43 -0400
+Received: from mail-ot1-f67.google.com ([209.85.210.67]:33273 "EHLO
+        mail-ot1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725962AbfEBVgn (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 2 May 2019 17:36:43 -0400
+Received: by mail-ot1-f67.google.com with SMTP id s11so3547142otp.0;
+        Thu, 02 May 2019 14:36:42 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=68ezu1CC+9jQwedrlXKi1B7o3NkSj3TSJKQOha2Am3U=;
+        b=oZdJNMNvRp08zZCLpiszpTic6dfJ4mM0cR1DOUZrCXAbNie0W5Vg0CNGxWSjE/uiYC
+         9J5kZRDS+c7ynf5ZeONNCJp9FgXqDxC5PbNz9wj49dHiDRUUo2q6ZRC4He5nYmwc9SpV
+         EKPgDvNmzbQuE5N9EhHU/xDKY/9SO3GiZjq3dzx01kIHv5ykHo3OhN3L0ZTiGPlDLvaI
+         ojtLJWjE5EhXu89uYDLYK54FWe+maZJ/crqSruYi9NkGQd38lSiyLPwzNCtEBwFwL1j7
+         rAGNzTsZPgCha7lOcbqyzAvfoa/rmWS39Psb1PEJAe0qi7O66aF2Gwd8jm/Tmgy7fF8/
+         SVwQ==
+X-Gm-Message-State: APjAAAX/K6X4svGZXM4DSDPPxUp78RHmGXkr50YEFiCs87/K6zu+uCCV
+        gPDDlJwgZjI8vZ8eM03i1Q==
+X-Google-Smtp-Source: APXvYqyVHjgextdRZdHLuL/OkF0dTrVbN6LNb+8KdVWK52/DvUyad7LssZXEokGeIAvDrcFVsBZDIg==
+X-Received: by 2002:a9d:37e6:: with SMTP id x93mr4079435otb.351.1556833002225;
+        Thu, 02 May 2019 14:36:42 -0700 (PDT)
+Received: from localhost (24-155-109-49.dyn.grandenetworks.net. [24.155.109.49])
+        by smtp.gmail.com with ESMTPSA id e9sm135608otf.48.2019.05.02.14.36.41
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Thu, 02 May 2019 14:36:41 -0700 (PDT)
+Date:   Thu, 2 May 2019 16:36:40 -0500
+From:   Rob Herring <robh@kernel.org>
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     Kishon Vijay Abraham I <kishon@ti.com>,
+        Mark Rutland <mark.rutland@arm.com>,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        devicetree@vger.kernel.org
+Subject: Re: [PATCH v3 1/2] dt-bindings: phy: Add binding for Qualcomm PCIe2
+ PHY
+Message-ID: <20190502213640.GA21552@bogus>
+References: <20190502001406.10431-1-bjorn.andersson@linaro.org>
+ <20190502001406.10431-2-bjorn.andersson@linaro.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <20190502112024.GA18333@centauri>
-References: <20190502002138.10646-1-bjorn.andersson@linaro.org> <ecc6a7fb-14a8-3314-d376-433c9f98b692@free.fr> <20190502112024.GA18333@centauri>
-To:     Marc Gonzalez <marc.w.gonzalez@free.fr>,
-        Niklas Cassel <niklas.cassel@linaro.org>
-Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        MSM <linux-arm-msm@vger.kernel.org>,
-        linux-clk <linux-clk@vger.kernel.org>
-From:   Stephen Boyd <sboyd@kernel.org>
-Subject: Re: [PATCH] clk: gcc-qcs404: Add PCIe resets
-Message-ID: <155682982590.200842.4482547017911714715@swboyd.mtv.corp.google.com>
-User-Agent: alot/0.8
-Date:   Thu, 02 May 2019 13:43:45 -0700
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20190502001406.10431-2-bjorn.andersson@linaro.org>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Niklas Cassel (2019-05-02 04:20:24)
-> On Thu, May 02, 2019 at 12:53:33PM +0200, Marc Gonzalez wrote:
-> > On 02/05/2019 02:21, Bjorn Andersson wrote:
-> >=20
-> > > diff --git a/include/dt-bindings/clock/qcom,gcc-qcs404.h b/include/dt=
--bindings/clock/qcom,gcc-qcs404.h
-> > > index 454b3f43f538..5959399fed2e 100644
-> > > --- a/include/dt-bindings/clock/qcom,gcc-qcs404.h
-> > > +++ b/include/dt-bindings/clock/qcom,gcc-qcs404.h
-> > > @@ -166,5 +166,12 @@
-> > >  #define GCC_PCIEPHY_0_PHY_BCR                              12
-> > >  #define GCC_EMAC_BCR                                       13
-> > >  #define GCC_CDSP_RESTART                           14
-> > > +#define GCC_PCIE_0_AXI_MASTER_STICKY_ARES          14
-> >=20
-> > Seems weird that there would be two names for the same entry at index 1=
-4?
->=20
+On Wed,  1 May 2019 17:14:05 -0700, Bjorn Andersson wrote:
+> The Qualcomm PCIe2 PHY is a Synopsys based PCIe PHY found in a number of
+> Qualcomm platforms, add a binding to describe this.
+> 
+> Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+> ---
+> 
 > Changes since v2:
-> - Rebased patch
->=20
-> The proper tag in the subject should have been [PATCH v2].
->=20
-> This is most likely an issue caused by the rebase.
->=20
+> - Add #clock-cells
+> 
+>  .../bindings/phy/qcom-pcie2-phy.txt           | 42 +++++++++++++++++++
+>  1 file changed, 42 insertions(+)
+>  create mode 100644 Documentation/devicetree/bindings/phy/qcom-pcie2-phy.txt
+> 
 
-Please resend then.
-
+Reviewed-by: Rob Herring <robh@kernel.org>
