@@ -2,103 +2,141 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 1307811BFA
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  2 May 2019 17:00:21 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 879C011C56
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  2 May 2019 17:12:47 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726326AbfEBPAG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 2 May 2019 11:00:06 -0400
-Received: from mail-pf1-f195.google.com ([209.85.210.195]:44636 "EHLO
-        mail-pf1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726197AbfEBPAG (ORCPT
+        id S1726203AbfEBPMo (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 2 May 2019 11:12:44 -0400
+Received: from mail-pg1-f195.google.com ([209.85.215.195]:41622 "EHLO
+        mail-pg1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726424AbfEBPMo (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 2 May 2019 11:00:06 -0400
-Received: by mail-pf1-f195.google.com with SMTP id y13so1248939pfm.11
-        for <linux-arm-msm@vger.kernel.org>; Thu, 02 May 2019 08:00:05 -0700 (PDT)
+        Thu, 2 May 2019 11:12:44 -0400
+Received: by mail-pg1-f195.google.com with SMTP id f6so1197197pgs.8
+        for <linux-arm-msm@vger.kernel.org>; Thu, 02 May 2019 08:12:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to:user-agent;
-        bh=+h3hw8s9AtbUTxjsRg8h8D8msF/wrKXAgqEpw8EeNOA=;
-        b=jlPMKdBldP3f4gKDgtqtVH6KYU8BBSCgulAP9KFpHF3ggzd6GSvZz16mK18TthOsMB
-         1vIdQs+yeoBsgHJk6YekXKdpVP9K50gEgw25xuVBTGoxyyoHb29xzJ1Ag7owhc4iWbJH
-         3vtoFqsW+jMQOE51MrgTIxpPqNuJeob2IO2cLCizNlQi3tIitPvtK0sQj6ZbAjSSmi7Q
-         How1Fdr5GunZ9wIhUNpe8lJnwvz4fLYdBh0eoo7nwRiWBdB4lO/rCUKPbZYMYOEWstK6
-         X9eprPBu7iBiQdu2/W6KBPXy8NJJCdW7KNyEh5OU4DREjJDfxop3p+3u0QEieu4jXfUx
-         qsOg==
+        bh=Yc2jSz2PdGKy97kcSIVG1XsVhe9Q8as81N746C4MAqs=;
+        b=GX5GMYb7lqCB37WjNBisvRq6uZPdCXLd3VxnXA/ZvLsqJBlfimcWzQT+C1sRNZffzZ
+         AQMipqq1l/fhGJDRbBEUFBJwfhIWOoVx6WwBi6C98fLON6w8AFfj6H2PHrTzEWyHbcRL
+         U4DSVvJ5mjVWHzr0DvVtQE6TQ50Ru7ZEuGw7fTpyTfnB/Z5mmGUjzDP+y1psPBT90gF7
+         RKree+9JUf5tK9hBSIRAiiIaqa5esjjpA1tk11p+uUm6Cb84OlUnkpVJqy8ciiYLi6wm
+         4l/gjVEgKgK9hIw8HKni/Rf0tAg3eBsUWMNffOQ7U/tm106+WRuq80tkv3RvguK3cyn5
+         jjhA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=+h3hw8s9AtbUTxjsRg8h8D8msF/wrKXAgqEpw8EeNOA=;
-        b=cx9VdVqaYDeIeW+vWUwu57mpjzZw8UqnjAVVGLDrLUvAs/Rg2qpktB5ucGWF23oils
-         KLDkOjnWTqOvQ5EdWVNJUnXYe4P1fXIdC5tc0/naxrbJReRU04Z9Dgs0+3zIsFwJ/V1w
-         CtGmCQxBFVY6kjmY9yPWQr5sfKaiWrFk6pwy0ylmd/fvzKr0dlfZ032/36dYG1DJ7HNM
-         RdjfUlWhiVfiULiVp/pWkoXOwunxIaOA9RElRJ2uVOBJhT8pqyQEOM+WR0++Xy+s1z80
-         DGAkVfYe2OuMNwwt5rHL1HIf8tyqvzwtCRZlgehB94PL81CFsyNcfkdstr/BjKuptT/F
-         /TeA==
-X-Gm-Message-State: APjAAAWQ7geALJDLBQBWtkp1u/VOebcYb+ZS3jwh53MVk3jxw8HOPh10
-        AAByL0omJaiSEXps30zcdS40Fw==
-X-Google-Smtp-Source: APXvYqxWyfb9Mb0R98oD1S3XalY5sExRiMmQ78TIyJ0AR6QKTKJB4fZ9Az+LDCDt3uqkWQ2xI1kwEg==
-X-Received: by 2002:aa7:9242:: with SMTP id 2mr1888978pfp.230.1556809205168;
-        Thu, 02 May 2019 08:00:05 -0700 (PDT)
+        bh=Yc2jSz2PdGKy97kcSIVG1XsVhe9Q8as81N746C4MAqs=;
+        b=Fe02H9ZxZjiXEAHR9V6UYXZHQHlDc/MfNX0wsyZo9Knf0vu4spdUEDjcKkJIVjEw09
+         ZxoaB6bDXxzKANgYWUxDO7lKjGqm/QFdpp3Xq4gW3YTwg6EgqmwAPVFCnXhqeUIs/ovz
+         zT6uxo22cyIKJ9Ou4LJcF+QqcYwe1Wjp05N8A8p8ETsqiwev72W3ObrBxptBqqhd87aF
+         BHVLPNONa61pxMR1QmpFn1JOoZICA3KFvaq6K9au1nh1oNIklR7ykv0CuPCZPswvZonr
+         siyJx8f+m8zRkCHUuCBfVq4NLUydujRoBKM2wrVvfJgYKdCYthE6UtAjhzafOEOqEoYZ
+         0JmA==
+X-Gm-Message-State: APjAAAWQ0ILQBBvCw8clEIZCv1TOmbi3HWDOET9AVrCOVZ+x7icZf5lJ
+        ook+sv4j4yfMKwp7He+qfXlamw2hfes=
+X-Google-Smtp-Source: APXvYqwKEVoTXgCK1Yl04ktfUz1jePba/3rQOqT4m85x+ThB6u+shjyW4ngfqkaeGIYy6EdkKxf/Vw==
+X-Received: by 2002:a65:60ca:: with SMTP id r10mr4556757pgv.64.1556809962969;
+        Thu, 02 May 2019 08:12:42 -0700 (PDT)
 Received: from tuxbook-pro (104-188-17-28.lightspeed.sndgca.sbcglobal.net. [104.188.17.28])
-        by smtp.gmail.com with ESMTPSA id i3sm60549129pfa.90.2019.05.02.08.00.03
+        by smtp.gmail.com with ESMTPSA id g65sm8315779pfg.77.2019.05.02.08.12.41
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Thu, 02 May 2019 08:00:03 -0700 (PDT)
-Date:   Thu, 2 May 2019 08:00:06 -0700
+        Thu, 02 May 2019 08:12:41 -0700 (PDT)
+Date:   Thu, 2 May 2019 08:12:44 -0700
 From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Vinod Koul <vkoul@kernel.org>
-Cc:     Bjorn Helgaas <bhelgaas@google.com>,
-        Stanimir Varbanov <svarbanov@mm-sol.com>,
-        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
+To:     Marc Gonzalez <marc.w.gonzalez@free.fr>
+Cc:     Linus Walleij <linus.walleij@linaro.org>,
+        Jeffrey Hugo <jhugo@codeaurora.org>,
+        Andy Gross <agross@kernel.org>,
+        MSM <linux-arm-msm@vger.kernel.org>,
+        gpio <linux-gpio@vger.kernel.org>,
         Rob Herring <robh+dt@kernel.org>,
-        Mark Rutland <mark.rutland@arm.com>,
-        linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v3 1/3] PCI: qcom: Use clk_bulk API for 2.4.0 controllers
-Message-ID: <20190502150006.GL2938@tuxbook-pro>
-References: <20190502001955.10575-1-bjorn.andersson@linaro.org>
- <20190502001955.10575-2-bjorn.andersson@linaro.org>
- <20190502115351.GM3845@vkoul-mobl.Dlink>
+        Mark Rutland <mark.rutland@arm.com>
+Subject: Re: [PATCH v1] arm64: dts: qcom: msm8998: Add i2c5 pins
+Message-ID: <20190502151244.GM2938@tuxbook-pro>
+References: <ed5b1b55-285a-1c6d-c562-a965119000a5@free.fr>
+ <20190427045151.GE3137@builder>
+ <fcc97e67-3b8e-5b31-866e-6bee62a88fd9@free.fr>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20190502115351.GM3845@vkoul-mobl.Dlink>
+In-Reply-To: <fcc97e67-3b8e-5b31-866e-6bee62a88fd9@free.fr>
 User-Agent: Mutt/1.11.4 (2019-03-13)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu 02 May 04:53 PDT 2019, Vinod Koul wrote:
-> On 01-05-19, 17:19, Bjorn Andersson wrote:
-[..]
-> > diff --git a/drivers/pci/controller/dwc/pcie-qcom.c b/drivers/pci/controller/dwc/pcie-qcom.c
-> > index 0ed235d560e3..d740cbe0e56d 100644
-> > --- a/drivers/pci/controller/dwc/pcie-qcom.c
-> > +++ b/drivers/pci/controller/dwc/pcie-qcom.c
-> > @@ -112,10 +112,10 @@ struct qcom_pcie_resources_2_3_2 {
-> >  	struct regulator_bulk_data supplies[QCOM_PCIE_2_3_2_MAX_SUPPLY];
-> >  };
-> >  
-> > +#define QCOM_PCIE_2_4_0_MAX_CLOCKS	3
+On Mon 29 Apr 01:38 PDT 2019, Marc Gonzalez wrote:
+
+> On 27/04/2019 06:51, Bjorn Andersson wrote:
 > 
-> empty line after the define please
+> > On Thu 25 Apr 09:06 PDT 2019, Marc Gonzalez wrote:
+> > 
+> >> Downstream source:
+> >> https://source.codeaurora.org/quic/la/kernel/msm-4.4/tree/arch/arm/boot/dts/qcom/msm8998-pinctrl.dtsi?h=LE.UM.1.3.r3.25#n165
+> >>
+> >> Signed-off-by: Marc Gonzalez <marc.w.gonzalez@free.fr>
+> >> ---
+> >>  arch/arm64/boot/dts/qcom/msm8998-pins.dtsi | 7 +++++++
+> >>  1 file changed, 7 insertions(+)
+> >>
+> >> diff --git a/arch/arm64/boot/dts/qcom/msm8998-pins.dtsi b/arch/arm64/boot/dts/qcom/msm8998-pins.dtsi
+> >> index 6db70acd38ee..d0a95c70d1e7 100644
+> >> --- a/arch/arm64/boot/dts/qcom/msm8998-pins.dtsi
+> >> +++ b/arch/arm64/boot/dts/qcom/msm8998-pins.dtsi
+> >> @@ -2,6 +2,13 @@
+> >>  /* Copyright (c) 2018, The Linux Foundation. All rights reserved. */
+> >>  
+> >>  &tlmm {
+> >> +	i2c5_default: i2c5_default {
+> >> +		pins = "gpio87", "gpio88";
+> >> +		function = "blsp_i2c5";
+> >> +		drive-strength = <2>;
+> >> +		bias-disable;
+> >> +	};
+> > 
+> > You need to reference this node for it to make a difference.
+> 
+> Right. I do have a local board file referencing i2c5_default, which I plan
+> to submit at some point. It contains:
+> 
+> &blsp1_i2c5 {
+> 	status = "ok";
+> 	clock-frequency = <100000>;
+> 	pinctrl-names = "default";
+> 	pinctrl-0 = <&i2c5_default>;
+> };
+> 
+> > Also the drive-strength and bias are board specific, so please move this
+> > to your board dts (and reference the node).
+> 
+> Wait... Are you saying there should be no drive-strength nor bias definitions
+> inside msm8998-pins.dtsi?
+> 
+> $ grep -c 'strength\|bias' arch/arm64/boot/dts/qcom/msm8998-pins.dtsi
+> 18
+> 
+> Why are the SDHC pins different than the I2C pins?
+> 
+> i2c5 is "tied" to gpio87 and gpio88. Could my board designer "reassign"
+> these pins to a different HW block? Or is that immutable?
 > 
 
-This follows the style of QCOM_PCIE_2_3_2_MAX_SUPPLY one block up, so
-I think this is the way we want it.
+Right, so it makes a lot of sense to have a node in msm8998.dtsi that
+says that if i2c5 is probed then the associated pinmux should be set up.
 
-> >  struct qcom_pcie_resources_2_4_0 {
-[..]
-> 
-> 
-> rest lgtm:
-> 
-> Reviewed-by: Vinod Koul <vkoul@kernel.org>
-> 
+But the pinconf (drive-strenght, internal vs external bias) are board
+specific, so this part better go in the board.dts.
 
-Thanks!
+
+On sdm845 we put a node with pinmux in the platform.dtsi and then in the
+board we extend this node with the electrical properties of the board.
+This works out pretty well, but we haven't gone back and updated the
+older platforms/boards yet.
 
 Regards,
 Bjorn
