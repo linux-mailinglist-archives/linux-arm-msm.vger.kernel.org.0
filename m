@@ -2,107 +2,127 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id ECBAC135B3
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  4 May 2019 00:42:18 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 1142A1361D
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  4 May 2019 01:24:47 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726348AbfECWmR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 3 May 2019 18:42:17 -0400
-Received: from mail-pg1-f196.google.com ([209.85.215.196]:43442 "EHLO
-        mail-pg1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726150AbfECWmR (ORCPT
+        id S1726432AbfECXYq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 3 May 2019 19:24:46 -0400
+Received: from mail-pf1-f194.google.com ([209.85.210.194]:44850 "EHLO
+        mail-pf1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726059AbfECXYq (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 3 May 2019 18:42:17 -0400
-Received: by mail-pg1-f196.google.com with SMTP id t22so3370789pgi.10
-        for <linux-arm-msm@vger.kernel.org>; Fri, 03 May 2019 15:42:17 -0700 (PDT)
+        Fri, 3 May 2019 19:24:46 -0400
+Received: by mail-pf1-f194.google.com with SMTP id y13so3613316pfm.11
+        for <linux-arm-msm@vger.kernel.org>; Fri, 03 May 2019 16:24:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=4RYvNBRihg/HZePRuAHy3LcvAniIXnKHrlXHPcftmFs=;
-        b=Gt5toQv5TYcVqMJ1wYceVeXD21dLmeK2mCMoPR7QrK9DDKIzUd41u48ol33VRjGT9n
-         sKoIUJqzoMrxmH3wrfCaUWkIwqdgJ8Ouoz+8PJ1G+67G3bQ0uxICS0sH1PUE5g/P1NPD
-         KS+Rd22dTPYlQSuVFCyNEPAGt2Df2yw8H+EMDpBZTpSA3fZ9aHm+M2TJHGAU3z0eZ1oB
-         COEI295juknojXvk2ZUc++Einpc9aqX1OufbvergGj7kNg+6BywrmZcdyWFNUPMfB8Ya
-         VfVWAmCTwfzczuQXNNMlq4WCJyox4a3NMFuY2JazkLhy3Ej7lRxXwQpZjnKXqYQaZUQR
-         RPMg==
+        h=from:to:cc:subject:date:message-id;
+        bh=/RkezotWe0qKz9gHI76Sx6wtXQAllpgle4h0JP9cnd8=;
+        b=ugtyN4aWkbZ/xhfEWgsJkOc+gWDbNF9B9D+Yyui7dkiGipwGkMFmNn0NwPZ52HzZfj
+         Mg6H4LQOaoYV4qmeIr70TuVEcdZGQ+v3HadDR5FRIx3adlE3HG98hjGJ1iY4icxXpEsr
+         rQ0kH2jFKRG6LQiQ7NehMf0mFbJiOqH7Doi8qpGk8LarR3nzIdNmGIUg7hVhAZqk2Y7z
+         +g6FSZJGjEoFz64pJthDkOT/zPNsCtm7Fe7wjSvfgCOdbdImiF9sx/T4PYAeHn9lWPIm
+         YmuRaQzBsqw7pxw2YuwCHv/1nOIBhJtayWqA0cpleSnDk34iMh1TTNCTDZ+FU6PsBFgx
+         UXlQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=4RYvNBRihg/HZePRuAHy3LcvAniIXnKHrlXHPcftmFs=;
-        b=L/AoI3wjDgFTSasrsyDepicCvxEaxvTwJQjxkO39v0j+1q/w+6Xm1f1Xtpu17TY/Qx
-         0TGG24Z1vUwURXMEkWGXLNF3Xk+vrO+3xm1tZWY/sn4iLE5FqetnW5p2l3yWMOXgtqQw
-         a/603cBrGr1RY2Pmqk7M4wi2BhuC588A3wNh9V8ET22okplNO73Wuh04lgFSP+804ROj
-         aSeij64UTaMaq06WRdzFNNTLbEhQYpTfDl6Jb53Wv9za+CEbR92V+52BZ6d5B8pi6CdG
-         g2WyH0WiyQVI+DaYcIcuqb55sNLRYBW43gibLMnBYDrojbJ3n9bTA0uQK8MpPUROf+2k
-         IZyQ==
-X-Gm-Message-State: APjAAAVwcwnCCFMtDWdtj8eyHDBxgm2wCb05p/Ty4ryLtOpglFIyXAIe
-        56Lp5gnKJ/zMJtIQ6OggKsMKRg==
-X-Google-Smtp-Source: APXvYqzJIfKn9EVufbH6skH/fjFGpac0p0raS5ruRaxpojktvkgJnhgJi8aBBww4YuTIakheArHPdQ==
-X-Received: by 2002:a62:62c2:: with SMTP id w185mr14617509pfb.237.1556923336280;
-        Fri, 03 May 2019 15:42:16 -0700 (PDT)
-Received: from builder (104-188-17-28.lightspeed.sndgca.sbcglobal.net. [104.188.17.28])
-        by smtp.gmail.com with ESMTPSA id e29sm3648517pgb.37.2019.05.03.15.42.14
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Fri, 03 May 2019 15:42:15 -0700 (PDT)
-Date:   Fri, 3 May 2019 15:42:13 -0700
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=/RkezotWe0qKz9gHI76Sx6wtXQAllpgle4h0JP9cnd8=;
+        b=VMzd/XldNN9M/4Mt+akVxaiwkmKe4yE+NHP3oPi6fQp2lrr3L3cema4kr8A2nc83Il
+         mCCH0RXYFEKwjb9jE7emyFDXFzYDWIhhiGifdR+tLpuqDGXP10GwJaqOd+OOxdO0yXcL
+         rqL0hWSEWraICpP7/4ftr8solo3NdAYno0rkeOKnQ5rQhfBbRawrkFcXCPr1NsFQlQm6
+         wJpre8tO++ZrZJgklzYG2566v5Ia7GZhJmqPJ9sZ3tRJdWNi13sRsfOVXRbym5IXLMEy
+         Xc2I8lrDBUE+cSRJCVrZohNaVJT1UwBvTi+vEOAskMuPuYbHRwYQ0tbt1r17Cxfedh7r
+         HnqA==
+X-Gm-Message-State: APjAAAWPg2eJbAIMQ+QfYy9UKVX1gvO0ulUNHczkl6C8KMODVdBwwgVZ
+        nEIcuJYwCoeEd9sUORHdYFt2CQ==
+X-Google-Smtp-Source: APXvYqy2094pPqrRw5vcRArh29lDQGBGEffB4m2Hn2aAzXW9yXtO3zUgfgWhWfcozfRDjin+8YwDCA==
+X-Received: by 2002:aa7:86c3:: with SMTP id h3mr14402079pfo.169.1556925885301;
+        Fri, 03 May 2019 16:24:45 -0700 (PDT)
+Received: from localhost.localdomain (104-188-17-28.lightspeed.sndgca.sbcglobal.net. [104.188.17.28])
+        by smtp.gmail.com with ESMTPSA id e184sm9381071pfc.102.2019.05.03.16.24.44
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Fri, 03 May 2019 16:24:44 -0700 (PDT)
 From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Vinod Koul <vkoul@kernel.org>
-Cc:     Andy Gross <agross@kernel.org>, linux-arm-msm@vger.kernel.org,
-        David Brown <david.brown@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Mark Rutland <mark.rutland@arm.com>, devicetree@vger.kernel.org
-Subject: Re: [PATCH] arm64: dts: qcom: qcs404-evb: Fix typo
-Message-ID: <20190503224213.GI3137@builder>
-References: <20190502121306.3374-1-vkoul@kernel.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20190502121306.3374-1-vkoul@kernel.org>
-User-Agent: Mutt/1.10.0 (2018-05-17)
+To:     Andy Gross <agross@kernel.org>,
+        David Brown <david.brown@linaro.org>
+Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: [PATCH] arm64: dts: qcom: msm8996: Stop using legacy clock names
+Date:   Fri,  3 May 2019 16:24:42 -0700
+Message-Id: <20190503232442.1530-1-bjorn.andersson@linaro.org>
+X-Mailer: git-send-email 2.18.0
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu 02 May 05:13 PDT 2019, Vinod Koul wrote:
+MDSS and its friends complain about the DTS is using legacy clock names,
+update these to silence the warnings.
 
-> Fix the typo "dreive-strength" and use correct property drive-strength
-> 
-> Fixes: 7241ab944da3 ("arm64: dts: qcom: qcs404: Add sdcc1 node")
-> Signed-off-by: Vinod Koul <vkoul@kernel.org>
-> ---
+Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+---
+ arch/arm64/boot/dts/qcom/msm8996.dtsi | 26 +++++++++++++-------------
+ 1 file changed, 13 insertions(+), 13 deletions(-)
 
-Thanks for spotting this, picked up.
+diff --git a/arch/arm64/boot/dts/qcom/msm8996.dtsi b/arch/arm64/boot/dts/qcom/msm8996.dtsi
+index a988edabe474..3d861f1d836c 100644
+--- a/arch/arm64/boot/dts/qcom/msm8996.dtsi
++++ b/arch/arm64/boot/dts/qcom/msm8996.dtsi
+@@ -1678,7 +1678,7 @@
+ 			#interrupt-cells = <1>;
+ 
+ 			clocks = <&mmcc MDSS_AHB_CLK>;
+-			clock-names = "iface_clk";
++			clock-names = "iface";
+ 
+ 			#address-cells = <1>;
+ 			#size-cells = <1>;
+@@ -1697,11 +1697,11 @@
+ 					 <&mmcc MDSS_MDP_CLK>,
+ 					 <&mmcc SMMU_MDP_AXI_CLK>,
+ 					 <&mmcc MDSS_VSYNC_CLK>;
+-				clock-names = "iface_clk",
+-					      "bus_clk",
+-					      "core_clk",
+-					      "iommu_clk",
+-					      "vsync_clk";
++				clock-names = "iface",
++					      "bus",
++					      "core",
++					      "iommu",
++					      "vsync";
+ 
+ 				iommus = <&mdp_smmu 0>;
+ 
+@@ -1736,11 +1736,11 @@
+ 					 <&mmcc MDSS_HDMI_AHB_CLK>,
+ 					 <&mmcc MDSS_EXTPCLK_CLK>;
+ 				clock-names =
+-					"mdp_core_clk",
+-					"iface_clk",
+-					"core_clk",
+-					"alt_iface_clk",
+-					"extp_clk";
++					"mdp_core",
++					"iface",
++					"core",
++					"alt_iface",
++					"extp";
+ 
+ 				phys = <&hdmi_phy>;
+ 				phy-names = "hdmi_phy";
+@@ -1777,8 +1777,8 @@
+ 
+ 				clocks = <&mmcc MDSS_AHB_CLK>,
+ 					 <&gcc GCC_HDMI_CLKREF_CLK>;
+-				clock-names = "iface_clk",
+-					      "ref_clk";
++				clock-names = "iface",
++					      "ref";
+ 			};
+ 		};
+ 	};
+-- 
+2.18.0
 
-Regards,
-Bjorn
-
->  arch/arm64/boot/dts/qcom/qcs404-evb.dtsi | 4 ++--
->  1 file changed, 2 insertions(+), 2 deletions(-)
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/qcs404-evb.dtsi b/arch/arm64/boot/dts/qcom/qcs404-evb.dtsi
-> index 2c3127167e3c..7cc0b7842ac2 100644
-> --- a/arch/arm64/boot/dts/qcom/qcs404-evb.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/qcs404-evb.dtsi
-> @@ -200,7 +200,7 @@
->  		data {
->  			pins = "sdc1_data";
->  			bias-pull-up;
-> -			dreive-strength = <10>;
-> +			drive-strength = <10>;
->  		};
->  
->  		rclk {
-> @@ -225,7 +225,7 @@
->  		data {
->  			pins = "sdc1_data";
->  			bias-pull-up;
-> -			dreive-strength = <2>;
-> +			drive-strength = <2>;
->  		};
->  
->  		rclk {
-> -- 
-> 2.20.1
-> 
