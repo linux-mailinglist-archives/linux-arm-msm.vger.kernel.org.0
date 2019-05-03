@@ -2,150 +2,127 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 040CA1295B
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  3 May 2019 09:58:09 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 3B721129E7
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  3 May 2019 10:29:47 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726998AbfECH40 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 3 May 2019 03:56:26 -0400
-Received: from smtp.codeaurora.org ([198.145.29.96]:35232 "EHLO
-        smtp.codeaurora.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725777AbfECH40 (ORCPT
+        id S1725768AbfECI3q (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 3 May 2019 04:29:46 -0400
+Received: from mail-wm1-f67.google.com ([209.85.128.67]:50583 "EHLO
+        mail-wm1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725816AbfECI3q (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 3 May 2019 03:56:26 -0400
-Received: by smtp.codeaurora.org (Postfix, from userid 1000)
-        id 4D0A7611FA; Fri,  3 May 2019 07:56:24 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
-        s=default; t=1556870184;
-        bh=aDusQfMCjBF3dgdzRMthBxZkCv+AeRrwz8Z7d1VTjKo=;
-        h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
-        b=DRWkNWGAu7exQ3h4FFMC4HoxLk3WlgQ/prXDPdGrKGq5XEuvhLMmnMIPJ1UONp8JC
-         IdJpXD8luIkdRlg7tK31E6NdUm18rXc2veqcjehjof7wFxNnycWsn374j87pL4PYKx
-         S5ZJI5UEoCvkrtHRpSkMAyzXyE5mlDnEnPQ304r4=
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        pdx-caf-mail.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.7 required=2.0 tests=ALL_TRUSTED,BAYES_00,
-        DKIM_INVALID,DKIM_SIGNED autolearn=no autolearn_force=no version=3.4.0
-Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
-        by smtp.codeaurora.org (Postfix) with ESMTP id 27FBB61112;
-        Fri,  3 May 2019 07:56:23 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
-        s=default; t=1556870183;
-        bh=aDusQfMCjBF3dgdzRMthBxZkCv+AeRrwz8Z7d1VTjKo=;
-        h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
-        b=ap9zuQAHsDHkRvSiCgmkJ2xd96WFTtPhOLcWJKSupjL2AXB/QnOa3Uiscn8bktcLW
-         O97hFHWI9+1QUfaKMxREaqDRACQuVHq+3rgFBBnFdhz14nHSTQ/AhQDpBq1Qa/92Lo
-         lzvQm+MogmNpc7fsLW72XQ3a/D8ky3sau1reA4Zk=
+        Fri, 3 May 2019 04:29:46 -0400
+Received: by mail-wm1-f67.google.com with SMTP id p21so6020035wmc.0
+        for <linux-arm-msm@vger.kernel.org>; Fri, 03 May 2019 01:29:45 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=9BWo4wrOMB7S6ZNUaQSd5jSdL7ORd90HoRUjKXASCiQ=;
+        b=HHKoFlguUqMrYs86X0mAjpTHbiYUGjBZBnQY2FzIfEE8KKRzBWHZ8eb57oRe4+Bfp8
+         yFXtFxpH7T9X0bXnNj6+VYMnbGFBJ+4kxQmuf9ONuGaS/9yK2/vEzUQPPu8dYC21rhr4
+         jdAvNAqaDu5WTi2WjZnyXaDS1H1aQ40jn8LY/rfrD27yN2DWrmsUSaTOXMeE6ioKxmtr
+         S4WT3GtCL6xcU7/RgBWqRVN/VdlcdySBgBvnKbzSEIY7pyPXuHbjlgWdX627m1slu3ma
+         7GZaoBTOsBUMqkvmPxY/XA93MIZHMWOviSdD8ui/CJX7qRwAudIKteETxeZxnLVntxmo
+         26eQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=9BWo4wrOMB7S6ZNUaQSd5jSdL7ORd90HoRUjKXASCiQ=;
+        b=FkKWLc1rKw1aFqi7hsPlVmYDBPZv8UUBIpSS8fBNceL6t1Enobrx7ATk8NtKgX1pfL
+         cQv7UugQIcuxNK9dczzssubXCnMnUcDCXjMUgipl1TWRfX3atSUS9gC7ieu8XNR0PWFg
+         7km5VL1YVhMNXGrup4ZB7d1td+kt5lpZ6dhSZhKV7lJ+7IqR4km+5WcbYTILpSvO7+Au
+         1FM67Sh9G7LDEXz6ux7hvriC6Ja2OC/toc1xlxImBbvCqfbT1BhINBolKZ+MgOYnqTmZ
+         aEeYhQy2h/f4kg9JnL6Zr9h124Bb2xCcJq5ILIUZ/Xrn6D37GIH45PH5Tln4mYNUZNez
+         BQ3Q==
+X-Gm-Message-State: APjAAAXaG5CbErCh697fz+icBE2Qj0QyGv4Nm7cR1ADS9VjEY5EpK0tH
+        gncJaRWUp50D4PlvxFhbC8ij2VcsQuA=
+X-Google-Smtp-Source: APXvYqyVCwBwURKCdJNbafReM5dEKW0CL0LzHWCrcu7tg33cbbP2AxeFXU3xXgXEccvg/l0jXNBytw==
+X-Received: by 2002:a1c:ce:: with SMTP id 197mr5168760wma.105.1556872184621;
+        Fri, 03 May 2019 01:29:44 -0700 (PDT)
+Received: from [192.168.1.2] (200.red-83-34-200.dynamicip.rima-tde.net. [83.34.200.200])
+        by smtp.gmail.com with ESMTPSA id n4sm1714792wmk.24.2019.05.03.01.29.43
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Fri, 03 May 2019 01:29:43 -0700 (PDT)
+Subject: Re: [PATCH 2/3] drivers: regulator: qcom: add PMS405 SPMI regulator
+To:     Mark Brown <broonie@kernel.org>
+Cc:     lgirdwood@gmail.com, robh+dt@kernel.org, mark.rutland@arm.com,
+        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
+        bjorn.andersson@linaro.org, vinod.koul@linaro.org,
+        niklas.cassel@linaro.org, khasim.mohammed@linaro.org,
+        linux-arm-kernel@lists.infradead.org, linux-arm-msm@vger.kernel.org
+References: <a3c281d5-d30e-294f-71ab-957decde2ba0@linaro.org>
+ <20190502023316.GS14916@sirena.org.uk>
+ <dd15d784-f2a1-78c6-3543-69bbcc1143c4@linaro.org>
+ <20190503062626.GE14916@sirena.org.uk>
+From:   Jorge Ramirez <jorge.ramirez-ortiz@linaro.org>
+Message-ID: <229823c4-f5d4-4821-ded1-cc046dd0bd20@linaro.org>
+Date:   Fri, 3 May 2019 10:29:42 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+ Thunderbird/60.2.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8;
- format=flowed
-Content-Transfer-Encoding: 8bit
-Date:   Fri, 03 May 2019 15:56:23 +0800
-From:   Rocky Liao <rjliao@codeaurora.org>
-To:     Marcel Holtmann <marcel@holtmann.org>
-Cc:     Rob Herring <robh+dt@kernel.org>,
-        Mark Rutland <mark.rutland@arm.com>,
-        Johan Hedberg <johan.hedberg@gmail.com>,
-        Thierry Escande <thierry.escande@linaro.org>,
-        netdev <netdev@vger.kernel.org>,
-        devicetree <devicetree@vger.kernel.org>,
-        linux-kernel@vger.kernel.org,
-        "open list:BLUETOOTH DRIVERS" <linux-bluetooth@vger.kernel.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Balakrishna Godavarthi <bgodavar@codeaurora.org>,
-        linux-bluetooth-owner@vger.kernel.org
-Subject: Re: [PATCH v3 2/2] dt-bindings: net: bluetooth: Add device property
- firmware-name for QCA6174
-In-Reply-To: <60C7AC89-37B6-441C-9349-BCB15717EB2C@holtmann.org>
-References: <1554368908-22017-2-git-send-email-rjliao@codeaurora.org>
- <1554888476-17560-1-git-send-email-rjliao@codeaurora.org>
- <A85D7982-E000-4A5F-9927-CA36E0BA60F2@holtmann.org>
- <7e0cf9ba98260309c43d9d6e63dead6c@codeaurora.org>
- <CAL_JsqLnM4XqQTCT7VTUSmukujz0VHJoCbXMF2--RmTEx_LZww@mail.gmail.com>
- <60C7AC89-37B6-441C-9349-BCB15717EB2C@holtmann.org>
-Message-ID: <17221139821fb6ee35f3119df7405401@codeaurora.org>
-X-Sender: rjliao@codeaurora.org
-User-Agent: Roundcube Webmail/1.2.5
+In-Reply-To: <20190503062626.GE14916@sirena.org.uk>
+Content-Type: text/plain; charset=windows-1252
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Marcel,
+On 5/3/19 08:26, Mark Brown wrote:
+> On Thu, May 02, 2019 at 01:30:48PM +0200, Jorge Ramirez wrote:
+>> On 5/2/19 04:33, Mark Brown wrote:
+> 
+>>> I'm not sure I follow here, sorry - I can see that the driver needs a
+>>> custom get/set selector operation but shouldn't it be able to use the
+>>> standard list and map operations for linear ranges?
+> 
+>> I agree it should, but unfortunately that is not the case; when I first
+>> posted the patch I was concerned that for a regulator to be supported by
+>> this driver it should obey to the driver's internals (ie: comply with
+>> all of the spmi_common_regulator_registers definitions).
+> 
+> That's not a requirement that I'd particularly expect - it's not unusual
+> for devices to have multiple different styles of regulators in a single
+> chip (eg, DCDCs often have quite different register maps to LDOs).
+> 
+>> However, since there was just a single range to support, the
+>> modifications I had to do to support this SPMI regulator were minimal -
+>> hence why I opted for the changes under discussion instead of writing a
+>> new driver (which IMO it is an overkill).
+> 
+>> what do you think?
+> 
+> It seems a bit of a jump to add a new driver - it's just another
+> descriptor and ops structure isn't it?  Though as ever with the Qualcomm
+> stuff this driver is pretty baroque which doesn't entirely help though I
+> think it's just another regulator type which there's already some
+> handling for.
+> 
 
-On 2019-04-27 13:59, Marcel Holtmann wrote:
-> Hi Rob,
-> 
->>>>> This patch adds an optional device property "firmware-name" to 
->>>>> allow
->>>>> the
->>>>> driver to load customized nvm firmware file based on this property.
->>>>> 
->>>>> Signed-off-by: Rocky Liao <rjliao@codeaurora.org>
->>>>> ---
->>>>> Changes in v3:
->>>>> * added firmware-name instead of nvm-postfix to specify full 
->>>>> firmware
->>>>> name
->>>>> ---
->>>>> Documentation/devicetree/bindings/net/qualcomm-bluetooth.txt | 2 ++
->>>>> 1 file changed, 2 insertions(+)
->>>>> 
->>>>> diff --git
->>>>> a/Documentation/devicetree/bindings/net/qualcomm-bluetooth.txt
->>>>> b/Documentation/devicetree/bindings/net/qualcomm-bluetooth.txt
->>>>> index 824c0e2..2bcea50 100644
->>>>> --- a/Documentation/devicetree/bindings/net/qualcomm-bluetooth.txt
->>>>> +++ b/Documentation/devicetree/bindings/net/qualcomm-bluetooth.txt
->>>>> @@ -16,6 +16,7 @@ Optional properties for compatible string
->>>>> qcom,qca6174-bt:
->>>>> 
->>>>> - enable-gpios: gpio specifier used to enable chip
->>>>> - clocks: clock provided to the controller (SUSCLK_32KHZ)
->>>>> + - firmware-name: specify the name of nvm firmware to load
->>>>> 
->>>>> Required properties for compatible string qcom,wcn3990-bt:
->>>>> 
->>>>> @@ -39,6 +40,7 @@ serial@7570000 {
->>>>> 
->>>>>             enable-gpios = <&pm8994_gpios 19 GPIO_ACTIVE_HIGH>;
->>>>>             clocks = <&divclk4>;
->>>>> +            firmware-name = "nvm_00440302.bin";
->>>>>     };
->>>> 
->>>> and how is this a firmware-name property. Wouldn’t this be more like
->>>> nvm-file or something along these lines. This really needs to be
->>>> cleared with Rob to pick the right property name.
->>>> 
->>>> Regards
->>>> 
->>>> Marcel
->>> 
->>> Hi Rob,
->>> 
->>> Are you OK to use a property name "nvm-file" or "firmware-nvm-file"?
->>> Actually we have two firmware files, one is the patch file which is
->>> common to all of the products, the other is the nvm file which is
->>> customized. Using a "nvm-file" or "firmware-nvm-file" property name
->>> would be more clear.
->> 
->> 'firmware-name' is the standard name for specifying firmware file 
->> names.
-> 
-> but it is not a firmware file, it is a NVM file. What happens if in
-> the future they need a firmware file and a NVM file?
-> 
-> Regards
-> 
-> Marcel
+So how do we move this forward?
 
-We won't need to specify a rampatch firmware file in future as it's a 
-same file for all the boards with same chip, only the NVM firmware file 
-may have board differences. NVM file is also one of the firmware files 
-so I think it should be OK to use "firmware-name" property to specify 
-it.
+To sum up his regulator needs to be able to bypass accesses to
+SPMI_COMMON_REG_VOLTAGE_RANGE and provide the range in some other way
+hence the change below
 
--- 
-The Qualcomm Innovation Center, Inc. is a member of the Code Aurora 
-Forum,
-a Linux Foundation Collaborative Project
+I can't find a simpler solution than this since the function does now
+what is supposed to do for all the regulator types supported in the driver
+
+ @@ -653,6 +708,10 @@ spmi_regulator_find_range(struct spmi_regulator *vreg)
+  	range = vreg->set_points->range;
+  	end = range + vreg->set_points->count;
+
+ +	/* we know we only have one range for this type */
+ +	if (vreg->logical_type == SPMI_REGULATOR_LOGICAL_TYPE_HFS430)
+ +		return range;
+ +
+  	spmi_vreg_read(vreg, SPMI_COMMON_REG_VOLTAGE_RANGE, &range_sel, 1);
+
+  	for (; range < end; range++)
+
+
+
