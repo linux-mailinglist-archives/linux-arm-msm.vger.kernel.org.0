@@ -2,72 +2,113 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 4954812EC6
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  3 May 2019 15:07:30 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 2F3B31336E
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  3 May 2019 19:58:48 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726681AbfECNH3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 3 May 2019 09:07:29 -0400
-Received: from ns.iliad.fr ([212.27.33.1]:50140 "EHLO ns.iliad.fr"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726377AbfECNH3 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 3 May 2019 09:07:29 -0400
-Received: from ns.iliad.fr (localhost [127.0.0.1])
-        by ns.iliad.fr (Postfix) with ESMTP id E15D62043B;
-        Fri,  3 May 2019 15:07:27 +0200 (CEST)
-Received: from [192.168.108.49] (freebox.vlq16.iliad.fr [213.36.7.13])
-        by ns.iliad.fr (Postfix) with ESMTP id CB6DC2041C;
-        Fri,  3 May 2019 15:07:27 +0200 (CEST)
-Subject: Re: [PATCH] arm64/io: Don't use WZR in writel
-To:     Robin Murphy <robin.murphy@arm.com>,
-        AngeloGioacchino Del Regno <kholk11@gmail.com>
-Cc:     Will Deacon <will.deacon@arm.com>,
-        Catalin Marinas <catalin.marinas@arm.com>,
-        Mark Rutland <mark.rutland@arm.com>,
-        Marc Zyngier <marc.zyngier@arm.com>,
-        MSM <linux-arm-msm@vger.kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Jeffrey Hugo <jhugo@codeaurora.org>,
-        Linux ARM <linux-arm-kernel@lists.infradead.org>
-References: <68b71c15f32341468a868f6418e4fcb375bc49ba.camel@gmail.com>
- <20190211105755.GB30880@fuggles.cambridge.arm.com>
- <38d8965a-cd41-17cf-1b95-8dd58c079be4@arm.com>
- <874c702b8af760aa8fae38d478c79e3ecba00515.camel@gmail.com>
- <235d20ef-3054-69d9-975d-25aebf32aad3@arm.com>
- <20190223181254.GC572@tuxbook-pro> <86zhqm8i6d.wl-marc.zyngier@arm.com>
- <20190224035356.GD572@tuxbook-pro>
- <33d765b5-1807-fa6c-1ceb-99f09f7c8d5a@free.fr>
- <8eb4f446-6152-ffb6-9529-77fb0bcc307f@arm.com>
- <7b5e8bb1-d339-07f7-66f6-7f09df2107c4@free.fr>
- <3757fc2d-0587-be46-8f75-6d79906be8bd@arm.com>
- <5b83a4c2-1f0e-337f-a78d-f7d84fe01ab3@free.fr>
- <a6f89d1a-e7bb-bae9-6666-f4d5b263b835@free.fr>
- <b7a3c9d1-6bbc-1f14-956f-ee4dd3bce175@arm.com>
-From:   Marc Gonzalez <marc.w.gonzalez@free.fr>
-Message-ID: <bd3d23ed-1e4c-861b-35e6-08c2f7e4a47c@free.fr>
-Date:   Fri, 3 May 2019 15:07:27 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.6.1
-MIME-Version: 1.0
-In-Reply-To: <b7a3c9d1-6bbc-1f14-956f-ee4dd3bce175@arm.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
-X-Virus-Scanned: ClamAV using ClamSMTP ; ns.iliad.fr ; Fri May  3 15:07:27 2019 +0200 (CEST)
+        id S1727749AbfECR6r (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 3 May 2019 13:58:47 -0400
+Received: from mail-pf1-f195.google.com ([209.85.210.195]:45334 "EHLO
+        mail-pf1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727601AbfECR6r (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 3 May 2019 13:58:47 -0400
+Received: by mail-pf1-f195.google.com with SMTP id e24so3227222pfi.12;
+        Fri, 03 May 2019 10:58:46 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id;
+        bh=ooXXaTjW3PGU+EmYpvlg4whjJfgEkcywCH6vUZA4h/w=;
+        b=UXRQHQnpge6zu7lkrvOLU/fef+EsvPdq+ZsTPefd47hyCMMjQKxVVQoz5x9INsCiUC
+         cex6+hfa798VKtERv8ixv9vUVWfXkumVMxX0XDT+twT+ztLSRfbPiROXswHAeAKi8Sez
+         erFhtAedMXclfQttXvIxPwHbdbb+0sfO2jc+By54JzDJTdZYBjSWAEFtv5cOAbIFVMdE
+         2M1hSgz7Qs5RHKaV6i5JJR9vTPi0tItrBng8xOVWBmAyotpHGzd348cyMoq9l2sL+hQc
+         a/R5alkElgraFZ10WPkV9h1rJGM3elfoSXGzo/HyzNsonno1Ebhv2GTfk7wS/gH3Dye7
+         88LA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=ooXXaTjW3PGU+EmYpvlg4whjJfgEkcywCH6vUZA4h/w=;
+        b=CnEf2OdXCxULnmesI0nNFG6kgblNEc2+5RoRu/SE+CIL52YZt6RfojDlRIg9Kz8bTT
+         Sl9k/JM+IwCWqXNWT3D7J1TEIhY2X/TNglvLkf9tV8Xhp3GTfYAxoS6uQAB5HP43H/q8
+         9/hJVVQh3POzvI0XECEcFSYYYg4A9nkUFEf4YMAWo9PLGzyUZiO6kemAX1GYbi9RWNd/
+         IXbu8xLlww9+/JUTY+6ogMBNvYbLlKzWLcqTDqEQ6lprkKJm/TtNploMYyJ+lZx4VY/B
+         5j6p/pwiuVkAEh7vtb6xDEa8mWsDSgEW6Aqw6O7vkLlsB7VIhk0JG3lqO9xeAvx/rHlG
+         UgmQ==
+X-Gm-Message-State: APjAAAUU1JTEym3XoF2sSRrnW9FLkVtAWU+VbW8rwPL2wkXbBudB/ow/
+        rSIdreQhRbL3MR31nhonh/M=
+X-Google-Smtp-Source: APXvYqyXJ7yo91DLg3trGKRJzPJZkZarUay0Mj4BFJGWi6q84c8u3OAlKaaNzmKHZkCV8GEJ2jkH9w==
+X-Received: by 2002:aa7:83d1:: with SMTP id j17mr12854399pfn.78.1556906325799;
+        Fri, 03 May 2019 10:58:45 -0700 (PDT)
+Received: from CentOS76.localdomain.localdomain ([183.82.21.188])
+        by smtp.gmail.com with ESMTPSA id n18sm7019262pfi.48.2019.05.03.10.58.40
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Fri, 03 May 2019 10:58:44 -0700 (PDT)
+From:   jagdsh.linux@gmail.com
+To:     robdclark@gmail.com, sean@poorly.run, airlied@linux.ie,
+        daniel@ffwll.ch, bskeggs@redhat.com, hierry.reding@gmail.com,
+        jcrouse@codeaurora.org, jsanka@codeaurora.org,
+        skolluku@codeaurora.org, paul.burton@mips.com, jrdr.linux@gmail.com
+Cc:     linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org,
+        nouveau@lists.freedesktop.org,
+        Jagadeesh Pagadala <jagdsh.linux@gmail.com>
+Subject: [PATCH] gpu/drm: Remove duplicate headers
+Date:   Fri,  3 May 2019 23:28:13 +0530
+Message-Id: <1556906293-128921-1-git-send-email-jagdsh.linux@gmail.com>
+X-Mailer: git-send-email 1.8.3.1
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 03/05/2019 14:48, Robin Murphy wrote:
+From: Jagadeesh Pagadala <jagdsh.linux@gmail.com>
 
-> Anyway, I'll clean up my patch and post it properly - thanks to you and 
-> Bjorn for testing.
+Remove duplicate headers which are included twice.
 
-Cool. Thanks!
+Signed-off-by: Jagadeesh Pagadala <jagdsh.linux@gmail.com>
+---
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_lm.c             | 1 -
+ drivers/gpu/drm/nouveau/nvkm/subdev/bus/nv04.c        | 2 --
+ drivers/gpu/drm/panel/panel-raspberrypi-touchscreen.c | 1 -
+ 3 files changed, 4 deletions(-)
 
-AngeloGioacchino, are you still monitoring this thread?
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_lm.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_lm.c
+index 018df2c..45a5bc6 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_lm.c
++++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_lm.c
+@@ -15,7 +15,6 @@
+ #include "dpu_hwio.h"
+ #include "dpu_hw_lm.h"
+ #include "dpu_hw_mdss.h"
+-#include "dpu_kms.h"
+ 
+ #define LM_OP_MODE                        0x00
+ #define LM_OUT_SIZE                       0x04
+diff --git a/drivers/gpu/drm/nouveau/nvkm/subdev/bus/nv04.c b/drivers/gpu/drm/nouveau/nvkm/subdev/bus/nv04.c
+index c80b967..2b44ba5 100644
+--- a/drivers/gpu/drm/nouveau/nvkm/subdev/bus/nv04.c
++++ b/drivers/gpu/drm/nouveau/nvkm/subdev/bus/nv04.c
+@@ -26,8 +26,6 @@
+ 
+ #include <subdev/gpio.h>
+ 
+-#include <subdev/gpio.h>
+-
+ static void
+ nv04_bus_intr(struct nvkm_bus *bus)
+ {
+diff --git a/drivers/gpu/drm/panel/panel-raspberrypi-touchscreen.c b/drivers/gpu/drm/panel/panel-raspberrypi-touchscreen.c
+index 2c9c972..cacf2e0 100644
+--- a/drivers/gpu/drm/panel/panel-raspberrypi-touchscreen.c
++++ b/drivers/gpu/drm/panel/panel-raspberrypi-touchscreen.c
+@@ -53,7 +53,6 @@
+ #include <linux/of_graph.h>
+ #include <linux/pm.h>
+ 
+-#include <drm/drm_panel.h>
+ #include <drm/drmP.h>
+ #include <drm/drm_crtc.h>
+ #include <drm/drm_mipi_dsi.h>
+-- 
+1.8.3.1
 
-On which qcom platform(s) did you run into the issue?
-(Robin's work-around has been tested on msm8996 and msm8998.)
-
-Regards.
