@@ -2,124 +2,106 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 85F3513A51
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  4 May 2019 15:26:03 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 88ECC13A65
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  4 May 2019 15:36:10 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727504AbfEDNY7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 4 May 2019 09:24:59 -0400
-Received: from mail-ed1-f67.google.com ([209.85.208.67]:36715 "EHLO
-        mail-ed1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727539AbfEDNYv (ORCPT
+        id S1726672AbfEDNgJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 4 May 2019 09:36:09 -0400
+Received: from mail-wr1-f65.google.com ([209.85.221.65]:46462 "EHLO
+        mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726214AbfEDNgJ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 4 May 2019 09:24:51 -0400
-Received: by mail-ed1-f67.google.com with SMTP id a8so9465846edx.3
-        for <linux-arm-msm@vger.kernel.org>; Sat, 04 May 2019 06:24:50 -0700 (PDT)
+        Sat, 4 May 2019 09:36:09 -0400
+Received: by mail-wr1-f65.google.com with SMTP id r7so11246329wrr.13
+        for <linux-arm-msm@vger.kernel.org>; Sat, 04 May 2019 06:36:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=arista.com; s=googlenew;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=ilJMImjlYVy70bBELZy9Jn7imshjw1ckAQEWKZMZSgA=;
-        b=kHk2+JWRL/cGbPjnkWGob5MrdcSMAbvrNrGgqY4ptSrD91uypp+Vq+W6LqZ2SzdNPE
-         rqhrOB1Mv49q0CzhmJlb8yvM9bbLe3nrZf36IzqLMK/n5yUGPX2ncpB5oFck2z1hMfxg
-         AqeyMj5B6bRf6B+53EGk6s/43P27f97PgW1EgH+hzjnyQyru2apIMio9bh3E5AfvxbB4
-         ZKHESO05fwbw3JCIdISFH6QBNbxP/P9NUoCf71vTAQ1EfMsr8Ial0FNQKC2eP7csG7Ni
-         YzI0SuYDlcznFA2cjWTkrdfYIxpTmn3wrE066epBIP80jRLMpbCUt1cDYGrCIiopZOyd
-         nmow==
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=OwPfwZcZ52bpY4HX+FooZLavaLrComJSJs44yQK5qbw=;
+        b=fESV9dGYWNxFNa6dJB2+Ehn96BhGmG1wnDc5BenilN4ZVg7L8+B2WHtK4rrxlcHtXP
+         UlIvr9nMCoyv/EW6caEYRdwiEqMbM1Unf220dsMKHyb63GbwUsyaol/yqbt/xq51v2u7
+         SuAtAbxR07UxDUwLG3dJbX1RUYZ9HD00iZLMk/c1OumqUZCzolBX3I8T+BEq0aLLy3gl
+         E4ifvYWvLCHsAIWBGXsGK+q16cjnR9zuE0ixlaaSI5LMYpScvee3HCeVo0MP4HeMJ/Ce
+         sAGMfz0Ofe0YL+hr3w07ESkYuMnCmsGzOJ7dDzvls68+pLu1hzBcWbw2EQdG5UuCYuXs
+         yf7w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=ilJMImjlYVy70bBELZy9Jn7imshjw1ckAQEWKZMZSgA=;
-        b=pTwfR8q2FUz4a5FblrbpiqIKuy/C2Fj/WrzUZeu4icsqE05Suj7F5VbY0n1f4OOxL1
-         1MkzP8MNV40mANFlwbanVLo5R4SThs137e5ehw3PxSRsDyHLHNoD38CZJt3lB7JtNjjV
-         6AA8m6mZN19Nd1WV26wKkSoAl4BTfGG23pMFKIz+B40IN74E137/uiG5U2VOAar4clZd
-         yrb9kKsa8hudKjF/Mvqd+W6D6jaSZIMFyKn0lHb7ARrZ5Do5Y5lFcCOHptTPDW5DBqbD
-         OiC+f1ZUVFeXzGa/NlpOa4Qu7AUIrDKDk0MaUv78VprpgxsvhCCUsjRQl2Ho/JHTcrf5
-         cbGA==
-X-Gm-Message-State: APjAAAVA0g8NZbLkkH8Ng5DJwrmxEsgOirUw91f27KkAmDKWI4tMT6OL
-        PvktdMr229GWHd6eu8FRQXkOAg==
-X-Google-Smtp-Source: APXvYqxvfnAmtfi/HRH+5Vwm5xT8Q6YfnIc2JocZD/ewrQb7MbDvGkg7DJVtT1tIUxVEjnF4JYMjkg==
-X-Received: by 2002:a50:b669:: with SMTP id c38mr1398711ede.201.1556976289385;
-        Sat, 04 May 2019 06:24:49 -0700 (PDT)
-Received: from localhost.localdomain ([79.97.203.116])
-        by smtp.gmail.com with ESMTPSA id s53sm1391106edb.20.2019.05.04.06.24.47
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sat, 04 May 2019 06:24:48 -0700 (PDT)
-From:   Tom Murphy <tmurphy@arista.com>
-To:     iommu@lists.linux-foundation.org
-Cc:     murphyt7@tcd.ie, Tom Murphy <tmurphy@arista.com>,
-        Joerg Roedel <joro@8bytes.org>,
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=OwPfwZcZ52bpY4HX+FooZLavaLrComJSJs44yQK5qbw=;
+        b=dXt7QVXtFNt6fgWq7XgB71nBkXpde7iNIoI6TQV7YsWvPCmZmBRyniCJFFtQsfO92R
+         9JnCyd8JdBsoLezwf01THuwy+yA2bclGiTBosVDt5jJ49OM/JriSnM35BrHYor1MHZ0+
+         5KXcP5VqoedMlkJ75C8Cb3KOm07EGcRNK3Ca7FVk3lMvpzoESSN5sgST2lliuxmzJbjU
+         B91XbAXZBjAYzGkQdQeBFp1CqmPfYV8WvbIGZL/jRZU+Tpi5HZxEgyDAUAiSC9Q2h3Hw
+         w0hNTMKJo+2VoHchwF/rPruR6BKBVHd0dX/JXWA2P+vkokXN0rXCs6bqSVAhBZCocc5+
+         Y/+w==
+X-Gm-Message-State: APjAAAUSQEiuSrK2soR5qJOQlLexqSxTDTxTEe8Hdpm4lqWk5HHEtd/5
+        GlIEqubNZvRNcMmeorMKdeYZcH+fMr67uaSvPHg=
+X-Google-Smtp-Source: APXvYqwcWU8I2xbCxqwdC2UH740B6IsSWcaA6w+XGk8cI5AgVgHLgHGYE0gIdXNtlpvdbsx2JXyB8sGkRJ1iLBxrJJk=
+X-Received: by 2002:adf:9cc8:: with SMTP id h8mr5650848wre.308.1556976967596;
+ Sat, 04 May 2019 06:36:07 -0700 (PDT)
+MIME-Version: 1.0
+References: <68b71c15f32341468a868f6418e4fcb375bc49ba.camel@gmail.com>
+ <20190211105755.GB30880@fuggles.cambridge.arm.com> <38d8965a-cd41-17cf-1b95-8dd58c079be4@arm.com>
+ <874c702b8af760aa8fae38d478c79e3ecba00515.camel@gmail.com>
+ <235d20ef-3054-69d9-975d-25aebf32aad3@arm.com> <20190223181254.GC572@tuxbook-pro>
+ <86zhqm8i6d.wl-marc.zyngier@arm.com> <20190224035356.GD572@tuxbook-pro>
+ <33d765b5-1807-fa6c-1ceb-99f09f7c8d5a@free.fr> <8eb4f446-6152-ffb6-9529-77fb0bcc307f@arm.com>
+ <7b5e8bb1-d339-07f7-66f6-7f09df2107c4@free.fr> <3757fc2d-0587-be46-8f75-6d79906be8bd@arm.com>
+ <5b83a4c2-1f0e-337f-a78d-f7d84fe01ab3@free.fr> <a6f89d1a-e7bb-bae9-6666-f4d5b263b835@free.fr>
+ <b7a3c9d1-6bbc-1f14-956f-ee4dd3bce175@arm.com> <bd3d23ed-1e4c-861b-35e6-08c2f7e4a47c@free.fr>
+In-Reply-To: <bd3d23ed-1e4c-861b-35e6-08c2f7e4a47c@free.fr>
+From:   AngeloGioacchino Del Regno <kholk11@gmail.com>
+Date:   Sat, 4 May 2019 15:35:56 +0200
+Message-ID: <CAK7fi1b5PP+ToK5fS6xEvGaNF=43=OtA8=5KhypTcFeryWSr9Q@mail.gmail.com>
+Subject: Re: [PATCH] arm64/io: Don't use WZR in writel
+To:     Marc Gonzalez <marc.w.gonzalez@free.fr>
+Cc:     Robin Murphy <robin.murphy@arm.com>,
         Will Deacon <will.deacon@arm.com>,
-        Robin Murphy <robin.murphy@arm.com>,
-        Marek Szyprowski <m.szyprowski@samsung.com>,
-        Kukjin Kim <kgene@kernel.org>,
-        Krzysztof Kozlowski <krzk@kernel.org>,
-        David Woodhouse <dwmw2@infradead.org>,
-        Andy Gross <andy.gross@linaro.org>,
-        David Brown <david.brown@linaro.org>,
-        Matthias Brugger <matthias.bgg@gmail.com>,
-        Rob Clark <robdclark@gmail.com>,
-        Heiko Stuebner <heiko@sntech.de>,
-        Gerald Schaefer <gerald.schaefer@de.ibm.com>,
-        Thierry Reding <thierry.reding@gmail.com>,
-        Jonathan Hunter <jonathanh@nvidia.com>,
-        Alex Williamson <alex.williamson@redhat.com>,
-        Thomas Gleixner <tglx@linutronix.de>,
+        Catalin Marinas <catalin.marinas@arm.com>,
+        Mark Rutland <mark.rutland@arm.com>,
         Marc Zyngier <marc.zyngier@arm.com>,
-        linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
-        linux-samsung-soc@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-mediatek@lists.infradead.org,
-        linux-rockchip@lists.infradead.org, linux-s390@vger.kernel.org,
-        linux-tegra@vger.kernel.org, kvm@vger.kernel.org
-Subject: [RFC 7/7] iommu/vt-d: Always set DMA_PTE_READ if the iommu doens't support zero length reads
-Date:   Sat,  4 May 2019 14:23:23 +0100
-Message-Id: <20190504132327.27041-8-tmurphy@arista.com>
-X-Mailer: git-send-email 2.17.1
-In-Reply-To: <20190504132327.27041-1-tmurphy@arista.com>
-References: <20190504132327.27041-1-tmurphy@arista.com>
+        MSM <linux-arm-msm@vger.kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Jeffrey Hugo <jhugo@codeaurora.org>,
+        Linux ARM <linux-arm-kernel@lists.infradead.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-To match the dma-ops api path the DMA_PTE_READ should be set if ZLR
-isn't supported in the iommu
+Sorry, I've replied yesterday but I just realized that I did click on the wrong
+button and the email got sent only to Bjorn. My bad.
+Resending to all... this is the original text:
 
-Signed-off-by: Tom Murphy <tmurphy@arista.com>
----
- drivers/iommu/intel-iommu.c | 13 ++++++++++++-
- 1 file changed, 12 insertions(+), 1 deletion(-)
+For me, the [1] solution is working fine on qcom SDM630 (Xperia XA2),
+MSM8998 (Xperia XZ Premium) and MSM8996 (Xperia X Performance).
+I couldn't test on others that I have for time reasons, but I think that it's
+not even needed.
 
-diff --git a/drivers/iommu/intel-iommu.c b/drivers/iommu/intel-iommu.c
-index 980fc4816d72..e78b0000056d 100644
---- a/drivers/iommu/intel-iommu.c
-+++ b/drivers/iommu/intel-iommu.c
-@@ -4378,6 +4378,17 @@ static void intel_iommu_detach_device(struct iommu_domain *domain,
- 	dmar_remove_one_dev_info(dev);
- }
- 
-+static bool supports_zlr(struct dmar_domain *domain)
-+{
-+	int i;
-+
-+	for_each_domain_iommu(i, domain) {
-+		if (cap_zlr(g_iommus[i]->cap))
-+			return true;
-+	}
-+	return false;
-+}
-+
- static int intel_iommu_map(struct iommu_domain *domain,
- 			   unsigned long iova, phys_addr_t hpa,
- 			   size_t size, int iommu_prot)
-@@ -4391,7 +4402,7 @@ static int intel_iommu_map(struct iommu_domain *domain,
- 	if (dmar_domain == si_domain && hw_pass_through)
- 		return 0;
- 
--	if (iommu_prot & IOMMU_READ)
-+	if (iommu_prot & IOMMU_READ || !supports_zlr(dmar_domain))
- 		prot |= DMA_PTE_READ;
- 	if (iommu_prot & IOMMU_WRITE)
- 		prot |= DMA_PTE_WRITE;
--- 
-2.17.1
+By the way, I suggest to clearly document the fact that (from what I
+understand, at least) we can write whatever value we want to that
+register, as the change as it is may confuse some developers around.
 
+In any case... if you want, you can also include my:
+
+Tested-by: AngeloGioacchino Del Regno <kholk11@gmail.com>
+
+Il giorno ven 3 mag 2019 alle ore 15:07 Marc Gonzalez
+<marc.w.gonzalez@free.fr> ha scritto:
+>
+> On 03/05/2019 14:48, Robin Murphy wrote:
+>
+> > Anyway, I'll clean up my patch and post it properly - thanks to you and
+> > Bjorn for testing.
+>
+> Cool. Thanks!
+>
+> AngeloGioacchino, are you still monitoring this thread?
+>
+> On which qcom platform(s) did you run into the issue?
+> (Robin's work-around has been tested on msm8996 and msm8998.)
+>
+> Regards.
