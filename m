@@ -2,127 +2,86 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 1142A1361D
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  4 May 2019 01:24:47 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id BCC381367D
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  4 May 2019 02:17:42 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726432AbfECXYq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 3 May 2019 19:24:46 -0400
-Received: from mail-pf1-f194.google.com ([209.85.210.194]:44850 "EHLO
-        mail-pf1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726059AbfECXYq (ORCPT
+        id S1726042AbfEDARl (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 3 May 2019 20:17:41 -0400
+Received: from mail-pg1-f194.google.com ([209.85.215.194]:37177 "EHLO
+        mail-pg1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726041AbfEDARl (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 3 May 2019 19:24:46 -0400
-Received: by mail-pf1-f194.google.com with SMTP id y13so3613316pfm.11
-        for <linux-arm-msm@vger.kernel.org>; Fri, 03 May 2019 16:24:46 -0700 (PDT)
+        Fri, 3 May 2019 20:17:41 -0400
+Received: by mail-pg1-f194.google.com with SMTP id e6so3486360pgc.4
+        for <linux-arm-msm@vger.kernel.org>; Fri, 03 May 2019 17:17:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=from:to:cc:subject:date:message-id;
-        bh=/RkezotWe0qKz9gHI76Sx6wtXQAllpgle4h0JP9cnd8=;
-        b=ugtyN4aWkbZ/xhfEWgsJkOc+gWDbNF9B9D+Yyui7dkiGipwGkMFmNn0NwPZ52HzZfj
-         Mg6H4LQOaoYV4qmeIr70TuVEcdZGQ+v3HadDR5FRIx3adlE3HG98hjGJ1iY4icxXpEsr
-         rQ0kH2jFKRG6LQiQ7NehMf0mFbJiOqH7Doi8qpGk8LarR3nzIdNmGIUg7hVhAZqk2Y7z
-         +g6FSZJGjEoFz64pJthDkOT/zPNsCtm7Fe7wjSvfgCOdbdImiF9sx/T4PYAeHn9lWPIm
-         YmuRaQzBsqw7pxw2YuwCHv/1nOIBhJtayWqA0cpleSnDk34iMh1TTNCTDZ+FU6PsBFgx
-         UXlQ==
+        bh=T0GFsU5iTOyCwj8QNb5BtH0GpMGDHOczgY1Uj/CZHXk=;
+        b=oeQsoIXnKAJoKnIszLlOgMj6J9duncW8mzUEey2yO4oNzCVnmVL0XX+8v9FM5pIy2s
+         lj2aO3Aoo+Ij4241jr1fnMBi8z2hYk1KgQr7A2eOY8hTzfApsR4JhFNawomFUYNI1rzI
+         8kKJt+eaMdWlosvTyjoMnPmu5jUASwgPiJ2D49QPZe5GVpAGEHSdgtJ2pp0tvNrK8/nP
+         YD0IxCHRQojMDUkPcZQrUq/fYJcRrENPVAf7wOFaRMVYXyqZsqNu2kP0a1NL/B9+izSu
+         WMuD+dGAQClX7s8+hSZr27NH9SDNlHuoEMnsc31/PEFQyzW5OUmzcrzHkI6/MnOawgA/
+         VMVQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id;
-        bh=/RkezotWe0qKz9gHI76Sx6wtXQAllpgle4h0JP9cnd8=;
-        b=VMzd/XldNN9M/4Mt+akVxaiwkmKe4yE+NHP3oPi6fQp2lrr3L3cema4kr8A2nc83Il
-         mCCH0RXYFEKwjb9jE7emyFDXFzYDWIhhiGifdR+tLpuqDGXP10GwJaqOd+OOxdO0yXcL
-         rqL0hWSEWraICpP7/4ftr8solo3NdAYno0rkeOKnQ5rQhfBbRawrkFcXCPr1NsFQlQm6
-         wJpre8tO++ZrZJgklzYG2566v5Ia7GZhJmqPJ9sZ3tRJdWNi13sRsfOVXRbym5IXLMEy
-         Xc2I8lrDBUE+cSRJCVrZohNaVJT1UwBvTi+vEOAskMuPuYbHRwYQ0tbt1r17Cxfedh7r
-         HnqA==
-X-Gm-Message-State: APjAAAWPg2eJbAIMQ+QfYy9UKVX1gvO0ulUNHczkl6C8KMODVdBwwgVZ
-        nEIcuJYwCoeEd9sUORHdYFt2CQ==
-X-Google-Smtp-Source: APXvYqy2094pPqrRw5vcRArh29lDQGBGEffB4m2Hn2aAzXW9yXtO3zUgfgWhWfcozfRDjin+8YwDCA==
-X-Received: by 2002:aa7:86c3:: with SMTP id h3mr14402079pfo.169.1556925885301;
-        Fri, 03 May 2019 16:24:45 -0700 (PDT)
+        bh=T0GFsU5iTOyCwj8QNb5BtH0GpMGDHOczgY1Uj/CZHXk=;
+        b=XccBXdPhuYKFq/5Nhs+v0k/qirKelZ+Ltr6yRrSsAXLMLQB1C2VMwE5PFytjOKqMgy
+         R1HAbtUJFyIrvXVMYTFxIodQ/91z+qu2UNcu+zSV8PL6sqx3XHsr+seVBTqthuj59Ij2
+         cgMvuS9ivL7bh2WfbhZi2eClz7lFyXoKc8+ko7bSGqsNtT9t3CQaLkgPG8kc2FhzPCE6
+         l4RfINmvRrTqiovckbBzjBeLeVn2nX/0wRtX9qOPfNPJfye/spqpMXpn3ou7q7KFiPGF
+         uFRmYUBVdgeaCyYnJniLWWwG0Wi1ZRarIXpHSkB+3LKFKYO0fHdMQLfDQyq5O7RwxZwa
+         lx1w==
+X-Gm-Message-State: APjAAAXYIdJoMorPkON404RJpYEZXJuZVGKTx2cxmjFt4Kph3cbMONzQ
+        n01khVKtVOEMHy31w++Peu/dPQ==
+X-Google-Smtp-Source: APXvYqyEjLXIJyLHnBMCT+wiJSfzdTRGABuxSLtEAXX8MsYrKBxK/Ma8r1oNRsXOlNMqaMEy5XECgw==
+X-Received: by 2002:a62:4690:: with SMTP id o16mr15035772pfi.166.1556929060198;
+        Fri, 03 May 2019 17:17:40 -0700 (PDT)
 Received: from localhost.localdomain (104-188-17-28.lightspeed.sndgca.sbcglobal.net. [104.188.17.28])
-        by smtp.gmail.com with ESMTPSA id e184sm9381071pfc.102.2019.05.03.16.24.44
+        by smtp.gmail.com with ESMTPSA id 144sm4364785pfy.49.2019.05.03.17.17.38
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 03 May 2019 16:24:44 -0700 (PDT)
+        Fri, 03 May 2019 17:17:38 -0700 (PDT)
 From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Andy Gross <agross@kernel.org>,
-        David Brown <david.brown@linaro.org>
-Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+To:     Michael Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>
+Cc:     linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
         linux-kernel@vger.kernel.org
-Subject: [PATCH] arm64: dts: qcom: msm8996: Stop using legacy clock names
-Date:   Fri,  3 May 2019 16:24:42 -0700
-Message-Id: <20190503232442.1530-1-bjorn.andersson@linaro.org>
+Subject: [PATCH] clk: qcom: gdsc: WARN when failing to toggle
+Date:   Fri,  3 May 2019 17:17:36 -0700
+Message-Id: <20190504001736.8598-1-bjorn.andersson@linaro.org>
 X-Mailer: git-send-email 2.18.0
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-MDSS and its friends complain about the DTS is using legacy clock names,
-update these to silence the warnings.
+Failing to toggle a GDSC as the driver core is attaching the
+power-domain to a device will cause a silent probe deferral. Provide an
+explicit warning to the developer, in order to reduce the amount of time
+it take to debug this.
 
 Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
 ---
- arch/arm64/boot/dts/qcom/msm8996.dtsi | 26 +++++++++++++-------------
- 1 file changed, 13 insertions(+), 13 deletions(-)
+ drivers/clk/qcom/gdsc.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/msm8996.dtsi b/arch/arm64/boot/dts/qcom/msm8996.dtsi
-index a988edabe474..3d861f1d836c 100644
---- a/arch/arm64/boot/dts/qcom/msm8996.dtsi
-+++ b/arch/arm64/boot/dts/qcom/msm8996.dtsi
-@@ -1678,7 +1678,7 @@
- 			#interrupt-cells = <1>;
+diff --git a/drivers/clk/qcom/gdsc.c b/drivers/clk/qcom/gdsc.c
+index dd63aa36b092..6a8a4996dde3 100644
+--- a/drivers/clk/qcom/gdsc.c
++++ b/drivers/clk/qcom/gdsc.c
+@@ -149,7 +149,9 @@ static int gdsc_toggle_logic(struct gdsc *sc, enum gdsc_status status)
+ 		udelay(1);
+ 	}
  
- 			clocks = <&mmcc MDSS_AHB_CLK>;
--			clock-names = "iface_clk";
-+			clock-names = "iface";
+-	return gdsc_poll_status(sc, status);
++	ret = gdsc_poll_status(sc, status);
++	WARN(ret, "%s status stuck at 'o%s'", sc->pd.name, status ? "ff" : "n");
++	return ret;
+ }
  
- 			#address-cells = <1>;
- 			#size-cells = <1>;
-@@ -1697,11 +1697,11 @@
- 					 <&mmcc MDSS_MDP_CLK>,
- 					 <&mmcc SMMU_MDP_AXI_CLK>,
- 					 <&mmcc MDSS_VSYNC_CLK>;
--				clock-names = "iface_clk",
--					      "bus_clk",
--					      "core_clk",
--					      "iommu_clk",
--					      "vsync_clk";
-+				clock-names = "iface",
-+					      "bus",
-+					      "core",
-+					      "iommu",
-+					      "vsync";
- 
- 				iommus = <&mdp_smmu 0>;
- 
-@@ -1736,11 +1736,11 @@
- 					 <&mmcc MDSS_HDMI_AHB_CLK>,
- 					 <&mmcc MDSS_EXTPCLK_CLK>;
- 				clock-names =
--					"mdp_core_clk",
--					"iface_clk",
--					"core_clk",
--					"alt_iface_clk",
--					"extp_clk";
-+					"mdp_core",
-+					"iface",
-+					"core",
-+					"alt_iface",
-+					"extp";
- 
- 				phys = <&hdmi_phy>;
- 				phy-names = "hdmi_phy";
-@@ -1777,8 +1777,8 @@
- 
- 				clocks = <&mmcc MDSS_AHB_CLK>,
- 					 <&gcc GCC_HDMI_CLKREF_CLK>;
--				clock-names = "iface_clk",
--					      "ref_clk";
-+				clock-names = "iface",
-+					      "ref";
- 			};
- 		};
- 	};
+ static inline int gdsc_deassert_reset(struct gdsc *sc)
 -- 
 2.18.0
 
