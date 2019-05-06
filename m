@@ -2,141 +2,166 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 8828A14E1E
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  6 May 2019 16:58:55 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 6B1A015026
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  6 May 2019 17:27:23 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726872AbfEFO6w (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 6 May 2019 10:58:52 -0400
-Received: from mail-ed1-f66.google.com ([209.85.208.66]:42490 "EHLO
-        mail-ed1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728674AbfEFOnj (ORCPT
+        id S1726533AbfEFP1W (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 6 May 2019 11:27:22 -0400
+Received: from mail-wr1-f66.google.com ([209.85.221.66]:46156 "EHLO
+        mail-wr1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726511AbfEFP1W (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 6 May 2019 10:43:39 -0400
-Received: by mail-ed1-f66.google.com with SMTP id l25so15590594eda.9
-        for <linux-arm-msm@vger.kernel.org>; Mon, 06 May 2019 07:43:38 -0700 (PDT)
+        Mon, 6 May 2019 11:27:22 -0400
+Received: by mail-wr1-f66.google.com with SMTP id r7so17770261wrr.13
+        for <linux-arm-msm@vger.kernel.org>; Mon, 06 May 2019 08:27:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ffwll.ch; s=google;
-        h=sender:date:from:to:cc:subject:message-id:mail-followup-to
-         :references:mime-version:content-disposition:in-reply-to:user-agent;
-        bh=vaAPp8PyjYHsdP1CZGhOGZcNrdzUmU4mz1az3gjIEag=;
-        b=TeJLtrEe4JxAY6kU+FgDMqxxH774q5OmDnPgF4z1LCxJ0gA2hydu8AIgwxknkumsP+
-         w+p3KFDudzEwfTQwrebwzQ8H7AFC6XnqlApAqm6znxrbNtpsSorAwrpuQTF7daJEPSte
-         JtoM1vJiuvvMaYngrNIWUOuj8SndGJQPvePfs=
+        d=arista.com; s=googlenew;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=GuMSdmXl0z53dDi0xhlaU7BU2n/bLw/DBUWaPvlO+dc=;
+        b=C/d9PWiZ7kbJC0oH7zo5Ibhtjb0LJxg5WGRhk2z22dgXTR0ahak265kLVZyGYOhfje
+         aEtSmh42RRvz8bCCBZRBFOn7uv5XCF0ECqKL0Hb338d0yPodqMwGb1L0gvRyJgITkaxQ
+         Ki1y61sbdbPypKRjDCxUR8MH0zfn/bbro9LPpFVyLBByJZzEOqelQf5tS81MK2FkUIP3
+         sLhve+NsmP0dlDX03w14Qjs93JrqJwcC/r4yHUZhJhCv/72E7VCM80drfYcNtln/9ipb
+         cKIyK6t7ROv023pVx/00hbtubgQCmfBlIjzs3E6R48gtIILod1LUINjWV6UVWZ8tSjxH
+         BBpA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:date:from:to:cc:subject:message-id
-         :mail-followup-to:references:mime-version:content-disposition
-         :in-reply-to:user-agent;
-        bh=vaAPp8PyjYHsdP1CZGhOGZcNrdzUmU4mz1az3gjIEag=;
-        b=k0IgmYjku1QviXVbg+XO4OYbZUQgPFp+RL0EGLJWHRqL4AjTl0vQ3N03fohFEE1Rld
-         7trxCre1nxy0+0Bj463EASwLEhC1CmjrEGuYz6fRFxkNoVh73Rc8G5+16kUB0tBjx5ew
-         ACXDOM7dmiIlOGQd/fONV5vKelhL0+SNI7W3dreqT7/le3O+1qGAu3RAYdhxY/LfNqj9
-         txq8Mey/f43xprSrqr6mKEUasYoNgRO3nQvJ1iNyN0Hhuri4KhpLFi6hEfDW5YgCK+2R
-         6AyVMMFMI/j4D956AolyxQFVTjmQU93491rxCwen0YBvFY+n8eBpGokeyjBskx0DaH/P
-         awYA==
-X-Gm-Message-State: APjAAAXpsFMJab4NCoRQZcm25+l3bclIdN0Lpnsp9EODjvH3op/VDsyt
-        h836KPypkDEV5rwCBnBAkpcZHw==
-X-Google-Smtp-Source: APXvYqwtl5T/MpDTj7LbNirYR1SvYe+WhzHms3LVnX/pzSNP1kZnlocJBCYDhRieEoZXTXVwEMT6xg==
-X-Received: by 2002:a50:be42:: with SMTP id b2mr27581867edi.228.1557153817556;
-        Mon, 06 May 2019 07:43:37 -0700 (PDT)
-Received: from phenom.ffwll.local ([2a02:168:569e:0:3106:d637:d723:e855])
-        by smtp.gmail.com with ESMTPSA id q18sm1602623ejp.56.2019.05.06.07.43.35
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Mon, 06 May 2019 07:43:36 -0700 (PDT)
-Date:   Mon, 6 May 2019 16:43:34 +0200
-From:   Daniel Vetter <daniel@ffwll.ch>
-To:     jagdsh.linux@gmail.com
-Cc:     robdclark@gmail.com, sean@poorly.run, airlied@linux.ie,
-        daniel@ffwll.ch, bskeggs@redhat.com, hierry.reding@gmail.com,
-        jcrouse@codeaurora.org, jsanka@codeaurora.org,
-        skolluku@codeaurora.org, paul.burton@mips.com,
-        jrdr.linux@gmail.com, linux-arm-msm@vger.kernel.org,
-        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
-        linux-kernel@vger.kernel.org, nouveau@lists.freedesktop.org
-Subject: Re: [PATCH] gpu/drm: Remove duplicate headers
-Message-ID: <20190506144334.GH17751@phenom.ffwll.local>
-Mail-Followup-To: jagdsh.linux@gmail.com, robdclark@gmail.com,
-        sean@poorly.run, airlied@linux.ie, bskeggs@redhat.com,
-        hierry.reding@gmail.com, jcrouse@codeaurora.org,
-        jsanka@codeaurora.org, skolluku@codeaurora.org,
-        paul.burton@mips.com, jrdr.linux@gmail.com,
-        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org,
-        nouveau@lists.freedesktop.org
-References: <1556906293-128921-1-git-send-email-jagdsh.linux@gmail.com>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=GuMSdmXl0z53dDi0xhlaU7BU2n/bLw/DBUWaPvlO+dc=;
+        b=Ynk7UXN/vinPfGI0VaNEdFjZIR8sSpDuLGFEhyOWPaBlXNpjoQoZCpTiKtmpwBRElL
+         l8r/mxO0pfTLA62WA4/r6p7mU8mJFqSEKlt7+aM/9r4LrOyHa8xrmLtf6/XrXMIOrmIz
+         O9EwRk7WMK0RrjtJs1vAFnpT0W6aVCT7f2VJFNH35atKiiwKlwKjGTza/FJN++NBOdtu
+         9/iGLPZjL3JN2+jchvxmP8I8gSXZT4hC/V5a1zPBm5cxP0/0YgEtwlbuUGkuZt1MLjJU
+         FiDWEx75nP65KFADhUtnJqjosH5SlLdVtEbgxNTPZ31LnDobN1AMfcwtYR1t8RyPlOb+
+         wc/A==
+X-Gm-Message-State: APjAAAXz3YTFU+q+twD3Td9EvTdv3Rnki6ZfUJLHbElgVghV149XHjgE
+        VMLrHOFcA7MZZ634vE8wjXkk8MfZYA+X4+p3K5Ckgw==
+X-Google-Smtp-Source: APXvYqzdYjq2KzNwXSYRUYk147h4YL+JNa0zWfymURRoAL7aXQogilrHn37rwl9PoIS46ayzMGu+Ikwm2tOs7SUKN4Y=
+X-Received: by 2002:a5d:5551:: with SMTP id g17mr20082024wrw.50.1557156440752;
+ Mon, 06 May 2019 08:27:20 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <1556906293-128921-1-git-send-email-jagdsh.linux@gmail.com>
-X-Operating-System: Linux phenom 4.14.0-3-amd64 
-User-Agent: Mutt/1.10.1 (2018-07-13)
+References: <20190504132327.27041-1-tmurphy@arista.com> <20190504132327.27041-2-tmurphy@arista.com>
+ <8fef18f5-773c-e1c9-2537-c9dff5bfd35e@linux.intel.com>
+In-Reply-To: <8fef18f5-773c-e1c9-2537-c9dff5bfd35e@linux.intel.com>
+From:   Tom Murphy <tmurphy@arista.com>
+Date:   Mon, 6 May 2019 16:27:09 +0100
+Message-ID: <CAPL0++4_Qa+dxzQ2k6BJi_o+VSSrHEtomYgVmRqjtjsOfHbGew@mail.gmail.com>
+Subject: Re: [RFC 1/7] iommu/vt-d: Set the dma_ops per device so we can remove
+ the iommu_no_mapping code
+To:     Lu Baolu <baolu.lu@linux.intel.com>
+Cc:     iommu@lists.linux-foundation.org, Tom Murphy <murphyt7@tcd.ie>,
+        Joerg Roedel <joro@8bytes.org>,
+        Will Deacon <will.deacon@arm.com>,
+        Robin Murphy <robin.murphy@arm.com>,
+        Marek Szyprowski <m.szyprowski@samsung.com>,
+        Kukjin Kim <kgene@kernel.org>,
+        Krzysztof Kozlowski <krzk@kernel.org>,
+        David Woodhouse <dwmw2@infradead.org>,
+        Andy Gross <andy.gross@linaro.org>,
+        David Brown <david.brown@linaro.org>,
+        Matthias Brugger <matthias.bgg@gmail.com>,
+        Rob Clark <robdclark@gmail.com>,
+        Heiko Stuebner <heiko@sntech.de>,
+        Gerald Schaefer <gerald.schaefer@de.ibm.com>,
+        Thierry Reding <thierry.reding@gmail.com>,
+        Jonathan Hunter <jonathanh@nvidia.com>,
+        Alex Williamson <alex.williamson@redhat.com>,
+        Thomas Gleixner <tglx@linutronix.de>,
+        Marc Zyngier <marc.zyngier@arm.com>,
+        linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+        linux-samsung-soc@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-mediatek@lists.infradead.org,
+        linux-rockchip@lists.infradead.org, linux-s390@vger.kernel.org,
+        linux-tegra@vger.kernel.org, kvm@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, May 03, 2019 at 11:28:13PM +0530, jagdsh.linux@gmail.com wrote:
-> From: Jagadeesh Pagadala <jagdsh.linux@gmail.com>
-> 
-> Remove duplicate headers which are included twice.
-> 
-> Signed-off-by: Jagadeesh Pagadala <jagdsh.linux@gmail.com>
+On Mon, May 6, 2019 at 2:48 AM Lu Baolu <baolu.lu@linux.intel.com> wrote:
+>
+> Hi,
+>
+> On 5/4/19 9:23 PM, Tom Murphy wrote:
+> > Set the dma_ops per device so we can remove the iommu_no_mapping code.
+> >
+> > Signed-off-by: Tom Murphy<tmurphy@arista.com>
+> > ---
+> >   drivers/iommu/intel-iommu.c | 85 +++----------------------------------
+> >   1 file changed, 6 insertions(+), 79 deletions(-)
+> >
+> > diff --git a/drivers/iommu/intel-iommu.c b/drivers/iommu/intel-iommu.c
+> > index eace915602f0..2db1dc47e7e4 100644
+> > --- a/drivers/iommu/intel-iommu.c
+> > +++ b/drivers/iommu/intel-iommu.c
+> > @@ -2622,17 +2622,6 @@ static int __init si_domain_init(int hw)
+> >       return 0;
+> >   }
+> >
+> > -static int identity_mapping(struct device *dev)
+> > -{
+> > -     struct device_domain_info *info;
+> > -
+> > -     info = dev->archdata.iommu;
+> > -     if (info && info != DUMMY_DEVICE_DOMAIN_INFO)
+> > -             return (info->domain == si_domain);
+> > -
+> > -     return 0;
+> > -}
+> > -
+> >   static int domain_add_dev_info(struct dmar_domain *domain, struct device *dev)
+> >   {
+> >       struct dmar_domain *ndomain;
+> > @@ -3270,43 +3259,6 @@ static unsigned long intel_alloc_iova(struct device *dev,
+> >       return iova_pfn;
+> >   }
+> >
+> > -/* Check if the dev needs to go through non-identity map and unmap process.*/
+> > -static int iommu_no_mapping(struct device *dev)
+> > -{
+> > -     int found;
+> > -
+> > -     if (iommu_dummy(dev))
+> > -             return 1;
+> > -
+> > -     found = identity_mapping(dev);
+> > -     if (found) {
+> > -             /*
+> > -              * If the device's dma_mask is less than the system's memory
+> > -              * size then this is not a candidate for identity mapping.
+> > -              */
+> > -             u64 dma_mask = *dev->dma_mask;
+> > -
+> > -             if (dev->coherent_dma_mask &&
+> > -                 dev->coherent_dma_mask < dma_mask)
+> > -                     dma_mask = dev->coherent_dma_mask;
+> > -
+> > -             if (dma_mask < dma_get_required_mask(dev)) {
+> > -                     /*
+> > -                      * 32 bit DMA is removed from si_domain and fall back
+> > -                      * to non-identity mapping.
+> > -                      */
+> > -                     dmar_remove_one_dev_info(dev);
+> > -                     dev_warn(dev, "32bit DMA uses non-identity mapping\n");
+> > -
+> > -                     return 0;
+> > -             }
+>
+> The iommu_no_mapping() also checks whether any 32bit DMA device uses
+> identity mapping. The device might not work if the system memory space
+> is bigger than 4G.
 
-I collected some acks for the msm and nouveau parts and pushed this. For
-next time around would be great if you split these up along driver/module
-boundaries, so that each maintainer can pick this up directly.
+It looks like their is actually a bug in the v3 of the "iommu/vt-d:
+Delegate DMA domain to generic iommu" patch set. I will leave a
+message in that email thread. Fixing that bug should also fix this
+issue.
 
-Thanks for your patch.
--Daniel
 
-> ---
->  drivers/gpu/drm/msm/disp/dpu1/dpu_hw_lm.c             | 1 -
->  drivers/gpu/drm/nouveau/nvkm/subdev/bus/nv04.c        | 2 --
->  drivers/gpu/drm/panel/panel-raspberrypi-touchscreen.c | 1 -
->  3 files changed, 4 deletions(-)
-> 
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_lm.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_lm.c
-> index 018df2c..45a5bc6 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_lm.c
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_lm.c
-> @@ -15,7 +15,6 @@
->  #include "dpu_hwio.h"
->  #include "dpu_hw_lm.h"
->  #include "dpu_hw_mdss.h"
-> -#include "dpu_kms.h"
->  
->  #define LM_OP_MODE                        0x00
->  #define LM_OUT_SIZE                       0x04
-> diff --git a/drivers/gpu/drm/nouveau/nvkm/subdev/bus/nv04.c b/drivers/gpu/drm/nouveau/nvkm/subdev/bus/nv04.c
-> index c80b967..2b44ba5 100644
-> --- a/drivers/gpu/drm/nouveau/nvkm/subdev/bus/nv04.c
-> +++ b/drivers/gpu/drm/nouveau/nvkm/subdev/bus/nv04.c
-> @@ -26,8 +26,6 @@
->  
->  #include <subdev/gpio.h>
->  
-> -#include <subdev/gpio.h>
-> -
->  static void
->  nv04_bus_intr(struct nvkm_bus *bus)
->  {
-> diff --git a/drivers/gpu/drm/panel/panel-raspberrypi-touchscreen.c b/drivers/gpu/drm/panel/panel-raspberrypi-touchscreen.c
-> index 2c9c972..cacf2e0 100644
-> --- a/drivers/gpu/drm/panel/panel-raspberrypi-touchscreen.c
-> +++ b/drivers/gpu/drm/panel/panel-raspberrypi-touchscreen.c
-> @@ -53,7 +53,6 @@
->  #include <linux/of_graph.h>
->  #include <linux/pm.h>
->  
-> -#include <drm/drm_panel.h>
->  #include <drm/drmP.h>
->  #include <drm/drm_crtc.h>
->  #include <drm/drm_mipi_dsi.h>
-> -- 
-> 1.8.3.1
-> 
-
--- 
-Daniel Vetter
-Software Engineer, Intel Corporation
-http://blog.ffwll.ch
+>
+> Will you add this to other place, or it's unnecessary?
+>
+> Best regards,
+> Lu Baolu
