@@ -2,109 +2,101 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 6B1251455A
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  6 May 2019 09:38:18 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id CB33D14487
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  6 May 2019 08:42:50 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726319AbfEFHho (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 6 May 2019 03:37:44 -0400
-Received: from heliosphere.sirena.org.uk ([172.104.155.198]:38904 "EHLO
-        heliosphere.sirena.org.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725851AbfEFHho (ORCPT
+        id S1725840AbfEFGmt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 6 May 2019 02:42:49 -0400
+Received: from mail-lj1-f194.google.com ([209.85.208.194]:47085 "EHLO
+        mail-lj1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725851AbfEFGmt (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 6 May 2019 03:37:44 -0400
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-        d=sirena.org.uk; s=20170815-heliosphere; h=In-Reply-To:Content-Type:
-        MIME-Version:References:Message-ID:Subject:Cc:To:From:Date:Sender:Reply-To:
-        Content-Transfer-Encoding:Content-ID:Content-Description:Resent-Date:
-        Resent-From:Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:List-Id:
-        List-Help:List-Unsubscribe:List-Subscribe:List-Post:List-Owner:List-Archive;
-         bh=q/JBvH8ocBJRDInrHMuqhLFgpwZ/1CDyM2bB8iVm+1Q=; b=q3BZziWWw5XKK40iJ4F4q0pNq
-        dfknWEHZk0VDTavM7TFIgK8W83a1x2Jhf/nad0JPZHvS2CrDs1F/LC1i1ooIUM5Ot2pyhCIR+u+iS
-        /BAVmbNBb5ZCqqOeD4URO3C0CtFyV12sT/c8PNyDDimdJepfmASvb/MM3dLJMH/eQPrPE=;
-Received: from kd111239184067.au-net.ne.jp ([111.239.184.67] helo=finisterre.ee.mobilebroadband)
-        by heliosphere.sirena.org.uk with esmtpsa (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
-        (Exim 4.89)
-        (envelope-from <broonie@sirena.org.uk>)
-        id 1hNYBs-0000s6-Az; Mon, 06 May 2019 07:37:36 +0000
-Received: by finisterre.ee.mobilebroadband (Postfix, from userid 1000)
-        id CB81D440034; Mon,  6 May 2019 05:38:09 +0100 (BST)
-Date:   Mon, 6 May 2019 13:38:09 +0900
-From:   Mark Brown <broonie@kernel.org>
-To:     Jorge Ramirez <jorge.ramirez-ortiz@linaro.org>
-Cc:     lgirdwood@gmail.com, robh+dt@kernel.org, mark.rutland@arm.com,
-        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
-        bjorn.andersson@linaro.org, vinod.koul@linaro.org,
-        niklas.cassel@linaro.org, khasim.mohammed@linaro.org,
-        linux-arm-kernel@lists.infradead.org, linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH 2/3] drivers: regulator: qcom: add PMS405 SPMI regulator
-Message-ID: <20190506043809.GL14916@sirena.org.uk>
-References: <a3c281d5-d30e-294f-71ab-957decde2ba0@linaro.org>
- <20190502023316.GS14916@sirena.org.uk>
- <dd15d784-f2a1-78c6-3543-69bbcc1143c4@linaro.org>
- <20190503062626.GE14916@sirena.org.uk>
- <229823c4-f5d4-4821-ded1-cc046dd0bd20@linaro.org>
+        Mon, 6 May 2019 02:42:49 -0400
+Received: by mail-lj1-f194.google.com with SMTP id h21so10008690ljk.13
+        for <linux-arm-msm@vger.kernel.org>; Sun, 05 May 2019 23:42:48 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=kczJA0awqdoA0ORNL2OLUesgvZQuju/puNenMWJZnJs=;
+        b=hBHK5Dj/+/9RsrxgVMPxDHF5voi9VNs/bZnK1MrhfA5lRcvYi8EcaPEpzJJoRFgcWH
+         FQJflnlMcwe2e3kkppMG1fo6drZtZRQbBnksEnmbh8gH5QOEXbW3b7XQQtbYxwgxhnp9
+         Rce783IBgTTRdV/F6GubWOA84+TIGZ7/FsRSHGJGDfg+xZwAFPIr/eU11xaaQkKSowP1
+         Vu5qbCwMJFJgVAb0efR3AzhWlvTxfwe7CNjYhJdNu0MRABXOI0ogu2gYN1ZHd47DXKFV
+         wid9EQsKj70NWtlibFyZO0c3pO813bWgyW++V7EGfh6TrgVPItwvH25k9VonTp6uzApT
+         6sVA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=kczJA0awqdoA0ORNL2OLUesgvZQuju/puNenMWJZnJs=;
+        b=en5cbsj6WQqTG3hF6DwQTcbmARDCu6q8iufVuajJkm9NMQnhkzUPvcFmCqNs/Umm3W
+         cfF9l1fP39GbRt6nxW5z5VSwHrJhcZIvUOGm8Djgh9tsQyocxltgNa3k2F/zhn2xPf7L
+         QTGpCwYlzqDbDl3ACn4O1n7UjEKjT0qaPl7kjy2Eesj6bIIjEBBw2tAObWk/tz/iWyo1
+         GUEQTU/Ct2hi72jQ7eiuBBZP8PgEsoDdNvU1zepJZkQ9Y13kW5GH9lTdW7J1g9PongHp
+         oPm8wXeJkTF3AjANd/6W9tEAxM8TcVKEUHgIAw4N4ScRHolh4DSSBRJOUVMeAXaCHbx0
+         BhvA==
+X-Gm-Message-State: APjAAAX3WSVbJShKikIw5dj1bybSFvsFgjV3DNnpoABH6rGndrJKhdig
+        Wv5syPFzRcxu3aoL5N3gZlBM5vRkz6JVXRu0KXlPfg==
+X-Google-Smtp-Source: APXvYqzECzkqvuxznKULj5aWJNaUw2MEkVcg4fgbtysnQxn5pELNdiFkFl5c+9+UvZ55+uPDQ5wZRCiIcbF2LmUHVLU=
+X-Received: by 2002:a2e:988e:: with SMTP id b14mr12222773ljj.126.1557124967799;
+ Sun, 05 May 2019 23:42:47 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="Ahst0DKxuyFxAqHk"
-Content-Disposition: inline
-In-Reply-To: <229823c4-f5d4-4821-ded1-cc046dd0bd20@linaro.org>
-X-Cookie: -- I have seen the FUN --
-User-Agent: Mutt/1.10.1 (2018-07-13)
+References: <20190505130413.32253-1-masneyb@onstation.org>
+In-Reply-To: <20190505130413.32253-1-masneyb@onstation.org>
+From:   Linus Walleij <linus.walleij@linaro.org>
+Date:   Mon, 6 May 2019 08:42:36 +0200
+Message-ID: <CACRpkda=JTfKC4z=1Gmt1BE5adwd8XGZ4ERTgapWX_BN9TFESw@mail.gmail.com>
+Subject: Re: [PATCH RFC 0/6] ARM: qcom: initial Nexus 5 display support
+To:     Brian Masney <masneyb@onstation.org>
+Cc:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        "open list:DRM PANEL DRIVERS" <dri-devel@lists.freedesktop.org>,
+        MSM <linux-arm-msm@vger.kernel.org>,
+        freedreno@lists.freedesktop.org, Dave Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On Sun, May 5, 2019 at 3:04 PM Brian Masney <masneyb@onstation.org> wrote:
 
---Ahst0DKxuyFxAqHk
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+> mdp5_get_scanoutpos() and mdp5_get_vblank_counter() both return 0, which
+> is causing this stack trace to be dumped into the system log several
+> times:
+>
+>     WARNING: CPU: 0 PID: 5 at drivers/gpu/drm/drm_atomic_helper.c:1430 drm_atomic_helper_wait_for_vblanks.part.1+0x288/0x290
+>     [CRTC:49:crtc-0] vblank wait timed out
+>     Modules linked in:
+>     CPU: 0 PID: 5 Comm: kworker/0:0 Not tainted 5.1.0-rc6-next-20190426-00006-g35c0d32a96e1-dirty #191
+>     Hardware name: Generic DT based system
+>     Workqueue: events deferred_probe_work_func
+>     [<c031229c>] (unwind_backtrace) from [<c030d5ac>] (show_stack+0x10/0x14)
+>     [<c030d5ac>] (show_stack) from [<c0ac134c>] (dump_stack+0x78/0x8c)
+>     [<c0ac134c>] (dump_stack) from [<c0321660>] (__warn.part.3+0xb8/0xd4)
+>     [<c0321660>] (__warn.part.3) from [<c03216e0>] (warn_slowpath_fmt+0x64/0x88)
+>     [<c03216e0>] (warn_slowpath_fmt) from [<c0761a0c>] (drm_atomic_helper_wait_for_vblanks.part.1+0x288/0x290)
+>     [<c0761a0c>] (drm_atomic_helper_wait_for_vblanks.part.1) from [<c07b0a98>] (mdp5_complete_commit+0x14/0x40)
+>     [<c07b0a98>] (mdp5_complete_commit) from [<c07ddb80>] (msm_atomic_commit_tail+0xa8/0x140)
+>     [<c07ddb80>] (msm_atomic_commit_tail) from [<c0763304>] (commit_tail+0x40/0x6c)
+>     [<c07633f4>] (drm_atomic_helper_commit) from [<c07667f0>] (restore_fbdev_mode_atomic+0x168/0x1d4)
 
-On Fri, May 03, 2019 at 10:29:42AM +0200, Jorge Ramirez wrote:
-> On 5/3/19 08:26, Mark Brown wrote:
-> > On Thu, May 02, 2019 at 01:30:48PM +0200, Jorge Ramirez wrote:
+I recently merged this patch:
+https://cgit.freedesktop.org/drm/drm-misc/commit/?id=b3198c38f02d54a5e964258a2180d502abe6eaf0
 
-> > It seems a bit of a jump to add a new driver - it's just another
-> > descriptor and ops structure isn't it?  Though as ever with the Qualcomm
-> > stuff this driver is pretty baroque which doesn't entirely help though I
-> > think it's just another regulator type which there's already some
-> > handling for.
+I noticed that DSI is sometimes way slower than a monitor, even  in HS mode.
+On the MCDE this happened on the first screen update, which was slower
+than 50ms.
 
-> So how do we move this forward?
+Check if your vblanks are simply slow, try bumping this timeout even higher,
+I spent weeks finding this issue which boils down to an assumption that
+the vblank will be fired from something like a monitor at 50 or 60 HZ
+~20 ms so 50ms seemed like a good timeout at the time.
 
-> To sum up his regulator needs to be able to bypass accesses to
-> SPMI_COMMON_REG_VOLTAGE_RANGE and provide the range in some other way
-> hence the change below
+On a DSI display this is dubious, absolutely in LP mode, and even
+in HS mode.
 
-> I can't find a simpler solution than this since the function does now
-> what is supposed to do for all the regulator types supported in the driver
-
-The assumption that you need to have this regulator use functions that
-use and provide ranges is the very thing I'm trying to get you to
-change.  It looks like these regulators just need their own
-set_voltage_sel() and get_voltage_sel() then they can use the standard
-linear range mapping functions (and pobably the set_voltage_time_sel()
-needs fixing anyway for all the other regulators).
-
-There's already some conditional code in the probe function for handling
-different operations for the over current protection and SAW stuff, this
-looks like it should fit in reasonably well.  Usually this would be even
-easier as probe functions are just data driven but for some reason more
-than usual of this driver's data initializaiton is done dynamically.
-
---Ahst0DKxuyFxAqHk
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAlzPujEACgkQJNaLcl1U
-h9AkRwf9GK2o9cZ1OLFJrB/8tsboZ5JASZWrWkJyQhXcVyS0lEb46C0dmGfdx0QC
-K7zSOESXrHeOCwevpiCnlpBRtc8pP4raU2rWA4VgE7c7zASR2CITmJOpBDyAkZ6z
-lLSC2Tj++glpX0avpR3ySlj0jPOSi2J5Ya3J8Waa3FQZmACUOuSBWRwidw27JZqE
-2ya2yxvRLHvqy8CFqTXPgW2tOnI++sKwNsbJj7dKSjCHPT4NjALwGHGevcSlxYvn
-z21RkjOTzCm2jtUPphaEbecZW1MJzcjX+lJD7Io0e3tVveT5RUhX2Vd0IbPzyXGp
-s5taJbNKU1udzdqgETiAHg711RKazw==
-=ojFG
------END PGP SIGNATURE-----
-
---Ahst0DKxuyFxAqHk--
+Yours,
+Linus Walleij
