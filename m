@@ -2,52 +2,52 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id CB33D14487
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  6 May 2019 08:42:50 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B66EC144EE
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  6 May 2019 09:04:49 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725840AbfEFGmt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 6 May 2019 02:42:49 -0400
-Received: from mail-lj1-f194.google.com ([209.85.208.194]:47085 "EHLO
+        id S1726282AbfEFHEs (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 6 May 2019 03:04:48 -0400
+Received: from mail-lj1-f194.google.com ([209.85.208.194]:42825 "EHLO
         mail-lj1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725851AbfEFGmt (ORCPT
+        with ESMTP id S1725836AbfEFHEs (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 6 May 2019 02:42:49 -0400
-Received: by mail-lj1-f194.google.com with SMTP id h21so10008690ljk.13
-        for <linux-arm-msm@vger.kernel.org>; Sun, 05 May 2019 23:42:48 -0700 (PDT)
+        Mon, 6 May 2019 03:04:48 -0400
+Received: by mail-lj1-f194.google.com with SMTP id y10so3581145lji.9
+        for <linux-arm-msm@vger.kernel.org>; Mon, 06 May 2019 00:04:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=kczJA0awqdoA0ORNL2OLUesgvZQuju/puNenMWJZnJs=;
-        b=hBHK5Dj/+/9RsrxgVMPxDHF5voi9VNs/bZnK1MrhfA5lRcvYi8EcaPEpzJJoRFgcWH
-         FQJflnlMcwe2e3kkppMG1fo6drZtZRQbBnksEnmbh8gH5QOEXbW3b7XQQtbYxwgxhnp9
-         Rce783IBgTTRdV/F6GubWOA84+TIGZ7/FsRSHGJGDfg+xZwAFPIr/eU11xaaQkKSowP1
-         Vu5qbCwMJFJgVAb0efR3AzhWlvTxfwe7CNjYhJdNu0MRABXOI0ogu2gYN1ZHd47DXKFV
-         wid9EQsKj70NWtlibFyZO0c3pO813bWgyW++V7EGfh6TrgVPItwvH25k9VonTp6uzApT
-         6sVA==
+         :cc:content-transfer-encoding;
+        bh=iNnmod9ZKYpePclbWo4PT7+A86yCjlpOu7Z5K0IfDaI=;
+        b=pDlv+7ag2wt+konKcf3YjvXQ6Rx8/AkKeXQxV1jX2Yytl40iicDeBaiJDqbX1JNyQr
+         dmy65YjhxAUORD4wvQCuMlzacDMJ3Gv3BOZ4wyPiCHxJbsVE8p+pIhpKg9KPEeiIYfut
+         2t/qiJZs/QJWX8oAuj9XOnR3mE1OMSi+mDyfHECpsTb6MaNv3Q53YK0yef+Z487Kpx4i
+         HHgX3CBx/h482EqJqKDZNPhTMgzEvMbtTfQRCY1ChPdtS4DaHFcNfq/y9M8Rgoyah0Hq
+         ikkFaNXi8C43tOIs5Gm1aGBA/Ad71E3g0vMbVmm3JB1k+Gvlnx1hAAonb082ZSfAbS3f
+         OLlA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=kczJA0awqdoA0ORNL2OLUesgvZQuju/puNenMWJZnJs=;
-        b=en5cbsj6WQqTG3hF6DwQTcbmARDCu6q8iufVuajJkm9NMQnhkzUPvcFmCqNs/Umm3W
-         cfF9l1fP39GbRt6nxW5z5VSwHrJhcZIvUOGm8Djgh9tsQyocxltgNa3k2F/zhn2xPf7L
-         QTGpCwYlzqDbDl3ACn4O1n7UjEKjT0qaPl7kjy2Eesj6bIIjEBBw2tAObWk/tz/iWyo1
-         GUEQTU/Ct2hi72jQ7eiuBBZP8PgEsoDdNvU1zepJZkQ9Y13kW5GH9lTdW7J1g9PongHp
-         oPm8wXeJkTF3AjANd/6W9tEAxM8TcVKEUHgIAw4N4ScRHolh4DSSBRJOUVMeAXaCHbx0
-         BhvA==
-X-Gm-Message-State: APjAAAX3WSVbJShKikIw5dj1bybSFvsFgjV3DNnpoABH6rGndrJKhdig
-        Wv5syPFzRcxu3aoL5N3gZlBM5vRkz6JVXRu0KXlPfg==
-X-Google-Smtp-Source: APXvYqzECzkqvuxznKULj5aWJNaUw2MEkVcg4fgbtysnQxn5pELNdiFkFl5c+9+UvZ55+uPDQ5wZRCiIcbF2LmUHVLU=
-X-Received: by 2002:a2e:988e:: with SMTP id b14mr12222773ljj.126.1557124967799;
- Sun, 05 May 2019 23:42:47 -0700 (PDT)
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=iNnmod9ZKYpePclbWo4PT7+A86yCjlpOu7Z5K0IfDaI=;
+        b=o5V1NFw2v9NXTBY4WJQqL1J8eCtPxgDNoG5eJ/PArj2mJFp0XKabBCmEH/NZ2AqXMI
+         rVdKdsucA4wu6mko1ACDBnZtlrvxkAx8CkVWgGoHDjFjJVUKy5zbwX3p0h/moPImt31V
+         7yviBECRy0lLqpVtkqR/xsyYZyflH1SrcyfgDVYsrrrqeR9OBh30BSSTb5tTt/fC3KRp
+         3AHmQzMkXg1wlWct8wKB7fgv4GHaUQVT3uJCWQPiIuA1IHf6h9HwQ9ufWQ0lYDn9fX4W
+         cv9ArnvIQGqtjwwJUGxxMPfFBdsMOgNuwYzF0FZgsnjV9K86RDXcDFGUFSMNhjfP6jWS
+         oJhQ==
+X-Gm-Message-State: APjAAAUKgbABfq2/xi9gUXLTrg1LxCn98KpGCSMXSPLzOvd6UfPP0YPg
+        vIiMbpA3n5kZSmaVX5p6D2AmkEPkfswUl7vk8Jkz8g==
+X-Google-Smtp-Source: APXvYqwpSJLl8gV6pdZU4YYHl94me2CBN5IMcXEz3u0oBYWdfeT0XTVNkb2FrbRHhDYCHk2DkNUzwnMuw0PYb0iLxEY=
+X-Received: by 2002:a2e:8e93:: with SMTP id z19mr9427670ljk.159.1557126286550;
+ Mon, 06 May 2019 00:04:46 -0700 (PDT)
 MIME-Version: 1.0
-References: <20190505130413.32253-1-masneyb@onstation.org>
-In-Reply-To: <20190505130413.32253-1-masneyb@onstation.org>
+References: <20190505130413.32253-1-masneyb@onstation.org> <20190505130413.32253-4-masneyb@onstation.org>
+In-Reply-To: <20190505130413.32253-4-masneyb@onstation.org>
 From:   Linus Walleij <linus.walleij@linaro.org>
-Date:   Mon, 6 May 2019 08:42:36 +0200
-Message-ID: <CACRpkda=JTfKC4z=1Gmt1BE5adwd8XGZ4ERTgapWX_BN9TFESw@mail.gmail.com>
-Subject: Re: [PATCH RFC 0/6] ARM: qcom: initial Nexus 5 display support
+Date:   Mon, 6 May 2019 09:04:35 +0200
+Message-ID: <CACRpkdZFK9EGptXbtowUMai6M-jdh6OSTU2=X9A-N3R7hcvXiQ@mail.gmail.com>
+Subject: Re: [PATCH RFC 3/6] ARM: qcom_defconfig: add display-related options
 To:     Brian Masney <masneyb@onstation.org>
 Cc:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
         "open list:DRM PANEL DRIVERS" <dri-devel@lists.freedesktop.org>,
@@ -56,6 +56,7 @@ Cc:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
         Daniel Vetter <daniel@ffwll.ch>,
         "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
@@ -63,40 +64,23 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 On Sun, May 5, 2019 at 3:04 PM Brian Masney <masneyb@onstation.org> wrote:
 
-> mdp5_get_scanoutpos() and mdp5_get_vblank_counter() both return 0, which
-> is causing this stack trace to be dumped into the system log several
-> times:
+> Add the CMA (Contiguous Memory Allocator) for the MSM DRM driver, the
+> simple panel, and the TI LM3630A driver in order to support the display
+> on the LG Nexus 5 (hammerhead) phone.
 >
->     WARNING: CPU: 0 PID: 5 at drivers/gpu/drm/drm_atomic_helper.c:1430 drm_atomic_helper_wait_for_vblanks.part.1+0x288/0x290
->     [CRTC:49:crtc-0] vblank wait timed out
->     Modules linked in:
->     CPU: 0 PID: 5 Comm: kworker/0:0 Not tainted 5.1.0-rc6-next-20190426-00006-g35c0d32a96e1-dirty #191
->     Hardware name: Generic DT based system
->     Workqueue: events deferred_probe_work_func
->     [<c031229c>] (unwind_backtrace) from [<c030d5ac>] (show_stack+0x10/0x14)
->     [<c030d5ac>] (show_stack) from [<c0ac134c>] (dump_stack+0x78/0x8c)
->     [<c0ac134c>] (dump_stack) from [<c0321660>] (__warn.part.3+0xb8/0xd4)
->     [<c0321660>] (__warn.part.3) from [<c03216e0>] (warn_slowpath_fmt+0x64/0x88)
->     [<c03216e0>] (warn_slowpath_fmt) from [<c0761a0c>] (drm_atomic_helper_wait_for_vblanks.part.1+0x288/0x290)
->     [<c0761a0c>] (drm_atomic_helper_wait_for_vblanks.part.1) from [<c07b0a98>] (mdp5_complete_commit+0x14/0x40)
->     [<c07b0a98>] (mdp5_complete_commit) from [<c07ddb80>] (msm_atomic_commit_tail+0xa8/0x140)
->     [<c07ddb80>] (msm_atomic_commit_tail) from [<c0763304>] (commit_tail+0x40/0x6c)
->     [<c07633f4>] (drm_atomic_helper_commit) from [<c07667f0>] (restore_fbdev_mode_atomic+0x168/0x1d4)
+> Signed-off-by: Brian Masney <masneyb@onstation.org>
 
-I recently merged this patch:
-https://cgit.freedesktop.org/drm/drm-misc/commit/?id=b3198c38f02d54a5e964258a2180d502abe6eaf0
+Reviewed-by: Linus Walleij <linus.walleij@linaro.org>
 
-I noticed that DSI is sometimes way slower than a monitor, even  in HS mode.
-On the MCDE this happened on the first screen update, which was slower
-than 50ms.
+> The panel and backlight are currently compiled into the kernel, but will
+> be moved to be modules once the display is fully working in a later
+> verison of this patch series.
 
-Check if your vblanks are simply slow, try bumping this timeout even higher,
-I spent weeks finding this issue which boils down to an assumption that
-the vblank will be fired from something like a monitor at 50 or 60 HZ
-~20 ms so 50ms seemed like a good timeout at the time.
-
-On a DSI display this is dubious, absolutely in LP mode, and even
-in HS mode.
+I don't see why we would want to do that, the FB console is
+traditionally (x86) good to alwa=C3=BDs get up, as serial console
+might not always be available. For example for people
+who can't solder special cables but still want to boot a
+custom ROM on their Nexus. So I'd say keep it like this.
 
 Yours,
 Linus Walleij
