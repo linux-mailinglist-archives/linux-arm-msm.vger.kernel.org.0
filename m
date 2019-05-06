@@ -2,85 +2,99 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id B66EC144EE
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  6 May 2019 09:04:49 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B68C3144E3
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  6 May 2019 09:03:32 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726282AbfEFHEs (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 6 May 2019 03:04:48 -0400
-Received: from mail-lj1-f194.google.com ([209.85.208.194]:42825 "EHLO
-        mail-lj1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725836AbfEFHEs (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 6 May 2019 03:04:48 -0400
-Received: by mail-lj1-f194.google.com with SMTP id y10so3581145lji.9
-        for <linux-arm-msm@vger.kernel.org>; Mon, 06 May 2019 00:04:47 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=iNnmod9ZKYpePclbWo4PT7+A86yCjlpOu7Z5K0IfDaI=;
-        b=pDlv+7ag2wt+konKcf3YjvXQ6Rx8/AkKeXQxV1jX2Yytl40iicDeBaiJDqbX1JNyQr
-         dmy65YjhxAUORD4wvQCuMlzacDMJ3Gv3BOZ4wyPiCHxJbsVE8p+pIhpKg9KPEeiIYfut
-         2t/qiJZs/QJWX8oAuj9XOnR3mE1OMSi+mDyfHECpsTb6MaNv3Q53YK0yef+Z487Kpx4i
-         HHgX3CBx/h482EqJqKDZNPhTMgzEvMbtTfQRCY1ChPdtS4DaHFcNfq/y9M8Rgoyah0Hq
-         ikkFaNXi8C43tOIs5Gm1aGBA/Ad71E3g0vMbVmm3JB1k+Gvlnx1hAAonb082ZSfAbS3f
-         OLlA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=iNnmod9ZKYpePclbWo4PT7+A86yCjlpOu7Z5K0IfDaI=;
-        b=o5V1NFw2v9NXTBY4WJQqL1J8eCtPxgDNoG5eJ/PArj2mJFp0XKabBCmEH/NZ2AqXMI
-         rVdKdsucA4wu6mko1ACDBnZtlrvxkAx8CkVWgGoHDjFjJVUKy5zbwX3p0h/moPImt31V
-         7yviBECRy0lLqpVtkqR/xsyYZyflH1SrcyfgDVYsrrrqeR9OBh30BSSTb5tTt/fC3KRp
-         3AHmQzMkXg1wlWct8wKB7fgv4GHaUQVT3uJCWQPiIuA1IHf6h9HwQ9ufWQ0lYDn9fX4W
-         cv9ArnvIQGqtjwwJUGxxMPfFBdsMOgNuwYzF0FZgsnjV9K86RDXcDFGUFSMNhjfP6jWS
-         oJhQ==
-X-Gm-Message-State: APjAAAUKgbABfq2/xi9gUXLTrg1LxCn98KpGCSMXSPLzOvd6UfPP0YPg
-        vIiMbpA3n5kZSmaVX5p6D2AmkEPkfswUl7vk8Jkz8g==
-X-Google-Smtp-Source: APXvYqwpSJLl8gV6pdZU4YYHl94me2CBN5IMcXEz3u0oBYWdfeT0XTVNkb2FrbRHhDYCHk2DkNUzwnMuw0PYb0iLxEY=
-X-Received: by 2002:a2e:8e93:: with SMTP id z19mr9427670ljk.159.1557126286550;
- Mon, 06 May 2019 00:04:46 -0700 (PDT)
-MIME-Version: 1.0
-References: <20190505130413.32253-1-masneyb@onstation.org> <20190505130413.32253-4-masneyb@onstation.org>
-In-Reply-To: <20190505130413.32253-4-masneyb@onstation.org>
-From:   Linus Walleij <linus.walleij@linaro.org>
-Date:   Mon, 6 May 2019 09:04:35 +0200
-Message-ID: <CACRpkdZFK9EGptXbtowUMai6M-jdh6OSTU2=X9A-N3R7hcvXiQ@mail.gmail.com>
-Subject: Re: [PATCH RFC 3/6] ARM: qcom_defconfig: add display-related options
-To:     Brian Masney <masneyb@onstation.org>
-Cc:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        "open list:DRM PANEL DRIVERS" <dri-devel@lists.freedesktop.org>,
-        MSM <linux-arm-msm@vger.kernel.org>,
-        freedreno@lists.freedesktop.org, Dave Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+        id S1725830AbfEFHDb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 6 May 2019 03:03:31 -0400
+Received: from mxhk.zte.com.cn ([63.217.80.70]:40984 "EHLO mxhk.zte.com.cn"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1725710AbfEFHDb (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 6 May 2019 03:03:31 -0400
+Received: from mse-fl1.zte.com.cn (unknown [10.30.14.238])
+        by Forcepoint Email with ESMTPS id 678822367F41339C650A;
+        Mon,  6 May 2019 15:03:29 +0800 (CST)
+Received: from notes_smtp.zte.com.cn ([10.30.1.239])
+        by mse-fl1.zte.com.cn with ESMTP id x4673Pko021643;
+        Mon, 6 May 2019 15:03:25 +0800 (GMT-8)
+        (envelope-from wen.yang99@zte.com.cn)
+Received: from fox-host8.localdomain ([10.74.120.8])
+          by szsmtp06.zte.com.cn (Lotus Domino Release 8.5.3FP6)
+          with ESMTP id 2019050615032919-10027948 ;
+          Mon, 6 May 2019 15:03:29 +0800 
+From:   Wen Yang <wen.yang99@zte.com.cn>
+To:     linux-kernel@vger.kernel.org
+Cc:     wang.yi59@zte.com.cn, Wen Yang <wen.yang99@zte.com.cn>,
+        Stanimir Varbanov <stanimir.varbanov@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        David Brown <david.brown@linaro.org>,
+        Mauro Carvalho Chehab <mchehab@kernel.org>,
+        linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org
+Subject: [PATCH 1/4] media: venus: firmware: fix leaked of_node references
+Date:   Mon, 6 May 2019 15:05:15 +0800
+Message-Id: <1557126318-21487-2-git-send-email-wen.yang99@zte.com.cn>
+X-Mailer: git-send-email 1.8.3.1
+In-Reply-To: <1557126318-21487-1-git-send-email-wen.yang99@zte.com.cn>
+References: <1557126318-21487-1-git-send-email-wen.yang99@zte.com.cn>
+X-MIMETrack: Itemize by SMTP Server on SZSMTP06/server/zte_ltd(Release 8.5.3FP6|November
+ 21, 2013) at 2019-05-06 15:03:29,
+        Serialize by Router on notes_smtp/zte_ltd(Release 9.0.1FP7|August  17, 2016) at
+ 2019-05-06 15:03:23,
+        Serialize complete at 2019-05-06 15:03:23
+X-MAIL: mse-fl1.zte.com.cn x4673Pko021643
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Sun, May 5, 2019 at 3:04 PM Brian Masney <masneyb@onstation.org> wrote:
+The call to of_parse_phandle returns a node pointer with refcount
+incremented thus it must be explicitly decremented after the last
+usage.
 
-> Add the CMA (Contiguous Memory Allocator) for the MSM DRM driver, the
-> simple panel, and the TI LM3630A driver in order to support the display
-> on the LG Nexus 5 (hammerhead) phone.
->
-> Signed-off-by: Brian Masney <masneyb@onstation.org>
+Detected by coccinelle with the following warnings:
+drivers/media/platform/qcom/venus/firmware.c:90:2-8: ERROR: missing of_node_put; acquired a node pointer with refcount incremented on line 82, but without a corresponding object release within this function.
+drivers/media/platform/qcom/venus/firmware.c:94:2-8: ERROR: missing of_node_put; acquired a node pointer with refcount incremented on line 82, but without a corresponding object release within this function.
+drivers/media/platform/qcom/venus/firmware.c:128:1-7: ERROR: missing of_node_put; acquired a node pointer with refcount incremented on line 82, but without a corresponding object release within this function.
 
-Reviewed-by: Linus Walleij <linus.walleij@linaro.org>
+Signed-off-by: Wen Yang <wen.yang99@zte.com.cn>
+Cc: Stanimir Varbanov <stanimir.varbanov@linaro.org>
+Cc: Andy Gross <agross@kernel.org>
+Cc: David Brown <david.brown@linaro.org>
+Cc: Mauro Carvalho Chehab <mchehab@kernel.org>
+Cc: linux-media@vger.kernel.org
+Cc: linux-arm-msm@vger.kernel.org
+Cc: linux-kernel@vger.kernel.org
+---
+ drivers/media/platform/qcom/venus/firmware.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-> The panel and backlight are currently compiled into the kernel, but will
-> be moved to be modules once the display is fully working in a later
-> verison of this patch series.
+diff --git a/drivers/media/platform/qcom/venus/firmware.c b/drivers/media/platform/qcom/venus/firmware.c
+index 6cfa802..f81449b 100644
+--- a/drivers/media/platform/qcom/venus/firmware.c
++++ b/drivers/media/platform/qcom/venus/firmware.c
+@@ -87,11 +87,11 @@ static int venus_load_fw(struct venus_core *core, const char *fwname,
+ 
+ 	ret = of_address_to_resource(node, 0, &r);
+ 	if (ret)
+-		return ret;
++		goto err_put_node;
+ 
+ 	ret = request_firmware(&mdt, fwname, dev);
+ 	if (ret < 0)
+-		return ret;
++		goto err_put_node;
+ 
+ 	fw_size = qcom_mdt_get_size(mdt);
+ 	if (fw_size < 0) {
+@@ -125,6 +125,8 @@ static int venus_load_fw(struct venus_core *core, const char *fwname,
+ 	memunmap(mem_va);
+ err_release_fw:
+ 	release_firmware(mdt);
++err_put_node:
++	of_node_put(node);
+ 	return ret;
+ }
+ 
+-- 
+2.9.5
 
-I don't see why we would want to do that, the FB console is
-traditionally (x86) good to alwa=C3=BDs get up, as serial console
-might not always be available. For example for people
-who can't solder special cables but still want to boot a
-custom ROM on their Nexus. So I'd say keep it like this.
-
-Yours,
-Linus Walleij
