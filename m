@@ -2,99 +2,75 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id B68C3144E3
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  6 May 2019 09:03:32 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 67529144FD
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  6 May 2019 09:07:34 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725830AbfEFHDb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 6 May 2019 03:03:31 -0400
-Received: from mxhk.zte.com.cn ([63.217.80.70]:40984 "EHLO mxhk.zte.com.cn"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1725710AbfEFHDb (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 6 May 2019 03:03:31 -0400
-Received: from mse-fl1.zte.com.cn (unknown [10.30.14.238])
-        by Forcepoint Email with ESMTPS id 678822367F41339C650A;
-        Mon,  6 May 2019 15:03:29 +0800 (CST)
-Received: from notes_smtp.zte.com.cn ([10.30.1.239])
-        by mse-fl1.zte.com.cn with ESMTP id x4673Pko021643;
-        Mon, 6 May 2019 15:03:25 +0800 (GMT-8)
-        (envelope-from wen.yang99@zte.com.cn)
-Received: from fox-host8.localdomain ([10.74.120.8])
-          by szsmtp06.zte.com.cn (Lotus Domino Release 8.5.3FP6)
-          with ESMTP id 2019050615032919-10027948 ;
-          Mon, 6 May 2019 15:03:29 +0800 
-From:   Wen Yang <wen.yang99@zte.com.cn>
-To:     linux-kernel@vger.kernel.org
-Cc:     wang.yi59@zte.com.cn, Wen Yang <wen.yang99@zte.com.cn>,
-        Stanimir Varbanov <stanimir.varbanov@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        David Brown <david.brown@linaro.org>,
-        Mauro Carvalho Chehab <mchehab@kernel.org>,
-        linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org
-Subject: [PATCH 1/4] media: venus: firmware: fix leaked of_node references
-Date:   Mon, 6 May 2019 15:05:15 +0800
-Message-Id: <1557126318-21487-2-git-send-email-wen.yang99@zte.com.cn>
-X-Mailer: git-send-email 1.8.3.1
-In-Reply-To: <1557126318-21487-1-git-send-email-wen.yang99@zte.com.cn>
-References: <1557126318-21487-1-git-send-email-wen.yang99@zte.com.cn>
-X-MIMETrack: Itemize by SMTP Server on SZSMTP06/server/zte_ltd(Release 8.5.3FP6|November
- 21, 2013) at 2019-05-06 15:03:29,
-        Serialize by Router on notes_smtp/zte_ltd(Release 9.0.1FP7|August  17, 2016) at
- 2019-05-06 15:03:23,
-        Serialize complete at 2019-05-06 15:03:23
-X-MAIL: mse-fl1.zte.com.cn x4673Pko021643
+        id S1725836AbfEFHHd (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 6 May 2019 03:07:33 -0400
+Received: from mail-lj1-f194.google.com ([209.85.208.194]:34052 "EHLO
+        mail-lj1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725710AbfEFHHd (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 6 May 2019 03:07:33 -0400
+Received: by mail-lj1-f194.google.com with SMTP id s7so4691195ljh.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 06 May 2019 00:07:31 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=CwhE2uGZiLqXEkI99lHZnisKdDy8+j12/x0rEBhmeMM=;
+        b=l2L8hf9litttSO44g7UtX5hvurVX6oUBgrgVujLll+Rl/TJbvf3yhbIMo9EhmEZ9Rk
+         Wa2kzhcPXWJ1bcoLMsvfOY2kCOo0Dp9p+w3OEZsKkK4mKLpsiY1e935zU70ZGM5BvbjH
+         WQHijhdwJToIsiTpW66nmXUpeAGgGsTgL2YH9b3xSEgDX996kJl1VxdiNLu3a54gq9y8
+         s6bqhRSSGn90aGEWOpIXvBqEf1+xLT9YdV6OpKZyCSTnbF8IYG0R1/R/nVPrV3mzSSUr
+         r+RrzSE2Cwn8yJsRl+MCGGc+Nv8WEiF/H4gRbUC007pQnjF5URyBaMLARwq1JvbYca1w
+         IVkQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=CwhE2uGZiLqXEkI99lHZnisKdDy8+j12/x0rEBhmeMM=;
+        b=jrphvfYHvgbBYPj2QxJ2sZpMu9aONsITQv5CVWua1GnQvnwI0+3U+ZmR8fYJ/VWLrs
+         eAWZ3QNcQmw1vt4DXRY5n51p/0ldCkEBOFERCd1lpGtDGyQZlY4uifUjlxMxqcJHVweL
+         lHbMIS9knIYs3ejcCGhR2p5UtBhvJBid/jUK2dhS5GPFlXvx4Lj7aumwweJgQohFjC2U
+         mtAakENVDCCByZIGAOr/laew7JW/AEkINvwWmPYiFo1/jbUnvxGM6wXgaJAC4fPkgx+v
+         Zgm+MOF5KLTtDkA67+yA+KUVG0YY1RuzL9GzG6Ls0djs06eUz2vT0M+TgwBAoi6famXk
+         FjSA==
+X-Gm-Message-State: APjAAAVREEcETr3TRMdMekVAXx4o1leQSyLaW24UHYR0mR4aJENFK4pY
+        PbUjsiPQC8GHM+6zqSKvRfTN0ErvwJT03wUFKBOJjQ==
+X-Google-Smtp-Source: APXvYqy5QhAAjdwvG22vzOX8m6OHCd2VKpL1I6A8CX0v3BiwyS6su6YLuw04TDhpCSaHEIZ/H1RuHvzvAIH2QzK179o=
+X-Received: by 2002:a2e:834d:: with SMTP id l13mr13133044ljh.97.1557126451228;
+ Mon, 06 May 2019 00:07:31 -0700 (PDT)
+MIME-Version: 1.0
+References: <20190505130413.32253-1-masneyb@onstation.org> <20190505130413.32253-5-masneyb@onstation.org>
+In-Reply-To: <20190505130413.32253-5-masneyb@onstation.org>
+From:   Linus Walleij <linus.walleij@linaro.org>
+Date:   Mon, 6 May 2019 09:07:19 +0200
+Message-ID: <CACRpkdY_SwZMudmKaC90Q8O4OnhjVLeGN2ZU29xGw3FGG3uYiQ@mail.gmail.com>
+Subject: Re: [PATCH RFC 4/6] ARM: dts: msm8974: add display support
+To:     Brian Masney <masneyb@onstation.org>
+Cc:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        "open list:DRM PANEL DRIVERS" <dri-devel@lists.freedesktop.org>,
+        MSM <linux-arm-msm@vger.kernel.org>,
+        freedreno@lists.freedesktop.org, Dave Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The call to of_parse_phandle returns a node pointer with refcount
-incremented thus it must be explicitly decremented after the last
-usage.
+On Sun, May 5, 2019 at 3:04 PM Brian Masney <masneyb@onstation.org> wrote:
 
-Detected by coccinelle with the following warnings:
-drivers/media/platform/qcom/venus/firmware.c:90:2-8: ERROR: missing of_node_put; acquired a node pointer with refcount incremented on line 82, but without a corresponding object release within this function.
-drivers/media/platform/qcom/venus/firmware.c:94:2-8: ERROR: missing of_node_put; acquired a node pointer with refcount incremented on line 82, but without a corresponding object release within this function.
-drivers/media/platform/qcom/venus/firmware.c:128:1-7: ERROR: missing of_node_put; acquired a node pointer with refcount incremented on line 82, but without a corresponding object release within this function.
+> Add the MDP5, DSI and DSI PHY blocks for the display found on the
+> msm8974 SoCs. This is based on work from msm8916.dtsi and Jonathan
+> Marek.
+>
+> Signed-off-by: Brian Masney <masneyb@onstation.org>
 
-Signed-off-by: Wen Yang <wen.yang99@zte.com.cn>
-Cc: Stanimir Varbanov <stanimir.varbanov@linaro.org>
-Cc: Andy Gross <agross@kernel.org>
-Cc: David Brown <david.brown@linaro.org>
-Cc: Mauro Carvalho Chehab <mchehab@kernel.org>
-Cc: linux-media@vger.kernel.org
-Cc: linux-arm-msm@vger.kernel.org
-Cc: linux-kernel@vger.kernel.org
----
- drivers/media/platform/qcom/venus/firmware.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+From my limited understanding it looks good:
+Reviewed-by: Linus Walleij <linus.walleij@linaro.org>
 
-diff --git a/drivers/media/platform/qcom/venus/firmware.c b/drivers/media/platform/qcom/venus/firmware.c
-index 6cfa802..f81449b 100644
---- a/drivers/media/platform/qcom/venus/firmware.c
-+++ b/drivers/media/platform/qcom/venus/firmware.c
-@@ -87,11 +87,11 @@ static int venus_load_fw(struct venus_core *core, const char *fwname,
- 
- 	ret = of_address_to_resource(node, 0, &r);
- 	if (ret)
--		return ret;
-+		goto err_put_node;
- 
- 	ret = request_firmware(&mdt, fwname, dev);
- 	if (ret < 0)
--		return ret;
-+		goto err_put_node;
- 
- 	fw_size = qcom_mdt_get_size(mdt);
- 	if (fw_size < 0) {
-@@ -125,6 +125,8 @@ static int venus_load_fw(struct venus_core *core, const char *fwname,
- 	memunmap(mem_va);
- err_release_fw:
- 	release_firmware(mdt);
-+err_put_node:
-+	of_node_put(node);
- 	return ret;
- }
- 
--- 
-2.9.5
-
+Yours,
+Linus Walleij
