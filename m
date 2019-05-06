@@ -2,166 +2,106 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 6B1A015026
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  6 May 2019 17:27:23 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A82481532B
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  6 May 2019 19:56:28 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726533AbfEFP1W (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 6 May 2019 11:27:22 -0400
-Received: from mail-wr1-f66.google.com ([209.85.221.66]:46156 "EHLO
-        mail-wr1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726511AbfEFP1W (ORCPT
+        id S1726767AbfEFR41 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 6 May 2019 13:56:27 -0400
+Received: from mail-wm1-f66.google.com ([209.85.128.66]:36407 "EHLO
+        mail-wm1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726536AbfEFR40 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 6 May 2019 11:27:22 -0400
-Received: by mail-wr1-f66.google.com with SMTP id r7so17770261wrr.13
-        for <linux-arm-msm@vger.kernel.org>; Mon, 06 May 2019 08:27:21 -0700 (PDT)
+        Mon, 6 May 2019 13:56:26 -0400
+Received: by mail-wm1-f66.google.com with SMTP id j187so174481wmj.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 06 May 2019 10:56:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=arista.com; s=googlenew;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=GuMSdmXl0z53dDi0xhlaU7BU2n/bLw/DBUWaPvlO+dc=;
-        b=C/d9PWiZ7kbJC0oH7zo5Ibhtjb0LJxg5WGRhk2z22dgXTR0ahak265kLVZyGYOhfje
-         aEtSmh42RRvz8bCCBZRBFOn7uv5XCF0ECqKL0Hb338d0yPodqMwGb1L0gvRyJgITkaxQ
-         Ki1y61sbdbPypKRjDCxUR8MH0zfn/bbro9LPpFVyLBByJZzEOqelQf5tS81MK2FkUIP3
-         sLhve+NsmP0dlDX03w14Qjs93JrqJwcC/r4yHUZhJhCv/72E7VCM80drfYcNtln/9ipb
-         cKIyK6t7ROv023pVx/00hbtubgQCmfBlIjzs3E6R48gtIILod1LUINjWV6UVWZ8tSjxH
-         BBpA==
+        bh=XgcBPgF1G8mWsEvrlCrTStioPWUfDuKosdmWCCS6E5E=;
+        b=VTcOSw6DyJHMGc0Los3OPWsCksrdPWPyD8vO7tfd4hoUYxYcfmFRvdg6+xhXohcDI4
+         iaPbQJh8VcU547wAZs36ZseUPhEx2n6IGa7dslufaoh80Vv9iPal8eujdbqhX47dUUCf
+         rd0f8NtzfQWEGvOpMeRmdX8JSJP8cWcKcVhIbhptYXMtK+CkC+jkyMF1+0K9zUfHIWKS
+         SJl54+i/RAyvIlSJFHmzstzMCaSBfFTRYRQj0rviMBg1ovVLt3DHD9KLbmEDFh5DQkUB
+         K/4VUUv6V6l3X4JgKl9DsDvUKdy2qvZJaDBJBTVgKEAth7AkIIbN3tSX8f+DjWvOa5Un
+         ZWlQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=GuMSdmXl0z53dDi0xhlaU7BU2n/bLw/DBUWaPvlO+dc=;
-        b=Ynk7UXN/vinPfGI0VaNEdFjZIR8sSpDuLGFEhyOWPaBlXNpjoQoZCpTiKtmpwBRElL
-         l8r/mxO0pfTLA62WA4/r6p7mU8mJFqSEKlt7+aM/9r4LrOyHa8xrmLtf6/XrXMIOrmIz
-         O9EwRk7WMK0RrjtJs1vAFnpT0W6aVCT7f2VJFNH35atKiiwKlwKjGTza/FJN++NBOdtu
-         9/iGLPZjL3JN2+jchvxmP8I8gSXZT4hC/V5a1zPBm5cxP0/0YgEtwlbuUGkuZt1MLjJU
-         FiDWEx75nP65KFADhUtnJqjosH5SlLdVtEbgxNTPZ31LnDobN1AMfcwtYR1t8RyPlOb+
-         wc/A==
-X-Gm-Message-State: APjAAAXz3YTFU+q+twD3Td9EvTdv3Rnki6ZfUJLHbElgVghV149XHjgE
-        VMLrHOFcA7MZZ634vE8wjXkk8MfZYA+X4+p3K5Ckgw==
-X-Google-Smtp-Source: APXvYqzdYjq2KzNwXSYRUYk147h4YL+JNa0zWfymURRoAL7aXQogilrHn37rwl9PoIS46ayzMGu+Ikwm2tOs7SUKN4Y=
-X-Received: by 2002:a5d:5551:: with SMTP id g17mr20082024wrw.50.1557156440752;
- Mon, 06 May 2019 08:27:20 -0700 (PDT)
+        bh=XgcBPgF1G8mWsEvrlCrTStioPWUfDuKosdmWCCS6E5E=;
+        b=FTaY0RH+Q6R/iqCqVN4FBfS+pxDVd8aApefh+/c2k+0wVfs5EVTlH9PMQUkentfVQT
+         f4hTrnUQiV7LYfjDRTUMobVkAZxlH/rCt7c8lA2LZl44DCqugTrbRaXs2Ej2W4fJPo03
+         jv7igysJrDC57tyhuG6prSuzy1L++EljyPEk/4WAE0a/o0gVYnnUEsnXRMzWZ1Kt9UA+
+         5lBgA5HFKJ6mPP+Y2fP4hdBK3wKsKYXBM8iHZRdtbXCKUggb7G8EDyoGeJQCQeF9NCjF
+         /fSU/mNNejkCjZmLrj+J2LVgVTu68nGvG7tDVAR1zcKjy2yGLltkUCACxSdVX+9phEE7
+         3yDA==
+X-Gm-Message-State: APjAAAU5GR/r8QZsgoEih8Idyfjzs4ykYFIGjiEpN8nZfAgkV3ZY5gZV
+        eD9UINLFIM45RuEc9traEKMeTbwLhZWi+gXC+2Y6Bg==
+X-Google-Smtp-Source: APXvYqy6O9Hx4Xu6PpK27h5ZvwKOZrtRiCBaX5D6FeKqa43xpsoBRLSUcAf7GCThq5ov8PH4U8Kpn29YDNsu9mBVmhc=
+X-Received: by 2002:a1c:2e88:: with SMTP id u130mr10259976wmu.54.1557165384862;
+ Mon, 06 May 2019 10:56:24 -0700 (PDT)
 MIME-Version: 1.0
-References: <20190504132327.27041-1-tmurphy@arista.com> <20190504132327.27041-2-tmurphy@arista.com>
- <8fef18f5-773c-e1c9-2537-c9dff5bfd35e@linux.intel.com>
-In-Reply-To: <8fef18f5-773c-e1c9-2537-c9dff5bfd35e@linux.intel.com>
+References: <20190430002952.18909-1-tmurphy@arista.com> <20190430002952.18909-4-tmurphy@arista.com>
+ <20190430111222.GA3191@infradead.org> <da835ce2-f73e-3035-e1d7-d3028cc1a838@arm.com>
+ <20190430113253.GA23210@infradead.org> <96ebb6fc-a889-fa94-09ba-65d505b85724@arm.com>
+In-Reply-To: <96ebb6fc-a889-fa94-09ba-65d505b85724@arm.com>
 From:   Tom Murphy <tmurphy@arista.com>
-Date:   Mon, 6 May 2019 16:27:09 +0100
-Message-ID: <CAPL0++4_Qa+dxzQ2k6BJi_o+VSSrHEtomYgVmRqjtjsOfHbGew@mail.gmail.com>
-Subject: Re: [RFC 1/7] iommu/vt-d: Set the dma_ops per device so we can remove
- the iommu_no_mapping code
-To:     Lu Baolu <baolu.lu@linux.intel.com>
-Cc:     iommu@lists.linux-foundation.org, Tom Murphy <murphyt7@tcd.ie>,
-        Joerg Roedel <joro@8bytes.org>,
+Date:   Mon, 6 May 2019 18:56:13 +0100
+Message-ID: <CAPL0++61WytVhs63tvt+hdpZKXGinrkYx=4nDtNx1UoNTRWWjw@mail.gmail.com>
+Subject: Re: [PATCH v2 3/4] iommu/dma-iommu: Use the dev->coherent_dma_mask
+To:     Robin Murphy <robin.murphy@arm.com>
+Cc:     Christoph Hellwig <hch@infradead.org>,
+        iommu@lists.linux-foundation.org, Heiko Stuebner <heiko@sntech.de>,
         Will Deacon <will.deacon@arm.com>,
-        Robin Murphy <robin.murphy@arm.com>,
-        Marek Szyprowski <m.szyprowski@samsung.com>,
-        Kukjin Kim <kgene@kernel.org>,
-        Krzysztof Kozlowski <krzk@kernel.org>,
-        David Woodhouse <dwmw2@infradead.org>,
-        Andy Gross <andy.gross@linaro.org>,
         David Brown <david.brown@linaro.org>,
-        Matthias Brugger <matthias.bgg@gmail.com>,
-        Rob Clark <robdclark@gmail.com>,
-        Heiko Stuebner <heiko@sntech.de>,
-        Gerald Schaefer <gerald.schaefer@de.ibm.com>,
         Thierry Reding <thierry.reding@gmail.com>,
+        linux-s390@vger.kernel.org, linux-samsung-soc@vger.kernel.org,
+        Krzysztof Kozlowski <krzk@kernel.org>,
         Jonathan Hunter <jonathanh@nvidia.com>,
-        Alex Williamson <alex.williamson@redhat.com>,
-        Thomas Gleixner <tglx@linutronix.de>,
-        Marc Zyngier <marc.zyngier@arm.com>,
-        linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
-        linux-samsung-soc@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-rockchip@lists.infradead.org, Kukjin Kim <kgene@kernel.org>,
+        Gerald Schaefer <gerald.schaefer@de.ibm.com>,
+        Andy Gross <andy.gross@linaro.org>,
+        linux-tegra@vger.kernel.org, linux-arm-msm@vger.kernel.org,
         linux-mediatek@lists.infradead.org,
-        linux-rockchip@lists.infradead.org, linux-s390@vger.kernel.org,
-        linux-tegra@vger.kernel.org, kvm@vger.kernel.org
+        Matthias Brugger <matthias.bgg@gmail.com>,
+        linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
+        Tom Murphy <murphyt7@tcd.ie>,
+        David Woodhouse <dwmw2@infradead.org>
 Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, May 6, 2019 at 2:48 AM Lu Baolu <baolu.lu@linux.intel.com> wrote:
->
-> Hi,
->
-> On 5/4/19 9:23 PM, Tom Murphy wrote:
-> > Set the dma_ops per device so we can remove the iommu_no_mapping code.
-> >
-> > Signed-off-by: Tom Murphy<tmurphy@arista.com>
-> > ---
-> >   drivers/iommu/intel-iommu.c | 85 +++----------------------------------
-> >   1 file changed, 6 insertions(+), 79 deletions(-)
-> >
-> > diff --git a/drivers/iommu/intel-iommu.c b/drivers/iommu/intel-iommu.c
-> > index eace915602f0..2db1dc47e7e4 100644
-> > --- a/drivers/iommu/intel-iommu.c
-> > +++ b/drivers/iommu/intel-iommu.c
-> > @@ -2622,17 +2622,6 @@ static int __init si_domain_init(int hw)
-> >       return 0;
-> >   }
-> >
-> > -static int identity_mapping(struct device *dev)
-> > -{
-> > -     struct device_domain_info *info;
-> > -
-> > -     info = dev->archdata.iommu;
-> > -     if (info && info != DUMMY_DEVICE_DOMAIN_INFO)
-> > -             return (info->domain == si_domain);
-> > -
-> > -     return 0;
-> > -}
-> > -
-> >   static int domain_add_dev_info(struct dmar_domain *domain, struct device *dev)
-> >   {
-> >       struct dmar_domain *ndomain;
-> > @@ -3270,43 +3259,6 @@ static unsigned long intel_alloc_iova(struct device *dev,
-> >       return iova_pfn;
-> >   }
-> >
-> > -/* Check if the dev needs to go through non-identity map and unmap process.*/
-> > -static int iommu_no_mapping(struct device *dev)
-> > -{
-> > -     int found;
-> > -
-> > -     if (iommu_dummy(dev))
-> > -             return 1;
-> > -
-> > -     found = identity_mapping(dev);
-> > -     if (found) {
-> > -             /*
-> > -              * If the device's dma_mask is less than the system's memory
-> > -              * size then this is not a candidate for identity mapping.
-> > -              */
-> > -             u64 dma_mask = *dev->dma_mask;
-> > -
-> > -             if (dev->coherent_dma_mask &&
-> > -                 dev->coherent_dma_mask < dma_mask)
-> > -                     dma_mask = dev->coherent_dma_mask;
-> > -
-> > -             if (dma_mask < dma_get_required_mask(dev)) {
-> > -                     /*
-> > -                      * 32 bit DMA is removed from si_domain and fall back
-> > -                      * to non-identity mapping.
-> > -                      */
-> > -                     dmar_remove_one_dev_info(dev);
-> > -                     dev_warn(dev, "32bit DMA uses non-identity mapping\n");
-> > -
-> > -                     return 0;
-> > -             }
->
-> The iommu_no_mapping() also checks whether any 32bit DMA device uses
-> identity mapping. The device might not work if the system memory space
-> is bigger than 4G.
+Just to make this clear, I won't apply Christoph's patch (the one in
+this email thread) and instead the only change I will make is to
+rename dma_limit to dma_mask.
 
-It looks like their is actually a bug in the v3 of the "iommu/vt-d:
-Delegate DMA domain to generic iommu" patch set. I will leave a
-message in that email thread. Fixing that bug should also fix this
-issue.
-
-
+On Tue, Apr 30, 2019 at 1:05 PM Robin Murphy <robin.murphy@arm.com> wrote:
 >
-> Will you add this to other place, or it's unnecessary?
+> On 30/04/2019 12:32, Christoph Hellwig wrote:
+> > On Tue, Apr 30, 2019 at 12:27:02PM +0100, Robin Murphy wrote:
+> >>> Hmm, I don't think we need the DMA mask for the MSI mapping, this
+> >>> should probably always use a 64-bit mask.
+> >>
+> >> If that were true then we wouldn't need DMA masks for regular mappings
+> >> either. If we have to map the MSI doorbell at all, then we certainly have to
+> >> place it at an IOVA that the relevant device is actually capable of
+> >> addressing.
+> >
+> > Well, as shown by the patch below we don't even look at the DMA mask
+> > for the MSI page - we just allocate from bottom to top.
 >
-> Best regards,
-> Lu Baolu
+> In the trivial cookie for unmanaged domains, yes, but in that case the
+> responsibility is on VFIO to provide a suitable (i.e. sub-32-bit)
+> address range for that cookie in the first place. In the managed case,
+> allocation uses the streaming mask via iommu_dma_get_msi_page() calling
+> __iommu_dma_map(). Admittedly the mask can then get overlooked when
+> reusing an existing mapping, which strictly could pose a problem if you
+> have multiple devices with incompatible masks in the same group (and
+> such that the PCI stuff doesn't already mitigate it), but that's such an
+> obscure corner case that I'm reticent to introduce the complication to
+> handle it until it's actually proven necessary.
+>
+> Robin.
