@@ -2,74 +2,111 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id F0CB815D86
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 May 2019 08:35:54 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id F27AF15D97
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 May 2019 08:39:00 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726437AbfEGGfX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 7 May 2019 02:35:23 -0400
-Received: from bombadil.infradead.org ([198.137.202.133]:37748 "EHLO
-        bombadil.infradead.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725839AbfEGGfX (ORCPT
+        id S1726581AbfEGGiw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 7 May 2019 02:38:52 -0400
+Received: from mail-pg1-f194.google.com ([209.85.215.194]:44736 "EHLO
+        mail-pg1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726365AbfEGGiw (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 7 May 2019 02:35:23 -0400
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-        d=infradead.org; s=bombadil.20170209; h=In-Reply-To:Content-Type:MIME-Version
-        :References:Message-ID:Subject:Cc:To:From:Date:Sender:Reply-To:
-        Content-Transfer-Encoding:Content-ID:Content-Description:Resent-Date:
-        Resent-From:Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:List-Id:
-        List-Help:List-Unsubscribe:List-Subscribe:List-Post:List-Owner:List-Archive;
-         bh=TvZeaeAy9vEIfKAGEKlI3TfoHOJ88dzRbyl1QHu6By8=; b=HpsUMi8JcABK4F7j/9suEVKoC
-        YfA5GEgzPRqcD773WA24aESnahNs4znn6YYBLoU2Lz/vCywoOAJRvRLcYCj+DKvvKswYMc2wy9iue
-        2mkAbF4QIgapRI5B0taVSEsgIATttbKsqd0S4tonG9hYL2wHVQ4eHzU+siokbr6x9eZeNsZtzsPoj
-        gImA6EOSte1xBX5RH+xyv2ojahSuE479j8LisTBYabH12VVM+XJuK+g7AfyhGT9KvbUXRcb/x87Jf
-        6kthw/hML0UWcZs93wCHkduD10ly9LN2Ofrz/9RZ98MH3AyLeNL91EwGE0hZmj1ZO4c8lCU+rYiPi
-        rYry1GA8Q==;
-Received: from hch by bombadil.infradead.org with local (Exim 4.90_1 #2 (Red Hat Linux))
-        id 1hNth5-0001AM-FV; Tue, 07 May 2019 06:35:15 +0000
-Date:   Mon, 6 May 2019 23:35:15 -0700
-From:   Christoph Hellwig <hch@infradead.org>
-To:     Tom Murphy <tmurphy@arista.com>
-Cc:     Robin Murphy <robin.murphy@arm.com>,
-        Christoph Hellwig <hch@infradead.org>,
-        iommu@lists.linux-foundation.org, Heiko Stuebner <heiko@sntech.de>,
-        Will Deacon <will.deacon@arm.com>,
-        David Brown <david.brown@linaro.org>,
-        Thierry Reding <thierry.reding@gmail.com>,
-        linux-s390@vger.kernel.org, linux-samsung-soc@vger.kernel.org,
-        Krzysztof Kozlowski <krzk@kernel.org>,
-        Jonathan Hunter <jonathanh@nvidia.com>,
-        linux-rockchip@lists.infradead.org, Kukjin Kim <kgene@kernel.org>,
-        Gerald Schaefer <gerald.schaefer@de.ibm.com>,
-        Andy Gross <andy.gross@linaro.org>,
-        linux-tegra@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-mediatek@lists.infradead.org,
-        Matthias Brugger <matthias.bgg@gmail.com>,
-        linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
-        Tom Murphy <murphyt7@tcd.ie>,
-        David Woodhouse <dwmw2@infradead.org>
-Subject: Re: [PATCH v2 3/4] iommu/dma-iommu: Use the dev->coherent_dma_mask
-Message-ID: <20190507063515.GA5173@infradead.org>
-References: <20190430002952.18909-1-tmurphy@arista.com>
- <20190430002952.18909-4-tmurphy@arista.com>
- <20190430111222.GA3191@infradead.org>
- <da835ce2-f73e-3035-e1d7-d3028cc1a838@arm.com>
- <20190430113253.GA23210@infradead.org>
- <96ebb6fc-a889-fa94-09ba-65d505b85724@arm.com>
- <CAPL0++61WytVhs63tvt+hdpZKXGinrkYx=4nDtNx1UoNTRWWjw@mail.gmail.com>
+        Tue, 7 May 2019 02:38:52 -0400
+Received: by mail-pg1-f194.google.com with SMTP id z16so7756713pgv.11
+        for <linux-arm-msm@vger.kernel.org>; Mon, 06 May 2019 23:38:51 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=wWtp0jnKgCQgvYHJQP0mFqZsKhLPzrO6V1C+32VkFts=;
+        b=nYKXcx42aO3MAUePdnRAiJ9/V6lyE5FcjpoFwRX8BMynr8FAmMbfC31a5SOnBmTMYP
+         PDkho2ZE0OpqizZTZUU7EyGn8V0iipQwESQo4HxtxQ7G04peOASIu+JmnHkxsalwxihD
+         t8100G13Dr1QASK8RXQZ6b1UPHUqUH7B0sGBvVx4lnLoBF4qJrqT82Vvq4l9JrXfOuOa
+         dzbCOI2t7m1lobnq2FyseXkvsLCqlfRfWiOepvom8swe/loDKYzz/akLUeb7Xhd6kzaJ
+         aeYYMcnnJr0om+4NUfgNIKz0ffecitJ+H4aEMnNgDyknUm5GS122n6ls93W6MCAw+KGj
+         U2BQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=wWtp0jnKgCQgvYHJQP0mFqZsKhLPzrO6V1C+32VkFts=;
+        b=f/4t1ntGAkjOJqnaf+LwoMEPBSh4l4/1zW01yupMIr/Ufzi/7pqKFVAMpoS18FT2ds
+         wEmceCwwrUQOqT+1OGs2LMjfukGHILdKpflgO6VmqmBbO2xb9oTtSUU9MPUk+fQuza5P
+         6uiMvPxIq50JYCP4b1Uy/U7H3Ew5k14ZMjeqkGSBSEsINu7ByrRwS9vN0+Em0QnqeVQM
+         2jmPtONn64xeBgkrijy2fjm57k5vVNkTGFwUpG1PeceYrscLfoSej7sdRzFQ70f6e1DU
+         RuXkh31lHzTlvkrc/dU+DWM6sl7uVJK3Pj6OBOR7nhaMzZcfAWTRnFQpt/2xbcoJDoG6
+         Giww==
+X-Gm-Message-State: APjAAAVB16IkWiaLx7DyuxYR2Qw/uVZ4aOaUWIX+E8syOkv7aFSlFB9e
+        aWO+3OzhRNgGRyURgJY4HBVheA==
+X-Google-Smtp-Source: APXvYqwY91xBBVJv/756Xx6HEZCctbmrzp1jJLE/1sryCLnIM8LwzomLH62O4ev8IQJQJLg+ufVU8g==
+X-Received: by 2002:a62:6842:: with SMTP id d63mr39964616pfc.9.1557211130015;
+        Mon, 06 May 2019 23:38:50 -0700 (PDT)
+Received: from tuxbook-pro (104-188-17-28.lightspeed.sndgca.sbcglobal.net. [104.188.17.28])
+        by smtp.gmail.com with ESMTPSA id f2sm18843390pgc.30.2019.05.06.23.38.48
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Mon, 06 May 2019 23:38:49 -0700 (PDT)
+Date:   Mon, 6 May 2019 23:39:02 -0700
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     Brian Masney <masneyb@onstation.org>
+Cc:     robdclark@gmail.com, sean@poorly.run,
+        dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
+        freedreno@lists.freedesktop.org, airlied@linux.ie, daniel@ffwll.ch,
+        linux-kernel@vger.kernel.org, linus.walleij@linaro.org
+Subject: Re: [PATCH RFC 4/6] ARM: dts: msm8974: add display support
+Message-ID: <20190507063902.GA2085@tuxbook-pro>
+References: <20190505130413.32253-1-masneyb@onstation.org>
+ <20190505130413.32253-5-masneyb@onstation.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <CAPL0++61WytVhs63tvt+hdpZKXGinrkYx=4nDtNx1UoNTRWWjw@mail.gmail.com>
-User-Agent: Mutt/1.9.2 (2017-12-15)
-X-SRS-Rewrite: SMTP reverse-path rewritten from <hch@infradead.org> by bombadil.infradead.org. See http://www.infradead.org/rpr.html
+In-Reply-To: <20190505130413.32253-5-masneyb@onstation.org>
+User-Agent: Mutt/1.11.4 (2019-03-13)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, May 06, 2019 at 06:56:13PM +0100, Tom Murphy wrote:
-> Just to make this clear, I won't apply Christoph's patch (the one in
-> this email thread) and instead the only change I will make is to
-> rename dma_limit to dma_mask.
+On Sun 05 May 06:04 PDT 2019, Brian Masney wrote:
+> diff --git a/arch/arm/boot/dts/qcom-msm8974.dtsi b/arch/arm/boot/dts/qcom-msm8974.dtsi
+[..]
+> +			dsi0: dsi@fd922800 {
+> +				status = "disabled";
+> +
+> +				compatible = "qcom,mdss-dsi-ctrl";
+> +				reg = <0xfd922800 0x1f8>;
+> +				reg-names = "dsi_ctrl";
+> +
+> +				interrupt-parent = <&mdss>;
+> +				interrupts = <4 IRQ_TYPE_LEVEL_HIGH>;
+> +
+> +				assigned-clocks = <&mmcc BYTE0_CLK_SRC>,
+> +				                  <&mmcc PCLK0_CLK_SRC>;
+> +				assigned-clock-parents = <&dsi_phy0 0>,
+> +				                         <&dsi_phy0 1>;
+> +
+> +				clocks = <&mmcc MDSS_MDP_CLK>,
+> +				         <&mmcc MDSS_AHB_CLK>,
+> +				         <&mmcc MDSS_AXI_CLK>,
+> +				         <&mmcc MDSS_BYTE0_CLK>,
+> +				         <&mmcc MDSS_PCLK0_CLK>,
+> +				         <&mmcc MDSS_ESC0_CLK>,
+> +				         <&mmcc MMSS_MISC_AHB_CLK>;
+> +				clock-names = "mdp_core",
+> +				              "iface",
+> +				              "bus",
+> +				              "byte",
+> +				              "pixel",
+> +				              "core",
+> +				              "core_mmss";
 
-Sounds good for now.
+Unless I enable MMSS_MMSSNOC_AXI_CLK and MMSS_S0_AXI_CLK I get some
+underrun error from DSI. You don't see anything like this?
+
+(These clocks are controlled by msm_bus downstream and should be driven
+by interconnect upstream)
+
+
+Apart from this, I think this looks nice. Happy to see the progress.
+
+Regards,
+Bjorn
