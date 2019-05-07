@@ -2,25 +2,25 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id D53D7169D1
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 May 2019 20:02:44 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 8F51216AF9
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 May 2019 21:14:26 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726715AbfEGSCV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 7 May 2019 14:02:21 -0400
-Received: from smtp.codeaurora.org ([198.145.29.96]:52912 "EHLO
+        id S1726666AbfEGTOR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 7 May 2019 15:14:17 -0400
+Received: from smtp.codeaurora.org ([198.145.29.96]:48626 "EHLO
         smtp.codeaurora.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727554AbfEGSCR (ORCPT
+        with ESMTP id S1726642AbfEGTOQ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 7 May 2019 14:02:17 -0400
+        Tue, 7 May 2019 15:14:16 -0400
 Received: by smtp.codeaurora.org (Postfix, from userid 1000)
-        id BD3A2611FA; Tue,  7 May 2019 18:02:15 +0000 (UTC)
+        id 5940D609F3; Tue,  7 May 2019 19:14:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
-        s=default; t=1557252135;
-        bh=hvAuaeiqWwDpNNxkhQXfgLyBBNSo4KkWiQuSCzl+d40=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=CB5aFeFOInYvFc/pbZ0Mm1G7JRAj0e2gLvru96erHXhQDow8W+3144hoPAd3HsakX
-         gskFzjvSP/uANJMZvWseBqdspDW3jHnAHrWicMMWxBqExQbYYz57B/XuvxLEiLnG61
-         5gEy9N9928zHkB6gLC0zG54cdGqOQLADqWZaa/TU=
+        s=default; t=1557256456;
+        bh=fOdzMX7nkWBq97wocFIszly8aNfD4psiyZU/x1LQois=;
+        h=From:To:Cc:Subject:Date:From;
+        b=R6OYhfE6g8aa0cZBAnPiB/JFrOV0itf15UMPQ2zQpb1LcYcCqEnPUmXHP+q9q8X/k
+         LOcJCXJzysFIo2NHBF/6jWN+MGz6AP4IJgE4H4WznlEjalc1ls6Wr8iUsuK01+VOdN
+         8Sb2mqcejGbeKAfbk0WhKQdKBNQnkojsZ148b6Mw=
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
         pdx-caf-mail.web.codeaurora.org
 X-Spam-Level: 
@@ -30,169 +30,61 @@ Received: from jcrouse1-lnx.qualcomm.com (i-global254.qualcomm.com [199.106.103.
         (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
         (No client certificate requested)
         (Authenticated sender: jcrouse@smtp.codeaurora.org)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 37B7961194;
-        Tue,  7 May 2019 18:02:14 +0000 (UTC)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id F3D8C609F3;
+        Tue,  7 May 2019 19:14:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
-        s=default; t=1557252134;
-        bh=hvAuaeiqWwDpNNxkhQXfgLyBBNSo4KkWiQuSCzl+d40=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=oK4eURDwof2jZ48Cyxs+BZy02T5J0nBsFqg+ZeAlx7/v5+8WNBVNFcMwSWDL5zUZx
-         zEaB8QYifklid+qeapb/bIdoglh2eFLFi8fN4Fmcijj1YrfNNBzvWzo5pU20FeltQY
-         rvVA++sUzHw1+4ddm5ZdsakvgZyNZTsaw5vVne3A=
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 37B7961194
+        s=default; t=1557256455;
+        bh=fOdzMX7nkWBq97wocFIszly8aNfD4psiyZU/x1LQois=;
+        h=From:To:Cc:Subject:Date:From;
+        b=lWdVLrBN2AlTjCxGhuxp6fugiuSz7j4xPZ5/SC/6JPZ8U8VBYDIfJQQ2CC9xVy0Wl
+         Uxx2hU6ksXcgRdHfkc/HDBUMJyREpm1KoZLSbG8K/hPFGptuzRPc4PfVoNk5vrwWyW
+         OSWFiOm9FHwznwXGv8ixPo8ZckrW1vBm4Qgmz4G8=
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org F3D8C609F3
 Authentication-Results: pdx-caf-mail.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
 Authentication-Results: pdx-caf-mail.web.codeaurora.org; spf=none smtp.mailfrom=jcrouse@codeaurora.org
 From:   Jordan Crouse <jcrouse@codeaurora.org>
 To:     freedreno@lists.freedesktop.org
 Cc:     linux-arm-msm@vger.kernel.org, Sean Paul <sean@poorly.run>,
         linux-kernel@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        Rob Clark <robdclark@gmail.com>,
         David Airlie <airlied@linux.ie>,
+        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+        Maxime Ripard <maxime.ripard@bootlin.com>,
         Daniel Vetter <daniel@ffwll.ch>
-Subject: [PATCH v1 3/3] drm/msm: Pass the MMU domain index in struct msm_file_private
-Date:   Tue,  7 May 2019 12:02:07 -0600
-Message-Id: <1557252127-11145-4-git-send-email-jcrouse@codeaurora.org>
+Subject: [PATCH] drm/atomic: Check that the config funcs exist drm_mode_alloc
+Date:   Tue,  7 May 2019 13:14:11 -0600
+Message-Id: <1557256451-24950-1-git-send-email-jcrouse@codeaurora.org>
 X-Mailer: git-send-email 2.7.4
-In-Reply-To: <1557252127-11145-1-git-send-email-jcrouse@codeaurora.org>
-References: <1557252127-11145-1-git-send-email-jcrouse@codeaurora.org>
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Pass the index of the MMU domain in struct msm_file_private instead
-of assuming gpu->id throughout the submit path. This clears the way
-to change ctx->aspace to a per-instance pagetable.
+An error while initializing the msm driver ends up calling
+drm_atomic_helper_shutdown() without first initializing the funcs
+in mode_config. While I'm not 100% sure this isn't a ordering
+problem in msm adding a check to drm_mode_alloc seems like
+a nice and safe solution.
 
 Signed-off-by: Jordan Crouse <jcrouse@codeaurora.org>
 ---
 
- drivers/gpu/drm/msm/msm_drv.c        |  2 ++
- drivers/gpu/drm/msm/msm_drv.h        |  1 +
- drivers/gpu/drm/msm/msm_gem.h        |  1 +
- drivers/gpu/drm/msm/msm_gem_submit.c | 13 ++++++++-----
- drivers/gpu/drm/msm/msm_gpu.c        |  5 ++---
- 5 files changed, 14 insertions(+), 8 deletions(-)
+ drivers/gpu/drm/drm_atomic.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/gpu/drm/msm/msm_drv.c b/drivers/gpu/drm/msm/msm_drv.c
-index 154dab0..cac101f 100644
---- a/drivers/gpu/drm/msm/msm_drv.c
-+++ b/drivers/gpu/drm/msm/msm_drv.c
-@@ -611,6 +611,7 @@ static void load_gpu(struct drm_device *dev)
- 
- static int context_init(struct drm_device *dev, struct drm_file *file)
+diff --git a/drivers/gpu/drm/drm_atomic.c b/drivers/gpu/drm/drm_atomic.c
+index 5eb4013..1729428 100644
+--- a/drivers/gpu/drm/drm_atomic.c
++++ b/drivers/gpu/drm/drm_atomic.c
+@@ -114,6 +114,9 @@ drm_atomic_state_alloc(struct drm_device *dev)
  {
-+	struct msm_drm_private *priv = dev->dev_private;
- 	struct msm_file_private *ctx;
+ 	struct drm_mode_config *config = &dev->mode_config;
  
- 	ctx = kzalloc(sizeof(*ctx), GFP_KERNEL);
-@@ -619,6 +620,7 @@ static int context_init(struct drm_device *dev, struct drm_file *file)
++	if (!config->funcs)
++		return NULL;
++
+ 	if (!config->funcs->atomic_state_alloc) {
+ 		struct drm_atomic_state *state;
  
- 	msm_submitqueue_init(dev, ctx);
- 
-+	ctx->aspace = priv->gpu->aspace;
- 	file->driver_priv = ctx;
- 
- 	return 0;
-diff --git a/drivers/gpu/drm/msm/msm_drv.h b/drivers/gpu/drm/msm/msm_drv.h
-index bbf739d..07ae89f 100644
---- a/drivers/gpu/drm/msm/msm_drv.h
-+++ b/drivers/gpu/drm/msm/msm_drv.h
-@@ -68,6 +68,7 @@ struct msm_file_private {
- 	rwlock_t queuelock;
- 	struct list_head submitqueues;
- 	int queueid;
-+	struct msm_gem_address_space *aspace;
- };
- 
- enum msm_mdp_plane_property {
-diff --git a/drivers/gpu/drm/msm/msm_gem.h b/drivers/gpu/drm/msm/msm_gem.h
-index c5ac781..1c75310 100644
---- a/drivers/gpu/drm/msm/msm_gem.h
-+++ b/drivers/gpu/drm/msm/msm_gem.h
-@@ -145,6 +145,7 @@ void msm_gem_free_work(struct work_struct *work);
- struct msm_gem_submit {
- 	struct drm_device *dev;
- 	struct msm_gpu *gpu;
-+	struct msm_gem_address_space *aspace;
- 	struct list_head node;   /* node in ring submit list */
- 	struct list_head bo_list;
- 	struct ww_acquire_ctx ticket;
-diff --git a/drivers/gpu/drm/msm/msm_gem_submit.c b/drivers/gpu/drm/msm/msm_gem_submit.c
-index 648e0c1..e19e083 100644
---- a/drivers/gpu/drm/msm/msm_gem_submit.c
-+++ b/drivers/gpu/drm/msm/msm_gem_submit.c
-@@ -32,8 +32,9 @@
- #define BO_PINNED   0x2000
- 
- static struct msm_gem_submit *submit_create(struct drm_device *dev,
--		struct msm_gpu *gpu, struct msm_gpu_submitqueue *queue,
--		uint32_t nr_bos, uint32_t nr_cmds)
-+		struct msm_gpu *gpu, struct msm_gem_address_space *aspace,
-+		struct msm_gpu_submitqueue *queue, uint32_t nr_bos,
-+		uint32_t nr_cmds)
- {
- 	struct msm_gem_submit *submit;
- 	uint64_t sz = sizeof(*submit) + ((u64)nr_bos * sizeof(submit->bos[0])) +
-@@ -47,6 +48,7 @@ static struct msm_gem_submit *submit_create(struct drm_device *dev,
- 		return NULL;
- 
- 	submit->dev = dev;
-+	submit->aspace = aspace;
- 	submit->gpu = gpu;
- 	submit->fence = NULL;
- 	submit->cmd = (void *)&submit->bos[nr_bos];
-@@ -160,7 +162,7 @@ static void submit_unlock_unpin_bo(struct msm_gem_submit *submit,
- 	struct msm_gem_object *msm_obj = submit->bos[i].obj;
- 
- 	if (submit->bos[i].flags & BO_PINNED)
--		msm_gem_unpin_iova(&msm_obj->base, submit->gpu->aspace);
-+		msm_gem_unpin_iova(&msm_obj->base, submit->aspace);
- 
- 	if (submit->bos[i].flags & BO_LOCKED)
- 		ww_mutex_unlock(&msm_obj->resv->lock);
-@@ -264,7 +266,7 @@ static int submit_pin_objects(struct msm_gem_submit *submit)
- 
- 		/* if locking succeeded, pin bo: */
- 		ret = msm_gem_get_and_pin_iova(&msm_obj->base,
--				submit->gpu->aspace, &iova);
-+				submit->aspace, &iova);
- 
- 		if (ret)
- 			break;
-@@ -477,7 +479,8 @@ int msm_ioctl_gem_submit(struct drm_device *dev, void *data,
- 		}
- 	}
- 
--	submit = submit_create(dev, gpu, queue, args->nr_bos, args->nr_cmds);
-+	submit = submit_create(dev, gpu, ctx->aspace, queue, args->nr_bos,
-+		args->nr_cmds);
- 	if (!submit) {
- 		ret = -ENOMEM;
- 		goto out_unlock;
-diff --git a/drivers/gpu/drm/msm/msm_gpu.c b/drivers/gpu/drm/msm/msm_gpu.c
-index bf4ee27..0a4c77f 100644
---- a/drivers/gpu/drm/msm/msm_gpu.c
-+++ b/drivers/gpu/drm/msm/msm_gpu.c
-@@ -684,7 +684,7 @@ static void retire_submit(struct msm_gpu *gpu, struct msm_ringbuffer *ring,
- 		struct msm_gem_object *msm_obj = submit->bos[i].obj;
- 		/* move to inactive: */
- 		msm_gem_move_to_inactive(&msm_obj->base);
--		msm_gem_unpin_iova(&msm_obj->base, gpu->aspace);
-+		msm_gem_unpin_iova(&msm_obj->base, submit->aspace);
- 		drm_gem_object_put(&msm_obj->base);
- 	}
- 
-@@ -768,8 +768,7 @@ void msm_gpu_submit(struct msm_gpu *gpu, struct msm_gem_submit *submit,
- 
- 		/* submit takes a reference to the bo and iova until retired: */
- 		drm_gem_object_get(&msm_obj->base);
--		msm_gem_get_and_pin_iova(&msm_obj->base,
--				submit->gpu->aspace, &iova);
-+		msm_gem_get_and_pin_iova(&msm_obj->base, submit->aspace, &iova);
- 
- 		if (submit->bos[i].flags & MSM_SUBMIT_BO_WRITE)
- 			msm_gem_move_to_active(&msm_obj->base, gpu, true, submit->fence);
 -- 
 2.7.4
 
