@@ -2,167 +2,139 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id D02C816C71
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 May 2019 22:44:12 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E03BE16D03
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 May 2019 23:18:32 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727226AbfEGUlN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 7 May 2019 16:41:13 -0400
-Received: from smtp.codeaurora.org ([198.145.29.96]:53626 "EHLO
-        smtp.codeaurora.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727183AbfEGUlD (ORCPT
+        id S1728557AbfEGVSc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 7 May 2019 17:18:32 -0400
+Received: from mail-qt1-f193.google.com ([209.85.160.193]:39954 "EHLO
+        mail-qt1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727137AbfEGVSb (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 7 May 2019 16:41:03 -0400
-Received: by smtp.codeaurora.org (Postfix, from userid 1000)
-        id 8B9E161340; Tue,  7 May 2019 20:41:02 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
-        s=default; t=1557261662;
-        bh=002F9M1uXlnC2wPdhqVGhnev6UAfPxBuiQkXck5+64o=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=Of4xHJKf6u5JPbRDEeJsBCke9mYnqB+rCv9ZoJzEt5g2D4Qno8KeMz1tWZbUZMB+a
-         zYygOBp/AXYk3Uk7PCGPjPP/Oo+3Yde5FTVJh7KQC4o0JbeMF9i+cagaw8BzCZhfuy
-         hYo7JOHSpW7Wvr+8CMo4GwTQ84UuOWAU+aXrKC1k=
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        pdx-caf-mail.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.7 required=2.0 tests=ALL_TRUSTED,BAYES_00,
-        DKIM_INVALID,DKIM_SIGNED autolearn=no autolearn_force=no version=3.4.0
-Received: from codeaurora.org (i-global254.qualcomm.com [199.106.103.254])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: ilina@smtp.codeaurora.org)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 4305D614DB;
-        Tue,  7 May 2019 20:41:01 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
-        s=default; t=1557261662;
-        bh=002F9M1uXlnC2wPdhqVGhnev6UAfPxBuiQkXck5+64o=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=Of4xHJKf6u5JPbRDEeJsBCke9mYnqB+rCv9ZoJzEt5g2D4Qno8KeMz1tWZbUZMB+a
-         zYygOBp/AXYk3Uk7PCGPjPP/Oo+3Yde5FTVJh7KQC4o0JbeMF9i+cagaw8BzCZhfuy
-         hYo7JOHSpW7Wvr+8CMo4GwTQ84UuOWAU+aXrKC1k=
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 4305D614DB
-Authentication-Results: pdx-caf-mail.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: pdx-caf-mail.web.codeaurora.org; spf=none smtp.mailfrom=ilina@codeaurora.org
-From:   Lina Iyer <ilina@codeaurora.org>
-To:     swboyd@chromium.org, evgreen@chromium.org, marc.zyngier@arm.com,
-        linus.walleij@linaro.org
-Cc:     linux-kernel@vger.kernel.org, rplsssn@codeaurora.org,
-        linux-arm-msm@vger.kernel.org, thierry.reding@gmail.com,
-        bjorn.andersson@linaro.org, dianders@chromium.org,
-        Lina Iyer <ilina@codeaurora.org>
-Subject: [PATCH v5 11/11] arm64: dts: qcom: setup PDC as wakeup parent for GPIOs for SDM845
-Date:   Tue,  7 May 2019 14:37:49 -0600
-Message-Id: <20190507203749.3384-12-ilina@codeaurora.org>
-X-Mailer: git-send-email 2.21.0
-In-Reply-To: <20190507203749.3384-1-ilina@codeaurora.org>
-References: <20190507203749.3384-1-ilina@codeaurora.org>
+        Tue, 7 May 2019 17:18:31 -0400
+Received: by mail-qt1-f193.google.com with SMTP id k24so3646870qtq.7
+        for <linux-arm-msm@vger.kernel.org>; Tue, 07 May 2019 14:18:31 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=zPjGRWUhyFVfuJKiRiDu7uhpyaOVKSPaf9PdN9YPgKk=;
+        b=f+LEgFgYOiieMfsbGByYCCTeCgWoXPTR0eUf32D6l2At1DvrXmB4nvpstnQJ3gTvyp
+         4r6eErOK2MrbXhtVG2/ERi/nHvZlQI0JSC/gO7tUQPP+OLn491WDXBuvSWIFxUU4Cq83
+         9nlBD5bFAc+Zqktq6lD03sBxRLT9K5Bre/NRD5nc/SDG+/Bh8BksNnxIksJHjQYgXnGu
+         O0NND4FWS6rIuvJcPvULa/XXiQmobGPUVnbjgZ/ySYm8psWnL12dSIuqf6HYTjx1Ct3C
+         GFmOuCmdHRLAAw8ooJMrKyJvXtXnzNcvKL0H5xrNaid9NGykIkwLws1LVDa0KymagjvT
+         4XvA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=zPjGRWUhyFVfuJKiRiDu7uhpyaOVKSPaf9PdN9YPgKk=;
+        b=Nv6LRH6alTUh8XDOTJnmqDNJCV22LUXDxvNuBBCy/xt0c4j7zw0jkLqPDC1DdRRC3m
+         QOflZyBni8aClnYYHKt+daRhOo5JOlI6IohwBHvKDR6v/eGJ7CV/5UlfvtC6zrEI0dsp
+         SE4wSqN/5lP/6wJd9XLp+j9JzvVQV1DB01nCWAfz6dMIByw5GpSgKxmEO+iEl+oYEBjZ
+         ITmJc+3TmDX032aWK2TZt8QbjeSnUnqqHUxm+NqtyT7hni405JLbjZbmoH2w8I9ctYix
+         FbdAfCdBivtw5NBnfHREfq3dkyv5NR/gQmo/NLImHCaPerm6N5u1Kf9kVob0R0lXI5AY
+         p9bw==
+X-Gm-Message-State: APjAAAU+7hqq+AGEYqqS8js+VnOaTOo9eMY3zRKzH2a/Fvxm3EXQ8zvO
+        DUGQIdZu4ahhYVCZp1NoasljYkq9fJKTJK0+mNePbKJw
+X-Google-Smtp-Source: APXvYqy8Gjt4HaeOekGLbcHO1+1LKXMhZLfr9s4mSVKBMh3OOVSvm8jdCuKHH3BuKMiw3/0LBvtdCwvob1AHwBT8Oa8=
+X-Received: by 2002:aed:2471:: with SMTP id s46mr8156157qtc.144.1557263910761;
+ Tue, 07 May 2019 14:18:30 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <20190506193115.20909-1-niklas.cassel@linaro.org>
+In-Reply-To: <20190506193115.20909-1-niklas.cassel@linaro.org>
+From:   Amit Kucheria <amit.kucheria@linaro.org>
+Date:   Wed, 8 May 2019 02:48:19 +0530
+Message-ID: <CAP245DXLHqU3tv5cii=Z1G4J5m=Emy7yiHP=zSTpY6GX02NKcg@mail.gmail.com>
+Subject: Re: [PATCH] arm64: dts: qcom: qcs404: Add PSCI cpuidle support
+To:     Niklas Cassel <niklas.cassel@linaro.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        David Brown <david.brown@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Mark Rutland <mark.rutland@arm.com>,
+        Jorge Ramirez-Ortiz <jorge.ramirez-ortiz@linaro.org>,
+        Lina Iyer <lina.iyer@linaro.org>,
+        Ulf Hansson <ulf.hansson@linaro.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        DTML <devicetree@vger.kernel.org>,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Setup PDC wakeup parent for TLMM for SDM845 SoC.
+On Tue, May 7, 2019 at 1:01 AM Niklas Cassel <niklas.cassel@linaro.org> wrote:
+>
+> Add device bindings for CPUs to suspend using PSCI as the enable-method.
+>
+> Signed-off-by: Niklas Cassel <niklas.cassel@linaro.org>
+> ---
+>  arch/arm64/boot/dts/qcom/qcs404.dtsi | 15 +++++++++++++++
+>  1 file changed, 15 insertions(+)
+>
+> diff --git a/arch/arm64/boot/dts/qcom/qcs404.dtsi b/arch/arm64/boot/dts/qcom/qcs404.dtsi
+> index ffedf9640af7..f9db9f3ee10c 100644
+> --- a/arch/arm64/boot/dts/qcom/qcs404.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/qcs404.dtsi
+> @@ -31,6 +31,7 @@
+>                         reg = <0x100>;
+>                         enable-method = "psci";
+>                         next-level-cache = <&L2_0>;
+> +                       cpu-idle-states = <&CPU_PC>;
+>                 };
+>
+>                 CPU1: cpu@101 {
+> @@ -39,6 +40,7 @@
+>                         reg = <0x101>;
+>                         enable-method = "psci";
+>                         next-level-cache = <&L2_0>;
+> +                       cpu-idle-states = <&CPU_PC>;
+>                 };
+>
+>                 CPU2: cpu@102 {
+> @@ -47,6 +49,7 @@
+>                         reg = <0x102>;
+>                         enable-method = "psci";
+>                         next-level-cache = <&L2_0>;
+> +                       cpu-idle-states = <&CPU_PC>;
+>                 };
+>
+>                 CPU3: cpu@103 {
+> @@ -55,12 +58,24 @@
+>                         reg = <0x103>;
+>                         enable-method = "psci";
+>                         next-level-cache = <&L2_0>;
+> +                       cpu-idle-states = <&CPU_PC>;
+>                 };
+>
+>                 L2_0: l2-cache {
+>                         compatible = "cache";
+>                         cache-level = <2>;
+>                 };
+> +
+> +               idle-states {
 
-Signed-off-by: Lina Iyer <ilina@codeaurora.org>
----
-Changes in v3:
-	- Provide irqdomain-map for GPIOs that map to PDC
----
- arch/arm64/boot/dts/qcom/sdm845.dtsi | 79 ++++++++++++++++++++++++++++
- 1 file changed, 79 insertions(+)
+entry-method="psci" property goes here. I have a patch fixing it for 410c ;-)
 
-diff --git a/arch/arm64/boot/dts/qcom/sdm845.dtsi b/arch/arm64/boot/dts/qcom/sdm845.dtsi
-index 7d4b11c9314e..59da6944b106 100644
---- a/arch/arm64/boot/dts/qcom/sdm845.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sdm845.dtsi
-@@ -1105,6 +1105,85 @@
- 			#interrupt-cells = <2>;
- 			gpio-ranges = <&tlmm 0 0 150>;
- 
-+			wakeup-parent = <&pdc_intc>;
-+			irqdomain-map = <1 0 &pdc_intc 30 0>,
-+					<3 0 &pdc_intc 31 0>,
-+					<5 0 &pdc_intc 32 0>,
-+					<10 0 &pdc_intc 33 0>,
-+					<11 0 &pdc_intc 34 0>,
-+					<20 0 &pdc_intc 35 0>,
-+					<22 0 &pdc_intc 36 0>,
-+					<24 0 &pdc_intc 37 0>,
-+					<26 0 &pdc_intc 38 0>,
-+					<30 0 &pdc_intc 39 0>,
-+					<31 0 &pdc_intc 117 0>,
-+					<32 0 &pdc_intc 41 0>,
-+					<34 0 &pdc_intc 42 0>,
-+					<36 0 &pdc_intc 43 0>,
-+					<37 0 &pdc_intc 44 0>,
-+					<38 0 &pdc_intc 45 0>,
-+					<39 0 &pdc_intc 46 0>,
-+					<40 0 &pdc_intc 47 0>,
-+					<41 0 &pdc_intc 115 0>,
-+					<43 0 &pdc_intc 49 0>,
-+					<44 0 &pdc_intc 50 0>,
-+					<46 0 &pdc_intc 51 0>,
-+					<48 0 &pdc_intc 52 0>,
-+					<49 0 &pdc_intc 118 0>,
-+					<52 0 &pdc_intc 54 0>,
-+					<53 0 &pdc_intc 55 0>,
-+					<54 0 &pdc_intc 56 0>,
-+					<56 0 &pdc_intc 57 0>,
-+					<57 0 &pdc_intc 58 0>,
-+					<58 0 &pdc_intc 59 0>,
-+					<59 0 &pdc_intc 60 0>,
-+					<60 0 &pdc_intc 61 0>,
-+					<61 0 &pdc_intc 62 0>,
-+					<62 0 &pdc_intc 63 0>,
-+					<63 0 &pdc_intc 64 0>,
-+					<64 0 &pdc_intc 65 0>,
-+					<66 0 &pdc_intc 66 0>,
-+					<68 0 &pdc_intc 67 0>,
-+					<71 0 &pdc_intc 68 0>,
-+					<73 0 &pdc_intc 69 0>,
-+					<77 0 &pdc_intc 70 0>,
-+					<78 0 &pdc_intc 71 0>,
-+					<79 0 &pdc_intc 72 0>,
-+					<80 0 &pdc_intc 73 0>,
-+					<84 0 &pdc_intc 74 0>,
-+					<85 0 &pdc_intc 75 0>,
-+					<86 0 &pdc_intc 76 0>,
-+					<88 0 &pdc_intc 77 0>,
-+					<89 0 &pdc_intc 116 0>,
-+					<91 0 &pdc_intc 79 0>,
-+					<92 0 &pdc_intc 80 0>,
-+					<95 0 &pdc_intc 81 0>,
-+					<96 0 &pdc_intc 82 0>,
-+					<97 0 &pdc_intc 83 0>,
-+					<101 0 &pdc_intc 84 0>,
-+					<103 0 &pdc_intc 85 0>,
-+					<104 0 &pdc_intc 86 0>,
-+					<115 0 &pdc_intc 90 0>,
-+					<116 0 &pdc_intc 91 0>,
-+					<117 0 &pdc_intc 92 0>,
-+					<118 0 &pdc_intc 93 0>,
-+					<119 0 &pdc_intc 94 0>,
-+					<120 0 &pdc_intc 95 0>,
-+					<121 0 &pdc_intc 96 0>,
-+					<122 0 &pdc_intc 97 0>,
-+					<123 0 &pdc_intc 98 0>,
-+					<124 0 &pdc_intc 99 0>,
-+					<125 0 &pdc_intc 100 0>,
-+					<127 0 &pdc_intc 102 0>,
-+					<128 0 &pdc_intc 103 0>,
-+					<129 0 &pdc_intc 104 0>,
-+					<130 0 &pdc_intc 105 0>,
-+					<132 0 &pdc_intc 106 0>,
-+					<133 0 &pdc_intc 107 0>,
-+					<145 0 &pdc_intc 108 0>;
-+			irqdomain-map-mask = <0xff 0>;
-+			irqdomain-map-pass-thru = <0 0xff>;
-+
- 			qspi_clk: qspi-clk {
- 				pinmux {
- 					pins = "gpio95";
--- 
-The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
-a Linux Foundation Collaborative Project
+I don't think the psci_cpuidle_ops will even get called without this.
+Did you see any changes in consumption with this patch? I was trying
+to measure that before sending this out.
 
+> +                       CPU_PC: pc {
+> +                               compatible = "arm,idle-state";
+> +                               arm,psci-suspend-param = <0x40000003>;
+> +                               entry-latency-us = <125>;
+> +                               exit-latency-us = <180>;
+> +                               min-residency-us = <595>;
+> +                               local-timer-stop;
+> +                       };
+> +               };
+>         };
+>
+>         firmware {
+> --
+> 2.21.0
+>
