@@ -2,143 +2,155 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 1640B15DD9
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 May 2019 09:06:21 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9273E161A0
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 May 2019 12:05:39 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726570AbfEGHGU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 7 May 2019 03:06:20 -0400
-Received: from mail.kernel.org ([198.145.29.99]:47066 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726546AbfEGHGU (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 7 May 2019 03:06:20 -0400
-Received: from localhost (unknown [106.200.210.185])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id C7D7220989;
-        Tue,  7 May 2019 07:06:18 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1557212779;
-        bh=D/iLEeRMbAo/D0nUwcRfutpVVc7O5Mnze5ezjHPRVWU=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=ccX/mlxqT3F1w5nzpvWHtewkd6XiNZhglmQRJ5Qc4FEl3GX7hcSqtfaN0ILHflbJK
-         swAd+9ylQaTTgARuLfKGZgkJrr/5tPG8zw1C7u0xjbg4SYsT7t9nn71iBIr9NS4uT6
-         BHvNequA6KtX1EBV8TcCX5IVzyQdJ18dxgos2J7k=
-Date:   Tue, 7 May 2019 12:36:14 +0530
-From:   Vinod Koul <vkoul@kernel.org>
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     Niklas Cassel <niklas.cassel@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        David Brown <david.brown@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Mark Rutland <mark.rutland@arm.com>, amit.kucheria@linaro.org,
-        jorge.ramirez-ortiz@linaro.org, lina.iyer@linaro.org,
-        ulf.hansson@linaro.org, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] arm64: dts: qcom: qcs404: Add PSCI cpuidle support
-Message-ID: <20190507070614.GF16052@vkoul-mobl>
-References: <20190506193115.20909-1-niklas.cassel@linaro.org>
- <20190507053547.GE16052@vkoul-mobl>
- <20190507065555.GB2085@tuxbook-pro>
+        id S1726369AbfEGKFi (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 7 May 2019 06:05:38 -0400
+Received: from mail-ed1-f67.google.com ([209.85.208.67]:46795 "EHLO
+        mail-ed1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726268AbfEGKFi (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 7 May 2019 06:05:38 -0400
+Received: by mail-ed1-f67.google.com with SMTP id f37so18114322edb.13
+        for <linux-arm-msm@vger.kernel.org>; Tue, 07 May 2019 03:05:37 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=ffwll.ch; s=google;
+        h=sender:date:from:to:cc:subject:message-id:mail-followup-to
+         :references:mime-version:content-disposition:in-reply-to:user-agent;
+        bh=UswE8rrHo9QpkEQ1cscUjaFrFCZrjR7SNVgDCehnvY4=;
+        b=evcWe3qnR8Rs0GV0G6oQdOzN5VRQ17f1mfCNnZ9T5cwXYFQu5vI/OWowa9isuK8GqL
+         QiGcByLmeamZ+oKRnXjqbUESbqdxOo9QEXFaGsfwcrbTH+NQXTgP9nJoGFTUpDLOyQfO
+         eC1QYbRlJ3m1l2rTnX0em5lxT2P5wp6dw+Mik=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:sender:date:from:to:cc:subject:message-id
+         :mail-followup-to:references:mime-version:content-disposition
+         :in-reply-to:user-agent;
+        bh=UswE8rrHo9QpkEQ1cscUjaFrFCZrjR7SNVgDCehnvY4=;
+        b=JBKNJNtdZcVqZKX7BaxJ8oq/0ap1GhOGdCnT6i9wsu9hnR9IkB3aBaPY/N6DpzqX7O
+         pn+utrUdUY3zZ5TeUlAZIQTMoz9djUUO4PS8A40fYkExsudN9jW+zJWWmNB/MoHKOyYW
+         HKfOudj6TyjwJXE0sFTC7pwtMnRGaxlWt1omI08+i2aK72yKAE0D9rhrDuMatmMxalCM
+         7FuxR3N+sBfxfXpOoY53IM92wkAx23hiVeoWq1t4ZAcIprOqIoOFe2NP4VMBJquC7ABq
+         KNfqE2huFTL9x8nSaYFO10LizxhUkMQCqnv9QVpbVQV1yEjcgOYoEagTWpLOHgij+2q0
+         J77g==
+X-Gm-Message-State: APjAAAVUiZWGL94Kphp2w3AwgOyOjrICzSXAKncLC/Ixi556iKMgDQ0z
+        Eqp3mtns9sV2iBoWZ/+eTQ5JUQ==
+X-Google-Smtp-Source: APXvYqx10Oa/B2xszv1CzqJEyltgTlabbZu4UqLNgz7sqW1XDMCvuYWJUPrIGYjfWLlE2v4gSY7QxA==
+X-Received: by 2002:a50:be05:: with SMTP id a5mr22512407edi.75.1557223536438;
+        Tue, 07 May 2019 03:05:36 -0700 (PDT)
+Received: from phenom.ffwll.local ([2a02:168:569e:0:3106:d637:d723:e855])
+        by smtp.gmail.com with ESMTPSA id b48sm1072765edb.28.2019.05.07.03.05.34
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Tue, 07 May 2019 03:05:35 -0700 (PDT)
+Date:   Tue, 7 May 2019 12:05:32 +0200
+From:   Daniel Vetter <daniel@ffwll.ch>
+To:     jagdsh.linux@gmail.com
+Cc:     robdclark@gmail.com, sean@poorly.run, airlied@linux.ie,
+        daniel@ffwll.ch, bskeggs@redhat.com, hierry.reding@gmail.com,
+        jcrouse@codeaurora.org, jsanka@codeaurora.org,
+        skolluku@codeaurora.org, paul.burton@mips.com,
+        jrdr.linux@gmail.com, linux-arm-msm@vger.kernel.org,
+        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
+        linux-kernel@vger.kernel.org, nouveau@lists.freedesktop.org
+Subject: Re: [PATCH] gpu/drm: Remove duplicate headers
+Message-ID: <20190507100532.GP17751@phenom.ffwll.local>
+Mail-Followup-To: jagdsh.linux@gmail.com, robdclark@gmail.com,
+        sean@poorly.run, airlied@linux.ie, bskeggs@redhat.com,
+        hierry.reding@gmail.com, jcrouse@codeaurora.org,
+        jsanka@codeaurora.org, skolluku@codeaurora.org,
+        paul.burton@mips.com, jrdr.linux@gmail.com,
+        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org,
+        nouveau@lists.freedesktop.org
+References: <1556906293-128921-1-git-send-email-jagdsh.linux@gmail.com>
+ <20190506144334.GH17751@phenom.ffwll.local>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20190507065555.GB2085@tuxbook-pro>
-User-Agent: Mutt/1.11.3 (2019-02-01)
+In-Reply-To: <20190506144334.GH17751@phenom.ffwll.local>
+X-Operating-System: Linux phenom 4.14.0-3-amd64 
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 06-05-19, 23:55, Bjorn Andersson wrote:
-> On Mon 06 May 22:35 PDT 2019, Vinod Koul wrote:
-> 
-> > On 06-05-19, 21:31, Niklas Cassel wrote:
-> > > Add device bindings for CPUs to suspend using PSCI as the enable-method.
-> > > 
-> > > Signed-off-by: Niklas Cassel <niklas.cassel@linaro.org>
-> > > ---
-> > >  arch/arm64/boot/dts/qcom/qcs404.dtsi | 15 +++++++++++++++
-> > >  1 file changed, 15 insertions(+)
-> > > 
-> > > diff --git a/arch/arm64/boot/dts/qcom/qcs404.dtsi b/arch/arm64/boot/dts/qcom/qcs404.dtsi
-> > > index ffedf9640af7..f9db9f3ee10c 100644
-> > > --- a/arch/arm64/boot/dts/qcom/qcs404.dtsi
-> > > +++ b/arch/arm64/boot/dts/qcom/qcs404.dtsi
-> > > @@ -31,6 +31,7 @@
-> > >  			reg = <0x100>;
-> > >  			enable-method = "psci";
-> > >  			next-level-cache = <&L2_0>;
-> > > +			cpu-idle-states = <&CPU_PC>;
-> > >  		};
-> > >  
-> > >  		CPU1: cpu@101 {
-> > > @@ -39,6 +40,7 @@
-> > >  			reg = <0x101>;
-> > >  			enable-method = "psci";
-> > >  			next-level-cache = <&L2_0>;
-> > > +			cpu-idle-states = <&CPU_PC>;
-> > >  		};
-> > >  
-> > >  		CPU2: cpu@102 {
-> > > @@ -47,6 +49,7 @@
-> > >  			reg = <0x102>;
-> > >  			enable-method = "psci";
-> > >  			next-level-cache = <&L2_0>;
-> > > +			cpu-idle-states = <&CPU_PC>;
-> > >  		};
-> > >  
-> > >  		CPU3: cpu@103 {
-> > > @@ -55,12 +58,24 @@
-> > >  			reg = <0x103>;
-> > >  			enable-method = "psci";
-> > >  			next-level-cache = <&L2_0>;
-> > > +			cpu-idle-states = <&CPU_PC>;
-> > >  		};
-> > >  
-> > >  		L2_0: l2-cache {
-> > >  			compatible = "cache";
-> > >  			cache-level = <2>;
-> > >  		};
-> > > +
-> > > +		idle-states {
+On Mon, May 06, 2019 at 04:43:34PM +0200, Daniel Vetter wrote:
+> On Fri, May 03, 2019 at 11:28:13PM +0530, jagdsh.linux@gmail.com wrote:
+> > From: Jagadeesh Pagadala <jagdsh.linux@gmail.com>
 > > 
-> > Since we are trying to sort the file per address and
-> > alphabetically, it would be great if this can be moved before l2-cache
-> > :)
+> > Remove duplicate headers which are included twice.
 > > 
+> > Signed-off-by: Jagadeesh Pagadala <jagdsh.linux@gmail.com>
 > 
-> Picked up, with the order adjusted.
+> I collected some acks for the msm and nouveau parts and pushed this. For
+> next time around would be great if you split these up along driver/module
+> boundaries, so that each maintainer can pick this up directly.
 > 
-> > Other than that this lgtm
+> Thanks for your patch.
+> -Daniel
+> 
+> > ---
+> >  drivers/gpu/drm/msm/disp/dpu1/dpu_hw_lm.c             | 1 -
+> >  drivers/gpu/drm/nouveau/nvkm/subdev/bus/nv04.c        | 2 --
+> >  drivers/gpu/drm/panel/panel-raspberrypi-touchscreen.c | 1 -
+
+Correction, this didn't compile, so I dropped the changes to panel-rpi.
+Another reason to split patches more for next time around. Also, needs
+more compile testing (you need cross compilers for at least arm to test
+this stuff).
+-Daniel
+
+> >  3 files changed, 4 deletions(-)
+> > 
+> > diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_lm.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_lm.c
+> > index 018df2c..45a5bc6 100644
+> > --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_lm.c
+> > +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_lm.c
+> > @@ -15,7 +15,6 @@
+> >  #include "dpu_hwio.h"
+> >  #include "dpu_hw_lm.h"
+> >  #include "dpu_hw_mdss.h"
+> > -#include "dpu_kms.h"
 > >  
-> 
-> I presume that lgtm == Reviewed-by...
-
-yes :-) and formally here as well..
-
-Reviewed-by: Vinod Koul <vkoul@kernel.org>
-
-> 
-> Thanks,
-> Bjorn
-> 
-> > > +			CPU_PC: pc {
-> > > +				compatible = "arm,idle-state";
-> > > +				arm,psci-suspend-param = <0x40000003>;
-> > > +				entry-latency-us = <125>;
-> > > +				exit-latency-us = <180>;
-> > > +				min-residency-us = <595>;
-> > > +				local-timer-stop;
-> > > +			};
-> > > +		};
-> > >  	};
-> > >  
-> > >  	firmware {
-> > > -- 
-> > > 2.21.0
-> > 
+> >  #define LM_OP_MODE                        0x00
+> >  #define LM_OUT_SIZE                       0x04
+> > diff --git a/drivers/gpu/drm/nouveau/nvkm/subdev/bus/nv04.c b/drivers/gpu/drm/nouveau/nvkm/subdev/bus/nv04.c
+> > index c80b967..2b44ba5 100644
+> > --- a/drivers/gpu/drm/nouveau/nvkm/subdev/bus/nv04.c
+> > +++ b/drivers/gpu/drm/nouveau/nvkm/subdev/bus/nv04.c
+> > @@ -26,8 +26,6 @@
+> >  
+> >  #include <subdev/gpio.h>
+> >  
+> > -#include <subdev/gpio.h>
+> > -
+> >  static void
+> >  nv04_bus_intr(struct nvkm_bus *bus)
+> >  {
+> > diff --git a/drivers/gpu/drm/panel/panel-raspberrypi-touchscreen.c b/drivers/gpu/drm/panel/panel-raspberrypi-touchscreen.c
+> > index 2c9c972..cacf2e0 100644
+> > --- a/drivers/gpu/drm/panel/panel-raspberrypi-touchscreen.c
+> > +++ b/drivers/gpu/drm/panel/panel-raspberrypi-touchscreen.c
+> > @@ -53,7 +53,6 @@
+> >  #include <linux/of_graph.h>
+> >  #include <linux/pm.h>
+> >  
+> > -#include <drm/drm_panel.h>
+> >  #include <drm/drmP.h>
+> >  #include <drm/drm_crtc.h>
+> >  #include <drm/drm_mipi_dsi.h>
 > > -- 
-> > ~Vinod
+> > 1.8.3.1
+> > 
+> 
+> -- 
+> Daniel Vetter
+> Software Engineer, Intel Corporation
+> http://blog.ffwll.ch
 
 -- 
-~Vinod
+Daniel Vetter
+Software Engineer, Intel Corporation
+http://blog.ffwll.ch
