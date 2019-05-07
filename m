@@ -2,82 +2,191 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id F201016468
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 May 2019 15:18:04 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 1F1571686C
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 May 2019 18:54:23 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726446AbfEGNSE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 7 May 2019 09:18:04 -0400
-Received: from asavdk3.altibox.net ([109.247.116.14]:42274 "EHLO
-        asavdk3.altibox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726420AbfEGNSD (ORCPT
+        id S1725859AbfEGQyM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 7 May 2019 12:54:12 -0400
+Received: from mail-lj1-f195.google.com ([209.85.208.195]:46294 "EHLO
+        mail-lj1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726978AbfEGQyH (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 7 May 2019 09:18:03 -0400
-Received: from ravnborg.org (unknown [158.248.194.18])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by asavdk3.altibox.net (Postfix) with ESMTPS id 31DE92002B;
-        Tue,  7 May 2019 15:17:58 +0200 (CEST)
-Date:   Tue, 7 May 2019 15:17:56 +0200
-From:   Sam Ravnborg <sam@ravnborg.org>
-To:     jagdsh.linux@gmail.com, robdclark@gmail.com, sean@poorly.run,
-        airlied@linux.ie, bskeggs@redhat.com, hierry.reding@gmail.com,
-        jcrouse@codeaurora.org, jsanka@codeaurora.org,
-        skolluku@codeaurora.org, paul.burton@mips.com,
-        jrdr.linux@gmail.com, linux-arm-msm@vger.kernel.org,
-        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
-        linux-kernel@vger.kernel.org, nouveau@lists.freedesktop.org
-Subject: Re: [PATCH] gpu/drm: Remove duplicate headers
-Message-ID: <20190507131756.GA17647@ravnborg.org>
-References: <1556906293-128921-1-git-send-email-jagdsh.linux@gmail.com>
- <20190506144334.GH17751@phenom.ffwll.local>
- <20190507100532.GP17751@phenom.ffwll.local>
+        Tue, 7 May 2019 12:54:07 -0400
+Received: by mail-lj1-f195.google.com with SMTP id h21so14926365ljk.13
+        for <linux-arm-msm@vger.kernel.org>; Tue, 07 May 2019 09:54:05 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=B6zYDfIbsh4fVsiu8ZkF/mnbm8ndRtPN2deL3LIfJ84=;
+        b=EKcDa+QDVLkg6+3F8xbsv66Xjpqs7OCvn17LDo9ArsHIg8OaBH61OtNHdmo4oEUq5n
+         ZwK1/9qEBuAd0IgekzYIK3To6Nzsd0YeQOP7JwPvcMYhjWGcFE6o0ORE/sI5twuTDy4T
+         gUUgf+pxkfNjY0XhhVXhUlQ712ZFrn7yP8jrjpXunN1rMkY78mCOxdF6DbrTVbpIEsea
+         Tq3vmVUjR7DDqWaAe0GaXrnlTxTKQmPJx7hit+oPKdybNnPwtNo5QS9GLvS0oXFFASeE
+         fS2/5GIeEQ4IVQl813CT7q2XFlPxVtCT+mYkhINKA2uRoG4mtGsnIvFlVKBZ5CGXrKd5
+         91KA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=B6zYDfIbsh4fVsiu8ZkF/mnbm8ndRtPN2deL3LIfJ84=;
+        b=Pt1DHfKKG89dQewJXFC2pUEB0Gi5D3HkWoRZXls54hZl0au+XiyTJ8j5WCqfPZcr7y
+         JngO2v2xJQ1dSsYaJqHYfVhFs5K26Eo33L/HuQ2vFVCSpZgv4w/BXg88m9vBaxJb4l2J
+         ttOYB86x1TH7cfJgnv8RmXPzATXmonhurQPZ0Gc0nCQ1YqAqSlpLTcIiwPdXHtp+OcFE
+         A1OT1yTnTgXCgDtXKibFx6htW0PpxrChwtGvgbgfzbb9l+++clIoP8qVgTdiRo5Q80oB
+         WZ2xrov9G7C73by1ExCQwWLBy0RFoUwWA3MflFiOkdoeraX2h/dXROmpQm0ySH7ErvvB
+         BIrA==
+X-Gm-Message-State: APjAAAU53+42+NDDPRU2Y5mrgMelG5oYPlP8/djk+Dsrp64JxCE6OvKh
+        NCu0xjmabOEYIf0yoG+ydSZypA==
+X-Google-Smtp-Source: APXvYqyhBj0Cyym7O8BCcezWKbBr4/wUsQ/rLaB9CojWM34lke/HKUoy6IgewO93/sjprcXXThVOXw==
+X-Received: by 2002:a2e:86c5:: with SMTP id n5mr18423638ljj.184.1557248045227;
+        Tue, 07 May 2019 09:54:05 -0700 (PDT)
+Received: from [192.168.1.9] (hst-221-118.medicom.bg. [84.238.221.118])
+        by smtp.googlemail.com with ESMTPSA id n10sm3877075ljh.36.2019.05.07.09.54.03
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Tue, 07 May 2019 09:54:04 -0700 (PDT)
+Subject: Re: [PATCH v2] media/doc: Allow sizeimage to be set by v4l clients
+To:     Mauro Carvalho Chehab <mchehab@kernel.org>,
+        Hans Verkuil <hverkuil@xs4all.nl>
+Cc:     Stanimir Varbanov <stanimir.varbanov@linaro.org>,
+        linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+References: <20190412155915.16849-1-stanimir.varbanov@linaro.org>
+ <20190502095550.31282c0d@coco.lan>
+ <ee78effa-f678-5d15-3802-bb787e7057e2@xs4all.nl>
+ <20190502102956.70aed1c3@coco.lan>
+From:   Stanimir Varbanov <stanimir.varbanov@linaro.org>
+Message-ID: <5a94d216-dc61-968e-2eda-8f460c42b4ca@linaro.org>
+Date:   Tue, 7 May 2019 19:54:01 +0300
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+ Thunderbird/60.6.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20190507100532.GP17751@phenom.ffwll.local>
-User-Agent: Mutt/1.10.1 (2018-07-13)
-X-CMAE-Score: 0
-X-CMAE-Analysis: v=2.3 cv=dqr19Wo4 c=1 sm=1 tr=0
-        a=UWs3HLbX/2nnQ3s7vZ42gw==:117 a=UWs3HLbX/2nnQ3s7vZ42gw==:17
-        a=jpOVt7BSZ2e4Z31A5e1TngXxSK0=:19 a=kj9zAlcOel0A:10 a=pGLkceISAAAA:8
-        a=4sjd1iRJTynRc3plxrAA:9 a=CjuIK1q_8ugA:10
+In-Reply-To: <20190502102956.70aed1c3@coco.lan>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, May 07, 2019 at 12:05:32PM +0200, Daniel Vetter wrote:
-> On Mon, May 06, 2019 at 04:43:34PM +0200, Daniel Vetter wrote:
-> > On Fri, May 03, 2019 at 11:28:13PM +0530, jagdsh.linux@gmail.com wrote:
-> > > From: Jagadeesh Pagadala <jagdsh.linux@gmail.com>
-> > > 
-> > > Remove duplicate headers which are included twice.
-> > > 
-> > > Signed-off-by: Jagadeesh Pagadala <jagdsh.linux@gmail.com>
-> > 
-> > I collected some acks for the msm and nouveau parts and pushed this. For
-> > next time around would be great if you split these up along driver/module
-> > boundaries, so that each maintainer can pick this up directly.
-> > 
-> > Thanks for your patch.
-> > -Daniel
-> > 
-> > > ---
-> > >  drivers/gpu/drm/msm/disp/dpu1/dpu_hw_lm.c             | 1 -
-> > >  drivers/gpu/drm/nouveau/nvkm/subdev/bus/nv04.c        | 2 --
-> > >  drivers/gpu/drm/panel/panel-raspberrypi-touchscreen.c | 1 -
+Hi Mauro,
+
+Thanks for comments!
+
+On 5/2/19 4:29 PM, Mauro Carvalho Chehab wrote:
+> Em Thu, 2 May 2019 15:16:54 +0200
+> Hans Verkuil <hverkuil@xs4all.nl> escreveu:
 > 
-> Correction, this didn't compile, so I dropped the changes to panel-rpi.
-> Another reason to split patches more for next time around. Also, needs
-> more compile testing (you need cross compilers for at least arm to test
-> this stuff).
-I will try to resurrect my patch series for drm/panel/ that
-addresses:
-- removal of drmP.h
-- removal of duplicated include files
-- sort all include files
+>> On 5/2/19 2:55 PM, Mauro Carvalho Chehab wrote:
+>>> Em Fri, 12 Apr 2019 18:59:15 +0300
+>>> Stanimir Varbanov <stanimir.varbanov@linaro.org> escreveu:
+>>>   
+>>>> This changes v4l2_pix_format and v4l2_plane_pix_format sizeimage
+>>>> field description to allow v4l clients to set bigger image size
+>>>> in case of variable length compressed data.
+>>>>
+>>>> Signed-off-by: Stanimir Varbanov <stanimir.varbanov@linaro.org>
+>>>> ---
+>>>>  Documentation/media/uapi/v4l/pixfmt-v4l2-mplane.rst | 13 ++++++++++++-
+>>>>  Documentation/media/uapi/v4l/pixfmt-v4l2.rst        | 11 ++++++++++-
+>>>>  2 files changed, 22 insertions(+), 2 deletions(-)
+>>>>
+>>>> diff --git a/Documentation/media/uapi/v4l/pixfmt-v4l2-mplane.rst b/Documentation/media/uapi/v4l/pixfmt-v4l2-mplane.rst
+>>>> index 5688c816e334..005428a8121e 100644
+>>>> --- a/Documentation/media/uapi/v4l/pixfmt-v4l2-mplane.rst
+>>>> +++ b/Documentation/media/uapi/v4l/pixfmt-v4l2-mplane.rst
+>>>> @@ -31,7 +31,18 @@ describing all planes of that format.
+>>>>  
+>>>>      * - __u32
+>>>>        - ``sizeimage``
+>>>> -      - Maximum size in bytes required for image data in this plane.
+>>>> +      - Maximum size in bytes required for image data in this plane,
+>>>> +	set by the driver. When the image consists of variable length
+>>>> +	compressed data this is the number of bytes required by the
+>>>> +	codec to support the worst-case compression scenario.
+>>>> +
+>>>> +	For uncompressed images the driver will set the value. For
+>>>> +	variable length compressed data clients are allowed to set
+>>>> +	the sizeimage field, but the driver may ignore it and set the
+>>>> +	value itself, or it may modify the provided value based on
+>>>> +	alignment requirements or minimum/maximum size requirements.
+>>>> +	If the client wants to leave this to the driver, then it should
+>>>> +	set sizeimage to 0.
+>>>>      * - __u32
+>>>>        - ``bytesperline``
+>>>>        - Distance in bytes between the leftmost pixels in two adjacent
+>>>> diff --git a/Documentation/media/uapi/v4l/pixfmt-v4l2.rst b/Documentation/media/uapi/v4l/pixfmt-v4l2.rst
+>>>> index 71eebfc6d853..0f7771151db9 100644
+>>>> --- a/Documentation/media/uapi/v4l/pixfmt-v4l2.rst
+>>>> +++ b/Documentation/media/uapi/v4l/pixfmt-v4l2.rst
+>>>> @@ -89,7 +89,16 @@ Single-planar format structure
+>>>>        - Size in bytes of the buffer to hold a complete image, set by the
+>>>>  	driver. Usually this is ``bytesperline`` times ``height``. When
+>>>>  	the image consists of variable length compressed data this is the
+>>>> -	maximum number of bytes required to hold an image.
+>>>> +	number of bytes required by the codec to support the worst-case
+>>>> +	compression scenario.
+>>>> +
+>>>> +	For uncompressed images the driver will set the value. For
+>>>> +	variable length compressed data clients are allowed to set
+>>>> +	the sizeimage field, but the driver may ignore it and set the
+>>>> +	value itself, or it may modify the provided value based on
+>>>> +	alignment requirements or minimum/maximum size requirements.
+>>>> +	If the client wants to leave this to the driver, then it should
+>>>> +	set sizeimage to 0.  
+>>>
+>>> It is very confusing to understand what you meant by the above paragraph,
+>>> as you inverted the sentence order and forgot a comma.
+>>>
+>>> I would, instead, write the phrases using the direct order, and break
+>>> into two paragraphs, e. g., changing the above to:
+>>>
+>>> 	"The driver will set the value for uncompressed images.
+>>>
+>>> 	Clients are allowed to set the sizeimage field for variable length
+>>> 	compressed data, but the driver may ignore it and set the
+>>> 	value itself, or it may modify the provided value based on
+>>> 	alignment requirements or minimum/maximum size requirements.
+>>> 	If the client wants to leave this to the driver, then it should
+>>> 	set sizeimage to 0."
+>>>
+>>> That makes it a lot easier to read, hopefully preventing mistakes from
+>>> app and driver developers when reading about sizeimage.
+>>>
+>>> Yet, I'm not too comfortable on letting this too generic. I mean,
+>>> how an app writer would know what formats are "variable length
+>>> compressed data", specially since libv4l may actually change that.  
+>>
+>> It's actually quite clearly defined: compressed formats set the
+>> V4L2_FMT_FLAG_COMPRESSED flag in VIDIOC_ENUMFMT.
+> 
+> Ok, so let's be explicit here, e. g. something like:
+> 
+>  	"Clients are allowed to set the sizeimage field for variable length
+>  	compressed data flagged with V4L2_FMT_FLAG_COMPRESSED at
+> 	VIDIOC_ENUMFMT, but the driver may ignore it and set the
+>  	value itself, or it may modify the provided value based on
+>  	alignment requirements or minimum/maximum size requirements.
+>  	If the client wants to leave this to the driver, then it should
+>  	set sizeimage to 0."
+> 
+> That makes clear for app developers when they can use this new
+> feature.
 
-In other words - panel-raspberrypi-touchscreen.c will be dealt with.
-I expect to look at it in two weeks time (on vacation starting friday).
+OK, I will resend with that description.
 
-	Sam
+> 
+> That still leads us to what happens at libv4l with sizeimage
+> for a compressed format that got uncompressed by the library, in
+> order to ensure that a change like this won't cause breakages at
+> existing userspace apps.
+
+libv4l can decompress formats like MJPEG, right? I mean it isn't to
+decompress MPEG/H264 for example.
+
+-- 
+-- 
+regards,
+Stan
