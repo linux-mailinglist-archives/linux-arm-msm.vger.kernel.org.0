@@ -2,25 +2,25 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id DDDE016C68
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 May 2019 22:44:08 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0BC8D16C76
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 May 2019 22:44:15 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726378AbfEGUk5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 7 May 2019 16:40:57 -0400
-Received: from smtp.codeaurora.org ([198.145.29.96]:53086 "EHLO
+        id S1727257AbfEGUl0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 7 May 2019 16:41:26 -0400
+Received: from smtp.codeaurora.org ([198.145.29.96]:53206 "EHLO
         smtp.codeaurora.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727146AbfEGUk5 (ORCPT
+        with ESMTP id S1727156AbfEGUk6 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 7 May 2019 16:40:57 -0400
+        Tue, 7 May 2019 16:40:58 -0400
 Received: by smtp.codeaurora.org (Postfix, from userid 1000)
-        id 25805611BE; Tue,  7 May 2019 20:40:56 +0000 (UTC)
+        id 7F3B461214; Tue,  7 May 2019 20:40:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
-        s=default; t=1557261656;
-        bh=uOdiVH4mM3y1gGpZn3r1a7XWidHGtTS2ItC1QISSiPQ=;
+        s=default; t=1557261657;
+        bh=YIbjFbNVciKsIGLcV/krAz25GJ1zEgehK0arLR9Zof8=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=jpeDpL1qRb5s4eMrm7WIgaNOwrXfrpBVxUcEm+O4W7HON6lbqEEimZ6fBjv+BWfia
-         E1hCZqLNKVtrPtqCm0b07Ww59YEsJ1SmWFocWC3dwUNgh6mmpZ0RrKL8r3S/B6siUt
-         VDge1KWOcdXoZ8XVvryirblJNTWziSnxrpj8TR5c=
+        b=kkpR9wH0NUXYhbjf/ScVbk4cw+gXVYm+4HoFpIojPtQ/TiAzvQoJHjr/2yqLbDiYu
+         Q8RGaPrJ7OIfz+H+P53KckRvCgJk+6P+K6rcTaPooeB1khoRqo1PxOPSVfLcpYGjdh
+         n0SE25miUDVgyLnQdghnpuVO/M5MzM6GquVrzA58=
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
         pdx-caf-mail.web.codeaurora.org
 X-Spam-Level: 
@@ -30,16 +30,16 @@ Received: from codeaurora.org (i-global254.qualcomm.com [199.106.103.254])
         (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
         (No client certificate requested)
         (Authenticated sender: ilina@smtp.codeaurora.org)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 9E91560F3E;
-        Tue,  7 May 2019 20:40:54 +0000 (UTC)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id B32716119F;
+        Tue,  7 May 2019 20:40:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
-        s=default; t=1557261655;
-        bh=uOdiVH4mM3y1gGpZn3r1a7XWidHGtTS2ItC1QISSiPQ=;
+        s=default; t=1557261656;
+        bh=YIbjFbNVciKsIGLcV/krAz25GJ1zEgehK0arLR9Zof8=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=noBH39knVG9M0u+EPS5OnFZmzobCt4aAIx3Q+gkwtp53OygV7CjtZqeBYMR/+soMQ
-         jBCIzyq4MUfbDsATwycV8DkoORMXaqrTRLaDMYsNeXlt0m36shCqAEr0HpMXocqXbM
-         UKLKnA/2D0vNdju28tDcja9ThtZnPSHm9R/uGxmg=
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 9E91560F3E
+        b=B3NwokQa2yh4R+r6BWlJfTiMJuUThx6bhOW5t9EMh5bwvYZnsXuSkq3GopYHzaTk+
+         iYOrFKDqumD8m50/nyiuKTOqOQp1hZGACvalCAxRvb8feV3SUwPis7Y71KMHkMQv6j
+         BZVLFzOENAJf2nOLR0EvZGfskOm2npZxeTG97Rtg=
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org B32716119F
 Authentication-Results: pdx-caf-mail.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
 Authentication-Results: pdx-caf-mail.web.codeaurora.org; spf=none smtp.mailfrom=ilina@codeaurora.org
 From:   Lina Iyer <ilina@codeaurora.org>
@@ -49,9 +49,9 @@ Cc:     linux-kernel@vger.kernel.org, rplsssn@codeaurora.org,
         linux-arm-msm@vger.kernel.org, thierry.reding@gmail.com,
         bjorn.andersson@linaro.org, dianders@chromium.org,
         Lina Iyer <ilina@codeaurora.org>
-Subject: [PATCH v5 05/11] of: irq: add helper to remap interrupts to another irqdomain
-Date:   Tue,  7 May 2019 14:37:43 -0600
-Message-Id: <20190507203749.3384-6-ilina@codeaurora.org>
+Subject: [PATCH v5 06/11] drivers: irqchip: add PDC irqdomain for wakeup capable GPIOs
+Date:   Tue,  7 May 2019 14:37:44 -0600
+Message-Id: <20190507203749.3384-7-ilina@codeaurora.org>
 X-Mailer: git-send-email 2.21.0
 In-Reply-To: <20190507203749.3384-1-ilina@codeaurora.org>
 References: <20190507203749.3384-1-ilina@codeaurora.org>
@@ -62,201 +62,245 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Stephen Boyd <swboyd@chromium.org>
+Introduce a new domain for wakeup capable GPIOs. The domain can be
+requested using the bus token DOMAIN_BUS_WAKEUP. In the following
+patches, we will specify PDC as the wakeup-parent for the TLMM GPIO
+irqchip. Requesting a wakeup GPIO will setup the GPIO and the
+corresponding PDC interrupt as its parent.
 
-Sometimes interrupts are routed from an interrupt controller to another
-in no specific order. Having these in the drivers makes it difficult to
-maintain when the same drivers supports multiple variants with different
-mapping. Also, specifying them in DT makes little sense with a bunch of
-numbers like -
-	<0, 13>, <5, 32>,
-
-It makes more sense when we can have the parent handle along with
-interrupt specifiers for the incoming interrupt as well as that of the
-outgoing interrupt like -
-	<22 0 &intc 36 0>,
-	<24 0 &intc 37 0>,
-	<26 0 &intc 38 0>,
-
-And the interrupt specifiers can be interpreted using these optional
-properties -
-	irqdomain-map-mask = <0xff 0>;
-	irqdomain-map-pass-thru = <0 0xff>;
-
-The irqdomain-map-mask reads the input interrupt specifier to parse the
-incoming interrupt port. The format of the output port is specified with
-the irqdomain-map-pass-thru property.
-
-Let's add a helper function to parse this from DT and match a struct
-irq_fwspec using the input interrupt specifier from the irqdomain-map
-and the valid bits specified in the irqdomain-map-mask and copy the
-output interrupt specifier from the map to irq_fwspec per the mask in
-irqdomain-map-pass-thru property for the matched interrupt.
-
-Signed-off-by: Stephen Boyd <swboyd@chromium.org>
+Co-developed-by: Stephen Boyd <swboyd@chromium.org>
 Signed-off-by: Lina Iyer <ilina@codeaurora.org>
 ---
 Changes in v5:
-	- Fix returning 0 when no match is found
+	- Define invalid wakeup interrupt
 Changes in v4:
-	- Fix commit text spelling and verbosity
+	- Remove vestigial changes from v2
+Changes in v3:
+	- Remove PDC GPIO map data (moved to DT)
+	- hwirq passed in .alloc() is a PDC pin now
+Changes in v2:
+	- Remove separate file for PDC GPIO map data
+	- Error checks and return
+	- Whitespace fixes
 ---
- drivers/of/irq.c       | 129 +++++++++++++++++++++++++++++++++++++++++
- include/linux/of_irq.h |   1 +
- 2 files changed, 130 insertions(+)
+ drivers/irqchip/qcom-pdc.c   | 98 ++++++++++++++++++++++++++++++++----
+ include/linux/soc/qcom/irq.h | 25 +++++++++
+ 2 files changed, 114 insertions(+), 9 deletions(-)
+ create mode 100644 include/linux/soc/qcom/irq.h
 
-diff --git a/drivers/of/irq.c b/drivers/of/irq.c
-index e1f6f392a4c0..6186904b2b6b 100644
---- a/drivers/of/irq.c
-+++ b/drivers/of/irq.c
-@@ -273,6 +273,135 @@ int of_irq_parse_raw(const __be32 *addr, struct of_phandle_args *out_irq)
- }
- EXPORT_SYMBOL_GPL(of_irq_parse_raw);
+diff --git a/drivers/irqchip/qcom-pdc.c b/drivers/irqchip/qcom-pdc.c
+index faa7d61b9d6c..ef0135fbc41a 100644
+--- a/drivers/irqchip/qcom-pdc.c
++++ b/drivers/irqchip/qcom-pdc.c
+@@ -13,12 +13,13 @@
+ #include <linux/of.h>
+ #include <linux/of_address.h>
+ #include <linux/of_device.h>
++#include <linux/soc/qcom/irq.h>
+ #include <linux/spinlock.h>
+-#include <linux/platform_device.h>
+ #include <linux/slab.h>
+ #include <linux/types.h>
  
-+int of_irq_domain_map(const struct irq_fwspec *in, struct irq_fwspec *out)
+ #define PDC_MAX_IRQS		126
++#define PDC_MAX_GPIO_IRQS	256
+ 
+ #define CLEAR_INTR(reg, intr)	(reg & ~(1 << intr))
+ #define ENABLE_INTR(reg, intr)	(reg | (1 << intr))
+@@ -26,6 +27,8 @@
+ #define IRQ_ENABLE_BANK		0x10
+ #define IRQ_i_CFG		0x110
+ 
++#define PDC_NO_PARENT_IRQ	~0UL
++
+ struct pdc_pin_region {
+ 	u32 pin_base;
+ 	u32 parent_base;
+@@ -65,12 +68,18 @@ static void pdc_enable_intr(struct irq_data *d, bool on)
+ 
+ static void qcom_pdc_gic_mask(struct irq_data *d)
+ {
++	if (d->hwirq == GPIO_NO_WAKE_IRQ)
++		return;
++
+ 	pdc_enable_intr(d, false);
+ 	irq_chip_mask_parent(d);
+ }
+ 
+ static void qcom_pdc_gic_unmask(struct irq_data *d)
+ {
++	if (d->hwirq == GPIO_NO_WAKE_IRQ)
++		return;
++
+ 	pdc_enable_intr(d, true);
+ 	irq_chip_unmask_parent(d);
+ }
+@@ -114,6 +123,9 @@ static int qcom_pdc_gic_set_type(struct irq_data *d, unsigned int type)
+ 	int pin_out = d->hwirq;
+ 	enum pdc_irq_config_bits pdc_type;
+ 
++	if (pin_out == GPIO_NO_WAKE_IRQ)
++		return 0;
++
+ 	switch (type) {
+ 	case IRQ_TYPE_EDGE_RISING:
+ 		pdc_type = PDC_EDGE_RISING;
+@@ -169,8 +181,7 @@ static irq_hw_number_t get_parent_hwirq(int pin)
+ 			return (region->parent_base + pin - region->pin_base);
+ 	}
+ 
+-	WARN_ON(1);
+-	return ~0UL;
++	return PDC_NO_PARENT_IRQ;
+ }
+ 
+ static int qcom_pdc_translate(struct irq_domain *d, struct irq_fwspec *fwspec,
+@@ -199,17 +210,17 @@ static int qcom_pdc_alloc(struct irq_domain *domain, unsigned int virq,
+ 
+ 	ret = qcom_pdc_translate(domain, fwspec, &hwirq, &type);
+ 	if (ret)
+-		return -EINVAL;
+-
+-	parent_hwirq = get_parent_hwirq(hwirq);
+-	if (parent_hwirq == ~0UL)
+-		return -EINVAL;
++		return ret;
+ 
+ 	ret  = irq_domain_set_hwirq_and_chip(domain, virq, hwirq,
+ 					     &qcom_pdc_gic_chip, NULL);
+ 	if (ret)
+ 		return ret;
+ 
++	parent_hwirq = get_parent_hwirq(hwirq);
++	if (parent_hwirq == PDC_NO_PARENT_IRQ)
++		return 0;
++
+ 	if (type & IRQ_TYPE_EDGE_BOTH)
+ 		type = IRQ_TYPE_EDGE_RISING;
+ 
+@@ -232,6 +243,63 @@ static const struct irq_domain_ops qcom_pdc_ops = {
+ 	.free		= irq_domain_free_irqs_common,
+ };
+ 
++static int qcom_pdc_gpio_alloc(struct irq_domain *domain, unsigned int virq,
++			       unsigned int nr_irqs, void *data)
 +{
-+	char *stem_name;
-+	char *cells_name, *map_name = NULL, *mask_name = NULL;
-+	char *pass_name = NULL;
-+	struct device_node *cur, *new = NULL;
-+	const __be32 *map, *mask, *pass;
-+	static const __be32 dummy_mask[] = { [0 ... MAX_PHANDLE_ARGS] = ~0 };
-+	static const __be32 dummy_pass[] = { [0 ... MAX_PHANDLE_ARGS] = 0 };
-+	__be32 initial_match_array[MAX_PHANDLE_ARGS];
-+	const __be32 *match_array = initial_match_array;
-+	int i, ret, map_len, match;
-+	u32 in_size, out_size;
++	struct qcom_irq_fwspec *qcom_fwspec = data;
++	struct irq_fwspec *fwspec = &qcom_fwspec->fwspec;
++	struct irq_fwspec parent_fwspec;
++	irq_hw_number_t hwirq, parent_hwirq;
++	unsigned int type;
++	int ret;
 +
-+	stem_name = "";
-+	cells_name = "#interrupt-cells";
++	ret = qcom_pdc_translate(domain, fwspec, &hwirq, &type);
++	if (ret)
++		return ret;
 +
-+	ret = -ENOMEM;
-+	map_name = kasprintf(GFP_KERNEL, "irqdomain%s-map", stem_name);
-+	if (!map_name)
-+		goto free;
++	ret = irq_domain_set_hwirq_and_chip(domain, virq, hwirq,
++					    &qcom_pdc_gic_chip, NULL);
++	if (ret)
++		return ret;
 +
-+	mask_name = kasprintf(GFP_KERNEL, "irqdomain%s-map-mask", stem_name);
-+	if (!mask_name)
-+		goto free;
++	if (hwirq == GPIO_NO_WAKE_IRQ)
++		return 0;
 +
-+	pass_name = kasprintf(GFP_KERNEL, "irqdomain%s-map-pass-thru", stem_name);
-+	if (!pass_name)
-+		goto free;
++	parent_hwirq = get_parent_hwirq(hwirq);
++	if (parent_hwirq == PDC_NO_PARENT_IRQ)
++		return 0;
 +
-+	/* Get the #interrupt-cells property */
-+	cur = to_of_node(in->fwnode);
-+	ret = of_property_read_u32(cur, cells_name, &in_size);
-+	if (ret < 0)
-+		goto put;
++	qcom_fwspec->mask = true;
 +
-+	/* Precalculate the match array - this simplifies match loop */
-+	for (i = 0; i < in_size; i++)
-+		initial_match_array[i] = cpu_to_be32(in->param[i]);
++	if (type & IRQ_TYPE_EDGE_BOTH)
++		type = IRQ_TYPE_EDGE_RISING;
 +
-+	ret = -EINVAL;
-+	/* Get the irqdomain-map property */
-+	map = of_get_property(cur, map_name, &map_len);
-+	if (!map) {
-+		ret = 0;
-+		goto free;
-+	}
-+	map_len /= sizeof(u32);
++	if (type & IRQ_TYPE_LEVEL_MASK)
++		type = IRQ_TYPE_LEVEL_HIGH;
 +
-+	/* Get the irqdomain-map-mask property (optional) */
-+	mask = of_get_property(cur, mask_name, NULL);
-+	if (!mask)
-+		mask = dummy_mask;
-+	/* Iterate through irqdomain-map property */
-+	match = 0;
-+	while (map_len > (in_size + 1) && !match) {
-+		/* Compare specifiers */
-+		match = 1;
-+		for (i = 0; i < in_size; i++, map_len--)
-+			match &= !((match_array[i] ^ *map++) & mask[i]);
++	parent_fwspec.fwnode      = domain->parent->fwnode;
++	parent_fwspec.param_count = 3;
++	parent_fwspec.param[0]    = 0;
++	parent_fwspec.param[1]    = parent_hwirq;
++	parent_fwspec.param[2]    = type;
 +
-+		of_node_put(new);
-+		new = of_find_node_by_phandle(be32_to_cpup(map));
-+		map++;
-+		map_len--;
-+
-+		/* Check if not found */
-+		if (!new)
-+			goto put;
-+
-+		if (!of_device_is_available(new))
-+			match = 0;
-+
-+		ret = of_property_read_u32(new, cells_name, &out_size);
-+		if (ret)
-+			goto put;
-+
-+		/* Check for malformed properties */
-+		if (WARN_ON(out_size > MAX_PHANDLE_ARGS))
-+			goto put;
-+		if (map_len < out_size)
-+			goto put;
-+
-+		/* Move forward by new node's #interrupt-cells amount */
-+		map += out_size;
-+		map_len -= out_size;
-+	}
-+
-+	if (!match) {
-+		ret = -EINVAL;
-+		goto put;
-+	}
-+
-+	/* Get the irqdomain-map-pass-thru property (optional) */
-+	pass = of_get_property(cur, pass_name, NULL);
-+	if (!pass)
-+		pass = dummy_pass;
-+
-+	/*
-+	 * Successfully parsed a irqdomain-map translation; copy new
-+	 * specifier into the out structure, keeping the
-+	 * bits specified in irqdomain-map-pass-thru.
-+	 */
-+	match_array = map - out_size;
-+	for (i = 0; i < out_size; i++) {
-+		__be32 val = *(map - out_size + i);
-+
-+		out->param[i] = in->param[i];
-+		if (i < in_size) {
-+			val &= ~pass[i];
-+			val |= cpu_to_be32(out->param[i]) & pass[i];
-+		}
-+
-+		out->param[i] = be32_to_cpu(val);
-+	}
-+	out->param_count = in_size = out_size;
-+	out->fwnode = of_node_to_fwnode(new);
-+put:
-+	of_node_put(cur);
-+	of_node_put(new);
-+free:
-+	kfree(mask_name);
-+	kfree(map_name);
-+	kfree(pass_name);
-+
-+	return ret;
++	return irq_domain_alloc_irqs_parent(domain, virq, nr_irqs,
++					    &parent_fwspec);
 +}
-+EXPORT_SYMBOL(of_irq_domain_map);
 +
- /**
-  * of_irq_parse_one - Resolve an interrupt for a device
-  * @device: the device whose interrupt is to be resolved
-diff --git a/include/linux/of_irq.h b/include/linux/of_irq.h
-index 1214cabb2247..86342502a62a 100644
---- a/include/linux/of_irq.h
-+++ b/include/linux/of_irq.h
-@@ -32,6 +32,7 @@ static inline int of_irq_parse_oldworld(struct device_node *device, int index,
- }
- #endif /* CONFIG_PPC32 && CONFIG_PPC_PMAC */
++static int qcom_pdc_gpio_domain_select(struct irq_domain *d,
++				       struct irq_fwspec *fwspec,
++				       enum irq_domain_bus_token bus_token)
++{
++	return (bus_token == DOMAIN_BUS_WAKEUP);
++}
++
++static const struct irq_domain_ops qcom_pdc_gpio_ops = {
++	.select		= qcom_pdc_gpio_domain_select,
++	.alloc		= qcom_pdc_gpio_alloc,
++	.free		= irq_domain_free_irqs_common,
++};
++
+ static int pdc_setup_pin_mapping(struct device_node *np)
+ {
+ 	int ret, n;
+@@ -270,7 +338,7 @@ static int pdc_setup_pin_mapping(struct device_node *np)
  
-+extern int of_irq_domain_map(const struct irq_fwspec *in, struct irq_fwspec *out);
- extern int of_irq_parse_raw(const __be32 *addr, struct of_phandle_args *out_irq);
- extern int of_irq_parse_one(struct device_node *device, int index,
- 			  struct of_phandle_args *out_irq);
+ static int qcom_pdc_init(struct device_node *node, struct device_node *parent)
+ {
+-	struct irq_domain *parent_domain, *pdc_domain;
++	struct irq_domain *parent_domain, *pdc_domain, *pdc_gpio_domain;
+ 	int ret;
+ 
+ 	pdc_base = of_iomap(node, 0);
+@@ -301,6 +369,18 @@ static int qcom_pdc_init(struct device_node *node, struct device_node *parent)
+ 		goto fail;
+ 	}
+ 
++	pdc_gpio_domain = irq_domain_create_hierarchy(parent_domain, 0,
++						      PDC_MAX_GPIO_IRQS,
++						      of_fwnode_handle(node),
++						      &qcom_pdc_gpio_ops, NULL);
++	if (!pdc_gpio_domain) {
++		pr_err("%pOF: GIC domain add failed for GPIO domain\n", node);
++		ret = -ENOMEM;
++		goto fail;
++	}
++
++	irq_domain_update_bus_token(pdc_gpio_domain, DOMAIN_BUS_WAKEUP);
++
+ 	return 0;
+ 
+ fail:
+diff --git a/include/linux/soc/qcom/irq.h b/include/linux/soc/qcom/irq.h
+new file mode 100644
+index 000000000000..468a811141ad
+--- /dev/null
++++ b/include/linux/soc/qcom/irq.h
+@@ -0,0 +1,25 @@
++/* SPDX-License-Identifier: GPL-2.0 */
++
++#ifndef __QCOM_IRQ_H
++#define __QCOM_IRQ_H
++
++#include <linux/irqdomain.h>
++
++#define GPIO_NO_WAKE_IRQ	~0U
++
++/**
++ * struct qcom_irq_fwspec - qcom specific irq fwspec wrapper
++ * @fwspec: irq fwspec
++ * @mask: if true, keep the irq masked in the gpio controller
++ *
++ * Use this structure to communicate between the parent irq chip, MPM or PDC,
++ * to the gpio chip, TLMM, about the gpio being allocated in the parent
++ * and if the gpio chip should keep the line masked because the parent irq
++ * chip is handling everything about the irq line.
++ */
++struct qcom_irq_fwspec {
++	struct irq_fwspec fwspec;
++	bool mask;
++};
++
++#endif
 -- 
 The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
 a Linux Foundation Collaborative Project
