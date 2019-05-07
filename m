@@ -2,191 +2,87 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 1F1571686C
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 May 2019 18:54:23 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 7B7F4169C2
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 May 2019 20:02:14 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725859AbfEGQyM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 7 May 2019 12:54:12 -0400
-Received: from mail-lj1-f195.google.com ([209.85.208.195]:46294 "EHLO
-        mail-lj1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726978AbfEGQyH (ORCPT
+        id S1726545AbfEGSCN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 7 May 2019 14:02:13 -0400
+Received: from smtp.codeaurora.org ([198.145.29.96]:52534 "EHLO
+        smtp.codeaurora.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726527AbfEGSCN (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 7 May 2019 12:54:07 -0400
-Received: by mail-lj1-f195.google.com with SMTP id h21so14926365ljk.13
-        for <linux-arm-msm@vger.kernel.org>; Tue, 07 May 2019 09:54:05 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=B6zYDfIbsh4fVsiu8ZkF/mnbm8ndRtPN2deL3LIfJ84=;
-        b=EKcDa+QDVLkg6+3F8xbsv66Xjpqs7OCvn17LDo9ArsHIg8OaBH61OtNHdmo4oEUq5n
-         ZwK1/9qEBuAd0IgekzYIK3To6Nzsd0YeQOP7JwPvcMYhjWGcFE6o0ORE/sI5twuTDy4T
-         gUUgf+pxkfNjY0XhhVXhUlQ712ZFrn7yP8jrjpXunN1rMkY78mCOxdF6DbrTVbpIEsea
-         Tq3vmVUjR7DDqWaAe0GaXrnlTxTKQmPJx7hit+oPKdybNnPwtNo5QS9GLvS0oXFFASeE
-         fS2/5GIeEQ4IVQl813CT7q2XFlPxVtCT+mYkhINKA2uRoG4mtGsnIvFlVKBZ5CGXrKd5
-         91KA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=B6zYDfIbsh4fVsiu8ZkF/mnbm8ndRtPN2deL3LIfJ84=;
-        b=Pt1DHfKKG89dQewJXFC2pUEB0Gi5D3HkWoRZXls54hZl0au+XiyTJ8j5WCqfPZcr7y
-         JngO2v2xJQ1dSsYaJqHYfVhFs5K26Eo33L/HuQ2vFVCSpZgv4w/BXg88m9vBaxJb4l2J
-         ttOYB86x1TH7cfJgnv8RmXPzATXmonhurQPZ0Gc0nCQ1YqAqSlpLTcIiwPdXHtp+OcFE
-         A1OT1yTnTgXCgDtXKibFx6htW0PpxrChwtGvgbgfzbb9l+++clIoP8qVgTdiRo5Q80oB
-         WZ2xrov9G7C73by1ExCQwWLBy0RFoUwWA3MflFiOkdoeraX2h/dXROmpQm0ySH7ErvvB
-         BIrA==
-X-Gm-Message-State: APjAAAU53+42+NDDPRU2Y5mrgMelG5oYPlP8/djk+Dsrp64JxCE6OvKh
-        NCu0xjmabOEYIf0yoG+ydSZypA==
-X-Google-Smtp-Source: APXvYqyhBj0Cyym7O8BCcezWKbBr4/wUsQ/rLaB9CojWM34lke/HKUoy6IgewO93/sjprcXXThVOXw==
-X-Received: by 2002:a2e:86c5:: with SMTP id n5mr18423638ljj.184.1557248045227;
-        Tue, 07 May 2019 09:54:05 -0700 (PDT)
-Received: from [192.168.1.9] (hst-221-118.medicom.bg. [84.238.221.118])
-        by smtp.googlemail.com with ESMTPSA id n10sm3877075ljh.36.2019.05.07.09.54.03
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 07 May 2019 09:54:04 -0700 (PDT)
-Subject: Re: [PATCH v2] media/doc: Allow sizeimage to be set by v4l clients
-To:     Mauro Carvalho Chehab <mchehab@kernel.org>,
-        Hans Verkuil <hverkuil@xs4all.nl>
-Cc:     Stanimir Varbanov <stanimir.varbanov@linaro.org>,
-        linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-References: <20190412155915.16849-1-stanimir.varbanov@linaro.org>
- <20190502095550.31282c0d@coco.lan>
- <ee78effa-f678-5d15-3802-bb787e7057e2@xs4all.nl>
- <20190502102956.70aed1c3@coco.lan>
-From:   Stanimir Varbanov <stanimir.varbanov@linaro.org>
-Message-ID: <5a94d216-dc61-968e-2eda-8f460c42b4ca@linaro.org>
-Date:   Tue, 7 May 2019 19:54:01 +0300
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.6.1
-MIME-Version: 1.0
-In-Reply-To: <20190502102956.70aed1c3@coco.lan>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+        Tue, 7 May 2019 14:02:13 -0400
+Received: by smtp.codeaurora.org (Postfix, from userid 1000)
+        id 8513760E3E; Tue,  7 May 2019 18:02:12 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
+        s=default; t=1557252132;
+        bh=IwYIMrt5BrwMIHRzEOkGLNPJlO73nFmvHWeK/JO4d/s=;
+        h=From:To:Cc:Subject:Date:From;
+        b=QBeSyFd/GACWJ2aoNE+BdSSYjZBpiaYyDANObPD7yH6hLnk+aAPatvi8mP3cbD5YE
+         GPzdna/xD272+Yum0HqB4PzydyokWvn9YzGV2HqVHoh2yjJdIfKJ43Mw2QI8sogoiI
+         YMSff5B7zgmV9eMtiwqycUb/wqwjOmQBD86DrAMU=
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        pdx-caf-mail.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.7 required=2.0 tests=ALL_TRUSTED,BAYES_00,
+        DKIM_INVALID,DKIM_SIGNED autolearn=no autolearn_force=no version=3.4.0
+Received: from jcrouse1-lnx.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: jcrouse@smtp.codeaurora.org)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id CC1E160AA2;
+        Tue,  7 May 2019 18:02:10 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
+        s=default; t=1557252131;
+        bh=IwYIMrt5BrwMIHRzEOkGLNPJlO73nFmvHWeK/JO4d/s=;
+        h=From:To:Cc:Subject:Date:From;
+        b=G7FGJSz6bupthIf01bH+AJFT1hYJBsDeNPZZZJcPjmVdtyaL8XZVcpyr06moNdWsf
+         DGq9yAQlvcVQatfj4u+GG1raCB1ItDHmHBhvUx2n/FWSeRUawr9fMXI8pcQuZXKSER
+         NJ37ZPFlrqyKfLVLD3SVyAZ63ZmyVrgR2qsbS6/0=
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org CC1E160AA2
+Authentication-Results: pdx-caf-mail.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: pdx-caf-mail.web.codeaurora.org; spf=none smtp.mailfrom=jcrouse@codeaurora.org
+From:   Jordan Crouse <jcrouse@codeaurora.org>
+To:     freedreno@lists.freedesktop.org
+Cc:     linux-arm-msm@vger.kernel.org, Sean Paul <sean@poorly.run>,
+        Wen Yang <wen.yang99@zte.com.cn>,
+        Thomas Zimmermann <tzimmermann@suse.de>,
+        Kees Cook <keescook@chromium.org>,
+        Sharat Masetty <smasetty@codeaurora.org>,
+        dri-devel@lists.freedesktop.org, linux-kernel@vger.kernel.org,
+        Rob Clark <robdclark@gmail.com>,
+        David Airlie <airlied@linux.ie>,
+        Mamta Shukla <mamtashukla555@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>
+Subject: [PATCH v1 0/3] drm/msm: Add dependencies for per-instance pagetables
+Date:   Tue,  7 May 2019 12:02:04 -0600
+Message-Id: <1557252127-11145-1-git-send-email-jcrouse@codeaurora.org>
+X-Mailer: git-send-email 2.7.4
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Mauro,
+These are a few support changes in advance of per-instance pagetables. These
+can be added to msm-next immediately since they don't require anything external
+support and they are mostly benign on their own without the more aggressive
+changes coming up later.
 
-Thanks for comments!
+Jordan Crouse (3):
+  drm/msm/adreno: Enable 64 bit mode by default on a5xx and a6xx targets
+  drm/msm: Print all 64 bits of the faulting IOMMU address
+  drm/msm: Pass the MMU domain index in struct msm_file_private
 
-On 5/2/19 4:29 PM, Mauro Carvalho Chehab wrote:
-> Em Thu, 2 May 2019 15:16:54 +0200
-> Hans Verkuil <hverkuil@xs4all.nl> escreveu:
-> 
->> On 5/2/19 2:55 PM, Mauro Carvalho Chehab wrote:
->>> Em Fri, 12 Apr 2019 18:59:15 +0300
->>> Stanimir Varbanov <stanimir.varbanov@linaro.org> escreveu:
->>>   
->>>> This changes v4l2_pix_format and v4l2_plane_pix_format sizeimage
->>>> field description to allow v4l clients to set bigger image size
->>>> in case of variable length compressed data.
->>>>
->>>> Signed-off-by: Stanimir Varbanov <stanimir.varbanov@linaro.org>
->>>> ---
->>>>  Documentation/media/uapi/v4l/pixfmt-v4l2-mplane.rst | 13 ++++++++++++-
->>>>  Documentation/media/uapi/v4l/pixfmt-v4l2.rst        | 11 ++++++++++-
->>>>  2 files changed, 22 insertions(+), 2 deletions(-)
->>>>
->>>> diff --git a/Documentation/media/uapi/v4l/pixfmt-v4l2-mplane.rst b/Documentation/media/uapi/v4l/pixfmt-v4l2-mplane.rst
->>>> index 5688c816e334..005428a8121e 100644
->>>> --- a/Documentation/media/uapi/v4l/pixfmt-v4l2-mplane.rst
->>>> +++ b/Documentation/media/uapi/v4l/pixfmt-v4l2-mplane.rst
->>>> @@ -31,7 +31,18 @@ describing all planes of that format.
->>>>  
->>>>      * - __u32
->>>>        - ``sizeimage``
->>>> -      - Maximum size in bytes required for image data in this plane.
->>>> +      - Maximum size in bytes required for image data in this plane,
->>>> +	set by the driver. When the image consists of variable length
->>>> +	compressed data this is the number of bytes required by the
->>>> +	codec to support the worst-case compression scenario.
->>>> +
->>>> +	For uncompressed images the driver will set the value. For
->>>> +	variable length compressed data clients are allowed to set
->>>> +	the sizeimage field, but the driver may ignore it and set the
->>>> +	value itself, or it may modify the provided value based on
->>>> +	alignment requirements or minimum/maximum size requirements.
->>>> +	If the client wants to leave this to the driver, then it should
->>>> +	set sizeimage to 0.
->>>>      * - __u32
->>>>        - ``bytesperline``
->>>>        - Distance in bytes between the leftmost pixels in two adjacent
->>>> diff --git a/Documentation/media/uapi/v4l/pixfmt-v4l2.rst b/Documentation/media/uapi/v4l/pixfmt-v4l2.rst
->>>> index 71eebfc6d853..0f7771151db9 100644
->>>> --- a/Documentation/media/uapi/v4l/pixfmt-v4l2.rst
->>>> +++ b/Documentation/media/uapi/v4l/pixfmt-v4l2.rst
->>>> @@ -89,7 +89,16 @@ Single-planar format structure
->>>>        - Size in bytes of the buffer to hold a complete image, set by the
->>>>  	driver. Usually this is ``bytesperline`` times ``height``. When
->>>>  	the image consists of variable length compressed data this is the
->>>> -	maximum number of bytes required to hold an image.
->>>> +	number of bytes required by the codec to support the worst-case
->>>> +	compression scenario.
->>>> +
->>>> +	For uncompressed images the driver will set the value. For
->>>> +	variable length compressed data clients are allowed to set
->>>> +	the sizeimage field, but the driver may ignore it and set the
->>>> +	value itself, or it may modify the provided value based on
->>>> +	alignment requirements or minimum/maximum size requirements.
->>>> +	If the client wants to leave this to the driver, then it should
->>>> +	set sizeimage to 0.  
->>>
->>> It is very confusing to understand what you meant by the above paragraph,
->>> as you inverted the sentence order and forgot a comma.
->>>
->>> I would, instead, write the phrases using the direct order, and break
->>> into two paragraphs, e. g., changing the above to:
->>>
->>> 	"The driver will set the value for uncompressed images.
->>>
->>> 	Clients are allowed to set the sizeimage field for variable length
->>> 	compressed data, but the driver may ignore it and set the
->>> 	value itself, or it may modify the provided value based on
->>> 	alignment requirements or minimum/maximum size requirements.
->>> 	If the client wants to leave this to the driver, then it should
->>> 	set sizeimage to 0."
->>>
->>> That makes it a lot easier to read, hopefully preventing mistakes from
->>> app and driver developers when reading about sizeimage.
->>>
->>> Yet, I'm not too comfortable on letting this too generic. I mean,
->>> how an app writer would know what formats are "variable length
->>> compressed data", specially since libv4l may actually change that.  
->>
->> It's actually quite clearly defined: compressed formats set the
->> V4L2_FMT_FLAG_COMPRESSED flag in VIDIOC_ENUMFMT.
-> 
-> Ok, so let's be explicit here, e. g. something like:
-> 
->  	"Clients are allowed to set the sizeimage field for variable length
->  	compressed data flagged with V4L2_FMT_FLAG_COMPRESSED at
-> 	VIDIOC_ENUMFMT, but the driver may ignore it and set the
->  	value itself, or it may modify the provided value based on
->  	alignment requirements or minimum/maximum size requirements.
->  	If the client wants to leave this to the driver, then it should
->  	set sizeimage to 0."
-> 
-> That makes clear for app developers when they can use this new
-> feature.
-
-OK, I will resend with that description.
-
-> 
-> That still leads us to what happens at libv4l with sizeimage
-> for a compressed format that got uncompressed by the library, in
-> order to ensure that a change like this won't cause breakages at
-> existing userspace apps.
-
-libv4l can decompress formats like MJPEG, right? I mean it isn't to
-decompress MPEG/H264 for example.
+ drivers/gpu/drm/msm/adreno/a5xx_gpu.c | 14 ++++++++++++++
+ drivers/gpu/drm/msm/adreno/a6xx_gpu.c | 14 ++++++++++++++
+ drivers/gpu/drm/msm/msm_drv.c         |  2 ++
+ drivers/gpu/drm/msm/msm_drv.h         |  1 +
+ drivers/gpu/drm/msm/msm_gem.h         |  1 +
+ drivers/gpu/drm/msm/msm_gem_submit.c  | 13 ++++++++-----
+ drivers/gpu/drm/msm/msm_gpu.c         |  5 ++---
+ drivers/gpu/drm/msm/msm_iommu.c       |  2 +-
+ 8 files changed, 43 insertions(+), 9 deletions(-)
 
 -- 
--- 
-regards,
-Stan
+2.7.4
+
