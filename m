@@ -2,121 +2,74 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id BB16D15C37
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 May 2019 08:02:09 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id F0CB815D86
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 May 2019 08:35:54 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727926AbfEGFfy (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 7 May 2019 01:35:54 -0400
-Received: from mail.kernel.org ([198.145.29.99]:55876 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1727921AbfEGFfx (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 7 May 2019 01:35:53 -0400
-Received: from localhost (unknown [106.200.210.185])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 4BB9420C01;
-        Tue,  7 May 2019 05:35:52 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1557207353;
-        bh=0L4usra1BWLLoQ6Ux30TjVYIwy8g90JNMEHJnbVW2bk=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=FqQwOTE8wHKh1em/Zw+yqD1h4HGq9lupWbgQrz3Bm+z+RBDstmOntfkEjUs9rx3Lm
-         1KMgqbvHgNrdG7Qw0Deeu4HAg+3I3eHQWYIDlxmcDAfcHhxl2UX6ZevSjoAg2Omf9z
-         miHgPFGSBqPcBwBljOKqFhXBWZSaec0HfYrARRfU=
-Date:   Tue, 7 May 2019 11:05:47 +0530
-From:   Vinod Koul <vkoul@kernel.org>
-To:     Niklas Cassel <niklas.cassel@linaro.org>
-Cc:     Andy Gross <agross@kernel.org>,
+        id S1726437AbfEGGfX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 7 May 2019 02:35:23 -0400
+Received: from bombadil.infradead.org ([198.137.202.133]:37748 "EHLO
+        bombadil.infradead.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725839AbfEGGfX (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 7 May 2019 02:35:23 -0400
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+        d=infradead.org; s=bombadil.20170209; h=In-Reply-To:Content-Type:MIME-Version
+        :References:Message-ID:Subject:Cc:To:From:Date:Sender:Reply-To:
+        Content-Transfer-Encoding:Content-ID:Content-Description:Resent-Date:
+        Resent-From:Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:List-Id:
+        List-Help:List-Unsubscribe:List-Subscribe:List-Post:List-Owner:List-Archive;
+         bh=TvZeaeAy9vEIfKAGEKlI3TfoHOJ88dzRbyl1QHu6By8=; b=HpsUMi8JcABK4F7j/9suEVKoC
+        YfA5GEgzPRqcD773WA24aESnahNs4znn6YYBLoU2Lz/vCywoOAJRvRLcYCj+DKvvKswYMc2wy9iue
+        2mkAbF4QIgapRI5B0taVSEsgIATttbKsqd0S4tonG9hYL2wHVQ4eHzU+siokbr6x9eZeNsZtzsPoj
+        gImA6EOSte1xBX5RH+xyv2ojahSuE479j8LisTBYabH12VVM+XJuK+g7AfyhGT9KvbUXRcb/x87Jf
+        6kthw/hML0UWcZs93wCHkduD10ly9LN2Ofrz/9RZ98MH3AyLeNL91EwGE0hZmj1ZO4c8lCU+rYiPi
+        rYry1GA8Q==;
+Received: from hch by bombadil.infradead.org with local (Exim 4.90_1 #2 (Red Hat Linux))
+        id 1hNth5-0001AM-FV; Tue, 07 May 2019 06:35:15 +0000
+Date:   Mon, 6 May 2019 23:35:15 -0700
+From:   Christoph Hellwig <hch@infradead.org>
+To:     Tom Murphy <tmurphy@arista.com>
+Cc:     Robin Murphy <robin.murphy@arm.com>,
+        Christoph Hellwig <hch@infradead.org>,
+        iommu@lists.linux-foundation.org, Heiko Stuebner <heiko@sntech.de>,
+        Will Deacon <will.deacon@arm.com>,
         David Brown <david.brown@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Mark Rutland <mark.rutland@arm.com>, amit.kucheria@linaro.org,
-        jorge.ramirez-ortiz@linaro.org, lina.iyer@linaro.org,
-        ulf.hansson@linaro.org, bjorn.andersson@linaro.org,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] arm64: dts: qcom: qcs404: Add PSCI cpuidle support
-Message-ID: <20190507053547.GE16052@vkoul-mobl>
-References: <20190506193115.20909-1-niklas.cassel@linaro.org>
+        Thierry Reding <thierry.reding@gmail.com>,
+        linux-s390@vger.kernel.org, linux-samsung-soc@vger.kernel.org,
+        Krzysztof Kozlowski <krzk@kernel.org>,
+        Jonathan Hunter <jonathanh@nvidia.com>,
+        linux-rockchip@lists.infradead.org, Kukjin Kim <kgene@kernel.org>,
+        Gerald Schaefer <gerald.schaefer@de.ibm.com>,
+        Andy Gross <andy.gross@linaro.org>,
+        linux-tegra@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-mediatek@lists.infradead.org,
+        Matthias Brugger <matthias.bgg@gmail.com>,
+        linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
+        Tom Murphy <murphyt7@tcd.ie>,
+        David Woodhouse <dwmw2@infradead.org>
+Subject: Re: [PATCH v2 3/4] iommu/dma-iommu: Use the dev->coherent_dma_mask
+Message-ID: <20190507063515.GA5173@infradead.org>
+References: <20190430002952.18909-1-tmurphy@arista.com>
+ <20190430002952.18909-4-tmurphy@arista.com>
+ <20190430111222.GA3191@infradead.org>
+ <da835ce2-f73e-3035-e1d7-d3028cc1a838@arm.com>
+ <20190430113253.GA23210@infradead.org>
+ <96ebb6fc-a889-fa94-09ba-65d505b85724@arm.com>
+ <CAPL0++61WytVhs63tvt+hdpZKXGinrkYx=4nDtNx1UoNTRWWjw@mail.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20190506193115.20909-1-niklas.cassel@linaro.org>
-User-Agent: Mutt/1.11.3 (2019-02-01)
+In-Reply-To: <CAPL0++61WytVhs63tvt+hdpZKXGinrkYx=4nDtNx1UoNTRWWjw@mail.gmail.com>
+User-Agent: Mutt/1.9.2 (2017-12-15)
+X-SRS-Rewrite: SMTP reverse-path rewritten from <hch@infradead.org> by bombadil.infradead.org. See http://www.infradead.org/rpr.html
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 06-05-19, 21:31, Niklas Cassel wrote:
-> Add device bindings for CPUs to suspend using PSCI as the enable-method.
-> 
-> Signed-off-by: Niklas Cassel <niklas.cassel@linaro.org>
-> ---
->  arch/arm64/boot/dts/qcom/qcs404.dtsi | 15 +++++++++++++++
->  1 file changed, 15 insertions(+)
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/qcs404.dtsi b/arch/arm64/boot/dts/qcom/qcs404.dtsi
-> index ffedf9640af7..f9db9f3ee10c 100644
-> --- a/arch/arm64/boot/dts/qcom/qcs404.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/qcs404.dtsi
-> @@ -31,6 +31,7 @@
->  			reg = <0x100>;
->  			enable-method = "psci";
->  			next-level-cache = <&L2_0>;
-> +			cpu-idle-states = <&CPU_PC>;
->  		};
->  
->  		CPU1: cpu@101 {
-> @@ -39,6 +40,7 @@
->  			reg = <0x101>;
->  			enable-method = "psci";
->  			next-level-cache = <&L2_0>;
-> +			cpu-idle-states = <&CPU_PC>;
->  		};
->  
->  		CPU2: cpu@102 {
-> @@ -47,6 +49,7 @@
->  			reg = <0x102>;
->  			enable-method = "psci";
->  			next-level-cache = <&L2_0>;
-> +			cpu-idle-states = <&CPU_PC>;
->  		};
->  
->  		CPU3: cpu@103 {
-> @@ -55,12 +58,24 @@
->  			reg = <0x103>;
->  			enable-method = "psci";
->  			next-level-cache = <&L2_0>;
-> +			cpu-idle-states = <&CPU_PC>;
->  		};
->  
->  		L2_0: l2-cache {
->  			compatible = "cache";
->  			cache-level = <2>;
->  		};
-> +
-> +		idle-states {
+On Mon, May 06, 2019 at 06:56:13PM +0100, Tom Murphy wrote:
+> Just to make this clear, I won't apply Christoph's patch (the one in
+> this email thread) and instead the only change I will make is to
+> rename dma_limit to dma_mask.
 
-Since we are trying to sort the file per address and
-alphabetically, it would be great if this can be moved before l2-cache
-:)
-
-Other than that this lgtm
- 
-> +			CPU_PC: pc {
-> +				compatible = "arm,idle-state";
-> +				arm,psci-suspend-param = <0x40000003>;
-> +				entry-latency-us = <125>;
-> +				exit-latency-us = <180>;
-> +				min-residency-us = <595>;
-> +				local-timer-stop;
-> +			};
-> +		};
->  	};
->  
->  	firmware {
-> -- 
-> 2.21.0
-
--- 
-~Vinod
+Sounds good for now.
