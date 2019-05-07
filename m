@@ -2,25 +2,25 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 90FB116C65
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 May 2019 22:44:07 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C53BE16C7A
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 May 2019 22:44:16 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727000AbfEGUky (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 7 May 2019 16:40:54 -0400
-Received: from smtp.codeaurora.org ([198.145.29.96]:52782 "EHLO
+        id S1727128AbfEGUll (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 7 May 2019 16:41:41 -0400
+Received: from smtp.codeaurora.org ([198.145.29.96]:52914 "EHLO
         smtp.codeaurora.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726225AbfEGUkx (ORCPT
+        with ESMTP id S1726998AbfEGUky (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 7 May 2019 16:40:53 -0400
+        Tue, 7 May 2019 16:40:54 -0400
 Received: by smtp.codeaurora.org (Postfix, from userid 1000)
-        id 894E560E59; Tue,  7 May 2019 20:40:52 +0000 (UTC)
+        id E144461154; Tue,  7 May 2019 20:40:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
-        s=default; t=1557261652;
-        bh=pB6Bdb6xkgzNtpfnRd+1ICLbIeXtXqHB0y5vBDg5Wy8=;
+        s=default; t=1557261653;
+        bh=/5F8HTO9iokGlCSR/1R6LYbndmC6HaerDlTRHeo0W9Q=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=Rl4FujVdwzom8T07qBDrz/l7TEvXSz4833wWOZ1wkxMes7E8n7xarvP0PoWMKaBDU
-         8wspQFLsPiDvjuX3L/OGB53KkpslUJ3xUDpjKEgDLROwL91fQKbmVjGd5/hXDUcUDQ
-         r1K4a9jn3q9zBMFC+54U0omw/TvWJ5gH3fieKCkk=
+        b=fzF5U/ukwM5O2da73I+4UGIzWqC4gckWJHSxIkmdV6f8YM2PSNA2nPC4pNjPMJBfn
+         R2XOHEIl8IAWAEf2eOfEQgxhMEm2cholA1/lYXD0A4US9bTzDSvBaUaTiyPv/iviaN
+         I3Zs26VLBNdAXF6kh8+GTw3mT0DeBB2NWRqTQWb0=
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
         pdx-caf-mail.web.codeaurora.org
 X-Spam-Level: 
@@ -30,16 +30,16 @@ Received: from codeaurora.org (i-global254.qualcomm.com [199.106.103.254])
         (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
         (No client certificate requested)
         (Authenticated sender: ilina@smtp.codeaurora.org)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 5073660CF0;
-        Tue,  7 May 2019 20:40:51 +0000 (UTC)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 6189260E3E;
+        Tue,  7 May 2019 20:40:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
-        s=default; t=1557261652;
-        bh=pB6Bdb6xkgzNtpfnRd+1ICLbIeXtXqHB0y5vBDg5Wy8=;
+        s=default; t=1557261653;
+        bh=/5F8HTO9iokGlCSR/1R6LYbndmC6HaerDlTRHeo0W9Q=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=Rl4FujVdwzom8T07qBDrz/l7TEvXSz4833wWOZ1wkxMes7E8n7xarvP0PoWMKaBDU
-         8wspQFLsPiDvjuX3L/OGB53KkpslUJ3xUDpjKEgDLROwL91fQKbmVjGd5/hXDUcUDQ
-         r1K4a9jn3q9zBMFC+54U0omw/TvWJ5gH3fieKCkk=
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 5073660CF0
+        b=fzF5U/ukwM5O2da73I+4UGIzWqC4gckWJHSxIkmdV6f8YM2PSNA2nPC4pNjPMJBfn
+         R2XOHEIl8IAWAEf2eOfEQgxhMEm2cholA1/lYXD0A4US9bTzDSvBaUaTiyPv/iviaN
+         I3Zs26VLBNdAXF6kh8+GTw3mT0DeBB2NWRqTQWb0=
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 6189260E3E
 Authentication-Results: pdx-caf-mail.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
 Authentication-Results: pdx-caf-mail.web.codeaurora.org; spf=none smtp.mailfrom=ilina@codeaurora.org
 From:   Lina Iyer <ilina@codeaurora.org>
@@ -49,9 +49,9 @@ Cc:     linux-kernel@vger.kernel.org, rplsssn@codeaurora.org,
         linux-arm-msm@vger.kernel.org, thierry.reding@gmail.com,
         bjorn.andersson@linaro.org, dianders@chromium.org,
         Lina Iyer <ilina@codeaurora.org>
-Subject: [PATCH v5 02/11] gpio: allow gpio_to_irq to use OF variants for gpiochips
-Date:   Tue,  7 May 2019 14:37:40 -0600
-Message-Id: <20190507203749.3384-3-ilina@codeaurora.org>
+Subject: [PATCH v5 03/11] irqdomain: add bus token DOMAIN_BUS_WAKEUP
+Date:   Tue,  7 May 2019 14:37:41 -0600
+Message-Id: <20190507203749.3384-4-ilina@codeaurora.org>
 X-Mailer: git-send-email 2.21.0
 In-Reply-To: <20190507203749.3384-1-ilina@codeaurora.org>
 References: <20190507203749.3384-1-ilina@codeaurora.org>
@@ -62,46 +62,36 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The chip may define additional information in the DT that may be useful
-for translating and allocting a linux interrupt for the GPIO. When
-drivers do not specify a .to_irq function, the gpiolib defaults to
-gpiochip_to_irq() function. The defalt function uses creates an IRQ
-without referencing the OF definition of the gpiochip. Let's add this
-OF support to the default gpiochip_to_irq function.
+A single controller can handle normal interrupts and wake-up interrupts
+independently, with a different numbering space. It is thus crucial to
+allow the driver for such a controller discriminate between the two.
 
-When requesting an interrupt for the GPIO, let's stick to IRQ_TYPE_NONE
-for the trigger type, for we don't have the information what trigger
-type the driver may set when requesting the IRQ.
+A simple way to do so is to tag the wake-up irqdomain with a "bus token"
+that indicates the wake-up domain. This slightly abuses the notion of
+bus, but also radically simplifies the design of such a driver. Between
+two evils, we choose the least damaging.
 
+Suggested-by: Stephen Boyd <swboyd@chromium.org>
 Signed-off-by: Lina Iyer <ilina@codeaurora.org>
 ---
- drivers/gpio/gpiolib.c | 13 +++++++++++++
- 1 file changed, 13 insertions(+)
+Changes in v4:
+	- Update commit text
+---
+ include/linux/irqdomain.h | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/gpio/gpiolib.c b/drivers/gpio/gpiolib.c
-index 4a9a6d4afe6e..77317435e2b2 100644
---- a/drivers/gpio/gpiolib.c
-+++ b/drivers/gpio/gpiolib.c
-@@ -1825,6 +1825,19 @@ EXPORT_SYMBOL_GPL(gpiochip_irq_domain_deactivate);
+diff --git a/include/linux/irqdomain.h b/include/linux/irqdomain.h
+index 61706b430907..4eaf17dfd2f8 100644
+--- a/include/linux/irqdomain.h
++++ b/include/linux/irqdomain.h
+@@ -82,6 +82,7 @@ enum irq_domain_bus_token {
+ 	DOMAIN_BUS_NEXUS,
+ 	DOMAIN_BUS_IPI,
+ 	DOMAIN_BUS_FSL_MC_MSI,
++	DOMAIN_BUS_WAKEUP,
+ };
  
- static int gpiochip_to_irq(struct gpio_chip *chip, unsigned offset)
- {
-+#ifdef CONFIG_OF_GPIO
-+	struct irq_fwspec fwspec;
-+
-+	if (chip->of_node) {
-+		fwspec.fwnode = of_node_to_fwnode(chip->of_node);
-+		fwspec.param[0] = offset;
-+		fwspec.param[1] = IRQ_TYPE_NONE;
-+		fwspec.param_count = 2;
-+
-+		return irq_create_fwspec_mapping(&fwspec);
-+	}
-+#endif
-+
- 	if (!gpiochip_irqchip_irq_valid(chip, offset))
- 		return -ENXIO;
- 
+ /**
 -- 
 The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
 a Linux Foundation Collaborative Project
