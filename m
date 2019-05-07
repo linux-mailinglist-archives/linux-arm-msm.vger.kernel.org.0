@@ -2,111 +2,89 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id F27AF15D97
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 May 2019 08:39:00 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id CD62415D9C
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 May 2019 08:40:15 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726581AbfEGGiw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 7 May 2019 02:38:52 -0400
-Received: from mail-pg1-f194.google.com ([209.85.215.194]:44736 "EHLO
-        mail-pg1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726365AbfEGGiw (ORCPT
+        id S1726297AbfEGGkO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 7 May 2019 02:40:14 -0400
+Received: from bombadil.infradead.org ([198.137.202.133]:44332 "EHLO
+        bombadil.infradead.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726253AbfEGGkO (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 7 May 2019 02:38:52 -0400
-Received: by mail-pg1-f194.google.com with SMTP id z16so7756713pgv.11
-        for <linux-arm-msm@vger.kernel.org>; Mon, 06 May 2019 23:38:51 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=wWtp0jnKgCQgvYHJQP0mFqZsKhLPzrO6V1C+32VkFts=;
-        b=nYKXcx42aO3MAUePdnRAiJ9/V6lyE5FcjpoFwRX8BMynr8FAmMbfC31a5SOnBmTMYP
-         PDkho2ZE0OpqizZTZUU7EyGn8V0iipQwESQo4HxtxQ7G04peOASIu+JmnHkxsalwxihD
-         t8100G13Dr1QASK8RXQZ6b1UPHUqUH7B0sGBvVx4lnLoBF4qJrqT82Vvq4l9JrXfOuOa
-         dzbCOI2t7m1lobnq2FyseXkvsLCqlfRfWiOepvom8swe/loDKYzz/akLUeb7Xhd6kzaJ
-         aeYYMcnnJr0om+4NUfgNIKz0ffecitJ+H4aEMnNgDyknUm5GS122n6ls93W6MCAw+KGj
-         U2BQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=wWtp0jnKgCQgvYHJQP0mFqZsKhLPzrO6V1C+32VkFts=;
-        b=f/4t1ntGAkjOJqnaf+LwoMEPBSh4l4/1zW01yupMIr/Ufzi/7pqKFVAMpoS18FT2ds
-         wEmceCwwrUQOqT+1OGs2LMjfukGHILdKpflgO6VmqmBbO2xb9oTtSUU9MPUk+fQuza5P
-         6uiMvPxIq50JYCP4b1Uy/U7H3Ew5k14ZMjeqkGSBSEsINu7ByrRwS9vN0+Em0QnqeVQM
-         2jmPtONn64xeBgkrijy2fjm57k5vVNkTGFwUpG1PeceYrscLfoSej7sdRzFQ70f6e1DU
-         RuXkh31lHzTlvkrc/dU+DWM6sl7uVJK3Pj6OBOR7nhaMzZcfAWTRnFQpt/2xbcoJDoG6
-         Giww==
-X-Gm-Message-State: APjAAAVB16IkWiaLx7DyuxYR2Qw/uVZ4aOaUWIX+E8syOkv7aFSlFB9e
-        aWO+3OzhRNgGRyURgJY4HBVheA==
-X-Google-Smtp-Source: APXvYqwY91xBBVJv/756Xx6HEZCctbmrzp1jJLE/1sryCLnIM8LwzomLH62O4ev8IQJQJLg+ufVU8g==
-X-Received: by 2002:a62:6842:: with SMTP id d63mr39964616pfc.9.1557211130015;
-        Mon, 06 May 2019 23:38:50 -0700 (PDT)
-Received: from tuxbook-pro (104-188-17-28.lightspeed.sndgca.sbcglobal.net. [104.188.17.28])
-        by smtp.gmail.com with ESMTPSA id f2sm18843390pgc.30.2019.05.06.23.38.48
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Mon, 06 May 2019 23:38:49 -0700 (PDT)
-Date:   Mon, 6 May 2019 23:39:02 -0700
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Brian Masney <masneyb@onstation.org>
-Cc:     robdclark@gmail.com, sean@poorly.run,
-        dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
-        freedreno@lists.freedesktop.org, airlied@linux.ie, daniel@ffwll.ch,
-        linux-kernel@vger.kernel.org, linus.walleij@linaro.org
-Subject: Re: [PATCH RFC 4/6] ARM: dts: msm8974: add display support
-Message-ID: <20190507063902.GA2085@tuxbook-pro>
-References: <20190505130413.32253-1-masneyb@onstation.org>
- <20190505130413.32253-5-masneyb@onstation.org>
+        Tue, 7 May 2019 02:40:14 -0400
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+        d=infradead.org; s=bombadil.20170209; h=In-Reply-To:Content-Type:MIME-Version
+        :References:Message-ID:Subject:Cc:To:From:Date:Sender:Reply-To:
+        Content-Transfer-Encoding:Content-ID:Content-Description:Resent-Date:
+        Resent-From:Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:List-Id:
+        List-Help:List-Unsubscribe:List-Subscribe:List-Post:List-Owner:List-Archive;
+         bh=XYiVJaYipElgO5DnYZ9IrtCvXPhrJsC2Tw1fwQg5GSA=; b=M2nM+YCCYmiZNNCEpsr9d0tYK
+        BlAg0kfZ2aS0QA5DIszm27dGTcv88VTH3ZzJDRYu9kQ75lDbMSp3+LisfFLwmzrNs6grL8QaJsO47
+        pFii8fgK5x+Pt2gxCY9TeHgRHbiic1pONVMSR+7oDKxlNJarKhYCKWQEtbKh1fTS+XOx+JM7FG7B3
+        ggIgXtbupg5yvc0ORzsOrBV23ECv/AdUqbIpBkiV849J+2N9GDEKIuJ+LLLjBmI9T95YzXhbEPMUA
+        bVjERUFjbkl0Z91J1BcS9bFD+QGStzRPb+mF9beVASs+FiesV2/vSyTBHhmy35tu0L4hThVRAwXH7
+        Q3cz+FZdw==;
+Received: from hch by bombadil.infradead.org with local (Exim 4.90_1 #2 (Red Hat Linux))
+        id 1hNtlg-0002k3-HT; Tue, 07 May 2019 06:40:00 +0000
+Date:   Mon, 6 May 2019 23:40:00 -0700
+From:   Christoph Hellwig <hch@infradead.org>
+To:     Tom Murphy <tmurphy@arista.com>
+Cc:     iommu@lists.linux-foundation.org, murphyt7@tcd.ie,
+        Joerg Roedel <joro@8bytes.org>,
+        Will Deacon <will.deacon@arm.com>,
+        Robin Murphy <robin.murphy@arm.com>,
+        Marek Szyprowski <m.szyprowski@samsung.com>,
+        Kukjin Kim <kgene@kernel.org>,
+        Krzysztof Kozlowski <krzk@kernel.org>,
+        David Woodhouse <dwmw2@infradead.org>,
+        Andy Gross <andy.gross@linaro.org>,
+        David Brown <david.brown@linaro.org>,
+        Matthias Brugger <matthias.bgg@gmail.com>,
+        Rob Clark <robdclark@gmail.com>,
+        Heiko Stuebner <heiko@sntech.de>,
+        Gerald Schaefer <gerald.schaefer@de.ibm.com>,
+        Thierry Reding <thierry.reding@gmail.com>,
+        Jonathan Hunter <jonathanh@nvidia.com>,
+        linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+        linux-samsung-soc@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-mediatek@lists.infradead.org,
+        linux-rockchip@lists.infradead.org, linux-s390@vger.kernel.org,
+        linux-tegra@vger.kernel.org
+Subject: Re: [PATCH v3 2/4] iommu/dma-iommu: Handle deferred devices
+Message-ID: <20190507064000.GB5173@infradead.org>
+References: <20190506185207.31069-1-tmurphy@arista.com>
+ <20190506185207.31069-3-tmurphy@arista.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20190505130413.32253-5-masneyb@onstation.org>
-User-Agent: Mutt/1.11.4 (2019-03-13)
+In-Reply-To: <20190506185207.31069-3-tmurphy@arista.com>
+User-Agent: Mutt/1.9.2 (2017-12-15)
+X-SRS-Rewrite: SMTP reverse-path rewritten from <hch@infradead.org> by bombadil.infradead.org. See http://www.infradead.org/rpr.html
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Sun 05 May 06:04 PDT 2019, Brian Masney wrote:
-> diff --git a/arch/arm/boot/dts/qcom-msm8974.dtsi b/arch/arm/boot/dts/qcom-msm8974.dtsi
-[..]
-> +			dsi0: dsi@fd922800 {
-> +				status = "disabled";
+On Mon, May 06, 2019 at 07:52:04PM +0100, Tom Murphy wrote:
+> +static int handle_deferred_device(struct device *dev)
+> +{
+> +	struct iommu_domain *domain;
+> +	const struct iommu_ops *ops;
 > +
-> +				compatible = "qcom,mdss-dsi-ctrl";
-> +				reg = <0xfd922800 0x1f8>;
-> +				reg-names = "dsi_ctrl";
+> +	if (!is_kdump_kernel())
+> +		return 0;
 > +
-> +				interrupt-parent = <&mdss>;
-> +				interrupts = <4 IRQ_TYPE_LEVEL_HIGH>;
+> +	domain = iommu_get_domain_for_dev(dev);
+
+> -	dma_handle =__iommu_dma_map(dev, phys, size,
+> +	if (unlikely(handle_deferred_device(dev)))
+> +		return DMA_MAPPING_ERROR;
 > +
-> +				assigned-clocks = <&mmcc BYTE0_CLK_SRC>,
-> +				                  <&mmcc PCLK0_CLK_SRC>;
-> +				assigned-clock-parents = <&dsi_phy0 0>,
-> +				                         <&dsi_phy0 1>;
-> +
-> +				clocks = <&mmcc MDSS_MDP_CLK>,
-> +				         <&mmcc MDSS_AHB_CLK>,
-> +				         <&mmcc MDSS_AXI_CLK>,
-> +				         <&mmcc MDSS_BYTE0_CLK>,
-> +				         <&mmcc MDSS_PCLK0_CLK>,
-> +				         <&mmcc MDSS_ESC0_CLK>,
-> +				         <&mmcc MMSS_MISC_AHB_CLK>;
-> +				clock-names = "mdp_core",
-> +				              "iface",
-> +				              "bus",
-> +				              "byte",
-> +				              "pixel",
-> +				              "core",
-> +				              "core_mmss";
+> +	dma_handle = __iommu_dma_map(dev, phys, size,
 
-Unless I enable MMSS_MMSSNOC_AXI_CLK and MMSS_S0_AXI_CLK I get some
-underrun error from DSI. You don't see anything like this?
+__iommu_dma_map already looks up the domain, and as far as I can
+tell all callers need the handle_deferred_device call.  Should we
+just move it to there and pass the domain from the caller?
 
-(These clocks are controlled by msm_bus downstream and should be driven
-by interconnect upstream)
-
-
-Apart from this, I think this looks nice. Happy to see the progress.
-
-Regards,
-Bjorn
+Also shouldn't the iommu_attach_device call inside
+handle_deferred_device also get an unlikely marker?
