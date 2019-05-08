@@ -2,248 +2,176 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id EBEFB16D82
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 May 2019 00:21:29 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 1732B16EDD
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 May 2019 04:19:44 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726452AbfEGWUy (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 7 May 2019 18:20:54 -0400
-Received: from mail-ua1-f65.google.com ([209.85.222.65]:40520 "EHLO
-        mail-ua1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725843AbfEGWUx (ORCPT
+        id S1726525AbfEHCTm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 7 May 2019 22:19:42 -0400
+Received: from mail-yw1-f67.google.com ([209.85.161.67]:46205 "EHLO
+        mail-yw1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726543AbfEHCTm (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 7 May 2019 18:20:53 -0400
-Received: by mail-ua1-f65.google.com with SMTP id d4so1000383uaj.7
-        for <linux-arm-msm@vger.kernel.org>; Tue, 07 May 2019 15:20:52 -0700 (PDT)
+        Tue, 7 May 2019 22:19:42 -0400
+Received: by mail-yw1-f67.google.com with SMTP id a130so9375128ywe.13
+        for <linux-arm-msm@vger.kernel.org>; Tue, 07 May 2019 19:19:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=verdurent-com.20150623.gappssmtp.com; s=20150623;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=kG2WwpyR7pHycbjDjCi479hB08AsdI45LDcaIB/Ay64=;
-        b=hjN9Yj59LATp2bF3ohozr0h4VitiflbvzeOSSbSaBGOTZncsE7cab9AvJ68MTAf1J8
-         AigRqhDNeiAuuGqitKYp/2M77PEINn2xOVFTboK++LZvbxCTNMTYZgwMBtdOQm1X1eG9
-         4C6IMmkj2+4bQd5SP+0N/ZyMHWP9b86jy3rIH84FOb0vMCDIA5WZ+ndL74A0c9bAQ2SA
-         9kccjisOJ6osEzEdxaxcxA4iQGkx/X2L6heAONlMtlyU766jXtqbhtoUE5Pi5AAA9ElW
-         36e/N46YOH+pvb322fsrB0QNHmsFDi9PWJLbt4DYxsh+kDAH5JHvq+c0F5rGJgHMD087
-         Vwnw==
+        d=linaro.org; s=google;
+        h=from:to:cc:subject:date:message-id;
+        bh=53Jboj1jRgFvMb4WzHp98oy3I5nfTVXEAchn1y2EzOc=;
+        b=RBlup3KPFNcyrB9ylm1qkvs0cblxy6flpxA0OYqN53KJ8PIAYu8bo8D+/x/2pvQsmM
+         dl4wfuL8b02ODRM/SfXQfikr08d923wAv0kjMs9VhtlTv4EQiORgx3Rxhbwu9XcyWbHE
+         mj0pse0+S5xQSdjyolPLlxWnNr4H+2+Jnopz28QnJz9ijG2nGcc4nXu1G7Nv9QoiIeo3
+         L8i+OFgfTReIrAy3/4ipDRegLIPRsI3twnwK1LFJ5480U8fjuXKeZnCUwamHV9ZcDWbn
+         OOw6DkQabvzVU9g9iQdPeluo3AWax/6Oxwan60wUvw95otfaUHekxnGsvNrLXPgH0/6P
+         diaw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=kG2WwpyR7pHycbjDjCi479hB08AsdI45LDcaIB/Ay64=;
-        b=jds4Ll6+zKeSCFfDpXnxBCsUj6KE3yLeYWhTc+KWX/Dub978hj0w2EtcpqNzb2V9fd
-         c7u1D0Rb0AYdRSuNyL7K1mkpf+buHEpiFv9I7ptnwKAYQ69+7l7D4mpYEcdDDaYJ83qT
-         ejr2zvX4KA3xUCYFvRzrIor3TftFyZRpVL2aPODpJ01mVStNthYg8x5Ma8q23Ii2n3Cn
-         7n7jTLPX0hi+0lCKjc1EoeZA20hLZYHbEqHK+lBdSiBzUQTbaKUumwR3MVf5VEJTj8UQ
-         m8iGQDj1Yk28P0PPk54P8+pxzWTsq3iYdG2B8ltP/ibXJ4ti7UnoegjT6NXtfVAc+hGw
-         aRTw==
-X-Gm-Message-State: APjAAAXqU3C4ZqB2x4VBynYvdviKZJyviNt8QM+5wSODkWBzL0V+pmBY
-        WPZ6tS+D5cWet50HoHNwzI+LwGf5ULCdAhcXP6PvXg==
-X-Google-Smtp-Source: APXvYqwrszAopFQoWDWwRSifkvHAk3lphGUdOi1S0fZjHRLaae+7hRt/vMsz3eDDRvkDSU+RSKY7jYNP9xERgU+voI8=
-X-Received: by 2002:ab0:70d4:: with SMTP id r20mr16052105ual.67.1557267652335;
- Tue, 07 May 2019 15:20:52 -0700 (PDT)
-MIME-Version: 1.0
-References: <1540920209-28954-1-git-send-email-rplsssn@codeaurora.org>
-In-Reply-To: <1540920209-28954-1-git-send-email-rplsssn@codeaurora.org>
-From:   Amit Kucheria <amit.kucheria@verdurent.com>
-Date:   Wed, 8 May 2019 03:50:40 +0530
-Message-ID: <CAHLCerPi4Fd1eoPY=Gvo=FkVTGOt=ummAqHfWBi645Yb0O5-sg@mail.gmail.com>
-Subject: Re: [PATCH v2] arm64: dts: sdm845: Add PSCI cpuidle low power states
-To:     "Raju P.L.S.S.S.N" <rplsssn@codeaurora.org>
-Cc:     Andy Gross <andy.gross@linaro.org>,
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=53Jboj1jRgFvMb4WzHp98oy3I5nfTVXEAchn1y2EzOc=;
+        b=ld2cedBXZgtPviwvii09fmPKNRcQbc0hakB23lMAKj8+VlmOXM2rnBRGLNWiYRIrua
+         Bix+0Cg3nhtvFXWU/cOl524EJkMXvtSwylhIJARBZVjanFHfmqT3vWnA+gC1dc8D5D0I
+         hLKGoV3I07xZqvFP0qGMwD5hoQNEYjiSMoQzg5tq9SYKolw5EGNCsoc/pVitiucNRWbc
+         Sq/9YAYCGHK1+GKITSNmOmCvo5TyMy5S2iOWnQKJZ5MF2AEeEyPWIc34hvFlbMLYO0PR
+         0HljJXEraqwTaL7m9RP1ft20PUC1D8ih9UyzAaAIWy/ayiEyNoGy1pAopkKs+w0dghy/
+         GUGw==
+X-Gm-Message-State: APjAAAWLE9CrqXZkPeK3sBfNOuaHaI8zb8UNhw6uwKwcj2BLC7TpvsrP
+        bkfoKz7CLpwUyG1yHHFeG5whbg==
+X-Google-Smtp-Source: APXvYqxIefpB6QOxsv5208c4eOzk2H+HjQbDo2jovyEHJ5xfkrhRDkweBqtP1NwPjRT6lpkVusJgxw==
+X-Received: by 2002:a25:542:: with SMTP id 63mr23605669ybf.331.1557281980950;
+        Tue, 07 May 2019 19:19:40 -0700 (PDT)
+Received: from localhost.localdomain (li931-65.members.linode.com. [45.56.113.65])
+        by smtp.gmail.com with ESMTPSA id s4sm1168116yws.48.2019.05.07.19.19.31
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Tue, 07 May 2019 19:19:39 -0700 (PDT)
+From:   Leo Yan <leo.yan@linaro.org>
+To:     Rob Herring <robh+dt@kernel.org>,
+        Mark Rutland <mark.rutland@arm.com>,
+        Suzuki K Poulose <suzuki.poulose@arm.com>,
+        Mathieu Poirier <mathieu.poirier@linaro.org>,
+        Mike Leach <mike.leach@linaro.org>,
+        Wei Xu <xuwei5@hisilicon.com>, Shawn Guo <shawnguo@kernel.org>,
+        Sascha Hauer <s.hauer@pengutronix.de>,
+        Pengutronix Kernel Team <kernel@pengutronix.de>,
+        Fabio Estevam <festevam@gmail.com>,
+        NXP Linux Team <linux-imx@nxp.com>,
+        Andy Gross <agross@kernel.org>,
         David Brown <david.brown@linaro.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        "open list:ARM/QUALCOMM SUPPORT" <linux-soc@vger.kernel.org>,
-        Rajendra Nayak <rnayak@codeaurora.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        LKML <linux-kernel@vger.kernel.org>,
-        Linux PM list <linux-pm@vger.kernel.org>,
-        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
-        <devicetree@vger.kernel.org>, Stephen Boyd <sboyd@kernel.org>,
-        evgreen@chromium.org, Douglas Anderson <dianders@chromium.org>,
-        Matthias Kaehlcke <mka@chromium.org>, ilina@codeaurora.org
-Content-Type: text/plain; charset="UTF-8"
+        Linus Walleij <linus.walleij@linaro.org>,
+        Liviu Dudau <liviu.dudau@arm.com>,
+        Sudeep Holla <sudeep.holla@arm.com>,
+        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
+        Orson Zhai <orsonzhai@gmail.com>,
+        Baolin Wang <baolin.wang@linaro.org>,
+        Chunyan Zhang <zhang.lyra@gmail.com>,
+        linux-arm-kernel@lists.infradead.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org
+Cc:     Leo Yan <leo.yan@linaro.org>, Guodong Xu <guodong.xu@linaro.org>,
+        Zhangfei Gao <zhangfei.gao@linaro.org>,
+        Haojian Zhuang <haojian.zhuang@linaro.org>,
+        Chris Healy <cphealy@gmail.com>, Andrew Lunn <andrew@lunn.ch>,
+        Lee Jones <lee.jones@linaro.org>,
+        Chunyan Zhang <zhang.chunyan@linaro.org>
+Subject: [PATCH v2 00/11] dts: Update DT bindings for CoreSight replicator and funnel
+Date:   Wed,  8 May 2019 10:18:51 +0800
+Message-Id: <20190508021902.10358-1-leo.yan@linaro.org>
+X-Mailer: git-send-email 2.17.1
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Oct 30, 2018 at 10:53 PM Raju P.L.S.S.S.N
-<rplsssn@codeaurora.org> wrote:
->
-> Add device bindings for cpuidle states for cpu devices.
+Since the DT bindings consolidatoins for CoreSight replicator and funnel
+is ready for kernel v5.2 merge window [1], this patch set is to update
+the related CoreSight DT bindings for platforms; IIUC, this patch set
+will be safe for merging into kernel v5.2 because the dependency
+patches in [1] will be landed into mainline kernel v5.2 cycle.
 
-Raju: Did this patch fall through the cracks? It would be nice to land
-this while Lina works on setting up the infrastructure to do
-hierarchical power domains.
+In this patch set, it tries to update below two compatible strings to
+the latest strings:
 
-> Cc: <devicetree@vger.kernel.org>
-> Signed-off-by: Raju P.L.S.S.S.N <rplsssn@codeaurora.org>
-> ---
-> Changes in v2
->  - Address comments from Doug
-> ---
-> ---
->  arch/arm64/boot/dts/qcom/sdm845.dtsi | 62 ++++++++++++++++++++++++++++++++++++
->  1 file changed, 62 insertions(+)
->
-> diff --git a/arch/arm64/boot/dts/qcom/sdm845.dtsi b/arch/arm64/boot/dts/qcom/sdm845.dtsi
-> index 0c9a2aa..3a8381e 100644
-> --- a/arch/arm64/boot/dts/qcom/sdm845.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sdm845.dtsi
-> @@ -96,6 +96,7 @@
->                         reg = <0x0 0x0>;
->                         enable-method = "psci";
->                         next-level-cache = <&L2_0>;
-> +                       cpu-idle-states = <&C0_CPU_PD &C0_CPU_RPD &CLUSTER_PD>;
+  s/"arm,coresight-replicator"/"arm,coresight-static-replicator"
+  s/"arm,coresight-funnel"/"arm,coresight-dynamic-funnel"
 
-May I suggest using more generic names here instead of C0_CPU_PD and
-move the QC-specific description to the idle-state-name property? C0
-and C4 isn't easy to understand at a glance. Neither is PD and RPD.
+Please note, some platforms have two continuous patches, one is for
+updating static replicator compatible string and another is for dynamic
+funnel change; and other platforms have only one patch since it only
+needs to change for dynamic funnel.
 
-Something like big_cpu_retention, big_cpu_sleep, little_cpu_retention,
-little_cpu_sleep, cluster_sleep?
-Or big_cpu_idle_0, big_cpu_idle_1, big_cpu_idle_2 for states with
-increasing breakeven times.
+Avoid to introduce merging confliction, I rebased this patch set on
+linux-next branch with last commit fcdb095ad001 ("Add linux-next
+specific files for 20190506").
 
-I've commented below on what it might look like.
+This patch set has been tested on Arm Juno and Hikey620 boards, other
+platforms are only compilation passing.
 
->                         L2_0: l2-cache {
->                                 compatible = "cache";
->                                 next-level-cache = <&L3_0>;
-> @@ -111,6 +112,7 @@
->                         reg = <0x0 0x100>;
->                         enable-method = "psci";
->                         next-level-cache = <&L2_100>;
-> +                       cpu-idle-states = <&C0_CPU_PD &C0_CPU_RPD &CLUSTER_PD>;
->                         L2_100: l2-cache {
->                                 compatible = "cache";
->                                 next-level-cache = <&L3_0>;
-> @@ -123,6 +125,7 @@
->                         reg = <0x0 0x200>;
->                         enable-method = "psci";
->                         next-level-cache = <&L2_200>;
-> +                       cpu-idle-states = <&C0_CPU_PD &C0_CPU_RPD &CLUSTER_PD>;
->                         L2_200: l2-cache {
->                                 compatible = "cache";
->                                 next-level-cache = <&L3_0>;
-> @@ -135,6 +138,7 @@
->                         reg = <0x0 0x300>;
->                         enable-method = "psci";
->                         next-level-cache = <&L2_300>;
-> +                       cpu-idle-states = <&C0_CPU_PD &C0_CPU_RPD &CLUSTER_PD>;
->                         L2_300: l2-cache {
->                                 compatible = "cache";
->                                 next-level-cache = <&L3_0>;
-> @@ -147,6 +151,7 @@
->                         reg = <0x0 0x400>;
->                         enable-method = "psci";
->                         next-level-cache = <&L2_400>;
-> +                       cpu-idle-states = <&C4_CPU_PD &C4_CPU_RPD &CLUSTER_PD>;
->                         L2_400: l2-cache {
->                                 compatible = "cache";
->                                 next-level-cache = <&L3_0>;
-> @@ -159,6 +164,7 @@
->                         reg = <0x0 0x500>;
->                         enable-method = "psci";
->                         next-level-cache = <&L2_500>;
-> +                       cpu-idle-states = <&C4_CPU_PD &C4_CPU_RPD &CLUSTER_PD>;
->                         L2_500: l2-cache {
->                                 compatible = "cache";
->                                 next-level-cache = <&L3_0>;
-> @@ -171,6 +177,7 @@
->                         reg = <0x0 0x600>;
->                         enable-method = "psci";
->                         next-level-cache = <&L2_600>;
-> +                       cpu-idle-states = <&C4_CPU_PD &C4_CPU_RPD &CLUSTER_PD>;
->                         L2_600: l2-cache {
->                                 compatible = "cache";
->                                 next-level-cache = <&L3_0>;
-> @@ -183,11 +190,66 @@
->                         reg = <0x0 0x700>;
->                         enable-method = "psci";
->                         next-level-cache = <&L2_700>;
-> +                       cpu-idle-states = <&C4_CPU_PD &C4_CPU_RPD &CLUSTER_PD>;
->                         L2_700: l2-cache {
->                                 compatible = "cache";
->                                 next-level-cache = <&L3_0>;
->                         };
->                 };
-> +
-> +               idle-states {
-> +                       entry-method = "psci";
-> +
-> +                       C0_CPU_PD: c0-power-down {
+P.s. when use scirpt/checkpatch.pl, it reports the warnings as below. I
+think we can ignore this warnings for this patch set, please review if
+this makes sense for you.
 
-big_cpu_retention: big-cpu-retention
+WARNING: line over 80 characters
+#29: FILE: arch/arm/boot/dts/imx7s.dtsi:178:
++                       compatible = "arm,coresight-dynamic-funnel", "arm,primecell";
 
-> +                               compatible = "arm,idle-state";
-> +                               arm,psci-suspend-param = <0x40000003>;
-> +                               entry-latency-us = <350>;
-> +                               exit-latency-us = <461>;
-> +                               min-residency-us = <1890>;
-> +                               local-timer-stop;
-> +                               idle-state-name = "power-down";
+[1] https://archive.armlinux.org.uk/lurker/message/20190412.102734.2afbb29a.en.html
 
-"big-cpu-power-down"
+== Changes for v2 ==
+* Add explanation for the change in the commit logs. (Fabio)
+* Merge the separate patches for funnel and replicator per DTS into
+  a single patch. (Suzuki)
 
-> +                       };
-> +
-> +                       C0_CPU_RPD: c0-rail-power-down {
 
-big_cpu_sleep: big-cpu-sleep
+Cc: Rob Herring <robh+dt@kernel.org>
+Cc: Mark Rutland <mark.rutland@arm.com>
+Cc: Mathieu Poirier <mathieu.poirier@linaro.org>
+Cc: Suzuki K Poulose <suzuki.poulose@arm.com>
+Cc: Liviu Dudau <liviu.dudau@arm.com>
+Cc: Sudeep Holla <sudeep.holla@arm.com>
+Cc: Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>
+Cc: Wei Xu <xuwei5@hisilicon.com>
+Cc: Guodong Xu <guodong.xu@linaro.org>
+Cc: Zhangfei Gao <zhangfei.gao@linaro.org>
+Cc: Haojian Zhuang <haojian.zhuang@linaro.org>
+Cc: Shawn Guo <shawnguo@kernel.org>
+Cc: Chris Healy <cphealy@gmail.com>
+Cc: Andrew Lunn <andrew@lunn.ch>
+Cc: Fabio Estevam <festevam@gmail.com>
+Cc: Sascha Hauer <s.hauer@pengutronix.de>
+Cc: Andy Gross <agross@kernel.org>
+Cc: David Brown <david.brown@linaro.org>
+Cc: Linus Walleij <linus.walleij@linaro.org>
+Cc: Lee Jones <lee.jones@linaro.org>
+Cc: Chunyan Zhang <zhang.chunyan@linaro.org>
+Cc: Orson Zhai <orsonzhai@gmail.com>
+Cc: Baolin Wang <baolin.wang@linaro.org>
 
-> +                               compatible = "arm,idle-state";
-> +                               arm,psci-suspend-param = <0x40000004>;
-> +                               entry-latency-us = <360>;
-> +                               exit-latency-us = <531>;
-> +                               min-residency-us = <3934>;
-> +                               local-timer-stop;
-> +                               idle-state-name = "rail-power-down";
 
-"big-cpu-rail-power-down"
+Leo Yan (11):
+  ARM: dts: hip04: Update coresight DT bindings
+  ARM: dts: imx7s: Update coresight DT bindings
+  ARM: dts: qcom-apq8064: Update coresight DT bindings
+  ARM: dts: ste: Update coresight DT bindings
+  ARM: dts: vexpress-v2p-ca15_a7: Update coresight DT bindings
+  ARM: dts: qcom-msm8974: Update coresight DT bindings
+  arm64: dts: hi6220: Update coresight DT bindings
+  arm64: dts: juno: Update coresight DT bindings
+  arm64: dts: qcom-msm8916: Update coresight DT bindings
+  arm64: dts: sc9836: Update coresight DT bindings
+  arm64: dts: sc9860: Update coresight DT bindings
 
-> +                       };
-> +
-> +                       C4_CPU_PD: c4-power-down {
+ arch/arm/boot/dts/hip04.dtsi                   | 18 +++++++++---------
+ arch/arm/boot/dts/imx7s.dtsi                   |  6 +++---
+ arch/arm/boot/dts/qcom-apq8064.dtsi            |  4 ++--
+ arch/arm/boot/dts/qcom-msm8974.dtsi            |  6 +++---
+ arch/arm/boot/dts/ste-dbx5x0.dtsi              |  4 ++--
+ arch/arm/boot/dts/vexpress-v2p-ca15_a7.dts     |  4 ++--
+ arch/arm64/boot/dts/arm/juno-base.dtsi         |  6 +++---
+ arch/arm64/boot/dts/arm/juno-cs-r1r2.dtsi      |  4 ++--
+ .../boot/dts/hisilicon/hi6220-coresight.dtsi   |  6 +++---
+ arch/arm64/boot/dts/qcom/msm8916.dtsi          |  4 ++--
+ arch/arm64/boot/dts/sprd/sc9836.dtsi           |  2 +-
+ arch/arm64/boot/dts/sprd/sc9860.dtsi           |  8 ++++----
+ 12 files changed, 36 insertions(+), 36 deletions(-)
 
-little_cpu_retention: little-cpu-retention
+-- 
+2.17.1
 
-> +                               compatible = "arm,idle-state";
-> +                               arm,psci-suspend-param = <0x40000003>;
-> +                               entry-latency-us = <264>;
-> +                               exit-latency-us = <621>;
-> +                               min-residency-us = <952>;
-> +                               local-timer-stop;
-> +                               idle-state-name = "power-down";
-
-"little-cpu-power-down" and so and so forth. You get the idea.
-
-> +                       };
-> +
-> +                       C4_CPU_RPD: c4-rail-power-down {
-> +                               compatible = "arm,idle-state";
-> +                               arm,psci-suspend-param = <0x40000004>;
-> +                               entry-latency-us = <702>;
-> +                               exit-latency-us = <1061>;
-> +                               min-residency-us = <4488>;
-> +                               local-timer-stop;
-> +                               idle-state-name = "rail-power-down";
-> +                       };
-> +
-> +                       CLUSTER_PD: cluster-power-down {
-> +                               compatible = "arm,idle-state";
-> +                               arm,psci-suspend-param = <0x400000F4>;
-> +                               entry-latency-us = <3263>;
-> +                               exit-latency-us = <6562>;
-> +                               min-residency-us = <9987>;
-> +                               local-timer-stop;
-> +                               idle-state-name = "cluster-power-down";
-> +                       };
-> +               };
->         };
->
->         pmu {
-> --
-> QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
-> of the Code Aurora Forum, hosted by The Linux Foundation.
->
