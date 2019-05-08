@@ -2,48 +2,48 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 2FA8E16F00
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 May 2019 04:20:56 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9950216F03
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 May 2019 04:20:57 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726793AbfEHCUs (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 7 May 2019 22:20:48 -0400
-Received: from mail-yw1-f66.google.com ([209.85.161.66]:46258 "EHLO
-        mail-yw1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726381AbfEHCUr (ORCPT
+        id S1726435AbfEHCUz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 7 May 2019 22:20:55 -0400
+Received: from mail-yw1-f68.google.com ([209.85.161.68]:43538 "EHLO
+        mail-yw1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726837AbfEHCUz (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 7 May 2019 22:20:47 -0400
-Received: by mail-yw1-f66.google.com with SMTP id a130so9376733ywe.13
-        for <linux-arm-msm@vger.kernel.org>; Tue, 07 May 2019 19:20:47 -0700 (PDT)
+        Tue, 7 May 2019 22:20:55 -0400
+Received: by mail-yw1-f68.google.com with SMTP id p19so12147052ywe.10
+        for <linux-arm-msm@vger.kernel.org>; Tue, 07 May 2019 19:20:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=ELPN95of+YiOXZ1OxQ8uPptCoKBLr4pqVfRwM3q7Rn4=;
-        b=cscdb65Ju8PNF/KJxd7OgJitjE7xvD2hH+EOqa3yAm/uFo29RFZ0ERGQbKoqO0q9Gq
-         zSwcdpJVS5MsuUm/T8tKqVO3RfOIRDRu5aQiqGPIbWM18R952ENHLGhUQnm83PGMmKe1
-         EgQal7cm7LlxCvwcYlSTCmJV/MZWGEpist0neYA/7IBRuJwhjlrEQrfw3vvlriUP+kyt
-         3ufU5Byby6hWfhMlfD6/MXxpxE2IMyTU78S9/Al7YONQFjUnpwRgxHFDjbL+q1E9jWGB
-         FbPBL34cfSR80zIQPoIudRAqVdHiqB7GENsCrGdtBelXwbdTlCXzzjvovHf7d/0iMlgm
-         YwFQ==
+        bh=o9v2i1BskzOhYoxvbGa0Ks+cL4rPkVrKBIZw1YQ7z2U=;
+        b=TzbVCtOVob5wGFXsMeQt0szq3hqpslDw1dcya+lfdauPQ4SUbYScHMu+d2gv3hX9Ov
+         EwnuYG5EqJtbGCu/QbiISJBC+ePP7p33BQcfCj0w3IVS9f9lL4H/qdoLFQwEg20AAzBU
+         GL9TWj2xicfLC5S3+ZA7p3Nh4W7CeWZd2Ba+WhDNd6QHjjewOFnakwyFnTDbnl3wxyAG
+         U5oeUaFoTc7l3NSdaHQSNom77wgB0xYWnt3dsONCmE0nebUXjuIrxfzhZUSl1QqvYMn/
+         kO8NW0xCiCi8sSYJkLA2XDQ1lc5EJvYbdfl4+lhu9/4894loyKV5EzDyW814j8usdt/D
+         t53g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=ELPN95of+YiOXZ1OxQ8uPptCoKBLr4pqVfRwM3q7Rn4=;
-        b=m3ubMZlo1h0Df3e4DRo8quFOybaDCRMjDYHOp6hGSGWbouV1pb3fjcCWIjijAky2a4
-         s6t2khwDeFSPDicpe3jHoS+6Y2G/dW9yXRvIGXNrojrsf3QaoUpIs+aFwMRDz47WZRRF
-         5XJAwjtx/2LNgzvM1l6wKUx8Lzu9b/ijzLsqWgOjYpjogHpmF3Bu8pB/Vpa77p2xVOvh
-         zZQ/28976PIOua61KnvtfuhtHllEpFDqmpa6KfJ8qA8YFLdyhrUntZFzYduQhMYZH3p9
-         VRhh+NNGKRXiMOx5Vl98bx0T2UyskaxwH3QXv8PnyDnH2P67ERwAiWte+nBmy69dvrF3
-         CVpA==
-X-Gm-Message-State: APjAAAVrRhJcYxAmlYxqHQDEZRnAdWkuzOoXfqEjrsBNzTFXcxHdCUTZ
-        NxYH6HBnVBqG6BTveErwBpNSUQ==
-X-Google-Smtp-Source: APXvYqzvOq6p0lda62atGvMBmnBlPHx7Zw5jRgRsJ+HkkunEAVkvajT5fwLabmYeGsoo85gnyPLuTA==
-X-Received: by 2002:a0d:e6c1:: with SMTP id p184mr9009462ywe.201.1557282047160;
-        Tue, 07 May 2019 19:20:47 -0700 (PDT)
+        bh=o9v2i1BskzOhYoxvbGa0Ks+cL4rPkVrKBIZw1YQ7z2U=;
+        b=LPE+8+M/T+KcSU7CyAjh+KKNeC03QIbjOBwZT7CGvRg4+zJFOL53IqewDQTGrD9fLq
+         XXUDPx3b6PILqSxr44+Cmq7NMgIhxNFEbfNmSresWV8QZnAu0hhEDtMb2nt7hpq/k0Qh
+         ZTXIClxVRfkKwgiy9ydruGQGRtuVkfxqcMo27dlaEkJXhZkkc9XtIBRcGLkx4tTAAVOZ
+         JTzrGOSE571koako0SumvscC3IyEzD1ukPRnWq2kbZ9p/AMMcLVFoSLSTeLyKl7Wa43P
+         gxSDNpMfr+VpUKIKy7W5bguG+1vT1bjdjp++rbFOpy3ebH0DIZEf9x0ZtXXJQ9AMT23c
+         o3sA==
+X-Gm-Message-State: APjAAAW4owhU/JjW7IvB9JwGzhv946AG3eRXzyZKtpb952McpYBCbQ4X
+        rt7xKnLQWlxqPZF0NOqmSaPmeg==
+X-Google-Smtp-Source: APXvYqxkbRQnf94BeqIG33NbLKJtoaoexo6xYGJu9Cz84P9/WBrCI33zQx6dAYnDIHlYdksEySD2/Q==
+X-Received: by 2002:a0d:fec2:: with SMTP id o185mr22939115ywf.116.1557282054378;
+        Tue, 07 May 2019 19:20:54 -0700 (PDT)
 Received: from localhost.localdomain (li931-65.members.linode.com. [45.56.113.65])
-        by smtp.gmail.com with ESMTPSA id s4sm1168116yws.48.2019.05.07.19.20.40
+        by smtp.gmail.com with ESMTPSA id s4sm1168116yws.48.2019.05.07.19.20.47
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 07 May 2019 19:20:46 -0700 (PDT)
+        Tue, 07 May 2019 19:20:53 -0700 (PDT)
 From:   Leo Yan <leo.yan@linaro.org>
 To:     Rob Herring <robh+dt@kernel.org>,
         Mark Rutland <mark.rutland@arm.com>,
@@ -66,10 +66,11 @@ To:     Rob Herring <robh+dt@kernel.org>,
         Chunyan Zhang <zhang.lyra@gmail.com>,
         linux-arm-kernel@lists.infradead.org, devicetree@vger.kernel.org,
         linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org
-Cc:     Leo Yan <leo.yan@linaro.org>
-Subject: [PATCH v2 09/11] arm64: dts: qcom-msm8916: Update coresight DT bindings
-Date:   Wed,  8 May 2019 10:19:00 +0800
-Message-Id: <20190508021902.10358-10-leo.yan@linaro.org>
+Cc:     Leo Yan <leo.yan@linaro.org>,
+        Chunyan Zhang <zhang.chunyan@linaro.org>
+Subject: [PATCH v2 10/11] arm64: dts: sc9836: Update coresight DT bindings
+Date:   Wed,  8 May 2019 10:19:01 +0800
+Message-Id: <20190508021902.10358-11-leo.yan@linaro.org>
 X-Mailer: git-send-email 2.17.1
 In-Reply-To: <20190508021902.10358-1-leo.yan@linaro.org>
 References: <20190508021902.10358-1-leo.yan@linaro.org>
@@ -85,37 +86,29 @@ obsolete strings.
 This patch switches to the new bindings for CoreSight dynamic funnel,
 so can dismiss warning during initialisation.
 
-Cc: Andy Gross <agross@kernel.org>
-Cc: David Brown <david.brown@linaro.org>
+Cc: Chunyan Zhang <zhang.chunyan@linaro.org>
+Cc: Orson Zhai <orsonzhai@gmail.com>
 Cc: Mathieu Poirier <mathieu.poirier@linaro.org>
 Cc: Suzuki K Poulose <suzuki.poulose@arm.com>
 Signed-off-by: Leo Yan <leo.yan@linaro.org>
+Acked-by: Chunyan Zhang <zhang.chunyan@linaro.org>
 ---
- arch/arm64/boot/dts/qcom/msm8916.dtsi | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ arch/arm64/boot/dts/sprd/sc9836.dtsi | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/msm8916.dtsi b/arch/arm64/boot/dts/qcom/msm8916.dtsi
-index 423dda996b5d..de49ec110fc2 100644
---- a/arch/arm64/boot/dts/qcom/msm8916.dtsi
-+++ b/arch/arm64/boot/dts/qcom/msm8916.dtsi
-@@ -1172,7 +1172,7 @@
- 		};
+diff --git a/arch/arm64/boot/dts/sprd/sc9836.dtsi b/arch/arm64/boot/dts/sprd/sc9836.dtsi
+index 286d7173f94f..231436be0e3f 100644
+--- a/arch/arm64/boot/dts/sprd/sc9836.dtsi
++++ b/arch/arm64/boot/dts/sprd/sc9836.dtsi
+@@ -60,7 +60,7 @@
+ 	};
  
- 		funnel@821000 {
--			compatible = "arm,coresight-funnel", "arm,primecell";
-+			compatible = "arm,coresight-dynamic-funnel", "arm,primecell";
- 			reg = <0x821000 0x1000>;
- 
- 			clocks = <&rpmcc RPM_QDSS_CLK>, <&rpmcc RPM_QDSS_A_CLK>;
-@@ -1285,7 +1285,7 @@
- 		};
- 
- 		funnel@841000 {	/* APSS funnel only 4 inputs are used */
--			compatible = "arm,coresight-funnel", "arm,primecell";
-+			compatible = "arm,coresight-dynamic-funnel", "arm,primecell";
- 			reg = <0x841000 0x1000>;
- 
- 			clocks = <&rpmcc RPM_QDSS_CLK>, <&rpmcc RPM_QDSS_A_CLK>;
+ 	funnel@10001000 {
+-		compatible = "arm,coresight-funnel", "arm,primecell";
++		compatible = "arm,coresight-dynamic-funnel", "arm,primecell";
+ 		reg = <0 0x10001000 0 0x1000>;
+ 		clocks = <&clk26mhz>;
+ 		clock-names = "apb_pclk";
 -- 
 2.17.1
 
