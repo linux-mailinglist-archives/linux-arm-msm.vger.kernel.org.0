@@ -2,140 +2,81 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 0668C16F0E
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 May 2019 04:22:13 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4605B170B8
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 May 2019 08:06:50 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726836AbfEHCVC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 7 May 2019 22:21:02 -0400
-Received: from mail-yw1-f68.google.com ([209.85.161.68]:36792 "EHLO
-        mail-yw1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726730AbfEHCVC (ORCPT
+        id S1727070AbfEHGGt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 8 May 2019 02:06:49 -0400
+Received: from mail-pf1-f195.google.com ([209.85.210.195]:33655 "EHLO
+        mail-pf1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726179AbfEHGGt (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 7 May 2019 22:21:02 -0400
-Received: by mail-yw1-f68.google.com with SMTP id q185so14992461ywe.3
-        for <linux-arm-msm@vger.kernel.org>; Tue, 07 May 2019 19:21:02 -0700 (PDT)
+        Wed, 8 May 2019 02:06:49 -0400
+Received: by mail-pf1-f195.google.com with SMTP id z28so9945412pfk.0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 07 May 2019 23:06:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=VT/DoumIOruXiAt+IEfHVTj8xFMF06dsPV76vTKLKmU=;
-        b=qIQj7mU4c7YJHHe7BHgZEUYGBUP8UfrrrZBbYdGM5Yu+nz6qHXQGamhEyeAGJrzMJ9
-         3gl8WGLMdi3K4E4XsP8ft4URWKos/ny2JcrGqYZcBd90V+IfE4RpP28jyXsIZ+wDbVpZ
-         sLWdTy+6Q6P96HNODOJIlLlCDRoFLonAdzVThLDnR2hShGvXw6aRh8HRhyPtoIEWmms3
-         OY5Dc8BO/PrYgDGwP3JAfuXxgZeQvYQAgv7NYNxIU6nWHrIl3KJf56MWOJ7PX91e2Kn2
-         Erpnd30Fb/uVAnXAp3vpywTsDvqCZKUg0agcDNdzQOSl3OPlWni+s0jYRalouzi03tDj
-         ufXw==
+        h=from:to:cc:subject:date:message-id;
+        bh=VL6JgzPEvyYwDsgy9COt0nfgYdULxflvPEbEkBc3IBs=;
+        b=LXuOtmF81sUb6ZqftugF9mg8zLPkFF5Kmi26fPIhKOx4T/pWiUvQjqhK7J9QrKYjf5
+         n0L3cd379N4tZNhYhLMS29uaRLnb+hPrQMXTJuXiuqJsxEl9WrJhMoQIZT2nldwlRf/u
+         fvyRKP8iEMg0ZB70K0tObwNSVGEXSBZhkw41Ik3DEMREkcgqocf04AzspFl2nDWSBCjN
+         /T7avC4+rkVAgpos82U/KkFG+LJmfqGrgNv4fEdjXERNzH10EUaMQpvs61HA+6KrxQtN
+         hwHW81OnJWDhQiNH/oqP0tAeXTRiEISMJS18Jq0XEvWgTL0HirZFb0YSoe7TQx3TB1go
+         QUaw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=VT/DoumIOruXiAt+IEfHVTj8xFMF06dsPV76vTKLKmU=;
-        b=bSoJ9XPaMF2rLyJ+KlhorH/jMe32UCsGynRoUkeTUo+vCiJs6MzV5f4cTXYjGR4xYD
-         Ng/amp+CV29ZVKu/Gvl7SE4ilQJELUPHX/CJLzhuKEHwGzfRlkdPK6baH36yCFpYXF21
-         3vCzVa7ZRQPgJwdtGhz1hX2yvgiliqeUYGh4D4kfuZTrRUb4zxWvZzyA4iLorNkFrNpH
-         3muLi3n9p+JV/kkNvVb9LHaTnGY61coFWQTzWQFSXx82rGvqrR3lbvu90QevN0kHGckE
-         J+sZZL1vVfwrR63nar56ogSI4GDiB8lq8iKdsunJrGA8DMk8/enmWM9HI0eRJu7mkN/Z
-         1TbA==
-X-Gm-Message-State: APjAAAX3+kVShgsKNq5/SmYu9r1v/4AIqsZC5CWXggfExz3owU00UpO6
-        OvU3ZPgzy0qW3dQjn0BL1lGICg==
-X-Google-Smtp-Source: APXvYqwUV2PSsioGsTEJtGNisNfeTjMAt5+acFaEPT1kWqqPlXnSGAxrpT/5JBTWNkf7gyrMX5zVZw==
-X-Received: by 2002:a81:6d87:: with SMTP id i129mr20367881ywc.424.1557282061711;
-        Tue, 07 May 2019 19:21:01 -0700 (PDT)
-Received: from localhost.localdomain (li931-65.members.linode.com. [45.56.113.65])
-        by smtp.gmail.com with ESMTPSA id s4sm1168116yws.48.2019.05.07.19.20.54
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=VL6JgzPEvyYwDsgy9COt0nfgYdULxflvPEbEkBc3IBs=;
+        b=Cyn1qtrugIOjlSUuE4T8s2udJEGt5OulhAo3+bpdnde9Jzz1wilTCIm8Mbf9Iw5jFI
+         KU2LuMy4VrUatB4QVf/8OrI88v5vualUZcXML0O+JCKPp6WD+ww2pjIuahh9UwP//cWU
+         r0mKbWHfpzDCRRogL1hr7Si4cyc1OBtJhqdjQy/Ohp5TeSHrdVS5CXgdh2dWXj9ggO/S
+         oR3U/VWaWF5bTs+W5wMmdAA0DObnw0ro1eQLLW94lMLJ9faaocUpJ0rKchzoILSxQBII
+         tD5S9aFL7TiyVQkBfN+6PnDGDDW5J7tsm6JF5QEKGPwqZansnNkNTOy6+qBh2yugJqfv
+         y5FQ==
+X-Gm-Message-State: APjAAAW179S1uyF/Tl59bT4umX5Ff4nag1XcTmBl1xlGWU7MbanBgqkP
+        QfErf39LaUwRBuhL7acWAy+tGmRqM+c=
+X-Google-Smtp-Source: APXvYqxx2vFAgOmHdaHvQ8kGexENoX08edWIpPpZ1HgG4mkaX+MxpCauUS3la2l3ZMzylA+ka6qW/w==
+X-Received: by 2002:a65:628b:: with SMTP id f11mr43010659pgv.95.1557295607391;
+        Tue, 07 May 2019 23:06:47 -0700 (PDT)
+Received: from localhost.localdomain (104-188-17-28.lightspeed.sndgca.sbcglobal.net. [104.188.17.28])
+        by smtp.gmail.com with ESMTPSA id t5sm2756130pgn.80.2019.05.07.23.06.46
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 07 May 2019 19:21:01 -0700 (PDT)
-From:   Leo Yan <leo.yan@linaro.org>
-To:     Rob Herring <robh+dt@kernel.org>,
-        Mark Rutland <mark.rutland@arm.com>,
-        Suzuki K Poulose <suzuki.poulose@arm.com>,
-        Mathieu Poirier <mathieu.poirier@linaro.org>,
-        Mike Leach <mike.leach@linaro.org>,
-        Wei Xu <xuwei5@hisilicon.com>, Shawn Guo <shawnguo@kernel.org>,
-        Sascha Hauer <s.hauer@pengutronix.de>,
-        Pengutronix Kernel Team <kernel@pengutronix.de>,
-        Fabio Estevam <festevam@gmail.com>,
-        NXP Linux Team <linux-imx@nxp.com>,
-        Andy Gross <agross@kernel.org>,
-        David Brown <david.brown@linaro.org>,
-        Linus Walleij <linus.walleij@linaro.org>,
-        Liviu Dudau <liviu.dudau@arm.com>,
-        Sudeep Holla <sudeep.holla@arm.com>,
-        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
-        Orson Zhai <orsonzhai@gmail.com>,
-        Baolin Wang <baolin.wang@linaro.org>,
-        Chunyan Zhang <zhang.lyra@gmail.com>,
-        linux-arm-kernel@lists.infradead.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org
-Cc:     Leo Yan <leo.yan@linaro.org>,
-        Chunyan Zhang <zhang.chunyan@linaro.org>
-Subject: [PATCH v2 11/11] arm64: dts: sc9860: Update coresight DT bindings
-Date:   Wed,  8 May 2019 10:19:02 +0800
-Message-Id: <20190508021902.10358-12-leo.yan@linaro.org>
-X-Mailer: git-send-email 2.17.1
-In-Reply-To: <20190508021902.10358-1-leo.yan@linaro.org>
-References: <20190508021902.10358-1-leo.yan@linaro.org>
+        Tue, 07 May 2019 23:06:46 -0700 (PDT)
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     "David S. Miller" <davem@davemloft.net>,
+        Arun Kumar Neelakantam <aneela@codeaurora.org>,
+        Chris Lew <clew@codeaurora.org>
+Cc:     netdev@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org
+Subject: [PATCH 0/5] QRTR flow control improvements
+Date:   Tue,  7 May 2019 23:06:38 -0700
+Message-Id: <20190508060643.30936-1-bjorn.andersson@linaro.org>
+X-Mailer: git-send-email 2.18.0
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-CoreSight DT bindings have been updated, thus the old compatible strings
-are obsolete and the drivers will report warning if DTS uses these
-obsolete strings.
+In order to prevent overconsumption of resources on the remote side QRTR
+implements a flow control mechanism.
 
-This patch switches to the new bindings for CoreSight dynamic funnel,
-so can dismiss warning during initialisation.
+Move the handling of the incoming confirm_rx to the receiving process to ensure
+incoming flow is controlled. Then implement outgoing flow control, using the
+recommended algorithm of counting outstanding non-confirmed messages and
+blocking when hitting a limit. The last three patches refactors the node
+assignment and port lookup, in order to remove the worker in the receive path.
 
-Cc: Chunyan Zhang <zhang.chunyan@linaro.org>
-Cc: Orson Zhai <orsonzhai@gmail.com>
-Cc: Mathieu Poirier <mathieu.poirier@linaro.org>
-Cc: Suzuki K Poulose <suzuki.poulose@arm.com>
-Signed-off-by: Leo Yan <leo.yan@linaro.org>
-Acked-by: Chunyan Zhang <zhang.chunyan@linaro.org>
----
- arch/arm64/boot/dts/sprd/sc9860.dtsi | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+Bjorn Andersson (5):
+  net: qrtr: Move resume-tx transmission to recvmsg
+  net: qrtr: Implement outgoing flow control
+  net: qrtr: Migrate node lookup tree to spinlock
+  net: qrtr: Make qrtr_port_lookup() use RCU
+  net: qrtr: Remove receive worker
 
-diff --git a/arch/arm64/boot/dts/sprd/sc9860.dtsi b/arch/arm64/boot/dts/sprd/sc9860.dtsi
-index b25d19977170..e27eb3ed1d47 100644
---- a/arch/arm64/boot/dts/sprd/sc9860.dtsi
-+++ b/arch/arm64/boot/dts/sprd/sc9860.dtsi
-@@ -300,7 +300,7 @@
- 		};
- 
- 		funnel@10001000 { /* SoC Funnel */
--			compatible = "arm,coresight-funnel", "arm,primecell";
-+			compatible = "arm,coresight-dynamic-funnel", "arm,primecell";
- 			reg = <0 0x10001000 0 0x1000>;
- 			clocks = <&ext_26m>;
- 			clock-names = "apb_pclk";
-@@ -367,7 +367,7 @@
- 		};
- 
- 		funnel@11001000 { /* Cluster0 Funnel */
--			compatible = "arm,coresight-funnel", "arm,primecell";
-+			compatible = "arm,coresight-dynamic-funnel", "arm,primecell";
- 			reg = <0 0x11001000 0 0x1000>;
- 			clocks = <&ext_26m>;
- 			clock-names = "apb_pclk";
-@@ -415,7 +415,7 @@
- 		};
- 
- 		funnel@11002000 { /* Cluster1 Funnel */
--			compatible = "arm,coresight-funnel", "arm,primecell";
-+			compatible = "arm,coresight-dynamic-funnel", "arm,primecell";
- 			reg = <0 0x11002000 0 0x1000>;
- 			clocks = <&ext_26m>;
- 			clock-names = "apb_pclk";
-@@ -513,7 +513,7 @@
- 		};
- 
- 		funnel@11005000 { /* Main Funnel */
--			compatible = "arm,coresight-funnel", "arm,primecell";
-+			compatible = "arm,coresight-dynamic-funnel", "arm,primecell";
- 			reg = <0 0x11005000 0 0x1000>;
- 			clocks = <&ext_26m>;
- 			clock-names = "apb_pclk";
+ net/qrtr/qrtr.c | 265 +++++++++++++++++++++++++++++++++++-------------
+ 1 file changed, 196 insertions(+), 69 deletions(-)
+
 -- 
-2.17.1
+2.18.0
 
