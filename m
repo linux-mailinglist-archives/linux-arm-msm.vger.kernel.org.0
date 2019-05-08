@@ -2,110 +2,84 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 905FD18146
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 May 2019 22:44:17 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 737BF181F6
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 May 2019 00:14:51 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727657AbfEHUn7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 8 May 2019 16:43:59 -0400
-Received: from mail-qk1-f196.google.com ([209.85.222.196]:38619 "EHLO
-        mail-qk1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727195AbfEHUn6 (ORCPT
+        id S1728855AbfEHWOq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 8 May 2019 18:14:46 -0400
+Received: from retiisi.org.uk ([95.216.213.190]:50810 "EHLO
+        hillosipuli.retiisi.org.uk" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1726837AbfEHWOq (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 8 May 2019 16:43:58 -0400
-Received: by mail-qk1-f196.google.com with SMTP id a64so144398qkg.5;
-        Wed, 08 May 2019 13:43:57 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=D+5a7yIWfQM2RvqyQS12Uu7fVHTzOqx14y8Bsmfizjw=;
-        b=PXEIRHCYBAhc/MI+OVHSqQ/OUK0FRyA6cewJp/JxCuqKhxrD8xflX/xYjakuSRlV+j
-         bzHoRlNx4GFNyr08V2kvI/4lM6I7pR2Prx/hnUbwntSECCYxbZtLDy5nqKGHoxA2jJnR
-         OBqMmCSgzw1FD8ho4L/G/2RpClWH07txtknw+rLfb91XD5WBEYAv34JlkjZ4Ump9shRK
-         xtukBuq3opyrXSjbhg3OQIhlFWAVxGl0wfEYTXiqJ6ZxAQT7zxm8xXNhpRuOVUTuwb6S
-         7849sMDcPeGt911RbZvMqWtBmgDUHKEYvR9I2ajWYjeDjvjt8pT6uV77orYWlkIvPQM5
-         WxmA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=D+5a7yIWfQM2RvqyQS12Uu7fVHTzOqx14y8Bsmfizjw=;
-        b=fyX6gBHpauc7lPQJxrx3Wb5LLtxUWh59dh9KtGuXNn9xlDON5sbJMabts/N4zUWloL
-         N+x4bLO3XHABsxgp/5a4U6s8Sqi31V8D/nNCGDgEbR4qTGw3/O6auy6We/rKn88o8an/
-         tDeuRyBB1HO6jnnwRUmzLh0z0pvK6xr7/feiGggNbf9Ia3OmCmedFS2d+VyiHWPGrIxf
-         iUbMkWg0KCrr825CrNI46xC1OOwL9EHmKDUHGznEFegFuWNyWV2uHgQq3C1P3HXzouWP
-         Vrwp7qjJ7aILk3Xgf9U74za9zHIXlZI64RwON9u1LW5e0NG8Xcr1TLhPk6azjLJMrkGA
-         tG7g==
-X-Gm-Message-State: APjAAAUHiHQobMP2miY9SHnzEiAL3m99Rr90KKx+6fIq8QU+estUVWLN
-        yYNkepz2rHecJRfkYzjV8AI=
-X-Google-Smtp-Source: APXvYqxuSaA7O0Kfvow7bS6+66Q1kCm9xtHIqoJya9G35v6+67pZVluGYmgVIgRVikVrU1R2Ow08rw==
-X-Received: by 2002:a37:b4c6:: with SMTP id d189mr7925772qkf.173.1557348237279;
-        Wed, 08 May 2019 13:43:57 -0700 (PDT)
-Received: from localhost ([2601:184:4780:7861:6268:7a0b:50be:cebc])
-        by smtp.gmail.com with ESMTPSA id u2sm14131qkb.37.2019.05.08.13.43.56
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 08 May 2019 13:43:56 -0700 (PDT)
-From:   Rob Clark <robdclark@gmail.com>
-To:     dri-devel@lists.freedesktop.org
-Cc:     Georgi Djakov <georgi.djakov@linaro.org>,
-        Rob Clark <robdclark@chromium.org>,
-        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>, linux-arm-msm@vger.kernel.org,
-        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org
-Subject: [PATCH 5/5] drm/msm/mdp5: Use the interconnect API
-Date:   Wed,  8 May 2019 13:42:15 -0700
-Message-Id: <20190508204219.31687-6-robdclark@gmail.com>
-X-Mailer: git-send-email 2.20.1
-In-Reply-To: <20190508204219.31687-1-robdclark@gmail.com>
-References: <20190508204219.31687-1-robdclark@gmail.com>
+        Wed, 8 May 2019 18:14:46 -0400
+Received: from valkosipuli.localdomain (valkosipuli.retiisi.org.uk [IPv6:2a01:4f9:c010:4572::80:2])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by hillosipuli.retiisi.org.uk (Postfix) with ESMTPS id 99EE1634C7B;
+        Thu,  9 May 2019 01:14:02 +0300 (EEST)
+Received: from sailus by valkosipuli.localdomain with local (Exim 4.89)
+        (envelope-from <sakari.ailus@retiisi.org.uk>)
+        id 1hOUp8-0001dU-9h; Thu, 09 May 2019 01:14:02 +0300
+Date:   Thu, 9 May 2019 01:14:02 +0300
+From:   Sakari Ailus <sakari.ailus@iki.fi>
+To:     Hans Verkuil <hverkuil@xs4all.nl>
+Cc:     Stanimir Varbanov <stanimir.varbanov@linaro.org>,
+        linux-media@vger.kernel.org,
+        Mauro Carvalho Chehab <mchehab@kernel.org>,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v2] v4l: Add source event change for bit-depth
+Message-ID: <20190508221402.6fh5k2pvep33lggj@valkosipuli.retiisi.org.uk>
+References: <20190508113759.19168-1-stanimir.varbanov@linaro.org>
+ <d6dcee9a-0308-855c-9819-3e7413cb617d@linaro.org>
+ <a63d1c5f-806e-92c3-a6f7-e70f0686a27d@xs4all.nl>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <a63d1c5f-806e-92c3-a6f7-e70f0686a27d@xs4all.nl>
+User-Agent: NeoMutt/20170113 (1.7.2)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Georgi Djakov <georgi.djakov@linaro.org>
+On Wed, May 08, 2019 at 06:38:49PM +0200, Hans Verkuil wrote:
+> On 5/8/19 5:34 PM, Stanimir Varbanov wrote:
+> > Hi Hans,
+> > 
+> > On 5/8/19 2:37 PM, Stanimir Varbanov wrote:
+> >> This event indicate that the source bit-depth is changed during
+> >> run-time. The client must get the new format and re-allocate buffers
+> >> for it. This can usually happens with video decoder (encoders) when
+> >> the bit-stream depth is changed from 8 to 10bits or vice versa.
+> >>
+> >> Signed-off-by: Stanimir Varbanov <stanimir.varbanov@linaro.org>
+> >> ---
+> >> Change since v1: s/BITDEPTH/BIT_DEPTH
+> >>
+> >>  Documentation/media/uapi/v4l/vidioc-dqevent.rst | 7 +++++++
+> >>  Documentation/media/videodev2.h.rst.exceptions  | 1 +
+> >>  include/uapi/linux/videodev2.h                  | 1 +
+> >>  3 files changed, 9 insertions(+)
+> >>
+> >> diff --git a/Documentation/media/uapi/v4l/vidioc-dqevent.rst b/Documentation/media/uapi/v4l/vidioc-dqevent.rst
+> >> index dea9c0cc00ab..f7782cbddc5f 100644
+> >> --- a/Documentation/media/uapi/v4l/vidioc-dqevent.rst
+> >> +++ b/Documentation/media/uapi/v4l/vidioc-dqevent.rst
+> >> @@ -397,6 +397,13 @@ call.
+> >>  	that many devices are not able to recover from a temporary loss of
+> >>  	signal and so restarting streaming I/O is required in order for the
+> >>  	hardware to synchronize to the video signal.
+> >> +    * - ``V4L2_EVENT_SRC_CH_BIT_DEPTH``
+> > 
+> > I started to wonder isn't COLOR_DEPTH more appropriate? Bit-depth
+> > doesn't describe what is actually deep.
+> > 
+> 
+> I agree. COLOR_DEPTH is a better name.
 
-Signed-off-by: Georgi Djakov <georgi.djakov@linaro.org>
-Signed-off-by: Rob Clark <robdclark@chromium.org>
----
- drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c | 14 ++++++++++++++
- 1 file changed, 14 insertions(+)
+Please add:
 
-diff --git a/drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c b/drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c
-index 97179bec8902..54d2b4c2b09f 100644
---- a/drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c
-+++ b/drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c
-@@ -16,6 +16,7 @@
-  * this program.  If not, see <http://www.gnu.org/licenses/>.
-  */
- 
-+#include <linux/interconnect.h>
- #include <linux/of_irq.h>
- 
- #include "msm_drv.h"
-@@ -1050,6 +1051,19 @@ static const struct component_ops mdp5_ops = {
- 
- static int mdp5_dev_probe(struct platform_device *pdev)
- {
-+	struct icc_path *path0 = of_icc_get(&pdev->dev, "port0");
-+	struct icc_path *path1 = of_icc_get(&pdev->dev, "port1");
-+	struct icc_path *path_rot = of_icc_get(&pdev->dev, "rotator");
-+
-+	if (IS_ERR(path0))
-+		return PTR_ERR(path0);
-+	icc_set_bw(path0, 0, MBps_to_icc(6400));
-+
-+	if (!IS_ERR(path1))
-+		icc_set_bw(path1, 0, MBps_to_icc(6400));
-+	if (!IS_ERR(path_rot))
-+		icc_set_bw(path_rot, 0, MBps_to_icc(6400));
-+
- 	DBG("");
- 	return component_add(&pdev->dev, &mdp5_ops);
- }
+Acked-by: Sakari Ailus <sakari.ailus@linux.intel.com>
+
 -- 
-2.20.1
-
+Sakari Ailus
