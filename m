@@ -2,73 +2,84 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id D7DD117E4A
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 May 2019 18:41:51 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id EE2A817FBE
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 May 2019 20:25:11 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728068AbfEHQlj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 8 May 2019 12:41:39 -0400
-Received: from shards.monkeyblade.net ([23.128.96.9]:48726 "EHLO
-        shards.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727786AbfEHQlj (ORCPT
+        id S1727893AbfEHSZL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 8 May 2019 14:25:11 -0400
+Received: from smtp.codeaurora.org ([198.145.29.96]:54172 "EHLO
+        smtp.codeaurora.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726883AbfEHSZK (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 8 May 2019 12:41:39 -0400
-Received: from localhost (unknown [IPv6:2601:601:9f80:35cd::3d8])
-        (using TLSv1 with cipher AES256-SHA (256/256 bits))
-        (Client did not present a certificate)
-        (Authenticated sender: davem-davemloft)
-        by shards.monkeyblade.net (Postfix) with ESMTPSA id E826614051AFC;
-        Wed,  8 May 2019 09:41:38 -0700 (PDT)
-Date:   Wed, 08 May 2019 09:41:38 -0700 (PDT)
-Message-Id: <20190508.094138.1398128604024649557.davem@davemloft.net>
-To:     bjorn.andersson@linaro.org
-Cc:     aneela@codeaurora.org, clew@codeaurora.org, netdev@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH 2/5] net: qrtr: Implement outgoing flow control
-From:   David Miller <davem@davemloft.net>
-In-Reply-To: <20190508060643.30936-3-bjorn.andersson@linaro.org>
-References: <20190508060643.30936-1-bjorn.andersson@linaro.org>
-        <20190508060643.30936-3-bjorn.andersson@linaro.org>
-X-Mailer: Mew version 6.8 on Emacs 26.1
-Mime-Version: 1.0
-Content-Type: Text/Plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-X-Greylist: Sender succeeded SMTP AUTH, not delayed by milter-greylist-4.5.12 (shards.monkeyblade.net [149.20.54.216]); Wed, 08 May 2019 09:41:39 -0700 (PDT)
+        Wed, 8 May 2019 14:25:10 -0400
+Received: by smtp.codeaurora.org (Postfix, from userid 1000)
+        id 1857A60132; Wed,  8 May 2019 18:25:09 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
+        s=default; t=1557339910;
+        bh=mn5g6iGvI2jmQwQ92iHJz0YqAINmEWshw7aWFCQfT8w=;
+        h=From:To:Cc:Subject:Date:From;
+        b=RIdf54AQ1bGrooB1DtKFLhtCG7SO0ZHb3S1CBOLJ4xUOnPQl6/wmNgr7R/9/OWgDx
+         163ILqkJRgVwrYByux0Wxm1kaMhYggcEM14wZQFX/R00Bw8EA2dH4T7QWxj8DCoOk2
+         lliYvEIQCcvHHFaFJ1lvuSwaulWmku3lFc//fddo=
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        pdx-caf-mail.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.7 required=2.0 tests=ALL_TRUSTED,BAYES_00,
+        DKIM_INVALID,DKIM_SIGNED autolearn=no autolearn_force=no version=3.4.0
+Received: from tdas-linux.qualcomm.com (blr-c-bdr-fw-01_globalnat_allzones-outside.qualcomm.com [103.229.19.19])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: tdas@smtp.codeaurora.org)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id EFA7060300;
+        Wed,  8 May 2019 18:25:05 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
+        s=default; t=1557339909;
+        bh=mn5g6iGvI2jmQwQ92iHJz0YqAINmEWshw7aWFCQfT8w=;
+        h=From:To:Cc:Subject:Date:From;
+        b=cUkf6ob1eVuJfc9srVi59Ws6hszxrQGe8uxQIxlAFVEBEX81xI5fwgdzMj5HmAPbw
+         zbfCA5S3lo8HcmhgdhtHRIrl+lawI8jA+EU6zIr5gJBq80XH4QxIKTFchJzZBksg0K
+         bJG6HSXcpYLsYA3RdaSPpGOuJ3QqeA2YHJ/FDJXM=
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org EFA7060300
+Authentication-Results: pdx-caf-mail.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: pdx-caf-mail.web.codeaurora.org; spf=none smtp.mailfrom=tdas@codeaurora.org
+From:   Taniya Das <tdas@codeaurora.org>
+To:     Stephen Boyd <sboyd@kernel.org>,
+        Michael Turquette <mturquette@baylibre.com>
+Cc:     Andy Gross <andy.gross@linaro.org>,
+        David Brown <david.brown@linaro.org>,
+        Rajendra Nayak <rnayak@codeaurora.org>,
+        linux-arm-msm@vger.kernel.org, linux-soc@vger.kernel.org,
+        linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Taniya Das <tdas@codeaurora.org>
+Subject: [PATCH v1 0/3] clk: qcom: Misc updates for Root Clock Generators
+Date:   Wed,  8 May 2019 23:54:52 +0530
+Message-Id: <1557339895-21952-1-git-send-email-tdas@codeaurora.org>
+X-Mailer: git-send-email 1.9.1
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Bjorn Andersson <bjorn.andersson@linaro.org>
-Date: Tue,  7 May 2019 23:06:40 -0700
+This patch adds support for the below
 
-> +static void qrtr_tx_resume(struct qrtr_node *node, struct sk_buff *skb)
-> +{
-> +	struct qrtr_ctrl_pkt *pkt = (struct qrtr_ctrl_pkt *)skb->data;
-> +	struct qrtr_tx_flow *flow;
-> +	unsigned long key;
-> +	u64 remote_node = le32_to_cpu(pkt->client.node);
-> +	u32 remote_port = le32_to_cpu(pkt->client.port);
+1) There could be failure while updating the RCG and not returning the
+   failure could cause the consumer to assume the clock update is a
+   success and not handling the failure gracefully.
+2) There are few clocks in certain clock controllers which might require
+   the hardware control mode to be enabled explicitly.
+3) Update the DFS macro as per the hardware plans.
 
-Reverse christmas tree for the local variables please.
+Taniya Das (3):
+  clk: qcom: rcg: Return failure for RCG update
+  clk: qcom: rcg2: Add support for hardware control mode
+  clk: qcom: rcg: update the DFS macro for RCG
 
-> +static int qrtr_tx_wait(struct qrtr_node *node, int dest_node, int dest_port,
-> +			int type)
-> +{
-> +	struct qrtr_tx_flow *flow;
-> +	unsigned long key = (u64)dest_node << 32 | dest_port;
-> +	int confirm_rx = 0;
-> +	int ret;
+ drivers/clk/qcom/clk-rcg.h    |  5 ++-
+ drivers/clk/qcom/clk-rcg2.c   |  5 ++-
+ drivers/clk/qcom/gcc-sdm845.c | 96 +++++++++++++++++++++----------------------
+ 3 files changed, 56 insertions(+), 50 deletions(-)
 
-Likewise.
+--
+Qualcomm INDIA, on behalf of Qualcomm Innovation Center, Inc.is a member
+of the Code Aurora Forum, hosted by the  Linux Foundation.
 
->  /* Pass an outgoing packet socket buffer to the endpoint driver. */
->  static int qrtr_node_enqueue(struct qrtr_node *node, struct sk_buff *skb,
->  			     int type, struct sockaddr_qrtr *from,
->  			     struct sockaddr_qrtr *to)
->  {
->  	struct qrtr_hdr_v1 *hdr;
-> +	int confirm_rx;
->  	size_t len = skb->len;
->  	int rc = -ENODEV;
-
-Likewise.
