@@ -2,96 +2,251 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 6B7F7179EB
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 May 2019 15:07:31 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9B11417AEB
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 May 2019 15:44:06 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726163AbfEHNHa (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 8 May 2019 09:07:30 -0400
-Received: from mail-qk1-f193.google.com ([209.85.222.193]:35291 "EHLO
-        mail-qk1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725815AbfEHNHa (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 8 May 2019 09:07:30 -0400
-Received: by mail-qk1-f193.google.com with SMTP id c15so3131834qkl.2;
-        Wed, 08 May 2019 06:07:29 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=PB0UQqZL2l81e8KBphbHsFIt1aSxB71MYNy4uU0+TBs=;
-        b=cFSVhlXBBuje5m5yG1SvlpxPFYTkUqhuABFFnM8Vap7s0cUik1oEGWP9QprZQO/4N5
-         3hIN3RGR1yVlwPky/QSUD9Q7ZHA7b8BPqbuwQvTvsuw+p7GFIWmRIGuTrLFcyGjlvCOg
-         cbWGC5thnbw+vzjdfs7WW6Sj1cjDOdFDkunmt2TPMNxOLKDTVHUxJ/iRJYv0nW/aaLjF
-         AYVX1MhiuDZ6p133n04G6zR0Afc9LSBf7Nef7XBmhWgSQRpg2F9EHnDIBa6k1YMz0tn/
-         1HQZ/EKTF2NKd3MPu/SxDC20Ay19kLnrmtwSsiYQ0G43B4kFJIwdmASlfCUHw1X3ESYy
-         KG0A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=PB0UQqZL2l81e8KBphbHsFIt1aSxB71MYNy4uU0+TBs=;
-        b=kDE0rjM25bGvdPNAvEnOXlLVDQhGuvnQwdyAnGShq8bPxvG6g4bLiC+8mJ8NS18twU
-         AisTC/TUDx6b2O+fJ5V+mqKbqE9u3O3ZV4q9zrcWNnPoGu/tFPHPcR4QQ5bKvm3TQUvE
-         VQJiRIrUS5SgjfDSL/koeNK4vuglM7EmkCZIqs+rDqIZW9iQwmuPhGg8nXh2/n9HiB31
-         ok4/5hNVHTpvNSYD4uHRw21BbweoRXtvJZ54hIGye4GgHRBFtfpkDdvaGqUldRu/g96H
-         oWQmqdvnE0hU8fIAn/elmyX7QG3qm2XPLGb9YJDKAg3r1Vlbmwt3v89uc0j3+Igpbvbf
-         qpyQ==
-X-Gm-Message-State: APjAAAWRfmogzgZFUOOA2E1RuYo4pVJBiM4lSDJIGB4JAOB9pFAmvG4t
-        tgo/oi7h/0I8Q56CBobU00k=
-X-Google-Smtp-Source: APXvYqwdNnENVaxCQS/UfbH5uDsAC1Cpc98U/DY8M3zrGBK2M8tRp+nc6/EGVHJZB5x+wEqALkCAtg==
-X-Received: by 2002:a37:40d2:: with SMTP id n201mr29155323qka.83.1557320849170;
-        Wed, 08 May 2019 06:07:29 -0700 (PDT)
-Received: from localhost ([2601:184:4780:7861:6268:7a0b:50be:cebc])
-        by smtp.gmail.com with ESMTPSA id g206sm9021192qkb.75.2019.05.08.06.07.28
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 08 May 2019 06:07:28 -0700 (PDT)
-From:   Rob Clark <robdclark@gmail.com>
-To:     dri-devel@lists.freedesktop.org
-Cc:     Rob Clark <robdclark@chromium.org>,
-        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Jordan Crouse <jcrouse@codeaurora.org>,
-        Sharat Masetty <smasetty@codeaurora.org>,
-        linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org,
-        linux-kernel@vger.kernel.org
-Subject: [PATCH] drm/msm/a6xx: No zap shader is not an error
-Date:   Wed,  8 May 2019 06:06:52 -0700
-Message-Id: <20190508130726.27557-1-robdclark@gmail.com>
+        id S1727715AbfEHNn4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 8 May 2019 09:43:56 -0400
+Received: from szxga06-in.huawei.com ([45.249.212.32]:57592 "EHLO huawei.com"
+        rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+        id S1727706AbfEHNnz (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 8 May 2019 09:43:55 -0400
+Received: from DGGEMS402-HUB.china.huawei.com (unknown [172.30.72.58])
+        by Forcepoint Email with ESMTP id D63364D9A7FA07365607;
+        Wed,  8 May 2019 21:43:51 +0800 (CST)
+Received: from localhost.localdomain.localdomain (10.175.113.25) by
+ DGGEMS402-HUB.china.huawei.com (10.3.19.202) with Microsoft SMTP Server id
+ 14.3.439.0; Wed, 8 May 2019 21:43:43 +0800
+From:   Kefeng Wang <wangkefeng.wang@huawei.com>
+To:     <linux-kernel@vger.kernel.org>
+CC:     Kefeng Wang <wangkefeng.wang@huawei.com>,
+        Andy Gross <andy.gross@linaro.org>,
+        David Brown <david.brown@linaro.org>,
+        Lee Jones <lee.jones@linaro.org>,
+        <linux-arm-msm@vger.kernel.org>
+Subject: [PATCH next v2] mfd: Use dev_get_drvdata()
+Date:   Wed, 8 May 2019 21:52:57 +0800
+Message-ID: <20190508135257.134747-1-wangkefeng.wang@huawei.com>
 X-Mailer: git-send-email 2.20.1
+In-Reply-To: <20190508103202.GJ3995@dell>
+References: <20190508103202.GJ3995@dell>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7BIT
+Content-Type:   text/plain; charset=US-ASCII
+X-Originating-IP: [10.175.113.25]
+X-CFilter-Loop: Reflected
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Rob Clark <robdclark@chromium.org>
+Using dev_get_drvdata directly.
 
-Depending on platform firmware, a zap shader may not be required to take
-the GPU out of secure mode on boot, in which case we can just write
-RBBM_SECVID_TRUST_CNTL directly.  Which we *mostly* handled, but missed
-clearing 'ret' resulting that hw_init() returned an error on these
-devices.
-
-Fixes: abccb9fe3267 drm/msm/a6xx: Add zap shader load
-Signed-off-by: Rob Clark <robdclark@chromium.org>
+Cc: Andy Gross <andy.gross@linaro.org>
+Cc: David Brown <david.brown@linaro.org>
+Cc: Lee Jones <lee.jones@linaro.org>
+Cc: linux-arm-msm@vger.kernel.org
+Signed-off-by: Kefeng Wang <wangkefeng.wang@huawei.com>
 ---
- drivers/gpu/drm/msm/adreno/a6xx_gpu.c | 1 +
- 1 file changed, 1 insertion(+)
+v2:
+-use dev_get_drvdata() instead of to_ssbi()
 
-diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
-index ec24508b9d68..e74dce474250 100644
---- a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
-+++ b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
-@@ -527,6 +527,7 @@ static int a6xx_hw_init(struct msm_gpu *gpu)
- 		dev_warn_once(gpu->dev->dev,
- 			"Zap shader not enabled - using SECVID_TRUST_CNTL instead\n");
- 		gpu_write(gpu, REG_A6XX_RBBM_SECVID_TRUST_CNTL, 0x0);
-+		ret = 0;
- 	}
+ drivers/mfd/ssbi.c     |  6 ++----
+ drivers/mfd/t7l66xb.c  | 12 ++++--------
+ drivers/mfd/tc6387xb.c | 12 ++++--------
+ drivers/mfd/tc6393xb.c | 21 +++++++--------------
+ 4 files changed, 17 insertions(+), 34 deletions(-)
+
+diff --git a/drivers/mfd/ssbi.c b/drivers/mfd/ssbi.c
+index 36b96fee4ce6..0ae27cd30268 100644
+--- a/drivers/mfd/ssbi.c
++++ b/drivers/mfd/ssbi.c
+@@ -80,8 +80,6 @@ struct ssbi {
+ 	int (*write)(struct ssbi *, u16 addr, const u8 *buf, int len);
+ };
  
- out:
+-#define to_ssbi(dev)	platform_get_drvdata(to_platform_device(dev))
+-
+ static inline u32 ssbi_readl(struct ssbi *ssbi, u32 reg)
+ {
+ 	return readl(ssbi->base + reg);
+@@ -243,7 +241,7 @@ ssbi_pa_write_bytes(struct ssbi *ssbi, u16 addr, const u8 *buf, int len)
+ 
+ int ssbi_read(struct device *dev, u16 addr, u8 *buf, int len)
+ {
+-	struct ssbi *ssbi = to_ssbi(dev);
++	struct ssbi *ssbi = dev_get_drvdata(dev);
+ 	unsigned long flags;
+ 	int ret;
+ 
+@@ -257,7 +255,7 @@ EXPORT_SYMBOL_GPL(ssbi_read);
+ 
+ int ssbi_write(struct device *dev, u16 addr, const u8 *buf, int len)
+ {
+-	struct ssbi *ssbi = to_ssbi(dev);
++	struct ssbi *ssbi = dev_get_drvdata(dev);
+ 	unsigned long flags;
+ 	int ret;
+ 
+diff --git a/drivers/mfd/t7l66xb.c b/drivers/mfd/t7l66xb.c
+index 43d8683266de..e9cfb147345e 100644
+--- a/drivers/mfd/t7l66xb.c
++++ b/drivers/mfd/t7l66xb.c
+@@ -82,8 +82,7 @@ struct t7l66xb {
+ 
+ static int t7l66xb_mmc_enable(struct platform_device *mmc)
+ {
+-	struct platform_device *dev = to_platform_device(mmc->dev.parent);
+-	struct t7l66xb *t7l66xb = platform_get_drvdata(dev);
++	struct t7l66xb *t7l66xb = dev_get_drvdata(mmc->dev.parent);
+ 	unsigned long flags;
+ 	u8 dev_ctl;
+ 	int ret;
+@@ -108,8 +107,7 @@ static int t7l66xb_mmc_enable(struct platform_device *mmc)
+ 
+ static int t7l66xb_mmc_disable(struct platform_device *mmc)
+ {
+-	struct platform_device *dev = to_platform_device(mmc->dev.parent);
+-	struct t7l66xb *t7l66xb = platform_get_drvdata(dev);
++	struct t7l66xb *t7l66xb = dev_get_drvdata(mmc->dev.parent);
+ 	unsigned long flags;
+ 	u8 dev_ctl;
+ 
+@@ -128,16 +126,14 @@ static int t7l66xb_mmc_disable(struct platform_device *mmc)
+ 
+ static void t7l66xb_mmc_pwr(struct platform_device *mmc, int state)
+ {
+-	struct platform_device *dev = to_platform_device(mmc->dev.parent);
+-	struct t7l66xb *t7l66xb = platform_get_drvdata(dev);
++	struct t7l66xb *t7l66xb = dev_get_drvdata(mmc->dev.parent);
+ 
+ 	tmio_core_mmc_pwr(t7l66xb->scr + 0x200, 0, state);
+ }
+ 
+ static void t7l66xb_mmc_clk_div(struct platform_device *mmc, int state)
+ {
+-	struct platform_device *dev = to_platform_device(mmc->dev.parent);
+-	struct t7l66xb *t7l66xb = platform_get_drvdata(dev);
++	struct t7l66xb *t7l66xb = dev_get_drvdata(mmc->dev.parent);
+ 
+ 	tmio_core_mmc_clk_div(t7l66xb->scr + 0x200, 0, state);
+ }
+diff --git a/drivers/mfd/tc6387xb.c b/drivers/mfd/tc6387xb.c
+index 85fab3729102..f417c6fecfe2 100644
+--- a/drivers/mfd/tc6387xb.c
++++ b/drivers/mfd/tc6387xb.c
+@@ -80,16 +80,14 @@ static int tc6387xb_resume(struct platform_device *dev)
+ 
+ static void tc6387xb_mmc_pwr(struct platform_device *mmc, int state)
+ {
+-	struct platform_device *dev = to_platform_device(mmc->dev.parent);
+-	struct tc6387xb *tc6387xb = platform_get_drvdata(dev);
++	struct tc6387xb *tc6387xb = dev_get_drvdata(mmc->dev.parent);
+ 
+ 	tmio_core_mmc_pwr(tc6387xb->scr + 0x200, 0, state);
+ }
+ 
+ static void tc6387xb_mmc_clk_div(struct platform_device *mmc, int state)
+ {
+-	struct platform_device *dev = to_platform_device(mmc->dev.parent);
+-	struct tc6387xb *tc6387xb = platform_get_drvdata(dev);
++	struct tc6387xb *tc6387xb = dev_get_drvdata(mmc->dev.parent);
+ 
+ 	tmio_core_mmc_clk_div(tc6387xb->scr + 0x200, 0, state);
+ }
+@@ -97,8 +95,7 @@ static void tc6387xb_mmc_clk_div(struct platform_device *mmc, int state)
+ 
+ static int tc6387xb_mmc_enable(struct platform_device *mmc)
+ {
+-	struct platform_device *dev      = to_platform_device(mmc->dev.parent);
+-	struct tc6387xb *tc6387xb = platform_get_drvdata(dev);
++	struct tc6387xb *tc6387xb = dev_get_drvdata(mmc->dev.parent);
+ 
+ 	clk_prepare_enable(tc6387xb->clk32k);
+ 
+@@ -110,8 +107,7 @@ static int tc6387xb_mmc_enable(struct platform_device *mmc)
+ 
+ static int tc6387xb_mmc_disable(struct platform_device *mmc)
+ {
+-	struct platform_device *dev      = to_platform_device(mmc->dev.parent);
+-	struct tc6387xb *tc6387xb = platform_get_drvdata(dev);
++	struct tc6387xb *tc6387xb = dev_get_drvdata(mmc->dev.parent);
+ 
+ 	clk_disable_unprepare(tc6387xb->clk32k);
+ 
+diff --git a/drivers/mfd/tc6393xb.c b/drivers/mfd/tc6393xb.c
+index 0c9f0390e891..ad0351f22675 100644
+--- a/drivers/mfd/tc6393xb.c
++++ b/drivers/mfd/tc6393xb.c
+@@ -122,8 +122,7 @@ enum {
+ 
+ static int tc6393xb_nand_enable(struct platform_device *nand)
+ {
+-	struct platform_device *dev = to_platform_device(nand->dev.parent);
+-	struct tc6393xb *tc6393xb = platform_get_drvdata(dev);
++	struct tc6393xb *tc6393xb = dev_get_drvdata(nand->dev.parent);
+ 	unsigned long flags;
+ 
+ 	raw_spin_lock_irqsave(&tc6393xb->lock, flags);
+@@ -312,8 +311,7 @@ static int tc6393xb_fb_disable(struct platform_device *dev)
+ 
+ int tc6393xb_lcd_set_power(struct platform_device *fb, bool on)
+ {
+-	struct platform_device *dev = to_platform_device(fb->dev.parent);
+-	struct tc6393xb *tc6393xb = platform_get_drvdata(dev);
++	struct tc6393xb *tc6393xb = dev_get_drvdata(fb->dev.parent);
+ 	u8 fer;
+ 	unsigned long flags;
+ 
+@@ -334,8 +332,7 @@ EXPORT_SYMBOL(tc6393xb_lcd_set_power);
+ 
+ int tc6393xb_lcd_mode(struct platform_device *fb,
+ 					const struct fb_videomode *mode) {
+-	struct platform_device *dev = to_platform_device(fb->dev.parent);
+-	struct tc6393xb *tc6393xb = platform_get_drvdata(dev);
++	struct tc6393xb *tc6393xb = dev_get_drvdata(fb->dev.parent);
+ 	unsigned long flags;
+ 
+ 	raw_spin_lock_irqsave(&tc6393xb->lock, flags);
+@@ -351,8 +348,7 @@ EXPORT_SYMBOL(tc6393xb_lcd_mode);
+ 
+ static int tc6393xb_mmc_enable(struct platform_device *mmc)
+ {
+-	struct platform_device *dev = to_platform_device(mmc->dev.parent);
+-	struct tc6393xb *tc6393xb = platform_get_drvdata(dev);
++	struct tc6393xb *tc6393xb = dev_get_drvdata(mmc->dev.parent);
+ 
+ 	tmio_core_mmc_enable(tc6393xb->scr + 0x200, 0,
+ 		tc6393xb_mmc_resources[0].start & 0xfffe);
+@@ -362,8 +358,7 @@ static int tc6393xb_mmc_enable(struct platform_device *mmc)
+ 
+ static int tc6393xb_mmc_resume(struct platform_device *mmc)
+ {
+-	struct platform_device *dev = to_platform_device(mmc->dev.parent);
+-	struct tc6393xb *tc6393xb = platform_get_drvdata(dev);
++	struct tc6393xb *tc6393xb = dev_get_drvdata(mmc->dev.parent);
+ 
+ 	tmio_core_mmc_resume(tc6393xb->scr + 0x200, 0,
+ 		tc6393xb_mmc_resources[0].start & 0xfffe);
+@@ -373,16 +368,14 @@ static int tc6393xb_mmc_resume(struct platform_device *mmc)
+ 
+ static void tc6393xb_mmc_pwr(struct platform_device *mmc, int state)
+ {
+-	struct platform_device *dev = to_platform_device(mmc->dev.parent);
+-	struct tc6393xb *tc6393xb = platform_get_drvdata(dev);
++	struct tc6393xb *tc6393xb = dev_get_drvdata(mmc->dev.parent);
+ 
+ 	tmio_core_mmc_pwr(tc6393xb->scr + 0x200, 0, state);
+ }
+ 
+ static void tc6393xb_mmc_clk_div(struct platform_device *mmc, int state)
+ {
+-	struct platform_device *dev = to_platform_device(mmc->dev.parent);
+-	struct tc6393xb *tc6393xb = platform_get_drvdata(dev);
++	struct tc6393xb *tc6393xb = dev_get_drvdata(mmc->dev.parent);
+ 
+ 	tmio_core_mmc_clk_div(tc6393xb->scr + 0x200, 0, state);
+ }
 -- 
 2.20.1
 
