@@ -2,108 +2,119 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 6C50F17604
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 May 2019 12:32:14 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A7A3317876
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 May 2019 13:38:21 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727270AbfEHKcK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 8 May 2019 06:32:10 -0400
-Received: from mail-wm1-f68.google.com ([209.85.128.68]:36537 "EHLO
-        mail-wm1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727269AbfEHKcH (ORCPT
+        id S1727734AbfEHLiO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 8 May 2019 07:38:14 -0400
+Received: from mail-wm1-f65.google.com ([209.85.128.65]:40150 "EHLO
+        mail-wm1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727693AbfEHLiO (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 8 May 2019 06:32:07 -0400
-Received: by mail-wm1-f68.google.com with SMTP id j187so2580493wmj.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 08 May 2019 03:32:05 -0700 (PDT)
+        Wed, 8 May 2019 07:38:14 -0400
+Received: by mail-wm1-f65.google.com with SMTP id h11so2804039wmb.5
+        for <linux-arm-msm@vger.kernel.org>; Wed, 08 May 2019 04:38:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to
-         :user-agent;
-        bh=lTYtWH+vlDq1C8tSZ2s1Nk4aplc77EuzahEQKqSXH1w=;
-        b=o3QJktUzhea3lHbIefLX+aNhSNRGeqRunVeT2IHCizVIXFqfS4luvNVPnBU4Lsq0Qi
-         rc2thhYpQepQUtsSnj2eMPg2szR+6J8k4+Yolyo8IFppvYYW/bdqj4GRO6Efjo4pI4pj
-         jrBu6D3zKyl0TBtGICj41PuFsd+FUSrfIbzVqyobDIaFu/anZw1N3T51qBBSkxLP9d3C
-         Us1fIzm2jYVr+ZJoSYMWkaZsChb2XTQ8uIVRswge1AqtWk4ao8SmmIqETb5qYNAxMxX6
-         qHG8mgVTKaT+qS2DvV9ME6uSWg8iOUbcr3/ozePgoTr1AilUiQljdYFXt8afs++LW40h
-         7CgA==
+        h=from:to:cc:subject:date:message-id;
+        bh=+SyLCGKQZVZPU6RL6iNDUpQzPqwKhYQ4Nyrk4MwksBs=;
+        b=H4L+4rhnt7nJyxUySG1D23U7M9pA5N7CS039VwgPFeog8c1Klhg8iWTRDlj8w6WBt2
+         5sItGQ+3VIqHal+WYVg6wp43BZm7t3BsDCDWbHZseIrR7Mh87mv/BdxJPCvcr2tsQy2q
+         iS1Juki+Y76Q1bIFy1P+jHdFX5Wk1JvuKUQ53yaYwroRfFYA5gvxX7WsLQVC6j9bTINR
+         KdENWoXqhrW86MJ2rtpD16eomAyw31yBAtLUK4QM1LPlSJCl+/Ho01vS8Lw7RuCHLeOw
+         EF/I6soUFl2NVdwNrms2Brv8QFNqb5xdF+0ReSgAn4HgchKwtwWaTlelpv0+zpjyWB35
+         Z/OQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        bh=lTYtWH+vlDq1C8tSZ2s1Nk4aplc77EuzahEQKqSXH1w=;
-        b=A7PO1a6HpIPzkfc24h6Vu7hQ7Bw9oX3Ovm7b21e9QWpwYNRSbtTkPBlegAra9eSWJ+
-         plLXJfm8FZvnflPrtb8oAxmFK+F58smJpSiPN6M+Przn+3Bcqkbn8Y3kiEoKT8aKv0aj
-         nMyzQW/kD+W0XI6I9DqjT8NFK6b6P+igEcx+tKBOhfhyEBsOsgDSxHX7OS4Li42rIYsz
-         JFaA28yLWQ3BGvI3K7Rnn39GQTwHu3Wyi3OFvU8gaFjzbWfnRggE2nrO8ji/Bd9ZdYrG
-         auJvSy/8iKF2U1j/SPnuhKTuSmeTv1+CX3YYSxAUQD572gtWbewmRoCyvE3zv/Gc4yG+
-         8s9w==
-X-Gm-Message-State: APjAAAXbNEppEXm+UmNI12k+FaiPmkDp/W2Ev9IfuXoKbCHeym1j9YUe
-        3H3rskIi3quo4NXTEGZdvj7Tng==
-X-Google-Smtp-Source: APXvYqyS2UuaH9kJHYVFIWfTSezTKbwt3gNBCgfakaqiMBVfMgfAFs5aOs/71Y4Ld7OaOjbph6TsxQ==
-X-Received: by 2002:a1c:b756:: with SMTP id h83mr1245637wmf.64.1557311524716;
-        Wed, 08 May 2019 03:32:04 -0700 (PDT)
-Received: from dell ([2.27.167.43])
-        by smtp.gmail.com with ESMTPSA id f128sm2896834wme.28.2019.05.08.03.32.03
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 08 May 2019 03:32:03 -0700 (PDT)
-Date:   Wed, 8 May 2019 11:32:02 +0100
-From:   Lee Jones <lee.jones@linaro.org>
-To:     Kefeng Wang <wangkefeng.wang@huawei.com>
-Cc:     linux-kernel@vger.kernel.org,
-        Masahiro Yamada <yamada.masahiro@socionext.com>,
-        Andy Gross <andy.gross@linaro.org>,
-        David Brown <david.brown@linaro.org>,
-        linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH next 16/25] mfd: Use dev_get_drvdata()
-Message-ID: <20190508103202.GJ3995@dell>
-References: <20190423075020.173734-1-wangkefeng.wang@huawei.com>
- <20190423075020.173734-17-wangkefeng.wang@huawei.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20190423075020.173734-17-wangkefeng.wang@huawei.com>
-User-Agent: Mutt/1.9.4 (2018-02-28)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=+SyLCGKQZVZPU6RL6iNDUpQzPqwKhYQ4Nyrk4MwksBs=;
+        b=R2B/ow8tZJmiAS61YNT52f86QGV0vNPDFt51009a4VCsfkcAZWxvrcZ59WU+rl6ph6
+         RkV2JFrUJ7Twnq4s1w1+f9t05QBcfRjPURV562dch7CoK59hFgd0+czp9LBQWb28gGcH
+         X0mBXOOFFazIhzaId+7+mBqT/82s801uDNLQrmBSvwIK3xy5BMRaINuFT/C61PiljObj
+         KtT0d7U+cq8ScRxkUvmVR6/JEk/0S5Od/VtrBEyR/lE8fuXRvug9psaK0ZP1U47sOvTP
+         pP1iCjOPGOSRxYQvQPs1AQzYOGo7c21ka5dWSdXXq6AoJNE3i3R8pssslH5f0aRIy1AC
+         27Yw==
+X-Gm-Message-State: APjAAAXpCSorSoJmIkGxO6M0H6R76mtcL8QYxL3rDCjced7NnOcDSnX0
+        B7T8zdPto4/UZEV97O0Yz+m/OQ==
+X-Google-Smtp-Source: APXvYqxV6O4YkH8fOkqEwIvXPC5Y08lfZOvf0U3VsyRoVLRXZ/PfErlzIJjSyNQbIzcFPxlHt/buSQ==
+X-Received: by 2002:a1c:eb07:: with SMTP id j7mr2656906wmh.138.1557315493184;
+        Wed, 08 May 2019 04:38:13 -0700 (PDT)
+Received: from localhost.localdomain ([37.157.136.206])
+        by smtp.gmail.com with ESMTPSA id r2sm36077322wrr.65.2019.05.08.04.38.11
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Wed, 08 May 2019 04:38:12 -0700 (PDT)
+From:   Stanimir Varbanov <stanimir.varbanov@linaro.org>
+To:     linux-media@vger.kernel.org
+Cc:     Mauro Carvalho Chehab <mchehab@kernel.org>,
+        Hans Verkuil <hverkuil@xs4all.nl>,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Sakari Ailus <sakari.ailus@linux.intel.com>,
+        Stanimir Varbanov <stanimir.varbanov@linaro.org>
+Subject: [PATCH v2] v4l: Add source event change for bit-depth
+Date:   Wed,  8 May 2019 14:37:59 +0300
+Message-Id: <20190508113759.19168-1-stanimir.varbanov@linaro.org>
+X-Mailer: git-send-email 2.17.1
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, 23 Apr 2019, Kefeng Wang wrote:
+This event indicate that the source bit-depth is changed during
+run-time. The client must get the new format and re-allocate buffers
+for it. This can usually happens with video decoder (encoders) when
+the bit-stream depth is changed from 8 to 10bits or vice versa.
 
-> Using dev_get_drvdata directly.
-> 
-> Cc: Andy Gross <andy.gross@linaro.org>
-> Cc: David Brown <david.brown@linaro.org>
-> Cc: Lee Jones <lee.jones@linaro.org>
-> Cc: linux-arm-msm@vger.kernel.org
-> Signed-off-by: Kefeng Wang <wangkefeng.wang@huawei.com>
-> ---
->  drivers/mfd/ssbi.c     |  2 +-
->  drivers/mfd/t7l66xb.c  | 12 ++++--------
->  drivers/mfd/tc6387xb.c | 12 ++++--------
->  drivers/mfd/tc6393xb.c | 21 +++++++--------------
->  4 files changed, 16 insertions(+), 31 deletions(-)
-> 
-> diff --git a/drivers/mfd/ssbi.c b/drivers/mfd/ssbi.c
-> index 36b96fee4ce6..50f87d0f9151 100644
-> --- a/drivers/mfd/ssbi.c
-> +++ b/drivers/mfd/ssbi.c
-> @@ -80,7 +80,7 @@ struct ssbi {
->  	int (*write)(struct ssbi *, u16 addr, const u8 *buf, int len);
->  };
->  
-> -#define to_ssbi(dev)	platform_get_drvdata(to_platform_device(dev))
-> +#define to_ssbi(dev)	dev_get_drvdata(dev)
+Signed-off-by: Stanimir Varbanov <stanimir.varbanov@linaro.org>
+---
+Change since v1: s/BITDEPTH/BIT_DEPTH
 
-If you could replace 'to_ssbi(dev)' with 'dev_get_drvdata(dev)' it
-would be better.
+ Documentation/media/uapi/v4l/vidioc-dqevent.rst | 7 +++++++
+ Documentation/media/videodev2.h.rst.exceptions  | 1 +
+ include/uapi/linux/videodev2.h                  | 1 +
+ 3 files changed, 9 insertions(+)
 
-The rest of the changes look fine.
-
+diff --git a/Documentation/media/uapi/v4l/vidioc-dqevent.rst b/Documentation/media/uapi/v4l/vidioc-dqevent.rst
+index dea9c0cc00ab..f7782cbddc5f 100644
+--- a/Documentation/media/uapi/v4l/vidioc-dqevent.rst
++++ b/Documentation/media/uapi/v4l/vidioc-dqevent.rst
+@@ -397,6 +397,13 @@ call.
+ 	that many devices are not able to recover from a temporary loss of
+ 	signal and so restarting streaming I/O is required in order for the
+ 	hardware to synchronize to the video signal.
++    * - ``V4L2_EVENT_SRC_CH_BIT_DEPTH``
++      - 0x0002
++      - This event gets triggered when bit-depth change is detected from a
++	video decoder. Applications will have to query the new pixel format
++	and re-negotiate the queue. In most cases the streaming must be stopped
++	and restarted (:ref:`VIDIOC_STREAMOFF <VIDIOC_STREAMON>` followed by
++	:ref:`VIDIOC_STREAMON <VIDIOC_STREAMON>`).
+ 
+ 
+ Return Value
+diff --git a/Documentation/media/videodev2.h.rst.exceptions b/Documentation/media/videodev2.h.rst.exceptions
+index 64d348e67df9..68ae00d7450f 100644
+--- a/Documentation/media/videodev2.h.rst.exceptions
++++ b/Documentation/media/videodev2.h.rst.exceptions
+@@ -478,6 +478,7 @@ replace define V4L2_EVENT_CTRL_CH_FLAGS ctrl-changes-flags
+ replace define V4L2_EVENT_CTRL_CH_RANGE ctrl-changes-flags
+ 
+ replace define V4L2_EVENT_SRC_CH_RESOLUTION src-changes-flags
++replace define V4L2_EVENT_SRC_CH_BIT_DEPTH src-changes-flags
+ 
+ replace define V4L2_EVENT_MD_FL_HAVE_FRAME_SEQ :c:type:`v4l2_event_motion_det`
+ 
+diff --git a/include/uapi/linux/videodev2.h b/include/uapi/linux/videodev2.h
+index 1050a75fb7ef..ecfdbaa60b05 100644
+--- a/include/uapi/linux/videodev2.h
++++ b/include/uapi/linux/videodev2.h
+@@ -2287,6 +2287,7 @@ struct v4l2_event_frame_sync {
+ };
+ 
+ #define V4L2_EVENT_SRC_CH_RESOLUTION		(1 << 0)
++#define V4L2_EVENT_SRC_CH_BIT_DEPTH		(1 << 1)
+ 
+ struct v4l2_event_src_change {
+ 	__u32 changes;
 -- 
-Lee Jones [李琼斯]
-Linaro Services Technical Lead
-Linaro.org │ Open source software for ARM SoCs
-Follow Linaro: Facebook | Twitter | Blog
+2.17.1
+
