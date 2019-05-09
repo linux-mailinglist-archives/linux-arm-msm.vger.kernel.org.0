@@ -2,113 +2,146 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id D212218BF4
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 May 2019 16:38:21 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5B55018BF9
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 May 2019 16:39:04 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726495AbfEIOiV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 9 May 2019 10:38:21 -0400
-Received: from smtp.codeaurora.org ([198.145.29.96]:56980 "EHLO
-        smtp.codeaurora.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726187AbfEIOiV (ORCPT
+        id S1726682AbfEIOjD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 9 May 2019 10:39:03 -0400
+Received: from mail-ed1-f65.google.com ([209.85.208.65]:34379 "EHLO
+        mail-ed1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726187AbfEIOjD (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 9 May 2019 10:38:21 -0400
-Received: by smtp.codeaurora.org (Postfix, from userid 1000)
-        id BD3A960779; Thu,  9 May 2019 14:38:19 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
-        s=default; t=1557412699;
-        bh=m/9MIbexuBdPxCFPr6oX4nJ8E4mDFLipijNpmR33xf0=;
-        h=Subject:To:Cc:References:From:Date:In-Reply-To:From;
-        b=EJX8j9RinsUzb5V1hvPYqVOPERp2yIR1uT/0HBSVR0Q+O6CI0LwmKwYLq0rKQ4ies
-         zGVXpsPJRiso66Ua8hTfNohOiDKOVE8jhxX3gZ3wJ3mbNjHr2fSOS1Zb7OUpvuUkBI
-         Xt2uYLXIwmn05nTC5BwCkI2TIq8o8q0yazTOrfbQ=
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        pdx-caf-mail.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.7 required=2.0 tests=ALL_TRUSTED,BAYES_00,
-        DKIM_INVALID,DKIM_SIGNED autolearn=no autolearn_force=no version=3.4.0
-Received: from [10.204.78.109] (blr-c-bdr-fw-01_globalnat_allzones-outside.qualcomm.com [103.229.19.19])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: gkohli@smtp.codeaurora.org)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 9491D6016D;
-        Thu,  9 May 2019 14:38:04 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
-        s=default; t=1557412698;
-        bh=m/9MIbexuBdPxCFPr6oX4nJ8E4mDFLipijNpmR33xf0=;
-        h=Subject:To:Cc:References:From:Date:In-Reply-To:From;
-        b=KVLMA6xnVzPYMMB8pD2qrzzyV4Ipd559Wuq/B/1f73knIZWmE0yQ3DBOJxGoFNIz8
-         PcGr67buW45zYJd+Hi9O/tZuj7J0sKHqYyxJxSxSZgaXyJl25MdQLz0eLBFB6kqPO0
-         hUp/EkRKZzI8FDXFHswA4oppfmczHonEPG+nM4tc=
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 9491D6016D
-Authentication-Results: pdx-caf-mail.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: pdx-caf-mail.web.codeaurora.org; spf=none smtp.mailfrom=gkohli@codeaurora.org
-Subject: Re: [PATCH] driver core: Fix use-after-free and double free on glue
- directory
-To:     Greg KH <gregkh@linuxfoundation.org>,
-        Muchun Song <smuchun@gmail.com>
-Cc:     rafael@kernel.org,
-        Benjamin Herrenschmidt <benh@kernel.crashing.org>,
-        linux-kernel <linux-kernel@vger.kernel.org>,
-        zhaowuyun@wingtech.com, linux-arm-msm@vger.kernel.org
-References: <20190423143258.96706-1-smuchun@gmail.com>
- <24b0fff3775147c04b006282727d94fea7f408b4.camel@kernel.crashing.org>
- <CAPSr9jHhwASv7=83hU+81mC0JJyuyt2gGxLmyzpCOfmc9vKgGQ@mail.gmail.com>
- <a37e7a49c3e7fa6ece2be2b76798fef3e51ade4e.camel@kernel.crashing.org>
- <CAPSr9jHCVCHNK+AmKkUBgs4dPC0UC5KdYKqMinkauyL3OL6qrQ@mail.gmail.com>
- <79fbc203bc9fa09d88ab2c4bff8635be4c293d49.camel@kernel.crashing.org>
- <CAPSr9jHw9hgAZo2TuDAKdSLEG1c6EtJG005MWxsxfnbsk1AXow@mail.gmail.com>
- <20190504153440.GB19654@kroah.com>
-From:   Gaurav Kohli <gkohli@codeaurora.org>
-Message-ID: <e79201c2-a00b-d226-adc2-62769ae1ad81@codeaurora.org>
-Date:   Thu, 9 May 2019 20:08:02 +0530
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
- Thunderbird/60.6.1
+        Thu, 9 May 2019 10:39:03 -0400
+Received: by mail-ed1-f65.google.com with SMTP id p27so2278839eda.1;
+        Thu, 09 May 2019 07:39:01 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=9t7aEDiITTttHmEroagFkepeymOccLvzdNzl0sxtB0Y=;
+        b=kc3H9lA0fD/2BVU7pcpJ8aO/xF8B9diKeKq1Np9zrH9xRCpslbFIyx6PeduDjYOIUa
+         +kaYfKZojmbRHptRHdfkFGYPdla5sjvWUMDqNiH7CbhUyL/hE9shgIxXVEbIiT7i7Tac
+         LNMbuvGLzUgqGCOxnH7xMLzKsGtjL0jKdp3zrYZ3LD7Rxq5gTyeiezQbRMHE8bYNihMn
+         f8cMd4qiCByXQYT4FjtGrmRrdHWc+AD1e32/VAkx6cIfbSCsg49LL0BpQJ0erjzqag4x
+         QxWy63YFHapBUTbGs5Y1EwN7H0KwTSIavAGHEsb0tcYpLs70BusdRUH5i+9XAIjAj/eM
+         K0Wg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=9t7aEDiITTttHmEroagFkepeymOccLvzdNzl0sxtB0Y=;
+        b=iov6ubRf/VpFhiCP1BN9uYu8uwD/gejue4N2heHnpCIA9xWGOPWoHutc7za/OlxEfz
+         WpwmLq8R/QR6d8Pj3GKXIHw04uMKEiMFauaH6QoN/iHUc4OH3rHSh3TRgS9WEDTiAgnn
+         IfUtSYgOF3/7VUqH3xFOMisdqyiwRv6b3fvu4ygWIPin2mOtEVTpWcHoVp3kWythbQTL
+         AoOLAyzyDQ9GXK9TFs3Zsx2FhW8lmhfR/ijApjZvH7AV4q6AqqmVUk0imcM5OK6NaAht
+         1EknYW1PXw1Acu3IwBwMBG3EKEkDhTHpmMB8l8RzhUU+mVDPe2DMedH+mAuLmANa+IFv
+         XORw==
+X-Gm-Message-State: APjAAAV9b60Nw9i1HOF5gyHHCKrol6TJTNDTmbHgFD666FSrWZh35PQl
+        iEzqjRwt5oSNiepm3vQPUqP0yiK5X1S+WGRJr8A=
+X-Google-Smtp-Source: APXvYqyc5GrUMyW2UgdZHxlpNMrGzEye6QrDZqbGzBMUgpBeXmJ7pwyZ119oHVGaZx1mmB5PCGRWYFTm65kRgjbet2c=
+X-Received: by 2002:a17:906:7695:: with SMTP id o21mr3604110ejm.165.1557412741041;
+ Thu, 09 May 2019 07:39:01 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <20190504153440.GB19654@kroah.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 8bit
+References: <20190505130413.32253-1-masneyb@onstation.org> <20190505130413.32253-5-masneyb@onstation.org>
+ <20190507063902.GA2085@tuxbook-pro> <20190509021616.GA26228@basecamp>
+ <CAF6AEGsM382jB=h7oM3frhZ5fAp+qYUdgiiKSKo1RtR8+ffjrg@mail.gmail.com>
+ <20190509030047.GE2085@tuxbook-pro> <20190509071243.GA27143@basecamp>
+In-Reply-To: <20190509071243.GA27143@basecamp>
+From:   Rob Clark <robdclark@gmail.com>
+Date:   Thu, 9 May 2019 07:38:51 -0700
+Message-ID: <CAF6AEGvRQoVq-P8tXupDCauxuW9K0vVsOv5HMivRxDrXPdHERA@mail.gmail.com>
+Subject: Re: [PATCH RFC 4/6] ARM: dts: msm8974: add display support
+To:     Brian Masney <masneyb@onstation.org>
+Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Sean Paul <sean@poorly.run>,
+        dri-devel <dri-devel@lists.freedesktop.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        freedreno <freedreno@lists.freedesktop.org>,
+        David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        Linus Walleij <linus.walleij@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi ,
+On Thu, May 9, 2019 at 12:12 AM Brian Masney <masneyb@onstation.org> wrote:
+>
+> On Wed, May 08, 2019 at 08:00:47PM -0700, Bjorn Andersson wrote:
+> > On Wed 08 May 19:25 PDT 2019, Rob Clark wrote:
+> >
+> > > On Wed, May 8, 2019 at 7:16 PM Brian Masney <masneyb@onstation.org> wrote:
+> > > >
+> > > > On Mon, May 06, 2019 at 11:39:02PM -0700, Bjorn Andersson wrote:
+> > > > > On Sun 05 May 06:04 PDT 2019, Brian Masney wrote:
+> > > > > > diff --git a/arch/arm/boot/dts/qcom-msm8974.dtsi b/arch/arm/boot/dts/qcom-msm8974.dtsi
+> > > > > [..]
+> > > > > > +                           clocks = <&mmcc MDSS_MDP_CLK>,
+> > > > > > +                                    <&mmcc MDSS_AHB_CLK>,
+> > > > > > +                                    <&mmcc MDSS_AXI_CLK>,
+> > > > > > +                                    <&mmcc MDSS_BYTE0_CLK>,
+> > > > > > +                                    <&mmcc MDSS_PCLK0_CLK>,
+> > > > > > +                                    <&mmcc MDSS_ESC0_CLK>,
+> > > > > > +                                    <&mmcc MMSS_MISC_AHB_CLK>;
+> > > > > > +                           clock-names = "mdp_core",
+> > > > > > +                                         "iface",
+> > > > > > +                                         "bus",
+> > > > > > +                                         "byte",
+> > > > > > +                                         "pixel",
+> > > > > > +                                         "core",
+> > > > > > +                                         "core_mmss";
+> > > > >
+> > > > > Unless I enable MMSS_MMSSNOC_AXI_CLK and MMSS_S0_AXI_CLK I get some
+> > > > > underrun error from DSI. You don't see anything like this?
+> > > > >
+> > > > > (These clocks are controlled by msm_bus downstream and should be driven
+> > > > > by interconnect upstream)
+> > > > >
+> > > > >
+> > > > > Apart from this, I think this looks nice. Happy to see the progress.
+> > > >
+> > > > No, I'm not seeing an underrun errors from the DSI. I think the clocks
+> > > > are fine since I'm able to get this working with 4.17 using these same
+> > > > clocks. I just sent out v2 and the cover letter has some details, along
+> > > > with the full dmesg.
+> > >
+> > > since we don't have interconnect driver for 8974, I guess there is
+> > > some chance that things work or not based on how lk leaves things?
+> > >
+> >
+> > Right, I guess the bootloader on my device does not leave the busses
+> > ticking - perhaps there's a boot splash involved on Brian's device?
+> >
+> > Regardless, this works on Nexus 5 and allows Brian to make further
+> > progress so I'm all for merging it.
+>
+> There is a boot splash on the Nexus 5 and that may explain a behavior
+> that I observed. I attempted to add reset GPIO support to the simple
+> panel driver and the screen will clear but nothing will come on the
+> screen after a hard reset, even on 4.17. To be sure, I got the timing
+> information for how long to leave the GPIO high and low from the
+> downstream MSM 3.4 sources. That's when I had a script port all of the
+> ~400 panel on commands in the downstream device tree to a new panel
+> driver.
+>
+> With the latest kernel kernel having a delay showing the console text,
+> I observe a brief second where the boot splash is shown along with the
+> startup text from Linux. A full refresh is performed and the boot
+> splash goes away. I don't see this with the 4.17 kernel; perhaps maybe
+> the full refresh occurs quick enough that its not noticeable.
+>
+> Can you point me to where the interconnect API is in the downstream
+> MSM 3.4 sources? https://github.com/AICP/kernel_lge_hammerhead
+> It looks like its in drivers/interconnect/ in the upstream sources.
+>
 
-Last patch will serialize the addition of child to parent directory, 
-won't it affect performance.
+Looks like this is the thing:
 
-Regards
-Gaurav
+https://github.com/AICP/kernel_lge_hammerhead/tree/n7.1/arch/arm/mach-msm/msm_bus
 
-On 5/4/2019 9:04 PM, Greg KH wrote:
-> On Sat, May 04, 2019 at 10:47:07PM +0800, Muchun Song wrote:
->> Benjamin Herrenschmidt <benh@kernel.crashing.org> 于2019年5月2日周四 下午2:25写道：
->>
->>>>> The basic idea yes, the whole bool *locked is horrid though.
->>>>> Wouldn't it
->>>>> work to have a get_device_parent_locked that always returns with
->>>>> the mutex held,
->>>>> or just move the mutex to the caller or something simpler like this
->>>>> ?
->>>>>
->>>>
->>>> Greg and Rafael, do you have any suggestions for this? Or you also
->>>> agree with Ben?
->>>
->>> Ping guys ? This is worth fixing...
->>
->> I also agree with you. But Greg and Rafael seem to be high latency right now.
-> 
-> It's in my list of patches to get to, sorry, hopefully will dig out of
-> that next week with the buffer that the merge window provides me.
-> 
-> thanks,
-> 
-> greg k-h
-> 
+(ahh, mach-msm... blast from the past..)
 
--- 
-Qualcomm India Private Limited, on behalf of Qualcomm Innovation Center,
-Inc. is a member of the Code Aurora Forum,
-a Linux Foundation Collaborative Project.
+BR,
+-R
