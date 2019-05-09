@@ -2,58 +2,53 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 5B55018BF9
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 May 2019 16:39:04 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 167E318C86
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 May 2019 16:58:59 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726682AbfEIOjD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 9 May 2019 10:39:03 -0400
-Received: from mail-ed1-f65.google.com ([209.85.208.65]:34379 "EHLO
-        mail-ed1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726187AbfEIOjD (ORCPT
+        id S1726251AbfEIO66 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 9 May 2019 10:58:58 -0400
+Received: from mail-pf1-f196.google.com ([209.85.210.196]:34304 "EHLO
+        mail-pf1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726187AbfEIO66 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 9 May 2019 10:39:03 -0400
-Received: by mail-ed1-f65.google.com with SMTP id p27so2278839eda.1;
-        Thu, 09 May 2019 07:39:01 -0700 (PDT)
+        Thu, 9 May 2019 10:58:58 -0400
+Received: by mail-pf1-f196.google.com with SMTP id n19so1474399pfa.1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 09 May 2019 07:58:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=9t7aEDiITTttHmEroagFkepeymOccLvzdNzl0sxtB0Y=;
-        b=kc3H9lA0fD/2BVU7pcpJ8aO/xF8B9diKeKq1Np9zrH9xRCpslbFIyx6PeduDjYOIUa
-         +kaYfKZojmbRHptRHdfkFGYPdla5sjvWUMDqNiH7CbhUyL/hE9shgIxXVEbIiT7i7Tac
-         LNMbuvGLzUgqGCOxnH7xMLzKsGtjL0jKdp3zrYZ3LD7Rxq5gTyeiezQbRMHE8bYNihMn
-         f8cMd4qiCByXQYT4FjtGrmRrdHWc+AD1e32/VAkx6cIfbSCsg49LL0BpQJ0erjzqag4x
-         QxWy63YFHapBUTbGs5Y1EwN7H0KwTSIavAGHEsb0tcYpLs70BusdRUH5i+9XAIjAj/eM
-         K0Wg==
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=O2GVNaaLG3l4A7SJYHvhzrnNiIlglRkSlpfGLRzuylM=;
+        b=owM2FhNdQD3/AZ1QZczHAcumqaO62cKOzbcn0wo0srjYi0aJmUbBO5bCn3V5VdxSW0
+         74bIGkNFPqUHT5SLQKJGibcflH3UxMzbGuy/ZLbtw3AWBpjuTmllygACfswKRryWDjEE
+         7FcJwiuwkwdH1xJVyPDY4c7MOjCMsvjM4VqFrUofJd5m4BugNQLB0TGzkcZTS0NxFG5W
+         gUx85r8q9Gaagdgm41Zl2bDJt0YcjeOL130nHdSgAww8zP5BX5jpgAA4uU9e3Gm3G3zz
+         eozMavbAcKt3BHMsIdWIzk9olc+36VygZOIVr2T4PcDWEbeEIGlQGCM9CfctVEo1LPIp
+         Y8Cw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=9t7aEDiITTttHmEroagFkepeymOccLvzdNzl0sxtB0Y=;
-        b=iov6ubRf/VpFhiCP1BN9uYu8uwD/gejue4N2heHnpCIA9xWGOPWoHutc7za/OlxEfz
-         WpwmLq8R/QR6d8Pj3GKXIHw04uMKEiMFauaH6QoN/iHUc4OH3rHSh3TRgS9WEDTiAgnn
-         IfUtSYgOF3/7VUqH3xFOMisdqyiwRv6b3fvu4ygWIPin2mOtEVTpWcHoVp3kWythbQTL
-         AoOLAyzyDQ9GXK9TFs3Zsx2FhW8lmhfR/ijApjZvH7AV4q6AqqmVUk0imcM5OK6NaAht
-         1EknYW1PXw1Acu3IwBwMBG3EKEkDhTHpmMB8l8RzhUU+mVDPe2DMedH+mAuLmANa+IFv
-         XORw==
-X-Gm-Message-State: APjAAAV9b60Nw9i1HOF5gyHHCKrol6TJTNDTmbHgFD666FSrWZh35PQl
-        iEzqjRwt5oSNiepm3vQPUqP0yiK5X1S+WGRJr8A=
-X-Google-Smtp-Source: APXvYqyc5GrUMyW2UgdZHxlpNMrGzEye6QrDZqbGzBMUgpBeXmJ7pwyZ119oHVGaZx1mmB5PCGRWYFTm65kRgjbet2c=
-X-Received: by 2002:a17:906:7695:: with SMTP id o21mr3604110ejm.165.1557412741041;
- Thu, 09 May 2019 07:39:01 -0700 (PDT)
-MIME-Version: 1.0
-References: <20190505130413.32253-1-masneyb@onstation.org> <20190505130413.32253-5-masneyb@onstation.org>
- <20190507063902.GA2085@tuxbook-pro> <20190509021616.GA26228@basecamp>
- <CAF6AEGsM382jB=h7oM3frhZ5fAp+qYUdgiiKSKo1RtR8+ffjrg@mail.gmail.com>
- <20190509030047.GE2085@tuxbook-pro> <20190509071243.GA27143@basecamp>
-In-Reply-To: <20190509071243.GA27143@basecamp>
-From:   Rob Clark <robdclark@gmail.com>
-Date:   Thu, 9 May 2019 07:38:51 -0700
-Message-ID: <CAF6AEGvRQoVq-P8tXupDCauxuW9K0vVsOv5HMivRxDrXPdHERA@mail.gmail.com>
-Subject: Re: [PATCH RFC 4/6] ARM: dts: msm8974: add display support
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=O2GVNaaLG3l4A7SJYHvhzrnNiIlglRkSlpfGLRzuylM=;
+        b=EltbkxG8g0KIbMtApiut4jUsUKdPv/8psbzax5R+/WiMbkmNoCEERNFrlRH+xcqq/r
+         ciwMwOcCnOUn9I3eWks4jqrRuNByIz/3CR8s6NvMMmzfevYaDlKtS5k2Nojlo8SJEoXl
+         +H+wBt4MJ6WXMd/Kwz5+78pDh0yEGADX58UVQhZzfK0il0l4GwfNlzSA5wlSL4wYCFs8
+         38Nhsy+gGFhynop8Cz49YDyklsw7tGi+/FcgrWD12/L9b7h7x6Lb4yKwm4yAFnzuh5GK
+         GiMss8yttyGK0ShD6dxjN7vB4je8f4FfXZK+RzZUti5uLmc8lgHxE+7IWF1Mxkf/Zbm8
+         wyng==
+X-Gm-Message-State: APjAAAXZ1fgI7r04VC3B9+j82uQIVEVtPY4FrfkZqPYpWhsKwNKcGYvK
+        jcGraNNHivXWU8HEsv1sqVIzQw==
+X-Google-Smtp-Source: APXvYqzB08jbRTCZn/COGHwU59Jhcv8+bRZwlqaOwdUaHe25RZJvtDJY+ALgBmzW3A/k0UdMggom9w==
+X-Received: by 2002:a62:1b8a:: with SMTP id b132mr5780183pfb.19.1557413936856;
+        Thu, 09 May 2019 07:58:56 -0700 (PDT)
+Received: from tuxbook-pro (104-188-17-28.lightspeed.sndgca.sbcglobal.net. [104.188.17.28])
+        by smtp.gmail.com with ESMTPSA id g10sm6438908pfg.153.2019.05.09.07.58.55
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Thu, 09 May 2019 07:58:55 -0700 (PDT)
+Date:   Thu, 9 May 2019 07:59:12 -0700
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
 To:     Brian Masney <masneyb@onstation.org>
-Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Sean Paul <sean@poorly.run>,
+Cc:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
         dri-devel <dri-devel@lists.freedesktop.org>,
         linux-arm-msm <linux-arm-msm@vger.kernel.org>,
         freedreno <freedreno@lists.freedesktop.org>,
@@ -61,17 +56,30 @@ Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
         Daniel Vetter <daniel@ffwll.ch>,
         Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
         Linus Walleij <linus.walleij@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
+Subject: Re: [PATCH RFC 4/6] ARM: dts: msm8974: add display support
+Message-ID: <20190509145912.GG2085@tuxbook-pro>
+References: <20190505130413.32253-1-masneyb@onstation.org>
+ <20190505130413.32253-5-masneyb@onstation.org>
+ <20190507063902.GA2085@tuxbook-pro>
+ <20190509021616.GA26228@basecamp>
+ <CAF6AEGsM382jB=h7oM3frhZ5fAp+qYUdgiiKSKo1RtR8+ffjrg@mail.gmail.com>
+ <20190509030047.GE2085@tuxbook-pro>
+ <20190509071243.GA27143@basecamp>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20190509071243.GA27143@basecamp>
+User-Agent: Mutt/1.11.4 (2019-03-13)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, May 9, 2019 at 12:12 AM Brian Masney <masneyb@onstation.org> wrote:
->
+On Thu 09 May 00:12 PDT 2019, Brian Masney wrote:
+
 > On Wed, May 08, 2019 at 08:00:47PM -0700, Bjorn Andersson wrote:
 > > On Wed 08 May 19:25 PDT 2019, Rob Clark wrote:
-> >
+> > 
 > > > On Wed, May 8, 2019 at 7:16 PM Brian Masney <masneyb@onstation.org> wrote:
 > > > >
 > > > > On Mon, May 06, 2019 at 11:39:02PM -0700, Bjorn Andersson wrote:
@@ -106,17 +114,17 @@ On Thu, May 9, 2019 at 12:12 AM Brian Masney <masneyb@onstation.org> wrote:
 > > > > are fine since I'm able to get this working with 4.17 using these same
 > > > > clocks. I just sent out v2 and the cover letter has some details, along
 > > > > with the full dmesg.
-> > >
+> > > 
 > > > since we don't have interconnect driver for 8974, I guess there is
 > > > some chance that things work or not based on how lk leaves things?
-> > >
-> >
+> > > 
+> > 
 > > Right, I guess the bootloader on my device does not leave the busses
 > > ticking - perhaps there's a boot splash involved on Brian's device?
-> >
+> > 
 > > Regardless, this works on Nexus 5 and allows Brian to make further
 > > progress so I'm all for merging it.
->
+> 
 > There is a boot splash on the Nexus 5 and that may explain a behavior
 > that I observed. I attempted to add reset GPIO support to the simple
 > panel driver and the screen will clear but nothing will come on the
@@ -125,23 +133,23 @@ On Thu, May 9, 2019 at 12:12 AM Brian Masney <masneyb@onstation.org> wrote:
 > downstream MSM 3.4 sources. That's when I had a script port all of the
 > ~400 panel on commands in the downstream device tree to a new panel
 > driver.
->
+> 
 > With the latest kernel kernel having a delay showing the console text,
 > I observe a brief second where the boot splash is shown along with the
 > startup text from Linux. A full refresh is performed and the boot
 > splash goes away. I don't see this with the 4.17 kernel; perhaps maybe
 > the full refresh occurs quick enough that its not noticeable.
->
+> 
 > Can you point me to where the interconnect API is in the downstream
 > MSM 3.4 sources? https://github.com/AICP/kernel_lge_hammerhead
 > It looks like its in drivers/interconnect/ in the upstream sources.
->
+> 
 
-Looks like this is the thing:
+The data will be 8974 specific, but the plumbing should be reusable from
+8916 or 404. Hopefully we can get those landed shortly.
 
-https://github.com/AICP/kernel_lge_hammerhead/tree/n7.1/arch/arm/mach-msm/msm_bus
+You can find the latest incarnation here:
+https://lore.kernel.org/lkml/20190415104357.5305-1-georgi.djakov@linaro.org/
 
-(ahh, mach-msm... blast from the past..)
-
-BR,
--R
+Regards,
+Bjorn
