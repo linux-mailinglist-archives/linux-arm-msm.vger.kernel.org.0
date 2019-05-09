@@ -2,70 +2,101 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 4ACC218D9E
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 May 2019 18:05:00 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 99CC618F0B
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 May 2019 19:27:54 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726558AbfEIQE7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 9 May 2019 12:04:59 -0400
-Received: from ns.iliad.fr ([212.27.33.1]:51454 "EHLO ns.iliad.fr"
+        id S1726734AbfEIR1r (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 9 May 2019 13:27:47 -0400
+Received: from mail.kernel.org ([198.145.29.99]:57804 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726469AbfEIQE7 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 9 May 2019 12:04:59 -0400
-Received: from ns.iliad.fr (localhost [127.0.0.1])
-        by ns.iliad.fr (Postfix) with ESMTP id A151A206A1;
-        Thu,  9 May 2019 18:04:57 +0200 (CEST)
-Received: from [192.168.108.49] (freebox.vlq16.iliad.fr [213.36.7.13])
-        by ns.iliad.fr (Postfix) with ESMTP id 7C21020B7F;
-        Thu,  9 May 2019 18:04:50 +0200 (CEST)
-Subject: Re: [PATCH v1 2/3] drm/msm: Print all 64 bits of the faulting IOMMU
- address
-To:     Jordan Crouse <jcrouse@codeaurora.org>
-References: <1557252127-11145-1-git-send-email-jcrouse@codeaurora.org>
- <1557252127-11145-3-git-send-email-jcrouse@codeaurora.org>
-Cc:     MSM <linux-arm-msm@vger.kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Jeffrey Hugo <jhugo@codeaurora.org>
-From:   Marc Gonzalez <marc.w.gonzalez@free.fr>
-Message-ID: <cdf42319-b64c-4455-c6e1-94a9420a2da8@free.fr>
-Date:   Thu, 9 May 2019 18:04:50 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.6.1
+        id S1726632AbfEIR1r (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 9 May 2019 13:27:47 -0400
+Received: from localhost (unknown [104.132.0.74])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by mail.kernel.org (Postfix) with ESMTPSA id 1D8AF20675;
+        Thu,  9 May 2019 17:27:46 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=default; t=1557422866;
+        bh=TuZoZqt3C0Ly1PPKUwukLctgk89R/xZyUazagckl/rc=;
+        h=In-Reply-To:References:From:Subject:Cc:To:Date:From;
+        b=bAZfXMIUKIKsOuzgSpi04J+BjpwxbbTPE/x7MCVEFuVBqCpdtCOViJGgsx21EZ67I
+         lGvMgzfqW2K/Eeh/hdq+zWXs0fXub0NvjX+yAbxGce9cUQxzdcndvp+8MFfTprWGWb
+         mjdzIqNY2L/6UFFn+ipSqvXCDut4TsqQcqn9DBaA=
+Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
-In-Reply-To: <1557252127-11145-3-git-send-email-jcrouse@codeaurora.org>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
-X-Virus-Scanned: ClamAV using ClamSMTP ; ns.iliad.fr ; Thu May  9 18:04:57 2019 +0200 (CEST)
+Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <1557339895-21952-4-git-send-email-tdas@codeaurora.org>
+References: <1557339895-21952-1-git-send-email-tdas@codeaurora.org> <1557339895-21952-4-git-send-email-tdas@codeaurora.org>
+From:   Stephen Boyd <sboyd@kernel.org>
+Subject: Re: [PATCH v1 3/3] clk: qcom: rcg: update the DFS macro for RCG
+Cc:     Andy Gross <andy.gross@linaro.org>,
+        David Brown <david.brown@linaro.org>,
+        Rajendra Nayak <rnayak@codeaurora.org>,
+        linux-arm-msm@vger.kernel.org, linux-soc@vger.kernel.org,
+        linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Taniya Das <tdas@codeaurora.org>
+To:     Michael Turquette <mturquette@baylibre.com>,
+        Taniya Das <tdas@codeaurora.org>
+Message-ID: <155742286525.14659.18081373668341127486@swboyd.mtv.corp.google.com>
+User-Agent: alot/0.8
+Date:   Thu, 09 May 2019 10:27:45 -0700
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 07/05/2019 20:02, Jordan Crouse wrote:
+Quoting Taniya Das (2019-05-08 11:24:55)
+> Update the init data name for each of the dynamic frequency switch
+> controlled clock associated with the RCG clock name, so that it can be
+> generated as per the hardware plan. Thus update the macro accordingly.
+>=20
+> Signed-off-by: Taniya Das <tdas@codeaurora.org>
 
-> When we move to 64 bit addressing for a5xx and a6xx targets we will start
-> seeing pagefaults at larger addresses so format them appropriately in the
-> log message for easier debugging.
-> 
-> Signed-off-by: Jordan Crouse <jcrouse@codeaurora.org>
+This patch doesn't make any sense to me.
+
 > ---
-> 
->  drivers/gpu/drm/msm/msm_iommu.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
-> 
-> diff --git a/drivers/gpu/drm/msm/msm_iommu.c b/drivers/gpu/drm/msm/msm_iommu.c
-> index 12bb54c..1926329 100644
-> --- a/drivers/gpu/drm/msm/msm_iommu.c
-> +++ b/drivers/gpu/drm/msm/msm_iommu.c
-> @@ -30,7 +30,7 @@ static int msm_fault_handler(struct iommu_domain *domain, struct device *dev,
->  	struct msm_iommu *iommu = arg;
->  	if (iommu->base.handler)
->  		return iommu->base.handler(iommu->base.arg, iova, flags);
-> -	pr_warn_ratelimited("*** fault: iova=%08lx, flags=%d\n", iova, flags);
-> +	pr_warn_ratelimited("*** fault: iova=%16lx, flags=%d\n", iova, flags);
+>  drivers/clk/qcom/clk-rcg.h    |  2 +-
+>  drivers/clk/qcom/gcc-sdm845.c | 96 +++++++++++++++++++++----------------=
+------
+>  2 files changed, 49 insertions(+), 49 deletions(-)
+>=20
+> diff --git a/drivers/clk/qcom/clk-rcg.h b/drivers/clk/qcom/clk-rcg.h
+> index 5562f38..e40e8f8 100644
+> --- a/drivers/clk/qcom/clk-rcg.h
+> +++ b/drivers/clk/qcom/clk-rcg.h
+> @@ -171,7 +171,7 @@ struct clk_rcg_dfs_data {
+>  };
+>=20
+>  #define DEFINE_RCG_DFS(r) \
+> -       { .rcg =3D &r##_src, .init =3D &r##_init }
+> +       { .rcg =3D &r, .init =3D &r##_init }
 
-Why no leading 0 for 64-bit numbers?
+Why do we need to rename the init data?
 
-Will 32-bit platforms always get 8 useless characters?
+>=20
+>  extern int qcom_cc_register_rcg_dfs(struct regmap *regmap,
+>                                     const struct clk_rcg_dfs_data *rcgs,
+> diff --git a/drivers/clk/qcom/gcc-sdm845.c b/drivers/clk/qcom/gcc-sdm845.c
+> index 7131dcf..a76178b 100644
+> --- a/drivers/clk/qcom/gcc-sdm845.c
+> +++ b/drivers/clk/qcom/gcc-sdm845.c
+> @@ -408,7 +408,7 @@ enum {
+>         { }
+>  };
+>=20
+> -static struct clk_init_data gcc_qupv3_wrap0_s0_clk_init =3D {
+> +static struct clk_init_data gcc_qupv3_wrap0_s0_clk_src_init =3D {
+>         .name =3D "gcc_qupv3_wrap0_s0_clk_src",
+>         .parent_names =3D gcc_parent_names_0,
+>         .num_parents =3D 4,
+> @@ -3577,22 +3577,22 @@ enum {
+>  MODULE_DEVICE_TABLE(of, gcc_sdm845_match_table);
+>=20
+>  static const struct clk_rcg_dfs_data gcc_dfs_clocks[] =3D {
+> -       DEFINE_RCG_DFS(gcc_qupv3_wrap0_s0_clk),
+> +       DEFINE_RCG_DFS(gcc_qupv3_wrap0_s0_clk_src),
 
-Regards.
+I've trimmed the above to try and see what's changed but it doesn't make
+sense still.
+
