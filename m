@@ -2,154 +2,98 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 167E318C86
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 May 2019 16:58:59 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 41CEE18D1C
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 May 2019 17:39:25 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726251AbfEIO66 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 9 May 2019 10:58:58 -0400
-Received: from mail-pf1-f196.google.com ([209.85.210.196]:34304 "EHLO
-        mail-pf1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726187AbfEIO66 (ORCPT
+        id S1726779AbfEIPjX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 9 May 2019 11:39:23 -0400
+Received: from mail-vs1-f66.google.com ([209.85.217.66]:33600 "EHLO
+        mail-vs1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726597AbfEIPjX (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 9 May 2019 10:58:58 -0400
-Received: by mail-pf1-f196.google.com with SMTP id n19so1474399pfa.1
-        for <linux-arm-msm@vger.kernel.org>; Thu, 09 May 2019 07:58:57 -0700 (PDT)
+        Thu, 9 May 2019 11:39:23 -0400
+Received: by mail-vs1-f66.google.com with SMTP id y6so1720828vsb.0;
+        Thu, 09 May 2019 08:39:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=O2GVNaaLG3l4A7SJYHvhzrnNiIlglRkSlpfGLRzuylM=;
-        b=owM2FhNdQD3/AZ1QZczHAcumqaO62cKOzbcn0wo0srjYi0aJmUbBO5bCn3V5VdxSW0
-         74bIGkNFPqUHT5SLQKJGibcflH3UxMzbGuy/ZLbtw3AWBpjuTmllygACfswKRryWDjEE
-         7FcJwiuwkwdH1xJVyPDY4c7MOjCMsvjM4VqFrUofJd5m4BugNQLB0TGzkcZTS0NxFG5W
-         gUx85r8q9Gaagdgm41Zl2bDJt0YcjeOL130nHdSgAww8zP5BX5jpgAA4uU9e3Gm3G3zz
-         eozMavbAcKt3BHMsIdWIzk9olc+36VygZOIVr2T4PcDWEbeEIGlQGCM9CfctVEo1LPIp
-         Y8Cw==
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=Yd8RkYcSwt5CH746lToN3J7dxLcl9P87HyYsL7ViWQY=;
+        b=FCiSzQoJkd2cwXjtOL7ovFDazzwL9mHcuR2iZx/UnXJT9pvM3vefzQ7noANymRwlC1
+         Bt3c7yLSzPVoq3t7tOroTOidR0w9JyCZqqU0HtMRFRu+ziouU9DQvJZ8QzEQIXgIpNPi
+         L3DwfbQdAxh+boYjL57aB2PtN0foQz5Rl1NYT/ztQLhAM8rbpWoHgxeYfiCpNnMAD9U5
+         u3XxCLfTy+FRxK+mk5bk0w90ELsQ+NVf4YfIPrr1O0KuBpt5PgZmE+PYoiDS9enSpS0y
+         l+dmJAjNeXWXIkODKKjFCZpmwEaUym5zHcCVzPKRLad448LW35UqYbWHjYj3I5b2/A1f
+         S1DA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=O2GVNaaLG3l4A7SJYHvhzrnNiIlglRkSlpfGLRzuylM=;
-        b=EltbkxG8g0KIbMtApiut4jUsUKdPv/8psbzax5R+/WiMbkmNoCEERNFrlRH+xcqq/r
-         ciwMwOcCnOUn9I3eWks4jqrRuNByIz/3CR8s6NvMMmzfevYaDlKtS5k2Nojlo8SJEoXl
-         +H+wBt4MJ6WXMd/Kwz5+78pDh0yEGADX58UVQhZzfK0il0l4GwfNlzSA5wlSL4wYCFs8
-         38Nhsy+gGFhynop8Cz49YDyklsw7tGi+/FcgrWD12/L9b7h7x6Lb4yKwm4yAFnzuh5GK
-         GiMss8yttyGK0ShD6dxjN7vB4je8f4FfXZK+RzZUti5uLmc8lgHxE+7IWF1Mxkf/Zbm8
-         wyng==
-X-Gm-Message-State: APjAAAXZ1fgI7r04VC3B9+j82uQIVEVtPY4FrfkZqPYpWhsKwNKcGYvK
-        jcGraNNHivXWU8HEsv1sqVIzQw==
-X-Google-Smtp-Source: APXvYqzB08jbRTCZn/COGHwU59Jhcv8+bRZwlqaOwdUaHe25RZJvtDJY+ALgBmzW3A/k0UdMggom9w==
-X-Received: by 2002:a62:1b8a:: with SMTP id b132mr5780183pfb.19.1557413936856;
-        Thu, 09 May 2019 07:58:56 -0700 (PDT)
-Received: from tuxbook-pro (104-188-17-28.lightspeed.sndgca.sbcglobal.net. [104.188.17.28])
-        by smtp.gmail.com with ESMTPSA id g10sm6438908pfg.153.2019.05.09.07.58.55
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Thu, 09 May 2019 07:58:55 -0700 (PDT)
-Date:   Thu, 9 May 2019 07:59:12 -0700
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Brian Masney <masneyb@onstation.org>
-Cc:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        dri-devel <dri-devel@lists.freedesktop.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        freedreno <freedreno@lists.freedesktop.org>,
-        David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-        Linus Walleij <linus.walleij@linaro.org>
-Subject: Re: [PATCH RFC 4/6] ARM: dts: msm8974: add display support
-Message-ID: <20190509145912.GG2085@tuxbook-pro>
-References: <20190505130413.32253-1-masneyb@onstation.org>
- <20190505130413.32253-5-masneyb@onstation.org>
- <20190507063902.GA2085@tuxbook-pro>
- <20190509021616.GA26228@basecamp>
- <CAF6AEGsM382jB=h7oM3frhZ5fAp+qYUdgiiKSKo1RtR8+ffjrg@mail.gmail.com>
- <20190509030047.GE2085@tuxbook-pro>
- <20190509071243.GA27143@basecamp>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=Yd8RkYcSwt5CH746lToN3J7dxLcl9P87HyYsL7ViWQY=;
+        b=D1qxoX7IEZIUxqKg6sV3XhSuNZ7XJGDi0g1/yBHeqBzeSoAQAppt0PBg1P8Pz/bOAs
+         V1utJ1lIaQsbQvLpLhkRdMgAKmmwd9/Uo2DjudqkKHEsf8y6bl1d065+TLnw+N0kNkX1
+         Lor3/Wg44F9CpbwYN2vOnAWZTI3xfs8N7vruNLU2Js3tQ/wxt6zaZaI/2/dApIdik/8E
+         HsWAOpN/0VxquNWpJfZmZMQl1rpkcrcW1zCTQP94hnD6n2n/eJNdiG7XZUf7h7q7jqTL
+         vTw7FS/56l3leU5DbUjR7WjRV3fZ606Lx5oM964vFxx36s0j7ZCVC2zxnIKFCyrNaJsw
+         s6rQ==
+X-Gm-Message-State: APjAAAVKDZCv7dD7pNEuLuf+T0soGosfj7HSVETFkbCvOMHH8DpcfCak
+        UAg4zVuK2XEl8PNWCjJZ7H7TkucX61dRH/90qUU=
+X-Google-Smtp-Source: APXvYqwTohibUJuLYdL5JMayoegLe/NsHqe3cEirwttrcoCdPnewPhpehYhcNpc+Ijr0lSu8NCtkxTFBC/JKsFj+/lM=
+X-Received: by 2002:a67:f153:: with SMTP id t19mr2504897vsm.148.1557416361757;
+ Thu, 09 May 2019 08:39:21 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20190509071243.GA27143@basecamp>
-User-Agent: Mutt/1.11.4 (2019-03-13)
+References: <1557252127-11145-1-git-send-email-jcrouse@codeaurora.org> <1557252127-11145-3-git-send-email-jcrouse@codeaurora.org>
+In-Reply-To: <1557252127-11145-3-git-send-email-jcrouse@codeaurora.org>
+From:   =?UTF-8?Q?Kristian_H=C3=B8gsberg?= <hoegsberg@gmail.com>
+Date:   Thu, 9 May 2019 08:39:10 -0700
+Message-ID: <CAOeoa-d4tC9VYR_O_Nfrx=hm1Xi4JpsLEDWCibv39CGxsSFt=Q@mail.gmail.com>
+Subject: Re: [Freedreno] [PATCH v1 2/3] drm/msm: Print all 64 bits of the
+ faulting IOMMU address
+To:     Jordan Crouse <jcrouse@codeaurora.org>
+Cc:     freedreno@lists.freedesktop.org, David Airlie <airlied@linux.ie>,
+        linux-arm-msm@vger.kernel.org, LKML <linux-kernel@vger.kernel.org>,
+        dri-devel <dri-devel@lists.freedesktop.org>,
+        Rob Clark <robdclark@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>, Sean Paul <sean@poorly.run>
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu 09 May 00:12 PDT 2019, Brian Masney wrote:
+On Tue, May 7, 2019 at 11:02 AM Jordan Crouse <jcrouse@codeaurora.org> wrote:
+>
+> When we move to 64 bit addressing for a5xx and a6xx targets we will start
+> seeing pagefaults at larger addresses so format them appropriately in the
+> log message for easier debugging.
 
-> On Wed, May 08, 2019 at 08:00:47PM -0700, Bjorn Andersson wrote:
-> > On Wed 08 May 19:25 PDT 2019, Rob Clark wrote:
-> > 
-> > > On Wed, May 8, 2019 at 7:16 PM Brian Masney <masneyb@onstation.org> wrote:
-> > > >
-> > > > On Mon, May 06, 2019 at 11:39:02PM -0700, Bjorn Andersson wrote:
-> > > > > On Sun 05 May 06:04 PDT 2019, Brian Masney wrote:
-> > > > > > diff --git a/arch/arm/boot/dts/qcom-msm8974.dtsi b/arch/arm/boot/dts/qcom-msm8974.dtsi
-> > > > > [..]
-> > > > > > +                           clocks = <&mmcc MDSS_MDP_CLK>,
-> > > > > > +                                    <&mmcc MDSS_AHB_CLK>,
-> > > > > > +                                    <&mmcc MDSS_AXI_CLK>,
-> > > > > > +                                    <&mmcc MDSS_BYTE0_CLK>,
-> > > > > > +                                    <&mmcc MDSS_PCLK0_CLK>,
-> > > > > > +                                    <&mmcc MDSS_ESC0_CLK>,
-> > > > > > +                                    <&mmcc MMSS_MISC_AHB_CLK>;
-> > > > > > +                           clock-names = "mdp_core",
-> > > > > > +                                         "iface",
-> > > > > > +                                         "bus",
-> > > > > > +                                         "byte",
-> > > > > > +                                         "pixel",
-> > > > > > +                                         "core",
-> > > > > > +                                         "core_mmss";
-> > > > >
-> > > > > Unless I enable MMSS_MMSSNOC_AXI_CLK and MMSS_S0_AXI_CLK I get some
-> > > > > underrun error from DSI. You don't see anything like this?
-> > > > >
-> > > > > (These clocks are controlled by msm_bus downstream and should be driven
-> > > > > by interconnect upstream)
-> > > > >
-> > > > >
-> > > > > Apart from this, I think this looks nice. Happy to see the progress.
-> > > >
-> > > > No, I'm not seeing an underrun errors from the DSI. I think the clocks
-> > > > are fine since I'm able to get this working with 4.17 using these same
-> > > > clocks. I just sent out v2 and the cover letter has some details, along
-> > > > with the full dmesg.
-> > > 
-> > > since we don't have interconnect driver for 8974, I guess there is
-> > > some chance that things work or not based on how lk leaves things?
-> > > 
-> > 
-> > Right, I guess the bootloader on my device does not leave the busses
-> > ticking - perhaps there's a boot splash involved on Brian's device?
-> > 
-> > Regardless, this works on Nexus 5 and allows Brian to make further
-> > progress so I'm all for merging it.
-> 
-> There is a boot splash on the Nexus 5 and that may explain a behavior
-> that I observed. I attempted to add reset GPIO support to the simple
-> panel driver and the screen will clear but nothing will come on the
-> screen after a hard reset, even on 4.17. To be sure, I got the timing
-> information for how long to leave the GPIO high and low from the
-> downstream MSM 3.4 sources. That's when I had a script port all of the
-> ~400 panel on commands in the downstream device tree to a new panel
-> driver.
-> 
-> With the latest kernel kernel having a delay showing the console text,
-> I observe a brief second where the boot splash is shown along with the
-> startup text from Linux. A full refresh is performed and the boot
-> splash goes away. I don't see this with the 4.17 kernel; perhaps maybe
-> the full refresh occurs quick enough that its not noticeable.
-> 
-> Can you point me to where the interconnect API is in the downstream
-> MSM 3.4 sources? https://github.com/AICP/kernel_lge_hammerhead
-> It looks like its in drivers/interconnect/ in the upstream sources.
-> 
+Yes please, this has confused me more than once.
 
-The data will be 8974 specific, but the plumbing should be reusable from
-8916 or 404. Hopefully we can get those landed shortly.
+Reviewed-by: Kristian H. Kristensen <hoegsberg@google.com>
 
-You can find the latest incarnation here:
-https://lore.kernel.org/lkml/20190415104357.5305-1-georgi.djakov@linaro.org/
-
-Regards,
-Bjorn
+> Signed-off-by: Jordan Crouse <jcrouse@codeaurora.org>
+> ---
+>
+>  drivers/gpu/drm/msm/msm_iommu.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+>
+> diff --git a/drivers/gpu/drm/msm/msm_iommu.c b/drivers/gpu/drm/msm/msm_iommu.c
+> index 12bb54c..1926329 100644
+> --- a/drivers/gpu/drm/msm/msm_iommu.c
+> +++ b/drivers/gpu/drm/msm/msm_iommu.c
+> @@ -30,7 +30,7 @@ static int msm_fault_handler(struct iommu_domain *domain, struct device *dev,
+>         struct msm_iommu *iommu = arg;
+>         if (iommu->base.handler)
+>                 return iommu->base.handler(iommu->base.arg, iova, flags);
+> -       pr_warn_ratelimited("*** fault: iova=%08lx, flags=%d\n", iova, flags);
+> +       pr_warn_ratelimited("*** fault: iova=%16lx, flags=%d\n", iova, flags);
+>         return 0;
+>  }
+>
+> --
+> 2.7.4
+>
+> _______________________________________________
+> Freedreno mailing list
+> Freedreno@lists.freedesktop.org
+> https://lists.freedesktop.org/mailman/listinfo/freedreno
