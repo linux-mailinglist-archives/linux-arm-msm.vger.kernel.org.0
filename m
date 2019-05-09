@@ -2,106 +2,112 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id DDA941829E
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 May 2019 01:17:20 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C434918377
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 May 2019 04:04:09 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727469AbfEHXRT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 8 May 2019 19:17:19 -0400
-Received: from mail-yw1-f66.google.com ([209.85.161.66]:33877 "EHLO
-        mail-yw1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726163AbfEHXRT (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 8 May 2019 19:17:19 -0400
-Received: by mail-yw1-f66.google.com with SMTP id n76so368933ywd.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 08 May 2019 16:17:19 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=s0XmE/SSKgdB2Zi6D0Xro94Z8cgKXXoHmAWbL6G9FWo=;
-        b=sLmnrLoj9lksRIXKKwys/IS3j0vPyEkYExfwLWVWdBx4HZSJVlsq6V+Vcf0ziNQQXz
-         tLNKweEYQZF5GPp1himBK4SukfKMRv8LNyieGXS9Q4p1HiRGZOSAgzaLM70MkdANCFQw
-         AQoOZauRkNQ7f08wPTDIbVVbeXycI6ItQ4bsLu4BBd48f5j66b4Q2cy4cY30dpXqvtmI
-         3rDnWpAwEynr3nOGBGWDrWG+3tscb8+2mNShKm9w2EsL4pzymELY3CkHRmw95lrldL7E
-         m6zskT1VxOvRzv1Bisnr3WAbliDNqSKsBQDpuoy5IoynKxtd6+D8jt/dxoaccO1izrH7
-         GMSQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=s0XmE/SSKgdB2Zi6D0Xro94Z8cgKXXoHmAWbL6G9FWo=;
-        b=etzn9t5uTB3dgDNApnXX5J+joeqpZqwWrO68ySE67J5A17gOl5h0stlhCXP4Asnl0+
-         iv6iil3vgORvXTQ9k0Wb/Tb7SJbDnwrk0pDcxZywXaCzyww127Swsf4ksrGb8fbB/Hga
-         eXjwZgpyUdbb87sp3gBJrOJtpwAYx3YcO7BgYkLmCzgkSp8TOAlbREXWjLq0UyrIgC/C
-         5XSkOm+rV/7QJ+/U399ZnaWcxbOFSyJU1OetUmxb1e2hfxhhIEGJP4u/cmOk6yL4ulRu
-         VC6AStGQWKw+Mko7rVhv3ZjQZJr0DmkY9yObhYrWexYRAL5icfvck81Asj18ed3c2dla
-         gZoA==
-X-Gm-Message-State: APjAAAWdRAGQQ6zoZio6fm1BXzP5XI6ePhS3CwRkFyrm9qnwYdhcfrza
-        GIxX7Y9wykkj2JU72r0kM10onQ==
-X-Google-Smtp-Source: APXvYqwCScrOtsn/r0nbplNIVpXXh8yEgVNfGi8tKe9k+OX0Y8w8/cROWDlp9BASceZ1pGqP2kWGog==
-X-Received: by 2002:a81:170e:: with SMTP id 14mr232136ywx.238.1557357438787;
-        Wed, 08 May 2019 16:17:18 -0700 (PDT)
-Received: from leoy-ThinkPad-X240s (li931-65.members.linode.com. [45.56.113.65])
-        by smtp.gmail.com with ESMTPSA id v128sm110717ywd.24.2019.05.08.16.17.09
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 08 May 2019 16:17:17 -0700 (PDT)
-Date:   Thu, 9 May 2019 07:17:06 +0800
-From:   Leo Yan <leo.yan@linaro.org>
-To:     Suzuki K Poulose <suzuki.poulose@arm.com>
-Cc:     robh+dt@kernel.org, mark.rutland@arm.com,
-        mathieu.poirier@linaro.org, mike.leach@linaro.org,
-        xuwei5@hisilicon.com, shawnguo@kernel.org, s.hauer@pengutronix.de,
-        kernel@pengutronix.de, festevam@gmail.com, linux-imx@nxp.com,
-        agross@kernel.org, david.brown@linaro.org,
-        linus.walleij@linaro.org, liviu.dudau@arm.com,
-        Sudeep.Holla@arm.com, Lorenzo.Pieralisi@arm.com,
-        orsonzhai@gmail.com, baolin.wang@linaro.org, zhang.lyra@gmail.com,
-        linux-arm-kernel@lists.infradead.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        guodong.xu@linaro.org, zhangfei.gao@linaro.org,
-        haojian.zhuang@linaro.org, cphealy@gmail.com, andrew@lunn.ch,
-        lee.jones@linaro.org, zhang.chunyan@linaro.org
-Subject: Re: [PATCH v2 00/11] dts: Update DT bindings for CoreSight
- replicator and funnel
-Message-ID: <20190508231706.GA5840@leoy-ThinkPad-X240s>
-References: <20190508021902.10358-1-leo.yan@linaro.org>
- <9c56323b-7b14-c662-b824-ed60fbb1638f@arm.com>
+        id S1726426AbfEICEJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 8 May 2019 22:04:09 -0400
+Received: from onstation.org ([52.200.56.107]:56736 "EHLO onstation.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726100AbfEICEJ (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 8 May 2019 22:04:09 -0400
+Received: from localhost.localdomain (c-98-239-145-235.hsd1.wv.comcast.net [98.239.145.235])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        (Authenticated sender: masneyb)
+        by onstation.org (Postfix) with ESMTPSA id 326613E93E;
+        Thu,  9 May 2019 02:04:07 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=onstation.org;
+        s=default; t=1557367447;
+        bh=Kod5cFvQdGvUj1Lnt7VCuJqda/vsktWbnD0AqfqQtBM=;
+        h=From:To:Subject:Date:From;
+        b=avoHY4QOKE7h8iwJZLUDGJ03o7HT/mmKbQfWKFvZRstKgm1jYHzOLHkAeOniPvqZm
+         Q/aCMx8JdyrMGst5x5gzXNH7ERfSlIvee1ChfoJ0tIvs4fe0bGLnYvdMc0O1LOvEY4
+         Jql6i9yJY3qsAxnFURoWRNTb4+FkH6AOWOUPQ1z0=
+From:   Brian Masney <masneyb@onstation.org>
+To:     robdclark@gmail.com, sean@poorly.run,
+        dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
+        freedreno@lists.freedesktop.org, airlied@linux.ie, daniel@ffwll.ch,
+        linux-kernel@vger.kernel.org, linus.walleij@linaro.org,
+        jonathan@marek.ca, robh@kernel.org
+Subject: [PATCH RFC v2 0/6] ARM: qcom: initial Nexus 5 display support
+Date:   Wed,  8 May 2019 22:03:46 -0400
+Message-Id: <20190509020352.14282-1-masneyb@onstation.org>
+X-Mailer: git-send-email 2.20.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <9c56323b-7b14-c662-b824-ed60fbb1638f@arm.com>
-User-Agent: Mutt/1.9.4 (2018-02-28)
+Content-Transfer-Encoding: 8bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, May 08, 2019 at 03:29:12PM +0100, Suzuki K Poulose wrote:
-> 
-> On 08/05/2019 03:18, Leo Yan wrote:
-> > Since the DT bindings consolidatoins for CoreSight replicator and funnel
-> > is ready for kernel v5.2 merge window [1], this patch set is to update
-> > the related CoreSight DT bindings for platforms; IIUC, this patch set
-> > will be safe for merging into kernel v5.2 because the dependency
-> > patches in [1] will be landed into mainline kernel v5.2 cycle.
-> > 
-> > In this patch set, it tries to update below two compatible strings to
-> > the latest strings:
-> > 
-> >    s/"arm,coresight-replicator"/"arm,coresight-static-replicator"
-> >    s/"arm,coresight-funnel"/"arm,coresight-dynamic-funnel"
-> > 
-> > Please note, some platforms have two continuous patches, one is for
-> > updating static replicator compatible string and another is for dynamic
-> > funnel change; and other platforms have only one patch since it only
-> > needs to change for dynamic funnel.
-> 
-> This is now misleading ;-), but that doesn't matter.
+Here is a patch series that adds initial display support for the LG
+Nexus 5 (hammerhead) phone. It's not fully working so that's why some
+of these patches are RFC until we can get it fully working.
 
-Oops ...
+The phones boots into terminal mode, however there is a several second
+(or more) delay when writing to tty1 compared to when the changes are
+actually shown on the screen. The following errors are in dmesg:
 
-> For the entire series :
-> 
-> Acked-by: Suzuki K Poulose <suzuki.poulose@arm.com>
+    [drm:drm_atomic_helper_wait_for_dependencies] *ERROR* [CRTC:49:crtc-0] flip_done timed out
+    [drm:drm_atomic_helper_wait_for_dependencies] *ERROR* [PLANE:32:plane-0] flip_done timed out
 
-Thanks for reviewing!
+    WARNING: CPU: 0 PID: 5 at drivers/gpu/drm/drm_atomic_helper.c:1430 drm_atomic_helper_wait_for_vblanks.part.1+0x288/0x290
+    [CRTC:49:crtc-0] vblank wait timed out
+    Modules linked in:
+    CPU: 0 PID: 5 Comm: kworker/0:0 Not tainted 5.1.0-rc6-next-20190426-00006-g35c0d32a96e1-dirty #191
+    Hardware name: Generic DT based system
+    Workqueue: events deferred_probe_work_func
+    [<c031229c>] (unwind_backtrace) from [<c030d5ac>] (show_stack+0x10/0x14)
+    [<c030d5ac>] (show_stack) from [<c0ac134c>] (dump_stack+0x78/0x8c)
+    [<c0ac134c>] (dump_stack) from [<c0321660>] (__warn.part.3+0xb8/0xd4)
+    [<c0321660>] (__warn.part.3) from [<c03216e0>] (warn_slowpath_fmt+0x64/0x88)
+    [<c03216e0>] (warn_slowpath_fmt) from [<c0761a0c>] (drm_atomic_helper_wait_for_vblanks.part.1+0x288/0x290)
+    [<c0761a0c>] (drm_atomic_helper_wait_for_vblanks.part.1) from [<c07b0a98>] (mdp5_complete_commit+0x14/0x40)
+    [<c07b0a98>] (mdp5_complete_commit) from [<c07ddb80>] (msm_atomic_commit_tail+0xa8/0x140)
+    [<c07ddb80>] (msm_atomic_commit_tail) from [<c0763304>] (commit_tail+0x40/0x6c)
+    [<c07633f4>] (drm_atomic_helper_commit) from [<c07667f0>] (restore_fbdev_mode_atomic+0x168/0x1d4)
+    ....
+
+I can get the text console to work with a 4.17 kernel with this patch
+https://patchwork.kernel.org/patch/10321845/ plus about a dozen or more
+other patches that have been mainlined since that release.
+
+I'm new to the DRM subsystem and continuing to dig into the issue,
+however I'd appreciate any suggestions. I suspect the issue lies
+somewhere in the second patch in this series.
+
+Changes since v1:
+- Shortened problem description above. I'll reply to this email and send
+  a full dmesg with the boot log with debugging turned on.
+- Dropped patch 'fix null pointer dereference in
+  msm_atomic_prepare_fb()'
+- New patch: Remove resv fields from msm_gem_object struct that was
+  incorrectly being referenced by the prepare_fb callbacks.
+- Add drm_plane_enable_fb_damage_clips() to plane init for mdp4, mdp5,
+  and dpu1.
+- Add Linus Walleij's reviewed-by to patches 3-6
+
+Brian Masney (6):
+  drm: msm: remove resv fields from msm_gem_object struct
+  drm: msm: add dirty framebuffer helper
+  ARM: qcom_defconfig: add display-related options
+  ARM: dts: msm8974: add display support
+  ARM: dts: qcom: msm8974-hammerhead: add support for backlight
+  ARM: dts: qcom: msm8974-hammerhead: add support for display
+
+ .../qcom-msm8974-lge-nexus5-hammerhead.dts    |  79 +++++++++++
+ arch/arm/boot/dts/qcom-msm8974.dtsi           | 132 ++++++++++++++++++
+ arch/arm/configs/qcom_defconfig               |   5 +
+ drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c     |   7 +-
+ drivers/gpu/drm/msm/disp/mdp4/mdp4_plane.c    |   3 +
+ drivers/gpu/drm/msm/disp/mdp5/mdp5_plane.c    |   3 +
+ drivers/gpu/drm/msm/msm_atomic.c              |   4 +-
+ drivers/gpu/drm/msm/msm_fb.c                  |   2 +
+ drivers/gpu/drm/msm/msm_gem.c                 |   3 -
+ drivers/gpu/drm/msm/msm_gem.h                 |   4 -
+ 10 files changed, 229 insertions(+), 13 deletions(-)
+
+-- 
+2.20.1
+
