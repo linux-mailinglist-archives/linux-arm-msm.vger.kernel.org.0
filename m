@@ -2,193 +2,102 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 84FE818F9B
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 May 2019 19:49:48 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 575E51901D
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 May 2019 20:22:07 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726843AbfEIRtg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 9 May 2019 13:49:36 -0400
-Received: from mail-vs1-f67.google.com ([209.85.217.67]:44858 "EHLO
-        mail-vs1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726681AbfEIRtg (ORCPT
+        id S1726658AbfEISWG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 9 May 2019 14:22:06 -0400
+Received: from mail-ed1-f67.google.com ([209.85.208.67]:38583 "EHLO
+        mail-ed1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726661AbfEISWG (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 9 May 2019 13:49:36 -0400
-Received: by mail-vs1-f67.google.com with SMTP id j184so1951345vsd.11
-        for <linux-arm-msm@vger.kernel.org>; Thu, 09 May 2019 10:49:35 -0700 (PDT)
+        Thu, 9 May 2019 14:22:06 -0400
+Received: by mail-ed1-f67.google.com with SMTP id w11so2880013edl.5
+        for <linux-arm-msm@vger.kernel.org>; Thu, 09 May 2019 11:22:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
+        d=gmail.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=EH7jEXZyZKvAtUeW6cCFcLL4FqSd/A3iJEXYx8OljIU=;
-        b=IC1oQNAgZo3s3zKgaeYt0VrxPg0DP7D9ABi+Y0c/SX6/j+DU3inX+z0u3eMq4e/XgD
-         s1HPa+Hqh91Idp8CDkOOeHEZqhCgOBisL+LpQdYBpELhBVaXQtQ4nXmXEh08UxjOvESZ
-         Z0TTApcW4S41vxjPV+EMwqg8y+k40csfLr2tlONgvTZImLLTzldbHGOYXDGLgKUdHyoO
-         dGD9PpkLS0o3aq3iXCq7eK5QFjXhREv81rTip4/m4zEfl6AdRIJhS5elKSQiz+yWWX1U
-         JszBEROnzPL0rgKTu0GIfWsSfuMFkYI3F7qCZQzHJbq8qwQoUVQ4PRc/RwI7bpMxRg77
-         oh2w==
+        bh=eJPh04YzT4O3RclBatzvmypCrnIuBZLLqFoFXlr0M40=;
+        b=VH2PqHUG0qRA6uN/oKzzrV88ZMYOyQfGn1Y8aD0Vto/L0+w7gc2P4icPbBdKXejCnP
+         ix63htD2lOlDA6LBNT3WyBGHKuP/laNWXcpf4A4sWYWDSripyHNTvzPlKmT5jjtY+SXm
+         Rv2OyKaayMl8PwHnC9b5uBayvHs4lWAUBAFInPZREFKY5wpFkRJsYAh0KxABnx6JNWLx
+         ffCdIjrd4XeSrfPVfMQKJujnl+8drqsm0q6qNXv3pejXWXb85wUy73jIWTt3sMENVAD3
+         coHg6ykdbMVxs3tyfz93kZdulmjwe9F4fmQDKwJkkOfJedaCnVPw5eEKUNIvKWZon7B4
+         uyuQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=EH7jEXZyZKvAtUeW6cCFcLL4FqSd/A3iJEXYx8OljIU=;
-        b=r/0n0d87jAWCrvVWfXqB4mJfYAJURKUFs2LBPQGhjVUfj257pcJgFz/eJPxUnB/E3L
-         IqO8fn2yjsCX0QBouoXP1aEXGRm+duZJ0uSXLx31EXoZUC/cssP6X9tMUChTYeiubs8d
-         lreAefjxALj8RDzWuvCbsdPZy03XXkR12kBOUVhqjktpD1VEph3VulrETRDOKAEmF0J9
-         wb5VsMIXNAmqfJnMAL1dNYLeCPh4D9FhX6K93zthtlRJYC4pvKGS8p5/tUX31KJQllmH
-         iLV2EjK8RZj391hiGy7XbOSXsaUjLG7Kf1XD5QcpfGpSO531E3THNUvqhwziNhqUIqWe
-         3fcw==
-X-Gm-Message-State: APjAAAXGzE4NpO3V+/Kp2L04ajFWd9ZKB0lZincvvDeAnQKxyRBg1xnV
-        P22qkAalxetxZ1qyl1EgC48Ukwp7Zxtmns9R6IyPeg==
-X-Google-Smtp-Source: APXvYqzk8uFHBlgCSkOhIBS0yK9rrT6iZ4LP/5820HUukPinkRV2mrldiC+qqlUOq9IXMLlrVSZEtFfD7KiLoS332ic=
-X-Received: by 2002:a67:ad03:: with SMTP id t3mr2771101vsl.159.1557424174870;
- Thu, 09 May 2019 10:49:34 -0700 (PDT)
+        bh=eJPh04YzT4O3RclBatzvmypCrnIuBZLLqFoFXlr0M40=;
+        b=V/wVuanBLNtl7xjAfxlXPB8hsf06QZYVDhRWpn9gOw3RPW1LUui6WFqgagPSn/li92
+         PUmxMH4zkg8EgUnZEJJefmsJ3zDG3HHkI7SdKRjwYYptOXEAw7x7Lrjcw8mZCs0irl7+
+         e/I1HK/FxF4xFtFJEaIqNNYjLYi/w7WGcegM8CQjBvYXhcj4BsN5UZXYzFx7j1S0LO12
+         rDdyWeWpqKbcfxRnx3PdT7Vd0l69JHi3519sunmwCywYWcc5lVRM9qoaZbBs3Kt+j/9a
+         LZEzb9KScmb7Ilo/OYyWzP5h2Oa/5GAGwOHa9TC9ErTHU5KJljXzzSSP0+yVOiYjoXEt
+         hjBw==
+X-Gm-Message-State: APjAAAV5T9THhBTXcGJvt27GVZW/UsgoOy9/4zSbuto8nrI+n+2MyOJa
+        0DTZdG3ZinxcVGG+kjDT3wsVr1Tk92Yin6QX2Ow97GpH
+X-Google-Smtp-Source: APXvYqz35NytvoCYC7jax9RgD2nvLMbkAfxsLvqb2irLbJH3rkd7UsNpw7p9z0yGoeezaVRswwXs1UUYT1Hq3CtvsCA=
+X-Received: by 2002:a17:906:c456:: with SMTP id ck22mr4651394ejb.113.1557426124389;
+ Thu, 09 May 2019 11:22:04 -0700 (PDT)
 MIME-Version: 1.0
-References: <20190506193115.20909-1-niklas.cassel@linaro.org>
- <CAP245DXLHqU3tv5cii=Z1G4J5m=Emy7yiHP=zSTpY6GX02NKcg@mail.gmail.com> <20190508145600.GA26843@centauri>
-In-Reply-To: <20190508145600.GA26843@centauri>
-From:   Amit Kucheria <amit.kucheria@linaro.org>
-Date:   Thu, 9 May 2019 23:19:23 +0530
-Message-ID: <CAHLCerN8L4np0WAY4hTjTnPXFtTK6EH0BXWLXzB-NiRaAnvcDA@mail.gmail.com>
-Subject: Re: [PATCH] arm64: dts: qcom: qcs404: Add PSCI cpuidle support
-To:     Niklas Cassel <niklas.cassel@linaro.org>,
-        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
-        Sudeep Holla <sudeep.holla@arm.com>
-Cc:     Andy Gross <agross@kernel.org>,
-        David Brown <david.brown@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Mark Rutland <mark.rutland@arm.com>,
-        Jorge Ramirez-Ortiz <jorge.ramirez-ortiz@linaro.org>,
-        Lina Iyer <lina.iyer@linaro.org>,
-        Ulf Hansson <ulf.hansson@linaro.org>,
+References: <1557252127-11145-1-git-send-email-jcrouse@codeaurora.org>
+ <1557252127-11145-3-git-send-email-jcrouse@codeaurora.org> <cdf42319-b64c-4455-c6e1-94a9420a2da8@free.fr>
+In-Reply-To: <cdf42319-b64c-4455-c6e1-94a9420a2da8@free.fr>
+From:   Rob Clark <robdclark@gmail.com>
+Date:   Thu, 9 May 2019 11:21:55 -0700
+Message-ID: <CAF6AEGuut5VfmzuaPTSrx7jSqnALFQ9GCrmK5S4kuM6JwuL3Dw@mail.gmail.com>
+Subject: Re: [PATCH v1 2/3] drm/msm: Print all 64 bits of the faulting IOMMU address
+To:     Marc Gonzalez <marc.w.gonzalez@free.fr>
+Cc:     Jordan Crouse <jcrouse@codeaurora.org>,
+        MSM <linux-arm-msm@vger.kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        DTML <devicetree@vger.kernel.org>,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>
+        Jeffrey Hugo <jhugo@codeaurora.org>
 Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-(Adding Lorenzo and Sudeep)
-
-On Wed, May 8, 2019 at 8:26 PM Niklas Cassel <niklas.cassel@linaro.org> wrote:
+On Thu, May 9, 2019 at 9:06 AM Marc Gonzalez <marc.w.gonzalez@free.fr> wrote:
 >
-> On Wed, May 08, 2019 at 02:48:19AM +0530, Amit Kucheria wrote:
-> > On Tue, May 7, 2019 at 1:01 AM Niklas Cassel <niklas.cassel@linaro.org> wrote:
-> > >
-> > > Add device bindings for CPUs to suspend using PSCI as the enable-method.
-> > >
-> > > Signed-off-by: Niklas Cassel <niklas.cassel@linaro.org>
-> > > ---
-> > >  arch/arm64/boot/dts/qcom/qcs404.dtsi | 15 +++++++++++++++
-> > >  1 file changed, 15 insertions(+)
-> > >
-> > > diff --git a/arch/arm64/boot/dts/qcom/qcs404.dtsi b/arch/arm64/boot/dts/qcom/qcs404.dtsi
-> > > index ffedf9640af7..f9db9f3ee10c 100644
-> > > --- a/arch/arm64/boot/dts/qcom/qcs404.dtsi
-> > > +++ b/arch/arm64/boot/dts/qcom/qcs404.dtsi
-> > > @@ -31,6 +31,7 @@
-> > >                         reg = <0x100>;
-> > >                         enable-method = "psci";
-> > >                         next-level-cache = <&L2_0>;
-> > > +                       cpu-idle-states = <&CPU_PC>;
-> > >                 };
-> > >
-> > >                 CPU1: cpu@101 {
-> > > @@ -39,6 +40,7 @@
-> > >                         reg = <0x101>;
-> > >                         enable-method = "psci";
-> > >                         next-level-cache = <&L2_0>;
-> > > +                       cpu-idle-states = <&CPU_PC>;
-> > >                 };
-> > >
-> > >                 CPU2: cpu@102 {
-> > > @@ -47,6 +49,7 @@
-> > >                         reg = <0x102>;
-> > >                         enable-method = "psci";
-> > >                         next-level-cache = <&L2_0>;
-> > > +                       cpu-idle-states = <&CPU_PC>;
-> > >                 };
-> > >
-> > >                 CPU3: cpu@103 {
-> > > @@ -55,12 +58,24 @@
-> > >                         reg = <0x103>;
-> > >                         enable-method = "psci";
-> > >                         next-level-cache = <&L2_0>;
-> > > +                       cpu-idle-states = <&CPU_PC>;
-> > >                 };
-> > >
-> > >                 L2_0: l2-cache {
-> > >                         compatible = "cache";
-> > >                         cache-level = <2>;
-> > >                 };
-> > > +
-> > > +               idle-states {
+> On 07/05/2019 20:02, Jordan Crouse wrote:
+>
+> > When we move to 64 bit addressing for a5xx and a6xx targets we will start
+> > seeing pagefaults at larger addresses so format them appropriately in the
+> > log message for easier debugging.
 > >
-> > entry-method="psci" property goes here. I have a patch fixing it for 410c ;-)
+> > Signed-off-by: Jordan Crouse <jcrouse@codeaurora.org>
+> > ---
 > >
-> > I don't think the psci_cpuidle_ops will even get called without this.
->
-> Hello Amit,
->
-> I added debug prints in psci_cpu_suspend_enter() and arm_cpuidle_suspend()
-> when verifying this patch, and psci_cpu_suspend_enter() is indeed called,
-> with the correct psci suspend parameter.
->
-> The output from:
-> grep "" /sys/bus/cpu/devices/cpu0/cpuidle/state?/*
-> also looks sane.
->
-> However, if 'entry-method="psci"' is required according to the DT binding,
-> perhaps you can send a 2/2 series that fixes both this patch and msm8916 ?
-
-Last time I discussed this with Lorenzo and Sudeep (on IRC), I pointed
-out that entry-method="psci" isn't checked for in code anywhere. Let's
-get their view on this for posterity.
-
-What does entry-method="psci" in the idle-states node achieve that
-enable-method="psci" in the cpu node doesn't achieve? (Note: enable-
-vs. entry-).
-
-The enable-method property is the one that sets up the
-psci_cpuidle_ops callbacks through the CPUIDLE_METHOD_OF_DECLARE
-macro.
-
-IOW, if we deprecated the entry-method property, everything would
-still work, wouldn't it?
-Do we expect to support PSCI platforms that might have a different
-entry-method for idle states?
-Should I whip up a patch removing entry-method? Since we don't check
-for it today, it won't break the old DTs either.
-
-Regards,
-Amit
-
-
-> > Did you see any changes in consumption with this patch? I was trying
-> > to measure that before sending this out.
->
-> I don't know of any way to measure the power consumption on this board,
-> so no, I haven't been able to verify that the firmware actually does
-> the right thing here.
->
->
-> Kind regards,
-> Niklas
->
+> >  drivers/gpu/drm/msm/msm_iommu.c | 2 +-
+> >  1 file changed, 1 insertion(+), 1 deletion(-)
 > >
-> > > +                       CPU_PC: pc {
-> > > +                               compatible = "arm,idle-state";
-> > > +                               arm,psci-suspend-param = <0x40000003>;
-> > > +                               entry-latency-us = <125>;
-> > > +                               exit-latency-us = <180>;
-> > > +                               min-residency-us = <595>;
-> > > +                               local-timer-stop;
-> > > +                       };
-> > > +               };
-> > >         };
-> > >
-> > >         firmware {
-> > > --
-> > > 2.21.0
-> > >
+> > diff --git a/drivers/gpu/drm/msm/msm_iommu.c b/drivers/gpu/drm/msm/msm_iommu.c
+> > index 12bb54c..1926329 100644
+> > --- a/drivers/gpu/drm/msm/msm_iommu.c
+> > +++ b/drivers/gpu/drm/msm/msm_iommu.c
+> > @@ -30,7 +30,7 @@ static int msm_fault_handler(struct iommu_domain *domain, struct device *dev,
+> >       struct msm_iommu *iommu = arg;
+> >       if (iommu->base.handler)
+> >               return iommu->base.handler(iommu->base.arg, iova, flags);
+> > -     pr_warn_ratelimited("*** fault: iova=%08lx, flags=%d\n", iova, flags);
+> > +     pr_warn_ratelimited("*** fault: iova=%16lx, flags=%d\n", iova, flags);
+>
+> Why no leading 0 for 64-bit numbers?
+>
+> Will 32-bit platforms always get 8 useless characters?
+>
+
+well, they should be 0's, rather than garbage, if that was the
+question.  I'm not sure how many hoops it is worth jumping thru to
+handle the diff between 32b GPU (<= a4xx) and 64b (>= a5xx).  Even on
+newer devices, the display is still 32b iova.
+
+I guess this is *mostly* useful for debugging mesa (or at least I
+guess I'm the one who triggers the most iommu faults).. so maybe not
+worth caring about?
+
+BR,
+-R
