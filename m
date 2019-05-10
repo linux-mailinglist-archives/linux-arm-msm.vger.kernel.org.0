@@ -2,198 +2,211 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 5DB2019EC7
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 May 2019 16:13:01 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 8CD3219F50
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 May 2019 16:35:14 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727836AbfEJONA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 10 May 2019 10:13:00 -0400
-Received: from mail-qk1-f194.google.com ([209.85.222.194]:37536 "EHLO
-        mail-qk1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727758AbfEJONA (ORCPT
+        id S1727551AbfEJOfN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 10 May 2019 10:35:13 -0400
+Received: from mail-ed1-f65.google.com ([209.85.208.65]:38200 "EHLO
+        mail-ed1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727384AbfEJOfM (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 10 May 2019 10:13:00 -0400
-Received: by mail-qk1-f194.google.com with SMTP id c1so2404659qkk.4
-        for <linux-arm-msm@vger.kernel.org>; Fri, 10 May 2019 07:12:59 -0700 (PDT)
+        Fri, 10 May 2019 10:35:12 -0400
+Received: by mail-ed1-f65.google.com with SMTP id w11so5443455edl.5;
+        Fri, 10 May 2019 07:35:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
+        d=gmail.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=Oc+HOjNDQ7ZjdNxPUZBvb85a2F3DpskyEuAF4ob+cf0=;
-        b=hXfOvlq1JUHYhRQN/Ecd6q0zC9XIBX61zsDh4XQdCD1zQW1hPj/PmsBI1uZaFd1hua
-         HyikYujCWvHzujSK9TUo7erUKIbg+TcbT4C1ME7V3DcZmZmsLNfCqnNwWQCZT3/piURz
-         BjcK8xDlY6we/9H/6O11CQvtXeodO10bkJAZBLljlda8dyXKkd+GFVMl437QHNa1+whW
-         ayDJNGtMe8+v0bDP1lK5OTlIEA4ZTBR8NuerSXE6G+JfM45GsUVMJm6IHn0WevIw0s8Q
-         4lJCgH8aBbCvlje7zjfrPYon2n35yILcwaOD2wDBxULpMTkYisUSyBAG86VbqJ5YCzgd
-         cwJQ==
+        bh=sRGoD2Jk3axEMJAz4oUDi3IhON+s6sBmkV7kecsI120=;
+        b=ZRaaR8zIHbGpBxpag7cXYGhxYyatgmcdbo5M9JLVWOVP/kzZ4whElHdgW0iSrHFvro
+         WyejXJQ8pn0ktBXz/c9e3QQ0ugLdE5/fAfSfanKQC/ZsxdbHljwhkcIpzeFOxcLPK3Un
+         N7QcYxJVu073kqNQ10uf+rhHcc/4xUBzvWhZ0hfQKHBhPJWSuKcP12tcYyJ+kMcdeiNR
+         +XN/F3ExiTTonCHxC51stIUNU0ZGJMxpgQlxIsPRcXWvZRa2qclgbZd9kfAbFrUODAXf
+         L2fn66YybM+M53tTFnZ5m/749cl9iiwGokLe+PPMgHipfF687U2CnZjxkpSlHK7pyCrJ
+         QJNQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=Oc+HOjNDQ7ZjdNxPUZBvb85a2F3DpskyEuAF4ob+cf0=;
-        b=QSNxLGj0r7czO8LfX2DAh5b9/DC4KVNdpCcpQtChFb6ylQgZqtfa/GbkWDkybJUyd1
-         1li3FdlwbgDxD1DHIHmN93MB+S57G/CIWPS6qOUuZkEmOBICzzDui7D5efNuPBBDVv+p
-         CCERQD9TTOrExciKHLS/rt5UaSt0nXY2T2v8uf5et72up+jjUBhxZIoyTFmBteLyYnn7
-         kh19c2JToSAXc6vy0fInzeGvm9L0V7LoLgD9BRe6e/83XgSpkFK5VbWwawU2pLIjGY3p
-         x2PBtmAcrcBvqESI013ERSsdRVWn/BteBCC4o6YHgqh0BtVp1nZfDNkYYLHhnXIxHAhx
-         n3VQ==
-X-Gm-Message-State: APjAAAWVoODza0MhOqPrfXusY1JU4LGiJlKZ3eN6uLm0GrozgJHMIs3s
-        Rrtil+eztzClN1/bWZX2BQMoLkpnL2/SDO5CZRQliQ==
-X-Google-Smtp-Source: APXvYqxObyuwfh5p481QM2OYq3veOhpwYH8bBAQxOrz4FO1Oxji5/awAiK377X9YEKdfToc/V6XqP4PX5sLCPZ6tIyU=
-X-Received: by 2002:a37:9606:: with SMTP id y6mr8611016qkd.352.1557497578809;
- Fri, 10 May 2019 07:12:58 -0700 (PDT)
+        bh=sRGoD2Jk3axEMJAz4oUDi3IhON+s6sBmkV7kecsI120=;
+        b=uYKl4pp8c54aUBGbFt69Zs3gyBUHTttczjdkj5IYEK99SghBeemaaQ8Gn5nWjDB7my
+         l8LqPieJuxbYDJ61/XsR9F0hE2WbH9Fq2NpW0LhfpYjpC2kBWseJOs2hzF4JBHqfnHy8
+         5DffexqqyVzTv0a9+4b+f8qDRP43TXypyXyYyUlD9nLI5/eOj1qiY/1Gm/uj5tUc9HZl
+         704BNcKW/z8IkBn6fyFHsCLsi5NuvHQLODR4g4Irn5VQSu3Zd51WFisZUI0HTVA/bvcZ
+         weE2dioL2qbb/KLqeeG1hfZL2SmJroSv2zkiDTli/qTSlBCdAPxxwo3L/8rApsYEPeKJ
+         fniQ==
+X-Gm-Message-State: APjAAAW/eIQGGrfVe6eFLmsBO9OdIIvOWOmmN6P9qyj/BRG+M+6a5Cpp
+        /kIvP/Nrc7AaC50grJ7spHaAFXn7k3ZV50SxzBI=
+X-Google-Smtp-Source: APXvYqzKvpcO/2fg2I+c6SASpfcaYKAfpXbFbSBLRwHFwNyLuN4e0ED2A6TWRg3CU9BxF+5g8ZlkzwBso67pduC0rG8=
+X-Received: by 2002:a50:b78a:: with SMTP id h10mr11574922ede.65.1557498910356;
+ Fri, 10 May 2019 07:35:10 -0700 (PDT)
 MIME-Version: 1.0
-References: <cover.1557486950.git.amit.kucheria@linaro.org>
- <0afe77d25490b10250f9eac4b4e92ccac8c42718.1557486950.git.amit.kucheria@linaro.org>
- <3de9c573-5971-15fc-1632-706fc30e90c2@free.fr>
-In-Reply-To: <3de9c573-5971-15fc-1632-706fc30e90c2@free.fr>
-From:   Amit Kucheria <amit.kucheria@linaro.org>
-Date:   Fri, 10 May 2019 19:42:47 +0530
-Message-ID: <CAP245DU7=h=t1_QoM9nMGE-Amduuh+GPQBnmEEG+NGDdXCiR=g@mail.gmail.com>
-Subject: Re: [PATCHv1 7/8] arm64: dts: qcom: msm8998: Add PSCI cpuidle low
- power states
-To:     Marc Gonzalez <marc.w.gonzalez@free.fr>
-Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        MSM <linux-arm-msm@vger.kernel.org>,
-        LKML <linux-kernel@vger.kernel.org>
+References: <20181201165348.24140-1-robdclark@gmail.com> <CAL_JsqJmPqis46Un91QyhXgdrVtfATMP_hTp6wSeSAfc8MLFfw@mail.gmail.com>
+In-Reply-To: <CAL_JsqJmPqis46Un91QyhXgdrVtfATMP_hTp6wSeSAfc8MLFfw@mail.gmail.com>
+From:   Rob Clark <robdclark@gmail.com>
+Date:   Fri, 10 May 2019 07:35:01 -0700
+Message-ID: <CAF6AEGs9Nsft8ofZkGz_yWBPBC+prh8dBSkJ4PJr8yk2c5FMdQ@mail.gmail.com>
+Subject: Re: [PATCH] of/device: add blacklist for iommu dma_ops
+To:     Rob Herring <robh+dt@kernel.org>
+Cc:     Linux IOMMU <iommu@lists.linux-foundation.org>,
+        dri-devel <dri-devel@lists.freedesktop.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        Vivek Gautam <vivek.gautam@codeaurora.org>,
+        Tomasz Figa <tfiga@chromium.org>,
+        Christoph Hellwig <hch@lst.de>,
+        Robin Murphy <robin.murphy@arm.com>,
+        Will Deacon <will.deacon@arm.com>,
+        David Airlie <airlied@linux.ie>,
+        freedreno <freedreno@lists.freedesktop.org>,
+        Archit Taneja <architt@codeaurora.org>,
+        Sean Paul <seanpaul@chromium.org>,
+        Doug Anderson <dianders@chromium.org>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Frank Rowand <frowand.list@gmail.com>,
+        devicetree@vger.kernel.org,
+        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, May 10, 2019 at 6:45 PM Marc Gonzalez <marc.w.gonzalez@free.fr> wrote:
+On Tue, Dec 4, 2018 at 2:29 PM Rob Herring <robh+dt@kernel.org> wrote:
 >
-> On 10/05/2019 13:29, Amit Kucheria wrote:
->
-> > Add device bindings for cpuidle states for cpu devices.
+> On Sat, Dec 1, 2018 at 10:54 AM Rob Clark <robdclark@gmail.com> wrote:
 > >
-> > Cc: Marc Gonzalez <marc.w.gonzalez@free.fr>
-> > Signed-off-by: Amit Kucheria <amit.kucheria@linaro.org>
+> > This solves a problem we see with drm/msm, caused by getting
+> > iommu_dma_ops while we attach our own domain and manage it directly at
+> > the iommu API level:
+> >
+> >   [0000000000000038] user address but active_mm is swapper
+> >   Internal error: Oops: 96000005 [#1] PREEMPT SMP
+> >   Modules linked in:
+> >   CPU: 7 PID: 70 Comm: kworker/7:1 Tainted: G        W         4.19.3 #90
+> >   Hardware name: xxx (DT)
+> >   Workqueue: events deferred_probe_work_func
+> >   pstate: 80c00009 (Nzcv daif +PAN +UAO)
+> >   pc : iommu_dma_map_sg+0x7c/0x2c8
+> >   lr : iommu_dma_map_sg+0x40/0x2c8
+> >   sp : ffffff80095eb4f0
+> >   x29: ffffff80095eb4f0 x28: 0000000000000000
+> >   x27: ffffffc0f9431578 x26: 0000000000000000
+> >   x25: 00000000ffffffff x24: 0000000000000003
+> >   x23: 0000000000000001 x22: ffffffc0fa9ac010
+> >   x21: 0000000000000000 x20: ffffffc0fab40980
+> >   x19: ffffffc0fab40980 x18: 0000000000000003
+> >   x17: 00000000000001c4 x16: 0000000000000007
+> >   x15: 000000000000000e x14: ffffffffffffffff
+> >   x13: ffff000000000000 x12: 0000000000000028
+> >   x11: 0101010101010101 x10: 7f7f7f7f7f7f7f7f
+> >   x9 : 0000000000000000 x8 : ffffffc0fab409a0
+> >   x7 : 0000000000000000 x6 : 0000000000000002
+> >   x5 : 0000000100000000 x4 : 0000000000000000
+> >   x3 : 0000000000000001 x2 : 0000000000000002
+> >   x1 : ffffffc0f9431578 x0 : 0000000000000000
+> >   Process kworker/7:1 (pid: 70, stack limit = 0x0000000017d08ffb)
+> >   Call trace:
+> >    iommu_dma_map_sg+0x7c/0x2c8
+> >    __iommu_map_sg_attrs+0x70/0x84
+> >    get_pages+0x170/0x1e8
+> >    msm_gem_get_iova+0x8c/0x128
+> >    _msm_gem_kernel_new+0x6c/0xc8
+> >    msm_gem_kernel_new+0x4c/0x58
+> >    dsi_tx_buf_alloc_6g+0x4c/0x8c
+> >    msm_dsi_host_modeset_init+0xc8/0x108
+> >    msm_dsi_modeset_init+0x54/0x18c
+> >    _dpu_kms_drm_obj_init+0x430/0x474
+> >    dpu_kms_hw_init+0x5f8/0x6b4
+> >    msm_drm_bind+0x360/0x6c8
+> >    try_to_bring_up_master.part.7+0x28/0x70
+> >    component_master_add_with_match+0xe8/0x124
+> >    msm_pdev_probe+0x294/0x2b4
+> >    platform_drv_probe+0x58/0xa4
+> >    really_probe+0x150/0x294
+> >    driver_probe_device+0xac/0xe8
+> >    __device_attach_driver+0xa4/0xb4
+> >    bus_for_each_drv+0x98/0xc8
+> >    __device_attach+0xac/0x12c
+> >    device_initial_probe+0x24/0x30
+> >    bus_probe_device+0x38/0x98
+> >    deferred_probe_work_func+0x78/0xa4
+> >    process_one_work+0x24c/0x3dc
+> >    worker_thread+0x280/0x360
+> >    kthread+0x134/0x13c
+> >    ret_from_fork+0x10/0x18
+> >   Code: d2800004 91000725 6b17039f 5400048a (f9401f40)
+> >   ---[ end trace f22dda57f3648e2c ]---
+> >   Kernel panic - not syncing: Fatal exception
+> >   SMP: stopping secondary CPUs
+> >   Kernel Offset: disabled
+> >   CPU features: 0x0,22802a18
+> >   Memory Limit: none
+> >
+> > The problem is that when drm/msm does it's own iommu_attach_device(),
+> > now the domain returned by iommu_get_domain_for_dev() is drm/msm's
+> > domain, and it doesn't have domain->iova_cookie.
+> >
+> > We kind of avoided this problem prior to sdm845/dpu because the iommu
+> > was attached to the mdp node in dt, which is a child of the toplevel
+> > mdss node (which corresponds to the dev passed in dma_map_sg()).  But
+> > with sdm845, now the iommu is attached at the mdss level so we hit the
+> > iommu_dma_ops in dma_map_sg().
+> >
+> > But auto allocating/attaching a domain before the driver is probed was
+> > already a blocking problem for enabling per-context pagetables for the
+> > GPU.  This problem is also now solved with this patch.
+> >
+> > Fixes: 97890ba9289c dma-mapping: detect and configure IOMMU in of_dma_configure
+> > Tested-by: Douglas Anderson <dianders@chromium.org>
+> > Signed-off-by: Rob Clark <robdclark@gmail.com>
 > > ---
-> >  arch/arm64/boot/dts/qcom/msm8998.dtsi | 32 +++++++++++++++++++++++++++
-> >  1 file changed, 32 insertions(+)
+> > This is an alternative/replacement for [1].  What it lacks in elegance
+> > it makes up for in practicality ;-)
 > >
-> > diff --git a/arch/arm64/boot/dts/qcom/msm8998.dtsi b/arch/arm64/boot/dts/qcom/msm8998.dtsi
-> > index 3fd0769fe648..208281f318e2 100644
-> > --- a/arch/arm64/boot/dts/qcom/msm8998.dtsi
-> > +++ b/arch/arm64/boot/dts/qcom/msm8998.dtsi
-> > @@ -78,6 +78,7 @@
-> >                       compatible = "arm,armv8";
-> >                       reg = <0x0 0x0>;
-> >                       enable-method = "psci";
-> > +                     cpu-idle-states = <&LITTLE_CPU_PD>;
+> > [1] https://patchwork.freedesktop.org/patch/264930/
+> >
+> >  drivers/of/device.c | 22 ++++++++++++++++++++++
+> >  1 file changed, 22 insertions(+)
+> >
+> > diff --git a/drivers/of/device.c b/drivers/of/device.c
+> > index 5957cd4fa262..15ffee00fb22 100644
+> > --- a/drivers/of/device.c
+> > +++ b/drivers/of/device.c
+> > @@ -72,6 +72,14 @@ int of_device_add(struct platform_device *ofdev)
+> >         return device_add(&ofdev->dev);
+> >  }
+> >
+> > +static const struct of_device_id iommu_blacklist[] = {
+> > +       { .compatible = "qcom,mdp4" },
+> > +       { .compatible = "qcom,mdss" },
+> > +       { .compatible = "qcom,sdm845-mdss" },
+> > +       { .compatible = "qcom,adreno" },
+> > +       {}
+> > +};
 >
-> For some reason, I was expecting the big cores to come first, but according
-> to /proc/cpuinfo, cores 0-3 are part 0x801, while cores 4-7 are part 0x800.
+> Not completely clear to whether this is still needed or not, but this
+> really won't scale. Why can't the driver for these devices override
+> whatever has been setup by default?
 >
-> According to https://github.com/pytorch/cpuinfo/blob/master/src/arm/uarch.c
->
-> 0x801 = Low-power Kryo 260 / 280 "Silver" -> Cortex-A53
-> 0x800 = High-performance Kryo 260 (r10p2) / Kryo 280 (r10p1) "Gold" -> Cortex-A73
 
-Hmm, did I mess up the order of the big and LITTLE cores? I'll take a
-look again.
+fwiw, at the moment it is not needed, but it will become needed again
+to implement per-context pagetables (although I suppose for this we
+only need to blacklist qcom,adreno and not also the display nodes).
 
-> >                       efficiency = <1024>;
-> >                       next-level-cache = <&L2_0>;
-> >                       L2_0: l2-cache {
-> > @@ -97,6 +98,7 @@
-> >                       compatible = "arm,armv8";
-> >                       reg = <0x0 0x1>;
-> >                       enable-method = "psci";
-> > +                     cpu-idle-states = <&LITTLE_CPU_PD>;
-> >                       efficiency = <1024>;
-> >                       next-level-cache = <&L2_0>;
-> >                       L1_I_1: l1-icache {
-> > @@ -112,6 +114,7 @@
-> >                       compatible = "arm,armv8";
-> >                       reg = <0x0 0x2>;
-> >                       enable-method = "psci";
-> > +                     cpu-idle-states = <&LITTLE_CPU_PD>;
-> >                       efficiency = <1024>;
-> >                       next-level-cache = <&L2_0>;
-> >                       L1_I_2: l1-icache {
-> > @@ -127,6 +130,7 @@
-> >                       compatible = "arm,armv8";
-> >                       reg = <0x0 0x3>;
-> >                       enable-method = "psci";
-> > +                     cpu-idle-states = <&LITTLE_CPU_PD>;
-> >                       efficiency = <1024>;
-> >                       next-level-cache = <&L2_0>;
-> >                       L1_I_3: l1-icache {
-> > @@ -142,6 +146,7 @@
-> >                       compatible = "arm,armv8";
-> >                       reg = <0x0 0x100>;
-> >                       enable-method = "psci";
-> > +                     cpu-idle-states = <&BIG_CPU_PD>;
-> >                       efficiency = <1536>;
-> >                       next-level-cache = <&L2_1>;
-> >                       L2_1: l2-cache {
-> > @@ -161,6 +166,7 @@
-> >                       compatible = "arm,armv8";
-> >                       reg = <0x0 0x101>;
-> >                       enable-method = "psci";
-> > +                     cpu-idle-states = <&BIG_CPU_PD>;
-> >                       efficiency = <1536>;
-> >                       next-level-cache = <&L2_1>;
-> >                       L1_I_101: l1-icache {
-> > @@ -176,6 +182,7 @@
-> >                       compatible = "arm,armv8";
-> >                       reg = <0x0 0x102>;
-> >                       enable-method = "psci";
-> > +                     cpu-idle-states = <&BIG_CPU_PD>;
-> >                       efficiency = <1536>;
-> >                       next-level-cache = <&L2_1>;
-> >                       L1_I_102: l1-icache {
-> > @@ -191,6 +198,7 @@
-> >                       compatible = "arm,armv8";
-> >                       reg = <0x0 0x103>;
-> >                       enable-method = "psci";
-> > +                     cpu-idle-states = <&BIG_CPU_PD>;
-> >                       efficiency = <1536>;
-> >                       next-level-cache = <&L2_1>;
-> >                       L1_I_103: l1-icache {
-> > @@ -238,6 +246,30 @@
-> >                               };
-> >                       };
-> >               };
-> > +
-> > +             idle-states {
-> > +                     entry-method="psci";
-> > +
-> > +                     LITTLE_CPU_PD: little-power-down {
-> > +                             compatible = "arm,idle-state";
-> > +                             idle-state-name = "little-power-down";
-> > +                             arm,psci-suspend-param = <0x00000002>;
-> > +                             entry-latency-us = <43>;
-> > +                             exit-latency-us = <43>;
->
-> Little cores have higher latency (+5%) than big cores?
->
-> > +                             min-residency-us = <200>;
-> > +                             local-timer-stop;
-> > +                     };
-> > +
-> > +                     BIG_CPU_PD: big-power-down {
-> > +                             compatible = "arm,idle-state";
-> > +                             idle-state-name = "big-power-down";
-> > +                             arm,psci-suspend-param = <0x00000002>;
-> > +                             entry-latency-us = <41>;
-> > +                             exit-latency-us = <41>;
-> > +                             min-residency-us = <200>;
-> > +                             local-timer-stop;
-> > +                     };
-> > +             };
->
-> What is the simplest way to test this patch?
+The reason is that in the current state the core code creates the
+first domain before the driver has a chance to intervene and tell it
+not to.  And this results that driver ends up using a different
+context bank on the iommu than what the firmware expects.
 
-You should be able to see state transitions in /sys/devices/cpu/cpu?/cpuidle/*/*
+I guess the alternative is to put some property in DT.. but that
+doesn't really feel right.  I guess there aren't really many (or any?)
+other drivers that have this specific problem, so I don't really
+expect it to be a scaling problem.
 
-$ grep "" /sys/devices/cpu/cpu?/cpuidle/*/*
+Yeah, it's a bit ugly, but I'll take a small ugly working hack, over
+elegant but non-working any day ;-)... but if someone has a better
+idea then I'm all ears.
 
-And if you have an instrumented board with power rails exposed, you
-could measure the cpu rails with and without some load on the CPUs.
-That'd help us tune the values too, in the future.
-
-Regards,
-Amit
+BR,
+-R
