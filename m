@@ -2,90 +2,101 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id BA0101A2B0
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 May 2019 19:54:39 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 50E0D1A2DC
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 May 2019 20:13:30 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727569AbfEJRyP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 10 May 2019 13:54:15 -0400
-Received: from mail.kernel.org ([198.145.29.99]:53264 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1727551AbfEJRyP (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 10 May 2019 13:54:15 -0400
-Received: from localhost (unknown [104.132.0.74])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 89E7F208C3;
-        Fri, 10 May 2019 17:54:14 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1557510854;
-        bh=TPcYCKnbp3auhRg3X0Zai1KmfmkYrRP7IMwzQaXcZaQ=;
-        h=In-Reply-To:References:From:Subject:Cc:To:Date:From;
-        b=wUhYsGhmnx1usumemDEOYHTOVFf6PU8tbg2IXIe/iuDX/i15g95hkvlwKP8OoCIvt
-         1/2jeuMnBye7x16Uq8fCbTNqjvgSsSbr4FmmMzzJgWWKwMLUViybFcyKBAfHIqsUrf
-         aZaHWVX8DhSfZnWKf+JqWwF7NN0phV8g+WK6QZ9w=
-Content-Type: text/plain; charset="utf-8"
+        id S1727663AbfEJSN3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 10 May 2019 14:13:29 -0400
+Received: from mail-pl1-f196.google.com ([209.85.214.196]:39618 "EHLO
+        mail-pl1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727629AbfEJSN3 (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 10 May 2019 14:13:29 -0400
+Received: by mail-pl1-f196.google.com with SMTP id g9so3193525plm.6
+        for <linux-arm-msm@vger.kernel.org>; Fri, 10 May 2019 11:13:29 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=+cojE6T8V5ImSjp0mytrz09qkONdmVExdwfw6/pUjGc=;
+        b=XeAFnHRBBr343EevnSOiaR1bEMCHTqALQpIAEPJNwf909qly8FahmCyfUZeUX1OWnI
+         1GPrjTDzR1qCUCaSCA7dBSmBED6uVd52YvYcxiu1gnBVQr3MnW39/sLtGqrQPQft8wKI
+         mvGujMeNftojXQjMhWAz0MH/R+mi4kT2vXYC8=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=+cojE6T8V5ImSjp0mytrz09qkONdmVExdwfw6/pUjGc=;
+        b=nD+pTW0l8txnnekaD4swGkHx2X9duniK0HNhi8F+hD1ttUcnPt6LBv+55n1SLgMZ9y
+         n4g06QdgEiddQV9Idsip+LfdMGRwM5nh20O7ApKE3fhDO29uJPs3+87uLqARDbDiFYyr
+         WXkTUNVbgRgSezf8AEIAtwpUjBEiNF1VtLjEJGut/99Be5U151VzIx2+snaJiDGl9jzJ
+         1Oj1rWsw2pNCk9hL8DOvHn6TB8NctecDdP3W2wAKlBWoWACgaz5t8GYoD4WXa/deWX5Z
+         2l0u+5VDWhLalzlsAllNInPwVJYb8dd0M3aaHuev1v8IyeDcO/xlgrp665H23/GImo82
+         b7Ww==
+X-Gm-Message-State: APjAAAUNVv9b57fM8QPEbHg/xOYdmMFQA40f9AgcEctxorKbpCrOVnQk
+        6/t0lmsgKmrQBq9UAhk6Pg8Oiw==
+X-Google-Smtp-Source: APXvYqy1va4lBAS5EQUovZMTSaUTDacYI7cW8OQovdmDm+fuRXV2/h038u0QUOGHRT91YxzwxGcG7g==
+X-Received: by 2002:a17:902:868b:: with SMTP id g11mr15001069plo.273.1557512008726;
+        Fri, 10 May 2019 11:13:28 -0700 (PDT)
+Received: from smtp.gmail.com ([2620:15c:202:1:fa53:7765:582b:82b9])
+        by smtp.gmail.com with ESMTPSA id g71sm17169365pgc.41.2019.05.10.11.13.27
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Fri, 10 May 2019 11:13:28 -0700 (PDT)
+From:   Stephen Boyd <swboyd@chromium.org>
+To:     Andy Gross <agross@kernel.org>
+Cc:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        Mahesh Sivasubramanian <msivasub@codeaurora.org>,
+        Lina Iyer <ilina@codeaurora.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Evan Green <evgreen@chromium.org>
+Subject: [PATCH] soc: qcom: cmd-db: Mark more things const
+Date:   Fri, 10 May 2019 11:13:27 -0700
+Message-Id: <20190510181327.121666-1-swboyd@chromium.org>
+X-Mailer: git-send-email 2.21.0.1020.gf2820cf01a-goog
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <07bcd2df-a786-ea52-8566-70f484248952@codeaurora.org>
-References: <1557339895-21952-1-git-send-email-tdas@codeaurora.org> <1557339895-21952-4-git-send-email-tdas@codeaurora.org> <155742286525.14659.18081373668341127486@swboyd.mtv.corp.google.com> <07bcd2df-a786-ea52-8566-70f484248952@codeaurora.org>
-From:   Stephen Boyd <sboyd@kernel.org>
-Subject: Re: [PATCH v1 3/3] clk: qcom: rcg: update the DFS macro for RCG
-Cc:     Andy Gross <andy.gross@linaro.org>,
-        David Brown <david.brown@linaro.org>,
-        Rajendra Nayak <rnayak@codeaurora.org>,
-        linux-arm-msm@vger.kernel.org, linux-soc@vger.kernel.org,
-        linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org
-To:     Michael Turquette <mturquette@baylibre.com>,
-        Taniya Das <tdas@codeaurora.org>
-Message-ID: <155751085370.14659.7749105088997177801@swboyd.mtv.corp.google.com>
-User-Agent: alot/0.8
-Date:   Fri, 10 May 2019 10:54:13 -0700
+Content-Transfer-Encoding: 8bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Taniya Das (2019-05-09 19:58:39)
-> Hello Stephen,
->=20
-> Thanks for the review.
->=20
-> On 5/9/2019 10:57 PM, Stephen Boyd wrote:
-> > Quoting Taniya Das (2019-05-08 11:24:55)
-> >> Update the init data name for each of the dynamic frequency switch
-> >> controlled clock associated with the RCG clock name, so that it can be
-> >> generated as per the hardware plan. Thus update the macro accordingly.
-> >>
-> >> Signed-off-by: Taniya Das <tdas@codeaurora.org>
-> >=20
-> > This patch doesn't make any sense to me.
-> >=20
-> >> ---
-> >>   drivers/clk/qcom/clk-rcg.h    |  2 +-
-> >>   drivers/clk/qcom/gcc-sdm845.c | 96 +++++++++++++++++++++------------=
-----------
-> >>   2 files changed, 49 insertions(+), 49 deletions(-)
-> >>
-> >> diff --git a/drivers/clk/qcom/clk-rcg.h b/drivers/clk/qcom/clk-rcg.h
-> >> index 5562f38..e40e8f8 100644
-> >> --- a/drivers/clk/qcom/clk-rcg.h
-> >> +++ b/drivers/clk/qcom/clk-rcg.h
-> >> @@ -171,7 +171,7 @@ struct clk_rcg_dfs_data {
-> >>   };
-> >>
-> >>   #define DEFINE_RCG_DFS(r) \
-> >> -       { .rcg =3D &r##_src, .init =3D &r##_init }
-> >> +       { .rcg =3D &r, .init =3D &r##_init }
-> >=20
-> > Why do we need to rename the init data?
-> >=20
->=20
-> We want to manage the init data as the clock source name, so that we=20
-> could manage to auto generate our code. So that we do not have to=20
-> re-name the clock init data manually if the DFS source names gets=20
-> updated at any point of time.
->=20
+Nothing that cmd db returns is ever non-const, so mark cmd_db_header and
+rsc_offset const so that we don't try to modify the database
+inadvertently.
 
-Why is the clk name changing to not have a _src after the "root" of the
-clk name? As long as I can remember, RCGs have a "_src" postfix.
+Cc: Mahesh Sivasubramanian <msivasub@codeaurora.org>
+Cc: Lina Iyer <ilina@codeaurora.org>
+Cc: Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc: Evan Green <evgreen@chromium.org>
+Signed-off-by: Stephen Boyd <swboyd@chromium.org>
+---
+ drivers/soc/qcom/cmd-db.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/drivers/soc/qcom/cmd-db.c b/drivers/soc/qcom/cmd-db.c
+index c701b3b010f1..7d67cbb52b97 100644
+--- a/drivers/soc/qcom/cmd-db.c
++++ b/drivers/soc/qcom/cmd-db.c
+@@ -99,7 +99,7 @@ static bool cmd_db_magic_matches(const struct cmd_db_header *header)
+ 	return memcmp(magic, CMD_DB_MAGIC, ARRAY_SIZE(CMD_DB_MAGIC)) == 0;
+ }
+ 
+-static struct cmd_db_header *cmd_db_header;
++static const struct cmd_db_header *cmd_db_header;
+ 
+ static inline const void *rsc_to_entry_header(const struct rsc_hdr *hdr)
+ {
+@@ -108,7 +108,7 @@ static inline const void *rsc_to_entry_header(const struct rsc_hdr *hdr)
+ 	return cmd_db_header->data + offset;
+ }
+ 
+-static inline void *
++static inline const void *
+ rsc_offset(const struct rsc_hdr *hdr, const struct entry_header *ent)
+ {
+ 	u16 offset = le16_to_cpu(hdr->data_offset);
+
+base-commit: e93c9c99a629c61837d5a7fc2120cd2b6c70dbdd
+-- 
+Sent by a computer through tubes
 
