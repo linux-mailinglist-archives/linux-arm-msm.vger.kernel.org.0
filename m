@@ -2,139 +2,213 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id F25B51A2ED
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 May 2019 20:23:48 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 75EC61A2F8
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 May 2019 20:28:59 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727975AbfEJSXs (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 10 May 2019 14:23:48 -0400
-Received: from mail-ed1-f65.google.com ([209.85.208.65]:40526 "EHLO
-        mail-ed1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727453AbfEJSXr (ORCPT
+        id S1727803AbfEJS2x (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 10 May 2019 14:28:53 -0400
+Received: from mail-ua1-f68.google.com ([209.85.222.68]:34491 "EHLO
+        mail-ua1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727535AbfEJS2x (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 10 May 2019 14:23:47 -0400
-Received: by mail-ed1-f65.google.com with SMTP id j12so5564277eds.7;
-        Fri, 10 May 2019 11:23:46 -0700 (PDT)
+        Fri, 10 May 2019 14:28:53 -0400
+Received: by mail-ua1-f68.google.com with SMTP id f9so2483066ual.1
+        for <linux-arm-msm@vger.kernel.org>; Fri, 10 May 2019 11:28:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
+        d=linaro.org; s=google;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=dra68sD3A+L9jmTIge40RbJUDi0r64rvVKFCcIo9SWw=;
-        b=JU7a3v7RiEPD0VNYuvo2kA58OUV7CQec5Ky0+jiMqZlny9/CBjNNYq4moEr1fX4pk5
-         Vl39VkY8/uNJsv3AmfCAB4yL/naqG1CR4VS8IBCruJAiFmJCq4PKyMcGsojx3eOxbB0I
-         VGRmjtXGeVK6pCln5OuvJUVLngWjz9mng9/csQqQcVukvSUlw7G3behUihBvp/Q6dYQM
-         KpD/fVa/3uGUf3NHOIvyS6PB5ehNdGETjupUhRA6M7U5KJOknptkLUIivQx2ur907mKN
-         UkkhhgRONlVmFckixCjsCppo6REXgRk/ORQlUjmFMCPVZ3yvauhqYRex1VQau3q+Te27
-         77yQ==
+        bh=53B459eecvRty+a3wV9xVIaRrF5O7M+rhPq+rsdt49Q=;
+        b=Cg00A8UFLYkETfa0fNN/fBZTQ/WB3tM0tBvqcgmsD7y4Qnh+T7w5qI3un3uJFEYnzl
+         KaC1ZQ/e9h8U5x1HQqzOqNI+6QLjLi/9TFwZV2s5ZCpnbc93Q+uelEF4LDdko9hbTWIF
+         qGhDp/rhVSoIR1YCxVfG+VsqcQf+Yd0U54jPTVl1qycbXo2zKhtQGbXG2QYvHgQQ3MYy
+         MINutBZLASFsyKnRhT4dShy9e9JHBIsnDYytNtgzXxVPJULGq0ypi0kXFh3+jCuckYps
+         rDP7Xjq0ehMyZeT2eXWFoObjJNJn2iG704TlGzr7DBAVgSeiKZfsnMw2fDgzI8Qw7I6n
+         OMXA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=dra68sD3A+L9jmTIge40RbJUDi0r64rvVKFCcIo9SWw=;
-        b=CqAfsjfevj83r/B1Q7X9A5XkqI/xerjVvRzKQbUsgy9nxvoH0PLs9FP4XY5sU3cSnR
-         LGKfNW27q638C+8zlVYDYlFPcKo+jUXvL20+s1FM3/255TGVj/S5jXRpTFMRWcaJcJEf
-         dKERK+rIKVDozK34swMkQDG8kmz3zfWosV7uD3RTopbQoWVAO3qgA5Pf7tJHTEMw0pE0
-         GDLfYH5Z7hsFnH6qKrqitBFg6dtbE14IDvwXTZv7od2J+R7mT4EjRTTRnCaa5R54DGfj
-         RlCbTpaF5e9tog6l2ZR31yEz+IuzvRgDPeaPlteA6wHhHMbOF8LkShgPkTXvrJ67aKv+
-         AACA==
-X-Gm-Message-State: APjAAAXo7O+obWNDRQw49M1FpELkWjgo08vMZL0UWt5gAH6WHiDuQ0jJ
-        3swgET6VG1an3Z+V9ptvTpb7a2fXSfPe3wlr/oY=
-X-Google-Smtp-Source: APXvYqzRQiFqm/l2aMVgEBwFQ5yK/wNMJvVmyhgygOk1zEL5AYR7ciH6/liicBqcTNkP12Ulkw8VgOjDuH6k3s3Qgm4=
-X-Received: by 2002:a50:b3a6:: with SMTP id s35mr13324855edd.220.1557512625336;
- Fri, 10 May 2019 11:23:45 -0700 (PDT)
+        bh=53B459eecvRty+a3wV9xVIaRrF5O7M+rhPq+rsdt49Q=;
+        b=bYG8+R2taz7GnUObWIDPLb9QWF5gq+2WQ1brGkFq+n57+P/dPPKDVpoXn9qyZVSnAi
+         hELQbFHB2yhSv+vohPjlxMEyq3X7e7Qe5l2l6HEFRp/VIo5gnGQ29a6qUYUA6JQz2PN7
+         z4psl1ffOStuib8kTYzXm26J7KREwMF2F3tjCwwvvEAORfV0rXGkjz5XPKBR8gYJ5GD2
+         POrB+9/qg/7Hql75CZucbchMBKH+nwpBxmuG21OyKhhXPau2G1/V16nsLHlxqhka2jOP
+         f63eluIut08hLMDdhwisK5XMCZJZtNUglYKiMtTzXEQEn87suWnApSr9KAOVHfTzN0CP
+         AESw==
+X-Gm-Message-State: APjAAAV72m/fqKdsFTik/nWPbY0spQD4afSuG/kmtkIcEzUsO86ncd1a
+        khksA/Xp1xipObcdxhadGnHVKJo9z5n1Pxm+7iZesg==
+X-Google-Smtp-Source: APXvYqwXRa9KK3jbWYWs+gozP2JQn6xPfkndKLXXl4HD2u+AuhwHY19lfENjCYj/mWKbuNyqLzndwn0I636BipoYXhc=
+X-Received: by 2002:ab0:154e:: with SMTP id p14mr6334650uae.48.1557512931577;
+ Fri, 10 May 2019 11:28:51 -0700 (PDT)
 MIME-Version: 1.0
-References: <20170914194444.32551-1-robdclark@gmail.com> <20170919123038.GF8398@8bytes.org>
- <CAF6AEGuutkqjrWk4jagE=p-NwHgxdiPZjjsaFsfwtczK568j+A@mail.gmail.com>
- <20170922090204.GJ8398@8bytes.org> <32e3ab2c-a996-c805-2a0d-a2e85deb3a50@arm.com>
-In-Reply-To: <32e3ab2c-a996-c805-2a0d-a2e85deb3a50@arm.com>
-From:   Rob Clark <robdclark@gmail.com>
-Date:   Fri, 10 May 2019 11:23:35 -0700
-Message-ID: <CAF6AEGuepdKo1Ob2jW66UhYXOTAqOMc3C-XKsK3Rze1QdLobLw@mail.gmail.com>
-Subject: Re: [RFC] iommu: arm-smmu: stall support
-To:     Jean-Philippe Brucker <jean-philippe.brucker@arm.com>
-Cc:     Joerg Roedel <joro@8bytes.org>,
+References: <20190508145600.GA26843@centauri> <CAHLCerN8L4np0WAY4hTjTnPXFtTK6EH0BXWLXzB-NiRaAnvcDA@mail.gmail.com>
+ <20190510091158.GA10284@e107155-lin>
+In-Reply-To: <20190510091158.GA10284@e107155-lin>
+From:   Amit Kucheria <amit.kucheria@linaro.org>
+Date:   Fri, 10 May 2019 23:58:40 +0530
+Message-ID: <CAHLCerM83weBBvwurU45d9_M0Wg49WjDFTRJ6KL8vj7cavz03g@mail.gmail.com>
+Subject: Re: [PATCH] arm64: dts: qcom: qcs404: Add PSCI cpuidle support
+To:     Sudeep Holla <sudeep.holla@arm.com>
+Cc:     Niklas Cassel <niklas.cassel@linaro.org>,
+        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
+        Andy Gross <agross@kernel.org>,
+        David Brown <david.brown@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Mark Rutland <mark.rutland@arm.com>,
+        Jorge Ramirez-Ortiz <jorge.ramirez-ortiz@linaro.org>,
+        Lina Iyer <lina.iyer@linaro.org>,
+        Ulf Hansson <ulf.hansson@linaro.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
         linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Will Deacon <Will.Deacon@arm.com>,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-        "iommu@lists.linux-foundation.org" <iommu@lists.linux-foundation.org>,
-        "linux-arm-kernel@lists.infradead.org" 
-        <linux-arm-kernel@lists.infradead.org>
+        DTML <devicetree@vger.kernel.org>,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, Sep 22, 2017 at 2:58 AM Jean-Philippe Brucker
-<jean-philippe.brucker@arm.com> wrote:
+On Fri, May 10, 2019 at 2:54 PM Sudeep Holla <sudeep.holla@arm.com> wrote:
 >
-> On 22/09/17 10:02, Joerg Roedel wrote:
-> > On Tue, Sep 19, 2017 at 10:23:43AM -0400, Rob Clark wrote:
-> >> I would like to decide in the IRQ whether or not to queue work or not,
-> >> because when we get a gpu fault, we tend to get 1000's of gpu faults
-> >> all at once (and I really only need to handle the first one).  I
-> >> suppose that could also be achieved by having a special return value
-> >> from the fault handler to say "call me again from a wq"..
-> >>
-> >> Note that in the drm driver I already have a suitable wq to queue the
-> >> work, so it really doesn't buy me anything to have the iommu driver
-> >> toss things off to a wq for me.  Might be a different situation for
-> >> other drivers (but I guess mostly other drivers are using iommu API
-> >> indirectly via dma-mapping?)
+> On Thu, May 09, 2019 at 11:19:23PM +0530, Amit Kucheria wrote:
+> > (Adding Lorenzo and Sudeep)
 > >
-> > Okay, so since you are the only user for now, we don't need a
-> > work-queue. But I still want the ->resume call-back to be hidden in the
-> > iommu code and not be exposed to users.
+> > On Wed, May 8, 2019 at 8:26 PM Niklas Cassel <niklas.cassel@linaro.org> wrote:
+> > >
+> > > On Wed, May 08, 2019 at 02:48:19AM +0530, Amit Kucheria wrote:
+> > > > On Tue, May 7, 2019 at 1:01 AM Niklas Cassel <niklas.cassel@linaro.org> wrote:
+> > > > >
+> > > > > Add device bindings for CPUs to suspend using PSCI as the enable-method.
+> > > > >
+> > > > > Signed-off-by: Niklas Cassel <niklas.cassel@linaro.org>
+> > > > > ---
+> > > > >  arch/arm64/boot/dts/qcom/qcs404.dtsi | 15 +++++++++++++++
+> > > > >  1 file changed, 15 insertions(+)
+> > > > >
+> > > > > diff --git a/arch/arm64/boot/dts/qcom/qcs404.dtsi b/arch/arm64/boot/dts/qcom/qcs404.dtsi
+> > > > > index ffedf9640af7..f9db9f3ee10c 100644
+> > > > > --- a/arch/arm64/boot/dts/qcom/qcs404.dtsi
+> > > > > +++ b/arch/arm64/boot/dts/qcom/qcs404.dtsi
+> > > > > @@ -31,6 +31,7 @@
+> > > > >                         reg = <0x100>;
+> > > > >                         enable-method = "psci";
+> > > > >                         next-level-cache = <&L2_0>;
+> > > > > +                       cpu-idle-states = <&CPU_PC>;
+> > > > >                 };
+> > > > >
+> > > > >                 CPU1: cpu@101 {
+> > > > > @@ -39,6 +40,7 @@
+> > > > >                         reg = <0x101>;
+> > > > >                         enable-method = "psci";
+> > > > >                         next-level-cache = <&L2_0>;
+> > > > > +                       cpu-idle-states = <&CPU_PC>;
+> > > > >                 };
+> > > > >
+> > > > >                 CPU2: cpu@102 {
+> > > > > @@ -47,6 +49,7 @@
+> > > > >                         reg = <0x102>;
+> > > > >                         enable-method = "psci";
+> > > > >                         next-level-cache = <&L2_0>;
+> > > > > +                       cpu-idle-states = <&CPU_PC>;
+> > > > >                 };
+> > > > >
+> > > > >                 CPU3: cpu@103 {
+> > > > > @@ -55,12 +58,24 @@
+> > > > >                         reg = <0x103>;
+> > > > >                         enable-method = "psci";
+> > > > >                         next-level-cache = <&L2_0>;
+> > > > > +                       cpu-idle-states = <&CPU_PC>;
+> > > > >                 };
+> > > > >
+> > > > >                 L2_0: l2-cache {
+> > > > >                         compatible = "cache";
+> > > > >                         cache-level = <2>;
+> > > > >                 };
+> > > > > +
+> > > > > +               idle-states {
+> > > >
+> > > > entry-method="psci" property goes here. I have a patch fixing it for 410c ;-)
+> > > >
+> > > > I don't think the psci_cpuidle_ops will even get called without this.
+> > >
+> > > Hello Amit,
+> > >
+> > > I added debug prints in psci_cpu_suspend_enter() and arm_cpuidle_suspend()
+> > > when verifying this patch, and psci_cpu_suspend_enter() is indeed called,
+> > > with the correct psci suspend parameter.
+> > >
+> > > The output from:
+> > > grep "" /sys/bus/cpu/devices/cpu0/cpuidle/state?/*
+> > > also looks sane.
+> > >
+> > > However, if 'entry-method="psci"' is required according to the DT binding,
+> > > perhaps you can send a 2/2 series that fixes both this patch and msm8916 ?
 > >
-> > We already have per-domain fault-handlers, so the best solution for now
-> > is to call ->resume from report_iommu_fault() when the fault-handler
-> > returns a special value.
+> > Last time I discussed this with Lorenzo and Sudeep (on IRC), I pointed
+> > out that entry-method="psci" isn't checked for in code anywhere. Let's
+> > get their view on this for posterity.
+> >
 >
-> The problem is that report_iommu_fault is called from IRQ context by the
-> SMMU driver, so the device driver callback cannot sleep.
+> Yes entry-method="psci" is required as per DT binding but not checked
+> in code on arm64. We have CPU ops with idle enabled only for "psci", so
+> there's not need to check.
+
+I don't see it being checked on arm32 either.
+
+> Once we have DT schema validation, this will be caught, so it's better
+> to fix it.
 >
-> So if the device driver needs to be able to sleep between fault report and
-> resume, as I understand Rob needs for writing debugfs, we can either:
+> > What does entry-method="psci" in the idle-states node achieve that
+> > enable-method="psci" in the cpu node doesn't achieve? (Note: enable-
+> > vs. entry-).
+> >
 >
-> * call report_iommu_fault from higher up, in a thread or workqueue.
-> * split the fault reporting as this patch proposes. The exact same
->   mechanism is needed for the vSVM work by Intel: in order to inject fault
->   into the guest, they would like to have an atomic notifier registered by
->   VFIO for passing down the Page Request, and a new function in the IOMMU
->   API to resume/complete the fault.
+> From DT binding perspective, we can have different CPU enable-method
+> and CPU idle entry-method. However on arm64, it's restricted to PSCI
+> only. I need to check what happens on arm32 though, as the driver
+> invocation happens via CPUIDLE_METHOD_OF_DECLARE.
 >
+> > The enable-method property is the one that sets up the
+> > psci_cpuidle_ops callbacks through the CPUIDLE_METHOD_OF_DECLARE
+> > macro.
+> >
+>
+> Indeed.
+>
+> > IOW, if we deprecated the entry-method property, everything would
+> > still work, wouldn't it?
+>
+> Why do you want to deprecated just because Linux kernel doesn't want to
+> use it. That's not a valid reason IMO.
 
-So I was thinking about this topic again.. I would still like to get
-some sort of async resume so that I can wire up GPU cmdstream/state
-logging on iommu fault (without locally resurrecting and rebasing this
-patch and drm/msm side changes each time I need to debug iommu
-faults)..
+Fair enough. Just want to make sure that it isn't some vestigial
+property that was never used. Do you know if another OS is actually
+using it?
 
-And I do still prefer the fault cb in irq (or not requiring it in
-wq)..  but on thinking about it, the two ideas aren't entirely
-conflicting, ie. add some flags either when we register handler[1], or
-they could be handled thru domain_set_attr, like:
+> > Do we expect to support PSCI platforms that might have a different
+> > entry-method for idle states?
+>
+> Not on ARM64, but same DT bindings can be used for idle-states on
+> say RISC-V and have some value other than "psci".
 
- _EXPLICIT_RESUME - iommu API user calls iommu_domain_resume(),
-potentialy from wq/thread after fault handler returns
- _HANDLER_SLEEPS  - iommu core handles the wq, and calls ops->resume()
-internally
+Both enable-method and entry-method properties are currently only used
+(and documented) for ARM platforms. Hence this discussion about
+deprecation of one of them.
 
-In both cases, from the iommu driver PoV it just implements
-iommu_ops::resume().. in first case it is called via iommu user either
-from the fault handler or at some point later (ie. wq or thread).
+> > Should I whip up a patch removing entry-method? Since we don't check
+> > for it today, it won't break the old DTs either.
+> >
+>
+> Nope, I don't think so. But if it's causing issues, we can look into it.
+> I don't want to restrict the use of the bindings for ARM/ARM64 or psci only.
 
-I don't particularly need the _HANDLER_SLEEPS case (unless I can't
-convince anyone that iommu_domamin_resume() called from outside iommu
-core is a good idea).. so probably I wouldn't wire up the wq plumbing
-for the _HANDLER_SLEEPS case unless someone really wanted me to.
+Only a couple of minor issues:
+1. There is a trickle of DTs that need fixing up every now and then
+because they don't use entry-method in their idle-states node. Schema
+validation ought to fix that.
+2. A property that isn't ready by any code is a bit confusing. Perhaps
+we can mention something to the effect in the documentation?
 
-Since there are more iommu drivers, than places that register fault
-handlers, I like the idea that in either case, from the driver PoV, it
-is just implementing the resume callback.
-
-[1] currently I only see a few places where fault handlers are
-registered, so changing iommu_set_fault_handler() is really not much
-churn
-
-BR,
--R
+Regards,
+Amit
