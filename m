@@ -2,58 +2,59 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 4619219CA5
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 May 2019 13:30:18 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 3C98519CA7
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 May 2019 13:30:19 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727344AbfEJLaK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 10 May 2019 07:30:10 -0400
-Received: from mail-pl1-f196.google.com ([209.85.214.196]:45091 "EHLO
-        mail-pl1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727390AbfEJLaJ (ORCPT
+        id S1727454AbfEJLaO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 10 May 2019 07:30:14 -0400
+Received: from mail-pf1-f195.google.com ([209.85.210.195]:36641 "EHLO
+        mail-pf1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727416AbfEJLaN (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 10 May 2019 07:30:09 -0400
-Received: by mail-pl1-f196.google.com with SMTP id a5so2702238pls.12
-        for <linux-arm-msm@vger.kernel.org>; Fri, 10 May 2019 04:30:09 -0700 (PDT)
+        Fri, 10 May 2019 07:30:13 -0400
+Received: by mail-pf1-f195.google.com with SMTP id v80so3095847pfa.3
+        for <linux-arm-msm@vger.kernel.org>; Fri, 10 May 2019 04:30:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :in-reply-to:references;
-        bh=QX6d+2j5rTo6SXyWxTv7coh+9aY0FrKtm56hn7CHowI=;
-        b=ymL3BlSnyQUw4ZwTZIV68bfcJZez4YPfZ7fbb46ka4OALV9P1C8awhm1QWKQcNNAkI
-         /FKXdVCZROLk4hqWuF2XbVHBttz41l1Sh6/JUhLqbICU4tSpxLpxgLIfNdF7qzlpUtf0
-         pu3W+QLbwSiUE8BjQzWRuMCP4teo0eVkBtA2k7MH++Jh6s3yIEJTSBOecJb/Ee4Lzmbz
-         X6AgGCHdu3ptcKnxhYuc4syExlnS8PZpT6vLVJWpfCaUMIZaI23zH1rKjeZzFCkljiLi
-         KUKaSeg/6sKY99p+h/Lz/WC4CtmsAqs2/ATPyfWkIUjyw3p6HfQD2y0tiZYbakHagI0y
-         SvEA==
+        bh=vxbRgWsY1oo16QVLjuEv5vJpgQAg02SeRW3oIPG3HnE=;
+        b=majRNknwjCIZzqzc4d0Qf2KSDJ845oaJmYikIf4x95USXpK3heltnfr/FkhqZSbUmt
+         ana31GB2FZ8yw+s/CDGOcaOCH5BHAFXcd8a+1Kcilsaw6//0LMdVHUFxbg46HglF+CR9
+         3wWEOqDB6wF8rhx3GwNkhimtooLej6PLUxYeFE3Gv86wzEFK1/6/7us5axHAJiTBIZoW
+         kS2E5JQDU5Vsptjpgmd8jHgwsuxhWISp8jQNa2n+R4dzvnJ4SUCkPrRb4xNlGNwtX28H
+         7DxtEBuj+qnU4BLWf2oD/0J5HThB4cE2N+IQVOhutsNC4VKx6pDfoSd2NKp7ZnnlqdZC
+         6ywQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:in-reply-to:references;
-        bh=QX6d+2j5rTo6SXyWxTv7coh+9aY0FrKtm56hn7CHowI=;
-        b=nhss88TCQIOdWG92Sw4IwbkokChcDyf4XTFa5XpQmLqgULqDH/EtFQ32NBahjKX0Zn
-         3D5wBUgcHKBv2VW6sb1Nz6YQ2OVEf5m4cKAwj4yrnog3vAY638rwqvSP5Cu/Foz6MLSy
-         J27yAu2ZggoNHbfnHJkpUDfggfZR54+kOMshpTBSgBSAbXHM7foPZ+KKKLhfRChpvKC6
-         dagMms6vr3ERRundM3Nr33XKJ48QyyMdeA5DallDzWjZTZDI4OpmZ6owUvp0D6o/6RMQ
-         OyD4wiqhnWdW/6ocfbKF8d3zsJhPPhfwJku8cTmOpK2CHainGJrEvcFAyZmFGeuZLmps
-         LxXw==
-X-Gm-Message-State: APjAAAUr2JfPjX8cRYa+dZcJor/o7AdaycS6DYCIk3m7cUaeI7JzhY0J
-        1fiui/G/PB1p34pejfPO42kjpw==
-X-Google-Smtp-Source: APXvYqwVFyUQNGSTFCnt5pCdMiU+jr9xhkNVSK1jl4WxMHv+dE8Y701YC8NfFCk8t9Y08kBmTnCsSw==
-X-Received: by 2002:a17:902:7682:: with SMTP id m2mr11970974pll.68.1557487808815;
-        Fri, 10 May 2019 04:30:08 -0700 (PDT)
+        bh=vxbRgWsY1oo16QVLjuEv5vJpgQAg02SeRW3oIPG3HnE=;
+        b=AeoDYkM2mu+RNQ5VfeV6A8HmSeth7orOPtrMVaRYR1FFij08eAKan5RuLkffMsZBF3
+         wHRWdn0w6Qfbt4AiCsZWqnEi/R0Nks0NmDZWivFHp5fXXRdLyEUZ4xm5LlskMuuhkPm+
+         HgF3sKIT5bH3lw9zY8QaWK853xtY+kgEGYpZexIp8cKjxIis3H2LOkARs5rxHJ8Hr44j
+         GnOw/BFB6fspy/g4ErKk46QsewRQB8Nj6zfhw1NX8erpJL9YpJMzH+Nt4dUDR/dvzFH7
+         MRkUK7ObQyYjHQQh81xjsoi47d3lIXrmgJZ1numDv9PL60GWnRBqCWjmrIdZEfxJuU5Z
+         W1Gg==
+X-Gm-Message-State: APjAAAVVzqivZNo+bvyh3u/8ppCJV2Cx/Q/m3qUBqu3F+hClX5WLSMt9
+        WLdV1Ux78wUb/48L1wP3DHhjTg==
+X-Google-Smtp-Source: APXvYqwdIL0EfbSiX42k8sFfKHDlMcLhJWYsKHWyAGukAhP0HaiNos3zWxVtyEdlTTDwwFC01VQdGg==
+X-Received: by 2002:a65:6496:: with SMTP id e22mr12758716pgv.249.1557487813185;
+        Fri, 10 May 2019 04:30:13 -0700 (PDT)
 Received: from localhost ([103.8.150.7])
-        by smtp.gmail.com with ESMTPSA id g72sm13935671pfg.63.2019.05.10.04.30.07
+        by smtp.gmail.com with ESMTPSA id q80sm10840463pfa.66.2019.05.10.04.30.12
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Fri, 10 May 2019 04:30:08 -0700 (PDT)
+        Fri, 10 May 2019 04:30:12 -0700 (PDT)
 From:   Amit Kucheria <amit.kucheria@linaro.org>
 To:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
         bjorn.andersson@linaro.org, andy.gross@linaro.org,
         David Brown <david.brown@linaro.org>,
         Li Yang <leoyang.li@nxp.com>, Shawn Guo <shawnguo@kernel.org>
-Cc:     devicetree@vger.kernel.org
-Subject: [PATCHv1 4/8] arm64: dts: qcom: msm8916: Use more generic idle state names
-Date:   Fri, 10 May 2019 16:59:42 +0530
-Message-Id: <2a0626da4d8d5a1018c351b24b63e5e0d7a45a10.1557486950.git.amit.kucheria@linaro.org>
+Cc:     Niklas Cassel <niklas.cassel@linaro.org>,
+        devicetree@vger.kernel.org
+Subject: [PATCHv1 5/8] arm64: dts: qcom: qcs404: Add PSCI cpuidle low power states
+Date:   Fri, 10 May 2019 16:59:43 +0530
+Message-Id: <d3a517b90620fe167eb9fd27bcc88a43dce514b2.1557486950.git.amit.kucheria@linaro.org>
 X-Mailer: git-send-email 2.17.1
 In-Reply-To: <cover.1557486950.git.amit.kucheria@linaro.org>
 References: <cover.1557486950.git.amit.kucheria@linaro.org>
@@ -64,66 +65,76 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Instead of using Qualcomm-specific terminology, use generic node names
-for the idle states that are easier to understand. Move the description
-into the "idle-state-name" property.
+From: Niklas Cassel <niklas.cassel@linaro.org>
 
+Add device bindings for cpuidle states for cpu devices.
+
+[amit: rename the idle-states to more generic names and fixups]
+
+Signed-off-by: Niklas Cassel <niklas.cassel@linaro.org>
+Reviewed-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Amit Kucheria <amit.kucheria@linaro.org>
 ---
- arch/arm64/boot/dts/qcom/msm8916.dtsi | 11 ++++++-----
- 1 file changed, 6 insertions(+), 5 deletions(-)
+ arch/arm64/boot/dts/qcom/qcs404.dtsi | 18 ++++++++++++++++++
+ 1 file changed, 18 insertions(+)
 
-diff --git a/arch/arm64/boot/dts/qcom/msm8916.dtsi b/arch/arm64/boot/dts/qcom/msm8916.dtsi
-index ded1052e5693..400b609bb3fd 100644
---- a/arch/arm64/boot/dts/qcom/msm8916.dtsi
-+++ b/arch/arm64/boot/dts/qcom/msm8916.dtsi
-@@ -110,7 +110,7 @@
- 			reg = <0x0>;
- 			next-level-cache = <&L2_0>;
+diff --git a/arch/arm64/boot/dts/qcom/qcs404.dtsi b/arch/arm64/boot/dts/qcom/qcs404.dtsi
+index e8fd26633d57..369c59c35bc7 100644
+--- a/arch/arm64/boot/dts/qcom/qcs404.dtsi
++++ b/arch/arm64/boot/dts/qcom/qcs404.dtsi
+@@ -30,6 +30,7 @@
+ 			compatible = "arm,cortex-a53";
+ 			reg = <0x100>;
  			enable-method = "psci";
--			cpu-idle-states = <&CPU_SPC>;
 +			cpu-idle-states = <&CPU_SLEEP_0>;
- 			clocks = <&apcs>;
- 			operating-points-v2 = <&cpu_opp_table>;
- 			#cooling-cells = <2>;
-@@ -122,7 +122,7 @@
- 			reg = <0x1>;
  			next-level-cache = <&L2_0>;
- 			enable-method = "psci";
--			cpu-idle-states = <&CPU_SPC>;
-+			cpu-idle-states = <&CPU_SLEEP_0>;
- 			clocks = <&apcs>;
- 			operating-points-v2 = <&cpu_opp_table>;
- 			#cooling-cells = <2>;
-@@ -134,7 +134,7 @@
- 			reg = <0x2>;
- 			next-level-cache = <&L2_0>;
- 			enable-method = "psci";
--			cpu-idle-states = <&CPU_SPC>;
-+			cpu-idle-states = <&CPU_SLEEP_0>;
- 			clocks = <&apcs>;
- 			operating-points-v2 = <&cpu_opp_table>;
- 			#cooling-cells = <2>;
-@@ -146,7 +146,7 @@
- 			reg = <0x3>;
- 			next-level-cache = <&L2_0>;
- 			enable-method = "psci";
--			cpu-idle-states = <&CPU_SPC>;
-+			cpu-idle-states = <&CPU_SLEEP_0>;
- 			clocks = <&apcs>;
- 			operating-points-v2 = <&cpu_opp_table>;
- 			#cooling-cells = <2>;
-@@ -160,8 +160,9 @@
- 		idle-states {
- 			entry-method="psci";
+ 		};
  
--			CPU_SPC: spc {
+@@ -38,6 +39,7 @@
+ 			compatible = "arm,cortex-a53";
+ 			reg = <0x101>;
+ 			enable-method = "psci";
++			cpu-idle-states = <&CPU_SLEEP_0>;
+ 			next-level-cache = <&L2_0>;
+ 		};
+ 
+@@ -46,6 +48,7 @@
+ 			compatible = "arm,cortex-a53";
+ 			reg = <0x102>;
+ 			enable-method = "psci";
++			cpu-idle-states = <&CPU_SLEEP_0>;
+ 			next-level-cache = <&L2_0>;
+ 		};
+ 
+@@ -54,6 +57,7 @@
+ 			compatible = "arm,cortex-a53";
+ 			reg = <0x103>;
+ 			enable-method = "psci";
++			cpu-idle-states = <&CPU_SLEEP_0>;
+ 			next-level-cache = <&L2_0>;
+ 		};
+ 
+@@ -61,6 +65,20 @@
+ 			compatible = "cache";
+ 			cache-level = <2>;
+ 		};
++
++		idle-states {
++			entry-method="psci";
++
 +			CPU_SLEEP_0: cpu-sleep-0 {
- 				compatible = "arm,idle-state";
++				compatible = "arm,idle-state";
 +				idle-state-name = "standalone-power-collapse";
- 				arm,psci-suspend-param = <0x40000002>;
- 				entry-latency-us = <130>;
- 				exit-latency-us = <150>;
++				arm,psci-suspend-param = <0x40000003>;
++				entry-latency-us = <125>;
++				exit-latency-us = <180>;
++				min-residency-us = <595>;
++				local-timer-stop;
++			};
++		};
+ 	};
+ 
+ 	firmware {
 -- 
 2.17.1
 
