@@ -2,213 +2,170 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 75EC61A2F8
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 May 2019 20:28:59 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id CE4891A566
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 11 May 2019 00:40:34 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727803AbfEJS2x (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 10 May 2019 14:28:53 -0400
-Received: from mail-ua1-f68.google.com ([209.85.222.68]:34491 "EHLO
-        mail-ua1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727535AbfEJS2x (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 10 May 2019 14:28:53 -0400
-Received: by mail-ua1-f68.google.com with SMTP id f9so2483066ual.1
-        for <linux-arm-msm@vger.kernel.org>; Fri, 10 May 2019 11:28:52 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=53B459eecvRty+a3wV9xVIaRrF5O7M+rhPq+rsdt49Q=;
-        b=Cg00A8UFLYkETfa0fNN/fBZTQ/WB3tM0tBvqcgmsD7y4Qnh+T7w5qI3un3uJFEYnzl
-         KaC1ZQ/e9h8U5x1HQqzOqNI+6QLjLi/9TFwZV2s5ZCpnbc93Q+uelEF4LDdko9hbTWIF
-         qGhDp/rhVSoIR1YCxVfG+VsqcQf+Yd0U54jPTVl1qycbXo2zKhtQGbXG2QYvHgQQ3MYy
-         MINutBZLASFsyKnRhT4dShy9e9JHBIsnDYytNtgzXxVPJULGq0ypi0kXFh3+jCuckYps
-         rDP7Xjq0ehMyZeT2eXWFoObjJNJn2iG704TlGzr7DBAVgSeiKZfsnMw2fDgzI8Qw7I6n
-         OMXA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=53B459eecvRty+a3wV9xVIaRrF5O7M+rhPq+rsdt49Q=;
-        b=bYG8+R2taz7GnUObWIDPLb9QWF5gq+2WQ1brGkFq+n57+P/dPPKDVpoXn9qyZVSnAi
-         hELQbFHB2yhSv+vohPjlxMEyq3X7e7Qe5l2l6HEFRp/VIo5gnGQ29a6qUYUA6JQz2PN7
-         z4psl1ffOStuib8kTYzXm26J7KREwMF2F3tjCwwvvEAORfV0rXGkjz5XPKBR8gYJ5GD2
-         POrB+9/qg/7Hql75CZucbchMBKH+nwpBxmuG21OyKhhXPau2G1/V16nsLHlxqhka2jOP
-         f63eluIut08hLMDdhwisK5XMCZJZtNUglYKiMtTzXEQEn87suWnApSr9KAOVHfTzN0CP
-         AESw==
-X-Gm-Message-State: APjAAAV72m/fqKdsFTik/nWPbY0spQD4afSuG/kmtkIcEzUsO86ncd1a
-        khksA/Xp1xipObcdxhadGnHVKJo9z5n1Pxm+7iZesg==
-X-Google-Smtp-Source: APXvYqwXRa9KK3jbWYWs+gozP2JQn6xPfkndKLXXl4HD2u+AuhwHY19lfENjCYj/mWKbuNyqLzndwn0I636BipoYXhc=
-X-Received: by 2002:ab0:154e:: with SMTP id p14mr6334650uae.48.1557512931577;
- Fri, 10 May 2019 11:28:51 -0700 (PDT)
+        id S1727961AbfEJWkd (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 10 May 2019 18:40:33 -0400
+Received: from mail.kernel.org ([198.145.29.99]:47894 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726986AbfEJWkd (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 10 May 2019 18:40:33 -0400
+Received: from mail-qk1-f175.google.com (mail-qk1-f175.google.com [209.85.222.175])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        by mail.kernel.org (Postfix) with ESMTPSA id A45FB217D6;
+        Fri, 10 May 2019 22:40:31 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=default; t=1557528031;
+        bh=sjg797I3Ege8CH2yMEKO3LN7YMxSK0+Tf/Ul0+K1ZmU=;
+        h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
+        b=2BQZd867VQk7T/6xVDuphNMg8PT5izoOPVjRH879mo5UuHee3+ME5We5UOp8oRApd
+         iNSg0CMTjRLx+00A9EkpzztyQHHRMInm04SGcjFY0N6Ai1ssRwJbeHEvYjgtLq3o/8
+         Wx03509gNXFgIf1KQaGDcBNEhhyg+soHiT3IF6pM=
+Received: by mail-qk1-f175.google.com with SMTP id c1so3365531qkk.4;
+        Fri, 10 May 2019 15:40:31 -0700 (PDT)
+X-Gm-Message-State: APjAAAW4lI9YZcdBQOHTUO12vKApasFtUEa37qKOlUhFHw63XY3DrNho
+        Z4MY0Q3mcIdVCFavI5lHXsb3A24Yv0TtGLIEow==
+X-Google-Smtp-Source: APXvYqzfUsXjKG+F9pb5KnYx61JOP50q/a8ljf0lZ3E6IZXXHNgJGxcJf1n0r9rKoC1VBQNTKS7hmCXklLDer5hjE7Q=
+X-Received: by 2002:a37:c42:: with SMTP id 63mr10276099qkm.326.1557528030863;
+ Fri, 10 May 2019 15:40:30 -0700 (PDT)
 MIME-Version: 1.0
-References: <20190508145600.GA26843@centauri> <CAHLCerN8L4np0WAY4hTjTnPXFtTK6EH0BXWLXzB-NiRaAnvcDA@mail.gmail.com>
- <20190510091158.GA10284@e107155-lin>
-In-Reply-To: <20190510091158.GA10284@e107155-lin>
-From:   Amit Kucheria <amit.kucheria@linaro.org>
-Date:   Fri, 10 May 2019 23:58:40 +0530
-Message-ID: <CAHLCerM83weBBvwurU45d9_M0Wg49WjDFTRJ6KL8vj7cavz03g@mail.gmail.com>
-Subject: Re: [PATCH] arm64: dts: qcom: qcs404: Add PSCI cpuidle support
-To:     Sudeep Holla <sudeep.holla@arm.com>
-Cc:     Niklas Cassel <niklas.cassel@linaro.org>,
-        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
-        Andy Gross <agross@kernel.org>,
-        David Brown <david.brown@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Mark Rutland <mark.rutland@arm.com>,
-        Jorge Ramirez-Ortiz <jorge.ramirez-ortiz@linaro.org>,
-        Lina Iyer <lina.iyer@linaro.org>,
-        Ulf Hansson <ulf.hansson@linaro.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
+References: <20190507203749.3384-1-ilina@codeaurora.org> <20190507203749.3384-5-ilina@codeaurora.org>
+In-Reply-To: <20190507203749.3384-5-ilina@codeaurora.org>
+From:   Rob Herring <robh@kernel.org>
+Date:   Fri, 10 May 2019 17:40:19 -0500
+X-Gmail-Original-Message-ID: <CAL_JsqKXN2ye49HGEf+vLD0xaysp6kDqsZfFXX9BssK+TUh5SA@mail.gmail.com>
+Message-ID: <CAL_JsqKXN2ye49HGEf+vLD0xaysp6kDqsZfFXX9BssK+TUh5SA@mail.gmail.com>
+Subject: Re: [PATCH v5 04/11] of: irq: document properties for wakeup
+ interrupt parent
+To:     Lina Iyer <ilina@codeaurora.org>
+Cc:     Stephen Boyd <swboyd@chromium.org>,
+        Evan Green <evgreen@chromium.org>,
+        Marc Zyngier <marc.zyngier@arm.com>,
+        Linus Walleij <linus.walleij@linaro.org>,
+        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
+        "Raju P.L.S.S.S.N" <rplsssn@codeaurora.org>,
         linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        DTML <devicetree@vger.kernel.org>,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>
+        Thierry Reding <thierry.reding@gmail.com>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Doug Anderson <dianders@chromium.org>,
+        devicetree@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, May 10, 2019 at 2:54 PM Sudeep Holla <sudeep.holla@arm.com> wrote:
+On Tue, May 7, 2019 at 3:41 PM Lina Iyer <ilina@codeaurora.org> wrote:
 >
-> On Thu, May 09, 2019 at 11:19:23PM +0530, Amit Kucheria wrote:
-> > (Adding Lorenzo and Sudeep)
-> >
-> > On Wed, May 8, 2019 at 8:26 PM Niklas Cassel <niklas.cassel@linaro.org> wrote:
-> > >
-> > > On Wed, May 08, 2019 at 02:48:19AM +0530, Amit Kucheria wrote:
-> > > > On Tue, May 7, 2019 at 1:01 AM Niklas Cassel <niklas.cassel@linaro.org> wrote:
-> > > > >
-> > > > > Add device bindings for CPUs to suspend using PSCI as the enable-method.
-> > > > >
-> > > > > Signed-off-by: Niklas Cassel <niklas.cassel@linaro.org>
-> > > > > ---
-> > > > >  arch/arm64/boot/dts/qcom/qcs404.dtsi | 15 +++++++++++++++
-> > > > >  1 file changed, 15 insertions(+)
-> > > > >
-> > > > > diff --git a/arch/arm64/boot/dts/qcom/qcs404.dtsi b/arch/arm64/boot/dts/qcom/qcs404.dtsi
-> > > > > index ffedf9640af7..f9db9f3ee10c 100644
-> > > > > --- a/arch/arm64/boot/dts/qcom/qcs404.dtsi
-> > > > > +++ b/arch/arm64/boot/dts/qcom/qcs404.dtsi
-> > > > > @@ -31,6 +31,7 @@
-> > > > >                         reg = <0x100>;
-> > > > >                         enable-method = "psci";
-> > > > >                         next-level-cache = <&L2_0>;
-> > > > > +                       cpu-idle-states = <&CPU_PC>;
-> > > > >                 };
-> > > > >
-> > > > >                 CPU1: cpu@101 {
-> > > > > @@ -39,6 +40,7 @@
-> > > > >                         reg = <0x101>;
-> > > > >                         enable-method = "psci";
-> > > > >                         next-level-cache = <&L2_0>;
-> > > > > +                       cpu-idle-states = <&CPU_PC>;
-> > > > >                 };
-> > > > >
-> > > > >                 CPU2: cpu@102 {
-> > > > > @@ -47,6 +49,7 @@
-> > > > >                         reg = <0x102>;
-> > > > >                         enable-method = "psci";
-> > > > >                         next-level-cache = <&L2_0>;
-> > > > > +                       cpu-idle-states = <&CPU_PC>;
-> > > > >                 };
-> > > > >
-> > > > >                 CPU3: cpu@103 {
-> > > > > @@ -55,12 +58,24 @@
-> > > > >                         reg = <0x103>;
-> > > > >                         enable-method = "psci";
-> > > > >                         next-level-cache = <&L2_0>;
-> > > > > +                       cpu-idle-states = <&CPU_PC>;
-> > > > >                 };
-> > > > >
-> > > > >                 L2_0: l2-cache {
-> > > > >                         compatible = "cache";
-> > > > >                         cache-level = <2>;
-> > > > >                 };
-> > > > > +
-> > > > > +               idle-states {
-> > > >
-> > > > entry-method="psci" property goes here. I have a patch fixing it for 410c ;-)
-> > > >
-> > > > I don't think the psci_cpuidle_ops will even get called without this.
-> > >
-> > > Hello Amit,
-> > >
-> > > I added debug prints in psci_cpu_suspend_enter() and arm_cpuidle_suspend()
-> > > when verifying this patch, and psci_cpu_suspend_enter() is indeed called,
-> > > with the correct psci suspend parameter.
-> > >
-> > > The output from:
-> > > grep "" /sys/bus/cpu/devices/cpu0/cpuidle/state?/*
-> > > also looks sane.
-> > >
-> > > However, if 'entry-method="psci"' is required according to the DT binding,
-> > > perhaps you can send a 2/2 series that fixes both this patch and msm8916 ?
-> >
-> > Last time I discussed this with Lorenzo and Sudeep (on IRC), I pointed
-> > out that entry-method="psci" isn't checked for in code anywhere. Let's
-> > get their view on this for posterity.
-> >
+> Some interrupt controllers in a SoC, are always powered on and have a
+> select interrupts routed to them, so that they can wakeup the SoC from
+> suspend. Add wakeup-parent DT property to refer to these interrupt
+> controllers.
 >
-> Yes entry-method="psci" is required as per DT binding but not checked
-> in code on arm64. We have CPU ops with idle enabled only for "psci", so
-> there's not need to check.
+> If the interrupts routed to the wakeup parent are not sequential, than a
+> map needs to exist to associate the same interrupt line on multiple
+> interrupt controllers. Providing this map in every driver is cumbersome.
+> Let's add this in the device tree and document the properties to map the
+> interrupt specifiers
+>
+> Cc: devicetree@vger.kernel.org
+> Signed-off-by: Lina Iyer <ilina@codeaurora.org>
+> ---
+> Changes in v5:
+>         - Update documentation to describe masks in the example
+> Changes in v4:
+>         - Added this documentation
+> ---
+>  .../interrupt-controller/interrupts.txt       | 54 +++++++++++++++++++
+>  1 file changed, 54 insertions(+)
+>
+> diff --git a/Documentation/devicetree/bindings/interrupt-controller/interrupts.txt b/Documentation/devicetree/bindings/interrupt-controller/interrupts.txt
+> index 8a3c40829899..e3e43f5d5566 100644
+> --- a/Documentation/devicetree/bindings/interrupt-controller/interrupts.txt
+> +++ b/Documentation/devicetree/bindings/interrupt-controller/interrupts.txt
+> @@ -108,3 +108,57 @@ commonly used:
+>                         sensitivity = <7>;
+>                 };
+>         };
+> +
+> +3) Interrupt wakeup parent
+> +--------------------------
+> +
+> +Some interrupt controllers in a SoC, are always powered on and have a select
+> +interrupts routed to them, so that they can wakeup the SoC from suspend. These
+> +interrupt controllers do not fall into the category of a parent interrupt
+> +controller and can be specified by the "wakeup-parent" property and contain a
+> +single phandle referring to the wakeup capable interrupt controller.
+> +
+> +   Example:
+> +       wakeup-parent = <&pdc_intc>;
+> +
+> +
+> +4) Interrupt mapping
+> +--------------------
+> +
+> +Sometimes interrupts may be detected by more than one interrupt controller
+> +(depending on which controller is active). The interrupt controllers may not
+> +be in hierarchy and therefore the interrupt controller driver is required to
+> +establish the relationship between the same interrupt at different interrupt
+> +controllers. If these interrupts are not sequential then a map needs to be
+> +specified to help identify these interrupts.
+> +
+> +Mapping the interrupt specifiers in the device tree can be done using the
+> +"irqdomain-map" property. The property contains interrupt specifier at the
+> +current interrupt controller followed by the interrupt specifier at the mapped
+> +interrupt controller.
+> +
+> +   irqdomain-map = <incoming-interrupt-specifier mapped-interrupt-specifier>
 
-I don't see it being checked on arm32 either.
+I'm wondering why we need a new map property rather than just using
+interrupt-map? Contrary to what Linus said, it is not PCI only.
 
-> Once we have DT schema validation, this will be caught, so it's better
-> to fix it.
->
-> > What does entry-method="psci" in the idle-states node achieve that
-> > enable-method="psci" in the cpu node doesn't achieve? (Note: enable-
-> > vs. entry-).
-> >
->
-> From DT binding perspective, we can have different CPU enable-method
-> and CPU idle entry-method. However on arm64, it's restricted to PSCI
-> only. I need to check what happens on arm32 though, as the driver
-> invocation happens via CPUIDLE_METHOD_OF_DECLARE.
->
-> > The enable-method property is the one that sets up the
-> > psci_cpuidle_ops callbacks through the CPUIDLE_METHOD_OF_DECLARE
-> > macro.
-> >
->
-> Indeed.
->
-> > IOW, if we deprecated the entry-method property, everything would
-> > still work, wouldn't it?
->
-> Why do you want to deprecated just because Linux kernel doesn't want to
-> use it. That's not a valid reason IMO.
+It would be an extension of the current behavior. It's generally used
+to map each interrupt to different parents or swizzle the routing (in
+the PCI case). Generally, a node would be either an
+'interrupt-controller' or an 'interrupt-map' node. The interrupt
+parsing code (for the kernel at least) prioritizes
+'interrupt-controller' path, so adding 'interrupt-map' could be done
+without changing behavior.
 
-Fair enough. Just want to make sure that it isn't some vestigial
-property that was never used. Do you know if another OS is actually
-using it?
+Another concern I have with this is it only solves the problem of an
+IRQ routed to multiple parents for the case of 2 parents. What happens
+when we have an IRQ routed to 3 different parents? Maybe the solution
+is the incoming-interrupt-specifier can be listed more than once. Marc
+already expressed concerns with the scalability of interrupt-map
+property, so that's maybe not an ideal solution.
 
-> > Do we expect to support PSCI platforms that might have a different
-> > entry-method for idle states?
+> +
+> +The optional properties "irqdomain-map-mask" and "irqdomain-map-pass-thru" may
+> +be provided to help interpret the valid bits of the incoming and mapped
+> +interrupt specifiers respectively.
+> +
+> +   Example:
+> +       intc: interrupt-controller@17a00000 {
+> +               #interrupt-cells = <3>;
+
+The phandle doesn't count as a cell, so this should be 2.
+
+> +       };
+> +
+> +       pinctrl@3400000 {
+> +               #interrupt-cells = <2>;
+> +               irqdomain-map = <22 0 &intc 36 0>, <24 0 &intc 37 0>;
+> +               irqdomain-map-mask = <0xff 0>;
+> +               irqdomain-map-pass-thru = <0 0xff>;
+> +       };
+> +
+> +In the above example, the input interrupt specifier map-mask <0xff 0> applied
+> +on the incoming interrupt specifier of the map <22 0>, <24 0>, returns the
+> +input interrupt 22, 24 etc. The second argument being irq type is immaterial
+> +from the map and is used from the incoming request instead. The pass-thru
+> +specifier parses the output interrupt specifier from the rest of the unparsed
+> +argments from the map <&intc 36 0>, <&intc 37 0> etc to return the output
+> +interrupt 36, 37 etc.
+> --
+> The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
+> a Linux Foundation Collaborative Project
 >
-> Not on ARM64, but same DT bindings can be used for idle-states on
-> say RISC-V and have some value other than "psci".
-
-Both enable-method and entry-method properties are currently only used
-(and documented) for ARM platforms. Hence this discussion about
-deprecation of one of them.
-
-> > Should I whip up a patch removing entry-method? Since we don't check
-> > for it today, it won't break the old DTs either.
-> >
->
-> Nope, I don't think so. But if it's causing issues, we can look into it.
-> I don't want to restrict the use of the bindings for ARM/ARM64 or psci only.
-
-Only a couple of minor issues:
-1. There is a trickle of DTs that need fixing up every now and then
-because they don't use entry-method in their idle-states node. Schema
-validation ought to fix that.
-2. A property that isn't ready by any code is a bit confusing. Perhaps
-we can mention something to the effect in the documentation?
-
-Regards,
-Amit
