@@ -2,25 +2,25 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id B34B31B3E6
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 May 2019 12:21:24 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4DC351B3E3
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 May 2019 12:21:23 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728890AbfEMKUj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 13 May 2019 06:20:39 -0400
-Received: from smtp.codeaurora.org ([198.145.29.96]:55764 "EHLO
+        id S1728852AbfEMKUm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 13 May 2019 06:20:42 -0400
+Received: from smtp.codeaurora.org ([198.145.29.96]:55850 "EHLO
         smtp.codeaurora.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728852AbfEMKUi (ORCPT
+        with ESMTP id S1727690AbfEMKUm (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 13 May 2019 06:20:38 -0400
+        Mon, 13 May 2019 06:20:42 -0400
 Received: by smtp.codeaurora.org (Postfix, from userid 1000)
-        id B9A2660AA8; Mon, 13 May 2019 10:20:37 +0000 (UTC)
+        id 485E060C72; Mon, 13 May 2019 10:20:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
-        s=default; t=1557742837;
-        bh=gv7cZOA40miXv3BP7BEyZB/2v7GNv3dIS+X+E9LBQ48=;
+        s=default; t=1557742841;
+        bh=9qbE9DNsT7sHR+XIxHoeAAs2S5N1haUdw3Jt612GZno=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=D7nZeUWxzg+XiGuMd3cl2M201OgzHR/mJX62SXBM6L2svpIy+zXbAVoZRhCGKxipq
-         rXQK9epk8mWjQiUIyERdDGG+Zft7p9egONnD/wgWcWAB65N7tiY5diwUF/f3dirVzg
-         Tld4+TZuvrLe5x+ChjV0MgfVdBMkPiOVgjPZSWDQ=
+        b=duspvJgLY6ATJbIzQz8rkrrAXzgIar+9cWfyNhcFuzMVsHfko64V6JZbz47QhQLDP
+         mBVWr2Mfrj+Uv7ElZxVmIr8GWmAboZmnIp6qYW7miGGU7MZShzGncDctNG/mSSAmeZ
+         wVp6/TpGrFYhAPRhAik1IE2sND+RkSc9dNqWEGBs=
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
         pdx-caf-mail.web.codeaurora.org
 X-Spam-Level: 
@@ -30,16 +30,16 @@ Received: from blr-ubuntu-87.qualcomm.com (blr-bdr-fw-01_globalnat_allzones-outs
         (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
         (No client certificate requested)
         (Authenticated sender: sibis@smtp.codeaurora.org)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 2B3B660A0A;
-        Mon, 13 May 2019 10:20:33 +0000 (UTC)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 9532E60ACA;
+        Mon, 13 May 2019 10:20:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
-        s=default; t=1557742837;
-        bh=gv7cZOA40miXv3BP7BEyZB/2v7GNv3dIS+X+E9LBQ48=;
+        s=default; t=1557742840;
+        bh=9qbE9DNsT7sHR+XIxHoeAAs2S5N1haUdw3Jt612GZno=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=D7nZeUWxzg+XiGuMd3cl2M201OgzHR/mJX62SXBM6L2svpIy+zXbAVoZRhCGKxipq
-         rXQK9epk8mWjQiUIyERdDGG+Zft7p9egONnD/wgWcWAB65N7tiY5diwUF/f3dirVzg
-         Tld4+TZuvrLe5x+ChjV0MgfVdBMkPiOVgjPZSWDQ=
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 2B3B660A0A
+        b=YronulV9I4I0iQfXZGtNt4yyrD6vRlbWSVhE72Ry85twC9vCqzoE59jPstJfFfqKx
+         SvXVTOwmU4oREFh/aMx4x5owCwOIKU4qQCpQ5ScqaGqYMG14S2vmgHLZ5hNyJcHVNi
+         dcFLMPdyhUEQEsW7SKOIMfkCA4F8yp+0ymx+c044=
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 9532E60ACA
 Authentication-Results: pdx-caf-mail.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
 Authentication-Results: pdx-caf-mail.web.codeaurora.org; spf=none smtp.mailfrom=sibis@codeaurora.org
 From:   Sibi Sankar <sibis@codeaurora.org>
@@ -48,9 +48,9 @@ Cc:     david.brown@linaro.org, mark.rutland@arm.com,
         linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
         devicetree@vger.kernel.org, rnayak@codeaurora.org,
         marc.w.gonzalez@free.fr, Sibi Sankar <sibis@codeaurora.org>
-Subject: [PATCH v4 1/9] soc: qcom: rpmpd: fixup rpmpd set performance state
-Date:   Mon, 13 May 2019 15:50:07 +0530
-Message-Id: <20190513102015.26551-2-sibis@codeaurora.org>
+Subject: [PATCH v4 2/9] soc: qcom: rpmpd: Add support to set rpmpd state to max
+Date:   Mon, 13 May 2019 15:50:08 +0530
+Message-Id: <20190513102015.26551-3-sibis@codeaurora.org>
 X-Mailer: git-send-email 2.21.0
 In-Reply-To: <20190513102015.26551-1-sibis@codeaurora.org>
 References: <20190513102015.26551-1-sibis@codeaurora.org>
@@ -61,32 +61,69 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Remoteproc q6v5-mss calls set_performace_state with INT_MAX on
-rpmpd. This is currently ignored since it is greater than the
-max supported state. Fixup rpmpd state to max if the required
-state is greater than all the supported states.
+rpmpd max state varies across SoCs and SoC families, add support
+in the driver to make it SoC/SoC family specific
 
-Fixes: 075d3db8d10d ("soc: qcom: rpmpd: Add support for get/set performance state")
-
-Reviewed-by: Marc Gonzalez <marc.w.gonzalez@free.fr>
 Signed-off-by: Sibi Sankar <sibis@codeaurora.org>
 ---
- drivers/soc/qcom/rpmpd.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/soc/qcom/rpmpd.c | 10 +++++++---
+ 1 file changed, 7 insertions(+), 3 deletions(-)
 
 diff --git a/drivers/soc/qcom/rpmpd.c b/drivers/soc/qcom/rpmpd.c
-index 005326050c23..235d01870dd8 100644
+index 235d01870dd8..94015ece40e9 100644
 --- a/drivers/soc/qcom/rpmpd.c
 +++ b/drivers/soc/qcom/rpmpd.c
-@@ -226,7 +226,7 @@ static int rpmpd_set_performance(struct generic_pm_domain *domain,
+@@ -25,7 +25,7 @@
+ #define KEY_ENABLE		0x6e657773 /* swen */
+ #define KEY_FLOOR_CORNER	0x636676   /* vfc */
+ 
+-#define MAX_RPMPD_STATE		6
++#define MAX_8996_RPMPD_STATE	6
+ 
+ #define DEFINE_RPMPD_CORNER_SMPA(_platform, _name, _active, r_id)		\
+ 	static struct rpmpd _platform##_##_active;			\
+@@ -83,12 +83,14 @@ struct rpmpd {
+ 	const int res_type;
+ 	const int res_id;
+ 	struct qcom_smd_rpm *rpm;
++	unsigned int max_state;
+ 	__le32 key;
+ };
+ 
+ struct rpmpd_desc {
+ 	struct rpmpd **rpmpds;
+ 	size_t num_pds;
++	unsigned int max_state;
+ };
+ 
+ static DEFINE_MUTEX(rpmpd_lock);
+@@ -114,6 +116,7 @@ static struct rpmpd *msm8996_rpmpds[] = {
+ static const struct rpmpd_desc msm8996_desc = {
+ 	.rpmpds = msm8996_rpmpds,
+ 	.num_pds = ARRAY_SIZE(msm8996_rpmpds),
++	.max_state = MAX_8996_RPMPD_STATE,
+ };
+ 
+ static const struct of_device_id rpmpd_match_table[] = {
+@@ -225,8 +228,8 @@ static int rpmpd_set_performance(struct generic_pm_domain *domain,
+ 	int ret = 0;
  	struct rpmpd *pd = domain_to_rpmpd(domain);
  
- 	if (state > MAX_RPMPD_STATE)
--		goto out;
-+		state = MAX_RPMPD_STATE;
+-	if (state > MAX_RPMPD_STATE)
+-		state = MAX_RPMPD_STATE;
++	if (state > pd->max_state)
++		state = pd->max_state;
  
  	mutex_lock(&rpmpd_lock);
  
+@@ -287,6 +290,7 @@ static int rpmpd_probe(struct platform_device *pdev)
+ 		}
+ 
+ 		rpmpds[i]->rpm = rpm;
++		rpmpds[i]->max_state = desc->max_state;
+ 		rpmpds[i]->pd.power_off = rpmpd_power_off;
+ 		rpmpds[i]->pd.power_on = rpmpd_power_on;
+ 		rpmpds[i]->pd.set_performance_state = rpmpd_set_performance;
 -- 
 The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
 a Linux Foundation Collaborative Project
