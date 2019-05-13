@@ -2,273 +2,174 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 07C5B1BE09
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 May 2019 21:31:53 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0A5921BEC0
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 May 2019 22:32:45 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727171AbfEMTbt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 13 May 2019 15:31:49 -0400
-Received: from mail-lj1-f193.google.com ([209.85.208.193]:38621 "EHLO
-        mail-lj1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726290AbfEMTbt (ORCPT
+        id S1726259AbfEMUco (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 13 May 2019 16:32:44 -0400
+Received: from mail-pf1-f195.google.com ([209.85.210.195]:46353 "EHLO
+        mail-pf1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726179AbfEMUcn (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 13 May 2019 15:31:49 -0400
-Received: by mail-lj1-f193.google.com with SMTP id 14so12099813ljj.5
-        for <linux-arm-msm@vger.kernel.org>; Mon, 13 May 2019 12:31:47 -0700 (PDT)
+        Mon, 13 May 2019 16:32:43 -0400
+Received: by mail-pf1-f195.google.com with SMTP id y11so7788835pfm.13
+        for <linux-arm-msm@vger.kernel.org>; Mon, 13 May 2019 13:32:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=7AxPd/WiAkEtzi6eC4zcfxrPuKGzl2d+dQ6Z4/Ng9yA=;
-        b=iguEcn8d2UHmA1BdPS+ybI3lkwBDS3Ab7tjgLTOWKG6wZ7qEdUTtbHKOqgM2Pnvm4B
-         Xofw8r8SJPdY+sJxTtVFiOGqhI6kONaT2HlWPLlUPTFxNHUtX5OLL4bifccr+S/yXa3L
-         1874f/2ZGLG1PlPpnMLUejT0OAYu+L+O/+Tjquwfhc9n4SfDn/aZgcGK8cGVd1V0uzUf
-         PPof97i8Xu9/kDaXfsu5Hm2b0l3KZKU/pEG+zdRjUSm4VqyLizf/dMOcOLG7wEsnVQ0t
-         p+FWaZl+/zA11ABliZ+oXMfD7J1aEnNIpgO0Q9nWUTv9CRs6+XpZ0/jLRxkxzf+u27O2
-         FmAQ==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=UzVOW4+OtCm98/Ue4nBATFT7n58mc+iYO2oR5TpDKaQ=;
+        b=z60ibMFqK837aU0kMc2Ddajt/3OqcFSzX1UIPoUDq8qWWrTOiFXpyJ/1IRpvcwvTa9
+         xhdjmqTU6JNpbEZxeh4FBluO9Zf6lV/z/T1Hc1C/ic0sx/o5LsDkBSwpZ7msdo3PELiT
+         LzYyqbHzeKuue8Y4NqGNSFVyPcqasONQmj+OfRt1BmrPeCys+mtZty5iBx8XIodOQtaS
+         LEbi/3pDC4awXth8ohze0eqU0YVV86sTcwsjW63QA3nAkhCjvOZIWGAkW3maYlrr+BLL
+         2A5nv+fcAWz/UTxesDmaQ6fQ5liiC0mUg5Oxw/1KD5Mi0lx/8uoUfQIxgV1KNP5u83M/
+         LtIw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=7AxPd/WiAkEtzi6eC4zcfxrPuKGzl2d+dQ6Z4/Ng9yA=;
-        b=c0oyl7bYqSuPE9TJQPFJsOy5xZd/2yCVIBuDwctGuJVXvTfmx1jqbQ0MP/+QfQfZG+
-         XuOlnWF7W8ZJqtFiJnU0IZMuxUPguWW0V6Ux/kjcHyAuSKbimDlH+9gTzabOCiR4JDuB
-         dm1HHM+Fyg0KZfCe1R9FFyxVVWYiE+pwV/oDYoa0vxltK5LQe+1TOdg5KuwmehrhGDYl
-         DGozeEcsmb9XHewzFRfEUO9O0m34vdssfKhCd+u/wtSZPaGE9tfnspfywQCpWd5Z81v7
-         Bi1W2mBXtbUqo4/OMz2fmE/wZ5FDNFw/P2U4f5dx4f4bYkTIfup8nxHljhvEGXjaOev5
-         52Hw==
-X-Gm-Message-State: APjAAAVV6FQqw/Gt/LAPpn+jhqB7s+X8OUnUdvSoWkzyaa3Fi9JSNWNA
-        35zXddSA8DQ0y0CCe55KQqubcA==
-X-Google-Smtp-Source: APXvYqwxMWB7/4WyFA59ijUF+6dp1ja8lpTuNpIG+hVBnaOO/pbLdkkOZsUgbqrpPxXYczj1YuOnIA==
-X-Received: by 2002:a2e:309:: with SMTP id 9mr15762950ljd.114.1557775419346;
-        Mon, 13 May 2019 12:23:39 -0700 (PDT)
-Received: from localhost.localdomain (h-158-174-22-210.NA.cust.bahnhof.se. [158.174.22.210])
-        by smtp.gmail.com with ESMTPSA id q21sm3449365lfa.84.2019.05.13.12.23.37
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 13 May 2019 12:23:38 -0700 (PDT)
-From:   Ulf Hansson <ulf.hansson@linaro.org>
-To:     Sudeep Holla <sudeep.holla@arm.com>,
-        Lorenzo Pieralisi <Lorenzo.Pieralisi@arm.com>,
-        Mark Rutland <mark.rutland@arm.com>,
-        linux-arm-kernel@lists.infradead.org
-Cc:     "Rafael J . Wysocki" <rjw@rjwysocki.net>,
-        Daniel Lezcano <daniel.lezcano@linaro.org>,
-        "Raju P . L . S . S . S . N" <rplsssn@codeaurora.org>,
-        Amit Kucheria <amit.kucheria@linaro.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Niklas Cassel <niklas.cassel@linaro.org>,
-        Tony Lindgren <tony@atomide.com>,
-        Kevin Hilman <khilman@kernel.org>,
-        Lina Iyer <ilina@codeaurora.org>,
-        Viresh Kumar <viresh.kumar@linaro.org>,
-        Vincent Guittot <vincent.guittot@linaro.org>,
-        Geert Uytterhoeven <geert+renesas@glider.be>,
-        Souvik Chakravarty <souvik.chakravarty@arm.com>,
-        linux-pm@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org, Ulf Hansson <ulf.hansson@linaro.org>,
-        Wei Xu <xuwei5@hisilicon.com>
-Subject: [PATCH 18/18] arm64: dts: hikey: Convert to the hierarchical CPU topology layout
-Date:   Mon, 13 May 2019 21:23:00 +0200
-Message-Id: <20190513192300.653-19-ulf.hansson@linaro.org>
-X-Mailer: git-send-email 2.17.1
-In-Reply-To: <20190513192300.653-1-ulf.hansson@linaro.org>
-References: <20190513192300.653-1-ulf.hansson@linaro.org>
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=UzVOW4+OtCm98/Ue4nBATFT7n58mc+iYO2oR5TpDKaQ=;
+        b=heJZf7fo3GtbTdnrlISNVtNTPSMnAui0XGS1HVwHjydsl8gJ2p737HH5Jse7yzP+D9
+         OuoiSrWZDytsEG2+c+wFxB5zioF8tj41XB5zJhm6e9hRDT5HKTRqpjYTsTF2+ZKHPOE7
+         2S2d2+vt318Lmc9P0YgzF9xJBQs03EWH1ArqDTnSEyVklpVC8aQwe1f7UYVihguItckA
+         oPu7VhD7PkWYjGAEgwywtBWqPcuZbjNtzISAsBwW71k6cGaQ6sLlHwptdXNJ27XSp5/P
+         Gy3/ErZ25p3iLh08H8mjcvgHtDuagKHMXzyzmIkpZ61PizCwDLPM0WJp2znxzJZrqSgo
+         QOhQ==
+X-Gm-Message-State: APjAAAUWXOXCAAYpIgdbSZzevjj9FidU8AMtKyqFcGm+IwB9NExu57U8
+        /kCH13hgxV+vId6cExq48AnnSQ==
+X-Google-Smtp-Source: APXvYqxJMGs7bxkaprwPMiopGVkKJYFQYtABq0nOE83dF3CaEG82kyxNc3hc/sd7R2gIo9zS+S9jiA==
+X-Received: by 2002:a63:fd4a:: with SMTP id m10mr34486700pgj.302.1557779562276;
+        Mon, 13 May 2019 13:32:42 -0700 (PDT)
+Received: from builder (104-188-17-28.lightspeed.sndgca.sbcglobal.net. [104.188.17.28])
+        by smtp.gmail.com with ESMTPSA id v2sm8332088pgr.2.2019.05.13.13.32.40
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Mon, 13 May 2019 13:32:41 -0700 (PDT)
+Date:   Mon, 13 May 2019 13:32:39 -0700
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     Brian Masney <masneyb@onstation.org>
+Cc:     robdclark@gmail.com, sean@poorly.run,
+        dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
+        freedreno@lists.freedesktop.org, airlied@linux.ie, daniel@ffwll.ch,
+        linux-kernel@vger.kernel.org, linus.walleij@linaro.org,
+        jonathan@marek.ca, robh@kernel.org
+Subject: Re: [PATCH v2 1/6] drm: msm: remove resv fields from msm_gem_object
+ struct
+Message-ID: <20190513203239.GA9527@builder>
+References: <20190509020352.14282-1-masneyb@onstation.org>
+ <20190509020352.14282-2-masneyb@onstation.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20190509020352.14282-2-masneyb@onstation.org>
+User-Agent: Mutt/1.10.0 (2018-05-17)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-To enable the OS to manage last-man standing activities for a CPU, while an
-idle state for a group of CPUs is selected, let's convert the Hikey
-platform into using the hierarchical CPU topology layout.
+On Wed 08 May 19:03 PDT 2019, Brian Masney wrote:
 
-Cc: Wei Xu <xuwei5@hisilicon.com>
-Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
----
+> The msm_gem_object structure contains resv and _resv fields that are
+> no longer needed since the reservation object is now stored on
+> drm_gem_object. msm_atomic_prepare_fb() and msm_atomic_prepare_fb()
+> both referenced the wrong reservation object, and would lead to an
+> attempt to dereference a NULL pointer. Correct those two cases to
+> point to the correct reservation object.
+> 
+> Signed-off-by: Brian Masney <masneyb@onstation.org>
+> Fixes: dd55cf6929e6 ("drm: msm: Switch to use drm_gem_object reservation_object")
 
-Changes:
-	- None.
+Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+Tested-by: Bjorn Andersson <bjorn.andersson@linaro.org>
 
----
- arch/arm64/boot/dts/hisilicon/hi6220.dtsi | 87 ++++++++++++++++++++---
- 1 file changed, 76 insertions(+), 11 deletions(-)
+This resolves a NULL-pointer dereference about to show up in v5.2-rc1,
+so please pick this up for -rc.
 
-diff --git a/arch/arm64/boot/dts/hisilicon/hi6220.dtsi b/arch/arm64/boot/dts/hisilicon/hi6220.dtsi
-index 108e2a4227f6..36ff460f428f 100644
---- a/arch/arm64/boot/dts/hisilicon/hi6220.dtsi
-+++ b/arch/arm64/boot/dts/hisilicon/hi6220.dtsi
-@@ -20,6 +20,64 @@
- 	psci {
- 		compatible = "arm,psci-0.2";
- 		method = "smc";
-+
-+		CPU_PD0: cpu-pd0 {
-+			#power-domain-cells = <0>;
-+			power-domains = <&CLUSTER_PD0>;
-+			domain-idle-states = <&CPU_SLEEP>;
-+		};
-+
-+		CPU_PD1: cpu-pd1 {
-+			#power-domain-cells = <0>;
-+			power-domains = <&CLUSTER_PD0>;
-+			domain-idle-states = <&CPU_SLEEP>;
-+		};
-+
-+		CPU_PD2: cpu-pd2 {
-+			#power-domain-cells = <0>;
-+			power-domains = <&CLUSTER_PD0>;
-+			domain-idle-states = <&CPU_SLEEP>;
-+		};
-+
-+		CPU_PD3: cpu-pd3 {
-+			#power-domain-cells = <0>;
-+			power-domains = <&CLUSTER_PD0>;
-+			domain-idle-states = <&CPU_SLEEP>;
-+		};
-+
-+		CPU_PD4: cpu-pd4 {
-+			#power-domain-cells = <0>;
-+			power-domains = <&CLUSTER_PD1>;
-+			domain-idle-states = <&CPU_SLEEP>;
-+		};
-+
-+		CPU_PD5: cpu-pd5 {
-+			#power-domain-cells = <0>;
-+			power-domains = <&CLUSTER_PD1>;
-+			domain-idle-states = <&CPU_SLEEP>;
-+		};
-+
-+		CPU_PD6: cpu-pd6 {
-+			#power-domain-cells = <0>;
-+			power-domains = <&CLUSTER_PD1>;
-+			domain-idle-states = <&CPU_SLEEP>;
-+		};
-+
-+		CPU_PD7: cpu-pd7 {
-+			#power-domain-cells = <0>;
-+			power-domains = <&CLUSTER_PD1>;
-+			domain-idle-states = <&CPU_SLEEP>;
-+		};
-+
-+		CLUSTER_PD0: cluster-pd0 {
-+			#power-domain-cells = <0>;
-+			domain-idle-states = <&CLUSTER_SLEEP>;
-+		};
-+
-+		CLUSTER_PD1: cluster-pd1 {
-+			#power-domain-cells = <0>;
-+			domain-idle-states = <&CLUSTER_SLEEP>;
-+		};
- 	};
- 
- 	cpus {
-@@ -70,9 +128,8 @@
- 			};
- 
- 			CLUSTER_SLEEP: cluster-sleep {
--				compatible = "arm,idle-state";
--				local-timer-stop;
--				arm,psci-suspend-param = <0x1010000>;
-+				compatible = "domain-idle-state";
-+				arm,psci-suspend-param = <0x1000000>;
- 				entry-latency-us = <1000>;
- 				exit-latency-us = <700>;
- 				min-residency-us = <2700>;
-@@ -88,9 +145,10 @@
- 			next-level-cache = <&CLUSTER0_L2>;
- 			clocks = <&stub_clock 0>;
- 			operating-points-v2 = <&cpu_opp_table>;
--			cpu-idle-states = <&CPU_SLEEP &CLUSTER_SLEEP>;
- 			#cooling-cells = <2>; /* min followed by max */
- 			dynamic-power-coefficient = <311>;
-+			power-domains = <&CPU_PD0>;
-+			power-domain-names = "psci";
- 		};
- 
- 		cpu1: cpu@1 {
-@@ -101,9 +159,10 @@
- 			next-level-cache = <&CLUSTER0_L2>;
- 			clocks = <&stub_clock 0>;
- 			operating-points-v2 = <&cpu_opp_table>;
--			cpu-idle-states = <&CPU_SLEEP &CLUSTER_SLEEP>;
- 			#cooling-cells = <2>; /* min followed by max */
- 			dynamic-power-coefficient = <311>;
-+			power-domains = <&CPU_PD1>;
-+			power-domain-names = "psci";
- 		};
- 
- 		cpu2: cpu@2 {
-@@ -114,9 +173,10 @@
- 			next-level-cache = <&CLUSTER0_L2>;
- 			clocks = <&stub_clock 0>;
- 			operating-points-v2 = <&cpu_opp_table>;
--			cpu-idle-states = <&CPU_SLEEP &CLUSTER_SLEEP>;
- 			#cooling-cells = <2>; /* min followed by max */
- 			dynamic-power-coefficient = <311>;
-+			power-domains = <&CPU_PD2>;
-+			power-domain-names = "psci";
- 		};
- 
- 		cpu3: cpu@3 {
-@@ -127,9 +187,10 @@
- 			next-level-cache = <&CLUSTER0_L2>;
- 			clocks = <&stub_clock 0>;
- 			operating-points-v2 = <&cpu_opp_table>;
--			cpu-idle-states = <&CPU_SLEEP &CLUSTER_SLEEP>;
- 			#cooling-cells = <2>; /* min followed by max */
- 			dynamic-power-coefficient = <311>;
-+			power-domains = <&CPU_PD3>;
-+			power-domain-names = "psci";
- 		};
- 
- 		cpu4: cpu@100 {
-@@ -140,9 +201,10 @@
- 			next-level-cache = <&CLUSTER1_L2>;
- 			clocks = <&stub_clock 0>;
- 			operating-points-v2 = <&cpu_opp_table>;
--			cpu-idle-states = <&CPU_SLEEP &CLUSTER_SLEEP>;
- 			#cooling-cells = <2>; /* min followed by max */
- 			dynamic-power-coefficient = <311>;
-+			power-domains = <&CPU_PD4>;
-+			power-domain-names = "psci";
- 		};
- 
- 		cpu5: cpu@101 {
-@@ -153,9 +215,10 @@
- 			next-level-cache = <&CLUSTER1_L2>;
- 			clocks = <&stub_clock 0>;
- 			operating-points-v2 = <&cpu_opp_table>;
--			cpu-idle-states = <&CPU_SLEEP &CLUSTER_SLEEP>;
- 			#cooling-cells = <2>; /* min followed by max */
- 			dynamic-power-coefficient = <311>;
-+			power-domains = <&CPU_PD5>;
-+			power-domain-names = "psci";
- 		};
- 
- 		cpu6: cpu@102 {
-@@ -166,9 +229,10 @@
- 			next-level-cache = <&CLUSTER1_L2>;
- 			clocks = <&stub_clock 0>;
- 			operating-points-v2 = <&cpu_opp_table>;
--			cpu-idle-states = <&CPU_SLEEP &CLUSTER_SLEEP>;
- 			#cooling-cells = <2>; /* min followed by max */
- 			dynamic-power-coefficient = <311>;
-+			power-domains = <&CPU_PD6>;
-+			power-domain-names = "psci";
- 		};
- 
- 		cpu7: cpu@103 {
-@@ -179,9 +243,10 @@
- 			next-level-cache = <&CLUSTER1_L2>;
- 			clocks = <&stub_clock 0>;
- 			operating-points-v2 = <&cpu_opp_table>;
--			cpu-idle-states = <&CPU_SLEEP &CLUSTER_SLEEP>;
- 			#cooling-cells = <2>; /* min followed by max */
- 			dynamic-power-coefficient = <311>;
-+			power-domains = <&CPU_PD7>;
-+			power-domain-names = "psci";
- 		};
- 
- 		CLUSTER0_L2: l2-cache0 {
--- 
-2.17.1
+Regards,
+Bjorn
 
+> ---
+> Patch introduced in v2
+> 
+>  drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c | 4 +---
+>  drivers/gpu/drm/msm/msm_atomic.c          | 4 +---
+>  drivers/gpu/drm/msm/msm_gem.c             | 3 ---
+>  drivers/gpu/drm/msm/msm_gem.h             | 4 ----
+>  4 files changed, 2 insertions(+), 13 deletions(-)
+> 
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
+> index da1f727d7495..ce1a555e1f31 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
+> @@ -780,7 +780,6 @@ static int dpu_plane_prepare_fb(struct drm_plane *plane,
+>  	struct dpu_plane_state *pstate = to_dpu_plane_state(new_state);
+>  	struct dpu_hw_fmt_layout layout;
+>  	struct drm_gem_object *obj;
+> -	struct msm_gem_object *msm_obj;
+>  	struct dma_fence *fence;
+>  	struct dpu_kms *kms = _dpu_plane_get_kms(&pdpu->base);
+>  	int ret;
+> @@ -799,8 +798,7 @@ static int dpu_plane_prepare_fb(struct drm_plane *plane,
+>  	 *       implicit fence and fb prepare by hand here.
+>  	 */
+>  	obj = msm_framebuffer_bo(new_state->fb, 0);
+> -	msm_obj = to_msm_bo(obj);
+> -	fence = reservation_object_get_excl_rcu(msm_obj->resv);
+> +	fence = reservation_object_get_excl_rcu(obj->resv);
+>  	if (fence)
+>  		drm_atomic_set_fence_for_plane(new_state, fence);
+>  
+> diff --git a/drivers/gpu/drm/msm/msm_atomic.c b/drivers/gpu/drm/msm/msm_atomic.c
+> index f5b1256e32b6..131c23a267ee 100644
+> --- a/drivers/gpu/drm/msm/msm_atomic.c
+> +++ b/drivers/gpu/drm/msm/msm_atomic.c
+> @@ -49,15 +49,13 @@ int msm_atomic_prepare_fb(struct drm_plane *plane,
+>  	struct msm_drm_private *priv = plane->dev->dev_private;
+>  	struct msm_kms *kms = priv->kms;
+>  	struct drm_gem_object *obj;
+> -	struct msm_gem_object *msm_obj;
+>  	struct dma_fence *fence;
+>  
+>  	if (!new_state->fb)
+>  		return 0;
+>  
+>  	obj = msm_framebuffer_bo(new_state->fb, 0);
+> -	msm_obj = to_msm_bo(obj);
+> -	fence = reservation_object_get_excl_rcu(msm_obj->resv);
+> +	fence = reservation_object_get_excl_rcu(obj->resv);
+>  
+>  	drm_atomic_set_fence_for_plane(new_state, fence);
+>  
+> diff --git a/drivers/gpu/drm/msm/msm_gem.c b/drivers/gpu/drm/msm/msm_gem.c
+> index 31d5a744d84f..947508e8269d 100644
+> --- a/drivers/gpu/drm/msm/msm_gem.c
+> +++ b/drivers/gpu/drm/msm/msm_gem.c
+> @@ -973,9 +973,6 @@ static int msm_gem_new_impl(struct drm_device *dev,
+>  	msm_obj->flags = flags;
+>  	msm_obj->madv = MSM_MADV_WILLNEED;
+>  
+> -	if (resv)
+> -		msm_obj->base.resv = resv;
+> -
+>  	INIT_LIST_HEAD(&msm_obj->submit_entry);
+>  	INIT_LIST_HEAD(&msm_obj->vmas);
+>  
+> diff --git a/drivers/gpu/drm/msm/msm_gem.h b/drivers/gpu/drm/msm/msm_gem.h
+> index c5ac781dffee..812d1b1369a5 100644
+> --- a/drivers/gpu/drm/msm/msm_gem.h
+> +++ b/drivers/gpu/drm/msm/msm_gem.h
+> @@ -86,10 +86,6 @@ struct msm_gem_object {
+>  
+>  	struct llist_node freed;
+>  
+> -	/* normally (resv == &_resv) except for imported bo's */
+> -	struct reservation_object *resv;
+> -	struct reservation_object _resv;
+> -
+>  	/* For physically contiguous buffers.  Used when we don't have
+>  	 * an IOMMU.  Also used for stolen/splashscreen buffer.
+>  	 */
+> -- 
+> 2.20.1
+> 
