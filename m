@@ -2,127 +2,77 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id E93951AF38
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 May 2019 05:44:58 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 7FA821AF91
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 May 2019 06:54:07 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727522AbfEMDoy (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 12 May 2019 23:44:54 -0400
-Received: from smtp.codeaurora.org ([198.145.29.96]:48230 "EHLO
-        smtp.codeaurora.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727202AbfEMDoy (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 12 May 2019 23:44:54 -0400
-Received: by smtp.codeaurora.org (Postfix, from userid 1000)
-        id C244D6016D; Mon, 13 May 2019 03:44:52 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
-        s=default; t=1557719092;
-        bh=aC/siESkfqyPwZqxlLNGpYFrcrfYJOzDMbmJcKmnt8Q=;
-        h=Subject:To:Cc:References:From:Date:In-Reply-To:From;
-        b=LCuDUzzMo1fBLmd1EvgoyFXQi1lbDKsroM/CaZgKtM3RuzPBxYMhn9C70x2wOz/hs
-         l8uLVULdvMRM/YjIT6Dh6JtAReBew4cmMGgAKGP77kF62eYVJcrENHlSgCO38UEuzt
-         wlZndxuJb/i8oNNpu/clWpAHVnEkuo8owsWDNIQA=
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        pdx-caf-mail.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.7 required=2.0 tests=ALL_TRUSTED,BAYES_00,
-        DKIM_INVALID,DKIM_SIGNED autolearn=no autolearn_force=no version=3.4.0
-Received: from [10.206.28.9] (blr-c-bdr-fw-01_globalnat_allzones-outside.qualcomm.com [103.229.19.19])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        id S1727506AbfEMEyG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 13 May 2019 00:54:06 -0400
+Received: from mail.kernel.org ([198.145.29.99]:58274 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1725970AbfEMEyG (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 13 May 2019 00:54:06 -0400
+Received: from localhost (unknown [106.200.210.185])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        (Authenticated sender: tdas@smtp.codeaurora.org)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 8381F6016D;
-        Mon, 13 May 2019 03:44:49 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
-        s=default; t=1557719092;
-        bh=aC/siESkfqyPwZqxlLNGpYFrcrfYJOzDMbmJcKmnt8Q=;
-        h=Subject:To:Cc:References:From:Date:In-Reply-To:From;
-        b=LCuDUzzMo1fBLmd1EvgoyFXQi1lbDKsroM/CaZgKtM3RuzPBxYMhn9C70x2wOz/hs
-         l8uLVULdvMRM/YjIT6Dh6JtAReBew4cmMGgAKGP77kF62eYVJcrENHlSgCO38UEuzt
-         wlZndxuJb/i8oNNpu/clWpAHVnEkuo8owsWDNIQA=
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 8381F6016D
-Authentication-Results: pdx-caf-mail.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: pdx-caf-mail.web.codeaurora.org; spf=none smtp.mailfrom=tdas@codeaurora.org
-Subject: Re: [PATCH v1 3/3] clk: qcom: rcg: update the DFS macro for RCG
-To:     Stephen Boyd <sboyd@kernel.org>,
-        Michael Turquette <mturquette@baylibre.com>
-Cc:     Andy Gross <andy.gross@linaro.org>,
+        by mail.kernel.org (Postfix) with ESMTPSA id 30B0720862;
+        Mon, 13 May 2019 04:54:04 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=default; t=1557723245;
+        bh=kg5Sb4lx5oluSFBl+OqDQTg9mOuwKBnt6PVVLQ5bqjs=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=abIKUmBMyEAqbWr+SIwvqkZ3FEYCkflDYGytWwgEgc08BkXcy8CImrUN3yuTa4RR6
+         yu7mVogmvYcqDpBgbb6juu66alrIRkk0nomRvpdkBUmaWCjJ7yEjClEZq032gR0kmj
+         qaIy4w/zaN7OMqzSMcTO0r9oP0YcJZaV3B3K0b74=
+Date:   Mon, 13 May 2019 10:24:02 +0530
+From:   Vinod Koul <vkoul@kernel.org>
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     Andy Gross <agross@kernel.org>,
         David Brown <david.brown@linaro.org>,
-        Rajendra Nayak <rnayak@codeaurora.org>,
-        linux-arm-msm@vger.kernel.org, linux-soc@vger.kernel.org,
-        linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <1557339895-21952-1-git-send-email-tdas@codeaurora.org>
- <1557339895-21952-4-git-send-email-tdas@codeaurora.org>
- <155742286525.14659.18081373668341127486@swboyd.mtv.corp.google.com>
- <07bcd2df-a786-ea52-8566-70f484248952@codeaurora.org>
- <155751085370.14659.7749105088997177801@swboyd.mtv.corp.google.com>
-From:   Taniya Das <tdas@codeaurora.org>
-Message-ID: <f65811f8-42ea-6365-7822-db662eaea228@codeaurora.org>
-Date:   Mon, 13 May 2019 09:14:46 +0530
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
- Thunderbird/60.6.1
+        Ohad Ben-Cohen <ohad@wizery.com>,
+        Rob Herring <robh+dt@kernel.org>,
+        Mark Rutland <mark.rutland@arm.com>,
+        linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v2 7/8] arm64: dts: qcom: qcs404: Define APPS IOMMU
+Message-ID: <20190513045402.GA2707@vkoul-mobl>
+References: <20190510043421.31393-1-bjorn.andersson@linaro.org>
+ <20190510043421.31393-8-bjorn.andersson@linaro.org>
 MIME-Version: 1.0
-In-Reply-To: <155751085370.14659.7749105088997177801@swboyd.mtv.corp.google.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20190510043421.31393-8-bjorn.andersson@linaro.org>
+User-Agent: Mutt/1.11.3 (2019-02-01)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hello Stephen,
+On 09-05-19, 21:34, Bjorn Andersson wrote:
+> The APPS IOMMU provides contexts for FastRPC, MDP and WLAN, among other
+> things.  Define these. We use the qcom_iommu binding because the
+        ^^^
+Double spaces crept in..
 
-On 5/10/2019 11:24 PM, Stephen Boyd wrote:
-> Quoting Taniya Das (2019-05-09 19:58:39)
->> Hello Stephen,
->>
->> Thanks for the review.
->>
->> On 5/9/2019 10:57 PM, Stephen Boyd wrote:
->>> Quoting Taniya Das (2019-05-08 11:24:55)
->>>> Update the init data name for each of the dynamic frequency switch
->>>> controlled clock associated with the RCG clock name, so that it can be
->>>> generated as per the hardware plan. Thus update the macro accordingly.
->>>>
->>>> Signed-off-by: Taniya Das <tdas@codeaurora.org>
->>>
->>> This patch doesn't make any sense to me.
->>>
->>>> ---
->>>>    drivers/clk/qcom/clk-rcg.h    |  2 +-
->>>>    drivers/clk/qcom/gcc-sdm845.c | 96 +++++++++++++++++++++----------------------
->>>>    2 files changed, 49 insertions(+), 49 deletions(-)
->>>>
->>>> diff --git a/drivers/clk/qcom/clk-rcg.h b/drivers/clk/qcom/clk-rcg.h
->>>> index 5562f38..e40e8f8 100644
->>>> --- a/drivers/clk/qcom/clk-rcg.h
->>>> +++ b/drivers/clk/qcom/clk-rcg.h
->>>> @@ -171,7 +171,7 @@ struct clk_rcg_dfs_data {
->>>>    };
->>>>
->>>>    #define DEFINE_RCG_DFS(r) \
->>>> -       { .rcg = &r##_src, .init = &r##_init }
->>>> +       { .rcg = &r, .init = &r##_init }
->>>
->>> Why do we need to rename the init data?
->>>
->>
->> We want to manage the init data as the clock source name, so that we
->> could manage to auto generate our code. So that we do not have to
->> re-name the clock init data manually if the DFS source names gets
->> updated at any point of time.
->>
+> firmware restrictions in incompatible with the arm-smmu.
 > 
-> Why is the clk name changing to not have a _src after the "root" of the
-> clk name? As long as I can remember, RCGs have a "_src" postfix.
+> Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+> ---
+>  arch/arm64/boot/dts/qcom/qcs404.dtsi | 85 ++++++++++++++++++++++++++++
+>  1 file changed, 85 insertions(+)
 > 
+> diff --git a/arch/arm64/boot/dts/qcom/qcs404.dtsi b/arch/arm64/boot/dts/qcom/qcs404.dtsi
+> index b213f6acad76..fcde4f0334c2 100644
+> --- a/arch/arm64/boot/dts/qcom/qcs404.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/qcs404.dtsi
+> @@ -378,6 +378,91 @@
+>  			reg = <0x01937000 0x25000>;
+>  		};
+>  
+> +		apps_iommu: iommu@1e20000 {
+> +			compatible = "qcom,qcs404-iommu", "qcom,msm-iommu-v1";
 
-Yes, the RCGs would have _src, so we do want the init data also to be
-generated with _src postfix. So that we do not have to manually clean up 
-the generated code.
+Did we define qcom,qcs404-iommu in bindings, It does not seem to be
+there in this patch, next or integration one
 
 -- 
-QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
-of Code Aurora Forum, hosted by The Linux Foundation.
-
---
+~Vinod
