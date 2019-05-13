@@ -2,48 +2,48 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id E298D1BDEF
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 May 2019 21:30:11 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 25EDC1BE04
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 May 2019 21:31:37 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727192AbfEMTaF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 13 May 2019 15:30:05 -0400
-Received: from mail-lf1-f67.google.com ([209.85.167.67]:41594 "EHLO
-        mail-lf1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727191AbfEMTaF (ORCPT
+        id S1727132AbfEMTbW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 13 May 2019 15:31:22 -0400
+Received: from mail-lf1-f65.google.com ([209.85.167.65]:43543 "EHLO
+        mail-lf1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727171AbfEMTbW (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 13 May 2019 15:30:05 -0400
-Received: by mail-lf1-f67.google.com with SMTP id d8so9926302lfb.8
-        for <linux-arm-msm@vger.kernel.org>; Mon, 13 May 2019 12:30:03 -0700 (PDT)
+        Mon, 13 May 2019 15:31:22 -0400
+Received: by mail-lf1-f65.google.com with SMTP id u27so9928453lfg.10
+        for <linux-arm-msm@vger.kernel.org>; Mon, 13 May 2019 12:31:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=FS9Zs+3LWO+O30HH4l9Kk8Vdize9BSzeQBpadzl2HYA=;
-        b=t15nWHPmFlGF4Hk/qXkWtGd6P4khoapB58QJFxrQ0ZNQUXmlHvGcZXvn8hgr3rc7X+
-         eE/ASRA8k1AQG0DdZLyF3FiUVQKz9AjKmneEG4iuBy5DWguCj44rHUGww8VoLC14kkpV
-         TAmsE70nTuh+vkyVTcFflq1Ihtv15Gjs6lN28RnAdyk6YEKe1sk82sQKEFoOgzZS1j0g
-         ppmAaYnj4FwI7sFWE7rhWAusai9maT6zhjqYzXhVMTt9rwMyhTPogRZF82iPBQdLTLL8
-         e41snlmZNXFO0Bqj9yPBVHA/mzxQ87IGeFK04GazkTYlofyN2rCzQMCISOTnU4Ay1zIY
-         C4YA==
+        bh=PDEUjjOBUJS5iHQaBAG+Z33WI0zFNAprAtoJyuCQ0PY=;
+        b=M21k49y1eNn330/lF5JvreEZChjrS2M6ynm3TqPbbn/Q9xiZAzxNCYtv/EuxrqqtMM
+         QGsNsvmFxgy9sSC46EshhJEpWH5Pz4ZTv2l1DCMYxEhHs7XqE1HQbPYe5KlbUPpZoz1u
+         CROTIRFp0MmW7feCctSmkdf9rvOLpD1AHPnKXgEBya6wH+hN4dttUD8c/NIeoCMp+8G5
+         7LZjDpnxdIB9RSMG00FALVcyBAhvnwEyA3AsG5QE2IRgu2aE+wNxXs4Clt22/rk1KpRQ
+         w4c/YO/4ShYOv7C674P9egAkOJOTIQ8CMoR5T4g9Bnk7vkufWL1z+GXWXR2K+l22GP4M
+         zUnw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=FS9Zs+3LWO+O30HH4l9Kk8Vdize9BSzeQBpadzl2HYA=;
-        b=nT0tPxYOeQVAAZUT80fHyeB2strJeh5v6e3aNHYrtAWuTMCjwyWppuvsoqTqsMQ2XT
-         FGQg3Djz8bi9vJu7mc5/8vi2oh+3V38271++c6hGF59HEXy039KU1oM6gjak/fv3Vmcs
-         kuX5uHZn3kbyi5g+UDDjXtBsEmpmanILzO5/ECRPfiZ/otvc/1rw1MNM84J9/4xvjgmp
-         z0+ZiX9VU9pCi5T0TGd9hPs/LlnzNVBa4l0NFx22T8ycsYGnhaYzMh9wbtebg9PxBd3d
-         JUKu8pptDIYGqvC7RRGrfK0SgNLNdYztfzeMmfUYq2k+OiYedcroIr86/PzYjbmt+2tA
-         Ct/g==
-X-Gm-Message-State: APjAAAUMALHkxMV6u49hVbspcKJe76/CdEjdntIdurVywwXCWLRMX4j7
-        D0SZYTqWMCfLmEqR7k5Swqaymg==
-X-Google-Smtp-Source: APXvYqwf7I+vqyV1oY+DdOoP8eb7s+6VlIHVgf1KVMJaduN8GSRO4HLl7ruL91VI1qfgG8O6PtC3NA==
-X-Received: by 2002:a19:ae14:: with SMTP id f20mr14035921lfc.49.1557775415444;
-        Mon, 13 May 2019 12:23:35 -0700 (PDT)
+        bh=PDEUjjOBUJS5iHQaBAG+Z33WI0zFNAprAtoJyuCQ0PY=;
+        b=QkNhp5JYVQ68xAcwgifQqADfRR/SEpFvubgQuzTm35rF2VhE2l07S1eIGPCUsGdDI6
+         eQ0mY6j7bfWa5fB3p5khTjMPEHd5sZWM+2Q8Mb1MNQUaEvJxgIlaJJkcT1QCWckQ1gs4
+         2h4P3KS8C3l2zJif7aI4SqUZdvU6fr3Z3h4JbOTXTs/xX/AFKTtQXYY2aP/AeF3u21xW
+         wqLIpeG9UZmrczymVh2O6ymZntDS8raVmoHHjSRIizEUkOTx0y49w0PGljXhpm6sg73I
+         5k7zr2trF/fsJCnJld6yyxdMT3qNNKKGoVuTcIN3dvRVk9Q3jApg6o6zLAb/vhz6j57J
+         Czng==
+X-Gm-Message-State: APjAAAU0uL+Fp/hffVOtQw5udrlHXVm/bOImdZowTBi+Lsd2JPd2evXy
+        tDBn0GJhqnQoMIvBlISgIWA4Og==
+X-Google-Smtp-Source: APXvYqzkkltCyacB6OrKhqu88JBHdO9W+dZpAtceJBpmMRPPTu1skXnjUWJRxuUbEzEFar3+9FUfjQ==
+X-Received: by 2002:a19:e002:: with SMTP id x2mr15509153lfg.16.1557775417282;
+        Mon, 13 May 2019 12:23:37 -0700 (PDT)
 Received: from localhost.localdomain (h-158-174-22-210.NA.cust.bahnhof.se. [158.174.22.210])
-        by smtp.gmail.com with ESMTPSA id q21sm3449365lfa.84.2019.05.13.12.23.33
+        by smtp.gmail.com with ESMTPSA id q21sm3449365lfa.84.2019.05.13.12.23.35
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 13 May 2019 12:23:34 -0700 (PDT)
+        Mon, 13 May 2019 12:23:36 -0700 (PDT)
 From:   Ulf Hansson <ulf.hansson@linaro.org>
 To:     Sudeep Holla <sudeep.holla@arm.com>,
         Lorenzo Pieralisi <Lorenzo.Pieralisi@arm.com>,
@@ -64,13 +64,13 @@ Cc:     "Rafael J . Wysocki" <rjw@rjwysocki.net>,
         Geert Uytterhoeven <geert+renesas@glider.be>,
         Souvik Chakravarty <souvik.chakravarty@arm.com>,
         linux-pm@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org, Ulf Hansson <ulf.hansson@linaro.org>,
-        Catalin Marinas <catalin.marinas@arm.com>,
-        Will Deacon <will.deacon@arm.com>,
-        Lina Iyer <lina.iyer@linaro.org>
-Subject: [PATCH 16/18] arm64: kernel: Respect the hierarchical CPU topology in DT for PSCI
-Date:   Mon, 13 May 2019 21:22:58 +0200
-Message-Id: <20190513192300.653-17-ulf.hansson@linaro.org>
+        linux-kernel@vger.kernel.org, Lina Iyer <lina.iyer@linaro.org>,
+        Andy Gross <andy.gross@linaro.org>,
+        David Brown <david.brown@linaro.org>,
+        Ulf Hansson <ulf.hansson@linaro.org>
+Subject: [PATCH 17/18] arm64: dts: Convert to the hierarchical CPU topology layout for MSM8916
+Date:   Mon, 13 May 2019 21:22:59 +0200
+Message-Id: <20190513192300.653-18-ulf.hansson@linaro.org>
 X-Mailer: git-send-email 2.17.1
 In-Reply-To: <20190513192300.653-1-ulf.hansson@linaro.org>
 References: <20190513192300.653-1-ulf.hansson@linaro.org>
@@ -79,15 +79,26 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-To let the PSCI driver parse for the hierarchical CPU topology in DT and
-thus potentially initiate the corresponding PM domain data structures,
-let's call psci_dt_topology_init() from the existing topology_init()
-subsys_initcall.
+From: Lina Iyer <lina.iyer@linaro.org>
 
-Cc: Catalin Marinas <catalin.marinas@arm.com>
-Cc: Will Deacon <will.deacon@arm.com>
-Co-developed-by: Lina Iyer <lina.iyer@linaro.org>
+In the hierarchical layout, we are creating power domains around each CPU
+and describes the idle states for them inside the power domain provider
+node. Note that, the CPU's idle states still needs to be compatible with
+"arm,idle-state".
+
+Furthermore, represent the CPU cluster as a separate master power domain,
+powering the CPU's power domains. The cluster node, contains the idle
+states for the cluster and each idle state needs to be compatible with the
+"domain-idle-state".
+
+If the running platform is using a PSCI FW that supports the OS initiated
+CPU suspend mode, which likely should be the case unless the PSCI FW is
+very old, this change triggers the PSCI driver to enable it.
+
+Cc: Andy Gross <andy.gross@linaro.org>
+Cc: David Brown <david.brown@linaro.org>
 Signed-off-by: Lina Iyer <lina.iyer@linaro.org>
+Co-developed-by: Ulf Hansson <ulf.hansson@linaro.org>
 Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
 ---
 
@@ -95,23 +106,123 @@ Changes:
 	- None.
 
 ---
- arch/arm64/kernel/setup.c | 3 +++
- 1 file changed, 3 insertions(+)
+ arch/arm64/boot/dts/qcom/msm8916.dtsi | 57 +++++++++++++++++++++++++--
+ 1 file changed, 53 insertions(+), 4 deletions(-)
 
-diff --git a/arch/arm64/kernel/setup.c b/arch/arm64/kernel/setup.c
-index 413d566405d1..f1559223c55b 100644
---- a/arch/arm64/kernel/setup.c
-+++ b/arch/arm64/kernel/setup.c
-@@ -367,6 +367,9 @@ static int __init topology_init(void)
- {
- 	int i;
+diff --git a/arch/arm64/boot/dts/qcom/msm8916.dtsi b/arch/arm64/boot/dts/qcom/msm8916.dtsi
+index 0803ca8c02da..1bb33f0326b5 100644
+--- a/arch/arm64/boot/dts/qcom/msm8916.dtsi
++++ b/arch/arm64/boot/dts/qcom/msm8916.dtsi
+@@ -110,10 +110,11 @@
+ 			reg = <0x0>;
+ 			next-level-cache = <&L2_0>;
+ 			enable-method = "psci";
+-			cpu-idle-states = <&CPU_SPC>;
+ 			clocks = <&apcs>;
+ 			operating-points-v2 = <&cpu_opp_table>;
+ 			#cooling-cells = <2>;
++			power-domains = <&CPU_PD0>;
++			power-domain-names = "psci";
+ 		};
  
-+	if (acpi_disabled)
-+		psci_dt_topology_init();
+ 		CPU1: cpu@1 {
+@@ -122,10 +123,11 @@
+ 			reg = <0x1>;
+ 			next-level-cache = <&L2_0>;
+ 			enable-method = "psci";
+-			cpu-idle-states = <&CPU_SPC>;
+ 			clocks = <&apcs>;
+ 			operating-points-v2 = <&cpu_opp_table>;
+ 			#cooling-cells = <2>;
++			power-domains = <&CPU_PD1>;
++			power-domain-names = "psci";
+ 		};
+ 
+ 		CPU2: cpu@2 {
+@@ -134,10 +136,11 @@
+ 			reg = <0x2>;
+ 			next-level-cache = <&L2_0>;
+ 			enable-method = "psci";
+-			cpu-idle-states = <&CPU_SPC>;
+ 			clocks = <&apcs>;
+ 			operating-points-v2 = <&cpu_opp_table>;
+ 			#cooling-cells = <2>;
++			power-domains = <&CPU_PD2>;
++			power-domain-names = "psci";
+ 		};
+ 
+ 		CPU3: cpu@3 {
+@@ -146,10 +149,11 @@
+ 			reg = <0x3>;
+ 			next-level-cache = <&L2_0>;
+ 			enable-method = "psci";
+-			cpu-idle-states = <&CPU_SPC>;
+ 			clocks = <&apcs>;
+ 			operating-points-v2 = <&cpu_opp_table>;
+ 			#cooling-cells = <2>;
++			power-domains = <&CPU_PD3>;
++			power-domain-names = "psci";
+ 		};
+ 
+ 		L2_0: l2-cache {
+@@ -166,12 +170,57 @@
+ 				min-residency-us = <2000>;
+ 				local-timer-stop;
+ 			};
 +
- 	for_each_online_node(i)
- 		register_one_node(i);
++			CLUSTER_RET: cluster-retention {
++				compatible = "domain-idle-state";
++				arm,psci-suspend-param = <0x1000010>;
++				entry-latency-us = <500>;
++				exit-latency-us = <500>;
++				min-residency-us = <2000>;
++			};
++
++			CLUSTER_PWRDN: cluster-gdhs {
++				compatible = "domain-idle-state";
++				arm,psci-suspend-param = <0x1000030>;
++				entry-latency-us = <2000>;
++				exit-latency-us = <2000>;
++				min-residency-us = <6000>;
++			};
+ 		};
+ 	};
  
+ 	psci {
+ 		compatible = "arm,psci-1.0";
+ 		method = "smc";
++
++		CPU_PD0: cpu-pd0 {
++			#power-domain-cells = <0>;
++			power-domains = <&CLUSTER_PD>;
++			domain-idle-states = <&CPU_SPC>;
++		};
++
++		CPU_PD1: cpu-pd1 {
++			#power-domain-cells = <0>;
++			power-domains = <&CLUSTER_PD>;
++			domain-idle-states = <&CPU_SPC>;
++		};
++
++		CPU_PD2: cpu-pd2 {
++			#power-domain-cells = <0>;
++			power-domains = <&CLUSTER_PD>;
++			domain-idle-states = <&CPU_SPC>;
++		};
++
++		CPU_PD3: cpu-pd3 {
++			#power-domain-cells = <0>;
++			power-domains = <&CLUSTER_PD>;
++			domain-idle-states = <&CPU_SPC>;
++		};
++
++		CLUSTER_PD: cluster-pd {
++			#power-domain-cells = <0>;
++			domain-idle-states = <&CLUSTER_RET>, <&CLUSTER_PWRDN>;
++		};
+ 	};
+ 
+ 	pmu {
 -- 
 2.17.1
 
