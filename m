@@ -2,112 +2,189 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 963E31BD54
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 May 2019 20:39:29 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 122471BDCE
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 May 2019 21:25:49 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727263AbfEMSj2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 13 May 2019 14:39:28 -0400
-Received: from mail-pl1-f193.google.com ([209.85.214.193]:46364 "EHLO
-        mail-pl1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726940AbfEMSj2 (ORCPT
+        id S1729419AbfEMTXI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 13 May 2019 15:23:08 -0400
+Received: from mail-lj1-f193.google.com ([209.85.208.193]:32965 "EHLO
+        mail-lj1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728365AbfEMTXI (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 13 May 2019 14:39:28 -0400
-Received: by mail-pl1-f193.google.com with SMTP id r18so2135309pls.13
-        for <linux-arm-msm@vger.kernel.org>; Mon, 13 May 2019 11:39:27 -0700 (PDT)
+        Mon, 13 May 2019 15:23:08 -0400
+Received: by mail-lj1-f193.google.com with SMTP id w1so9505361ljw.0
+        for <linux-arm-msm@vger.kernel.org>; Mon, 13 May 2019 12:23:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=OHoX7oCDIxtnl3NxtTVvKViiqkZglgOas/g1Rubunpw=;
-        b=ZWZUGjjawgSeblVhgOyDlCAGehMU/Z0twGz6rujUUg+RLiCUzlrAnTLFcPy3TgWvfU
-         Fd0UT+okOXosraWP4hGiz8yB04ZmpU2BsxQRd46mO6PNoqx9TsGDiJEtV4lxbPJ36ex/
-         undy3vtilTIBNn4Y4yuefGrOfxV+XQhh2dKnvDf9hnscJrHAnjVSeALFFT+AMWCW4Y9h
-         Jhu6wF0JwP2e1KmW5KLrnrbFPn19cVSLTD1kKx3wOx8Ofp+KpQZsBdtHK9Ql00vuWihH
-         LExnK/hNrae/YOtkyv7dzAx+3QR52XAF+I8RMbJoQndRs6tFofXaU4Z4yETkZJkd1BhX
-         e9sw==
+        h=from:to:cc:subject:date:message-id;
+        bh=Gzzr3aPqnDTR4xJuZ6Dwo8dyXxy5sIUZgyMsJ7pPoY0=;
+        b=Mzo5I774dXYMHByU7wsqj3lng+uKL8knf8ObGK3ASOFvgRuuzH0EFF5DVfEKVc3CxF
+         heZjV67nx216HD5b+aMO7oOxn8Mi2KHLUf4q3asBIiQjlqZEUJb+b4N/0Td5sDbVKEfh
+         4a/uhflYJk2rXduqkIyG3LzIIWpcT6R2xYGpjMvItHNnUsjE6XKkXdtgC3vDs1ngYDWk
+         U0+Us+RYvk5sNGre/guOCQ77M3G6ShT42Lzu/+Uc1l7bxp6y0OvD5wposLorqen2+wsi
+         6prpNYZaww9EzNj4Q9CmAvS8TK7yfwVLUoiTMmVHLn8C2FQkuz9Dz1sTycuhe4rljnoF
+         7WVw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=OHoX7oCDIxtnl3NxtTVvKViiqkZglgOas/g1Rubunpw=;
-        b=C5hekZ1rWQgeaK2SC4ORsUju9Rw6RPU+h/zVovGxG9XQ3vo9iIImE7AgGG2WpzUVjD
-         qqMTEGmalTPh299IenZ8WZSAbjPpo0EIH2aUaNm6dTsyBd75x09wNnSaX0LudhwZm+gH
-         7QijIvVAQhHrDogQC7NI64YDRU0h9VBIMQL2XumqPdxj+krPWx0REtI9cQZ/INb2hQYQ
-         f8romNg8B6MeWQGFQyhTB2tR+eb+uWv52qwuoj1ZqvGVWH5VJmdaWnDO2uaAKRBETVd6
-         2acBvi2v+1gFyqxdcGzDV6jBPFLni1jrttp5V12welLsA80qzH/UWVrk9lKegoPXLFWN
-         TZUw==
-X-Gm-Message-State: APjAAAWlAC0sRK1KTVawqvp219Ea7HU6mfjbAQ3vavei/OiRyBK4wJZS
-        fkJ/a5892MNe+Y1QCEykq4W4lw==
-X-Google-Smtp-Source: APXvYqynr2g6ljNTN5TU7b36goVbopwPwI4vVSq9IFQfsOzsCc5jpeiEx5UIY/EXqC5dgrtP7joR6w==
-X-Received: by 2002:a17:902:2de4:: with SMTP id p91mr16401267plb.300.1557772766932;
-        Mon, 13 May 2019 11:39:26 -0700 (PDT)
-Received: from tuxbook-pro (104-188-17-28.lightspeed.sndgca.sbcglobal.net. [104.188.17.28])
-        by smtp.gmail.com with ESMTPSA id b23sm5116335pfi.6.2019.05.13.11.39.25
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Mon, 13 May 2019 11:39:26 -0700 (PDT)
-Date:   Mon, 13 May 2019 11:39:47 -0700
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Amit Kucheria <amit.kucheria@linaro.org>
-Cc:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        andy.gross@linaro.org, David Brown <david.brown@linaro.org>,
-        Li Yang <leoyang.li@nxp.com>, Shawn Guo <shawnguo@kernel.org>,
-        Sudeep Holla <sudeep.holla@arm.com>,
-        linux-arm-kernel@lists.infradead.org, devicetree@vger.kernel.org
-Subject: Re: [PATCHv1 1/8] arm64: dts: Fix various entry-method properties to
- reflect documentation
-Message-ID: <20190513183947.GJ2085@tuxbook-pro>
-References: <cover.1557486950.git.amit.kucheria@linaro.org>
- <ab5bad0258e455ef84059b749ca9e79f311b5e3c.1557486950.git.amit.kucheria@linaro.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <ab5bad0258e455ef84059b749ca9e79f311b5e3c.1557486950.git.amit.kucheria@linaro.org>
-User-Agent: Mutt/1.11.4 (2019-03-13)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=Gzzr3aPqnDTR4xJuZ6Dwo8dyXxy5sIUZgyMsJ7pPoY0=;
+        b=N+if9mIrj87To5wNOljOkAkPRH68LPMQOxwB1ybjEuhj0HX6XFiDYtp87gUJds/2yp
+         HH/qsDtknsE/fd15/yB0M0NB9NpPJ/eete914t/Ofy2qLmVnTA+rpTbaNLRN2kyV3nub
+         MynoIhYRJ7HmFoKiilfZTai8hWo4L0m+s8l9EqxyqPZJ7xToG1tz2TYoxuBnrZYbHtbh
+         3i0Vc27JvEsh0u9I5lsqJeHSB88AzNhLtr8lWQ5UkEaxh7HRzZnU7PS2J5RpjpMnMTH3
+         6ZCdExrJm0yfKLtMzQ575dCRsEDbgk4cqf6TRnnPn5W2JN6H4bndZbIzyg7igBVVWMRN
+         qKjQ==
+X-Gm-Message-State: APjAAAUbr0GrXjviLrKD9wi1yAvP/wmHFRrwgrVShyCxlLptyXKGoamF
+        50YvCK+bg5w1nn/Z58ghJO8BxA==
+X-Google-Smtp-Source: APXvYqwitEWls33sFoMJJbAKOhzoDnMBmnyAJE/ot+GvPj1v5chGc9NXR/OeG4gvXkNOUG5EoPkgYg==
+X-Received: by 2002:a2e:9f44:: with SMTP id v4mr14425722ljk.72.1557775385746;
+        Mon, 13 May 2019 12:23:05 -0700 (PDT)
+Received: from localhost.localdomain (h-158-174-22-210.NA.cust.bahnhof.se. [158.174.22.210])
+        by smtp.gmail.com with ESMTPSA id q21sm3449365lfa.84.2019.05.13.12.23.04
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Mon, 13 May 2019 12:23:04 -0700 (PDT)
+From:   Ulf Hansson <ulf.hansson@linaro.org>
+To:     Sudeep Holla <sudeep.holla@arm.com>,
+        Lorenzo Pieralisi <Lorenzo.Pieralisi@arm.com>,
+        Mark Rutland <mark.rutland@arm.com>,
+        linux-arm-kernel@lists.infradead.org
+Cc:     "Rafael J . Wysocki" <rjw@rjwysocki.net>,
+        Daniel Lezcano <daniel.lezcano@linaro.org>,
+        "Raju P . L . S . S . S . N" <rplsssn@codeaurora.org>,
+        Amit Kucheria <amit.kucheria@linaro.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Niklas Cassel <niklas.cassel@linaro.org>,
+        Tony Lindgren <tony@atomide.com>,
+        Kevin Hilman <khilman@kernel.org>,
+        Lina Iyer <ilina@codeaurora.org>,
+        Viresh Kumar <viresh.kumar@linaro.org>,
+        Vincent Guittot <vincent.guittot@linaro.org>,
+        Geert Uytterhoeven <geert+renesas@glider.be>,
+        Souvik Chakravarty <souvik.chakravarty@arm.com>,
+        linux-pm@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, Ulf Hansson <ulf.hansson@linaro.org>
+Subject: [PATCH 00/18] ARM/ARM64: Support hierarchical CPU arrangement for PSCI
+Date:   Mon, 13 May 2019 21:22:42 +0200
+Message-Id: <20190513192300.653-1-ulf.hansson@linaro.org>
+X-Mailer: git-send-email 2.17.1
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri 10 May 04:29 PDT 2019, Amit Kucheria wrote:
+This series enables support for hierarchical CPU arrangement, managed by PSCI
+for ARM/ARM64. It's based on using the generic PM domain (genpd), which
+recently was extended to manage devices belonging to CPUs.
 
-Subject indicates pluralism, but this fixes a specific platform
-(board?). I think you should update that.
+The last two DTS patches enables the hierarchical topology to be used for the
+Qcom 410c Dragonboard and the Hisilicon Hikey board. The former uses PSCI OS-
+initiated mode, while the latter uses the PSCI Platform-Coordinated mode. In
+other words, the hierarchical description of the topology in DT, is orthogonal
+to the supported PSCI CPU suspend mode.
 
-> The idle-states binding documentation[1] mentions that the
-> 'entry-method' property is required on 64-bit platforms and must be set
-> to "psci".
-> 
-> We fixed up all uses of the entry-method property in
-> commit e9880240e4f4 ("arm64: dts: Fix various entry-method properties to
-> reflect documentation"). But a new one has appeared. Fix it up.
-> 
-> Cc: Sudeep Holla <sudeep.holla@arm.com>
+Do note, these patches have been posted earlier, but then being part of bigger
+series, which at that point also included the needed infrastructure changes to
+genpd and cpuidle. Rather than continue to carry the old version history,
+which may be a bit confusing, I decided to start over. Although, for clarity,
+the changelog below explains what changes that have been made since the last
+submission was made.
 
-The message looks good though, so with a new subject you have my:
+Changes since last submission:
+ - Converted to use dev_pm_domain_attach_by_name() rather than
+   dev_pm_domain_attach(),when attaching a CPU to its PM domain. This is done to
+   cope with multiple PM domains per CPU, if that turns out to be needed in the
+   future. Changes mainly consisted of storing the returned struct device* from
+   dev_pm_domain_attach_by_name() into a per CPU struct.
+ - Due to above changes, some simplification of the code became possible, in
+   particular the deployment of runtime PM became a bit nicer, I think.
+ - Moved some of the new code inside "#ifdef CONFIG_CPU_IDLE".
+ - Addressed various comments for each patch.
 
-Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+The series is also available at:
+git.linaro.org/people/ulf.hansson/linux-pm.git next
 
-Regards,
-Bjorn
+More background (if you are still awake):
+For ARM64/ARM based platforms CPUs are often arranged in a hierarchical manner.
+From a CPU idle state perspective, this means some states may be shared among a
+group of CPUs (aka CPU cluster).
 
-> Signed-off-by: Amit Kucheria <amit.kucheria@linaro.org>
-> ---
->  arch/arm64/boot/dts/freescale/fsl-ls1028a.dtsi | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
-> 
-> diff --git a/arch/arm64/boot/dts/freescale/fsl-ls1028a.dtsi b/arch/arm64/boot/dts/freescale/fsl-ls1028a.dtsi
-> index 2896bbcfa3bb..42e7822a0227 100644
-> --- a/arch/arm64/boot/dts/freescale/fsl-ls1028a.dtsi
-> +++ b/arch/arm64/boot/dts/freescale/fsl-ls1028a.dtsi
-> @@ -51,7 +51,7 @@
->  		 * PSCI node is not added default, U-boot will add missing
->  		 * parts if it determines to use PSCI.
->  		 */
-> -		entry-method = "arm,psci";
-> +		entry-method = "psci";
->  
->  		CPU_PH20: cpu-ph20 {
->  			compatible = "arm,idle-state";
-> -- 
-> 2.17.1
-> 
+To deal with idle management of a group of CPUs, sometimes the kernel needs to
+be involved to manage the last-man standing algorithm, simply because it can't
+rely solely on power management FWs to deal with this. Depending on the
+platform, of course.
+
+There are a couple of typical scenarios for when the kernel needs to be in
+control, dealing with synchronization of when the last CPU in a cluster is about
+to enter a deep idle state.
+
+1)
+The kernel needs to carry out so called last-man activities before the
+CPU cluster can enter a deep idle state. This may for example involve to
+configure external logics for wakeups, as the GIC may no longer be functional
+once a deep cluster idle state have been entered. Likewise, these operations
+may need to be restored, when the first CPU wakes up.
+
+2)
+Other more generic I/O devices, such as an MMC controller for example, may be a
+part of the same power domain as the CPU cluster, due to a shared power-rail.
+For these scenarios, when the MMC controller is in use dealing with an MMC
+request, a deeper idle state of the CPU cluster may needs to be temporarily
+disabled. This is needed to retain the MMC controller in a functional state,
+else it may loose its register-context in the middle of serving a request.
+
+Kind regards
+Ulf Hansson
+
+
+Lina Iyer (4):
+  dt: psci: Update DT bindings to support hierarchical PSCI states
+  cpuidle: dt: Support hierarchical CPU idle states
+  drivers: firmware: psci: Support hierarchical CPU idle states
+  arm64: dts: Convert to the hierarchical CPU topology layout for
+    MSM8916
+
+Ulf Hansson (14):
+  of: base: Add of_get_cpu_state_node() to get idle states for a CPU
+    node
+  ARM/ARM64: cpuidle: Let back-end init ops take the driver as input
+  drivers: firmware: psci: Simplify state node parsing
+  drivers: firmware: psci: Prepare to use OS initiated suspend mode
+  drivers: firmware: psci: Prepare to support PM domains
+  drivers: firmware: psci: Add support for PM domains using genpd
+  drivers: firmware: psci: Add hierarchical domain idle states converter
+  drivers: firmware: psci: Introduce psci_dt_topology_init()
+  drivers: firmware: psci: Add a helper to attach a CPU to its PM domain
+  drivers: firmware: psci: Attach the CPU's device to its PM domain
+  drivers: firmware: psci: Manage runtime PM in the idle path for CPUs
+  drivers: firmware: psci: Support CPU hotplug for the hierarchical
+    model
+  arm64: kernel: Respect the hierarchical CPU topology in DT for PSCI
+  arm64: dts: hikey: Convert to the hierarchical CPU topology layout
+
+ .../devicetree/bindings/arm/psci.txt          | 166 ++++++++
+ arch/arm/include/asm/cpuidle.h                |   4 +-
+ arch/arm/kernel/cpuidle.c                     |   5 +-
+ arch/arm64/boot/dts/hisilicon/hi6220.dtsi     |  87 +++-
+ arch/arm64/boot/dts/qcom/msm8916.dtsi         |  57 ++-
+ arch/arm64/include/asm/cpu_ops.h              |   4 +-
+ arch/arm64/include/asm/cpuidle.h              |   6 +-
+ arch/arm64/kernel/cpuidle.c                   |   6 +-
+ arch/arm64/kernel/setup.c                     |   3 +
+ drivers/cpuidle/cpuidle-arm.c                 |   2 +-
+ drivers/cpuidle/dt_idle_states.c              |   5 +-
+ drivers/firmware/psci/Makefile                |   2 +-
+ drivers/firmware/psci/psci.c                  | 219 ++++++++--
+ drivers/firmware/psci/psci.h                  |  29 ++
+ drivers/firmware/psci/psci_pm_domain.c        | 403 ++++++++++++++++++
+ drivers/of/base.c                             |  36 ++
+ drivers/soc/qcom/spm.c                        |   3 +-
+ include/linux/of.h                            |   8 +
+ include/linux/psci.h                          |   6 +-
+ 19 files changed, 987 insertions(+), 64 deletions(-)
+ create mode 100644 drivers/firmware/psci/psci.h
+ create mode 100644 drivers/firmware/psci/psci_pm_domain.c
+
+-- 
+2.17.1
+
