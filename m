@@ -2,124 +2,173 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 48B631B32F
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 May 2019 11:49:54 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id F2A921B39A
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 May 2019 12:04:19 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728071AbfEMJtt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 13 May 2019 05:49:49 -0400
-Received: from usa-sjc-mx-foss1.foss.arm.com ([217.140.101.70]:50538 "EHLO
-        foss.arm.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1728042AbfEMJtt (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 13 May 2019 05:49:49 -0400
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.72.51.249])
-        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 9782C341;
-        Mon, 13 May 2019 02:49:48 -0700 (PDT)
-Received: from e107155-lin (e107155-lin.cambridge.arm.com [10.1.196.42])
-        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 18AEE3F703;
-        Mon, 13 May 2019 02:49:45 -0700 (PDT)
-Date:   Mon, 13 May 2019 10:49:35 +0100
-From:   Sudeep Holla <sudeep.holla@arm.com>
-To:     Amit Kucheria <amit.kucheria@linaro.org>
-Cc:     Niklas Cassel <niklas.cassel@linaro.org>,
-        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
-        Andy Gross <agross@kernel.org>,
-        David Brown <david.brown@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Mark Rutland <mark.rutland@arm.com>,
-        Jorge Ramirez-Ortiz <jorge.ramirez-ortiz@linaro.org>,
-        Lina Iyer <lina.iyer@linaro.org>,
-        Ulf Hansson <ulf.hansson@linaro.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        DTML <devicetree@vger.kernel.org>,
-        Sudeep Holla <sudeep.holla@arm.com>,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>
-Subject: Re: [PATCH] arm64: dts: qcom: qcs404: Add PSCI cpuidle support
-Message-ID: <20190513094935.GA4885@e107155-lin>
-References: <20190508145600.GA26843@centauri>
- <CAHLCerN8L4np0WAY4hTjTnPXFtTK6EH0BXWLXzB-NiRaAnvcDA@mail.gmail.com>
- <20190510091158.GA10284@e107155-lin>
- <CAHLCerM83weBBvwurU45d9_M0Wg49WjDFTRJ6KL8vj7cavz03g@mail.gmail.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAHLCerM83weBBvwurU45d9_M0Wg49WjDFTRJ6KL8vj7cavz03g@mail.gmail.com>
-User-Agent: Mutt/1.9.4 (2018-02-28)
+        id S1728891AbfEMKET (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 13 May 2019 06:04:19 -0400
+Received: from smtp.codeaurora.org ([198.145.29.96]:50502 "EHLO
+        smtp.codeaurora.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727690AbfEMKET (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 13 May 2019 06:04:19 -0400
+Received: by smtp.codeaurora.org (Postfix, from userid 1000)
+        id D582D6030D; Mon, 13 May 2019 10:04:17 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
+        s=default; t=1557741857;
+        bh=3XkmslwS7hhd6EdWnGyXu2LiPfgBfYAn/ge7FUSOMio=;
+        h=From:To:Cc:Subject:Date:From;
+        b=i7IElMERGgACywoAZa6u3aWYQd1W5SfUBTXCuSczHQJRbzJfCajsyRsX34fF3own8
+         idNPyJUkg2tXfMWUl4+s3I27EmLz7yw/E1ZIja1BjaViPd/0oXJmqA+sTkbfMay88P
+         WsAHaFrcGS1gd65ifVYanbWp7+vAJX7FgkiIi7Xo=
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        pdx-caf-mail.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.7 required=2.0 tests=ALL_TRUSTED,BAYES_00,
+        DKIM_INVALID,DKIM_SIGNED autolearn=no autolearn_force=no version=3.4.0
+Received: from blr-ubuntu-41.ap.qualcomm.com (blr-bdr-fw-01_globalnat_allzones-outside.qualcomm.com [103.229.18.19])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: vivek.gautam@smtp.codeaurora.org)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 4B9EF6032C;
+        Mon, 13 May 2019 10:04:14 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
+        s=default; t=1557741857;
+        bh=3XkmslwS7hhd6EdWnGyXu2LiPfgBfYAn/ge7FUSOMio=;
+        h=From:To:Cc:Subject:Date:From;
+        b=i7IElMERGgACywoAZa6u3aWYQd1W5SfUBTXCuSczHQJRbzJfCajsyRsX34fF3own8
+         idNPyJUkg2tXfMWUl4+s3I27EmLz7yw/E1ZIja1BjaViPd/0oXJmqA+sTkbfMay88P
+         WsAHaFrcGS1gd65ifVYanbWp7+vAJX7FgkiIi7Xo=
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 4B9EF6032C
+Authentication-Results: pdx-caf-mail.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: pdx-caf-mail.web.codeaurora.org; spf=none smtp.mailfrom=vivek.gautam@codeaurora.org
+From:   Vivek Gautam <vivek.gautam@codeaurora.org>
+To:     will.deacon@arm.com, robin.murphy@arm.com, joro@8bytes.org,
+        iommu@lists.linux-foundation.org
+Cc:     pdaly@codeaurora.org, linux-arm-msm@vger.kernel.org,
+        pratikp@codeaurora.org, linux-kernel@vger.kernel.org,
+        jcrouse@codeaurora.org, Vivek Gautam <vivek.gautam@codeaurora.org>
+Subject: [PATCH v4 1/1] iommu/io-pgtable-arm: Add support to use system cache
+Date:   Mon, 13 May 2019 15:34:03 +0530
+Message-Id: <20190513100403.18981-1-vivek.gautam@codeaurora.org>
+X-Mailer: git-send-email 2.16.1.72.g5be1f00a9a70
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, May 10, 2019 at 11:58:40PM +0530, Amit Kucheria wrote:
-> On Fri, May 10, 2019 at 2:54 PM Sudeep Holla <sudeep.holla@arm.com> wrote:
-> >
+Few Qualcomm platforms such as, sdm845 have an additional outer
+cache called as System cache, aka. Last level cache (LLC) that
+allows non-coherent devices to upgrade to using caching.
+This cache sits right before the DDR, and is tightly coupled
+with the memory controller. The clients using this cache request
+their slices from this system cache, make it active, and can then
+start using it.
 
-[...]
+There is a fundamental assumption that non-coherent devices can't
+access caches. This change adds an exception where they *can* use
+some level of cache despite still being non-coherent overall.
+The coherent devices that use cacheable memory, and CPU make use of
+this system cache by default.
 
-> >
-> > Yes entry-method="psci" is required as per DT binding but not checked
-> > in code on arm64. We have CPU ops with idle enabled only for "psci", so
-> > there's not need to check.
->
-> I don't see it being checked on arm32 either.
->
+Looking at memory types, we have following -
+a) Normal uncached :- MAIR 0x44, inner non-cacheable,
+                      outer non-cacheable;
+b) Normal cached :-   MAIR 0xff, inner read write-back non-transient,
+                      outer read write-back non-transient;
+                      attribute setting for coherenet I/O devices.
+and, for non-coherent i/o devices that can allocate in system cache
+another type gets added -
+c) Normal sys-cached :- MAIR 0xf4, inner non-cacheable,
+                        outer read write-back non-transient
 
-arm_cpuidle_get_ops in arch/arm/kernel/cpuidle.c checks the method, has
-to match "psci" for drivers/firmware/psci.c to work on arm32
+Coherent I/O devices use system cache by marking the memory as
+normal cached.
+Non-coherent I/O devices should mark the memory as normal
+sys-cached in page tables to use system cache.
 
-[...]
+Signed-off-by: Vivek Gautam <vivek.gautam@codeaurora.org>
+---
 
-> >
-> > Why do you want to deprecated just because Linux kernel doesn't want to
-> > use it. That's not a valid reason IMO.
->
-> Fair enough. Just want to make sure that it isn't some vestigial
-> property that was never used. Do you know if another OS is actually
-> using it?
->
+V3 version of this patch and related series can be found at [1].
 
-Not that I am aware of. But Linux uses it on arm32, so it's not entirely
-unused.
+This change is a realisation of following changes from downstream msm-4.9:
+iommu: io-pgtable-arm: Implement IOMMU_USE_UPSTREAM_HINT[2]
 
-> > > Do we expect to support PSCI platforms that might have a different
-> > > entry-method for idle states?
-> >
-> > Not on ARM64, but same DT bindings can be used for idle-states on
-> > say RISC-V and have some value other than "psci".
->
-> Both enable-method and entry-method properties are currently only used
-> (and documented) for ARM platforms. Hence this discussion about
-> deprecation of one of them.
->
+Changes since v3:
+ - Dropping support to cache i/o page tables to system cache. Getting support
+   for data buffers is the first step.
+   Removed io-pgtable quirk and related change to add domain attribute.
 
-Yes, it's used on arm32 as mentioned above.
+Glmark2 numbers on SDM845 based cheza board:
 
-> > > Should I whip up a patch removing entry-method? Since we don't check
-> > > for it today, it won't break the old DTs either.
-> > >
-> >
-> > Nope, I don't think so. But if it's causing issues, we can look into it.
-> > I don't want to restrict the use of the bindings for ARM/ARM64 or psci only.
->
-> Only a couple of minor issues:
-> 1. There is a trickle of DTs that need fixing up every now and then
-> because they don't use entry-method in their idle-states node. Schema
-> validation ought to fix that.
+S.No.|	with LLC support   |	without LLC support
+     |	for data buffers   |
+---------------------------------------------------		
+1    |	4480; 72.3fps      |	4042; 65.2fps
+2    |	4500; 72.6fps      |	4039; 65.1fps
+3    |	4523; 72.9fps	   |	4106; 66.2fps
+4    |	4489; 72.4fps	   |	4104; 66.2fps
+5    |	4518; 72.9fps	   |	4072; 65.7fps
 
-I understand, scheme should fix it. This is not just restricted to this,
-it's generic DT problem. So let's hope we get schema based validation soon.
+[1] https://patchwork.kernel.org/cover/10772629/
+[2] https://source.codeaurora.org/quic/la/kernel/msm-4.9/commit/?h=msm-4.9&id=d4c72c413ea27c43f60825193d4de9cb8ffd9602
 
-> 2. A property that isn't ready by any code is a bit confusing. Perhaps
-> we can mention something to the effect in the documentation?
->
+ drivers/iommu/io-pgtable-arm.c | 9 ++++++++-
+ include/linux/iommu.h          | 1 +
+ 2 files changed, 9 insertions(+), 1 deletion(-)
 
-Not entirely true. We have quite a lot of bindings that are added just
-because downstream drivers use e.g. GPU and even standard ePAPR or DT
-specification has lots of bindings which OS like Linux may choose
-not to use at all. Same applies to ACPI, so I am not for removing bindings
-just because there are no users in Linux.
-
---
-Regards,
-Sudeep
+diff --git a/drivers/iommu/io-pgtable-arm.c b/drivers/iommu/io-pgtable-arm.c
+index d3700ec15cbd..2dbafe697531 100644
+--- a/drivers/iommu/io-pgtable-arm.c
++++ b/drivers/iommu/io-pgtable-arm.c
+@@ -167,10 +167,12 @@
+ #define ARM_LPAE_MAIR_ATTR_MASK		0xff
+ #define ARM_LPAE_MAIR_ATTR_DEVICE	0x04
+ #define ARM_LPAE_MAIR_ATTR_NC		0x44
++#define ARM_LPAE_MAIR_ATTR_QCOM_SYS_CACHE	0xf4
+ #define ARM_LPAE_MAIR_ATTR_WBRWA	0xff
+ #define ARM_LPAE_MAIR_ATTR_IDX_NC	0
+ #define ARM_LPAE_MAIR_ATTR_IDX_CACHE	1
+ #define ARM_LPAE_MAIR_ATTR_IDX_DEV	2
++#define ARM_LPAE_MAIR_ATTR_IDX_QCOM_SYS_CACHE	3
+ 
+ /* IOPTE accessors */
+ #define iopte_deref(pte,d) __va(iopte_to_paddr(pte, d))
+@@ -442,6 +444,9 @@ static arm_lpae_iopte arm_lpae_prot_to_pte(struct arm_lpae_io_pgtable *data,
+ 		else if (prot & IOMMU_CACHE)
+ 			pte |= (ARM_LPAE_MAIR_ATTR_IDX_CACHE
+ 				<< ARM_LPAE_PTE_ATTRINDX_SHIFT);
++		else if (prot & IOMMU_QCOM_SYS_CACHE)
++			pte |= (ARM_LPAE_MAIR_ATTR_IDX_QCOM_SYS_CACHE
++				<< ARM_LPAE_PTE_ATTRINDX_SHIFT);
+ 	} else {
+ 		pte = ARM_LPAE_PTE_HAP_FAULT;
+ 		if (prot & IOMMU_READ)
+@@ -841,7 +846,9 @@ arm_64_lpae_alloc_pgtable_s1(struct io_pgtable_cfg *cfg, void *cookie)
+ 	      (ARM_LPAE_MAIR_ATTR_WBRWA
+ 	       << ARM_LPAE_MAIR_ATTR_SHIFT(ARM_LPAE_MAIR_ATTR_IDX_CACHE)) |
+ 	      (ARM_LPAE_MAIR_ATTR_DEVICE
+-	       << ARM_LPAE_MAIR_ATTR_SHIFT(ARM_LPAE_MAIR_ATTR_IDX_DEV));
++	       << ARM_LPAE_MAIR_ATTR_SHIFT(ARM_LPAE_MAIR_ATTR_IDX_DEV)) |
++	      (ARM_LPAE_MAIR_ATTR_QCOM_SYS_CACHE
++	       << ARM_LPAE_MAIR_ATTR_SHIFT(ARM_LPAE_MAIR_ATTR_IDX_QCOM_SYS_CACHE));
+ 
+ 	cfg->arm_lpae_s1_cfg.mair[0] = reg;
+ 	cfg->arm_lpae_s1_cfg.mair[1] = 0;
+diff --git a/include/linux/iommu.h b/include/linux/iommu.h
+index a815cf6f6f47..29dd2c624348 100644
+--- a/include/linux/iommu.h
++++ b/include/linux/iommu.h
+@@ -31,6 +31,7 @@
+ #define IOMMU_CACHE	(1 << 2) /* DMA cache coherency */
+ #define IOMMU_NOEXEC	(1 << 3)
+ #define IOMMU_MMIO	(1 << 4) /* e.g. things like MSI doorbells */
++#define IOMMU_QCOM_SYS_CACHE	(1 << 6)
+ /*
+  * Where the bus hardware includes a privilege level as part of its access type
+  * markings, and certain devices are capable of issuing transactions marked as
+-- 
+QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
+of Code Aurora Forum, hosted by The Linux Foundation
 
