@@ -2,167 +2,206 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 18E321CD4B
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 May 2019 18:56:02 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E52341CDC6
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 May 2019 19:17:23 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726089AbfENQ4B (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 14 May 2019 12:56:01 -0400
-Received: from mail.kernel.org ([198.145.29.99]:59956 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726013AbfENQ4B (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 14 May 2019 12:56:01 -0400
-Received: from localhost (83-86-89-107.cable.dynamic.v4.ziggo.nl [83.86.89.107])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 4E9D42084A;
-        Tue, 14 May 2019 16:55:59 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1557852959;
-        bh=kLKAdEEeXCbRylavUkmyhySVv0lYey9X0yaOkSYnFwY=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=suFW14rDR+aofrdMelabOO6zWt/x6IU0m6HQjDQoVN5DP9RJfdiHQNzHkNh+usqZ5
-         vBWjvDTvSRV2+su6pxeHQ8XODKpSrHamfKPtnWac+7E+BsWyoYno7FYYbYUsx23Nq6
-         OZgYJHHpEUIF5KsoUXsqj2uGdo9R35TDu4FJqKFs=
-Date:   Tue, 14 May 2019 18:55:57 +0200
-From:   Greg KH <gregkh@linuxfoundation.org>
-To:     Muchun Song <smuchun@gmail.com>
-Cc:     rafael@kernel.org, benh@kernel.crashing.org, prsood@codeaurora.org,
-        mojha@codeaurora.org, gkohli@codeaurora.org,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        zhaowuyun@wingtech.com
-Subject: Re: [PATCH v2] driver core: Fix use-after-free and double free on
- glue directory
-Message-ID: <20190514165557.GB28266@kroah.com>
-References: <20190514150027.2364-1-smuchun@gmail.com>
+        id S1726870AbfENRRR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 14 May 2019 13:17:17 -0400
+Received: from mail-ed1-f67.google.com ([209.85.208.67]:42231 "EHLO
+        mail-ed1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726251AbfENRRR (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 14 May 2019 13:17:17 -0400
+Received: by mail-ed1-f67.google.com with SMTP id l25so23890569eda.9;
+        Tue, 14 May 2019 10:17:15 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=+l9zz6eaN2LIJhz1rmWgTZAN4kH+dDR0HBMwscHakxY=;
+        b=Vw8j1EhC/hirGyhd//mhklJ3dK/9R4/rkLaiCq33qN9mZBdK+h9CeuGckVuTAQj4r8
+         Lroza3lMGmp3StHW3eBjXChsbcS6EzT+k4q+eonRhUVGbJfcGNxpvbT9O2BDNZ0+AOX9
+         m4AAe84sX022No4bgqg0cFpzvHd5AN7eSJj3oinlXew9tzYa2COSvYh7cs9sOrhvyivV
+         Io/sNSNXcrdWcax24GCRqP5/Crhy3g3lIl7bs4HUgNiVaFKD/wG2LeXJu7F943s/cwD0
+         HWQdaWMKasSQOWas0lKqMo36mGXP4HzFwMOV/QttYVTHapA6zmuvvFGGuApY99YCJvjT
+         4BWA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=+l9zz6eaN2LIJhz1rmWgTZAN4kH+dDR0HBMwscHakxY=;
+        b=cNPi/6WhNxYPo78K5odk+gqzj84r9qHWQ+m9eO4Q6Un1N5qUptyvTK4GMUh+IGIKvo
+         tri30Q2QbStq6499Nis3yoMFw76LZ8Km9JwW3zMrO2SximfWVc7cCDJB4y2fp3T6gIXp
+         fo3jbhm1yhSzO5FiamH6WQ+1fJeqWeWkY3lVSNjNjRsAeyMylmVYVyxUlvbycgcNNbfa
+         KiFrqqiXLRVs0tlrvisYTtOQ6hdBOuJL+l9EhpOX/R6sgo7joMAoFqEYVXYMDF5k7SVM
+         +nMMANPNXHYh+FmzzDbh9RqevfC26QL3AcD0X4vtaWr52aR0bnGopSlkbrDtkZ1dGarp
+         te2w==
+X-Gm-Message-State: APjAAAU8AvDQaFbdT7SVdXtWsMZNslPyEodnuK8rlO1hbYIMa0HH9sTX
+        4hBHKUSavjVkr5DFgr8+caWMjADnhjJOxjkgswY=
+X-Google-Smtp-Source: APXvYqwmXirTESmlcC78TECRFWo44J6KJt1h6qI1PBjPpoXbbJP1T2BFjs/mfGdnb1QLBUyu3TedlIxXhIoLHR0QlWs=
+X-Received: by 2002:a17:907:20a6:: with SMTP id pw6mr11778381ejb.113.1557854234894;
+ Tue, 14 May 2019 10:17:14 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20190514150027.2364-1-smuchun@gmail.com>
-User-Agent: Mutt/1.11.4 (2019-03-13)
+References: <20170914194444.32551-1-robdclark@gmail.com> <20170919123038.GF8398@8bytes.org>
+ <CAF6AEGuutkqjrWk4jagE=p-NwHgxdiPZjjsaFsfwtczK568j+A@mail.gmail.com>
+ <20170922090204.GJ8398@8bytes.org> <32e3ab2c-a996-c805-2a0d-a2e85deb3a50@arm.com>
+ <CAF6AEGuepdKo1Ob2jW66UhYXOTAqOMc3C-XKsK3Rze1QdLobLw@mail.gmail.com>
+ <571e825d-7f54-2da4-adc0-6b6ac6dae459@arm.com> <CAF6AEGtJRYvSLw+Cc6XaHEN58Ne2_StTojN9_e6+aJZSfX_dVg@mail.gmail.com>
+ <6f7fb139-5117-d89e-0caa-bd34ea9b6ff3@arm.com>
+In-Reply-To: <6f7fb139-5117-d89e-0caa-bd34ea9b6ff3@arm.com>
+From:   Rob Clark <robdclark@gmail.com>
+Date:   Tue, 14 May 2019 10:17:03 -0700
+Message-ID: <CAF6AEGuxGAjqpZBKQvmyHTr7fPU9yKYLf1CfB_TMzKDiXptjzg@mail.gmail.com>
+Subject: Re: [RFC] iommu: arm-smmu: stall support
+To:     Robin Murphy <robin.murphy@arm.com>
+Cc:     Jean-Philippe Brucker <jean-philippe.brucker@arm.com>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        Will Deacon <Will.Deacon@arm.com>,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        "iommu@lists.linux-foundation.org" <iommu@lists.linux-foundation.org>,
+        "linux-arm-kernel@lists.infradead.org" 
+        <linux-arm-kernel@lists.infradead.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, May 14, 2019 at 11:00:27PM +0800, Muchun Song wrote:
-> There is a race condition between removing glue directory and adding a new
-> device under the glue directory. It can be reproduced in following test:
-> 
-> path 1: Add the child device under glue dir
-> device_add()
->     get_device_parent()
->         mutex_lock(&gdp_mutex);
->         ....
->         /*find parent from glue_dirs.list*/
->         list_for_each_entry(k, &dev->class->p->glue_dirs.list, entry)
->             if (k->parent == parent_kobj) {
->                 kobj = kobject_get(k);
->                 break;
->             }
->         ....
->         mutex_unlock(&gdp_mutex);
->         ....
->     ....
->     kobject_add()
->         kobject_add_internal()
->             create_dir()
->                 sysfs_create_dir_ns()
->                     if (kobj->parent)
->                         parent = kobj->parent->sd;
->                     ....
->                     kernfs_create_dir_ns(parent)
->                         kernfs_new_node()
->                             kernfs_get(parent)
->                         ....
->                         /* link in */
->                         rc = kernfs_add_one(kn);
->                         if (!rc)
->                             return kn;
-> 
->                         kernfs_put(kn)
->                             ....
->                             repeat:
->                             kmem_cache_free(kn)
->                             kn = parent;
-> 
->                             if (kn) {
->                                 if (atomic_dec_and_test(&kn->count))
->                                     goto repeat;
->                             }
->                         ....
-> 
-> path2: Remove last child device under glue dir
-> device_del()
->     cleanup_device_parent()
->         cleanup_glue_dir()
->             mutex_lock(&gdp_mutex);
->             if (!kobject_has_children(glue_dir))
->                 kobject_del(glue_dir);
->             kobject_put(glue_dir);
->             mutex_unlock(&gdp_mutex);
-> 
-> Before path2 remove last child device under glue dir, If path1 add a new
-> device under glue dir, the glue_dir kobject reference count will be
-> increase to 2 via kobject_get(k) in get_device_parent(). And path1 has
-> been called kernfs_new_node(), but not call kernfs_get(parent).
-> Meanwhile, path2 call kobject_del(glue_dir) beacause 0 is returned by
-> kobject_has_children(). This result in glue_dir->sd is freed and it's
-> reference count will be 0. Then path1 call kernfs_get(parent) will trigger
-> a warning in kernfs_get()(WARN_ON(!atomic_read(&kn->count))) and increase
-> it's reference count to 1. Because glue_dir->sd is freed by path2, the next
-> call kernfs_add_one() by path1 will fail(This is also use-after-free)
-> and call atomic_dec_and_test() to decrease reference count. Because the
-> reference count is decremented to 0, it will also call kmem_cache_free()
-> to free glue_dir->sd again. This will result in double free.
-> 
-> In order to avoid this happening, we we should not call kobject_del() on
-> path2 when the reference count of glue_dir is greater than 1. So we add a
-> conditional statement to fix it.
-> 
-> The following calltrace is captured in kernel 4.14 with the following patch
-> applied:
-> 
-> commit 726e41097920 ("drivers: core: Remove glue dirs from sysfs earlier")
-> 
-> --------------------------------------------------------------------------
-> [    3.633703] WARNING: CPU: 4 PID: 513 at .../fs/kernfs/dir.c:494
->                 Here is WARN_ON(!atomic_read(&kn->count) in kernfs_get().
-> ....
-> [    3.633986] Call trace:
-> [    3.633991]  kernfs_create_dir_ns+0xa8/0xb0
-> [    3.633994]  sysfs_create_dir_ns+0x54/0xe8
-> [    3.634001]  kobject_add_internal+0x22c/0x3f0
-> [    3.634005]  kobject_add+0xe4/0x118
-> [    3.634011]  device_add+0x200/0x870
-> [    3.634017]  _request_firmware+0x958/0xc38
-> [    3.634020]  request_firmware_into_buf+0x4c/0x70
-> ....
-> [    3.634064] kernel BUG at .../mm/slub.c:294!
->                 Here is BUG_ON(object == fp) in set_freepointer().
-> ....
-> [    3.634346] Call trace:
-> [    3.634351]  kmem_cache_free+0x504/0x6b8
-> [    3.634355]  kernfs_put+0x14c/0x1d8
-> [    3.634359]  kernfs_create_dir_ns+0x88/0xb0
-> [    3.634362]  sysfs_create_dir_ns+0x54/0xe8
-> [    3.634366]  kobject_add_internal+0x22c/0x3f0
-> [    3.634370]  kobject_add+0xe4/0x118
-> [    3.634374]  device_add+0x200/0x870
-> [    3.634378]  _request_firmware+0x958/0xc38
-> [    3.634381]  request_firmware_into_buf+0x4c/0x70
-> --------------------------------------------------------------------------
-> 
-> Fixes: 726e41097920 ("drivers: core: Remove glue dirs from sysfs earlier")
-> 
-> Signed-off-by: Muchun Song <smuchun@gmail.com>
-> ---
->  drivers/base/core.c | 47 ++++++++++++++++++++++++++++++++++++---------
->  1 file changed, 38 insertions(+), 9 deletions(-)
+On Tue, May 14, 2019 at 3:24 AM Robin Murphy <robin.murphy@arm.com> wrote:
+>
+> On 14/05/2019 02:54, Rob Clark wrote:
+> > On Mon, May 13, 2019 at 11:37 AM Jean-Philippe Brucker
+> > <jean-philippe.brucker@arm.com> wrote:
+> >>
+> >> Hi Rob,
+> >>
+> >> On 10/05/2019 19:23, Rob Clark wrote:
+> >>> On Fri, Sep 22, 2017 at 2:58 AM Jean-Philippe Brucker
+> >>> <jean-philippe.brucker@arm.com> wrote:
+> >>>>
+> >>>> On 22/09/17 10:02, Joerg Roedel wrote:
+> >>>>> On Tue, Sep 19, 2017 at 10:23:43AM -0400, Rob Clark wrote:
+> >>>>>> I would like to decide in the IRQ whether or not to queue work or not,
+> >>>>>> because when we get a gpu fault, we tend to get 1000's of gpu faults
+> >>>>>> all at once (and I really only need to handle the first one).  I
+> >>>>>> suppose that could also be achieved by having a special return value
+> >>>>>> from the fault handler to say "call me again from a wq"..
+> >>>>>>
+> >>>>>> Note that in the drm driver I already have a suitable wq to queue the
+> >>>>>> work, so it really doesn't buy me anything to have the iommu driver
+> >>>>>> toss things off to a wq for me.  Might be a different situation for
+> >>>>>> other drivers (but I guess mostly other drivers are using iommu API
+> >>>>>> indirectly via dma-mapping?)
+> >>>>>
+> >>>>> Okay, so since you are the only user for now, we don't need a
+> >>>>> work-queue. But I still want the ->resume call-back to be hidden in the
+> >>>>> iommu code and not be exposed to users.
+> >>>>>
+> >>>>> We already have per-domain fault-handlers, so the best solution for now
+> >>>>> is to call ->resume from report_iommu_fault() when the fault-handler
+> >>>>> returns a special value.
+> >>>>
+> >>>> The problem is that report_iommu_fault is called from IRQ context by the
+> >>>> SMMU driver, so the device driver callback cannot sleep.
+> >>>>
+> >>>> So if the device driver needs to be able to sleep between fault report and
+> >>>> resume, as I understand Rob needs for writing debugfs, we can either:
+> >>>>
+> >>>> * call report_iommu_fault from higher up, in a thread or workqueue.
+> >>>> * split the fault reporting as this patch proposes. The exact same
+> >>>>    mechanism is needed for the vSVM work by Intel: in order to inject fault
+> >>>>    into the guest, they would like to have an atomic notifier registered by
+> >>>>    VFIO for passing down the Page Request, and a new function in the IOMMU
+> >>>>    API to resume/complete the fault.
+> >>>>
+> >>>
+> >>> So I was thinking about this topic again.. I would still like to get
+> >>> some sort of async resume so that I can wire up GPU cmdstream/state
+> >>> logging on iommu fault (without locally resurrecting and rebasing this
+> >>> patch and drm/msm side changes each time I need to debug iommu
+> >>> faults)..
+> >>
+> >> We've been working on the new fault reporting API with Jacob and Eric,
+> >> and I intend to send it out soon. It is supposed to be used for
+> >> reporting faults to guests via VFIO, handling page faults via mm, and
+> >> also reporting events directly to device drivers. Please let us know
+> >> what works and what doesn't in your case
+> >>
+> >> The most recent version of the patches is at
+> >> http://www.linux-arm.org/git?p=linux-jpb.git;a=shortlog;h=refs/heads/sva/api
+> >> (git://www.linux-arm.org/linux-jpb.git branch sva/api). Hopefully on the
+> >> list sometimes next week, I'll add you on Cc.
+> >>
+> >> In particular, see commits
+> >>          iommu: Introduce device fault data
+> >>          iommu: Introduce device fault report API
+> >>          iommu: Add recoverable fault reporting
+> >>
+> >> The device driver calls iommu_register_device_fault_handler(dev, cb,
+> >> data). To report a fault, the SMMU driver calls
+> >> iommu_report_device_fault(dev, fault). This calls into the device driver
+> >> directly, there isn't any workqueue. If the fault is recoverable (the
+> >> SMMU driver set type IOMMU_FAULT_PAGE_REQ rather than
+> >> IOMMU_FAULT_DMA_UNRECOV), the device driver calls iommu_page_response()
+> >> once it has dealt with the fault (after sleeping if it needs to). This
+> >> invokes the SMMU driver's resume callback.
+> >
+> > Ok, this sounds at a high level similar to my earlier RFC, in that
+> > resume is split (and that was the main thing I was interested in).
+> > And it does solve one thing I was struggling with, namely that when
+> > the domain is created it doesn't know which iommu device it will be
+> > attached to (given that at least the original arm-smmu.c driver cannot
+> > support stall in all cases)..
+> >
+> > For GPU translation faults, I also don't really need to know if the
+> > faulting translation is stalled until the callback (I mainly want to
+> > not bother to snapshot GPU state if it is not stalled, because in that
+> > case the data we snapshot is unlikely to be related to the fault if
+> > the translation is not stalled).
+> >
+> >> At the moment we use mutexes, so iommu_report_device_fault() can only be
+> >> called from an IRQ thread, which is incompatible with the current SMMUv2
+> >> driver. Either we need to switch the SMMUv2 driver to an IRQ thread, or
+> >> rework the fault handler to be called from an IRQ handler. The reporting
+> >> also has to be per device rather than per domain, and I'm not sure if
+> >> the SMMUv2 driver can deal with this.
+> >
+> > I'll take a closer look at the branch and try to formulate some plan
+> > to add v2 support for this.
+>
+> What's fun is that we should be able to identify a stream ID for most
+> context faults *except* translation faults...
+>
+> We've considered threaded IRQs before, and IIRC the problem with doing
+> it at the architectural level is that in some cases the fault interrupt
+> can only be deasserted by actually resuming/terminating the stalled
+> transaction.
+>
+> > For my cases, the GPU always has it's own iommu device, while display
+> > and other blocks share an apps_smmu.. although this sort of
+> > functionality isn't really required outside of the GPU.. but I'll have
+> > to think a bit about how we can support both cases in the single v2
+> > driver.
+>
+> With the above said, I am in the middle of a big refactoring[1] to allow
+> everyone's imp-def stuff to coexist nicely, so ultimately if qcom
+> implementations can guarantee the appropriate hardware behaviour then
+> they can have their own interrupt handlers to accommodate this.
+>
 
-What changed in v2?  That always goes below the --- line.
+Ok, maybe I'll hold off a bit and work on other things, to avoid feet stomping..
 
-Please fix up and send v3.
+I don't suppose you have thoughts about split pagetables, which is one
+of the things we want for implementing per-context pagetables?  I
+suppose that is less of an impl thing and more an architecture thing,
+but maybe no one on other implementations wants this?
 
-thanks,
+BR,
+-R
 
-greg k-h
+
+> Robin.
+>
+> [1]
+> http://linux-arm.org/git?p=linux-rm.git;a=shortlog;h=refs/heads/iommu/smmu-impl
+> - note that this is very, very WIP right now
