@@ -2,174 +2,148 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id E5EB91C6F8
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 May 2019 12:24:25 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 215EC1C863
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 May 2019 14:19:39 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726324AbfENKYZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 14 May 2019 06:24:25 -0400
-Received: from foss.arm.com ([217.140.101.70]:53596 "EHLO foss.arm.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1725892AbfENKYZ (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 14 May 2019 06:24:25 -0400
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.72.51.249])
-        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 9A7D4374;
-        Tue, 14 May 2019 03:24:24 -0700 (PDT)
-Received: from [10.1.196.75] (e110467-lin.cambridge.arm.com [10.1.196.75])
-        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 383953F703;
-        Tue, 14 May 2019 03:24:23 -0700 (PDT)
-Subject: Re: [RFC] iommu: arm-smmu: stall support
-To:     Rob Clark <robdclark@gmail.com>,
-        Jean-Philippe Brucker <jean-philippe.brucker@arm.com>
-Cc:     linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Will Deacon <Will.Deacon@arm.com>,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-        "iommu@lists.linux-foundation.org" <iommu@lists.linux-foundation.org>,
-        "linux-arm-kernel@lists.infradead.org" 
-        <linux-arm-kernel@lists.infradead.org>
-References: <20170914194444.32551-1-robdclark@gmail.com>
- <20170919123038.GF8398@8bytes.org>
- <CAF6AEGuutkqjrWk4jagE=p-NwHgxdiPZjjsaFsfwtczK568j+A@mail.gmail.com>
- <20170922090204.GJ8398@8bytes.org>
- <32e3ab2c-a996-c805-2a0d-a2e85deb3a50@arm.com>
- <CAF6AEGuepdKo1Ob2jW66UhYXOTAqOMc3C-XKsK3Rze1QdLobLw@mail.gmail.com>
- <571e825d-7f54-2da4-adc0-6b6ac6dae459@arm.com>
- <CAF6AEGtJRYvSLw+Cc6XaHEN58Ne2_StTojN9_e6+aJZSfX_dVg@mail.gmail.com>
-From:   Robin Murphy <robin.murphy@arm.com>
-Message-ID: <6f7fb139-5117-d89e-0caa-bd34ea9b6ff3@arm.com>
-Date:   Tue, 14 May 2019 11:24:21 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.6.1
+        id S1726254AbfENMTi (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 14 May 2019 08:19:38 -0400
+Received: from mail-qt1-f196.google.com ([209.85.160.196]:37384 "EHLO
+        mail-qt1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726211AbfENMTi (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 14 May 2019 08:19:38 -0400
+Received: by mail-qt1-f196.google.com with SMTP id o7so18667803qtp.4
+        for <linux-arm-msm@vger.kernel.org>; Tue, 14 May 2019 05:19:37 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=ndufresne-ca.20150623.gappssmtp.com; s=20150623;
+        h=message-id:subject:from:to:cc:date:in-reply-to:references
+         :user-agent:mime-version:content-transfer-encoding;
+        bh=U0DpT43tjbc+zKgowoXNj4gD+VXgSMT7iXcdOXpGfnk=;
+        b=MsI3redrPwQrIOqOIgfojac/SeflfTeSEEHbupT3uBsTZOa0Fwu17Q/4GFem24pier
+         vnqRKPL/wbNcwCaoZqeRX79HadZM7b7Df0PWoQokbBaY5NO6Q61enz3FUQYzVOzCjSRh
+         Jqs1kXHB/1coy7gansBBV9Mqf9q8rqShoZuWHlZnwTVcOvG8ddZsiyHFyixvF3LtFc0j
+         L17JRrdPeEVYX2q2LFoX3pn4SECSkSnD/ppXxsWz0TTYPI9m5Z0GxmIddijElsAdWwc9
+         bLNiCJSvuSnGFYKrKEQIwPPtVcZTbVDpQTyqEruDc6wUUjIoXyMQy1lvlA5PbQ77siXE
+         ia+Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:message-id:subject:from:to:cc:date:in-reply-to
+         :references:user-agent:mime-version:content-transfer-encoding;
+        bh=U0DpT43tjbc+zKgowoXNj4gD+VXgSMT7iXcdOXpGfnk=;
+        b=oHewXGHgPDwE5ic7dJBXG9c/Gae2us1WE+D/McEDHYj85W6UUhm0dBqQ6yDJLQfU5x
+         btv/+hKE/uxyvrEV1kEN7wSzGrp+5vQJ3yjFoDw/cg7NR/UQDkJFUkoZTOCg/3jAHIJE
+         Pr/tO22FViwVj4cNSDJzTYHvLfxlPkdJlXfAXvSRED1cglJL3wQZD/oHS/8JYmeCasfZ
+         EjDpLYBSSgQzC5Vma+zdIbwZ8Bkm/CQnF1w43/HRr495fqcqbSyAbNKR8Wo5koCasioR
+         UNWz12mHqTuSV2ue4QRG3BPEP9QEZEYgpYFbHtvoM8MgD5cRolGEK86Dki/7NO4Us/WU
+         1/4A==
+X-Gm-Message-State: APjAAAWoMx2LTBq5M0Tbcv9zpUYafEy/2JOsVwXLAMeKBP8W10UgNRNl
+        1rhq4YnymGV+Jq5znyB3/7DV6Q==
+X-Google-Smtp-Source: APXvYqxD2KIzuB0hooUSp+6DNIlDqA8GfSvdV41V1sBC1GAHZF5hrB10YsOIvolxxzU+uDonglNXbg==
+X-Received: by 2002:a0c:ad46:: with SMTP id v6mr7839465qvc.82.1557836376895;
+        Tue, 14 May 2019 05:19:36 -0700 (PDT)
+Received: from skullcanyon ([2002:c0de:c115:0:481e:e17e:2f68:43f8])
+        by smtp.gmail.com with ESMTPSA id f33sm2792457qtf.64.2019.05.14.05.19.35
+        (version=TLS1_3 cipher=AEAD-AES256-GCM-SHA384 bits=256/256);
+        Tue, 14 May 2019 05:19:36 -0700 (PDT)
+Message-ID: <ecdb8da5f00a8f5bd5d5ec125e2aa162e0091728.camel@ndufresne.ca>
+Subject: Re: [PATCH v2] media/doc: Allow sizeimage to be set by v4l clients
+From:   Nicolas Dufresne <nicolas@ndufresne.ca>
+To:     Hans Verkuil <hverkuil@xs4all.nl>,
+        Stanimir Varbanov <stanimir.varbanov@linaro.org>,
+        linux-media@vger.kernel.org
+Cc:     Mauro Carvalho Chehab <mchehab@kernel.org>,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+Date:   Tue, 14 May 2019 08:19:34 -0400
+In-Reply-To: <a1807c37-99cf-d1fa-bcb9-67af2935abaf@xs4all.nl>
+References: <20190412155915.16849-1-stanimir.varbanov@linaro.org>
+         <a1807c37-99cf-d1fa-bcb9-67af2935abaf@xs4all.nl>
+Content-Type: text/plain; charset="UTF-8"
+User-Agent: Evolution 3.32.1 (3.32.1-1.fc30) 
 MIME-Version: 1.0
-In-Reply-To: <CAF6AEGtJRYvSLw+Cc6XaHEN58Ne2_StTojN9_e6+aJZSfX_dVg@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-GB
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 14/05/2019 02:54, Rob Clark wrote:
-> On Mon, May 13, 2019 at 11:37 AM Jean-Philippe Brucker
-> <jean-philippe.brucker@arm.com> wrote:
->>
->> Hi Rob,
->>
->> On 10/05/2019 19:23, Rob Clark wrote:
->>> On Fri, Sep 22, 2017 at 2:58 AM Jean-Philippe Brucker
->>> <jean-philippe.brucker@arm.com> wrote:
->>>>
->>>> On 22/09/17 10:02, Joerg Roedel wrote:
->>>>> On Tue, Sep 19, 2017 at 10:23:43AM -0400, Rob Clark wrote:
->>>>>> I would like to decide in the IRQ whether or not to queue work or not,
->>>>>> because when we get a gpu fault, we tend to get 1000's of gpu faults
->>>>>> all at once (and I really only need to handle the first one).  I
->>>>>> suppose that could also be achieved by having a special return value
->>>>>> from the fault handler to say "call me again from a wq"..
->>>>>>
->>>>>> Note that in the drm driver I already have a suitable wq to queue the
->>>>>> work, so it really doesn't buy me anything to have the iommu driver
->>>>>> toss things off to a wq for me.  Might be a different situation for
->>>>>> other drivers (but I guess mostly other drivers are using iommu API
->>>>>> indirectly via dma-mapping?)
->>>>>
->>>>> Okay, so since you are the only user for now, we don't need a
->>>>> work-queue. But I still want the ->resume call-back to be hidden in the
->>>>> iommu code and not be exposed to users.
->>>>>
->>>>> We already have per-domain fault-handlers, so the best solution for now
->>>>> is to call ->resume from report_iommu_fault() when the fault-handler
->>>>> returns a special value.
->>>>
->>>> The problem is that report_iommu_fault is called from IRQ context by the
->>>> SMMU driver, so the device driver callback cannot sleep.
->>>>
->>>> So if the device driver needs to be able to sleep between fault report and
->>>> resume, as I understand Rob needs for writing debugfs, we can either:
->>>>
->>>> * call report_iommu_fault from higher up, in a thread or workqueue.
->>>> * split the fault reporting as this patch proposes. The exact same
->>>>    mechanism is needed for the vSVM work by Intel: in order to inject fault
->>>>    into the guest, they would like to have an atomic notifier registered by
->>>>    VFIO for passing down the Page Request, and a new function in the IOMMU
->>>>    API to resume/complete the fault.
->>>>
->>>
->>> So I was thinking about this topic again.. I would still like to get
->>> some sort of async resume so that I can wire up GPU cmdstream/state
->>> logging on iommu fault (without locally resurrecting and rebasing this
->>> patch and drm/msm side changes each time I need to debug iommu
->>> faults)..
->>
->> We've been working on the new fault reporting API with Jacob and Eric,
->> and I intend to send it out soon. It is supposed to be used for
->> reporting faults to guests via VFIO, handling page faults via mm, and
->> also reporting events directly to device drivers. Please let us know
->> what works and what doesn't in your case
->>
->> The most recent version of the patches is at
->> http://www.linux-arm.org/git?p=linux-jpb.git;a=shortlog;h=refs/heads/sva/api
->> (git://www.linux-arm.org/linux-jpb.git branch sva/api). Hopefully on the
->> list sometimes next week, I'll add you on Cc.
->>
->> In particular, see commits
->>          iommu: Introduce device fault data
->>          iommu: Introduce device fault report API
->>          iommu: Add recoverable fault reporting
->>
->> The device driver calls iommu_register_device_fault_handler(dev, cb,
->> data). To report a fault, the SMMU driver calls
->> iommu_report_device_fault(dev, fault). This calls into the device driver
->> directly, there isn't any workqueue. If the fault is recoverable (the
->> SMMU driver set type IOMMU_FAULT_PAGE_REQ rather than
->> IOMMU_FAULT_DMA_UNRECOV), the device driver calls iommu_page_response()
->> once it has dealt with the fault (after sleeping if it needs to). This
->> invokes the SMMU driver's resume callback.
+Le mardi 14 mai 2019 à 10:54 +0200, Hans Verkuil a écrit :
+> Hi Stanimir,
 > 
-> Ok, this sounds at a high level similar to my earlier RFC, in that
-> resume is split (and that was the main thing I was interested in).
-> And it does solve one thing I was struggling with, namely that when
-> the domain is created it doesn't know which iommu device it will be
-> attached to (given that at least the original arm-smmu.c driver cannot
-> support stall in all cases)..
+> On 4/12/19 5:59 PM, Stanimir Varbanov wrote:
+> > This changes v4l2_pix_format and v4l2_plane_pix_format sizeimage
+> > field description to allow v4l clients to set bigger image size
+> > in case of variable length compressed data.
 > 
-> For GPU translation faults, I also don't really need to know if the
-> faulting translation is stalled until the callback (I mainly want to
-> not bother to snapshot GPU state if it is not stalled, because in that
-> case the data we snapshot is unlikely to be related to the fault if
-> the translation is not stalled).
+> I've been reconsidering this change. The sizeimage value in the format
+> is the minimum size a buffer should have in order to store the data of
+> an image of the width and height as described in the format.
+
+Should this read as the minimum size for the specific (returned by
+driver) width/height/bytesperline ?
+
 > 
->> At the moment we use mutexes, so iommu_report_device_fault() can only be
->> called from an IRQ thread, which is incompatible with the current SMMUv2
->> driver. Either we need to switch the SMMUv2 driver to an IRQ thread, or
->> rework the fault handler to be called from an IRQ handler. The reporting
->> also has to be per device rather than per domain, and I'm not sure if
->> the SMMUv2 driver can deal with this.
+> But there is nothing that prevents userspace from calling VIDIOC_CREATEBUFS
+> instead of VIDIOC_REQBUFS to allocate larger buffers.
 > 
-> I'll take a closer look at the branch and try to formulate some plan
-> to add v2 support for this.
+> So do we really need this change?
+> 
+> The more I think about this, the more uncomfortable I become with this change.
+> 
+> Regards,
+> 
+> 	Hans
+> 
+> > Signed-off-by: Stanimir Varbanov <stanimir.varbanov@linaro.org>
+> > ---
+> >  Documentation/media/uapi/v4l/pixfmt-v4l2-mplane.rst | 13 ++++++++++++-
+> >  Documentation/media/uapi/v4l/pixfmt-v4l2.rst        | 11 ++++++++++-
+> >  2 files changed, 22 insertions(+), 2 deletions(-)
+> > 
+> > diff --git a/Documentation/media/uapi/v4l/pixfmt-v4l2-mplane.rst b/Documentation/media/uapi/v4l/pixfmt-v4l2-mplane.rst
+> > index 5688c816e334..005428a8121e 100644
+> > --- a/Documentation/media/uapi/v4l/pixfmt-v4l2-mplane.rst
+> > +++ b/Documentation/media/uapi/v4l/pixfmt-v4l2-mplane.rst
+> > @@ -31,7 +31,18 @@ describing all planes of that format.
+> >  
+> >      * - __u32
+> >        - ``sizeimage``
+> > -      - Maximum size in bytes required for image data in this plane.
+> > +      - Maximum size in bytes required for image data in this plane,
+> > +	set by the driver. When the image consists of variable length
+> > +	compressed data this is the number of bytes required by the
+> > +	codec to support the worst-case compression scenario.
+> > +
+> > +	For uncompressed images the driver will set the value. For
+> > +	variable length compressed data clients are allowed to set
+> > +	the sizeimage field, but the driver may ignore it and set the
+> > +	value itself, or it may modify the provided value based on
+> > +	alignment requirements or minimum/maximum size requirements.
+> > +	If the client wants to leave this to the driver, then it should
+> > +	set sizeimage to 0.
+> >      * - __u32
+> >        - ``bytesperline``
+> >        - Distance in bytes between the leftmost pixels in two adjacent
+> > diff --git a/Documentation/media/uapi/v4l/pixfmt-v4l2.rst b/Documentation/media/uapi/v4l/pixfmt-v4l2.rst
+> > index 71eebfc6d853..0f7771151db9 100644
+> > --- a/Documentation/media/uapi/v4l/pixfmt-v4l2.rst
+> > +++ b/Documentation/media/uapi/v4l/pixfmt-v4l2.rst
+> > @@ -89,7 +89,16 @@ Single-planar format structure
+> >        - Size in bytes of the buffer to hold a complete image, set by the
+> >  	driver. Usually this is ``bytesperline`` times ``height``. When
+> >  	the image consists of variable length compressed data this is the
+> > -	maximum number of bytes required to hold an image.
+> > +	number of bytes required by the codec to support the worst-case
+> > +	compression scenario.
+> > +
+> > +	For uncompressed images the driver will set the value. For
+> > +	variable length compressed data clients are allowed to set
+> > +	the sizeimage field, but the driver may ignore it and set the
+> > +	value itself, or it may modify the provided value based on
+> > +	alignment requirements or minimum/maximum size requirements.
+> > +	If the client wants to leave this to the driver, then it should
+> > +	set sizeimage to 0.
+> >      * - __u32
+> >        - ``colorspace``
+> >        - Image colorspace, from enum :c:type:`v4l2_colorspace`.
+> > 
 
-What's fun is that we should be able to identify a stream ID for most 
-context faults *except* translation faults...
-
-We've considered threaded IRQs before, and IIRC the problem with doing 
-it at the architectural level is that in some cases the fault interrupt 
-can only be deasserted by actually resuming/terminating the stalled 
-transaction.
-
-> For my cases, the GPU always has it's own iommu device, while display
-> and other blocks share an apps_smmu.. although this sort of
-> functionality isn't really required outside of the GPU.. but I'll have
-> to think a bit about how we can support both cases in the single v2
-> driver.
-
-With the above said, I am in the middle of a big refactoring[1] to allow 
-everyone's imp-def stuff to coexist nicely, so ultimately if qcom 
-implementations can guarantee the appropriate hardware behaviour then 
-they can have their own interrupt handlers to accommodate this.
-
-Robin.
-
-[1] 
-http://linux-arm.org/git?p=linux-rm.git;a=shortlog;h=refs/heads/iommu/smmu-impl 
-- note that this is very, very WIP right now
