@@ -2,75 +2,118 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 354691C464
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 May 2019 10:08:55 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 22D411C56C
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 May 2019 10:54:26 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726370AbfENIIy (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 14 May 2019 04:08:54 -0400
-Received: from mail-ot1-f66.google.com ([209.85.210.66]:46707 "EHLO
-        mail-ot1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726210AbfENIIy (ORCPT
+        id S1726292AbfENIyZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 14 May 2019 04:54:25 -0400
+Received: from lb1-smtp-cloud9.xs4all.net ([194.109.24.22]:47971 "EHLO
+        lb1-smtp-cloud9.xs4all.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1725916AbfENIyY (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 14 May 2019 04:08:54 -0400
-Received: by mail-ot1-f66.google.com with SMTP id j49so6730966otc.13;
-        Tue, 14 May 2019 01:08:54 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=AWm6mMU5ntuV/CqseYpvApqEUMSFpmgOWSwc60Tv2bc=;
-        b=F0EjUCJiIB5F4D3GoURhu1AKUGjpkk46fDdHYFlkokF9DiEJMIMpv/BRGUyDBIS/m7
-         AP6nbqZFFdzjqSNeavAZO/jPxladFV8wGTQ9jjtvOOkiTNoPrp5af8t7YPY0NRKlscSX
-         XI4ZXJfUwqBLhOmVmIB2/uXeuDUiQmglywy5uheDyB5u9A7nWuBLoAqqn7XiOqKh8soN
-         em5FWotejBvIcgKtgUorxlKR3ZlqXuqRWFDpKPxJEzhksI98Srft9pfLAx3952ihI+uu
-         SrI+qqYG9QQES3O3iNbROGOFqv2nat9/SJZ6w8oqzC7SQbGzoCTJ5MgbEn7hYzRIfn+o
-         5XcA==
-X-Gm-Message-State: APjAAAXubFhT1189GjduEsXjuS3mgLsEQN/pVfeBlYaeJBVAqGMK0kFb
-        weHkBjlkYqyZYkNFgP30J4b5iYd7XO5u4OYCkvU=
-X-Google-Smtp-Source: APXvYqwTEraX14mcZPt1vimtoi25THN+ixAWY1ha+9DfuEBICcJUnLm2RU77VIBddQdQK8nrMAM+2KXW8YeAocOii18=
-X-Received: by 2002:a9d:5912:: with SMTP id t18mr14870864oth.252.1557821333611;
- Tue, 14 May 2019 01:08:53 -0700 (PDT)
+        Tue, 14 May 2019 04:54:24 -0400
+Received: from [IPv6:2001:420:44c1:2579:859d:cefd:f7a7:d8be] ([IPv6:2001:420:44c1:2579:859d:cefd:f7a7:d8be])
+        by smtp-cloud9.xs4all.net with ESMTPA
+        id QTCThNgNTsDWyQTCXhnyVt; Tue, 14 May 2019 10:54:22 +0200
+Subject: Re: [PATCH v2] media/doc: Allow sizeimage to be set by v4l clients
+To:     Stanimir Varbanov <stanimir.varbanov@linaro.org>,
+        linux-media@vger.kernel.org
+Cc:     Mauro Carvalho Chehab <mchehab@kernel.org>,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20190412155915.16849-1-stanimir.varbanov@linaro.org>
+From:   Hans Verkuil <hverkuil@xs4all.nl>
+Message-ID: <a1807c37-99cf-d1fa-bcb9-67af2935abaf@xs4all.nl>
+Date:   Tue, 14 May 2019 10:54:17 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+ Thunderbird/60.5.1
 MIME-Version: 1.0
-References: <20190513192300.653-1-ulf.hansson@linaro.org>
-In-Reply-To: <20190513192300.653-1-ulf.hansson@linaro.org>
-From:   "Rafael J. Wysocki" <rafael@kernel.org>
-Date:   Tue, 14 May 2019 10:08:42 +0200
-Message-ID: <CAJZ5v0gbK3AFCVC1b9LyXeMOM8fKR1=ECXZwaeSYRSqcK0UgYA@mail.gmail.com>
-Subject: Re: [PATCH 00/18] ARM/ARM64: Support hierarchical CPU arrangement for PSCI
-To:     Ulf Hansson <ulf.hansson@linaro.org>
-Cc:     Sudeep Holla <sudeep.holla@arm.com>,
-        Lorenzo Pieralisi <Lorenzo.Pieralisi@arm.com>,
-        Mark Rutland <mark.rutland@arm.com>,
-        Linux ARM <linux-arm-kernel@lists.infradead.org>,
-        "Rafael J . Wysocki" <rjw@rjwysocki.net>,
-        Daniel Lezcano <daniel.lezcano@linaro.org>,
-        "Raju P . L . S . S . S . N" <rplsssn@codeaurora.org>,
-        Amit Kucheria <amit.kucheria@linaro.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Niklas Cassel <niklas.cassel@linaro.org>,
-        Tony Lindgren <tony@atomide.com>,
-        Kevin Hilman <khilman@kernel.org>,
-        Lina Iyer <ilina@codeaurora.org>,
-        Viresh Kumar <viresh.kumar@linaro.org>,
-        Vincent Guittot <vincent.guittot@linaro.org>,
-        Geert Uytterhoeven <geert+renesas@glider.be>,
-        Souvik Chakravarty <souvik.chakravarty@arm.com>,
-        Linux PM <linux-pm@vger.kernel.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+In-Reply-To: <20190412155915.16849-1-stanimir.varbanov@linaro.org>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
+X-CMAE-Envelope: MS4wfAgHoK2WGMk8wobjzwGKH8h2qhPqPdWqnic4oyaXyYXoeyoRnnLK/2ARQjpyQ0xK95h8xK8IxF4BxwZrXbykNh+Z/HyS6oJ80GXvwBJ8LvBnV8Fw8XHF
+ ACq78qH8Y0dRpNHTfaxSdsYrf6/81duxZvrBRrvKbGitnonfy0N/vQt0CZr1UzBlaL1OI07Tnd+BqHQkJ9KdxqLU7tRShMsibjdCk1rOi0AW69oODpX2f0wp
+ FHs8oSQrapUvigEDFBBLgmjBygAqXSvgWcnhkC/mbFC2q02Ox7Vk/URo+wAfHzLMKIqD8K+H/sdBjtWaev97wVyp9KmMvYWDHsSTCpMU6mYxbpqvYIrV4zEj
+ ZodYpnwiM6h0uohbDMAtI/lqKBwtLDE0nP2Yo4oWMiLtwI6UU2TqqCWDlTmlP49TPFRbYYgX64ShzBEQBXYnBjbkqD2PVQ==
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, May 13, 2019 at 9:23 PM Ulf Hansson <ulf.hansson@linaro.org> wrote:
->
-> This series enables support for hierarchical CPU arrangement, managed by PSCI
-> for ARM/ARM64. It's based on using the generic PM domain (genpd), which
-> recently was extended to manage devices belonging to CPUs.
+Hi Stanimir,
 
-ACK for the patches touching cpuidle in this series (from the
-framework perspective), but I'm assuming it to be taken care of by
-ARM/ARM64 maintainers.
+On 4/12/19 5:59 PM, Stanimir Varbanov wrote:
+> This changes v4l2_pix_format and v4l2_plane_pix_format sizeimage
+> field description to allow v4l clients to set bigger image size
+> in case of variable length compressed data.
+
+I've been reconsidering this change. The sizeimage value in the format
+is the minimum size a buffer should have in order to store the data of
+an image of the width and height as described in the format.
+
+But there is nothing that prevents userspace from calling VIDIOC_CREATEBUFS
+instead of VIDIOC_REQBUFS to allocate larger buffers.
+
+So do we really need this change?
+
+The more I think about this, the more uncomfortable I become with this change.
+
+Regards,
+
+	Hans
+
+> 
+> Signed-off-by: Stanimir Varbanov <stanimir.varbanov@linaro.org>
+> ---
+>  Documentation/media/uapi/v4l/pixfmt-v4l2-mplane.rst | 13 ++++++++++++-
+>  Documentation/media/uapi/v4l/pixfmt-v4l2.rst        | 11 ++++++++++-
+>  2 files changed, 22 insertions(+), 2 deletions(-)
+> 
+> diff --git a/Documentation/media/uapi/v4l/pixfmt-v4l2-mplane.rst b/Documentation/media/uapi/v4l/pixfmt-v4l2-mplane.rst
+> index 5688c816e334..005428a8121e 100644
+> --- a/Documentation/media/uapi/v4l/pixfmt-v4l2-mplane.rst
+> +++ b/Documentation/media/uapi/v4l/pixfmt-v4l2-mplane.rst
+> @@ -31,7 +31,18 @@ describing all planes of that format.
+>  
+>      * - __u32
+>        - ``sizeimage``
+> -      - Maximum size in bytes required for image data in this plane.
+> +      - Maximum size in bytes required for image data in this plane,
+> +	set by the driver. When the image consists of variable length
+> +	compressed data this is the number of bytes required by the
+> +	codec to support the worst-case compression scenario.
+> +
+> +	For uncompressed images the driver will set the value. For
+> +	variable length compressed data clients are allowed to set
+> +	the sizeimage field, but the driver may ignore it and set the
+> +	value itself, or it may modify the provided value based on
+> +	alignment requirements or minimum/maximum size requirements.
+> +	If the client wants to leave this to the driver, then it should
+> +	set sizeimage to 0.
+>      * - __u32
+>        - ``bytesperline``
+>        - Distance in bytes between the leftmost pixels in two adjacent
+> diff --git a/Documentation/media/uapi/v4l/pixfmt-v4l2.rst b/Documentation/media/uapi/v4l/pixfmt-v4l2.rst
+> index 71eebfc6d853..0f7771151db9 100644
+> --- a/Documentation/media/uapi/v4l/pixfmt-v4l2.rst
+> +++ b/Documentation/media/uapi/v4l/pixfmt-v4l2.rst
+> @@ -89,7 +89,16 @@ Single-planar format structure
+>        - Size in bytes of the buffer to hold a complete image, set by the
+>  	driver. Usually this is ``bytesperline`` times ``height``. When
+>  	the image consists of variable length compressed data this is the
+> -	maximum number of bytes required to hold an image.
+> +	number of bytes required by the codec to support the worst-case
+> +	compression scenario.
+> +
+> +	For uncompressed images the driver will set the value. For
+> +	variable length compressed data clients are allowed to set
+> +	the sizeimage field, but the driver may ignore it and set the
+> +	value itself, or it may modify the provided value based on
+> +	alignment requirements or minimum/maximum size requirements.
+> +	If the client wants to leave this to the driver, then it should
+> +	set sizeimage to 0.
+>      * - __u32
+>        - ``colorspace``
+>        - Image colorspace, from enum :c:type:`v4l2_colorspace`.
+> 
+
