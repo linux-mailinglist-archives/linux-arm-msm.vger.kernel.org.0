@@ -2,248 +2,88 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id C5FFA1C37B
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 May 2019 08:56:46 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 55E221C3CF
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 May 2019 09:27:37 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725946AbfENG4p (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 14 May 2019 02:56:45 -0400
-Received: from smtp.codeaurora.org ([198.145.29.96]:38628 "EHLO
-        smtp.codeaurora.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726408AbfENG4p (ORCPT
+        id S1726279AbfENH1g (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 14 May 2019 03:27:36 -0400
+Received: from mail-pf1-f194.google.com ([209.85.210.194]:39940 "EHLO
+        mail-pf1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726265AbfENH1g (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 14 May 2019 02:56:45 -0400
-Received: by smtp.codeaurora.org (Postfix, from userid 1000)
-        id AE1F3602DC; Tue, 14 May 2019 06:56:43 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
-        s=default; t=1557817003;
-        bh=YbCMg9q9sBLc3fJxn2hqKhzGhuLKnHO2+q9S7K7wCHA=;
-        h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
-        b=gZDflyB4sz8QNmCF1TST2PdBum6IwkE2DRD1xlKUiKeZxNuEKhaO0foXHjVT0bz9i
-         XVdkMMZoT1d/scVJnMxmFFl4h0nLCOTHyyPpD4oVoV6yWiqkOBrE204Yy3rGSVVaQe
-         xWPn7RSz/ATmoIYXDrgyMWYZlONjE5B9HAmhtvfA=
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        pdx-caf-mail.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.7 required=2.0 tests=ALL_TRUSTED,BAYES_00,
-        DKIM_INVALID,DKIM_SIGNED autolearn=no autolearn_force=no version=3.4.0
-Received: from mail-ed1-f46.google.com (mail-ed1-f46.google.com [209.85.208.46])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: vivek.gautam@smtp.codeaurora.org)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 994AD602DC;
-        Tue, 14 May 2019 06:56:42 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
-        s=default; t=1557817002;
-        bh=YbCMg9q9sBLc3fJxn2hqKhzGhuLKnHO2+q9S7K7wCHA=;
-        h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
-        b=KWaFgXrNaDe51ouWPsXt5smZpBHgyUS9VReQZ0Ymy1EyAOn1HKe1IROnS3pXLRRFU
-         2ea4tlUes9UuInlI1rgQ9mz4Y6VTqz+hzA4/NMRR15wqh8ppN8VwJ8sh5nIrbH67nx
-         zb9Nn+u4/Es43ioaznd8THNzbcIYvaG8u7ntrd5Q=
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 994AD602DC
-Authentication-Results: pdx-caf-mail.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: pdx-caf-mail.web.codeaurora.org; spf=none smtp.mailfrom=vivek.gautam@codeaurora.org
-Received: by mail-ed1-f46.google.com with SMTP id p26so21299095edr.2;
-        Mon, 13 May 2019 23:56:42 -0700 (PDT)
-X-Gm-Message-State: APjAAAVdDzF8LCOA8xd6Pm3ghynd0lHCgDj7QP8QI5uFjhbxj+Ra3ppt
-        rdMuVofA1/Id5eJ760JjNOLVe3g/Q8OQOmwFqfs=
-X-Google-Smtp-Source: APXvYqxdecIIrC9t9SvKavda81uHlDzBZ7FRquT0EGiRV7bOSzF8qWkN9acHi6LQaNpyPTJhBKy5kqxAj3Nt0mkmn64=
-X-Received: by 2002:aa7:d381:: with SMTP id x1mr34647046edq.251.1557817001406;
- Mon, 13 May 2019 23:56:41 -0700 (PDT)
+        Tue, 14 May 2019 03:27:36 -0400
+Received: by mail-pf1-f194.google.com with SMTP id u17so8630593pfn.7;
+        Tue, 14 May 2019 00:27:35 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=message-id:date:from:to:cc:subject:mime-version:content-disposition
+         :user-agent;
+        bh=lyCo4RhtPFnk5/aO02qephrgTtbsGXyGZCb4n0cJnyw=;
+        b=rC/4goGz+dlS8ODMHvQ0+YTx8qA0gG2SUfvLdyOUSeyYt+5CrLa3HOF9uZRs9AmFj/
+         JK8uvTZvnPUMuYG/4AQT+0ysU8q1Q/xh27z/gof/bP2598F0TPBcctKIfMm7ES8nDttU
+         tlZEJhiIP4+d0RsrWCPzBjVrxnXZ+yiNeA0VdbBMnzGHGsVFClIhIrN7LzrmqvqXv5wA
+         mE44F27yJcCf3IeSVBOh8YkngCVLsy//JXGwU7Tb/JUJZda7vvxw2ppB/5L1mTXich7+
+         keJcx7hqHVRTzu2ovsv98FmzxDCARMMrG/V4yXt26xTqJCO5RPxhJn9qUS59q1CnubD6
+         IPpg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:message-id:date:from:to:cc:subject:mime-version
+         :content-disposition:user-agent;
+        bh=lyCo4RhtPFnk5/aO02qephrgTtbsGXyGZCb4n0cJnyw=;
+        b=TsSDeFizZxD+JRvtNLLyU67zEt8GSZPZ1DFUA9WukeNHiLKabtMZ56oolPveHsPL8S
+         GwnOtgskeMkujihimmH77ChTIWVYSbgEPzJofHNBjMycZhc7wXfd6evN3/Fzg9jgA5mQ
+         9jO3OGaYJ2W8LcdM1swYGNLu07ZnmIdx+TSgEd9teAmBAa7wqtEFe68WWVT2V4NvtLSL
+         mEon0B2dI4jpCqqjR01jffPxGOBVqQ1jjrHqx+3yhc46V395JM+TYU5cveVvbcJ9EKr2
+         WbCPzHf2f9gorRfEvwSXph6fmKtML5tvGnR/DZkpyqqKKDhL8+c3tfz9PftHjM6/io3k
+         QUDw==
+X-Gm-Message-State: APjAAAUGRjBXq1yJHQg9zNP52un6UT3eA5VbE5alpqfHmWdYU15ZnL3d
+        UzeJIiFSTfCc3ab4oMdEfCx6hQmX
+X-Google-Smtp-Source: APXvYqxbkyut4p6mQIIgh6NfXlp+BvZaBtJJSbumEGh8I67qHa+vAQhNgHsP9GFw7uocH/XK7BDc6g==
+X-Received: by 2002:a63:1e5b:: with SMTP id p27mr35433842pgm.213.1557818855330;
+        Tue, 14 May 2019 00:27:35 -0700 (PDT)
+Received: from sabyasachi ([2405:205:641d:f30a:5511:e7cb:49d8:c4c3])
+        by smtp.gmail.com with ESMTPSA id z9sm8613380pfj.58.2019.05.14.00.27.33
+        (version=TLS1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Tue, 14 May 2019 00:27:34 -0700 (PDT)
+Message-ID: <5cda6de6.1c69fb81.a3ae5.836a@mx.google.com>
+X-Google-Original-Message-ID: <20190514072728.GA6348@sabyasachi.linux@gmail.com>
+Date:   Tue, 14 May 2019 12:57:28 +0530
+From:   Sabyasachi Gupta <sabyasachi.linux@gmail.com>
+To:     robdclark@gmail.com, airlied@linux.ie, seanpaul@chromium.org,
+        jsanka@codeaurora.org, jcrouse@codeaurora.org,
+        chandanu@codeaurora.org
+Cc:     jrdr.linux@gmail.com, linux-arm-msm@vger.kernel.org,
+        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
+        linux-kernel@vger.kernel.org
+Subject: [PATCH] drm/msm/dpu: Remove duplicate header
 MIME-Version: 1.0
-References: <20190513100403.18981-1-vivek.gautam@codeaurora.org> <dc53456d-027e-0ede-1ce9-1efa476937a9@arm.com>
-In-Reply-To: <dc53456d-027e-0ede-1ce9-1efa476937a9@arm.com>
-From:   Vivek Gautam <vivek.gautam@codeaurora.org>
-Date:   Tue, 14 May 2019 12:26:30 +0530
-X-Gmail-Original-Message-ID: <CAFp+6iH0f+uUCWjS738M_W0bW7eF2=DSu9rtEbexCoWio+TZsQ@mail.gmail.com>
-Message-ID: <CAFp+6iH0f+uUCWjS738M_W0bW7eF2=DSu9rtEbexCoWio+TZsQ@mail.gmail.com>
-Subject: Re: [PATCH v4 1/1] iommu/io-pgtable-arm: Add support to use system cache
-To:     Robin Murphy <robin.murphy@arm.com>
-Cc:     Will Deacon <will.deacon@arm.com>,
-        "list@263.net:IOMMU DRIVERS <iommu@lists.linux-foundation.org>, Joerg
-        Roedel <joro@8bytes.org>," <joro@8bytes.org>,
-        "list@263.net:IOMMU DRIVERS <iommu@lists.linux-foundation.org>, Joerg
-        Roedel <joro@8bytes.org>," <iommu@lists.linux-foundation.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        pratikp@codeaurora.org, open list <linux-kernel@vger.kernel.org>,
-        pdaly@codeaurora.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+User-Agent: Mutt/1.5.24 (2015-08-30)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Robin,
+Remove dpu_kms.h which is included more than once
 
+Signed-off-by: Sabyasachi Gupta <sabyasachi.linux@gmail.com>
+---
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_lm.c | 1 -
+ 1 file changed, 1 deletion(-)
 
-On Mon, May 13, 2019 at 5:02 PM Robin Murphy <robin.murphy@arm.com> wrote:
->
-> On 13/05/2019 11:04, Vivek Gautam wrote:
-> > Few Qualcomm platforms such as, sdm845 have an additional outer
-> > cache called as System cache, aka. Last level cache (LLC) that
-> > allows non-coherent devices to upgrade to using caching.
-> > This cache sits right before the DDR, and is tightly coupled
-> > with the memory controller. The clients using this cache request
-> > their slices from this system cache, make it active, and can then
-> > start using it.
-> >
-> > There is a fundamental assumption that non-coherent devices can't
-> > access caches. This change adds an exception where they *can* use
-> > some level of cache despite still being non-coherent overall.
-> > The coherent devices that use cacheable memory, and CPU make use of
-> > this system cache by default.
-> >
-> > Looking at memory types, we have following -
-> > a) Normal uncached :- MAIR 0x44, inner non-cacheable,
-> >                        outer non-cacheable;
-> > b) Normal cached :-   MAIR 0xff, inner read write-back non-transient,
-> >                        outer read write-back non-transient;
-> >                        attribute setting for coherenet I/O devices.
-> > and, for non-coherent i/o devices that can allocate in system cache
-> > another type gets added -
-> > c) Normal sys-cached :- MAIR 0xf4, inner non-cacheable,
-> >                          outer read write-back non-transient
-> >
-> > Coherent I/O devices use system cache by marking the memory as
-> > normal cached.
-> > Non-coherent I/O devices should mark the memory as normal
-> > sys-cached in page tables to use system cache.
-> >
-> > Signed-off-by: Vivek Gautam <vivek.gautam@codeaurora.org>
-> > ---
-> >
-> > V3 version of this patch and related series can be found at [1].
-> >
-> > This change is a realisation of following changes from downstream msm-4.9:
-> > iommu: io-pgtable-arm: Implement IOMMU_USE_UPSTREAM_HINT[2]
-> >
-> > Changes since v3:
-> >   - Dropping support to cache i/o page tables to system cache. Getting support
-> >     for data buffers is the first step.
-> >     Removed io-pgtable quirk and related change to add domain attribute.
-> >
-> > Glmark2 numbers on SDM845 based cheza board:
-> >
-> > S.No.|        with LLC support   |    without LLC support
-> >       |       for data buffers   |
-> > ---------------------------------------------------
-> > 1    |        4480; 72.3fps      |    4042; 65.2fps
-> > 2    |        4500; 72.6fps      |    4039; 65.1fps
-> > 3    |        4523; 72.9fps      |    4106; 66.2fps
-> > 4    |        4489; 72.4fps      |    4104; 66.2fps
-> > 5    |        4518; 72.9fps      |    4072; 65.7fps
-> >
-> > [1] https://patchwork.kernel.org/cover/10772629/
-> > [2] https://source.codeaurora.org/quic/la/kernel/msm-4.9/commit/?h=msm-4.9&id=d4c72c413ea27c43f60825193d4de9cb8ffd9602
-> >
-> >   drivers/iommu/io-pgtable-arm.c | 9 ++++++++-
-> >   include/linux/iommu.h          | 1 +
-> >   2 files changed, 9 insertions(+), 1 deletion(-)
-> >
-> > diff --git a/drivers/iommu/io-pgtable-arm.c b/drivers/iommu/io-pgtable-arm.c
-> > index d3700ec15cbd..2dbafe697531 100644
-> > --- a/drivers/iommu/io-pgtable-arm.c
-> > +++ b/drivers/iommu/io-pgtable-arm.c
-> > @@ -167,10 +167,12 @@
-> >   #define ARM_LPAE_MAIR_ATTR_MASK             0xff
-> >   #define ARM_LPAE_MAIR_ATTR_DEVICE   0x04
-> >   #define ARM_LPAE_MAIR_ATTR_NC               0x44
-> > +#define ARM_LPAE_MAIR_ATTR_QCOM_SYS_CACHE    0xf4
-> >   #define ARM_LPAE_MAIR_ATTR_WBRWA    0xff
-> >   #define ARM_LPAE_MAIR_ATTR_IDX_NC   0
-> >   #define ARM_LPAE_MAIR_ATTR_IDX_CACHE        1
-> >   #define ARM_LPAE_MAIR_ATTR_IDX_DEV  2
-> > +#define ARM_LPAE_MAIR_ATTR_IDX_QCOM_SYS_CACHE        3
->
-> Here at the implementation level, I'd rather just call these what they
-> are, i.e. s/QCOM_SYS_CACHE/INC_OWBRWA/.
->
-
-Thanks for the review.
-Sure, will change this as suggested.
-
-> >
-> >   /* IOPTE accessors */
-> >   #define iopte_deref(pte,d) __va(iopte_to_paddr(pte, d))
-> > @@ -442,6 +444,9 @@ static arm_lpae_iopte arm_lpae_prot_to_pte(struct arm_lpae_io_pgtable *data,
-> >               else if (prot & IOMMU_CACHE)
-> >                       pte |= (ARM_LPAE_MAIR_ATTR_IDX_CACHE
-> >                               << ARM_LPAE_PTE_ATTRINDX_SHIFT);
-> > +             else if (prot & IOMMU_QCOM_SYS_CACHE)
->
-> Where in the call stack is this going to be decided? (I don't recall the
-> previous discussions ever really reaching a solid conclusion on how to
-> separate responsibilities).
->
-
-Based on the last discussion [1], I understood that we may not want to expose
-these cache protections to DMA APIs. So such control would lie with the masters
-that are creating the individual domains. An example [2] of this is
-graphics on sdm845.
-Please ignore the change in naming at [2] IOMMU_UPSTREAM_HINT in [2] is same as
-IOMMU_QCOM_SYS_CACHE here.
-
-At that point [1] I also pointed to the fact that video that uses DMA
-APIs to handle
-buffers too uses system cache on sdm845. In this case shouldn't we expose the
-protection controls to DMA APIs? Or would you suggest that such devices get
-iommu domains in the driver, and then update these protection flags?
-
-[1] https://lkml.org/lkml/2018/12/4/790
-[2] https://patchwork.kernel.org/patch/10302791/
-
-> > +                     pte |= (ARM_LPAE_MAIR_ATTR_IDX_QCOM_SYS_CACHE
-> > +                             << ARM_LPAE_PTE_ATTRINDX_SHIFT);
-> >       } else {
-> >               pte = ARM_LPAE_PTE_HAP_FAULT;
-> >               if (prot & IOMMU_READ)
-> > @@ -841,7 +846,9 @@ arm_64_lpae_alloc_pgtable_s1(struct io_pgtable_cfg *cfg, void *cookie)
-> >             (ARM_LPAE_MAIR_ATTR_WBRWA
-> >              << ARM_LPAE_MAIR_ATTR_SHIFT(ARM_LPAE_MAIR_ATTR_IDX_CACHE)) |
-> >             (ARM_LPAE_MAIR_ATTR_DEVICE
-> > -            << ARM_LPAE_MAIR_ATTR_SHIFT(ARM_LPAE_MAIR_ATTR_IDX_DEV));
-> > +            << ARM_LPAE_MAIR_ATTR_SHIFT(ARM_LPAE_MAIR_ATTR_IDX_DEV)) |
-> > +           (ARM_LPAE_MAIR_ATTR_QCOM_SYS_CACHE
-> > +            << ARM_LPAE_MAIR_ATTR_SHIFT(ARM_LPAE_MAIR_ATTR_IDX_QCOM_SYS_CACHE));
-> >
-> >       cfg->arm_lpae_s1_cfg.mair[0] = reg;
-> >       cfg->arm_lpae_s1_cfg.mair[1] = 0;
-> > diff --git a/include/linux/iommu.h b/include/linux/iommu.h
-> > index a815cf6f6f47..29dd2c624348 100644
-> > --- a/include/linux/iommu.h
-> > +++ b/include/linux/iommu.h
-> > @@ -31,6 +31,7 @@
-> >   #define IOMMU_CACHE (1 << 2) /* DMA cache coherency */
-> >   #define IOMMU_NOEXEC        (1 << 3)
-> >   #define IOMMU_MMIO  (1 << 4) /* e.g. things like MSI doorbells */
-> > +#define IOMMU_QCOM_SYS_CACHE (1 << 6)
->
-> Nit: 6 usually comes *after* 5 ;)
-
-Sorry, pasting mistake.
-
->
-> Plus although it's fairly self-evident that this value has *something*
-> to do with Qcom system caches and isn't as generic as, say, IOMMU_PRIV,
-> it probably still warrants some degree of comment.
-
-I will add the necessary comments.
-
-Best regards
-Vivek
->
-> Robin.
->
-> >   /*
-> >    * Where the bus hardware includes a privilege level as part of its access type
-> >    * markings, and certain devices are capable of issuing transactions marked as
-> >
-> _______________________________________________
-> iommu mailing list
-> iommu@lists.linux-foundation.org
-> https://lists.linuxfoundation.org/mailman/listinfo/iommu
-
-
-
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_lm.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_lm.c
+index dbe48e00..d692dee 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_lm.c
++++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_lm.c
+@@ -16,7 +16,6 @@
+ #include "dpu_hw_lm.h"
+ #include "dpu_hw_mdss.h"
+ #include "dpu_dbg.h"
+-#include "dpu_kms.h"
+ 
+ #define LM_OP_MODE                        0x00
+ #define LM_OUT_SIZE                       0x04
 -- 
-QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
-of Code Aurora Forum, hosted by The Linux Foundation
+2.7.4
+
