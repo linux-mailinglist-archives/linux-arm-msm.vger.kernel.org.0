@@ -2,88 +2,116 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 55E221C3CF
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 May 2019 09:27:37 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id CA60A1C433
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 May 2019 09:54:17 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726279AbfENH1g (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 14 May 2019 03:27:36 -0400
-Received: from mail-pf1-f194.google.com ([209.85.210.194]:39940 "EHLO
-        mail-pf1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726265AbfENH1g (ORCPT
+        id S1726107AbfENHyM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 14 May 2019 03:54:12 -0400
+Received: from mail-ua1-f67.google.com ([209.85.222.67]:42218 "EHLO
+        mail-ua1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726039AbfENHyM (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 14 May 2019 03:27:36 -0400
-Received: by mail-pf1-f194.google.com with SMTP id u17so8630593pfn.7;
-        Tue, 14 May 2019 00:27:35 -0700 (PDT)
+        Tue, 14 May 2019 03:54:12 -0400
+Received: by mail-ua1-f67.google.com with SMTP id e9so5362957uar.9
+        for <linux-arm-msm@vger.kernel.org>; Tue, 14 May 2019 00:54:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=message-id:date:from:to:cc:subject:mime-version:content-disposition
-         :user-agent;
-        bh=lyCo4RhtPFnk5/aO02qephrgTtbsGXyGZCb4n0cJnyw=;
-        b=rC/4goGz+dlS8ODMHvQ0+YTx8qA0gG2SUfvLdyOUSeyYt+5CrLa3HOF9uZRs9AmFj/
-         JK8uvTZvnPUMuYG/4AQT+0ysU8q1Q/xh27z/gof/bP2598F0TPBcctKIfMm7ES8nDttU
-         tlZEJhiIP4+d0RsrWCPzBjVrxnXZ+yiNeA0VdbBMnzGHGsVFClIhIrN7LzrmqvqXv5wA
-         mE44F27yJcCf3IeSVBOh8YkngCVLsy//JXGwU7Tb/JUJZda7vvxw2ppB/5L1mTXich7+
-         keJcx7hqHVRTzu2ovsv98FmzxDCARMMrG/V4yXt26xTqJCO5RPxhJn9qUS59q1CnubD6
-         IPpg==
+        d=linaro.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=Zf8IJjcdPrQOgX1z3j6gO2WdWT6UVn+L7AhNfe6yMi8=;
+        b=IAsJ4EQAYOn036lV8psLdhXQfclTm/pOQHGolyhy+F/M9PN51UF1V/AzbmQ2+szdeA
+         50WNp67zAeq6LM46Rm5S8gA77LBMEMw1JsVn/tpSuW3Fmn2xta1oG5hpd6oQAlItiBS0
+         V7wGhDfi+6qvy0RGWnt2gDFdS1UQBmLgdXkSmdDpeafokFQHUZoUqTZIOHCETe6JfFAC
+         a7PnXUppJHzhn2AVGetOalutM2jS6ypHR9488igXkCBQ8h9ghd/iSRHKRauDRdWVhy3O
+         1dBuucve8gsrdUniXl3OAxGA0NC4JSN5HrSsxuOzyO7z9KI/68uSfGyLt3t1vA/hmfgL
+         34qw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:date:from:to:cc:subject:mime-version
-         :content-disposition:user-agent;
-        bh=lyCo4RhtPFnk5/aO02qephrgTtbsGXyGZCb4n0cJnyw=;
-        b=TsSDeFizZxD+JRvtNLLyU67zEt8GSZPZ1DFUA9WukeNHiLKabtMZ56oolPveHsPL8S
-         GwnOtgskeMkujihimmH77ChTIWVYSbgEPzJofHNBjMycZhc7wXfd6evN3/Fzg9jgA5mQ
-         9jO3OGaYJ2W8LcdM1swYGNLu07ZnmIdx+TSgEd9teAmBAa7wqtEFe68WWVT2V4NvtLSL
-         mEon0B2dI4jpCqqjR01jffPxGOBVqQ1jjrHqx+3yhc46V395JM+TYU5cveVvbcJ9EKr2
-         WbCPzHf2f9gorRfEvwSXph6fmKtML5tvGnR/DZkpyqqKKDhL8+c3tfz9PftHjM6/io3k
-         QUDw==
-X-Gm-Message-State: APjAAAUGRjBXq1yJHQg9zNP52un6UT3eA5VbE5alpqfHmWdYU15ZnL3d
-        UzeJIiFSTfCc3ab4oMdEfCx6hQmX
-X-Google-Smtp-Source: APXvYqxbkyut4p6mQIIgh6NfXlp+BvZaBtJJSbumEGh8I67qHa+vAQhNgHsP9GFw7uocH/XK7BDc6g==
-X-Received: by 2002:a63:1e5b:: with SMTP id p27mr35433842pgm.213.1557818855330;
-        Tue, 14 May 2019 00:27:35 -0700 (PDT)
-Received: from sabyasachi ([2405:205:641d:f30a:5511:e7cb:49d8:c4c3])
-        by smtp.gmail.com with ESMTPSA id z9sm8613380pfj.58.2019.05.14.00.27.33
-        (version=TLS1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Tue, 14 May 2019 00:27:34 -0700 (PDT)
-Message-ID: <5cda6de6.1c69fb81.a3ae5.836a@mx.google.com>
-X-Google-Original-Message-ID: <20190514072728.GA6348@sabyasachi.linux@gmail.com>
-Date:   Tue, 14 May 2019 12:57:28 +0530
-From:   Sabyasachi Gupta <sabyasachi.linux@gmail.com>
-To:     robdclark@gmail.com, airlied@linux.ie, seanpaul@chromium.org,
-        jsanka@codeaurora.org, jcrouse@codeaurora.org,
-        chandanu@codeaurora.org
-Cc:     jrdr.linux@gmail.com, linux-arm-msm@vger.kernel.org,
-        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
-        linux-kernel@vger.kernel.org
-Subject: [PATCH] drm/msm/dpu: Remove duplicate header
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=Zf8IJjcdPrQOgX1z3j6gO2WdWT6UVn+L7AhNfe6yMi8=;
+        b=s9nOC8dzo5qdh+EZgeO4DlMwDs8W3yBtsf1hLMM76VfSEOi/Egwuwcmrd2fFNG6Zew
+         1up7Th3H3kv1ZOS16pLwiw0D7jaAcehh10s1kMak5OZy/IYvFqE03xma3xCjWhOrxMwy
+         6V0tG8EbuWhuswy82BkpccxO8W9UEF3maA+YR5QighUpTk5MRlfyJT7mF9j5RJvEC17A
+         oz59hyyC25tKs1VUQZFcThn6LxdlG29hFbnm6RB4f0M6pRGamZ5EqLW7B7H6EXwBJFcu
+         oLTslJPLvxw7wJoeINle0r3fjNCHUP9nbhalxYqo+hIEMYjFMf/yhI/yOyDTxUaTKU0+
+         UsFA==
+X-Gm-Message-State: APjAAAX0zqrduaaEosv+Gcd4SXD+UUfJH8nRutgnP9OlK+o2wO5W1jQ+
+        PYEb4YPuU+0KGmZ2iVAByzQwW7ENQa3k9biv0PZCRw==
+X-Google-Smtp-Source: APXvYqw26na4iAl9OES8/pXHjHR4OX/mYE4JxGMYMoMM698JgOYmYEnp2SYDxqwKYvDyL7iTIXPA7w04vcm/XFFuFFI=
+X-Received: by 2002:ab0:30a1:: with SMTP id b1mr13121475uam.104.1557820450699;
+ Tue, 14 May 2019 00:54:10 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-User-Agent: Mutt/1.5.24 (2015-08-30)
+References: <20190320094918.20234-1-rnayak@codeaurora.org> <20190320094918.20234-9-rnayak@codeaurora.org>
+In-Reply-To: <20190320094918.20234-9-rnayak@codeaurora.org>
+From:   Ulf Hansson <ulf.hansson@linaro.org>
+Date:   Tue, 14 May 2019 09:53:34 +0200
+Message-ID: <CAPDyKFppirfM7B9TB=jZzo67E=rdMnfVKEjdv0wn1zBAUoY_HA@mail.gmail.com>
+Subject: Re: [RFC v2 08/11] arm64: dts: sdm845: Add ufs opps and power-domains
+To:     Rajendra Nayak <rnayak@codeaurora.org>
+Cc:     Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        Linux PM <linux-pm@vger.kernel.org>,
+        linux-serial@vger.kernel.org, linux-spi@vger.kernel.org,
+        dri-devel <dri-devel@lists.freedesktop.org>,
+        linux-scsi <linux-scsi@vger.kernel.org>,
+        Stephen Boyd <swboyd@chromium.org>,
+        Viresh Kumar <viresh.kumar@linaro.org>,
+        Doug Anderson <dianders@chromium.org>,
+        "Rafael J. Wysocki" <rafael@kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Remove dpu_kms.h which is included more than once
+On Wed, 20 Mar 2019 at 10:50, Rajendra Nayak <rnayak@codeaurora.org> wrote:
+>
+> Add the additional power domain and the OPP table for ufs on sdm845
+> so the driver can set the appropriate performance state of the
+> power domain while setting the clock rate.
+>
+> Signed-off-by: Rajendra Nayak <rnayak@codeaurora.org>
+> ---
+>  arch/arm64/boot/dts/qcom/sdm845.dtsi | 20 +++++++++++++++++++-
+>  1 file changed, 19 insertions(+), 1 deletion(-)
+>
+> diff --git a/arch/arm64/boot/dts/qcom/sdm845.dtsi b/arch/arm64/boot/dts/qcom/sdm845.dtsi
+> index 027ffe6e93e8..a3af4a1757b4 100644
+> --- a/arch/arm64/boot/dts/qcom/sdm845.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/sdm845.dtsi
+> @@ -1140,6 +1140,21 @@
+>                         };
+>                 };
+>
+> +               ufs_opp_table: ufs-opp-table {
+> +                       compatible = "operating-points-v2";
+> +
+> +                       opp-50000000 {
+> +                               opp-hz = /bits/ 64 <50000000>;
+> +                               required-opps = <&rpmhpd_opp_min_svs>;
+> +                       };
+> +
+> +                       opp-200000000 {
+> +                               opp-hz = /bits/ 64 <200000000>;
+> +                               required-opps = <&rpmhpd_opp_nom>;
+> +
+> +                       };
+> +               };
+> +
+>                 ufs_mem_hc: ufshc@1d84000 {
+>                         compatible = "qcom,sdm845-ufshc", "qcom,ufshc",
+>                                      "jedec,ufs-2.0";
+> @@ -1148,7 +1163,7 @@
+>                         phys = <&ufs_mem_phy_lanes>;
+>                         phy-names = "ufsphy";
+>                         lanes-per-direction = <2>;
+> -                       power-domains = <&gcc UFS_PHY_GDSC>;
+> +                       power-domains = <&gcc UFS_PHY_GDSC>, <&rpmhpd SDM845_CX>;
 
-Signed-off-by: Sabyasachi Gupta <sabyasachi.linux@gmail.com>
----
- drivers/gpu/drm/msm/disp/dpu1/dpu_hw_lm.c | 1 -
- 1 file changed, 1 deletion(-)
+You probably want to use "power-domain-names" as well.
 
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_lm.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_lm.c
-index dbe48e00..d692dee 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_lm.c
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_lm.c
-@@ -16,7 +16,6 @@
- #include "dpu_hw_lm.h"
- #include "dpu_hw_mdss.h"
- #include "dpu_dbg.h"
--#include "dpu_kms.h"
- 
- #define LM_OP_MODE                        0x00
- #define LM_OUT_SIZE                       0x04
--- 
-2.7.4
+[...]
 
+Kind regards
+Uffe
