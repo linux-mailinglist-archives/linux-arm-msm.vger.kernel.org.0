@@ -2,170 +2,105 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id C90FB1CEBA
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 May 2019 20:12:38 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9E3851D124
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 May 2019 23:16:10 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727516AbfENSMc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 14 May 2019 14:12:32 -0400
-Received: from mail-qk1-f193.google.com ([209.85.222.193]:45313 "EHLO
-        mail-qk1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726281AbfENSMb (ORCPT
+        id S1726486AbfENVQJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 14 May 2019 17:16:09 -0400
+Received: from mail-pl1-f195.google.com ([209.85.214.195]:45453 "EHLO
+        mail-pl1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726201AbfENVQJ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 14 May 2019 14:12:31 -0400
-Received: by mail-qk1-f193.google.com with SMTP id j1so10864491qkk.12
-        for <linux-arm-msm@vger.kernel.org>; Tue, 14 May 2019 11:12:31 -0700 (PDT)
+        Tue, 14 May 2019 17:16:09 -0400
+Received: by mail-pl1-f195.google.com with SMTP id a5so194774pls.12
+        for <linux-arm-msm@vger.kernel.org>; Tue, 14 May 2019 14:16:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=poorly.run; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=sZPPr8NGhHoJdmUxN5wiV/8svlug9VYTHhuXEbiDTIs=;
-        b=J0sdHWzHgNXc/T6S5pXJau+wiI3sT1CAKCHzpcU9ZfRdac6fquW/qSi/EdFnTd8/hv
-         I8v4S+RoINJT2chsyyNhKb/+oR1z+ZiqLKlVP4POFtN19qaB9e2bIYBKrht/mnOqIssB
-         PBzGjFwsMbr892LK0Kt8UtTMx2c6hCWUBfvsKwvqFMlr/4KfhetV2wbzHv/7Dcnps+Ia
-         PZDiauM/MENz/lQ9d9OKQKlUUl1QBhScvjb8RQ/vUTp3GDzptRDdcpTLScpOPqCxes8Y
-         HRkD2PJv0Uf8MNG5uqNIDUGm71WPo0g09yWu+RKoQI4Uci7SPfOGMVH0Zfh3pgdAIlOm
-         gedQ==
+        d=chromium.org; s=google;
+        h=mime-version:content-transfer-encoding:in-reply-to:references:from
+         :subject:cc:to:message-id:user-agent:date;
+        bh=4/0EYyURtIIeG3BNu5Eb8zY3q3sILIawrVYeoU2X7wE=;
+        b=HYtfkmzDiWv/IoeQZ8htdEocmcAJwoVrmzPN3cllVYS3DBvkgnDeI7v5BR6vMZweSX
+         W4ZLmiOU3JxWHx72V1K3ych98Py+AXaNu6NC2OpH5ciRpOiFP1iglTiZjcXly1deVL8g
+         yraTHwNouWxUFKNzRbbqmYRpUAfx1MMm7AutA=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=sZPPr8NGhHoJdmUxN5wiV/8svlug9VYTHhuXEbiDTIs=;
-        b=P3iDytSsdecSPzfdaAImCDN/yrv2jh9h2QCht3xBCtqnYB4arYmA5lv1/QdvdDY78j
-         HmN8ATny7y5nhq2htieozG6UC7pKjk0uVJVnB88doMZJ/K3N0I8U/Bj3iVZ69NOX9LH4
-         9guXhG+/Rm/qlIfYLVNrgom0Cxmx8Of3WVFUdRwRYZWmgDGe1bwJOkEcpJZD5pGu2rUE
-         YjuHFbSHeMfy3RgV8Rt1gFCe348aY4x9+bpdkEIjnKiJe7y/3kjpx4VnMJba1dU92mpO
-         z4PRaGLk2tLHPQlPIG1Ppv9CmAcHpbAUWfXpi24mukmnc9AlpaO/xCOFMrQhXxYCdyd9
-         tQzg==
-X-Gm-Message-State: APjAAAU8gIXwldXlbPVs2OBCs8QOhjN2QHvw/zrHOmw3RmdrVVucYq8g
-        dc1Krok/YsA5GrEWg5Nyt+Fvlw==
-X-Google-Smtp-Source: APXvYqyuHJzqUT7Z2Pj09whePMH3EbHddhBKbeNS8tp2bKdSLjym61SPS67apixuM3EHOeXj9XBYtw==
-X-Received: by 2002:a37:5005:: with SMTP id e5mr28417713qkb.99.1557857550434;
-        Tue, 14 May 2019 11:12:30 -0700 (PDT)
-Received: from localhost ([2620:0:1013:11:89c6:2139:5435:371d])
-        by smtp.gmail.com with ESMTPSA id e8sm8209768qtm.34.2019.05.14.11.12.29
+        h=x-gm-message-state:mime-version:content-transfer-encoding
+         :in-reply-to:references:from:subject:cc:to:message-id:user-agent
+         :date;
+        bh=4/0EYyURtIIeG3BNu5Eb8zY3q3sILIawrVYeoU2X7wE=;
+        b=O5cMugtA87rwTMAEi0in5hCLuhkSqWe17GDDx+UBqKugvQrMNhMLHb6a/pwykfQu4m
+         s6R/+MOjNEB/znc0yskRqa/UuZ+nyCQUE/4Rv6zMYTeQgoaujyMxXUVqxVdDgT91ZBaE
+         CiUncQ0HoXb5S+fQXm8K56Y5pw+0bsrC3lvpWZot1p3edunf8fas7wAeKnNExF1AEAzP
+         6gw2wIF120G6at6vpjVL5ID07GYJhSZEEXcDGYATP9hVHP2u3lP89/EgcSTdN/Smbrp9
+         AC27mmDwf9kfL75R03JppwcuO07FC6DjN6Nw4D6SDEfnmASzVm+bXpZOhJjV9i7pUV6c
+         hd6g==
+X-Gm-Message-State: APjAAAX4G3V7xfWgV6f+F1lacrUDJpMuEL2YebO3xgsJqxzlyhNTBw++
+        vUo2Sf/cWioAKXBunOiKxzshXg==
+X-Google-Smtp-Source: APXvYqxvWZiVSIIq1zv4nXn2LXwxu37jK4T5pigsoozMDp9eWQ6PlpkvyNJVYs8JHXKdslF1wplP2Q==
+X-Received: by 2002:a17:902:2ae6:: with SMTP id j93mr16503676plb.130.1557868568753;
+        Tue, 14 May 2019 14:16:08 -0700 (PDT)
+Received: from localhost ([2620:15c:202:1:fa53:7765:582b:82b9])
+        by smtp.gmail.com with ESMTPSA id 187sm37857pfv.174.2019.05.14.14.16.07
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Tue, 14 May 2019 11:12:29 -0700 (PDT)
-Date:   Tue, 14 May 2019 14:12:29 -0400
-From:   Sean Paul <sean@poorly.run>
-To:     Brian Masney <masneyb@onstation.org>
-Cc:     robdclark@gmail.com, sean@poorly.run, bjorn.andersson@linaro.org,
-        dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
-        freedreno@lists.freedesktop.org, airlied@linux.ie, daniel@ffwll.ch,
-        linux-kernel@vger.kernel.org, linus.walleij@linaro.org,
-        jonathan@marek.ca, robh@kernel.org
-Subject: Re: [PATCH v2.1 1/2] drm/msm: remove resv fields from msm_gem_object
- struct
-Message-ID: <20190514181229.GR17077@art_vandelay>
-References: <20190513234105.7531-1-masneyb@onstation.org>
+        Tue, 14 May 2019 14:16:08 -0700 (PDT)
+Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20190513234105.7531-1-masneyb@onstation.org>
-User-Agent: Mutt/1.10.1 (2018-07-13)
+Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <CAHLCerPZ0Y-rkeMa_7BJWtR4g5af2vwfPY9FgOuvpUTJG3rf7g@mail.gmail.com>
+References: <20190114184255.258318-1-mka@chromium.org> <CAHLCerP+F9AP97+qVCMqwu-OMJXRhwZrXd33Wk-vj5eyyw-KyA@mail.gmail.com> <CAHLCerPZ0Y-rkeMa_7BJWtR4g5af2vwfPY9FgOuvpUTJG3rf7g@mail.gmail.com>
+From:   Stephen Boyd <swboyd@chromium.org>
+Subject: Re: [PATCH] arm64: dts: sdm845: Add CPU topology
+Cc:     Andy Gross <andy.gross@linaro.org>,
+        David Brown <david.brown@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Mark Rutland <mark.rutland@arm.com>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        "open list:ARM/QUALCOMM SUPPORT" <linux-soc@vger.kernel.org>,
+        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
+        <devicetree@vger.kernel.org>, LKML <linux-kernel@vger.kernel.org>,
+        Douglas Anderson <dianders@chromium.org>,
+        Rajendra Nayak <rnayak@codeaurora.org>
+To:     Amit Kucheria <amit.kucheria@linaro.org>,
+        Matthias Kaehlcke <mka@chromium.org>
+Message-ID: <155786856719.14659.2902538189660269078@swboyd.mtv.corp.google.com>
+User-Agent: alot/0.8
+Date:   Tue, 14 May 2019 14:16:07 -0700
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, May 13, 2019 at 07:41:04PM -0400, Brian Masney wrote:
-> The msm_gem_object structure contains resv and _resv fields that are
-> no longer needed since the reservation object is now stored on
-> drm_gem_object. msm_atomic_prepare_fb() and msm_atomic_prepare_fb()
-> both referenced the wrong reservation object, and would lead to an
-> attempt to dereference a NULL pointer. Correct those two cases to
-> point to the correct reservation object.
-> 
-> Signed-off-by: Brian Masney <masneyb@onstation.org>
+Quoting Amit Kucheria (2019-05-13 04:54:12)
+> On Mon, May 13, 2019 at 4:31 PM Amit Kucheria <amit.kucheria@linaro.org> =
+wrote:
+> >
+> > On Tue, Jan 15, 2019 at 12:13 AM Matthias Kaehlcke <mka@chromium.org> w=
+rote:
+> > >
+> > > The 8 CPU cores of the SDM845 are organized in two clusters of 4 big
+> > > ("gold") and 4 little ("silver") cores. Add a cpu-map node to the DT
+> > > that describes this topology.
+> >
+> > This is partly true. There are two groups of gold and silver cores,
+> > but AFAICT they are in a single cluster, not two separate ones. SDM845
+> > is one of the early examples of ARM's Dynamiq architecture.
+> >
+> > > Signed-off-by: Matthias Kaehlcke <mka@chromium.org>
+> >
+> > I noticed that this patch sneaked through for this merge window but
+> > perhaps we can whip up a quick fix for -rc2?
+> >
+>=20
+> And please find attached a patch to fix this up. Andy, since this
+> hasn't landed yet (can we still squash this into the original patch?),
+> I couldn't add a Fixes tag.
+>=20
 
-Thanks Brian for your patches. I've applied them to drm-misc-next-fixes for
-inclusion in 5.2
+I had the same concern. Thanks for catching this. I suspect this must
+cause some problem for IPA given that it can't discern between the big
+and little "power clusters"?
 
-Sean
+Either way,
 
-> Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
-> Tested-by: Bjorn Andersson <bjorn.andersson@linaro.org>
-> Fixes: dd55cf6929e6 ("drm: msm: Switch to use drm_gem_object reservation_object")
-> ---
-> This is a split out version of this patch from where I am working to get
-> the display working on the Nexus 5:
-> 
-> https://lore.kernel.org/lkml/20190509020352.14282-2-masneyb@onstation.org/
-> 
-> Bjorn asks:
->     This resolves a NULL-pointer dereference about to show up in v5.2-rc1,
->     so please pick this up for -rc.
-> 
-> In this version, I dropped the change to msm_gem_new_impl() that
-> mistakenly removed 'msm_obj->base.resv = resv;'. I did not put a v3 on
-> this patch since I wanted to keep that version number for the larger work
-> to get the display working on the Nexus 5 so I went with 2.1 here. :)
-> 
->  drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c | 4 +---
->  drivers/gpu/drm/msm/msm_atomic.c          | 4 +---
->  drivers/gpu/drm/msm/msm_gem.h             | 4 ----
->  3 files changed, 2 insertions(+), 10 deletions(-)
-> 
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
-> index 4fca24b8702c..f3d009a3dc63 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
-> @@ -781,7 +781,6 @@ static int dpu_plane_prepare_fb(struct drm_plane *plane,
->  	struct dpu_plane_state *pstate = to_dpu_plane_state(new_state);
->  	struct dpu_hw_fmt_layout layout;
->  	struct drm_gem_object *obj;
-> -	struct msm_gem_object *msm_obj;
->  	struct dma_fence *fence;
->  	struct dpu_kms *kms = _dpu_plane_get_kms(&pdpu->base);
->  	int ret;
-> @@ -800,8 +799,7 @@ static int dpu_plane_prepare_fb(struct drm_plane *plane,
->  	 *       implicit fence and fb prepare by hand here.
->  	 */
->  	obj = msm_framebuffer_bo(new_state->fb, 0);
-> -	msm_obj = to_msm_bo(obj);
-> -	fence = reservation_object_get_excl_rcu(msm_obj->resv);
-> +	fence = reservation_object_get_excl_rcu(obj->resv);
->  	if (fence)
->  		drm_atomic_set_fence_for_plane(new_state, fence);
->  
-> diff --git a/drivers/gpu/drm/msm/msm_atomic.c b/drivers/gpu/drm/msm/msm_atomic.c
-> index f5b1256e32b6..131c23a267ee 100644
-> --- a/drivers/gpu/drm/msm/msm_atomic.c
-> +++ b/drivers/gpu/drm/msm/msm_atomic.c
-> @@ -49,15 +49,13 @@ int msm_atomic_prepare_fb(struct drm_plane *plane,
->  	struct msm_drm_private *priv = plane->dev->dev_private;
->  	struct msm_kms *kms = priv->kms;
->  	struct drm_gem_object *obj;
-> -	struct msm_gem_object *msm_obj;
->  	struct dma_fence *fence;
->  
->  	if (!new_state->fb)
->  		return 0;
->  
->  	obj = msm_framebuffer_bo(new_state->fb, 0);
-> -	msm_obj = to_msm_bo(obj);
-> -	fence = reservation_object_get_excl_rcu(msm_obj->resv);
-> +	fence = reservation_object_get_excl_rcu(obj->resv);
->  
->  	drm_atomic_set_fence_for_plane(new_state, fence);
->  
-> diff --git a/drivers/gpu/drm/msm/msm_gem.h b/drivers/gpu/drm/msm/msm_gem.h
-> index c5ac781dffee..812d1b1369a5 100644
-> --- a/drivers/gpu/drm/msm/msm_gem.h
-> +++ b/drivers/gpu/drm/msm/msm_gem.h
-> @@ -86,10 +86,6 @@ struct msm_gem_object {
->  
->  	struct llist_node freed;
->  
-> -	/* normally (resv == &_resv) except for imported bo's */
-> -	struct reservation_object *resv;
-> -	struct reservation_object _resv;
-> -
->  	/* For physically contiguous buffers.  Used when we don't have
->  	 * an IOMMU.  Also used for stolen/splashscreen buffer.
->  	 */
-> -- 
-> 2.20.1
-> 
+Reviewed-by: Stephen Boyd <swboyd@chromium.org>
 
--- 
-Sean Paul, Software Engineer, Google / Chromium OS
