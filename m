@@ -2,104 +2,155 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 0CDD01FA10
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 May 2019 20:37:16 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 1298B1FA65
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 May 2019 21:24:15 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727084AbfEOShP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 15 May 2019 14:37:15 -0400
-Received: from mail-qt1-f194.google.com ([209.85.160.194]:40177 "EHLO
-        mail-qt1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726554AbfEOShO (ORCPT
+        id S1726170AbfEOTYO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 15 May 2019 15:24:14 -0400
+Received: from smtp.codeaurora.org ([198.145.29.96]:41148 "EHLO
+        smtp.codeaurora.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726124AbfEOTYN (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 15 May 2019 14:37:14 -0400
-Received: by mail-qt1-f194.google.com with SMTP id k24so864876qtq.7
-        for <linux-arm-msm@vger.kernel.org>; Wed, 15 May 2019 11:37:14 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=poorly.run; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=SFNuIJemdTLO0xp4SS7eD7mTRt2jx19bhUfAq2FJGCg=;
-        b=eEBO9MSQNtsb6zqoHTndPS0B0pR8E0sMp9T7yHW6qouW7Epg5SAzibiwdCmR3ibNGl
-         D/S1jOoC2CAkyYprOIQpXzrm0BT5s0wI2sn0Gix9ARpYci3hGGmbmMyqd9it3GwAEj7C
-         CiPRdXhZFO7FQKxofCxcAcaW6/fdl4oUvWmlMZSqXpiRT0sTARPesrhuPgFwsZ/HWvIr
-         Nkkx6vFla5YJskiuqMxOiGm+DTXTF5AslGYsE1aXObkoOPMRkJ81w7W9Ne791MKUj9aU
-         +saNoD9teyzZjIyA/28tOSqexFL/GyVjCBQCAOer25Gs869VftGpTli5Am3dCRe1qaQh
-         NE1g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=SFNuIJemdTLO0xp4SS7eD7mTRt2jx19bhUfAq2FJGCg=;
-        b=ZUpqOaCnl112NlT2t8zyPS/pT8ZePhqHMHipSJTTtmz37YnghijtHbmMU734MfiAs6
-         zFtvNLUqFMZx+ZaDYJv7JYD0C4rJXFAQu5nVOHA3oyocYiz1EdT1uNdgyjab2K9QcTAL
-         KXGqJ+3pXSqs5WzeoyAvjiSF/1wfentGDjPbcwL37xrXoTOA+xKgwDsHBkelfB+CTF4k
-         l+mPRYG9PTrZf36grqfsXfKlxhpc+9q+8syMCoga04rNIEzVfhffu8tgJpY9i8il9XsP
-         nMVlJbYG9BVVJrSku31CCZIFZ7tLg5tNO9zyX+WPFPa7PEUkhJnFNpNqfyOzgZZkwumM
-         bCQQ==
-X-Gm-Message-State: APjAAAX04ixR9HFlB7/n5kUDzyzGolWguQTr3sjaNoRRL+BnyXiEVIuN
-        WaFWkjpM3/luuuO6ANNcnjl7sA==
-X-Google-Smtp-Source: APXvYqxMIfZBBwCvYBUULJBhCR4PNZQyPokNd7gubEnQIC9pIP9wcs/fACEqVBe4sfNi7KMbt+/qXg==
-X-Received: by 2002:ac8:534d:: with SMTP id d13mr13916550qto.217.1557945433945;
-        Wed, 15 May 2019 11:37:13 -0700 (PDT)
-Received: from localhost ([2620:0:1013:11:89c6:2139:5435:371d])
-        by smtp.gmail.com with ESMTPSA id b19sm1396281qkk.51.2019.05.15.11.37.13
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 15 May 2019 11:37:13 -0700 (PDT)
-Date:   Wed, 15 May 2019 14:37:12 -0400
-From:   Sean Paul <sean@poorly.run>
-To:     Sabyasachi Gupta <sabyasachi.linux@gmail.com>
-Cc:     robdclark@gmail.com, airlied@linux.ie, seanpaul@chromium.org,
-        jsanka@codeaurora.org, jcrouse@codeaurora.org,
-        chandanu@codeaurora.org, jrdr.linux@gmail.com,
-        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] drm/msm/dpu: Remove duplicate header
-Message-ID: <20190515183712.GZ17077@art_vandelay>
-References: <5cda6de6.1c69fb81.a3ae5.836a@mx.google.com>
+        Wed, 15 May 2019 15:24:13 -0400
+Received: by smtp.codeaurora.org (Postfix, from userid 1000)
+        id 3B3926087A; Wed, 15 May 2019 19:24:12 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
+        s=default; t=1557948252;
+        bh=IhMSDG5a5N0dL5eqitoSAgF0GjbDpoPuc54UFkEWmSM=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=iOG/8mNjRXLkM0rBqsyyQIiRTecWHPhZPWxeULXedlF5fejT5FWLj1ph2vkHUa9kA
+         ORmhjFsSttyn0Kq1dWGsCyjCxBKx2GCP2odvEa1v4DKrtcLYy6yJPZ7JWaMd9JFNrp
+         5V05iR/GFnIKU6NI+24EzTXwSTl0hiJuQMSiCYPQ=
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        pdx-caf-mail.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.7 required=2.0 tests=ALL_TRUSTED,BAYES_00,
+        DKIM_INVALID,DKIM_SIGNED autolearn=no autolearn_force=no version=3.4.0
+Received: from jcrouse1-lnx.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: jcrouse@smtp.codeaurora.org)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 6709360592;
+        Wed, 15 May 2019 19:24:10 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
+        s=default; t=1557948251;
+        bh=IhMSDG5a5N0dL5eqitoSAgF0GjbDpoPuc54UFkEWmSM=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=OV7VyfmBMxvleNQtJng1Lv6XGtvld6L5TIzlbWqdtSjf5WUElLykidfhqPPR1xL/0
+         qjlFI0l1CyL6I1xubXnaaQ76ORsDEPNc1bu6ny8fRd63UFyWl+b0kbgqxGv0aYslUn
+         oENiYl4/sMEIww6gtOGGE52lqUjJ89ijC4sWcFV8=
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 6709360592
+Authentication-Results: pdx-caf-mail.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: pdx-caf-mail.web.codeaurora.org; spf=none smtp.mailfrom=jcrouse@codeaurora.org
+Date:   Wed, 15 May 2019 13:24:08 -0600
+From:   Jordan Crouse <jcrouse@codeaurora.org>
+To:     Rob Clark <robdclark@chromium.org>
+Cc:     Doug Anderson <dianders@chromium.org>,
+        Rob Clark <robdclark@gmail.com>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        Stephen Boyd <swboyd@chromium.org>,
+        Andy Gross <andy.gross@linaro.org>,
+        David Brown <david.brown@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Mark Rutland <mark.rutland@arm.com>,
+        devicetree@vger.kernel.org, LKML <linux-kernel@vger.kernel.org>
+Subject: Re: [RFC 2/3] arm64: dts: qcom: sdm845-cheza: Re-add reserved memory
+Message-ID: <20190515192408.GD24137@jcrouse1-lnx.qualcomm.com>
+Mail-Followup-To: Rob Clark <robdclark@chromium.org>,
+        Doug Anderson <dianders@chromium.org>,
+        Rob Clark <robdclark@gmail.com>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        Stephen Boyd <swboyd@chromium.org>,
+        Andy Gross <andy.gross@linaro.org>,
+        David Brown <david.brown@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Mark Rutland <mark.rutland@arm.com>, devicetree@vger.kernel.org,
+        LKML <linux-kernel@vger.kernel.org>
+References: <20190509184415.11592-1-robdclark@gmail.com>
+ <20190509184415.11592-3-robdclark@gmail.com>
+ <CAD=FV=WXW3aApS=c7baxhtfr1Nf-UnBN2s=rEBBkjj4=TCdT+g@mail.gmail.com>
+ <CAJs_Fx5PDj+T+DVixzHjun_wCG5fhZsxH8xUqRwmkfwN87UP_A@mail.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <5cda6de6.1c69fb81.a3ae5.836a@mx.google.com>
-User-Agent: Mutt/1.10.1 (2018-07-13)
+In-Reply-To: <CAJs_Fx5PDj+T+DVixzHjun_wCG5fhZsxH8xUqRwmkfwN87UP_A@mail.gmail.com>
+User-Agent: Mutt/1.5.24 (2015-08-30)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, May 14, 2019 at 12:57:28PM +0530, Sabyasachi Gupta wrote:
-> Remove dpu_kms.h which is included more than once
+On Tue, May 14, 2019 at 09:09:55PM -0700, Rob Clark wrote:
+> On Mon, May 13, 2019 at 3:48 PM Doug Anderson <dianders@chromium.org> wrote:
+> >
+> > Hi,
+> >
+> > On Thu, May 9, 2019 at 11:44 AM Rob Clark <robdclark@gmail.com> wrote:
+> >
+> > > From: Douglas Anderson <dianders@chromium.org>
+> > >
+> > > Let's fixup the reserved memory to re-add the things we deleted in
+> > > ("CHROMIUM: arm64: dts: qcom: sdm845-cheza: Temporarily delete
+> > > reserved-mem changes") in a way that plays nicely with the new
+> > > upstream definitions.
+> >
+> > The message above makes no sense since that commit you reference isn't
+> > in upstream.
+> >
+> > ...but in any case, why not squash this in with the previous commit?
 > 
-> Signed-off-by: Sabyasachi Gupta <sabyasachi.linux@gmail.com>
-
-Thanks for your patch, I've applied it to drm-misc-next-fixes.
-
-Note for next time: The patch didn't apply cleanly since dpu_dbg.h has been
-removed upstream. In future please make sure your patches apply cleanly and
-at least build against upstream.
-
-Thanks again!
-
-Sean
-
-> ---
->  drivers/gpu/drm/msm/disp/dpu1/dpu_hw_lm.c | 1 -
->  1 file changed, 1 deletion(-)
+> Yeah, I should have mentioned this was my intention, I just left it
+> unsquashed since (at the time) it was something I had cherry-picked on
+> top of current 4.19 cros kernel..
 > 
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_lm.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_lm.c
-> index dbe48e00..d692dee 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_lm.c
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_lm.c
-> @@ -16,7 +16,6 @@
->  #include "dpu_hw_lm.h"
->  #include "dpu_hw_mdss.h"
->  #include "dpu_dbg.h"
-> -#include "dpu_kms.h"
->  
->  #define LM_OP_MODE                        0x00
->  #define LM_OUT_SIZE                       0x04
-> -- 
-> 2.7.4
+> anyways, I pushed an (unsquashed, converted to fixup!'s) update to:
 > 
+> https://github.com/freedreno/kernel-msm/commits/wip/cheza-dtb-upstreaming
+> 
+> which has updates based on you're review comments (at least assuming I
+> understood them correctly).. plus some unrelated to cheza-dt patches
+> on top to get things actually working (ie. ignore everything on top of
+> the fixup!'s)
+> 
+> I didn't see any comments on the 'delete zap-shader' patch, so
+> hopefully that means what I did there was a sane (or at least not
+> insane) way to handle android/linux tz vs what we have on cheza?
+
+Yeah. In a world where all the 845 firmware is in linux-firmware the best
+differentiating factor would be the absence of the reserved memory or the
+zap-shader node in the device tree. Otherwise we would have to try and fail to
+execute the scm call and then make some sort of educated guess as to if it
+failed for the "right" reasons.
+
+Jordan
+
+> > > Signed-off-by: Douglas Anderson <dianders@chromium.org>
+> > > Reviewed-by: Stephen Boyd <swboyd@chromium.org>
+> > > Signed-off-by: Rob Clark <robdclark@chromium.org>
+> >
+> > Remove Stephen's Reviewed-by.  In general reviews that happen in the
+> > Chrome OS gerrit shouldn't be carried over when things are posted
+> > upstream.
+> >
+> >
+> > > +/* Increase the size from 2MB to 8MB */
+> > > +&rmtfs_mem {
+> > > +       reg = <0 0x88f00000 0 0x800000>;
+> > > +};
+> > > +
+> > > +/ {
+> > > +       reserved-memory {
+> > > +               venus_mem: memory@96000000 {
+> > > +                       reg = <0 0x96000000 0 0x500000>;
+> > > +                       no-map;
+> > > +               };
+> > > +       };
+> > > +};
+> >
+> > nit: blank line?
+> >
+> > -Doug
 
 -- 
-Sean Paul, Software Engineer, Google / Chromium OS
+The Qualcomm Innovation Center, Inc. is a member of Code Aurora Forum,
+a Linux Foundation Collaborative Project
