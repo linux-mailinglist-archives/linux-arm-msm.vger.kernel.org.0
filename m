@@ -2,25 +2,25 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 1298B1FA65
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 May 2019 21:24:15 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id CD27E1FB08
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 May 2019 21:39:15 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726170AbfEOTYO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 15 May 2019 15:24:14 -0400
-Received: from smtp.codeaurora.org ([198.145.29.96]:41148 "EHLO
+        id S1727755AbfEOTjO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 15 May 2019 15:39:14 -0400
+Received: from smtp.codeaurora.org ([198.145.29.96]:46712 "EHLO
         smtp.codeaurora.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726124AbfEOTYN (ORCPT
+        with ESMTP id S1727725AbfEOTjO (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 15 May 2019 15:24:13 -0400
+        Wed, 15 May 2019 15:39:14 -0400
 Received: by smtp.codeaurora.org (Postfix, from userid 1000)
-        id 3B3926087A; Wed, 15 May 2019 19:24:12 +0000 (UTC)
+        id 5315E609CD; Wed, 15 May 2019 19:39:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
-        s=default; t=1557948252;
-        bh=IhMSDG5a5N0dL5eqitoSAgF0GjbDpoPuc54UFkEWmSM=;
+        s=default; t=1557949153;
+        bh=IGrrCPh/FK/sDRXRKl9rNDJmBDTVZkTFJEPRx68pwrY=;
         h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=iOG/8mNjRXLkM0rBqsyyQIiRTecWHPhZPWxeULXedlF5fejT5FWLj1ph2vkHUa9kA
-         ORmhjFsSttyn0Kq1dWGsCyjCxBKx2GCP2odvEa1v4DKrtcLYy6yJPZ7JWaMd9JFNrp
-         5V05iR/GFnIKU6NI+24EzTXwSTl0hiJuQMSiCYPQ=
+        b=I3zH6CZZqggTdYP6VEfhWmTpkIO+SYZm96HpQhbgeLIiSlO+uI2P3pSwaYYDDRFPL
+         mBm4Q3YRByTy3B/X1GSVEyF8BuhGjuGOlOTGq7z236uBfClSEJ7S9Tg40EJalXp+ZD
+         yKxcS+Gt+9RVKJz0hlDhndmnIQKhwQ2KPedIQu4M=
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
         pdx-caf-mail.web.codeaurora.org
 X-Spam-Level: 
@@ -30,126 +30,94 @@ Received: from jcrouse1-lnx.qualcomm.com (i-global254.qualcomm.com [199.106.103.
         (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
         (No client certificate requested)
         (Authenticated sender: jcrouse@smtp.codeaurora.org)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 6709360592;
-        Wed, 15 May 2019 19:24:10 +0000 (UTC)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 70BFF6076A;
+        Wed, 15 May 2019 19:39:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
-        s=default; t=1557948251;
-        bh=IhMSDG5a5N0dL5eqitoSAgF0GjbDpoPuc54UFkEWmSM=;
+        s=default; t=1557949147;
+        bh=IGrrCPh/FK/sDRXRKl9rNDJmBDTVZkTFJEPRx68pwrY=;
         h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=OV7VyfmBMxvleNQtJng1Lv6XGtvld6L5TIzlbWqdtSjf5WUElLykidfhqPPR1xL/0
-         qjlFI0l1CyL6I1xubXnaaQ76ORsDEPNc1bu6ny8fRd63UFyWl+b0kbgqxGv0aYslUn
-         oENiYl4/sMEIww6gtOGGE52lqUjJ89ijC4sWcFV8=
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 6709360592
+        b=fA409/S1vze2xiXW86p/7PVrMFTRS24/YVpi/us8Dt33o+vrs2EBd3s2SgeduQVTQ
+         WsXiYCE2eTf9eYTEM4URbWKmkfTekQUS6WGvDbGbYEWaV58MoHdPX5Dw18cXvcsHYq
+         1HsSr4N2sdbBB9+y1LJ/r+cgn7BbXU3n9T2JCthM=
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 70BFF6076A
 Authentication-Results: pdx-caf-mail.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
 Authentication-Results: pdx-caf-mail.web.codeaurora.org; spf=none smtp.mailfrom=jcrouse@codeaurora.org
-Date:   Wed, 15 May 2019 13:24:08 -0600
+Date:   Wed, 15 May 2019 13:39:04 -0600
 From:   Jordan Crouse <jcrouse@codeaurora.org>
-To:     Rob Clark <robdclark@chromium.org>
-Cc:     Doug Anderson <dianders@chromium.org>,
-        Rob Clark <robdclark@gmail.com>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Andy Gross <andy.gross@linaro.org>,
-        David Brown <david.brown@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Mark Rutland <mark.rutland@arm.com>,
-        devicetree@vger.kernel.org, LKML <linux-kernel@vger.kernel.org>
-Subject: Re: [RFC 2/3] arm64: dts: qcom: sdm845-cheza: Re-add reserved memory
-Message-ID: <20190515192408.GD24137@jcrouse1-lnx.qualcomm.com>
-Mail-Followup-To: Rob Clark <robdclark@chromium.org>,
-        Doug Anderson <dianders@chromium.org>,
-        Rob Clark <robdclark@gmail.com>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Andy Gross <andy.gross@linaro.org>,
-        David Brown <david.brown@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Mark Rutland <mark.rutland@arm.com>, devicetree@vger.kernel.org,
-        LKML <linux-kernel@vger.kernel.org>
-References: <20190509184415.11592-1-robdclark@gmail.com>
- <20190509184415.11592-3-robdclark@gmail.com>
- <CAD=FV=WXW3aApS=c7baxhtfr1Nf-UnBN2s=rEBBkjj4=TCdT+g@mail.gmail.com>
- <CAJs_Fx5PDj+T+DVixzHjun_wCG5fhZsxH8xUqRwmkfwN87UP_A@mail.gmail.com>
+To:     Sean Paul <sean@poorly.run>
+Cc:     dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
+        Sean Paul <seanpaul@chromium.org>,
+        Rob Clark <robdclark@chromium.org>,
+        Rob Clark <robdclark@gmail.com>, linux-arm-msm@vger.kernel.org
+Subject: Re: [PATCH] drm/msm: Upgrade gxpd checks to IS_ERR_OR_NULL
+Message-ID: <20190515193904.GE24137@jcrouse1-lnx.qualcomm.com>
+Mail-Followup-To: Sean Paul <sean@poorly.run>,
+        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
+        Sean Paul <seanpaul@chromium.org>,
+        Rob Clark <robdclark@chromium.org>, Rob Clark <robdclark@gmail.com>,
+        linux-arm-msm@vger.kernel.org
+References: <20190515170104.155525-1-sean@poorly.run>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <CAJs_Fx5PDj+T+DVixzHjun_wCG5fhZsxH8xUqRwmkfwN87UP_A@mail.gmail.com>
+In-Reply-To: <20190515170104.155525-1-sean@poorly.run>
 User-Agent: Mutt/1.5.24 (2015-08-30)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, May 14, 2019 at 09:09:55PM -0700, Rob Clark wrote:
-> On Mon, May 13, 2019 at 3:48 PM Doug Anderson <dianders@chromium.org> wrote:
-> >
-> > Hi,
-> >
-> > On Thu, May 9, 2019 at 11:44 AM Rob Clark <robdclark@gmail.com> wrote:
-> >
-> > > From: Douglas Anderson <dianders@chromium.org>
-> > >
-> > > Let's fixup the reserved memory to re-add the things we deleted in
-> > > ("CHROMIUM: arm64: dts: qcom: sdm845-cheza: Temporarily delete
-> > > reserved-mem changes") in a way that plays nicely with the new
-> > > upstream definitions.
-> >
-> > The message above makes no sense since that commit you reference isn't
-> > in upstream.
-> >
-> > ...but in any case, why not squash this in with the previous commit?
+On Wed, May 15, 2019 at 01:00:52PM -0400, Sean Paul wrote:
+> From: Sean Paul <seanpaul@chromium.org>
 > 
-> Yeah, I should have mentioned this was my intention, I just left it
-> unsquashed since (at the time) it was something I had cherry-picked on
-> top of current 4.19 cros kernel..
+> dev_pm_domain_attach_by_name() can return NULL, so we should check for
+> that case when we're about to dereference gxpd.
 > 
-> anyways, I pushed an (unsquashed, converted to fixup!'s) update to:
-> 
-> https://github.com/freedreno/kernel-msm/commits/wip/cheza-dtb-upstreaming
-> 
-> which has updates based on you're review comments (at least assuming I
-> understood them correctly).. plus some unrelated to cheza-dt patches
-> on top to get things actually working (ie. ignore everything on top of
-> the fixup!'s)
-> 
-> I didn't see any comments on the 'delete zap-shader' patch, so
-> hopefully that means what I did there was a sane (or at least not
-> insane) way to handle android/linux tz vs what we have on cheza?
+> Fixes: 9325d4266afd ("drm/msm/gpu: Attach to the GPU GX power domain")
+> Cc: Jordan Crouse <jcrouse@codeaurora.org>
+> Cc: Rob Clark <robdclark@chromium.org>
+> Signed-off-by: Sean Paul <seanpaul@chromium.org>
 
-Yeah. In a world where all the 845 firmware is in linux-firmware the best
-differentiating factor would be the absence of the reserved memory or the
-zap-shader node in the device tree. Otherwise we would have to try and fail to
-execute the scm call and then make some sort of educated guess as to if it
-failed for the "right" reasons.
+Reviewed-by: Jordan Crouse <jcrouse@codeauorora.org>
 
-Jordan
-
-> > > Signed-off-by: Douglas Anderson <dianders@chromium.org>
-> > > Reviewed-by: Stephen Boyd <swboyd@chromium.org>
-> > > Signed-off-by: Rob Clark <robdclark@chromium.org>
-> >
-> > Remove Stephen's Reviewed-by.  In general reviews that happen in the
-> > Chrome OS gerrit shouldn't be carried over when things are posted
-> > upstream.
-> >
-> >
-> > > +/* Increase the size from 2MB to 8MB */
-> > > +&rmtfs_mem {
-> > > +       reg = <0 0x88f00000 0 0x800000>;
-> > > +};
-> > > +
-> > > +/ {
-> > > +       reserved-memory {
-> > > +               venus_mem: memory@96000000 {
-> > > +                       reg = <0 0x96000000 0 0x500000>;
-> > > +                       no-map;
-> > > +               };
-> > > +       };
-> > > +};
-> >
-> > nit: blank line?
-> >
-> > -Doug
+> ---
+>  drivers/gpu/drm/msm/adreno/a6xx_gmu.c | 6 +++---
+>  1 file changed, 3 insertions(+), 3 deletions(-)
+> 
+> diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gmu.c b/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
+> index 9155dafae2a90..38e2cfa9cec79 100644
+> --- a/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
+> +++ b/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
+> @@ -747,7 +747,7 @@ int a6xx_gmu_resume(struct a6xx_gpu *a6xx_gpu)
+>  	 * will make sure that the refcounting is correct in case we need to
+>  	 * bring down the GX after a GMU failure
+>  	 */
+> -	if (!IS_ERR(gmu->gxpd))
+> +	if (!IS_ERR_OR_NULL(gmu->gxpd))
+>  		pm_runtime_get(gmu->gxpd);
+>  
+>  out:
+> @@ -863,7 +863,7 @@ int a6xx_gmu_stop(struct a6xx_gpu *a6xx_gpu)
+>  	 * domain. Usually the GMU does this but only if the shutdown sequence
+>  	 * was successful
+>  	 */
+> -	if (!IS_ERR(gmu->gxpd))
+> +	if (!IS_ERR_OR_NULL(gmu->gxpd))
+>  		pm_runtime_put_sync(gmu->gxpd);
+>  
+>  	clk_bulk_disable_unprepare(gmu->nr_clocks, gmu->clocks);
+> @@ -1234,7 +1234,7 @@ void a6xx_gmu_remove(struct a6xx_gpu *a6xx_gpu)
+>  
+>  	pm_runtime_disable(gmu->dev);
+>  
+> -	if (!IS_ERR(gmu->gxpd)) {
+> +	if (!IS_ERR_OR_NULL(gmu->gxpd)) {
+>  		pm_runtime_disable(gmu->gxpd);
+>  		dev_pm_domain_detach(gmu->gxpd, false);
+>  	}
+> -- 
+> Sean Paul, Software Engineer, Google / Chromium OS
+> 
 
 -- 
 The Qualcomm Innovation Center, Inc. is a member of Code Aurora Forum,
