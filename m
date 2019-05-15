@@ -2,331 +2,156 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id C1BCB1EA38
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 May 2019 10:35:16 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 3350F1EB85
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 May 2019 11:56:28 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725977AbfEOIfK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 15 May 2019 04:35:10 -0400
-Received: from mail-ot1-f65.google.com ([209.85.210.65]:43577 "EHLO
-        mail-ot1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725871AbfEOIfJ (ORCPT
+        id S1726325AbfEOJ41 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 15 May 2019 05:56:27 -0400
+Received: from mail-vs1-f67.google.com ([209.85.217.67]:43504 "EHLO
+        mail-vs1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726254AbfEOJ41 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 15 May 2019 04:35:09 -0400
-Received: by mail-ot1-f65.google.com with SMTP id i8so1468107oth.10;
-        Wed, 15 May 2019 01:35:08 -0700 (PDT)
+        Wed, 15 May 2019 05:56:27 -0400
+Received: by mail-vs1-f67.google.com with SMTP id d128so1271032vsc.10
+        for <linux-arm-msm@vger.kernel.org>; Wed, 15 May 2019 02:56:26 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=Z/PxU7IOgFaM/vpcRB7+25UT92kn0Avb7GExq6eQckE=;
+        b=UPfTU82iv2+QSBeDe9ByO5SIbVG/hJicOeB1sIQMcwRi5hIGPhnXJ9ts5oKGVhx3PS
+         TvcreLnXy/bJb/VDf+ZKo4/DuZZPww1U0jRY0Le3X64RE6EQLLQDDj0OMFzQZzF1bO3i
+         tOovIGbRlH8KsDvUDGs4gpxPe9mxXG4PRclFLGJ6Fcm6kQktQhq62SGSbnSX1FmJB8cl
+         Lo/H2d9FvINiDP9SIsf6MeqBTOcoI/GAy7X9MtOfgx+d2QhvrEg+loPRWRmwWMma/0rT
+         2myYIQ+Xp/lly3LJGwGmXIV7qGo2U62kKXoiAq0duOF/HV9toAqd5g0AW1PoyT41l2DQ
+         w8Ag==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=qGDvjhuqwyZ9tac5+2DRA2DTVD+KM6zUhqbXQAxYbK0=;
-        b=RPGtf+Vm1AB6ox0PhFVsjGheZirrqpi0YSzw0ConWTI6lKSIrW9a43YJuHE5MtzzTj
-         aqs5j75u0l2lP1CSINBiT170mjpaUpb0ZXQzeGMVPQYHcPjGrJH3wImJNvxdv+tXoAg8
-         0VkwmQcnM281vQamFlI7cXdZAT7opFC+MCzZ1S7CEAoEwRzU+zxScwzUH0FOQI0KX2Jh
-         Zq0BzIuSvEmYY7Tf7TPKjZjBDlDqExh2xjdJ6CnN1T/usibuJY7i/T+RR1QxblQa27Zy
-         qL92sxP49+Ah2S20lj4he+YUVZCHcKmcm4ScxWcDufEub18DU7hUSfGNxwm86B3QJNvE
-         P2pg==
-X-Gm-Message-State: APjAAAVbCUmr0ZXvlQDyRUyt7J000ipy2wFwsOmF4MARHLrnd6R5TQ4O
-        5fpOLoWaTO48G0D4SIErwWJ1bzCsDEfGN6EbtPQ=
-X-Google-Smtp-Source: APXvYqzE59NGA+Cc6Kgj3bHAnAwdU+grNRr9QJ/08hhNfPsLt2nPn0NAbP1CeUiSkybt7WtOU/M65zLVNkPi26UEzu0=
-X-Received: by 2002:a9d:7b46:: with SMTP id f6mr139072oto.324.1557909307949;
- Wed, 15 May 2019 01:35:07 -0700 (PDT)
+        bh=Z/PxU7IOgFaM/vpcRB7+25UT92kn0Avb7GExq6eQckE=;
+        b=UWHeRMsWnq/aGN93yWaJd/3JNXvw8RKomb+lBarBgOQW/ywqF0EwBq7REE+HXYvjZ5
+         mewVqZhCFLA0iZESPHyFPUBBV4gk4asoUwpy+3xKeB7jJAieMquuXOxfeNfdNsQm5OD9
+         Dv8e7ez24MH0P2Eg/dzNIkd7DCDKlZjSgwqrboiz/+14GTfnbK7WHOr6+R/3q6c8ueA9
+         fAZzV+pTIEpL+KIHxIXWubldKUFzPRZD85RwY3Cbiyv49QrX5UeB9pVo1eQBJ32ZrGgI
+         miPbrbdqOpVplNvFZ0zyQNkJ1WikolAZmJ2jchFaFwL60QGoVrWWpH5DXXoGg3ZZF794
+         leIQ==
+X-Gm-Message-State: APjAAAWfTkwXkivk9vn9Fhrejm0u9a3FBIkQMgXvZQdGU6yQhEvI7xAI
+        7JDnxzQsq/eNba8WjnPiAvmidZVJDhj2oix0tMt0Pg==
+X-Google-Smtp-Source: APXvYqyVbCc0ntyYjzrbfP4AYQ+9vS8vTevheiFO9USB5K9LCBZ8JwXS+KAyPYy4rMuQKw31NRfsWqnbpqLv6NuTd68=
+X-Received: by 2002:a67:dc98:: with SMTP id g24mr8902213vsk.27.1557914186011;
+ Wed, 15 May 2019 02:56:26 -0700 (PDT)
 MIME-Version: 1.0
-References: <20190515005716.4019-1-smuchun@gmail.com>
-In-Reply-To: <20190515005716.4019-1-smuchun@gmail.com>
-From:   "Rafael J. Wysocki" <rafael@kernel.org>
-Date:   Wed, 15 May 2019 10:34:56 +0200
-Message-ID: <CAJZ5v0hRZ8aLvNJdYFNNF9nT9nmts7-sAu-Uw+x8MOYdDfFLDg@mail.gmail.com>
-Subject: Re: [PATCH v3] driver core: Fix use-after-free and double free on
- glue directory
-To:     Muchun Song <smuchun@gmail.com>
-Cc:     Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        "Rafael J. Wysocki" <rafael@kernel.org>,
-        Benjamin Herrenschmidt <benh@kernel.crashing.org>,
-        Prateek Sood <prsood@codeaurora.org>, mojha@codeaurora.org,
-        gkohli@codeaurora.org,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+References: <20190508145600.GA26843@centauri> <CAHLCerN8L4np0WAY4hTjTnPXFtTK6EH0BXWLXzB-NiRaAnvcDA@mail.gmail.com>
+ <20190510091158.GA10284@e107155-lin> <CAHLCerM83weBBvwurU45d9_M0Wg49WjDFTRJ6KL8vj7cavz03g@mail.gmail.com>
+ <20190513094935.GA4885@e107155-lin>
+In-Reply-To: <20190513094935.GA4885@e107155-lin>
+From:   Amit Kucheria <amit.kucheria@linaro.org>
+Date:   Wed, 15 May 2019 15:26:14 +0530
+Message-ID: <CAHLCerM6SVCx5vdrodh+O5nQ0uDwr7zpvOMxVYtreT9EFk22eg@mail.gmail.com>
+Subject: Re: [PATCH] arm64: dts: qcom: qcs404: Add PSCI cpuidle support
+To:     Sudeep Holla <sudeep.holla@arm.com>
+Cc:     Niklas Cassel <niklas.cassel@linaro.org>,
+        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
+        Andy Gross <agross@kernel.org>,
+        David Brown <david.brown@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Mark Rutland <mark.rutland@arm.com>,
+        Jorge Ramirez-Ortiz <jorge.ramirez-ortiz@linaro.org>,
+        Lina Iyer <lina.iyer@linaro.org>,
+        Ulf Hansson <ulf.hansson@linaro.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
         linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        zhaowuyun@wingtech.com
+        DTML <devicetree@vger.kernel.org>,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, May 15, 2019 at 2:57 AM Muchun Song <smuchun@gmail.com> wrote:
+On Mon, May 13, 2019 at 3:19 PM Sudeep Holla <sudeep.holla@arm.com> wrote:
 >
-> There is a race condition between removing glue directory and adding a new
-> device under the glue directory. It can be reproduced in following test:
+> On Fri, May 10, 2019 at 11:58:40PM +0530, Amit Kucheria wrote:
+> > On Fri, May 10, 2019 at 2:54 PM Sudeep Holla <sudeep.holla@arm.com> wrote:
+> > >
 >
-> path 1: Add the child device under glue dir
-> device_add()
->     get_device_parent()
->         mutex_lock(&gdp_mutex);
->         ....
->         /*find parent from glue_dirs.list*/
->         list_for_each_entry(k, &dev->class->p->glue_dirs.list, entry)
->             if (k->parent == parent_kobj) {
->                 kobj = kobject_get(k);
->                 break;
->             }
->         ....
->         mutex_unlock(&gdp_mutex);
->         ....
->     ....
->     kobject_add()
->         kobject_add_internal()
->             create_dir()
->                 sysfs_create_dir_ns()
->                     if (kobj->parent)
->                         parent = kobj->parent->sd;
->                     ....
->                     kernfs_create_dir_ns(parent)
->                         kernfs_new_node()
->                             kernfs_get(parent)
->                         ....
->                         /* link in */
->                         rc = kernfs_add_one(kn);
->                         if (!rc)
->                             return kn;
+> [...]
 >
->                         kernfs_put(kn)
->                             ....
->                             repeat:
->                             kmem_cache_free(kn)
->                             kn = parent;
+> > >
+> > > Yes entry-method="psci" is required as per DT binding but not checked
+> > > in code on arm64. We have CPU ops with idle enabled only for "psci", so
+> > > there's not need to check.
+> >
+> > I don't see it being checked on arm32 either.
+> >
 >
->                             if (kn) {
->                                 if (atomic_dec_and_test(&kn->count))
->                                     goto repeat;
->                             }
->                         ....
->
-> path2: Remove last child device under glue dir
-> device_del()
->     cleanup_device_parent()
->         cleanup_glue_dir()
->             mutex_lock(&gdp_mutex);
->             if (!kobject_has_children(glue_dir))
->                 kobject_del(glue_dir);
->             kobject_put(glue_dir);
->             mutex_unlock(&gdp_mutex);
->
-> Before path2 remove last child device under glue dir, If path1 add a new
-> device under glue dir, the glue_dir kobject reference count will be
-> increase to 2 via kobject_get(k) in get_device_parent(). And path1 has
-> been called kernfs_new_node(), but not call kernfs_get(parent).
-> Meanwhile, path2 call kobject_del(glue_dir) beacause 0 is returned by
-> kobject_has_children(). This result in glue_dir->sd is freed and it's
-> reference count will be 0. Then path1 call kernfs_get(parent) will trigger
-> a warning in kernfs_get()(WARN_ON(!atomic_read(&kn->count))) and increase
-> it's reference count to 1. Because glue_dir->sd is freed by path2, the next
-> call kernfs_add_one() by path1 will fail(This is also use-after-free)
-> and call atomic_dec_and_test() to decrease reference count. Because the
-> reference count is decremented to 0, it will also call kmem_cache_free()
-> to free glue_dir->sd again. This will result in double free.
->
-> In order to avoid this happening, we we should not call kobject_del() on
-> path2 when the reference count of glue_dir is greater than 1. So we add a
-> conditional statement to fix it.
->
-> The following calltrace is captured in kernel 4.14 with the following patch
-> applied:
->
-> commit 726e41097920 ("drivers: core: Remove glue dirs from sysfs earlier")
->
-> --------------------------------------------------------------------------
-> [    3.633703] WARNING: CPU: 4 PID: 513 at .../fs/kernfs/dir.c:494
->                 Here is WARN_ON(!atomic_read(&kn->count) in kernfs_get().
-> ....
-> [    3.633986] Call trace:
-> [    3.633991]  kernfs_create_dir_ns+0xa8/0xb0
-> [    3.633994]  sysfs_create_dir_ns+0x54/0xe8
-> [    3.634001]  kobject_add_internal+0x22c/0x3f0
-> [    3.634005]  kobject_add+0xe4/0x118
-> [    3.634011]  device_add+0x200/0x870
-> [    3.634017]  _request_firmware+0x958/0xc38
-> [    3.634020]  request_firmware_into_buf+0x4c/0x70
-> ....
-> [    3.634064] kernel BUG at .../mm/slub.c:294!
->                 Here is BUG_ON(object == fp) in set_freepointer().
-> ....
-> [    3.634346] Call trace:
-> [    3.634351]  kmem_cache_free+0x504/0x6b8
-> [    3.634355]  kernfs_put+0x14c/0x1d8
-> [    3.634359]  kernfs_create_dir_ns+0x88/0xb0
-> [    3.634362]  sysfs_create_dir_ns+0x54/0xe8
-> [    3.634366]  kobject_add_internal+0x22c/0x3f0
-> [    3.634370]  kobject_add+0xe4/0x118
-> [    3.634374]  device_add+0x200/0x870
-> [    3.634378]  _request_firmware+0x958/0xc38
-> [    3.634381]  request_firmware_into_buf+0x4c/0x70
-> --------------------------------------------------------------------------
->
-> Fixes: 726e41097920 ("drivers: core: Remove glue dirs from sysfs earlier")
->
-> Signed-off-by: Muchun Song <smuchun@gmail.com>
-> ---
->
-> Change in v3:
->        add change log.
-> Change in v2:
->        Fix device_move() also.
->
->  drivers/base/core.c | 47 ++++++++++++++++++++++++++++++++++++---------
->  1 file changed, 38 insertions(+), 9 deletions(-)
->
-> diff --git a/drivers/base/core.c b/drivers/base/core.c
-> index 4aeaa0c92bda..e7810329223a 100644
-> --- a/drivers/base/core.c
-> +++ b/drivers/base/core.c
-> @@ -1739,8 +1739,9 @@ class_dir_create_and_add(struct class *class, struct kobject *parent_kobj)
->
->  static DEFINE_MUTEX(gdp_mutex);
->
-> -static struct kobject *get_device_parent(struct device *dev,
-> -                                        struct device *parent)
-> +static struct kobject *__get_device_parent(struct device *dev,
-> +                                          struct device *parent,
-> +                                          bool lock)
->  {
->         if (dev->class) {
->                 struct kobject *kobj = NULL;
-> @@ -1779,14 +1780,16 @@ static struct kobject *get_device_parent(struct device *dev,
->                         }
->                 spin_unlock(&dev->class->p->glue_dirs.list_lock);
->                 if (kobj) {
-> -                       mutex_unlock(&gdp_mutex);
-> +                       if (!lock)
-> +                               mutex_unlock(&gdp_mutex);
->                         return kobj;
->                 }
+> arm_cpuidle_get_ops in arch/arm/kernel/cpuidle.c checks the method, has
+> to match "psci" for drivers/firmware/psci.c to work on arm32
 
-There is an unconditional mutex_lock(&gdp_mutex) above this, so the
-idea appears to be to leave the function with the mutex locked in some
-cases.
+That is a check for the enable-method, not entry-method.
 
-That is far away from straightforward, so there needs to be a
-kerneldoc comment explaining that behavior.
+We don't check for entry-method anywhere, AFAICT.
 
-It also may be necessary to annotate the function with __acquires().
-
+> [...]
 >
->                 /* or create a new class-directory at the parent device */
->                 k = class_dir_create_and_add(dev->class, parent_kobj);
->                 /* do not emit an uevent for this simple "glue" directory */
-> -               mutex_unlock(&gdp_mutex);
-> +               if (!lock || IS_ERR(k))
-> +                       mutex_unlock(&gdp_mutex);
-
-So it needs to be unlocked in the error case too, because the
-conditional unlock down the road doesn't work then, right?
-
-There needs to be a comment to that effect here, please.
-
->                 return k;
->         }
+> > >
+> > > Why do you want to deprecated just because Linux kernel doesn't want to
+> > > use it. That's not a valid reason IMO.
+> >
+> > Fair enough. Just want to make sure that it isn't some vestigial
+> > property that was never used. Do you know if another OS is actually
+> > using it?
+> >
 >
-> @@ -1799,6 +1802,19 @@ static struct kobject *get_device_parent(struct device *dev,
->         return NULL;
->  }
+> Not that I am aware of. But Linux uses it on arm32, so it's not entirely
+> unused.
+
+entry-method is not read in Linux code (see above).
+
+> > > > Do we expect to support PSCI platforms that might have a different
+> > > > entry-method for idle states?
+> > >
+> > > Not on ARM64, but same DT bindings can be used for idle-states on
+> > > say RISC-V and have some value other than "psci".
+> >
+> > Both enable-method and entry-method properties are currently only used
+> > (and documented) for ARM platforms. Hence this discussion about
+> > deprecation of one of them.
+> >
 >
-> +static inline struct kobject *get_device_parent(struct device *dev,
-> +                                               struct device *parent)
-> +{
-> +       return __get_device_parent(dev, parent, false);
-> +}
-> +
-> +static inline struct kobject *
-> +get_device_parent_locked_if_glue_dir(struct device *dev,
-> +                                    struct device *parent)
+> Yes, it's used on arm32 as mentioned above.
 
-The name is long and it doesn't explain much IMO.
+Only enable-method is checked.
 
-I guess the idea is to pair this wrapper with unlock_if_glue_dir() to
-produce a kind of lock/unlock pattern, but this doesn't work anyway
-IMO because of the extra glue dir arg that needs to be passed to
-unlock_if_glue_dir().
-
-I would just use the raw __get_device_parent(dev, parent, true)
-instead which should be clear enough as long as the (missing now)
-kerneldoc comment (and possibly annotation) is added to it.
-
-> +{
-> +       return __get_device_parent(dev, parent, true);
-> +}
-> +
->  static inline bool live_in_glue_dir(struct kobject *kobj,
->                                     struct device *dev)
->  {
-> @@ -1831,6 +1847,16 @@ static void cleanup_glue_dir(struct device *dev, struct kobject *glue_dir)
->         mutex_unlock(&gdp_mutex);
->  }
+> > > > Should I whip up a patch removing entry-method? Since we don't check
+> > > > for it today, it won't break the old DTs either.
+> > > >
+> > >
+> > > Nope, I don't think so. But if it's causing issues, we can look into it.
+> > > I don't want to restrict the use of the bindings for ARM/ARM64 or psci only.
+> >
+> > Only a couple of minor issues:
+> > 1. There is a trickle of DTs that need fixing up every now and then
+> > because they don't use entry-method in their idle-states node. Schema
+> > validation ought to fix that.
 >
-> +static inline void unlock_if_glue_dir(struct device *dev,
-> +                                     struct kobject *glue_dir)
-> +{
-> +       /* see if we live in a "glue" directory */
-> +       if (!live_in_glue_dir(glue_dir, dev))
-> +               return;
-> +
-> +       mutex_unlock(&gdp_mutex);
-
-This can be written in fewer lines of code and one negation less as follows:
-
-if (live_in_glue_dir(glue_dir, dev))
-       mutex_unlock(&gdp_mutex);
-
-which IMO is self-explanatory, so the comment is redundant.
-
-And I would use it directly, without the static wrapper around it,
-possibly with a comment to say that it drops the mutex possibly
-acquired by __get_device_parent().
-
-> +}
-> +
->  static int device_add_class_symlinks(struct device *dev)
->  {
->         struct device_node *of_node = dev_of_node(dev);
-> @@ -2040,7 +2066,7 @@ int device_add(struct device *dev)
->         pr_debug("device: '%s': %s\n", dev_name(dev), __func__);
+> I understand, scheme should fix it. This is not just restricted to this,
+> it's generic DT problem. So let's hope we get schema based validation soon.
 >
->         parent = get_device(dev->parent);
-> -       kobj = get_device_parent(dev, parent);
-> +       kobj = get_device_parent_locked_if_glue_dir(dev, parent);
->         if (IS_ERR(kobj)) {
->                 error = PTR_ERR(kobj);
->                 goto parent_error;
-> @@ -2055,10 +2081,12 @@ int device_add(struct device *dev)
->         /* first, register with generic layer. */
->         /* we require the name to be set before, and pass NULL */
->         error = kobject_add(&dev->kobj, dev->kobj.parent, NULL);
-> -       if (error) {
-> -               glue_dir = get_glue_dir(dev);
-> +
-> +       glue_dir = get_glue_dir(dev);
-> +       unlock_if_glue_dir(dev, glue_dir);
-> +
-> +       if (error)
->                 goto Error;
-> -       }
+> > 2. A property that isn't ready by any code is a bit confusing. Perhaps
+> > we can mention something to the effect in the documentation?
+> >
 >
->         /* notify platform of device entry */
->         error = device_platform_notify(dev, KOBJ_ADD);
-> @@ -2972,7 +3000,7 @@ int device_move(struct device *dev, struct device *new_parent,
->
->         device_pm_lock();
->         new_parent = get_device(new_parent);
-> -       new_parent_kobj = get_device_parent(dev, new_parent);
-> +       new_parent_kobj = get_device_parent_locked_if_glue_dir(dev, new_parent);
->         if (IS_ERR(new_parent_kobj)) {
->                 error = PTR_ERR(new_parent_kobj);
->                 put_device(new_parent);
-> @@ -2982,6 +3010,7 @@ int device_move(struct device *dev, struct device *new_parent,
->         pr_debug("device: '%s': %s: moving to '%s'\n", dev_name(dev),
->                  __func__, new_parent ? dev_name(new_parent) : "<NULL>");
->         error = kobject_move(&dev->kobj, new_parent_kobj);
-> +       unlock_if_glue_dir(dev, new_parent_kobj);
->         if (error) {
->                 cleanup_glue_dir(dev, new_parent_kobj);
->                 put_device(new_parent);
-> --
+> Not entirely true. We have quite a lot of bindings that are added just
+> because downstream drivers use e.g. GPU and even standard ePAPR or DT
+> specification has lots of bindings which OS like Linux may choose
+> not to use at all. Same applies to ACPI, so I am not for removing bindings
+> just because there are no users in Linux.
+
+That is a fair point. But in those cases, the binding is probably used
+by another OS. entry-method seems to an example of one that isn't used
+by Linux or other OSes.
+
+Regards,
+Amit
