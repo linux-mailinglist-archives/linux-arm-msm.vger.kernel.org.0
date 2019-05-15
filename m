@@ -2,124 +2,111 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id A592A1FB5C
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 May 2019 22:08:15 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B10071FC61
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 May 2019 23:43:34 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726319AbfEOUIO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 15 May 2019 16:08:14 -0400
-Received: from mail-vs1-f65.google.com ([209.85.217.65]:32942 "EHLO
-        mail-vs1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726124AbfEOUIO (ORCPT
+        id S1727294AbfEOVnc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 15 May 2019 17:43:32 -0400
+Received: from mail-ua1-f67.google.com ([209.85.222.67]:42358 "EHLO
+        mail-ua1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726651AbfEOVn3 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 15 May 2019 16:08:14 -0400
-Received: by mail-vs1-f65.google.com with SMTP id y6so798695vsb.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 15 May 2019 13:08:14 -0700 (PDT)
+        Wed, 15 May 2019 17:43:29 -0400
+Received: by mail-ua1-f67.google.com with SMTP id e9so468536uar.9
+        for <linux-arm-msm@vger.kernel.org>; Wed, 15 May 2019 14:43:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=poorly.run; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to;
-        bh=v48zyXjM+0T7zugWwKkaSHzGROBxp5MaD7k3bo3xnQA=;
-        b=dRy6jUWevG+0XhP6OTr7k/DY51m5lCsFaJkkZcm1nGHHVfpqk2yboQlaciHA6UqGAY
-         1WisHud/8P4Ed6MmG1zJgV3IgVbGXq+qg+WBPoOYK6oM3vlxe8xPoAEX16vq/wgvc4bE
-         CFf8sukd70kKuRBXsCmfyS+bW6Vm7++aLljb4FnpBCxa+g7wwBfbjCrwqea5DpK9MSQ3
-         zVzUiXmHgLyONDaC+OjZs5+sENfqNsD0qGLEvTEIqd8yYAqUNPh2W4e6xfuGrBZFZsk2
-         YpN5iGd3qM265ObrDKxl2PwAs0VER3ysmq3T+RBOiyt583tGgm1pJghYmSHKWz/TywNM
-         DV7A==
+        d=chromium.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=Kjfknf32vTN6dOCTbKM2s4UhXiubagFxAlST3GyPe/4=;
+        b=GR//cp3pkBQCdrHCiA7U78cbGHrhAthjeR/dCjmIIoD5qYQZuteM3NaBSy+HNbvY48
+         IvgNM0VAE85ycebNJSfBDPE3hfaZSJCDQ23VFwYM5vosvYKqaPXIMso4VLQPi1wCqPof
+         nH2b4nPE7GE05LNfkK8yd9VHThgjZlNPDOpZg=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to;
-        bh=v48zyXjM+0T7zugWwKkaSHzGROBxp5MaD7k3bo3xnQA=;
-        b=saToo+lw9Bv3jgkLhc0qJZ8yeyTH/CIXlxcZ33rDhS64qEVzdj2Jboio8xUUGE4fSX
-         MzyEXOhZ+bYKVZRhEoXNuXa8F0VzvWOQ74LQR/9firGiQMSf09X0WehPmp9SKctOnvFP
-         UVMeHbUqFXllhSbdIDK3Z2egdVTRwfSaYIJJOkPN5+pus4FfhR3ufz2mM4kuH++9UOdC
-         k2eDDsBXGXrqmcnqP9Dcm9yqREFtqb4WQA8pLtmXBaGlXlIXNSDtZ1jKmEqehDYnQQcS
-         Rm0NlCsAZULmP88M2qYUNXBiYQKD4L/YbkXvf0dNVTtzVF0xL2/wNeepTBl0kdi7oQcI
-         1kPQ==
-X-Gm-Message-State: APjAAAWyaCR4zHjdY9Ylbr+0tYhXBgVStN4B2l9tBsCa0+hOBh0Y0RY+
-        bVTmkLmZwSzonq5E4kcctkAI/2luXJJAeKJwnQ6kCw==
-X-Google-Smtp-Source: APXvYqysnnQ3i41oD1FSw+qj90+S478GDLPURo5Z3hBgXdt8GVd806sYNUFVdgQN0vWea5eMtp7/yipVR53sFrgmoW8=
-X-Received: by 2002:a67:d806:: with SMTP id e6mr5468439vsj.43.1557950893516;
- Wed, 15 May 2019 13:08:13 -0700 (PDT)
+         :message-id:subject:to:cc;
+        bh=Kjfknf32vTN6dOCTbKM2s4UhXiubagFxAlST3GyPe/4=;
+        b=f9pVJXwQLrGZ6ICR6ndyLcMm3gEWaabW0iwmxkZlmhVT87sgc0wUzUoEqfeu+KgX9C
+         +yOgIMYt3blD8NDXfYMwMyFwzGN61v2mB3hkHv2ZEKa48qSOfWigd3dad0Oii5DihloC
+         4A65nUylW7FW3Lfoo3XfjK32tgusnSL9aLzaGAmD4G0WUuVy/5LxrggRJL9ag/qufF2h
+         hxqMUcxAU+US/SgYiUERDorI5yfia3fyYr79zR8l3drGci13pU0wUgOTrQcUH+Bo51qp
+         YzHnWRIsWiQ7+c+VxOu6gVl/LW2rX77CkHkVrBRdZ+KFbU1KJS4rppi9UO9Ccmt5Tr/k
+         rMaw==
+X-Gm-Message-State: APjAAAVg/zB32emnhp3i21ODKKYttJwQ22e+a0MhTAdVVjsETqKoF76n
+        TXoZC8VSYKtuuYP4BLKEqhyTQNOxJLw=
+X-Google-Smtp-Source: APXvYqwcHHrsnp24cHrNZ+7aA938jMqTC/u3l9RtQFaF6nJWgmASfqV4UxwUpKLuxneRLcVBf7q61A==
+X-Received: by 2002:a9f:22e8:: with SMTP id 95mr13561170uan.6.1557956607543;
+        Wed, 15 May 2019 14:43:27 -0700 (PDT)
+Received: from mail-vs1-f54.google.com (mail-vs1-f54.google.com. [209.85.217.54])
+        by smtp.gmail.com with ESMTPSA id c204sm1443212vkd.14.2019.05.15.14.43.26
+        for <linux-arm-msm@vger.kernel.org>
+        (version=TLS1_3 cipher=AEAD-AES128-GCM-SHA256 bits=128/128);
+        Wed, 15 May 2019 14:43:26 -0700 (PDT)
+Received: by mail-vs1-f54.google.com with SMTP id d128so925859vsc.10
+        for <linux-arm-msm@vger.kernel.org>; Wed, 15 May 2019 14:43:26 -0700 (PDT)
+X-Received: by 2002:a67:79ca:: with SMTP id u193mr20557958vsc.20.1557956606068;
+ Wed, 15 May 2019 14:43:26 -0700 (PDT)
 MIME-Version: 1.0
-References: <20190515170104.155525-1-sean@poorly.run> <20190515193904.GE24137@jcrouse1-lnx.qualcomm.com>
-In-Reply-To: <20190515193904.GE24137@jcrouse1-lnx.qualcomm.com>
-From:   Sean Paul <sean@poorly.run>
-Date:   Wed, 15 May 2019 16:07:37 -0400
-Message-ID: <CAMavQKKxUDX-tOLULDfZxcizysWOr63VvBBT8fNa-VB=v8jvVQ@mail.gmail.com>
-Subject: Re: [PATCH] drm/msm: Upgrade gxpd checks to IS_ERR_OR_NULL
-To:     Sean Paul <sean@poorly.run>,
-        dri-devel <dri-devel@lists.freedesktop.org>,
-        freedreno@lists.freedesktop.org, Sean Paul <seanpaul@chromium.org>,
+References: <20190509184415.11592-1-robdclark@gmail.com> <20190509184415.11592-4-robdclark@gmail.com>
+In-Reply-To: <20190509184415.11592-4-robdclark@gmail.com>
+From:   Doug Anderson <dianders@chromium.org>
+Date:   Wed, 15 May 2019 14:43:13 -0700
+X-Gmail-Original-Message-ID: <CAD=FV=Xa0kAReU7CFvO8QiCRkNxGaQY_JohK+psykqeN9e+QJw@mail.gmail.com>
+Message-ID: <CAD=FV=Xa0kAReU7CFvO8QiCRkNxGaQY_JohK+psykqeN9e+QJw@mail.gmail.com>
+Subject: Re: [RFC 3/3] arm64: dts: qcom: sdm845-cheza: delete zap-shader
+To:     Rob Clark <robdclark@gmail.com>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     linux-arm-msm <linux-arm-msm@vger.kernel.org>,
         Rob Clark <robdclark@chromium.org>,
-        Rob Clark <robdclark@gmail.com>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>
+        Andy Gross <andy.gross@linaro.org>,
+        David Brown <david.brown@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Mark Rutland <mark.rutland@arm.com>,
+        devicetree@vger.kernel.org, LKML <linux-kernel@vger.kernel.org>,
+        Jordan Crouse <jcrouse@codeaurora.org>
 Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, May 15, 2019 at 3:39 PM Jordan Crouse <jcrouse@codeaurora.org> wrote:
->
-> On Wed, May 15, 2019 at 01:00:52PM -0400, Sean Paul wrote:
-> > From: Sean Paul <seanpaul@chromium.org>
-> >
-> > dev_pm_domain_attach_by_name() can return NULL, so we should check for
-> > that case when we're about to dereference gxpd.
-> >
-> > Fixes: 9325d4266afd ("drm/msm/gpu: Attach to the GPU GX power domain")
-> > Cc: Jordan Crouse <jcrouse@codeaurora.org>
-> > Cc: Rob Clark <robdclark@chromium.org>
-> > Signed-off-by: Sean Paul <seanpaul@chromium.org>
->
-> Reviewed-by: Jordan Crouse <jcrouse@codeauorora.org>
->
+Hi,
 
-Thanks for the review, I've applied it to -misc-next-fixes with the
-other msm fixes for 5.2
+On Thu, May 9, 2019 at 12:08 PM Rob Clark <robdclark@gmail.com> wrote:
 
-
-Sean
-
-> > ---
-> >  drivers/gpu/drm/msm/adreno/a6xx_gmu.c | 6 +++---
-> >  1 file changed, 3 insertions(+), 3 deletions(-)
-> >
-> > diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gmu.c b/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
-> > index 9155dafae2a90..38e2cfa9cec79 100644
-> > --- a/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
-> > +++ b/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
-> > @@ -747,7 +747,7 @@ int a6xx_gmu_resume(struct a6xx_gpu *a6xx_gpu)
-> >        * will make sure that the refcounting is correct in case we need to
-> >        * bring down the GX after a GMU failure
-> >        */
-> > -     if (!IS_ERR(gmu->gxpd))
-> > +     if (!IS_ERR_OR_NULL(gmu->gxpd))
-> >               pm_runtime_get(gmu->gxpd);
-> >
-> >  out:
-> > @@ -863,7 +863,7 @@ int a6xx_gmu_stop(struct a6xx_gpu *a6xx_gpu)
-> >        * domain. Usually the GMU does this but only if the shutdown sequence
-> >        * was successful
-> >        */
-> > -     if (!IS_ERR(gmu->gxpd))
-> > +     if (!IS_ERR_OR_NULL(gmu->gxpd))
-> >               pm_runtime_put_sync(gmu->gxpd);
-> >
-> >       clk_bulk_disable_unprepare(gmu->nr_clocks, gmu->clocks);
-> > @@ -1234,7 +1234,7 @@ void a6xx_gmu_remove(struct a6xx_gpu *a6xx_gpu)
-> >
-> >       pm_runtime_disable(gmu->dev);
-> >
-> > -     if (!IS_ERR(gmu->gxpd)) {
-> > +     if (!IS_ERR_OR_NULL(gmu->gxpd)) {
-> >               pm_runtime_disable(gmu->gxpd);
-> >               dev_pm_domain_detach(gmu->gxpd, false);
-> >       }
-> > --
-> > Sean Paul, Software Engineer, Google / Chromium OS
-> >
+> From: Rob Clark <robdclark@chromium.org>
 >
-> --
-> The Qualcomm Innovation Center, Inc. is a member of Code Aurora Forum,
-> a Linux Foundation Collaborative Project
+> This is unused on cheza.  Delete the node to get rid of the reserved-
+> memory section, and to avoid the driver from attempting to load a zap
+> shader that doesn't exist every time it powers up the GPU.
+>
+> Signed-off-by: Rob Clark <robdclark@chromium.org>
+> ---
+>  arch/arm64/boot/dts/qcom/sdm845-cheza.dtsi | 2 ++
+>  arch/arm64/boot/dts/qcom/sdm845.dtsi       | 2 +-
+
+nit: up to Bjorn / Andy, but personally I'd put cheza and non-cheza
+changes in two patches.
+
+
+>  2 files changed, 3 insertions(+), 1 deletion(-)
+>
+> diff --git a/arch/arm64/boot/dts/qcom/sdm845-cheza.dtsi b/arch/arm64/boot/dts/qcom/sdm845-cheza.dtsi
+> index 8ccbe246dff4..28c28517b21a 100644
+> --- a/arch/arm64/boot/dts/qcom/sdm845-cheza.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/sdm845-cheza.dtsi
+> @@ -175,6 +175,8 @@
+>  /delete-node/ &venus_mem;
+>  /delete-node/ &cdsp_mem;
+>  /delete-node/ &cdsp_pas;
+> +/delete-node/ &zap_shader;
+
+nit: I'd probably move the delete of the zap shader to a slightly
+different place just because the rest of the lines here are deleting
+reserved memory regions.
+
+Other than nits this seems OK to me.  Not that I know anything about
+the zap shader or why a zap shader wouldn't be appropriate for cheza.
+
+-Doug
