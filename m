@@ -2,156 +2,171 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 3350F1EB85
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 May 2019 11:56:28 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 709521EBDD
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 May 2019 12:13:33 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726325AbfEOJ41 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 15 May 2019 05:56:27 -0400
-Received: from mail-vs1-f67.google.com ([209.85.217.67]:43504 "EHLO
-        mail-vs1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726254AbfEOJ41 (ORCPT
+        id S1726292AbfEOKNc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 15 May 2019 06:13:32 -0400
+Received: from mail-qt1-f195.google.com ([209.85.160.195]:36507 "EHLO
+        mail-qt1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726260AbfEOKNc (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 15 May 2019 05:56:27 -0400
-Received: by mail-vs1-f67.google.com with SMTP id d128so1271032vsc.10
-        for <linux-arm-msm@vger.kernel.org>; Wed, 15 May 2019 02:56:26 -0700 (PDT)
+        Wed, 15 May 2019 06:13:32 -0400
+Received: by mail-qt1-f195.google.com with SMTP id a17so2584442qth.3
+        for <linux-arm-msm@vger.kernel.org>; Wed, 15 May 2019 03:13:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=Z/PxU7IOgFaM/vpcRB7+25UT92kn0Avb7GExq6eQckE=;
-        b=UPfTU82iv2+QSBeDe9ByO5SIbVG/hJicOeB1sIQMcwRi5hIGPhnXJ9ts5oKGVhx3PS
-         TvcreLnXy/bJb/VDf+ZKo4/DuZZPww1U0jRY0Le3X64RE6EQLLQDDj0OMFzQZzF1bO3i
-         tOovIGbRlH8KsDvUDGs4gpxPe9mxXG4PRclFLGJ6Fcm6kQktQhq62SGSbnSX1FmJB8cl
-         Lo/H2d9FvINiDP9SIsf6MeqBTOcoI/GAy7X9MtOfgx+d2QhvrEg+loPRWRmwWMma/0rT
-         2myYIQ+Xp/lly3LJGwGmXIV7qGo2U62kKXoiAq0duOF/HV9toAqd5g0AW1PoyT41l2DQ
-         w8Ag==
+        bh=q5vzb9qbv69BzC3TBeJnpXxGBryRXdu9w9fPfes2sXY=;
+        b=bLY7sL/G7Yf8SOp3HqCiZL/Kxke2jlyjmhfdkXZ4DfcbDpQUZHQifT9d1Oju1FPBS1
+         Ao0qSpfnJn6I8FO2jf0bAeMaODXJM/0x1q07MfRLBZQNVfB8nCoGWEWkc+S1GqGtDz0/
+         9IVRpcLcC2qsGz8hm6MAWrHIShgSy/hOo2J4L6njeSF8PECmqnZATpyreRDrinDXpZEM
+         VyaodUXP0ixgqtokO43Dj33+VD8/bq/nbt9LW1grUE3MS5DvJhkPVUlOhAcf/dI2mEkv
+         h437g/Nz4hMvkLA4KLeNv3vuyGFSPBmO/HSuM1ElFU2Ncsx4PKs34PWYv6YY/FKawKcy
+         IKvw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=Z/PxU7IOgFaM/vpcRB7+25UT92kn0Avb7GExq6eQckE=;
-        b=UWHeRMsWnq/aGN93yWaJd/3JNXvw8RKomb+lBarBgOQW/ywqF0EwBq7REE+HXYvjZ5
-         mewVqZhCFLA0iZESPHyFPUBBV4gk4asoUwpy+3xKeB7jJAieMquuXOxfeNfdNsQm5OD9
-         Dv8e7ez24MH0P2Eg/dzNIkd7DCDKlZjSgwqrboiz/+14GTfnbK7WHOr6+R/3q6c8ueA9
-         fAZzV+pTIEpL+KIHxIXWubldKUFzPRZD85RwY3Cbiyv49QrX5UeB9pVo1eQBJ32ZrGgI
-         miPbrbdqOpVplNvFZ0zyQNkJ1WikolAZmJ2jchFaFwL60QGoVrWWpH5DXXoGg3ZZF794
-         leIQ==
-X-Gm-Message-State: APjAAAWfTkwXkivk9vn9Fhrejm0u9a3FBIkQMgXvZQdGU6yQhEvI7xAI
-        7JDnxzQsq/eNba8WjnPiAvmidZVJDhj2oix0tMt0Pg==
-X-Google-Smtp-Source: APXvYqyVbCc0ntyYjzrbfP4AYQ+9vS8vTevheiFO9USB5K9LCBZ8JwXS+KAyPYy4rMuQKw31NRfsWqnbpqLv6NuTd68=
-X-Received: by 2002:a67:dc98:: with SMTP id g24mr8902213vsk.27.1557914186011;
- Wed, 15 May 2019 02:56:26 -0700 (PDT)
+        bh=q5vzb9qbv69BzC3TBeJnpXxGBryRXdu9w9fPfes2sXY=;
+        b=cWoBvJFzjPrS0xS+WjQu8YiW2pfdnwpHsgNrBabRplyCDG15uxqhDwk2MtwCur408p
+         sXuCP2F3UQ9NReu9ZOn/YdPlIuM8J9xR4GXv8AifTEUpZOEtwiBe8W7wLEZd+Fedxa1B
+         SK1MzdXd76378x2SV6APS4lctWbJD45G+AE9HD9Wt7TzAL/Fv67IMI+Kd5dXyrAw973S
+         Q0gH3JIssuZfb5XGs18wh4okl0y3UjPaBEP+IYfMSVwY05J2G5jQp/pT4UKNZGFsS+eO
+         oLYKSkscrYY0zhRJmYsQCckTQdcsHzz3Y7mnLd8rikouHUxKa1fWeSnu0oV5aqwTpC2E
+         S7VQ==
+X-Gm-Message-State: APjAAAXMmOKnExG41bvPQLETt7lfKd9zU93J23YsOmIBy7VIVS1M7fI7
+        a9szdQfIT0XTeQJE8N7VVYlW4LPycwJvx7efqwwIQw==
+X-Google-Smtp-Source: APXvYqzLBvSCbKg+8irN8jnpxztkevGoY93//8qdmVE2cBuZ3c+fv+koI6pSANU5lRp7y+543QI3+9VDjONgsSpz/bY=
+X-Received: by 2002:ac8:3884:: with SMTP id f4mr35537714qtc.300.1557915210650;
+ Wed, 15 May 2019 03:13:30 -0700 (PDT)
 MIME-Version: 1.0
-References: <20190508145600.GA26843@centauri> <CAHLCerN8L4np0WAY4hTjTnPXFtTK6EH0BXWLXzB-NiRaAnvcDA@mail.gmail.com>
- <20190510091158.GA10284@e107155-lin> <CAHLCerM83weBBvwurU45d9_M0Wg49WjDFTRJ6KL8vj7cavz03g@mail.gmail.com>
- <20190513094935.GA4885@e107155-lin>
-In-Reply-To: <20190513094935.GA4885@e107155-lin>
+References: <cover.1557486950.git.amit.kucheria@linaro.org>
+ <2a0626da4d8d5a1018c351b24b63e5e0d7a45a10.1557486950.git.amit.kucheria@linaro.org>
+ <20190514161220.GC1824@centauri.ideon.se>
+In-Reply-To: <20190514161220.GC1824@centauri.ideon.se>
 From:   Amit Kucheria <amit.kucheria@linaro.org>
-Date:   Wed, 15 May 2019 15:26:14 +0530
-Message-ID: <CAHLCerM6SVCx5vdrodh+O5nQ0uDwr7zpvOMxVYtreT9EFk22eg@mail.gmail.com>
-Subject: Re: [PATCH] arm64: dts: qcom: qcs404: Add PSCI cpuidle support
-To:     Sudeep Holla <sudeep.holla@arm.com>
-Cc:     Niklas Cassel <niklas.cassel@linaro.org>,
-        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
-        Andy Gross <agross@kernel.org>,
-        David Brown <david.brown@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Mark Rutland <mark.rutland@arm.com>,
-        Jorge Ramirez-Ortiz <jorge.ramirez-ortiz@linaro.org>,
-        Lina Iyer <lina.iyer@linaro.org>,
-        Ulf Hansson <ulf.hansson@linaro.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
+Date:   Wed, 15 May 2019 15:43:19 +0530
+Message-ID: <CAP245DWgfQakjXSTU2AfhkLOjAue83A-X6Qb40DC1QQj01GogQ@mail.gmail.com>
+Subject: Re: [PATCHv1 4/8] arm64: dts: qcom: msm8916: Use more generic idle
+ state names
+To:     Niklas Cassel <niklas.cassel@linaro.org>
+Cc:     Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
         linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        DTML <devicetree@vger.kernel.org>,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Andy Gross <andy.gross@linaro.org>,
+        David Brown <david.brown@linaro.org>,
+        Li Yang <leoyang.li@nxp.com>, Shawn Guo <shawnguo@kernel.org>,
+        DTML <devicetree@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, May 13, 2019 at 3:19 PM Sudeep Holla <sudeep.holla@arm.com> wrote:
+On Tue, May 14, 2019 at 9:42 PM Niklas Cassel <niklas.cassel@linaro.org> wrote:
 >
-> On Fri, May 10, 2019 at 11:58:40PM +0530, Amit Kucheria wrote:
-> > On Fri, May 10, 2019 at 2:54 PM Sudeep Holla <sudeep.holla@arm.com> wrote:
-> > >
->
-> [...]
->
-> > >
-> > > Yes entry-method="psci" is required as per DT binding but not checked
-> > > in code on arm64. We have CPU ops with idle enabled only for "psci", so
-> > > there's not need to check.
+> On Fri, May 10, 2019 at 04:59:42PM +0530, Amit Kucheria wrote:
+> > Instead of using Qualcomm-specific terminology, use generic node names
+> > for the idle states that are easier to understand. Move the description
+> > into the "idle-state-name" property.
 > >
-> > I don't see it being checked on arm32 either.
+> > Signed-off-by: Amit Kucheria <amit.kucheria@linaro.org>
+> > ---
+> >  arch/arm64/boot/dts/qcom/msm8916.dtsi | 11 ++++++-----
+> >  1 file changed, 6 insertions(+), 5 deletions(-)
 > >
+> > diff --git a/arch/arm64/boot/dts/qcom/msm8916.dtsi b/arch/arm64/boot/dts/qcom/msm8916.dtsi
+> > index ded1052e5693..400b609bb3fd 100644
+> > --- a/arch/arm64/boot/dts/qcom/msm8916.dtsi
+> > +++ b/arch/arm64/boot/dts/qcom/msm8916.dtsi
+> > @@ -110,7 +110,7 @@
+> >                       reg = <0x0>;
+> >                       next-level-cache = <&L2_0>;
+> >                       enable-method = "psci";
+> > -                     cpu-idle-states = <&CPU_SPC>;
+> > +                     cpu-idle-states = <&CPU_SLEEP_0>;
+> >                       clocks = <&apcs>;
+> >                       operating-points-v2 = <&cpu_opp_table>;
+> >                       #cooling-cells = <2>;
+> > @@ -122,7 +122,7 @@
+> >                       reg = <0x1>;
+> >                       next-level-cache = <&L2_0>;
+> >                       enable-method = "psci";
+> > -                     cpu-idle-states = <&CPU_SPC>;
+> > +                     cpu-idle-states = <&CPU_SLEEP_0>;
+> >                       clocks = <&apcs>;
+> >                       operating-points-v2 = <&cpu_opp_table>;
+> >                       #cooling-cells = <2>;
+> > @@ -134,7 +134,7 @@
+> >                       reg = <0x2>;
+> >                       next-level-cache = <&L2_0>;
+> >                       enable-method = "psci";
+> > -                     cpu-idle-states = <&CPU_SPC>;
+> > +                     cpu-idle-states = <&CPU_SLEEP_0>;
+> >                       clocks = <&apcs>;
+> >                       operating-points-v2 = <&cpu_opp_table>;
+> >                       #cooling-cells = <2>;
+> > @@ -146,7 +146,7 @@
+> >                       reg = <0x3>;
+> >                       next-level-cache = <&L2_0>;
+> >                       enable-method = "psci";
+> > -                     cpu-idle-states = <&CPU_SPC>;
+> > +                     cpu-idle-states = <&CPU_SLEEP_0>;
+> >                       clocks = <&apcs>;
+> >                       operating-points-v2 = <&cpu_opp_table>;
+> >                       #cooling-cells = <2>;
+> > @@ -160,8 +160,9 @@
+> >               idle-states {
+> >                       entry-method="psci";
 >
-> arm_cpuidle_get_ops in arch/arm/kernel/cpuidle.c checks the method, has
-> to match "psci" for drivers/firmware/psci.c to work on arm32
-
-That is a check for the enable-method, not entry-method.
-
-We don't check for entry-method anywhere, AFAICT.
-
-> [...]
+> Please add a space before and after "=".
 >
-> > >
-> > > Why do you want to deprecated just because Linux kernel doesn't want to
-> > > use it. That's not a valid reason IMO.
 > >
-> > Fair enough. Just want to make sure that it isn't some vestigial
-> > property that was never used. Do you know if another OS is actually
-> > using it?
-> >
+> > -                     CPU_SPC: spc {
+> > +                     CPU_SLEEP_0: cpu-sleep-0 {
 >
-> Not that I am aware of. But Linux uses it on arm32, so it's not entirely
-> unused.
-
-entry-method is not read in Linux code (see above).
-
-> > > > Do we expect to support PSCI platforms that might have a different
-> > > > entry-method for idle states?
-> > >
-> > > Not on ARM64, but same DT bindings can be used for idle-states on
-> > > say RISC-V and have some value other than "psci".
-> >
-> > Both enable-method and entry-method properties are currently only used
-> > (and documented) for ARM platforms. Hence this discussion about
-> > deprecation of one of them.
-> >
+> While I like your idea of using power state names from
+> Server Base System Architecture document (SBSA) where applicable,
+> does each qcom power state have a matching state in SBSA?
 >
-> Yes, it's used on arm32 as mentioned above.
+> These are the qcom power states:
+> https://source.codeaurora.org/quic/la/kernel/msm-4.4/tree/Documentation/devicetree/bindings/arm/msm/lpm-levels.txt?h=msm-4.4#n53
+>
+> Note that qcom defines:
+> "wfi", "retention", "gdhs", "pc", "fpc"
+> while SBSA simply defines "idle_standby" (aka wfi), "idle_retention", "sleep".
+>
+> Unless you know the equivalent name for each qcom power state
+> (perhaps several qcom power states are really the same SBSA state?),
+> I think that you should omit the renaming from this patch series.
 
-Only enable-method is checked.
+That is what SLEEP_0, SLEEP_1, SLEEP_2 could be used for.
 
-> > > > Should I whip up a patch removing entry-method? Since we don't check
-> > > > for it today, it won't break the old DTs either.
-> > > >
-> > >
-> > > Nope, I don't think so. But if it's causing issues, we can look into it.
-> > > I don't want to restrict the use of the bindings for ARM/ARM64 or psci only.
+IOW, all these qcom definitions are nicely represented in the
+state-name and we could simply stick to SLEEP_0, SLEEP_1 for the node
+names. There is wide variability in the the names of the qcom idle
+states across SoC families downstream, so I'd argue against using
+those for the node names.
+
+Just for cpu states (non-wfi) I see the use of the following names
+downstream across families. The C<num> seems to come from x86
+world[1]:
+
+ - C4,   standalone power collapse (spc)
+ - C4,   power collapse (fpc)
+ - C2D, retention
+ - C3,   power collapse (pc)
+ - C4,   rail power collapse (rail-pc)
+
+[1] https://www.hardwaresecrets.com/everything-you-need-to-know-about-the-cpu-c-states-power-saving-modes/
+
+> >                               compatible = "arm,idle-state";
+> > +                             idle-state-name = "standalone-power-collapse";
+> >                               arm,psci-suspend-param = <0x40000002>;
+> >                               entry-latency-us = <130>;
+> >                               exit-latency-us = <150>;
+> > --
+> > 2.17.1
 > >
-> > Only a couple of minor issues:
-> > 1. There is a trickle of DTs that need fixing up every now and then
-> > because they don't use entry-method in their idle-states node. Schema
-> > validation ought to fix that.
->
-> I understand, scheme should fix it. This is not just restricted to this,
-> it's generic DT problem. So let's hope we get schema based validation soon.
->
-> > 2. A property that isn't ready by any code is a bit confusing. Perhaps
-> > we can mention something to the effect in the documentation?
-> >
->
-> Not entirely true. We have quite a lot of bindings that are added just
-> because downstream drivers use e.g. GPU and even standard ePAPR or DT
-> specification has lots of bindings which OS like Linux may choose
-> not to use at all. Same applies to ACPI, so I am not for removing bindings
-> just because there are no users in Linux.
-
-That is a fair point. But in those cases, the binding is probably used
-by another OS. entry-method seems to an example of one that isn't used
-by Linux or other OSes.
-
-Regards,
-Amit
