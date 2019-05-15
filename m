@@ -2,191 +2,111 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 6BBB21F4F8
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 May 2019 15:03:09 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 946321F909
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 May 2019 19:01:08 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727259AbfEONDD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 15 May 2019 09:03:03 -0400
-Received: from mail-lj1-f194.google.com ([209.85.208.194]:33181 "EHLO
-        mail-lj1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727178AbfEONDD (ORCPT
+        id S1726887AbfEORBH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 15 May 2019 13:01:07 -0400
+Received: from mail-qt1-f196.google.com ([209.85.160.196]:39287 "EHLO
+        mail-qt1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726690AbfEORBH (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 15 May 2019 09:03:03 -0400
-Received: by mail-lj1-f194.google.com with SMTP id w1so2465611ljw.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 15 May 2019 06:03:01 -0700 (PDT)
+        Wed, 15 May 2019 13:01:07 -0400
+Received: by mail-qt1-f196.google.com with SMTP id y42so486081qtk.6
+        for <linux-arm-msm@vger.kernel.org>; Wed, 15 May 2019 10:01:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=5EfvjTphEiWxfZkH/SJILym7SxsbhbZY/PCb8VawuUg=;
-        b=ayeka6UTHhnGsyqjF/S0VQygqFcDtLsdyoMY05IN04kMYtr3VGUF7yySk0v64kDxw2
-         F+MmrRhH0WdMFtjh/xHhQYCxTnt03vC32ioECsuFXa3a288soB46gSic3vYe+ahXulrj
-         pZxPJtnbXkpg8j6gw1DCzZTAegenaUjP1XKOQ7QworNc8LK6HOnIb0C7Mtc843clREw6
-         Rehe7xaqhUDjyDAtJramsatSwzA8WKy1nE0gwSPPn/vB59pUjDTpnBzdP863YGr3Qze1
-         tdKlcUfA7oEYORa5+vRRbn48hsZ2eUPCAvzRCXoBUDaTQjet9BvbxFxRrbxXNqnqtUOE
-         mhQA==
+        d=poorly.run; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=ZE7g/HGauausRDTK6bZw/q/K+Gnd9OS+XsSVo0GduUI=;
+        b=P7qIIA/qcOgl9iUWmNJT4dv7IVphTUQWjFwSwh3SX2rrflcjjeSGKiF5UFInKtBH+Y
+         WEtBBwkRWy0nZbCSC2thQEBxDvr8GY9jAgoBY++4LiJ8JPAhhV+u3V1A3X4jzE7UORMY
+         dqX5CSnv7c+JrmFgu6wbyaG93t1sfhxF6E3wsOI2zKJ34XanLHagzRf2OUA017jVAtP5
+         j4I7gpYUCjLYJnZ+OXDp+WrDKlZuwKwI9fFtijzx6cYuF0DrE8Bimef9jVOxop5TQGIB
+         ux2I6KZ9tqb2qhyOiSb1ch3xRq+jbUxiIW1Qa11gVOwoTj10QgVlBAM4KAo1JthByqj0
+         72Ow==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=5EfvjTphEiWxfZkH/SJILym7SxsbhbZY/PCb8VawuUg=;
-        b=K0cnIhJL4K9T/+W96sf5H81g03JuikJKz8gZ5Lf8Uckl46tG2YhubiJQ+KpfXxeEFC
-         I++CRh9DjsCxhP6I/evAmjFMwlbe5ApEAIe8JLqSmuViCIytUWCyO2cg0j6cxdk8h7H8
-         cEHBWzY47JWFP5KurSVAUi95Jgqc4KmTJ7UXBA8OfMlmKuh6XnS8MVvMcANjZhTLoS/b
-         7NE+cu73GipR+n+HpB0BfD6P8Cb/gEJuxUARCrnw4VHOCeHJ+BUgu7DcNaWnd03xpNBK
-         zYQe+dsVyLhadHMx5Rl5i0lukUXy5ss9++ATWEl68s5E+LJUGP7ZprF9LeRs+CbIjvdA
-         xTdg==
-X-Gm-Message-State: APjAAAU4pazEURsNKyXTba8bA90BkE38aXz3DNNMRs4dPmsONstIeqU0
-        20wC1CRojpB8rfQSFKK2lEJJ2Q==
-X-Google-Smtp-Source: APXvYqwFzZ8mYcYbxGTpyfsT4epedCPOJ5kwTzY4bpkxtWnhik0432wibEAWxrwHTUyU/3539mcM7Q==
-X-Received: by 2002:a2e:309:: with SMTP id 9mr21863831ljd.114.1557925380569;
-        Wed, 15 May 2019 06:03:00 -0700 (PDT)
-Received: from centauri (m83-185-80-163.cust.tele2.se. [83.185.80.163])
-        by smtp.gmail.com with ESMTPSA id j6sm387581ljc.0.2019.05.15.06.02.58
-        (version=TLS1_3 cipher=AEAD-AES256-GCM-SHA384 bits=256/256);
-        Wed, 15 May 2019 06:02:59 -0700 (PDT)
-Date:   Wed, 15 May 2019 15:02:56 +0200
-From:   Niklas Cassel <niklas.cassel@linaro.org>
-To:     Amit Kucheria <amit.kucheria@linaro.org>
-Cc:     Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Andy Gross <andy.gross@linaro.org>,
-        David Brown <david.brown@linaro.org>,
-        Li Yang <leoyang.li@nxp.com>, Shawn Guo <shawnguo@kernel.org>,
-        DTML <devicetree@vger.kernel.org>
-Subject: Re: [PATCHv1 4/8] arm64: dts: qcom: msm8916: Use more generic idle
- state names
-Message-ID: <20190515130256.GA27174@centauri>
-References: <cover.1557486950.git.amit.kucheria@linaro.org>
- <2a0626da4d8d5a1018c351b24b63e5e0d7a45a10.1557486950.git.amit.kucheria@linaro.org>
- <20190514161220.GC1824@centauri.ideon.se>
- <CAP245DWgfQakjXSTU2AfhkLOjAue83A-X6Qb40DC1QQj01GogQ@mail.gmail.com>
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=ZE7g/HGauausRDTK6bZw/q/K+Gnd9OS+XsSVo0GduUI=;
+        b=e8MticREV2Og+IwNF8sO0MGn8NujNlenSOxwRK49NIWQFa1YgqZpKTNgBJzjAhYkcZ
+         4Yboh12rO9yHQrmMaOCkbTrh+7oDu7aUpmu5OKDkJ+AF4OwqGMnGpwHow1FdXwcCv/ht
+         p53yNrilI6DS8g7Y+iVZHlONL1fOSkTnFflyv+neGVgqqDQPip9wbLQmuF7viiiNFzGW
+         s4uGgiWl1Ik0qgVdSNa6O0XfV8++Ti5Kgg/AaB5FYgiPqo/aHxKPPZ6BnJ+jQkYfLJXv
+         bSei9oGZjf9Jbt1l6si5hffeiec2gcC3G7upq1MMCtdyFljrGxnl9PFqhxrbHSc7qieu
+         rDJQ==
+X-Gm-Message-State: APjAAAW7todrl02BuDcoxESqdVi0uWy2VhN2dHumeroOwcYDnijHjg81
+        SfCrAFB3EfYklpa9UJHk/pAi8Q==
+X-Google-Smtp-Source: APXvYqzLdXfuFpI0sV/8xgRItzIbC+3nYZhFJaitBs9ADziTO4/uBh4d2TolOL9dKNIG9a/UkMfzUQ==
+X-Received: by 2002:a0c:a91d:: with SMTP id y29mr9117072qva.0.1557939666252;
+        Wed, 15 May 2019 10:01:06 -0700 (PDT)
+Received: from rosewood.cam.corp.google.com ([2620:0:1013:11:89c6:2139:5435:371d])
+        by smtp.gmail.com with ESMTPSA id k63sm1100934qkf.97.2019.05.15.10.01.05
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Wed, 15 May 2019 10:01:05 -0700 (PDT)
+From:   Sean Paul <sean@poorly.run>
+To:     dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org
+Cc:     Sean Paul <seanpaul@chromium.org>,
+        Jordan Crouse <jcrouse@codeaurora.org>,
+        Rob Clark <robdclark@chromium.org>,
+        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        linux-arm-msm@vger.kernel.org
+Subject: [PATCH] drm/msm: Upgrade gxpd checks to IS_ERR_OR_NULL
+Date:   Wed, 15 May 2019 13:00:52 -0400
+Message-Id: <20190515170104.155525-1-sean@poorly.run>
+X-Mailer: git-send-email 2.21.0.1020.gf2820cf01a-goog
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAP245DWgfQakjXSTU2AfhkLOjAue83A-X6Qb40DC1QQj01GogQ@mail.gmail.com>
-User-Agent: Mutt/1.11.4 (2019-03-13)
+Content-Transfer-Encoding: 8bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, May 15, 2019 at 03:43:19PM +0530, Amit Kucheria wrote:
-> On Tue, May 14, 2019 at 9:42 PM Niklas Cassel <niklas.cassel@linaro.org> wrote:
-> >
-> > On Fri, May 10, 2019 at 04:59:42PM +0530, Amit Kucheria wrote:
-> > > Instead of using Qualcomm-specific terminology, use generic node names
-> > > for the idle states that are easier to understand. Move the description
-> > > into the "idle-state-name" property.
-> > >
-> > > Signed-off-by: Amit Kucheria <amit.kucheria@linaro.org>
-> > > ---
-> > >  arch/arm64/boot/dts/qcom/msm8916.dtsi | 11 ++++++-----
-> > >  1 file changed, 6 insertions(+), 5 deletions(-)
-> > >
-> > > diff --git a/arch/arm64/boot/dts/qcom/msm8916.dtsi b/arch/arm64/boot/dts/qcom/msm8916.dtsi
-> > > index ded1052e5693..400b609bb3fd 100644
-> > > --- a/arch/arm64/boot/dts/qcom/msm8916.dtsi
-> > > +++ b/arch/arm64/boot/dts/qcom/msm8916.dtsi
-> > > @@ -110,7 +110,7 @@
-> > >                       reg = <0x0>;
-> > >                       next-level-cache = <&L2_0>;
-> > >                       enable-method = "psci";
-> > > -                     cpu-idle-states = <&CPU_SPC>;
-> > > +                     cpu-idle-states = <&CPU_SLEEP_0>;
-> > >                       clocks = <&apcs>;
-> > >                       operating-points-v2 = <&cpu_opp_table>;
-> > >                       #cooling-cells = <2>;
-> > > @@ -122,7 +122,7 @@
-> > >                       reg = <0x1>;
-> > >                       next-level-cache = <&L2_0>;
-> > >                       enable-method = "psci";
-> > > -                     cpu-idle-states = <&CPU_SPC>;
-> > > +                     cpu-idle-states = <&CPU_SLEEP_0>;
-> > >                       clocks = <&apcs>;
-> > >                       operating-points-v2 = <&cpu_opp_table>;
-> > >                       #cooling-cells = <2>;
-> > > @@ -134,7 +134,7 @@
-> > >                       reg = <0x2>;
-> > >                       next-level-cache = <&L2_0>;
-> > >                       enable-method = "psci";
-> > > -                     cpu-idle-states = <&CPU_SPC>;
-> > > +                     cpu-idle-states = <&CPU_SLEEP_0>;
-> > >                       clocks = <&apcs>;
-> > >                       operating-points-v2 = <&cpu_opp_table>;
-> > >                       #cooling-cells = <2>;
-> > > @@ -146,7 +146,7 @@
-> > >                       reg = <0x3>;
-> > >                       next-level-cache = <&L2_0>;
-> > >                       enable-method = "psci";
-> > > -                     cpu-idle-states = <&CPU_SPC>;
-> > > +                     cpu-idle-states = <&CPU_SLEEP_0>;
-> > >                       clocks = <&apcs>;
-> > >                       operating-points-v2 = <&cpu_opp_table>;
-> > >                       #cooling-cells = <2>;
-> > > @@ -160,8 +160,9 @@
-> > >               idle-states {
-> > >                       entry-method="psci";
-> >
-> > Please add a space before and after "=".
-> >
-> > >
-> > > -                     CPU_SPC: spc {
-> > > +                     CPU_SLEEP_0: cpu-sleep-0 {
-> >
-> > While I like your idea of using power state names from
-> > Server Base System Architecture document (SBSA) where applicable,
-> > does each qcom power state have a matching state in SBSA?
-> >
-> > These are the qcom power states:
-> > https://source.codeaurora.org/quic/la/kernel/msm-4.4/tree/Documentation/devicetree/bindings/arm/msm/lpm-levels.txt?h=msm-4.4#n53
-> >
-> > Note that qcom defines:
-> > "wfi", "retention", "gdhs", "pc", "fpc"
-> > while SBSA simply defines "idle_standby" (aka wfi), "idle_retention", "sleep".
-> >
-> > Unless you know the equivalent name for each qcom power state
-> > (perhaps several qcom power states are really the same SBSA state?),
-> > I think that you should omit the renaming from this patch series.
-> 
-> That is what SLEEP_0, SLEEP_1, SLEEP_2 could be used for.
+From: Sean Paul <seanpaul@chromium.org>
 
-Ok, sounds good to me.
+dev_pm_domain_attach_by_name() can return NULL, so we should check for
+that case when we're about to dereference gxpd.
 
-> 
-> IOW, all these qcom definitions are nicely represented in the
-> state-name and we could simply stick to SLEEP_0, SLEEP_1 for the node
-> names. There is wide variability in the the names of the qcom idle
-> states across SoC families downstream, so I'd argue against using
-> those for the node names.
-> 
-> Just for cpu states (non-wfi) I see the use of the following names
-> downstream across families. The C<num> seems to come from x86
-> world[1]:
-> 
->  - C4,   standalone power collapse (spc)
->  - C4,   power collapse (fpc)
->  - C2D, retention
->  - C3,   power collapse (pc)
->  - C4,   rail power collapse (rail-pc)
-> 
-> [1] https://www.hardwaresecrets.com/everything-you-need-to-know-about-the-cpu-c-states-power-saving-modes/
+Fixes: 9325d4266afd ("drm/msm/gpu: Attach to the GPU GX power domain")
+Cc: Jordan Crouse <jcrouse@codeaurora.org>
+Cc: Rob Clark <robdclark@chromium.org>
+Signed-off-by: Sean Paul <seanpaul@chromium.org>
+---
+ drivers/gpu/drm/msm/adreno/a6xx_gmu.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-Indeed, there seems to be mixed names used, I've also seen "fpc-def".
+diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gmu.c b/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
+index 9155dafae2a90..38e2cfa9cec79 100644
+--- a/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
++++ b/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
+@@ -747,7 +747,7 @@ int a6xx_gmu_resume(struct a6xx_gpu *a6xx_gpu)
+ 	 * will make sure that the refcounting is correct in case we need to
+ 	 * bring down the GX after a GMU failure
+ 	 */
+-	if (!IS_ERR(gmu->gxpd))
++	if (!IS_ERR_OR_NULL(gmu->gxpd))
+ 		pm_runtime_get(gmu->gxpd);
+ 
+ out:
+@@ -863,7 +863,7 @@ int a6xx_gmu_stop(struct a6xx_gpu *a6xx_gpu)
+ 	 * domain. Usually the GMU does this but only if the shutdown sequence
+ 	 * was successful
+ 	 */
+-	if (!IS_ERR(gmu->gxpd))
++	if (!IS_ERR_OR_NULL(gmu->gxpd))
+ 		pm_runtime_put_sync(gmu->gxpd);
+ 
+ 	clk_bulk_disable_unprepare(gmu->nr_clocks, gmu->clocks);
+@@ -1234,7 +1234,7 @@ void a6xx_gmu_remove(struct a6xx_gpu *a6xx_gpu)
+ 
+ 	pm_runtime_disable(gmu->dev);
+ 
+-	if (!IS_ERR(gmu->gxpd)) {
++	if (!IS_ERR_OR_NULL(gmu->gxpd)) {
+ 		pm_runtime_disable(gmu->gxpd);
+ 		dev_pm_domain_detach(gmu->gxpd, false);
+ 	}
+-- 
+Sean Paul, Software Engineer, Google / Chromium OS
 
-So, you have convinced me.
-
-
-Kind regards,
-Niklas
-
-> 
-> > >                               compatible = "arm,idle-state";
-> > > +                             idle-state-name = "standalone-power-collapse";
-> > >                               arm,psci-suspend-param = <0x40000002>;
-> > >                               entry-latency-us = <130>;
-> > >                               exit-latency-us = <150>;
-> > > --
-> > > 2.17.1
-> > >
