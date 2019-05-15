@@ -2,95 +2,130 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 168F01FD87
+	by mail.lfdr.de (Postfix) with ESMTP id ECC101FD89
 	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 May 2019 03:50:43 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726563AbfEPBqV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        id S1727031AbfEPBqV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
         Wed, 15 May 2019 21:46:21 -0400
-Received: from mail-pf1-f196.google.com ([209.85.210.196]:46525 "EHLO
-        mail-pf1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726379AbfEOXdT (ORCPT
+Received: from mail-pl1-f194.google.com ([209.85.214.194]:37216 "EHLO
+        mail-pl1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726380AbfEOXl2 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 15 May 2019 19:33:19 -0400
-Received: by mail-pf1-f196.google.com with SMTP id y11so760804pfm.13
-        for <linux-arm-msm@vger.kernel.org>; Wed, 15 May 2019 16:33:19 -0700 (PDT)
+        Wed, 15 May 2019 19:41:28 -0400
+Received: by mail-pl1-f194.google.com with SMTP id p15so626778pll.4
+        for <linux-arm-msm@vger.kernel.org>; Wed, 15 May 2019 16:41:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id;
-        bh=djKpp0+BHbp5KVBEx90JiFN57Gm/WbDeClRhCLK6F4g=;
-        b=nv9GeemUHg9Ck9WHEPtTACJZ7OgdsjblkCFtaEkdeQJfA22VhPDEoCDvM7q/C1mfoO
-         0FNXng6oezdyuzS4O8ioDjNLNczUR2HoiEDBNCsYkNnpIH9ZoBYuVcbENfTYTcsFVGQK
-         3enQzMf3jsqOxl9jrQauCcF2v/gwXuUSZ8NK6vafEPg41DzqIw/pEsksTULJ+/A/8dEx
-         iedXGCKhDl2a4KbUUdciQ7BWneL9SMhIrrN09ZDlQ9Oh+uRm1LPueXSiVGS8mEw9T7sd
-         0jhsbzFrlq21+bp3Zhv0603B48bIcM69XJRKRWZo1cjNCYJQRaVB1m3hsVlR7Iz1bZOe
-         kysw==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=ZjzAq2AO1sRBqrHJUjIMR4JCd00dysDTYDWKUQqEjMQ=;
+        b=bXMgsHQyNMU2fM0Ue9SNrNhQp2QCv7JSxc5jzX0IZmgsg2OidZNzsm8l3jUm1uE6nJ
+         lWaqMUHtNuGJqztJtHFz8qq0mDt/CiCZpfad5s4Lar/0LSp9YNJ4LfCfOyPKjC1m6mz1
+         3ptuYCoxX+8Jb5kFkHkJRuLa8Cb48QvPHkyzvL/aOFptkBfoE1sfSG/DH75K0zkMGOCk
+         UKLn1z8DM2/dwHP26TVmBpEDMUleMKoGHiO5SPFdigIH4tDV5uYGfhAUHlUkpBA9aeGT
+         zfHAkEmYsHIQ8owAl5TDHSjfDoC//9ZGpi9UGnLUd1nHfq3vJ58bJ/rhc01P05NZBFF2
+         oyyQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id;
-        bh=djKpp0+BHbp5KVBEx90JiFN57Gm/WbDeClRhCLK6F4g=;
-        b=ZyYE4l8p1JKYB7gMesbLwq5bxDJVIsFzsUKQRuUGwafZYKePj9SuIgFoPozEdsfehC
-         /HgIe2lVAYVa9PvFBR4BCmkEpdRnx6FqWpA0vDEDDeUq+N2G7hyeC91L1I6YOrN3LeMq
-         RM7fjPkT0TUM69rqj6U3Z3UR5jLVVH2C0Qp0SICQn87d2ib5ge8rH3ExWxGsWQ/W/suD
-         Ts+bhXbDbEWEm7l4gmqZhFdswpeBcOfq/8hZY9YvPagW5+u5+0/5Io17eyXv1o0Gn+tR
-         HwGNuEyLov2X3Qt7ZLTf5tH+xpcLOy/b3BAIYNvZpMH/v6n9kQ+ePGifxUUapJCxfzUc
-         ZV0Q==
-X-Gm-Message-State: APjAAAUgb718JP1Y4bSPsVd2r/ycrKn4vkGfMi8pzjzG97X1AzmSjRw6
-        uWSP5StBRVswh1jeKFHwtPUDHw==
-X-Google-Smtp-Source: APXvYqyrXnVeiR2IKdFoQs+/KyHKdfWtdip/KqmSq2+qQIWEc62Pl0Ip2kKHk13I4sqWwYIihDM5Lg==
-X-Received: by 2002:aa7:9ac4:: with SMTP id x4mr50439288pfp.43.1557963198628;
-        Wed, 15 May 2019 16:33:18 -0700 (PDT)
-Received: from localhost.localdomain (104-188-17-28.lightspeed.sndgca.sbcglobal.net. [104.188.17.28])
-        by smtp.gmail.com with ESMTPSA id e6sm7215087pfl.115.2019.05.15.16.32.37
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 15 May 2019 16:32:41 -0700 (PDT)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=ZjzAq2AO1sRBqrHJUjIMR4JCd00dysDTYDWKUQqEjMQ=;
+        b=et6dwWeZappUIlVkiE/a2vFfKhOM3dMXXTat+RRmp8ZiIu1Eg5pZVzBmq5/WK2D1x0
+         8opM/tPUK19NCPCUsc2CT6SBgwD6EFruJokqNrInQfwcd6UF0MTNWmRAzYj0TvmoKAxa
+         VFPlt/vRn8uM/98gY0TygUUrk4B6ClodPi09u7n9HBJo6f2M6AM3DOdPZYC3Yd7JLapX
+         C4wZEqtftBjXyFSmEWGESefKPkiedk2uQdm3kuDg2qsO+xGHuAsKS1MbGA8xpxisq3KJ
+         JVmQFaJgp4B8cndqSzjuyDPeyVUkzrFGsaClv4PDykJhUdiqjcsk//RNAXSR3m3gJr4n
+         AEoA==
+X-Gm-Message-State: APjAAAWHW/HNArsHZKJgAbGa3dotv8KJlAGKBtSBhRY3qGxL5h+9+oRy
+        yYRHrufDBNRbayS5Qy15dj25Wg==
+X-Google-Smtp-Source: APXvYqyRpmmXxhxDQ6tCx1u6g4+IFs/LWvWFlwdifLuOAObsUDyvgkOgAz2yesijZ/zlqJKH0WhsiQ==
+X-Received: by 2002:a17:902:2d03:: with SMTP id o3mr11064877plb.309.1557963687169;
+        Wed, 15 May 2019 16:41:27 -0700 (PDT)
+Received: from minitux (104-188-17-28.lightspeed.sndgca.sbcglobal.net. [104.188.17.28])
+        by smtp.gmail.com with ESMTPSA id g22sm4011790pfo.28.2019.05.15.16.41.25
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Wed, 15 May 2019 16:41:25 -0700 (PDT)
+Date:   Wed, 15 May 2019 16:41:23 -0700
 From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Will Deacon <will.deacon@arm.com>,
-        Robin Murphy <robin.murphy@arm.com>,
-        Joerg Roedel <joro@8bytes.org>
-Cc:     linux-arm-kernel@lists.infradead.org,
-        iommu@lists.linux-foundation.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org,
-        Vivek Gautam <vgautam@qti.qualcomm.com>
-Subject: [PATCH] iommu: io-pgtable: Support non-coherent page tables
-Date:   Wed, 15 May 2019 16:32:34 -0700
-Message-Id: <20190515233234.22990-1-bjorn.andersson@linaro.org>
-X-Mailer: git-send-email 2.18.0
+To:     Doug Anderson <dianders@chromium.org>
+Cc:     Rob Clark <robdclark@chromium.org>,
+        Rob Clark <robdclark@gmail.com>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        Stephen Boyd <swboyd@chromium.org>,
+        Andy Gross <andy.gross@linaro.org>,
+        David Brown <david.brown@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Mark Rutland <mark.rutland@arm.com>,
+        devicetree@vger.kernel.org, LKML <linux-kernel@vger.kernel.org>
+Subject: Re: [RFC 2/3] arm64: dts: qcom: sdm845-cheza: Re-add reserved memory
+Message-ID: <20190515234123.GP31438@minitux>
+References: <20190509184415.11592-1-robdclark@gmail.com>
+ <20190509184415.11592-3-robdclark@gmail.com>
+ <CAD=FV=WXW3aApS=c7baxhtfr1Nf-UnBN2s=rEBBkjj4=TCdT+g@mail.gmail.com>
+ <CAJs_Fx5PDj+T+DVixzHjun_wCG5fhZsxH8xUqRwmkfwN87UP_A@mail.gmail.com>
+ <CAD=FV=Vgiej=+hCZ_Eekoa4FJfpKxhOge8Wy29EEmtjB8JeF9g@mail.gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CAD=FV=Vgiej=+hCZ_Eekoa4FJfpKxhOge8Wy29EEmtjB8JeF9g@mail.gmail.com>
+User-Agent: Mutt/1.11.3 (2019-02-01)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Describe the memory related to page table walks as non-cachable for iommu
-instances that are not DMA coherent.
+On Wed 15 May 14:50 PDT 2019, Doug Anderson wrote:
 
-Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
----
- drivers/iommu/io-pgtable-arm.c | 12 +++++++++---
- 1 file changed, 9 insertions(+), 3 deletions(-)
+> Hi,
+> 
+> On Tue, May 14, 2019 at 9:10 PM Rob Clark <robdclark@chromium.org> wrote:
+> 
+> > On Mon, May 13, 2019 at 3:48 PM Doug Anderson <dianders@chromium.org> wrote:
+> > >
+> > > Hi,
+> > >
+> > > On Thu, May 9, 2019 at 11:44 AM Rob Clark <robdclark@gmail.com> wrote:
+> > >
+> > > > From: Douglas Anderson <dianders@chromium.org>
+> > > >
+> > > > Let's fixup the reserved memory to re-add the things we deleted in
+> > > > ("CHROMIUM: arm64: dts: qcom: sdm845-cheza: Temporarily delete
+> > > > reserved-mem changes") in a way that plays nicely with the new
+> > > > upstream definitions.
+> > >
+> > > The message above makes no sense since that commit you reference isn't
+> > > in upstream.
+> > >
+> > > ...but in any case, why not squash this in with the previous commit?
+> >
+> > Yeah, I should have mentioned this was my intention, I just left it
+> > unsquashed since (at the time) it was something I had cherry-picked on
+> > top of current 4.19 cros kernel..
+> >
+> > anyways, I pushed an (unsquashed, converted to fixup!'s) update to:
+> >
+> > https://github.com/freedreno/kernel-msm/commits/wip/cheza-dtb-upstreaming
+> >
+> > which has updates based on you're review comments (at least assuming I
+> > understood them correctly).. plus some unrelated to cheza-dt patches
+> > on top to get things actually working (ie. ignore everything on top of
+> > the fixup!'s)
+> 
+> Looks OK to me.  Are you going to post this?  Bjorn / Andy: do you
+> guys have opinions here?
+> 
 
-diff --git a/drivers/iommu/io-pgtable-arm.c b/drivers/iommu/io-pgtable-arm.c
-index 4e21efbc4459..68ff22ffd2cb 100644
---- a/drivers/iommu/io-pgtable-arm.c
-+++ b/drivers/iommu/io-pgtable-arm.c
-@@ -803,9 +803,15 @@ arm_64_lpae_alloc_pgtable_s1(struct io_pgtable_cfg *cfg, void *cookie)
- 		return NULL;
- 
- 	/* TCR */
--	reg = (ARM_LPAE_TCR_SH_IS << ARM_LPAE_TCR_SH0_SHIFT) |
--	      (ARM_LPAE_TCR_RGN_WBWA << ARM_LPAE_TCR_IRGN0_SHIFT) |
--	      (ARM_LPAE_TCR_RGN_WBWA << ARM_LPAE_TCR_ORGN0_SHIFT);
-+	if (cfg->quirks & IO_PGTABLE_QUIRK_NO_DMA) {
-+		reg = (ARM_LPAE_TCR_SH_IS << ARM_LPAE_TCR_SH0_SHIFT) |
-+		      (ARM_LPAE_TCR_RGN_WBWA << ARM_LPAE_TCR_IRGN0_SHIFT) |
-+		      (ARM_LPAE_TCR_RGN_WBWA << ARM_LPAE_TCR_ORGN0_SHIFT);
-+	} else {
-+		reg = (ARM_LPAE_TCR_SH_IS << ARM_LPAE_TCR_SH0_SHIFT) |
-+		      (ARM_LPAE_TCR_RGN_NC << ARM_LPAE_TCR_IRGN0_SHIFT) |
-+		      (ARM_LPAE_TCR_RGN_NC << ARM_LPAE_TCR_ORGN0_SHIFT);
-+	}
- 
- 	switch (ARM_LPAE_GRANULE(data)) {
- 	case SZ_4K:
--- 
-2.18.0
+I think this is a good opportunity to get people with Cheza off 4.19, so
+I'm all for landing this upstream.
 
+Regards,
+Bjorn
+
+> 
+> > I didn't see any comments on the 'delete zap-shader' patch, so
+> > hopefully that means what I did there was a sane (or at least not
+> > insane) way to handle android/linux tz vs what we have on cheza?
+> 
+> I wasn't CCed, so I assumed you were looking for feedback from others
+> on that one.  ;-)  Oh, but I guess Jordan and Bjorn also weren't
+> CCed...  In any case, I replied now.
