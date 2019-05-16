@@ -2,352 +2,135 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 409EC20977
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 May 2019 16:24:29 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 1221920AB6
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 May 2019 17:09:43 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726909AbfEPOYL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 16 May 2019 10:24:11 -0400
-Received: from mail-pg1-f194.google.com ([209.85.215.194]:46539 "EHLO
-        mail-pg1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726692AbfEPOYK (ORCPT
+        id S1726906AbfEPPJm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 16 May 2019 11:09:42 -0400
+Received: from mail-lf1-f66.google.com ([209.85.167.66]:34010 "EHLO
+        mail-lf1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727006AbfEPPJl (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 16 May 2019 10:24:10 -0400
-Received: by mail-pg1-f194.google.com with SMTP id t187so1631509pgb.13;
-        Thu, 16 May 2019 07:24:10 -0700 (PDT)
+        Thu, 16 May 2019 11:09:41 -0400
+Received: by mail-lf1-f66.google.com with SMTP id v18so2949076lfi.1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 16 May 2019 08:09:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id;
-        bh=pbiGxWp+6g8Ev1vPyMkDL0Yj0MpKYGjwYXWdffQT+X0=;
-        b=Zq2F9+AwPqYiGFsLYwXUsUayVj+DYRUxovrZuhCckbgt3neqkzA5476vz9QvYBHHJ9
-         cmBQz7WpTNxXNfR5CBKLXJWTAvNkz75kzjVLSmEdvZsvVhZ7sFx8yWe38gkPLUWHePBn
-         GvcqF64fgZlxB4aghH6KrBWjGYU3uVtC1GrCZiP6PN2yy8oHLd2q6QRv246u9E7NWaBJ
-         pRQc1mbYjkIg9q5RmbQnKu/4kIch6ECX8TIAygzBIlCPZaR+gTt/BWhh+v/+b9QY0c2t
-         1G/45BQW3mPbhNbyIWPdHVK5gWtu3+8oH9kYiipg0+6XSj6aTxaFvfH5RKceG83dgStC
-         +agQ==
+        d=linaro.org; s=google;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=7fB9DlcVFOAT6LcVvHuzjF9RuGghiAlLNT1Szy+bvHA=;
+        b=QQtT3MUoecbgLPAJBmgi/HgcDX42oA2UghCthloNZ1C2laHkrmgiQ6Tq2ndgNPo9ic
+         GdRJaWixE63tfWlJdp52gMDb6upAh9yovQfON37akDcrQmbGp/kkZeQOgXWwN2Y3uN3N
+         O8CMY99TXMt+Oxj94Gu4swr6le0eyqrXa4wLt8KwitVjTfJIkXNR5Cgi2PNvr+2BE4bQ
+         gThCSeHVJKwKWN5V8Nw63PG5AxV8CwuOkoBx7FezQb0hYPie76L+g1TlYiZUOiH3va+X
+         YrZW1uMFeb4k4Fa0OUqoIDvwI2wbhNoiZ2/jnmUY2GVPHa6WyVixXuzLmK18vO/LMd6Y
+         YEAg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id;
-        bh=pbiGxWp+6g8Ev1vPyMkDL0Yj0MpKYGjwYXWdffQT+X0=;
-        b=kZ4vXEeoyb5PHqPHn9AUZodxD54LScLbIU0t+GsW94onq2JHCShteK854XR6mxjP1y
-         d4Sx9/6DYCSaxdJO2+A8IX+06yFSxVAoAtK9gMqjMQ+Z8tr238c/HobC2MKYDml2LDeP
-         Ca7tAycWLpB2ruofBJyY6Fm3ASBeYSBmmJ5ByKrsAUo6YE+oUfDkxdufKGxal9kVEn7j
-         vBdjElDElKrMFi6G2EYRremFE0R3lIRHQaHGhy/LfvTAMhTPqPI1ngGOOeOW87NRnr88
-         ycfHoSpq0pIyVcIuRPvg7/wCxjqrPvbE+Ipl3zGQYx+sOp2VJW7koq4lNWLv0xqQZC2y
-         8Ovg==
-X-Gm-Message-State: APjAAAXIIZOysWZpKkq8zd5+HqVSQV7fCgv/aeBfWDxi0AgJ4+zNEbnN
-        wHb5g9W3O356IL8CNC6evHc=
-X-Google-Smtp-Source: APXvYqzqUF7sYORxVtp1XKW8qb53iivcDATFMHlhkdQMRgw2+5O3yikymYytMK/4RZBJPrz8IT/DfA==
-X-Received: by 2002:a65:5241:: with SMTP id q1mr49877661pgp.298.1558016649724;
-        Thu, 16 May 2019 07:24:09 -0700 (PDT)
-Received: from ubuntu.localdomain ([104.238.150.158])
-        by smtp.gmail.com with ESMTPSA id u6sm7080284pfm.10.2019.05.16.07.24.02
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=7fB9DlcVFOAT6LcVvHuzjF9RuGghiAlLNT1Szy+bvHA=;
+        b=CTJYdbt+MMu7GCWJOjIkBxU+NZXzKvXNdEWGo+6DaL/cvZM2XL63EXM4OzknfJ1qI0
+         e8nj3O/PYquiyA4nCreZj/5JnYltnUpG6RqtNtEZMSTqNh7fnciyNTIQIszkZD9JGtk5
+         F4Fx283zkr6vLZgz1n08On6MMnfzcA3SliSYzbzXx18I/CltCi2KwJCNdDfiu6kW3ot8
+         TUDyIqn8hzMrNLVWWmAYOaU/l4mlmk6aBrIlGDkleoZRCKYQeSutRd1hbHBWnwZLePUB
+         Ih1930urJ7eJua6M6Dl+65zOBWaLBXsiIIlI+JyA/vzBZTpDdYI5xfsucBKWCm7lN7PP
+         PLhw==
+X-Gm-Message-State: APjAAAULlM+XSOjLaS7v0nFwf5q/8SmMuhGoU6EnNF9V9uG+GtmHnuX3
+        fymFdQbu7M/YVB242ANOqNi0bUdKmb0=
+X-Google-Smtp-Source: APXvYqxwiNJLKxtxCmE2ST2AE9Lmu5H++j8eE4QkIdwsCoxfpJYEwyGO1xHpDzV9MtN/IwdAOuFNIQ==
+X-Received: by 2002:a19:3f4b:: with SMTP id m72mr24201853lfa.32.1558019380002;
+        Thu, 16 May 2019 08:09:40 -0700 (PDT)
+Received: from [192.168.27.209] ([37.157.136.206])
+        by smtp.googlemail.com with ESMTPSA id t23sm1148857lfk.9.2019.05.16.08.09.38
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 16 May 2019 07:24:09 -0700 (PDT)
-From:   Muchun Song <smuchun@gmail.com>
-To:     gregkh@linuxfoundation.org, rafael@kernel.org,
-        benh@kernel.crashing.org, prsood@codeaurora.org,
-        mojha@codeaurora.org, gkohli@codeaurora.org
-Cc:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        zhaowuyun@wingtech.com
-Subject: [PATCH v4] driver core: Fix use-after-free and double free on glue directory
-Date:   Thu, 16 May 2019 22:23:42 +0800
-Message-Id: <20190516142342.28019-1-smuchun@gmail.com>
-X-Mailer: git-send-email 2.17.1
+        Thu, 16 May 2019 08:09:38 -0700 (PDT)
+Subject: Re: [PATCH v2] media/doc: Allow sizeimage to be set by v4l clients
+To:     Hans Verkuil <hverkuil@xs4all.nl>,
+        Tomasz Figa <tfiga@chromium.org>,
+        Stanimir Varbanov <stanimir.varbanov@linaro.org>
+Cc:     Linux Media Mailing List <linux-media@vger.kernel.org>,
+        Mauro Carvalho Chehab <mchehab@kernel.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>
+References: <20190412155915.16849-1-stanimir.varbanov@linaro.org>
+ <a1807c37-99cf-d1fa-bcb9-67af2935abaf@xs4all.nl>
+ <ca0e2c94-cca9-567f-5376-f302f79f4ba7@linaro.org>
+ <CAAFQd5DBUUAPV0_=thmRBTFqJE+Nd4LZRzZE20rR0D8d7Cjz5g@mail.gmail.com>
+ <cd7baea0-3893-7471-2e86-9cc6730843e3@xs4all.nl>
+From:   Stanimir Varbanov <stanimir.varbanov@linaro.org>
+Message-ID: <49fd2002-8723-2f00-c972-8d605561b29a@linaro.org>
+Date:   Thu, 16 May 2019 18:09:35 +0300
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+ Thunderbird/60.6.1
+MIME-Version: 1.0
+In-Reply-To: <cd7baea0-3893-7471-2e86-9cc6730843e3@xs4all.nl>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-There is a race condition between removing glue directory and adding a new
-device under the glue directory. It can be reproduced in following test:
+Hi Hans,
 
-path 1: Add the child device under glue dir
-device_add()
-    get_device_parent()
-        mutex_lock(&gdp_mutex);
-        ....
-        /*find parent from glue_dirs.list*/
-        list_for_each_entry(k, &dev->class->p->glue_dirs.list, entry)
-            if (k->parent == parent_kobj) {
-                kobj = kobject_get(k);
-                break;
-            }
-        ....
-        mutex_unlock(&gdp_mutex);
-        ....
-    ....
-    kobject_add()
-        kobject_add_internal()
-            create_dir()
-                sysfs_create_dir_ns()
-                    if (kobj->parent)
-                        parent = kobj->parent->sd;
-                    ....
-                    kernfs_create_dir_ns(parent)
-                        kernfs_new_node()
-                            kernfs_get(parent)
-                        ....
-                        /* link in */
-                        rc = kernfs_add_one(kn);
-                        if (!rc)
-                            return kn;
+On 5/16/19 1:40 PM, Hans Verkuil wrote:
+> On 5/16/19 11:56 AM, Tomasz Figa wrote:
+>> On Thu, May 16, 2019 at 5:09 PM Stanimir Varbanov
+>> <stanimir.varbanov@linaro.org> wrote:
+>>>
+>>> Hi Hans,
+>>>
+>>> On 5/14/19 11:54 AM, Hans Verkuil wrote:
+>>>> Hi Stanimir,
+>>>>
+>>>> On 4/12/19 5:59 PM, Stanimir Varbanov wrote:
+>>>>> This changes v4l2_pix_format and v4l2_plane_pix_format sizeimage
+>>>>> field description to allow v4l clients to set bigger image size
+>>>>> in case of variable length compressed data.
+>>>>
+>>>> I've been reconsidering this change. The sizeimage value in the format
+>>>> is the minimum size a buffer should have in order to store the data of
+>>>> an image of the width and height as described in the format.
+>>>>
+>>>> But there is nothing that prevents userspace from calling VIDIOC_CREATEBUFS
+>>>> instead of VIDIOC_REQBUFS to allocate larger buffers.
+>>>
+>>> Sometimes CREATEBUFS cannot be implemented for a particular fw/hw.
+>>>
+>>> CC: Tomasz for his opinion.
+>>>
+>>
+>> Thanks Stanimir.
+>>
+>> Actually, if called at the same point in time as REQBUFS, CREATE_BUFS
+>> doesn't really differ to much, except that it gives more flexibility
+>> for allocating the buffers and that shouldn't depend on any specific
+>> features of hardware or firmware.
+>>
+>> Actually, one could even allocate any buffers any time regardless of
+>> hardware/firmware support, but the ability to use such buffers would
+>> actually depend on such.
+>>
+>> Perhaps we should just let the drivers return -EBUSY from CREATE_BUFS
+>> if called at the wrong time?
+>>
+>>>>
+>>>> So do we really need this change?
+>>>>
+>>
+>> Yes, because this has worked like this all the time, but it was just
+>> not documented. Disallowing this would break quite a bit of existing
+>> userspace.
+> 
+> Which drivers allow this today? I think that would be useful information
+> for the commit log of a v4 of this patch.
+> 
 
-                        kernfs_put(kn)
-                            ....
-                            repeat:
-                            kmem_cache_free(kn)
-                            kn = parent;
+I'd say s5p-mfc and mtk-vcodec at least.
 
-                            if (kn) {
-                                if (atomic_dec_and_test(&kn->count))
-                                    goto repeat;
-                            }
-                        ....
-
-path2: Remove last child device under glue dir
-device_del()
-    cleanup_device_parent()
-        cleanup_glue_dir()
-            mutex_lock(&gdp_mutex);
-            if (!kobject_has_children(glue_dir))
-                kobject_del(glue_dir);
-            kobject_put(glue_dir);
-            mutex_unlock(&gdp_mutex);
-
-Before path2 remove last child device under glue dir, If path1 add a new
-device under glue dir, the glue_dir kobject reference count will be
-increase to 2 via kobject_get(k) in get_device_parent(). And path1 has
-been called kernfs_new_node(), but not call kernfs_get(parent).
-Meanwhile, path2 call kobject_del(glue_dir) beacause 0 is returned by
-kobject_has_children(). This result in glue_dir->sd is freed and it's
-reference count will be 0. Then path1 call kernfs_get(parent) will trigger
-a warning in kernfs_get()(WARN_ON(!atomic_read(&kn->count))) and increase
-it's reference count to 1. Because glue_dir->sd is freed by path2, the next
-call kernfs_add_one() by path1 will fail(This is also use-after-free)
-and call atomic_dec_and_test() to decrease reference count. Because the
-reference count is decremented to 0, it will also call kmem_cache_free()
-to free glue_dir->sd again. This will result in double free.
-
-In order to avoid this happening, we can ensure the lookup of the glue
-dir and creation of the child object(s) are done under a single instance
-of gdp_mutex so we never see a stale "empty" but still poentially used
-glue dir around.
-
-The following calltrace is captured in kernel 4.14 with the following patch
-applied:
-
-commit 726e41097920 ("drivers: core: Remove glue dirs from sysfs earlier")
-
---------------------------------------------------------------------------
-[    3.633703] WARNING: CPU: 4 PID: 513 at .../fs/kernfs/dir.c:494
-                Here is WARN_ON(!atomic_read(&kn->count) in kernfs_get().
-....
-[    3.633986] Call trace:
-[    3.633991]  kernfs_create_dir_ns+0xa8/0xb0
-[    3.633994]  sysfs_create_dir_ns+0x54/0xe8
-[    3.634001]  kobject_add_internal+0x22c/0x3f0
-[    3.634005]  kobject_add+0xe4/0x118
-[    3.634011]  device_add+0x200/0x870
-[    3.634017]  _request_firmware+0x958/0xc38
-[    3.634020]  request_firmware_into_buf+0x4c/0x70
-....
-[    3.634064] kernel BUG at .../mm/slub.c:294!
-                Here is BUG_ON(object == fp) in set_freepointer().
-....
-[    3.634346] Call trace:
-[    3.634351]  kmem_cache_free+0x504/0x6b8
-[    3.634355]  kernfs_put+0x14c/0x1d8
-[    3.634359]  kernfs_create_dir_ns+0x88/0xb0
-[    3.634362]  sysfs_create_dir_ns+0x54/0xe8
-[    3.634366]  kobject_add_internal+0x22c/0x3f0
-[    3.634370]  kobject_add+0xe4/0x118
-[    3.634374]  device_add+0x200/0x870
-[    3.634378]  _request_firmware+0x958/0xc38
-[    3.634381]  request_firmware_into_buf+0x4c/0x70
---------------------------------------------------------------------------
-
-Fixes: 726e41097920 ("drivers: core: Remove glue dirs from sysfs earlier")
-
-Signed-off-by: Muchun Song <smuchun@gmail.com>
----
-
-Change in v4:
-       1. Add some kerneldoc comment.
-       2. Remove unlock_if_glue_dir().
-       3. Rename get_device_parent_locked_if_glue_dir() to
-          get_device_parent_locked.
-       4. Update commit message.
-Change in v3:
-       Add change log.
-Change in v2:
-       Fix device_move() also.
-
- drivers/base/core.c | 108 +++++++++++++++++++++++++++++++++++++-------
- 1 file changed, 92 insertions(+), 16 deletions(-)
-
-diff --git a/drivers/base/core.c b/drivers/base/core.c
-index 4aeaa0c92bda..2251e391a352 100644
---- a/drivers/base/core.c
-+++ b/drivers/base/core.c
-@@ -1739,8 +1739,23 @@ class_dir_create_and_add(struct class *class, struct kobject *parent_kobj)
- 
- static DEFINE_MUTEX(gdp_mutex);
- 
--static struct kobject *get_device_parent(struct device *dev,
--					 struct device *parent)
-+/**
-+ * __get_device_parent() - Get the parent device kobject.
-+ * @dev: Pointer to the device structure.
-+ * @parent: Pointer to the parent device structure.
-+ * @lock: When we live in a glue directory, should we hold the
-+ *        gdp_mutex lock when this function returns? If @lock
-+ *        is true, this function returns with the gdp_mutex
-+ *        holed. Otherwise it will not.
-+ *
-+ * Note: Only when we live in a glue directory and @lock is
-+ * true, the function will return with the gdp_mutex holed.
-+ * In this case, The caller is responsible for releasing the
-+ * gdp_mutex lock.
-+ */
-+static struct kobject *__get_device_parent(struct device *dev,
-+					   struct device *parent,
-+					   bool lock)
- {
- 	if (dev->class) {
- 		struct kobject *kobj = NULL;
-@@ -1778,16 +1793,32 @@ static struct kobject *get_device_parent(struct device *dev,
- 				break;
- 			}
- 		spin_unlock(&dev->class->p->glue_dirs.list_lock);
--		if (kobj) {
--			mutex_unlock(&gdp_mutex);
--			return kobj;
--		}
- 
--		/* or create a new class-directory at the parent device */
--		k = class_dir_create_and_add(dev->class, parent_kobj);
--		/* do not emit an uevent for this simple "glue" directory */
--		mutex_unlock(&gdp_mutex);
--		return k;
-+		/**
-+		 * If not found, create a new class-directory at the
-+		 * parent device and do not emit an uevent for this
-+		 * simple "glue" directory.
-+		 */
-+		if (!kobj)
-+			kobj = class_dir_create_and_add(dev->class,
-+							parent_kobj);
-+
-+		/**
-+		 * If the caller want to add/move a new directory
-+		 * under the glue directory next. We should leave
-+		 * the function with the gdp_mutex holed. And then
-+		 * release the gdp_mutex lock after adding/moving
-+		 * the new directory.
-+		 *
-+		 * Because we should ensure the lookup of the glue
-+		 * dir and creation of the child object(s) are done
-+		 * under a single instance of gdp_mutex so we never
-+		 * see a stale "empty" but still poentially used
-+		 * glue dir around.
-+		 */
-+		if (!lock)
-+			mutex_unlock(&gdp_mutex);
-+		return kobj;
- 	}
- 
- 	/* subsystems can specify a default root directory for their devices */
-@@ -1799,6 +1830,36 @@ static struct kobject *get_device_parent(struct device *dev,
- 	return NULL;
- }
- 
-+static inline struct kobject *get_device_parent(struct device *dev,
-+						struct device *parent)
-+{
-+	return __get_device_parent(dev, parent, false);
-+}
-+
-+/**
-+ * Note: When this function returns successfully, the gdp_mutex
-+ * lock may be held (when we live in a glue directory). The caller
-+ * can determine wheather we hold the lock by live_in_glue_dir().
-+ *
-+ * If true is returned by live_in_glue_dir(), the caller should
-+ * drop the gdp_mutex lock.
-+ */
-+static inline struct kobject *get_device_parent_locked(struct device *dev,
-+						       struct device *parent)
-+{
-+	struct kobject *kobj = __get_device_parent(dev, parent, true);
-+
-+	/**
-+	 * When we create a new glue directory fail, there
-+	 * is no need for us to leave the function with the
-+	 * the gdp_mutex holed.
-+	 */
-+	if (IS_ERR(kobj))
-+		mutex_unlock(&gdp_mutex);
-+
-+	return kobj;
-+}
-+
- static inline bool live_in_glue_dir(struct kobject *kobj,
- 				    struct device *dev)
- {
-@@ -2040,7 +2101,7 @@ int device_add(struct device *dev)
- 	pr_debug("device: '%s': %s\n", dev_name(dev), __func__);
- 
- 	parent = get_device(dev->parent);
--	kobj = get_device_parent(dev, parent);
-+	kobj = get_device_parent_locked(dev, parent);
- 	if (IS_ERR(kobj)) {
- 		error = PTR_ERR(kobj);
- 		goto parent_error;
-@@ -2055,10 +2116,17 @@ int device_add(struct device *dev)
- 	/* first, register with generic layer. */
- 	/* we require the name to be set before, and pass NULL */
- 	error = kobject_add(&dev->kobj, dev->kobj.parent, NULL);
--	if (error) {
--		glue_dir = get_glue_dir(dev);
-+
-+	glue_dir = get_glue_dir(dev);
-+	/**
-+	 * Drops the mutex possibly acquired by get_device_parent_locked().
-+	 * See the comment in __get_device_parent().
-+	 */
-+	if (live_in_glue_dir(glue_dir, dev))
-+		mutex_unlock(&gdp_mutex);
-+
-+	if (error)
- 		goto Error;
--	}
- 
- 	/* notify platform of device entry */
- 	error = device_platform_notify(dev, KOBJ_ADD);
-@@ -2972,7 +3040,7 @@ int device_move(struct device *dev, struct device *new_parent,
- 
- 	device_pm_lock();
- 	new_parent = get_device(new_parent);
--	new_parent_kobj = get_device_parent(dev, new_parent);
-+	new_parent_kobj = get_device_parent_locked(dev, new_parent);
- 	if (IS_ERR(new_parent_kobj)) {
- 		error = PTR_ERR(new_parent_kobj);
- 		put_device(new_parent);
-@@ -2982,6 +3050,14 @@ int device_move(struct device *dev, struct device *new_parent,
- 	pr_debug("device: '%s': %s: moving to '%s'\n", dev_name(dev),
- 		 __func__, new_parent ? dev_name(new_parent) : "<NULL>");
- 	error = kobject_move(&dev->kobj, new_parent_kobj);
-+
-+	/**
-+	 * Drops the mutex possibly acquired by get_device_parent_locked().
-+	 * See the comment in __get_device_parent().
-+	 */
-+	if (live_in_glue_dir(new_parent_kobj, dev))
-+		mutex_unlock(&gdp_mutex);
-+
- 	if (error) {
- 		cleanup_glue_dir(dev, new_parent_kobj);
- 		put_device(new_parent);
 -- 
-2.17.1
-
+regards,
+Stan
