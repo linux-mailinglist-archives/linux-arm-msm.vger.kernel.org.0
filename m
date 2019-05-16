@@ -2,106 +2,173 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 8C0CD201B4
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 May 2019 10:50:39 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 204FA20252
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 May 2019 11:14:10 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726787AbfEPIui (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 16 May 2019 04:50:38 -0400
-Received: from onstation.org ([52.200.56.107]:48980 "EHLO onstation.org"
+        id S1726363AbfEPJOJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 16 May 2019 05:14:09 -0400
+Received: from ns.mm-sol.com ([37.157.136.199]:46871 "EHLO extserv.mm-sol.com"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726383AbfEPIui (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 16 May 2019 04:50:38 -0400
-Received: from localhost.localdomain (c-98-239-145-235.hsd1.wv.comcast.net [98.239.145.235])
+        id S1726336AbfEPJOJ (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 16 May 2019 05:14:09 -0400
+Received: from [192.168.27.209] (unknown [37.157.136.206])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        (Authenticated sender: masneyb)
-        by onstation.org (Postfix) with ESMTPSA id 48B4B44970;
-        Thu, 16 May 2019 08:50:37 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=onstation.org;
-        s=default; t=1557996637;
-        bh=wEQftk2jOPZqULmeEi922a5nskVGytsJ4NrXuV4OdsQ=;
-        h=From:To:Cc:Subject:Date:From;
-        b=Nq8HVBdeZBixholiz4yvFgIcO4TlljymySnnautZ7mcb11sYw8pMckY4suhwvisj0
-         ZLkROqf4B/vFCqC2TT11KompG5s8GLJuQWAOMqKNNQfdciP784ggQ2L34DHyv4wY8H
-         jU9tE0CoEbDkKNZIOHyzyO3IyI2l0nHf8omoYW2U=
-From:   Brian Masney <masneyb@onstation.org>
-To:     agross@kernel.org, david.brown@linaro.org
-Cc:     bjorn.andersson@linaro.org, robh+dt@kernel.org,
-        mark.rutland@arm.com, linux-arm-msm@vger.kernel.org,
+        (Client did not present a certificate)
+        by extserv.mm-sol.com (Postfix) with ESMTPSA id 9CB4FCE62;
+        Thu, 16 May 2019 12:14:06 +0300 (EEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=mm-sol.com; s=201706;
+        t=1557998046; bh=U7h5UbxFwM9HF2KK5k9ZsweizpqRxr6fmzDCvFTxsLY=;
+        h=Subject:To:Cc:From:Date:From;
+        b=dlAHB60cwE2q7geraVnyFJNr28gxi2t6TQCggZ1q78PSRsw4pBuECizxFG2Cr3P1O
+         1XxHENfwWRdI8pV61dVlgzK+rASMEGi5oPqKqbKZzi+Gb4K7Uxbc9y7BlurorU5O1b
+         qqe0+p3CWdWymJrcwCkaBA/T+KDRa9rGX0oqlDrVIwsHZG6hLpmypOfo43drWtJVs8
+         bYrOzZMKelMh3cTygze0W7hiFQG+Tn1KdfXTaK4m6zupoeWq7HkdS2X/+M9eHr4gcf
+         Vjb37XBBK1VYPZeYuk440j2RZJHS5OUjkagCtlAveMOs8tQUodIhPOPfEwlfHxiq4s
+         RqoaKsEg6mT1w==
+Subject: Re: [PATCH v3 1/3] PCI: qcom: Use clk_bulk API for 2.4.0 controllers
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Bjorn Helgaas <bhelgaas@google.com>,
+        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>
+Cc:     Rob Herring <robh+dt@kernel.org>,
+        Mark Rutland <mark.rutland@arm.com>,
+        linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org,
         devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: [PATCH RESEND] ARM: dts: qcom: msm8974-hammerhead: add device tree bindings for vibrator
-Date:   Thu, 16 May 2019 04:50:18 -0400
-Message-Id: <20190516085018.2207-1-masneyb@onstation.org>
-X-Mailer: git-send-email 2.20.1
+References: <20190502001955.10575-1-bjorn.andersson@linaro.org>
+ <20190502001955.10575-2-bjorn.andersson@linaro.org>
+From:   Stanimir Varbanov <svarbanov@mm-sol.com>
+Message-ID: <fcfcd3b4-99d2-7b10-e82d-b92e6bf37a33@mm-sol.com>
+Date:   Thu, 16 May 2019 12:14:04 +0300
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+ Thunderbird/60.6.1
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+In-Reply-To: <20190502001955.10575-2-bjorn.andersson@linaro.org>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-This patch adds device device tree bindings for the vibrator found on
-the LG Nexus 5 (hammerhead) phone.
+Hi Bjorn,
 
-Signed-off-by: Brian Masney <masneyb@onstation.org>
----
-This is a resend of the following patch that has missed the last two
-merge windows:
+On 5/2/19 3:19 AM, Bjorn Andersson wrote:
+> Before introducing the QCS404 platform, which uses the same PCIe
+> controller as IPQ4019, migrate this to use the bulk clock API, in order
+> to make the error paths slighly cleaner.
+> 
+> Acked-by: Stanimir Varbanov <svarbanov@mm-sol.com>
+> Reviewed-by: Niklas Cassel <niklas.cassel@linaro.org>
+> Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+> ---
+> 
+> Changes since v2:
+> - Defined QCOM_PCIE_2_4_0_MAX_CLOCKS
+> 
+>  drivers/pci/controller/dwc/pcie-qcom.c | 49 ++++++++------------------
+>  1 file changed, 14 insertions(+), 35 deletions(-)
+> 
+> diff --git a/drivers/pci/controller/dwc/pcie-qcom.c b/drivers/pci/controller/dwc/pcie-qcom.c
+> index 0ed235d560e3..d740cbe0e56d 100644
+> --- a/drivers/pci/controller/dwc/pcie-qcom.c
+> +++ b/drivers/pci/controller/dwc/pcie-qcom.c
+> @@ -112,10 +112,10 @@ struct qcom_pcie_resources_2_3_2 {
+>  	struct regulator_bulk_data supplies[QCOM_PCIE_2_3_2_MAX_SUPPLY];
+>  };
+>  
+> +#define QCOM_PCIE_2_4_0_MAX_CLOCKS	3
+>  struct qcom_pcie_resources_2_4_0 {
+> -	struct clk *aux_clk;
+> -	struct clk *master_clk;
+> -	struct clk *slave_clk;
+> +	struct clk_bulk_data clks[QCOM_PCIE_2_4_0_MAX_CLOCKS];
+> +	int num_clks;
+>  	struct reset_control *axi_m_reset;
+>  	struct reset_control *axi_s_reset;
+>  	struct reset_control *pipe_reset;
+> @@ -638,18 +638,17 @@ static int qcom_pcie_get_resources_2_4_0(struct qcom_pcie *pcie)
+>  	struct qcom_pcie_resources_2_4_0 *res = &pcie->res.v2_4_0;
+>  	struct dw_pcie *pci = pcie->pci;
+>  	struct device *dev = pci->dev;
+> +	int ret;
+>  
+> -	res->aux_clk = devm_clk_get(dev, "aux");
+> -	if (IS_ERR(res->aux_clk))
+> -		return PTR_ERR(res->aux_clk);
+> +	res->clks[0].id = "aux";
+> +	res->clks[1].id = "master_bus";
+> +	res->clks[2].id = "slave_bus";
+>  
+> -	res->master_clk = devm_clk_get(dev, "master_bus");
+> -	if (IS_ERR(res->master_clk))
+> -		return PTR_ERR(res->master_clk);
+> +	res->num_clks = 3;
 
-https://lore.kernel.org/lkml/20190206013329.18195-4-masneyb@onstation.org/
+Use the new fresh define QCOM_PCIE_2_4_0_MAX_CLOCKS?
 
- .../qcom-msm8974-lge-nexus5-hammerhead.dts    | 31 +++++++++++++++++++
- 1 file changed, 31 insertions(+)
+>  
+> -	res->slave_clk = devm_clk_get(dev, "slave_bus");
+> -	if (IS_ERR(res->slave_clk))
+> -		return PTR_ERR(res->slave_clk);
+> +	ret = devm_clk_bulk_get(dev, res->num_clks, res->clks);
+> +	if (ret < 0)
+> +		return ret;
+>  
+>  	res->axi_m_reset = devm_reset_control_get_exclusive(dev, "axi_m");
+>  	if (IS_ERR(res->axi_m_reset))
+> @@ -719,9 +718,7 @@ static void qcom_pcie_deinit_2_4_0(struct qcom_pcie *pcie)
+>  	reset_control_assert(res->axi_m_sticky_reset);
+>  	reset_control_assert(res->pwr_reset);
+>  	reset_control_assert(res->ahb_reset);
+> -	clk_disable_unprepare(res->aux_clk);
+> -	clk_disable_unprepare(res->master_clk);
+> -	clk_disable_unprepare(res->slave_clk);
+> +	clk_bulk_disable_unprepare(res->num_clks, res->clks);
+>  }
+>  
+>  static int qcom_pcie_init_2_4_0(struct qcom_pcie *pcie)
+> @@ -850,23 +847,9 @@ static int qcom_pcie_init_2_4_0(struct qcom_pcie *pcie)
+>  
+>  	usleep_range(10000, 12000);
+>  
+> -	ret = clk_prepare_enable(res->aux_clk);
+> -	if (ret) {
+> -		dev_err(dev, "cannot prepare/enable iface clock\n");
+> +	ret = clk_bulk_prepare_enable(res->num_clks, res->clks);
+> +	if (ret)
+>  		goto err_clk_aux;
 
-diff --git a/arch/arm/boot/dts/qcom-msm8974-lge-nexus5-hammerhead.dts b/arch/arm/boot/dts/qcom-msm8974-lge-nexus5-hammerhead.dts
-index b3b04736a159..1fd9f429f34a 100644
---- a/arch/arm/boot/dts/qcom-msm8974-lge-nexus5-hammerhead.dts
-+++ b/arch/arm/boot/dts/qcom-msm8974-lge-nexus5-hammerhead.dts
-@@ -5,6 +5,7 @@
- #include <dt-bindings/gpio/gpio.h>
- #include <dt-bindings/input/input.h>
- #include <dt-bindings/pinctrl/qcom,pmic-gpio.h>
-+#include <dt-bindings/clock/qcom,mmcc-msm8974.h>
- 
- / {
- 	model = "LGE MSM 8974 HAMMERHEAD";
-@@ -306,6 +307,36 @@
- 				input-enable;
- 			};
- 		};
-+
-+		vibrator_pin: vibrator {
-+			pwm {
-+				pins = "gpio27";
-+				function = "gp1_clk";
-+
-+				drive-strength = <6>;
-+				bias-disable;
-+			};
-+
-+			enable {
-+				pins = "gpio60";
-+				function = "gpio";
-+			};
-+		};
-+	};
-+
-+	vibrator@fd8c3450 {
-+		compatible = "qcom,msm8974-vibrator";
-+		reg = <0xfd8c3450 0x400>;
-+
-+		vcc-supply = <&pm8941_l19>;
-+
-+		clocks = <&mmcc CAMSS_GP1_CLK>;
-+		clock-names = "pwm";
-+
-+		enable-gpios = <&msmgpio 60 GPIO_ACTIVE_HIGH>;
-+
-+		pinctrl-names = "default";
-+		pinctrl-0 = <&vibrator_pin>;
- 	};
- 
- 	sdhci@f9824900 {
+Maybe you have to change the name of the label too?
+
+> -	}
+> -
+> -	ret = clk_prepare_enable(res->master_clk);
+> -	if (ret) {
+> -		dev_err(dev, "cannot prepare/enable core clock\n");
+> -		goto err_clk_axi_m;
+> -	}
+> -
+> -	ret = clk_prepare_enable(res->slave_clk);
+> -	if (ret) {
+> -		dev_err(dev, "cannot prepare/enable phy clock\n");
+> -		goto err_clk_axi_s;
+> -	}
+>  
+>  	/* enable PCIe clocks and resets */
+>  	val = readl(pcie->parf + PCIE20_PARF_PHY_CTRL);
+> @@ -891,10 +874,6 @@ static int qcom_pcie_init_2_4_0(struct qcom_pcie *pcie)
+>  
+>  	return 0;
+>  
+> -err_clk_axi_s:
+> -	clk_disable_unprepare(res->master_clk);
+> -err_clk_axi_m:
+> -	clk_disable_unprepare(res->aux_clk);
+>  err_clk_aux:
+>  	reset_control_assert(res->ahb_reset);
+>  err_rst_ahb:
+> 
+
 -- 
-2.17.2
-
+regards,
+Stan
