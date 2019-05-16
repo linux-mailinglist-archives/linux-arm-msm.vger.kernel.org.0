@@ -2,107 +2,106 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 49645200F0
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 May 2019 10:09:14 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 8C0CD201B4
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 May 2019 10:50:39 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726279AbfEPIJN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 16 May 2019 04:09:13 -0400
-Received: from mail-lj1-f194.google.com ([209.85.208.194]:46626 "EHLO
-        mail-lj1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726336AbfEPIJM (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 16 May 2019 04:09:12 -0400
-Received: by mail-lj1-f194.google.com with SMTP id h21so2180683ljk.13
-        for <linux-arm-msm@vger.kernel.org>; Thu, 16 May 2019 01:09:11 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=QG++TdTDo8I5Y/kXuu9iUwjpqJr5RRm0pgh41ilp46o=;
-        b=tNDLPnvnICu0ql4vXKqwN3CRGatnx0hohbiBQksTPFRlycOEhBL9mmRtlSrl0WvP4m
-         5zPygpT9/5ERZlbeoASLFmzJEbC86DaiJfaH0i1Lh+1fs3N2G5qntqynVJcQ3pTl4pJV
-         gr15uR4VXpg7kVk3+xzrBKa52YDFxsN3hgFKHOlVdfX8EVT409ScYKGl+oPBBDP1hBBV
-         tAjgDKAKh158sX6emXiD4/jXaMySs429Zx5naJOtuAJOQJh3gqsPMs4zBuzS9KJDvXJd
-         Rj/8nlgfm5eLdGBMKgZVIjS0Y2RKIBeSrRDML8H7bzG+Qvvg6KdvayevAXaiUw9AlSE5
-         u7LQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=QG++TdTDo8I5Y/kXuu9iUwjpqJr5RRm0pgh41ilp46o=;
-        b=N/7TK/nqB4+F4CIbwOFzhNYcdkNPEDUwwnQQlgKKFwz9WyOrx9eY+lzBpMmqo3W3LO
-         5+AMHUTn59avARN/Uwl8HFfsY3tqLZw3VQlXD0rC6ZcZTrWu//ylQPwyWgB/uBhXQ6sS
-         cLBAX/kPbGH8iMhOmJfnOFCMFzAAW2AGt3xa1dvMyA7RgjU+VxogjMZe7mSPb+TwJzzW
-         clw4XPUIwUtU1Z//KLc+bpHUFELqauWkFvm31rQxoR4b3aPWtDjOPBDNHo1WooZ8geDE
-         gA6E/wvpX7zJia+6biNL1W+yrO0553WlMwxsIs9d7fzgpDQsLsRvxt27hB5MOKrGnS0q
-         p6lw==
-X-Gm-Message-State: APjAAAXPKJ5/T4618dVCoC3SFVM9ZNVg1iVXZ6CgyQjP1cyzTZFjFUB9
-        YhFSeD/u2s3WptjXrlUE4U2giA==
-X-Google-Smtp-Source: APXvYqxvMH7YTuGRmcz3kUP8TzVYaoFE+f8w+fN6e0CEox7DYVoK71J7fbGskxym6MMzAi9u5G9vKQ==
-X-Received: by 2002:a2e:9d4c:: with SMTP id y12mr23076244ljj.132.1557994150813;
-        Thu, 16 May 2019 01:09:10 -0700 (PDT)
-Received: from [192.168.27.209] ([37.157.136.206])
-        by smtp.googlemail.com with ESMTPSA id k1sm938935lfc.18.2019.05.16.01.09.08
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 16 May 2019 01:09:09 -0700 (PDT)
-Subject: Re: [PATCH v2] media/doc: Allow sizeimage to be set by v4l clients
-To:     Hans Verkuil <hverkuil@xs4all.nl>,
-        Stanimir Varbanov <stanimir.varbanov@linaro.org>,
-        linux-media@vger.kernel.org
-Cc:     Mauro Carvalho Chehab <mchehab@kernel.org>,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Tomasz Figa <tfiga@chromium.org>
-References: <20190412155915.16849-1-stanimir.varbanov@linaro.org>
- <a1807c37-99cf-d1fa-bcb9-67af2935abaf@xs4all.nl>
-From:   Stanimir Varbanov <stanimir.varbanov@linaro.org>
-Message-ID: <ca0e2c94-cca9-567f-5376-f302f79f4ba7@linaro.org>
-Date:   Thu, 16 May 2019 11:09:06 +0300
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.6.1
+        id S1726787AbfEPIui (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 16 May 2019 04:50:38 -0400
+Received: from onstation.org ([52.200.56.107]:48980 "EHLO onstation.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726383AbfEPIui (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 16 May 2019 04:50:38 -0400
+Received: from localhost.localdomain (c-98-239-145-235.hsd1.wv.comcast.net [98.239.145.235])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        (Authenticated sender: masneyb)
+        by onstation.org (Postfix) with ESMTPSA id 48B4B44970;
+        Thu, 16 May 2019 08:50:37 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=onstation.org;
+        s=default; t=1557996637;
+        bh=wEQftk2jOPZqULmeEi922a5nskVGytsJ4NrXuV4OdsQ=;
+        h=From:To:Cc:Subject:Date:From;
+        b=Nq8HVBdeZBixholiz4yvFgIcO4TlljymySnnautZ7mcb11sYw8pMckY4suhwvisj0
+         ZLkROqf4B/vFCqC2TT11KompG5s8GLJuQWAOMqKNNQfdciP784ggQ2L34DHyv4wY8H
+         jU9tE0CoEbDkKNZIOHyzyO3IyI2l0nHf8omoYW2U=
+From:   Brian Masney <masneyb@onstation.org>
+To:     agross@kernel.org, david.brown@linaro.org
+Cc:     bjorn.andersson@linaro.org, robh+dt@kernel.org,
+        mark.rutland@arm.com, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: [PATCH RESEND] ARM: dts: qcom: msm8974-hammerhead: add device tree bindings for vibrator
+Date:   Thu, 16 May 2019 04:50:18 -0400
+Message-Id: <20190516085018.2207-1-masneyb@onstation.org>
+X-Mailer: git-send-email 2.20.1
 MIME-Version: 1.0
-In-Reply-To: <a1807c37-99cf-d1fa-bcb9-67af2935abaf@xs4all.nl>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Hans,
+This patch adds device device tree bindings for the vibrator found on
+the LG Nexus 5 (hammerhead) phone.
 
-On 5/14/19 11:54 AM, Hans Verkuil wrote:
-> Hi Stanimir,
-> 
-> On 4/12/19 5:59 PM, Stanimir Varbanov wrote:
->> This changes v4l2_pix_format and v4l2_plane_pix_format sizeimage
->> field description to allow v4l clients to set bigger image size
->> in case of variable length compressed data.
-> 
-> I've been reconsidering this change. The sizeimage value in the format
-> is the minimum size a buffer should have in order to store the data of
-> an image of the width and height as described in the format.
-> 
-> But there is nothing that prevents userspace from calling VIDIOC_CREATEBUFS
-> instead of VIDIOC_REQBUFS to allocate larger buffers.
+Signed-off-by: Brian Masney <masneyb@onstation.org>
+---
+This is a resend of the following patch that has missed the last two
+merge windows:
 
-Sometimes CREATEBUFS cannot be implemented for a particular fw/hw.
+https://lore.kernel.org/lkml/20190206013329.18195-4-masneyb@onstation.org/
 
-CC: Tomasz for his opinion.
+ .../qcom-msm8974-lge-nexus5-hammerhead.dts    | 31 +++++++++++++++++++
+ 1 file changed, 31 insertions(+)
 
-> 
-> So do we really need this change?
-> 
-> The more I think about this, the more uncomfortable I become with this change.
-> 
-> Regards,
-> 
-> 	Hans
-> 
-
-<cut>
-
+diff --git a/arch/arm/boot/dts/qcom-msm8974-lge-nexus5-hammerhead.dts b/arch/arm/boot/dts/qcom-msm8974-lge-nexus5-hammerhead.dts
+index b3b04736a159..1fd9f429f34a 100644
+--- a/arch/arm/boot/dts/qcom-msm8974-lge-nexus5-hammerhead.dts
++++ b/arch/arm/boot/dts/qcom-msm8974-lge-nexus5-hammerhead.dts
+@@ -5,6 +5,7 @@
+ #include <dt-bindings/gpio/gpio.h>
+ #include <dt-bindings/input/input.h>
+ #include <dt-bindings/pinctrl/qcom,pmic-gpio.h>
++#include <dt-bindings/clock/qcom,mmcc-msm8974.h>
+ 
+ / {
+ 	model = "LGE MSM 8974 HAMMERHEAD";
+@@ -306,6 +307,36 @@
+ 				input-enable;
+ 			};
+ 		};
++
++		vibrator_pin: vibrator {
++			pwm {
++				pins = "gpio27";
++				function = "gp1_clk";
++
++				drive-strength = <6>;
++				bias-disable;
++			};
++
++			enable {
++				pins = "gpio60";
++				function = "gpio";
++			};
++		};
++	};
++
++	vibrator@fd8c3450 {
++		compatible = "qcom,msm8974-vibrator";
++		reg = <0xfd8c3450 0x400>;
++
++		vcc-supply = <&pm8941_l19>;
++
++		clocks = <&mmcc CAMSS_GP1_CLK>;
++		clock-names = "pwm";
++
++		enable-gpios = <&msmgpio 60 GPIO_ACTIVE_HIGH>;
++
++		pinctrl-names = "default";
++		pinctrl-0 = <&vibrator_pin>;
+ 	};
+ 
+ 	sdhci@f9824900 {
 -- 
-regards,
-Stan
+2.17.2
+
