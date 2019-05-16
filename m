@@ -2,82 +2,101 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 355CD2072A
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 May 2019 14:45:12 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4BD1D20754
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 May 2019 14:54:09 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727198AbfEPMor (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 16 May 2019 08:44:47 -0400
-Received: from mail-lj1-f196.google.com ([209.85.208.196]:34347 "EHLO
-        mail-lj1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727456AbfEPMoo (ORCPT
+        id S1727198AbfEPMyB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 16 May 2019 08:54:01 -0400
+Received: from mail-lj1-f195.google.com ([209.85.208.195]:38203 "EHLO
+        mail-lj1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726923AbfEPMyB (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 16 May 2019 08:44:44 -0400
-Received: by mail-lj1-f196.google.com with SMTP id j24so3006422ljg.1
-        for <linux-arm-msm@vger.kernel.org>; Thu, 16 May 2019 05:44:42 -0700 (PDT)
+        Thu, 16 May 2019 08:54:01 -0400
+Received: by mail-lj1-f195.google.com with SMTP id 14so3000941ljj.5
+        for <linux-arm-msm@vger.kernel.org>; Thu, 16 May 2019 05:54:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=WAcJqFUogOC+q5kPPB4TqPaHzS2NFJ0eM8JptnvXwCY=;
-        b=lSbRP38AQ6SFgZe7kefhpxx8/TDZSnH2lvUSx43pHjMx7U+pNW/gkPtChmN1XxMZQF
-         aG2GYCNFQE+Js4XFSeeF7MJ/tiTkjkFTJRM70xPIljpD2HgNUhuqx8SA46t1GmT6Rdl8
-         3RLaQ2GRTITuwusHV0tg0yumSCSrJF5QL1iHC65CT/k8XNcW8NDZ/jRf4dZGVELvQS4s
-         s0DL/WgyqYOS3VbeBY3JXWXLvY2aEWcwuTp77vIRTQs9uxgH3+45Fo/vPNGdEM15QrZ0
-         b5P0PZA8CP9nS+kTyJv9NupA/e7XY8Px9gHOg0Ite/fQTuPpCEO2N4o1Y+5S5IEtTBBw
-         9EfQ==
+         :cc;
+        bh=is+vcG0UlA2yzmtL4LYYh2ozUEoTSqklk60p4mnMQ04=;
+        b=MFfg5EGV3WlcVRL7t42mRGuevg4Dw6jHWVPGT2WaA9U+imkG3qz/ByB3JShhUb2NxO
+         IAAzMFCyoy1azLf5+Q4ThwNIqn4V0/PTTLPDCOt+U7xefvG3qkOt5zG0uB9cx/TNHXE6
+         2+ED85Si4JXqF+cr/iQMckJ2lj+Pl65K1fgbeFkbbY1jSDmv1lN3C2eF4DTCsBjz/Zcb
+         18XkqFVHEYMISKb44tLwMqYKXX9k0mqKfX0i8c6MUWXkuRuMDiTmBFpo8tV0Vx9Wtcb5
+         z9tSgHWa/o0DMzx/TanVLPgRTSHg6HXiBkz+H2H7PQT21r5iYkCS8Z79gfZowJCaFo/z
+         EWyg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=WAcJqFUogOC+q5kPPB4TqPaHzS2NFJ0eM8JptnvXwCY=;
-        b=Mu/iyITrcPaYNppbWxM5HPnoOn7+LYbHsAeHRN5BK3fQWKvzxzPokcbRaWbYaGRucC
-         sgMYp+aAtTgZ5yy2xVp6Uyi86W7lnNlKGauesGLnmnAcH5DThxLoMXqXJqVhPzctI56I
-         3eTA1kncq/IBAR6wj2AfjnN4MNBVyUyKdjJb3aQP37nNCavxeuy1KTekbg4kxvhE4Wz7
-         SbkXPmScClPV0o03/Fyyw/Ugel0OGn+COucUvH4LeBSZkc1ujpM+bs0vgrIIMczImulV
-         0sca1ZJO0A77ZK0b8R7D21GOHIlSwFsByM28P3K1oD1lt8AuzF8yJ+B04FPjOaLfexto
-         ew7w==
-X-Gm-Message-State: APjAAAUCZkMetUtnP/HHaqD+ubXctitHRPxza9J59tQJQvA8GywwOHcD
-        9YU8+9/FaRelna3yNTwxFfzMcJo7KA5U0EfoYl+G18Gw
-X-Google-Smtp-Source: APXvYqz1nKgkBL8f+HFCe7nXbFNOicCiF9Au3HD3bQcJw9TF68xCQ8lq2AMz/ruba3dbZXK+AF6xyEkmAFuQTpMWTEI=
-X-Received: by 2002:a2e:301a:: with SMTP id w26mr8899681ljw.153.1558010681900;
- Thu, 16 May 2019 05:44:41 -0700 (PDT)
+         :message-id:subject:to:cc;
+        bh=is+vcG0UlA2yzmtL4LYYh2ozUEoTSqklk60p4mnMQ04=;
+        b=kHTF1HDtZAvcctmYfW39IKosv9p5ytwQb5/jMPJGWO4eplRxk+ZMQomb4Hw6JbP4gQ
+         1yMzocTUprdV1I1PREv+Jv4yh8/+gL42oY0s4M9Ms6z64w1YDpIkkUjhpt9zsh+plGD1
+         4jVX6apMyg81UbZKF1T/aw6kqVP3MyEMTxiUBt+nH8NKq24xiCrTy/OMfHzql2DT18Jn
+         VhdZWi/txAEBs6fPAIr1WJkq766PldUZvHpCn93V6YK1RfQsq6QY6mfCvHlfccHA7thH
+         /H3mgjD9oJns8IFaIkHme668VTSVlyFVoUypWmQrOpTh2d7JEsyhLVpp0el63nirA9mK
+         XOYQ==
+X-Gm-Message-State: APjAAAUE0Xt2OnFAc6SQNufeVD7FrmGxyASlnP1SyoBekXs8pfjHgMH2
+        PDvlD1BdyB7Lzw83GNTeUfkxye/4uHtjUokMRvHnOQ==
+X-Google-Smtp-Source: APXvYqwLJEUqsa8XfBzAuJKLBahg71QpFWWEysf/pHtQkxsQuNW8z5xmBuXwRIog/cBAbIfM7m/qozW3wQZmt//QoVw=
+X-Received: by 2002:a2e:9a4f:: with SMTP id k15mr19599643ljj.159.1558011239510;
+ Thu, 16 May 2019 05:53:59 -0700 (PDT)
 MIME-Version: 1.0
-References: <20190428150822.13935-1-j.neuschaefer@gmx.net>
-In-Reply-To: <20190428150822.13935-1-j.neuschaefer@gmx.net>
+References: <20190508021902.10358-1-leo.yan@linaro.org> <20190508021902.10358-5-leo.yan@linaro.org>
+In-Reply-To: <20190508021902.10358-5-leo.yan@linaro.org>
 From:   Linus Walleij <linus.walleij@linaro.org>
-Date:   Thu, 16 May 2019 14:44:30 +0200
-Message-ID: <CACRpkdZcP3gEsudT0rpzNuBe=4Mz0s=KLPd_y-38E4oxVeQD0A@mail.gmail.com>
-Subject: Re: [PATCH] dt-bindings: pinctrl: Fix spelling of bias-pull-up
-To:     =?UTF-8?Q?Jonathan_Neusch=C3=A4fer?= <j.neuschaefer@gmx.net>
-Cc:     MSM <linux-arm-msm@vger.kernel.org>,
-        Andy Gross <andy.gross@linaro.org>,
-        David Brown <david.brown@linaro.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
+Date:   Thu, 16 May 2019 14:53:48 +0200
+Message-ID: <CACRpkda4aEfgW6e7EfqC=FE_=QzKi5UTDLLzHEryQ6kpcKYzVg@mail.gmail.com>
+Subject: Re: [PATCH v2 04/11] ARM: dts: ste: Update coresight DT bindings
+To:     Leo Yan <leo.yan@linaro.org>
+Cc:     Rob Herring <robh+dt@kernel.org>,
         Mark Rutland <mark.rutland@arm.com>,
-        "open list:GPIO SUBSYSTEM" <linux-gpio@vger.kernel.org>,
+        Suzuki K Poulose <suzuki.poulose@arm.com>,
+        Mathieu Poirier <mathieu.poirier@linaro.org>,
+        Mike Leach <mike.leach@linaro.org>,
+        Wei Xu <xuwei5@hisilicon.com>, Shawn Guo <shawnguo@kernel.org>,
+        Sascha Hauer <s.hauer@pengutronix.de>,
+        Pengutronix Kernel Team <kernel@pengutronix.de>,
+        Fabio Estevam <festevam@gmail.com>,
+        NXP Linux Team <linux-imx@nxp.com>,
+        Andy Gross <agross@kernel.org>,
+        David Brown <david.brown@linaro.org>,
+        Liviu Dudau <liviu.dudau@arm.com>,
+        Sudeep Holla <sudeep.holla@arm.com>,
+        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
+        Orson Zhai <orsonzhai@gmail.com>,
+        Baolin Wang <baolin.wang@linaro.org>,
+        Chunyan Zhang <zhang.lyra@gmail.com>,
+        Linux ARM <linux-arm-kernel@lists.infradead.org>,
         "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
         <devicetree@vger.kernel.org>,
-        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>
+        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
+        MSM <linux-arm-msm@vger.kernel.org>,
+        Lee Jones <lee.jones@linaro.org>
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Sun, Apr 28, 2019 at 5:08 PM Jonathan Neusch=C3=A4fer
-<j.neuschaefer@gmx.net> wrote:
+On Wed, May 8, 2019 at 4:20 AM Leo Yan <leo.yan@linaro.org> wrote:
 
-> The property is spelled 'bias-pull-up', as documented in
-> pinctrl-bindings.txt.
+> CoreSight DT bindings have been updated, thus the old compatible strings
+> are obsolete and the drivers will report warning if DTS uses these
+> obsolete strings.
 >
-> Signed-off-by: Jonathan Neusch=C3=A4fer <j.neuschaefer@gmx.net>
+> This patch switches to the new bindings for CoreSight dynamic funnel and
+> static replicator, so can dismiss warning during initialisation.
+>
+> Cc: Linus Walleij <linus.walleij@linaro.org>
+> Cc: Lee Jones <lee.jones@linaro.org>
+> Cc: Mathieu Poirier <mathieu.poirier@linaro.org>
+> Cc: Suzuki K Poulose <suzuki.poulose@arm.com>
+> Signed-off-by: Leo Yan <leo.yan@linaro.org>
 
 Reviewed-by: Linus Walleij <linus.walleij@linaro.org>
 
-It appears from Rob's comment that he's applying it,
-tell me if I need to apply it to the pinctrl tree.
+Will I need to carry this patch or will you send it to ARM SoC?
 
 Yours,
 Linus Walleij
