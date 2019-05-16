@@ -2,115 +2,160 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 1F7C8207E6
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 May 2019 15:22:12 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A67F7207EC
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 May 2019 15:22:40 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727453AbfEPNWL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 16 May 2019 09:22:11 -0400
-Received: from mail-yb1-f193.google.com ([209.85.219.193]:39647 "EHLO
-        mail-yb1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726742AbfEPNWL (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 16 May 2019 09:22:11 -0400
-Received: by mail-yb1-f193.google.com with SMTP id x5so1238664ybn.6
-        for <linux-arm-msm@vger.kernel.org>; Thu, 16 May 2019 06:22:10 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=4c/eHlt6Y2MSltoHNBiW76PU+BUs11lf5e6M64GBW24=;
-        b=BXvLxUG+rrwtufrtsoEwanZPpxvShNZboOp0jN1+zafuntCSmyO8gX2zolP3Vr3pw+
-         09rvmfQO1fjL1gJMr3BvEZUvig9MpmYjUXz9sT7RhtbjAVfqGqFxX9YPnCB0+MYmbYCr
-         Y60LJ2FSL6+/MF8N88rCw7bO8t6sYffb43cyAbJsRaR9tzgdLZb2bfYHofuka3if48uV
-         zeV+gQkP0sTel0HLOtdgrB/Brvt6XOcx1V4BJzM/12B6HSo/eJPxaGKYcfwdtan4y8j+
-         ix85zsiqYKteo9ZwSpFslfF57pJdFciRFHkLNxrjKsWoJ3yri8+D7dVoRpCcqJsLKCUv
-         v4+g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=4c/eHlt6Y2MSltoHNBiW76PU+BUs11lf5e6M64GBW24=;
-        b=RLs4EZjFFaVuPLAcTOHVO/4iY7KMnB+0EfONMWSU9sgURZ7NjAk+WrAs1I1eQIdGoq
-         l4B9z/nkOcEwfgZrYWi5POop55lzroMIwwgXCQGZq3G6njELzavSdmxrqSEQrk3eji12
-         L6M82Mii2MtxBMLTVyRORsM77FdNcfBceDoolSadsH+PCo0YiqTSnWs0RljOZD/+DrHz
-         Fvxrua5eDiV9s0D1/6d+umU9BKlwu4o3zTSKW5rvMaKxdS9zlQjee9lLxtd5hlvJrRdP
-         3zEhvC5fUKc8ABrvpyRjKcBAMTieOrGmPfzXeoIBfO/e8TF/s2GzIKkQ6tAOnRBSmNcj
-         pk8Q==
-X-Gm-Message-State: APjAAAWVNDd7F41jQGkJMM8Z1IsE1PQBOZ0ndJSHmzeP+1tzWMBu4pEY
-        Kc02sTijROpdSNX0o4pxLWwoYQ==
-X-Google-Smtp-Source: APXvYqw9jqhY5l1HANdlGqjcRlv2RmkEXMS5oeV+k8cx1Pw7T8hUhYJ4WqE5HLWtD0vmeuLgsJ2NTQ==
-X-Received: by 2002:a25:2254:: with SMTP id i81mr21841202ybi.343.1558012929941;
-        Thu, 16 May 2019 06:22:09 -0700 (PDT)
-Received: from leoy-ThinkPad-X240s (li483-211.members.linode.com. [50.116.44.211])
-        by smtp.gmail.com with ESMTPSA id e6sm479541ywb.71.2019.05.16.06.22.00
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Thu, 16 May 2019 06:22:08 -0700 (PDT)
-Date:   Thu, 16 May 2019 21:21:56 +0800
-From:   Leo Yan <leo.yan@linaro.org>
-To:     Linus Walleij <linus.walleij@linaro.org>
-Cc:     Rob Herring <robh+dt@kernel.org>,
-        Mark Rutland <mark.rutland@arm.com>,
-        Suzuki K Poulose <suzuki.poulose@arm.com>,
-        Mathieu Poirier <mathieu.poirier@linaro.org>,
-        Mike Leach <mike.leach@linaro.org>,
-        Wei Xu <xuwei5@hisilicon.com>, Shawn Guo <shawnguo@kernel.org>,
-        Sascha Hauer <s.hauer@pengutronix.de>,
-        Pengutronix Kernel Team <kernel@pengutronix.de>,
-        Fabio Estevam <festevam@gmail.com>,
-        NXP Linux Team <linux-imx@nxp.com>,
-        Andy Gross <agross@kernel.org>,
+        id S1727533AbfEPNWS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 16 May 2019 09:22:18 -0400
+Received: from foss.arm.com ([217.140.101.70]:45514 "EHLO foss.arm.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726623AbfEPNWS (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 16 May 2019 09:22:18 -0400
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.72.51.249])
+        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id A51931715;
+        Thu, 16 May 2019 06:22:17 -0700 (PDT)
+Received: from e107155-lin (e107155-lin.cambridge.arm.com [10.1.196.42])
+        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 6B4EF3F703;
+        Thu, 16 May 2019 06:22:15 -0700 (PDT)
+Date:   Thu, 16 May 2019 14:22:08 +0100
+From:   Sudeep Holla <sudeep.holla@arm.com>
+To:     Amit Kucheria <amit.kucheria@linaro.org>
+Cc:     Matthias Kaehlcke <mka@chromium.org>,
+        Andy Gross <andy.gross@linaro.org>,
         David Brown <david.brown@linaro.org>,
-        Liviu Dudau <liviu.dudau@arm.com>,
-        Sudeep Holla <sudeep.holla@arm.com>,
-        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
-        Orson Zhai <orsonzhai@gmail.com>,
-        Baolin Wang <baolin.wang@linaro.org>,
-        Chunyan Zhang <zhang.lyra@gmail.com>,
-        Linux ARM <linux-arm-kernel@lists.infradead.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Mark Rutland <mark.rutland@arm.com>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        "open list:ARM/QUALCOMM SUPPORT" <linux-soc@vger.kernel.org>,
         "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
-        <devicetree@vger.kernel.org>,
-        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
-        MSM <linux-arm-msm@vger.kernel.org>,
-        Lee Jones <lee.jones@linaro.org>
-Subject: Re: [PATCH v2 04/11] ARM: dts: ste: Update coresight DT bindings
-Message-ID: <20190516132156.GF12557@leoy-ThinkPad-X240s>
-References: <20190508021902.10358-1-leo.yan@linaro.org>
- <20190508021902.10358-5-leo.yan@linaro.org>
- <CACRpkda4aEfgW6e7EfqC=FE_=QzKi5UTDLLzHEryQ6kpcKYzVg@mail.gmail.com>
+        <devicetree@vger.kernel.org>, LKML <linux-kernel@vger.kernel.org>,
+        Douglas Anderson <dianders@chromium.org>,
+        Rajendra Nayak <rnayak@codeaurora.org>,
+        Sudeep Holla <sudeep.holla@arm.com>
+Subject: Re: [PATCH] arm64: dts: sdm845: Add CPU topology
+Message-ID: <20190516132208.GA22096@e107155-lin>
+References: <20190114184255.258318-1-mka@chromium.org>
+ <CAHLCerP+F9AP97+qVCMqwu-OMJXRhwZrXd33Wk-vj5eyyw-KyA@mail.gmail.com>
+ <CAHLCerPZ0Y-rkeMa_7BJWtR4g5af2vwfPY9FgOuvpUTJG3rf7g@mail.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <CACRpkda4aEfgW6e7EfqC=FE_=QzKi5UTDLLzHEryQ6kpcKYzVg@mail.gmail.com>
+In-Reply-To: <CAHLCerPZ0Y-rkeMa_7BJWtR4g5af2vwfPY9FgOuvpUTJG3rf7g@mail.gmail.com>
 User-Agent: Mutt/1.9.4 (2018-02-28)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Linus,
-
-On Thu, May 16, 2019 at 02:53:48PM +0200, Linus Walleij wrote:
-> On Wed, May 8, 2019 at 4:20 AM Leo Yan <leo.yan@linaro.org> wrote:
-> 
-> > CoreSight DT bindings have been updated, thus the old compatible strings
-> > are obsolete and the drivers will report warning if DTS uses these
-> > obsolete strings.
+On Mon, May 13, 2019 at 05:24:12PM +0530, Amit Kucheria wrote:
+> On Mon, May 13, 2019 at 4:31 PM Amit Kucheria <amit.kucheria@linaro.org> wrote:
 > >
-> > This patch switches to the new bindings for CoreSight dynamic funnel and
-> > static replicator, so can dismiss warning during initialisation.
+> > On Tue, Jan 15, 2019 at 12:13 AM Matthias Kaehlcke <mka@chromium.org> wrote:
+> > >
+> > > The 8 CPU cores of the SDM845 are organized in two clusters of 4 big
+> > > ("gold") and 4 little ("silver") cores. Add a cpu-map node to the DT
+> > > that describes this topology.
 > >
-> > Cc: Linus Walleij <linus.walleij@linaro.org>
-> > Cc: Lee Jones <lee.jones@linaro.org>
-> > Cc: Mathieu Poirier <mathieu.poirier@linaro.org>
-> > Cc: Suzuki K Poulose <suzuki.poulose@arm.com>
-> > Signed-off-by: Leo Yan <leo.yan@linaro.org>
+> > This is partly true. There are two groups of gold and silver cores,
+> > but AFAICT they are in a single cluster, not two separate ones. SDM845
+> > is one of the early examples of ARM's Dynamiq architecture.
+> >
+> > > Signed-off-by: Matthias Kaehlcke <mka@chromium.org>
+> >
+> > I noticed that this patch sneaked through for this merge window but
+> > perhaps we can whip up a quick fix for -rc2?
+> >
 > 
-> Reviewed-by: Linus Walleij <linus.walleij@linaro.org>
+> And please find attached a patch to fix this up. Andy, since this
+> hasn't landed yet (can we still squash this into the original patch?),
+> I couldn't add a Fixes tag.
 > 
-> Will I need to carry this patch or will you send it to ARM SoC?
+> Regards,
+> Amit
+> 
+> > > ---
+> > >  arch/arm64/boot/dts/qcom/sdm845.dtsi | 38 ++++++++++++++++++++++++++++
+> > >  1 file changed, 38 insertions(+)
+> > >
+> > > diff --git a/arch/arm64/boot/dts/qcom/sdm845.dtsi b/arch/arm64/boot/dts/qcom/sdm845.dtsi
+> > > index c27cbd3bcb0a6..f6c0d87e663f3 100644
+> > > --- a/arch/arm64/boot/dts/qcom/sdm845.dtsi
+> > > +++ b/arch/arm64/boot/dts/qcom/sdm845.dtsi
+> > > @@ -192,6 +192,44 @@
+> > >                                 next-level-cache = <&L3_0>;
+> > >                         };
+> > >                 };
+> > > +
+> > > +               cpu-map {
+> > > +                       cluster0 {
+> > > +                               core0 {
+> > > +                                       cpu = <&CPU0>;
+> > > +                               };
+> > > +
+> > > +                               core1 {
+> > > +                                       cpu = <&CPU1>;
+> > > +                               };
+> > > +
+> > > +                               core2 {
+> > > +                                       cpu = <&CPU2>;
+> > > +                               };
+> > > +
+> > > +                               core3 {
+> > > +                                       cpu = <&CPU3>;
+> > > +                               };
+> > > +                       };
+> > > +
+> > > +                       cluster1 {
+> >
+> > This shouldn't exist.
+> >
+> > > +                               core0 {
+> >
+> > Rename to core4, 5, etc...
+> >
+> > > +                                       cpu = <&CPU4>;
+> > > +                               };
+> > > +
+> > > +                               core1 {
+> > > +                                       cpu = <&CPU5>;
+> > > +                               };
+> > > +
+> > > +                               core2 {
+> > > +                                       cpu = <&CPU6>;
+> > > +                               };
+> > > +
+> > > +                               core3 {
+> > > +                                       cpu = <&CPU7>;
+> > > +                               };
+> > > +                       };
+> > > +               };
+> > >         };
+> > >
+> > >         pmu {
+> > > --
+> > > 2.20.1.97.g81188d93c3-goog
+> > >
 
-Please pick this patch into your tree and I will monitor rest
-patches with other maintainers.  Thanks a lot!
+> From 9e7d60bcabad7594a1da43982bbc9fda04669717 Mon Sep 17 00:00:00 2001
+> Message-Id: <9e7d60bcabad7594a1da43982bbc9fda04669717.1557748437.git.amit.kucheria@linaro.org>
+> From: Amit Kucheria <amit.kucheria@linaro.org>
+> Date: Mon, 13 May 2019 17:08:33 +0530
+> Subject: [PATCH] arm64: dts: sdm845: Fix up CPU topology
+> 
+> SDM845 implements ARM's Dynamiq architecture that allows the big and
+> LITTLE cores to exist in a single cluster sharing the L3 cache.
+> 
+> Fix the cpu-map to put all cpus into a single cluster.
+>
 
-Thanks,
-Leo Yan
+Thanks for noticing and fixing this. I always mentioned this should
+never land in mainline when Arm suggested this as hack/workaround
+but it has unfortunately.
+
+FWIW,
+
+Reviewed-by: Sudeep Holla <sudeep.holla@arm.com>
+
+--
+Regards,
+Sudeep
