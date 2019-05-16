@@ -2,132 +2,107 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 952C11FFD4
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 May 2019 08:48:12 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 49645200F0
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 May 2019 10:09:14 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726277AbfEPGsL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 16 May 2019 02:48:11 -0400
-Received: from smtp.codeaurora.org ([198.145.29.96]:47326 "EHLO
-        smtp.codeaurora.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726221AbfEPGsL (ORCPT
+        id S1726279AbfEPIJN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 16 May 2019 04:09:13 -0400
+Received: from mail-lj1-f194.google.com ([209.85.208.194]:46626 "EHLO
+        mail-lj1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726336AbfEPIJM (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 16 May 2019 02:48:11 -0400
-Received: by smtp.codeaurora.org (Postfix, from userid 1000)
-        id 6DF9960A24; Thu, 16 May 2019 06:48:10 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
-        s=default; t=1557989290;
-        bh=ZG75f0lAOy1l5nnTA2W31hBIGHC2MtPKNbbEUIh5Wf0=;
-        h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
-        b=ip+KhnSDwqQ6o84dfRIgliZ9j6YSTEa9vIzYvXc943S2AD3mA8aQ+Z0lkcoi/m49p
-         7aMiny8cvc23arEec0ailuT7eJKEu+iZqrEv3Uvhpfs7pXfdnVzTNs6zAzJA1zNZs0
-         NfoQDxOP6wNxrgjB0i1sbFBmV0CzKI9A98mS5vQo=
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        pdx-caf-mail.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.7 required=2.0 tests=ALL_TRUSTED,BAYES_00,
-        DKIM_INVALID,DKIM_SIGNED autolearn=no autolearn_force=no version=3.4.0
-Received: from mail-ed1-f51.google.com (mail-ed1-f51.google.com [209.85.208.51])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: vivek.gautam@smtp.codeaurora.org)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 77F6A60A4E;
-        Thu, 16 May 2019 06:48:06 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
-        s=default; t=1557989287;
-        bh=ZG75f0lAOy1l5nnTA2W31hBIGHC2MtPKNbbEUIh5Wf0=;
-        h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
-        b=i8Skn8GMp5Ca9Xq4RekrA/tI7vqbQdhgnWOmKSuIrmQ1hdYfYfUDwAIyRZea+9d+G
-         WUE6mX2GhMtI+iPujURAFxvOvZfEuvFPjDKiHlJCif+q4kZ70YgN4D9tX1B83SWBW5
-         /EQyE2vOidCqzDcB15dYsgku1yKEywtYvDOrkzVU=
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 77F6A60A4E
-Authentication-Results: pdx-caf-mail.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: pdx-caf-mail.web.codeaurora.org; spf=none smtp.mailfrom=vivek.gautam@codeaurora.org
-Received: by mail-ed1-f51.google.com with SMTP id e24so3583229edq.6;
-        Wed, 15 May 2019 23:48:06 -0700 (PDT)
-X-Gm-Message-State: APjAAAWF5vvn2UJoMMUsPvWw7tehIchlyCxkEnVTie2JEx/RLX3BNBbC
-        5wi4w+pZ0NiSUJ3j+OGBCvNoEnqkWHKXDzkNUxc=
-X-Google-Smtp-Source: APXvYqwE4sv9OWAdotkgId+uAs3Ngm4nCDGeM/ygr0LbOzm5ahsK2cp4+ig58+Nr8zmvRko1JQyh3Xh0k05F1GQXZQg=
-X-Received: by 2002:a50:94db:: with SMTP id t27mr1721377eda.173.1557989284710;
- Wed, 15 May 2019 23:48:04 -0700 (PDT)
+        Thu, 16 May 2019 04:09:12 -0400
+Received: by mail-lj1-f194.google.com with SMTP id h21so2180683ljk.13
+        for <linux-arm-msm@vger.kernel.org>; Thu, 16 May 2019 01:09:11 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=QG++TdTDo8I5Y/kXuu9iUwjpqJr5RRm0pgh41ilp46o=;
+        b=tNDLPnvnICu0ql4vXKqwN3CRGatnx0hohbiBQksTPFRlycOEhBL9mmRtlSrl0WvP4m
+         5zPygpT9/5ERZlbeoASLFmzJEbC86DaiJfaH0i1Lh+1fs3N2G5qntqynVJcQ3pTl4pJV
+         gr15uR4VXpg7kVk3+xzrBKa52YDFxsN3hgFKHOlVdfX8EVT409ScYKGl+oPBBDP1hBBV
+         tAjgDKAKh158sX6emXiD4/jXaMySs429Zx5naJOtuAJOQJh3gqsPMs4zBuzS9KJDvXJd
+         Rj/8nlgfm5eLdGBMKgZVIjS0Y2RKIBeSrRDML8H7bzG+Qvvg6KdvayevAXaiUw9AlSE5
+         u7LQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=QG++TdTDo8I5Y/kXuu9iUwjpqJr5RRm0pgh41ilp46o=;
+        b=N/7TK/nqB4+F4CIbwOFzhNYcdkNPEDUwwnQQlgKKFwz9WyOrx9eY+lzBpMmqo3W3LO
+         5+AMHUTn59avARN/Uwl8HFfsY3tqLZw3VQlXD0rC6ZcZTrWu//ylQPwyWgB/uBhXQ6sS
+         cLBAX/kPbGH8iMhOmJfnOFCMFzAAW2AGt3xa1dvMyA7RgjU+VxogjMZe7mSPb+TwJzzW
+         clw4XPUIwUtU1Z//KLc+bpHUFELqauWkFvm31rQxoR4b3aPWtDjOPBDNHo1WooZ8geDE
+         gA6E/wvpX7zJia+6biNL1W+yrO0553WlMwxsIs9d7fzgpDQsLsRvxt27hB5MOKrGnS0q
+         p6lw==
+X-Gm-Message-State: APjAAAXPKJ5/T4618dVCoC3SFVM9ZNVg1iVXZ6CgyQjP1cyzTZFjFUB9
+        YhFSeD/u2s3WptjXrlUE4U2giA==
+X-Google-Smtp-Source: APXvYqxvMH7YTuGRmcz3kUP8TzVYaoFE+f8w+fN6e0CEox7DYVoK71J7fbGskxym6MMzAi9u5G9vKQ==
+X-Received: by 2002:a2e:9d4c:: with SMTP id y12mr23076244ljj.132.1557994150813;
+        Thu, 16 May 2019 01:09:10 -0700 (PDT)
+Received: from [192.168.27.209] ([37.157.136.206])
+        by smtp.googlemail.com with ESMTPSA id k1sm938935lfc.18.2019.05.16.01.09.08
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Thu, 16 May 2019 01:09:09 -0700 (PDT)
+Subject: Re: [PATCH v2] media/doc: Allow sizeimage to be set by v4l clients
+To:     Hans Verkuil <hverkuil@xs4all.nl>,
+        Stanimir Varbanov <stanimir.varbanov@linaro.org>,
+        linux-media@vger.kernel.org
+Cc:     Mauro Carvalho Chehab <mchehab@kernel.org>,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Tomasz Figa <tfiga@chromium.org>
+References: <20190412155915.16849-1-stanimir.varbanov@linaro.org>
+ <a1807c37-99cf-d1fa-bcb9-67af2935abaf@xs4all.nl>
+From:   Stanimir Varbanov <stanimir.varbanov@linaro.org>
+Message-ID: <ca0e2c94-cca9-567f-5376-f302f79f4ba7@linaro.org>
+Date:   Thu, 16 May 2019 11:09:06 +0300
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+ Thunderbird/60.6.1
 MIME-Version: 1.0
-References: <20190515233234.22990-1-bjorn.andersson@linaro.org>
-In-Reply-To: <20190515233234.22990-1-bjorn.andersson@linaro.org>
-From:   Vivek Gautam <vivek.gautam@codeaurora.org>
-Date:   Thu, 16 May 2019 12:17:53 +0530
-X-Gmail-Original-Message-ID: <CAFp+6iEMQd1uAWdkLysYWt0et8eRojoivG6+e78y0DU+4=H+_g@mail.gmail.com>
-Message-ID: <CAFp+6iEMQd1uAWdkLysYWt0et8eRojoivG6+e78y0DU+4=H+_g@mail.gmail.com>
-Subject: Re: [PATCH] iommu: io-pgtable: Support non-coherent page tables
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     Will Deacon <will.deacon@arm.com>,
-        Robin Murphy <robin.murphy@arm.com>,
-        Joerg Roedel <joro@8bytes.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        "list@263.net:IOMMU DRIVERS <iommu@lists.linux-foundation.org>, Joerg
-        Roedel <joro@8bytes.org>," <iommu@lists.linux-foundation.org>,
-        Vivek Gautam <vgautam@qti.qualcomm.com>,
-        open list <linux-kernel@vger.kernel.org>,
-        Linux ARM <linux-arm-kernel@lists.infradead.org>
-Content-Type: text/plain; charset="UTF-8"
+In-Reply-To: <a1807c37-99cf-d1fa-bcb9-67af2935abaf@xs4all.nl>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, May 16, 2019 at 5:03 AM Bjorn Andersson
-<bjorn.andersson@linaro.org> wrote:
->
-> Describe the memory related to page table walks as non-cachable for iommu
-> instances that are not DMA coherent.
->
-> Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
-> ---
->  drivers/iommu/io-pgtable-arm.c | 12 +++++++++---
->  1 file changed, 9 insertions(+), 3 deletions(-)
->
-> diff --git a/drivers/iommu/io-pgtable-arm.c b/drivers/iommu/io-pgtable-arm.c
-> index 4e21efbc4459..68ff22ffd2cb 100644
-> --- a/drivers/iommu/io-pgtable-arm.c
-> +++ b/drivers/iommu/io-pgtable-arm.c
-> @@ -803,9 +803,15 @@ arm_64_lpae_alloc_pgtable_s1(struct io_pgtable_cfg *cfg, void *cookie)
->                 return NULL;
->
->         /* TCR */
-> -       reg = (ARM_LPAE_TCR_SH_IS << ARM_LPAE_TCR_SH0_SHIFT) |
-> -             (ARM_LPAE_TCR_RGN_WBWA << ARM_LPAE_TCR_IRGN0_SHIFT) |
-> -             (ARM_LPAE_TCR_RGN_WBWA << ARM_LPAE_TCR_ORGN0_SHIFT);
-> +       if (cfg->quirks & IO_PGTABLE_QUIRK_NO_DMA) {
-> +               reg = (ARM_LPAE_TCR_SH_IS << ARM_LPAE_TCR_SH0_SHIFT) |
-> +                     (ARM_LPAE_TCR_RGN_WBWA << ARM_LPAE_TCR_IRGN0_SHIFT) |
-> +                     (ARM_LPAE_TCR_RGN_WBWA << ARM_LPAE_TCR_ORGN0_SHIFT);
-> +       } else {
-> +               reg = (ARM_LPAE_TCR_SH_IS << ARM_LPAE_TCR_SH0_SHIFT) |
-> +                     (ARM_LPAE_TCR_RGN_NC << ARM_LPAE_TCR_IRGN0_SHIFT) |
-> +                     (ARM_LPAE_TCR_RGN_NC << ARM_LPAE_TCR_ORGN0_SHIFT);
-> +       }
+Hi Hans,
 
-This looks okay to me based on the discussion that we had on a similar
-patch that I
-posted. So,
-Reviewed-by: Vivek Gautam <vivek.gautam@codeaurora.org>
+On 5/14/19 11:54 AM, Hans Verkuil wrote:
+> Hi Stanimir,
+> 
+> On 4/12/19 5:59 PM, Stanimir Varbanov wrote:
+>> This changes v4l2_pix_format and v4l2_plane_pix_format sizeimage
+>> field description to allow v4l clients to set bigger image size
+>> in case of variable length compressed data.
+> 
+> I've been reconsidering this change. The sizeimage value in the format
+> is the minimum size a buffer should have in order to store the data of
+> an image of the width and height as described in the format.
+> 
+> But there is nothing that prevents userspace from calling VIDIOC_CREATEBUFS
+> instead of VIDIOC_REQBUFS to allocate larger buffers.
 
-[1] https://lore.kernel.org/patchwork/patch/1032939/
+Sometimes CREATEBUFS cannot be implemented for a particular fw/hw.
 
-Thanks & regards
-Vivek
+CC: Tomasz for his opinion.
 
->
->         switch (ARM_LPAE_GRANULE(data)) {
->         case SZ_4K:
-> --
-> 2.18.0
->
-> _______________________________________________
-> iommu mailing list
-> iommu@lists.linux-foundation.org
-> https://lists.linuxfoundation.org/mailman/listinfo/iommu
+> 
+> So do we really need this change?
+> 
+> The more I think about this, the more uncomfortable I become with this change.
+> 
+> Regards,
+> 
+> 	Hans
+> 
 
-
+<cut>
 
 -- 
-QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
-of Code Aurora Forum, hosted by The Linux Foundation
+regards,
+Stan
