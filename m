@@ -2,121 +2,131 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 10BD1202B8
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 May 2019 11:40:11 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 71A0B202F4
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 May 2019 11:56:49 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726537AbfEPJjv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 16 May 2019 05:39:51 -0400
-Received: from ns.mm-sol.com ([37.157.136.199]:48688 "EHLO extserv.mm-sol.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726374AbfEPJjv (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 16 May 2019 05:39:51 -0400
-Received: from [192.168.27.209] (unknown [37.157.136.206])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (Client did not present a certificate)
-        by extserv.mm-sol.com (Postfix) with ESMTPSA id C8124CE6F;
-        Thu, 16 May 2019 12:39:47 +0300 (EEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=mm-sol.com; s=201706;
-        t=1557999587; bh=gtvWMbdQdnb7LYo5ABxwlV32TZDaPlVrBBH+/CofRko=;
-        h=Subject:To:Cc:From:Date:From;
-        b=nK/xIje4UFqTVVEISNtWB6QEO5a8wygY1e2E8Z4m7AUNg13m0ReU4WT9GSKz4Hytj
-         zmXkUJqsSxM4oCkQYsAD00OVwDTXFWH1h3g7n2pC1OgEKo8v6jPdb/sSIYAQ5omiQD
-         DrBhURBmTklidAqq1Mhdq+KizFSJAxNxMfL8f22EizKJVZkFrCBosYnwSoqei7y672
-         k4awo6qwCX7nelgUnfWv4ofToldsoX3K5gay5ZTE/WYH7/axgbMew41U52ZEDur+XH
-         dY1BpCOTsNrkFEASqqp+k1nR0cOtnJhaQEY0WISnPCerI2SnrUET/KOTbkVpvh8DRV
-         vwMfCR2A24YQw==
-Subject: Re: [PATCH v3 3/3] PCI: qcom: Add QCS404 PCIe controller support
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Bjorn Helgaas <bhelgaas@google.com>,
-        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>
-Cc:     Rob Herring <robh+dt@kernel.org>,
-        Mark Rutland <mark.rutland@arm.com>,
-        linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20190502001955.10575-1-bjorn.andersson@linaro.org>
- <20190502001955.10575-4-bjorn.andersson@linaro.org>
-From:   Stanimir Varbanov <svarbanov@mm-sol.com>
-Message-ID: <d54c6002-496e-c8fb-b67f-e441453c29c6@mm-sol.com>
-Date:   Thu, 16 May 2019 12:39:45 +0300
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.6.1
+        id S1726336AbfEPJ4r (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 16 May 2019 05:56:47 -0400
+Received: from mail-lf1-f66.google.com ([209.85.167.66]:38932 "EHLO
+        mail-lf1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726597AbfEPJ4r (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 16 May 2019 05:56:47 -0400
+Received: by mail-lf1-f66.google.com with SMTP id f1so2135835lfl.6
+        for <linux-arm-msm@vger.kernel.org>; Thu, 16 May 2019 02:56:46 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=TMDrVnTjQ1immxiYKmdnHO4lUdJFEpb4jOAuuz/w3MM=;
+        b=gJWuQZybohtXg5MERpeUsZNOq4RdyG5oC2punG8BCdPmzF+h5sYNnovAC8Tv6c7l6m
+         2qSLM6ZtOKMDC4hPhDjycEgDIcomZLJ8EHVQSwAFzBXz93OJ2RzIX8tM82SWkHtExoRf
+         oQvvRoSnD9cOp67mw0tqCEtoQQMz0gbw8f9lQ=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=TMDrVnTjQ1immxiYKmdnHO4lUdJFEpb4jOAuuz/w3MM=;
+        b=rFaHOxPrBi25x9ByAU9Dij/Kz4M1j44gxSlb/S47lQvOIGhhboq2pSe1PaA3NP/iEI
+         UBjck6MBVBdwJv0jSTWbDy6ZU03KM6wTra149jruc4RmdcoNUWFAN3fWSKOgUkeTHfcd
+         3lxqiqCUFA+Q9XUo8tNnS0/YXFWx6rMZR5tmQnRhVT62G83LkJ3LdjZn+IfIYV++d+fb
+         nX4+ZmErcTOAzAzYn0uK/da5pKbBufxO41GtjPavEg4ILa4/FxePcu9Umna3tCAXQglj
+         IVuOl6kSZcPNb1rYtaeTHHO3NLCsA8rOn5SDIUKphDgwuhi1UJoJfSsV/kLM2dZS9hzL
+         m+DQ==
+X-Gm-Message-State: APjAAAV5iChU0n6owSlgwtLVtdqMmash2e3ZiSw0ia1W00Zf5YssDgBq
+        KFxk0tTR6SdYZVPEbD3NGxM4UkCRueHSuA==
+X-Google-Smtp-Source: APXvYqxiKCXwgcKP9z5rvjsaZEXlc1QKF3K1Kh15lUU9GbwmFA6aNDzhT0NVt+3zAo4P88u5mBRr8Q==
+X-Received: by 2002:a19:2312:: with SMTP id j18mr2568071lfj.79.1558000605326;
+        Thu, 16 May 2019 02:56:45 -0700 (PDT)
+Received: from mail-lf1-f45.google.com (mail-lf1-f45.google.com. [209.85.167.45])
+        by smtp.gmail.com with ESMTPSA id m18sm868403lfj.91.2019.05.16.02.56.43
+        for <linux-arm-msm@vger.kernel.org>
+        (version=TLS1_3 cipher=AEAD-AES128-GCM-SHA256 bits=128/128);
+        Thu, 16 May 2019 02:56:44 -0700 (PDT)
+Received: by mail-lf1-f45.google.com with SMTP id n134so2105970lfn.11
+        for <linux-arm-msm@vger.kernel.org>; Thu, 16 May 2019 02:56:43 -0700 (PDT)
+X-Received: by 2002:a19:cc95:: with SMTP id c143mr23074476lfg.138.1558000603275;
+ Thu, 16 May 2019 02:56:43 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <20190502001955.10575-4-bjorn.andersson@linaro.org>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+References: <20190412155915.16849-1-stanimir.varbanov@linaro.org>
+ <a1807c37-99cf-d1fa-bcb9-67af2935abaf@xs4all.nl> <ca0e2c94-cca9-567f-5376-f302f79f4ba7@linaro.org>
+In-Reply-To: <ca0e2c94-cca9-567f-5376-f302f79f4ba7@linaro.org>
+From:   Tomasz Figa <tfiga@chromium.org>
+Date:   Thu, 16 May 2019 18:56:32 +0900
+X-Gmail-Original-Message-ID: <CAAFQd5DBUUAPV0_=thmRBTFqJE+Nd4LZRzZE20rR0D8d7Cjz5g@mail.gmail.com>
+Message-ID: <CAAFQd5DBUUAPV0_=thmRBTFqJE+Nd4LZRzZE20rR0D8d7Cjz5g@mail.gmail.com>
+Subject: Re: [PATCH v2] media/doc: Allow sizeimage to be set by v4l clients
+To:     Stanimir Varbanov <stanimir.varbanov@linaro.org>
+Cc:     Hans Verkuil <hverkuil@xs4all.nl>,
+        Linux Media Mailing List <linux-media@vger.kernel.org>,
+        Mauro Carvalho Chehab <mchehab@kernel.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Bjorn,
+On Thu, May 16, 2019 at 5:09 PM Stanimir Varbanov
+<stanimir.varbanov@linaro.org> wrote:
+>
+> Hi Hans,
+>
+> On 5/14/19 11:54 AM, Hans Verkuil wrote:
+> > Hi Stanimir,
+> >
+> > On 4/12/19 5:59 PM, Stanimir Varbanov wrote:
+> >> This changes v4l2_pix_format and v4l2_plane_pix_format sizeimage
+> >> field description to allow v4l clients to set bigger image size
+> >> in case of variable length compressed data.
+> >
+> > I've been reconsidering this change. The sizeimage value in the format
+> > is the minimum size a buffer should have in order to store the data of
+> > an image of the width and height as described in the format.
+> >
+> > But there is nothing that prevents userspace from calling VIDIOC_CREATEBUFS
+> > instead of VIDIOC_REQBUFS to allocate larger buffers.
+>
+> Sometimes CREATEBUFS cannot be implemented for a particular fw/hw.
+>
+> CC: Tomasz for his opinion.
+>
 
-On 5/2/19 3:19 AM, Bjorn Andersson wrote:
-> The QCS404 platform contains a PCIe controller of version 2.4.0 and a
-> Qualcomm PCIe2 PHY. The driver already supports version 2.4.0, for the
-> IPQ4019, but this support touches clocks and resets related to the PHY
-> as well, and there's no upstream driver for the PHY.
-> 
-> On QCS404 we must initialize the PHY, so a separate PHY driver is
-> implemented to take care of this and the controller driver is updated to
-> not require the PHY related resources. This is done by relying on the
-> fact that operations in both the clock and reset framework are nops when
-> passed NULL, so we can isolate this change to only the get_resource
-> function.
-> 
-> For QCS404 we also need to enable the AHB (iface) clock, in order to
-> access the register space of the controller, but as this is not part of
-> the IPQ4019 DT binding this is only added for new users of the 2.4.0
-> controller.
-> 
-> Reviewed-by: Niklas Cassel <niklas.cassel@linaro.org>
-> Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
-> ---
-> 
-> Changes since v2:
-> - None
-> 
->  drivers/pci/controller/dwc/pcie-qcom.c | 64 +++++++++++++++-----------
->  1 file changed, 38 insertions(+), 26 deletions(-)
-> 
-> diff --git a/drivers/pci/controller/dwc/pcie-qcom.c b/drivers/pci/controller/dwc/pcie-qcom.c
-> index d740cbe0e56d..d101bc5c0def 100644
-> --- a/drivers/pci/controller/dwc/pcie-qcom.c
-> +++ b/drivers/pci/controller/dwc/pcie-qcom.c
-> @@ -112,7 +112,7 @@ struct qcom_pcie_resources_2_3_2 {
->  	struct regulator_bulk_data supplies[QCOM_PCIE_2_3_2_MAX_SUPPLY];
->  };
->  
-> -#define QCOM_PCIE_2_4_0_MAX_CLOCKS	3
-> +#define QCOM_PCIE_2_4_0_MAX_CLOCKS	4
->  struct qcom_pcie_resources_2_4_0 {
->  	struct clk_bulk_data clks[QCOM_PCIE_2_4_0_MAX_CLOCKS];
->  	int num_clks;
-> @@ -638,13 +638,16 @@ static int qcom_pcie_get_resources_2_4_0(struct qcom_pcie *pcie)
->  	struct qcom_pcie_resources_2_4_0 *res = &pcie->res.v2_4_0;
->  	struct dw_pcie *pci = pcie->pci;
->  	struct device *dev = pci->dev;
-> +	bool is_ipq = of_device_is_compatible(dev->of_node, "qcom,pcie-ipq4019");
->  	int ret;
->  
->  	res->clks[0].id = "aux";
->  	res->clks[1].id = "master_bus";
->  	res->clks[2].id = "slave_bus";
-> +	res->clks[3].id = "iface";
->  
-> -	res->num_clks = 3;
-> +	/* qcom,pcie-ipq4019 is defined without "iface" */
-> +	res->num_clks = is_ipq ? 3 : 4;
+Thanks Stanimir.
 
-This is ugly but I don't have better idea except having static const
-resource structures where we can describe num_clks and select the right
-resource from compatible string, but lets leave that for the future.
+Actually, if called at the same point in time as REQBUFS, CREATE_BUFS
+doesn't really differ to much, except that it gives more flexibility
+for allocating the buffers and that shouldn't depend on any specific
+features of hardware or firmware.
 
-Otherwise:
+Actually, one could even allocate any buffers any time regardless of
+hardware/firmware support, but the ability to use such buffers would
+actually depend on such.
 
-Acked-by: Stanimir Varbanov <svarbanov@mm-sol.com>
+Perhaps we should just let the drivers return -EBUSY from CREATE_BUFS
+if called at the wrong time?
 
--- 
-regards,
-Stan
+> >
+> > So do we really need this change?
+> >
+
+Yes, because this has worked like this all the time, but it was just
+not documented. Disallowing this would break quite a bit of existing
+userspace.
+
+Best regards,
+Tomasz
+
+> > The more I think about this, the more uncomfortable I become with this change.
+> >
+> > Regards,
+> >
+> >       Hans
+> >
+>
+> <cut>
+>
+> --
+> regards,
+> Stan
