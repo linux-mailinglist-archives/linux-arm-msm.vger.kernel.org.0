@@ -2,173 +2,190 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 204FA20252
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 May 2019 11:14:10 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E9AF52028D
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 May 2019 11:30:37 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726363AbfEPJOJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 16 May 2019 05:14:09 -0400
-Received: from ns.mm-sol.com ([37.157.136.199]:46871 "EHLO extserv.mm-sol.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726336AbfEPJOJ (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 16 May 2019 05:14:09 -0400
-Received: from [192.168.27.209] (unknown [37.157.136.206])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (Client did not present a certificate)
-        by extserv.mm-sol.com (Postfix) with ESMTPSA id 9CB4FCE62;
-        Thu, 16 May 2019 12:14:06 +0300 (EEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=mm-sol.com; s=201706;
-        t=1557998046; bh=U7h5UbxFwM9HF2KK5k9ZsweizpqRxr6fmzDCvFTxsLY=;
-        h=Subject:To:Cc:From:Date:From;
-        b=dlAHB60cwE2q7geraVnyFJNr28gxi2t6TQCggZ1q78PSRsw4pBuECizxFG2Cr3P1O
-         1XxHENfwWRdI8pV61dVlgzK+rASMEGi5oPqKqbKZzi+Gb4K7Uxbc9y7BlurorU5O1b
-         qqe0+p3CWdWymJrcwCkaBA/T+KDRa9rGX0oqlDrVIwsHZG6hLpmypOfo43drWtJVs8
-         bYrOzZMKelMh3cTygze0W7hiFQG+Tn1KdfXTaK4m6zupoeWq7HkdS2X/+M9eHr4gcf
-         Vjb37XBBK1VYPZeYuk440j2RZJHS5OUjkagCtlAveMOs8tQUodIhPOPfEwlfHxiq4s
-         RqoaKsEg6mT1w==
-Subject: Re: [PATCH v3 1/3] PCI: qcom: Use clk_bulk API for 2.4.0 controllers
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Bjorn Helgaas <bhelgaas@google.com>,
-        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>
-Cc:     Rob Herring <robh+dt@kernel.org>,
-        Mark Rutland <mark.rutland@arm.com>,
-        linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20190502001955.10575-1-bjorn.andersson@linaro.org>
- <20190502001955.10575-2-bjorn.andersson@linaro.org>
-From:   Stanimir Varbanov <svarbanov@mm-sol.com>
-Message-ID: <fcfcd3b4-99d2-7b10-e82d-b92e6bf37a33@mm-sol.com>
-Date:   Thu, 16 May 2019 12:14:04 +0300
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.6.1
-MIME-Version: 1.0
-In-Reply-To: <20190502001955.10575-2-bjorn.andersson@linaro.org>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+        id S1726964AbfEPJah (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 16 May 2019 05:30:37 -0400
+Received: from smtp.codeaurora.org ([198.145.29.96]:39876 "EHLO
+        smtp.codeaurora.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726374AbfEPJag (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 16 May 2019 05:30:36 -0400
+Received: by smtp.codeaurora.org (Postfix, from userid 1000)
+        id B412760AA3; Thu, 16 May 2019 09:30:32 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
+        s=default; t=1557999032;
+        bh=BQeF1SghZ/cw9v6x9DZFOORthYlBbnNOG2SlS537v3U=;
+        h=From:To:Cc:Subject:Date:From;
+        b=BFRH/DYu1wXg3QQWrs7g+LzRHUCwO4azI6zhO/c/QseXFWoSu536x+50Ct9Hi8Sc+
+         jURtj1I6iMOxWLBMZ22PsImxlxRKXFYA+itDWEjj6+jEK7urJh3GVWp7BgzBY0B5u+
+         ZaWAZJ8C9vxpI3mmws94cCoGjouLK/PNXDDkmaRA=
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        pdx-caf-mail.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.7 required=2.0 tests=ALL_TRUSTED,BAYES_00,
+        DKIM_INVALID,DKIM_SIGNED autolearn=no autolearn_force=no version=3.4.0
+Received: from blr-ubuntu-41.ap.qualcomm.com (blr-bdr-fw-01_globalnat_allzones-outside.qualcomm.com [103.229.18.19])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: vivek.gautam@smtp.codeaurora.org)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 38E0260A43;
+        Thu, 16 May 2019 09:30:26 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
+        s=default; t=1557999030;
+        bh=BQeF1SghZ/cw9v6x9DZFOORthYlBbnNOG2SlS537v3U=;
+        h=From:To:Cc:Subject:Date:From;
+        b=oba4MSJvFuLeFSdasc4U5oYTvBGipxJu6XZ/MUkV+RP0S1DkD/+EEg0sBfTYTgr3q
+         c4s51rYoxO5UjSMjWU7Amj2vInP4frGltunoa3Mfoh9v/HKqYqv3JFnfpZ8S4H+LwO
+         u5oY7GHPLQJNLTEUvwfkbwukao23Jg0UCSDhwrME=
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 38E0260A43
+Authentication-Results: pdx-caf-mail.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: pdx-caf-mail.web.codeaurora.org; spf=none smtp.mailfrom=vivek.gautam@codeaurora.org
+From:   Vivek Gautam <vivek.gautam@codeaurora.org>
+To:     will.deacon@arm.com, robin.murphy@arm.com, joro@8bytes.org,
+        iommu@lists.linux-foundation.org
+Cc:     linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+        linux-arm-msm@vger.kernel.org, pdaly@codeaurora.org,
+        pratikp@codeaurora.org, jcrouse@codeaurora.org,
+        Vivek Gautam <vivek.gautam@codeaurora.org>
+Subject: [PATCH v5 1/1] iommu/io-pgtable-arm: Add support to use system cache
+Date:   Thu, 16 May 2019 15:00:20 +0530
+Message-Id: <20190516093020.18028-1-vivek.gautam@codeaurora.org>
+X-Mailer: git-send-email 2.16.1.72.g5be1f00a9a70
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Bjorn,
+Few Qualcomm platforms such as, sdm845 have an additional outer
+cache called as System cache, aka. Last level cache (LLC) that
+allows non-coherent devices to upgrade to using caching.
+This cache sits right before the DDR, and is tightly coupled
+with the memory controller. The clients using this cache request
+their slices from this system cache, make it active, and can then
+start using it.
 
-On 5/2/19 3:19 AM, Bjorn Andersson wrote:
-> Before introducing the QCS404 platform, which uses the same PCIe
-> controller as IPQ4019, migrate this to use the bulk clock API, in order
-> to make the error paths slighly cleaner.
-> 
-> Acked-by: Stanimir Varbanov <svarbanov@mm-sol.com>
-> Reviewed-by: Niklas Cassel <niklas.cassel@linaro.org>
-> Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
-> ---
-> 
-> Changes since v2:
-> - Defined QCOM_PCIE_2_4_0_MAX_CLOCKS
-> 
->  drivers/pci/controller/dwc/pcie-qcom.c | 49 ++++++++------------------
->  1 file changed, 14 insertions(+), 35 deletions(-)
-> 
-> diff --git a/drivers/pci/controller/dwc/pcie-qcom.c b/drivers/pci/controller/dwc/pcie-qcom.c
-> index 0ed235d560e3..d740cbe0e56d 100644
-> --- a/drivers/pci/controller/dwc/pcie-qcom.c
-> +++ b/drivers/pci/controller/dwc/pcie-qcom.c
-> @@ -112,10 +112,10 @@ struct qcom_pcie_resources_2_3_2 {
->  	struct regulator_bulk_data supplies[QCOM_PCIE_2_3_2_MAX_SUPPLY];
->  };
->  
-> +#define QCOM_PCIE_2_4_0_MAX_CLOCKS	3
->  struct qcom_pcie_resources_2_4_0 {
-> -	struct clk *aux_clk;
-> -	struct clk *master_clk;
-> -	struct clk *slave_clk;
-> +	struct clk_bulk_data clks[QCOM_PCIE_2_4_0_MAX_CLOCKS];
-> +	int num_clks;
->  	struct reset_control *axi_m_reset;
->  	struct reset_control *axi_s_reset;
->  	struct reset_control *pipe_reset;
-> @@ -638,18 +638,17 @@ static int qcom_pcie_get_resources_2_4_0(struct qcom_pcie *pcie)
->  	struct qcom_pcie_resources_2_4_0 *res = &pcie->res.v2_4_0;
->  	struct dw_pcie *pci = pcie->pci;
->  	struct device *dev = pci->dev;
-> +	int ret;
->  
-> -	res->aux_clk = devm_clk_get(dev, "aux");
-> -	if (IS_ERR(res->aux_clk))
-> -		return PTR_ERR(res->aux_clk);
-> +	res->clks[0].id = "aux";
-> +	res->clks[1].id = "master_bus";
-> +	res->clks[2].id = "slave_bus";
->  
-> -	res->master_clk = devm_clk_get(dev, "master_bus");
-> -	if (IS_ERR(res->master_clk))
-> -		return PTR_ERR(res->master_clk);
-> +	res->num_clks = 3;
+There is a fundamental assumption that non-coherent devices can't
+access caches. This change adds an exception where they *can* use
+some level of cache despite still being non-coherent overall.
+The coherent devices that use cacheable memory, and CPU make use of
+this system cache by default.
 
-Use the new fresh define QCOM_PCIE_2_4_0_MAX_CLOCKS?
+Looking at memory types, we have following -
+a) Normal uncached :- MAIR 0x44, inner non-cacheable,
+                      outer non-cacheable;
+b) Normal cached :-   MAIR 0xff, inner read write-back non-transient,
+                      outer read write-back non-transient;
+                      attribute setting for coherenet I/O devices.
+and, for non-coherent i/o devices that can allocate in system cache
+another type gets added -
+c) Normal sys-cached :- MAIR 0xf4, inner non-cacheable,
+                        outer read write-back non-transient
 
->  
-> -	res->slave_clk = devm_clk_get(dev, "slave_bus");
-> -	if (IS_ERR(res->slave_clk))
-> -		return PTR_ERR(res->slave_clk);
-> +	ret = devm_clk_bulk_get(dev, res->num_clks, res->clks);
-> +	if (ret < 0)
-> +		return ret;
->  
->  	res->axi_m_reset = devm_reset_control_get_exclusive(dev, "axi_m");
->  	if (IS_ERR(res->axi_m_reset))
-> @@ -719,9 +718,7 @@ static void qcom_pcie_deinit_2_4_0(struct qcom_pcie *pcie)
->  	reset_control_assert(res->axi_m_sticky_reset);
->  	reset_control_assert(res->pwr_reset);
->  	reset_control_assert(res->ahb_reset);
-> -	clk_disable_unprepare(res->aux_clk);
-> -	clk_disable_unprepare(res->master_clk);
-> -	clk_disable_unprepare(res->slave_clk);
-> +	clk_bulk_disable_unprepare(res->num_clks, res->clks);
->  }
->  
->  static int qcom_pcie_init_2_4_0(struct qcom_pcie *pcie)
-> @@ -850,23 +847,9 @@ static int qcom_pcie_init_2_4_0(struct qcom_pcie *pcie)
->  
->  	usleep_range(10000, 12000);
->  
-> -	ret = clk_prepare_enable(res->aux_clk);
-> -	if (ret) {
-> -		dev_err(dev, "cannot prepare/enable iface clock\n");
-> +	ret = clk_bulk_prepare_enable(res->num_clks, res->clks);
-> +	if (ret)
->  		goto err_clk_aux;
+Coherent I/O devices use system cache by marking the memory as
+normal cached.
+Non-coherent I/O devices should mark the memory as normal
+sys-cached in page tables to use system cache.
 
-Maybe you have to change the name of the label too?
+Signed-off-by: Vivek Gautam <vivek.gautam@codeaurora.org>
+---
 
-> -	}
-> -
-> -	ret = clk_prepare_enable(res->master_clk);
-> -	if (ret) {
-> -		dev_err(dev, "cannot prepare/enable core clock\n");
-> -		goto err_clk_axi_m;
-> -	}
-> -
-> -	ret = clk_prepare_enable(res->slave_clk);
-> -	if (ret) {
-> -		dev_err(dev, "cannot prepare/enable phy clock\n");
-> -		goto err_clk_axi_s;
-> -	}
->  
->  	/* enable PCIe clocks and resets */
->  	val = readl(pcie->parf + PCIE20_PARF_PHY_CTRL);
-> @@ -891,10 +874,6 @@ static int qcom_pcie_init_2_4_0(struct qcom_pcie *pcie)
->  
->  	return 0;
->  
-> -err_clk_axi_s:
-> -	clk_disable_unprepare(res->master_clk);
-> -err_clk_axi_m:
-> -	clk_disable_unprepare(res->aux_clk);
->  err_clk_aux:
->  	reset_control_assert(res->ahb_reset);
->  err_rst_ahb:
-> 
+V3 version of this patch and related series can be found at [1].
+V4 of this patch is available at [2].
 
+The example usage of how a smmu master can make use of this protection
+flag and set the correct memory attributes to start using system cache,
+can be found at [3]; and here at [3] IOMMU_UPSTREAM_HINT is same as
+IOMMU_QCOM_SYS_CACHE.
+
+Changes since v4:
+ - Changed ARM_LPAE_MAIR_ATTR_QCOM_SYS_CACHE to
+   ARM_LPAE_MAIR_ATTR_INC_OWBRWA.
+ - Changed ARM_LPAE_MAIR_ATTR_IDX_QCOM_SYS_CACHE to
+   ARM_LPAE_MAIR_ATTR_IDX_INC_OCACHE.
+ - Added comments to iommu protection flag - IOMMU_QCOM_SYS_CACHE.
+
+Changes since v3:
+ - Dropping support to cache i/o page tables to system cache. Getting support
+   for data buffers is the first step.
+   Removed io-pgtable quirk and related change to add domain attribute.
+
+Glmark2 numbers on SDM845 based cheza board:
+
+S.No.|	with LLC support   |	without LLC support
+     |	for data buffers   |
+---------------------------------------------------		
+1    |	4480; 72.3fps      |	4042; 65.2fps
+2    |	4500; 72.6fps      |	4039; 65.1fps
+3    |	4523; 72.9fps	   |	4106; 66.2fps
+4    |	4489; 72.4fps	   |	4104; 66.2fps
+5    |	4518; 72.9fps	   |	4072; 65.7fps
+
+[1] https://patchwork.kernel.org/cover/10772629/
+[2] https://lore.kernel.org/patchwork/patch/1072936/
+[3] https://patchwork.kernel.org/patch/10302791/
+
+ drivers/iommu/io-pgtable-arm.c | 9 ++++++++-
+ include/linux/iommu.h          | 6 ++++++
+ 2 files changed, 14 insertions(+), 1 deletion(-)
+
+diff --git a/drivers/iommu/io-pgtable-arm.c b/drivers/iommu/io-pgtable-arm.c
+index 4e21efbc4459..2454ac11aa97 100644
+--- a/drivers/iommu/io-pgtable-arm.c
++++ b/drivers/iommu/io-pgtable-arm.c
+@@ -167,10 +167,12 @@
+ #define ARM_LPAE_MAIR_ATTR_MASK		0xff
+ #define ARM_LPAE_MAIR_ATTR_DEVICE	0x04
+ #define ARM_LPAE_MAIR_ATTR_NC		0x44
++#define ARM_LPAE_MAIR_ATTR_INC_OWBRWA	0xf4
+ #define ARM_LPAE_MAIR_ATTR_WBRWA	0xff
+ #define ARM_LPAE_MAIR_ATTR_IDX_NC	0
+ #define ARM_LPAE_MAIR_ATTR_IDX_CACHE	1
+ #define ARM_LPAE_MAIR_ATTR_IDX_DEV	2
++#define ARM_LPAE_MAIR_ATTR_IDX_INC_OCACHE	3
+ 
+ #define ARM_MALI_LPAE_TTBR_ADRMODE_TABLE (3u << 0)
+ #define ARM_MALI_LPAE_TTBR_READ_INNER	BIT(2)
+@@ -470,6 +472,9 @@ static arm_lpae_iopte arm_lpae_prot_to_pte(struct arm_lpae_io_pgtable *data,
+ 		else if (prot & IOMMU_CACHE)
+ 			pte |= (ARM_LPAE_MAIR_ATTR_IDX_CACHE
+ 				<< ARM_LPAE_PTE_ATTRINDX_SHIFT);
++		else if (prot & IOMMU_QCOM_SYS_CACHE)
++			pte |= (ARM_LPAE_MAIR_ATTR_IDX_INC_OCACHE
++				<< ARM_LPAE_PTE_ATTRINDX_SHIFT);
+ 	}
+ 
+ 	if (prot & IOMMU_NOEXEC)
+@@ -857,7 +862,9 @@ arm_64_lpae_alloc_pgtable_s1(struct io_pgtable_cfg *cfg, void *cookie)
+ 	      (ARM_LPAE_MAIR_ATTR_WBRWA
+ 	       << ARM_LPAE_MAIR_ATTR_SHIFT(ARM_LPAE_MAIR_ATTR_IDX_CACHE)) |
+ 	      (ARM_LPAE_MAIR_ATTR_DEVICE
+-	       << ARM_LPAE_MAIR_ATTR_SHIFT(ARM_LPAE_MAIR_ATTR_IDX_DEV));
++	       << ARM_LPAE_MAIR_ATTR_SHIFT(ARM_LPAE_MAIR_ATTR_IDX_DEV)) |
++	      (ARM_LPAE_MAIR_ATTR_INC_OWBRWA
++	       << ARM_LPAE_MAIR_ATTR_SHIFT(ARM_LPAE_MAIR_ATTR_IDX_INC_OCACHE));
+ 
+ 	cfg->arm_lpae_s1_cfg.mair[0] = reg;
+ 	cfg->arm_lpae_s1_cfg.mair[1] = 0;
+diff --git a/include/linux/iommu.h b/include/linux/iommu.h
+index a815cf6f6f47..8ee3fbaf5855 100644
+--- a/include/linux/iommu.h
++++ b/include/linux/iommu.h
+@@ -41,6 +41,12 @@
+  * if the IOMMU page table format is equivalent.
+  */
+ #define IOMMU_PRIV	(1 << 5)
++/*
++ * Non-coherent masters on few Qualcomm SoCs can use this page protection flag
++ * to set correct cacheability attributes to use an outer level of cache -
++ * last level cache, aka system cache.
++ */
++#define IOMMU_QCOM_SYS_CACHE	(1 << 6)
+ 
+ struct iommu_ops;
+ struct iommu_group;
 -- 
-regards,
-Stan
+QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
+of Code Aurora Forum, hosted by The Linux Foundation
+
