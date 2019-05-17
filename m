@@ -2,98 +2,193 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 0135A21B6C
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 17 May 2019 18:18:04 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E947221B2F
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 17 May 2019 18:11:11 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729457AbfEQQR4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 17 May 2019 12:17:56 -0400
-Received: from esa3.hc3370-68.iphmx.com ([216.71.145.155]:14361 "EHLO
-        esa3.hc3370-68.iphmx.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729164AbfEQQR4 (ORCPT
+        id S1729176AbfEQQLG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 17 May 2019 12:11:06 -0400
+Received: from mail-wm1-f66.google.com ([209.85.128.66]:38445 "EHLO
+        mail-wm1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729163AbfEQQLF (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 17 May 2019 12:17:56 -0400
-X-Greylist: delayed 426 seconds by postgrey-1.27 at vger.kernel.org; Fri, 17 May 2019 12:17:56 EDT
-Authentication-Results: esa3.hc3370-68.iphmx.com; dkim=none (message not signed) header.i=none; spf=None smtp.pra=ian.jackson@citrix.com; spf=SoftFail smtp.mailfrom=Ian.Jackson@citrix.com; spf=None smtp.helo=postmaster@MIAPEX02MSOL02.citrite.net
-Received-SPF: None (esa3.hc3370-68.iphmx.com: no sender
-  authenticity information available from domain of
-  ian.jackson@citrix.com) identity=pra; client-ip=23.29.105.83;
-  receiver=esa3.hc3370-68.iphmx.com;
-  envelope-from="Ian.Jackson@citrix.com";
-  x-sender="ian.jackson@citrix.com";
-  x-conformance=sidf_compatible
-Received-SPF: SoftFail (esa3.hc3370-68.iphmx.com: domain of
-  Ian.Jackson@citrix.com is inclined to not designate
-  23.29.105.83 as permitted sender) identity=mailfrom;
-  client-ip=23.29.105.83; receiver=esa3.hc3370-68.iphmx.com;
-  envelope-from="Ian.Jackson@citrix.com";
-  x-sender="Ian.Jackson@citrix.com";
-  x-conformance=sidf_compatible; x-record-type="v=spf1";
-  x-record-text="v=spf1 include:spf.citrix.com
-  include:spf2.citrix.com include:ironport.citrix.com
-  exists:%{i}._spf.mta.salesforce.com ~all"
-Received-SPF: None (esa3.hc3370-68.iphmx.com: no sender
-  authenticity information available from domain of
-  postmaster@MIAPEX02MSOL02.citrite.net) identity=helo;
-  client-ip=23.29.105.83; receiver=esa3.hc3370-68.iphmx.com;
-  envelope-from="Ian.Jackson@citrix.com";
-  x-sender="postmaster@MIAPEX02MSOL02.citrite.net";
-  x-conformance=sidf_compatible
-IronPort-SDR: famv8vIoPsnOKwXmdlWDIEhBOt4cUXzX4+f54NPc23fAuwffW2raCf5zapUcOXvZCrUq5Z+WxL
- OvnxVL++brFYBNdFnSsQh9HX+6uL5RC1nnLFsA38pvuZFjAhjYmYO80gGJhP49umuplXBqyFpI
- 9BJqsXEehd3N/AgHDdYiqJtajO4zHiyWMcaVLRXJUrDr4EFj53LdCD1OIdZwWLMiAWTo6ucC4Q
- pmljpkuuEHr0A0LTbPFkPpH92+R3Q+5aDDcpUU6mGyPpbOpwfRscsAuoBi3ewhp7+XkWW2y+a8
- OpY=
-X-SBRS: 2.7
-X-MesageID: 589638
-X-Ironport-Server: esa3.hc3370-68.iphmx.com
-X-Remote-IP: 23.29.105.83
-X-Policy: $RELAYED
-X-IronPort-AV: E=Sophos;i="5.60,480,1549947600"; 
-   d="scan'208";a="589638"
-From:   Ian Jackson <ian.jackson@citrix.com>
+        Fri, 17 May 2019 12:11:05 -0400
+Received: by mail-wm1-f66.google.com with SMTP id t5so5933879wmh.3
+        for <linux-arm-msm@vger.kernel.org>; Fri, 17 May 2019 09:11:02 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=o3znglSYE3qWmbHWfVx7bUQXAqGJQvSQXgl1NOhCAVQ=;
+        b=zC8ivZGjYMdfpaM3iFqctfmjEYxiou7E1dRg+77y5lw2eJ0a5+xq0gvLDIQv5iuONp
+         wrei1mpheIyRIM0QyPMLCba4jnj2KksNNGzg1wNwO8eoHfbaqaNyxyH4jdtVf//2Acm9
+         nhQeqxco9Dhbsm891E/BDwsPm2yJUkYx9qM/BpNUZ1ihzeu9Bq0Lf+nJV1RJU55nPzYM
+         ejupTDvwK+3seXgL8TYP8B4UIic8Uvg17r0ZyjVtEi/2+09l5uOpFOqgoqjvlD2XKISW
+         gOM9EYcneCW0/a9AAAZ33cfRefmnkRN/dtBfb4mMLGWrHeUARCBpWqDajaJE5XjLztxy
+         BPHA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=o3znglSYE3qWmbHWfVx7bUQXAqGJQvSQXgl1NOhCAVQ=;
+        b=U2P2wrfeQFOlsjEWn5zhSfFuZ5Lw5nw5ytFz00EyZ0pDMKBMNVKUccHPUBz1N4jdGI
+         6k4QF6YfZtRItR2bGRLlbb4VQFbM6MKx1X9bQrkksRyXMmbXhhEinkluTxUjZxS3OkT4
+         fEVNcmdOG62N5JdA/hCiTzLURc5QB8vbtf23GL/c3p1pv/Myzi95pcz4Yf9Dp23pUDE+
+         tB5lO/bJFxfa9p0WNfk2j/fnteRTmZzF8JkFosDBdyFA7P0tnTR8zoJufLoLfWnLeKju
+         OcaoUuvgGrLCsTkL+DM82LYezIQiXKy5KT5vVAsN6D3pmLYxJGEcHGvXZIDvsTI03Va+
+         d8jA==
+X-Gm-Message-State: APjAAAX29lhW/V9BbZPM7ERkMU/KXUaV9ONYYKJGUujWNGMaOZY2s+1Z
+        o6PmOZkDjEJg3UmA+/oL3tQlFA==
+X-Google-Smtp-Source: APXvYqytFb6Lr6UvVt6vABF1Ha5/L0gUrj561kuxWy2jGkrPlViqSGlF3tlPtcq9umuF69+5oH3ZEQ==
+X-Received: by 2002:a1c:7518:: with SMTP id o24mr2624307wmc.42.1558109461904;
+        Fri, 17 May 2019 09:11:01 -0700 (PDT)
+Received: from [192.168.0.41] (sju31-1-78-210-255-2.fbx.proxad.net. [78.210.255.2])
+        by smtp.googlemail.com with ESMTPSA id z8sm10116243wrh.48.2019.05.17.09.11.00
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Fri, 17 May 2019 09:11:01 -0700 (PDT)
+Subject: Re: [PATCHv1 7/8] arm64: dts: qcom: msm8998: Add PSCI cpuidle low
+ power states
+To:     Amit Kucheria <amit.kucheria@linaro.org>,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        bjorn.andersson@linaro.org, andy.gross@linaro.org,
+        David Brown <david.brown@linaro.org>,
+        Li Yang <leoyang.li@nxp.com>, Shawn Guo <shawnguo@kernel.org>
+Cc:     Marc Gonzalez <marc.w.gonzalez@free.fr>, devicetree@vger.kernel.org
+References: <cover.1557486950.git.amit.kucheria@linaro.org>
+ <0afe77d25490b10250f9eac4b4e92ccac8c42718.1557486950.git.amit.kucheria@linaro.org>
+From:   Daniel Lezcano <daniel.lezcano@linaro.org>
+Message-ID: <6b60656e-7786-1560-05f9-e2cbd6d1d18d@linaro.org>
+Date:   Fri, 17 May 2019 18:11:00 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+ Thunderbird/60.6.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+In-Reply-To: <0afe77d25490b10250f9eac4b4e92ccac8c42718.1557486950.git.amit.kucheria@linaro.org>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
 Content-Transfer-Encoding: 8bit
-Message-ID: <23774.56553.445601.436491@mariner.uk.xensource.com>
-Date:   Fri, 17 May 2019 17:10:17 +0100
-To:     Julien Grall <julien.grall@arm.com>
-CC:     Stefano Stabellini <sstabellini@kernel.org>,
-        "xen-devel@lists.xenproject.org" <xen-devel@lists.xenproject.org>,
-        "andy.gross@linaro.org" <andy.gross@linaro.org>,
-        "david.brown@linaro.org" <david.brown@linaro.org>,
-        "linux-arm-msm@vger.kernel.org" <linux-arm-msm@vger.kernel.org>,
-        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>
-Subject: Re: qcom_scm: Incompatible pointer type build failure
-In-Reply-To: <87d9fbc1-5956-2b7b-0b9a-6368e378d0f6@arm.com>
-References: <osstest-135420-mainreport@xen.org>
-        <23752.17186.527512.614163@mariner.uk.xensource.com>
-        <87d9fbc1-5956-2b7b-0b9a-6368e378d0f6@arm.com>
-X-Mailer: VM 8.2.0b under 24.5.1 (i686-pc-linux-gnu)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Julien Grall writes ("qcom_scm: Incompatible pointer type build failure"):
-> Thank you for the report.
-...> 
-> On 30/04/2019 13:44, Ian Jackson wrote:
-> > osstest service owner writes ("[linux-4.19 test] 135420: regressions - FAIL"):
-> >    drivers/firmware/qcom_scm.c: In function â€˜qcom_scm_assign_memâ€™:
-> >    drivers/firmware/qcom_scm.c:469:47: error: passing argument 3 of â€˜dma_alloc_coherentâ€™ from incompatible pointer type [-Werror=incompatible-pointer-types]
-...
-> > I think this build failure is probably a regression; rather it is due
-> > to the stretch update which brings in a new compiler.
+On 10/05/2019 13:29, Amit Kucheria wrote:
+> Add device bindings for cpuidle states for cpu devices.
 > 
-> The bug has always been present (and still present in master), it is possible 
-> the compiler became smarter with the upgrade to stretch.
-> 
-> The problem is similar to [1] and happen when the size of phys_addr_t is 
-> different to dma_addr_t.
-> 
-> I have CCed the maintainers of this file.
+> Cc: Marc Gonzalez <marc.w.gonzalez@free.fr>
+> Signed-off-by: Amit Kucheria <amit.kucheria@linaro.org>
 
-That was several weeks ago and osstest is still blocked on this.
-Can you please advise what CONFIG_* to disable to work around this ?
+Acked-by: Daniel Lezcano <daniel.lezcano@linaro.org>
 
-Ian.
+> ---
+>  arch/arm64/boot/dts/qcom/msm8998.dtsi | 32 +++++++++++++++++++++++++++
+>  1 file changed, 32 insertions(+)
+> 
+> diff --git a/arch/arm64/boot/dts/qcom/msm8998.dtsi b/arch/arm64/boot/dts/qcom/msm8998.dtsi
+> index 3fd0769fe648..208281f318e2 100644
+> --- a/arch/arm64/boot/dts/qcom/msm8998.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/msm8998.dtsi
+> @@ -78,6 +78,7 @@
+>  			compatible = "arm,armv8";
+>  			reg = <0x0 0x0>;
+>  			enable-method = "psci";
+> +			cpu-idle-states = <&LITTLE_CPU_PD>;
+>  			efficiency = <1024>;
+>  			next-level-cache = <&L2_0>;
+>  			L2_0: l2-cache {
+> @@ -97,6 +98,7 @@
+>  			compatible = "arm,armv8";
+>  			reg = <0x0 0x1>;
+>  			enable-method = "psci";
+> +			cpu-idle-states = <&LITTLE_CPU_PD>;
+>  			efficiency = <1024>;
+>  			next-level-cache = <&L2_0>;
+>  			L1_I_1: l1-icache {
+> @@ -112,6 +114,7 @@
+>  			compatible = "arm,armv8";
+>  			reg = <0x0 0x2>;
+>  			enable-method = "psci";
+> +			cpu-idle-states = <&LITTLE_CPU_PD>;
+>  			efficiency = <1024>;
+>  			next-level-cache = <&L2_0>;
+>  			L1_I_2: l1-icache {
+> @@ -127,6 +130,7 @@
+>  			compatible = "arm,armv8";
+>  			reg = <0x0 0x3>;
+>  			enable-method = "psci";
+> +			cpu-idle-states = <&LITTLE_CPU_PD>;
+>  			efficiency = <1024>;
+>  			next-level-cache = <&L2_0>;
+>  			L1_I_3: l1-icache {
+> @@ -142,6 +146,7 @@
+>  			compatible = "arm,armv8";
+>  			reg = <0x0 0x100>;
+>  			enable-method = "psci";
+> +			cpu-idle-states = <&BIG_CPU_PD>;
+>  			efficiency = <1536>;
+>  			next-level-cache = <&L2_1>;
+>  			L2_1: l2-cache {
+> @@ -161,6 +166,7 @@
+>  			compatible = "arm,armv8";
+>  			reg = <0x0 0x101>;
+>  			enable-method = "psci";
+> +			cpu-idle-states = <&BIG_CPU_PD>;
+>  			efficiency = <1536>;
+>  			next-level-cache = <&L2_1>;
+>  			L1_I_101: l1-icache {
+> @@ -176,6 +182,7 @@
+>  			compatible = "arm,armv8";
+>  			reg = <0x0 0x102>;
+>  			enable-method = "psci";
+> +			cpu-idle-states = <&BIG_CPU_PD>;
+>  			efficiency = <1536>;
+>  			next-level-cache = <&L2_1>;
+>  			L1_I_102: l1-icache {
+> @@ -191,6 +198,7 @@
+>  			compatible = "arm,armv8";
+>  			reg = <0x0 0x103>;
+>  			enable-method = "psci";
+> +			cpu-idle-states = <&BIG_CPU_PD>;
+>  			efficiency = <1536>;
+>  			next-level-cache = <&L2_1>;
+>  			L1_I_103: l1-icache {
+> @@ -238,6 +246,30 @@
+>  				};
+>  			};
+>  		};
+> +
+> +		idle-states {
+> +			entry-method="psci";
+> +
+> +			LITTLE_CPU_PD: little-power-down {
+> +				compatible = "arm,idle-state";
+> +				idle-state-name = "little-power-down";
+> +				arm,psci-suspend-param = <0x00000002>;
+> +				entry-latency-us = <43>;
+> +				exit-latency-us = <43>;
+> +				min-residency-us = <200>;
+> +				local-timer-stop;
+> +			};
+> +
+> +			BIG_CPU_PD: big-power-down {
+> +				compatible = "arm,idle-state";
+> +				idle-state-name = "big-power-down";
+> +				arm,psci-suspend-param = <0x00000002>;
+> +				entry-latency-us = <41>;
+> +				exit-latency-us = <41>;
+> +				min-residency-us = <200>;
+> +				local-timer-stop;
+> +			};
+> +		};
+>  	};
+>  
+>  	firmware {
+> 
+
+
+-- 
+ <http://www.linaro.org/> Linaro.org │ Open source software for ARM SoCs
+
+Follow Linaro:  <http://www.facebook.com/pages/Linaro> Facebook |
+<http://twitter.com/#!/linaroorg> Twitter |
+<http://www.linaro.org/linaro-blog/> Blog
+
