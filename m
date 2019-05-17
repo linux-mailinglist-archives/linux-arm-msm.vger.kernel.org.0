@@ -2,117 +2,123 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 8CFBF21C29
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 17 May 2019 19:03:57 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 25E4421C8A
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 17 May 2019 19:34:54 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726732AbfEQRD4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 17 May 2019 13:03:56 -0400
-Received: from smtp.codeaurora.org ([198.145.29.96]:42978 "EHLO
-        smtp.codeaurora.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726462AbfEQRD4 (ORCPT
+        id S1728397AbfEQRex (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 17 May 2019 13:34:53 -0400
+Received: from mail-pg1-f196.google.com ([209.85.215.196]:36342 "EHLO
+        mail-pg1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727966AbfEQRex (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 17 May 2019 13:03:56 -0400
-Received: by smtp.codeaurora.org (Postfix, from userid 1000)
-        id 0ABD660DAB; Fri, 17 May 2019 17:03:54 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
-        s=default; t=1558112635;
-        bh=4IgcuJFcVBunA66vabPQGLUoMAAyfYOXj6QvXzjcV9I=;
-        h=Subject:To:Cc:References:From:Date:In-Reply-To:From;
-        b=HSWvFxn0qtDzSm9PyIPznHPMS+TALkycUaHjcD5iJAgxDLVsfR0Kj6IN2B9DwhzZL
-         C6oMyNLOWq2l7ufhPAoF/zPhDYWvoultb+rJN3Pkbj2rohDU7lHvov6OKhzz4Yedb7
-         JHtJcTkxvt4HesHwsqEzz1XR2HC2PWxAv7eYiIgA=
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        pdx-caf-mail.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.7 required=2.0 tests=ALL_TRUSTED,BAYES_00,
-        DKIM_INVALID,DKIM_SIGNED,SPF_NONE autolearn=no autolearn_force=no
-        version=3.4.0
-Received: from [10.226.58.28] (i-global254.qualcomm.com [199.106.103.254])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: jhugo@smtp.codeaurora.org)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 5A423602F8;
-        Fri, 17 May 2019 17:03:53 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
-        s=default; t=1558112634;
-        bh=4IgcuJFcVBunA66vabPQGLUoMAAyfYOXj6QvXzjcV9I=;
-        h=Subject:To:Cc:References:From:Date:In-Reply-To:From;
-        b=k+R2tF9WuUY7eh5PECiRZ0/Qf9PXm5wjZm6I0pUXoXqvxamT22r8qoNZamBUmTc5e
-         VFax+tV3sVJZ8RUoBq93EnftWC7b1GYXfiqoIOplx8CNMt83P4K8kiyl1FuriR2a6j
-         QbBQZOCQO5ALfNYi4RMRKJdCL2gAoyNcnByeWhYM=
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 5A423602F8
-Authentication-Results: pdx-caf-mail.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: pdx-caf-mail.web.codeaurora.org; spf=none smtp.mailfrom=jhugo@codeaurora.org
-Subject: Re: [PATCH v4 0/9] RPMPD for QCS404 and MSM8998
-To:     Sibi Sankar <sibis@codeaurora.org>, bjorn.andersson@linaro.org,
-        robh+dt@kernel.org, agross@kernel.org
-Cc:     david.brown@linaro.org, mark.rutland@arm.com,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, rnayak@codeaurora.org,
-        marc.w.gonzalez@free.fr
-References: <20190513102015.26551-1-sibis@codeaurora.org>
-From:   Jeffrey Hugo <jhugo@codeaurora.org>
-Message-ID: <2d453c99-4ea2-e4f0-1d99-e13d099bfa07@codeaurora.org>
-Date:   Fri, 17 May 2019 11:03:52 -0600
-User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:60.0) Gecko/20100101
- Thunderbird/60.6.1
+        Fri, 17 May 2019 13:34:53 -0400
+Received: by mail-pg1-f196.google.com with SMTP id a3so3623872pgb.3
+        for <linux-arm-msm@vger.kernel.org>; Fri, 17 May 2019 10:34:52 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=EQJ+i6iyywaiyvPH5Ae01aI539IGazdRX+wyFdAqzQ8=;
+        b=aanZSxafrgKwxWZXR9j39vx1sCu33cNvgPcDwT6PxgjwJRrkJcbhwxhh51PE7RY2mz
+         AY5Iycj6ZTO24RiG3PvHwStotGD451nVBIT6sjLw6Ynr4Ou4WW/nHdGQxnBOVgBrZ5wt
+         ozAo5veCyhAikOq+8aWu4Ey164M3K+n2/Wa+P9oxiTOfyjTCPDn4hdKDtmWCFA86qyo1
+         Axb84Btin+aZNsep3wfDD5JVAmugrkNPhN/KuwEUOBZq2kj1b2YI8MshZNcuDk1JxQjf
+         NjjY5tUquuwM1gJhMUS6g7ErT/4PZfCb0DdUm/Ng7BhHzt3u3Jsd4i59RFgcck4Z4OUL
+         UBvA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=EQJ+i6iyywaiyvPH5Ae01aI539IGazdRX+wyFdAqzQ8=;
+        b=bTdAqGAeVxt9oNUEZ9zYoEbKb9B7KZ8znGsX644UqXbooiMgiLFwW8VoqbYslq2HpM
+         WpiYyKb/b4O06NbEHf8wlh7g3UzvrsyumWi6Prs3y95Wsy+/6b+6u/Ugwvp3yGF8kqNj
+         jXoJn4fhy9MVc5J4g0qgTt44ChXdSeKuyQ5I3WhloAoQqloQPRGmxk9XcAFOO0R61QIB
+         FKe9rPW8Y8mtGK7xRJHSDx1eQN6mQxCW+eWwDuTcds7iEEGWBQ5EpTtKDzxwmPti+6AI
+         /ks5CO6cCWF63oEme+8bNEaSn4BsK9kzUdiXNCo4sDK73zOSgUsUe3Ku4psFh4njVP0l
+         m4CA==
+X-Gm-Message-State: APjAAAUgdNvCqUTiPvPp79NJj4V8vSmcw9+CfnwbJqPDrcKeTBUf4kbK
+        6itsLJ7Ilq2oz6e7mTH5KI8ETQ==
+X-Google-Smtp-Source: APXvYqwAR5v9g9Pj7oAhKsdMTbRAYpj8+edIonWgSGveknrjHzEQSgArD/o7pgLUsetiE0m+QRPAzw==
+X-Received: by 2002:aa7:8e59:: with SMTP id d25mr61042439pfr.24.1558114492292;
+        Fri, 17 May 2019 10:34:52 -0700 (PDT)
+Received: from tuxbook-pro (104-188-17-28.lightspeed.sndgca.sbcglobal.net. [104.188.17.28])
+        by smtp.gmail.com with ESMTPSA id p16sm26875608pfq.153.2019.05.17.10.34.50
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Fri, 17 May 2019 10:34:51 -0700 (PDT)
+Date:   Fri, 17 May 2019 10:35:14 -0700
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     Stephen Boyd <swboyd@chromium.org>
+Cc:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org, devicetree@vger.kernel.org,
+        Evan Green <evgreen@chromium.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Andy Gross <agross@kernel.org>,
+        Will Deacon <will.deacon@arm.com>,
+        Catalin Marinas <catalin.marinas@arm.com>
+Subject: Re: [RFC/PATCH 0/5] Read-only memremap() proposal
+Message-ID: <20190517173514.GM2085@tuxbook-pro>
+References: <20190517164746.110786-1-swboyd@chromium.org>
 MIME-Version: 1.0
-In-Reply-To: <20190513102015.26551-1-sibis@codeaurora.org>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20190517164746.110786-1-swboyd@chromium.org>
+User-Agent: Mutt/1.11.4 (2019-03-13)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 5/13/2019 4:20 AM, Sibi Sankar wrote:
-> Re-worked the macros of the rpmpd driver. Add power domains support
-> for QCS404 and MSM8998.
+On Fri 17 May 09:47 PDT 2019, Stephen Boyd wrote:
 
-For the series:
-Reviewed-by: Jeffrey Hugo <jhugo@codeaurora.org>
-
+> This patch series implements a read-only version of memremap() via
+> a new MEMREMAP_RO flag. If this is passed in the mapping call, we'll
+> try to map the memory region as read-only if it doesn't intersect
+> with an existing mapping. Otherwise, we'll try to fallback to other
+> flags to try to map the memory that way.
 > 
-> V4:
-> * fixup fixes tag and commit message in patch 1 [Marc]
-> * fixup typos in qcs404 and msm8998 dt nodes
-> * fixup comments regarding resource type in patch 8 [Marc]
-> 
-> V3:
-> * always send level updates to vfc and vfl in set_performance state
-> * fixup commit messages [Rajendra]
-> * fixup s-o-b ordering
-> 
-> V2:
-> * Add rpmpd support for msm8998
-> * fixup corner/vfc with vlfl/vfl
-> 
-> Bjorn Andersson (4):
->    soc: qcom: rpmpd: Modify corner defining macros
->    dt-bindings: power: Add rpm power domain bindings for qcs404
->    soc: qcom: rpmpd: Add QCS404 power-domains
->    arm64: dts: qcom: qcs404: Add rpmpd node
-> 
-> Sibi Sankar (5):
->    soc: qcom: rpmpd: fixup rpmpd set performance state
->    soc: qcom: rpmpd: Add support to set rpmpd state to max
->    dt-bindings: power: Add rpm power domain bindings for msm8998
->    soc: qcom: rpmpd: Add MSM8998 power-domains
->    arm64: dts: qcom: msm8998: Add rpmpd node
-> 
->   .../devicetree/bindings/power/qcom,rpmpd.txt  |   2 +
->   arch/arm64/boot/dts/qcom/msm8998.dtsi         |  51 +++++++
->   arch/arm64/boot/dts/qcom/qcs404.dtsi          |  55 +++++++
->   drivers/soc/qcom/rpmpd.c                      | 134 ++++++++++++++----
->   include/dt-bindings/power/qcom-rpmpd.h        |  34 +++++
->   5 files changed, 252 insertions(+), 24 deletions(-)
+> The main use case I have is to map the command-db memory region on
+> Qualcomm devices with a read-only mapping. It's already a const marked
+> pointer and the API returns const pointers as well, so this series makes
+> sure that even stray writes can't modify the memory. To get there we
+> introduce a devm version of memremap() for a reserved memory region, add
+> a memremap() flag, and implement support for that flag on arm64.
 > 
 
+I have a few places where the first patch will be useful, and the rest
+looks good.
 
--- 
-Jeffrey Hugo
-Qualcomm Datacenter Technologies as an affiliate of Qualcomm 
-Technologies, Inc.
-Qualcomm Technologies, Inc. is a member of the
-Code Aurora Forum, a Linux Foundation Collaborative Project.
+Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+
+Regards,
+Bjorn
+
+> Cc: Evan Green <evgreen@chromium.org>
+> Cc: Rob Herring <robh+dt@kernel.org>
+> Cc: Bjorn Andersson <bjorn.andersson@linaro.org>
+> Cc: Andy Gross <agross@kernel.org>
+> Cc: Will Deacon <will.deacon@arm.com>
+> Cc: Catalin Marinas <catalin.marinas@arm.com>
+> 
+> Stephen Boyd (5):
+>   reserved_mem: Add a devm_memremap_reserved_mem() API
+>   soc: qcom: cmd-db: Migrate to devm_memremap_reserved_mem()
+>   memremap: Add support for read-only memory mappings
+>   arm64: Add support for arch_memremap_ro()
+>   soc: qcom: cmd-db: Map with read-only mappings
+> 
+>  arch/arm64/include/asm/io.h     |  1 +
+>  drivers/of/of_reserved_mem.c    | 45 +++++++++++++++++++++++++++++++++
+>  drivers/soc/qcom/cmd-db.c       | 14 +++-------
+>  include/linux/io.h              |  1 +
+>  include/linux/of_reserved_mem.h |  6 +++++
+>  kernel/iomem.c                  | 15 +++++++++--
+>  6 files changed, 70 insertions(+), 12 deletions(-)
+> 
+> 
+> base-commit: 9e98c678c2d6ae3a17cb2de55d17f69dddaa231b
+> prerequisite-patch-id: 62119e27c0c0686e02f0cb55c296b878fb7f5e47
+> prerequisite-patch-id: bda32cfc1733c245ae3f141d7c27b18e4adcc628
+> prerequisite-patch-id: b8f8097161bd15e87d54dcfbfa67b9ca1abc7204
+> -- 
+> Sent by a computer through tubes
+> 
