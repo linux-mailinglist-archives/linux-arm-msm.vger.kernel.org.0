@@ -2,105 +2,79 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 502E721E19
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 17 May 2019 21:16:44 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5E60321F5B
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 17 May 2019 23:09:26 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727439AbfEQTQm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 17 May 2019 15:16:42 -0400
-Received: from smtp.codeaurora.org ([198.145.29.96]:49978 "EHLO
-        smtp.codeaurora.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727320AbfEQTQm (ORCPT
+        id S1727183AbfEQVJZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 17 May 2019 17:09:25 -0400
+Received: from mail-pl1-f169.google.com ([209.85.214.169]:41024 "EHLO
+        mail-pl1-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727001AbfEQVJZ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 17 May 2019 15:16:42 -0400
-Received: by smtp.codeaurora.org (Postfix, from userid 1000)
-        id DC8E860275; Fri, 17 May 2019 19:16:41 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
-        s=default; t=1558120601;
-        bh=UDu0988ZE+VQBR50SgJEt/dR2lv42ytmm9zgN71+Qlg=;
-        h=Subject:To:Cc:References:From:Date:In-Reply-To:From;
-        b=OrBVinkcuh1jiRpHR+jEUx8gGVeVx2nWoaqEvPm2vSvBoTy74pq5bMN3C0b6cHOCz
-         i1juxM8hVd0hEFvyPPpyEoo5PtLybM8gNyJ2CWzIeqDkmQ/ul2UfNkeTheE14VXqpF
-         S+UN/Pp9BwqV+JfH3wQ8Y6areQgX+7juWB7OcNB0=
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        pdx-caf-mail.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.7 required=2.0 tests=ALL_TRUSTED,BAYES_00,
-        DKIM_INVALID,DKIM_SIGNED,SPF_NONE autolearn=no autolearn_force=no
-        version=3.4.0
-Received: from [10.226.58.28] (i-global254.qualcomm.com [199.106.103.254])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: jhugo@smtp.codeaurora.org)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id BC32860735;
-        Fri, 17 May 2019 19:16:40 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
-        s=default; t=1558120601;
-        bh=UDu0988ZE+VQBR50SgJEt/dR2lv42ytmm9zgN71+Qlg=;
-        h=Subject:To:Cc:References:From:Date:In-Reply-To:From;
-        b=OrBVinkcuh1jiRpHR+jEUx8gGVeVx2nWoaqEvPm2vSvBoTy74pq5bMN3C0b6cHOCz
-         i1juxM8hVd0hEFvyPPpyEoo5PtLybM8gNyJ2CWzIeqDkmQ/ul2UfNkeTheE14VXqpF
-         S+UN/Pp9BwqV+JfH3wQ8Y6areQgX+7juWB7OcNB0=
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org BC32860735
-Authentication-Results: pdx-caf-mail.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: pdx-caf-mail.web.codeaurora.org; spf=none smtp.mailfrom=jhugo@codeaurora.org
-Subject: Re: [PATCH] clk: qcom: gdsc: WARN when failing to toggle
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>
-Cc:     linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-References: <20190504001736.8598-1-bjorn.andersson@linaro.org>
-From:   Jeffrey Hugo <jhugo@codeaurora.org>
-Message-ID: <fa15fb15-3597-8563-bf30-518ce345a232@codeaurora.org>
-Date:   Fri, 17 May 2019 13:16:39 -0600
-User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:60.0) Gecko/20100101
- Thunderbird/60.6.1
+        Fri, 17 May 2019 17:09:25 -0400
+Received: by mail-pl1-f169.google.com with SMTP id f12so3873048plt.8
+        for <linux-arm-msm@vger.kernel.org>; Fri, 17 May 2019 14:09:25 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=5Osr4IBLKvqeoGIhILlOabAONYWC6fq+a0u3OcWitsE=;
+        b=JD5n94i4mKalDB7/QIq6hwmxfHuc3LPfFo3nTv1rqK5hcqf3iPDGRh1EFIOki0v4Wa
+         5eB4nDxybuOB6dUKwutNbxeO8PCEk7HcsT+DbzAoAr2P5dE8pFYxEVgZyzl4G6ZaPCbe
+         hHCRMa8UyiV0LV6JwjoUeakRGvd8LWKz2nEZg=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=5Osr4IBLKvqeoGIhILlOabAONYWC6fq+a0u3OcWitsE=;
+        b=JKqzO3BZhJLKSjAcJREqwJpUEi/0c2C2AadfPss5ZG/AwZbjPXd7N1zbzkH+bxtPrz
+         dC8G9RnKpfQuXr5IQcrqk9hWG/W35fdp6yqZgjD9eFNT4bXPQTjeSGuKBXgYyHuvGF7b
+         TpbpM/Gy6bsm1d6G+cKSZbRO/Fm+bjsO7FrYmPsX/PVj7C7g9F8CopNmnfuE06iUauA7
+         COVBgVuTM3AEGfJ4kiO7k5beakCa5Puy6uxSRUWz2WznaftCgoqvAMN1E00q+ZLiUWf4
+         baroWU8Uif7O+8ZLEVBMC1LMDCr8UNAfGCjtu4bW0DwAzc4PWSjRW3BZq/qmMG9eliJH
+         8mJw==
+X-Gm-Message-State: APjAAAWflbJghXQnsWU/aqGRSwAPMddAgrU0m4B7/RDK9NxF6odsFysQ
+        UE8t+GtClcuWZEHZUZahJ+UdrQ==
+X-Google-Smtp-Source: APXvYqxEO2VhzyiHpSv9o0CI0H1knnTnrlTCtf/zuChtA/femWc3y8FZABEnlw2/tjPIL9gPSU6oDQ==
+X-Received: by 2002:a17:902:aa95:: with SMTP id d21mr4553546plr.32.1558127364718;
+        Fri, 17 May 2019 14:09:24 -0700 (PDT)
+Received: from smtp.gmail.com ([2620:15c:202:1:fa53:7765:582b:82b9])
+        by smtp.gmail.com with ESMTPSA id q142sm7890448pfc.27.2019.05.17.14.09.23
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Fri, 17 May 2019 14:09:24 -0700 (PDT)
+From:   Stephen Boyd <swboyd@chromium.org>
+To:     Andy Gross <agross@kernel.org>
+Cc:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org
+Subject: [PATCH 0/3] qcom_scm: Fix some dma mapping things
+Date:   Fri, 17 May 2019 14:09:20 -0700
+Message-Id: <20190517210923.202131-1-swboyd@chromium.org>
+X-Mailer: git-send-email 2.21.0.1020.gf2820cf01a-goog
+In-Reply-To: <23774.56553.445601.436491@mariner.uk.xensource.com>
+References: <23774.56553.445601.436491@mariner.uk.xensource.com>
 MIME-Version: 1.0
-In-Reply-To: <20190504001736.8598-1-bjorn.andersson@linaro.org>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 5/3/2019 6:17 PM, Bjorn Andersson wrote:
-> Failing to toggle a GDSC as the driver core is attaching the
-> power-domain to a device will cause a silent probe deferral. Provide an
-> explicit warning to the developer, in order to reduce the amount of time
-> it take to debug this.
-> 
-> Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+This patch series fixes some DMA mapping problems reported
+in the qcom SCM driver. I haven't tested these patches at all
+so it could be totally broken. If someone can test them for
+me I'd appreciate it. Otherwise, I'll spend some time dusting
+off modem loading code to see if it works.
 
-Reviewed-by: Jeffrey Hugo <jhugo@codeaurora.org>
-Tested-by: Jeffrey Hugo <jhugo@codeaurora.org>
+Stephen Boyd (3):
+  firmware: qcom_scm: Use proper types for dma mappings
+  firmware: qcom_scm: Cleanup code in qcom_scm_assign_mem()
+  firmware: qcom_scm: Fix some typos in docs and printks
 
-> ---
->   drivers/clk/qcom/gdsc.c | 4 +++-
->   1 file changed, 3 insertions(+), 1 deletion(-)
-> 
-> diff --git a/drivers/clk/qcom/gdsc.c b/drivers/clk/qcom/gdsc.c
-> index dd63aa36b092..6a8a4996dde3 100644
-> --- a/drivers/clk/qcom/gdsc.c
-> +++ b/drivers/clk/qcom/gdsc.c
-> @@ -149,7 +149,9 @@ static int gdsc_toggle_logic(struct gdsc *sc, enum gdsc_status status)
->   		udelay(1);
->   	}
->   
-> -	return gdsc_poll_status(sc, status);
-> +	ret = gdsc_poll_status(sc, status);
-> +	WARN(ret, "%s status stuck at 'o%s'", sc->pd.name, status ? "ff" : "n");
-> +	return ret;
->   }
->   
->   static inline int gdsc_deassert_reset(struct gdsc *sc)
-> 
+ drivers/firmware/qcom_scm.c | 47 +++++++++++++++++++------------------
+ include/linux/qcom_scm.h    |  9 +++----
+ 2 files changed, 29 insertions(+), 27 deletions(-)
 
 
+base-commit: e93c9c99a629c61837d5a7fc2120cd2b6c70dbdd
 -- 
-Jeffrey Hugo
-Qualcomm Datacenter Technologies as an affiliate of Qualcomm 
-Technologies, Inc.
-Qualcomm Technologies, Inc. is a member of the
-Code Aurora Forum, a Linux Foundation Collaborative Project.
+Sent by a computer through tubes
+
