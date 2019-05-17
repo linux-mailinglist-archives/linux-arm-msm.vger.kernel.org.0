@@ -2,105 +2,116 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 311B921F5E
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 17 May 2019 23:09:52 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 644D821FF5
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 17 May 2019 23:55:22 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729531AbfEQVJ3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 17 May 2019 17:09:29 -0400
-Received: from mail-pl1-f195.google.com ([209.85.214.195]:35201 "EHLO
+        id S1729599AbfEQVzV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 17 May 2019 17:55:21 -0400
+Received: from mail-pl1-f195.google.com ([209.85.214.195]:36310 "EHLO
         mail-pl1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729521AbfEQVJ2 (ORCPT
+        with ESMTP id S1729596AbfEQVzV (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 17 May 2019 17:09:28 -0400
-Received: by mail-pl1-f195.google.com with SMTP id g5so3886790plt.2
-        for <linux-arm-msm@vger.kernel.org>; Fri, 17 May 2019 14:09:27 -0700 (PDT)
+        Fri, 17 May 2019 17:55:21 -0400
+Received: by mail-pl1-f195.google.com with SMTP id d21so3939984plr.3
+        for <linux-arm-msm@vger.kernel.org>; Fri, 17 May 2019 14:55:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=chromium.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=6yMhbjOdJrtk0xQ+i6AZwRL1Zy3R9rye9qItwhZgYoY=;
-        b=S1pCUHGutY6vLzoeCG8u5Yqz3ySgTf/kdPKzMam30sIRpcZRxsjF+zlAGx/fIrTFIp
-         c1UKcK4gDiWA9vZQFvW6iGNpJB4zv13dQ3EW4iO5pTUV0W8VgSG3ubSdD6/d6/DzUQ31
-         EpISSdtYpdScNDbFpu1KySJGBw2Fj5UhNbs1g=
+        h=message-id:mime-version:content-transfer-encoding:in-reply-to
+         :references:subject:from:cc:to:user-agent:date;
+        bh=3cmDmKVrpmOZMNgPRAiH0olqmC9Yh+Gmdf/HadyohC4=;
+        b=J6sBCDZEcDFHQljhONfwZsgtsfwSoAQY/BmYrJ9Df8UUnT54h3T2+eZsxV5rHjLhSt
+         gsEPT4lke+v+APQlrZCxIn4+A4jvnTSS7HiMae4+5DVhMVIiML1iXWIYyz6mP7E9bSa/
+         hJYSNflLuHdJBE65HxtMr6Q6fCKRPt8A47avk=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=6yMhbjOdJrtk0xQ+i6AZwRL1Zy3R9rye9qItwhZgYoY=;
-        b=bwSUntU/67zbMI19qXWnjYcykV6MJ17+rlnlMCoPPsVsq3IIkM6TFJDf/+Dnce4AoA
-         GJVVCUYD48uw/ujuWM8i0Cq8wAg2Z5TWv607pJSZxlCFNWhw6j5Rjkw4ETVC5UMpsKEc
-         L6i8JSP32jPObk6oMaXShG3fLZ/CiNa+JiHPxolQqmIKRAtgtR6ZXd9vfoz4nGiDv6fP
-         2xYeC0zrZkfJ9e6S6nLY6ub6cTGApUvittkvytqpham6UYiu6F7dkvtu2BV+stABXH8Q
-         ykeI44H8F0zAzaKIfX7eH9mjNzEdsbZzxdrui3R8Syw2hDI9alcN0EPrNyRdbwqH0MZ6
-         yo+A==
-X-Gm-Message-State: APjAAAUrO3EW0DCmHX53zXWPPkMEQa3PqZmWZuxwYEle41p9p00LBv4M
-        00yaJY5bWGtRvh4AyHABbaW04A==
-X-Google-Smtp-Source: APXvYqxwpbLICdYAwGQqNce4bs0ykKfJr2vw7HkbP2gvufSFs/2dDJFK4zwTSIAgWKa7ah5VPW4rIg==
-X-Received: by 2002:a17:902:201:: with SMTP id 1mr14372173plc.263.1558127367509;
-        Fri, 17 May 2019 14:09:27 -0700 (PDT)
-Received: from smtp.gmail.com ([2620:15c:202:1:fa53:7765:582b:82b9])
-        by smtp.gmail.com with ESMTPSA id q142sm7890448pfc.27.2019.05.17.14.09.26
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 17 May 2019 14:09:27 -0700 (PDT)
-From:   Stephen Boyd <swboyd@chromium.org>
-To:     Andy Gross <agross@kernel.org>
-Cc:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        Ian Jackson <ian.jackson@citrix.com>,
-        Julien Grall <julien.grall@arm.com>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Avaneesh Kumar Dwivedi <akdwived@codeaurora.org>
-Subject: [PATCH 3/3] firmware: qcom_scm: Fix some typos in docs and printks
-Date:   Fri, 17 May 2019 14:09:23 -0700
-Message-Id: <20190517210923.202131-4-swboyd@chromium.org>
-X-Mailer: git-send-email 2.21.0.1020.gf2820cf01a-goog
-In-Reply-To: <23774.56553.445601.436491@mariner.uk.xensource.com>
-References: <23774.56553.445601.436491@mariner.uk.xensource.com>
+        h=x-gm-message-state:message-id:mime-version
+         :content-transfer-encoding:in-reply-to:references:subject:from:cc:to
+         :user-agent:date;
+        bh=3cmDmKVrpmOZMNgPRAiH0olqmC9Yh+Gmdf/HadyohC4=;
+        b=rJygGFKx4qxIqhw9zrNVP95eTHDxFKUBmVDYEpUtd2h5wSyhZpgQvvVlArcIS6oAve
+         VX7e90R6VWmwmLRfSaNCAIaMGX9QoUwYHNoz1XMrUaviO+EFrN9h5Hted5xzEAXIapGb
+         si06i7/ZYeq3fm8nWgMr4w3wMSSOJ11NeCMZtF857ifcNPi68i1QxafaUAlfPwoHRMiX
+         seQCoIICU/4WHlbMq6tuma9tPPge9S3ptM5zJSiecyEve7+IhFL8lUITrAibYQ321CNT
+         IgSkUdiSpte6RwTrvJIzes9Cj0NgGVCmGcdP5RzxG0NKoR6qGBbm0yotf/ky1kxiirgU
+         UQCw==
+X-Gm-Message-State: APjAAAX/x34WzwqP+TMvsFsayNvCNI/7SKjzf1dLUk/R2rlhZID2snh4
+        XgxeB9fZmYpVCkQNh+QsOtfFmg==
+X-Google-Smtp-Source: APXvYqw9MkFyQZykC6TAt/08Rk/EnsGsIC2de8Bs+rNwfZLiGzHmFC8ZPpTfd4rxAE6RGMd2uFlcaw==
+X-Received: by 2002:a17:902:868c:: with SMTP id g12mr42106151plo.323.1558130120619;
+        Fri, 17 May 2019 14:55:20 -0700 (PDT)
+Received: from chromium.org ([2620:15c:202:1:fa53:7765:582b:82b9])
+        by smtp.gmail.com with ESMTPSA id e73sm9564668pfh.59.2019.05.17.14.55.19
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Fri, 17 May 2019 14:55:20 -0700 (PDT)
+Message-ID: <5cdf2dc8.1c69fb81.521c8.9339@mx.google.com>
+Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <CAHLCerP69Jw27VyO+ek4Fe3-2fDiOejtz6XZPykPSRA2G1831w@mail.gmail.com>
+References: <20190114184255.258318-1-mka@chromium.org> <CAHLCerP+F9AP97+qVCMqwu-OMJXRhwZrXd33Wk-vj5eyyw-KyA@mail.gmail.com> <CAHLCerPZ0Y-rkeMa_7BJWtR4g5af2vwfPY9FgOuvpUTJG3rf7g@mail.gmail.com> <155786856719.14659.2902538189660269078@swboyd.mtv.corp.google.com> <CAHLCerP69Jw27VyO+ek4Fe3-2fDiOejtz6XZPykPSRA2G1831w@mail.gmail.com>
+Subject: Re: [PATCH] arm64: dts: sdm845: Add CPU topology
+From:   Stephen Boyd <swboyd@chromium.org>
+Cc:     Matthias Kaehlcke <mka@chromium.org>,
+        David Brown <david.brown@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Mark Rutland <mark.rutland@arm.com>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        "open list:ARM/QUALCOMM SUPPORT" <linux-soc@vger.kernel.org>,
+        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
+        <devicetree@vger.kernel.org>, LKML <linux-kernel@vger.kernel.org>,
+        Douglas Anderson <dianders@chromium.org>,
+        Rajendra Nayak <rnayak@codeaurora.org>
+To:     Amit Kucheria <amit.kucheria@linaro.org>,
+        Andy Gross <agross@kernel.org>
+User-Agent: alot/0.8.1
+Date:   Fri, 17 May 2019 14:55:19 -0700
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Some words are misspelled and we put a full stop after a return value
-integer. Fix these things up so it doesn't look so odd.
+Quoting Amit Kucheria (2019-05-16 04:54:45)
+> (cc'ing Andy's correct email address)
+>=20
+> On Wed, May 15, 2019 at 2:46 AM Stephen Boyd <swboyd@chromium.org> wrote:
+> >
+> > Quoting Amit Kucheria (2019-05-13 04:54:12)
+> > > On Mon, May 13, 2019 at 4:31 PM Amit Kucheria <amit.kucheria@linaro.o=
+rg> wrote:
+> > > >
+> > > > On Tue, Jan 15, 2019 at 12:13 AM Matthias Kaehlcke <mka@chromium.or=
+g> wrote:
+> > > > >
+> > > > > The 8 CPU cores of the SDM845 are organized in two clusters of 4 =
+big
+> > > > > ("gold") and 4 little ("silver") cores. Add a cpu-map node to the=
+ DT
+> > > > > that describes this topology.
+> > > >
+> > > > This is partly true. There are two groups of gold and silver cores,
+> > > > but AFAICT they are in a single cluster, not two separate ones. SDM=
+845
+> > > > is one of the early examples of ARM's Dynamiq architecture.
+> > > >
+> > > > > Signed-off-by: Matthias Kaehlcke <mka@chromium.org>
+> > > >
+> > > > I noticed that this patch sneaked through for this merge window but
+> > > > perhaps we can whip up a quick fix for -rc2?
+> > > >
+> > >
+> > > And please find attached a patch to fix this up. Andy, since this
+> > > hasn't landed yet (can we still squash this into the original patch?),
+> > > I couldn't add a Fixes tag.
+> > >
+> >
+> > I had the same concern. Thanks for catching this. I suspect this must
+> > cause some problem for IPA given that it can't discern between the big
+> > and little "power clusters"?
+>=20
+> Both EAS and IPA, I believe. It influences the scheduler's view of the
+> the topology.
 
-Cc: Ian Jackson <ian.jackson@citrix.com>
-Cc: Julien Grall <julien.grall@arm.com>
-Cc: Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc: Avaneesh Kumar Dwivedi <akdwived@codeaurora.org>
-Signed-off-by: Stephen Boyd <swboyd@chromium.org>
----
- drivers/firmware/qcom_scm.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
-
-diff --git a/drivers/firmware/qcom_scm.c b/drivers/firmware/qcom_scm.c
-index 153f13f72bac..e300cc272847 100644
---- a/drivers/firmware/qcom_scm.c
-+++ b/drivers/firmware/qcom_scm.c
-@@ -435,11 +435,11 @@ EXPORT_SYMBOL(qcom_scm_set_remote_state);
-  * @mem_sz:   size of the region.
-  * @srcvm:    vmid for current set of owners, each set bit in
-  *            flag indicate a unique owner
-- * @newvm:    array having new owners and corrsponding permission
-+ * @newvm:    array having new owners and corresponding permission
-  *            flags
-  * @dest_cnt: number of owners in next set.
-  *
-- * Return negative errno on failure, 0 on success, with @srcvm updated.
-+ * Return negative errno on failure or 0 on success with @srcvm updated.
-  */
- int qcom_scm_assign_mem(phys_addr_t mem_addr, size_t mem_sz,
- 			unsigned int *srcvm,
-@@ -502,7 +502,7 @@ int qcom_scm_assign_mem(phys_addr_t mem_addr, size_t mem_sz,
- 	dma_free_coherent(__scm->dev, ptr_sz, ptr, ptr_dma);
- 	if (ret) {
- 		dev_err(__scm->dev,
--			"Assign memory protection call failed %d.\n", ret);
-+			"Assign memory protection call failed %d\n", ret);
- 		return -EINVAL;
- 	}
- 
--- 
-Sent by a computer through tubes
+And EAS and IPA are OK with the real topology? I'm just curious if
+changing the topology to reflect reality will be a problem for those
+two.
 
