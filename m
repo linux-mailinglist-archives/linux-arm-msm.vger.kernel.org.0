@@ -2,97 +2,107 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 17DE621B93
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 17 May 2019 18:25:22 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E8C3821BFC
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 17 May 2019 18:48:22 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725933AbfEQQZV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 17 May 2019 12:25:21 -0400
-Received: from mail-wm1-f46.google.com ([209.85.128.46]:51980 "EHLO
-        mail-wm1-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726422AbfEQQZU (ORCPT
+        id S1727461AbfEQQrw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 17 May 2019 12:47:52 -0400
+Received: from mail-pf1-f194.google.com ([209.85.210.194]:43841 "EHLO
+        mail-pf1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727302AbfEQQrv (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 17 May 2019 12:25:20 -0400
-Received: by mail-wm1-f46.google.com with SMTP id c77so6025406wmd.1
-        for <linux-arm-msm@vger.kernel.org>; Fri, 17 May 2019 09:25:19 -0700 (PDT)
+        Fri, 17 May 2019 12:47:51 -0400
+Received: by mail-pf1-f194.google.com with SMTP id c6so3933962pfa.10
+        for <linux-arm-msm@vger.kernel.org>; Fri, 17 May 2019 09:47:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=8x2Jy6/gxZmiezgdFVn1BQR/C6WvCQ7LwkCWGJtj+hI=;
-        b=QaZHohHYfmwHjH4GvWttm3+9MJWC/0IJ5/Aro3Wu+pdYp7FyBA1SYgTXoWSUFJPpZF
-         yyHQmF+d2nOxFU8JzNBbveifLDji7skAw5dWHCnc+z2dSJGpNvs3685UrWXp7u0fXnd5
-         +mIt8qddf2y4wwI0ffXo+rr3bittdci8FYuzZbEonksAISNEquDZNrkAo5XghTlRP6AX
-         3fgq5Hoc7sWuMARPZuo19SMlYM30mYhupvF9gCXQHLGB0IZkJNwtZzNakL0qdAXdz749
-         nhDmsikrJAlgjjTZb5RDfxAY6A8BNFfIW+kWbROm6RTdRjoxVoQuBEPj3JjnQxchB9xj
-         Wl+w==
+        d=chromium.org; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=ZEOBQ+tiRCBCDhxOnqUK3ak9dZiYIaMI5j8XdfHoJPo=;
+        b=apNC443IjOu26zOUT73921FGrnZ1n43OPBcwr8RIvJ+ZwA785Xj8ae/wdc1rrNkXDy
+         23fQnlF+WLg7ie94sC7Saky9o7IuCQHw5EtDYIwfJ3Hhg5BFCSLEIgSAq/ijzHWjvVtg
+         gNLSxE2QaGgEAbJZHjlXf9OVihYSzy2yxrfjA=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
          :content-transfer-encoding;
-        bh=8x2Jy6/gxZmiezgdFVn1BQR/C6WvCQ7LwkCWGJtj+hI=;
-        b=gAWJh9svVhcM5yc6YXpuJpNbkfZsrQ+HCfT7lBaJv+QbniNWG8FR9svAG/dMPLFppj
-         0v1UJKkFAbBGeO+JK7HvMfxSJ84PfKXnillaoDMJIyKSjYbHXY0fbwQDM8ozohKXHZD+
-         W9olD/1AIuMtsICm8QWw5UDDmHqpZQlQdy2KbRVA6ujEK/0ZHKkm0l6pI4gDrBpk+B+H
-         8/a46C9dtvA6ZVcKmvA8GBbv/wmaFbwXNHEG7oeWxoodk7PXmguDoRanYT7YHUVijT5N
-         aw1egFo/k5CM2tETas9fPgPbmd/niUbt4+DrhtZ0M1YyRcXfk3ERZbHFJWOWcA8vWsZl
-         JWdA==
-X-Gm-Message-State: APjAAAXsOJuY2ZuMr+J12wEQ5VccM2bR1Fs9c9K/yuLjyV9/2q2g/umv
-        tqmHH4fsXGlBvnyR+TiHeuy7QQ==
-X-Google-Smtp-Source: APXvYqwPm5Uo6MeWvcRhGVDqKtnGQIbzB18KIfogvsXWSaBa2KfTjIHRF150v5mcpy4LLvwCUH28FQ==
-X-Received: by 2002:a7b:c344:: with SMTP id l4mr17740012wmj.25.1558110318183;
-        Fri, 17 May 2019 09:25:18 -0700 (PDT)
-Received: from [192.168.0.41] (sju31-1-78-210-255-2.fbx.proxad.net. [78.210.255.2])
-        by smtp.googlemail.com with ESMTPSA id k30sm13228108wrd.0.2019.05.17.09.25.16
+        bh=ZEOBQ+tiRCBCDhxOnqUK3ak9dZiYIaMI5j8XdfHoJPo=;
+        b=KFw6yiagUxiesEuQLVHzJdl9bxwuKNKsHyDIVDpOkEpUT0GP+sAI4i6FFCGN0pvSxV
+         YoZrW5kJI/zptOsjCKjHZtHdheWLeelfjWFNbycrZ8XZDX0XTGsddtl7fClQKMR1e+pB
+         e4JFf1hOxuVGQaT7dDokIe/b/+WvhyDQoqw3lozVyyvQpOOYV7GRwAU4v3UXHybGKWYd
+         BkQMqBpOhbtlYn4Briww3D/h8j4Fxk7nq9ElkhP19mKgw7+C8V6XidnmK46b6xrZRk7y
+         rLOvFBwIO6707vgidzVNHGODsnGT1zcrUJ3wt+VYqIkZy0L3iE63ARlEo9mA0+R/YBt9
+         EL5A==
+X-Gm-Message-State: APjAAAWHEd2Ml+NrhHC9go4w3Tv7mI685hUi4oPDUvAlSYpD0mPNeOCi
+        xjm/Mu5ktkPrHxvw73KBhXG0qA==
+X-Google-Smtp-Source: APXvYqxzWh7+qSyhy1qYyWLoyY4I2do1NdTj92SZJu+yMhoeS1eAS3iHOrpPbfYELyOXmcFNaUiphA==
+X-Received: by 2002:a63:170a:: with SMTP id x10mr56459139pgl.355.1558111671057;
+        Fri, 17 May 2019 09:47:51 -0700 (PDT)
+Received: from smtp.gmail.com ([2620:15c:202:1:fa53:7765:582b:82b9])
+        by smtp.gmail.com with ESMTPSA id l141sm12229810pfd.24.2019.05.17.09.47.50
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 17 May 2019 09:25:17 -0700 (PDT)
-Subject: Re: [PATCHv1 8/8] arm64: dts: qcom: sdm845: Add PSCI cpuidle low
- power states
-To:     Amit Kucheria <amit.kucheria@linaro.org>,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        bjorn.andersson@linaro.org, andy.gross@linaro.org,
-        David Brown <david.brown@linaro.org>,
-        Li Yang <leoyang.li@nxp.com>, Shawn Guo <shawnguo@kernel.org>
-Cc:     "Raju P.L.S.S.S.N" <rplsssn@codeaurora.org>,
-        devicetree@vger.kernel.org, mkshah@codeaurora.org
-References: <cover.1557486950.git.amit.kucheria@linaro.org>
- <044cd74e461a1dd7934f44531802f4b557264365.1557486950.git.amit.kucheria@linaro.org>
-From:   Daniel Lezcano <daniel.lezcano@linaro.org>
-Message-ID: <2132b7dd-8832-7db3-d05a-69eec3d5f139@linaro.org>
-Date:   Fri, 17 May 2019 18:25:16 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.6.1
+        Fri, 17 May 2019 09:47:50 -0700 (PDT)
+From:   Stephen Boyd <swboyd@chromium.org>
+To:     linux-kernel@vger.kernel.org
+Cc:     linux-arm-msm@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org, devicetree@vger.kernel.org,
+        Evan Green <evgreen@chromium.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Will Deacon <will.deacon@arm.com>,
+        Catalin Marinas <catalin.marinas@arm.com>
+Subject: [RFC/PATCH 0/5] Read-only memremap() proposal
+Date:   Fri, 17 May 2019 09:47:41 -0700
+Message-Id: <20190517164746.110786-1-swboyd@chromium.org>
+X-Mailer: git-send-email 2.21.0.1020.gf2820cf01a-goog
 MIME-Version: 1.0
-In-Reply-To: <044cd74e461a1dd7934f44531802f4b557264365.1557486950.git.amit.kucheria@linaro.org>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
 Content-Transfer-Encoding: 8bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 10/05/2019 13:29, Amit Kucheria wrote:
-> From: "Raju P.L.S.S.S.N" <rplsssn@codeaurora.org>
-> 
-> Add device bindings for cpuidle states for cpu devices.
-> 
-> [amit: rename the idle-states to more generic names and fixups]
-> 
-> Cc: <devicetree@vger.kernel.org>
-> Cc: <mkshah@codeaurora.org>
-> Signed-off-by: Raju P.L.S.S.S.N <rplsssn@codeaurora.org>
-> Reviewed-by: Evan Green <evgreen@chromium.org>
-> Signed-off-by: Amit Kucheria <amit.kucheria@linaro.org>
+This patch series implements a read-only version of memremap() via
+a new MEMREMAP_RO flag. If this is passed in the mapping call, we'll
+try to map the memory region as read-only if it doesn't intersect
+with an existing mapping. Otherwise, we'll try to fallback to other
+flags to try to map the memory that way.
 
-Acked-by: Daniel Lezcano <daniel.lezcano@linaro.org>
+The main use case I have is to map the command-db memory region on
+Qualcomm devices with a read-only mapping. It's already a const marked
+pointer and the API returns const pointers as well, so this series makes
+sure that even stray writes can't modify the memory. To get there we
+introduce a devm version of memremap() for a reserved memory region, add
+a memremap() flag, and implement support for that flag on arm64.
+
+Cc: Evan Green <evgreen@chromium.org>
+Cc: Rob Herring <robh+dt@kernel.org>
+Cc: Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc: Andy Gross <agross@kernel.org>
+Cc: Will Deacon <will.deacon@arm.com>
+Cc: Catalin Marinas <catalin.marinas@arm.com>
+
+Stephen Boyd (5):
+  reserved_mem: Add a devm_memremap_reserved_mem() API
+  soc: qcom: cmd-db: Migrate to devm_memremap_reserved_mem()
+  memremap: Add support for read-only memory mappings
+  arm64: Add support for arch_memremap_ro()
+  soc: qcom: cmd-db: Map with read-only mappings
+
+ arch/arm64/include/asm/io.h     |  1 +
+ drivers/of/of_reserved_mem.c    | 45 +++++++++++++++++++++++++++++++++
+ drivers/soc/qcom/cmd-db.c       | 14 +++-------
+ include/linux/io.h              |  1 +
+ include/linux/of_reserved_mem.h |  6 +++++
+ kernel/iomem.c                  | 15 +++++++++--
+ 6 files changed, 70 insertions(+), 12 deletions(-)
 
 
-
+base-commit: 9e98c678c2d6ae3a17cb2de55d17f69dddaa231b
+prerequisite-patch-id: 62119e27c0c0686e02f0cb55c296b878fb7f5e47
+prerequisite-patch-id: bda32cfc1733c245ae3f141d7c27b18e4adcc628
+prerequisite-patch-id: b8f8097161bd15e87d54dcfbfa67b9ca1abc7204
 -- 
- <http://www.linaro.org/> Linaro.org │ Open source software for ARM SoCs
-
-Follow Linaro:  <http://www.facebook.com/pages/Linaro> Facebook |
-<http://twitter.com/#!/linaroorg> Twitter |
-<http://www.linaro.org/linaro-blog/> Blog
+Sent by a computer through tubes
 
