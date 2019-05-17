@@ -2,120 +2,105 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id ED61321D5D
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 17 May 2019 20:35:15 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 502E721E19
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 17 May 2019 21:16:44 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726750AbfEQSfN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 17 May 2019 14:35:13 -0400
-Received: from mail-ua1-f67.google.com ([209.85.222.67]:37185 "EHLO
-        mail-ua1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726554AbfEQSfN (ORCPT
+        id S1727439AbfEQTQm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 17 May 2019 15:16:42 -0400
+Received: from smtp.codeaurora.org ([198.145.29.96]:49978 "EHLO
+        smtp.codeaurora.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727320AbfEQTQm (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 17 May 2019 14:35:13 -0400
-Received: by mail-ua1-f67.google.com with SMTP id t18so3063080uar.4
-        for <linux-arm-msm@vger.kernel.org>; Fri, 17 May 2019 11:35:13 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=D7Ld6ak/BcDR+qMn0+Bwsy5o52SxdEie1Dd6vVWMNQc=;
-        b=f0K0xxpVCF0ZLjARllhNmUlWPrNzNN5Nc31omR/w66TNZzX+6LZi+uLIHRG3pOjbld
-         Gz5edzdihDaQQN/cpB2qydPoWipFpiGBOL0D0BXOabrGcCiX/KO1sGrfrMjUCGjDWKd7
-         jKY9WFgb8JoT9kHtActzd8jbPHp6fFMTBZJ+s=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=D7Ld6ak/BcDR+qMn0+Bwsy5o52SxdEie1Dd6vVWMNQc=;
-        b=cGp0FIV/pqmmDkJXEvgCdByUILalDtvWG3cmLGjvnxI0Ub7Ntkklvwjlmu6yQuER41
-         hwGUDkQcct5D5/wtbWBQSeZaoH3qTwAAlyYwX3S1bvzS/w2A9v7jTXAp4jgeQDdU9V0+
-         S9eopF0hYqx1c0f5O1XeE3yHOjcZ0mJ9jg9OWwXQoHu7Vys8bflSyamyGzZjcARhNjul
-         CtZhlqUWVjNoi3ZBFjtZ3UV4Duqg7A8pEkeWTor4r+7TrtAYrZPePy1TMYNvqulcj0kc
-         KF9LnTJcwMVezOYmr8IGav3nMlR84LKZidwuO/hwYSlTDbMvbGfqfTfQGrDQVFXztzAP
-         NLqw==
-X-Gm-Message-State: APjAAAU8Ve/VJmcp9XuhtsQFpN1D3LhcOCmWWrKQ9OCBYB12YVoMNkd2
-        Eu+sXNQKsfdnKOYcCylu84H1mgbV1yE=
-X-Google-Smtp-Source: APXvYqwQgVTUi4QHqTwW9JzJL+EH8sSa/CMX1py3pfsZ40u703+Fwmgo36qaN6E3MPVN8hdKB8G7oA==
-X-Received: by 2002:ab0:1410:: with SMTP id b16mr27333321uae.1.1558118112002;
-        Fri, 17 May 2019 11:35:12 -0700 (PDT)
-Received: from mail-ua1-f50.google.com (mail-ua1-f50.google.com. [209.85.222.50])
-        by smtp.gmail.com with ESMTPSA id b83sm6378298vsd.32.2019.05.17.11.35.10
-        for <linux-arm-msm@vger.kernel.org>
-        (version=TLS1_3 cipher=AEAD-AES128-GCM-SHA256 bits=128/128);
-        Fri, 17 May 2019 11:35:11 -0700 (PDT)
-Received: by mail-ua1-f50.google.com with SMTP id d4so3056342uaj.7
-        for <linux-arm-msm@vger.kernel.org>; Fri, 17 May 2019 11:35:10 -0700 (PDT)
-X-Received: by 2002:a9f:24a3:: with SMTP id 32mr5229332uar.109.1558118110537;
- Fri, 17 May 2019 11:35:10 -0700 (PDT)
+        Fri, 17 May 2019 15:16:42 -0400
+Received: by smtp.codeaurora.org (Postfix, from userid 1000)
+        id DC8E860275; Fri, 17 May 2019 19:16:41 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
+        s=default; t=1558120601;
+        bh=UDu0988ZE+VQBR50SgJEt/dR2lv42ytmm9zgN71+Qlg=;
+        h=Subject:To:Cc:References:From:Date:In-Reply-To:From;
+        b=OrBVinkcuh1jiRpHR+jEUx8gGVeVx2nWoaqEvPm2vSvBoTy74pq5bMN3C0b6cHOCz
+         i1juxM8hVd0hEFvyPPpyEoo5PtLybM8gNyJ2CWzIeqDkmQ/ul2UfNkeTheE14VXqpF
+         S+UN/Pp9BwqV+JfH3wQ8Y6areQgX+7juWB7OcNB0=
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        pdx-caf-mail.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.7 required=2.0 tests=ALL_TRUSTED,BAYES_00,
+        DKIM_INVALID,DKIM_SIGNED,SPF_NONE autolearn=no autolearn_force=no
+        version=3.4.0
+Received: from [10.226.58.28] (i-global254.qualcomm.com [199.106.103.254])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: jhugo@smtp.codeaurora.org)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id BC32860735;
+        Fri, 17 May 2019 19:16:40 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
+        s=default; t=1558120601;
+        bh=UDu0988ZE+VQBR50SgJEt/dR2lv42ytmm9zgN71+Qlg=;
+        h=Subject:To:Cc:References:From:Date:In-Reply-To:From;
+        b=OrBVinkcuh1jiRpHR+jEUx8gGVeVx2nWoaqEvPm2vSvBoTy74pq5bMN3C0b6cHOCz
+         i1juxM8hVd0hEFvyPPpyEoo5PtLybM8gNyJ2CWzIeqDkmQ/ul2UfNkeTheE14VXqpF
+         S+UN/Pp9BwqV+JfH3wQ8Y6areQgX+7juWB7OcNB0=
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org BC32860735
+Authentication-Results: pdx-caf-mail.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: pdx-caf-mail.web.codeaurora.org; spf=none smtp.mailfrom=jhugo@codeaurora.org
+Subject: Re: [PATCH] clk: qcom: gdsc: WARN when failing to toggle
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>
+Cc:     linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+References: <20190504001736.8598-1-bjorn.andersson@linaro.org>
+From:   Jeffrey Hugo <jhugo@codeaurora.org>
+Message-ID: <fa15fb15-3597-8563-bf30-518ce345a232@codeaurora.org>
+Date:   Fri, 17 May 2019 13:16:39 -0600
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:60.0) Gecko/20100101
+ Thunderbird/60.6.1
 MIME-Version: 1.0
-References: <20190517015305.23194-1-robdclark@gmail.com>
-In-Reply-To: <20190517015305.23194-1-robdclark@gmail.com>
-From:   Doug Anderson <dianders@chromium.org>
-Date:   Fri, 17 May 2019 11:34:59 -0700
-X-Gmail-Original-Message-ID: <CAD=FV=XWz9iigg-GWrKZdsYePhH7==d3hZ9kZDXKeEuwLXOhaw@mail.gmail.com>
-Message-ID: <CAD=FV=XWz9iigg-GWrKZdsYePhH7==d3hZ9kZDXKeEuwLXOhaw@mail.gmail.com>
-Subject: Re: [PATCH] arm64: dts: qcom: sdm845-cheza: add initial cheza dt
-To:     Rob Clark <robdclark@gmail.com>
-Cc:     linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Rob Clark <robdclark@chromium.org>,
-        Sibi Sankar <sibis@codeaurora.org>,
-        Evan Green <evgreen@chromium.org>,
-        Matthias Kaehlcke <mka@chromium.org>,
-        Abhinav Kumar <abhinavk@codeaurora.org>,
-        Brian Norris <briannorris@chromium.org>,
-        Venkat Gopalakrishnan <venkatg@codeaurora.org>,
-        Rajendra Nayak <rnayak@codeaurora.org>,
-        Andy Gross <andy.gross@linaro.org>,
-        David Brown <david.brown@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Mark Rutland <mark.rutland@arm.com>,
-        devicetree@vger.kernel.org, LKML <linux-kernel@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+In-Reply-To: <20190504001736.8598-1-bjorn.andersson@linaro.org>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi,
+On 5/3/2019 6:17 PM, Bjorn Andersson wrote:
+> Failing to toggle a GDSC as the driver core is attaching the
+> power-domain to a device will cause a silent probe deferral. Provide an
+> explicit warning to the developer, in order to reduce the amount of time
+> it take to debug this.
+> 
+> Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
 
-On Thu, May 16, 2019 at 6:53 PM Rob Clark <robdclark@gmail.com> wrote:
->
-> From: Rob Clark <robdclark@chromium.org>
->
-> This is essentialy a squash of a bunch of history of cheza dt updates
-> from chromium kernel, some of which were themselves squashes of history
-> from older chromium kernels.
->
-> I don't claim any credit other than wanting to more easily boot upstream
-> kernel on cheza to have an easier way to test upstream driver work ;-)
->
-> I've added below in Cc tags all the original actual authors (apologies
-> if I missed any).
->
-> Cc: Douglas Anderson <dianders@chromium.org>
-> Cc: Sibi Sankar <sibis@codeaurora.org>
-> Cc: Evan Green <evgreen@chromium.org>
-> Cc: Matthias Kaehlcke <mka@chromium.org>
-> Cc: Abhinav Kumar <abhinavk@codeaurora.org>
-> Cc: Brian Norris <briannorris@chromium.org>
-> Cc: Venkat Gopalakrishnan <venkatg@codeaurora.org>
-> Cc: Rajendra Nayak <rnayak@codeaurora.org>
-> Signed-off-by: Rob Clark <robdclark@chromium.org>
+Reviewed-by: Jeffrey Hugo <jhugo@codeaurora.org>
+Tested-by: Jeffrey Hugo <jhugo@codeaurora.org>
+
 > ---
-> Updated from review comments and squashed.  I left out the the patch
-> related to deleting gpu_mem/zap_shader nodes as the corresponding
-> patch that adds them in sdm845.dtsi hasn't landed yet, but once it
-> has we will need to revisit that patch for cheza.
->
->  arch/arm64/boot/dts/qcom/Makefile            |    3 +
->  arch/arm64/boot/dts/qcom/sdm845-cheza-r1.dts |  238 ++++
->  arch/arm64/boot/dts/qcom/sdm845-cheza-r2.dts |  238 ++++
->  arch/arm64/boot/dts/qcom/sdm845-cheza-r3.dts |  174 +++
->  arch/arm64/boot/dts/qcom/sdm845-cheza.dtsi   | 1326 ++++++++++++++++++
->  5 files changed, 1979 insertions(+)
+>   drivers/clk/qcom/gdsc.c | 4 +++-
+>   1 file changed, 3 insertions(+), 1 deletion(-)
+> 
+> diff --git a/drivers/clk/qcom/gdsc.c b/drivers/clk/qcom/gdsc.c
+> index dd63aa36b092..6a8a4996dde3 100644
+> --- a/drivers/clk/qcom/gdsc.c
+> +++ b/drivers/clk/qcom/gdsc.c
+> @@ -149,7 +149,9 @@ static int gdsc_toggle_logic(struct gdsc *sc, enum gdsc_status status)
+>   		udelay(1);
+>   	}
+>   
+> -	return gdsc_poll_status(sc, status);
+> +	ret = gdsc_poll_status(sc, status);
+> +	WARN(ret, "%s status stuck at 'o%s'", sc->pd.name, status ? "ff" : "n");
+> +	return ret;
+>   }
+>   
+>   static inline int gdsc_deassert_reset(struct gdsc *sc)
+> 
 
-Looks sane to me.  Thanks!
 
-Reviewed-by: Douglas Anderson <dianders@chromium.org>
+-- 
+Jeffrey Hugo
+Qualcomm Datacenter Technologies as an affiliate of Qualcomm 
+Technologies, Inc.
+Qualcomm Technologies, Inc. is a member of the
+Code Aurora Forum, a Linux Foundation Collaborative Project.
