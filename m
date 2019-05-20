@@ -2,68 +2,103 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 15D7C23B8D
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 May 2019 17:05:34 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 8D8DF23BAF
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 May 2019 17:08:01 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2387869AbfETPFW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 20 May 2019 11:05:22 -0400
-Received: from ns.iliad.fr ([212.27.33.1]:40362 "EHLO ns.iliad.fr"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1730766AbfETPFU (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 20 May 2019 11:05:20 -0400
-Received: from ns.iliad.fr (localhost [127.0.0.1])
-        by ns.iliad.fr (Postfix) with ESMTP id 157B420BCE;
-        Mon, 20 May 2019 17:05:19 +0200 (CEST)
-Received: from [192.168.108.49] (freebox.vlq16.iliad.fr [213.36.7.13])
-        by ns.iliad.fr (Postfix) with ESMTP id E906920B17;
-        Mon, 20 May 2019 17:05:18 +0200 (CEST)
-Subject: Re: [PATCH] arm64/io: Don't use WZR in writel
-To:     Robin Murphy <robin.murphy@arm.com>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     Will Deacon <will.deacon@arm.com>,
-        Catalin Marinas <catalin.marinas@arm.com>,
-        Mark Rutland <mark.rutland@arm.com>,
-        MSM <linux-arm-msm@vger.kernel.org>,
-        Jeffrey Hugo <jhugo@codeaurora.org>,
-        AngeloGioacchino Del Regno <kholk11@gmail.com>,
-        Linux ARM <linux-arm-kernel@lists.infradead.org>
-References: <68b71c15f32341468a868f6418e4fcb375bc49ba.camel@gmail.com>
- <20190211105755.GB30880@fuggles.cambridge.arm.com>
- <38d8965a-cd41-17cf-1b95-8dd58c079be4@arm.com>
- <874c702b8af760aa8fae38d478c79e3ecba00515.camel@gmail.com>
- <235d20ef-3054-69d9-975d-25aebf32aad3@arm.com>
- <20190223181254.GC572@tuxbook-pro> <86zhqm8i6d.wl-marc.zyngier@arm.com>
- <20190224035356.GD572@tuxbook-pro>
- <33d765b5-1807-fa6c-1ceb-99f09f7c8d5a@free.fr>
- <8eb4f446-6152-ffb6-9529-77fb0bcc307f@arm.com>
- <7b5e8bb1-d339-07f7-66f6-7f09df2107c4@free.fr>
- <3757fc2d-0587-be46-8f75-6d79906be8bd@arm.com>
- <5b83a4c2-1f0e-337f-a78d-f7d84fe01ab3@free.fr>
- <a6f89d1a-e7bb-bae9-6666-f4d5b263b835@free.fr>
- <b7a3c9d1-6bbc-1f14-956f-ee4dd3bce175@arm.com>
-From:   Marc Gonzalez <marc.w.gonzalez@free.fr>
-Message-ID: <c70264f1-98cc-7e4f-2e3b-08b5cb15c3ed@free.fr>
-Date:   Mon, 20 May 2019 17:05:18 +0200
+        id S1733186AbfETPH4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 20 May 2019 11:07:56 -0400
+Received: from mail-wm1-f65.google.com ([209.85.128.65]:40645 "EHLO
+        mail-wm1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1730986AbfETPH4 (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 20 May 2019 11:07:56 -0400
+Received: by mail-wm1-f65.google.com with SMTP id 15so9372873wmg.5
+        for <linux-arm-msm@vger.kernel.org>; Mon, 20 May 2019 08:07:54 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=3FCkJMun06bDUVWTAvV42COQZNf02FQ8u62uqqJiOUg=;
+        b=EzqGCTeHr1mxFc/IIH/eDfjStg8gyhuoN7DpS3KC+9YyD2U5qUFrxigfAPSw4xCK0n
+         MbFMfVEOChtVmivqDSSSqSdBP3ZUHRXbQeZnffYrr5TFW05A/RTwj9wSOys1oOBiK7Kn
+         756EffHkeyW9iNA3rer9/kTbd0tCHUioS2XLz87ZX+N064+Xf6rkHhwy8KE+y7oEyesr
+         R97BQK76VTBbxwl9u0OZEWgkWPOIjjyLF6bYkoAnCkgPenv0vd90n2fkKE9bJX83L0y0
+         m+h207nWDlglAG/p4vFzjhXcwihCxdRteNjfqS7l6EO1UZGbWL8o8my6Nr28LXx0tks9
+         MGlA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=3FCkJMun06bDUVWTAvV42COQZNf02FQ8u62uqqJiOUg=;
+        b=Y2Oq12BOkPHVA5fc/Ar4hWp2aRt6wUo/1M9mAy8/75pMTYO+B9LfjP8YbyQkdJYpuj
+         hx4SkfNIa59Vn/+RThV/8jSHPveeDYI/qdjhWt6+gd6yUkq/G/70XoBlrVF/lae32IuB
+         VQs9HaN/xF9zfFt+Xl4hbPsxYkp/v7m3F1VTT2rBlu+HGoRHKe5cfmyEU64MEoyew/eQ
+         91DWkIRRNeC4Gldm40OWKcbi7SpLB92YVWYpj9LfXeWAd60F0Jj0X6ayVyI+XL9tQ3dF
+         0r/Jup/zS/qlHjfUSbzOu5IfN+U6EgEQnZ0XVMl0rFXb95GDwI3Wq4wXcEiRAeEtGx/7
+         xbew==
+X-Gm-Message-State: APjAAAXF+7MMMm+pNbcSqkbJvkKLwpRIkJJhUG/AgL0JtRzXj6McrOyj
+        z8TgOPqKPrXQbm0dthTi3eQbUA==
+X-Google-Smtp-Source: APXvYqzjhtWs2ECOpc6DH3Regf74W/w90rqJ9sdZ9gYa3j955AR0Pgj0HE8TQfallTTr07Ejd0Hg2Q==
+X-Received: by 2002:a1c:f10f:: with SMTP id p15mr9221577wmh.150.1558364873726;
+        Mon, 20 May 2019 08:07:53 -0700 (PDT)
+Received: from [192.168.1.7] (139.red-79-146-81.dynamicip.rima-tde.net. [79.146.81.139])
+        by smtp.gmail.com with ESMTPSA id l12sm16472733wmj.0.2019.05.20.08.07.52
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Mon, 20 May 2019 08:07:53 -0700 (PDT)
+Subject: Re: [PATCH] tty: serial: msm_serial: Fix XON/XOFF
+To:     Stephen Boyd <sboyd@kernel.org>, agross@kernel.org,
+        david.brown@linaro.org, gregkh@linuxfoundation.org
+Cc:     jslaby@suse.com, keescook@chromium.org, anton@enomsg.org,
+        ccross@android.com, tony.luck@intel.com,
+        linux-arm-msm@vger.kernel.org, linux-serial@vger.kernel.org,
+        linux-kernel@vger.kernel.org, khasim.mohammed@linaro.org,
+        agsumit@qti.qualcomm.com
+References: <20190520103435.30850-1-jorge.ramirez-ortiz@linaro.org>
+ <20190520145110.7BDAE21721@mail.kernel.org>
+ <254704a2-ee20-30cd-8362-6e1bd23ec090@linaro.org>
+ <f0c89b84-7c3d-596d-06e1-cb5172e62970@linaro.org>
+ <20190520150320.5DBC520856@mail.kernel.org>
+From:   Jorge Ramirez <jorge.ramirez-ortiz@linaro.org>
+Message-ID: <c728b454-1aa5-da93-8ed7-f6e4ad75fc4a@linaro.org>
+Date:   Mon, 20 May 2019 17:07:51 +0200
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.6.1
+ Thunderbird/60.2.1
 MIME-Version: 1.0
-In-Reply-To: <b7a3c9d1-6bbc-1f14-956f-ee4dd3bce175@arm.com>
+In-Reply-To: <20190520150320.5DBC520856@mail.kernel.org>
 Content-Type: text/plain; charset=utf-8
 Content-Language: en-US
 Content-Transfer-Encoding: 7bit
-X-Virus-Scanned: ClamAV using ClamSMTP ; ns.iliad.fr ; Mon May 20 17:05:19 2019 +0200 (CEST)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 03/05/2019 14:48, Robin Murphy wrote:
+On 5/20/19 17:03, Stephen Boyd wrote:
+> Quoting Jorge Ramirez (2019-05-20 07:58:54)
+>> On 5/20/19 16:56, Jorge Ramirez wrote:
+>>>
+>>> yeah, semantically confusing msm_reset_dm_count is what really matters:
+>>> it tells the hardware to only take n bytes (in this case only one) so
+>>> the others will be ignored
+>>
+>> um after I said this, maybe iowrite32_rep should only be applied to
+>> uartdm ... what do you think?
+>>
+> 
+> Probably. The uartdm hardware typically required words everywhere while
+> the pre-dm hardware didn't. It's an if condition so it should be OK.
+> 
+> It may be time to remove non-uartdm support from this driver
+> all-together. From what I recall the only devices that are upstream are
+> the uartdm ones, so it may be easier to just remove the legacy stuff
+> that nobody has tested in many years.
+> 
+> 
 
-> Anyway, I'll clean up my patch and post it properly - thanks to you and 
-> Bjorn for testing.
+should this be merged before removing the non-uartdm support or after?
 
-Ideally, the "wzr work-around" would land early enough in the 5.2 RC cycle
-that it remains possible to submit the msm8998 anoc1 smmu and PCIe DT nodes
-(the latter requires the former) in time for the 5.3 merge window.
+I also have some other changes - in particular with respect to the usage
+of fifosize which according to the documentation is in words not in bytes.
 
-Regards.
+
