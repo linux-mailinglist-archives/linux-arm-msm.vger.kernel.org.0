@@ -2,79 +2,90 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 8B4BC22E21
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 May 2019 10:14:44 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B9DB923092
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 May 2019 11:41:43 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727108AbfETIOn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 20 May 2019 04:14:43 -0400
-Received: from ns.iliad.fr ([212.27.33.1]:60906 "EHLO ns.iliad.fr"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1730549AbfETIOn (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 20 May 2019 04:14:43 -0400
-Received: from ns.iliad.fr (localhost [127.0.0.1])
-        by ns.iliad.fr (Postfix) with ESMTP id 4DCA520B5F;
-        Mon, 20 May 2019 10:14:41 +0200 (CEST)
-Received: from [192.168.108.49] (freebox.vlq16.iliad.fr [213.36.7.13])
-        by ns.iliad.fr (Postfix) with ESMTP id 3973020AC3;
-        Mon, 20 May 2019 10:14:41 +0200 (CEST)
-Subject: Re: [PATCH] clk: qcom: gdsc: WARN when failing to toggle
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>
-Cc:     MSM <linux-arm-msm@vger.kernel.org>,
-        linux-clk <linux-clk@vger.kernel.org>,
-        LKML <linux-kernel@vger.kernel.org>
-References: <20190504001736.8598-1-bjorn.andersson@linaro.org>
-From:   Marc Gonzalez <marc.w.gonzalez@free.fr>
-Message-ID: <68b73077-9fff-9b4c-bf6a-8aca24a814d7@free.fr>
-Date:   Mon, 20 May 2019 10:14:41 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.6.1
+        id S1730272AbfETJlm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 20 May 2019 05:41:42 -0400
+Received: from esa3.hc3370-68.iphmx.com ([216.71.145.155]:45263 "EHLO
+        esa3.hc3370-68.iphmx.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726126AbfETJlm (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 20 May 2019 05:41:42 -0400
+Authentication-Results: esa3.hc3370-68.iphmx.com; dkim=none (message not signed) header.i=none; spf=None smtp.pra=ian.jackson@citrix.com; spf=SoftFail smtp.mailfrom=Ian.Jackson@citrix.com; spf=None smtp.helo=postmaster@MIAPEX02MSOL01.citrite.net
+Received-SPF: None (esa3.hc3370-68.iphmx.com: no sender
+  authenticity information available from domain of
+  ian.jackson@citrix.com) identity=pra; client-ip=23.29.105.83;
+  receiver=esa3.hc3370-68.iphmx.com;
+  envelope-from="Ian.Jackson@citrix.com";
+  x-sender="ian.jackson@citrix.com";
+  x-conformance=sidf_compatible
+Received-SPF: SoftFail (esa3.hc3370-68.iphmx.com: domain of
+  Ian.Jackson@citrix.com is inclined to not designate
+  23.29.105.83 as permitted sender) identity=mailfrom;
+  client-ip=23.29.105.83; receiver=esa3.hc3370-68.iphmx.com;
+  envelope-from="Ian.Jackson@citrix.com";
+  x-sender="Ian.Jackson@citrix.com";
+  x-conformance=sidf_compatible; x-record-type="v=spf1";
+  x-record-text="v=spf1 include:spf.citrix.com
+  include:spf2.citrix.com include:ironport.citrix.com
+  exists:%{i}._spf.mta.salesforce.com ~all"
+Received-SPF: None (esa3.hc3370-68.iphmx.com: no sender
+  authenticity information available from domain of
+  postmaster@MIAPEX02MSOL01.citrite.net) identity=helo;
+  client-ip=23.29.105.83; receiver=esa3.hc3370-68.iphmx.com;
+  envelope-from="Ian.Jackson@citrix.com";
+  x-sender="postmaster@MIAPEX02MSOL01.citrite.net";
+  x-conformance=sidf_compatible
+IronPort-SDR: dnz1Zx+CAoiM3RfLC4Bmi/p8WvU7bajFuyeAs59B/Mn7RamN0mPE6Nb73DFK8O6GY+LUpRZdkC
+ WkZDgDWgMV3uWeUdEuiU8nXB5qusrEtfKVkmYfsYNWJ79+eL4AbTv/WRIpdyeR0jluInvolqnT
+ ZTqCo6geGsJjvUaizZw4CORi+J4Y3QWBJC246L21RuvgbZzhzOEUHeISQqBqgjWwiWuPmPvYI7
+ a4oarXwDsbrPJ9EC2kR+PSXsByW6JXB2oPf7Hc6Fh4PXtlnv2Gx1C4GgWgkbr84k+o4hQTS6b3
+ 6wY=
+X-SBRS: 2.7
+X-MesageID: 649610
+X-Ironport-Server: esa3.hc3370-68.iphmx.com
+X-Remote-IP: 23.29.105.83
+X-Policy: $RELAYED
+X-IronPort-AV: E=Sophos;i="5.60,491,1549947600"; 
+   d="scan'208";a="649610"
+From:   Ian Jackson <ian.jackson@citrix.com>
 MIME-Version: 1.0
-In-Reply-To: <20190504001736.8598-1-bjorn.andersson@linaro.org>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
+Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
-X-Virus-Scanned: ClamAV using ClamSMTP ; ns.iliad.fr ; Mon May 20 10:14:41 2019 +0200 (CEST)
+Message-ID: <23778.30265.117488.781364@mariner.uk.xensource.com>
+Date:   Mon, 20 May 2019 10:41:13 +0100
+To:     Stephen Boyd <swboyd@chromium.org>
+CC:     Andy Gross <agross@kernel.org>,
+        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
+        "linux-arm-msm@vger.kernel.org" <linux-arm-msm@vger.kernel.org>,
+        Julien Grall <julien.grall@arm.com>,
+        "Bjorn Andersson" <bjorn.andersson@linaro.org>,
+        Avaneesh Kumar Dwivedi <akdwived@codeaurora.org>
+Subject: [PATCH 1/3] firmware: qcom_scm: Use proper types for dma mappings
+In-Reply-To: <20190517210923.202131-2-swboyd@chromium.org>
+References: <23774.56553.445601.436491@mariner.uk.xensource.com>
+        <20190517210923.202131-2-swboyd@chromium.org>
+X-Mailer: VM 8.2.0b under 24.5.1 (i686-pc-linux-gnu)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 04/05/2019 02:17, Bjorn Andersson wrote:
+Stephen Boyd writes ("[PATCH 1/3] firmware: qcom_scm: Use proper types for dma mappings"):
+> We need to use the proper types and convert between physical addresses
+> and dma addresses here to avoid mismatch warnings. This is especially
+> important on systems with a different size for dma addresses and
+> physical addresses. Otherwise, we get the following warning:
 
-> Failing to toggle a GDSC as the driver core is attaching the
-> power-domain to a device will cause a silent probe deferral. Provide an
-> explicit warning to the developer, in order to reduce the amount of time
-> it take to debug this.
+Thanks.  Do you expect this to be a backport candidate and if so how
+far back do you think it will go ?  To be honest, I am not really
+convinced that backporting this would be a service to users.  The
+situation I have, where I changed the compiler but kept the old kernel
+code and old configuration, is going to be fairly rare.
 
-"it takes"
+I think I should probably therefore disable this driver in the config
+on stable branches of Linux, at least.
 
-> Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
-> ---
->  drivers/clk/qcom/gdsc.c | 4 +++-
->  1 file changed, 3 insertions(+), 1 deletion(-)
-> 
-> diff --git a/drivers/clk/qcom/gdsc.c b/drivers/clk/qcom/gdsc.c
-> index dd63aa36b092..6a8a4996dde3 100644
-> --- a/drivers/clk/qcom/gdsc.c
-> +++ b/drivers/clk/qcom/gdsc.c
-> @@ -149,7 +149,9 @@ static int gdsc_toggle_logic(struct gdsc *sc, enum gdsc_status status)
->  		udelay(1);
->  	}
->  
-> -	return gdsc_poll_status(sc, status);
-> +	ret = gdsc_poll_status(sc, status);
-> +	WARN(ret, "%s status stuck at 'o%s'", sc->pd.name, status ? "ff" : "n");
-> +	return ret;
-
-In my opinion, the minor obfuscation of "o%s", foo ? "ff" : "n"
-does not justify the tiny space savings.
-
-I'd spell it out: "%s", foo ? "off" : "on"
-
-In any event:
-
-Reviewed-by: Marc Gonzalez <marc.w.gonzalez@free.fr>
-
-Regards.
+Thanks,
+Ian.
