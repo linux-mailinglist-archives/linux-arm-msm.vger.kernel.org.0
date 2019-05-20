@@ -2,134 +2,91 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 2E73F23ACD
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 May 2019 16:47:59 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C079423B38
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 May 2019 16:51:14 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2390155AbfETOrt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 20 May 2019 10:47:49 -0400
-Received: from mail-lj1-f195.google.com ([209.85.208.195]:40067 "EHLO
-        mail-lj1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1732533AbfETOrt (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 20 May 2019 10:47:49 -0400
-Received: by mail-lj1-f195.google.com with SMTP id q62so3243345ljq.7
-        for <linux-arm-msm@vger.kernel.org>; Mon, 20 May 2019 07:47:48 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=from:subject:to:cc:references:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=lduM1D/30FHnKa/TxamjAn4bdPB0y468JNuwks7lSTQ=;
-        b=ZC0heqctg4mOdx1j9EMHSRagFdJdZJ6b9kHkjDQxtco1Csn3xTmsBYjOmu9YOcA7Q2
-         717eB1oJLOdvSZ3Vbzl9SlvBWMkMynGOxlLvsfSYGXyPmFsJnr+qT48ftsNhXTTVtnjj
-         +E7nwypgTJ0Hh66RUR0VT6tZoIi8XHPj7TBnsX7ru9FfzjfvfmX74muund4krn1SFnsS
-         x9CopEVxxXevkrxfb98W12dtpSPuwb7bCFnwSbsj2//qAXEIRBDRzJShhbNPI/mlnBCR
-         iqrNazpmDZG2NwOrYWo1iDsBcX55HVhBpE/aYqWVIw2JJm1CdU+RxAZ8aajGL3IbsBFG
-         9g5A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:subject:to:cc:references:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=lduM1D/30FHnKa/TxamjAn4bdPB0y468JNuwks7lSTQ=;
-        b=X+7NelAE91M1o9k+lpANUvME3pJxgRASeJ/6BgCgoox3RisyoSF0yUQ4aT8AyTRMFt
-         H3IsIatGN4DJjDiSMBk/zCz4/NjAOoj5GiT8C6SGZf9AIC9Z1hvXqvO5PEUb6OS3KwhM
-         NdZ5rCSoa1OPZjF4dSJFsWvr2KbMoMmk5pFPimQwNR+oAk/e9cD73X7GDCozwsZZ6Kkg
-         EtGt+CN1lc3f3RQCldnM23ZcAj7Ly7u/Ta8jIAyZrhligeftFqw0ZEKYZZzTLwFnVB1t
-         dqbIFbSGCeHTFvOaxaGMrzeqqUx9xWDNfrUZ6GZdrJminOGdL3Wtoq8HQGp9ObxmDT5K
-         Db8Q==
-X-Gm-Message-State: APjAAAWwZdunOM6SExSeHKV65gLJCMYFbSDpw57bO5MmgGVB1Lm4Em1L
-        FPE8xG6NJHBrzXgLu5w/s2Bevw==
-X-Google-Smtp-Source: APXvYqy49HmF/zVtrpBI/4FFwPmxErLVpwCnhMGaASUN4pBhhjDI0xWaYrQSipQDNjEyeHj1TIVEgg==
-X-Received: by 2002:a2e:6c0b:: with SMTP id h11mr2381223ljc.15.1558363667338;
-        Mon, 20 May 2019 07:47:47 -0700 (PDT)
-Received: from [192.168.27.209] ([37.157.136.206])
-        by smtp.googlemail.com with ESMTPSA id z3sm3805757ljg.78.2019.05.20.07.47.45
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 20 May 2019 07:47:46 -0700 (PDT)
-From:   Stanimir Varbanov <stanimir.varbanov@linaro.org>
-Subject: Re: [PATCH 10/10] venus: dec: make decoder compliant with stateful
- codec API
-To:     Tomasz Figa <tfiga@chromium.org>
-Cc:     Hans Verkuil <hverkuil@xs4all.nl>,
-        Linux Media Mailing List <linux-media@vger.kernel.org>,
-        Mauro Carvalho Chehab <mchehab@kernel.org>,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Vikash Garodia <vgarodia@codeaurora.org>,
-        Alexandre Courbot <acourbot@chromium.org>,
-        Malathi Gottam <mgottam@codeaurora.org>
-References: <20190117162008.25217-1-stanimir.varbanov@linaro.org>
- <20190117162008.25217-11-stanimir.varbanov@linaro.org>
- <60b3efff-31c1-bc04-8af9-deebb8bc013a@xs4all.nl>
- <fe51ae1e-6d2e-36bd-485a-d85520ad2386@linaro.org>
- <CAAFQd5Co3G1J4+HOcjtCb7p3rhLcm+1E=mPr2d=AtdOSuF_eKg@mail.gmail.com>
-Message-ID: <c56930e0-be6f-2ade-fcea-8ee0ff6247ec@linaro.org>
-Date:   Mon, 20 May 2019 17:47:44 +0300
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.6.1
+        id S2387945AbfETOvL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 20 May 2019 10:51:11 -0400
+Received: from mail.kernel.org ([198.145.29.99]:33970 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1732283AbfETOvL (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 20 May 2019 10:51:11 -0400
+Received: from kernel.org (unknown [104.132.0.74])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by mail.kernel.org (Postfix) with ESMTPSA id 7BDAE21721;
+        Mon, 20 May 2019 14:51:10 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=default; t=1558363870;
+        bh=KxVzuRz+VMTUFhknDdKVGc3wrqC8JIymUA+D2BFiRnc=;
+        h=In-Reply-To:References:Subject:From:Cc:To:Date:From;
+        b=fhMCSaVq4D/iqwBFHFK2VQBG5q4sBcI7jYbwMkbFUGwdEOd4hIJEzim5k48Us29Vf
+         6ifK4tfZpmqc24N80eSlPhMb68GMek5D7avcpcuGKHm3beXUlN5UxrMLhBvBW8hbwh
+         C5IgqI/fqKKgXhbBSK3wrokub+f3hN6ArALnc73M=
+Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
-In-Reply-To: <CAAFQd5Co3G1J4+HOcjtCb7p3rhLcm+1E=mPr2d=AtdOSuF_eKg@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <20190520103435.30850-1-jorge.ramirez-ortiz@linaro.org>
+References: <20190520103435.30850-1-jorge.ramirez-ortiz@linaro.org>
+Subject: Re: [PATCH] tty: serial: msm_serial: Fix XON/XOFF
+From:   Stephen Boyd <sboyd@kernel.org>
+Cc:     jslaby@suse.com, keescook@chromium.org, anton@enomsg.org,
+        ccross@android.com, tony.luck@intel.com,
+        linux-arm-msm@vger.kernel.org, linux-serial@vger.kernel.org,
+        linux-kernel@vger.kernel.org, khasim.mohammed@linaro.org,
+        agsumit@qti.qualcomm.com
+To:     agross@kernel.org, david.brown@linaro.org,
+        gregkh@linuxfoundation.org, jorge.ramirez-ortiz@linaro.org
+User-Agent: alot/0.8.1
+Date:   Mon, 20 May 2019 07:51:09 -0700
+Message-Id: <20190520145110.7BDAE21721@mail.kernel.org>
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Tomasz,
+Quoting Jorge Ramirez-Ortiz (2019-05-20 03:34:35)
+> When the tty layer requests the uart to throttle, the current code
+> executing in msm_serial will trigger "Bad mode in Error Handler" and
+> generate an invalid stack frame in pstore before rebooting (that is if
+> pstore is indeed configured: otherwise the user shall just notice a
+> reboot with no further information dumped to the console).
+>=20
+> This patch replaces the PIO byte accessor with the word accessor
+> already used in PIO mode.
 
-On 4/24/19 3:39 PM, Tomasz Figa wrote:
-> On Wed, Apr 24, 2019 at 9:15 PM Stanimir Varbanov
-> <stanimir.varbanov@linaro.org> wrote:
->>
->> Hi Hans,
->>
->> On 2/15/19 3:44 PM, Hans Verkuil wrote:
->>> Hi Stanimir,
->>>
->>> I never paid much attention to this patch series since others were busy
->>> discussing it and I had a lot of other things on my plate, but then I heard
->>> that this patch made G_FMT blocking.
->>
->> OK, another option could be to block REQBUF(CAPTURE) until event from hw
->> is received that the stream is parsed and the resolution is correctly
->> set by application. Just to note that I'd think to this like a temporal
->> solution until gstreamer implements v4l events.
->>
->> Is that looks good to you?
-> 
-> Hmm, I thought we concluded that gstreamer sets the width and height
-> in OUTPUT queue before querying the CAPTURE queue and so making the
-> driver calculate the CAPTURE format based on what's set on OUTPUT
-> would work fine. Did I miss something?
+Because the hardware only accepts word based accessors and fails
+otherwise? I can believe that.
 
-Nobody is miss something.
+I wonder if the earlier UART hardware this driver used to support (i.e.
+pre-DM) would accept byte access to the registers. It's possible, but we
+don't really care because those boards aren't supported.
 
-First some background about how Venus implements stateful codec API.
+>=20
+> Signed-off-by: Jorge Ramirez-Ortiz <jorge.ramirez-ortiz@linaro.org>
+> ---
 
-The Venus firmware can generate two events "sufficient" and
-"insufficient" buffer requirements (this includes decoder output buffer
-size and internal/scratch buffer sizes). Presently I always set minimum
-possible decoder resolution no matter what the user said, and by that
-way I'm sure that "insufficient" event will always be triggered by the
-firmware (the other reason to take this path is because this is the
-least-common-divider for all supported Venus hw/fw versions thus common
-code in the driver). The reconfiguration (during codec Initialization
-sequence) is made from STREAMON(CAPTURE) context. Now, to make that
-re-configuration happen I need to wait for "insufficient" event from
-firmware in order to know the real coded resolution.
+Reviewed-by: Stephen Boyd <swboyd@chromium.org>
 
-In the case of gstreamer where v4l2_events support is missing I have to
-block (wait for firmware event) REQBUF(CAPTURE) (vb2::queue_setup) or
-STREAMON(CAPTURE) (vb2::start_streaming).
+>  drivers/tty/serial/msm_serial.c | 5 ++++-
+>  1 file changed, 4 insertions(+), 1 deletion(-)
+>=20
+> diff --git a/drivers/tty/serial/msm_serial.c b/drivers/tty/serial/msm_ser=
+ial.c
+> index 109096033bb1..23833ad952ba 100644
+> --- a/drivers/tty/serial/msm_serial.c
+> +++ b/drivers/tty/serial/msm_serial.c
+> @@ -869,10 +870,12 @@ static void msm_handle_tx(struct uart_port *port)
+>                 else
+>                         tf =3D port->membase + UART_TF;
+> =20
+> +               buf[0] =3D port->x_char;
+> +
+>                 if (msm_port->is_uartdm)
+>                         msm_reset_dm_count(port, 1);
+> =20
+> -               iowrite8_rep(tf, &port->x_char, 1);
+> +               iowrite32_rep(tf, buf, 1);
 
-I tried to set the coded resolution to the firmware as-is it set by
-gstreamer but then I cannot receive the "sufficient" event for VP8 and
-VP9 codecs. So I return back to the solution with minimum resolution above.
+I suppose it's OK to write some extra zeroes here?
 
-I'm open for suggestions.
-
--- 
-regards,
-Stan
