@@ -2,87 +2,135 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 43CEF24D06
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 May 2019 12:42:19 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 8AD7724D83
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 May 2019 13:04:01 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726138AbfEUKmS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 21 May 2019 06:42:18 -0400
-Received: from mail.kernel.org ([198.145.29.99]:52598 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1727571AbfEUKmS (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 21 May 2019 06:42:18 -0400
-Received: from localhost (unknown [223.186.130.65])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 2E2CF2173E;
-        Tue, 21 May 2019 10:42:15 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1558435337;
-        bh=rVM3KmjOp0zK7/WO0Do7OaoRxedBm1NHHJ8zm8Mz0M0=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=0/xS6lfDoYXfzlDvsgRro4RFoQ2YBk3FFxStoiSPFrKZ1Pqax59Go7YMi67M9vGeM
-         SvLpkqjz2i3L09HtDC6FiVbiGEfffMfe1kXxMb+obkVMmRC3G19lLFJWVy4Jfke0Yz
-         heUaSiFJmDHL6+GXeVZnXGVp5+3YXv4/Ee3jqPBg=
-Date:   Tue, 21 May 2019 16:12:11 +0530
-From:   Vinod Koul <vkoul@kernel.org>
+        id S1726995AbfEULEB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 21 May 2019 07:04:01 -0400
+Received: from mail-io1-f66.google.com ([209.85.166.66]:38297 "EHLO
+        mail-io1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726344AbfEULEA (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 21 May 2019 07:04:00 -0400
+Received: by mail-io1-f66.google.com with SMTP id x24so13561368ion.5
+        for <linux-arm-msm@vger.kernel.org>; Tue, 21 May 2019 04:04:00 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=tVZ1tFnofzDOshXJ55p2YIxYyc5VRLW0cEuiG1ZNDek=;
+        b=ihR4sLB+Kcp5BjrhDZHbUHYi2I33+G3zsEL7+TLDz8Y7qWAJ6TdjzbQk2F+OSvOM1A
+         GLIa2qJAZhBQZ9VZwMjjj3E45vPjlkcUCpN6i/oYE7jp19uqCloRgvG1a6iAmErAWRgE
+         Qebj/ChBVrQbBUZg0ohqVfL9DyqylRQYV9NQNal9pXz9TXgpd8sF8qjgc21GP7N6zHeG
+         FYb1QS5bhZgssSibeUx/tIQkitHUx5vKhoE2slQG2BN9Wmt2paYn5C4O2aKpZelG1qwW
+         AwPwcL8iGMce28BZ/P2CtfAQNd9d3mCbLhtcxCDemp2dZnA6XZEwzQ1NEAMpidVJjVuo
+         6mtA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=tVZ1tFnofzDOshXJ55p2YIxYyc5VRLW0cEuiG1ZNDek=;
+        b=fqZayJkaYzyJsoLe/KR+lOLM81pA8ljV7DCjdasMZUCAzW0IFagDvDlu3vri9Bp3ZB
+         +DFANeZzq9u3Qgsn/GwcNVGogwzPHCMgBWZAXQU9J8sxSQlKabK+mhtn5zdWXWcXzYVU
+         Jkr3Kq0PidI+qJSbldbL94fxxsURLD+6ynWjlWgzFsYFkBEtrgInjUs4dAf+VMai5oup
+         LPSzWpr4MLhXR9kEV6p0jwCyWeOwn3pdcYTKd6EUO7Gf3AYbfdTUSrrRL5tTCnJ2j+I4
+         GaiHqToVAuRjFvA1FYwf9WrA4RpvYImu1+8ZNZh2CCnBv89XdV4+cWzm5sJt2OMl9b50
+         i+fg==
+X-Gm-Message-State: APjAAAUDTcOJhAlSVGtL20UtMFMripE/WonfrT4MmFVKUh6/fGQTWwiJ
+        ZDzVcwOfdbPU7tZhbvo+eZkMbA==
+X-Google-Smtp-Source: APXvYqzdS1QKhqlxQQboe9Y8ZH8ImzRkyRKdPGltO8YHoy6eE3kbPG+Qdn9Y/EsptD5mGgIiV7tFqw==
+X-Received: by 2002:a6b:da11:: with SMTP id x17mr1436692iob.78.1558436639911;
+        Tue, 21 May 2019 04:03:59 -0700 (PDT)
+Received: from [172.22.22.26] (c-71-195-29-92.hsd1.mn.comcast.net. [71.195.29.92])
+        by smtp.googlemail.com with ESMTPSA id q24sm6851957ioh.31.2019.05.21.04.03.58
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Tue, 21 May 2019 04:03:59 -0700 (PDT)
+Subject: Re: [PATCH 1/8] net: qualcomm: rmnet: fix struct rmnet_map_header
 To:     Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        David Brown <david.brown@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Mark Rutland <mark.rutland@arm.com>,
-        Stephen Boyd <swboyd@chromium.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v7 1/4] dt-bindings: soc: qcom: Add AOSS QMP binding
-Message-ID: <20190521104211.GF15118@vkoul-mobl>
-References: <20190501043734.26706-1-bjorn.andersson@linaro.org>
- <20190501043734.26706-2-bjorn.andersson@linaro.org>
+Cc:     Subash Abhinov Kasiviswanathan <subashab@codeaurora.org>,
+        arnd@arndb.de, david.brown@linaro.org, agross@kernel.org,
+        davem@davemloft.net, ilias.apalodimas@linaro.org,
+        cpratapa@codeaurora.org, syadagir@codeaurora.org,
+        evgreen@chromium.org, benchan@google.com, ejcaruso@google.com,
+        netdev@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org
+References: <20190520135354.18628-1-elder@linaro.org>
+ <20190520135354.18628-2-elder@linaro.org>
+ <b0edef36555877350cfbab2248f8baac@codeaurora.org>
+ <81fd1e01-b8e3-f86a-fcc9-2bcbc51bd679@linaro.org>
+ <d90f8ccdc1f76f9166f269eb71a14f7f@codeaurora.org>
+ <cd839826-639d-2419-0941-333055e26e37@linaro.org>
+ <20190521030712.GY2085@tuxbook-pro>
+From:   Alex Elder <elder@linaro.org>
+Message-ID: <25b1d768-d492-08a7-b1ab-d3d022b01bc9@linaro.org>
+Date:   Tue, 21 May 2019 06:03:58 -0500
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+ Thunderbird/60.6.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20190501043734.26706-2-bjorn.andersson@linaro.org>
-User-Agent: Mutt/1.11.3 (2019-02-01)
+In-Reply-To: <20190521030712.GY2085@tuxbook-pro>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 30-04-19, 21:37, Bjorn Andersson wrote:
-> Add binding for the QMP based side-channel communication mechanism to
-> the AOSS, which is used to control resources not exposed through the
-> RPMh interface.
+On 5/20/19 10:07 PM, Bjorn Andersson wrote:
+> On Mon 20 May 19:30 PDT 2019, Alex Elder wrote:
 > 
-> Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
-> ---
+>> On 5/20/19 8:32 PM, Subash Abhinov Kasiviswanathan wrote:
+>>>>
+>>>> If you are telling me that the command/data flag resides at bit
+>>>> 7 of the first byte, I will update the field masks in a later
+>>>> patch in this series to reflect that.
+>>>>
+>>>
+>>> Higher order bit is Command / Data.
+>>
+>> So what this means is that to get the command/data bit we use:
+>>
+>> 	first_byte & 0x80
+>>
+>> If that is correct I will remove this patch from the series and
+>> will update the subsequent patches so bit 7 is the command bit,
+>> bit 6 is reserved, and bits 0-5 are the pad length.
+>>
+>> I will post a v2 of the series with these changes, and will
+>> incorporate Bjorn's "Reviewed-by".
+>>
 > 
-> Changes since v6:
-> - Added #clock-cells
-> 
->  .../bindings/soc/qcom/qcom,aoss-qmp.txt       | 81 +++++++++++++++++++
->  include/dt-bindings/power/qcom-aoss-qmp.h     | 14 ++++
->  2 files changed, 95 insertions(+)
->  create mode 100644 Documentation/devicetree/bindings/soc/qcom/qcom,aoss-qmp.txt
->  create mode 100644 include/dt-bindings/power/qcom-aoss-qmp.h
-> 
-> diff --git a/Documentation/devicetree/bindings/soc/qcom/qcom,aoss-qmp.txt b/Documentation/devicetree/bindings/soc/qcom/qcom,aoss-qmp.txt
-> new file mode 100644
-> index 000000000000..14a45b3dc059
-> --- /dev/null
-> +++ b/Documentation/devicetree/bindings/soc/qcom/qcom,aoss-qmp.txt
-> @@ -0,0 +1,81 @@
-> +Qualcomm Always-On Subsystem side channel binding
-> +
-> +This binding describes the hardware component responsible for side channel
-> +requests to the always-on subsystem (AOSS), used for certain power management
-> +requests that is not handled by the standard RPMh interface. Each client in the
-> +SoC has it's own block of message RAM and IRQ for communication with the AOSS.
-> +The protocol used to communicate in the message RAM is known as Qualcomm
-> +Messagin Protocol (QMP)
+> But didn't you say that your testing show that the current bit order is
+> wrong?
 
-s/Messagin/Messaging?
+I did say that, but it seems I may have been misinterpreting
+what the documentation said, namely that "bit 0" in the network
+data stream is actually the high-order bit in the first byte.
 
-Rest lgtm:
-Reviewed-by: Vinod Koul <vkoul@kernel.org>
+I did definitely see that bit 7 (0x80) in the first byte was the
+one selected by the "cd_bit" C bit-field originally, and I believed
+that was wrong.
 
--- 
-~Vinod
+The other thing I can say is that I never see that bit set in my
+use of the rmnet driver for IPA.  On top of that, the pad_len
+value is 0.  Given that, either bit order works, because the
+whole first byte is 0 either way.  So it turns out the testing
+I am able to do is not adequate to verify the change.
+
+I am hoping that Subash has an environment in which QMAP
+commands (with the appropriate bit set) are actually used.
+
+I'm going to wait a bit for him to confirm that, but at this
+time my plan is to do as I said above--remove this patch and
+adjust the ones that follow accordingly.
+
+					-Alex
+
+> I still like the cleanup, if nothing else just to clarify and clearly
+> document the actual content of this header.
+> 
+> Regards,
+> Bjorn
+> 
+
