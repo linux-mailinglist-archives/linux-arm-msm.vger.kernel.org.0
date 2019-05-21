@@ -2,165 +2,105 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 1905725634
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 May 2019 18:54:39 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D8499256A0
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 May 2019 19:26:14 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728998AbfEUQyg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 21 May 2019 12:54:36 -0400
-Received: from mail-qt1-f195.google.com ([209.85.160.195]:46886 "EHLO
-        mail-qt1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727965AbfEUQyg (ORCPT
+        id S1728055AbfEUR0N (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 21 May 2019 13:26:13 -0400
+Received: from mail-pg1-f195.google.com ([209.85.215.195]:39106 "EHLO
+        mail-pg1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727969AbfEUR0N (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 21 May 2019 12:54:36 -0400
-Received: by mail-qt1-f195.google.com with SMTP id z19so21244232qtz.13
-        for <linux-arm-msm@vger.kernel.org>; Tue, 21 May 2019 09:54:35 -0700 (PDT)
+        Tue, 21 May 2019 13:26:13 -0400
+Received: by mail-pg1-f195.google.com with SMTP id w22so8916149pgi.6
+        for <linux-arm-msm@vger.kernel.org>; Tue, 21 May 2019 10:26:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=poorly.run; s=google;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=YX1lqQKoAdMEkXm9fJ7ay6mt/s4Fthe/P9FKBQsotPA=;
-        b=HfRUsH30j8bXOUQb7Dj+WNScabJk0n5VYqokSX6HSXVxAA6C/9LFtd1QTG2rS9uMUf
-         kY7XYJXxrUtZlyvN4tHCD/ld0eNIKMwqriNP9YGiik5s9Dbr0mQNUOh98RfiDI1/uCfi
-         qNblANZU4QtkDhsxHLCX1wbgIolSCBTxfeHZ2wWr9RakCIE9RynEpy0kASPqSkVc/IDm
-         FH0rOxQ5pt5tsVKz00HO8jnIhChnWv6FfWIIEHJuCaaNsIVQurdpWWLxhIfpnSTIMKs6
-         UoYjLCQ0nM0yPdAs2WvqSLYKm0PYBmyS9vuUcL63G26AS7ex6w8XG54tOp6nR6wSChWn
-         9dGg==
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=Ji0VdzU5OHK1F6Sbp+YSXpK8rtBxFsIqpzSG7ymRqzo=;
+        b=R8RGyzYX+KVy8m3zJtD+38A1CQR4ZeKD7IZ8knX4UBdcazCt+USKTWOEB5MTkdw/Fd
+         f7WTG412wUr9M4tY1MwLdCYXU6mls6g0h6SjAl87o5Sbg45Q6T+ILmFXeg1SiNZF+J2+
+         ms3TSb7ib9ND/W7bLRjuENhi8gH2ZooMHWYrdw2pkJMTOeCyXMNp4xWd+c+GCHg5LgO6
+         odQztXqLSb63vlLYPkqUvg/k5+WXoxmJE0alaqzhkDfeCD4L5vvTLe49ZQGxICd2tXUL
+         Tr7hW4wirXJwpclHYlkq2VP7GHXvJ5Y1PFcsWqwgS14g5h+A8XLIgwtj9Dw8OhyMQrIu
+         mc8A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=YX1lqQKoAdMEkXm9fJ7ay6mt/s4Fthe/P9FKBQsotPA=;
-        b=OH6a/e/C4nxzfBDXusCXcSN12E9pNdoUkKUZHSnG/QMDN+37ek4DCLMQr3d+StrCea
-         h3zO3VuxgfPr4bzh7vOL5wf7koUYQKK4zhciD2o0PEw/kk1iSJeV/J3grr1DwGckTEsG
-         c0KeyaYgmjVZYAWALLW3yc2BFd/3xX2NDXXIBgTzi8kf9aCDzeTV1G4yg2yhrTI3R3S3
-         hEN565D70inwOJvsDNTYMQPmRBqCMRhU2afNeOFfurqEh3FLZHPkF+qlWg1oq6h+QYi4
-         jp2CfRY9W0SJfR6UzdZCNM8ZasPXgwEL3Pj5gDtrCQajAo6xsSkzGT0waqvEB7Hp2Xku
-         N/7w==
-X-Gm-Message-State: APjAAAW1Jc9Qan9HksIcZN9cdt4aEygm5XFPYMNly0/3CD1ybJaIRrYf
-        RIguunGEawDWj1i5BG72ZB4deQ==
-X-Google-Smtp-Source: APXvYqyn3PDcDAV3VtVntCLGUTk34w3mGeiDPU2bayID9L/15EXdZ1OMsMblyWHbE8SXaz0tJepwzQ==
-X-Received: by 2002:a0c:ad1c:: with SMTP id u28mr23319436qvc.87.1558457675228;
-        Tue, 21 May 2019 09:54:35 -0700 (PDT)
-Received: from rosewood.cam.corp.google.com ([2620:0:1013:11:89c6:2139:5435:371d])
-        by smtp.gmail.com with ESMTPSA id z29sm10777828qkg.19.2019.05.21.09.54.34
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 21 May 2019 09:54:34 -0700 (PDT)
-From:   Sean Paul <sean@poorly.run>
-To:     dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org
-Cc:     Sean Paul <seanpaul@chromium.org>,
-        Jordan Crouse <jcrouse@codeaurora.org>,
-        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        linux-arm-msm@vger.kernel.org
-Subject: [PATCH] drm/msm/a6xx: Avoid freeing gmu resources multiple times
-Date:   Tue, 21 May 2019 12:54:20 -0400
-Message-Id: <20190521165433.2895-1-sean@poorly.run>
-X-Mailer: git-send-email 2.21.0.1020.gf2820cf01a-goog
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=Ji0VdzU5OHK1F6Sbp+YSXpK8rtBxFsIqpzSG7ymRqzo=;
+        b=WVADLBz9h9ZYjgt+hgoWGyzWmXO9WXEZu/KWseuYTHX/5CyI+iFgP5qSG7XVgWGrmB
+         MvWXK3A9lz97Uoynf+P0xnm/fj7CKqMM8tUxEmqsEoio9MXcXGc6uVW1Ea2aRq8RtofI
+         3z5ZKFzH7b0qwgy/MhgG70QKzP6/MT2GSjYFDIDxed9JCXohEMFUA7a3BgOHARjwLn8A
+         zoa7bNJ+kE47fGStzN9LOk4TtIspP1ywTd+9a4iZCzY3SZgVcdN2CVz87dLWKjBp2zqj
+         eqnLLx9c1NLMiCErxS8O2qGCmRBJuH2SCNX/hDx9zBiq7DsPUWHF/ydq6FeXu8S/AqBn
+         J1gw==
+X-Gm-Message-State: APjAAAWeASwcAEPpWdaR/Tb4qt2BZ222XM1y7kW6YozJ8GUk+oUCbE/X
+        QJkEE3zB2gmaAejolStysobWsQ==
+X-Google-Smtp-Source: APXvYqxHPRhrUt8LyBPdVgl0BaXABlTIZ1JBG/HpULhXJEwb7w0zzAA5be0uaHu+Y/y1a/7Kx3iCuQ==
+X-Received: by 2002:a63:ea42:: with SMTP id l2mr81880080pgk.19.1558459572511;
+        Tue, 21 May 2019 10:26:12 -0700 (PDT)
+Received: from tuxbook-pro (104-188-17-28.lightspeed.sndgca.sbcglobal.net. [104.188.17.28])
+        by smtp.gmail.com with ESMTPSA id k192sm21751525pga.20.2019.05.21.10.26.11
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Tue, 21 May 2019 10:26:11 -0700 (PDT)
+Date:   Tue, 21 May 2019 10:26:39 -0700
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
+Cc:     lgirdwood@gmail.com, broonie@kernel.org, robh+dt@kernel.org,
+        mark.rutland@arm.com, agross@kernel.org, david.brown@linaro.org,
+        jcrouse@codeaurora.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org
+Subject: Re: [PATCH 1/3] dt-bindings: qcom_spmi: Document PM8005 regulators
+Message-ID: <20190521172639.GB2085@tuxbook-pro>
+References: <20190521164932.14265-1-jeffrey.l.hugo@gmail.com>
+ <20190521165244.14321-1-jeffrey.l.hugo@gmail.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20190521165244.14321-1-jeffrey.l.hugo@gmail.com>
+User-Agent: Mutt/1.11.4 (2019-03-13)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Sean Paul <seanpaul@chromium.org>
+On Tue 21 May 09:52 PDT 2019, Jeffrey Hugo wrote:
 
-The driver checks for gmu->mmio as a sign that the device has been
-initialized, however there are failures in probe below the mmio init.
-If one of those is hit, mmio will be non-null but freed.
+> Document the dt bindings for the PM8005 regulators which are usually used
+> for VDD of standalone blocks on a SoC like the GPU.
+> 
 
-In that case, a6xx_gmu_probe will return an error to a6xx_gpu_init which
-will in turn call a6xx_gmu_remove which checks gmu->mmio and tries to free
-resources for a second time. This causes a great boom.
+Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
 
-Fix this by adding an initialized member to gmu which is set on
-successful probe and cleared on removal.
-
-Cc: Jordan Crouse <jcrouse@codeaurora.org>
-Signed-off-by: Sean Paul <seanpaul@chromium.org>
----
- drivers/gpu/drm/msm/adreno/a6xx_gmu.c | 14 +++++++++-----
- drivers/gpu/drm/msm/adreno/a6xx_gmu.h |  1 +
- 2 files changed, 10 insertions(+), 5 deletions(-)
-
-diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gmu.c b/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
-index 38e2cfa9cec7..aa84edb25d91 100644
---- a/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
-+++ b/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
-@@ -74,7 +74,7 @@ bool a6xx_gmu_sptprac_is_on(struct a6xx_gmu *gmu)
- 	u32 val;
- 
- 	/* This can be called from gpu state code so make sure GMU is valid */
--	if (IS_ERR_OR_NULL(gmu->mmio))
-+	if (!gmu->initialized)
- 		return false;
- 
- 	val = gmu_read(gmu, REG_A6XX_GMU_SPTPRAC_PWR_CLK_STATUS);
-@@ -90,7 +90,7 @@ bool a6xx_gmu_gx_is_on(struct a6xx_gmu *gmu)
- 	u32 val;
- 
- 	/* This can be called from gpu state code so make sure GMU is valid */
--	if (IS_ERR_OR_NULL(gmu->mmio))
-+	if (!gmu->initialized)
- 		return false;
- 
- 	val = gmu_read(gmu, REG_A6XX_GMU_SPTPRAC_PWR_CLK_STATUS);
-@@ -695,7 +695,7 @@ int a6xx_gmu_resume(struct a6xx_gpu *a6xx_gpu)
- 	struct a6xx_gmu *gmu = &a6xx_gpu->gmu;
- 	int status, ret;
- 
--	if (WARN(!gmu->mmio, "The GMU is not set up yet\n"))
-+	if (WARN(!gmu->initialized, "The GMU is not set up yet\n"))
- 		return 0;
- 
- 	gmu->hung = false;
-@@ -765,7 +765,7 @@ bool a6xx_gmu_isidle(struct a6xx_gmu *gmu)
- {
- 	u32 reg;
- 
--	if (!gmu->mmio)
-+	if (!gmu->initialized)
- 		return true;
- 
- 	reg = gmu_read(gmu, REG_A6XX_GPU_GMU_AO_GPU_CX_BUSY_STATUS);
-@@ -1227,7 +1227,7 @@ void a6xx_gmu_remove(struct a6xx_gpu *a6xx_gpu)
- {
- 	struct a6xx_gmu *gmu = &a6xx_gpu->gmu;
- 
--	if (IS_ERR_OR_NULL(gmu->mmio))
-+	if (!gmu->initialized)
- 		return;
- 
- 	a6xx_gmu_stop(a6xx_gpu);
-@@ -1245,6 +1245,8 @@ void a6xx_gmu_remove(struct a6xx_gpu *a6xx_gpu)
- 	iommu_detach_device(gmu->domain, gmu->dev);
- 
- 	iommu_domain_free(gmu->domain);
-+
-+	gmu->initialized = false;
- }
- 
- int a6xx_gmu_probe(struct a6xx_gpu *a6xx_gpu, struct device_node *node)
-@@ -1309,6 +1311,8 @@ int a6xx_gmu_probe(struct a6xx_gpu *a6xx_gpu, struct device_node *node)
- 	/* Set up the HFI queues */
- 	a6xx_hfi_init(gmu);
- 
-+	gmu->initialized = true;
-+
- 	return 0;
- err:
- 	a6xx_gmu_memory_free(gmu, gmu->hfi);
-diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gmu.h b/drivers/gpu/drm/msm/adreno/a6xx_gmu.h
-index bedd8e6a63aa..39a26dd63674 100644
---- a/drivers/gpu/drm/msm/adreno/a6xx_gmu.h
-+++ b/drivers/gpu/drm/msm/adreno/a6xx_gmu.h
-@@ -75,6 +75,7 @@ struct a6xx_gmu {
- 
- 	struct a6xx_hfi_queue queues[2];
- 
-+	bool initialized;
- 	bool hung;
- };
- 
--- 
-Sean Paul, Software Engineer, Google / Chromium OS
-
+> Signed-off-by: Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
+> ---
+>  .../devicetree/bindings/regulator/qcom,spmi-regulator.txt     | 4 ++++
+>  1 file changed, 4 insertions(+)
+> 
+> diff --git a/Documentation/devicetree/bindings/regulator/qcom,spmi-regulator.txt b/Documentation/devicetree/bindings/regulator/qcom,spmi-regulator.txt
+> index 406f2e570c50..ba94bc2d407a 100644
+> --- a/Documentation/devicetree/bindings/regulator/qcom,spmi-regulator.txt
+> +++ b/Documentation/devicetree/bindings/regulator/qcom,spmi-regulator.txt
+> @@ -4,6 +4,7 @@ Qualcomm SPMI Regulators
+>  	Usage: required
+>  	Value type: <string>
+>  	Definition: must be one of:
+> +			"qcom,pm8005-regulators"
+>  			"qcom,pm8841-regulators"
+>  			"qcom,pm8916-regulators"
+>  			"qcom,pm8941-regulators"
+> @@ -120,6 +121,9 @@ The regulator node houses sub-nodes for each regulator within the device. Each
+>  sub-node is identified using the node's name, with valid values listed for each
+>  of the PMICs below.
+>  
+> +pm8005:
+> +	s1, s2, s3, s4
+> +
+>  pm8841:
+>  	s1, s2, s3, s4, s5, s6, s7, s8
+>  
+> -- 
+> 2.17.1
+> 
