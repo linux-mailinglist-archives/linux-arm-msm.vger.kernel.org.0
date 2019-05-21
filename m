@@ -2,134 +2,114 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id EE0A424EEC
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 May 2019 14:27:40 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 70A842526B
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 May 2019 16:44:30 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726995AbfEUM1f (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 21 May 2019 08:27:35 -0400
-Received: from lb3-smtp-cloud7.xs4all.net ([194.109.24.31]:59143 "EHLO
-        lb3-smtp-cloud7.xs4all.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726900AbfEUM1f (ORCPT
+        id S1727969AbfEUOo3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 21 May 2019 10:44:29 -0400
+Received: from smtp.codeaurora.org ([198.145.29.96]:42988 "EHLO
+        smtp.codeaurora.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727534AbfEUOo3 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 21 May 2019 08:27:35 -0400
-Received: from [IPv6:2001:420:44c1:2579:1066:b00f:a986:b5ce] ([IPv6:2001:420:44c1:2579:1066:b00f:a986:b5ce])
-        by smtp-cloud7.xs4all.net with ESMTPA
-        id T3rbh21ur3qlsT3rfhtxFC; Tue, 21 May 2019 14:27:32 +0200
-Subject: Re: [PATCH 10/10] venus: dec: make decoder compliant with stateful
- codec API
-To:     Tomasz Figa <tfiga@chromium.org>,
-        Stanimir Varbanov <stanimir.varbanov@linaro.org>
-Cc:     Linux Media Mailing List <linux-media@vger.kernel.org>,
-        Mauro Carvalho Chehab <mchehab@kernel.org>,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Vikash Garodia <vgarodia@codeaurora.org>,
-        Alexandre Courbot <acourbot@chromium.org>,
-        Malathi Gottam <mgottam@codeaurora.org>
-References: <20190117162008.25217-1-stanimir.varbanov@linaro.org>
- <20190117162008.25217-11-stanimir.varbanov@linaro.org>
- <60b3efff-31c1-bc04-8af9-deebb8bc013a@xs4all.nl>
- <fe51ae1e-6d2e-36bd-485a-d85520ad2386@linaro.org>
- <CAAFQd5Co3G1J4+HOcjtCb7p3rhLcm+1E=mPr2d=AtdOSuF_eKg@mail.gmail.com>
- <c56930e0-be6f-2ade-fcea-8ee0ff6247ec@linaro.org>
- <CAAFQd5CNGsnqjpLsWSTf=8r+hSfyOgD8SU-tn5EbHCCuuSgH6A@mail.gmail.com>
-From:   Hans Verkuil <hverkuil@xs4all.nl>
-Message-ID: <01b6683f-9378-e6f2-501f-e2213e6c690d@xs4all.nl>
-Date:   Tue, 21 May 2019 14:27:27 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.5.1
-MIME-Version: 1.0
-In-Reply-To: <CAAFQd5CNGsnqjpLsWSTf=8r+hSfyOgD8SU-tn5EbHCCuuSgH6A@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
-X-CMAE-Envelope: MS4wfP9bAukXy5w9F+0DSaJeryRUlQHgly/WAZNpSOm5vDrb5wQN6Tp+5l4syU+U0MtYFPNMhu99vp6ZC77Wmop+slCcF5GhXSjfhZxHmgSAhDp1qV2foHIw
- b+siH/56q9y/8iMro4xbAfxiUxpc0bH7MxH3cU+KcfuT5OxEFn+2kEgM1FzpKBoUbuoP91KC/MlMuhgmbR0sL/a8lxvx2hb5tRSJ86Tka7eaM5F1l/OPGonT
- rmXwRF/7jNaKWJAaSODHUuKMld3MUdu8o3D/43RE0eWGbal4srwMWph5Kbc0znzB62DkRscG0V1Z4Q4UBw7wCPhYCuJ2LFPMfasePRQOi9ISP6yYPMcfUMxu
- NIOs3wOXcxbvGSz6XsRLem45JZxt6KuLFzFj4XfUd8ocTRDLbRaEFaOyVNikLmbzEyKaXr0qumoxKLtQaeikQYHzCGVzOomp73kCtxdkwWTQHxAtov4bjuma
- XApR+XB++T5PBCkWf5j2Oia41FnSmqnuGfFs98W32MMA6gbXTu0tUcmOV0R4JTAky+3jyzY3bYpSVtmPu+jbdzVDg87U2ToKqEJDOktskx3CUzwJ2Ch/bcXC
- SSs=
+        Tue, 21 May 2019 10:44:29 -0400
+Received: by smtp.codeaurora.org (Postfix, from userid 1000)
+        id 0CCE260E41; Tue, 21 May 2019 14:44:27 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
+        s=default; t=1558449868;
+        bh=9RJTartqJw5pP0Ur3CP53YgFDs7kDaCUu1bvIYsQLIs=;
+        h=From:To:Cc:Subject:Date:From;
+        b=DdIcQxJzBoz/6d2weEfmyZfZC3JFLx5MBBSU5GnNCZnRCqOKGts6UYoTyB1seX8s3
+         C9k6ZfntTzNiDeN3N5XUQxh5qECJh08lO7mYTouYXHrIKv8sDbNWL8VBMSFRql7JOQ
+         0+rmf3zpT5b8eAmJnAXWCGB/wtdef/qU+//7ZqvU=
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        pdx-caf-mail.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.7 required=2.0 tests=ALL_TRUSTED,BAYES_00,
+        DKIM_INVALID,DKIM_SIGNED,SPF_NONE autolearn=no autolearn_force=no
+        version=3.4.0
+Received: from jhugo-perf-lnx.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: jhugo@smtp.codeaurora.org)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 3F43C60746;
+        Tue, 21 May 2019 14:44:24 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
+        s=default; t=1558449865;
+        bh=9RJTartqJw5pP0Ur3CP53YgFDs7kDaCUu1bvIYsQLIs=;
+        h=From:To:Cc:Subject:Date:From;
+        b=nMAEaiSSgI+4E4ak1QXYoDpkuUy/zxz2tQNmwTPsPhQA1L4s1OYkUogTdq/psvDbd
+         /R/3iEZVaLYoFTu51rrY1S38Sh15IcyytTODnC+zIKR2bKMw9AFPvzjeqpaC7ORY2q
+         EKJl8XRZdzrYVZrEnhXNBJBCniGKhCHVSpP9BnAc=
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 3F43C60746
+Authentication-Results: pdx-caf-mail.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: pdx-caf-mail.web.codeaurora.org; spf=none smtp.mailfrom=jhugo@codeaurora.org
+From:   Jeffrey Hugo <jhugo@codeaurora.org>
+To:     david.brown@linaro.org
+Cc:     agross@kernel.org, bjorn.andersson@linaro.org,
+        marc.w.gonzalez@free.fr, mturquette@baylibre.com, sboyd@kernel.org,
+        robh+dt@kernel.org, mark.rutland@arm.com,
+        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
+        Jeffrey Hugo <jhugo@codeaurora.org>
+Subject: [PATCH v4 0/6] MSM8998 Multimedia Clock Controller
+Date:   Tue, 21 May 2019 08:44:03 -0600
+Message-Id: <1558449843-19971-1-git-send-email-jhugo@codeaurora.org>
+X-Mailer: git-send-email 1.9.1
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 5/21/19 11:09 AM, Tomasz Figa wrote:
-> Hi Stan,
-> 
-> On Mon, May 20, 2019 at 11:47 PM Stanimir Varbanov
-> <stanimir.varbanov@linaro.org> wrote:
->>
->> Hi Tomasz,
->>
->> On 4/24/19 3:39 PM, Tomasz Figa wrote:
->>> On Wed, Apr 24, 2019 at 9:15 PM Stanimir Varbanov
->>> <stanimir.varbanov@linaro.org> wrote:
->>>>
->>>> Hi Hans,
->>>>
->>>> On 2/15/19 3:44 PM, Hans Verkuil wrote:
->>>>> Hi Stanimir,
->>>>>
->>>>> I never paid much attention to this patch series since others were busy
->>>>> discussing it and I had a lot of other things on my plate, but then I heard
->>>>> that this patch made G_FMT blocking.
->>>>
->>>> OK, another option could be to block REQBUF(CAPTURE) until event from hw
->>>> is received that the stream is parsed and the resolution is correctly
->>>> set by application. Just to note that I'd think to this like a temporal
->>>> solution until gstreamer implements v4l events.
->>>>
->>>> Is that looks good to you?
->>>
->>> Hmm, I thought we concluded that gstreamer sets the width and height
->>> in OUTPUT queue before querying the CAPTURE queue and so making the
->>> driver calculate the CAPTURE format based on what's set on OUTPUT
->>> would work fine. Did I miss something?
->>
->> Nobody is miss something.
->>
->> First some background about how Venus implements stateful codec API.
->>
->> The Venus firmware can generate two events "sufficient" and
->> "insufficient" buffer requirements (this includes decoder output buffer
->> size and internal/scratch buffer sizes). Presently I always set minimum
->> possible decoder resolution no matter what the user said, and by that
->> way I'm sure that "insufficient" event will always be triggered by the
->> firmware (the other reason to take this path is because this is the
->> least-common-divider for all supported Venus hw/fw versions thus common
->> code in the driver). The reconfiguration (during codec Initialization
->> sequence) is made from STREAMON(CAPTURE) context. Now, to make that
->> re-configuration happen I need to wait for "insufficient" event from
->> firmware in order to know the real coded resolution.
->>
->> In the case of gstreamer where v4l2_events support is missing I have to
->> block (wait for firmware event) REQBUF(CAPTURE) (vb2::queue_setup) or
->> STREAMON(CAPTURE) (vb2::start_streaming).
->>
->> I tried to set the coded resolution to the firmware as-is it set by
->> gstreamer but then I cannot receive the "sufficient" event for VP8 and
->> VP9 codecs. So I return back to the solution with minimum resolution above.
->>
->> I'm open for suggestions.
-> 
-> I think you could still keep setting the minimum size and wait for the
-> "insufficient" event. At the same time, you could speculatively
-> advertise the expected "sufficient" size on the CAPTURE queue before
-> the hardware signals those. Even if you mispredict them, you'll get
-> the event, update the CAPTURE resolution and send the source change
-> event to the application, which would then give you the correct
-> buffers. Would that work for you?
+The multimedia clock controller (mmcc) is the main clock controller for
+the multimedia subsystem and is required to enable things like display and
+camera.
 
-As I understand it this still would require event support, which gstreamer
-doesn't have.
+v4:
+-fix makefile to use correct config item
+-pick up tags
+-fix ordering of clocks and clock-names in dt
+-drop MODULE_ALIAS
+-wait for xo in mmcc since that was found to be useful in some debug configs
 
-I think it is OK to have REQBUFS sleep in this case. However, I would only
-enable this behavior if the application didn't subscribe to the SOURCE_CHANGE
-event. That's easy enough to check in the driver. And that means that if the
-application is well written, then the driver will behave in a completely
-standard way that the compliance test can check.
+v3:
+-Rebase onto linux-next to get the final version of the clk parent rewrite
+series
+-Moved the bindings header to the bindings patch per Rob
+-Made xo manditory for GCC to work around the lack of clk orphan probe defer
+to avoid the uart console glitch
 
-Regards,
+v2:
+-Rebased on the "Rewrite clk parent handling" series and updated to the clk init
+mechanisms introduced there.
+-Marked XO clk as CLK_IGNORE_UNUSED to avoid the concern about the XO going away
+"incorrectly" during late init
+-Corrected the name of the XO clock to "xo"
+-Dropped the fake XO clock in GCC to prevent a namespace conflict
+-Fully enumerated the external clocks (DSI PLLs, etc) in the DT binding
+-Cleaned up the weird newlines in the added DT node
+-Added DT header file to msm8998 DT for future clients
 
-	Hans
+Jeffrey Hugo (6):
+  dt-bindings: clock: Document external clocks for MSM8998 gcc
+  arm64: dts: msm8998: Add xo clock to gcc node
+  clk: qcom: smd: Add XO clock for MSM8998
+  dt-bindings: clock: Add support for the MSM8998 mmcc
+  clk: qcom: Add MSM8998 Multimedia Clock Controller (MMCC) driver
+  arm64: dts: qcom: msm8998: Add mmcc node
+
+ .../devicetree/bindings/clock/qcom,gcc.txt    |   10 +
+ .../devicetree/bindings/clock/qcom,mmcc.txt   |   21 +
+ arch/arm64/boot/dts/qcom/msm8998.dtsi         |   16 +
+ drivers/clk/qcom/Kconfig                      |    9 +
+ drivers/clk/qcom/Makefile                     |    1 +
+ drivers/clk/qcom/clk-smd-rpm.c                |   24 +-
+ drivers/clk/qcom/gcc-msm8998.c                |   29 +-
+ drivers/clk/qcom/mmcc-msm8998.c               | 2915 +++++++++++++++++
+ include/dt-bindings/clock/qcom,mmcc-msm8998.h |  210 ++
+ 9 files changed, 3214 insertions(+), 21 deletions(-)
+ create mode 100644 drivers/clk/qcom/mmcc-msm8998.c
+ create mode 100644 include/dt-bindings/clock/qcom,mmcc-msm8998.h
+
+-- 
+2.17.1
+
