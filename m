@@ -2,143 +2,138 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 801AF24B2C
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 May 2019 11:10:02 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 38AB724B68
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 May 2019 11:25:59 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727046AbfEUJKB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 21 May 2019 05:10:01 -0400
-Received: from mail-ed1-f66.google.com ([209.85.208.66]:33703 "EHLO
-        mail-ed1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727015AbfEUJKB (ORCPT
+        id S1727218AbfEUJZx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 21 May 2019 05:25:53 -0400
+Received: from mail-lj1-f194.google.com ([209.85.208.194]:35681 "EHLO
+        mail-lj1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726740AbfEUJZt (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 21 May 2019 05:10:01 -0400
-Received: by mail-ed1-f66.google.com with SMTP id n17so28355699edb.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 21 May 2019 02:10:00 -0700 (PDT)
+        Tue, 21 May 2019 05:25:49 -0400
+Received: by mail-lj1-f194.google.com with SMTP id h11so13849376ljb.2
+        for <linux-arm-msm@vger.kernel.org>; Tue, 21 May 2019 02:25:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=PSdPOItR/QwQaJqAWDzyHjSOY0FhX0Q6RByw0iZfWqY=;
-        b=LRgF3QOdZRfOdkdcevF4kHXKpLVf+DmgnDacDANvUI/gJ05zyHF+rFhWral3BX2t5a
-         AJ+s8NZT0eJHefNlxPmxnDRpDW3x3YNDwEXIYtO228pxHr+jNhr45VMKgvEdUUF0YW8k
-         t3rsUQityMohQJFpsxx9FCJ4P2P235mLpB1no=
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=CkcirGX3QvjLhz9moY6Imqk+qItJBJo6soSbUqVfWnQ=;
+        b=KPVsE6tbmoozmtanxFIcLRZ6t1QsqfMa3iEgemxmZvJCVg3YSyfhz+CWOYIPn0z+kY
+         524LHkx3uTbLNW0a9Bl8sjLjp9ktTb+7R7bqyH+QgCptPcvc9ZophZDDPdlNs/xeSF7U
+         j4J9EGZ/mU8uv6wsxOsnY4zzJWe9mp04gIuNNcH1qSt4Oq2aMb3yMVsub/9Swq8bqmLm
+         VEJP0jlpCLr3ns9M+fimlkhyx5MkOdIJs6LEhZGXU30FJFAzQ+7BRQAWIiNZ3w0edpuu
+         C8//mxCK9vsrcJ5Y/NGIoVB7X1R1mOdaHqMoNLZTXcVPxj6gEyDC5uUnC5Os6oKuWGrl
+         XGoQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=PSdPOItR/QwQaJqAWDzyHjSOY0FhX0Q6RByw0iZfWqY=;
-        b=J2VT/VLcJC8+p8uvKpJTj0/niz7cjb0Az4K221HBBc4fAvL8b8iC7C2FWTNAZLN0w2
-         fjFlq0Wnf0bR2bt5L3bg5BZigf+yc0/NTs5bDuWpjZWypVlU/vueI1Rwx/+Dh7uFh80Z
-         y4pgnllV3yDHtebpjyuf0p7I0SN2NcLjpqQs/DN3SLQOQO/uYs0LjBjrHEVfjHDoOy5A
-         cWyt5VOuAhR47ozuG14+eUIevaJOFkBFjICXlTlWDfjhegcxBZi7z6cslfDN2Fbm8yJk
-         r9g+lYW13cwQKrFI1VuPs5d3x11silqMGHcBy9ALDdMUEfSYAM2qAkqXVFAWiWnfA4YP
-         3qGg==
-X-Gm-Message-State: APjAAAUAjD2a/qlmPU6cYvBj6uVAPfIZ3H0ZUvrH9q5njlwyxkoYWw3n
-        i2rewalacH5jy5WKjb3BXD8MIXgde1h04cz4
-X-Google-Smtp-Source: APXvYqxJIiHsoKTL8vq2lT1iB4JzbxlzWJ7AuusfW652KTs9pym00UPxJxPdqlmD8pQiAVkKSy3mUA==
-X-Received: by 2002:a17:906:5f82:: with SMTP id a2mr28277984eju.297.1558429799356;
-        Tue, 21 May 2019 02:09:59 -0700 (PDT)
-Received: from mail-wr1-f44.google.com (mail-wr1-f44.google.com. [209.85.221.44])
-        by smtp.gmail.com with ESMTPSA id v15sm3468267ejj.23.2019.05.21.02.09.58
-        for <linux-arm-msm@vger.kernel.org>
-        (version=TLS1_3 cipher=AEAD-AES128-GCM-SHA256 bits=128/128);
-        Tue, 21 May 2019 02:09:58 -0700 (PDT)
-Received: by mail-wr1-f44.google.com with SMTP id s17so17679138wru.3
-        for <linux-arm-msm@vger.kernel.org>; Tue, 21 May 2019 02:09:58 -0700 (PDT)
-X-Received: by 2002:a5d:5048:: with SMTP id h8mr681332wrt.177.1558429797759;
- Tue, 21 May 2019 02:09:57 -0700 (PDT)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=CkcirGX3QvjLhz9moY6Imqk+qItJBJo6soSbUqVfWnQ=;
+        b=TTAWIdElXgMnkvk3NCDHXDP9xudaqfKMliphQHgEsadt++i4fy5rJpuKMmn40XhDzk
+         5hormMDwu4lwVtAWy6N+b9qj/vP3zh/r2r0WUQ/nzu/2a/jNPreykoAQD5dCLDiIBjgx
+         TKTTRocD0fS222kntc2eIVyXh/9J7QS4wKhnNCe+feduRHnt1iIi3/kKM9H/nPQZK702
+         HTbk5t/RkSAh4LIdrf3omjUFL6SqSeLLZLMdYtZS90vDgfVVFbZmyAAFEAB/HP5sMm2R
+         ZXPbOpoNpVxeg7pj/VQXvBTl0IruK542ZkU9/v0IasAOoOdez0a9tVS9ckvryk4us5ye
+         UOiw==
+X-Gm-Message-State: APjAAAWssxYmGqUxpQWNHnvrgK801mEVgXq5WknSQ3qj9rIi7wqAgWkC
+        Th/oMI8qfRvwr9ATchLxsdLCwA==
+X-Google-Smtp-Source: APXvYqyREgv4vGHN0qpoxZgnvPbSHQF4hl4/zB2vk3nwAFQr5ASD4uiHBCK/ox3Af/hHK+UEStkOEA==
+X-Received: by 2002:a2e:731a:: with SMTP id o26mr543653ljc.105.1558430747246;
+        Tue, 21 May 2019 02:25:47 -0700 (PDT)
+Received: from centauri (m83-185-80-163.cust.tele2.se. [83.185.80.163])
+        by smtp.gmail.com with ESMTPSA id i1sm38409lfc.86.2019.05.21.02.25.46
+        (version=TLS1_3 cipher=AEAD-AES256-GCM-SHA384 bits=256/256);
+        Tue, 21 May 2019 02:25:46 -0700 (PDT)
+Date:   Tue, 21 May 2019 11:25:44 +0200
+From:   Niklas Cassel <niklas.cassel@linaro.org>
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        David Brown <david.brown@linaro.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: Re: [PATCH] arm64: dts: qcom: msm8996: Stop using legacy clock names
+Message-ID: <20190521092544.GB22910@centauri>
+References: <20190503232442.1530-1-bjorn.andersson@linaro.org>
 MIME-Version: 1.0
-References: <20190117162008.25217-1-stanimir.varbanov@linaro.org>
- <20190117162008.25217-11-stanimir.varbanov@linaro.org> <60b3efff-31c1-bc04-8af9-deebb8bc013a@xs4all.nl>
- <fe51ae1e-6d2e-36bd-485a-d85520ad2386@linaro.org> <CAAFQd5Co3G1J4+HOcjtCb7p3rhLcm+1E=mPr2d=AtdOSuF_eKg@mail.gmail.com>
- <c56930e0-be6f-2ade-fcea-8ee0ff6247ec@linaro.org>
-In-Reply-To: <c56930e0-be6f-2ade-fcea-8ee0ff6247ec@linaro.org>
-From:   Tomasz Figa <tfiga@chromium.org>
-Date:   Tue, 21 May 2019 18:09:45 +0900
-X-Gmail-Original-Message-ID: <CAAFQd5CNGsnqjpLsWSTf=8r+hSfyOgD8SU-tn5EbHCCuuSgH6A@mail.gmail.com>
-Message-ID: <CAAFQd5CNGsnqjpLsWSTf=8r+hSfyOgD8SU-tn5EbHCCuuSgH6A@mail.gmail.com>
-Subject: Re: [PATCH 10/10] venus: dec: make decoder compliant with stateful
- codec API
-To:     Stanimir Varbanov <stanimir.varbanov@linaro.org>
-Cc:     Hans Verkuil <hverkuil@xs4all.nl>,
-        Linux Media Mailing List <linux-media@vger.kernel.org>,
-        Mauro Carvalho Chehab <mchehab@kernel.org>,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Vikash Garodia <vgarodia@codeaurora.org>,
-        Alexandre Courbot <acourbot@chromium.org>,
-        Malathi Gottam <mgottam@codeaurora.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20190503232442.1530-1-bjorn.andersson@linaro.org>
+User-Agent: Mutt/1.11.4 (2019-03-13)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Stan,
+On Fri, May 03, 2019 at 04:24:42PM -0700, Bjorn Andersson wrote:
+> MDSS and its friends complain about the DTS is using legacy clock names,
+> update these to silence the warnings.
+> 
+> Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+> ---
+>  arch/arm64/boot/dts/qcom/msm8996.dtsi | 26 +++++++++++++-------------
+>  1 file changed, 13 insertions(+), 13 deletions(-)
+> 
+> diff --git a/arch/arm64/boot/dts/qcom/msm8996.dtsi b/arch/arm64/boot/dts/qcom/msm8996.dtsi
+> index a988edabe474..3d861f1d836c 100644
+> --- a/arch/arm64/boot/dts/qcom/msm8996.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/msm8996.dtsi
+> @@ -1678,7 +1678,7 @@
+>  			#interrupt-cells = <1>;
+>  
+>  			clocks = <&mmcc MDSS_AHB_CLK>;
+> -			clock-names = "iface_clk";
+> +			clock-names = "iface";
+>  
+>  			#address-cells = <1>;
+>  			#size-cells = <1>;
+> @@ -1697,11 +1697,11 @@
+>  					 <&mmcc MDSS_MDP_CLK>,
+>  					 <&mmcc SMMU_MDP_AXI_CLK>,
+>  					 <&mmcc MDSS_VSYNC_CLK>;
+> -				clock-names = "iface_clk",
+> -					      "bus_clk",
+> -					      "core_clk",
+> -					      "iommu_clk",
+> -					      "vsync_clk";
+> +				clock-names = "iface",
+> +					      "bus",
+> +					      "core",
+> +					      "iommu",
+> +					      "vsync";
+>  
+>  				iommus = <&mdp_smmu 0>;
+>  
+> @@ -1736,11 +1736,11 @@
+>  					 <&mmcc MDSS_HDMI_AHB_CLK>,
+>  					 <&mmcc MDSS_EXTPCLK_CLK>;
+>  				clock-names =
+> -					"mdp_core_clk",
+> -					"iface_clk",
+> -					"core_clk",
+> -					"alt_iface_clk",
+> -					"extp_clk";
+> +					"mdp_core",
+> +					"iface",
+> +					"core",
+> +					"alt_iface",
+> +					"extp";
+>  
+>  				phys = <&hdmi_phy>;
+>  				phy-names = "hdmi_phy";
+> @@ -1777,8 +1777,8 @@
+>  
+>  				clocks = <&mmcc MDSS_AHB_CLK>,
+>  					 <&gcc GCC_HDMI_CLKREF_CLK>;
+> -				clock-names = "iface_clk",
+> -					      "ref_clk";
+> +				clock-names = "iface",
+> +					      "ref";
+>  			};
+>  		};
+>  	};
+> -- 
+> 2.18.0
+> 
 
-On Mon, May 20, 2019 at 11:47 PM Stanimir Varbanov
-<stanimir.varbanov@linaro.org> wrote:
->
-> Hi Tomasz,
->
-> On 4/24/19 3:39 PM, Tomasz Figa wrote:
-> > On Wed, Apr 24, 2019 at 9:15 PM Stanimir Varbanov
-> > <stanimir.varbanov@linaro.org> wrote:
-> >>
-> >> Hi Hans,
-> >>
-> >> On 2/15/19 3:44 PM, Hans Verkuil wrote:
-> >>> Hi Stanimir,
-> >>>
-> >>> I never paid much attention to this patch series since others were busy
-> >>> discussing it and I had a lot of other things on my plate, but then I heard
-> >>> that this patch made G_FMT blocking.
-> >>
-> >> OK, another option could be to block REQBUF(CAPTURE) until event from hw
-> >> is received that the stream is parsed and the resolution is correctly
-> >> set by application. Just to note that I'd think to this like a temporal
-> >> solution until gstreamer implements v4l events.
-> >>
-> >> Is that looks good to you?
-> >
-> > Hmm, I thought we concluded that gstreamer sets the width and height
-> > in OUTPUT queue before querying the CAPTURE queue and so making the
-> > driver calculate the CAPTURE format based on what's set on OUTPUT
-> > would work fine. Did I miss something?
->
-> Nobody is miss something.
->
-> First some background about how Venus implements stateful codec API.
->
-> The Venus firmware can generate two events "sufficient" and
-> "insufficient" buffer requirements (this includes decoder output buffer
-> size and internal/scratch buffer sizes). Presently I always set minimum
-> possible decoder resolution no matter what the user said, and by that
-> way I'm sure that "insufficient" event will always be triggered by the
-> firmware (the other reason to take this path is because this is the
-> least-common-divider for all supported Venus hw/fw versions thus common
-> code in the driver). The reconfiguration (during codec Initialization
-> sequence) is made from STREAMON(CAPTURE) context. Now, to make that
-> re-configuration happen I need to wait for "insufficient" event from
-> firmware in order to know the real coded resolution.
->
-> In the case of gstreamer where v4l2_events support is missing I have to
-> block (wait for firmware event) REQBUF(CAPTURE) (vb2::queue_setup) or
-> STREAMON(CAPTURE) (vb2::start_streaming).
->
-> I tried to set the coded resolution to the firmware as-is it set by
-> gstreamer but then I cannot receive the "sufficient" event for VP8 and
-> VP9 codecs. So I return back to the solution with minimum resolution above.
->
-> I'm open for suggestions.
-
-I think you could still keep setting the minimum size and wait for the
-"insufficient" event. At the same time, you could speculatively
-advertise the expected "sufficient" size on the CAPTURE queue before
-the hardware signals those. Even if you mispredict them, you'll get
-the event, update the CAPTURE resolution and send the source change
-event to the application, which would then give you the correct
-buffers. Would that work for you?
-
-Best regards,
-Tomasz
+Reviewed-by: Niklas Cassel <niklas.cassel@linaro.org>
