@@ -2,428 +2,393 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id EDFDC25805
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 May 2019 21:09:29 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D82F725843
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 May 2019 21:28:31 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728221AbfEUTJ3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 21 May 2019 15:09:29 -0400
-Received: from mail-pg1-f195.google.com ([209.85.215.195]:46713 "EHLO
-        mail-pg1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728103AbfEUTJ2 (ORCPT
+        id S1727341AbfEUT2V (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 21 May 2019 15:28:21 -0400
+Received: from mail-pg1-f196.google.com ([209.85.215.196]:36393 "EHLO
+        mail-pg1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727319AbfEUT2V (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 21 May 2019 15:09:28 -0400
-Received: by mail-pg1-f195.google.com with SMTP id t187so9027254pgb.13
-        for <linux-arm-msm@vger.kernel.org>; Tue, 21 May 2019 12:09:28 -0700 (PDT)
+        Tue, 21 May 2019 15:28:21 -0400
+Received: by mail-pg1-f196.google.com with SMTP id a3so10132pgb.3;
+        Tue, 21 May 2019 12:28:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=67JYBQJp6gKHg5KWzYO1IDzsFGK/r5ICkditkwMbrNs=;
-        b=Gowlq3M5IeXr9hbwicwXN+ICtdCvzXXDL5YA5fNVL6mR/oatI2qR40KVofVUCwSshJ
-         uhFN77JqES7GuhUuMsJMtgGgE5K0cegzS4AQgOzhOyu6Wi2sh2aSqGvDxuoSuiRJUgxK
-         IqalZ6BPYMntPuvSD05N/bALAPeh8E0usSdxylqKq7+RAe0gq9F3XBnT8NcsA7q1EMNW
-         4z2mPxLu7M+/S4eQ7JNCiVnmlYJEvSnGeDREQfsOvmJE6OUvqHVDBwu/ikLFTO1inuIE
-         OiSE5+1Vv56W92DHZcHzJY/+8HWr6QaWBklZbOJuczXg+2mhm7MeNrl3+lODmJ+LavdX
-         MiRA==
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id;
+        bh=H6go7CcUBjX3mzKpRCwd0evI+2M4u0B9z6h4VcPCc1A=;
+        b=qLGkbLDwWl0lVlk/adYib/b/sDlGbf+3aKNtAQ3O61E873sJulejk9R09Kh89wwLye
+         ajPQnhV2iQKzg+8KBPhytmKKMghOjbek15ssXUAs6QGuTmFb3EzcjMd2Q28Xb+DSuE+7
+         Saq5DMSYn9s2x02pMiob21ba7HglJEgfF9E3DcQ7ZzyhGZn+QmK746STqlkgAeAV1RVY
+         MfMADVSvxPHkazzGDhPWH5FTTir7EHmDVKoImDsYSBI2/IrT5L0jGfZLtT+V0N2Zd4As
+         w52Nb0c0IwjzByhvunK2xdC4CQ7HZdvyesHWuWn8VbSOlBW5sYDQfB2ONrCY101qtB+a
+         yBaw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=67JYBQJp6gKHg5KWzYO1IDzsFGK/r5ICkditkwMbrNs=;
-        b=K/lC1Ym2EckfTNdLxH6wd7JYp3boDqVL1EARemP6whDmUWT3ngQPUg2Vf3OqDpWEQL
-         lmTHS2NnGLtehYBHDtehN8NeOcMnPt4VtOtzx1rd8iez/3NSX9yUIKBR1+nFzrXLiAs/
-         V7rN5ARQQRnxIFyWP7RmFtfsmRyErf293NXIoI8ri3zIjF79ssZCBckUqLxgu/ymIWU0
-         ROyfesImwO1/WlvBmqvtr+LmMZBUlAkIYxKP8XvUSePt+0mlcNDdhxZG+S6QJCssx5Yl
-         Md//iBOYEugJB4d5lqRn6wumesE67QOk3rDLLVnhCWzJJv2jjQ8ZIcJaoAAF5XYX8oZM
-         Kb5w==
-X-Gm-Message-State: APjAAAWzBxNN02BqgoMozO6W69BPNfNJF/4IFh9MTvN0QY8gx3czPVxc
-        4ezWl8zkfAwTHQcjAuni/0B1lQ==
-X-Google-Smtp-Source: APXvYqxqV1nc3tbZQ06mCE2YSbtykG9rRjWk0ZN8EReBy2kZ8+uTQ7iwAKiytGUCKKNGc9s0Z6CmfQ==
-X-Received: by 2002:aa7:93bb:: with SMTP id x27mr88851941pff.104.1558465767487;
-        Tue, 21 May 2019 12:09:27 -0700 (PDT)
-Received: from tuxbook-pro (104-188-17-28.lightspeed.sndgca.sbcglobal.net. [104.188.17.28])
-        by smtp.gmail.com with ESMTPSA id e62sm25970446pfa.50.2019.05.21.12.09.26
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Tue, 21 May 2019 12:09:26 -0700 (PDT)
-Date:   Tue, 21 May 2019 12:09:53 -0700
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
-Cc:     lgirdwood@gmail.com, broonie@kernel.org, agross@kernel.org,
-        david.brown@linaro.org, jcrouse@codeaurora.org, robh+dt@kernel.org,
-        mark.rutland@arm.com, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org
-Subject: Re: [PATCH 2/3] regulator: qcom_spmi: Add support for PM8005
-Message-ID: <20190521190953.GD2085@tuxbook-pro>
-References: <20190521164932.14265-1-jeffrey.l.hugo@gmail.com>
- <20190521165315.14379-1-jeffrey.l.hugo@gmail.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20190521165315.14379-1-jeffrey.l.hugo@gmail.com>
-User-Agent: Mutt/1.11.4 (2019-03-13)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=H6go7CcUBjX3mzKpRCwd0evI+2M4u0B9z6h4VcPCc1A=;
+        b=t7H+Smxkl8zQ+SMF0rFxB7bMi4tiuHKFm0f+Xk7bnUjY0JI7UCEzwQ82XLXt+4UQRf
+         Qgb6f/+PHeQaFVY4zalGICNoTiMBzj8IIFy+APx57h6JN+NfNjE0Vv9eAk1GyIaTbNqu
+         wOX/KxFjclDkc6rvdw8eLax8rnmnvIMebZpT1fOH4RVFpqueqUt7sSLd/RgfaavjJpkM
+         NHLpq0MdoRMYX5hSe5ZWaUfl2NeKPt3U8BbByEHErwsx8xbhEqdQ8ALPeorFIc+EdkIN
+         e6vQZZhz63eiRdukcfPTTCqyqsEjfoK+PkHt4fMqVyNDokqz2hvKgshMilKOIxFE/kt4
+         o67g==
+X-Gm-Message-State: APjAAAWdHt3BPtqJOD8GrIa75fEtd9CwhSc1sLFp3w+539iKDD/2hiqM
+        sHwaZMKGrsYJpBOGaJG2RV4=
+X-Google-Smtp-Source: APXvYqyXddJUHTc2OzpreTHB+PQuLPhDAlw52ZnNU9kP+z7JjpLNUDOgkon9dSKxYcJcwywTMqSnIA==
+X-Received: by 2002:aa7:9289:: with SMTP id j9mr2874365pfa.251.1558466900256;
+        Tue, 21 May 2019 12:28:20 -0700 (PDT)
+Received: from mail.broadcom.com ([192.19.231.250])
+        by smtp.gmail.com with ESMTPSA id c76sm41382743pfc.43.2019.05.21.12.28.16
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Tue, 21 May 2019 12:28:19 -0700 (PDT)
+From:   Kamal Dasu <kdasu.kdev@gmail.com>
+To:     linux-mtd@lists.infradead.org
+Cc:     bcm-kernel-feedback-list@broadcom.com,
+        linux-kernel@vger.kernel.org, Kamal Dasu <kdasu.kdev@gmail.com>,
+        Liang Yang <liang.yang@amlogic.com>,
+        David Woodhouse <dwmw2@infradead.org>,
+        Brian Norris <computersforpeace@gmail.com>,
+        Marek Vasut <marek.vasut@gmail.com>,
+        Miquel Raynal <miquel.raynal@bootlin.com>,
+        Richard Weinberger <richard@nod.at>,
+        Vignesh Raghavendra <vigneshr@ti.com>,
+        Rob Herring <robh+dt@kernel.org>,
+        Mark Rutland <mark.rutland@arm.com>,
+        Kevin Hilman <khilman@baylibre.com>,
+        Stefan Agner <stefan@agner.ch>, Lucas Stach <dev@lynxeye.de>,
+        Thierry Reding <thierry.reding@gmail.com>,
+        Jonathan Hunter <jonathanh@nvidia.com>,
+        Neil Armstrong <narmstrong@baylibre.com>,
+        Andy Gross <agross@kernel.org>,
+        David Brown <david.brown@linaro.org>,
+        Maxime Coquelin <mcoquelin.stm32@gmail.com>,
+        Alexandre Torgue <alexandre.torgue@st.com>,
+        Marc Gonzalez <marc.w.gonzalez@free.fr>,
+        Mans Rullgard <mans@mansr.com>, devicetree@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org,
+        linux-amlogic@lists.infradead.org, linux-tegra@vger.kernel.org,
+        linux-oxnas@groups.io, linux-arm-msm@vger.kernel.org,
+        linux-stm32@st-md-mailman.stormreply.com
+Subject: [PATCH] dt: bindings: mtd: replace references to nand.txt with nand-controller.yaml
+Date:   Tue, 21 May 2019 15:27:57 -0400
+Message-Id: <1558466890-45471-1-git-send-email-kdasu.kdev@gmail.com>
+X-Mailer: git-send-email 1.9.0.138.g2de3478
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue 21 May 09:53 PDT 2019, Jeffrey Hugo wrote:
+nand-controller.yaml replaced nand.txt however the references to it were
+not updated. This change updates these references wherever it appears in
+bindings documentation.
 
-> The PM8005 is used on the msm8998 MTP.  The S1 regulator is VDD_GFX, ie
-> it needs to be on and controlled inorder to use the GPU.  Add support to
-> drive the PM8005 regulators so that we can bring up the GPU on msm8998.
-> 
-> Signed-off-by: Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
-> ---
->  drivers/regulator/qcom_spmi-regulator.c | 203 +++++++++++++++++++++++-
->  1 file changed, 198 insertions(+), 5 deletions(-)
-> 
-> diff --git a/drivers/regulator/qcom_spmi-regulator.c b/drivers/regulator/qcom_spmi-regulator.c
-> index 53a61fb65642..e4b89fbaf426 100644
-> --- a/drivers/regulator/qcom_spmi-regulator.c
-> +++ b/drivers/regulator/qcom_spmi-regulator.c
-> @@ -104,6 +104,7 @@ enum spmi_regulator_logical_type {
->  	SPMI_REGULATOR_LOGICAL_TYPE_ULT_LO_SMPS,
->  	SPMI_REGULATOR_LOGICAL_TYPE_ULT_HO_SMPS,
->  	SPMI_REGULATOR_LOGICAL_TYPE_ULT_LDO,
-> +	SPMI_REGULATOR_LOGICAL_TYPE_FTSMPS2,
->  };
->  
->  enum spmi_regulator_type {
-> @@ -150,6 +151,7 @@ enum spmi_regulator_subtype {
->  	SPMI_REGULATOR_SUBTYPE_5V_BOOST		= 0x01,
->  	SPMI_REGULATOR_SUBTYPE_FTS_CTL		= 0x08,
->  	SPMI_REGULATOR_SUBTYPE_FTS2p5_CTL	= 0x09,
-> +	SPMI_REGULATOR_SUBTYPE_FTS426_CTL	= 0x0a,
->  	SPMI_REGULATOR_SUBTYPE_BB_2A		= 0x01,
->  	SPMI_REGULATOR_SUBTYPE_ULT_HF_CTL1	= 0x0d,
->  	SPMI_REGULATOR_SUBTYPE_ULT_HF_CTL2	= 0x0e,
-> @@ -170,6 +172,20 @@ enum spmi_common_regulator_registers {
->  	SPMI_COMMON_REG_STEP_CTRL		= 0x61,
->  };
->  
-> +/*
-> + * Second common register layout used by newer devices
-> + * Note that some of the registers from the first common layout remain
-> + * unchanged and their definition is not duplicated.
-> + */
-> +enum qpnp_common2_regulator_registers {
-> +	SPMI_COMMON2_REG_VOLTAGE_LSB		= 0x40,
-> +	SPMI_COMMON2_REG_VOLTAGE_MSB		= 0x41,
-> +	SPMI_COMMON2_REG_MODE			= 0x45,
-> +	SPMI_COMMON2_REG_STEP_CTRL		= 0x61,
-> +	SPMI_COMMON2_REG_VOLTAGE_ULS_LSB	= 0x68,
-> +	SPMI_COMMON2_REG_VOLTAGE_ULS_MSB	= 0x69,
-> +};
-> +
->  enum spmi_vs_registers {
->  	SPMI_VS_REG_OCP				= 0x4a,
->  	SPMI_VS_REG_SOFT_START			= 0x4c,
-> @@ -229,6 +245,15 @@ enum spmi_common_control_register_index {
->  #define SPMI_COMMON_MODE_FOLLOW_HW_EN0_MASK	0x01
->  #define SPMI_COMMON_MODE_FOLLOW_ALL_MASK	0x1f
->  
-> +/* Second common regulator mode register values */
-> +#define SPMI_COMMON2_MODE_BYPASS_MASK		3
-> +#define SPMI_COMMON2_MODE_RETENTION_MASK	4
-> +#define SPMI_COMMON2_MODE_LPM_MASK		5
-> +#define SPMI_COMMON2_MODE_AUTO_MASK		6
-> +#define SPMI_COMMON2_MODE_HPM_MASK		7
-> +
-> +#define SPMI_COMMON2_MODE_MASK			0x07
-> +
->  /* Common regulator pull down control register layout */
->  #define SPMI_COMMON_PULL_DOWN_ENABLE_MASK	0x80
->  
-> @@ -274,6 +299,23 @@ enum spmi_common_control_register_index {
->  #define SPMI_FTSMPS_STEP_MARGIN_NUM	4
->  #define SPMI_FTSMPS_STEP_MARGIN_DEN	5
->  
-> +#define SPMI_FTSMPS2_STEP_CTRL_DELAY_MASK	0x03
-> +#define SPMI_FTSMPS2_STEP_CTRL_DELAY_SHIFT	0
-> +
-> +/* Clock rate in kHz of the FTSMPS2 regulator reference clock. */
-> +#define SPMI_FTSMPS2_CLOCK_RATE		4800
-> +
-> +/* Minimum voltage stepper delay for each step. */
-> +#define SPMI_FTSMPS2_STEP_DELAY		2
-> +
-> +/*
-> + * The ratio SPMI_FTSMPS2_STEP_MARGIN_NUM/SPMI_FTSMPS2_STEP_MARGIN_DEN is used
-> + * to adjust the step rate in order to account for oscillator variance.
-> + */
-> +#define SPMI_FTSMPS2_STEP_MARGIN_NUM	10
-> +#define SPMI_FTSMPS2_STEP_MARGIN_DEN	11
-> +
-> +
->  /* VSET value to decide the range of ULT SMPS */
->  #define ULT_SMPS_RANGE_SPLIT 0x60
->  
-> @@ -447,6 +489,10 @@ static struct spmi_voltage_range ftsmps2p5_ranges[] = {
->  	SPMI_VOLTAGE_RANGE(1,  160000, 1360000, 2200000, 2200000, 10000),
->  };
->  
-> +static struct spmi_voltage_range ftsmps426_ranges[] = {
-> +	SPMI_VOLTAGE_RANGE(0,       0,  320000, 1352000, 1352000,  4000),
-> +};
-> +
->  static struct spmi_voltage_range boost_ranges[] = {
->  	SPMI_VOLTAGE_RANGE(0, 4000000, 4000000, 5550000, 5550000, 50000),
->  };
-> @@ -480,6 +526,7 @@ static DEFINE_SPMI_SET_POINTS(ln_ldo);
->  static DEFINE_SPMI_SET_POINTS(smps);
->  static DEFINE_SPMI_SET_POINTS(ftsmps);
->  static DEFINE_SPMI_SET_POINTS(ftsmps2p5);
-> +static DEFINE_SPMI_SET_POINTS(ftsmps426);
->  static DEFINE_SPMI_SET_POINTS(boost);
->  static DEFINE_SPMI_SET_POINTS(boost_byp);
->  static DEFINE_SPMI_SET_POINTS(ult_lo_smps);
-> @@ -647,17 +694,31 @@ static int spmi_hw_selector_to_sw(struct spmi_regulator *vreg, u8 hw_sel,
->  static const struct spmi_voltage_range *
->  spmi_regulator_find_range(struct spmi_regulator *vreg)
->  {
-> -	u8 range_sel;
-> +	int uV;
-> +	u8 range_sel, lsb, msb;
->  	const struct spmi_voltage_range *range, *end;
->  
->  	range = vreg->set_points->range;
->  	end = range + vreg->set_points->count;
->  
-> -	spmi_vreg_read(vreg, SPMI_COMMON_REG_VOLTAGE_RANGE, &range_sel, 1);
-> +	/* second common devices don't have VOLTAGE_RANGE register */
-> +	if (vreg->logical_type == SPMI_REGULATOR_LOGICAL_TYPE_FTSMPS2) {
-> +		spmi_vreg_read(vreg, SPMI_COMMON2_REG_VOLTAGE_LSB, &lsb, 1);
-> +		spmi_vreg_read(vreg, SPMI_COMMON2_REG_VOLTAGE_MSB, &msb, 1);
-> +
-> +		uV = (((int)msb << 8) | (int)lsb) * 1000;
->  
-> -	for (; range < end; range++)
-> -		if (range->range_sel == range_sel)
-> -			return range;
-> +		for (; range < end; range++)
-> +			if (range->min_uV <= uV && range->max_uV >= uV)
-> +				return range;
-> +	} else {
-> +		spmi_vreg_read(vreg, SPMI_COMMON_REG_VOLTAGE_RANGE, &range_sel,
-> +			       1);
-> +
-> +		for (; range < end; range++)
-> +			if (range->range_sel == range_sel)
-> +				return range;
-> +	}
+Fixes: 212e49693592 ("dt-bindings: mtd: Add YAML schemas for the generic NAND options")
 
-While I think the patch looks good it suffers from the same design
-issue that Mark objected to in:
-https://lore.kernel.org/lkml/1548675904-18324-3-git-send-email-jorge.ramirez-ortiz@linaro.org/
+Signed-off-by: Kamal Dasu <kdasu.kdev@gmail.com>
+---
+ .../devicetree/bindings/mtd/amlogic,meson-nand.txt         |  2 +-
+ Documentation/devicetree/bindings/mtd/brcm,brcmnand.txt    |  6 +++---
+ Documentation/devicetree/bindings/mtd/denali-nand.txt      |  6 +++---
+ Documentation/devicetree/bindings/mtd/fsmc-nand.txt        |  6 +++---
+ Documentation/devicetree/bindings/mtd/gpmc-nand.txt        |  2 +-
+ Documentation/devicetree/bindings/mtd/hisi504-nand.txt     |  2 +-
+ Documentation/devicetree/bindings/mtd/marvell-nand.txt     | 14 +++++++-------
+ Documentation/devicetree/bindings/mtd/mxc-nand.txt         |  6 +++---
+ .../devicetree/bindings/mtd/nvidia-tegra20-nand.txt        |  6 +++---
+ Documentation/devicetree/bindings/mtd/oxnas-nand.txt       |  2 +-
+ Documentation/devicetree/bindings/mtd/qcom_nandc.txt       |  4 ++--
+ Documentation/devicetree/bindings/mtd/samsung-s3c2410.txt  |  6 +++---
+ Documentation/devicetree/bindings/mtd/stm32-fmc2-nand.txt  |  6 +++---
+ Documentation/devicetree/bindings/mtd/tango-nand.txt       |  2 +-
+ Documentation/devicetree/bindings/mtd/vf610-nfc.txt        |  8 ++++----
+ 15 files changed, 39 insertions(+), 39 deletions(-)
 
-I think we need a better strategy, as we now at least have to support
-the three cases of:
-* range selector + voltage selector
-* multi range voltage selector
-* single range voltage selector
+diff --git a/Documentation/devicetree/bindings/mtd/amlogic,meson-nand.txt b/Documentation/devicetree/bindings/mtd/amlogic,meson-nand.txt
+index 3983c11..5794ab11 100644
+--- a/Documentation/devicetree/bindings/mtd/amlogic,meson-nand.txt
++++ b/Documentation/devicetree/bindings/mtd/amlogic,meson-nand.txt
+@@ -24,7 +24,7 @@ Optional children nodes:
+ Children nodes represent the available nand chips.
+ 
+ Other properties:
+-see Documentation/devicetree/bindings/mtd/nand.txt for generic bindings.
++see Documentation/devicetree/bindings/mtd/nand-controller.yaml for generic bindings.
+ 
+ Example demonstrate on AXG SoC:
+ 
+diff --git a/Documentation/devicetree/bindings/mtd/brcm,brcmnand.txt b/Documentation/devicetree/bindings/mtd/brcm,brcmnand.txt
+index bcda1df..0b7c373 100644
+--- a/Documentation/devicetree/bindings/mtd/brcm,brcmnand.txt
++++ b/Documentation/devicetree/bindings/mtd/brcm,brcmnand.txt
+@@ -101,12 +101,12 @@ Required properties:
+                               number (e.g., 0, 1, 2, etc.)
+ - #address-cells            : see partition.txt
+ - #size-cells               : see partition.txt
+-- nand-ecc-strength         : see nand.txt
+-- nand-ecc-step-size        : must be 512 or 1024. See nand.txt
++- nand-ecc-strength         : see nand-controller.yaml
++- nand-ecc-step-size        : must be 512 or 1024. See nand-controller.yaml
+ 
+ Optional properties:
+ - nand-on-flash-bbt         : boolean, to enable the on-flash BBT for this
+-                              chip-select. See nand.txt
++                              chip-select. See nand-controller.yaml
+ - brcm,nand-oob-sector-size : integer, to denote the spare area sector size
+                               expected for the ECC layout in use. This size, in
+                               addition to the strength and step-size,
+diff --git a/Documentation/devicetree/bindings/mtd/denali-nand.txt b/Documentation/devicetree/bindings/mtd/denali-nand.txt
+index b14b675..b32aed1 100644
+--- a/Documentation/devicetree/bindings/mtd/denali-nand.txt
++++ b/Documentation/devicetree/bindings/mtd/denali-nand.txt
+@@ -22,16 +22,16 @@ Sub-nodes:
+       select is connected.
+ 
+   Optional properties:
+-    - nand-ecc-step-size: see nand.txt for details.
++    - nand-ecc-step-size: see nand-controller.yaml for details.
+       If present, the value must be
+         512        for "altr,socfpga-denali-nand"
+         1024       for "socionext,uniphier-denali-nand-v5a"
+         1024       for "socionext,uniphier-denali-nand-v5b"
+-    - nand-ecc-strength: see nand.txt for details. Valid values are:
++    - nand-ecc-strength: see nand-controller.yaml for details. Valid values are:
+         8, 15      for "altr,socfpga-denali-nand"
+         8, 16, 24  for "socionext,uniphier-denali-nand-v5a"
+         8, 16      for "socionext,uniphier-denali-nand-v5b"
+-    - nand-ecc-maximize: see nand.txt for details
++    - nand-ecc-maximize: see nand-controller.yaml for details
+ 
+ The chip nodes may optionally contain sub-nodes describing partitions of the
+ address space. See partition.txt for more detail.
+diff --git a/Documentation/devicetree/bindings/mtd/fsmc-nand.txt b/Documentation/devicetree/bindings/mtd/fsmc-nand.txt
+index 32636eb..6762d3c 100644
+--- a/Documentation/devicetree/bindings/mtd/fsmc-nand.txt
++++ b/Documentation/devicetree/bindings/mtd/fsmc-nand.txt
+@@ -30,9 +30,9 @@ Optional properties:
+                  command is asserted. Zero means one cycle, 255 means 256
+                  cycles.
+ - bank: default NAND bank to use (0-3 are valid, 0 is the default).
+-- nand-ecc-mode      : see nand.txt
+-- nand-ecc-strength  : see nand.txt
+-- nand-ecc-step-size : see nand.txt
++- nand-ecc-mode      : see nand-controller.yaml
++- nand-ecc-strength  : see nand-controller.yaml
++- nand-ecc-step-size : see nand-controller.yaml
+ 
+ Can support 1-bit HW ECC (default) or if stronger correction is required,
+ software-based BCH.
+diff --git a/Documentation/devicetree/bindings/mtd/gpmc-nand.txt b/Documentation/devicetree/bindings/mtd/gpmc-nand.txt
+index c059ab7..44919d4 100644
+--- a/Documentation/devicetree/bindings/mtd/gpmc-nand.txt
++++ b/Documentation/devicetree/bindings/mtd/gpmc-nand.txt
+@@ -8,7 +8,7 @@ explained in a separate documents - please refer to
+ Documentation/devicetree/bindings/memory-controllers/omap-gpmc.txt
+ 
+ For NAND specific properties such as ECC modes or bus width, please refer to
+-Documentation/devicetree/bindings/mtd/nand.txt
++Documentation/devicetree/bindings/mtd/nand-controller.yaml
+ 
+ 
+ Required properties:
+diff --git a/Documentation/devicetree/bindings/mtd/hisi504-nand.txt b/Documentation/devicetree/bindings/mtd/hisi504-nand.txt
+index 2e35f06..8963983 100644
+--- a/Documentation/devicetree/bindings/mtd/hisi504-nand.txt
++++ b/Documentation/devicetree/bindings/mtd/hisi504-nand.txt
+@@ -7,7 +7,7 @@ Required properties:
+                        NAND controller's registers. The second contains base
+                        physical address and size of NAND controller's buffer.
+ - interrupts:          Interrupt number for nfc.
+-- nand-bus-width:      See nand.txt.
++- nand-bus-width:      See nand-controller.yaml.
+ - nand-ecc-mode:       Support none and hw ecc mode.
+ - #address-cells:      Partition address, should be set 1.
+ - #size-cells:         Partition size, should be set 1.
+diff --git a/Documentation/devicetree/bindings/mtd/marvell-nand.txt b/Documentation/devicetree/bindings/mtd/marvell-nand.txt
+index e0c7907..a2d9a0f 100644
+--- a/Documentation/devicetree/bindings/mtd/marvell-nand.txt
++++ b/Documentation/devicetree/bindings/mtd/marvell-nand.txt
+@@ -36,29 +36,29 @@ Children nodes represent the available NAND chips.
+ 
+ Required properties:
+ - reg: shall contain the native Chip Select ids (0-3).
+-- nand-rb: see nand.txt (0-1).
++- nand-rb: see nand-controller.yaml (0-1).
+ 
+ Optional properties:
+ - marvell,nand-keep-config: orders the driver not to take the timings
+   from the core and leaving them completely untouched. Bootloader
+   timings will then be used.
+ - label: MTD name.
+-- nand-on-flash-bbt: see nand.txt.
+-- nand-ecc-mode: see nand.txt. Will use hardware ECC if not specified.
+-- nand-ecc-algo: see nand.txt. This property is essentially useful when
++- nand-on-flash-bbt: see nand-controller.yaml.
++- nand-ecc-mode: see nand-controller.yaml. Will use hardware ECC if not specified.
++- nand-ecc-algo: see nand-controller.yaml. This property is essentially useful when
+   not using hardware ECC. Howerver, it may be added when using hardware
+   ECC for clarification but will be ignored by the driver because ECC
+   mode is chosen depending on the page size and the strength required by
+   the NAND chip. This value may be overwritten with nand-ecc-strength
+   property.
+-- nand-ecc-strength: see nand.txt.
+-- nand-ecc-step-size: see nand.txt. Marvell's NAND flash controller does
++- nand-ecc-strength: see nand-controller.yaml.
++- nand-ecc-step-size: see nand-controller.yaml. Marvell's NAND flash controller does
+   use fixed strength (1-bit for Hamming, 16-bit for BCH), so the actual
+   step size will shrink or grow in order to fit the required strength.
+   Step sizes are not completely random for all and follow certain
+   patterns described in AN-379, "Marvell SoC NFC ECC".
+ 
+-See Documentation/devicetree/bindings/mtd/nand.txt for more details on
++See Documentation/devicetree/bindings/mtd/nand-controller.yaml for more details on
+ generic bindings.
+ 
+ 
+diff --git a/Documentation/devicetree/bindings/mtd/mxc-nand.txt b/Documentation/devicetree/bindings/mtd/mxc-nand.txt
+index b5833d1..2857c62 100644
+--- a/Documentation/devicetree/bindings/mtd/mxc-nand.txt
++++ b/Documentation/devicetree/bindings/mtd/mxc-nand.txt
+@@ -4,9 +4,9 @@ Required properties:
+ - compatible: "fsl,imxXX-nand"
+ - reg: address range of the nfc block
+ - interrupts: irq to be used
+-- nand-bus-width: see nand.txt
+-- nand-ecc-mode: see nand.txt
+-- nand-on-flash-bbt: see nand.txt
++- nand-bus-width: see nand-controller.yaml
++- nand-ecc-mode: see nand-controller.yaml
++- nand-on-flash-bbt: see nand-controller.yaml
+ 
+ Example:
+ 
+diff --git a/Documentation/devicetree/bindings/mtd/nvidia-tegra20-nand.txt b/Documentation/devicetree/bindings/mtd/nvidia-tegra20-nand.txt
+index b2f2ca1..e737e5b 100644
+--- a/Documentation/devicetree/bindings/mtd/nvidia-tegra20-nand.txt
++++ b/Documentation/devicetree/bindings/mtd/nvidia-tegra20-nand.txt
+@@ -26,14 +26,14 @@ Optional children node properties:
+ 		 "hw" is supported.
+ - nand-ecc-algo: string, algorithm of NAND ECC.
+ 		 Supported values with "hw" ECC mode are: "rs", "bch".
+-- nand-bus-width : See nand.txt
+-- nand-on-flash-bbt: See nand.txt
++- nand-bus-width : See nand-controller.yaml
++- nand-on-flash-bbt: See nand-controller.yaml
+ - nand-ecc-strength: integer representing the number of bits to correct
+ 		     per ECC step (always 512). Supported strength using HW ECC
+ 		     modes are:
+ 		     - RS: 4, 6, 8
+ 		     - BCH: 4, 8, 14, 16
+-- nand-ecc-maximize: See nand.txt
++- nand-ecc-maximize: See nand-controller.yaml
+ - nand-is-boot-medium: Makes sure only ECC strengths supported by the boot ROM
+ 		       are chosen.
+ - wp-gpios: GPIO specifier for the write protect pin.
+diff --git a/Documentation/devicetree/bindings/mtd/oxnas-nand.txt b/Documentation/devicetree/bindings/mtd/oxnas-nand.txt
+index 56d5c19d..2ba07fc 100644
+--- a/Documentation/devicetree/bindings/mtd/oxnas-nand.txt
++++ b/Documentation/devicetree/bindings/mtd/oxnas-nand.txt
+@@ -1,6 +1,6 @@
+ * Oxford Semiconductor OXNAS NAND Controller
+ 
+-Please refer to nand.txt for generic information regarding MTD NAND bindings.
++Please refer to nand-controller.yaml for generic information regarding MTD NAND bindings.
+ 
+ Required properties:
+  - compatible: "oxsemi,ox820-nand"
+diff --git a/Documentation/devicetree/bindings/mtd/qcom_nandc.txt b/Documentation/devicetree/bindings/mtd/qcom_nandc.txt
+index 1123cc6..5c2fba4 100644
+--- a/Documentation/devicetree/bindings/mtd/qcom_nandc.txt
++++ b/Documentation/devicetree/bindings/mtd/qcom_nandc.txt
+@@ -47,8 +47,8 @@ Required properties:
+ - #size-cells:		see partition.txt
+ 
+ Optional properties:
+-- nand-bus-width:	see nand.txt
+-- nand-ecc-strength:	see nand.txt. If not specified, then ECC strength will
++- nand-bus-width:	see nand-controller.yaml
++- nand-ecc-strength:	see nand-controller.yaml. If not specified, then ECC strength will
+ 			be used according to chip requirement and available
+ 			OOB size.
+ 
+diff --git a/Documentation/devicetree/bindings/mtd/samsung-s3c2410.txt b/Documentation/devicetree/bindings/mtd/samsung-s3c2410.txt
+index 0040eb8..09815c4 100644
+--- a/Documentation/devicetree/bindings/mtd/samsung-s3c2410.txt
++++ b/Documentation/devicetree/bindings/mtd/samsung-s3c2410.txt
+@@ -6,7 +6,7 @@ Required properties:
+ 	"samsung,s3c2412-nand"
+ 	"samsung,s3c2440-nand"
+ - reg : register's location and length.
+-- #address-cells, #size-cells : see nand.txt
++- #address-cells, #size-cells : see nand-controller.yaml
+ - clocks : phandle to the nand controller clock
+ - clock-names : must contain "nand"
+ 
+@@ -14,8 +14,8 @@ Optional child nodes:
+ Child nodes representing the available nand chips.
+ 
+ Optional child properties:
+-- nand-ecc-mode : see nand.txt
+-- nand-on-flash-bbt : see nand.txt
++- nand-ecc-mode : see nand-controller.yaml
++- nand-on-flash-bbt : see nand-controller.yaml
+ 
+ Each child device node may optionally contain a 'partitions' sub-node,
+ which further contains sub-nodes describing the flash partition mapping.
+diff --git a/Documentation/devicetree/bindings/mtd/stm32-fmc2-nand.txt b/Documentation/devicetree/bindings/mtd/stm32-fmc2-nand.txt
+index ad2bef8..e55895e 100644
+--- a/Documentation/devicetree/bindings/mtd/stm32-fmc2-nand.txt
++++ b/Documentation/devicetree/bindings/mtd/stm32-fmc2-nand.txt
+@@ -24,9 +24,9 @@ Required properties:
+ - reg: describes the CS lines assigned to the NAND device.
+ 
+ Optional properties:
+-- nand-on-flash-bbt: see nand.txt
+-- nand-ecc-strength: see nand.txt
+-- nand-ecc-step-size: see nand.txt
++- nand-on-flash-bbt: see nand-controller.yaml
++- nand-ecc-strength: see nand-controller.yaml
++- nand-ecc-step-size: see nand-controller.yaml
+ 
+ The following ECC strength and step size are currently supported:
+  - nand-ecc-strength = <1>, nand-ecc-step-size = <512> (Hamming)
+diff --git a/Documentation/devicetree/bindings/mtd/tango-nand.txt b/Documentation/devicetree/bindings/mtd/tango-nand.txt
+index cd1bf2a..91c8420 100644
+--- a/Documentation/devicetree/bindings/mtd/tango-nand.txt
++++ b/Documentation/devicetree/bindings/mtd/tango-nand.txt
+@@ -11,7 +11,7 @@ Required properties:
+ - #size-cells: <0>
+ 
+ Children nodes represent the available NAND chips.
+-See Documentation/devicetree/bindings/mtd/nand.txt for generic bindings.
++See Documentation/devicetree/bindings/mtd/nand-controller.yaml for generic bindings.
+ 
+ Example:
+ 
+diff --git a/Documentation/devicetree/bindings/mtd/vf610-nfc.txt b/Documentation/devicetree/bindings/mtd/vf610-nfc.txt
+index c96eeb6..7db5e6e 100644
+--- a/Documentation/devicetree/bindings/mtd/vf610-nfc.txt
++++ b/Documentation/devicetree/bindings/mtd/vf610-nfc.txt
+@@ -25,14 +25,14 @@ only handle one NAND chip.
+ 
+ Required properties:
+ - compatible: Should be set to "fsl,vf610-nfc-cs".
+-- nand-bus-width: see nand.txt
+-- nand-ecc-mode: see nand.txt
++- nand-bus-width: see nand-controller.yaml
++- nand-ecc-mode: see nand-controller.yaml
+ 
+ Required properties for hardware ECC:
+-- nand-ecc-strength: supported strengths are 24 and 32 bit (see nand.txt)
++- nand-ecc-strength: supported strengths are 24 and 32 bit (see nand-controller.yaml)
+ - nand-ecc-step-size: step size equals page size, currently only 2k pages are
+     supported
+-- nand-on-flash-bbt: see nand.txt
++- nand-on-flash-bbt: see nand-controller.yaml
+ 
+ Example:
+ 
+-- 
+1.9.0.138.g2de3478
 
-Regards,
-Bjorn
-
->  
->  	return NULL;
->  }
-> @@ -747,6 +808,23 @@ spmi_regulator_common_set_voltage(struct regulator_dev *rdev, unsigned selector)
->  	return spmi_vreg_write(vreg, SPMI_COMMON_REG_VOLTAGE_RANGE, buf, 2);
->  }
->  
-> +static int spmi_regulator_common_list_voltage(struct regulator_dev *rdev,
-> +					      unsigned selector);
-> +
-> +static int spmi_regulator_common2_set_voltage(struct regulator_dev *rdev,
-> +					      unsigned selector)
-> +{
-> +	struct spmi_regulator *vreg = rdev_get_drvdata(rdev);
-> +	u8 buf[2];
-> +	int mV;
-> +
-> +	mV = spmi_regulator_common_list_voltage(rdev, selector) / 1000;
-> +
-> +	buf[0] = mV & 0xff;
-> +	buf[1] = (mV >> 8) & 0xff;
-> +	return spmi_vreg_write(vreg, SPMI_COMMON2_REG_VOLTAGE_LSB, buf, 2);
-> +}
-> +
->  static int spmi_regulator_set_voltage_time_sel(struct regulator_dev *rdev,
->  		unsigned int old_selector, unsigned int new_selector)
->  {
-> @@ -778,6 +856,17 @@ static int spmi_regulator_common_get_voltage(struct regulator_dev *rdev)
->  	return spmi_hw_selector_to_sw(vreg, voltage_sel, range);
->  }
->  
-> +static int spmi_regulator_common2_get_voltage(struct regulator_dev *rdev)
-> +{
-> +	struct spmi_regulator *vreg = rdev_get_drvdata(rdev);
-> +	u8 lsb, msb;
-> +
-> +	spmi_vreg_read(vreg, SPMI_COMMON2_REG_VOLTAGE_LSB, &lsb, 1);
-> +	spmi_vreg_read(vreg, SPMI_COMMON2_REG_VOLTAGE_MSB, &msb, 1);
-> +
-> +	return (((int)msb << 8) | (int)lsb) * 1000;
-> +}
-> +
->  static int spmi_regulator_single_map_voltage(struct regulator_dev *rdev,
->  		int min_uV, int max_uV)
->  {
-> @@ -920,6 +1009,22 @@ static unsigned int spmi_regulator_common_get_mode(struct regulator_dev *rdev)
->  	return REGULATOR_MODE_IDLE;
->  }
->  
-> +static unsigned int spmi_regulator_common2_get_mode(struct regulator_dev *rdev)
-> +{
-> +	struct spmi_regulator *vreg = rdev_get_drvdata(rdev);
-> +	u8 reg;
-> +
-> +	spmi_vreg_read(vreg, SPMI_COMMON2_REG_MODE, &reg, 1);
-> +
-> +	if (reg == SPMI_COMMON2_MODE_HPM_MASK)
-> +		return REGULATOR_MODE_NORMAL;
-> +
-> +	if (reg == SPMI_COMMON2_MODE_AUTO_MASK)
-> +		return REGULATOR_MODE_FAST;
-> +
-> +	return REGULATOR_MODE_IDLE;
-> +}
-> +
->  static int
->  spmi_regulator_common_set_mode(struct regulator_dev *rdev, unsigned int mode)
->  {
-> @@ -935,6 +1040,21 @@ spmi_regulator_common_set_mode(struct regulator_dev *rdev, unsigned int mode)
->  	return spmi_vreg_update_bits(vreg, SPMI_COMMON_REG_MODE, val, mask);
->  }
->  
-> +static int
-> +spmi_regulator_common2_set_mode(struct regulator_dev *rdev, unsigned int mode)
-> +{
-> +	struct spmi_regulator *vreg = rdev_get_drvdata(rdev);
-> +	u8 mask = SPMI_COMMON2_MODE_MASK;
-> +	u8 val = SPMI_COMMON2_MODE_LPM_MASK;
-> +
-> +	if (mode == REGULATOR_MODE_NORMAL)
-> +		val = SPMI_COMMON2_MODE_HPM_MASK;
-> +	else if (mode == REGULATOR_MODE_FAST)
-> +		val = SPMI_COMMON2_MODE_AUTO_MASK;
-> +
-> +	return spmi_vreg_update_bits(vreg, SPMI_COMMON2_REG_MODE, val, mask);
-> +}
-> +
->  static int
->  spmi_regulator_common_set_load(struct regulator_dev *rdev, int load_uA)
->  {
-> @@ -1264,6 +1384,21 @@ static struct regulator_ops spmi_ult_ldo_ops = {
->  	.set_soft_start		= spmi_regulator_common_set_soft_start,
->  };
->  
-> +static struct regulator_ops spmi_ftsmps426_ops = {
-> +	.enable			= regulator_enable_regmap,
-> +	.disable		= regulator_disable_regmap,
-> +	.is_enabled		= regulator_is_enabled_regmap,
-> +	.set_voltage_sel	= spmi_regulator_common2_set_voltage,
-> +	.set_voltage_time_sel	= spmi_regulator_set_voltage_time_sel,
-> +	.get_voltage_sel	= spmi_regulator_common2_get_voltage,
-> +	.map_voltage		= spmi_regulator_common_map_voltage,
-> +	.list_voltage		= spmi_regulator_common_list_voltage,
-> +	.set_mode		= spmi_regulator_common2_set_mode,
-> +	.get_mode		= spmi_regulator_common2_get_mode,
-> +	.set_load		= spmi_regulator_common_set_load,
-> +	.set_pull_down		= spmi_regulator_common_set_pull_down,
-> +};
-> +
->  /* Maximum possible digital major revision value */
->  #define INF 0xFF
->  
-> @@ -1299,6 +1434,7 @@ static const struct spmi_regulator_mapping supported_regulators[] = {
->  	SPMI_VREG(BOOST, 5V_BOOST, 0, INF, BOOST,  boost,  boost,       0),
->  	SPMI_VREG(FTS,   FTS_CTL,  0, INF, FTSMPS, ftsmps, ftsmps, 100000),
->  	SPMI_VREG(FTS, FTS2p5_CTL, 0, INF, FTSMPS, ftsmps, ftsmps2p5, 100000),
-> +	SPMI_VREG(FTS, FTS426_CTL, 0, INF, FTSMPS2, ftsmps426, ftsmps426, 100000),
->  	SPMI_VREG(BOOST_BYP, BB_2A, 0, INF, BOOST_BYP, boost, boost_byp, 0),
->  	SPMI_VREG(ULT_BUCK, ULT_HF_CTL1, 0, INF, ULT_LO_SMPS, ult_lo_smps,
->  						ult_lo_smps,   100000),
-> @@ -1436,6 +1572,48 @@ static int spmi_regulator_init_slew_rate(struct spmi_regulator *vreg)
->  	return ret;
->  }
->  
-> +/* slew rate init for common register layout #2 */
-> +static int spmi_regulator_init_slew_rate2(struct spmi_regulator *vreg)
-> +{
-> +	int ret, i;
-> +	u8 reg = 0;
-> +	int delay, slew_rate;
-> +	const struct spmi_voltage_range *range = NULL;
-> +
-> +	ret = spmi_vreg_read(vreg, SPMI_COMMON2_REG_STEP_CTRL, &reg, 1);
-> +	if (ret) {
-> +		dev_err(vreg->dev, "spmi read failed, ret=%d\n", ret);
-> +		return ret;
-> +	}
-> +
-> +	/*
-> +	 * Regulators using the common #2 register layout do not have a voltage
-> +	 * range select register.  Choose the lowest possible step size to be
-> +	 * conservative in the slew rate calculation.
-> +	 */
-> +	for (i = 0; i < vreg->set_points->count; i++)
-> +		if (!range || vreg->set_points->range[i].step_uV <
-> +		    range->step_uV)
-> +			range = &vreg->set_points->range[i];
-> +
-> +	if (!range)
-> +		return -EINVAL;
-> +
-> +	delay = reg & SPMI_FTSMPS2_STEP_CTRL_DELAY_MASK;
-> +	delay >>= SPMI_FTSMPS2_STEP_CTRL_DELAY_SHIFT;
-> +
-> +	/* slew_rate has units of uV/us */
-> +	slew_rate = SPMI_FTSMPS2_CLOCK_RATE * range->step_uV;
-> +	slew_rate /= 1000 * (SPMI_FTSMPS2_STEP_DELAY << delay);
-> +	slew_rate *= SPMI_FTSMPS2_STEP_MARGIN_NUM;
-> +	slew_rate /= SPMI_FTSMPS2_STEP_MARGIN_DEN;
-> +
-> +	/* Ensure that the slew rate is greater than 0 */
-> +	vreg->slew_rate = max(slew_rate, 1);
-> +
-> +	return ret;
-> +}
-> +
->  static int spmi_regulator_init_registers(struct spmi_regulator *vreg,
->  				const struct spmi_regulator_init_data *data)
->  {
-> @@ -1575,6 +1753,12 @@ static int spmi_regulator_of_parse(struct device_node *node,
->  		ret = spmi_regulator_init_slew_rate(vreg);
->  		if (ret)
->  			return ret;
-> +		break;
-> +	case SPMI_REGULATOR_LOGICAL_TYPE_FTSMPS2:
-> +		ret = spmi_regulator_init_slew_rate2(vreg);
-> +		if (ret)
-> +			return ret;
-> +		break;
->  	default:
->  		break;
->  	}
-> @@ -1731,7 +1915,16 @@ static const struct spmi_regulator_data pmi8994_regulators[] = {
->  	{ }
->  };
->  
-> +static const struct spmi_regulator_data pm8005_regulators[] = {
-> +	{ "s1", 0x1400, "vdd_s1", },
-> +	{ "s2", 0x1700, "vdd_s2", },
-> +	{ "s3", 0x1a00, "vdd_s3", },
-> +	{ "s4", 0x1d00, "vdd_s4", },
-> +	{ }
-> +};
-> +
->  static const struct of_device_id qcom_spmi_regulator_match[] = {
-> +	{ .compatible = "qcom,pm8005-regulators", .data = &pm8005_regulators },
->  	{ .compatible = "qcom,pm8841-regulators", .data = &pm8841_regulators },
->  	{ .compatible = "qcom,pm8916-regulators", .data = &pm8916_regulators },
->  	{ .compatible = "qcom,pm8941-regulators", .data = &pm8941_regulators },
-> -- 
-> 2.17.1
-> 
