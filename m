@@ -2,25 +2,25 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 70A842526B
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 May 2019 16:44:30 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 031D425281
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 May 2019 16:46:54 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727969AbfEUOo3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 21 May 2019 10:44:29 -0400
-Received: from smtp.codeaurora.org ([198.145.29.96]:42988 "EHLO
+        id S1727941AbfEUOqr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 21 May 2019 10:46:47 -0400
+Received: from smtp.codeaurora.org ([198.145.29.96]:44166 "EHLO
         smtp.codeaurora.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727534AbfEUOo3 (ORCPT
+        with ESMTP id S1727044AbfEUOqq (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 21 May 2019 10:44:29 -0400
+        Tue, 21 May 2019 10:46:46 -0400
 Received: by smtp.codeaurora.org (Postfix, from userid 1000)
-        id 0CCE260E41; Tue, 21 May 2019 14:44:27 +0000 (UTC)
+        id D677F60795; Tue, 21 May 2019 14:46:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
-        s=default; t=1558449868;
-        bh=9RJTartqJw5pP0Ur3CP53YgFDs7kDaCUu1bvIYsQLIs=;
-        h=From:To:Cc:Subject:Date:From;
-        b=DdIcQxJzBoz/6d2weEfmyZfZC3JFLx5MBBSU5GnNCZnRCqOKGts6UYoTyB1seX8s3
-         C9k6ZfntTzNiDeN3N5XUQxh5qECJh08lO7mYTouYXHrIKv8sDbNWL8VBMSFRql7JOQ
-         0+rmf3zpT5b8eAmJnAXWCGB/wtdef/qU+//7ZqvU=
+        s=default; t=1558450005;
+        bh=58fFmYhPIocjStRpbEhyiTY5BBN3Wu7usU0JI7t0dMM=;
+        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+        b=V9zV7vPpj4+k2OwsbLcNbbrUpidQKcXhLjGcvAg0ip4ZB6irUaHrD9iIvXmYtVhBT
+         dnPwuSPE1p01MIrAJcCEx18QPMYbqQ+oO9WwLbHEwaa4b/fNLu2/1D8E3kAjVcktki
+         Mja75BPH1riGM6RmmWMjlN3dbvql7EdcDBiNLzAY=
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
         pdx-caf-mail.web.codeaurora.org
 X-Spam-Level: 
@@ -31,85 +31,70 @@ Received: from jhugo-perf-lnx.qualcomm.com (i-global254.qualcomm.com [199.106.10
         (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
         (No client certificate requested)
         (Authenticated sender: jhugo@smtp.codeaurora.org)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 3F43C60746;
-        Tue, 21 May 2019 14:44:24 +0000 (UTC)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 1BD186021C;
+        Tue, 21 May 2019 14:46:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
-        s=default; t=1558449865;
-        bh=9RJTartqJw5pP0Ur3CP53YgFDs7kDaCUu1bvIYsQLIs=;
-        h=From:To:Cc:Subject:Date:From;
-        b=nMAEaiSSgI+4E4ak1QXYoDpkuUy/zxz2tQNmwTPsPhQA1L4s1OYkUogTdq/psvDbd
-         /R/3iEZVaLYoFTu51rrY1S38Sh15IcyytTODnC+zIKR2bKMw9AFPvzjeqpaC7ORY2q
-         EKJl8XRZdzrYVZrEnhXNBJBCniGKhCHVSpP9BnAc=
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 3F43C60746
+        s=default; t=1558450005;
+        bh=58fFmYhPIocjStRpbEhyiTY5BBN3Wu7usU0JI7t0dMM=;
+        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+        b=V9zV7vPpj4+k2OwsbLcNbbrUpidQKcXhLjGcvAg0ip4ZB6irUaHrD9iIvXmYtVhBT
+         dnPwuSPE1p01MIrAJcCEx18QPMYbqQ+oO9WwLbHEwaa4b/fNLu2/1D8E3kAjVcktki
+         Mja75BPH1riGM6RmmWMjlN3dbvql7EdcDBiNLzAY=
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 1BD186021C
 Authentication-Results: pdx-caf-mail.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
 Authentication-Results: pdx-caf-mail.web.codeaurora.org; spf=none smtp.mailfrom=jhugo@codeaurora.org
 From:   Jeffrey Hugo <jhugo@codeaurora.org>
-To:     david.brown@linaro.org
+To:     mturquette@baylibre.com, sboyd@kernel.org
 Cc:     agross@kernel.org, bjorn.andersson@linaro.org,
-        marc.w.gonzalez@free.fr, mturquette@baylibre.com, sboyd@kernel.org,
+        marc.w.gonzalez@free.fr, david.brown@linaro.org,
         robh+dt@kernel.org, mark.rutland@arm.com,
         linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
         linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
         Jeffrey Hugo <jhugo@codeaurora.org>
-Subject: [PATCH v4 0/6] MSM8998 Multimedia Clock Controller
-Date:   Tue, 21 May 2019 08:44:03 -0600
-Message-Id: <1558449843-19971-1-git-send-email-jhugo@codeaurora.org>
+Subject: [PATCH v4 1/6] dt-bindings: clock: Document external clocks for MSM8998 gcc
+Date:   Tue, 21 May 2019 08:46:33 -0600
+Message-Id: <1558449993-20902-1-git-send-email-jhugo@codeaurora.org>
 X-Mailer: git-send-email 1.9.1
+In-Reply-To: <1558449843-19971-1-git-send-email-jhugo@codeaurora.org>
+References: <1558449843-19971-1-git-send-email-jhugo@codeaurora.org>
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The multimedia clock controller (mmcc) is the main clock controller for
-the multimedia subsystem and is required to enable things like display and
-camera.
+The global clock controller on MSM8998 can consume a number of external
+clocks.  Document them.
 
-v4:
--fix makefile to use correct config item
--pick up tags
--fix ordering of clocks and clock-names in dt
--drop MODULE_ALIAS
--wait for xo in mmcc since that was found to be useful in some debug configs
+Signed-off-by: Jeffrey Hugo <jhugo@codeaurora.org>
+Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+Reviewed-by: Rob Herring <robh@kernel.org>
+---
+ Documentation/devicetree/bindings/clock/qcom,gcc.txt | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
-v3:
--Rebase onto linux-next to get the final version of the clk parent rewrite
-series
--Moved the bindings header to the bindings patch per Rob
--Made xo manditory for GCC to work around the lack of clk orphan probe defer
-to avoid the uart console glitch
-
-v2:
--Rebased on the "Rewrite clk parent handling" series and updated to the clk init
-mechanisms introduced there.
--Marked XO clk as CLK_IGNORE_UNUSED to avoid the concern about the XO going away
-"incorrectly" during late init
--Corrected the name of the XO clock to "xo"
--Dropped the fake XO clock in GCC to prevent a namespace conflict
--Fully enumerated the external clocks (DSI PLLs, etc) in the DT binding
--Cleaned up the weird newlines in the added DT node
--Added DT header file to msm8998 DT for future clients
-
-Jeffrey Hugo (6):
-  dt-bindings: clock: Document external clocks for MSM8998 gcc
-  arm64: dts: msm8998: Add xo clock to gcc node
-  clk: qcom: smd: Add XO clock for MSM8998
-  dt-bindings: clock: Add support for the MSM8998 mmcc
-  clk: qcom: Add MSM8998 Multimedia Clock Controller (MMCC) driver
-  arm64: dts: qcom: msm8998: Add mmcc node
-
- .../devicetree/bindings/clock/qcom,gcc.txt    |   10 +
- .../devicetree/bindings/clock/qcom,mmcc.txt   |   21 +
- arch/arm64/boot/dts/qcom/msm8998.dtsi         |   16 +
- drivers/clk/qcom/Kconfig                      |    9 +
- drivers/clk/qcom/Makefile                     |    1 +
- drivers/clk/qcom/clk-smd-rpm.c                |   24 +-
- drivers/clk/qcom/gcc-msm8998.c                |   29 +-
- drivers/clk/qcom/mmcc-msm8998.c               | 2915 +++++++++++++++++
- include/dt-bindings/clock/qcom,mmcc-msm8998.h |  210 ++
- 9 files changed, 3214 insertions(+), 21 deletions(-)
- create mode 100644 drivers/clk/qcom/mmcc-msm8998.c
- create mode 100644 include/dt-bindings/clock/qcom,mmcc-msm8998.h
-
+diff --git a/Documentation/devicetree/bindings/clock/qcom,gcc.txt b/Documentation/devicetree/bindings/clock/qcom,gcc.txt
+index 8661c3c..7d45323 100644
+--- a/Documentation/devicetree/bindings/clock/qcom,gcc.txt
++++ b/Documentation/devicetree/bindings/clock/qcom,gcc.txt
+@@ -28,6 +28,16 @@ Required properties :
+ - #clock-cells : shall contain 1
+ - #reset-cells : shall contain 1
+ 
++For MSM8998 only:
++	- clocks: a list of phandles and clock-specifier pairs,
++		  one for each entry in clock-names.
++	- clock-names: "xo" (required)
++		       "usb3_pipe" (optional)
++		       "ufs_rx_symbol0" (optional)
++		       "ufs_rx_symbol1" (optional)
++		       "ufs_tx_symbol0" (optional)
++		       "pcie0_pipe" (optional)
++
+ Optional properties :
+ - #power-domain-cells : shall contain 1
+ - Qualcomm TSENS (thermal sensor device) on some devices can
 -- 
-2.17.1
+Qualcomm Datacenter Technologies as an affiliate of Qualcomm Technologies, Inc.
+Qualcomm Technologies, Inc. is a member of the
+Code Aurora Forum, a Linux Foundation Collaborative Project.
 
