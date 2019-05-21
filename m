@@ -2,394 +2,194 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 16BC525548
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 May 2019 18:15:13 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D1CF3255DF
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 May 2019 18:43:04 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729126AbfEUQO5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 21 May 2019 12:14:57 -0400
-Received: from smtp.codeaurora.org ([198.145.29.96]:60654 "EHLO
-        smtp.codeaurora.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728957AbfEUQO4 (ORCPT
+        id S1728957AbfEUQm7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 21 May 2019 12:42:59 -0400
+Received: from mail-pl1-f193.google.com ([209.85.214.193]:43918 "EHLO
+        mail-pl1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726900AbfEUQm6 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 21 May 2019 12:14:56 -0400
-Received: by smtp.codeaurora.org (Postfix, from userid 1000)
-        id 338E161A8C; Tue, 21 May 2019 16:14:36 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
-        s=default; t=1558455295;
-        bh=skmuU9adM83f8pYynDhQq/z6pybT9klCdz2v0f50ZWc=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=IEdEaTI0LVG97gCUwM9D/11RKEi0k/JlxA3clYKzf9ZuNcHApxlicmV1ebNQt/LSk
-         yzHiTjkGmDUB2sxKqJ4xCrWn6znqSy3xH8+qk/RcgH0lBNQcHZEHEUmgCGK7JXFe+r
-         zQ90e0pID297PKufT1Gl4KGh25/xMnQY08XkRqp8=
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        pdx-caf-mail.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.7 required=2.0 tests=ALL_TRUSTED,BAYES_00,
-        DKIM_INVALID,DKIM_SIGNED,SPF_NONE autolearn=no autolearn_force=no
-        version=3.4.0
-Received: from jcrouse1-lnx.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: jcrouse@smtp.codeaurora.org)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id CB1B161A6B;
-        Tue, 21 May 2019 16:14:31 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
-        s=default; t=1558455273;
-        bh=skmuU9adM83f8pYynDhQq/z6pybT9klCdz2v0f50ZWc=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=PJHIGB1ii+RzmfWMi7cPVhAWZKRgazmyrlszgWt+vJ5b1Zmy4VqNslAhYQcxKIsTZ
-         cOauq20BqA30MtS2SXkppFz9m8y9IfOuiMvn0lhAS3DfExO+lytvQObvrLOeB/96hD
-         K02Pt7WTu0Y4oKk0U5+zVXKKCQyN0W3w4ebSTxos=
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org CB1B161A6B
-Authentication-Results: pdx-caf-mail.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: pdx-caf-mail.web.codeaurora.org; spf=none smtp.mailfrom=jcrouse@codeaurora.org
-From:   Jordan Crouse <jcrouse@codeaurora.org>
-To:     freedreno@lists.freedesktop.org
-Cc:     jean-philippe.brucker@arm.com, linux-arm-msm@vger.kernel.org,
-        hoegsberg@google.com, dianders@chromium.org,
-        Sean Paul <sean@poorly.run>, Wen Yang <wen.yang99@zte.com.cn>,
-        Thomas Zimmermann <tzimmermann@suse.de>,
-        Sharat Masetty <smasetty@codeaurora.org>,
-        dri-devel@lists.freedesktop.org, linux-kernel@vger.kernel.org,
-        Rob Clark <robdclark@gmail.com>,
-        David Airlie <airlied@linux.ie>,
-        Mamta Shukla <mamtashukla555@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>
-Subject: [PATCH v2 15/15] drm/msm/a5xx: Support per-instance pagetables
-Date:   Tue, 21 May 2019 10:14:03 -0600
-Message-Id: <1558455243-32746-16-git-send-email-jcrouse@codeaurora.org>
-X-Mailer: git-send-email 2.7.4
-In-Reply-To: <1558455243-32746-1-git-send-email-jcrouse@codeaurora.org>
-References: <1558455243-32746-1-git-send-email-jcrouse@codeaurora.org>
+        Tue, 21 May 2019 12:42:58 -0400
+Received: by mail-pl1-f193.google.com with SMTP id gn7so4543004plb.10
+        for <linux-arm-msm@vger.kernel.org>; Tue, 21 May 2019 09:42:58 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=WtZw+fdpaZbjOuInBI+L534tlDp+rXop9p/+kf7XV9Y=;
+        b=hFNtdVKEgvRPdSC5PDgOq8ZO64S/5OEgXmRLL+urCT25WMrrztgtN7uEjQhFZ0x1q9
+         472j6PCFOpSu9GCbELpRPLoXI8edMyQZO9oXOOQOa+9qDynglftR9FIBF2samkT3ZMRl
+         sHNelQEizfXadKEq6bQQCkKPxdxLXYjIq0ztKCNXaEOYZ0aDxKy95VjgvSjCPhavUKDZ
+         +PovVhwCZCVANcIkrWpNQS53G5pOdvhUXu1EEYb/M9G+qQAg75c48u5RSg3Lz8TP6JSQ
+         N9oToM2QuyrevbIkGevB/nzQC9E5I4kcBx49z+Zp5GdyivvaLDDlAX5AJ9+4j/bVAoKG
+         ueeg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=WtZw+fdpaZbjOuInBI+L534tlDp+rXop9p/+kf7XV9Y=;
+        b=i5C6LAohPuFAB5xxYpFM3DfhUdeXvySGNGc1707bq0WHKJS+0vwtfy3+fC2oGU/Ya6
+         JGIjOkO4fR6t5eqHXZuOuIrxzJmZ3GRf4GQqMI5P1E8ydc4cdqpedxwsdXBqPTIo5SZB
+         hNxKaEypb7M8K7b+O6Zup898X+tL1dzhLe6tJ4gxeJAK0flf4lD/ohQqskW92OZbm8+Q
+         txmEhRH2WPAfLMQHGyKChQOjbCs/c8uEjIs6GTwZdlL6reYpRrp6St2WbVMH1nsJ94pq
+         9LExJU58eTZjiroOa+2egKizOhxS3uIzu8YWua1ku/X4ydbKotctq7o3CN4+oCiL6Yc6
+         F7lg==
+X-Gm-Message-State: APjAAAXg124FJe96pyVhYb7loeGxtihfkPv4vofbViYZQRbc0fnYH1D5
+        KtHtzcCWNRv17hBMRarrYhCmkA==
+X-Google-Smtp-Source: APXvYqz6hkQggncGw2amqhWyINM+2IIHUlaiyyx3bhaLSiib6GgTf9AkL4kdRJODyIfrRQHDBRKiyw==
+X-Received: by 2002:a17:902:20ca:: with SMTP id v10mr44805389plg.296.1558456977499;
+        Tue, 21 May 2019 09:42:57 -0700 (PDT)
+Received: from tuxbook-pro (104-188-17-28.lightspeed.sndgca.sbcglobal.net. [104.188.17.28])
+        by smtp.gmail.com with ESMTPSA id t78sm46216148pfa.154.2019.05.21.09.42.56
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Tue, 21 May 2019 09:42:56 -0700 (PDT)
+Date:   Tue, 21 May 2019 09:43:24 -0700
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
+Cc:     dmitry.torokhov@gmail.com, jikos@kernel.org,
+        benjamin.tissoires@redhat.com, lee.jones@linaro.org,
+        robh+dt@kernel.org, mark.rutland@arm.com, agross@kernel.org,
+        david.brown@linaro.org, hdegoede@redhat.com,
+        linux-input@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v4 1/2] HID: quirks: Refactor ELAN 400 and 401 handling
+Message-ID: <20190521164324.GA2085@tuxbook-pro>
+References: <20190423160543.9922-1-jeffrey.l.hugo@gmail.com>
+ <20190423160605.9970-1-jeffrey.l.hugo@gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20190423160605.9970-1-jeffrey.l.hugo@gmail.com>
+User-Agent: Mutt/1.11.4 (2019-03-13)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add support for per-instance pagetables for 5XX targets. Create a support
-buffer for preemption to hold the SMMU pagetable information for a
-preempted ring, enable TTBR1 to support split pagetables and add the
-necessary PM4 commands to trigger a pagetable switch at the beginning
-of a user command.
+On Tue 23 Apr 09:06 PDT 2019, Jeffrey Hugo wrote:
 
-Signed-off-by: Jordan Crouse <jcrouse@codeaurora.org>
----
+> There needs to be coordination between hid-quirks and the elan_i2c driver
+> about which devices are handled by what drivers.  Currently, both use
+> whitelists, which results in valid devices being unhandled by default,
+> when they should not be rejected by hid-quirks.  This is quickly becoming
+> an issue.
+> 
+> Since elan_i2c has a maintained whitelist of what devices it will handle,
+> use that to implement a blacklist in hid-quirks so that only the devices
+> that need to be handled by elan_i2c get rejected by hid-quirks, and
+> everything else is handled by default.  The downside is the whitelist and
+> blacklist need to be kept in sync.
+> 
 
- drivers/gpu/drm/msm/adreno/a5xx_gpu.c     | 120 +++++++++++++++++++++++++++++-
- drivers/gpu/drm/msm/adreno/a5xx_gpu.h     |  19 +++++
- drivers/gpu/drm/msm/adreno/a5xx_preempt.c |  70 +++++++++++++----
- 3 files changed, 192 insertions(+), 17 deletions(-)
+Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
 
-diff --git a/drivers/gpu/drm/msm/adreno/a5xx_gpu.c b/drivers/gpu/drm/msm/adreno/a5xx_gpu.c
-index c243334..21b8e5c 100644
---- a/drivers/gpu/drm/msm/adreno/a5xx_gpu.c
-+++ b/drivers/gpu/drm/msm/adreno/a5xx_gpu.c
-@@ -111,6 +111,59 @@ static void a5xx_submit_in_rb(struct msm_gpu *gpu, struct msm_gem_submit *submit
- 	msm_gpu_retire(gpu);
- }
- 
-+static void a5xx_set_pagetable(struct msm_gpu *gpu, struct msm_ringbuffer *ring,
-+	struct msm_file_private *ctx)
-+{
-+	u64 ttbr;
-+	u32 asid;
-+
-+	if (!msm_iommu_get_ptinfo(ctx->aspace->mmu, &ttbr, &asid))
-+		return;
-+
-+	ttbr = ttbr | ((u64) asid) << 48;
-+
-+	/* Turn off protected mode */
-+	OUT_PKT7(ring, CP_SET_PROTECTED_MODE, 1);
-+	OUT_RING(ring, 0);
-+
-+	/* Turn on APIV mode to access critical regions */
-+	OUT_PKT4(ring, REG_A5XX_CP_CNTL, 1);
-+	OUT_RING(ring, 1);
-+
-+	/* Make sure the ME is synchronized before staring the update */
-+	OUT_PKT7(ring, CP_WAIT_FOR_ME, 0);
-+
-+	/* Execute the table update */
-+	OUT_PKT7(ring, CP_SMMU_TABLE_UPDATE, 3);
-+	OUT_RING(ring, lower_32_bits(ttbr));
-+	OUT_RING(ring, upper_32_bits(ttbr));
-+	OUT_RING(ring, 0);
-+
-+	/*
-+	 * Write the new TTBR0 to the preemption records - this will be used to
-+	 * reload the pagetable if the current ring gets preempted out.
-+	 */
-+	OUT_PKT7(ring, CP_MEM_WRITE, 4);
-+	OUT_RING(ring, lower_32_bits(rbmemptr(ring, ttbr0)));
-+	OUT_RING(ring, upper_32_bits(rbmemptr(ring, ttbr0)));
-+	OUT_RING(ring, lower_32_bits(ttbr));
-+	OUT_RING(ring, upper_32_bits(ttbr));
-+
-+	/* Invalidate the draw state so we start off fresh */
-+	OUT_PKT7(ring, CP_SET_DRAW_STATE, 3);
-+	OUT_RING(ring, 0x40000);
-+	OUT_RING(ring, 1);
-+	OUT_RING(ring, 0);
-+
-+	/* Turn off APRIV */
-+	OUT_PKT4(ring, REG_A5XX_CP_CNTL, 1);
-+	OUT_RING(ring, 0);
-+
-+	/* Turn off protected mode */
-+	OUT_PKT7(ring, CP_SET_PROTECTED_MODE, 1);
-+	OUT_RING(ring, 1);
-+}
-+
- static void a5xx_submit(struct msm_gpu *gpu, struct msm_gem_submit *submit,
- 	struct msm_file_private *ctx)
- {
-@@ -126,6 +179,8 @@ static void a5xx_submit(struct msm_gpu *gpu, struct msm_gem_submit *submit,
- 		return;
- 	}
- 
-+	a5xx_set_pagetable(gpu, ring, ctx);
-+
- 	OUT_PKT7(ring, CP_PREEMPT_ENABLE_GLOBAL, 1);
- 	OUT_RING(ring, 0x02);
- 
-@@ -1349,21 +1404,77 @@ static unsigned long a5xx_gpu_busy(struct msm_gpu *gpu)
- 	return (unsigned long)busy_time;
- }
- 
-+static struct msm_gem_address_space *a5xx_new_address_space(struct msm_gpu *gpu)
-+{
-+	struct adreno_gpu *adreno_gpu = to_adreno_gpu(gpu);
-+	struct a5xx_gpu *a5xx_gpu = to_a5xx_gpu(adreno_gpu);
-+	struct msm_gem_address_space *aspace;
-+	int ret;
-+
-+	/* Return the default pagetable if per instance tables don't work */
-+	if (!a5xx_gpu->per_instance_tables)
-+		return gpu->aspace;
-+
-+	aspace = msm_gem_address_space_create_instance(&gpu->pdev->dev,
-+		"gpu", 0x100000000ULL, 0x1ffffffffULL);
-+	if (IS_ERR(aspace))
-+		return aspace;
-+
-+	ret = aspace->mmu->funcs->attach(aspace->mmu, NULL, 0);
-+	if (ret) {
-+		/* -ENODEV means that aux domains aren't supported */
-+		if (ret == -ENODEV)
-+			return gpu->aspace;
-+
-+		return ERR_PTR(ret);
-+	}
-+
-+	return aspace;
-+}
-+
- static struct msm_gem_address_space *
- a5xx_create_address_space(struct msm_gpu *gpu)
- {
-+	struct adreno_gpu *adreno_gpu = to_adreno_gpu(gpu);
-+	struct a5xx_gpu *a5xx_gpu = to_a5xx_gpu(adreno_gpu);
-+	struct device *dev = &gpu->pdev->dev;
- 	struct msm_gem_address_space *aspace;
- 	struct iommu_domain *iommu;
--	int ret;
-+	int ret, val = 1;
-+
-+	a5xx_gpu->per_instance_tables = false;
- 
- 	iommu = iommu_domain_alloc(&platform_bus_type);
- 	if (!iommu)
- 		return NULL;
- 
--	iommu->geometry.aperture_start = 0x100000000ULL;
--	iommu->geometry.aperture_end = 0x1ffffffffULL;
-+	/* Try to enable split pagetables */
-+	if (iommu_domain_set_attr(iommu, DOMAIN_ATTR_SPLIT_TABLES, &val)) {
-+		/*
-+		 * If split pagetables aren't available we won't be able to do
-+		 * per-instance pagetables so set up the global va space at our
-+		 * susual location
-+		 */
-+		iommu->geometry.aperture_start = 0x100000000ULL;
-+		iommu->geometry.aperture_end = 0x1ffffffffULL;
-+	} else {
-+		/*
-+		 * If split pagetables are available then we might be able to do
-+		 * per-instance pagetables. Put the default va-space in TTBR1 to
-+		 * prepare
-+		 */
-+		iommu->geometry.aperture_start = 0xfffffff100000000ULL;
-+		iommu->geometry.aperture_end = 0xfffffff1ffffffffULL;
-+
-+		/*
-+		 * If both split pagetables and aux domains are supported we can
-+		 * do per_instance pagetables
-+		 */
-+		a5xx_gpu->per_instance_tables =
-+			iommu_dev_has_feature(dev, IOMMU_DEV_FEAT_AUX);
-+	}
- 
--	aspace = msm_gem_address_space_create(&gpu->pdev->dev, iommu, "gpu");
-+	aspace = msm_gem_address_space_create(dev, iommu, "gpu");
- 	if (IS_ERR(aspace)) {
- 		iommu_domain_free(iommu);
- 		DRM_DEV_ERROR(gpu->dev->dev, "failed to init mmu: %ld\n",
-@@ -1403,6 +1514,7 @@ static const struct adreno_gpu_funcs funcs = {
- 		.gpu_state_get = a5xx_gpu_state_get,
- 		.gpu_state_put = a5xx_gpu_state_put,
- 		.create_address_space = a5xx_create_address_space,
-+		.new_address_space = a5xx_new_address_space,
- 	},
- 	.get_timestamp = a5xx_get_timestamp,
- };
-diff --git a/drivers/gpu/drm/msm/adreno/a5xx_gpu.h b/drivers/gpu/drm/msm/adreno/a5xx_gpu.h
-index 7d71860..82ceb9b 100644
---- a/drivers/gpu/drm/msm/adreno/a5xx_gpu.h
-+++ b/drivers/gpu/drm/msm/adreno/a5xx_gpu.h
-@@ -45,6 +45,11 @@ struct a5xx_gpu {
- 
- 	atomic_t preempt_state;
- 	struct timer_list preempt_timer;
-+	struct a5xx_smmu_info *smmu_info;
-+	struct drm_gem_object *smmu_info_bo;
-+	uint64_t smmu_info_iova;
-+
-+	bool per_instance_tables;
- };
- 
- #define to_a5xx_gpu(x) container_of(x, struct a5xx_gpu, base)
-@@ -132,6 +137,20 @@ struct a5xx_preempt_record {
-  */
- #define A5XX_PREEMPT_COUNTER_SIZE (16 * 4)
- 
-+/*
-+ * This is a global structure that the preemption code uses to switch in the
-+ * pagetable for the preempted process - the code switches in whatever we
-+ * after preempting in a new ring.
-+ */
-+struct a5xx_smmu_info {
-+	uint32_t  magic;
-+	uint32_t  _pad4;
-+	uint64_t  ttbr0;
-+	uint32_t  asid;
-+	uint32_t  contextidr;
-+};
-+
-+#define A5XX_SMMU_INFO_MAGIC 0x3618CDA3UL
- 
- int a5xx_power_init(struct msm_gpu *gpu);
- void a5xx_gpmu_ucode_init(struct msm_gpu *gpu);
-diff --git a/drivers/gpu/drm/msm/adreno/a5xx_preempt.c b/drivers/gpu/drm/msm/adreno/a5xx_preempt.c
-index 3d62310..1050409 100644
---- a/drivers/gpu/drm/msm/adreno/a5xx_preempt.c
-+++ b/drivers/gpu/drm/msm/adreno/a5xx_preempt.c
-@@ -12,6 +12,7 @@
-  */
- 
- #include "msm_gem.h"
-+#include "msm_mmu.h"
- #include "a5xx_gpu.h"
- 
- /*
-@@ -145,6 +146,15 @@ void a5xx_preempt_trigger(struct msm_gpu *gpu)
- 	a5xx_gpu->preempt[ring->id]->wptr = get_wptr(ring);
- 	spin_unlock_irqrestore(&ring->lock, flags);
- 
-+	/* Do read barrier to make sure we have updated pagetable info */
-+	rmb();
-+
-+	/* Set the SMMU info for the preemption */
-+	if (a5xx_gpu->smmu_info) {
-+		a5xx_gpu->smmu_info->ttbr0 = ring->memptrs->ttbr0;
-+		a5xx_gpu->smmu_info->contextidr = 0;
-+	}
-+
- 	/* Set the address of the incoming preemption record */
- 	gpu_write64(gpu, REG_A5XX_CP_CONTEXT_SWITCH_RESTORE_ADDR_LO,
- 		REG_A5XX_CP_CONTEXT_SWITCH_RESTORE_ADDR_HI,
-@@ -221,9 +231,10 @@ void a5xx_preempt_hw_init(struct msm_gpu *gpu)
- 		a5xx_gpu->preempt[i]->rbase = gpu->rb[i]->iova;
- 	}
- 
--	/* Write a 0 to signal that we aren't switching pagetables */
-+	/* Tell the CP where to find the smmu_info buffer*/
- 	gpu_write64(gpu, REG_A5XX_CP_CONTEXT_SWITCH_SMMU_INFO_LO,
--		REG_A5XX_CP_CONTEXT_SWITCH_SMMU_INFO_HI, 0);
-+		REG_A5XX_CP_CONTEXT_SWITCH_SMMU_INFO_HI,
-+		a5xx_gpu->smmu_info_iova);
- 
- 	/* Reset the preemption state */
- 	set_preempt_state(a5xx_gpu, PREEMPT_NONE);
-@@ -271,6 +282,34 @@ void a5xx_preempt_fini(struct msm_gpu *gpu)
- 
- 	for (i = 0; i < gpu->nr_rings; i++)
- 		msm_gem_kernel_put(a5xx_gpu->preempt_bo[i], gpu->aspace, true);
-+
-+	msm_gem_kernel_put(a5xx_gpu->smmu_info_bo, gpu->aspace, true);
-+}
-+
-+static int a5xx_smmu_info_init(struct msm_gpu *gpu)
-+{
-+	struct adreno_gpu *adreno_gpu = to_adreno_gpu(gpu);
-+	struct a5xx_gpu *a5xx_gpu = to_a5xx_gpu(adreno_gpu);
-+	struct a5xx_smmu_info *ptr;
-+	struct drm_gem_object *bo;
-+	u64 iova;
-+
-+	if (!a5xx_gpu->per_instance_tables)
-+		return 0;
-+
-+	ptr = msm_gem_kernel_new(gpu->dev, sizeof(struct a5xx_smmu_info),
-+		MSM_BO_UNCACHED, gpu->aspace, &bo, &iova);
-+
-+	if (IS_ERR(ptr))
-+		return PTR_ERR(ptr);
-+
-+	ptr->magic = A5XX_SMMU_INFO_MAGIC;
-+
-+	a5xx_gpu->smmu_info_bo = bo;
-+	a5xx_gpu->smmu_info_iova = iova;
-+	a5xx_gpu->smmu_info = ptr;
-+
-+	return 0;
- }
- 
- void a5xx_preempt_init(struct msm_gpu *gpu)
-@@ -284,17 +323,22 @@ void a5xx_preempt_init(struct msm_gpu *gpu)
- 		return;
- 
- 	for (i = 0; i < gpu->nr_rings; i++) {
--		if (preempt_init_ring(a5xx_gpu, gpu->rb[i])) {
--			/*
--			 * On any failure our adventure is over. Clean up and
--			 * set nr_rings to 1 to force preemption off
--			 */
--			a5xx_preempt_fini(gpu);
--			gpu->nr_rings = 1;
--
--			return;
--		}
-+		if (preempt_init_ring(a5xx_gpu, gpu->rb[i]))
-+			goto fail;
- 	}
- 
--	timer_setup(&a5xx_gpu->preempt_timer, a5xx_preempt_timer, 0);
-+	if (a5xx_smmu_info_init(gpu))
-+		goto fail;
-+
-+	timer_setup(&a5xx_gpu->preempt_timer, a5xx_preempt_timer,
-+		(unsigned long) a5xx_gpu);
-+
-+	return;
-+fail:
-+	/*
-+	 * On any failure our adventure is over. Clean up and
-+	 * set nr_rings to 1 to force preemption off
-+	 */
-+	a5xx_preempt_fini(gpu);
-+	gpu->nr_rings = 1;
- }
--- 
-2.7.4
+Jiri, the two patches in this series doesn't have a build time
+dependency, so if you take this one through your tree I'll take 2/2
+through arm-soc.
 
+Regards,
+Bjorn
+
+> Suggested-by: Benjamin Tissoires <benjamin.tissoires@redhat.com>
+> Signed-off-by: Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
+> ---
+>  drivers/hid/hid-quirks.c            | 64 ++++++++++++++++++++++++-----
+>  drivers/input/mouse/elan_i2c_core.c |  4 ++
+>  2 files changed, 58 insertions(+), 10 deletions(-)
+> 
+> diff --git a/drivers/hid/hid-quirks.c b/drivers/hid/hid-quirks.c
+> index 77ffba48cc73..656485e08eb7 100644
+> --- a/drivers/hid/hid-quirks.c
+> +++ b/drivers/hid/hid-quirks.c
+> @@ -987,17 +987,61 @@ bool hid_ignore(struct hid_device *hdev)
+>  		break;
+>  	case USB_VENDOR_ID_ELAN:
+>  		/*
+> -		 * Many Elan devices have a product id of 0x0401 and are handled
+> -		 * by the elan_i2c input driver. But the ACPI HID ELAN0800 dev
+> -		 * is not (and cannot be) handled by that driver ->
+> -		 * Ignore all 0x0401 devs except for the ELAN0800 dev.
+> +		 * Blacklist of everything that gets handled by the elan_i2c
+> +		 * input driver.  This should be kept in sync with the whitelist
+> +		 * that exists in that driver.  This avoids disabling valid
+> +		 * touchpads and other ELAN devices.
+>  		 */
+> -		if (hdev->product == 0x0401 &&
+> -		    strncmp(hdev->name, "ELAN0800", 8) != 0)
+> -			return true;
+> -		/* Same with product id 0x0400 */
+> -		if (hdev->product == 0x0400 &&
+> -		    strncmp(hdev->name, "QTEC0001", 8) != 0)
+> +		if ((hdev->product == 0x0401 || hdev->product == 0x0400) &&
+> +		   (strncmp(hdev->name, "ELAN0000", 8) == 0 ||
+> +		    strncmp(hdev->name, "ELAN0100", 8) == 0 ||
+> +		    strncmp(hdev->name, "ELAN0600", 8) == 0 ||
+> +		    strncmp(hdev->name, "ELAN0601", 8) == 0 ||
+> +		    strncmp(hdev->name, "ELAN0602", 8) == 0 ||
+> +		    strncmp(hdev->name, "ELAN0603", 8) == 0 ||
+> +		    strncmp(hdev->name, "ELAN0604", 8) == 0 ||
+> +		    strncmp(hdev->name, "ELAN0605", 8) == 0 ||
+> +		    strncmp(hdev->name, "ELAN0606", 8) == 0 ||
+> +		    strncmp(hdev->name, "ELAN0607", 8) == 0 ||
+> +		    strncmp(hdev->name, "ELAN0608", 8) == 0 ||
+> +		    strncmp(hdev->name, "ELAN0609", 8) == 0 ||
+> +		    strncmp(hdev->name, "ELAN060B", 8) == 0 ||
+> +		    strncmp(hdev->name, "ELAN060C", 8) == 0 ||
+> +		    strncmp(hdev->name, "ELAN060F", 8) == 0 ||
+> +		    strncmp(hdev->name, "ELAN0610", 8) == 0 ||
+> +		    strncmp(hdev->name, "ELAN0611", 8) == 0 ||
+> +		    strncmp(hdev->name, "ELAN0612", 8) == 0 ||
+> +		    strncmp(hdev->name, "ELAN0613", 8) == 0 ||
+> +		    strncmp(hdev->name, "ELAN0614", 8) == 0 ||
+> +		    strncmp(hdev->name, "ELAN0615", 8) == 0 ||
+> +		    strncmp(hdev->name, "ELAN0616", 8) == 0 ||
+> +		    strncmp(hdev->name, "ELAN0617", 8) == 0 ||
+> +		    strncmp(hdev->name, "ELAN0618", 8) == 0 ||
+> +		    strncmp(hdev->name, "ELAN0619", 8) == 0 ||
+> +		    strncmp(hdev->name, "ELAN061A", 8) == 0 ||
+> +		    strncmp(hdev->name, "ELAN061B", 8) == 0 ||
+> +		    strncmp(hdev->name, "ELAN061C", 8) == 0 ||
+> +		    strncmp(hdev->name, "ELAN061D", 8) == 0 ||
+> +		    strncmp(hdev->name, "ELAN061E", 8) == 0 ||
+> +		    strncmp(hdev->name, "ELAN061F", 8) == 0 ||
+> +		    strncmp(hdev->name, "ELAN0620", 8) == 0 ||
+> +		    strncmp(hdev->name, "ELAN0621", 8) == 0 ||
+> +		    strncmp(hdev->name, "ELAN0622", 8) == 0 ||
+> +		    strncmp(hdev->name, "ELAN0623", 8) == 0 ||
+> +		    strncmp(hdev->name, "ELAN0624", 8) == 0 ||
+> +		    strncmp(hdev->name, "ELAN0625", 8) == 0 ||
+> +		    strncmp(hdev->name, "ELAN0626", 8) == 0 ||
+> +		    strncmp(hdev->name, "ELAN0627", 8) == 0 ||
+> +		    strncmp(hdev->name, "ELAN0628", 8) == 0 ||
+> +		    strncmp(hdev->name, "ELAN0629", 8) == 0 ||
+> +		    strncmp(hdev->name, "ELAN062A", 8) == 0 ||
+> +		    strncmp(hdev->name, "ELAN062B", 8) == 0 ||
+> +		    strncmp(hdev->name, "ELAN062C", 8) == 0 ||
+> +		    strncmp(hdev->name, "ELAN062D", 8) == 0 ||
+> +		    strncmp(hdev->name, "ELAN0631", 8) == 0 ||
+> +		    strncmp(hdev->name, "ELAN0632", 8) == 0 ||
+> +		    strncmp(hdev->name, "ELAN1000", 8) == 0 ||
+> +		    strncmp(hdev->name, "elan,ekth3000", 13) == 0))
+>  			return true;
+>  		break;
+>  	}
+> diff --git a/drivers/input/mouse/elan_i2c_core.c b/drivers/input/mouse/elan_i2c_core.c
+> index f9525d6f0bfe..3ded19528cd4 100644
+> --- a/drivers/input/mouse/elan_i2c_core.c
+> +++ b/drivers/input/mouse/elan_i2c_core.c
+> @@ -1332,6 +1332,10 @@ static const struct i2c_device_id elan_id[] = {
+>  };
+>  MODULE_DEVICE_TABLE(i2c, elan_id);
+>  
+> +/*
+> + * when these whtielists get updated, the corresponding blacklist in hid-quirks
+> + * needs to be updated to match.
+> + */
+>  #ifdef CONFIG_ACPI
+>  static const struct acpi_device_id elan_acpi_id[] = {
+>  	{ "ELAN0000", 0 },
+> -- 
+> 2.17.1
+> 
