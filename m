@@ -2,204 +2,113 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 63019256E9
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 May 2019 19:43:39 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D5D1E2575A
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 May 2019 20:16:27 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728500AbfEURni (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 21 May 2019 13:43:38 -0400
-Received: from usa-sjc-mx-foss1.foss.arm.com ([217.140.101.70]:39488 "EHLO
-        foss.arm.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1728053AbfEURni (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 21 May 2019 13:43:38 -0400
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.72.51.249])
-        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id ABB9B80D;
-        Tue, 21 May 2019 10:43:37 -0700 (PDT)
-Received: from [10.1.196.75] (e110467-lin.cambridge.arm.com [10.1.196.75])
-        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 9D20C3F718;
-        Tue, 21 May 2019 10:43:35 -0700 (PDT)
-Subject: Re: [PATCH v2 01/15] iommu/arm-smmu: Allow IOMMU enabled devices to
- skip DMA domains
-To:     Jordan Crouse <jcrouse@codeaurora.org>,
-        freedreno@lists.freedesktop.org
-Cc:     jean-philippe.brucker@arm.com, linux-arm-msm@vger.kernel.org,
-        hoegsberg@google.com, dianders@chromium.org,
-        linux-kernel@vger.kernel.org, iommu@lists.linux-foundation.org,
-        Will Deacon <will.deacon@arm.com>,
-        Joerg Roedel <joro@8bytes.org>,
-        linux-arm-kernel@lists.infradead.org
-References: <1558455243-32746-1-git-send-email-jcrouse@codeaurora.org>
- <1558455243-32746-2-git-send-email-jcrouse@codeaurora.org>
-From:   Robin Murphy <robin.murphy@arm.com>
-Message-ID: <6c5898e5-4b14-b77b-15b7-e926233c07d0@arm.com>
-Date:   Tue, 21 May 2019 18:43:34 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.6.1
+        id S1729205AbfEUSQ1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 21 May 2019 14:16:27 -0400
+Received: from mail-pf1-f195.google.com ([209.85.210.195]:46014 "EHLO
+        mail-pf1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729171AbfEUSQ1 (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 21 May 2019 14:16:27 -0400
+Received: by mail-pf1-f195.google.com with SMTP id s11so9459466pfm.12
+        for <linux-arm-msm@vger.kernel.org>; Tue, 21 May 2019 11:16:26 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=kWn23uPSMxDFn2qGTs4o2rEa3INC2eoWBUd16xA7XV8=;
+        b=StpYFVZSovK25IyEPqkVrilukmqVU8wqhQsBBJXhzVWPRyObGv3Y0sE/foiPAP1dLY
+         u+5cRVaM2aXyHOZbDnvo5CixYT3pDTGkwkastTAD9csANh4Kq53CAYqdt3BU542IHDWo
+         GL5I6q2Z4PZP3D28tm1mOHEUFcPTPaXw5u/4PmkRk1zyWJvXlJA1+y01Eb56nO8IuZZZ
+         7O7OzNNw+gXkyyEWTk9bN4QuYEOEFrAk7OSvc5rGDby3rnQqpeuTXTMHw/HMugDrt6SQ
+         sJExt/iFymWshqalcGbMGMqXuAuxB6kf0qmYF9UKfVF8w5mMat09dUmFZKf+frzxamE0
+         dGbg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=kWn23uPSMxDFn2qGTs4o2rEa3INC2eoWBUd16xA7XV8=;
+        b=nqi2yWgxVAf+NoWVlrSKnVGEGL3V3oQkju/MIV14Bcnw0DtV6Y2LPBQz8UQvR+55Ef
+         xaib/eu+0PT+KIKJlCtBjcJLO9p4xtyIuHqnYTKG6rUbyyt0k+lfXU4Vo57Ehrstfhzc
+         Sh6oKM1OPSj+GuID8Z3GvyPJIGk1SgvaztdPaIyA+BYKu6Vg25I6MZxk1M7i0GYzbMM3
+         0FcTGy8bq5NkDVlFql+FeZWmBZm7KXM8VCFsAWEx8eNB5N1odi/ezpX5bga/XPy8QAF5
+         R00SpJ+8Ee0mzF9W/P9WfvdnliJvddhpPDyoLlmoAnPx4mWbceQ4rCJDbNHqapW/gp0R
+         24MQ==
+X-Gm-Message-State: APjAAAW7LsV1vCtp+a8i1fK9bRkIhmUCCJmRpcqxbKjNHifxwQvXgHji
+        RLAh41xPxY4Gy1BsH4lkmqZIEw==
+X-Google-Smtp-Source: APXvYqzNDTddr3qSb0H+nAtgW+HjSihhmwcLS/tOoKNIQOseOHwP64iiNXN2WRg9soFejjy2u6Ne/A==
+X-Received: by 2002:a63:484d:: with SMTP id x13mr56974pgk.275.1558462586195;
+        Tue, 21 May 2019 11:16:26 -0700 (PDT)
+Received: from tuxbook-pro (104-188-17-28.lightspeed.sndgca.sbcglobal.net. [104.188.17.28])
+        by smtp.gmail.com with ESMTPSA id i17sm27598969pfo.103.2019.05.21.11.16.24
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Tue, 21 May 2019 11:16:25 -0700 (PDT)
+Date:   Tue, 21 May 2019 11:16:52 -0700
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
+Cc:     agross@kernel.org, david.brown@linaro.org, jcrouse@codeaurora.org,
+        lgirdwood@gmail.com, broonie@kernel.org, robh+dt@kernel.org,
+        mark.rutland@arm.com, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org
+Subject: Re: [PATCH 3/3] arm64: dts: msm8998-mtp: Add pm8005_s1 regulator
+Message-ID: <20190521181652.GC2085@tuxbook-pro>
+References: <20190521164932.14265-1-jeffrey.l.hugo@gmail.com>
+ <20190521165341.14428-1-jeffrey.l.hugo@gmail.com>
 MIME-Version: 1.0
-In-Reply-To: <1558455243-32746-2-git-send-email-jcrouse@codeaurora.org>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-GB
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20190521165341.14428-1-jeffrey.l.hugo@gmail.com>
+User-Agent: Mutt/1.11.4 (2019-03-13)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 21/05/2019 17:13, Jordan Crouse wrote:
-> Allow IOMMU enabled devices specified on an opt-in list to create a
-> default identity domain for a new IOMMU group and bypass the DMA
-> domain created by the IOMMU core. This allows the group to be properly
-> set up but otherwise skips touching the hardware until the client
-> device attaches a unmanaged domain of its own.
+On Tue 21 May 09:53 PDT 2019, Jeffrey Hugo wrote:
 
-All the cool kids are using iommu_request_dm_for_dev() to force an 
-identity domain for particular devices, won't that suffice for this case 
-too? There is definite scope for improvement in this area, so I'd really 
-like to keep things as consistent as possible to make that easier in future.
+> The pm8005_s1 is VDD_GFX, and needs to be on to enable the GPU.
+> This should be hooked up to the GPU CPR, but we don't have support for that
+> yet, so until then, just turn on the regulator and keep it on so that we
+> can focus on basic GPU bringup.
+> 
 
-Robin.
+Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
 
-> Signed-off-by: Jordan Crouse <jcrouse@codeaurora.org>
+> Signed-off-by: Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
 > ---
+>  arch/arm64/boot/dts/qcom/msm8998-mtp.dtsi | 17 +++++++++++++++++
+>  1 file changed, 17 insertions(+)
 > 
->   drivers/iommu/arm-smmu.c | 42 ++++++++++++++++++++++++++++++++++++++++++
->   drivers/iommu/iommu.c    | 29 +++++++++++++++++++++++------
->   include/linux/iommu.h    |  3 +++
->   3 files changed, 68 insertions(+), 6 deletions(-)
-> 
-> diff --git a/drivers/iommu/arm-smmu.c b/drivers/iommu/arm-smmu.c
-> index 5e54cc0..a795ada 100644
-> --- a/drivers/iommu/arm-smmu.c
-> +++ b/drivers/iommu/arm-smmu.c
-> @@ -1235,6 +1235,35 @@ static int arm_smmu_domain_add_master(struct arm_smmu_domain *smmu_domain,
->   	return 0;
->   }
->   
-> +struct arm_smmu_client_match_data {
-> +	bool use_identity_domain;
+> diff --git a/arch/arm64/boot/dts/qcom/msm8998-mtp.dtsi b/arch/arm64/boot/dts/qcom/msm8998-mtp.dtsi
+> index f09f3e03f708..108667ce4f31 100644
+> --- a/arch/arm64/boot/dts/qcom/msm8998-mtp.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/msm8998-mtp.dtsi
+> @@ -27,6 +27,23 @@
+>  	status = "okay";
+>  };
+>  
+> +&pm8005_lsid1 {
+> +	pm8005-regulators {
+> +		compatible = "qcom,pm8005-regulators";
+> +
+> +		vdd_s1-supply = <&vph_pwr>;
+> +
+> +		pm8005_s1: s1 { /* VDD_GFX supply */
+> +			regulator-min-microvolt = <524000>;
+> +			regulator-max-microvolt = <1100000>;
+> +			regulator-enable-ramp-delay = <500>;
+> +
+> +			/* hack until we rig up the gpu consumer */
+> +			regulator-always-on;
+> +		};
+> +	};
 > +};
 > +
-> +static const struct arm_smmu_client_match_data qcom_adreno = {
-> +	.use_identity_domain = true,
-> +};
-> +
-> +static const struct arm_smmu_client_match_data qcom_mdss = {
-> +	.use_identity_domain = true,
-> +};
-> +
-> +static const struct of_device_id arm_smmu_client_of_match[] = {
-> +	{ .compatible = "qcom,adreno", .data = &qcom_adreno },
-> +	{ .compatible = "qcom,mdp4", .data = &qcom_mdss },
-> +	{ .compatible = "qcom,mdss", .data = &qcom_mdss },
-> +	{ .compatible = "qcom,sdm845-mdss", .data = &qcom_mdss },
-> +	{},
-> +};
-> +
-> +static const struct arm_smmu_client_match_data *
-> +arm_smmu_client_data(struct device *dev)
-> +{
-> +	const struct of_device_id *match =
-> +		of_match_device(arm_smmu_client_of_match, dev);
-> +
-> +	return match ? match->data : NULL;
-> +}
-> +
->   static int arm_smmu_attach_dev(struct iommu_domain *domain, struct device *dev)
->   {
->   	int ret;
-> @@ -1552,6 +1581,7 @@ static struct iommu_group *arm_smmu_device_group(struct device *dev)
->   {
->   	struct iommu_fwspec *fwspec = dev_iommu_fwspec_get(dev);
->   	struct arm_smmu_device *smmu = fwspec_smmu(fwspec);
-> +	const struct arm_smmu_client_match_data *client;
->   	struct iommu_group *group = NULL;
->   	int i, idx;
->   
-> @@ -1573,6 +1603,18 @@ static struct iommu_group *arm_smmu_device_group(struct device *dev)
->   	else
->   		group = generic_device_group(dev);
->   
-> +	client = arm_smmu_client_data(dev);
-> +
-> +	/*
-> +	 * If the client chooses to bypass the dma domain, create a identity
-> +	 * domain as a default placeholder. This will give the device a
-> +	 * default domain but skip DMA operations and not consume a context
-> +	 * bank
-> +	 */
-> +	if (client && client->no_dma_domain)
-> +		iommu_group_set_default_domain(group, dev,
-> +			IOMMU_DOMAIN_IDENTITY);
-> +
->   	return group;
->   }
->   
-> diff --git a/drivers/iommu/iommu.c b/drivers/iommu/iommu.c
-> index 67ee662..af3e1ed 100644
-> --- a/drivers/iommu/iommu.c
-> +++ b/drivers/iommu/iommu.c
-> @@ -1062,6 +1062,24 @@ struct iommu_group *fsl_mc_device_group(struct device *dev)
->   	return group;
->   }
->   
-> +struct iommu_domain *iommu_group_set_default_domain(struct iommu_group *group,
-> +		struct device *dev, unsigned int type)
-> +{
-> +	struct iommu_domain *dom;
-> +
-> +	dom = __iommu_domain_alloc(dev->bus, type);
-> +	if (!dom)
-> +		return NULL;
-> +
-> +	/* FIXME: Error if the default domain is already set? */
-> +	group->default_domain = dom;
-> +	if (!group->domain)
-> +		group->domain = dom;
-> +
-> +	return dom;
-> +}
-> +EXPORT_SYMBOL_GPL(iommu_group_set_default_domain);
-> +
->   /**
->    * iommu_group_get_for_dev - Find or create the IOMMU group for a device
->    * @dev: target device
-> @@ -1099,9 +1117,12 @@ struct iommu_group *iommu_group_get_for_dev(struct device *dev)
->   	if (!group->default_domain) {
->   		struct iommu_domain *dom;
->   
-> -		dom = __iommu_domain_alloc(dev->bus, iommu_def_domain_type);
-> +		dom = iommu_group_set_default_domain(group, dev,
-> +			iommu_def_domain_type);
-> +
->   		if (!dom && iommu_def_domain_type != IOMMU_DOMAIN_DMA) {
-> -			dom = __iommu_domain_alloc(dev->bus, IOMMU_DOMAIN_DMA);
-> +			dom = iommu_group_set_default_domain(group, dev,
-> +				IOMMU_DOMAIN_DMA);
->   			if (dom) {
->   				dev_warn(dev,
->   					 "failed to allocate default IOMMU domain of type %u; falling back to IOMMU_DOMAIN_DMA",
-> @@ -1109,10 +1130,6 @@ struct iommu_group *iommu_group_get_for_dev(struct device *dev)
->   			}
->   		}
->   
-> -		group->default_domain = dom;
-> -		if (!group->domain)
-> -			group->domain = dom;
-> -
->   		if (dom && !iommu_dma_strict) {
->   			int attr = 1;
->   			iommu_domain_set_attr(dom,
-> diff --git a/include/linux/iommu.h b/include/linux/iommu.h
-> index a815cf6..4ef8bd5 100644
-> --- a/include/linux/iommu.h
-> +++ b/include/linux/iommu.h
-> @@ -394,6 +394,9 @@ extern int iommu_group_id(struct iommu_group *group);
->   extern struct iommu_group *iommu_group_get_for_dev(struct device *dev);
->   extern struct iommu_domain *iommu_group_default_domain(struct iommu_group *);
->   
-> +struct iommu_domain *iommu_group_set_default_domain(struct iommu_group *group,
-> +		struct device *dev, unsigned int type);
-> +
->   extern int iommu_domain_get_attr(struct iommu_domain *domain, enum iommu_attr,
->   				 void *data);
->   extern int iommu_domain_set_attr(struct iommu_domain *domain, enum iommu_attr,
+>  &qusb2phy {
+>  	status = "okay";
+>  
+> -- 
+> 2.17.1
 > 
