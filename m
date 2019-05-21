@@ -2,194 +2,80 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id D1CF3255DF
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 May 2019 18:43:04 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 2FC5625606
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 May 2019 18:49:39 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728957AbfEUQm7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 21 May 2019 12:42:59 -0400
-Received: from mail-pl1-f193.google.com ([209.85.214.193]:43918 "EHLO
+        id S1728581AbfEUQth (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 21 May 2019 12:49:37 -0400
+Received: from mail-pl1-f193.google.com ([209.85.214.193]:35905 "EHLO
         mail-pl1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726900AbfEUQm6 (ORCPT
+        with ESMTP id S1727817AbfEUQth (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 21 May 2019 12:42:58 -0400
-Received: by mail-pl1-f193.google.com with SMTP id gn7so4543004plb.10
-        for <linux-arm-msm@vger.kernel.org>; Tue, 21 May 2019 09:42:58 -0700 (PDT)
+        Tue, 21 May 2019 12:49:37 -0400
+Received: by mail-pl1-f193.google.com with SMTP id d21so8722314plr.3;
+        Tue, 21 May 2019 09:49:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=WtZw+fdpaZbjOuInBI+L534tlDp+rXop9p/+kf7XV9Y=;
-        b=hFNtdVKEgvRPdSC5PDgOq8ZO64S/5OEgXmRLL+urCT25WMrrztgtN7uEjQhFZ0x1q9
-         472j6PCFOpSu9GCbELpRPLoXI8edMyQZO9oXOOQOa+9qDynglftR9FIBF2samkT3ZMRl
-         sHNelQEizfXadKEq6bQQCkKPxdxLXYjIq0ztKCNXaEOYZ0aDxKy95VjgvSjCPhavUKDZ
-         +PovVhwCZCVANcIkrWpNQS53G5pOdvhUXu1EEYb/M9G+qQAg75c48u5RSg3Lz8TP6JSQ
-         N9oToM2QuyrevbIkGevB/nzQC9E5I4kcBx49z+Zp5GdyivvaLDDlAX5AJ9+4j/bVAoKG
-         ueeg==
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id;
+        bh=v2SnYdg7A+KRf1CirjBXBSRjCuSa5ZCNOU/wWwgCIfk=;
+        b=Ddep7DyHe5OsovWNiAt9kTIMBQlef/9LvJA19PYauVxiR02nikKb24vzLGi03F7nsN
+         T2V6VOpn+2U+RJicJhJatRRwwq+azLcIwsHclxn81zlRcai3UATILn6cxNnxzZV/5ehR
+         Bu3VpJ6zqJUnJD1T7k2/U+eJTy4iNZg4xoSO25YWBpbTJW9MizL1zJb0hfYqcBUbh1om
+         UTxzOpSjyh9aorCUnS7hb3qFRtytTckbMZugXBTXBLRcTpIwnsM/pLy9FuLME7FYojIK
+         hA/YL9CdX9tR3PrsCv5SI7noKMNDtvgGrxWGXve6/d66D0l3XoTicIH89o1pUS7QchMo
+         bNVQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=WtZw+fdpaZbjOuInBI+L534tlDp+rXop9p/+kf7XV9Y=;
-        b=i5C6LAohPuFAB5xxYpFM3DfhUdeXvySGNGc1707bq0WHKJS+0vwtfy3+fC2oGU/Ya6
-         JGIjOkO4fR6t5eqHXZuOuIrxzJmZ3GRf4GQqMI5P1E8ydc4cdqpedxwsdXBqPTIo5SZB
-         hNxKaEypb7M8K7b+O6Zup898X+tL1dzhLe6tJ4gxeJAK0flf4lD/ohQqskW92OZbm8+Q
-         txmEhRH2WPAfLMQHGyKChQOjbCs/c8uEjIs6GTwZdlL6reYpRrp6St2WbVMH1nsJ94pq
-         9LExJU58eTZjiroOa+2egKizOhxS3uIzu8YWua1ku/X4ydbKotctq7o3CN4+oCiL6Yc6
-         F7lg==
-X-Gm-Message-State: APjAAAXg124FJe96pyVhYb7loeGxtihfkPv4vofbViYZQRbc0fnYH1D5
-        KtHtzcCWNRv17hBMRarrYhCmkA==
-X-Google-Smtp-Source: APXvYqz6hkQggncGw2amqhWyINM+2IIHUlaiyyx3bhaLSiib6GgTf9AkL4kdRJODyIfrRQHDBRKiyw==
-X-Received: by 2002:a17:902:20ca:: with SMTP id v10mr44805389plg.296.1558456977499;
-        Tue, 21 May 2019 09:42:57 -0700 (PDT)
-Received: from tuxbook-pro (104-188-17-28.lightspeed.sndgca.sbcglobal.net. [104.188.17.28])
-        by smtp.gmail.com with ESMTPSA id t78sm46216148pfa.154.2019.05.21.09.42.56
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Tue, 21 May 2019 09:42:56 -0700 (PDT)
-Date:   Tue, 21 May 2019 09:43:24 -0700
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
-Cc:     dmitry.torokhov@gmail.com, jikos@kernel.org,
-        benjamin.tissoires@redhat.com, lee.jones@linaro.org,
-        robh+dt@kernel.org, mark.rutland@arm.com, agross@kernel.org,
-        david.brown@linaro.org, hdegoede@redhat.com,
-        linux-input@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v4 1/2] HID: quirks: Refactor ELAN 400 and 401 handling
-Message-ID: <20190521164324.GA2085@tuxbook-pro>
-References: <20190423160543.9922-1-jeffrey.l.hugo@gmail.com>
- <20190423160605.9970-1-jeffrey.l.hugo@gmail.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20190423160605.9970-1-jeffrey.l.hugo@gmail.com>
-User-Agent: Mutt/1.11.4 (2019-03-13)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=v2SnYdg7A+KRf1CirjBXBSRjCuSa5ZCNOU/wWwgCIfk=;
+        b=LZbjSW/Ytxhz7PXEaWtzcDNCaoYMweuTamvfijHAY3fLMiVS12tvRz0cLBp8h+nbwt
+         VvomViT4z2LrV56DO0V9/c8aFE8qdXMNfz9BZqMTY63FZGhERC8jRwmQ5rlQEMJNMMFr
+         xrrRX5MtJS8swqnWA0NMRaQdi8z8BtHTG/3OWTyu4pMjMeWGLI3Y1bRL8rdquWIpK1q1
+         9ARs+1TBMPiu+/t1XwXCCXeZCl3haZlEC5dkIEFTxZ86D7qhbJZdNIIeGjDDXv0PShTj
+         DPXHgc3fjjP1RugqXRAp7m1yGwRt8K+0B5dRJUzaFsUs1H1ECnR2yFihRAlCZJ1w8sFE
+         H/Xg==
+X-Gm-Message-State: APjAAAVNRLCI/x7zpXQgp2D0xN/0L1JId7H988JKGGFlOK6RPOO4qfyt
+        u8PBgBJ7MGpD/qpCG7dZb6Y=
+X-Google-Smtp-Source: APXvYqzvYTYoKR4keXPH4jiYbPWg9Rfb6ADPPLBY7qhfTOKHapIWHpV+sbFumzLUsWLGsvVb034/Ng==
+X-Received: by 2002:a17:902:2a2b:: with SMTP id i40mr83744999plb.170.1558457376769;
+        Tue, 21 May 2019 09:49:36 -0700 (PDT)
+Received: from aw-bldr-10.qualcomm.com (i-global254.qualcomm.com. [199.106.103.254])
+        by smtp.gmail.com with ESMTPSA id o7sm32411008pfp.168.2019.05.21.09.49.35
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Tue, 21 May 2019 09:49:36 -0700 (PDT)
+From:   Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
+Cc:     agross@kernel.org, david.brown@linaro.org,
+        bjorn.andersson@linaro.org, jcrouse@codeaurora.org,
+        lgirdwood@gmail.com, broonie@kernel.org, robh+dt@kernel.org,
+        mark.rutland@arm.com, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
+        Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
+Subject: [PATCH 0/3] PM8005 regulator support for msm8998 GPU
+Date:   Tue, 21 May 2019 09:49:32 -0700
+Message-Id: <20190521164932.14265-1-jeffrey.l.hugo@gmail.com>
+X-Mailer: git-send-email 2.17.1
+To:     unlisted-recipients:; (no To-header on input)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue 23 Apr 09:06 PDT 2019, Jeffrey Hugo wrote:
+The MSM8998 MTP reference platform supplies VDD_GFX from s1 of the
+pm8005 PMIC.  VDD_GFX is needed to turn on the GPU.  As we are looking
+to bring up the GPU, add the support for pm8005 and wire up s1 in a
+basic manner so that we have this dependency out of the way and can
+focus on enabling the GPU driver.
 
-> There needs to be coordination between hid-quirks and the elan_i2c driver
-> about which devices are handled by what drivers.  Currently, both use
-> whitelists, which results in valid devices being unhandled by default,
-> when they should not be rejected by hid-quirks.  This is quickly becoming
-> an issue.
-> 
-> Since elan_i2c has a maintained whitelist of what devices it will handle,
-> use that to implement a blacklist in hid-quirks so that only the devices
-> that need to be handled by elan_i2c get rejected by hid-quirks, and
-> everything else is handled by default.  The downside is the whitelist and
-> blacklist need to be kept in sync.
-> 
+Jeffrey Hugo (3):
+  dt-bindings: qcom_spmi: Document PM8005 regulators
+  regulator: qcom_spmi: Add support for PM8005
+  arm64: dts: msm8998-mtp: Add pm8005_s1 regulator
 
-Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+ .../regulator/qcom,spmi-regulator.txt         |   4 +
+ arch/arm64/boot/dts/qcom/msm8998-mtp.dtsi     |  17 ++
+ drivers/regulator/qcom_spmi-regulator.c       | 203 +++++++++++++++++-
+ 3 files changed, 219 insertions(+), 5 deletions(-)
 
-Jiri, the two patches in this series doesn't have a build time
-dependency, so if you take this one through your tree I'll take 2/2
-through arm-soc.
+-- 
+2.17.1
 
-Regards,
-Bjorn
-
-> Suggested-by: Benjamin Tissoires <benjamin.tissoires@redhat.com>
-> Signed-off-by: Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
-> ---
->  drivers/hid/hid-quirks.c            | 64 ++++++++++++++++++++++++-----
->  drivers/input/mouse/elan_i2c_core.c |  4 ++
->  2 files changed, 58 insertions(+), 10 deletions(-)
-> 
-> diff --git a/drivers/hid/hid-quirks.c b/drivers/hid/hid-quirks.c
-> index 77ffba48cc73..656485e08eb7 100644
-> --- a/drivers/hid/hid-quirks.c
-> +++ b/drivers/hid/hid-quirks.c
-> @@ -987,17 +987,61 @@ bool hid_ignore(struct hid_device *hdev)
->  		break;
->  	case USB_VENDOR_ID_ELAN:
->  		/*
-> -		 * Many Elan devices have a product id of 0x0401 and are handled
-> -		 * by the elan_i2c input driver. But the ACPI HID ELAN0800 dev
-> -		 * is not (and cannot be) handled by that driver ->
-> -		 * Ignore all 0x0401 devs except for the ELAN0800 dev.
-> +		 * Blacklist of everything that gets handled by the elan_i2c
-> +		 * input driver.  This should be kept in sync with the whitelist
-> +		 * that exists in that driver.  This avoids disabling valid
-> +		 * touchpads and other ELAN devices.
->  		 */
-> -		if (hdev->product == 0x0401 &&
-> -		    strncmp(hdev->name, "ELAN0800", 8) != 0)
-> -			return true;
-> -		/* Same with product id 0x0400 */
-> -		if (hdev->product == 0x0400 &&
-> -		    strncmp(hdev->name, "QTEC0001", 8) != 0)
-> +		if ((hdev->product == 0x0401 || hdev->product == 0x0400) &&
-> +		   (strncmp(hdev->name, "ELAN0000", 8) == 0 ||
-> +		    strncmp(hdev->name, "ELAN0100", 8) == 0 ||
-> +		    strncmp(hdev->name, "ELAN0600", 8) == 0 ||
-> +		    strncmp(hdev->name, "ELAN0601", 8) == 0 ||
-> +		    strncmp(hdev->name, "ELAN0602", 8) == 0 ||
-> +		    strncmp(hdev->name, "ELAN0603", 8) == 0 ||
-> +		    strncmp(hdev->name, "ELAN0604", 8) == 0 ||
-> +		    strncmp(hdev->name, "ELAN0605", 8) == 0 ||
-> +		    strncmp(hdev->name, "ELAN0606", 8) == 0 ||
-> +		    strncmp(hdev->name, "ELAN0607", 8) == 0 ||
-> +		    strncmp(hdev->name, "ELAN0608", 8) == 0 ||
-> +		    strncmp(hdev->name, "ELAN0609", 8) == 0 ||
-> +		    strncmp(hdev->name, "ELAN060B", 8) == 0 ||
-> +		    strncmp(hdev->name, "ELAN060C", 8) == 0 ||
-> +		    strncmp(hdev->name, "ELAN060F", 8) == 0 ||
-> +		    strncmp(hdev->name, "ELAN0610", 8) == 0 ||
-> +		    strncmp(hdev->name, "ELAN0611", 8) == 0 ||
-> +		    strncmp(hdev->name, "ELAN0612", 8) == 0 ||
-> +		    strncmp(hdev->name, "ELAN0613", 8) == 0 ||
-> +		    strncmp(hdev->name, "ELAN0614", 8) == 0 ||
-> +		    strncmp(hdev->name, "ELAN0615", 8) == 0 ||
-> +		    strncmp(hdev->name, "ELAN0616", 8) == 0 ||
-> +		    strncmp(hdev->name, "ELAN0617", 8) == 0 ||
-> +		    strncmp(hdev->name, "ELAN0618", 8) == 0 ||
-> +		    strncmp(hdev->name, "ELAN0619", 8) == 0 ||
-> +		    strncmp(hdev->name, "ELAN061A", 8) == 0 ||
-> +		    strncmp(hdev->name, "ELAN061B", 8) == 0 ||
-> +		    strncmp(hdev->name, "ELAN061C", 8) == 0 ||
-> +		    strncmp(hdev->name, "ELAN061D", 8) == 0 ||
-> +		    strncmp(hdev->name, "ELAN061E", 8) == 0 ||
-> +		    strncmp(hdev->name, "ELAN061F", 8) == 0 ||
-> +		    strncmp(hdev->name, "ELAN0620", 8) == 0 ||
-> +		    strncmp(hdev->name, "ELAN0621", 8) == 0 ||
-> +		    strncmp(hdev->name, "ELAN0622", 8) == 0 ||
-> +		    strncmp(hdev->name, "ELAN0623", 8) == 0 ||
-> +		    strncmp(hdev->name, "ELAN0624", 8) == 0 ||
-> +		    strncmp(hdev->name, "ELAN0625", 8) == 0 ||
-> +		    strncmp(hdev->name, "ELAN0626", 8) == 0 ||
-> +		    strncmp(hdev->name, "ELAN0627", 8) == 0 ||
-> +		    strncmp(hdev->name, "ELAN0628", 8) == 0 ||
-> +		    strncmp(hdev->name, "ELAN0629", 8) == 0 ||
-> +		    strncmp(hdev->name, "ELAN062A", 8) == 0 ||
-> +		    strncmp(hdev->name, "ELAN062B", 8) == 0 ||
-> +		    strncmp(hdev->name, "ELAN062C", 8) == 0 ||
-> +		    strncmp(hdev->name, "ELAN062D", 8) == 0 ||
-> +		    strncmp(hdev->name, "ELAN0631", 8) == 0 ||
-> +		    strncmp(hdev->name, "ELAN0632", 8) == 0 ||
-> +		    strncmp(hdev->name, "ELAN1000", 8) == 0 ||
-> +		    strncmp(hdev->name, "elan,ekth3000", 13) == 0))
->  			return true;
->  		break;
->  	}
-> diff --git a/drivers/input/mouse/elan_i2c_core.c b/drivers/input/mouse/elan_i2c_core.c
-> index f9525d6f0bfe..3ded19528cd4 100644
-> --- a/drivers/input/mouse/elan_i2c_core.c
-> +++ b/drivers/input/mouse/elan_i2c_core.c
-> @@ -1332,6 +1332,10 @@ static const struct i2c_device_id elan_id[] = {
->  };
->  MODULE_DEVICE_TABLE(i2c, elan_id);
->  
-> +/*
-> + * when these whtielists get updated, the corresponding blacklist in hid-quirks
-> + * needs to be updated to match.
-> + */
->  #ifdef CONFIG_ACPI
->  static const struct acpi_device_id elan_acpi_id[] = {
->  	{ "ELAN0000", 0 },
-> -- 
-> 2.17.1
-> 
