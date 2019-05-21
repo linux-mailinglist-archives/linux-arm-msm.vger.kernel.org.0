@@ -2,135 +2,129 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 8AD7724D83
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 May 2019 13:04:01 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 02C3E24DA4
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 May 2019 13:11:13 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726995AbfEULEB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 21 May 2019 07:04:01 -0400
-Received: from mail-io1-f66.google.com ([209.85.166.66]:38297 "EHLO
-        mail-io1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726344AbfEULEA (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 21 May 2019 07:04:00 -0400
-Received: by mail-io1-f66.google.com with SMTP id x24so13561368ion.5
-        for <linux-arm-msm@vger.kernel.org>; Tue, 21 May 2019 04:04:00 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=tVZ1tFnofzDOshXJ55p2YIxYyc5VRLW0cEuiG1ZNDek=;
-        b=ihR4sLB+Kcp5BjrhDZHbUHYi2I33+G3zsEL7+TLDz8Y7qWAJ6TdjzbQk2F+OSvOM1A
-         GLIa2qJAZhBQZ9VZwMjjj3E45vPjlkcUCpN6i/oYE7jp19uqCloRgvG1a6iAmErAWRgE
-         Qebj/ChBVrQbBUZg0ohqVfL9DyqylRQYV9NQNal9pXz9TXgpd8sF8qjgc21GP7N6zHeG
-         FYb1QS5bhZgssSibeUx/tIQkitHUx5vKhoE2slQG2BN9Wmt2paYn5C4O2aKpZelG1qwW
-         AwPwcL8iGMce28BZ/P2CtfAQNd9d3mCbLhtcxCDemp2dZnA6XZEwzQ1NEAMpidVJjVuo
-         6mtA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=tVZ1tFnofzDOshXJ55p2YIxYyc5VRLW0cEuiG1ZNDek=;
-        b=fqZayJkaYzyJsoLe/KR+lOLM81pA8ljV7DCjdasMZUCAzW0IFagDvDlu3vri9Bp3ZB
-         +DFANeZzq9u3Qgsn/GwcNVGogwzPHCMgBWZAXQU9J8sxSQlKabK+mhtn5zdWXWcXzYVU
-         Jkr3Kq0PidI+qJSbldbL94fxxsURLD+6ynWjlWgzFsYFkBEtrgInjUs4dAf+VMai5oup
-         LPSzWpr4MLhXR9kEV6p0jwCyWeOwn3pdcYTKd6EUO7Gf3AYbfdTUSrrRL5tTCnJ2j+I4
-         GaiHqToVAuRjFvA1FYwf9WrA4RpvYImu1+8ZNZh2CCnBv89XdV4+cWzm5sJt2OMl9b50
-         i+fg==
-X-Gm-Message-State: APjAAAUDTcOJhAlSVGtL20UtMFMripE/WonfrT4MmFVKUh6/fGQTWwiJ
-        ZDzVcwOfdbPU7tZhbvo+eZkMbA==
-X-Google-Smtp-Source: APXvYqzdS1QKhqlxQQboe9Y8ZH8ImzRkyRKdPGltO8YHoy6eE3kbPG+Qdn9Y/EsptD5mGgIiV7tFqw==
-X-Received: by 2002:a6b:da11:: with SMTP id x17mr1436692iob.78.1558436639911;
-        Tue, 21 May 2019 04:03:59 -0700 (PDT)
-Received: from [172.22.22.26] (c-71-195-29-92.hsd1.mn.comcast.net. [71.195.29.92])
-        by smtp.googlemail.com with ESMTPSA id q24sm6851957ioh.31.2019.05.21.04.03.58
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 21 May 2019 04:03:59 -0700 (PDT)
-Subject: Re: [PATCH 1/8] net: qualcomm: rmnet: fix struct rmnet_map_header
+        id S1726448AbfEULLG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 21 May 2019 07:11:06 -0400
+Received: from mail.kernel.org ([198.145.29.99]:54054 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726042AbfEULLG (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 21 May 2019 07:11:06 -0400
+Received: from localhost (unknown [223.186.130.65])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by mail.kernel.org (Postfix) with ESMTPSA id 19BDF2081C;
+        Tue, 21 May 2019 11:11:03 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=default; t=1558437065;
+        bh=ATO0mafowpmS9lD2uJVlmt4JcavGsNrwrYgrfOLt7bg=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=bD29SWe1toCHHRKmxc1/VKp/HxszwXcFJ8pAR41Jds9NGDnY/ixUY65YKHffhKlMc
+         64B4hRD0lZL9Z+vtUaZ0fb5DZ7JcubCdye8vRDxnEBpaxDK6w2/cte69FA6+LYG1pQ
+         Z/vnK0IFGJWk4aFuA0GP98Ofr4NSJ5W9vuXS7ENg=
+Date:   Tue, 21 May 2019 16:40:58 +0530
+From:   Vinod Koul <vkoul@kernel.org>
 To:     Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     Subash Abhinov Kasiviswanathan <subashab@codeaurora.org>,
-        arnd@arndb.de, david.brown@linaro.org, agross@kernel.org,
-        davem@davemloft.net, ilias.apalodimas@linaro.org,
-        cpratapa@codeaurora.org, syadagir@codeaurora.org,
-        evgreen@chromium.org, benchan@google.com, ejcaruso@google.com,
-        netdev@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org
-References: <20190520135354.18628-1-elder@linaro.org>
- <20190520135354.18628-2-elder@linaro.org>
- <b0edef36555877350cfbab2248f8baac@codeaurora.org>
- <81fd1e01-b8e3-f86a-fcc9-2bcbc51bd679@linaro.org>
- <d90f8ccdc1f76f9166f269eb71a14f7f@codeaurora.org>
- <cd839826-639d-2419-0941-333055e26e37@linaro.org>
- <20190521030712.GY2085@tuxbook-pro>
-From:   Alex Elder <elder@linaro.org>
-Message-ID: <25b1d768-d492-08a7-b1ab-d3d022b01bc9@linaro.org>
-Date:   Tue, 21 May 2019 06:03:58 -0500
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.6.1
+Cc:     Andy Gross <agross@kernel.org>,
+        David Brown <david.brown@linaro.org>,
+        Stephen Boyd <swboyd@chromium.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Mark Rutland <mark.rutland@arm.com>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v7 2/4] soc: qcom: Add AOSS QMP driver
+Message-ID: <20190521111058.GG15118@vkoul-mobl>
+References: <20190501043734.26706-1-bjorn.andersson@linaro.org>
+ <20190501043734.26706-3-bjorn.andersson@linaro.org>
 MIME-Version: 1.0
-In-Reply-To: <20190521030712.GY2085@tuxbook-pro>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20190501043734.26706-3-bjorn.andersson@linaro.org>
+User-Agent: Mutt/1.11.3 (2019-02-01)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 5/20/19 10:07 PM, Bjorn Andersson wrote:
-> On Mon 20 May 19:30 PDT 2019, Alex Elder wrote:
-> 
->> On 5/20/19 8:32 PM, Subash Abhinov Kasiviswanathan wrote:
->>>>
->>>> If you are telling me that the command/data flag resides at bit
->>>> 7 of the first byte, I will update the field masks in a later
->>>> patch in this series to reflect that.
->>>>
->>>
->>> Higher order bit is Command / Data.
->>
->> So what this means is that to get the command/data bit we use:
->>
->> 	first_byte & 0x80
->>
->> If that is correct I will remove this patch from the series and
->> will update the subsequent patches so bit 7 is the command bit,
->> bit 6 is reserved, and bits 0-5 are the pad length.
->>
->> I will post a v2 of the series with these changes, and will
->> incorporate Bjorn's "Reviewed-by".
->>
-> 
-> But didn't you say that your testing show that the current bit order is
-> wrong?
+On 30-04-19, 21:37, Bjorn Andersson wrote:
 
-I did say that, but it seems I may have been misinterpreting
-what the documentation said, namely that "bit 0" in the network
-data stream is actually the high-order bit in the first byte.
+> +#include <linux/clk-provider.h>
+> +#include <linux/interrupt.h>
+> +#include <linux/io.h>
+> +#include <linux/mailbox_client.h>
+> +#include <linux/pm_domain.h>
+> +#include <linux/module.h>
+> +#include <linux/platform_device.h>
+> +#include <dt-bindings/power/qcom-aoss-qmp.h>
 
-I did definitely see that bit 7 (0x80) in the first byte was the
-one selected by the "cd_bit" C bit-field originally, and I believed
-that was wrong.
+I would have preferred this as first one, but this is fine too :)
 
-The other thing I can say is that I never see that bit set in my
-use of the rmnet driver for IPA.  On top of that, the pad_len
-value is 0.  Given that, either bit order works, because the
-whole first byte is 0 either way.  So it turns out the testing
-I am able to do is not adequate to verify the change.
+> +/* Linux-side offsets */
+> +#define QMP_DESC_MCORE_LINK_STATE	0x24
+> +#define QMP_DESC_MCORE_LINK_STATE_ACK	0x28
+> +#define QMP_DESC_MCORE_CH_STATE		0x2c
+> +#define QMP_DESC_MCORE_CH_STATE_ACK	0x30
+> +#define QMP_DESC_MCORE_MBOX_SIZE	0x34
+> +#define QMP_DESC_MCORE_MBOX_OFFSET	0x38
+> +
+> +#define QMP_STATE_UP	0x0000ffff
 
-I am hoping that Subash has an environment in which QMAP
-commands (with the appropriate bit set) are actually used.
+I prefer using GENMASK(15, 0)
 
-I'm going to wait a bit for him to confirm that, but at this
-time my plan is to do as I said above--remove this patch and
-adjust the ones that follow accordingly.
+> +#define QMP_STATE_DOWN	0xffff0000
 
-					-Alex
+GENMASK(31, 16)?
 
-> I still like the cleanup, if nothing else just to clarify and clearly
-> document the actual content of this header.
-> 
-> Regards,
-> Bjorn
-> 
+> +/**
+> + * struct qmp - driver state for QMP implementation
+> + * @msgram: iomem referencing the message RAM used for communication
+> + * @dev: reference to QMP device
+> + * @mbox_client: mailbox client used to ring the doorbell on transmit
+> + * @mbox_chan: mailbox channel used to ring the doorbell on transmit
+> + * @offset: offset within @msgram where messages should be written
+> + * @size: maximum size of the messages to be transmitted
+> + * @event: wait_queue for synchronization with the IRQ
+> + * @tx_lock: provides syncrhonization between multiple callers of qmp_send()
 
+/s/syncrhonization/synchronization
+
+> +int qmp_send(struct qmp *qmp, const void *data, size_t len)
+> +{
+> +	int ret;
+> +
+> +	if (WARN_ON(len + sizeof(u32) > qmp->size))
+> +		return -EINVAL;
+> +
+> +	if (WARN_ON(len % sizeof(u32)))
+> +		return -EINVAL;
+> +
+> +	mutex_lock(&qmp->tx_lock);
+> +
+> +	/* The message RAM only implements 32-bit accesses */
+> +	__iowrite32_copy(qmp->msgram + qmp->offset + sizeof(u32),
+> +			 data, len / sizeof(u32));
+> +	writel(len, qmp->msgram + qmp->offset);
+> +	qmp_kick(qmp);
+> +
+> +	ret = wait_event_interruptible_timeout(qmp->event,
+> +					       qmp_message_empty(qmp), HZ);
+> +	if (!ret) {
+> +		dev_err(qmp->dev, "ucore did not ack channel\n");
+> +		ret = -ETIMEDOUT;
+> +
+> +		/* Clear message from buffer */
+> +		writel(0, qmp->msgram + qmp->offset);
+> +	} else {
+> +		ret = 0;
+
+Isn't this redundant?
+
+> +	}
+> +
+> +	mutex_unlock(&qmp->tx_lock);
+> +
+> +	return ret;
+> +}
+-- 
+~Vinod
