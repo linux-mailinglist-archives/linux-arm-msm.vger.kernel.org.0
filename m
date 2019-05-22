@@ -2,89 +2,84 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id C4C1625F68
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 May 2019 10:23:51 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E8DAE26047
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 May 2019 11:17:42 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728680AbfEVIXu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 22 May 2019 04:23:50 -0400
-Received: from onstation.org ([52.200.56.107]:34656 "EHLO onstation.org"
+        id S1727946AbfEVJRm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 22 May 2019 05:17:42 -0400
+Received: from ns.iliad.fr ([212.27.33.1]:58276 "EHLO ns.iliad.fr"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1728653AbfEVIXu (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 22 May 2019 04:23:50 -0400
-Received: from localhost (c-98-239-145-235.hsd1.wv.comcast.net [98.239.145.235])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        (Authenticated sender: masneyb)
-        by onstation.org (Postfix) with ESMTPSA id 48C913E85B;
-        Wed, 22 May 2019 08:23:49 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=onstation.org;
-        s=default; t=1558513429;
-        bh=VwsPQeEkjtUDvFbRrWrenVq9dKv37ynzaHzSyE0Crp8=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=o5D9rWiTzK5SazUOVnMsNJa++g8OkgtQ5DIDryBZ7KXXnYVT9vrfRceZP2zDDGW21
-         O6Gces4yVyJjU4jmKWkJmx41XaPtqkHntbQHrZF069Zms4VeCuYL4PbLJ5EaqUlgaQ
-         R4EvKMF5gGwjBfOaR7VsB6DUgxuUDhHOvOigeVRs=
-Date:   Wed, 22 May 2019 04:23:48 -0400
-From:   Brian Masney <masneyb@onstation.org>
-To:     Stephen Boyd <sboyd@kernel.org>
-Cc:     agross@kernel.org, david.brown@linaro.org,
-        bjorn.andersson@linaro.org, robh+dt@kernel.org,
-        mark.rutland@arm.com, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH RESEND] ARM: dts: qcom: msm8974-hammerhead: add device
- tree bindings for vibrator
-Message-ID: <20190522082348.GA15793@basecamp>
-References: <20190516085018.2207-1-masneyb@onstation.org>
- <20190520142149.D56DA214AE@mail.kernel.org>
+        id S1726552AbfEVJRm (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 22 May 2019 05:17:42 -0400
+Received: from ns.iliad.fr (localhost [127.0.0.1])
+        by ns.iliad.fr (Postfix) with ESMTP id AB33520A0E;
+        Wed, 22 May 2019 11:17:40 +0200 (CEST)
+Received: from [192.168.108.49] (freebox.vlq16.iliad.fr [213.36.7.13])
+        by ns.iliad.fr (Postfix) with ESMTP id 7CED620875;
+        Wed, 22 May 2019 11:17:40 +0200 (CEST)
+From:   Marc Gonzalez <marc.w.gonzalez@free.fr>
+Subject: Re: [PATCH v2 7/9] arm64: dts: qcom: msm8998: Add PSCI cpuidle low
+ power states
+To:     Amit Kucheria <amit.kucheria@linaro.org>,
+        MSM <linux-arm-msm@vger.kernel.org>,
+        Linux ARM <linux-arm-kernel@lists.infradead.org>
+Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Daniel Lezcano <daniel.lezcano@linaro.org>,
+        Niklas Cassel <niklas.cassel@linaro.org>,
+        Jeffrey Hugo <jhugo@codeaurora.org>,
+        Sibi Sankar <sibis@codeaurora.org>,
+        Mark Rutland <mark.rutland@arm.com>,
+        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
+        Robin Murphy <robin.murphy@arm.com>,
+        Sudeep Holla <sudeep.holla@arm.com>,
+        Marc Zyngier <marc.zyngier@arm.com>
+References: <cover.1558430617.git.amit.kucheria@linaro.org>
+ <49cf5d94beb9af9ef4e78d4c52f3b0ad20b7c63f.1558430617.git.amit.kucheria@linaro.org>
+ <a7514c68-d2d3-ce9e-bc4b-f484bb5bf3cf@free.fr>
+Message-ID: <d1ca4d37-ce25-a285-a9ef-dfe831f3d1de@free.fr>
+Date:   Wed, 22 May 2019 11:17:40 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+ Thunderbird/60.6.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20190520142149.D56DA214AE@mail.kernel.org>
+In-Reply-To: <a7514c68-d2d3-ce9e-bc4b-f484bb5bf3cf@free.fr>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
+X-Virus-Scanned: ClamAV using ClamSMTP ; ns.iliad.fr ; Wed May 22 11:17:40 2019 +0200 (CEST)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Stephen,
+[ Re-sending to a wider audience, hoping to catch someone's eye ]
 
-On Mon, May 20, 2019 at 07:21:49AM -0700, Stephen Boyd wrote:
-> Quoting Brian Masney (2019-05-16 01:50:18)
-> > @@ -306,6 +307,36 @@
-> >                                 input-enable;
-> >                         };
-> >                 };
-> > +
-> > +               vibrator_pin: vibrator {
-> > +                       pwm {
-> > +                               pins = "gpio27";
-> > +                               function = "gp1_clk";
-> > +
-> > +                               drive-strength = <6>;
-> > +                               bias-disable;
-> > +                       };
-> > +
-> > +                       enable {
-> > +                               pins = "gpio60";
-> > +                               function = "gpio";
-> > +                       };
-> > +               };
-> > +       };
-> > +
-> > +       vibrator@fd8c3450 {
-> > +               compatible = "qcom,msm8974-vibrator";
-> > +               reg = <0xfd8c3450 0x400>;
-> 
-> This is inside the multimedia clk controller. The resource reservation
-> mechanism should be complaining loudly here. Is the driver writing
-> directly into clk controller registers to adjust a duty cycle of the
-> camera's general purpose clk?
-> 
-> Can you add support for duty cycle to the qcom clk driver's RCGs and
-> then write a generic clk duty cycle vibrator driver that adjusts the
-> duty cycle of the clk? That would be better than reaching into the clk
-> controller registers to do this.
+https://patchwork.kernel.org/patch/10953257/
 
-I don't see any complaints in dmesg about this, however I'll work on a
-new clk duty cycle vibrator driver.
+On 21/05/2019 14:03, Marc Gonzalez wrote:
 
-Brian
+> With CPUIDLE enabled, my system starts to boot, hangs a few seconds,
+> then silently reboots (killed by FW)
+
+Using extremely high-tech debugging tools (i.e. spraying printk left and right)
+I traced this crash down to:
+
+psci_cpu_suspend_enter: 435
+psci_cpu_suspend: 171
+psci_cpu_suspend: __invoke_psci_fn_smc c4000001
+__invoke_psci_fn_smc: id=c4000001 3 0 0
+/*** execution never returns from arm_smccc_smc() ***/
+
+
+The following dmesg log caught my eye, and might be relevant:
+
+	ARM_SMCCC_ARCH_WORKAROUND_1 missing from firmware
+
+Is that bad, doctor? I don't think it would explain the crash though...
+
+
+If I revert the patch, psci_cpu_suspend_enter() is never called,
+so we don't tickle the arm_smccc_smc() monster.
+
+Could it be that this FW doesn't support PSCI?
+
+Regards.
