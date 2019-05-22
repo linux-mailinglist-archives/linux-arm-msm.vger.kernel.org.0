@@ -2,115 +2,88 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 3D2A0262B0
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 May 2019 13:01:23 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E578D2647B
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 May 2019 15:19:39 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728743AbfEVLBS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 22 May 2019 07:01:18 -0400
-Received: from heliosphere.sirena.org.uk ([172.104.155.198]:55612 "EHLO
-        heliosphere.sirena.org.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728406AbfEVLBR (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 22 May 2019 07:01:17 -0400
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-        d=sirena.org.uk; s=20170815-heliosphere; h=In-Reply-To:Content-Type:
-        MIME-Version:References:Message-ID:Subject:Cc:To:From:Date:Sender:Reply-To:
-        Content-Transfer-Encoding:Content-ID:Content-Description:Resent-Date:
-        Resent-From:Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:List-Id:
-        List-Help:List-Unsubscribe:List-Subscribe:List-Post:List-Owner:List-Archive;
-         bh=zayKSYs/1H7s0xB/BM7u3QdiVVXr8vKW/624+3am8oI=; b=lBsZPNdl+N8oAgIkMsLdVrTnR
-        szN9nikklbIFhthxDf+7g9jkQU3hMZP0jTjniUsU2bUIUR8FCKydeCfHZ2YYXMCsjWG7T99RN+jjv
-        XCLG1c/qnj2jWwbvjAWB8553rHe7VwZMyoewf5+3MDRqQMna/HHUKeAPpMUWYk5pOp8Tc=;
-Received: from cpc102320-sgyl38-2-0-cust46.18-2.cable.virginm.net ([82.37.168.47] helo=debutante.sirena.org.uk)
-        by heliosphere.sirena.org.uk with esmtpa (Exim 4.89)
-        (envelope-from <broonie@sirena.org.uk>)
-        id 1hTOzf-00043C-2o; Wed, 22 May 2019 11:01:11 +0000
-Received: by debutante.sirena.org.uk (Postfix, from userid 1000)
-        id 678611126D0E; Wed, 22 May 2019 12:01:07 +0100 (BST)
-Date:   Wed, 22 May 2019 12:01:07 +0100
-From:   Mark Brown <broonie@kernel.org>
-To:     Jeffrey Hugo <jhugo@codeaurora.org>
-Cc:     Jeffrey Hugo <jeffrey.l.hugo@gmail.com>, lgirdwood@gmail.com,
-        agross@kernel.org, david.brown@linaro.org,
-        bjorn.andersson@linaro.org, jcrouse@codeaurora.org,
-        robh+dt@kernel.org, mark.rutland@arm.com,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        devicetree@vger.kernel.org,
-        Jorge Ramirez-Ortiz <jorge.ramirez-ortiz@linaro.org>
-Subject: Re: [PATCH 2/3] regulator: qcom_spmi: Add support for PM8005
-Message-ID: <20190522110107.GB8582@sirena.org.uk>
-References: <20190521164932.14265-1-jeffrey.l.hugo@gmail.com>
- <20190521165315.14379-1-jeffrey.l.hugo@gmail.com>
- <20190521185054.GD16633@sirena.org.uk>
- <51caaee4-dfc9-5b5a-07c7-b1406c178ca3@codeaurora.org>
+        id S1729126AbfEVNTX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 22 May 2019 09:19:23 -0400
+Received: from mail.kernel.org ([198.145.29.99]:56770 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1729003AbfEVNTX (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 22 May 2019 09:19:23 -0400
+Received: from mail-qt1-f174.google.com (mail-qt1-f174.google.com [209.85.160.174])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        by mail.kernel.org (Postfix) with ESMTPSA id C7AC52187F;
+        Wed, 22 May 2019 13:19:22 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=default; t=1558531162;
+        bh=xZL000OlxXJ3Olb6ufE2AzjLi7N4hMQu+kQzQcbFNCE=;
+        h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
+        b=0mYeaIOisZLB0e2XA+n2+3BIXH94kWanrOCk0grtqaLO+lZvxY3UI7XggEwxwuQqh
+         vq/62sb27M9TkomToLDrAOJEMM7ci1rjoij0f3S6+ILn1ARCEMG0aZLvAXz4U57nd3
+         Bsy2TjvX8AeZkQy1Oa+uXn9+h2LRBrcSTjcCeEdI=
+Received: by mail-qt1-f174.google.com with SMTP id y42so2243463qtk.6;
+        Wed, 22 May 2019 06:19:22 -0700 (PDT)
+X-Gm-Message-State: APjAAAVdCVFds0Fnq6jTA+xS8dQbFcl39IMXD0oq4ZXUVTQJCCCGcGPs
+        g4ixs+6wButiDXtvq3O1ACJkXJv0FgWQYbwyzQ==
+X-Google-Smtp-Source: APXvYqyvYTuRn9kxbS1Z4NqODKeovcHPYdzWdAvI9bwxOBcedkYyTwND/I5vtUvsg9uaG6kVGsaTqAdvJBL/eqFqgL8=
+X-Received: by 2002:a0c:929a:: with SMTP id b26mr70772394qvb.148.1558531161859;
+ Wed, 22 May 2019 06:19:21 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="ftEhullJWpWg/VHq"
-Content-Disposition: inline
-In-Reply-To: <51caaee4-dfc9-5b5a-07c7-b1406c178ca3@codeaurora.org>
-X-Cookie: Does the name Pavlov ring a bell?
-User-Agent: Mutt/1.10.1 (2018-07-13)
+References: <1558466890-45471-1-git-send-email-kdasu.kdev@gmail.com>
+In-Reply-To: <1558466890-45471-1-git-send-email-kdasu.kdev@gmail.com>
+From:   Rob Herring <robh+dt@kernel.org>
+Date:   Wed, 22 May 2019 08:19:09 -0500
+X-Gmail-Original-Message-ID: <CAL_JsqKd53W1E33YdtJwagi4=7DrVQ5+N3rSY=Rxo5J0RiW46g@mail.gmail.com>
+Message-ID: <CAL_JsqKd53W1E33YdtJwagi4=7DrVQ5+N3rSY=Rxo5J0RiW46g@mail.gmail.com>
+Subject: Re: [PATCH] dt: bindings: mtd: replace references to nand.txt with nand-controller.yaml
+To:     Kamal Dasu <kdasu.kdev@gmail.com>
+Cc:     MTD Maling List <linux-mtd@lists.infradead.org>,
+        "maintainer:BROADCOM BCM7XXX ARM ARCHITECTURE" 
+        <bcm-kernel-feedback-list@broadcom.com>,
+        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
+        Liang Yang <liang.yang@amlogic.com>,
+        David Woodhouse <dwmw2@infradead.org>,
+        Brian Norris <computersforpeace@gmail.com>,
+        Marek Vasut <marek.vasut@gmail.com>,
+        Miquel Raynal <miquel.raynal@bootlin.com>,
+        Richard Weinberger <richard@nod.at>,
+        Vignesh Raghavendra <vigneshr@ti.com>,
+        Mark Rutland <mark.rutland@arm.com>,
+        Kevin Hilman <khilman@baylibre.com>,
+        Stefan Agner <stefan@agner.ch>, Lucas Stach <dev@lynxeye.de>,
+        Thierry Reding <thierry.reding@gmail.com>,
+        Jonathan Hunter <jonathanh@nvidia.com>,
+        Neil Armstrong <narmstrong@baylibre.com>,
+        Andy Gross <agross@kernel.org>,
+        David Brown <david.brown@linaro.org>,
+        Maxime Coquelin <mcoquelin.stm32@gmail.com>,
+        Alexandre Torgue <alexandre.torgue@st.com>,
+        Marc Gonzalez <marc.w.gonzalez@free.fr>,
+        Mans Rullgard <mans@mansr.com>, devicetree@vger.kernel.org,
+        "moderated list:ARM/FREESCALE IMX / MXC ARM ARCHITECTURE" 
+        <linux-arm-kernel@lists.infradead.org>,
+        linux-amlogic@lists.infradead.org, linux-tegra@vger.kernel.org,
+        linux-oxnas@groups.io,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        linux-stm32@st-md-mailman.stormreply.com
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On Tue, May 21, 2019 at 2:28 PM Kamal Dasu <kdasu.kdev@gmail.com> wrote:
+>
+> nand-controller.yaml replaced nand.txt however the references to it were
+> not updated. This change updates these references wherever it appears in
+> bindings documentation.
+>
+> Fixes: 212e49693592 ("dt-bindings: mtd: Add YAML schemas for the generic NAND options")
+>
+> Signed-off-by: Kamal Dasu <kdasu.kdev@gmail.com>
 
---ftEhullJWpWg/VHq
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+Mauro already sent a similar patch.
 
-On Tue, May 21, 2019 at 05:16:06PM -0600, Jeffrey Hugo wrote:
-> On 5/21/2019 12:50 PM, Mark Brown wrote:
-
-> > > +static int spmi_regulator_common_list_voltage(struct regulator_dev *rdev,
-> > > +					      unsigned selector);
-> > > +
-> > > +static int spmi_regulator_common2_set_voltage(struct regulator_dev *rdev,
-> > > +					      unsigned selector)
-
-> > Eeew, can we not have better names?
-
-> I'm open to suggestions.  Apparently there are two register common register
-> schemes - the old one and the new one.  PMIC designs after some random point
-> in time are all the new register scheme per the documentation I see.
-
-> As far as I an aware, the FT426 design is the first design to be added to
-> this driver to make use of the new scheme, but I expect more to be supported
-> in future, thus I'm reluctant to make these ft426 specific in the name.
-
-If there's a completely new register map why are these even in the same
-driver?
-
-> > > +	if (reg == SPMI_COMMON2_MODE_HPM_MASK)
-> > > +		return REGULATOR_MODE_NORMAL;
-> > > +
-> > > +	if (reg == SPMI_COMMON2_MODE_AUTO_MASK)
-> > > +		return REGULATOR_MODE_FAST;
-> > > +
-> > > +	return REGULATOR_MODE_IDLE;
-> > > +}
-
-> > This looks like you want to write a switch statement.
-
-> It follows the existing style in the driver, but sure I can make this a
-> switch.
-
-Please fix the rest of the driver as well then.
-
---ftEhullJWpWg/VHq
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAlzlK/IACgkQJNaLcl1U
-h9AXBAf+Mto6O8QugYdL/55lY+O0vvNOPBrb59BAFs7716IWtNgDrcYMV26RZQSH
-BzgdRdziDxkoGHoN5SW0+SMI4M3+P/z2H/27sIzWS9XVN1Sa2FWpY/YXuLbH2CZi
-X9ghBPTYAzoMuBUmYLFGtLIRdiO9010etKXNciGD2gFJfNNadNKO3J8hC3OqDgTZ
-bMxyC5g7MC3I9htRJ9yafXbbXHqahv65Ef6qJglqAab9l8lEYZUsinLDr0+RsDjA
-VK6zsNXyfMwkdUUWvLpzObIWE3LYAys1o/c62/nPfPdJp39K5ZVaN8oAKAQlcULk
-rvwI3qh/T/+DFRxCMIU+w/Hp9MLa5g==
-=jGLx
------END PGP SIGNATURE-----
-
---ftEhullJWpWg/VHq--
+Rob
