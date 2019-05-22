@@ -2,94 +2,165 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id A7E292670D
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 May 2019 17:39:53 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 286FE2692D
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 May 2019 19:37:05 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729388AbfEVPjw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 22 May 2019 11:39:52 -0400
-Received: from ns.iliad.fr ([212.27.33.1]:56780 "EHLO ns.iliad.fr"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1728466AbfEVPjw (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 22 May 2019 11:39:52 -0400
-Received: from ns.iliad.fr (localhost [127.0.0.1])
-        by ns.iliad.fr (Postfix) with ESMTP id 06FE020609;
-        Wed, 22 May 2019 17:39:51 +0200 (CEST)
-Received: from [192.168.108.49] (freebox.vlq16.iliad.fr [213.36.7.13])
-        by ns.iliad.fr (Postfix) with ESMTP id E3BAF20072;
-        Wed, 22 May 2019 17:39:50 +0200 (CEST)
-Subject: Re: [PATCH v2 7/9] arm64: dts: qcom: msm8998: Add PSCI cpuidle low
- power states
-To:     Marc Zyngier <marc.zyngier@arm.com>,
-        MSM <linux-arm-msm@vger.kernel.org>,
-        Linux ARM <linux-arm-kernel@lists.infradead.org>
-Cc:     Amit Kucheria <amit.kucheria@linaro.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Daniel Lezcano <daniel.lezcano@linaro.org>,
-        Niklas Cassel <niklas.cassel@linaro.org>,
-        Jeffrey Hugo <jhugo@codeaurora.org>,
-        Sibi Sankar <sibis@codeaurora.org>,
-        Mark Rutland <mark.rutland@arm.com>,
-        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
-        Robin Murphy <robin.murphy@arm.com>,
-        Sudeep Holla <sudeep.holla@arm.com>
-References: <cover.1558430617.git.amit.kucheria@linaro.org>
- <49cf5d94beb9af9ef4e78d4c52f3b0ad20b7c63f.1558430617.git.amit.kucheria@linaro.org>
- <a7514c68-d2d3-ce9e-bc4b-f484bb5bf3cf@free.fr>
- <d1ca4d37-ce25-a285-a9ef-dfe831f3d1de@free.fr>
- <2f8db49a-759c-d560-70c1-d041beeea914@arm.com>
-From:   Marc Gonzalez <marc.w.gonzalez@free.fr>
-Message-ID: <d94e33ed-f6f2-b39a-6360-2dd9112a1183@free.fr>
-Date:   Wed, 22 May 2019 17:39:50 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.6.1
+        id S1729509AbfEVRg7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 22 May 2019 13:36:59 -0400
+Received: from mail-qt1-f194.google.com ([209.85.160.194]:41370 "EHLO
+        mail-qt1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729161AbfEVRg7 (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 22 May 2019 13:36:59 -0400
+Received: by mail-qt1-f194.google.com with SMTP id y22so3362889qtn.8
+        for <linux-arm-msm@vger.kernel.org>; Wed, 22 May 2019 10:36:58 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=poorly.run; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=AYiSIlwY7eZx42yq/yFRXslZFh/MVGXyDo26yWSMo7o=;
+        b=SrBINLg3y8oOnNpUKbA1YuWFLyA6h+N1Egt2ZPDFCv7VISdUgDKm1XBjTrTHNZWfPm
+         C9cjC/OXMJ9fC2GoGz4FZtTr+fWOe+IRKfLhTK5CJnAX7DAzXA+V8v0U57PCvrC5lr4y
+         67EXllxIoOz0nX4jPmsGjXiYyqjiyPiY8cMJFNcywvBcfqBrPlQgDcWkoJbGW198Xc6y
+         LfhSbk/uEaOOOxEnPKsi3MBbLploSMuBsLE/3L9OtdoIspbQdZB7rqzQYpBi8AyIQfn0
+         ImmsiMLq/3i1FP7fpX5sH1Z+EO/WvjFDX7VaN7qKR9h4je3dKiI+HSVoJnC0x85sbWvK
+         J4hQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=AYiSIlwY7eZx42yq/yFRXslZFh/MVGXyDo26yWSMo7o=;
+        b=SsePk/uxF46V1ROx8TGUCcjvlz/TUs3VLY7/L8qPWiz/Df4syv1Yc95hsZ0xoKsbJf
+         H0R95KYjnl8adMcyRCrIxGZRTBgIklvtncBTzdMbP28a/yjfeB3V1DBqoVWObIcihG9k
+         YdM9jedrncX7ptu2yIEKzPeew/Dbyo0vc9pzKWBm7s0M3LNO0xhoZoITFM2o3u3AL64U
+         tr6EnUxPSZQwrdW8ZU2EyV4cNkcMPL+qqkO5Ik2J4fxnnAlnYtzE5qRNthwmv4+jRwsp
+         hxeYtFuzi1fpF4qVzA9JE+C3ByB7WaMFPmQFeSKjxFANaz/P20vhQVYvPQsRjOFhfxJN
+         QkrQ==
+X-Gm-Message-State: APjAAAXm8Fp7sCtCeYfoV7n4LJLoUfvtdwHb6o2e1scK2R3S3ISsDhRd
+        7yaEutAgtpJWRmulZ5RuRxQPb6LnoOA=
+X-Google-Smtp-Source: APXvYqySVLc8RxuM7HtrdaGFkR54894hlH1Xqo/SCO3BahDCmgyit80hoTs+BawDDwCys8EWkW7NLw==
+X-Received: by 2002:ac8:8fd:: with SMTP id y58mr77023926qth.375.1558546618411;
+        Wed, 22 May 2019 10:36:58 -0700 (PDT)
+Received: from rosewood.cam.corp.google.com ([2620:0:1013:11:89c6:2139:5435:371d])
+        by smtp.gmail.com with ESMTPSA id w143sm10692969qka.22.2019.05.22.10.36.57
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Wed, 22 May 2019 10:36:57 -0700 (PDT)
+From:   Sean Paul <sean@poorly.run>
+To:     dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org
+Cc:     Sean Paul <seanpaul@chromium.org>, Rob Clark <robdclark@gmail.com>,
+        Sean Paul <sean@poorly.run>, linux-arm-msm@vger.kernel.org
+Subject: [RESEND PATCH 1/5] drm/msm/a6xx: Avoid freeing gmu resources multiple times
+Date:   Wed, 22 May 2019 13:36:40 -0400
+Message-Id: <20190522173656.162006-1-sean@poorly.run>
+X-Mailer: git-send-email 2.21.0.1020.gf2820cf01a-goog
 MIME-Version: 1.0
-In-Reply-To: <2f8db49a-759c-d560-70c1-d041beeea914@arm.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
-X-Virus-Scanned: ClamAV using ClamSMTP ; ns.iliad.fr ; Wed May 22 17:39:51 2019 +0200 (CEST)
+Content-Transfer-Encoding: 8bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 22/05/2019 11:35, Marc Zyngier wrote:
+From: Sean Paul <seanpaul@chromium.org>
 
-> On 22/05/2019 10:17, Marc Gonzalez wrote:
-> 
->> The following dmesg log caught my eye, and might be relevant:
->>
->> 	ARM_SMCCC_ARCH_WORKAROUND_1 missing from firmware
->>
->> Is that bad, doctor? I don't think it would explain the crash though...
-> 
-> It doesn't explain it.
-> 
-> It is bad though: your vendor doesn't tell the kernel about the HW being
-> free of Spectre-v2, and doesn't provide a mitigation either. Hopefully,
-> this is a responsible vendor that will provide you with a firmware
-> update that fixes it.
+The driver checks for gmu->mmio as a sign that the device has been
+initialized, however there are failures in probe below the mmio init.
+If one of those is hit, mmio will be non-null but freed.
 
-# cd /sys/devices/system/cpu/vulnerabilities/
-# grep "" *
-l1tf:Not affected
-mds:Not affected
-meltdown:Mitigation: PTI
-spec_store_bypass:Vulnerable
-spectre_v1:Mitigation: __user pointer sanitization
-spectre_v2:Vulnerable
+In that case, a6xx_gmu_probe will return an error to a6xx_gpu_init which
+will in turn call a6xx_gmu_remove which checks gmu->mmio and tries to free
+resources for a second time. This causes a great boom.
 
-OK, so there are apparently two unmitigated vulns, spec_store_bypass
-and spectre_v2.
+Fix this by adding an initialized member to gmu which is set on
+successful probe and cleared on removal.
 
-These vulns need to be mitigated in FW because otherwise some secure
-property of the secure OS could be violated? Or because disabling the
-faulty optimization requires secure privileges?
+Signed-off-by: Sean Paul <seanpaul@chromium.org>
+---
 
+Resending as part of the set since some later patches depend on it
 
-Some documentation, for my own reference:
+ drivers/gpu/drm/msm/adreno/a6xx_gmu.c | 14 +++++++++-----
+ drivers/gpu/drm/msm/adreno/a6xx_gmu.h |  1 +
+ 2 files changed, 10 insertions(+), 5 deletions(-)
 
-https://elixir.bootlin.com/linux/latest/source/Documentation/ABI/testing/sysfs-devices-system-cpu
-https://developer.arm.com/support/arm-security-updates/speculative-processor-vulnerability
+diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gmu.c b/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
+index 38e2cfa9cec7..aa84edb25d91 100644
+--- a/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
++++ b/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
+@@ -74,7 +74,7 @@ bool a6xx_gmu_sptprac_is_on(struct a6xx_gmu *gmu)
+ 	u32 val;
+ 
+ 	/* This can be called from gpu state code so make sure GMU is valid */
+-	if (IS_ERR_OR_NULL(gmu->mmio))
++	if (!gmu->initialized)
+ 		return false;
+ 
+ 	val = gmu_read(gmu, REG_A6XX_GMU_SPTPRAC_PWR_CLK_STATUS);
+@@ -90,7 +90,7 @@ bool a6xx_gmu_gx_is_on(struct a6xx_gmu *gmu)
+ 	u32 val;
+ 
+ 	/* This can be called from gpu state code so make sure GMU is valid */
+-	if (IS_ERR_OR_NULL(gmu->mmio))
++	if (!gmu->initialized)
+ 		return false;
+ 
+ 	val = gmu_read(gmu, REG_A6XX_GMU_SPTPRAC_PWR_CLK_STATUS);
+@@ -695,7 +695,7 @@ int a6xx_gmu_resume(struct a6xx_gpu *a6xx_gpu)
+ 	struct a6xx_gmu *gmu = &a6xx_gpu->gmu;
+ 	int status, ret;
+ 
+-	if (WARN(!gmu->mmio, "The GMU is not set up yet\n"))
++	if (WARN(!gmu->initialized, "The GMU is not set up yet\n"))
+ 		return 0;
+ 
+ 	gmu->hung = false;
+@@ -765,7 +765,7 @@ bool a6xx_gmu_isidle(struct a6xx_gmu *gmu)
+ {
+ 	u32 reg;
+ 
+-	if (!gmu->mmio)
++	if (!gmu->initialized)
+ 		return true;
+ 
+ 	reg = gmu_read(gmu, REG_A6XX_GPU_GMU_AO_GPU_CX_BUSY_STATUS);
+@@ -1227,7 +1227,7 @@ void a6xx_gmu_remove(struct a6xx_gpu *a6xx_gpu)
+ {
+ 	struct a6xx_gmu *gmu = &a6xx_gpu->gmu;
+ 
+-	if (IS_ERR_OR_NULL(gmu->mmio))
++	if (!gmu->initialized)
+ 		return;
+ 
+ 	a6xx_gmu_stop(a6xx_gpu);
+@@ -1245,6 +1245,8 @@ void a6xx_gmu_remove(struct a6xx_gpu *a6xx_gpu)
+ 	iommu_detach_device(gmu->domain, gmu->dev);
+ 
+ 	iommu_domain_free(gmu->domain);
++
++	gmu->initialized = false;
+ }
+ 
+ int a6xx_gmu_probe(struct a6xx_gpu *a6xx_gpu, struct device_node *node)
+@@ -1309,6 +1311,8 @@ int a6xx_gmu_probe(struct a6xx_gpu *a6xx_gpu, struct device_node *node)
+ 	/* Set up the HFI queues */
+ 	a6xx_hfi_init(gmu);
+ 
++	gmu->initialized = true;
++
+ 	return 0;
+ err:
+ 	a6xx_gmu_memory_free(gmu, gmu->hfi);
+diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gmu.h b/drivers/gpu/drm/msm/adreno/a6xx_gmu.h
+index bedd8e6a63aa..39a26dd63674 100644
+--- a/drivers/gpu/drm/msm/adreno/a6xx_gmu.h
++++ b/drivers/gpu/drm/msm/adreno/a6xx_gmu.h
+@@ -75,6 +75,7 @@ struct a6xx_gmu {
+ 
+ 	struct a6xx_hfi_queue queues[2];
+ 
++	bool initialized;
+ 	bool hung;
+ };
+ 
+-- 
+Sean Paul, Software Engineer, Google / Chromium OS
 
-Regards.
