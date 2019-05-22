@@ -2,56 +2,56 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 4DABC26932
+	by mail.lfdr.de (Postfix) with ESMTP id EDBA126933
 	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 May 2019 19:37:17 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729161AbfEVRhH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 22 May 2019 13:37:07 -0400
-Received: from mail-qt1-f193.google.com ([209.85.160.193]:39060 "EHLO
+        id S1729085AbfEVRhM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 22 May 2019 13:37:12 -0400
+Received: from mail-qt1-f193.google.com ([209.85.160.193]:45159 "EHLO
         mail-qt1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729085AbfEVRhH (ORCPT
+        with ESMTP id S1727499AbfEVRhM (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 22 May 2019 13:37:07 -0400
-Received: by mail-qt1-f193.google.com with SMTP id y42so3376893qtk.6
-        for <linux-arm-msm@vger.kernel.org>; Wed, 22 May 2019 10:37:07 -0700 (PDT)
+        Wed, 22 May 2019 13:37:12 -0400
+Received: by mail-qt1-f193.google.com with SMTP id t1so3355661qtc.12
+        for <linux-arm-msm@vger.kernel.org>; Wed, 22 May 2019 10:37:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=poorly.run; s=google;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=rfjKyX7zH6WdV+81p3MbZM1b4C1cPYdMHawe6tfVqAs=;
-        b=VUhMOA1ELdO2stBmws9mvE7SyaFYOggjY0RgWmAQ6KDJRHFjsOThuqfVd1XAUr91yy
-         JohAmFWN88/e3S4AweJBb/XTKZRNl0ObBTwmbTajcUlv06sxUIzX5Q9QZH6EWEyM6Bsj
-         GiXK79bczQHpZeh9VeojG6UUWPJQTvTZuBqAhLAB/75k8D1WNeyBI//aRciFBUv1v5eG
-         BsZ7DD5Q4beTX041a6b6G5VuE73PapMjm37tIELFnuufhzF1Isuq6VpMqG4DcbtP85Ql
-         D0wHVA3lwsnCFBbv0gq2v0dV/aGm4A4FnPIKDXMxAmn9QGyIOSCyoC8JX7olSq78aZtM
-         pxjg==
+        bh=tZML6VkciB7AuKKei7Kqbg+e3K02ODJFh5iugoLa3GU=;
+        b=ZqJTTf89H8OWeKKoOJtmynNFXV7rb0e8QnxtvOdBncJjlCKAjY5K6UH3wifhFNrxJv
+         ZzgggAfAs3fPRzOXGjd4/ATy83o1+RXlJjPzYFGav7o4ceZ3ecFJgK212EbeR08ZP8Fp
+         Gu6ydgPk2bHvWeCaGIfKaK1OTNwD3myVndjGq+fSg1zFMegrAbBGaJFsjntpcNc2GaMy
+         1JToWMTj5pmkBFLwKSuoWx6omWw3ELLOOG7g1giTX5hl6YuZebD24oCpGfMq886Le+EK
+         EsmBH60VpYZauQbkPDSqVRjqvwuDHIzAME53Cxu34mLZI9yu0GStY03HJk+DEdPmS/dy
+         5gtg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=rfjKyX7zH6WdV+81p3MbZM1b4C1cPYdMHawe6tfVqAs=;
-        b=r6ctjF/xp1gQyQiChqqPqHQ2MjHzycKZHZbMmom1ze8RFaPwa1Ljk3tB3Hi/wr9WYz
-         yO+/d+tGo/NfHsmaNTaIjT9nOOZHrH8gAfZd15aDxbtzjpAo5jMjnyWB1o9DAeX1qLQD
-         NKRvmcuk1AhBT40cRDk7HTTIYnU1FafIlMKFoptphn87KzPJTqEcXM/TYa3ZrMzM5OaF
-         s9UsTLxD6WPYRZM45bcvK1umAIUF/EJDmozWPpa7FVMzBdhCpZO8guq18xdzE+m/0ExP
-         aA0RD+qLsJQeb5O+eYGEIXF3vxruxrzBuaqjo0MgFHYq74O584lQfVMkMYd8dRrdeT6f
-         LxHA==
-X-Gm-Message-State: APjAAAVWs94Jx2MrY+o0fGFegyCtTTI37CmwcN2iaIM0CdHfiWweDrk8
-        MaMYcmYpVR6BnbcQItcWDMfHjg==
-X-Google-Smtp-Source: APXvYqy43UmlIKYjLNdnnXAJzeA14V/9hMBmSX0GlDxsmqTqZ6mvNCzd//FES5K73n/5R618j8mAGQ==
-X-Received: by 2002:ac8:38d1:: with SMTP id g17mr6085370qtc.281.1558546626606;
-        Wed, 22 May 2019 10:37:06 -0700 (PDT)
+        bh=tZML6VkciB7AuKKei7Kqbg+e3K02ODJFh5iugoLa3GU=;
+        b=bzLYZpbTjqvQO4jM7xWZeHiK58tQYl17KwSt7USfK6C/ENuX50Y7g7cNxXjji1wRI+
+         MoqCGlRQ6y+gF41XZcxdg3qHER9akSNpFCOb6FToN1GSYwz6cdq5pQVUHuECu+hHT8U5
+         FhCuVxnYd+KD+QrR5D2xp2LmHIsjHFvK1ignKpqpDBIlUlrC0KEhXJKWjkGv+W9C2JFT
+         oQN6jSEfRuAq9OcXG8r8ff4uul9C5xzIQb/k6YNSmKbX6Wc7uhomjOBqvFYlbuEy6Og1
+         obZRONLA7r16HPfvJVxQAgiQ5zCdMQ4SymG3swZUwqZa3wWNFjJsZZRrrjULStHM4nue
+         1Y3Q==
+X-Gm-Message-State: APjAAAW9sg18cizrQIid2H8C835sp9T1btoQBCwyy1DxcT5IJuHZ/t/E
+        R3CRAWpUefHSneDzULHXJRNE+Q==
+X-Google-Smtp-Source: APXvYqwACFZKaEuG6C4xoOxKoLMhDaml3NRoW801dp1Y62ESCBRpNtQDuDaIvLMtGBgUu36tBg0bUg==
+X-Received: by 2002:a0c:8a8d:: with SMTP id 13mr40433344qvv.88.1558546631511;
+        Wed, 22 May 2019 10:37:11 -0700 (PDT)
 Received: from rosewood.cam.corp.google.com ([2620:0:1013:11:89c6:2139:5435:371d])
-        by smtp.gmail.com with ESMTPSA id w143sm10692969qka.22.2019.05.22.10.37.05
+        by smtp.gmail.com with ESMTPSA id w143sm10692969qka.22.2019.05.22.10.37.10
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 22 May 2019 10:37:06 -0700 (PDT)
+        Wed, 22 May 2019 10:37:11 -0700 (PDT)
 From:   Sean Paul <sean@poorly.run>
 To:     dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org
 Cc:     Sean Paul <seanpaul@chromium.org>, Rob Clark <robdclark@gmail.com>,
         Sean Paul <sean@poorly.run>, linux-arm-msm@vger.kernel.org
-Subject: [PATCH 2/5] drm/msm/a6xx: Remove duplicate irq disable from remove
-Date:   Wed, 22 May 2019 13:36:41 -0400
-Message-Id: <20190522173656.162006-2-sean@poorly.run>
+Subject: [PATCH 3/5] drm/msm/a6xx: Check for ERR or NULL before iounmap
+Date:   Wed, 22 May 2019 13:36:42 -0400
+Message-Id: <20190522173656.162006-3-sean@poorly.run>
 X-Mailer: git-send-email 2.21.0.1020.gf2820cf01a-goog
 In-Reply-To: <20190522173656.162006-1-sean@poorly.run>
 References: <20190522173656.162006-1-sean@poorly.run>
@@ -64,27 +64,31 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 From: Sean Paul <seanpaul@chromium.org>
 
-a6xx_gmu_stop() already calls this function via shutdown or force_stop,
-so it's not necessary to call it twice. This also knocks the irq depth
-count out of sync, so nice to avoid.
+pdcptr and seqptr aren't necessarily valid, check them before trying to
+unmap them.
 
 Signed-off-by: Sean Paul <seanpaul@chromium.org>
 ---
- drivers/gpu/drm/msm/adreno/a6xx_gmu.c | 1 -
- 1 file changed, 1 deletion(-)
+ drivers/gpu/drm/msm/adreno/a6xx_gmu.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
 diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gmu.c b/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
-index aa84edb25d91..742c8ff9a61c 100644
+index 742c8ff9a61c..7465423e9b71 100644
 --- a/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
 +++ b/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
-@@ -1239,7 +1239,6 @@ void a6xx_gmu_remove(struct a6xx_gpu *a6xx_gpu)
- 		dev_pm_domain_detach(gmu->gxpd, false);
- 	}
+@@ -504,8 +504,10 @@ static void a6xx_gmu_rpmh_init(struct a6xx_gmu *gmu)
+ 	wmb();
  
--	a6xx_gmu_irq_disable(gmu);
- 	a6xx_gmu_memory_free(gmu, gmu->hfi);
+ err:
+-	devm_iounmap(gmu->dev, pdcptr);
+-	devm_iounmap(gmu->dev, seqptr);
++	if (!IS_ERR_OR_NULL(pdcptr))
++		devm_iounmap(gmu->dev, pdcptr);
++	if (!IS_ERR_OR_NULL(seqptr))
++		devm_iounmap(gmu->dev, seqptr);
+ }
  
- 	iommu_detach_device(gmu->domain, gmu->dev);
+ /*
 -- 
 Sean Paul, Software Engineer, Google / Chromium OS
 
