@@ -2,150 +2,140 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 41F81283F2
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 May 2019 18:38:48 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 3A0B3283FA
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 May 2019 18:41:54 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731371AbfEWQib (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 23 May 2019 12:38:31 -0400
-Received: from mail-vk1-f193.google.com ([209.85.221.193]:37825 "EHLO
-        mail-vk1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1731369AbfEWQib (ORCPT
+        id S1730924AbfEWQlx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 23 May 2019 12:41:53 -0400
+Received: from mail-pl1-f196.google.com ([209.85.214.196]:44995 "EHLO
+        mail-pl1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1730860AbfEWQlx (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 23 May 2019 12:38:31 -0400
-Received: by mail-vk1-f193.google.com with SMTP id j124so1494190vkb.4
-        for <linux-arm-msm@vger.kernel.org>; Thu, 23 May 2019 09:38:30 -0700 (PDT)
+        Thu, 23 May 2019 12:41:53 -0400
+Received: by mail-pl1-f196.google.com with SMTP id c5so2975381pll.11
+        for <linux-arm-msm@vger.kernel.org>; Thu, 23 May 2019 09:41:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=r0rDpYcpEU2DlpfJPWclkw5oXzfo0RvY7oAeAA+3T90=;
-        b=f7DFyXKTBWt5U7XgFYEc6tpBvygZbJf11fOqOQXgOXkwOVzXyJkqrEFj1jL04GFqyF
-         KaPeTgWPv1xcwPktqe+PKBE5ipEuuUyahM+6zRAjX7mwCrDn8SQiMqpgRr8v4QSo8uBt
-         mai/Br9ocyY4z1h4P4lZ9JoH9BK9pnb/uS9X8=
+        d=broadcom.com; s=google;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-transfer-encoding:content-language;
+        bh=QxLlMcpZF4s6oYuMc8pgq9hIU3JxTkHMlIXFqr7xT6c=;
+        b=FVFxuVHQtP/UwFTrvUUdg8Mu0s5/ZUDGf2daY9CljgY4Zl/eofCrRMJ/MAnm6ezoIT
+         rplSNc3PXLwYrNvnWuPWkQZ5arZ0V7jHonRDY6SAjRiwCNQvdK66+Qx80NtPSj+hwrxd
+         +XksfxQqaFKOl0koZkqKitzGyEXCiDMNCw6xU=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=r0rDpYcpEU2DlpfJPWclkw5oXzfo0RvY7oAeAA+3T90=;
-        b=jnlxNF8x/+LTi/j9j5+hHT0NG2bMcvfeARl0k3k9N7a+2QqO6d9m39p0Ny/3InfYSl
-         DnGOEqIJ2L1IomoIJp1KJzDElrTXe4/M4tV0NSKBBfIZXuGIzdOQvW/QPseM01xmCAhV
-         OeVlEtVABMl7QtNQYHfu6raRw/oIylGT35fWA2i12cMfwfukVVpVHumZtZc2EAXCvOpH
-         sVMiE5p6RKNrKpkwrN4I/4H4Esmbi9Q1jsMLlRQ/HowU/+G5+NGz7oD2ZmQtmxnevUBR
-         OPSJbe5Aqp0/IRdoI9DlwctjiiSQrLbHvl/6qJP4mZQu/nJwkJTLXwCdu9YVLZMGYu0b
-         LcCQ==
-X-Gm-Message-State: APjAAAU6Eoi73iip+Bu3nBaYRLWcaWfcfOn69BIqxc26ZbFTo04vKHl6
-        VJC7NdF0HoP0pUTu9mqDSw4fHNulrs8=
-X-Google-Smtp-Source: APXvYqz/oTfbEtlGty3H8JglgyULdsM94SrJkPI1zjEvU8nSyQWsPBN1eMUA5Bndy7K5lwhccXvryg==
-X-Received: by 2002:a1f:4ec6:: with SMTP id c189mr2109607vkb.17.1558629509336;
-        Thu, 23 May 2019 09:38:29 -0700 (PDT)
-Received: from mail-vs1-f42.google.com (mail-vs1-f42.google.com. [209.85.217.42])
-        by smtp.gmail.com with ESMTPSA id v133sm2142883vkv.5.2019.05.23.09.38.25
-        for <linux-arm-msm@vger.kernel.org>
-        (version=TLS1_3 cipher=AEAD-AES128-GCM-SHA256 bits=128/128);
-        Thu, 23 May 2019 09:38:27 -0700 (PDT)
-Received: by mail-vs1-f42.google.com with SMTP id d128so3968589vsc.10
-        for <linux-arm-msm@vger.kernel.org>; Thu, 23 May 2019 09:38:25 -0700 (PDT)
-X-Received: by 2002:a67:1cc2:: with SMTP id c185mr23275103vsc.20.1558629505309;
- Thu, 23 May 2019 09:38:25 -0700 (PDT)
-MIME-Version: 1.0
-References: <20190501043734.26706-1-bjorn.andersson@linaro.org> <20190501043734.26706-3-bjorn.andersson@linaro.org>
-In-Reply-To: <20190501043734.26706-3-bjorn.andersson@linaro.org>
-From:   Doug Anderson <dianders@chromium.org>
-Date:   Thu, 23 May 2019 09:38:13 -0700
-X-Gmail-Original-Message-ID: <CAD=FV=VVxKSp6e=j8YM8JBrhsF+T=0=8xDjd_817hphOMWHVFA@mail.gmail.com>
-Message-ID: <CAD=FV=VVxKSp6e=j8YM8JBrhsF+T=0=8xDjd_817hphOMWHVFA@mail.gmail.com>
-Subject: Re: [PATCH v7 2/4] soc: qcom: Add AOSS QMP driver
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     Andy Gross <agross@kernel.org>,
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-transfer-encoding
+         :content-language;
+        bh=QxLlMcpZF4s6oYuMc8pgq9hIU3JxTkHMlIXFqr7xT6c=;
+        b=hOhqAgEywTjAKc+CMsg37NfnEtvV7rdvnLhz7nfWj1zbUqroH8qe8aCO4ceiocRgOd
+         XvlVs+VP7ogHRoXr6sD6Tn3ml0jfxLPbQuwxWpaIraFSYicc8rNHhKRudVwM95bkuMqx
+         Jqg/Rn2PY6iy/4eXSOzMiT7T06PW88Zyoekc1SwDFrA6lBrA7ThMbjW97yu8cDNSoP8p
+         mrUJKVpSfkUIG48XC/GWwUWLNBCBVw4t/H7nt8uE8XwNLuqIyCjqcwd5WcflysvTKtWE
+         qadcbfdBsw8vOpnF4naY3Cp4aivAAxa7+/T4FumNElS/bGP/28OkwAQ0WqnelAN8H6SI
+         OxbA==
+X-Gm-Message-State: APjAAAVJNWdKq3YSwpmTIRPlr9ZMe6aZnqsccaMFyIoMuclIOex6riza
+        FW6ywiFxt9fpHwe4nPbJydYADQ==
+X-Google-Smtp-Source: APXvYqz2ENEwFpcm+GtlaHW4ZEFkpatXoMtMl+mKUtN4o5Gt+iMf9QqM+Xlm6MebmUhMNU4q6gQbGA==
+X-Received: by 2002:a17:902:aa85:: with SMTP id d5mr98713790plr.245.1558629712674;
+        Thu, 23 May 2019 09:41:52 -0700 (PDT)
+Received: from [10.136.13.65] ([192.19.228.250])
+        by smtp.gmail.com with ESMTPSA id g9sm27282487pgs.78.2019.05.23.09.41.50
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Thu, 23 May 2019 09:41:51 -0700 (PDT)
+Subject: Re: [PATCH 3/3] soc: qcom: mdt_loader: add offset to
+ request_firmware_into_buf
+To:     Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc:     Luis Chamberlain <mcgrof@kernel.org>,
+        Andy Gross <andy.gross@linaro.org>,
         David Brown <david.brown@linaro.org>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Mark Rutland <mark.rutland@arm.com>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        devicetree@vger.kernel.org, LKML <linux-kernel@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+        Alexander Viro <viro@zeniv.linux.org.uk>,
+        "Rafael J . Wysocki" <rafael@kernel.org>,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-fsdevel@vger.kernel.org,
+        BCM Kernel Feedback <bcm-kernel-feedback-list@broadcom.com>,
+        Olof Johansson <olof@lixom.net>
+References: <20190523025113.4605-1-scott.branden@broadcom.com>
+ <20190523025113.4605-4-scott.branden@broadcom.com>
+ <20190523055212.GA22946@kroah.com>
+From:   Scott Branden <scott.branden@broadcom.com>
+Message-ID: <c12872f5-4dc3-9bc4-f89b-27037dc0b6ff@broadcom.com>
+Date:   Thu, 23 May 2019 09:41:49 -0700
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+ Thunderbird/60.6.1
+MIME-Version: 1.0
+In-Reply-To: <20190523055212.GA22946@kroah.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Content-Language: en-US
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi,
+Hi Greg,
 
-On Tue, Apr 30, 2019 at 9:38 PM Bjorn Andersson
-<bjorn.andersson@linaro.org> wrote:
+On 2019-05-22 10:52 p.m., Greg Kroah-Hartman wrote:
+> On Wed, May 22, 2019 at 07:51:13PM -0700, Scott Branden wrote:
+>> Adjust request_firmware_into_buf API to allow for portions
+>> of firmware file to be read into a buffer.  mdt_loader still
+>> retricts request fo whole file read into buffer.
+>>
+>> Signed-off-by: Scott Branden <scott.branden@broadcom.com>
+>> ---
+>>   drivers/soc/qcom/mdt_loader.c | 7 +++++--
+>>   1 file changed, 5 insertions(+), 2 deletions(-)
+>>
+>> diff --git a/drivers/soc/qcom/mdt_loader.c b/drivers/soc/qcom/mdt_loader.c
+>> index 1c488024c698..ad20d159699c 100644
+>> --- a/drivers/soc/qcom/mdt_loader.c
+>> +++ b/drivers/soc/qcom/mdt_loader.c
+>> @@ -172,8 +172,11 @@ static int __qcom_mdt_load(struct device *dev, const struct firmware *fw,
+>>   
+>>   		if (phdr->p_filesz) {
+>>   			sprintf(fw_name + fw_name_len - 3, "b%02d", i);
+>> -			ret = request_firmware_into_buf(&seg_fw, fw_name, dev,
+>> -							ptr, phdr->p_filesz);
+>> +			ret = request_firmware_into_buf
+>> +						(&seg_fw, fw_name, dev,
+>> +						 ptr, phdr->p_filesz,
+>> +						 0,
+>> +						 KERNEL_PREAD_FLAG_WHOLE);
+> So, all that work in the first 2 patches for no real change at all?  Why
+> are these changes even needed?
+
+The first two patches allow partial read of files into memory.
+
+Existing kernel drivers haven't need such functionality so, yes, there 
+should be no real change
+
+with first two patches other than adding such partial file read support.
+
+We have a new driver in development which needs partial read of files 
+supported in the kernel.
+
 >
-> +static int qmp_qdss_clk_prepare(struct clk_hw *hw)
-> +{
-> +       struct qmp *qmp = container_of(hw, struct qmp, qdss_clk);
-> +       char buf[QMP_MSG_LEN] = "{class: clock, res: qdss, val: 1}";
+> And didn't you break this driver in patch 2/3?  You can't fix it up
+> later here, you need to also resolve that in the 2nd patch.
 
-nit: "static const" the buf?  No need to copy it to the stack each
-time.  In qmp_qdss_clk_unprepare() too.
+I thought the driver changes needs to be in a different patch. If 
+required I can squash this
 
-...your string is also now fixed at 34 bytes big (including the '\0').
-Do we still need to send exactly 96 bytes, or can we dumb this down to
-36?  We'll get a compile error if we overflow, right?  If this truly
-needs to be exactly 96 bytes maybe qmp_send()'s error checks should
-check for things being exactly 96 bytes instead of checking for > and
-% 4.
+driver change in with the request_firmware_into_buf change.
 
+But the 2nd patch won't work without the 1st patch either.
 
-> +static int qmp_qdss_clk_add(struct qmp *qmp)
-> +{
-> +       struct clk_init_data qdss_init = {
-> +               .ops = &qmp_qdss_clk_ops,
-> +               .name = "qdss",
-> +       };
+So that would mean you now want all 3 patches for different subsystems 
+squashed together?
 
-Can't qdss_init be "static const"?  That had the advantage of not
-needing to construct it on the stack and also of it having a longer
-lifetime.  It looks like clk_register() stores the "hw" pointer in its
-structure and the "hw" structure will have a pointer here.  While I
-can believe that it never looks at it again, it's nice if that pointer
-doesn't point somewhere on an old stack.
+Please let me know how you would like the patch series submitted.
 
-I suppose we could go the other way and try to mark more stuff in this
-module as __init and __initdata, but even then at least the pointer
-won't be onto a stack.  ;-)
+>
+> thanks,
+>
+> greg k-h
 
+Regards,
 
-> +       int ret;
-> +
-> +       qmp->qdss_clk.init = &qdss_init;
-> +       ret = clk_hw_register(qmp->dev, &qmp->qdss_clk);
-> +       if (ret < 0) {
-> +               dev_err(qmp->dev, "failed to register qdss clock\n");
-> +               return ret;
-> +       }
-> +
-> +       return of_clk_add_hw_provider(qmp->dev->of_node, of_clk_hw_simple_get,
-> +                                     &qmp->qdss_clk);
+  Scott
 
-devm_clk_hw_register() and devm_of_clk_add_hw_provider()?  If you're
-worried about ordering you could always throw in
-devm_add_action_or_reset() to handle the qmp_pd_remove(), qmp_close()
-and mbox_free_channel().
-
-...with that you could fully get rid of qmp_remove() and also your
-setting of drvdata.
-
-
-> +static void qmp_pd_remove(struct qmp *qmp)
-> +{
-> +       struct genpd_onecell_data *data = &qmp->pd_data;
-> +       struct device *dev = qmp->dev;
-> +       int i;
-> +
-> +       of_genpd_del_provider(dev->of_node);
-> +
-> +       for (i = 0; i < data->num_domains; i++)
-> +               pm_genpd_remove(data->domains[i]);
-
-Still feels like the above loop would be better as:
-  for (i = data->num_domains - 1; i >= 0; i--)
-
-
-(BTW: any way you could add me to the CC list for future patches so I
-notice them earlier?)
-
--Doug
