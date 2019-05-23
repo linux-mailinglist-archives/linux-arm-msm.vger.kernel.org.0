@@ -2,45 +2,45 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id E24662749C
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 May 2019 04:52:38 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 968EA27499
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 May 2019 04:52:37 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729694AbfEWCvk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 22 May 2019 22:51:40 -0400
-Received: from mail-pf1-f193.google.com ([209.85.210.193]:41445 "EHLO
-        mail-pf1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729892AbfEWCvb (ORCPT
+        id S1729996AbfEWCvc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 22 May 2019 22:51:32 -0400
+Received: from mail-pg1-f175.google.com ([209.85.215.175]:43793 "EHLO
+        mail-pg1-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729972AbfEWCvc (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 22 May 2019 22:51:31 -0400
-Received: by mail-pf1-f193.google.com with SMTP id q17so2368080pfq.8
-        for <linux-arm-msm@vger.kernel.org>; Wed, 22 May 2019 19:51:30 -0700 (PDT)
+        Wed, 22 May 2019 22:51:32 -0400
+Received: by mail-pg1-f175.google.com with SMTP id f25so2293132pgv.10
+        for <linux-arm-msm@vger.kernel.org>; Wed, 22 May 2019 19:51:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=broadcom.com; s=google;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=a33B5dVFl//CSD5xiGq7X/EJU3E2AsKeoUUI/bbtEUY=;
-        b=c5L/nVAUSsb3g6K0q+ocBSa9AuR0Rxv0bLa770FXdXIJQKQhmBGX7rkRMR1iKpR7jY
-         ZQtx4T/5mIhzVlfWDCXt81//ZaS5RTn6WytDog6uc1jv2laQyQ8ePMbdT29U4x/GCriO
-         ih7i1WpaVpTXVGoIiJA85PeiMcnkambuJJznU=
+        bh=Fg/iHmx0B1Mv4Llb80mXau43v90pWA5HUyUPc2gShgg=;
+        b=N7gavrhWEUw0x/OIpr76d/A/QEMOAExQ8CGX8SNEHzd2JYpT3BBsEN530r3g2yElpk
+         wugcmhEbfKVTlhkWKEjCBVr3lU+rUfVMzJZSFvlX2W+k+T70pFHPUHfiK9lhtq5qYdh6
+         SvnzqrkmEVoHcpfXIlsCgqzZds2/iFokvqmN8=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=a33B5dVFl//CSD5xiGq7X/EJU3E2AsKeoUUI/bbtEUY=;
-        b=LiE++G1wu2Vor49crdupsmiUoBvr1ceUy8tSOFnTo8Sj2XNh8q9bGSOOoTSbb5IfYC
-         hmAuuXFzErUbhT2qlZg86KP1YQOvubO6qKfF9nK15HGwwI5+rFXpAXUY0o88HPlsI6yq
-         3vry3Fj9cOnr6ON47ak0RBW5Z+oc8ayL4UkfN6FjUaSFD+N/PX67JG/zgYGC7fMHe12H
-         QCUr7eWtq1WRlM0PBjMwypN9vZ/213RnN0EGFH1ne4kRA0bYiVo0o8xXVc677Muesi5R
-         mxzxskQ/UKGZfKUPM8GzVRFbEouU/VX0UGqG9OZNkAjdNVVswNUFxTjERwE90ChyDYP1
-         D/yw==
-X-Gm-Message-State: APjAAAXNw1ntpxgIOKgyLTExRsmUaKA2wnCPf42hyy7+emrtVHwF/mMs
-        5MD3oMpMK1Hr8oB6atB5JAXTug==
-X-Google-Smtp-Source: APXvYqydUdE9J++ceqvklk2kh9zBacE72tt9HkYrMkcC8NoVLRmfubWzxyopkOnMq12DfOKPZ08/pQ==
-X-Received: by 2002:a63:d949:: with SMTP id e9mr6375335pgj.437.1558579889730;
-        Wed, 22 May 2019 19:51:29 -0700 (PDT)
+        bh=Fg/iHmx0B1Mv4Llb80mXau43v90pWA5HUyUPc2gShgg=;
+        b=LdAEMst7391/LkqZptsOUf/1NPPi6rX5NCHs69cYrBR9mqx3+2UH5D7sIoXBARgfX5
+         gcV5WbcHzNf7LT5N8bAOfh6ak11ZH6VKQ+Ha0omNrwv4/GuDc8afpvFayUDH9phzfCvj
+         N4eW/YLyHJbqki8Ib0pUpF8ubJOks7JsrENeU4kc1xHARCWjg+jdPAFn89UIxrKHVAER
+         h6yMM8czzjj/9Dhc1zkUa2SEJoTS6ov8TEuauOErNMiIlXfAbqZO1BVVnx3jjKwqlQ7b
+         P6RMK6kIuR/dyVML4KjUx2NFHXNq+UozcFbS43c+Gs+uk2B/GwIgqCrRHRMsdpTPUgIi
+         ksXQ==
+X-Gm-Message-State: APjAAAWTXKAvHyPwC/59OWXf5Khtm5nJwoWtTig6Dzn8wZ3IILU3EUxf
+        YhPf/JeoZXazVMKLJmoh6DFsfA==
+X-Google-Smtp-Source: APXvYqyXG074m3md96HTSMqZH6wIifHHqDJmGnwXeGgSJ4ZhoMxIhAnPrKUyQBs+M9DIGdtK5+64qQ==
+X-Received: by 2002:a62:14d6:: with SMTP id 205mr100298494pfu.4.1558579891739;
+        Wed, 22 May 2019 19:51:31 -0700 (PDT)
 Received: from lbrmn-lnxub113.broadcom.net ([192.19.228.250])
-        by smtp.gmail.com with ESMTPSA id q19sm42812174pff.96.2019.05.22.19.51.27
+        by smtp.gmail.com with ESMTPSA id q19sm42812174pff.96.2019.05.22.19.51.29
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 22 May 2019 19:51:29 -0700 (PDT)
+        Wed, 22 May 2019 19:51:31 -0700 (PDT)
 From:   Scott Branden <scott.branden@broadcom.com>
 To:     Luis Chamberlain <mcgrof@kernel.org>,
         Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -53,9 +53,9 @@ Cc:     "Rafael J . Wysocki" <rafael@kernel.org>,
         BCM Kernel Feedback <bcm-kernel-feedback-list@broadcom.com>,
         Olof Johansson <olof@lixom.net>,
         Scott Branden <scott.branden@broadcom.com>
-Subject: [PATCH 2/3] firmware: add offset to request_firmware_into_buf
-Date:   Wed, 22 May 2019 19:51:12 -0700
-Message-Id: <20190523025113.4605-3-scott.branden@broadcom.com>
+Subject: [PATCH 3/3] soc: qcom: mdt_loader: add offset to request_firmware_into_buf
+Date:   Wed, 22 May 2019 19:51:13 -0700
+Message-Id: <20190523025113.4605-4-scott.branden@broadcom.com>
 X-Mailer: git-send-email 2.17.1
 In-Reply-To: <20190523025113.4605-1-scott.branden@broadcom.com>
 References: <20190523025113.4605-1-scott.branden@broadcom.com>
@@ -64,248 +64,33 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add offset to request_firmware_into_buf to allow for portions
-of firmware file to be read into a buffer.  Necessary where firmware
-needs to be loaded in portions from file in memory constrained systems.
+Adjust request_firmware_into_buf API to allow for portions
+of firmware file to be read into a buffer.  mdt_loader still
+retricts request fo whole file read into buffer.
 
 Signed-off-by: Scott Branden <scott.branden@broadcom.com>
 ---
- drivers/base/firmware_loader/firmware.h |  5 +++
- drivers/base/firmware_loader/main.c     | 49 +++++++++++++++++--------
- include/linux/firmware.h                |  8 +++-
- 3 files changed, 45 insertions(+), 17 deletions(-)
+ drivers/soc/qcom/mdt_loader.c | 7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/base/firmware_loader/firmware.h b/drivers/base/firmware_loader/firmware.h
-index 4c1395f8e7ed..d73d400c2023 100644
---- a/drivers/base/firmware_loader/firmware.h
-+++ b/drivers/base/firmware_loader/firmware.h
-@@ -29,6 +29,8 @@
-  *	firmware caching mechanism.
-  * @FW_OPT_NOFALLBACK: Disable the fallback mechanism. Takes precedence over
-  *	&FW_OPT_UEVENT and &FW_OPT_USERHELPER.
-+ * @FW_OPT_PARTIAL: Allow partial read of firmware instead of needing to read
-+ *	entire file.
-  */
- enum fw_opt {
- 	FW_OPT_UEVENT =         BIT(0),
-@@ -37,6 +39,7 @@ enum fw_opt {
- 	FW_OPT_NO_WARN =        BIT(3),
- 	FW_OPT_NOCACHE =        BIT(4),
- 	FW_OPT_NOFALLBACK =     BIT(5),
-+	FW_OPT_PARTIAL =        BIT(6),
- };
+diff --git a/drivers/soc/qcom/mdt_loader.c b/drivers/soc/qcom/mdt_loader.c
+index 1c488024c698..ad20d159699c 100644
+--- a/drivers/soc/qcom/mdt_loader.c
++++ b/drivers/soc/qcom/mdt_loader.c
+@@ -172,8 +172,11 @@ static int __qcom_mdt_load(struct device *dev, const struct firmware *fw,
  
- enum fw_status {
-@@ -64,6 +67,8 @@ struct fw_priv {
- 	void *data;
- 	size_t size;
- 	size_t allocated_size;
-+	size_t offset;
-+	unsigned int flags;
- #ifdef CONFIG_FW_LOADER_USER_HELPER
- 	bool is_paged_buf;
- 	bool need_uevent;
-diff --git a/drivers/base/firmware_loader/main.c b/drivers/base/firmware_loader/main.c
-index 7eaaf5ee5ba6..34d4f043b7c8 100644
---- a/drivers/base/firmware_loader/main.c
-+++ b/drivers/base/firmware_loader/main.c
-@@ -166,7 +166,8 @@ static int fw_cache_piggyback_on_request(const char *name);
- 
- static struct fw_priv *__allocate_fw_priv(const char *fw_name,
- 					  struct firmware_cache *fwc,
--					  void *dbuf, size_t size)
-+					  void *dbuf, size_t size,
-+					  size_t offset, unsigned int flags)
- {
- 	struct fw_priv *fw_priv;
- 
-@@ -184,6 +185,8 @@ static struct fw_priv *__allocate_fw_priv(const char *fw_name,
- 	fw_priv->fwc = fwc;
- 	fw_priv->data = dbuf;
- 	fw_priv->allocated_size = size;
-+	fw_priv->offset = offset;
-+	fw_priv->flags = flags;
- 	fw_state_init(fw_priv);
- #ifdef CONFIG_FW_LOADER_USER_HELPER
- 	INIT_LIST_HEAD(&fw_priv->pending_list);
-@@ -209,9 +212,11 @@ static struct fw_priv *__lookup_fw_priv(const char *fw_name)
- static int alloc_lookup_fw_priv(const char *fw_name,
- 				struct firmware_cache *fwc,
- 				struct fw_priv **fw_priv, void *dbuf,
--				size_t size, enum fw_opt opt_flags)
-+				size_t size, enum fw_opt opt_flags,
-+				size_t offset)
- {
- 	struct fw_priv *tmp;
-+	unsigned int pread_flags;
- 
- 	spin_lock(&fwc->lock);
- 	if (!(opt_flags & FW_OPT_NOCACHE)) {
-@@ -225,7 +230,12 @@ static int alloc_lookup_fw_priv(const char *fw_name,
- 		}
- 	}
- 
--	tmp = __allocate_fw_priv(fw_name, fwc, dbuf, size);
-+	if (opt_flags & FW_OPT_PARTIAL)
-+		pread_flags = KERNEL_PREAD_FLAG_PART;
-+	else
-+		pread_flags = KERNEL_PREAD_FLAG_WHOLE;
-+
-+	tmp = __allocate_fw_priv(fw_name, fwc, dbuf, size, offset, pread_flags);
- 	if (tmp) {
- 		INIT_LIST_HEAD(&tmp->list);
- 		if (!(opt_flags & FW_OPT_NOCACHE))
-@@ -325,8 +335,9 @@ fw_get_filesystem_firmware(struct device *device, struct fw_priv *fw_priv)
- 		}
- 
- 		fw_priv->size = 0;
--		rc = kernel_read_file_from_path(path, &fw_priv->data, &size,
--						msize, id);
-+		rc = kernel_pread_file_from_path(path, &fw_priv->data, &size,
-+						 fw_priv->offset, msize,
-+						 fw_priv->flags, id);
- 		if (rc) {
- 			if (rc != -ENOENT)
- 				dev_warn(device, "loading %s failed with error %d\n",
-@@ -500,7 +511,7 @@ int assign_fw(struct firmware *fw, struct device *device,
- static int
- _request_firmware_prepare(struct firmware **firmware_p, const char *name,
- 			  struct device *device, void *dbuf, size_t size,
--			  enum fw_opt opt_flags)
-+			  enum fw_opt opt_flags, size_t offset)
- {
- 	struct firmware *firmware;
- 	struct fw_priv *fw_priv;
-@@ -519,7 +530,7 @@ _request_firmware_prepare(struct firmware **firmware_p, const char *name,
- 	}
- 
- 	ret = alloc_lookup_fw_priv(name, &fw_cache, &fw_priv, dbuf, size,
--				  opt_flags);
-+				  opt_flags, offset);
- 
- 	/*
- 	 * bind with 'priv' now to avoid warning in failure path
-@@ -566,7 +577,7 @@ static void fw_abort_batch_reqs(struct firmware *fw)
- static int
- _request_firmware(const struct firmware **firmware_p, const char *name,
- 		  struct device *device, void *buf, size_t size,
--		  enum fw_opt opt_flags)
-+		  enum fw_opt opt_flags, size_t offset)
- {
- 	struct firmware *fw = NULL;
- 	int ret;
-@@ -580,7 +591,7 @@ _request_firmware(const struct firmware **firmware_p, const char *name,
- 	}
- 
- 	ret = _request_firmware_prepare(&fw, name, device, buf, size,
--					opt_flags);
-+					opt_flags, offset);
- 	if (ret <= 0) /* error or already assigned */
- 		goto out;
- 
-@@ -634,7 +645,7 @@ request_firmware(const struct firmware **firmware_p, const char *name,
- 	/* Need to pin this module until return */
- 	__module_get(THIS_MODULE);
- 	ret = _request_firmware(firmware_p, name, device, NULL, 0,
--				FW_OPT_UEVENT);
-+				FW_OPT_UEVENT, 0);
- 	module_put(THIS_MODULE);
- 	return ret;
- }
-@@ -661,7 +672,7 @@ int firmware_request_nowarn(const struct firmware **firmware, const char *name,
- 	/* Need to pin this module until return */
- 	__module_get(THIS_MODULE);
- 	ret = _request_firmware(firmware, name, device, NULL, 0,
--				FW_OPT_UEVENT | FW_OPT_NO_WARN);
-+				FW_OPT_UEVENT | FW_OPT_NO_WARN, 0);
- 	module_put(THIS_MODULE);
- 	return ret;
- }
-@@ -686,7 +697,7 @@ int request_firmware_direct(const struct firmware **firmware_p,
- 	__module_get(THIS_MODULE);
- 	ret = _request_firmware(firmware_p, name, device, NULL, 0,
- 				FW_OPT_UEVENT | FW_OPT_NO_WARN |
--				FW_OPT_NOFALLBACK);
-+				FW_OPT_NOFALLBACK, 0);
- 	module_put(THIS_MODULE);
- 	return ret;
- }
-@@ -723,6 +734,8 @@ EXPORT_SYMBOL_GPL(firmware_request_cache);
-  * @device: device for which firmware is being loaded and DMA region allocated
-  * @buf: address of buffer to load firmware into
-  * @size: size of buffer
-+ * @offset: offset into file to read
-+ * @pread_flags: KERNEL_PREAD_FLAG_PART to allow partial file read
-  *
-  * This function works pretty much like request_firmware(), but it doesn't
-  * allocate a buffer to hold the firmware data. Instead, the firmware
-@@ -733,16 +746,22 @@ EXPORT_SYMBOL_GPL(firmware_request_cache);
-  */
- int
- request_firmware_into_buf(const struct firmware **firmware_p, const char *name,
--			  struct device *device, void *buf, size_t size)
-+			  struct device *device, void *buf, size_t size,
-+			  size_t offset, unsigned int pread_flags)
- {
- 	int ret;
-+	enum fw_opt opt_flags;
- 
- 	if (fw_cache_is_setup(device, name))
- 		return -EOPNOTSUPP;
- 
- 	__module_get(THIS_MODULE);
-+	opt_flags = FW_OPT_UEVENT | FW_OPT_NOCACHE;
-+	if (pread_flags & KERNEL_PREAD_FLAG_PART)
-+		opt_flags |= FW_OPT_PARTIAL;
-+
- 	ret = _request_firmware(firmware_p, name, device, buf, size,
--				FW_OPT_UEVENT | FW_OPT_NOCACHE);
-+				opt_flags, offset);
- 	module_put(THIS_MODULE);
- 	return ret;
- }
-@@ -781,7 +800,7 @@ static void request_firmware_work_func(struct work_struct *work)
- 	fw_work = container_of(work, struct firmware_work, work);
- 
- 	_request_firmware(&fw, fw_work->name, fw_work->device, NULL, 0,
--			  fw_work->opt_flags);
-+			  fw_work->opt_flags, 0);
- 	fw_work->cont(fw, fw_work->context);
- 	put_device(fw_work->device); /* taken in request_firmware_nowait() */
- 
-diff --git a/include/linux/firmware.h b/include/linux/firmware.h
-index 2dd566c91d44..c81162a8d709 100644
---- a/include/linux/firmware.h
-+++ b/include/linux/firmware.h
-@@ -4,6 +4,7 @@
- 
- #include <linux/types.h>
- #include <linux/compiler.h>
-+#include <linux/fs.h>
- #include <linux/gfp.h>
- 
- #define FW_ACTION_NOHOTPLUG 0
-@@ -51,7 +52,9 @@ int request_firmware_nowait(
- int request_firmware_direct(const struct firmware **fw, const char *name,
- 			    struct device *device);
- int request_firmware_into_buf(const struct firmware **firmware_p,
--	const char *name, struct device *device, void *buf, size_t size);
-+			      const char *name, struct device *device,
-+			      void *buf, size_t size,
-+			      size_t offset, unsigned int pread_flags);
- 
- void release_firmware(const struct firmware *fw);
- #else
-@@ -89,7 +92,8 @@ static inline int request_firmware_direct(const struct firmware **fw,
- }
- 
- static inline int request_firmware_into_buf(const struct firmware **firmware_p,
--	const char *name, struct device *device, void *buf, size_t size)
-+	const char *name, struct device *device, void *buf, size_t size,
-+	size_t offset, unsigned int pread_flags);
- {
- 	return -EINVAL;
- }
+ 		if (phdr->p_filesz) {
+ 			sprintf(fw_name + fw_name_len - 3, "b%02d", i);
+-			ret = request_firmware_into_buf(&seg_fw, fw_name, dev,
+-							ptr, phdr->p_filesz);
++			ret = request_firmware_into_buf
++						(&seg_fw, fw_name, dev,
++						 ptr, phdr->p_filesz,
++						 0,
++						 KERNEL_PREAD_FLAG_WHOLE);
+ 			if (ret) {
+ 				dev_err(dev, "failed to load %s\n", fw_name);
+ 				break;
 -- 
 2.17.1
 
