@@ -2,126 +2,130 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 5233C27FEE
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 May 2019 16:38:31 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id EA1DB2800D
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 May 2019 16:44:45 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730934AbfEWOia (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 23 May 2019 10:38:30 -0400
-Received: from mail-wm1-f65.google.com ([209.85.128.65]:54508 "EHLO
-        mail-wm1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730860AbfEWOia (ORCPT
+        id S1730918AbfEWOoo (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 23 May 2019 10:44:44 -0400
+Received: from mail-pl1-f194.google.com ([209.85.214.194]:44842 "EHLO
+        mail-pl1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1730913AbfEWOon (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 23 May 2019 10:38:30 -0400
-Received: by mail-wm1-f65.google.com with SMTP id i3so6104157wml.4
-        for <linux-arm-msm@vger.kernel.org>; Thu, 23 May 2019 07:38:29 -0700 (PDT)
+        Thu, 23 May 2019 10:44:43 -0400
+Received: by mail-pl1-f194.google.com with SMTP id c5so2851875pll.11
+        for <linux-arm-msm@vger.kernel.org>; Thu, 23 May 2019 07:44:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=/HlefMV0bwmUzLKXhAmlVYeXPjcTFvz8Ki1WeUsw4eA=;
-        b=s0hr3OtJjjizR8t7XxwJFiZcY+6l+tr9RBVt0An3WE8H+XpnT9Q354IZCKjX87NYVI
-         KMk1cXfrqu6RCRqcI98jFGRx1YYoz3lbaq4KFt6yMwBS8R+K9ASEWZqavrD1Wsnu/WU8
-         yi+6BwDM4vC3tlJ212bOE7v1LDXV5rEc4NkCtXp3021wJGiS1NsImjO5DEfvBr7ZGbT4
-         yXmuBa7JWmTolKuO24gcGD1V3qcuYN+PPrXNlhSmWqXzRlnDNU8celvj0R2+jQ15sJln
-         xLhJFArPQsm3zOfKh/0nJNYSJ7GYhYDW15rmrA9P8f56L9m/E3lPhPbFx4F5A3efrQh5
-         QWsw==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=2Ky1NhTh6Sjvjan+qNl8ZXCfOCQ4Wh0D7lNZmX1Rk4s=;
+        b=rP6Xyj/q6gZKJRtGHb4s/nLwR57MhxbnQuw2lmcL3adCpoU5QQdXse548sY7W/zuGp
+         g3z9l8KWVy7T+jhAfzH4EGz7LVMEhKk/jgOsuOOZH6LVaBZp6ItlLieciyelHwkQi9vq
+         cyPa0I+iCP/5H0+wSOBK/+c68CkvPwr3dBsB3qkom9Zz39aMQ4lSgMFjNYrwKAk72L59
+         Er36+iRGksE9wtmaMGeW2U70CWZsgcLznWLbkqm42rTFioB6CT7z7+7rjDHBKi3I3NyA
+         rWeniayWC+nTUj/whE5g/LNk+Pqo2fUqzuNWP72MxRJjvYw2MjwFBpjGVQAA+vlkllFN
+         8k2A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=/HlefMV0bwmUzLKXhAmlVYeXPjcTFvz8Ki1WeUsw4eA=;
-        b=sT7TW5r4iNyVdOSBBZXpz0A88ASbNii3gCBN6YofdMy02PxhBqUY12naHv6/8K0go6
-         iCpcM59Rvf+edBV0Uwn7plDvl7I4zTAeFc9qBvtrRQhmXhULxXemEl6icVWAbL2s+px/
-         zl4XXH8k4UH0tKTAGNLZsvcxzCqTHHkwObCvdMuoXh2p8FGwYALxJImiyeyh2zJZwZOS
-         L1okTP60hu3nimHs7AyT2EViSqWZ1RCG1NM7OxOIhJKF+NfecWSJ4Dt87j7fLfi8yaDW
-         BRfVGJ/Df7fnzPLho5x/uMYOTWQ7XCB86GL4eOhug9vz42PdzkF1RVIQP6Ef6nmO7XAT
-         f73w==
-X-Gm-Message-State: APjAAAV+ablLx3wglTjSdGcUOKqpIycNZyz5KBgZp1zWO4Dmi0ZkRfHg
-        fs3AjpvR2Cmz4Y3UA8+Zf60ykA==
-X-Google-Smtp-Source: APXvYqxQgq+rdSwKf1bkfpHBWA6HZtKthLBgqdX6MDBQOoVwnphvJBoTyijnAK9ayk/rlfQnsZN15g==
-X-Received: by 2002:a1c:ef0c:: with SMTP id n12mr12266159wmh.3.1558622308599;
-        Thu, 23 May 2019 07:38:28 -0700 (PDT)
-Received: from [192.168.86.34] (cpc89974-aztw32-2-0-cust43.18-1.cable.virginm.net. [86.30.250.44])
-        by smtp.googlemail.com with ESMTPSA id t13sm60423742wra.81.2019.05.23.07.38.27
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 23 May 2019 07:38:27 -0700 (PDT)
-Subject: Re: [PATCH] soc: qcom: apr: Don't use reg for domain id
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Mark Rutland <mark.rutland@arm.com>
-Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=2Ky1NhTh6Sjvjan+qNl8ZXCfOCQ4Wh0D7lNZmX1Rk4s=;
+        b=FoLTRgrps1dvcdtZss15ELF9tf4nPK0iCZUF56oC/dzZq0EPZ+UBcf9QXMm+dKvDiv
+         S2t3W4ztTotIqUGuu3/ogFNC78hsWL4VG3aooQxqbnYA6lUrfjwY0U7NtHDcfc06EFlF
+         AcZuDeAx4pCsz/Irl2FKHUoh3l2dKr8SXu/YaqiPaaXFUqvNPZPE6RZPDhW8PjUqw2EE
+         mMJGfOEQpQ3Gr1nW4DVnQPOZBV6REHMdjRZ5ANAsYm9U9FH+5wtVVHQX0By4H7Zgal2/
+         ZmdC7GcO3eXuvIU73sxLAg2JgzlFad6RlSmiMn5ZU+0j2qLZrCX6QkkG54pW5eB6EXGh
+         WJvg==
+X-Gm-Message-State: APjAAAURppahYM+9l8CiKmdyUI63VBKNJivWAwdBdUDbYw+Z8Nu3CEPV
+        2oLDvZIdxgVu5YkxKkuzducVug==
+X-Google-Smtp-Source: APXvYqzchItDvd9Ubge8eLDuQHoQswRIRqB8pGOfnTf4Aha7Nu59oyxPz1vEnqnJxz47wckbg4GLYQ==
+X-Received: by 2002:a17:902:2aab:: with SMTP id j40mr75540236plb.238.1558622682710;
+        Thu, 23 May 2019 07:44:42 -0700 (PDT)
+Received: from tuxbook-pro (104-188-17-28.lightspeed.sndgca.sbcglobal.net. [104.188.17.28])
+        by smtp.gmail.com with ESMTPSA id c129sm39219824pfg.178.2019.05.23.07.44.41
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Thu, 23 May 2019 07:44:41 -0700 (PDT)
+Date:   Thu, 23 May 2019 07:45:08 -0700
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+Cc:     Andy Gross <agross@kernel.org>, Rob Herring <robh+dt@kernel.org>,
+        Mark Rutland <mark.rutland@arm.com>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
         linux-kernel@vger.kernel.org
+Subject: Re: [PATCH] soc: qcom: apr: Don't use reg for domain id
+Message-ID: <20190523144508.GH2085@tuxbook-pro>
 References: <20190522015342.29501-1-bjorn.andersson@linaro.org>
-From:   Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-Message-ID: <e7046725-578d-8854-872b-a7837d0fc20a@linaro.org>
-Date:   Thu, 23 May 2019 15:38:27 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.6.1
+ <e7046725-578d-8854-872b-a7837d0fc20a@linaro.org>
 MIME-Version: 1.0
-In-Reply-To: <20190522015342.29501-1-bjorn.andersson@linaro.org>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <e7046725-578d-8854-872b-a7837d0fc20a@linaro.org>
+User-Agent: Mutt/1.11.4 (2019-03-13)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On Thu 23 May 07:38 PDT 2019, Srinivas Kandagatla wrote:
 
+> 
+> 
+> On 22/05/2019 02:53, Bjorn Andersson wrote:
+> > The reg property represents the address and size on the bus that a
+> > device lives, but for APR the parent is a rpmsg bus, which does not have
+> > numerical addresses. Simply defining #address/#size-cells to 1 and 0,
+> > respectively, to silence the compiler is not an appropriate solution.
+> > 
+> I agree.
+> 
+> > Replace the use of "reg" with an APR specific property.
+> > 
+> > Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+> > ---
+> Can you also change the example too.
+> 
 
-On 22/05/2019 02:53, Bjorn Andersson wrote:
-> The reg property represents the address and size on the bus that a
-> device lives, but for APR the parent is a rpmsg bus, which does not have
-> numerical addresses. Simply defining #address/#size-cells to 1 and 0,
-> respectively, to silence the compiler is not an appropriate solution.
-> 
-I agree.
+Of course, sorry for missing that.
 
-> Replace the use of "reg" with an APR specific property.
+> other than that am okay with the change.
 > 
-> Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
-> ---
-Can you also change the example too.
+> Reviewed-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+> 
 
-other than that am okay with the change.
+Thanks,
+Bjorn
 
-Reviewed-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-
---srini
-> 
-> The APR device was recently added to msm8996.dtsi, but this is still
-> depending on working SMMU to provide functional audio support.
-> 
->   Documentation/devicetree/bindings/soc/qcom/qcom,apr.txt | 2 +-
->   drivers/soc/qcom/apr.c                                  | 2 +-
->   2 files changed, 2 insertions(+), 2 deletions(-)
-> 
-> diff --git a/Documentation/devicetree/bindings/soc/qcom/qcom,apr.txt b/Documentation/devicetree/bindings/soc/qcom/qcom,apr.txt
-> index bcc612cc7423..38d3c06abc41 100644
-> --- a/Documentation/devicetree/bindings/soc/qcom/qcom,apr.txt
-> +++ b/Documentation/devicetree/bindings/soc/qcom/qcom,apr.txt
-> @@ -9,7 +9,7 @@ used for audio/voice services on the QDSP.
->   	Value type: <stringlist>
->   	Definition: must be "qcom,apr-v<VERSION-NUMBER>", example "qcom,apr-v2"
->   
-> -- reg
-> +- qcom,apr-domain
->   	Usage: required
->   	Value type: <u32>
->   	Definition: Destination processor ID.
-> diff --git a/drivers/soc/qcom/apr.c b/drivers/soc/qcom/apr.c
-> index 74f8b9607daa..b83d71b2e0a4 100644
-> --- a/drivers/soc/qcom/apr.c
-> +++ b/drivers/soc/qcom/apr.c
-> @@ -276,7 +276,7 @@ static int apr_probe(struct rpmsg_device *rpdev)
->   	if (!apr)
->   		return -ENOMEM;
->   
-> -	ret = of_property_read_u32(dev->of_node, "reg", &apr->dest_domain_id);
-> +	ret = of_property_read_u32(dev->of_node, "qcom,apr-domain", &apr->dest_domain_id);
->   	if (ret) {
->   		dev_err(dev, "APR Domain ID not specified in DT\n");
->   		return ret;
-> 
+> --srini
+> > 
+> > The APR device was recently added to msm8996.dtsi, but this is still
+> > depending on working SMMU to provide functional audio support.
+> > 
+> >   Documentation/devicetree/bindings/soc/qcom/qcom,apr.txt | 2 +-
+> >   drivers/soc/qcom/apr.c                                  | 2 +-
+> >   2 files changed, 2 insertions(+), 2 deletions(-)
+> > 
+> > diff --git a/Documentation/devicetree/bindings/soc/qcom/qcom,apr.txt b/Documentation/devicetree/bindings/soc/qcom/qcom,apr.txt
+> > index bcc612cc7423..38d3c06abc41 100644
+> > --- a/Documentation/devicetree/bindings/soc/qcom/qcom,apr.txt
+> > +++ b/Documentation/devicetree/bindings/soc/qcom/qcom,apr.txt
+> > @@ -9,7 +9,7 @@ used for audio/voice services on the QDSP.
+> >   	Value type: <stringlist>
+> >   	Definition: must be "qcom,apr-v<VERSION-NUMBER>", example "qcom,apr-v2"
+> > -- reg
+> > +- qcom,apr-domain
+> >   	Usage: required
+> >   	Value type: <u32>
+> >   	Definition: Destination processor ID.
+> > diff --git a/drivers/soc/qcom/apr.c b/drivers/soc/qcom/apr.c
+> > index 74f8b9607daa..b83d71b2e0a4 100644
+> > --- a/drivers/soc/qcom/apr.c
+> > +++ b/drivers/soc/qcom/apr.c
+> > @@ -276,7 +276,7 @@ static int apr_probe(struct rpmsg_device *rpdev)
+> >   	if (!apr)
+> >   		return -ENOMEM;
+> > -	ret = of_property_read_u32(dev->of_node, "reg", &apr->dest_domain_id);
+> > +	ret = of_property_read_u32(dev->of_node, "qcom,apr-domain", &apr->dest_domain_id);
+> >   	if (ret) {
+> >   		dev_err(dev, "APR Domain ID not specified in DT\n");
+> >   		return ret;
+> > 
