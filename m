@@ -2,103 +2,286 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 3067028AAC
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 May 2019 21:58:08 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A785E28B2D
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 May 2019 22:01:25 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2389021AbfEWTod (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 23 May 2019 15:44:33 -0400
-Received: from mail-lf1-f66.google.com ([209.85.167.66]:46557 "EHLO
-        mail-lf1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2389724AbfEWTo2 (ORCPT
+        id S2387820AbfEWUAr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 23 May 2019 16:00:47 -0400
+Received: from smtp.codeaurora.org ([198.145.29.96]:52662 "EHLO
+        smtp.codeaurora.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2387469AbfEWUAr (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 23 May 2019 15:44:28 -0400
-Received: by mail-lf1-f66.google.com with SMTP id l26so5250816lfh.13
-        for <linux-arm-msm@vger.kernel.org>; Thu, 23 May 2019 12:44:26 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=jNbZY0p8pWRuPRjABJaml8O4mccH5Jx1g9npXI6IBLo=;
-        b=lWagWGQI4Lk+H2G8F7bjOZ0o+YRhs+9v+XfusVkgWu4zTtUjhBc1vNWh5T0FAtYrO2
-         uaEYQ5mnbQZ8zW7REAeDHPogCZ1a33uuMLzR+KDcsjQEjc7IWxpxY+VU9/xsSVgle4KF
-         7lozdqZ9Efsf4gnjQRqO1xDunMv+kE6aFhXPFgfdmKom6kzyX34WrnDymjoAoRwn2syG
-         KLRrZTb9ul+4/tJwT5dzxtuAcvZKZf6ZSK7tIJf7Y2rd0JEXgLNF+LZAfjfoLeF7i8lp
-         C7VStLjaVa4GGMW9n+p3z8dVHq1JQXWZm3BZLQnzPfv6QfyV0CvTggJiRsCO5b6kJ5yK
-         ABaQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=jNbZY0p8pWRuPRjABJaml8O4mccH5Jx1g9npXI6IBLo=;
-        b=pdNTO0rW6ez+zePThnfgQ7ZCYt7EpjZ57wTP1HOA+vMYaZBWL6/KcAAacMNcXUMBV/
-         Ib69eeAfxztsC4AZz908a1P/iD1OPlYeSZGkWulKuJiG/rrc0CtMIRQITs0zH0ap9Vqg
-         YKo/0RgahCvPYL0/9D4gHOW3gBYtKH4Gjl4jP2fqttyPpf8ylofDZba3bPf6i4UIdSV7
-         DdgljmDatqy1SLe8co2ZfBYS3YEjbI8q39ph4TN+xW05MeLH2UdVXCYJQIHcm5irQpZd
-         +psJCM38TZxVF//vJiGgtXvOtMtx4AV8QdENqmiXDrdsIG6700NYLrPbCPBlObd0k+wK
-         e87Q==
-X-Gm-Message-State: APjAAAVtK/J2JE4YncaorilnrUdXvQa0UGM3BucVrAqcp3RoT1P+T+ce
-        FJu7zpxBEFJ4yi/Oq/cjAnLDAQ==
-X-Google-Smtp-Source: APXvYqzk0w49E9NkmPZd5eBxe9i8B0TNIyJ3SlFH6jTItFZLFpU3+Y1yJwUPMdJ1GZC2qN8eKqKLtQ==
-X-Received: by 2002:a19:ca02:: with SMTP id a2mr4451705lfg.88.1558640665908;
-        Thu, 23 May 2019 12:44:25 -0700 (PDT)
-Received: from localhost.localdomain (m83-185-80-163.cust.tele2.se. [83.185.80.163])
-        by smtp.gmail.com with ESMTPSA id c8sm86990ljk.77.2019.05.23.12.44.24
-        (version=TLS1_3 cipher=AEAD-AES256-GCM-SHA384 bits=256/256);
-        Thu, 23 May 2019 12:44:25 -0700 (PDT)
-From:   Niklas Cassel <niklas.cassel@linaro.org>
-To:     Stanimir Varbanov <svarbanov@mm-sol.com>,
-        Andy Gross <agross@kernel.org>,
-        David Brown <david.brown@linaro.org>,
-        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
-        Bjorn Helgaas <bhelgaas@google.com>
-Cc:     Niklas Cassel <niklas.cassel@linaro.org>,
-        linux-pci@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: [PATCH] PCI: qcom: Ensure that PERST is asserted for at least 100 ms
-Date:   Thu, 23 May 2019 21:44:08 +0200
-Message-Id: <20190523194409.17718-1-niklas.cassel@linaro.org>
-X-Mailer: git-send-email 2.21.0
+        Thu, 23 May 2019 16:00:47 -0400
+Received: by smtp.codeaurora.org (Postfix, from userid 1000)
+        id A672161194; Thu, 23 May 2019 20:00:46 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
+        s=default; t=1558641646;
+        bh=Z5AcrjFvDwrNkhjxHTpfdZspY00IxihlRtFxpIOo+/E=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=N1f2Y5j7Hd9X/RRuAZY5fTcT2PicJ/d105KEGndy/QAkTnhJiU9VjHX9oZvBurcbQ
+         cG5SAhdIrabPWKijjc+sskhY9Z9VEaScZe8gVho9V2ImxZrNmV+MdJ4Pkdaox+jCBY
+         +fExgQh9dIZoybrhvbYxel1uabnsXU45QeLkGbZQ=
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        pdx-caf-mail.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.7 required=2.0 tests=ALL_TRUSTED,BAYES_00,
+        DKIM_INVALID,DKIM_SIGNED,SPF_NONE autolearn=no autolearn_force=no
+        version=3.4.0
+Received: from jcrouse1-lnx.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: jcrouse@smtp.codeaurora.org)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 83E7860E3E;
+        Thu, 23 May 2019 20:00:42 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
+        s=default; t=1558641643;
+        bh=Z5AcrjFvDwrNkhjxHTpfdZspY00IxihlRtFxpIOo+/E=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=bX2rnrsQ37owVAjPQKqBc5/stuIp4p8eYRSNVAM/2An6D6HFHp4/+F6pchZe722Fg
+         10QwE/eRPrVGOfHrQOLPooUPtadMF3+8BT/uoajBbfGDcWNcuBDBkTPcJ5auITBMRj
+         yUH2jgT3JbizdNr9VKhAqy/5YP1ayaRlzwdjLRPk=
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 83E7860E3E
+Authentication-Results: pdx-caf-mail.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: pdx-caf-mail.web.codeaurora.org; spf=none smtp.mailfrom=jcrouse@codeaurora.org
+Date:   Thu, 23 May 2019 14:00:40 -0600
+From:   Jordan Crouse <jcrouse@codeaurora.org>
+To:     Robin Murphy <robin.murphy@arm.com>
+Cc:     freedreno@lists.freedesktop.org, jean-philippe.brucker@arm.com,
+        linux-arm-msm@vger.kernel.org, hoegsberg@google.com,
+        dianders@chromium.org, linux-kernel@vger.kernel.org,
+        iommu@lists.linux-foundation.org,
+        Will Deacon <will.deacon@arm.com>,
+        Joerg Roedel <joro@8bytes.org>,
+        linux-arm-kernel@lists.infradead.org
+Subject: Re: [PATCH v2 03/15] iommu/arm-smmu: Add split pagetable support for
+ arm-smmu-v2
+Message-ID: <20190523200040.GA18360@jcrouse1-lnx.qualcomm.com>
+Mail-Followup-To: Robin Murphy <robin.murphy@arm.com>,
+        freedreno@lists.freedesktop.org, jean-philippe.brucker@arm.com,
+        linux-arm-msm@vger.kernel.org, hoegsberg@google.com,
+        dianders@chromium.org, linux-kernel@vger.kernel.org,
+        iommu@lists.linux-foundation.org, Will Deacon <will.deacon@arm.com>,
+        Joerg Roedel <joro@8bytes.org>,
+        linux-arm-kernel@lists.infradead.org
+References: <1558455243-32746-1-git-send-email-jcrouse@codeaurora.org>
+ <1558455243-32746-4-git-send-email-jcrouse@codeaurora.org>
+ <f2b2f524-cd63-7153-c454-0210410d1116@arm.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <f2b2f524-cd63-7153-c454-0210410d1116@arm.com>
+User-Agent: Mutt/1.5.24 (2015-08-30)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Currently, there is only a 1 ms sleep after asserting PERST.
+On Tue, May 21, 2019 at 07:18:32PM +0100, Robin Murphy wrote:
+> On 21/05/2019 17:13, Jordan Crouse wrote:
+> >Add support for a split pagetable (TTBR0/TTBR1) scheme for arm-smmu-v2.
+> >If split pagetables are enabled, create a pagetable for TTBR1 and set
+> >up the sign extension bit so that all IOVAs with that bit set are mapped
+> >and translated from the TTBR1 pagetable.
+> >
+> >Signed-off-by: Jordan Crouse <jcrouse@codeaurora.org>
+> >---
+> >
+> >  drivers/iommu/arm-smmu-regs.h  |  19 +++++
+> >  drivers/iommu/arm-smmu.c       | 179 ++++++++++++++++++++++++++++++++++++++---
+> >  drivers/iommu/io-pgtable-arm.c |   3 +-
+> >  3 files changed, 186 insertions(+), 15 deletions(-)
+> >
+> >diff --git a/drivers/iommu/arm-smmu-regs.h b/drivers/iommu/arm-smmu-regs.h
+> >index e9132a9..23f27c2 100644
+> >--- a/drivers/iommu/arm-smmu-regs.h
+> >+++ b/drivers/iommu/arm-smmu-regs.h
+> >@@ -195,7 +195,26 @@ enum arm_smmu_s2cr_privcfg {
+> >  #define RESUME_RETRY			(0 << 0)
+> >  #define RESUME_TERMINATE		(1 << 0)
+> >+#define TTBCR_EPD1			(1 << 23)
+> >+#define TTBCR_T0SZ_SHIFT		0
+> >+#define TTBCR_T1SZ_SHIFT		16
+> >+#define TTBCR_IRGN1_SHIFT		24
+> >+#define TTBCR_ORGN1_SHIFT		26
+> >+#define TTBCR_RGN_WBWA			1
+> >+#define TTBCR_SH1_SHIFT			28
+> >+#define TTBCR_SH_IS			3
+> >+
+> >+#define TTBCR_TG1_16K			(1 << 30)
+> >+#define TTBCR_TG1_4K			(2 << 30)
+> >+#define TTBCR_TG1_64K			(3 << 30)
+> >+
+> >  #define TTBCR2_SEP_SHIFT		15
+> >+#define TTBCR2_SEP_31			(0x0 << TTBCR2_SEP_SHIFT)
+> >+#define TTBCR2_SEP_35			(0x1 << TTBCR2_SEP_SHIFT)
+> >+#define TTBCR2_SEP_39			(0x2 << TTBCR2_SEP_SHIFT)
+> >+#define TTBCR2_SEP_41			(0x3 << TTBCR2_SEP_SHIFT)
+> >+#define TTBCR2_SEP_43			(0x4 << TTBCR2_SEP_SHIFT)
+> >+#define TTBCR2_SEP_47			(0x5 << TTBCR2_SEP_SHIFT)
+> >  #define TTBCR2_SEP_UPSTREAM		(0x7 << TTBCR2_SEP_SHIFT)
+> >  #define TTBCR2_AS			(1 << 4)
+> >diff --git a/drivers/iommu/arm-smmu.c b/drivers/iommu/arm-smmu.c
+> >index a795ada..e09c0e6 100644
+> >--- a/drivers/iommu/arm-smmu.c
+> >+++ b/drivers/iommu/arm-smmu.c
+> >@@ -152,6 +152,7 @@ struct arm_smmu_cb {
+> >  	u32				tcr[2];
+> >  	u32				mair[2];
+> >  	struct arm_smmu_cfg		*cfg;
+> >+	unsigned long			split_table_mask;
+> >  };
+> >  struct arm_smmu_master_cfg {
+> >@@ -253,13 +254,14 @@ enum arm_smmu_domain_stage {
+> >  struct arm_smmu_domain {
+> >  	struct arm_smmu_device		*smmu;
+> >-	struct io_pgtable_ops		*pgtbl_ops;
+> >+	struct io_pgtable_ops		*pgtbl_ops[2];
+> 
+> This seems a bit off - surely the primary domain and aux domain only ever
+> need one set of tables each, but either way there's definitely unnecessary
+> redundancy in having four sets of io_pgtable_ops between them.
+> 
+> >  	const struct iommu_gather_ops	*tlb_ops;
+> >  	struct arm_smmu_cfg		cfg;
+> >  	enum arm_smmu_domain_stage	stage;
+> >  	bool				non_strict;
+> >  	struct mutex			init_mutex; /* Protects smmu pointer */
+> >  	spinlock_t			cb_lock; /* Serialises ATS1* ops and TLB syncs */
+> >+	u32 attributes;
+> >  	struct iommu_domain		domain;
+> >  };
+> >@@ -621,6 +623,85 @@ static irqreturn_t arm_smmu_global_fault(int irq, void *dev)
+> >  	return IRQ_HANDLED;
+> >  }
+> >+/* Adjust the context bank settings to support TTBR1 */
+> >+static void arm_smmu_init_ttbr1(struct arm_smmu_domain *smmu_domain,
+> >+		struct io_pgtable_cfg *pgtbl_cfg)
+> >+{
+> >+	struct arm_smmu_device *smmu = smmu_domain->smmu;
+> >+	struct arm_smmu_cfg *cfg = &smmu_domain->cfg;
+> >+	struct arm_smmu_cb *cb = &smmu_domain->smmu->cbs[cfg->cbndx];
+> >+	int pgsize = 1 << __ffs(pgtbl_cfg->pgsize_bitmap);
+> >+
+> >+	/* Enable speculative walks through the TTBR1 */
+> >+	cb->tcr[0] &= ~TTBCR_EPD1;
+> >+
+> >+	cb->tcr[0] |= TTBCR_SH_IS << TTBCR_SH1_SHIFT;
+> >+	cb->tcr[0] |= TTBCR_RGN_WBWA << TTBCR_IRGN1_SHIFT;
+> >+	cb->tcr[0] |= TTBCR_RGN_WBWA << TTBCR_ORGN1_SHIFT;
+> >+
+> >+	switch (pgsize) {
+> >+	case SZ_4K:
+> >+		cb->tcr[0] |= TTBCR_TG1_4K;
+> >+		break;
+> >+	case SZ_16K:
+> >+		cb->tcr[0] |= TTBCR_TG1_16K;
+> >+		break;
+> >+	case SZ_64K:
+> >+		cb->tcr[0] |= TTBCR_TG1_64K;
+> >+		break;
+> >+	}
+> >+
+> >+	/*
+> >+	 * Outside of the special 49 bit UBS case that has a dedicated sign
+> >+	 * extension bit, setting the SEP for any other va_size will force us to
+> >+	 * shrink the size of the T0/T1 regions by one bit to accommodate the
+> >+	 * SEP
+> >+	 */
+> >+	if (smmu->va_size != 48) {
+> >+		/* Replace the T0 size */
+> >+		cb->tcr[0] &= ~(0x3f << TTBCR_T0SZ_SHIFT);
+> >+		cb->tcr[0] |= (64ULL - smmu->va_size - 1) << TTBCR_T0SZ_SHIFT;
+> >+		/* Set the T1 size */
+> >+		cb->tcr[0] |= (64ULL - smmu->va_size - 1) << TTBCR_T1SZ_SHIFT;
+> >+	} else {
+> >+		/* Set the T1 size to the full available UBS */
+> >+		cb->tcr[0] |= (64ULL - smmu->va_size) << TTBCR_T1SZ_SHIFT;
+> >+	}
+> >+
+> >+	/* Clear the existing SEP configuration */
+> >+	cb->tcr[1] &= ~TTBCR2_SEP_UPSTREAM;
+> >+
+> >+	/* Set up the sign extend bit */
+> >+	switch (smmu->va_size) {
+> >+	case 32:
+> >+		cb->tcr[1] |= TTBCR2_SEP_31;
+> >+		cb->split_table_mask = (1UL << 31);
+> >+		break;
+> >+	case 36:
+> >+		cb->tcr[1] |= TTBCR2_SEP_35;
+> >+		cb->split_table_mask = (1UL << 35);
+> >+		break;
+> >+	case 40:
+> >+		cb->tcr[1] |= TTBCR2_SEP_39;
+> >+		cb->split_table_mask = (1UL << 39);
+> >+		break;
+> >+	case 42:
+> >+		cb->tcr[1] |= TTBCR2_SEP_41;
+> >+		cb->split_table_mask = (1UL << 41);
+> >+		break;
+> >+	case 44:
+> >+		cb->tcr[1] |= TTBCR2_SEP_43;
+> >+		cb->split_table_mask = (1UL << 43);
+> >+		break;
+> >+	case 48:
+> >+		cb->tcr[1] |= TTBCR2_SEP_UPSTREAM;
+> >+		cb->split_table_mask = (1UL << 48);
+> >+	}
+> >+
+> >+	cb->ttbr[1] = pgtbl_cfg->arm_lpae_s1_cfg.ttbr[0];
+> 
+> Assigning a "TTBR0" to a "TTBR1" is the point at which it becomes clear that
+> we need to take a step back and reconsider. I think there was originally a
+> half-formed idea that pagetables might go around in pairs, but things really
+> aren't working out that way in practice, so it's almost certainly time to
+> rework the io_pgatble_alloc() interface. We probably want to make "TTBR1" an
+> up-front option for the appropriate formats, such that either way they
+> return a single TTBR value plus a TCR with the appropriate half configured
+> (hopefully in such a way that the caller can simply allocate one of each and
+> merge the two TCRs together, so maybe responsibility for EPD* needs to
+> move). That way we can also make *better* use of the IOVA sanity-checking in
+> io-pgtable-arm, rather than just removing it (especially since this will
+> open up a whole new class of "unmapping a TTBR0 address from the TTBR1
+> domain" type bugs).
 
-Reading the datasheets for different endpoints, some require PERST to be
-asserted for 10 ms in order for the endpoint to perform a reset, others
-require it to be asserted for 50 ms.
+I'm kind of having trouble wrapping my brain around what an API like this would
+look like, so please bear with me.
 
-Several SoCs using this driver uses PCIe Mini Card, where we don't know
-what endpoint will be plugged in.
+The current patch does three things in the arm-smmu driver: it creates a
+secondary pagetable in the same manner as the first one (with the same
+parameters), updates the context bank registers and makes a decision at
+map/unmap time as to which pagetable ops pointer to use.
 
-The PCI Express Card Electromechanical Specification specifies:
-"On power up, the deassertion of PERST# is delayed 100 ms (TPVPERL) from
-the power rails achieving specified operating limits."
+If I understand you correctly I think you are saying that we would like to move
+the register specific details into the io_pgtable code and get rid of the
+function quoted above. It also sounds like you may want to use separate
+pagetable ops for mapping ttbr0 and ttbr1 to allow for better sanity checking.
 
-Add a sleep of 100 ms before deasserting PERST, in order to ensure that
-we are compliant with the spec.
+I'm still not quite sure how the pagetable allocation will work in this case.
+The biggest downside is that we need to possibly adjust T0SZ in a split table
+situation to account for the SEP and both T0SZ and T1SZ live in tcr[0] so if we
+stick with individual allocation functions struct io_pgtable_cfg would have to
+be an accumulator of sorts, passed first for TTBR0 and the again for TTBR1 which
+may modify the value of tcr[0] (or OR the two values together and hope
+they don't conflict).
 
-Signed-off-by: Niklas Cassel <niklas.cassel@linaro.org>
----
- drivers/pci/controller/dwc/pcie-qcom.c | 2 ++
- 1 file changed, 2 insertions(+)
+To me this kind of defeats the purpose of calling the allocator twice. It feels
+cleaner if we called it once with the advanced knowledge that we are going to
+use TTBR1 and then return the pagetable addresses in .ttbr[0] and .ttbr[1] as
+above. We could make a new format type that incorporates TTBR1 and then we
+wouldn't have to change struct io_ptgable_cfg or the API call.
 
-diff --git a/drivers/pci/controller/dwc/pcie-qcom.c b/drivers/pci/controller/dwc/pcie-qcom.c
-index 0ed235d560e3..cae24376237c 100644
---- a/drivers/pci/controller/dwc/pcie-qcom.c
-+++ b/drivers/pci/controller/dwc/pcie-qcom.c
-@@ -1110,6 +1110,8 @@ static int qcom_pcie_host_init(struct pcie_port *pp)
- 	if (IS_ENABLED(CONFIG_PCI_MSI))
- 		dw_pcie_msi_init(pp);
- 
-+	/* Ensure that PERST has been asserted for at least 100 ms */
-+	msleep(100);
- 	qcom_ep_reset_deassert(pcie);
- 
- 	ret = qcom_pcie_establish_link(pcie);
+This could also have the advantage of moving the mask check out of the arm-smmu
+map/unmap functions and moving it to special TTBR1 ops in the io pgtable that
+could find the right pagetable  to write to as well as do the appropriate sanity
+checks.
+
+I'm kind of shooting from the hip here so feel free to let me know I'm being
+silly. I really want to get this moving forward so any reasonable ideas will be
+welcome.
+
+> Robin.
+
 -- 
-2.21.0
-
+The Qualcomm Innovation Center, Inc. is a member of Code Aurora Forum,
+a Linux Foundation Collaborative Project
