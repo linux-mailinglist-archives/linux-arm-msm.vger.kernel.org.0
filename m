@@ -2,111 +2,320 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id A0B58296B1
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 24 May 2019 13:11:58 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 567D729736
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 24 May 2019 13:33:12 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2390879AbfEXLLJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 24 May 2019 07:11:09 -0400
-Received: from onstation.org ([52.200.56.107]:53838 "EHLO onstation.org"
+        id S2390699AbfEXLdL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 24 May 2019 07:33:11 -0400
+Received: from ns.iliad.fr ([212.27.33.1]:55942 "EHLO ns.iliad.fr"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S2390760AbfEXLLJ (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 24 May 2019 07:11:09 -0400
-Received: from localhost.localdomain (c-98-239-145-235.hsd1.wv.comcast.net [98.239.145.235])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        (Authenticated sender: masneyb)
-        by onstation.org (Postfix) with ESMTPSA id CF2B53E88C;
-        Fri, 24 May 2019 11:11:07 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=onstation.org;
-        s=default; t=1558696268;
-        bh=b3xoIo6bZa98+lW1QIsMbZizb+JmTWWn33+Kc5ksiJo=;
-        h=From:To:Cc:Subject:Date:From;
-        b=QVGyy0kSeWGNcheHJjAJEw93eVpXHSDN7EfhbQ3t6WSHe8wz1PFkW/W8BBgxUDFPR
-         ACR17+MnBRZFyTpSI5imbsA9FwwkC3aL6TGS57ONUVRWsDsLswMENFW7lR27s1F2Yu
-         puO0OE48XEzT648f92DGoBpb7JQg7DgS5saFy0AM=
-From:   Brian Masney <masneyb@onstation.org>
-To:     adrian.hunter@intel.com, ulf.hansson@linaro.org
-Cc:     faiz_abbas@ti.com, linux-mmc@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org
-Subject: [PATCH] mmc: sdhci: queue work after sdhci_defer_done()
-Date:   Fri, 24 May 2019 07:10:53 -0400
-Message-Id: <20190524111053.12228-1-masneyb@onstation.org>
-X-Mailer: git-send-email 2.20.1
+        id S2390654AbfEXLdL (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 24 May 2019 07:33:11 -0400
+Received: from ns.iliad.fr (localhost [127.0.0.1])
+        by ns.iliad.fr (Postfix) with ESMTP id 709D0213CE;
+        Fri, 24 May 2019 13:33:09 +0200 (CEST)
+Received: from [192.168.108.49] (freebox.vlq16.iliad.fr [213.36.7.13])
+        by ns.iliad.fr (Postfix) with ESMTP id 57DA11FF12;
+        Fri, 24 May 2019 13:33:09 +0200 (CEST)
+Subject: Re: [PATCH v3] arm64: dts: qcom: msm8998: Add PSCI cpuidle low power
+ states
+To:     Niklas Cassel <niklas.cassel@linaro.org>
+Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Amit Kucheria <amit.kucheria@linaro.org>,
+        MSM <linux-arm-msm@vger.kernel.org>,
+        Linux ARM <linux-arm-kernel@lists.infradead.org>,
+        Daniel Lezcano <daniel.lezcano@linaro.org>,
+        Sibi Sankar <sibis@codeaurora.org>,
+        Jeffrey Hugo <jhugo@codeaurora.org>,
+        Andy Gross <agross@kernel.org>
+References: <346cd9f0-583d-f467-83d0-e73768bf5aac@free.fr>
+ <20190523214619.GB25133@centauri>
+From:   Marc Gonzalez <marc.w.gonzalez@free.fr>
+Message-ID: <a40b368e-9ec1-5d3c-8d91-b87e8a15f269@free.fr>
+Date:   Fri, 24 May 2019 13:33:09 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+ Thunderbird/60.6.1
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+In-Reply-To: <20190523214619.GB25133@centauri>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
+X-Virus-Scanned: ClamAV using ClamSMTP ; ns.iliad.fr ; Fri May 24 13:33:09 2019 +0200 (CEST)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-WiFi stopped working on the LG Nexus 5 phone and the issue was bisected
-to the commit c07a48c26519 ("mmc: sdhci: Remove finish_tasklet") that
-moved from using a tasklet to a work queue. That patch also changed
-sdhci_irq() to return IRQ_WAKE_THREAD instead of finishing the work when
-sdhci_defer_done() is true. Change it to queue work to the complete work
-queue if sdhci_defer_done() is true so that the functionality is
-equilivent to what was there when the finish_tasklet was present. This
-corrects the WiFi breakage on the Nexus 5 phone.
+On 23/05/2019 23:46, Niklas Cassel wrote:
 
-Signed-off-by: Brian Masney <masneyb@onstation.org>
-Fixes: c07a48c26519 ("mmc: sdhci: Remove finish_tasklet")
----
-See 'sdhci@f98a4900' in qcom-msm8974-lge-nexus5-hammerhead.dts for
-details about how the WiFi is wired into sdhci on this platform.
+> On Thu, May 23, 2019 at 10:36:51AM +0200, Marc Gonzalez wrote:
+>
+>> From: Amit Kucheria <amit.kucheria@linaro.org>
+>>
+>> Add device bindings for cpuidle states for cpu devices.
+>>
+>> [marc: rebase and fix arm,psci-suspend-param for power-collapse]
+>> Acked-by: Daniel Lezcano <daniel.lezcano@linaro.org>
+>> Signed-off-by: Amit Kucheria <amit.kucheria@linaro.org>
+>> Signed-off-by: Marc Gonzalez <marc.w.gonzalez@free.fr>
+>> ---
+>> Bjorn, this is an updated/fixed (as documented above) version of
+>> [PATCH v2 7/9] arm64: dts: qcom: msm8998: Add PSCI cpuidle low power states
+>> ---
+>>  arch/arm64/boot/dts/qcom/msm8998.dtsi | 50 +++++++++++++++++++++++++++
+>>  1 file changed, 50 insertions(+)
+>>
+>> diff --git a/arch/arm64/boot/dts/qcom/msm8998.dtsi b/arch/arm64/boot/dts/qcom/msm8998.dtsi
+>> index 412195b9794c..224f84e39204 100644
+>> --- a/arch/arm64/boot/dts/qcom/msm8998.dtsi
+>> +++ b/arch/arm64/boot/dts/qcom/msm8998.dtsi
+>> @@ -78,6 +78,7 @@
+>>  			compatible = "arm,armv8";
+>>  			reg = <0x0 0x0>;
+>>  			enable-method = "psci";
+>> +			cpu-idle-states = <&LITTLE_CPU_SLEEP_0 &LITTLE_CPU_SLEEP_1>;
+>>  			next-level-cache = <&L2_0>;
+>>  			L2_0: l2-cache {
+>>  				compatible = "arm,arch-cache";
+>> @@ -96,6 +97,7 @@
+>>  			compatible = "arm,armv8";
+>>  			reg = <0x0 0x1>;
+>>  			enable-method = "psci";
+>> +			cpu-idle-states = <&LITTLE_CPU_SLEEP_0 &LITTLE_CPU_SLEEP_1>;
+>>  			next-level-cache = <&L2_0>;
+>>  			L1_I_1: l1-icache {
+>>  				compatible = "arm,arch-cache";
+>> @@ -110,6 +112,7 @@
+>>  			compatible = "arm,armv8";
+>>  			reg = <0x0 0x2>;
+>>  			enable-method = "psci";
+>> +			cpu-idle-states = <&LITTLE_CPU_SLEEP_0 &LITTLE_CPU_SLEEP_1>;
+>>  			next-level-cache = <&L2_0>;
+>>  			L1_I_2: l1-icache {
+>>  				compatible = "arm,arch-cache";
+>> @@ -124,6 +127,7 @@
+>>  			compatible = "arm,armv8";
+>>  			reg = <0x0 0x3>;
+>>  			enable-method = "psci";
+>> +			cpu-idle-states = <&LITTLE_CPU_SLEEP_0 &LITTLE_CPU_SLEEP_1>;
+>>  			next-level-cache = <&L2_0>;
+>>  			L1_I_3: l1-icache {
+>>  				compatible = "arm,arch-cache";
+>> @@ -138,6 +142,7 @@
+>>  			compatible = "arm,armv8";
+>>  			reg = <0x0 0x100>;
+>>  			enable-method = "psci";
+>> +			cpu-idle-states = <&BIG_CPU_SLEEP_0 &BIG_CPU_SLEEP_1>;
+>>  			next-level-cache = <&L2_1>;
+>>  			L2_1: l2-cache {
+>>  				compatible = "arm,arch-cache";
+>> @@ -156,6 +161,7 @@
+>>  			compatible = "arm,armv8";
+>>  			reg = <0x0 0x101>;
+>>  			enable-method = "psci";
+>> +			cpu-idle-states = <&BIG_CPU_SLEEP_0 &BIG_CPU_SLEEP_1>;
+>>  			next-level-cache = <&L2_1>;
+>>  			L1_I_101: l1-icache {
+>>  				compatible = "arm,arch-cache";
+>> @@ -170,6 +176,7 @@
+>>  			compatible = "arm,armv8";
+>>  			reg = <0x0 0x102>;
+>>  			enable-method = "psci";
+>> +			cpu-idle-states = <&BIG_CPU_SLEEP_0 &BIG_CPU_SLEEP_1>;
+>>  			next-level-cache = <&L2_1>;
+>>  			L1_I_102: l1-icache {
+>>  				compatible = "arm,arch-cache";
+>> @@ -184,6 +191,7 @@
+>>  			compatible = "arm,armv8";
+>>  			reg = <0x0 0x103>;
+>>  			enable-method = "psci";
+>> +			cpu-idle-states = <&BIG_CPU_SLEEP_0 &BIG_CPU_SLEEP_1>;
+>>  			next-level-cache = <&L2_1>;
+>>  			L1_I_103: l1-icache {
+>>  				compatible = "arm,arch-cache";
+>> @@ -230,6 +238,48 @@
+>>  				};
+>>  			};
+>>  		};
+>> +
+> 
+> Hello Marc, Amit,
+> 
+> Looking at this line of code in msm-4.14:
+> https://source.codeaurora.org/quic/la/kernel/msm-4.14/tree/drivers/cpuidle/lpm-levels.c?h=LA.UM.7.1.r1-14000-sm8150.0#n993
+> 
+> And seeing the equivalent in msm-4.4:
+> https://source.codeaurora.org/quic/la/kernel/msm-4.4/tree/drivers/cpuidle/lpm-levels.c?h=msm-4.4#n1080
+> 
+> It becomes obvious that
+> 
+> qcom,time-overhead == entry-latency-us + exit-latency-us
+> and
+> qcom,latency-us == exit-latency-us
+> 
+> which means that
+> 
+> entry-latency-us == qcom,time-overhead - qcom,latency-us
+> 
+> 
+> Using this formula, with the numbers from downstream SDM845:
+> https://source.codeaurora.org/quic/la/kernel/msm-4.9/tree/arch/arm64/boot/dts/qcom/sdm845-pm.dtsi?h=msm-4.9#n123
+> 
+> qcom,latency-us = <621>;
+> qcom,time-overhead = <885>;
+> 
+> 885 - 621 = 264
+> 
+> we end up with the same values that Raju
+> has in his submission for upstream SDM845:
+> https://patchwork.kernel.org/patch/10953253/
+> 
+> entry-latency-us = <264>;
+> exit-latency-us = <621>;
+> 
+>> +		idle-states {
+>> +			entry-method = "psci";
+>> +
+>> +			LITTLE_CPU_SLEEP_0: cpu-sleep-0-0 {
+>> +				compatible = "arm,idle-state";
+>> +				idle-state-name = "little-retention";
+>> +				arm,psci-suspend-param = <0x00000002>;
+>> +				entry-latency-us = <43>;
+>> +				exit-latency-us = <86>;
+> 
+> Which for little cluster retention:
+> 
+> https://source.codeaurora.org/quic/la/kernel/msm-4.4/tree/arch/arm/boot/dts/qcom/msm8998-pm.dtsi?h=msm-4.4#n153
+> 
+> qcom,latency-us = <86>;
+> qcom,time-overhead = <167>;
+> 
+> gives:
+> 
+> entry-latency-us = <81>;
+> exit-latency-us = <86>;
+> 
+>> +				min-residency-us = <200>;
+>> +			};
+>> +
+>> +			LITTLE_CPU_SLEEP_1: cpu-sleep-0-1 {
+>> +				compatible = "arm,idle-state";
+>> +				idle-state-name = "little-power-collapse";
+>> +				arm,psci-suspend-param = <0x40000003>;
+>> +				entry-latency-us = <100>;
+>> +				exit-latency-us = <612>;
+> 
+> Which for little power collapse:
+> 
+> https://source.codeaurora.org/quic/la/kernel/msm-4.4/tree/arch/arm/boot/dts/qcom/msm8998-pm.dtsi?h=msm-4.4#n163
+> 
+> qcom,latency-us = <612>;
+> qcom,time-overhead = <885>;
+> 
+> gives:
+> 
+> entry-latency-us = <273>;
+> exit-latency-us = <612>;
+> 
+>> +				min-residency-us = <1000>;
+>> +				local-timer-stop;
+>> +			};
+>> +
+>> +			BIG_CPU_SLEEP_0: cpu-sleep-1-0 {
+>> +				compatible = "arm,idle-state";
+>> +				idle-state-name = "big-retention";
+>> +				arm,psci-suspend-param = <0x00000002>;
+>> +				entry-latency-us = <41>;
+>> +				exit-latency-us = <82>;
+> 
+> Which for big retention:
+> 
+> https://source.codeaurora.org/quic/la/kernel/msm-4.4/tree/arch/arm/boot/dts/qcom/msm8998-pm.dtsi?h=msm-4.4#n246
+> 
+> qcom,latency-us = <82>;
+> qcom,time-overhead = <161>;
+> 
+> gives:
+> 
+> entry-latency-us = <79>;
+> exit-latency-us = <82>;
+> 
+>> +				min-residency-us = <200>;
+>> +			};
+>> +
+>> +			BIG_CPU_SLEEP_1: cpu-sleep-1-1 {
+>> +				compatible = "arm,idle-state";
+>> +				idle-state-name = "big-power-collapse";
+>> +				arm,psci-suspend-param = <0x40000003>;
+>> +				entry-latency-us = <100>;
+>> +				exit-latency-us = <525>;
+>> +				min-residency-us = <1000>;
+> 
+> Which for big power collapse:
+> 
+> https://source.codeaurora.org/quic/la/kernel/msm-4.4/tree/arch/arm/boot/dts/qcom/msm8998-pm.dtsi?h=msm-4.4#n256
+> 
+> qcom,latency-us = <525>;
+> qcom,time-overhead = <861>;
+> 
+> gives:
+> 
+> entry-latency-us = <336>;
+> exit-latency-us = <525>;
 
-bisect log:
+Tangential:
+I find it somewhat silly to specify the latencies to within a single microsecond.
+I assume the margin of error is several microseconds?
+How about rounding to the nearest multiple of 5 microseconds?
+81 to 80, 86 to 85,
+273 to 275, 612 to 610
+79 to 80, 82 to 80
+336 to 335
 
- git bisect start
- # bad: [4dde821e4296e156d133b98ddc4c45861935a4fb] Merge tag 'xfs-5.2-fixes-1' of git://git.kernel.org/pub/scm/fs/xfs/xfs-linux
- git bisect bad 4dde821e4296e156d133b98ddc4c45861935a4fb
- # good: [e93c9c99a629c61837d5a7fc2120cd2b6c70dbdd] Linux 5.1
- git bisect good e93c9c99a629c61837d5a7fc2120cd2b6c70dbdd
- # bad: [8c79f4cd441b27df6cadd11b70a50e06b3b3a2bf] Merge tag 'docs-5.2' of git://git.lwn.net/linux
- git bisect bad 8c79f4cd441b27df6cadd11b70a50e06b3b3a2bf
- # bad: [67a242223958d628f0ba33283668e3ddd192d057] Merge tag 'for-5.2/block-20190507' of git://git.kernel.dk/linux-block
- git bisect bad 67a242223958d628f0ba33283668e3ddd192d057
- # good: [8ff468c29e9a9c3afe9152c10c7b141343270bf3] Merge branch 'x86-fpu-for-linus' of git://git.kernel.org/pub/scm/linux/kernel/git/tip/tip
- git bisect good 8ff468c29e9a9c3afe9152c10c7b141343270bf3
- # good: [e2a5be107f52cefb9010ccae6f569c3ddaa954cc] staging: kpc2000: kpc_spi: Fix build error for {read,write}q
- git bisect good e2a5be107f52cefb9010ccae6f569c3ddaa954cc
- # bad: [cf482a49af564a3044de3178ea28f10ad5921b38] Merge tag 'driver-core-5.2-rc1' of git://git.kernel.org/pub/scm/linux/kernel/git/gregkh/driver-core
- git bisect bad cf482a49af564a3044de3178ea28f10ad5921b38
- # good: [9f2e3a53f7ec9ef55e9d01bc29a6285d291c151e] Merge tag 'for-5.2-tag' of git://git.kernel.org/pub/scm/linux/kernel/git/kdave/linux
- git bisect good 9f2e3a53f7ec9ef55e9d01bc29a6285d291c151e
- # good: [b4b52b881cf08e13d110eac811d4becc0775abbf] Merge tag 'Wimplicit-fallthrough-5.2-rc1' of git://git.kernel.org/pub/scm/linux/kernel/git/gustavoars/linux
- git bisect good b4b52b881cf08e13d110eac811d4becc0775abbf
- # bad: [d5f758f2df8015b8dcf47b6403cc192e4cef734d] mmc: meson-gx: disable HS400
- git bisect bad d5f758f2df8015b8dcf47b6403cc192e4cef734d
- # good: [b3fb9d64b497b890f7b779a9f0b40b5cc269ea18] mmc: mmci: define get_dctrl_cfg for legacy variant
- git bisect good b3fb9d64b497b890f7b779a9f0b40b5cc269ea18
- # good: [ade024f130f742725da9219624b01666f04bc4a6] memstick: jmb38x_ms: remove set but not used variable 'data'
- git bisect good ade024f130f742725da9219624b01666f04bc4a6
- # bad: [42c38d4a1bc41e78dedbf73b0fb35e44007789bb] mmc: core: Fix warning and undefined behavior in mmc voltage handling
- git bisect bad 42c38d4a1bc41e78dedbf73b0fb35e44007789bb
- # good: [19d2f695f4e82794df7465b029c02b104d1b9903] mmc: sdhci: Call mmc_request_done() from IRQ handler if possible
- git bisect good 19d2f695f4e82794df7465b029c02b104d1b9903
- # bad: [71c733c4e1aeb83e8221e89caeec893d51f88b7b] mmc: tegra: add sdhci tegra suspend and resume
- git bisect bad 71c733c4e1aeb83e8221e89caeec893d51f88b7b
- # bad: [c07a48c2651965e84d35cf193dfc0e5f7892d612] mmc: sdhci: Remove finish_tasklet
- git bisect bad c07a48c2651965e84d35cf193dfc0e5f7892d612
- # first bad commit: [c07a48c2651965e84d35cf193dfc0e5f7892d612] mmc: sdhci: Remove finish_tasklet
 
- drivers/mmc/host/sdhci.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+To summarize, all the entry-latency-us were underestimated:
 
-diff --git a/drivers/mmc/host/sdhci.c b/drivers/mmc/host/sdhci.c
-index 97158344b862..3563c3bc57c9 100644
---- a/drivers/mmc/host/sdhci.c
-+++ b/drivers/mmc/host/sdhci.c
-@@ -3115,7 +3115,7 @@ static irqreturn_t sdhci_irq(int irq, void *dev_id)
- 			continue;
- 
- 		if (sdhci_defer_done(host, mrq)) {
--			result = IRQ_WAKE_THREAD;
-+			queue_work(host->complete_wq, &host->complete_work);
- 		} else {
- 			mrqs_done[i] = mrq;
- 			host->mrqs_done[i] = NULL;
--- 
-2.20.1
+diff --git a/arch/arm64/boot/dts/qcom/msm8998.dtsi b/arch/arm64/boot/dts/qcom/msm8998.dtsi
+index 224f84e39204..ac6bd32c0e7d 100644
+--- a/arch/arm64/boot/dts/qcom/msm8998.dtsi
++++ b/arch/arm64/boot/dts/qcom/msm8998.dtsi
+@@ -246,7 +246,7 @@
+ 				compatible = "arm,idle-state";
+ 				idle-state-name = "little-retention";
+ 				arm,psci-suspend-param = <0x00000002>;
+-				entry-latency-us = <43>;
++				entry-latency-us = <81>;
+ 				exit-latency-us = <86>;
+ 				min-residency-us = <200>;
+ 			};
+@@ -255,7 +255,7 @@
+ 				compatible = "arm,idle-state";
+ 				idle-state-name = "little-power-collapse";
+ 				arm,psci-suspend-param = <0x40000003>;
+-				entry-latency-us = <100>;
++				entry-latency-us = <273>;
+ 				exit-latency-us = <612>;
+ 				min-residency-us = <1000>;
+ 				local-timer-stop;
+@@ -265,7 +265,7 @@
+ 				compatible = "arm,idle-state";
+ 				idle-state-name = "big-retention";
+ 				arm,psci-suspend-param = <0x00000002>;
+-				entry-latency-us = <41>;
++				entry-latency-us = <79>;
+ 				exit-latency-us = <82>;
+ 				min-residency-us = <200>;
+ 			};
+@@ -274,7 +274,7 @@
+ 				compatible = "arm,idle-state";
+ 				idle-state-name = "big-power-collapse";
+ 				arm,psci-suspend-param = <0x40000003>;
+-				entry-latency-us = <100>;
++				entry-latency-us = <336>;
+ 				exit-latency-us = <525>;
+ 				min-residency-us = <1000>;
+ 				local-timer-stop;
 
+
+
+Regards.
