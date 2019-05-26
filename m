@@ -2,111 +2,121 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 2A9212A892
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 26 May 2019 07:48:52 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 355092A996
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 26 May 2019 14:21:40 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726506AbfEZFsv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 26 May 2019 01:48:51 -0400
-Received: from mail-pg1-f193.google.com ([209.85.215.193]:42349 "EHLO
-        mail-pg1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726470AbfEZFsv (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 26 May 2019 01:48:51 -0400
-Received: by mail-pg1-f193.google.com with SMTP id 33so4302904pgv.9
-        for <linux-arm-msm@vger.kernel.org>; Sat, 25 May 2019 22:48:50 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=/1mbn5gY5Ly2COk6hSx+B8iGsTtL0c4swiFd6dIhVpI=;
-        b=q32mHuXkhsVRJi5P75fk+cYqfmL5FYaU2EF/MxwHcRp5689RwAVCmsRikxIY4pi5Os
-         jRC09tMdpss013NPDY6S/WUfPWL/Q+Fde/yTlTluNTt0rXSlTGXLfUE7ubdjuCu5yruQ
-         N66RDYti9ea4YxawCDNI2wj6sa/l37+gmuYQN4xreG+KF7xRwiaOUyW6Psf//3Kioyuy
-         H1FuCPNP0nvU2h11Ous1UzCDezt+ypwRxbsDWqTxH8oyux37LYhSw3guRTKJ6rKoPqi+
-         92w9tBRnCMs52U4X7eRsGGWbD0nd4H7+sM1tutRdYHz8P1oDsn12KcKpriutYq8xhwul
-         QhGw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=/1mbn5gY5Ly2COk6hSx+B8iGsTtL0c4swiFd6dIhVpI=;
-        b=BTRY8aQyfLt7OsRnrjjz7NGXKeEWJIjX5PTNZEbEY6wkOShOwk03rbx9axGwkKxLpr
-         KLFzEYRpoHOP6qlKs/pwhJSVO/rbWCYG0si3i+A0N5DNzBzd+iyubiNuQSeCbT4q2TGO
-         SAtuJVVZ75yeAVxGlBBg/8kXg8imck9Rm2oGaqzijLYwoHL/sKoWwcT2f7LfhVFC91ei
-         ZbcTnz0fs0TXtca9r11joLDxKcFPwpelzPRwtTLy1DddebOhkOkl6H9ORx4girYetKWA
-         CARB27QIP3hEd03toDNjAm0uPWqyWIwbh5XUUv5NZppCRxOE//yOFvaHri6gVe6BL+J+
-         kuWg==
-X-Gm-Message-State: APjAAAWXZ2AF4xKT/oMop+XpBCQ/AbWdLuriDtzRY8q5liqflHIMiFfn
-        NIReBTkeGSL+sYqFRvCNxaks4g==
-X-Google-Smtp-Source: APXvYqyM+DyIl1ulyTQdPYLeGn3PVr/zhEVyeU3tLpnb4G+2GjthBdDn8D9fu4Zczwn8At2enmO1NQ==
-X-Received: by 2002:a62:82c1:: with SMTP id w184mr11245400pfd.171.1558849730290;
-        Sat, 25 May 2019 22:48:50 -0700 (PDT)
-Received: from tuxbook-pro (104-188-17-28.lightspeed.sndgca.sbcglobal.net. [104.188.17.28])
-        by smtp.gmail.com with ESMTPSA id a64sm6011216pgc.53.2019.05.25.22.48.49
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Sat, 25 May 2019 22:48:49 -0700 (PDT)
-Date:   Sat, 25 May 2019 22:49:18 -0700
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Niklas Cassel <niklas.cassel@linaro.org>
-Cc:     Stanimir Varbanov <svarbanov@mm-sol.com>,
-        Andy Gross <agross@kernel.org>,
-        David Brown <david.brown@linaro.org>,
-        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
-        Bjorn Helgaas <bhelgaas@google.com>, linux-pci@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] PCI: qcom: Ensure that PERST is asserted for at least
- 100 ms
-Message-ID: <20190526054918.GK2085@tuxbook-pro>
-References: <20190523194409.17718-1-niklas.cassel@linaro.org>
+        id S1727684AbfEZMVi (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 26 May 2019 08:21:38 -0400
+Received: from onstation.org ([52.200.56.107]:34294 "EHLO onstation.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1727577AbfEZMVi (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Sun, 26 May 2019 08:21:38 -0400
+Received: from localhost (c-98-239-145-235.hsd1.wv.comcast.net [98.239.145.235])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        (Authenticated sender: masneyb)
+        by onstation.org (Postfix) with ESMTPSA id 3D8283E8DE;
+        Sun, 26 May 2019 12:21:37 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=onstation.org;
+        s=default; t=1558873297;
+        bh=+pZchRi39jPHP0qQqNkASaPmePyovKRsrhb/epkA3O8=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=H3WM8l28X85rNtXbObGWCc0HVfSkpKpZ4nzWbVIS8dppFuFhg/AlCGbCqvRRNgC8a
+         e8Cj3LHOIuzlbWyJrije+DpG8X8yUbh2/xsmoKgL+auQ0VxtR7cWL3ZJjUe3uPZXTe
+         TgOkNqLbnLUq7YQEo1PjCt7ljwsFbS4hgb/UxgmI=
+Date:   Sun, 26 May 2019 08:21:36 -0400
+From:   Brian Masney <masneyb@onstation.org>
+To:     Adrian Hunter <adrian.hunter@intel.com>,
+        Arend van Spriel <arend.vanspriel@broadcom.com>,
+        Franky Lin <franky.lin@broadcom.com>,
+        Hante Meuleman <hante.meuleman@broadcom.com>,
+        Chi-Hsien Lin <chi-hsien.lin@cypress.com>,
+        Wright Feng <wright.feng@cypress.com>
+Cc:     ulf.hansson@linaro.org, faiz_abbas@ti.com,
+        linux-mmc@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, Kalle Valo <kvalo@codeaurora.org>,
+        linux-wireless@vger.kernel.org,
+        brcm80211-dev-list.pdl@broadcom.com,
+        brcm80211-dev-list@cypress.com, netdev@vger.kernel.org
+Subject: Issue with Broadcom wireless in 5.2rc1 (was Re: [PATCH] mmc: sdhci:
+ queue work after sdhci_defer_done())
+Message-ID: <20190526122136.GA26456@basecamp>
+References: <20190524111053.12228-1-masneyb@onstation.org>
+ <70782901-a9ac-5647-1abe-89c86a44a01b@intel.com>
+ <20190524154958.GB16322@basecamp>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20190523194409.17718-1-niklas.cassel@linaro.org>
-User-Agent: Mutt/1.11.4 (2019-03-13)
+In-Reply-To: <20190524154958.GB16322@basecamp>
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu 23 May 12:44 PDT 2019, Niklas Cassel wrote:
++ Broadcom wireless maintainers
 
-> Currently, there is only a 1 ms sleep after asserting PERST.
+On Fri, May 24, 2019 at 11:49:58AM -0400, Brian Masney wrote:
+> On Fri, May 24, 2019 at 03:17:13PM +0300, Adrian Hunter wrote:
+> > On 24/05/19 2:10 PM, Brian Masney wrote:
+> > > WiFi stopped working on the LG Nexus 5 phone and the issue was bisected
+> > > to the commit c07a48c26519 ("mmc: sdhci: Remove finish_tasklet") that
+> > > moved from using a tasklet to a work queue. That patch also changed
+> > > sdhci_irq() to return IRQ_WAKE_THREAD instead of finishing the work when
+> > > sdhci_defer_done() is true. Change it to queue work to the complete work
+> > > queue if sdhci_defer_done() is true so that the functionality is
+> > > equilivent to what was there when the finish_tasklet was present. This
+> > > corrects the WiFi breakage on the Nexus 5 phone.
+> > > 
+> > > Signed-off-by: Brian Masney <masneyb@onstation.org>
+> > > Fixes: c07a48c26519 ("mmc: sdhci: Remove finish_tasklet")
+> > > ---
+> > > [ ... ]
+> > > 
+> > >  drivers/mmc/host/sdhci.c | 2 +-
+> > >  1 file changed, 1 insertion(+), 1 deletion(-)
+> > > 
+> > > diff --git a/drivers/mmc/host/sdhci.c b/drivers/mmc/host/sdhci.c
+> > > index 97158344b862..3563c3bc57c9 100644
+> > > --- a/drivers/mmc/host/sdhci.c
+> > > +++ b/drivers/mmc/host/sdhci.c
+> > > @@ -3115,7 +3115,7 @@ static irqreturn_t sdhci_irq(int irq, void *dev_id)
+> > >  			continue;
+> > >  
+> > >  		if (sdhci_defer_done(host, mrq)) {
+> > > -			result = IRQ_WAKE_THREAD;
+> > > +			queue_work(host->complete_wq, &host->complete_work);
+> > 
+> > The IRQ thread has a lot less latency than the work queue, which is why it
+> > is done that way.
+> > 
+> > I am not sure why you say this change is equivalent to what was there
+> > before, nor why it fixes your problem.
+> > 
+> > Can you explain some more?
+>
+> [ ... ]
 > 
-> Reading the datasheets for different endpoints, some require PERST to be
-> asserted for 10 ms in order for the endpoint to perform a reset, others
-> require it to be asserted for 50 ms.
-> 
-> Several SoCs using this driver uses PCIe Mini Card, where we don't know
-> what endpoint will be plugged in.
-> 
-> The PCI Express Card Electromechanical Specification specifies:
-> "On power up, the deassertion of PERST# is delayed 100 ms (TPVPERL) from
-> the power rails achieving specified operating limits."
-> 
-> Add a sleep of 100 ms before deasserting PERST, in order to ensure that
-> we are compliant with the spec.
-> 
-> Signed-off-by: Niklas Cassel <niklas.cassel@linaro.org>
+> drivers/net/wireless/broadcom/brcm80211/brcmfmac/sdio.c calls
+> sdio_claim_host() and it appears to never return.
 
-Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+When the brcmfmac driver is loaded, the firmware is requested from disk,
+and that's when the deadlock occurs in 5.2rc1. Specifically:
 
-> ---
->  drivers/pci/controller/dwc/pcie-qcom.c | 2 ++
->  1 file changed, 2 insertions(+)
-> 
-> diff --git a/drivers/pci/controller/dwc/pcie-qcom.c b/drivers/pci/controller/dwc/pcie-qcom.c
-> index 0ed235d560e3..cae24376237c 100644
-> --- a/drivers/pci/controller/dwc/pcie-qcom.c
-> +++ b/drivers/pci/controller/dwc/pcie-qcom.c
-> @@ -1110,6 +1110,8 @@ static int qcom_pcie_host_init(struct pcie_port *pp)
->  	if (IS_ENABLED(CONFIG_PCI_MSI))
->  		dw_pcie_msi_init(pp);
->  
-> +	/* Ensure that PERST has been asserted for at least 100 ms */
-> +	msleep(100);
->  	qcom_ep_reset_deassert(pcie);
->  
->  	ret = qcom_pcie_establish_link(pcie);
-> -- 
-> 2.21.0
-> 
+1) brcmf_sdio_download_firmware() in
+   drivers/net/wireless/broadcom/brcm80211/brcmfmac/sdio.c calls
+   sdio_claim_host()
+
+2) brcmf_sdio_firmware_callback() is called and brcmf_sdiod_ramrw()
+   tries to claim the host, but has to wait since its already claimed
+   in #1 and the deadlock occurs.
+
+I tried to release the host before the firmware is requested, however
+parts of brcmf_chip_set_active() needs the host to be claimed, and a
+similar deadlock occurs in brcmf_sdiod_ramrw() if I claim the host
+before calling brcmf_chip_set_active().
+
+I started to look at moving the sdio_{claim,release}_host() calls out of
+brcmf_sdiod_ramrw() but there's a fair number of callers, so I'd like to
+get feedback about the best course of action here.
+
+Brian
