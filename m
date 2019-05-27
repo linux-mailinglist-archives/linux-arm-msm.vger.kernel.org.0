@@ -2,102 +2,80 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id A08572B5BF
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 May 2019 14:50:34 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9BCCF2B71A
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 May 2019 15:59:58 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726063AbfE0Mu1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 27 May 2019 08:50:27 -0400
-Received: from onstation.org ([52.200.56.107]:36804 "EHLO onstation.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1725991AbfE0Mu1 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 27 May 2019 08:50:27 -0400
-Received: from localhost (c-98-239-145-235.hsd1.wv.comcast.net [98.239.145.235])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        (Authenticated sender: masneyb)
-        by onstation.org (Postfix) with ESMTPSA id 6DA123E8DE;
-        Mon, 27 May 2019 12:50:26 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=onstation.org;
-        s=default; t=1558961426;
-        bh=jTtzWSOIGKn0fkQo40d1XpoMwyOF6Fujvlz+J+wVGrs=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=H+c4wVstJrtVTNZHM5dBbtBD9KNkr7WRbF2I7N7juKzi4/JKRyvNseklTpSauSpWB
-         cRmbY632ruZkf7ziPB+HEQ267L0rg5bMYnijg0fKSF0WebnFvC8mk7OuS+SYxZMD2y
-         /h/c1EAvSxZDDNC1lYbtjjVxAYJU7g5YBkxzSINQ=
-Date:   Mon, 27 May 2019 08:50:26 -0400
-From:   Brian Masney <masneyb@onstation.org>
-To:     Adrian Hunter <adrian.hunter@intel.com>
-Cc:     Arend Van Spriel <arend.vanspriel@broadcom.com>,
-        Franky Lin <franky.lin@broadcom.com>,
-        Hante Meuleman <hante.meuleman@broadcom.com>,
-        Chi-Hsien Lin <chi-hsien.lin@cypress.com>,
-        Wright Feng <wright.feng@cypress.com>, ulf.hansson@linaro.org,
-        faiz_abbas@ti.com, linux-mmc@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        Kalle Valo <kvalo@codeaurora.org>,
-        linux-wireless@vger.kernel.org,
-        brcm80211-dev-list.pdl@broadcom.com,
-        brcm80211-dev-list@cypress.com, netdev@vger.kernel.org
-Subject: Re: Issue with Broadcom wireless in 5.2rc1 (was Re: [PATCH] mmc:
- sdhci: queue work after sdhci_defer_done())
-Message-ID: <20190527125026.GA4272@basecamp>
-References: <20190524111053.12228-1-masneyb@onstation.org>
- <70782901-a9ac-5647-1abe-89c86a44a01b@intel.com>
- <20190524154958.GB16322@basecamp>
- <20190526122136.GA26456@basecamp>
- <e8c049ce-07e1-8b34-678d-41b3d6d41983@broadcom.com>
- <20190526195819.GA29665@basecamp>
- <20190527093711.GA853@basecamp>
- <ead7f268-b730-3541-31f7-4499556efec0@intel.com>
+        id S1726207AbfE0N75 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 27 May 2019 09:59:57 -0400
+Received: from szxga06-in.huawei.com ([45.249.212.32]:50108 "EHLO huawei.com"
+        rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+        id S1726185AbfE0N75 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 27 May 2019 09:59:57 -0400
+Received: from DGGEMS406-HUB.china.huawei.com (unknown [172.30.72.60])
+        by Forcepoint Email with ESMTP id BCDD59305DE19F6E293A;
+        Mon, 27 May 2019 21:44:03 +0800 (CST)
+Received: from localhost (10.177.31.96) by DGGEMS406-HUB.china.huawei.com
+ (10.3.19.206) with Microsoft SMTP Server id 14.3.439.0; Mon, 27 May 2019
+ 21:43:55 +0800
+From:   YueHaibing <yuehaibing@huawei.com>
+To:     <amit.kucheria@linaro.org>, <agross@kernel.org>,
+        <david.brown@linaro.org>, <rui.zhang@intel.com>,
+        <edubezval@gmail.com>, <daniel.lezcano@linaro.org>
+CC:     <linux-kernel@vger.kernel.org>, <linux-pm@vger.kernel.org>,
+        <linux-arm-msm@vger.kernel.org>, YueHaibing <yuehaibing@huawei.com>
+Subject: [PATCH -next] drivers: thermal: tsens: Change hw_id type to int in is_sensor_enabled
+Date:   Mon, 27 May 2019 21:41:24 +0800
+Message-ID: <20190527134124.14784-1-yuehaibing@huawei.com>
+X-Mailer: git-send-email 2.10.2.windows.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <ead7f268-b730-3541-31f7-4499556efec0@intel.com>
+Content-Type: text/plain
+X-Originating-IP: [10.177.31.96]
+X-CFilter-Loop: Reflected
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, May 27, 2019 at 03:08:07PM +0300, Adrian Hunter wrote:
-> On 27/05/19 12:37 PM, Brian Masney wrote:
-> > On Sun, May 26, 2019 at 03:58:19PM -0400, Brian Masney wrote:
-> >> I attached a patch that shows how I was able to determine what had
-> >> already claimed the host.
-> > On Mon, May 27, 2019 at 10:48:24AM +0300, Adrian Hunter wrote:
-> >> This is because SDHCI is using the IRQ thread to process the SDIO card
-> >> interrupt (sdio_run_irqs()).  When the card driver tries to use the card, it
-> >> causes interrupts which deadlocks since c07a48c26519 ("mmc: sdhci: Remove
-> >> finish_tasklet") has moved the tasklet processing to the IRQ thread.
-> >>
-> >> I would expect to be able to use the IRQ thread to complete requests, and it
-> >> is desirable to do so because it is lower latency.
-> >>
-> >> Probably, SDHCI should use sdio_signal_irq() which queues a work item, and
-> >> is what other drivers are doing.
-> >>
-> >> I will investigate some more and send a patch.
-> 
-> Please try the patch below:
-> 
-> From: Adrian Hunter <adrian.hunter@intel.com>
-> Date: Mon, 27 May 2019 14:45:55 +0300
-> Subject: [PATCH] mmc: sdhci: Fix SDIO IRQ thread deadlock
-> 
-> Since commit c07a48c26519 ("mmc: sdhci: Remove finish_tasklet"), the IRQ
-> thread might be used to complete requests, but the IRQ thread is also used
-> to process SDIO card interrupts. This can cause a deadlock when the SDIO
-> processing tries to access the card since that would also require the IRQ
-> thread. Change SDHCI to use sdio_signal_irq() to schedule a work item
-> instead. That also requires implementing the ->ack_sdio_irq() mmc host op.
-> 
-> Signed-off-by: Adrian Hunter <adrian.hunter@intel.com>
-> Fixes: c07a48c26519 ("mmc: sdhci: Remove finish_tasklet")
+Sensor hw_id is int type other u32, is_sensor_enabled
+should use int to compare, this fix smatch warning:
 
-Yes, this fixes the issue for me. You can add my:
+drivers/thermal/qcom/tsens-common.c:72
+ is_sensor_enabled() warn: unsigned 'hw_id' is never less than zero.
 
-Reported-by: Brian Masney <masneyb@onstation.org>
-Tested-by: Brian Masney <masneyb@onstation.org>
+Fixes: 3e6a8fb33084 ("drivers: thermal: tsens: Add new operation to check if a sensor is enabled")
+Signed-off-by: YueHaibing <yuehaibing@huawei.com>
+---
+ drivers/thermal/qcom/tsens-common.c | 2 +-
+ drivers/thermal/qcom/tsens.h        | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
-Thanks,
+diff --git a/drivers/thermal/qcom/tsens-common.c b/drivers/thermal/qcom/tsens-common.c
+index 928e8e81ba69..5df4eed84535 100644
+--- a/drivers/thermal/qcom/tsens-common.c
++++ b/drivers/thermal/qcom/tsens-common.c
+@@ -64,7 +64,7 @@ void compute_intercept_slope(struct tsens_priv *priv, u32 *p1,
+ 	}
+ }
+ 
+-bool is_sensor_enabled(struct tsens_priv *priv, u32 hw_id)
++bool is_sensor_enabled(struct tsens_priv *priv, int hw_id)
+ {
+ 	u32 val;
+ 	int ret;
+diff --git a/drivers/thermal/qcom/tsens.h b/drivers/thermal/qcom/tsens.h
+index eefe3844fb4e..15264806f6a8 100644
+--- a/drivers/thermal/qcom/tsens.h
++++ b/drivers/thermal/qcom/tsens.h
+@@ -315,7 +315,7 @@ void compute_intercept_slope(struct tsens_priv *priv, u32 *pt1, u32 *pt2, u32 mo
+ int init_common(struct tsens_priv *priv);
+ int get_temp_tsens_valid(struct tsens_priv *priv, int i, int *temp);
+ int get_temp_common(struct tsens_priv *priv, int i, int *temp);
+-bool is_sensor_enabled(struct tsens_priv *priv, u32 hw_id);
++bool is_sensor_enabled(struct tsens_priv *priv, int hw_id);
+ 
+ /* TSENS target */
+ extern const struct tsens_plat_data data_8960;
+-- 
+2.17.1
 
-Brian
+
