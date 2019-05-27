@@ -2,93 +2,138 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 14D462B914
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 May 2019 18:30:16 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id DCEA92B95A
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 May 2019 19:15:31 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726353AbfE0QaP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 27 May 2019 12:30:15 -0400
-Received: from gateway33.websitewelcome.com ([192.185.145.24]:36962 "EHLO
-        gateway33.websitewelcome.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726202AbfE0QaP (ORCPT
+        id S1726801AbfE0RP1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 27 May 2019 13:15:27 -0400
+Received: from mail-lf1-f65.google.com ([209.85.167.65]:44313 "EHLO
+        mail-lf1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726274AbfE0RP1 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 27 May 2019 12:30:15 -0400
-X-Greylist: delayed 1306 seconds by postgrey-1.27 at vger.kernel.org; Mon, 27 May 2019 12:30:14 EDT
-Received: from cm13.websitewelcome.com (cm13.websitewelcome.com [100.42.49.6])
-        by gateway33.websitewelcome.com (Postfix) with ESMTP id CE7362D1E6
-        for <linux-arm-msm@vger.kernel.org>; Mon, 27 May 2019 11:08:27 -0500 (CDT)
-Received: from gator4166.hostgator.com ([108.167.133.22])
-        by cmsmtp with SMTP
-        id VIAlhkce1YTGMVIAlhkSKJ; Mon, 27 May 2019 11:08:27 -0500
-X-Authority-Reason: nr=8
-Received: from [189.250.47.159] (port=33436 helo=embeddedor)
-        by gator4166.hostgator.com with esmtpa (Exim 4.91)
-        (envelope-from <gustavo@embeddedor.com>)
-        id 1hVIAk-001oQ4-O2; Mon, 27 May 2019 11:08:26 -0500
-Date:   Mon, 27 May 2019 11:08:25 -0500
-From:   "Gustavo A. R. Silva" <gustavo@embeddedor.com>
-To:     Amit Kucheria <amit.kucheria@linaro.org>,
+        Mon, 27 May 2019 13:15:27 -0400
+Received: by mail-lf1-f65.google.com with SMTP id r15so3110762lfm.11
+        for <linux-arm-msm@vger.kernel.org>; Mon, 27 May 2019 10:15:26 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=bQYcUfzJ2eNZWZPGMl/JEm3foS8Vd5oiqQcXqPz07kw=;
+        b=IwyLnWMZV/lpbMMff8AmQ9B448MJe0hJfxwb0ybe6SaMC0lAuX1ECzmNaHNcN0Fa8/
+         TZkEKkQQbEF1yrnnVZ0455tihokSvF0U2ll4z1nsJYIk4r89GxDcO4BKABRGZ35FeOHa
+         JRcgJyHcrufrWvWj/HC80jNc8vqhmNVdGzyDsLPxwjAu+UasKMS9VjdT7wc1ZuuQIQLJ
+         KIUbeCkVLS1APL5fNmRXP+Ad1nqkwvGH4TYMMeAPTLudHITt/L/lOSWGK2+axIJeIH+p
+         sbxzFZSFJr8mPrv4POl+WTkJJ2aQA8CUgilP6GATfXEHzDBhATBuQWF3UXVkj5mnqshm
+         ACtw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=bQYcUfzJ2eNZWZPGMl/JEm3foS8Vd5oiqQcXqPz07kw=;
+        b=h6gvT5It3/J0ZtGE2facIGKW+YGPT1Jly515R5n91/346DR7HlAijlqtaSvO+AtdNc
+         zkqv7ehzvFMLex92TmjM5HTZ570v4wHvXmNXZcXqfMYXqDjCMvodTZfV/0SJZR5GAiZ2
+         s0661aLzpLaB/hsz5AqgUJPBYwXHAsea8FMR7E/eZQUPEBmOCXHaCJ4w1nwUoJtLZWgv
+         SukPmMDTIyUpBMF3vCyQ20+c5Hwv0FxF8+qSUqoiWU3y5uJP6B4EvLUSIXpUmW9Ox2BB
+         hmi0THvJ/2VaAn1kpHVxOYzzTWAAeECu4bheONQmeyJkV0qBdeJdXHUWH9kz5JdGM2Zq
+         03tw==
+X-Gm-Message-State: APjAAAXdaC/Tsl4+UfPOG1F4Su0PRrMRM5CWf6XV4QAOcch6etgXMBQR
+        YLTQfqVP3gZxsyXc+6/3/cycyw==
+X-Google-Smtp-Source: APXvYqwsEdFVhYeFfyhJrlzePl5Iuv+PqsOCTx5ry/jO/7Fo47egn7d+efqzPXCU53fFtTFc+KItfg==
+X-Received: by 2002:ac2:510b:: with SMTP id q11mr1072378lfb.11.1558977325355;
+        Mon, 27 May 2019 10:15:25 -0700 (PDT)
+Received: from centauri (m83-185-80-163.cust.tele2.se. [83.185.80.163])
+        by smtp.gmail.com with ESMTPSA id t13sm2382792lji.47.2019.05.27.10.15.23
+        (version=TLS1_3 cipher=AEAD-AES256-GCM-SHA384 bits=256/256);
+        Mon, 27 May 2019 10:15:24 -0700 (PDT)
+Date:   Mon, 27 May 2019 19:15:21 +0200
+From:   Niklas Cassel <niklas.cassel@linaro.org>
+To:     Marc Gonzalez <marc.w.gonzalez@free.fr>
+Cc:     Stanimir Varbanov <svarbanov@mm-sol.com>,
         Andy Gross <agross@kernel.org>,
-        David Brown <david.brown@linaro.org>,
-        Zhang Rui <rui.zhang@intel.com>,
-        Eduardo Valentin <edubezval@gmail.com>,
-        Daniel Lezcano <daniel.lezcano@linaro.org>
-Cc:     linux-pm@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org,
-        "Gustavo A. R. Silva" <gustavo@embeddedor.com>
-Subject: [PATCH] thermal: tsens: Remove unnecessary comparison of unsigned
- integer with < 0
-Message-ID: <20190527160825.GA24219@embeddedor>
+        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
+        Bjorn Helgaas <bhelgaas@google.com>,
+        PCI <linux-pci@vger.kernel.org>,
+        MSM <linux-arm-msm@vger.kernel.org>,
+        LKML <linux-kernel@vger.kernel.org>
+Subject: Re: [PATCH] PCI: qcom: Ensure that PERST is asserted for at least
+ 100 ms
+Message-ID: <20190527171521.GA7936@centauri>
+References: <20190523194409.17718-1-niklas.cassel@linaro.org>
+ <5d743969-e763-95c5-6763-171a8ecf66d8@free.fr>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-User-Agent: Mutt/1.9.4 (2018-02-28)
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - gator4166.hostgator.com
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - embeddedor.com
-X-BWhitelist: no
-X-Source-IP: 189.250.47.159
-X-Source-L: No
-X-Exim-ID: 1hVIAk-001oQ4-O2
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
-X-Source-Sender: (embeddedor) [189.250.47.159]:33436
-X-Source-Auth: gustavo@embeddedor.com
-X-Email-Count: 8
-X-Source-Cap: Z3V6aWRpbmU7Z3V6aWRpbmU7Z2F0b3I0MTY2Lmhvc3RnYXRvci5jb20=
-X-Local-Domain: yes
+In-Reply-To: <5d743969-e763-95c5-6763-171a8ecf66d8@free.fr>
+User-Agent: Mutt/1.11.4 (2019-03-13)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-There is no need to compare hw_id with < 0 because such comparison
-of an unsigned value is always false.
+On Fri, May 24, 2019 at 02:43:00PM +0200, Marc Gonzalez wrote:
+> On 23/05/2019 21:44, Niklas Cassel wrote:
+> 
+> > Currently, there is only a 1 ms sleep after asserting PERST.
+> > 
+> > Reading the datasheets for different endpoints, some require PERST to be
+> > asserted for 10 ms in order for the endpoint to perform a reset, others
+> > require it to be asserted for 50 ms.
+> > 
+> > Several SoCs using this driver uses PCIe Mini Card, where we don't know
+> > what endpoint will be plugged in.
+> > 
+> > The PCI Express Card Electromechanical Specification specifies:
+> > "On power up, the deassertion of PERST# is delayed 100 ms (TPVPERL) from
+> > the power rails achieving specified operating limits."
+> > 
+> > Add a sleep of 100 ms before deasserting PERST, in order to ensure that
+> > we are compliant with the spec.
+> > 
+> > Signed-off-by: Niklas Cassel <niklas.cassel@linaro.org>
+> > ---
+> >  drivers/pci/controller/dwc/pcie-qcom.c | 2 ++
+> >  1 file changed, 2 insertions(+)
+> > 
+> > diff --git a/drivers/pci/controller/dwc/pcie-qcom.c b/drivers/pci/controller/dwc/pcie-qcom.c
+> > index 0ed235d560e3..cae24376237c 100644
+> > --- a/drivers/pci/controller/dwc/pcie-qcom.c
+> > +++ b/drivers/pci/controller/dwc/pcie-qcom.c
+> > @@ -1110,6 +1110,8 @@ static int qcom_pcie_host_init(struct pcie_port *pp)
+> >  	if (IS_ENABLED(CONFIG_PCI_MSI))
+> >  		dw_pcie_msi_init(pp);
+> >  
+> > +	/* Ensure that PERST has been asserted for at least 100 ms */
+> > +	msleep(100);
+> >  	qcom_ep_reset_deassert(pcie);
+> >  
+> >  	ret = qcom_pcie_establish_link(pcie);
+> 
+> Currently, qcom_ep_reset_assert() and qcom_ep_reset_deassert() both include
+> a call to usleep_range() of 1.0 to 1.5 ms
+> 
+> Can we git rid of both if we sleep 100 ms before qcom_ep_reset_deassert?
 
-Fix this by removing such comparison.
+These two sleeps after asserting/deasserting reset in qcom_ep_reset_assert()/
+qcom_ep_reset_deassert() matches the sleeps in:
+https://source.codeaurora.org/quic/la/kernel/msm-4.14/tree/drivers/pci/host/pci-msm.c?h=LA.UM.7.1.r1-14000-sm8150.0#n1942
 
-Addresses-Coverity-ID: 1445440 ("Unsigned compared against 0")
-Fixes: 3e6a8fb33084 ("drivers: thermal: tsens: Add new operation to check if a sensor is enabled")
-Signed-off-by: Gustavo A. R. Silva <gustavo@embeddedor.com>
----
- drivers/thermal/qcom/tsens-common.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+and
 
-diff --git a/drivers/thermal/qcom/tsens-common.c b/drivers/thermal/qcom/tsens-common.c
-index 928e8e81ba69..94878ad35464 100644
---- a/drivers/thermal/qcom/tsens-common.c
-+++ b/drivers/thermal/qcom/tsens-common.c
-@@ -69,7 +69,7 @@ bool is_sensor_enabled(struct tsens_priv *priv, u32 hw_id)
- 	u32 val;
- 	int ret;
- 
--	if ((hw_id > (priv->num_sensors - 1)) || (hw_id < 0))
-+	if (hw_id > priv->num_sensors - 1)
- 		return -EINVAL;
- 	ret = regmap_field_read(priv->rf[SENSOR_EN], &val);
- 	if (ret)
--- 
-2.21.0
+https://source.codeaurora.org/quic/la/kernel/msm-4.14/tree/drivers/pci/host/pci-msm.c?h=LA.UM.7.1.r1-14000-sm8150.0#n1949
 
+I would rather not remove these since that might affect existing devices.
+
+
+This new sleep matches matches the sleep in:
+https://source.codeaurora.org/quic/la/kernel/msm-4.14/tree/drivers/pci/host/pci-msm.c?h=LA.UM.7.1.r1-14000-sm8150.0#n3926
+
+> 
+> Should the msleep() call be included in one of the two wrappers?
+
+This new sleep could be moved into qcom_ep_reset_deassert(),
+added before the gpiod_set_value_cansleep(pcie->reset, 0) call,
+if Stanimir prefers it to be placed there instead.
+
+
+Kind regards,
+Niklas
