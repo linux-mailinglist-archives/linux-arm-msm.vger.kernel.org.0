@@ -2,178 +2,180 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 52EC92AC5F
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 26 May 2019 23:51:32 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B73C32AD6C
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 May 2019 05:51:44 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725853AbfEZVvb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 26 May 2019 17:51:31 -0400
-Received: from mail-qk1-f196.google.com ([209.85.222.196]:39657 "EHLO
-        mail-qk1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725851AbfEZVvb (ORCPT
+        id S1726340AbfE0Dvn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 26 May 2019 23:51:43 -0400
+Received: from mail-ed1-f68.google.com ([209.85.208.68]:43802 "EHLO
+        mail-ed1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726068AbfE0Dvn (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 26 May 2019 17:51:31 -0400
-Received: by mail-qk1-f196.google.com with SMTP id i125so13040987qkd.6
-        for <linux-arm-msm@vger.kernel.org>; Sun, 26 May 2019 14:51:30 -0700 (PDT)
+        Sun, 26 May 2019 23:51:43 -0400
+Received: by mail-ed1-f68.google.com with SMTP id w33so21181375edb.10
+        for <linux-arm-msm@vger.kernel.org>; Sun, 26 May 2019 20:51:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
+        d=chromium.org; s=google;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=k0NU3GdNCQtaCBjZ4hKsl5/kUxZv2IaxX39s5Iv4+6o=;
-        b=Ve77pMpT0U6SxZbft6ZK8JpKt6LHWXunl+S8aPo+fhmMxpwJjyUfLEllXvuINPi5ya
-         L9iuVKrtEWvQW8QEpG1L0G8m/UTakEo9q3t044cTJQC6Bz/6aTC1UYMBYwuQCo1DXOb7
-         LqeLaSWmCSnsfKye76Qem2pI8K4em8ZNdTpyn3V8M4P1g1AhF3HdcgGd2cWuu6tXugwJ
-         CG4u69607NaxKVNPxvzF34T+XOO9hff2hvjenCuCbnFwXIYTvcKkGMx+PsDBCrCPavcD
-         8OJZp2YhyATUyy3wprGYPDCoQLrmxOsSoc6nXXgZBEQwQ3AYFuyDc+NMCs8b5AQZ3b5r
-         ADXg==
+        bh=D0QV8qyfvSFrB2pCHlJaBkLaI6mf2LLeBc50MxxOpH8=;
+        b=MJglQuI93h/MaSGCbXpu+1/2njRn2SFnTRXg0exJjB8T3VjOTgwLuhH/Wnbh501X8T
+         pLiLZ+agaxbwhmWjj1kTZilthQ4/cuEYUj96l7xADwCpD7aCog/g6PqXbBiUBc48Dw6o
+         XqeoEdTY/p4h78o3Odmn+2BjwEbXmyr3yQWwA=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=k0NU3GdNCQtaCBjZ4hKsl5/kUxZv2IaxX39s5Iv4+6o=;
-        b=GHxwDnFSw1v9q2uJqqJXgfyXpD5vTeDqGqQ44W0IjG43tMoVAWaNKS0oP+aC+aZ2/p
-         3Up7vb/qtxZskjZ9RK4tgE7ow8Av5aLdEMU0iMXb6n02iplqfMIZwnn0B10ENAa7TmJA
-         QoIovLWYm0pd4SNGodLqZ+pkXfrDbAL1vIT1r712uzfHzw/Gs+597mYguP9aCHVX1FLV
-         i1lTtpeGXuZ0cN7iNnDwUcaLo+O8f48hPbIPU4zQpX8sZn6MRqy96DXYDxOU0Za70mX+
-         PvBmMNBVDyCZ/1vLulhvdIaYlrbWPKLF0Er7C8beXY8JFPaozlzBwunhAeAUifzRSRpf
-         vxJg==
-X-Gm-Message-State: APjAAAVTTSvV/6tTlQE29AmZmi/S49FFftffrO4rFMuZTbwj/PtuPvIk
-        G7DM2cCg426yHFgw9UzwlYjjr0FNHaSM5nW9WmW+myjftQxx+g==
-X-Google-Smtp-Source: APXvYqxXPJOR9AM+6hnmPx4XiRGV77+OkE6qRfAeMp5Gnykqo0kvJxguRg2isUteh9Lv2Qd9QVOmGM82oW57EdrBppM=
-X-Received: by 2002:a05:620a:55c:: with SMTP id o28mr1330299qko.86.1558907489823;
- Sun, 26 May 2019 14:51:29 -0700 (PDT)
+        bh=D0QV8qyfvSFrB2pCHlJaBkLaI6mf2LLeBc50MxxOpH8=;
+        b=KT8xZCyAq5ERqJoDmCXhBbJZEuLEDHcIrmSJNDBdN8aEYQy+DaV9uVkAmh04x/kXoI
+         wQv6VYOcAS+IpR+oF16K9s0a+sh3DASiZIuziMJRurbnaEf5c4W1AyJ4wG+n9a5TVNH0
+         y/OinDOX8bxH+eJ613/AsOwn7JZAACQCda7DmmXGwlwyb/at0U3ugbVuv8mZKHrct/0M
+         wKnwrhf8SRvj9cNRQyYugb/GPz3aPXenMMRLPElSvX2hscys2ExrfJ8HhhD0yv9LxiGj
+         uCMEwd5bloCAcZ2zHnk3U9ZfpFA/5r1AG7oQDHJ9iFU3oRuynZY8kuNwiZAu2iE7p8Vx
+         sSsA==
+X-Gm-Message-State: APjAAAWt/1JYlRfd6NAN5LAC2MxCSzfKiwhBsg0BSb8ZVLed+ieRzw7m
+        Pxi4+btj4DlAeAp9H3xPceHxU8GHVLhdJg==
+X-Google-Smtp-Source: APXvYqwJ26bATRh7cnemqRFX2W5aEpwDEpTlcC6iUrcrk1Nuc+RtkemjoXf0Kb57RP+jW3v1RF9kKw==
+X-Received: by 2002:a50:87b5:: with SMTP id a50mr117418850eda.118.1558929100965;
+        Sun, 26 May 2019 20:51:40 -0700 (PDT)
+Received: from mail-wm1-f43.google.com (mail-wm1-f43.google.com. [209.85.128.43])
+        by smtp.gmail.com with ESMTPSA id d90sm2916371edd.96.2019.05.26.20.51.38
+        for <linux-arm-msm@vger.kernel.org>
+        (version=TLS1_3 cipher=AEAD-AES128-GCM-SHA256 bits=128/128);
+        Sun, 26 May 2019 20:51:39 -0700 (PDT)
+Received: by mail-wm1-f43.google.com with SMTP id w9so8191788wmi.0
+        for <linux-arm-msm@vger.kernel.org>; Sun, 26 May 2019 20:51:38 -0700 (PDT)
+X-Received: by 2002:a1c:994f:: with SMTP id b76mr7388714wme.90.1558929098045;
+ Sun, 26 May 2019 20:51:38 -0700 (PDT)
 MIME-Version: 1.0
-References: <5ce71d79.1c69fb81.dd0de.33cf@mx.google.com> <7hv9y01z85.fsf@baylibre.com>
- <20190524012913.D9BB72168B@mail.kernel.org>
-In-Reply-To: <20190524012913.D9BB72168B@mail.kernel.org>
-From:   Amit Kucheria <amit.kucheria@linaro.org>
-Date:   Sun, 26 May 2019 23:51:18 +0200
-Message-ID: <CAP245DXkEym=x3vrN2cc2y+uHHx_+z0cW0WsV0dGGXfd+c2mSQ@mail.gmail.com>
-Subject: Re: next/pending-fixes boot: 227 boots: 6 failed, 198 passed with 20
- offline, 1 untried/unknown, 2 conflicts (v5.2-rc1-375-g3695b18d1e9cd)
-To:     Stephen Boyd <sboyd@kernel.org>
-Cc:     "kernelci.org bot" <bot@kernelci.org>,
-        Kevin Hilman <khilman@baylibre.com>,
-        kernel-build-reports@lists.linaro.org,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>, andygro@gmail.com,
-        Bjorn Andersson <bjorn.andersson@linaro.org>
+References: <20190117162008.25217-1-stanimir.varbanov@linaro.org>
+ <20190117162008.25217-11-stanimir.varbanov@linaro.org> <60b3efff-31c1-bc04-8af9-deebb8bc013a@xs4all.nl>
+ <fe51ae1e-6d2e-36bd-485a-d85520ad2386@linaro.org> <CAAFQd5Co3G1J4+HOcjtCb7p3rhLcm+1E=mPr2d=AtdOSuF_eKg@mail.gmail.com>
+ <c56930e0-be6f-2ade-fcea-8ee0ff6247ec@linaro.org> <CAAFQd5CNGsnqjpLsWSTf=8r+hSfyOgD8SU-tn5EbHCCuuSgH6A@mail.gmail.com>
+ <01b6683f-9378-e6f2-501f-e2213e6c690d@xs4all.nl>
+In-Reply-To: <01b6683f-9378-e6f2-501f-e2213e6c690d@xs4all.nl>
+From:   Tomasz Figa <tfiga@chromium.org>
+Date:   Mon, 27 May 2019 12:51:26 +0900
+X-Gmail-Original-Message-ID: <CAAFQd5Dw-1A2gXuC54Z7808L6Vm9mjPpE7Kbj-TZC18_k_FgVA@mail.gmail.com>
+Message-ID: <CAAFQd5Dw-1A2gXuC54Z7808L6Vm9mjPpE7Kbj-TZC18_k_FgVA@mail.gmail.com>
+Subject: Re: [PATCH 10/10] venus: dec: make decoder compliant with stateful
+ codec API
+To:     Hans Verkuil <hverkuil@xs4all.nl>
+Cc:     Stanimir Varbanov <stanimir.varbanov@linaro.org>,
+        Linux Media Mailing List <linux-media@vger.kernel.org>,
+        Mauro Carvalho Chehab <mchehab@kernel.org>,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        Vikash Garodia <vgarodia@codeaurora.org>,
+        Alexandre Courbot <acourbot@chromium.org>,
+        Malathi Gottam <mgottam@codeaurora.org>
 Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, May 24, 2019 at 3:29 AM Stephen Boyd <sboyd@kernel.org> wrote:
+On Tue, May 21, 2019 at 9:27 PM Hans Verkuil <hverkuil@xs4all.nl> wrote:
 >
-> Quoting Kevin Hilman (2019-05-23 17:18:50)
-> > [ + Andy Gross, Stephen Boyd ]
+> On 5/21/19 11:09 AM, Tomasz Figa wrote:
+> > Hi Stan,
 > >
-> > "kernelci.org bot" <bot@kernelci.org> writes:
+> > On Mon, May 20, 2019 at 11:47 PM Stanimir Varbanov
+> > <stanimir.varbanov@linaro.org> wrote:
+> >>
+> >> Hi Tomasz,
+> >>
+> >> On 4/24/19 3:39 PM, Tomasz Figa wrote:
+> >>> On Wed, Apr 24, 2019 at 9:15 PM Stanimir Varbanov
+> >>> <stanimir.varbanov@linaro.org> wrote:
+> >>>>
+> >>>> Hi Hans,
+> >>>>
+> >>>> On 2/15/19 3:44 PM, Hans Verkuil wrote:
+> >>>>> Hi Stanimir,
+> >>>>>
+> >>>>> I never paid much attention to this patch series since others were busy
+> >>>>> discussing it and I had a lot of other things on my plate, but then I heard
+> >>>>> that this patch made G_FMT blocking.
+> >>>>
+> >>>> OK, another option could be to block REQBUF(CAPTURE) until event from hw
+> >>>> is received that the stream is parsed and the resolution is correctly
+> >>>> set by application. Just to note that I'd think to this like a temporal
+> >>>> solution until gstreamer implements v4l events.
+> >>>>
+> >>>> Is that looks good to you?
+> >>>
+> >>> Hmm, I thought we concluded that gstreamer sets the width and height
+> >>> in OUTPUT queue before querying the CAPTURE queue and so making the
+> >>> driver calculate the CAPTURE format based on what's set on OUTPUT
+> >>> would work fine. Did I miss something?
+> >>
+> >> Nobody is miss something.
+> >>
+> >> First some background about how Venus implements stateful codec API.
+> >>
+> >> The Venus firmware can generate two events "sufficient" and
+> >> "insufficient" buffer requirements (this includes decoder output buffer
+> >> size and internal/scratch buffer sizes). Presently I always set minimum
+> >> possible decoder resolution no matter what the user said, and by that
+> >> way I'm sure that "insufficient" event will always be triggered by the
+> >> firmware (the other reason to take this path is because this is the
+> >> least-common-divider for all supported Venus hw/fw versions thus common
+> >> code in the driver). The reconfiguration (during codec Initialization
+> >> sequence) is made from STREAMON(CAPTURE) context. Now, to make that
+> >> re-configuration happen I need to wait for "insufficient" event from
+> >> firmware in order to know the real coded resolution.
+> >>
+> >> In the case of gstreamer where v4l2_events support is missing I have to
+> >> block (wait for firmware event) REQBUF(CAPTURE) (vb2::queue_setup) or
+> >> STREAMON(CAPTURE) (vb2::start_streaming).
+> >>
+> >> I tried to set the coded resolution to the firmware as-is it set by
+> >> gstreamer but then I cannot receive the "sufficient" event for VP8 and
+> >> VP9 codecs. So I return back to the solution with minimum resolution above.
+> >>
+> >> I'm open for suggestions.
 > >
-> > > next/pending-fixes boot: 227 boots: 6 failed, 198 passed with 20 offline, 1 untried/unknown, 2 conflicts (v5.2-rc1-375-g3695b18d1e9cd)
-> > >
-> > > Full Boot Summary: https://kernelci.org/boot/all/job/next/branch/pending-fixes/kernel/v5.2-rc1-375-g3695b18d1e9cd/
-> > > Full Build Summary: https://kernelci.org/build/next/branch/pending-fixes/kernel/v5.2-rc1-375-g3695b18d1e9cd/
-> > >
-> > > Tree: next
-> > > Branch: pending-fixes
-> > > Git Describe: v5.2-rc1-375-g3695b18d1e9cd
-> > > Git Commit: 3695b18d1e9cd6bb739579e782670518d500839d
-> > > Git URL: git://git.kernel.org/pub/scm/linux/kernel/git/next/linux-next.git
-> > > Tested: 82 unique boards, 24 SoC families, 19 builds out of 223
-> > >
-> > > Boot Regressions Detected:
-> > >
-> > > arm:
-> > >
-> > >     qcom_defconfig:
-> > >         gcc-8:
-> > >           qcom-apq8064-cm-qs600:
-> > >               lab-baylibre-seattle: failing since 3 days (last pass: v5.1-11016-gf31c9c9ee122 - first fail: v5.1-12956-g8d4b83476a8f)
-> > >           qcom-apq8064-ifc6410:
-> > >               lab-baylibre-seattle: failing since 3 days (last pass: v5.1-11016-gf31c9c9ee122 - first fail: v5.1-12956-g8d4b83476a8f)
-> >
-> > Andy, 8064 not happy in linux-next lately, I haven't had a chance to
-> > look closer.
-> >
+> > I think you could still keep setting the minimum size and wait for the
+> > "insufficient" event. At the same time, you could speculatively
+> > advertise the expected "sufficient" size on the CAPTURE queue before
+> > the hardware signals those. Even if you mispredict them, you'll get
+> > the event, update the CAPTURE resolution and send the source change
+> > event to the application, which would then give you the correct
+> > buffers. Would that work for you?
 >
-> Looks like some sort of tsens crash with a bad regmap_field or something.
+> As I understand it this still would require event support, which gstreamer
+> doesn't have.
+
+I don't think it matches what I remember from the earlier discussion.
+As long as Gstreamer sets the visible resolution (from the container
+AFAIR) on OUTPUT, the driver would adjust it to something that is
+expected to be the right framebuffer resolution and so Gstreamer would
+be able to continue. Of course if the expected value doesn't match, it
+wouldn't work, but it's the same as currently for Coda AFAICT.
+
 >
-> [    4.001041] Unable to handle kernel NULL pointer dereference at virtual address 00000000
-> [    4.008631] pgd = (ptrval)
-> [    4.016914] [00000000] *pgd=00000000
-> [    4.019374] Internal error: Oops: 5 [#1] PREEMPT SMP ARM
-> [    4.023100] Modules linked in:
-> [    4.028402] CPU: 2 PID: 21 Comm: kworker/2:0 Tainted: G        W         5.2.0-rc1 #1
-> [    4.031259] Hardware name: Generic DT based system
-> [    4.039175] Workqueue: events deferred_probe_work_func
-> [    4.043859] PC is at regmap_field_read+0x1c/0x70
-> [    4.048973] LR is at is_sensor_enabled+0x40/0x74
-> [    4.053743] pc : []    lr : []    psr: 20000013
-> [    4.058340] sp : c02f1dc8  ip : 00000000  fp : 00000007
-> [    4.064332] r10: c0de1534  r9 : c0bb596c  r8 : ee4eda00
-> [    4.068214] usb 1-1: New USB device found, idVendor=04b4, idProduct=6570, bcdDevice=32.99
-> [    4.069539] r7 : c02f0000  r6 : c02f1de0  r5 : 00000000  r4 : c02f0000
-> [    4.069549] r3 : c02f1dc8  r2 : 11403009  r1 : c02f1de0  r0 : 00000000
-> [    4.074838] usb 1-1: New USB device strings: Mfr=0, Product=1, SerialNumber=0
-> [    4.083085] Flags: nzCv  IRQs on  FIQs on  Mode SVC_32  ISA ARM  Segment none
-> [    4.083096] Control: 10c5787d  Table: 8020406a  DAC: 00000051
-> [    4.083108] Process kworker/2:0 (pid: 21, stack limit = 0x(ptrval))
-> [    4.083118] Stack: (0xc02f1dc8 to 0xc02f2000)
-> [    4.083152] 1dc0:                   c02f0000 c093d93c c02f0000 00000000 00000000 c093dabc
-> [    4.083192] 1de0: 0000000b 11403009 ee39b040 ee39b040 ee39b040 c093d794 00000000 11403009
-> [    4.089507] usb 1-1: Product: USB2.0 Hub
-> [    4.096045] 1e00: 0000000b 11403009 ee4eda10 00000000 c10a2b84 00000000 c10c2f78 00000000
-> [    4.096085] 1e20: c10a2b84 c080b940 c110b37c ee4eda10 c110b380 00000000 c10c2f78 c0809480
-> [    4.096126] 1e40: c02f1ecc ee4eda10 ffffe000 ee4eda10 c10a2b84 c02f1ecc c0809b78 00000001
-> [    4.105168] hub 1-1:1.0: USB hub found
-> [    4.110367] 1e60: c0dbb994 c10c2f78 ffffe000 c0809938 ee4eda10 00000001 00000001 00000000
-> [    4.116581] hub 1-1:1.0: 4 ports detected
-> [    4.122170] 1e80: c02f0000 c02f1ecc c0809b78 00000001 c0dbb994 c10c2f78 ffffe000 c0807718
-> [    4.187285] 1ea0: ffffe000 c028c26c ee20acb8 11403009 ee4eda10 ee4eda10 c02f0000 ee4eda54
-> [    4.195443] 1ec0: c10938a8 c08092d8 ee4eda10 ee4eda10 00000001 11403009 ee4eda10 ee4eda10
-> [    4.203603] 1ee0: c1093b18 c10938a8 c10c2f78 c08084e4 ee4eda10 c1093894 c1093894 c0808a2c
-> [    4.211762] 1f00: c10938cc c0208880 eefc0cc0 eefc3e00 00000000 c10b76b0 00000000 c033c804
-> [    4.219921] 1f20: eefc0cc0 eefc0cc0 eefc0cd8 c0208880 c0208894 eefc0cc0 00000108 c1003d00
-> [    4.228082] 1f40: eefc0cd8 eefc0cc0 ffffe000 c033d6dc c023ed00 c10b70e8 c0d44c58 00000000
-> [    4.236242] 1f60: c023ed1c c023ed00 c023ec80 00000000 c02f0000 c0208880 c033d448 c029bdec
-> [    4.244400] 1f80: c023ed1c c034289c 00000000 c023ec80 c0342754 00000000 00000000 00000000
-> [    4.252559] 1fa0: 00000000 00000000 00000000 c03010e8 00000000 00000000 00000000 00000000
-> [    4.260719] 1fc0: 00000000 00000000 00000000 00000000 00000000 00000000 00000000 00000000
-> [    4.268878] 1fe0: 00000000 00000000 00000000 00000000 00000013 00000000 00000000 00000000
-> [    4.277031] [] (regmap_field_read) from [] (is_sensor_enabled+0x40/0x74)
+> I think it is OK to have REQBUFS sleep in this case. However, I would only
 
-Sorry for breaking the boot on 8064. That was one of the platforms
-that I didn't convert over to regmap (needs more refactoring). I had
-hoped kernelci would catch any issues but looks like thermal-soc tree
-entered linux-next quite late and didn't catch this.
+Why REQBUFS? While that could possibly allow us to allocate the right
+buffers, Gstreamer wouldn't be able to know the right format, because
+it would query it before REQBUFS, wouldn't it?
 
-Does reverting 3e6a8fb33084 ("drivers: thermal: tsens: Add new
-operation to check if a sensor is enabled") fix the issue? If so,
-reverting that commit might be the best course of action since I've
-started vacations and can't fix this for 8064 in a meaningful amount
-of time (until 3rd week of June). cc'ing Bjorn in case this needs more
-investigation, but I think that patch is fairly self contained and
-reverting it shouldn't have any knock-on effects.
+For this reason, s5p-mfc makes G_FMT(CAPTURE) blocking and if we
+decide to forcefully keep the compatibility, even with in drivers, we
+should probably do the same here.
 
-Regards,
-Amit
+> enable this behavior if the application didn't subscribe to the SOURCE_CHANGE
+> event. That's easy enough to check in the driver. And that means that if the
+> application is well written, then the driver will behave in a completely
+> standard way that the compliance test can check.
 
-> [    4.285185] [] (is_sensor_enabled) from [] (tsens_probe+0x170/0x2d4)
-> [    4.293699] [] (tsens_probe) from [] (platform_drv_probe+0x48/0x98)
-> [    4.301764] [] (platform_drv_probe) from [] (really_probe+0x108/0x40c)
-> [    4.309490] [] (really_probe) from [] (driver_probe_device+0x78/0x1c0)
-> [    4.317822] [] (driver_probe_device) from [] (bus_for_each_drv+0x84/0xc8)
-> [    4.326069] [] (bus_for_each_drv) from [] (__device_attach+0xd4/0x16c)
-> [    4.334662] [] (__device_attach) from [] (bus_probe_device+0x84/0x8c)
-> [    4.342815] [] (bus_probe_device) from [] (deferred_probe_work_func+0x84/0xc4)
-> [    4.351081] [] (deferred_probe_work_func) from [] (process_one_work+0x204/0x570)
-> [    4.359935] [] (process_one_work) from [] (worker_thread+0x294/0x580)
-> [    4.369218] [] (worker_thread) from [] (kthread+0x148/0x150)
-> [    4.377288] [] (kthread) from [] (ret_from_fork+0x14/0x2c)
-> [    4.384735] Exception stack(0xc02f1fb0 to 0xc02f1ff8)
-> [    4.391775] 1fa0:                                     00000000 00000000 00000000 00000000
-> [    4.396916] 1fc0: 00000000 00000000 00000000 00000000 00000000 00000000 00000000 00000000
-> [    4.405068] 1fe0: 00000000 00000000 00000000 00000000 00000013 00000000
-> [    4.413232] Code: e1a06001 e1a0300d e3c34d7f e3c4403f
->
-> [1] https://storage.kernelci.org/next/pending-fixes/v5.2-rc1-375-g3695b18d1e9cd/arm/qcom_defconfig/gcc-8/lab-baylibre-seattle/boot-qcom-apq8064-cm-qs600.html
+I guess one could have some helpers for this. They would listen to the
+source change events internally and block / wake-up appropriate ioctls
+whenever necessary.
+
+Another question: If we intend this to be implemented in new drivers
+too, should it be documented in the spec?
+
+Best regards,
+Tomasz
