@@ -2,79 +2,78 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 4DDC12B077
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 May 2019 10:43:53 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id CE3F32B112
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 May 2019 11:10:34 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726209AbfE0Inw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 27 May 2019 04:43:52 -0400
-Received: from mail-ot1-f67.google.com ([209.85.210.67]:41282 "EHLO
-        mail-ot1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725908AbfE0Inv (ORCPT
+        id S1726627AbfE0JK3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 27 May 2019 05:10:29 -0400
+Received: from mail-lj1-f193.google.com ([209.85.208.193]:43410 "EHLO
+        mail-lj1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726097AbfE0JK3 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 27 May 2019 04:43:51 -0400
-Received: by mail-ot1-f67.google.com with SMTP id l25so14128128otp.8;
-        Mon, 27 May 2019 01:43:50 -0700 (PDT)
+        Mon, 27 May 2019 05:10:29 -0400
+Received: by mail-lj1-f193.google.com with SMTP id z5so14027975lji.10
+        for <linux-arm-msm@vger.kernel.org>; Mon, 27 May 2019 02:10:27 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=pEGlKR9cMXvIeUwusBglsYeiQ+SPB2PmHYL6y3sHsr0=;
+        b=FhjjRkkXUEVnfVIt6bTqWSZJb/80sf15Ilad86TcxGXBhK8aK4E1Q8KTgK9nZ7a3Wc
+         L+08R9RZF08RtWFv83jca1VyQfwi7ljQUoGUnI+MLWoxcugHRvse2TEQADWqDxxGDhkv
+         03VruCzQb3H2EC7bW3VH9sYFSU1DSddBsVfvpbfT+VLY9BvT7GtBotmkm3OzN5YNmVAG
+         kO6OSAhPlVJGlX/tgBr5UHCMZEYKdewpzcS9XDXgV/Z2rjnIc5B86w2RLERHCubNoixu
+         uI8Dtj9y6WlZ2f+MIDty1Q5bXXvSPYBMYwABhThGOV8v6RJF3aNCo0+PFKpKf3EFP0+Z
+         kd1g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=SPyeTzPFoh+1jcHD1T6EeO+I9ugNzJgCyHNSVSPB+Tc=;
-        b=CurKgiqG1W2/kcwqKQGypZEHcqAaKeeiBvQOmycmxO1M+JUNpY1wcado5riTLx4FgG
-         KoAuupXk1Co0lLXoLzVZk0CvOYk7xlutqqlEq5DZk3/LMCHkjffnoinnb9e32YvycQy8
-         ziXuqUmjx/p/KoWMf47CE+jo966cTxXZ/QZn2/qErM/uzZ6ujgEDVfRRgopAaD6kJKZj
-         Thp50xWIEhTq1yDoPNKmKuhGmOQDuMveeVlMnKE+WWRL4hBg2kwXBkVZQse0hRHudESs
-         DyuBbNdhcgcC++eX5TnpHOy8uFHrP2P0257cxe/WUfISunfz2lJjT6b48Se2N812QYc+
-         6YIQ==
-X-Gm-Message-State: APjAAAUPr7GH+9lLtlo50P8cRh7osBh4bF0CR5KFM/Npp13or1BEUC//
-        VGOAIkJoib2ZcJWVVgLKoZZY7j4ThLNydZb6Nnw=
-X-Google-Smtp-Source: APXvYqxIlLFH84yhUFerMj/YlUDBNDBRTGJTxhPDFRXnfvuo7mYZbz39ugxbhoZlfat/iRijWwRpROWfadWrjYSeMCE=
-X-Received: by 2002:a9d:7dd5:: with SMTP id k21mr43860970otn.167.1558946630255;
- Mon, 27 May 2019 01:43:50 -0700 (PDT)
+        bh=pEGlKR9cMXvIeUwusBglsYeiQ+SPB2PmHYL6y3sHsr0=;
+        b=Ovu/8WJxJ4ACJmXmTiHYE7L2XkjY+oaDGCBspmL4jjWiv6aH/J7gqOJBNyAvfYVp/9
+         qcGHfypszeakJ3Y/LZTW8wn5FWjytaAXSVHkFqgq+mAEFQ27SXNAEIWnqZJ6EgopZJmW
+         rg/x3M3JQThOn9kD+77/ptCiolggArOxx58dm483esZYFceIhIXhRdEvVuHt1FpsC4JB
+         dfjVpADETakYYM0b+VQul9cBpMCjMckhPPLipXkYig7xFGmb+9P4TTVRLcjUczyW90Z0
+         CNtPfcNYNuvCqWCm6ZxOKV1AoTDCVT69NuX144XNpg0n2+xaloX1pwL2+nvrO9rA2+c5
+         hpvA==
+X-Gm-Message-State: APjAAAWJ5PDc45z5H3ak6zpQRlSgS14E1dhoRSg/LclW5bFiVEAFadko
+        8hvVc60JrY/5j+7ZDkSU70+r4f0O7yvk4MypxeqMPw==
+X-Google-Smtp-Source: APXvYqx3PadhULZkWPFoOWBCluXUOl+KRGzn+HWRbMqV3BUzCYyZIRy5UR/oJ53rjISdwLm4eqiipmAdUSlkYMpbwu0=
+X-Received: by 2002:a2e:5c1:: with SMTP id 184mr52626256ljf.94.1558948227212;
+ Mon, 27 May 2019 02:10:27 -0700 (PDT)
 MIME-Version: 1.0
-References: <cover.1558362030.git.mchehab+samsung@kernel.org> <4fd1182b4a41feb2447c7ccde4d7f0a6b3c92686.1558362030.git.mchehab+samsung@kernel.org>
-In-Reply-To: <4fd1182b4a41feb2447c7ccde4d7f0a6b3c92686.1558362030.git.mchehab+samsung@kernel.org>
-From:   "Rafael J. Wysocki" <rafael@kernel.org>
-Date:   Mon, 27 May 2019 10:43:39 +0200
-Message-ID: <CAJZ5v0iiSo=yoyZTt6ddf5fBRGy1wSvzmA-ZaHH33nivkSp22Q@mail.gmail.com>
-Subject: Re: [PATCH 10/10] docs: fix broken documentation links
-To:     Mauro Carvalho Chehab <mchehab+samsung@kernel.org>
-Cc:     Linux Doc Mailing List <linux-doc@vger.kernel.org>,
-        Mauro Carvalho Chehab <mchehab@infradead.org>,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-        Jonathan Corbet <corbet@lwn.net>,
-        "the arch/x86 maintainers" <x86@kernel.org>,
-        ACPI Devel Maling List <linux-acpi@vger.kernel.org>,
-        "open list:EDAC-CORE" <linux-edac@vger.kernel.org>,
-        netdev <netdev@vger.kernel.org>,
-        "devicetree@vger.kernel.org" <devicetree@vger.kernel.org>,
-        Linux PCI <linux-pci@vger.kernel.org>,
-        Linux ARM <linux-arm-kernel@lists.infradead.org>,
-        linux-amlogic@lists.infradead.org,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        linux-gpio@vger.kernel.org, linux-i2c <linux-i2c@vger.kernel.org>,
-        linuxppc-dev <linuxppc-dev@lists.ozlabs.org>,
-        xen-devel@lists.xenproject.org,
-        Platform Driver <platform-driver-x86@vger.kernel.org>,
-        devel@driverdev.osuosl.org, kvm@vger.kernel.org,
-        virtualization@lists.linux-foundation.org,
-        "open list:ACPI COMPONENT ARCHITECTURE (ACPICA)" <devel@acpica.org>,
-        Linux Memory Management List <linux-mm@kvack.org>,
-        linux-security-module@vger.kernel.org,
-        linux-kselftest@vger.kernel.org
+References: <20190525204228.8546-1-colin.king@canonical.com>
+In-Reply-To: <20190525204228.8546-1-colin.king@canonical.com>
+From:   Linus Walleij <linus.walleij@linaro.org>
+Date:   Mon, 27 May 2019 11:10:15 +0200
+Message-ID: <CACRpkdadikx9MPrVUQxXa6KYsmnuoakjYVTNEcv_HOoW0pCgZg@mail.gmail.com>
+Subject: Re: [PATCH] dt-bindings: pinctrl: fix spelling mistakes in pinctl documentation
+To:     Colin King <colin.king@canonical.com>
+Cc:     Andy Gross <agross@kernel.org>,
+        David Brown <david.brown@linaro.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Mark Rutland <mark.rutland@arm.com>,
+        MSM <linux-arm-msm@vger.kernel.org>,
+        "open list:GPIO SUBSYSTEM" <linux-gpio@vger.kernel.org>,
+        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
+        <devicetree@vger.kernel.org>, kernel-janitors@vger.kernel.org,
+        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, May 20, 2019 at 4:48 PM Mauro Carvalho Chehab
-<mchehab+samsung@kernel.org> wrote:
->
-> Mostly due to x86 and acpi conversion, several documentation
-> links are still pointing to the old file. Fix them.
->
-> Signed-off-by: Mauro Carvalho Chehab <mchehab+samsung@kernel.org>
+On Sat, May 25, 2019 at 10:42 PM Colin King <colin.king@canonical.com> wrote:
 
-For the ACPI part:
+> From: Colin Ian King <colin.king@canonical.com>
+>
+> The spelling of configured is incorrect in the documentation. Fix it.
+>
+> Signed-off-by: Colin Ian King <colin.king@canonical.com>
 
-Acked-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Patch applied with Bjorn's review tag.
+
+Yours,
+Linus Walleij
