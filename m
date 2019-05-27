@@ -2,136 +2,178 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 3F9682AE51
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 May 2019 07:57:21 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B5FBD2AF75
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 May 2019 09:39:45 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726054AbfE0F5U (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 27 May 2019 01:57:20 -0400
-Received: from mail-pg1-f196.google.com ([209.85.215.196]:43007 "EHLO
-        mail-pg1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725822AbfE0F5T (ORCPT
+        id S1725940AbfE0Hjp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 27 May 2019 03:39:45 -0400
+Received: from lb3-smtp-cloud9.xs4all.net ([194.109.24.30]:54193 "EHLO
+        lb3-smtp-cloud9.xs4all.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1725869AbfE0Hjp (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 27 May 2019 01:57:19 -0400
-Received: by mail-pg1-f196.google.com with SMTP id 33so5505612pgv.9
-        for <linux-arm-msm@vger.kernel.org>; Sun, 26 May 2019 22:57:19 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=JyuJRgpS/Z7CTA8H0O+hxtzN/dPpz0TyAwIDE7XTsoE=;
-        b=tuK8ZJtVIXwdPqsWdCte9y3TqlJG9qgELDQ3Qtp6LQKM8RKkyKpCzZkxEj0Rc2WkDL
-         2Zsfou7/kcXjVBVVKZbyd1vpgHoltIgN/xtEWFYBHpnAG3V6zkWDiy1iTyxASIA9CENQ
-         mA7+QcLY3xq9OCa85rUrfTnUC93wNgN7pb/iWF9gDRmtjp/EREjqEwTpSmkigkxsMWFW
-         Dch1i+eR2PB3g/qfC+a+rSADliGMCp1rcVIDlZ1nUQhX3IA1oVSLv+0kdbMvq+wLMVEH
-         EiFnt8NM5d7BexcLwQ+IFWTjLJXCKlKrLgcaDZCIFCHPhnltSPGoP4cbGO158bKGJAU7
-         /huA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=JyuJRgpS/Z7CTA8H0O+hxtzN/dPpz0TyAwIDE7XTsoE=;
-        b=QViLQDFDkQcOYm+iCkud7Eq8Pmtvpkh//ob/9O2rQxsP98lkHGOXmAQTVgVcYGlwSc
-         ROhRIB4+euyufUTEMFkZZV2X33OZA1glJWzmECnx7eqG11ka0Gq5B/GTvcFaBwwxXXsL
-         lyQEBhknRYDoTnwUjbnizTX3trmAWZ90M8lH/dvC8ECL13t6edjChoxSRvqYA8c5jZav
-         h36LHEX9mlfWgHQAMAiCbOmoYwv7MvG/mGeMMMp4p719SFlclBo1fjplLCW8s8BQ5yAG
-         scNEWXnG6CndH7YRF5atXYXTBlyi6Uq9vA5TNAHpFuuNx/6IPwhha8+P6xZdcrHrHeFp
-         laqw==
-X-Gm-Message-State: APjAAAWwqoJmAww0eY2kA43vtFlnci2A9Vp2TYdYdesY1BjBRlpdb1Ji
-        rS7H3cDu/WYP6oNDY6GlMzi4AQ==
-X-Google-Smtp-Source: APXvYqyFsSMergPg5Nna/kdDGDiTnNFmQX2Z9Q80x2Bevc9+pSNViT0695L4158UfsAXYGHWblpzzg==
-X-Received: by 2002:a63:e603:: with SMTP id g3mr14837549pgh.167.1558936638925;
-        Sun, 26 May 2019 22:57:18 -0700 (PDT)
-Received: from minitux (104-188-17-28.lightspeed.sndgca.sbcglobal.net. [104.188.17.28])
-        by smtp.gmail.com with ESMTPSA id t18sm8297274pgm.69.2019.05.26.22.57.16
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Sun, 26 May 2019 22:57:17 -0700 (PDT)
-Date:   Sun, 26 May 2019 22:57:15 -0700
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     "Enrico Weigelt, metux IT consult" <info@metux.net>
-Cc:     linux-kernel@vger.kernel.org, gregkh@linuxfoundation.org,
-        eric@anholt.net, stefan.wahren@i2se.com, f.fainelli@gmail.com,
-        rjui@broadcom.com, sbranden@broadcom.com,
-        bcm-kernel-feedback-list@broadcom.com,
-        andriy.shevchenko@linux.intel.com, vz@mleia.com,
-        matthias.bgg@gmail.com, yamada.masahiro@socionext.com,
-        tklauser@distanz.ch, richard.genoud@gmail.com,
-        macro@linux-mips.org, u.kleine-koenig@pengutronix.de,
-        kernel@pengutronix.de, slemieux.tyco@gmail.com,
-        andy.gross@linaro.org, david.brown@linaro.org, shawnguo@kernel.org,
-        s.hauer@pengutronix.de, festevam@gmail.com, linux-imx@nxp.com,
-        baohua@kernel.org, jacmet@sunsite.dk, linux-serial@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, linuxppc-dev@lists.ozlabs.org
-Subject: Re: [PATCH v2 20/45] drivers: tty: serial: msm_serial: use devm_*
- functions
-Message-ID: <20190527055715.GW31438@minitux>
-References: <1552602855-26086-1-git-send-email-info@metux.net>
- <1552602855-26086-21-git-send-email-info@metux.net>
+        Mon, 27 May 2019 03:39:45 -0400
+Received: from [IPv6:2001:983:e9a7:1:f4bd:6355:63eb:2e52] ([IPv6:2001:983:e9a7:1:f4bd:6355:63eb:2e52])
+        by smtp-cloud9.xs4all.net with ESMTPA
+        id VAEOhZ8u3sDWyVAEPhXnKi; Mon, 27 May 2019 09:39:42 +0200
+Subject: Re: [PATCH 10/10] venus: dec: make decoder compliant with stateful
+ codec API
+To:     Tomasz Figa <tfiga@chromium.org>
+Cc:     Stanimir Varbanov <stanimir.varbanov@linaro.org>,
+        Linux Media Mailing List <linux-media@vger.kernel.org>,
+        Mauro Carvalho Chehab <mchehab@kernel.org>,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        Vikash Garodia <vgarodia@codeaurora.org>,
+        Alexandre Courbot <acourbot@chromium.org>,
+        Malathi Gottam <mgottam@codeaurora.org>
+References: <20190117162008.25217-1-stanimir.varbanov@linaro.org>
+ <20190117162008.25217-11-stanimir.varbanov@linaro.org>
+ <60b3efff-31c1-bc04-8af9-deebb8bc013a@xs4all.nl>
+ <fe51ae1e-6d2e-36bd-485a-d85520ad2386@linaro.org>
+ <CAAFQd5Co3G1J4+HOcjtCb7p3rhLcm+1E=mPr2d=AtdOSuF_eKg@mail.gmail.com>
+ <c56930e0-be6f-2ade-fcea-8ee0ff6247ec@linaro.org>
+ <CAAFQd5CNGsnqjpLsWSTf=8r+hSfyOgD8SU-tn5EbHCCuuSgH6A@mail.gmail.com>
+ <01b6683f-9378-e6f2-501f-e2213e6c690d@xs4all.nl>
+ <CAAFQd5Dw-1A2gXuC54Z7808L6Vm9mjPpE7Kbj-TZC18_k_FgVA@mail.gmail.com>
+From:   Hans Verkuil <hverkuil@xs4all.nl>
+Message-ID: <a9b11ba0-adca-f974-67a5-a0fe54689bba@xs4all.nl>
+Date:   Mon, 27 May 2019 09:39:39 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+ Thunderbird/60.6.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <1552602855-26086-21-git-send-email-info@metux.net>
-User-Agent: Mutt/1.11.3 (2019-02-01)
+In-Reply-To: <CAAFQd5Dw-1A2gXuC54Z7808L6Vm9mjPpE7Kbj-TZC18_k_FgVA@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
+X-CMAE-Envelope: MS4wfP/KlNMUpI8R5BYs77TLAQQpb7XPrT/Q7FQW/9jjzWxU0gK9jSERXE2vWgoHtc8gKV48bA83Qt+62pLbBCyHlf2cvHrjyp5CqYS4fFJGLXiLBwq/jI9c
+ hDq9Idy8JzJI+TCm9X9vX8wxHPMEL6lKNgy+iy0TLmkFwWX/0jDE6KvfDJvi+5bhUPQdA7VjcJzONb7wRB+Pi62MCK/GiCKLLtJW1QuVyIXXQh0Yz3ayCMM3
+ /9G4xg2jLk6kZMq25trnWTnSUZiLoGr6Ln25TSWe4qZLw/iHQ/mpxfPHWHIkIQw5IWkJcOJ/WRkjcscZxz7AD3WCSA1wgkRvkf6oZLBzDl9DZf82qdO94+K0
+ nVx9GiUbhAFS+oVCSink8KPdAY2wkqDQ2csnvHoaiJc0a1fzNRPo/psWIzxGj+7fgnV2bw6WWx5I/dbNoremu6MqgDyKIqD18Vbn/NX7pwBZBdmvfDxfIi2b
+ ZTDdE8WOzge1lP4qDPRR/GHpUmUnMi0dJ5VgLdTbJ+9EcaLCuuM0X/rWuT7pGzfUXyFrfentz+yHsfwlumZV5Vpak5oFPIwyhzgKog==
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu 14 Mar 15:33 PDT 2019, Enrico Weigelt, metux IT consult wrote:
-
-> Use the safer devm versions of memory mapping functions.
+On 5/27/19 5:51 AM, Tomasz Figa wrote:
+> On Tue, May 21, 2019 at 9:27 PM Hans Verkuil <hverkuil@xs4all.nl> wrote:
+>>
+>> On 5/21/19 11:09 AM, Tomasz Figa wrote:
+>>> Hi Stan,
+>>>
+>>> On Mon, May 20, 2019 at 11:47 PM Stanimir Varbanov
+>>> <stanimir.varbanov@linaro.org> wrote:
+>>>>
+>>>> Hi Tomasz,
+>>>>
+>>>> On 4/24/19 3:39 PM, Tomasz Figa wrote:
+>>>>> On Wed, Apr 24, 2019 at 9:15 PM Stanimir Varbanov
+>>>>> <stanimir.varbanov@linaro.org> wrote:
+>>>>>>
+>>>>>> Hi Hans,
+>>>>>>
+>>>>>> On 2/15/19 3:44 PM, Hans Verkuil wrote:
+>>>>>>> Hi Stanimir,
+>>>>>>>
+>>>>>>> I never paid much attention to this patch series since others were busy
+>>>>>>> discussing it and I had a lot of other things on my plate, but then I heard
+>>>>>>> that this patch made G_FMT blocking.
+>>>>>>
+>>>>>> OK, another option could be to block REQBUF(CAPTURE) until event from hw
+>>>>>> is received that the stream is parsed and the resolution is correctly
+>>>>>> set by application. Just to note that I'd think to this like a temporal
+>>>>>> solution until gstreamer implements v4l events.
+>>>>>>
+>>>>>> Is that looks good to you?
+>>>>>
+>>>>> Hmm, I thought we concluded that gstreamer sets the width and height
+>>>>> in OUTPUT queue before querying the CAPTURE queue and so making the
+>>>>> driver calculate the CAPTURE format based on what's set on OUTPUT
+>>>>> would work fine. Did I miss something?
+>>>>
+>>>> Nobody is miss something.
+>>>>
+>>>> First some background about how Venus implements stateful codec API.
+>>>>
+>>>> The Venus firmware can generate two events "sufficient" and
+>>>> "insufficient" buffer requirements (this includes decoder output buffer
+>>>> size and internal/scratch buffer sizes). Presently I always set minimum
+>>>> possible decoder resolution no matter what the user said, and by that
+>>>> way I'm sure that "insufficient" event will always be triggered by the
+>>>> firmware (the other reason to take this path is because this is the
+>>>> least-common-divider for all supported Venus hw/fw versions thus common
+>>>> code in the driver). The reconfiguration (during codec Initialization
+>>>> sequence) is made from STREAMON(CAPTURE) context. Now, to make that
+>>>> re-configuration happen I need to wait for "insufficient" event from
+>>>> firmware in order to know the real coded resolution.
+>>>>
+>>>> In the case of gstreamer where v4l2_events support is missing I have to
+>>>> block (wait for firmware event) REQBUF(CAPTURE) (vb2::queue_setup) or
+>>>> STREAMON(CAPTURE) (vb2::start_streaming).
+>>>>
+>>>> I tried to set the coded resolution to the firmware as-is it set by
+>>>> gstreamer but then I cannot receive the "sufficient" event for VP8 and
+>>>> VP9 codecs. So I return back to the solution with minimum resolution above.
+>>>>
+>>>> I'm open for suggestions.
+>>>
+>>> I think you could still keep setting the minimum size and wait for the
+>>> "insufficient" event. At the same time, you could speculatively
+>>> advertise the expected "sufficient" size on the CAPTURE queue before
+>>> the hardware signals those. Even if you mispredict them, you'll get
+>>> the event, update the CAPTURE resolution and send the source change
+>>> event to the application, which would then give you the correct
+>>> buffers. Would that work for you?
+>>
+>> As I understand it this still would require event support, which gstreamer
+>> doesn't have.
 > 
-> Signed-off-by: Enrico Weigelt, metux IT consult <info@metux.net>
+> I don't think it matches what I remember from the earlier discussion.
+> As long as Gstreamer sets the visible resolution (from the container
+> AFAIR) on OUTPUT, the driver would adjust it to something that is
+> expected to be the right framebuffer resolution and so Gstreamer would
+> be able to continue. Of course if the expected value doesn't match, it
+> wouldn't work, but it's the same as currently for Coda AFAICT.
+> 
+>>
+>> I think it is OK to have REQBUFS sleep in this case. However, I would only
+> 
+> Why REQBUFS? While that could possibly allow us to allocate the right
+> buffers, Gstreamer wouldn't be able to know the right format, because
+> it would query it before REQBUFS, wouldn't it?
 
-As pointed out by others, this resource does not follow the life cycle
-of the port->dev, so I don't think this improves the code.
+Oops, you are right. It's got to be in G_FMT(CAPTURE), but *only* if
+nobody subscribed to the SOURCE_CHANGE event.
+
+> 
+> For this reason, s5p-mfc makes G_FMT(CAPTURE) blocking and if we
+> decide to forcefully keep the compatibility, even with in drivers, we
+> should probably do the same here.
+> 
+>> enable this behavior if the application didn't subscribe to the SOURCE_CHANGE
+>> event. That's easy enough to check in the driver. And that means that if the
+>> application is well written, then the driver will behave in a completely
+>> standard way that the compliance test can check.
+> 
+> I guess one could have some helpers for this. They would listen to the
+> source change events internally and block / wake-up appropriate ioctls
+> whenever necessary.
+
+I really do not want this for new drivers. gstreamer should be fixed.
+A blocking G_FMT is just plain bad. Only those drivers that do this, can
+still block if nobody subscribed to EVENT_SOURCE_CHANGE.
+
+> Another question: If we intend this to be implemented in new drivers
+> too, should it be documented in the spec?
+
+We most certainly do NOT want to implement this in new drivers.
 
 Regards,
-Bjorn
 
-> ---
->  drivers/tty/serial/msm_serial.c | 13 ++++++++-----
->  1 file changed, 8 insertions(+), 5 deletions(-)
+	Hans
+
 > 
-> diff --git a/drivers/tty/serial/msm_serial.c b/drivers/tty/serial/msm_serial.c
-> index 1090960..e8e0c87 100644
-> --- a/drivers/tty/serial/msm_serial.c
-> +++ b/drivers/tty/serial/msm_serial.c
-> @@ -1324,8 +1324,8 @@ static void msm_release_port(struct uart_port *port)
->  		return;
->  	size = resource_size(uart_resource);
->  
-> -	release_mem_region(port->mapbase, size);
-> -	iounmap(port->membase);
-> +	devm_release_mem_region(port->dev, port->mapbase, size);
-> +	devm_iounmap(port->dev, port->membase);
->  	port->membase = NULL;
->  }
->  
-> @@ -1342,10 +1342,13 @@ static int msm_request_port(struct uart_port *port)
->  
->  	size = resource_size(uart_resource);
->  
-> -	if (!request_mem_region(port->mapbase, size, "msm_serial"))
-> +	if (!devm_request_mem_region(port->dev,
-> +				     port->mapbase,
-> +				     size,
-> +				     "msm_serial"))
->  		return -EBUSY;
->  
-> -	port->membase = ioremap(port->mapbase, size);
-> +	port->membase = ioremap(port->dev, port->mapbase, size);
->  	if (!port->membase) {
->  		ret = -EBUSY;
->  		goto fail_release_port;
-> @@ -1354,7 +1357,7 @@ static int msm_request_port(struct uart_port *port)
->  	return 0;
->  
->  fail_release_port:
-> -	release_mem_region(port->mapbase, size);
-> +	devm_release_mem_region(port->dev, port->mapbase, size);
->  	return ret;
->  }
->  
-> -- 
-> 1.9.1
+> Best regards,
+> Tomasz
 > 
+
