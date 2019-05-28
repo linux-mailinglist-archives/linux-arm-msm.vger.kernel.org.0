@@ -2,75 +2,82 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 911ED2C18D
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 May 2019 10:43:22 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 007E72C812
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 May 2019 15:46:31 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726279AbfE1InV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 28 May 2019 04:43:21 -0400
-Received: from ns.iliad.fr ([212.27.33.1]:59964 "EHLO ns.iliad.fr"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1725943AbfE1InV (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 28 May 2019 04:43:21 -0400
-Received: from ns.iliad.fr (localhost [127.0.0.1])
-        by ns.iliad.fr (Postfix) with ESMTP id 3BE4020D88;
-        Tue, 28 May 2019 10:43:20 +0200 (CEST)
-Received: from [192.168.108.49] (freebox.vlq16.iliad.fr [213.36.7.13])
-        by ns.iliad.fr (Postfix) with ESMTP id 23ADB20C11;
-        Tue, 28 May 2019 10:43:20 +0200 (CEST)
-Subject: Re: [PATCH 1/1] drm/panel: truly: Add additional delay after pulling
- down reset gpio
-To:     Vivek Gautam <vivek.gautam@codeaurora.org>, airlied@linux.ie,
-        thierry.reding@gmail.com, daniel@ffwll.ch
-Cc:     Rob Clark <robdclark@gmail.com>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        MSM <linux-arm-msm@vger.kernel.org>,
-        LKML <linux-kernel@vger.kernel.org>
-References: <20190527102616.28315-1-vivek.gautam@codeaurora.org>
-From:   Marc Gonzalez <marc.w.gonzalez@free.fr>
-Message-ID: <7dfcf294-6ab1-c1ce-352d-dfdeec4347af@free.fr>
-Date:   Tue, 28 May 2019 10:43:20 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.6.1
+        id S1727545AbfE1Nq2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 28 May 2019 09:46:28 -0400
+Received: from mail-lf1-f65.google.com ([209.85.167.65]:42315 "EHLO
+        mail-lf1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727039AbfE1Nq1 (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 28 May 2019 09:46:27 -0400
+Received: by mail-lf1-f65.google.com with SMTP id y13so14614783lfh.9
+        for <linux-arm-msm@vger.kernel.org>; Tue, 28 May 2019 06:46:26 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=uimJHxg6x5yQ0SkHYR4jhNo2jzcs/560scjjidJxXaA=;
+        b=wIhuxC/qafCCzj9xj0e1GyrPTHQ9LBOu5VnQiwMSnJKjudJatYnjbRzVzl7upG0ngG
+         cWtzKZmvp4vPIiRmvem2OWDEplCrgRfOuYzeq7EjL6eblc1GzwDuuKZ/uZmXUkyNAH6M
+         h9ICrKl5D7CVaL58rjVCvLBqaPUOu/RAf73EcQDaGcodz0JIMVeJAaFbOlYrV7vaY7hb
+         QOvaCL5bfa8tmpaGCOdUxmeU8tEyo+OhnsBwZdL+LTvxyjKmLP60bPkiyBYGH1eR6nw8
+         87ZbuRmU9ShywtYnKzjS+OIQJmbJ9jsjjuUx2i0hIDJr5LWtHvg2bAOY8ivWaoxDmWM0
+         b3Yg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=uimJHxg6x5yQ0SkHYR4jhNo2jzcs/560scjjidJxXaA=;
+        b=Q/VlkjAcbMivA+M/IvM5VBvcYjLboGrpUFbqu6uZoDgetT7VOkTf068SFOTWxYDKW9
+         7/Vgw/Oa5qev0FZZ7kkIBGR3+wGzcBzOkJnpNh279pRNT+VmiRdJukbmrLLR4Zwj+/YZ
+         UmYhdesDvoMbgMuyNPNf2EZmenBxxqQk34UzpoOXGrFs91UGPSk1IoeMXsXCtcxy78Xm
+         f/Q6ZpAVaxtifJlbjga9asTfHFnzfWyz2FaZg7xW1UEAveBYttLXIZ9qcHf5R7xb7UKY
+         Kt4Mgrp3jJQslG5s7NFB8AUEruftWJN3jgObhfj9BMhYjjP5N74rfX7ZpilnFA1fykrA
+         m23A==
+X-Gm-Message-State: APjAAAWmDvD/6robh0bKn1Dhd/iBoPw1fBPdrWZLtM5rZFClqB9HJoM7
+        vNH9GOMK3xYoy8Y/hpB5RIKyoZvSjzxpL9HGXiTivA==
+X-Google-Smtp-Source: APXvYqy4gMwzBlvFh/Ib5gpRrpfYM0F0Z553OBKhHwqFjc4A6FVcEqQkL1jjwcIYhdWJgpLzcJ0GmyoVFzYPjUkcRek=
+X-Received: by 2002:ac2:48ad:: with SMTP id u13mr33425124lfg.60.1559051186146;
+ Tue, 28 May 2019 06:46:26 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <20190527102616.28315-1-vivek.gautam@codeaurora.org>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
-X-Virus-Scanned: ClamAV using ClamSMTP ; ns.iliad.fr ; Tue May 28 10:43:20 2019 +0200 (CEST)
+References: <20190509020352.14282-1-masneyb@onstation.org>
+In-Reply-To: <20190509020352.14282-1-masneyb@onstation.org>
+From:   Linus Walleij <linus.walleij@linaro.org>
+Date:   Tue, 28 May 2019 15:46:14 +0200
+Message-ID: <CACRpkda-7+ggoeMD9=erPX09OWteX0bt+qP60_Yv6=4XLqNDZQ@mail.gmail.com>
+Subject: Re: [PATCH RFC v2 0/6] ARM: qcom: initial Nexus 5 display support
+To:     Brian Masney <masneyb@onstation.org>
+Cc:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        "open list:DRM PANEL DRIVERS" <dri-devel@lists.freedesktop.org>,
+        MSM <linux-arm-msm@vger.kernel.org>,
+        freedreno@lists.freedesktop.org, Dave Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
+        Jonathan Marek <jonathan@marek.ca>,
+        Rob Herring <robh@kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 27/05/2019 12:26, Vivek Gautam wrote:
+On Thu, May 9, 2019 at 4:04 AM Brian Masney <masneyb@onstation.org> wrote:
 
-> MTP SDM845 panel seems to need additional delay to bring panel
-> to a workable state. Running modetest without this change displays
-> blurry artifacts.
-> 
-> Signed-off-by: Vivek Gautam <vivek.gautam@codeaurora.org>
-> ---
->  drivers/gpu/drm/panel/panel-truly-nt35597.c | 1 +
->  1 file changed, 1 insertion(+)
-> 
-> diff --git a/drivers/gpu/drm/panel/panel-truly-nt35597.c b/drivers/gpu/drm/panel/panel-truly-nt35597.c
-> index fc2a66c53db4..aa7153fd3be4 100644
-> --- a/drivers/gpu/drm/panel/panel-truly-nt35597.c
-> +++ b/drivers/gpu/drm/panel/panel-truly-nt35597.c
-> @@ -280,6 +280,7 @@ static int truly_35597_power_on(struct truly_nt35597 *ctx)
->  	gpiod_set_value(ctx->reset_gpio, 1);
->  	usleep_range(10000, 20000);
->  	gpiod_set_value(ctx->reset_gpio, 0);
-> +	usleep_range(10000, 20000);
+> Here is a patch series that adds initial display support for the LG
+> Nexus 5 (hammerhead) phone. It's not fully working so that's why some
+> of these patches are RFC until we can get it fully working.
+>
+> The phones boots into terminal mode, however there is a several second
+> (or more) delay when writing to tty1 compared to when the changes are
+> actually shown on the screen. The following errors are in dmesg:
 
-I'm not sure usleep_range() makes sense with these values.
+I tested to apply patches 2-6 and got the console up on the phone as well.
+I see the same timouts, and I also notice the update is slow in the
+display, as if the DSI panel was running in low power (LP) mode.
 
-AFAIU, usleep_range() is typically used for sub-jiffy sleeps, and is based
-on HRT to generate an interrupt.
+Was booting this to do some other work, but happy to see the progress!
 
-Once we get into jiffy granularity, it seems to me msleep() is good enough.
-IIUC, it would piggy-back on the jiffy timer interrupt.
-
-In short, why not just use msleep(10); ?
-
-Regards.
+Yours,
+Linus Walleij
