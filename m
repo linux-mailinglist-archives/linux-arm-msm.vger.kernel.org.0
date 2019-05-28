@@ -2,317 +2,85 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 52F502CD18
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 May 2019 19:06:19 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 541A92CE3B
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 May 2019 20:09:21 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726668AbfE1RGS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 28 May 2019 13:06:18 -0400
-Received: from mail-pl1-f193.google.com ([209.85.214.193]:34638 "EHLO
-        mail-pl1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726515AbfE1RGS (ORCPT
+        id S1727855AbfE1SJU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 28 May 2019 14:09:20 -0400
+Received: from mail-pf1-f193.google.com ([209.85.210.193]:42971 "EHLO
+        mail-pf1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726576AbfE1SJU (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 28 May 2019 13:06:18 -0400
-Received: by mail-pl1-f193.google.com with SMTP id w7so8597729plz.1;
-        Tue, 28 May 2019 10:06:18 -0700 (PDT)
+        Tue, 28 May 2019 14:09:20 -0400
+Received: by mail-pf1-f193.google.com with SMTP id r22so9084121pfh.9
+        for <linux-arm-msm@vger.kernel.org>; Tue, 28 May 2019 11:09:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id;
-        bh=Ydxy9Vm+UUHZwMpZmWqub2N/J5c96RxBnZTvV04Gl14=;
-        b=VBFGbTRYbpvpsQaJMola+p9hgodWQnO9dpwCJV2aLSnit30517prjMQENqHtIGwKec
-         zRGgYvrntvKFYeGj/tUTzOZkfL1d7Uo88EXsbqAj079cTcH8b93anIpfvXTZQ5HA25l2
-         01vONSaBrJxnZK+4T1fdg7Uq9UQl6NhvfZP3CtQqyCKI+MelYu6dPka3tnZDbjeopYde
-         RsWreMdTPI6FzwBVPBhtdzGMDSp84kAW0FFmB0KXtqRZ+QA7FVYPnNavB6Itmc/rV8Ci
-         H5E45HlUri3gHBe/J1/QDffv01jUUBNlFFzmlnecr0NHnARtwmmBYMP5W7EGUUMGFrij
-         yOTg==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=tlMPpoqpJ1M5vsv9PSz/nXeMxwOqULqzOJEOm1XHFU8=;
+        b=KsvePykmq7eU2PD9yMZlwKmWg1b/BUNZld1ykTSRb2GXvxlNxXGqQ6biUwbPHT76Zy
+         Oz+iSu31crNOCdNPONje0fGxIK+jbmIvRfowTZPQSZcPuNKanZeEdo4p8I8AnIkbRQah
+         nYo7cL4fq8rCOHdJBrmOpK/aeldiKd4lf0r6rl5bVgGeX6guaf8xA6xxlqX85uD4gFpr
+         wywm+VIJ1shhO7u3Uf9zJfUQLy3sEDSgvclIeYoXXUK8NFndmihpJ3bOg0KZW3PMSRnF
+         5OV6GtgeEluNNowKLjRyRlLbKqm/iMX36NLYZYSUJaRxB6TOOLmtpaYAMzdAWCpuWCLn
+         o1xQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id;
-        bh=Ydxy9Vm+UUHZwMpZmWqub2N/J5c96RxBnZTvV04Gl14=;
-        b=l8gXv8RmBX+REWXuO5rt0DmWeD/NEqBXW2EJZ4QIEZ1sin0BcLV8YlfKoIivvVXRYS
-         pYYJtLOisFoNLHXwVG5xE99ORTAhzSzEArDfWYvtZgs3wlGd21fR4mQ+muEPn/2xm0G4
-         mgDsvNqhx0LiEh/sbTNDh7ivk4kHMirSkFliq638N6YYvzzEwjfUZVpZ1WxkVdbEYlqJ
-         YaRkjpyVU/WsHnyFQcsMjQE07q4sc/mjgtqcjo+6V5jZATqBgk/HAIfOatq+N59mLLyw
-         vw98dG+Y0u7hCMjZMa/yhpnb7F6Q3zlt8HCaA6G4Gvx4xKdiTqEYEsRmKUrZmczOrbAe
-         mHJw==
-X-Gm-Message-State: APjAAAUwprTwnhwDrCjcz1ajAQBpRepsMQ/h6Z3lbfnA4WzkdmOsATpe
-        WRdO4E+7MusOQ1HfOamGP20=
-X-Google-Smtp-Source: APXvYqxls+cn2sXjlHyn6D8iVjW+UOFHhjpxNdLtDQqvOhi5/kU+v320BL5PCh326Dl2suuvmejkKA==
-X-Received: by 2002:a17:902:e65:: with SMTP id 92mr19595305plw.13.1559063177629;
-        Tue, 28 May 2019 10:06:17 -0700 (PDT)
-Received: from aw-bldr-10.qualcomm.com (i-global254.qualcomm.com. [199.106.103.254])
-        by smtp.gmail.com with ESMTPSA id q6sm11237483pfg.7.2019.05.28.10.06.16
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 28 May 2019 10:06:17 -0700 (PDT)
-From:   Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
-To:     robdclark@gmail.com, sean@poorly.run, airlied@linux.ie,
-        daniel@ffwll.ch, jcrouse@codeaurora.org
-Cc:     marc.w.gonzalez@free.fr, bjorn.andersson@linaro.org,
-        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org,
-        Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
-Subject: [PATCH] drm/msm/adreno: Add A540 support
-Date:   Tue, 28 May 2019 10:06:12 -0700
-Message-Id: <20190528170612.39003-1-jeffrey.l.hugo@gmail.com>
-X-Mailer: git-send-email 2.17.1
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=tlMPpoqpJ1M5vsv9PSz/nXeMxwOqULqzOJEOm1XHFU8=;
+        b=sNmTFvEHQgKt42zZvS1ottZRkBdQ2hG9//Pkh7RnaN6bAmU5o7qtzCOPqYz+XcKgJF
+         qLpYQn1KHYMITU0q92kh6N9bW1YskHO4l39OhRg5eXvDmtKa3Cd41E1jfG4tXS1qqzX2
+         DEK7q+6p0FVKip3j8znSmeV1qnmcvZMoBRYcW1HvjdUOUYR7Gmc3nBFHHymAzFrxd+Gi
+         kzHivpUbk7sQ4ueKYacRN42FEZEUaflR1YvNoQjc7SYUCUrGhnqk23X9j6fiQZhyLmLD
+         DeRJ8VcNTD1BfvXDjON7j+p2DAaJB9IDr8hK7FC5DCn4Y7eyDUf7FaI1LpElBeDa+5IS
+         LuvQ==
+X-Gm-Message-State: APjAAAXfPIYG5tr0FKPuoohqw21TJyWNP7GuCNF5FlXUwcnnF1w2xZWN
+        UlaU9ZAuEpxMlhuGIl5//zg4bQaAua+K8EuVlCo=
+X-Google-Smtp-Source: APXvYqwdutcV12zcgLS5zsMACLjYTRBi+8kxcxY5OpvGRrdTWDzNtWQ91FpcSdEqKfvxlIWFK7RNzMIQJAerhAkBUdk=
+X-Received: by 2002:a17:90a:248:: with SMTP id t8mr7435833pje.119.1559066959742;
+ Tue, 28 May 2019 11:09:19 -0700 (PDT)
+MIME-Version: 1.0
+References: <5ce71d79.1c69fb81.dd0de.33cf@mx.google.com> <7hv9y01z85.fsf@baylibre.com>
+ <20190524012913.D9BB72168B@mail.kernel.org> <CAP245DXkEym=x3vrN2cc2y+uHHx_+z0cW0WsV0dGGXfd+c2mSQ@mail.gmail.com>
+In-Reply-To: <CAP245DXkEym=x3vrN2cc2y+uHHx_+z0cW0WsV0dGGXfd+c2mSQ@mail.gmail.com>
+From:   Andy Gross <andygro@gmail.com>
+Date:   Tue, 28 May 2019 13:09:08 -0500
+Message-ID: <CAJ=6tTqdvgsoVH+3=_6ucAyuhgSjjVSROBKwtxjYwO1vmFvxfg@mail.gmail.com>
+Subject: Re: next/pending-fixes boot: 227 boots: 6 failed, 198 passed with 20
+ offline, 1 untried/unknown, 2 conflicts (v5.2-rc1-375-g3695b18d1e9cd)
+To:     Amit Kucheria <amit.kucheria@linaro.org>
+Cc:     Stephen Boyd <sboyd@kernel.org>,
+        "kernelci.org bot" <bot@kernelci.org>,
+        Kevin Hilman <khilman@baylibre.com>,
+        kernel-build-reports@lists.linaro.org,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The A540 is a derivative of the A530, and is found in the MSM8998 SoC.
+On Sun, May 26, 2019 at 4:51 PM Amit Kucheria <amit.kucheria@linaro.org> wrote:
 
-Signed-off-by: Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
----
- drivers/gpu/drm/msm/adreno/a5xx_gpu.c      | 22 +++++++
- drivers/gpu/drm/msm/adreno/a5xx_power.c    | 76 +++++++++++++++++++++-
- drivers/gpu/drm/msm/adreno/adreno_device.c | 18 +++++
- drivers/gpu/drm/msm/adreno/adreno_gpu.h    |  6 ++
- 4 files changed, 119 insertions(+), 3 deletions(-)
+<snip>
 
-diff --git a/drivers/gpu/drm/msm/adreno/a5xx_gpu.c b/drivers/gpu/drm/msm/adreno/a5xx_gpu.c
-index e5fcefa49f19..7ca8fde22fd8 100644
---- a/drivers/gpu/drm/msm/adreno/a5xx_gpu.c
-+++ b/drivers/gpu/drm/msm/adreno/a5xx_gpu.c
-@@ -318,12 +318,19 @@ static const struct {
- 
- void a5xx_set_hwcg(struct msm_gpu *gpu, bool state)
- {
-+	struct adreno_gpu *adreno_gpu = to_adreno_gpu(gpu);
- 	unsigned int i;
- 
- 	for (i = 0; i < ARRAY_SIZE(a5xx_hwcg); i++)
- 		gpu_write(gpu, a5xx_hwcg[i].offset,
- 			state ? a5xx_hwcg[i].value : 0);
- 
-+	if (adreno_is_a540(adreno_gpu)) {
-+		gpu_write(gpu, REG_A5XX_RBBM_CLOCK_HYST_GPMU, 0x00000222);
-+		gpu_write(gpu, REG_A5XX_RBBM_CLOCK_DELAY_GPMU, 0x00000770);
-+		gpu_write(gpu, REG_A5XX_RBBM_CLOCK_HYST_GPMU, 0x00000004);
-+	}
-+
- 	gpu_write(gpu, REG_A5XX_RBBM_CLOCK_CNTL, state ? 0xAAA8AA00 : 0);
- 	gpu_write(gpu, REG_A5XX_RBBM_ISDB_CNT, state ? 0x182 : 0x180);
- }
-@@ -507,6 +514,9 @@ static int a5xx_hw_init(struct msm_gpu *gpu)
- 
- 	gpu_write(gpu, REG_A5XX_VBIF_ROUND_ROBIN_QOS_ARB, 0x00000003);
- 
-+	if (adreno_is_a540(adreno_gpu))
-+		gpu_write(gpu, REG_A5XX_VBIF_GATE_OFF_WRREQ_EN, 0x00000009);
-+
- 	/* Make all blocks contribute to the GPU BUSY perf counter */
- 	gpu_write(gpu, REG_A5XX_RBBM_PERFCTR_GPU_BUSY_MASKED, 0xFFFFFFFF);
- 
-@@ -592,6 +602,8 @@ static int a5xx_hw_init(struct msm_gpu *gpu)
- 	/* Set the highest bank bit */
- 	gpu_write(gpu, REG_A5XX_TPL1_MODE_CNTL, 2 << 7);
- 	gpu_write(gpu, REG_A5XX_RB_MODE_CNTL, 2 << 1);
-+	if (adreno_is_a540(adreno_gpu))
-+		gpu_write(gpu, REG_A5XX_UCHE_DBG_ECO_CNTL_2, 2);
- 
- 	/* Protect registers from the CP */
- 	gpu_write(gpu, REG_A5XX_CP_PROTECT_CNTL, 0x00000007);
-@@ -642,6 +654,16 @@ static int a5xx_hw_init(struct msm_gpu *gpu)
- 		REG_A5XX_RBBM_SECVID_TSB_TRUSTED_BASE_HI, 0x00000000);
- 	gpu_write(gpu, REG_A5XX_RBBM_SECVID_TSB_TRUSTED_SIZE, 0x00000000);
- 
-+	/*
-+	 * VPC corner case with local memory load kill leads to corrupt
-+	 * internal state. Normal Disable does not work for all a5x chips.
-+	 * So do the following setting to disable it.
-+	 */
-+	if (adreno_gpu->info->quirks & ADRENO_QUIRK_LMLOADKILL_DISABLE) {
-+		gpu_rmw(gpu, REG_A5XX_VPC_DBG_ECO_CNTL, 0, BIT(23));
-+		gpu_rmw(gpu, 0xE04, BIT(18), 0); /*REG_A5XX_HLSQ_DBG_ECO_CNTL*/
-+	}
-+
- 	ret = adreno_hw_init(gpu);
- 	if (ret)
- 		return ret;
-diff --git a/drivers/gpu/drm/msm/adreno/a5xx_power.c b/drivers/gpu/drm/msm/adreno/a5xx_power.c
-index 70e65c94e525..5cb325c6eb8f 100644
---- a/drivers/gpu/drm/msm/adreno/a5xx_power.c
-+++ b/drivers/gpu/drm/msm/adreno/a5xx_power.c
-@@ -32,6 +32,18 @@
- #define AGC_POWER_CONFIG_PRODUCTION_ID 1
- #define AGC_INIT_MSG_VALUE 0xBABEFACE
- 
-+/* AGC_LM_CONFIG (A540+) */
-+#define AGC_LM_CONFIG (136/4)
-+#define AGC_LM_CONFIG_GPU_VERSION_SHIFT 17
-+#define AGC_LM_CONFIG_ENABLE_GPMU_ADAPTIVE 1
-+#define AGC_LM_CONFIG_THROTTLE_DISABLE (2 << 8)
-+#define AGC_LM_CONFIG_ISENSE_ENABLE (1 << 4)
-+#define AGC_LM_CONFIG_ENABLE_ERROR (3 << 4)
-+#define AGC_LM_CONFIG_LLM_ENABLED (1 << 16)
-+#define AGC_LM_CONFIG_BCL_DISABLED (1 << 24)
-+
-+#define AGC_LEVEL_CONFIG (140/4)
-+
- static struct {
- 	uint32_t reg;
- 	uint32_t value;
-@@ -116,7 +128,7 @@ static inline uint32_t _get_mvolts(struct msm_gpu *gpu, uint32_t freq)
- }
- 
- /* Setup thermal limit management */
--static void a5xx_lm_setup(struct msm_gpu *gpu)
-+static void a530_lm_setup(struct msm_gpu *gpu)
- {
- 	struct adreno_gpu *adreno_gpu = to_adreno_gpu(gpu);
- 	struct a5xx_gpu *a5xx_gpu = to_a5xx_gpu(adreno_gpu);
-@@ -165,6 +177,45 @@ static void a5xx_lm_setup(struct msm_gpu *gpu)
- 	gpu_write(gpu, AGC_INIT_MSG_MAGIC, AGC_INIT_MSG_VALUE);
- }
- 
-+#define PAYLOAD_SIZE(_size) ((_size) * sizeof(u32))
-+#define LM_DCVS_LIMIT 1
-+#define LEVEL_CONFIG ~(0x303)
-+
-+static void a540_lm_setup(struct msm_gpu *gpu)
-+{
-+	struct adreno_gpu *adreno_gpu = to_adreno_gpu(gpu);
-+	u32 config;
-+
-+	/* The battery current limiter isn't enabled for A540 */
-+	config = AGC_LM_CONFIG_BCL_DISABLED;
-+	config |= adreno_gpu->rev.patchid << AGC_LM_CONFIG_GPU_VERSION_SHIFT;
-+
-+	/* For now disable GPMU side throttling */
-+	config |= AGC_LM_CONFIG_THROTTLE_DISABLE;
-+
-+	/* Until we get clock scaling 0 is always the active power level */
-+	gpu_write(gpu, REG_A5XX_GPMU_GPMU_VOLTAGE, 0x80000000 | 0);
-+
-+	/* Fixed at 6000 for now */
-+	gpu_write(gpu, REG_A5XX_GPMU_GPMU_PWR_THRESHOLD, 0x80000000 | 6000);
-+
-+	gpu_write(gpu, AGC_MSG_STATE, 0x80000001);
-+	gpu_write(gpu, AGC_MSG_COMMAND, AGC_POWER_CONFIG_PRODUCTION_ID);
-+
-+	gpu_write(gpu, AGC_MSG_PAYLOAD(0), 5448); //magic number?
-+	gpu_write(gpu, AGC_MSG_PAYLOAD(1), 1);
-+
-+	gpu_write(gpu, AGC_MSG_PAYLOAD(2), _get_mvolts(gpu, gpu->fast_rate));
-+	gpu_write(gpu, AGC_MSG_PAYLOAD(3), gpu->fast_rate / 1000000);
-+
-+	gpu_write(gpu, AGC_MSG_PAYLOAD(AGC_LM_CONFIG), config);
-+	gpu_write(gpu, AGC_MSG_PAYLOAD(AGC_LEVEL_CONFIG), LEVEL_CONFIG);
-+	gpu_write(gpu, AGC_MSG_PAYLOAD_SIZE,
-+	PAYLOAD_SIZE(AGC_LEVEL_CONFIG + 1));
-+
-+	gpu_write(gpu, AGC_INIT_MSG_MAGIC, AGC_INIT_MSG_VALUE);
-+}
-+
- /* Enable SP/TP cpower collapse */
- static void a5xx_pc_init(struct msm_gpu *gpu)
- {
-@@ -206,7 +257,8 @@ static int a5xx_gpmu_init(struct msm_gpu *gpu)
- 		return -EINVAL;
- 	}
- 
--	gpu_write(gpu, REG_A5XX_GPMU_WFI_CONFIG, 0x4014);
-+	if (adreno_is_a530(adreno_gpu))
-+		gpu_write(gpu, REG_A5XX_GPMU_WFI_CONFIG, 0x4014);
- 
- 	/* Kick off the GPMU */
- 	gpu_write(gpu, REG_A5XX_GPMU_CM3_SYSRESET, 0x0);
-@@ -220,12 +272,26 @@ static int a5xx_gpmu_init(struct msm_gpu *gpu)
- 		DRM_ERROR("%s: GPMU firmware initialization timed out\n",
- 			gpu->name);
- 
-+	if (!adreno_is_a530(adreno_gpu)) {
-+		u32 val = gpu_read(gpu, REG_A5XX_GPMU_GENERAL_1);
-+
-+		if (val)
-+			DRM_ERROR("%s: GPMU firmware initialization failed: %d\n",
-+				  gpu->name, val);
-+	}
-+
- 	return 0;
- }
- 
- /* Enable limits management */
- static void a5xx_lm_enable(struct msm_gpu *gpu)
- {
-+	struct adreno_gpu *adreno_gpu = to_adreno_gpu(gpu);
-+
-+	/* This init sequence only applies to A530 */
-+	if (!adreno_is_a530(adreno_gpu))
-+		return;
-+
- 	gpu_write(gpu, REG_A5XX_GDPM_INT_MASK, 0x0);
- 	gpu_write(gpu, REG_A5XX_GDPM_INT_EN, 0x0A);
- 	gpu_write(gpu, REG_A5XX_GPMU_GPMU_VOLTAGE_INTR_EN_MASK, 0x01);
-@@ -237,10 +303,14 @@ static void a5xx_lm_enable(struct msm_gpu *gpu)
- 
- int a5xx_power_init(struct msm_gpu *gpu)
- {
-+	struct adreno_gpu *adreno_gpu = to_adreno_gpu(gpu);
- 	int ret;
- 
- 	/* Set up the limits management */
--	a5xx_lm_setup(gpu);
-+	if (adreno_is_a530(adreno_gpu))
-+		a530_lm_setup(gpu);
-+	else
-+		a540_lm_setup(gpu);
- 
- 	/* Set up SP/TP power collpase */
- 	a5xx_pc_init(gpu);
-diff --git a/drivers/gpu/drm/msm/adreno/adreno_device.c b/drivers/gpu/drm/msm/adreno/adreno_device.c
-index b907245d3d96..cb7dadaf1669 100644
---- a/drivers/gpu/drm/msm/adreno/adreno_device.c
-+++ b/drivers/gpu/drm/msm/adreno/adreno_device.c
-@@ -144,6 +144,24 @@ static const struct adreno_info gpulist[] = {
- 			ADRENO_QUIRK_FAULT_DETECT_MASK,
- 		.init = a5xx_gpu_init,
- 		.zapfw = "a530_zap.mdt",
-+	}, {
-+		.rev = ADRENO_REV(5, 4, 0, 2),
-+		.revn = 540,
-+		.name = "A540",
-+		.fw = {
-+			[ADRENO_FW_PM4] = "a530_pm4.fw",
-+			[ADRENO_FW_PFP] = "a530_pfp.fw",
-+			[ADRENO_FW_GPMU] = "a540_gpmu.fw2",
-+		},
-+		.gmem = SZ_1M,
-+		/*
-+		 * Increase inactive period to 250 to avoid bouncing
-+		 * the GDSC which appears to make it grumpy
-+		 */
-+		.inactive_period = 250,
-+		.quirks = ADRENO_QUIRK_LMLOADKILL_DISABLE,
-+		.init = a5xx_gpu_init,
-+		.zapfw = "a540_zap.mdt",
- 	}, {
- 		.rev = ADRENO_REV(6, 3, 0, ANY_ID),
- 		.revn = 630,
-diff --git a/drivers/gpu/drm/msm/adreno/adreno_gpu.h b/drivers/gpu/drm/msm/adreno/adreno_gpu.h
-index 0925606ec9b5..d67c1a69c49a 100644
---- a/drivers/gpu/drm/msm/adreno/adreno_gpu.h
-+++ b/drivers/gpu/drm/msm/adreno/adreno_gpu.h
-@@ -61,6 +61,7 @@ enum {
- enum adreno_quirks {
- 	ADRENO_QUIRK_TWO_PASS_USE_WFI = 1,
- 	ADRENO_QUIRK_FAULT_DETECT_MASK = 2,
-+	ADRENO_QUIRK_LMLOADKILL_DISABLE = 3,
- };
- 
- struct adreno_rev {
-@@ -221,6 +222,11 @@ static inline int adreno_is_a530(struct adreno_gpu *gpu)
- 	return gpu->revn == 530;
- }
- 
-+static inline int adreno_is_a540(struct adreno_gpu *gpu)
-+{
-+	return gpu->revn == 540;
-+}
-+
- int adreno_get_param(struct msm_gpu *gpu, uint32_t param, uint64_t *value);
- const struct firmware *adreno_request_fw(struct adreno_gpu *adreno_gpu,
- 		const char *fwname);
--- 
-2.17.1
+> Sorry for breaking the boot on 8064. That was one of the platforms
+> that I didn't convert over to regmap (needs more refactoring). I had
+> hoped kernelci would catch any issues but looks like thermal-soc tree
+> entered linux-next quite late and didn't catch this.
+>
+> Does reverting 3e6a8fb33084 ("drivers: thermal: tsens: Add new
+> operation to check if a sensor is enabled") fix the issue? If so,
+> reverting that commit might be the best course of action since I've
+> started vacations and can't fix this for 8064 in a meaningful amount
+> of time (until 3rd week of June). cc'ing Bjorn in case this needs more
+> investigation, but I think that patch is fairly self contained and
+> reverting it shouldn't have any knock-on effects.
 
+I am ok with this.  I'll check with Bjorn before adding this to a
+fixes for -rc2.
+
+Andy
