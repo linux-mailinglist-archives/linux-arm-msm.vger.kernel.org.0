@@ -2,168 +2,84 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 106E42CA0A
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 May 2019 17:14:08 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E723E2CC68
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 May 2019 18:46:27 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727937AbfE1POB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 28 May 2019 11:14:01 -0400
-Received: from foss.arm.com ([217.140.101.70]:59276 "EHLO foss.arm.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1727921AbfE1POB (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 28 May 2019 11:14:01 -0400
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.72.51.249])
-        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 4EEB880D;
-        Tue, 28 May 2019 08:14:00 -0700 (PDT)
-Received: from redmoon (e121166-lin.cambridge.arm.com [10.1.196.255])
-        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id A49ED3F59C;
-        Tue, 28 May 2019 08:13:58 -0700 (PDT)
-Date:   Tue, 28 May 2019 16:13:52 +0100
-From:   Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>
-To:     Stanimir Varbanov <svarbanov@mm-sol.com>
-Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Bjorn Helgaas <bhelgaas@google.com>,
-        Rob Herring <robh+dt@kernel.org>,
-        Mark Rutland <mark.rutland@arm.com>,
-        linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v3 1/3] PCI: qcom: Use clk_bulk API for 2.4.0 controllers
-Message-ID: <20190528151330.GA28649@redmoon>
-References: <20190502001955.10575-1-bjorn.andersson@linaro.org>
- <20190502001955.10575-2-bjorn.andersson@linaro.org>
- <fcfcd3b4-99d2-7b10-e82d-b92e6bf37a33@mm-sol.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <fcfcd3b4-99d2-7b10-e82d-b92e6bf37a33@mm-sol.com>
-User-Agent: Mutt/1.9.4 (2018-02-28)
+        id S1726736AbfE1Qq0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 28 May 2019 12:46:26 -0400
+Received: from mail-pg1-f195.google.com ([209.85.215.195]:34399 "EHLO
+        mail-pg1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726515AbfE1Qq0 (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 28 May 2019 12:46:26 -0400
+Received: by mail-pg1-f195.google.com with SMTP id h2so8264653pgg.1;
+        Tue, 28 May 2019 09:46:25 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id;
+        bh=u1PRUF8sKFOPE5c2JeDzwxAJ2jF9djlm2TXX02Ljq1w=;
+        b=HDIn0nXXGHnoEIekkbx+iUVCYkdvcBxtMFBdQEKjR5k+4m/oZJxSv7kgnMgpTXAxGR
+         /KxZPZ9gX9hXGMPiUAZcD5vVAwtQMytsd/F9g8s024eb9sEF38s20iTeQYfzxEKJJu8+
+         SuInjKGeaS7h8QgTXPNp0AKF04yQrCw7A2awA7QN7q65z5TCkafBHC2GzCYzSq9YMPji
+         rwedsGBVp0ei9KZioABjEcCPFh+41Ik6zoKOTUwzh0etgppnzSfndDIsLTrj3Krb2t1f
+         z/8Xf5Kgfi3rSMnis7QTV0ILeqw97XUzrAROrvRWgTKJ+SNnCd9+oWuelHYPYhJjLP5M
+         FOzA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=u1PRUF8sKFOPE5c2JeDzwxAJ2jF9djlm2TXX02Ljq1w=;
+        b=RaNWlCX+d8BpfauHwTsLHB8y4WCVvV4GoQiOVlwFg6/VUhInkaEId9XG4SLKQ3Yg43
+         zNqjxp+eYcZKOdgZadq4YAGpDJDfrZQ45BAjWJ4T3nnuGW6iomfevhz058g31nv3yy91
+         i/usVlrZo+D3NW8ZKOLE8WFVVxn6WaVHrJQdxkcm+HRZPCumI4K7A9QkbCE1PQCv6to+
+         p6MnZQksfS82trMvc2mpywCWzLxqL+EnsyhO0W0wMdzuxYPVmiM2Dbj/9qsS3E/gjry7
+         FcWoDEbd/69+/YYHEZIK9Tbt0q9CXz/UBlZexrX/QeRziyiEGjvGnd1yA8F02KSpcp+r
+         EASQ==
+X-Gm-Message-State: APjAAAWx8rJ3zFJCkZ2O19TZzTQ0bScz2jycQ/EgDx+xcePKfMNmgd5y
+        raYbI1UcqOBhFYxBJ/yBlOE=
+X-Google-Smtp-Source: APXvYqwUFnTd8ppNFycGy/ZoXliOo6VBj+IihItjk9xKzs+uMJtUHX/PYTwXjZTxihuW0Sb8HYjlmQ==
+X-Received: by 2002:a65:638e:: with SMTP id h14mr60165079pgv.209.1559061985431;
+        Tue, 28 May 2019 09:46:25 -0700 (PDT)
+Received: from aw-bldr-10.qualcomm.com (i-global254.qualcomm.com. [199.106.103.254])
+        by smtp.gmail.com with ESMTPSA id f29sm22891098pfq.11.2019.05.28.09.46.23
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Tue, 28 May 2019 09:46:24 -0700 (PDT)
+From:   Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
+Cc:     agross@kernel.org, david.brown@linaro.org,
+        bjorn.andersson@linaro.org, mturquette@baylibre.com,
+        sboyd@kernel.org, robh+dt@kernel.org, mark.rutland@arm.com,
+        marc.w.gonzalez@free.fr, jcrouse@codeaurora.org,
+        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
+Subject: [PATCH 0/3] MSM8998 GPUCC Support
+Date:   Tue, 28 May 2019 09:46:16 -0700
+Message-Id: <20190528164616.38517-1-jeffrey.l.hugo@gmail.com>
+X-Mailer: git-send-email 2.17.1
+To:     unlisted-recipients:; (no To-header on input)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, May 16, 2019 at 12:14:04PM +0300, Stanimir Varbanov wrote:
-> Hi Bjorn,
-> 
-> On 5/2/19 3:19 AM, Bjorn Andersson wrote:
-> > Before introducing the QCS404 platform, which uses the same PCIe
-> > controller as IPQ4019, migrate this to use the bulk clock API, in order
-> > to make the error paths slighly cleaner.
-> > 
-> > Acked-by: Stanimir Varbanov <svarbanov@mm-sol.com>
-> > Reviewed-by: Niklas Cassel <niklas.cassel@linaro.org>
-> > Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
-> > ---
-> > 
-> > Changes since v2:
-> > - Defined QCOM_PCIE_2_4_0_MAX_CLOCKS
-> > 
-> >  drivers/pci/controller/dwc/pcie-qcom.c | 49 ++++++++------------------
-> >  1 file changed, 14 insertions(+), 35 deletions(-)
-> > 
-> > diff --git a/drivers/pci/controller/dwc/pcie-qcom.c b/drivers/pci/controller/dwc/pcie-qcom.c
-> > index 0ed235d560e3..d740cbe0e56d 100644
-> > --- a/drivers/pci/controller/dwc/pcie-qcom.c
-> > +++ b/drivers/pci/controller/dwc/pcie-qcom.c
-> > @@ -112,10 +112,10 @@ struct qcom_pcie_resources_2_3_2 {
-> >  	struct regulator_bulk_data supplies[QCOM_PCIE_2_3_2_MAX_SUPPLY];
-> >  };
-> >  
-> > +#define QCOM_PCIE_2_4_0_MAX_CLOCKS	3
-> >  struct qcom_pcie_resources_2_4_0 {
-> > -	struct clk *aux_clk;
-> > -	struct clk *master_clk;
-> > -	struct clk *slave_clk;
-> > +	struct clk_bulk_data clks[QCOM_PCIE_2_4_0_MAX_CLOCKS];
-> > +	int num_clks;
-> >  	struct reset_control *axi_m_reset;
-> >  	struct reset_control *axi_s_reset;
-> >  	struct reset_control *pipe_reset;
-> > @@ -638,18 +638,17 @@ static int qcom_pcie_get_resources_2_4_0(struct qcom_pcie *pcie)
-> >  	struct qcom_pcie_resources_2_4_0 *res = &pcie->res.v2_4_0;
-> >  	struct dw_pcie *pci = pcie->pci;
-> >  	struct device *dev = pci->dev;
-> > +	int ret;
-> >  
-> > -	res->aux_clk = devm_clk_get(dev, "aux");
-> > -	if (IS_ERR(res->aux_clk))
-> > -		return PTR_ERR(res->aux_clk);
-> > +	res->clks[0].id = "aux";
-> > +	res->clks[1].id = "master_bus";
-> > +	res->clks[2].id = "slave_bus";
-> >  
-> > -	res->master_clk = devm_clk_get(dev, "master_bus");
-> > -	if (IS_ERR(res->master_clk))
-> > -		return PTR_ERR(res->master_clk);
-> > +	res->num_clks = 3;
-> 
-> Use the new fresh define QCOM_PCIE_2_4_0_MAX_CLOCKS?
-> 
-> >  
-> > -	res->slave_clk = devm_clk_get(dev, "slave_bus");
-> > -	if (IS_ERR(res->slave_clk))
-> > -		return PTR_ERR(res->slave_clk);
-> > +	ret = devm_clk_bulk_get(dev, res->num_clks, res->clks);
-> > +	if (ret < 0)
-> > +		return ret;
-> >  
-> >  	res->axi_m_reset = devm_reset_control_get_exclusive(dev, "axi_m");
-> >  	if (IS_ERR(res->axi_m_reset))
-> > @@ -719,9 +718,7 @@ static void qcom_pcie_deinit_2_4_0(struct qcom_pcie *pcie)
-> >  	reset_control_assert(res->axi_m_sticky_reset);
-> >  	reset_control_assert(res->pwr_reset);
-> >  	reset_control_assert(res->ahb_reset);
-> > -	clk_disable_unprepare(res->aux_clk);
-> > -	clk_disable_unprepare(res->master_clk);
-> > -	clk_disable_unprepare(res->slave_clk);
-> > +	clk_bulk_disable_unprepare(res->num_clks, res->clks);
-> >  }
-> >  
-> >  static int qcom_pcie_init_2_4_0(struct qcom_pcie *pcie)
-> > @@ -850,23 +847,9 @@ static int qcom_pcie_init_2_4_0(struct qcom_pcie *pcie)
-> >  
-> >  	usleep_range(10000, 12000);
-> >  
-> > -	ret = clk_prepare_enable(res->aux_clk);
-> > -	if (ret) {
-> > -		dev_err(dev, "cannot prepare/enable iface clock\n");
-> > +	ret = clk_bulk_prepare_enable(res->num_clks, res->clks);
-> > +	if (ret)
-> >  		goto err_clk_aux;
-> 
-> Maybe you have to change the name of the label too?
-> 
-> > -	}
-> > -
-> > -	ret = clk_prepare_enable(res->master_clk);
-> > -	if (ret) {
-> > -		dev_err(dev, "cannot prepare/enable core clock\n");
-> > -		goto err_clk_axi_m;
-> > -	}
-> > -
-> > -	ret = clk_prepare_enable(res->slave_clk);
-> > -	if (ret) {
-> > -		dev_err(dev, "cannot prepare/enable phy clock\n");
-> > -		goto err_clk_axi_s;
-> > -	}
-> >  
-> >  	/* enable PCIe clocks and resets */
-> >  	val = readl(pcie->parf + PCIE20_PARF_PHY_CTRL);
-> > @@ -891,10 +874,6 @@ static int qcom_pcie_init_2_4_0(struct qcom_pcie *pcie)
-> >  
-> >  	return 0;
-> >  
-> > -err_clk_axi_s:
-> > -	clk_disable_unprepare(res->master_clk);
-> > -err_clk_axi_m:
-> > -	clk_disable_unprepare(res->aux_clk);
-> >  err_clk_aux:
-> >  	reset_control_assert(res->ahb_reset);
-> >  err_rst_ahb:
+The Adreno GPU on MSM8998 has its own clock controller, which is a
+dependency for bringing up the GPU.  This series gets the gpucc all in
+place as another step on the road to getting the GPU enabled.
 
-Hi Bjorn, Stanimir,
+Jeffrey Hugo (3):
+  dt-bindings: clock: Document gpucc for msm8998
+  clk: qcom: Add MSM8998 GPU Clock Controller (GPUCC) driver
+  arm64: dts: qcom: msm8998: Add gpucc node
 
-can I merge the series as-is or we need a v4 for the requested
-updates ? Please let me know.
+ .../devicetree/bindings/clock/qcom,gpucc.txt  |   4 +-
+ arch/arm64/boot/dts/qcom/msm8998.dtsi         |  15 +
+ drivers/clk/qcom/Kconfig                      |   8 +
+ drivers/clk/qcom/Makefile                     |   1 +
+ drivers/clk/qcom/gpucc-msm8998.c              | 364 ++++++++++++++++++
+ .../dt-bindings/clock/qcom,gpucc-msm8998.h    |  29 ++
+ 6 files changed, 420 insertions(+), 1 deletion(-)
+ create mode 100644 drivers/clk/qcom/gpucc-msm8998.c
+ create mode 100644 include/dt-bindings/clock/qcom,gpucc-msm8998.h
 
-Thanks,
-Lorenzo
+-- 
+2.17.1
+
