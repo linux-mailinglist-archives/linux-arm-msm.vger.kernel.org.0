@@ -2,138 +2,245 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id DCEA92B95A
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 May 2019 19:15:31 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 717E82BCBE
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 May 2019 03:16:48 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726801AbfE0RP1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 27 May 2019 13:15:27 -0400
-Received: from mail-lf1-f65.google.com ([209.85.167.65]:44313 "EHLO
-        mail-lf1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726274AbfE0RP1 (ORCPT
+        id S1727779AbfE1BQR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 27 May 2019 21:16:17 -0400
+Received: from mailout4.samsung.com ([203.254.224.34]:47293 "EHLO
+        mailout4.samsung.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727090AbfE1BQR (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 27 May 2019 13:15:27 -0400
-Received: by mail-lf1-f65.google.com with SMTP id r15so3110762lfm.11
-        for <linux-arm-msm@vger.kernel.org>; Mon, 27 May 2019 10:15:26 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=bQYcUfzJ2eNZWZPGMl/JEm3foS8Vd5oiqQcXqPz07kw=;
-        b=IwyLnWMZV/lpbMMff8AmQ9B448MJe0hJfxwb0ybe6SaMC0lAuX1ECzmNaHNcN0Fa8/
-         TZkEKkQQbEF1yrnnVZ0455tihokSvF0U2ll4z1nsJYIk4r89GxDcO4BKABRGZ35FeOHa
-         JRcgJyHcrufrWvWj/HC80jNc8vqhmNVdGzyDsLPxwjAu+UasKMS9VjdT7wc1ZuuQIQLJ
-         KIUbeCkVLS1APL5fNmRXP+Ad1nqkwvGH4TYMMeAPTLudHITt/L/lOSWGK2+axIJeIH+p
-         sbxzFZSFJr8mPrv4POl+WTkJJ2aQA8CUgilP6GATfXEHzDBhATBuQWF3UXVkj5mnqshm
-         ACtw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=bQYcUfzJ2eNZWZPGMl/JEm3foS8Vd5oiqQcXqPz07kw=;
-        b=h6gvT5It3/J0ZtGE2facIGKW+YGPT1Jly515R5n91/346DR7HlAijlqtaSvO+AtdNc
-         zkqv7ehzvFMLex92TmjM5HTZ570v4wHvXmNXZcXqfMYXqDjCMvodTZfV/0SJZR5GAiZ2
-         s0661aLzpLaB/hsz5AqgUJPBYwXHAsea8FMR7E/eZQUPEBmOCXHaCJ4w1nwUoJtLZWgv
-         SukPmMDTIyUpBMF3vCyQ20+c5Hwv0FxF8+qSUqoiWU3y5uJP6B4EvLUSIXpUmW9Ox2BB
-         hmi0THvJ/2VaAn1kpHVxOYzzTWAAeECu4bheONQmeyJkV0qBdeJdXHUWH9kz5JdGM2Zq
-         03tw==
-X-Gm-Message-State: APjAAAXdaC/Tsl4+UfPOG1F4Su0PRrMRM5CWf6XV4QAOcch6etgXMBQR
-        YLTQfqVP3gZxsyXc+6/3/cycyw==
-X-Google-Smtp-Source: APXvYqwsEdFVhYeFfyhJrlzePl5Iuv+PqsOCTx5ry/jO/7Fo47egn7d+efqzPXCU53fFtTFc+KItfg==
-X-Received: by 2002:ac2:510b:: with SMTP id q11mr1072378lfb.11.1558977325355;
-        Mon, 27 May 2019 10:15:25 -0700 (PDT)
-Received: from centauri (m83-185-80-163.cust.tele2.se. [83.185.80.163])
-        by smtp.gmail.com with ESMTPSA id t13sm2382792lji.47.2019.05.27.10.15.23
-        (version=TLS1_3 cipher=AEAD-AES256-GCM-SHA384 bits=256/256);
-        Mon, 27 May 2019 10:15:24 -0700 (PDT)
-Date:   Mon, 27 May 2019 19:15:21 +0200
-From:   Niklas Cassel <niklas.cassel@linaro.org>
-To:     Marc Gonzalez <marc.w.gonzalez@free.fr>
-Cc:     Stanimir Varbanov <svarbanov@mm-sol.com>,
-        Andy Gross <agross@kernel.org>,
-        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
-        Bjorn Helgaas <bhelgaas@google.com>,
-        PCI <linux-pci@vger.kernel.org>,
-        MSM <linux-arm-msm@vger.kernel.org>,
-        LKML <linux-kernel@vger.kernel.org>
-Subject: Re: [PATCH] PCI: qcom: Ensure that PERST is asserted for at least
- 100 ms
-Message-ID: <20190527171521.GA7936@centauri>
-References: <20190523194409.17718-1-niklas.cassel@linaro.org>
- <5d743969-e763-95c5-6763-171a8ecf66d8@free.fr>
+        Mon, 27 May 2019 21:16:17 -0400
+Received: from epcas1p1.samsung.com (unknown [182.195.41.45])
+        by mailout4.samsung.com (KnoxPortal) with ESMTP id 20190528011614epoutp04f15a02e175e2c6fc2b21069b6ef7b6bb~is9sr4UfU1304413044epoutp04C
+        for <linux-arm-msm@vger.kernel.org>; Tue, 28 May 2019 01:16:14 +0000 (GMT)
+DKIM-Filter: OpenDKIM Filter v2.11.0 mailout4.samsung.com 20190528011614epoutp04f15a02e175e2c6fc2b21069b6ef7b6bb~is9sr4UfU1304413044epoutp04C
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=samsung.com;
+        s=mail20170921; t=1559006174;
+        bh=0vYxNaN0DjAJ27p8LoaH8nU/xLDm2uIusYx8OTjPnRA=;
+        h=Subject:To:Cc:From:Date:In-Reply-To:References:From;
+        b=imEoJ5UoRtq1t+29AiddUXiW1c/gxL+zpnS7j6UFadseVReNbSA2k7XcGMx97+/FI
+         DonOKCwKnBmQ9fBK/IXZiGJ0yI9ofcyROORUdzUEog/sJp49dQnQzVSwm1xI5mEUWg
+         StJjs+0Jx9EmdYlxGJBUxSOmixq0DXkkAmEcmvcw=
+Received: from epsmges1p4.samsung.com (unknown [182.195.40.152]) by
+        epcas1p1.samsung.com (KnoxPortal) with ESMTP id
+        20190528011612epcas1p17d6e23d0e004e4c60644686cd5d57e1a~is9p-VmL21279612796epcas1p1D;
+        Tue, 28 May 2019 01:16:12 +0000 (GMT)
+Received: from epcas1p2.samsung.com ( [182.195.41.46]) by
+        epsmges1p4.samsung.com (Symantec Messaging Gateway) with SMTP id
+        6D.32.04257.BDB8CEC5; Tue, 28 May 2019 10:16:11 +0900 (KST)
+Received: from epsmtrp2.samsung.com (unknown [182.195.40.14]) by
+        epcas1p1.samsung.com (KnoxPortal) with ESMTPA id
+        20190528011611epcas1p1364c6a80db0e526c689950c4a66f53ea~is9pZADRb1280812808epcas1p1n;
+        Tue, 28 May 2019 01:16:11 +0000 (GMT)
+Received: from epsmgms1p1new.samsung.com (unknown [182.195.42.41]) by
+        epsmtrp2.samsung.com (KnoxPortal) with ESMTP id
+        20190528011611epsmtrp21e70426903cb4f0878cb07d5483b0a64~is9pYNceQ1136211362epsmtrp2X;
+        Tue, 28 May 2019 01:16:11 +0000 (GMT)
+X-AuditID: b6c32a38-a3dc09c0000010a1-f4-5cec8bdbfd1d
+Received: from epsmtip2.samsung.com ( [182.195.34.31]) by
+        epsmgms1p1new.samsung.com (Symantec Messaging Gateway) with SMTP id
+        8C.C2.03692.BDB8CEC5; Tue, 28 May 2019 10:16:11 +0900 (KST)
+Received: from [10.113.221.102] (unknown [10.113.221.102]) by
+        epsmtip2.samsung.com (KnoxPortal) with ESMTPA id
+        20190528011611epsmtip28557f32efc5ece3feae685ba1e24084a~is9pMKrQR1103611036epsmtip2V;
+        Tue, 28 May 2019 01:16:11 +0000 (GMT)
+Subject: Re: [PATCH] PM / devfreq: try_then_request_governor should not
+ return NULL
+To:     Rob Clark <robdclark@chromium.org>
+Cc:     Rob Clark <robdclark@gmail.com>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        MyungJoo Ham <myungjoo.ham@samsung.com>,
+        Kyungmin Park <kyungmin.park@samsung.com>,
+        linux-pm@vger.kernel.org, LKML <linux-kernel@vger.kernel.org>
+From:   Chanwoo Choi <cw00.choi@samsung.com>
+Organization: Samsung Electronics
+Message-ID: <e1232f97-c80d-2bf2-639a-7f7b9195d1f0@samsung.com>
+Date:   Tue, 28 May 2019 10:18:06 +0900
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+        Thunderbird/60.6.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <5d743969-e763-95c5-6763-171a8ecf66d8@free.fr>
-User-Agent: Mutt/1.11.4 (2019-03-13)
+In-Reply-To: <CAJs_Fx4hw3nrUAksQxTrVrJubQAxADE5FmBrSs+EOmE3jwL9bg@mail.gmail.com>
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFlrAJsWRmVeSWpSXmKPExsWy7bCmnu7t7jcxBh3nNSzONr1ht5i4/yy7
+        xeVdc9gsPvceYbS43biCzeLaz8fMFs8X/mB2YPeY3XCRxWPnrLvsHn1bVjF6fN4kF8ASlW2T
+        kZqYklqkkJqXnJ+SmZduq+QdHO8cb2pmYKhraGlhrqSQl5ibaqvk4hOg65aZA3SBkkJZYk4p
+        UCggsbhYSd/Opii/tCRVISO/uMRWKbUgJafAskCvODG3uDQvXS85P9fK0MDAyBSoMCE7Y/qa
+        o4wFD1Uqdnf1sjUwPpfpYuTkkBAwkej6+IC5i5GLQ0hgB6PE6uNNTBDOJ0aJSVu/s0A43xgl
+        Nu1aygzTcrURJrGXUWJB61qolveMEtcPHGPtYuTgEBYIlbg7QR6kQURATWJrzxWwBmaB14wS
+        966uZwNJsAloSex/cQPM5hdQlLj64zEjiM0rYCfxavFXFhCbRUBVYm/fPDBbVCBC4v6xDawQ
+        NYISJ2c+AYtzCgRKLNs0BayXWUBc4taT+UwQtrxE89bZUFc/Z5N4uSwDwnaRmNO5jQXCFpZ4
+        dXwLO4QtJfH53V42CLtaYuXJI2wgR0sIdDBKbNl/gRUiYSyxf+lkJpAnmQU0Jdbv0ocIK0rs
+        /D0X6gY+iXdfe8DhICHAK9HRJgRRoixx+cFdJghbUmJxeyfbBEalWUi+mYXkg1lIPpiFsGwB
+        I8sqRrHUguLc9NRiwwIT5NjexAhOnVoWOxj3nPM5xCjAwajEw2tx6nWMEGtiWXFl7iFGCQ5m
+        JRFe0y2vYoR4UxIrq1KL8uOLSnNSiw8xmgIDeyKzlGhyPjCt55XEG5oaGRsbW5gYmpkaGiqJ
+        88Zz34wREkhPLEnNTk0tSC2C6WPi4JRqYMzj07u3zzqXf7LimhNpb9P02X9pusl92+R6dKPz
+        zFYfBvc1dscfOkVdsOT1Mn61a1HIhw73Tv7bZwT6LLYsWFMb/ONzyP7iGb+09b+s2vagSCJM
+        4LOamc8FPvae9G+TQjymTpednZ6pe6VqqVYev5fT3KOHlC2jbeKCVuiH+zzMkv9RlCw9R4ml
+        OCPRUIu5qDgRAIgaCjezAwAA
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFuphkeLIzCtJLcpLzFFi42LZdlhJXvd295sYg1e3BC3ONr1ht5i4/yy7
+        xeVdc9gsPvceYbS43biCzeLaz8fMFs8X/mB2YPeY3XCRxWPnrLvsHn1bVjF6fN4kF8ASxWWT
+        kpqTWZZapG+XwJUxfc1RxoKHKhW7u3rZGhify3QxcnJICJhIXG38ztLFyMUhJLCbUWLTifUs
+        EAlJiWkXjzJ3MXIA2cIShw8XQ9S8ZZQ48fwlE0iNsECoxJRlvYwgtoiAmsTWnitgg5hBit5v
+        PMYI0dHBJHFwxmJmkCo2AS2J/S9usIHY/AKKEld/PAbr5hWwk3i1+CvYZhYBVYm9ffPAbFGB
+        CIkz71ewQNQISpyc+QTM5hQIlFi2aQpYL7OAusSfeZeYIWxxiVtP5jNB2PISzVtnM09gFJ6F
+        pH0WkpZZSFpmIWlZwMiyilEytaA4Nz232LDAMC+1XK84Mbe4NC9dLzk/dxMjOI60NHcwXl4S
+        f4hRgINRiYfX4tTrGCHWxLLiytxDjBIczEoivKZbXsUI8aYkVlalFuXHF5XmpBYfYpTmYFES
+        532adyxSSCA9sSQ1OzW1ILUIJsvEwSnVwMjwa1+65uGtYeJxBdozgzNev5/benfywQ4poRVv
+        fQ62iZaUNXM/t/7IXvFOLe5ZesKmz6rz1524aMC1QTWG7YC3l7qNB8/naOmzL0JXZvjkbHtk
+        9kgnPWytFp/Ei5pnwXGzovWrkqtLf0coT5u6WqDlvHDFmdPNZ29c3avalLGg8vnpackNd5RY
+        ijMSDbWYi4oTAYSr59efAgAA
+X-CMS-MailID: 20190528011611epcas1p1364c6a80db0e526c689950c4a66f53ea
+X-Msg-Generator: CA
+Content-Type: text/plain; charset="utf-8"
+X-Sendblock-Type: SVC_REQ_APPROVE
+CMS-TYPE: 101P
+DLP-Filter: Pass
+X-CFilter-Loop: Reflected
+X-CMS-RootMailID: 20190523215902epcas5p40e3aca0efb342c8d778529fef416c3fd
+References: <CGME20190523215902epcas5p40e3aca0efb342c8d778529fef416c3fd@epcas5p4.samsung.com>
+        <20190523215853.16622-1-robdclark@gmail.com>
+        <9c63ac15-9917-7adc-3ef8-3e44060797bd@samsung.com>
+        <CAJs_Fx4hw3nrUAksQxTrVrJubQAxADE5FmBrSs+EOmE3jwL9bg@mail.gmail.com>
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, May 24, 2019 at 02:43:00PM +0200, Marc Gonzalez wrote:
-> On 23/05/2019 21:44, Niklas Cassel wrote:
+Hi Rob,
+
+You're right. It have to be posted to stable@vger.kernel.org.
+As you recommended, I send it[1] to stable@vger.kernel.org for fixup.
+[1]https://lkml.org/lkml/2019/5/27/547
+
+Best Regards,
+Chanwoo Choi
+
+On 19. 5. 24. 오후 10:15, Rob Clark wrote:
+> Ahh, thanks, I've not moved to the latest -rc yet..
 > 
-> > Currently, there is only a 1 ms sleep after asserting PERST.
-> > 
-> > Reading the datasheets for different endpoints, some require PERST to be
-> > asserted for 10 ms in order for the endpoint to perform a reset, others
-> > require it to be asserted for 50 ms.
-> > 
-> > Several SoCs using this driver uses PCIe Mini Card, where we don't know
-> > what endpoint will be plugged in.
-> > 
-> > The PCI Express Card Electromechanical Specification specifies:
-> > "On power up, the deassertion of PERST# is delayed 100 ms (TPVPERL) from
-> > the power rails achieving specified operating limits."
-> > 
-> > Add a sleep of 100 ms before deasserting PERST, in order to ensure that
-> > we are compliant with the spec.
-> > 
-> > Signed-off-by: Niklas Cassel <niklas.cassel@linaro.org>
-> > ---
-> >  drivers/pci/controller/dwc/pcie-qcom.c | 2 ++
-> >  1 file changed, 2 insertions(+)
-> > 
-> > diff --git a/drivers/pci/controller/dwc/pcie-qcom.c b/drivers/pci/controller/dwc/pcie-qcom.c
-> > index 0ed235d560e3..cae24376237c 100644
-> > --- a/drivers/pci/controller/dwc/pcie-qcom.c
-> > +++ b/drivers/pci/controller/dwc/pcie-qcom.c
-> > @@ -1110,6 +1110,8 @@ static int qcom_pcie_host_init(struct pcie_port *pp)
-> >  	if (IS_ENABLED(CONFIG_PCI_MSI))
-> >  		dw_pcie_msi_init(pp);
-> >  
-> > +	/* Ensure that PERST has been asserted for at least 100 ms */
-> > +	msleep(100);
-> >  	qcom_ep_reset_deassert(pcie);
-> >  
-> >  	ret = qcom_pcie_establish_link(pcie);
+> That commit would be a good candidate for 5.1.y stable branch
 > 
-> Currently, qcom_ep_reset_assert() and qcom_ep_reset_deassert() both include
-> a call to usleep_range() of 1.0 to 1.5 ms
+> BR,
+> -R
 > 
-> Can we git rid of both if we sleep 100 ms before qcom_ep_reset_deassert?
-
-These two sleeps after asserting/deasserting reset in qcom_ep_reset_assert()/
-qcom_ep_reset_deassert() matches the sleeps in:
-https://source.codeaurora.org/quic/la/kernel/msm-4.14/tree/drivers/pci/host/pci-msm.c?h=LA.UM.7.1.r1-14000-sm8150.0#n1942
-
-and
-
-https://source.codeaurora.org/quic/la/kernel/msm-4.14/tree/drivers/pci/host/pci-msm.c?h=LA.UM.7.1.r1-14000-sm8150.0#n1949
-
-I would rather not remove these since that might affect existing devices.
-
-
-This new sleep matches matches the sleep in:
-https://source.codeaurora.org/quic/la/kernel/msm-4.14/tree/drivers/pci/host/pci-msm.c?h=LA.UM.7.1.r1-14000-sm8150.0#n3926
-
+> On Fri, May 24, 2019 at 12:13 AM Chanwoo Choi <cw00.choi@samsung.com> wrote:
+>>
+>> Hi,
+>>
+>> This issue[1] is already fixed on latest linux.git
+>> You can check it. Thanks.
+>>
+>> [1] https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=b53b0128052ffd687797d5f4deeb76327e7b5711
+>>
+>> Regards,
+>> Chanwoo Choi
+>>
+>>
+>> On 19. 5. 24. 오전 6:58, Rob Clark wrote:
+>>> From: Rob Clark <robdclark@chromium.org>
+>>>
+>>> The two spots it is called expect either an IS_ERR() or a valid pointer,
+>>> but not NULL.
+>>>
+>>> Fixes this crash that I came across:
+>>>
+>>>    Unable to handle kernel NULL pointer dereference at virtual address 0000000000000030
+>>>    Mem abort info:
+>>>      ESR = 0x96000005
+>>>      Exception class = DABT (current EL), IL = 32 bits
+>>>      SET = 0, FnV = 0
+>>>      EA = 0, S1PTW = 0
+>>>    Data abort info:
+>>>      ISV = 0, ISS = 0x00000005
+>>>      CM = 0, WnR = 0
+>>>    [0000000000000030] user address but active_mm is swapper
+>>>    Internal error: Oops: 96000005 [#1] PREEMPT SMP
+>>>    Modules linked in:
+>>>    Process kworker/2:1 (pid: 212, stack limit = 0x(____ptrval____))
+>>>    CPU: 2 PID: 212 Comm: kworker/2:1 Not tainted 5.1.0-43338-g460e6984675c-dirty #54
+>>>    Hardware name: Google Cheza (rev3+) (DT)
+>>>    Workqueue: events deferred_probe_work_func
+>>>    pstate: 00c00009 (nzcv daif +PAN +UAO)
+>>>    pc : devfreq_add_device+0x2e4/0x410
+>>>    lr : devfreq_add_device+0x2d4/0x410
+>>>    sp : ffffff8013d93740
+>>>    x29: ffffff8013d93790 x28: ffffffc0f54f8670
+>>>    x27: 0000000000000001 x26: 0000000000000007
+>>>    x25: ffffff80124abfd8 x24: 0000000000000000
+>>>    x23: ffffffc0fabc4048 x22: ffffffc0fabc4388
+>>>    x21: ffffffc0fabc4010 x20: ffffffc0fa243010
+>>>    x19: ffffffc0fabc4000 x18: 0000000091c3d373
+>>>    x17: 0000000000000400 x16: 000000000000001a
+>>>    x15: 000000019e06d400 x14: 0000000000000001
+>>>    x13: 0000000000000000 x12: 00000000000006b6
+>>>    x11: 0000000000000000 x10: 0000000000000000
+>>>    x9 : ffffffc0fa18ba00 x8 : 0000000000000000
+>>>    x7 : 0000000000000000 x6 : ffffff80127a3d9a
+>>>    x5 : ffffff8013d93550 x4 : 0000000000000000
+>>>    x3 : 0000000000000000 x2 : 0000000000000000
+>>>    x1 : 00000000000000fe x0 : 0000000000000000
+>>>    Call trace:
+>>>     devfreq_add_device+0x2e4/0x410
+>>>     devm_devfreq_add_device+0x64/0xac
+>>>     msm_gpu_init+0x320/0x5c0
+>>>     adreno_gpu_init+0x21c/0x274
+>>>     a6xx_gpu_init+0x68/0xf4
+>>>     adreno_bind+0x158/0x284
+>>>     component_bind_all+0x110/0x204
+>>>     msm_drm_bind+0x118/0x5b8
+>>>     try_to_bring_up_master+0x15c/0x19c
+>>>     component_master_add_with_match+0xb4/0xec
+>>>     msm_pdev_probe+0x1f0/0x27c
+>>>     platform_drv_probe+0x90/0xb0
+>>>     really_probe+0x120/0x298
+>>>     driver_probe_device+0x64/0xfc
+>>>     __device_attach_driver+0x8c/0xa4
+>>>     bus_for_each_drv+0x88/0xd0
+>>>     __device_attach+0xac/0x134
+>>>     device_initial_probe+0x20/0x2c
+>>>     bus_probe_device+0x34/0x90
+>>>     deferred_probe_work_func+0x74/0xac
+>>>     process_one_work+0x210/0x428
+>>>     worker_thread+0x278/0x3e4
+>>>     kthread+0x120/0x130
+>>>     ret_from_fork+0x10/0x18
+>>>    Code: aa0003f8 b13ffc1f 54000762 f901c278 (f9401b08)
+>>>    ---[ end trace a6ecc18ce5894375 ]---
+>>>    Kernel panic - not syncing: Fatal exception
+>>>
+>>> Signed-off-by: Rob Clark <robdclark@chromium.org>
+>>> ---
+>>>  drivers/devfreq/devfreq.c | 2 +-
+>>>  1 file changed, 1 insertion(+), 1 deletion(-)
+>>>
+>>> diff --git a/drivers/devfreq/devfreq.c b/drivers/devfreq/devfreq.c
+>>> index 0ae3de76833b..d29f66f0e52a 100644
+>>> --- a/drivers/devfreq/devfreq.c
+>>> +++ b/drivers/devfreq/devfreq.c
+>>> @@ -254,7 +254,7 @@ static struct devfreq_governor *try_then_request_governor(const char *name)
+>>>               /* Restore previous state before return */
+>>>               mutex_lock(&devfreq_list_lock);
+>>>               if (err)
+>>> -                     return NULL;
+>>> +                     return ERR_PTR(err);
+>>>
+>>>               governor = find_devfreq_governor(name);
+>>>       }
+>>>
+>>
+>>
+>> --
+>> Best Regards,
+>> Chanwoo Choi
+>> Samsung Electronics
 > 
-> Should the msleep() call be included in one of the two wrappers?
-
-This new sleep could be moved into qcom_ep_reset_deassert(),
-added before the gpiod_set_value_cansleep(pcie->reset, 0) call,
-if Stanimir prefers it to be placed there instead.
+> 
 
 
-Kind regards,
-Niklas
+-- 
+Best Regards,
+Chanwoo Choi
+Samsung Electronics
