@@ -2,174 +2,92 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id F19662D307
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 May 2019 02:59:07 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 51C622D30C
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 May 2019 03:00:43 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726068AbfE2A64 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 28 May 2019 20:58:56 -0400
-Received: from mail-pl1-f195.google.com ([209.85.214.195]:41169 "EHLO
-        mail-pl1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726062AbfE2A64 (ORCPT
+        id S1725872AbfE2BAm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 28 May 2019 21:00:42 -0400
+Received: from mail-pg1-f194.google.com ([209.85.215.194]:36290 "EHLO
+        mail-pg1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725847AbfE2BAl (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 28 May 2019 20:58:56 -0400
-Received: by mail-pl1-f195.google.com with SMTP id s24so141667plr.8
-        for <linux-arm-msm@vger.kernel.org>; Tue, 28 May 2019 17:58:55 -0700 (PDT)
+        Tue, 28 May 2019 21:00:41 -0400
+Received: by mail-pg1-f194.google.com with SMTP id a3so266964pgb.3
+        for <linux-arm-msm@vger.kernel.org>; Tue, 28 May 2019 18:00:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to:user-agent;
-        bh=dB5GfLc57cH6bwtQrAmsQw+qYEcHdnY9B3siLBUP8uk=;
-        b=tLFATLFYr4475dDD6gdRPblwkVp37ut14jAhMGAKgDqy/FEKqbNCpymi8UgGLXX0yc
-         ubeAhI9iPxmQHwjCNZ91dSqb3zokbVjGyh1avWonTN/AdxsPbQov+N9nBdITLIN30V6W
-         dnkWfainrxBlolQas37BhgY0HEx9GJ1wYUlFvPhEjPJycBTTMPXXQFwZJDn54kw2i4fK
-         A5dHihK96brpHAlFxR+FCRKmGnzSlDcq1vTQHIaJpJovkwOXj0CvmsJEanudE0DxjPDc
-         sUzR+c6lF/pOuJgirMBTDNB9FEWj+Bh8/RMQNjHT06KfX0Oz7bTPxMXdGt5P8VELGzQP
-         bvYQ==
+        bh=5okW6g2VapWq+966zCYvvEkTXlL5bw9tVSxlg7ghy+Y=;
+        b=YUuDgzjEuJMlWW4Q7SU3Nwqb9mKmP8inZ7fTn8526il+ecMkkCKinaV5fhtcohgMms
+         8tQs/rulsNffA0rbpzc0ANiUa57KQCw7VMPFTRqrS4d3JJ+99G/Nk6lJ1nCoMlXDgsLM
+         bZdDe7hx2ecOU2dlHCuN6vqcbfs+qwTKP1GxAt+beJWErt10s7C2dk3qnxTrmb+ElFVA
+         HmwbGFspPbvFjnJC6dXVb5fjK+iUXLVYTnJuh/9fnL3EXc2u/eoQipDU7aGbPZY82ZCM
+         x+tw+Qv2CZ3ULihn65VrHSiADLAQuy5kHfeqbfL4u7iy1O6JLeFk39Wj0KKflIGYIyox
+         sOZA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=dB5GfLc57cH6bwtQrAmsQw+qYEcHdnY9B3siLBUP8uk=;
-        b=qJUnVodL3f0txLWz3OrclSalEPcXpgZ7H0dG5uMeUIwp0ItOKd/mEdljrQT+hU++Yv
-         nlZX9bzhidm08n1AoXQJvW3C4ADC+7qONJHUB7gABjsznkEnsTNalNvJ9ewjjIfc76r7
-         8tkdEI1eqdaNPdLhm3ZiHNaPZgThBSHBydHvslcuVulokm0I8c0ODlHwvyF3J4Eh95J2
-         7HYbgZMgRTrXdhULEZDfKAj6YSLPllbIwzjbAhzBR7249wYF6yTkUPKa4WfHrxF50X2K
-         6C1p7qdhatIIbjX+Z7uxYNwP0SBb7s2I2SK7BEqembz8PuW3JyPsaV3hPtUs9yQsVc8U
-         vVvQ==
-X-Gm-Message-State: APjAAAU5tRTFml9kKXZa2gDS6gMX2L39BCehJoz87jjGqvNXOECV6V1d
-        huzI8kdpjA/5iXsCHKzMX9ZucA==
-X-Google-Smtp-Source: APXvYqwxh6jDK5DVOgkaZM5rVzp3+LyBXrFZZTjYOOYOzEtNmwHBrNbU2n5KLBLmmwYvFxPSAjRXeQ==
-X-Received: by 2002:a17:902:704a:: with SMTP id h10mr47656719plt.294.1559091535018;
-        Tue, 28 May 2019 17:58:55 -0700 (PDT)
+        bh=5okW6g2VapWq+966zCYvvEkTXlL5bw9tVSxlg7ghy+Y=;
+        b=MJiCdkX2g6o3urjH9mmmh5zgEE8V/tDpSlMMkAtuuRGZkAj1upLRfhlyLTqSviPtSp
+         09G9l/0XqK5MgClxwKWjNfZ3Wj6JGwGBLfXd3UdQd5Ryz19I8NGRT9XS8sTUybwitFpK
+         MpVe9f7Bo5QsvPzVC4IA3DD5yNxCmvKppxb9roP8ZVkolALbw/RaFithzAIkQXcNM+np
+         9vwcaxcWMex2Lkf7+2fWvUvIl9YvnA2Av9fNYoVQHpxvEnUnpC0fU9iX1psQtrVp/F2a
+         kPfA4FMyeUfU+z/RbgkV/MxwDULYS2baIxcOHuvBfp1OOb+cPS6uaGnVkq8dp+XK7CK3
+         geMw==
+X-Gm-Message-State: APjAAAVKwdtFwV68YHsCBa1IseKufTvZke/HxS1iHNH32CCVesizSKRW
+        MUuikE+x/cMrK86mTPx8HMURfA==
+X-Google-Smtp-Source: APXvYqwLe9mfrNT7kmddfcq3cOHoZhNyk/rZbdgG0+dKzVdRNnJ5+snM6mVlWtpLxJZWw1Q1w/2BIA==
+X-Received: by 2002:a63:f703:: with SMTP id x3mr132423383pgh.394.1559091641061;
+        Tue, 28 May 2019 18:00:41 -0700 (PDT)
 Received: from builder (104-188-17-28.lightspeed.sndgca.sbcglobal.net. [104.188.17.28])
-        by smtp.gmail.com with ESMTPSA id z4sm16431588pfa.142.2019.05.28.17.58.53
+        by smtp.gmail.com with ESMTPSA id p64sm19050426pfp.72.2019.05.28.18.00.40
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Tue, 28 May 2019 17:58:53 -0700 (PDT)
-Date:   Tue, 28 May 2019 17:58:51 -0700
+        Tue, 28 May 2019 18:00:40 -0700 (PDT)
+Date:   Tue, 28 May 2019 18:00:38 -0700
 From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Stanimir Varbanov <svarbanov@mm-sol.com>
-Cc:     Bjorn Helgaas <bhelgaas@google.com>,
-        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
-        Rob Herring <robh+dt@kernel.org>,
+To:     Kishon Vijay Abraham I <kishon@ti.com>
+Cc:     Rob Herring <robh+dt@kernel.org>,
         Mark Rutland <mark.rutland@arm.com>,
-        linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v3 1/3] PCI: qcom: Use clk_bulk API for 2.4.0 controllers
-Message-ID: <20190529005851.GA3923@builder>
-References: <20190502001955.10575-1-bjorn.andersson@linaro.org>
- <20190502001955.10575-2-bjorn.andersson@linaro.org>
- <fcfcd3b4-99d2-7b10-e82d-b92e6bf37a33@mm-sol.com>
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        devicetree@vger.kernel.org
+Subject: Re: [PATCH v3 0/2] Qualcomm PCIe2 PHY
+Message-ID: <20190529010038.GB3923@builder>
+References: <20190502001406.10431-1-bjorn.andersson@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <fcfcd3b4-99d2-7b10-e82d-b92e6bf37a33@mm-sol.com>
+In-Reply-To: <20190502001406.10431-1-bjorn.andersson@linaro.org>
 User-Agent: Mutt/1.10.0 (2018-05-17)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu 16 May 02:14 PDT 2019, Stanimir Varbanov wrote:
+On Wed 01 May 17:14 PDT 2019, Bjorn Andersson wrote:
 
-> Hi Bjorn,
-> 
-> On 5/2/19 3:19 AM, Bjorn Andersson wrote:
-> > Before introducing the QCS404 platform, which uses the same PCIe
-> > controller as IPQ4019, migrate this to use the bulk clock API, in order
-> > to make the error paths slighly cleaner.
-> > 
-> > Acked-by: Stanimir Varbanov <svarbanov@mm-sol.com>
-> > Reviewed-by: Niklas Cassel <niklas.cassel@linaro.org>
-> > Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
-> > ---
-> > 
-> > Changes since v2:
-> > - Defined QCOM_PCIE_2_4_0_MAX_CLOCKS
-> > 
-> >  drivers/pci/controller/dwc/pcie-qcom.c | 49 ++++++++------------------
-> >  1 file changed, 14 insertions(+), 35 deletions(-)
-> > 
-> > diff --git a/drivers/pci/controller/dwc/pcie-qcom.c b/drivers/pci/controller/dwc/pcie-qcom.c
-> > index 0ed235d560e3..d740cbe0e56d 100644
-> > --- a/drivers/pci/controller/dwc/pcie-qcom.c
-> > +++ b/drivers/pci/controller/dwc/pcie-qcom.c
-> > @@ -112,10 +112,10 @@ struct qcom_pcie_resources_2_3_2 {
-> >  	struct regulator_bulk_data supplies[QCOM_PCIE_2_3_2_MAX_SUPPLY];
-> >  };
-> >  
-> > +#define QCOM_PCIE_2_4_0_MAX_CLOCKS	3
-> >  struct qcom_pcie_resources_2_4_0 {
-> > -	struct clk *aux_clk;
-> > -	struct clk *master_clk;
-> > -	struct clk *slave_clk;
-> > +	struct clk_bulk_data clks[QCOM_PCIE_2_4_0_MAX_CLOCKS];
-> > +	int num_clks;
-> >  	struct reset_control *axi_m_reset;
-> >  	struct reset_control *axi_s_reset;
-> >  	struct reset_control *pipe_reset;
-> > @@ -638,18 +638,17 @@ static int qcom_pcie_get_resources_2_4_0(struct qcom_pcie *pcie)
-> >  	struct qcom_pcie_resources_2_4_0 *res = &pcie->res.v2_4_0;
-> >  	struct dw_pcie *pci = pcie->pci;
-> >  	struct device *dev = pci->dev;
-> > +	int ret;
-> >  
-> > -	res->aux_clk = devm_clk_get(dev, "aux");
-> > -	if (IS_ERR(res->aux_clk))
-> > -		return PTR_ERR(res->aux_clk);
-> > +	res->clks[0].id = "aux";
-> > +	res->clks[1].id = "master_bus";
-> > +	res->clks[2].id = "slave_bus";
-> >  
-> > -	res->master_clk = devm_clk_get(dev, "master_bus");
-> > -	if (IS_ERR(res->master_clk))
-> > -		return PTR_ERR(res->master_clk);
-> > +	res->num_clks = 3;
-> 
-> Use the new fresh define QCOM_PCIE_2_4_0_MAX_CLOCKS?
+> The Qualcomm PCIe2 PHY is based on design from Synopsys and found in
+> several different platforms where the QMP PHY isn't used.
 > 
 
-As I replace it in patch 3/3 with a value different from "max clocks", I
-don't think it makes sense to use the define here. So I'm leaving this
-as is.
-
-> >  
-> > -	res->slave_clk = devm_clk_get(dev, "slave_bus");
-> > -	if (IS_ERR(res->slave_clk))
-> > -		return PTR_ERR(res->slave_clk);
-> > +	ret = devm_clk_bulk_get(dev, res->num_clks, res->clks);
-> > +	if (ret < 0)
-> > +		return ret;
-> >  
-> >  	res->axi_m_reset = devm_reset_control_get_exclusive(dev, "axi_m");
-> >  	if (IS_ERR(res->axi_m_reset))
-> > @@ -719,9 +718,7 @@ static void qcom_pcie_deinit_2_4_0(struct qcom_pcie *pcie)
-> >  	reset_control_assert(res->axi_m_sticky_reset);
-> >  	reset_control_assert(res->pwr_reset);
-> >  	reset_control_assert(res->ahb_reset);
-> > -	clk_disable_unprepare(res->aux_clk);
-> > -	clk_disable_unprepare(res->master_clk);
-> > -	clk_disable_unprepare(res->slave_clk);
-> > +	clk_bulk_disable_unprepare(res->num_clks, res->clks);
-> >  }
-> >  
-> >  static int qcom_pcie_init_2_4_0(struct qcom_pcie *pcie)
-> > @@ -850,23 +847,9 @@ static int qcom_pcie_init_2_4_0(struct qcom_pcie *pcie)
-> >  
-> >  	usleep_range(10000, 12000);
-> >  
-> > -	ret = clk_prepare_enable(res->aux_clk);
-> > -	if (ret) {
-> > -		dev_err(dev, "cannot prepare/enable iface clock\n");
-> > +	ret = clk_bulk_prepare_enable(res->num_clks, res->clks);
-> > +	if (ret)
-> >  		goto err_clk_aux;
-> 
-> Maybe you have to change the name of the label too?
-> 
-
-Updated this and posted v5. Should be good to be merged now.
-
-Thanks for your reviews!
+Kishon, any feedback on this or would you be willing to pick it up?
 
 Regards,
 Bjorn
+
+> Bjorn Andersson (2):
+>   dt-bindings: phy: Add binding for Qualcomm PCIe2 PHY
+>   phy: qcom: Add Qualcomm PCIe2 PHY driver
+> 
+>  .../bindings/phy/qcom-pcie2-phy.txt           |  42 +++
+>  drivers/phy/qualcomm/Kconfig                  |   8 +
+>  drivers/phy/qualcomm/Makefile                 |   1 +
+>  drivers/phy/qualcomm/phy-qcom-pcie2.c         | 331 ++++++++++++++++++
+>  4 files changed, 382 insertions(+)
+>  create mode 100644 Documentation/devicetree/bindings/phy/qcom-pcie2-phy.txt
+>  create mode 100644 drivers/phy/qualcomm/phy-qcom-pcie2.c
+> 
+> -- 
+> 2.18.0
+> 
