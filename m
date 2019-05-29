@@ -2,116 +2,102 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 6A9572D3F1
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 May 2019 04:45:09 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 1A7E22D3F4
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 May 2019 04:46:51 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725880AbfE2CpI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 28 May 2019 22:45:08 -0400
-Received: from mail-pg1-f196.google.com ([209.85.215.196]:34592 "EHLO
-        mail-pg1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725830AbfE2CpI (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 28 May 2019 22:45:08 -0400
-Received: by mail-pg1-f196.google.com with SMTP id h2so413835pgg.1;
-        Tue, 28 May 2019 19:45:08 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=meFcpphhYV4WBekdUl819xcACyT3cK1yVAImW+DBKZg=;
-        b=vKBpnhMUDxXTVfuhHDxSGA1iGNoWy3YA3IHXPpTxcif532Scne8fac2TqqgiBZbJdV
-         cBCTi0KlDsXgds2uJHDvIwg2ZApzm12OVP2YxeQzzGuqo0FDtGZ0BDHdyOx8Q1dA3J9c
-         5pHtrq5F0+133Com3l8FCMG45vSgHq1B7cq1fwR4z5EIshk99/SoPSb8GEYjDLHDLsyP
-         5esli1PkXCbx14yFJE0W4t7/5AIlvmPzo/TtGLND0Ba9rzjfmlCP9OBNjb6LiShxFcAO
-         ICzrEfJMhWwPbFwpDt2dutzIX7U9qd01HWoaKVh8ZL0/gys2zB290h512+6yuBeH5RLw
-         gqxw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=meFcpphhYV4WBekdUl819xcACyT3cK1yVAImW+DBKZg=;
-        b=TqvAAlMCtA59y2u+lBcCNh3uccwIbyCie45YArj0LSNK3iRS4QPCy8fTSgv9kioISJ
-         gQRk8u5h4/QcsjkEkdm9wnwPOuGYR+bOg379nkOPFygoNCZbzx3Ut7Wfpl17KosKAQhY
-         qOz/3HQORsNC++N80W1qXj8feNv402NDQbil307d/6on6nFhlfCpG5HAsUJl+h41oT63
-         PXFfkTHGEISIsiMREtuYZWD7YJkbH2gQ2tdOlpUcae6fo5DlqMTAPN7NxaEZUgQGDNlC
-         11XQNHyr3OBjQ0ej+uK6xneVQG1+kOkkJUO6A3k4ZVI/6XW+xUuXpnn4YYtfXmRodRpG
-         P7gg==
-X-Gm-Message-State: APjAAAV2RE/w/SMeOJgPIwdtdDtcOO/6saRkiQN2Anig/kY+ZUiNdXTp
-        vg4z1Ga1XzOMXnNTkBn0wxA=
-X-Google-Smtp-Source: APXvYqyepIlzlzxv7jUpcOcApw7qp6nkDcesi6SJS9N2s0ltYOCCbBg/NYVvA+9xguWWmnk1BOjmqw==
-X-Received: by 2002:a17:90a:9289:: with SMTP id n9mr9481868pjo.35.1559097907598;
-        Tue, 28 May 2019 19:45:07 -0700 (PDT)
-Received: from localhost.localdomain ([2601:644:8201:32e0:7256:81ff:febd:926d])
-        by smtp.gmail.com with ESMTPSA id r3sm18050032pgn.12.2019.05.28.19.45.06
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 28 May 2019 19:45:07 -0700 (PDT)
-Date:   Tue, 28 May 2019 19:45:05 -0700
-From:   Eduardo Valentin <edubezval@gmail.com>
-To:     YueHaibing <yuehaibing@huawei.com>
-Cc:     amit.kucheria@linaro.org, agross@kernel.org,
-        david.brown@linaro.org, rui.zhang@intel.com,
-        daniel.lezcano@linaro.org, linux-kernel@vger.kernel.org,
-        linux-pm@vger.kernel.org, linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH -next] drivers: thermal: tsens: Change hw_id type to int
- in is_sensor_enabled
-Message-ID: <20190529024501.GA2355@localhost.localdomain>
-References: <20190527134124.14784-1-yuehaibing@huawei.com>
+        id S1725917AbfE2Cqu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 28 May 2019 22:46:50 -0400
+Received: from onstation.org ([52.200.56.107]:41642 "EHLO onstation.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1725830AbfE2Cqu (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 28 May 2019 22:46:50 -0400
+Received: from localhost (c-98-239-145-235.hsd1.wv.comcast.net [98.239.145.235])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        (Authenticated sender: masneyb)
+        by onstation.org (Postfix) with ESMTPSA id AF6A73E93F;
+        Wed, 29 May 2019 02:46:48 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=onstation.org;
+        s=default; t=1559098009;
+        bh=aRBBhy0Kk6XSGsl/Ftb8O8lFKtAxihQWGmXQEY0I06w=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=C9rPPdfaKmSr7mTVb+0Lk2lfnDbgZbDzftRQhz3hjeRFgTNa0pRlOicd50dvk90EX
+         taUjiI1yBvgyypyXxKqtcP+/7WALm3KK7iRwqrpZxCxjplv7JEC7NEX91fCSLCDA4F
+         l27G7XLjh2AtIX3DNrY7JEldf2XaU3DKwU7EsExo=
+Date:   Tue, 28 May 2019 22:46:48 -0400
+From:   Brian Masney <masneyb@onstation.org>
+To:     Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
+Cc:     Linus Walleij <linus.walleij@linaro.org>,
+        Sean Paul <sean@poorly.run>, Rob Herring <robh@kernel.org>,
+        Jonathan Marek <jonathan@marek.ca>,
+        Dave Airlie <airlied@linux.ie>,
+        MSM <linux-arm-msm@vger.kernel.org>,
+        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
+        "open list:DRM PANEL DRIVERS" <dri-devel@lists.freedesktop.org>,
+        Rob Clark <robdclark@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        freedreno@lists.freedesktop.org
+Subject: Re: [Freedreno] [PATCH RFC v2 0/6] ARM: qcom: initial Nexus 5
+ display support
+Message-ID: <20190529024648.GA13436@basecamp>
+References: <20190509020352.14282-1-masneyb@onstation.org>
+ <CACRpkda-7+ggoeMD9=erPX09OWteX0bt+qP60_Yv6=4XLqNDZQ@mail.gmail.com>
+ <20190529011705.GA12977@basecamp>
+ <CAOCk7NrRo2=0fPN_Sy1Bhhy+UV7U6uO5aV9uXZc8kc3VpSt71g@mail.gmail.com>
+ <20190529013713.GA13245@basecamp>
+ <CAOCk7NqfdNkRJkbJY70XWN-XvdtFJ0UVn3_9rbgAsNCdR7q5PQ@mail.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20190527134124.14784-1-yuehaibing@huawei.com>
-User-Agent: Mutt/1.5.23 (2014-03-12)
+In-Reply-To: <CAOCk7NqfdNkRJkbJY70XWN-XvdtFJ0UVn3_9rbgAsNCdR7q5PQ@mail.gmail.com>
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-YueHaibing,
-
-On Mon, May 27, 2019 at 09:41:24PM +0800, YueHaibing wrote:
-> Sensor hw_id is int type other u32, is_sensor_enabled
-> should use int to compare, this fix smatch warning:
+On Tue, May 28, 2019 at 07:42:19PM -0600, Jeffrey Hugo wrote:
+> > > Do you know if the nexus 5 has a video or command mode panel?  There
+> > > is some glitchyness with vblanks and command mode panels.
+> >
+> > Its in command mode. I know this because I see two 'pp done time out'
+> > messages, even on 4.17. Based on my understanding, the ping pong code is
+> > only applicable for command mode panels.
 > 
-> drivers/thermal/qcom/tsens-common.c:72
->  is_sensor_enabled() warn: unsigned 'hw_id' is never less than zero.
+> Actually, the ping pong element exists in both modes, but 'pp done
+> time out' is a good indicator that it is command mode.
 > 
-> Fixes: 3e6a8fb33084 ("drivers: thermal: tsens: Add new operation to check if a sensor is enabled")
+> Are you also seeing vblank timeouts?
 
-Thanks for the patch, but we had to revert this commit which was
-causing some issues. So, your patch is not applicable.
+Yes, here's a snippet of the first one.
 
-> Signed-off-by: YueHaibing <yuehaibing@huawei.com>
+[    2.556014] WARNING: CPU: 0 PID: 5 at drivers/gpu/drm/drm_atomic_helper.c:1429 drm_atomic_helper_wait_for_vblanks.part.1+0x288/0x290
+[    2.556020] [CRTC:49:crtc-0] vblank wait timed out
+[    2.556023] Modules linked in:
+[    2.556034] CPU: 0 PID: 5 Comm: kworker/0:0 Not tainted 5.2.0-rc1-00178-g72c3c1fd5f86-dirty #426
+[    2.556038] Hardware name: Generic DT based system
+[    2.556056] Workqueue: events deferred_probe_work_func
+...
 
-Thank you anyways.
-
-> ---
->  drivers/thermal/qcom/tsens-common.c | 2 +-
->  drivers/thermal/qcom/tsens.h        | 2 +-
->  2 files changed, 2 insertions(+), 2 deletions(-)
+> Do you have busybox?
 > 
-> diff --git a/drivers/thermal/qcom/tsens-common.c b/drivers/thermal/qcom/tsens-common.c
-> index 928e8e81ba69..5df4eed84535 100644
-> --- a/drivers/thermal/qcom/tsens-common.c
-> +++ b/drivers/thermal/qcom/tsens-common.c
-> @@ -64,7 +64,7 @@ void compute_intercept_slope(struct tsens_priv *priv, u32 *p1,
->  	}
->  }
->  
-> -bool is_sensor_enabled(struct tsens_priv *priv, u32 hw_id)
-> +bool is_sensor_enabled(struct tsens_priv *priv, int hw_id)
->  {
->  	u32 val;
->  	int ret;
-> diff --git a/drivers/thermal/qcom/tsens.h b/drivers/thermal/qcom/tsens.h
-> index eefe3844fb4e..15264806f6a8 100644
-> --- a/drivers/thermal/qcom/tsens.h
-> +++ b/drivers/thermal/qcom/tsens.h
-> @@ -315,7 +315,7 @@ void compute_intercept_slope(struct tsens_priv *priv, u32 *pt1, u32 *pt2, u32 mo
->  int init_common(struct tsens_priv *priv);
->  int get_temp_tsens_valid(struct tsens_priv *priv, int i, int *temp);
->  int get_temp_common(struct tsens_priv *priv, int i, int *temp);
-> -bool is_sensor_enabled(struct tsens_priv *priv, u32 hw_id);
-> +bool is_sensor_enabled(struct tsens_priv *priv, int hw_id);
->  
->  /* TSENS target */
->  extern const struct tsens_plat_data data_8960;
+> Can you run -
+> sudo busybox devmem 0xFD900614
+> sudo busybox devmem 0xFD900714
+> sudo busybox devmem 0xFD900814
+> sudo busybox devmem 0xFD900914
+> sudo busybox devmem 0xFD900A14
+
+# busybox devmem 0xFD900614
+0x00020020
+# busybox devmem 0xFD900714
+0x00000000
+# busybox devmem 0xFD900814
+0x00000000
+# busybox devmem 0xFD900914
+0x00000000
+# busybox devmem 0xFD900A14
+0x00000000
+
+I get the same values with the mainline kernel and 4.17.
+
+Brian
