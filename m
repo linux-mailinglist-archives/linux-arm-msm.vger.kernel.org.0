@@ -2,102 +2,109 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 1A7E22D3F4
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 May 2019 04:46:51 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E522B2D53B
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 May 2019 07:57:18 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725917AbfE2Cqu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 28 May 2019 22:46:50 -0400
-Received: from onstation.org ([52.200.56.107]:41642 "EHLO onstation.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1725830AbfE2Cqu (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 28 May 2019 22:46:50 -0400
-Received: from localhost (c-98-239-145-235.hsd1.wv.comcast.net [98.239.145.235])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        id S1725879AbfE2F5S (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 29 May 2019 01:57:18 -0400
+Received: from smtp.codeaurora.org ([198.145.29.96]:33968 "EHLO
+        smtp.codeaurora.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725874AbfE2F5R (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 29 May 2019 01:57:17 -0400
+Received: by smtp.codeaurora.org (Postfix, from userid 1000)
+        id EE64D60795; Wed, 29 May 2019 05:57:16 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
+        s=default; t=1559109436;
+        bh=74Ne9sS3vTkaD1mJsi9vabiBu9b2KjBQaNeK5Xh8kGI=;
+        h=Subject:To:Cc:References:From:Date:In-Reply-To:From;
+        b=ZS5kwl9p9omyxADk65Nf5iKFRGfND8XHq2UDHz8d59MZAecFVTIOFxcROO9Ig/jZq
+         D6IRrGSMi0Uaylok6Ezt64S3YGWbE55OSyAu5Hu+miXQPWbR8MlYelIjaAQihMbu0y
+         A7uopP5u5fDbL8ky7zDy9X1OJbMZjwfeb4GA52AM=
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        pdx-caf-mail.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.7 required=2.0 tests=ALL_TRUSTED,BAYES_00,
+        DKIM_INVALID,DKIM_SIGNED,SPF_NONE autolearn=no autolearn_force=no
+        version=3.4.0
+Received: from [10.79.129.124] (blr-bdr-fw-01_globalnat_allzones-outside.qualcomm.com [103.229.18.19])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
         (No client certificate requested)
-        (Authenticated sender: masneyb)
-        by onstation.org (Postfix) with ESMTPSA id AF6A73E93F;
-        Wed, 29 May 2019 02:46:48 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=onstation.org;
-        s=default; t=1559098009;
-        bh=aRBBhy0Kk6XSGsl/Ftb8O8lFKtAxihQWGmXQEY0I06w=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=C9rPPdfaKmSr7mTVb+0Lk2lfnDbgZbDzftRQhz3hjeRFgTNa0pRlOicd50dvk90EX
-         taUjiI1yBvgyypyXxKqtcP+/7WALm3KK7iRwqrpZxCxjplv7JEC7NEX91fCSLCDA4F
-         l27G7XLjh2AtIX3DNrY7JEldf2XaU3DKwU7EsExo=
-Date:   Tue, 28 May 2019 22:46:48 -0400
-From:   Brian Masney <masneyb@onstation.org>
-To:     Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
-Cc:     Linus Walleij <linus.walleij@linaro.org>,
-        Sean Paul <sean@poorly.run>, Rob Herring <robh@kernel.org>,
-        Jonathan Marek <jonathan@marek.ca>,
-        Dave Airlie <airlied@linux.ie>,
+        (Authenticated sender: vivek.gautam@smtp.codeaurora.org)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id A66396029B;
+        Wed, 29 May 2019 05:57:12 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
+        s=default; t=1559109436;
+        bh=74Ne9sS3vTkaD1mJsi9vabiBu9b2KjBQaNeK5Xh8kGI=;
+        h=Subject:To:Cc:References:From:Date:In-Reply-To:From;
+        b=ZS5kwl9p9omyxADk65Nf5iKFRGfND8XHq2UDHz8d59MZAecFVTIOFxcROO9Ig/jZq
+         D6IRrGSMi0Uaylok6Ezt64S3YGWbE55OSyAu5Hu+miXQPWbR8MlYelIjaAQihMbu0y
+         A7uopP5u5fDbL8ky7zDy9X1OJbMZjwfeb4GA52AM=
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org A66396029B
+Authentication-Results: pdx-caf-mail.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: pdx-caf-mail.web.codeaurora.org; spf=none smtp.mailfrom=vivek.gautam@codeaurora.org
+Subject: Re: [PATCH 1/1] drm/panel: truly: Add additional delay after pulling
+ down reset gpio
+To:     Marc Gonzalez <marc.w.gonzalez@free.fr>, airlied@linux.ie,
+        thierry.reding@gmail.com, daniel@ffwll.ch
+Cc:     Rob Clark <robdclark@gmail.com>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
         MSM <linux-arm-msm@vger.kernel.org>,
-        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
-        "open list:DRM PANEL DRIVERS" <dri-devel@lists.freedesktop.org>,
-        Rob Clark <robdclark@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        freedreno@lists.freedesktop.org
-Subject: Re: [Freedreno] [PATCH RFC v2 0/6] ARM: qcom: initial Nexus 5
- display support
-Message-ID: <20190529024648.GA13436@basecamp>
-References: <20190509020352.14282-1-masneyb@onstation.org>
- <CACRpkda-7+ggoeMD9=erPX09OWteX0bt+qP60_Yv6=4XLqNDZQ@mail.gmail.com>
- <20190529011705.GA12977@basecamp>
- <CAOCk7NrRo2=0fPN_Sy1Bhhy+UV7U6uO5aV9uXZc8kc3VpSt71g@mail.gmail.com>
- <20190529013713.GA13245@basecamp>
- <CAOCk7NqfdNkRJkbJY70XWN-XvdtFJ0UVn3_9rbgAsNCdR7q5PQ@mail.gmail.com>
+        LKML <linux-kernel@vger.kernel.org>
+References: <20190527102616.28315-1-vivek.gautam@codeaurora.org>
+ <7dfcf294-6ab1-c1ce-352d-dfdeec4347af@free.fr>
+From:   Vivek Gautam <vivek.gautam@codeaurora.org>
+Message-ID: <e260c253-66af-cb09-f685-8bf62f0d5547@codeaurora.org>
+Date:   Wed, 29 May 2019 11:27:10 +0530
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:60.0) Gecko/20100101
+ Thunderbird/60.6.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAOCk7NqfdNkRJkbJY70XWN-XvdtFJ0UVn3_9rbgAsNCdR7q5PQ@mail.gmail.com>
+In-Reply-To: <7dfcf294-6ab1-c1ce-352d-dfdeec4347af@free.fr>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Content-Language: en-US
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, May 28, 2019 at 07:42:19PM -0600, Jeffrey Hugo wrote:
-> > > Do you know if the nexus 5 has a video or command mode panel?  There
-> > > is some glitchyness with vblanks and command mode panels.
-> >
-> > Its in command mode. I know this because I see two 'pp done time out'
-> > messages, even on 4.17. Based on my understanding, the ping pong code is
-> > only applicable for command mode panels.
-> 
-> Actually, the ping pong element exists in both modes, but 'pp done
-> time out' is a good indicator that it is command mode.
-> 
-> Are you also seeing vblank timeouts?
 
-Yes, here's a snippet of the first one.
 
-[    2.556014] WARNING: CPU: 0 PID: 5 at drivers/gpu/drm/drm_atomic_helper.c:1429 drm_atomic_helper_wait_for_vblanks.part.1+0x288/0x290
-[    2.556020] [CRTC:49:crtc-0] vblank wait timed out
-[    2.556023] Modules linked in:
-[    2.556034] CPU: 0 PID: 5 Comm: kworker/0:0 Not tainted 5.2.0-rc1-00178-g72c3c1fd5f86-dirty #426
-[    2.556038] Hardware name: Generic DT based system
-[    2.556056] Workqueue: events deferred_probe_work_func
-...
+On 5/28/2019 2:13 PM, Marc Gonzalez wrote:
+> On 27/05/2019 12:26, Vivek Gautam wrote:
+>
+>> MTP SDM845 panel seems to need additional delay to bring panel
+>> to a workable state. Running modetest without this change displays
+>> blurry artifacts.
+>>
+>> Signed-off-by: Vivek Gautam <vivek.gautam@codeaurora.org>
+>> ---
+>>   drivers/gpu/drm/panel/panel-truly-nt35597.c | 1 +
+>>   1 file changed, 1 insertion(+)
+>>
+>> diff --git a/drivers/gpu/drm/panel/panel-truly-nt35597.c b/drivers/gpu/drm/panel/panel-truly-nt35597.c
+>> index fc2a66c53db4..aa7153fd3be4 100644
+>> --- a/drivers/gpu/drm/panel/panel-truly-nt35597.c
+>> +++ b/drivers/gpu/drm/panel/panel-truly-nt35597.c
+>> @@ -280,6 +280,7 @@ static int truly_35597_power_on(struct truly_nt35597 *ctx)
+>>   	gpiod_set_value(ctx->reset_gpio, 1);
+>>   	usleep_range(10000, 20000);
+>>   	gpiod_set_value(ctx->reset_gpio, 0);
+>> +	usleep_range(10000, 20000);
+> I'm not sure usleep_range() makes sense with these values.
+>
+> AFAIU, usleep_range() is typically used for sub-jiffy sleeps, and is based
+> on HRT to generate an interrupt.
+>
+> Once we get into jiffy granularity, it seems to me msleep() is good enough.
+> IIUC, it would piggy-back on the jiffy timer interrupt.
+>
+> In short, why not just use msleep(10); ?
 
-> Do you have busybox?
-> 
-> Can you run -
-> sudo busybox devmem 0xFD900614
-> sudo busybox devmem 0xFD900714
-> sudo busybox devmem 0xFD900814
-> sudo busybox devmem 0xFD900914
-> sudo busybox devmem 0xFD900A14
+I am just maintaining the symmetry across older code.
 
-# busybox devmem 0xFD900614
-0x00020020
-# busybox devmem 0xFD900714
-0x00000000
-# busybox devmem 0xFD900814
-0x00000000
-# busybox devmem 0xFD900914
-0x00000000
-# busybox devmem 0xFD900A14
-0x00000000
+Thanks
+Vivek
+>
+> Regards.
 
-I get the same values with the mainline kernel and 4.17.
-
-Brian
