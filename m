@@ -2,109 +2,88 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id E522B2D53B
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 May 2019 07:57:18 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 21E292D571
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 May 2019 08:23:33 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725879AbfE2F5S (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 29 May 2019 01:57:18 -0400
-Received: from smtp.codeaurora.org ([198.145.29.96]:33968 "EHLO
-        smtp.codeaurora.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725874AbfE2F5R (ORCPT
+        id S1725903AbfE2GXc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 29 May 2019 02:23:32 -0400
+Received: from mail-lj1-f196.google.com ([209.85.208.196]:35580 "EHLO
+        mail-lj1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726120AbfE2GXb (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 29 May 2019 01:57:17 -0400
-Received: by smtp.codeaurora.org (Postfix, from userid 1000)
-        id EE64D60795; Wed, 29 May 2019 05:57:16 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
-        s=default; t=1559109436;
-        bh=74Ne9sS3vTkaD1mJsi9vabiBu9b2KjBQaNeK5Xh8kGI=;
-        h=Subject:To:Cc:References:From:Date:In-Reply-To:From;
-        b=ZS5kwl9p9omyxADk65Nf5iKFRGfND8XHq2UDHz8d59MZAecFVTIOFxcROO9Ig/jZq
-         D6IRrGSMi0Uaylok6Ezt64S3YGWbE55OSyAu5Hu+miXQPWbR8MlYelIjaAQihMbu0y
-         A7uopP5u5fDbL8ky7zDy9X1OJbMZjwfeb4GA52AM=
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        pdx-caf-mail.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.7 required=2.0 tests=ALL_TRUSTED,BAYES_00,
-        DKIM_INVALID,DKIM_SIGNED,SPF_NONE autolearn=no autolearn_force=no
-        version=3.4.0
-Received: from [10.79.129.124] (blr-bdr-fw-01_globalnat_allzones-outside.qualcomm.com [103.229.18.19])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: vivek.gautam@smtp.codeaurora.org)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id A66396029B;
-        Wed, 29 May 2019 05:57:12 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
-        s=default; t=1559109436;
-        bh=74Ne9sS3vTkaD1mJsi9vabiBu9b2KjBQaNeK5Xh8kGI=;
-        h=Subject:To:Cc:References:From:Date:In-Reply-To:From;
-        b=ZS5kwl9p9omyxADk65Nf5iKFRGfND8XHq2UDHz8d59MZAecFVTIOFxcROO9Ig/jZq
-         D6IRrGSMi0Uaylok6Ezt64S3YGWbE55OSyAu5Hu+miXQPWbR8MlYelIjaAQihMbu0y
-         A7uopP5u5fDbL8ky7zDy9X1OJbMZjwfeb4GA52AM=
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org A66396029B
-Authentication-Results: pdx-caf-mail.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: pdx-caf-mail.web.codeaurora.org; spf=none smtp.mailfrom=vivek.gautam@codeaurora.org
-Subject: Re: [PATCH 1/1] drm/panel: truly: Add additional delay after pulling
- down reset gpio
-To:     Marc Gonzalez <marc.w.gonzalez@free.fr>, airlied@linux.ie,
-        thierry.reding@gmail.com, daniel@ffwll.ch
-Cc:     Rob Clark <robdclark@gmail.com>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        MSM <linux-arm-msm@vger.kernel.org>,
-        LKML <linux-kernel@vger.kernel.org>
-References: <20190527102616.28315-1-vivek.gautam@codeaurora.org>
- <7dfcf294-6ab1-c1ce-352d-dfdeec4347af@free.fr>
-From:   Vivek Gautam <vivek.gautam@codeaurora.org>
-Message-ID: <e260c253-66af-cb09-f685-8bf62f0d5547@codeaurora.org>
-Date:   Wed, 29 May 2019 11:27:10 +0530
-User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:60.0) Gecko/20100101
- Thunderbird/60.6.1
+        Wed, 29 May 2019 02:23:31 -0400
+Received: by mail-lj1-f196.google.com with SMTP id h11so1243809ljb.2
+        for <linux-arm-msm@vger.kernel.org>; Tue, 28 May 2019 23:23:30 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=Y1SBl/NhErMiMqrSROQABj44p6n5fylOaEGm2rxHFac=;
+        b=oqk/J0AF4QeADPOdicRdeDUwsHkDSXWjWx8dSgJe6kYqicSzaWT6We5F12PmUwMZ65
+         LMtry+PPgl9aZ+ehVfQ3aYUPdsUA+0G/0MxVYzVP3GQ7nbyVaWAFtqS14q9Cz/sXTVWw
+         WStWmxJlYuL0EZHA9ZLPC+k+8DEk47jsreW/64yj3ouY/mC8ANmDOehvx6T5ccr5eMGf
+         1WHWfK+w0dKIuRVlMUYtK5EJTnE70DhNt1doisAzvDA3kA4nYYZdqKIMaavmi3/4P3dM
+         OFEXNXqpmonqPRobjHOdNVf7Lw0XFzgEPkX3HUfI1XRrIa4g+PCInqe2zu8U3pN8pT/h
+         jBAg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=Y1SBl/NhErMiMqrSROQABj44p6n5fylOaEGm2rxHFac=;
+        b=UZ7vKAyIA1tQcFAlM1uzk/1eFYxLcP1QXYzB2BiD2R4ytVEa7lEauBvI7h6FNcrT0S
+         oxN6aHB58fiHnfiohVVgObFjLrE2YET8B1gmn9BnGm9H1At/6iQHkt0wJvl++8+QCvjP
+         h1O8M/ncGd3ZcQqaydUO4ho6pbpQtGjMeOXcK1cAd363tE2kxLEuuG/l1vhgJ2gsezcj
+         lUaiuL49PCTtkdPurAVgpaxIkBTQ8BmMRm1MYEOEOtj4bO/oofITuyixN12bSfLYmmLL
+         Az1WWXj+5PXBHVit9Ki/aZVHLBJMYFUg+GTH36aPlpAOCJB9kQ8iHhAfVHbrhEK4O4Ct
+         Mn7w==
+X-Gm-Message-State: APjAAAWxY/luGd/s+J+7e0TDmMkORNbYdEbVfZAQfKBYfcyzPO3+wnbG
+        SVVD+QjDu3Sg6dvYqWJuoA2TJ8F9YDBQy+0qrru5uQ==
+X-Google-Smtp-Source: APXvYqwIsl1wSDxK9EPcOc6HNZDGzaYIXxohtHwHpz4z0RvbNyq1y2+YZmevdVoB7By354baiJgjeTvrt9wKyS/5rzA=
+X-Received: by 2002:a2e:8997:: with SMTP id c23mr1321995lji.94.1559111009909;
+ Tue, 28 May 2019 23:23:29 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <7dfcf294-6ab1-c1ce-352d-dfdeec4347af@free.fr>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Content-Language: en-US
+References: <20190509020352.14282-1-masneyb@onstation.org> <CACRpkda-7+ggoeMD9=erPX09OWteX0bt+qP60_Yv6=4XLqNDZQ@mail.gmail.com>
+ <20190529011705.GA12977@basecamp>
+In-Reply-To: <20190529011705.GA12977@basecamp>
+From:   Linus Walleij <linus.walleij@linaro.org>
+Date:   Wed, 29 May 2019 08:23:17 +0200
+Message-ID: <CACRpkdZu5KxKTMqAM5rueWbrXbfPNorOOerezCAA3vgAR6cD5g@mail.gmail.com>
+Subject: Re: [PATCH RFC v2 0/6] ARM: qcom: initial Nexus 5 display support
+To:     Brian Masney <masneyb@onstation.org>
+Cc:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        "open list:DRM PANEL DRIVERS" <dri-devel@lists.freedesktop.org>,
+        MSM <linux-arm-msm@vger.kernel.org>,
+        freedreno@lists.freedesktop.org, Dave Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
+        Jonathan Marek <jonathan@marek.ca>,
+        Rob Herring <robh@kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On Wed, May 29, 2019 at 3:17 AM Brian Masney <masneyb@onstation.org> wrote:
 
+> It's in low speed mode but its usable.
 
-On 5/28/2019 2:13 PM, Marc Gonzalez wrote:
-> On 27/05/2019 12:26, Vivek Gautam wrote:
->
->> MTP SDM845 panel seems to need additional delay to bring panel
->> to a workable state. Running modetest without this change displays
->> blurry artifacts.
->>
->> Signed-off-by: Vivek Gautam <vivek.gautam@codeaurora.org>
->> ---
->>   drivers/gpu/drm/panel/panel-truly-nt35597.c | 1 +
->>   1 file changed, 1 insertion(+)
->>
->> diff --git a/drivers/gpu/drm/panel/panel-truly-nt35597.c b/drivers/gpu/drm/panel/panel-truly-nt35597.c
->> index fc2a66c53db4..aa7153fd3be4 100644
->> --- a/drivers/gpu/drm/panel/panel-truly-nt35597.c
->> +++ b/drivers/gpu/drm/panel/panel-truly-nt35597.c
->> @@ -280,6 +280,7 @@ static int truly_35597_power_on(struct truly_nt35597 *ctx)
->>   	gpiod_set_value(ctx->reset_gpio, 1);
->>   	usleep_range(10000, 20000);
->>   	gpiod_set_value(ctx->reset_gpio, 0);
->> +	usleep_range(10000, 20000);
-> I'm not sure usleep_range() makes sense with these values.
->
-> AFAIU, usleep_range() is typically used for sub-jiffy sleeps, and is based
-> on HRT to generate an interrupt.
->
-> Once we get into jiffy granularity, it seems to me msleep() is good enough.
-> IIUC, it would piggy-back on the jiffy timer interrupt.
->
-> In short, why not just use msleep(10); ?
+How low speed is that?
 
-I am just maintaining the symmetry across older code.
+> I assume that it's related to the
+> vblank events not working properly?
 
-Thanks
-Vivek
->
-> Regards.
+They are only waiting for 50 ms before timing out, I raised it
+to 100ms in the -next kernel. I'm still suspicious about this
+even though I think you said this was not the problem.
 
+For a command mode panel in LP mode it will nevertheless
+be more than 100ms for sure, the update is visible to the
+naked eye.
+
+Raise it to 10000 ms or something and see what happens.
+drivers/gpu/drm/drm_atomic_helper.c:
+ msecs_to_jiffies(50)
+
+Yours,
+Linus Walleij
