@@ -2,224 +2,115 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 618E42D310
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 May 2019 03:04:14 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 830492D312
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 May 2019 03:06:33 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725880AbfE2BEN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 28 May 2019 21:04:13 -0400
-Received: from mail-pl1-f196.google.com ([209.85.214.196]:43144 "EHLO
-        mail-pl1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725847AbfE2BEN (ORCPT
+        id S1725830AbfE2BGc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 28 May 2019 21:06:32 -0400
+Received: from mail-pf1-f194.google.com ([209.85.210.194]:33123 "EHLO
+        mail-pf1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725816AbfE2BGc (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 28 May 2019 21:04:13 -0400
-Received: by mail-pl1-f196.google.com with SMTP id gn7so268491plb.10
-        for <linux-arm-msm@vger.kernel.org>; Tue, 28 May 2019 18:04:13 -0700 (PDT)
+        Tue, 28 May 2019 21:06:32 -0400
+Received: by mail-pf1-f194.google.com with SMTP id z28so452922pfk.0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 28 May 2019 18:06:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
+        d=gmail.com; s=20161025;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to:user-agent;
-        bh=eDM5fdSuTRnA5fXaF+6hZdcJmU1/PIyQ7UxywRR2Zog=;
-        b=jRY3uG8W1jMZob8W9ofGD/se970aLLuWe8jQ03NxTzulzSjjpWbkKesIq8eGFxh7T+
-         qgp/CGZTXI5WP0lrsBwWI/9QE/pTpkHOV65N4W3vATnRLtk+x0vJGO5wJiB+mPzAmprz
-         yhfiUWLV8419oXZTadCTiDl8546amwwXjTNKbLvRtH72RxXdhky9YKKOUThJECLpc+YA
-         iNSPtol1fajjIznq7Rbm9CCRPd9dxGP2vF0FRQzOKNPhe8Agk3RRcwvcE0ugE4U1zARI
-         AcJ8v4CIkWwvHRnoA5dK9tJogm7shN1jfQnNDsR9h2oWpum22MDihS+0qXCS2erERKol
-         eOfQ==
+        bh=50V9t41UXg85VFErBSYKMIzUvnbt87kmuJK3a+Xg/Wg=;
+        b=TCqFea28JX1N/A+mJWgy8qt91/jv2aKbK2/msQWWoOqLQfhty9g8wUQ5N46u1dFXF6
+         cz0lmHsbG8mi4f4kh00DYZthBomaxT5612fjeDHbz2bxmxjMvqkJMHwCnrJCh3ZN7s0k
+         X4VP+Dwc0IZW4Vv7cIOnSRmn+hXbfSzzBF3PI7nBBv6DE0RxWZJDhmhh9FKWlH7FJc00
+         oQKWQuZ+L9ZY4Zm3FZOQV4pJ2WD4li/RZjrMY2F0oPt45RNYF0RT+iCsXf/B7xCFgMbT
+         ZPMguDFOCXt7yJENvrwzDkuAH2hkBIjs6kFsoSTm+hqXnsyojgWrG7oz6BqGH1MUW25P
+         sRLg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=eDM5fdSuTRnA5fXaF+6hZdcJmU1/PIyQ7UxywRR2Zog=;
-        b=l/qbypefg/hgUthpBEzPUrrrYevM7iWE1ScAxI19Fy69OPwDQoVFI+z4ElDywCd7uJ
-         MjjTOLhg6j9YZPCI/v/OP1X3ULPObtT9VZV2FvQQYCc9i4EPmeUzD+QNz/VxNYyGmjlQ
-         RDJx/jeLJJGgcobunNgnH0Jp9u4eAT/XrLc3yeuOnyzFnhxksEVzLCIxlqlEvY1nsRDx
-         z/24XypDImN1hUYzEnNjJglAMwPxXjCEVWrOMbL4EHv23nQgznSYbfR7ju54enaX6aoA
-         hdf6EfNQBh7rHTStPmbi/uZwYOXjMbq7FsikpFC6kLMigE7M+jXIvpNohyQqjoF7miYv
-         f+ug==
-X-Gm-Message-State: APjAAAX4EWEA6qax6Z7GZyfTqnGncqaQKtqj0Omz6+dVfcq2iPBqCt/Y
-        K1B6EO/gmJvXpb9IZBG4O2Qf4B7y7S4=
-X-Google-Smtp-Source: APXvYqxova5B2ZxYzxrpOdJ/qUyycjlqZCJMv+XpnPdomRoSmE60kwLkJxo5XWWbioRRYWw3FjMYkw==
-X-Received: by 2002:a17:902:9698:: with SMTP id n24mr53203712plp.118.1559091852902;
-        Tue, 28 May 2019 18:04:12 -0700 (PDT)
-Received: from builder (104-188-17-28.lightspeed.sndgca.sbcglobal.net. [104.188.17.28])
-        by smtp.gmail.com with ESMTPSA id l141sm19334761pfd.24.2019.05.28.18.04.11
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Tue, 28 May 2019 18:04:11 -0700 (PDT)
-Date:   Tue, 28 May 2019 18:04:10 -0700
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-Cc:     andy.gross@linaro.org, linux-arm-msm@vger.kernel.org,
-        linux-soc@vger.kernel.org, linux-kernel@vger.kernel.org,
-        rohitkr@codeaurora.org, bgoswami@codeaurora.org
-Subject: Re: [PATCH v2] qcom: apr: Make apr callbacks in non-atomic context
-Message-ID: <20190529010410.GA24059@builder>
-References: <20190208175510.26837-1-srinivas.kandagatla@linaro.org>
+        bh=50V9t41UXg85VFErBSYKMIzUvnbt87kmuJK3a+Xg/Wg=;
+        b=g1ivuxB431US0XSqhWKWucygW0g22iDyaONhKK/IVBc/loF2FfKvi/OAsX8HgenPkk
+         i+QqExl+/KanKNta6i3Vbrbk0LcfMnXMVAFuNIdoBndxHVnphuo9txCOQph/HmLWNwIR
+         JFzFnz7atl6Nt7LNJkVaQ3h5e6l5MF7C13HlujQQYiQN8Vvg2agCeuA4XUYKYOhmF6SB
+         cWMwmwoyQLD+RoBh+3HXE2mDS6NVPREvLXc5c8k0zEaAoUrOiJeiRcjysTwXI0QRBr4b
+         iEfCCPhpfDD1hqrHOEEoSfm/p71LWoRGr0a6g9sVfRMiz7hMKLPIMtBcVG6mXUSNp9rN
+         A2Gw==
+X-Gm-Message-State: APjAAAV9CJx24yulltivSA28d8vLR34Lx91ViCH2Lg1e2PtmHE52FLam
+        fqmbkFnxjct4/wWZakVzVz0=
+X-Google-Smtp-Source: APXvYqyE0D6qF1usWqtrPpTiqU9xwIL4Qn41YONstYKrxB8qp9AW128EcFx8eKQsdnIxSLc2lU/CUQ==
+X-Received: by 2002:a63:1b56:: with SMTP id b22mr41515239pgm.87.1559091991609;
+        Tue, 28 May 2019 18:06:31 -0700 (PDT)
+Received: from localhost.localdomain ([2601:644:8201:32e0:7256:81ff:febd:926d])
+        by smtp.gmail.com with ESMTPSA id h7sm9499491pfo.108.2019.05.28.18.06.29
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Tue, 28 May 2019 18:06:30 -0700 (PDT)
+Date:   Tue, 28 May 2019 18:06:28 -0700
+From:   Eduardo Valentin <edubezval@gmail.com>
+To:     Andy Gross <andygro@gmail.com>
+Cc:     Amit Kucheria <amit.kucheria@linaro.org>,
+        Stephen Boyd <sboyd@kernel.org>,
+        "kernelci.org bot" <bot@kernelci.org>,
+        Kevin Hilman <khilman@baylibre.com>,
+        kernel-build-reports@lists.linaro.org,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>
+Subject: Re: next/pending-fixes boot: 227 boots: 6 failed, 198 passed with 20
+ offline, 1 untried/unknown, 2 conflicts (v5.2-rc1-375-g3695b18d1e9cd)
+Message-ID: <20190529010627.GA8566@localhost.localdomain>
+References: <5ce71d79.1c69fb81.dd0de.33cf@mx.google.com>
+ <7hv9y01z85.fsf@baylibre.com>
+ <20190524012913.D9BB72168B@mail.kernel.org>
+ <CAP245DXkEym=x3vrN2cc2y+uHHx_+z0cW0WsV0dGGXfd+c2mSQ@mail.gmail.com>
+ <CAJ=6tTqdvgsoVH+3=_6ucAyuhgSjjVSROBKwtxjYwO1vmFvxfg@mail.gmail.com>
+ <CAJ=6tTr4EaLLiavN+aRpU3JnJ5MuAtU-uer_8iLm7QMh6i4rAg@mail.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20190208175510.26837-1-srinivas.kandagatla@linaro.org>
-User-Agent: Mutt/1.10.0 (2018-05-17)
+In-Reply-To: <CAJ=6tTr4EaLLiavN+aRpU3JnJ5MuAtU-uer_8iLm7QMh6i4rAg@mail.gmail.com>
+User-Agent: Mutt/1.5.23 (2014-03-12)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri 08 Feb 09:55 PST 2019, Srinivas Kandagatla wrote:
+Hello,
 
-> APR communication with DSP is not atomic in nature.
-> Its request-response type. Trying to pretend that these are atomic
-> and invoking apr client callbacks directly under atomic/irq context has
-> endless issues with soundcard. It makes more sense to convert these
-> to nonatomic calls. This also coverts all the dais to be nonatomic.
+On Tue, May 28, 2019 at 04:37:15PM -0500, Andy Gross wrote:
+> +Eduardo
 > 
-> All the callbacks are now invoked as part of rx work queue.
+> On Tue, May 28, 2019 at 1:09 PM Andy Gross <andygro@gmail.com> wrote:
 > 
-> Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-> Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+> > On Sun, May 26, 2019 at 4:51 PM Amit Kucheria <amit.kucheria@linaro.org>
+> > wrote:
+> >
+> > <snip>
+> >
+> > > Sorry for breaking the boot on 8064. That was one of the platforms
+> > > that I didn't convert over to regmap (needs more refactoring). I had
+> > > hoped kernelci would catch any issues but looks like thermal-soc tree
+> > > entered linux-next quite late and didn't catch this.
+> > >
+> > > Does reverting 3e6a8fb33084 ("drivers: thermal: tsens: Add new
+> > > operation to check if a sensor is enabled") fix the issue? If so,
+> > > reverting that commit might be the best course of action since I've
+> > > started vacations and can't fix this for 8064 in a meaningful amount
+> > > of time (until 3rd week of June). cc'ing Bjorn in case this needs more
+> > > investigation, but I think that patch is fairly self contained and
+> > > reverting it shouldn't have any knock-on effects.
+> >
+> > I am ok with this.  I'll check with Bjorn before adding this to a
+> > fixes for -rc2.
+> >
+> 
+> Eduardo, we have a situation with the Qcom tsens driver and
+> commit  3e6a8fb33084.  Do you mind if I send in a revert for this through
+> my tree or can you do this for us for -rc2?
 
-Picked up
+I can revert this patch. I can confirm that it is selfcontained and
+reverting seams to work. I am sending the revert to -rc3, as rc2 is
+already out.
 
-Thanks,
-Bjorn
-
-> ---
-> Changes since v1:
->  - flush and destroy work queue after removing the device
-> 	 to avoid active communication from device. suggested by Bjorn.
 > 
->  drivers/soc/qcom/apr.c | 74 +++++++++++++++++++++++++++++++++++++++---
->  1 file changed, 69 insertions(+), 5 deletions(-)
-> 
-> diff --git a/drivers/soc/qcom/apr.c b/drivers/soc/qcom/apr.c
-> index 74f8b9607daa..039e3aa6f5e0 100644
-> --- a/drivers/soc/qcom/apr.c
-> +++ b/drivers/soc/qcom/apr.c
-> @@ -8,6 +8,7 @@
->  #include <linux/spinlock.h>
->  #include <linux/idr.h>
->  #include <linux/slab.h>
-> +#include <linux/workqueue.h>
->  #include <linux/of_device.h>
->  #include <linux/soc/qcom/apr.h>
->  #include <linux/rpmsg.h>
-> @@ -17,8 +18,18 @@ struct apr {
->  	struct rpmsg_endpoint *ch;
->  	struct device *dev;
->  	spinlock_t svcs_lock;
-> +	spinlock_t rx_lock;
->  	struct idr svcs_idr;
->  	int dest_domain_id;
-> +	struct workqueue_struct *rxwq;
-> +	struct work_struct rx_work;
-> +	struct list_head rx_list;
-> +};
-> +
-> +struct apr_rx_buf {
-> +	struct list_head node;
-> +	int len;
-> +	uint8_t buf[];
->  };
->  
->  /**
-> @@ -62,11 +73,7 @@ static int apr_callback(struct rpmsg_device *rpdev, void *buf,
->  				  int len, void *priv, u32 addr)
->  {
->  	struct apr *apr = dev_get_drvdata(&rpdev->dev);
-> -	uint16_t hdr_size, msg_type, ver, svc_id;
-> -	struct apr_device *svc = NULL;
-> -	struct apr_driver *adrv = NULL;
-> -	struct apr_resp_pkt resp;
-> -	struct apr_hdr *hdr;
-> +	struct apr_rx_buf *abuf;
->  	unsigned long flags;
->  
->  	if (len <= APR_HDR_SIZE) {
-> @@ -75,6 +82,34 @@ static int apr_callback(struct rpmsg_device *rpdev, void *buf,
->  		return -EINVAL;
->  	}
->  
-> +	abuf = kzalloc(sizeof(*abuf) + len, GFP_ATOMIC);
-> +	if (!abuf)
-> +		return -ENOMEM;
-> +
-> +	abuf->len = len;
-> +	memcpy(abuf->buf, buf, len);
-> +
-> +	spin_lock_irqsave(&apr->rx_lock, flags);
-> +	list_add_tail(&abuf->node, &apr->rx_list);
-> +	spin_unlock_irqrestore(&apr->rx_lock, flags);
-> +
-> +	queue_work(apr->rxwq, &apr->rx_work);
-> +
-> +	return 0;
-> +}
-> +
-> +
-> +static int apr_do_rx_callback(struct apr *apr, struct apr_rx_buf *abuf)
-> +{
-> +	uint16_t hdr_size, msg_type, ver, svc_id;
-> +	struct apr_device *svc = NULL;
-> +	struct apr_driver *adrv = NULL;
-> +	struct apr_resp_pkt resp;
-> +	struct apr_hdr *hdr;
-> +	unsigned long flags;
-> +	void *buf = abuf->buf;
-> +	int len = abuf->len;
-> +
->  	hdr = buf;
->  	ver = APR_HDR_FIELD_VER(hdr->hdr_field);
->  	if (ver > APR_PKT_VER + 1)
-> @@ -132,6 +167,23 @@ static int apr_callback(struct rpmsg_device *rpdev, void *buf,
->  	return 0;
->  }
->  
-> +static void apr_rxwq(struct work_struct *work)
-> +{
-> +	struct apr *apr = container_of(work, struct apr, rx_work);
-> +	struct apr_rx_buf *abuf, *b;
-> +	unsigned long flags;
-> +
-> +	if (!list_empty(&apr->rx_list)) {
-> +		list_for_each_entry_safe(abuf, b, &apr->rx_list, node) {
-> +			apr_do_rx_callback(apr, abuf);
-> +			spin_lock_irqsave(&apr->rx_lock, flags);
-> +			list_del(&abuf->node);
-> +			spin_unlock_irqrestore(&apr->rx_lock, flags);
-> +			kfree(abuf);
-> +		}
-> +	}
-> +}
-> +
->  static int apr_device_match(struct device *dev, struct device_driver *drv)
->  {
->  	struct apr_device *adev = to_apr_device(dev);
-> @@ -285,6 +337,14 @@ static int apr_probe(struct rpmsg_device *rpdev)
->  	dev_set_drvdata(dev, apr);
->  	apr->ch = rpdev->ept;
->  	apr->dev = dev;
-> +	apr->rxwq = create_singlethread_workqueue("qcom_apr_rx");
-> +	if (!apr->rxwq) {
-> +		dev_err(apr->dev, "Failed to start Rx WQ\n");
-> +		return -ENOMEM;
-> +	}
-> +	INIT_WORK(&apr->rx_work, apr_rxwq);
-> +	INIT_LIST_HEAD(&apr->rx_list);
-> +	spin_lock_init(&apr->rx_lock);
->  	spin_lock_init(&apr->svcs_lock);
->  	idr_init(&apr->svcs_idr);
->  	of_register_apr_devices(dev);
-> @@ -303,7 +363,11 @@ static int apr_remove_device(struct device *dev, void *null)
->  
->  static void apr_remove(struct rpmsg_device *rpdev)
->  {
-> +	struct apr *apr = dev_get_drvdata(&rpdev->dev);
-> +
->  	device_for_each_child(&rpdev->dev, NULL, apr_remove_device);
-> +	flush_workqueue(apr->rxwq);
-> +	destroy_workqueue(apr->rxwq);
->  }
->  
->  /*
-> -- 
-> 2.20.1
-> 
+> Thanks,
+> Andy
