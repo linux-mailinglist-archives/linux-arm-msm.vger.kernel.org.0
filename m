@@ -2,141 +2,91 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 8CE2E2E65C
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 May 2019 22:43:39 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 6FD3A2E66C
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 May 2019 22:47:28 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726240AbfE2Uni (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 29 May 2019 16:43:38 -0400
-Received: from smtp.codeaurora.org ([198.145.29.96]:47196 "EHLO
-        smtp.codeaurora.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726121AbfE2Uni (ORCPT
+        id S1726224AbfE2Ur1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 29 May 2019 16:47:27 -0400
+Received: from mail-ed1-f67.google.com ([209.85.208.67]:43478 "EHLO
+        mail-ed1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726139AbfE2Ur1 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 29 May 2019 16:43:38 -0400
-Received: by smtp.codeaurora.org (Postfix, from userid 1000)
-        id 2388460769; Wed, 29 May 2019 20:43:37 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
-        s=default; t=1559162617;
-        bh=qBy4lmW9DGF9/YaBsWNd/qvMetf/baE4+9e9TucgeSs=;
-        h=Subject:To:Cc:References:From:Date:In-Reply-To:From;
-        b=PQIVOfZ18XZPxTjlgze5ceTwVT8YtzJN3LQdV41i6SPxLOPyInVk5CSQEfL7zDMAX
-         TfKg3OU/2mh3yzCSNvxS5bvQiRLLxYpg1IYD6NzLF5Nn784/aneKzwyBsjgKR4Odxs
-         URUZFt/MIlEJE8c7ZGKXR+848PC57ojR2OKLhc6U=
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        pdx-caf-mail.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.7 required=2.0 tests=ALL_TRUSTED,BAYES_00,
-        DKIM_INVALID,DKIM_SIGNED,SPF_NONE autolearn=no autolearn_force=no
-        version=3.4.0
-Received: from [10.226.58.28] (i-global254.qualcomm.com [199.106.103.254])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: jhugo@smtp.codeaurora.org)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 77B97606DB;
-        Wed, 29 May 2019 20:43:34 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
-        s=default; t=1559162616;
-        bh=qBy4lmW9DGF9/YaBsWNd/qvMetf/baE4+9e9TucgeSs=;
-        h=Subject:To:Cc:References:From:Date:In-Reply-To:From;
-        b=C967cVxnpJt/5AFVP1nto9BFxVfh0EFMGqw07CZTR4Gs6alujtc7WQ0OopW+80NIq
-         TjmCHRUFZKJAqJZLhQo4iBRlFYB6ciJ3oXU+e0AvBYZ4hS8RsS7ovR2AejIsO9tlm5
-         OtCnuloyXru/kMhcS9IvaCnTve77NnWJgrstcYTk=
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 77B97606DB
-Authentication-Results: pdx-caf-mail.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: pdx-caf-mail.web.codeaurora.org; spf=none smtp.mailfrom=jhugo@codeaurora.org
-Subject: Re: [PATCH] drm/msm/dsi: add protection against NULL dsi device
-To:     Abhinav Kumar <abhinavk@codeaurora.org>,
-        Sean Paul <sean@poorly.run>
-Cc:     dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
-        robdclark@gmail.com, jsanka@codeaurora.org, seanpaul@chromium.org,
-        nganji@codeaurora.org, chandanu@codeaurora.org,
-        hoegsberg@google.com
-References: <1551922134-22518-1-git-send-email-abhinavk@codeaurora.org>
- <20190307215947.GG114153@art_vandelay>
- <cd4c2e25f2785bc09da77e715a3d6c30@codeaurora.org>
-From:   Jeffrey Hugo <jhugo@codeaurora.org>
-Message-ID: <5ae613db-092c-f93d-dd96-a79a4e1eff3a@codeaurora.org>
-Date:   Wed, 29 May 2019 14:43:32 -0600
-User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:60.0) Gecko/20100101
- Thunderbird/60.6.1
+        Wed, 29 May 2019 16:47:27 -0400
+Received: by mail-ed1-f67.google.com with SMTP id w33so5678682edb.10;
+        Wed, 29 May 2019 13:47:25 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=PEb0b1EqOFVao/VpttYj8pRTc5EZTx8yOH2gisVAS1I=;
+        b=Et+YWjaIZ8Z6R1kYSWwUvURblSTgQo8QuDL8xhvF2V+tJmeLBpi7vu/dRuvThEj72b
+         XlL9YIcGTFeXTw+DUbAqbzGncHo9iPLpSNcpmUvefhrRTPFAzWt2l/1UclfAMWorPLVE
+         7inuhdE5vc0eqRX/fT3laeX6jp0uPRkLyOMrARD+fmc60dfNmPMNzX4COnkqyAsjPV+o
+         JIHNXUgCNE5xuxRcFxa9nCpiCiMq7bE8uTC5mp0LMS+5r3BsMp/GkTuzfpEviQBc27dm
+         nDMCGisXEBJKLUZoDsncrujueOPw7+729wYAdthpXUxm1qFEiH/TXU3Qah2+WU9LVi6f
+         oSTQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=PEb0b1EqOFVao/VpttYj8pRTc5EZTx8yOH2gisVAS1I=;
+        b=ZvJLDtcfilTMvzbRPMdzzj25DptHrfJcOTiC81m05RaY02wPalxbTufqnBJx4umNSW
+         QgOx2z52LOOGhquL0Vle4aFTVeQO6jdLBYN1lPZAOKPVYxn/tXYRRbtM1lnO4HCdW/ab
+         YmT+HH8SP8+zEKxPwvxZz2wVzeu9o8zhcrrVmygBWSxkn0xTa803sLRbhhOvHYlDNkdb
+         cBmdlckLkdkWGAgZIkreupEPLH3l/CY+J/FcE8r+Zbkdg6WLV/whzMFWOWUj1NIAu9oN
+         jFnQIej12zyvW4V1u8PUJ1mVForKKGjG4YqigZXUC5UH3UsdSU7smUUGxDLuDwGXWVVx
+         Xkcg==
+X-Gm-Message-State: APjAAAWJ6pEVySBTrWc4Wf9AMyNEjRYym+UaA0Q/XUZQ4BHO3AnJLbQW
+        iDNYVrxWGXcgqqdrMN7Sg0hH8Cytuk+noi0cCLw=
+X-Google-Smtp-Source: APXvYqx14X0H5f2xOK8QIwCicWxWrh881A89gewt51xGVzujShI/t3Vkxpwk6YpKf2Fkbc5MtE4bMNOJim/O1z9mDhk=
+X-Received: by 2002:a17:906:724c:: with SMTP id n12mr157037ejk.164.1559162845256;
+ Wed, 29 May 2019 13:47:25 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <cd4c2e25f2785bc09da77e715a3d6c30@codeaurora.org>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 8bit
+References: <20190529152022.42799-1-jeffrey.l.hugo@gmail.com> <20190529152022.42799-2-jeffrey.l.hugo@gmail.com>
+In-Reply-To: <20190529152022.42799-2-jeffrey.l.hugo@gmail.com>
+From:   Rob Clark <robdclark@gmail.com>
+Date:   Wed, 29 May 2019 13:47:12 -0700
+Message-ID: <CAF6AEGuELkPf0KSFK1mBpfjFr27m64NtCZ817pkcf1kGB6vT7A@mail.gmail.com>
+Subject: Re: [PATCH v2 1/2] a5xx: Define HLSQ_DBG_ECO_CNTL
+To:     Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
+Cc:     Sean Paul <sean@poorly.run>, David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Jordan Crouse <jcrouse@codeaurora.org>,
+        Marc Gonzalez <marc.w.gonzalez@free.fr>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        dri-devel <dri-devel@lists.freedesktop.org>,
+        freedreno <freedreno@lists.freedesktop.org>,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 3/7/2019 3:02 PM, Abhinav Kumar wrote:
-> On 2019-03-07 13:59, Sean Paul wrote:
->> On Wed, Mar 06, 2019 at 05:28:54PM -0800, Abhinav Kumar wrote:
->>> When panel probe happens after DSI probe, the DSI probe
->>> is deferred as per current design. In the probe defer path
->>> dsi device is destroyed. This NULL dsi device could be
->>> deferenced by the panel probe in the mipi_dsi_attach path.
->>>
->>> Check for NULL dsi device before accessing it.
->>
->> It would be really nice to sort all of this out in a manner that's not
->> sprinkling NULL checks around the driver. I spent 5 minutes looking 
->> around and
->> couldn't really make sense of how all of these pieces interact, but 
->> this seems
->> like it might be an architectural problem (perhaps since dpu was using 
->> its own
->> panel stuff instead of drm_panel?).
->>
->> Anyways, it'd be nice to fix that.
->>
->> In the meantime, could you please add a big comment like the !dev 
->> check in this
->> function explaining how this situation can come to pass? That way the 
->> knowledge
->> isn't lost and whoever comes along to clean up all of these probe 
->> checks will
->> have some clue as to what's going on.
->>
->> Sean
-> [Abhinav] Sure Sean, will add a detailed comment to explain the scenario
+thanks, I've pushed this one to envytools tree
 
-Abhinav, it looks like this may have dropped off your radar.  Do you 
-know when you'll come back to it?
+BR,
+-R
 
->>
->>>
->>> Reported-by: Jeffrey Hugo <jhugo@codeaurora.org>
->>> Tested-by: Jeffrey Hugo <jhugo@codeaurora.org>
->>> Signed-off-by: Abhinav Kumar <abhinavk@codeaurora.org>
->>> ---
->>>  drivers/gpu/drm/msm/dsi/dsi_manager.c | 2 +-
->>>  1 file changed, 1 insertion(+), 1 deletion(-)
->>>
->>> diff --git a/drivers/gpu/drm/msm/dsi/dsi_manager.c 
->>> b/drivers/gpu/drm/msm/dsi/dsi_manager.c
->>> index 80aa634..cc2569d 100644
->>> --- a/drivers/gpu/drm/msm/dsi/dsi_manager.c
->>> +++ b/drivers/gpu/drm/msm/dsi/dsi_manager.c
->>> @@ -769,7 +769,7 @@ bool msm_dsi_manager_cmd_xfer_trigger(int id, u32 
->>> dma_base, u32 len)
->>>  void msm_dsi_manager_attach_dsi_device(int id, u32 device_flags)
->>>  {
->>>      struct msm_dsi *msm_dsi = dsi_mgr_get_dsi(id);
->>> -    struct drm_device *dev = msm_dsi->dev;
->>> +    struct drm_device *dev = msm_dsi ? msm_dsi->dev : NULL;
->>>      struct msm_drm_private *priv;
->>>      struct msm_kms *kms;
->>>      struct drm_encoder *encoder;
->>> -- 
->>> The Qualcomm Innovation Center, Inc. is a member of the Code Aurora 
->>> Forum,
->>> a Linux Foundation Collaborative Project
->>>
-
-
--- 
-Jeffrey Hugo
-Qualcomm Datacenter Technologies as an affiliate of Qualcomm 
-Technologies, Inc.
-Qualcomm Technologies, Inc. is a member of the
-Code Aurora Forum, a Linux Foundation Collaborative Project.
+On Wed, May 29, 2019 at 8:20 AM Jeffrey Hugo <jeffrey.l.hugo@gmail.com> wrote:
+>
+> ---
+>  rnndb/adreno/a5xx.xml | 1 +
+>  1 file changed, 1 insertion(+)
+>
+> diff --git a/rnndb/adreno/a5xx.xml b/rnndb/adreno/a5xx.xml
+> index ae654eeb..16203512 100644
+> --- a/rnndb/adreno/a5xx.xml
+> +++ b/rnndb/adreno/a5xx.xml
+> @@ -1523,6 +1523,7 @@ xsi:schemaLocation="http://nouveau.freedesktop.org/ rules-ng.xsd">
+>
+>         <reg32 offset="0x0e00" name="HLSQ_TIMEOUT_THRESHOLD_0"/>
+>         <reg32 offset="0x0e01" name="HLSQ_TIMEOUT_THRESHOLD_1"/>
+> +       <reg32 offset="0x0e04" name="HLSQ_DBG_ECO_CNTL"/>
+>         <reg32 offset="0x0e05" name="HLSQ_ADDR_MODE_CNTL"/>
+>         <reg32 offset="0x0e06" name="HLSQ_MODE_CNTL"/> <!-- always 00000001? -->
+>         <reg32 offset="0x0e10" name="HLSQ_PERFCTR_HLSQ_SEL_0" type="a5xx_hlsq_perfcounter_select"/>
+> --
+> 2.17.1
+>
