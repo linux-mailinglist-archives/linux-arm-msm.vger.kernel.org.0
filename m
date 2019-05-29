@@ -2,202 +2,106 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id D5E962DB6A
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 May 2019 13:08:47 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 40D3E2DC3F
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 May 2019 13:55:51 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726015AbfE2LIr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 29 May 2019 07:08:47 -0400
-Received: from ns.iliad.fr ([212.27.33.1]:40620 "EHLO ns.iliad.fr"
+        id S1726795AbfE2Lzu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 29 May 2019 07:55:50 -0400
+Received: from ns.iliad.fr ([212.27.33.1]:46732 "EHLO ns.iliad.fr"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1725894AbfE2LIr (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 29 May 2019 07:08:47 -0400
+        id S1726101AbfE2Lzu (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 29 May 2019 07:55:50 -0400
 Received: from ns.iliad.fr (localhost [127.0.0.1])
-        by ns.iliad.fr (Postfix) with ESMTP id 284A22043B;
-        Wed, 29 May 2019 13:08:45 +0200 (CEST)
+        by ns.iliad.fr (Postfix) with ESMTP id C0B5D209AE;
+        Wed, 29 May 2019 13:55:48 +0200 (CEST)
 Received: from [192.168.108.49] (freebox.vlq16.iliad.fr [213.36.7.13])
-        by ns.iliad.fr (Postfix) with ESMTP id 098E920114;
-        Wed, 29 May 2019 13:08:45 +0200 (CEST)
-Subject: Re: [PATCH v4] arm64: dts: qcom: msm8998: Add PSCI cpuidle low power
- states
-From:   Marc Gonzalez <marc.w.gonzalez@free.fr>
-To:     Niklas Cassel <niklas.cassel@linaro.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Amit Kucheria <amit.kucheria@linaro.org>,
-        Rafael Wysocki <rjw@rjwysocki.net>,
-        Daniel Lezcano <daniel.lezcano@linaro.org>
+        by ns.iliad.fr (Postfix) with ESMTP id A6481207DC;
+        Wed, 29 May 2019 13:55:48 +0200 (CEST)
+To:     Robin Murphy <robin.murphy@arm.com>,
+        Will Deacon <will.deacon@arm.com>,
+        Joerg Roedel <joro@8bytes.org>
 Cc:     MSM <linux-arm-msm@vger.kernel.org>,
         Linux ARM <linux-arm-kernel@lists.infradead.org>,
-        PM <linux-pm@vger.kernel.org>,
-        Sibi Sankar <sibis@codeaurora.org>,
-        Jeffrey Hugo <jhugo@codeaurora.org>,
+        iommu <iommu@lists.linux-foundation.org>,
+        AngeloGioacchino Del Regno <kholk11@gmail.com>,
+        Jeffrey Hugo <jeffrey.l.hugo@gmail.com>,
         Andy Gross <agross@kernel.org>,
-        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
-        Sudeep Holla <sudeep.holla@arm.com>
-References: <346cd9f0-583d-f467-83d0-e73768bf5aac@free.fr>
- <20190523214619.GB25133@centauri>
- <f9aa108f-cb0a-2cee-7fce-e2803dcadb24@free.fr>
-Message-ID: <c41508c7-35b2-aa40-c468-384e51d3d7b6@free.fr>
-Date:   Wed, 29 May 2019 13:08:44 +0200
+        Bjorn Andersson <bjorn.andersson@linaro.org>
+From:   Marc Gonzalez <marc.w.gonzalez@free.fr>
+Subject: [PATCH v2] iommu/arm-smmu: Avoid constant zero in TLBI writes
+Message-ID: <f523effd-ef81-46fe-1f9e-1a0cb42c8b7b@free.fr>
+Date:   Wed, 29 May 2019 13:55:48 +0200
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
  Thunderbird/60.6.1
 MIME-Version: 1.0
-In-Reply-To: <f9aa108f-cb0a-2cee-7fce-e2803dcadb24@free.fr>
 Content-Type: text/plain; charset=utf-8
 Content-Language: en-US
 Content-Transfer-Encoding: 7bit
-X-Virus-Scanned: ClamAV using ClamSMTP ; ns.iliad.fr ; Wed May 29 13:08:45 2019 +0200 (CEST)
+X-Virus-Scanned: ClamAV using ClamSMTP ; ns.iliad.fr ; Wed May 29 13:55:48 2019 +0200 (CEST)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-+ linux-pm
+From: Robin Murphy <robin.murphy@arm.com>
 
-On 24/05/2019 14:32, Marc Gonzalez wrote:
+Apparently, some Qualcomm arm64 platforms which appear to expose their
+SMMU global register space are still, in fact, using a hypervisor to
+mediate it by trapping and emulating register accesses. Sadly, some
+deployed versions of said trapping code have bugs wherein they go
+horribly wrong for stores using r31 (i.e. XZR/WZR) as the source
+register.
 
-> From: Amit Kucheria <amit.kucheria@linaro.org>
-> 
-> Add device bindings for cpuidle states for cpu devices.
-> 
-> [marc: rebase, fix arm,psci-suspend-param, fix entry-latency-us]
-> Acked-by: Daniel Lezcano <daniel.lezcano@linaro.org>
-> Signed-off-by: Amit Kucheria <amit.kucheria@linaro.org>
-> Signed-off-by: Marc Gonzalez <marc.w.gonzalez@free.fr>
-> ---
-> Changes from v3:
-> - Fixup all 4 entry-latency-us (Niklas)
-> Changes from v2:
-> - Rebase
-> - Fixup arm,psci-suspend-param for power-collapse states (otherwise: reboot)
-> ---
->  arch/arm64/boot/dts/qcom/msm8998.dtsi | 50 +++++++++++++++++++++++++++
->  1 file changed, 50 insertions(+)
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/msm8998.dtsi b/arch/arm64/boot/dts/qcom/msm8998.dtsi
-> index 412195b9794c..ac6bd32c0e7d 100644
-> --- a/arch/arm64/boot/dts/qcom/msm8998.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/msm8998.dtsi
-> @@ -78,6 +78,7 @@
->  			compatible = "arm,armv8";
->  			reg = <0x0 0x0>;
->  			enable-method = "psci";
-> +			cpu-idle-states = <&LITTLE_CPU_SLEEP_0 &LITTLE_CPU_SLEEP_1>;
->  			next-level-cache = <&L2_0>;
->  			L2_0: l2-cache {
->  				compatible = "arm,arch-cache";
-> @@ -96,6 +97,7 @@
->  			compatible = "arm,armv8";
->  			reg = <0x0 0x1>;
->  			enable-method = "psci";
-> +			cpu-idle-states = <&LITTLE_CPU_SLEEP_0 &LITTLE_CPU_SLEEP_1>;
->  			next-level-cache = <&L2_0>;
->  			L1_I_1: l1-icache {
->  				compatible = "arm,arch-cache";
-> @@ -110,6 +112,7 @@
->  			compatible = "arm,armv8";
->  			reg = <0x0 0x2>;
->  			enable-method = "psci";
-> +			cpu-idle-states = <&LITTLE_CPU_SLEEP_0 &LITTLE_CPU_SLEEP_1>;
->  			next-level-cache = <&L2_0>;
->  			L1_I_2: l1-icache {
->  				compatible = "arm,arch-cache";
-> @@ -124,6 +127,7 @@
->  			compatible = "arm,armv8";
->  			reg = <0x0 0x3>;
->  			enable-method = "psci";
-> +			cpu-idle-states = <&LITTLE_CPU_SLEEP_0 &LITTLE_CPU_SLEEP_1>;
->  			next-level-cache = <&L2_0>;
->  			L1_I_3: l1-icache {
->  				compatible = "arm,arch-cache";
-> @@ -138,6 +142,7 @@
->  			compatible = "arm,armv8";
->  			reg = <0x0 0x100>;
->  			enable-method = "psci";
-> +			cpu-idle-states = <&BIG_CPU_SLEEP_0 &BIG_CPU_SLEEP_1>;
->  			next-level-cache = <&L2_1>;
->  			L2_1: l2-cache {
->  				compatible = "arm,arch-cache";
-> @@ -156,6 +161,7 @@
->  			compatible = "arm,armv8";
->  			reg = <0x0 0x101>;
->  			enable-method = "psci";
-> +			cpu-idle-states = <&BIG_CPU_SLEEP_0 &BIG_CPU_SLEEP_1>;
->  			next-level-cache = <&L2_1>;
->  			L1_I_101: l1-icache {
->  				compatible = "arm,arch-cache";
-> @@ -170,6 +176,7 @@
->  			compatible = "arm,armv8";
->  			reg = <0x0 0x102>;
->  			enable-method = "psci";
-> +			cpu-idle-states = <&BIG_CPU_SLEEP_0 &BIG_CPU_SLEEP_1>;
->  			next-level-cache = <&L2_1>;
->  			L1_I_102: l1-icache {
->  				compatible = "arm,arch-cache";
-> @@ -184,6 +191,7 @@
->  			compatible = "arm,armv8";
->  			reg = <0x0 0x103>;
->  			enable-method = "psci";
-> +			cpu-idle-states = <&BIG_CPU_SLEEP_0 &BIG_CPU_SLEEP_1>;
->  			next-level-cache = <&L2_1>;
->  			L1_I_103: l1-icache {
->  				compatible = "arm,arch-cache";
-> @@ -230,6 +238,48 @@
->  				};
->  			};
->  		};
-> +
-> +		idle-states {
-> +			entry-method = "psci";
-> +
-> +			LITTLE_CPU_SLEEP_0: cpu-sleep-0-0 {
-> +				compatible = "arm,idle-state";
-> +				idle-state-name = "little-retention";
-> +				arm,psci-suspend-param = <0x00000002>;
-> +				entry-latency-us = <81>;
-> +				exit-latency-us = <86>;
-> +				min-residency-us = <200>;
-> +			};
-> +
-> +			LITTLE_CPU_SLEEP_1: cpu-sleep-0-1 {
-> +				compatible = "arm,idle-state";
-> +				idle-state-name = "little-power-collapse";
-> +				arm,psci-suspend-param = <0x40000003>;
-> +				entry-latency-us = <273>;
-> +				exit-latency-us = <612>;
-> +				min-residency-us = <1000>;
-> +				local-timer-stop;
-> +			};
-> +
-> +			BIG_CPU_SLEEP_0: cpu-sleep-1-0 {
-> +				compatible = "arm,idle-state";
-> +				idle-state-name = "big-retention";
-> +				arm,psci-suspend-param = <0x00000002>;
-> +				entry-latency-us = <79>;
-> +				exit-latency-us = <82>;
-> +				min-residency-us = <200>;
-> +			};
-> +
-> +			BIG_CPU_SLEEP_1: cpu-sleep-1-1 {
-> +				compatible = "arm,idle-state";
-> +				idle-state-name = "big-power-collapse";
-> +				arm,psci-suspend-param = <0x40000003>;
-> +				entry-latency-us = <336>;
-> +				exit-latency-us = <525>;
-> +				min-residency-us = <1000>;
-> +				local-timer-stop;
-> +			};
-> +		};
+While this can be mitigated for GCC today by tweaking the constraints
+for the implementation of writel_relaxed(), to avoid any potential
+arms race with future compilers more aggressively optimising register
+allocation, the simple way is to just remove all the problematic
+constant zeros. For the write-only TLB operations, the actual value is
+irrelevant anyway and any old nearby variable will provide a suitable
+GPR to encode. The one point at which we really do need a zero to clear
+a context bank happens before any of the TLB maintenance where crashes
+have been reported, so is apparently not a problem... :/
 
-Niklas and I have been discussing the min-residency-us prop.
+Reported-by: AngeloGioacchino Del Regno <kholk11@gmail.com>
+Reviewed-by: Marc Gonzalez <marc.w.gonzalez@free.fr>
+Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+Tested-by: AngeloGioacchino Del Regno <kholk11@gmail.com>
+Tested-by: Marc Gonzalez <marc.w.gonzalez@free.fr>
+Tested-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+Signed-off-by: Robin Murphy <robin.murphy@arm.com>
+---
+Changes from v1:
+- Tweak commit message (remove "compilers", s/hangs/crashes)
+- Add a comment before writel_relaxed
+---
+ drivers/iommu/arm-smmu.c | 8 +++++---
+ 1 file changed, 5 insertions(+), 3 deletions(-)
 
-https://elixir.bootlin.com/linux/latest/source/Documentation/devicetree/bindings/arm/idle-states.txt
-
-I thought a requirement would be
-
-	min-residency > entry-latency + exit-latency
-
-but it doesn't seem to be the case.
-
-Do the values proposed here look kosher?
-
-Regards.
+diff --git a/drivers/iommu/arm-smmu.c b/drivers/iommu/arm-smmu.c
+index 5e54cc0a28b3..3f352268fa8b 100644
+--- a/drivers/iommu/arm-smmu.c
++++ b/drivers/iommu/arm-smmu.c
+@@ -423,7 +423,8 @@ static void __arm_smmu_tlb_sync(struct arm_smmu_device *smmu,
+ {
+ 	unsigned int spin_cnt, delay;
+ 
+-	writel_relaxed(0, sync);
++	/* Write "garbage" (rather than 0) to work around a qcom bug */
++	writel_relaxed((unsigned long)sync, sync);
+ 	for (delay = 1; delay < TLB_LOOP_TIMEOUT; delay *= 2) {
+ 		for (spin_cnt = TLB_SPIN_COUNT; spin_cnt > 0; spin_cnt--) {
+ 			if (!(readl_relaxed(status) & sTLBGSTATUS_GSACTIVE))
+@@ -1763,8 +1764,9 @@ static void arm_smmu_device_reset(struct arm_smmu_device *smmu)
+ 	}
+ 
+ 	/* Invalidate the TLB, just in case */
+-	writel_relaxed(0, gr0_base + ARM_SMMU_GR0_TLBIALLH);
+-	writel_relaxed(0, gr0_base + ARM_SMMU_GR0_TLBIALLNSNH);
++	/* Write "garbage" (rather than 0) to work around a qcom bug */
++	writel_relaxed(reg, gr0_base + ARM_SMMU_GR0_TLBIALLH);
++	writel_relaxed(reg, gr0_base + ARM_SMMU_GR0_TLBIALLNSNH);
+ 
+ 	reg = readl_relaxed(ARM_SMMU_GR0_NS(smmu) + ARM_SMMU_GR0_sCR0);
+ 
+-- 
+2.17.1
