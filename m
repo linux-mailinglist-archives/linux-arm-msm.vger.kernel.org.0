@@ -2,142 +2,170 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 32C7B2D3C1
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 May 2019 04:24:22 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C88A12D3D6
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 May 2019 04:34:44 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725847AbfE2CYV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 28 May 2019 22:24:21 -0400
-Received: from mail-it1-f193.google.com ([209.85.166.193]:37723 "EHLO
-        mail-it1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725828AbfE2CYV (ORCPT
+        id S1725830AbfE2Cef (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 28 May 2019 22:34:35 -0400
+Received: from mail-pg1-f196.google.com ([209.85.215.196]:40072 "EHLO
+        mail-pg1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725816AbfE2Cef (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 28 May 2019 22:24:21 -0400
-Received: by mail-it1-f193.google.com with SMTP id s16so1119728ita.2;
-        Tue, 28 May 2019 19:24:20 -0700 (PDT)
+        Tue, 28 May 2019 22:34:35 -0400
+Received: by mail-pg1-f196.google.com with SMTP id d30so384549pgm.7;
+        Tue, 28 May 2019 19:34:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=pkI2uXRAShxqXkSUvpvwJ4ItMDdl8/Q41df8coamHk0=;
-        b=LX+X2Ny7LZpwASE6RSVor7y3/lpFmffZt9vd3p4i+CdDT9yJn+B04Lc7DmEm/WrZV8
-         Gm5jBfDpQt6e7gWn/yJQlEIfCAmMvLeuexPyULZsToNY7DjhKd4yD2b3eYQzyLj5a0xS
-         cY/28OKxSy8xY47dxsMMWITaiXvhuhIucoCfgiinU8Ftu5KKUq8uZ3JXz06DJkewLKnP
-         KRAohIHXkViAZFFL0mWlU6ZL9KTre4i6QT37E6Jb76PCU1bE0Wqv4hWeMF3TkTYcEnv6
-         IMtVtOP8Ii9Jzw/jUL7CNRhe/0QdEqlDPfDyEI7V2Y9h5xQl0FXZFyUGjnMYwnqT+oTa
-         jOEw==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=h4HAswLo5xWylyhxHYQaGkQiPnSlTO4ftDNVwHlm10E=;
+        b=BdijjK50B4yGs2xl1j13xH1Nea+/zyun0B4RhsO/A6piYaISkz9mwd6HXAxV2giSbx
+         /ZctzsJGZcwcb6rR1cXFLB1ORIxZInUr8qObA+0Kc2EYTzos0bOxznQKvBWp52FWx9sU
+         dnZT37oa67uXnAM/fpDYfj0b63duM6O86iOG2MbrtN7xzw8H1zqf1S/r2YbZVQ1VQgI8
+         n5kAWrQxtAejzSfZs3Z4sO6CqokjNVtnhS1DKQAIEdsxXdif1mpd0D5V2ffK+dMgFlZG
+         0BoOpbnAoycIkR4BoAZZc6Dso7Syz39z8/EDZykdtz1XupQSyrcCYH8MkVG1A1s3PRLt
+         cz6g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=pkI2uXRAShxqXkSUvpvwJ4ItMDdl8/Q41df8coamHk0=;
-        b=RhVaFU9E8pN/UxnkPpqpQbbrtKuUJwEoT7TazoSPod4j/238o98zuFOQCa+nT0T0Ot
-         znmZwjq0X45nvoAMbFG8pc+dcA9FletKW9W2jxzOFsEzRGaI+KqwsQbTDKJMP44aVPZv
-         teCXkO4hx79jnFWqUM5g7BuKftz62eK4yoZLF8lhGVK5sZ4Di4eb3xf9yGSuJCRRC9x+
-         seEjzRju6POHLZwFE6UhPVOBmgMjBySH486ZOO1zJYO+qbAQnz1wmTk1smitr3PdWc13
-         ry6nhfKyfeF4D5NMnWV2Zsi25NR68/90goS00e9GC1027aUDlmSvSldixlIWP5qtfEFA
-         WJ/g==
-X-Gm-Message-State: APjAAAXneMX1Ht5xHxpZvCc5NnjE8rdJe9lTOac+MAXhzr/NieQTKW+n
-        JsGspatCPQK+ZYPCfecc0fN6FjDDKLMwvQMIgl8=
-X-Google-Smtp-Source: APXvYqzvE5182ciT1TB9K19vtHHojeePX9Mas/KsfGZ6QiNvfa3aalA7WoBVYO+NTqQoODG9q3QtMCdcwyFBijqVObo=
-X-Received: by 2002:a24:6c4a:: with SMTP id w71mr5835760itb.128.1559096659929;
- Tue, 28 May 2019 19:24:19 -0700 (PDT)
-MIME-Version: 1.0
-References: <20190509020352.14282-1-masneyb@onstation.org> <CACRpkda-7+ggoeMD9=erPX09OWteX0bt+qP60_Yv6=4XLqNDZQ@mail.gmail.com>
- <20190529011705.GA12977@basecamp> <CAF6AEGu4JNePimAmBG6GFT8DAaQ56OXYqu5BSN_JQB4KaBt29Q@mail.gmail.com>
-In-Reply-To: <CAF6AEGu4JNePimAmBG6GFT8DAaQ56OXYqu5BSN_JQB4KaBt29Q@mail.gmail.com>
-From:   Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
-Date:   Tue, 28 May 2019 20:24:09 -0600
-Message-ID: <CAOCk7Nq4zh_tY1aPQ3vJLxR-YDCfYY+iMqx+i5aXUX-wnyPP3w@mail.gmail.com>
-Subject: Re: [Freedreno] [PATCH RFC v2 0/6] ARM: qcom: initial Nexus 5 display support
-To:     Rob Clark <robdclark@gmail.com>
-Cc:     Brian Masney <masneyb@onstation.org>, Sean Paul <sean@poorly.run>,
-        Rob Herring <robh@kernel.org>,
-        Jonathan Marek <jonathan@marek.ca>,
-        Dave Airlie <airlied@linux.ie>,
-        MSM <linux-arm-msm@vger.kernel.org>,
-        Linus Walleij <linus.walleij@linaro.org>,
-        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
-        "open list:DRM PANEL DRIVERS" <dri-devel@lists.freedesktop.org>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        freedreno <freedreno@lists.freedesktop.org>
-Content-Type: text/plain; charset="UTF-8"
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references;
+        bh=h4HAswLo5xWylyhxHYQaGkQiPnSlTO4ftDNVwHlm10E=;
+        b=paCgnMLxpKyv0pmSoa2JWUak+oZ8gMSTgvXlpxFr6FiAu9wtqhRBHrPdSeRS8fNkSV
+         4u0JO8L58yepnHuAmepNd9snKraSf8AUGDbBQxhyzEsVTUhg8IRTsDiCc2rgriTEQjIt
+         f4mgmpXwaRsKt7yw+mtBPLLduN/38+N50RoBlixHGJu2Yh/eECHem7yOiFLGjdjLbYNw
+         cVFXfW6PHT6yaCnjbQvKxfq8U7OAZ5M54LVKJepiprs6P6lPYRBkFMU0xwkCuvsHoKkj
+         RyaJ9nTUeVY+pHxJGvuWXrTSdSpc3DasJLNZjuzBKjrw4NIYgNBGxW/yXvbHtln8jb3Z
+         NTVg==
+X-Gm-Message-State: APjAAAU5MEPc5eKLTxCoWn8yVQvsnQ2QcMcQ3sCayghYVO2UZioHV2Ht
+        qBMHwxIEykc7j4RQgOXwUYFpun3+
+X-Google-Smtp-Source: APXvYqyofbBxvyS5ovPaLMDcXQsE5q3ulrvYaBAWd1va1isSW/QGyl9IdZGEFFsHVqa9GjNYBISZ+w==
+X-Received: by 2002:a17:90a:ae10:: with SMTP id t16mr9470350pjq.51.1559097274267;
+        Tue, 28 May 2019 19:34:34 -0700 (PDT)
+Received: from localhost ([2601:644:8201:32e0:7256:81ff:febd:926d])
+        by smtp.gmail.com with ESMTPSA id f16sm10422064pja.18.2019.05.28.19.34.32
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Tue, 28 May 2019 19:34:32 -0700 (PDT)
+From:   Eduardo Valentin <edubezval@gmail.com>
+To:     linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Cc:     Stephen Boyd <sboyd@kernel.org>, bot@kernelci.org,
+        Kevin Hilman <khilman@baylibre.com>,
+        kernel-build-reports@lists.linaro.org,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Eduardo Valentin <edubezval@gmail.com>,
+        Andy Gross <agross@kernel.org>,
+        David Brown <david.brown@linaro.org>,
+        Amit Kucheria <amit.kucheria@linaro.org>,
+        Zhang Rui <rui.zhang@intel.com>,
+        Daniel Lezcano <daniel.lezcano@linaro.org>
+Subject: [PATCH 1/1] Revert "drivers: thermal: tsens: Add new operation to check if a sensor is enabled"
+Date:   Tue, 28 May 2019 19:34:26 -0700
+Message-Id: <1559097266-12780-1-git-send-email-edubezval@gmail.com>
+X-Mailer: git-send-email 2.1.4
+In-Reply-To: <CAJ=6tTqOW5s_dhEuy3su+R6=tUY_ZiuAuCMG1A8Y-Lz-aHXw2Q@mail.gmail.com>
+References: <CAJ=6tTqOW5s_dhEuy3su+R6=tUY_ZiuAuCMG1A8Y-Lz-aHXw2Q@mail.gmail.com>
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, May 28, 2019 at 8:15 PM Rob Clark <robdclark@gmail.com> wrote:
->
-> On Tue, May 28, 2019 at 6:17 PM Brian Masney <masneyb@onstation.org> wrote:
-> >
-> > On Tue, May 28, 2019 at 03:46:14PM +0200, Linus Walleij wrote:
-> > > On Thu, May 9, 2019 at 4:04 AM Brian Masney <masneyb@onstation.org> wrote:
-> > >
-> > > > Here is a patch series that adds initial display support for the LG
-> > > > Nexus 5 (hammerhead) phone. It's not fully working so that's why some
-> > > > of these patches are RFC until we can get it fully working.
-> > > >
-> > > > The phones boots into terminal mode, however there is a several second
-> > > > (or more) delay when writing to tty1 compared to when the changes are
-> > > > actually shown on the screen. The following errors are in dmesg:
-> > >
-> > > I tested to apply patches 2-6 and got the console up on the phone as well.
-> > > I see the same timouts, and I also notice the update is slow in the
-> > > display, as if the DSI panel was running in low power (LP) mode.
-> > >
-> > > Was booting this to do some other work, but happy to see the progress!
-> >
-> > Thanks!
-> >
-> > I've had three people email me off list regarding the display working on
-> > 4.17 before the msm kms/drm driver was converted to the DRM atomic API so
-> > this email is to get some more information out publicly.
-> >
-> > I pushed up a branch to my github with 15 patches applied against 4.17
-> > that has a working display:
-> >
-> > https://github.com/masneyb/linux/commits/display-works-4.17
-> >
-> > It's in low speed mode but its usable. The first 10 patches are in
-> > mainline now and the last 5 are in essence this patch series with the
-> > exception of 'drm/atomic+msm: add helper to implement legacy dirtyfb'.
-> > There's a slightly different version of that patch in mainline now.
-> >
-> > I'm planning to work on the msm8974 interconnect support once some of
-> > the outstanding interconnect patches for the msm kms/drm driver arrive
-> > in mainline. I'd really like to understand why the display works on
-> > 4.17 with those patches though. I assume that it's related to the
-> > vblank events not working properly? Let me preface this with I'm a
-> > total DRM newbie, but it looked like the pre-DRM-atomic driver wasn't
-> > looking for these events in the atomic commits before the migration?
-> > See commit 70db18dca4e0 ("drm/msm: Remove msm_commit/worker, use atomic
-> > helper commit"), specifically the drm_atomic_helper_wait_for_vblanks()
-> > call that was added.
->
-> interconnect probably good to get going anyways (and I need to find
-> some time to respin those mdp5/dpu patches) but I guess not related to
-> what you see (ie. I'd expect interconnect issue would trigger
-> underflow irq's)..
->
-> I'm not entirely sure why atomic would break things but cmd mode
-> panels aren't especially well tested.  I can't find it now but there
-> was a thread (or IRC discussion?) that intf2vblank() should be
-> returning MDP5_IRQ_PING_PONG_<n>_DONE instead of
-> MDP5_IRQ_PING_PONG_<n>_RD_PTR, which seems likely and possibly related
-> to vblank timing issues..
+This reverts commit 3e6a8fb3308419129c7a52de6eb42feef5a919a0.
 
-That was an irc discussion, and I've changed my mind on that.
+Cc: Andy Gross <agross@kernel.org>
+Cc: David Brown <david.brown@linaro.org>
+Cc: Amit Kucheria <amit.kucheria@linaro.org>
+Cc: Zhang Rui <rui.zhang@intel.com>
+Cc: Daniel Lezcano <daniel.lezcano@linaro.org>
+Suggested-by: Amit Kucheria <amit.kucheria@linaro.org>
+Reported-by: Andy Gross <andygro@gmail.com>
+Signed-off-by: Eduardo Valentin <edubezval@gmail.com>
+---
 
-My big issue ended up being that autorefresh was enabled (which
-basically turns the command panel into a pseudo video mode panel),
-which appears incompatible with using the start kick.  If FW is
-configuring things in autorefresh mode, the driver likely doesn't
-know, and will make a mess of things by using the start kick.
+Added this for next -rc, as per request.
 
-Disabling autorefresh would make the driver work as is, but fbcon
-wouldn't work well (you'd need to do a start kick per frame, which
-doesn't seem to happen).  Removing the start kick and using the
-autorefresh feature seemed better in my testing, but I haven't cleaned
-up my code tree to send something up.
+ drivers/thermal/qcom/tsens-common.c | 14 --------------
+ drivers/thermal/qcom/tsens-v0_1.c   |  1 -
+ drivers/thermal/qcom/tsens-v2.c     |  1 -
+ drivers/thermal/qcom/tsens.c        |  5 -----
+ drivers/thermal/qcom/tsens.h        |  1 -
+ 5 files changed, 22 deletions(-)
 
-However, lets see how the hardware is actually configured in Brian's case.
+diff --git a/drivers/thermal/qcom/tsens-common.c b/drivers/thermal/qcom/tsens-common.c
+index 928e8e8..528df88 100644
+--- a/drivers/thermal/qcom/tsens-common.c
++++ b/drivers/thermal/qcom/tsens-common.c
+@@ -64,20 +64,6 @@ void compute_intercept_slope(struct tsens_priv *priv, u32 *p1,
+ 	}
+ }
+ 
+-bool is_sensor_enabled(struct tsens_priv *priv, u32 hw_id)
+-{
+-	u32 val;
+-	int ret;
+-
+-	if ((hw_id > (priv->num_sensors - 1)) || (hw_id < 0))
+-		return -EINVAL;
+-	ret = regmap_field_read(priv->rf[SENSOR_EN], &val);
+-	if (ret)
+-		return ret;
+-
+-	return val & (1 << hw_id);
+-}
+-
+ static inline int code_to_degc(u32 adc_code, const struct tsens_sensor *s)
+ {
+ 	int degc, num, den;
+diff --git a/drivers/thermal/qcom/tsens-v0_1.c b/drivers/thermal/qcom/tsens-v0_1.c
+index a319283..6f26fad 100644
+--- a/drivers/thermal/qcom/tsens-v0_1.c
++++ b/drivers/thermal/qcom/tsens-v0_1.c
+@@ -334,7 +334,6 @@ static const struct reg_field tsens_v0_1_regfields[MAX_REGFIELDS] = {
+ 	/* CTRL_OFFSET */
+ 	[TSENS_EN]     = REG_FIELD(SROT_CTRL_OFF, 0,  0),
+ 	[TSENS_SW_RST] = REG_FIELD(SROT_CTRL_OFF, 1,  1),
+-	[SENSOR_EN]    = REG_FIELD(SROT_CTRL_OFF, 3, 13),
+ 
+ 	/* ----- TM ------ */
+ 	/* INTERRUPT ENABLE */
+diff --git a/drivers/thermal/qcom/tsens-v2.c b/drivers/thermal/qcom/tsens-v2.c
+index 1099069..0a4f2b8 100644
+--- a/drivers/thermal/qcom/tsens-v2.c
++++ b/drivers/thermal/qcom/tsens-v2.c
+@@ -44,7 +44,6 @@ static const struct reg_field tsens_v2_regfields[MAX_REGFIELDS] = {
+ 	/* CTRL_OFF */
+ 	[TSENS_EN]     = REG_FIELD(SROT_CTRL_OFF,    0,  0),
+ 	[TSENS_SW_RST] = REG_FIELD(SROT_CTRL_OFF,    1,  1),
+-	[SENSOR_EN]    = REG_FIELD(SROT_CTRL_OFF,    3, 18),
+ 
+ 	/* ----- TM ------ */
+ 	/* INTERRUPT ENABLE */
+diff --git a/drivers/thermal/qcom/tsens.c b/drivers/thermal/qcom/tsens.c
+index 36b0b52..0627d86 100644
+--- a/drivers/thermal/qcom/tsens.c
++++ b/drivers/thermal/qcom/tsens.c
+@@ -85,11 +85,6 @@ static int tsens_register(struct tsens_priv *priv)
+ 	struct thermal_zone_device *tzd;
+ 
+ 	for (i = 0;  i < priv->num_sensors; i++) {
+-		if (!is_sensor_enabled(priv, priv->sensor[i].hw_id)) {
+-			dev_err(priv->dev, "sensor %d: disabled\n",
+-				priv->sensor[i].hw_id);
+-			continue;
+-		}
+ 		priv->sensor[i].priv = priv;
+ 		priv->sensor[i].id = i;
+ 		tzd = devm_thermal_zone_of_sensor_register(priv->dev, i,
+diff --git a/drivers/thermal/qcom/tsens.h b/drivers/thermal/qcom/tsens.h
+index eefe384..2fd9499 100644
+--- a/drivers/thermal/qcom/tsens.h
++++ b/drivers/thermal/qcom/tsens.h
+@@ -315,7 +315,6 @@ void compute_intercept_slope(struct tsens_priv *priv, u32 *pt1, u32 *pt2, u32 mo
+ int init_common(struct tsens_priv *priv);
+ int get_temp_tsens_valid(struct tsens_priv *priv, int i, int *temp);
+ int get_temp_common(struct tsens_priv *priv, int i, int *temp);
+-bool is_sensor_enabled(struct tsens_priv *priv, u32 hw_id);
+ 
+ /* TSENS target */
+ extern const struct tsens_plat_data data_8960;
+-- 
+2.1.4
+
