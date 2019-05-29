@@ -2,25 +2,25 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 5FD422E6C0
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 May 2019 22:56:09 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id EE0052E6CE
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 May 2019 22:57:34 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726535AbfE2Uz7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 29 May 2019 16:55:59 -0400
-Received: from smtp.codeaurora.org ([198.145.29.96]:59578 "EHLO
+        id S1726453AbfE2U4V (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 29 May 2019 16:56:21 -0400
+Received: from smtp.codeaurora.org ([198.145.29.96]:60772 "EHLO
         smtp.codeaurora.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726426AbfE2Uz6 (ORCPT
+        with ESMTP id S1726038AbfE2U4V (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 29 May 2019 16:55:58 -0400
+        Wed, 29 May 2019 16:56:21 -0400
 Received: by smtp.codeaurora.org (Postfix, from userid 1000)
-        id 82453618CE; Wed, 29 May 2019 20:55:49 +0000 (UTC)
+        id 5E45D60FEB; Wed, 29 May 2019 20:55:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
-        s=default; t=1559163357;
-        bh=TB4M/rt699+7GpLoS9OHP7ZRv5MHTXpe7MAOFn1ir+A=;
+        s=default; t=1559163380;
+        bh=Q7ZQd878jM/ppuJ4uNWWJeXdoWzwLS/xcQibVXy6ISg=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=FuwiQejBLS/4m99GWIgPpVK2e9XkORdqMKETMunlZZMy0qk3d4c0dLYh/wgAqMXtN
-         X7Zy9ZzypsNXDpDzYQo86FNY+2kob5bLpkO95Bs2EGPQYeEMF77wycDCA7x1iiaugs
-         nJSV/NN2Bd1UTzyHDREdjvmEF6NmblBKqaK21ZIM=
+        b=l0rkU5p6c78A9yyAOon8wO29jALyf4dfxO+tiGdkvP7bWZ9WFSJ10/Ip3jjwWHG0O
+         RNnIdzTxZJG2kAhcjh19xc9ST7NdUeXIGAG/fCJWaDGLNPL1jlwLXXviGa1QDC08SY
+         fI8vcgYLhZ1FY6UofJVUT+ULk3hYGm3QTB3H5bKo=
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
         pdx-caf-mail.web.codeaurora.org
 X-Spam-Level: 
@@ -31,16 +31,16 @@ Received: from jcrouse1-lnx.qualcomm.com (i-global254.qualcomm.com [199.106.103.
         (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
         (No client certificate requested)
         (Authenticated sender: jcrouse@smtp.codeaurora.org)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id E89656192E;
-        Wed, 29 May 2019 20:55:44 +0000 (UTC)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 7EAD460A63;
+        Wed, 29 May 2019 20:55:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
-        s=default; t=1559163347;
-        bh=TB4M/rt699+7GpLoS9OHP7ZRv5MHTXpe7MAOFn1ir+A=;
+        s=default; t=1559163351;
+        bh=Q7ZQd878jM/ppuJ4uNWWJeXdoWzwLS/xcQibVXy6ISg=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=OnhxSkrDBTnHxUssHyGW0vZs7PCS1z3HfaZYwlHPLcXL5/I/LzpKoBAQv3J/V27vP
-         l8xO+iEqqfNVo4zst0gpmMyFqPhwglA9jAgEihn5VLAaY2KjtySe6VyhhUTILrjP4D
-         7mrSKsxib8vrOMrnO3Zmn2ONaTY6D0dRBvTR2dkc=
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org E89656192E
+        b=M2LzsUiEUpDhY8rHCdeqFQfHqXLFLPZdacqRZUXosKTXQTfzq5KShaUFbm1wW4qQn
+         40kWnbOGOvRIHp7Gp4FTcfbqjJM2Q4mdBpTAIAtYELW1ZbcY8Wo8WivQ0hEnzih6RA
+         0/QkDy4mNnOgEuNQzl2lUaH+cTbza0a1N23OSomg=
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 7EAD460A63
 Authentication-Results: pdx-caf-mail.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
 Authentication-Results: pdx-caf-mail.web.codeaurora.org; spf=none smtp.mailfrom=jcrouse@codeaurora.org
 From:   Jordan Crouse <jcrouse@codeaurora.org>
@@ -51,9 +51,9 @@ Cc:     jean-philippe.brucker@arm.com, linux-arm-msm@vger.kernel.org,
         dri-devel@lists.freedesktop.org, Rob Clark <robdclark@gmail.com>,
         David Airlie <airlied@linux.ie>,
         Daniel Vetter <daniel@ffwll.ch>
-Subject: [PATCH v3 13/16] drm/msm: Add support to create target specific address spaces
-Date:   Wed, 29 May 2019 14:54:49 -0600
-Message-Id: <1559163292-4792-14-git-send-email-jcrouse@codeaurora.org>
+Subject: [PATCH v3 14/16] drm/msm/gpu: Add ttbr0 to the memptrs
+Date:   Wed, 29 May 2019 14:54:50 -0600
+Message-Id: <1559163292-4792-15-git-send-email-jcrouse@codeaurora.org>
 X-Mailer: git-send-email 2.7.4
 In-Reply-To: <1559163292-4792-1-git-send-email-jcrouse@codeaurora.org>
 References: <1559163292-4792-1-git-send-email-jcrouse@codeaurora.org>
@@ -62,91 +62,28 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add support to create a GPU target specific address space for
-a context. For those targets that support per-instance
-pagetables they will return a new address space set up for
-the instance if possible otherwise just use the global
-device pagetable.
+Targets that support per-instance pagetable switching will have to keep
+track of which pagetable belongs to each instance to be able to recover
+for preemption.
 
 Signed-off-by: Jordan Crouse <jcrouse@codeaurora.org>
 ---
 
- drivers/gpu/drm/msm/msm_drv.c | 25 ++++++++++++++++++++++---
- drivers/gpu/drm/msm/msm_gpu.h |  1 +
- 2 files changed, 23 insertions(+), 3 deletions(-)
+ drivers/gpu/drm/msm/msm_ringbuffer.h | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/gpu/drm/msm/msm_drv.c b/drivers/gpu/drm/msm/msm_drv.c
-index 4c51063..dd3eb30 100644
---- a/drivers/gpu/drm/msm/msm_drv.c
-+++ b/drivers/gpu/drm/msm/msm_drv.c
-@@ -609,6 +609,14 @@ static void load_gpu(struct drm_device *dev)
- 	mutex_unlock(&init_lock);
- }
+diff --git a/drivers/gpu/drm/msm/msm_ringbuffer.h b/drivers/gpu/drm/msm/msm_ringbuffer.h
+index 6434ebb..493fa89 100644
+--- a/drivers/gpu/drm/msm/msm_ringbuffer.h
++++ b/drivers/gpu/drm/msm/msm_ringbuffer.h
+@@ -40,6 +40,7 @@ struct msm_gpu_submit_stats {
+ struct msm_rbmemptrs {
+ 	volatile uint32_t rptr;
+ 	volatile uint32_t fence;
++	volatile uint64_t ttbr0;
  
-+static struct msm_gem_address_space *context_address_space(struct msm_gpu *gpu)
-+{
-+	if (!gpu->funcs->new_address_space)
-+		return gpu->aspace;
-+
-+	return gpu->funcs->new_address_space(gpu);
-+}
-+
- static int context_init(struct drm_device *dev, struct drm_file *file)
- {
- 	struct msm_drm_private *priv = dev->dev_private;
-@@ -618,9 +626,16 @@ static int context_init(struct drm_device *dev, struct drm_file *file)
- 	if (!ctx)
- 		return -ENOMEM;
- 
-+	ctx->aspace = context_address_space(priv->gpu);
-+	if (IS_ERR(ctx->aspace)) {
-+		int ret = PTR_ERR(ctx->aspace);
-+
-+		kfree(ctx);
-+		return ret;
-+	}
-+
- 	msm_submitqueue_init(dev, ctx);
- 
--	ctx->aspace = priv->gpu->aspace;
- 	file->driver_priv = ctx;
- 
- 	return 0;
-@@ -636,8 +651,12 @@ static int msm_open(struct drm_device *dev, struct drm_file *file)
- 	return context_init(dev, file);
- }
- 
--static void context_close(struct msm_file_private *ctx)
-+static void context_close(struct msm_drm_private *priv,
-+		struct msm_file_private *ctx)
- {
-+	if (ctx->aspace != priv->gpu->aspace)
-+		msm_gem_address_space_put(ctx->aspace);
-+
- 	msm_submitqueue_close(ctx);
- 	kfree(ctx);
- }
-@@ -652,7 +671,7 @@ static void msm_postclose(struct drm_device *dev, struct drm_file *file)
- 		priv->lastctx = NULL;
- 	mutex_unlock(&dev->struct_mutex);
- 
--	context_close(ctx);
-+	context_close(priv, ctx);
- }
- 
- static irqreturn_t msm_irq(int irq, void *arg)
-diff --git a/drivers/gpu/drm/msm/msm_gpu.h b/drivers/gpu/drm/msm/msm_gpu.h
-index d4bf051..588d7ba 100644
---- a/drivers/gpu/drm/msm/msm_gpu.h
-+++ b/drivers/gpu/drm/msm/msm_gpu.h
-@@ -77,6 +77,7 @@ struct msm_gpu_funcs {
- 	void (*gpu_set_freq)(struct msm_gpu *gpu, unsigned long freq);
- 	struct msm_gem_address_space *(*create_address_space)
- 		(struct msm_gpu *gpu);
-+	struct msm_gem_address_space *(*new_address_space)(struct msm_gpu *gpu);
+ 	volatile struct msm_gpu_submit_stats stats[MSM_GPU_SUBMIT_STATS_COUNT];
  };
- 
- struct msm_gpu {
 -- 
 2.7.4
 
