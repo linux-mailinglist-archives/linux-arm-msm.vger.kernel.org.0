@@ -2,80 +2,112 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id B694A2DF0C
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 May 2019 16:00:25 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 1E6832DFC9
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 May 2019 16:31:10 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727014AbfE2OAY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 29 May 2019 10:00:24 -0400
-Received: from mail-io1-f51.google.com ([209.85.166.51]:46444 "EHLO
-        mail-io1-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726889AbfE2OAY (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 29 May 2019 10:00:24 -0400
-Received: by mail-io1-f51.google.com with SMTP id u25so1866362iot.13
-        for <linux-arm-msm@vger.kernel.org>; Wed, 29 May 2019 07:00:24 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=0VGl6o87phfM9urdx72wlD00hd105HAU2SoUY4M/gec=;
-        b=n7vCz5/ga85hnXCXWPrBsYoZXqJrQUUaM5PX6J7rbWj8O1Tu4iGwZ3oJKQql/8hCoJ
-         WoFfeOq2PNC2ClNuGx7WJd38k+FGv6+xbsFdNNT/tNvCKCRQP6OyuJjPAX8kP2aGMNA/
-         ULlAPXO3JVNnFGS4dG8lBlyeNAwkwoQUZEgiDVS/fGHUQiKb2pWGOJBjwpLNwPU/ss1V
-         lGW7cdLnkZ8s0IQ8+HcISgW0rgWEDFAEHhf+vt9aulPXkRyLueWp38t/zPCb/wXKfGz/
-         oJQkE0Sy0E5GLWUwx0DviQOcxPxIk7PvLNZ9L3FNpdbRq8MkB2oMUvGKk5fRxFAsmoah
-         /HfA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=0VGl6o87phfM9urdx72wlD00hd105HAU2SoUY4M/gec=;
-        b=kaNkVwPK6Q39bvq5kcYwa9+lfc5VYEUu7lnIbVbRMyLUwEgXMSzzhi3pZLuXPqGgff
-         2XK4wM1q1v9T1agaODmbfl+gUYRtlHgXI6y91pHlXGyil6O2SEQHMYZyaisQItVqh/+f
-         9rzgCWQJxf/yn0BoUf4ssWO0AiShMfscERVTrCMtvanThPb6dBGKc3Wsyc/0wAtxepIo
-         MUCuiRtv1q52KRy/+27gy49tv2odDC8gF/6S5PbnGNxIY7090CpkfT5GoGODBgvYd2+t
-         teatjqEW2GIs7AMI3ESZZvZUGNBUmvAkK26zfwCAjosFm8Pvzwv5slSKi1pXApKRCys8
-         VflA==
-X-Gm-Message-State: APjAAAXpLsLxLgEXqAZgv6wf50QXsAJ38JUegq2DI8boWpvimXkrt/kS
-        OmWSSqH1PCOHq7L73+ZLthr553sizto4EETYRO8=
-X-Google-Smtp-Source: APXvYqww4nSWDXwWQQ6DYaUmh2jSjm3Da8rFrUV+OlBTVcEpOZrPD6vvAgo6J/eGU0ARWodKmnJaPIbUR+dvz1h9Nxk=
-X-Received: by 2002:a5e:9513:: with SMTP id r19mr756808ioj.263.1559138422972;
- Wed, 29 May 2019 07:00:22 -0700 (PDT)
+        id S1726462AbfE2ObJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 29 May 2019 10:31:09 -0400
+Received: from ns.iliad.fr ([212.27.33.1]:51584 "EHLO ns.iliad.fr"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726411AbfE2ObJ (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 29 May 2019 10:31:09 -0400
+Received: from ns.iliad.fr (localhost [127.0.0.1])
+        by ns.iliad.fr (Postfix) with ESMTP id E4A0020B19;
+        Wed, 29 May 2019 16:31:06 +0200 (CEST)
+Received: from [192.168.108.49] (freebox.vlq16.iliad.fr [213.36.7.13])
+        by ns.iliad.fr (Postfix) with ESMTP id CA82B207DC;
+        Wed, 29 May 2019 16:31:06 +0200 (CEST)
+Subject: Re: [PATCH v2] iommu/arm-smmu: Avoid constant zero in TLBI writes
+To:     Will Deacon <will.deacon@arm.com>
+Cc:     Robin Murphy <robin.murphy@arm.com>,
+        Joerg Roedel <joro@8bytes.org>,
+        MSM <linux-arm-msm@vger.kernel.org>,
+        Linux ARM <linux-arm-kernel@lists.infradead.org>,
+        iommu <iommu@lists.linux-foundation.org>,
+        AngeloGioacchino Del Regno <kholk11@gmail.com>,
+        Jeffrey Hugo <jeffrey.l.hugo@gmail.com>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>
+References: <f523effd-ef81-46fe-1f9e-1a0cb42c8b7b@free.fr>
+ <20190529130559.GB11023@fuggles.cambridge.arm.com>
+From:   Marc Gonzalez <marc.w.gonzalez@free.fr>
+Message-ID: <84791515-e0ae-0322-78aa-02ca0b40d157@free.fr>
+Date:   Wed, 29 May 2019 16:31:06 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+ Thunderbird/60.6.1
 MIME-Version: 1.0
-References: <20190528164616.38517-1-jeffrey.l.hugo@gmail.com>
- <20190528164803.38642-1-jeffrey.l.hugo@gmail.com> <8117078a-68b0-97eb-14d9-10ca83e16cc9@free.fr>
-In-Reply-To: <8117078a-68b0-97eb-14d9-10ca83e16cc9@free.fr>
-From:   Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
-Date:   Wed, 29 May 2019 08:00:10 -0600
-Message-ID: <CAOCk7NpO5eWHH8H1zQU2-B9k+POYpRC_u82Lxr9JFVLjg-fJ1A@mail.gmail.com>
-Subject: Re: [PATCH 2/3] clk: qcom: Add MSM8998 GPU Clock Controller (GPUCC) driver
-To:     Marc Gonzalez <marc.w.gonzalez@free.fr>
-Cc:     MSM <linux-arm-msm@vger.kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Stephen Boyd <sboyd@kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+In-Reply-To: <20190529130559.GB11023@fuggles.cambridge.arm.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
+X-Virus-Scanned: ClamAV using ClamSMTP ; ns.iliad.fr ; Wed May 29 16:31:06 2019 +0200 (CEST)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, May 29, 2019 at 3:46 AM Marc Gonzalez <marc.w.gonzalez@free.fr> wrote:
->
-> On 28/05/2019 18:48, Jeffrey Hugo wrote:
->
-> > +//static struct clk_hw *gpucc_msm8998_hws[] = {
-> > +//   &gpucc_cxo_clk.clkr.hw,
-> > +//};
->
-> Did you really intend to keep that commented-out code?
+On 29/05/2019 15:05, Will Deacon wrote:
 
-Nope.  I clearly didn't scrub these well enough from my work in
-progress branch.  Funny, I'm pretty sure I ran checkpatch over them,
-and checkpatch used to catch c++ style comments.  I wonder if that
-changed.
-Anyways.  Will fix.
+> On Wed, May 29, 2019 at 01:55:48PM +0200, Marc Gonzalez wrote:
+>
+>> From: Robin Murphy <robin.murphy@arm.com>
+>>
+>> Apparently, some Qualcomm arm64 platforms which appear to expose their
+>> SMMU global register space are still, in fact, using a hypervisor to
+>> mediate it by trapping and emulating register accesses. Sadly, some
+>> deployed versions of said trapping code have bugs wherein they go
+>> horribly wrong for stores using r31 (i.e. XZR/WZR) as the source
+>> register.
+> 
+> ^^^
+> This should be in the comment instead of "qcom bug".
 
->
-> Sorry, can't really comment on the actual code, it's all way over my head.
->
-> Regards.
+As you wish. I wasn't sure how much was too much.
+
+>> While this can be mitigated for GCC today by tweaking the constraints
+>> for the implementation of writel_relaxed(), to avoid any potential
+>> arms race with future compilers more aggressively optimising register
+>> allocation, the simple way is to just remove all the problematic
+>> constant zeros. For the write-only TLB operations, the actual value is
+>> irrelevant anyway and any old nearby variable will provide a suitable
+>> GPR to encode. The one point at which we really do need a zero to clear
+>> a context bank happens before any of the TLB maintenance where crashes
+>> have been reported, so is apparently not a problem... :/
+> 
+> Hmm. It would be nice to understand this a little better. In which cases
+> does XZR appear to work?
+
+There are 4 occurrences of writel_relaxed(0 in the driver.
+
+The following do not crash. Perhaps they run natively from NS EL1.
+
+[        SMMU + 008000] = 00000000
+[        SMMU + 009000] = 00000000
+[        SMMU + 00a000] = 00000000
+[        SMMU + 00b000] = 00000000
+[        SMMU + 00c000] = 00000000
+[        SMMU + 00d000] = 00000000
+
+The following do crash. They trap to some evil place.
+
+[        SMMU + 00006c] = 00000000
+[        SMMU + 000068] = 00000000
+[        SMMU + 000070] = 11190070
+
+NB: with Robin's patch, we end up writing 0 anyway.
+It would be "fun" if the emulation puked at !0
+Unlikely since it worked for +70
+
+> Any reason not to make these obviously dummy values e.g.:
+> 
+> 	/*
+> 	 * Text from the commit message about broken hypervisor
+> 	 */
+> 	#define QCOM_DUMMY_VAL_NOT_XZR	~0U
+> 
+> That makes the callsites much easier to understand and I doubt there's a
+> performance impact from allocating an extra register here.
+
+Robin, what sayeth thee? Should I spin a v3?
+
+Regards.
