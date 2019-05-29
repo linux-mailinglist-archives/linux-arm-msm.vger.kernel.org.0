@@ -2,94 +2,109 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 2F3F12D332
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 May 2019 03:17:08 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 219912D336
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 May 2019 03:19:22 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725832AbfE2BRH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 28 May 2019 21:17:07 -0400
-Received: from onstation.org ([52.200.56.107]:41432 "EHLO onstation.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1725805AbfE2BRH (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 28 May 2019 21:17:07 -0400
-Received: from localhost (c-98-239-145-235.hsd1.wv.comcast.net [98.239.145.235])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        (Authenticated sender: masneyb)
-        by onstation.org (Postfix) with ESMTPSA id DC95F3E93F;
-        Wed, 29 May 2019 01:17:05 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=onstation.org;
-        s=default; t=1559092626;
-        bh=624x27QESSEqdHdt8jzd0ud8U0qgsoYwZR247KGLs0E=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=bhY0pU6QI6vSQUXwTbKMMbwo2QHJ971xqn7eUiLTyXSQeUKqVNIqC7ifzFhdxZgNT
-         l98hUA5Uw9EK3nVmwFcPc4oFA+11WCN0M2L59LyFp97/pKisUVlzaN6JGOMNdO/Kcd
-         OzcTKkDDlXjjeGCT/xTywIbT0MNrBbaAZ2MZWuz4=
-Date:   Tue, 28 May 2019 21:17:05 -0400
-From:   Brian Masney <masneyb@onstation.org>
-To:     Linus Walleij <linus.walleij@linaro.org>
-Cc:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        "open list:DRM PANEL DRIVERS" <dri-devel@lists.freedesktop.org>,
-        MSM <linux-arm-msm@vger.kernel.org>,
-        freedreno@lists.freedesktop.org, Dave Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
-        Jonathan Marek <jonathan@marek.ca>,
-        Rob Herring <robh@kernel.org>
-Subject: Re: [PATCH RFC v2 0/6] ARM: qcom: initial Nexus 5 display support
-Message-ID: <20190529011705.GA12977@basecamp>
-References: <20190509020352.14282-1-masneyb@onstation.org>
- <CACRpkda-7+ggoeMD9=erPX09OWteX0bt+qP60_Yv6=4XLqNDZQ@mail.gmail.com>
+        id S1725855AbfE2BTV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 28 May 2019 21:19:21 -0400
+Received: from mail-pf1-f195.google.com ([209.85.210.195]:37873 "EHLO
+        mail-pf1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725805AbfE2BTV (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 28 May 2019 21:19:21 -0400
+Received: by mail-pf1-f195.google.com with SMTP id a23so460563pff.4
+        for <linux-arm-msm@vger.kernel.org>; Tue, 28 May 2019 18:19:20 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=OGp/SVq1BboOzjtWbeRiaeLK2DoNo5kwnKAHPJUWJC8=;
+        b=XTLgE4jLYkcAf82yQJQHOxI2WQlIK+hfyDUZTEh2jv2FfYj/ldEwrrDJpK3RHYALsp
+         LAyTiXtweVHY8rrGU+DFxz6PhY/+x4Xg6GSGGPJP7wyPqKjk5AYmBXzElqoeFQglv46h
+         EYeAMkxm82GPsYA6Dl3lyEaQa522r0Nk9AHXxq2CLlMMigv5xlubs511c1ikvmUTxI9J
+         8YXpD8zIcUXKBpfiVq0vbjWX2GLj3eO1M2YYGfPWnWUtnSY9GtRG8HmwUHuXA7Qdd4V0
+         mqcUJAMU7EsOaNn1DLeXveQOG+UPIRa+Om+h3GlSMSuvQomX6/goBig+r2cyhpzCbOmc
+         rhxg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=OGp/SVq1BboOzjtWbeRiaeLK2DoNo5kwnKAHPJUWJC8=;
+        b=rgtWEA/qk75vjQGVEFqu3GpG/s2vnb6QGDR94rPlLhz5veM/a7VdTVtYnmOorjKB2w
+         s9VT9/t0koqPPtOQvWXGHoyGfD7k8Jh9K/rOlQFq71huHQUuohTES84Klru4/860zsl3
+         5qY331Gu7YrXAjNuUD+wPKX5mr8fePCifaN4faaniPAaGHh96SQwDhiRtP1C5QNmkm2d
+         1XSgAsduvEXknSgX36xH9HFzqUFB9LgEq7R8rAm1aKVBZkEJ1sSIPMTpsBqejzt7iq5O
+         C4ueayYTAWvQi01iEGk3rj3tY/py0cDm/A3r2EUZYL/deUceXH2/iKC48eAIvQ4Umk5d
+         OS7w==
+X-Gm-Message-State: APjAAAW2yPigJJFF5O/lfrpgE4p4xi5lU0O5sJLjeNWHmY8PALii8poU
+        QQYZ927PsLxLxYJR7ZzKV3iUjuNJiHj/qnhU8cxgz8KqHqk=
+X-Google-Smtp-Source: APXvYqzKBKbh9FlqhV2c4nS78H7i32JyHewq3SARV/q+kmb02iB8x11yvJCrGGI3CHBGRvG0DL5TrZLhFiEgXTxM2BY=
+X-Received: by 2002:a63:fc5b:: with SMTP id r27mr37622272pgk.219.1559092760183;
+ Tue, 28 May 2019 18:19:20 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CACRpkda-7+ggoeMD9=erPX09OWteX0bt+qP60_Yv6=4XLqNDZQ@mail.gmail.com>
+References: <5ce71d79.1c69fb81.dd0de.33cf@mx.google.com> <7hv9y01z85.fsf@baylibre.com>
+ <20190524012913.D9BB72168B@mail.kernel.org> <CAP245DXkEym=x3vrN2cc2y+uHHx_+z0cW0WsV0dGGXfd+c2mSQ@mail.gmail.com>
+ <CAJ=6tTqdvgsoVH+3=_6ucAyuhgSjjVSROBKwtxjYwO1vmFvxfg@mail.gmail.com>
+ <CAJ=6tTr4EaLLiavN+aRpU3JnJ5MuAtU-uer_8iLm7QMh6i4rAg@mail.gmail.com> <20190529010627.GA8566@localhost.localdomain>
+In-Reply-To: <20190529010627.GA8566@localhost.localdomain>
+From:   Andy Gross <andygro@gmail.com>
+Date:   Tue, 28 May 2019 20:19:09 -0500
+Message-ID: <CAJ=6tTqOW5s_dhEuy3su+R6=tUY_ZiuAuCMG1A8Y-Lz-aHXw2Q@mail.gmail.com>
+Subject: Re: next/pending-fixes boot: 227 boots: 6 failed, 198 passed with 20
+ offline, 1 untried/unknown, 2 conflicts (v5.2-rc1-375-g3695b18d1e9cd)
+To:     Eduardo Valentin <edubezval@gmail.com>
+Cc:     Amit Kucheria <amit.kucheria@linaro.org>,
+        Stephen Boyd <sboyd@kernel.org>,
+        "kernelci.org bot" <bot@kernelci.org>,
+        Kevin Hilman <khilman@baylibre.com>,
+        kernel-build-reports@lists.linaro.org,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, May 28, 2019 at 03:46:14PM +0200, Linus Walleij wrote:
-> On Thu, May 9, 2019 at 4:04 AM Brian Masney <masneyb@onstation.org> wrote:
-> 
-> > Here is a patch series that adds initial display support for the LG
-> > Nexus 5 (hammerhead) phone. It's not fully working so that's why some
-> > of these patches are RFC until we can get it fully working.
+On Tue, May 28, 2019 at 8:06 PM Eduardo Valentin <edubezval@gmail.com> wrote:
+>
+> Hello,
+>
+> On Tue, May 28, 2019 at 04:37:15PM -0500, Andy Gross wrote:
+> > +Eduardo
 > >
-> > The phones boots into terminal mode, however there is a several second
-> > (or more) delay when writing to tty1 compared to when the changes are
-> > actually shown on the screen. The following errors are in dmesg:
-> 
-> I tested to apply patches 2-6 and got the console up on the phone as well.
-> I see the same timouts, and I also notice the update is slow in the
-> display, as if the DSI panel was running in low power (LP) mode.
-> 
-> Was booting this to do some other work, but happy to see the progress!
+> > On Tue, May 28, 2019 at 1:09 PM Andy Gross <andygro@gmail.com> wrote:
+> >
+> > > On Sun, May 26, 2019 at 4:51 PM Amit Kucheria <amit.kucheria@linaro.org>
+> > > wrote:
+> > >
+> > > <snip>
+> > >
+> > > > Sorry for breaking the boot on 8064. That was one of the platforms
+> > > > that I didn't convert over to regmap (needs more refactoring). I had
+> > > > hoped kernelci would catch any issues but looks like thermal-soc tree
+> > > > entered linux-next quite late and didn't catch this.
+> > > >
+> > > > Does reverting 3e6a8fb33084 ("drivers: thermal: tsens: Add new
+> > > > operation to check if a sensor is enabled") fix the issue? If so,
+> > > > reverting that commit might be the best course of action since I've
+> > > > started vacations and can't fix this for 8064 in a meaningful amount
+> > > > of time (until 3rd week of June). cc'ing Bjorn in case this needs more
+> > > > investigation, but I think that patch is fairly self contained and
+> > > > reverting it shouldn't have any knock-on effects.
+> > >
+> > > I am ok with this.  I'll check with Bjorn before adding this to a
+> > > fixes for -rc2.
+> > >
+> >
+> > Eduardo, we have a situation with the Qcom tsens driver and
+> > commit  3e6a8fb33084.  Do you mind if I send in a revert for this through
+> > my tree or can you do this for us for -rc2?
+>
+> I can revert this patch. I can confirm that it is selfcontained and
+> reverting seams to work. I am sending the revert to -rc3, as rc2 is
+> already out.
 
-Thanks!
+Perfect.  Thanks Eduardo!
 
-I've had three people email me off list regarding the display working on
-4.17 before the msm kms/drm driver was converted to the DRM atomic API so
-this email is to get some more information out publicly.
-
-I pushed up a branch to my github with 15 patches applied against 4.17
-that has a working display:
-
-https://github.com/masneyb/linux/commits/display-works-4.17
-
-It's in low speed mode but its usable. The first 10 patches are in
-mainline now and the last 5 are in essence this patch series with the
-exception of 'drm/atomic+msm: add helper to implement legacy dirtyfb'.
-There's a slightly different version of that patch in mainline now.
-
-I'm planning to work on the msm8974 interconnect support once some of
-the outstanding interconnect patches for the msm kms/drm driver arrive
-in mainline. I'd really like to understand why the display works on
-4.17 with those patches though. I assume that it's related to the
-vblank events not working properly? Let me preface this with I'm a
-total DRM newbie, but it looked like the pre-DRM-atomic driver wasn't
-looking for these events in the atomic commits before the migration?
-See commit 70db18dca4e0 ("drm/msm: Remove msm_commit/worker, use atomic
-helper commit"), specifically the drm_atomic_helper_wait_for_vblanks()
-call that was added.
-
-Brian
+Andy
