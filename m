@@ -2,25 +2,25 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 4467E2E68C
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 May 2019 22:55:09 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 96EF52E6C3
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 May 2019 22:56:10 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726464AbfE2UzI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 29 May 2019 16:55:08 -0400
-Received: from smtp.codeaurora.org ([198.145.29.96]:55244 "EHLO
+        id S1726540AbfE2UzK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 29 May 2019 16:55:10 -0400
+Received: from smtp.codeaurora.org ([198.145.29.96]:55310 "EHLO
         smtp.codeaurora.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726155AbfE2UzI (ORCPT
+        with ESMTP id S1726186AbfE2UzJ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 29 May 2019 16:55:08 -0400
+        Wed, 29 May 2019 16:55:09 -0400
 Received: by smtp.codeaurora.org (Postfix, from userid 1000)
-        id 556C260E3E; Wed, 29 May 2019 20:55:05 +0000 (UTC)
+        id DDD9E607C3; Wed, 29 May 2019 20:55:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
-        s=default; t=1559163306;
-        bh=a10cqXD3K1rvMJw3L43nt+iaIhgdpjlzVZD15xJBhaA=;
-        h=From:To:Cc:Subject:Date:From;
-        b=Vp0ytwik6JEWAQFO/yG5VFu3Z6MkCfPENawBVa/y59bquj5SpgduvRjs2xXk0Pdrg
-         xAShGzTeW+ZhTTQJhO/ke4tluOhH90QajK5uXiU5Odl6uJsGHhWHgplxm1hmnN+M9s
-         WYMKWEjF49mjefdBuETfWF9op/mMPhoYsCjvOGFs=
+        s=default; t=1559163307;
+        bh=H1gJftayyhVU3QVkkOlFv2DhgJ/CrcDyVexTTU22x4A=;
+        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+        b=lBBCCLNWLtMP6MTlifW0/hhWULMbqAHn8agLMArTbyVmXfLZY0mTYUbtDvXrhGJRB
+         +rMjk9pU/Y5kmWw2na3O35JtABPJw1UFGa73g5+eW6WGZz0ZGgzD6SIKgOIL0poPBS
+         VGANA337XjlLLCTgDmOZQgtPBQchIWcqJZaSBX0U=
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
         pdx-caf-mail.web.codeaurora.org
 X-Spam-Level: 
@@ -31,138 +31,111 @@ Received: from jcrouse1-lnx.qualcomm.com (i-global254.qualcomm.com [199.106.103.
         (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
         (No client certificate requested)
         (Authenticated sender: jcrouse@smtp.codeaurora.org)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 00F036030E;
-        Wed, 29 May 2019 20:54:58 +0000 (UTC)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id F21AB606DB;
+        Wed, 29 May 2019 20:55:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
-        s=default; t=1559163304;
-        bh=a10cqXD3K1rvMJw3L43nt+iaIhgdpjlzVZD15xJBhaA=;
-        h=From:To:Cc:Subject:Date:From;
-        b=cSnhvA7BCJGATHq0sbtLanP6Lv34+whQEyH5M/1UWMBpLxrtk5CUaKV7c2SE1lSQd
-         3/RMJ4i5inUbtIPaeQtlZgTz/sjprVqxt79t2tdd0hrHLlltv1Ng8V263HFJzEQIKv
-         05ODYE8MeXimWoQrEpyB//MZ6ROo8rVnPKiBQOC0=
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 00F036030E
+        s=default; t=1559163307;
+        bh=H1gJftayyhVU3QVkkOlFv2DhgJ/CrcDyVexTTU22x4A=;
+        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+        b=lBBCCLNWLtMP6MTlifW0/hhWULMbqAHn8agLMArTbyVmXfLZY0mTYUbtDvXrhGJRB
+         +rMjk9pU/Y5kmWw2na3O35JtABPJw1UFGa73g5+eW6WGZz0ZGgzD6SIKgOIL0poPBS
+         VGANA337XjlLLCTgDmOZQgtPBQchIWcqJZaSBX0U=
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org F21AB606DB
 Authentication-Results: pdx-caf-mail.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
 Authentication-Results: pdx-caf-mail.web.codeaurora.org; spf=none smtp.mailfrom=jcrouse@codeaurora.org
 From:   Jordan Crouse <jcrouse@codeaurora.org>
 To:     freedreno@lists.freedesktop.org
 Cc:     jean-philippe.brucker@arm.com, linux-arm-msm@vger.kernel.org,
         hoegsberg@google.com, dianders@chromium.org,
-        Sean Paul <sean@poorly.run>,
-        Thomas Zimmermann <tzimmermann@suse.de>,
-        Sharat Masetty <smasetty@codeaurora.org>,
-        dri-devel@lists.freedesktop.org,
-        Robin Murphy <robin.murphy@arm.com>,
-        David Airlie <airlied@linux.ie>,
-        Joerg Roedel <joro@8bytes.org>,
-        Zhen Lei <thunder.leizhen@huawei.com>,
-        Rob Clark <robdclark@gmail.com>,
-        linux-arm-kernel@lists.infradead.org,
-        Will Deacon <will.deacon@arm.com>,
-        Rob Herring <robh@kernel.org>,
-        Wen Yang <wen.yang99@zte.com.cn>,
-        Kees Cook <keescook@chromium.org>,
         linux-kernel@vger.kernel.org, iommu@lists.linux-foundation.org,
-        Jonathan Marek <jonathan@marek.ca>,
-        Mamta Shukla <mamtashukla555@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>
-Subject: [PATCH v3 00/16] drm/msm: Per-instance pagetable support
-Date:   Wed, 29 May 2019 14:54:36 -0600
-Message-Id: <1559163292-4792-1-git-send-email-jcrouse@codeaurora.org>
+        Robin Murphy <robin.murphy@arm.com>,
+        Will Deacon <will.deacon@arm.com>,
+        Joerg Roedel <joro@8bytes.org>,
+        linux-arm-kernel@lists.infradead.org
+Subject: [PATCH v3 01/16] iommu/arm-smmu: Allow client devices to select direct mapping
+Date:   Wed, 29 May 2019 14:54:37 -0600
+Message-Id: <1559163292-4792-2-git-send-email-jcrouse@codeaurora.org>
 X-Mailer: git-send-email 2.7.4
+In-Reply-To: <1559163292-4792-1-git-send-email-jcrouse@codeaurora.org>
+References: <1559163292-4792-1-git-send-email-jcrouse@codeaurora.org>
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-This is v3 of the per-instance pagetable support. Biggest change in this
-revision is moving nearly all of the split pagetable support into
-io-pgtable-arm and setting up specific ops to handle the unique behavior
-of the split pagetables. Now that I've spent some time with it, I like how
-it turned out.
+Some client devices want to directly map the IOMMU themselves instead
+of using the DMA domain. Allow those devices to opt in to direct
+mapping by way of a list of compatible strings.
 
-For background:
+v3: use iommu_request_dm_for_dev() to set up a default identity domain
+for a group, per Robin
 
-Per-instance pagetables allow the target GPU driver to create and manage
-an individual pagetable for each file descriptor instance and switch
-between them asynchronously using the GPU to reprogram the pagetable
-registers on the fly.
+Signed-off-by: Jordan Crouse <jcrouse@codeaurora.org>
+---
 
-Most of the heavy lifting for this is done in the arm-smmu-v2 driver by
-taking advantage of the newly added multiple domain API. The first patch in the
-series allows opted-in clients to direct map a device with
-iommu_request_dm_for_dev(). This bypasses the DMA domain creation in the IOMMU
-core which serves several purposes for the GPU by skipping the otherwise unused
-DMA domain and also keeping context bank 0 unused on the hardware (for better or
-worse, the GPU is hardcoded to only use context bank 0 for switching).
+ drivers/iommu/arm-smmu.c | 35 +++++++++++++++++++++++++++++++++++
+ 1 file changed, 35 insertions(+)
 
-The next several patches enable split pagetable support. This is used to map
-global buffers for the GPU so we can safely switch the TTBR0 pagetable for the
-instance.
-
-The last two arm-smmu-v2 patches enable auxillary domain support. Again the
-SMMU client can opt-in to allow auxiliary domains, and if enabled will create
-a pagetable but not otherwise touch the hardware. The client can get the address
-of the pagetable through an attribute to perform its own switching.
-
-After the arm-smmu-v2 patches are more than several msm/gpu patches to allow
-for target specific address spaces, enable 64 bit virtual addressing and
-implement the mechanics of pagetable switching.
-
-For the purposes of merging all the patches between
-
-drm/msm/adreno: Enable 64 bit mode by default on a5xx and a6xx targets
-
-and
-
-drm/msm: Add support to create target specific address spaces
-
-can be merged to the msm-next tree without dependencies on the IOMMU changes.
-Only the last three patches will require coordination between the two areas.
-
-Jordan Crouse (16):
-  iommu/arm-smmu: Allow client devices to select direct mapping
-  iommu: Add DOMAIN_ATTR_SPLIT_TABLES
-  iommu/io-pgtable-arm: Add support for AARCH64 split pagetables
-  iommu/arm-smmu: Add support for DOMAIN_ATTR_SPLIT_TABLES
-  iommu: Add DOMAIN_ATTR_PTBASE
-  iommu/arm-smmu: Add auxiliary domain support for arm-smmuv2
-  drm/msm/adreno: Enable 64 bit mode by default on a5xx and a6xx targets
-  drm/msm: Print all 64 bits of the faulting IOMMU address
-  drm/msm: Pass the MMU domain index in struct msm_file_private
-  drm/msm/gpu: Move address space setup to the GPU targets
-  drm/msm: Add support for IOMMU auxiliary domains
-  drm/msm: Add a helper function for a per-instance address space
-  drm/msm: Add support to create target specific address spaces
-  drm/msm/gpu: Add ttbr0 to the memptrs
-  drm/msm/a6xx: Support per-instance pagetables
-  drm/msm/a5xx: Support per-instance pagetables
-
- drivers/gpu/drm/msm/adreno/a2xx_gpu.c     |  37 +++--
- drivers/gpu/drm/msm/adreno/a3xx_gpu.c     |  50 ++++--
- drivers/gpu/drm/msm/adreno/a4xx_gpu.c     |  51 ++++--
- drivers/gpu/drm/msm/adreno/a5xx_gpu.c     | 163 ++++++++++++++++++-
- drivers/gpu/drm/msm/adreno/a5xx_gpu.h     |  19 +++
- drivers/gpu/drm/msm/adreno/a5xx_preempt.c |  70 ++++++--
- drivers/gpu/drm/msm/adreno/a6xx_gpu.c     | 166 ++++++++++++++++++-
- drivers/gpu/drm/msm/adreno/a6xx_gpu.h     |   1 +
- drivers/gpu/drm/msm/adreno/adreno_gpu.c   |   7 -
- drivers/gpu/drm/msm/msm_drv.c             |  25 ++-
- drivers/gpu/drm/msm/msm_drv.h             |   5 +
- drivers/gpu/drm/msm/msm_gem.h             |   2 +
- drivers/gpu/drm/msm/msm_gem_submit.c      |  13 +-
- drivers/gpu/drm/msm/msm_gem_vma.c         |  53 +++---
- drivers/gpu/drm/msm/msm_gpu.c             |  59 +------
- drivers/gpu/drm/msm/msm_gpu.h             |   3 +
- drivers/gpu/drm/msm/msm_iommu.c           |  99 +++++++++++-
- drivers/gpu/drm/msm/msm_mmu.h             |   4 +
- drivers/gpu/drm/msm/msm_ringbuffer.h      |   1 +
- drivers/iommu/arm-smmu.c                  | 176 ++++++++++++++++++--
- drivers/iommu/io-pgtable-arm.c            | 261 +++++++++++++++++++++++++++---
- drivers/iommu/io-pgtable.c                |   1 +
- include/linux/io-pgtable.h                |   2 +
- include/linux/iommu.h                     |   2 +
- 24 files changed, 1082 insertions(+), 188 deletions(-)
-
+diff --git a/drivers/iommu/arm-smmu.c b/drivers/iommu/arm-smmu.c
+index 5e54cc0..7537639 100644
+--- a/drivers/iommu/arm-smmu.c
++++ b/drivers/iommu/arm-smmu.c
+@@ -1235,6 +1235,35 @@ static int arm_smmu_domain_add_master(struct arm_smmu_domain *smmu_domain,
+ 	return 0;
+ }
+ 
++struct arm_smmu_client_match_data {
++	bool direct_mapping;
++};
++
++static const struct arm_smmu_client_match_data qcom_adreno = {
++	.direct_mapping = true,
++};
++
++static const struct arm_smmu_client_match_data qcom_mdss = {
++	.direct_mapping = true,
++};
++
++static const struct of_device_id arm_smmu_client_of_match[] = {
++	{ .compatible = "qcom,adreno", .data = &qcom_adreno },
++	{ .compatible = "qcom,mdp4", .data = &qcom_mdss },
++	{ .compatible = "qcom,mdss", .data = &qcom_mdss },
++	{ .compatible = "qcom,sdm845-mdss", .data = &qcom_mdss },
++	{},
++};
++
++static const struct arm_smmu_client_match_data *
++arm_smmu_client_data(struct device *dev)
++{
++	const struct of_device_id *match =
++		of_match_device(arm_smmu_client_of_match, dev);
++
++	return match ? match->data : NULL;
++}
++
+ static int arm_smmu_attach_dev(struct iommu_domain *domain, struct device *dev)
+ {
+ 	int ret;
+@@ -1450,6 +1479,7 @@ static int arm_smmu_add_device(struct device *dev)
+ 	struct arm_smmu_device *smmu;
+ 	struct arm_smmu_master_cfg *cfg;
+ 	struct iommu_fwspec *fwspec = dev_iommu_fwspec_get(dev);
++	const struct arm_smmu_client_match_data *client;
+ 	int i, ret;
+ 
+ 	if (using_legacy_binding) {
+@@ -1512,6 +1542,11 @@ static int arm_smmu_add_device(struct device *dev)
+ 	device_link_add(dev, smmu->dev,
+ 			DL_FLAG_PM_RUNTIME | DL_FLAG_AUTOREMOVE_SUPPLIER);
+ 
++	client = arm_smmu_client_data(dev);
++
++	if (client && client->direct_mapping)
++		iommu_request_dm_for_dev(dev);
++
+ 	return 0;
+ 
+ out_cfg_free:
 -- 
 2.7.4
 
