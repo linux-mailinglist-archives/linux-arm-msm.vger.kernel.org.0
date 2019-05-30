@@ -2,27 +2,27 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 0CA062F605
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 30 May 2019 06:53:13 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 21A902F33B
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 30 May 2019 06:28:03 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728364AbfE3EwH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 30 May 2019 00:52:07 -0400
-Received: from mail.kernel.org ([198.145.29.99]:48950 "EHLO mail.kernel.org"
+        id S1730031AbfE3E11 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 30 May 2019 00:27:27 -0400
+Received: from mail.kernel.org ([198.145.29.99]:34018 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1728247AbfE3DKv (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 29 May 2019 23:10:51 -0400
+        id S1728154AbfE3DOV (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 29 May 2019 23:14:21 -0400
 Received: from localhost (ip67-88-213-2.z213-88-67.customer.algx.net [67.88.213.2])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id E0576244BE;
-        Thu, 30 May 2019 03:10:49 +0000 (UTC)
+        by mail.kernel.org (Postfix) with ESMTPSA id 471E7244EF;
+        Thu, 30 May 2019 03:14:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1559185849;
+        s=default; t=1559186060;
         bh=BCc15NeOx4Irdj+ofRsABC8wNfwE3dbtR0v/5IB/peg=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=KB5JZSVBQo2XTHxckMIuR4EZbwtczB6bwCQw06Id74W4dFnAfWIgssi2Bd2GgtAOo
-         3RovPNRNIeCZXiDEC72nog11URoAkZMIgvFz206Je9mztvbLq+aA0MiQhtaF+sAo8A
-         RhZR7fzWDTnNfaDwl5XpG9Q7uZtabyh8ujWk4lxk=
+        b=Auz2xXd7L3a3uyV7zzC7tpj/5uzvDMUONujntAvtXEYKtzb2y5F5igzrbcs1Pq+bo
+         1DMmrWLlR1ulga34KRdNhsmmrY1vuq5V8vgrlQUW/tNoMJGx8dtup+VWlyeg8+BzFw
+         xgYNdY+THxkPslXBw32yE0N1FNIT2ifS9t7VGm7o=
 From:   Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To:     linux-kernel@vger.kernel.org
 Cc:     Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -38,12 +38,12 @@ Cc:     Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
         freedreno@lists.freedesktop.org,
         Rob Clark <robdclark@chromium.org>,
         Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.1 173/405] drm/msm: a5xx: fix possible object reference leak
-Date:   Wed, 29 May 2019 20:02:51 -0700
-Message-Id: <20190530030549.873012064@linuxfoundation.org>
+Subject: [PATCH 5.0 158/346] drm/msm: a5xx: fix possible object reference leak
+Date:   Wed, 29 May 2019 20:03:51 -0700
+Message-Id: <20190530030549.183893460@linuxfoundation.org>
 X-Mailer: git-send-email 2.21.0
-In-Reply-To: <20190530030540.291644921@linuxfoundation.org>
-References: <20190530030540.291644921@linuxfoundation.org>
+In-Reply-To: <20190530030540.363386121@linuxfoundation.org>
+References: <20190530030540.363386121@linuxfoundation.org>
 User-Agent: quilt/0.66
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
