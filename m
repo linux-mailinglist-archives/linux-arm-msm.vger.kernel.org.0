@@ -2,165 +2,124 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id CF6192E7B1
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 May 2019 23:54:23 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0CA062F605
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 30 May 2019 06:53:13 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726476AbfE2VyX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 29 May 2019 17:54:23 -0400
-Received: from onstation.org ([52.200.56.107]:44478 "EHLO onstation.org"
+        id S1728364AbfE3EwH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 30 May 2019 00:52:07 -0400
+Received: from mail.kernel.org ([198.145.29.99]:48950 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726250AbfE2VyX (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 29 May 2019 17:54:23 -0400
-Received: from localhost (c-98-239-145-235.hsd1.wv.comcast.net [98.239.145.235])
+        id S1728247AbfE3DKv (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 29 May 2019 23:10:51 -0400
+Received: from localhost (ip67-88-213-2.z213-88-67.customer.algx.net [67.88.213.2])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        (Authenticated sender: masneyb)
-        by onstation.org (Postfix) with ESMTPSA id 4E7603E93F;
-        Wed, 29 May 2019 21:54:21 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=onstation.org;
-        s=default; t=1559166861;
-        bh=tIAy2GIEYuNFrX/uboRVUaQFApaBDfrKHODIjF4ZzsY=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=f+ScQg9nH5BPsj0L/L9Pa5xMLgJuRWLyNAdh6g8x1q7BuhrDpRaPl+RkGQ21g7SyY
-         R3BKA8lT8S5AS73Wb7sjxnACIfi+ejE5m4rfW7XJW9+TS9avwbBeX05ysQyCH2fT17
-         Trm/LM+RDTvci7VHkavslpvmltPUrECo6Wpb/35Y=
-Date:   Wed, 29 May 2019 17:54:21 -0400
-From:   Brian Masney <masneyb@onstation.org>
-To:     Jeffrey Hugo <jhugo@codeaurora.org>
-Cc:     Jeffrey Hugo <jeffrey.l.hugo@gmail.com>,
-        Linus Walleij <linus.walleij@linaro.org>,
-        Sean Paul <sean@poorly.run>, Rob Herring <robh@kernel.org>,
-        Jonathan Marek <jonathan@marek.ca>,
-        Dave Airlie <airlied@linux.ie>,
-        MSM <linux-arm-msm@vger.kernel.org>,
-        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
-        "open list:DRM PANEL DRIVERS" <dri-devel@lists.freedesktop.org>,
-        Rob Clark <robdclark@gmail.com>,
+        by mail.kernel.org (Postfix) with ESMTPSA id E0576244BE;
+        Thu, 30 May 2019 03:10:49 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=default; t=1559185849;
+        bh=BCc15NeOx4Irdj+ofRsABC8wNfwE3dbtR0v/5IB/peg=;
+        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+        b=KB5JZSVBQo2XTHxckMIuR4EZbwtczB6bwCQw06Id74W4dFnAfWIgssi2Bd2GgtAOo
+         3RovPNRNIeCZXiDEC72nog11URoAkZMIgvFz206Je9mztvbLq+aA0MiQhtaF+sAo8A
+         RhZR7fzWDTnNfaDwl5XpG9Q7uZtabyh8ujWk4lxk=
+From:   Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To:     linux-kernel@vger.kernel.org
+Cc:     Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        stable@vger.kernel.org, Wen Yang <wen.yang99@zte.com.cn>,
+        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        David Airlie <airlied@linux.ie>,
         Daniel Vetter <daniel@ffwll.ch>,
-        freedreno <freedreno@lists.freedesktop.org>
-Subject: Re: [Freedreno] [PATCH RFC v2 0/6] ARM: qcom: initial Nexus 5
- display support
-Message-ID: <20190529215421.GA20611@basecamp>
-References: <20190529011705.GA12977@basecamp>
- <CAOCk7NrRo2=0fPN_Sy1Bhhy+UV7U6uO5aV9uXZc8kc3VpSt71g@mail.gmail.com>
- <20190529013713.GA13245@basecamp>
- <CAOCk7NqfdNkRJkbJY70XWN-XvdtFJ0UVn3_9rbgAsNCdR7q5PQ@mail.gmail.com>
- <20190529024648.GA13436@basecamp>
- <CAOCk7NpC93ACr4jFm7SBOKSvFJSDhq2byX6BAYPX29BuYEkWnQ@mail.gmail.com>
- <20190529102822.GA15027@basecamp>
- <CAOCk7NoVknZOkFcki9c8hq2vkqLhBSfum05T9Srq8mtJjAaLyQ@mail.gmail.com>
- <20190529193046.GA19876@basecamp>
- <26c535af-9853-c8c9-3138-04f5d9ee11b0@codeaurora.org>
+        Jordan Crouse <jcrouse@codeaurora.org>,
+        Mamta Shukla <mamtashukla555@gmail.com>,
+        Thomas Zimmermann <tzimmermann@suse.de>,
+        Sharat Masetty <smasetty@codeaurora.org>,
+        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org,
+        Rob Clark <robdclark@chromium.org>,
+        Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.1 173/405] drm/msm: a5xx: fix possible object reference leak
+Date:   Wed, 29 May 2019 20:02:51 -0700
+Message-Id: <20190530030549.873012064@linuxfoundation.org>
+X-Mailer: git-send-email 2.21.0
+In-Reply-To: <20190530030540.291644921@linuxfoundation.org>
+References: <20190530030540.291644921@linuxfoundation.org>
+User-Agent: quilt/0.66
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <26c535af-9853-c8c9-3138-04f5d9ee11b0@codeaurora.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, May 29, 2019 at 01:58:16PM -0600, Jeffrey Hugo wrote:
-> On 5/29/2019 1:30 PM, Brian Masney wrote:
-> > On Wed, May 29, 2019 at 08:41:31AM -0600, Jeffrey Hugo wrote:
-> > > On Wed, May 29, 2019 at 4:28 AM Brian Masney <masneyb@onstation.org> wrote:
-> > > > 
-> > > > On Tue, May 28, 2019 at 08:53:49PM -0600, Jeffrey Hugo wrote:
-> > > > > On Tue, May 28, 2019 at 8:46 PM Brian Masney <masneyb@onstation.org> wrote:
-> > > > > > 
-> > > > > > On Tue, May 28, 2019 at 07:42:19PM -0600, Jeffrey Hugo wrote:
-> > > > > > > > > Do you know if the nexus 5 has a video or command mode panel?  There
-> > > > > > > > > is some glitchyness with vblanks and command mode panels.
-> > > > > > > > 
-> > > > > > > > Its in command mode. I know this because I see two 'pp done time out'
-> > > > > > > > messages, even on 4.17. Based on my understanding, the ping pong code is
-> > > > > > > > only applicable for command mode panels.
-> > > > > > > 
-> > > > > > > Actually, the ping pong element exists in both modes, but 'pp done
-> > > > > > > time out' is a good indicator that it is command mode.
-> > > > > > > 
-> > > > > > > Are you also seeing vblank timeouts?
-> > > > > > 
-> > > > > > Yes, here's a snippet of the first one.
-> > > > > > 
-> > > > > > [    2.556014] WARNING: CPU: 0 PID: 5 at drivers/gpu/drm/drm_atomic_helper.c:1429 drm_atomic_helper_wait_for_vblanks.part.1+0x288/0x290
-> > > > > > [    2.556020] [CRTC:49:crtc-0] vblank wait timed out
-> > > > > > [    2.556023] Modules linked in:
-> > > > > > [    2.556034] CPU: 0 PID: 5 Comm: kworker/0:0 Not tainted 5.2.0-rc1-00178-g72c3c1fd5f86-dirty #426
-> > > > > > [    2.556038] Hardware name: Generic DT based system
-> > > > > > [    2.556056] Workqueue: events deferred_probe_work_func
-> > > > > > ...
-> > > > > > 
-> > > > > > > Do you have busybox?
-> > > > > > > 
-> > > > > > > Can you run -
-> > > > > > > sudo busybox devmem 0xFD900614
-> > > > > > > sudo busybox devmem 0xFD900714
-> > > > > > > sudo busybox devmem 0xFD900814
-> > > > > > > sudo busybox devmem 0xFD900914
-> > > > > > > sudo busybox devmem 0xFD900A14
-> > > > > > 
-> > > > > > # busybox devmem 0xFD900614
-> > > > > > 0x00020020
-> > > > > 
-> > > > > Ok, so CTL_0 path, command mode, ping pong 0, with the output going to DSI 1.
-> > > > > 
-> > > > > Next one please:
-> > > > > 
-> > > > > busybox devmem 0xFD912D30
-> > > > 
-> > > > It's 0x00000000 on mainline and 4.17. I used the following script to
-> > > > dump the entire mdp5 memory region and attached the dump from 4.17 and
-> > > > 5.2rc1.
-> > > > 
-> > > 
-> > > ok, 0 means autorefresh is not on.  Which is fine.  My next guess
-> > > would be the vblank code checking the hardware vblank counter, which
-> > > doesn't exist.
-> > > In video mode, there is a frame counter which increments, which can be
-> > > used as the vblank counter.  Unfortunately, that hardware isn't active
-> > > in command mode, and there isn't an equivalent.
-> > > 
-> > > So, the vblank code is going to read the register, and look for an
-> > > update, which will never happen, thus it will timeout.  There is a
-> > > backup path which uses timestamps (no hardware), which you can
-> > > activate with a quick hack - make max_vblank_count = 0 at the
-> > > following line
-> > > https://elixir.bootlin.com/linux/latest/source/drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c#L753
-> > 
-> > That fixed the issue!
-> 
-> Awesome.  I'm glad it was something simple.
-> 
-> > 
-> > I previously observed that mdp5_get_vblank_counter, specifically
-> > mdp5_encoder_get_framecount, would always return 0.
-> > 
-> > What's the best way to fix this in mainline? Set that to zero if any
-> > of the interface modes is MDP5_INTF_DSI_MODE_COMMAND?
-> > 
-> 
-> Short version, yes.  Long version:
-> 
-> I still have that hack in my tree and haven't come back to formulating
-> a proper fix yet.  Feel free to run with it.
-> 
-> Thinking about it briefly, we could do two things.  We could fake a
-> hardware counter by just increment an int every time the vblank irq is
-> processed, but that seems clunky.  Otherwise, we could force a
-> fallback onto the timestamp solution, which seems less invasive.
-> 
-> In theory, we could service multiple displays, with different
-> properties (ie a combination of command and video mode).  The hack
-> then, is not good, because it would break video mode (at-least we
-> wouldn't be using the register when we could).  It would be great if
-> the use of the hardware register could be done per display.
-> 
-> Luckily, it looks like someone just made that possible -
-> https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/drivers/gpu/drm/drm_vblank.c?h=v5.2-rc2&id=ed20151a7699bb2c77eba3610199789a126940c4
+[ Upstream commit 6cd5235c3135ea84b32469ea51b2aae384eda8af ]
 
-I'll work on this for the msm driver.
+The call to of_get_child_by_name returns a node pointer with refcount
+incremented thus it must be explicitly decremented after the last
+usage.
 
-Thanks for the info!
+Detected by coccinelle with the following warnings:
+drivers/gpu/drm/msm/adreno/a5xx_gpu.c:57:2-8: ERROR: missing of_node_put; acquired a node pointer with refcount incremented on line 47, but without a corresponding object release within this function.
+drivers/gpu/drm/msm/adreno/a5xx_gpu.c:66:2-8: ERROR: missing of_node_put; acquired a node pointer with refcount incremented on line 47, but without a corresponding object release within this function.
+drivers/gpu/drm/msm/adreno/a5xx_gpu.c:118:1-7: ERROR: missing of_node_put; acquired a node pointer with refcount incremented on line 47, but without a corresponding object release within this function.
+drivers/gpu/drm/msm/adreno/a5xx_gpu.c:57:2-8: ERROR: missing of_node_put; acquired a node pointer with refcount incremented on line 51, but without a corresponding object release within this function.
+drivers/gpu/drm/msm/adreno/a5xx_gpu.c:66:2-8: ERROR: missing of_node_put; acquired a node pointer with refcount incremented on line 51, but without a corresponding object release within this function.
+drivers/gpu/drm/msm/adreno/a5xx_gpu.c:118:1-7: ERROR: missing of_node_put; acquired a node pointer with refcount incremented on line 51, but without a corresponding object release within this function.
 
-Brian
+Signed-off-by: Wen Yang <wen.yang99@zte.com.cn>
+Cc: Rob Clark <robdclark@gmail.com>
+Cc: Sean Paul <sean@poorly.run>
+Cc: David Airlie <airlied@linux.ie>
+Cc: Daniel Vetter <daniel@ffwll.ch>
+Cc: Jordan Crouse <jcrouse@codeaurora.org>
+Cc: Mamta Shukla <mamtashukla555@gmail.com>
+Cc: Thomas Zimmermann <tzimmermann@suse.de>
+Cc: Sharat Masetty <smasetty@codeaurora.org>
+Cc: linux-arm-msm@vger.kernel.org
+Cc: dri-devel@lists.freedesktop.org
+Cc: freedreno@lists.freedesktop.org
+Cc: linux-kernel@vger.kernel.org (open list)
+Reviewed-by: Jordan Crouse <jcrouse@codeaurora.org>
+Signed-off-by: Rob Clark <robdclark@gmail.com>
+Signed-off-by: Rob Clark <robdclark@chromium.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
+---
+ drivers/gpu/drm/msm/adreno/a5xx_gpu.c | 10 ++++++----
+ 1 file changed, 6 insertions(+), 4 deletions(-)
+
+diff --git a/drivers/gpu/drm/msm/adreno/a5xx_gpu.c b/drivers/gpu/drm/msm/adreno/a5xx_gpu.c
+index d5f5e56422f57..270da14cba673 100644
+--- a/drivers/gpu/drm/msm/adreno/a5xx_gpu.c
++++ b/drivers/gpu/drm/msm/adreno/a5xx_gpu.c
+@@ -34,7 +34,7 @@ static int zap_shader_load_mdt(struct msm_gpu *gpu, const char *fwname)
+ {
+ 	struct device *dev = &gpu->pdev->dev;
+ 	const struct firmware *fw;
+-	struct device_node *np;
++	struct device_node *np, *mem_np;
+ 	struct resource r;
+ 	phys_addr_t mem_phys;
+ 	ssize_t mem_size;
+@@ -48,11 +48,13 @@ static int zap_shader_load_mdt(struct msm_gpu *gpu, const char *fwname)
+ 	if (!np)
+ 		return -ENODEV;
+ 
+-	np = of_parse_phandle(np, "memory-region", 0);
+-	if (!np)
++	mem_np = of_parse_phandle(np, "memory-region", 0);
++	of_node_put(np);
++	if (!mem_np)
+ 		return -EINVAL;
+ 
+-	ret = of_address_to_resource(np, 0, &r);
++	ret = of_address_to_resource(mem_np, 0, &r);
++	of_node_put(mem_np);
+ 	if (ret)
+ 		return ret;
+ 
+-- 
+2.20.1
+
+
+
