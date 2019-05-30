@@ -2,128 +2,86 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 709D92F979
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 30 May 2019 11:33:30 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id BD7D62FCC2
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 30 May 2019 15:58:51 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727001AbfE3Jd3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 30 May 2019 05:33:29 -0400
-Received: from mail-wr1-f65.google.com ([209.85.221.65]:34540 "EHLO
-        mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726557AbfE3Jd3 (ORCPT
+        id S1726609AbfE3N6u (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 30 May 2019 09:58:50 -0400
+Received: from smtp.codeaurora.org ([198.145.29.96]:46250 "EHLO
+        smtp.codeaurora.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726232AbfE3N6u (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 30 May 2019 05:33:29 -0400
-Received: by mail-wr1-f65.google.com with SMTP id f8so3746856wrt.1
-        for <linux-arm-msm@vger.kernel.org>; Thu, 30 May 2019 02:33:28 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id;
-        bh=6m1gjqr7LLo5czWaTNxbcS9O7G75X5W+OVxVsjgwdOk=;
-        b=dmyIRlMRlkjOTvPMU8h28OONRBSGMbu5OSkC56ceQtI82uyy9wZSUWnAAFvv4qeefD
-         1uH+WS2sxeXVRW2DNdtQA1dDIEw6uVypGKzciRZoT6bctV3lMYh+jNP1ZR36djmDCLjw
-         VKLc53Cg59P21NX3oLbIHnVwGGcPUG1neQP65J7MTFocgNYwh20lwAGvv3Ngi8M2C82+
-         0fvLmrK0jdeSOBNSEQdAbiJWsx3fUupQM0n/aD6hJWbVcLzf+l4XVtOED3rcZchEf3ut
-         bVwX3gW/aTaj4Dm6vSGvA5Jlw9ng9ZXieYne8XtFL5y7PF4Y3iBDODeM8v5OEF8Ttnc3
-         biHg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id;
-        bh=6m1gjqr7LLo5czWaTNxbcS9O7G75X5W+OVxVsjgwdOk=;
-        b=AmyhVCPDN+PY5czcP81almOzPvy90hYb1rOwGQj+FIPP8gDDwSKDjEElgAiVSU28hj
-         Zr2YAD9XAZs2C76LyZ/c/Jj1420eebU52bCb8M/HRIUUH8U4n4JVDa+QhIshZmNLc46a
-         dgWdib/sxv+fsvtVNZko3AdXsLTzZMVCwUqwUxmy/2i6TOfE3KtQy4Oj+iBkmGTY+kyu
-         cyUoP0ltHHYHcFqqFtA9bFg0OF+sbF9nwbckntd933NQ1UdXX9V1SsJW3RQcMn16IcWn
-         2QcJ1ssz9aCOXM0hKx97MyAAPlrMQgABMJ6vGLuLOATJlhW44/0DOdhvjryTQuZya0BW
-         aRaA==
-X-Gm-Message-State: APjAAAVhRMrnjYnw/sxHI4xjPxCGNgIKB1/ueoX5pJZop76+xdKac4oT
-        kw1yxQwNHFUopbI2GL7QhWHo6g==
-X-Google-Smtp-Source: APXvYqxEASlLnIkp5PQbSa4BfrTxFJ6g24r6qZiMp+C9TsnMS8uQxuD/y1DzZGzNDx7DhMVpHGITmg==
-X-Received: by 2002:adf:c982:: with SMTP id f2mr1940460wrh.235.1559208808019;
-        Thu, 30 May 2019 02:33:28 -0700 (PDT)
-Received: from localhost.localdomain ([37.157.136.206])
-        by smtp.gmail.com with ESMTPSA id a124sm2863900wmh.3.2019.05.30.02.33.26
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 30 May 2019 02:33:26 -0700 (PDT)
-From:   Stanimir Varbanov <stanimir.varbanov@linaro.org>
-To:     linux-media@vger.kernel.org
-Cc:     Mauro Carvalho Chehab <mchehab@kernel.org>,
-        Hans Verkuil <hverkuil@xs4all.nl>,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        Stanimir Varbanov <stanimir.varbanov@linaro.org>
-Subject: [PATCH v3] media/doc: Allow sizeimage to be set by v4l clients
-Date:   Thu, 30 May 2019 12:33:12 +0300
-Message-Id: <20190530093312.27562-1-stanimir.varbanov@linaro.org>
-X-Mailer: git-send-email 2.17.1
+        Thu, 30 May 2019 09:58:50 -0400
+Received: by smtp.codeaurora.org (Postfix, from userid 1000)
+        id CDE31607CA; Thu, 30 May 2019 13:58:49 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
+        s=default; t=1559224729;
+        bh=ZhapyRz7rpO7+RXjnPRw8coTCr3ij19lsTGVLI65SL4=;
+        h=From:To:Cc:Subject:Date:From;
+        b=Q6+JwilLbIhB+XoM/3S6CaEKG5a6wNZx5/wkuJWPEAD0A5cUs0buLCy5OTbV1/9qO
+         lG22IAs9K95buf1UgYiFVUoMSScNTJJPqYFbZfgNQ+4VILP+EGeMcHaKjbcrL5bAPk
+         O41rBltZWg7/J1QtkiWuwFnTq+jyjFMGnJ2PGLas=
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        pdx-caf-mail.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.7 required=2.0 tests=ALL_TRUSTED,BAYES_00,
+        DKIM_INVALID,DKIM_SIGNED,SPF_NONE autolearn=no autolearn_force=no
+        version=3.4.0
+Received: from amasule-linux.qualcomm.com (blr-c-bdr-fw-01_globalnat_allzones-outside.qualcomm.com [103.229.19.19])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: amasule@codeaurora.org)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 722026049C;
+        Thu, 30 May 2019 13:58:47 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
+        s=default; t=1559224729;
+        bh=ZhapyRz7rpO7+RXjnPRw8coTCr3ij19lsTGVLI65SL4=;
+        h=From:To:Cc:Subject:Date:From;
+        b=Q6+JwilLbIhB+XoM/3S6CaEKG5a6wNZx5/wkuJWPEAD0A5cUs0buLCy5OTbV1/9qO
+         lG22IAs9K95buf1UgYiFVUoMSScNTJJPqYFbZfgNQ+4VILP+EGeMcHaKjbcrL5bAPk
+         O41rBltZWg7/J1QtkiWuwFnTq+jyjFMGnJ2PGLas=
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 722026049C
+Authentication-Results: pdx-caf-mail.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: pdx-caf-mail.web.codeaurora.org; spf=none smtp.mailfrom=amasule@codeaurora.org
+From:   Aniket Masule <amasule@codeaurora.org>
+To:     linux-media@vger.kernel.org, stanimir.varbanov@linaro.org
+Cc:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        vgarodia@codeaurora.org, Aniket Masule <amasule@codeaurora.org>
+Subject: [PATCH 0/5] media: venus: Update clock scaling and core selection
+Date:   Thu, 30 May 2019 19:28:23 +0530
+Message-Id: <1559224708-6039-1-git-send-email-amasule@codeaurora.org>
+X-Mailer: git-send-email 1.9.1
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-This changes v4l2_pix_format and v4l2_plane_pix_format sizeimage
-field description to allow v4l clients to set bigger image size
-in case of variable length compressed data.
+In this patch series, clock scaling and core selection methods are
+updated. Current clock scaling and core selection methods are same
+for vpu4 and previous versions. Introducing load calculations using
+vpp cycles, which indicates the cycles required by video hardware to
+process each macroblock. Clock scaling is now done more precisely using
+vpp cycles. Instance is assigned to core with minimum load, instead of
+of static assignment.
 
-Presently s5p-mfc and mtk-vcodec codec drivers use that. Lets
-make it obvious in the documentation.
+Aniket Masule (5):
+  media: venus: Add codec data table
+  media: venus: Initialize codec data
+  media: venus: Update clock scaling
+  media: venus: Add interface for load per core
+  media: venus: Update core selection
 
-Signed-off-by: Stanimir Varbanov <stanimir.varbanov@linaro.org>
----
-Changes since v2:
-Addressed review comments from Mauro.
+ drivers/media/platform/qcom/venus/core.c       |  13 ++
+ drivers/media/platform/qcom/venus/core.h       |  15 ++
+ drivers/media/platform/qcom/venus/helpers.c    | 189 +++++++++++++++++++++++--
+ drivers/media/platform/qcom/venus/helpers.h    |   3 +-
+ drivers/media/platform/qcom/venus/hfi_helper.h |   1 +
+ drivers/media/platform/qcom/venus/hfi_parser.h |   5 +
+ drivers/media/platform/qcom/venus/vdec.c       |   9 +-
+ drivers/media/platform/qcom/venus/venc.c       |   8 +-
+ 8 files changed, 229 insertions(+), 14 deletions(-)
 
- .../media/uapi/v4l/pixfmt-v4l2-mplane.rst         | 15 ++++++++++++++-
- Documentation/media/uapi/v4l/pixfmt-v4l2.rst      | 13 ++++++++++++-
- 2 files changed, 26 insertions(+), 2 deletions(-)
-
-diff --git a/Documentation/media/uapi/v4l/pixfmt-v4l2-mplane.rst b/Documentation/media/uapi/v4l/pixfmt-v4l2-mplane.rst
-index 5688c816e334..db43dda5aafb 100644
---- a/Documentation/media/uapi/v4l/pixfmt-v4l2-mplane.rst
-+++ b/Documentation/media/uapi/v4l/pixfmt-v4l2-mplane.rst
-@@ -31,7 +31,20 @@ describing all planes of that format.
- 
-     * - __u32
-       - ``sizeimage``
--      - Maximum size in bytes required for image data in this plane.
-+      - Maximum size in bytes required for image data in this plane,
-+	set by the driver. When the image consists of variable length
-+	compressed data this is the number of bytes required by the
-+	codec to support the worst-case compression scenario.
-+
-+	The driver will set the value for uncompressed images.
-+
-+	Clients are allowed to set the sizeimage field for variable length
-+	compressed data flagged with ``V4L2_FMT_FLAG_COMPRESSED`` at
-+	:ref:`VIDIOC_ENUM_FMT`, but the driver may ignore it and set the
-+	value itself, or it may modify the provided value based on
-+	alignment requirements or minimum/maximum size requirements.
-+	If the client wants to leave this to the driver, then it should
-+	set sizeimage to 0.
-     * - __u32
-       - ``bytesperline``
-       - Distance in bytes between the leftmost pixels in two adjacent
-diff --git a/Documentation/media/uapi/v4l/pixfmt-v4l2.rst b/Documentation/media/uapi/v4l/pixfmt-v4l2.rst
-index 71eebfc6d853..da6da2ef139a 100644
---- a/Documentation/media/uapi/v4l/pixfmt-v4l2.rst
-+++ b/Documentation/media/uapi/v4l/pixfmt-v4l2.rst
-@@ -89,7 +89,18 @@ Single-planar format structure
-       - Size in bytes of the buffer to hold a complete image, set by the
- 	driver. Usually this is ``bytesperline`` times ``height``. When
- 	the image consists of variable length compressed data this is the
--	maximum number of bytes required to hold an image.
-+	number of bytes required by the codec to support the worst-case
-+	compression scenario.
-+
-+	The driver will set the value for uncompressed images.
-+
-+	Clients are allowed to set the sizeimage field for variable length
-+	compressed data flagged with ``V4L2_FMT_FLAG_COMPRESSED`` at
-+	:ref:`VIDIOC_ENUM_FMT`, but the driver may ignore it and set the
-+	value itself, or it may modify the provided value based on
-+	alignment requirements or minimum/maximum size requirements.
-+	If the client wants to leave this to the driver, then it should
-+	set sizeimage to 0.
-     * - __u32
-       - ``colorspace``
-       - Image colorspace, from enum :c:type:`v4l2_colorspace`.
 -- 
-2.17.1
+The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
+a Linux Foundation Collaborative Project
 
