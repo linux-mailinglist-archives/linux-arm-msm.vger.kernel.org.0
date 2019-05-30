@@ -2,60 +2,61 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 01B2C2FFC6
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 30 May 2019 18:00:29 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5A9ED2FFC9
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 30 May 2019 18:00:43 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726355AbfE3QA1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 30 May 2019 12:00:27 -0400
-Received: from mail-pf1-f196.google.com ([209.85.210.196]:34396 "EHLO
-        mail-pf1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726250AbfE3QA1 (ORCPT
+        id S1727581AbfE3QAm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 30 May 2019 12:00:42 -0400
+Received: from mail-pl1-f196.google.com ([209.85.214.196]:44825 "EHLO
+        mail-pl1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726250AbfE3QAm (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 30 May 2019 12:00:27 -0400
-Received: by mail-pf1-f196.google.com with SMTP id c14so1829583pfi.1;
-        Thu, 30 May 2019 09:00:26 -0700 (PDT)
+        Thu, 30 May 2019 12:00:42 -0400
+Received: by mail-pl1-f196.google.com with SMTP id c5so2736152pll.11;
+        Thu, 30 May 2019 09:00:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=JlasCBadKVSsXNr9CWB0njdLgCAXoVvqrNuDEFbuiAk=;
-        b=GGmvQfnjEYqg8qQyb2/5A1vSa5dD9qVfe8yOwyW2rD/Y8VqE6iaViUCuy/BFehmPVJ
-         PjpbhjyrSODquqB6uzFDXx8DgOgey45RoPlY2fqhz80ezGwluIbikPcA104eRL/U3p0O
-         s7cELqrWxaZedQ99dD3wcl3EUVZyWX5l7N6FwYcxRkEfxy1jUWvObhPB9WPCcD0v94S3
-         uWr5tHcjTcD3TG3nnSoRFhlHTWakjZPLtwZkPI5ayGWTRxuAomVKxg1dWzRt+vmnwbVX
-         1mTYq/EfeuLTBXoihmdBHQBnNUWIeNG579eMNQmArE8MU7SCGIQtFF4FkP/CVLYe6Avq
-         cb5A==
+        bh=nFuE48SxjxGD42uWCm67in47wWXCmv1XAERqUz8MYR0=;
+        b=NnAw8ZFx9RxpVuQ9/KhIc8M8EEHTxQnD5/6j/xJ2aXuv0QpAy6dUtA82UM3hxcgniX
+         QUcDqNHDD+zUkApJfHw7H0ZCONI0dToj6nUo9A+2dQZo0J5MKMRy+frfVBDFVbQ7INfV
+         dY71wg646IhT5wgSMxvdRRfVMn84bzCLOEL/eRGsD2T6c62qS1nFq/FjQ2oOeNYcPCoR
+         Br7euxPfOFiKg0qZgBnPKgqq9S5g+A6JJsXTrmN+wzuDakO6ke7qs5yxSCCcHbyY/GyQ
+         SgVK5ZysV9mGwcLT/OPV9WR+6xc6tVE4lCqvIpQ6QQnpTqeUi9DS8TTVnpDOtWL2VSOH
+         ED2Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=JlasCBadKVSsXNr9CWB0njdLgCAXoVvqrNuDEFbuiAk=;
-        b=fq9ryNxQG8fDWfA1DOV3OiT6+Hp3sDI07pfj6Iillb3QpMTkmxCBsef4Ki48g5d3Jj
-         Ucr18jSSOWFsyqgXSMP7laO7kEElF1HQT/+ScIXgsrugKrx5e3ZpDne9aw01+zzftcT2
-         mN7+3w7bpFOxDuji2UVxsTyZUcQT83EeQYv7FBsj1syChOFGi/Zc8SyvtQLPm7nC5BOo
-         aAev0C3WFoXO57VnAQnjo04twyoQUwlV8GToF/h6kuZWMO2XbohxxLNeYgcuzeh0i7Fo
-         wkZVRivo6uqkTg055DxL0qDGLj5XRWk/WtDM2mTNphmG3E+ggIrb+geIYPzx4bbX+o+R
-         +2hQ==
-X-Gm-Message-State: APjAAAXLSeeogZ0TTGWYZ2/wB0jKjFgiKmYBJqgL3skfXv3IlkQBm3lw
-        WLUVgGS4+HRW51kP8Rt9+K0=
-X-Google-Smtp-Source: APXvYqx7uR82rclJSLO1W53P8kcXMQFQ/il2D/p+aY+ksKPDcfYRXob0yFz/gBQQ+NFgXCTSJZ1kog==
-X-Received: by 2002:a62:bd11:: with SMTP id a17mr4504182pff.126.1559232026423;
-        Thu, 30 May 2019 09:00:26 -0700 (PDT)
+        bh=nFuE48SxjxGD42uWCm67in47wWXCmv1XAERqUz8MYR0=;
+        b=B9V97TEtXD91+hwp1tX3IpQ1eEglC0ed7QFk3iS6ZZEYoqXxqkamW7dpJc6Rh2oXjf
+         JwRSDB9myfbzI56m7mLPVb2N6NOdvXufoxcdw65hVDTtWkB0evy476cu6iUzaG7+e84E
+         /JVth2FCGqsLlhq3SI6KOUrsJy/Y/uBXaS6GoqX0a9rVJmKvQk3pV6GlDe30Sms9+HK0
+         3GP7WjI8a65gl91ATJZV9xZoZPvSsqFrLmsqogMeXeKe5S0sbYQXy4Luvu8MMf0vUZ5p
+         d8T9R4Nu8GwOwmNzyKD8ncp7TC6oUoWyzpd5viR/aMr1/5GP1B/7nU7VPM1tvG1rji/L
+         E+rA==
+X-Gm-Message-State: APjAAAUMPnTIK3toJLfv1jZ1CQByUcI/SfZLNUx5nE7ybUWqkbYfbRGy
+        0ZHnMBN9EDExHI4yBk+4hrc=
+X-Google-Smtp-Source: APXvYqwixR7q3Osx9ui3862owtX4fZY1r/HG70N3K2IuvZ685K6K5Bn6WbQSGj8CEqm/zetPpXfNjw==
+X-Received: by 2002:a17:902:8d94:: with SMTP id v20mr4034604plo.99.1559232041637;
+        Thu, 30 May 2019 09:00:41 -0700 (PDT)
 Received: from aw-bldr-10.qualcomm.com (i-global254.qualcomm.com. [199.106.103.254])
-        by smtp.gmail.com with ESMTPSA id a69sm4022560pfa.81.2019.05.30.09.00.24
+        by smtp.gmail.com with ESMTPSA id k36sm3278390pjb.14.2019.05.30.09.00.39
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 30 May 2019 09:00:25 -0700 (PDT)
+        Thu, 30 May 2019 09:00:41 -0700 (PDT)
 From:   Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
 To:     robdclark@gmail.com, sean@poorly.run, airlied@linux.ie,
-        daniel@ffwll.ch, robh+dt@kernel.org, mark.rutland@arm.com
-Cc:     sibis@codeaurora.org, chandanu@codeaurora.org,
-        abhinavk@codeaurora.org, bjorn.andersson@linaro.org,
-        marc.w.gonzalez@free.fr, linux-arm-msm@vger.kernel.org,
-        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        daniel@ffwll.ch
+Cc:     robh+dt@kernel.org, mark.rutland@arm.com, sibis@codeaurora.org,
+        chandanu@codeaurora.org, abhinavk@codeaurora.org,
+        bjorn.andersson@linaro.org, marc.w.gonzalez@free.fr,
+        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org,
         Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
-Subject: [PATCH 1/4] dt-bindings: msm/dsi: Add 10nm phy for msm8998 compatible
-Date:   Thu, 30 May 2019 09:00:23 -0700
-Message-Id: <20190530160023.2773-1-jeffrey.l.hugo@gmail.com>
+Subject: [PATCH 2/4] drm/msm/dsi: Add support for MSM8998 10nm dsi phy
+Date:   Thu, 30 May 2019 09:00:39 -0700
+Message-Id: <20190530160039.2824-1-jeffrey.l.hugo@gmail.com>
 X-Mailer: git-send-email 2.17.1
 In-Reply-To: <20190530155909.2718-1-jeffrey.l.hugo@gmail.com>
 References: <20190530155909.2718-1-jeffrey.l.hugo@gmail.com>
@@ -64,27 +65,67 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The DSI phy on MSM8998 is a 10nm design like SDM845, however it has some
-slightly different quirks which need to be handled by drivers.  Provide
-a separate compatible to assist in handling the specifics.
+The MSM8998 dsi phy is 10nm v3.0.0 like SDM845, however there appear to
+be minor differences such as the address space location.
 
 Signed-off-by: Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
 ---
- Documentation/devicetree/bindings/display/msm/dsi.txt | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/gpu/drm/msm/dsi/phy/dsi_phy.c      |  2 ++
+ drivers/gpu/drm/msm/dsi/phy/dsi_phy.h      |  1 +
+ drivers/gpu/drm/msm/dsi/phy/dsi_phy_10nm.c | 18 ++++++++++++++++++
+ 3 files changed, 21 insertions(+)
 
-diff --git a/Documentation/devicetree/bindings/display/msm/dsi.txt b/Documentation/devicetree/bindings/display/msm/dsi.txt
-index 9ae946942720..af95586c898f 100644
---- a/Documentation/devicetree/bindings/display/msm/dsi.txt
-+++ b/Documentation/devicetree/bindings/display/msm/dsi.txt
-@@ -88,6 +88,7 @@ Required properties:
-   * "qcom,dsi-phy-28nm-8960"
-   * "qcom,dsi-phy-14nm"
-   * "qcom,dsi-phy-10nm"
-+  * "qcom,dsi-phy-10nm-8998"
- - reg: Physical base address and length of the registers of PLL, PHY. Some
-   revisions require the PHY regulator base address, whereas others require the
-   PHY lane base address. See below for each PHY revision.
+diff --git a/drivers/gpu/drm/msm/dsi/phy/dsi_phy.c b/drivers/gpu/drm/msm/dsi/phy/dsi_phy.c
+index 1760483b247e..fda73749fcc0 100644
+--- a/drivers/gpu/drm/msm/dsi/phy/dsi_phy.c
++++ b/drivers/gpu/drm/msm/dsi/phy/dsi_phy.c
+@@ -507,6 +507,8 @@ static const struct of_device_id dsi_phy_dt_match[] = {
+ #ifdef CONFIG_DRM_MSM_DSI_10NM_PHY
+ 	{ .compatible = "qcom,dsi-phy-10nm",
+ 	  .data = &dsi_phy_10nm_cfgs },
++	{ .compatible = "qcom,dsi-phy-10nm-8998",
++	  .data = &dsi_phy_10nm_8998_cfgs },
+ #endif
+ 	{}
+ };
+diff --git a/drivers/gpu/drm/msm/dsi/phy/dsi_phy.h b/drivers/gpu/drm/msm/dsi/phy/dsi_phy.h
+index a24ab80994a3..7161beb23b03 100644
+--- a/drivers/gpu/drm/msm/dsi/phy/dsi_phy.h
++++ b/drivers/gpu/drm/msm/dsi/phy/dsi_phy.h
+@@ -49,6 +49,7 @@ extern const struct msm_dsi_phy_cfg dsi_phy_20nm_cfgs;
+ extern const struct msm_dsi_phy_cfg dsi_phy_28nm_8960_cfgs;
+ extern const struct msm_dsi_phy_cfg dsi_phy_14nm_cfgs;
+ extern const struct msm_dsi_phy_cfg dsi_phy_10nm_cfgs;
++extern const struct msm_dsi_phy_cfg dsi_phy_10nm_8998_cfgs;
+ 
+ struct msm_dsi_dphy_timing {
+ 	u32 clk_pre;
+diff --git a/drivers/gpu/drm/msm/dsi/phy/dsi_phy_10nm.c b/drivers/gpu/drm/msm/dsi/phy/dsi_phy_10nm.c
+index 44959e79ce28..b1e7dbc69fa6 100644
+--- a/drivers/gpu/drm/msm/dsi/phy/dsi_phy_10nm.c
++++ b/drivers/gpu/drm/msm/dsi/phy/dsi_phy_10nm.c
+@@ -221,3 +221,21 @@ const struct msm_dsi_phy_cfg dsi_phy_10nm_cfgs = {
+ 	.io_start = { 0xae94400, 0xae96400 },
+ 	.num_dsi_phy = 2,
+ };
++
++const struct msm_dsi_phy_cfg dsi_phy_10nm_8998_cfgs = {
++	.type = MSM_DSI_PHY_10NM,
++	.src_pll_truthtable = { {false, false}, {true, false} },
++	.reg_cfg = {
++		.num = 1,
++		.regs = {
++			{"vdds", 36000, 32},
++		},
++	},
++	.ops = {
++		.enable = dsi_10nm_phy_enable,
++		.disable = dsi_10nm_phy_disable,
++		.init = dsi_10nm_phy_init,
++	},
++	.io_start = { 0xc994400, 0xc996400 },
++	.num_dsi_phy = 2,
++};
 -- 
 2.17.1
 
