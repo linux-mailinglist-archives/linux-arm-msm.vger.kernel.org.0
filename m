@@ -2,27 +2,27 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id B89AA2F0F3
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 30 May 2019 06:09:14 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D4ACF2EF4D
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 30 May 2019 05:54:36 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729537AbfE3DRP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 29 May 2019 23:17:15 -0400
-Received: from mail.kernel.org ([198.145.29.99]:45326 "EHLO mail.kernel.org"
+        id S1730754AbfE3DTU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 29 May 2019 23:19:20 -0400
+Received: from mail.kernel.org ([198.145.29.99]:54702 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1730972AbfE3DRN (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 29 May 2019 23:17:13 -0400
+        id S1731861AbfE3DTT (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 29 May 2019 23:19:19 -0400
 Received: from localhost (ip67-88-213-2.z213-88-67.customer.algx.net [67.88.213.2])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 7035124692;
-        Thu, 30 May 2019 03:17:13 +0000 (UTC)
+        by mail.kernel.org (Postfix) with ESMTPSA id ED14F2485E;
+        Thu, 30 May 2019 03:19:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1559186233;
-        bh=72OU6/E9r+R3S7kGaNCtbOCaNYutmfAb+PEzWF0SBPU=;
+        s=default; t=1559186359;
+        bh=dBdt0Mj0rKev0+tWtSjsaimFMylCqUd3zYLueb9grdo=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=1lTsoB/B32VQbatIQ88quU6ft530uisTiWNcB0mjtaPYBmWzVAedfw9UE3f2CSCbo
-         sVN67yJMVlWsyh5uN4sxgf5i8ZyQ0uYwmW+IESk3iJYADQPKa/SM7BCrZ4B+wO1Z73
-         vQsm6OvhpsHykgKtHASvYTfF0bNlI/TY/NKPOOvY=
+        b=g91ZQEXMOyXMo/Hu+g8ezBFkatSC9J/HiHh/F9g8iLA6s2qhPoCoOZe3bd+rF3Ly2
+         oIsGgCBfIxautH/ZqFx/XNPNNNmcaaMzJJnDEKo1L0wdjyH/bLM13u8Qsb7qd/+wQD
+         sRzGurLO+7LXlXT2186Z1/cIjJ4AZimmFuDL7rhU=
 From:   Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To:     linux-kernel@vger.kernel.org
 Cc:     Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -38,12 +38,12 @@ Cc:     Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
         freedreno@lists.freedesktop.org,
         Rob Clark <robdclark@chromium.org>,
         Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 140/276] drm/msm: a5xx: fix possible object reference leak
-Date:   Wed, 29 May 2019 20:04:58 -0700
-Message-Id: <20190530030534.446007552@linuxfoundation.org>
+Subject: [PATCH 4.14 103/193] drm/msm: a5xx: fix possible object reference leak
+Date:   Wed, 29 May 2019 20:05:57 -0700
+Message-Id: <20190530030503.211447709@linuxfoundation.org>
 X-Mailer: git-send-email 2.21.0
-In-Reply-To: <20190530030523.133519668@linuxfoundation.org>
-References: <20190530030523.133519668@linuxfoundation.org>
+In-Reply-To: <20190530030446.953835040@linuxfoundation.org>
+References: <20190530030446.953835040@linuxfoundation.org>
 User-Agent: quilt/0.66
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
@@ -89,19 +89,19 @@ Signed-off-by: Sasha Levin <sashal@kernel.org>
  1 file changed, 6 insertions(+), 4 deletions(-)
 
 diff --git a/drivers/gpu/drm/msm/adreno/a5xx_gpu.c b/drivers/gpu/drm/msm/adreno/a5xx_gpu.c
-index ab1d9308c3114..ba6f3c14495c0 100644
+index 17c59d839e6fa..f1aaa76cc2e4e 100644
 --- a/drivers/gpu/drm/msm/adreno/a5xx_gpu.c
 +++ b/drivers/gpu/drm/msm/adreno/a5xx_gpu.c
-@@ -35,7 +35,7 @@ static int zap_shader_load_mdt(struct msm_gpu *gpu, const char *fwname)
+@@ -29,7 +29,7 @@ static void a5xx_dump(struct msm_gpu *gpu);
+ static int zap_shader_load_mdt(struct device *dev, const char *fwname)
  {
- 	struct device *dev = &gpu->pdev->dev;
  	const struct firmware *fw;
 -	struct device_node *np;
 +	struct device_node *np, *mem_np;
  	struct resource r;
  	phys_addr_t mem_phys;
  	ssize_t mem_size;
-@@ -49,11 +49,13 @@ static int zap_shader_load_mdt(struct msm_gpu *gpu, const char *fwname)
+@@ -43,11 +43,13 @@ static int zap_shader_load_mdt(struct device *dev, const char *fwname)
  	if (!np)
  		return -ENODEV;
  
