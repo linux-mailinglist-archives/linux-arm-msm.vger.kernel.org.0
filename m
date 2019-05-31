@@ -2,157 +2,115 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id B9109314EB
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 31 May 2019 20:50:26 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 968093152C
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 31 May 2019 21:19:46 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727038AbfEaSuZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 31 May 2019 14:50:25 -0400
-Received: from mail-ed1-f68.google.com ([209.85.208.68]:39516 "EHLO
-        mail-ed1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726589AbfEaSuZ (ORCPT
+        id S1727191AbfEaTTg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 31 May 2019 15:19:36 -0400
+Received: from mail-qt1-f193.google.com ([209.85.160.193]:35042 "EHLO
+        mail-qt1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727147AbfEaTTg (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 31 May 2019 14:50:25 -0400
-Received: by mail-ed1-f68.google.com with SMTP id e24so15950056edq.6;
-        Fri, 31 May 2019 11:50:24 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=9F1WuqVm5Nwgt2J2M3yybMSAaWZKrJwC/jdTGtkMibQ=;
-        b=i/FN5emthvipoIzFp3zGS9/f6xBcQBDTkQ7GC/lmQe0TwDLTHCS3IgiVtCQRBB44uB
-         6WEp7SwcJyAqdjMEYkv19i0jR/gVwbKMEhj2oMHnhpkKRJZ5d0RmumzwB+qOHE1anNKc
-         0EoAj2WEuDVIMfXdkxJ3IGB25hWm23hdRd/FWTJFpXyho+ouicbkZl4TX2nNirMfcJ64
-         mai4mjwMYtQ6nXS7rThoZY8t1lc4IYhFlbouzCfip/E3hE+7kuTzGaxnhDM8chWESfLK
-         33z4dteGs8q9xfQWTk8CUAzFuf3deuNaSOza9pxhkogn2H2EOi/hLl8Wobn2pzywPjxr
-         xrfA==
+        Fri, 31 May 2019 15:19:36 -0400
+Received: by mail-qt1-f193.google.com with SMTP id d23so2279847qto.2;
+        Fri, 31 May 2019 12:19:35 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=9F1WuqVm5Nwgt2J2M3yybMSAaWZKrJwC/jdTGtkMibQ=;
-        b=RJh9o9MV3rfUIu2h0nNdDOZO7JgeoBidWqeCXH2hBCsyCG4sT5Nzzp02lsTwg7foHL
-         KMWkn4jflkC9Mr8bXkiAEpfXFMkEtuyZpxSKJFBlLIw42tXUsFD1kmSu5J7dh/pJ8+/o
-         xdTS5Y5+xAsX7G6NkAQnrW5ZursvoJHYsoQQxZiOBu2uvev8WTC4aKU2+L5bO9UFulVF
-         C8xK9fg64X0bH5uVNnYBH9Uo98aNcfaNZS5WcjNCM5YKuQyQl1aIdzrp//203hLrl+A1
-         nW2Lr/LZynjGC2leScEOfllBMCC0gl/714+Whrk2LLmIb5/wPr1JegbYfn/Y75XIMHP5
-         xBCw==
-X-Gm-Message-State: APjAAAV9qePpBsgcZ85CQrMQ3SRfxN4NdRgWVxN/wD9qBFo7kOdG9BmA
-        xlVW3wpuWnjza1cZGn0IRtLQ/hNpCccKYzTwXQpyQhWp
-X-Google-Smtp-Source: APXvYqzPMqyWQ+/oc5RiQ0JtssEbM6wdvalwO7IL3dmiggPgXl4aCaKyvkmw+wPethuMjUFG0dLNSwtXsRd8qIV8JHw=
-X-Received: by 2002:a50:bc15:: with SMTP id j21mr13082718edh.163.1559328623286;
- Fri, 31 May 2019 11:50:23 -0700 (PDT)
+        bh=ZasN1uMb6LWNr3Bdl17/Az/Guny0XVTL4T4x9/AydIU=;
+        b=UM7nM38a4xI4mDFTwnvkJ5uHeKUmW5NKf3JRUxdTvVLKyk3lfgeHGBlEUqaNm+x6op
+         udiG16NB4a4/8mD1sYtFKZj/e7GY+WmzrZiVg4lYlWN6zFfd09RrCx+R5Nje6ghN1QRn
+         yzoAa+Wq1me6pdGv2h8OPve/9ubJP1LKN1/8Mou1YDKNckcjjPjTsoeez9gkCeLQg5Wu
+         IHlT2IDcB04iwimQNvzsqyVAMTK4lyHaW4eeBLEAETEPKj/W/hbbXZWcwrRlmPgg1b0k
+         9uYspbGfFV+zqceCU0Yq1ECpOIInlGicyj+yOgHlAgwNQQVz0hsmVsYOjC/Xwp5HwSke
+         o2uQ==
+X-Gm-Message-State: APjAAAVtt06/JdcWU2abaK4ocDsg948NoQUaRlUX/fjoihElVyrWttft
+        UV8Bh8u5tk7Ns+rvlNcoBA579DL7o8wLYjIN204=
+X-Google-Smtp-Source: APXvYqwTzyt4WCkVVX3Qulyt1v2QQMhca2JE7R2nPL+bbYIIgogHgkLIhe92uxEulcPWL7paeV3/6XiyNu5oc8Epn44=
+X-Received: by 2002:aed:3e7c:: with SMTP id m57mr5706705qtf.204.1559330374999;
+ Fri, 31 May 2019 12:19:34 -0700 (PDT)
 MIME-Version: 1.0
-References: <20190314002027.7833-1-helen.koike@collabora.com>
- <20190314002027.7833-4-helen.koike@collabora.com> <c591d04c-a7f8-f64b-aff9-4a79b61356e7@koikeco.de>
-In-Reply-To: <c591d04c-a7f8-f64b-aff9-4a79b61356e7@koikeco.de>
-From:   Rob Clark <robdclark@gmail.com>
-Date:   Fri, 31 May 2019 11:50:09 -0700
-Message-ID: <CAF6AEGsRzgqNPPuNTopiqXWXQ8GLd1Zi2DsWZFQQ5PuCsDnmBA@mail.gmail.com>
-Subject: Re: [PATCH v3 3/5] drm/msm: fix fb references in async update
-To:     Helen Koike <helen@koikeco.de>
-Cc:     Helen Koike <helen.koike@collabora.com>,
-        dri-devel <dri-devel@lists.freedesktop.org>,
-        nicholas.kazlauskas@amd.com,
-        "Grodzovsky, Andrey" <andrey.grodzovsky@amd.com>,
-        Daniel Vetter <daniel.vetter@ffwll.ch>,
+References: <20190531035348.7194-1-elder@linaro.org> <e75cd1c111233fdc05f47017046a6b0f0c97673a.camel@redhat.com>
+ <065c95a8-7b17-495d-f225-36c46faccdd7@linaro.org>
+In-Reply-To: <065c95a8-7b17-495d-f225-36c46faccdd7@linaro.org>
+From:   Arnd Bergmann <arnd@arndb.de>
+Date:   Fri, 31 May 2019 21:19:18 +0200
+Message-ID: <CAK8P3a05CevRBV3ym+pnKmxv+A0_T+AtURW2L4doPAFzu3QcJw@mail.gmail.com>
+Subject: Re: [PATCH v2 00/17] net: introduce Qualcomm IPA driver
+To:     Alex Elder <elder@linaro.org>
+Cc:     Dan Williams <dcbw@redhat.com>, David Miller <davem@davemloft.net>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Ilias Apalodimas <ilias.apalodimas@linaro.org>,
+        evgreen@chromium.org, Ben Chan <benchan@google.com>,
+        Eric Caruso <ejcaruso@google.com>, cpratapa@codeaurora.org,
+        syadagir@codeaurora.org,
+        Subash Abhinov Kasiviswanathan <subashab@codeaurora.org>,
+        abhishek.esse@gmail.com, Networking <netdev@vger.kernel.org>,
+        DTML <devicetree@vger.kernel.org>,
         Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-        Tomasz Figa <tfiga@chromium.org>,
-        Boris Brezillon <boris.brezillon@collabora.com>,
-        David Airlie <airlied@linux.ie>,
-        Sean Paul <seanpaul@google.com>, kernel@collabora.com,
-        Harry Wentland <harry.wentland@amd.com>,
-        =?UTF-8?Q?St=C3=A9phane_Marchesin?= <marcheu@google.com>,
-        stable <stable@vger.kernel.org>, Sean Paul <sean@poorly.run>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        =?UTF-8?B?VmlsbGUgU3lyasOkbMOk?= <ville.syrjala@linux.intel.com>,
-        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
-        freedreno <freedreno@lists.freedesktop.org>,
-        Mamta Shukla <mamtashukla555@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>
+        linux-soc@vger.kernel.org,
+        Linux ARM <linux-arm-kernel@lists.infradead.org>,
+        linux-arm-msm@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, May 31, 2019 at 10:54 AM Helen Koike <helen@koikeco.de> wrote:
->
-> Hello,
->
-> On 3/13/19 9:20 PM, Helen Koike wrote:
-> > Async update callbacks are expected to set the old_fb in the new_state
-> > so prepare/cleanup framebuffers are balanced.
+On Fri, May 31, 2019 at 6:36 PM Alex Elder <elder@linaro.org> wrote:
+> On 5/31/19 9:58 AM, Dan Williams wrote:
+> > On Thu, 2019-05-30 at 22:53 -0500, Alex Elder wrote:
 > >
-> > Cc: <stable@vger.kernel.org> # v4.14+
-> > Fixes: 224a4c970987 ("drm/msm: update cursors asynchronously through atomic")
-> > Suggested-by: Boris Brezillon <boris.brezillon@collabora.com>
-> > Signed-off-by: Helen Koike <helen.koike@collabora.com>
+> > My question from the Nov 2018 IPA rmnet driver still stands; how does
+> > this relate to net/ethernet/qualcomm/rmnet/ if at all? And if this is
+> > really just a netdev talking to the IPA itself and unrelated to
+> > net/ethernet/qualcomm/rmnet, let's call it "ipa%d" and stop cargo-
+> > culting rmnet around just because it happens to be a net driver for a
+> > QC SoC.
+>
+> First, the relationship between the IPA driver and the rmnet driver
+> is that the IPA driver is assumed to sit between the rmnet driver
+> and the hardware.
 
-Thanks, I'm not super happy about the refcnt'ing subtleness here
-(mostly because it makes it harder to page in how things work on
-kernel/display side after spending most of my time in userspace/mesa),
-but I don't want to hold this up..
+Does this mean that IPA can only be used to back rmnet, and rmnet
+can only be used on top of IPA, or can or both of them be combined
+with another driver to talk to instead?
 
-Acked-by: Rob Clark <robdclark@gmail.com>
+> Currently the modem is assumed to use QMAP protocol.  This means
+> each packet is prefixed by a (struct rmnet_map_header) structure
+> that allows the IPA connection to be multiplexed for several logical
+> connections.  The rmnet driver parses such messages and implements
+> the multiplexed network interfaces.
+>
+> QMAP protocol can also be used for aggregating many small packets
+> into a larger message.  The rmnet driver implements de-aggregation
+> of such messages (and could probably aggregate them for TX as well).
+>
+> Finally, the IPA can support checksum offload, and the rmnet
+> driver handles providing a prepended header (for TX) and
+> interpreting the appended trailer (for RX) if these features
+> are enabled.
+>
+> So basically, the purpose of the rmnet driver is to handle QMAP
+> protocol connections, and right now that's what the modem provides.
 
-> >
-> > ---
-> > Hello,
-> >
-> > As mentioned in the cover letter,
-> > But I couldn't test on MSM because I don't have the hardware and I would
-> > appreciate if anyone could test it.
->
-> I got this tested on a dragonboard 410c, no regressions where found and
-> no extra warnings.
->
-> These two tests where already failing for other reasons:
-> flip-vs-cursor-crc-atomic
-> flip-vs-cursor-crc-legacy
->
-> If you want to see the full log:
->
-> https://people.collabora.com/~koike/drm-fixes-results.zip
->
-> Thanks
-> Helen
->
-> >
-> > In other platforms (VC4, AMD, Rockchip), there is a hidden
-> > drm_framebuffer_get(new_fb)/drm_framebuffer_put(old_fb) in async_update
-> > that is wrong, but I couldn't identify those here, not sure if it is hidden
-> > somewhere else, but if tests fail this is probably the cause.
-> >
-> > Thanks!
-> > Helen
-> >
-> > Changes in v3: None
-> > Changes in v2:
-> > - update CC stable and Fixes tag
-> >
-> >  drivers/gpu/drm/msm/disp/mdp5/mdp5_plane.c | 4 ++++
-> >  1 file changed, 4 insertions(+)
-> >
-> > diff --git a/drivers/gpu/drm/msm/disp/mdp5/mdp5_plane.c b/drivers/gpu/drm/msm/disp/mdp5/mdp5_plane.c
-> > index be13140967b4..b854f471e9e5 100644
-> > --- a/drivers/gpu/drm/msm/disp/mdp5/mdp5_plane.c
-> > +++ b/drivers/gpu/drm/msm/disp/mdp5/mdp5_plane.c
-> > @@ -502,6 +502,8 @@ static int mdp5_plane_atomic_async_check(struct drm_plane *plane,
-> >  static void mdp5_plane_atomic_async_update(struct drm_plane *plane,
-> >                                          struct drm_plane_state *new_state)
-> >  {
-> > +     struct drm_framebuffer *old_fb = plane->state->fb;
-> > +
-> >       plane->state->src_x = new_state->src_x;
-> >       plane->state->src_y = new_state->src_y;
-> >       plane->state->crtc_x = new_state->crtc_x;
-> > @@ -524,6 +526,8 @@ static void mdp5_plane_atomic_async_update(struct drm_plane *plane,
-> >
-> >       *to_mdp5_plane_state(plane->state) =
-> >               *to_mdp5_plane_state(new_state);
-> > +
-> > +     new_state->fb = old_fb;
-> >  }
-> >
-> >  static const struct drm_plane_helper_funcs mdp5_plane_helper_funcs = {
-> >
+Do you have any idea why this particular design was picked?
+
+My best guess is that it evolved organically with multiple
+generations of hardware and software, rather than being thought
+out as a nice abstraction layer. If the two are tightly connected,
+this might mean that what we actually want here is to reintegrate
+the two components into a single driver with a much simpler
+RX and TX path that handles the checksumming and aggregation
+of data packets directly as it passes them from the network
+stack into the hardware.
+
+Always passing data from one netdev to another both ways
+sounds like it introduces both direct CPU overhead, and
+problems with flow control when data gets buffered inbetween.
+The intermediate buffer here acts like a router that must
+pass data along or randomly drop packets when the consumer
+can't keep up with the producer.
+
+        Arnd
