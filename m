@@ -2,51 +2,55 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 32CD8316B4
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 31 May 2019 23:46:38 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 8FD82316C3
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 31 May 2019 23:50:08 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726428AbfEaVqh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 31 May 2019 17:46:37 -0400
-Received: from shards.monkeyblade.net ([23.128.96.9]:51068 "EHLO
+        id S1726520AbfEaVuH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 31 May 2019 17:50:07 -0400
+Received: from shards.monkeyblade.net ([23.128.96.9]:51114 "EHLO
         shards.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725934AbfEaVqh (ORCPT
+        with ESMTP id S1725913AbfEaVuH (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 31 May 2019 17:46:37 -0400
+        Fri, 31 May 2019 17:50:07 -0400
 Received: from localhost (unknown [IPv6:2601:601:9f80:35cd::3d5])
         (using TLSv1 with cipher AES256-SHA (256/256 bits))
         (Client did not present a certificate)
         (Authenticated sender: davem-davemloft)
-        by shards.monkeyblade.net (Postfix) with ESMTPSA id 991A615015E81;
-        Fri, 31 May 2019 14:46:36 -0700 (PDT)
-Date:   Fri, 31 May 2019 14:46:35 -0700 (PDT)
-Message-Id: <20190531.144635.1962054387021988238.davem@davemloft.net>
-To:     bjorn.andersson@linaro.org
-Cc:     aneela@codeaurora.org, clew@codeaurora.org, netdev@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH v2 2/5] net: qrtr: Implement outgoing flow control
+        by shards.monkeyblade.net (Postfix) with ESMTPSA id 2BEDE15015E90;
+        Fri, 31 May 2019 14:50:06 -0700 (PDT)
+Date:   Fri, 31 May 2019 14:50:05 -0700 (PDT)
+Message-Id: <20190531.145005.798440469894507477.davem@davemloft.net>
+To:     elder@linaro.org
+Cc:     arnd@arndb.de, bjorn.andersson@linaro.org,
+        ilias.apalodimas@linaro.org, evgreen@chromium.org,
+        benchan@google.com, ejcaruso@google.com, cpratapa@codeaurora.org,
+        syadagir@codeaurora.org, subashab@codeaurora.org,
+        abhishek.esse@gmail.com, netdev@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-soc@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+        linux-arm-msm@vger.kernel.org
+Subject: Re: [PATCH v2 03/17] soc: qcom: ipa: main code
 From:   David Miller <davem@davemloft.net>
-In-Reply-To: <20190531011753.11840-3-bjorn.andersson@linaro.org>
-References: <20190531011753.11840-1-bjorn.andersson@linaro.org>
-        <20190531011753.11840-3-bjorn.andersson@linaro.org>
+In-Reply-To: <20190531035348.7194-4-elder@linaro.org>
+References: <20190531035348.7194-1-elder@linaro.org>
+        <20190531035348.7194-4-elder@linaro.org>
 X-Mailer: Mew version 6.8 on Emacs 26.1
 Mime-Version: 1.0
 Content-Type: Text/Plain; charset=us-ascii
 Content-Transfer-Encoding: 7bit
-X-Greylist: Sender succeeded SMTP AUTH, not delayed by milter-greylist-4.5.12 (shards.monkeyblade.net [149.20.54.216]); Fri, 31 May 2019 14:46:36 -0700 (PDT)
+X-Greylist: Sender succeeded SMTP AUTH, not delayed by milter-greylist-4.5.12 (shards.monkeyblade.net [149.20.54.216]); Fri, 31 May 2019 14:50:06 -0700 (PDT)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Bjorn Andersson <bjorn.andersson@linaro.org>
-Date: Thu, 30 May 2019 18:17:50 -0700
+From: Alex Elder <elder@linaro.org>
+Date: Thu, 30 May 2019 22:53:34 -0500
 
-> +	flow = radix_tree_lookup(&node->qrtr_tx_flow, key);
-> +	if (flow)
-> +		atomic_set(&flow->pending, 0);
+> +	void *route_virt;
+ ...
+> +	void *filter_virt;
+ ...
 
-You can't just zero out an atomic counter without extra synchronization
-which protects you from the increment paths.
-
-And since you'll need a lock to cover all of those paths, you don't
-need to use an atomic_t and instead can use a plain integer.
+If these are arrays of u64's, please declare them as "u64 *" instead of
+the opaque "void *".
