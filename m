@@ -2,155 +2,94 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 891FE31722
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  1 Jun 2019 00:24:17 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 77B0F3172E
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  1 Jun 2019 00:26:05 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726446AbfEaWYQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 31 May 2019 18:24:16 -0400
-Received: from mail-ua1-f65.google.com ([209.85.222.65]:41432 "EHLO
-        mail-ua1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725913AbfEaWYQ (ORCPT
+        id S1726776AbfEaWZ6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 31 May 2019 18:25:58 -0400
+Received: from mail-it1-f193.google.com ([209.85.166.193]:55020 "EHLO
+        mail-it1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726747AbfEaWZ5 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 31 May 2019 18:24:16 -0400
-Received: by mail-ua1-f65.google.com with SMTP id n2so4428395uad.8
-        for <linux-arm-msm@vger.kernel.org>; Fri, 31 May 2019 15:24:15 -0700 (PDT)
+        Fri, 31 May 2019 18:25:57 -0400
+Received: by mail-it1-f193.google.com with SMTP id h20so18340907itk.4
+        for <linux-arm-msm@vger.kernel.org>; Fri, 31 May 2019 15:25:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=NQat/hmrJY1AaWIgT3mTRP/HxuxnRB68t461DgyKajk=;
-        b=aIKKW82dvdOzE+1wEmRt5/OwfwxeYiGLLG20GVyJdVys1rGKr/+ihpppzprb/QLFRA
-         CKos1Ee4G0Qz03wjNyxB/eB2jNB7FjGKMaAx9dfsX6Zdsu3o/y5JAI9PvBKgRa+xkyQP
-         eWD/nvaNTkLAYBd98lvZQunL1eNswJ832l2pY=
+        d=linaro.org; s=google;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=jNO29A3eBJvwf2Vu9Oyg5E4jjTlIZetGj3NF5CjfGMc=;
+        b=Hlmnc+h5861mci94IXNOb1Pm2K/0ArQ3l0KACnywjZOwv3P1ECcqa+VZ+zoiXhrRyS
+         91dnqz/NNnw7ufWxstEtybtxLBrHrKA/qei/0QaNIh1IkhzJieUH47QlzmN284PWCGCY
+         jBB2Kjbb4wm8ZhY0Id2+ri0jTqSC8oFOMEcSb8HPhHhPSyzRNIqNbWWQdVXlEkx5Kmt5
+         nfaKo/Pjvo5vRWZzmGTWg/0xjYkxDVKxCASO7ynAFxG/yE//lxPCl3OwMSB5dAZSVR81
+         YEKWnHi8tnyQec0gqdbuW4E0tHdQ+NkDo/eO0Ex4cHfU8SiCnN3IA0lXzzIqlU3lWNLr
+         /5gg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=NQat/hmrJY1AaWIgT3mTRP/HxuxnRB68t461DgyKajk=;
-        b=ZegJSj35PuZa2aGhsqzzSwus92E0yRw8rCS4reRGVN1SiRRPJtUm8DuMlHxUnjoeIp
-         XY+bgVq5hON6WLGPHkH6soqf5pzgdz6q+cXgew/iz6pUUGo50a1jKJ9K7Q75hIGFULs1
-         LLUj6pwD7c2MuJPRDxQzyRE89Q+TEOqR9UC0i9FsRhz25Z8tteqbJuoZoZfRm4E/ea78
-         GKjyhDNTDe+4Fwq2HW0ZJ38GM8lz8zRXM3jxbvyl2NXOHUOtCqOkaSZOYPAYDjw7bJkq
-         iac9sFEtXUqo1txjglHMWauHG1l/S1Ub1Q9q2dn+CQEximiF+A9l9chJi6EE6DdLqgY2
-         pO9A==
-X-Gm-Message-State: APjAAAXsSuwyV2FjIo3d7asMBZXTsdOsyk30hUh57vckwKZ2/SyDJvoI
-        xS02+D+fJ7pTyOSXco2qPNr7z686DeQ=
-X-Google-Smtp-Source: APXvYqxBv43JdPjvUcMj/+UFEQSgwAE44TuaHvn/M01X8luUOhtNwdyUyHt0yR8gZVull2bPTKbMxg==
-X-Received: by 2002:ab0:671a:: with SMTP id q26mr3928128uam.7.1559341455035;
-        Fri, 31 May 2019 15:24:15 -0700 (PDT)
-Received: from mail-vs1-f42.google.com (mail-vs1-f42.google.com. [209.85.217.42])
-        by smtp.gmail.com with ESMTPSA id n132sm7423921vke.18.2019.05.31.15.24.13
-        for <linux-arm-msm@vger.kernel.org>
-        (version=TLS1_3 cipher=AEAD-AES128-GCM-SHA256 bits=128/128);
-        Fri, 31 May 2019 15:24:13 -0700 (PDT)
-Received: by mail-vs1-f42.google.com with SMTP id o5so7728835vsq.4
-        for <linux-arm-msm@vger.kernel.org>; Fri, 31 May 2019 15:24:13 -0700 (PDT)
-X-Received: by 2002:a67:442:: with SMTP id 63mr2686288vse.111.1559341452918;
- Fri, 31 May 2019 15:24:12 -0700 (PDT)
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=jNO29A3eBJvwf2Vu9Oyg5E4jjTlIZetGj3NF5CjfGMc=;
+        b=L6IiL4ViAyUITsRwZLBatYDmGUOyulSbiFQPpMuwcRe/gm763SF4thnu/X6I1uReM7
+         sUVz6uA9DBeCru50rXZTwj5nkcyjjl/YLcty/s4w7ZlKaD4TVodmOQ4lehyUXF0MqJ5B
+         +R6SoYnEyphweKD64u21/uLjFWp4Ug7dkmHL7prLuRilxg5XiLiKYQOtonlqjMpZTiSZ
+         iULJCy0e7OKP5NhfQxUKERv8PswyGqaw55kNkpaIjVpW+Q4ewrwyl5kAInOS2DrzHneO
+         pdoBryuwyzpJYJZXWxcRzO4+O1goQ3FuJ3rwORLgJdHhrCrGZo6wsaPqOZK3zGbs2uct
+         2jTg==
+X-Gm-Message-State: APjAAAXQ5j8HSLdYfqMc3TI2Z/lJ89La4Mbb4cjKZo4m8ZZu5qSssvOT
+        6aA77TkCTwQxYGgl6tkwhcgWxlkDS0U=
+X-Google-Smtp-Source: APXvYqxn/8sjKyKDB1q/z3xyIFqbE0YwBOLGF5GhVsgmlK6s3ApK9hMQ4eWtlgBcJSrXjR9IMGygzA==
+X-Received: by 2002:a24:16c6:: with SMTP id a189mr8499974ita.179.1559341556857;
+        Fri, 31 May 2019 15:25:56 -0700 (PDT)
+Received: from [172.22.22.26] (c-71-195-29-92.hsd1.mn.comcast.net. [71.195.29.92])
+        by smtp.googlemail.com with ESMTPSA id 194sm3015704itm.40.2019.05.31.15.25.55
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Fri, 31 May 2019 15:25:56 -0700 (PDT)
+Subject: Re: [PATCH v2 03/17] soc: qcom: ipa: main code
+To:     David Miller <davem@davemloft.net>
+Cc:     arnd@arndb.de, bjorn.andersson@linaro.org,
+        ilias.apalodimas@linaro.org, evgreen@chromium.org,
+        benchan@google.com, ejcaruso@google.com, cpratapa@codeaurora.org,
+        syadagir@codeaurora.org, subashab@codeaurora.org,
+        abhishek.esse@gmail.com, netdev@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-soc@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+        linux-arm-msm@vger.kernel.org
+References: <20190531035348.7194-1-elder@linaro.org>
+ <20190531035348.7194-4-elder@linaro.org>
+ <20190531.145005.798440469894507477.davem@davemloft.net>
+From:   Alex Elder <elder@linaro.org>
+Message-ID: <8295f702-2c3f-1fa3-0a4e-ebb51d5b03ee@linaro.org>
+Date:   Fri, 31 May 2019 17:25:54 -0500
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+ Thunderbird/60.7.0
 MIME-Version: 1.0
-References: <20190531030057.18328-1-bjorn.andersson@linaro.org> <20190531030057.18328-3-bjorn.andersson@linaro.org>
-In-Reply-To: <20190531030057.18328-3-bjorn.andersson@linaro.org>
-From:   Doug Anderson <dianders@chromium.org>
-Date:   Fri, 31 May 2019 15:24:00 -0700
-X-Gmail-Original-Message-ID: <CAD=FV=V=_ozPiTvT-Fnrc1a+qfHYi3ynNn8cbw9ibqfKk7Am_w@mail.gmail.com>
-Message-ID: <CAD=FV=V=_ozPiTvT-Fnrc1a+qfHYi3ynNn8cbw9ibqfKk7Am_w@mail.gmail.com>
-Subject: Re: [PATCH v8 2/4] soc: qcom: Add AOSS QMP driver
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        David Brown <david.brown@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Mark Rutland <mark.rutland@arm.com>,
-        Arun Kumar Neelakantam <aneela@codeaurora.org>,
-        Vinod Koul <vkoul@kernel.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        devicetree@vger.kernel.org, LKML <linux-kernel@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+In-Reply-To: <20190531.145005.798440469894507477.davem@davemloft.net>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi,
+On 5/31/19 4:50 PM, David Miller wrote:
+> From: Alex Elder <elder@linaro.org>
+> Date: Thu, 30 May 2019 22:53:34 -0500
+> 
+>> +	void *route_virt;
+>  ...
+>> +	void *filter_virt;
+>  ...
+> 
+> If these are arrays of u64's, please declare them as "u64 *" instead of
+> the opaque "void *".
 
-On Thu, May 30, 2019 at 8:01 PM Bjorn Andersson
-<bjorn.andersson@linaro.org> wrote:
->
-> +/**
-> + * qmp_send() - send a message to the AOSS
-> + * @qmp: qmp context
-> + * @data: message to be sent
-> + * @len: length of the message
-> + *
-> + * Transmit @data to AOSS and wait for the AOSS to acknowledge the message.
-> + * @len must be a multiple of 4 and not longer than the mailbox size. Access is
-> + * synchronized by this implementation.
-> + *
-> + * Return: 0 on success, negative errno on failure
-> + */
-> +static int qmp_send(struct qmp *qmp, const void *data, size_t len)
-> +{
-> +       int ret;
-> +
-> +       if (WARN_ON(len + sizeof(u32) > qmp->size))
-> +               return -EINVAL;
-> +
-> +       if (WARN_ON(len % sizeof(u32)))
-> +               return -EINVAL;
-> +
-> +       mutex_lock(&qmp->tx_lock);
-> +
-> +       /* The message RAM only implements 32-bit accesses */
-> +       __iowrite32_copy(qmp->msgram + qmp->offset + sizeof(u32),
-> +                        data, len / sizeof(u32));
-> +       writel(len, qmp->msgram + qmp->offset);
-> +       qmp_kick(qmp);
-> +
-> +       ret = wait_event_interruptible_timeout(qmp->event,
-> +                                              qmp_message_empty(qmp), HZ);
-> +       if (!ret) {
-> +               dev_err(qmp->dev, "ucore did not ack channel\n");
-> +               ret = -ETIMEDOUT;
-> +
-> +               /* Clear message from buffer */
-> +               writel(0, qmp->msgram + qmp->offset);
-> +       } else {
-> +               ret = 0;
-> +       }
+Good idea.  I hadn't paid attention to that.  These tables are
+arrays of 64-bit addresses so it's better to represent them that
+way.
 
-Just like Vinod said in in v7, the "ret = 0" is redundant.
+Thanks.
 
-
-> +static int qmp_qdss_clk_add(struct qmp *qmp)
-> +{
-> +       struct clk_init_data qdss_init = {
-> +               .ops = &qmp_qdss_clk_ops,
-> +               .name = "qdss",
-> +       };
-
-As I mentioned in v7, there is no downside in marking qdss_init as
-"static const" and it avoids the compiler inserting a memcpy() to get
-this data on the stack.  Using static const also reduces your stack
-usage.
-
-
-> +       int ret;
-> +
-> +       qmp->qdss_clk.init = &qdss_init;
-> +       ret = clk_hw_register(qmp->dev, &qmp->qdss_clk);
-> +       if (ret < 0) {
-> +               dev_err(qmp->dev, "failed to register qdss clock\n");
-> +               return ret;
-> +       }
-> +
-> +       ret = of_clk_add_hw_provider(qmp->dev->of_node, of_clk_hw_simple_get,
-> +                                    &qmp->qdss_clk);
-
-I still prefer to devm-ify the whole driver, using
-devm_add_action_or_reset() to handle things where there is no devm.
-...but I won't insist.
-
-
-Above things are just nits and I won't insist.  They also could be
-addressed in follow-up patches.  Thus:
-
-Reviewed-by: Douglas Anderson <dianders@chromium.org>
+					-Alex
