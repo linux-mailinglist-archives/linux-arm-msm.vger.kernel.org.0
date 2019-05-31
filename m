@@ -2,99 +2,193 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 33825306C2
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 31 May 2019 05:01:03 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 8346C306C5
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 31 May 2019 05:01:27 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726667AbfEaDBC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 30 May 2019 23:01:02 -0400
-Received: from mail-pg1-f195.google.com ([209.85.215.195]:33463 "EHLO
-        mail-pg1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726649AbfEaDBC (ORCPT
+        id S1726719AbfEaDBE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 30 May 2019 23:01:04 -0400
+Received: from mail-pg1-f193.google.com ([209.85.215.193]:36751 "EHLO
+        mail-pg1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726715AbfEaDBD (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 30 May 2019 23:01:02 -0400
-Received: by mail-pg1-f195.google.com with SMTP id h17so3187044pgv.0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 30 May 2019 20:01:01 -0700 (PDT)
+        Thu, 30 May 2019 23:01:03 -0400
+Received: by mail-pg1-f193.google.com with SMTP id a3so3175134pgb.3
+        for <linux-arm-msm@vger.kernel.org>; Thu, 30 May 2019 20:01:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id;
-        bh=9DXOFODBqmIato1G6sUFuAMjaJ7HfVcF5OL98ROBWB0=;
-        b=yc4Wu0e7nn+b+z4wwDSsnR/SHWgh+XCFyN/oln/5lzBH41crQS7uiJhep0iOWwjXGp
-         p7OKXuFybH2ZNLRvzZj7ULC7XoWg0RSxHju/Vek7wKiKG6rIhcm1tdNQzuZjFrQ64b5E
-         6JogTE22Egfqqjh6YygMtEZ/+cxfxSiI1jxCKR43a7riQE8exXu/X8+XHgWllL6zEAl3
-         hq+Od2DB5wAqvkGm7iJDl1ZQrGtcyGFdiAQEYbXa5nYLoW8OCkJ1hhs56nJkm6gnRxGo
-         2HrVcLTvg2CwF5iny8LKVaEIbkYluuNeaTd34paQZSE28I40vDZdoaPaPYPAY9sBgrjp
-         0Yng==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=JAKPz5HiR/M9MZ5W/93Y/2txxEly1u4ytdsXz4IxAZM=;
+        b=PtlXPcbo4dDcpE3ipqToSLUoiilw4pslHUCPpdqU/uIDE7SUrNvYRFtCTnOlm2fXY0
+         BShSdoX0WGnvbEaKEqfwcb4pe1BxeQ26RXIFoCw+BW6J6AZjSZytxIZhJUt5VjO3sRGB
+         j5oVWGZ2grZPKi0Fgg8fXd8HqsnrI/n/muxZ1oltqKE2YP4r8B1ZzPUkbdDp4hSSF4WQ
+         1XKLSeWq8fAeEJFzSCGTqND1dT8a6TuRI79Y8wprv+O3wfRnvh7qes5T+YsbeLz22sTd
+         JXKlvtHx4/DknPQmlq7f3Vx52sxO3IAR0RDFCRKGrWSR5/2WoR9vAOAyTLJNVPkCNtlT
+         fsbw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id;
-        bh=9DXOFODBqmIato1G6sUFuAMjaJ7HfVcF5OL98ROBWB0=;
-        b=mIgT7ND4HaSewZQW2a4VfJolZ/HQOymu6hzGc0Fma8EPVD3nkDKbHr9kMVCAgG2hC2
-         AlSZOQKVuBJTyS15mtiPhBOg/2h9B8+h5OA9B59wiWt1vC2/GR3JHYJO/2y274vzq1sx
-         NpCf1FLBGTfuPsy3HfU/UxQwfOaBj1x0UdaggKiK/dPRTkAZ8hr6/J4TQM9s9Wc+YSgb
-         UrD8+LyL2I3Kf634i2nA98JYB/4PXrHkgX89jGzZhe59SkhiJk4JAGn4n1fufUlKBHBo
-         2m0zNji8Vkq0OQ/iKpOEQDTpPpz9rGV+koX2bPhttLqJuIg2P+/kBp4juZ+bfbb5zO/R
-         4P7g==
-X-Gm-Message-State: APjAAAURVnctab2LLfU6+F72JgcKNnmpw43v6KQw2HTNdedDT5KYZBX8
-        tI9rcqP89xCJXJe3aEwp11h/jA==
-X-Google-Smtp-Source: APXvYqxaMcySQg8PkW0Fh852AHXFzEMJZ1N/GTFlK0FWFL3OYC+XaIjOoLjttxL5urryeajcR0DCYg==
-X-Received: by 2002:a17:90a:f488:: with SMTP id bx8mr6801107pjb.62.1559271661246;
-        Thu, 30 May 2019 20:01:01 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references;
+        bh=JAKPz5HiR/M9MZ5W/93Y/2txxEly1u4ytdsXz4IxAZM=;
+        b=G7GrF7nniPEUiKJlUiUvgVR8TXqdfYeGDP0boz1rHnTw/PdSJkv+tWPxbKml+fooOJ
+         i6nvY9NH33IEAxDuA9fQ/0adElJr2VOM2senpd5VDJg/+xft3hEDq/4qOfOQ6+z25bBh
+         tmCDKnNLjakLi5tTxd1bDxVmsoNg4apKlf+zuDU/GqJNPnw7+1UGk4Pc8WmYy2xCbUDB
+         Hng1V8+qixLKsoy7DUJvK+WUS7WlWMG1ULz5ph6h8QaRjDv/A9N7TH5/O5p5hAhKSUgH
+         MeWS3Y7V7hNGv5t3zF3LI0Z80BbD/MYrYB37zRzbiikxwoMp3aqaKAgv+lLqVnT0LLEV
+         Kdfg==
+X-Gm-Message-State: APjAAAUf7XeO4xgPw9tV/8uakWKAwKKgMTYLtGIIOwAxUyxtpWUGn7M7
+        EBJXXHG8bUpdeO8I4B5+4bVYnA==
+X-Google-Smtp-Source: APXvYqwrGyHTCH17O/nwl7MWLe1y4Oxo9vddlZfVF9wdT/6qMhZs33fSBtqL8w9g2aIpoxN6vjZpXA==
+X-Received: by 2002:a17:90a:9b8b:: with SMTP id g11mr6297449pjp.103.1559271662688;
+        Thu, 30 May 2019 20:01:02 -0700 (PDT)
 Received: from localhost.localdomain (104-188-17-28.lightspeed.sndgca.sbcglobal.net. [104.188.17.28])
-        by smtp.gmail.com with ESMTPSA id m8sm6991549pff.137.2019.05.30.20.01.00
+        by smtp.gmail.com with ESMTPSA id m8sm6991549pff.137.2019.05.30.20.01.01
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 30 May 2019 20:01:00 -0700 (PDT)
+        Thu, 30 May 2019 20:01:01 -0700 (PDT)
 From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        David Brown <david.brown@linaro.org>,
+To:     Andy Gross <agross@kernel.org>
+Cc:     David Brown <david.brown@linaro.org>,
         Rob Herring <robh+dt@kernel.org>,
         Mark Rutland <mark.rutland@arm.com>,
         Doug Anderson <dianders@chromium.org>,
         Arun Kumar Neelakantam <aneela@codeaurora.org>,
         Vinod Koul <vkoul@kernel.org>, linux-arm-msm@vger.kernel.org,
         devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: [PATCH v8 0/4] Qualcomm AOSS QMP driver
-Date:   Thu, 30 May 2019 20:00:53 -0700
-Message-Id: <20190531030057.18328-1-bjorn.andersson@linaro.org>
+Subject: [PATCH v8 1/4] dt-bindings: soc: qcom: Add AOSS QMP binding
+Date:   Thu, 30 May 2019 20:00:54 -0700
+Message-Id: <20190531030057.18328-2-bjorn.andersson@linaro.org>
 X-Mailer: git-send-email 2.18.0
-To:     unlisted-recipients:; (no To-header on input)
+In-Reply-To: <20190531030057.18328-1-bjorn.andersson@linaro.org>
+References: <20190531030057.18328-1-bjorn.andersson@linaro.org>
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Introduce a driver implementing Qualcomm Messaging Protocol (QMP) to
-communicate with the Always On Subsystem (AOSS) and expose the low-power
-states for the remoteprocs as a set of power-domains and the QDSS clock
-as a clock.
+Add binding for the QMP based side-channel communication mechanism to
+the AOSS, which is used to control resources not exposed through the
+RPMh interface.
+
+Reviewed-by: Rob Herring <robh@kernel.org>
+Reviewed-by: Vinod Koul <vkoul@kernel.org>
+Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+---
 
 Changes since v7:
-- Minor tweaks code style tweaks and error handling
+- Fix spelling of "Messaging"
 
-Changes since v6:
-- First couple of patches merged for v5.2
-- Squashed the qmp and qmp-pd driver into one and by that moved it all
-  to one file
-- Expose QDSS clock as a clock instead of a power domain
-
-Bjorn Andersson (3):
-  dt-bindings: soc: qcom: Add AOSS QMP binding
-  soc: qcom: Add AOSS QMP driver
-  arm64: dts: qcom: Add AOSS QMP node
-
-Sibi Sankar (1):
-  arm64: dts: qcom: sdm845: Add Q6V5 MSS node
-
- .../bindings/soc/qcom/qcom,aoss-qmp.txt       |  81 +++
- arch/arm64/boot/dts/qcom/sdm845.dtsi          |  68 +++
- drivers/soc/qcom/Kconfig                      |  12 +
- drivers/soc/qcom/Makefile                     |   1 +
- drivers/soc/qcom/qcom_aoss.c                  | 479 ++++++++++++++++++
- include/dt-bindings/power/qcom-aoss-qmp.h     |  14 +
- 6 files changed, 655 insertions(+)
+ .../bindings/soc/qcom/qcom,aoss-qmp.txt       | 81 +++++++++++++++++++
+ include/dt-bindings/power/qcom-aoss-qmp.h     | 14 ++++
+ 2 files changed, 95 insertions(+)
  create mode 100644 Documentation/devicetree/bindings/soc/qcom/qcom,aoss-qmp.txt
- create mode 100644 drivers/soc/qcom/qcom_aoss.c
  create mode 100644 include/dt-bindings/power/qcom-aoss-qmp.h
 
+diff --git a/Documentation/devicetree/bindings/soc/qcom/qcom,aoss-qmp.txt b/Documentation/devicetree/bindings/soc/qcom/qcom,aoss-qmp.txt
+new file mode 100644
+index 000000000000..954ffee0a9c4
+--- /dev/null
++++ b/Documentation/devicetree/bindings/soc/qcom/qcom,aoss-qmp.txt
+@@ -0,0 +1,81 @@
++Qualcomm Always-On Subsystem side channel binding
++
++This binding describes the hardware component responsible for side channel
++requests to the always-on subsystem (AOSS), used for certain power management
++requests that is not handled by the standard RPMh interface. Each client in the
++SoC has it's own block of message RAM and IRQ for communication with the AOSS.
++The protocol used to communicate in the message RAM is known as Qualcomm
++Messaging Protocol (QMP)
++
++The AOSS side channel exposes control over a set of resources, used to control
++a set of debug related clocks and to affect the low power state of resources
++related to the secondary subsystems. These resources are exposed as a set of
++power-domains.
++
++- compatible:
++	Usage: required
++	Value type: <string>
++	Definition: must be "qcom,sdm845-aoss-qmp"
++
++- reg:
++	Usage: required
++	Value type: <prop-encoded-array>
++	Definition: the base address and size of the message RAM for this
++		    client's communication with the AOSS
++
++- interrupts:
++	Usage: required
++	Value type: <prop-encoded-array>
++	Definition: should specify the AOSS message IRQ for this client
++
++- mboxes:
++	Usage: required
++	Value type: <prop-encoded-array>
++	Definition: reference to the mailbox representing the outgoing doorbell
++		    in APCS for this client, as described in mailbox/mailbox.txt
++
++- #clock-cells:
++	Usage: optional
++	Value type: <u32>
++	Definition: must be 0
++		    The single clock represents the QDSS clock.
++
++- #power-domain-cells:
++	Usage: optional
++	Value type: <u32>
++	Definition: must be 1
++		    The provided power-domains are:
++		    CDSP state (0), LPASS state (1), modem state (2), SLPI
++		    state (3), SPSS state (4) and Venus state (5).
++
++= SUBNODES
++The AOSS side channel also provides the controls for three cooling devices,
++these are expressed as subnodes of the QMP node. The name of the node is used
++to identify the resource and must therefor be "cx", "mx" or "ebi".
++
++- #cooling-cells:
++	Usage: optional
++	Value type: <u32>
++	Definition: must be 2
++
++= EXAMPLE
++
++The following example represents the AOSS side-channel message RAM and the
++mechanism exposing the power-domains, as found in SDM845.
++
++  aoss_qmp: qmp@c300000 {
++	  compatible = "qcom,sdm845-aoss-qmp";
++	  reg = <0x0c300000 0x100000>;
++	  interrupts = <GIC_SPI 389 IRQ_TYPE_EDGE_RISING>;
++	  mboxes = <&apss_shared 0>;
++
++	  #power-domain-cells = <1>;
++
++	  cx_cdev: cx {
++		#cooling-cells = <2>;
++	  };
++
++	  mx_cdev: mx {
++		#cooling-cells = <2>;
++	  };
++  };
+diff --git a/include/dt-bindings/power/qcom-aoss-qmp.h b/include/dt-bindings/power/qcom-aoss-qmp.h
+new file mode 100644
+index 000000000000..ec336d31dee4
+--- /dev/null
++++ b/include/dt-bindings/power/qcom-aoss-qmp.h
+@@ -0,0 +1,14 @@
++/* SPDX-License-Identifier: GPL-2.0 */
++/* Copyright (c) 2018, Linaro Ltd. */
++
++#ifndef __DT_BINDINGS_POWER_QCOM_AOSS_QMP_H
++#define __DT_BINDINGS_POWER_QCOM_AOSS_QMP_H
++
++#define AOSS_QMP_LS_CDSP		0
++#define AOSS_QMP_LS_LPASS	1
++#define AOSS_QMP_LS_MODEM	2
++#define AOSS_QMP_LS_SLPI		3
++#define AOSS_QMP_LS_SPSS		4
++#define AOSS_QMP_LS_VENUS	5
++
++#endif
 -- 
 2.18.0
 
