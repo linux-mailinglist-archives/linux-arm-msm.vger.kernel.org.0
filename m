@@ -2,53 +2,53 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id CC137317E9
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  1 Jun 2019 01:27:51 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E8F893182B
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  1 Jun 2019 01:33:32 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726518AbfEaX1u (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 31 May 2019 19:27:50 -0400
-Received: from mail-pf1-f196.google.com ([209.85.210.196]:47088 "EHLO
-        mail-pf1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726653AbfEaX1u (ORCPT
+        id S1727056AbfEaXdM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 31 May 2019 19:33:12 -0400
+Received: from mail-pg1-f196.google.com ([209.85.215.196]:42873 "EHLO
+        mail-pg1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727038AbfEaXdK (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 31 May 2019 19:27:50 -0400
-Received: by mail-pf1-f196.google.com with SMTP id y11so7052304pfm.13
-        for <linux-arm-msm@vger.kernel.org>; Fri, 31 May 2019 16:27:50 -0700 (PDT)
+        Fri, 31 May 2019 19:33:10 -0400
+Received: by mail-pg1-f196.google.com with SMTP id e6so3596849pgd.9
+        for <linux-arm-msm@vger.kernel.org>; Fri, 31 May 2019 16:33:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to:user-agent;
-        bh=1mBjmLwOKlNkyYhM6oxRhsf42lMAXU/xAGOi1IdZboQ=;
-        b=ZNOteqQLyqgc+QbRl7AXNIxJGN4xjDTgG6lWt6T6hJIAi2uw3z3Flh39L0EupY/Gdy
-         aRQu8htEcM2guXKL3DiQ4okSSGGyunEAl9Vs6GRc1UEOfPAiDmQ8zPwoUqSNG0OYQVV6
-         EIib45uFU25OiqwIdyyh8xrqPokchZdfmTrwCmyplfHfbLDWbuuuOwUb+ovvtbfvhNA1
-         zjW6vzLAyANZQjQVAtJnOlbpyMIjpq149dUyltnV5NgU5IpF1Yk5dIVTcoGsrgrl27Ql
-         8PicUE4+rTtZi9T5oo0W1VHdKG2BtaIZImEFJFnrAmzM0oJR7kaWUvZ22S1Cz16LJR/k
-         aIlw==
+        bh=zzddG9Gjm8AXO9IHzYUM1VDR0CHwahQe8D71s9hFu/c=;
+        b=sUFNLE70qFuM1j32iqPxE2N82dVJJzFJaig1Wc2IOUGvkXLZBJWeWXEnUpoER7ZDH5
+         lmPoYejl4nkgIgnY4RVJpWC4DbOXHt4cuJn3rNDITsEMmuHlooOoGM8q0p6UsN22WV3r
+         nsI1V8f9K77o0rjLcWUEgQj2DtJF5B2CAgykzgCf4yXUgSsJNINJozSXCUelfZYikR0t
+         vY2DgytSi3PGwSkp748aqkLh23FuFSagcBfJmDMaSw1brMGuZAZXdz+2y75ZfA+d4Aqj
+         UPpnZFpNufpYERlc5isr4RxlVC7tXskMUL9Rc1IH1UTus0aA98hA1TKSQvlLnNB7znCx
+         3pIw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=1mBjmLwOKlNkyYhM6oxRhsf42lMAXU/xAGOi1IdZboQ=;
-        b=U5VQIwoFy9Qi3JNtxCsl5QfDFzg07iNmu/1KfnpVUZhXF0mGUMiZKOyKJYHK/gyLgY
-         B8/k3D/DWXrQAWdRm17I2enQ7b2pmHU8YC82G6WwTdhoefm21doh/oI+d3Dv5m9CE2nM
-         DqK6VsgAwkB9aCviY6PN8ZU49OHRamOWxu5mtViqEiisfRiN0QGI/HfPGNJ4HFREdUgf
-         cPAZ+MBInzE3C+PTchPiFUIvio9hW341/KA0oMl0L6yKhhit+ys+C7VwJtvFevzvtoAK
-         qcBjonDuNZTPQgtB6DJG7sPhUI3UN4jD8IicxjWt1LrJ2DjBxqDEuYS1LLNC3kZRnZYD
-         wIZA==
-X-Gm-Message-State: APjAAAXQGB7MOxL17CD32VKx12ks1yc2zU/H2eJKelxhVTBqKzx9PAw2
-        1//reRrzsACwARKk3htG3A3cbQ==
-X-Google-Smtp-Source: APXvYqw/ryB+xTJ5eNyo0R0Rz5FbaRSXOb+hJAMPW6Ub79YQuTrjFf0b/mvOzSK2WWNJ4P0EduX3Cg==
-X-Received: by 2002:a17:90a:7147:: with SMTP id g7mr12603555pjs.42.1559345269878;
-        Fri, 31 May 2019 16:27:49 -0700 (PDT)
+        bh=zzddG9Gjm8AXO9IHzYUM1VDR0CHwahQe8D71s9hFu/c=;
+        b=EyIHHROZm4khuleIOtT4tJe1z9c9CuC9oSde8Q8DK2qEL8b1mW/VTApqmxUSItrMu3
+         OEbKl6rvawhZaPDdn9vyQLR+AsS/OAHcsJBP/IOqsuB/YA8zjVcRdI1Oqml8MdMA4qkD
+         ty3T7q0w2wqiOkG9CHRJGvbwUT9B9mLWBURP4/30DpdsXMwkRhHVeMgv4AHYSeaOoxAT
+         Sjyumtz/NFIGA4W62tXvdNZnZvYsEFjwZg4jtj2vL6fR36WEKEUQZPDWIjwVM7V+nRDF
+         wdQS1QWoiHEY6HNAmmyypqAFAXQ0XgQJ/XgsRGdoFrAg8MVww/b+34ic0CGEznkkrSqb
+         tZAw==
+X-Gm-Message-State: APjAAAUUcPxHXoaFb20XcyHbsU9LwIzm5AGfCmiySCebIGBP5E0F4ir+
+        UmUm6OX2N313byORq+hzPeztpg==
+X-Google-Smtp-Source: APXvYqyJ7gQmtzmeiKPbNeIHflsw1vNpFtYMs7bzVo3F+1S7RJ+MFhz+r8ETLxFyxFKwyQDGRT1VaQ==
+X-Received: by 2002:aa7:8b12:: with SMTP id f18mr13286126pfd.178.1559345589344;
+        Fri, 31 May 2019 16:33:09 -0700 (PDT)
 Received: from minitux (104-188-17-28.lightspeed.sndgca.sbcglobal.net. [104.188.17.28])
-        by smtp.gmail.com with ESMTPSA id u1sm7196808pfh.85.2019.05.31.16.27.48
+        by smtp.gmail.com with ESMTPSA id c17sm7733229pfo.114.2019.05.31.16.33.07
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Fri, 31 May 2019 16:27:49 -0700 (PDT)
-Date:   Fri, 31 May 2019 16:27:46 -0700
+        Fri, 31 May 2019 16:33:08 -0700 (PDT)
+Date:   Fri, 31 May 2019 16:33:06 -0700
 From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Arnd Bergmann <arnd@arndb.de>
-Cc:     Alex Elder <elder@linaro.org>, Dan Williams <dcbw@redhat.com>,
+To:     Alex Elder <elder@linaro.org>
+Cc:     Arnd Bergmann <arnd@arndb.de>, Dan Williams <dcbw@redhat.com>,
         David Miller <davem@davemloft.net>,
         Ilias Apalodimas <ilias.apalodimas@linaro.org>,
         evgreen@chromium.org, Ben Chan <benchan@google.com>,
@@ -62,41 +62,75 @@ Cc:     Alex Elder <elder@linaro.org>, Dan Williams <dcbw@redhat.com>,
         Linux ARM <linux-arm-kernel@lists.infradead.org>,
         linux-arm-msm@vger.kernel.org
 Subject: Re: [PATCH v2 00/17] net: introduce Qualcomm IPA driver
-Message-ID: <20190531232746.GA25597@minitux>
+Message-ID: <20190531233306.GB25597@minitux>
 References: <20190531035348.7194-1-elder@linaro.org>
  <e75cd1c111233fdc05f47017046a6b0f0c97673a.camel@redhat.com>
  <065c95a8-7b17-495d-f225-36c46faccdd7@linaro.org>
  <CAK8P3a05CevRBV3ym+pnKmxv+A0_T+AtURW2L4doPAFzu3QcJw@mail.gmail.com>
+ <a28c5e13-59bc-144d-4153-9d104cfa9188@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <CAK8P3a05CevRBV3ym+pnKmxv+A0_T+AtURW2L4doPAFzu3QcJw@mail.gmail.com>
+In-Reply-To: <a28c5e13-59bc-144d-4153-9d104cfa9188@linaro.org>
 User-Agent: Mutt/1.11.3 (2019-02-01)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri 31 May 12:19 PDT 2019, Arnd Bergmann wrote:
+On Fri 31 May 13:47 PDT 2019, Alex Elder wrote:
 
-> On Fri, May 31, 2019 at 6:36 PM Alex Elder <elder@linaro.org> wrote:
-> > On 5/31/19 9:58 AM, Dan Williams wrote:
-> > > On Thu, 2019-05-30 at 22:53 -0500, Alex Elder wrote:
-[..]
-> > So basically, the purpose of the rmnet driver is to handle QMAP
-> > protocol connections, and right now that's what the modem provides.
+> On 5/31/19 2:19 PM, Arnd Bergmann wrote:
+> > On Fri, May 31, 2019 at 6:36 PM Alex Elder <elder@linaro.org> wrote:
+> >> On 5/31/19 9:58 AM, Dan Williams wrote:
+> >>> On Thu, 2019-05-30 at 22:53 -0500, Alex Elder wrote:
+> >>>
+> >>> My question from the Nov 2018 IPA rmnet driver still stands; how does
+> >>> this relate to net/ethernet/qualcomm/rmnet/ if at all? And if this is
+> >>> really just a netdev talking to the IPA itself and unrelated to
+> >>> net/ethernet/qualcomm/rmnet, let's call it "ipa%d" and stop cargo-
+> >>> culting rmnet around just because it happens to be a net driver for a
+> >>> QC SoC.
+> >>
+> >> First, the relationship between the IPA driver and the rmnet driver
+> >> is that the IPA driver is assumed to sit between the rmnet driver
+> >> and the hardware.
+> > 
+> > Does this mean that IPA can only be used to back rmnet, and rmnet
+> > can only be used on top of IPA, or can or both of them be combined
+> > with another driver to talk to instead?
 > 
-> Do you have any idea why this particular design was picked?
+> No it does not mean that.
+> 
+> As I understand it, one reason for the rmnet layer was to abstract
+> the back end, which would allow using a modem, or using something
+> else (a LAN?), without exposing certain details of the hardware.
+> (Perhaps to support multiplexing, etc. without duplicating that
+> logic in two "back-end" drivers?)
+> 
+> To be perfectly honest, at first I thought having IPA use rmnet
+> was a cargo cult thing like Dan suggested, because I didn't see
+> the benefit.  I now see why one would use that pass-through layer
+> to handle the QMAP features.
+> 
+> But back to your question.  The other thing is that I see no
+> reason the IPA couldn't present a "normal" (non QMAP) interface
+> for a modem.  It's something I'd really like to be able to do,
+> but I can't do it without having the modem firmware change its
+> configuration for these endpoints.  My access to the people who
+> implement the modem firmware has been very limited (something
+> I hope to improve), and unless and until I can get corresponding
+> changes on the modem side to implement connections that don't
+> use QMAP, I can't implement such a thing.
 > 
 
-From what I've seen of QMAP it seems like a reasonable design choice to
-have a software component (rmnet) dealing with this, separate from the
-transport. And I think IPA is the 4th or 5th mechanism for transporting
-QMAP packets back and forth to the modem.
+But any such changes would either be years into the future or for
+specific devices and as such not applicable to any/most of devices on
+the market now or in the coming years.
 
 
-Downstream rmnet is copyright 2007-, and I know of interest in bringing
-at least one of the other transports upstream.
+But as Arnd points out, if the software split between IPA and rmnet is
+suboptimal your are encouraged to fix that.
 
 Regards,
 Bjorn
