@@ -2,175 +2,99 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id AEEF930624
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 31 May 2019 03:18:19 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 33825306C2
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 31 May 2019 05:01:03 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726935AbfEaBSD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 30 May 2019 21:18:03 -0400
-Received: from mail-pf1-f195.google.com ([209.85.210.195]:36414 "EHLO
-        mail-pf1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726909AbfEaBSD (ORCPT
+        id S1726667AbfEaDBC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 30 May 2019 23:01:02 -0400
+Received: from mail-pg1-f195.google.com ([209.85.215.195]:33463 "EHLO
+        mail-pg1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726649AbfEaDBC (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 30 May 2019 21:18:03 -0400
-Received: by mail-pf1-f195.google.com with SMTP id u22so5080816pfm.3
-        for <linux-arm-msm@vger.kernel.org>; Thu, 30 May 2019 18:18:02 -0700 (PDT)
+        Thu, 30 May 2019 23:01:02 -0400
+Received: by mail-pg1-f195.google.com with SMTP id h17so3187044pgv.0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 30 May 2019 20:01:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=4uHEAa5GeZzr2h0opAabsUuB1kTv1SagFVuFPuo6Vy4=;
-        b=migBA7G0X8TRyWt+AlogD9HOesTE9MlGY/VHdPuOv2b4R05pmowj823gTs5tiG2Pov
-         sSM2x9XvzPtsJczvx912e+oBwNoeY01DDuG3j1RTintQIw2Z9zKUXgRya/xSQ3WAfMA/
-         mz9V6ymLT0qqERhwb6SQDuwBuWSZmUFu23sOd+OfIGIM2E1HKn1jxxJoUSIEytKr0Sm4
-         6rKrQhG8WyFbNg6SsnzSfWvGTpgn4kRZRqxjg9Cz+Si6LvJBNtliij/XI3FjAmHk9+xs
-         q6SB7k1FJaoPMpQ7Xk71ak8xHKrI/uWpJv3i6+MtXEV5OABRTwdwkHziRE60+tfrSbzA
-         xdOQ==
+        h=from:to:cc:subject:date:message-id;
+        bh=9DXOFODBqmIato1G6sUFuAMjaJ7HfVcF5OL98ROBWB0=;
+        b=yc4Wu0e7nn+b+z4wwDSsnR/SHWgh+XCFyN/oln/5lzBH41crQS7uiJhep0iOWwjXGp
+         p7OKXuFybH2ZNLRvzZj7ULC7XoWg0RSxHju/Vek7wKiKG6rIhcm1tdNQzuZjFrQ64b5E
+         6JogTE22Egfqqjh6YygMtEZ/+cxfxSiI1jxCKR43a7riQE8exXu/X8+XHgWllL6zEAl3
+         hq+Od2DB5wAqvkGm7iJDl1ZQrGtcyGFdiAQEYbXa5nYLoW8OCkJ1hhs56nJkm6gnRxGo
+         2HrVcLTvg2CwF5iny8LKVaEIbkYluuNeaTd34paQZSE28I40vDZdoaPaPYPAY9sBgrjp
+         0Yng==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=4uHEAa5GeZzr2h0opAabsUuB1kTv1SagFVuFPuo6Vy4=;
-        b=na5Gv4BhXxTxz7dDG1pYV4cZqBgaRBlZobTaFAWBNu/znUQy5nVntWPwPWuiICGzdx
-         zdUqyPUby9vwD6nasFC6Tm59/wJMfUiWPYeym48PMrgY4rKooL5B29PI6eg7nc8gEERv
-         8WV8yPjPFj79MYvXOWjywtTVz78FT5184dtDFmxkBtk5m9GvlST1E9erzEPBlyrHVUeu
-         iAu1qmMsGLoG+DoD4WnYQPmfB/hIGlgqBFCldNZMymn+H91e/YK60gTv7G5wl0n5PAMM
-         DLoi9PLHv3Mk/aGF+cZZgKZs41ESKwGhZQbODZ9a0LtjbgDIlU2uIxC4k+3vIT3yIva6
-         HH7Q==
-X-Gm-Message-State: APjAAAVL7p3F/QR25jgqjE+kbYVdb2a9JcjK78+qejo5vTzuqEE0Zqwp
-        HH4WQk49Xr4vG0cVPCt5tWCvfw==
-X-Google-Smtp-Source: APXvYqyzIj6Pm1KfV/B4BT/7El4cJiSWB3kByoiUQxMfNJ3vK96ay9Q4JTPnEheGYvM+SrTLPr/mRg==
-X-Received: by 2002:a63:ea42:: with SMTP id l2mr5875093pgk.19.1559265482268;
-        Thu, 30 May 2019 18:18:02 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=9DXOFODBqmIato1G6sUFuAMjaJ7HfVcF5OL98ROBWB0=;
+        b=mIgT7ND4HaSewZQW2a4VfJolZ/HQOymu6hzGc0Fma8EPVD3nkDKbHr9kMVCAgG2hC2
+         AlSZOQKVuBJTyS15mtiPhBOg/2h9B8+h5OA9B59wiWt1vC2/GR3JHYJO/2y274vzq1sx
+         NpCf1FLBGTfuPsy3HfU/UxQwfOaBj1x0UdaggKiK/dPRTkAZ8hr6/J4TQM9s9Wc+YSgb
+         UrD8+LyL2I3Kf634i2nA98JYB/4PXrHkgX89jGzZhe59SkhiJk4JAGn4n1fufUlKBHBo
+         2m0zNji8Vkq0OQ/iKpOEQDTpPpz9rGV+koX2bPhttLqJuIg2P+/kBp4juZ+bfbb5zO/R
+         4P7g==
+X-Gm-Message-State: APjAAAURVnctab2LLfU6+F72JgcKNnmpw43v6KQw2HTNdedDT5KYZBX8
+        tI9rcqP89xCJXJe3aEwp11h/jA==
+X-Google-Smtp-Source: APXvYqxaMcySQg8PkW0Fh852AHXFzEMJZ1N/GTFlK0FWFL3OYC+XaIjOoLjttxL5urryeajcR0DCYg==
+X-Received: by 2002:a17:90a:f488:: with SMTP id bx8mr6801107pjb.62.1559271661246;
+        Thu, 30 May 2019 20:01:01 -0700 (PDT)
 Received: from localhost.localdomain (104-188-17-28.lightspeed.sndgca.sbcglobal.net. [104.188.17.28])
-        by smtp.gmail.com with ESMTPSA id j20sm1819042pff.183.2019.05.30.18.18.01
+        by smtp.gmail.com with ESMTPSA id m8sm6991549pff.137.2019.05.30.20.01.00
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 30 May 2019 18:18:01 -0700 (PDT)
+        Thu, 30 May 2019 20:01:00 -0700 (PDT)
 From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     "David S. Miller" <davem@davemloft.net>
-Cc:     Arun Kumar Neelakantam <aneela@codeaurora.org>,
-        Chris Lew <clew@codeaurora.org>, netdev@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org
-Subject: [PATCH v2 5/5] net: qrtr: Remove receive worker
-Date:   Thu, 30 May 2019 18:17:53 -0700
-Message-Id: <20190531011753.11840-6-bjorn.andersson@linaro.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        David Brown <david.brown@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Mark Rutland <mark.rutland@arm.com>,
+        Doug Anderson <dianders@chromium.org>,
+        Arun Kumar Neelakantam <aneela@codeaurora.org>,
+        Vinod Koul <vkoul@kernel.org>, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: [PATCH v8 0/4] Qualcomm AOSS QMP driver
+Date:   Thu, 30 May 2019 20:00:53 -0700
+Message-Id: <20190531030057.18328-1-bjorn.andersson@linaro.org>
 X-Mailer: git-send-email 2.18.0
-In-Reply-To: <20190531011753.11840-1-bjorn.andersson@linaro.org>
-References: <20190531011753.11840-1-bjorn.andersson@linaro.org>
+To:     unlisted-recipients:; (no To-header on input)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Rather than enqueuing messages and scheduling a worker to deliver them
-to the individual sockets we can now, thanks to the previous work, move
-this directly into the endpoint callback.
+Introduce a driver implementing Qualcomm Messaging Protocol (QMP) to
+communicate with the Always On Subsystem (AOSS) and expose the low-power
+states for the remoteprocs as a set of power-domains and the QDSS clock
+as a clock.
 
-This saves us a context switch per incoming message and removes the
-possibility of an opportunistic suspend to happen between the message is
-coming from the endpoint until it ends up in the socket's receive
-buffer.
+Changes since v7:
+- Minor tweaks code style tweaks and error handling
 
-Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
----
+Changes since v6:
+- First couple of patches merged for v5.2
+- Squashed the qmp and qmp-pd driver into one and by that moved it all
+  to one file
+- Expose QDSS clock as a clock instead of a power domain
 
-Changes since v1:
-- None
+Bjorn Andersson (3):
+  dt-bindings: soc: qcom: Add AOSS QMP binding
+  soc: qcom: Add AOSS QMP driver
+  arm64: dts: qcom: Add AOSS QMP node
 
- net/qrtr/qrtr.c | 54 ++++++++++++++++---------------------------------
- 1 file changed, 17 insertions(+), 37 deletions(-)
+Sibi Sankar (1):
+  arm64: dts: qcom: sdm845: Add Q6V5 MSS node
 
-diff --git a/net/qrtr/qrtr.c b/net/qrtr/qrtr.c
-index 7f048b9e02fb..782a3e8c5f93 100644
---- a/net/qrtr/qrtr.c
-+++ b/net/qrtr/qrtr.c
-@@ -165,6 +165,8 @@ static int qrtr_local_enqueue(struct qrtr_node *node, struct sk_buff *skb,
- static int qrtr_bcast_enqueue(struct qrtr_node *node, struct sk_buff *skb,
- 			      int type, struct sockaddr_qrtr *from,
- 			      struct sockaddr_qrtr *to);
-+static struct qrtr_sock *qrtr_port_lookup(int port);
-+static void qrtr_port_put(struct qrtr_sock *ipc);
- 
- /* Release node resources and free the node.
-  *
-@@ -429,6 +431,7 @@ int qrtr_endpoint_post(struct qrtr_endpoint *ep, const void *data, size_t len)
- 	struct qrtr_node *node = ep->node;
- 	const struct qrtr_hdr_v1 *v1;
- 	const struct qrtr_hdr_v2 *v2;
-+	struct qrtr_sock *ipc;
- 	struct sk_buff *skb;
- 	struct qrtr_cb *cb;
- 	unsigned int size;
-@@ -493,8 +496,20 @@ int qrtr_endpoint_post(struct qrtr_endpoint *ep, const void *data, size_t len)
- 
- 	skb_put_data(skb, data + hdrlen, size);
- 
--	skb_queue_tail(&node->rx_queue, skb);
--	schedule_work(&node->work);
-+	qrtr_node_assign(node, cb->src_node);
-+
-+	if (cb->type == QRTR_TYPE_RESUME_TX) {
-+		qrtr_tx_resume(node, skb);
-+	} else {
-+		ipc = qrtr_port_lookup(cb->dst_port);
-+		if (!ipc)
-+			goto err;
-+
-+		if (sock_queue_rcv_skb(&ipc->sk, skb))
-+			goto err;
-+
-+		qrtr_port_put(ipc);
-+	}
- 
- 	return 0;
- 
-@@ -529,40 +544,6 @@ static struct sk_buff *qrtr_alloc_ctrl_packet(struct qrtr_ctrl_pkt **pkt)
- 	return skb;
- }
- 
--static struct qrtr_sock *qrtr_port_lookup(int port);
--static void qrtr_port_put(struct qrtr_sock *ipc);
--
--/* Handle and route a received packet.
-- *
-- * This will auto-reply with resume-tx packet as necessary.
-- */
--static void qrtr_node_rx_work(struct work_struct *work)
--{
--	struct qrtr_node *node = container_of(work, struct qrtr_node, work);
--	struct sk_buff *skb;
--
--	while ((skb = skb_dequeue(&node->rx_queue)) != NULL) {
--		struct qrtr_sock *ipc;
--		struct qrtr_cb *cb = (struct qrtr_cb *)skb->cb;
--
--		qrtr_node_assign(node, cb->src_node);
--
--		if (cb->type == QRTR_TYPE_RESUME_TX) {
--			qrtr_tx_resume(node, skb);
--		} else {
--			ipc = qrtr_port_lookup(cb->dst_port);
--			if (!ipc) {
--				kfree_skb(skb);
--			} else {
--				if (sock_queue_rcv_skb(&ipc->sk, skb))
--					kfree_skb(skb);
--
--				qrtr_port_put(ipc);
--			}
--		}
--	}
--}
--
- /**
-  * qrtr_endpoint_register() - register a new endpoint
-  * @ep: endpoint to register
-@@ -582,7 +563,6 @@ int qrtr_endpoint_register(struct qrtr_endpoint *ep, unsigned int nid)
- 	if (!node)
- 		return -ENOMEM;
- 
--	INIT_WORK(&node->work, qrtr_node_rx_work);
- 	kref_init(&node->ref);
- 	mutex_init(&node->ep_lock);
- 	skb_queue_head_init(&node->rx_queue);
+ .../bindings/soc/qcom/qcom,aoss-qmp.txt       |  81 +++
+ arch/arm64/boot/dts/qcom/sdm845.dtsi          |  68 +++
+ drivers/soc/qcom/Kconfig                      |  12 +
+ drivers/soc/qcom/Makefile                     |   1 +
+ drivers/soc/qcom/qcom_aoss.c                  | 479 ++++++++++++++++++
+ include/dt-bindings/power/qcom-aoss-qmp.h     |  14 +
+ 6 files changed, 655 insertions(+)
+ create mode 100644 Documentation/devicetree/bindings/soc/qcom/qcom,aoss-qmp.txt
+ create mode 100644 drivers/soc/qcom/qcom_aoss.c
+ create mode 100644 include/dt-bindings/power/qcom-aoss-qmp.h
+
 -- 
 2.18.0
 
