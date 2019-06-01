@@ -2,142 +2,113 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 180343187C
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  1 Jun 2019 01:59:47 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 94E1531894
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  1 Jun 2019 02:05:45 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726643AbfEaX7q (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 31 May 2019 19:59:46 -0400
-Received: from smtp.codeaurora.org ([198.145.29.96]:34120 "EHLO
-        smtp.codeaurora.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726550AbfEaX7p (ORCPT
+        id S1726718AbfFAAFo (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 31 May 2019 20:05:44 -0400
+Received: from mail-wm1-f65.google.com ([209.85.128.65]:55677 "EHLO
+        mail-wm1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726550AbfFAAFo (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 31 May 2019 19:59:45 -0400
-Received: by smtp.codeaurora.org (Postfix, from userid 1000)
-        id 7B0C36070D; Fri, 31 May 2019 23:59:44 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
-        s=default; t=1559347184;
-        bh=tJJKl5ehmjDb2KK6XeMOmnd1rblvf2TEFa0oPKfTx5A=;
-        h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
-        b=DrR5If3bSV4UtULQl7DoeUdYH0qFStHS2EZNSIBc+cRSxZWIZArUiSxyvoPNOcyc+
-         BV1zFF3oNDbjY01hii7pjCDzqV2bQY+v6PFLeGPMvyWpdx0LSzd0kKC/qtsqXQKFE2
-         F9xYliUcplczYufvnmMhN9ZUuMk3PlzArFyOZXIM=
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        pdx-caf-mail.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.7 required=2.0 tests=ALL_TRUSTED,BAYES_00,
-        DKIM_INVALID,DKIM_SIGNED autolearn=no autolearn_force=no version=3.4.0
-Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
-        by smtp.codeaurora.org (Postfix) with ESMTP id 2C6286070D;
-        Fri, 31 May 2019 23:59:43 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
-        s=default; t=1559347183;
-        bh=tJJKl5ehmjDb2KK6XeMOmnd1rblvf2TEFa0oPKfTx5A=;
-        h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
-        b=JhHqfqgmdNVqLrmRdouTw0Seluy99Trhgv3NmXlFn69xRxPpycBc/Q+DRSfAeVwu4
-         JTEboKLfLKX0c13lS4DlpcSurxqakUSwUHvxF/LXUHDnPuoHKctksui16YqOi10b83
-         IBD+oLcK1w2+MnQzgPq0KGIsSeRbdNA1g0f1wxfU=
+        Fri, 31 May 2019 20:05:44 -0400
+Received: by mail-wm1-f65.google.com with SMTP id 16so2583087wmg.5
+        for <linux-arm-msm@vger.kernel.org>; Fri, 31 May 2019 17:05:43 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=q8wl8Ebr+tk3zdpRQhTbcjzF7wVJuwWPREKgkot9nSU=;
+        b=WNJY/3yWFpK+ZSv7Sxw4R3kUbleuB6gvBougV0etbg8DpJcU4ZBc5RQKwXJzf6ih8/
+         ihAgNSuoaYELwpfeBMVRfqiKXP1yormx16Tl5sx0yli8Qh3KuJTVHD/1L5r1KMvjlSkT
+         aqbw4BpqU2oYWkcmoEvoPDDG4jNuIAAs9VOHhM+i/9riLzEBzZA9AA0wkeCsY3Ebdj+s
+         wD88tcTcr4KudgeppRszfgbrcFEPUVvpSulgAfcl+gdeajNaTtSPnjuOTv1N+XeickCA
+         ML1DAXzB3sh80l02yfMPxJH6qXWtsNIhJI6z07eXniTB0Cj4V0UuZa09o9o0Qv68b44w
+         KANg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=q8wl8Ebr+tk3zdpRQhTbcjzF7wVJuwWPREKgkot9nSU=;
+        b=fuKPkmszNZC4kAeO6mOZhzCsdqvtEwFPw1zfZicEtnXrDwJRZSYqdNdddgW7YbKMD7
+         rGHk1Wf0HyM1nhQA3h89sW16f4TUacx/DYZ6geuLa22P3QL+VX12ytL0LFUZU+/YF2Co
+         vXCiIJaDkmRDhMKdI2S+DXdqjuEsjwBagMpXiTyVUpDHybekP0BaGj3B7grUM/LK6Te+
+         U1kRj415Lu06rIYvNgIj/58aZNK/2dyOr99Fa/95hjJzzURpKxw9/0RjE+lEN/vSZBAI
+         AdwHVk9+WS9ZiJ2YOvkWgwmT+ft0bPU0KIQJKSCM5hiBNAqnxQV5UdXQYivO4xWMxkgx
+         Dzfg==
+X-Gm-Message-State: APjAAAV9Fn8w0E5ZSNHtjpAEMWdN9aMqDC9KWSfoHTFfIJFYRtqfxVzj
+        dJzEU35OCYDkn1Hs+DwIRoUULn8C6OhFTeNf+i3t3A==
+X-Google-Smtp-Source: APXvYqx6IqRo6a9cOKueKjJoBvf6m40KnlPpQdf6c682eEXGzCyVjaUTixWO7j8FalDLH0+SUsUPfSsPHlP05rS3Z50=
+X-Received: by 2002:a1c:9a53:: with SMTP id c80mr1080859wme.173.1559347542656;
+ Fri, 31 May 2019 17:05:42 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
-Content-Transfer-Encoding: 7bit
-Date:   Fri, 31 May 2019 17:59:43 -0600
-From:   Subash Abhinov Kasiviswanathan <subashab@codeaurora.org>
+References: <20190531234734.102842-1-john.stultz@linaro.org>
+ <20190531234734.102842-2-john.stultz@linaro.org> <20190531235302.GD25597@minitux>
+In-Reply-To: <20190531235302.GD25597@minitux>
+From:   John Stultz <john.stultz@linaro.org>
+Date:   Fri, 31 May 2019 17:05:30 -0700
+Message-ID: <CALAqxLXAdu63roX0WgXHqOwrr2dyJV+Oh06SSu8D+LqUOE3gng@mail.gmail.com>
+Subject: Re: [RFC][PATCH 2/2] reset: qcom-pon: Add support for gen2 pon
 To:     Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     Alex Elder <elder@linaro.org>, Arnd Bergmann <arnd@arndb.de>,
-        Dan Williams <dcbw@redhat.com>,
-        David Miller <davem@davemloft.net>,
-        Ilias Apalodimas <ilias.apalodimas@linaro.org>,
-        evgreen@chromium.org, Ben Chan <benchan@google.com>,
-        Eric Caruso <ejcaruso@google.com>, cpratapa@codeaurora.org,
-        syadagir@codeaurora.org, abhishek.esse@gmail.com,
-        Networking <netdev@vger.kernel.org>,
-        DTML <devicetree@vger.kernel.org>,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-        linux-soc@vger.kernel.org,
-        Linux ARM <linux-arm-kernel@lists.infradead.org>,
-        linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH v2 00/17] net: introduce Qualcomm IPA driver
-In-Reply-To: <20190531233306.GB25597@minitux>
-References: <20190531035348.7194-1-elder@linaro.org>
- <e75cd1c111233fdc05f47017046a6b0f0c97673a.camel@redhat.com>
- <065c95a8-7b17-495d-f225-36c46faccdd7@linaro.org>
- <CAK8P3a05CevRBV3ym+pnKmxv+A0_T+AtURW2L4doPAFzu3QcJw@mail.gmail.com>
- <a28c5e13-59bc-144d-4153-9d104cfa9188@linaro.org>
- <20190531233306.GB25597@minitux>
-Message-ID: <d76a710d45dd7df3a28afb12fc62cf14@codeaurora.org>
-X-Sender: subashab@codeaurora.org
-User-Agent: Roundcube Webmail/1.2.5
+Cc:     lkml <linux-kernel@vger.kernel.org>,
+        Andy Gross <agross@kernel.org>,
+        David Brown <david.brown@linaro.org>,
+        Amit Pundir <amit.pundir@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Mark Rutland <mark.rutland@arm.com>,
+        Sebastian Reichel <sre@kernel.org>,
+        linux-arm-msm@vger.kernel.org,
+        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
+        <devicetree@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2019-05-31 17:33, Bjorn Andersson wrote:
-> On Fri 31 May 13:47 PDT 2019, Alex Elder wrote:
-> 
->> On 5/31/19 2:19 PM, Arnd Bergmann wrote:
->> > On Fri, May 31, 2019 at 6:36 PM Alex Elder <elder@linaro.org> wrote:
->> >> On 5/31/19 9:58 AM, Dan Williams wrote:
->> >>> On Thu, 2019-05-30 at 22:53 -0500, Alex Elder wrote:
->> >>>
->> >>> My question from the Nov 2018 IPA rmnet driver still stands; how does
->> >>> this relate to net/ethernet/qualcomm/rmnet/ if at all? And if this is
->> >>> really just a netdev talking to the IPA itself and unrelated to
->> >>> net/ethernet/qualcomm/rmnet, let's call it "ipa%d" and stop cargo-
->> >>> culting rmnet around just because it happens to be a net driver for a
->> >>> QC SoC.
->> >>
->> >> First, the relationship between the IPA driver and the rmnet driver
->> >> is that the IPA driver is assumed to sit between the rmnet driver
->> >> and the hardware.
->> >
->> > Does this mean that IPA can only be used to back rmnet, and rmnet
->> > can only be used on top of IPA, or can or both of them be combined
->> > with another driver to talk to instead?
->> 
->> No it does not mean that.
->> 
->> As I understand it, one reason for the rmnet layer was to abstract
->> the back end, which would allow using a modem, or using something
->> else (a LAN?), without exposing certain details of the hardware.
->> (Perhaps to support multiplexing, etc. without duplicating that
->> logic in two "back-end" drivers?)
->> 
->> To be perfectly honest, at first I thought having IPA use rmnet
->> was a cargo cult thing like Dan suggested, because I didn't see
->> the benefit.  I now see why one would use that pass-through layer
->> to handle the QMAP features.
->> 
->> But back to your question.  The other thing is that I see no
->> reason the IPA couldn't present a "normal" (non QMAP) interface
->> for a modem.  It's something I'd really like to be able to do,
->> but I can't do it without having the modem firmware change its
->> configuration for these endpoints.  My access to the people who
->> implement the modem firmware has been very limited (something
->> I hope to improve), and unless and until I can get corresponding
->> changes on the modem side to implement connections that don't
->> use QMAP, I can't implement such a thing.
->> 
-> 
-> But any such changes would either be years into the future or for
-> specific devices and as such not applicable to any/most of devices on
-> the market now or in the coming years.
-> 
-> 
-> But as Arnd points out, if the software split between IPA and rmnet is
-> suboptimal your are encouraged to fix that.
-> 
-> Regards,
-> Bjorn
+On Fri, May 31, 2019 at 4:53 PM Bjorn Andersson
+<bjorn.andersson@linaro.org> wrote:
+>
+> On Fri 31 May 16:47 PDT 2019, John Stultz wrote:
+>
+> > Add support for gen2 pon register so "reboot bootloader" can
+> > work on pixel3 and db845.
+> >
+> > Cc: Andy Gross <agross@kernel.org>
+> > Cc: David Brown <david.brown@linaro.org>
+> > Cc: Bjorn Andersson <bjorn.andersson@linaro.org>
+> > Cc: Amit Pundir <amit.pundir@linaro.org>
+> > Cc: Rob Herring <robh+dt@kernel.org>
+> > Cc: Mark Rutland <mark.rutland@arm.com>
+> > Cc: Sebastian Reichel <sre@kernel.org>
+> > Cc: linux-arm-msm@vger.kernel.org
+> > Cc: devicetree@vger.kernel.org
+> > Signed-off-by: John Stultz <john.stultz@linaro.org>
+> > ---
+> >  arch/arm64/boot/dts/qcom/pm8998.dtsi |  2 +-
+> >  drivers/power/reset/qcom-pon.c       | 15 ++++++++++++---
+> >  2 files changed, 13 insertions(+), 4 deletions(-)
+> >
+> > diff --git a/arch/arm64/boot/dts/qcom/pm8998.dtsi b/arch/arm64/boot/dts/qcom/pm8998.dtsi
+> > index d3ca35a940fb..051a52df80f9 100644
+> > --- a/arch/arm64/boot/dts/qcom/pm8998.dtsi
+> > +++ b/arch/arm64/boot/dts/qcom/pm8998.dtsi
+> > @@ -39,7 +39,7 @@
+> >               #size-cells = <0>;
+> >
+> >               pm8998_pon: pon@800 {
+> > -                     compatible = "qcom,pm8916-pon";
+> > +                     compatible = "qcom,pm8998-pon";
+> >
+> >                       reg = <0x800>;
+> >                       mode-bootloader = <0x2>;
+>
+> We want to take this through arm-soc and the rest through Sebastian's
+> tree, so please provide the dts update in a separate commit.
 
-The split rmnet design was chosen because we could place rmnet
-over any transport - IPA, PCIe (https://lkml.org/lkml/2018/4/26/1159)
-or USB.
+Sure. I wasn't sure if tracking the change in a separate patch was
+worth it for such a trivial oneliner, but that's fine, I'll split it
+out.
 
-rmnet registers a rx handler, so the rmnet packet processing itself
-happens in the same softirq when packets are queued to network stack
-by IPA.
-
--- 
-Qualcomm Innovation Center, Inc. is a member of Code Aurora Forum,
-a Linux Foundation Collaborative Project
+thanks for the review!
+-john
