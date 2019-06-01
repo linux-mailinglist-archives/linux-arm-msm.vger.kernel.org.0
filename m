@@ -2,112 +2,117 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id AC4A731917
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  1 Jun 2019 04:43:38 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id EABEE319C8
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  1 Jun 2019 07:47:26 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726708AbfFACnh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 31 May 2019 22:43:37 -0400
-Received: from smtp.codeaurora.org ([198.145.29.96]:39046 "EHLO
-        smtp.codeaurora.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726634AbfFACnh (ORCPT
+        id S1726013AbfFAFrZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 1 Jun 2019 01:47:25 -0400
+Received: from mail-pg1-f196.google.com ([209.85.215.196]:40502 "EHLO
+        mail-pg1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725928AbfFAFrZ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 31 May 2019 22:43:37 -0400
-Received: by smtp.codeaurora.org (Postfix, from userid 1000)
-        id AB47860AD1; Sat,  1 Jun 2019 02:43:36 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
-        s=default; t=1559357016;
-        bh=EIGdHRTGMSH8BrR4fNTW/L7YHCj/dHmkgWPz/8baTkk=;
-        h=From:To:Cc:Subject:Date:From;
-        b=kzjqUEITrbZXR8nDM/ieBr3arNCD85iak0qOLuY92dXcPaNvKxX+Erwn5ygm+JQ7n
-         neSiKTiSVcdphc/E3JsaM4mbLcU+Bv/Mi90VrG5Jz+xGVuRrZlF+PQN1J2C5qILLEy
-         hU2+eNlNXaIYyLux0nz5I+X0n5HUylmh4ErqFrA4=
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        pdx-caf-mail.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.7 required=2.0 tests=ALL_TRUSTED,BAYES_00,
-        DKIM_INVALID,DKIM_SIGNED,SPF_NONE autolearn=no autolearn_force=no
-        version=3.4.0
-Received: from abhinavk-linux.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: abhinavk@smtp.codeaurora.org)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 8CFBB60312;
-        Sat,  1 Jun 2019 02:43:35 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
-        s=default; t=1559357015;
-        bh=EIGdHRTGMSH8BrR4fNTW/L7YHCj/dHmkgWPz/8baTkk=;
-        h=From:To:Cc:Subject:Date:From;
-        b=FaulWKHrxQedjqxTPLe7lPVM3Ogjdr7ayPTSHSYQ9X/dQs5BadNcsH14fFIEFH2E1
-         P+h8Q4MiYuATcH54SupiS9EeHuQlCYuiahOVeqh9EkWryU7B+w+t+Ac8Ol5CwGb+et
-         CIV57FL+ART+JjJa95Jbtpw3gR7uyXSKfOJ4UgKs=
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 8CFBB60312
-Authentication-Results: pdx-caf-mail.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: pdx-caf-mail.web.codeaurora.org; spf=none smtp.mailfrom=abhinavk@codeaurora.org
-From:   Abhinav Kumar <abhinavk@codeaurora.org>
-To:     dri-devel@lists.freedesktop.org
-Cc:     Abhinav Kumar <abhinavk@codeaurora.org>,
-        linux-arm-msm@vger.kernel.org, robdclark@gmail.com,
-        jsanka@codeaurora.org, seanpaul@chromium.org,
-        nganji@codeaurora.org, chandanu@codeaurora.org,
-        hoegsberg@google.com
-Subject: [PATCH v2] drm/msm/dsi: add protection against NULL dsi device
-Date:   Fri, 31 May 2019 19:43:27 -0700
-Message-Id: <1559357007-21004-1-git-send-email-abhinavk@codeaurora.org>
-X-Mailer: git-send-email 1.9.1
+        Sat, 1 Jun 2019 01:47:25 -0400
+Received: by mail-pg1-f196.google.com with SMTP id d30so5195833pgm.7
+        for <linux-arm-msm@vger.kernel.org>; Fri, 31 May 2019 22:47:25 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=N4NYqP5qcFsuKou3hOU2QoLbHi9KXa2wwTKFEejFE9g=;
+        b=YHiEJLdlNslOmqVxxCDPqKHWKNoy3U8FqNRl6OXkForegge1wL/cfA5vNcL0vXHSkE
+         16X7UP9rxWjnITY62EyvrbyaV9fp6E7FCjytDj5vKX2kTN95rG2hjUnaqnAH4yXXzCc0
+         iGd8IlCwyGAgw2dju6uBwMUTJoXf/3lU/8lFQLTwgTIJS1mYyGwf2R2IDjUov/x4Yu7m
+         x0+DDkFJx5erlLm/0DbDsR9oWSayJnjv9k4S6sq5ymhUsbEZ/IX0I7MTHDZAmJeulx7B
+         0HAxSc1JPDvaZvDg8sRaywaoUAh4n9RMy994KN5JDNQ0TMXoV3g8bzmvrfvUb5pvmGWg
+         2IGA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=N4NYqP5qcFsuKou3hOU2QoLbHi9KXa2wwTKFEejFE9g=;
+        b=BDp2EJZzxnosQoWslMLtYwm0D8F5E1aakE3sZlDw8YejFVLKXhxJxWIFl8ipLYSakT
+         FLjoOWFxz+tKD05fhbh9lF9A/4ThSfyqcKsK5of1vWG4WRP2R5nOXcDhvNhz5Hn8NXO4
+         LXxFrYORpyR/R+L8gMJLyDudScPEAZwObpaaPANqnTP4Vnw9NCARRbJTLhKpxr0A4VBz
+         sCvpIul1Pq3wqAhUERU2w7ulPTWny+c7eRZsF1IUZrZL5jKQUfbqpGCXmLw/gSqmoOMc
+         AM2q9KGtDnfz1SOPs0DGeL5CmTFPGDs/KLT+FpQWqvVE1a5aScVfisAi8Z8SADb8PNR2
+         cbzw==
+X-Gm-Message-State: APjAAAXyksA6XKzL1rtpT8DnLqq/S7Ieiywm0PCkmPWjhERfKShV4qfw
+        sIj+QBR4hbZQ7GNSGxnuPBexqA==
+X-Google-Smtp-Source: APXvYqyWwgqCn57/81AHKxNxBjxPxel3NYyFS7mKcCvinFDQWA3aWLt0spiLAHLYe9RqMBaXDnB0zw==
+X-Received: by 2002:a05:6a00:46:: with SMTP id i6mr1498503pfk.173.1559368044910;
+        Fri, 31 May 2019 22:47:24 -0700 (PDT)
+Received: from tuxbook-pro (104-188-17-28.lightspeed.sndgca.sbcglobal.net. [104.188.17.28])
+        by smtp.gmail.com with ESMTPSA id n21sm7833707pff.92.2019.05.31.22.47.23
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Fri, 31 May 2019 22:47:24 -0700 (PDT)
+Date:   Fri, 31 May 2019 22:48:04 -0700
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     Jordan Crouse <jcrouse@codeaurora.org>
+Cc:     freedreno@lists.freedesktop.org, Sean Paul <sean@poorly.run>,
+        Kees Cook <keescook@chromium.org>,
+        linux-arm-msm@vger.kernel.org,
+        Sharat Masetty <smasetty@codeaurora.org>,
+        dri-devel@lists.freedesktop.org, linux-kernel@vger.kernel.org,
+        Douglas Anderson <dianders@chromium.org>,
+        Rob Clark <robdclark@gmail.com>,
+        David Airlie <airlied@linux.ie>,
+        Jonathan Marek <jonathan@marek.ca>,
+        Mamta Shukla <mamtashukla555@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>
+Subject: Re: [PATCH] drm/msm/adreno: Ensure that the zap shader region is big
+ enough
+Message-ID: <20190601054804.GF22737@tuxbook-pro>
+References: <1559340578-11482-1-git-send-email-jcrouse@codeaurora.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <1559340578-11482-1-git-send-email-jcrouse@codeaurora.org>
+User-Agent: Mutt/1.11.4 (2019-03-13)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-When panel probe happens after DSI probe, the DSI probe is deferred as
-per current design. In the probe defer path dsi device is destroyed.
-This NULL dsi device could be deferenced by the panel probe in the
-mipi_dsi_attach path.
+On Fri 31 May 15:09 PDT 2019, Jordan Crouse wrote:
 
-Check for NULL dsi device before accessing it.
+> Before loading the zap shader we should ensure that the reserved memory
+> region is big enough to hold the loaded file.
+> 
+> Signed-off-by: Jordan Crouse <jcrouse@codeaurora.org>
 
-Changes in v2:
- - Add more comments on how this NULL pointer situation will be hit
+Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
 
-Reported-by: Jeffrey Hugo <jhugo@codeaurora.org>
-Tested-by: Jeffrey Hugo <jhugo@codeaurora.org>
-Signed-off-by: Abhinav Kumar <abhinavk@codeaurora.org>
----
- drivers/gpu/drm/msm/dsi/dsi_manager.c | 12 +++++++++++-
- 1 file changed, 11 insertions(+), 1 deletion(-)
-
-diff --git a/drivers/gpu/drm/msm/dsi/dsi_manager.c b/drivers/gpu/drm/msm/dsi/dsi_manager.c
-index 80aa634..8fcb13f 100644
---- a/drivers/gpu/drm/msm/dsi/dsi_manager.c
-+++ b/drivers/gpu/drm/msm/dsi/dsi_manager.c
-@@ -769,7 +769,7 @@ bool msm_dsi_manager_cmd_xfer_trigger(int id, u32 dma_base, u32 len)
- void msm_dsi_manager_attach_dsi_device(int id, u32 device_flags)
- {
- 	struct msm_dsi *msm_dsi = dsi_mgr_get_dsi(id);
--	struct drm_device *dev = msm_dsi->dev;
-+	struct drm_device *dev;
- 	struct msm_drm_private *priv;
- 	struct msm_kms *kms;
- 	struct drm_encoder *encoder;
-@@ -781,7 +781,17 @@ void msm_dsi_manager_attach_dsi_device(int id, u32 device_flags)
- 	 * (generally the case when we're connected to a drm_panel of the type
- 	 * mipi_dsi_device), this would be NULL. In such cases, try to set the
- 	 * encoder mode in the DSI connector's detect() op.
-+	 *
-+	 * msm_dsi pointer is assigned to a valid dsi device only when
-+	 * msm_dsi_manager_register() succeeds. When panel hasnt probed yet
-+	 * dsi_mgr_setup_components() could potentially return -EDEFER and
-+	 * assign the msm_dsi->dev to NULL. When the panel now probes and calls
-+	 * mipi_dsi_attach(), this will call msm_dsi_manager_attach_dsi_device()
-+	 * which will result in a NULL pointer dereference
- 	 */
-+
-+	dev = msm_dsi ? msm_dsi->dev : NULL;
-+
- 	if (!dev)
- 		return;
- 
--- 
-The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
-a Linux Foundation Collaborative Project
-
+> ---
+> 
+>  drivers/gpu/drm/msm/adreno/adreno_gpu.c | 8 +++++++-
+>  1 file changed, 7 insertions(+), 1 deletion(-)
+> 
+> diff --git a/drivers/gpu/drm/msm/adreno/adreno_gpu.c b/drivers/gpu/drm/msm/adreno/adreno_gpu.c
+> index 6f7f411..3db8e49 100644
+> --- a/drivers/gpu/drm/msm/adreno/adreno_gpu.c
+> +++ b/drivers/gpu/drm/msm/adreno/adreno_gpu.c
+> @@ -67,7 +67,6 @@ static int zap_shader_load_mdt(struct msm_gpu *gpu, const char *fwname,
+>  		return ret;
+>  
+>  	mem_phys = r.start;
+> -	mem_size = resource_size(&r);
+>  
+>  	/* Request the MDT file for the firmware */
+>  	fw = adreno_request_fw(to_adreno_gpu(gpu), fwname);
+> @@ -83,6 +82,13 @@ static int zap_shader_load_mdt(struct msm_gpu *gpu, const char *fwname,
+>  		goto out;
+>  	}
+>  
+> +	if (mem_size > resource_size(&r)) {
+> +		DRM_DEV_ERROR(dev,
+> +			"memory region is too small to load the MDT\n");
+> +		ret = -E2BIG;
+> +		goto out;
+> +	}
+> +
+>  	/* Allocate memory for the firmware image */
+>  	mem_region = memremap(mem_phys, mem_size,  MEMREMAP_WC);
+>  	if (!mem_region) {
+> -- 
+> 2.7.4
+> 
