@@ -2,220 +2,112 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 1ADC3318FA
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  1 Jun 2019 04:12:45 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id AC4A731917
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  1 Jun 2019 04:43:38 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726550AbfFACMn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 31 May 2019 22:12:43 -0400
-Received: from mail-vk1-f201.google.com ([209.85.221.201]:44755 "EHLO
-        mail-vk1-f201.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726634AbfFACMj (ORCPT
+        id S1726708AbfFACnh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 31 May 2019 22:43:37 -0400
+Received: from smtp.codeaurora.org ([198.145.29.96]:39046 "EHLO
+        smtp.codeaurora.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726634AbfFACnh (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 31 May 2019 22:12:39 -0400
-Received: by mail-vk1-f201.google.com with SMTP id b85so4781944vka.11
-        for <linux-arm-msm@vger.kernel.org>; Fri, 31 May 2019 19:12:38 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
-         :cc;
-        bh=08mjM/33fuAqClzZoa7YUqdS1ySMCsNBKI12UqOjWzk=;
-        b=XU+pKjLjCREmIBEMxtJFIuXHdFTwxOwud1WuUBFVM/dIo2ugghEu8frk5STuW6Ba5X
-         sl+zeuOutVq74dkKsF8vRIABDKcSElkUh8RjD6BNxGAB+lxazRNlgWEoJ5Z7znW5Kw81
-         Kky7qO0kD/7H1w3E5t6b5/pD/4qeE8nMajfcqDgwpGjo01ZteNYb156IoMwCXtY+ISKy
-         p8pG0CSF3ULO7WtN20Y7tCtpZoKv+/yzn1rDcbCka/j2ixifbrz4SP2x7kCb1zYsGRbJ
-         uuoCgNifI0hwYZcLlvqKfXAHyOOnJkHvtikvnxGbGK/HHfOFUOe/zTJmDCwfP2ExJoDD
-         wyHA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
-         :references:subject:from:to:cc;
-        bh=08mjM/33fuAqClzZoa7YUqdS1ySMCsNBKI12UqOjWzk=;
-        b=N4nUhxpA/ZochKBEO7RgjKf49zikQfEyR73bR2JXnJkNvQyhwBIRu2ZFgS4Rut35Zx
-         i4criHI/nIxW56UXXdx/guFr1qMM0S4QxT+5YW8rAZ/NA+LegimJzOZK8S/4NMNjnL5P
-         Pyq+hYpUI/OgvKhePzgIGIDwrrl3pDc9nf+Yv1xy+K46N4HNxCE0WPs4yGWSIblZVPn9
-         /PI+ZP5Qorx8EJh1RJz1YAQ7wNchVxt8t6UkiJ+hb6B74Om+w1W0jLtQ8uusjpkgRFTK
-         r/HZr37bzqAro+dxPDpobnZJWx7m0g43T1NU66XEeFjVb7uDPr0V+h4qKlMbHULZyDzf
-         L7Hw==
-X-Gm-Message-State: APjAAAXGmmxKfv7tqnbMxLUuH1oqGWE0UhlQCaBAX78nsV5P7IgLaOj9
-        b+sfLZwKxwC2VPBt6UW4DrtXDmXqrzITlzA=
-X-Google-Smtp-Source: APXvYqyZctxOLLcNqdJz4F8qgSoryrsfzX9pcTmEDGxkkTcjvAc7STsB97HnlgnuSCfsvxcZBuyiP5a9mw7ZzC4=
-X-Received: by 2002:a67:ea03:: with SMTP id g3mr6750699vso.212.1559355157607;
- Fri, 31 May 2019 19:12:37 -0700 (PDT)
-Date:   Fri, 31 May 2019 19:12:28 -0700
-In-Reply-To: <20190423132823.7915-1-georgi.djakov@linaro.org>
-Message-Id: <20190601021228.210574-1-saravanak@google.com>
-Mime-Version: 1.0
-References: <20190423132823.7915-1-georgi.djakov@linaro.org>
-X-Mailer: git-send-email 2.22.0.rc1.311.g5d7573a151-goog
-Subject: Re: [PATCH v2 0/5] Introduce OPP bandwidth bindings
-From:   Saravana Kannan <saravanak@google.com>
-To:     georgi.djakov@linaro.org
-Cc:     amit.kucheria@linaro.org, bjorn.andersson@linaro.org,
-        daidavid1@codeaurora.org, devicetree@vger.kernel.org,
-        evgreen@chromium.org, jcrouse@codeaurora.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-pm@vger.kernel.org, mark.rutland@arm.com, nm@ti.com,
-        rjw@rjwysocki.net, robh+dt@kernel.org, sboyd@kernel.org,
-        seansw@qti.qualcomm.com, sibis@codeaurora.org,
-        vincent.guittot@linaro.org, vireshk@kernel.org,
-        saravanak@google.com, kernel-team@android.com
-Content-Type: text/plain; charset="UTF-8"
+        Fri, 31 May 2019 22:43:37 -0400
+Received: by smtp.codeaurora.org (Postfix, from userid 1000)
+        id AB47860AD1; Sat,  1 Jun 2019 02:43:36 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
+        s=default; t=1559357016;
+        bh=EIGdHRTGMSH8BrR4fNTW/L7YHCj/dHmkgWPz/8baTkk=;
+        h=From:To:Cc:Subject:Date:From;
+        b=kzjqUEITrbZXR8nDM/ieBr3arNCD85iak0qOLuY92dXcPaNvKxX+Erwn5ygm+JQ7n
+         neSiKTiSVcdphc/E3JsaM4mbLcU+Bv/Mi90VrG5Jz+xGVuRrZlF+PQN1J2C5qILLEy
+         hU2+eNlNXaIYyLux0nz5I+X0n5HUylmh4ErqFrA4=
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        pdx-caf-mail.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.7 required=2.0 tests=ALL_TRUSTED,BAYES_00,
+        DKIM_INVALID,DKIM_SIGNED,SPF_NONE autolearn=no autolearn_force=no
+        version=3.4.0
+Received: from abhinavk-linux.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: abhinavk@smtp.codeaurora.org)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 8CFBB60312;
+        Sat,  1 Jun 2019 02:43:35 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
+        s=default; t=1559357015;
+        bh=EIGdHRTGMSH8BrR4fNTW/L7YHCj/dHmkgWPz/8baTkk=;
+        h=From:To:Cc:Subject:Date:From;
+        b=FaulWKHrxQedjqxTPLe7lPVM3Ogjdr7ayPTSHSYQ9X/dQs5BadNcsH14fFIEFH2E1
+         P+h8Q4MiYuATcH54SupiS9EeHuQlCYuiahOVeqh9EkWryU7B+w+t+Ac8Ol5CwGb+et
+         CIV57FL+ART+JjJa95Jbtpw3gR7uyXSKfOJ4UgKs=
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 8CFBB60312
+Authentication-Results: pdx-caf-mail.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: pdx-caf-mail.web.codeaurora.org; spf=none smtp.mailfrom=abhinavk@codeaurora.org
+From:   Abhinav Kumar <abhinavk@codeaurora.org>
+To:     dri-devel@lists.freedesktop.org
+Cc:     Abhinav Kumar <abhinavk@codeaurora.org>,
+        linux-arm-msm@vger.kernel.org, robdclark@gmail.com,
+        jsanka@codeaurora.org, seanpaul@chromium.org,
+        nganji@codeaurora.org, chandanu@codeaurora.org,
+        hoegsberg@google.com
+Subject: [PATCH v2] drm/msm/dsi: add protection against NULL dsi device
+Date:   Fri, 31 May 2019 19:43:27 -0700
+Message-Id: <1559357007-21004-1-git-send-email-abhinavk@codeaurora.org>
+X-Mailer: git-send-email 1.9.1
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-I'll have to Nack this series because it's making a couple of wrong assumptions
-about bandwidth voting.
+When panel probe happens after DSI probe, the DSI probe is deferred as
+per current design. In the probe defer path dsi device is destroyed.
+This NULL dsi device could be deferenced by the panel probe in the
+mipi_dsi_attach path.
 
-Firstly, it's mixing up OPP to bandwidth mapping (Eg: CPU freq to CPU<->DDR
-bandwidth mapping) with the bandwidth levels that are actually supported by an
-interconnect path (Eg: CPU<->DDR bandwidth levels). For example, CPU0 might
-decide to vote for a max of 10 GB/s because it's a little CPU and never needs
-anything higher than 10 GB/s even at CPU0's max frequency. But that has no
-bearing on bandwidth level available between CPU<->DDR.
+Check for NULL dsi device before accessing it.
 
-There needs to be a separate BW OPP table describing the bandwith levels
-available for the CPU<->DDR path and then a separate mapping between CPU OPP to
-CPU<->DDR BW OPP. That way, the mapping decision (policy or voltage based
-config decision) doesn't affect the description of what the hardware really is
-capable of.
+Changes in v2:
+ - Add more comments on how this NULL pointer situation will be hit
 
-Put another way, if someone comes around and decides the CPU0's max freq should
-ask for 15 GB/s because some shared voltage rail would already be pushed to a
-voltage sufficient to support 15 GB/s, then it shouldn't change the HW
-description of what bandwidth levels are available between CPU<->DDR. If the
-CPU<->DDR path supports 20 GB/s, it always does independent of the CPU OPP
-table mapping.
+Reported-by: Jeffrey Hugo <jhugo@codeaurora.org>
+Tested-by: Jeffrey Hugo <jhugo@codeaurora.org>
+Signed-off-by: Abhinav Kumar <abhinavk@codeaurora.org>
+---
+ drivers/gpu/drm/msm/dsi/dsi_manager.c | 12 +++++++++++-
+ 1 file changed, 11 insertions(+), 1 deletion(-)
 
-By splitting out the available bandwidth levels of the CPU<->DDR path into a
-separate BW OPP table, we avoid these kinds of issues.
-
-Also, one could easily imagine using a bandwidth counter or some other means of
-BW measurement hardware to vote for bandwidth between CPU<->DDR and CPU<->L3.
-That entity should be able to know/learn all the available bandwidth levels in
-the CPU<->DDR path without forcing bandwidth levels to be listed in CPU OPP
-table. And if it's measuring bandwidth at a point common for all CPUs, what CPU
-OPP table is it even supposed to look at to learn all the available bandwidth
-levels. It just doesn't make sense.
-
-It's also easy to envision having multiple policies or devfreq governors voting
-for an interconnect path. The mapping you are talking about in this series is
-just an input for one of them (the cpufreq-map governor I sent out a while
-ago).
-
-Secondly, when it comes to bandwidth OPP tables, the peak bandwidth should be
-the key/first element (similar to how frequency is now). Long explanation
-follows.
-
-All the sensible frequency combinations of all the hardware interconnects
-between the master and slave port (Eg: GPU -> MMNOC -> BIMC -> DDR) determine
-the peak bandwidth levels available in that interconnect path.
-
-If multiple devices (GPU, CPU, etc) vote for different peak bandwidths for an
-interconnect (say BIMC), the interconnect provider picks the max peak bandwidth
-amongst all the requests and then picks the lowest interconnect frequency that
-can support the max peak bandwidth. 
-
-So the devices (GPU, CPU, etc), actually have some control on what interconnect
-frequencies are picked by asking for a specific peak bandwidth -- so there's
-actually a notion of useful levels.
-
-Average bandwidth is an additive property -- so if CPU and GPU ask for 5 GB/s
-and 3 GB/s respectively for an interconnect, the interconnect provider adds
-them up and configures the interconnect for 8 GB/s. So if GPU asks for 5 GB/s
-average bandwidth, it has no idea what frequency the interconnect will actually
-get configured to. So, average bandwidth really doesn't provide a sense of
-levels to pick from for a given interconnect path.
-
-So peak bandwidth is a much better pick than average bandwidth for being a key
-to the bandwidth OPP table.
-
-So what I think we need is:
-* Bandwidth OPP support in the kernel
-* Bandwidth OPP DT binding to describe the bandwidth levels available for
-  different interconnect paths.
-* A new "interconnect-opp" property that can point to different BW OPP
-  tables for each of the interconnect paths listed under interconnects
-  property.
-
-Then for mapping from device OPP to interconnect path bandwidth OPPs, you
-just used the existing required-opps binding to link an entry in GPU OPP to
-an entry in GPU<->DDR bandwidth OPP table. That way the hardware is
-actually described correctly and the mapping is kept separate.
-
-So, in the end, it'll look something like this in DT.
-
-gpu_cache_opp_table: gpu_cache_opp_table {
-	compatible = "operating-points-v2";
-
-	gpu_cache_3000: opp-3000 {
-		opp-peak-mbps = <3000>;
-		avg-mbps = <1000>;
-	};
-	gpu_cache_6000: opp-6000 {
-		opp-peak-mbps = <6000>;
-		avg-mbps = <2000>;
-	};
-	gpu_cache_9000: opp-9000 {
-		opp-peak-mbps = <9000>;
-		avg-mbps = <9000>;
-	};
-};
-
-gpu_ddr_opp_table: gpu_ddr_opp_table {
-	compatible = "operating-points-v2";
-
-	gpu_ddr_1525: opp-1525 {
-		opp-peak-mbps = <1525>;
-		avg-mbps = <452>;
-	};
-	gpu_ddr_3051: opp-3051 {
-		opp-peak-mbps = <3051>;
-		avg-mbps = <915>;
-	};
-	gpu_ddr_7500: opp-7500 {
-		opp-peak-mbps = <7500>;
-		avg-mbps = <3000>;
-	};
-};
-
-gpu_opp_table: gpu_opp_table {
-	compatible = "operating-points-v2";
-	opp-shared;
-
-	opp-200000000 {
-		opp-hz = /bits/ 64 <200000000>;
-		required-opps = <&gpu_cache_3000>, <&gpu_ddr_1525>;
-	};
-	opp-400000000 {
-		opp-hz = /bits/ 64 <400000000>;
-		required-opps = <&gpu_cache_6000>, <&gpu_ddr_3051>;
-	};
-};
-
-gpu@7864000 {
-	...
-	operating-points-v2 = <&gpu_opp_table>;
-	interconnects = <&mmnoc MASTER_GPU_1 &bimc SLAVE_SYSTEL_CACHE>,
-			<&mmnoc MASTER_GPU_1 &bimc SLAVE_DDR>;
-	interconnect-names = "gpu-cache", "gpu-mem";
-	interconnect-opps = <&gpu_cache_bw_opp>, <&gpu_ddr_bw_opp>
-};
-
-It's very clear what the HW supports vs what the mapping chooses to use. It's
-also very clearer what the mapping is doing because it actually points to
-entries in appropriately names OPP tables. There's no confusion on what mapping
-corresponds to what interconnect paths -- which is why this doesn't need a
-comment to clarify the intent here whereas in this patch series, the mappings
-needed comments on which interconnect they are referring to.
-
-Sorry about the long email and jumping in out of nowhere. The need for
-something like this has been in my mind for a long time and my situation has
-also changed where I can be more active upstream compared to before.
-
-Thanks and have a nice weekend.
-
--Saravana
-
+diff --git a/drivers/gpu/drm/msm/dsi/dsi_manager.c b/drivers/gpu/drm/msm/dsi/dsi_manager.c
+index 80aa634..8fcb13f 100644
+--- a/drivers/gpu/drm/msm/dsi/dsi_manager.c
++++ b/drivers/gpu/drm/msm/dsi/dsi_manager.c
+@@ -769,7 +769,7 @@ bool msm_dsi_manager_cmd_xfer_trigger(int id, u32 dma_base, u32 len)
+ void msm_dsi_manager_attach_dsi_device(int id, u32 device_flags)
+ {
+ 	struct msm_dsi *msm_dsi = dsi_mgr_get_dsi(id);
+-	struct drm_device *dev = msm_dsi->dev;
++	struct drm_device *dev;
+ 	struct msm_drm_private *priv;
+ 	struct msm_kms *kms;
+ 	struct drm_encoder *encoder;
+@@ -781,7 +781,17 @@ void msm_dsi_manager_attach_dsi_device(int id, u32 device_flags)
+ 	 * (generally the case when we're connected to a drm_panel of the type
+ 	 * mipi_dsi_device), this would be NULL. In such cases, try to set the
+ 	 * encoder mode in the DSI connector's detect() op.
++	 *
++	 * msm_dsi pointer is assigned to a valid dsi device only when
++	 * msm_dsi_manager_register() succeeds. When panel hasnt probed yet
++	 * dsi_mgr_setup_components() could potentially return -EDEFER and
++	 * assign the msm_dsi->dev to NULL. When the panel now probes and calls
++	 * mipi_dsi_attach(), this will call msm_dsi_manager_attach_dsi_device()
++	 * which will result in a NULL pointer dereference
+ 	 */
++
++	dev = msm_dsi ? msm_dsi->dev : NULL;
++
+ 	if (!dev)
+ 		return;
+ 
 -- 
+The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
+a Linux Foundation Collaborative Project
+
