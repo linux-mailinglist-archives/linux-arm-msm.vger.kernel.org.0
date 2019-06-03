@@ -2,224 +2,255 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id B9F103299E
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  3 Jun 2019 09:31:04 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id CD3CC32A23
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  3 Jun 2019 09:57:07 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726606AbfFCHbA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 3 Jun 2019 03:31:00 -0400
-Received: from mail-ed1-f68.google.com ([209.85.208.68]:36381 "EHLO
-        mail-ed1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726616AbfFCHa5 (ORCPT
+        id S1726179AbfFCH5H (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 3 Jun 2019 03:57:07 -0400
+Received: from smtp.codeaurora.org ([198.145.29.96]:40916 "EHLO
+        smtp.codeaurora.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725856AbfFCH5G (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 3 Jun 2019 03:30:57 -0400
-Received: by mail-ed1-f68.google.com with SMTP id a8so25526479edx.3
-        for <linux-arm-msm@vger.kernel.org>; Mon, 03 Jun 2019 00:30:55 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=fo/05+9hcZwW8SjdLMg/XD5HT/ASZ+Wu485ITiG25q4=;
-        b=QLQwRznFSB/E5WI16dNZSQ5jie0R77DHJ6JJlOD0tT30W++++l6AdGqNNSygq0F3ex
-         hushvXYIIt7EpVLKqh6tIfIeeBRMU5bwbs5/asealweqDQ6LVVB+ixq6t30Y8v/vNunv
-         /PuCgQE1eHrAPfVhm8Ug+s7AR6hwxlF8W3hck=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=fo/05+9hcZwW8SjdLMg/XD5HT/ASZ+Wu485ITiG25q4=;
-        b=tWGJLp5UMPnbdG7dlxoqrkO5mhTlIT4l4/K7mqoQFCJliDInhtyM4lnwCKTLAM2G5P
-         AIRG8X/CCkeD6b8g8dgpDxYyvlKoYFLZOdyrbiUHLDszy1Y6FtnbT18R7VV35ocACSnP
-         QKGIug0XJTIiOUyP/PhIhgnRGudDnpHWplXsUraWpBdyIHbERL0hmo9xVCICIZ0jYjX0
-         e4LwcwioQeWLhSrXyYHe2YlZ/SVkBFWoZPVB+2/tiIHmkEhGcvvRgyU8O4PiIFS/rIqS
-         RdnlUKpuoBL7J7r0he5iJUFcS8YO9+9l9pXTB+wFVO9xtHy+SJGw1kJ12WEKusqeeLiR
-         +qPA==
-X-Gm-Message-State: APjAAAUXK88ImgxlPb0d5J7zvl1z7tZ8JFXZjswRFLxJlIGeziL1iwT9
-        Oo87HKsylfFDhqXQnbNJzh+5u5nAE2nCKQ==
-X-Google-Smtp-Source: APXvYqxdOjgryX9xnhAcdm9NvQgZ6M4J8LZjkCib0yvnb3Zna/3TfoZ+2SfZHxwVeiWw5QE0eUukVg==
-X-Received: by 2002:a17:906:7d16:: with SMTP id u22mr22115294ejo.85.1559547054840;
-        Mon, 03 Jun 2019 00:30:54 -0700 (PDT)
-Received: from mail-wr1-f48.google.com (mail-wr1-f48.google.com. [209.85.221.48])
-        by smtp.gmail.com with ESMTPSA id z26sm2350805edr.5.2019.06.03.00.30.52
-        for <linux-arm-msm@vger.kernel.org>
-        (version=TLS1_3 cipher=AEAD-AES128-GCM-SHA256 bits=128/128);
-        Mon, 03 Jun 2019 00:30:53 -0700 (PDT)
-Received: by mail-wr1-f48.google.com with SMTP id o12so3710837wrj.9
-        for <linux-arm-msm@vger.kernel.org>; Mon, 03 Jun 2019 00:30:52 -0700 (PDT)
-X-Received: by 2002:a5d:568c:: with SMTP id f12mr15245783wrv.77.1559547052239;
- Mon, 03 Jun 2019 00:30:52 -0700 (PDT)
-MIME-Version: 1.0
-References: <20190117162008.25217-1-stanimir.varbanov@linaro.org>
- <20190117162008.25217-11-stanimir.varbanov@linaro.org> <60b3efff-31c1-bc04-8af9-deebb8bc013a@xs4all.nl>
- <fe51ae1e-6d2e-36bd-485a-d85520ad2386@linaro.org> <CAAFQd5Co3G1J4+HOcjtCb7p3rhLcm+1E=mPr2d=AtdOSuF_eKg@mail.gmail.com>
- <c56930e0-be6f-2ade-fcea-8ee0ff6247ec@linaro.org> <CAAFQd5CNGsnqjpLsWSTf=8r+hSfyOgD8SU-tn5EbHCCuuSgH6A@mail.gmail.com>
- <01b6683f-9378-e6f2-501f-e2213e6c690d@xs4all.nl> <CAAFQd5Dw-1A2gXuC54Z7808L6Vm9mjPpE7Kbj-TZC18_k_FgVA@mail.gmail.com>
- <a9b11ba0-adca-f974-67a5-a0fe54689bba@xs4all.nl> <CAAFQd5CMpQ4ODyeBPnOv4w9ktqPsiqJtSkpRhAx+XgQ=Lz9crQ@mail.gmail.com>
- <ee62fdb0-d8fa-0695-9088-5aaef48e485f@linaro.org> <0cf25512-97b3-f46a-c266-508368e261d8@xs4all.nl>
-In-Reply-To: <0cf25512-97b3-f46a-c266-508368e261d8@xs4all.nl>
-From:   Tomasz Figa <tfiga@chromium.org>
-Date:   Mon, 3 Jun 2019 16:30:40 +0900
-X-Gmail-Original-Message-ID: <CAAFQd5AWSEyAyVVJ21C554cbLRE9tRfCM=iwwJMbmKNKS7NJ2g@mail.gmail.com>
-Message-ID: <CAAFQd5AWSEyAyVVJ21C554cbLRE9tRfCM=iwwJMbmKNKS7NJ2g@mail.gmail.com>
-Subject: Re: [PATCH 10/10] venus: dec: make decoder compliant with stateful
- codec API
-To:     Hans Verkuil <hverkuil@xs4all.nl>
-Cc:     Stanimir Varbanov <stanimir.varbanov@linaro.org>,
-        Linux Media Mailing List <linux-media@vger.kernel.org>,
-        Mauro Carvalho Chehab <mchehab@kernel.org>,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        Mon, 3 Jun 2019 03:57:06 -0400
+Received: by smtp.codeaurora.org (Postfix, from userid 1000)
+        id 011D860DAA; Mon,  3 Jun 2019 07:57:05 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
+        s=default; t=1559548626;
+        bh=mBZgBo5F/entiEG9jUDRDHQHu9Gepo00mMtixF0pRcY=;
+        h=Subject:To:Cc:References:From:Date:In-Reply-To:From;
+        b=kexSYBEEE3NS2aOoRjLQfXcAb+M1RLXXCJy7XvgNO7J5O69U338K7jyLZBBVe+C1R
+         8snyRIFf6YWuM2GV5+ujctv0AtPYNRJkMHAMZCnCgVQVtk2CTyvCSp35LhH96rPGvc
+         p0D1NFExjam50i90boDlkkn1j6Ngnbo2x4K1fOL8=
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        pdx-caf-mail.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.7 required=2.0 tests=ALL_TRUSTED,BAYES_00,
+        DKIM_INVALID,DKIM_SIGNED,SPF_NONE autolearn=no autolearn_force=no
+        version=3.4.0
+Received: from [10.79.129.126] (blr-bdr-fw-01_globalnat_allzones-outside.qualcomm.com [103.229.18.19])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: vivek.gautam@smtp.codeaurora.org)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 1CC0A60388;
+        Mon,  3 Jun 2019 07:56:58 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
+        s=default; t=1559548624;
+        bh=mBZgBo5F/entiEG9jUDRDHQHu9Gepo00mMtixF0pRcY=;
+        h=Subject:To:Cc:References:From:Date:In-Reply-To:From;
+        b=DDy3aAQh147+cMvWi72FqzW6u1IgXfVYg+CdwwWQgTMOgsrzOOrWK82m3Ue0K8unv
+         rL0p+pD4P38MqPOKciAjhZIW37Vwejd3etrzi0ruSjtJxTw2HRXMetSpNU10zcv8bk
+         p0rKmbpViYb5dLGvFdEmtKfJamrzJc68W1puWoGU=
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 1CC0A60388
+Authentication-Results: pdx-caf-mail.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: pdx-caf-mail.web.codeaurora.org; spf=none smtp.mailfrom=vivek.gautam@codeaurora.org
+Subject: Re: [PATCH] of/device: add blacklist for iommu dma_ops
+To:     Tomasz Figa <tfiga@chromium.org>, Rob Clark <robdclark@gmail.com>,
+        Marek Szyprowski <m.szyprowski@samsung.com>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     Rob Herring <robh+dt@kernel.org>,
+        Linux IOMMU <iommu@lists.linux-foundation.org>,
+        dri-devel <dri-devel@lists.freedesktop.org>,
         linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Vikash Garodia <vgarodia@codeaurora.org>,
-        Alexandre Courbot <acourbot@chromium.org>,
-        Malathi Gottam <mgottam@codeaurora.org>
-Content-Type: text/plain; charset="UTF-8"
+        Christoph Hellwig <hch@lst.de>,
+        Robin Murphy <robin.murphy@arm.com>,
+        Will Deacon <will.deacon@arm.com>,
+        David Airlie <airlied@linux.ie>,
+        freedreno <freedreno@lists.freedesktop.org>,
+        Archit Taneja <architt@codeaurora.org>,
+        Sean Paul <seanpaul@chromium.org>,
+        Doug Anderson <dianders@chromium.org>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Frank Rowand <frowand.list@gmail.com>,
+        devicetree@vger.kernel.org,
+        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>
+References: <20181201165348.24140-1-robdclark@gmail.com>
+ <CAL_JsqJmPqis46Un91QyhXgdrVtfATMP_hTp6wSeSAfc8MLFfw@mail.gmail.com>
+ <CAF6AEGs9Nsft8ofZkGz_yWBPBC+prh8dBSkJ4PJr8yk2c5FMdQ@mail.gmail.com>
+ <CAF6AEGt-dhbQS5zZCNVTLT57OiUwO0RiP5bawTSu2RKZ-7W-aw@mail.gmail.com>
+ <CAAFQd5BdrJFL5LKK8O5NPDKWfFgkTX_JU-jU3giEz33tj-jwCA@mail.gmail.com>
+From:   Vivek Gautam <vivek.gautam@codeaurora.org>
+Message-ID: <4864dc3e-6e04-43e5-32c8-2cf5a0705fe5@codeaurora.org>
+Date:   Mon, 3 Jun 2019 13:26:56 +0530
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:60.0) Gecko/20100101
+ Thunderbird/60.7.0
+MIME-Version: 1.0
+In-Reply-To: <CAAFQd5BdrJFL5LKK8O5NPDKWfFgkTX_JU-jU3giEz33tj-jwCA@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Content-Language: en-US
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Jun 3, 2019 at 4:26 PM Hans Verkuil <hverkuil@xs4all.nl> wrote:
->
-> On 5/31/19 10:01 AM, Stanimir Varbanov wrote:
-> > Hi,
-> >
-> > On 5/27/19 11:18 AM, Tomasz Figa wrote:
-> >> On Mon, May 27, 2019 at 4:39 PM Hans Verkuil <hverkuil@xs4all.nl> wrote:
-> >>>
-> >>> On 5/27/19 5:51 AM, Tomasz Figa wrote:
-> >>>> On Tue, May 21, 2019 at 9:27 PM Hans Verkuil <hverkuil@xs4all.nl> wrote:
-> >>>>>
-> >>>>> On 5/21/19 11:09 AM, Tomasz Figa wrote:
-> >>>>>> Hi Stan,
-> >>>>>>
-> >>>>>> On Mon, May 20, 2019 at 11:47 PM Stanimir Varbanov
-> >>>>>> <stanimir.varbanov@linaro.org> wrote:
-> >>>>>>>
-> >>>>>>> Hi Tomasz,
-> >>>>>>>
-> >>>>>>> On 4/24/19 3:39 PM, Tomasz Figa wrote:
-> >>>>>>>> On Wed, Apr 24, 2019 at 9:15 PM Stanimir Varbanov
-> >>>>>>>> <stanimir.varbanov@linaro.org> wrote:
-> >>>>>>>>>
-> >>>>>>>>> Hi Hans,
-> >>>>>>>>>
-> >>>>>>>>> On 2/15/19 3:44 PM, Hans Verkuil wrote:
-> >>>>>>>>>> Hi Stanimir,
-> >>>>>>>>>>
-> >>>>>>>>>> I never paid much attention to this patch series since others were busy
-> >>>>>>>>>> discussing it and I had a lot of other things on my plate, but then I heard
-> >>>>>>>>>> that this patch made G_FMT blocking.
-> >>>>>>>>>
-> >>>>>>>>> OK, another option could be to block REQBUF(CAPTURE) until event from hw
-> >>>>>>>>> is received that the stream is parsed and the resolution is correctly
-> >>>>>>>>> set by application. Just to note that I'd think to this like a temporal
-> >>>>>>>>> solution until gstreamer implements v4l events.
-> >>>>>>>>>
-> >>>>>>>>> Is that looks good to you?
-> >>>>>>>>
-> >>>>>>>> Hmm, I thought we concluded that gstreamer sets the width and height
-> >>>>>>>> in OUTPUT queue before querying the CAPTURE queue and so making the
-> >>>>>>>> driver calculate the CAPTURE format based on what's set on OUTPUT
-> >>>>>>>> would work fine. Did I miss something?
-> >>>>>>>
-> >>>>>>> Nobody is miss something.
-> >>>>>>>
-> >>>>>>> First some background about how Venus implements stateful codec API.
-> >>>>>>>
-> >>>>>>> The Venus firmware can generate two events "sufficient" and
-> >>>>>>> "insufficient" buffer requirements (this includes decoder output buffer
-> >>>>>>> size and internal/scratch buffer sizes). Presently I always set minimum
-> >>>>>>> possible decoder resolution no matter what the user said, and by that
-> >>>>>>> way I'm sure that "insufficient" event will always be triggered by the
-> >>>>>>> firmware (the other reason to take this path is because this is the
-> >>>>>>> least-common-divider for all supported Venus hw/fw versions thus common
-> >>>>>>> code in the driver). The reconfiguration (during codec Initialization
-> >>>>>>> sequence) is made from STREAMON(CAPTURE) context. Now, to make that
-> >>>>>>> re-configuration happen I need to wait for "insufficient" event from
-> >>>>>>> firmware in order to know the real coded resolution.
-> >>>>>>>
-> >>>>>>> In the case of gstreamer where v4l2_events support is missing I have to
-> >>>>>>> block (wait for firmware event) REQBUF(CAPTURE) (vb2::queue_setup) or
-> >>>>>>> STREAMON(CAPTURE) (vb2::start_streaming).
-> >>>>>>>
-> >>>>>>> I tried to set the coded resolution to the firmware as-is it set by
-> >>>>>>> gstreamer but then I cannot receive the "sufficient" event for VP8 and
-> >>>>>>> VP9 codecs. So I return back to the solution with minimum resolution above.
-> >>>>>>>
-> >>>>>>> I'm open for suggestions.
-> >>>>>>
-> >>>>>> I think you could still keep setting the minimum size and wait for the
-> >>>>>> "insufficient" event. At the same time, you could speculatively
-> >>>>>> advertise the expected "sufficient" size on the CAPTURE queue before
-> >>>>>> the hardware signals those. Even if you mispredict them, you'll get
-> >>>>>> the event, update the CAPTURE resolution and send the source change
-> >>>>>> event to the application, which would then give you the correct
-> >>>>>> buffers. Would that work for you?
-> >>>>>
-> >>>>> As I understand it this still would require event support, which gstreamer
-> >>>>> doesn't have.
-> >>>>
-> >>>> I don't think it matches what I remember from the earlier discussion.
-> >>>> As long as Gstreamer sets the visible resolution (from the container
-> >>>> AFAIR) on OUTPUT, the driver would adjust it to something that is
-> >>>> expected to be the right framebuffer resolution and so Gstreamer would
-> >>>> be able to continue. Of course if the expected value doesn't match, it
-> >>>> wouldn't work, but it's the same as currently for Coda AFAICT.
-> >>>>
-> >>>>>
-> >>>>> I think it is OK to have REQBUFS sleep in this case. However, I would only
-> >>>>
-> >>>> Why REQBUFS? While that could possibly allow us to allocate the right
-> >>>> buffers, Gstreamer wouldn't be able to know the right format, because
-> >>>> it would query it before REQBUFS, wouldn't it?
-> >>>
-> >>> Oops, you are right. It's got to be in G_FMT(CAPTURE), but *only* if
-> >>> nobody subscribed to the SOURCE_CHANGE event.
-> >>>
-> >>>>
-> >>>> For this reason, s5p-mfc makes G_FMT(CAPTURE) blocking and if we
-> >>>> decide to forcefully keep the compatibility, even with in drivers, we
-> >>>> should probably do the same here.
-> >>>>
-> >>>>> enable this behavior if the application didn't subscribe to the SOURCE_CHANGE
-> >>>>> event. That's easy enough to check in the driver. And that means that if the
-> >>>>> application is well written, then the driver will behave in a completely
-> >>>>> standard way that the compliance test can check.
-> >>>>
-> >>>> I guess one could have some helpers for this. They would listen to the
-> >>>> source change events internally and block / wake-up appropriate ioctls
-> >>>> whenever necessary.
-> >>>
-> >>> I really do not want this for new drivers. gstreamer should be fixed.
-> >>> A blocking G_FMT is just plain bad. Only those drivers that do this, can
-> >>> still block if nobody subscribed to EVENT_SOURCE_CHANGE.
-> >>
-> >> Yeah and that's why I just suggested to mimic coda, which doesn't
-> >> block, but apparently gstreamer still works with it.
-> >
-> > Unfortunately in Venus case that is not an easy task (as I tried to
-> > explain why above).
-> >
-> > To have an unified and common code for all different SoCs and
-> > firmware/hardware versions I decided to set the minimum supported
-> > resolution for the decoder (no matter what the user said) and trigger
-> > the reconfiguration event always. Something more, I need the event also
-> > to retrieve the minimum capture buffers
-> > (V4L2_CID_MIN_BUFFERS_FOR_CAPTURE) and sizes for capture and
-> > internal/scratch buffers as well, thus I really need to wait for that
-> > event.
-> >
-> > So, just to confirm - you are fine with blocking G_FMT (not REQBUF) when
-> > the user doesn't subscribe for v4l2 events?
->
-> 'Fine' is too strong a word :-)
->
-> But I think this is a reasonable compromise.
->
-> Document carefully why you are doing this, since it is purely for backwards
-> compatibility reasons. And perhaps at some point in the future the workaround
-> might be removed again.
 
-Thanks Hans. I don't have objections either.
 
-Best regards,
-Tomasz
+On 6/3/2019 11:50 AM, Tomasz Figa wrote:
+> On Mon, Jun 3, 2019 at 4:40 AM Rob Clark <robdclark@gmail.com> wrote:
+>> On Fri, May 10, 2019 at 7:35 AM Rob Clark <robdclark@gmail.com> wrote:
+>>> On Tue, Dec 4, 2018 at 2:29 PM Rob Herring <robh+dt@kernel.org> wrote:
+>>>> On Sat, Dec 1, 2018 at 10:54 AM Rob Clark <robdclark@gmail.com> wrote:
+>>>>> This solves a problem we see with drm/msm, caused by getting
+>>>>> iommu_dma_ops while we attach our own domain and manage it directly at
+>>>>> the iommu API level:
+>>>>>
+>>>>>    [0000000000000038] user address but active_mm is swapper
+>>>>>    Internal error: Oops: 96000005 [#1] PREEMPT SMP
+>>>>>    Modules linked in:
+>>>>>    CPU: 7 PID: 70 Comm: kworker/7:1 Tainted: G        W         4.19.3 #90
+>>>>>    Hardware name: xxx (DT)
+>>>>>    Workqueue: events deferred_probe_work_func
+>>>>>    pstate: 80c00009 (Nzcv daif +PAN +UAO)
+>>>>>    pc : iommu_dma_map_sg+0x7c/0x2c8
+>>>>>    lr : iommu_dma_map_sg+0x40/0x2c8
+>>>>>    sp : ffffff80095eb4f0
+>>>>>    x29: ffffff80095eb4f0 x28: 0000000000000000
+>>>>>    x27: ffffffc0f9431578 x26: 0000000000000000
+>>>>>    x25: 00000000ffffffff x24: 0000000000000003
+>>>>>    x23: 0000000000000001 x22: ffffffc0fa9ac010
+>>>>>    x21: 0000000000000000 x20: ffffffc0fab40980
+>>>>>    x19: ffffffc0fab40980 x18: 0000000000000003
+>>>>>    x17: 00000000000001c4 x16: 0000000000000007
+>>>>>    x15: 000000000000000e x14: ffffffffffffffff
+>>>>>    x13: ffff000000000000 x12: 0000000000000028
+>>>>>    x11: 0101010101010101 x10: 7f7f7f7f7f7f7f7f
+>>>>>    x9 : 0000000000000000 x8 : ffffffc0fab409a0
+>>>>>    x7 : 0000000000000000 x6 : 0000000000000002
+>>>>>    x5 : 0000000100000000 x4 : 0000000000000000
+>>>>>    x3 : 0000000000000001 x2 : 0000000000000002
+>>>>>    x1 : ffffffc0f9431578 x0 : 0000000000000000
+>>>>>    Process kworker/7:1 (pid: 70, stack limit = 0x0000000017d08ffb)
+>>>>>    Call trace:
+>>>>>     iommu_dma_map_sg+0x7c/0x2c8
+>>>>>     __iommu_map_sg_attrs+0x70/0x84
+>>>>>     get_pages+0x170/0x1e8
+>>>>>     msm_gem_get_iova+0x8c/0x128
+>>>>>     _msm_gem_kernel_new+0x6c/0xc8
+>>>>>     msm_gem_kernel_new+0x4c/0x58
+>>>>>     dsi_tx_buf_alloc_6g+0x4c/0x8c
+>>>>>     msm_dsi_host_modeset_init+0xc8/0x108
+>>>>>     msm_dsi_modeset_init+0x54/0x18c
+>>>>>     _dpu_kms_drm_obj_init+0x430/0x474
+>>>>>     dpu_kms_hw_init+0x5f8/0x6b4
+>>>>>     msm_drm_bind+0x360/0x6c8
+>>>>>     try_to_bring_up_master.part.7+0x28/0x70
+>>>>>     component_master_add_with_match+0xe8/0x124
+>>>>>     msm_pdev_probe+0x294/0x2b4
+>>>>>     platform_drv_probe+0x58/0xa4
+>>>>>     really_probe+0x150/0x294
+>>>>>     driver_probe_device+0xac/0xe8
+>>>>>     __device_attach_driver+0xa4/0xb4
+>>>>>     bus_for_each_drv+0x98/0xc8
+>>>>>     __device_attach+0xac/0x12c
+>>>>>     device_initial_probe+0x24/0x30
+>>>>>     bus_probe_device+0x38/0x98
+>>>>>     deferred_probe_work_func+0x78/0xa4
+>>>>>     process_one_work+0x24c/0x3dc
+>>>>>     worker_thread+0x280/0x360
+>>>>>     kthread+0x134/0x13c
+>>>>>     ret_from_fork+0x10/0x18
+>>>>>    Code: d2800004 91000725 6b17039f 5400048a (f9401f40)
+>>>>>    ---[ end trace f22dda57f3648e2c ]---
+>>>>>    Kernel panic - not syncing: Fatal exception
+>>>>>    SMP: stopping secondary CPUs
+>>>>>    Kernel Offset: disabled
+>>>>>    CPU features: 0x0,22802a18
+>>>>>    Memory Limit: none
+>>>>>
+>>>>> The problem is that when drm/msm does it's own iommu_attach_device(),
+>>>>> now the domain returned by iommu_get_domain_for_dev() is drm/msm's
+>>>>> domain, and it doesn't have domain->iova_cookie.
+>>>>>
+>>>>> We kind of avoided this problem prior to sdm845/dpu because the iommu
+>>>>> was attached to the mdp node in dt, which is a child of the toplevel
+>>>>> mdss node (which corresponds to the dev passed in dma_map_sg()).  But
+>>>>> with sdm845, now the iommu is attached at the mdss level so we hit the
+>>>>> iommu_dma_ops in dma_map_sg().
+>>>>>
+>>>>> But auto allocating/attaching a domain before the driver is probed was
+>>>>> already a blocking problem for enabling per-context pagetables for the
+>>>>> GPU.  This problem is also now solved with this patch.
+>>>>>
+>>>>> Fixes: 97890ba9289c dma-mapping: detect and configure IOMMU in of_dma_configure
+>>>>> Tested-by: Douglas Anderson <dianders@chromium.org>
+>>>>> Signed-off-by: Rob Clark <robdclark@gmail.com>
+>>>>> ---
+>>>>> This is an alternative/replacement for [1].  What it lacks in elegance
+>>>>> it makes up for in practicality ;-)
+>>>>>
+>>>>> [1] https://patchwork.freedesktop.org/patch/264930/
+>>>>>
+>>>>>   drivers/of/device.c | 22 ++++++++++++++++++++++
+>>>>>   1 file changed, 22 insertions(+)
+>>>>>
+>>>>> diff --git a/drivers/of/device.c b/drivers/of/device.c
+>>>>> index 5957cd4fa262..15ffee00fb22 100644
+>>>>> --- a/drivers/of/device.c
+>>>>> +++ b/drivers/of/device.c
+>>>>> @@ -72,6 +72,14 @@ int of_device_add(struct platform_device *ofdev)
+>>>>>          return device_add(&ofdev->dev);
+>>>>>   }
+>>>>>
+>>>>> +static const struct of_device_id iommu_blacklist[] = {
+>>>>> +       { .compatible = "qcom,mdp4" },
+>>>>> +       { .compatible = "qcom,mdss" },
+>>>>> +       { .compatible = "qcom,sdm845-mdss" },
+>>>>> +       { .compatible = "qcom,adreno" },
+>>>>> +       {}
+>>>>> +};
+>>>> Not completely clear to whether this is still needed or not, but this
+>>>> really won't scale. Why can't the driver for these devices override
+>>>> whatever has been setup by default?
+>>>>
+>>> fwiw, at the moment it is not needed, but it will become needed again
+>>> to implement per-context pagetables (although I suppose for this we
+>>> only need to blacklist qcom,adreno and not also the display nodes).
+>> So, another case I've come across, on the display side.. I'm working
+>> on handling the case where bootloader enables display (and takes iommu
+>> out of reset).. as soon as DMA domain gets attached we get iommu
+>> faults, because bootloader has already configured display for scanout.
+>> Unfortunately this all happens before actual driver is probed and has
+>> a chance to intervene.
+
+Things are bad for MTP sdm845 too where the bootloader sets up iommu to
+display splash screen, and when the kernel resets the iommu, the mappings go
+for a toss resulting in fatal faults.
+Bjorn was working on something recently to address this. Adding him to 
+the thread.
+
+
+Best regards
+Vivek
+
+>> It's rather unfortunate that we tried to be clever rather than just
+>> making drivers call some function to opt-in to the hookup of dma iommu
+>> ops :-(
+> I think it still works for the 90% of cases and if 10% needs some
+> explicit work in the drivers, that's better than requiring 100% of the
+> drivers to do things manually.
+>
+> Adding Marek who had the same problem on Exynos.
+>
+> Best regards,
+> Tomasz
+>
+>> BR,
+>> -R
+>>
+>>> The reason is that in the current state the core code creates the
+>>> first domain before the driver has a chance to intervene and tell it
+>>> not to.  And this results that driver ends up using a different
+>>> context bank on the iommu than what the firmware expects.
+>>>
+>>> I guess the alternative is to put some property in DT.. but that
+>>> doesn't really feel right.  I guess there aren't really many (or any?)
+>>> other drivers that have this specific problem, so I don't really
+>>> expect it to be a scaling problem.
+>>>
+>>> Yeah, it's a bit ugly, but I'll take a small ugly working hack, over
+>>> elegant but non-working any day ;-)... but if someone has a better
+>>> idea then I'm all ears.
+>>>
+>>> BR,
+>>> -R
+
