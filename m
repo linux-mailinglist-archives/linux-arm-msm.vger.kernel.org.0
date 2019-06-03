@@ -2,104 +2,111 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id AB71B3376C
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  3 Jun 2019 20:02:55 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id CEAB4338D2
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  3 Jun 2019 21:04:57 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726691AbfFCSCy (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 3 Jun 2019 14:02:54 -0400
-Received: from heliosphere.sirena.org.uk ([172.104.155.198]:56568 "EHLO
-        heliosphere.sirena.org.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725876AbfFCSCy (ORCPT
+        id S1726616AbfFCTEn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 3 Jun 2019 15:04:43 -0400
+Received: from smtp.codeaurora.org ([198.145.29.96]:36876 "EHLO
+        smtp.codeaurora.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726336AbfFCTEm (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 3 Jun 2019 14:02:54 -0400
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-        d=sirena.org.uk; s=20170815-heliosphere; h=Date:Message-Id:In-Reply-To:
-        Subject:Cc:To:From:Sender:Reply-To:MIME-Version:Content-Type:
-        Content-Transfer-Encoding:Content-ID:Content-Description:Resent-Date:
-        Resent-From:Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:References:
-        List-Id:List-Help:List-Unsubscribe:List-Subscribe:List-Post:List-Owner:
-        List-Archive; bh=ma35thperYGWyb/nkjWyegfRbpj87ZHQlb98QF7Ppqg=; b=MacOEriOZ/v7
-        nuQEgHWOdboZ17Tw2BaNzgeiQmEEvvL93bfSbzUj62TIG00QKGp8rcP1m4hyHfYhVRtSJje45fL9O
-        zpVFui3og9JLXDxmFvYsW8vLkltfLZzo7tZgvrPzBXpiJ9gN9ubQTiFpmBoEinpaBKk7xUef9q0VX
-        2xvAU=;
-Received: from cpc102320-sgyl38-2-0-cust46.18-2.cable.virginm.net ([82.37.168.47] helo=finisterre.sirena.org.uk)
-        by heliosphere.sirena.org.uk with esmtpsa (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
-        (Exim 4.89)
-        (envelope-from <broonie@sirena.org.uk>)
-        id 1hXrIJ-0003ay-6h; Mon, 03 Jun 2019 18:02:51 +0000
-Received: by finisterre.sirena.org.uk (Postfix, from userid 1000)
-        id 9792D440046; Mon,  3 Jun 2019 19:02:50 +0100 (BST)
-From:   Mark Brown <broonie@kernel.org>
-To:     Jorge Ramirez-Ortiz <jorge.ramirez-ortiz@linaro.org>
-Cc:     agross@kernel.org, broonie@kernel.org, david.brown@linaro.org,
-        jorge.ramirez-ortiz@linaro.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-spi@vger.kernel.org,
-        Mark Brown <broonie@kernel.org>
-Subject: Applied "spi: qup: remove unnecessary goto" to the spi tree
-In-Reply-To: <20190531144636.27843-1-jorge.ramirez-ortiz@linaro.org>
-X-Patchwork-Hint: ignore
-Message-Id: <20190603180250.9792D440046@finisterre.sirena.org.uk>
-Date:   Mon,  3 Jun 2019 19:02:50 +0100 (BST)
+        Mon, 3 Jun 2019 15:04:42 -0400
+Received: by smtp.codeaurora.org (Postfix, from userid 1000)
+        id BFD07607C3; Mon,  3 Jun 2019 19:04:39 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
+        s=default; t=1559588681;
+        bh=2fFF2UZ1IMZoss2BdlfTKftG1dBbtIAex7bZx7hQCNA=;
+        h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
+        b=e9asATusPcw0LSbghmIwPQkwJg+oAHwQGTHydazcY9tQ/gFD4R4zc69ZFUkWTLl6N
+         EHfjekEeWo6jkd01rCHpfPFf36FY5lJUx6ICYxQfcrni/SbnVoNcA+J0/XNEgUpG03
+         tI4hqzXe7SRakYnfbSamFoqjH5/ujpYtpSMAF6DI=
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        pdx-caf-mail.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.7 required=2.0 tests=ALL_TRUSTED,BAYES_00,
+        DKIM_INVALID,DKIM_SIGNED autolearn=no autolearn_force=no version=3.4.0
+Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
+        by smtp.codeaurora.org (Postfix) with ESMTP id 639956020A;
+        Mon,  3 Jun 2019 19:04:37 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
+        s=default; t=1559588677;
+        bh=2fFF2UZ1IMZoss2BdlfTKftG1dBbtIAex7bZx7hQCNA=;
+        h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
+        b=MoQ3CkC5zUj8smO9TgVqkewwzN+bMdSvy1hwgvlG1qi8GDPxO9pSlf2g2VzGuEgZ7
+         iW1JFRDNNyJGMxrHj2N2KKQJ1R9sOPUWSN2u7qkqOAa3Cy9TTjpL7rWs/BRNAqeBdM
+         IM1gEWYa2IWjjsaxCuJWM6r5brDVUnpN2UWV4XPM=
+MIME-Version: 1.0
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
+Content-Transfer-Encoding: 7bit
+Date:   Mon, 03 Jun 2019 13:04:37 -0600
+From:   Subash Abhinov Kasiviswanathan <subashab@codeaurora.org>
+To:     Dan Williams <dcbw@redhat.com>
+Cc:     Alex Elder <elder@linaro.org>, Arnd Bergmann <arnd@arndb.de>,
+        David Miller <davem@davemloft.net>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Ilias Apalodimas <ilias.apalodimas@linaro.org>,
+        evgreen@chromium.org, Ben Chan <benchan@google.com>,
+        Eric Caruso <ejcaruso@google.com>, cpratapa@codeaurora.org,
+        syadagir@codeaurora.org, abhishek.esse@gmail.com,
+        Networking <netdev@vger.kernel.org>,
+        DTML <devicetree@vger.kernel.org>,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        linux-soc@vger.kernel.org,
+        Linux ARM <linux-arm-kernel@lists.infradead.org>,
+        linux-arm-msm@vger.kernel.org
+Subject: Re: [PATCH v2 00/17] net: introduce Qualcomm IPA driver
+In-Reply-To: <0fc29577a5c69530145b6095fa1ac1a51949ba8e.camel@redhat.com>
+References: <20190531035348.7194-1-elder@linaro.org>
+ <e75cd1c111233fdc05f47017046a6b0f0c97673a.camel@redhat.com>
+ <065c95a8-7b17-495d-f225-36c46faccdd7@linaro.org>
+ <CAK8P3a05CevRBV3ym+pnKmxv+A0_T+AtURW2L4doPAFzu3QcJw@mail.gmail.com>
+ <a28c5e13-59bc-144d-4153-9d104cfa9188@linaro.org>
+ <3b1e12b145a273dd3ded2864d976bdc5fa90e68a.camel@redhat.com>
+ <87f98f81-8f77-3bc5-374c-f498e07cb1bd@linaro.org>
+ <0fc29577a5c69530145b6095fa1ac1a51949ba8e.camel@redhat.com>
+Message-ID: <c200581b8fc167f3a0c09ef6233b8d81@codeaurora.org>
+X-Sender: subashab@codeaurora.org
+User-Agent: Roundcube Webmail/1.2.5
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The patch
+>> I can't (or won't) comment right now on whether IPA needs its own
+>> netdev for rmnet to use.  The IPA endpoints used for the modem
+>> network interfaces are enabled when the netdev is opened and
+>> disabled when closed.  Outside of that, TX and RX are pretty
+>> much immediately passed through to the layer below or above.
+>> IPA currently has no other net device operations.
+> 
+> I don't really have issues with the patchset underneath the netdev
+> layer. I'm interested in how the various bits present themselves to
+> userspace, which is why I am trying to tie this in with Johannes'
+> conversation about WWAN devices, netdevs, channels, and how the various
+> drivers present API for creating data channels that map to different
+> modem contexts.
+> 
+> So let me rephrase. If the control plane has set up the default context
+> and sent a QMI Start Network message (or the network attached the
+> default one) and the resulting IP details are applied to the IPA netdev
+> can things just start sending data? Or do we need to create an rmnet on
+> top to get that working?
+> 
+> Dan
 
-   spi: qup: remove unnecessary goto
+Hi Dan
 
-has been applied to the spi tree at
+All data from the hardware will have the MAP headers.
+We still need to create rmnet devs over the IPA netdev and use it for 
+the
+data path.
+The IPA netdev will pass on the packets which it receives from the 
+hardware
+and queue it to network stack where it will be intercepted by the
+rmnet rx handler.
 
-   https://git.kernel.org/pub/scm/linux/kernel/git/broonie/spi.git for-5.3
-
-All being well this means that it will be integrated into the linux-next
-tree (usually sometime in the next 24 hours) and sent to Linus during
-the next merge window (or sooner if it is a bug fix), however if
-problems are discovered then the patch may be dropped or reverted.  
-
-You may get further e-mails resulting from automated or manual testing
-and review of the tree, please engage with people reporting problems and
-send followup patches addressing any issues that are reported if needed.
-
-If any updates are required or you are submitting further changes they
-should be sent as incremental updates against current git, existing
-patches will not be replaced.
-
-Please add any relevant lists and maintainers to the CCs when replying
-to this mail.
-
-Thanks,
-Mark
-
-From 3594bfa265da38dcfbab2312ddaff39711b98857 Mon Sep 17 00:00:00 2001
-From: Jorge Ramirez-Ortiz <jorge.ramirez-ortiz@linaro.org>
-Date: Fri, 31 May 2019 16:46:36 +0200
-Subject: [PATCH] spi: qup: remove unnecessary goto
-
-Remove unnecessary condition check and associated goto.
-
-Signed-off-by: Jorge Ramirez-Ortiz <jorge.ramirez-ortiz@linaro.org>
-Signed-off-by: Mark Brown <broonie@kernel.org>
----
- drivers/spi/spi-qup.c | 4 ----
- 1 file changed, 4 deletions(-)
-
-diff --git a/drivers/spi/spi-qup.c b/drivers/spi/spi-qup.c
-index 974a8ce58b68..314d91b95a16 100644
---- a/drivers/spi/spi-qup.c
-+++ b/drivers/spi/spi-qup.c
-@@ -842,10 +842,6 @@ static int spi_qup_transfer_one(struct spi_master *master,
- 	else
- 		ret = spi_qup_do_pio(spi, xfer, timeout);
- 
--	if (ret)
--		goto exit;
--
--exit:
- 	spi_qup_set_state(controller, QUP_STATE_RESET);
- 	spin_lock_irqsave(&controller->lock, flags);
- 	if (!ret)
 -- 
-2.20.1
-
+Qualcomm Innovation Center, Inc. is a member of Code Aurora Forum,
+a Linux Foundation Collaborative Project
