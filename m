@@ -2,120 +2,104 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 70CA632E9F
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  3 Jun 2019 13:27:54 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id BE08632EB0
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  3 Jun 2019 13:32:20 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728320AbfFCL1t (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 3 Jun 2019 07:27:49 -0400
-Received: from mail-pf1-f194.google.com ([209.85.210.194]:43534 "EHLO
-        mail-pf1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727853AbfFCL1t (ORCPT
+        id S1727993AbfFCLcT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 3 Jun 2019 07:32:19 -0400
+Received: from smtp.codeaurora.org ([198.145.29.96]:47574 "EHLO
+        smtp.codeaurora.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727393AbfFCLcT (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 3 Jun 2019 07:27:49 -0400
-Received: by mail-pf1-f194.google.com with SMTP id c6so10442607pfa.10
-        for <linux-arm-msm@vger.kernel.org>; Mon, 03 Jun 2019 04:27:49 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=arista.com; s=googlenew;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=yge3w9rHbWgvobFZbFOeEgA2IlTICZ6Y6fbhlA0nby0=;
-        b=Y+yacQIvPCAiHgjTQHZU0FVoG9I2CbtFWh1hmP9jN5AY8VLFjiX+k6xtFzH0HNGzit
-         O8+HuDE7HRrRPCKpVtBjzFEjUib45UJWNrACrI5dtMn5dhL7BYlOQviAmeCacyysnT/n
-         Xvty8zwlPZ+u8dVb5gfg1+6bj4mdWhGmOj9ZV4LWheZdjBeBpOVrxXrNWXT+AbiGMNl2
-         Yu+vBF4TlQWGZi8Dq4zfPpETqkKfLGxVZb/314XRDJcA/hQwkyrur5b+hi4Dx4U2BziM
-         nnSr7BJ7sU2o9o3B6SunhLofFsrm83s3EU1wt5ZiCI98JrmP0w6INx6y8G5bvgNUiRxA
-         ZVIw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=yge3w9rHbWgvobFZbFOeEgA2IlTICZ6Y6fbhlA0nby0=;
-        b=s61SqGIVjEKYqUUNMNZ7tLowseFaQps/TTplVSi19CvHjprnHeHN3p/wfb3XrwVu1J
-         cnCjj2H7oHJ8BcxQOI5i/u9lI3sXgEDFUTAYhKCfxWtywkpJCiSEmulHvMjY394HvnhR
-         M53KfP10jZjawFlghArLXlsbgFatNtumRbbyd6oTU4hfkuGq8b/xmVODxQECgFJ7XGBA
-         ggvSlxoYNpk/C5qO7e56Ydc2v4e/E4v20wuLUehZ52yE7p2VQfYNoi7ynaZN93J2blVT
-         Crg/DT7TM7T0W7+PgoZ1rMm4kQt6VN+euAhggetjTZWT/6+HhkWLaW1ntM3DRY9Zub0j
-         lTOw==
-X-Gm-Message-State: APjAAAW3JXp5FFjPoNGwjU/ekCFcRYKqcSrgtpwCLGkrR7XlAnRSpGaj
-        93NQrtk8rGlQ34ezfEjwnPD3qK56JP17eSQbqw2QiQ==
-X-Google-Smtp-Source: APXvYqzSN6KszB00jgSY5jsJHGaLYRRvYWrgtbKYUHrE3f1JWTjJzTyKXde3mFVwC5OO8+m15yXDYPFToKa7arJ98wc=
-X-Received: by 2002:a62:4d03:: with SMTP id a3mr30832487pfb.2.1559561268802;
- Mon, 03 Jun 2019 04:27:48 -0700 (PDT)
+        Mon, 3 Jun 2019 07:32:19 -0400
+Received: by smtp.codeaurora.org (Postfix, from userid 1000)
+        id B389660E41; Mon,  3 Jun 2019 11:32:17 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
+        s=default; t=1559561537;
+        bh=u888gqwF5NhltRBK8QKDhfIseMU8jp8wEFqDIraWQdM=;
+        h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
+        b=nMoCQMTLHHj4U+Y6FJPQlUokPulCRDfdG0mnglE0VnYreDcFAvUhXAB7ZhZ/xf2Xz
+         pouMdu8/KphryGpg1bFGyBNHNsstHJel/gO7lr5J0Qq0aMTJlUZB6ANd9dRXN6B0Vc
+         Cl59+jU74fIKLw40uoPLawLkGv6jueo9kTOf0vGI=
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        pdx-caf-mail.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.7 required=2.0 tests=ALL_TRUSTED,BAYES_00,
+        DKIM_INVALID,DKIM_SIGNED,SPF_NONE autolearn=no autolearn_force=no
+        version=3.4.0
+Received: from mail-ed1-f51.google.com (mail-ed1-f51.google.com [209.85.208.51])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: vivek.gautam@smtp.codeaurora.org)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 5F7E760E41;
+        Mon,  3 Jun 2019 11:32:16 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
+        s=default; t=1559561536;
+        bh=u888gqwF5NhltRBK8QKDhfIseMU8jp8wEFqDIraWQdM=;
+        h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
+        b=hxQLPhaQslKp9q099I3Z4uSekA0WGa7SAv077w193RpFzKvwqHaoZFDupcsWhOy3h
+         GS2T89RpACK5+kgV4Wng/QklehjK4cseEogNCONidArZowYO3qBvJZe5pMx4HynvCG
+         CZfmelntQRr2W1WyuVQK9105rGLlFYPQCojwHpoM=
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 5F7E760E41
+Authentication-Results: pdx-caf-mail.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: pdx-caf-mail.web.codeaurora.org; spf=none smtp.mailfrom=vivek.gautam@codeaurora.org
+Received: by mail-ed1-f51.google.com with SMTP id w37so26465096edw.4;
+        Mon, 03 Jun 2019 04:32:16 -0700 (PDT)
+X-Gm-Message-State: APjAAAV0KbyQjbqlQndVvnGfWb1PbCgzre2dVzrSdXq6LM3Hyke1bASl
+        X3nCWQmm++a3b7KhyC+dDYRMUSl8gu4qiu9LKH4=
+X-Google-Smtp-Source: APXvYqyiIFFrNC2dS0VKPCYWX1j2jp1tB7QsnH94XhbngF15E/fbqVAiXipU+Z4bYlGRkMHto3FDPg70mdWqFQgEqKg=
+X-Received: by 2002:a50:85c1:: with SMTP id q1mr25059239edh.253.1559561535071;
+ Mon, 03 Jun 2019 04:32:15 -0700 (PDT)
 MIME-Version: 1.0
-References: <20190506185207.31069-1-tmurphy@arista.com> <20190603105158.GL12745@8bytes.org>
-In-Reply-To: <20190603105158.GL12745@8bytes.org>
-From:   Tom Murphy <tmurphy@arista.com>
-Date:   Mon, 3 Jun 2019 12:27:37 +0100
-Message-ID: <CAPL0++72dekt=re1=sTWpCJtMX=mUOc3Jcq=9d1sr1QO25_zFA@mail.gmail.com>
-Subject: Re: [PATCH v3 0/4] iommu/amd: Convert the AMD iommu driver to the
- dma-iommu api
-To:     Joerg Roedel <joro@8bytes.org>
-Cc:     iommu@lists.linux-foundation.org, Tom Murphy <murphyt7@tcd.ie>,
+References: <20181201165348.24140-1-robdclark@gmail.com> <CAL_JsqJmPqis46Un91QyhXgdrVtfATMP_hTp6wSeSAfc8MLFfw@mail.gmail.com>
+ <CAF6AEGs9Nsft8ofZkGz_yWBPBC+prh8dBSkJ4PJr8yk2c5FMdQ@mail.gmail.com>
+ <CAF6AEGt-dhbQS5zZCNVTLT57OiUwO0RiP5bawTSu2RKZ-7W-aw@mail.gmail.com>
+ <CAAFQd5BdrJFL5LKK8O5NPDKWfFgkTX_JU-jU3giEz33tj-jwCA@mail.gmail.com>
+ <4864dc3e-6e04-43e5-32c8-2cf5a0705fe5@codeaurora.org> <CAF6AEGuFyk1DJWUcQTnW=xsEUhYTYJccjzHJFxvipK4M8UdrUA@mail.gmail.com>
+ <CAFp+6iGexVjbak8RQhEQNPp5cV8PK2ubTNNCMyaFPqdTGAbJ0A@mail.gmail.com> <20190603111705.GA27163@lst.de>
+In-Reply-To: <20190603111705.GA27163@lst.de>
+From:   Vivek Gautam <vivek.gautam@codeaurora.org>
+Date:   Mon, 3 Jun 2019 17:02:03 +0530
+X-Gmail-Original-Message-ID: <CAFp+6iEULiB74ecZQ4E+Jouj0AYZu4cDBgy3S2LuT6Ud4uf+KQ@mail.gmail.com>
+Message-ID: <CAFp+6iEULiB74ecZQ4E+Jouj0AYZu4cDBgy3S2LuT6Ud4uf+KQ@mail.gmail.com>
+Subject: Re: [PATCH] of/device: add blacklist for iommu dma_ops
+To:     Christoph Hellwig <hch@lst.de>
+Cc:     "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
+        <devicetree@vger.kernel.org>,
+        Archit Taneja <architt@codeaurora.org>,
+        David Airlie <airlied@linux.ie>,
+        freedreno <freedreno@lists.freedesktop.org>,
         Will Deacon <will.deacon@arm.com>,
-        Robin Murphy <robin.murphy@arm.com>,
-        Marek Szyprowski <m.szyprowski@samsung.com>,
-        Kukjin Kim <kgene@kernel.org>,
-        Krzysztof Kozlowski <krzk@kernel.org>,
-        David Woodhouse <dwmw2@infradead.org>,
-        Andy Gross <andy.gross@linaro.org>,
-        David Brown <david.brown@linaro.org>,
-        Matthias Brugger <matthias.bgg@gmail.com>,
-        Rob Clark <robdclark@gmail.com>,
-        Heiko Stuebner <heiko@sntech.de>,
-        Gerald Schaefer <gerald.schaefer@de.ibm.com>,
-        Thierry Reding <thierry.reding@gmail.com>,
-        Jonathan Hunter <jonathanh@nvidia.com>,
-        linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
-        linux-samsung-soc@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-mediatek@lists.infradead.org,
-        linux-rockchip@lists.infradead.org, linux-s390@vger.kernel.org,
-        linux-tegra@vger.kernel.org
+        Doug Anderson <dianders@chromium.org>,
+        dri-devel <dri-devel@lists.freedesktop.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Linux IOMMU <iommu@lists.linux-foundation.org>,
+        Sean Paul <seanpaul@chromium.org>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        Frank Rowand <frowand.list@gmail.com>,
+        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
+        Robin Murphy <robin.murphy@arm.com>
 Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Jun 3, 2019 at 11:52 AM Joerg Roedel <joro@8bytes.org> wrote:
+On Mon, Jun 3, 2019 at 4:47 PM Christoph Hellwig <hch@lst.de> wrote:
 >
-> Hi Tom,
->
-> On Mon, May 06, 2019 at 07:52:02PM +0100, Tom Murphy wrote:
-> > Convert the AMD iommu driver to the dma-iommu api. Remove the iova
-> > handling and reserve region code from the AMD iommu driver.
->
-> Thank you for your work on this! I appreciate that much, but I am not
-> sure we are ready to make that move for the AMD and Intel IOMMU drivers
-> yet.
->
-> My main concern right now is that these changes will add a per-page
-> table lock into the fast-path for dma-mapping operations. There has been
-> much work in the past to remove all locking from these code-paths and
-> make it scalable on x86.
+> If you (and a few others actors in the thread) want people to actually
+> read what you wrote please follow proper mailing list ettiquette.  I've
+> given up on reading all the recent mails after scrolling through two
+> pages of full quotes.
 
-Where is the locking introduced? intel doesn't use a lock in it's
-iommu_map function:
-https://github.com/torvalds/linux/blob/f2c7c76c5d0a443053e94adb9f0918fa2fb85c3a/drivers/iommu/intel-iommu.c#L5302
-because it cleverly uses cmpxchg64 to avoid using locks:
-https://github.com/torvalds/linux/blob/f2c7c76c5d0a443053e94adb9f0918fa2fb85c3a/drivers/iommu/intel-iommu.c#L900
-And the locking in AMD's iommu_map function can be removed (and i have
-removed it in my patch set) because it does that same thing as intel:
-https://github.com/torvalds/linux/blob/f2c7c76c5d0a443053e94adb9f0918fa2fb85c3a/drivers/iommu/amd_iommu.c#L1486
+Apologies for not cutting down the quoted text. I will be more careful
+next time onwards.
 
-Is there something I'm missing?
+Regards
+Vivek
 
->
-> The dma-ops implementations in the x86 IOMMU drivers have the benefit
-> that they can call their page-table manipulation functions directly and
-> without locks, because they can make the necessary assumptions. The
-> IOMMU-API mapping/unmapping path can't make these assumptions because it
-> is also used for non-DMA-API use-cases.
->
-> So before we can move the AMD and Intel drivers to the generic DMA-API
-> implementation we need to solve this problem to not introduce new
-> scalability regressions.
->
-> Regards,
->
->         Joerg
->
+-- 
+QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
+of Code Aurora Forum, hosted by The Linux Foundation
