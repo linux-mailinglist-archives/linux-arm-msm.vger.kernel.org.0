@@ -2,190 +2,104 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id EF688335A3
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  3 Jun 2019 18:57:30 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id AB71B3376C
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  3 Jun 2019 20:02:55 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729828AbfFCQ5E (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 3 Jun 2019 12:57:04 -0400
-Received: from bhuna.collabora.co.uk ([46.235.227.227]:35428 "EHLO
-        bhuna.collabora.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727227AbfFCQ5D (ORCPT
+        id S1726691AbfFCSCy (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 3 Jun 2019 14:02:54 -0400
+Received: from heliosphere.sirena.org.uk ([172.104.155.198]:56568 "EHLO
+        heliosphere.sirena.org.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725876AbfFCSCy (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 3 Jun 2019 12:57:03 -0400
-Received: from [127.0.0.1] (localhost [127.0.0.1])
-        (Authenticated sender: koike)
-        with ESMTPSA id 1DD31284FB7
-From:   Helen Koike <helen.koike@collabora.com>
-To:     dri-devel@lists.freedesktop.org, nicholas.kazlauskas@amd.com
-Cc:     andrey.grodzovsky@amd.com, daniel.vetter@ffwll.ch,
-        linux-kernel@vger.kernel.org, Tomasz Figa <tfiga@chromium.org>,
-        boris.brezillon@collabora.com, David Airlie <airlied@linux.ie>,
-        Sean Paul <seanpaul@google.com>, kernel@collabora.com,
-        harry.wentland@amd.com,
-        =?UTF-8?q?St=C3=A9phane=20Marchesin?= <marcheu@google.com>,
-        Helen Koike <helen.koike@collabora.com>,
-        stable@vger.kernel.org, Sean Paul <sean@poorly.run>,
-        Sandy Huang <hjc@rock-chips.com>,
-        linux-rockchip@lists.infradead.org, linux-arm-msm@vger.kernel.org,
-        eric@anholt.net, robdclark@gmail.com,
-        amd-gfx@lists.freedesktop.org,
-        =?UTF-8?q?Heiko=20St=C3=BCbner?= <heiko@sntech.de>,
-        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        freedreno@lists.freedesktop.org,
-        linux-arm-kernel@lists.infradead.org,
-        Maxime Ripard <maxime.ripard@bootlin.com>
-Subject: [PATCH v4 5/5] drm: don't block fb changes for async plane updates
-Date:   Mon,  3 Jun 2019 13:56:10 -0300
-Message-Id: <20190603165610.24614-6-helen.koike@collabora.com>
-X-Mailer: git-send-email 2.20.1
-In-Reply-To: <20190603165610.24614-1-helen.koike@collabora.com>
-References: <20190603165610.24614-1-helen.koike@collabora.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        Mon, 3 Jun 2019 14:02:54 -0400
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+        d=sirena.org.uk; s=20170815-heliosphere; h=Date:Message-Id:In-Reply-To:
+        Subject:Cc:To:From:Sender:Reply-To:MIME-Version:Content-Type:
+        Content-Transfer-Encoding:Content-ID:Content-Description:Resent-Date:
+        Resent-From:Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:References:
+        List-Id:List-Help:List-Unsubscribe:List-Subscribe:List-Post:List-Owner:
+        List-Archive; bh=ma35thperYGWyb/nkjWyegfRbpj87ZHQlb98QF7Ppqg=; b=MacOEriOZ/v7
+        nuQEgHWOdboZ17Tw2BaNzgeiQmEEvvL93bfSbzUj62TIG00QKGp8rcP1m4hyHfYhVRtSJje45fL9O
+        zpVFui3og9JLXDxmFvYsW8vLkltfLZzo7tZgvrPzBXpiJ9gN9ubQTiFpmBoEinpaBKk7xUef9q0VX
+        2xvAU=;
+Received: from cpc102320-sgyl38-2-0-cust46.18-2.cable.virginm.net ([82.37.168.47] helo=finisterre.sirena.org.uk)
+        by heliosphere.sirena.org.uk with esmtpsa (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+        (Exim 4.89)
+        (envelope-from <broonie@sirena.org.uk>)
+        id 1hXrIJ-0003ay-6h; Mon, 03 Jun 2019 18:02:51 +0000
+Received: by finisterre.sirena.org.uk (Postfix, from userid 1000)
+        id 9792D440046; Mon,  3 Jun 2019 19:02:50 +0100 (BST)
+From:   Mark Brown <broonie@kernel.org>
+To:     Jorge Ramirez-Ortiz <jorge.ramirez-ortiz@linaro.org>
+Cc:     agross@kernel.org, broonie@kernel.org, david.brown@linaro.org,
+        jorge.ramirez-ortiz@linaro.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-spi@vger.kernel.org,
+        Mark Brown <broonie@kernel.org>
+Subject: Applied "spi: qup: remove unnecessary goto" to the spi tree
+In-Reply-To: <20190531144636.27843-1-jorge.ramirez-ortiz@linaro.org>
+X-Patchwork-Hint: ignore
+Message-Id: <20190603180250.9792D440046@finisterre.sirena.org.uk>
+Date:   Mon,  3 Jun 2019 19:02:50 +0100 (BST)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-In the case of a normal sync update, the preparation of framebuffers (be
-it calling drm_atomic_helper_prepare_planes() or doing setups with
-drm_framebuffer_get()) are performed in the new_state and the respective
-cleanups are performed in the old_state.
+The patch
 
-In the case of async updates, the preparation is also done in the
-new_state but the cleanups are done in the new_state (because updates
-are performed in place, i.e. in the current state).
+   spi: qup: remove unnecessary goto
 
-The current code blocks async udpates when the fb is changed, turning
-async updates into sync updates, slowing down cursor updates and
-introducing regressions in igt tests with errors of type:
+has been applied to the spi tree at
 
-"CRITICAL: completed 97 cursor updated in a period of 30 flips, we
-expect to complete approximately 15360 updates, with the threshold set
-at 7680"
+   https://git.kernel.org/pub/scm/linux/kernel/git/broonie/spi.git for-5.3
 
-Fb changes in async updates were prevented to avoid the following scenario:
+All being well this means that it will be integrated into the linux-next
+tree (usually sometime in the next 24 hours) and sent to Linus during
+the next merge window (or sooner if it is a bug fix), however if
+problems are discovered then the patch may be dropped or reverted.  
 
-- Async update, oldfb = NULL, newfb = fb1, prepare fb1, cleanup fb1
-- Async update, oldfb = fb1, newfb = fb2, prepare fb2, cleanup fb2
-- Non-async commit, oldfb = fb2, newfb = fb1, prepare fb1, cleanup fb2 (wrong)
-Where we have a single call to prepare fb2 but double cleanup call to fb2.
+You may get further e-mails resulting from automated or manual testing
+and review of the tree, please engage with people reporting problems and
+send followup patches addressing any issues that are reported if needed.
 
-To solve the above problems, instead of blocking async fb changes, we
-place the old framebuffer in the new_state object, so when the code
-performs cleanups in the new_state it will cleanup the old_fb and we
-will have the following scenario instead:
+If any updates are required or you are submitting further changes they
+should be sent as incremental updates against current git, existing
+patches will not be replaced.
 
-- Async update, oldfb = NULL, newfb = fb1, prepare fb1, no cleanup
-- Async update, oldfb = fb1, newfb = fb2, prepare fb2, cleanup fb1
-- Non-async commit, oldfb = fb2, newfb = fb1, prepare fb1, cleanup fb2
+Please add any relevant lists and maintainers to the CCs when replying
+to this mail.
 
-Where calls to prepare/cleanup are balanced.
+Thanks,
+Mark
 
-Cc: <stable@vger.kernel.org> # v4.14+
-Fixes: 25dc194b34dd ("drm: Block fb changes for async plane updates")
-Suggested-by: Boris Brezillon <boris.brezillon@collabora.com>
-Signed-off-by: Helen Koike <helen.koike@collabora.com>
-Reviewed-by: Boris Brezillon <boris.brezillon@collabora.com>
-Reviewed-by: Nicholas Kazlauskas <nicholas.kazlauskas@amd.com>
+From 3594bfa265da38dcfbab2312ddaff39711b98857 Mon Sep 17 00:00:00 2001
+From: Jorge Ramirez-Ortiz <jorge.ramirez-ortiz@linaro.org>
+Date: Fri, 31 May 2019 16:46:36 +0200
+Subject: [PATCH] spi: qup: remove unnecessary goto
 
+Remove unnecessary condition check and associated goto.
+
+Signed-off-by: Jorge Ramirez-Ortiz <jorge.ramirez-ortiz@linaro.org>
+Signed-off-by: Mark Brown <broonie@kernel.org>
 ---
+ drivers/spi/spi-qup.c | 4 ----
+ 1 file changed, 4 deletions(-)
 
-Changes in v4:
-- update docs in atomic_async_update callback
-
-Changes in v3:
-- Add Reviewed-by tags
-- Add TODO in drm_atomic_helper_async_commit()
-
-Changes in v2:
-- Change the order of the patch in the series, add this as the last one.
-- Add documentation
-- s/ballanced/balanced
-
- drivers/gpu/drm/drm_atomic_helper.c      | 22 ++++++++++++----------
- include/drm/drm_modeset_helper_vtables.h |  8 ++++++++
- 2 files changed, 20 insertions(+), 10 deletions(-)
-
-diff --git a/drivers/gpu/drm/drm_atomic_helper.c b/drivers/gpu/drm/drm_atomic_helper.c
-index acf993cb8e52..ac81d8440b40 100644
---- a/drivers/gpu/drm/drm_atomic_helper.c
-+++ b/drivers/gpu/drm/drm_atomic_helper.c
-@@ -1610,15 +1610,6 @@ int drm_atomic_helper_async_check(struct drm_device *dev,
- 	    old_plane_state->crtc != new_plane_state->crtc)
- 		return -EINVAL;
+diff --git a/drivers/spi/spi-qup.c b/drivers/spi/spi-qup.c
+index 974a8ce58b68..314d91b95a16 100644
+--- a/drivers/spi/spi-qup.c
++++ b/drivers/spi/spi-qup.c
+@@ -842,10 +842,6 @@ static int spi_qup_transfer_one(struct spi_master *master,
+ 	else
+ 		ret = spi_qup_do_pio(spi, xfer, timeout);
  
--	/*
--	 * FIXME: Since prepare_fb and cleanup_fb are always called on
--	 * the new_plane_state for async updates we need to block framebuffer
--	 * changes. This prevents use of a fb that's been cleaned up and
--	 * double cleanups from occuring.
--	 */
--	if (old_plane_state->fb != new_plane_state->fb)
--		return -EINVAL;
+-	if (ret)
+-		goto exit;
 -
- 	funcs = plane->helper_private;
- 	if (!funcs->atomic_async_update)
- 		return -EINVAL;
-@@ -1649,6 +1640,8 @@ EXPORT_SYMBOL(drm_atomic_helper_async_check);
-  * drm_atomic_async_check() succeeds. Async commits are not supposed to swap
-  * the states like normal sync commits, but just do in-place changes on the
-  * current state.
-+ *
-+ * TODO: Implement full swap instead of doing in-place changes.
-  */
- void drm_atomic_helper_async_commit(struct drm_device *dev,
- 				    struct drm_atomic_state *state)
-@@ -1659,6 +1652,9 @@ void drm_atomic_helper_async_commit(struct drm_device *dev,
- 	int i;
- 
- 	for_each_new_plane_in_state(state, plane, plane_state, i) {
-+		struct drm_framebuffer *new_fb = plane_state->fb;
-+		struct drm_framebuffer *old_fb = plane->state->fb;
-+
- 		funcs = plane->helper_private;
- 		funcs->atomic_async_update(plane, plane_state);
- 
-@@ -1667,11 +1663,17 @@ void drm_atomic_helper_async_commit(struct drm_device *dev,
- 		 * plane->state in-place, make sure at least common
- 		 * properties have been properly updated.
- 		 */
--		WARN_ON_ONCE(plane->state->fb != plane_state->fb);
-+		WARN_ON_ONCE(plane->state->fb != new_fb);
- 		WARN_ON_ONCE(plane->state->crtc_x != plane_state->crtc_x);
- 		WARN_ON_ONCE(plane->state->crtc_y != plane_state->crtc_y);
- 		WARN_ON_ONCE(plane->state->src_x != plane_state->src_x);
- 		WARN_ON_ONCE(plane->state->src_y != plane_state->src_y);
-+
-+		/*
-+		 * Make sure the FBs have been swapped so that cleanups in the
-+		 * new_state performs a cleanup in the old FB.
-+		 */
-+		WARN_ON_ONCE(plane_state->fb != old_fb);
- 	}
- }
- EXPORT_SYMBOL(drm_atomic_helper_async_commit);
-diff --git a/include/drm/drm_modeset_helper_vtables.h b/include/drm/drm_modeset_helper_vtables.h
-index f9c94c2a1364..f7bbd0b0ecd1 100644
---- a/include/drm/drm_modeset_helper_vtables.h
-+++ b/include/drm/drm_modeset_helper_vtables.h
-@@ -1185,6 +1185,14 @@ struct drm_plane_helper_funcs {
- 	 * current one with the new plane configurations in the new
- 	 * plane_state.
- 	 *
-+	 * Drivers should also swap the framebuffers between current plane
-+	 * state (&drm_plane.state) and new_state.
-+	 * This is required since cleanup for async commits is performed on
-+	 * the new state, rather than old state like for traditional commits.
-+	 * Since we want to give up the reference on the current (old) fb
-+	 * instead of our brand new one, swap them in the driver during the
-+	 * async commit.
-+	 *
- 	 * FIXME:
- 	 *  - It only works for single plane updates
- 	 *  - Async Pageflips are not supported yet
+-exit:
+ 	spi_qup_set_state(controller, QUP_STATE_RESET);
+ 	spin_lock_irqsave(&controller->lock, flags);
+ 	if (!ret)
 -- 
 2.20.1
 
