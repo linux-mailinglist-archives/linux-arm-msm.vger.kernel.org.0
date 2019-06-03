@@ -2,130 +2,96 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 4BFFE338EB
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  3 Jun 2019 21:13:08 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E8E8C33B15
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  4 Jun 2019 00:23:23 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726573AbfFCTNH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 3 Jun 2019 15:13:07 -0400
-Received: from mail-ot1-f67.google.com ([209.85.210.67]:38844 "EHLO
-        mail-ot1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726055AbfFCTNH (ORCPT
+        id S1726369AbfFCWXX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 3 Jun 2019 18:23:23 -0400
+Received: from mail-pg1-f195.google.com ([209.85.215.195]:36558 "EHLO
+        mail-pg1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726336AbfFCWXX (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 3 Jun 2019 15:13:07 -0400
-Received: by mail-ot1-f67.google.com with SMTP id d17so2975194oth.5
-        for <linux-arm-msm@vger.kernel.org>; Mon, 03 Jun 2019 12:13:06 -0700 (PDT)
+        Mon, 3 Jun 2019 18:23:23 -0400
+Received: by mail-pg1-f195.google.com with SMTP id a3so1679222pgb.3
+        for <linux-arm-msm@vger.kernel.org>; Mon, 03 Jun 2019 15:23:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to;
-        bh=mAoddn+++8qwVdvo0LP4Flz+Y0mAR71WsumbGA5/ntU=;
-        b=wUFV0A+XrqyYbdkgHK2CxppQeWvJUI4OC2TQpYTXBHH0DILNt6bkaBhKCwhB5AMwIG
-         0LOIAe+9QJKpYEjKS94senTDbXCrId9d/+f/ZBIfAfPM+uzNRYXp73FwgI8keJiQH6Wx
-         cNe1QAI+DNUL/c6FAldEpXYakT33XUg0x5qP0g1jDJfet10XDHsrdMDInEk52n+QnmBA
-         EzuhaWMFTEIxQS84WmV0CUdoSAaZUMhAm5V8jXOjbmWjyKqFHkZizOEpvqx/kZBlpS24
-         DRbZGfmxdVyKJaGeuHg6Bj5VC642CNXwqO3WOByUzpW7WkyWju0chAM6nifBRzHX6/Mc
-         2x0g==
+        d=linaro.org; s=google;
+        h=from:to:cc:subject:date:message-id;
+        bh=6niAwzcPpAohPvJt4Jc8GtfUU8V0u7v0Rg+78LYun9M=;
+        b=tpyrIN3pOhJIjlxgLadTRT5CufA7IzK4ux2DtTFgG7teYRUtUh06+WAmNriOTkh6u2
+         2MPJhiEQjvyIIwN3TyUAgw4GPxAti8x9g4fIBmWMYaB5QSONi8/JJhBj05BA4+Wy5vRz
+         PAHvFaONYBe6dGZblkI7awqz3xqSW6y6G4S4tWzElGh0XE0tJtHQDwjqisHNfdW4Veia
+         rG7L5JGJzGKf+TeJNB1m+5C9cQ/Ew9nkrSOZyfz2akaUDuDwO6I8Q4/G8Z5J1jl4fLUi
+         vvldAc/78m23v283dpNjp3mCpC3lLQc/hHp6cUFSWuh7a/kACawIPOMRZJAIJ9cIHIFd
+         FxkA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to;
-        bh=mAoddn+++8qwVdvo0LP4Flz+Y0mAR71WsumbGA5/ntU=;
-        b=RLZoyjinhnsqXMo9rR6iUjncCeSaaG/hd5K5y5oXL+IsQGw6ipXk6q/WtjLXbCHmGW
-         wUtqgLRW3YbqVWq0CghNUm1l9J5w+4+XOXU+SjYXP8uONHrkFL8ECE222NlNUcRAx3WH
-         iFEJlm6lUDhkoxbVP8TjAgko1JFG8rkxQ+wstCVHR0dLZh43GO3Eh0nI7puJmnlN8Qi7
-         OQHZoOxc2f9+EC3DE14Jurp2TSwkh3+rAJnvRMnHgKWh++Zx6ZYfrIof1/3BswhVSiGg
-         e7WXCpWzjmcxAxG/rzvyLx0LLkC75/+3lhxK29dAoW3yeD1gQfsWS94ltPWDAQ3B01da
-         PC0w==
-X-Gm-Message-State: APjAAAWxvNI7R1DUuO5HPCEtkaBjh2tM/J3/oaozqICpu3sGivGv5SDZ
-        CoJh7WsYgF8HocR+FNv6nPzlYvKoKRKVuLKOl7mkFg==
-X-Google-Smtp-Source: APXvYqy+Lm1ofR4ZAQBNDXyeTt8ZtlyM1FjuSyKegJQbbObal6TMdDAAlb7/1ROuwQ5EjTzGHLN2r16ho6jaEfz21D8=
-X-Received: by 2002:a05:6830:160c:: with SMTP id g12mr2427193otr.231.1559589186170;
- Mon, 03 Jun 2019 12:13:06 -0700 (PDT)
-MIME-Version: 1.0
-References: <20190423132823.7915-1-georgi.djakov@linaro.org>
- <20190601021228.210574-1-saravanak@google.com> <20190603155634.GA10741@jcrouse1-lnx.qualcomm.com>
-In-Reply-To: <20190603155634.GA10741@jcrouse1-lnx.qualcomm.com>
-From:   Saravana Kannan <saravanak@google.com>
-Date:   Mon, 3 Jun 2019 12:12:30 -0700
-Message-ID: <CAGETcx8yV_D+=qLnJOx5s5Nvq2RxhcJvz+gejDBN1-qrBE=Msg@mail.gmail.com>
-Subject: Re: [PATCH v2 0/5] Introduce OPP bandwidth bindings
-To:     Saravana Kannan <saravanak@google.com>, georgi.djakov@linaro.org,
-        amit.kucheria@linaro.org,
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=6niAwzcPpAohPvJt4Jc8GtfUU8V0u7v0Rg+78LYun9M=;
+        b=ONxGPkIzJ5LMa5d0eWY/Wd0hHsyMlrUdCn0JPPA31iSs3DqaN5/o0K0wVI/EjMDch/
+         5spVFHZga0XIhaMgXfYPTHhhuGVsQ92FGzPTVwmYRTHMODvdOIeIfoz3J3o5PwqGMGr/
+         ja99nUXzcVJj4971s8HFZD95zHtiSKgP57nNF5+9tZE7ObTvATyFAzMTex0A8IM0vhN4
+         wkbOtTUz3xjjdIiNoz7QZmG3U117FnMus9WLg5m6cTPsHMesZag9axzMNgRBUkAHmOW2
+         7G+/TT0QMuq6HKPsLuNKvxnGi3jEEgNW8sz3cvpmqMMNDL3cRfWvCM3Fn42fTl/xzxX6
+         ReAQ==
+X-Gm-Message-State: APjAAAV2u4R1mSv2z4YatO7AThO27IWkv8tA1G2M5iz4gTcsazOpVeW6
+        35dj2VRESxqCae0gc0vIzpCK5g==
+X-Google-Smtp-Source: APXvYqyW9fNJIYUZyJi9V5wJYk9SdgROr34PF8/DcyWJQ0PKLOKb9vtvUgdQ2NiVawrNdsXoeyOSuw==
+X-Received: by 2002:a17:90a:37e9:: with SMTP id v96mr18652976pjb.10.1559600602567;
+        Mon, 03 Jun 2019 15:23:22 -0700 (PDT)
+Received: from localhost.localdomain ([2601:1c2:680:1319:692:26ff:feda:3a81])
+        by smtp.gmail.com with ESMTPSA id g8sm14320588pjp.17.2019.06.03.15.23.21
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Mon, 03 Jun 2019 15:23:21 -0700 (PDT)
+From:   John Stultz <john.stultz@linaro.org>
+To:     lkml <linux-kernel@vger.kernel.org>
+Cc:     John Stultz <john.stultz@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        David Brown <david.brown@linaro.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        daidavid1@codeaurora.org, devicetree@vger.kernel.org,
-        evgreen@chromium.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-pm@vger.kernel.org,
-        Mark Rutland <mark.rutland@arm.com>, nm@ti.com,
-        rjw@rjwysocki.net, Rob Herring <robh+dt@kernel.org>,
-        sboyd@kernel.org, seansw@qti.qualcomm.com, sibis@codeaurora.org,
-        Vincent Guittot <vincent.guittot@linaro.org>,
-        vireshk@kernel.org, Android Kernel Team <kernel-team@android.com>
-Content-Type: text/plain; charset="UTF-8"
+        Amit Pundir <amit.pundir@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Mark Rutland <mark.rutland@arm.com>,
+        Sebastian Reichel <sre@kernel.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org
+Subject: [PATCH 1/3 v2] dt-bindings: power: reset: qcom: Add qcom,pm8998-pon compatability line
+Date:   Mon,  3 Jun 2019 22:23:17 +0000
+Message-Id: <20190603222319.62842-1-john.stultz@linaro.org>
+X-Mailer: git-send-email 2.17.1
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Jun 3, 2019 at 8:56 AM Jordan Crouse <jcrouse@codeaurora.org> wrote:
->
-> On Fri, May 31, 2019 at 07:12:28PM -0700, Saravana Kannan wrote:
-> > I'll have to Nack this series because it's making a couple of wrong assumptions
-> > about bandwidth voting.
-> >
-> > Firstly, it's mixing up OPP to bandwidth mapping (Eg: CPU freq to CPU<->DDR
-> > bandwidth mapping) with the bandwidth levels that are actually supported by an
-> > interconnect path (Eg: CPU<->DDR bandwidth levels). For example, CPU0 might
-> > decide to vote for a max of 10 GB/s because it's a little CPU and never needs
-> > anything higher than 10 GB/s even at CPU0's max frequency. But that has no
-> > bearing on bandwidth level available between CPU<->DDR.
->
-> I'm going to just quote this part of the email to avoid forcing people to
-> scroll too much.
->
-> I agree that there is an enormous universe of new and innovative things that can
-> be done for bandwidth voting. I would love to have smart governors and expansive
-> connections between different components that are all aware of each other. I
-> don't think that anybody is discounting that these things are possible.
->
-> But as it stands today, as a leaf driver developer my primary concern is that I
-> need to vote something for the GPU->DDR path. Right now I'm voting the maximum
-> because that is the bare minimum we need to get working GPU.
->
-> Then the next incremental baby step is to allow us to select a minimum
-> vote based on a GPU frequency level to allow for some sort of very coarse power
-> savings. It isn't perfect, but better than cranking everything to 11.
+Update bindings to support for qcom,pm8998-pon which uses gen2 pon
 
-I completely agree. I'm not saying you shouldn't do bandwidth voting
-based on device frequency. In some cases, it's actually the right
-thing to do too.
+Cc: Andy Gross <agross@kernel.org>
+Cc: David Brown <david.brown@linaro.org>
+Cc: Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc: Amit Pundir <amit.pundir@linaro.org>
+Cc: Rob Herring <robh+dt@kernel.org>
+Cc: Mark Rutland <mark.rutland@arm.com>
+Cc: Sebastian Reichel <sre@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org
+Cc: devicetree@vger.kernel.org
+Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+Signed-off-by: John Stultz <john.stultz@linaro.org>
+---
+ Documentation/devicetree/bindings/power/reset/qcom,pon.txt | 1 +
+ 1 file changed, 1 insertion(+)
 
-> This is
-> why we need the OPP bandwidth bindings to allow us to make the association and
-> tune down the vote.
+diff --git a/Documentation/devicetree/bindings/power/reset/qcom,pon.txt b/Documentation/devicetree/bindings/power/reset/qcom,pon.txt
+index 5705f575862df..0c0dc3a1e693e 100644
+--- a/Documentation/devicetree/bindings/power/reset/qcom,pon.txt
++++ b/Documentation/devicetree/bindings/power/reset/qcom,pon.txt
+@@ -9,6 +9,7 @@ Required Properties:
+ -compatible: Must be one of:
+ 	"qcom,pm8916-pon"
+ 	"qcom,pms405-pon"
++	"qcom,pm8998-pon"
+ 
+ -reg: Specifies the physical address of the pon register
+ 
+-- 
+2.17.1
 
-Again, I'm perfectly fine with this too.
-
-> I fully agree that this isn't the optimal solution but
-> it is the only knob we have right now.
-> And after that we should go nuts. I'll gladly put the OPP bindings in the
-> rear-view mirror and turn over all bandwidth to a governor or two or three.
-
-This is the problem part in the series. Once a property is exposed in
-DT, we can't just take it back. A new kernel needs to continue
-supporting old compiled DT binaries. So if we know we'll have to
-change a DT property in the future to be "more correct", then we
-should just do that one instead of "for now" bindings.
-
-And I even proposed what the new bindings should look like and why we
-should do it that way.
-
-I'll try to get some patches out for that in the near future. But
-doesn't have to be just from me. I'm just pointing out why the current
-bindings aren't good/scalable.
-
-> I'll be happy to have nothing to do with it again. But until then we need
-> a solution for the leaf drivers that lets us provide some modicum of power
-> control.
-
-Agreed.
-
--Saravana
