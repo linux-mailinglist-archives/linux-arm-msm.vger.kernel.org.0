@@ -2,19 +2,19 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 4248633587
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  3 Jun 2019 18:56:52 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 17DF833590
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  3 Jun 2019 18:56:56 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727866AbfFCQ4d (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 3 Jun 2019 12:56:33 -0400
-Received: from bhuna.collabora.co.uk ([46.235.227.227]:35312 "EHLO
+        id S1726958AbfFCQ4w (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 3 Jun 2019 12:56:52 -0400
+Received: from bhuna.collabora.co.uk ([46.235.227.227]:35366 "EHLO
         bhuna.collabora.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726958AbfFCQ4d (ORCPT
+        with ESMTP id S1727047AbfFCQ4v (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 3 Jun 2019 12:56:33 -0400
+        Mon, 3 Jun 2019 12:56:51 -0400
 Received: from [127.0.0.1] (localhost [127.0.0.1])
         (Authenticated sender: koike)
-        with ESMTPSA id 82DD527FDB2
+        with ESMTPSA id A58E1284CE3
 From:   Helen Koike <helen.koike@collabora.com>
 To:     dri-devel@lists.freedesktop.org, nicholas.kazlauskas@amd.com
 Cc:     andrey.grodzovsky@amd.com, daniel.vetter@ffwll.ch,
@@ -24,86 +24,77 @@ Cc:     andrey.grodzovsky@amd.com, daniel.vetter@ffwll.ch,
         harry.wentland@amd.com,
         =?UTF-8?q?St=C3=A9phane=20Marchesin?= <marcheu@google.com>,
         Helen Koike <helen.koike@collabora.com>,
-        Sean Paul <sean@poorly.run>, Sandy Huang <hjc@rock-chips.com>,
-        Thomas Zimmermann <tzimmermann@suse.de>, eric@anholt.net,
-        Alex Deucher <alexander.deucher@amd.com>,
-        Bhawanpreet Lakha <Bhawanpreet.Lakha@amd.com>,
-        "David (ChunMing) Zhou" <David1.Zhou@amd.com>,
-        Anthony Koo <Anthony.Koo@amd.com>,
-        amd-gfx@lists.freedesktop.org, linux-rockchip@lists.infradead.org,
+        stable@vger.kernel.org, Rob Clark <robdclark@gmail.com>,
+        Sean Paul <sean@poorly.run>,
+        Thomas Zimmermann <tzimmermann@suse.de>,
+        linux-arm-msm@vger.kernel.org,
         =?UTF-8?q?Ville=20Syrj=C3=A4l=C3=A4?= 
-        <ville.syrjala@linux.intel.com>, Rob Clark <robdclark@gmail.com>,
-        =?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
-        Leo Li <sunpeng.li@amd.com>, linux-arm-msm@vger.kernel.org,
+        <ville.syrjala@linux.intel.com>,
         Jeykumar Sankaran <jsanka@codeaurora.org>,
-        =?UTF-8?q?Heiko=20St=C3=BCbner?= <heiko@sntech.de>,
-        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
-        linux-arm-kernel@lists.infradead.org,
-        David Francis <David.Francis@amd.com>,
-        Mario Kleiner <mario.kleiner.de@gmail.com>,
         Maxime Ripard <maxime.ripard@bootlin.com>,
         freedreno@lists.freedesktop.org,
         Mamta Shukla <mamtashukla555@gmail.com>,
         Daniel Vetter <daniel@ffwll.ch>
-Subject: [PATCH v4 0/5] drm: Fix fb changes for async updates
-Date:   Mon,  3 Jun 2019 13:56:05 -0300
-Message-Id: <20190603165610.24614-1-helen.koike@collabora.com>
+Subject: [PATCH v4 3/5] drm/msm: fix fb references in async update
+Date:   Mon,  3 Jun 2019 13:56:08 -0300
+Message-Id: <20190603165610.24614-4-helen.koike@collabora.com>
 X-Mailer: git-send-email 2.20.1
+In-Reply-To: <20190603165610.24614-1-helen.koike@collabora.com>
+References: <20190603165610.24614-1-helen.koike@collabora.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+Async update callbacks are expected to set the old_fb in the new_state
+so prepare/cleanup framebuffers are balanced.
+
+Cc: <stable@vger.kernel.org> # v4.14+
+Fixes: 224a4c970987 ("drm/msm: update cursors asynchronously through atomic")
+Suggested-by: Boris Brezillon <boris.brezillon@collabora.com>
+Signed-off-by: Helen Koike <helen.koike@collabora.com>
+Acked-by: Rob Clark <robdclark@gmail.com>
+
+---
 Hello,
 
-I'm re-sending this series with the acked by in the msm patch and
-updating the docs in the last patch, the rest is the same.
-
-v3 link: https://patchwork.kernel.org/project/dri-devel/list/?series=91353
-
-Thanks!
-Helen
+This was tested on the dragonboard 410c using igt plane_cursor_legacy and
+kms_cursor_legacy and I didn't see any regressions.
 
 Changes in v4:
 - add acked by tag
-- update docs in atomic_async_update callback
 
-Changes in v3:
-- use swap() to swap old and new framebuffers in async_update
-- get the reference to old_fb and set the worker after vop_plane_atomic_update()
-- add a FIXME tag for when we have multiple fbs to be released when
-vblank happens.
-- update commit message
-- Add Reviewed-by tags
-- Add TODO in drm_atomic_helper_async_commit()
-
+Changes in v3: None
 Changes in v2:
-- added reviewed-by tag
 - update CC stable and Fixes tag
-- Added reviewed-by tag
-- updated CC stable and Fixes tag
-- Change the order of the patch in the series, add this as the last one.
-- Add documentation
-- s/ballanced/balanced
 
-Helen Koike (5):
-  drm/rockchip: fix fb references in async update
-  drm/amd: fix fb references in async update
-  drm/msm: fix fb references in async update
-  drm/vc4: fix fb references in async update
-  drm: don't block fb changes for async plane updates
+ drivers/gpu/drm/msm/disp/mdp5/mdp5_plane.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
- .../gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c |  3 +-
- drivers/gpu/drm/drm_atomic_helper.c           | 22 ++++----
- drivers/gpu/drm/msm/disp/mdp5/mdp5_plane.c    |  4 ++
- drivers/gpu/drm/rockchip/rockchip_drm_vop.c   | 51 ++++++++++---------
- drivers/gpu/drm/vc4/vc4_plane.c               |  2 +-
- include/drm/drm_modeset_helper_vtables.h      |  8 +++
- 6 files changed, 52 insertions(+), 38 deletions(-)
-
+diff --git a/drivers/gpu/drm/msm/disp/mdp5/mdp5_plane.c b/drivers/gpu/drm/msm/disp/mdp5/mdp5_plane.c
+index 9d9fb6c5fd68..1105c2433f14 100644
+--- a/drivers/gpu/drm/msm/disp/mdp5/mdp5_plane.c
++++ b/drivers/gpu/drm/msm/disp/mdp5/mdp5_plane.c
+@@ -502,6 +502,8 @@ static int mdp5_plane_atomic_async_check(struct drm_plane *plane,
+ static void mdp5_plane_atomic_async_update(struct drm_plane *plane,
+ 					   struct drm_plane_state *new_state)
+ {
++	struct drm_framebuffer *old_fb = plane->state->fb;
++
+ 	plane->state->src_x = new_state->src_x;
+ 	plane->state->src_y = new_state->src_y;
+ 	plane->state->crtc_x = new_state->crtc_x;
+@@ -524,6 +526,8 @@ static void mdp5_plane_atomic_async_update(struct drm_plane *plane,
+ 
+ 	*to_mdp5_plane_state(plane->state) =
+ 		*to_mdp5_plane_state(new_state);
++
++	new_state->fb = old_fb;
+ }
+ 
+ static const struct drm_plane_helper_funcs mdp5_plane_helper_funcs = {
 -- 
 2.20.1
 
