@@ -2,112 +2,108 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id D8B30352B5
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  5 Jun 2019 00:30:31 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A183F352C5
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  5 Jun 2019 00:37:04 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726551AbfFDWaa (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 4 Jun 2019 18:30:30 -0400
-Received: from mail-pf1-f193.google.com ([209.85.210.193]:42318 "EHLO
-        mail-pf1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726490AbfFDWa3 (ORCPT
+        id S1726305AbfFDWhD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 4 Jun 2019 18:37:03 -0400
+Received: from mail-pg1-f194.google.com ([209.85.215.194]:40086 "EHLO
+        mail-pg1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726293AbfFDWhD (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 4 Jun 2019 18:30:29 -0400
-Received: by mail-pf1-f193.google.com with SMTP id q10so3341956pff.9
-        for <linux-arm-msm@vger.kernel.org>; Tue, 04 Jun 2019 15:30:29 -0700 (PDT)
+        Tue, 4 Jun 2019 18:37:03 -0400
+Received: by mail-pg1-f194.google.com with SMTP id d30so11182306pgm.7
+        for <linux-arm-msm@vger.kernel.org>; Tue, 04 Jun 2019 15:37:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to:user-agent;
-        bh=LmDCNIRDhs7DNH9NPW4xy+8J+i5MZl5x+uVtCFZTa5g=;
-        b=sxVPDH4yKTfJRPnVkbZ54wQ58ysVL1hfzaDD4ECK1ZYB3PTci6r3+sjVoj2lHmW1pA
-         AxyVgqJ30L6RACIMF0z+XOHSpGmMpm7vxX09D6iqPUVhLzQ5pqTNJ1h+ASZHtuiOp4/3
-         G2UROw7Iuy2bKZ0EuE+MyGB8C//LUGCveyBYXkkvxzoCg+bM/M8/PZPCq548R2ehAOj9
-         3xhPO+FITtygmugNozKr3AKWahz91BWyY+TCRv5Ktmbo+9zR+xPjsGJkYOKz+5Kuiipr
-         WuxcpjbIEfEN/zxdK91N2P/Ked7QePfxQ/jtygOfuYTR1y4ygVj4KmOVD6ce5eEoPuuw
-         FPiA==
+        bh=q3LYolv9HS8m3O9LEPPo+AYNjPUFnZ39lcs8VPIoY7Y=;
+        b=rB6ebIAvraBr3OkVvfCrDmvlEKBZzTdiegPVzW+a9Mp/EQswhhTU6Fke3ruVWDYx4S
+         UpJS8sapWXy50/ISJ4Xr9DyiQGrIgHPoP/ir/U7XQEKbJrpmSAKES9u15fms3X9Nwepo
+         abRM00W1dy0ncnCbHsztuaGXBoBHHmEHVNx0RcpgS4i6/1m/1Tf4tEsPxPNphrkinks0
+         UFjA341cRsyEdx6HxcVXe3vnf4YVnY06xJPFrGGdHm2yxQh+TCUfEePfUYkeH/D5tDxp
+         WyxqLUmZSP/UpKPaeZypRh9nI0UKMt1uB+AB3XVc3HOogo042WGitH/d/+LxSKqwyUK3
+         S8Bg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=LmDCNIRDhs7DNH9NPW4xy+8J+i5MZl5x+uVtCFZTa5g=;
-        b=HlmGYr3HkWb33kyEAOlilBO04LBa+vc7f/+kuaJAuhMd21yI4+KE6VPekeHopFIsFS
-         0TbahU2xNxK3/xnD3hxUDDBH52JOQU7iEpBS5fQePOapKvJhNXa2ln+Qbiq1/d8pw2a5
-         i5aykFhW4OAMA5umyW8pPXCdqhjEGGpkMSeOvcI/Sfzj/Lv7sYjke5pZTsYjs7X0D6J2
-         e4PPsUN00Aqq4XZ8Aykj0ohTvakD8r5w3mHEs+SNWTDG83vLH3oGBxfe/XvTTIMMRzeY
-         oRCT+MkiNV0Cxa/1wriq4kLwrX88YyBgOXHQ2WawnowL9R/zccec84hmaZ3mu5PPN6km
-         EDkg==
-X-Gm-Message-State: APjAAAX8H/GZrL+LdkI/MREsX7TJm04MqtVo+IMkxcqi5w0G0qKjh7Xm
-        DV2VemtCuKkU9JyX6Y8VaULbwA==
-X-Google-Smtp-Source: APXvYqzTEUN7udbEF/IQ5S4vaSRT5SZ53qYu6Xq5+iodypdDvCByZtaq5dCbtg4MhJ1JM8f0B77mJg==
-X-Received: by 2002:a17:90a:c38a:: with SMTP id h10mr37802679pjt.112.1559687428923;
-        Tue, 04 Jun 2019 15:30:28 -0700 (PDT)
+        bh=q3LYolv9HS8m3O9LEPPo+AYNjPUFnZ39lcs8VPIoY7Y=;
+        b=LkP9DYamVk1hYfBHkdKCTUh+fMDqWWkkg1+k3iOi7nNzQh7Wb1GO0E/NVU5ClyLuO2
+         zc7Z9xAbXWXRR/1fx/MpimhZPO2JMrdWAmA855m/SRBPPQ78eIzvqfzBN6L6BJPmtsT5
+         uERspk7JLDEkrI7MdQloXI0f+4A8CfToRBWDDZJL5gLXzazhvMZ/KbZt7QNlhjmAD7aa
+         YSq0Qdm7V5ibFOQnzvFIe7Z9lTCZfxIU/ArqQ4/aInWjX6SMryAwpLUyXDTzWTamHWTu
+         TBLuDURac+9UKnsVYNg3JelncC3O55WR27Eq/qnHACnchinDc9+ozvR79XHU1w6yj5cG
+         opmg==
+X-Gm-Message-State: APjAAAX68pealJE2FuoF6SgKcUQtx86cLz921StgcUOmLn381R1DqxZC
+        uDFyMZWqRQrVpc9XldRD2HUIzQ==
+X-Google-Smtp-Source: APXvYqyBR8kVfo5UG11Mff9yGDhpHlpTueoxyePcbFTPSVifGJSFF+exudIdxNVt5jQnwyblXLDmlA==
+X-Received: by 2002:a63:1c59:: with SMTP id c25mr182601pgm.395.1559687822780;
+        Tue, 04 Jun 2019 15:37:02 -0700 (PDT)
 Received: from minitux (104-188-17-28.lightspeed.sndgca.sbcglobal.net. [104.188.17.28])
-        by smtp.gmail.com with ESMTPSA id u5sm16516107pgp.19.2019.06.04.15.30.26
+        by smtp.gmail.com with ESMTPSA id h15sm471630pfr.44.2019.06.04.15.37.01
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Tue, 04 Jun 2019 15:30:27 -0700 (PDT)
-Date:   Tue, 4 Jun 2019 15:30:25 -0700
+        Tue, 04 Jun 2019 15:37:02 -0700 (PDT)
+Date:   Tue, 4 Jun 2019 15:37:00 -0700
 From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     "Bean Huo (beanhuo)" <beanhuo@micron.com>
-Cc:     Pedro Sousa <pedrom.sousa@synopsys.com>,
-        "James E.J. Bottomley" <jejb@linux.ibm.com>,
-        "Martin K. Petersen" <martin.petersen@oracle.com>,
-        Andy Gross <agross@kernel.org>,
-        Linus Walleij <linus.walleij@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Mark Rutland <mark.rutland@arm.com>,
-        "linux-arm-msm@vger.kernel.org" <linux-arm-msm@vger.kernel.org>,
-        "linux-gpio@vger.kernel.org" <linux-gpio@vger.kernel.org>,
-        "devicetree@vger.kernel.org" <devicetree@vger.kernel.org>,
-        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
-        "linux-scsi@vger.kernel.org" <linux-scsi@vger.kernel.org>
-Subject: Re: [EXT] [PATCH 2/3] scsi: ufs: Allow resetting the UFS device
-Message-ID: <20190604223025.GD4814@minitux>
-References: <20190604072001.9288-1-bjorn.andersson@linaro.org>
- <20190604072001.9288-3-bjorn.andersson@linaro.org>
- <BN7PR08MB568450B1EC51ABAA2E426AC0DB150@BN7PR08MB5684.namprd08.prod.outlook.com>
+To:     Stephen Boyd <swboyd@chromium.org>
+Cc:     Andy Gross <agross@kernel.org>, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, Sibi Sankar <sibis@codeaurora.org>
+Subject: Re: [PATCH] arm64: dts: sdm845: Add iommus property to qup1
+Message-ID: <20190604223700.GE4814@minitux>
+References: <20190604222939.195471-1-swboyd@chromium.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <BN7PR08MB568450B1EC51ABAA2E426AC0DB150@BN7PR08MB5684.namprd08.prod.outlook.com>
+In-Reply-To: <20190604222939.195471-1-swboyd@chromium.org>
 User-Agent: Mutt/1.12.0 (2019-05-25)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue 04 Jun 01:13 PDT 2019, Bean Huo (beanhuo) wrote:
-> >@@ -6159,6 +6179,9 @@ static int ufshcd_reset_and_restore(struct ufs_hba
-> >*hba)
-> > 	int retries = MAX_HOST_RESET_RETRIES;
-> >
-> > 	do {
-> >+		/* Reset the attached device */
-> >+		ufshcd_device_reset(hba);
-> >+
-> 
-> what's problem you met, and you should reset UFS device here? could you give more info?
-> 
-> It is true that we don't reset UFS device in case of device fatal error. According to UFS host spec,
-> Host should be device reset except that in addition to resetting UIC. But as so far,
-> We didn't experience any problems result from this missing reset.
-> 
-> We have three UFS device reset ways.  Comparing to this hardware reset, 
-> I prefer to use DME_ENDPOINTRESET.req software reset.
+On Tue 04 Jun 15:29 PDT 2019, Stephen Boyd wrote:
+
+> The SMMU that sits in front of the QUP needs to be programmed properly
+> so that the i2c geni driver can allocate DMA descriptors. Failure to do
+> this leads to faults when using devices such as an i2c touchscreen where
+> the transaction is larger than 32 bytes and we use a DMA buffer.
 > 
 
-Hi Bean,
+I'm pretty sure I've run into this problem, but before we marked the
+smmu bypass_disable and as such didn't get the fault, thanks.
 
-Thanks for your questions. With some memories we see issues establishing
-the link during bootup, so that's the purpose of issuing this reset.
+>  arm-smmu 15000000.iommu: Unexpected global fault, this could be serious
+>  arm-smmu 15000000.iommu:         GFSR 0x00000002, GFSYNR0 0x00000002, GFSYNR1 0x000006c0, GFSYNR2 0x00000000
+> 
+> Add the right SID and mask so this works.
+> 
+> Cc: Sibi Sankar <sibis@codeaurora.org>
+> Signed-off-by: Stephen Boyd <swboyd@chromium.org>
+> ---
+>  arch/arm64/boot/dts/qcom/sdm845.dtsi | 1 +
+>  1 file changed, 1 insertion(+)
+> 
+> diff --git a/arch/arm64/boot/dts/qcom/sdm845.dtsi b/arch/arm64/boot/dts/qcom/sdm845.dtsi
+> index fcb93300ca62..2e57e861e17c 100644
+> --- a/arch/arm64/boot/dts/qcom/sdm845.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/sdm845.dtsi
+> @@ -900,6 +900,7 @@
+>  			#address-cells = <2>;
+>  			#size-cells = <2>;
+>  			ranges;
+> +			iommus = <&apps_smmu 0x6c0 0x3>;
 
-Unfortunately the downstream Qualcomm patch [1] (which I should have
-remembered to attribute), does not mention why the reset during host
-controller reset is needed - but I'm fairly certain that this scenario
-would be similar to the handover from bootloader to kernel that we do
-see an issue with.
-
-
-[1] https://source.codeaurora.org/quic/la/kernel/msm-4.4/commit/?h=msm-4.4&id=0c82737188e2d63a08196e078e411032dbbc3b89
+According to the docs this stream belongs to TZ, the HLOS stream should
+be 0x6c3.
 
 Regards,
 Bjorn
+
+>  			status = "disabled";
+>  
+>  			i2c8: i2c@a80000 {
+> -- 
+> Sent by a computer through tubes
+> 
