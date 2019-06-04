@@ -2,118 +2,138 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 27A76341DB
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  4 Jun 2019 10:32:20 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 3FF48344AA
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  4 Jun 2019 12:46:00 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726840AbfFDIcT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 4 Jun 2019 04:32:19 -0400
-Received: from bhuna.collabora.co.uk ([46.235.227.227]:40654 "EHLO
-        bhuna.collabora.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726828AbfFDIcT (ORCPT
+        id S1727568AbfFDKpl (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 4 Jun 2019 06:45:41 -0400
+Received: from mail-wm1-f65.google.com ([209.85.128.65]:39301 "EHLO
+        mail-wm1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727239AbfFDKpC (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 4 Jun 2019 04:32:19 -0400
-Received: from localhost (unknown [IPv6:2a01:e0a:2c:6930:5cf4:84a1:2763:fe0d])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        (Authenticated sender: bbrezillon)
-        by bhuna.collabora.co.uk (Postfix) with ESMTPSA id 8C467260E1F;
-        Tue,  4 Jun 2019 09:32:15 +0100 (BST)
-Date:   Tue, 4 Jun 2019 10:32:11 +0200
-From:   Boris Brezillon <boris.brezillon@collabora.com>
-To:     Helen Koike <helen.koike@collabora.com>
-Cc:     dri-devel@lists.freedesktop.org, nicholas.kazlauskas@amd.com,
-        andrey.grodzovsky@amd.com, daniel.vetter@ffwll.ch,
-        linux-kernel@vger.kernel.org, Tomasz Figa <tfiga@chromium.org>,
-        David Airlie <airlied@linux.ie>,
-        Sean Paul <seanpaul@google.com>, kernel@collabora.com,
-        harry.wentland@amd.com,
-        =?UTF-8?B?U3TDqXBoYW5l?= Marchesin <marcheu@google.com>,
-        Sean Paul <sean@poorly.run>, Sandy Huang <hjc@rock-chips.com>,
-        Thomas Zimmermann <tzimmermann@suse.de>, eric@anholt.net,
-        Alex Deucher <alexander.deucher@amd.com>,
-        Bhawanpreet Lakha <Bhawanpreet.Lakha@amd.com>,
-        "David (ChunMing) Zhou" <David1.Zhou@amd.com>,
-        Anthony Koo <Anthony.Koo@amd.com>,
-        amd-gfx@lists.freedesktop.org, linux-rockchip@lists.infradead.org,
-        Ville =?UTF-8?B?U3lyasOkbMOk?= <ville.syrjala@linux.intel.com>,
-        Rob Clark <robdclark@gmail.com>,
-        Christian =?UTF-8?B?S8O2bmln?= <christian.koenig@amd.com>,
-        Leo Li <sunpeng.li@amd.com>, linux-arm-msm@vger.kernel.org,
-        Jeykumar Sankaran <jsanka@codeaurora.org>,
-        Heiko =?UTF-8?B?U3TDvGJuZXI=?= <heiko@sntech.de>,
-        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
-        linux-arm-kernel@lists.infradead.org,
-        David Francis <David.Francis@amd.com>,
-        Mario Kleiner <mario.kleiner.de@gmail.com>,
-        Maxime Ripard <maxime.ripard@bootlin.com>,
-        freedreno@lists.freedesktop.org,
-        Mamta Shukla <mamtashukla555@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>
-Subject: Re: [PATCH v4 0/5] drm: Fix fb changes for async updates
-Message-ID: <20190604103211.7a42be9b@collabora.com>
-In-Reply-To: <20190603165610.24614-1-helen.koike@collabora.com>
-References: <20190603165610.24614-1-helen.koike@collabora.com>
-Organization: Collabora
-X-Mailer: Claws Mail 3.17.3 (GTK+ 2.24.32; x86_64-redhat-linux-gnu)
-MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
+        Tue, 4 Jun 2019 06:45:02 -0400
+Received: by mail-wm1-f65.google.com with SMTP id z23so14174002wma.4
+        for <linux-arm-msm@vger.kernel.org>; Tue, 04 Jun 2019 03:45:00 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=from:to:cc:subject:date:message-id;
+        bh=nQjqkj1EN8NC8Ay0yEHmwn6X2HJX2TtkXyONunIjoOQ=;
+        b=LgaFtLgo69Z61g+GbWOW59qkBgcDUOxjNGAQFne/2sNXo+5nvlREiDIDiZ5YaY5F9N
+         Eyv3uRxa6TWCtsMCUJWb9Z8oapmFfry/+Ssw7nMD9REJirzVscIqSBPbu0EB+tXDsrFJ
+         oz9y18iFepuQyqmb98O7GQYfNCXa6ElADnlthp5IzMl8S1xTIWDKver4ZF2aPfftF/WZ
+         CeRdv9BwD+LaDbuC4g0tzV0AMVmDUGL4/e5N0YOscBVmeAlZUeRwdhH6/g9pHq7/a/rA
+         fdQ8GAvTL8rb31m81z4MDhX0+POnf3oemi4gmNJYx+AMv8NuAF1EMYqp8A85NWygnW/u
+         Tz5w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=nQjqkj1EN8NC8Ay0yEHmwn6X2HJX2TtkXyONunIjoOQ=;
+        b=r7WH1vZLkBG6N2gUd0+nNqeZu1LZFtLoKdw5Bv/LgNxWVlhFhVQiowaZ/zZeLKJ/mb
+         PsIknV4R7+tApmmSqy5YX/cH9oisL65PDjzE2taf+IZ9VLbF+/i3KlsKRflNwkxu1Blx
+         CqjJYVmGTKYjIiHM0nyDrz2Yg92NESSc6WFoljLqFpaVdMt5IsAfau6l+AQuKJH+r8kQ
+         YSLv5Mt6om+l9Fkedu715CVfuZtdCrmEbBubWTpvo7WI9ZMG8DnaQ0+oYoMg1phKB7Dv
+         IuQlVsnoRQOpAEvBcIstgkosIpQVyKdd80a8mWe1czQ2RlHi6s7kX1ZPtGq+JWmmW5pj
+         hrIQ==
+X-Gm-Message-State: APjAAAWpVSHk2GELBZArJlmclhGuqnVFkdPTmREXle8Eep+gyrBdtMMQ
+        ngyzIbxkrHgypZo6wfq6Ru1FUg==
+X-Google-Smtp-Source: APXvYqwy7Wly0XpVwU2R8jBLlrTc45c8pBpyc8Qd+lEsf451U2b70fbSQiSGxtDiciO8fcfvfWZ8aw==
+X-Received: by 2002:a1c:448b:: with SMTP id r133mr5943280wma.114.1559645099469;
+        Tue, 04 Jun 2019 03:44:59 -0700 (PDT)
+Received: from localhost.localdomain ([2.27.167.43])
+        by smtp.gmail.com with ESMTPSA id t140sm2718623wmt.0.2019.06.04.03.44.58
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Tue, 04 Jun 2019 03:44:58 -0700 (PDT)
+From:   Lee Jones <lee.jones@linaro.org>
+To:     alokc@codeaurora.org, kramasub@codeaurora.org,
+        andy.gross@linaro.org, david.brown@linaro.org,
+        wsa+renesas@sang-engineering.com, bjorn.andersson@linaro.org,
+        linus.walleij@linaro.org, balbi@kernel.org,
+        gregkh@linuxfoundation.org
+Cc:     linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
+        jlhugo@gmail.com, linux-i2c@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org,
+        linux-usb@vger.kernel.org, Lee Jones <lee.jones@linaro.org>
+Subject: [PATCH 1/8] i2c: i2c-qcom-geni: Provide support for ACPI
+Date:   Tue,  4 Jun 2019 11:44:48 +0100
+Message-Id: <20190604104455.8877-1-lee.jones@linaro.org>
+X-Mailer: git-send-email 2.17.1
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon,  3 Jun 2019 13:56:05 -0300
-Helen Koike <helen.koike@collabora.com> wrote:
+Add a match table to allow automatic probing of ACPI device
+QCOM0220.  Ignore clock attainment errors.  Set default clock
+frequency value.
 
-> Hello,
-> 
-> I'm re-sending this series with the acked by in the msm patch and
-> updating the docs in the last patch, the rest is the same.
-> 
-> v3 link: https://patchwork.kernel.org/project/dri-devel/list/?series=91353
+Signed-off-by: Lee Jones <lee.jones@linaro.org>
+---
+ drivers/i2c/busses/i2c-qcom-geni.c | 19 +++++++++++++++++--
+ 1 file changed, 17 insertions(+), 2 deletions(-)
 
-Series queued to drm-misc-fixes.
-
-> 
-> Thanks!
-> Helen
-> 
-> Changes in v4:
-> - add acked by tag
-> - update docs in atomic_async_update callback
-> 
-> Changes in v3:
-> - use swap() to swap old and new framebuffers in async_update
-> - get the reference to old_fb and set the worker after vop_plane_atomic_update()
-> - add a FIXME tag for when we have multiple fbs to be released when
-> vblank happens.
-> - update commit message
-> - Add Reviewed-by tags
-> - Add TODO in drm_atomic_helper_async_commit()
-> 
-> Changes in v2:
-> - added reviewed-by tag
-> - update CC stable and Fixes tag
-> - Added reviewed-by tag
-> - updated CC stable and Fixes tag
-> - Change the order of the patch in the series, add this as the last one.
-> - Add documentation
-> - s/ballanced/balanced
-> 
-> Helen Koike (5):
->   drm/rockchip: fix fb references in async update
->   drm/amd: fix fb references in async update
->   drm/msm: fix fb references in async update
->   drm/vc4: fix fb references in async update
->   drm: don't block fb changes for async plane updates
-> 
->  .../gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c |  3 +-
->  drivers/gpu/drm/drm_atomic_helper.c           | 22 ++++----
->  drivers/gpu/drm/msm/disp/mdp5/mdp5_plane.c    |  4 ++
->  drivers/gpu/drm/rockchip/rockchip_drm_vop.c   | 51 ++++++++++---------
->  drivers/gpu/drm/vc4/vc4_plane.c               |  2 +-
->  include/drm/drm_modeset_helper_vtables.h      |  8 +++
->  6 files changed, 52 insertions(+), 38 deletions(-)
-> 
+diff --git a/drivers/i2c/busses/i2c-qcom-geni.c b/drivers/i2c/busses/i2c-qcom-geni.c
+index db075bc0d952..0fa93b448e8d 100644
+--- a/drivers/i2c/busses/i2c-qcom-geni.c
++++ b/drivers/i2c/busses/i2c-qcom-geni.c
+@@ -1,6 +1,7 @@
+ // SPDX-License-Identifier: GPL-2.0
+ // Copyright (c) 2017-2018, The Linux Foundation. All rights reserved.
+ 
++#include <linux/acpi.h>
+ #include <linux/clk.h>
+ #include <linux/dma-mapping.h>
+ #include <linux/err.h>
+@@ -483,6 +484,12 @@ static const struct i2c_algorithm geni_i2c_algo = {
+ 	.functionality	= geni_i2c_func,
+ };
+ 
++static const struct acpi_device_id geni_i2c_acpi_match[] = {
++	{ "QCOM0220"},
++	{ },
++};
++MODULE_DEVICE_TABLE(acpi, geni_i2c_acpi_match);
++
+ static int geni_i2c_probe(struct platform_device *pdev)
+ {
+ 	struct geni_i2c_dev *gi2c;
+@@ -502,7 +509,7 @@ static int geni_i2c_probe(struct platform_device *pdev)
+ 		return PTR_ERR(gi2c->se.base);
+ 
+ 	gi2c->se.clk = devm_clk_get(&pdev->dev, "se");
+-	if (IS_ERR(gi2c->se.clk)) {
++	if (IS_ERR(gi2c->se.clk) && !ACPI_HANDLE(&pdev->dev)) {
+ 		ret = PTR_ERR(gi2c->se.clk);
+ 		dev_err(&pdev->dev, "Err getting SE Core clk %d\n", ret);
+ 		return ret;
+@@ -510,12 +517,19 @@ static int geni_i2c_probe(struct platform_device *pdev)
+ 
+ 	ret = device_property_read_u32(&pdev->dev, "clock-frequency",
+ 							&gi2c->clk_freq_out);
+-	if (ret) {
++	if (ret && !ACPI_HANDLE(&pdev->dev)) {
+ 		dev_info(&pdev->dev,
+ 			"Bus frequency not specified, default to 100kHz.\n");
+ 		gi2c->clk_freq_out = KHZ(100);
+ 	}
+ 
++	if (ACPI_HANDLE(&pdev->dev)) {
++		ACPI_COMPANION_SET(&gi2c->adap.dev, ACPI_COMPANION(&pdev->dev));
++
++		/* Using default, same as the !ACPI case above */
++		gi2c->clk_freq_out = KHZ(100);
++	}
++
+ 	gi2c->irq = platform_get_irq(pdev, 0);
+ 	if (gi2c->irq < 0) {
+ 		dev_err(&pdev->dev, "IRQ error for i2c-geni\n");
+@@ -660,6 +674,7 @@ static struct platform_driver geni_i2c_driver = {
+ 		.name = "geni_i2c",
+ 		.pm = &geni_i2c_pm_ops,
+ 		.of_match_table = geni_i2c_dt_match,
++		.acpi_match_table = ACPI_PTR(geni_i2c_acpi_match),
+ 	},
+ };
+ 
+-- 
+2.17.1
 
