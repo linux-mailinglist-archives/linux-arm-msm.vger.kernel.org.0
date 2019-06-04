@@ -2,119 +2,115 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 30507352EA
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  5 Jun 2019 00:59:35 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 7EBD83547D
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  5 Jun 2019 01:43:23 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726454AbfFDW7e (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 4 Jun 2019 18:59:34 -0400
-Received: from mail-pf1-f195.google.com ([209.85.210.195]:39800 "EHLO
-        mail-pf1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726422AbfFDW7e (ORCPT
+        id S1726399AbfFDXnX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 4 Jun 2019 19:43:23 -0400
+Received: from gateway23.websitewelcome.com ([192.185.50.129]:29007 "EHLO
+        gateway23.websitewelcome.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1726269AbfFDXnW (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 4 Jun 2019 18:59:34 -0400
-Received: by mail-pf1-f195.google.com with SMTP id j2so13596692pfe.6
-        for <linux-arm-msm@vger.kernel.org>; Tue, 04 Jun 2019 15:59:34 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=2x/6dym/wJBwbh6+t1lbnKjE5x4RtuWi4gD3SnKAZ30=;
-        b=fUIpItUeGWs1El53UJTO7arimX5f3Q03oxlhM+LZSQLk4f6jC2FOWuIuPU9n/R57ij
-         16itbc1GNd5Fwvqse0VWcvJ1zSc/Nyrz3xNBw0omDrhYOE8hZnUWXqiYI9uzvf+DKG1x
-         uD0JAbnEK0mc5kl08VQQlocHVrp0YaLZacv8LOUyfghzIWBa+BdCCQSO7qMV7R8kM2Xk
-         Cv5VhmRdZxiVFaNtoNzVMRKe+zba1WEYtBrG+roxg3ObtJbg6CSaxU65iBmRWUTMW89T
-         OjlxEmpv4swHEg2CjiB6qrzbfHR8luEd63JZjBJiFsNXVy8hYy2RhixCC+ESPcdZShQL
-         KDBg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=2x/6dym/wJBwbh6+t1lbnKjE5x4RtuWi4gD3SnKAZ30=;
-        b=NM/x3SWfaVEzlzF+qWf2X5gGV/XXrJfEnDRUuBzUg/RLX+o4CeLkxQFPV9wzk0v8zL
-         Newh5nscIOnCFsR2ss4lciWsff/uPEh7h6wOOA35uHVBmmm1ZYi0I+35HcuwF7OJvBJV
-         r+JNNjaK1xgKfxKZWHWZ7T+/UPpTWSqbo7CVR1YU88rvUOlKog9LZGWnw/MkJA77fm1+
-         AKaI/iw+PBN0qyWTZ/42ynns/J0vITBO1Yqj0Wtps2C6M2a6sDFsQP4AoKqp+BdHs7sE
-         42SJ24DZw6EpY5/T3kb01oVnQQxcUEXLbDQu8/LC3ISC4ESFX6Rf2OjZgdGC5WW26YZG
-         7BbQ==
-X-Gm-Message-State: APjAAAVVfmj/QGXFuB6N/8q97Ksw2GrTm4RL2QflCjOVqTF6mD3pwq5w
-        OPqdGq0yF1J4Mh8CiYC0qiPJAA==
-X-Google-Smtp-Source: APXvYqzbo4KgZDKcMiTV0gkusEc5LPCSwW5uOvd6fOEYHvt+CGXxRongSvJFzcSbuwCyj3K6py6hDQ==
-X-Received: by 2002:aa7:9256:: with SMTP id 22mr28183848pfp.69.1559689173725;
-        Tue, 04 Jun 2019 15:59:33 -0700 (PDT)
-Received: from minitux (104-188-17-28.lightspeed.sndgca.sbcglobal.net. [104.188.17.28])
-        by smtp.gmail.com with ESMTPSA id a21sm9754032pjh.10.2019.06.04.15.59.32
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Tue, 04 Jun 2019 15:59:33 -0700 (PDT)
-Date:   Tue, 4 Jun 2019 15:59:31 -0700
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Stephen Boyd <swboyd@chromium.org>, vivek.gautam@codeaurora.org
-Cc:     Andy Gross <agross@kernel.org>, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, Sibi Sankar <sibis@codeaurora.org>
-Subject: Re: [PATCH] arm64: dts: sdm845: Add iommus property to qup1
-Message-ID: <20190604225931.GG4814@minitux>
-References: <20190604222939.195471-1-swboyd@chromium.org>
- <20190604223700.GE4814@minitux>
- <5cf6f4bb.1c69fb81.c39da.5496@mx.google.com>
+        Tue, 4 Jun 2019 19:43:22 -0400
+X-Greylist: delayed 1452 seconds by postgrey-1.27 at vger.kernel.org; Tue, 04 Jun 2019 19:43:22 EDT
+Received: from cm10.websitewelcome.com (cm10.websitewelcome.com [100.42.49.4])
+        by gateway23.websitewelcome.com (Postfix) with ESMTP id 62BAB5A245
+        for <linux-arm-msm@vger.kernel.org>; Tue,  4 Jun 2019 18:16:18 -0500 (CDT)
+Received: from gator4166.hostgator.com ([108.167.133.22])
+        by cmsmtp with SMTP
+        id YIfChQkE72PzOYIfChlJVJ; Tue, 04 Jun 2019 18:16:18 -0500
+X-Authority-Reason: nr=8
+Received: from [189.250.127.120] (port=45750 helo=embeddedor)
+        by gator4166.hostgator.com with esmtpa (Exim 4.91)
+        (envelope-from <gustavo@embeddedor.com>)
+        id 1hYIfB-000fBA-4A; Tue, 04 Jun 2019 18:16:17 -0500
+Date:   Tue, 4 Jun 2019 18:16:16 -0500
+From:   "Gustavo A. R. Silva" <gustavo@embeddedor.com>
+To:     Andy Gross <agross@kernel.org>,
+        David Brown <david.brown@linaro.org>,
+        Thomas Gleixner <tglx@linutronix.de>,
+        Jason Cooper <jason@lakedaemon.net>,
+        Marc Zyngier <marc.zyngier@arm.com>
+Cc:     linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        "Gustavo A. R. Silva" <gustavo@embeddedor.com>
+Subject: [PATCH] irqchip/qcom: Use struct_size() in devm_kzalloc()
+Message-ID: <20190604231616.GA31969@embeddedor>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <5cf6f4bb.1c69fb81.c39da.5496@mx.google.com>
-User-Agent: Mutt/1.12.0 (2019-05-25)
+User-Agent: Mutt/1.9.4 (2018-02-28)
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - gator4166.hostgator.com
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - embeddedor.com
+X-BWhitelist: no
+X-Source-IP: 189.250.127.120
+X-Source-L: No
+X-Exim-ID: 1hYIfB-000fBA-4A
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
+X-Source-Sender: (embeddedor) [189.250.127.120]:45750
+X-Source-Auth: gustavo@embeddedor.com
+X-Email-Count: 7
+X-Source-Cap: Z3V6aWRpbmU7Z3V6aWRpbmU7Z2F0b3I0MTY2Lmhvc3RnYXRvci5jb20=
+X-Local-Domain: yes
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue 04 Jun 15:46 PDT 2019, Stephen Boyd wrote:
+One of the more common cases of allocation size calculations is finding
+the size of a structure that has a zero-sized array at the end, along
+with memory for some number of elements for that array. For example:
 
-> Quoting Bjorn Andersson (2019-06-04 15:37:00)
-> > On Tue 04 Jun 15:29 PDT 2019, Stephen Boyd wrote:
-> > 
-> > > The SMMU that sits in front of the QUP needs to be programmed properly
-> > > so that the i2c geni driver can allocate DMA descriptors. Failure to do
-> > > this leads to faults when using devices such as an i2c touchscreen where
-> > > the transaction is larger than 32 bytes and we use a DMA buffer.
-> > > 
-> > 
-> > I'm pretty sure I've run into this problem, but before we marked the
-> > smmu bypass_disable and as such didn't get the fault, thanks.
-> > 
-> > >  arm-smmu 15000000.iommu: Unexpected global fault, this could be serious
-> > >  arm-smmu 15000000.iommu:         GFSR 0x00000002, GFSYNR0 0x00000002, GFSYNR1 0x000006c0, GFSYNR2 0x00000000
-> > > 
-> > > Add the right SID and mask so this works.
-> > > 
-> > > Cc: Sibi Sankar <sibis@codeaurora.org>
-> > > Signed-off-by: Stephen Boyd <swboyd@chromium.org>
-> > > ---
-> > >  arch/arm64/boot/dts/qcom/sdm845.dtsi | 1 +
-> > >  1 file changed, 1 insertion(+)
-> > > 
-> > > diff --git a/arch/arm64/boot/dts/qcom/sdm845.dtsi b/arch/arm64/boot/dts/qcom/sdm845.dtsi
-> > > index fcb93300ca62..2e57e861e17c 100644
-> > > --- a/arch/arm64/boot/dts/qcom/sdm845.dtsi
-> > > +++ b/arch/arm64/boot/dts/qcom/sdm845.dtsi
-> > > @@ -900,6 +900,7 @@
-> > >                       #address-cells = <2>;
-> > >                       #size-cells = <2>;
-> > >                       ranges;
-> > > +                     iommus = <&apps_smmu 0x6c0 0x3>;
-> > 
-> > According to the docs this stream belongs to TZ, the HLOS stream should
-> > be 0x6c3.
-> 
-> Aye, I saw this line in the downstream kernel but it doesn't work for
-> me. If I specify <&apps_smmu 0x6c3 0x0> it still blows up. I wonder if
-> my firmware perhaps is missing some initialization here to make the QUP
-> operate in HLOS mode? Otherwise, I thought that the 0x3 at the end was
-> the mask and so it should be split off to the second cell in the DT
-> specifier but that seemed a little weird.
-> 
+struct foo {
+    int stuff;
+    struct boo entry[];
+};
 
-Both 0x3 and 0x6c3 are documented as the actual HLOS stream id, with
-mask of 0x0. 
+size = sizeof(struct foo) + count * sizeof(struct boo);
+instance = devm_kzalloc(dev, size, GFP_KERNEL);
 
-Looping in Vivek as well.
+Instead of leaving these open-coded and prone to type mistakes, we can
+now use the new struct_size() helper:
 
-Regards,
-Bjorn
+instance = devm_kzalloc(dev, struct_size(instance, entry, count), GFP_KERNEL);
+
+Notice that, in this case, variable alloc_sz is not necessary, hence it
+is removed.
+
+This code was detected with the help of Coccinelle.
+
+Signed-off-by: Gustavo A. R. Silva <gustavo@embeddedor.com>
+---
+ drivers/irqchip/qcom-irq-combiner.c | 5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
+
+diff --git a/drivers/irqchip/qcom-irq-combiner.c b/drivers/irqchip/qcom-irq-combiner.c
+index 7f0c0be322e0..d269a7722032 100644
+--- a/drivers/irqchip/qcom-irq-combiner.c
++++ b/drivers/irqchip/qcom-irq-combiner.c
+@@ -237,7 +237,6 @@ static int get_registers(struct platform_device *pdev, struct combiner *comb)
+ static int __init combiner_probe(struct platform_device *pdev)
+ {
+ 	struct combiner *combiner;
+-	size_t alloc_sz;
+ 	int nregs;
+ 	int err;
+ 
+@@ -247,8 +246,8 @@ static int __init combiner_probe(struct platform_device *pdev)
+ 		return -EINVAL;
+ 	}
+ 
+-	alloc_sz = sizeof(*combiner) + sizeof(struct combiner_reg) * nregs;
+-	combiner = devm_kzalloc(&pdev->dev, alloc_sz, GFP_KERNEL);
++	combiner = devm_kzalloc(&pdev->dev, struct_size(combiner, regs, nregs),
++				GFP_KERNEL);
+ 	if (!combiner)
+ 		return -ENOMEM;
+ 
+-- 
+2.21.0
+
