@@ -2,106 +2,103 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id B0CBB34C13
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  4 Jun 2019 17:22:01 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 6E66E34C29
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  4 Jun 2019 17:25:26 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728072AbfFDPVw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 4 Jun 2019 11:21:52 -0400
-Received: from mx1.redhat.com ([209.132.183.28]:56478 "EHLO mx1.redhat.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1727857AbfFDPVw (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 4 Jun 2019 11:21:52 -0400
-Received: from smtp.corp.redhat.com (int-mx07.intmail.prod.int.phx2.redhat.com [10.5.11.22])
-        (using TLSv1.2 with cipher AECDH-AES256-SHA (256/256 bits))
-        (No client certificate requested)
-        by mx1.redhat.com (Postfix) with ESMTPS id 87F6D2F8BC8;
-        Tue,  4 Jun 2019 15:21:46 +0000 (UTC)
-Received: from ovpn-112-67.rdu2.redhat.com (ovpn-112-67.rdu2.redhat.com [10.10.112.67])
-        by smtp.corp.redhat.com (Postfix) with ESMTP id 23E621001947;
-        Tue,  4 Jun 2019 15:21:41 +0000 (UTC)
-Message-ID: <feb3d23718ea462d304369d718c6ed37da8a8f15.camel@redhat.com>
-Subject: Re: [PATCH v2 00/17] net: introduce Qualcomm IPA driver
-From:   Dan Williams <dcbw@redhat.com>
-To:     Subash Abhinov Kasiviswanathan <subashab@codeaurora.org>
-Cc:     Alex Elder <elder@linaro.org>, Arnd Bergmann <arnd@arndb.de>,
-        David Miller <davem@davemloft.net>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Ilias Apalodimas <ilias.apalodimas@linaro.org>,
-        evgreen@chromium.org, Ben Chan <benchan@google.com>,
-        Eric Caruso <ejcaruso@google.com>, cpratapa@codeaurora.org,
-        syadagir@codeaurora.org, abhishek.esse@gmail.com,
-        Networking <netdev@vger.kernel.org>,
-        DTML <devicetree@vger.kernel.org>,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-        linux-soc@vger.kernel.org,
-        Linux ARM <linux-arm-kernel@lists.infradead.org>,
-        linux-arm-msm@vger.kernel.org
-Date:   Tue, 04 Jun 2019 10:21:41 -0500
-In-Reply-To: <c200581b8fc167f3a0c09ef6233b8d81@codeaurora.org>
-References: <20190531035348.7194-1-elder@linaro.org>
-         <e75cd1c111233fdc05f47017046a6b0f0c97673a.camel@redhat.com>
-         <065c95a8-7b17-495d-f225-36c46faccdd7@linaro.org>
-         <CAK8P3a05CevRBV3ym+pnKmxv+A0_T+AtURW2L4doPAFzu3QcJw@mail.gmail.com>
-         <a28c5e13-59bc-144d-4153-9d104cfa9188@linaro.org>
-         <3b1e12b145a273dd3ded2864d976bdc5fa90e68a.camel@redhat.com>
-         <87f98f81-8f77-3bc5-374c-f498e07cb1bd@linaro.org>
-         <0fc29577a5c69530145b6095fa1ac1a51949ba8e.camel@redhat.com>
-         <c200581b8fc167f3a0c09ef6233b8d81@codeaurora.org>
-Content-Type: text/plain; charset="UTF-8"
-User-Agent: Evolution 3.30.5 (3.30.5-1.fc29) 
+        id S1728122AbfFDPZQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 4 Jun 2019 11:25:16 -0400
+Received: from mail-pf1-f194.google.com ([209.85.210.194]:35340 "EHLO
+        mail-pf1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727953AbfFDPZQ (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 4 Jun 2019 11:25:16 -0400
+Received: by mail-pf1-f194.google.com with SMTP id d126so12919554pfd.2
+        for <linux-arm-msm@vger.kernel.org>; Tue, 04 Jun 2019 08:25:16 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=message-id:mime-version:content-transfer-encoding:in-reply-to
+         :references:cc:to:from:subject:user-agent:date;
+        bh=Mrua8Se3/4ilWZJMy5h+Rrfq98YU9hLPDYoeq7tQAs0=;
+        b=bwPYy4WKJZInqlQTDw1tRC2vfxgDnGkK0PChtQyEZsGS0topViNdNdWX6VaSl0HMrO
+         qSz/UqMNTHg45ahUSDI9Xnc5tEuvAfrpjfMhBG14xZHMiUqJAKP4h78NdotF4VlIogzP
+         UEi49SUP40Pyaut0+lMsfKNsgbjYpzHc2RCqI=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:message-id:mime-version
+         :content-transfer-encoding:in-reply-to:references:cc:to:from:subject
+         :user-agent:date;
+        bh=Mrua8Se3/4ilWZJMy5h+Rrfq98YU9hLPDYoeq7tQAs0=;
+        b=YSR5QqjG62tunfTIa/IewmYu4T1E3erE/RWlYtd49S8F9YLiWMYtZnmPSGTm6jmiCo
+         ArrVqmzSJwZ0ZbMcj8WcPQfeCO8ySHevsDe031eFvY2GkdfPdZ2+hCCbIoeEuFnJzAdF
+         yl2N/uGMgGINDNJrMKBf/SrlMywt/nJ9E783FR9oMD7UcbrRic2awWWz6x4IjNYaM2lu
+         9TvezISQALK1goisNKVnrXT8RCGgPfRY7J9Df0qsZ8//8xup+SC9dPkjeKzIPVSPKy1O
+         Jx/Bcck6c3SybdUFwNJxob2GYanptBRUJjTqgJSImBBoanMpQEzmABymmYcx3m9mMof/
+         WDhw==
+X-Gm-Message-State: APjAAAUOpzuT5kHLylQkzj6oAskD0BYOpnYo77IX/ev7TTaQb3E6VfX3
+        Ln7npxxnztEdZ6vVFUcb5g+NGg==
+X-Google-Smtp-Source: APXvYqzFK80JeE50UcjFQyirswrvWFymO/ZMzI1vu12d2/0cwjZ7GI6ZIB2R/YBegZpgyFsXzUUQMw==
+X-Received: by 2002:a62:5c84:: with SMTP id q126mr12951772pfb.247.1559661915912;
+        Tue, 04 Jun 2019 08:25:15 -0700 (PDT)
+Received: from chromium.org ([2620:15c:202:1:fa53:7765:582b:82b9])
+        by smtp.gmail.com with ESMTPSA id k6sm19398866pfi.86.2019.06.04.08.25.15
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Tue, 04 Jun 2019 08:25:15 -0700 (PDT)
+Message-ID: <5cf68d5b.1c69fb81.281cd.5f93@mx.google.com>
+Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
-Content-Transfer-Encoding: 7bit
-X-Scanned-By: MIMEDefang 2.84 on 10.5.11.22
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.5.16 (mx1.redhat.com [10.5.110.38]); Tue, 04 Jun 2019 15:21:51 +0000 (UTC)
+Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <20190604072001.9288-3-bjorn.andersson@linaro.org>
+References: <20190604072001.9288-1-bjorn.andersson@linaro.org> <20190604072001.9288-3-bjorn.andersson@linaro.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Linus Walleij <linus.walleij@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Mark Rutland <mark.rutland@arm.com>,
+        linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-scsi@vger.kernel.org
+To:     "James E.J. Bottomley" <jejb@linux.ibm.com>,
+        "Martin K. Petersen" <martin.petersen@oracle.com>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Pedro Sousa <pedrom.sousa@synopsys.com>
+From:   Stephen Boyd <swboyd@chromium.org>
+Subject: Re: [PATCH 2/3] scsi: ufs: Allow resetting the UFS device
+User-Agent: alot/0.8.1
+Date:   Tue, 04 Jun 2019 08:25:14 -0700
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, 2019-06-03 at 13:04 -0600, Subash Abhinov Kasiviswanathan
-wrote:
-> > > I can't (or won't) comment right now on whether IPA needs its own
-> > > netdev for rmnet to use.  The IPA endpoints used for the modem
-> > > network interfaces are enabled when the netdev is opened and
-> > > disabled when closed.  Outside of that, TX and RX are pretty
-> > > much immediately passed through to the layer below or above.
-> > > IPA currently has no other net device operations.
-> > 
-> > I don't really have issues with the patchset underneath the netdev
-> > layer. I'm interested in how the various bits present themselves to
-> > userspace, which is why I am trying to tie this in with Johannes'
-> > conversation about WWAN devices, netdevs, channels, and how the
-> > various
-> > drivers present API for creating data channels that map to
-> > different
-> > modem contexts.
-> > 
-> > So let me rephrase. If the control plane has set up the default
-> > context
-> > and sent a QMI Start Network message (or the network attached the
-> > default one) and the resulting IP details are applied to the IPA
-> > netdev
-> > can things just start sending data? Or do we need to create an
-> > rmnet on
-> > top to get that working?
-> > 
-> > Dan
-> 
-> Hi Dan
-> 
-> All data from the hardware will have the MAP headers.
-> We still need to create rmnet devs over the IPA netdev and use it
-> for 
-> the
-> data path.
-> The IPA netdev will pass on the packets which it receives from the 
-> hardware
-> and queue it to network stack where it will be intercepted by the
-> rmnet rx handler.
+Quoting Bjorn Andersson (2019-06-04 00:20:00)
+> @@ -6104,6 +6105,25 @@ static int ufshcd_abort(struct scsi_cmnd *cmd)
+>         return err;
+>  }
+> =20
+> +/**
+> + ufshcd_device_reset() - toggle the (optional) device reset line
+> + * @hba: per-adapter instance
+> + *
+> + * Toggles the (optional) reset line to reset the attached device.
+> + */
+> +static void ufshcd_device_reset(struct ufs_hba *hba)
+> +{
+> +       /*
+> +        * The USB device shall detect reset pulses of 1us, sleep for 10u=
+s to
 
-Ok, so IPA only needs a netdev so that rmnet has something to
-send/receive packets to/from? This gets even closer to the discussion
-in "cellular modem driver APIs - take 2" from last week.
+This isn't usb though. Can we have a gpio reset driver and then
+implement this in the reset framework instead? Or did that not work out
+for some reason?
 
-Dan
-
+> +        * be on the safe side.
+> +        */
+> +       gpiod_set_value_cansleep(hba->device_reset, 1);
+> +       usleep_range(10, 15);
+> +
+> +       gpiod_set_value_cansleep(hba->device_reset, 0);
+> +       usleep_range(10, 15);
+> +}
+> +
+>  /**
+>   * ufshcd_host_reset_and_restore - reset and restore host controller
+>   * @hba: per-adapter instance
