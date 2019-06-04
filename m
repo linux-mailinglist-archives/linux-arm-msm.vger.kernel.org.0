@@ -2,168 +2,207 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 1BB323414D
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  4 Jun 2019 10:14:02 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 960CA3414A
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  4 Jun 2019 10:13:53 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726867AbfFDIN4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 4 Jun 2019 04:13:56 -0400
-Received: from mail-qt1-f195.google.com ([209.85.160.195]:41658 "EHLO
-        mail-qt1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726637AbfFDIN4 (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 4 Jun 2019 04:13:56 -0400
-Received: by mail-qt1-f195.google.com with SMTP id s57so5580411qte.8;
-        Tue, 04 Jun 2019 01:13:55 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=OlXBKw7HgP4DZult/XowRKn8oIkzj5I8Bd8HMNjnVco=;
-        b=WM6UY//u3gKrc0uo6AsfF8nChVGhf0xjC7EpAbk4VMYXb4/+tNYkyOb+YzQp5QDF+F
-         eATXSb0zT4e1tS4eHVzdmlE5htmqXImNh17u+QbK07ea8zHYXMfc93UVZD9mzC5lkgFf
-         jW2YyBnearx5ncMLRsP6hmF4VtuyxzyJJTuHiEYTY4rjTctXn9T4FojidVlcmEbO+Czk
-         KK2JY7zq6/hFcHFAk4At6DYq5ooPpxWGllOO6r4CyuS+0gAIIovda48sgtxPPWjB5B7W
-         VhJcL99+Maezi626WOXoV0bAmEn2WArGh7xclwN9Rr5nyhNpkMi+fYWMGLUiFkvwvqk9
-         ebOA==
-X-Gm-Message-State: APjAAAUHRFZifjj64hotD1DGUzR/OQaMQ02RxR15vu9da26nwDX0TW9L
-        AZyCatY999QurzjVJu5CvU59YVNFTrjc+vSH80c=
-X-Google-Smtp-Source: APXvYqz5kir33J5AjmzplbKAfH30cVdEZ3sEoQzuyfFO20zuGZF8LYiKII1TI8KuvJglH3idinfKAhZ4lWT5LqRWGgc=
-X-Received: by 2002:ac8:3ff5:: with SMTP id v50mr24492574qtk.142.1559636034539;
- Tue, 04 Jun 2019 01:13:54 -0700 (PDT)
+        id S1726729AbfFDINo (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 4 Jun 2019 04:13:44 -0400
+Received: from mail-eopbgr740059.outbound.protection.outlook.com ([40.107.74.59]:62048
+        "EHLO NAM01-BN3-obe.outbound.protection.outlook.com"
+        rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+        id S1726637AbfFDINn (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 4 Jun 2019 04:13:43 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=micron.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=i1FG6zloKqxGnK9Sf5W6AQAEFuisLyxvP7AEIBxtQfM=;
+ b=eJsTBbOaO5Cv1S1TpJ8FDHif+JO7GCEqps1G1kkj+A2JcY/wvq7960CrCCvtK+Hp3SZZ1cWeFjbtttitd74pf71EJtH8Ffs9nLbkorV9WF6b5s0oyG/orn8OYFWaQPDFRFjXiMSWvF2apmPNvAIpTD3hc6rSR7koJdqz6MWos1w=
+Received: from BN7PR08MB5684.namprd08.prod.outlook.com (20.176.31.141) by
+ BN7PR08MB4164.namprd08.prod.outlook.com (52.133.220.151) with Microsoft SMTP
+ Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.1943.22; Tue, 4 Jun 2019 08:13:38 +0000
+Received: from BN7PR08MB5684.namprd08.prod.outlook.com
+ ([fe80::8d6c:f350:4859:e532]) by BN7PR08MB5684.namprd08.prod.outlook.com
+ ([fe80::8d6c:f350:4859:e532%4]) with mapi id 15.20.1943.018; Tue, 4 Jun 2019
+ 08:13:38 +0000
+From:   "Bean Huo (beanhuo)" <beanhuo@micron.com>
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Pedro Sousa <pedrom.sousa@synopsys.com>,
+        "James E.J. Bottomley" <jejb@linux.ibm.com>,
+        "Martin K. Petersen" <martin.petersen@oracle.com>
+CC:     Andy Gross <agross@kernel.org>,
+        Linus Walleij <linus.walleij@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Mark Rutland <mark.rutland@arm.com>,
+        "linux-arm-msm@vger.kernel.org" <linux-arm-msm@vger.kernel.org>,
+        "linux-gpio@vger.kernel.org" <linux-gpio@vger.kernel.org>,
+        "devicetree@vger.kernel.org" <devicetree@vger.kernel.org>,
+        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
+        "linux-scsi@vger.kernel.org" <linux-scsi@vger.kernel.org>
+Subject: RE: [EXT] [PATCH 2/3] scsi: ufs: Allow resetting the UFS device
+Thread-Topic: [EXT] [PATCH 2/3] scsi: ufs: Allow resetting the UFS device
+Thread-Index: AQHVGqX7mZWyymp0D0+pRLZPzmjhVqaLH8ww
+Date:   Tue, 4 Jun 2019 08:13:38 +0000
+Message-ID: <BN7PR08MB568450B1EC51ABAA2E426AC0DB150@BN7PR08MB5684.namprd08.prod.outlook.com>
+References: <20190604072001.9288-1-bjorn.andersson@linaro.org>
+ <20190604072001.9288-3-bjorn.andersson@linaro.org>
+In-Reply-To: <20190604072001.9288-3-bjorn.andersson@linaro.org>
+Accept-Language: en-150, en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+authentication-results: spf=none (sender IP is )
+ smtp.mailfrom=beanhuo@micron.com; 
+x-originating-ip: [195.89.176.137]
+x-ms-publictraffictype: Email
+x-ms-office365-filtering-correlation-id: 5ae37eab-556d-4259-ca02-08d6e8c48c83
+x-microsoft-antispam: BCL:0;PCL:0;RULEID:(2390118)(7020095)(4652040)(8989299)(4534185)(4627221)(201703031133081)(201702281549075)(8990200)(5600148)(711020)(4605104)(1401327)(2017052603328)(7193020);SRVR:BN7PR08MB4164;
+x-ms-traffictypediagnostic: BN7PR08MB4164:|BN7PR08MB4164:
+x-microsoft-antispam-prvs: <BN7PR08MB4164F5C147BE78F2515C7267DB150@BN7PR08MB4164.namprd08.prod.outlook.com>
+x-ms-oob-tlc-oobclassifiers: OLM:8882;
+x-forefront-prvs: 0058ABBBC7
+x-forefront-antispam-report: SFV:NSPM;SFS:(10009020)(136003)(376002)(39860400002)(366004)(346002)(396003)(189003)(199004)(186003)(74316002)(9686003)(486006)(26005)(446003)(76176011)(52536014)(55016002)(476003)(66446008)(73956011)(229853002)(7696005)(316002)(66066001)(6506007)(102836004)(25786009)(110136005)(54906003)(4326008)(99286004)(66946007)(76116006)(6436002)(3846002)(478600001)(53936002)(66476007)(64756008)(14444005)(33656002)(11346002)(6246003)(68736007)(66556008)(8676002)(71190400001)(71200400001)(2906002)(81166006)(86362001)(81156014)(305945005)(7736002)(5660300002)(6116002)(5024004)(8936002)(256004)(14454004)(7416002);DIR:OUT;SFP:1101;SCL:1;SRVR:BN7PR08MB4164;H:BN7PR08MB5684.namprd08.prod.outlook.com;FPR:;SPF:None;LANG:en;PTR:InfoNoRecords;MX:1;A:1;
+received-spf: None (protection.outlook.com: micron.com does not designate
+ permitted sender hosts)
+x-ms-exchange-senderadcheck: 1
+x-microsoft-antispam-message-info: cXZuNu4cK0kkbe6cdlEKLGOU5WftKvUrZ7lzRwcQSW4zYvos/kKKux6MOhcyDmF+CUw2molHCuEKXPLA5H55Kden09dvQU4wm7ALW6ZFFRKxBYMaESibhec5KdM+ZfJLv5edcY+c/NVemrRAlWkVNINTXlNoNKnSHDttV1D1gSKRJFzhUg6w1bdnYzTMYOGYY51HbIZhC1s0iWrLVaHUfHhsAV01cNRVJOMingHSvulDILYiEUybCGaqlyjPnDkpUbhGyniCo4FVy3NXwi102EOEuXkDw0jL3wBBwjL/eIoRWZ/U/2QEy+Y7xSen6TSK7Dcnc01ljlsK8YrcGWw/ZwpZ5KQ74R/sGzcvDOn+D9EQFODKvXNJbmi3oOdC1I0TnHG96z7n9hqlk+iKfAZKHkqqUzxC5L7cqA/Vwj5/TDQ=
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: quoted-printable
 MIME-Version: 1.0
-References: <20190531035348.7194-1-elder@linaro.org> <e75cd1c111233fdc05f47017046a6b0f0c97673a.camel@redhat.com>
- <065c95a8-7b17-495d-f225-36c46faccdd7@linaro.org> <CAK8P3a05CevRBV3ym+pnKmxv+A0_T+AtURW2L4doPAFzu3QcJw@mail.gmail.com>
- <a28c5e13-59bc-144d-4153-9d104cfa9188@linaro.org> <20190531233306.GB25597@minitux>
- <d76a710d45dd7df3a28afb12fc62cf14@codeaurora.org> <CAK8P3a0brT0zyZGNWiS2R0RMHHFF2JG=_ixQyvjhj3Ky39o0UA@mail.gmail.com>
- <040ce9cc-7173-d10a-a82c-5186d2fcd737@linaro.org>
-In-Reply-To: <040ce9cc-7173-d10a-a82c-5186d2fcd737@linaro.org>
-From:   Arnd Bergmann <arnd@arndb.de>
-Date:   Tue, 4 Jun 2019 10:13:37 +0200
-Message-ID: <CAK8P3a2U=RzfpVaAgRP1QwPhRpZiBNsG5qdWjzwG=tCKZefYHA@mail.gmail.com>
-Subject: Re: [PATCH v2 00/17] net: introduce Qualcomm IPA driver
-To:     Alex Elder <elder@linaro.org>
-Cc:     Subash Abhinov Kasiviswanathan <subashab@codeaurora.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Dan Williams <dcbw@redhat.com>,
-        David Miller <davem@davemloft.net>,
-        Ilias Apalodimas <ilias.apalodimas@linaro.org>,
-        evgreen@chromium.org, Ben Chan <benchan@google.com>,
-        Eric Caruso <ejcaruso@google.com>, cpratapa@codeaurora.org,
-        syadagir@codeaurora.org, abhishek.esse@gmail.com,
-        Networking <netdev@vger.kernel.org>,
-        DTML <devicetree@vger.kernel.org>,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-        linux-soc@vger.kernel.org,
-        Linux ARM <linux-arm-kernel@lists.infradead.org>,
-        linux-arm-msm@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+X-OriginatorOrg: micron.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 5ae37eab-556d-4259-ca02-08d6e8c48c83
+X-MS-Exchange-CrossTenant-originalarrivaltime: 04 Jun 2019 08:13:38.6206
+ (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: f38a5ecd-2813-4862-b11b-ac1d563c806f
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: beanhuo@micron.com
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: BN7PR08MB4164
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Jun 3, 2019 at 3:32 PM Alex Elder <elder@linaro.org> wrote:
-> On 6/3/19 5:04 AM, Arnd Bergmann wrote:
-> > On Sat, Jun 1, 2019 at 1:59 AM Subash Abhinov Kasiviswanathan
-> >
-> > - What I'm worried about most here is the flow control handling on the
-> >   transmit side. The IPA driver now uses the modern BQL method to
-> >   control how much data gets submitted to the hardware at any time.
-> >   The rmnet driver also uses flow control using the
-> >   rmnet_map_command() function, that blocks tx on the higher
-> >   level device when the remote side asks us to.
-> >   I fear that doing flow control for a single physical device on two
-> >   separate netdev instances is counterproductive and confuses
-> >   both sides.
+Hi, Bjorn
+
+>Acquire the device-reset GPIO and toggle this to reset the UFS device duri=
+ng
+>initialization and host reset.
 >
-> I understand what you're saying here, and instinctively I think
-> you're right.
+>+/**
+>+ ufshcd_device_reset() - toggle the (optional) device reset line
+>+ * @hba: per-adapter instance
+>+ *
+>+ * Toggles the (optional) reset line to reset the attached device.
+>+ */
+>+static void ufshcd_device_reset(struct ufs_hba *hba) {
+>+	/*
+>+	 * The USB device shall detect reset pulses of 1us, sleep for 10us to
+>+	 * be on the safe side.
+>+	 */
+>+	gpiod_set_value_cansleep(hba->device_reset, 1);
+>+	usleep_range(10, 15);
+>+
+>+	gpiod_set_value_cansleep(hba->device_reset, 0);
+>+	usleep_range(10, 15);
+>+}
+>+
+> /**
+>  * ufshcd_host_reset_and_restore - reset and restore host controller
+>  * @hba: per-adapter instance
+>@@ -6159,6 +6179,9 @@ static int ufshcd_reset_and_restore(struct ufs_hba
+>*hba)
+> 	int retries =3D MAX_HOST_RESET_RETRIES;
 >
-> But BQL manages the *local* interface's ability to get rid of
-> packets, whereas the QMAP flow control is initiated by the other
-> end of the connection (the modem in this case).
+> 	do {
+>+		/* Reset the attached device */
+>+		ufshcd_device_reset(hba);
+>+
+
+what's problem you met, and you should reset UFS device here? could you giv=
+e more info?
+
+It is true that we don't reset UFS device in case of device fatal error. Ac=
+cording to UFS host spec,
+Host should be device reset except that in addition to resetting UIC. But a=
+s so far,
+We didn't experience any problems result from this missing reset.
+
+We have three UFS device reset ways.  Comparing to this hardware reset,=20
+I prefer to use DME_ENDPOINTRESET.req software reset.
+
+
+> 		err =3D ufshcd_host_reset_and_restore(hba);
+> 	} while (err && --retries);
 >
-> With multiplexing, it's possible that one of several logical
-> devices on the modem side has exhausted a resource and must
-> ask the source of the data on the host side to suspend the
-> flow.  Meanwhile the other logical devices sharing the physical
-> link might be fine, and should not be delayed by the first one.
+>@@ -7355,6 +7378,18 @@ static void ufshcd_variant_hba_exit(struct ufs_hba
+>*hba)
+> 	ufshcd_vops_exit(hba);
+> }
 >
-> It is the multiplexing itself that confuses the BQL algorithm.
-> The abstraction obscures the *real* rates at which individual
-> logical connections are able to transmit data.
-
-I would assume that the real rate constantly changes, at least
-for wireless interfaces that are also shared with other users
-on the same network. BQL is meant to deal with that, at least
-when using a modern queuing algorithm.
-
-> Even if the multiple logical interfaces implemented BQL, they
-> would not get the feedback they need directly from the IPA
-> driver, because transmitting over the physical interface might
-> succeed even if the logical interface on the modem side can't
-> handle more data.  So I think the flow control commands may be
-> necessary, given multiplexing.
-
-Can you describe what kind of multiplexing is actually going on?
-I'm still unclear about what we actually use multiple logical
-interfaces for here, and how they relate to one another.
-
-> The rmnet driver could use BQL, and could return NETDEV_TX_BUSY
-> for a logical interface when its TX flow has been stopped by a
-> QMAP command.  That way the feedback for BQL on the logical
-> interfaces would be provided in the right place.
+>+static int ufshcd_init_device_reset(struct ufs_hba *hba) {
+>+	hba->device_reset =3D devm_gpiod_get_optional(hba->dev, "device-
+>reset",
+>+						    GPIOD_OUT_HIGH);
+>+	if (IS_ERR(hba->device_reset)) {
+>+		dev_err(hba->dev, "failed to acquire reset gpio: %ld\n",
+>+			PTR_ERR(hba->device_reset));
+>+	}
+>+
+>+	return PTR_ERR_OR_ZERO(hba->device_reset);
+>+}
+>+
+> static int ufshcd_hba_init(struct ufs_hba *hba)  {
+> 	int err;
+>@@ -7394,9 +7429,15 @@ static int ufshcd_hba_init(struct ufs_hba *hba)
+> 	if (err)
+> 		goto out_disable_vreg;
 >
-> I have no good intuition about the interaction between
-> two layered BQL managed queues though.
-
-Returning NETDEV_TX_BUSY is usually a bad idea as that
-leads to unnecessary frame drop.
-
-I do think that using BQL and the QMAP flow command on
-the /same/ device would be best, as that throttles the connection
-when either of the two algorithms wants us to slow down.
-
-The question is mainly which of the two devices that should be.
-Doing it in the ipa driver is probably easier to implement here,
-but ideally I think we'd only have a single queue visible to the
-network stack, if we can come up with a way to do that.
-
-> > - I was a little confused by the location of the rmnet driver in
-> >   drivers/net/ethernet/... More conventionally, I think as a protocol
-> >   handler it should go into net/qmap/, with the ipa driver going
-> >   into drivers/net/qmap/ipa/, similar to what we have fo ethernet,
-> >   wireless, ppp, appletalk, etc.
-> >
-> > - The rx_handler uses gro_cells, which as I understand is meant
-> >   for generic tunnelling setups and takes another loop through
-> >   NAPI to aggregate data from multiple queues, but in case of
-> >   IPA's single-queue receive calling gro directly would be simpler
-> >   and more efficient.
+>+	err =3D ufshcd_init_device_reset(hba);
+>+	if (err)
+>+		goto out_disable_variant;
+>+
+> 	hba->is_powered =3D true;
+> 	goto out;
 >
-> I have been planning to investigate some of the generic GRO
-> stuff for IPA but was going to wait on that until the basic
-> code was upstream.
-
-That's ok, that part can easily be changed after the fact, as it
-does not impact the user interface or the general design.
-
-> >   From the overall design and the rmnet Kconfig description, it
-> >   appears as though the intention as that rmnet could be a
-> >   generic wrapper on top of any device, but from the
-> >   implementation it seems that IPA is not actually usable that
-> >   way and would always go through IPA.
+>+out_disable_variant:
+>+	ufshcd_vops_setup_regulators(hba, false);
+> out_disable_vreg:
+> 	ufshcd_setup_vreg(hba, false);
+> out_disable_clks:
+>@@ -8290,6 +8331,9 @@ int ufshcd_init(struct ufs_hba *hba, void __iomem
+>*mmio_base, unsigned int irq)
+> 		goto exit_gating;
+> 	}
 >
-> As far as I know *nothing* upstream currently uses rmnet; the
-> IPA driver will be the first, but as Bjorn said others seem to
-> be on the way.  I'm not sure what you mean by "IPA is not
-> usable that way."  Currently the IPA driver assumes a fixed
-> configuration, and that configuration assumes the use of QMAP,
-> and therefore assumes the rmnet driver is layered above it.
-> That doesn't preclude rmnet from using a different back end.
+>+	/* Reset the attached device */
+>+	ufshcd_device_reset(hba);
+>+
+> 	/* Host controller enable */
+> 	err =3D ufshcd_hba_enable(hba);
+> 	if (err) {
+>diff --git a/drivers/scsi/ufs/ufshcd.h b/drivers/scsi/ufs/ufshcd.h index
+>ecfa898b9ccc..d8be67742168 100644
+>--- a/drivers/scsi/ufs/ufshcd.h
+>+++ b/drivers/scsi/ufs/ufshcd.h
+>@@ -72,6 +72,8 @@
+> #define UFSHCD "ufshcd"
+> #define UFSHCD_DRIVER_VERSION "0.2"
+>
+>+struct gpio_desc;
+>+
+> struct ufs_hba;
+>
+> enum dev_cmd_type {
+>@@ -706,6 +708,8 @@ struct ufs_hba {
+>
+> 	struct device		bsg_dev;
+> 	struct request_queue	*bsg_queue;
+>+
+>+	struct gpio_desc *device_reset;
+> };
+>
+> /* Returns true if clocks can be gated. Otherwise false */
+>--
+>2.18.0
 
-Yes, that's what I meant above: IPA can only be used through
-rmnet (I wrote "through IPA", sorry for the typo), but cannot be
-used by itself.
-
-       Arnd
