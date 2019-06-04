@@ -2,98 +2,83 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 4A8E5346B2
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  4 Jun 2019 14:29:43 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 6291834753
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  4 Jun 2019 14:52:32 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727556AbfFDM3h (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 4 Jun 2019 08:29:37 -0400
-Received: from mail-lj1-f194.google.com ([209.85.208.194]:32854 "EHLO
-        mail-lj1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727462AbfFDM3h (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 4 Jun 2019 08:29:37 -0400
-Received: by mail-lj1-f194.google.com with SMTP id v29so8197977ljv.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 04 Jun 2019 05:29:36 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=MEMpjywarvEIBpqLOs0vJ3c4H0FioFO5FH41QQdLsTU=;
-        b=l31B3A5DK5yaDaUiuO+4HGcagdn0NkvHuppeEAbpodeU9ctKE/fsIFO4+B2QfE/e7+
-         G4cnqbrtvFi9AdL7LGafgtKNNbtaQH6MQLkvq7mvfC8wtRHAr4Sv62e9MbAURw95Sb1u
-         FqCRGz7XfbCA0quCluQSn7QJlMLjuDlQdrlNEF2mMN1qJU2TFZAwQauDB92Oqd7rwz9u
-         0Gyet5i9HEFB/jdW2Raxdn7K/E91xo2e9nhjWC+uuyhTE8vxwD5WAjwSsRPoCAgcICsm
-         nJj2IlOT8k03uRjO3xFSFcG5ntXYi3dTqwH+UiVY8aHQJ1BPRGguknNx1ot+0vZC4PHP
-         /rhA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=MEMpjywarvEIBpqLOs0vJ3c4H0FioFO5FH41QQdLsTU=;
-        b=VB2YWG/9NbSeGeH0aly6wAe/8XOZwIefxqKOdDExWoVF/Rg5mHfgkCUnoP2z73zVS6
-         MOz9VtlIs2iwQ6dqPtMUsPegb1h2Ii1Qts7Plixq3bqk4KwJSnJo5jqHcfb5HW2K1uuF
-         DUMeQBhjFvQgN7eavt6zwiSWOHJhxnNnfsAZY0aFKcXWV3VFnpThsooEhrexpXZkOGmi
-         nhR5C/BFxramFaLeOD+c8/ZAunwZIJnvB1L18gX4InoLHQfmEJyW0hdxRaTtjXxbIn1/
-         od2CNnBPIx7KysmA+0cNFNdBKUpH3ypCQrt5Oxyn2WEPk1LD5Bfu5WyLRdxOb7il+wwu
-         fJ4w==
-X-Gm-Message-State: APjAAAU3bEkl8+yrPn2u5091cp5dRrMfZc1YRYkQaUwaMlhR4Y98KF1g
-        hX7bRKdMLYuX+41ElCQvVGeRzw==
-X-Google-Smtp-Source: APXvYqwV+FwOVL156Jwgxn4HfmhR4c4RJUEji+CigP/7IgjPiauVSOU7vsxfGGhUtHXXXb6eAGi7BA==
-X-Received: by 2002:a2e:890c:: with SMTP id d12mr16520655lji.107.1559651375370;
-        Tue, 04 Jun 2019 05:29:35 -0700 (PDT)
-Received: from centauri.ideon.se ([85.235.10.227])
-        by smtp.gmail.com with ESMTPSA id l15sm3754389lji.5.2019.06.04.05.29.34
-        (version=TLS1_3 cipher=AEAD-AES256-GCM-SHA384 bits=256/256);
-        Tue, 04 Jun 2019 05:29:34 -0700 (PDT)
-From:   Niklas Cassel <niklas.cassel@linaro.org>
-To:     Andy Gross <agross@kernel.org>,
-        David Brown <david.brown@linaro.org>,
+        id S1727580AbfFDMw0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 4 Jun 2019 08:52:26 -0400
+Received: from mail.kernel.org ([198.145.29.99]:57766 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1727462AbfFDMw0 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 4 Jun 2019 08:52:26 -0400
+Received: from localhost (173-25-83-245.client.mchsi.com [173.25.83.245])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by mail.kernel.org (Postfix) with ESMTPSA id 445CF2075C;
+        Tue,  4 Jun 2019 12:52:25 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=default; t=1559652745;
+        bh=TI//IwvVH2KA10K2fPqSGn4jya7M7Om2ADT6qWSZz60=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=UX+QyaR1JZL+2rhj/O/mvKmEnURKyjwVwjIesADGaL7D1soH7BrbMcNGEZ0a1Pan7
+         molVHJYOjaNNJf2mUaP1xnf5jzhjI05SQmOjBSDNcescJ0l8dZFGB+S9PEKapob+p5
+         NwjexAwr6aKk4/OME9Hu1loH3YOeScpWUNnwPsY4=
+Date:   Tue, 4 Jun 2019 07:52:24 -0500
+From:   Bjorn Helgaas <helgaas@kernel.org>
+To:     Niklas Cassel <niklas.cassel@linaro.org>
+Cc:     Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
         Rob Herring <robh+dt@kernel.org>,
-        Mark Rutland <mark.rutland@arm.com>
-Cc:     amit.kucheria@linaro.org, bjorn.andersson@linaro.org,
-        Niklas Cassel <niklas.cassel@linaro.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: [PATCH] arm64: dts: msm8996: fix PSCI entry-latency-us
-Date:   Tue,  4 Jun 2019 14:29:31 +0200
-Message-Id: <20190604122931.22235-1-niklas.cassel@linaro.org>
-X-Mailer: git-send-email 2.21.0
+        Mark Rutland <mark.rutland@arm.com>,
+        Stanimir Varbanov <svarbanov@mm-sol.com>,
+        linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v5 0/3] Qualcomm QCS404 PCIe support
+Message-ID: <20190604125224.GG189360@google.com>
+References: <20190529005710.23950-1-bjorn.andersson@linaro.org>
+ <20190529163155.GA24655@redmoon>
+ <20190604113347.GA13029@centauri.ideon.se>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20190604113347.GA13029@centauri.ideon.se>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The current entry-latency-us is too short.
-The proper way to convert between the device tree properties
-from the vendor tree to the upstream PSCI device tree properties is:
+On Tue, Jun 04, 2019 at 01:33:47PM +0200, Niklas Cassel wrote:
+> On Wed, May 29, 2019 at 05:31:55PM +0100, Lorenzo Pieralisi wrote:
+> > On Tue, May 28, 2019 at 05:57:07PM -0700, Bjorn Andersson wrote:
+> > > This series adds support for the PCIe controller in the Qualcomm QCS404
+> > > platform.
+> > > 
+> > > Bjorn Andersson (3):
+> > >   PCI: qcom: Use clk_bulk API for 2.4.0 controllers
+> > >   dt-bindings: PCI: qcom: Add QCS404 to the binding
+> > >   PCI: qcom: Add QCS404 PCIe controller support
+> > > 
+> > >  .../devicetree/bindings/pci/qcom,pcie.txt     |  25 +++-
+> > >  drivers/pci/controller/dwc/pcie-qcom.c        | 113 ++++++++----------
+> > >  2 files changed, 75 insertions(+), 63 deletions(-)
+> > 
+> > Applied to pci/qcom for v5.3, thanks.
+> > 
+> > Lorenzo
+> 
+> Hello Lorenzo,
+> 
+> I don't see these patches in linux-next.
+> 
+> It appears that only Bjorn Helgaas tree is in linux-next, and not yours.
+> 
+> I think that it makes a lot of sense for patches to cook in linux-next
+> for as long a possible.
+> 
+> Perhaps you and Bjorn Helgaas could have a shared PCI git tree?
+> Or perhaps you could add your tree to linux-next?
+> ..or some other solution :)
 
-entry-latency-us = qcom,time-overhead - qcom,latency-us
-
-which gives
-
-entry-latency-us = 210 - 80 = 130
-
-Fixes: f6aee7af59b6 ("arm64: dts: qcom: msm8996: Add PSCI cpuidle low power states")
-Signed-off-by: Niklas Cassel <niklas.cassel@linaro.org>
----
- arch/arm64/boot/dts/qcom/msm8996.dtsi | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/arch/arm64/boot/dts/qcom/msm8996.dtsi b/arch/arm64/boot/dts/qcom/msm8996.dtsi
-index b7cf2a17dcb5..e8c03b5c8990 100644
---- a/arch/arm64/boot/dts/qcom/msm8996.dtsi
-+++ b/arch/arm64/boot/dts/qcom/msm8996.dtsi
-@@ -174,7 +174,7 @@
- 				compatible = "arm,idle-state";
- 				idle-state-name = "standalone-power-collapse";
- 				arm,psci-suspend-param = <0x00000004>;
--				entry-latency-us = <40>;
-+				entry-latency-us = <130>;
- 				exit-latency-us = <80>;
- 				min-residency-us = <300>;
- 			};
--- 
-2.21.0
-
+I pull Lorenzo's branches into my -nexst branch.  I just haven't
+gotten to it yet.
