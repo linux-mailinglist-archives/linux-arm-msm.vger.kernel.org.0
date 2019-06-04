@@ -2,62 +2,62 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id EEB6533FEB
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  4 Jun 2019 09:20:32 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C052433FEF
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  4 Jun 2019 09:20:34 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726861AbfFDHUH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 4 Jun 2019 03:20:07 -0400
-Received: from mail-pf1-f195.google.com ([209.85.210.195]:38069 "EHLO
-        mail-pf1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726855AbfFDHUG (ORCPT
+        id S1726872AbfFDHUW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 4 Jun 2019 03:20:22 -0400
+Received: from mail-pf1-f194.google.com ([209.85.210.194]:44594 "EHLO
+        mail-pf1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726880AbfFDHUH (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 4 Jun 2019 03:20:06 -0400
-Received: by mail-pf1-f195.google.com with SMTP id a186so11424389pfa.5
-        for <linux-arm-msm@vger.kernel.org>; Tue, 04 Jun 2019 00:20:06 -0700 (PDT)
+        Tue, 4 Jun 2019 03:20:07 -0400
+Received: by mail-pf1-f194.google.com with SMTP id t16so3306650pfe.11
+        for <linux-arm-msm@vger.kernel.org>; Tue, 04 Jun 2019 00:20:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=ViYa7F9UtMEME21J5BQzy3vs+Cq1vhzXOpNQ8GRwj90=;
-        b=IQHyypeLvlM4iPMqI4K31qIccqyDXJUNAkUxaVhwli/2GjylIzF6dAawwqwChEpKAy
-         aaIKSnnA4n1FcjHAefxCe1pHccyedHAO8oXGSu8TWcR4F7rdgAWWgfh6SL68CEVAZHEv
-         Pp9dp0tsP/1Z8C7VLNUOy9xy5En5PaGeNIKDrpW/8sBu5ARxEBLxLSXkMlkk2WGmrOM/
-         dLEUx4SM/+JAjA6Konl0hOJ4xF+4x1Da+dMN95qPZL+CjTbTd+DAKjYgtNdbVRZdCvtR
-         lAR9K2wXfF7DIWiapg1VyBBCVFcJ1kUI68o0j99J1vfebfnVlxDaUu46CRCBEiCYLVoc
-         BF5w==
+        bh=D3XWMIqhXFSeKwJRGJ6IYznTDgg0AaloPMfGvuC80wY=;
+        b=X8Atb4xA74DTxVSx/Ukx/fVa0wQKoezZtlxqvBf96Cf95zR2X1FfRXwJesGaQZdL81
+         Ki3C59Rptp13xpbiX/YwbAQriKHHYOP8RB57asRp25JOM9bmtIgLSecC3+xGNnzsRB/h
+         Xr8W/s+GvDudZP7kUJBeUMf4LPBBKOwKQvyhcIF2pPwUc4M0COinI0f0F9NFxjWqY2y3
+         KsN2qiYtNfie3Dyb5EO7qO13QROoyWkuFLfEc7m74O01zBpWkQw0GTg2EdHfBiZeD+d9
+         cZDV5H3fJjtubbILssEhG3IOyBv9mAKLCWwsDVQupXFYhQ5+6TLcCZRQv7dhqVJGWL6z
+         8CAQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=ViYa7F9UtMEME21J5BQzy3vs+Cq1vhzXOpNQ8GRwj90=;
-        b=GqnU6XItb/fcXzX/oxvp4dzB9wX2kNeiuiLwr66N4IbGlaC0BXEhUsZ1d1Xv+zxzWQ
-         CRZ5sPbRqQ/WC2J0sODBIOAPWo+s3KA1RGT216eAKY2GqVr0sawriHrBBlX0okBtAkfi
-         WSTbVjNJ2jGcjRpq0lBmixVWkBmVj2AJCaq2Yo4VCpuA9RPaqGeppITwDE+9oZwGt3cv
-         4mFfEKbgu3RPSTYWO+QjmFNcS0uQJcU9G0F2H5eQtdtXh1UahhmbTsnzVU/+FF7S7p5A
-         Jgyei9Ws1OB1WwtwrSyLclLxElA9Ic9cnk80sUENIO9P3/gK43Y2Ny+eV4ypHIRg6FtS
-         zT6w==
-X-Gm-Message-State: APjAAAUTXcjWO23amZzdoeE3U8nexSLno5NwSgNerJ35H+zhdCPT3Rsq
-        u6LS7aPibFh5o7HsC/SPIhN8Pw==
-X-Google-Smtp-Source: APXvYqxep24lPZLwXxpx558WKp+gDT6VilB85WYF0oHb5nOjxCXrDxAsXc35nYFTLkltrAI9xGRhvQ==
-X-Received: by 2002:a17:90a:2648:: with SMTP id l66mr6801082pje.65.1559632805532;
-        Tue, 04 Jun 2019 00:20:05 -0700 (PDT)
+        bh=D3XWMIqhXFSeKwJRGJ6IYznTDgg0AaloPMfGvuC80wY=;
+        b=ELUcbG2ij72trKF/CGgCDdyJwIzbWRf5yI886jwJvw09wv90GiaoWjrrfNz1dce1EY
+         dvEFtqHIQ2Qk6mf+1vBxxvY1qBlj5K0R9kI9jVvSNABHrIg/rYNDQbu/BjP2fUfAVg2u
+         gpo9Mst/q41yHzX17orBN8WI88XQ1dejBJHG9iyU/lHLc6WFlWE4SSALaTnRTs/Gg3iG
+         X463k5x9qgrKYSp1excOJUc5n+kErevgUs7J9VwisuapBCsGWB3XM4NeLBvlWBKvUfMH
+         JjaAWJSvbvRV31Jmchd1srzQg25h0Mq+dkc47JTw0T3sxX8wW7SfEPVda48YRJaCv40P
+         AuJA==
+X-Gm-Message-State: APjAAAVdeGeqc5oiLb4wrAd2LeUoR2ZOZ+IikXvSqrarpBkyuhTb41j9
+        GUdBCPidbShZqRIY3RVa4ayK1Q==
+X-Google-Smtp-Source: APXvYqwIp0yPQVLkTzYfOYL8foJhru05lDR4yF3ReVF/y76RzLLNdJInPRCaoMp0xsnrSEllMGMDiQ==
+X-Received: by 2002:a17:90a:9504:: with SMTP id t4mr35609032pjo.100.1559632806648;
+        Tue, 04 Jun 2019 00:20:06 -0700 (PDT)
 Received: from localhost.localdomain (104-188-17-28.lightspeed.sndgca.sbcglobal.net. [104.188.17.28])
-        by smtp.gmail.com with ESMTPSA id d6sm17747446pgv.4.2019.06.04.00.20.04
+        by smtp.gmail.com with ESMTPSA id d6sm17747446pgv.4.2019.06.04.00.20.05
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 04 Jun 2019 00:20:05 -0700 (PDT)
+        Tue, 04 Jun 2019 00:20:06 -0700 (PDT)
 From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Linus Walleij <linus.walleij@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Mark Rutland <mark.rutland@arm.com>,
-        Pedro Sousa <pedrom.sousa@synopsys.com>,
+To:     Pedro Sousa <pedrom.sousa@synopsys.com>,
         "James E.J. Bottomley" <jejb@linux.ibm.com>,
-        "Martin K. Petersen" <martin.petersen@oracle.com>,
+        "Martin K. Petersen" <martin.petersen@oracle.com>
+Cc:     Andy Gross <agross@kernel.org>,
+        Linus Walleij <linus.walleij@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Mark Rutland <mark.rutland@arm.com>,
         linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org,
         devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
         linux-scsi@vger.kernel.org
-Subject: [PATCH 1/3] pinctrl: qcom: sdm845: Expose ufs_reset as gpio
-Date:   Tue,  4 Jun 2019 00:19:59 -0700
-Message-Id: <20190604072001.9288-2-bjorn.andersson@linaro.org>
+Subject: [PATCH 2/3] scsi: ufs: Allow resetting the UFS device
+Date:   Tue,  4 Jun 2019 00:20:00 -0700
+Message-Id: <20190604072001.9288-3-bjorn.andersson@linaro.org>
 X-Mailer: git-send-email 2.18.0
 In-Reply-To: <20190604072001.9288-1-bjorn.andersson@linaro.org>
 References: <20190604072001.9288-1-bjorn.andersson@linaro.org>
@@ -66,71 +66,130 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The ufs_reset pin is expected to be wired to the reset pin of the
-primary UFS memory but is pretty much just a general purpose output pinr
-
-Reorder the pins and expose it as gpio 150, so that the UFS driver can
-toggle it.
+Acquire the device-reset GPIO and toggle this to reset the UFS device
+during initialization and host reset.
 
 Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
 ---
- .../bindings/pinctrl/qcom,sdm845-pinctrl.txt         |  2 +-
- drivers/pinctrl/qcom/pinctrl-sdm845.c                | 12 ++++++------
- 2 files changed, 7 insertions(+), 7 deletions(-)
+ drivers/scsi/ufs/ufshcd.c | 44 +++++++++++++++++++++++++++++++++++++++
+ drivers/scsi/ufs/ufshcd.h |  4 ++++
+ 2 files changed, 48 insertions(+)
 
-diff --git a/Documentation/devicetree/bindings/pinctrl/qcom,sdm845-pinctrl.txt b/Documentation/devicetree/bindings/pinctrl/qcom,sdm845-pinctrl.txt
-index 665aadb5ea28..33ae08aa4b89 100644
---- a/Documentation/devicetree/bindings/pinctrl/qcom,sdm845-pinctrl.txt
-+++ b/Documentation/devicetree/bindings/pinctrl/qcom,sdm845-pinctrl.txt
-@@ -79,7 +79,7 @@ to specify in a pin configuration subnode:
- 		      gpio0-gpio149
- 		        Supports mux, bias and drive-strength
+diff --git a/drivers/scsi/ufs/ufshcd.c b/drivers/scsi/ufs/ufshcd.c
+index 8c1c551f2b42..951a0efee536 100644
+--- a/drivers/scsi/ufs/ufshcd.c
++++ b/drivers/scsi/ufs/ufshcd.c
+@@ -42,6 +42,7 @@
+ #include <linux/nls.h>
+ #include <linux/of.h>
+ #include <linux/bitfield.h>
++#include <linux/gpio/consumer.h>
+ #include "ufshcd.h"
+ #include "ufs_quirks.h"
+ #include "unipro.h"
+@@ -6104,6 +6105,25 @@ static int ufshcd_abort(struct scsi_cmnd *cmd)
+ 	return err;
+ }
  
--		      sdc2_clk, sdc2_cmd, sdc2_data
-+		      sdc2_clk, sdc2_cmd, sdc2_data, ufs_reset
- 		        Supports bias and drive-strength
++/**
++ ufshcd_device_reset() - toggle the (optional) device reset line
++ * @hba: per-adapter instance
++ *
++ * Toggles the (optional) reset line to reset the attached device.
++ */
++static void ufshcd_device_reset(struct ufs_hba *hba)
++{
++	/*
++	 * The USB device shall detect reset pulses of 1us, sleep for 10us to
++	 * be on the safe side.
++	 */
++	gpiod_set_value_cansleep(hba->device_reset, 1);
++	usleep_range(10, 15);
++
++	gpiod_set_value_cansleep(hba->device_reset, 0);
++	usleep_range(10, 15);
++}
++
+ /**
+  * ufshcd_host_reset_and_restore - reset and restore host controller
+  * @hba: per-adapter instance
+@@ -6159,6 +6179,9 @@ static int ufshcd_reset_and_restore(struct ufs_hba *hba)
+ 	int retries = MAX_HOST_RESET_RETRIES;
  
- - function:
-diff --git a/drivers/pinctrl/qcom/pinctrl-sdm845.c b/drivers/pinctrl/qcom/pinctrl-sdm845.c
-index c97f20fca5fd..e4e5acade086 100644
---- a/drivers/pinctrl/qcom/pinctrl-sdm845.c
-+++ b/drivers/pinctrl/qcom/pinctrl-sdm845.c
-@@ -420,10 +420,10 @@ DECLARE_MSM_GPIO_PINS(147);
- DECLARE_MSM_GPIO_PINS(148);
- DECLARE_MSM_GPIO_PINS(149);
+ 	do {
++		/* Reset the attached device */
++		ufshcd_device_reset(hba);
++
+ 		err = ufshcd_host_reset_and_restore(hba);
+ 	} while (err && --retries);
  
--static const unsigned int sdc2_clk_pins[] = { 150 };
--static const unsigned int sdc2_cmd_pins[] = { 151 };
--static const unsigned int sdc2_data_pins[] = { 152 };
--static const unsigned int ufs_reset_pins[] = { 153 };
-+static const unsigned int ufs_reset_pins[] = { 150 };
-+static const unsigned int sdc2_clk_pins[] = { 151 };
-+static const unsigned int sdc2_cmd_pins[] = { 152 };
-+static const unsigned int sdc2_data_pins[] = { 153 };
+@@ -7355,6 +7378,18 @@ static void ufshcd_variant_hba_exit(struct ufs_hba *hba)
+ 	ufshcd_vops_exit(hba);
+ }
  
- enum sdm845_functions {
- 	msm_mux_gpio,
-@@ -1271,10 +1271,10 @@ static const struct msm_pingroup sdm845_groups[] = {
- 	PINGROUP(147, NORTH, _, _, _, _, _, _, _, _, _, _),
- 	PINGROUP(148, NORTH, _, _, _, _, _, _, _, _, _, _),
- 	PINGROUP(149, NORTH, _, _, _, _, _, _, _, _, _, _),
-+	UFS_RESET(ufs_reset, 0x99f000),
- 	SDC_QDSD_PINGROUP(sdc2_clk, 0x99a000, 14, 6),
- 	SDC_QDSD_PINGROUP(sdc2_cmd, 0x99a000, 11, 3),
- 	SDC_QDSD_PINGROUP(sdc2_data, 0x99a000, 9, 0),
--	UFS_RESET(ufs_reset, 0x99f000),
++static int ufshcd_init_device_reset(struct ufs_hba *hba)
++{
++	hba->device_reset = devm_gpiod_get_optional(hba->dev, "device-reset",
++						    GPIOD_OUT_HIGH);
++	if (IS_ERR(hba->device_reset)) {
++		dev_err(hba->dev, "failed to acquire reset gpio: %ld\n",
++			PTR_ERR(hba->device_reset));
++	}
++
++	return PTR_ERR_OR_ZERO(hba->device_reset);
++}
++
+ static int ufshcd_hba_init(struct ufs_hba *hba)
+ {
+ 	int err;
+@@ -7394,9 +7429,15 @@ static int ufshcd_hba_init(struct ufs_hba *hba)
+ 	if (err)
+ 		goto out_disable_vreg;
+ 
++	err = ufshcd_init_device_reset(hba);
++	if (err)
++		goto out_disable_variant;
++
+ 	hba->is_powered = true;
+ 	goto out;
+ 
++out_disable_variant:
++	ufshcd_vops_setup_regulators(hba, false);
+ out_disable_vreg:
+ 	ufshcd_setup_vreg(hba, false);
+ out_disable_clks:
+@@ -8290,6 +8331,9 @@ int ufshcd_init(struct ufs_hba *hba, void __iomem *mmio_base, unsigned int irq)
+ 		goto exit_gating;
+ 	}
+ 
++	/* Reset the attached device */
++	ufshcd_device_reset(hba);
++
+ 	/* Host controller enable */
+ 	err = ufshcd_hba_enable(hba);
+ 	if (err) {
+diff --git a/drivers/scsi/ufs/ufshcd.h b/drivers/scsi/ufs/ufshcd.h
+index ecfa898b9ccc..d8be67742168 100644
+--- a/drivers/scsi/ufs/ufshcd.h
++++ b/drivers/scsi/ufs/ufshcd.h
+@@ -72,6 +72,8 @@
+ #define UFSHCD "ufshcd"
+ #define UFSHCD_DRIVER_VERSION "0.2"
+ 
++struct gpio_desc;
++
+ struct ufs_hba;
+ 
+ enum dev_cmd_type {
+@@ -706,6 +708,8 @@ struct ufs_hba {
+ 
+ 	struct device		bsg_dev;
+ 	struct request_queue	*bsg_queue;
++
++	struct gpio_desc *device_reset;
  };
  
- static const struct msm_pinctrl_soc_data sdm845_pinctrl = {
-@@ -1284,7 +1284,7 @@ static const struct msm_pinctrl_soc_data sdm845_pinctrl = {
- 	.nfunctions = ARRAY_SIZE(sdm845_functions),
- 	.groups = sdm845_groups,
- 	.ngroups = ARRAY_SIZE(sdm845_groups),
--	.ngpios = 150,
-+	.ngpios = 151,
- };
- 
- static int sdm845_pinctrl_probe(struct platform_device *pdev)
+ /* Returns true if clocks can be gated. Otherwise false */
 -- 
 2.18.0
 
