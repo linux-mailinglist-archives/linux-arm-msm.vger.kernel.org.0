@@ -2,101 +2,83 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id A449233B1A
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  4 Jun 2019 00:23:29 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id DD2B433FDC
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  4 Jun 2019 09:20:05 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726761AbfFCWX0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 3 Jun 2019 18:23:26 -0400
-Received: from mail-pg1-f195.google.com ([209.85.215.195]:37252 "EHLO
-        mail-pg1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726663AbfFCWX0 (ORCPT
+        id S1726761AbfFDHUF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 4 Jun 2019 03:20:05 -0400
+Received: from mail-pg1-f196.google.com ([209.85.215.196]:36728 "EHLO
+        mail-pg1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726704AbfFDHUF (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 3 Jun 2019 18:23:26 -0400
-Received: by mail-pg1-f195.google.com with SMTP id 20so9083838pgr.4
-        for <linux-arm-msm@vger.kernel.org>; Mon, 03 Jun 2019 15:23:25 -0700 (PDT)
+        Tue, 4 Jun 2019 03:20:05 -0400
+Received: by mail-pg1-f196.google.com with SMTP id a3so2415836pgb.3
+        for <linux-arm-msm@vger.kernel.org>; Tue, 04 Jun 2019 00:20:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=KV1yP4xPKIyp1RKqHB+nD6QgQGfk1bw32PIxxNzkN7U=;
-        b=L7aCm9arW0EF/yMO3AoxQuQPqIWFqHn2McPj1Pnb6jxxV/O6Z+hFMVddo7AdkGjYdI
-         lfIf2RBJi2sqof8W3HPbnDqO3drzS9kN0Xge9AxFf4QV8PzZwxVu5rzY31FVbp7Gwae9
-         SrzeyAOdcv1FP2JGidBa2fUl+2fKzKS2uMdkAFd5OBfsLvewktfT69k0OPQxJEZ6XEpA
-         H3AU6JfQM0sx1XFk+ujk4bKOHXnkD8KsYffAgz46z17K6zIgyySAvNFWMX7S0+ea2zmC
-         D2s1znTbmO9wraSLLyBAZnxrTIyM0OSurxT1G9O9GWYImS8XFrSrd8174uxxP8d8zTAP
-         30fQ==
+        h=from:to:cc:subject:date:message-id;
+        bh=cW54g37zzSz4GWvh5hRmHVol1ElNCqsUtdX3i5TDki8=;
+        b=RtBWZujoWwW3pFIZuHpnWrxTc8YvUZAJEdbpx9IY/AVKKprlylZPo4sQDdv+iGW4f3
+         BD2uhbla9+ITaG+pHmSjpvZ6jmb9i7Shw7kH3FG1mQIuzf6Lc60QAFndAoaY80zc7gQJ
+         b6BcwbyIqhZa1t93ZOHF4wBec3eumarIxn2Y44vVRphfZg4giYiVNtIVx84AMWaSVzuX
+         PFJT4EEWaOVsk+nBA8U2nC7/MZsLgO3a/rr5LOrZjkeCAcCqHViQKrKWGsR2i4iWgU37
+         21RwAgEHaunjZ0eB5GI7IrxjfCr8qk8hEo4yHZAjJoUbLTjoKrKTC2mGKsZ5u1aX6TLe
+         UlkQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=KV1yP4xPKIyp1RKqHB+nD6QgQGfk1bw32PIxxNzkN7U=;
-        b=LMUWFArJCEKoP2+gdCb/DIj4L3auwAgdHccNb+MCbuovrLV+fNdRzM9hatjccOhtMJ
-         JELWh7IHNJnMhtJ3YkzLwAMpf0DnuifVBeM+j1hVbTAI/cbVz9nA0pu3mEnn+G6Xd7CP
-         lOIssRAlvWxrEgrdRz3JTWDtt7cy+pW7sEgJQz6AcHNExYPsZgyq47Uj+OL+yA0aRqM7
-         /UUNxltOsmoWP71iPSPJDX5vhKNUaMd+MP7rqqF348A1snVBjmheEkV1CkSZ3L+QfjJ+
-         7KKZiJowsO1ree4+/O5H9NVeYjozPrhYE9WdomJREZdkj11+JiSnBrL9PF5DbdsBNtoz
-         lh+g==
-X-Gm-Message-State: APjAAAU+vU2ctAcdOnyVRi4A6cFa+rsUxfGpb2g2s36/B7L9qX6WjtvN
-        QifctqrWeMOA6KEwlGTs+JPYhQ==
-X-Google-Smtp-Source: APXvYqxeAhg/5hJQWcCD51pc6wcjvauGAvorr2NlhrqLCJn4zUoNyePOZR4JRwhRVRZWzvatY8yVxg==
-X-Received: by 2002:a62:7a8a:: with SMTP id v132mr11712996pfc.103.1559600605383;
-        Mon, 03 Jun 2019 15:23:25 -0700 (PDT)
-Received: from localhost.localdomain ([2601:1c2:680:1319:692:26ff:feda:3a81])
-        by smtp.gmail.com with ESMTPSA id g8sm14320588pjp.17.2019.06.03.15.23.24
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=cW54g37zzSz4GWvh5hRmHVol1ElNCqsUtdX3i5TDki8=;
+        b=lMIMIGYQTf14jCWd+S7L/8vPcSzDxwoWmh9v5XFTIEneRDLepyNiOtkHrZERx3etcT
+         969HDY2/GEE2la+gv9/TNDRyoMgfZm+pEvjMsm1v+w5O0vUQoiy9bKquixZrkUPME7VB
+         qYiKNSb1eTpCEAhcanmnxbt7AlLOit05+GAStl/E0eo2XnTypKtp+8z8VxW7g5JMvIEg
+         C241F6rVH/Ho+PMRcUZFKa0ktsDRotC6eNQj02YO2fQmKv0CKy3L3e8i9Hqo+lHFw9dM
+         TeEO9gqHeMkf2KhFHxTP2vxhc/v6rmQCWQC3R4+vVIEO02Sky/ZSZWDeujq7xF34ushD
+         FuCQ==
+X-Gm-Message-State: APjAAAVm0dc8B6N0n05q39hOeDyDxumHtlL6YofiaCgg6n4nGJrrfu6k
+        QPYKrz/s/PBW502zSreGAu6KlA==
+X-Google-Smtp-Source: APXvYqx5aLQZoHyol1PmiF+AvixuAC4swlY3kkqgRqnYCzZ0I1A/uWV/nxPZxmDkkkzGfx3kB+M9PQ==
+X-Received: by 2002:a17:90b:8d3:: with SMTP id ds19mr34718088pjb.135.1559632804480;
+        Tue, 04 Jun 2019 00:20:04 -0700 (PDT)
+Received: from localhost.localdomain (104-188-17-28.lightspeed.sndgca.sbcglobal.net. [104.188.17.28])
+        by smtp.gmail.com with ESMTPSA id d6sm17747446pgv.4.2019.06.04.00.20.03
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 03 Jun 2019 15:23:24 -0700 (PDT)
-From:   John Stultz <john.stultz@linaro.org>
-To:     lkml <linux-kernel@vger.kernel.org>
-Cc:     John Stultz <john.stultz@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        David Brown <david.brown@linaro.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Amit Pundir <amit.pundir@linaro.org>,
+        Tue, 04 Jun 2019 00:20:04 -0700 (PDT)
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Linus Walleij <linus.walleij@linaro.org>,
         Rob Herring <robh+dt@kernel.org>,
         Mark Rutland <mark.rutland@arm.com>,
-        Sebastian Reichel <sre@kernel.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org
-Subject: [PATCH 3/3 v2] arm64: dts: qcom: pm8998: Use qcom,pm8998-pon binding for second gen pon
-Date:   Mon,  3 Jun 2019 22:23:19 +0000
-Message-Id: <20190603222319.62842-3-john.stultz@linaro.org>
-X-Mailer: git-send-email 2.17.1
-In-Reply-To: <20190603222319.62842-1-john.stultz@linaro.org>
-References: <20190603222319.62842-1-john.stultz@linaro.org>
+        Pedro Sousa <pedrom.sousa@synopsys.com>,
+        "James E.J. Bottomley" <jejb@linux.ibm.com>,
+        "Martin K. Petersen" <martin.petersen@oracle.com>,
+        linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-scsi@vger.kernel.org
+Subject: [PATCH 0/3] (Qualcomm) UFS device reset support
+Date:   Tue,  4 Jun 2019 00:19:58 -0700
+Message-Id: <20190604072001.9288-1-bjorn.andersson@linaro.org>
+X-Mailer: git-send-email 2.18.0
+To:     unlisted-recipients:; (no To-header on input)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-This changes pm8998 to use the new qcom,pm8998-pon compatible
-string for the pon in order to support the gen2 pon
-functionality properly.
+This series exposes the ufs_reset line as a gpio, adds support for ufshcd to
+acquire and toggle this and then adds this to SDM845 MTP.
 
-Cc: Andy Gross <agross@kernel.org>
-Cc: David Brown <david.brown@linaro.org>
-Cc: Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc: Amit Pundir <amit.pundir@linaro.org>
-Cc: Rob Herring <robh+dt@kernel.org>
-Cc: Mark Rutland <mark.rutland@arm.com>
-Cc: Sebastian Reichel <sre@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org
-Cc: devicetree@vger.kernel.org
-Signed-off-by: John Stultz <john.stultz@linaro.org>
----
- arch/arm64/boot/dts/qcom/pm8998.dtsi | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+Bjorn Andersson (3):
+  pinctrl: qcom: sdm845: Expose ufs_reset as gpio
+  scsi: ufs: Allow resetting the UFS device
+  arm64: dts: qcom: sdm845-mtp: Specify UFS device-reset GPIO
 
-diff --git a/arch/arm64/boot/dts/qcom/pm8998.dtsi b/arch/arm64/boot/dts/qcom/pm8998.dtsi
-index d3ca35a940fb6..051a52df80f9e 100644
---- a/arch/arm64/boot/dts/qcom/pm8998.dtsi
-+++ b/arch/arm64/boot/dts/qcom/pm8998.dtsi
-@@ -39,7 +39,7 @@
- 		#size-cells = <0>;
- 
- 		pm8998_pon: pon@800 {
--			compatible = "qcom,pm8916-pon";
-+			compatible = "qcom,pm8998-pon";
- 
- 			reg = <0x800>;
- 			mode-bootloader = <0x2>;
+ .../bindings/pinctrl/qcom,sdm845-pinctrl.txt  |  2 +-
+ arch/arm64/boot/dts/qcom/sdm845-mtp.dts       |  2 +
+ drivers/pinctrl/qcom/pinctrl-sdm845.c         | 12 ++---
+ drivers/scsi/ufs/ufshcd.c                     | 44 +++++++++++++++++++
+ drivers/scsi/ufs/ufshcd.h                     |  4 ++
+ 5 files changed, 57 insertions(+), 7 deletions(-)
+
 -- 
-2.17.1
+2.18.0
 
