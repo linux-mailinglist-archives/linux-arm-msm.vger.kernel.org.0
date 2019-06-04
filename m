@@ -2,207 +2,118 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 960CA3414A
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  4 Jun 2019 10:13:53 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 27A76341DB
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  4 Jun 2019 10:32:20 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726729AbfFDINo (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 4 Jun 2019 04:13:44 -0400
-Received: from mail-eopbgr740059.outbound.protection.outlook.com ([40.107.74.59]:62048
-        "EHLO NAM01-BN3-obe.outbound.protection.outlook.com"
-        rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-        id S1726637AbfFDINn (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 4 Jun 2019 04:13:43 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=micron.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=i1FG6zloKqxGnK9Sf5W6AQAEFuisLyxvP7AEIBxtQfM=;
- b=eJsTBbOaO5Cv1S1TpJ8FDHif+JO7GCEqps1G1kkj+A2JcY/wvq7960CrCCvtK+Hp3SZZ1cWeFjbtttitd74pf71EJtH8Ffs9nLbkorV9WF6b5s0oyG/orn8OYFWaQPDFRFjXiMSWvF2apmPNvAIpTD3hc6rSR7koJdqz6MWos1w=
-Received: from BN7PR08MB5684.namprd08.prod.outlook.com (20.176.31.141) by
- BN7PR08MB4164.namprd08.prod.outlook.com (52.133.220.151) with Microsoft SMTP
- Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.1943.22; Tue, 4 Jun 2019 08:13:38 +0000
-Received: from BN7PR08MB5684.namprd08.prod.outlook.com
- ([fe80::8d6c:f350:4859:e532]) by BN7PR08MB5684.namprd08.prod.outlook.com
- ([fe80::8d6c:f350:4859:e532%4]) with mapi id 15.20.1943.018; Tue, 4 Jun 2019
- 08:13:38 +0000
-From:   "Bean Huo (beanhuo)" <beanhuo@micron.com>
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Pedro Sousa <pedrom.sousa@synopsys.com>,
-        "James E.J. Bottomley" <jejb@linux.ibm.com>,
-        "Martin K. Petersen" <martin.petersen@oracle.com>
-CC:     Andy Gross <agross@kernel.org>,
-        Linus Walleij <linus.walleij@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Mark Rutland <mark.rutland@arm.com>,
-        "linux-arm-msm@vger.kernel.org" <linux-arm-msm@vger.kernel.org>,
-        "linux-gpio@vger.kernel.org" <linux-gpio@vger.kernel.org>,
-        "devicetree@vger.kernel.org" <devicetree@vger.kernel.org>,
-        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
-        "linux-scsi@vger.kernel.org" <linux-scsi@vger.kernel.org>
-Subject: RE: [EXT] [PATCH 2/3] scsi: ufs: Allow resetting the UFS device
-Thread-Topic: [EXT] [PATCH 2/3] scsi: ufs: Allow resetting the UFS device
-Thread-Index: AQHVGqX7mZWyymp0D0+pRLZPzmjhVqaLH8ww
-Date:   Tue, 4 Jun 2019 08:13:38 +0000
-Message-ID: <BN7PR08MB568450B1EC51ABAA2E426AC0DB150@BN7PR08MB5684.namprd08.prod.outlook.com>
-References: <20190604072001.9288-1-bjorn.andersson@linaro.org>
- <20190604072001.9288-3-bjorn.andersson@linaro.org>
-In-Reply-To: <20190604072001.9288-3-bjorn.andersson@linaro.org>
-Accept-Language: en-150, en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-authentication-results: spf=none (sender IP is )
- smtp.mailfrom=beanhuo@micron.com; 
-x-originating-ip: [195.89.176.137]
-x-ms-publictraffictype: Email
-x-ms-office365-filtering-correlation-id: 5ae37eab-556d-4259-ca02-08d6e8c48c83
-x-microsoft-antispam: BCL:0;PCL:0;RULEID:(2390118)(7020095)(4652040)(8989299)(4534185)(4627221)(201703031133081)(201702281549075)(8990200)(5600148)(711020)(4605104)(1401327)(2017052603328)(7193020);SRVR:BN7PR08MB4164;
-x-ms-traffictypediagnostic: BN7PR08MB4164:|BN7PR08MB4164:
-x-microsoft-antispam-prvs: <BN7PR08MB4164F5C147BE78F2515C7267DB150@BN7PR08MB4164.namprd08.prod.outlook.com>
-x-ms-oob-tlc-oobclassifiers: OLM:8882;
-x-forefront-prvs: 0058ABBBC7
-x-forefront-antispam-report: SFV:NSPM;SFS:(10009020)(136003)(376002)(39860400002)(366004)(346002)(396003)(189003)(199004)(186003)(74316002)(9686003)(486006)(26005)(446003)(76176011)(52536014)(55016002)(476003)(66446008)(73956011)(229853002)(7696005)(316002)(66066001)(6506007)(102836004)(25786009)(110136005)(54906003)(4326008)(99286004)(66946007)(76116006)(6436002)(3846002)(478600001)(53936002)(66476007)(64756008)(14444005)(33656002)(11346002)(6246003)(68736007)(66556008)(8676002)(71190400001)(71200400001)(2906002)(81166006)(86362001)(81156014)(305945005)(7736002)(5660300002)(6116002)(5024004)(8936002)(256004)(14454004)(7416002);DIR:OUT;SFP:1101;SCL:1;SRVR:BN7PR08MB4164;H:BN7PR08MB5684.namprd08.prod.outlook.com;FPR:;SPF:None;LANG:en;PTR:InfoNoRecords;MX:1;A:1;
-received-spf: None (protection.outlook.com: micron.com does not designate
- permitted sender hosts)
-x-ms-exchange-senderadcheck: 1
-x-microsoft-antispam-message-info: cXZuNu4cK0kkbe6cdlEKLGOU5WftKvUrZ7lzRwcQSW4zYvos/kKKux6MOhcyDmF+CUw2molHCuEKXPLA5H55Kden09dvQU4wm7ALW6ZFFRKxBYMaESibhec5KdM+ZfJLv5edcY+c/NVemrRAlWkVNINTXlNoNKnSHDttV1D1gSKRJFzhUg6w1bdnYzTMYOGYY51HbIZhC1s0iWrLVaHUfHhsAV01cNRVJOMingHSvulDILYiEUybCGaqlyjPnDkpUbhGyniCo4FVy3NXwi102EOEuXkDw0jL3wBBwjL/eIoRWZ/U/2QEy+Y7xSen6TSK7Dcnc01ljlsK8YrcGWw/ZwpZ5KQ74R/sGzcvDOn+D9EQFODKvXNJbmi3oOdC1I0TnHG96z7n9hqlk+iKfAZKHkqqUzxC5L7cqA/Vwj5/TDQ=
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: quoted-printable
+        id S1726840AbfFDIcT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 4 Jun 2019 04:32:19 -0400
+Received: from bhuna.collabora.co.uk ([46.235.227.227]:40654 "EHLO
+        bhuna.collabora.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726828AbfFDIcT (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 4 Jun 2019 04:32:19 -0400
+Received: from localhost (unknown [IPv6:2a01:e0a:2c:6930:5cf4:84a1:2763:fe0d])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        (Authenticated sender: bbrezillon)
+        by bhuna.collabora.co.uk (Postfix) with ESMTPSA id 8C467260E1F;
+        Tue,  4 Jun 2019 09:32:15 +0100 (BST)
+Date:   Tue, 4 Jun 2019 10:32:11 +0200
+From:   Boris Brezillon <boris.brezillon@collabora.com>
+To:     Helen Koike <helen.koike@collabora.com>
+Cc:     dri-devel@lists.freedesktop.org, nicholas.kazlauskas@amd.com,
+        andrey.grodzovsky@amd.com, daniel.vetter@ffwll.ch,
+        linux-kernel@vger.kernel.org, Tomasz Figa <tfiga@chromium.org>,
+        David Airlie <airlied@linux.ie>,
+        Sean Paul <seanpaul@google.com>, kernel@collabora.com,
+        harry.wentland@amd.com,
+        =?UTF-8?B?U3TDqXBoYW5l?= Marchesin <marcheu@google.com>,
+        Sean Paul <sean@poorly.run>, Sandy Huang <hjc@rock-chips.com>,
+        Thomas Zimmermann <tzimmermann@suse.de>, eric@anholt.net,
+        Alex Deucher <alexander.deucher@amd.com>,
+        Bhawanpreet Lakha <Bhawanpreet.Lakha@amd.com>,
+        "David (ChunMing) Zhou" <David1.Zhou@amd.com>,
+        Anthony Koo <Anthony.Koo@amd.com>,
+        amd-gfx@lists.freedesktop.org, linux-rockchip@lists.infradead.org,
+        Ville =?UTF-8?B?U3lyasOkbMOk?= <ville.syrjala@linux.intel.com>,
+        Rob Clark <robdclark@gmail.com>,
+        Christian =?UTF-8?B?S8O2bmln?= <christian.koenig@amd.com>,
+        Leo Li <sunpeng.li@amd.com>, linux-arm-msm@vger.kernel.org,
+        Jeykumar Sankaran <jsanka@codeaurora.org>,
+        Heiko =?UTF-8?B?U3TDvGJuZXI=?= <heiko@sntech.de>,
+        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+        linux-arm-kernel@lists.infradead.org,
+        David Francis <David.Francis@amd.com>,
+        Mario Kleiner <mario.kleiner.de@gmail.com>,
+        Maxime Ripard <maxime.ripard@bootlin.com>,
+        freedreno@lists.freedesktop.org,
+        Mamta Shukla <mamtashukla555@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>
+Subject: Re: [PATCH v4 0/5] drm: Fix fb changes for async updates
+Message-ID: <20190604103211.7a42be9b@collabora.com>
+In-Reply-To: <20190603165610.24614-1-helen.koike@collabora.com>
+References: <20190603165610.24614-1-helen.koike@collabora.com>
+Organization: Collabora
+X-Mailer: Claws Mail 3.17.3 (GTK+ 2.24.32; x86_64-redhat-linux-gnu)
 MIME-Version: 1.0
-X-OriginatorOrg: micron.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 5ae37eab-556d-4259-ca02-08d6e8c48c83
-X-MS-Exchange-CrossTenant-originalarrivaltime: 04 Jun 2019 08:13:38.6206
- (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: f38a5ecd-2813-4862-b11b-ac1d563c806f
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: beanhuo@micron.com
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: BN7PR08MB4164
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi, Bjorn
+On Mon,  3 Jun 2019 13:56:05 -0300
+Helen Koike <helen.koike@collabora.com> wrote:
 
->Acquire the device-reset GPIO and toggle this to reset the UFS device duri=
-ng
->initialization and host reset.
->
->+/**
->+ ufshcd_device_reset() - toggle the (optional) device reset line
->+ * @hba: per-adapter instance
->+ *
->+ * Toggles the (optional) reset line to reset the attached device.
->+ */
->+static void ufshcd_device_reset(struct ufs_hba *hba) {
->+	/*
->+	 * The USB device shall detect reset pulses of 1us, sleep for 10us to
->+	 * be on the safe side.
->+	 */
->+	gpiod_set_value_cansleep(hba->device_reset, 1);
->+	usleep_range(10, 15);
->+
->+	gpiod_set_value_cansleep(hba->device_reset, 0);
->+	usleep_range(10, 15);
->+}
->+
-> /**
->  * ufshcd_host_reset_and_restore - reset and restore host controller
->  * @hba: per-adapter instance
->@@ -6159,6 +6179,9 @@ static int ufshcd_reset_and_restore(struct ufs_hba
->*hba)
-> 	int retries =3D MAX_HOST_RESET_RETRIES;
->
-> 	do {
->+		/* Reset the attached device */
->+		ufshcd_device_reset(hba);
->+
+> Hello,
+> 
+> I'm re-sending this series with the acked by in the msm patch and
+> updating the docs in the last patch, the rest is the same.
+> 
+> v3 link: https://patchwork.kernel.org/project/dri-devel/list/?series=91353
 
-what's problem you met, and you should reset UFS device here? could you giv=
-e more info?
+Series queued to drm-misc-fixes.
 
-It is true that we don't reset UFS device in case of device fatal error. Ac=
-cording to UFS host spec,
-Host should be device reset except that in addition to resetting UIC. But a=
-s so far,
-We didn't experience any problems result from this missing reset.
-
-We have three UFS device reset ways.  Comparing to this hardware reset,=20
-I prefer to use DME_ENDPOINTRESET.req software reset.
-
-
-> 		err =3D ufshcd_host_reset_and_restore(hba);
-> 	} while (err && --retries);
->
->@@ -7355,6 +7378,18 @@ static void ufshcd_variant_hba_exit(struct ufs_hba
->*hba)
-> 	ufshcd_vops_exit(hba);
-> }
->
->+static int ufshcd_init_device_reset(struct ufs_hba *hba) {
->+	hba->device_reset =3D devm_gpiod_get_optional(hba->dev, "device-
->reset",
->+						    GPIOD_OUT_HIGH);
->+	if (IS_ERR(hba->device_reset)) {
->+		dev_err(hba->dev, "failed to acquire reset gpio: %ld\n",
->+			PTR_ERR(hba->device_reset));
->+	}
->+
->+	return PTR_ERR_OR_ZERO(hba->device_reset);
->+}
->+
-> static int ufshcd_hba_init(struct ufs_hba *hba)  {
-> 	int err;
->@@ -7394,9 +7429,15 @@ static int ufshcd_hba_init(struct ufs_hba *hba)
-> 	if (err)
-> 		goto out_disable_vreg;
->
->+	err =3D ufshcd_init_device_reset(hba);
->+	if (err)
->+		goto out_disable_variant;
->+
-> 	hba->is_powered =3D true;
-> 	goto out;
->
->+out_disable_variant:
->+	ufshcd_vops_setup_regulators(hba, false);
-> out_disable_vreg:
-> 	ufshcd_setup_vreg(hba, false);
-> out_disable_clks:
->@@ -8290,6 +8331,9 @@ int ufshcd_init(struct ufs_hba *hba, void __iomem
->*mmio_base, unsigned int irq)
-> 		goto exit_gating;
-> 	}
->
->+	/* Reset the attached device */
->+	ufshcd_device_reset(hba);
->+
-> 	/* Host controller enable */
-> 	err =3D ufshcd_hba_enable(hba);
-> 	if (err) {
->diff --git a/drivers/scsi/ufs/ufshcd.h b/drivers/scsi/ufs/ufshcd.h index
->ecfa898b9ccc..d8be67742168 100644
->--- a/drivers/scsi/ufs/ufshcd.h
->+++ b/drivers/scsi/ufs/ufshcd.h
->@@ -72,6 +72,8 @@
-> #define UFSHCD "ufshcd"
-> #define UFSHCD_DRIVER_VERSION "0.2"
->
->+struct gpio_desc;
->+
-> struct ufs_hba;
->
-> enum dev_cmd_type {
->@@ -706,6 +708,8 @@ struct ufs_hba {
->
-> 	struct device		bsg_dev;
-> 	struct request_queue	*bsg_queue;
->+
->+	struct gpio_desc *device_reset;
-> };
->
-> /* Returns true if clocks can be gated. Otherwise false */
->--
->2.18.0
+> 
+> Thanks!
+> Helen
+> 
+> Changes in v4:
+> - add acked by tag
+> - update docs in atomic_async_update callback
+> 
+> Changes in v3:
+> - use swap() to swap old and new framebuffers in async_update
+> - get the reference to old_fb and set the worker after vop_plane_atomic_update()
+> - add a FIXME tag for when we have multiple fbs to be released when
+> vblank happens.
+> - update commit message
+> - Add Reviewed-by tags
+> - Add TODO in drm_atomic_helper_async_commit()
+> 
+> Changes in v2:
+> - added reviewed-by tag
+> - update CC stable and Fixes tag
+> - Added reviewed-by tag
+> - updated CC stable and Fixes tag
+> - Change the order of the patch in the series, add this as the last one.
+> - Add documentation
+> - s/ballanced/balanced
+> 
+> Helen Koike (5):
+>   drm/rockchip: fix fb references in async update
+>   drm/amd: fix fb references in async update
+>   drm/msm: fix fb references in async update
+>   drm/vc4: fix fb references in async update
+>   drm: don't block fb changes for async plane updates
+> 
+>  .../gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c |  3 +-
+>  drivers/gpu/drm/drm_atomic_helper.c           | 22 ++++----
+>  drivers/gpu/drm/msm/disp/mdp5/mdp5_plane.c    |  4 ++
+>  drivers/gpu/drm/rockchip/rockchip_drm_vop.c   | 51 ++++++++++---------
+>  drivers/gpu/drm/vc4/vc4_plane.c               |  2 +-
+>  include/drm/drm_modeset_helper_vtables.h      |  8 +++
+>  6 files changed, 52 insertions(+), 38 deletions(-)
+> 
 
