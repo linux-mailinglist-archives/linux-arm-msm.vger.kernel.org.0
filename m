@@ -2,94 +2,105 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id C1FFD3448C
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  4 Jun 2019 12:45:20 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 114CF34575
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  4 Jun 2019 13:33:43 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727454AbfFDKpJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 4 Jun 2019 06:45:09 -0400
-Received: from mail-wr1-f67.google.com ([209.85.221.67]:33905 "EHLO
-        mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727472AbfFDKpI (ORCPT
+        id S1727398AbfFDLdY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 4 Jun 2019 07:33:24 -0400
+Received: from mail-pf1-f195.google.com ([209.85.210.195]:34110 "EHLO
+        mail-pf1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727285AbfFDLdY (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 4 Jun 2019 06:45:08 -0400
-Received: by mail-wr1-f67.google.com with SMTP id e16so7022248wrn.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 04 Jun 2019 03:45:07 -0700 (PDT)
+        Tue, 4 Jun 2019 07:33:24 -0400
+Received: by mail-pf1-f195.google.com with SMTP id c85so3726235pfc.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 04 Jun 2019 04:33:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=MkGVFZY1XhtlH3EXbDSeWCPiZrbaYk4zwPdOeyiIsNc=;
-        b=hljw8RsTFEcbuplHCj6D4tq/5nIpPFTXoAK24WDaO16R2lM4A4tkIl52AnrPf6JXw1
-         gT3EjpICXK9lQrDnqMtsHhdKD3i45MO0tlSwTZkOGsLnygeqnS1GEq42hVT5+HlqpNGw
-         T+gYf8t0vIU7HSEAEdNBmet5opXalvHQjYcEdfz/km30EDtQQfXPpL8nTAL5/46rMhak
-         gMuexpRELw1yz4AqSHcBpII97mOzlQXjdBv9q9uxJg0vY4L2Wkz4mWfTGT41kUyPjWyf
-         oCCUVzTVMMLzv8BuVscDTyHO0HMHqetsCPsptCOLxfHbS+xv6PqNZFqqiN1cTF5Ezas/
-         RETA==
+        d=broadcom.com; s=google;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=EUprF+8/pHWVdRSsm+gYg6Nl/I7GuQYxpR2PKTuS704=;
+        b=cX5NyM5ycgQOuk4IAmaDphsDa6H1d8CV7lcsQ4WAlb3RMe7FRqEdFwUIy/zUw8PT8H
+         Haqw45ol2rk0FawObSUduoqdJamkzKEihgKpPg8h/L/kNvLP5+HNu60rp64HSLBJfQpF
+         3HigbEfhYLItfyDMYlI5C8j8tpV6TYxxSik3E=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=MkGVFZY1XhtlH3EXbDSeWCPiZrbaYk4zwPdOeyiIsNc=;
-        b=t7teihyZfsrQjC7Kd12//wFhQa/Fx4WBCyisSiwGa/1qCRMeNWUTk+OLHpECV1Qpqc
-         +bONqegMGFygWqite93MJ/YPCvU4wxj4DE+lSXBV8tTidgbK4HiN51+dwE6UZkNC9nR1
-         imye/8TESbI5wVmSYeIxwrRz+ZYKA/6jALcYKxVcZ0I2U12WF4GhcO45RVSpD9SiCb5h
-         4civ0pgW1/Os09yDUGSh86C1ucyGICm+9Kdas8WyIH3+inUxc9wqemHbtROJOdPjDlNv
-         l+V9YVZidmUdagNqiZ8aU8A3eDKWK1KrOdn6Xz3gxCB/zcoaB5fTCJxJLNAUZvtEBZHf
-         I/JA==
-X-Gm-Message-State: APjAAAUU/ghtLnWd8s+C2dA5RtTfTHCeKHna2QS9V94OasPczZpXNn4L
-        lh+ENdMknQT70fF/IClDnhGR+A==
-X-Google-Smtp-Source: APXvYqyK+bgytdW+OPwhr0ZBevMVV7NDVd58ezc6owb6wL4UOd2DK/LWci6dPsr3n48XMl5sTrJS0w==
-X-Received: by 2002:adf:a38d:: with SMTP id l13mr13613323wrb.187.1559645107190;
-        Tue, 04 Jun 2019 03:45:07 -0700 (PDT)
-Received: from localhost.localdomain ([2.27.167.43])
-        by smtp.gmail.com with ESMTPSA id t140sm2718623wmt.0.2019.06.04.03.45.06
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=EUprF+8/pHWVdRSsm+gYg6Nl/I7GuQYxpR2PKTuS704=;
+        b=X9sPdTse15e6rkx7Z3w5nVlxIGbGveFj8s7gs07sHMWgPxkj7Ro1asaNjN3huGp/2Z
+         jWTUdQnVci0x6oiC4+VO2/v05+209eO2xT+PxkVDtlf1TUrRNQOEWyYT0UCFbgL9SCRO
+         RJiAlM6jCdASBTDYrRCPpJvTyzzSuHd14kqAKhvIvImwvyeRLBpSZeae3bEVT6CTapZd
+         4zqA36nV/0mmqA66q/m0PmOYPBRFc+i0JWq3g4d+XZvVW2F92duCrSKQUkn5nmPM4+Sj
+         uMFoCbFhJ1lau36QWtd1ma4inkFtv8wBYcFAINDhRLSLclV7oOqgNcTr0Z4D8PdGEGrl
+         cSFg==
+X-Gm-Message-State: APjAAAUzc6udFi3cB/x7Rp6BF/82wUZgRIdjmsgtWqMfXiBACJjFfNJC
+        fcaysOxTw6CcsLCIDyNOT9+krvt3xI7JJw==
+X-Google-Smtp-Source: APXvYqxvTH3i5lfqNDE1vh1a5Z/iOkSgOFTEfkO87DUgwW2C+aCSxKKDsoC0hUv5/Gdl7rHPksKKEw==
+X-Received: by 2002:a62:ea04:: with SMTP id t4mr36483301pfh.47.1559648003307;
+        Tue, 04 Jun 2019 04:33:23 -0700 (PDT)
+Received: from [10.176.68.125] ([192.19.248.250])
+        by smtp.gmail.com with ESMTPSA id u4sm17314721pfu.26.2019.06.04.04.33.19
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 04 Jun 2019 03:45:06 -0700 (PDT)
-From:   Lee Jones <lee.jones@linaro.org>
-To:     alokc@codeaurora.org, kramasub@codeaurora.org,
-        andy.gross@linaro.org, david.brown@linaro.org,
-        wsa+renesas@sang-engineering.com, bjorn.andersson@linaro.org,
-        linus.walleij@linaro.org, balbi@kernel.org,
-        gregkh@linuxfoundation.org
-Cc:     linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
-        jlhugo@gmail.com, linux-i2c@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org,
-        linux-usb@vger.kernel.org, Lee Jones <lee.jones@linaro.org>
-Subject: [PATCH 8/8] usb: dwc3: qcom: Improve error handling
-Date:   Tue,  4 Jun 2019 11:44:55 +0100
-Message-Id: <20190604104455.8877-8-lee.jones@linaro.org>
-X-Mailer: git-send-email 2.17.1
-In-Reply-To: <20190604104455.8877-1-lee.jones@linaro.org>
-References: <20190604104455.8877-1-lee.jones@linaro.org>
+        Tue, 04 Jun 2019 04:33:22 -0700 (PDT)
+Subject: Re: Issue with Broadcom wireless in 5.2rc1 (was Re: [PATCH] mmc:
+ sdhci: queue work after sdhci_defer_done())
+To:     Adrian Hunter <adrian.hunter@intel.com>,
+        Brian Masney <masneyb@onstation.org>
+Cc:     Franky Lin <franky.lin@broadcom.com>,
+        Hante Meuleman <hante.meuleman@broadcom.com>,
+        Chi-Hsien Lin <chi-hsien.lin@cypress.com>,
+        Wright Feng <wright.feng@cypress.com>, ulf.hansson@linaro.org,
+        faiz_abbas@ti.com, linux-mmc@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        Kalle Valo <kvalo@codeaurora.org>,
+        linux-wireless@vger.kernel.org,
+        brcm80211-dev-list.pdl@broadcom.com,
+        brcm80211-dev-list@cypress.com, netdev@vger.kernel.org
+References: <20190524111053.12228-1-masneyb@onstation.org>
+ <70782901-a9ac-5647-1abe-89c86a44a01b@intel.com>
+ <20190524154958.GB16322@basecamp> <20190526122136.GA26456@basecamp>
+ <e8c049ce-07e1-8b34-678d-41b3d6d41983@broadcom.com>
+ <20190526195819.GA29665@basecamp> <20190527093711.GA853@basecamp>
+ <ead7f268-b730-3541-31f7-4499556efec0@intel.com>
+From:   Arend Van Spriel <arend.vanspriel@broadcom.com>
+Message-ID: <af4d6703-8506-dad7-c2ed-13fa8b2e390d@broadcom.com>
+Date:   Tue, 4 Jun 2019 13:33:18 +0200
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
+ Thunderbird/60.7.0
+MIME-Version: 1.0
+In-Reply-To: <ead7f268-b730-3541-31f7-4499556efec0@intel.com>
+Content-Type: text/plain; charset=windows-1252; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-dwc3_qcom_clk_init() is called with of_count_phandle_with_args() as an
-argument.  If of_count_phandle_with_args() returns an error, the number
-of clocks will be a negative value and will lead to undefined behaviour.
+On 5/27/2019 2:08 PM, Adrian Hunter wrote:
+> On 27/05/19 12:37 PM, Brian Masney wrote:
+>> On Sun, May 26, 2019 at 03:58:19PM -0400, Brian Masney wrote:
+>>> I attached a patch that shows how I was able to determine what had
+>>> already claimed the host.
+>> On Mon, May 27, 2019 at 10:48:24AM +0300, Adrian Hunter wrote:
+>>> This is because SDHCI is using the IRQ thread to process the SDIO card
+>>> interrupt (sdio_run_irqs()).  When the card driver tries to use the card, it
+>>> causes interrupts which deadlocks since c07a48c26519 ("mmc: sdhci: Remove
+>>> finish_tasklet") has moved the tasklet processing to the IRQ thread.
+>>>
+>>> I would expect to be able to use the IRQ thread to complete requests, and it
+>>> is desirable to do so because it is lower latency.
+>>>
+>>> Probably, SDHCI should use sdio_signal_irq() which queues a work item, and
+>>> is what other drivers are doing.
+>>>
+>>> I will investigate some more and send a patch.
+> 
+> Please try the patch below:
 
-Ensure we check for an error before attempting to blindly use the value.
+Finally got time to update my kernel to 5.2-rc2. This patch indeed 
+resolves the issue.
 
-Signed-off-by: Lee Jones <lee.jones@linaro.org>
----
- drivers/usb/dwc3/dwc3-qcom.c | 3 +++
- 1 file changed, 3 insertions(+)
-
-diff --git a/drivers/usb/dwc3/dwc3-qcom.c b/drivers/usb/dwc3/dwc3-qcom.c
-index f21fdd6cdd1a..633482926497 100644
---- a/drivers/usb/dwc3/dwc3-qcom.c
-+++ b/drivers/usb/dwc3/dwc3-qcom.c
-@@ -419,6 +419,9 @@ static int dwc3_qcom_clk_init(struct dwc3_qcom *qcom, int count)
- 	if (!count || ACPI_HANDLE(dev))
- 		return 0;
- 
-+	if (count < 0)
-+		return count;
-+
- 	qcom->clks = devm_kcalloc(dev, qcom->num_clocks,
- 				  sizeof(struct clk *), GFP_KERNEL);
- 	if (!qcom->clks)
--- 
-2.17.1
-
+Thanks,
+Arend
