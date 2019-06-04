@@ -2,105 +2,104 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 114CF34575
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  4 Jun 2019 13:33:43 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0AA4734579
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  4 Jun 2019 13:33:53 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727398AbfFDLdY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 4 Jun 2019 07:33:24 -0400
-Received: from mail-pf1-f195.google.com ([209.85.210.195]:34110 "EHLO
-        mail-pf1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727285AbfFDLdY (ORCPT
+        id S1727180AbfFDLdw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 4 Jun 2019 07:33:52 -0400
+Received: from mail-lf1-f66.google.com ([209.85.167.66]:36220 "EHLO
+        mail-lf1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727543AbfFDLdw (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 4 Jun 2019 07:33:24 -0400
-Received: by mail-pf1-f195.google.com with SMTP id c85so3726235pfc.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 04 Jun 2019 04:33:23 -0700 (PDT)
+        Tue, 4 Jun 2019 07:33:52 -0400
+Received: by mail-lf1-f66.google.com with SMTP id q26so16184250lfc.3
+        for <linux-arm-msm@vger.kernel.org>; Tue, 04 Jun 2019 04:33:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=broadcom.com; s=google;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=EUprF+8/pHWVdRSsm+gYg6Nl/I7GuQYxpR2PKTuS704=;
-        b=cX5NyM5ycgQOuk4IAmaDphsDa6H1d8CV7lcsQ4WAlb3RMe7FRqEdFwUIy/zUw8PT8H
-         Haqw45ol2rk0FawObSUduoqdJamkzKEihgKpPg8h/L/kNvLP5+HNu60rp64HSLBJfQpF
-         3HigbEfhYLItfyDMYlI5C8j8tpV6TYxxSik3E=
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=ASxZDvczStvZaA0VBviKVlooZ7GlgEB3+byQR32kp/k=;
+        b=Ev3E4Q5ds8kRtofMeEhlq0dH5P79FuXtW5dzhqiD1UCOjKrYEcvIzNK0DvGVKlL/gC
+         5hnLEsHWJJ8tVkSakD+W6TtRImmxmO8RvgRqp9+T+XAXrUiuhxGaSb06RGJbhfp7dFLR
+         raODvceKMuOyY7COUAYvuHPNApTFJVK8fj7kUzCoiK2JLVj9irK79hHIVJONadMBJMpi
+         mlrUgWIiIQ75wXya4DwCE5fDsM2pfnf1Iy4GpN4V3VQ01xvQ/tUdNhP/uDMjGEYWAZH1
+         k8ko+TaCwwEnUH8a0NLoFKH6w9Ue5Zn75Ec7eWCiNvPb2Jy1zeiH2QnqUJu7+Q2iUGi8
+         QHiA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=EUprF+8/pHWVdRSsm+gYg6Nl/I7GuQYxpR2PKTuS704=;
-        b=X9sPdTse15e6rkx7Z3w5nVlxIGbGveFj8s7gs07sHMWgPxkj7Ro1asaNjN3huGp/2Z
-         jWTUdQnVci0x6oiC4+VO2/v05+209eO2xT+PxkVDtlf1TUrRNQOEWyYT0UCFbgL9SCRO
-         RJiAlM6jCdASBTDYrRCPpJvTyzzSuHd14kqAKhvIvImwvyeRLBpSZeae3bEVT6CTapZd
-         4zqA36nV/0mmqA66q/m0PmOYPBRFc+i0JWq3g4d+XZvVW2F92duCrSKQUkn5nmPM4+Sj
-         uMFoCbFhJ1lau36QWtd1ma4inkFtv8wBYcFAINDhRLSLclV7oOqgNcTr0Z4D8PdGEGrl
-         cSFg==
-X-Gm-Message-State: APjAAAUzc6udFi3cB/x7Rp6BF/82wUZgRIdjmsgtWqMfXiBACJjFfNJC
-        fcaysOxTw6CcsLCIDyNOT9+krvt3xI7JJw==
-X-Google-Smtp-Source: APXvYqxvTH3i5lfqNDE1vh1a5Z/iOkSgOFTEfkO87DUgwW2C+aCSxKKDsoC0hUv5/Gdl7rHPksKKEw==
-X-Received: by 2002:a62:ea04:: with SMTP id t4mr36483301pfh.47.1559648003307;
-        Tue, 04 Jun 2019 04:33:23 -0700 (PDT)
-Received: from [10.176.68.125] ([192.19.248.250])
-        by smtp.gmail.com with ESMTPSA id u4sm17314721pfu.26.2019.06.04.04.33.19
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 04 Jun 2019 04:33:22 -0700 (PDT)
-Subject: Re: Issue with Broadcom wireless in 5.2rc1 (was Re: [PATCH] mmc:
- sdhci: queue work after sdhci_defer_done())
-To:     Adrian Hunter <adrian.hunter@intel.com>,
-        Brian Masney <masneyb@onstation.org>
-Cc:     Franky Lin <franky.lin@broadcom.com>,
-        Hante Meuleman <hante.meuleman@broadcom.com>,
-        Chi-Hsien Lin <chi-hsien.lin@cypress.com>,
-        Wright Feng <wright.feng@cypress.com>, ulf.hansson@linaro.org,
-        faiz_abbas@ti.com, linux-mmc@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        Kalle Valo <kvalo@codeaurora.org>,
-        linux-wireless@vger.kernel.org,
-        brcm80211-dev-list.pdl@broadcom.com,
-        brcm80211-dev-list@cypress.com, netdev@vger.kernel.org
-References: <20190524111053.12228-1-masneyb@onstation.org>
- <70782901-a9ac-5647-1abe-89c86a44a01b@intel.com>
- <20190524154958.GB16322@basecamp> <20190526122136.GA26456@basecamp>
- <e8c049ce-07e1-8b34-678d-41b3d6d41983@broadcom.com>
- <20190526195819.GA29665@basecamp> <20190527093711.GA853@basecamp>
- <ead7f268-b730-3541-31f7-4499556efec0@intel.com>
-From:   Arend Van Spriel <arend.vanspriel@broadcom.com>
-Message-ID: <af4d6703-8506-dad7-c2ed-13fa8b2e390d@broadcom.com>
-Date:   Tue, 4 Jun 2019 13:33:18 +0200
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
- Thunderbird/60.7.0
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=ASxZDvczStvZaA0VBviKVlooZ7GlgEB3+byQR32kp/k=;
+        b=KINGtAmaD0Vb3ZkONSR3jmCzmroXDbPwH90HG9Et8yBE8Lh4bv8jIblNkjalgPoaje
+         I0ZZzS2upTo+JQhcLB1fwDgd3AX8qcQsgqLSxy1DqtSqOAk5hAeBkNe7LJv/ufxSOXz4
+         J5NBz3m00O38NrMGE7FGdnPdY17S3XvK7TEGRUsN6oHYqyzMH3XVfPG5wMqEcaAQezje
+         LPERiK5VBZTZfWZzpRWa1bGweF5yxyzWkGm/haVI/OtnubEnlvPv5oif4M5rWDO8OPNB
+         lTlVBNE+uj9qP4hnGTfVwE4nzTXGPKSAzxKBsx0aVBRilhly2JvFjCfqP0PWu9dhy4et
+         84vQ==
+X-Gm-Message-State: APjAAAVulhp7z8tniNXOM51IHN7xBbUlfAdNIeUB+SI9UaR4wK/13Hkc
+        KHsqX243CsRIzWVqwumIlFNjQQ==
+X-Google-Smtp-Source: APXvYqy2ewn+TJ31z8SQ+T9aaETF2ZblqkKMNvIWZBN6vbRH3jSlLfBfGhfFImz0Cn/uFgotAnyJlg==
+X-Received: by 2002:a19:f601:: with SMTP id x1mr16378550lfe.182.1559648030291;
+        Tue, 04 Jun 2019 04:33:50 -0700 (PDT)
+Received: from centauri.ideon.se ([85.235.10.227])
+        by smtp.gmail.com with ESMTPSA id s19sm293564ljg.85.2019.06.04.04.33.48
+        (version=TLS1_3 cipher=AEAD-AES256-GCM-SHA384 bits=256/256);
+        Tue, 04 Jun 2019 04:33:49 -0700 (PDT)
+Date:   Tue, 4 Jun 2019 13:33:47 +0200
+From:   Niklas Cassel <niklas.cassel@linaro.org>
+To:     Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>
+Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Bjorn Helgaas <bhelgaas@google.com>,
+        Rob Herring <robh+dt@kernel.org>,
+        Mark Rutland <mark.rutland@arm.com>,
+        Stanimir Varbanov <svarbanov@mm-sol.com>,
+        linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v5 0/3] Qualcomm QCS404 PCIe support
+Message-ID: <20190604113347.GA13029@centauri.ideon.se>
+References: <20190529005710.23950-1-bjorn.andersson@linaro.org>
+ <20190529163155.GA24655@redmoon>
 MIME-Version: 1.0
-In-Reply-To: <ead7f268-b730-3541-31f7-4499556efec0@intel.com>
-Content-Type: text/plain; charset=windows-1252; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20190529163155.GA24655@redmoon>
+User-Agent: Mutt/1.11.4 (2019-03-13)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 5/27/2019 2:08 PM, Adrian Hunter wrote:
-> On 27/05/19 12:37 PM, Brian Masney wrote:
->> On Sun, May 26, 2019 at 03:58:19PM -0400, Brian Masney wrote:
->>> I attached a patch that shows how I was able to determine what had
->>> already claimed the host.
->> On Mon, May 27, 2019 at 10:48:24AM +0300, Adrian Hunter wrote:
->>> This is because SDHCI is using the IRQ thread to process the SDIO card
->>> interrupt (sdio_run_irqs()).  When the card driver tries to use the card, it
->>> causes interrupts which deadlocks since c07a48c26519 ("mmc: sdhci: Remove
->>> finish_tasklet") has moved the tasklet processing to the IRQ thread.
->>>
->>> I would expect to be able to use the IRQ thread to complete requests, and it
->>> is desirable to do so because it is lower latency.
->>>
->>> Probably, SDHCI should use sdio_signal_irq() which queues a work item, and
->>> is what other drivers are doing.
->>>
->>> I will investigate some more and send a patch.
+On Wed, May 29, 2019 at 05:31:55PM +0100, Lorenzo Pieralisi wrote:
+> On Tue, May 28, 2019 at 05:57:07PM -0700, Bjorn Andersson wrote:
+> > This series adds support for the PCIe controller in the Qualcomm QCS404
+> > platform.
+> > 
+> > Bjorn Andersson (3):
+> >   PCI: qcom: Use clk_bulk API for 2.4.0 controllers
+> >   dt-bindings: PCI: qcom: Add QCS404 to the binding
+> >   PCI: qcom: Add QCS404 PCIe controller support
+> > 
+> >  .../devicetree/bindings/pci/qcom,pcie.txt     |  25 +++-
+> >  drivers/pci/controller/dwc/pcie-qcom.c        | 113 ++++++++----------
+> >  2 files changed, 75 insertions(+), 63 deletions(-)
 > 
-> Please try the patch below:
+> Applied to pci/qcom for v5.3, thanks.
+> 
+> Lorenzo
 
-Finally got time to update my kernel to 5.2-rc2. This patch indeed 
-resolves the issue.
+Hello Lorenzo,
 
-Thanks,
-Arend
+I don't see these patches in linux-next.
+
+It appears that only Bjorn Helgaas tree is in linux-next, and not yours.
+
+I think that it makes a lot of sense for patches to cook in linux-next
+for as long a possible.
+
+Perhaps you and Bjorn Helgaas could have a shared PCI git tree?
+Or perhaps you could add your tree to linux-next?
+..or some other solution :)
+
+
+Kind regards,
+Niklas
