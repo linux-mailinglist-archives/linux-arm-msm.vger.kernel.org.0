@@ -2,118 +2,141 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id D385235477
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  5 Jun 2019 01:41:10 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 21C8B3560A
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  5 Jun 2019 06:55:43 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726652AbfFDXlH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 4 Jun 2019 19:41:07 -0400
-Received: from mail-pl1-f196.google.com ([209.85.214.196]:39741 "EHLO
-        mail-pl1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726463AbfFDXlH (ORCPT
+        id S1726119AbfFEEzm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 5 Jun 2019 00:55:42 -0400
+Received: from smtp.codeaurora.org ([198.145.29.96]:54892 "EHLO
+        smtp.codeaurora.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725268AbfFEEzm (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 4 Jun 2019 19:41:07 -0400
-Received: by mail-pl1-f196.google.com with SMTP id g9so8958262plm.6
-        for <linux-arm-msm@vger.kernel.org>; Tue, 04 Jun 2019 16:41:06 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=PEW0YI52v17ROAEu88+lgWes0aNQUTZHMT31ckUQV0Y=;
-        b=k97nBHkWVfd4b6neMJHJ1ikRwOa0Dnrb283GaiQ9vr42eeTi4Bzx6eCgd+XwXVRSHQ
-         +onY9F03ZXXkt961UHeohcEMV+3oVQjVMP8xX5A5k2iFczJ8DXypJQjgkI6Y0qM4JS/K
-         X6xlrAgYcrnXayME8/5i7jtCSAS9PDoDxUXeIuPik6D3MpMv/zhxeVc2gd9oChlT0ywk
-         WLa+Ici1IoaTqRUddVaU+Bo3ZPhwVoZEoTDhExOOelm9e4OIM3C7JYQ+uXAByKwZJAdQ
-         j8E891XgJw6IGm1muVCiqTp+SlMuul/l0INLSkvimO8nHpLf8Va+JU3vk4R98MYNb2xr
-         CbWA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=PEW0YI52v17ROAEu88+lgWes0aNQUTZHMT31ckUQV0Y=;
-        b=uX8Cz6v2DTjt0FVGyyW4AC853qGFhdnlb/x1fzQvJpSqyi7kqkV4lZdapp5aBq4BWn
-         f/f4W4oxL0uXaPVwyCTLPMuiPwHRcjoMHyEQFxLVldOutAtBp4t8mXC/vflLKyML0yCV
-         CUXR+ER6LmJddfCmXofz3smOGoj8c/LD0txTxVFFZEjFtlza62LnNoSxjxs1ZM49Ik3q
-         ksndDfxtngvGkscKr1wLfXuI/9g7uOkHKQk2k494fXxpj3dZIZBVBfCxBnvya/HlBhqu
-         Ec5C4MrE9o98oTaSKrUNp8LwhAhaWn6owfyOEF9eUKRIZ6aolMyIm4Ux5u3QKdxXYcsx
-         qAIw==
-X-Gm-Message-State: APjAAAVH8GXo59gOZy/PMX1C7FHWWt/lshnXIFCI0Om5Waj22nNSwxWu
-        /BTJp+HcxVXDLNd1gzYLN6DV0w==
-X-Google-Smtp-Source: APXvYqwB9Rs6qdMKX9gf7PQIrUTJvFAVQlDRxbVsBIYlA6lXkdsejqKkUUFki/Do31p/eXmdrr7tew==
-X-Received: by 2002:a17:902:d916:: with SMTP id c22mr14264492plz.195.1559691666284;
-        Tue, 04 Jun 2019 16:41:06 -0700 (PDT)
-Received: from minitux (104-188-17-28.lightspeed.sndgca.sbcglobal.net. [104.188.17.28])
-        by smtp.gmail.com with ESMTPSA id a9sm17192793pgw.72.2019.06.04.16.41.04
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Tue, 04 Jun 2019 16:41:05 -0700 (PDT)
-Date:   Tue, 4 Jun 2019 16:41:03 -0700
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Will Deacon <will.deacon@arm.com>,
-        Robin Murphy <robin.murphy@arm.com>
-Cc:     Vivek Gautam <vivek.gautam@codeaurora.org>,
-        Joerg Roedel <joro@8bytes.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        "list@263.net:IOMMU DRIVERS <iommu@lists.linux-foundation.org>, Joerg
-        Roedel <joro@8bytes.org>," <iommu@lists.linux-foundation.org>,
-        Vivek Gautam <vgautam@qti.qualcomm.com>,
-        open list <linux-kernel@vger.kernel.org>,
-        Linux ARM <linux-arm-kernel@lists.infradead.org>
-Subject: Re: [PATCH] iommu: io-pgtable: Support non-coherent page tables
-Message-ID: <20190604234103.GH4814@minitux>
-References: <20190515233234.22990-1-bjorn.andersson@linaro.org>
- <CAFp+6iEMQd1uAWdkLysYWt0et8eRojoivG6+e78y0DU+4=H+_g@mail.gmail.com>
+        Wed, 5 Jun 2019 00:55:42 -0400
+Received: by smtp.codeaurora.org (Postfix, from userid 1000)
+        id CC92E6074C; Wed,  5 Jun 2019 04:55:40 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
+        s=default; t=1559710540;
+        bh=h9iwlufpq7/KISUsW3e2E4eX6OYVTsTCWq1ehA98fsM=;
+        h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
+        b=OAlUvYzgEjn0P2VhZh/Pu77zRs9ypRoj+ZFzcBRncTK/e9gFPTLykhgNBIRh3GigY
+         mo0NYxiU6iaOl91kIKvo+8EVkqXYl0hh3KDWhZWEK87NjvAWBIOuF5oFH35yuvF4lY
+         23tTGl+kBllW9MHbciEHf+htrdplYjelIojVHPKA=
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        pdx-caf-mail.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.7 required=2.0 tests=ALL_TRUSTED,BAYES_00,
+        DKIM_INVALID,DKIM_SIGNED,SPF_NONE autolearn=no autolearn_force=no
+        version=3.4.0
+Received: from mail-ed1-f50.google.com (mail-ed1-f50.google.com [209.85.208.50])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: vivek.gautam@smtp.codeaurora.org)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 159746074C;
+        Wed,  5 Jun 2019 04:55:40 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
+        s=default; t=1559710540;
+        bh=h9iwlufpq7/KISUsW3e2E4eX6OYVTsTCWq1ehA98fsM=;
+        h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
+        b=OAlUvYzgEjn0P2VhZh/Pu77zRs9ypRoj+ZFzcBRncTK/e9gFPTLykhgNBIRh3GigY
+         mo0NYxiU6iaOl91kIKvo+8EVkqXYl0hh3KDWhZWEK87NjvAWBIOuF5oFH35yuvF4lY
+         23tTGl+kBllW9MHbciEHf+htrdplYjelIojVHPKA=
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 159746074C
+Authentication-Results: pdx-caf-mail.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: pdx-caf-mail.web.codeaurora.org; spf=none smtp.mailfrom=vivek.gautam@codeaurora.org
+Received: by mail-ed1-f50.google.com with SMTP id c26so3869624edt.1;
+        Tue, 04 Jun 2019 21:55:39 -0700 (PDT)
+X-Gm-Message-State: APjAAAWRzR9FH0Xwm0IOX2CDJh+w4DGDUTx95rbF12TgYLMPBKBRSU1c
+        scQuhmG40QE55tPE8gkei7ydfMlcNwaCUfrcrSE=
+X-Google-Smtp-Source: APXvYqxv0a4cCcROLh0AISC2tWtOtWpbq41ZNWWSx20A4zgTfgPfQfqoTyT7mxmZaVoUMPCbLUCcOGNqGRb0duhh53E=
+X-Received: by 2002:a17:906:8d8:: with SMTP id o24mr33250632eje.235.1559710538685;
+ Tue, 04 Jun 2019 21:55:38 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAFp+6iEMQd1uAWdkLysYWt0et8eRojoivG6+e78y0DU+4=H+_g@mail.gmail.com>
-User-Agent: Mutt/1.12.0 (2019-05-25)
+References: <20190604222939.195471-1-swboyd@chromium.org> <20190604223700.GE4814@minitux>
+ <5cf6f4bb.1c69fb81.c39da.5496@mx.google.com>
+In-Reply-To: <5cf6f4bb.1c69fb81.c39da.5496@mx.google.com>
+From:   Vivek Gautam <vivek.gautam@codeaurora.org>
+Date:   Wed, 5 Jun 2019 10:25:26 +0530
+X-Gmail-Original-Message-ID: <CAFp+6iHZeawnz7Vfk3=Oox-GN_y6c-E9wMwc-qdp1bTOXgqjFQ@mail.gmail.com>
+Message-ID: <CAFp+6iHZeawnz7Vfk3=Oox-GN_y6c-E9wMwc-qdp1bTOXgqjFQ@mail.gmail.com>
+Subject: Re: [PATCH] arm64: dts: sdm845: Add iommus property to qup1
+To:     Stephen Boyd <swboyd@chromium.org>
+Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        open list <linux-kernel@vger.kernel.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        Sibi Sankar <sibis@codeaurora.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed 15 May 23:47 PDT 2019, Vivek Gautam wrote:
+On Wed, Jun 5, 2019 at 4:16 AM Stephen Boyd <swboyd@chromium.org> wrote:
+>
+> Quoting Bjorn Andersson (2019-06-04 15:37:00)
+> > On Tue 04 Jun 15:29 PDT 2019, Stephen Boyd wrote:
+> >
+> > > The SMMU that sits in front of the QUP needs to be programmed properly
+> > > so that the i2c geni driver can allocate DMA descriptors. Failure to do
+> > > this leads to faults when using devices such as an i2c touchscreen where
+> > > the transaction is larger than 32 bytes and we use a DMA buffer.
+> > >
+> >
+> > I'm pretty sure I've run into this problem, but before we marked the
+> > smmu bypass_disable and as such didn't get the fault, thanks.
+> >
+> > >  arm-smmu 15000000.iommu: Unexpected global fault, this could be serious
+> > >  arm-smmu 15000000.iommu:         GFSR 0x00000002, GFSYNR0 0x00000002, GFSYNR1 0x000006c0, GFSYNR2 0x00000000
+> > >
+> > > Add the right SID and mask so this works.
+> > >
+> > > Cc: Sibi Sankar <sibis@codeaurora.org>
+> > > Signed-off-by: Stephen Boyd <swboyd@chromium.org>
+> > > ---
+> > >  arch/arm64/boot/dts/qcom/sdm845.dtsi | 1 +
+> > >  1 file changed, 1 insertion(+)
+> > >
+> > > diff --git a/arch/arm64/boot/dts/qcom/sdm845.dtsi b/arch/arm64/boot/dts/qcom/sdm845.dtsi
+> > > index fcb93300ca62..2e57e861e17c 100644
+> > > --- a/arch/arm64/boot/dts/qcom/sdm845.dtsi
+> > > +++ b/arch/arm64/boot/dts/qcom/sdm845.dtsi
+> > > @@ -900,6 +900,7 @@
+> > >                       #address-cells = <2>;
+> > >                       #size-cells = <2>;
+> > >                       ranges;
+> > > +                     iommus = <&apps_smmu 0x6c0 0x3>;
+> >
+> > According to the docs this stream belongs to TZ, the HLOS stream should
+> > be 0x6c3.
+>
+> Aye, I saw this line in the downstream kernel but it doesn't work for
+> me. If I specify <&apps_smmu 0x6c3 0x0> it still blows up. I wonder if
+> my firmware perhaps is missing some initialization here to make the QUP
+> operate in HLOS mode? Otherwise, I thought that the 0x3 at the end was
+> the mask and so it should be split off to the second cell in the DT
+> specifier but that seemed a little weird.
 
-> On Thu, May 16, 2019 at 5:03 AM Bjorn Andersson
-> <bjorn.andersson@linaro.org> wrote:
-> >
-> > Describe the memory related to page table walks as non-cachable for iommu
-> > instances that are not DMA coherent.
-> >
-> > Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
-> > ---
-> >  drivers/iommu/io-pgtable-arm.c | 12 +++++++++---
-> >  1 file changed, 9 insertions(+), 3 deletions(-)
-> >
-> > diff --git a/drivers/iommu/io-pgtable-arm.c b/drivers/iommu/io-pgtable-arm.c
-> > index 4e21efbc4459..68ff22ffd2cb 100644
-> > --- a/drivers/iommu/io-pgtable-arm.c
-> > +++ b/drivers/iommu/io-pgtable-arm.c
-> > @@ -803,9 +803,15 @@ arm_64_lpae_alloc_pgtable_s1(struct io_pgtable_cfg *cfg, void *cookie)
-> >                 return NULL;
-> >
-> >         /* TCR */
-> > -       reg = (ARM_LPAE_TCR_SH_IS << ARM_LPAE_TCR_SH0_SHIFT) |
-> > -             (ARM_LPAE_TCR_RGN_WBWA << ARM_LPAE_TCR_IRGN0_SHIFT) |
-> > -             (ARM_LPAE_TCR_RGN_WBWA << ARM_LPAE_TCR_ORGN0_SHIFT);
-> > +       if (cfg->quirks & IO_PGTABLE_QUIRK_NO_DMA) {
-> > +               reg = (ARM_LPAE_TCR_SH_IS << ARM_LPAE_TCR_SH0_SHIFT) |
-> > +                     (ARM_LPAE_TCR_RGN_WBWA << ARM_LPAE_TCR_IRGN0_SHIFT) |
-> > +                     (ARM_LPAE_TCR_RGN_WBWA << ARM_LPAE_TCR_ORGN0_SHIFT);
-> > +       } else {
-> > +               reg = (ARM_LPAE_TCR_SH_IS << ARM_LPAE_TCR_SH0_SHIFT) |
-> > +                     (ARM_LPAE_TCR_RGN_NC << ARM_LPAE_TCR_IRGN0_SHIFT) |
-> > +                     (ARM_LPAE_TCR_RGN_NC << ARM_LPAE_TCR_ORGN0_SHIFT);
-> > +       }
-> 
-> This looks okay to me based on the discussion that we had on a similar
-> patch that I
-> posted. So,
-> Reviewed-by: Vivek Gautam <vivek.gautam@codeaurora.org>
-> 
-> [1] https://lore.kernel.org/patchwork/patch/1032939/
-> 
+Two things here -
+0x6c0 - TZ SID. Do you see above fault on MTP sdm845 devices?
+0x6c3/0x6c6 - HLOS SIDs.
 
-Will, Robin, any input on this patch?
+Cheza will throw faults for anything that is programmed with TZ on mtp
+as all of that should be handled in HLOS. The firmwares of all these
+peripherals assume that the SID reservation is done (whether in TZ or HLOS).
 
-Regards,
-Bjorn
+I am inclined to moving the iommus property for all 'TZ' to board dts files.
+MTP wouldn't need those SIDs. So, the SOC level dtsi will have just the
+HLOS SIDs.
+
+P.S.
+As you rightly said, the second cell in iommus property is the mask so that
+the iommu is able to reserve all that SIDs that are covered with the
+starting SID
+and the mask.
+
+
+Best regards
+Vivek
+-- 
+QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
+of Code Aurora Forum, hosted by The Linux Foundation
