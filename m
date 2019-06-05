@@ -2,50 +2,54 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 3F1A835668
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  5 Jun 2019 07:50:41 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 503D23568A
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  5 Jun 2019 08:01:17 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726572AbfFEFuj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 5 Jun 2019 01:50:39 -0400
-Received: from esa6.hgst.iphmx.com ([216.71.154.45]:21517 "EHLO
-        esa6.hgst.iphmx.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726050AbfFEFuj (ORCPT
+        id S1726652AbfFEGBL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 5 Jun 2019 02:01:11 -0400
+Received: from mail-pg1-f193.google.com ([209.85.215.193]:42618 "EHLO
+        mail-pg1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726642AbfFEGBK (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 5 Jun 2019 01:50:39 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple;
-  d=wdc.com; i=@wdc.com; q=dns/txt; s=dkim.wdc.com;
-  t=1559713839; x=1591249839;
-  h=from:to:cc:subject:date:message-id:references:
-   in-reply-to:content-transfer-encoding:mime-version;
-  bh=V23UQoLuR8JfcnTKw+reL88TN+mD9zb++TQbqJi3rt8=;
-  b=L5rDmFGRwqT9AxB9FIzSc4JW24PhpVGK0IR3GRetQancCFd9KlzU1Bnf
-   95N7AxtsO51dM45TfTuZ9UUXGgJ4FUDWTjHBFu81TDCYOyTKF82wrqLgx
-   tyzWYZhkI8GuKEYot7SkWGnTpcz25UMgMApqZBfxiGbA9TfR/J6qH090x
-   jCWEZy7kzXrGQqk4DJBPwLLYCew/7gIlYfKwG+34t4V6+ZNMexrsCrOsz
-   UfeYXNLsgvoRHnOL5f5hMBpegYo+vmbZxXkaEGnG0q8ShN9bE92F34sT5
-   fD1SfrIUkqD51nye+g+57jzfEMYlvfxNcVcuITQZXiPQUcpdv1C8uRTAC
-   w==;
-X-IronPort-AV: E=Sophos;i="5.60,550,1549900800"; 
-   d="scan'208";a="111507124"
-Received: from mail-sn1nam01lp2058.outbound.protection.outlook.com (HELO NAM01-SN1-obe.outbound.protection.outlook.com) ([104.47.32.58])
-  by ob1.hgst.iphmx.com with ESMTP; 05 Jun 2019 13:50:38 +0800
+        Wed, 5 Jun 2019 02:01:10 -0400
+Received: by mail-pg1-f193.google.com with SMTP id e6so10529279pgd.9
+        for <linux-arm-msm@vger.kernel.org>; Tue, 04 Jun 2019 23:01:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=sharedspace.onmicrosoft.com; s=selector2-sharedspace-onmicrosoft-com;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=V23UQoLuR8JfcnTKw+reL88TN+mD9zb++TQbqJi3rt8=;
- b=bRU0wRy2MGCJx1+aiQtjvmCRrino99uux6SOpl2ZJp/UFzssOR0chzp2Sn1zlhiVimnnz45mcF5f3fuOcZfn4uVggpylVpf8/78yekEAj+Fs5ygeGrKk9bG+srDulGwPzNE7yPIwLkcFLw5lWVmMMbBOQGrOygsbKxZNrUYjuF0=
-Received: from SN6PR04MB4925.namprd04.prod.outlook.com (52.135.114.82) by
- SN6PR04MB4335.namprd04.prod.outlook.com (52.135.72.31) with Microsoft SMTP
- Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.1943.22; Wed, 5 Jun 2019 05:50:36 +0000
-Received: from SN6PR04MB4925.namprd04.prod.outlook.com
- ([fe80::6d99:14d9:3fa:f530]) by SN6PR04MB4925.namprd04.prod.outlook.com
- ([fe80::6d99:14d9:3fa:f530%6]) with mapi id 15.20.1943.018; Wed, 5 Jun 2019
- 05:50:36 +0000
-From:   Avri Altman <Avri.Altman@wdc.com>
-To:     John Stultz <john.stultz@linaro.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>
-CC:     Andy Gross <agross@kernel.org>,
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=XhgXHLObV5Vbqo0Ol1dr/K9C6PfbnIr6P+CU31xn0uk=;
+        b=JMDtt3o4OpRyNKqkIsA2AAl8veHAMN2+KlqcyzaxHwpNI6+UJ79YrJx/oC0KuKGwN4
+         uLEguOKwpu/0TSXjxpVrV9ohcTpmW1vkIcHcIVFgf/wP1efqPouTguYWm4hBw/s9V3XE
+         aw5GVUVx5BjtFgTryP1pejwqui5+CG9DuIUr2Ev5/THCjVKRvJBSeEgLJSQ/KuXmabKK
+         8imeg+KY2S7LywceHrI7pk9u1toSQeENkXq3lHGZjPFcoLpEOYr1s0TZGtu8CjO/sgnV
+         mzVHrj+TjeVEHvdU1/i3c4QDrjusE5znnwztyeYOiLl5Loaz8upXQeqBR5ZaH4KbdnXP
+         iplA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=XhgXHLObV5Vbqo0Ol1dr/K9C6PfbnIr6P+CU31xn0uk=;
+        b=TDNIu6Sj00r8zYb7oQfA8GmVS4kx2iSlbYtWWyTzMy0QVQidMdteNjVO5EXydeckC4
+         Nro/ikDuTSaXo62FEF64W0sPHoEcM3H+TgxIEFWVdHx9sx25UsX7OayVGugbJ0zmEDCF
+         QA5imjirvUuBQdz3mAFCIECW66++PP1ddI6y+fqiwd5gofieFdotePwbP4EP3IGPgP80
+         OGNpwq+qbBXr7WgPcDOw9cOgF7f1kx4H3A5EDI6Ppt/wHFPGW2MotdVHcfPyFx+NhIO0
+         8QdNK36rEScrmxx5aPPawRjf2fr4072lJ46wN/9YNmC2Q5LnboYhMLhDGHujkWxVyShq
+         SD1g==
+X-Gm-Message-State: APjAAAVzYQd3FqJ8whAkVG9an0gM2dAYFNfLtSA1nn281A6GcrMZxG2/
+        +E6qW6uJVnMqdQ9QKvbrYd963w==
+X-Google-Smtp-Source: APXvYqxRBdu6ErpFV+5gKRxDXyTrGYM8duUS6m39Y3koDFw3q4yhtgHG0ERg3ih11MGWr8lRBc13xA==
+X-Received: by 2002:a17:90a:2ec9:: with SMTP id h9mr43058272pjs.130.1559714469980;
+        Tue, 04 Jun 2019 23:01:09 -0700 (PDT)
+Received: from tuxbook-pro (104-188-17-28.lightspeed.sndgca.sbcglobal.net. [104.188.17.28])
+        by smtp.gmail.com with ESMTPSA id q22sm2332383pff.63.2019.06.04.23.01.08
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Tue, 04 Jun 2019 23:01:09 -0700 (PDT)
+Date:   Tue, 4 Jun 2019 23:01:54 -0700
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     Avri Altman <Avri.Altman@wdc.com>
+Cc:     John Stultz <john.stultz@linaro.org>,
+        Andy Gross <agross@kernel.org>,
         Linus Walleij <linus.walleij@linaro.org>,
         Rob Herring <robh+dt@kernel.org>,
         Mark Rutland <mark.rutland@arm.com>,
@@ -57,61 +61,52 @@ CC:     Andy Gross <agross@kernel.org>,
         "devicetree@vger.kernel.org" <devicetree@vger.kernel.org>,
         Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
         "linux-scsi@vger.kernel.org" <linux-scsi@vger.kernel.org>
-Subject: RE: [PATCH 0/3] (Qualcomm) UFS device reset support
-Thread-Topic: [PATCH 0/3] (Qualcomm) UFS device reset support
-Thread-Index: AQHVGqYAlQFsNx0blUeatbYnjFKLiqaMDImAgACCvoA=
-Date:   Wed, 5 Jun 2019 05:50:36 +0000
-Message-ID: <SN6PR04MB4925530F216E86F6404FE14CFC160@SN6PR04MB4925.namprd04.prod.outlook.com>
+Subject: Re: [PATCH 0/3] (Qualcomm) UFS device reset support
+Message-ID: <20190605060154.GJ22737@tuxbook-pro>
 References: <20190604072001.9288-1-bjorn.andersson@linaro.org>
  <CANcMJZBmgWMZu7Y53Lnx_x3L2UpCmEbFRHVW0SFCXfW=Yw9uYg@mail.gmail.com>
-In-Reply-To: <CANcMJZBmgWMZu7Y53Lnx_x3L2UpCmEbFRHVW0SFCXfW=Yw9uYg@mail.gmail.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-authentication-results: spf=none (sender IP is )
- smtp.mailfrom=Avri.Altman@wdc.com; 
-x-originating-ip: [212.25.79.133]
-x-ms-publictraffictype: Email
-x-ms-office365-filtering-correlation-id: 2717869a-9cec-4eb0-6dd4-08d6e979bb7f
-x-ms-office365-filtering-ht: Tenant
-x-microsoft-antispam: BCL:0;PCL:0;RULEID:(2390118)(7020095)(4652040)(8989299)(4534185)(4627221)(201703031133081)(201702281549075)(8990200)(5600148)(711020)(4605104)(1401327)(4618075)(2017052603328)(7193020);SRVR:SN6PR04MB4335;
-x-ms-traffictypediagnostic: SN6PR04MB4335:
-wdcipoutbound: EOP-TRUE
-x-microsoft-antispam-prvs: <SN6PR04MB4335CC9F1C4F1146AACC75F6FC160@SN6PR04MB4335.namprd04.prod.outlook.com>
-x-ms-oob-tlc-oobclassifiers: OLM:7219;
-x-forefront-prvs: 00594E8DBA
-x-forefront-antispam-report: SFV:NSPM;SFS:(10019020)(39860400002)(376002)(396003)(346002)(136003)(366004)(189003)(199004)(2906002)(256004)(9686003)(55016002)(99286004)(71200400001)(3846002)(81166006)(6116002)(71190400001)(5660300002)(6246003)(53936002)(4744005)(33656002)(11346002)(446003)(486006)(4326008)(25786009)(52536014)(476003)(54906003)(110136005)(53546011)(6506007)(102836004)(7696005)(186003)(14454004)(316002)(76116006)(66556008)(76176011)(72206003)(14444005)(86362001)(478600001)(26005)(81156014)(7736002)(7416002)(229853002)(8676002)(8936002)(68736007)(64756008)(66476007)(73956011)(66946007)(74316002)(305945005)(66446008)(6436002)(66066001);DIR:OUT;SFP:1102;SCL:1;SRVR:SN6PR04MB4335;H:SN6PR04MB4925.namprd04.prod.outlook.com;FPR:;SPF:None;LANG:en;PTR:InfoNoRecords;MX:1;A:1;
-x-ms-exchange-senderadcheck: 1
-x-microsoft-antispam-message-info: e+yJZSvXZp7ShiVLuSaJeJNOAQOkSlqfUcc2sbw/IDQKRtzEafDdMrq/uqvQhhZyRfqaesrXuIe/xcpmvY28LutBjY0SGFlrjLFZjrSV2YIvNSIUosXW2IxNfn9EK8Bg38DXYHU1ctttswuQ9+3u0j12lK6+zU67ktkULGlMZxZdX+wl5ZLKlHPet5rwAYxh/sRSfvS/fHH5OW2koX4ooiBCLwPPiytpPIj3yprCA3ULODNbK3uMw5y2kIEZoK9sNQd/EpifO+YmZg3ffWr1ecwl3BMa0wphMt3jYIIWokPXdwiRIxU2eonbsLGriMT0gSHLG0bwIAce/cyWO2nu14LPhPtJmiEZHejETgSG0764vGQhXXqlYCu1eaBizoDh/fxch87JWPdDcTxQASsCedrHNiM/YtbYA6WwRYJIZyk=
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
+ <SN6PR04MB4925530F216E86F6404FE14CFC160@SN6PR04MB4925.namprd04.prod.outlook.com>
 MIME-Version: 1.0
-X-OriginatorOrg: wdc.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 2717869a-9cec-4eb0-6dd4-08d6e979bb7f
-X-MS-Exchange-CrossTenant-originalarrivaltime: 05 Jun 2019 05:50:36.4249
- (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: b61c8803-16f3-4c35-9b17-6f65f441df86
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: Avri.Altman@wdc.com
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SN6PR04MB4335
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <SN6PR04MB4925530F216E86F6404FE14CFC160@SN6PR04MB4925.namprd04.prod.outlook.com>
+User-Agent: Mutt/1.11.4 (2019-03-13)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-SGksDQoNCj4gDQo+IE9uIFR1ZSwgSnVuIDQsIDIwMTkgYXQgMTI6MjIgQU0gQmpvcm4gQW5kZXJz
-c29uDQo+IDxiam9ybi5hbmRlcnNzb25AbGluYXJvLm9yZz4gd3JvdGU6DQo+ID4NCj4gPiBUaGlz
-IHNlcmllcyBleHBvc2VzIHRoZSB1ZnNfcmVzZXQgbGluZSBhcyBhIGdwaW8sIGFkZHMgc3VwcG9y
-dCBmb3IgdWZzaGNkIHRvDQo+ID4gYWNxdWlyZSBhbmQgdG9nZ2xlIHRoaXMgYW5kIHRoZW4gYWRk
-cyB0aGlzIHRvIFNETTg0NSBNVFAuDQo+ID4NCj4gPiBCam9ybiBBbmRlcnNzb24gKDMpOg0KPiA+
-ICAgcGluY3RybDogcWNvbTogc2RtODQ1OiBFeHBvc2UgdWZzX3Jlc2V0IGFzIGdwaW8NCj4gPiAg
-IHNjc2k6IHVmczogQWxsb3cgcmVzZXR0aW5nIHRoZSBVRlMgZGV2aWNlDQo+ID4gICBhcm02NDog
-ZHRzOiBxY29tOiBzZG04NDUtbXRwOiBTcGVjaWZ5IFVGUyBkZXZpY2UtcmVzZXQgR1BJTw0KPiAN
-Cj4gQWRkaW5nIHNpbWlsYXIgY2hhbmdlIGFzIGluIHNkbTg0NS1tdHAgdG8gdGhlIG5vdCB5ZXQg
-dXBzdHJlYW0NCj4gYmx1ZWxpbmUgZHRzLCBJIHZhbGlkYXRlZCB0aGlzIGFsbG93cyBteSBtaWNy
-b24gVUZTIHBpeGVsMyB0byBib290Lg0KPiANCj4gVGVzdGVkLWJ5OiBKb2huIFN0dWx0eiA8am9o
-bi5zdHVsdHpAbGluYXJvLm9yZz4NCk1heWJlIHVmc19oYmFfdmFyaWFudF9vcHMgd291bGQgYmUg
-dGhlIHByb3BlciBwbGFjZSB0byBhZGQgdGhpcz8NCg0KVGhhbmtzLA0KQXZyaQ0KDQoNCg0KPiAN
-Cj4gdGhhbmtzDQo+IC1qb2huDQo=
+On Tue 04 Jun 22:50 PDT 2019, Avri Altman wrote:
+
+> Hi,
+> 
+> > 
+> > On Tue, Jun 4, 2019 at 12:22 AM Bjorn Andersson
+> > <bjorn.andersson@linaro.org> wrote:
+> > >
+> > > This series exposes the ufs_reset line as a gpio, adds support for ufshcd to
+> > > acquire and toggle this and then adds this to SDM845 MTP.
+> > >
+> > > Bjorn Andersson (3):
+> > >   pinctrl: qcom: sdm845: Expose ufs_reset as gpio
+> > >   scsi: ufs: Allow resetting the UFS device
+> > >   arm64: dts: qcom: sdm845-mtp: Specify UFS device-reset GPIO
+> > 
+> > Adding similar change as in sdm845-mtp to the not yet upstream
+> > blueline dts, I validated this allows my micron UFS pixel3 to boot.
+> > 
+> > Tested-by: John Stultz <john.stultz@linaro.org>
+> Maybe ufs_hba_variant_ops would be the proper place to add this?
+> 
+
+Are you saying that these memories only need a reset when they are
+paired with the Qualcomm host controller?
+
+The way it's implemented it here is that the device-reset GPIO is
+optional and only if you specify it we'll toggle the reset. So if your
+board design has a UFS memory that requires a reset pulse during
+initialization you specify this, regardless of which vendor your SoC
+comes from.
+
+Regards,
+Bjorn
