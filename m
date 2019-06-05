@@ -2,81 +2,153 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id C3C043586F
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  5 Jun 2019 10:22:27 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5A9D935879
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  5 Jun 2019 10:23:40 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726573AbfFEIW0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 5 Jun 2019 04:22:26 -0400
-Received: from asavdk4.altibox.net ([109.247.116.15]:56330 "EHLO
-        asavdk4.altibox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726561AbfFEIW0 (ORCPT
+        id S1726729AbfFEIXi (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 5 Jun 2019 04:23:38 -0400
+Received: from mail-wm1-f66.google.com ([209.85.128.66]:39067 "EHLO
+        mail-wm1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726697AbfFEIXc (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 5 Jun 2019 04:22:26 -0400
-Received: from ravnborg.org (unknown [158.248.194.18])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by asavdk4.altibox.net (Postfix) with ESMTPS id 2BD71804F9;
-        Wed,  5 Jun 2019 10:22:23 +0200 (CEST)
-Date:   Wed, 5 Jun 2019 10:22:21 +0200
-From:   Sam Ravnborg <sam@ravnborg.org>
-To:     Vivek Gautam <vivek.gautam@codeaurora.org>
-Cc:     airlied@linux.ie, thierry.reding@gmail.com, daniel@ffwll.ch,
-        dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org, bjorn.andersson@linaro.org
-Subject: Re: [PATCH 1/1] drm/panel: truly: Add additional delay after pulling
- down reset gpio
-Message-ID: <20190605082221.GB15169@ravnborg.org>
-References: <20190527102616.28315-1-vivek.gautam@codeaurora.org>
+        Wed, 5 Jun 2019 04:23:32 -0400
+Received: by mail-wm1-f66.google.com with SMTP id z23so1286025wma.4
+        for <linux-arm-msm@vger.kernel.org>; Wed, 05 Jun 2019 01:23:31 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:content-transfer-encoding:in-reply-to
+         :user-agent;
+        bh=KB8B36tEhg7g9/5o0/vbeuwsLyG7Xckc2xGFAP6zc6U=;
+        b=UqEtGE+iGLEv5a8+dhYUt/TpItZVF7YutlO2qMc8O+pmYdpG03c90Q518SSLMajSWX
+         f40/pwGMGtZCV4kbgbWm0h1VBrWAX3B+JhWGEJIOiQNTAxpC6a0767jdQXd2NJSczqCn
+         Rs9t3jhO9MHLwTczbKWos+GUz2T/hyu1HSM1lGIRsKGEHcChMtA2FgZodaGlisIRYavh
+         73kSTJkBWr2HxbeHeJcnCdjbOB6Pjxpscko+f36AOaVmL1y652yazuLNBrB8XoqUiqb2
+         YrzeXXMfW0z4uJDCH9Px7WTFnuY7s4VmVe8yBfYOi4IiJpYCUjXKiUTI5F+B+Q1eyAVc
+         Ts+A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        bh=KB8B36tEhg7g9/5o0/vbeuwsLyG7Xckc2xGFAP6zc6U=;
+        b=LdVOYMmEDOmET04rjJIDhrlx6lDBr+158hDWiETUly/zrtoPUMnXafNaMO8lpWr8jA
+         BRz+u+4xwhzsVH4mSlQn6xkN1EkoOilpg+3dYnRnauG/ps6IQzZSDR8L8H0K9JmUpec/
+         CVjjjJWIrVh7mQbY5MlXWFwJH0N2jK3IzwtFlYFbxHJ95cReI12YOMIyUUUppcGGKL2+
+         gVzFoOhgfMwTfxx7n50FM1RplTYJZAjwl/YfJySPvH/S5l2FeGS06PRL7LSUu2+N6FCz
+         i7noH9zdXxpISpDNnUZePkJMO3ANgeME/9/mRVvKlRvpFHoT0YJOwVxpmZpT80VmNY0s
+         1zRA==
+X-Gm-Message-State: APjAAAW0ppJyYO49tkWQUod9o6+b4eT5YMXF6fB87846JdevNtb0gE/Y
+        L11oCbWppufv7mnPqU1Kk3ofrw==
+X-Google-Smtp-Source: APXvYqyn7r2Og6MqHzF9tB1GS7hQSk2g0XHprHTvLKG654EdQDiLEPjf16VyH9JzBnK035IC2hV9qw==
+X-Received: by 2002:a1c:f311:: with SMTP id q17mr20555885wmq.2.1559723010516;
+        Wed, 05 Jun 2019 01:23:30 -0700 (PDT)
+Received: from dell ([2.27.167.43])
+        by smtp.gmail.com with ESMTPSA id d2sm14874801wmb.9.2019.06.05.01.23.29
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Wed, 05 Jun 2019 01:23:29 -0700 (PDT)
+Date:   Wed, 5 Jun 2019 09:23:27 +0100
+From:   Lee Jones <lee.jones@linaro.org>
+To:     Ard Biesheuvel <ard.biesheuvel@linaro.org>
+Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>, balbi@kernel.org,
+        wsa+renesas@sang-engineering.com,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Linus Walleij <linus.walleij@linaro.org>,
+        linux-usb <linux-usb@vger.kernel.org>,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        David Brown <david.brown@linaro.org>, alokc@codeaurora.org,
+        kramasub@codeaurora.org, linux-i2c <linux-i2c@vger.kernel.org>,
+        "open list:GPIO SUBSYSTEM" <linux-gpio@vger.kernel.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        Andy Gross <andy.gross@linaro.org>,
+        Jeffrey Hugo <jlhugo@gmail.com>,
+        linux-arm-kernel <linux-arm-kernel@lists.infradead.org>
+Subject: Re: [PATCH 2/8] i2c: i2c-qcom-geni: Signify successful driver probe
+Message-ID: <20190605082327.GN4797@dell>
+References: <20190604104455.8877-1-lee.jones@linaro.org>
+ <20190604104455.8877-2-lee.jones@linaro.org>
+ <20190605062020.GL22737@tuxbook-pro>
+ <20190605071625.GK4797@dell>
+ <CAKv+Gu_YcdePUkkCGdP5DC9rxCUAshgOzU32pViAp2CbmAaJuw@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20190527102616.28315-1-vivek.gautam@codeaurora.org>
-User-Agent: Mutt/1.10.1 (2018-07-13)
-X-CMAE-Score: 0
-X-CMAE-Analysis: v=2.3 cv=VcLZwmh9 c=1 sm=1 tr=0
-        a=UWs3HLbX/2nnQ3s7vZ42gw==:117 a=UWs3HLbX/2nnQ3s7vZ42gw==:17
-        a=jpOVt7BSZ2e4Z31A5e1TngXxSK0=:19 a=kj9zAlcOel0A:10 a=LpQP-O61AAAA:8
-        a=e5mUnYsNAAAA:8 a=u_M7I5vmc8m8u026BJQA:9 a=CjuIK1q_8ugA:10
-        a=pioyyrs4ZptJ924tMmac:22 a=Vxmtnl_E_bksehYqCbjh:22
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <CAKv+Gu_YcdePUkkCGdP5DC9rxCUAshgOzU32pViAp2CbmAaJuw@mail.gmail.com>
+User-Agent: Mutt/1.9.4 (2018-02-28)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Vivek,
+On Wed, 05 Jun 2019, Ard Biesheuvel wrote:
 
-On Mon, May 27, 2019 at 03:56:16PM +0530, Vivek Gautam wrote:
-> MTP SDM845 panel seems to need additional delay to bring panel
-> to a workable state. Running modetest without this change displays
-> blurry artifacts.
+> On Wed, 5 Jun 2019 at 09:16, Lee Jones <lee.jones@linaro.org> wrote:
+> >
+> > On Tue, 04 Jun 2019, Bjorn Andersson wrote:
+> >
+> > > On Tue 04 Jun 03:44 PDT 2019, Lee Jones wrote:
+> > >
+> > > > The Qualcomm Geni I2C driver currently probes silently which can be
+> > > > confusing when debugging potential issues.  Add a low level (INFO)
+> > > > print when each I2C controller is successfully initially set-up.
+> > > >
+> > > > Signed-off-by: Lee Jones <lee.jones@linaro.org>
+> > > > ---
+> > > >  drivers/i2c/busses/i2c-qcom-geni.c | 2 ++
+> > > >  1 file changed, 2 insertions(+)
+> > > >
+> > > > diff --git a/drivers/i2c/busses/i2c-qcom-geni.c b/drivers/i2c/busses/i2c-qcom-geni.c
+> > > > index 0fa93b448e8d..e27466d77767 100644
+> > > > --- a/drivers/i2c/busses/i2c-qcom-geni.c
+> > > > +++ b/drivers/i2c/busses/i2c-qcom-geni.c
+> > > > @@ -598,6 +598,8 @@ static int geni_i2c_probe(struct platform_device *pdev)
+> > > >             return ret;
+> > > >     }
+> > > >
+> > > > +   dev_info(&pdev->dev, "Geni-I2C adaptor successfully added\n");
+> > > > +
+> > >
+> > > I would prefer that we do not add such prints, as it would be to accept
+> > > the downstream behaviour of spamming the log to the point where no one
+> > > will ever look through it.
+> >
+> > We should be able to find a middle ground.  Spamming the log with all
+> > sorts of device specific information/debug is obviously not
+> > constructive, but a single liner to advertise that an important
+> > device/controller has been successfully initialised is more helpful
+> > than it is hinderous.
+> >
+> > This print was added due to the silent initialisation costing me
+> > several hours of debugging ACPI device/driver code (albeit learning a
+> > lot about ACPI as I go) just to find out that it was already doing the
+> > right thing - just very quietly.
+> >
 > 
-> Signed-off-by: Vivek Gautam <vivek.gautam@codeaurora.org>
-
-added to drm-misc-next
-
-	Sam
-
-> ---
->  drivers/gpu/drm/panel/panel-truly-nt35597.c | 1 +
->  1 file changed, 1 insertion(+)
+> I agree.
 > 
-> diff --git a/drivers/gpu/drm/panel/panel-truly-nt35597.c b/drivers/gpu/drm/panel/panel-truly-nt35597.c
-> index fc2a66c53db4..aa7153fd3be4 100644
-> --- a/drivers/gpu/drm/panel/panel-truly-nt35597.c
-> +++ b/drivers/gpu/drm/panel/panel-truly-nt35597.c
-> @@ -280,6 +280,7 @@ static int truly_35597_power_on(struct truly_nt35597 *ctx)
->  	gpiod_set_value(ctx->reset_gpio, 1);
->  	usleep_range(10000, 20000);
->  	gpiod_set_value(ctx->reset_gpio, 0);
-> +	usleep_range(10000, 20000);
->  
->  	return 0;
->  }
-> -- 
-> QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
-> of Code Aurora Forum, hosted by The Linux Foundation
+> There are numerous EHCI drivers IIRC which, if compiled in,
+> unconditionally print some blurb, whether you have the hardware or
+> not, which is pretty annoying.
 > 
-> _______________________________________________
-> dri-devel mailing list
-> dri-devel@lists.freedesktop.org
-> https://lists.freedesktop.org/mailman/listinfo/dri-devel
+> In this case, however, having a single line per successfully probed
+> device (containing the dev_name and perhaps the MMIO base address or
+> some other identifying feature) is pretty useful, and shouldn't be
+> regarded as log spamming imo. dev_info() honours the 'quiet' kernel
+> command line parameter, and so you will only see the message if you
+> actually look at the log.
+
++999
+
+This is exactly as I see it.
+
+If people want a quiet log/fast boot-up times, they can request it.
+Otherwise, it's far more useful to trade a second or two for
+important information such as which devices are present/enabled on a
+platform.
+
+-- 
+Lee Jones [李琼斯]
+Linaro Services Technical Lead
+Linaro.org │ Open source software for ARM SoCs
+Follow Linaro: Facebook | Twitter | Blog
