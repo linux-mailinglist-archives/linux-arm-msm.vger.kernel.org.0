@@ -2,155 +2,207 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 0AF5B366A0
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  5 Jun 2019 23:17:57 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 2D7C5366D3
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  5 Jun 2019 23:30:25 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726642AbfFEVR4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 5 Jun 2019 17:17:56 -0400
-Received: from mail-eopbgr790059.outbound.protection.outlook.com ([40.107.79.59]:2512
-        "EHLO NAM03-CO1-obe.outbound.protection.outlook.com"
-        rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-        id S1726554AbfFEVRz (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 5 Jun 2019 17:17:55 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=micron.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=M6Zhdr1Kn/YAwbuIZrv7cOH5SdjRclBqEpShpueDq0c=;
- b=CdVn2rxOqf/JonUFGechxkMr9ga+/KcyXvxjah7aLidhkBsOydVkntx27mGxFdQm03yVFzMG5xGrysWACVOH9yRBx/kQ+uXZlo0IdspvyAhkWlJh05dRiBtBo8eGomRRaeuwwvr0DMAefnzLwMOTWabGmjoIJCsLssRMW01oxdE=
-Received: from BN7PR08MB5684.namprd08.prod.outlook.com (20.176.31.141) by
- BN7PR08MB3843.namprd08.prod.outlook.com (52.132.5.22) with Microsoft SMTP
- Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.1943.22; Wed, 5 Jun 2019 21:17:48 +0000
-Received: from BN7PR08MB5684.namprd08.prod.outlook.com
- ([fe80::8d6c:f350:4859:e532]) by BN7PR08MB5684.namprd08.prod.outlook.com
- ([fe80::8d6c:f350:4859:e532%4]) with mapi id 15.20.1943.018; Wed, 5 Jun 2019
- 21:17:48 +0000
-From:   "Bean Huo (beanhuo)" <beanhuo@micron.com>
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>
-CC:     Pedro Sousa <pedrom.sousa@synopsys.com>,
-        "James E.J. Bottomley" <jejb@linux.ibm.com>,
-        "Martin K. Petersen" <martin.petersen@oracle.com>,
+        id S1726561AbfFEVaY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 5 Jun 2019 17:30:24 -0400
+Received: from mail-qt1-f196.google.com ([209.85.160.196]:37921 "EHLO
+        mail-qt1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726461AbfFEVaY (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 5 Jun 2019 17:30:24 -0400
+Received: by mail-qt1-f196.google.com with SMTP id l3so301000qtj.5
+        for <linux-arm-msm@vger.kernel.org>; Wed, 05 Jun 2019 14:30:23 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=marek-ca.20150623.gappssmtp.com; s=20150623;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=W1SwKAzrSsraL2rJYcRqKU9p/AAS2w/6bHcCd/yWVTY=;
+        b=XvoSyiJWJjZ8O1byGZWAjxvlsniWLJz+KAPD8l0fEGvVihiVdIjoMHmThPQX0IAFdH
+         OLqH7L3HbIGle+BLtliIEpNU1RAx77yleEYUd4/aDvcm6TsXvCyho10McqEwwgT+ijpy
+         T+KX7DYWNUWYDeSwUfcf6U1ZHeoKqx6ITYk/euysVAF5CbCqDHfJtMhkCiul5BcuG6lo
+         38k2HB4XhrKWEscKB6syZx8Vk0sEnseixgDsFPzglKe4XEQlkGY+9ucGLOccEbzG/AWX
+         ra2tCcqsL9Av0/NvkHGdxCG6kRAGY7Lt5+1chyd5k4HqT0rAaaP0nLhUgE5Cxjv73qVB
+         vQ+g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=W1SwKAzrSsraL2rJYcRqKU9p/AAS2w/6bHcCd/yWVTY=;
+        b=bCYm1b1kiwSowwr249wxoCjrIvNwjjTdl38zQdkhLdH5netAnrozqgiX/46FyDTHwM
+         8n7j5BFU5zl76Dx1oa4oq/cAG4VQGrGJkSPmnRM8faVG4DfMF+aOMGhdVKlPP9KEZOwX
+         XEv27nIPiF/RuV2lkLvGknj4ZTNx4CjMezbFrZ9oxafDSKBE+hVL2s6KsAJnRNlmU1++
+         ORFHM3VrCwaRGaUzAiXSKFU5JiJxfn5pAwQX9XAxioaC9uMviQ/mG9eVxBruNwQj8UkS
+         +91EALMa/x1QRT+0Pkaj6+VY7lDEolQX5IpKZ5t8ivMYrtcyk16V2uqeE7pWdYOXXGd6
+         2cIQ==
+X-Gm-Message-State: APjAAAX1VgWTFVV6LjC5i4+fl4kLbzAYRq/dXc3LJjf3dnAict/fiIq+
+        a5t1U5l4ylmoZe5a7HdAxrlYZQ==
+X-Google-Smtp-Source: APXvYqyr179W7aDtAChmKkptnBIc2kMcBdRREpSZmu+3HLBiaBVJv0h7CtNC7XKvc89sY8BUrLtvGQ==
+X-Received: by 2002:aed:3a87:: with SMTP id o7mr36089666qte.310.1559770223223;
+        Wed, 05 Jun 2019 14:30:23 -0700 (PDT)
+Received: from [192.168.0.189] ([147.253.86.153])
+        by smtp.gmail.com with ESMTPSA id v195sm12092964qka.28.2019.06.05.14.30.22
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Wed, 05 Jun 2019 14:30:22 -0700 (PDT)
+Subject: Re: [PATCH] Revert "media: hfi_parser: don't trick gcc with a wrong
+ expected size"
+To:     Mauro Carvalho Chehab <mchehab@kernel.org>
+Cc:     Stanimir Varbanov <stanimir.varbanov@linaro.org>,
         Andy Gross <agross@kernel.org>,
-        Linus Walleij <linus.walleij@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Mark Rutland <mark.rutland@arm.com>,
-        "linux-arm-msm@vger.kernel.org" <linux-arm-msm@vger.kernel.org>,
-        "linux-gpio@vger.kernel.org" <linux-gpio@vger.kernel.org>,
-        "devicetree@vger.kernel.org" <devicetree@vger.kernel.org>,
-        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
-        "linux-scsi@vger.kernel.org" <linux-scsi@vger.kernel.org>
-Subject: RE: [EXT] [PATCH 2/3] scsi: ufs: Allow resetting the UFS device
-Thread-Topic: [EXT] [PATCH 2/3] scsi: ufs: Allow resetting the UFS device
-Thread-Index: AQHVGqX7mZWyymp0D0+pRLZPzmjhVqaLH8wwgAD1HYCAAXihMA==
-Date:   Wed, 5 Jun 2019 21:17:48 +0000
-Message-ID: <BN7PR08MB5684B63CABF148C279FD64C1DB160@BN7PR08MB5684.namprd08.prod.outlook.com>
-References: <20190604072001.9288-1-bjorn.andersson@linaro.org>
- <20190604072001.9288-3-bjorn.andersson@linaro.org>
- <BN7PR08MB568450B1EC51ABAA2E426AC0DB150@BN7PR08MB5684.namprd08.prod.outlook.com>
- <20190604223025.GD4814@minitux>
-In-Reply-To: <20190604223025.GD4814@minitux>
-Accept-Language: en-150, en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-authentication-results: spf=none (sender IP is )
- smtp.mailfrom=beanhuo@micron.com; 
-x-originating-ip: [165.225.81.60]
-x-ms-publictraffictype: Email
-x-ms-office365-filtering-correlation-id: 4414cfc2-6c39-416b-dbfb-08d6e9fb42c1
-x-microsoft-antispam: BCL:0;PCL:0;RULEID:(2390118)(7020095)(4652040)(8989299)(4534185)(7168020)(4627221)(201703031133081)(201702281549075)(8990200)(5600148)(711020)(4605104)(1401327)(2017052603328)(7193020);SRVR:BN7PR08MB3843;
-x-ms-traffictypediagnostic: BN7PR08MB3843:|BN7PR08MB3843:
-x-ms-exchange-purlcount: 1
-x-microsoft-antispam-prvs: <BN7PR08MB38438D51443799382393E3E8DB160@BN7PR08MB3843.namprd08.prod.outlook.com>
-x-ms-oob-tlc-oobclassifiers: OLM:10000;
-x-forefront-prvs: 00594E8DBA
-x-forefront-antispam-report: SFV:NSPM;SFS:(10009020)(366004)(396003)(376002)(136003)(39860400002)(346002)(199004)(189003)(7696005)(54906003)(55236004)(71190400001)(76176011)(11346002)(6506007)(14454004)(476003)(9686003)(6436002)(2906002)(76116006)(26005)(6916009)(25786009)(71200400001)(53936002)(99286004)(7416002)(229853002)(14444005)(52536014)(81156014)(4326008)(486006)(68736007)(55016002)(66476007)(66066001)(66556008)(66446008)(74316002)(5660300002)(45080400002)(446003)(478600001)(6246003)(256004)(6116002)(86362001)(8676002)(33656002)(5024004)(6306002)(186003)(102836004)(7736002)(8936002)(316002)(305945005)(81166006)(3846002)(73956011)(66946007)(64756008);DIR:OUT;SFP:1101;SCL:1;SRVR:BN7PR08MB3843;H:BN7PR08MB5684.namprd08.prod.outlook.com;FPR:;SPF:None;LANG:en;PTR:InfoNoRecords;A:1;MX:1;
-received-spf: None (protection.outlook.com: micron.com does not designate
- permitted sender hosts)
-x-ms-exchange-senderadcheck: 1
-x-microsoft-antispam-message-info: bB0RHptXoY0oN9gfNYpsrwZhlAj/DQvFYUapaXM0Wiztqn7J8GnbHjmFn5ukYsG0t5k8hxl6As7reDo9/Z5KmOlC2M//V0HxktAKzKki1iKF+DqPt2uOSsUvJWCoH+Sf21u1Sff5wDKuZu7fZWYc3W4r3OuehOyNE2oE8yDk+866uDBpvhYIgmguS+Xfg9jS581nCHmogupbw9QKMJ/tiCqore70uXL+77zbdMPH1iBiuxISaFHTFocEg/+jhMBi3kPbbiO/io+XSWgC1n8x/Yfc7uVRZpwHnzOqRMyhClTN6I8VVvooTIVPyAZUfqqod2EKiOUdBB0qd434Dq8IL8+OXvGvW8OXkqgAeD3CtUdIYPky3T1Iftj3L4RO+KRU0KDlkj2CofXleI+ktelCPCihWGoczsj1i5M9kcjEXaQ=
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: quoted-printable
+        David Brown <david.brown@linaro.org>,
+        "open list:QUALCOMM VENUS VIDEO ACCELERATOR DRIVER" 
+        <linux-media@vger.kernel.org>,
+        "open list:QUALCOMM VENUS VIDEO ACCELERATOR DRIVER" 
+        <linux-arm-msm@vger.kernel.org>,
+        open list <linux-kernel@vger.kernel.org>
+References: <20190605201941.4150-1-jonathan@marek.ca>
+ <20190605174044.65ac1e4a@coco.lan>
+From:   Jonathan Marek <jonathan@marek.ca>
+Message-ID: <c0a251c1-d36a-613b-4573-5939cdfc3ebe@marek.ca>
+Date:   Wed, 5 Jun 2019 17:27:38 -0400
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+ Thunderbird/60.4.0
 MIME-Version: 1.0
-X-OriginatorOrg: micron.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 4414cfc2-6c39-416b-dbfb-08d6e9fb42c1
-X-MS-Exchange-CrossTenant-originalarrivaltime: 05 Jun 2019 21:17:48.3179
- (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: f38a5ecd-2813-4862-b11b-ac1d563c806f
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: beanhuo@micron.com
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: BN7PR08MB3843
+In-Reply-To: <20190605174044.65ac1e4a@coco.lan>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi, Bjorn
-I think I should give up my preview suggestion DME_ENDPOINTRESET.req softwa=
-re reset,  go back to your HW reset.
-Although SW reset can cover most of the requirement, and compatible with di=
-fferent vendor UFS device, for some device
-fatal error cases, UFS internal stuck and would not accept SW Reset. An HW =
-reset is expected. =20
-Please go on your reset way.
+hfi_capabilities /  hfi_profile_level_supported come from hardware so 
+there is no option to dynamically allocate, and using size [1] doesn't 
+cause any bug.
 
-Thanks,
-//Bean
+Your enclosed patch is wrong in a way because MAX_CAP_ENTRIES is not a 
+hardware limit but the size of the statically allocated array used by 
+the driver. I don't think there is any defined hardware limit, otherwise 
+the driver author would've defined it as they did with 
+HFI_MAX_PROFILE_COUNT.
 
->Andy Gross <agross@kernel.org>; Linus Walleij <linus.walleij@linaro.org>;
->Rob Herring <robh+dt@kernel.org>; Mark Rutland <mark.rutland@arm.com>;
->linux-arm-msm@vger.kernel.org; linux-gpio@vger.kernel.org;
->devicetree@vger.kernel.org; linux-kernel@vger.kernel.org; linux-
->scsi@vger.kernel.org
->Subject: Re: [EXT] [PATCH 2/3] scsi: ufs: Allow resetting the UFS device
->
->On Tue 04 Jun 01:13 PDT 2019, Bean Huo (beanhuo) wrote:
->> >@@ -6159,6 +6179,9 @@ static int ufshcd_reset_and_restore(struct
->> >ufs_hba
->> >*hba)
->> > 	int retries =3D MAX_HOST_RESET_RETRIES;
->> >
->> > 	do {
->> >+		/* Reset the attached device */
->> >+		ufshcd_device_reset(hba);
->> >+
+A better solution (IMO) if you want to avoid these warnings is to remove 
+those memcpy() and work on the data[] / profile_level[] from the struct 
+directly:
+
+diff --git a/drivers/media/platform/qcom/venus/hfi_parser.c 
+b/drivers/media/platform/qcom/venus/hfi_parser.c
+index 2293d936e49c..ecaa336b2cb9 100644
+--- a/drivers/media/platform/qcom/venus/hfi_parser.c
++++ b/drivers/media/platform/qcom/venus/hfi_parser.c
+@@ -94,16 +94,12 @@ static void
+  parse_profile_level(struct venus_core *core, u32 codecs, u32 domain, 
+void *data)
+  {
+  	struct hfi_profile_level_supported *pl = data;
+-	struct hfi_profile_level *proflevel = pl->profile_level;
+-	struct hfi_profile_level pl_arr[HFI_MAX_PROFILE_COUNT] = {};
+
+  	if (pl->profile_count > HFI_MAX_PROFILE_COUNT)
+  		return;
+
+-	memcpy(pl_arr, proflevel, pl->profile_count * sizeof(*proflevel));
+-
+  	for_each_codec(core->caps, ARRAY_SIZE(core->caps), codecs, domain,
+-		       fill_profile_level, pl_arr, pl->profile_count);
++		       fill_profile_level, pl->profile_level, pl->profile_count);
+  }
+
+  static void
+@@ -119,17 +115,12 @@ static void
+  parse_caps(struct venus_core *core, u32 codecs, u32 domain, void *data)
+  {
+  	struct hfi_capabilities *caps = data;
+-	struct hfi_capability *cap = caps->data;
+-	u32 num_caps = caps->num_capabilities;
+-	struct hfi_capability caps_arr[MAX_CAP_ENTRIES] = {};
+
+-	if (num_caps > MAX_CAP_ENTRIES)
++	if (caps->num_capabilities > MAX_CAP_ENTRIES)
+  		return;
+
+-	memcpy(caps_arr, cap, num_caps * sizeof(*cap));
+-
+  	for_each_codec(core->caps, ARRAY_SIZE(core->caps), codecs, domain,
+-		       fill_caps, caps_arr, num_caps);
++		       fill_caps, caps->data, caps->num_capabilities);
+  }
+
+  static void fill_raw_fmts(struct venus_caps *cap, const void *fmts,
+
+On 6/5/19 4:41 PM, Mauro Carvalho Chehab wrote:
+> Em Wed,  5 Jun 2019 16:19:40 -0400
+> Jonathan Marek <jonathan@marek.ca> escreveu:
+> 
+>> This reverts commit ded716267196862809e5926072adc962a611a1e3.
 >>
->> what's problem you met, and you should reset UFS device here? could you
->give more info?
->>
->> It is true that we don't reset UFS device in case of device fatal
->> error. According to UFS host spec, Host should be device reset except
->> that in addition to resetting UIC. But as so far, We didn't experience a=
-ny
->problems result from this missing reset.
->>
->> We have three UFS device reset ways.  Comparing to this hardware
->> reset, I prefer to use DME_ENDPOINTRESET.req software reset.
->>
->
->Hi Bean,
->
->Thanks for your questions. With some memories we see issues establishing
->the link during bootup, so that's the purpose of issuing this reset.
->
->Unfortunately the downstream Qualcomm patch [1] (which I should have
->remembered to attribute), does not mention why the reset during host
->controller reset is needed - but I'm fairly certain that this scenario wou=
-ld be
->similar to the handover from bootloader to kernel that we do see an issue
->with.
->
->
->[1]
->https://nam01.safelinks.protection.outlook.com/?url=3Dhttps%3A%2F%2Fsource
->.codeaurora.org%2Fquic%2Fla%2Fkernel%2Fmsm-
->4.4%2Fcommit%2F%3Fh%3Dmsm-
->4.4%26id%3D0c82737188e2d63a08196e078e411032dbbc3b89&amp;data=3D02%
->7C01%7Cbeanhuo%40micron.com%7Cf72404eb906440e1f9c408d6e93c401d%7
->Cf38a5ecd28134862b11bac1d563c806f%7C0%7C0%7C636952842324926509&a
->mp;sdata=3DI%2FH7km6b34jyoUa1RVEPApfYt5uSFtHqL3%2BvV1bvryM%3D&amp
->;reserved=3D0
->
->Regards,
->Bjorn
+>> This change doesn't make any sense and breaks the driver.
+> 
+> The fix is indeed wrong, but reverting is the wrong thing to do.
+> 
+> The problem is that the driver is trying to write past the
+> allocated area, as reported:
+> 
+> 	drivers/media/platform/qcom/venus/hfi_parser.c:103 parse_profile_level() error: memcpy() 'proflevel' too small (8 vs 128)
+> 	drivers/media/platform/qcom/venus/hfi_parser.c:129 parse_caps() error: memcpy() 'cap' too small (16 vs 512)
+> 
+> If you check the memcpy() logic at the above lines, you'll see that
+> hfi_capability.data may have up to 32 entries, and
+> hfi_profile_level_supported.profile level can have up to it can be up
+> to 16 entries.
+> 
+> So, the buffer should either be dynamically allocated with the real
+> size or we need something like the enclosed patch.
+> 
+> Thanks,
+> Mauro
+> 
+> diff --git a/drivers/media/platform/qcom/venus/core.h b/drivers/media/platform/qcom/venus/core.h
+> index 7a3feb5cee00..06a84f266bcc 100644
+> --- a/drivers/media/platform/qcom/venus/core.h
+> +++ b/drivers/media/platform/qcom/venus/core.h
+> @@ -59,7 +59,6 @@ struct venus_format {
+>   
+>   #define MAX_PLANES		4
+>   #define MAX_FMT_ENTRIES		32
+> -#define MAX_CAP_ENTRIES		32
+>   #define MAX_ALLOC_MODE_ENTRIES	16
+>   #define MAX_CODEC_NUM		32
+>   
+> diff --git a/drivers/media/platform/qcom/venus/hfi_helper.h b/drivers/media/platform/qcom/venus/hfi_helper.h
+> index 34ea503a9842..ca8033381515 100644
+> --- a/drivers/media/platform/qcom/venus/hfi_helper.h
+> +++ b/drivers/media/platform/qcom/venus/hfi_helper.h
+> @@ -560,6 +560,8 @@ struct hfi_bitrate {
+>   #define HFI_CAPABILITY_HIER_P_HYBRID_NUM_ENH_LAYERS	0x15
+>   #define HFI_CAPABILITY_MBS_PER_SECOND_POWERSAVE		0x16
+>   
+> +#define MAX_CAP_ENTRIES                32
+> +
+>   struct hfi_capability {
+>   	u32 capability_type;
+>   	u32 min;
+> @@ -569,7 +571,7 @@ struct hfi_capability {
+>   
+>   struct hfi_capabilities {
+>   	u32 num_capabilities;
+> -	struct hfi_capability *data;
+> +	struct hfi_capability data[MAX_CAP_ENTRIES];
+>   };
+>   
+>   #define HFI_DEBUG_MSG_LOW	0x01
+> @@ -726,7 +728,7 @@ struct hfi_profile_level {
+>   
+>   struct hfi_profile_level_supported {
+>   	u32 profile_count;
+> -	struct hfi_profile_level *profile_level;
+> +	struct hfi_profile_level profile_level[HFI_MAX_PROFILE_COUNT];
+>   };
+>   
+>   struct hfi_quality_vs_speed {
+> 
+> 
+> 
