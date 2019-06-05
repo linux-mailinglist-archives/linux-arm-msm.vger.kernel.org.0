@@ -2,70 +2,116 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 6DB5E35660
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  5 Jun 2019 07:50:32 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 3F1A835668
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  5 Jun 2019 07:50:41 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726490AbfFEFub (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 5 Jun 2019 01:50:31 -0400
-Received: from bombadil.infradead.org ([198.137.202.133]:51614 "EHLO
-        bombadil.infradead.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726050AbfFEFub (ORCPT
+        id S1726572AbfFEFuj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 5 Jun 2019 01:50:39 -0400
+Received: from esa6.hgst.iphmx.com ([216.71.154.45]:21517 "EHLO
+        esa6.hgst.iphmx.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726050AbfFEFuj (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 5 Jun 2019 01:50:31 -0400
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-        d=infradead.org; s=bombadil.20170209; h=In-Reply-To:Content-Transfer-Encoding
-        :Content-Type:MIME-Version:References:Message-ID:Subject:Cc:To:From:Date:
-        Sender:Reply-To:Content-ID:Content-Description:Resent-Date:Resent-From:
-        Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:
-        List-Unsubscribe:List-Subscribe:List-Post:List-Owner:List-Archive;
-        bh=OjIrnGQGCOhzp7rHkVNxq6gEHvDiczQ7n+SWfkZXfuA=; b=FOh08iBoGdxd0TgZxWZAe6HY72
-        /y1hc0WRaI1KV40nBnCVCTOhmnFS1h4bSdNQSrxJOcNtvxu9PmbP/uk1SBAVW477UVP8nRBqs8cbF
-        J5rNRQNgZgLlmWRdm3illrkt8ckb3/2rN9ec5hh+jO5+vHItXKFdgfmAJFEuqyf+sww13/3n97E7S
-        vmtMhW40lznrYzWF2YPcOysOUiar1cIRSChCJkFf0lIO4NYUTTy0cr1p0wB2J5Fcp87h6zNekn8aN
-        GFTzn57fRV37XuUpKUTT7A5+IWgfzWtQwvq+XOvRwiMRtJIxwiUQHM5iDrSZzCiFK2UrdsiP5ne72
-        HRloGgdA==;
-Received: from hch by bombadil.infradead.org with local (Exim 4.90_1 #2 (Red Hat Linux))
-        id 1hYOoX-0005Al-PR; Wed, 05 Jun 2019 05:50:21 +0000
-Date:   Tue, 4 Jun 2019 22:50:21 -0700
-From:   Christoph Hellwig <hch@infradead.org>
-To:     Tom Murphy <tmurphy@arista.com>
-Cc:     iommu@lists.linux-foundation.org, Heiko Stuebner <heiko@sntech.de>,
-        Will Deacon <will.deacon@arm.com>,
-        David Brown <david.brown@linaro.org>,
-        Thierry Reding <thierry.reding@gmail.com>,
-        linux-s390@vger.kernel.org, linux-samsung-soc@vger.kernel.org,
-        Krzysztof Kozlowski <krzk@kernel.org>,
-        Jonathan Hunter <jonathanh@nvidia.com>,
-        linux-rockchip@lists.infradead.org, Kukjin Kim <kgene@kernel.org>,
-        Gerald Schaefer <gerald.schaefer@de.ibm.com>,
-        Andy Gross <andy.gross@linaro.org>,
-        linux-tegra@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-mediatek@lists.infradead.org,
-        Matthias Brugger <matthias.bgg@gmail.com>,
-        linux-arm-kernel@lists.infradead.org,
-        Robin Murphy <robin.murphy@arm.com>,
-        linux-kernel@vger.kernel.org, murphyt7@tcd.ie,
-        David Woodhouse <dwmw2@infradead.org>
-Subject: Re: [PATCH v3 1/4] iommu: Add gfp parameter to iommu_ops::map
-Message-ID: <20190605055021.GA15036@infradead.org>
-References: <20190506185207.31069-1-tmurphy@arista.com>
- <20190506185207.31069-2-tmurphy@arista.com>
+        Wed, 5 Jun 2019 01:50:39 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple;
+  d=wdc.com; i=@wdc.com; q=dns/txt; s=dkim.wdc.com;
+  t=1559713839; x=1591249839;
+  h=from:to:cc:subject:date:message-id:references:
+   in-reply-to:content-transfer-encoding:mime-version;
+  bh=V23UQoLuR8JfcnTKw+reL88TN+mD9zb++TQbqJi3rt8=;
+  b=L5rDmFGRwqT9AxB9FIzSc4JW24PhpVGK0IR3GRetQancCFd9KlzU1Bnf
+   95N7AxtsO51dM45TfTuZ9UUXGgJ4FUDWTjHBFu81TDCYOyTKF82wrqLgx
+   tyzWYZhkI8GuKEYot7SkWGnTpcz25UMgMApqZBfxiGbA9TfR/J6qH090x
+   jCWEZy7kzXrGQqk4DJBPwLLYCew/7gIlYfKwG+34t4V6+ZNMexrsCrOsz
+   UfeYXNLsgvoRHnOL5f5hMBpegYo+vmbZxXkaEGnG0q8ShN9bE92F34sT5
+   fD1SfrIUkqD51nye+g+57jzfEMYlvfxNcVcuITQZXiPQUcpdv1C8uRTAC
+   w==;
+X-IronPort-AV: E=Sophos;i="5.60,550,1549900800"; 
+   d="scan'208";a="111507124"
+Received: from mail-sn1nam01lp2058.outbound.protection.outlook.com (HELO NAM01-SN1-obe.outbound.protection.outlook.com) ([104.47.32.58])
+  by ob1.hgst.iphmx.com with ESMTP; 05 Jun 2019 13:50:38 +0800
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=sharedspace.onmicrosoft.com; s=selector2-sharedspace-onmicrosoft-com;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=V23UQoLuR8JfcnTKw+reL88TN+mD9zb++TQbqJi3rt8=;
+ b=bRU0wRy2MGCJx1+aiQtjvmCRrino99uux6SOpl2ZJp/UFzssOR0chzp2Sn1zlhiVimnnz45mcF5f3fuOcZfn4uVggpylVpf8/78yekEAj+Fs5ygeGrKk9bG+srDulGwPzNE7yPIwLkcFLw5lWVmMMbBOQGrOygsbKxZNrUYjuF0=
+Received: from SN6PR04MB4925.namprd04.prod.outlook.com (52.135.114.82) by
+ SN6PR04MB4335.namprd04.prod.outlook.com (52.135.72.31) with Microsoft SMTP
+ Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.1943.22; Wed, 5 Jun 2019 05:50:36 +0000
+Received: from SN6PR04MB4925.namprd04.prod.outlook.com
+ ([fe80::6d99:14d9:3fa:f530]) by SN6PR04MB4925.namprd04.prod.outlook.com
+ ([fe80::6d99:14d9:3fa:f530%6]) with mapi id 15.20.1943.018; Wed, 5 Jun 2019
+ 05:50:36 +0000
+From:   Avri Altman <Avri.Altman@wdc.com>
+To:     John Stultz <john.stultz@linaro.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>
+CC:     Andy Gross <agross@kernel.org>,
+        Linus Walleij <linus.walleij@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Mark Rutland <mark.rutland@arm.com>,
+        Pedro Sousa <pedrom.sousa@synopsys.com>,
+        "James E.J. Bottomley" <jejb@linux.ibm.com>,
+        "Martin K. Petersen" <martin.petersen@oracle.com>,
+        "linux-arm-msm@vger.kernel.org" <linux-arm-msm@vger.kernel.org>,
+        "linux-gpio@vger.kernel.org" <linux-gpio@vger.kernel.org>,
+        "devicetree@vger.kernel.org" <devicetree@vger.kernel.org>,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        "linux-scsi@vger.kernel.org" <linux-scsi@vger.kernel.org>
+Subject: RE: [PATCH 0/3] (Qualcomm) UFS device reset support
+Thread-Topic: [PATCH 0/3] (Qualcomm) UFS device reset support
+Thread-Index: AQHVGqYAlQFsNx0blUeatbYnjFKLiqaMDImAgACCvoA=
+Date:   Wed, 5 Jun 2019 05:50:36 +0000
+Message-ID: <SN6PR04MB4925530F216E86F6404FE14CFC160@SN6PR04MB4925.namprd04.prod.outlook.com>
+References: <20190604072001.9288-1-bjorn.andersson@linaro.org>
+ <CANcMJZBmgWMZu7Y53Lnx_x3L2UpCmEbFRHVW0SFCXfW=Yw9uYg@mail.gmail.com>
+In-Reply-To: <CANcMJZBmgWMZu7Y53Lnx_x3L2UpCmEbFRHVW0SFCXfW=Yw9uYg@mail.gmail.com>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+authentication-results: spf=none (sender IP is )
+ smtp.mailfrom=Avri.Altman@wdc.com; 
+x-originating-ip: [212.25.79.133]
+x-ms-publictraffictype: Email
+x-ms-office365-filtering-correlation-id: 2717869a-9cec-4eb0-6dd4-08d6e979bb7f
+x-ms-office365-filtering-ht: Tenant
+x-microsoft-antispam: BCL:0;PCL:0;RULEID:(2390118)(7020095)(4652040)(8989299)(4534185)(4627221)(201703031133081)(201702281549075)(8990200)(5600148)(711020)(4605104)(1401327)(4618075)(2017052603328)(7193020);SRVR:SN6PR04MB4335;
+x-ms-traffictypediagnostic: SN6PR04MB4335:
+wdcipoutbound: EOP-TRUE
+x-microsoft-antispam-prvs: <SN6PR04MB4335CC9F1C4F1146AACC75F6FC160@SN6PR04MB4335.namprd04.prod.outlook.com>
+x-ms-oob-tlc-oobclassifiers: OLM:7219;
+x-forefront-prvs: 00594E8DBA
+x-forefront-antispam-report: SFV:NSPM;SFS:(10019020)(39860400002)(376002)(396003)(346002)(136003)(366004)(189003)(199004)(2906002)(256004)(9686003)(55016002)(99286004)(71200400001)(3846002)(81166006)(6116002)(71190400001)(5660300002)(6246003)(53936002)(4744005)(33656002)(11346002)(446003)(486006)(4326008)(25786009)(52536014)(476003)(54906003)(110136005)(53546011)(6506007)(102836004)(7696005)(186003)(14454004)(316002)(76116006)(66556008)(76176011)(72206003)(14444005)(86362001)(478600001)(26005)(81156014)(7736002)(7416002)(229853002)(8676002)(8936002)(68736007)(64756008)(66476007)(73956011)(66946007)(74316002)(305945005)(66446008)(6436002)(66066001);DIR:OUT;SFP:1102;SCL:1;SRVR:SN6PR04MB4335;H:SN6PR04MB4925.namprd04.prod.outlook.com;FPR:;SPF:None;LANG:en;PTR:InfoNoRecords;MX:1;A:1;
+x-ms-exchange-senderadcheck: 1
+x-microsoft-antispam-message-info: e+yJZSvXZp7ShiVLuSaJeJNOAQOkSlqfUcc2sbw/IDQKRtzEafDdMrq/uqvQhhZyRfqaesrXuIe/xcpmvY28LutBjY0SGFlrjLFZjrSV2YIvNSIUosXW2IxNfn9EK8Bg38DXYHU1ctttswuQ9+3u0j12lK6+zU67ktkULGlMZxZdX+wl5ZLKlHPet5rwAYxh/sRSfvS/fHH5OW2koX4ooiBCLwPPiytpPIj3yprCA3ULODNbK3uMw5y2kIEZoK9sNQd/EpifO+YmZg3ffWr1ecwl3BMa0wphMt3jYIIWokPXdwiRIxU2eonbsLGriMT0gSHLG0bwIAce/cyWO2nu14LPhPtJmiEZHejETgSG0764vGQhXXqlYCu1eaBizoDh/fxch87JWPdDcTxQASsCedrHNiM/YtbYA6WwRYJIZyk=
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: base64
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20190506185207.31069-2-tmurphy@arista.com>
-User-Agent: Mutt/1.9.2 (2017-12-15)
-X-SRS-Rewrite: SMTP reverse-path rewritten from <hch@infradead.org> by bombadil.infradead.org. See http://www.infradead.org/rpr.html
+X-OriginatorOrg: wdc.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 2717869a-9cec-4eb0-6dd4-08d6e979bb7f
+X-MS-Exchange-CrossTenant-originalarrivaltime: 05 Jun 2019 05:50:36.4249
+ (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: b61c8803-16f3-4c35-9b17-6f65f441df86
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: Avri.Altman@wdc.com
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SN6PR04MB4335
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, May 06, 2019 at 07:52:03PM +0100, Tom Murphy via iommu wrote:
-> We can remove the mutex lock from amd_iommu_map and amd_iommu_unmap.
-> iommu_map doesn’t lock while mapping and so no two calls should touch
-> the same iova range. The AMD driver already handles the page table page
-> allocations without locks so we can safely remove the locks.
-
-Btw, this really should be a separate patch.
+SGksDQoNCj4gDQo+IE9uIFR1ZSwgSnVuIDQsIDIwMTkgYXQgMTI6MjIgQU0gQmpvcm4gQW5kZXJz
+c29uDQo+IDxiam9ybi5hbmRlcnNzb25AbGluYXJvLm9yZz4gd3JvdGU6DQo+ID4NCj4gPiBUaGlz
+IHNlcmllcyBleHBvc2VzIHRoZSB1ZnNfcmVzZXQgbGluZSBhcyBhIGdwaW8sIGFkZHMgc3VwcG9y
+dCBmb3IgdWZzaGNkIHRvDQo+ID4gYWNxdWlyZSBhbmQgdG9nZ2xlIHRoaXMgYW5kIHRoZW4gYWRk
+cyB0aGlzIHRvIFNETTg0NSBNVFAuDQo+ID4NCj4gPiBCam9ybiBBbmRlcnNzb24gKDMpOg0KPiA+
+ICAgcGluY3RybDogcWNvbTogc2RtODQ1OiBFeHBvc2UgdWZzX3Jlc2V0IGFzIGdwaW8NCj4gPiAg
+IHNjc2k6IHVmczogQWxsb3cgcmVzZXR0aW5nIHRoZSBVRlMgZGV2aWNlDQo+ID4gICBhcm02NDog
+ZHRzOiBxY29tOiBzZG04NDUtbXRwOiBTcGVjaWZ5IFVGUyBkZXZpY2UtcmVzZXQgR1BJTw0KPiAN
+Cj4gQWRkaW5nIHNpbWlsYXIgY2hhbmdlIGFzIGluIHNkbTg0NS1tdHAgdG8gdGhlIG5vdCB5ZXQg
+dXBzdHJlYW0NCj4gYmx1ZWxpbmUgZHRzLCBJIHZhbGlkYXRlZCB0aGlzIGFsbG93cyBteSBtaWNy
+b24gVUZTIHBpeGVsMyB0byBib290Lg0KPiANCj4gVGVzdGVkLWJ5OiBKb2huIFN0dWx0eiA8am9o
+bi5zdHVsdHpAbGluYXJvLm9yZz4NCk1heWJlIHVmc19oYmFfdmFyaWFudF9vcHMgd291bGQgYmUg
+dGhlIHByb3BlciBwbGFjZSB0byBhZGQgdGhpcz8NCg0KVGhhbmtzLA0KQXZyaQ0KDQoNCg0KPiAN
+Cj4gdGhhbmtzDQo+IC1qb2huDQo=
