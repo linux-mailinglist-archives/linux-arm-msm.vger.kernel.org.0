@@ -2,96 +2,99 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 6E58335EFC
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  5 Jun 2019 16:18:29 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 7364B36226
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  5 Jun 2019 19:16:13 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728142AbfFEOSP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 5 Jun 2019 10:18:15 -0400
-Received: from sauhun.de ([88.99.104.3]:54796 "EHLO pokefinder.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1727904AbfFEOSP (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 5 Jun 2019 10:18:15 -0400
-Received: from localhost (p5486CB35.dip0.t-ipconnect.de [84.134.203.53])
-        by pokefinder.org (Postfix) with ESMTPSA id 87E5D2C016F;
-        Wed,  5 Jun 2019 16:18:12 +0200 (CEST)
-Date:   Wed, 5 Jun 2019 16:18:12 +0200
-From:   Wolfram Sang <wsa@the-dreams.de>
-To:     Johan Hovold <johan@kernel.org>
-Cc:     Lee Jones <lee.jones@linaro.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>, balbi@kernel.org,
-        wsa+renesas@sang-engineering.com, gregkh@linuxfoundation.org,
-        linus.walleij@linaro.org, linux-usb@vger.kernel.org,
-        linux-kernel@vger.kernel.org, david.brown@linaro.org,
-        alokc@codeaurora.org, kramasub@codeaurora.org,
-        linux-i2c@vger.kernel.org, linux-gpio@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, andy.gross@linaro.org,
-        jlhugo@gmail.com, linux-arm-kernel@lists.infradead.org
-Subject: Re: [PATCH 2/8] i2c: i2c-qcom-geni: Signify successful driver probe
-Message-ID: <20190605141812.GA962@kunai>
-References: <20190604104455.8877-1-lee.jones@linaro.org>
- <20190604104455.8877-2-lee.jones@linaro.org>
- <20190605062020.GL22737@tuxbook-pro>
- <20190605071625.GK4797@dell>
- <20190605075656.GC29637@localhost>
- <20190605082047.GM4797@dell>
- <20190605083353.GD29637@localhost>
- <20190605084921.GQ4797@dell>
- <20190605085527.GE29637@localhost>
+        id S1726464AbfFERQM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 5 Jun 2019 13:16:12 -0400
+Received: from smtp.codeaurora.org ([198.145.29.96]:58046 "EHLO
+        smtp.codeaurora.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725950AbfFERQM (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 5 Jun 2019 13:16:12 -0400
+Received: by smtp.codeaurora.org (Postfix, from userid 1000)
+        id 407346063A; Wed,  5 Jun 2019 17:16:11 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
+        s=default; t=1559754971;
+        bh=FdlcBmhv22cQY8wMK0PgQ3r93qrONz476UJE+bJjDO4=;
+        h=From:To:Subject:Date:From;
+        b=Ieo5tQpi9gySz3Ixsi3ysw/ZxCGrXrVPG1DnZnWoOY3QMYtvBeZ5rkVxtQeZ32OC+
+         x2+YTZuVvItNudc2oKLRCuuxXK3ZQiu5LDku4aV9SApDbJZqlc5CgOWIt0dV8BrvxL
+         Fo6jLfoOTW3sXoUiki4hA4kRwzwJS8PJbdiLNITw=
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        pdx-caf-mail.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.7 required=2.0 tests=ALL_TRUSTED,BAYES_00,
+        DKIM_INVALID,DKIM_SIGNED,SPF_NONE autolearn=no autolearn_force=no
+        version=3.4.0
+Received: from srichara-linux.qualcomm.com (blr-c-bdr-fw-01_globalnat_allzones-outside.qualcomm.com [103.229.19.19])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: sricharan@smtp.codeaurora.org)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 8C14E6063A;
+        Wed,  5 Jun 2019 17:16:07 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
+        s=default; t=1559754970;
+        bh=FdlcBmhv22cQY8wMK0PgQ3r93qrONz476UJE+bJjDO4=;
+        h=From:To:Subject:Date:From;
+        b=cLqKEbMtwDbOXwdDl5cANUaP7t18uBCbMBe4k5vi9oKe/Tm7pAM1uwQUWgomgI7TX
+         m0i+G52gG6GFw3vJCjGbUyodA8b6wDNQFyjG6b/BTOG46yiPZNBmAfriaFsZfecH/K
+         Cs1KlvCAP5UjUe/G7yjje9LlepUmjCfaU9NrMzB4=
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 8C14E6063A
+Authentication-Results: pdx-caf-mail.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: pdx-caf-mail.web.codeaurora.org; spf=none smtp.mailfrom=sricharan@codeaurora.org
+From:   Sricharan R <sricharan@codeaurora.org>
+To:     robh+dt@kernel.org, sboyd@codeaurora.org, linus.walleij@linaro.org,
+        agross@kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-clk@vger.kernel.org,
+        linux-gpio@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-soc@vger.kernel.org, linux-arm-kernel@lists.infradead.org
+Subject: [PATCH 0/6] Add minimal boot support for IPQ6018
+Date:   Wed,  5 Jun 2019 22:45:55 +0530
+Message-Id: <1559754961-26783-1-git-send-email-sricharan@codeaurora.org>
+X-Mailer: git-send-email 1.9.1
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="0F1p//8PRICkK4MW"
-Content-Disposition: inline
-In-Reply-To: <20190605085527.GE29637@localhost>
-User-Agent: Mutt/1.10.1 (2018-07-13)
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+The IPQ6018 is Qualcomm’s 802.11ax SoC for Routers,
+Gateways and Access Points.
 
---0F1p//8PRICkK4MW
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+This series adds minimal board boot support for ipq6018-cp01
+board.
 
+Sricharan R (6):
+  pinctrl: qcom: Add ipq6018 pinctrl driver
+  dt-bindings: qcom: Add ipq6018 bindings
+  clk: qcom: Add DT bindings for ipq6018 gcc clock controller
+  clk: qcom: Add ipq6018 Global Clock Controller support
+  arm64: dts: Add ipq6018 SoC and CP01 board support
+  arm64: defconfig: Enable qcom ipq6018 clock and pinctrl
 
-> To enable dynamic debugging in driver core you could use something like
->=20
-> 	CONFIG_CMDLINE=3D"dyndbg=3D\"func really_probe =3Dp\""
->=20
-> That gives you two printouts per successful probe, for example:
->=20
-> 	bus: 'usb-serial': really_probe: probing driver edgeport_ti_1 with devic=
-e ttyUSB0
-> 	bus: 'usb-serial': really_probe: bound device ttyUSB0 to driver edgeport=
-_ti_1
+ Documentation/devicetree/bindings/arm/qcom.yaml    |    2 +
+ .../devicetree/bindings/clock/qcom,gcc.txt         |    1 +
+ arch/arm64/boot/dts/qcom/Makefile                  |    1 +
+ arch/arm64/boot/dts/qcom/ipq6018-cp01-c1.dts       |   35 +
+ arch/arm64/boot/dts/qcom/ipq6018.dtsi              |  231 +
+ arch/arm64/configs/defconfig                       |    2 +
+ drivers/clk/qcom/Kconfig                           |    9 +
+ drivers/clk/qcom/Makefile                          |    1 +
+ drivers/clk/qcom/gcc-ipq6018.c                     | 5267 ++++++++++++++++++++
+ drivers/pinctrl/qcom/Kconfig                       |   10 +
+ drivers/pinctrl/qcom/Makefile                      |    1 +
+ drivers/pinctrl/qcom/pinctrl-ipq6018.c             | 1183 +++++
+ include/dt-bindings/clock/qcom,gcc-ipq6018.h       |  405 ++
+ 13 files changed, 7148 insertions(+)
+ create mode 100644 arch/arm64/boot/dts/qcom/ipq6018-cp01-c1.dts
+ create mode 100644 arch/arm64/boot/dts/qcom/ipq6018.dtsi
+ create mode 100644 drivers/clk/qcom/gcc-ipq6018.c
+ create mode 100644 drivers/pinctrl/qcom/pinctrl-ipq6018.c
+ create mode 100644 include/dt-bindings/clock/qcom,gcc-ipq6018.h
 
-I agree that this scales much better than adding strings to every
-driver. Also, the driver core will report failed probes other than
--ENODEV, or?
+-- 
+QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member of Code Aurora Forum, hosted by The Linux Foundation
 
-Regarding this patch, however, I don't care much. I'll let the driver
-maintainers decide.
-
-
---0F1p//8PRICkK4MW
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAABCgAdFiEEOZGx6rniZ1Gk92RdFA3kzBSgKbYFAlz3zx8ACgkQFA3kzBSg
-KbbwxQ//RQO8EXcBxgeJWiAo1YAvXE5bXco6J0Kag8kCqqOMHBIScESwy3pPkg+5
-DS/gtk2oJhvxOzUsFV1pLy+Eo3XbwN91CqbOd4QN8EEDTovnAWjvkzfyvy71DBgY
-w+O3WXPA4vsZ1i3907HUdaUAgfcWOLJYe6TaJG/4gkS43ByT1eK54rsOg9Gz1YZZ
-L06igURCQudkaB/OGzVuNk4nkyd1v5HoSiMcuYHKp9ifOf9ID992LpJ47FIEb2h+
-QFFSc/M5XGGETtUuQxdPW9DjqthrSUKV6hKoIKBMOG3uH13JUVbCCB8DIyTvb8h6
-UWcDfjQp/s7f279yVjhnE4+oEnKD4qzrsHX5+rzdeZ3rbEbLvjtbX7DHkeT6/ql7
-FcHnLelb3wGM0wSBybsovpH7zyzMR1g3CPTuClmjtuxNTQKcdRdZ6+7ZimA0KdQE
-/zQEW/QIwIutYmpU11iei8VT5BIg3ihI+xJOrFvdJMpmsrf9Y0WAR6j6kypBHPAH
-V750wMmIEQVgd+tordV7qB+HYdcCQspA2Beqglhz7Lu0f4ynexueEzP4oLQZRohR
-j/1C+7+dTDz43EIXL6OJpaXpyJPzeTnrSuyuVOquAJcXSPa9ALu36A7QFFsjU3t+
-oyeAoN/LwsnU5AxUy28uOyBgDldBrwrihTH/i0GU4pdAn54BY+Y=
-=a6fa
------END PGP SIGNATURE-----
-
---0F1p//8PRICkK4MW--
