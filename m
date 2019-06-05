@@ -2,48 +2,48 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 2809136659
+	by mail.lfdr.de (Postfix) with ESMTP id 9C88B3665A
 	for <lists+linux-arm-msm@lfdr.de>; Wed,  5 Jun 2019 23:09:22 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726707AbfFEVJC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 5 Jun 2019 17:09:02 -0400
-Received: from mail-pl1-f196.google.com ([209.85.214.196]:33029 "EHLO
-        mail-pl1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726593AbfFEVJB (ORCPT
+        id S1726716AbfFEVJD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 5 Jun 2019 17:09:03 -0400
+Received: from mail-pg1-f194.google.com ([209.85.215.194]:41747 "EHLO
+        mail-pg1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726719AbfFEVJD (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 5 Jun 2019 17:09:01 -0400
-Received: by mail-pl1-f196.google.com with SMTP id g21so15170plq.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 05 Jun 2019 14:09:01 -0700 (PDT)
+        Wed, 5 Jun 2019 17:09:03 -0400
+Received: by mail-pg1-f194.google.com with SMTP id 83so17058pgg.8
+        for <linux-arm-msm@vger.kernel.org>; Wed, 05 Jun 2019 14:09:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=doGqQfOnbpbz6KWyxr0y6OarZe4NFnZU43MXukaW24s=;
-        b=zsLf+GJaoDAXKa5EdGWe2FOH0F+xp5lNHW7YtXxQp3F6tZIgoxWTg4ICtQmSyMUzFS
-         b0EGjQtzqHXwjdTw3FRh9z+9C6OYT11qsbfHgjRZPZakvHnZPBN05Qfz7+TfLQvcmfZy
-         k8JA698NZ2o0hx24JO+WjKTiegX0rZpAXCRvblhsB/qkNq0Pyo3Fld98laxJ++tnYiDP
-         l5VuN6NUy0XCB/5KqMOTCc9277V09UY4OBy3OnP1pl5FX2/+XCRwYGMCFJZjI4mweOty
-         1iAo0dUwojRJmbTkcnex3nPunwVVOrWhwSE9evn6ehy9bWiqnakAnymht15U2Vk1qBfJ
-         tx9g==
+        bh=Ry1vQBxsMbP00vdiIcPrZlm4iIMXw6h5SGLwwG/iVbM=;
+        b=VxvqG2PW0+5pSp9t5XCA4qowHutScYDHRE+nsLAcjwkD761a4tLnjjrKTbCLu5r/P5
+         A3y9IdCB35zNuT4KlIhFtfr2gqIzPm2q3CCscrHUC3ttodvJI6lc4/l75psvQbELxPZ9
+         8lOrONhJe4mXYue0Zaz8Kg413VqyaC+RFEeOZlZGYLCoNaDjIsK0rZ0+crw5uSHC9hqD
+         Y0AR7672VjKnZlm44qEvrfmPKN/h8zW9V/htrWXI1cYQq5fj3cKiM3pjv7BsD1YpDNSp
+         Cz7mECl9WTz15xhD74clwsWi0Da3MuyOIETFx9YDnaBM07TcGGiaGunskRGqq5O0X7Mw
+         8BZw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=doGqQfOnbpbz6KWyxr0y6OarZe4NFnZU43MXukaW24s=;
-        b=EM+c5waGeOQcjlE1VSeqC062xdrYVnpB9eXDiX9sHFgYFICjUcimhhkKj/uc3lAMoy
-         tlXQEm/ujBLPC8MJatd4FUHj4SMsDk33h7gfvIfhVseChvL8p0hF+FGGc+u3RNZlxOTM
-         cdJgFGeP4JY1taz6/wCo8zQm93R3VhWsVTH6fr/BuYmZIDrHjnkyfjRB2EYRpqAQADeS
-         xa270/JsNPZM9pYVJdNLojo9QJ4qaiL+alPB0ad9iCPdXElBiztGLIX7X5XsA3FzdhIH
-         JVU12irHeFQv+F0pHDb60nmKycgzB8j4uYiFoQRoU4ePvIP6lrvfMYO0GcTqyohjP7/y
-         JT9Q==
-X-Gm-Message-State: APjAAAXauh80RYtNsFHdTJwjuAfXWahNJpCXts9V6TEr8S+xv38mwFFz
-        1zxzUCLRoebFQLHzOxzY7oFmtg==
-X-Google-Smtp-Source: APXvYqwoS4/fIM8nKfSXqVALkUrziDsBx5YwkF6lBl7eSp+Ql0R6Eq9xI2taS6Dvk0vFthsrEHo8CA==
-X-Received: by 2002:a17:902:2aab:: with SMTP id j40mr7623927plb.76.1559768940538;
-        Wed, 05 Jun 2019 14:09:00 -0700 (PDT)
+        bh=Ry1vQBxsMbP00vdiIcPrZlm4iIMXw6h5SGLwwG/iVbM=;
+        b=gVioAKJBCmIGE6V+lycusEJvI6YPsKkMUDxvahNNzpTQZ0ad3rj899ngUl0kfY/onm
+         Y+zpiegxJX6K8fqvehoIKHBMW0H83YLuPJnqUN3MiF3gNgT+aQBE+joDdqg023Ugt31q
+         Cr8Gb9KsHM/FsMlNvDT9VlXKYLLG4cy7o2gypPmIzAXtJAEj2UdT48HQ+DaWLQXTPKD/
+         WNQFrnDPvUDSnEUZ11l2ctVgvhePrK9VeREtqCIDuQzM/frthC6LUwjw4N6inGeTgEQl
+         htlkVE1YDw/1NiSnH1zYE3bUJwlz0v0OU517AfSXsxV4FbMyYzlMiu7XEl8N9hpMGNeu
+         BaTg==
+X-Gm-Message-State: APjAAAU97lYLyOIFflUP2e6oZqHp57YWPX2sMdahAz0k/7fh205qT4Pd
+        Byw6j0kHTHvbfxxNoJV2idSUIQ==
+X-Google-Smtp-Source: APXvYqwLjPbJRcoaAugB6k9b8sqHmGnHrT4H05jhzViLueVW5rfhjOYyfkZm+C2OANbT62nCKvlMNA==
+X-Received: by 2002:a17:90a:b30a:: with SMTP id d10mr22253135pjr.8.1559768941840;
+        Wed, 05 Jun 2019 14:09:01 -0700 (PDT)
 Received: from localhost.localdomain (104-188-17-28.lightspeed.sndgca.sbcglobal.net. [104.188.17.28])
-        by smtp.gmail.com with ESMTPSA id z68sm5093374pfb.37.2019.06.05.14.08.59
+        by smtp.gmail.com with ESMTPSA id z68sm5093374pfb.37.2019.06.05.14.09.00
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 05 Jun 2019 14:09:00 -0700 (PDT)
+        Wed, 05 Jun 2019 14:09:01 -0700 (PDT)
 From:   Bjorn Andersson <bjorn.andersson@linaro.org>
 To:     Joerg Roedel <joro@8bytes.org>, Will Deacon <will.deacon@arm.com>,
         Robin Murphy <robin.murphy@arm.com>
@@ -52,9 +52,9 @@ Cc:     Vivek Gautam <vivek.gautam@codeaurora.org>,
         Patrick Daly <pdaly@codeaurora.org>,
         iommu@lists.linux-foundation.org, linux-kernel@vger.kernel.org,
         linux-arm-kernel@lists.infradead.org, linux-arm-msm@vger.kernel.org
-Subject: [RFC 1/2] iommu: arm-smmu: Handoff SMR registers and context banks
-Date:   Wed,  5 Jun 2019 14:08:55 -0700
-Message-Id: <20190605210856.20677-2-bjorn.andersson@linaro.org>
+Subject: [RFC 2/2] iommu: arm-smmu: Don't blindly use first SMR to calculate mask
+Date:   Wed,  5 Jun 2019 14:08:56 -0700
+Message-Id: <20190605210856.20677-3-bjorn.andersson@linaro.org>
 X-Mailer: git-send-email 2.18.0
 In-Reply-To: <20190605210856.20677-1-bjorn.andersson@linaro.org>
 References: <20190605210856.20677-1-bjorn.andersson@linaro.org>
@@ -63,179 +63,58 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Boot splash screen or EFI framebuffer requires the display hardware to
-operate while the Linux iommu driver probes. Therefore, we cannot simply
-wipe out the SMR register settings programmed by the bootloader.
-
-Detect which SMR registers are in use during probe, and which context
-banks they are associated with. Reserve these context banks for the
-first Linux device whose stream-id matches the SMR register.
-
-Any existing page-tables will be discarded.
-
-Heavily based on downstream implementation by Patrick Daly
-<pdaly@codeaurora.org>.
+With the SMRs inherited from the bootloader the first SMR might actually
+be valid and in use. As such probing the SMR mask using the first SMR
+might break a stream in use. Search for an unused stream and use this to
+probe the SMR mask.
 
 Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
 ---
- drivers/iommu/arm-smmu-regs.h |  2 +
- drivers/iommu/arm-smmu.c      | 80 ++++++++++++++++++++++++++++++++---
- 2 files changed, 77 insertions(+), 5 deletions(-)
+ drivers/iommu/arm-smmu.c | 20 ++++++++++++++++----
+ 1 file changed, 16 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/iommu/arm-smmu-regs.h b/drivers/iommu/arm-smmu-regs.h
-index e9132a926761..8c1fd84032a2 100644
---- a/drivers/iommu/arm-smmu-regs.h
-+++ b/drivers/iommu/arm-smmu-regs.h
-@@ -105,7 +105,9 @@
- #define ARM_SMMU_GR0_SMR(n)		(0x800 + ((n) << 2))
- #define SMR_VALID			(1 << 31)
- #define SMR_MASK_SHIFT			16
-+#define SMR_MASK_MASK			0x7fff
- #define SMR_ID_SHIFT			0
-+#define SMR_ID_MASK			0xffff
- 
- #define ARM_SMMU_GR0_S2CR(n)		(0xc00 + ((n) << 2))
- #define S2CR_CBNDX_SHIFT		0
 diff --git a/drivers/iommu/arm-smmu.c b/drivers/iommu/arm-smmu.c
-index 5e54cc0a28b3..c8629a656b42 100644
+index c8629a656b42..0c6f5fe6f382 100644
 --- a/drivers/iommu/arm-smmu.c
 +++ b/drivers/iommu/arm-smmu.c
-@@ -135,6 +135,7 @@ struct arm_smmu_s2cr {
- 	enum arm_smmu_s2cr_type		type;
- 	enum arm_smmu_s2cr_privcfg	privcfg;
- 	u8				cbndx;
-+	bool				handoff;
- };
- 
- #define s2cr_init_val (struct arm_smmu_s2cr){				\
-@@ -399,9 +400,22 @@ static int arm_smmu_register_legacy_master(struct device *dev,
- 	return err;
- }
- 
--static int __arm_smmu_alloc_bitmap(unsigned long *map, int start, int end)
-+static int __arm_smmu_alloc_cb(struct arm_smmu_device *smmu, int start,
-+			       struct device *dev)
+@@ -1084,23 +1084,35 @@ static void arm_smmu_test_smr_masks(struct arm_smmu_device *smmu)
  {
-+	struct iommu_fwspec *fwspec = dev_iommu_fwspec_get(dev);
-+	unsigned long *map = smmu->context_map;
-+	int end = smmu->num_context_banks;
-+	int cbndx;
- 	int idx;
-+	int i;
-+
-+	for_each_cfg_sme(fwspec, i, idx) {
-+		if (smmu->s2crs[idx].handoff) {
-+			cbndx = smmu->s2crs[idx].cbndx;
-+			goto found_handoff;
-+		}
-+	}
+ 	void __iomem *gr0_base = ARM_SMMU_GR0(smmu);
+ 	u32 smr;
++	int idx;
  
- 	do {
- 		idx = find_next_zero_bit(map, end, start);
-@@ -410,6 +424,17 @@ static int __arm_smmu_alloc_bitmap(unsigned long *map, int start, int end)
- 	} while (test_and_set_bit(idx, map));
+ 	if (!smmu->smrs)
+ 		return;
  
- 	return idx;
-+
-+found_handoff:
-+	for (i = 0; i < smmu->num_mapping_groups; i++) {
-+		if (smmu->s2crs[i].cbndx == cbndx) {
-+			smmu->s2crs[i].cbndx = 0;
-+			smmu->s2crs[i].handoff = false;
-+			smmu->s2crs[i].count--;
-+		}
-+	}
-+
-+	return cbndx;
- }
- 
- static void __arm_smmu_free_bitmap(unsigned long *map, int idx)
-@@ -759,7 +784,8 @@ static void arm_smmu_write_context_bank(struct arm_smmu_device *smmu, int idx)
- }
- 
- static int arm_smmu_init_domain_context(struct iommu_domain *domain,
--					struct arm_smmu_device *smmu)
-+					struct arm_smmu_device *smmu,
-+					struct device *dev)
- {
- 	int irq, start, ret = 0;
- 	unsigned long ias, oas;
-@@ -873,8 +899,7 @@ static int arm_smmu_init_domain_context(struct iommu_domain *domain,
- 		ret = -EINVAL;
- 		goto out_unlock;
- 	}
--	ret = __arm_smmu_alloc_bitmap(smmu->context_map, start,
--				      smmu->num_context_banks);
-+	ret = __arm_smmu_alloc_cb(smmu, start, dev);
- 	if (ret < 0)
- 		goto out_unlock;
- 
-@@ -1264,7 +1289,7 @@ static int arm_smmu_attach_dev(struct iommu_domain *domain, struct device *dev)
- 		return ret;
- 
- 	/* Ensure that the domain is finalised */
--	ret = arm_smmu_init_domain_context(domain, smmu);
-+	ret = arm_smmu_init_domain_context(domain, smmu, dev);
- 	if (ret < 0)
- 		goto rpm_put;
- 
-@@ -1798,6 +1823,49 @@ static void arm_smmu_device_reset(struct arm_smmu_device *smmu)
- 	writel(reg, ARM_SMMU_GR0_NS(smmu) + ARM_SMMU_GR0_sCR0);
- }
- 
-+static void arm_smmu_read_smr_state(struct arm_smmu_device *smmu)
-+{
-+	u32 privcfg;
-+	u32 cbndx;
-+	u32 mask;
-+	u32 type;
-+	u32 s2cr;
-+	u32 smr;
-+	u32 id;
-+	int i;
-+
-+	for (i = 0; i < smmu->num_mapping_groups; i++) {
-+		smr = readl_relaxed(ARM_SMMU_GR0(smmu) + ARM_SMMU_GR0_SMR(i));
-+		mask = (smr >> SMR_MASK_SHIFT) & SMR_MASK_MASK;
-+		id = smr & SMR_ID_MASK;
++	for (idx = 0; idx < smmu->num_mapping_groups; idx++) {
++		smr = readl_relaxed(gr0_base + ARM_SMMU_GR0_SMR(idx));
 +		if (!(smr & SMR_VALID))
-+			continue;
-+
-+		s2cr = readl_relaxed(ARM_SMMU_GR0(smmu) + ARM_SMMU_GR0_S2CR(i));
-+		type = (s2cr >> S2CR_TYPE_SHIFT) & S2CR_TYPE_MASK;
-+		cbndx = (s2cr >> S2CR_CBNDX_SHIFT) & S2CR_CBNDX_MASK;
-+		privcfg = (s2cr >> S2CR_PRIVCFG_SHIFT) & S2CR_PRIVCFG_MASK;
-+		if (type != S2CR_TYPE_TRANS)
-+			continue;
-+
-+		/* Populate the SMR */
-+		smmu->smrs[i].mask = mask;
-+		smmu->smrs[i].id = id;
-+		smmu->smrs[i].valid = true;
-+
-+		/* Populate the S2CR */
-+		smmu->s2crs[i].group = NULL;
-+		smmu->s2crs[i].count = 1;
-+		smmu->s2crs[i].type = type;
-+		smmu->s2crs[i].privcfg = privcfg;
-+		smmu->s2crs[i].cbndx = cbndx;
-+		smmu->s2crs[i].handoff = true;
-+
-+		/* Mark the context bank as busy */
-+		bitmap_set(smmu->context_map, cbndx, 1);
++			break;
 +	}
-+}
 +
- static int arm_smmu_id_size_to_bits(int size)
- {
- 	switch (size) {
-@@ -2023,6 +2091,8 @@ static int arm_smmu_device_cfg_probe(struct arm_smmu_device *smmu)
- 		dev_notice(smmu->dev, "\tStage-2: %lu-bit IPA -> %lu-bit PA\n",
- 			   smmu->ipa_size, smmu->pa_size);
++	if (idx == smmu->num_mapping_groups) {
++		dev_err(smmu->dev, "Unable to compute streamid_mask\n");
++		return;
++	}
++
+ 	/*
+ 	 * SMR.ID bits may not be preserved if the corresponding MASK
+ 	 * bits are set, so check each one separately. We can reject
+ 	 * masters later if they try to claim IDs outside these masks.
+ 	 */
+ 	smr = smmu->streamid_mask << SMR_ID_SHIFT;
+-	writel_relaxed(smr, gr0_base + ARM_SMMU_GR0_SMR(0));
+-	smr = readl_relaxed(gr0_base + ARM_SMMU_GR0_SMR(0));
++	writel_relaxed(smr, gr0_base + ARM_SMMU_GR0_SMR(idx));
++	smr = readl_relaxed(gr0_base + ARM_SMMU_GR0_SMR(idx));
+ 	smmu->streamid_mask = smr >> SMR_ID_SHIFT;
  
-+	arm_smmu_read_smr_state(smmu);
-+
- 	return 0;
+ 	smr = smmu->streamid_mask << SMR_MASK_SHIFT;
+-	writel_relaxed(smr, gr0_base + ARM_SMMU_GR0_SMR(0));
+-	smr = readl_relaxed(gr0_base + ARM_SMMU_GR0_SMR(0));
++	writel_relaxed(smr, gr0_base + ARM_SMMU_GR0_SMR(idx));
++	smr = readl_relaxed(gr0_base + ARM_SMMU_GR0_SMR(idx));
+ 	smmu->smr_mask_mask = smr >> SMR_MASK_SHIFT;
  }
  
 -- 
