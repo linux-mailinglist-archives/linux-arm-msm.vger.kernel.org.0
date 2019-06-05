@@ -2,160 +2,137 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 8A1B0359F7
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  5 Jun 2019 11:55:30 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 7863835B6A
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  5 Jun 2019 13:43:10 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726974AbfFEJz3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 5 Jun 2019 05:55:29 -0400
-Received: from mail-wm1-f65.google.com ([209.85.128.65]:37752 "EHLO
-        mail-wm1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726690AbfFEJz3 (ORCPT
+        id S1727389AbfFELnJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 5 Jun 2019 07:43:09 -0400
+Received: from mail-wr1-f65.google.com ([209.85.221.65]:35050 "EHLO
+        mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727320AbfFELnJ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 5 Jun 2019 05:55:29 -0400
-Received: by mail-wm1-f65.google.com with SMTP id 22so1602865wmg.2
-        for <linux-arm-msm@vger.kernel.org>; Wed, 05 Jun 2019 02:55:27 -0700 (PDT)
+        Wed, 5 Jun 2019 07:43:09 -0400
+Received: by mail-wr1-f65.google.com with SMTP id m3so3299397wrv.2
+        for <linux-arm-msm@vger.kernel.org>; Wed, 05 Jun 2019 04:43:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to
-         :user-agent;
-        bh=T2lb6BFKyo6qFGuGkYXia4Pk+2dP0QxKBCkXd6OlypE=;
-        b=CPgOTuOq7c9MOvfUWJ5q/1+tOxgwn+XFG+0Um2QDTbUUUZanzLWDdj11nBOM2fIwB7
-         kEstullEcq59rr+WijeSFS9WnI3Qt9gjYsTf935hVMLJqfnOazzwxLxIHcji5TjkcosG
-         Y9XeYmQEDs6JbYlcEA7MiiEoYVV0BhB9r3suWTxQwm2++AJs9fMMbvBXj41wWMXxBHMd
-         Jf9fOl3L6hWXn6ofOl5x36eliDoR4Kpmq+BhUX/CuX//P1ZfkmcraAPARmc95tEHq9iI
-         iCz+Nm6D2SuuWiuOfBEm9CAkUqn9XEWtOrlUjSO+W80Dvqivdf9+b0ODE40uSn7iXy5B
-         3ZfA==
+        h=from:to:cc:subject:date:message-id;
+        bh=nQjqkj1EN8NC8Ay0yEHmwn6X2HJX2TtkXyONunIjoOQ=;
+        b=RH78oA+NxoAk2QUd4m2HOQ8dyN2sCxrVo+FvNDasZKbmuqv5dUteK2nYHr3AU8dZY2
+         lL6O731jO9kBau+KvwCnnF2pv2zQNFqiUY9zOrc3A4LrxHgl9/zAkEPJlQwGcvHZMo/w
+         T5Q+bajSnI9mx+6X4Pf9VCvK19Rxr/TWdt13E2G4DlLn2iW89yA4kT0OaSSfHFXfqVw2
+         wsqz5uFfMcqQjg4rZ9X+5QJeBFThsy8V7siule0Y3MR04je8W6A0+CQYQsv0XPB0SH1t
+         zd6JjCDEnS9YTtARJbgAB90xZpf4QrVjQTx3SGk0eBWm1D1i41b7bUq302Rnt1ZCH8ac
+         ByZg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        bh=T2lb6BFKyo6qFGuGkYXia4Pk+2dP0QxKBCkXd6OlypE=;
-        b=ZropH/ds4EvxSZVeE7DqdWdAUtqqgxWCf8S8OhNN/rSe6nsDsxT4GBJ+uuzPBd5/bi
-         bKq+/j5q87mmJz/B25boF9qViIay8Nf14eeq6tApxRD+Lu87cym/gBkHAxyKi1Ns5Tk+
-         V3sav8SrL5TBSGoBXtoNwBDygDONSiMXrGkwdGa3v0RIuolo+SkwZULP1w0CQYdCgZNW
-         ZflJgUs87FzxAo+uRv/3fqTuWP6zvUzlH6Lf1+WTUr9GWYU5hPlX4nR5FBKkfQ4SCctQ
-         LzOyYHLEExXQU1dLwf/GGg3O4bel/84VBQeUAWu0DatVtHt6ezSIfHCuohZaZfiZTYGp
-         AzTQ==
-X-Gm-Message-State: APjAAAVr11FQEk1XvPMBaE/s63rJuqOh5yWuj+q5AOCLPzgohqXTA78L
-        t9aaJpcm7QaMC4Ey5ogCAhZ10Q==
-X-Google-Smtp-Source: APXvYqwb15JLdo1InhCZA1cwpY0KvOYdXxpte37lxvn/nhB25qLp3J8HUS7DEBlgQIXew3zQcT8Cbw==
-X-Received: by 2002:a1c:dc07:: with SMTP id t7mr15208355wmg.164.1559728526806;
-        Wed, 05 Jun 2019 02:55:26 -0700 (PDT)
-Received: from dell ([2.27.167.43])
-        by smtp.gmail.com with ESMTPSA id z14sm7127245wre.96.2019.06.05.02.55.25
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 05 Jun 2019 02:55:26 -0700 (PDT)
-Date:   Wed, 5 Jun 2019 10:55:24 +0100
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=nQjqkj1EN8NC8Ay0yEHmwn6X2HJX2TtkXyONunIjoOQ=;
+        b=UZG8Kz+nYdhBlvkwpiMehAGCcJ1Gxl9VRrFKI9O6ZmdjJkVu4PK/q8RkUOepXd1yiZ
+         t8etgN8Q+j1J9XhKjinqB2If/Gv5ID1PDU5EshCP/Yu/etUmiO3AsCxRRBx3/WbyFw/o
+         6TEmnitJvddxdemlL5+CqoK683cXYCXyMuKKnMwRCXO9KmJ9FpS4tTo6ssP0iNDw2aZe
+         2XbPgjuapFXdBnbKRKwvmxLT8yg8+lwcT/87GoQ8dPkio7CqSCMDKBkYs3vFsBxy8p22
+         rGros8pxKiZnxVXE9ssMXXWbEpP9yAIPy/7piaw90yM0raGFOw900aXFI1LmFLJVdCPg
+         wswQ==
+X-Gm-Message-State: APjAAAXYkUOMGfu6P4S4yNkUvaGZwPDLd1uCqQe0L5RvrvXDJCqBSHgH
+        CsHN57itK0YykctDBM8pz/HpKQ==
+X-Google-Smtp-Source: APXvYqzW/Zk1QYpnjxkfpZRt3FJnFpmA3XMOWzcM86U3SMvvL1uOdSy1dK3RIaWGRhxFidbFe5xSCw==
+X-Received: by 2002:a5d:5702:: with SMTP id a2mr9341914wrv.89.1559734987545;
+        Wed, 05 Jun 2019 04:43:07 -0700 (PDT)
+Received: from localhost.localdomain ([2.27.167.43])
+        by smtp.gmail.com with ESMTPSA id 34sm27718740wre.32.2019.06.05.04.43.06
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Wed, 05 Jun 2019 04:43:06 -0700 (PDT)
 From:   Lee Jones <lee.jones@linaro.org>
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     alokc@codeaurora.org, kramasub@codeaurora.org,
-        andy.gross@linaro.org, david.brown@linaro.org,
-        wsa+renesas@sang-engineering.com, linus.walleij@linaro.org,
-        balbi@kernel.org, gregkh@linuxfoundation.org,
-        linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
+To:     alokc@codeaurora.org, andy.gross@linaro.org,
+        david.brown@linaro.org, wsa+renesas@sang-engineering.com,
+        bjorn.andersson@linaro.org, linus.walleij@linaro.org,
+        balbi@kernel.org, gregkh@linuxfoundation.org
+Cc:     linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
         jlhugo@gmail.com, linux-i2c@vger.kernel.org,
         linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org,
-        linux-usb@vger.kernel.org
-Subject: Re: [PATCH 6/8] usb: dwc3: qcom: Add support for booting with ACPI
-Message-ID: <20190605095524.GS4797@dell>
-References: <20190604104455.8877-1-lee.jones@linaro.org>
- <20190604104455.8877-6-lee.jones@linaro.org>
- <20190605063507.GM22737@tuxbook-pro>
- <20190605070928.GJ4797@dell>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20190605070928.GJ4797@dell>
-User-Agent: Mutt/1.9.4 (2018-02-28)
+        linux-usb@vger.kernel.org, Lee Jones <lee.jones@linaro.org>
+Subject: [PATCH 1/8] i2c: i2c-qcom-geni: Provide support for ACPI
+Date:   Wed,  5 Jun 2019 12:42:55 +0100
+Message-Id: <20190605114302.22509-1-lee.jones@linaro.org>
+X-Mailer: git-send-email 2.17.1
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, 05 Jun 2019, Lee Jones wrote:
+Add a match table to allow automatic probing of ACPI device
+QCOM0220.  Ignore clock attainment errors.  Set default clock
+frequency value.
 
-> On Tue, 04 Jun 2019, Bjorn Andersson wrote:
-> 
-> > On Tue 04 Jun 03:44 PDT 2019, Lee Jones wrote:
-> > > diff --git a/drivers/usb/dwc3/dwc3-qcom.c b/drivers/usb/dwc3/dwc3-qcom.c
-> > [..]
-> > > @@ -373,7 +416,7 @@ static int dwc3_qcom_clk_init(struct dwc3_qcom *qcom, int count)
-> > >  
-> > >  	qcom->num_clocks = count;
-> > >  
-> > > -	if (!count)
-> > > +	if (!count || ACPI_HANDLE(dev))
-> > >  		return 0;
-> > 
-> > Afaict you call this with count = of_count_phandle_with_args(), which
-> > should be 0. But why not skip calling this at all?
-> 
-> Actually count can be <0, which is why I must have needed it at the
-> beginning.  There is another patch in this set which checks for
-> errors, thus the ACPI_HANDLE() call should now be superfluous.  I
-> will test and remove it.
+Signed-off-by: Lee Jones <lee.jones@linaro.org>
+---
+ drivers/i2c/busses/i2c-qcom-geni.c | 19 +++++++++++++++++--
+ 1 file changed, 17 insertions(+), 2 deletions(-)
 
-Just looked into this - it is still required.
-
-of_count_phandle_with_args() returns an error not to be heeded in the
-ACPI case.  So the logic goes:
-
-[This patch]
- * It's fine to boot DT with no clocks to initialise (return 0)
- * There are no clocks to enable when booting ACPI (return 0)
-
-[Another patch]
- * It's not fine to boot DT and for 'count < 0' (return count)
-
-> > >  	qcom->clks = devm_kcalloc(dev, qcom->num_clocks,
-> > > @@ -409,12 +452,28 @@ static int dwc3_qcom_clk_init(struct dwc3_qcom *qcom, int count)
-> > >  	return 0;
-> > >  }
-> > >  
-> > > +static const struct dwc3_acpi_pdata sdm845_acpi_pdata = {
-> > > +	.qscratch_base_offset = SDM845_QSCRATCH_BASE_OFFSET,
-> > > +	.qscratch_base_size = SDM845_QSCRATCH_SIZE,
-> > > +	.dwc3_core_base_size = SDM845_DWC3_CORE_SIZE,
-> > > +	.hs_phy_irq_index = 1,
-> > > +	.dp_hs_phy_irq_index = 4,
-> > > +	.dm_hs_phy_irq_index = 3,
-> > > +	.ss_phy_irq_index = 2
-> > > +};
-> > > +
-> > > +static const struct acpi_device_id dwc3_qcom_acpi_match[] = {
-> > > +	{ "QCOM2430", (unsigned long)&sdm845_acpi_pdata },
-> > > +	{ },
-> > > +};
-> > > +MODULE_DEVICE_TABLE(acpi, dwc3_qcom_acpi_match);
-> > 
-> > Analog to of_device_get_match_data() there seems to be a
-> > acpi_device_get_match_data(), if you use this you should be able to
-> > have you acpi_device_id array next to the of_device_id.
-> 
-> Do you mean "Analogous"?
-> 
-> I will try to group them, thanks.
-> 
-> > > +
-> > >  static int dwc3_qcom_probe(struct platform_device *pdev)
-> > 
-> > It seems that all that's left unconditional on ACPI_HANDLE() in this
-> > function are the optional pieces and the tail. Wouldn't it be cleaner to
-> > split it out in different functions?
-> 
-> There are ~50 lines of shared code in dwc3_qcom_probe(), most of it is
-> interspersed between the configuration table (DT, ACPI) pieces, which
-> is why it's formatted in the current way.
-> 
-> I can split a few things out into separate functions if you think
-> it'll help.
-> 
-
+diff --git a/drivers/i2c/busses/i2c-qcom-geni.c b/drivers/i2c/busses/i2c-qcom-geni.c
+index db075bc0d952..0fa93b448e8d 100644
+--- a/drivers/i2c/busses/i2c-qcom-geni.c
++++ b/drivers/i2c/busses/i2c-qcom-geni.c
+@@ -1,6 +1,7 @@
+ // SPDX-License-Identifier: GPL-2.0
+ // Copyright (c) 2017-2018, The Linux Foundation. All rights reserved.
+ 
++#include <linux/acpi.h>
+ #include <linux/clk.h>
+ #include <linux/dma-mapping.h>
+ #include <linux/err.h>
+@@ -483,6 +484,12 @@ static const struct i2c_algorithm geni_i2c_algo = {
+ 	.functionality	= geni_i2c_func,
+ };
+ 
++static const struct acpi_device_id geni_i2c_acpi_match[] = {
++	{ "QCOM0220"},
++	{ },
++};
++MODULE_DEVICE_TABLE(acpi, geni_i2c_acpi_match);
++
+ static int geni_i2c_probe(struct platform_device *pdev)
+ {
+ 	struct geni_i2c_dev *gi2c;
+@@ -502,7 +509,7 @@ static int geni_i2c_probe(struct platform_device *pdev)
+ 		return PTR_ERR(gi2c->se.base);
+ 
+ 	gi2c->se.clk = devm_clk_get(&pdev->dev, "se");
+-	if (IS_ERR(gi2c->se.clk)) {
++	if (IS_ERR(gi2c->se.clk) && !ACPI_HANDLE(&pdev->dev)) {
+ 		ret = PTR_ERR(gi2c->se.clk);
+ 		dev_err(&pdev->dev, "Err getting SE Core clk %d\n", ret);
+ 		return ret;
+@@ -510,12 +517,19 @@ static int geni_i2c_probe(struct platform_device *pdev)
+ 
+ 	ret = device_property_read_u32(&pdev->dev, "clock-frequency",
+ 							&gi2c->clk_freq_out);
+-	if (ret) {
++	if (ret && !ACPI_HANDLE(&pdev->dev)) {
+ 		dev_info(&pdev->dev,
+ 			"Bus frequency not specified, default to 100kHz.\n");
+ 		gi2c->clk_freq_out = KHZ(100);
+ 	}
+ 
++	if (ACPI_HANDLE(&pdev->dev)) {
++		ACPI_COMPANION_SET(&gi2c->adap.dev, ACPI_COMPANION(&pdev->dev));
++
++		/* Using default, same as the !ACPI case above */
++		gi2c->clk_freq_out = KHZ(100);
++	}
++
+ 	gi2c->irq = platform_get_irq(pdev, 0);
+ 	if (gi2c->irq < 0) {
+ 		dev_err(&pdev->dev, "IRQ error for i2c-geni\n");
+@@ -660,6 +674,7 @@ static struct platform_driver geni_i2c_driver = {
+ 		.name = "geni_i2c",
+ 		.pm = &geni_i2c_pm_ops,
+ 		.of_match_table = geni_i2c_dt_match,
++		.acpi_match_table = ACPI_PTR(geni_i2c_acpi_match),
+ 	},
+ };
+ 
 -- 
-Lee Jones [李琼斯]
-Linaro Services Technical Lead
-Linaro.org │ Open source software for ARM SoCs
-Follow Linaro: Facebook | Twitter | Blog
+2.17.1
+
