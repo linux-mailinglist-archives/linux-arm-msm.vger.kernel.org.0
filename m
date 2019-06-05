@@ -2,52 +2,52 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id ED9DC364B3
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  5 Jun 2019 21:29:31 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id DB19D364C5
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  5 Jun 2019 21:35:50 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726597AbfFET3b (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 5 Jun 2019 15:29:31 -0400
-Received: from mail-wm1-f68.google.com ([209.85.128.68]:52505 "EHLO
-        mail-wm1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726280AbfFET3a (ORCPT
+        id S1726573AbfFETft (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 5 Jun 2019 15:35:49 -0400
+Received: from mail-wm1-f65.google.com ([209.85.128.65]:38808 "EHLO
+        mail-wm1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726568AbfFETft (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 5 Jun 2019 15:29:30 -0400
-Received: by mail-wm1-f68.google.com with SMTP id s3so38411wms.2
-        for <linux-arm-msm@vger.kernel.org>; Wed, 05 Jun 2019 12:29:29 -0700 (PDT)
+        Wed, 5 Jun 2019 15:35:49 -0400
+Received: by mail-wm1-f65.google.com with SMTP id t5so46159wmh.3
+        for <linux-arm-msm@vger.kernel.org>; Wed, 05 Jun 2019 12:35:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:content-transfer-encoding:in-reply-to
          :user-agent;
-        bh=D5NcDW+/WmQwqSB+Xi8h1sKYPuuI5ApOFt3kq9BvkTE=;
-        b=U4jgD3qb1TiWPeo0I0EQj9YVlGjsjBiUgv3hdUmrYuJZrUIMq1nNLAiutPQCj8EtAU
-         YcN2wBjP/xTv7tUdThX93VYX+jHZw5o551/dyZ5nHxveozxZb7mV7AnbhOP3Xm1aNcgb
-         zWPwwh4cUFyxAGVJHFgITDfzSo0Fijs3mzurFbu3Dxh9EE16inWaZaO31svsntXTWO+E
-         rfQ2q3CIc3i7jCGmbbwjZpRhYeLhJK8BD9iADSXBK+n0GDyNWmK+SIK+418dbmYGmH2y
-         bIn0iv+CbWqXWwlNmyM/unKrXJcIfcEAv7F48JcipbDFhbKp/iNFt0eUPUWKtO7DjtrJ
-         Jocw==
+        bh=+XgTLMQHXUHAlRC15H03l3gn1i1407JWZiEl7Nlddc8=;
+        b=rxPej+XaD2qUwYl11GzFNqf37sO+gbFXWtcskQgkqqRrdfKXJVNXNWMKUOIhNqFjnH
+         sZbnuPbZbo21HKEviDQhbRvQbZn8LburWbITtvsEJE0y8WStht94fUX2bcgyE1Dcm/lf
+         k5OsvlayoxvkYJ1AqrJmd7BisXQpEh/PpaWAqM8L8WIAt844ii2QLM0SNMtFcZBZkWhn
+         uzfcIIQPdraQpVsk2BLRA95nwTaL4V8rxuU+oKOWJ1HzBIE2Nv0AYF5Hx4puT0WNmK/T
+         iiOl87G2kq51FeqFmeOYCg0qMP1lYY6XCF9GnuBHVqQELSUiwfDN0j9gi2dDEg1GG0AL
+         lk4g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:content-transfer-encoding
          :in-reply-to:user-agent;
-        bh=D5NcDW+/WmQwqSB+Xi8h1sKYPuuI5ApOFt3kq9BvkTE=;
-        b=iwZKQG1uVkYuUo49c0m82KBsqXsAlBivn8Gp/L+WUCnU58GaDtddFD39omzuWPBfkI
-         EohiwDylGcwJ1/5sn0dgTgR2mwbiStYUWcd5R8Uk44/mgh9jcz7Ccf7k1fIf6vSoRu6s
-         sqbrxTryqlbI7gLt1zMTkcbFtctB55I5TdzJO7M9G0NVYBYsfwzztmQUskwTwL/4nOiH
-         mV3RiZKhZUlF1LZPPTzR0IWzeYdXCLwTnJR9zel6HUcE7E0i9UXUCsSHy6M4shgEvoO9
-         /LSFq5JacRERWU/2gQQzJ+2w4Fc6SsYxAKeGkomW0++a16qE71clx+uwFRmQiTemirE6
-         I2BQ==
-X-Gm-Message-State: APjAAAWQdVD5idF7Z2o6WsmPjaSWJn2RwZIc/27BsOtVbgle0XPgKU43
-        PwbO41wlSnun4sBxafuTZZx8fw==
-X-Google-Smtp-Source: APXvYqz8xLqEZUQ1bW9JTYYNxCZRI9YeEhZeMBTkaYKaXpxE3Ij1iNeqP9qVNZUnCX1dMi5d/0Ok/g==
-X-Received: by 2002:a1c:ca06:: with SMTP id a6mr23888475wmg.48.1559762968778;
-        Wed, 05 Jun 2019 12:29:28 -0700 (PDT)
+        bh=+XgTLMQHXUHAlRC15H03l3gn1i1407JWZiEl7Nlddc8=;
+        b=JjaNT1iTvzZVsOIJtwVsnowuilYz6dhCTB5c148ZrckVvhk8Bfy2tC3KN1SUVTk5xh
+         qtiVGJEQYpNSpv6ltFfUhm+l2gAmXYubZj18DRULCaelOx7Lk6ODSRlMLMQEiE3XU38n
+         ai45a3RKZMc7Wvjgx4BP2G95tdvwiMDaqCo+Fk10otPXb8qW3aR4ecQaTew2/fRoYC+r
+         DmP/Pau+tq1xW5FxjZ8kiJIKZvl1A7vtD1iz7Jn+XxB+ilBBXJwHeWc1vZ/1gyyuVQA8
+         873b7OmA4dqkDReFHSXUt6oosQ2NGIkLnL+63wtYUr7kbf2u6n0lca4fD9qqCZtjSi9x
+         bxbQ==
+X-Gm-Message-State: APjAAAUepyulVoKNBeJ8QpHl4s+6kHUyoSQAG575U/vQ6AHKI4Rkwf3M
+        flWkBQHQf7uMkj0F1XZFJLjQrw==
+X-Google-Smtp-Source: APXvYqwP7o7VGE+TdqvhZHNouyX2xhkoTgrYZTIp0Ei2POvdABQ8iKlx3+djogE+DbI+YmFupn+u2w==
+X-Received: by 2002:a1c:b707:: with SMTP id h7mr11518255wmf.45.1559763347150;
+        Wed, 05 Jun 2019 12:35:47 -0700 (PDT)
 Received: from dell ([2.31.167.229])
-        by smtp.gmail.com with ESMTPSA id w185sm20968659wma.39.2019.06.05.12.29.27
+        by smtp.gmail.com with ESMTPSA id m17sm10523991wrx.12.2019.06.05.12.35.46
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 05 Jun 2019 12:29:28 -0700 (PDT)
-Date:   Wed, 5 Jun 2019 20:29:26 +0100
+        Wed, 05 Jun 2019 12:35:46 -0700 (PDT)
+Date:   Wed, 5 Jun 2019 20:35:44 +0100
 From:   Lee Jones <lee.jones@linaro.org>
 To:     Bjorn Andersson <bjorn.andersson@linaro.org>
 Cc:     alokc@codeaurora.org, kramasub@codeaurora.org,
@@ -58,19 +58,18 @@ Cc:     alokc@codeaurora.org, kramasub@codeaurora.org,
         jlhugo@gmail.com, linux-i2c@vger.kernel.org,
         linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org,
         linux-usb@vger.kernel.org
-Subject: Re: [PATCH 7/8] usb: dwc3: qcom: Start USB in 'host mode' on the
- SDM845
-Message-ID: <20190605192926.GW4797@dell>
+Subject: Re: [PATCH 4/8] pinctrl: qcom: sdm845: Provide ACPI support
+Message-ID: <20190605193544.GX4797@dell>
 References: <20190604104455.8877-1-lee.jones@linaro.org>
- <20190604104455.8877-7-lee.jones@linaro.org>
- <20190605070029.GN22737@tuxbook-pro>
- <20190605083454.GO4797@dell>
- <20190605191453.GJ4814@minitux>
+ <20190604104455.8877-4-lee.jones@linaro.org>
+ <20190605061721.GK22737@tuxbook-pro>
+ <20190605073133.GL4797@dell>
+ <20190605190614.GI4814@minitux>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20190605191453.GJ4814@minitux>
+In-Reply-To: <20190605190614.GI4814@minitux>
 User-Agent: Mutt/1.9.4 (2018-02-28)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
@@ -79,57 +78,117 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 On Wed, 05 Jun 2019, Bjorn Andersson wrote:
 
-> On Wed 05 Jun 01:34 PDT 2019, Lee Jones wrote:
+> On Wed 05 Jun 00:31 PDT 2019, Lee Jones wrote:
 > 
-> > On Wed, 05 Jun 2019, Bjorn Andersson wrote:
+> > On Tue, 04 Jun 2019, Bjorn Andersson wrote:
 > > 
 > > > On Tue 04 Jun 03:44 PDT 2019, Lee Jones wrote:
 > > > 
-> > > > When booting with Device Tree, the current default boot configuration
-> > > > table option, the request to boot via 'host mode' comes from the
-> > > > "dr_mode" property.
+> > > > This patch provides basic support for booting with ACPI instead
+> > > > of the currently supported Device Tree.  When doing so there are a
+> > > > couple of differences which we need to taken into consideration.
+> > > > 
+> > > > Firstly, the SDM850 ACPI tables omit information pertaining to the
+> > > > 4 reserved GPIOs on the platform.  If Linux attempts to touch/
+> > > > initialise any of these lines, the firmware will restart the
+> > > > platform.
+> > > > 
+> > > > Secondly, when booting with ACPI, it is expected that the firmware
+> > > > will set-up things like; Regulators, Clocks, Pin Functions, etc in
+> > > > their ideal configuration.  Thus, the possible Pin Functions
+> > > > available to this platform are not advertised when providing the
+> > > > higher GPIOD/Pinctrl APIs with pin information.
+> > > > 
+> > > > Signed-off-by: Lee Jones <lee.jones@linaro.org>
+> > > > ---
+> > > >  drivers/pinctrl/qcom/Kconfig          |  2 +-
+> > > >  drivers/pinctrl/qcom/pinctrl-sdm845.c | 35 ++++++++++++++++++++++++++-
+> > > >  2 files changed, 35 insertions(+), 2 deletions(-)
+> > > > 
+> > > > diff --git a/drivers/pinctrl/qcom/Kconfig b/drivers/pinctrl/qcom/Kconfig
+> > > > index 2e66ab72c10b..aafbe932424f 100644
+> > > > --- a/drivers/pinctrl/qcom/Kconfig
+> > > > +++ b/drivers/pinctrl/qcom/Kconfig
+> > > > @@ -168,7 +168,7 @@ config PINCTRL_SDM660
+> > > >  
+> > > >  config PINCTRL_SDM845
+> > > >         tristate "Qualcomm Technologies Inc SDM845 pin controller driver"
+> > > > -       depends on GPIOLIB && OF
+> > > > +       depends on GPIOLIB && (OF || ACPI)
+> > > >         select PINCTRL_MSM
+> > > >         help
+> > > >           This is the pinctrl, pinmux, pinconf and gpiolib driver for the
+> > > > diff --git a/drivers/pinctrl/qcom/pinctrl-sdm845.c b/drivers/pinctrl/qcom/pinctrl-sdm845.c
+> > > > index c97f20fca5fd..7188bee3cf3e 100644
+> > > > --- a/drivers/pinctrl/qcom/pinctrl-sdm845.c
+> > > > +++ b/drivers/pinctrl/qcom/pinctrl-sdm845.c
+> > > > @@ -3,6 +3,7 @@
+> > > >   * Copyright (c) 2016-2018, The Linux Foundation. All rights reserved.
+> > > >   */
+> > > >  
+> > > > +#include <linux/acpi.h>
+> > > >  #include <linux/module.h>
+> > > >  #include <linux/of.h>
+> > > >  #include <linux/platform_device.h>
+> > > > @@ -1277,6 +1278,10 @@ static const struct msm_pingroup sdm845_groups[] = {
+> > > >  	UFS_RESET(ufs_reset, 0x99f000),
+> > > >  };
+> > > >  
+> > > > +static const int sdm845_acpi_reserved_gpios[] = {
+> > > > +	0, 1, 2, 3, 81, 82, 83, 84, -1
+> > > > +};
+> > > > +
+> > > >  static const struct msm_pinctrl_soc_data sdm845_pinctrl = {
+> > > >  	.pins = sdm845_pins,
+> > > >  	.npins = ARRAY_SIZE(sdm845_pins),
+> > > > @@ -1284,14 +1289,41 @@ static const struct msm_pinctrl_soc_data sdm845_pinctrl = {
+> > > >  	.nfunctions = ARRAY_SIZE(sdm845_functions),
+> > > >  	.groups = sdm845_groups,
+> > > >  	.ngroups = ARRAY_SIZE(sdm845_groups),
+> > > > +	.reserved_gpios = sdm845_acpi_reserved_gpios,
 > > > 
-> > > This has been the default on the MTP, but this is changing as this is
-> > > causing issues when connected downstream from a hub (the typical
-> > > development case for the primary USB port of a phone like device) and
-> > > more importantly we don't have support for the PMIC blocks that control
-> > > VBUS.
+> > > The reason why put these in DT is because the list is board/firmware
+> > > dependent. E.g. the firmware on db845c does not support the peripherals
+> > > that sits on these 8 pins and as such these are not reserved.
 > > 
-> > My point is not about which mode is currently chosen.  It's more about
-> > the capability of choosing which mode is appropriate for a given
-> > system via DT.
+> > If we need to be more particular about which platform(s) this affects,
+> > we could add matching based on their differences (some ACPI HID or F/W
+> > version/descriptor, etc) as and when we enable them for booting with
+> > ACPI.
 > > 
-> > > Once these issues are resolved the dr_mode would be "otg".
-> > 
-> > OTG doesn't work on this H/W, so we need to specify "host" mode.
 > 
-> My objection is that when you say "this H/W" you mean a particular
-> product, but you're making this decision for all SDM845 based products
-> using ACPI.
-> 
-> I don't know if there is a Windows phone based on SDM845, but if there
-> is then I don't think forcing it to host would be correct.
+> You're making an assumption that all SDM845 (the platform) devices using
+> ACPI will have this list of GPIOs reserved for secure firmware to use,
+> this is questionable but I don't have any better suggestion.
 
-You mean if someone wanted to boot Linux on a Windows phone?  Not sure
-how likely that is, but even if a) there is an SDM845 based Windows
-phone and b) someone is crazy enough to run Linux on it, it should be
-trivial for them to conduct some device matching and choose a
-different property based on the result.
+Yes, I am, since this is the first and currently only device which
+ticks those boxes.  If/when there are others AND if they require a
+different configuration, we can look at the differences and conduct
+some suitable matching on them at the time.
 
-[...]
+> But you do this by adding a new struct msm_pinctrl_soc_data
+> sdm845_acpi_pinctrl, specifically for the ACPI case. And then, on the
+> line I object to here, you add this list as the list of reserved GPIOs
+> for the DT case as well.
 
-> > > And this driver is used on a range of different Qualcomm platforms, so I
-> > > don't think this is SDM845 specific.
+Ohhhh, now I see what you're getting at.  Yes, that's a mistake left
+over from testing.  That needs removing -- good spot.
+
+> > > But given that the two structs looks identical now, did you perhaps not
+> > > intend to add.reserved_gpios for the non-ACPI case?
 > > 
-> > ACPI based platforms?
+> > Given your example above, I think it's best that we let the
+> > configuration tables advertise these in the first instance.  I only
+> > add them here because it is not possible to obtain them from
+> > elsewhere.
 > > 
-> > All the ones I've seen use the XHCI USB driver directly ("PNP0D10").
 > 
-> MSM8998 (835) has the same controller, so this should affect those
-> laptops as well.
+> Then add it for ACPI only - which I still presume you intended to do by
+> adding sdm845_acpi_pinctrl (which is now identical to sdm845_pinctrl).
 
-This would also be the correct configuration for them too.  OTG
-doesn't make much sense for a laptop form factor.
+We're arguing about the same thing - sorry for the confusion.
+
+I will fix this.
 
 -- 
 Lee Jones [李琼斯]
