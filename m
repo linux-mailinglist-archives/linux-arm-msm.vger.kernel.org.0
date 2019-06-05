@@ -2,50 +2,50 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 1D746356DB
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  5 Jun 2019 08:19:44 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 27DC335709
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  5 Jun 2019 08:34:31 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726527AbfFEGTh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 5 Jun 2019 02:19:37 -0400
-Received: from mail-pl1-f195.google.com ([209.85.214.195]:33372 "EHLO
-        mail-pl1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726477AbfFEGTg (ORCPT
+        id S1726660AbfFEGeY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 5 Jun 2019 02:34:24 -0400
+Received: from mail-pg1-f195.google.com ([209.85.215.195]:39203 "EHLO
+        mail-pg1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726502AbfFEGeY (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 5 Jun 2019 02:19:36 -0400
-Received: by mail-pl1-f195.google.com with SMTP id g21so9321139plq.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 04 Jun 2019 23:19:36 -0700 (PDT)
+        Wed, 5 Jun 2019 02:34:24 -0400
+Received: by mail-pg1-f195.google.com with SMTP id 196so11838506pgc.6
+        for <linux-arm-msm@vger.kernel.org>; Tue, 04 Jun 2019 23:34:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to:user-agent;
-        bh=8NDvqSiCIKv+/i60Ynslx6ipNYtxvNjYvkZ3l5Jrxiw=;
-        b=Jv+ylw+eYYUmtx1uLMAE5WfRGbPZcDvoOmC1qqQkMmVoWISm6X+KqDoG/xkKlfZp1M
-         O6gSWIh+Sh12hcQ1RTa4KsSVZBTgRrVifmZUjlC3+RENnfGGKqgwZIjqDpBIZG7ZZ0o9
-         cgt6l84qKjCge1D0+WNYLBz4yjubpHHQLrQE/uGjorTP8Bo6TcuCatE17fGGRYUdhLHa
-         YrMCziHY1qjVIkTMkhNdM+sEuMQR9wqYTzegHOCf/2dCREgk/m0XHsyumJ/GOC18x5+a
-         DQ6HMN7Cc1c/9R7EJYu5f/Ojspos4AX5jlFgJbN4m2txeCi4CRZW+ZO99kX+jPvezxjt
-         KgqQ==
+        bh=MDnhT69i4+3igVNMGRO0Olac0iYlmd7+e9rYlDGKlMQ=;
+        b=b0zeeCKtZnHGuRksL/MviXPn9ETjzaS+XVRjInqPSn3MmRYG1h2xHNGblAhI+hwSgW
+         27ZfCX1Gruevo4QQpULxZqIYe5C+Zgz/G1c55aHrsLCR1l4SuO6Zl2rqHMz/HhFh9Z9Q
+         QxMw+vu3nl1p1nftk6+cafNIaL0Qc2EIwNB2KxZMrgxWW1jAV1G6l5NzkuLcxcGZCAGE
+         4WVEq1fL81w0hRjY+jxAYMV+Z8z5ugYVoDpGILoXwPvhIzQqgv5xTEOy7KxvxfLB+J1S
+         ODzal5jdUT/lQkiRAr2R384iYKbide9/PJ3H67SHJn10yNgF/PbuaKGoJUtwsqQIGR2B
+         g+0Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=8NDvqSiCIKv+/i60Ynslx6ipNYtxvNjYvkZ3l5Jrxiw=;
-        b=bFM20FZIt1pAhL9En6N7DfyKMBJcVnxg2YKFFHU9ZufDl+htPqKhM6wpKXnFuCvxnw
-         uXtLZLlZr6Ju5KIuMuQ6uMwLz84/qqPMU/iqUs484VDrdtI3FlxFRhXNZTWNrGAR6mRb
-         IoAPV+sdPEzq+CSd0BGpP3mTwdlaBWs9atrYq3HhuEtgTRxOiqylRZpVn49ISMp5bas/
-         oYDcy673pEc0EDdC/uUlARDvnfnv8wPqsNpiZrIfjHyCZhW3PFXt6ImB8Cgi1HN+IxRk
-         yBV0EbHqaZU0SVWEVrjAH5yhTz5S8rkuMN3+YuNUFVCXEXNRsjqm2bUgspEdjiFw7Y4+
-         uEvw==
-X-Gm-Message-State: APjAAAXfRrb0ywnGn6Qp3jGgDxOg9BFhyrYonnEPLG4BQEQl3t2RK2Hz
-        UQRhXx25697dRwSNYUpcc/zhvQ==
-X-Google-Smtp-Source: APXvYqwh+STN/4aMELzC9REIaRk3yfuoyfOR7lNLNz7fdt88CIQ5SzfZxE21KW+S3BxQ6DpLT5kMqQ==
-X-Received: by 2002:a17:902:a708:: with SMTP id w8mr39377169plq.162.1559715575910;
-        Tue, 04 Jun 2019 23:19:35 -0700 (PDT)
+        bh=MDnhT69i4+3igVNMGRO0Olac0iYlmd7+e9rYlDGKlMQ=;
+        b=kEG3AE9haO+6cE2DnEiFZmEUjr9pPS8LY/wSWAzcBSCIEjA/R8Z2xdWs4BV9+gpK0N
+         QS9q3izWGJx3WHAYKdgMlNwCtkXW9dIs6OxwXj40KchHUkS9kbsoGTGqttuv8kuH7Omc
+         6RzdXrYm0DOgYgsVW++xP9EfQdtBLrT+H5wlsVOperpZP8yTou/BM+yYbhrDJElhJqkd
+         S7LF6ECHYc0RxtPb3pY+FVn1oSzPtMvkQZvDCj5R3Ie+QCgwEg7WdfrAdVWMrYiyn+Pm
+         9nJ4maLFeHFpvwsQQj7Yp6XV7Y2lOCxwCi678D58pCPA8Kldb4Km7Gb+Od6LK3NSadom
+         TjZA==
+X-Gm-Message-State: APjAAAWF23fZpN/47ou64rdsJoEi7j18KsHRU2ex7WjUoCBc+F3zkEZR
+        jKAF5SBSWGSV5V1jGuVEP/ZJvQ==
+X-Google-Smtp-Source: APXvYqy3bNsHWjS/PwRCl4JZk2sWXQhzg3FwJWCnisZBOEnbpp0qgkByrv0MfZW4pI4x2RdDmUP25g==
+X-Received: by 2002:a63:f146:: with SMTP id o6mr2228929pgk.179.1559716463205;
+        Tue, 04 Jun 2019 23:34:23 -0700 (PDT)
 Received: from tuxbook-pro (104-188-17-28.lightspeed.sndgca.sbcglobal.net. [104.188.17.28])
-        by smtp.gmail.com with ESMTPSA id t25sm15044103pgv.30.2019.06.04.23.19.34
+        by smtp.gmail.com with ESMTPSA id k8sm8144854pfk.177.2019.06.04.23.34.21
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Tue, 04 Jun 2019 23:19:35 -0700 (PDT)
-Date:   Tue, 4 Jun 2019 23:20:20 -0700
+        Tue, 04 Jun 2019 23:34:22 -0700 (PDT)
+Date:   Tue, 4 Jun 2019 23:35:07 -0700
 From:   Bjorn Andersson <bjorn.andersson@linaro.org>
 To:     Lee Jones <lee.jones@linaro.org>
 Cc:     alokc@codeaurora.org, kramasub@codeaurora.org,
@@ -56,14 +56,14 @@ Cc:     alokc@codeaurora.org, kramasub@codeaurora.org,
         jlhugo@gmail.com, linux-i2c@vger.kernel.org,
         linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org,
         linux-usb@vger.kernel.org
-Subject: Re: [PATCH 2/8] i2c: i2c-qcom-geni: Signify successful driver probe
-Message-ID: <20190605062020.GL22737@tuxbook-pro>
+Subject: Re: [PATCH 6/8] usb: dwc3: qcom: Add support for booting with ACPI
+Message-ID: <20190605063507.GM22737@tuxbook-pro>
 References: <20190604104455.8877-1-lee.jones@linaro.org>
- <20190604104455.8877-2-lee.jones@linaro.org>
+ <20190604104455.8877-6-lee.jones@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20190604104455.8877-2-lee.jones@linaro.org>
+In-Reply-To: <20190604104455.8877-6-lee.jones@linaro.org>
 User-Agent: Mutt/1.11.4 (2019-03-13)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
@@ -71,37 +71,51 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 On Tue 04 Jun 03:44 PDT 2019, Lee Jones wrote:
-
-> The Qualcomm Geni I2C driver currently probes silently which can be
-> confusing when debugging potential issues.  Add a low level (INFO)
-> print when each I2C controller is successfully initially set-up.
-> 
-> Signed-off-by: Lee Jones <lee.jones@linaro.org>
-> ---
->  drivers/i2c/busses/i2c-qcom-geni.c | 2 ++
->  1 file changed, 2 insertions(+)
-> 
-> diff --git a/drivers/i2c/busses/i2c-qcom-geni.c b/drivers/i2c/busses/i2c-qcom-geni.c
-> index 0fa93b448e8d..e27466d77767 100644
-> --- a/drivers/i2c/busses/i2c-qcom-geni.c
-> +++ b/drivers/i2c/busses/i2c-qcom-geni.c
-> @@ -598,6 +598,8 @@ static int geni_i2c_probe(struct platform_device *pdev)
->  		return ret;
->  	}
+> diff --git a/drivers/usb/dwc3/dwc3-qcom.c b/drivers/usb/dwc3/dwc3-qcom.c
+[..]
+> @@ -373,7 +416,7 @@ static int dwc3_qcom_clk_init(struct dwc3_qcom *qcom, int count)
 >  
-> +	dev_info(&pdev->dev, "Geni-I2C adaptor successfully added\n");
-> +
+>  	qcom->num_clocks = count;
+>  
+> -	if (!count)
+> +	if (!count || ACPI_HANDLE(dev))
+>  		return 0;
 
-I would prefer that we do not add such prints, as it would be to accept
-the downstream behaviour of spamming the log to the point where no one
-will ever look through it.
+Afaict you call this with count = of_count_phandle_with_args(), which
+should be 0. But why not skip calling this at all?
 
-Regards,
-Bjorn
-
+>  
+>  	qcom->clks = devm_kcalloc(dev, qcom->num_clocks,
+> @@ -409,12 +452,28 @@ static int dwc3_qcom_clk_init(struct dwc3_qcom *qcom, int count)
 >  	return 0;
 >  }
 >  
-> -- 
-> 2.17.1
-> 
+> +static const struct dwc3_acpi_pdata sdm845_acpi_pdata = {
+> +	.qscratch_base_offset = SDM845_QSCRATCH_BASE_OFFSET,
+> +	.qscratch_base_size = SDM845_QSCRATCH_SIZE,
+> +	.dwc3_core_base_size = SDM845_DWC3_CORE_SIZE,
+> +	.hs_phy_irq_index = 1,
+> +	.dp_hs_phy_irq_index = 4,
+> +	.dm_hs_phy_irq_index = 3,
+> +	.ss_phy_irq_index = 2
+> +};
+> +
+> +static const struct acpi_device_id dwc3_qcom_acpi_match[] = {
+> +	{ "QCOM2430", (unsigned long)&sdm845_acpi_pdata },
+> +	{ },
+> +};
+> +MODULE_DEVICE_TABLE(acpi, dwc3_qcom_acpi_match);
+
+Analog to of_device_get_match_data() there seems to be a
+acpi_device_get_match_data(), if you use this you should be able to
+have you acpi_device_id array next to the of_device_id.
+
+> +
+>  static int dwc3_qcom_probe(struct platform_device *pdev)
+
+It seems that all that's left unconditional on ACPI_HANDLE() in this
+function are the optional pieces and the tail. Wouldn't it be cleaner to
+split it out in different functions?
+
+Regards,
+Bjorn
