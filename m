@@ -2,146 +2,81 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 9BEDA3586D
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  5 Jun 2019 10:20:58 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C3C043586F
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  5 Jun 2019 10:22:27 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726597AbfFEIUw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 5 Jun 2019 04:20:52 -0400
-Received: from mail-wr1-f67.google.com ([209.85.221.67]:40544 "EHLO
-        mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726556AbfFEIUw (ORCPT
+        id S1726573AbfFEIW0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 5 Jun 2019 04:22:26 -0400
+Received: from asavdk4.altibox.net ([109.247.116.15]:56330 "EHLO
+        asavdk4.altibox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726561AbfFEIW0 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 5 Jun 2019 04:20:52 -0400
-Received: by mail-wr1-f67.google.com with SMTP id p11so13647429wre.7
-        for <linux-arm-msm@vger.kernel.org>; Wed, 05 Jun 2019 01:20:51 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to
-         :user-agent;
-        bh=4N4wbbPbH5vFPQ02lIzPzQHg+yDqqNmeJgiKq0aKWHQ=;
-        b=EEsoVwHJfcVfB0ReGOh4L2CQa6hWhl7NbcxauHoct4OV4K/eJmfkm8ODRylrWf0538
-         cFa6Ud53SF9GDxPzTf2QH8ClrklK6SAbghEFIvkPB08cXK8dmhn83Xof+s2ZK+q518Aj
-         2GSJmz2YyAyeCySlO/be4cLEbL9RVXGU2l/CaV+hYuqsyJZHVcKKnBUKrOw96GNUV40b
-         KNe4oyVp/g92y3oHSnA66Q/gFpFB8Qukzyhelc9SvseBGDW6imI5ONkiObzQkjBsYMub
-         PuXqEPcOMPhEBrpFa02315DvejuZd4l+e3SZjyFqd8VDsFe7rOanchMNtkmv8jUP81la
-         /Ovg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        bh=4N4wbbPbH5vFPQ02lIzPzQHg+yDqqNmeJgiKq0aKWHQ=;
-        b=OXeMk2AXry2P97EVlM0xpqPjJ1qS6PeiTw00GhpTmDxUJVjIkSStT+6fxCFJI5A467
-         o6DKVzaFV2c1+5jnVRQL+cyS1Di/vEMG1fV387WBMtYAnosUBht1zlTZYJDjOzV1bayI
-         Y/WVVnu39wCNjkqeEo6p8iEbua/2dcoR4LdDczvsc/JFfpgKi1XvFw5lNVt3zZBs3H4P
-         DtTbbcae40uSdNslYqeP4yzN3vrLAXBRScLatquUkhkBuYxpJrI0tSwPPr3uNA0g/KWt
-         8ZTTNrIMSy/TnryetAZtODXQY53o3cAys78ELihHDDeDVDMQ9ehe3IJQ/3Md0zcQ5YD6
-         98Hg==
-X-Gm-Message-State: APjAAAVnjGiWM16Meuszn8IknwmLsUWBFtnt/FXeleeRE8v2z73Qx2Y1
-        eNdBBsRPQqyN44hkJTxlURy/Gw==
-X-Google-Smtp-Source: APXvYqx/8oIyrbj4ascfwZpwcyMAKVAvtaBu7KaV63F4l5bAfkhGLPkaQF18jo6DwFQGyXdhimt4dQ==
-X-Received: by 2002:adf:f38a:: with SMTP id m10mr9150235wro.81.1559722850820;
-        Wed, 05 Jun 2019 01:20:50 -0700 (PDT)
-Received: from dell ([2.27.167.43])
-        by smtp.gmail.com with ESMTPSA id a62sm21930094wmf.19.2019.06.05.01.20.49
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 05 Jun 2019 01:20:49 -0700 (PDT)
-Date:   Wed, 5 Jun 2019 09:20:47 +0100
-From:   Lee Jones <lee.jones@linaro.org>
-To:     Johan Hovold <johan@kernel.org>
-Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>, balbi@kernel.org,
-        wsa+renesas@sang-engineering.com, gregkh@linuxfoundation.org,
-        linus.walleij@linaro.org, linux-usb@vger.kernel.org,
-        linux-kernel@vger.kernel.org, david.brown@linaro.org,
-        alokc@codeaurora.org, kramasub@codeaurora.org,
-        linux-i2c@vger.kernel.org, linux-gpio@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, andy.gross@linaro.org,
-        jlhugo@gmail.com, linux-arm-kernel@lists.infradead.org
-Subject: Re: [PATCH 2/8] i2c: i2c-qcom-geni: Signify successful driver probe
-Message-ID: <20190605082047.GM4797@dell>
-References: <20190604104455.8877-1-lee.jones@linaro.org>
- <20190604104455.8877-2-lee.jones@linaro.org>
- <20190605062020.GL22737@tuxbook-pro>
- <20190605071625.GK4797@dell>
- <20190605075656.GC29637@localhost>
+        Wed, 5 Jun 2019 04:22:26 -0400
+Received: from ravnborg.org (unknown [158.248.194.18])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by asavdk4.altibox.net (Postfix) with ESMTPS id 2BD71804F9;
+        Wed,  5 Jun 2019 10:22:23 +0200 (CEST)
+Date:   Wed, 5 Jun 2019 10:22:21 +0200
+From:   Sam Ravnborg <sam@ravnborg.org>
+To:     Vivek Gautam <vivek.gautam@codeaurora.org>
+Cc:     airlied@linux.ie, thierry.reding@gmail.com, daniel@ffwll.ch,
+        dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, bjorn.andersson@linaro.org
+Subject: Re: [PATCH 1/1] drm/panel: truly: Add additional delay after pulling
+ down reset gpio
+Message-ID: <20190605082221.GB15169@ravnborg.org>
+References: <20190527102616.28315-1-vivek.gautam@codeaurora.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20190605075656.GC29637@localhost>
-User-Agent: Mutt/1.9.4 (2018-02-28)
+In-Reply-To: <20190527102616.28315-1-vivek.gautam@codeaurora.org>
+User-Agent: Mutt/1.10.1 (2018-07-13)
+X-CMAE-Score: 0
+X-CMAE-Analysis: v=2.3 cv=VcLZwmh9 c=1 sm=1 tr=0
+        a=UWs3HLbX/2nnQ3s7vZ42gw==:117 a=UWs3HLbX/2nnQ3s7vZ42gw==:17
+        a=jpOVt7BSZ2e4Z31A5e1TngXxSK0=:19 a=kj9zAlcOel0A:10 a=LpQP-O61AAAA:8
+        a=e5mUnYsNAAAA:8 a=u_M7I5vmc8m8u026BJQA:9 a=CjuIK1q_8ugA:10
+        a=pioyyrs4ZptJ924tMmac:22 a=Vxmtnl_E_bksehYqCbjh:22
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, 05 Jun 2019, Johan Hovold wrote:
+Hi Vivek,
 
-> On Wed, Jun 05, 2019 at 08:16:25AM +0100, Lee Jones wrote:
-> > On Tue, 04 Jun 2019, Bjorn Andersson wrote:
-> > 
-> > > On Tue 04 Jun 03:44 PDT 2019, Lee Jones wrote:
-> > > 
-> > > > The Qualcomm Geni I2C driver currently probes silently which can be
-> > > > confusing when debugging potential issues.  Add a low level (INFO)
-> > > > print when each I2C controller is successfully initially set-up.
-> > > > 
-> > > > Signed-off-by: Lee Jones <lee.jones@linaro.org>
-> > > > ---
-> > > >  drivers/i2c/busses/i2c-qcom-geni.c | 2 ++
-> > > >  1 file changed, 2 insertions(+)
-> > > > 
-> > > > diff --git a/drivers/i2c/busses/i2c-qcom-geni.c b/drivers/i2c/busses/i2c-qcom-geni.c
-> > > > index 0fa93b448e8d..e27466d77767 100644
-> > > > --- a/drivers/i2c/busses/i2c-qcom-geni.c
-> > > > +++ b/drivers/i2c/busses/i2c-qcom-geni.c
-> > > > @@ -598,6 +598,8 @@ static int geni_i2c_probe(struct platform_device *pdev)
-> > > >  		return ret;
-> > > >  	}
-> > > >  
-> > > > +	dev_info(&pdev->dev, "Geni-I2C adaptor successfully added\n");
-> > > > +
-> > > 
-> > > I would prefer that we do not add such prints, as it would be to accept
-> > > the downstream behaviour of spamming the log to the point where no one
-> > > will ever look through it.
-> > 
-> > We should be able to find a middle ground.  Spamming the log with all
-> > sorts of device specific information/debug is obviously not
-> > constructive, but a single liner to advertise that an important
-> > device/controller has been successfully initialised is more helpful
-> > than it is hinderous.
-> > 
-> > This print was added due to the silent initialisation costing me
-> > several hours of debugging ACPI device/driver code (albeit learning a
-> > lot about ACPI as I go) just to find out that it was already doing the
-> > right thing - just very quietly.
+On Mon, May 27, 2019 at 03:56:16PM +0530, Vivek Gautam wrote:
+> MTP SDM845 panel seems to need additional delay to bring panel
+> to a workable state. Running modetest without this change displays
+> blurry artifacts.
 > 
-> No, we don't add noise like this to the logs just because it may be
-> useful while debugging. Even one-liners add up.
+> Signed-off-by: Vivek Gautam <vivek.gautam@codeaurora.org>
 
-One line per device is should not cause an issue.
+added to drm-misc-next
 
-Problems occur when developers try to print all kinds of device
-specifics to the boot log.  A simple, single line for such an
-important device/controller has more benefits than drawbacks.
+	Sam
 
-> There are plenty of options for debugging already ranging from adding a
-> temporary dev_info() to the probe function in question to using dynamic
-> debugging to have driver core log every successful probe.
-
-This is what I ended up doing.  It was time consuming to parse though
-a log of that size when you have no paging or keyboard.
-
-> And in this case you say the driver was in fact already bound; that can
-> easily be verified through sysfs too in case things aren't behaving the
-> way you expect.
-
-Not in a non-booting system with no keyboard you can't. ;)
-
--- 
-Lee Jones [李琼斯]
-Linaro Services Technical Lead
-Linaro.org │ Open source software for ARM SoCs
-Follow Linaro: Facebook | Twitter | Blog
+> ---
+>  drivers/gpu/drm/panel/panel-truly-nt35597.c | 1 +
+>  1 file changed, 1 insertion(+)
+> 
+> diff --git a/drivers/gpu/drm/panel/panel-truly-nt35597.c b/drivers/gpu/drm/panel/panel-truly-nt35597.c
+> index fc2a66c53db4..aa7153fd3be4 100644
+> --- a/drivers/gpu/drm/panel/panel-truly-nt35597.c
+> +++ b/drivers/gpu/drm/panel/panel-truly-nt35597.c
+> @@ -280,6 +280,7 @@ static int truly_35597_power_on(struct truly_nt35597 *ctx)
+>  	gpiod_set_value(ctx->reset_gpio, 1);
+>  	usleep_range(10000, 20000);
+>  	gpiod_set_value(ctx->reset_gpio, 0);
+> +	usleep_range(10000, 20000);
+>  
+>  	return 0;
+>  }
+> -- 
+> QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
+> of Code Aurora Forum, hosted by The Linux Foundation
+> 
+> _______________________________________________
+> dri-devel mailing list
+> dri-devel@lists.freedesktop.org
+> https://lists.freedesktop.org/mailman/listinfo/dri-devel
