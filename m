@@ -2,137 +2,214 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 6CD6436CED
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Jun 2019 09:05:35 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C0F5436CF6
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Jun 2019 09:07:21 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726699AbfFFHFb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 6 Jun 2019 03:05:31 -0400
-Received: from mail-lf1-f65.google.com ([209.85.167.65]:44081 "EHLO
-        mail-lf1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725947AbfFFHFa (ORCPT
+        id S1726762AbfFFHHF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 6 Jun 2019 03:07:05 -0400
+Received: from mail-qk1-f196.google.com ([209.85.222.196]:37804 "EHLO
+        mail-qk1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726726AbfFFHHF (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 6 Jun 2019 03:05:30 -0400
-Received: by mail-lf1-f65.google.com with SMTP id r15so720366lfm.11
-        for <linux-arm-msm@vger.kernel.org>; Thu, 06 Jun 2019 00:05:29 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=LxUuoqEbUmgmnRX9vLQxQ/tQ09ZsJx159pAs1BZjQQw=;
-        b=XE2mWnWbAi156xacpzGakgxd0XdnPCTjLko9UBbfOxI68vIwEY1UqU3DdVepHT2unK
-         IXFQuljTyQaBE63iTT06aLL+Gabw06PozTCJJyXbmKvvVShYaCMrd+a5URAFB89lEIrU
-         oH3FnL+nYHmx42QzFDxG5r+oZSqRevKAxlp0V/DFV++C/3xPhMUC2Woo4QjnWcxAJlx8
-         I81qqKzeu0gdR3REUvOrz+2QwvtvK3yIaokulPtppIRatORNpAjdXcyB35p+xAEy9RmN
-         y4ND6KqQT11fRSwVqXg03KLBPqqJX4YYaH2X4ZLxkTZKD4Y39fNVQOdJy8bB0sRlmd6C
-         qLgg==
+        Thu, 6 Jun 2019 03:07:05 -0400
+Received: by mail-qk1-f196.google.com with SMTP id d15so844852qkl.4
+        for <linux-arm-msm@vger.kernel.org>; Thu, 06 Jun 2019 00:07:04 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=LxUuoqEbUmgmnRX9vLQxQ/tQ09ZsJx159pAs1BZjQQw=;
-        b=jzZJXhZwtd+ToC93Cpwyt0tH8YquB5ggLxPDs6V8p1subuWyKd9pSvp8GCWCwKIcSk
-         Dgr2S54phuU0Js5D7YU+exiEIaVaDrDVO6aknep04x+geyN4AP8YaIQemHdyPXo3U+A8
-         IOD3DUgQf87u1ppeg1QsXQU46ukjbQVbJSD8/Gh3BIigU0Kwt3GyR6VyZxowUgKGOcKg
-         k7Vb1lLfEa+1yAB+lqONkf/jw9woDRc/9U++LSkPyooPlLN+2CabTgzFcoBzprCDU0QZ
-         NMXb+XQqqUozl50Ta6pXPyiBrFrAgRXZvN2JYqg3Oa1V9mNbBC8bJokp361f6Qlg47zK
-         jpvw==
-X-Gm-Message-State: APjAAAXBFX7CmEr8TReVwbPkwGm7BJiEBsCDIFQdrWhj41Xq+3vOkIdp
-        5klc04qUIo8+UbWOzacBRY1fNNPQLLDDw2J7hoqV6Q==
-X-Google-Smtp-Source: APXvYqxZCAlDmT5oc8zqUrM9LX+7zRm365sy7bvsFw5heno4p5UQD7LD9oIpvPIgG/H6nUWIJ0qyXLkVoeON3W+U3V8=
-X-Received: by 2002:a19:2892:: with SMTP id o140mr9068556lfo.177.1559804728178;
- Thu, 06 Jun 2019 00:05:28 -0700 (PDT)
+        bh=HpE5F2PryY/7ekaCFARM6Uj5LXLqn4ImiAP5wBAaGFc=;
+        b=DUixgOAQHkbCcT1qLS9rGa7qSJyDrVumrCPVgSMjTrSwFjKMB6zZPX0rq2KHdINmP7
+         N8lswcFTwqKmPplIwXLV2jDzJ1J/5nJ9ewT/BCGCpRqrFt4ndVnqyxKcOGUh1Nk2So1v
+         fdBWHqlSwwSTQjqnGathmGuzvm23AawRzrlWDFsji1ITpVntvBPCE31t4uovuoXvS9a6
+         9UlMhkvGLTu4qt7SgGG/gs7J4YmhvQDgprWnhvzRwP3twUXPBe8WgKbaZSjjUHRdWe1p
+         ILdmWCcUZnKAQMXV3E7vqG6NkdkzjhrDyrOFyMYvAFCbZkfBXcZSFYLCRR4tt2Cj6b/x
+         ljNw==
+X-Gm-Message-State: APjAAAW64mYN3UmP+uKHyw/a91TyhUc9yvz2DpshfJcfg734GrY9XjeS
+        jJ2NQ/038H/4e+2exv801VQAjmIGTx6tgxdBYd1xpg==
+X-Google-Smtp-Source: APXvYqwFRTz20CD8M6Kwg2Np+AkH9v6bF7YwNEs8nIQpd/ztnd685i07+sFMbB/EzUwlkQYxhQWAuYDDIW0U/bPJIAA=
+X-Received: by 2002:a37:8847:: with SMTP id k68mr37265523qkd.278.1559804823661;
+ Thu, 06 Jun 2019 00:07:03 -0700 (PDT)
 MIME-Version: 1.0
-References: <20190114184255.258318-1-mka@chromium.org> <CAHLCerP+F9AP97+qVCMqwu-OMJXRhwZrXd33Wk-vj5eyyw-KyA@mail.gmail.com>
- <CAHLCerPZ0Y-rkeMa_7BJWtR4g5af2vwfPY9FgOuvpUTJG3rf7g@mail.gmail.com>
- <155786856719.14659.2902538189660269078@swboyd.mtv.corp.google.com>
- <CAHLCerP69Jw27VyO+ek4Fe3-2fDiOejtz6XZPykPSRA2G1831w@mail.gmail.com>
- <5cdf2dc8.1c69fb81.521c8.9339@mx.google.com> <20190605172048.ahzusevvdxrpnebk@queper01-ThinkPad-T460s>
-In-Reply-To: <20190605172048.ahzusevvdxrpnebk@queper01-ThinkPad-T460s>
-From:   Vincent Guittot <vincent.guittot@linaro.org>
-Date:   Thu, 6 Jun 2019 09:05:16 +0200
-Message-ID: <CAKfTPtCR360osDz3oW+XhHT1R12SacAuJ44W_NfFOPWxJFjOPg@mail.gmail.com>
-Subject: Re: [PATCH] arm64: dts: sdm845: Add CPU topology
-To:     Quentin Perret <quentin.perret@arm.com>
-Cc:     Stephen Boyd <swboyd@chromium.org>,
-        Amit Kucheria <amit.kucheria@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Matthias Kaehlcke <mka@chromium.org>,
-        David Brown <david.brown@linaro.org>,
+References: <20190423160543.9922-1-jeffrey.l.hugo@gmail.com>
+ <20190423160605.9970-1-jeffrey.l.hugo@gmail.com> <20190521164324.GA2085@tuxbook-pro>
+ <CAOCk7Nr-a=ek7xOhBwMgxG55jvKQK2tyy15oknrDn7OYvxtEwA@mail.gmail.com>
+In-Reply-To: <CAOCk7Nr-a=ek7xOhBwMgxG55jvKQK2tyy15oknrDn7OYvxtEwA@mail.gmail.com>
+From:   Benjamin Tissoires <benjamin.tissoires@redhat.com>
+Date:   Thu, 6 Jun 2019 09:06:51 +0200
+Message-ID: <CAO-hwJKeS06Tsz8BzbWZw2TW74ZowvRqJue=Od-cMmfNH9N7Tw@mail.gmail.com>
+Subject: Re: [PATCH v4 1/2] HID: quirks: Refactor ELAN 400 and 401 handling
+To:     Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
+Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Dmitry Torokhov <dmitry.torokhov@gmail.com>,
+        Jiri Kosina <jikos@kernel.org>,
+        Lee Jones <lee.jones@linaro.org>,
         Rob Herring <robh+dt@kernel.org>,
         Mark Rutland <mark.rutland@arm.com>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        "open list:ARM/QUALCOMM SUPPORT" <linux-soc@vger.kernel.org>,
-        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
-        <devicetree@vger.kernel.org>, LKML <linux-kernel@vger.kernel.org>,
-        Douglas Anderson <dianders@chromium.org>,
-        Rajendra Nayak <rnayak@codeaurora.org>
+        Andy Gross <agross@kernel.org>,
+        David Brown <david.brown@linaro.org>,
+        Hans de Goede <hdegoede@redhat.com>,
+        "open list:HID CORE LAYER" <linux-input@vger.kernel.org>,
+        devicetree@vger.kernel.org, MSM <linux-arm-msm@vger.kernel.org>,
+        lkml <linux-kernel@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Quentin,
-
-On Wed, 5 Jun 2019 at 19:21, Quentin Perret <quentin.perret@arm.com> wrote:
+On Thu, Jun 6, 2019 at 1:25 AM Jeffrey Hugo <jeffrey.l.hugo@gmail.com> wrote:
 >
-> On Friday 17 May 2019 at 14:55:19 (-0700), Stephen Boyd wrote:
-> > Quoting Amit Kucheria (2019-05-16 04:54:45)
-> > > (cc'ing Andy's correct email address)
-> > >
-> > > On Wed, May 15, 2019 at 2:46 AM Stephen Boyd <swboyd@chromium.org> wrote:
-> > > >
-> > > > Quoting Amit Kucheria (2019-05-13 04:54:12)
-> > > > > On Mon, May 13, 2019 at 4:31 PM Amit Kucheria <amit.kucheria@linaro.org> wrote:
-> > > > > >
-> > > > > > On Tue, Jan 15, 2019 at 12:13 AM Matthias Kaehlcke <mka@chromium.org> wrote:
-> > > > > > >
-> > > > > > > The 8 CPU cores of the SDM845 are organized in two clusters of 4 big
-> > > > > > > ("gold") and 4 little ("silver") cores. Add a cpu-map node to the DT
-> > > > > > > that describes this topology.
-> > > > > >
-> > > > > > This is partly true. There are two groups of gold and silver cores,
-> > > > > > but AFAICT they are in a single cluster, not two separate ones. SDM845
-> > > > > > is one of the early examples of ARM's Dynamiq architecture.
-> > > > > >
-> > > > > > > Signed-off-by: Matthias Kaehlcke <mka@chromium.org>
-> > > > > >
-> > > > > > I noticed that this patch sneaked through for this merge window but
-> > > > > > perhaps we can whip up a quick fix for -rc2?
-> > > > > >
-> > > > >
-> > > > > And please find attached a patch to fix this up. Andy, since this
-> > > > > hasn't landed yet (can we still squash this into the original patch?),
-> > > > > I couldn't add a Fixes tag.
-> > > > >
-> > > >
-> > > > I had the same concern. Thanks for catching this. I suspect this must
-> > > > cause some problem for IPA given that it can't discern between the big
-> > > > and little "power clusters"?
-> > >
-> > > Both EAS and IPA, I believe. It influences the scheduler's view of the
-> > > the topology.
+> On Tue, May 21, 2019 at 10:42 AM Bjorn Andersson
+> <bjorn.andersson@linaro.org> wrote:
 > >
-> > And EAS and IPA are OK with the real topology? I'm just curious if
-> > changing the topology to reflect reality will be a problem for those
-> > two.
+> > On Tue 23 Apr 09:06 PDT 2019, Jeffrey Hugo wrote:
+> >
+> > > There needs to be coordination between hid-quirks and the elan_i2c driver
+> > > about which devices are handled by what drivers.  Currently, both use
+> > > whitelists, which results in valid devices being unhandled by default,
+> > > when they should not be rejected by hid-quirks.  This is quickly becoming
+> > > an issue.
+> > >
+> > > Since elan_i2c has a maintained whitelist of what devices it will handle,
+> > > use that to implement a blacklist in hid-quirks so that only the devices
+> > > that need to be handled by elan_i2c get rejected by hid-quirks, and
+> > > everything else is handled by default.  The downside is the whitelist and
+> > > blacklist need to be kept in sync.
+> > >
+> >
+> > Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+> >
+> > Jiri, the two patches in this series doesn't have a build time
+> > dependency, so if you take this one through your tree I'll take 2/2
+> > through arm-soc.
 >
-> FWIW, neither EAS nor IPA depends on this. Not the upstream version of
-> EAS at least (which is used in recent Android kernels -- 4.19+).
+> Ping?  Is this good from the HID perspective?  I would really like to
+> see this queued for 5.3.
 >
-> But doing this is still required for other things in the scheduler (the
-> so-called 'capacity-awareness' code). So until we have a better
-> solution, this patch is doing the right thing.
 
-I'm not sure to catch what you mean ?
-Which so-called 'capacity-awareness' code are you speaking about ? and
-what is the problem ?
+Sorry, this felt through the cracks.
 
-Regards,
-Vincent
+I'm fine with the idea of the patch, but I just realized what bugged me:
+we should instead have a static array of the various ACPI matches,
+instead of duplicating the various strncmp.
 
->
-> I hope that helps.
->
-> Thanks,
-> Quentin
+So IMO, we should:
+- merge patch 2/2 through Bjorn's tree (or with any changes he would request)
+- have a v5 for the HID/input part with:
+  * a static array of the names to match against in hid-quirks.c
+  * separate the elan_i2c trivial change in its separate patch as
+there are already a few changes committed in the input tree, which is
+different from the HID tree. I don't expect any conflicts though, so
+if Dmitry is fine, I can take the whole input/HID part through the HID
+tree, but a separate patch would be more obvious in case of a
+conflict.
+
+Cheers,
+Benjamin
+
+> >
+> > Regards,
+> > Bjorn
+> >
+> > > Suggested-by: Benjamin Tissoires <benjamin.tissoires@redhat.com>
+> > > Signed-off-by: Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
+> > > ---
+> > >  drivers/hid/hid-quirks.c            | 64 ++++++++++++++++++++++++-----
+> > >  drivers/input/mouse/elan_i2c_core.c |  4 ++
+> > >  2 files changed, 58 insertions(+), 10 deletions(-)
+> > >
+> > > diff --git a/drivers/hid/hid-quirks.c b/drivers/hid/hid-quirks.c
+> > > index 77ffba48cc73..656485e08eb7 100644
+> > > --- a/drivers/hid/hid-quirks.c
+> > > +++ b/drivers/hid/hid-quirks.c
+> > > @@ -987,17 +987,61 @@ bool hid_ignore(struct hid_device *hdev)
+> > >               break;
+> > >       case USB_VENDOR_ID_ELAN:
+> > >               /*
+> > > -              * Many Elan devices have a product id of 0x0401 and are handled
+> > > -              * by the elan_i2c input driver. But the ACPI HID ELAN0800 dev
+> > > -              * is not (and cannot be) handled by that driver ->
+> > > -              * Ignore all 0x0401 devs except for the ELAN0800 dev.
+> > > +              * Blacklist of everything that gets handled by the elan_i2c
+> > > +              * input driver.  This should be kept in sync with the whitelist
+> > > +              * that exists in that driver.  This avoids disabling valid
+> > > +              * touchpads and other ELAN devices.
+> > >                */
+> > > -             if (hdev->product == 0x0401 &&
+> > > -                 strncmp(hdev->name, "ELAN0800", 8) != 0)
+> > > -                     return true;
+> > > -             /* Same with product id 0x0400 */
+> > > -             if (hdev->product == 0x0400 &&
+> > > -                 strncmp(hdev->name, "QTEC0001", 8) != 0)
+> > > +             if ((hdev->product == 0x0401 || hdev->product == 0x0400) &&
+> > > +                (strncmp(hdev->name, "ELAN0000", 8) == 0 ||
+> > > +                 strncmp(hdev->name, "ELAN0100", 8) == 0 ||
+> > > +                 strncmp(hdev->name, "ELAN0600", 8) == 0 ||
+> > > +                 strncmp(hdev->name, "ELAN0601", 8) == 0 ||
+> > > +                 strncmp(hdev->name, "ELAN0602", 8) == 0 ||
+> > > +                 strncmp(hdev->name, "ELAN0603", 8) == 0 ||
+> > > +                 strncmp(hdev->name, "ELAN0604", 8) == 0 ||
+> > > +                 strncmp(hdev->name, "ELAN0605", 8) == 0 ||
+> > > +                 strncmp(hdev->name, "ELAN0606", 8) == 0 ||
+> > > +                 strncmp(hdev->name, "ELAN0607", 8) == 0 ||
+> > > +                 strncmp(hdev->name, "ELAN0608", 8) == 0 ||
+> > > +                 strncmp(hdev->name, "ELAN0609", 8) == 0 ||
+> > > +                 strncmp(hdev->name, "ELAN060B", 8) == 0 ||
+> > > +                 strncmp(hdev->name, "ELAN060C", 8) == 0 ||
+> > > +                 strncmp(hdev->name, "ELAN060F", 8) == 0 ||
+> > > +                 strncmp(hdev->name, "ELAN0610", 8) == 0 ||
+> > > +                 strncmp(hdev->name, "ELAN0611", 8) == 0 ||
+> > > +                 strncmp(hdev->name, "ELAN0612", 8) == 0 ||
+> > > +                 strncmp(hdev->name, "ELAN0613", 8) == 0 ||
+> > > +                 strncmp(hdev->name, "ELAN0614", 8) == 0 ||
+> > > +                 strncmp(hdev->name, "ELAN0615", 8) == 0 ||
+> > > +                 strncmp(hdev->name, "ELAN0616", 8) == 0 ||
+> > > +                 strncmp(hdev->name, "ELAN0617", 8) == 0 ||
+> > > +                 strncmp(hdev->name, "ELAN0618", 8) == 0 ||
+> > > +                 strncmp(hdev->name, "ELAN0619", 8) == 0 ||
+> > > +                 strncmp(hdev->name, "ELAN061A", 8) == 0 ||
+> > > +                 strncmp(hdev->name, "ELAN061B", 8) == 0 ||
+> > > +                 strncmp(hdev->name, "ELAN061C", 8) == 0 ||
+> > > +                 strncmp(hdev->name, "ELAN061D", 8) == 0 ||
+> > > +                 strncmp(hdev->name, "ELAN061E", 8) == 0 ||
+> > > +                 strncmp(hdev->name, "ELAN061F", 8) == 0 ||
+> > > +                 strncmp(hdev->name, "ELAN0620", 8) == 0 ||
+> > > +                 strncmp(hdev->name, "ELAN0621", 8) == 0 ||
+> > > +                 strncmp(hdev->name, "ELAN0622", 8) == 0 ||
+> > > +                 strncmp(hdev->name, "ELAN0623", 8) == 0 ||
+> > > +                 strncmp(hdev->name, "ELAN0624", 8) == 0 ||
+> > > +                 strncmp(hdev->name, "ELAN0625", 8) == 0 ||
+> > > +                 strncmp(hdev->name, "ELAN0626", 8) == 0 ||
+> > > +                 strncmp(hdev->name, "ELAN0627", 8) == 0 ||
+> > > +                 strncmp(hdev->name, "ELAN0628", 8) == 0 ||
+> > > +                 strncmp(hdev->name, "ELAN0629", 8) == 0 ||
+> > > +                 strncmp(hdev->name, "ELAN062A", 8) == 0 ||
+> > > +                 strncmp(hdev->name, "ELAN062B", 8) == 0 ||
+> > > +                 strncmp(hdev->name, "ELAN062C", 8) == 0 ||
+> > > +                 strncmp(hdev->name, "ELAN062D", 8) == 0 ||
+> > > +                 strncmp(hdev->name, "ELAN0631", 8) == 0 ||
+> > > +                 strncmp(hdev->name, "ELAN0632", 8) == 0 ||
+> > > +                 strncmp(hdev->name, "ELAN1000", 8) == 0 ||
+> > > +                 strncmp(hdev->name, "elan,ekth3000", 13) == 0))
+> > >                       return true;
+> > >               break;
+> > >       }
+> > > diff --git a/drivers/input/mouse/elan_i2c_core.c b/drivers/input/mouse/elan_i2c_core.c
+> > > index f9525d6f0bfe..3ded19528cd4 100644
+> > > --- a/drivers/input/mouse/elan_i2c_core.c
+> > > +++ b/drivers/input/mouse/elan_i2c_core.c
+> > > @@ -1332,6 +1332,10 @@ static const struct i2c_device_id elan_id[] = {
+> > >  };
+> > >  MODULE_DEVICE_TABLE(i2c, elan_id);
+> > >
+> > > +/*
+> > > + * when these whtielists get updated, the corresponding blacklist in hid-quirks
+> > > + * needs to be updated to match.
+> > > + */
+> > >  #ifdef CONFIG_ACPI
+> > >  static const struct acpi_device_id elan_acpi_id[] = {
+> > >       { "ELAN0000", 0 },
+> > > --
+> > > 2.17.1
+> > >
