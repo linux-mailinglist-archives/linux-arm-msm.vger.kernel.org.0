@@ -2,98 +2,122 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id EC29E3785B
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Jun 2019 17:43:36 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 1248037939
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Jun 2019 18:12:24 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729489AbfFFPnf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 6 Jun 2019 11:43:35 -0400
-Received: from mail-pf1-f195.google.com ([209.85.210.195]:35837 "EHLO
-        mail-pf1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729366AbfFFPnf (ORCPT
+        id S1729512AbfFFQMW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 6 Jun 2019 12:12:22 -0400
+Received: from mail-pf1-f193.google.com ([209.85.210.193]:45715 "EHLO
+        mail-pf1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729191AbfFFQMW (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 6 Jun 2019 11:43:35 -0400
-Received: by mail-pf1-f195.google.com with SMTP id d126so1758893pfd.2
-        for <linux-arm-msm@vger.kernel.org>; Thu, 06 Jun 2019 08:43:35 -0700 (PDT)
+        Thu, 6 Jun 2019 12:12:22 -0400
+Received: by mail-pf1-f193.google.com with SMTP id s11so1780990pfm.12;
+        Thu, 06 Jun 2019 09:12:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=BfrnQRYKGFgPxF9NSnQflkQWl1ljH2e27gVbldpoCtM=;
-        b=G526VcO+jFeP1Kp96oisydppUTR325SAabfAj6XffQwSmnnk1fpfZq2JNrtma3sq9V
-         bUQ+A75ziJPPn7hBRksbtk+T6Y9IgGhi5PQaRPJHuJDgvXlkHzG69IUtJZT2vxcD+jqE
-         t/h4GMZ5MtaRvM/RjnGdut6SKYqwSYoKWOciJ1uayYOVVUbw5tYFWmPuKRdIl1WHJfwW
-         /L6d8b274D1jaWJ8kXV1ogOTs61jy5TB7/STFsPpt+jchl+bIVBKyDB09fNNGZjkYCsF
-         VsJ5Y8KS/bPkMbj69HoTBAUL4pgmylrnY2BrgmEpPlDSmvY1EYT46qNmYRFSNpPSKn/4
-         LIeQ==
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id;
+        bh=8Zc8qJqb674XuWLoPig1e9WRoBoqYfsMdfDerD1Y84I=;
+        b=hWozMkV01JYUjz28wuRy7Z0qFH8zGaqnld1tOMo+U4GaOm5s4ac3WzIF/yF105TzXu
+         Ncfw0a2ed1CzP+sss6HMA8UGTJ+1o7CLg+4MTNqiD7oktPdu+/HjiXy40N9eNqn6lOwW
+         +1BIiK1/D43/k73x2S6wUGm+q5MTVV/Ygb33OXVlEhbMgxq86cFfJ4vCxborERCA5dlr
+         Lttm/Pi2itibF6CZJbzgNj9wdh3SOc9yphBA2GC6N1Zizr4/7/7MT724OCmEztigcPZb
+         995iBzTfECIadcZtlG9jnaAeieC2KLU4hhUsSxvQBWTXsLyYFaeuWxCChDbrduBbBZH/
+         /gYA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=BfrnQRYKGFgPxF9NSnQflkQWl1ljH2e27gVbldpoCtM=;
-        b=eNZ2XRIwVBjMiYLNNbveBuFqVgBz8mHUoCvPHqQYeNvBOkKyDovhu0tFNUBGIEgL9l
-         Ed88tv+kFJO4Q16wbLuzHTX42P40CZxOQtJbdlxMxMo8APwMEd5tSbUlZfMcs1a8mWrI
-         +DOyZ+rkcEFYOKywjjEYSAVLEGiuSg7HbGr03LqFhKaaViDNPgNak5hNigMDJ2OimXTv
-         KgxPBWviS7br0hPcxd959SbvXo6SsC7+VO0w2y5Hac5ckbYavlpSrMimLGqQP5CYF5MY
-         PwKw6IpOobh5AJgIkCQcic4f0d4T3WA9tinX01mC9UD+iRDZ98BRWVqCzmfM8s8Q35l0
-         4Ilg==
-X-Gm-Message-State: APjAAAWkDOXDlW3+x+lzA+7xTL4MSmIWqGjxm8hBymHm9ThP4WaMnn8j
-        FWj0x0b0XP0zot84XWW9sbZ7tg==
-X-Google-Smtp-Source: APXvYqx+sT+/LQuM4S09B7Xt9KV37NrCwBh8IBko+fhwQpGMCytJTR8ZRG5FS309mJBurHzccGKhDA==
-X-Received: by 2002:a62:386:: with SMTP id 128mr55122544pfd.10.1559835814740;
-        Thu, 06 Jun 2019 08:43:34 -0700 (PDT)
-Received: from builder (104-188-17-28.lightspeed.sndgca.sbcglobal.net. [104.188.17.28])
-        by smtp.gmail.com with ESMTPSA id v64sm4919401pfv.172.2019.06.06.08.43.33
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Thu, 06 Jun 2019 08:43:34 -0700 (PDT)
-Date:   Thu, 6 Jun 2019 08:43:32 -0700
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Arnaud Pouliquen <arnaud.pouliquen@st.com>
-Cc:     Ohad Ben-Cohen <ohad@wizery.com>, linux-remoteproc@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH] remoteproc: debug: fix va dump format in carveout list
-Message-ID: <20190606154332.GB23094@builder>
-References: <1559835519-8165-1-git-send-email-arnaud.pouliquen@st.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <1559835519-8165-1-git-send-email-arnaud.pouliquen@st.com>
-User-Agent: Mutt/1.10.0 (2018-05-17)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=8Zc8qJqb674XuWLoPig1e9WRoBoqYfsMdfDerD1Y84I=;
+        b=KoMBEyruTb2KHIR4Sw1ze5bzMpsbhFONopYQKbioB5WYGb0BSw2skZFQllCM7BNzNN
+         i/9kzkVndJYevLOwqH5rGHhYN+/CXIeb8NvWGV8KnqEo4Pf5gzX91oacySgslZia1Ffb
+         GP2WJoUI/C9EPE/J6eaqcvst8DiBTCTAIZAjn0RExPJME5PgiFtTduCSS3ymH5cQkPrd
+         Zl9xU3LVqTSK4b1Jld1oX5AkJxIaBC5CwjSv8vtkV0Pv+Vk3cPbES/dPxYsZSYRgULzE
+         vl0VkZYFLabn013MRh74SoUNc0vA0Qa/69+dbs9EmeZexoeLUTSzH13SPRxkjuEo6+pY
+         SRoA==
+X-Gm-Message-State: APjAAAU2BluWHW+8tT8Em6CS9uCkijv2XmTe4EHyZPKFHPmj5UB8ocMy
+        VL+MUbqx3qmZ4DDgVYPtLDE=
+X-Google-Smtp-Source: APXvYqyd/bWJhSZ+sgeAGgA3nldsQkOQqnMaAuK5ExRbXjQLzAVGgeJlCiL1GYX6yDfSKPPWtURJog==
+X-Received: by 2002:a63:cc43:: with SMTP id q3mr4037399pgi.438.1559837541829;
+        Thu, 06 Jun 2019 09:12:21 -0700 (PDT)
+Received: from aw-bldr-10.qualcomm.com (i-global254.qualcomm.com. [199.106.103.254])
+        by smtp.gmail.com with ESMTPSA id j7sm7894239pjb.26.2019.06.06.09.12.20
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Thu, 06 Jun 2019 09:12:21 -0700 (PDT)
+From:   Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
+Cc:     bjorn.andersson@linaro.org, benjamin.tissoires@redhat.com,
+        dmitry.torokhov@gmail.com, jikos@kernel.org, lee.jones@linaro.org,
+        robh+dt@kernel.org, mark.rutland@arm.com, agross@kernel.org,
+        david.brown@linaro.org, hdegoede@redhat.com,
+        linux-input@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
+Subject: [PATCH v5 0/3] Basic DT support for Lenovo Miix 630
+Date:   Thu,  6 Jun 2019 09:10:55 -0700
+Message-Id: <20190606161055.47089-1-jeffrey.l.hugo@gmail.com>
+X-Mailer: git-send-email 2.17.1
+To:     unlisted-recipients:; (no To-header on input)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu 06 Jun 08:38 PDT 2019, Arnaud Pouliquen wrote:
+The Lenovo Miix 630 is one of three ARM based (specifically Qualcomm
+MSM8998) laptops that comes with Windows, and seems to have a dedicated
+following of folks intrested to get Linux up and running on it.
 
-> Standardize dump presentation for va, dma and da dumps by adding
-> "0x" prefix for virtual address.
-> 
-> Fixes: 276ec9934231("remoteproc: replace "%p" with "%pK"")
-> 
-> Signed-off-by: Arnaud Pouliquen <arnaud.pouliquen@st.com>
+This series adds support for the basic functionality this is validated
+towork using devicetree.  Although the laptops do feed ACPI to Windows,
+the existing MSM8998 support in mainline is DT based, so DT provides a
+quick path to functionality while ACPI support is investigated.
 
-Applied
+The three devices are very similar, but do have differences in the set
+of peripherals supported, so the idea is that the vast majority of the
+support for all three can live in a common include, which should reduce
+overall duplication.  Adding support for the other two devices as a
+follow on should involve minimal work.
 
-Thanks,
-Bjorn
+The bleeding edge work for these laptops and work in progress can be
+found at https://github.com/aarch64-laptops/prebuilt
 
-> ---
->  drivers/remoteproc/remoteproc_debugfs.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
-> 
-> diff --git a/drivers/remoteproc/remoteproc_debugfs.c b/drivers/remoteproc/remoteproc_debugfs.c
-> index 6da934b8dc4b..91d3a75f0b41 100644
-> --- a/drivers/remoteproc/remoteproc_debugfs.c
-> +++ b/drivers/remoteproc/remoteproc_debugfs.c
-> @@ -298,7 +298,7 @@ static int rproc_carveouts_show(struct seq_file *seq, void *p)
->  	list_for_each_entry(carveout, &rproc->carveouts, node) {
->  		seq_puts(seq, "Carveout memory entry:\n");
->  		seq_printf(seq, "\tName: %s\n", carveout->name);
-> -		seq_printf(seq, "\tVirtual address: %pK\n", carveout->va);
-> +		seq_printf(seq, "\tVirtual address: 0x%pK\n", carveout->va);
->  		seq_printf(seq, "\tDMA address: %pad\n", &carveout->dma);
->  		seq_printf(seq, "\tDevice address: 0x%x\n", carveout->da);
->  		seq_printf(seq, "\tLength: 0x%x Bytes\n\n", carveout->len);
-> -- 
-> 2.7.4
-> 
+v5:
+-Split out elan_i2c changes into their own patch
+-Use a static list of strings to match
+-Fixed typo of "whitelist"
+-Dropped incorrect thermal zones
+-Dropped tags from Bjorn and Lee since the functional should be
+identical, but the code is structured different
+
+v4:
+-Changed the hid-quirks ELAN handling around per Benjamin Tissoires
+-Dropped new DT binding
+
+v3:
+-Changed "clam" to "clamshell"
+-Defined a dt binding for the combo Elan keyboard + touchpad device
+-Adjusted the HID quirk to be correct for dt boot
+-Removed extranious comment in board dts
+-Fixed board level compatible
+
+v2:
+-Changed "cls" to "clam" since feedback indicated "cls" is too opaque,
+but
+"clamshell" is a mouthfull.  "clam" seems to be a happy medium.
+
+Jeffrey Hugo (3):
+  Input: elan_i2c: Add comment about link between elan_i2c and
+    hid-quirks
+  HID: quirks: Refactor ELAN 400 and 401 handling
+  arm64: dts: qcom: Add Lenovo Miix 630
+
+ arch/arm64/boot/dts/qcom/Makefile             |   1 +
+ .../boot/dts/qcom/msm8998-clamshell.dtsi      | 240 ++++++++++++++++++
+ .../boot/dts/qcom/msm8998-lenovo-miix-630.dts |  30 +++
+ drivers/hid/hid-quirks.c                      |  78 +++++-
+ drivers/input/mouse/elan_i2c_core.c           |   4 +
+ 5 files changed, 342 insertions(+), 11 deletions(-)
+ create mode 100644 arch/arm64/boot/dts/qcom/msm8998-clamshell.dtsi
+ create mode 100644 arch/arm64/boot/dts/qcom/msm8998-lenovo-miix-630.dts
+
+-- 
+2.17.1
+
