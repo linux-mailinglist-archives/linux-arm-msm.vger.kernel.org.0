@@ -2,87 +2,133 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id D5696369A5
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Jun 2019 04:00:21 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id AC989369AA
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Jun 2019 04:01:16 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726699AbfFFCAR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 5 Jun 2019 22:00:17 -0400
-Received: from mail-pf1-f196.google.com ([209.85.210.196]:33379 "EHLO
-        mail-pf1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726593AbfFFCAR (ORCPT
+        id S1726747AbfFFCBH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 5 Jun 2019 22:01:07 -0400
+Received: from mail-pl1-f194.google.com ([209.85.214.194]:42743 "EHLO
+        mail-pl1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726593AbfFFCBH (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 5 Jun 2019 22:00:17 -0400
-Received: by mail-pf1-f196.google.com with SMTP id x15so483715pfq.0;
-        Wed, 05 Jun 2019 19:00:16 -0700 (PDT)
+        Wed, 5 Jun 2019 22:01:07 -0400
+Received: by mail-pl1-f194.google.com with SMTP id go2so247114plb.9;
+        Wed, 05 Jun 2019 19:01:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id;
-        bh=x7qwOsCUljcPtS0zwGfT/F7OR260b2vj2I2Z3hV+0Vw=;
-        b=A9qObc4i5vO0woGJ3cg3uISuB5bxnGAL/+ozW+EhdwWNA31g3TMfQIeiD5NULF0cA2
-         XYZKt9Jel0pAbExfDGszMRiWtFxOpGfUZdzBnjShNA3K+lfXeNSH6udRdX4+puQDg2Y3
-         4HSQpALDaGVvKEKK2Q4DCpxqaNlx8q8f/AlKyRGLaqveYSPvXZC8oE3oNSHS2Hk2CGnh
-         p9SnF9IXb0e4J7wrfzdmPNULuKTVJg32mDvQFvYY7krDNRSOIu4cONvhSRc4KkUsAOxj
-         F0C9aaJ/XPNJmEbCyy10tF+mMPxNlNPvj2B/tzf8ZVFX2a67suPLpO5ksNbmU4VFxdPX
-         x9rg==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=hl7Qw6TV0ASyprnMWnpIzwz2Nh0SP6ZozbsZ5FdFVys=;
+        b=H0k5UvaxvoCI50EAcHDJDxKJiqPALNdhcZOr8eEA7gVjCtmKlSz0krZHgfOkkp7+mT
+         mQZjsMFRXdOkRVdmESmy71jsa/D4dFb5WyU9Tnt61rUn/+b+mV+dJAoC9of6ekK+S8JI
+         f7NFg9RICEMvg5h23hNFtZse6Eg/1ldR++y8RqxBBwHJT/xw69U9MREv5u4Y1l02NT3n
+         /ES3O02YP6HuqFXVsaDKWltsUsG2SBdk4VmWETzqatY5JvGpA3lMVDIgaEHV0P7OR9Fj
+         A5VFUnMFJtVm+fGa8mksgKLQCrfOzvXoJyvDuly354CxnjGsrfv6TC/1bjRjVJleP8tO
+         599Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id;
-        bh=x7qwOsCUljcPtS0zwGfT/F7OR260b2vj2I2Z3hV+0Vw=;
-        b=W7eqkk5JUNtAW2wUmL+wb/i/zXcKdTR1FvIM22+tKU4vk9mxqSxGPJTftEI19pW+Hf
-         fV4nTd0EPvDS1SnLEaytcSvw4sZRRtfd2J6nTYF/I1fgI4M5dbsc56s9B3NL0h+YZnAE
-         XNo3Gq79coTax+xjbW+kMUtVBNhq/wPcPk1V6kSeOcaPohamw6+Fw0mvivz30LJpEL4U
-         jZmMyqeRfImN5oQxoDnbsW49jAJDPTiiK8Q9vI48O3HppTJyWHSyu2xWkROeDcTTBwiS
-         VS5Zf6iplcqmp5T3yCYf+7jwm5BnCNKh2nDjjJTNIh70b1rE08otSKy3/TUUytYPCvhO
-         E0Uw==
-X-Gm-Message-State: APjAAAWZt4lD+14jNZhlami1UGTmssTyPM6NP9MukW4PXbQZ4946H+ar
-        J1FRGVrdrsqQct6YP2KNvcg=
-X-Google-Smtp-Source: APXvYqyPmqa7lqmty0IqA8/OiwgJIYtWHbs/vn7I7gtRg48rBH4l7U9lXE5gPHXIQWvvzkHtLfXb+w==
-X-Received: by 2002:a63:de53:: with SMTP id y19mr884162pgi.166.1559786416299;
-        Wed, 05 Jun 2019 19:00:16 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references;
+        bh=hl7Qw6TV0ASyprnMWnpIzwz2Nh0SP6ZozbsZ5FdFVys=;
+        b=Oosww+8oVAwDw2zXdLp++jiTT1B1Uod/Gv5qGm/fZaUH/4XcMtyNm33qH0mYk89Dby
+         sAJJplcNfS9Ai6WdAbtOP4YMaNDsihNT924q+X0jGRJ1Y2eslC1KjHXrYqCaHay6vuaJ
+         hX4+zQ13Zs+WPez+bJlXZ9sNZF8rtHyKxu6DOZSOZSYWR74iDrK1tiJXEgPzI5v1LO/d
+         L1/a73YuHJhNIy9o9XgO5IIw5//iBzbm0vSqelVB4gmYTswuPsRz91hthyHU0jR74vBg
+         fYF4sOQh9PGaGSdiZXJA/uVSu02nPZohipROPk8PDlRrQwDQA97o5t+H0OlvmXgkh2P0
+         wjEQ==
+X-Gm-Message-State: APjAAAWmMRbRuDp2gROJHAAur0tOlg6vH7tgNYTY3fJxzBEpGcQIl/W0
+        uvEiWxVIsE3RMC56MnW51xg=
+X-Google-Smtp-Source: APXvYqyMYndp+Uyq2J7tCVNgbiVo5mec/xiEJ7usFR3KQl0MMLdJT9wum0Dz60prHwMGJJc8YZuCOg==
+X-Received: by 2002:a17:902:bb89:: with SMTP id m9mr44474933pls.188.1559786466660;
+        Wed, 05 Jun 2019 19:01:06 -0700 (PDT)
 Received: from aw-bldr-10.qualcomm.com (i-global254.qualcomm.com. [199.106.103.254])
-        by smtp.gmail.com with ESMTPSA id k14sm185234pga.5.2019.06.05.19.00.14
+        by smtp.gmail.com with ESMTPSA id b15sm248746pff.31.2019.06.05.19.01.04
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 05 Jun 2019 19:00:15 -0700 (PDT)
+        Wed, 05 Jun 2019 19:01:06 -0700 (PDT)
 From:   Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
+To:     mturquette@baylibre.com, sboyd@kernel.org, robh+dt@kernel.org,
+        mark.rutland@arm.com
 Cc:     agross@kernel.org, david.brown@linaro.org,
-        bjorn.andersson@linaro.org, mturquette@baylibre.com,
-        sboyd@kernel.org, robh+dt@kernel.org, mark.rutland@arm.com,
-        marc.w.gonzalez@free.fr, jcrouse@codeaurora.org,
-        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        bjorn.andersson@linaro.org, marc.w.gonzalez@free.fr,
+        jcrouse@codeaurora.org, linux-arm-msm@vger.kernel.org,
+        linux-clk@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org,
         Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
-Subject: [PATCH v2 0/3] MSM8998 GPUCC Support
-Date:   Wed,  5 Jun 2019 18:58:44 -0700
-Message-Id: <20190606015844.2285-1-jeffrey.l.hugo@gmail.com>
+Subject: [PATCH v2 1/3] dt-bindings: clock: Document gpucc for msm8998
+Date:   Wed,  5 Jun 2019 18:59:37 -0700
+Message-Id: <20190606015937.2337-1-jeffrey.l.hugo@gmail.com>
 X-Mailer: git-send-email 2.17.1
-To:     unlisted-recipients:; (no To-header on input)
+In-Reply-To: <20190606015844.2285-1-jeffrey.l.hugo@gmail.com>
+References: <20190606015844.2285-1-jeffrey.l.hugo@gmail.com>
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The Adreno GPU on MSM8998 has its own clock controller, which is a
-dependency for bringing up the GPU.  This series gets the gpucc all in
-place as another step on the road to getting the GPU enabled.
+The GPU for msm8998 has its own clock controller.  Document it.
 
-v2:
--drop desd code
-
-Jeffrey Hugo (3):
-  dt-bindings: clock: Document gpucc for msm8998
-  clk: qcom: Add MSM8998 GPU Clock Controller (GPUCC) driver
-  arm64: dts: qcom: msm8998: Add gpucc node
-
- .../devicetree/bindings/clock/qcom,gpucc.txt  |   4 +-
- arch/arm64/boot/dts/qcom/msm8998.dtsi         |  15 +
- drivers/clk/qcom/Kconfig                      |   8 +
- drivers/clk/qcom/Makefile                     |   1 +
- drivers/clk/qcom/gpucc-msm8998.c              | 364 ++++++++++++++++++
- .../dt-bindings/clock/qcom,gpucc-msm8998.h    |  29 ++
- 6 files changed, 420 insertions(+), 1 deletion(-)
- create mode 100644 drivers/clk/qcom/gpucc-msm8998.c
+Signed-off-by: Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
+---
+ .../devicetree/bindings/clock/qcom,gpucc.txt  |  4 ++-
+ .../dt-bindings/clock/qcom,gpucc-msm8998.h    | 29 +++++++++++++++++++
+ 2 files changed, 32 insertions(+), 1 deletion(-)
  create mode 100644 include/dt-bindings/clock/qcom,gpucc-msm8998.h
 
+diff --git a/Documentation/devicetree/bindings/clock/qcom,gpucc.txt b/Documentation/devicetree/bindings/clock/qcom,gpucc.txt
+index 4e5215ef1acd..269afe8a757e 100644
+--- a/Documentation/devicetree/bindings/clock/qcom,gpucc.txt
++++ b/Documentation/devicetree/bindings/clock/qcom,gpucc.txt
+@@ -2,13 +2,15 @@ Qualcomm Graphics Clock & Reset Controller Binding
+ --------------------------------------------------
+ 
+ Required properties :
+-- compatible : shall contain "qcom,sdm845-gpucc"
++- compatible : shall contain "qcom,sdm845-gpucc" or "qcom,msm8998-gpucc"
+ - reg : shall contain base register location and length
+ - #clock-cells : from common clock binding, shall contain 1
+ - #reset-cells : from common reset binding, shall contain 1
+ - #power-domain-cells : from generic power domain binding, shall contain 1
+ - clocks : shall contain the XO clock
++	   shall contain the gpll0 out main clock (msm8998)
+ - clock-names : shall be "xo"
++		shall be "gpll0" (msm8998)
+ 
+ Example:
+ 	gpucc: clock-controller@5090000 {
+diff --git a/include/dt-bindings/clock/qcom,gpucc-msm8998.h b/include/dt-bindings/clock/qcom,gpucc-msm8998.h
+new file mode 100644
+index 000000000000..2623570ee974
+--- /dev/null
++++ b/include/dt-bindings/clock/qcom,gpucc-msm8998.h
+@@ -0,0 +1,29 @@
++/* SPDX-License-Identifier: GPL-2.0 */
++/*
++ * Copyright (c) 2019, Jeffrey Hugo
++ */
++
++#ifndef _DT_BINDINGS_CLK_MSM_GPUCC_8998_H
++#define _DT_BINDINGS_CLK_MSM_GPUCC_8998_H
++
++#define GPUPLL0						0
++#define GPUPLL0_OUT_EVEN				1
++#define RBCPR_CLK_SRC					2
++#define GFX3D_CLK_SRC					3
++#define RBBMTIMER_CLK_SRC				4
++#define GFX3D_ISENSE_CLK_SRC				5
++#define RBCPR_CLK					6
++#define GFX3D_CLK					7
++#define RBBMTIMER_CLK					8
++#define GFX3D_ISENSE_CLK				9
++#define GPUCC_CXO_CLK					10
++
++#define GPU_CX_BCR					0
++#define RBCPR_BCR					1
++#define GPU_GX_BCR					2
++#define GPU_ISENSE_BCR					3
++
++#define GPU_CX_GDSC					1
++#define GPU_GX_GDSC					2
++
++#endif
 -- 
 2.17.1
 
