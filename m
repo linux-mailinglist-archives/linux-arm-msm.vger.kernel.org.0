@@ -2,116 +2,90 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 3971F37F25
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Jun 2019 22:57:21 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E6C2F38177
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  7 Jun 2019 01:00:56 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727504AbfFFU5U (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 6 Jun 2019 16:57:20 -0400
-Received: from mail-wr1-f68.google.com ([209.85.221.68]:36017 "EHLO
-        mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727023AbfFFU5U (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 6 Jun 2019 16:57:20 -0400
-Received: by mail-wr1-f68.google.com with SMTP id n4so32566wrs.3
-        for <linux-arm-msm@vger.kernel.org>; Thu, 06 Jun 2019 13:57:19 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=yc3mIWAOmzHLsJR8ETFapoAFaIyvxuHseTv4ycdMJAA=;
-        b=HfDVpn9rD1xoy6TiwTnp55C660rqvMS7UbuxsqaxbKuxOVCCCyXf/NFuK0R6wNw5e1
-         iT3FG4KKohgCds+EzsVs/xOqcJyfiSv8LJyESbdXog9CfwvnSHw0iIr0OivkDwgcSLLe
-         VwaiURO5zaRUphb3Ux5P5ACJDJmGKk8GXEm29+xKm+ez9IMjXq1gtadxcb7GmbZ+gFaV
-         57nEgBaUd2Blq/aAreHgJzRoUPDudyyrqeClz3UeC2IV8KO9moXT17A51wgrOCxH0vMF
-         hXFMwWz6+B+qJpI4kFc0lI2XJW3WqYS4rzlLoJvoS3KJU0Voy9EmP4uk5NsdfT+58Ju6
-         rwwA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=yc3mIWAOmzHLsJR8ETFapoAFaIyvxuHseTv4ycdMJAA=;
-        b=ie6maVvPQCyrl/ls3dFpg45HXW/pfXtEO1HNduhk0X1UA8fJ9SUhlRKavbjCKZZi4a
-         Gr5ThLvuhriBCjwAp2BU7EpcTIyPd+C1dNvM24tsfy9Z7+0yIEsJ+zYdURY1C18VI/Ad
-         Rt+gLtF6a/hhtcvP7JcJskharRSZ/L1P7x7/KAxRdkfjXudrrT+xLuHeoQGihhVONVrn
-         D9pCbhGAcG3mTGbpIBKYwPH2WPjtIzIWTjkExu5hjT7lG1PaPznR5rkeURpCAEZFRke4
-         bYg7oFGDFL6yOCSkZvHsovfbewgFuZR/U4XZb9majHBHH+4Tq2W+4zGraCeU8yYhdzuX
-         SAVQ==
-X-Gm-Message-State: APjAAAUKJqPLe5eTuuBPyeS1agcEZAyMuxHjapjlNgoVy9+2y7e0J5g7
-        G5Yd7+5Ug6POFlTbZ8oJuG0EMA==
-X-Google-Smtp-Source: APXvYqwXj2etJ/M3sp849BOhuQAtV/gHqw0dA6C4Q5N+pFvKjsOwzoiYWXPOc4OBixtAveLznLnCSQ==
-X-Received: by 2002:a5d:4e46:: with SMTP id r6mr15283767wrt.290.1559854638401;
-        Thu, 06 Jun 2019 13:57:18 -0700 (PDT)
-Received: from ?IPv6:2a02:587:1936:1900:9d54:196a:5d8d:4379? ([2a02:587:1936:1900:9d54:196a:5d8d:4379])
-        by smtp.googlemail.com with ESMTPSA id x11sm45119wmg.23.2019.06.06.13.57.16
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 06 Jun 2019 13:57:17 -0700 (PDT)
-Subject: Re: [PATCH] Revert "media: hfi_parser: don't trick gcc with a wrong
- expected size"
-To:     Jonathan Marek <jonathan@marek.ca>
-Cc:     Andy Gross <agross@kernel.org>,
-        David Brown <david.brown@linaro.org>,
-        Mauro Carvalho Chehab <mchehab@kernel.org>,
-        "open list:QUALCOMM VENUS VIDEO ACCELERATOR DRIVER" 
-        <linux-media@vger.kernel.org>,
-        "open list:QUALCOMM VENUS VIDEO ACCELERATOR DRIVER" 
-        <linux-arm-msm@vger.kernel.org>,
-        open list <linux-kernel@vger.kernel.org>
-References: <20190605201941.4150-1-jonathan@marek.ca>
-From:   Stanimir Varbanov <stanimir.varbanov@linaro.org>
-Message-ID: <59d458b5-8c29-1c66-ea39-b678889e25cc@linaro.org>
-Date:   Thu, 6 Jun 2019 23:57:16 +0300
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.6.1
+        id S1727021AbfFFXAv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 6 Jun 2019 19:00:51 -0400
+Received: from mail.kernel.org ([198.145.29.99]:45944 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726352AbfFFXAv (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 6 Jun 2019 19:00:51 -0400
+Received: from kernel.org (unknown [104.132.0.74])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by mail.kernel.org (Postfix) with ESMTPSA id 2F33720645;
+        Thu,  6 Jun 2019 23:00:50 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=default; t=1559862050;
+        bh=A2CuOolZBDK0Z3relfnI07Z/gnbTneghKbkRvdlGm3k=;
+        h=In-Reply-To:References:To:From:Subject:Cc:Date:From;
+        b=YPTYWA7Vd0sPaZNRyWtc/92OXwKwg9OT3pB847NFm0o9iDF9nfdg8fVMgvED/Pkfk
+         1VL7Wmd8s+t4afWGIqrccCUMimewhaJMvcNqlJ3bsxi5tV3BvSvvHUYQy+c8t7meV6
+         Mblbc7xMXzts2DiX4kqPkf4nphq4ynOe4XTgZavA=
+Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
-In-Reply-To: <20190605201941.4150-1-jonathan@marek.ca>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <20190528164803.38642-1-jeffrey.l.hugo@gmail.com>
+References: <20190528164616.38517-1-jeffrey.l.hugo@gmail.com> <20190528164803.38642-1-jeffrey.l.hugo@gmail.com>
+To:     Jeffrey Hugo <jeffrey.l.hugo@gmail.com>, mturquette@baylibre.com
+From:   Stephen Boyd <sboyd@kernel.org>
+Subject: Re: [PATCH 2/3] clk: qcom: Add MSM8998 GPU Clock Controller (GPUCC) driver
+Cc:     agross@kernel.org, david.brown@linaro.org,
+        bjorn.andersson@linaro.org, robh+dt@kernel.org,
+        mark.rutland@arm.com, marc.w.gonzalez@free.fr,
+        jcrouse@codeaurora.org, linux-arm-msm@vger.kernel.org,
+        linux-clk@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org,
+        Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
+User-Agent: alot/0.8.1
+Date:   Thu, 06 Jun 2019 16:00:49 -0700
+Message-Id: <20190606230050.2F33720645@mail.kernel.org>
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Jonathan,
+Quoting Jeffrey Hugo (2019-05-28 09:48:03)
+> diff --git a/drivers/clk/qcom/gpucc-msm8998.c b/drivers/clk/qcom/gpucc-ms=
+m8998.c
+> new file mode 100644
+> index 000000000000..e45062e40718
+> --- /dev/null
+> +++ b/drivers/clk/qcom/gpucc-msm8998.c
+> +
+> +static int gpucc_msm8998_probe(struct platform_device *pdev)
+> +{
+> +       struct regmap *regmap;
+> +       struct clk *xo;
+> +
+> +       /*
+> +        * We must have a valid XO to continue until orphan probe defer is
+> +        * implemented.
+> +        */
+> +       xo =3D clk_get(&pdev->dev, "xo");
 
-I sent a fix for that here [1] and Mauro already taken it.
+Why is this necessary?
 
-regards,
-Stan
+> +       if (IS_ERR(xo))
+> +               return PTR_ERR(xo);
+> +       clk_put(xo);
+> +
+> +       regmap =3D qcom_cc_map(pdev, &gpucc_msm8998_desc);
+> +       if (IS_ERR(regmap))
+> +               return PTR_ERR(regmap);
+> +
+> +       /* force periph logic on to acoid perf counter corruption */
 
-[1] https://patchwork.kernel.org/patch/10963369/
+avoid?
 
-On 5.06.19 г. 23:19 ч., Jonathan Marek wrote:
-> This reverts commit ded716267196862809e5926072adc962a611a1e3.
-> 
-> This change doesn't make any sense and breaks the driver.
-> 
-> Signed-off-by: Jonathan Marek <jonathan@marek.ca>
-> ---
->   drivers/media/platform/qcom/venus/hfi_helper.h | 4 ++--
->   1 file changed, 2 insertions(+), 2 deletions(-)
-> 
-> diff --git a/drivers/media/platform/qcom/venus/hfi_helper.h b/drivers/media/platform/qcom/venus/hfi_helper.h
-> index 34ea503a9842..15804ad7e65d 100644
-> --- a/drivers/media/platform/qcom/venus/hfi_helper.h
-> +++ b/drivers/media/platform/qcom/venus/hfi_helper.h
-> @@ -569,7 +569,7 @@ struct hfi_capability {
->   
->   struct hfi_capabilities {
->   	u32 num_capabilities;
-> -	struct hfi_capability *data;
-> +	struct hfi_capability data[1];
->   };
->   
->   #define HFI_DEBUG_MSG_LOW	0x01
-> @@ -726,7 +726,7 @@ struct hfi_profile_level {
->   
->   struct hfi_profile_level_supported {
->   	u32 profile_count;
-> -	struct hfi_profile_level *profile_level;
-> +	struct hfi_profile_level profile_level[1];
->   };
->   
->   struct hfi_quality_vs_speed {
-> 
+> +       regmap_write_bits(regmap, gfx3d_clk.clkr.enable_reg, BIT(13), BIT=
+(13));
+> +       /* tweak droop detector (GPUCC_GPU_DD_WRAP_CTRL) to reduce leakag=
+e */
+> +       regmap_write_bits(regmap, gfx3d_clk.clkr.enable_reg, BIT(0), BIT(=
+0));
+> +
+> +       return qcom_cc_really_probe(pdev, &gpucc_msm8998_desc, regmap);
+> +}
+> +
