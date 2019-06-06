@@ -2,59 +2,59 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id C658537CB8
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Jun 2019 20:52:34 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id ACCC737CBD
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Jun 2019 20:53:13 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726998AbfFFSwa (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 6 Jun 2019 14:52:30 -0400
-Received: from mail-pl1-f194.google.com ([209.85.214.194]:38370 "EHLO
-        mail-pl1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726893AbfFFSw3 (ORCPT
+        id S1727808AbfFFSww (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 6 Jun 2019 14:52:52 -0400
+Received: from mail-pg1-f194.google.com ([209.85.215.194]:36596 "EHLO
+        mail-pg1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727572AbfFFSww (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 6 Jun 2019 14:52:29 -0400
-Received: by mail-pl1-f194.google.com with SMTP id f97so1279320plb.5;
-        Thu, 06 Jun 2019 11:52:29 -0700 (PDT)
+        Thu, 6 Jun 2019 14:52:52 -0400
+Received: by mail-pg1-f194.google.com with SMTP id a3so1861195pgb.3;
+        Thu, 06 Jun 2019 11:52:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=ShYV+EbWvX524xQNClO0SMbhJ4ngTe/5gGFiTlAJkmg=;
-        b=nf1Vgu5nL4tLoizqDxbhb3lSAkF7+BQSN8P3rCgdFMiMozj7zIgNZFuExpn2BwEuJg
-         Jm8B5wndn617akK85HdovJPPR85poikWLHkpMF2AwuxvpwXN71Uy6fJ2kVVwr+HMpPVS
-         bCQBJQOWaXrpKo/mCuoJAJqgU9y5twDOsVzKl57fw2dJfQRg6766632s8jdCgNGBnSIA
-         DUL+6Z8kYja5TLQtDNh5l3PybMeyuqRS8Kiv4K19H/YnRI5JluI6upg+L5Qwyenkj1KL
-         8ng1EucC4B0QuPX8H50H6AF7yYQdgblWzaXvq/LpYTq50b7p5aSDlCp9TRFy4/+5mfeE
-         cWqw==
+        bh=2QCsw+gA+NPdEFQB5c0NGkHe0GOzzrEqSJ0EJ9N8L18=;
+        b=IOrFsGzE/OkoIoODg5tlLMkjPi1INtt/OoS3GPP9Zq6RTNQRUtJUTiCcAtIX1EtQ+6
+         JHuj52dRXNqJoIWEXaLh5i9Rl0i7nspdUHmxfqyg9kpEtg0Gsl7p1n7Yj3BJQqSAEGS6
+         FFcVIsajLeL77M6tkFE26b2QaAhQ+FSmt2TvSw0M/GyErD3MJ0ZI839kmiYoviSB321r
+         WsJ9jBad8Cxp7+MHjhhcYlEISsRk4bMh0y+CQDHo+gwbNmFTUIBfZlqtggGy0cCUqGP4
+         qKiBy6QCXhFiZi2sqA4UMxAMDRfVL1tEDbtbIStzFSkvtXqMx3kAKOagb8DNcQXvffSk
+         0B2g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=ShYV+EbWvX524xQNClO0SMbhJ4ngTe/5gGFiTlAJkmg=;
-        b=BCD/CqsevsC5ZsNL0kLRGifFiH9oY37qKqa7YYH3YLv/+1tCf8DMQLAbhLdz234Zy0
-         Cgu8g5R7+AEH6eWemyvbI+PU7WBHmz4FA44iipxaNN0KhLK6E/SOIKfJdnpxY4iPS8Ki
-         T0RHuupAKuU20toYQtIjaGwb+hh/wzoN8mFKTNm403xN47g30o9Br08u6UX/QpAzfAxU
-         LiO1nrGkzuTK5MI7v5YpeKFZwPZT/v1srJ3XW617S+aocG3iZ6Qf/7vjbw6JCYIR5BRd
-         S+x5NPvfVETwMeIPMZ1NFAJt19pDzUr4s4JuLxhkfvcCFxyYB9OPOuRALQrnLmR5g/Kr
-         BZsA==
-X-Gm-Message-State: APjAAAVoLp3Uou+Wm4ydX/su8pdslbr75/p3g3ts7DKUh5MCwZelf3mi
-        sfIMrhCzKk1yBcHfiqHV0/E=
-X-Google-Smtp-Source: APXvYqyx0gdIdFdS/4/9VKqby1kiCqBbScwjiyBC/xfoXyefv5AaVKvHb4INBDbKvonQF2wCBMlJUw==
-X-Received: by 2002:a17:902:3064:: with SMTP id u91mr52245703plb.244.1559847149252;
-        Thu, 06 Jun 2019 11:52:29 -0700 (PDT)
+        bh=2QCsw+gA+NPdEFQB5c0NGkHe0GOzzrEqSJ0EJ9N8L18=;
+        b=p0HMUDVuRv0fTgWMSjtxIvG6xW/UY9a8d8a+47cl6xsQO7FApziyPy+6PhfemVdwDR
+         iOiEyN9y99tnmhmclfct92OPwGL60vHL5xdCrgLgphwg3xrlCTwl17ArphdBUpcT31KO
+         ES9sXOKLLhReJV56fTjrQ3BXcugmkKUwsJNoOzqr7e/sTOszp6yn98g8QAgD6mEfR2G5
+         eyUBWuqeL2W//90pQaGe0b9g8jKk7SGuShSPiea0U9I9mFaGfCmhdrSXD7rbwq508ZVt
+         LXfqAtT93NA9XvCCyRk8VwcxktTSkcZBUXtzXacJkragEpT2Aev191YAr6qTjtsPb3EC
+         MBiA==
+X-Gm-Message-State: APjAAAW0WWRSnfAMMuuYk8xPUBhaJCzULO5XDbWVf6jE41zII5wXmDXa
+        ejBov9sJywLhzd0E1ljZjDE=
+X-Google-Smtp-Source: APXvYqxiBiy6dJlmeu3uMScnISQG7sRB0defVl8xmI3tP+rGO5gTCvmoUUVi4dQrvk7MoDYV/SAx7g==
+X-Received: by 2002:a65:4c07:: with SMTP id u7mr6071pgq.93.1559847171593;
+        Thu, 06 Jun 2019 11:52:51 -0700 (PDT)
 Received: from aw-bldr-10.qualcomm.com (i-global254.qualcomm.com. [199.106.103.254])
-        by smtp.gmail.com with ESMTPSA id d10sm6175332pgh.43.2019.06.06.11.52.27
+        by smtp.gmail.com with ESMTPSA id x8sm3136807pfa.46.2019.06.06.11.52.50
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 06 Jun 2019 11:52:28 -0700 (PDT)
+        Thu, 06 Jun 2019 11:52:51 -0700 (PDT)
 From:   Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
-To:     agross@kernel.org, david.brown@linaro.org,
-        bjorn.andersson@linaro.org
-Cc:     lgirdwood@gmail.com, broonie@kernel.org, robh+dt@kernel.org,
+To:     lgirdwood@gmail.com, broonie@kernel.org
+Cc:     agross@kernel.org, david.brown@linaro.org,
+        bjorn.andersson@linaro.org, robh+dt@kernel.org,
         mark.rutland@arm.com, jorge.ramirez-ortiz@linaro.org,
         niklas.cassel@linaro.org, linux-arm-msm@vger.kernel.org,
         linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
         Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
-Subject: [PATCH v2 5/7] arm64: dts: msm8998-mtp: Add pm8005_s1 regulator
-Date:   Thu,  6 Jun 2019 11:51:03 -0700
-Message-Id: <20190606185103.39788-1-jeffrey.l.hugo@gmail.com>
+Subject: [PATCH v2 6/7] dt-bindings: qcom_spmi: Document pms405 support
+Date:   Thu,  6 Jun 2019 11:51:26 -0700
+Message-Id: <20190606185126.39839-1-jeffrey.l.hugo@gmail.com>
 X-Mailer: git-send-email 2.17.1
 In-Reply-To: <20190606184842.39484-1-jeffrey.l.hugo@gmail.com>
 References: <20190606184842.39484-1-jeffrey.l.hugo@gmail.com>
@@ -63,45 +63,59 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The pm8005_s1 is VDD_GFX, and needs to be on to enable the GPU.
-This should be hooked up to the GPU CPR, but we don't have support for that
-yet, so until then, just turn on the regulator and keep it on so that we
-can focus on basic GPU bringup.
+From: Jorge Ramirez <jorge.ramirez-ortiz@linaro.org>
 
+The PMS405 supports 5 SMPS and 13 LDO regulators.
+
+Signed-off-by: Jorge Ramirez-Ortiz <jorge.ramirez-ortiz@linaro.org>
+Reviewed-by: Rob Herring <robh@kernel.org>
 Signed-off-by: Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
-Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
 ---
- arch/arm64/boot/dts/qcom/msm8998-mtp.dtsi | 17 +++++++++++++++++
- 1 file changed, 17 insertions(+)
+ .../regulator/qcom,spmi-regulator.txt         | 24 +++++++++++++++++++
+ 1 file changed, 24 insertions(+)
 
-diff --git a/arch/arm64/boot/dts/qcom/msm8998-mtp.dtsi b/arch/arm64/boot/dts/qcom/msm8998-mtp.dtsi
-index f09f3e03f708..108667ce4f31 100644
---- a/arch/arm64/boot/dts/qcom/msm8998-mtp.dtsi
-+++ b/arch/arm64/boot/dts/qcom/msm8998-mtp.dtsi
-@@ -27,6 +27,23 @@
- 	status = "okay";
- };
+diff --git a/Documentation/devicetree/bindings/regulator/qcom,spmi-regulator.txt b/Documentation/devicetree/bindings/regulator/qcom,spmi-regulator.txt
+index ba94bc2d407a..19cffb239094 100644
+--- a/Documentation/devicetree/bindings/regulator/qcom,spmi-regulator.txt
++++ b/Documentation/devicetree/bindings/regulator/qcom,spmi-regulator.txt
+@@ -10,6 +10,7 @@ Qualcomm SPMI Regulators
+ 			"qcom,pm8941-regulators"
+ 			"qcom,pm8994-regulators"
+ 			"qcom,pmi8994-regulators"
++			"qcom,pms405-regulators"
  
-+&pm8005_lsid1 {
-+	pm8005-regulators {
-+		compatible = "qcom,pm8005-regulators";
-+
-+		vdd_s1-supply = <&vph_pwr>;
-+
-+		pm8005_s1: s1 { /* VDD_GFX supply */
-+			regulator-min-microvolt = <524000>;
-+			regulator-max-microvolt = <1100000>;
-+			regulator-enable-ramp-delay = <500>;
-+
-+			/* hack until we rig up the gpu consumer */
-+			regulator-always-on;
-+		};
-+	};
-+};
-+
- &qusb2phy {
- 	status = "okay";
+ - interrupts:
+ 	Usage: optional
+@@ -111,6 +112,29 @@ Qualcomm SPMI Regulators
+ 	Definition: Reference to regulator supplying the input pin, as
+ 		    described in the data sheet.
  
++- vdd_s1-supply:
++- vdd_s2-supply:
++- vdd_s3-supply:
++- vdd_s4-supply:
++- vdd_s5-supply:
++- vdd_l1-supply:
++- vdd_l2-supply:
++- vdd_l3-supply:
++- vdd_l4-supply:
++- vdd_l5-supply:
++- vdd_l6-supply:
++- vdd_l7-supply:
++- vdd_l8-supply:
++- vdd_l9-supply:
++- vdd_l10-supply:
++- vdd_l11-supply:
++- vdd_l12-supply:
++- vdd_l13-supply:
++	Usage: optional (pms405 only)
++	Value type: <phandle>
++	Definition: Reference to regulator supplying the input pin, as
++		    described in the data sheet.
++
+ - qcom,saw-reg:
+ 	Usage: optional
+ 	Value type: <phandle>
 -- 
 2.17.1
 
