@@ -2,176 +2,191 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id C05F03720A
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Jun 2019 12:50:24 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 6F0713729D
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Jun 2019 13:17:33 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727097AbfFFKuX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 6 Jun 2019 06:50:23 -0400
-Received: from foss.arm.com ([217.140.101.70]:45292 "EHLO foss.arm.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1725784AbfFFKuX (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 6 Jun 2019 06:50:23 -0400
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.72.51.249])
-        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id DA9FFA78;
-        Thu,  6 Jun 2019 03:50:22 -0700 (PDT)
-Received: from e105550-lin.cambridge.arm.com (usa-sjc-imap-foss1.foss.arm.com [10.72.51.249])
-        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 383063F690;
-        Thu,  6 Jun 2019 03:50:20 -0700 (PDT)
-Date:   Thu, 6 Jun 2019 11:50:17 +0100
-From:   Morten Rasmussen <morten.rasmussen@arm.com>
-To:     Vincent Guittot <vincent.guittot@linaro.org>
-Cc:     Dietmar Eggemann <dietmar.eggemann@arm.com>,
-        Quentin Perret <quentin.perret@arm.com>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Amit Kucheria <amit.kucheria@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Matthias Kaehlcke <mka@chromium.org>,
-        David Brown <david.brown@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Mark Rutland <mark.rutland@arm.com>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        "open list:ARM/QUALCOMM SUPPORT" <linux-soc@vger.kernel.org>,
-        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
-        <devicetree@vger.kernel.org>, LKML <linux-kernel@vger.kernel.org>,
-        Douglas Anderson <dianders@chromium.org>,
-        Rajendra Nayak <rnayak@codeaurora.org>
-Subject: Re: [PATCH] arm64: dts: sdm845: Add CPU topology
-Message-ID: <20190606105017.GD10919@e105550-lin.cambridge.arm.com>
-References: <CAHLCerPZ0Y-rkeMa_7BJWtR4g5af2vwfPY9FgOuvpUTJG3rf7g@mail.gmail.com>
- <155786856719.14659.2902538189660269078@swboyd.mtv.corp.google.com>
- <CAHLCerP69Jw27VyO+ek4Fe3-2fDiOejtz6XZPykPSRA2G1831w@mail.gmail.com>
- <5cdf2dc8.1c69fb81.521c8.9339@mx.google.com>
- <20190605172048.ahzusevvdxrpnebk@queper01-ThinkPad-T460s>
- <CAKfTPtCR360osDz3oW+XhHT1R12SacAuJ44W_NfFOPWxJFjOPg@mail.gmail.com>
- <20190606074921.43mbinemk3j565yu@queper01-ThinkPad-T460s>
- <CAKfTPtA9WDOH3UzU-Qz4AqhLNGkOPo9EFkTHXGqTq7qsrec_JA@mail.gmail.com>
- <9267b9ed-89b0-7b71-88a2-ca1894d4c497@arm.com>
- <CAKfTPtAc=aOD=ukuPKhEL_gBSeb9DJaK-oYAPg1MWNcr-6HLQw@mail.gmail.com>
+        id S1726836AbfFFLRc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 6 Jun 2019 07:17:32 -0400
+Received: from smtp.codeaurora.org ([198.145.29.96]:58952 "EHLO
+        smtp.codeaurora.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726092AbfFFLRc (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 6 Jun 2019 07:17:32 -0400
+Received: by smtp.codeaurora.org (Postfix, from userid 1000)
+        id 20C0260A97; Thu,  6 Jun 2019 11:17:31 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
+        s=default; t=1559819851;
+        bh=44FYV19hER2OKPFePIbE2vYYVMSTWXADeWEp8M56/AI=;
+        h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
+        b=apeLxYtwa2KnIJ2NT4qZc5+2anZ9I8dhSoi2ERsbE0hZLkee4tASrDdeAA6GmXhaz
+         NW2eDbK+WWuNUp4CQNrja90ROpc5S9tk2vURgt8YGVL/xQ3vjJNu1qHGIx6Ameypfn
+         FsPGNbqmz4sU+niQVhaxozhQlwRge3PgjHDu5EKM=
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        pdx-caf-mail.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.7 required=2.0 tests=ALL_TRUSTED,BAYES_00,
+        DKIM_INVALID,DKIM_SIGNED,SPF_NONE autolearn=no autolearn_force=no
+        version=3.4.0
+Received: from mail-ed1-f53.google.com (mail-ed1-f53.google.com [209.85.208.53])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: vivek.gautam@smtp.codeaurora.org)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id E7F2D6063A;
+        Thu,  6 Jun 2019 11:17:29 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
+        s=default; t=1559819850;
+        bh=44FYV19hER2OKPFePIbE2vYYVMSTWXADeWEp8M56/AI=;
+        h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
+        b=M1M6GE79MO4dwRGVPw6dX44nWzVEYMupVmzwDTVnGZjF9IzERYLotzigSVZBdxVN+
+         5ikBRSjgLMX+LYqdiuRPh0TrCiXI66kS5aHGeHRd2DoPseMpzZ0aR5UlRQC7vB6TR1
+         C4fxI+K5H1cPbsEdEvdD/UfYTi135CxUhV6RKOt0=
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org E7F2D6063A
+Authentication-Results: pdx-caf-mail.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: pdx-caf-mail.web.codeaurora.org; spf=none smtp.mailfrom=vivek.gautam@codeaurora.org
+Received: by mail-ed1-f53.google.com with SMTP id r18so2777395edo.7;
+        Thu, 06 Jun 2019 04:17:29 -0700 (PDT)
+X-Gm-Message-State: APjAAAVrNhJ0N77bUZzO8wrq65ICXKJno5OEHFIdTTQdRs3Y9N/UVGa8
+        W1sRoDe1imCh7WYHONGyrNaZciRFL3V2h2g9PFg=
+X-Google-Smtp-Source: APXvYqwklxrrrs8SWvaSCMxC+Og7VzvNs6WCp3Va3dO+SqGYHV81qhQaGPqVo0WZDXo7IgykaSwgCatdbbsvwSmowQI=
+X-Received: by 2002:a17:906:3c1:: with SMTP id c1mr33330161eja.221.1559819848628;
+ Thu, 06 Jun 2019 04:17:28 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CAKfTPtAc=aOD=ukuPKhEL_gBSeb9DJaK-oYAPg1MWNcr-6HLQw@mail.gmail.com>
-User-Agent: Mutt/1.5.24 (2015-08-30)
+References: <20190604222939.195471-1-swboyd@chromium.org> <20190604223700.GE4814@minitux>
+ <5cf6f4bb.1c69fb81.c39da.5496@mx.google.com> <CAFp+6iHZeawnz7Vfk3=Oox-GN_y6c-E9wMwc-qdp1bTOXgqjFQ@mail.gmail.com>
+ <5cf82c6f.1c69fb81.9e342.dbda@mx.google.com>
+In-Reply-To: <5cf82c6f.1c69fb81.9e342.dbda@mx.google.com>
+From:   Vivek Gautam <vivek.gautam@codeaurora.org>
+Date:   Thu, 6 Jun 2019 16:47:16 +0530
+X-Gmail-Original-Message-ID: <CAFp+6iE8FUXxexKbYy=ak+se-pj1XXUZxTu5o=hJvg66V6+Rzw@mail.gmail.com>
+Message-ID: <CAFp+6iE8FUXxexKbYy=ak+se-pj1XXUZxTu5o=hJvg66V6+Rzw@mail.gmail.com>
+Subject: Re: [PATCH] arm64: dts: sdm845: Add iommus property to qup1
+To:     Stephen Boyd <swboyd@chromium.org>
+Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        open list <linux-kernel@vger.kernel.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        Sibi Sankar <sibis@codeaurora.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Jun 06, 2019 at 10:44:58AM +0200, Vincent Guittot wrote:
-> On Thu, 6 Jun 2019 at 10:34, Dietmar Eggemann <dietmar.eggemann@arm.com> wrote:
-> >
-> > On 6/6/19 10:20 AM, Vincent Guittot wrote:
-> > > On Thu, 6 Jun 2019 at 09:49, Quentin Perret <quentin.perret@arm.com> wrote:
-> > >>
-> > >> Hi Vincent,
-> > >>
-> > >> On Thursday 06 Jun 2019 at 09:05:16 (+0200), Vincent Guittot wrote:
-> > >>> Hi Quentin,
-> > >>>
-> > >>> On Wed, 5 Jun 2019 at 19:21, Quentin Perret <quentin.perret@arm.com> wrote:
-> > >>>>
-> > >>>> On Friday 17 May 2019 at 14:55:19 (-0700), Stephen Boyd wrote:
-> > >>>>> Quoting Amit Kucheria (2019-05-16 04:54:45)
-> > >>>>>> (cc'ing Andy's correct email address)
-> > >>>>>>
-> > >>>>>> On Wed, May 15, 2019 at 2:46 AM Stephen Boyd <swboyd@chromium.org> wrote:
-> > >>>>>>>
-> > >>>>>>> Quoting Amit Kucheria (2019-05-13 04:54:12)
-> > >>>>>>>> On Mon, May 13, 2019 at 4:31 PM Amit Kucheria <amit.kucheria@linaro.org> wrote:
-> > >>>>>>>>>
-> > >>>>>>>>> On Tue, Jan 15, 2019 at 12:13 AM Matthias Kaehlcke <mka@chromium.org> wrote:
-> > >>>>>>>>>>
-> > >>>>>>>>>> The 8 CPU cores of the SDM845 are organized in two clusters of 4 big
-> > >>>>>>>>>> ("gold") and 4 little ("silver") cores. Add a cpu-map node to the DT
-> > >>>>>>>>>> that describes this topology.
-> > >>>>>>>>>
-> > >>>>>>>>> This is partly true. There are two groups of gold and silver cores,
-> > >>>>>>>>> but AFAICT they are in a single cluster, not two separate ones. SDM845
-> > >>>>>>>>> is one of the early examples of ARM's Dynamiq architecture.
-> > >>>>>>>>>
-> > >>>>>>>>>> Signed-off-by: Matthias Kaehlcke <mka@chromium.org>
-> > >>>>>>>>>
-> > >>>>>>>>> I noticed that this patch sneaked through for this merge window but
-> > >>>>>>>>> perhaps we can whip up a quick fix for -rc2?
-> > >>>>>>>>>
-> > >>>>>>>>
-> > >>>>>>>> And please find attached a patch to fix this up. Andy, since this
-> > >>>>>>>> hasn't landed yet (can we still squash this into the original patch?),
-> > >>>>>>>> I couldn't add a Fixes tag.
-> > >>>>>>>>
-> > >>>>>>>
-> > >>>>>>> I had the same concern. Thanks for catching this. I suspect this must
-> > >>>>>>> cause some problem for IPA given that it can't discern between the big
-> > >>>>>>> and little "power clusters"?
-> > >>>>>>
-> > >>>>>> Both EAS and IPA, I believe. It influences the scheduler's view of the
-> > >>>>>> the topology.
-> > >>>>>
-> > >>>>> And EAS and IPA are OK with the real topology? I'm just curious if
-> > >>>>> changing the topology to reflect reality will be a problem for those
-> > >>>>> two.
-> > >>>>
-> > >>>> FWIW, neither EAS nor IPA depends on this. Not the upstream version of
-> > >>>> EAS at least (which is used in recent Android kernels -- 4.19+).
-> > >>>>
-> > >>>> But doing this is still required for other things in the scheduler (the
-> > >>>> so-called 'capacity-awareness' code). So until we have a better
-> > >>>> solution, this patch is doing the right thing.
-> > >>>
-> > >>> I'm not sure to catch what you mean ?
-> > >>> Which so-called 'capacity-awareness' code are you speaking about ? and
-> > >>> what is the problem ?
-> > >>
-> > >> I'm talking about the wake-up path. ATM select_idle_sibling() is totally
-> > >> unaware of capacity differences. In its current form, this function
-> > >> basically assumes that all CPUs in a given sd_llc have the same
-> > >> capacity, which would be wrong if we had a single MC level for SDM845.
-> > >> So, until select_idle_sibling() is 'fixed' to be capacity-aware, we need
-> > >> two levels of sd for asymetric systems (including DynamIQ) so the
-> > >> wake_cap() story actually works.
-> > >>
-> > >> I hope that clarifies it :)
+Hi Stephen,
+
+On Thu, Jun 6, 2019 at 2:27 AM Stephen Boyd <swboyd@chromium.org> wrote:
+>
+> Quoting Vivek Gautam (2019-06-04 21:55:26)
+> > On Wed, Jun 5, 2019 at 4:16 AM Stephen Boyd <swboyd@chromium.org> wrote:
 > > >
-> > > hmm... does this justifies this wrong topology ?
-
-No, it doesn't. It relies heavily on how nested clusters are interpreted
-too, so it is quite fragile.
-
-> > > select_idle_sibling() is called only when system is overloaded and
-> > > scheduler disables the EAS path
-> > > In this case, the scheduler looks either for an idle cpu or for evenly
-> > > spreading the loads
-> > > This is maybe not always optimal and should probably be fixed but
-> > > doesn't justifies a wrong topology description IMHO
+> > > Quoting Bjorn Andersson (2019-06-04 15:37:00)
+> > > > On Tue 04 Jun 15:29 PDT 2019, Stephen Boyd wrote:
+> > > >
+> > > > > The SMMU that sits in front of the QUP needs to be programmed properly
+> > > > > so that the i2c geni driver can allocate DMA descriptors. Failure to do
+> > > > > this leads to faults when using devices such as an i2c touchscreen where
+> > > > > the transaction is larger than 32 bytes and we use a DMA buffer.
+> > > > >
+> > > >
+> > > > I'm pretty sure I've run into this problem, but before we marked the
+> > > > smmu bypass_disable and as such didn't get the fault, thanks.
+> > > >
+> > > > >  arm-smmu 15000000.iommu: Unexpected global fault, this could be serious
+> > > > >  arm-smmu 15000000.iommu:         GFSR 0x00000002, GFSYNR0 0x00000002, GFSYNR1 0x000006c0, GFSYNR2 0x00000000
+> > > > >
+> > > > > Add the right SID and mask so this works.
+> > > > >
+> > > > > Cc: Sibi Sankar <sibis@codeaurora.org>
+> > > > > Signed-off-by: Stephen Boyd <swboyd@chromium.org>
+> > > > > ---
+> > > > >  arch/arm64/boot/dts/qcom/sdm845.dtsi | 1 +
+> > > > >  1 file changed, 1 insertion(+)
+> > > > >
+> > > > > diff --git a/arch/arm64/boot/dts/qcom/sdm845.dtsi b/arch/arm64/boot/dts/qcom/sdm845.dtsi
+> > > > > index fcb93300ca62..2e57e861e17c 100644
+> > > > > --- a/arch/arm64/boot/dts/qcom/sdm845.dtsi
+> > > > > +++ b/arch/arm64/boot/dts/qcom/sdm845.dtsi
+> > > > > @@ -900,6 +900,7 @@
+> > > > >                       #address-cells = <2>;
+> > > > >                       #size-cells = <2>;
+> > > > >                       ranges;
+> > > > > +                     iommus = <&apps_smmu 0x6c0 0x3>;
+> > > >
+> > > > According to the docs this stream belongs to TZ, the HLOS stream should
+> > > > be 0x6c3.
+> > >
+> > > Aye, I saw this line in the downstream kernel but it doesn't work for
+> > > me. If I specify <&apps_smmu 0x6c3 0x0> it still blows up. I wonder if
+> > > my firmware perhaps is missing some initialization here to make the QUP
+> > > operate in HLOS mode? Otherwise, I thought that the 0x3 at the end was
+> > > the mask and so it should be split off to the second cell in the DT
+> > > specifier but that seemed a little weird.
 > >
-> > The big/Little cluster detection in wake_cap() doesn't work anymore with
-> > DynamIQ w/o Phanton (DIE) domain. So the decision of going sis() or slow
-> > path is IMHO broken.
-> 
-> That's probably not the right thread to discuss this further but i'm
-> not sure to understand why wake_cap() doesn't work as it compares the
-> capacity_orig of local cpu and prev cpu which are the same whatever
-> the sche domainœ
+> > Two things here -
+> > 0x6c0 - TZ SID. Do you see above fault on MTP sdm845 devices?
+>
+> No. I see the above fault on Cheza.
 
-We have had this discussion a couple of times over the last couple of
-years. The story, IIRC, is that when we introduced capacity awareness in
-the wake-up path (wake_cap()) we realised (I think it was actually you)
-that we could use select_idle_sibling() in cases where we know that the
-search space is limited to cpus with sufficient capacity so we didn't
-have to take the long route through find_idlest_cpu(). Back then, big
-and little were grouped by clusters so it was "safe" to use
-select_idle_sibling() on cpu or prev_cpu if they have sufficient
-capacity.
+Right, expected.
 
-With DynamiQ the true topology on many systems is just one cluster and
-hence using select_idle_sibling() there means search space includes all
-cpu types which isn't "safe" if you have a task requiring more capacity
-than can be offered by any cpu in the system. We need to use the
-find_idlest_cpu() path on more cases than we do today.
+>
+> > 0x6c3/0x6c6 - HLOS SIDs.
 
-All the code is there I think, we just have to tweak some conditions. I
-can try to come up with a simple fix we can discuss and refine as
-necessary.
+My bad, the other SID is 0x6D6.
 
-Morten
+>
+> Why are there two? I see some mentions of GSI mode near these SIDs so
+> maybe GSI has to be used for DMA here to get the above two SIDs at the
+> IOMMU? Otherwise if we do the non-GSI mode of DMA we're going to use the
+> "TZ" SID?
+
+Yea, one for GSI, and the other one for non-GSI DMA. I am unsure at this point
+about the use of TZ SID, but i would assume this is the SID that's used by the
+qup firmware, and therefore on MTP TZ programs this SID.
+
+>
+> >
+> > Cheza will throw faults for anything that is programmed with TZ on mtp
+> > as all of that should be handled in HLOS. The firmwares of all these
+> > peripherals assume that the SID reservation is done (whether in TZ or HLOS).
+> >
+> > I am inclined to moving the iommus property for all 'TZ' to board dts files.
+> > MTP wouldn't need those SIDs. So, the SOC level dtsi will have just the
+> > HLOS SIDs.
+>
+> So you're saying you'd like to have the SID be <&apps_smmu 0x6c3 0x0> in
+> the sdm845.dtsi file and then override this on Cheza because our SID is
+> different (possibly because we don't use GSI)? Why can't we program the
+> SID in Cheza firmware to match the "HLOS" SID of 0x6c3?
+
+Sorry my bad, I missed the overriding part.
+May be we add the lists of SIDs in board dts only. So, cheza dts will
+have all these SIDs -
+<&apps_smmu 0x6c0 0x3>   // for both 0x6c0 (TZ) and 0x6c3 (HLOS)
+<&apps_smmu 0x6d6 0x0>   // if we want to use the GSI dma.
+and
+MTP will have
+<&apps_smmu 0x6c3 0x0>
+<&apps_smmu 0x6d6 0x0>
+WDUT?
+
+>
+> >
+> > P.S.
+> > As you rightly said, the second cell in iommus property is the mask so that
+> > the iommu is able to reserve all that SIDs that are covered with the
+> > starting SID
+> > and the mask.
+> >
+>
+> Well if 0x6c6 is another possibility maybe it should be <&apps_smmu
+> 0x6c0 0x7> to cover the 0x6c3 and 0x6c6 SIDs?
+
+The other SID was 0x6D6.
+
+Best regards
+Vivek
+
+-- 
+QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
+of Code Aurora Forum, hosted by The Linux Foundation
