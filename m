@@ -2,126 +2,137 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id B27E036C5F
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Jun 2019 08:36:36 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 6CD6436CED
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Jun 2019 09:05:35 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726379AbfFFGga (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 6 Jun 2019 02:36:30 -0400
-Received: from esa2.hgst.iphmx.com ([68.232.143.124]:12850 "EHLO
-        esa2.hgst.iphmx.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725267AbfFFGga (ORCPT
+        id S1726699AbfFFHFb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 6 Jun 2019 03:05:31 -0400
+Received: from mail-lf1-f65.google.com ([209.85.167.65]:44081 "EHLO
+        mail-lf1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725947AbfFFHFa (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 6 Jun 2019 02:36:30 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple;
-  d=wdc.com; i=@wdc.com; q=dns/txt; s=dkim.wdc.com;
-  t=1559803027; x=1591339027;
-  h=from:to:cc:subject:date:message-id:references:
-   in-reply-to:content-transfer-encoding:mime-version;
-  bh=GROh4qCTdCjDOeNTyHdfWCyNWpdwRCHJ5JXYERWlgu0=;
-  b=LcmEO5ccA5R3PSpAdvlFBX9D2Rl46oBQQBrXh17CJIgev0B9pPavXGo0
-   tBGbmgFz8CAvjZuqhX0VLnhFmUjobZHV6cM1n+/lUHjugGnODX3cgcudw
-   6owL02qnvaAk0pAn5LIbVaLzgzZYsgtlUzQZP/Hca/HnJT9OuMbIafd5B
-   tBVWtFO4by7q209gB7JbPUrG5puAD7KmQUFOsJq0/n8XJcEHU1xiTJ3/3
-   ECAJbQ6l/Ara4fOSmJNi92FzhvgZIByFvGBib9HU9+uv0IoDSN7KOSnoF
-   V+ZscA37J1Ll4TxucJv2pz9gOMAeQmkKNQZtk3PWu8Qg8gMvsB4DCpRa/
-   w==;
-X-IronPort-AV: E=Sophos;i="5.63,558,1557158400"; 
-   d="scan'208";a="209549030"
-Received: from mail-dm3nam03lp2051.outbound.protection.outlook.com (HELO NAM03-DM3-obe.outbound.protection.outlook.com) ([104.47.41.51])
-  by ob1.hgst.iphmx.com with ESMTP; 06 Jun 2019 14:37:05 +0800
+        Thu, 6 Jun 2019 03:05:30 -0400
+Received: by mail-lf1-f65.google.com with SMTP id r15so720366lfm.11
+        for <linux-arm-msm@vger.kernel.org>; Thu, 06 Jun 2019 00:05:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=sharedspace.onmicrosoft.com; s=selector2-sharedspace-onmicrosoft-com;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=sdhSAoDoPtdHbdxwUQZniSOsm6I76sfh9IxmQMqTqks=;
- b=r85ctanC0fsTOgTMTSpXJQeucLOZXrTbELDDxPuNqbha/lpON5SeAUkdliMS2/TiDpilTRrdLy5eE17SFFhymJljpvIVaLoThnm1777p6y8tvW70XnBxHwvqiODJbqk0aKFfOAS+91ySGcU+qXrjzgYB2BMee7KmAI/8e4YTtU8=
-Received: from SN6PR04MB4925.namprd04.prod.outlook.com (52.135.114.82) by
- SN6PR04MB4158.namprd04.prod.outlook.com (52.135.71.28) with Microsoft SMTP
- Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.1943.21; Thu, 6 Jun 2019 06:36:22 +0000
-Received: from SN6PR04MB4925.namprd04.prod.outlook.com
- ([fe80::6d99:14d9:3fa:f530]) by SN6PR04MB4925.namprd04.prod.outlook.com
- ([fe80::6d99:14d9:3fa:f530%6]) with mapi id 15.20.1943.018; Thu, 6 Jun 2019
- 06:36:22 +0000
-From:   Avri Altman <Avri.Altman@wdc.com>
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        d=linaro.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=LxUuoqEbUmgmnRX9vLQxQ/tQ09ZsJx159pAs1BZjQQw=;
+        b=XE2mWnWbAi156xacpzGakgxd0XdnPCTjLko9UBbfOxI68vIwEY1UqU3DdVepHT2unK
+         IXFQuljTyQaBE63iTT06aLL+Gabw06PozTCJJyXbmKvvVShYaCMrd+a5URAFB89lEIrU
+         oH3FnL+nYHmx42QzFDxG5r+oZSqRevKAxlp0V/DFV++C/3xPhMUC2Woo4QjnWcxAJlx8
+         I81qqKzeu0gdR3REUvOrz+2QwvtvK3yIaokulPtppIRatORNpAjdXcyB35p+xAEy9RmN
+         y4ND6KqQT11fRSwVqXg03KLBPqqJX4YYaH2X4ZLxkTZKD4Y39fNVQOdJy8bB0sRlmd6C
+         qLgg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=LxUuoqEbUmgmnRX9vLQxQ/tQ09ZsJx159pAs1BZjQQw=;
+        b=jzZJXhZwtd+ToC93Cpwyt0tH8YquB5ggLxPDs6V8p1subuWyKd9pSvp8GCWCwKIcSk
+         Dgr2S54phuU0Js5D7YU+exiEIaVaDrDVO6aknep04x+geyN4AP8YaIQemHdyPXo3U+A8
+         IOD3DUgQf87u1ppeg1QsXQU46ukjbQVbJSD8/Gh3BIigU0Kwt3GyR6VyZxowUgKGOcKg
+         k7Vb1lLfEa+1yAB+lqONkf/jw9woDRc/9U++LSkPyooPlLN+2CabTgzFcoBzprCDU0QZ
+         NMXb+XQqqUozl50Ta6pXPyiBrFrAgRXZvN2JYqg3Oa1V9mNbBC8bJokp361f6Qlg47zK
+         jpvw==
+X-Gm-Message-State: APjAAAXBFX7CmEr8TReVwbPkwGm7BJiEBsCDIFQdrWhj41Xq+3vOkIdp
+        5klc04qUIo8+UbWOzacBRY1fNNPQLLDDw2J7hoqV6Q==
+X-Google-Smtp-Source: APXvYqxZCAlDmT5oc8zqUrM9LX+7zRm365sy7bvsFw5heno4p5UQD7LD9oIpvPIgG/H6nUWIJ0qyXLkVoeON3W+U3V8=
+X-Received: by 2002:a19:2892:: with SMTP id o140mr9068556lfo.177.1559804728178;
+ Thu, 06 Jun 2019 00:05:28 -0700 (PDT)
+MIME-Version: 1.0
+References: <20190114184255.258318-1-mka@chromium.org> <CAHLCerP+F9AP97+qVCMqwu-OMJXRhwZrXd33Wk-vj5eyyw-KyA@mail.gmail.com>
+ <CAHLCerPZ0Y-rkeMa_7BJWtR4g5af2vwfPY9FgOuvpUTJG3rf7g@mail.gmail.com>
+ <155786856719.14659.2902538189660269078@swboyd.mtv.corp.google.com>
+ <CAHLCerP69Jw27VyO+ek4Fe3-2fDiOejtz6XZPykPSRA2G1831w@mail.gmail.com>
+ <5cdf2dc8.1c69fb81.521c8.9339@mx.google.com> <20190605172048.ahzusevvdxrpnebk@queper01-ThinkPad-T460s>
+In-Reply-To: <20190605172048.ahzusevvdxrpnebk@queper01-ThinkPad-T460s>
+From:   Vincent Guittot <vincent.guittot@linaro.org>
+Date:   Thu, 6 Jun 2019 09:05:16 +0200
+Message-ID: <CAKfTPtCR360osDz3oW+XhHT1R12SacAuJ44W_NfFOPWxJFjOPg@mail.gmail.com>
+Subject: Re: [PATCH] arm64: dts: sdm845: Add CPU topology
+To:     Quentin Perret <quentin.perret@arm.com>
+Cc:     Stephen Boyd <swboyd@chromium.org>,
+        Amit Kucheria <amit.kucheria@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Matthias Kaehlcke <mka@chromium.org>,
+        David Brown <david.brown@linaro.org>,
         Rob Herring <robh+dt@kernel.org>,
         Mark Rutland <mark.rutland@arm.com>,
-        Alim Akhtar <alim.akhtar@samsung.com>,
-        Pedro Sousa <pedrom.sousa@synopsys.com>,
-        "James E.J. Bottomley" <jejb@linux.ibm.com>,
-        "Martin K. Petersen" <martin.petersen@oracle.com>
-CC:     Andy Gross <agross@kernel.org>,
-        Linus Walleij <linus.walleij@linaro.org>,
-        Evan Green <evgreen@chromium.org>,
-        "linux-arm-msm@vger.kernel.org" <linux-arm-msm@vger.kernel.org>,
-        "linux-gpio@vger.kernel.org" <linux-gpio@vger.kernel.org>,
-        "devicetree@vger.kernel.org" <devicetree@vger.kernel.org>,
-        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
-        "linux-scsi@vger.kernel.org" <linux-scsi@vger.kernel.org>
-Subject: RE: [PATCH v2 2/3] scsi: ufs: Allow resetting the UFS device
-Thread-Topic: [PATCH v2 2/3] scsi: ufs: Allow resetting the UFS device
-Thread-Index: AQHVHAOW/gPfCB+BCUqDoLF2sKUkJqaOK2sA
-Date:   Thu, 6 Jun 2019 06:36:22 +0000
-Message-ID: <SN6PR04MB4925FC3F1001326AA218DF21FC170@SN6PR04MB4925.namprd04.prod.outlook.com>
-References: <20190606010249.3538-1-bjorn.andersson@linaro.org>
- <20190606010249.3538-3-bjorn.andersson@linaro.org>
-In-Reply-To: <20190606010249.3538-3-bjorn.andersson@linaro.org>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-authentication-results: spf=none (sender IP is )
- smtp.mailfrom=Avri.Altman@wdc.com; 
-x-originating-ip: [212.25.79.133]
-x-ms-publictraffictype: Email
-x-ms-office365-filtering-correlation-id: 41b35a9c-4567-4f04-99d2-08d6ea494a7d
-x-ms-office365-filtering-ht: Tenant
-x-microsoft-antispam: BCL:0;PCL:0;RULEID:(2390118)(7020095)(4652040)(8989299)(4534185)(4627221)(201703031133081)(201702281549075)(8990200)(5600148)(711020)(4605104)(1401327)(4618075)(2017052603328)(7193020);SRVR:SN6PR04MB4158;
-x-ms-traffictypediagnostic: SN6PR04MB4158:
-wdcipoutbound: EOP-TRUE
-x-microsoft-antispam-prvs: <SN6PR04MB4158EF452179F86E542F9400FC170@SN6PR04MB4158.namprd04.prod.outlook.com>
-x-ms-oob-tlc-oobclassifiers: OLM:5236;
-x-forefront-prvs: 00603B7EEF
-x-forefront-antispam-report: SFV:NSPM;SFS:(10019020)(39860400002)(136003)(346002)(396003)(376002)(366004)(189003)(199004)(73956011)(76116006)(66446008)(66556008)(64756008)(66476007)(86362001)(66946007)(99286004)(14454004)(7416002)(74316002)(5660300002)(4326008)(6246003)(478600001)(68736007)(52536014)(256004)(102836004)(72206003)(305945005)(25786009)(71190400001)(71200400001)(7696005)(4744005)(6506007)(66066001)(53936002)(76176011)(186003)(2906002)(8676002)(81156014)(81166006)(8936002)(26005)(3846002)(55016002)(486006)(9686003)(110136005)(54906003)(6116002)(33656002)(7736002)(316002)(476003)(446003)(11346002)(6436002)(229853002);DIR:OUT;SFP:1102;SCL:1;SRVR:SN6PR04MB4158;H:SN6PR04MB4925.namprd04.prod.outlook.com;FPR:;SPF:None;LANG:en;PTR:InfoNoRecords;MX:1;A:1;
-x-ms-exchange-senderadcheck: 1
-x-microsoft-antispam-message-info: O5fXCumXJe8xh/1Hp2CY2EBrpkx9FbkYVpUAE8hwX2oD97nmXB9OQQ0b2zUuSuc0Y74A4G7oDbiORHOKwzTvoJQBNdWu0fqHv/EJuCj1GxdCyBQ7Et4lq6ky9OSZMrO2NZBO39uc22jBHDaQ3LV8lgDeTwiwOVFCvj86kSEJHKY0OjHwDblXP1KDw72uW0lVZoEz3fq+SZLRFeXxcEm0fCIzAY8oKEMBvpUuNKUIX4HHTkMohViLzpa33wd8OlpA6cJJFFZeGKsLc8wO3nJ2clndAtDjhnoBxcIWVDwkR/3woM1l05coO5GOBjaIPZWgp+Tb3OK0llWSyV+fNLjJvQ64bKg/WK8VVRDjUZc1ZS4Xz2oofqjvqSgJZcWjM8DmF1dvi4VXj7cwVEMqzSSUxU0NtajthYpOGAPhpCX9GPw=
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: quoted-printable
-MIME-Version: 1.0
-X-OriginatorOrg: wdc.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 41b35a9c-4567-4f04-99d2-08d6ea494a7d
-X-MS-Exchange-CrossTenant-originalarrivaltime: 06 Jun 2019 06:36:22.1322
- (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: b61c8803-16f3-4c35-9b17-6f65f441df86
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: Avri.Altman@wdc.com
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SN6PR04MB4158
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        "open list:ARM/QUALCOMM SUPPORT" <linux-soc@vger.kernel.org>,
+        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
+        <devicetree@vger.kernel.org>, LKML <linux-kernel@vger.kernel.org>,
+        Douglas Anderson <dianders@chromium.org>,
+        Rajendra Nayak <rnayak@codeaurora.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+Hi Quentin,
 
->  static int ufshcd_hba_init(struct ufs_hba *hba)
->  {
->  	int err;
-> @@ -7425,9 +7460,15 @@ static int ufshcd_hba_init(struct ufs_hba *hba)
->  	if (err)
->  		goto out_disable_vreg;
->=20
-> +	err =3D ufshcd_init_device_reset(hba);
-> +	if (err)
-> +		goto out_disable_variant;
-> +
->  	hba->is_powered =3D true;
->  	goto out;
->=20
-> +out_disable_variant:
-> +	ufshcd_vops_setup_regulators(hba, false);
-Is this necessary?
-ufshcd_vops_setup_regulators() was just called as part of ufshcd_variant_hb=
-a_init
+On Wed, 5 Jun 2019 at 19:21, Quentin Perret <quentin.perret@arm.com> wrote:
+>
+> On Friday 17 May 2019 at 14:55:19 (-0700), Stephen Boyd wrote:
+> > Quoting Amit Kucheria (2019-05-16 04:54:45)
+> > > (cc'ing Andy's correct email address)
+> > >
+> > > On Wed, May 15, 2019 at 2:46 AM Stephen Boyd <swboyd@chromium.org> wrote:
+> > > >
+> > > > Quoting Amit Kucheria (2019-05-13 04:54:12)
+> > > > > On Mon, May 13, 2019 at 4:31 PM Amit Kucheria <amit.kucheria@linaro.org> wrote:
+> > > > > >
+> > > > > > On Tue, Jan 15, 2019 at 12:13 AM Matthias Kaehlcke <mka@chromium.org> wrote:
+> > > > > > >
+> > > > > > > The 8 CPU cores of the SDM845 are organized in two clusters of 4 big
+> > > > > > > ("gold") and 4 little ("silver") cores. Add a cpu-map node to the DT
+> > > > > > > that describes this topology.
+> > > > > >
+> > > > > > This is partly true. There are two groups of gold and silver cores,
+> > > > > > but AFAICT they are in a single cluster, not two separate ones. SDM845
+> > > > > > is one of the early examples of ARM's Dynamiq architecture.
+> > > > > >
+> > > > > > > Signed-off-by: Matthias Kaehlcke <mka@chromium.org>
+> > > > > >
+> > > > > > I noticed that this patch sneaked through for this merge window but
+> > > > > > perhaps we can whip up a quick fix for -rc2?
+> > > > > >
+> > > > >
+> > > > > And please find attached a patch to fix this up. Andy, since this
+> > > > > hasn't landed yet (can we still squash this into the original patch?),
+> > > > > I couldn't add a Fixes tag.
+> > > > >
+> > > >
+> > > > I had the same concern. Thanks for catching this. I suspect this must
+> > > > cause some problem for IPA given that it can't discern between the big
+> > > > and little "power clusters"?
+> > >
+> > > Both EAS and IPA, I believe. It influences the scheduler's view of the
+> > > the topology.
+> >
+> > And EAS and IPA are OK with the real topology? I'm just curious if
+> > changing the topology to reflect reality will be a problem for those
+> > two.
+>
+> FWIW, neither EAS nor IPA depends on this. Not the upstream version of
+> EAS at least (which is used in recent Android kernels -- 4.19+).
+>
+> But doing this is still required for other things in the scheduler (the
+> so-called 'capacity-awareness' code). So until we have a better
+> solution, this patch is doing the right thing.
 
-Thanks,
-Avri
+I'm not sure to catch what you mean ?
+Which so-called 'capacity-awareness' code are you speaking about ? and
+what is the problem ?
+
+Regards,
+Vincent
+
+>
+> I hope that helps.
+>
+> Thanks,
+> Quentin
