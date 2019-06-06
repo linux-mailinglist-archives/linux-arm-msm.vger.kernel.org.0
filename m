@@ -2,99 +2,87 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 38801368EF
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Jun 2019 03:03:07 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D5696369A5
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Jun 2019 04:00:21 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726711AbfFFBC6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 5 Jun 2019 21:02:58 -0400
-Received: from mail-pl1-f193.google.com ([209.85.214.193]:42477 "EHLO
-        mail-pl1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726701AbfFFBC5 (ORCPT
+        id S1726699AbfFFCAR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 5 Jun 2019 22:00:17 -0400
+Received: from mail-pf1-f196.google.com ([209.85.210.196]:33379 "EHLO
+        mail-pf1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726593AbfFFCAR (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 5 Jun 2019 21:02:57 -0400
-Received: by mail-pl1-f193.google.com with SMTP id go2so195510plb.9
-        for <linux-arm-msm@vger.kernel.org>; Wed, 05 Jun 2019 18:02:57 -0700 (PDT)
+        Wed, 5 Jun 2019 22:00:17 -0400
+Received: by mail-pf1-f196.google.com with SMTP id x15so483715pfq.0;
+        Wed, 05 Jun 2019 19:00:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=JrcbvKOldgWkH50kiW0a4HfpMKXomzEmet187F9e9WI=;
-        b=Qd9d1msbSQb53Iq2KqsHsAFxY5JW7/DojKA2+N32CgI93O94JHubPZWVlC4T3bAMJr
-         ZrvFCj/RzF+FbICJpj5JCH4CSTEAarhBE+BW5cjaT/fhsuBRzHh4R4kg+eUsJkXcmelb
-         aJRZaXGTdAXba/9Zyk31ploH6ku4OjM3HOI4G79WyWiadhcA/+hLyoyLuNP/7hmImK4s
-         yj7Wm+GpGOxYDWvhRDlGg18PZFunPptfjzeUCnWdgmaLkwE47/RuxkhrxK4Na8bGlHe6
-         qFcEbErPiIJsSTnCUmMVu7jomRuNUC1mBrKGUgXmeBtTMd8nZ9ibn65B24CxyjbksXiS
-         yxlw==
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id;
+        bh=x7qwOsCUljcPtS0zwGfT/F7OR260b2vj2I2Z3hV+0Vw=;
+        b=A9qObc4i5vO0woGJ3cg3uISuB5bxnGAL/+ozW+EhdwWNA31g3TMfQIeiD5NULF0cA2
+         XYZKt9Jel0pAbExfDGszMRiWtFxOpGfUZdzBnjShNA3K+lfXeNSH6udRdX4+puQDg2Y3
+         4HSQpALDaGVvKEKK2Q4DCpxqaNlx8q8f/AlKyRGLaqveYSPvXZC8oE3oNSHS2Hk2CGnh
+         p9SnF9IXb0e4J7wrfzdmPNULuKTVJg32mDvQFvYY7krDNRSOIu4cONvhSRc4KkUsAOxj
+         F0C9aaJ/XPNJmEbCyy10tF+mMPxNlNPvj2B/tzf8ZVFX2a67suPLpO5ksNbmU4VFxdPX
+         x9rg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=JrcbvKOldgWkH50kiW0a4HfpMKXomzEmet187F9e9WI=;
-        b=JscuZNtGfpl5o11A1b6tzGcUdIWSI7yR2+GHPcHsi2Uk3RNcKBqQkD1/CI1viz+IMi
-         ryWm/nv0KD2G62pnbGVZJW3cbLMiwFmLZV+HyGHNz72uLgkL/vX3kbDXUkKf0WfmrJYH
-         rFjgiSBcmohxzjHeAbLFlrOLqPHnEg89Rsnxp7/+CMd+LHt/PJ1YXqVXCj0BYnC1tBeD
-         aAwfn+KnhFnDOF2mig/nBZc/4oO3B2SMeEDyOCyMyHFilOhPXjxhqLBg1YaTPqPaDZl5
-         6chm7Od2CnaPN4pe3JhgR60ez2h6sdfmivKTm8SGHA4yeiF+fNhZ0Z0q8No8tt9QaQ1r
-         Q/ew==
-X-Gm-Message-State: APjAAAVA/bWr6DZcbTLdd7QcZ6IImED/j2DKBe8zhTP322ooqwaVSwcV
-        4IY9DNrF0br8jJ4Zmk15uYuoug==
-X-Google-Smtp-Source: APXvYqzxPgy34UUwtKp+qsxEzAqNHyHrYFZnGo1PhXfMwMDzdB7H5vaW7x7ustTZPxvF+bd24ZmJYA==
-X-Received: by 2002:a17:902:a716:: with SMTP id w22mr47239553plq.270.1559782976660;
-        Wed, 05 Jun 2019 18:02:56 -0700 (PDT)
-Received: from localhost.localdomain (104-188-17-28.lightspeed.sndgca.sbcglobal.net. [104.188.17.28])
-        by smtp.gmail.com with ESMTPSA id 144sm170856pfy.54.2019.06.05.18.02.55
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=x7qwOsCUljcPtS0zwGfT/F7OR260b2vj2I2Z3hV+0Vw=;
+        b=W7eqkk5JUNtAW2wUmL+wb/i/zXcKdTR1FvIM22+tKU4vk9mxqSxGPJTftEI19pW+Hf
+         fV4nTd0EPvDS1SnLEaytcSvw4sZRRtfd2J6nTYF/I1fgI4M5dbsc56s9B3NL0h+YZnAE
+         XNo3Gq79coTax+xjbW+kMUtVBNhq/wPcPk1V6kSeOcaPohamw6+Fw0mvivz30LJpEL4U
+         jZmMyqeRfImN5oQxoDnbsW49jAJDPTiiK8Q9vI48O3HppTJyWHSyu2xWkROeDcTTBwiS
+         VS5Zf6iplcqmp5T3yCYf+7jwm5BnCNKh2nDjjJTNIh70b1rE08otSKy3/TUUytYPCvhO
+         E0Uw==
+X-Gm-Message-State: APjAAAWZt4lD+14jNZhlami1UGTmssTyPM6NP9MukW4PXbQZ4946H+ar
+        J1FRGVrdrsqQct6YP2KNvcg=
+X-Google-Smtp-Source: APXvYqyPmqa7lqmty0IqA8/OiwgJIYtWHbs/vn7I7gtRg48rBH4l7U9lXE5gPHXIQWvvzkHtLfXb+w==
+X-Received: by 2002:a63:de53:: with SMTP id y19mr884162pgi.166.1559786416299;
+        Wed, 05 Jun 2019 19:00:16 -0700 (PDT)
+Received: from aw-bldr-10.qualcomm.com (i-global254.qualcomm.com. [199.106.103.254])
+        by smtp.gmail.com with ESMTPSA id k14sm185234pga.5.2019.06.05.19.00.14
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 05 Jun 2019 18:02:56 -0700 (PDT)
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Andy Gross <agross@kernel.org>
-Cc:     Linus Walleij <linus.walleij@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Mark Rutland <mark.rutland@arm.com>,
-        Alim Akhtar <alim.akhtar@samsung.com>,
-        Avri Altman <avri.altman@wdc.com>,
-        Pedro Sousa <pedrom.sousa@synopsys.com>,
-        "James E.J. Bottomley" <jejb@linux.ibm.com>,
-        "Martin K. Petersen" <martin.petersen@oracle.com>,
-        Evan Green <evgreen@chromium.org>,
-        linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org,
+        Wed, 05 Jun 2019 19:00:15 -0700 (PDT)
+From:   Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
+Cc:     agross@kernel.org, david.brown@linaro.org,
+        bjorn.andersson@linaro.org, mturquette@baylibre.com,
+        sboyd@kernel.org, robh+dt@kernel.org, mark.rutland@arm.com,
+        marc.w.gonzalez@free.fr, jcrouse@codeaurora.org,
+        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
         devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-scsi@vger.kernel.org
-Subject: [PATCH v2 3/3] arm64: dts: qcom: sdm845-mtp: Specify UFS device-reset GPIO
-Date:   Wed,  5 Jun 2019 18:02:49 -0700
-Message-Id: <20190606010249.3538-4-bjorn.andersson@linaro.org>
-X-Mailer: git-send-email 2.18.0
-In-Reply-To: <20190606010249.3538-1-bjorn.andersson@linaro.org>
-References: <20190606010249.3538-1-bjorn.andersson@linaro.org>
+        Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
+Subject: [PATCH v2 0/3] MSM8998 GPUCC Support
+Date:   Wed,  5 Jun 2019 18:58:44 -0700
+Message-Id: <20190606015844.2285-1-jeffrey.l.hugo@gmail.com>
+X-Mailer: git-send-email 2.17.1
+To:     unlisted-recipients:; (no To-header on input)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Specify the UFS device-reset gpio, so that the controller will issue a
-reset of the UFS device.
+The Adreno GPU on MSM8998 has its own clock controller, which is a
+dependency for bringing up the GPU.  This series gets the gpucc all in
+place as another step on the road to getting the GPU enabled.
 
-Tested-by: John Stultz <john.stultz@linaro.org>
-Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
----
+v2:
+-drop desd code
 
-Changes since v1:
-- None
+Jeffrey Hugo (3):
+  dt-bindings: clock: Document gpucc for msm8998
+  clk: qcom: Add MSM8998 GPU Clock Controller (GPUCC) driver
+  arm64: dts: qcom: msm8998: Add gpucc node
 
- arch/arm64/boot/dts/qcom/sdm845-mtp.dts | 2 ++
- 1 file changed, 2 insertions(+)
+ .../devicetree/bindings/clock/qcom,gpucc.txt  |   4 +-
+ arch/arm64/boot/dts/qcom/msm8998.dtsi         |  15 +
+ drivers/clk/qcom/Kconfig                      |   8 +
+ drivers/clk/qcom/Makefile                     |   1 +
+ drivers/clk/qcom/gpucc-msm8998.c              | 364 ++++++++++++++++++
+ .../dt-bindings/clock/qcom,gpucc-msm8998.h    |  29 ++
+ 6 files changed, 420 insertions(+), 1 deletion(-)
+ create mode 100644 drivers/clk/qcom/gpucc-msm8998.c
+ create mode 100644 include/dt-bindings/clock/qcom,gpucc-msm8998.h
 
-diff --git a/arch/arm64/boot/dts/qcom/sdm845-mtp.dts b/arch/arm64/boot/dts/qcom/sdm845-mtp.dts
-index 2e78638eb73b..d116a0956a9c 100644
---- a/arch/arm64/boot/dts/qcom/sdm845-mtp.dts
-+++ b/arch/arm64/boot/dts/qcom/sdm845-mtp.dts
-@@ -388,6 +388,8 @@
- &ufs_mem_hc {
- 	status = "okay";
- 
-+	device-reset-gpios = <&tlmm 150 GPIO_ACTIVE_LOW>;
-+
- 	vcc-supply = <&vreg_l20a_2p95>;
- 	vcc-max-microamp = <600000>;
- };
 -- 
-2.18.0
+2.17.1
 
