@@ -2,201 +2,122 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id A7A2F367F2
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Jun 2019 01:25:33 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 67053368CF
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Jun 2019 02:40:30 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726800AbfFEXZ2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 5 Jun 2019 19:25:28 -0400
-Received: from mail-it1-f194.google.com ([209.85.166.194]:56226 "EHLO
-        mail-it1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726603AbfFEXZ2 (ORCPT
+        id S1726599AbfFFAkE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 5 Jun 2019 20:40:04 -0400
+Received: from mail-pf1-f195.google.com ([209.85.210.195]:42094 "EHLO
+        mail-pf1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726561AbfFFAkD (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 5 Jun 2019 19:25:28 -0400
-Received: by mail-it1-f194.google.com with SMTP id i21so267646ita.5;
-        Wed, 05 Jun 2019 16:25:27 -0700 (PDT)
+        Wed, 5 Jun 2019 20:40:03 -0400
+Received: by mail-pf1-f195.google.com with SMTP id q10so343041pff.9
+        for <linux-arm-msm@vger.kernel.org>; Wed, 05 Jun 2019 17:40:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=+WWUao+0KYKJX7/eCyyrGifWT6Z32ta9Z0LQFgrFodk=;
-        b=sPrd/xgnfWj8aOIB6h6viaBvaeccIwX4YNlrf2bwLiCoBmGVbA9nKJG5+UCyALqqiz
-         nFlZNWmPqfL1yyJwRWeZ7yLRTytcqNDRn8nb11oLYfXVVCoHHqTxxs5Qj/AaIsw9BwAJ
-         XIvCCUhyKGADDjVS60sEt5Hw0G0fegqPJh7Ke2CheWlPbTBOP74gSQD/3iIR6P2kuu3M
-         UKSN3S4PYkKuk8s9mROHVMM3hDVgR1Q7OE3Kc998hiKqwMSFyRrKGNA/qJl8Vozs3JsU
-         YMNuX9sQdAWdg+q3XURtApz1N85A7oPP34f8tOUXZa+gCZDTDx/8utlP7TspmDAW8EhG
-         huQg==
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=2j6AeMQyqlvFrN/cZ76T3pXgzcnOXpcF30PXkUvG5XQ=;
+        b=pD2wunXYqvfYwPLkqvphd1Nzp5oBP1ZJMlmbllJSDRqtIDW6GMm+JLMRRA0rbZiS1C
+         +9pX2xQxEuN9NhtiVlPu2Jxh6vHv5pnFnYTwBGb5uvtA1DL8+Rf4kviOf5xc77dpWKSB
+         rf8bStUliSESYC80DHlCn8Zkpe6fr6yqjkblYLgaVy0mUYWGe2eSvbKU5FdYiCayUKmB
+         IS2+/HgohoC/dtOAoPVklaNzTd/4lnl4tVjaA8ytHMG8vSWNF8tHI4lhaEMgn3r1eDai
+         XQyeR/zl4UZGvJsyrPL5pR5yxascYYXBmP2ViQI/Xs2NIXa0Fz4whXJebVBrtj4cuJto
+         4/pA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=+WWUao+0KYKJX7/eCyyrGifWT6Z32ta9Z0LQFgrFodk=;
-        b=lJBVdJUgAx5bUlhu0BAPnNrqTLS6lxikZyMbE90+uPnpPldjFz5HHDtoDTjsfRdfv7
-         G60IhzO1WlJP56FD2/tyu/OE8dPU+ExPDobt8ZNdM0YlSfTAcEmG/XNrT5ssAhfbUNWo
-         kpko7deGJOI0m+Kt39noC03uZICEY2tgM8YIUk6aQtqZ0o6FS1PuglpFpUK9kKWWQL7r
-         msPH0yvFnxUUDvhSRgV8gqvCWC2Y1OMcR/APNXTk/weXIJNwVnm3A48BLqW6BzEnDEwF
-         U3ip9FNqMkaWnWPTOpp4I26KUnqVCURHNm9WbdCNmfg9pTfoneFU9O4lsHLK6JwtTWUm
-         MqLA==
-X-Gm-Message-State: APjAAAXVp6pdtb81Tw9oYioCXSsb8j5bvEYx71Wrq6hp3I3teR007MXs
-        9+9gxpNe1YdR0kkUmxDBHrND7GPp5KDq3roSllk=
-X-Google-Smtp-Source: APXvYqwpdcZVyBlfikTfWGuw0wAUUPxpTv7H6zcpYDq+kqKd32iTlgG/bPmu0brEdKgxbIA1aMDsfwK3+FbkIf0KMnM=
-X-Received: by 2002:a24:6c4a:: with SMTP id w71mr29571756itb.128.1559777127054;
- Wed, 05 Jun 2019 16:25:27 -0700 (PDT)
-MIME-Version: 1.0
-References: <20190423160543.9922-1-jeffrey.l.hugo@gmail.com>
- <20190423160605.9970-1-jeffrey.l.hugo@gmail.com> <20190521164324.GA2085@tuxbook-pro>
-In-Reply-To: <20190521164324.GA2085@tuxbook-pro>
-From:   Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
-Date:   Wed, 5 Jun 2019 17:25:15 -0600
-Message-ID: <CAOCk7Nr-a=ek7xOhBwMgxG55jvKQK2tyy15oknrDn7OYvxtEwA@mail.gmail.com>
-Subject: Re: [PATCH v4 1/2] HID: quirks: Refactor ELAN 400 and 401 handling
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     Dmitry Torokhov <dmitry.torokhov@gmail.com>,
-        Jiri Kosina <jikos@kernel.org>,
-        Benjamin Tissoires <benjamin.tissoires@redhat.com>,
-        Lee Jones <lee.jones@linaro.org>,
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=2j6AeMQyqlvFrN/cZ76T3pXgzcnOXpcF30PXkUvG5XQ=;
+        b=WWMSjm7RVSdsclK0d2Nd8y/ZDPNJge4c7OVlkDwl5cpxCJWAau+ABr2hkU/p+ddKYm
+         GWIU2GD/r4aAbwLMfxxcmv8AHppXjkdsXj6zJz7sfPhXg1/1PgS8GsXGXNzL3Lizdcub
+         4nr+UaCyJWX+rYpgAJAMMFz2o3dDcMQbpm4Kqu+c6DMem7e5vCLY6gVfd9pql1Iho/Va
+         1+nZ9xIjoj7V4FwZ2VloON7rL6MVyts6PkQ7vZv3dN/I/TqjXTf+n7Nk+JKqGZufpUBR
+         vXTXlzVmz2tOeh7zNkvW3YKoGLu8gsUsv0vneMmeLZMmkYjxyBLG/JM6uLowJXaFVI6S
+         nMKg==
+X-Gm-Message-State: APjAAAVvfrAUZVOlsqb2hspT6sbh57n3p1nVMf0yF6CLtwyaapAA0a85
+        S8kwqC5G5/cGO7IXWbuB+xKqNQ==
+X-Google-Smtp-Source: APXvYqzvXQ5ewa5JC1Giq17eXL/bIpyul2XvnitexIdi7NKOYgS8rm1aWJkbpisCuaALbZ2LP5zfhA==
+X-Received: by 2002:a62:e511:: with SMTP id n17mr43614480pff.181.1559781602896;
+        Wed, 05 Jun 2019 17:40:02 -0700 (PDT)
+Received: from minitux (104-188-17-28.lightspeed.sndgca.sbcglobal.net. [104.188.17.28])
+        by smtp.gmail.com with ESMTPSA id v28sm89656pga.65.2019.06.05.17.40.01
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Wed, 05 Jun 2019 17:40:02 -0700 (PDT)
+Date:   Wed, 5 Jun 2019 17:39:59 -0700
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     Avri Altman <Avri.Altman@wdc.com>
+Cc:     John Stultz <john.stultz@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Linus Walleij <linus.walleij@linaro.org>,
         Rob Herring <robh+dt@kernel.org>,
         Mark Rutland <mark.rutland@arm.com>,
-        Andy Gross <agross@kernel.org>,
-        David Brown <david.brown@linaro.org>,
-        Hans de Goede <hdegoede@redhat.com>,
-        "open list:HID CORE LAYER" <linux-input@vger.kernel.org>,
-        devicetree@vger.kernel.org, MSM <linux-arm-msm@vger.kernel.org>,
-        lkml <linux-kernel@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+        Pedro Sousa <pedrom.sousa@synopsys.com>,
+        "James E.J. Bottomley" <jejb@linux.ibm.com>,
+        "Martin K. Petersen" <martin.petersen@oracle.com>,
+        "linux-arm-msm@vger.kernel.org" <linux-arm-msm@vger.kernel.org>,
+        "linux-gpio@vger.kernel.org" <linux-gpio@vger.kernel.org>,
+        "devicetree@vger.kernel.org" <devicetree@vger.kernel.org>,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        "linux-scsi@vger.kernel.org" <linux-scsi@vger.kernel.org>
+Subject: Re: [PATCH 0/3] (Qualcomm) UFS device reset support
+Message-ID: <20190606003959.GM4814@minitux>
+References: <20190604072001.9288-1-bjorn.andersson@linaro.org>
+ <CANcMJZBmgWMZu7Y53Lnx_x3L2UpCmEbFRHVW0SFCXfW=Yw9uYg@mail.gmail.com>
+ <SN6PR04MB4925530F216E86F6404FE14CFC160@SN6PR04MB4925.namprd04.prod.outlook.com>
+ <20190605060154.GJ22737@tuxbook-pro>
+ <SN6PR04MB492521B7D2DB6F3462EDB7D9FC160@SN6PR04MB4925.namprd04.prod.outlook.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <SN6PR04MB492521B7D2DB6F3462EDB7D9FC160@SN6PR04MB4925.namprd04.prod.outlook.com>
+User-Agent: Mutt/1.12.0 (2019-05-25)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, May 21, 2019 at 10:42 AM Bjorn Andersson
-<bjorn.andersson@linaro.org> wrote:
->
-> On Tue 23 Apr 09:06 PDT 2019, Jeffrey Hugo wrote:
->
-> > There needs to be coordination between hid-quirks and the elan_i2c driver
-> > about which devices are handled by what drivers.  Currently, both use
-> > whitelists, which results in valid devices being unhandled by default,
-> > when they should not be rejected by hid-quirks.  This is quickly becoming
-> > an issue.
-> >
-> > Since elan_i2c has a maintained whitelist of what devices it will handle,
-> > use that to implement a blacklist in hid-quirks so that only the devices
-> > that need to be handled by elan_i2c get rejected by hid-quirks, and
-> > everything else is handled by default.  The downside is the whitelist and
-> > blacklist need to be kept in sync.
-> >
->
-> Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
->
-> Jiri, the two patches in this series doesn't have a build time
-> dependency, so if you take this one through your tree I'll take 2/2
-> through arm-soc.
+On Wed 05 Jun 02:32 PDT 2019, Avri Altman wrote:
 
-Ping?  Is this good from the HID perspective?  I would really like to
-see this queued for 5.3.
+> > 
+> > On Tue 04 Jun 22:50 PDT 2019, Avri Altman wrote:
+> > 
+> > > Hi,
+> > >
+> > > >
+> > > > On Tue, Jun 4, 2019 at 12:22 AM Bjorn Andersson
+> > > > <bjorn.andersson@linaro.org> wrote:
+> > > > >
+> > > > > This series exposes the ufs_reset line as a gpio, adds support for ufshcd to
+> > > > > acquire and toggle this and then adds this to SDM845 MTP.
+> > > > >
+> > > > > Bjorn Andersson (3):
+> > > > >   pinctrl: qcom: sdm845: Expose ufs_reset as gpio
+> > > > >   scsi: ufs: Allow resetting the UFS device
+> > > > >   arm64: dts: qcom: sdm845-mtp: Specify UFS device-reset GPIO
+> > > >
+> > > > Adding similar change as in sdm845-mtp to the not yet upstream
+> > > > blueline dts, I validated this allows my micron UFS pixel3 to boot.
+> > > >
+> > > > Tested-by: John Stultz <john.stultz@linaro.org>
+> > > Maybe ufs_hba_variant_ops would be the proper place to add this?
+> > >
+> > 
+> > Are you saying that these memories only need a reset when they are
+> > paired with the Qualcomm host controller?
+> ufs_hba_variant_ops is for vendors to implement their own vops,
+> and as you can see, many of them do.
+> Adding hw_reset to that template seems like the proper way
+> to do what you are doing.
+> 
 
->
-> Regards,
-> Bjorn
->
-> > Suggested-by: Benjamin Tissoires <benjamin.tissoires@redhat.com>
-> > Signed-off-by: Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
-> > ---
-> >  drivers/hid/hid-quirks.c            | 64 ++++++++++++++++++++++++-----
-> >  drivers/input/mouse/elan_i2c_core.c |  4 ++
-> >  2 files changed, 58 insertions(+), 10 deletions(-)
-> >
-> > diff --git a/drivers/hid/hid-quirks.c b/drivers/hid/hid-quirks.c
-> > index 77ffba48cc73..656485e08eb7 100644
-> > --- a/drivers/hid/hid-quirks.c
-> > +++ b/drivers/hid/hid-quirks.c
-> > @@ -987,17 +987,61 @@ bool hid_ignore(struct hid_device *hdev)
-> >               break;
-> >       case USB_VENDOR_ID_ELAN:
-> >               /*
-> > -              * Many Elan devices have a product id of 0x0401 and are handled
-> > -              * by the elan_i2c input driver. But the ACPI HID ELAN0800 dev
-> > -              * is not (and cannot be) handled by that driver ->
-> > -              * Ignore all 0x0401 devs except for the ELAN0800 dev.
-> > +              * Blacklist of everything that gets handled by the elan_i2c
-> > +              * input driver.  This should be kept in sync with the whitelist
-> > +              * that exists in that driver.  This avoids disabling valid
-> > +              * touchpads and other ELAN devices.
-> >                */
-> > -             if (hdev->product == 0x0401 &&
-> > -                 strncmp(hdev->name, "ELAN0800", 8) != 0)
-> > -                     return true;
-> > -             /* Same with product id 0x0400 */
-> > -             if (hdev->product == 0x0400 &&
-> > -                 strncmp(hdev->name, "QTEC0001", 8) != 0)
-> > +             if ((hdev->product == 0x0401 || hdev->product == 0x0400) &&
-> > +                (strncmp(hdev->name, "ELAN0000", 8) == 0 ||
-> > +                 strncmp(hdev->name, "ELAN0100", 8) == 0 ||
-> > +                 strncmp(hdev->name, "ELAN0600", 8) == 0 ||
-> > +                 strncmp(hdev->name, "ELAN0601", 8) == 0 ||
-> > +                 strncmp(hdev->name, "ELAN0602", 8) == 0 ||
-> > +                 strncmp(hdev->name, "ELAN0603", 8) == 0 ||
-> > +                 strncmp(hdev->name, "ELAN0604", 8) == 0 ||
-> > +                 strncmp(hdev->name, "ELAN0605", 8) == 0 ||
-> > +                 strncmp(hdev->name, "ELAN0606", 8) == 0 ||
-> > +                 strncmp(hdev->name, "ELAN0607", 8) == 0 ||
-> > +                 strncmp(hdev->name, "ELAN0608", 8) == 0 ||
-> > +                 strncmp(hdev->name, "ELAN0609", 8) == 0 ||
-> > +                 strncmp(hdev->name, "ELAN060B", 8) == 0 ||
-> > +                 strncmp(hdev->name, "ELAN060C", 8) == 0 ||
-> > +                 strncmp(hdev->name, "ELAN060F", 8) == 0 ||
-> > +                 strncmp(hdev->name, "ELAN0610", 8) == 0 ||
-> > +                 strncmp(hdev->name, "ELAN0611", 8) == 0 ||
-> > +                 strncmp(hdev->name, "ELAN0612", 8) == 0 ||
-> > +                 strncmp(hdev->name, "ELAN0613", 8) == 0 ||
-> > +                 strncmp(hdev->name, "ELAN0614", 8) == 0 ||
-> > +                 strncmp(hdev->name, "ELAN0615", 8) == 0 ||
-> > +                 strncmp(hdev->name, "ELAN0616", 8) == 0 ||
-> > +                 strncmp(hdev->name, "ELAN0617", 8) == 0 ||
-> > +                 strncmp(hdev->name, "ELAN0618", 8) == 0 ||
-> > +                 strncmp(hdev->name, "ELAN0619", 8) == 0 ||
-> > +                 strncmp(hdev->name, "ELAN061A", 8) == 0 ||
-> > +                 strncmp(hdev->name, "ELAN061B", 8) == 0 ||
-> > +                 strncmp(hdev->name, "ELAN061C", 8) == 0 ||
-> > +                 strncmp(hdev->name, "ELAN061D", 8) == 0 ||
-> > +                 strncmp(hdev->name, "ELAN061E", 8) == 0 ||
-> > +                 strncmp(hdev->name, "ELAN061F", 8) == 0 ||
-> > +                 strncmp(hdev->name, "ELAN0620", 8) == 0 ||
-> > +                 strncmp(hdev->name, "ELAN0621", 8) == 0 ||
-> > +                 strncmp(hdev->name, "ELAN0622", 8) == 0 ||
-> > +                 strncmp(hdev->name, "ELAN0623", 8) == 0 ||
-> > +                 strncmp(hdev->name, "ELAN0624", 8) == 0 ||
-> > +                 strncmp(hdev->name, "ELAN0625", 8) == 0 ||
-> > +                 strncmp(hdev->name, "ELAN0626", 8) == 0 ||
-> > +                 strncmp(hdev->name, "ELAN0627", 8) == 0 ||
-> > +                 strncmp(hdev->name, "ELAN0628", 8) == 0 ||
-> > +                 strncmp(hdev->name, "ELAN0629", 8) == 0 ||
-> > +                 strncmp(hdev->name, "ELAN062A", 8) == 0 ||
-> > +                 strncmp(hdev->name, "ELAN062B", 8) == 0 ||
-> > +                 strncmp(hdev->name, "ELAN062C", 8) == 0 ||
-> > +                 strncmp(hdev->name, "ELAN062D", 8) == 0 ||
-> > +                 strncmp(hdev->name, "ELAN0631", 8) == 0 ||
-> > +                 strncmp(hdev->name, "ELAN0632", 8) == 0 ||
-> > +                 strncmp(hdev->name, "ELAN1000", 8) == 0 ||
-> > +                 strncmp(hdev->name, "elan,ekth3000", 13) == 0))
-> >                       return true;
-> >               break;
-> >       }
-> > diff --git a/drivers/input/mouse/elan_i2c_core.c b/drivers/input/mouse/elan_i2c_core.c
-> > index f9525d6f0bfe..3ded19528cd4 100644
-> > --- a/drivers/input/mouse/elan_i2c_core.c
-> > +++ b/drivers/input/mouse/elan_i2c_core.c
-> > @@ -1332,6 +1332,10 @@ static const struct i2c_device_id elan_id[] = {
-> >  };
-> >  MODULE_DEVICE_TABLE(i2c, elan_id);
-> >
-> > +/*
-> > + * when these whtielists get updated, the corresponding blacklist in hid-quirks
-> > + * needs to be updated to match.
-> > + */
-> >  #ifdef CONFIG_ACPI
-> >  static const struct acpi_device_id elan_acpi_id[] = {
-> >       { "ELAN0000", 0 },
-> > --
-> > 2.17.1
-> >
+Right, but the vops is operations related to the UFS controller, this
+property relates to the memory connected.
+
+E.g I have a Hynix memory and John have a Micron memory that needs this
+reset and my assumption is that these memories will need their RESET pin
+toggled regardless of which controller they are connected to.
+
+Regards,
+Bjorn
