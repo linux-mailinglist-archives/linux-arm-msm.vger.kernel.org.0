@@ -2,224 +2,141 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id BBE363944E
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  7 Jun 2019 20:27:56 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C99D6395C9
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  7 Jun 2019 21:34:12 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730474AbfFGS14 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 7 Jun 2019 14:27:56 -0400
-Received: from mail-pg1-f196.google.com ([209.85.215.196]:35933 "EHLO
-        mail-pg1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730228AbfFGS1z (ORCPT
+        id S1730573AbfFGTeL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 7 Jun 2019 15:34:11 -0400
+Received: from mail-pl1-f194.google.com ([209.85.214.194]:43416 "EHLO
+        mail-pl1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729450AbfFGTeL (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 7 Jun 2019 14:27:55 -0400
-Received: by mail-pg1-f196.google.com with SMTP id a3so1584844pgb.3
-        for <linux-arm-msm@vger.kernel.org>; Fri, 07 Jun 2019 11:27:55 -0700 (PDT)
+        Fri, 7 Jun 2019 15:34:11 -0400
+Received: by mail-pl1-f194.google.com with SMTP id cl9so1184793plb.10
+        for <linux-arm-msm@vger.kernel.org>; Fri, 07 Jun 2019 12:34:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to:user-agent;
-        bh=oIjp0laGeaMLz3DpfA7bZ3JYDaFx6ya3dcNI7Njhg8A=;
-        b=ESkpHft1KvNCIjHH3O/JUW/TyJfp8u5I0y/5PBA0Kc3OLYfdGygNcQ3HrL6mlWClj7
-         bpPx05wKv7MF2xAYgnxO6JCCJ2cIO62/8SRg3N5N7U9wPn80JwsKcfvk8CeTjbA0U4f9
-         iVyZZEVy+xGP3u6Aoq8A+IXLbf28YRQfrCs+a3ovoMF4t17OeqK/B5HSIwzwIGpHAKaj
-         Mbd5iK+qvuTCS0O8YKKWAm5rhOdvRI3zYHUUURf08xwu8gAWNRBNUnGTXeyJ5RK+rEry
-         8xddYxkOrBjmpqUD8ftZyfQBuIp3R+2fMQNaKLXXUmzot5YaCPjuBWAledWLDCr1SUiH
-         /fIw==
+        bh=wpKUd2nT5fJdpxBIuy/BOsoGuLISr+yeuc18GcpDf6g=;
+        b=tf63b50aos3gIs6Uh0x0ZPeVIy4dEEbpe9EQmwGyT5+A2Gw+N/fvymG2EdZPGIy8L9
+         5xNyeQKO8zT6AP0IKirJTEmIaiKb0OS22rDKMOn0xOxkquKtpLyow98OJ4nggW92g6My
+         9pdMTgF13mlwfqUP3g8TWHhyUpxL9SbblVrXJdKjTdqxqojrU5td0HmAQ0uovPfbnxVC
+         drUELbnT0qtfXIoREosTwsWm+DTIQBTK17ZyUprcwTpWecwDd1KhtfUWf8qd3HewI/gj
+         yccWS8LfVbTTNCkPA7VUiFxQPzMCcZkELxdnOr46rMOQzYY/LSG5VMTANT0WWgP6jyeo
+         1SaQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=oIjp0laGeaMLz3DpfA7bZ3JYDaFx6ya3dcNI7Njhg8A=;
-        b=ke2Y3RQKW+bJ0jOhpvZvqRKS++s9uZfvZMhaJi8WWY3Iq4iab28S0+xVhjXrZwdfGa
-         aWSmxiy+a09rjYM/ua3WVSZWMonR5XRHmhjHVOB70hZaqnHYyJzp2qnzgtDWxu5getDE
-         GPnZjB7nbTkLj2V5GtNjZaLbApp+YG3piCgL25yrj7J2btUQHg5f9fW+/3W39cNO7V2Z
-         d6q1dHV1Yjnk0g9ueaEmMfGwdIOpeh7dwKfFuW8MLAH4XboH+Jex7Rek4DAGAEIpSup5
-         2mht2jagFX8Plsm3n8OTnKSTQisdXtTh4apvF47lsdR865ceYP6h0nKGIP4GW3booxPJ
-         bDNA==
-X-Gm-Message-State: APjAAAUaSCjj88Q3mfFOWonVjzO3+yg38/BG0azH5un/WJKWzZjp2cSM
-        Cj+YmI4JLspRAWxmMBzb/SmINA==
-X-Google-Smtp-Source: APXvYqyrJmrV7+okkrFesHkpTxqrJm8TWaLeMfZ3XymVF9KmZh5tefwAwOWAl5r4VG5HGHrfuPm0/A==
-X-Received: by 2002:aa7:8ac7:: with SMTP id b7mr46483017pfd.100.1559932075002;
-        Fri, 07 Jun 2019 11:27:55 -0700 (PDT)
-Received: from minitux (104-188-17-28.lightspeed.sndgca.sbcglobal.net. [104.188.17.28])
-        by smtp.gmail.com with ESMTPSA id d24sm2610692pjv.24.2019.06.07.11.27.54
-        (version=TLS1_3 cipher=AEAD-AES256-GCM-SHA384 bits=256/256);
-        Fri, 07 Jun 2019 11:27:54 -0700 (PDT)
-Date:   Fri, 7 Jun 2019 11:27:52 -0700
+        bh=wpKUd2nT5fJdpxBIuy/BOsoGuLISr+yeuc18GcpDf6g=;
+        b=h5KjpoclIJQ6DZNPgZeHMaP+Ff+oQJWy5FwESF+dHNfl0DrCsHgfVBcQTriw1dxGoV
+         NlNnpBQEiQhPRHytg7doM/41ce5Y9wRoX4vGDHiz2t17DCzhxbGup5uuGE6cCbPbSqQP
+         vqtf0qPCwK/Y6Lk21HIuE9d7pqp+gcFxZbcA6Oyu0keqp+ThopQPn3RpPwabPCidULPm
+         AGQv4Ryq8SCVTGL0SsjPWI6jhn4U7oVyLjdxOh0sDywfm9gf28TcEXT6a36voVpdMO5d
+         ZKhdgpnWVcIU4msQhbJKWwU89eazugM4C0j/DBRKS9gehuZyay2pnK39JtjT9/VOA5Ng
+         D4fw==
+X-Gm-Message-State: APjAAAVqZXq2gnsY7cIThk/e9QC2SrBmyzJC1wcpinCsunCXm3qdCjG3
+        Z548FPJKtZ8URw56BqIuwHUrUQ==
+X-Google-Smtp-Source: APXvYqxSC7rw05vLxn/PlSEW90GOUry7OdvPp1Qde6epr5HHI6UoO46GU4ItChia53NkMezfJO+8dA==
+X-Received: by 2002:a17:902:2883:: with SMTP id f3mr57841151plb.111.1559936050681;
+        Fri, 07 Jun 2019 12:34:10 -0700 (PDT)
+Received: from builder (104-188-17-28.lightspeed.sndgca.sbcglobal.net. [104.188.17.28])
+        by smtp.gmail.com with ESMTPSA id o26sm2726497pgv.47.2019.06.07.12.34.09
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Fri, 07 Jun 2019 12:34:10 -0700 (PDT)
+Date:   Fri, 7 Jun 2019 12:34:07 -0700
 From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Alim Akhtar <alim.akhtar@samsung.com>
-Cc:     Marc Gonzalez <marc.w.gonzalez@free.fr>,
-        Linus Walleij <linus.walleij@linaro.org>,
-        Avri Altman <avri.altman@wdc.com>,
-        MSM <linux-arm-msm@vger.kernel.org>,
-        SCSI <linux-scsi@vger.kernel.org>
-Subject: Re: [PATCH 2/3] scsi: ufs: Allow resetting the UFS device
-Message-ID: <20190607182752.GN4814@minitux>
-References: <20190604072001.9288-1-bjorn.andersson@linaro.org>
- <20190604072001.9288-3-bjorn.andersson@linaro.org>
- <CGME20190604075345epcas2p4078376e31e760396490431a6b631f9dd@epcas2p4.samsung.com>
- <53775224-5418-1235-20a2-c46d76ef56da@free.fr>
- <875adde9-1a4b-6bb6-1990-9bb78610546c@samsung.com>
+To:     Sudeep Holla <sudeep.holla@arm.com>
+Cc:     Ulf Hansson <ulf.hansson@linaro.org>,
+        "Rafael J. Wysocki" <rafael@kernel.org>,
+        Lorenzo Pieralisi <Lorenzo.Pieralisi@arm.com>,
+        Mark Rutland <mark.rutland@arm.com>,
+        Linux ARM <linux-arm-kernel@lists.infradead.org>,
+        "Rafael J . Wysocki" <rjw@rjwysocki.net>,
+        Daniel Lezcano <daniel.lezcano@linaro.org>,
+        "Raju P . L . S . S . S . N" <rplsssn@codeaurora.org>,
+        Amit Kucheria <amit.kucheria@linaro.org>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Niklas Cassel <niklas.cassel@linaro.org>,
+        Tony Lindgren <tony@atomide.com>,
+        Kevin Hilman <khilman@kernel.org>,
+        Lina Iyer <ilina@codeaurora.org>,
+        Viresh Kumar <viresh.kumar@linaro.org>,
+        Vincent Guittot <vincent.guittot@linaro.org>,
+        Geert Uytterhoeven <geert+renesas@glider.be>,
+        Souvik Chakravarty <souvik.chakravarty@arm.com>,
+        Linux PM <linux-pm@vger.kernel.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>
+Subject: Re: [PATCH 00/18] ARM/ARM64: Support hierarchical CPU arrangement
+ for PSCI
+Message-ID: <20190607193407.GB24059@builder>
+References: <20190513192300.653-1-ulf.hansson@linaro.org>
+ <CAJZ5v0gbK3AFCVC1b9LyXeMOM8fKR1=ECXZwaeSYRSqcK0UgYA@mail.gmail.com>
+ <CAPDyKFpU3u248Gi+FnrVdY-EWXJQuu14uNV9d3Xs0W-K-EMEhg@mail.gmail.com>
+ <20190607154210.GJ15577@e107155-lin>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <875adde9-1a4b-6bb6-1990-9bb78610546c@samsung.com>
-User-Agent: Mutt/1.12.0 (2019-05-25)
+In-Reply-To: <20190607154210.GJ15577@e107155-lin>
+User-Agent: Mutt/1.10.0 (2018-05-17)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri 07 Jun 03:41 PDT 2019, Alim Akhtar wrote:
+On Fri 07 Jun 08:42 PDT 2019, Sudeep Holla wrote:
 
-> Hi Marc
-> Thanks for coping me.
+> On Tue, May 14, 2019 at 10:58:04AM +0200, Ulf Hansson wrote:
+> > On Tue, 14 May 2019 at 10:08, Rafael J. Wysocki <rafael@kernel.org> wrote:
+> > >
+> > > On Mon, May 13, 2019 at 9:23 PM Ulf Hansson <ulf.hansson@linaro.org> wrote:
+> > > >
+> > > > This series enables support for hierarchical CPU arrangement, managed by PSCI
+> > > > for ARM/ARM64. It's based on using the generic PM domain (genpd), which
+> > > > recently was extended to manage devices belonging to CPUs.
+> > >
+> > > ACK for the patches touching cpuidle in this series (from the
+> > > framework perspective), but I'm assuming it to be taken care of by
+> > > ARM/ARM64 maintainers.
+> >
+> > Thanks for the ack! Yes, this is for PSCI/ARM maintainers.
+> >
+> > BTW, apologize for sending this in the merge window, but wanted to
+> > take the opportunity for people to have a look before OSPM Pisa next
+> > week.
+> >
 > 
-> On 6/4/19 1:23 PM, Marc Gonzalez wrote:
-> > [ Shuffling the recipients list ]
-> > 
-> > On 04/06/2019 09:20, Bjorn Andersson wrote:
-> > 
-> >> Acquire the device-reset GPIO and toggle this to reset the UFS device
-> >> during initialization and host reset.
-> >>
-> >> Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
-> >> ---
-> >>   drivers/scsi/ufs/ufshcd.c | 44 +++++++++++++++++++++++++++++++++++++++
-> >>   drivers/scsi/ufs/ufshcd.h |  4 ++++
-> >>   2 files changed, 48 insertions(+)
-> >>
-> >> diff --git a/drivers/scsi/ufs/ufshcd.c b/drivers/scsi/ufs/ufshcd.c
-> >> index 8c1c551f2b42..951a0efee536 100644
-> >> --- a/drivers/scsi/ufs/ufshcd.c
-> >> +++ b/drivers/scsi/ufs/ufshcd.c
-> >> @@ -42,6 +42,7 @@
-> >>   #include <linux/nls.h>
-> >>   #include <linux/of.h>
-> >>   #include <linux/bitfield.h>
-> >> +#include <linux/gpio/consumer.h>
-> >>   #include "ufshcd.h"
-> >>   #include "ufs_quirks.h"
-> >>   #include "unipro.h"
-> >> @@ -6104,6 +6105,25 @@ static int ufshcd_abort(struct scsi_cmnd *cmd)
-> >>   	return err;
-> >>   }
-> >>   
-> >> +/**
-> >> + ufshcd_device_reset() - toggle the (optional) device reset line
-> >> + * @hba: per-adapter instance
-> >> + *
-> >> + * Toggles the (optional) reset line to reset the attached device.
-> >> + */
-> >> +static void ufshcd_device_reset(struct ufs_hba *hba)
-> >> +{
-> >> +	/*
-> >> +	 * The USB device shall detect reset pulses of 1us, sleep for 10us to
-> >> +	 * be on the safe side.
-> >> +	 */
-> >> +	gpiod_set_value_cansleep(hba->device_reset, 1);
-> >> +	usleep_range(10, 15);
-> >> +
-> >> +	gpiod_set_value_cansleep(hba->device_reset, 0);
-> >> +	usleep_range(10, 15);
-> >> +}
-> >> +
-> >>   /**
-> >>    * ufshcd_host_reset_and_restore - reset and restore host controller
-> >>    * @hba: per-adapter instance
-> >> @@ -6159,6 +6179,9 @@ static int ufshcd_reset_and_restore(struct ufs_hba *hba)
-> >>   	int retries = MAX_HOST_RESET_RETRIES;
-> >>   
-> >>   	do {
-> >> +		/* Reset the attached device */
-> >> +		ufshcd_device_reset(hba);
-> >> +
-> >>   		err = ufshcd_host_reset_and_restore(hba);
-> >>   	} while (err && --retries);
-> >>   
-> >> @@ -7355,6 +7378,18 @@ static void ufshcd_variant_hba_exit(struct ufs_hba *hba)
-> >>   	ufshcd_vops_exit(hba);
-> >>   }
-> >>   
-> >> +static int ufshcd_init_device_reset(struct ufs_hba *hba)
-> >> +{
-> >> +	hba->device_reset = devm_gpiod_get_optional(hba->dev, "device-reset",
-> >> +						    GPIOD_OUT_HIGH);
-> >> +	if (IS_ERR(hba->device_reset)) {
-> >> +		dev_err(hba->dev, "failed to acquire reset gpio: %ld\n",
-> >> +			PTR_ERR(hba->device_reset));
-> >> +	}
-> >> +
-> >> +	return PTR_ERR_OR_ZERO(hba->device_reset);
-> >> +}
-> >> +
-> >>   static int ufshcd_hba_init(struct ufs_hba *hba)
-> >>   {
-> >>   	int err;
-> >> @@ -7394,9 +7429,15 @@ static int ufshcd_hba_init(struct ufs_hba *hba)
-> >>   	if (err)
-> >>   		goto out_disable_vreg;
-> >>   
-> >> +	err = ufshcd_init_device_reset(hba);
-> >> +	if (err)
-> >> +		goto out_disable_variant;
-> >> +
-> >>   	hba->is_powered = true;
-> >>   	goto out;
-> >>   
-> >> +out_disable_variant:
-> >> +	ufshcd_vops_setup_regulators(hba, false);
-> >>   out_disable_vreg:
-> >>   	ufshcd_setup_vreg(hba, false);
-> >>   out_disable_clks:
-> >> @@ -8290,6 +8331,9 @@ int ufshcd_init(struct ufs_hba *hba, void __iomem *mmio_base, unsigned int irq)
-> >>   		goto exit_gating;
-> >>   	}
-> >>   
-> >> +	/* Reset the attached device */
-> >> +	ufshcd_device_reset(hba);
-> >> +
-> >>   	/* Host controller enable */
-> >>   	err = ufshcd_hba_enable(hba);
-> >>   	if (err) {
-> >> diff --git a/drivers/scsi/ufs/ufshcd.h b/drivers/scsi/ufs/ufshcd.h
-> >> index ecfa898b9ccc..d8be67742168 100644
-> >> --- a/drivers/scsi/ufs/ufshcd.h
-> >> +++ b/drivers/scsi/ufs/ufshcd.h
-> >> @@ -72,6 +72,8 @@
-> >>   #define UFSHCD "ufshcd"
-> >>   #define UFSHCD_DRIVER_VERSION "0.2"
-> >>   
-> >> +struct gpio_desc;
-> >> +
-> >>   struct ufs_hba;
-> >>   
-> >>   enum dev_cmd_type {
-> >> @@ -706,6 +708,8 @@ struct ufs_hba {
-> >>   
-> >>   	struct device		bsg_dev;
-> >>   	struct request_queue	*bsg_queue;
-> >> +
-> >> +	struct gpio_desc *device_reset;
-> >>   };
-> >>   
-> >>   /* Returns true if clocks can be gated. Otherwise false */
-> >>
-> > 
-> > Why is this needed on 845 and not on 8998?
-> > 
-> Not sure about MSM, but this is high implementation dependent, different 
-> SoC vendors implement device reset in different way, like one mentioned 
-> above in this patch, and in case of Samsung/exynos, HCI register control 
-> device reset. AFA ufs spec is concerns, it just mandate about connecting 
-> a active low signal to RST_n pin of the ufs device.
+> I will start looking at this series. But I would request PSCI/other
+> maintainers to wait until we see some comparison data before we merge.
 
-I didn't consider the case where the host controller is the GPIO
-controller, in which case it makes sense to move this to the platform
-driver so that we don't have to implement a gpio-controller in the
-exynos platform driver, to be consumed by the ufshcd.
+What comparison are you asking for here? Do you want to see the
+improvement this series gives or are you hoping to compare it with some
+other mechanism?
 
-I'll rework this.
+> If they are fine to merge w/o that, I am fine. As of now we have just
+> 1-2 platforms to test(that too not so simple to get started) and the
+> long term support for them are questionable.
 
-Thanks,
+Why is the support for these platforms questionable? People are actively
+working on these platforms and the feature set constantly improving.
+
+> Also with SDM845 supporting PC, we have excellent opportunity to
+> compare and conclude the results found.
+
+That's correct, ATF exists for SDM845. But with the standard choice of
+firmware you will get OSI and I don't know of a board out there where
+you can switch between them and do a apple to apple comparison.
+
+Devices such as RB3 (96boards SDM845), Pixel3 and the Windows laptops
+are all OSI only.
+
+
+So landing this support is not a question of PC or OSI being the better
+choice, it's a question of do we want to be able to enter these lower
+power states - with the upstream kernel - on any past, present or future
+Qualcomm devices.
+
+Regards,
 Bjorn
