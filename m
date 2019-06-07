@@ -2,136 +2,80 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 237C6397D5
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  7 Jun 2019 23:34:59 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 1E4973987A
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  8 Jun 2019 00:20:28 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729796AbfFGVe6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 7 Jun 2019 17:34:58 -0400
-Received: from mail-it1-f194.google.com ([209.85.166.194]:34946 "EHLO
-        mail-it1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729731AbfFGVe6 (ORCPT
+        id S1731344AbfFGWU0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 7 Jun 2019 18:20:26 -0400
+Received: from mail-lj1-f196.google.com ([209.85.208.196]:39680 "EHLO
+        mail-lj1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1731147AbfFGWUW (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 7 Jun 2019 17:34:58 -0400
-Received: by mail-it1-f194.google.com with SMTP id n189so4997618itd.0;
-        Fri, 07 Jun 2019 14:34:57 -0700 (PDT)
+        Fri, 7 Jun 2019 18:20:22 -0400
+Received: by mail-lj1-f196.google.com with SMTP id v18so3021327ljh.6
+        for <linux-arm-msm@vger.kernel.org>; Fri, 07 Jun 2019 15:20:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
+        d=linaro.org; s=google;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=VR7uEffq8NFspXFmnfI2T/BRI4sqmyVwOkT2yO1GgUU=;
-        b=V80xuj+qA9FL52VHgkyQS1flAc5YTEHbuFIgDBcI1xWdvUNYPSSyEyQj4EsIWS01To
-         d6p95jIvVqoRHUw4XymUEFIRp7+OkukqYH3DwPucje3kqvAmdx8TjjhY/u10PhkWrFNS
-         GDYoGF6ocuvxOFmhwUk4gg03wgeE4fkt1kIDRlaN9/+RzskIPWHJil0aEcJ0Wt8JOAyv
-         B6qNq7bUtYtWJs0GhgKaCdfpR3jVaAbZZmRscGW08c4EcqSaDNYxpCuf0PDM1xsI2yqw
-         UqdOHOIoavggXKUMhRc+IDDbpEfF5Xw7l7/iGmp/DXpXoIRIQVlVj3Xr86LTY8Ve+RYN
-         bxlA==
+        bh=UQG5fZ3EhYRq8CYdObUVFyj6seF2R8nq3JkVzFb/lxA=;
+        b=J8oCCPGNMQU5rDGmeyVTZPHkWL9+Vc3T20HBnIQsBN/psbfksQVafp9kuniapFnd9p
+         ACZqYf29QTVDX3vNf/GeJ+C6SzG9RRzuaNdi7Odo6sI+fOHmjBlRCd8oN2ZfmoLK+yVW
+         Z4ijFNknrQ679mE38Nn9tFfqwmhPjVcPgN3CEI1ODVHLd67dZWr89t/5PRBA/eaDKeNz
+         imVCpLxet79CIeJKx/Lh38ZyzAatFK0W0vjcsPjXkCGoUOYqKW4hNg+KHhIE7ODa2w80
+         vFgRB3icM0W8MLppUf36C40m++FpW5cdTrEZKh9qGz3T7b6fCuVUnjuxS/9bejthZ/14
+         6Guw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=VR7uEffq8NFspXFmnfI2T/BRI4sqmyVwOkT2yO1GgUU=;
-        b=AO7sSHSO15lhm7Ltav84eLA7Cj8iQ9012VUP8wYEMTswMfoVGVcl+BAtrTaQydjXhe
-         tiaRXzCTMHhP9rGPvwUd/gj/C3tmCujk8unVvqpcfOrmxcUH3MVO2rW9GBkqEH+PHHyD
-         PoRumovoj8n/RJvXOGZT8zo+cAFWVe9LLAxNG+QnTRva53smmXDTYjQ0Z4oyVemneL+Q
-         50gKrSxXscFoA1x9uwo+s12ZlBvZrZt8XDUvhNdnAhrtLkYwZE1W/KO08RB6I88sUMFW
-         J87YnmQJSbXoemBOTBInZjiz+THPh0hDYrRifq2fkP14uENVu4B12v/ft8BC3b3EMYZv
-         +vdg==
-X-Gm-Message-State: APjAAAU2dHDE4CbSYybPcIoI4N1JfzyF7eEMV6EXtSGbFdgqkex87ZEX
-        alzD3YUGvFtQrKsEcJ7tUc/Nb4iQIoBhsFFkM7g=
-X-Google-Smtp-Source: APXvYqyKPbDa+FOTD+B7z0V4g6ihqV1/C/R2tv2LemPd1z+Ctld1YNgoIQ8KLjSSPOSnP3DowNrUTfhlIT12DEDD+js=
-X-Received: by 2002:a24:7289:: with SMTP id x131mr6287772itc.62.1559943297481;
- Fri, 07 Jun 2019 14:34:57 -0700 (PDT)
+        bh=UQG5fZ3EhYRq8CYdObUVFyj6seF2R8nq3JkVzFb/lxA=;
+        b=XiDTjRzYsTSBy2dZs/7VSeY0Z2fzAfcvAamx4fN13UMRfd5s4cq1kgDfTCH6x2CbXv
+         FtxCvYm7FaG71RcFY2ZHyT8tQ6fIcd5+yWwC96kJN/xpaf7+RJsBfv3czqk7sMPzOao9
+         ogr4onIcEtdga1STAtNbd3Rrh1g3tCM6Pn3ZTOkxiz3TmdaM0ka6TEUqM1JRi0lflpTn
+         SHdAceQmT2SztWAwSRael+sXL7IS4vq6p0DsXTYHiBszSRuqIKDGp8jWGGZpJs5wbYzt
+         VLEG570EYbQUePtuZRI5tI2MSTnZ/PwnltGN82ZYItCXV5NCUEmNjXbdr3o00QJo155K
+         QKyg==
+X-Gm-Message-State: APjAAAXQ6XDF+dGZazihJ7Sj1VMxFLQ+NMpVNZ+6NiBKDTl/tl3zmU26
+        PVq1wTzti0zuSRXNOOxd7JEh6HigLYQO3xIRdUyjQg==
+X-Google-Smtp-Source: APXvYqwtFn9ujhL1bNosuQYXIjXabGQeb/hX4swI0JpPVUh1sm9eQAptKaHUcU43LzWRCdPzHPmmw6b84I+/1LdT4jQ=
+X-Received: by 2002:a2e:9753:: with SMTP id f19mr5402543ljj.113.1559946020389;
+ Fri, 07 Jun 2019 15:20:20 -0700 (PDT)
 MIME-Version: 1.0
-References: <20190528164616.38517-1-jeffrey.l.hugo@gmail.com>
- <20190528164803.38642-1-jeffrey.l.hugo@gmail.com> <20190606230050.2F33720645@mail.kernel.org>
- <CAOCk7NqYptsLkYyfUCSvh0J0FZd_9gPDZJoyjB5Ng4v8aLFUNw@mail.gmail.com> <20190607203245.3AEA320868@mail.kernel.org>
-In-Reply-To: <20190607203245.3AEA320868@mail.kernel.org>
-From:   Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
-Date:   Fri, 7 Jun 2019 15:34:46 -0600
-Message-ID: <CAOCk7NqpTDOe39pAEkMC0eLAVDm-mHc_Xk1Sci8gMDyc6EgqLQ@mail.gmail.com>
-Subject: Re: [PATCH 2/3] clk: qcom: Add MSM8998 GPU Clock Controller (GPUCC) driver
-To:     Stephen Boyd <sboyd@kernel.org>
-Cc:     Michael Turquette <mturquette@baylibre.com>,
-        Andy Gross <agross@kernel.org>,
-        David Brown <david.brown@linaro.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
+References: <20190604072001.9288-1-bjorn.andersson@linaro.org> <20190604072001.9288-4-bjorn.andersson@linaro.org>
+In-Reply-To: <20190604072001.9288-4-bjorn.andersson@linaro.org>
+From:   Linus Walleij <linus.walleij@linaro.org>
+Date:   Sat, 8 Jun 2019 00:20:12 +0200
+Message-ID: <CACRpkdZETzjw2hOz7y15sUFa+s2Ki3UaMh-Qcor4cEopZrf03Q@mail.gmail.com>
+Subject: Re: [PATCH 3/3] arm64: dts: qcom: sdm845-mtp: Specify UFS
+ device-reset GPIO
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     Andy Gross <agross@kernel.org>, Rob Herring <robh+dt@kernel.org>,
         Mark Rutland <mark.rutland@arm.com>,
-        Marc Gonzalez <marc.w.gonzalez@free.fr>,
-        Jordan Crouse <jcrouse@codeaurora.org>,
-        MSM <linux-arm-msm@vger.kernel.org>, linux-clk@vger.kernel.org,
-        devicetree@vger.kernel.org, lkml <linux-kernel@vger.kernel.org>
+        Pedro Sousa <pedrom.sousa@synopsys.com>,
+        "James E.J. Bottomley" <jejb@linux.ibm.com>,
+        "Martin K. Petersen" <martin.petersen@oracle.com>,
+        MSM <linux-arm-msm@vger.kernel.org>,
+        "open list:GPIO SUBSYSTEM" <linux-gpio@vger.kernel.org>,
+        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
+        <devicetree@vger.kernel.org>,
+        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
+        linux-scsi@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, Jun 7, 2019 at 2:32 PM Stephen Boyd <sboyd@kernel.org> wrote:
->
-> Quoting Jeffrey Hugo (2019-06-07 07:08:46)
-> >
-> > As you well know, XO is the root clock for pretty much everything on
-> > Qualcomm platforms.  We are trying to do things "properly" on 8998.
-> > We are planning on having rpmcc manage it (see my other series), and
->
-> I don't have the rpmcc series in my queue. I think it needs a resend?
+On Tue, Jun 4, 2019 at 9:20 AM Bjorn Andersson
+<bjorn.andersson@linaro.org> wrote:
 
-See the "[PATCH v4 0/6] MSM8998 Multimedia Clock Controller" series.
-
+> Specify the UFS device-reset gpio, so that the controller will issue a
+> reset of the UFS device.
 >
-> > all the other components consume xo from there.  Unfortunately we
-> > cannot control the probe order, particularly when things are built as
-> > modules, so its possible gpucc might be the first thing to probe.
-> > Currently, the clock framework will allow that since everything in
-> > gpucc will just be an orphan.  However that doesn't prevent gpucc
-> > consumers from grabbing their clocks, and we've seen that cause
-> > issues.
-> >
-> > As you've previously explained, you have a ton of work to do to
-> > refactor things so that a clock will probe defer if its dependencies
-> > are not present.  We'd prefer that functionality, but are not really
-> > willing to wait for it.  Thus, we are implementing the same
-> > functionality in the driver until the framework handles it for us, at
-> > which point we'll gladly rip this out.
->
-> Can you add more to the comment? Right now it doesn't explain the _why_
-> part that you describe in the first paragraph here. That's what I'm
-> asking to be put here as a comment. Also, GCC is the one exporting the
-> XO clk on this platform so I'm a little lost why we're talking about rpm
-> here.
+> Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
 
-Oh, I see, you wanted the comment expanded.  Sorry I didn't understand
-that earlier.  Will do.
+Reviewed-by: Linus Walleij <linus.walleij@linaro.org>
 
->
-> I guess I'm left to do the ton of work myself and get to have clk
-> providers like this be clk consumers so that probe ordering is correct
-> and clks aren't exposed until the whole parent chain exists. This is
-> taking a step backwards and causes me to be sad.
-
-I'll take a second look at the list of tasks you outlined, but what I
-recall was that most of them went over my head, so I wasn't really
-confident in poking my nose in there.
-
->
-> >
-> > >
-> > > > +       if (IS_ERR(xo))
-> > > > +               return PTR_ERR(xo);
-> > > > +       clk_put(xo);
-> > > > +
-> > > > +       regmap = qcom_cc_map(pdev, &gpucc_msm8998_desc);
-> > > > +       if (IS_ERR(regmap))
-> > > > +               return PTR_ERR(regmap);
-> > > > +
-> > > > +       /* force periph logic on to acoid perf counter corruption */
-> > >
-> > > avoid?
-> >
-> > Yes.  Do you want a v3 with this fixed?
->
-> Yes, please resend without the binding patch that I've already applied.
->
-
-Will do.
+Yours,
+Linus Walleij
