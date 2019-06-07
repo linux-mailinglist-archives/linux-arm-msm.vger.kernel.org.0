@@ -2,66 +2,65 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 2F88D39940
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  8 Jun 2019 01:02:19 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0C6D939968
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  8 Jun 2019 01:10:08 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731268AbfFGXCS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 7 Jun 2019 19:02:18 -0400
-Received: from mail-lf1-f67.google.com ([209.85.167.67]:35943 "EHLO
-        mail-lf1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1731225AbfFGXCS (ORCPT
+        id S1730655AbfFGXIg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 7 Jun 2019 19:08:36 -0400
+Received: from mail-lj1-f194.google.com ([209.85.208.194]:35711 "EHLO
+        mail-lj1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1730543AbfFGXIc (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 7 Jun 2019 19:02:18 -0400
-Received: by mail-lf1-f67.google.com with SMTP id q26so2780029lfc.3
-        for <linux-arm-msm@vger.kernel.org>; Fri, 07 Jun 2019 16:02:17 -0700 (PDT)
+        Fri, 7 Jun 2019 19:08:32 -0400
+Received: by mail-lj1-f194.google.com with SMTP id h11so3108970ljb.2
+        for <linux-arm-msm@vger.kernel.org>; Fri, 07 Jun 2019 16:08:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc:content-transfer-encoding;
-        bh=5xFvF+4uJK8Lh2AsjRCLimxFRPpGedGu0+ViCBhUWR4=;
-        b=H5gdtMARqwXZeZeFjKwNuxbqV7Ma28Zy+ksL8TIwffhROYWLRyFUstv2pLeZRXOtVI
-         fAhShFz/IZuaKEtFrFCylwW+MoCj5faYUez2qq2xt7Fy22nACsumSyiw4RjiAz8FnrXC
-         7GtI0/gcBjnuD3WLTh0f4i+ovxk/37NSTnaGr+rNE28cNDK9nt51/7yY0bnDcrQYbwEJ
-         hr/PnOIYlRhZoIZbhsi7K73CA5EyoPpIoef1Vzg9WAzleef10NaCpIn1AMsr/JMWRfWX
-         hHz1RCfhhjKHLMy9rsvhEyACNYumCq+iakbKsRoDM2vq4izlpoylJdu1CyzZEmCTFnZ/
-         T44A==
+        bh=CJjAb+Z5ioBZ0AM/8mCFtzkkLn/OKSEL3IHSOtuKgfQ=;
+        b=FkVCVtLwoVP2xNToV3V9nLLFBH8qK0uahCMEKeFCpaR2z9IF0rpEg8YFqnUmGXZsgq
+         DfvxttPbgwKv51MItse2JF1YQ5TsRI5GCwNHRb9IYez7H3NYfXRNHgXB0gnp2gTndxNB
+         LwkbDBxTrRmHrzyvFF13obVOy9KBAFVFFzTocL3+JUOgAFqMpgZ+U41+ABtrRyWnIodz
+         eqN5ctPHY09xzgpkZFV2Tez9dxUvSL4e5wfFHFtt31VxWoUedzV9qMV9ZKUB51qacrdz
+         tTCqV/urQYCK3kC4ka+GuQTTXl3BE0wjaSiIPmANYwxUqfk3h0q8w6gczsAnBL5+4gOe
+         vC3Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc:content-transfer-encoding;
-        bh=5xFvF+4uJK8Lh2AsjRCLimxFRPpGedGu0+ViCBhUWR4=;
-        b=rQBGERPaBuNhcgaoZEfRr0CBQG85lrjzwvJRbnLNuBMWCM5IA/LWrqcU6qELOREAWl
-         Ffu8IVF5HKXwV3Ue67SOvUa9jZOIosHms2ZGxjFa0MWZqF5/cTJjLMjx37Y6bzip66aV
-         ewsszjggGdIqGo8HqBbuHH+xUzR4RVMKv3UZgX1QgCGG8tseGiNZOYvCDk1gYyoCrrtE
-         as20rptjaSxRGu617eGfv3QhlGqxEwJqQvfVI2L3tqIBmoJrZcmEdEUhwHAQC9Z8affX
-         dwsxzGRatcOrs1DMkegvnaZXfF4P88FaeP79ZHQa7w/HL0/xysBz1ooYTmUxlnW+EyYN
-         HatA==
-X-Gm-Message-State: APjAAAXrdZdWqKMZC64GeF5WJ4Sv6+CTOnE/ZWMjSYwoPmR5cEglT69r
-        tJRc1TfrTFQcL1J2efIWI2xRUYrhE6B6REpQ2hSLzg==
-X-Google-Smtp-Source: APXvYqxzX4pBaF3Caq1oDbU7bQ+/NcABw//1thgHYHWRKTRFjeHnAO7VM0FJu2uXV21zUNtbO89kZJkPdws6UI2If2A=
-X-Received: by 2002:ac2:50c4:: with SMTP id h4mr14517898lfm.61.1559948536365;
- Fri, 07 Jun 2019 16:02:16 -0700 (PDT)
+        bh=CJjAb+Z5ioBZ0AM/8mCFtzkkLn/OKSEL3IHSOtuKgfQ=;
+        b=S86xosSkzQPWQYV1z3bxu607WpC4uUGSl9GroZzWONiFsv59LEbtOkJcR6URl/qwEE
+         AlaJPNTbb6VVbZoTaR+U609J3GZwnuw9ar+q59Hah/FVM9urB/rBHzLoVKXMhqwhTYfh
+         1QiKupBb290Zor5aTyEGzFV5LRpFoNHxmc9715C/cHFZSBGi1JAqxBak0gXSaxK1HkkT
+         i4zHFP4YJakQkBReqh5+gAUtV0leh39NJZcYOJ/CSQ3b6dptWAPx5NrCzNGvbdqzZj+H
+         sIvmbyHHNDZLfc9bLbompE3YUoxGBWjMxrU4uMiVLRothxkMMeyTWeR0G6iWYNo8QtEw
+         RVOA==
+X-Gm-Message-State: APjAAAX6Wa7K6w9SvyA0ER2Zdh2Bx5/3Qmew5PJJkMC0uUS3ll1zjssL
+        IwbqLbgjGZGYWwSNDc6kb1z43hz/XeyR9VCDOHlNpw==
+X-Google-Smtp-Source: APXvYqxUOi2ComwroPYJqL0+HmrxnRaNzTbxCzwrLY351hzZwjGfd8PvKzmcThTDM6zJHWY6X2LcwPf0/66wKSkFxIw=
+X-Received: by 2002:a2e:5bdd:: with SMTP id m90mr19985474lje.46.1559948910013;
+ Fri, 07 Jun 2019 16:08:30 -0700 (PDT)
 MIME-Version: 1.0
-References: <20190605114302.22509-1-lee.jones@linaro.org> <20190605114302.22509-3-lee.jones@linaro.org>
-In-Reply-To: <20190605114302.22509-3-lee.jones@linaro.org>
+References: <1559754961-26783-1-git-send-email-sricharan@codeaurora.org>
+In-Reply-To: <1559754961-26783-1-git-send-email-sricharan@codeaurora.org>
 From:   Linus Walleij <linus.walleij@linaro.org>
-Date:   Sat, 8 Jun 2019 01:02:09 +0200
-Message-ID: <CACRpkdaEe3uKAsSuhbToevXH1cMsuMUvwaopLPuD+JkDTnuEnQ@mail.gmail.com>
-Subject: Re: [PATCH 3/8] pinctrl: msm: Add ability for drivers to supply a
- reserved GPIO list
-To:     Lee Jones <lee.jones@linaro.org>
-Cc:     alokc@codeaurora.org, Andy Gross <andy.gross@linaro.org>,
-        David Brown <david.brown@linaro.org>,
-        Wolfram Sang <wsa+renesas@sang-engineering.com>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Felipe Balbi <balbi@kernel.org>,
-        Greg KH <gregkh@linuxfoundation.org>,
-        Linux ARM <linux-arm-kernel@lists.infradead.org>,
+Date:   Sat, 8 Jun 2019 01:08:22 +0200
+Message-ID: <CACRpkdbxUHR8Uo+M7+_0v77Pg6k_jmL79KeHKNzWmFhtq+mZXw@mail.gmail.com>
+Subject: Re: [PATCH 0/6] Add minimal boot support for IPQ6018
+To:     Sricharan R <sricharan@codeaurora.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     Rob Herring <robh+dt@kernel.org>,
+        Stephen Boyd <sboyd@codeaurora.org>,
+        Andy Gross <agross@kernel.org>,
+        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
+        <devicetree@vger.kernel.org>,
         "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
-        jlhugo@gmail.com, linux-i2c@vger.kernel.org,
-        MSM <linux-arm-msm@vger.kernel.org>,
+        linux-clk <linux-clk@vger.kernel.org>,
         "open list:GPIO SUBSYSTEM" <linux-gpio@vger.kernel.org>,
-        linux-usb@vger.kernel.org
+        MSM <linux-arm-msm@vger.kernel.org>,
+        "open list:ARM/QUALCOMM SUPPORT" <linux-soc@vger.kernel.org>,
+        Linux ARM <linux-arm-kernel@lists.infradead.org>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 Sender: linux-arm-msm-owner@vger.kernel.org
@@ -69,24 +68,21 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Jun 5, 2019 at 1:43 PM Lee Jones <lee.jones@linaro.org> wrote:
+On Wed, Jun 5, 2019 at 7:16 PM Sricharan R <sricharan@codeaurora.org> wrote=
+:
 
-> When booting MSM based platforms with Device Tree or some ACPI
-> implementations, it is possible to provide a list of reserved pins
-> via the 'gpio-reserved-ranges' and 'gpios' properties respectively.
-> However some ACPI tables are not populated with this information,
-> thus it has to come from a knowledgable device driver instead.
+> The IPQ6018 is Qualcomm=E2=80=99s 802.11ax SoC for Routers,
+> Gateways and Access Points.
 >
-> Here we provide the MSM common driver with additional support to
-> parse this informtion and correctly populate the widely used
-> 'valid_mask'.
+> This series adds minimal board boot support for ipq6018-cp01
+> board.
 >
-> Signed-off-by: Lee Jones <lee.jones@linaro.org>
+> Sricharan R (6):
+>   pinctrl: qcom: Add ipq6018 pinctrl driver
+>   dt-bindings: qcom: Add ipq6018 bindings
 
-Exactly how we should use of the API, so if Bj=C3=B6rn can supply an
-ACK to patches 3 and 4 I'm happy to apply them.
-
-Bj=C3=B6rn?
+I'm happy to merge these two if I can get a review from
+Bjorn Andersson on them.
 
 Yours,
 Linus Walleij
