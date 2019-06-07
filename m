@@ -2,141 +2,61 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id C99D6395C9
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  7 Jun 2019 21:34:12 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 65B1B3961E
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  7 Jun 2019 21:45:01 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730573AbfFGTeL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 7 Jun 2019 15:34:11 -0400
-Received: from mail-pl1-f194.google.com ([209.85.214.194]:43416 "EHLO
-        mail-pl1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729450AbfFGTeL (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 7 Jun 2019 15:34:11 -0400
-Received: by mail-pl1-f194.google.com with SMTP id cl9so1184793plb.10
-        for <linux-arm-msm@vger.kernel.org>; Fri, 07 Jun 2019 12:34:11 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=wpKUd2nT5fJdpxBIuy/BOsoGuLISr+yeuc18GcpDf6g=;
-        b=tf63b50aos3gIs6Uh0x0ZPeVIy4dEEbpe9EQmwGyT5+A2Gw+N/fvymG2EdZPGIy8L9
-         5xNyeQKO8zT6AP0IKirJTEmIaiKb0OS22rDKMOn0xOxkquKtpLyow98OJ4nggW92g6My
-         9pdMTgF13mlwfqUP3g8TWHhyUpxL9SbblVrXJdKjTdqxqojrU5td0HmAQ0uovPfbnxVC
-         drUELbnT0qtfXIoREosTwsWm+DTIQBTK17ZyUprcwTpWecwDd1KhtfUWf8qd3HewI/gj
-         yccWS8LfVbTTNCkPA7VUiFxQPzMCcZkELxdnOr46rMOQzYY/LSG5VMTANT0WWgP6jyeo
-         1SaQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=wpKUd2nT5fJdpxBIuy/BOsoGuLISr+yeuc18GcpDf6g=;
-        b=h5KjpoclIJQ6DZNPgZeHMaP+Ff+oQJWy5FwESF+dHNfl0DrCsHgfVBcQTriw1dxGoV
-         NlNnpBQEiQhPRHytg7doM/41ce5Y9wRoX4vGDHiz2t17DCzhxbGup5uuGE6cCbPbSqQP
-         vqtf0qPCwK/Y6Lk21HIuE9d7pqp+gcFxZbcA6Oyu0keqp+ThopQPn3RpPwabPCidULPm
-         AGQv4Ryq8SCVTGL0SsjPWI6jhn4U7oVyLjdxOh0sDywfm9gf28TcEXT6a36voVpdMO5d
-         ZKhdgpnWVcIU4msQhbJKWwU89eazugM4C0j/DBRKS9gehuZyay2pnK39JtjT9/VOA5Ng
-         D4fw==
-X-Gm-Message-State: APjAAAVqZXq2gnsY7cIThk/e9QC2SrBmyzJC1wcpinCsunCXm3qdCjG3
-        Z548FPJKtZ8URw56BqIuwHUrUQ==
-X-Google-Smtp-Source: APXvYqxSC7rw05vLxn/PlSEW90GOUry7OdvPp1Qde6epr5HHI6UoO46GU4ItChia53NkMezfJO+8dA==
-X-Received: by 2002:a17:902:2883:: with SMTP id f3mr57841151plb.111.1559936050681;
-        Fri, 07 Jun 2019 12:34:10 -0700 (PDT)
-Received: from builder (104-188-17-28.lightspeed.sndgca.sbcglobal.net. [104.188.17.28])
-        by smtp.gmail.com with ESMTPSA id o26sm2726497pgv.47.2019.06.07.12.34.09
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Fri, 07 Jun 2019 12:34:10 -0700 (PDT)
-Date:   Fri, 7 Jun 2019 12:34:07 -0700
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Sudeep Holla <sudeep.holla@arm.com>
-Cc:     Ulf Hansson <ulf.hansson@linaro.org>,
-        "Rafael J. Wysocki" <rafael@kernel.org>,
-        Lorenzo Pieralisi <Lorenzo.Pieralisi@arm.com>,
-        Mark Rutland <mark.rutland@arm.com>,
-        Linux ARM <linux-arm-kernel@lists.infradead.org>,
-        "Rafael J . Wysocki" <rjw@rjwysocki.net>,
-        Daniel Lezcano <daniel.lezcano@linaro.org>,
-        "Raju P . L . S . S . S . N" <rplsssn@codeaurora.org>,
-        Amit Kucheria <amit.kucheria@linaro.org>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Niklas Cassel <niklas.cassel@linaro.org>,
-        Tony Lindgren <tony@atomide.com>,
-        Kevin Hilman <khilman@kernel.org>,
-        Lina Iyer <ilina@codeaurora.org>,
-        Viresh Kumar <viresh.kumar@linaro.org>,
-        Vincent Guittot <vincent.guittot@linaro.org>,
-        Geert Uytterhoeven <geert+renesas@glider.be>,
-        Souvik Chakravarty <souvik.chakravarty@arm.com>,
-        Linux PM <linux-pm@vger.kernel.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>
-Subject: Re: [PATCH 00/18] ARM/ARM64: Support hierarchical CPU arrangement
- for PSCI
-Message-ID: <20190607193407.GB24059@builder>
-References: <20190513192300.653-1-ulf.hansson@linaro.org>
- <CAJZ5v0gbK3AFCVC1b9LyXeMOM8fKR1=ECXZwaeSYRSqcK0UgYA@mail.gmail.com>
- <CAPDyKFpU3u248Gi+FnrVdY-EWXJQuu14uNV9d3Xs0W-K-EMEhg@mail.gmail.com>
- <20190607154210.GJ15577@e107155-lin>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20190607154210.GJ15577@e107155-lin>
-User-Agent: Mutt/1.10.0 (2018-05-17)
+        id S1730622AbfFGTpA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 7 Jun 2019 15:45:00 -0400
+Received: from mail.kernel.org ([198.145.29.99]:54036 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1730326AbfFGTpA (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 7 Jun 2019 15:45:00 -0400
+Received: from localhost (107-207-74-175.lightspeed.austtx.sbcglobal.net [107.207.74.175])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        by mail.kernel.org (Postfix) with ESMTPSA id 88CFE20868;
+        Fri,  7 Jun 2019 19:44:59 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=default; t=1559936699;
+        bh=n+3Sw/P9Edjb/WQZTIlVmNy5Vbg1PHkTk5IHHvvsEdw=;
+        h=From:To:Cc:Subject:Date:From;
+        b=keuDiN46VAX426027Ek7ZhfHrrLZ+7LmzFjuTfC9cmVWvXvnwLMzO5UNlHW2g4etB
+         sULqXu0w1bwKfEKPKnBn6zQrKRN+KRgcznA5AAxxUe7aOKzAa/TUvFkTaHwp7Br4WP
+         CJN/U/4GrtR6AnBf9K/sZr6aceSFkgWvEDXWRngc=
+From:   Andy Gross <agross@kernel.org>
+To:     linux-kernel@vger.kernel.org
+Cc:     linux-arm-kernel@lists.infradead.org,
+        Bjorn Andersson <bjorn.andersson@linaro.org>, arm@kernel.org,
+        linux-arm-msm@vger.kernel.org, Andy Gross <agross@kernel.org>
+Subject: [PATCH] MAINTAINERS: Change QCOM repo location
+Date:   Fri,  7 Jun 2019 14:44:51 -0500
+Message-Id: <1559936691-15759-1-git-send-email-agross@kernel.org>
+X-Mailer: git-send-email 2.7.4
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri 07 Jun 08:42 PDT 2019, Sudeep Holla wrote:
+This patch updates the Qualcomm SoC repo to a new location.
 
-> On Tue, May 14, 2019 at 10:58:04AM +0200, Ulf Hansson wrote:
-> > On Tue, 14 May 2019 at 10:08, Rafael J. Wysocki <rafael@kernel.org> wrote:
-> > >
-> > > On Mon, May 13, 2019 at 9:23 PM Ulf Hansson <ulf.hansson@linaro.org> wrote:
-> > > >
-> > > > This series enables support for hierarchical CPU arrangement, managed by PSCI
-> > > > for ARM/ARM64. It's based on using the generic PM domain (genpd), which
-> > > > recently was extended to manage devices belonging to CPUs.
-> > >
-> > > ACK for the patches touching cpuidle in this series (from the
-> > > framework perspective), but I'm assuming it to be taken care of by
-> > > ARM/ARM64 maintainers.
-> >
-> > Thanks for the ack! Yes, this is for PSCI/ARM maintainers.
-> >
-> > BTW, apologize for sending this in the merge window, but wanted to
-> > take the opportunity for people to have a look before OSPM Pisa next
-> > week.
-> >
-> 
-> I will start looking at this series. But I would request PSCI/other
-> maintainers to wait until we see some comparison data before we merge.
+Signed-off-by: Andy Gross <agross@kernel.org>
+---
+ MAINTAINERS | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-What comparison are you asking for here? Do you want to see the
-improvement this series gives or are you hoping to compare it with some
-other mechanism?
+diff --git a/MAINTAINERS b/MAINTAINERS
+index 5cfbea4..de1e935 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -2079,7 +2079,7 @@ F:	drivers/tty/serial/msm_serial.c
+ F:	drivers/usb/dwc3/dwc3-qcom.c
+ F:	include/dt-bindings/*/qcom*
+ F:	include/linux/*/qcom*
+-T:	git git://git.kernel.org/pub/scm/linux/kernel/git/agross/linux.git
++T:	git git://git.kernel.org/pub/scm/linux/kernel/git/qcom/linux.git
+ 
+ ARM/RADISYS ENP2611 MACHINE SUPPORT
+ M:	Lennert Buytenhek <kernel@wantstofly.org>
+-- 
+2.7.4
 
-> If they are fine to merge w/o that, I am fine. As of now we have just
-> 1-2 platforms to test(that too not so simple to get started) and the
-> long term support for them are questionable.
-
-Why is the support for these platforms questionable? People are actively
-working on these platforms and the feature set constantly improving.
-
-> Also with SDM845 supporting PC, we have excellent opportunity to
-> compare and conclude the results found.
-
-That's correct, ATF exists for SDM845. But with the standard choice of
-firmware you will get OSI and I don't know of a board out there where
-you can switch between them and do a apple to apple comparison.
-
-Devices such as RB3 (96boards SDM845), Pixel3 and the Windows laptops
-are all OSI only.
-
-
-So landing this support is not a question of PC or OSI being the better
-choice, it's a question of do we want to be able to enter these lower
-power states - with the upstream kernel - on any past, present or future
-Qualcomm devices.
-
-Regards,
-Bjorn
