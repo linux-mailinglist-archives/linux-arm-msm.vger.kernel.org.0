@@ -2,84 +2,82 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 02E7E39767
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  7 Jun 2019 23:11:09 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 395FF397B9
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  7 Jun 2019 23:27:01 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730775AbfFGVLI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 7 Jun 2019 17:11:08 -0400
-Received: from mail-lf1-f65.google.com ([209.85.167.65]:36928 "EHLO
-        mail-lf1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730737AbfFGVLI (ORCPT
+        id S1729829AbfFGV0z (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 7 Jun 2019 17:26:55 -0400
+Received: from mail-lj1-f194.google.com ([209.85.208.194]:46747 "EHLO
+        mail-lj1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729813AbfFGV0z (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 7 Jun 2019 17:11:08 -0400
-Received: by mail-lf1-f65.google.com with SMTP id m15so2626324lfh.4
-        for <linux-arm-msm@vger.kernel.org>; Fri, 07 Jun 2019 14:11:07 -0700 (PDT)
+        Fri, 7 Jun 2019 17:26:55 -0400
+Received: by mail-lj1-f194.google.com with SMTP id m15so2917520ljg.13
+        for <linux-arm-msm@vger.kernel.org>; Fri, 07 Jun 2019 14:26:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=GPc4uqgBsBwvM/V5yLC3GgSCS1qEGuH2AgCesOfjZVs=;
-        b=Xj+2CqjydRXkCSQdyY7hh8PknmG976aSmUGB6M0CXKwV68YBSlt7lEEc+0Q42HLwWz
-         Kra3lWvzcZx8eZY4JLM9mGD+VkNWxtwDyVXjTFTgP11NG2vkLXXXisA4gdEpta8GgDB2
-         yxGporWlOf2R6G+iU1qVE/dS2KcDdPsOgzlWsQScxqbH7f/eMvtehgLWrh/1s1mMzjg1
-         BK/0CrHmik6HkETFYVX4kcOMMJv106KemH4Z0D8fzGvw9Y3KVrowv8NuJWMIEnm7Eorb
-         QD7hXFsgXb7V41En3COZDajj/mMY4wVVGLQ6hrmrSsj80bmLgb4VTYAq4+CJUHOuV9ia
-         B5IA==
+        bh=q6sGj4udjdudlOgOeP/H6pDDZcmuzFdAkSUlLYTz7Hc=;
+        b=z23mfVUe0uLJ/lnbrCPAfFLlJoZeq+fXYSy3t319XR2mXsJF2HJBlsHc72bDowYPbr
+         BKlcfggdOUpnzKEOcmo/gWDJBafNeMAp2aw7/FOy/CEMhLhZAkJiqltxY9gqYHhdPADe
+         LWRluJiEIcw2pJBdRmdTdrAVM13WBgOAg9klKPj6zLBbvJjcvG0SF3UGpq5K05+1nydQ
+         YVvrkZaXl+tnN/7TgP1T8xCinH9HAqs6lCo00edbK7wHMvW8WMzCuFvKYkfX8GduJi99
+         j0wanfih+iwQg+9v0kDSq7XaxRBoHZrhq0vIpY4sKoaShnKX2Gdts7XNyc78ZgcYCS/j
+         ih7A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=GPc4uqgBsBwvM/V5yLC3GgSCS1qEGuH2AgCesOfjZVs=;
-        b=ExXDfIkBczTqd5A0ZwKJnBzuZsXsto1y/Ni2SJl8ThQhvEhSnZL1DgtfrDqW07H08x
-         er3idhHhnIeQ7qL7awVbUgey1cv/spuABbKvDm1Rms4sviEfxz0q+86a37zeDtZ0c47R
-         xM7MGlatwBmMFJia5DVm+TFGEoDFd0TIIi19inii/E+xLRK+9GsZ1/yM0c0wzsg2tZtM
-         jZAq7BadeyVPvUzuRwvoC4A4+XoH5oxJYYhMhcbSDBLBSN2s2OHC+UjGEgzttn6QIDQx
-         ct9cO4t6I2tdQUaHd2KPXH1SnXj85U7Bc+bn0EVO3Pojl/ksqINoHdGDOY9xhyrv2N2U
-         vMEQ==
-X-Gm-Message-State: APjAAAUElORXFoiogxpeNVzYE+VmBUdocHkUblX1scLXyh5tZ1BSSGLV
-        EjK5pZcFq5GpOPYB2qubg2tT7rRSPllipzCJ34b/1g==
-X-Google-Smtp-Source: APXvYqwLMWoxXQVxSrAqsjepyHJHrlxKQondxww0aj1IMUZLcbBmaGIZOjMLnDuUtqzxjWJr+xi7qFr48fEF7tdb+eo=
-X-Received: by 2002:a19:6a01:: with SMTP id u1mr26200028lfu.141.1559941866676;
- Fri, 07 Jun 2019 14:11:06 -0700 (PDT)
+        bh=q6sGj4udjdudlOgOeP/H6pDDZcmuzFdAkSUlLYTz7Hc=;
+        b=qv2EbuY74SUJ6YAgc/P/RnPWFYdc4zxj//+Ybf8v+keCG1yNtlc4dB7k2qSMFp9qdD
+         Kv7qizMW5Tvr4wdw9DfKOnKLcezlDU60TEjAtlsyaGUGrbVc0kRBv3N/SIagqjkI9M1O
+         CZ1LbdQkONSVDuoDjca6U4faz+MCJmn/0EhM3Z5aDjdEclMMAP8HeeqnZnwbvtdJMD2N
+         RMQqlg5e7pCDrfkOPA+cJyd5GKMw4Wg9EZw48odN0hhm9apb/1cgn9Z6cFMohRPsEL3Y
+         nvTi5haazESIUZlC80AyZKd+W175UgKwojz8VVkIo/Afq3jQEctGMXZ9rzJVYwT2ybYu
+         pbbQ==
+X-Gm-Message-State: APjAAAUE6hZhnrsHlo47lyN9eBM6XyYgSMMwHsPC+xId+j4gP5gsj7vO
+        1tZFYBgnd7RrVt8lCLxjFcNH8X7HtGJb5nf6J5TTSQ==
+X-Google-Smtp-Source: APXvYqwIajTpMSgCMZav18YPN+TlLmExrYklafV6rIWWxNFhS1pNAPS/UUbCntmRCn13SfjJkYCmG7CoaruMAno9FuY=
+X-Received: by 2002:a2e:7508:: with SMTP id q8mr13158846ljc.165.1559942813429;
+ Fri, 07 Jun 2019 14:26:53 -0700 (PDT)
 MIME-Version: 1.0
-References: <20190603010455.17060-1-masneyb@onstation.org>
-In-Reply-To: <20190603010455.17060-1-masneyb@onstation.org>
+References: <20190604072001.9288-1-bjorn.andersson@linaro.org> <20190604072001.9288-2-bjorn.andersson@linaro.org>
+In-Reply-To: <20190604072001.9288-2-bjorn.andersson@linaro.org>
 From:   Linus Walleij <linus.walleij@linaro.org>
-Date:   Fri, 7 Jun 2019 23:10:58 +0200
-Message-ID: <CACRpkdYP2C1cUN9w9uguSbXV3vkCDrm3o84qNbpTiaD9TcdMog@mail.gmail.com>
-Subject: Re: [PATCH 1/2] ARM: dts: qcom: msm8974-hammerhead: add touchscreen support
-To:     Brian Masney <masneyb@onstation.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        David Brown <david.brown@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
+Date:   Fri, 7 Jun 2019 23:26:46 +0200
+Message-ID: <CACRpkdazzRV5XydKHmXRQiU2Mx+=HyRgNCEpNqsOsCdycXmMOg@mail.gmail.com>
+Subject: Re: [PATCH 1/3] pinctrl: qcom: sdm845: Expose ufs_reset as gpio
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     Rob Herring <robh+dt@kernel.org>, Andy Gross <agross@kernel.org>,
         Mark Rutland <mark.rutland@arm.com>,
-        Russell King <linux@armlinux.org.uk>, frank.rowand@sony.com,
-        =?UTF-8?Q?Miqu=C3=A8l_Raynal?= <miquel.raynal@bootlin.com>,
-        absahu@codeaurora.org, MSM <linux-arm-msm@vger.kernel.org>,
+        Pedro Sousa <pedrom.sousa@synopsys.com>,
+        "James E.J. Bottomley" <jejb@linux.ibm.com>,
+        "Martin K. Petersen" <martin.petersen@oracle.com>,
+        MSM <linux-arm-msm@vger.kernel.org>,
+        "open list:GPIO SUBSYSTEM" <linux-gpio@vger.kernel.org>,
         "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
         <devicetree@vger.kernel.org>,
         "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
-        Linux ARM <linux-arm-kernel@lists.infradead.org>,
-        Jonathan Marek <jonathan@marek.ca>
+        linux-scsi@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Jun 3, 2019 at 3:05 AM Brian Masney <masneyb@onstation.org> wrote:
+On Tue, Jun 4, 2019 at 9:20 AM Bjorn Andersson
+<bjorn.andersson@linaro.org> wrote:
 
-> From: Jonathan Marek <jonathan@marek.ca>
+> The ufs_reset pin is expected to be wired to the reset pin of the
+> primary UFS memory but is pretty much just a general purpose output pinr
 >
-> Add support for the Synaptics RMI4 touchscreen that is found on the
-> Nexus 5.
+> Reorder the pins and expose it as gpio 150, so that the UFS driver can
+> toggle it.
 >
-> Signed-off-by: Jonathan Marek <jonathan@marek.ca>
-> Signed-off-by: Brian Masney <masneyb@onstation.org>
+> Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
 
-Looks good to me:
-Reviewed-by: Linus Walleij <linus.walleij@linaro.org>
+Patch applied.
 
 Yours,
 Linus Walleij
