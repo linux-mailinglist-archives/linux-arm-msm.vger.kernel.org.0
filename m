@@ -2,386 +2,197 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id BCECF393B6
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  7 Jun 2019 19:55:45 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id BB416393FC
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  7 Jun 2019 20:09:48 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730991AbfFGRzo (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 7 Jun 2019 13:55:44 -0400
-Received: from mail.kernel.org ([198.145.29.99]:35830 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1727391AbfFGRzo (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 7 Jun 2019 13:55:44 -0400
-Received: from kernel.org (unknown [104.132.0.74])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id D9D56208C0;
-        Fri,  7 Jun 2019 17:55:42 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1559930143;
-        bh=MX/fuZ19/Q8W4niXDIk65px+1vun1Fu8DRq7pvgK/Ik=;
-        h=In-Reply-To:References:To:From:Subject:Cc:Date:From;
-        b=IuawJLcX/j/+tWcwSLGnCb8HGXlB779YtfQTLuimnIL0uDkuQ4UbE5qW+RjBLHIx5
-         PWmM/6k3LN+aKEjPeaxDhq1LHPG1njsHvZc76IEVhzVaA+zg9e3yV9GjXm2iKwr7Ce
-         pztrw7/cXJq7Kn8Rc4SeeUQVkIaQFPrQ4jmu7xXc=
-Content-Type: text/plain; charset="utf-8"
-MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <20190607101234.30449-1-vkoul@kernel.org>
-References: <20190607101234.30449-1-vkoul@kernel.org>
-To:     Vinod Koul <vkoul@kernel.org>
-From:   Stephen Boyd <sboyd@kernel.org>
-Subject: Re: [PATCH 1/2] clk: qcom: clk-alpha-pll: Add support for Trion PLLs
-Cc:     linux-arm-msm@vger.kernel.org,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Deepak Katragadda <dkatraga@codeaurora.org>,
-        Andy Gross <agross@kernel.org>,
+        id S1730448AbfFGSJr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 7 Jun 2019 14:09:47 -0400
+Received: from mail-pf1-f196.google.com ([209.85.210.196]:36856 "EHLO
+        mail-pf1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1730422AbfFGSJr (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 7 Jun 2019 14:09:47 -0400
+Received: by mail-pf1-f196.google.com with SMTP id u22so1632076pfm.3
+        for <linux-arm-msm@vger.kernel.org>; Fri, 07 Jun 2019 11:09:47 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=/3m639ul9fLGHczHyKn0H1zZg+5SVSXXo1Nl+CYKby4=;
+        b=PzFmnwe5R9+tXehwIXZM6y8FoShB+B2G5A0MZe7+0cyb/EOpN+t4FPLENdAFQiY4vp
+         snMFvVlNDWgHWDB2eUSQIPp1jPpux+sTG071CiSoW9pKxLK4lCyinxlVC7k40V6c7NyM
+         z5pTl9+LJCEFZIC3Qz7jsfCfXo3GXCw4hr6fH/Of0zai00v9lD1BaHATpmLQ9qqU0zRI
+         HEJWGafkIT/mIu9OHFbD7peMSgFffJJnzRTXUZh94uyM4rRLf4WGCbHpAYNJSgv6Pp+D
+         fd+lIHwpViriTTXjPu1DqDEtndYAxhmI9tO3EsjbdeUbHvIlHX+VrJDGetgrOd1J7w40
+         Dz0w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=/3m639ul9fLGHczHyKn0H1zZg+5SVSXXo1Nl+CYKby4=;
+        b=kUD8DdkVkZHybkMP+OKsbJdKORhtiS9cCODbEQxDx7W16RKM8E+w18CiT36jtLpGsU
+         E30ZaP7Vrybjjy8Te7OgikwJuKxvctdIHoYQPVsc4xYqwnV0FvKrZYuPBhtZkMp0XUef
+         QvrOJ6CXTHFK7Zdqt68EsSNgACmIFyFzaf2RYfj05NBKl/qrcuend5q/l9KcuJnr4NGu
+         0Ku6rXJBZLerl7biJgs5pZPeKD08hIs7Yl/fwwVv7v0eq0qZ0Oz80sW3mHAFZk45I1To
+         PKfNEJu8OadhmTq7cm0laSsZEl/neUlv3VZRt5HtwwvZEFt7vKKhOWedqdoEaL5GtxYA
+         wVxQ==
+X-Gm-Message-State: APjAAAU8UOzc5qMiaVVNsB3QCFkbkN4C18LUgee9zDmbpwSVJFu0jHEh
+        0EvqJcO9Sqz1WZy5lRAwOun58g==
+X-Google-Smtp-Source: APXvYqzt5gwdXKwtn7ZORpYSN5ZFetcAiXsBwVaXb6cj35kEgitwNjg1kWrl11fOzV9tGYSsCfKnXw==
+X-Received: by 2002:a62:3287:: with SMTP id y129mr4134583pfy.251.1559930986308;
+        Fri, 07 Jun 2019 11:09:46 -0700 (PDT)
+Received: from tuxbook-pro (104-188-17-28.lightspeed.sndgca.sbcglobal.net. [104.188.17.28])
+        by smtp.gmail.com with ESMTPSA id l44sm6897224pje.29.2019.06.07.11.09.43
+        (version=TLS1_3 cipher=AEAD-AES256-GCM-SHA384 bits=256/256);
+        Fri, 07 Jun 2019 11:09:45 -0700 (PDT)
+Date:   Fri, 7 Jun 2019 11:10:30 -0700
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     Ard Biesheuvel <ard.biesheuvel@linaro.org>
+Cc:     Lee Jones <lee.jones@linaro.org>, alokc@codeaurora.org,
+        Andy Gross <andy.gross@linaro.org>,
         David Brown <david.brown@linaro.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        linux-clk@vger.kernel.org, Taniya Das <tdas@codeaurora.org>,
-        Vinod Koul <vkoul@kernel.org>
-User-Agent: alot/0.8.1
-Date:   Fri, 07 Jun 2019 10:55:42 -0700
-Message-Id: <20190607175542.D9D56208C0@mail.kernel.org>
+        wsa+renesas@sang-engineering.com,
+        Linus Walleij <linus.walleij@linaro.org>, balbi@kernel.org,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        linux-usb <linux-usb@vger.kernel.org>,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        "open list:GPIO SUBSYSTEM" <linux-gpio@vger.kernel.org>,
+        linux-i2c <linux-i2c@vger.kernel.org>,
+        Jeffrey Hugo <jlhugo@gmail.com>,
+        linux-arm-kernel <linux-arm-kernel@lists.infradead.org>
+Subject: Re: [PATCH v2 3/8] pinctrl: msm: Add ability for drivers to supply a
+ reserved GPIO list
+Message-ID: <20190607181030.GX22737@tuxbook-pro>
+References: <20190607082901.6491-1-lee.jones@linaro.org>
+ <20190607082901.6491-3-lee.jones@linaro.org>
+ <CAKv+Gu-1QhX-9aNhFJauc9NVe6ceQQueE8Kd14031XJ-2yaupA@mail.gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CAKv+Gu-1QhX-9aNhFJauc9NVe6ceQQueE8Kd14031XJ-2yaupA@mail.gmail.com>
+User-Agent: Mutt/1.11.4 (2019-03-13)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Vinod Koul (2019-06-07 03:12:33)
-> From: Deepak Katragadda <dkatraga@codeaurora.org>
->=20
-> Add programming sequence support for managing the Trion
-> PLLs.
->=20
-> Signed-off-by: Deepak Katragadda <dkatraga@codeaurora.org>
-> Signed-off-by: Taniya Das <tdas@codeaurora.org>
-> [vkoul: port to upstream and tidy-up]
+On Fri 07 Jun 04:10 PDT 2019, Ard Biesheuvel wrote:
 
-This tag isn't very useful. Maybe you can list out what you actually did
-instead of just "tidying"?
+> On Fri, 7 Jun 2019 at 10:29, Lee Jones <lee.jones@linaro.org> wrote:
+> >
+> > When booting MSM based platforms with Device Tree or some ACPI
+> > implementations, it is possible to provide a list of reserved pins
+> > via the 'gpio-reserved-ranges' and 'gpios' properties respectively.
+> > However some ACPI tables are not populated with this information,
+> > thus it has to come from a knowledgable device driver instead.
+> >
+> > Here we provide the MSM common driver with additional support to
+> > parse this informtion and correctly populate the widely used
+> > 'valid_mask'.
+> >
+> > Signed-off-by: Lee Jones <lee.jones@linaro.org>
+> 
+> I'm not sure if this is the correct approach. Presumably, on ACPI
+> systems, all the pinctl stuff is already set up by the firmware, and
+> so we shouldn't touch *any* pins unless they have been requested
+> explicitly. Is there any way we can support this in the current
+> framework?
+> 
 
-> diff --git a/drivers/clk/qcom/clk-alpha-pll.c b/drivers/clk/qcom/clk-alph=
-a-pll.c
-> index 0ced4a5a9a17..bf36a929458b 100644
-> --- a/drivers/clk/qcom/clk-alpha-pll.c
-> +++ b/drivers/clk/qcom/clk-alpha-pll.c
-> @@ -120,6 +140,15 @@ EXPORT_SYMBOL_GPL(clk_alpha_pll_regs);
->  #define FABIA_PLL_OUT_MASK     0x7
->  #define FABIA_PLL_RATE_MARGIN  500
-> =20
-> +#define TRION_PLL_CAL_VAL      0x44
-> +#define TRION_PLL_STANDBY      0x0
-> +#define TRION_PLL_RUN          0x1
-> +#define TRION_PLL_OUT_MASK     0x7
-> +#define TRION_PCAL_DONE                BIT(26)
-> +#define TRION_PLL_RATE_MARGIN  500
+The only reason why we do this (at least the initial reason) is because
+gpiolib will read the current state of all GPIOs during initialization.
 
-These last two aren't used. Do we need them?
+But due to the sensitive nature of the application using these pins
+Linux is prohibited from touching the associated GPIO/pinmux/pinconf
+registers - resulting in a security violation if we allow gpiolib to
+touch them.
 
-> +
-> +#define XO_RATE                        19200000
 
-Please remove this define. It isn't used (thankfully!).
+When it comes to pinmux/pinconf those are only poked explicitly and
+those seems to be described in PEP nodes, such as:
 
-> +
->  #define pll_alpha_width(p)                                     \
->                 ((PLL_ALPHA_VAL_U(p) - PLL_ALPHA_VAL(p) =3D=3D 4) ? \
->                                  ALPHA_REG_BITWIDTH : ALPHA_REG_16BIT_WID=
-TH)
-> @@ -392,6 +421,15 @@ alpha_pll_round_rate(unsigned long rate, unsigned lo=
-ng prate, u32 *l, u64 *a,
->         u64 remainder;
->         u64 quotient;
-> =20
-> +       /*
-> +        * The PLLs parent rate is zero probably since the parent hasn't
-> +        * registered yet. Return early with the requested rate.
-> +        */
-> +       if (!prate) {
+	Package (0x02)
+	{
+	    "TLMMGPIO",
+	    Package (0x06)
+	    {
+		0x2C,
+		One,
+		Zero,
+		One,
+		Zero,
+		Zero
+	    }
+	},
 
-This hasn't been a problem before. Why is it a problem now?
+So the pinctrl-sdm845/msm drivers gives us GPIOs, but for pinconf and
+pinmux there's a need for something very different from what we're used
+to.
 
-> +               pr_warn("PLLs parent rate hasn't been initialized.\n");
-> +               return rate;
-> +       }
-> +
->         quotient =3D rate;
->         remainder =3D do_div(quotient, prate);
->         *l =3D quotient;
-> @@ -730,6 +768,136 @@ static long alpha_pll_huayra_round_rate(struct clk_=
-hw *hw, unsigned long rate,
->         return alpha_huayra_pll_round_rate(rate, *prate, &l, &a);
->  }
-> =20
-> +static int trion_pll_is_enabled(struct clk_alpha_pll *pll,
-> +                               struct regmap *regmap)
-> +{
-> +       u32 mode_regval, opmode_regval;
-> +       int ret;
-> +
-> +       ret =3D regmap_read(regmap, PLL_MODE(pll), &mode_regval);
-> +       ret |=3D regmap_read(regmap, PLL_OPMODE(pll), &opmode_regval);
-> +       if (ret)
-> +               return 0;
-> +
-> +       return ((opmode_regval & TRION_PLL_RUN) && (mode_regval & PLL_OUT=
-CTRL));
-> +}
-> +
-> +static int clk_trion_pll_enable(struct clk_hw *hw)
-> +{
-> +       struct clk_alpha_pll *pll =3D to_clk_alpha_pll(hw);
-> +       struct regmap *regmap =3D pll->clkr.regmap;
-> +       u32 val;
-> +       int ret;
-> +
-> +       ret =3D regmap_read(regmap, PLL_MODE(pll), &val);
-> +       if (ret)
-> +               return ret;
-> +
-> +       /* If in FSM mode, just vote for it */
-> +       if (val & PLL_VOTE_FSM_ENA) {
-> +               ret =3D clk_enable_regmap(hw);
-> +               if (ret)
-> +                       return ret;
-> +               return wait_for_pll_enable_active(pll);
-> +       }
-> +
-> +       /* Set operation mode to RUN */
-> +       regmap_write(regmap, PLL_OPMODE(pll), TRION_PLL_RUN);
-> +
-> +       ret =3D wait_for_pll_enable_lock(pll);
-> +       if (ret)
-> +               return ret;
-> +
-> +       /* Enable the PLL outputs */
-> +       ret =3D regmap_update_bits(regmap, PLL_USER_CTL(pll),
-> +                                TRION_PLL_OUT_MASK, TRION_PLL_OUT_MASK);
-> +       if (ret)
-> +               return ret;
-> +
-> +       /* Enable the global PLL outputs */
-> +       ret =3D regmap_update_bits(regmap, PLL_MODE(pll),
-> +                                PLL_OUTCTRL, PLL_OUTCTRL);
-> +       if (ret)
-> +               return ret;
+Regards,
+Bjorn
 
-This if (ret) can be removed.
-
-> +
-> +       /* Ensure that the write above goes through before returning. */
-> +       mb();
-
-As far as I recall mb() does nothing to ensure the write above goes
-through, just that writes after this one are ordered with the write
-above.
-
-> +       return ret;
-> +}
-> +
-> +static void clk_trion_pll_disable(struct clk_hw *hw)
-> +{
-> +       struct clk_alpha_pll *pll =3D to_clk_alpha_pll(hw);
-> +       struct regmap *regmap =3D pll->clkr.regmap;
-> +       u32 val;
-> +       int ret;
-> +
-> +       ret =3D regmap_read(regmap, PLL_MODE(pll), &val);
-> +       if (ret)
-> +               return;
-> +
-> +       /* If in FSM mode, just unvote it */
-> +       if (val & PLL_VOTE_FSM_ENA) {
-> +               clk_disable_regmap(hw);
-> +               return;
-> +       }
-> +
-> +       /* Disable the global PLL output */
-> +       ret =3D regmap_update_bits(regmap, PLL_MODE(pll), PLL_OUTCTRL, 0);
-> +       if (ret)
-> +               return;
-> +
-> +       /* Disable the PLL outputs */
-> +       ret =3D regmap_update_bits(regmap, PLL_USER_CTL(pll),
-> +                                TRION_PLL_OUT_MASK, 0);
-> +       if (ret)
-> +               return;
-> +
-> +       /* Place the PLL mode in STANDBY */
-> +       regmap_write(regmap, PLL_OPMODE(pll), TRION_PLL_STANDBY);
-> +       regmap_update_bits(regmap, PLL_MODE(pll), PLL_RESET_N, PLL_RESET_=
-N);
-> +}
-> +
-> +static unsigned long
-> +clk_trion_pll_recalc_rate(struct clk_hw *hw, unsigned long parent_rate)
-> +{
-> +       struct clk_alpha_pll *pll =3D to_clk_alpha_pll(hw);
-> +       struct regmap *regmap =3D pll->clkr.regmap;
-> +       u32 l, frac;
-> +       u64 prate =3D parent_rate;
-> +
-> +       regmap_read(regmap, PLL_L_VAL(pll), &l);
-> +       regmap_read(regmap, PLL_ALPHA_VAL(pll), &frac);
-> +
-> +       return alpha_pll_calc_rate(prate, l, frac, ALPHA_REG_16BIT_WIDTH);
-> +}
-> +
-> +static int clk_trion_pll_is_enabled(struct clk_hw *hw)
-> +{
-> +       struct clk_alpha_pll *pll =3D to_clk_alpha_pll(hw);
-> +
-> +       return trion_pll_is_enabled(pll, pll->clkr.regmap);
-> +}
-
-Can you move this function right below trion_pll_is_enabled()?
-
-> +
-> +static long clk_trion_pll_round_rate(struct clk_hw *hw, unsigned long ra=
-te,
-> +                                    unsigned long *prate)
-> +{
-> +       struct clk_alpha_pll *pll =3D to_clk_alpha_pll(hw);
-> +       unsigned long min_freq, max_freq;
-> +       u32 l;
-> +       u64 a;
-> +
-> +       rate =3D alpha_pll_round_rate(rate, *prate,
-> +                                   &l, &a, ALPHA_REG_16BIT_WIDTH);
-> +       if (!pll->vco_table || alpha_pll_find_vco(pll, rate))
-> +               return rate;
-> +
-> +       min_freq =3D pll->vco_table[0].min_freq;
-> +       max_freq =3D pll->vco_table[pll->num_vco - 1].max_freq;
-> +
-> +       return clamp(rate, min_freq, max_freq);
-> +}
-> +
->  const struct clk_ops clk_alpha_pll_ops =3D {
->         .enable =3D clk_alpha_pll_enable,
->         .disable =3D clk_alpha_pll_disable,
-> @@ -902,6 +1079,10 @@ static int alpha_pll_fabia_enable(struct clk_hw *hw)
->         ret =3D regmap_read(regmap, PLL_OPMODE(pll), &opmode_val);
->         if (ret)
->                 return ret;
-> +       ret =3D regmap_update_bits(regmap, PLL_MODE(pll),
-> +                                PLL_BYPASSNL, PLL_BYPASSNL);
-> +       if (ret)
-> +               return ret;
-
-What is this?
-
-> =20
->         /* Skip If PLL is already running */
->         if ((opmode_val & FABIA_OPMODE_RUN) && (val & PLL_OUTCTRL))
-> @@ -1058,6 +1239,91 @@ static unsigned long clk_alpha_pll_postdiv_fabia_r=
-ecalc_rate(struct clk_hw *hw,
->         return (parent_rate / div);
->  }
-> =20
-> +static unsigned long
-> +clk_trion_pll_postdiv_recalc_rate(struct clk_hw *hw, unsigned long paren=
-t_rate)
-> +{
-> +       struct clk_alpha_pll_postdiv *pll =3D to_clk_alpha_pll_postdiv(hw=
-);
-> +       struct regmap *regmap =3D pll->clkr.regmap;
-> +       u32 i, div =3D 1, val;
-> +
-> +       if (!pll->post_div_table) {
-> +               pr_err("Missing the post_div_table for the PLL\n");
-
-Ahhh!
-
-> +               return -EINVAL;
-> +       }
-> +
-> +       regmap_read(regmap, PLL_USER_CTL(pll), &val);
-> +
-> +       val >>=3D pll->post_div_shift;
-> +       val &=3D PLL_POST_DIV_MASK(pll);
-> +
-> +       for (i =3D 0; i < pll->num_post_div; i++) {
-> +               if (pll->post_div_table[i].val =3D=3D val) {
-> +                       div =3D pll->post_div_table[i].div;
-> +                       break;
-> +               }
-> +       }
-> +
-> +       return (parent_rate / div);
-> +}
-> +
-> +static long
-> +clk_trion_pll_postdiv_round_rate(struct clk_hw *hw, unsigned long rate,
-> +                                unsigned long *prate)
-> +{
-> +       struct clk_alpha_pll_postdiv *pll =3D to_clk_alpha_pll_postdiv(hw=
-);
-> +
-> +       if (!pll->post_div_table) {
-> +               pr_err("Missing the post_div_table for the PLL\n");
-> +               return -EINVAL;
-
-Does this ever happen? I'd rather see this removed and the code blow up
-if the driver author didn't test this.
-
-> +       }
-> +
-> +       return divider_round_rate(hw, rate, prate, pll->post_div_table,
-> +                                 pll->width, CLK_DIVIDER_ROUND_CLOSEST);
-> +};
-> +
-> +static int
-> +clk_trion_pll_postdiv_set_rate(struct clk_hw *hw, unsigned long rate,
-> +                              unsigned long parent_rate)
-> +{
-> +       struct clk_alpha_pll_postdiv *pll =3D to_clk_alpha_pll_postdiv(hw=
-);
-> +       struct regmap *regmap =3D pll->clkr.regmap;
-> +       int i, val =3D 0, div, ret;
-> +
-> +       /*
-> +        * If the PLL is in FSM mode, then treat the set_rate callback
-> +        * as a no-operation.
-> +        */
-> +       ret =3D regmap_read(regmap, PLL_MODE(pll), &val);
-> +       if (ret)
-> +               return ret;
-> +
-> +       if (val & PLL_VOTE_FSM_ENA)
-> +               return 0;
-> +
-> +       if (!pll->post_div_table) {
-> +               pr_err("Missing the post_div_table for the PLL\n");
-
-Again!
-
-> +               return -EINVAL;
-> +       }
-> +
-> +       div =3D DIV_ROUND_UP_ULL((u64)parent_rate, rate);
-
-Is the cast necessary?
-
-> +       for (i =3D 0; i < pll->num_post_div; i++) {
-> +               if (pll->post_div_table[i].div =3D=3D div) {
-> +                       val =3D pll->post_div_table[i].val;
-> +                       break;
-> +               }
-> +       }
-> +       return regmap_update_bits(regmap, PLL_USER_CTL(pll),
-> +                                 PLL_POST_DIV_MASK(pll) << PLL_POST_DIV_=
-SHIFT,
-> +                                 val << PLL_POST_DIV_SHIFT);
-> +}
-> +
-> +const struct clk_ops clk_trion_pll_postdiv_ops =3D {
-> +       .recalc_rate =3D clk_trion_pll_postdiv_recalc_rate,
-> +       .round_rate =3D clk_trion_pll_postdiv_round_rate,
-> +       .set_rate =3D clk_trion_pll_postdiv_set_rate,
-> +};
-> +EXPORT_SYMBOL_GPL(clk_trion_pll_postdiv_ops);
-> +
->  static long clk_alpha_pll_postdiv_fabia_round_rate(struct clk_hw *hw,
->                                 unsigned long rate, unsigned long *prate)
->  {
+> > ---
+> >  drivers/pinctrl/qcom/pinctrl-msm.c | 18 ++++++++++++++++++
+> >  drivers/pinctrl/qcom/pinctrl-msm.h |  1 +
+> >  2 files changed, 19 insertions(+)
+> >
+> > diff --git a/drivers/pinctrl/qcom/pinctrl-msm.c b/drivers/pinctrl/qcom/pinctrl-msm.c
+> > index ee8119879c4c..3ac740b36508 100644
+> > --- a/drivers/pinctrl/qcom/pinctrl-msm.c
+> > +++ b/drivers/pinctrl/qcom/pinctrl-msm.c
+> > @@ -607,8 +607,23 @@ static int msm_gpio_init_valid_mask(struct gpio_chip *chip)
+> >         int ret;
+> >         unsigned int len, i;
+> >         unsigned int max_gpios = pctrl->soc->ngpios;
+> > +       const int *reserved = pctrl->soc->reserved_gpios;
+> >         u16 *tmp;
+> >
+> > +       /* Driver provided reserved list overrides DT and ACPI */
+> > +       if (reserved) {
+> > +               bitmap_fill(chip->valid_mask, max_gpios);
+> > +               for (i = 0; reserved[i] >= 0; i++) {
+> > +                       if (i >= max_gpios || reserved[i] >= max_gpios) {
+> > +                               dev_err(pctrl->dev, "invalid list of reserved GPIOs\n");
+> > +                               return -EINVAL;
+> > +                       }
+> > +                       clear_bit(reserved[i], chip->valid_mask);
+> > +               }
+> > +
+> > +               return 0;
+> > +       }
+> > +
+> >         /* The number of GPIOs in the ACPI tables */
+> >         len = ret = device_property_read_u16_array(pctrl->dev, "gpios", NULL,
+> >                                                    0);
+> > @@ -964,6 +979,9 @@ static void msm_gpio_irq_handler(struct irq_desc *desc)
+> >
+> >  static bool msm_gpio_needs_valid_mask(struct msm_pinctrl *pctrl)
+> >  {
+> > +       if (pctrl->soc->reserved_gpios)
+> > +               return true;
+> > +
+> >         return device_property_read_u16_array(pctrl->dev, "gpios", NULL, 0) > 0;
+> >  }
+> >
+> > diff --git a/drivers/pinctrl/qcom/pinctrl-msm.h b/drivers/pinctrl/qcom/pinctrl-msm.h
+> > index c12048e54a6f..23b93ae92269 100644
+> > --- a/drivers/pinctrl/qcom/pinctrl-msm.h
+> > +++ b/drivers/pinctrl/qcom/pinctrl-msm.h
+> > @@ -121,6 +121,7 @@ struct msm_pinctrl_soc_data {
+> >         bool pull_no_keeper;
+> >         const char *const *tiles;
+> >         unsigned int ntiles;
+> > +       const int *reserved_gpios;
+> >  };
+> >
+> >  extern const struct dev_pm_ops msm_pinctrl_dev_pm_ops;
+> > --
+> > 2.17.1
+> >
+> >
+> > _______________________________________________
+> > linux-arm-kernel mailing list
+> > linux-arm-kernel@lists.infradead.org
+> > http://lists.infradead.org/mailman/listinfo/linux-arm-kernel
