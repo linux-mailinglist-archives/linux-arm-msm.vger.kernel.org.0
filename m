@@ -2,75 +2,116 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 0F13739C0E
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  8 Jun 2019 11:19:03 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id EC37D3A041
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  8 Jun 2019 16:22:15 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726613AbfFHJTC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 8 Jun 2019 05:19:02 -0400
-Received: from mail.kernel.org ([198.145.29.99]:44466 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726478AbfFHJTC (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 8 Jun 2019 05:19:02 -0400
-Received: from localhost (unknown [106.200.229.24])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 83A782146E;
-        Sat,  8 Jun 2019 09:18:56 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1559985541;
-        bh=OanMxsEXZVTB4mNJ5mhC8IHdcZWYqLtxc3NYjHBDJ9I=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=ZffyHhrygV7SQLLbKaVoX3Yj4oG4O+m9VvIfTxasTkFgYK/FRjRBPFLQShEZVSfd/
-         u/zLFL4CdCuIRdtp4+Oc6C53XJPxTDntZtx3ioHFJU5Vo85e3BkSTc6LwpOH8weT2O
-         nGEvkMyyJA4lVDFGjAMZBieZHJqgHs07F42S0cfA=
-Date:   Sat, 8 Jun 2019 14:45:37 +0530
-From:   Vinod Koul <vkoul@kernel.org>
-To:     Stephen Boyd <sboyd@kernel.org>
-Cc:     Rob Herring <robh+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Deepak Katragadda <dkatraga@codeaurora.org>,
-        Andy Gross <agross@kernel.org>,
-        David Brown <david.brown@linaro.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Mark Rutland <mark.rutland@arm.com>, linux-clk@vger.kernel.org,
-        devicetree@vger.kernel.org, Taniya Das <tdas@codeaurora.org>
-Subject: Re: [PATCH 2/2] clk: qcom: gcc: Add global clock controller driver
- for SM8150
-Message-ID: <20190608091537.GG9160@vkoul-mobl.Dlink>
-References: <20190607101234.30449-1-vkoul@kernel.org>
- <20190607101234.30449-2-vkoul@kernel.org>
- <20190607174353.31EDA208C3@mail.kernel.org>
+        id S1727144AbfFHOWN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 8 Jun 2019 10:22:13 -0400
+Received: from mail-lf1-f68.google.com ([209.85.167.68]:35041 "EHLO
+        mail-lf1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727034AbfFHOWM (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Sat, 8 Jun 2019 10:22:12 -0400
+Received: by mail-lf1-f68.google.com with SMTP id a25so3695240lfg.2
+        for <linux-arm-msm@vger.kernel.org>; Sat, 08 Jun 2019 07:22:11 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=aIUAKPG6L/Uk7RNnahoThkSWUC4nrgmZui5o+1IQtNk=;
+        b=a8zCjMPgP8flEe8AX4DYltakrbTeXlf4HJdUBQFer/b0IPJPCfVav33LROaOIvkRBh
+         d/ezKZe+qMrAcg+2zaULmB+dIX8setyM8Dw/amQKtBtuGvpqfUZdtCABo4QaT5ZFUGGd
+         fksqElAG9w2gwbE6Q6S46627rrHHqLiRDCA8eScKkVkurpN9O6Dge+avOCJxW9CwIBjE
+         vWmpOGwdimteMBWpy3R6+1wtE1HyS9jIIsl6y+9pjv6itruHNG55mTSg6Qzlisw2u1sl
+         d/rKG06wFYR5828vG892iuyGTPq8CV75uQK3Cx8ndRZlvQhTZTCv/wvDzZyIGlw+oOwZ
+         bmxg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=aIUAKPG6L/Uk7RNnahoThkSWUC4nrgmZui5o+1IQtNk=;
+        b=Zb9Yw37EGVeQxMcIEk/ikz0nJG6/OY2O4BDQ2mV3R2mXhqQLCj7pN8H0fMJ8+ASpoT
+         LfiNSvfjj2NM2ps79MzfRFqSf2gADgu8reCh+YUH0jJKJzbLpS6FK6BEOIpBXjrQDsbt
+         ib+gozS3ljOxYFndLdp5CU3l3kY/Kc7zOiarFDBUxBsO9H3aRwUGgfKrSxpzOehR8qqU
+         0KD6BlfS1txMZaLheyjRX/RelO6m989n9HJFdfNAODWX7/h84Jqh9fCdJSml50CqRU2l
+         IdGFuSiD6Y3O1SrRbcKMH6r+G75ENXBsQilU/Z8yiuP5C0RRZRoIu6pnfYX5zX5z5Aac
+         XXHg==
+X-Gm-Message-State: APjAAAXRfHcBLAqaNOwVXm4mAUU3JfU9bmdvhkI+xsxZ3h6UDOxqKHrP
+        AicPUxhRquAuthrLOv+TWEacqy0DiVWUSgjvLm3SSg==
+X-Google-Smtp-Source: APXvYqx2MoGtkoQjUm5Wa5IOCM/k/orM6EKwAwZG7AXIo8rcqREn8WTPkR2Fc2Pbt++tRSEdz7xZS6GOynFOOaZSLRQ=
+X-Received: by 2002:ac2:598d:: with SMTP id w13mr28511822lfn.165.1560003730786;
+ Sat, 08 Jun 2019 07:22:10 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20190607174353.31EDA208C3@mail.kernel.org>
-User-Agent: Mutt/1.11.3 (2019-02-01)
+References: <20190607082901.6491-1-lee.jones@linaro.org> <20190607082901.6491-3-lee.jones@linaro.org>
+ <CAKv+Gu-1QhX-9aNhFJauc9NVe6ceQQueE8Kd14031XJ-2yaupA@mail.gmail.com>
+In-Reply-To: <CAKv+Gu-1QhX-9aNhFJauc9NVe6ceQQueE8Kd14031XJ-2yaupA@mail.gmail.com>
+From:   Linus Walleij <linus.walleij@linaro.org>
+Date:   Sat, 8 Jun 2019 16:22:03 +0200
+Message-ID: <CACRpkdZmBe6ucmekLUNkypDKx=eAXqtwdYNpZzwByzuWb-sjDA@mail.gmail.com>
+Subject: Re: [PATCH v2 3/8] pinctrl: msm: Add ability for drivers to supply a
+ reserved GPIO list
+To:     Ard Biesheuvel <ard.biesheuvel@linaro.org>
+Cc:     Lee Jones <lee.jones@linaro.org>, alokc@codeaurora.org,
+        Andy Gross <andy.gross@linaro.org>,
+        David Brown <david.brown@linaro.org>,
+        Wolfram Sang <wsa+renesas@sang-engineering.com>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Felipe Balbi <balbi@kernel.org>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        linux-usb <linux-usb@vger.kernel.org>,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        "open list:GPIO SUBSYSTEM" <linux-gpio@vger.kernel.org>,
+        linux-i2c <linux-i2c@vger.kernel.org>,
+        Jeffrey Hugo <jlhugo@gmail.com>,
+        linux-arm-kernel <linux-arm-kernel@lists.infradead.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 07-06-19, 10:43, Stephen Boyd wrote:
-> Quoting Vinod Koul (2019-06-07 03:12:34)
-> > diff --git a/drivers/clk/qcom/gcc-sm8150.c b/drivers/clk/qcom/gcc-sm8150.c
-> > new file mode 100644
-> > index 000000000000..1cbc884444c9
-> > --- /dev/null
-> > +++ b/drivers/clk/qcom/gcc-sm8150.c
-> > +static const struct parent_map gcc_parent_map_0[] = {
-> > +       { P_BI_TCXO, 0 },
-> > +       { P_GPLL0_OUT_MAIN, 1 },
-> > +       { P_GPLL0_OUT_EVEN, 6 },
-> > +       { P_CORE_BI_PLL_TEST_SE, 7 },
-> > +};
-> > +
-> > +static const char * const gcc_parent_names_0[] = {
-> 
-> We have a new way of specifying clk parents now. Can you use that
-> instead of using strings everywhere?
+On Fri, Jun 7, 2019 at 1:10 PM Ard Biesheuvel <ard.biesheuvel@linaro.org> wrote:
+> On Fri, 7 Jun 2019 at 10:29, Lee Jones <lee.jones@linaro.org> wrote:
+> >
+> > When booting MSM based platforms with Device Tree or some ACPI
+> > implementations, it is possible to provide a list of reserved pins
+> > via the 'gpio-reserved-ranges' and 'gpios' properties respectively.
+> > However some ACPI tables are not populated with this information,
+> > thus it has to come from a knowledgable device driver instead.
+> >
+> > Here we provide the MSM common driver with additional support to
+> > parse this informtion and correctly populate the widely used
+> > 'valid_mask'.
+> >
+> > Signed-off-by: Lee Jones <lee.jones@linaro.org>
+>
+> I'm not sure if this is the correct approach. Presumably, on ACPI
+> systems, all the pinctl stuff is already set up by the firmware, and
+> so we shouldn't touch *any* pins unless they have been requested
+> explicitly. Is there any way we can support this in the current
+> framework?
 
-Okay I will update, any pointers on new implementation I can look up?
+I don't suppose anything but the GPIO portions of the pinctrl
+driver is ever used under ACPI. I guess in an ideal ACPI world
+noone (like userspace) would ever use a GPIO because ACPI
+would have all GPIOs assigned a particular purpose, so accessing
+any of them would lead to a crash.
 
-Thanks
--- 
-~Vinod
+But in practice it seems a lot of GPIOs are available and used
+for example by userspace hacks, so just blacklisting the ones
+that cannot be accessed by the GPIO subsystem seems like
+a viable compromise.
+
+Then we have the ACPI paradigm of pin control being controlled
+by ACPI: this is also great in theory, but it seems like the ACPI
+firmware has in cases forgot or omitted to implement some of
+it and people need to access it anyways. The people writing the
+default firmware cannot think out or test all usecases, so some
+will be left open-ended to non-firmware authoring users. This is why
+drivers/pinctrl/intel/* exists despite being for exclusively
+ACPI platforms. Being able to control pins also from the kernel
+has become a viable compromise.
+
+Yours,
+Linus Walleij
