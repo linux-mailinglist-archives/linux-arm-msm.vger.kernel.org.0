@@ -2,50 +2,50 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 6950039A38
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  8 Jun 2019 05:26:24 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B6CCA39A3C
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  8 Jun 2019 05:27:59 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730241AbfFHD0S (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 7 Jun 2019 23:26:18 -0400
-Received: from mail-pf1-f195.google.com ([209.85.210.195]:39931 "EHLO
-        mail-pf1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730056AbfFHD0S (ORCPT
+        id S1730385AbfFHD16 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 7 Jun 2019 23:27:58 -0400
+Received: from mail-pg1-f195.google.com ([209.85.215.195]:45759 "EHLO
+        mail-pg1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1730348AbfFHD16 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 7 Jun 2019 23:26:18 -0400
-Received: by mail-pf1-f195.google.com with SMTP id j2so2205574pfe.6
-        for <linux-arm-msm@vger.kernel.org>; Fri, 07 Jun 2019 20:26:18 -0700 (PDT)
+        Fri, 7 Jun 2019 23:27:58 -0400
+Received: by mail-pg1-f195.google.com with SMTP id w34so2102225pga.12
+        for <linux-arm-msm@vger.kernel.org>; Fri, 07 Jun 2019 20:27:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to:user-agent;
-        bh=85fGZyxeIESYVExgLJEz9zbguq3QsyqJkOP+evG9ReA=;
-        b=jq1gW6sZNN9W+SZw8GIqmtfSCoc/FhohIUENUFTOmro4SJs00F/gjtrry7bYU3QGK/
-         RzmFcbJ978ADB0K3ymaWhxsOYZN6XAiPsG2w4jkhk+kSSNh0D6ewYD581T+ZLHmh1Jbn
-         uHfjB5qGiRmr9/xjonUtDPMDWXlsLlQ2hhNKVIE9/NXcF825nnv6hnBLjgJX7HlXWc5G
-         t0RVTpcQsfe1liymwWfcbFzVnjI46JhcZxKFOVqqAOcXN4fJMHLvWXwlKRS0Tb36vWnH
-         NVA6r++ey7swlBljZo4T7+NSK28k9zJeLH8kCd356ZGymiO+wHbjNfzL08TWwowERqUy
-         VHAQ==
+        bh=73rlx0Al8Bi2D+T3uFyrwNuDhtIRdfkSfNSwNdqApLY=;
+        b=vZnuo1omaf1ebaOYnIivvcEKMipbWLSXSetiJzjAuMDkwFvEejTvw/LERyGnyTtTFD
+         Ut/KBH2OgucYOakJ3plFjqVP2fvA4EA6KgyKv5PHmzdtl7dSUlO7jVHUCmNAk4zNViXh
+         pKGSg82xwCrwAUhhUNdijgGe48Eal15iGLO+rrKF3pUswZcPEdRRUXAa7WX8c4x90r2a
+         ibzcUYjSYhTrrD3IDphUlAXAX9JJvjekdKspwLeNpKUjPyFbTFB57z13q+YsY8RTEyW4
+         djtelDTKb5XyY1rK5bbAxOwrhja/IYeH4U5HhA4o4Pu9+b9HFxOAh4wtCClptpI3FMnd
+         CRaQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=85fGZyxeIESYVExgLJEz9zbguq3QsyqJkOP+evG9ReA=;
-        b=oTtVSH7y5EdWE4TjmuIPOOqJIvMOgokkxj2F/0Uuu5B8GmdYYwzhlD8YoZ1yG7K/7e
-         ktC8TedwM3QkMB4TiyrSX8FCq3pSXsM2hcAeWMCsIDWU8wET/rlxu8e7WcaSJmQm3sur
-         3nLWdun8t3qydKR6YcU/wgUAhTefQ0DNPBjRqY4gg0l/hw+B9IQ2lmLUEAZMt32rBVpZ
-         lA95T7FY8jOrgt0lNFqFO1ieMe15X/M4c5ON5yY3HT8CZBvwgkpmwoEvWHKhLTst+hmc
-         WKwzUtb3kIg4dNUscHv9CuHDOuUue4wC2zN4DqvggknYqwqbpWoHtc2PdOEOsGoqfZgU
-         uhJg==
-X-Gm-Message-State: APjAAAXZf+c1g6ZjRWCObmMbUHG4rCx9eylQ0bf5+FRneAuBnxSCncbl
-        mUKMs0A3e9r9e/fAzzqvONnnvw==
-X-Google-Smtp-Source: APXvYqxE0z2KpZOn+l9dr6k9neNYGoDZ2dl92CSG/dDZ8h4Ozz7buZcUC4AmV1m+V8ZqSGKMWx2LPg==
-X-Received: by 2002:a63:490b:: with SMTP id w11mr4312263pga.127.1559964377447;
-        Fri, 07 Jun 2019 20:26:17 -0700 (PDT)
+        bh=73rlx0Al8Bi2D+T3uFyrwNuDhtIRdfkSfNSwNdqApLY=;
+        b=R51liE9rHZDLX63UKFShOjQY2LsR4+Co8b7iFVYYsmN49c8t7MjcEKm6xsaknqoPpA
+         rf58B6KI8R5G49Pae9xpPrIdFH3p9Zn4y+LWm9sgAqflGdhnCW3RXc+8/bDyDIEYp0Nj
+         5BdKBX1vWT8wTpNs/QHxFcCgFnVBcw8nDgNilh3drhJ4XwQC2nPTHkA+P5AVPbCdzFpv
+         V3twmm2ocdsO40XhThEMkLCAnchy+tDoiw5tQbpvFszzEfzUPgP8yID1DrrL5/y4qjP7
+         xocZFcvGTYEKXB5czajr6lFae8210qFqNDXMLis1HDoFeGkuT0s6jdWQlCfUMp7ugjx4
+         FWfQ==
+X-Gm-Message-State: APjAAAWlFXielGWBLsp1qbhYoOkFgqF92kRToIK7QOQXdfwJt1r1DZMY
+        C2Mm+48nXTSwZd0WJkwi6X/poQ==
+X-Google-Smtp-Source: APXvYqzoWjPhd12ySZSr68F6QXinc6DRO2r16B7jrtAvC5fo2zqsmgssrm3j46hlC4Q0mg/vp7bIdw==
+X-Received: by 2002:a63:1650:: with SMTP id 16mr5875706pgw.164.1559964477334;
+        Fri, 07 Jun 2019 20:27:57 -0700 (PDT)
 Received: from builder (104-188-17-28.lightspeed.sndgca.sbcglobal.net. [104.188.17.28])
-        by smtp.gmail.com with ESMTPSA id 124sm430653pfd.63.2019.06.07.20.26.15
+        by smtp.gmail.com with ESMTPSA id j37sm3189251pgj.58.2019.06.07.20.27.56
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Fri, 07 Jun 2019 20:26:16 -0700 (PDT)
-Date:   Fri, 7 Jun 2019 20:26:13 -0700
+        Fri, 07 Jun 2019 20:27:56 -0700 (PDT)
+Date:   Fri, 7 Jun 2019 20:27:54 -0700
 From:   Bjorn Andersson <bjorn.andersson@linaro.org>
 To:     Sricharan R <sricharan@codeaurora.org>
 Cc:     robh+dt@kernel.org, sboyd@codeaurora.org, linus.walleij@linaro.org,
@@ -53,14 +53,14 @@ Cc:     robh+dt@kernel.org, sboyd@codeaurora.org, linus.walleij@linaro.org,
         linux-kernel@vger.kernel.org, linux-clk@vger.kernel.org,
         linux-gpio@vger.kernel.org, linux-arm-msm@vger.kernel.org,
         linux-soc@vger.kernel.org, linux-arm-kernel@lists.infradead.org
-Subject: Re: [PATCH 1/6] pinctrl: qcom: Add ipq6018 pinctrl driver
-Message-ID: <20190608032613.GC24059@builder>
+Subject: Re: [PATCH 2/6] dt-bindings: qcom: Add ipq6018 bindings
+Message-ID: <20190608032754.GD24059@builder>
 References: <1559754961-26783-1-git-send-email-sricharan@codeaurora.org>
- <1559754961-26783-2-git-send-email-sricharan@codeaurora.org>
+ <1559754961-26783-3-git-send-email-sricharan@codeaurora.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <1559754961-26783-2-git-send-email-sricharan@codeaurora.org>
+In-Reply-To: <1559754961-26783-3-git-send-email-sricharan@codeaurora.org>
 User-Agent: Mutt/1.10.0 (2018-05-17)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
@@ -69,95 +69,39 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 On Wed 05 Jun 10:15 PDT 2019, Sricharan R wrote:
 
-> Add initial pinctrl driver to support pin configuration with
-> pinctrl framework for ipq6018.
-> 
 > Signed-off-by: Sricharan R <sricharan@codeaurora.org>
-> Signed-off-by: Rajkumar Ayyasamy <arajkuma@codeaurora.org>
 > Signed-off-by: speriaka <speriaka@codeaurora.org>
+> ---
+>  Documentation/devicetree/bindings/arm/qcom.yaml | 2 ++
+>  1 file changed, 2 insertions(+)
+> 
+> diff --git a/Documentation/devicetree/bindings/arm/qcom.yaml b/Documentation/devicetree/bindings/arm/qcom.yaml
+> index f6316ab..7b19028 100644
+> --- a/Documentation/devicetree/bindings/arm/qcom.yaml
+> +++ b/Documentation/devicetree/bindings/arm/qcom.yaml
+> @@ -36,6 +36,7 @@ description: |
+>    	mdm9615
+>    	ipq8074
+>    	sdm845
+> +	ipq6018
 
-These should start with the author, then followed by each person that
-handled the patch on its way to the list - so your name should probably
-be last.  If you have more than one author add Co-developed-by, in
-addition to the Signed-off-by.
-
-And please spell our speriaka's first and last name.
-
-[..]
-> diff --git a/Documentation/devicetree/bindings/pinctrl/qcom,ipq6018-pinctrl.txt b/Documentation/devicetree/bindings/pinctrl/qcom,ipq6018-pinctrl.txt
-[..]
-> +- #gpio-cells:
-> +	Usage: required
-> +	Value type: <u32>
-> +	Definition: must be 2. Specifying the pin number and flags, as defined
-> +		    in <dt-bindings/gpio/gpio.h>
-
-You're missing the required "gpio-ranges" property.
-
-> +
-[..]
-> +- function:
-> +	Usage: required
-> +	Value type: <string>
-> +	Definition: Specify the alternative function to be configured for the
-> +		    specified pins. Functions are only valid for gpio pins.
-> +		    Valid values are:
-> +	adsp_ext, alsp_int, atest_bbrx0, atest_bbrx1, atest_char, atest_char0,
-
-Please indent these.
-
-[..]
-
-The rest should be in a separate patch from the binding.
-
-> diff --git a/drivers/pinctrl/qcom/Kconfig b/drivers/pinctrl/qcom/Kconfig
-[..]
-> +enum ipq6018_functions {
-[..]
-> +	msm_mux_NA,
-
-I like when these are sorted, and if you make the last entry msm_mux__
-the msm_pingroup array becomes easier to read.
-
-> +};
-[..]
-> +static const struct msm_function ipq6018_functions[] = {
-[..]
-> +	FUNCTION(gcc_tlmm),
-
-As above, please sort these.
-
-> +};
-> +
-> +static const struct msm_pingroup ipq6018_groups[] = {
-> +	PINGROUP(0, qpic_pad, wci20, qdss_traceclk_b, NA, burn0, NA, NA, NA,
-> +		 NA),
-
-Please ignore the 80-char and skip the line breaks.
-
-> +	PINGROUP(1, qpic_pad, mac12, qdss_tracectl_b, NA, burn1, NA, NA, NA,
-> +		 NA),
-> +	PINGROUP(2, qpic_pad, wci20, qdss_tracedata_b, NA, NA, NA, NA, NA, NA),
-> +	PINGROUP(3, qpic_pad, mac01, qdss_tracedata_b, NA, NA, NA, NA, NA, NA),
-> +	PINGROUP(4, qpic_pad, mac01, qdss_tracedata_b, NA, NA, NA, NA, NA, NA),
-> +	PINGROUP(5, qpic_pad4, mac21, qdss_tracedata_b, NA, NA, NA, NA, NA, NA),
-
-Is there a reason to keep qpic_padN as separate functions from qpic_pad?
-
-[..]
-> +static struct platform_driver ipq6018_pinctrl_driver = {
-> +	.driver = {
-> +		.name = "ipq6018-pinctrl",
-> +		.owner = THIS_MODULE,
-
-.owner is populated automagically by platform_driver_register, so please
-omit this.
-
-> +		.of_match_table = ipq6018_pinctrl_of_match,
-> +	},
-> +	.probe = ipq6018_pinctrl_probe,
-> +	.remove = msm_pinctrl_remove,
-> +};
+It would be nice if these lists where sorted, but as that's not the
+case, please sort it wrt the other ipq at least.
 
 Regards,
 Bjorn
+
+>  
+>    The 'board' element must be one of the following strings:
+>  
+> @@ -45,6 +46,7 @@ description: |
+>    	mtp
+>    	sbc
+>    	hk01
+> +	cp01-c1
+>  
+>    The 'soc_version' and 'board_version' elements take the form of v<Major>.<Minor>
+>    where the minor number may be omitted when it's zero, i.e.  v1.0 is the same
+> -- 
+> QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member of Code Aurora Forum, hosted by The Linux Foundation
+> 
