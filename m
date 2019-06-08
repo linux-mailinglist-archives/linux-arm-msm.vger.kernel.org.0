@@ -2,127 +2,218 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id D24FB399AC
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  8 Jun 2019 01:18:47 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 701B439A23
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  8 Jun 2019 04:44:23 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729127AbfFGXSn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 7 Jun 2019 19:18:43 -0400
-Received: from mail.kernel.org ([198.145.29.99]:54110 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1727933AbfFGXSn (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 7 Jun 2019 19:18:43 -0400
-Received: from kernel.org (unknown [104.132.0.74])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        id S1729573AbfFHCoW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 7 Jun 2019 22:44:22 -0400
+Received: from smtp.codeaurora.org ([198.145.29.96]:55076 "EHLO
+        smtp.codeaurora.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728860AbfFHCoW (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 7 Jun 2019 22:44:22 -0400
+Received: by smtp.codeaurora.org (Postfix, from userid 1000)
+        id 7C4856070D; Sat,  8 Jun 2019 02:44:20 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
+        s=default; t=1559961860;
+        bh=oKWJ7IKb+QbAvUpADFLHB7hOUGVmIRjnWSUgva6nGvc=;
+        h=Subject:To:References:From:Date:In-Reply-To:From;
+        b=GkOcePglk59aecjlDAiHgo1albSPlNW3AO+7uBFtBtbjQ6I1m915XtwDeJLN3Ctr/
+         tDNlWZkviOHx0RmIrwBUrGtnWDh6fw2/qTdMGNQ91vJnAUsFdaPImmiRkwqmycGoll
+         ubQGbXpMh60Q1s7ZSSMtXeKaiowBr5If1JR6oNXo=
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        pdx-caf-mail.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.7 required=2.0 tests=ALL_TRUSTED,BAYES_00,
+        DKIM_INVALID,DKIM_SIGNED,SPF_NONE autolearn=no autolearn_force=no
+        version=3.4.0
+Received: from [192.168.1.6] (unknown [171.60.255.54])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
         (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id D101120825;
-        Fri,  7 Jun 2019 23:18:41 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1559949521;
-        bh=l2jzpqRVXHZxq5pLdpMGhXCEZg3vOypPYJk8LvJUja8=;
-        h=In-Reply-To:References:To:From:Cc:Subject:Date:From;
-        b=GCLGxU6azs6ie7ehXuwV0HZBgHSl5RVwKBY/sOot40PJFHo56qbAciZfPutbiiAEE
-         eivl+cvfIOPcr+av1XvzyMB9dswXq0KFVm/Fqc7M41ZxNBT7urjJ7MTTcHc9lH4Yv2
-         MFovqZaMbj0d9bpx/VN336ZjiVucLkR0eOpGHF5c=
-Content-Type: text/plain; charset="utf-8"
+        (Authenticated sender: sricharan@smtp.codeaurora.org)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id B499660240;
+        Sat,  8 Jun 2019 02:44:14 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
+        s=default; t=1559961859;
+        bh=oKWJ7IKb+QbAvUpADFLHB7hOUGVmIRjnWSUgva6nGvc=;
+        h=Subject:To:References:From:Date:In-Reply-To:From;
+        b=am4cnrVIkLTW3BjoL2rTfOEK+yBpuSa1p396Q/acd5RAwWAOW57vc/ndv9KH39zwv
+         hlJhtxcw733TPFb6sx8APFWX0UtRPuWgiwCpV33PA5fGQZHpictSF270BfkUpWvMCh
+         Y2CdwX8/i5UPWVeVdm+13dwQpr45hCrqIDQdVM0E=
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org B499660240
+Authentication-Results: pdx-caf-mail.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: pdx-caf-mail.web.codeaurora.org; spf=none smtp.mailfrom=sricharan@codeaurora.org
+Subject: Re: [PATCH 5/6] arm64: dts: Add ipq6018 SoC and CP01 board support
+To:     Marc Zyngier <marc.zyngier@arm.com>, robh+dt@kernel.org,
+        sboyd@codeaurora.org, linus.walleij@linaro.org, agross@kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-clk@vger.kernel.org, linux-gpio@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-soc@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org
+References: <1559754961-26783-1-git-send-email-sricharan@codeaurora.org>
+ <1559754961-26783-6-git-send-email-sricharan@codeaurora.org>
+ <d313bec5-1115-0ef7-0241-83e20672d2f1@arm.com>
+From:   Sricharan R <sricharan@codeaurora.org>
+Message-ID: <d0e5f602-34de-f28e-cc11-6ebd1d29b495@codeaurora.org>
+Date:   Sat, 8 Jun 2019 08:14:11 +0530
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
+ Thunderbird/60.7.0
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <CAOCk7NrnnUzaXtnRvH0pHyHha4sTQDQCRoVPPatHfgVuEPZr0Q@mail.gmail.com>
-References: <1558449843-19971-1-git-send-email-jhugo@codeaurora.org> <933023a0-10fd-fedf-6715-381dae174ad9@codeaurora.org> <20190607203838.1361E208C3@mail.kernel.org> <CAOCk7NrnnUzaXtnRvH0pHyHha4sTQDQCRoVPPatHfgVuEPZr0Q@mail.gmail.com>
-To:     Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
-From:   Stephen Boyd <sboyd@kernel.org>
-Cc:     Jeffrey Hugo <jhugo@codeaurora.org>,
-        David Brown <david.brown@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Marc Gonzalez <marc.w.gonzalez@free.fr>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Rob Herring <robh+dt@kernel.org>,
-        Mark Rutland <mark.rutland@arm.com>,
-        MSM <linux-arm-msm@vger.kernel.org>, linux-clk@vger.kernel.org,
-        lkml <linux-kernel@vger.kernel.org>, devicetree@vger.kernel.org
-Subject: Re: [PATCH v4 0/6] MSM8998 Multimedia Clock Controller
-User-Agent: alot/0.8.1
-Date:   Fri, 07 Jun 2019 16:18:41 -0700
-Message-Id: <20190607231841.D101120825@mail.kernel.org>
+In-Reply-To: <d313bec5-1115-0ef7-0241-83e20672d2f1@arm.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Jeffrey Hugo (2019-06-07 14:31:13)
-> On Fri, Jun 7, 2019 at 2:38 PM Stephen Boyd <sboyd@kernel.org> wrote:
-> >
-> > Quoting Jeffrey Hugo (2019-05-21 07:52:28)
-> > > On 5/21/2019 8:44 AM, Jeffrey Hugo wrote:
-> > > > The multimedia clock controller (mmcc) is the main clock controller=
- for
-> > > > the multimedia subsystem and is required to enable things like disp=
-lay and
-> > > > camera.
-> > >
-> > > Stephen, I think this series is good to go, and I have display/gpu st=
-uff
-> > > I'm polishing that will depend on this.  Would you kindly pickup patc=
-hes
-> > > 1, 3, 4, and 5 for 5.3?  I can work with Bjorn to pick up patches 2 a=
-nd 6.
-> > >
-> >
-> > If I apply patch 3 won't it break boot until patch 2 is also in the
-> > tree? That seems to imply that I'll break bisection, and we have
-> > kernelci boot testing clk-next so this will probably set off alarms
-> > somewhere.
->=20
-> Yes, it'll break boot.  Maybe you and Bjorn can make a deal?  (more below)
->=20
-> Doesn't look like kernelci is running tests on 8998 anymore, so maybe
-> no one will complain?  As far as I am aware, Marc, Lee, Bjorn, and I
-> are the only ones whom care about 8998 presently, and I think we are
-> all good with a temporary breakage in order to get this basic
-> functionality in since the platform isn't really well supported yet.
+Hi Marc,
 
-Ok.
+On 6/5/2019 10:56 PM, Marc Zyngier wrote:
+> On 05/06/2019 18:16, Sricharan R wrote:
+>> Add initial device tree support for the Qualcomm IPQ6018 SoC and
+>> CP01 evaluation board.
+>>
+>> Signed-off-by: Sricharan R <sricharan@codeaurora.org>
+>> Signed-off-by: Abhishek Sahu <absahu@codeaurora.org>
+>> ---
+>>  arch/arm64/boot/dts/qcom/Makefile            |   1 +
+>>  arch/arm64/boot/dts/qcom/ipq6018-cp01-c1.dts |  35 ++++
+>>  arch/arm64/boot/dts/qcom/ipq6018.dtsi        | 231 +++++++++++++++++++++++++++
+>>  3 files changed, 267 insertions(+)
+>>  create mode 100644 arch/arm64/boot/dts/qcom/ipq6018-cp01-c1.dts
+>>  create mode 100644 arch/arm64/boot/dts/qcom/ipq6018.dtsi
+>>
+>> diff --git a/arch/arm64/boot/dts/qcom/Makefile b/arch/arm64/boot/dts/qcom/Makefile
+>> index 21d548f..ac22dbb 100644
+>> --- a/arch/arm64/boot/dts/qcom/Makefile
+>> +++ b/arch/arm64/boot/dts/qcom/Makefile
+>> @@ -2,6 +2,7 @@
+>>  dtb-$(CONFIG_ARCH_QCOM)	+= apq8016-sbc.dtb
+>>  dtb-$(CONFIG_ARCH_QCOM)	+= apq8096-db820c.dtb
+>>  dtb-$(CONFIG_ARCH_QCOM)	+= ipq8074-hk01.dtb
+>> +dtb-$(CONFIG_ARCH_QCOM)	+= ipq6018-cp01-c1.dtb
+>>  dtb-$(CONFIG_ARCH_QCOM)	+= msm8916-mtp.dtb
+>>  dtb-$(CONFIG_ARCH_QCOM)	+= msm8992-bullhead-rev-101.dtb
+>>  dtb-$(CONFIG_ARCH_QCOM)	+= msm8994-angler-rev-101.dtb
+>> diff --git a/arch/arm64/boot/dts/qcom/ipq6018-cp01-c1.dts b/arch/arm64/boot/dts/qcom/ipq6018-cp01-c1.dts
+>> new file mode 100644
+>> index 0000000..ac7cb22
+>> --- /dev/null
+>> +++ b/arch/arm64/boot/dts/qcom/ipq6018-cp01-c1.dts
+>> @@ -0,0 +1,35 @@
+>> +// SPDX-License-Identifier: GPL-2.0
+>> +/*
+>> + * IPQ6018 CP01 board device tree source
+>> + *
+>> + * Copyright (c) 2019, The Linux Foundation. All rights reserved.
+>> + */
+>> +
+>> +/dts-v1/;
+>> +
+>> +#include "ipq6018.dtsi"
+>> +
+>> +/ {
+>> +	#address-cells = <0x2>;
+>> +	#size-cells = <0x2>;
+>> +	model = "Qualcomm Technologies, Inc. IPQ6018/AP-CP01-C1";
+>> +	compatible = "qcom,ipq6018-cp01", "qcom,ipq6018";
+>> +	interrupt-parent = <&intc>;
+>> +};
+>> +
+>> +&tlmm {
+>> +	uart_pins: uart_pins {
+>> +		mux {
+>> +			pins = "gpio44", "gpio45";
+>> +			function = "blsp2_uart";
+>> +			drive-strength = <8>;
+>> +			bias-pull-down;
+>> +		};
+>> +	};
+>> +};
+>> +
+>> +&blsp1_uart3 {
+>> +	pinctrl-0 = <&uart_pins>;
+>> +	pinctrl-names = "default";
+>> +	status = "ok";
+>> +};
+>> diff --git a/arch/arm64/boot/dts/qcom/ipq6018.dtsi b/arch/arm64/boot/dts/qcom/ipq6018.dtsi
+>> new file mode 100644
+>> index 0000000..79cccdd
+>> --- /dev/null
+>> +++ b/arch/arm64/boot/dts/qcom/ipq6018.dtsi
+>> @@ -0,0 +1,231 @@
+>> +// SPDX-License-Identifier: GPL-2.0
+>> +/*
+>> + * IPQ6018 SoC device tree source
+>> + *
+>> + * Copyright (c) 2019, The Linux Foundation. All rights reserved.
+>> + */
+>> +
+>> +#include <dt-bindings/interrupt-controller/arm-gic.h>
+>> +#include <dt-bindings/clock/qcom,gcc-ipq6018.h>
+>> +
+>> +/ {
+>> +	model = "Qualcomm Technologies, Inc. IPQ6018";
+>> +	compatible = "qcom,ipq6018";
+>> +
+>> +	chosen {
+>> +		bootargs = "console=ttyMSM0,115200,n8 rw init=/init";
+>> +		bootargs-append = " swiotlb=1 clk_ignore_unused";
+>> +	};
+>> +
+>> +	reserved-memory {
+>> +		#address-cells = <2>;
+>> +		#size-cells = <2>;
+>> +		ranges;
+>> +
+>> +		tz:tz@48500000 {
+>> +			no-map;
+>> +			reg = <0x0 0x48500000 0x0 0x00200000>;
+>> +		};
+>> +	};
+>> +
+>> +	soc: soc {
+>> +		#address-cells = <0x1>;
+>> +		#size-cells = <0x1>;
+>> +		ranges = <0 0 0 0xffffffff>;
+>> +		dma-ranges;
+>> +		compatible = "simple-bus";
+>> +
+>> +		intc: interrupt-controller@b000000 {
+>> +			compatible = "qcom,msm-qgic2";
+>> +			interrupt-controller;
+>> +			#interrupt-cells = <0x3>;
+>> +			reg = <0xb000000 0x1000>, <0xb002000 0x1000>;
+> 
+> Where are the rest of the GICv2 MMIO regions, such as GICV and GICH? And
+> the maintenance interrupt?
+> 
+  GICH - 0xB001000 -- 0xB002000
+  GICV - 0xB004000 -- 0xB005000
+  Will add this and the PPI as well.
 
->=20
-> >
-> > I thought we had some code that got removed that was going to make the
-> > transition "seamless" in the sense that it would search the tree for an
-> > RPM clk controller and then not add the XO fixed factor clk somehow.
-> > See commit 54823af9cd52 ("clk: qcom: Always add factor clock for xo
-> > clocks") for the code that we removed. So ideally we do something like
-> > this too, but now we search for a property on the calling node to see if
-> > the XO clk is there?
-> >
->=20
-> Trying to remember back a bit.
->=20
-> I don't think its possible.  Maybe I'm wrong.  I didn't see a solution
-> to the below:
->=20
-> How does GCC know the following?
-> -RPMCC is compiled in the build (I guess this can be assumed)
+Regards,
+ Sricharan
 
-This is the IS_ENABLED part.
+>> +		};
+>> +
+>> +		timer {
+>> +			compatible = "arm,armv8-timer";
+>> +			interrupts = <GIC_PPI 2 (GIC_CPU_MASK_SIMPLE(4) | IRQ_TYPE_LEVEL_LOW)>,
+>> +				     <GIC_PPI 3 (GIC_CPU_MASK_SIMPLE(4) | IRQ_TYPE_LEVEL_LOW)>,
+>> +				     <GIC_PPI 4 (GIC_CPU_MASK_SIMPLE(4) | IRQ_TYPE_LEVEL_LOW)>,
+>> +				     <GIC_PPI 1 (GIC_CPU_MASK_SIMPLE(4) | IRQ_TYPE_LEVEL_LOW)>;
+> 
+> The fact that you expose the EL2 timer interrupt would tend to confirm
+> the idea that this system supports virtualization... Hence my questions
+> above.
+> 
+> Thanks,
+> 
+> 	M.
+> 
 
-> -RPMCC has probed
-> -RPMCC is not and will not be providing XO
-
-Presumably if it's enabled then it will be providing XO at some point in
-the future. I'm not suggesting the probe defer logic is removed, just
-that we don't get into a state where clk tree has merged all the patches
-for clk driver side and that then relies on DT to provide the clk but it
-doesn't do that.
-
-So the idea is to check if RPM is compiled in and also check the GCC DT
-node for the clocks property having the xo clk there. Then we assume
-that we have the clk patches in place for the RPM clk driver to provide
-that clk and we skip inserting the fake clk that RPM is going to
-provide.
-
-This is also a "general" solution to GCC not depending on or selecting
-the RPM clk driver. It may be better to just have a select statement in
-GCC Kconfig so that we can't enable the GCC driver without also enabling
-the RPM driver if it's an essential dependency to the clk tree working.
-But if we do this design then we can make the clk tree keep working
-regardless of RPM being there or not, which may be a good thing.
-
+-- 
+"QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member of Code Aurora Forum, hosted by The Linux Foundation
