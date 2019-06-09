@@ -2,116 +2,72 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id EC37D3A041
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  8 Jun 2019 16:22:15 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E646A3A37D
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  9 Jun 2019 06:19:37 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727144AbfFHOWN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 8 Jun 2019 10:22:13 -0400
-Received: from mail-lf1-f68.google.com ([209.85.167.68]:35041 "EHLO
-        mail-lf1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727034AbfFHOWM (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 8 Jun 2019 10:22:12 -0400
-Received: by mail-lf1-f68.google.com with SMTP id a25so3695240lfg.2
-        for <linux-arm-msm@vger.kernel.org>; Sat, 08 Jun 2019 07:22:11 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=aIUAKPG6L/Uk7RNnahoThkSWUC4nrgmZui5o+1IQtNk=;
-        b=a8zCjMPgP8flEe8AX4DYltakrbTeXlf4HJdUBQFer/b0IPJPCfVav33LROaOIvkRBh
-         d/ezKZe+qMrAcg+2zaULmB+dIX8setyM8Dw/amQKtBtuGvpqfUZdtCABo4QaT5ZFUGGd
-         fksqElAG9w2gwbE6Q6S46627rrHHqLiRDCA8eScKkVkurpN9O6Dge+avOCJxW9CwIBjE
-         vWmpOGwdimteMBWpy3R6+1wtE1HyS9jIIsl6y+9pjv6itruHNG55mTSg6Qzlisw2u1sl
-         d/rKG06wFYR5828vG892iuyGTPq8CV75uQK3Cx8ndRZlvQhTZTCv/wvDzZyIGlw+oOwZ
-         bmxg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=aIUAKPG6L/Uk7RNnahoThkSWUC4nrgmZui5o+1IQtNk=;
-        b=Zb9Yw37EGVeQxMcIEk/ikz0nJG6/OY2O4BDQ2mV3R2mXhqQLCj7pN8H0fMJ8+ASpoT
-         LfiNSvfjj2NM2ps79MzfRFqSf2gADgu8reCh+YUH0jJKJzbLpS6FK6BEOIpBXjrQDsbt
-         ib+gozS3ljOxYFndLdp5CU3l3kY/Kc7zOiarFDBUxBsO9H3aRwUGgfKrSxpzOehR8qqU
-         0KD6BlfS1txMZaLheyjRX/RelO6m989n9HJFdfNAODWX7/h84Jqh9fCdJSml50CqRU2l
-         IdGFuSiD6Y3O1SrRbcKMH6r+G75ENXBsQilU/Z8yiuP5C0RRZRoIu6pnfYX5zX5z5Aac
-         XXHg==
-X-Gm-Message-State: APjAAAXRfHcBLAqaNOwVXm4mAUU3JfU9bmdvhkI+xsxZ3h6UDOxqKHrP
-        AicPUxhRquAuthrLOv+TWEacqy0DiVWUSgjvLm3SSg==
-X-Google-Smtp-Source: APXvYqx2MoGtkoQjUm5Wa5IOCM/k/orM6EKwAwZG7AXIo8rcqREn8WTPkR2Fc2Pbt++tRSEdz7xZS6GOynFOOaZSLRQ=
-X-Received: by 2002:ac2:598d:: with SMTP id w13mr28511822lfn.165.1560003730786;
- Sat, 08 Jun 2019 07:22:10 -0700 (PDT)
-MIME-Version: 1.0
-References: <20190607082901.6491-1-lee.jones@linaro.org> <20190607082901.6491-3-lee.jones@linaro.org>
- <CAKv+Gu-1QhX-9aNhFJauc9NVe6ceQQueE8Kd14031XJ-2yaupA@mail.gmail.com>
-In-Reply-To: <CAKv+Gu-1QhX-9aNhFJauc9NVe6ceQQueE8Kd14031XJ-2yaupA@mail.gmail.com>
-From:   Linus Walleij <linus.walleij@linaro.org>
-Date:   Sat, 8 Jun 2019 16:22:03 +0200
-Message-ID: <CACRpkdZmBe6ucmekLUNkypDKx=eAXqtwdYNpZzwByzuWb-sjDA@mail.gmail.com>
-Subject: Re: [PATCH v2 3/8] pinctrl: msm: Add ability for drivers to supply a
- reserved GPIO list
-To:     Ard Biesheuvel <ard.biesheuvel@linaro.org>
-Cc:     Lee Jones <lee.jones@linaro.org>, alokc@codeaurora.org,
-        Andy Gross <andy.gross@linaro.org>,
-        David Brown <david.brown@linaro.org>,
-        Wolfram Sang <wsa+renesas@sang-engineering.com>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Felipe Balbi <balbi@kernel.org>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        linux-usb <linux-usb@vger.kernel.org>,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-        "open list:GPIO SUBSYSTEM" <linux-gpio@vger.kernel.org>,
-        linux-i2c <linux-i2c@vger.kernel.org>,
-        Jeffrey Hugo <jlhugo@gmail.com>,
-        linux-arm-kernel <linux-arm-kernel@lists.infradead.org>
-Content-Type: text/plain; charset="UTF-8"
+        id S1725787AbfFIETg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 9 Jun 2019 00:19:36 -0400
+Received: from mail.kernel.org ([198.145.29.99]:58900 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1725770AbfFIETg (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Sun, 9 Jun 2019 00:19:36 -0400
+Received: from hector.attlocal.net (107-207-74-175.lightspeed.austtx.sbcglobal.net [107.207.74.175])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
+        (No client certificate requested)
+        by mail.kernel.org (Postfix) with ESMTPSA id B92CF208E3;
+        Sun,  9 Jun 2019 04:19:35 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=default; t=1560053976;
+        bh=ILMIKm6unfoX0sFWJ1A3LaSPMfGyKOUWY4kQZ8AaS0A=;
+        h=From:To:Cc:Subject:Date:From;
+        b=0aA2xqD0SLfZNVTPTxO6F7sJ5iWvdnlSeaNhAzr5uGtqJKNV8DETsmrkVuYRB87Dy
+         ZqCOZuse653Y5SwYrA/m8PootAso45zVBtIaxQ0V395yvVyXMLBImGtH+/+/7wTI01
+         /3+ZsFhH0AQyeBYM3vCuWk6oEzxAoJRzKU3pD8TA=
+From:   Andy Gross <agross@kernel.org>
+To:     linux-arm-msm@vger.kernel.org
+Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>, arm@kernel.org,
+        linux-arm-kernel@lists.infradead.org,
+        Andy Gross <agross@kernel.org>
+Subject: [PATCH] arm64: qcom: qcs404: Add reset-cells to GCC node
+Date:   Sat,  8 Jun 2019 23:19:32 -0500
+Message-Id: <1560053972-32273-1-git-send-email-agross@kernel.org>
+X-Mailer: git-send-email 2.7.4
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, Jun 7, 2019 at 1:10 PM Ard Biesheuvel <ard.biesheuvel@linaro.org> wrote:
-> On Fri, 7 Jun 2019 at 10:29, Lee Jones <lee.jones@linaro.org> wrote:
-> >
-> > When booting MSM based platforms with Device Tree or some ACPI
-> > implementations, it is possible to provide a list of reserved pins
-> > via the 'gpio-reserved-ranges' and 'gpios' properties respectively.
-> > However some ACPI tables are not populated with this information,
-> > thus it has to come from a knowledgable device driver instead.
-> >
-> > Here we provide the MSM common driver with additional support to
-> > parse this informtion and correctly populate the widely used
-> > 'valid_mask'.
-> >
-> > Signed-off-by: Lee Jones <lee.jones@linaro.org>
->
-> I'm not sure if this is the correct approach. Presumably, on ACPI
-> systems, all the pinctl stuff is already set up by the firmware, and
-> so we shouldn't touch *any* pins unless they have been requested
-> explicitly. Is there any way we can support this in the current
-> framework?
+This patch adds a reset-cells property to the gcc controller on the QCS404.
+Without this in place, we get warnings like the following if nodes reference
+a gcc reset:
 
-I don't suppose anything but the GPIO portions of the pinctrl
-driver is ever used under ACPI. I guess in an ideal ACPI world
-noone (like userspace) would ever use a GPIO because ACPI
-would have all GPIOs assigned a particular purpose, so accessing
-any of them would lead to a crash.
+arch/arm64/boot/dts/qcom/qcs404.dtsi:261.38-310.5: Warning (resets_property):
+/soc@0/remoteproc@b00000: Missing property '#reset-cells' in node
+/soc@0/clock-controller@1800000 or bad phandle (referred from resets[0])
+  also defined at arch/arm64/boot/dts/qcom/qcs404-evb.dtsi:82.18-84.3
+  DTC     arch/arm64/boot/dts/qcom/qcs404-evb-4000.dtb
+arch/arm64/boot/dts/qcom/qcs404.dtsi:261.38-310.5: Warning (resets_property):
+/soc@0/remoteproc@b00000: Missing property '#reset-cells' in node
+/soc@0/clock-controller@1800000 or bad phandle (referred from resets[0])
+  also defined at arch/arm64/boot/dts/qcom/qcs404-evb.dtsi:82.18-84.3
 
-But in practice it seems a lot of GPIOs are available and used
-for example by userspace hacks, so just blacklisting the ones
-that cannot be accessed by the GPIO subsystem seems like
-a viable compromise.
+Signed-off-by: Andy Gross <agross@kernel.org>
+---
+ arch/arm64/boot/dts/qcom/qcs404.dtsi | 1 +
+ 1 file changed, 1 insertion(+)
 
-Then we have the ACPI paradigm of pin control being controlled
-by ACPI: this is also great in theory, but it seems like the ACPI
-firmware has in cases forgot or omitted to implement some of
-it and people need to access it anyways. The people writing the
-default firmware cannot think out or test all usecases, so some
-will be left open-ended to non-firmware authoring users. This is why
-drivers/pinctrl/intel/* exists despite being for exclusively
-ACPI platforms. Being able to control pins also from the kernel
-has become a viable compromise.
+diff --git a/arch/arm64/boot/dts/qcom/qcs404.dtsi b/arch/arm64/boot/dts/qcom/qcs404.dtsi
+index 342788a..086cadb 100644
+--- a/arch/arm64/boot/dts/qcom/qcs404.dtsi
++++ b/arch/arm64/boot/dts/qcom/qcs404.dtsi
+@@ -426,6 +426,7 @@
+ 			compatible = "qcom,gcc-qcs404";
+ 			reg = <0x01800000 0x80000>;
+ 			#clock-cells = <1>;
++			#reset-cells = <1>;
+ 
+ 			assigned-clocks = <&gcc GCC_APSS_AHB_CLK_SRC>;
+ 			assigned-clock-rates = <19200000>;
+-- 
+2.7.4
 
-Yours,
-Linus Walleij
