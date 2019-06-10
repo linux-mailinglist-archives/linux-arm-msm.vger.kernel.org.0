@@ -2,116 +2,141 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id D06103BB64
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 10 Jun 2019 19:53:29 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 45E573BC48
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 10 Jun 2019 20:58:28 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2388458AbfFJRxZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 10 Jun 2019 13:53:25 -0400
-Received: from mail-ed1-f67.google.com ([209.85.208.67]:37848 "EHLO
-        mail-ed1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2388174AbfFJRxZ (ORCPT
+        id S2388900AbfFJS5o (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 10 Jun 2019 14:57:44 -0400
+Received: from mail-vs1-f66.google.com ([209.85.217.66]:36753 "EHLO
+        mail-vs1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2388889AbfFJS5o (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 10 Jun 2019 13:53:25 -0400
-Received: by mail-ed1-f67.google.com with SMTP id w13so15711010eds.4;
-        Mon, 10 Jun 2019 10:53:23 -0700 (PDT)
+        Mon, 10 Jun 2019 14:57:44 -0400
+Received: by mail-vs1-f66.google.com with SMTP id l20so6171257vsp.3
+        for <linux-arm-msm@vger.kernel.org>; Mon, 10 Jun 2019 11:57:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
+        d=linaro.org; s=google;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=v1cwCImDOstaAdDepmaoSdovcsMeX1QCpfpK/bKSfWg=;
-        b=rOOXWNQJxx/m8GcJW8LlP4CvbEPV9w2vljn+BGcYXxzMTbnfupXJdGgFGVdxkbdfD3
-         3R5ik6Zyy8LXupk4G/vjgRcR6uHM9xYgw0CHAbuyviyt+mhXoe1U8mkTo6EGpZ3d+aJy
-         2oRWPregGxv9aOV5NpfIKdHTe1OdddrI1aR7vEnLMhI3Ibc4KM3JqZJlpd1sXyJBxxvr
-         jUvnf0Q6iDy+7HZ+IIoC9uSrrz37Ec6MF3/YHVHOlBQSE9oircXZqdU9eFj2uHBMw1Mz
-         M9zitjjGyqNXx3fgeddHMnSfGP5gWixqsVXUg4cSuBpTGM4dRAxSEJqfSNFoefAIRvSk
-         ssfQ==
+        bh=hev5OwEACcFPK6C/FK48RMoXOAu7262fSU4AViD4u8w=;
+        b=Kai5Z2EkT0zQjVLtISRnsn979fWob+Jsr+Kyg5eRj7CxJ7C+1El4hYerae8V2HnD10
+         Vr4/J7G71YpP58NVfVe+X4DYJx2Izsxl0vEeKRtW4ySmvYYI5LNYwJUX7UhV6DWJPQjH
+         mUMz6Ce5gPtIrO9yjGBJzdAJQWnFUjaqtBndYVPwHg9T7/wrirYFF33oBhoXNCWsQ0ly
+         KLJeIWIl7AB5Hauw6t+B6m/FwhNQB7siy27tLNScZnfT0W34zAk5zCjZUXKcR+ZUDtyf
+         nP3cEYZvjT/IvcQYnobXENvk1R8HugzTubIA/RSZDO0UaLZT8wV9gyrXBgrcgIRnElYH
+         7QnA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=v1cwCImDOstaAdDepmaoSdovcsMeX1QCpfpK/bKSfWg=;
-        b=Nc5UM2J6dbNyMdZhqHm22e2Rp1LEco/f4iCWb8qadnqK6hmLn7g3YjCoW7HoYBOasV
-         5bMHJTKFj8nVwPZ0s/0PGhUErogJHEY01uiMWvHSlB9+WGpVqW/DzHSZfMlMzkmuyO/S
-         32No18hwaz8aWWbS2lh5DWjMpOmgrp+aKQZS5TlZ1kTKLXdfTszUJar3fUSEPlrzej9t
-         WGP8SiUiSVfRF4gN3Sp0L5xFwUh5v0BmrE/o4Vp+4uJH0tCcNGyhfb4Rp2pOXRXJ6xIJ
-         JmirivlA/kCkdf/uQODObMvz4Kn4605Tg+vA/34obIaP8GBu/Dg0mNsnHmWqobzrZHDE
-         n/sw==
-X-Gm-Message-State: APjAAAW1tziCGhd/0H78DC0uB4ptO51NVH0fnQ32SLn1sYXleiX3T+oa
-        sFWSz3rSY4GLM7EpMqrZnQ3HRkBnpi6DFGp0hrI=
-X-Google-Smtp-Source: APXvYqza5AvXqQv6lJCZftZ7ng0sD7CUY06mSZD508SbQGK3VJgsRzDxMDimvEwZ8zJZOftWgr1DjsQszfluQLPurrM=
-X-Received: by 2002:a50:d1d8:: with SMTP id i24mr69636414edg.57.1560189203181;
- Mon, 10 Jun 2019 10:53:23 -0700 (PDT)
+        bh=hev5OwEACcFPK6C/FK48RMoXOAu7262fSU4AViD4u8w=;
+        b=ADZDGdCYbgM4JLy8yGRTZ9FJ9dHozFyopSHr+krpWLFtb88PZBU4M0/wUrm5YEcQQ5
+         eqwqrju0aVIzPwOBU3cful8LPedDGLx/3SlwTOBahfTIle6Xo6FIcr0wFzGgspx3jdsq
+         vTqy5cLa6pR27N6U9wdRO7JRSanBcAx7hv4snjcpbuawJbpXRzWrdgFZmDB5o/tRAldt
+         wB93DeMiwnbbAUDzuK1ZrQ0QHO0lzzFAW8nHJXHWZtBHkk6HjJm8h4T0lhDQFDAR+CBM
+         GDn3sbSLAbZEmqHwwQfJvXNRqzsmIQe8aU+436mkTvWqFnuldh3u2loxtrW/iHybU3F9
+         mBcg==
+X-Gm-Message-State: APjAAAV9qlZlclu0NlL6WdC3jY3uhIM3wwIpDqielSuAzX7h7ObVxzNV
+        Gd+YUQn6jBJSU8Rn0HQkGNqkY7gdIukl0MtH0r4FnQ==
+X-Google-Smtp-Source: APXvYqwm/ynTvjQ+f9xLC1Cl7wUK4nvhtVIJf0TZpVpspEnFtpsiTVdCmUl3c7IKVyU5GWmfDB+ArZ52XPhJqykZu18=
+X-Received: by 2002:a67:ebc5:: with SMTP id y5mr26971295vso.34.1560193063536;
+ Mon, 10 Jun 2019 11:57:43 -0700 (PDT)
 MIME-Version: 1.0
-References: <20190610172308.21129-1-jorge.ramirez-ortiz@linaro.org>
-In-Reply-To: <20190610172308.21129-1-jorge.ramirez-ortiz@linaro.org>
-From:   Rob Clark <robdclark@gmail.com>
-Date:   Mon, 10 Jun 2019 10:53:09 -0700
-Message-ID: <CAF6AEGuAPurGcRh42iRkt3paD=kWLJw-ic_LL1QGY=ws8_00XA@mail.gmail.com>
-Subject: Re: [PATCH v3] tty: serial: msm_serial: avoid system lockup condition
-To:     Jorge Ramirez-Ortiz <jorge.ramirez-ortiz@linaro.org>
-Cc:     Greg KH <gregkh@linuxfoundation.org>, agross@kernel.org,
-        David Brown <david.brown@linaro.org>, jslaby@suse.com,
+References: <20190513192300.653-1-ulf.hansson@linaro.org> <CAJZ5v0gbK3AFCVC1b9LyXeMOM8fKR1=ECXZwaeSYRSqcK0UgYA@mail.gmail.com>
+ <CAPDyKFpU3u248Gi+FnrVdY-EWXJQuu14uNV9d3Xs0W-K-EMEhg@mail.gmail.com>
+ <20190607154210.GJ15577@e107155-lin> <20190607193407.GB24059@builder>
+ <20190610103225.GA26602@e107155-lin> <CAPDyKFr31SwmHHAREbR3dWMQ55LzzUyTc4M5FZvNsqWfX7SE8Q@mail.gmail.com>
+ <20190610171557.GA4560@redmoon>
+In-Reply-To: <20190610171557.GA4560@redmoon>
+From:   Ulf Hansson <ulf.hansson@linaro.org>
+Date:   Mon, 10 Jun 2019 20:57:07 +0200
+Message-ID: <CAPDyKFqC8+Sv5WRhwOxqphAt8tb_PDisy13Miz5e-PajvwS1ew@mail.gmail.com>
+Subject: Re: [PATCH 00/18] ARM/ARM64: Support hierarchical CPU arrangement for PSCI
+To:     Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>
+Cc:     Sudeep Holla <sudeep.holla@arm.com>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        "Rafael J. Wysocki" <rafael@kernel.org>,
+        Mark Rutland <mark.rutland@arm.com>,
+        Linux ARM <linux-arm-kernel@lists.infradead.org>,
+        "Rafael J . Wysocki" <rjw@rjwysocki.net>,
+        Daniel Lezcano <daniel.lezcano@linaro.org>,
+        "Raju P . L . S . S . S . N" <rplsssn@codeaurora.org>,
+        Amit Kucheria <amit.kucheria@linaro.org>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Niklas Cassel <niklas.cassel@linaro.org>,
+        Tony Lindgren <tony@atomide.com>,
+        Kevin Hilman <khilman@kernel.org>,
+        Lina Iyer <ilina@codeaurora.org>,
+        Viresh Kumar <viresh.kumar@linaro.org>,
+        Vincent Guittot <vincent.guittot@linaro.org>,
+        Geert Uytterhoeven <geert+renesas@glider.be>,
+        Souvik Chakravarty <souvik.chakravarty@arm.com>,
+        Linux PM <linux-pm@vger.kernel.org>,
         linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        linux-serial@vger.kernel.org,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-        khasim.mohammed@linaro.org,
-        Bjorn Andersson <bjorn.andersson@linaro.org>
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Jun 10, 2019 at 10:23 AM Jorge Ramirez-Ortiz
-<jorge.ramirez-ortiz@linaro.org> wrote:
+On Mon, 10 Jun 2019 at 19:16, Lorenzo Pieralisi
+<lorenzo.pieralisi@arm.com> wrote:
 >
-> The function msm_wait_for_xmitr can be taken with interrupts
-> disabled. In order to avoid a potential system lockup - demonstrated
-> under stress testing conditions on SoC QCS404/5 - make sure we wait
-> for a bounded amount of time.
+> On Mon, Jun 10, 2019 at 05:54:39PM +0200, Ulf Hansson wrote:
 >
-> Tested on SoC QCS404.
+> [...]
 >
-> Signed-off-by: Jorge Ramirez-Ortiz <jorge.ramirez-ortiz@linaro.org>
+> > My summary from the earlier ones, is that because the PSCI spec
+> > includes support for OSI, we should also support it in the kernel (and
+> > ATF). In a discussion offlist, Lorenzo agreed that it's okay to add,
+> > without an apple to apple comparison. Maybe Lorenzo can fill in and
+> > state this publicly, to save us all some time?
+>
+> The comparison should have been made before even requesting PSCI OSI
+> mode changes to the specifications, so we have a chip on our shoulders
+> anyway.
+>
+> We will enable PSCI OSI but that's not where the problem lies, enabling
+> PSCI OSI from a firmware perspective should take 10 lines of code,
+> not:
 
+Thanks for confirming!
 
-I had observed that heavy UART traffic would lockup the system (on
-sdm845, but I guess same serial driver)?
+>
+>  drivers/firmware/psci/Makefile                |   2 +-
+>  drivers/firmware/psci/psci.c                  | 219 ++++++++--
+>  drivers/firmware/psci/psci.h                  |  29 ++
+>  drivers/firmware/psci/psci_pm_domain.c        | 403 ++++++++++++++++++
+>
+> I have some concerns about these changes that I will state in the
+> relevant patches.
 
-But a comment from the peanut gallary:  wouldn't this fix lead to TX
-corruption, ie. writing more into TX fifo before hw is ready?  I
-haven't looked closely at the driver, but a way to wait without irqs
-disabled would seem nicer..
+Most of the above changes isn't for solely for OSI, but to support a
+hierarchical topology described in the PSCI DT layout. This is for
+example needed when other resources shares the same power rail as the
+CPU cluster.
 
-BR,
--R
+In other words, the series is orthogonal to whether OSI or PC mode is
+used for PSCI, just to make that clear. BTW, this is what you
+requested me to change into, a while ago.
 
-> ---
->  v2: fix exit condition (timeout --> !timeout)
->  v3: add these clarification messages
 >
->  drivers/tty/serial/msm_serial.c | 4 ++++
->  1 file changed, 4 insertions(+)
+> > My final point in regards to the OSI mode support, it's a minor part
+> > of the series. I don't see how that should hurt from a maintenance
+> > point of view, or perhaps I am wrong? In any case, I offer my help
+> > with review/maintenance in any form as you may see need/fit.
 >
-> diff --git a/drivers/tty/serial/msm_serial.c b/drivers/tty/serial/msm_serial.c
-> index 23833ad952ba..3657a24913fc 100644
-> --- a/drivers/tty/serial/msm_serial.c
-> +++ b/drivers/tty/serial/msm_serial.c
-> @@ -383,10 +383,14 @@ static void msm_request_rx_dma(struct msm_port *msm_port, resource_size_t base)
+> I will go through the series but most of this code should move
+> to core PM code, it has nothing to do with PSCI.
+
+I am looking forward to your review - and for sure, I am open to suggestions!
+
 >
->  static inline void msm_wait_for_xmitr(struct uart_port *port)
->  {
-> +       unsigned int timeout = 500000;
-> +
->         while (!(msm_read(port, UART_SR) & UART_SR_TX_EMPTY)) {
->                 if (msm_read(port, UART_ISR) & UART_ISR_TX_READY)
->                         break;
->                 udelay(1);
-> +               if (!timeout--)
-> +                       break;
->         }
->         msm_write(port, UART_CR_CMD_RESET_TX_READY, UART_CR);
->  }
-> --
-> 2.21.0
+> BTW, apologies for the delay, I was away.
 >
+> Thanks,
+> Lorenzo
+
+Kind regards
+Uffe
