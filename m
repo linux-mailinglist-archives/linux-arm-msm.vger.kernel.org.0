@@ -2,103 +2,112 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id EEA413B3AE
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 10 Jun 2019 13:03:31 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E323D3B3B4
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 10 Jun 2019 13:03:34 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2389303AbfFJLCC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 10 Jun 2019 07:02:02 -0400
-Received: from smtp.codeaurora.org ([198.145.29.96]:60568 "EHLO
-        smtp.codeaurora.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2389191AbfFJLCC (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 10 Jun 2019 07:02:02 -0400
-Received: by smtp.codeaurora.org (Postfix, from userid 1000)
-        id B6F4E602F3; Mon, 10 Jun 2019 11:02:00 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
-        s=default; t=1560164521;
-        bh=mRD0HxQRl5qvKBhQoKCxAZoQjXYl9uAGRc+kOHjgp68=;
-        h=Subject:To:Cc:References:From:Date:In-Reply-To:From;
-        b=R1GOxNf+yljtjiwU+Fi0t3WEP0qcYT3squbnT1TdnJPRXEEFZ+Iw+n15K3NuOHWls
-         Xs4wSTZDnl9L2L3qUPwuS0kz6M/C7lWPAttdE0tb+QLYhhwcArsSaQDjj4G0Pjpt3X
-         YPmdskbpEQ5g9dY7dDo8H010W+42UQxkvtHJluR8=
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        pdx-caf-mail.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.7 required=2.0 tests=ALL_TRUSTED,BAYES_00,
-        DKIM_INVALID,DKIM_SIGNED,SPF_NONE autolearn=no autolearn_force=no
-        version=3.4.0
-Received: from [10.201.2.161] (blr-c-bdr-fw-01_globalnat_allzones-outside.qualcomm.com [103.229.19.19])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: sricharan@smtp.codeaurora.org)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 3D50060271;
-        Mon, 10 Jun 2019 11:01:56 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
-        s=default; t=1560164519;
-        bh=mRD0HxQRl5qvKBhQoKCxAZoQjXYl9uAGRc+kOHjgp68=;
-        h=Subject:To:Cc:References:From:Date:In-Reply-To:From;
-        b=R1+9C+PIOrIaeixpPyIerEfvdehTjfet+LxQbNBKhChBEx9+0hbBLIGGCkq4NJmOB
-         qTAP9KBidpLhnp4Myb41gzmir6AKYZ7pwv9toiPDdlIOgx1EBjOXLKGe/v4kqGv66Y
-         /WSehylOGAagYmnO7UwXXof1yn2BXFrqK9lsVj78=
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 3D50060271
-Authentication-Results: pdx-caf-mail.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: pdx-caf-mail.web.codeaurora.org; spf=none smtp.mailfrom=sricharan@codeaurora.org
-Subject: Re: [PATCH 2/6] dt-bindings: qcom: Add ipq6018 bindings
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linus.walleij@linaro.org, Stephen Boyd <sboyd@kernel.org>,
-        agross@kernel.org, linux-kernel@vger.kernel.org,
-        linux-gpio@vger.kernel.org, robh+dt@kernel.org,
-        linux-soc@vger.kernel.org, linux-clk@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org
-References: <1559754961-26783-1-git-send-email-sricharan@codeaurora.org>
- <1559754961-26783-3-git-send-email-sricharan@codeaurora.org>
- <20190608032754.GD24059@builder>
-From:   Sricharan R <sricharan@codeaurora.org>
-Message-ID: <93e5b0c5-f97b-ef62-8c7f-262e80a53b49@codeaurora.org>
-Date:   Mon, 10 Jun 2019 16:31:54 +0530
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
- Thunderbird/60.7.0
+        id S2389349AbfFJLC4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 10 Jun 2019 07:02:56 -0400
+Received: from foss.arm.com ([217.140.110.172]:40672 "EHLO foss.arm.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S2388982AbfFJLC4 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 10 Jun 2019 07:02:56 -0400
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id AC8F6337;
+        Mon, 10 Jun 2019 04:02:55 -0700 (PDT)
+Received: from e107155-lin (e107155-lin.cambridge.arm.com [10.1.196.42])
+        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id DB2553F557;
+        Mon, 10 Jun 2019 04:04:34 -0700 (PDT)
+Date:   Mon, 10 Jun 2019 12:02:50 +0100
+From:   Sudeep Holla <sudeep.holla@arm.com>
+To:     Ulf Hansson <ulf.hansson@linaro.org>
+Cc:     Lorenzo Pieralisi <Lorenzo.Pieralisi@arm.com>,
+        Mark Rutland <mark.rutland@arm.com>,
+        Linux ARM <linux-arm-kernel@lists.infradead.org>,
+        "Rafael J . Wysocki" <rjw@rjwysocki.net>,
+        Daniel Lezcano <daniel.lezcano@linaro.org>,
+        "Raju P . L . S . S . S . N" <rplsssn@codeaurora.org>,
+        Amit Kucheria <amit.kucheria@linaro.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Niklas Cassel <niklas.cassel@linaro.org>,
+        Tony Lindgren <tony@atomide.com>,
+        Kevin Hilman <khilman@kernel.org>,
+        Lina Iyer <ilina@codeaurora.org>,
+        Viresh Kumar <viresh.kumar@linaro.org>,
+        Vincent Guittot <vincent.guittot@linaro.org>,
+        Geert Uytterhoeven <geert+renesas@glider.be>,
+        Souvik Chakravarty <souvik.chakravarty@arm.com>,
+        Sudeep Holla <sudeep.holla@arm.com>,
+        Linux PM <linux-pm@vger.kernel.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>
+Subject: Re: [PATCH 15/18] drivers: firmware: psci: Support CPU hotplug for
+ the hierarchical model
+Message-ID: <20190610110250.GD26602@e107155-lin>
+References: <20190513192300.653-1-ulf.hansson@linaro.org>
+ <20190513192300.653-16-ulf.hansson@linaro.org>
+ <20190607153114.GI15577@e107155-lin>
+ <CAPDyKFqooMww0B6vGL56BnG-L=13C3oWeDFx4v1cO9=W9QPwVQ@mail.gmail.com>
 MIME-Version: 1.0
-In-Reply-To: <20190608032754.GD24059@builder>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CAPDyKFqooMww0B6vGL56BnG-L=13C3oWeDFx4v1cO9=W9QPwVQ@mail.gmail.com>
+User-Agent: Mutt/1.9.4 (2018-02-28)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On Mon, Jun 10, 2019 at 12:21:47PM +0200, Ulf Hansson wrote:
+> On Fri, 7 Jun 2019 at 17:31, Sudeep Holla <sudeep.holla@arm.com> wrote:
+> >
+> > On Mon, May 13, 2019 at 09:22:57PM +0200, Ulf Hansson wrote:
+> > > When the hierarchical CPU topology is used and when a CPU has been put
+> > > offline (hotplug), that same CPU prevents its PM domain and thus also
+> > > potential master PM domains, from being powered off. This is because genpd
+> > > observes the CPU's attached device as being active from a runtime PM point
+> > > of view.
+> > >
+> > > To deal with this, let's decrease the runtime PM usage count by calling
+> > > pm_runtime_put_sync_suspend() of the attached struct device when putting
+> > > the CPU offline. Consequentially, we must then increase the runtime PM
+> > > usage count, while putting the CPU online again.
+> > >
+> >
+> > Why is this firmware/driver specific ? Why can't this be dealt in core
+> > pm-domain ? I am concerned that if any other architectures or firmware
+> > method decides to use this feature, this need to be duplicated there.
+>
+> What is the core pm-domain? Do you refer to the generic PM domain (genpd), no?
+>
 
+Sorry for my bad choice of names. I just wrote names as I understand
+rather than looking for exact match. But yes, I meant generic place
+where such ref-counting is done currently for other things.
 
-On 6/8/2019 8:57 AM, Bjorn Andersson wrote:
-> On Wed 05 Jun 10:15 PDT 2019, Sricharan R wrote:
-> 
->> Signed-off-by: Sricharan R <sricharan@codeaurora.org>
->> Signed-off-by: speriaka <speriaka@codeaurora.org>
->> ---
->>  Documentation/devicetree/bindings/arm/qcom.yaml | 2 ++
->>  1 file changed, 2 insertions(+)
->>
->> diff --git a/Documentation/devicetree/bindings/arm/qcom.yaml b/Documentation/devicetree/bindings/arm/qcom.yaml
->> index f6316ab..7b19028 100644
->> --- a/Documentation/devicetree/bindings/arm/qcom.yaml
->> +++ b/Documentation/devicetree/bindings/arm/qcom.yaml
->> @@ -36,6 +36,7 @@ description: |
->>    	mdm9615
->>    	ipq8074
->>    	sdm845
->> +	ipq6018
-> 
-> It would be nice if these lists where sorted, but as that's not the
-> case, please sort it wrt the other ipq at least.
-> 
+> In such case, this is not the job of genpd, but rather the opposite
+> (to *monitor* the reference count).
+>
 
- ok.
+OK, I need to understand that then.
 
+> >
+> > The way I see this is pure reference counting and is hardware/firmware/
+> > driver agnostic and can be made generic.
+>
+> As stated in the another reply, I would rather start with having more
+> things driver specific rather than generic. Later on we can always
+> consider to move/split things, when there are more users.
+>
+> In this particular case, the runtime PM reference counting is done on
+> the struct device*, that genpd returned via
+> dev_pm_domain_attach_by_name(). And because
+> dev_pm_domain_attach_by_name() is called from PSCI code, I decided to
+> keep this struct device* internal to PSCI.
+
+Sure, I understand your intent. I have just mentioned my thoughts/comments
+as I reviewed.
+
+--
 Regards,
- Sricharan
-
-
--- 
-"QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member of Code Aurora Forum, hosted by The Linux Foundation
+Sudeep
