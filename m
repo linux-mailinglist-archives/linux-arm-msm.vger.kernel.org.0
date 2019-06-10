@@ -2,112 +2,80 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id E323D3B3B4
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 10 Jun 2019 13:03:34 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id EBCEF3B3F6
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 10 Jun 2019 13:22:51 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2389349AbfFJLC4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 10 Jun 2019 07:02:56 -0400
-Received: from foss.arm.com ([217.140.110.172]:40672 "EHLO foss.arm.com"
+        id S2389666AbfFJLVw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 10 Jun 2019 07:21:52 -0400
+Received: from foss.arm.com ([217.140.110.172]:40922 "EHLO foss.arm.com"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S2388982AbfFJLC4 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 10 Jun 2019 07:02:56 -0400
+        id S2388611AbfFJLVw (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 10 Jun 2019 07:21:52 -0400
 Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id AC8F6337;
-        Mon, 10 Jun 2019 04:02:55 -0700 (PDT)
-Received: from e107155-lin (e107155-lin.cambridge.arm.com [10.1.196.42])
-        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id DB2553F557;
-        Mon, 10 Jun 2019 04:04:34 -0700 (PDT)
-Date:   Mon, 10 Jun 2019 12:02:50 +0100
-From:   Sudeep Holla <sudeep.holla@arm.com>
-To:     Ulf Hansson <ulf.hansson@linaro.org>
-Cc:     Lorenzo Pieralisi <Lorenzo.Pieralisi@arm.com>,
+        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id BE4AE337;
+        Mon, 10 Jun 2019 04:21:51 -0700 (PDT)
+Received: from redmoon (unknown [10.1.196.255])
+        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 489523F557;
+        Mon, 10 Jun 2019 04:23:32 -0700 (PDT)
+Date:   Mon, 10 Jun 2019 12:21:41 +0100
+From:   Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>
+To:     Niklas Cassel <niklas.cassel@linaro.org>
+Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Bjorn Helgaas <bhelgaas@google.com>,
+        Rob Herring <robh+dt@kernel.org>,
         Mark Rutland <mark.rutland@arm.com>,
-        Linux ARM <linux-arm-kernel@lists.infradead.org>,
-        "Rafael J . Wysocki" <rjw@rjwysocki.net>,
-        Daniel Lezcano <daniel.lezcano@linaro.org>,
-        "Raju P . L . S . S . S . N" <rplsssn@codeaurora.org>,
-        Amit Kucheria <amit.kucheria@linaro.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Niklas Cassel <niklas.cassel@linaro.org>,
-        Tony Lindgren <tony@atomide.com>,
-        Kevin Hilman <khilman@kernel.org>,
-        Lina Iyer <ilina@codeaurora.org>,
-        Viresh Kumar <viresh.kumar@linaro.org>,
-        Vincent Guittot <vincent.guittot@linaro.org>,
-        Geert Uytterhoeven <geert+renesas@glider.be>,
-        Souvik Chakravarty <souvik.chakravarty@arm.com>,
-        Sudeep Holla <sudeep.holla@arm.com>,
-        Linux PM <linux-pm@vger.kernel.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>
-Subject: Re: [PATCH 15/18] drivers: firmware: psci: Support CPU hotplug for
- the hierarchical model
-Message-ID: <20190610110250.GD26602@e107155-lin>
-References: <20190513192300.653-1-ulf.hansson@linaro.org>
- <20190513192300.653-16-ulf.hansson@linaro.org>
- <20190607153114.GI15577@e107155-lin>
- <CAPDyKFqooMww0B6vGL56BnG-L=13C3oWeDFx4v1cO9=W9QPwVQ@mail.gmail.com>
+        Stanimir Varbanov <svarbanov@mm-sol.com>,
+        linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v5 0/3] Qualcomm QCS404 PCIe support
+Message-ID: <20190610112134.GA30098@redmoon>
+References: <20190529005710.23950-1-bjorn.andersson@linaro.org>
+ <20190529163155.GA24655@redmoon>
+ <20190604113347.GA13029@centauri.ideon.se>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <CAPDyKFqooMww0B6vGL56BnG-L=13C3oWeDFx4v1cO9=W9QPwVQ@mail.gmail.com>
+In-Reply-To: <20190604113347.GA13029@centauri.ideon.se>
 User-Agent: Mutt/1.9.4 (2018-02-28)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Jun 10, 2019 at 12:21:47PM +0200, Ulf Hansson wrote:
-> On Fri, 7 Jun 2019 at 17:31, Sudeep Holla <sudeep.holla@arm.com> wrote:
-> >
-> > On Mon, May 13, 2019 at 09:22:57PM +0200, Ulf Hansson wrote:
-> > > When the hierarchical CPU topology is used and when a CPU has been put
-> > > offline (hotplug), that same CPU prevents its PM domain and thus also
-> > > potential master PM domains, from being powered off. This is because genpd
-> > > observes the CPU's attached device as being active from a runtime PM point
-> > > of view.
-> > >
-> > > To deal with this, let's decrease the runtime PM usage count by calling
-> > > pm_runtime_put_sync_suspend() of the attached struct device when putting
-> > > the CPU offline. Consequentially, we must then increase the runtime PM
-> > > usage count, while putting the CPU online again.
-> > >
-> >
-> > Why is this firmware/driver specific ? Why can't this be dealt in core
-> > pm-domain ? I am concerned that if any other architectures or firmware
-> > method decides to use this feature, this need to be duplicated there.
->
-> What is the core pm-domain? Do you refer to the generic PM domain (genpd), no?
->
+On Tue, Jun 04, 2019 at 01:33:47PM +0200, Niklas Cassel wrote:
+> On Wed, May 29, 2019 at 05:31:55PM +0100, Lorenzo Pieralisi wrote:
+> > On Tue, May 28, 2019 at 05:57:07PM -0700, Bjorn Andersson wrote:
+> > > This series adds support for the PCIe controller in the Qualcomm QCS404
+> > > platform.
+> > > 
+> > > Bjorn Andersson (3):
+> > >   PCI: qcom: Use clk_bulk API for 2.4.0 controllers
+> > >   dt-bindings: PCI: qcom: Add QCS404 to the binding
+> > >   PCI: qcom: Add QCS404 PCIe controller support
+> > > 
+> > >  .../devicetree/bindings/pci/qcom,pcie.txt     |  25 +++-
+> > >  drivers/pci/controller/dwc/pcie-qcom.c        | 113 ++++++++----------
+> > >  2 files changed, 75 insertions(+), 63 deletions(-)
+> > 
+> > Applied to pci/qcom for v5.3, thanks.
+> > 
+> > Lorenzo
+> 
+> Hello Lorenzo,
+> 
+> I don't see these patches in linux-next.
+> 
+> It appears that only Bjorn Helgaas tree is in linux-next, and not yours.
+> 
+> I think that it makes a lot of sense for patches to cook in linux-next
+> for as long a possible.
+> 
+> Perhaps you and Bjorn Helgaas could have a shared PCI git tree?
+> Or perhaps you could add your tree to linux-next?
+> ..or some other solution :)
 
-Sorry for my bad choice of names. I just wrote names as I understand
-rather than looking for exact match. But yes, I meant generic place
-where such ref-counting is done currently for other things.
+I ask Bjorn to pull branches into linux-next at appropriate times
+that fit our schedules, be patient and this code will be in -next
+shortly.
 
-> In such case, this is not the job of genpd, but rather the opposite
-> (to *monitor* the reference count).
->
-
-OK, I need to understand that then.
-
-> >
-> > The way I see this is pure reference counting and is hardware/firmware/
-> > driver agnostic and can be made generic.
->
-> As stated in the another reply, I would rather start with having more
-> things driver specific rather than generic. Later on we can always
-> consider to move/split things, when there are more users.
->
-> In this particular case, the runtime PM reference counting is done on
-> the struct device*, that genpd returned via
-> dev_pm_domain_attach_by_name(). And because
-> dev_pm_domain_attach_by_name() is called from PSCI code, I decided to
-> keep this struct device* internal to PSCI.
-
-Sure, I understand your intent. I have just mentioned my thoughts/comments
-as I reviewed.
-
---
-Regards,
-Sudeep
+Lorenzo
