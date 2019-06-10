@@ -2,62 +2,90 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 967B93B8D3
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 10 Jun 2019 18:02:15 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id EA7B43B9E0
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 10 Jun 2019 18:48:06 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2390356AbfFJQB7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 10 Jun 2019 12:01:59 -0400
-Received: from mail.kernel.org ([198.145.29.99]:45310 "EHLO mail.kernel.org"
+        id S1727709AbfFJQsG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 10 Jun 2019 12:48:06 -0400
+Received: from mail.kernel.org ([198.145.29.99]:53110 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S2389356AbfFJQB7 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 10 Jun 2019 12:01:59 -0400
-Received: from localhost (unknown [122.167.93.80])
+        id S1726217AbfFJQsF (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 10 Jun 2019 12:48:05 -0400
+Received: from kernel.org (unknown [104.132.0.74])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 169A421726;
-        Mon, 10 Jun 2019 16:01:57 +0000 (UTC)
+        by mail.kernel.org (Postfix) with ESMTPSA id 18D15206C3;
+        Mon, 10 Jun 2019 16:48:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1560182518;
-        bh=Ys7DhJ+mKH71w87mci5TwN9k1JOK6LfD5c/WHEZ8RTE=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=rBU6bLj8ZBspEDLHH79L2W/bv5LAMc53bQpATHw9VBJ9LjI5l+2Vg/WbCSeqcvnEn
-         NAiYIKdaF0CmbuUvDrcfXQUx8qrROPDrD4KjMKt8a2B1aSrpDyEisYAc5Q9D8FRol6
-         M0GSPlpQeIcV/D5qDsmXM/mCCKjlVNMpyvHtHDxU=
-Date:   Mon, 10 Jun 2019 21:28:48 +0530
-From:   Vinod Koul <vkoul@kernel.org>
-To:     Andy Gross <agross@kernel.org>
-Cc:     linux-arm-msm@vger.kernel.org,
-        Bjorn Andersson <bjorn.andersson@linaro.org>, arm@kernel.org,
-        linux-arm-kernel@lists.infradead.org
-Subject: Re: [PATCH] arm64: qcom: qcs404: Add reset-cells to GCC node
-Message-ID: <20190610155848.GR9160@vkoul-mobl.Dlink>
-References: <1560053972-32273-1-git-send-email-agross@kernel.org>
+        s=default; t=1560185285;
+        bh=oFtb1o3AXLUr4k9TH9OD5ZZ8qF8S9a/ouxAXF91MYh0=;
+        h=In-Reply-To:References:To:From:Cc:Subject:Date:From;
+        b=tBcMESXBdsEGjobi+BHjlGd2RIqXKwu6aeRyd10RYmRrXjQpm69IIqrxRkhXkEUGP
+         AQyCw2PvGkD4ULELPPRFasXJIN7qpaewJiXRuwPJDsMS6aGgFogx+c/GJwb3W3C3dm
+         dVV/fDf3akooB5cM5Lom0XOdDCSitrtzKqlGPfuY=
+Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <1560053972-32273-1-git-send-email-agross@kernel.org>
-User-Agent: Mutt/1.11.3 (2019-02-01)
+Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <048a25c0-3a2c-3906-84d4-5eb67f3ce2ef@codeaurora.org>
+References: <1559754961-26783-1-git-send-email-sricharan@codeaurora.org> <1559754961-26783-6-git-send-email-sricharan@codeaurora.org> <20190608034835.GH24059@builder> <048a25c0-3a2c-3906-84d4-5eb67f3ce2ef@codeaurora.org>
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Sricharan R <sricharan@codeaurora.org>
+From:   Stephen Boyd <sboyd@kernel.org>
+Cc:     robh+dt@kernel.org, sboyd@codeaurora.org, linus.walleij@linaro.org,
+        agross@kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-clk@vger.kernel.org,
+        linux-gpio@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-soc@vger.kernel.org, linux-arm-kernel@lists.infradead.org
+Subject: Re: [PATCH 5/6] arm64: dts: Add ipq6018 SoC and CP01 board support
+User-Agent: alot/0.8.1
+Date:   Mon, 10 Jun 2019 09:48:04 -0700
+Message-Id: <20190610164805.18D15206C3@mail.kernel.org>
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 08-06-19, 23:19, Andy Gross wrote:
-> This patch adds a reset-cells property to the gcc controller on the QCS404.
-> Without this in place, we get warnings like the following if nodes reference
-> a gcc reset:
-> 
-> arch/arm64/boot/dts/qcom/qcs404.dtsi:261.38-310.5: Warning (resets_property):
-> /soc@0/remoteproc@b00000: Missing property '#reset-cells' in node
-> /soc@0/clock-controller@1800000 or bad phandle (referred from resets[0])
->   also defined at arch/arm64/boot/dts/qcom/qcs404-evb.dtsi:82.18-84.3
->   DTC     arch/arm64/boot/dts/qcom/qcs404-evb-4000.dtb
-> arch/arm64/boot/dts/qcom/qcs404.dtsi:261.38-310.5: Warning (resets_property):
-> /soc@0/remoteproc@b00000: Missing property '#reset-cells' in node
-> /soc@0/clock-controller@1800000 or bad phandle (referred from resets[0])
->   also defined at arch/arm64/boot/dts/qcom/qcs404-evb.dtsi:82.18-84.3
+Quoting Sricharan R (2019-06-10 08:45:22)
+> On 6/8/2019 9:18 AM, Bjorn Andersson wrote:
+> > On Wed 05 Jun 10:16 PDT 2019, Sricharan R wrote:
+> >> diff --git a/arch/arm64/boot/dts/qcom/ipq6018.dtsi b/arch/arm64/boot/d=
+ts/qcom/ipq6018.dtsi
+> >> new file mode 100644
+> >> index 0000000..79cccdd
+> >> --- /dev/null
+> >> +++ b/arch/arm64/boot/dts/qcom/ipq6018.dtsi
+> >> +                    compatible =3D "fixed-clock";
+> >> +                    clock-frequency =3D <32000>;
+> >> +                    #clock-cells =3D <0>;
+> >> +            };
+> >> +
+> >> +            xo: xo {
+> >> +                    compatible =3D "fixed-clock";
+> >> +                    clock-frequency =3D <24000000>;
+> >> +                    #clock-cells =3D <0>;
+> >> +            };
+> >> +
+> >> +            bias_pll_cc_clk {
+> >=20
+> > Please give this a label and reference it from the node that uses it
+> > (regardless of the implementation matching by clock name).
+> >=20
+>  ok, in that case, so might have to remove these for now, till we add
+>  the corresponding users.
 
-Reviewed-by: Vinod Koul <vkoul@kernel.org>
+Yes, please remove them. They don't look like board clks, instead
+they're SoC level details that need to be created by some clk driver
+like GCC.
 
--- 
-~Vinod
+>=20
+> >> +                    compatible =3D "fixed-clock";
+> >> +                    clock-frequency =3D <300000000>;
+> >> +                    #clock-cells =3D <0>;
+> >> +            };
+> >> +
+> >> +            bias_pll_nss_noc_clk {
+> >> +                    compatible =3D "fixed-clock";
+> >> +                    clock-frequency =3D <416500000>;
+> >> +                    #clock-cells =3D <0>;
+> >> +            };
+> >> +
