@@ -2,134 +2,102 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 995DB3B02B
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 10 Jun 2019 10:03:05 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 47FB33B064
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 10 Jun 2019 10:17:09 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2387781AbfFJIDE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 10 Jun 2019 04:03:04 -0400
-Received: from mail-wm1-f66.google.com ([209.85.128.66]:38468 "EHLO
-        mail-wm1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2388227AbfFJIDD (ORCPT
+        id S2388538AbfFJIRH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 10 Jun 2019 04:17:07 -0400
+Received: from mail-lj1-f194.google.com ([209.85.208.194]:38212 "EHLO
+        mail-lj1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2387904AbfFJIRH (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 10 Jun 2019 04:03:03 -0400
-Received: by mail-wm1-f66.google.com with SMTP id s15so4719365wmj.3
-        for <linux-arm-msm@vger.kernel.org>; Mon, 10 Jun 2019 01:03:01 -0700 (PDT)
+        Mon, 10 Jun 2019 04:17:07 -0400
+Received: by mail-lj1-f194.google.com with SMTP id o13so7062511lji.5
+        for <linux-arm-msm@vger.kernel.org>; Mon, 10 Jun 2019 01:17:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to
-         :user-agent;
-        bh=u82TTwb8ixlFfrNUJnFoGiqW7vUPbpvM9WdQFkW0Sgo=;
-        b=ILTcYwTEN0sqsAHKFcmwrFWMuSfyNM1NchlalYVj8bFmYmVu6fm/AHxWHvy+r5vmfm
-         0D/FGWCMsEkO/oOofk0C0YtrlvwLhDhYC6an9C7JRnbAARt2r2tBQZXsQqDKGziDxVjc
-         Z/aZhho0FcHYIrxyszQIHhvUw5nWnk2+Epw+hO8WzVSlHagZmy+fE4XxMeN0HLfY1fQa
-         YcPAqgiPJxAsz78MsL6jn7fb3aAuGThiJ1jBNR2QdIz2RihvMb2NwDFsB9DqgMnDwIB3
-         ZzJ3nTCgumg+ALD2kzR59+lC7LqoxXgFTJvASWAsgttbe5X+Qgz1Nff8floBpqRHbNKG
-         jVQg==
+         :content-disposition:in-reply-to:user-agent;
+        bh=8pL4Nb1/9ZlimGeO+8nNRwwsw7KQDrO0bIiM5MijaHc=;
+        b=xSRPJR4uipKtcDFNkoGLAFNDSWpur+y8M24zd3LBMhsJYqFp5+eEkZJfeJ+mUfA3dP
+         AOCXEMkGnfQuGJ/8GlSeSupXJiRgFsrpX5P2P8bKbiNdUjiKo4WlyhCtuSvw6Fu3yuSp
+         JlvmWIg3qvk3YA8rP6ziRd3ISQI+W5g/+ujJ6HXbRxdsFHJtT2251n7emGu/ehyLDchW
+         orY44h5Uq6uCpZAKQTXbUabYUv0SFU0BU35hUEowS0A8IT+z44mEQpi7FOqyMObTxHXH
+         J1IZmwmz0qzlrtkOKVn+2r1ULZjLMdlZ4gxp72cwNG0SGpQVHYzj40UB6i/K8uRaz/6v
+         Oapg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        bh=u82TTwb8ixlFfrNUJnFoGiqW7vUPbpvM9WdQFkW0Sgo=;
-        b=oL6qtY2nnizRzyU2hV+n2gxVM5WsGdvRg/Wgq3xcp7vQX6zMWQgYIg/S6T1iGLs4Ij
-         q4pb0iuTcaCy3wxy+wccA9+ffcYRae6A1U4AdxduYIM5YhGuYPB1DN10wHCUj859xnjY
-         JE6lBPtqYoQpzuvaNDLvqYOXTOfqFiklbe5kIEgUS1g3v2g5iKDITwoIAIfnSYkuyT3R
-         fFaHMyE1H/l9CiQAf1tHM5UVoVgl4HjxyYuEktZAJywKbJ0Zt9rB4NPLhJQXwS/xgkIY
-         CWRg1kyUW9k64cJJrvAR7zRWn5p/8t266FfimN3wm/UYye1/wyQoVvIYy/Tl523jOoQz
-         U7xw==
-X-Gm-Message-State: APjAAAVnjTL/oTvmdYIbQXTQ6wDntB7//nM5QP2EcXRnPUqfXH30gsLO
-        gFoPQXavuWDvXKvvtSK4p/aCXQ==
-X-Google-Smtp-Source: APXvYqz65id5SFfU8rn9yGZIaRt4Ct2BsHn+rIV/wkq2ik8juXBU/IcNLZAF70j8d/PFOU51TXB9nQ==
-X-Received: by 2002:a1c:8a:: with SMTP id 132mr9007662wma.44.1560153780728;
-        Mon, 10 Jun 2019 01:03:00 -0700 (PDT)
-Received: from dell ([2.31.167.229])
-        by smtp.gmail.com with ESMTPSA id s8sm16879674wra.55.2019.06.10.01.02.59
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Mon, 10 Jun 2019 01:03:00 -0700 (PDT)
-Date:   Mon, 10 Jun 2019 09:02:58 +0100
-From:   Lee Jones <lee.jones@linaro.org>
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     alokc@codeaurora.org, andy.gross@linaro.org,
-        david.brown@linaro.org, wsa+renesas@sang-engineering.com,
-        linus.walleij@linaro.org, balbi@kernel.org,
-        gregkh@linuxfoundation.org, linux-arm-kernel@lists.infradead.org,
-        linux-kernel@vger.kernel.org, jlhugo@gmail.com,
-        linux-i2c@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-gpio@vger.kernel.org, linux-usb@vger.kernel.org
-Subject: Re: [PATCH 3/8] pinctrl: msm: Add ability for drivers to supply a
- reserved GPIO list
-Message-ID: <20190610080258.GI4797@dell>
-References: <20190605114302.22509-1-lee.jones@linaro.org>
- <20190605114302.22509-3-lee.jones@linaro.org>
- <20190608040610.GJ24059@builder>
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=8pL4Nb1/9ZlimGeO+8nNRwwsw7KQDrO0bIiM5MijaHc=;
+        b=HWVqnhIj6eLYEHjqpD/nE2Al1qxMrMhl9xlHxzpHifkJwag/5mi3uU1l/bqRbDK7Fi
+         slB3VU4kY1c3kaWHKEnlFRdm9jcfPueVbIenoHZuKKn7JoakR5+hdVragx3DQadTgv7u
+         2Qce/4YIkIG/Dsgzo3QpHasljw0LOv+Ihiv/pcEJsg8x0//t4EQl7CHG4hhgQFs2rF50
+         wRIPA8xDtjlcDfC7/m3hWJIJGBTm+YbfwrDM7HzHbIdjqd2klbfCIJQ/RfVziqOVOp4c
+         ESs14xCNbCuHbBZq68SWvKdxR36bIIJvTi6y3z8/LD4zSVTNEtYkJ8wwfw1WkqREs+ka
+         btoQ==
+X-Gm-Message-State: APjAAAXrYilGUyYpgeTA1ge4Ay20cpho8DL2rtg7f5VrduQoABCJcrAK
+        MPjMN5mRC2C+bWzkK8qsJMZ48A==
+X-Google-Smtp-Source: APXvYqxdRKjHKNFtdU1RuLDegwe0z+Q9hzFQQCcTB/Mo0B6oh4MMv2rJa2+CBzMU9qD3w+1XRSlP9Q==
+X-Received: by 2002:a05:651c:87:: with SMTP id 7mr18288402ljq.184.1560154624975;
+        Mon, 10 Jun 2019 01:17:04 -0700 (PDT)
+Received: from centauri (m83-185-80-163.cust.tele2.se. [83.185.80.163])
+        by smtp.gmail.com with ESMTPSA id c1sm1892791lfh.13.2019.06.10.01.17.03
+        (version=TLS1_3 cipher=AEAD-AES256-GCM-SHA384 bits=256/256);
+        Mon, 10 Jun 2019 01:17:04 -0700 (PDT)
+Date:   Mon, 10 Jun 2019 10:17:01 +0200
+From:   Niklas Cassel <niklas.cassel@linaro.org>
+To:     Andy Gross <agross@kernel.org>
+Cc:     linux-arm-msm@vger.kernel.org,
+        Bjorn Andersson <bjorn.andersson@linaro.org>, arm@kernel.org,
+        linux-arm-kernel@lists.infradead.org
+Subject: Re: [PATCH] arm64: qcom: qcs404: Add reset-cells to GCC node
+Message-ID: <20190610081701.GA3152@centauri>
+References: <1560053972-32273-1-git-send-email-agross@kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20190608040610.GJ24059@builder>
-User-Agent: Mutt/1.9.4 (2018-02-28)
+In-Reply-To: <1560053972-32273-1-git-send-email-agross@kernel.org>
+User-Agent: Mutt/1.11.4 (2019-03-13)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, 07 Jun 2019, Bjorn Andersson wrote:
-
-> On Wed 05 Jun 04:42 PDT 2019, Lee Jones wrote:
+On Sat, Jun 08, 2019 at 11:19:32PM -0500, Andy Gross wrote:
+> This patch adds a reset-cells property to the gcc controller on the QCS404.
+> Without this in place, we get warnings like the following if nodes reference
+> a gcc reset:
 > 
-> > When booting MSM based platforms with Device Tree or some ACPI
-> > implementations, it is possible to provide a list of reserved pins
-> > via the 'gpio-reserved-ranges' and 'gpios' properties respectively.
-> > However some ACPI tables are not populated with this information,
-> > thus it has to come from a knowledgable device driver instead.
-> > 
-> > Here we provide the MSM common driver with additional support to
-> > parse this informtion and correctly populate the widely used
-> > 'valid_mask'.
-> > 
-> > Signed-off-by: Lee Jones <lee.jones@linaro.org>
-> > ---
-> >  drivers/pinctrl/qcom/pinctrl-msm.c | 18 ++++++++++++++++++
-> >  drivers/pinctrl/qcom/pinctrl-msm.h |  1 +
-> >  2 files changed, 19 insertions(+)
-> > 
-> > diff --git a/drivers/pinctrl/qcom/pinctrl-msm.c b/drivers/pinctrl/qcom/pinctrl-msm.c
-> > index ee8119879c4c..3ac740b36508 100644
-> > --- a/drivers/pinctrl/qcom/pinctrl-msm.c
-> > +++ b/drivers/pinctrl/qcom/pinctrl-msm.c
-> > @@ -607,8 +607,23 @@ static int msm_gpio_init_valid_mask(struct gpio_chip *chip)
-> >  	int ret;
-> >  	unsigned int len, i;
-> >  	unsigned int max_gpios = pctrl->soc->ngpios;
-> > +	const int *reserved = pctrl->soc->reserved_gpios;
-> >  	u16 *tmp;
-> >  
-> > +	/* Driver provided reserved list overrides DT and ACPI */
-> > +	if (reserved) {
-> > +		bitmap_fill(chip->valid_mask, max_gpios);
-> > +		for (i = 0; reserved[i] >= 0; i++) {
-> > +			if (i >= max_gpios || reserved[i] >= max_gpios) {
+> arch/arm64/boot/dts/qcom/qcs404.dtsi:261.38-310.5: Warning (resets_property):
+> /soc@0/remoteproc@b00000: Missing property '#reset-cells' in node
+> /soc@0/clock-controller@1800000 or bad phandle (referred from resets[0])
+>   also defined at arch/arm64/boot/dts/qcom/qcs404-evb.dtsi:82.18-84.3
+>   DTC     arch/arm64/boot/dts/qcom/qcs404-evb-4000.dtb
+> arch/arm64/boot/dts/qcom/qcs404.dtsi:261.38-310.5: Warning (resets_property):
+> /soc@0/remoteproc@b00000: Missing property '#reset-cells' in node
+> /soc@0/clock-controller@1800000 or bad phandle (referred from resets[0])
+>   also defined at arch/arm64/boot/dts/qcom/qcs404-evb.dtsi:82.18-84.3
 > 
-> reserved is a list of GPIOs to reserve, I don't see a reason to check
-> if that list is longer than the number of GPIOs (i.e. the first half of
-> the condition).
+> Signed-off-by: Andy Gross <agross@kernel.org>
+> ---
+>  arch/arm64/boot/dts/qcom/qcs404.dtsi | 1 +
+>  1 file changed, 1 insertion(+)
 > 
-> It wouldn't make sense to be, but there's no logical issue with it and I
-> had to read the conditional a few extra times to be sure what was going
-> on.
-
-If nothing else, it's an early hard stop in case someone forgot to
-terminate the reserved array.
-
-> Apart from that you have my
+> diff --git a/arch/arm64/boot/dts/qcom/qcs404.dtsi b/arch/arm64/boot/dts/qcom/qcs404.dtsi
+> index 342788a..086cadb 100644
+> --- a/arch/arm64/boot/dts/qcom/qcs404.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/qcs404.dtsi
+> @@ -426,6 +426,7 @@
+>  			compatible = "qcom,gcc-qcs404";
+>  			reg = <0x01800000 0x80000>;
+>  			#clock-cells = <1>;
+> +			#reset-cells = <1>;
+>  
+>  			assigned-clocks = <&gcc GCC_APSS_AHB_CLK_SRC>;
+>  			assigned-clock-rates = <19200000>;
+> -- 
+> 2.7.4
 > 
-> Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
 
-Thanks Bjorn.
-
--- 
-Lee Jones [李琼斯]
-Linaro Services Technical Lead
-Linaro.org │ Open source software for ARM SoCs
-Follow Linaro: Facebook | Twitter | Blog
+Reviewed-by: Niklas Cassel <niklas.cassel@linaro.org>
