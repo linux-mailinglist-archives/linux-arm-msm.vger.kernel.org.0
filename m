@@ -2,58 +2,58 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id CF0233AF91
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 10 Jun 2019 09:22:51 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 16A9E3AFC9
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 10 Jun 2019 09:37:43 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2387959AbfFJHWu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 10 Jun 2019 03:22:50 -0400
-Received: from mail-wr1-f68.google.com ([209.85.221.68]:36597 "EHLO
-        mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2387821AbfFJHWt (ORCPT
+        id S2388157AbfFJHhm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 10 Jun 2019 03:37:42 -0400
+Received: from mail-wr1-f67.google.com ([209.85.221.67]:35461 "EHLO
+        mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2388071AbfFJHhl (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 10 Jun 2019 03:22:49 -0400
-Received: by mail-wr1-f68.google.com with SMTP id n4so8037409wrs.3
-        for <linux-arm-msm@vger.kernel.org>; Mon, 10 Jun 2019 00:22:48 -0700 (PDT)
+        Mon, 10 Jun 2019 03:37:41 -0400
+Received: by mail-wr1-f67.google.com with SMTP id m3so8081039wrv.2
+        for <linux-arm-msm@vger.kernel.org>; Mon, 10 Jun 2019 00:37:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=from:to:cc:subject:date:message-id:mime-version
          :content-transfer-encoding;
-        bh=jbLxpWuUonBzNVgnD/xYkcw7GrDlHMS37R/RDa4E2Kg=;
-        b=abcOHs1oSH8mEsGUMSJzy5b1RaEKPt7RkL3pIvcDpv2/Oh1dFwoc/BMA9x2X7NGuaU
-         8BakLflGRhZ+v7Y2Sai9DDGqdZCjRGFLOaU7hwveLAXKQ2dSBTr+7P9N2dQlWWMx3fMw
-         6FnwUAfnPZa8o8RPcbm3PRlnj+nvkvPfHYD0hbiSX2lafD7Q641AJSoxEAnYBOscYGlD
-         ZgU4LxAwRd8A20yrnIphC2fra/0ugdtvIuay4c+RJ+ABZ64movos5GBB2Fm+D1Tf5VkN
-         MySvEsSsERbcPD6s4EOyp9rdNyA3RjB5HHhv+Bz7cSxLEG9/5FqmI0MZEcZQIK8e5wyR
-         2I4A==
+        bh=3aJUsVJEK9+CBcf4UpPeGea/cLMYkv5xsZDArHsWziA=;
+        b=x7cXKFFBTeToSOdu9ScaVUDjqDt66N6zxwx5eiCRELdilz4D9HOV0PNBw0USpTHZyo
+         pRyDwvR7FHnybSkI/LJYZw00nrY/2UmFQdxuklZCaowJP0dgKU9AkSgaiLYbmq16A1rq
+         DZhmYxD5o/LDMc4Bu6RveBnZNWrIFtzHcRYI17JXx+3s1EhRfi7ZJoKoeFB+qZ0J7ubW
+         TWeaZgAjZcBYdfawOgOIIxbBa7oRvhWafut/epTazByr2fkOnHkbS4hFO2iTzqmGTZlE
+         Tx928gmgtLkiMPbuQdxchrEQ2aYEWIhfSjfrLSGV2PuhiExO1oP4JRtM0C/TY9hRwPWh
+         zb5A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
          :content-transfer-encoding;
-        bh=jbLxpWuUonBzNVgnD/xYkcw7GrDlHMS37R/RDa4E2Kg=;
-        b=Z0UmMHk+Q4dKhYBxnraELJ8kR4e9eVWy8T2+Ft1ToCNxa6Cd6PBdUU51vRCXax+eVh
-         JZUv++Mr2EDZD5l+ZgukBYKx8xNeliHyPDcEKhAMxG0in8xm80cmTdPCOsA7+IlfJ3oJ
-         59Aszll0sqHV6r6nfI0B4wiulPiGzwqX3yOSydXb55YTq7YhuuOs08m8pR0fh2lI7o68
-         AGcxT8FuM3TOesyN3ek70ZwCqYi/mUCVi6O3QCwaHy2dDMAeD5KI28UiO5y0gmoggesI
-         rJiVupxxkB6z+t2enJ7b2El+nqLq9MxoMfwzZvQrQaUjzLYsR3/w9p5kqgRXB8pHbfMX
-         zIxQ==
-X-Gm-Message-State: APjAAAVztdR9lEpQZM+4hQCv9rz5TOcG5R1r6jsPQApUqEbG/ZZ7pwdB
-        DPkx0wTsd6BUFawN6HGUjT2DPA==
-X-Google-Smtp-Source: APXvYqzQEDfQc3vaIs3W803X6//9nQHYTuEqtlawE9U0l12vpy7sFBz3r42F3OHypKgv/d6CvaTDFA==
-X-Received: by 2002:a5d:4cc3:: with SMTP id c3mr17499958wrt.259.1560151367402;
-        Mon, 10 Jun 2019 00:22:47 -0700 (PDT)
+        bh=3aJUsVJEK9+CBcf4UpPeGea/cLMYkv5xsZDArHsWziA=;
+        b=EaLyCCudxwocvr5XfVIeZKn5B3ZYUAkaTVt34yOK7qOuQq9TQmrrDR5WBcL6uFFarA
+         vwWH4sZ0kzHPoBSwI0yI+4g4EU9p7eqHovmu130J7yq7MuxA8RQj90D7NaoNjLYQdTZR
+         dXIruDpMax9Tl5khpUYAyvJTH+dqcqjOzaOI5FdKFRi18UZS9kwiGJLpYZSnd8R3neK7
+         crkkmzAmy4/r01jO/Zqj1G5OhfbwysOBE7B4Y9MDF8y2qvT7a8Y+SPZcQ6k0OaGcq5ho
+         09OyZfdFF87EP5aYRcMbE1O+hRiPgISgvJYbXqNXZnRuaqgrWPpldee+HyC1G12kqtDt
+         tdWw==
+X-Gm-Message-State: APjAAAUzQhw25TQqNkJ8M7hk9haaGnUfB9OEY1Vz5gkynbJPtAGq1ET7
+        Z8lOxaixbxLIabEc5IVDIAKupQh6ubA=
+X-Google-Smtp-Source: APXvYqxFZIVaBoMnIveU6WQwFqVvm62qPtjos9GCmyqHffI7iTlBHH5oTNEWoqPqzxf7MS571LsXFw==
+X-Received: by 2002:adf:f951:: with SMTP id q17mr16745992wrr.173.1560152260502;
+        Mon, 10 Jun 2019 00:37:40 -0700 (PDT)
 Received: from localhost.localdomain (233.red-79-146-84.dynamicip.rima-tde.net. [79.146.84.233])
-        by smtp.gmail.com with ESMTPSA id y9sm12587654wma.1.2019.06.10.00.22.46
+        by smtp.gmail.com with ESMTPSA id t7sm8769520wrn.52.2019.06.10.00.37.39
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Mon, 10 Jun 2019 00:22:46 -0700 (PDT)
+        Mon, 10 Jun 2019 00:37:40 -0700 (PDT)
 From:   Jorge Ramirez-Ortiz <jorge.ramirez-ortiz@linaro.org>
 To:     jorge.ramirez-ortiz@linaro.org, agross@kernel.org,
-        david.brown@linaro.org, broonie@kernel.org
-Cc:     linux-arm-msm@vger.kernel.org, linux-spi@vger.kernel.org,
-        linux-kernel@vger.kernel.org, bjorn.andersson@linaro.org,
-        khasim.mohammed@linaro.org
-Subject: [PATCH] spi: qup: fix PIO/DMA transfers.
-Date:   Mon, 10 Jun 2019 09:22:43 +0200
-Message-Id: <20190610072243.19710-1-jorge.ramirez-ortiz@linaro.org>
+        david.brown@linaro.org, gregkh@linuxfoundation.org, jslaby@suse.com
+Cc:     linux-arm-msm@vger.kernel.org, linux-serial@vger.kernel.org,
+        linux-kernel@vger.kernel.org, khasim.mohammed@linaro.org,
+        bjorn.andersson@linaro.org
+Subject: [PATCH] tty: serial: msm_serial: avoid system lockup condition
+Date:   Mon, 10 Jun 2019 09:37:37 +0200
+Message-Id: <20190610073737.22856-1-jorge.ramirez-ortiz@linaro.org>
 X-Mailer: git-send-email 2.21.0
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
@@ -62,132 +62,37 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-- DMA/PIO:
-  If an error IRQ occurred during PIO or DMA mode make sure to log it so
-on completion the transfer can be marked as an error.
+The function msm_wait_for_xmitr can be taken with interrupts
+disabled. In order to avoid a potential system lockup - demonstrated
+under stress testing conditions on SoC QCS404/5 - make sure we wait
+for a bounded amount of time.
 
-- PIO:
-  Do not complete a transaction until all data has been transferred or
-an error IRQ was flagged.
-
-1) If there was no error IRQ, ignore the done flag IRQ
-(QUP_OP_MAX_INPUT_DONE_FLAG) until all data for the transfer has been
-processed: not doing so risks completing the transfer returning
-uninitialized data in the buffers.
-
-2) Under stress testing we have identified the need to
-protect read/write operations against spurious IN/OUT service events.
+Tested on SoC QCS404.
 
 Signed-off-by: Jorge Ramirez-Ortiz <jorge.ramirez-ortiz@linaro.org>
 ---
- drivers/spi/spi-qup.c | 51 ++++++++++++++++++++++++++++++++++++++-----
- 1 file changed, 45 insertions(+), 6 deletions(-)
+ drivers/tty/serial/msm_serial.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/drivers/spi/spi-qup.c b/drivers/spi/spi-qup.c
-index 974a8ce58b68..0a2ffd2f968a 100644
---- a/drivers/spi/spi-qup.c
-+++ b/drivers/spi/spi-qup.c
-@@ -281,6 +281,9 @@ static void spi_qup_read(struct spi_qup *controller, u32 *opflags)
- 		writel_relaxed(QUP_OP_IN_SERVICE_FLAG,
- 			       controller->base + QUP_OPERATIONAL);
+diff --git a/drivers/tty/serial/msm_serial.c b/drivers/tty/serial/msm_serial.c
+index 23833ad952ba..0d4f1fe2b3a2 100644
+--- a/drivers/tty/serial/msm_serial.c
++++ b/drivers/tty/serial/msm_serial.c
+@@ -383,10 +383,14 @@ static void msm_request_rx_dma(struct msm_port *msm_port, resource_size_t base)
  
-+		if (!remainder)
-+			goto exit;
-+
- 		if (is_block_mode) {
- 			num_words = (remainder > words_per_block) ?
- 					words_per_block : remainder;
-@@ -310,11 +313,13 @@ static void spi_qup_read(struct spi_qup *controller, u32 *opflags)
- 	 * to refresh opflags value because MAX_INPUT_DONE_FLAG may now be
- 	 * present and this is used to determine if transaction is complete
- 	 */
--	*opflags = readl_relaxed(controller->base + QUP_OPERATIONAL);
--	if (is_block_mode && *opflags & QUP_OP_MAX_INPUT_DONE_FLAG)
--		writel_relaxed(QUP_OP_IN_SERVICE_FLAG,
--			       controller->base + QUP_OPERATIONAL);
--
-+exit:
-+	if (!remainder) {
-+		*opflags = readl_relaxed(controller->base + QUP_OPERATIONAL);
-+		if (is_block_mode && *opflags & QUP_OP_MAX_INPUT_DONE_FLAG)
-+			writel_relaxed(QUP_OP_IN_SERVICE_FLAG,
-+				       controller->base + QUP_OPERATIONAL);
-+	}
- }
- 
- static void spi_qup_write_to_fifo(struct spi_qup *controller, u32 num_words)
-@@ -362,6 +367,10 @@ static void spi_qup_write(struct spi_qup *controller)
- 		writel_relaxed(QUP_OP_OUT_SERVICE_FLAG,
- 			       controller->base + QUP_OPERATIONAL);
- 
-+		/* make sure the interrupt is valid */
-+		if (!remainder)
-+			return;
-+
- 		if (is_block_mode) {
- 			num_words = (remainder > words_per_block) ?
- 				words_per_block : remainder;
-@@ -575,10 +584,24 @@ static int spi_qup_do_pio(struct spi_device *spi, struct spi_transfer *xfer,
- 	return 0;
- }
- 
-+static bool spi_qup_data_pending(struct spi_qup *controller)
-+{
-+	unsigned int remainder_tx, remainder_rx;
-+
-+	remainder_tx = DIV_ROUND_UP(spi_qup_len(controller) -
-+				    controller->tx_bytes, controller->w_size);
-+
-+	remainder_rx = DIV_ROUND_UP(spi_qup_len(controller) -
-+				    controller->rx_bytes, controller->w_size);
-+
-+	return remainder_tx || remainder_rx;
-+}
-+
- static irqreturn_t spi_qup_qup_irq(int irq, void *dev_id)
+ static inline void msm_wait_for_xmitr(struct uart_port *port)
  {
- 	struct spi_qup *controller = dev_id;
- 	u32 opflags, qup_err, spi_err;
-+	unsigned long flags;
- 	int error = 0;
- 
- 	qup_err = readl_relaxed(controller->base + QUP_ERROR_FLAGS);
-@@ -610,6 +633,11 @@ static irqreturn_t spi_qup_qup_irq(int irq, void *dev_id)
- 		error = -EIO;
++	unsigned int timeout = 500000;
++
+ 	while (!(msm_read(port, UART_SR) & UART_SR_TX_EMPTY)) {
+ 		if (msm_read(port, UART_ISR) & UART_ISR_TX_READY)
+ 			break;
+ 		udelay(1);
++		if (timeout--)
++			break;
  	}
- 
-+	spin_lock_irqsave(&controller->lock, flags);
-+	if (!controller->error)
-+		controller->error = error;
-+	spin_unlock_irqrestore(&controller->lock, flags);
-+
- 	if (spi_qup_is_dma_xfer(controller->mode)) {
- 		writel_relaxed(opflags, controller->base + QUP_OPERATIONAL);
- 	} else {
-@@ -618,11 +646,22 @@ static irqreturn_t spi_qup_qup_irq(int irq, void *dev_id)
- 
- 		if (opflags & QUP_OP_OUT_SERVICE_FLAG)
- 			spi_qup_write(controller);
-+
-+		if (!spi_qup_data_pending(controller))
-+			complete(&controller->done);
- 	}
- 
--	if ((opflags & QUP_OP_MAX_INPUT_DONE_FLAG) || error)
-+	if (error)
- 		complete(&controller->done);
- 
-+	if (opflags & QUP_OP_MAX_INPUT_DONE_FLAG) {
-+		if (!spi_qup_is_dma_xfer(controller->mode)) {
-+			if (spi_qup_data_pending(controller))
-+				return IRQ_HANDLED;
-+		}
-+		complete(&controller->done);
-+	}
-+
- 	return IRQ_HANDLED;
+ 	msm_write(port, UART_CR_CMD_RESET_TX_READY, UART_CR);
  }
- 
 -- 
 2.21.0
 
