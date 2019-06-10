@@ -2,141 +2,62 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 7B3783B8B2
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 10 Jun 2019 17:56:18 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 967B93B8D3
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 10 Jun 2019 18:02:15 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2403987AbfFJPzQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 10 Jun 2019 11:55:16 -0400
-Received: from mail-vs1-f66.google.com ([209.85.217.66]:42217 "EHLO
-        mail-vs1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2391360AbfFJPzQ (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 10 Jun 2019 11:55:16 -0400
-Received: by mail-vs1-f66.google.com with SMTP id 190so2073938vsf.9
-        for <linux-arm-msm@vger.kernel.org>; Mon, 10 Jun 2019 08:55:16 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=eJ960EUK4M88NTDJHb1rKy4PnhRaQvW8Nj+C4ov1eV0=;
-        b=vCBfA3KmfrlpdkfwvUkrPRXgpjj0KDLsG7IqaJiYABwd5Pcyt+37mq5KWs4wPSGqMb
-         8ZgO+v9HFp5+yUBCsWM3EzZH87jxKU3TpzYbeFbOOK7m8bhdQ1VpJzZg2LQ3MfAea/mO
-         eIND2griYlCH1pm58X4Ot68AJrGmrqHsHx/39nYjlnDkDZjrdt6+jVL/CSvvh9a4M0lm
-         RTE6Tl9praUVHc0Tmaeiz3dcU4blbB0iDAGmXz+xY0nJeRKi3vN6nhssHg1abNM+4se2
-         nc4Ba32motZk89uankg8NcXb2RU99K3kViAN47xvTlR682A9KwMEfT3SmCv+tcveqfdQ
-         +O7A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=eJ960EUK4M88NTDJHb1rKy4PnhRaQvW8Nj+C4ov1eV0=;
-        b=OQ5a/VHu/c3jF+WuRzVNYccKiWpAhmgfQUGw8NBMRwQxuMTp/XMJ9ZXnwTyQkjLt96
-         V2tYNszPU2E20YbOnZ4SC6R1Nxy2f3jl+NH9njUMoIa/P3QcpktAlhKEP5p9Qw63IyLN
-         RhzXrSjk0tN25B/JwyX5d4UbSGxE8jKJJIJI5qxArtvJASbOyaV7ZT/kc6FTJ91kTFjW
-         KkqB93tlrjP2vzcYA36o3iMfsxNjGmcUT8gHlYz5ny1mEuiOcJ37BJzo6NlQXu2Fnntg
-         /n5QeVDmuk4GSL0dG85zefVv0D1G2QXJSk/EMooO4JR4RKI3baUCnC0mS28I6P1W+hhy
-         7rxw==
-X-Gm-Message-State: APjAAAWXmtTLtEnzwfEby14IDmBxD0/fd4X+0EqW/nn5kdXPp4QCE0l1
-        f3t3r+x70fIsfCrAclqmsju2S4h/KgNGfTUJDCvz1Q==
-X-Google-Smtp-Source: APXvYqyKa1UWfLl1PSfzv6wP9x21u1pRGC0+qtdGCuyShRG80yR2Bgm8tFZ6P+m7SezHV6nB/wuI1N1s+r9iik+R06c=
-X-Received: by 2002:a67:706:: with SMTP id 6mr20519578vsh.200.1560182115587;
- Mon, 10 Jun 2019 08:55:15 -0700 (PDT)
+        id S2390356AbfFJQB7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 10 Jun 2019 12:01:59 -0400
+Received: from mail.kernel.org ([198.145.29.99]:45310 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S2389356AbfFJQB7 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 10 Jun 2019 12:01:59 -0400
+Received: from localhost (unknown [122.167.93.80])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by mail.kernel.org (Postfix) with ESMTPSA id 169A421726;
+        Mon, 10 Jun 2019 16:01:57 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=default; t=1560182518;
+        bh=Ys7DhJ+mKH71w87mci5TwN9k1JOK6LfD5c/WHEZ8RTE=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=rBU6bLj8ZBspEDLHH79L2W/bv5LAMc53bQpATHw9VBJ9LjI5l+2Vg/WbCSeqcvnEn
+         NAiYIKdaF0CmbuUvDrcfXQUx8qrROPDrD4KjMKt8a2B1aSrpDyEisYAc5Q9D8FRol6
+         M0GSPlpQeIcV/D5qDsmXM/mCCKjlVNMpyvHtHDxU=
+Date:   Mon, 10 Jun 2019 21:28:48 +0530
+From:   Vinod Koul <vkoul@kernel.org>
+To:     Andy Gross <agross@kernel.org>
+Cc:     linux-arm-msm@vger.kernel.org,
+        Bjorn Andersson <bjorn.andersson@linaro.org>, arm@kernel.org,
+        linux-arm-kernel@lists.infradead.org
+Subject: Re: [PATCH] arm64: qcom: qcs404: Add reset-cells to GCC node
+Message-ID: <20190610155848.GR9160@vkoul-mobl.Dlink>
+References: <1560053972-32273-1-git-send-email-agross@kernel.org>
 MIME-Version: 1.0
-References: <20190513192300.653-1-ulf.hansson@linaro.org> <CAJZ5v0gbK3AFCVC1b9LyXeMOM8fKR1=ECXZwaeSYRSqcK0UgYA@mail.gmail.com>
- <CAPDyKFpU3u248Gi+FnrVdY-EWXJQuu14uNV9d3Xs0W-K-EMEhg@mail.gmail.com>
- <20190607154210.GJ15577@e107155-lin> <20190607193407.GB24059@builder> <20190610103225.GA26602@e107155-lin>
-In-Reply-To: <20190610103225.GA26602@e107155-lin>
-From:   Ulf Hansson <ulf.hansson@linaro.org>
-Date:   Mon, 10 Jun 2019 17:54:39 +0200
-Message-ID: <CAPDyKFr31SwmHHAREbR3dWMQ55LzzUyTc4M5FZvNsqWfX7SE8Q@mail.gmail.com>
-Subject: Re: [PATCH 00/18] ARM/ARM64: Support hierarchical CPU arrangement for PSCI
-To:     Sudeep Holla <sudeep.holla@arm.com>,
-        Lorenzo Pieralisi <Lorenzo.Pieralisi@arm.com>
-Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        "Rafael J. Wysocki" <rafael@kernel.org>,
-        Mark Rutland <mark.rutland@arm.com>,
-        Linux ARM <linux-arm-kernel@lists.infradead.org>,
-        "Rafael J . Wysocki" <rjw@rjwysocki.net>,
-        Daniel Lezcano <daniel.lezcano@linaro.org>,
-        "Raju P . L . S . S . S . N" <rplsssn@codeaurora.org>,
-        Amit Kucheria <amit.kucheria@linaro.org>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Niklas Cassel <niklas.cassel@linaro.org>,
-        Tony Lindgren <tony@atomide.com>,
-        Kevin Hilman <khilman@kernel.org>,
-        Lina Iyer <ilina@codeaurora.org>,
-        Viresh Kumar <viresh.kumar@linaro.org>,
-        Vincent Guittot <vincent.guittot@linaro.org>,
-        Geert Uytterhoeven <geert+renesas@glider.be>,
-        Souvik Chakravarty <souvik.chakravarty@arm.com>,
-        Linux PM <linux-pm@vger.kernel.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <1560053972-32273-1-git-send-email-agross@kernel.org>
+User-Agent: Mutt/1.11.3 (2019-02-01)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, 10 Jun 2019 at 12:32, Sudeep Holla <sudeep.holla@arm.com> wrote:
->
-> On Fri, Jun 07, 2019 at 12:34:07PM -0700, Bjorn Andersson wrote:
-> > On Fri 07 Jun 08:42 PDT 2019, Sudeep Holla wrote:
-> >
-> > > On Tue, May 14, 2019 at 10:58:04AM +0200, Ulf Hansson wrote:
-> > > > On Tue, 14 May 2019 at 10:08, Rafael J. Wysocki <rafael@kernel.org> wrote:
-> > > > >
-> > > > > On Mon, May 13, 2019 at 9:23 PM Ulf Hansson <ulf.hansson@linaro.org> wrote:
-> > > > > >
-> > > > > > This series enables support for hierarchical CPU arrangement, managed by PSCI
-> > > > > > for ARM/ARM64. It's based on using the generic PM domain (genpd), which
-> > > > > > recently was extended to manage devices belonging to CPUs.
-> > > > >
-> > > > > ACK for the patches touching cpuidle in this series (from the
-> > > > > framework perspective), but I'm assuming it to be taken care of by
-> > > > > ARM/ARM64 maintainers.
-> > > >
-> > > > Thanks for the ack! Yes, this is for PSCI/ARM maintainers.
-> > > >
-> > > > BTW, apologize for sending this in the merge window, but wanted to
-> > > > take the opportunity for people to have a look before OSPM Pisa next
-> > > > week.
-> > > >
-> > >
-> > > I will start looking at this series. But I would request PSCI/other
-> > > maintainers to wait until we see some comparison data before we merge.
-> >
-> > What comparison are you asking for here? Do you want to see the
-> > improvement this series gives or are you hoping to compare it with some
-> > other mechanism?
-> >
->
-> OK, I have mentioned this many times already, let me repeat it again.
-> This series adds an alternative to the existing PC mode of CPU idle
-> management. And it's clear that the main reason for the same is the
-> improvement OSI mode offers vs the PC mode. I am asking the comparison
-> for the same. And yes we need to compare apples with apples and not
-> oranges here.
+On 08-06-19, 23:19, Andy Gross wrote:
+> This patch adds a reset-cells property to the gcc controller on the QCS404.
+> Without this in place, we get warnings like the following if nodes reference
+> a gcc reset:
+> 
+> arch/arm64/boot/dts/qcom/qcs404.dtsi:261.38-310.5: Warning (resets_property):
+> /soc@0/remoteproc@b00000: Missing property '#reset-cells' in node
+> /soc@0/clock-controller@1800000 or bad phandle (referred from resets[0])
+>   also defined at arch/arm64/boot/dts/qcom/qcs404-evb.dtsi:82.18-84.3
+>   DTC     arch/arm64/boot/dts/qcom/qcs404-evb-4000.dtb
+> arch/arm64/boot/dts/qcom/qcs404.dtsi:261.38-310.5: Warning (resets_property):
+> /soc@0/remoteproc@b00000: Missing property '#reset-cells' in node
+> /soc@0/clock-controller@1800000 or bad phandle (referred from resets[0])
+>   also defined at arch/arm64/boot/dts/qcom/qcs404-evb.dtsi:82.18-84.3
 
-In the cover letter you see the two main reasons behind this series.
-Yeah, OSI support is a part of the series, but OSI or PC mode is
-orthogonal to the overall changes this series implements.
+Reviewed-by: Vinod Koul <vkoul@kernel.org>
 
-When it comes to comparing OSI mode vs PC mode, let's try to avoid
-that tiring discussion again, please. :-)
-
-My summary from the earlier ones, is that because the PSCI spec
-includes support for OSI, we should also support it in the kernel (and
-ATF). In a discussion offlist, Lorenzo agreed that it's okay to add,
-without an apple to apple comparison. Maybe Lorenzo can fill in and
-state this publicly, to save us all some time?
-
-My final point in regards to the OSI mode support, it's a minor part
-of the series. I don't see how that should hurt from a maintenance
-point of view, or perhaps I am wrong? In any case, I offer my help
-with review/maintenance in any form as you may see need/fit.
-
-[...]
-
-Kind regards
-Uffe
+-- 
+~Vinod
