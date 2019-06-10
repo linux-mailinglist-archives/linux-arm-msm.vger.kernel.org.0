@@ -2,179 +2,192 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id B0BB43AF1A
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 10 Jun 2019 08:44:38 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id CF0233AF91
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 10 Jun 2019 09:22:51 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2387829AbfFJGoh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 10 Jun 2019 02:44:37 -0400
-Received: from mail-wr1-f67.google.com ([209.85.221.67]:36836 "EHLO
-        mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2387718AbfFJGoe (ORCPT
+        id S2387959AbfFJHWu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 10 Jun 2019 03:22:50 -0400
+Received: from mail-wr1-f68.google.com ([209.85.221.68]:36597 "EHLO
+        mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2387821AbfFJHWt (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 10 Jun 2019 02:44:34 -0400
-Received: by mail-wr1-f67.google.com with SMTP id n4so7934290wrs.3
-        for <linux-arm-msm@vger.kernel.org>; Sun, 09 Jun 2019 23:44:32 -0700 (PDT)
+        Mon, 10 Jun 2019 03:22:49 -0400
+Received: by mail-wr1-f68.google.com with SMTP id n4so8037409wrs.3
+        for <linux-arm-msm@vger.kernel.org>; Mon, 10 Jun 2019 00:22:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to
-         :user-agent;
-        bh=6v285XyrONVGX85JZPN2vEBoOamuC/TCwUgIuT1MYVI=;
-        b=JUO0jDnbhpEfAJfOIn/mmbA+BYvZwYR3dpEtmWpv9PZIPu+703QoKa9lYvNN7XE01N
-         AVuskQ8lgqYi+ReRHmxOrXd+3ZIitSv/af+yb//VqjPkALpRfqUZdL/uGfKplsJoFcGw
-         dz7tWj7T0RpYSYQNTTZ1dnCBTeRYE4/Ss6EQ2RS+ITbVhrViYs2H0KPJims9t1QepBn6
-         fae6961ZZ0d1mcM/cSiHvZVl4tLZgujzYzWG9ouCPAuwDM1CzhtchbqGQkSuZ7/q8F20
-         tbp9aLC0U4YJItjQdYRh9Y8lOaSRcOuO4hKmsKR1J6jdVcvCG0XFPTTX4C383DwnePsf
-         sP/Q==
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=jbLxpWuUonBzNVgnD/xYkcw7GrDlHMS37R/RDa4E2Kg=;
+        b=abcOHs1oSH8mEsGUMSJzy5b1RaEKPt7RkL3pIvcDpv2/Oh1dFwoc/BMA9x2X7NGuaU
+         8BakLflGRhZ+v7Y2Sai9DDGqdZCjRGFLOaU7hwveLAXKQ2dSBTr+7P9N2dQlWWMx3fMw
+         6FnwUAfnPZa8o8RPcbm3PRlnj+nvkvPfHYD0hbiSX2lafD7Q641AJSoxEAnYBOscYGlD
+         ZgU4LxAwRd8A20yrnIphC2fra/0ugdtvIuay4c+RJ+ABZ64movos5GBB2Fm+D1Tf5VkN
+         MySvEsSsERbcPD6s4EOyp9rdNyA3RjB5HHhv+Bz7cSxLEG9/5FqmI0MZEcZQIK8e5wyR
+         2I4A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        bh=6v285XyrONVGX85JZPN2vEBoOamuC/TCwUgIuT1MYVI=;
-        b=JlhxCh+BUzBtE++49mIzTh1KB89yretlW6BK9Nmz247lAr5oYzLotcoDsx72VZdLjs
-         3CzEPFK1wd4womVjxYcRdpnwxGz03h42ppogoPFXNUkPMd6jPjzSYUjaHXE23XTfLvj+
-         V9/s60aXvPXk4OUwvh3vCfg4vCIc9hRvQjovEAcNxWVyGcKg9NlxlAMIPG0BWeX89ppq
-         //pSA67CKQHaVf7LNBg6/cA3tvbNU4aooLBGMMuTvkAzs9F5uE6yU8rGMBVh5z33+TC3
-         ps3ZxhQfk9K2XvjU4HjfN0asG88Ij82z9F5o1Brq1UtmdpnQuSsTTR8CPHMRocJE+kNK
-         JOMw==
-X-Gm-Message-State: APjAAAUYY7EAgpBMV6MQqSsS87IJ3jXDTKguVt9IaPjYgipOuS8Ltydd
-        TRTdsZOtrFmNGCY669pz72v1Ew==
-X-Google-Smtp-Source: APXvYqy45tNcTtpg/c94lrABKtUPI2IloeMt1vo9EvaBBcW/D4raRflIRHWeOa3AYFf8Fefw5c/jrg==
-X-Received: by 2002:adf:a11d:: with SMTP id o29mr14522807wro.262.1560149071686;
-        Sun, 09 Jun 2019 23:44:31 -0700 (PDT)
-Received: from dell ([2.31.167.229])
-        by smtp.gmail.com with ESMTPSA id a2sm5038333wmj.9.2019.06.09.23.44.29
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Sun, 09 Jun 2019 23:44:30 -0700 (PDT)
-Date:   Mon, 10 Jun 2019 07:44:28 +0100
-From:   Lee Jones <lee.jones@linaro.org>
-To:     Ard Biesheuvel <ard.biesheuvel@linaro.org>
-Cc:     alokc@codeaurora.org, Andy Gross <andy.gross@linaro.org>,
-        David Brown <david.brown@linaro.org>,
-        wsa+renesas@sang-engineering.com,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Linus Walleij <linus.walleij@linaro.org>, balbi@kernel.org,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        linux-usb <linux-usb@vger.kernel.org>,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-        "open list:GPIO SUBSYSTEM" <linux-gpio@vger.kernel.org>,
-        linux-i2c <linux-i2c@vger.kernel.org>,
-        Jeffrey Hugo <jlhugo@gmail.com>,
-        linux-arm-kernel <linux-arm-kernel@lists.infradead.org>
-Subject: Re: [PATCH v2 1/8] i2c: i2c-qcom-geni: Provide support for ACPI
-Message-ID: <20190610064428.GF4797@dell>
-References: <20190607082901.6491-1-lee.jones@linaro.org>
- <CAKv+Gu_SP7qBggCrVkF41BimV3PnCQXb5OUKyCsE0bBxa68RZA@mail.gmail.com>
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=jbLxpWuUonBzNVgnD/xYkcw7GrDlHMS37R/RDa4E2Kg=;
+        b=Z0UmMHk+Q4dKhYBxnraELJ8kR4e9eVWy8T2+Ft1ToCNxa6Cd6PBdUU51vRCXax+eVh
+         JZUv++Mr2EDZD5l+ZgukBYKx8xNeliHyPDcEKhAMxG0in8xm80cmTdPCOsA7+IlfJ3oJ
+         59Aszll0sqHV6r6nfI0B4wiulPiGzwqX3yOSydXb55YTq7YhuuOs08m8pR0fh2lI7o68
+         AGcxT8FuM3TOesyN3ek70ZwCqYi/mUCVi6O3QCwaHy2dDMAeD5KI28UiO5y0gmoggesI
+         rJiVupxxkB6z+t2enJ7b2El+nqLq9MxoMfwzZvQrQaUjzLYsR3/w9p5kqgRXB8pHbfMX
+         zIxQ==
+X-Gm-Message-State: APjAAAVztdR9lEpQZM+4hQCv9rz5TOcG5R1r6jsPQApUqEbG/ZZ7pwdB
+        DPkx0wTsd6BUFawN6HGUjT2DPA==
+X-Google-Smtp-Source: APXvYqzQEDfQc3vaIs3W803X6//9nQHYTuEqtlawE9U0l12vpy7sFBz3r42F3OHypKgv/d6CvaTDFA==
+X-Received: by 2002:a5d:4cc3:: with SMTP id c3mr17499958wrt.259.1560151367402;
+        Mon, 10 Jun 2019 00:22:47 -0700 (PDT)
+Received: from localhost.localdomain (233.red-79-146-84.dynamicip.rima-tde.net. [79.146.84.233])
+        by smtp.gmail.com with ESMTPSA id y9sm12587654wma.1.2019.06.10.00.22.46
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Mon, 10 Jun 2019 00:22:46 -0700 (PDT)
+From:   Jorge Ramirez-Ortiz <jorge.ramirez-ortiz@linaro.org>
+To:     jorge.ramirez-ortiz@linaro.org, agross@kernel.org,
+        david.brown@linaro.org, broonie@kernel.org
+Cc:     linux-arm-msm@vger.kernel.org, linux-spi@vger.kernel.org,
+        linux-kernel@vger.kernel.org, bjorn.andersson@linaro.org,
+        khasim.mohammed@linaro.org
+Subject: [PATCH] spi: qup: fix PIO/DMA transfers.
+Date:   Mon, 10 Jun 2019 09:22:43 +0200
+Message-Id: <20190610072243.19710-1-jorge.ramirez-ortiz@linaro.org>
+X-Mailer: git-send-email 2.21.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <CAKv+Gu_SP7qBggCrVkF41BimV3PnCQXb5OUKyCsE0bBxa68RZA@mail.gmail.com>
-User-Agent: Mutt/1.9.4 (2018-02-28)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, 07 Jun 2019, Ard Biesheuvel wrote:
+- DMA/PIO:
+  If an error IRQ occurred during PIO or DMA mode make sure to log it so
+on completion the transfer can be marked as an error.
 
-> On Fri, 7 Jun 2019 at 10:29, Lee Jones <lee.jones@linaro.org> wrote:
-> >
-> > Add a match table to allow automatic probing of ACPI device
-> > QCOM0220.  Ignore clock attainment errors.  Set default clock
-> > frequency value.
-> >
-> > Signed-off-by: Lee Jones <lee.jones@linaro.org>
-> > ---
-> >  drivers/i2c/busses/i2c-qcom-geni.c | 19 +++++++++++++++++--
-> >  1 file changed, 17 insertions(+), 2 deletions(-)
-> >
-> > diff --git a/drivers/i2c/busses/i2c-qcom-geni.c b/drivers/i2c/busses/i2c-qcom-geni.c
-> > index db075bc0d952..0fa93b448e8d 100644
-> > --- a/drivers/i2c/busses/i2c-qcom-geni.c
-> > +++ b/drivers/i2c/busses/i2c-qcom-geni.c
-> > @@ -1,6 +1,7 @@
-> >  // SPDX-License-Identifier: GPL-2.0
-> >  // Copyright (c) 2017-2018, The Linux Foundation. All rights reserved.
-> >
-> > +#include <linux/acpi.h>
-> >  #include <linux/clk.h>
-> >  #include <linux/dma-mapping.h>
-> >  #include <linux/err.h>
-> > @@ -483,6 +484,12 @@ static const struct i2c_algorithm geni_i2c_algo = {
-> >         .functionality  = geni_i2c_func,
-> >  };
-> >
-> > +static const struct acpi_device_id geni_i2c_acpi_match[] = {
-> > +       { "QCOM0220"},
-> > +       { },
-> > +};
-> > +MODULE_DEVICE_TABLE(acpi, geni_i2c_acpi_match);
-> > +
-> 
-> We usually put #ifdef CONFIG_ACPI/#endif around these, otherwise you
-> end up with acpi:XXXX modaliases even though ACPI is not compiled in.
+- PIO:
+  Do not complete a transaction until all data has been transferred or
+an error IRQ was flagged.
 
-No problem.
+1) If there was no error IRQ, ignore the done flag IRQ
+(QUP_OP_MAX_INPUT_DONE_FLAG) until all data for the transfer has been
+processed: not doing so risks completing the transfer returning
+uninitialized data in the buffers.
 
-> >  static int geni_i2c_probe(struct platform_device *pdev)
-> >  {
-> >         struct geni_i2c_dev *gi2c;
-> > @@ -502,7 +509,7 @@ static int geni_i2c_probe(struct platform_device *pdev)
-> >                 return PTR_ERR(gi2c->se.base);
-> >
-> >         gi2c->se.clk = devm_clk_get(&pdev->dev, "se");
-> 
-> Can we avoid this call altogether in ACPI mode? Also, please use
+2) Under stress testing we have identified the need to
+protect read/write operations against spurious IN/OUT service events.
 
-I'm trying not to place all non-ACPI specific callers into if ()
-statements.  The tabbing becomes ridiculous in some places.  A great
-deal of these calls are requesting optional resources too, so it's
-better to simply ignore the returning error in the cases where
-non-optional resources (such as this one) are requested, since it has
-the least impact on the existing code.
+Signed-off-by: Jorge Ramirez-Ortiz <jorge.ramirez-ortiz@linaro.org>
+---
+ drivers/spi/spi-qup.c | 51 ++++++++++++++++++++++++++++++++++++++-----
+ 1 file changed, 45 insertions(+), 6 deletions(-)
 
-> 'has_acpi_companion()' to test whether we are probing via ACPI.
-
-Sure.
-
-> > -       if (IS_ERR(gi2c->se.clk)) {
-> > +       if (IS_ERR(gi2c->se.clk) && !ACPI_HANDLE(&pdev->dev)) {
-> 
-> 
-> >                 ret = PTR_ERR(gi2c->se.clk);
-> >                 dev_err(&pdev->dev, "Err getting SE Core clk %d\n", ret);
-> >                 return ret;
-> > @@ -510,12 +517,19 @@ static int geni_i2c_probe(struct platform_device *pdev)
-> >
-> >         ret = device_property_read_u32(&pdev->dev, "clock-frequency",
-> >                                                         &gi2c->clk_freq_out);
-> > -       if (ret) {
-> > +       if (ret && !ACPI_HANDLE(&pdev->dev)) {
-> >                 dev_info(&pdev->dev,
-> >                         "Bus frequency not specified, default to 100kHz.\n");
-> >                 gi2c->clk_freq_out = KHZ(100);
-> >         }
-> >
-> > +       if (ACPI_HANDLE(&pdev->dev)) {
-> > +               ACPI_COMPANION_SET(&gi2c->adap.dev, ACPI_COMPANION(&pdev->dev));
-> > +
-> > +               /* Using default, same as the !ACPI case above */
-> > +               gi2c->clk_freq_out = KHZ(100);
-> > +       }
-> > +
-> 
-> You are overriding the speed to 100 kHz even if the ACPI device has a
-> "clock-frequency" property.
-
-Will look at this.
-
-Thanks Ard.
-
+diff --git a/drivers/spi/spi-qup.c b/drivers/spi/spi-qup.c
+index 974a8ce58b68..0a2ffd2f968a 100644
+--- a/drivers/spi/spi-qup.c
++++ b/drivers/spi/spi-qup.c
+@@ -281,6 +281,9 @@ static void spi_qup_read(struct spi_qup *controller, u32 *opflags)
+ 		writel_relaxed(QUP_OP_IN_SERVICE_FLAG,
+ 			       controller->base + QUP_OPERATIONAL);
+ 
++		if (!remainder)
++			goto exit;
++
+ 		if (is_block_mode) {
+ 			num_words = (remainder > words_per_block) ?
+ 					words_per_block : remainder;
+@@ -310,11 +313,13 @@ static void spi_qup_read(struct spi_qup *controller, u32 *opflags)
+ 	 * to refresh opflags value because MAX_INPUT_DONE_FLAG may now be
+ 	 * present and this is used to determine if transaction is complete
+ 	 */
+-	*opflags = readl_relaxed(controller->base + QUP_OPERATIONAL);
+-	if (is_block_mode && *opflags & QUP_OP_MAX_INPUT_DONE_FLAG)
+-		writel_relaxed(QUP_OP_IN_SERVICE_FLAG,
+-			       controller->base + QUP_OPERATIONAL);
+-
++exit:
++	if (!remainder) {
++		*opflags = readl_relaxed(controller->base + QUP_OPERATIONAL);
++		if (is_block_mode && *opflags & QUP_OP_MAX_INPUT_DONE_FLAG)
++			writel_relaxed(QUP_OP_IN_SERVICE_FLAG,
++				       controller->base + QUP_OPERATIONAL);
++	}
+ }
+ 
+ static void spi_qup_write_to_fifo(struct spi_qup *controller, u32 num_words)
+@@ -362,6 +367,10 @@ static void spi_qup_write(struct spi_qup *controller)
+ 		writel_relaxed(QUP_OP_OUT_SERVICE_FLAG,
+ 			       controller->base + QUP_OPERATIONAL);
+ 
++		/* make sure the interrupt is valid */
++		if (!remainder)
++			return;
++
+ 		if (is_block_mode) {
+ 			num_words = (remainder > words_per_block) ?
+ 				words_per_block : remainder;
+@@ -575,10 +584,24 @@ static int spi_qup_do_pio(struct spi_device *spi, struct spi_transfer *xfer,
+ 	return 0;
+ }
+ 
++static bool spi_qup_data_pending(struct spi_qup *controller)
++{
++	unsigned int remainder_tx, remainder_rx;
++
++	remainder_tx = DIV_ROUND_UP(spi_qup_len(controller) -
++				    controller->tx_bytes, controller->w_size);
++
++	remainder_rx = DIV_ROUND_UP(spi_qup_len(controller) -
++				    controller->rx_bytes, controller->w_size);
++
++	return remainder_tx || remainder_rx;
++}
++
+ static irqreturn_t spi_qup_qup_irq(int irq, void *dev_id)
+ {
+ 	struct spi_qup *controller = dev_id;
+ 	u32 opflags, qup_err, spi_err;
++	unsigned long flags;
+ 	int error = 0;
+ 
+ 	qup_err = readl_relaxed(controller->base + QUP_ERROR_FLAGS);
+@@ -610,6 +633,11 @@ static irqreturn_t spi_qup_qup_irq(int irq, void *dev_id)
+ 		error = -EIO;
+ 	}
+ 
++	spin_lock_irqsave(&controller->lock, flags);
++	if (!controller->error)
++		controller->error = error;
++	spin_unlock_irqrestore(&controller->lock, flags);
++
+ 	if (spi_qup_is_dma_xfer(controller->mode)) {
+ 		writel_relaxed(opflags, controller->base + QUP_OPERATIONAL);
+ 	} else {
+@@ -618,11 +646,22 @@ static irqreturn_t spi_qup_qup_irq(int irq, void *dev_id)
+ 
+ 		if (opflags & QUP_OP_OUT_SERVICE_FLAG)
+ 			spi_qup_write(controller);
++
++		if (!spi_qup_data_pending(controller))
++			complete(&controller->done);
+ 	}
+ 
+-	if ((opflags & QUP_OP_MAX_INPUT_DONE_FLAG) || error)
++	if (error)
+ 		complete(&controller->done);
+ 
++	if (opflags & QUP_OP_MAX_INPUT_DONE_FLAG) {
++		if (!spi_qup_is_dma_xfer(controller->mode)) {
++			if (spi_qup_data_pending(controller))
++				return IRQ_HANDLED;
++		}
++		complete(&controller->done);
++	}
++
+ 	return IRQ_HANDLED;
+ }
+ 
 -- 
-Lee Jones [李琼斯]
-Linaro Services Technical Lead
-Linaro.org │ Open source software for ARM SoCs
-Follow Linaro: Facebook | Twitter | Blog
+2.21.0
+
