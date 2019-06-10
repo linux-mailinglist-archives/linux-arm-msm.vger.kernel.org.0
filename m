@@ -2,97 +2,118 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id C38023B004
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 10 Jun 2019 09:56:00 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9F87C3B00E
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 10 Jun 2019 09:57:49 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2387947AbfFJH4A (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 10 Jun 2019 03:56:00 -0400
-Received: from mail-wr1-f68.google.com ([209.85.221.68]:34757 "EHLO
-        mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2387855AbfFJHz7 (ORCPT
+        id S2388121AbfFJH5e (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 10 Jun 2019 03:57:34 -0400
+Received: from mail-wr1-f67.google.com ([209.85.221.67]:45945 "EHLO
+        mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2387781AbfFJH5e (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 10 Jun 2019 03:55:59 -0400
-Received: by mail-wr1-f68.google.com with SMTP id e16so8137318wrn.1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 10 Jun 2019 00:55:58 -0700 (PDT)
+        Mon, 10 Jun 2019 03:57:34 -0400
+Received: by mail-wr1-f67.google.com with SMTP id f9so8095649wre.12
+        for <linux-arm-msm@vger.kernel.org>; Mon, 10 Jun 2019 00:57:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=59OBAj0fI25tEYttQXITetWvFu8mb0M8xC0iXb+r1/Q=;
-        b=ac55uDWvwtnRMO4dwo2jOwokokoGQqChSr8nLRQkch3cqmntcsHmIs5Enlxes4BMmD
-         whsoQL32Phf74kG9p3ykb4BQpVNP5cJqt+cKlIDj4Zdm24Diem/ePySIdftWtIgPyWvy
-         5p0cqzqB9FFQq+TYlniqybtJAIfZ4NAgd1YaG7zkhbQvdpOCxk7J5mc279Hc2osCt1vd
-         Yl1fUWZqlbXJ/w97BoASau/j4/JSf2CTqRYtgMXw2CLCv729XFXLUeFukUuYvVJ5gmQM
-         G4SPTb4u2rAhJ5Y4dX5clBzE9vGyNBmO2HARalYO+9+qToitJnp5HTEtK2qpmoVHbXQM
-         nsaQ==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:content-transfer-encoding:in-reply-to
+         :user-agent;
+        bh=xTVf10rNwhHdq0na/JiMNEiN+1J2gR7CZjLBDvBlZ9M=;
+        b=C/7BgS21M51i7i2CmNw0m1n793WHuwfoYQkS3WRWJWKQsQBxjw9CIy2+Faq9ymMTeV
+         U2GBuJzPbjKCHDCazNCv3EufybIeE1wUBtLZaPDWMGaINHWIIzfHC+0p9nVF7beZGSBd
+         //LURySsxd2kT8FOBdUsOWxnFZ+5dl+hoVq7XeFhuZowUdZd4O1UvhPIRq4tH0zazkBr
+         3TnjUYgkVr92aniAKuyUF8QQKGfjozeMSXNOnfXAnZNynC+7HVoNCxcff8tCQ4ZbboQl
+         zVeN/hmZoEiKQoXh76n41vtHuJpPK1irmunendNLi9m6ZVhJKXOgCoZBuaGpKeVJspaT
+         PIVg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=59OBAj0fI25tEYttQXITetWvFu8mb0M8xC0iXb+r1/Q=;
-        b=G65MGVQMYQdgUK2DUAN7rOQqzvY/v9L01BL2Kl9ONHj5oioCzixDq3/IAfBDMxIzDo
-         8peGHjbTsOtQ3ZNifCWeZMYy+T6W5i0bwP48XMibsKhVghbOM63bsaGxb10o76LKg0zz
-         0r3OX8u+vsjtx4lRv8gSpO7BwqmKKNJjdjXfqhh6dMzX2+z1RpYdfU1HYsSykPd43ecx
-         qn2bBiQ85IS5km9CFcqH41Hgk3L3OjmMUzXLlWTK8Jkv3C2YxnpQyftu4yE2r9l67Vc9
-         zTP/KGWDejWYksPUY9O82dRm7ih1imUVzAqd/r/XymCvtoqXds/td87YLhApK4zcyRC7
-         VIZA==
-X-Gm-Message-State: APjAAAWo2a2h0Q2D3XomIlMKU9WobkIakmmlNQV2qYWZjM/0DQH4A0uK
-        kHazDNriROHSqolR6PExWLV4cQ==
-X-Google-Smtp-Source: APXvYqxbn9YaeW8aGMKMh2aP+dx2pUtvPkFwVo6Ly0icmWY5OKpn9BPA1ZwRVm/Nm5h9j9ZfLAU01g==
-X-Received: by 2002:adf:9ed3:: with SMTP id b19mr21441431wrf.292.1560153358334;
-        Mon, 10 Jun 2019 00:55:58 -0700 (PDT)
-Received: from localhost.localdomain (233.red-79-146-84.dynamicip.rima-tde.net. [79.146.84.233])
-        by smtp.gmail.com with ESMTPSA id e13sm22627166wra.16.2019.06.10.00.55.57
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Mon, 10 Jun 2019 00:55:57 -0700 (PDT)
-From:   Jorge Ramirez-Ortiz <jorge.ramirez-ortiz@linaro.org>
-To:     jorge.ramirez-ortiz@linaro.org, agross@kernel.org,
-        david.brown@linaro.org, gregkh@linuxfoundation.org, jslaby@suse.com
-Cc:     linux-arm-msm@vger.kernel.org, linux-serial@vger.kernel.org,
-        linux-kernel@vger.kernel.org, khasim.mohammed@linaro.org,
-        bjorn.andersson@linaro.org
-Subject: [PATCH v2] tty: serial: msm_serial: avoid system lockup condition
-Date:   Mon, 10 Jun 2019 09:55:54 +0200
-Message-Id: <20190610075554.24979-1-jorge.ramirez-ortiz@linaro.org>
-X-Mailer: git-send-email 2.21.0
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        bh=xTVf10rNwhHdq0na/JiMNEiN+1J2gR7CZjLBDvBlZ9M=;
+        b=Nd//GXJO0ZceIjHOkFs4shb2Nwa/+IbpjqEGY+86QAR3fzXku9GzGkTJ4V2AgXmOzB
+         BKEcM4kccBPURUI0KAnRmCi30ehtNZkYSCr+nETBFjTqH2Cn3uhpGD3J3iFEh3JUQivf
+         VZrCbVrJpTBmOkx8laWCJiSclXAiFYOlTHGr1vbUBP5ahvfvpmxEIwZDO9K0KK1TpKQ7
+         x5/A+RgbabmhtLVI4ke54y6UeppkOEe2kxI0gDOGG4r5vXpIHt7nybi5BhObt5JVCFik
+         e8NoUafFyiqQOWOthpuwJaThM5pSvSxDavY3dlKPJv5etqclA4rvEacyBA8J0Q7W49yK
+         KCeA==
+X-Gm-Message-State: APjAAAVHEEzTGjWntFvEWWmy4JzP1wI7BhcyTVOucaLVYK1nLC5BdzHa
+        HdmfT/dcvLbITvnt539BxSL5Lg==
+X-Google-Smtp-Source: APXvYqwPND89CTG631SsvW5xJabNs8hX8frrZKJyV7VaYPuMk/7oG5ltYmF1iH5bZQdZa0Uy/r0eCA==
+X-Received: by 2002:a5d:6583:: with SMTP id q3mr47343484wru.184.1560153452753;
+        Mon, 10 Jun 2019 00:57:32 -0700 (PDT)
+Received: from dell ([2.31.167.229])
+        by smtp.gmail.com with ESMTPSA id f13sm5796159wrt.27.2019.06.10.00.57.31
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Mon, 10 Jun 2019 00:57:32 -0700 (PDT)
+Date:   Mon, 10 Jun 2019 08:57:30 +0100
+From:   Lee Jones <lee.jones@linaro.org>
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     Linus Walleij <linus.walleij@linaro.org>, alokc@codeaurora.org,
+        Andy Gross <andy.gross@linaro.org>,
+        David Brown <david.brown@linaro.org>,
+        Wolfram Sang <wsa+renesas@sang-engineering.com>,
+        Felipe Balbi <balbi@kernel.org>,
+        Greg KH <gregkh@linuxfoundation.org>,
+        Linux ARM <linux-arm-kernel@lists.infradead.org>,
+        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
+        jlhugo@gmail.com, linux-i2c@vger.kernel.org,
+        MSM <linux-arm-msm@vger.kernel.org>,
+        "open list:GPIO SUBSYSTEM" <linux-gpio@vger.kernel.org>,
+        linux-usb@vger.kernel.org
+Subject: Re: [PATCH 3/8] pinctrl: msm: Add ability for drivers to supply a
+ reserved GPIO list
+Message-ID: <20190610075730.GH4797@dell>
+References: <20190605114302.22509-1-lee.jones@linaro.org>
+ <20190605114302.22509-3-lee.jones@linaro.org>
+ <CACRpkdaEe3uKAsSuhbToevXH1cMsuMUvwaopLPuD+JkDTnuEnQ@mail.gmail.com>
+ <20190608041044.GK24059@builder>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
+In-Reply-To: <20190608041044.GK24059@builder>
+User-Agent: Mutt/1.9.4 (2018-02-28)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The function msm_wait_for_xmitr can be taken with interrupts
-disabled. In order to avoid a potential system lockup - demonstrated
-under stress testing conditions on SoC QCS404/5 - make sure we wait
-for a bounded amount of time.
+On Fri, 07 Jun 2019, Bjorn Andersson wrote:
 
-Tested on SoC QCS404.
+> On Fri 07 Jun 16:02 PDT 2019, Linus Walleij wrote:
+> 
+> > On Wed, Jun 5, 2019 at 1:43 PM Lee Jones <lee.jones@linaro.org> wrote:
+> > 
+> > > When booting MSM based platforms with Device Tree or some ACPI
+> > > implementations, it is possible to provide a list of reserved pins
+> > > via the 'gpio-reserved-ranges' and 'gpios' properties respectively.
+> > > However some ACPI tables are not populated with this information,
+> > > thus it has to come from a knowledgable device driver instead.
+> > >
+> > > Here we provide the MSM common driver with additional support to
+> > > parse this informtion and correctly populate the widely used
+> > > 'valid_mask'.
+> > >
+> > > Signed-off-by: Lee Jones <lee.jones@linaro.org>
+> > 
+> > Exactly how we should use of the API, so if Björn can supply an
+> > ACK to patches 3 and 4 I'm happy to apply them.
+> > 
+> > Björn?
+> > 
+> 
+> I'm waiting for a version that does not specify the reserved_gpios for
+> struct msm_pinctrl_soc_data sdm845_pinctrl {}, as this would override
+> the ability of getting these from DT.
+> 
+> I haven't seen such revision yet, will review it once I find it.
 
-Signed-off-by: Jorge Ramirez-Ortiz <jorge.ramirez-ortiz@linaro.org>
----
- drivers/tty/serial/msm_serial.c | 4 ++++
- 1 file changed, 4 insertions(+)
+Just testing it now.  It should be on the list by the time you start.
 
-diff --git a/drivers/tty/serial/msm_serial.c b/drivers/tty/serial/msm_serial.c
-index 23833ad952ba..3657a24913fc 100644
---- a/drivers/tty/serial/msm_serial.c
-+++ b/drivers/tty/serial/msm_serial.c
-@@ -383,10 +383,14 @@ static void msm_request_rx_dma(struct msm_port *msm_port, resource_size_t base)
- 
- static inline void msm_wait_for_xmitr(struct uart_port *port)
- {
-+	unsigned int timeout = 500000;
-+
- 	while (!(msm_read(port, UART_SR) & UART_SR_TX_EMPTY)) {
- 		if (msm_read(port, UART_ISR) & UART_ISR_TX_READY)
- 			break;
- 		udelay(1);
-+		if (!timeout--)
-+			break;
- 	}
- 	msm_write(port, UART_CR_CMD_RESET_TX_READY, UART_CR);
- }
 -- 
-2.21.0
-
+Lee Jones [李琼斯]
+Linaro Services Technical Lead
+Linaro.org │ Open source software for ARM SoCs
+Follow Linaro: Facebook | Twitter | Blog
