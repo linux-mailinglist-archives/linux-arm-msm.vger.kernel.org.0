@@ -2,71 +2,148 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id B2118417CC
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Jun 2019 00:01:27 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 865A341839
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Jun 2019 00:34:11 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2407850AbfFKWBV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 11 Jun 2019 18:01:21 -0400
-Received: from mail-qt1-f195.google.com ([209.85.160.195]:42818 "EHLO
-        mail-qt1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2407758AbfFKWBV (ORCPT
+        id S2405596AbfFKWdx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 11 Jun 2019 18:33:53 -0400
+Received: from mail-pl1-f195.google.com ([209.85.214.195]:38888 "EHLO
+        mail-pl1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2405486AbfFKWdx (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 11 Jun 2019 18:01:21 -0400
-Received: by mail-qt1-f195.google.com with SMTP id s15so16463633qtk.9;
-        Tue, 11 Jun 2019 15:01:20 -0700 (PDT)
+        Tue, 11 Jun 2019 18:33:53 -0400
+Received: by mail-pl1-f195.google.com with SMTP id f97so5727435plb.5
+        for <linux-arm-msm@vger.kernel.org>; Tue, 11 Jun 2019 15:33:53 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=rheF1XeHr+TBtp29Z8BqnMhDdcbdifoVvsMUnTVTQ0w=;
+        b=QKzewkqqr14aegyj9+KanpTXPALGWcAhgyKlFkPm+hIUpaiT5vfVCHwLDQjJnicRB4
+         jWOVMCSmyMs7lj97v8kBr5AIAjLEtAYARRhQvSIdJl6dY8M8BIMwu6hXtzBO/6hQAAVZ
+         R/3aJvCS5f1cpoXdCsmvWLdPJctFcP3gL7lhMRFa2f04l87qEV3sG+LctemNIIutyiz0
+         coO2IFn//1n30Y5C3x2psChDUceRjUq3sahJi0y3yAlHV+XXZsp9XT/sRIA/UjAFFgGJ
+         VuUO6M6OzU+lbVMu8QhXHbQzabAHnK3JcUwmnUhN5ilGVa3HtEDaHSJuGg4zy3T9ddsl
+         /2iQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=wVRjad9Fc8BILg/+DYBhqnoHZfByaIOMm77zfoBIfY0=;
-        b=uZheCOttbqblvyIMZwReeWp+JKZkUKNnu2dE7PFC6Ayj4XeuMQmtYZ7WfswaYJbQcF
-         vOGVbYTmuPxAMwyLC004S0bLmcYiboju7syJ7Mtk+B+50jjdMzQ+YrNHZh1SYSrxY+VL
-         /gb2QmzjjonwcTtZyBQI1OseExiibPQbdd7ATSHuyf4ESdngBp/2CsZ8+5V5mfvir+8s
-         LLf1GDzvcJYS9r6YT2OUn0qoIp/bJDutb8gsV10YK/nesxcS/Ri44EE3kKZV7VsPrXbr
-         HkH1F+DJ/NG22BGf6czObAZ5M96xGGQzxOWUTwLi6vCiQkbsQIV7HNk9KwMFlwAXLq4x
-         oAGQ==
-X-Gm-Message-State: APjAAAUW+2mrC6Zwr9mHJnEewB70KZwGWWg6N/sVLhUr6jD2t/fwnqYF
-        wKhc9t86sFPVMhWLqKvXig==
-X-Google-Smtp-Source: APXvYqxq+ctalxr4J055wzK7JBghbqhScsopOPimJQptlh5w/Pu3JDApOeKWxso3z1UIm9uUmO+OTw==
-X-Received: by 2002:ac8:c45:: with SMTP id l5mr50644561qti.63.1560290480260;
-        Tue, 11 Jun 2019 15:01:20 -0700 (PDT)
-Received: from localhost ([64.188.179.199])
-        by smtp.gmail.com with ESMTPSA id g5sm8812899qta.77.2019.06.11.15.01.19
+        bh=rheF1XeHr+TBtp29Z8BqnMhDdcbdifoVvsMUnTVTQ0w=;
+        b=oyi+q/n/lKgpmhIfAGikKWbIRPD5Zvq/Gljv0yJOZEVxl1q/85sX4nal8rWw4oAeMu
+         3JbUAnaqXeTj425LHQa+BbR1GqWqIx+K9PoX+jpbwZLf2fDHZdXCF9Pf+jE3m+kgU64M
+         /aEt67f9VLDKJEzZlbSsK47TEM5K0uTR/Q2dX+3wODHeeam+qGo5JewWp5y8WR13b+pv
+         t3DYah0vk3N/19aBSAh07Ce56SP+IayUggPxYy/7Lh5d1AM0RM6VaVXc9aN6unRAkR3z
+         ME0DAj7w0qaj0/J6xNHO+eUqzqFnBo5NNqp90Q9KfI0bB5IRyN/Fh1yxIF2g+jQiy+8j
+         mrZw==
+X-Gm-Message-State: APjAAAWTuhsIeayCBzQWtweil4+YdFx5BVDStNQvRD78VKXfJVAXVkPO
+        kCvDrJwjWpJfXnre/EPJ2PB/Bw==
+X-Google-Smtp-Source: APXvYqzOrGp2e1lCEgBy09sDw+6XFk1Cp1xh3ZSUOlQ7lXvCww/YU+McON7j6rpV8WQzMMdtV7Kusw==
+X-Received: by 2002:a17:902:42a5:: with SMTP id h34mr40878255pld.16.1560292432547;
+        Tue, 11 Jun 2019 15:33:52 -0700 (PDT)
+Received: from minitux (104-188-17-28.lightspeed.sndgca.sbcglobal.net. [104.188.17.28])
+        by smtp.gmail.com with ESMTPSA id w4sm18222973pfw.97.2019.06.11.15.33.51
         (version=TLS1_3 cipher=AEAD-AES256-GCM-SHA384 bits=256/256);
-        Tue, 11 Jun 2019 15:01:19 -0700 (PDT)
-Date:   Tue, 11 Jun 2019 16:01:17 -0600
-From:   Rob Herring <robh@kernel.org>
-To:     Rocky Liao <rjliao@codeaurora.org>
-Cc:     mark.rutland@arm.com, marcel@holtmann.org, johan.hedberg@gmail.com,
-        thierry.escande@linaro.org, netdev@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-bluetooth@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        bgodavar@codeaurora.org, c-hbandi@codeaurora.org
-Subject: Re: [PATCH v6 2/2] dt-bindings: net: bluetooth: Add device property
- firmware-name for QCA6174
-Message-ID: <20190611220117.GA31601@bogus>
-References: <1557919203-11055-1-git-send-email-rjliao@codeaurora.org>
- <1559814055-13872-1-git-send-email-rjliao@codeaurora.org>
+        Tue, 11 Jun 2019 15:33:51 -0700 (PDT)
+Date:   Tue, 11 Jun 2019 15:33:49 -0700
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     Lee Jones <lee.jones@linaro.org>
+Cc:     alokc@codeaurora.org, andy.gross@linaro.org,
+        david.brown@linaro.org, wsa+renesas@sang-engineering.com,
+        linus.walleij@linaro.org, balbi@kernel.org,
+        gregkh@linuxfoundation.org, ard.biesheuvel@linaro.org,
+        jlhugo@gmail.com, linux-i2c@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org,
+        linux-usb@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+        linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v3 7/8] usb: dwc3: qcom: Start USB in 'host mode' on the
+ SDM845
+Message-ID: <20190611223349.GS4814@minitux>
+References: <20190610084213.1052-1-lee.jones@linaro.org>
+ <20190610084213.1052-7-lee.jones@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <1559814055-13872-1-git-send-email-rjliao@codeaurora.org>
-User-Agent: Mutt/1.10.1 (2018-07-13)
+In-Reply-To: <20190610084213.1052-7-lee.jones@linaro.org>
+User-Agent: Mutt/1.12.0 (2019-05-25)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Jun 06, 2019 at 05:40:55PM +0800, Rocky Liao wrote:
-> This patch adds an optional device property "firmware-name" to allow the
-> driver to load customized nvm firmware file based on this property.
-> 
-> Signed-off-by: Rocky Liao <rjliao@codeaurora.org>
-> ---
-> Changes in v6:
->   * Added read firmware-name property for both QCA6174 and WCN399X
-> ---
->  Documentation/devicetree/bindings/net/qualcomm-bluetooth.txt | 4 ++++
->  1 file changed, 4 insertions(+)
+On Mon 10 Jun 01:42 PDT 2019, Lee Jones wrote:
 
-Reviewed-by: Rob Herring <robh@kernel.org>
+> When booting with Device Tree, the current default boot configuration
+> table option, the request to boot via 'host mode' comes from the
+> 'dr_mode' property.
+
+As I said in my previous review, the default mode for SDM845 is OTG. For
+the MTP specifically we specify the default mode to be peripheral (was
+host).
+
+
+The remaining thing that worries me with this patch is that I do expect
+that at least one of the USB-C ports is OTG. But I am not able to
+conclude anything regarding this and host-only is a good default for
+this type of device, so I suggest that we merge this.
+
+Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+
+Regards,
+Bjorn
+
+> A property of the same name can be used inside
+> ACPI tables too.  However it is missing from the SDM845's ACPI tables
+> so we have to supply this information using Platform Device Properties
+> instead.
+> 
+> This does not change the behaviour of any currently supported devices.
+> The property is only set on ACPI enabled platforms, thus for H/W
+> booting DT, unless a 'dr_mode' property is present, the default is
+> still OTG (On-The-Go) as per [0].  Any new ACPI devices added will
+> also be able to over-ride this implementation by providing a 'dr_mode'
+> property in their ACPI tables.  In cases where 'dr_mode' is omitted
+> from the tables AND 'host mode' should not be the default (very
+> unlikely), then we will have to add some way of choosing between them
+> at run time - most likely by ACPI HID.
+> 
+> [0] Documentation/devicetree/bindings/usb/generic.txt
+> 
+> Signed-off-by: Lee Jones <lee.jones@linaro.org>
+> ---
+>  drivers/usb/dwc3/dwc3-qcom.c | 12 ++++++++++++
+>  1 file changed, 12 insertions(+)
+> 
+> diff --git a/drivers/usb/dwc3/dwc3-qcom.c b/drivers/usb/dwc3/dwc3-qcom.c
+> index 1e1f12b7991d..55ba04254e38 100644
+> --- a/drivers/usb/dwc3/dwc3-qcom.c
+> +++ b/drivers/usb/dwc3/dwc3-qcom.c
+> @@ -444,6 +444,11 @@ static int dwc3_qcom_clk_init(struct dwc3_qcom *qcom, int count)
+>  	return 0;
+>  }
+>  
+> +static const struct property_entry dwc3_qcom_acpi_properties[] = {
+> +	PROPERTY_ENTRY_STRING("dr_mode", "host"),
+> +	{}
+> +};
+> +
+>  static int dwc3_qcom_acpi_register_core(struct platform_device *pdev)
+>  {
+>  	struct dwc3_qcom 	*qcom = platform_get_drvdata(pdev);
+> @@ -488,6 +493,13 @@ static int dwc3_qcom_acpi_register_core(struct platform_device *pdev)
+>  		goto out;
+>  	}
+>  
+> +	ret = platform_device_add_properties(qcom->dwc3,
+> +					     dwc3_qcom_acpi_properties);
+> +	if (ret < 0) {
+> +		dev_err(&pdev->dev, "failed to add properties\n");
+> +		goto out;
+> +	}
+> +
+>  	ret = platform_device_add(qcom->dwc3);
+>  	if (ret)
+>  		dev_err(&pdev->dev, "failed to add device\n");
+> -- 
+> 2.17.1
+> 
