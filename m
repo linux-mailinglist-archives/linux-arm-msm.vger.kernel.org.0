@@ -2,95 +2,227 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 0B6663D3EF
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Jun 2019 19:23:23 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 160823D4F8
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Jun 2019 20:05:22 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2405998AbfFKRXM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 11 Jun 2019 13:23:12 -0400
-Received: from mx1.redhat.com ([209.132.183.28]:33460 "EHLO mx1.redhat.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S2406105AbfFKRXL (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 11 Jun 2019 13:23:11 -0400
-Received: from smtp.corp.redhat.com (int-mx04.intmail.prod.int.phx2.redhat.com [10.5.11.14])
-        (using TLSv1.2 with cipher AECDH-AES256-SHA (256/256 bits))
-        (No client certificate requested)
-        by mx1.redhat.com (Postfix) with ESMTPS id BBA097573D;
-        Tue, 11 Jun 2019 17:23:05 +0000 (UTC)
-Received: from ovpn-112-53.rdu2.redhat.com (ovpn-112-53.rdu2.redhat.com [10.10.112.53])
-        by smtp.corp.redhat.com (Postfix) with ESMTP id 59CCA5DE86;
-        Tue, 11 Jun 2019 17:22:59 +0000 (UTC)
-Message-ID: <153fafb91267147cf22e2bf102dd822933ec823a.camel@redhat.com>
-Subject: Re: [PATCH v2 00/17] net: introduce Qualcomm IPA driver
-From:   Dan Williams <dcbw@redhat.com>
-To:     Subash Abhinov Kasiviswanathan <subashab@codeaurora.org>
-Cc:     Arnd Bergmann <arnd@arndb.de>,
-        Johannes Berg <johannes@sipsolutions.net>,
-        Alex Elder <elder@linaro.org>, abhishek.esse@gmail.com,
-        Ben Chan <benchan@google.com>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        cpratapa@codeaurora.org, David Miller <davem@davemloft.net>,
-        DTML <devicetree@vger.kernel.org>,
-        Eric Caruso <ejcaruso@google.com>, evgreen@chromium.org,
-        Ilias Apalodimas <ilias.apalodimas@linaro.org>,
-        Linux ARM <linux-arm-kernel@lists.infradead.org>,
-        linux-arm-msm@vger.kernel.org,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-        linux-soc@vger.kernel.org, Networking <netdev@vger.kernel.org>,
-        syadagir@codeaurora.org
-Date:   Tue, 11 Jun 2019 12:22:58 -0500
-In-Reply-To: <36bca57c999f611353fd9741c55bb2a7@codeaurora.org>
-References: <380a6185-7ad1-6be0-060b-e6e5d4126917@linaro.org>
-         <a94676381a5ca662c848f7a725562f721c43ce76.camel@sipsolutions.net>
-         <CAK8P3a0kV-i7BJJ2X6C=5n65rSGfo8fUiC4J_G-+M8EctYKbkg@mail.gmail.com>
-         <fc0d08912bc10ad089eb74034726308375279130.camel@redhat.com>
-         <36bca57c999f611353fd9741c55bb2a7@codeaurora.org>
-Content-Type: text/plain; charset="UTF-8"
-User-Agent: Evolution 3.30.5 (3.30.5-1.fc29) 
+        id S2406797AbfFKSFU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 11 Jun 2019 14:05:20 -0400
+Received: from mail-pl1-f172.google.com ([209.85.214.172]:35738 "EHLO
+        mail-pl1-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2406751AbfFKSFU (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 11 Jun 2019 14:05:20 -0400
+Received: by mail-pl1-f172.google.com with SMTP id p1so5457579plo.2
+        for <linux-arm-msm@vger.kernel.org>; Tue, 11 Jun 2019 11:05:19 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=KsKxk7mWhnld6lqzDiFbfsJQ7V5kfiKkCUpMkhJ6QMo=;
+        b=rV92SEE1OzIHFKSqPBy6qmkBfcN2E2Z6LmooCmRH88pmbcFGqJ087T5UIuf4Co9Ipj
+         PFMEzNY6ZNcKljfUtkHdqWN9bP2CahKsUTGtxA5OzQgRLf6h/bA0FQsfpYt1DgeCn+4e
+         VXxrg4rj9pAQZf/AapbM6I0FoMd0Xam/E7TPtjnJMQTzpeUZ4sBBlXECTP860jih9ei2
+         KoIgdLKnUzDiE8xAVK/hYya3tVbdgkL/1YIwIvd90Bydyt9HmyQ38mHQZ4Dd2ecOa7bi
+         GT1h/jnmOp8E2CVwzjZ0D69KwJykw/iCwhRpSDGNhNaBJQT3boyYyNwtzUehNJSDkDxH
+         /cJA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=KsKxk7mWhnld6lqzDiFbfsJQ7V5kfiKkCUpMkhJ6QMo=;
+        b=aYtlIzVQEPo7MagBMbMnAyny4G/KjgG1WmYLO95Ga+2I+xYRGY1m7+XwqwlasfQWAc
+         lpwa06/LqhZEALTGr1ed0AVl24xvkhHSO2Bc39BW+JBpFfMkRMuCKw25dNc5uVmDTUJo
+         R09l0g0UVzSaKI/Q9yy4lsNINCHM67cpII+TRzLMXuU8uj2UXU85Qyl3Yo/hm58eQITk
+         Y7LkxrXdJXFe5fOzLd9upWvsjRzJxoYfNTd5z1Fsh8k73+36TczLe7YVVz5IgKDnaCEY
+         Q0Rh9auCxkJVfjP08Ie4xlIG6u6+xVokVDe2OaHwFVgl7yGUt0Vagx5HZbE9H2SUwpRv
+         0Sjw==
+X-Gm-Message-State: APjAAAWSuZrUMWawQFpZXQD4eysZM6CmsY+JmCYJ5ChTi2rLn6kOlTJy
+        AO8W5b5j7iLGhR/W0jF8HDs5dg==
+X-Google-Smtp-Source: APXvYqwZZTF6tR/ssbbRzTwNqufP9IAlXnh1xiTE/tMVU/va6rYZJWy85UQ+dkAX6720o1ageMTxVg==
+X-Received: by 2002:a17:902:26c:: with SMTP id 99mr79262961plc.215.1560276319186;
+        Tue, 11 Jun 2019 11:05:19 -0700 (PDT)
+Received: from minitux (104-188-17-28.lightspeed.sndgca.sbcglobal.net. [104.188.17.28])
+        by smtp.gmail.com with ESMTPSA id n21sm9068570pjo.0.2019.06.11.11.05.18
+        (version=TLS1_3 cipher=AEAD-AES256-GCM-SHA384 bits=256/256);
+        Tue, 11 Jun 2019 11:05:18 -0700 (PDT)
+Date:   Tue, 11 Jun 2019 11:05:16 -0700
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     Marc Gonzalez <marc.w.gonzalez@free.fr>
+Cc:     Linus Walleij <linus.walleij@linaro.org>,
+        MSM <linux-arm-msm@vger.kernel.org>,
+        gpio <linux-gpio@vger.kernel.org>,
+        Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
+Subject: Re: How to write "modern" pinctrl DT node
+Message-ID: <20190611180516.GO4814@minitux>
+References: <18ab4b1c-e74e-410a-a504-f524e46c42ac@free.fr>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 7bit
-X-Scanned-By: MIMEDefang 2.79 on 10.5.11.14
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.5.16 (mx1.redhat.com [10.5.110.25]); Tue, 11 Jun 2019 17:23:11 +0000 (UTC)
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <18ab4b1c-e74e-410a-a504-f524e46c42ac@free.fr>
+User-Agent: Mutt/1.12.0 (2019-05-25)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, 2019-06-11 at 10:52 -0600, Subash Abhinov Kasiviswanathan
-wrote:
-> > The general plan (and I believe Daniele Palmas was working on it)
-> > was
-> > to eventually make qmi_wwan use rmnet rather than its internal
-> > sysfs-
-> > based implementation. qmi_wwan and ipa are at essentially the same
-> > level and both could utilize rmnet on top.
-> > 
-> > *That's* what I'd like to see. I don't want to see two different
-> > ways
-> > to get QMAP packets to modem firmware from two different drivers
-> > that
-> > really could use the same code.
-> > 
-> > Dan
+On Tue 11 Jun 09:12 PDT 2019, Marc Gonzalez wrote:
+
+> Hello,
 > 
-> qmi_wwan is based on USB and is very different from the IPA
-> interconnect
-> though. AFAIK, they do not have much in common (apart from sending &
-> receiving MAP packets from hardware).
+> I'm working with a device (TSIF0) which apparently drives 4 pins:
+> (Or maybe 5... it seems gpio40 might be associated with TSIF0 as well.)
+> 
+> https://source.codeaurora.org/quic/la/kernel/msm-4.4/tree/arch/arm/boot/dts/qcom/msm8998-pinctrl.dtsi?h=LE.UM.1.3.r3.25#n2258
+> 
+> I'll copy the downstream DT nodes here for discussion:
+> 
+> 		tsif0_signals_active: tsif0_signals_active {
 
-That is correct, they are very different drivers but as you state they
-send and receive MAP packets with the other end via some closer-to-
-hardware protocol (USB or GSI?) than QMAP.
+This seems like the "default", "non-sleep" state. So I think a better
+name would be to make this:
 
-rmnet should handle muxing the QMAP, QoS, and aggregation and pass the
-resulting packet to the lower layer. That lower layer could be IPA or
-qmi_wwan, which in turn passes that QMAP packet to USB or GSI or
-whatever. This is typically how Linux handles clean abstractions
-between different protocol layers in drivers.
+	tsif0_default: tsif0-default 
 
-Similar to some WiFi drivers (drivers/net/wireless/marvell/libertas for
-example) where the same firmware interface can be accessed via PCI,
-SDIO, USB, SPI, etc. The bus-specific code is self-contained and does
-not creep into the upper more generic parts.
+(Note again, _ in label names, - in node names)
 
-Dan
+> 			tsif1_clk {
 
+The namespace here is local to the tsif0-default state node, so there's
+no need to repeat the "tsif" prefix here. Just name it "clk".
+
+Also, what's up with tsif0 vs tsif1?
+
+> 				pins = "gpio89"; /* TSIF0 CLK */
+
+This comment doesn't add any value, if you give the label a good name
+(i.e.  name it clk and you know that this represents the clock pin)
+
+> 				function = "tsif1_clk";
+
+Rather than having clk, en, data and error as separate functions we
+should have made them just "tsif1", as there's no overlap. But this is
+correct - see msm8998_functions[] (or the DT binding) for available
+functions.
+
+> 			};
+> 			tsif1_en {
+> 				pins = "gpio90"; /* TSIF0 Enable */
+> 				function = "tsif1_en";
+> 			};
+> 			tsif1_data {
+> 				pins = "gpio91"; /* TSIF0 DATA */
+> 				function = "tsif1_data";
+> 			};
+> 			signals_cfg {
+
+This is written with the mindset that pinmux and pinconf properties
+should be kept separate, so here they specify the drive-strength and
+bias for the above 3 pins.
+
+I've come to prefer to have these properties added to the above nodes,
+rather than having this split.
+
+> 				pins = "gpio89", "gpio90", "gpio91";
+> 				drive_strength = <2>;	/* 2 mA */
+
+As Jonathan pointed out, - not _.
+
+And in contrast to the previous downstream solution each property is of
+standard units and self explaining, so no need for comments.
+
+> 				bias-pull-down;		/* pull down */
+> 			};
+> 		};
+> 
+> 		/* sync signal is only used if configured to mode-2 */
+> 		tsif0_sync_active: tsif0_sync_active {
+
+This looks reasonable if this is a dynamic thing (if it's static it
+should be one node), and you can in your tsif0 node do:
+
+pinctrl-names = "default", "mode-2";
+pinctrl-0 = <&tsif0_default>;
+pinctrl-1 = <&tsif0_default>, <&tsif0_sync_active>;
+
+The driver core will select "default" and your driver will have to use
+the pinctrl api to switch to the state "mode-2".
+
+> 			tsif1_sync {
+> 				pins = "gpio9";	/* TSIF0 SYNC */
+> 				function = "tsif1_sync";
+> 				drive_strength = <2>;	/* 2 mA */
+> 				bias-pull-down;		/* pull down */
+> 			};
+> 		};
+> 
+> 
+> Can I rewrite the first node as:
+> 
+> 	tsif0_default {
+> 		pins = "gpio89", "gpio90", "gpio91"; /* clk, enable, data */
+
+If you feel the need to add a comment then use subnodes to denote which
+is which instead.
+
+> 		function = "is_this_just_a_label?"; /* Can I just leave it out? */
+
+For each pins you need to select a matching function name, per the
+mapping in msm8998_groups in the driver (or datasheet).
+
+As there are no collisions between the various tsif functions we should
+have just made them all "tsif1", but now you need to describe each pin
+and its associated function individually - as the example above shows..
+
+> 		drive-strength = <2>;
+> 		bias-pull-down;
+> 	}
+
+Had we made the function name "tsif1" for all of them then you could
+definitely do this.
+
+> 
+> Is this enough information to configure the 3 pins? Probably not...
+> There must be some information hard-coded in drivers/pinctrl/qcom/pinctrl-msm8998.c
+> 
+> Can I merge pin 9 in the above node, since it has the same
+> "hardware properties" (drive_strength and bias_direction) ?
+> 
+
+Had we made the tsif functions just "tsif1" then you could have done
+this. But based on the comment about mode-2 it seems like you still
+would like to keep this separate.
+
+> 
+[..]
+> 
+> 	PINGROUP(89, EAST, tsif1_clk, phase_flag10, NA, NA, NA, NA, NA, NA, NA),
+> 	PINGROUP(90, EAST, tsif1_en, mdp_vsync0, mdp_vsync1, mdp_vsync2, mdp_vsync3, blsp1_spi, tgu_ch0, qdss_cti1_b, NA),
+> 	PINGROUP(91, EAST, tsif1_data, sdc4_cmd, tgu_ch1, phase_flag1, qdss_cti1_b, NA, NA, NA, NA),
+> 
+> (It seems to me there is some redundancy in this driver?)
+> 
+> These last 3 lines seem to summarize how each pin is muxed?
+> I.e. it's used as one function, exclusively?
+> So a proper driver should be unloadable, to let other drivers
+> claim the shared pins?
+> 
+
+The common example of this is for drivers to jump between a function and
+the implicit "gpio" function when going in and our of sleep. A state is
+described for the "default" (active) state with appropriate pinmux and
+pinconf and a separate ("sleep") is used to e.g. pull the pins low while
+in suspend.
+
+I can't think of an example where you would dynamically switch between
+the other functions; because note that for a given hardware design you
+have e.g. your tsif block soldered onto those pins.
+
+
+PS. I would suggest that you send a patch to the MSM8998 pinctrl driver
+(and binding) where you squash tsifN_* to tsifN. It would break
+backwards compatibility, but I think we can take that risk now before
+someone starts to use it... And after that you can go with your proposed
+squashed node.
+
+Regards,
+Bjorn
