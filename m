@@ -2,162 +2,145 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 07618425A5
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Jun 2019 14:27:10 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 000E14270B
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Jun 2019 15:10:11 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731283AbfFLM0Z (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 12 Jun 2019 08:26:25 -0400
-Received: from mail.kernel.org ([198.145.29.99]:59756 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S2438710AbfFLM0W (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 12 Jun 2019 08:26:22 -0400
-Received: from localhost (83-86-89-107.cable.dynamic.v4.ziggo.nl [83.86.89.107])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id C30CE20874;
-        Wed, 12 Jun 2019 12:26:20 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1560342381;
-        bh=Q4DR0ZfiZ07BcC65F0iVrnB89qNKvjsdzyOF+UzlnSQ=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=aPC3w47Vx4ftoEzC0SsDE+HJwteGfxPGeFUoMw9bN6/EEl0kVTPxjAemiNyEmzRgG
-         aJHK/b3tZIB/D2HWMXXdc9igxJLIPPdKuaW4ZOMyoThY2zXQED00PVpLu8FQAbD6U6
-         J2DdHQWrJ2eiiigK2Cuk6+JI48CDDkiEaPlnG7WY=
-From:   Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To:     dan.j.williams@intel.com, vkoul@kernel.org
-Cc:     Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Sinan Kaya <okaya@kernel.org>, Andy Gross <agross@kernel.org>,
-        David Brown <david.brown@linaro.org>,
-        linux-arm-kernel@lists.infradead.org,
-        linux-arm-msm@vger.kernel.org, dmaengine@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: [PATCH 6/6] dma: qcom: hidma: no need to check return value of debugfs_create functions
-Date:   Wed, 12 Jun 2019 14:25:57 +0200
-Message-Id: <20190612122557.24158-6-gregkh@linuxfoundation.org>
-X-Mailer: git-send-email 2.22.0
-In-Reply-To: <20190612122557.24158-1-gregkh@linuxfoundation.org>
-References: <20190612122557.24158-1-gregkh@linuxfoundation.org>
+        id S2438725AbfFLNJK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 12 Jun 2019 09:09:10 -0400
+Received: from mail-lj1-f195.google.com ([209.85.208.195]:39340 "EHLO
+        mail-lj1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728322AbfFLNJG (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 12 Jun 2019 09:09:06 -0400
+Received: by mail-lj1-f195.google.com with SMTP id v18so15044016ljh.6
+        for <linux-arm-msm@vger.kernel.org>; Wed, 12 Jun 2019 06:09:05 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=MYYBvt30/Tw2U53d4ncQQ8BJSAS7aEExu9CI5ehaRYQ=;
+        b=fEIUYbESteaOEWXcp9jd1ip7LLMYbEGVOrQNAT3OqsOxsIPG6WVQwvCZE85HIg8FMU
+         oAJcpcWnWawsbblDgnVUPfBVy/MjKDQCYn+hVrC6aDbm7jmLJDDdOeYn7ovnkA3c95RJ
+         llSYqcqgco3znDjGJhQC/s0KMf/0CGgldGKLIZELciWkI5jAcYnilJXkUTuUj4XICqxS
+         27Zqa7abianHydTHDyrbogg/uHipI3Cn1g50hRO7vazuNTagb4IIWJANZlWyOrrQK89R
+         BzOEVtM4Gvmvr4sh93YP7UzMiZLLDbKCab70zFec3PK/DXbVmOUhA6hGuNvnRhjhsrJx
+         bIww==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=MYYBvt30/Tw2U53d4ncQQ8BJSAS7aEExu9CI5ehaRYQ=;
+        b=Ca0hZmL8BcoJHup/Qf9QrPaTL6aJX8HXINZqYrFvhWxJ8t/rl+Dp9j1tSxOPwFi4ol
+         cAumLdh4mDgKiY9Akrn8BLJ7t4l1y5HF8lKpmxgsAYmAq1l/+/ryubbC5Z3/LwiuliiX
+         aCMyb1swzqbNakgsKaOXVSB7E2Yvdos4IKvOtk9OkSkOFbaLJO/x4wyvhW98450TNyBs
+         pn/OUOqPKP/+HqrAChslx10LBeRGXo5LAPEHQVTIgBZw+PVCGl5e4W3tDudn/+LfuFUO
+         mBvRh7C0x7Rp6ZqFoyVZC1iFJeIjiWR849w63r6LUDXJEASdw+SNtIyDfD0MqzQIIvWY
+         GFCQ==
+X-Gm-Message-State: APjAAAUbCMDp2aTNIlz7FFusMNYs365gKEgrq6KqhLWhlDF0U28bUhcd
+        yn5Jz0NWyHFxprzcoRErvHvzrQ==
+X-Google-Smtp-Source: APXvYqzrSNdsWoOOTt2HzSZxGlgWX2BVIElZpnF0OUUPgprivZCkMq0Ej/jRwNVnwYyDfYkPbOohUw==
+X-Received: by 2002:a2e:a0cf:: with SMTP id f15mr13251760ljm.180.1560344944488;
+        Wed, 12 Jun 2019 06:09:04 -0700 (PDT)
+Received: from centauri (m83-185-80-163.cust.tele2.se. [83.185.80.163])
+        by smtp.gmail.com with ESMTPSA id s14sm905487ljd.88.2019.06.12.06.09.00
+        (version=TLS1_3 cipher=AEAD-AES256-GCM-SHA384 bits=256/256);
+        Wed, 12 Jun 2019 06:09:01 -0700 (PDT)
+Date:   Wed, 12 Jun 2019 15:08:58 +0200
+From:   Niklas Cassel <niklas.cassel@linaro.org>
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     Kishon Vijay Abraham I <kishon@ti.com>,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        stable@vger.kernel.org, Evan Green <evgreen@chromium.org>,
+        Marc Gonzalez <marc.w.gonzalez@free.fr>,
+        Vivek Gautam <vivek.gautam@codeaurora.org>
+Subject: Re: [PATCH] phy: qcom-qmp: Correct READY_STATUS poll break condition
+Message-ID: <20190612130858.GA11167@centauri>
+References: <20190604232443.3417-1-bjorn.andersson@linaro.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20190604232443.3417-1-bjorn.andersson@linaro.org>
+User-Agent: Mutt/1.11.4 (2019-03-13)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-When calling debugfs functions, there is no need to ever check the
-return value.  The function can work or not, but the code logic should
-never do something different based on this.
+On Tue, Jun 04, 2019 at 04:24:43PM -0700, Bjorn Andersson wrote:
+> After issuing a PHY_START request to the QMP, the hardware documentation
+> states that the software should wait for the PCS_READY_STATUS to become
+> 1.
+> 
+> With the introduction of c9b589791fc1 ("phy: qcom: Utilize UFS reset
+> controller") an additional 1ms delay was introduced between the start
+> request and the check of the status bit. This greatly increases the
+> chances for the hardware to actually becoming ready before the status
+> bit is read.
+> 
+> The result can be seen in that UFS PHY enabling is now reported as a
+> failure in 10% of the boots on SDM845, which is a clear regression from
+> the previous rare/occasional failure.
+> 
+> This patch fixes the "break condition" of the poll to check for the
+> correct state of the status bit.
+> 
+> Unfortunately PCIe on 8996 and 8998 does not specify the mask_pcs_ready
+> register, which means that the code checks a bit that's always 0. So the
+> patch also fixes these, in order to not regress these targets.
+> 
+> Cc: stable@vger.kernel.org
+> Cc: Evan Green <evgreen@chromium.org>
+> Cc: Marc Gonzalez <marc.w.gonzalez@free.fr>
+> Cc: Vivek Gautam <vivek.gautam@codeaurora.org>
+> Fixes: 73d7ec899bd8 ("phy: qcom-qmp: Add msm8998 PCIe QMP PHY support")
+> Fixes: e78f3d15e115 ("phy: qcom-qmp: new qmp phy driver for qcom-chipsets")
+> Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+> ---
+> 
+> @Kishon, this is a regression spotted in v5.2-rc1, so please consider applying
+> this towards v5.2.
+> 
+>  drivers/phy/qualcomm/phy-qcom-qmp.c | 4 +++-
+>  1 file changed, 3 insertions(+), 1 deletion(-)
+> 
+> diff --git a/drivers/phy/qualcomm/phy-qcom-qmp.c b/drivers/phy/qualcomm/phy-qcom-qmp.c
+> index cd91b4179b10..43abdfd0deed 100644
+> --- a/drivers/phy/qualcomm/phy-qcom-qmp.c
+> +++ b/drivers/phy/qualcomm/phy-qcom-qmp.c
+> @@ -1074,6 +1074,7 @@ static const struct qmp_phy_cfg msm8996_pciephy_cfg = {
+>  
+>  	.start_ctrl		= PCS_START | PLL_READY_GATE_EN,
+>  	.pwrdn_ctrl		= SW_PWRDN | REFCLK_DRV_DSBL,
+> +	.mask_pcs_ready		= PHYSTATUS,
+>  	.mask_com_pcs_ready	= PCS_READY,
+>  
+>  	.has_phy_com_ctrl	= true,
+> @@ -1253,6 +1254,7 @@ static const struct qmp_phy_cfg msm8998_pciephy_cfg = {
+>  
+>  	.start_ctrl             = SERDES_START | PCS_START,
+>  	.pwrdn_ctrl		= SW_PWRDN | REFCLK_DRV_DSBL,
+> +	.mask_pcs_ready		= PHYSTATUS,
+>  	.mask_com_pcs_ready	= PCS_READY,
+>  };
+>  
+> @@ -1547,7 +1549,7 @@ static int qcom_qmp_phy_enable(struct phy *phy)
+>  	status = pcs + cfg->regs[QPHY_PCS_READY_STATUS];
+>  	mask = cfg->mask_pcs_ready;
+>  
+> -	ret = readl_poll_timeout(status, val, !(val & mask), 1,
+> +	ret = readl_poll_timeout(status, val, val & mask, 1,
+>  				 PHY_INIT_COMPLETE_TIMEOUT);
+>  	if (ret) {
+>  		dev_err(qmp->dev, "phy initialization timed-out\n");
+> -- 
+> 2.18.0
+> 
 
-Also, because there is no need to save the file dentry, remove the
-variables that were saving them as they were never even being used once
-set.
+msm8996_pciephy_cfg and msm8998_pciephy_cfg not having a bit mask defined
+for PCS ready is really a separate bug, so personally I would have created
+two patches, one that adds the missing masks, and one patch that fixes the
+broken break condition.
 
-Cc: Sinan Kaya <okaya@kernel.org>
-Cc: Andy Gross <agross@kernel.org>
-Cc: David Brown <david.brown@linaro.org>
-Cc: Dan Williams <dan.j.williams@intel.com>
-Cc: Vinod Koul <vkoul@kernel.org>
-Cc: linux-arm-kernel@lists.infradead.org
-Cc: linux-arm-msm@vger.kernel.org
-Cc: dmaengine@vger.kernel.org
-Cc: linux-kernel@vger.kernel.org
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
----
- drivers/dma/qcom/hidma.h     |  5 +----
- drivers/dma/qcom/hidma_dbg.c | 37 +++++++-----------------------------
- 2 files changed, 8 insertions(+), 34 deletions(-)
+Either way:
 
-diff --git a/drivers/dma/qcom/hidma.h b/drivers/dma/qcom/hidma.h
-index 5f9966e82c0b..36357d02333a 100644
---- a/drivers/dma/qcom/hidma.h
-+++ b/drivers/dma/qcom/hidma.h
-@@ -101,8 +101,6 @@ struct hidma_chan {
- 	 * It is used by the DMA complete notification to
- 	 * locate the descriptor that initiated the transfer.
- 	 */
--	struct dentry			*debugfs;
--	struct dentry			*stats;
- 	struct hidma_dev		*dmadev;
- 	struct hidma_desc		*running;
- 
-@@ -134,7 +132,6 @@ struct hidma_dev {
- 	struct dma_device		ddev;
- 
- 	struct dentry			*debugfs;
--	struct dentry			*stats;
- 
- 	/* sysfs entry for the channel id */
- 	struct device_attribute		*chid_attrs;
-@@ -166,6 +163,6 @@ irqreturn_t hidma_ll_inthandler(int irq, void *arg);
- irqreturn_t hidma_ll_inthandler_msi(int irq, void *arg, int cause);
- void hidma_cleanup_pending_tre(struct hidma_lldev *llhndl, u8 err_info,
- 				u8 err_code);
--int hidma_debug_init(struct hidma_dev *dmadev);
-+void hidma_debug_init(struct hidma_dev *dmadev);
- void hidma_debug_uninit(struct hidma_dev *dmadev);
- #endif
-diff --git a/drivers/dma/qcom/hidma_dbg.c b/drivers/dma/qcom/hidma_dbg.c
-index 9523faf7acdc..994f448b64d8 100644
---- a/drivers/dma/qcom/hidma_dbg.c
-+++ b/drivers/dma/qcom/hidma_dbg.c
-@@ -146,17 +146,13 @@ void hidma_debug_uninit(struct hidma_dev *dmadev)
- 	debugfs_remove_recursive(dmadev->debugfs);
- }
- 
--int hidma_debug_init(struct hidma_dev *dmadev)
-+void hidma_debug_init(struct hidma_dev *dmadev)
- {
--	int rc = 0;
- 	int chidx = 0;
- 	struct list_head *position = NULL;
-+	struct dentry *dir;
- 
- 	dmadev->debugfs = debugfs_create_dir(dev_name(dmadev->ddev.dev), NULL);
--	if (!dmadev->debugfs) {
--		rc = -ENODEV;
--		return rc;
--	}
- 
- 	/* walk through the virtual channel list */
- 	list_for_each(position, &dmadev->ddev.channels) {
-@@ -165,32 +161,13 @@ int hidma_debug_init(struct hidma_dev *dmadev)
- 		chan = list_entry(position, struct hidma_chan,
- 				  chan.device_node);
- 		sprintf(chan->dbg_name, "chan%d", chidx);
--		chan->debugfs = debugfs_create_dir(chan->dbg_name,
-+		dir = debugfs_create_dir(chan->dbg_name,
- 						   dmadev->debugfs);
--		if (!chan->debugfs) {
--			rc = -ENOMEM;
--			goto cleanup;
--		}
--		chan->stats = debugfs_create_file("stats", S_IRUGO,
--						  chan->debugfs, chan,
--						  &hidma_chan_fops);
--		if (!chan->stats) {
--			rc = -ENOMEM;
--			goto cleanup;
--		}
-+		debugfs_create_file("stats", S_IRUGO, dir, chan,
-+				    &hidma_chan_fops);
- 		chidx++;
- 	}
- 
--	dmadev->stats = debugfs_create_file("stats", S_IRUGO,
--					    dmadev->debugfs, dmadev,
--					    &hidma_dma_fops);
--	if (!dmadev->stats) {
--		rc = -ENOMEM;
--		goto cleanup;
--	}
--
--	return 0;
--cleanup:
--	hidma_debug_uninit(dmadev);
--	return rc;
-+	debugfs_create_file("stats", S_IRUGO, dmadev->debugfs, dmadev,
-+			    &hidma_dma_fops);
- }
--- 
-2.22.0
-
+Reviewed-by: Niklas Cassel <niklas.cassel@linaro.org>
