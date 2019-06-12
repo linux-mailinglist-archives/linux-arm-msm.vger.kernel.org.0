@@ -2,114 +2,127 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id BB509429F7
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Jun 2019 16:54:48 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 7C0A642A49
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Jun 2019 17:07:10 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2408046AbfFLOyr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 12 Jun 2019 10:54:47 -0400
-Received: from mail-lj1-f194.google.com ([209.85.208.194]:45075 "EHLO
-        mail-lj1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2405540AbfFLOyr (ORCPT
+        id S2439953AbfFLPGg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 12 Jun 2019 11:06:36 -0400
+Received: from mail-qt1-f195.google.com ([209.85.160.195]:38020 "EHLO
+        mail-qt1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2437202AbfFLPGg (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 12 Jun 2019 10:54:47 -0400
-Received: by mail-lj1-f194.google.com with SMTP id m23so15343557lje.12;
-        Wed, 12 Jun 2019 07:54:45 -0700 (PDT)
+        Wed, 12 Jun 2019 11:06:36 -0400
+Received: by mail-qt1-f195.google.com with SMTP id n11so16738387qtl.5;
+        Wed, 12 Jun 2019 08:06:35 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=bT+gRjhnUHcITZVyDjTy7yxpytcU0MLxWkLAIPqteWw=;
-        b=HTuiJKO5ZoBsu2PZtBSv62ZIUrhuFF4o2XCet8jmtkfafKF07y0+rUoAHNOTF01t76
-         0PN4Mn9b5QgwtjpEFzr6YIcMpH3shhQQBVZHnY4QKfg4wQcTXX6DQMl5TPkP+PJfMlTD
-         qXXB7/Sf3cpGGX2fos9gwnEccSGpZkgpb1Aa/5h7AhbkTqMf7wCI2Wezz7eNZh1sDhUj
-         nkLjTotBhCLf0uhXna+dYE3iZRrbTbyqABsU+UcJBo3j7m/kmAa2ttVjUSdV+O/vAHrp
-         RnKpZX2ykFZh33fmAvm/3xIrvDundd5D12xwbr7lQ8abrctHodJecgk9lw01UGzuw1sN
-         RxkA==
-X-Gm-Message-State: APjAAAUmxV0otKZGVbCquh9pmcQl1h3GXi0BKyCr4FdjlDYUcLSb0hCj
-        VE4+Xs3QLC8sgdRatcmCThk=
-X-Google-Smtp-Source: APXvYqzZog9g6xCnR4zHYUJ0suI+/068Gy7cJkGIYif1HT7VnDSyju5wVbF7g0t6qiL48hJmlT6Q0Q==
-X-Received: by 2002:a2e:3008:: with SMTP id w8mr7377643ljw.13.1560351284397;
-        Wed, 12 Jun 2019 07:54:44 -0700 (PDT)
-Received: from xi.terra (c-74bee655.07-184-6d6c6d4.bbcust.telenor.se. [85.230.190.116])
-        by smtp.gmail.com with ESMTPSA id f30sm16287lfa.48.2019.06.12.07.54.42
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 12 Jun 2019 07:54:42 -0700 (PDT)
-Received: from johan by xi.terra with local (Exim 4.92)
-        (envelope-from <johan@kernel.org>)
-        id 1hb4eD-0004oo-So; Wed, 12 Jun 2019 16:54:45 +0200
-Date:   Wed, 12 Jun 2019 16:54:45 +0200
-From:   Johan Hovold <johan@kernel.org>
-To:     Wolfram Sang <wsa@the-dreams.de>
-Cc:     Johan Hovold <johan@kernel.org>, Lee Jones <lee.jones@linaro.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>, balbi@kernel.org,
-        wsa+renesas@sang-engineering.com, gregkh@linuxfoundation.org,
-        linus.walleij@linaro.org, linux-usb@vger.kernel.org,
-        linux-kernel@vger.kernel.org, david.brown@linaro.org,
-        alokc@codeaurora.org, kramasub@codeaurora.org,
-        linux-i2c@vger.kernel.org, linux-gpio@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, andy.gross@linaro.org,
-        jlhugo@gmail.com, linux-arm-kernel@lists.infradead.org
-Subject: Re: [PATCH 2/8] i2c: i2c-qcom-geni: Signify successful driver probe
-Message-ID: <20190612145445.GB18153@localhost>
-References: <20190604104455.8877-1-lee.jones@linaro.org>
- <20190604104455.8877-2-lee.jones@linaro.org>
- <20190605062020.GL22737@tuxbook-pro>
- <20190605071625.GK4797@dell>
- <20190605075656.GC29637@localhost>
- <20190605082047.GM4797@dell>
- <20190605083353.GD29637@localhost>
- <20190605084921.GQ4797@dell>
- <20190605085527.GE29637@localhost>
- <20190605141812.GA962@kunai>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=1g7s/UPWJzJeB4LrTKmbsG4ivrcvy+TUBuxC551yLEY=;
+        b=d66shXrNt0O/ILQOmOrlpZDjdgEODCMdtsY8L/CJMIu4+IkFvmEazMfTJ7Au8U64Rq
+         4P+o2ddPKPEQSDUifBXoloUYWwr9qwk5e+JW89rzkgiw+lEvwwhWtrsYLOz6hEnb4Jkr
+         ibemJxSrT015Q/RbN1pNo4NjbDkvR0VD/tl66yBVm+sPiGbXZdjlFc1ZURJMoZRLl/Xh
+         lH/YUbdq2+jZDlEXh+hk230IGhooh1F/ijF2BQItVkmBkdkGPwhI8FSUPc1/hnsGGdwc
+         82XGN5iEKnO84hvhgyMQspDGrGIxCs9KXUSJLKEATjSdqnlYmREfwsKEBeFqegjQI9jq
+         W0Og==
+X-Gm-Message-State: APjAAAXMtyjaTD2zZw160HMJCu7MGGQCPI9NeL+6/WFh3PhbVAGwttLz
+        dc13i4VXfStaElvT1PcbT2xAFgUu0zPQJ/wQ6OQ=
+X-Google-Smtp-Source: APXvYqzOMpjxx8OTt1LYucvtT3ec0rHQVDXxOvYnWwFFLgDetKQQiEnhNqtCjwvLI9BT1ZM6g2S2uumX596TBUy4Jug=
+X-Received: by 2002:ac8:8dd:: with SMTP id y29mr5832711qth.304.1560351994976;
+ Wed, 12 Jun 2019 08:06:34 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
-        protocol="application/pgp-signature"; boundary="3V7upXqbjpZ4EhLz"
-Content-Disposition: inline
-In-Reply-To: <20190605141812.GA962@kunai>
-User-Agent: Mutt/1.12.0 (2019-05-25)
+References: <380a6185-7ad1-6be0-060b-e6e5d4126917@linaro.org>
+ <a94676381a5ca662c848f7a725562f721c43ce76.camel@sipsolutions.net>
+ <CAK8P3a0kV-i7BJJ2X6C=5n65rSGfo8fUiC4J_G-+M8EctYKbkg@mail.gmail.com>
+ <fc0d08912bc10ad089eb74034726308375279130.camel@redhat.com>
+ <36bca57c999f611353fd9741c55bb2a7@codeaurora.org> <153fafb91267147cf22e2bf102dd822933ec823a.camel@redhat.com>
+ <CAK8P3a2Y+tcL1-V57dtypWHndNT3eDJdcKj29c_v+k8o1HHQig@mail.gmail.com> <f4249aa5f5acdd90275eda35aa16f3cfb29d29be.camel@redhat.com>
+In-Reply-To: <f4249aa5f5acdd90275eda35aa16f3cfb29d29be.camel@redhat.com>
+From:   Arnd Bergmann <arnd@arndb.de>
+Date:   Wed, 12 Jun 2019 17:06:17 +0200
+Message-ID: <CAK8P3a2nzZKtshYfomOOSYkqx5HdU15Wr9b+3va0B1euNhFOAg@mail.gmail.com>
+Subject: Re: [PATCH v2 00/17] net: introduce Qualcomm IPA driver
+To:     Dan Williams <dcbw@redhat.com>
+Cc:     Subash Abhinov Kasiviswanathan <subashab@codeaurora.org>,
+        Johannes Berg <johannes@sipsolutions.net>,
+        Alex Elder <elder@linaro.org>, abhishek.esse@gmail.com,
+        Ben Chan <benchan@google.com>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        cpratapa@codeaurora.org, David Miller <davem@davemloft.net>,
+        DTML <devicetree@vger.kernel.org>,
+        Eric Caruso <ejcaruso@google.com>, evgreen@chromium.org,
+        Ilias Apalodimas <ilias.apalodimas@linaro.org>,
+        Linux ARM <linux-arm-kernel@lists.infradead.org>,
+        linux-arm-msm@vger.kernel.org,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        linux-soc@vger.kernel.org, Networking <netdev@vger.kernel.org>,
+        syadagir@codeaurora.org
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On Wed, Jun 12, 2019 at 4:28 PM Dan Williams <dcbw@redhat.com> wrote:
+> On Wed, 2019-06-12 at 10:31 +0200, Arnd Bergmann wrote:
+> > On Tue, Jun 11, 2019 at 7:23 PM Dan Williams <dcbw@redhat.com> wrote:
+> I was trying to make the point that rmnet doesn't need to care about
+> how the QMAP packets get to the device itself; it can be pretty generic
+> so that it can be used by IPA/qmi_wwan/rmnet_smd/etc.
 
---3V7upXqbjpZ4EhLz
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+rmnet at the moment is completely generic in that regard already,
+however it is implemented as a tunnel driver talking to another
+device rather than an abstraction layer below that driver.
 
-On Wed, Jun 05, 2019 at 04:18:12PM +0200, Wolfram Sang wrote:
->=20
-> > To enable dynamic debugging in driver core you could use something like
-> >=20
-> > 	CONFIG_CMDLINE=3D"dyndbg=3D\"func really_probe =3Dp\""
-> >=20
-> > That gives you two printouts per successful probe, for example:
-> >=20
-> > 	bus: 'usb-serial': really_probe: probing driver edgeport_ti_1 with dev=
-ice ttyUSB0
-> > 	bus: 'usb-serial': really_probe: bound device ttyUSB0 to driver edgepo=
-rt_ti_1
->=20
-> I agree that this scales much better than adding strings to every
-> driver. Also, the driver core will report failed probes other than
-> -ENODEV, or?
+> > The current rmnet model is different in that by design the upper
+> > layer
+> > (rmnet) and the lower layer (qmi_wwan, ipa, ...) are kept independent
+> > in
+> > both directions, i.e. ipa has (almost) no knowledge of rmnet, and
+> > just
+> > has pointers to the other net_device:
+> >
+> >        ipa_device
+> >            net_device
+> >
+> >        rmnet_port
+> >            net_device
+> >
+> > I understand that the rmnet model was intended to provide a cleaner
+> > abstraction, but it's not how we normally structure subsystems in
+> > Linux, and moving to a model more like how wireless_dev works
+> > would improve both readability and performance, as you describe
+> > it, it would be more like (ignoring for now the need for multiple
+> > connections):
+> >
+> >    ipa_dev
+> >         rmnet_dev
+> >                wwan_dev
+> >                       net_device
+>
+> Perhaps I'm assuming too much from this diagram but this shows a 1:1
+> between wwan_dev and "lower" devices.
+>
+> What Johannes is proposing (IIRC) is something a bit looser where a
+> wwan_dev does not necessarily provide netdev itself, but is instead the
+> central point that various channels (control, data, gps, sim card, etc)
+> register with. That way the wwan_dev can provide an overall view of the
+> WWAN device to userspace, and userspace can talk to the wwan_dev to ask
+> the lower drivers (ipa, rmnet, etc) to create new channels (netdev,
+> tty, otherwise) when the control channel has told the modem firmware to
+> expect one.
 
-Right, errors other than -EPROBE_DEFER, -ENODEV and -ENXIO are always
-logged, and the previous three would also be logged with debugging
-enabled.
+Right, as I noted above, I simplified it a bit. We probably want to
+have multiple net_device instances for an ipa_dev, so there has
+to be a 1:n relationship instead of 1:1 at one of the intermediate
+levels, but it's not obvious which level that should be.
 
-Johan
+In theory we could even have a single net_device instance correspond
+to the ipa_dev, but then have multiple IP addresses bound to it,
+so each IP address corresponds to a channel/queue/napi_struct,
+but the user visible object remains a single device.
 
---3V7upXqbjpZ4EhLz
-Content-Type: application/pgp-signature; name="signature.asc"
+I trust that you and Johannes are more qualified than me to make
+the call on that point.
 
------BEGIN PGP SIGNATURE-----
-
-iHUEABYIAB0WIQQHbPq+cpGvN/peuzMLxc3C7H1lCAUCXQESJgAKCRALxc3C7H1l
-CP3ZAQCXRPAnR1biCp42ucqiyFiqTwNI2ivpwkFZxtse1SooNgD/f+BDGNZpuRH0
-tiQ1iXCC4VjcExWVqH6isBuTFoPS2wU=
-=yyFo
------END PGP SIGNATURE-----
-
---3V7upXqbjpZ4EhLz--
+       Arnd
