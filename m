@@ -2,396 +2,175 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 223A842099
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Jun 2019 11:21:20 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9F2EB420B1
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Jun 2019 11:27:09 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2437168AbfFLJUu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 12 Jun 2019 05:20:50 -0400
-Received: from mail.kernel.org ([198.145.29.99]:38674 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S2436698AbfFLJUu (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 12 Jun 2019 05:20:50 -0400
-Received: from localhost.localdomain (unknown [106.200.205.167])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        id S2408733AbfFLJ0Z (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 12 Jun 2019 05:26:25 -0400
+Received: from smtp.codeaurora.org ([198.145.29.96]:52010 "EHLO
+        smtp.codeaurora.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2406598AbfFLJ0Z (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 12 Jun 2019 05:26:25 -0400
+Received: by smtp.codeaurora.org (Postfix, from userid 1000)
+        id AFE27602F3; Wed, 12 Jun 2019 09:26:24 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
+        s=default; t=1560331584;
+        bh=zeHHmyNed96WAFtWPcPGxVLUicNu4T3ZxCI7j9ROzdE=;
+        h=Subject:To:Cc:References:From:Date:In-Reply-To:From;
+        b=eYHB8Z0xlAtQF75Iyu1N8rvwvthKbvX4Ybt+BLDJQGOTg35ylXJpB775wnnsL5ZfW
+         Lvxfug3sHkdIOsEGVqsPNmR4y1a/HgShJwRHE5eZZN3Vngy151Bshn4ptYeSFvUsSb
+         MhgI7HFEvHN3ryBAE8UM0SmUprTZlzzhzXJulQIQ=
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        pdx-caf-mail.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.7 required=2.0 tests=ALL_TRUSTED,BAYES_00,
+        DKIM_INVALID,DKIM_SIGNED,SPF_NONE autolearn=no autolearn_force=no
+        version=3.4.0
+Received: from [10.79.128.120] (blr-bdr-fw-01_globalnat_allzones-outside.qualcomm.com [103.229.18.19])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
         (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 2F9F120874;
-        Wed, 12 Jun 2019 09:20:45 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1560331249;
-        bh=K07r5YTCrJokUqoNcVsCrflmcJKBzGbfdpM/dUQeBmw=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=IOse1PXlbnIWzL11Z56cg4rvCjzB5I8bXjExgcErlx/VJMFqN1DreRba06GraXiE7
-         El44AHwRG/fVivMTCWcmEFiZOr+tINWC5XNH57uoSYjg5bV4zaBiYye988OMtAo2uj
-         3NHlMnaHD+oWpGM/56a3M7br6+HkxsAjFNifhyW0=
-From:   Vinod Koul <vkoul@kernel.org>
-To:     Stephen Boyd <sboyd@kernel.org>
-Cc:     linux-arm-msm@vger.kernel.org,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Deepak Katragadda <dkatraga@codeaurora.org>,
+        (Authenticated sender: vivek.gautam@smtp.codeaurora.org)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 5D72F60256;
+        Wed, 12 Jun 2019 09:26:22 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
+        s=default; t=1560331584;
+        bh=zeHHmyNed96WAFtWPcPGxVLUicNu4T3ZxCI7j9ROzdE=;
+        h=Subject:To:Cc:References:From:Date:In-Reply-To:From;
+        b=eYHB8Z0xlAtQF75Iyu1N8rvwvthKbvX4Ybt+BLDJQGOTg35ylXJpB775wnnsL5ZfW
+         Lvxfug3sHkdIOsEGVqsPNmR4y1a/HgShJwRHE5eZZN3Vngy151Bshn4ptYeSFvUsSb
+         MhgI7HFEvHN3ryBAE8UM0SmUprTZlzzhzXJulQIQ=
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 5D72F60256
+Authentication-Results: pdx-caf-mail.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: pdx-caf-mail.web.codeaurora.org; spf=none smtp.mailfrom=vivek.gautam@codeaurora.org
+Subject: Re: [PATCH] arm64: dts: sdm845: Add iommus property to qup1
+To:     Stephen Boyd <swboyd@chromium.org>
+Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
         Andy Gross <agross@kernel.org>,
-        David Brown <david.brown@linaro.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        linux-clk@vger.kernel.org, Taniya Das <tdas@codeaurora.org>,
-        Vinod Koul <vkoul@kernel.org>
-Subject: [PATCH v2 4/5] clk: qcom: clk-alpha-pll: Add support for Trion PLLs
-Date:   Wed, 12 Jun 2019 14:47:21 +0530
-Message-Id: <20190612091722.9377-5-vkoul@kernel.org>
-X-Mailer: git-send-email 2.20.1
-In-Reply-To: <20190612091722.9377-1-vkoul@kernel.org>
-References: <20190612091722.9377-1-vkoul@kernel.org>
+        open list <linux-kernel@vger.kernel.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        Sibi Sankar <sibis@codeaurora.org>
+References: <20190604222939.195471-1-swboyd@chromium.org>
+ <20190604223700.GE4814@minitux> <5cf6f4bb.1c69fb81.c39da.5496@mx.google.com>
+ <CAFp+6iHZeawnz7Vfk3=Oox-GN_y6c-E9wMwc-qdp1bTOXgqjFQ@mail.gmail.com>
+ <5cf82c6f.1c69fb81.9e342.dbda@mx.google.com>
+ <CAFp+6iE8FUXxexKbYy=ak+se-pj1XXUZxTu5o=hJvg66V6+Rzw@mail.gmail.com>
+ <5cfee60a.1c69fb81.584d9.cf12@mx.google.com>
+From:   Vivek Gautam <vivek.gautam@codeaurora.org>
+Message-ID: <7299c814-3d9f-c5d1-fe7b-44e05f8b4ec9@codeaurora.org>
+Date:   Wed, 12 Jun 2019 14:56:20 +0530
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:60.0) Gecko/20100101
+ Thunderbird/60.7.0
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+In-Reply-To: <5cfee60a.1c69fb81.584d9.cf12@mx.google.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Content-Language: en-US
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Deepak Katragadda <dkatraga@codeaurora.org>
 
-Add programming sequence support for managing the Trion
-PLLs.
 
-Signed-off-by: Deepak Katragadda <dkatraga@codeaurora.org>
-Signed-off-by: Taniya Das <tdas@codeaurora.org>
-[vkoul: Fix style and format issues
-  convert to use pll type infrastructure
-  remove unnecessary checks in code
-  remove unused code]
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
----
- drivers/clk/qcom/clk-alpha-pll.c | 228 +++++++++++++++++++++++++++++++
- drivers/clk/qcom/clk-alpha-pll.h |   7 +
- 2 files changed, 235 insertions(+)
+On 6/11/2019 4:51 AM, Stephen Boyd wrote:
+> Quoting Vivek Gautam (2019-06-06 04:17:16)
+>> Hi Stephen,
+>>
+>> On Thu, Jun 6, 2019 at 2:27 AM Stephen Boyd <swboyd@chromium.org> wrote:
+>>> Quoting Vivek Gautam (2019-06-04 21:55:26)
+>>>
+>>>> Cheza will throw faults for anything that is programmed with TZ on mtp
+>>>> as all of that should be handled in HLOS. The firmwares of all these
+>>>> peripherals assume that the SID reservation is done (whether in TZ or HLOS).
+>>>>
+>>>> I am inclined to moving the iommus property for all 'TZ' to board dts files.
+>>>> MTP wouldn't need those SIDs. So, the SOC level dtsi will have just the
+>>>> HLOS SIDs.
+>>> So you're saying you'd like to have the SID be <&apps_smmu 0x6c3 0x0> in
+>>> the sdm845.dtsi file and then override this on Cheza because our SID is
+>>> different (possibly because we don't use GSI)? Why can't we program the
+>>> SID in Cheza firmware to match the "HLOS" SID of 0x6c3?
+>> Sorry my bad, I missed the overriding part.
+>> May be we add the lists of SIDs in board dts only. So, cheza dts will
+>> have all these SIDs -
+>> <&apps_smmu 0x6c0 0x3>   // for both 0x6c0 (TZ) and 0x6c3 (HLOS)
+>> <&apps_smmu 0x6d6 0x0>   // if we want to use the GSI dma.
+>> and
+>> MTP will have
+>> <&apps_smmu 0x6c3 0x0>
+>> <&apps_smmu 0x6d6 0x0>
+>> WDUT?
+> I'd prefer to fix the firmware so that the HLOS SID is used even on this
+> board. Making Cheza use something different from MTP doesn't sound so
+> good. Do you know how that works? Is there some configuration register
+> or something that I should be looking for to see why the SID is not the
+> HLOS one? It's definitely generating SIDs for the TZ SID (0x6c0), but
+> I'd like to make sure that we can't change it because it's tied to some
+> hardware signal like the NS bit and/or the Execution Level. Hopefully
+> it's a config and then our difference from MTP can be minimized.
 
-diff --git a/drivers/clk/qcom/clk-alpha-pll.c b/drivers/clk/qcom/clk-alpha-pll.c
-index 2c6773188761..30210f5c6726 100644
---- a/drivers/clk/qcom/clk-alpha-pll.c
-+++ b/drivers/clk/qcom/clk-alpha-pll.c
-@@ -32,6 +32,7 @@
- # define PLL_LOCK_DET		BIT(31)
- 
- #define PLL_L_VAL(p)		((p)->offset + (p)->regs[PLL_OFF_L_VAL])
-+#define PLL_CAL_L_VAL(p)	((p)->offset + (p)->regs[PLL_OFF_CAL_L_VAL])
- #define PLL_ALPHA_VAL(p)	((p)->offset + (p)->regs[PLL_OFF_ALPHA_VAL])
- #define PLL_ALPHA_VAL_U(p)	((p)->offset + (p)->regs[PLL_OFF_ALPHA_VAL_U])
- 
-@@ -44,14 +45,17 @@
- # define PLL_VCO_MASK		0x3
- 
- #define PLL_USER_CTL_U(p)	((p)->offset + (p)->regs[PLL_OFF_USER_CTL_U])
-+#define PLL_USER_CTL_U1(p)	((p)->offset + (p)->regs[PLL_OFF_USER_CTL_U1])
- 
- #define PLL_CONFIG_CTL(p)	((p)->offset + (p)->regs[PLL_OFF_CONFIG_CTL])
- #define PLL_CONFIG_CTL_U(p)	((p)->offset + (p)->regs[PLL_OFF_CONFIG_CTL_U])
-+#define PLL_CONFIG_CTL_U1(p)	((p)->offset + (p)->regs[PLL_OFF_CONFIG_CTL_U11])
- #define PLL_TEST_CTL(p)		((p)->offset + (p)->regs[PLL_OFF_TEST_CTL])
- #define PLL_TEST_CTL_U(p)	((p)->offset + (p)->regs[PLL_OFF_TEST_CTL_U])
- #define PLL_STATUS(p)		((p)->offset + (p)->regs[PLL_OFF_STATUS])
- #define PLL_OPMODE(p)		((p)->offset + (p)->regs[PLL_OFF_OPMODE])
- #define PLL_FRAC(p)		((p)->offset + (p)->regs[PLL_OFF_FRAC])
-+#define PLL_CAL_VAL(p)		((p)->offset + (p)->regs[PLL_OFF_CAL_VAL])
- 
- const u8 clk_alpha_pll_regs[][PLL_OFF_MAX_REGS] = {
- 	[CLK_ALPHA_PLL_TYPE_DEFAULT] =  {
-@@ -96,6 +100,22 @@ const u8 clk_alpha_pll_regs[][PLL_OFF_MAX_REGS] = {
- 		[PLL_OFF_OPMODE] = 0x2c,
- 		[PLL_OFF_FRAC] = 0x38,
- 	},
-+	[CLK_ALPHA_PLL_TYPE_TRION] = {
-+		[PLL_OFF_L_VAL] = 0x04,
-+		[PLL_OFF_CAL_L_VAL] = 0x08,
-+		[PLL_OFF_USER_CTL] = 0x0c,
-+		[PLL_OFF_USER_CTL_U] = 0x10,
-+		[PLL_OFF_USER_CTL_U1] = 0x14,
-+		[PLL_OFF_CONFIG_CTL] = 0x18,
-+		[PLL_OFF_CONFIG_CTL_U] = 0x1c,
-+		[PLL_OFF_CONFIG_CTL_U1] = 0x20,
-+		[PLL_OFF_TEST_CTL] = 0x24,
-+		[PLL_OFF_TEST_CTL_U] = 0x28,
-+		[PLL_OFF_STATUS] = 0x30,
-+		[PLL_OFF_OPMODE] = 0x38,
-+		[PLL_OFF_ALPHA_VAL] = 0x40,
-+		[PLL_OFF_CAL_VAL] = 0x44,
-+	},
- };
- EXPORT_SYMBOL_GPL(clk_alpha_pll_regs);
- 
-@@ -120,6 +140,10 @@ EXPORT_SYMBOL_GPL(clk_alpha_pll_regs);
- #define FABIA_PLL_OUT_MASK	0x7
- #define FABIA_PLL_RATE_MARGIN	500
- 
-+#define TRION_PLL_STANDBY	0x0
-+#define TRION_PLL_RUN		0x1
-+#define TRION_PLL_OUT_MASK	0x7
-+
- #define pll_alpha_width(p)					\
- 		((PLL_ALPHA_VAL_U(p) - PLL_ALPHA_VAL(p) == 4) ?	\
- 				 ALPHA_REG_BITWIDTH : ALPHA_REG_16BIT_WIDTH)
-@@ -730,6 +754,130 @@ static long alpha_pll_huayra_round_rate(struct clk_hw *hw, unsigned long rate,
- 	return alpha_huayra_pll_round_rate(rate, *prate, &l, &a);
- }
- 
-+static int trion_pll_is_enabled(struct clk_alpha_pll *pll,
-+				struct regmap *regmap)
-+{
-+	u32 mode_regval, opmode_regval;
-+	int ret;
-+
-+	ret = regmap_read(regmap, PLL_MODE(pll), &mode_regval);
-+	ret |= regmap_read(regmap, PLL_OPMODE(pll), &opmode_regval);
-+	if (ret)
-+		return 0;
-+
-+	return ((opmode_regval & TRION_PLL_RUN) && (mode_regval & PLL_OUTCTRL));
-+}
-+
-+static int clk_trion_pll_is_enabled(struct clk_hw *hw)
-+{
-+	struct clk_alpha_pll *pll = to_clk_alpha_pll(hw);
-+
-+	return trion_pll_is_enabled(pll, pll->clkr.regmap);
-+}
-+
-+static int clk_trion_pll_enable(struct clk_hw *hw)
-+{
-+	struct clk_alpha_pll *pll = to_clk_alpha_pll(hw);
-+	struct regmap *regmap = pll->clkr.regmap;
-+	u32 val;
-+	int ret;
-+
-+	ret = regmap_read(regmap, PLL_MODE(pll), &val);
-+	if (ret)
-+		return ret;
-+
-+	/* If in FSM mode, just vote for it */
-+	if (val & PLL_VOTE_FSM_ENA) {
-+		ret = clk_enable_regmap(hw);
-+		if (ret)
-+			return ret;
-+		return wait_for_pll_enable_active(pll);
-+	}
-+
-+	/* Set operation mode to RUN */
-+	regmap_write(regmap, PLL_OPMODE(pll), TRION_PLL_RUN);
-+
-+	ret = wait_for_pll_enable_lock(pll);
-+	if (ret)
-+		return ret;
-+
-+	/* Enable the PLL outputs */
-+	ret = regmap_update_bits(regmap, PLL_USER_CTL(pll),
-+				 TRION_PLL_OUT_MASK, TRION_PLL_OUT_MASK);
-+	if (ret)
-+		return ret;
-+
-+	/* Enable the global PLL outputs */
-+	return regmap_update_bits(regmap, PLL_MODE(pll),
-+				 PLL_OUTCTRL, PLL_OUTCTRL);
-+}
-+
-+static void clk_trion_pll_disable(struct clk_hw *hw)
-+{
-+	struct clk_alpha_pll *pll = to_clk_alpha_pll(hw);
-+	struct regmap *regmap = pll->clkr.regmap;
-+	u32 val;
-+	int ret;
-+
-+	ret = regmap_read(regmap, PLL_MODE(pll), &val);
-+	if (ret)
-+		return;
-+
-+	/* If in FSM mode, just unvote it */
-+	if (val & PLL_VOTE_FSM_ENA) {
-+		clk_disable_regmap(hw);
-+		return;
-+	}
-+
-+	/* Disable the global PLL output */
-+	ret = regmap_update_bits(regmap, PLL_MODE(pll), PLL_OUTCTRL, 0);
-+	if (ret)
-+		return;
-+
-+	/* Disable the PLL outputs */
-+	ret = regmap_update_bits(regmap, PLL_USER_CTL(pll),
-+				 TRION_PLL_OUT_MASK, 0);
-+	if (ret)
-+		return;
-+
-+	/* Place the PLL mode in STANDBY */
-+	regmap_write(regmap, PLL_OPMODE(pll), TRION_PLL_STANDBY);
-+	regmap_update_bits(regmap, PLL_MODE(pll), PLL_RESET_N, PLL_RESET_N);
-+}
-+
-+static unsigned long
-+clk_trion_pll_recalc_rate(struct clk_hw *hw, unsigned long parent_rate)
-+{
-+	struct clk_alpha_pll *pll = to_clk_alpha_pll(hw);
-+	struct regmap *regmap = pll->clkr.regmap;
-+	u32 l, frac;
-+	u64 prate = parent_rate;
-+
-+	regmap_read(regmap, PLL_L_VAL(pll), &l);
-+	regmap_read(regmap, PLL_ALPHA_VAL(pll), &frac);
-+
-+	return alpha_pll_calc_rate(prate, l, frac, ALPHA_REG_16BIT_WIDTH);
-+}
-+
-+static long clk_trion_pll_round_rate(struct clk_hw *hw, unsigned long rate,
-+				     unsigned long *prate)
-+{
-+	struct clk_alpha_pll *pll = to_clk_alpha_pll(hw);
-+	unsigned long min_freq, max_freq;
-+	u32 l;
-+	u64 a;
-+
-+	rate = alpha_pll_round_rate(rate, *prate,
-+				    &l, &a, ALPHA_REG_16BIT_WIDTH);
-+	if (!pll->vco_table || alpha_pll_find_vco(pll, rate))
-+		return rate;
-+
-+	min_freq = pll->vco_table[0].min_freq;
-+	max_freq = pll->vco_table[pll->num_vco - 1].max_freq;
-+
-+	return clamp(rate, min_freq, max_freq);
-+}
-+
- const struct clk_ops clk_alpha_pll_ops = {
- 	.enable = clk_alpha_pll_enable,
- 	.disable = clk_alpha_pll_disable,
-@@ -760,6 +908,15 @@ const struct clk_ops clk_alpha_pll_hwfsm_ops = {
- };
- EXPORT_SYMBOL_GPL(clk_alpha_pll_hwfsm_ops);
- 
-+const struct clk_ops clk_trion_fixed_pll_ops = {
-+	.enable = clk_trion_pll_enable,
-+	.disable = clk_trion_pll_disable,
-+	.is_enabled = clk_trion_pll_is_enabled,
-+	.recalc_rate = clk_trion_pll_recalc_rate,
-+	.round_rate = clk_trion_pll_round_rate,
-+};
-+EXPORT_SYMBOL_GPL(clk_trion_fixed_pll_ops);
-+
- static unsigned long
- clk_alpha_pll_postdiv_recalc_rate(struct clk_hw *hw, unsigned long parent_rate)
- {
-@@ -1053,6 +1210,77 @@ static unsigned long clk_alpha_pll_postdiv_fabia_recalc_rate(struct clk_hw *hw,
- 	return (parent_rate / div);
- }
- 
-+static unsigned long
-+clk_trion_pll_postdiv_recalc_rate(struct clk_hw *hw, unsigned long parent_rate)
-+{
-+	struct clk_alpha_pll_postdiv *pll = to_clk_alpha_pll_postdiv(hw);
-+	struct regmap *regmap = pll->clkr.regmap;
-+	u32 i, div = 1, val;
-+
-+	regmap_read(regmap, PLL_USER_CTL(pll), &val);
-+
-+	val >>= pll->post_div_shift;
-+	val &= PLL_POST_DIV_MASK(pll);
-+
-+	for (i = 0; i < pll->num_post_div; i++) {
-+		if (pll->post_div_table[i].val == val) {
-+			div = pll->post_div_table[i].div;
-+			break;
-+		}
-+	}
-+
-+	return (parent_rate / div);
-+}
-+
-+static long
-+clk_trion_pll_postdiv_round_rate(struct clk_hw *hw, unsigned long rate,
-+				 unsigned long *prate)
-+{
-+	struct clk_alpha_pll_postdiv *pll = to_clk_alpha_pll_postdiv(hw);
-+
-+	return divider_round_rate(hw, rate, prate, pll->post_div_table,
-+				  pll->width, CLK_DIVIDER_ROUND_CLOSEST);
-+};
-+
-+static int
-+clk_trion_pll_postdiv_set_rate(struct clk_hw *hw, unsigned long rate,
-+			       unsigned long parent_rate)
-+{
-+	struct clk_alpha_pll_postdiv *pll = to_clk_alpha_pll_postdiv(hw);
-+	struct regmap *regmap = pll->clkr.regmap;
-+	int i, val = 0, div, ret;
-+
-+	/*
-+	 * If the PLL is in FSM mode, then treat the set_rate callback
-+	 * as a no-operation.
-+	 */
-+	ret = regmap_read(regmap, PLL_MODE(pll), &val);
-+	if (ret)
-+		return ret;
-+
-+	if (val & PLL_VOTE_FSM_ENA)
-+		return 0;
-+
-+	div = DIV_ROUND_UP_ULL(parent_rate, rate);
-+	for (i = 0; i < pll->num_post_div; i++) {
-+		if (pll->post_div_table[i].div == div) {
-+			val = pll->post_div_table[i].val;
-+			break;
-+		}
-+	}
-+
-+	return regmap_update_bits(regmap, PLL_USER_CTL(pll),
-+				  PLL_POST_DIV_MASK(pll) << PLL_POST_DIV_SHIFT,
-+				  val << PLL_POST_DIV_SHIFT);
-+}
-+
-+const struct clk_ops clk_trion_pll_postdiv_ops = {
-+	.recalc_rate = clk_trion_pll_postdiv_recalc_rate,
-+	.round_rate = clk_trion_pll_postdiv_round_rate,
-+	.set_rate = clk_trion_pll_postdiv_set_rate,
-+};
-+EXPORT_SYMBOL_GPL(clk_trion_pll_postdiv_ops);
-+
- static long clk_alpha_pll_postdiv_fabia_round_rate(struct clk_hw *hw,
- 				unsigned long rate, unsigned long *prate)
- {
-diff --git a/drivers/clk/qcom/clk-alpha-pll.h b/drivers/clk/qcom/clk-alpha-pll.h
-index 66755f0f84fc..15f27f4b06df 100644
---- a/drivers/clk/qcom/clk-alpha-pll.h
-+++ b/drivers/clk/qcom/clk-alpha-pll.h
-@@ -13,22 +13,27 @@ enum {
- 	CLK_ALPHA_PLL_TYPE_HUAYRA,
- 	CLK_ALPHA_PLL_TYPE_BRAMMO,
- 	CLK_ALPHA_PLL_TYPE_FABIA,
-+	CLK_ALPHA_PLL_TYPE_TRION,
- 	CLK_ALPHA_PLL_TYPE_MAX,
- };
- 
- enum {
- 	PLL_OFF_L_VAL,
-+	PLL_OFF_CAL_L_VAL,
- 	PLL_OFF_ALPHA_VAL,
- 	PLL_OFF_ALPHA_VAL_U,
- 	PLL_OFF_USER_CTL,
- 	PLL_OFF_USER_CTL_U,
-+	PLL_OFF_USER_CTL_U1,
- 	PLL_OFF_CONFIG_CTL,
- 	PLL_OFF_CONFIG_CTL_U,
-+	PLL_OFF_CONFIG_CTL_U1,
- 	PLL_OFF_TEST_CTL,
- 	PLL_OFF_TEST_CTL_U,
- 	PLL_OFF_STATUS,
- 	PLL_OFF_OPMODE,
- 	PLL_OFF_FRAC,
-+	PLL_OFF_CAL_VAL,
- 	PLL_OFF_MAX_REGS
- };
- 
-@@ -117,5 +122,7 @@ void clk_alpha_pll_configure(struct clk_alpha_pll *pll, struct regmap *regmap,
- 			     const struct alpha_pll_config *config);
- void clk_fabia_pll_configure(struct clk_alpha_pll *pll, struct regmap *regmap,
- 				const struct alpha_pll_config *config);
-+extern const struct clk_ops clk_trion_fixed_pll_ops;
-+extern const struct clk_ops clk_trion_pll_postdiv_ops;
- 
- #endif
--- 
-2.20.1
+I don't think SMMU limits any such programming of SIDs. It's a design 
+decision
+to program few SIDs in TZ/Hyp and allocate the corresponding context banks
+and create respective mappings. You should be able to see these SMR 
+configurations
+before kernel boots up. I use a simple T32 command -
+
+smmu.add "<name>" <smmu_type> <base_address>
+smmu.streammaptable <name>
+
+e.g. for sdm845 apps_smmu
+
+smmu.add "apps" MMU500 a:0x15000000
+smmu.StreamMapTable apps
+
+This dumps all the information regarding the smmu.
+
+>
+> As far as I can tell, HLOS on SDM845 has always used GPI (yet another
+> DMA engine) to do the DMA transfers. And the GPI is the hardware block
+> that uses the SID of 0x6d6 above, so putting that into iommus for the
+> geniqup doesn't make any sense given that GPI is another node. Can you
+> confirm this is the case? Furthermore, the SID of 0x6c3 sounds untested?
+> Has it ever been generated on SDM845 MTP?
+
+I will get back with this information.
+
+BRs
+Vivek
+
+>
+> If we ever support GPI, I'd expect to see something like this in DT:
+>
+> 	gpi_dma: gpi@a00000 {
+> 		reg = <0x00a00000 0x60000>;
+> 		iommus = <&apps_smmu 0x6d6 0x0>;
+> 		...
+> 	};
+>
+> 	geniqup@ac0000 {
+> 		reg = <0x00ac0000 0x6000>;
+> 		iommus = <&apps_smmu 0x6c3 0x0>;
+>
+> 		i2c@....{
+>
+> 			dmas = <&gpi_dma ....>;
+> 		};
+>
+> But now I'm worried that the geniqup needs the proper geniqup wrapper
+> clks to talk to it. Most likely the GPI is embedded inside the geniqup
+> wrapper and sits right next to the bus to do bus DMA mastering. From the
+> DT side, it means we should either put it inside the geniqup node, or we
+> should add the wrapper clks to the GPI node and hope things work out
+> with regards to clks and shared resources being used at the right time.
+>
+> If we're left with trying to figure out how to express the different
+> SIDs depending on the CPU execution state then it may be easier to push
+> for GPI upstreaming and use that dma engine to "fold" the SID
+> numberspace into one SID for the GPI. This would avoid having to deal
+> with the HLOS vs. TZ SID problem by adding a whole other driver. Or we
+> could just rip out the non-GPI DMA support in this driver because the
+> SID is all confused.
+>
 
