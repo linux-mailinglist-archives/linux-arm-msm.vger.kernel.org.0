@@ -2,160 +2,141 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id D7B4242D99
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Jun 2019 19:34:40 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5D4D442E33
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Jun 2019 19:59:57 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728658AbfFLRek (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 12 Jun 2019 13:34:40 -0400
-Received: from mail-pl1-f195.google.com ([209.85.214.195]:43967 "EHLO
-        mail-pl1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728091AbfFLRej (ORCPT
+        id S1727888AbfFLR6s (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 12 Jun 2019 13:58:48 -0400
+Received: from mail-it1-f196.google.com ([209.85.166.196]:37695 "EHLO
+        mail-it1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727439AbfFLR6s (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 12 Jun 2019 13:34:39 -0400
-Received: by mail-pl1-f195.google.com with SMTP id cl9so6900933plb.10
-        for <linux-arm-msm@vger.kernel.org>; Wed, 12 Jun 2019 10:34:39 -0700 (PDT)
+        Wed, 12 Jun 2019 13:58:48 -0400
+Received: by mail-it1-f196.google.com with SMTP id x22so12040437itl.2;
+        Wed, 12 Jun 2019 10:58:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=hf77Z7okHs6KAWJMSKNVF4d5KTz/UD7D/pDjyEK/gYs=;
-        b=aTi7+AmNi+MLs9q+r2+2Oe6atamFZY7EWfGeRNfBIg2NjakNPPZ43cfHjCccLr2OOo
-         p46JPMzb+PauyVyL6JqaMeTK2J4XfqUrUQGeI+ZLHAWeD5McQUhUrEi7KFrbFPxHjM9f
-         T/zymGxAKPZhoIx85qzNUx4yFkEv7qeiQsUtvXO9atO6NBEitjcS66KPloQrjvsm8o+e
-         xORntiGIiFJr8wKUMDQPOFVyovoRDTmkBBa5A/evBxZ0ps867zg0iIrVyNf97dx6Zm/n
-         IdjLIJN0UQ/eRwW/b5FC16lkaAqBnNzXWi1pAfuNzRNRi9LVDsSclZMmT4lSvJwIh4xP
-         E5dA==
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=iJG2vQZhcPeJyWwyoiZlnIBWFYcWNy7uPN6RTvt3o+0=;
+        b=XzeKPY4UghingG2IHUZj64o5cUYXhSbgoRNlc2ZYSYp19Xb8MeOj9g4cyCBylvQIJh
+         wLdBJkIJKdeeyzOChwsKtMRRjxXx+i7HA90CEf1Zjd+ke64dOY4eZ0vo4X+P8bUVg2x8
+         cTnwDbkdqGs29ml8EOlAOsZ/CeH1L2BFZnzI96H2449TrjsRS3mLgYGPhGde3CEOFWTU
+         d5rtmjG4RDEjw06GweP8Ae/jfnCaibpeyqnj1mhSIkHNUliG5KoRzga9xg6ZfrcBJTBP
+         toh6V70LGrupSKYSDQK32DkuGqg9WZcJzYMNZ1/7Wmtg2LyTXR72r+qsWNzwhviHYpN8
+         SWUg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=hf77Z7okHs6KAWJMSKNVF4d5KTz/UD7D/pDjyEK/gYs=;
-        b=oGBGbNIXKGd45K+dmJTVeDKXil48Ic5nrIeLhVQ3rLERqFM/s1e37vF7P8DuEVeveO
-         50iwZlQlqRBd/6F0dGWK/gJercnohe9iA9q08LZz/uoQa98+CLPfBcew2YwUllIf/70t
-         vdMxcZfjXehbMwrhdbjyGG9IG5INDR3ovB4TcbXIiZ8om1pqr/A3w23vaMQA1wJF9Kno
-         fUBteEKDovUj7OBkYV20DqgRv6Ytbkiro065VZkqGj52/72D7nj5vxBn2WInnuEFn5M5
-         o+xMMQTIG97H7B6yp3f/XaGQ/868tBMk8yh5W328wcny/Pi5Qt8gwhRK4WBG5LB0Hugl
-         TWqA==
-X-Gm-Message-State: APjAAAXxDRpqrYXMZhoT7oVJ6IU6nlGPgS9B/ofEQPSUuJT1B21Uuqt+
-        PuzSH7qP5oOgVrHNYI2XZSp5Nw==
-X-Google-Smtp-Source: APXvYqy4DZ49qp2EU0kGEhJdBUUq/lv7cA/TCZctxhPe/YZuPI9ZnWTiGzXXhAkf7DiepbF2F9ehCg==
-X-Received: by 2002:a17:902:8d92:: with SMTP id v18mr59822777plo.211.1560360878876;
-        Wed, 12 Jun 2019 10:34:38 -0700 (PDT)
-Received: from minitux (104-188-17-28.lightspeed.sndgca.sbcglobal.net. [104.188.17.28])
-        by smtp.gmail.com with ESMTPSA id z3sm75832pjn.16.2019.06.12.10.34.37
-        (version=TLS1_3 cipher=AEAD-AES256-GCM-SHA384 bits=256/256);
-        Wed, 12 Jun 2019 10:34:38 -0700 (PDT)
-Date:   Wed, 12 Jun 2019 10:34:36 -0700
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Niklas Cassel <niklas.cassel@linaro.org>
-Cc:     Kishon Vijay Abraham I <kishon@ti.com>,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        stable@vger.kernel.org, Evan Green <evgreen@chromium.org>,
-        Marc Gonzalez <marc.w.gonzalez@free.fr>,
-        Vivek Gautam <vivek.gautam@codeaurora.org>
-Subject: Re: [PATCH] phy: qcom-qmp: Correct READY_STATUS poll break condition
-Message-ID: <20190612173436.GZ4814@minitux>
-References: <20190604232443.3417-1-bjorn.andersson@linaro.org>
- <20190612130858.GA11167@centauri>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=iJG2vQZhcPeJyWwyoiZlnIBWFYcWNy7uPN6RTvt3o+0=;
+        b=ET2ERH4b0uXcFJLNxX35mI52yQQrWV42hhDFB52lHQ8XxhUWBskXpKxs9zPeB4b988
+         yUmINoFGytjRF2aDvxe90/sGCPzCusbLhp4Xxb//r8bHLBozZ1LFAhCPxku21UKd1+dV
+         6xJqwwpAB1ZI6iinRENkwPfXbtCViFDpvCAOZLTLOnlp4hZIuo9mvBhI6gxw5NAmmrtI
+         Iu2gRX/171iVuD20FjZzRO2kfAc6800cMpZCwrwG6Az0/Kj3Q2eKiVqABXUQ4Jj/Q7bC
+         0TzBI9gVMNl6N2dPOi62JAl7rL5EV/xmxGSsihloOniiJ1+mJthVGn8jVVRI/P1s8uO8
+         BlOg==
+X-Gm-Message-State: APjAAAUoG6pl669FaAfeN0jOlmQRI5LNgsGRqjuxq3VChMrI7WoJHQoe
+        f0B5vBXMEFIDBWUT6iuBsKfqkHu/V1U+irafFR4=
+X-Google-Smtp-Source: APXvYqy8FsnT2tXAP9AmLOyZ4r6ik6vu3DdC9qVPGnxzd/WzDMecFvfZ2ITzSGUE4E2Ce+Va6U+5wKKkP5QgrxvaLiI=
+X-Received: by 2002:a02:7121:: with SMTP id n33mr52373916jac.19.1560362326654;
+ Wed, 12 Jun 2019 10:58:46 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20190612130858.GA11167@centauri>
-User-Agent: Mutt/1.12.0 (2019-05-25)
+References: <20190605210856.20677-1-bjorn.andersson@linaro.org> <20190605210856.20677-3-bjorn.andersson@linaro.org>
+In-Reply-To: <20190605210856.20677-3-bjorn.andersson@linaro.org>
+From:   Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
+Date:   Wed, 12 Jun 2019 11:58:35 -0600
+Message-ID: <CAOCk7Nocb7VO5xCcuK1FAPVdPr9U-7z8qOL4yt3ig=05e7brgg@mail.gmail.com>
+Subject: Re: [RFC 2/2] iommu: arm-smmu: Don't blindly use first SMR to
+ calculate mask
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     Joerg Roedel <joro@8bytes.org>, Will Deacon <will.deacon@arm.com>,
+        Robin Murphy <robin.murphy@arm.com>,
+        Patrick Daly <pdaly@codeaurora.org>,
+        Jeffrey Hugo <jhugo@codeaurora.org>,
+        MSM <linux-arm-msm@vger.kernel.org>,
+        lkml <linux-kernel@vger.kernel.org>,
+        iommu@lists.linux-foundation.org,
+        Vivek Gautam <vivek.gautam@codeaurora.org>,
+        linux-arm-kernel@lists.infradead.org
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed 12 Jun 06:08 PDT 2019, Niklas Cassel wrote:
+On Wed, Jun 5, 2019 at 3:09 PM Bjorn Andersson
+<bjorn.andersson@linaro.org> wrote:
+>
+> With the SMRs inherited from the bootloader the first SMR might actually
+> be valid and in use. As such probing the SMR mask using the first SMR
+> might break a stream in use. Search for an unused stream and use this to
+> probe the SMR mask.
+>
+> Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
 
-> On Tue, Jun 04, 2019 at 04:24:43PM -0700, Bjorn Andersson wrote:
-> > After issuing a PHY_START request to the QMP, the hardware documentation
-> > states that the software should wait for the PCS_READY_STATUS to become
-> > 1.
-> > 
-> > With the introduction of c9b589791fc1 ("phy: qcom: Utilize UFS reset
-> > controller") an additional 1ms delay was introduced between the start
-> > request and the check of the status bit. This greatly increases the
-> > chances for the hardware to actually becoming ready before the status
-> > bit is read.
-> > 
-> > The result can be seen in that UFS PHY enabling is now reported as a
-> > failure in 10% of the boots on SDM845, which is a clear regression from
-> > the previous rare/occasional failure.
-> > 
-> > This patch fixes the "break condition" of the poll to check for the
-> > correct state of the status bit.
-> > 
-> > Unfortunately PCIe on 8996 and 8998 does not specify the mask_pcs_ready
-> > register, which means that the code checks a bit that's always 0. So the
-> > patch also fixes these, in order to not regress these targets.
-> > 
-> > Cc: stable@vger.kernel.org
-> > Cc: Evan Green <evgreen@chromium.org>
-> > Cc: Marc Gonzalez <marc.w.gonzalez@free.fr>
-> > Cc: Vivek Gautam <vivek.gautam@codeaurora.org>
-> > Fixes: 73d7ec899bd8 ("phy: qcom-qmp: Add msm8998 PCIe QMP PHY support")
-> > Fixes: e78f3d15e115 ("phy: qcom-qmp: new qmp phy driver for qcom-chipsets")
-> > Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
-> > ---
-> > 
-> > @Kishon, this is a regression spotted in v5.2-rc1, so please consider applying
-> > this towards v5.2.
-> > 
-> >  drivers/phy/qualcomm/phy-qcom-qmp.c | 4 +++-
-> >  1 file changed, 3 insertions(+), 1 deletion(-)
-> > 
-> > diff --git a/drivers/phy/qualcomm/phy-qcom-qmp.c b/drivers/phy/qualcomm/phy-qcom-qmp.c
-> > index cd91b4179b10..43abdfd0deed 100644
-> > --- a/drivers/phy/qualcomm/phy-qcom-qmp.c
-> > +++ b/drivers/phy/qualcomm/phy-qcom-qmp.c
-> > @@ -1074,6 +1074,7 @@ static const struct qmp_phy_cfg msm8996_pciephy_cfg = {
-> >  
-> >  	.start_ctrl		= PCS_START | PLL_READY_GATE_EN,
-> >  	.pwrdn_ctrl		= SW_PWRDN | REFCLK_DRV_DSBL,
-> > +	.mask_pcs_ready		= PHYSTATUS,
-> >  	.mask_com_pcs_ready	= PCS_READY,
-> >  
-> >  	.has_phy_com_ctrl	= true,
-> > @@ -1253,6 +1254,7 @@ static const struct qmp_phy_cfg msm8998_pciephy_cfg = {
-> >  
-> >  	.start_ctrl             = SERDES_START | PCS_START,
-> >  	.pwrdn_ctrl		= SW_PWRDN | REFCLK_DRV_DSBL,
-> > +	.mask_pcs_ready		= PHYSTATUS,
-> >  	.mask_com_pcs_ready	= PCS_READY,
-> >  };
-> >  
-> > @@ -1547,7 +1549,7 @@ static int qcom_qmp_phy_enable(struct phy *phy)
-> >  	status = pcs + cfg->regs[QPHY_PCS_READY_STATUS];
-> >  	mask = cfg->mask_pcs_ready;
-> >  
-> > -	ret = readl_poll_timeout(status, val, !(val & mask), 1,
-> > +	ret = readl_poll_timeout(status, val, val & mask, 1,
-> >  				 PHY_INIT_COMPLETE_TIMEOUT);
-> >  	if (ret) {
-> >  		dev_err(qmp->dev, "phy initialization timed-out\n");
-> > -- 
-> > 2.18.0
-> > 
-> 
-> msm8996_pciephy_cfg and msm8998_pciephy_cfg not having a bit mask defined
-> for PCS ready is really a separate bug, so personally I would have created
-> two patches, one that adds the missing masks, and one patch that fixes the
-> broken break condition.
-> 
+Reviewed-by: Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
 
-We can't add mask_pcs_ready in a separate commit after the poll change,
-because this would introduce a regression in the history and we can't
-add the mask_pcs_ready before because when I tested this on db820c I saw
-occasional initialization failures.
+I don't quite like the situation where the is no SMR to compute the mask, but I
+think the way you've handled it is the best option/
 
-I was not able to verify 8998, but I presume that the same dependency
-exists there.
+I'm curious, why is this not included in patch #1?  Seems like patch
+#1 introduces
+the issue, yet doesn't also fix it.
 
-> Either way:
-> 
-> Reviewed-by: Niklas Cassel <niklas.cassel@linaro.org>
-
-Thanks,
-Bjorn
+> ---
+>  drivers/iommu/arm-smmu.c | 20 ++++++++++++++++----
+>  1 file changed, 16 insertions(+), 4 deletions(-)
+>
+> diff --git a/drivers/iommu/arm-smmu.c b/drivers/iommu/arm-smmu.c
+> index c8629a656b42..0c6f5fe6f382 100644
+> --- a/drivers/iommu/arm-smmu.c
+> +++ b/drivers/iommu/arm-smmu.c
+> @@ -1084,23 +1084,35 @@ static void arm_smmu_test_smr_masks(struct arm_smmu_device *smmu)
+>  {
+>         void __iomem *gr0_base = ARM_SMMU_GR0(smmu);
+>         u32 smr;
+> +       int idx;
+>
+>         if (!smmu->smrs)
+>                 return;
+>
+> +       for (idx = 0; idx < smmu->num_mapping_groups; idx++) {
+> +               smr = readl_relaxed(gr0_base + ARM_SMMU_GR0_SMR(idx));
+> +               if (!(smr & SMR_VALID))
+> +                       break;
+> +       }
+> +
+> +       if (idx == smmu->num_mapping_groups) {
+> +               dev_err(smmu->dev, "Unable to compute streamid_mask\n");
+> +               return;
+> +       }
+> +
+>         /*
+>          * SMR.ID bits may not be preserved if the corresponding MASK
+>          * bits are set, so check each one separately. We can reject
+>          * masters later if they try to claim IDs outside these masks.
+>          */
+>         smr = smmu->streamid_mask << SMR_ID_SHIFT;
+> -       writel_relaxed(smr, gr0_base + ARM_SMMU_GR0_SMR(0));
+> -       smr = readl_relaxed(gr0_base + ARM_SMMU_GR0_SMR(0));
+> +       writel_relaxed(smr, gr0_base + ARM_SMMU_GR0_SMR(idx));
+> +       smr = readl_relaxed(gr0_base + ARM_SMMU_GR0_SMR(idx));
+>         smmu->streamid_mask = smr >> SMR_ID_SHIFT;
+>
+>         smr = smmu->streamid_mask << SMR_MASK_SHIFT;
+> -       writel_relaxed(smr, gr0_base + ARM_SMMU_GR0_SMR(0));
+> -       smr = readl_relaxed(gr0_base + ARM_SMMU_GR0_SMR(0));
+> +       writel_relaxed(smr, gr0_base + ARM_SMMU_GR0_SMR(idx));
+> +       smr = readl_relaxed(gr0_base + ARM_SMMU_GR0_SMR(idx));
+>         smmu->smr_mask_mask = smr >> SMR_MASK_SHIFT;
+>  }
+>
+> --
+> 2.18.0
+>
+>
+> _______________________________________________
+> linux-arm-kernel mailing list
+> linux-arm-kernel@lists.infradead.org
+> http://lists.infradead.org/mailman/listinfo/linux-arm-kernel
