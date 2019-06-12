@@ -2,25 +2,25 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 67C3041D57
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Jun 2019 09:16:59 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 6BB9141D61
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Jun 2019 09:17:03 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2408239AbfFLHQT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 12 Jun 2019 03:16:19 -0400
-Received: from smtp.codeaurora.org ([198.145.29.96]:45788 "EHLO
+        id S2407713AbfFLHQc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 12 Jun 2019 03:16:32 -0400
+Received: from smtp.codeaurora.org ([198.145.29.96]:45932 "EHLO
         smtp.codeaurora.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2408237AbfFLHQT (ORCPT
+        with ESMTP id S2408354AbfFLHQX (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 12 Jun 2019 03:16:19 -0400
+        Wed, 12 Jun 2019 03:16:23 -0400
 Received: by smtp.codeaurora.org (Postfix, from userid 1000)
-        id CC8A460CF0; Wed, 12 Jun 2019 07:16:17 +0000 (UTC)
+        id 46A9660E3F; Wed, 12 Jun 2019 07:16:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
-        s=default; t=1560323777;
-        bh=ZDenoutQ8tySlfx7o5y40gHxnZ0cmOtx5yB5PYRMHmA=;
+        s=default; t=1560323781;
+        bh=APUZKQMxuCP659BLXKIfQYp8vw7FUPYUW6I8vlsYHKw=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=NZisbeETz/AZMzwGSdFOZiOqWp73WTqtMls5xf1tG3OnsdWaMNVzKbqqF0WkpbZGq
-         8uO6b2yHkhrWiGWu1F8lmBErv8oh5cDW0RTbIZgWvfc+oLTvjoIRhiW5utBJB2j4kR
-         4JmXodbHBy9J7gUBd9M5r1qfYUpLW2/anh/NH4hM=
+        b=WWVUXPnaXnHiulNfWvtH5nOZVLrIh9sMMLqGDIqFgyWrsltehuCCzqfH7I7WKzbeZ
+         3GOuyxcWz4yEDdBGNjMu8nFYiDkussE/HKii63G2QzR/Sir+bzYKq8haCh5mnJX7AV
+         YqOEQAfax+zUTXDBmd2eESdTrikVW42m7J3B4aDw=
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
         pdx-caf-mail.web.codeaurora.org
 X-Spam-Level: 
@@ -31,16 +31,16 @@ Received: from blr-ubuntu-41.ap.qualcomm.com (blr-bdr-fw-01_globalnat_allzones-o
         (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
         (No client certificate requested)
         (Authenticated sender: vivek.gautam@smtp.codeaurora.org)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 61FEC6079C;
-        Wed, 12 Jun 2019 07:16:13 +0000 (UTC)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 0460A60C5F;
+        Wed, 12 Jun 2019 07:16:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
-        s=default; t=1560323776;
-        bh=ZDenoutQ8tySlfx7o5y40gHxnZ0cmOtx5yB5PYRMHmA=;
+        s=default; t=1560323780;
+        bh=APUZKQMxuCP659BLXKIfQYp8vw7FUPYUW6I8vlsYHKw=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=fH7UUeLK3+kqO83hVtXl56T1WIhkP6eW0JYYrlPUZNHgAbzESfLbM/tOtml7sS28d
-         fwqixWo8P2YOm6GGkznTU6GxQ6ssmGc06woxSZVQmKtLfDsOMjFBTHakz+NJylbO+L
-         XycWgtXwLI+Qzlpl3T/oXYBcIhuR+DmVb30baGx8=
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 61FEC6079C
+        b=pLoy65s9zcPXgJwk2N1Ihcrgoe/s1SQosjj4Wx3VF5Fvg8PL+T4ucJjI+okIXqpPi
+         jX8uwElLvruClZwI7ypKsneIgozLty/I81GHv5SodkkFZGg/W3LWqgI3JoU5nzLUvH
+         h0Xi3d/4dsICjWPnwUmtWO4Q/N4rEryR3RctCR7U=
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 0460A60C5F
 Authentication-Results: pdx-caf-mail.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
 Authentication-Results: pdx-caf-mail.web.codeaurora.org; spf=none smtp.mailfrom=vivek.gautam@codeaurora.org
 From:   Vivek Gautam <vivek.gautam@codeaurora.org>
@@ -50,9 +50,9 @@ To:     agross@kernel.org, robh+dt@kernel.org, will.deacon@arm.com,
         iommu@lists.linux-foundation.org
 Cc:     linux-kernel@vger.kernel.org, david.brown@linaro.org,
         Vivek Gautam <vivek.gautam@codeaurora.org>
-Subject: [PATCH v3 2/4] firmware/qcom_scm: Add scm call to handle smmu errata
-Date:   Wed, 12 Jun 2019 12:45:52 +0530
-Message-Id: <20190612071554.13573-3-vivek.gautam@codeaurora.org>
+Subject: [PATCH v3 3/4] iommu/arm-smmu: Add support to handle Qcom's wait-for-safe logic
+Date:   Wed, 12 Jun 2019 12:45:53 +0530
+Message-Id: <20190612071554.13573-4-vivek.gautam@codeaurora.org>
 X-Mailer: git-send-email 2.16.1.72.g5be1f00a9a70
 In-Reply-To: <20190612071554.13573-1-vivek.gautam@codeaurora.org>
 References: <20190612071554.13573-1-vivek.gautam@codeaurora.org>
@@ -61,113 +61,117 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Qcom's smmu-500 needs to toggle wait-for-safe logic to
-handle TLB invalidations.
-Few firmwares allow doing that through SCM interface.
-Add API to toggle wait for safe from firmware through a
-SCM call.
+Qcom's implementation of arm,mmu-500 adds a WAIT-FOR-SAFE logic
+to address under-performance issues in real-time clients, such as
+Display, and Camera.
+On receiving an invalidation requests, the SMMU forwards SAFE request
+to these clients and waits for SAFE ack signal from real-time clients.
+The SAFE signal from such clients is used to qualify the start of
+invalidation.
+This logic is controlled by chicken bits, one for each - MDP (display),
+IFE0, and IFE1 (camera), that can be accessed only from secure software
+on sdm845.
+
+This configuration, however, degrades the performance of non-real time
+clients, such as USB, and UFS etc. This happens because, with wait-for-safe
+logic enabled the hardware tries to throttle non-real time clients while
+waiting for SAFE ack signals from real-time clients.
+
+On MTP sdm845 devices, with wait-for-safe logic enabled at the boot time
+by the bootloaders we see degraded performance of USB and UFS when kernel
+enables the smmu stage-1 translations for these clients.
+Turn off this wait-for-safe logic from the kernel gets us back the perf
+of USB and UFS devices until we re-visit this when we start seeing perf
+issues on display/camera on upstream supported SDM845 platforms.
+
+Now, different bootloaders with their access control policies allow this
+register access differently through secure monitor calls -
+1) With one we can issue io-read/write secure monitor call (qcom-scm)
+   to update the register, while,
+2) With other, such as one on MTP sdm845 we should use the specific
+   qcom-scm command to send request to do the complete register
+   configuration.
+Adding a separate device tree flag for arm-smmu to identify which
+firmware configuration of the two mentioned above we use.
+Not adding code change to allow type-(1) bootloaders to toggle the
+safe using io-read/write qcom-scm call.
+
+This change is inspired by the downstream change from Patrick Daly
+to address performance issues with display and camera by handling
+this wait-for-safe within separte io-pagetable ops to do TLB
+maintenance. So a big thanks to him for the change.
+
+Without this change the UFS reads are pretty slow:
+$ time dd if=/dev/sda of=/dev/zero bs=1048576 count=10 conv=sync
+10+0 records in
+10+0 records out
+10485760 bytes (10.0MB) copied, 22.394903 seconds, 457.2KB/s
+real    0m 22.39s
+user    0m 0.00s
+sys     0m 0.01s
+
+With this change they are back to rock!
+$ time dd if=/dev/sda of=/dev/zero bs=1048576 count=300 conv=sync
+300+0 records in
+300+0 records out
+314572800 bytes (300.0MB) copied, 1.030541 seconds, 291.1MB/s
+real    0m 1.03s
+user    0m 0.00s
+sys     0m 0.54s
 
 Signed-off-by: Vivek Gautam <vivek.gautam@codeaurora.org>
-Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
 ---
- drivers/firmware/qcom_scm-32.c |  5 +++++
- drivers/firmware/qcom_scm-64.c | 13 +++++++++++++
- drivers/firmware/qcom_scm.c    |  6 ++++++
- drivers/firmware/qcom_scm.h    |  5 +++++
- include/linux/qcom_scm.h       |  2 ++
- 5 files changed, 31 insertions(+)
+ drivers/iommu/arm-smmu.c | 16 ++++++++++++++++
+ 1 file changed, 16 insertions(+)
 
-diff --git a/drivers/firmware/qcom_scm-32.c b/drivers/firmware/qcom_scm-32.c
-index 215061c581e1..bee8729525ec 100644
---- a/drivers/firmware/qcom_scm-32.c
-+++ b/drivers/firmware/qcom_scm-32.c
-@@ -614,3 +614,8 @@ int __qcom_scm_io_writel(struct device *dev, phys_addr_t addr, unsigned int val)
- 	return qcom_scm_call_atomic2(QCOM_SCM_SVC_IO, QCOM_SCM_IO_WRITE,
- 				     addr, val);
- }
-+
-+int __qcom_scm_qsmmu500_wait_safe_toggle(struct device *dev, bool enable)
-+{
-+	return -ENODEV;
-+}
-diff --git a/drivers/firmware/qcom_scm-64.c b/drivers/firmware/qcom_scm-64.c
-index b6dca32c5ac4..23de54b75cd7 100644
---- a/drivers/firmware/qcom_scm-64.c
-+++ b/drivers/firmware/qcom_scm-64.c
-@@ -550,3 +550,16 @@ int __qcom_scm_io_writel(struct device *dev, phys_addr_t addr, unsigned int val)
- 	return qcom_scm_call(dev, QCOM_SCM_SVC_IO, QCOM_SCM_IO_WRITE,
- 			     &desc, &res);
- }
-+
-+int __qcom_scm_qsmmu500_wait_safe_toggle(struct device *dev, bool en)
-+{
-+	struct qcom_scm_desc desc = {0};
-+	struct arm_smccc_res res;
-+
-+	desc.args[0] = QCOM_SCM_CONFIG_SAFE_EN_CLIENT_ALL;
-+	desc.args[1] = en;
-+	desc.arginfo = QCOM_SCM_ARGS(2);
-+
-+	return qcom_scm_call_atomic(dev, QCOM_SCM_SVC_SMMU_PROGRAM,
-+				    QCOM_SCM_CONFIG_SAFE_EN, &desc, &res);
-+}
-diff --git a/drivers/firmware/qcom_scm.c b/drivers/firmware/qcom_scm.c
-index 2ddc118dba1b..2b3b7a8c4270 100644
---- a/drivers/firmware/qcom_scm.c
-+++ b/drivers/firmware/qcom_scm.c
-@@ -344,6 +344,12 @@ int qcom_scm_iommu_secure_ptbl_init(u64 addr, u32 size, u32 spare)
- }
- EXPORT_SYMBOL(qcom_scm_iommu_secure_ptbl_init);
+diff --git a/drivers/iommu/arm-smmu.c b/drivers/iommu/arm-smmu.c
+index 0ad086da399c..3c3ad43eda97 100644
+--- a/drivers/iommu/arm-smmu.c
++++ b/drivers/iommu/arm-smmu.c
+@@ -39,6 +39,7 @@
+ #include <linux/pci.h>
+ #include <linux/platform_device.h>
+ #include <linux/pm_runtime.h>
++#include <linux/qcom_scm.h>
+ #include <linux/slab.h>
+ #include <linux/spinlock.h>
  
-+int qcom_scm_qsmmu500_wait_safe_toggle(bool en)
-+{
-+	return __qcom_scm_qsmmu500_wait_safe_toggle(__scm->dev, en);
-+}
-+EXPORT_SYMBOL(qcom_scm_qsmmu500_wait_safe_toggle);
+@@ -177,6 +178,7 @@ struct arm_smmu_device {
+ 	u32				features;
+ 
+ #define ARM_SMMU_OPT_SECURE_CFG_ACCESS (1 << 0)
++#define ARM_SMMU_OPT_QCOM_FW_IMPL_SAFE_ERRATA (1 << 1)
+ 	u32				options;
+ 	enum arm_smmu_arch_version	version;
+ 	enum arm_smmu_implementation	model;
+@@ -262,6 +264,7 @@ static bool using_legacy_binding, using_generic_binding;
+ 
+ static struct arm_smmu_option_prop arm_smmu_options[] = {
+ 	{ ARM_SMMU_OPT_SECURE_CFG_ACCESS, "calxeda,smmu-secure-config-access" },
++	{ ARM_SMMU_OPT_QCOM_FW_IMPL_SAFE_ERRATA, "qcom,smmu-500-fw-impl-safe-errata" },
+ 	{ 0, NULL},
+ };
+ 
+@@ -2292,6 +2295,19 @@ static int arm_smmu_device_probe(struct platform_device *pdev)
+ 	arm_smmu_device_reset(smmu);
+ 	arm_smmu_test_smr_masks(smmu);
+ 
++	/*
++	 * To address performance degradation in non-real time clients,
++	 * such as USB and UFS, turn off wait-for-safe on sdm845 platforms,
++	 * such as MTP, whose firmwares implement corresponding secure monitor
++	 * call handlers.
++	 */
++	if (of_device_is_compatible(smmu->dev->of_node, "qcom,sdm845-smmu-500") &&
++	    smmu->options & ARM_SMMU_OPT_QCOM_FW_IMPL_SAFE_ERRATA) {
++		err = qcom_scm_qsmmu500_wait_safe_toggle(0);
++		if (err)
++			dev_warn(dev, "Failed to turn off SAFE logic\n");
++	}
 +
- int qcom_scm_io_readl(phys_addr_t addr, unsigned int *val)
- {
- 	return __qcom_scm_io_readl(__scm->dev, addr, val);
-diff --git a/drivers/firmware/qcom_scm.h b/drivers/firmware/qcom_scm.h
-index 99506bd873c0..0b63ded89b41 100644
---- a/drivers/firmware/qcom_scm.h
-+++ b/drivers/firmware/qcom_scm.h
-@@ -91,10 +91,15 @@ extern int __qcom_scm_restore_sec_cfg(struct device *dev, u32 device_id,
- 				      u32 spare);
- #define QCOM_SCM_IOMMU_SECURE_PTBL_SIZE	3
- #define QCOM_SCM_IOMMU_SECURE_PTBL_INIT	4
-+#define QCOM_SCM_SVC_SMMU_PROGRAM	0x15
-+#define QCOM_SCM_CONFIG_SAFE_EN		0x3
-+#define QCOM_SCM_CONFIG_SAFE_EN_CLIENT_ALL	0x2
- extern int __qcom_scm_iommu_secure_ptbl_size(struct device *dev, u32 spare,
- 					     size_t *size);
- extern int __qcom_scm_iommu_secure_ptbl_init(struct device *dev, u64 addr,
- 					     u32 size, u32 spare);
-+extern int __qcom_scm_qsmmu500_wait_safe_toggle(struct device *dev,
-+						bool enable);
- #define QCOM_MEM_PROT_ASSIGN_ID	0x16
- extern int  __qcom_scm_assign_mem(struct device *dev,
- 				  phys_addr_t mem_region, size_t mem_sz,
-diff --git a/include/linux/qcom_scm.h b/include/linux/qcom_scm.h
-index 3f12cc77fb58..aee3d8580d89 100644
---- a/include/linux/qcom_scm.h
-+++ b/include/linux/qcom_scm.h
-@@ -57,6 +57,7 @@ extern int qcom_scm_set_remote_state(u32 state, u32 id);
- extern int qcom_scm_restore_sec_cfg(u32 device_id, u32 spare);
- extern int qcom_scm_iommu_secure_ptbl_size(u32 spare, size_t *size);
- extern int qcom_scm_iommu_secure_ptbl_init(u64 addr, u32 size, u32 spare);
-+extern int qcom_scm_qsmmu500_wait_safe_toggle(bool en);
- extern int qcom_scm_io_readl(phys_addr_t addr, unsigned int *val);
- extern int qcom_scm_io_writel(phys_addr_t addr, unsigned int val);
- #else
-@@ -96,6 +97,7 @@ qcom_scm_set_remote_state(u32 state,u32 id) { return -ENODEV; }
- static inline int qcom_scm_restore_sec_cfg(u32 device_id, u32 spare) { return -ENODEV; }
- static inline int qcom_scm_iommu_secure_ptbl_size(u32 spare, size_t *size) { return -ENODEV; }
- static inline int qcom_scm_iommu_secure_ptbl_init(u64 addr, u32 size, u32 spare) { return -ENODEV; }
-+static inline int qcom_scm_qsmmu500_wait_safe_toggle(bool en) { return -ENODEV; }
- static inline int qcom_scm_io_readl(phys_addr_t addr, unsigned int *val) { return -ENODEV; }
- static inline int qcom_scm_io_writel(phys_addr_t addr, unsigned int val) { return -ENODEV; }
- #endif
+ 	/*
+ 	 * We want to avoid touching dev->power.lock in fastpaths unless
+ 	 * it's really going to do something useful - pm_runtime_enabled()
 -- 
 QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
 of Code Aurora Forum, hosted by The Linux Foundation
