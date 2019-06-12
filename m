@@ -2,307 +2,118 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 632B642F3A
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Jun 2019 20:42:41 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5E43242F94
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Jun 2019 21:11:11 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727584AbfFLSmU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 12 Jun 2019 14:42:20 -0400
-Received: from mail-pl1-f193.google.com ([209.85.214.193]:44476 "EHLO
-        mail-pl1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727480AbfFLSmU (ORCPT
+        id S1727813AbfFLTKV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 12 Jun 2019 15:10:21 -0400
+Received: from smtp.codeaurora.org ([198.145.29.96]:43990 "EHLO
+        smtp.codeaurora.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727051AbfFLTKV (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 12 Jun 2019 14:42:20 -0400
-Received: by mail-pl1-f193.google.com with SMTP id t7so4372550plr.11
-        for <linux-arm-msm@vger.kernel.org>; Wed, 12 Jun 2019 11:42:19 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=ei7P1FJwNjKWyY3lSsF0Jir0f+bc/vHFp/Q0OynLu/E=;
-        b=dJYzV8Km5ZstyXOMBMh0rmuaW2A/Oy1Jc9a5zkmKoZlsvp/G5nNwyEMJyTApZ+H0Q1
-         TWoDMNSRNjZcsFDwcoSZah63BSQJs1G+L196yQDOAskIfE2VYbmJCjWWSvg0W0OlT4gD
-         M+eL9xwObkunL6BVLsxe4aCqVFd7UoY17JUjMNcf5HbGIPH6hgw/LO3saS+AnJk2CPQF
-         JVy5i3CdtEPD6wu16H/c5kaWPEjKjLuvuvC4fEyr3sf/UrZPek3nSQpzs6wl9S6rJD7x
-         TnHa7TqRGvgd23WZrGO9L0bcV+gRglSa2bxDXd8KC8PDGYsoSsIFNemI7hVr4LVW73B+
-         g1hw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=ei7P1FJwNjKWyY3lSsF0Jir0f+bc/vHFp/Q0OynLu/E=;
-        b=CSF2sNmblAlP2IqnXoRePo10H/ucxsXxREqY0GPHUfweVr4NSuAd3eeboVQMr3fyij
-         f2rWMr67q7GGWZXUEBsSX0+VD2U0TKIAiTe6bhQomuPWWQQsksjnOu9+8NbcntUrG2tl
-         mucCvVJmwFynofNbsKVdOalBNg9ueEoOZAT2mY+J4WJEOCUM3XF8G7DKkWkU+/BPl3IN
-         McotzaNZGzSYj3pe7ZsoMa15RTPJ/xK1klgdVSspnswj/47GA3iJmCCuDAl5wBoCQQ6c
-         8fCiAm4bZoAZr6ZSsWlo2LPo7chBgHOXjiWzS9pplWlZbpaJQFutBfjMtDWG+VPT8zLW
-         nsxw==
-X-Gm-Message-State: APjAAAUHuouGW98T11HUfytWB5kvvANpXpkCHmKtUuu+5xSu9Vr3oYMm
-        rMy4n4iYPwf2MYxeB3RHLDII9A==
-X-Google-Smtp-Source: APXvYqx8C6og84A/IMmD7FqpBhMl6FAI4uVwaQWfVofVzKlkV6PqLYC/lD/NOOx00Lmozb+WHJs/pg==
-X-Received: by 2002:a17:902:e2:: with SMTP id a89mr83814752pla.210.1560364939226;
-        Wed, 12 Jun 2019 11:42:19 -0700 (PDT)
-Received: from minitux (104-188-17-28.lightspeed.sndgca.sbcglobal.net. [104.188.17.28])
-        by smtp.gmail.com with ESMTPSA id r7sm262760pfl.134.2019.06.12.11.42.18
-        (version=TLS1_3 cipher=AEAD-AES256-GCM-SHA384 bits=256/256);
-        Wed, 12 Jun 2019 11:42:18 -0700 (PDT)
-Date:   Wed, 12 Jun 2019 11:42:16 -0700
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
-Cc:     Joerg Roedel <joro@8bytes.org>, Will Deacon <will.deacon@arm.com>,
-        Robin Murphy <robin.murphy@arm.com>,
-        Patrick Daly <pdaly@codeaurora.org>,
-        Jeffrey Hugo <jhugo@codeaurora.org>,
-        MSM <linux-arm-msm@vger.kernel.org>,
-        lkml <linux-kernel@vger.kernel.org>,
-        iommu@lists.linux-foundation.org,
-        Vivek Gautam <vivek.gautam@codeaurora.org>,
-        linux-arm-kernel@lists.infradead.org
-Subject: Re: [RFC 1/2] iommu: arm-smmu: Handoff SMR registers and context
- banks
-Message-ID: <20190612184216.GB4814@minitux>
-References: <20190605210856.20677-1-bjorn.andersson@linaro.org>
- <20190605210856.20677-2-bjorn.andersson@linaro.org>
- <CAOCk7NpuxpGGYwiPSdwkrZrM=u-euAUTX3wa-yaEsKocDUx-UA@mail.gmail.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAOCk7NpuxpGGYwiPSdwkrZrM=u-euAUTX3wa-yaEsKocDUx-UA@mail.gmail.com>
-User-Agent: Mutt/1.12.0 (2019-05-25)
+        Wed, 12 Jun 2019 15:10:21 -0400
+Received: by smtp.codeaurora.org (Postfix, from userid 1000)
+        id 7E48D60DAD; Wed, 12 Jun 2019 19:10:20 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
+        s=default; t=1560366620;
+        bh=PpXzJTcv8ItycyJTxzjx96xBpUQ+9JUzvtL8caAD2b4=;
+        h=From:To:Cc:Subject:Date:From;
+        b=jHsuUnH0IN/rWOzEPzsP4FTNnTIz2csMvFTh3+xmkJfaixp71MCv72/qMqILVOCzd
+         1uJ3OF+DdY6ukGi7BMrWaKEBW6Ab0GDD9qMkbaEumPxjVqj1SKhFnBeFcg78RbH9+b
+         oVVm6P0NdvNvJjTnOapBITnzDuW8JxGvXiA++OlE=
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        pdx-caf-mail.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.7 required=2.0 tests=ALL_TRUSTED,BAYES_00,
+        DKIM_INVALID,DKIM_SIGNED,SPF_NONE autolearn=no autolearn_force=no
+        version=3.4.0
+Received: from jhugo-perf-lnx.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: jhugo@smtp.codeaurora.org)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id B6C8C60DAB;
+        Wed, 12 Jun 2019 19:10:18 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
+        s=default; t=1560366619;
+        bh=PpXzJTcv8ItycyJTxzjx96xBpUQ+9JUzvtL8caAD2b4=;
+        h=From:To:Cc:Subject:Date:From;
+        b=huWUrGFlOUjsO4RjExq4Cy2hh+dNiS55XhKDTQriqE2QzSJyOmeF68j9fmh2IP3YD
+         +XuZ8FonCYvyK3+oRct2dLHxGn4UAdzyZ1CKpT9PerngQ0nr016/GFbm3koSbrc+te
+         HSPpRajmf0RpsdhcGPa+y6NvyoINQXtLbhaVCqTE=
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org B6C8C60DAB
+Authentication-Results: pdx-caf-mail.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: pdx-caf-mail.web.codeaurora.org; spf=none smtp.mailfrom=jhugo@codeaurora.org
+From:   Jeffrey Hugo <jhugo@codeaurora.org>
+Cc:     agross@kernel.org, bjorn.andersson@linaro.org,
+        marc.w.gonzalez@free.fr, mturquette@baylibre.com, sboyd@kernel.org,
+        robh+dt@kernel.org, mark.rutland@arm.com,
+        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
+        Jeffrey Hugo <jhugo@codeaurora.org>
+Subject: [PATCH v5 0/6] MSM8998 Multimedia Clock Controller
+Date:   Wed, 12 Jun 2019 13:10:00 -0600
+Message-Id: <1560366600-5826-1-git-send-email-jhugo@codeaurora.org>
+X-Mailer: git-send-email 1.9.1
+To:     unlisted-recipients:; (no To-header on input)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed 12 Jun 11:07 PDT 2019, Jeffrey Hugo wrote:
+The multimedia clock controller (mmcc) is the main clock controller for
+the multimedia subsystem and is required to enable things like display and
+camera.
 
-> On Wed, Jun 5, 2019 at 3:09 PM Bjorn Andersson
-> <bjorn.andersson@linaro.org> wrote:
-> >
-> > Boot splash screen or EFI framebuffer requires the display hardware to
-> > operate while the Linux iommu driver probes. Therefore, we cannot simply
-> > wipe out the SMR register settings programmed by the bootloader.
-> >
-> > Detect which SMR registers are in use during probe, and which context
-> > banks they are associated with. Reserve these context banks for the
-> > first Linux device whose stream-id matches the SMR register.
-> >
-> > Any existing page-tables will be discarded.
-> >
-> > Heavily based on downstream implementation by Patrick Daly
-> > <pdaly@codeaurora.org>.
-> >
-> > Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
-> 
-> Reviewed-by: Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
-> 
-> This is very similar to the hacked up version I did, and I'm glad to see it
-> cleaned up and posted.
-> 
-> This is important work, and I want to see it move forward, however it doesn't
-> completely address everything, IMO.  Fixing the remaining issues certainly
-> can be follow on work, but I don't know if they would end up affecting this
-> implementation.
-> 
-> So, with this series, we've gone from a crash on msm8998/sdm845, to causing
-> context faults.  This is because while we are now not nuking the config, we
-> are preventing the bootloader installed translations from working.  Essentially
-> the display already has a mapping (technically passthrough) that is likely being
-> used by EFIFB.  The instant the SMMU inits, that mapping becomes invalid,
-> and the display is going to generate context faults.  While not fatal,
-> this provides
-> a bad user experience as there are nasty messages, and EFIFB stops working.
-> 
-> The situation does get resolved once the display driver inits and takes over the
-> HW and SMMU mappings, so we are not stuck with it, but it would be nice to
-> have that addressed as well, ie have EFIFB working up until the Linux display
-> driver takes over.
-> 
+v5:
+-handle the case where gcc uses rpmcc for xo, but the link is not specified in dt
+-have gcc select rpmcc
 
-But do you see this even though you don't enable the mdss driver?
+v4:
+-fix makefile to use correct config item
+-pick up tags
+-fix ordering of clocks and clock-names in dt
+-drop MODULE_ALIAS
+-wait for xo in mmcc since that was found to be useful in some debug configs
 
-> The only way I can see that happening is if the SMMU leaves the context bank
-> alone, with M == 0, and the iommu framework defines a domain attribute or
-> some other mechanism to allow the driver to flip the M bit in the context bank
-> after installing the necessary handover translations.
-> 
+v3:
+-Rebase onto linux-next to get the final version of the clk parent rewrite
+series
+-Moved the bindings header to the bindings patch per Rob
+-Made xo manditory for GCC to work around the lack of clk orphan probe defer
+to avoid the uart console glitch
 
-From what I can tell this implementation leaves the framebuffer mapping
-in working condition until the attach_dev of the display driver, at
-which time we do get context faults until the display driver is done
-initializing things.
+v2:
+-Rebased on the "Rewrite clk parent handling" series and updated to the clk init
+mechanisms introduced there.
+-Marked XO clk as CLK_IGNORE_UNUSED to avoid the concern about the XO going away
+"incorrectly" during late init
+-Corrected the name of the XO clock to "xo"
+-Dropped the fake XO clock in GCC to prevent a namespace conflict
+-Fully enumerated the external clocks (DSI PLLs, etc) in the DT binding
+-Cleaned up the weird newlines in the added DT node
+-Added DT header file to msm8998 DT for future clients
 
-So we're reducing the problem to a question of how to seamlessly carry
-over the mapping during the attach.
+Jeffrey Hugo (6):
+  dt-bindings: clock: Document external clocks for MSM8998 gcc
+  arm64: dts: msm8998: Add xo clock to gcc node
+  clk: qcom: smd: Add XO clock for MSM8998
+  dt-bindings: clock: Add support for the MSM8998 mmcc
+  clk: qcom: Add MSM8998 Multimedia Clock Controller (MMCC) driver
+  arm64: dts: qcom: msm8998: Add mmcc node
 
-Regards,
-Bjorn
+ .../devicetree/bindings/clock/qcom,gcc.txt    |   10 +
+ .../devicetree/bindings/clock/qcom,mmcc.txt   |   21 +
+ arch/arm64/boot/dts/qcom/msm8998.dtsi         |   16 +
+ drivers/clk/qcom/Kconfig                      |    9 +
+ drivers/clk/qcom/Makefile                     |    1 +
+ drivers/clk/qcom/clk-smd-rpm.c                |   24 +-
+ drivers/clk/qcom/gcc-msm8998.c                |   29 +-
+ drivers/clk/qcom/mmcc-msm8998.c               | 2915 +++++++++++++++++
+ include/dt-bindings/clock/qcom,mmcc-msm8998.h |  210 ++
+ 9 files changed, 3214 insertions(+), 21 deletions(-)
+ create mode 100644 drivers/clk/qcom/mmcc-msm8998.c
+ create mode 100644 include/dt-bindings/clock/qcom,mmcc-msm8998.h
 
-> > ---
-> >  drivers/iommu/arm-smmu-regs.h |  2 +
-> >  drivers/iommu/arm-smmu.c      | 80 ++++++++++++++++++++++++++++++++---
-> >  2 files changed, 77 insertions(+), 5 deletions(-)
-> >
-> > diff --git a/drivers/iommu/arm-smmu-regs.h b/drivers/iommu/arm-smmu-regs.h
-> > index e9132a926761..8c1fd84032a2 100644
-> > --- a/drivers/iommu/arm-smmu-regs.h
-> > +++ b/drivers/iommu/arm-smmu-regs.h
-> > @@ -105,7 +105,9 @@
-> >  #define ARM_SMMU_GR0_SMR(n)            (0x800 + ((n) << 2))
-> >  #define SMR_VALID                      (1 << 31)
-> >  #define SMR_MASK_SHIFT                 16
-> > +#define SMR_MASK_MASK                  0x7fff
-> >  #define SMR_ID_SHIFT                   0
-> > +#define SMR_ID_MASK                    0xffff
-> >
-> >  #define ARM_SMMU_GR0_S2CR(n)           (0xc00 + ((n) << 2))
-> >  #define S2CR_CBNDX_SHIFT               0
-> > diff --git a/drivers/iommu/arm-smmu.c b/drivers/iommu/arm-smmu.c
-> > index 5e54cc0a28b3..c8629a656b42 100644
-> > --- a/drivers/iommu/arm-smmu.c
-> > +++ b/drivers/iommu/arm-smmu.c
-> > @@ -135,6 +135,7 @@ struct arm_smmu_s2cr {
-> >         enum arm_smmu_s2cr_type         type;
-> >         enum arm_smmu_s2cr_privcfg      privcfg;
-> >         u8                              cbndx;
-> > +       bool                            handoff;
-> >  };
-> >
-> >  #define s2cr_init_val (struct arm_smmu_s2cr){                          \
-> > @@ -399,9 +400,22 @@ static int arm_smmu_register_legacy_master(struct device *dev,
-> >         return err;
-> >  }
-> >
-> > -static int __arm_smmu_alloc_bitmap(unsigned long *map, int start, int end)
-> > +static int __arm_smmu_alloc_cb(struct arm_smmu_device *smmu, int start,
-> > +                              struct device *dev)
-> >  {
-> > +       struct iommu_fwspec *fwspec = dev_iommu_fwspec_get(dev);
-> > +       unsigned long *map = smmu->context_map;
-> > +       int end = smmu->num_context_banks;
-> > +       int cbndx;
-> >         int idx;
-> > +       int i;
-> > +
-> > +       for_each_cfg_sme(fwspec, i, idx) {
-> > +               if (smmu->s2crs[idx].handoff) {
-> > +                       cbndx = smmu->s2crs[idx].cbndx;
-> > +                       goto found_handoff;
-> > +               }
-> > +       }
-> >
-> >         do {
-> >                 idx = find_next_zero_bit(map, end, start);
-> > @@ -410,6 +424,17 @@ static int __arm_smmu_alloc_bitmap(unsigned long *map, int start, int end)
-> >         } while (test_and_set_bit(idx, map));
-> >
-> >         return idx;
-> > +
-> > +found_handoff:
-> > +       for (i = 0; i < smmu->num_mapping_groups; i++) {
-> > +               if (smmu->s2crs[i].cbndx == cbndx) {
-> > +                       smmu->s2crs[i].cbndx = 0;
-> > +                       smmu->s2crs[i].handoff = false;
-> > +                       smmu->s2crs[i].count--;
-> > +               }
-> > +       }
-> > +
-> > +       return cbndx;
-> >  }
-> >
-> >  static void __arm_smmu_free_bitmap(unsigned long *map, int idx)
-> > @@ -759,7 +784,8 @@ static void arm_smmu_write_context_bank(struct arm_smmu_device *smmu, int idx)
-> >  }
-> >
-> >  static int arm_smmu_init_domain_context(struct iommu_domain *domain,
-> > -                                       struct arm_smmu_device *smmu)
-> > +                                       struct arm_smmu_device *smmu,
-> > +                                       struct device *dev)
-> >  {
-> >         int irq, start, ret = 0;
-> >         unsigned long ias, oas;
-> > @@ -873,8 +899,7 @@ static int arm_smmu_init_domain_context(struct iommu_domain *domain,
-> >                 ret = -EINVAL;
-> >                 goto out_unlock;
-> >         }
-> > -       ret = __arm_smmu_alloc_bitmap(smmu->context_map, start,
-> > -                                     smmu->num_context_banks);
-> > +       ret = __arm_smmu_alloc_cb(smmu, start, dev);
-> >         if (ret < 0)
-> >                 goto out_unlock;
-> >
-> > @@ -1264,7 +1289,7 @@ static int arm_smmu_attach_dev(struct iommu_domain *domain, struct device *dev)
-> >                 return ret;
-> >
-> >         /* Ensure that the domain is finalised */
-> > -       ret = arm_smmu_init_domain_context(domain, smmu);
-> > +       ret = arm_smmu_init_domain_context(domain, smmu, dev);
-> >         if (ret < 0)
-> >                 goto rpm_put;
-> >
-> > @@ -1798,6 +1823,49 @@ static void arm_smmu_device_reset(struct arm_smmu_device *smmu)
-> >         writel(reg, ARM_SMMU_GR0_NS(smmu) + ARM_SMMU_GR0_sCR0);
-> >  }
-> >
-> > +static void arm_smmu_read_smr_state(struct arm_smmu_device *smmu)
-> > +{
-> > +       u32 privcfg;
-> > +       u32 cbndx;
-> > +       u32 mask;
-> > +       u32 type;
-> > +       u32 s2cr;
-> > +       u32 smr;
-> > +       u32 id;
-> > +       int i;
-> > +
-> > +       for (i = 0; i < smmu->num_mapping_groups; i++) {
-> > +               smr = readl_relaxed(ARM_SMMU_GR0(smmu) + ARM_SMMU_GR0_SMR(i));
-> > +               mask = (smr >> SMR_MASK_SHIFT) & SMR_MASK_MASK;
-> > +               id = smr & SMR_ID_MASK;
-> > +               if (!(smr & SMR_VALID))
-> > +                       continue;
-> > +
-> > +               s2cr = readl_relaxed(ARM_SMMU_GR0(smmu) + ARM_SMMU_GR0_S2CR(i));
-> > +               type = (s2cr >> S2CR_TYPE_SHIFT) & S2CR_TYPE_MASK;
-> > +               cbndx = (s2cr >> S2CR_CBNDX_SHIFT) & S2CR_CBNDX_MASK;
-> > +               privcfg = (s2cr >> S2CR_PRIVCFG_SHIFT) & S2CR_PRIVCFG_MASK;
-> > +               if (type != S2CR_TYPE_TRANS)
-> > +                       continue;
-> > +
-> > +               /* Populate the SMR */
-> > +               smmu->smrs[i].mask = mask;
-> > +               smmu->smrs[i].id = id;
-> > +               smmu->smrs[i].valid = true;
-> > +
-> > +               /* Populate the S2CR */
-> > +               smmu->s2crs[i].group = NULL;
-> > +               smmu->s2crs[i].count = 1;
-> > +               smmu->s2crs[i].type = type;
-> > +               smmu->s2crs[i].privcfg = privcfg;
-> > +               smmu->s2crs[i].cbndx = cbndx;
-> > +               smmu->s2crs[i].handoff = true;
-> > +
-> > +               /* Mark the context bank as busy */
-> > +               bitmap_set(smmu->context_map, cbndx, 1);
-> > +       }
-> > +}
-> > +
-> >  static int arm_smmu_id_size_to_bits(int size)
-> >  {
-> >         switch (size) {
-> > @@ -2023,6 +2091,8 @@ static int arm_smmu_device_cfg_probe(struct arm_smmu_device *smmu)
-> >                 dev_notice(smmu->dev, "\tStage-2: %lu-bit IPA -> %lu-bit PA\n",
-> >                            smmu->ipa_size, smmu->pa_size);
-> >
-> > +       arm_smmu_read_smr_state(smmu);
-> > +
-> >         return 0;
-> >  }
-> >
-> > --
-> > 2.18.0
-> >
-> >
-> > _______________________________________________
-> > linux-arm-kernel mailing list
-> > linux-arm-kernel@lists.infradead.org
-> > http://lists.infradead.org/mailman/listinfo/linux-arm-kernel
+-- 
+2.17.1
+
