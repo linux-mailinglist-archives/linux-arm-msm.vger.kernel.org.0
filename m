@@ -2,83 +2,173 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 8958341B7C
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Jun 2019 07:13:33 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C17E041BD6
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Jun 2019 07:57:41 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730527AbfFLFNc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 12 Jun 2019 01:13:32 -0400
-Received: from mail.kernel.org ([198.145.29.99]:52578 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1725958AbfFLFNc (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 12 Jun 2019 01:13:32 -0400
-Received: from localhost (unknown [106.200.205.167])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id D7BDD2086A;
-        Wed, 12 Jun 2019 05:13:30 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1560316411;
-        bh=pjKLLa6fq6+zEJ2xlibCltc+p1HsSk01Pj5/MlY2ZJo=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=iYYxV8F6CPWY6jYRCAxFVekOXxjV6WSlfOmq3HrlFylIR/l0p+NMLFFRO0Ng/HobZ
-         2HhHc1AA14PHqQZade24jDts7hKXRf/3+i9+9NNhe30osAKB+V8aWnmedaXKv5SDum
-         Pz6YeNmMVIa3ebGceiOEa207ktGusnctmqHNjM7I=
-Date:   Wed, 12 Jun 2019 10:40:23 +0530
-From:   Vinod Koul <vkoul@kernel.org>
-To:     Stephen Boyd <sboyd@kernel.org>
-Cc:     linux-arm-msm@vger.kernel.org,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Deepak Katragadda <dkatraga@codeaurora.org>,
-        Andy Gross <agross@kernel.org>,
-        David Brown <david.brown@linaro.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        linux-clk@vger.kernel.org, Taniya Das <tdas@codeaurora.org>
-Subject: Re: [PATCH 1/2] clk: qcom: clk-alpha-pll: Add support for Trion PLLs
-Message-ID: <20190612051023.GB9160@vkoul-mobl.Dlink>
-References: <20190607101234.30449-1-vkoul@kernel.org>
- <20190607175542.D9D56208C0@mail.kernel.org>
- <20190608091436.GF9160@vkoul-mobl.Dlink>
- <20190610150646.2003720859@mail.kernel.org>
+        id S1730841AbfFLF5k (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 12 Jun 2019 01:57:40 -0400
+Received: from mail-wm1-f65.google.com ([209.85.128.65]:38165 "EHLO
+        mail-wm1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1730754AbfFLF5k (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 12 Jun 2019 01:57:40 -0400
+Received: by mail-wm1-f65.google.com with SMTP id s15so5133688wmj.3
+        for <linux-arm-msm@vger.kernel.org>; Tue, 11 Jun 2019 22:57:39 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:content-transfer-encoding:in-reply-to
+         :user-agent;
+        bh=4of8ZiK34nF/APP+EeYx9XNCcGPU1AME2L4lrHVraeI=;
+        b=SD79wLU+G6g5/2870hSYrojXo8hkeJYjHJvuJMFUl4pMujwbM+t0i5yVvfgSuJzikK
+         bbMaoLkZRFq9lrBAnxGgMo7Wrr3d03cr+rLois8ec1U2UplLC+1ye25jxyNICqFESQ5B
+         Z66rCwLwDivfh9dprT0lI7za4JpauGVpOJWxSxSx+OJWj3EzbmXNdqlx95XsQbICUZJX
+         3L0/4zj64CDQ4DesKqgZ9NfDR0/VRLD0FvtnAiITdNaN0fu3aqCoN0iUa/CtBHkT0bTO
+         +u/BKQPj4AeOLK8Za3+5h9ls2FpC9zM1dwf42W5Sz8wh5DPuzSUqyYJHW62NKDW4ttYo
+         jmdQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        bh=4of8ZiK34nF/APP+EeYx9XNCcGPU1AME2L4lrHVraeI=;
+        b=LXBr5+c2XOMBiM1ndE6GS0ofc7lLUm8mMl/1MQWn+hMzwXck3lYE4OUpUfCsDeV2Tc
+         79Ew/lEk7v+10LOqWLvbe0/Bzjzydav0FXAORfL3P3zolmn9gYpapFxOGmR7IZLUcwwJ
+         mQZC5B1mazeDeycsNoDnZ6/+RY14apHL+8EnzVPRX7HDlOMKZpIP6prKg3JX+gpzyz2s
+         bmInViiiApOirs/Zh41GBJohSYJW6/kGlC4TOBpHKd6C4I3jx5szhwiApohlWmyyAEC8
+         1XduJo9tBXGZg5g12da1RYGVmcp5oZOhXsi7rzWkiIXR4/9cg20EORvJBhf6O++GIjmI
+         TQHg==
+X-Gm-Message-State: APjAAAVEmzEZ+WOsxmIPLwX7RyMb6/B8EXFd0BlS6Wr6h5qw7A8S1U/b
+        XgTXRpVhKZ9bwiiMERvMWhitMw==
+X-Google-Smtp-Source: APXvYqzJvBNZQtwmkeMKOpNbBz81+iFkqBs/75CCe2ORqE04JpIzCx+Il2rit2gE1lFSlYBsiUOwtA==
+X-Received: by 2002:a1c:618a:: with SMTP id v132mr20248396wmb.17.1560319058242;
+        Tue, 11 Jun 2019 22:57:38 -0700 (PDT)
+Received: from dell ([2.27.35.243])
+        by smtp.gmail.com with ESMTPSA id r3sm20726946wrr.61.2019.06.11.22.57.36
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Tue, 11 Jun 2019 22:57:37 -0700 (PDT)
+Date:   Wed, 12 Jun 2019 06:57:36 +0100
+From:   Lee Jones <lee.jones@linaro.org>
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     alokc@codeaurora.org, andy.gross@linaro.org,
+        david.brown@linaro.org, wsa+renesas@sang-engineering.com,
+        linus.walleij@linaro.org, balbi@kernel.org,
+        gregkh@linuxfoundation.org, ard.biesheuvel@linaro.org,
+        jlhugo@gmail.com, linux-i2c@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org,
+        linux-usb@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+        linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v3 7/8] usb: dwc3: qcom: Start USB in 'host mode' on the
+ SDM845
+Message-ID: <20190612055736.GO4797@dell>
+References: <20190610084213.1052-1-lee.jones@linaro.org>
+ <20190610084213.1052-7-lee.jones@linaro.org>
+ <20190611223349.GS4814@minitux>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20190610150646.2003720859@mail.kernel.org>
-User-Agent: Mutt/1.11.3 (2019-02-01)
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20190611223349.GS4814@minitux>
+User-Agent: Mutt/1.9.4 (2018-02-28)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 10-06-19, 08:06, Stephen Boyd wrote:
-> Quoting Vinod Koul (2019-06-08 02:14:36)
-> > On 07-06-19, 10:55, Stephen Boyd wrote:
-> > > Quoting Vinod Koul (2019-06-07 03:12:33)
-> > 
-> > > >  const struct clk_ops clk_alpha_pll_ops = {
-> > > >         .enable = clk_alpha_pll_enable,
-> > > >         .disable = clk_alpha_pll_disable,
-> > > > @@ -902,6 +1079,10 @@ static int alpha_pll_fabia_enable(struct clk_hw *hw)
-> > > >         ret = regmap_read(regmap, PLL_OPMODE(pll), &opmode_val);
-> > > >         if (ret)
-> > > >                 return ret;
-> > > > +       ret = regmap_update_bits(regmap, PLL_MODE(pll),
-> > > > +                                PLL_BYPASSNL, PLL_BYPASSNL);
-> > > > +       if (ret)
-> > > > +               return ret;
-> > > 
-> > > What is this?
-> > 
-> > Sorry am not sure I understood the question. care to elaborate please?
-> 
-> The bypass bit of a PLL is very generic so I'm confused why the enable
-> function is only gaining this bit setting logic now. Plus, it's all
-> grouped together with the previous line so it looks like a possible
-> stray addition to the code? And after this there's an early exit from
-> the function if the PLL is already running, so we would put the PLL into
-> bypass and then return? What's going on here?
+On Tue, 11 Jun 2019, Bjorn Andersson wrote:
 
-Thanks for spotting that is wrong. I am not sure why this crept in , I
-am not supposed to change this, will fix it in v2
+> On Mon 10 Jun 01:42 PDT 2019, Lee Jones wrote:
+> 
+> > When booting with Device Tree, the current default boot configuration
+> > table option, the request to boot via 'host mode' comes from the
+> > 'dr_mode' property.
+> 
+> As I said in my previous review, the default mode for SDM845 is OTG. For
+> the MTP specifically we specify the default mode to be peripheral (was
+> host).
+> 
+> 
+> The remaining thing that worries me with this patch is that I do expect
+> that at least one of the USB-C ports is OTG. But I am not able to
+> conclude anything regarding this and host-only is a good default for
+> this type of device, so I suggest that we merge this.
+
+Right.  So one thing to consider is that Qualcomm Mobile Dept. do not
+use ACPI for Linux, so this patch-set only affects the Laptop
+form factor devices, where 'host' is the expected mode.
+
+> Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+
+Thanks for taking the time to review this Bjorn.
+
+Hopefully we can get Felipe's attention soon.
+
+Felipe,
+
+One thing to think about when taking Bjorn's Reviewed-by into
+consideration; although we both work for Linaro, we actually operate
+in different teams.  Bjorn is on the Qualcomm Landing Team, and as an
+ex-Qualcomm employee he is in an excellent position to review these
+patches, thus his Review should carry more weight than the usual
+co-worker review IMHO.
+
+TIA.
+
+> > A property of the same name can be used inside
+> > ACPI tables too.  However it is missing from the SDM845's ACPI tables
+> > so we have to supply this information using Platform Device Properties
+> > instead.
+> > 
+> > This does not change the behaviour of any currently supported devices.
+> > The property is only set on ACPI enabled platforms, thus for H/W
+> > booting DT, unless a 'dr_mode' property is present, the default is
+> > still OTG (On-The-Go) as per [0].  Any new ACPI devices added will
+> > also be able to over-ride this implementation by providing a 'dr_mode'
+> > property in their ACPI tables.  In cases where 'dr_mode' is omitted
+> > from the tables AND 'host mode' should not be the default (very
+> > unlikely), then we will have to add some way of choosing between them
+> > at run time - most likely by ACPI HID.
+> > 
+> > [0] Documentation/devicetree/bindings/usb/generic.txt
+> > 
+> > Signed-off-by: Lee Jones <lee.jones@linaro.org>
+> > ---
+> >  drivers/usb/dwc3/dwc3-qcom.c | 12 ++++++++++++
+> >  1 file changed, 12 insertions(+)
+> > 
+> > diff --git a/drivers/usb/dwc3/dwc3-qcom.c b/drivers/usb/dwc3/dwc3-qcom.c
+> > index 1e1f12b7991d..55ba04254e38 100644
+> > --- a/drivers/usb/dwc3/dwc3-qcom.c
+> > +++ b/drivers/usb/dwc3/dwc3-qcom.c
+> > @@ -444,6 +444,11 @@ static int dwc3_qcom_clk_init(struct dwc3_qcom *qcom, int count)
+> >  	return 0;
+> >  }
+> >  
+> > +static const struct property_entry dwc3_qcom_acpi_properties[] = {
+> > +	PROPERTY_ENTRY_STRING("dr_mode", "host"),
+> > +	{}
+> > +};
+> > +
+> >  static int dwc3_qcom_acpi_register_core(struct platform_device *pdev)
+> >  {
+> >  	struct dwc3_qcom 	*qcom = platform_get_drvdata(pdev);
+> > @@ -488,6 +493,13 @@ static int dwc3_qcom_acpi_register_core(struct platform_device *pdev)
+> >  		goto out;
+> >  	}
+> >  
+> > +	ret = platform_device_add_properties(qcom->dwc3,
+> > +					     dwc3_qcom_acpi_properties);
+> > +	if (ret < 0) {
+> > +		dev_err(&pdev->dev, "failed to add properties\n");
+> > +		goto out;
+> > +	}
+> > +
+> >  	ret = platform_device_add(qcom->dwc3);
+> >  	if (ret)
+> >  		dev_err(&pdev->dev, "failed to add device\n");
 
 -- 
-~Vinod
+Lee Jones [李琼斯]
+Linaro Services Technical Lead
+Linaro.org │ Open source software for ARM SoCs
+Follow Linaro: Facebook | Twitter | Blog
