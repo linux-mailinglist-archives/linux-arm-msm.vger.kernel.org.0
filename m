@@ -2,77 +2,74 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 13D7542D65
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Jun 2019 19:25:07 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D7B4242D99
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Jun 2019 19:34:40 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2407332AbfFLRZG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 12 Jun 2019 13:25:06 -0400
-Received: from mail-pf1-f196.google.com ([209.85.210.196]:40803 "EHLO
-        mail-pf1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2407019AbfFLRZF (ORCPT
+        id S1728658AbfFLRek (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 12 Jun 2019 13:34:40 -0400
+Received: from mail-pl1-f195.google.com ([209.85.214.195]:43967 "EHLO
+        mail-pl1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728091AbfFLRej (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 12 Jun 2019 13:25:05 -0400
-Received: by mail-pf1-f196.google.com with SMTP id p184so6765690pfp.7
-        for <linux-arm-msm@vger.kernel.org>; Wed, 12 Jun 2019 10:25:05 -0700 (PDT)
+        Wed, 12 Jun 2019 13:34:39 -0400
+Received: by mail-pl1-f195.google.com with SMTP id cl9so6900933plb.10
+        for <linux-arm-msm@vger.kernel.org>; Wed, 12 Jun 2019 10:34:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to:user-agent;
-        bh=psJpbPCxhcOIVS0VxFu9jSQkVNPb46vsQ50rVBDku0E=;
-        b=sY3xBWdHj5p/R7MgELA6Nw35UkFCSHEvAjuwpVWNpZTDLJP1F9V7WAdZUMsS//VMsq
-         vty9Qdz6v/0MFbVE5QIDPckf0UGTeFUb+VITM7+1Bv9r86tXA7C1ZpIqTfnJemClpYcl
-         TM/vMw7enq1aNbeOoRm/+f3FIO1juubW1jkdIAI4vgSZ/0KuveFr+oKW3lgG8yHBB8l/
-         0YyQrPjfTKH6gsrboxY73wAjmYa4qemfPaee8UA96Lo6bK1/evx/RruVEVh8tM5GcHZf
-         axL7aeioREE9VvB3Tk149KI9kut8vvtcNhXoLHbjGXeOeTd04CCP79EFjl8bv72tRESZ
-         cmMw==
+        bh=hf77Z7okHs6KAWJMSKNVF4d5KTz/UD7D/pDjyEK/gYs=;
+        b=aTi7+AmNi+MLs9q+r2+2Oe6atamFZY7EWfGeRNfBIg2NjakNPPZ43cfHjCccLr2OOo
+         p46JPMzb+PauyVyL6JqaMeTK2J4XfqUrUQGeI+ZLHAWeD5McQUhUrEi7KFrbFPxHjM9f
+         T/zymGxAKPZhoIx85qzNUx4yFkEv7qeiQsUtvXO9atO6NBEitjcS66KPloQrjvsm8o+e
+         xORntiGIiFJr8wKUMDQPOFVyovoRDTmkBBa5A/evBxZ0ps867zg0iIrVyNf97dx6Zm/n
+         IdjLIJN0UQ/eRwW/b5FC16lkaAqBnNzXWi1pAfuNzRNRi9LVDsSclZMmT4lSvJwIh4xP
+         E5dA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=psJpbPCxhcOIVS0VxFu9jSQkVNPb46vsQ50rVBDku0E=;
-        b=pZPTke866fvzxN/EvZ48RkeKe+h8I9TerlG+HWplV7rt6iOOm37sXKEPvgtZLGCZRa
-         r96NjqSVr7jwyGgN7n4FPMbJ6xUJ29t0op8dlg2+Fb9Bp+MZgUTjplLDBa3znQDX233o
-         YGcL4hINUS0SdCykT8OVhy4sMILTgk93Vf4xHp4WcsLweAYnOVNuRbsNYt8noNWn3FHJ
-         Nk+hPOwwEaAmFlPquM1n3rbbOE8uNKVwM7sHgYGnpR4V0qzIwCAoAbNGl6+Ofh1izvlw
-         GUTIJOu/6IT0rT8/r7ZiPi554J65O7+en6XK4qCZfVWgTb2RXRgPnN1RjlCMCWMi7sba
-         vYSA==
-X-Gm-Message-State: APjAAAX2u9jz+sjDa4nXx0SL0cEQR++cSx44v59zMjQWqnu2sBqB0NuD
-        ZtCII4JbLlQAYleX9aX+IWUtTg==
-X-Google-Smtp-Source: APXvYqxDGWZ70XddNBdPLPLyIeL4KDxzjTZP1ZVe0SFGGd56LwNcKoDNBTMCI4/+A1NgAhbBTn87mA==
-X-Received: by 2002:a63:1a59:: with SMTP id a25mr822363pgm.173.1560360304569;
-        Wed, 12 Jun 2019 10:25:04 -0700 (PDT)
+        bh=hf77Z7okHs6KAWJMSKNVF4d5KTz/UD7D/pDjyEK/gYs=;
+        b=oGBGbNIXKGd45K+dmJTVeDKXil48Ic5nrIeLhVQ3rLERqFM/s1e37vF7P8DuEVeveO
+         50iwZlQlqRBd/6F0dGWK/gJercnohe9iA9q08LZz/uoQa98+CLPfBcew2YwUllIf/70t
+         vdMxcZfjXehbMwrhdbjyGG9IG5INDR3ovB4TcbXIiZ8om1pqr/A3w23vaMQA1wJF9Kno
+         fUBteEKDovUj7OBkYV20DqgRv6Ytbkiro065VZkqGj52/72D7nj5vxBn2WInnuEFn5M5
+         o+xMMQTIG97H7B6yp3f/XaGQ/868tBMk8yh5W328wcny/Pi5Qt8gwhRK4WBG5LB0Hugl
+         TWqA==
+X-Gm-Message-State: APjAAAXxDRpqrYXMZhoT7oVJ6IU6nlGPgS9B/ofEQPSUuJT1B21Uuqt+
+        PuzSH7qP5oOgVrHNYI2XZSp5Nw==
+X-Google-Smtp-Source: APXvYqy4DZ49qp2EU0kGEhJdBUUq/lv7cA/TCZctxhPe/YZuPI9ZnWTiGzXXhAkf7DiepbF2F9ehCg==
+X-Received: by 2002:a17:902:8d92:: with SMTP id v18mr59822777plo.211.1560360878876;
+        Wed, 12 Jun 2019 10:34:38 -0700 (PDT)
 Received: from minitux (104-188-17-28.lightspeed.sndgca.sbcglobal.net. [104.188.17.28])
-        by smtp.gmail.com with ESMTPSA id f7sm153313pfd.43.2019.06.12.10.25.03
+        by smtp.gmail.com with ESMTPSA id z3sm75832pjn.16.2019.06.12.10.34.37
         (version=TLS1_3 cipher=AEAD-AES256-GCM-SHA384 bits=256/256);
-        Wed, 12 Jun 2019 10:25:03 -0700 (PDT)
-Date:   Wed, 12 Jun 2019 10:25:01 -0700
+        Wed, 12 Jun 2019 10:34:38 -0700 (PDT)
+Date:   Wed, 12 Jun 2019 10:34:36 -0700
 From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Marc Gonzalez <marc.w.gonzalez@free.fr>
+To:     Niklas Cassel <niklas.cassel@linaro.org>
 Cc:     Kishon Vijay Abraham I <kishon@ti.com>,
-        MSM <linux-arm-msm@vger.kernel.org>,
-        LKML <linux-kernel@vger.kernel.org>,
-        Evan Green <evgreen@chromium.org>,
-        Vivek Gautam <vivek.gautam@codeaurora.org>,
-        Niklas Cassel <niklas.cassel@linaro.org>,
-        Stanimir Varbanov <svarbanov@mm-sol.com>
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        stable@vger.kernel.org, Evan Green <evgreen@chromium.org>,
+        Marc Gonzalez <marc.w.gonzalez@free.fr>,
+        Vivek Gautam <vivek.gautam@codeaurora.org>
 Subject: Re: [PATCH] phy: qcom-qmp: Correct READY_STATUS poll break condition
-Message-ID: <20190612172501.GY4814@minitux>
+Message-ID: <20190612173436.GZ4814@minitux>
 References: <20190604232443.3417-1-bjorn.andersson@linaro.org>
- <619d2559-6d88-e795-76e0-3078236933ef@free.fr>
+ <20190612130858.GA11167@centauri>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <619d2559-6d88-e795-76e0-3078236933ef@free.fr>
+In-Reply-To: <20190612130858.GA11167@centauri>
 User-Agent: Mutt/1.12.0 (2019-05-25)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed 12 Jun 09:24 PDT 2019, Marc Gonzalez wrote:
+On Wed 12 Jun 06:08 PDT 2019, Niklas Cassel wrote:
 
-> On 05/06/2019 01:24, Bjorn Andersson wrote:
-> 
+> On Tue, Jun 04, 2019 at 04:24:43PM -0700, Bjorn Andersson wrote:
 > > After issuing a PHY_START request to the QMP, the hardware documentation
 > > states that the software should wait for the PCS_READY_STATUS to become
 > > 1.
@@ -138,32 +135,27 @@ On Wed 12 Jun 09:24 PDT 2019, Marc Gonzalez wrote:
 > >  				 PHY_INIT_COMPLETE_TIMEOUT);
 > >  	if (ret) {
 > >  		dev_err(qmp->dev, "phy initialization timed-out\n");
+> > -- 
+> > 2.18.0
+> > 
 > 
-> Your patch made me realize that:
-> msm8998_pciephy_cfg.has_phy_com_ctrl = false
-> thus
-> msm8998_pciephy_cfg.mask_com_pcs_ready is useless, AFAICT.
-> 
-
-While 8998 has a COM block, it does (among other things) not have a
-ready bit. So afaict has_phy_com_ctrl = false is correct.
-
-The addition of mask_pcs_ready is part of resolving the regression in
-5.2, so I suggest that we remove mask_com_pcs_ready separately.
-
-> (I copied msm8996_pciephy_cfg for msm8998_pciephy_cfg)
-> 
-> Does msm8996_pciephy_cfg really need both mask_pcs_ready AND
-> mask_com_pcs_ready?
+> msm8996_pciephy_cfg and msm8998_pciephy_cfg not having a bit mask defined
+> for PCS ready is really a separate bug, so personally I would have created
+> two patches, one that adds the missing masks, and one patch that fixes the
+> broken break condition.
 > 
 
-8996 has a COM block and it contains both the control bits and the
-status bits, so that looks correct.
+We can't add mask_pcs_ready in a separate commit after the poll change,
+because this would introduce a regression in the history and we can't
+add the mask_pcs_ready before because when I tested this on db820c I saw
+occasional initialization failures.
 
-> I'll test your patch tomorrow.
+I was not able to verify 8998, but I presume that the same dependency
+exists there.
+
+> Either way:
 > 
-
-I appreciate that.
+> Reviewed-by: Niklas Cassel <niklas.cassel@linaro.org>
 
 Thanks,
 Bjorn
