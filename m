@@ -2,89 +2,73 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 76A6D42B21
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Jun 2019 17:39:52 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 3D45742B44
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Jun 2019 17:52:24 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2437553AbfFLPjv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 12 Jun 2019 11:39:51 -0400
-Received: from mail.kernel.org ([198.145.29.99]:45092 "EHLO mail.kernel.org"
+        id S1728550AbfFLPwX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 12 Jun 2019 11:52:23 -0400
+Received: from ns.iliad.fr ([212.27.33.1]:50248 "EHLO ns.iliad.fr"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S2437271AbfFLPjv (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 12 Jun 2019 11:39:51 -0400
-Received: from localhost (83-86-89-107.cable.dynamic.v4.ziggo.nl [83.86.89.107])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 58D57215EA;
-        Wed, 12 Jun 2019 15:39:50 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1560353990;
-        bh=OkfQa1r9r/eRE11QXleOQyWPtTdH6obHCWv126tLNpI=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=zlvoertnbkBTJMrAQfpkuh2QUBkBmhHgwKxKMhzLzXwM1MFXI3mAFWEQJlG02ywhQ
-         CGL8w3YRyJNYeegaLLxeksnCagXvjwVsVqHWh7TqF8ULWUp0lu+RlFIlkzun6WZglX
-         X/MI3qM2/MPsz8hyqx1V2TeFrrlpsp/ZLRfpytbo=
-Date:   Wed, 12 Jun 2019 17:39:48 +0200
-From:   Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To:     Sinan Kaya <Okaya@kernel.org>
-Cc:     dan.j.williams@intel.com, vkoul@kernel.org,
-        Andy Gross <agross@kernel.org>,
-        David Brown <david.brown@linaro.org>,
-        linux-arm-kernel@lists.infradead.org,
-        linux-arm-msm@vger.kernel.org, dmaengine@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 6/6] dma: qcom: hidma: no need to check return value of
- debugfs_create functions
-Message-ID: <20190612153948.GA21828@kroah.com>
-References: <20190612122557.24158-1-gregkh@linuxfoundation.org>
- <20190612122557.24158-6-gregkh@linuxfoundation.org>
- <8185a8b8-a0ce-4a86-84a2-b51391356052@kernel.org>
+        id S1726829AbfFLPwX (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 12 Jun 2019 11:52:23 -0400
+Received: from ns.iliad.fr (localhost [127.0.0.1])
+        by ns.iliad.fr (Postfix) with ESMTP id 9F7FA20BC5;
+        Wed, 12 Jun 2019 17:52:21 +0200 (CEST)
+Received: from [192.168.108.49] (freebox.vlq16.iliad.fr [213.36.7.13])
+        by ns.iliad.fr (Postfix) with ESMTP id 8A0D01FF7C;
+        Wed, 12 Jun 2019 17:52:21 +0200 (CEST)
+From:   Marc Gonzalez <marc.w.gonzalez@free.fr>
+Subject: [PATCH v1] clk: qcom: msm8916: Don't build support by default
+To:     Stephen Boyd <sboyd@kernel.org>,
+        Michael Turquette <mturquette@baylibre.com>
+Cc:     linux-clk <linux-clk@vger.kernel.org>,
+        MSM <linux-arm-msm@vger.kernel.org>,
+        Georgi Djakov <georgi.djakov@linaro.org>,
+        Amit Kucheria <amit.kucheria@linaro.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>
+Message-ID: <49b95f19-4da6-4491-6ed7-5238ecfc35a8@free.fr>
+Date:   Wed, 12 Jun 2019 17:52:21 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+ Thunderbird/60.6.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <8185a8b8-a0ce-4a86-84a2-b51391356052@kernel.org>
-User-Agent: Mutt/1.12.0 (2019-05-25)
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
+X-Virus-Scanned: ClamAV using ClamSMTP ; ns.iliad.fr ; Wed Jun 12 17:52:21 2019 +0200 (CEST)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Jun 12, 2019 at 11:24:51AM -0400, Sinan Kaya wrote:
-> On 6/12/2019 8:25 AM, Greg Kroah-Hartman wrote:
-> > When calling debugfs functions, there is no need to ever check the
-> > return value.  The function can work or not, but the code logic should
-> > never do something different based on this.
-> > 
-> > Also, because there is no need to save the file dentry, remove the
-> > variables that were saving them as they were never even being used once
-> > set.
-> > 
-> > Cc: Sinan Kaya <okaya@kernel.org>
-> > Cc: Andy Gross <agross@kernel.org>
-> > Cc: David Brown <david.brown@linaro.org>
-> > Cc: Dan Williams <dan.j.williams@intel.com>
-> > Cc: Vinod Koul <vkoul@kernel.org>
-> > Cc: linux-arm-kernel@lists.infradead.org
-> > Cc: linux-arm-msm@vger.kernel.org
-> > Cc: dmaengine@vger.kernel.org
-> > Cc: linux-kernel@vger.kernel.org
-> > Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-> 
-> Interesting. Wouldn't debugfs_create_file() blow up if dir is NULL
-> for some reason?
+Build QCOM_A53PLL and QCOM_CLK_APCS_MSM8916 by default only when
+we're building MSM_GCC_8916.
 
-It will create a file in the root of debugfs.  But how will that happen?
-debugfs_create_dir() can not return NULL.
+Signed-off-by: Marc Gonzalez <marc.w.gonzalez@free.fr>
+---
+ drivers/clk/qcom/Kconfig | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-> +		debugfs_create_file("stats", S_IRUGO, dir, chan,
-> +				    &hidma_chan_fops);
-> 
-> Note that code ignores the return value of hidma_debug_init();
-> It was just trying to do clean up on debugfs failure by calling
-> 
-> 	debugfs_remove_recursive(dmadev->debugfs);
-
-Is that a problem?
-
-thanks,
-
-greg k-h
+diff --git a/drivers/clk/qcom/Kconfig b/drivers/clk/qcom/Kconfig
+index e1ff83cc361e..d5b065f64afc 100644
+--- a/drivers/clk/qcom/Kconfig
++++ b/drivers/clk/qcom/Kconfig
+@@ -21,7 +21,7 @@ if COMMON_CLK_QCOM
+ 
+ config QCOM_A53PLL
+ 	tristate "MSM8916 A53 PLL"
+-	default ARCH_QCOM
++	default MSM_GCC_8916
+ 	help
+ 	  Support for the A53 PLL on MSM8916 devices. It provides
+ 	  the CPU with frequencies above 1GHz.
+@@ -31,7 +31,7 @@ config QCOM_A53PLL
+ config QCOM_CLK_APCS_MSM8916
+ 	tristate "MSM8916 APCS Clock Controller"
+ 	depends on QCOM_APCS_IPC || COMPILE_TEST
+-	default ARCH_QCOM
++	default MSM_GCC_8916
+ 	help
+ 	  Support for the APCS Clock Controller on msm8916 devices. The
+ 	  APCS is managing the mux and divider which feeds the CPUs.
+-- 
+2.17.1
