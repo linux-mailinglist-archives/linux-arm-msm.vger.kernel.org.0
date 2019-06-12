@@ -2,139 +2,111 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 5DBC041918
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Jun 2019 01:41:02 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 208F041978
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Jun 2019 02:35:16 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2408239AbfFKXkj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 11 Jun 2019 19:40:39 -0400
-Received: from mail-pl1-f195.google.com ([209.85.214.195]:35882 "EHLO
-        mail-pl1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2408240AbfFKXkX (ORCPT
+        id S2407376AbfFLAfL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 11 Jun 2019 20:35:11 -0400
+Received: from mail-pl1-f196.google.com ([209.85.214.196]:39493 "EHLO
+        mail-pl1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2407288AbfFLAfL (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 11 Jun 2019 19:40:23 -0400
-Received: by mail-pl1-f195.google.com with SMTP id d21so5783189plr.3
-        for <linux-arm-msm@vger.kernel.org>; Tue, 11 Jun 2019 16:40:23 -0700 (PDT)
+        Tue, 11 Jun 2019 20:35:11 -0400
+Received: by mail-pl1-f196.google.com with SMTP id b7so793991pls.6;
+        Tue, 11 Jun 2019 17:35:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
+        d=gmail.com; s=20161025;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to:user-agent;
-        bh=vrcKiJncQCvJeYdovjwcGHLQkpFI9UFvyKLS0tgyyJA=;
-        b=fxr+p7sgq0hHqMWtLVWiiVUmwvCK2K9niwmP89I8eDAL9RbspWdO1Z1sQG60RUq0Jh
-         T2MZsogyjVAyLqkT3ee99gA8N013logxMHyCVkL7mI3YgQv2TKxq/hfKC0YKDOW0Tejm
-         rPOIm4epv87XbkFyGuS0bvymTWIYvDCh+1NrywAgLDi61i8nwyH0pvvPXN+tS0oTBppj
-         21RpX2SJBsR0PDumQJSP7tyvgCg+e7HUPC5gc46suhRZBioDhD1l7sO+GOgTaRyKmgCJ
-         5DYz2JA/jf2MVMgTV5F8Sm7cG6RQ5CQdljOJ1kjjHo3+2itX5/elS5w8RqMKPWEOBokX
-         zYSw==
+        bh=ph86gesNnRTM7ujmiRuSEJzFcbh48v/P7EOKY+OdFyY=;
+        b=UD7GmZY8FzpfopaVwv7Q21zdCVPYfTWHzMZb9BOJpgHB5l26CfIO2OuBfGjjrLkN3J
+         QsIYQ7jMZKuLuCSdRB13J78M7OvygaLDg9VciXMarUGgpDsiaHSdFn7md8E2qz8Tzqvv
+         I7myqDGnk/KAy0d/fZ6GSTIUGEbeYZ3THvuOJhN7HUhKXachfNyfN7/Kd/utKT6qqyBh
+         4YZN/lMsTQPXrGCsKu4j57kGZVzoA1sg5ZPykaxpziSP9r7nFEM6A7wseq5EDEaLY4cy
+         E7g1GugR03Y8NhGHxo4JQSfPmFlmNKzRZH0zn6zSUVKF6LfVkBtVTKlgzTtHRIElO26P
+         aPHQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=vrcKiJncQCvJeYdovjwcGHLQkpFI9UFvyKLS0tgyyJA=;
-        b=JxLOH7qz8uH61KtZXi/x6Zghg7xHr2ZvKldGlZm2k8PoNzdx4DmdQGn+lda+7ANRtJ
-         ubEdWHwZDwjQ71s+1iGx4bnZY+tHPW7YACzDrKRievSOjuU3ywCUwPEFwK0OC3y+ayE/
-         tW4BsBXAPKVvndHVxGi2boLzcsV4iIKkqmdifs7/KnIuTqx0W1EsHPF23atNnbFmMiO/
-         GK44w9bXdufqKZSQIgIdtNhUK0sh2uoetUOWpafnIfaN8V8TR39RhhaO04s7LBKZLYOf
-         1tXIngq41/tjVhb0pSBt88eciYNiHrZsCj54N7dnlNY6dfA9jGDFUaPGBMZ8IoU5PpmE
-         oi+g==
-X-Gm-Message-State: APjAAAUjKqDHU+NUMyISgUoMeNSNEtlG0h7+0a3sOHJ9roWewoH2o9sc
-        8d5KRmDJD9jZ5HA6nGpikMWjuw==
-X-Google-Smtp-Source: APXvYqwVvSeKZ9+8pgl/U+yQv0XwTRD+oXRVoAp/CkKUZM51Vh73fYHUpTMj6hpKkhxVYtdA9svC7A==
-X-Received: by 2002:a17:902:d915:: with SMTP id c21mr11863733plz.335.1560296422678;
-        Tue, 11 Jun 2019 16:40:22 -0700 (PDT)
-Received: from minitux (104-188-17-28.lightspeed.sndgca.sbcglobal.net. [104.188.17.28])
-        by smtp.gmail.com with ESMTPSA id h11sm17090333pfn.170.2019.06.11.16.40.21
+        bh=ph86gesNnRTM7ujmiRuSEJzFcbh48v/P7EOKY+OdFyY=;
+        b=uXRuLl+pDmu3wYqX/MNWSMQO4f/tTWl5nHfLsxzlDaKn9P+BMYfa6L941aL+juWvbi
+         tuhekcEo/N7GbD7YdXMwZw+SIG9Loi9e+FO8WZCQI5MeO95+SrKe3eS0aIo/WRUF4gxu
+         +KSa5pjg8mAgd7LohPrJukqIpp+j0RXPYB8OqNVBLXTnIdpn2CcvpAkvm/GIU4ZoaaX+
+         BNJm/iGZlJoi956EQFmHh0LlCmuV3pxOc9xT1Gt1Lj8f11hg9v8v2rP9ISsezm+oB2hQ
+         F4bGQt6DIIkRvil++bkuNBSnKpK919UTg5LYWL9UTwDnkjIGG3j/A47zIKrz+zcTZrc5
+         Yc8Q==
+X-Gm-Message-State: APjAAAWKAnatrnD6sTenAc0W9Qas0AMF/iM1SwSe+UFLqrQPw0JX+KBl
+        n2p6ep6ZfOdv7WmF4Xmhf48=
+X-Google-Smtp-Source: APXvYqxZm72YQBMzfu3JeQ/pQSonMtBZam0wR61ec/mANR6WzsknWTt1c/ro/GU7bEt9Ot8Czc6tpw==
+X-Received: by 2002:a17:902:24c:: with SMTP id 70mr78198009plc.2.1560299710166;
+        Tue, 11 Jun 2019 17:35:10 -0700 (PDT)
+Received: from dtor-ws ([2620:15c:202:201:3adc:b08c:7acc:b325])
+        by smtp.gmail.com with ESMTPSA id a3sm227817pje.3.2019.06.11.17.35.08
         (version=TLS1_3 cipher=AEAD-AES256-GCM-SHA384 bits=256/256);
-        Tue, 11 Jun 2019 16:40:22 -0700 (PDT)
-Date:   Tue, 11 Jun 2019 16:40:20 -0700
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Georgi Djakov <georgi.djakov@linaro.org>
-Cc:     robh+dt@kernel.org, agross@kernel.org, vkoul@kernel.org,
-        evgreen@chromium.org, daidavid1@codeaurora.org,
-        linux-pm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH v3 5/5] arm64: dts: qcs404: Add interconnect provider DT
- nodes
-Message-ID: <20190611234020.GX4814@minitux>
-References: <20190611164157.24656-1-georgi.djakov@linaro.org>
- <20190611164157.24656-6-georgi.djakov@linaro.org>
+        Tue, 11 Jun 2019 17:35:09 -0700 (PDT)
+Date:   Tue, 11 Jun 2019 17:35:07 -0700
+From:   Dmitry Torokhov <dmitry.torokhov@gmail.com>
+To:     Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
+Cc:     benjamin.tissoires@redhat.com, jikos@kernel.org,
+        bjorn.andersson@linaro.org, lee.jones@linaro.org,
+        robh+dt@kernel.org, mark.rutland@arm.com, agross@kernel.org,
+        david.brown@linaro.org, hdegoede@redhat.com,
+        linux-input@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v5 2/3] HID: quirks: Refactor ELAN 400 and 401 handling
+Message-ID: <20190612003507.GG143729@dtor-ws>
+References: <20190606161055.47089-1-jeffrey.l.hugo@gmail.com>
+ <20190606161322.47192-1-jeffrey.l.hugo@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20190611164157.24656-6-georgi.djakov@linaro.org>
-User-Agent: Mutt/1.12.0 (2019-05-25)
+In-Reply-To: <20190606161322.47192-1-jeffrey.l.hugo@gmail.com>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue 11 Jun 09:41 PDT 2019, Georgi Djakov wrote:
-
-> Add the DT nodes for the network-on-chip interconnect buses found
-> on qcs404-based platforms.
+On Thu, Jun 06, 2019 at 09:13:22AM -0700, Jeffrey Hugo wrote:
+> There needs to be coordination between hid-quirks and the elan_i2c driver
+> about which devices are handled by what drivers.  Currently, both use
+> whitelists, which results in valid devices being unhandled by default,
+> when they should not be rejected by hid-quirks.  This is quickly becoming
+> an issue.
 > 
-> Signed-off-by: Georgi Djakov <georgi.djakov@linaro.org>
+> Since elan_i2c has a maintained whitelist of what devices it will handle,
+> use that to implement a blacklist in hid-quirks so that only the devices
+> that need to be handled by elan_i2c get rejected by hid-quirks, and
+> everything else is handled by default.  The downside is the whitelist and
+> blacklist need to be kept in sync.
+> 
+> Suggested-by: Benjamin Tissoires <benjamin.tissoires@redhat.com>
+> Signed-off-by: Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
 > ---
+>  drivers/hid/hid-quirks.c | 78 ++++++++++++++++++++++++++++++++++------
+>  1 file changed, 67 insertions(+), 11 deletions(-)
 > 
-> v3:
-> - Updated according to the new binding: added reg property and moved under the
->   "soc" node.
-> 
->  arch/arm64/boot/dts/qcom/qcs404.dtsi | 28 ++++++++++++++++++++++++++++
->  1 file changed, 28 insertions(+)
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/qcs404.dtsi b/arch/arm64/boot/dts/qcom/qcs404.dtsi
-> index ffedf9640af7..07ff592233b6 100644
-> --- a/arch/arm64/boot/dts/qcom/qcs404.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/qcs404.dtsi
-> @@ -1,6 +1,7 @@
->  // SPDX-License-Identifier: GPL-2.0
->  // Copyright (c) 2018, Linaro Limited
+> diff --git a/drivers/hid/hid-quirks.c b/drivers/hid/hid-quirks.c
+> index e5ca6fe2ca57..edebd0700e3d 100644
+> --- a/drivers/hid/hid-quirks.c
+> +++ b/drivers/hid/hid-quirks.c
+> @@ -912,8 +912,66 @@ static const struct hid_device_id hid_mouse_ignore_list[] = {
+>  	{ }
+>  };
 >  
-> +#include <dt-bindings/interconnect/qcom,qcs404.h>
->  #include <dt-bindings/interrupt-controller/arm-gic.h>
->  #include <dt-bindings/clock/qcom,gcc-qcs404.h>
->  #include <dt-bindings/clock/qcom,rpmcc.h>
-> @@ -411,6 +412,33 @@
->  			#interrupt-cells = <4>;
->  		};
->  
-> +		bimc: interconnect@400000 {
+> +/* 
+> + * List of device names that elan_i2c is handling and HID should ignore.  Must
+> + * be kept in sync with elan_i2c
+> + */
+> +static const char *hid_elan_i2c_ignore[] = {
 
-Please maintain sort order of address, node name, label name. So this
-should go between rng@e3000 and remoteproc@b00000.
+If this is a copy of elan whitelist, then, if we do not want to bother
+with sharing it in object form (as a elan-i2c-ids module), can we at
+least move it into include/linux/input/elan-i2c-ids.h and consume from
+hid-quirks.c?
 
-Other than that:
+Thanks.
 
-Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
-
-Regards,
-Bjorn
-> +			reg = <0x00400000 0x80000>;
-> +			compatible = "qcom,qcs404-bimc";
-> +			#interconnect-cells = <1>;
-> +			clock-names = "bus_clk", "bus_a_clk";
-> +			clocks = <&rpmcc RPM_SMD_BIMC_CLK>,
-> +				<&rpmcc RPM_SMD_BIMC_A_CLK>;
-> +		};
-> +
-> +		pcnoc: interconnect@500000 {
-> +			reg = <0x00500000 0x15080>;
-> +			compatible = "qcom,qcs404-pcnoc";
-> +			#interconnect-cells = <1>;
-> +			clock-names = "bus_clk", "bus_a_clk";
-> +			clocks = <&rpmcc RPM_SMD_PNOC_CLK>,
-> +				<&rpmcc RPM_SMD_PNOC_A_CLK>;
-> +		};
-> +
-> +		snoc: interconnect@580000 {
-> +			reg = <0x00580000 0x23080>;
-> +			compatible = "qcom,qcs404-snoc";
-> +			#interconnect-cells = <1>;
-> +			clock-names = "bus_clk", "bus_a_clk";
-> +			clocks = <&rpmcc RPM_SMD_SNOC_CLK>,
-> +				<&rpmcc RPM_SMD_SNOC_A_CLK>;
-> +		};
-> +
->  		sdcc1: sdcc@7804000 {
->  			compatible = "qcom,sdhci-msm-v5";
->  			reg = <0x07804000 0x1000>, <0x7805000 0x1000>;
+-- 
+Dmitry
