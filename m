@@ -2,126 +2,90 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 3D3D34286B
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Jun 2019 16:09:43 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4C9C7428F8
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Jun 2019 16:29:10 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2437219AbfFLOJQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 12 Jun 2019 10:09:16 -0400
-Received: from mail-wr1-f65.google.com ([209.85.221.65]:37712 "EHLO
-        mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2439584AbfFLOJQ (ORCPT
+        id S2408678AbfFLO1A (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 12 Jun 2019 10:27:00 -0400
+Received: from mail-wm1-f66.google.com ([209.85.128.66]:50886 "EHLO
+        mail-wm1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2407424AbfFLO1A (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 12 Jun 2019 10:09:16 -0400
-Received: by mail-wr1-f65.google.com with SMTP id v14so17077809wrr.4;
-        Wed, 12 Jun 2019 07:09:14 -0700 (PDT)
+        Wed, 12 Jun 2019 10:27:00 -0400
+Received: by mail-wm1-f66.google.com with SMTP id c66so6808999wmf.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 12 Jun 2019 07:26:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=VqRsR02MRpXUpBmTyt+gotwvmYKpyFWAczeS3z19SOU=;
-        b=Gg57xIIqwVV4RnV2ANTDzL2+YfITQx2vE4Y9d2hlrEOCXQQkntLVXiwLfxeX82EjvE
-         hGf4OL47pLdCtUVZu4T/HepeaoAHnEd3GsxFUr93ViEck/tLEkcTkWIHJjA5FIQkxfuu
-         xajdYxQ6gyD73stoT2KvRXpKNTr1qFc2FFKiJByENrmX/FOCNOBElSPXkhm7ieUmPrDi
-         4ZRW9pnQ41cTgKywTQk/f0DkcTDjA8bzWUcxzNI6LAAdhhboXQbJ6ntqrSyVD2zrPP8V
-         5zMlWY9PlvjRHtpqWWfNAwZp2vgM/VjC/SIa546QnDS3lczI1mJMis8h3x0yd2P78rQ4
-         TT/Q==
+        d=linaro.org; s=google;
+        h=from:to:cc:subject:date:message-id;
+        bh=9RG/fmGuMFz1uOaOz5ph/6qVFWhsvvm2ZWfHtq97fow=;
+        b=U3aIc/V9L3ZOTcT3ZWJ5NsF/6YJWWwbbm7Swu0+HXiDryJ0hzaoC0d599o5c02/wfB
+         txsPmg5vnRsDnpHii3K7CcH9tVtBuEIkdV9yk511gxV2IUu/hByTGdjLnEToK/XiJHE7
+         bYZcR54RCc6PrTpqyWwk7GJrQbSS5LtM+vafuV6wypMDmfZcQoFrz6K6R8I+ykp0Rt4y
+         8lM3cxTB+ITbOMGxQ5pXG+QdGDoe6vDIeH6USCgqcUPtBUcR0QdM8FBxohykFAa8lpM/
+         MY6HXggENdNPtU2hgdyGDNiA19XvUd6/l3/AKJjHZikq1HOfB80J0UWPwDChonFerPvx
+         eX9A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=VqRsR02MRpXUpBmTyt+gotwvmYKpyFWAczeS3z19SOU=;
-        b=YSOZfNhrjb/XEa+PLxqaea4KItbdMyHyDQYXERrB1W7jihy1+H5BXgbkmGqwlD++xj
-         22fVwgwmNhuFbHm4grW2miagRAKmKtXE6quPHH+fF9+ui0TYCeyJ4DSlnKDVoSpQgInU
-         CEjTa8nCIz+jrK1umicphshJGTDHwC1pRRZeibXoi15COtVE9I9tgEZYPlqezct2p2Lc
-         gSNtinGR6ZVkrOA3bNfD+GX4mmc623Ok0KDf9mvntWk9sCHLMuW/eIknCeinGDR7ZcTs
-         Q+u9+ZnWmScNCQIbtpNTJRDgwO74qEe7seifY0HjaPG5WSxUeGMYDbvYRT0uHX0wVnWB
-         Hq0Q==
-X-Gm-Message-State: APjAAAVcy3DndOwAAsXFRkouQoC2lhV+PxmwWYJbCSbMzZbIzk6Ikwm1
-        joLnEGTDEtXtvyqJacUk/L0=
-X-Google-Smtp-Source: APXvYqy2ksphkWG/pB6E0eHOxvp/qg8l/FsiJC9HmfAEpnA/dm5nE0SXyG7ZXAFSOdjcbz8QGPsUCg==
-X-Received: by 2002:a5d:4b4f:: with SMTP id w15mr11954799wrs.199.1560348553929;
-        Wed, 12 Jun 2019 07:09:13 -0700 (PDT)
-Received: from gmail.com (net-31-27-155-100.cust.vodafonedsl.it. [31.27.155.100])
-        by smtp.gmail.com with ESMTPSA id t140sm2772023wmt.0.2019.06.12.07.09.12
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=9RG/fmGuMFz1uOaOz5ph/6qVFWhsvvm2ZWfHtq97fow=;
+        b=pnrZs/3fYrFBujzkqNYSQg9Ye+H3W3ubv38i2/cZXUYGWReD/QUevGLgimyeMwqdcJ
+         tzw6GS0RF3gkv4LJ//UZNZklgahqaRa75TGVd0cpYSHa2CLE3z+y7OT139V7SHEcs7mP
+         5r0DL6yTtFeiryW/houYQSI/RtjmsfAVCoAoy82scL9hBQdMJmvW2bQX8bITisHSfItu
+         qNzIFc6eJT5Mt7KIDwVm9fI7pap1QU4ybdVIobdxMH8GF8jLQfO9nrmBsDlXw0OmxJtd
+         m5uT05dhv+wbJFcS+zxIgotKzfjjrVQn8ZSqls66MVbSZkkggEfh22lE0y64pKvdAWMl
+         nxwQ==
+X-Gm-Message-State: APjAAAXFLPRkYviraQfmNusK0Ybn4n/n+SfqusZl6vi2YW30KpgE+5AV
+        7Np7wXsjQc4R0T8Rp3FZPhANUg==
+X-Google-Smtp-Source: APXvYqy1cLtAIc09aYE/pTZ4C8baAoSIE+X5aqrXpGYtR24fXNVBaYjQ4r2OFfrIZUCykHgpUQaBCA==
+X-Received: by 2002:a7b:cb84:: with SMTP id m4mr23894630wmi.50.1560349618344;
+        Wed, 12 Jun 2019 07:26:58 -0700 (PDT)
+Received: from dell.watershed.co.uk ([185.80.132.160])
+        by smtp.gmail.com with ESMTPSA id y18sm203959wmd.29.2019.06.12.07.26.56
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 12 Jun 2019 07:09:13 -0700 (PDT)
-Date:   Wed, 12 Jun 2019 16:09:11 +0200
-From:   Paolo Pisati <p.pisati@gmail.com>
-To:     Niklas Cassel <niklas.cassel@linaro.org>
-Cc:     Paolo Pisati <p.pisati@gmail.com>,
-        Vivek Gautam <vivek.gautam@codeaurora.org>,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: msm8996: qcom-qmp: apq8096-db820c fails to boot, reset back to
- fastboot and locks up
-Message-ID: <20190612140911.GA16863@harukaze>
-References: <20190610134401.GA12964@harukaze>
- <20190611171225.GA21992@centauri.ideon.se>
- <20190612131735.GB11167@centauri>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20190612131735.GB11167@centauri>
-User-Agent: Mutt/1.5.24 (2015-08-30)
+        Wed, 12 Jun 2019 07:26:57 -0700 (PDT)
+From:   Lee Jones <lee.jones@linaro.org>
+To:     alokc@codeaurora.org, agross@kernel.org, david.brown@linaro.org,
+        wsa+renesas@sang-engineering.com, bjorn.andersson@linaro.org,
+        balbi@kernel.org, gregkh@linuxfoundation.org,
+        ard.biesheuvel@linaro.org, jlhugo@gmail.com
+Cc:     linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
+        linux-i2c@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-gpio@vger.kernel.org, linux-usb@vger.kernel.or,
+        Lee Jones <lee.jones@linaro.org>
+Subject: [PATCH v4 0/6] I2C: DWC3 USB: Add support for ACPI based AArch64 Laptops
+Date:   Wed, 12 Jun 2019 15:26:48 +0100
+Message-Id: <20190612142654.9639-1-lee.jones@linaro.org>
+X-Mailer: git-send-email 2.17.1
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Jun 12, 2019 at 03:17:35PM +0200, Niklas Cassel wrote:
-> > diff --git a/drivers/phy/qualcomm/phy-qcom-qmp.c b/drivers/phy/qualcomm/phy-qcom-qmp.c
-> > index cd91b4179b10..22352e3b0ec5 100644
-> > --- a/drivers/phy/qualcomm/phy-qcom-qmp.c
-> > +++ b/drivers/phy/qualcomm/phy-qcom-qmp.c
-> > @@ -1490,7 +1490,7 @@ static int qcom_qmp_phy_enable(struct phy *phy)
-> >  
-> >         ret = qcom_qmp_phy_com_init(qphy);
-> >         if (ret)
-> > -               return ret;
-> > +               goto err_lane_rst;
-> >  
-> >         if (cfg->has_lane_rst) {
-> >                 ret = reset_control_deassert(qphy->lane_rst);
+This patch-set ensures the kernel is bootable on the newly released
+AArch64 based Laptops using ACPI configuration tables.  The Pinctrl
+changes have been accepted, leaving only I2C (keyboard, touchpad,
+touchscreen, fingerprint, etc, HID device) and USB (root filesystem,
+camera, networking, etc) enablement.
 
-Hi Niklas,
-unfortunately, it didn't help - i added a printk, to highlight when it failed:
-
---- a/drivers/phy/qualcomm/phy-qcom-qmp.c
-+++ b/drivers/phy/qualcomm/phy-qcom-qmp.c
-@@ -1489,8 +1489,10 @@ static int qcom_qmp_phy_enable(struct phy *phy)
-        }
+v4:
+ * Collecting Acks
+ * Adding Andy Gross' new email
+ * Removing applied Pinctrl patches
  
-        ret = qcom_qmp_phy_com_init(qphy);
--       if (ret)
--               return ret;
-+       if (ret) {
-+               dev_err(qmp->dev, "qphy initialization failed\n");
-+               goto err_lane_rst;
-+       }
- 
-        if (cfg->has_lane_rst) {
-                ret = reset_control_deassert(qphy->lane_rst);
+Lee Jones (6):
+  i2c: i2c-qcom-geni: Provide support for ACPI
+  i2c: i2c-qcom-geni: Signify successful driver probe
+  soc: qcom: geni: Add support for ACPI
+  usb: dwc3: qcom: Add support for booting with ACPI
+  usb: dwc3: qcom: Start USB in 'host mode' on the SDM845
+  usb: dwc3: qcom: Improve error handling
 
-After several reboots i was able to trigger the phy init failure again:
+ drivers/i2c/busses/i2c-qcom-geni.c |  17 ++-
+ drivers/soc/qcom/qcom-geni-se.c    |  21 ++-
+ drivers/usb/dwc3/Kconfig           |   2 +-
+ drivers/usb/dwc3/dwc3-qcom.c       | 221 +++++++++++++++++++++++++----
+ 4 files changed, 225 insertions(+), 36 deletions(-)
 
-...
-[    2.223999] qcom-qmp-phy 34000.phy: Registered Qcom-QMP phy
-[    2.224956] qcom-qmp-phy 7410000.phy: Registered Qcom-QMP phy
-[    2.228798] ufs_qcom_phy_qmp_14nm 627000.phy: invalid resource
-[    2.237271] qcom-qmp-phy 34000.phy: phy common block init timed-out
-[    2.240315] qcom-qmp-phy 34000.phy: qphy initialization failed
-...
-
-these are the last lines printed, before rebooting in fastboot and
-locking up there (as before[*]).
-
-So, as far as i understand there are two distinct problems:
-
-1) sometimes, qcom-qmp-phy fails to initialize
-
-2) and when that happens, the failure is fatal and it led to a reboot & lockup
-in fastboot
-
-1: https://pastebin.ubuntu.com/p/rtjVrD3yzk/
 -- 
-bye,
-p.
+2.17.1
+
