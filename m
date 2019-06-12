@@ -2,114 +2,89 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 3CBF642B1A
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Jun 2019 17:38:56 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 76A6D42B21
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Jun 2019 17:39:52 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726947AbfFLPix (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 12 Jun 2019 11:38:53 -0400
-Received: from smtp.codeaurora.org ([198.145.29.96]:55506 "EHLO
-        smtp.codeaurora.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726829AbfFLPiw (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 12 Jun 2019 11:38:52 -0400
-Received: by smtp.codeaurora.org (Postfix, from userid 1000)
-        id D684A60312; Wed, 12 Jun 2019 15:38:51 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
-        s=default; t=1560353931;
-        bh=jo5xwzUkOXexvviKPM6NFNmRQs5GnOMsMW7FYO6sJ00=;
-        h=Subject:To:Cc:References:From:Date:In-Reply-To:From;
-        b=Nt7sd7cZDHTP1ZD9BGLhpg5rSQFdvUK1R2mXkRYJL0U5w1JoCvtR0q/ezvfDFcguR
-         v+sth8LZmLK/T5mYzGlxiOli7B6WvVQacdXZq/gcVvXUFmAyfs5pDpdm5G04OEVHp1
-         +0+PzOfZriOjnXhHw9ba88bitXd41PRgS6n+a6bM=
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        pdx-caf-mail.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.7 required=2.0 tests=ALL_TRUSTED,BAYES_00,
-        DKIM_INVALID,DKIM_SIGNED,SPF_NONE autolearn=no autolearn_force=no
-        version=3.4.0
-Received: from [10.226.58.28] (i-global254.qualcomm.com [199.106.103.254])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        id S2437553AbfFLPjv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 12 Jun 2019 11:39:51 -0400
+Received: from mail.kernel.org ([198.145.29.99]:45092 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S2437271AbfFLPjv (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 12 Jun 2019 11:39:51 -0400
+Received: from localhost (83-86-89-107.cable.dynamic.v4.ziggo.nl [83.86.89.107])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        (Authenticated sender: jhugo@smtp.codeaurora.org)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 5D3A4602F3;
-        Wed, 12 Jun 2019 15:38:49 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
-        s=default; t=1560353930;
-        bh=jo5xwzUkOXexvviKPM6NFNmRQs5GnOMsMW7FYO6sJ00=;
-        h=Subject:To:Cc:References:From:Date:In-Reply-To:From;
-        b=I8Hju8KJNFAyrfSlI3R59XQCdY9ihtqyUcwtNqUKPb95ly8WzJGcN12ELC8YgP2mB
-         KtTLMuPpeSgMIsiPD5Nv32DIRd4XdrXpRTke6G4KcxZl72wgMXQ2Vsoy/wdlVc069m
-         1fNeCLC0pOkSVCHPuS/ymcijn+tTp8u+gt1ZXfo4=
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 5D3A4602F3
-Authentication-Results: pdx-caf-mail.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: pdx-caf-mail.web.codeaurora.org; spf=none smtp.mailfrom=jhugo@codeaurora.org
-Subject: Re: [PATCH v5 2/3] HID: quirks: Refactor ELAN 400 and 401 handling
-To:     Benjamin Tissoires <benjamin.tissoires@redhat.com>,
-        Dmitry Torokhov <dmitry.torokhov@gmail.com>
-Cc:     Jiri Kosina <jikos@kernel.org>,
-        Jeffrey Hugo <jeffrey.l.hugo@gmail.com>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Lee Jones <lee.jones@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Mark Rutland <mark.rutland@arm.com>,
+        by mail.kernel.org (Postfix) with ESMTPSA id 58D57215EA;
+        Wed, 12 Jun 2019 15:39:50 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=default; t=1560353990;
+        bh=OkfQa1r9r/eRE11QXleOQyWPtTdH6obHCWv126tLNpI=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=zlvoertnbkBTJMrAQfpkuh2QUBkBmhHgwKxKMhzLzXwM1MFXI3mAFWEQJlG02ywhQ
+         CGL8w3YRyJNYeegaLLxeksnCagXvjwVsVqHWh7TqF8ULWUp0lu+RlFIlkzun6WZglX
+         X/MI3qM2/MPsz8hyqx1V2TeFrrlpsp/ZLRfpytbo=
+Date:   Wed, 12 Jun 2019 17:39:48 +0200
+From:   Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To:     Sinan Kaya <Okaya@kernel.org>
+Cc:     dan.j.williams@intel.com, vkoul@kernel.org,
         Andy Gross <agross@kernel.org>,
         David Brown <david.brown@linaro.org>,
-        Hans de Goede <hdegoede@redhat.com>,
-        "linux-input@vger.kernel.org" <linux-input@vger.kernel.org>,
-        DTML <devicetree@vger.kernel.org>,
-        "open list:ARM/QUALCOMM SUPPORT" <linux-arm-msm@vger.kernel.org>,
-        lkml <linux-kernel@vger.kernel.org>
-References: <20190606161055.47089-1-jeffrey.l.hugo@gmail.com>
- <20190606161322.47192-1-jeffrey.l.hugo@gmail.com>
- <20190612003507.GG143729@dtor-ws>
- <nycvar.YFH.7.76.1906121644160.27227@cbobk.fhfr.pm>
- <CAKdAkRQOxTX51rhodoFyYpwi85pk8apvWjCLLX5Sw6NTH=j1kA@mail.gmail.com>
- <CAO-hwJKDxu0Bxxjd9reAojHODQTnW1POmifBCVsnjt8+CT4rmw@mail.gmail.com>
-From:   Jeffrey Hugo <jhugo@codeaurora.org>
-Message-ID: <13ffac55-7760-9dda-8c80-d15283cf8f92@codeaurora.org>
-Date:   Wed, 12 Jun 2019 09:38:48 -0600
-User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:60.0) Gecko/20100101
- Thunderbird/60.7.0
+        linux-arm-kernel@lists.infradead.org,
+        linux-arm-msm@vger.kernel.org, dmaengine@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 6/6] dma: qcom: hidma: no need to check return value of
+ debugfs_create functions
+Message-ID: <20190612153948.GA21828@kroah.com>
+References: <20190612122557.24158-1-gregkh@linuxfoundation.org>
+ <20190612122557.24158-6-gregkh@linuxfoundation.org>
+ <8185a8b8-a0ce-4a86-84a2-b51391356052@kernel.org>
 MIME-Version: 1.0
-In-Reply-To: <CAO-hwJKDxu0Bxxjd9reAojHODQTnW1POmifBCVsnjt8+CT4rmw@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <8185a8b8-a0ce-4a86-84a2-b51391356052@kernel.org>
+User-Agent: Mutt/1.12.0 (2019-05-25)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 6/12/2019 9:21 AM, Benjamin Tissoires wrote:
-> On Wed, Jun 12, 2019 at 5:14 PM Dmitry Torokhov
-> <dmitry.torokhov@gmail.com> wrote:
->>
->> On Wed, Jun 12, 2019 at 7:45 AM Jiri Kosina <jikos@kernel.org> wrote:
->>>
->>> On Tue, 11 Jun 2019, Dmitry Torokhov wrote:
->>>
->>>>> +static const char *hid_elan_i2c_ignore[] = {
->>>>
->>>> If this is a copy of elan whitelist, then, if we do not want to bother
->>>> with sharing it in object form (as a elan-i2c-ids module), can we at
->>>> least move it into include/linux/input/elan-i2c-ids.h and consume from
->>>> hid-quirks.c?
->>>
->>> Let's just not duplicate it in both objects. Why not properly export it
->>> from hid_quirks?
->>
->> Strictly speaking Elan does not depend on HID; exporting it from
->> quirks would mean adding this dependency. This also mean that you
->> can't make Elan built-in while keeping HID as a module (I think this
->> at least used to be config on some Chromebooks).
->>
+On Wed, Jun 12, 2019 at 11:24:51AM -0400, Sinan Kaya wrote:
+> On 6/12/2019 8:25 AM, Greg Kroah-Hartman wrote:
+> > When calling debugfs functions, there is no need to ever check the
+> > return value.  The function can work or not, but the code logic should
+> > never do something different based on this.
+> > 
+> > Also, because there is no need to save the file dentry, remove the
+> > variables that were saving them as they were never even being used once
+> > set.
+> > 
+> > Cc: Sinan Kaya <okaya@kernel.org>
+> > Cc: Andy Gross <agross@kernel.org>
+> > Cc: David Brown <david.brown@linaro.org>
+> > Cc: Dan Williams <dan.j.williams@intel.com>
+> > Cc: Vinod Koul <vkoul@kernel.org>
+> > Cc: linux-arm-kernel@lists.infradead.org
+> > Cc: linux-arm-msm@vger.kernel.org
+> > Cc: dmaengine@vger.kernel.org
+> > Cc: linux-kernel@vger.kernel.org
+> > Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 > 
-> I also think it would me things cleaner to have the list of devices in elan_i2c.
-> If we put the list of devices supported by elan_i2c in a header, and
-> have HID read this .h file directly, there will be no runtime
-> dependency.
+> Interesting. Wouldn't debugfs_create_file() blow up if dir is NULL
+> for some reason?
+
+It will create a file in the root of debugfs.  But how will that happen?
+debugfs_create_dir() can not return NULL.
+
+> +		debugfs_create_file("stats", S_IRUGO, dir, chan,
+> +				    &hidma_chan_fops);
 > 
-> I am sure we can work something out to remove Jeffrey's fears.
+> Note that code ignores the return value of hidma_debug_init();
+> It was just trying to do clean up on debugfs failure by calling
+> 
+> 	debugfs_remove_recursive(dmadev->debugfs);
 
-Works for me.  I plan to have the next rev posted by the end of the week.
+Is that a problem?
 
+thanks,
+
+greg k-h
