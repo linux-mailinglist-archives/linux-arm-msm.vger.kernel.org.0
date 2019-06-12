@@ -2,96 +2,77 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 2EA9D42ADD
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Jun 2019 17:25:01 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 3CBF642B1A
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Jun 2019 17:38:56 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729737AbfFLPYx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 12 Jun 2019 11:24:53 -0400
-Received: from mail-qt1-f196.google.com ([209.85.160.196]:40240 "EHLO
-        mail-qt1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727419AbfFLPYx (ORCPT
+        id S1726947AbfFLPix (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 12 Jun 2019 11:38:53 -0400
+Received: from smtp.codeaurora.org ([198.145.29.96]:55506 "EHLO
+        smtp.codeaurora.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726829AbfFLPiw (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 12 Jun 2019 11:24:53 -0400
-Received: by mail-qt1-f196.google.com with SMTP id a15so18930384qtn.7;
-        Wed, 12 Jun 2019 08:24:52 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:subject:to:cc:references:openpgp:autocrypt:message-id
-         :date:user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=x/y4rh2GpXVp2fvK0BIj6HcH04gYu7ik1dJuJV7JqSE=;
-        b=gfaonzahNiQIay2TIzNRmKH4jfqBoa1rd4ukaLTrYRQkLOdLp/2X+zYhdgIRZjuL+K
-         M5BnzEoMLwGRU0ca+2ghr+czB10fUMRNz15o2Yl3sItCK7ORKZWLOyRO33YxZe1+I7wX
-         oJGEAHeAnxuxq5DIDNxwaL7LPR5SDkxCWlll7J91Z5/xkxwLaFSEJ3eKqELLHIiHj7w5
-         oNfQx6zhhGF4PpAwBVYbvHURhwNORv0bMni9nOD2yvW8cJXLgd2yEWP41spERrfDl4IT
-         F0SkvhzRsgjZItQJA33SFy2QIs0g6znV28uE5Lj+g4bDj8uGi2bF0+yszeI5v43VD5OT
-         0h3Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:subject:to:cc:references:openpgp
-         :autocrypt:message-id:date:user-agent:mime-version:in-reply-to
-         :content-language:content-transfer-encoding;
-        bh=x/y4rh2GpXVp2fvK0BIj6HcH04gYu7ik1dJuJV7JqSE=;
-        b=PwAISTp3+cUaxE13yYSyQJ/xeOSBWk818c/4KAaOlB8bsXAI7GpMOUG2mjWK9vVNi0
-         gKSWyA9V3bp1fIxCbQbkQD8BFpnJiPczLxksSYFqdWuOSRtgjJDDsJhOjOYoFQRHWpHy
-         MhPLjA/4lXz1tgduyHZNScYBycaWjm4ly5y1qmNZ5+tSBLPzAHMkq0T4GGZjdyH03rWo
-         lotGuG/WbL88dtGzAq6ZzCMh71m3xkbpJKPw2xHBIlt9ewp3kSV/X7Kblhe3cudHNnQy
-         9XjS/ZKh0y+u9n4xSum4Qf9vcDYRs4J01wwbpxHVYkKGx5xAA7u8/me3fGH8XOtcmb+o
-         GhXg==
-X-Gm-Message-State: APjAAAWjQz8hGYVkZrBmyseLTf71HJGiZfPJjmZFS9YL3YEbwFAAjo/L
-        4MC5y25mEpzI4zTZ5SKCAqZh6AFm
-X-Google-Smtp-Source: APXvYqye/2ePZackd8UnkSvmHspMqWBf3Ci8+wA0N4ZKXatISVMJv90tpsbH4oujNN2SjfCd7T+3Lw==
-X-Received: by 2002:aed:3ed5:: with SMTP id o21mr69291746qtf.369.1560353092224;
-        Wed, 12 Jun 2019 08:24:52 -0700 (PDT)
-Received: from [10.84.150.66] ([167.220.148.66])
-        by smtp.gmail.com with ESMTPSA id i17sm8068790qkl.71.2019.06.12.08.24.51
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 12 Jun 2019 08:24:51 -0700 (PDT)
-From:   Sinan Kaya <Okaya@kernel.org>
-X-Google-Original-From: Sinan Kaya <okaya@kernel.org>
-Subject: Re: [PATCH 6/6] dma: qcom: hidma: no need to check return value of
- debugfs_create functions
-To:     Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        dan.j.williams@intel.com, vkoul@kernel.org
-Cc:     Andy Gross <agross@kernel.org>,
+        Wed, 12 Jun 2019 11:38:52 -0400
+Received: by smtp.codeaurora.org (Postfix, from userid 1000)
+        id D684A60312; Wed, 12 Jun 2019 15:38:51 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
+        s=default; t=1560353931;
+        bh=jo5xwzUkOXexvviKPM6NFNmRQs5GnOMsMW7FYO6sJ00=;
+        h=Subject:To:Cc:References:From:Date:In-Reply-To:From;
+        b=Nt7sd7cZDHTP1ZD9BGLhpg5rSQFdvUK1R2mXkRYJL0U5w1JoCvtR0q/ezvfDFcguR
+         v+sth8LZmLK/T5mYzGlxiOli7B6WvVQacdXZq/gcVvXUFmAyfs5pDpdm5G04OEVHp1
+         +0+PzOfZriOjnXhHw9ba88bitXd41PRgS6n+a6bM=
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        pdx-caf-mail.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.7 required=2.0 tests=ALL_TRUSTED,BAYES_00,
+        DKIM_INVALID,DKIM_SIGNED,SPF_NONE autolearn=no autolearn_force=no
+        version=3.4.0
+Received: from [10.226.58.28] (i-global254.qualcomm.com [199.106.103.254])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: jhugo@smtp.codeaurora.org)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 5D3A4602F3;
+        Wed, 12 Jun 2019 15:38:49 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
+        s=default; t=1560353930;
+        bh=jo5xwzUkOXexvviKPM6NFNmRQs5GnOMsMW7FYO6sJ00=;
+        h=Subject:To:Cc:References:From:Date:In-Reply-To:From;
+        b=I8Hju8KJNFAyrfSlI3R59XQCdY9ihtqyUcwtNqUKPb95ly8WzJGcN12ELC8YgP2mB
+         KtTLMuPpeSgMIsiPD5Nv32DIRd4XdrXpRTke6G4KcxZl72wgMXQ2Vsoy/wdlVc069m
+         1fNeCLC0pOkSVCHPuS/ymcijn+tTp8u+gt1ZXfo4=
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 5D3A4602F3
+Authentication-Results: pdx-caf-mail.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: pdx-caf-mail.web.codeaurora.org; spf=none smtp.mailfrom=jhugo@codeaurora.org
+Subject: Re: [PATCH v5 2/3] HID: quirks: Refactor ELAN 400 and 401 handling
+To:     Benjamin Tissoires <benjamin.tissoires@redhat.com>,
+        Dmitry Torokhov <dmitry.torokhov@gmail.com>
+Cc:     Jiri Kosina <jikos@kernel.org>,
+        Jeffrey Hugo <jeffrey.l.hugo@gmail.com>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Lee Jones <lee.jones@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Mark Rutland <mark.rutland@arm.com>,
+        Andy Gross <agross@kernel.org>,
         David Brown <david.brown@linaro.org>,
-        linux-arm-kernel@lists.infradead.org,
-        linux-arm-msm@vger.kernel.org, dmaengine@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-References: <20190612122557.24158-1-gregkh@linuxfoundation.org>
- <20190612122557.24158-6-gregkh@linuxfoundation.org>
-Openpgp: preference=signencrypt
-Autocrypt: addr=okaya@kernel.org; keydata=
- mQENBFrnOrUBCADGOL0kF21B6ogpOkuYvz6bUjO7NU99PKhXx1MfK/AzK+SFgxJF7dMluoF6
- uT47bU7zb7HqACH6itTgSSiJeSoq86jYoq5s4JOyaj0/18Hf3/YBah7AOuwk6LtV3EftQIhw
- 9vXqCnBwP/nID6PQ685zl3vH68yzF6FVNwbDagxUz/gMiQh7scHvVCjiqkJ+qu/36JgtTYYw
- 8lGWRcto6gr0eTF8Wd8f81wspmUHGsFdN/xPsZPKMw6/on9oOj3AidcR3P9EdLY4qQyjvcNC
- V9cL9b5I/Ud9ghPwW4QkM7uhYqQDyh3SwgEFudc+/RsDuxjVlg9CFnGhS0nPXR89SaQZABEB
- AAG0HVNpbmFuIEtheWEgPG9rYXlhQGtlcm5lbC5vcmc+iQFOBBMBCAA4FiEEYdOlMSE+a7/c
- ckrQvGF4I+4LAFcFAlztcAoCGwMFCwkIBwIGFQoJCAsCBBYCAwECHgECF4AACgkQvGF4I+4L
- AFfidAf/VKHInxep0Z96iYkIq42432HTZUrxNzG9IWk4HN7c3vTJKv2W+b9pgvBF1SmkyQSy
- 8SJ3Zd98CO6FOHA1FigFyZahVsme+T0GsS3/OF1kjrtMktoREr8t0rK0yKpCTYVdlkHadxmR
- Qs5xLzW1RqKlrNigKHI2yhgpMwrpzS+67F1biT41227sqFzW9urEl/jqGJXaB6GV+SRKSHN+
- ubWXgE1NkmfAMeyJPKojNT7ReL6eh3BNB/Xh1vQJew+AE50EP7o36UXghoUktnx6cTkge0ZS
- qgxuhN33cCOU36pWQhPqVSlLTZQJVxuCmlaHbYWvye7bBOhmiuNKhOzb3FcgT7kBDQRa5zq1
- AQgAyRq/7JZKOyB8wRx6fHE0nb31P75kCnL3oE+smKW/sOcIQDV3C7mZKLf472MWB1xdr4Tm
- eXeL/wT0QHapLn5M5wWghC80YvjjdolHnlq9QlYVtvl1ocAC28y43tKJfklhHiwMNDJfdZbw
- 9lQ2h+7nccFWASNUu9cqZOABLvJcgLnfdDpnSzOye09VVlKr3NHgRyRZa7me/oFJCxrJlKAl
- 2hllRLt0yV08o7i14+qmvxI2EKLX9zJfJ2rGWLTVe3EJBnCsQPDzAUVYSnTtqELu2AGzvDiM
- gatRaosnzhvvEK+kCuXuCuZlRWP7pWSHqFFuYq596RRG5hNGLbmVFZrCxQARAQABiQEfBBgB
- CAAJBQJa5zq1AhsMAAoJELxheCPuCwBX2UYH/2kkMC4mImvoClrmcMsNGijcZHdDlz8NFfCI
- gSb3NHkarnA7uAg8KJuaHUwBMk3kBhv2BGPLcmAknzBIehbZ284W7u3DT9o1Y5g+LDyx8RIi
- e7pnMcC+bE2IJExCVf2p3PB1tDBBdLEYJoyFz/XpdDjZ8aVls/pIyrq+mqo5LuuhWfZzPPec
- 9EiM2eXpJw+Rz+vKjSt1YIhg46YbdZrDM2FGrt9ve3YaM5H0lzJgq/JQPKFdbd5MB0X37Qc+
- 2m/A9u9SFnOovA42DgXUyC2cSbIJdPWOK9PnzfXqF3sX9Aol2eLUmQuLpThJtq5EHu6FzJ7Y
- L+s0nPaNMKwv/Xhhm6Y=
-Message-ID: <8185a8b8-a0ce-4a86-84a2-b51391356052@kernel.org>
-Date:   Wed, 12 Jun 2019 11:24:51 -0400
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
+        Hans de Goede <hdegoede@redhat.com>,
+        "linux-input@vger.kernel.org" <linux-input@vger.kernel.org>,
+        DTML <devicetree@vger.kernel.org>,
+        "open list:ARM/QUALCOMM SUPPORT" <linux-arm-msm@vger.kernel.org>,
+        lkml <linux-kernel@vger.kernel.org>
+References: <20190606161055.47089-1-jeffrey.l.hugo@gmail.com>
+ <20190606161322.47192-1-jeffrey.l.hugo@gmail.com>
+ <20190612003507.GG143729@dtor-ws>
+ <nycvar.YFH.7.76.1906121644160.27227@cbobk.fhfr.pm>
+ <CAKdAkRQOxTX51rhodoFyYpwi85pk8apvWjCLLX5Sw6NTH=j1kA@mail.gmail.com>
+ <CAO-hwJKDxu0Bxxjd9reAojHODQTnW1POmifBCVsnjt8+CT4rmw@mail.gmail.com>
+From:   Jeffrey Hugo <jhugo@codeaurora.org>
+Message-ID: <13ffac55-7760-9dda-8c80-d15283cf8f92@codeaurora.org>
+Date:   Wed, 12 Jun 2019 09:38:48 -0600
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:60.0) Gecko/20100101
  Thunderbird/60.7.0
 MIME-Version: 1.0
-In-Reply-To: <20190612122557.24158-6-gregkh@linuxfoundation.org>
-Content-Type: text/plain; charset=utf-8
+In-Reply-To: <CAO-hwJKDxu0Bxxjd9reAojHODQTnW1POmifBCVsnjt8+CT4rmw@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
 Content-Language: en-US
 Content-Transfer-Encoding: 7bit
 Sender: linux-arm-msm-owner@vger.kernel.org
@@ -99,34 +80,36 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 6/12/2019 8:25 AM, Greg Kroah-Hartman wrote:
-> When calling debugfs functions, there is no need to ever check the
-> return value.  The function can work or not, but the code logic should
-> never do something different based on this.
+On 6/12/2019 9:21 AM, Benjamin Tissoires wrote:
+> On Wed, Jun 12, 2019 at 5:14 PM Dmitry Torokhov
+> <dmitry.torokhov@gmail.com> wrote:
+>>
+>> On Wed, Jun 12, 2019 at 7:45 AM Jiri Kosina <jikos@kernel.org> wrote:
+>>>
+>>> On Tue, 11 Jun 2019, Dmitry Torokhov wrote:
+>>>
+>>>>> +static const char *hid_elan_i2c_ignore[] = {
+>>>>
+>>>> If this is a copy of elan whitelist, then, if we do not want to bother
+>>>> with sharing it in object form (as a elan-i2c-ids module), can we at
+>>>> least move it into include/linux/input/elan-i2c-ids.h and consume from
+>>>> hid-quirks.c?
+>>>
+>>> Let's just not duplicate it in both objects. Why not properly export it
+>>> from hid_quirks?
+>>
+>> Strictly speaking Elan does not depend on HID; exporting it from
+>> quirks would mean adding this dependency. This also mean that you
+>> can't make Elan built-in while keeping HID as a module (I think this
+>> at least used to be config on some Chromebooks).
+>>
 > 
-> Also, because there is no need to save the file dentry, remove the
-> variables that were saving them as they were never even being used once
-> set.
+> I also think it would me things cleaner to have the list of devices in elan_i2c.
+> If we put the list of devices supported by elan_i2c in a header, and
+> have HID read this .h file directly, there will be no runtime
+> dependency.
 > 
-> Cc: Sinan Kaya <okaya@kernel.org>
-> Cc: Andy Gross <agross@kernel.org>
-> Cc: David Brown <david.brown@linaro.org>
-> Cc: Dan Williams <dan.j.williams@intel.com>
-> Cc: Vinod Koul <vkoul@kernel.org>
-> Cc: linux-arm-kernel@lists.infradead.org
-> Cc: linux-arm-msm@vger.kernel.org
-> Cc: dmaengine@vger.kernel.org
-> Cc: linux-kernel@vger.kernel.org
-> Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+> I am sure we can work something out to remove Jeffrey's fears.
 
-Interesting. Wouldn't debugfs_create_file() blow up if dir is NULL
-for some reason?
+Works for me.  I plan to have the next rev posted by the end of the week.
 
-
-+		debugfs_create_file("stats", S_IRUGO, dir, chan,
-+				    &hidma_chan_fops);
-
-Note that code ignores the return value of hidma_debug_init();
-It was just trying to do clean up on debugfs failure by calling
-
-	debugfs_remove_recursive(dmadev->debugfs);
