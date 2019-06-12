@@ -2,125 +2,81 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id C89A842C1E
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Jun 2019 18:24:11 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 08E8242C98
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Jun 2019 18:47:17 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2502084AbfFLQYJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 12 Jun 2019 12:24:09 -0400
-Received: from ns.iliad.fr ([212.27.33.1]:55940 "EHLO ns.iliad.fr"
+        id S2502211AbfFLQrN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 12 Jun 2019 12:47:13 -0400
+Received: from mail.kernel.org ([198.145.29.99]:45196 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S2502083AbfFLQYJ (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 12 Jun 2019 12:24:09 -0400
-Received: from ns.iliad.fr (localhost [127.0.0.1])
-        by ns.iliad.fr (Postfix) with ESMTP id 7B63620C11;
-        Wed, 12 Jun 2019 18:24:06 +0200 (CEST)
-Received: from [192.168.108.49] (freebox.vlq16.iliad.fr [213.36.7.13])
-        by ns.iliad.fr (Postfix) with ESMTP id 5F6C520BC5;
-        Wed, 12 Jun 2019 18:24:06 +0200 (CEST)
-Subject: Re: [PATCH] phy: qcom-qmp: Correct READY_STATUS poll break condition
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Kishon Vijay Abraham I <kishon@ti.com>
-Cc:     MSM <linux-arm-msm@vger.kernel.org>,
-        LKML <linux-kernel@vger.kernel.org>,
-        Evan Green <evgreen@chromium.org>,
-        Vivek Gautam <vivek.gautam@codeaurora.org>,
-        Niklas Cassel <niklas.cassel@linaro.org>,
-        Stanimir Varbanov <svarbanov@mm-sol.com>
-References: <20190604232443.3417-1-bjorn.andersson@linaro.org>
-From:   Marc Gonzalez <marc.w.gonzalez@free.fr>
-Message-ID: <619d2559-6d88-e795-76e0-3078236933ef@free.fr>
-Date:   Wed, 12 Jun 2019 18:24:06 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.6.1
+        id S2502210AbfFLQrM (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 12 Jun 2019 12:47:12 -0400
+Received: from localhost (83-86-89-107.cable.dynamic.v4.ziggo.nl [83.86.89.107])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by mail.kernel.org (Postfix) with ESMTPSA id E1377208C2;
+        Wed, 12 Jun 2019 16:47:11 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=default; t=1560358032;
+        bh=kfR8kNGOlTLzBEPDr9tom15y+byntqVAq6C+crySxUc=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=LBAJ9MxxtREFIMi+AFW1jouZWiS7hRdNIJgHmr7g+MAL3t5bzE5nb4Hez4x8nOeKM
+         lwDFpewKxDJ8oNAXN5b8DfsqhjcvvzX2vymp6hgid31KOw93OkAMExDDWkj+aMG8Jw
+         QsFWDLFObaERIw/mf24nSS/Obzokel2lt1mxtnLc=
+Date:   Wed, 12 Jun 2019 18:47:09 +0200
+From:   Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To:     Sinan Kaya <Okaya@kernel.org>
+Cc:     dan.j.williams@intel.com, vkoul@kernel.org,
+        Andy Gross <agross@kernel.org>,
+        David Brown <david.brown@linaro.org>,
+        linux-arm-kernel@lists.infradead.org,
+        linux-arm-msm@vger.kernel.org, dmaengine@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 6/6] dma: qcom: hidma: no need to check return value of
+ debugfs_create functions
+Message-ID: <20190612164709.GA31124@kroah.com>
+References: <20190612122557.24158-1-gregkh@linuxfoundation.org>
+ <20190612122557.24158-6-gregkh@linuxfoundation.org>
+ <8185a8b8-a0ce-4a86-84a2-b51391356052@kernel.org>
+ <20190612153948.GA21828@kroah.com>
+ <78da53a1-1363-fad8-16fa-4dfc6555f4e4@kernel.org>
 MIME-Version: 1.0
-In-Reply-To: <20190604232443.3417-1-bjorn.andersson@linaro.org>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
-X-Virus-Scanned: ClamAV using ClamSMTP ; ns.iliad.fr ; Wed Jun 12 18:24:06 2019 +0200 (CEST)
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <78da53a1-1363-fad8-16fa-4dfc6555f4e4@kernel.org>
+User-Agent: Mutt/1.12.0 (2019-05-25)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 05/06/2019 01:24, Bjorn Andersson wrote:
+On Wed, Jun 12, 2019 at 12:17:31PM -0400, Sinan Kaya wrote:
+> On 6/12/2019 11:39 AM, Greg Kroah-Hartman wrote:
+> >> Interesting. Wouldn't debugfs_create_file() blow up if dir is NULL
+> >> for some reason?
+> > It will create a file in the root of debugfs.  But how will that happen?
+> > debugfs_create_dir() can not return NULL.
+> 
+> I see.
+> 
+> > 
+> >> +		debugfs_create_file("stats", S_IRUGO, dir, chan,
+> >> +				    &hidma_chan_fops);
+> >>
+> >> Note that code ignores the return value of hidma_debug_init();
+> >> It was just trying to do clean up on debugfs failure by calling
+> >>
+> >> 	debugfs_remove_recursive(dmadev->debugfs);
+> > Is that a problem?
+> 
+> I just wanted to double check. You probably want to remove the return
+> value on debugfs_create_file() to prevent others from doing the same
+> thing.
 
-> After issuing a PHY_START request to the QMP, the hardware documentation
-> states that the software should wait for the PCS_READY_STATUS to become
-> 1.
-> 
-> With the introduction of c9b589791fc1 ("phy: qcom: Utilize UFS reset
-> controller") an additional 1ms delay was introduced between the start
-> request and the check of the status bit. This greatly increases the
-> chances for the hardware to actually becoming ready before the status
-> bit is read.
-> 
-> The result can be seen in that UFS PHY enabling is now reported as a
-> failure in 10% of the boots on SDM845, which is a clear regression from
-> the previous rare/occasional failure.
-> 
-> This patch fixes the "break condition" of the poll to check for the
-> correct state of the status bit.
-> 
-> Unfortunately PCIe on 8996 and 8998 does not specify the mask_pcs_ready
-> register, which means that the code checks a bit that's always 0. So the
-> patch also fixes these, in order to not regress these targets.
-> 
-> Cc: stable@vger.kernel.org
-> Cc: Evan Green <evgreen@chromium.org>
-> Cc: Marc Gonzalez <marc.w.gonzalez@free.fr>
-> Cc: Vivek Gautam <vivek.gautam@codeaurora.org>
-> Fixes: 73d7ec899bd8 ("phy: qcom-qmp: Add msm8998 PCIe QMP PHY support")
-> Fixes: e78f3d15e115 ("phy: qcom-qmp: new qmp phy driver for qcom-chipsets")
-> Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
-> ---
-> 
-> @Kishon, this is a regression spotted in v5.2-rc1, so please consider applying
-> this towards v5.2.
-> 
->  drivers/phy/qualcomm/phy-qcom-qmp.c | 4 +++-
->  1 file changed, 3 insertions(+), 1 deletion(-)
-> 
-> diff --git a/drivers/phy/qualcomm/phy-qcom-qmp.c b/drivers/phy/qualcomm/phy-qcom-qmp.c
-> index cd91b4179b10..43abdfd0deed 100644
-> --- a/drivers/phy/qualcomm/phy-qcom-qmp.c
-> +++ b/drivers/phy/qualcomm/phy-qcom-qmp.c
-> @@ -1074,6 +1074,7 @@ static const struct qmp_phy_cfg msm8996_pciephy_cfg = {
->  
->  	.start_ctrl		= PCS_START | PLL_READY_GATE_EN,
->  	.pwrdn_ctrl		= SW_PWRDN | REFCLK_DRV_DSBL,
-> +	.mask_pcs_ready		= PHYSTATUS,
->  	.mask_com_pcs_ready	= PCS_READY,
->  
->  	.has_phy_com_ctrl	= true,
-> @@ -1253,6 +1254,7 @@ static const struct qmp_phy_cfg msm8998_pciephy_cfg = {
->  
->  	.start_ctrl             = SERDES_START | PCS_START,
->  	.pwrdn_ctrl		= SW_PWRDN | REFCLK_DRV_DSBL,
-> +	.mask_pcs_ready		= PHYSTATUS,
->  	.mask_com_pcs_ready	= PCS_READY,
->  };
->  
-> @@ -1547,7 +1549,7 @@ static int qcom_qmp_phy_enable(struct phy *phy)
->  	status = pcs + cfg->regs[QPHY_PCS_READY_STATUS];
->  	mask = cfg->mask_pcs_ready;
->  
-> -	ret = readl_poll_timeout(status, val, !(val & mask), 1,
-> +	ret = readl_poll_timeout(status, val, val & mask, 1,
->  				 PHY_INIT_COMPLETE_TIMEOUT);
->  	if (ret) {
->  		dev_err(qmp->dev, "phy initialization timed-out\n");
+That is my long-term goal, I have a ways to go still :)
 
-Your patch made me realize that:
-msm8998_pciephy_cfg.has_phy_com_ctrl = false
-thus
-msm8998_pciephy_cfg.mask_com_pcs_ready is useless, AFAICT.
+> Acked-by: Sinan Kaya <okaya@kernel.org>
 
-(I copied msm8996_pciephy_cfg for msm8998_pciephy_cfg)
+Great, thanks for the review.
 
-Does msm8996_pciephy_cfg really need both mask_pcs_ready AND
-mask_com_pcs_ready?
-
-I'll test your patch tomorrow.
-
-Regards.
+greg k-h
