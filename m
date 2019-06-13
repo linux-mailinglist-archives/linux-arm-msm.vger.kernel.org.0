@@ -2,68 +2,94 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 8B6C143B57
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 13 Jun 2019 17:28:34 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 1342B43AD1
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 13 Jun 2019 17:24:04 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730040AbfFMP2B (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 13 Jun 2019 11:28:01 -0400
-Received: from ns.iliad.fr ([212.27.33.1]:60940 "EHLO ns.iliad.fr"
+        id S1731780AbfFMPYA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 13 Jun 2019 11:24:00 -0400
+Received: from mail.kernel.org ([198.145.29.99]:50400 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1728966AbfFMLcJ (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 13 Jun 2019 07:32:09 -0400
-Received: from ns.iliad.fr (localhost [127.0.0.1])
-        by ns.iliad.fr (Postfix) with ESMTP id 322AA20A7E;
-        Thu, 13 Jun 2019 13:32:08 +0200 (CEST)
-Received: from [192.168.108.49] (freebox.vlq16.iliad.fr [213.36.7.13])
-        by ns.iliad.fr (Postfix) with ESMTP id 1A28220514;
-        Thu, 13 Jun 2019 13:32:08 +0200 (CEST)
-To:     Kishon Vijay Abraham <kishon@ti.com>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Vivek Gautam <vivek.gautam@codeaurora.org>
-Cc:     MSM <linux-arm-msm@vger.kernel.org>,
-        LKML <linux-kernel@vger.kernel.org>
-From:   Marc Gonzalez <marc.w.gonzalez@free.fr>
-Subject: [PATCH v1] phy: qcom-qmp: Raise qcom_qmp_phy_enable() polling delay
-Message-ID: <92d97c68-d226-6290-37d6-f46f42ea604b@free.fr>
-Date:   Thu, 13 Jun 2019 13:32:08 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.6.1
+        id S1731748AbfFMMW7 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 13 Jun 2019 08:22:59 -0400
+Received: from localhost (83-86-89-107.cable.dynamic.v4.ziggo.nl [83.86.89.107])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by mail.kernel.org (Postfix) with ESMTPSA id 9B1B82082C;
+        Thu, 13 Jun 2019 12:22:58 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=default; t=1560428579;
+        bh=XbuVjN6h6G68INtlFDopuAtN+75uS8pGPgA9SalixQs=;
+        h=Date:From:To:Cc:Subject:From;
+        b=gopxNn85hjmQj9rFrQycCFRGmd1fQ1rChcT9QV+/qu1ceOMNdULRg5RYzZjO8OcAi
+         +nKDhIZE5fJMGgR/neeJEh7cqQd29CNStKDYBwT7l7C+Zj2KXm11fxMpfocfAX5p8r
+         LwyExS3ogkZy0ngby/dnoHsiXR5zM/1vREiR6924=
+Date:   Thu, 13 Jun 2019 14:22:56 +0200
+From:   Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Jordan Crouse <jcrouse@codeaurora.org>,
+        Mamta Shukla <mamtashukla555@gmail.com>,
+        Thomas Zimmermann <tzimmermann@suse.de>
+Cc:     linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org
+Subject: [PATCH] msm: adreno: no need to check return value of debugfs_create
+ functions
+Message-ID: <20190613122256.GA30577@kroah.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
-X-Virus-Scanned: ClamAV using ClamSMTP ; ns.iliad.fr ; Thu Jun 13 13:32:08 2019 +0200 (CEST)
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+User-Agent: Mutt/1.12.0 (2019-05-25)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-readl_poll_timeout() calls usleep_range() to sleep between reads.
-usleep_range() doesn't work efficiently for tiny values.
+When calling debugfs functions, there is no need to ever check the
+return value.  The function can work or not, but the code logic should
+never do something different based on this.
 
-Raise the polling delay in qcom_qmp_phy_enable() to bring it in line
-with the delay in qcom_qmp_phy_com_init().
-
-Signed-off-by: Marc Gonzalez <marc.w.gonzalez@free.fr>
+Cc: Rob Clark <robdclark@gmail.com>
+Cc: Sean Paul <sean@poorly.run>
+Cc: David Airlie <airlied@linux.ie>
+Cc: Daniel Vetter <daniel@ffwll.ch>
+Cc: Jordan Crouse <jcrouse@codeaurora.org>
+Cc: Mamta Shukla <mamtashukla555@gmail.com>
+Cc: Thomas Zimmermann <tzimmermann@suse.de>
+Cc: linux-arm-msm@vger.kernel.org
+Cc: dri-devel@lists.freedesktop.org
+Cc: freedreno@lists.freedesktop.org
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
-Vivek, do you remember why you didn't use the same delay value in
-qcom_qmp_phy_enable) and qcom_qmp_phy_com_init() ?
----
- drivers/phy/qualcomm/phy-qcom-qmp.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/msm/adreno/a5xx_debugfs.c | 8 ++------
+ 1 file changed, 2 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/phy/qualcomm/phy-qcom-qmp.c b/drivers/phy/qualcomm/phy-qcom-qmp.c
-index bb522b915fa9..34ff6434da8f 100644
---- a/drivers/phy/qualcomm/phy-qcom-qmp.c
-+++ b/drivers/phy/qualcomm/phy-qcom-qmp.c
-@@ -1548,7 +1548,7 @@ static int qcom_qmp_phy_enable(struct phy *phy)
- 	status = pcs + cfg->regs[QPHY_PCS_READY_STATUS];
- 	mask = cfg->mask_pcs_ready;
+diff --git a/drivers/gpu/drm/msm/adreno/a5xx_debugfs.c b/drivers/gpu/drm/msm/adreno/a5xx_debugfs.c
+index d9af3aff690f..cb8dfc970ec3 100644
+--- a/drivers/gpu/drm/msm/adreno/a5xx_debugfs.c
++++ b/drivers/gpu/drm/msm/adreno/a5xx_debugfs.c
+@@ -158,7 +158,6 @@ DEFINE_SIMPLE_ATTRIBUTE(reset_fops, NULL, reset_set, "%llx\n");
+ int a5xx_debugfs_init(struct msm_gpu *gpu, struct drm_minor *minor)
+ {
+ 	struct drm_device *dev;
+-	struct dentry *ent;
+ 	int ret;
  
--	ret = readl_poll_timeout(status, val, val & mask, 1,
-+	ret = readl_poll_timeout(status, val, val & mask, 10,
- 				 PHY_INIT_COMPLETE_TIMEOUT);
- 	if (ret) {
- 		dev_err(qmp->dev, "phy initialization timed-out\n");
+ 	if (!minor)
+@@ -175,11 +174,8 @@ int a5xx_debugfs_init(struct msm_gpu *gpu, struct drm_minor *minor)
+ 		return ret;
+ 	}
+ 
+-	ent = debugfs_create_file("reset", S_IWUGO,
+-		minor->debugfs_root,
+-		dev, &reset_fops);
+-	if (!ent)
+-		return -ENOMEM;
++	debugfs_create_file("reset", S_IWUGO, minor->debugfs_root, dev,
++			    &reset_fops);
+ 
+ 	return 0;
+ }
 -- 
-2.17.1
+2.22.0
+
