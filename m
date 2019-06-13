@@ -2,99 +2,124 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id D595644E5D
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 13 Jun 2019 23:25:55 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id BB59B44E61
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 13 Jun 2019 23:25:57 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727064AbfFMVZg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 13 Jun 2019 17:25:36 -0400
-Received: from mail-pl1-f194.google.com ([209.85.214.194]:42021 "EHLO
-        mail-pl1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725747AbfFMVZg (ORCPT
+        id S1728476AbfFMVZp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 13 Jun 2019 17:25:45 -0400
+Received: from mail-pf1-f195.google.com ([209.85.210.195]:35878 "EHLO
+        mail-pf1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725747AbfFMVZo (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 13 Jun 2019 17:25:36 -0400
-Received: by mail-pl1-f194.google.com with SMTP id go2so61641plb.9;
-        Thu, 13 Jun 2019 14:25:36 -0700 (PDT)
+        Thu, 13 Jun 2019 17:25:44 -0400
+Received: by mail-pf1-f195.google.com with SMTP id r7so59435pfl.3;
+        Thu, 13 Jun 2019 14:25:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=vQy1k6HKb0RegwKa8MFQ1WuwACmhveaQaWhX6DCfZS4=;
-        b=AvqhtXtMmkvBNxAYtS1J9rNxc490NsNyZO0Dy82HNp44sE8TJVD4tWLPdCjf8nMMgj
-         9Cx6i6Ko1u2LZmrdgW2a/xxRP6JqZKbVT+sGkFhVQCU1K5/Kfc2MJ1dGoSEi2cmhHDmg
-         ICaCb7K6MIW7H9ZM1XUMbjG+go5LW7IqQmhP6fR2gPq3SAgDoH6k+oLVlK9R5GXhtfqW
-         6bva1YkEz+4Jp/XpnL8mtBNDM17DN3BE6Jiy91Wat4ld8PqN3qkhkseQqBXD/oUCi0rq
-         wTtSctDGWsyBh35TrMrrJzQ0+1EYgHO/JG85SPlxYtjG+BOE2QauSe2YYAc5zKf6KWQG
-         53YQ==
+        bh=5+TFtA79aZ+IjNk4lXxAZtuIhR9lTbHQLneZLDhsOTI=;
+        b=uMIEjubqF6WKPWVjK7XNOAySKJKkv5jSfxkvZ3/roI+8lQePsCvI2lCFstJqXAdZkN
+         S+YIT+Fi6msM8J8ypbwHiyND64I2FVfr22MAlOuAA8i9ehTBNIVJM6DQXfdvvBL/qQKL
+         7QCGMCbmx+hvUmJxlV80JNaG3f2CmSbdwucYCy3cVvVLQwf7CAlcR0DS+vvVNJb8ami4
+         YKOeqVcKi0Ur0EQine6oclQTAKAv3GLamNd0eHZonC9SAVXP+r52aCRIW2pP4Rttahe5
+         xDFsDI1AbWqAuuGSBKSmblnGtn3xhEX0eOHE4AY76Ayhn66J3KFwBpFAf2KflTGGxqQS
+         Fhfg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=vQy1k6HKb0RegwKa8MFQ1WuwACmhveaQaWhX6DCfZS4=;
-        b=GyB37Px+UiAaOhh4TmvHK2liMAey6jDwHc4qqiUHvHdIFm6V/7E2HpyAH+wz4Ft3RV
-         3fSnNMzkai5nSzSf238d0ywbEe+JiFIlCsO04JtETlVX388YD0nH0aKoTdTzbUyXnPEP
-         7MRne3Wuiqnoi98+ubFd+/GKzNoSshZ2VBzjVIWeVEIuWbS3+H7b6jlxxG6uM551R1CF
-         lO3hojddhsj9OgprUHqn9Od7RqrJT6RT3+ESJYDXOdC7UFexmCKPS621il9Oklxd1LOW
-         YOTkzOCohLhhK8TU5AXBnoArasQf+sGL0/4F3V9dOu3ZY/yTtVPBzPWI9Oc5kJa4Om+r
-         xWmA==
-X-Gm-Message-State: APjAAAVE96+XvEh0kUD12BtwNrV33fHggfqQAlXaO4iZaOjj0XXLC304
-        75fesj8DJwnEk9SmQTDeUjc5LVO9
-X-Google-Smtp-Source: APXvYqxKm/ZkzPu+FJJw57ToQYD433M2RDVx7eWyafwjEeJQO382l7aKcMtV5hyD0mMbqNNlmos85Q==
-X-Received: by 2002:a17:902:7083:: with SMTP id z3mr25270687plk.205.1560461135930;
-        Thu, 13 Jun 2019 14:25:35 -0700 (PDT)
+        bh=5+TFtA79aZ+IjNk4lXxAZtuIhR9lTbHQLneZLDhsOTI=;
+        b=XHsQySmwm8f0mgrokBaa1zPl8q1FauOhYCkboJG/yqtFBrgOEVFlZCGBylKqVj/8Dt
+         CQ08em/8rd3kLSyeaLboooCrHvx5GPGVEk1UTPe+k3jLJeak7ZSYrVKpVOrFPN69e1ae
+         Dpcdx94bWh9aOpi/UoTZIbxAbhMBi8guxxCndluH6d7yIF/dzFv0JnL4NF/jBl6nZJ0f
+         jtjWVNy0U/HxL/CqsrrA/Gmb+5+gtSfMz0jkWFQgPdJpoB19cDdWAQEUohVoMH5oEVoG
+         se8IomCwGL2/GgZ76L5pyuTgqC/Xlo1015qSK18Fwqx3yYCdIxT+4Xy0DTos6pj0ZOOK
+         rESw==
+X-Gm-Message-State: APjAAAVM3M+SDHZ8EwvKh1mue1MEGfrEQF+MpKsK8hw7CeA/BSf9is0S
+        JFMo4Ejczdf/Pvh4odylNrd7Eskg
+X-Google-Smtp-Source: APXvYqx4P864mcDeRF6fv3rUBPWE/oL8fjhGlONrou+Q8YvAkWV05CsoT6qKLKpu3CFvr5A/J7/AkQ==
+X-Received: by 2002:a65:624f:: with SMTP id q15mr32323372pgv.436.1560461143720;
+        Thu, 13 Jun 2019 14:25:43 -0700 (PDT)
 Received: from aw-bldr-10.qualcomm.com (i-global254.qualcomm.com. [199.106.103.254])
-        by smtp.gmail.com with ESMTPSA id j22sm618471pfh.71.2019.06.13.14.25.34
+        by smtp.gmail.com with ESMTPSA id j22sm618471pfh.71.2019.06.13.14.25.42
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 13 Jun 2019 14:25:35 -0700 (PDT)
+        Thu, 13 Jun 2019 14:25:43 -0700 (PDT)
 From:   Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
 To:     lgirdwood@gmail.com, broonie@kernel.org
 Cc:     agross@kernel.org, bjorn.andersson@linaro.org, robh+dt@kernel.org,
         mark.rutland@arm.com, linux-arm-msm@vger.kernel.org,
         linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
-        Jorge Ramirez-Ortiz <jorge.ramirez-ortiz@linaro.org>,
         Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
-Subject: [PATCH v4 1/7] regulator: qcom_spmi: enable linear range info
-Date:   Thu, 13 Jun 2019 14:25:30 -0700
-Message-Id: <20190613212531.10452-1-jeffrey.l.hugo@gmail.com>
+Subject: [PATCH v4 2/7] regulator: qcom_spmi: Refactor get_mode/set_mode
+Date:   Thu, 13 Jun 2019 14:25:31 -0700
+Message-Id: <20190613212531.10452-2-jeffrey.l.hugo@gmail.com>
 X-Mailer: git-send-email 2.17.1
-In-Reply-To: <20190613212436.6940-1-jeffrey.l.hugo@gmail.com>
+In-Reply-To: <20190613212531.10452-1-jeffrey.l.hugo@gmail.com>
 References: <20190613212436.6940-1-jeffrey.l.hugo@gmail.com>
+ <20190613212531.10452-1-jeffrey.l.hugo@gmail.com>
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Jorge Ramirez-Ortiz <jorge.ramirez-ortiz@linaro.org>
+spmi_regulator_common_get_mode and spmi_regulator_common_set_mode use
+multi-level ifs which mirror a switch statement.  Refactor to use a switch
+statement to make the code flow more clear.
 
-Signed-off-by: Jorge Ramirez-Ortiz <jorge.ramirez-ortiz@linaro.org>
 Signed-off-by: Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
 ---
- drivers/regulator/qcom_spmi-regulator.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+ drivers/regulator/qcom_spmi-regulator.c | 26 +++++++++++++++++--------
+ 1 file changed, 18 insertions(+), 8 deletions(-)
 
 diff --git a/drivers/regulator/qcom_spmi-regulator.c b/drivers/regulator/qcom_spmi-regulator.c
-index 53a61fb65642..42c429d50743 100644
+index 42c429d50743..1b3383a24c9d 100644
 --- a/drivers/regulator/qcom_spmi-regulator.c
 +++ b/drivers/regulator/qcom_spmi-regulator.c
-@@ -1744,6 +1744,7 @@ MODULE_DEVICE_TABLE(of, qcom_spmi_regulator_match);
- static int qcom_spmi_regulator_probe(struct platform_device *pdev)
- {
- 	const struct spmi_regulator_data *reg;
-+	const struct spmi_voltage_range *range;
- 	const struct of_device_id *match;
- 	struct regulator_config config = { };
- 	struct regulator_dev *rdev;
-@@ -1833,6 +1834,12 @@ static int qcom_spmi_regulator_probe(struct platform_device *pdev)
- 			}
- 		}
+@@ -911,13 +911,16 @@ static unsigned int spmi_regulator_common_get_mode(struct regulator_dev *rdev)
  
-+		if (vreg->set_points->count == 1) {
-+			/* since there is only one range */
-+			range = vreg->set_points->range;
-+			vreg->desc.uV_step = range->step_uV;
-+		}
-+
- 		config.dev = dev;
- 		config.driver_data = vreg;
- 		config.regmap = regmap;
+ 	spmi_vreg_read(vreg, SPMI_COMMON_REG_MODE, &reg, 1);
+ 
+-	if (reg & SPMI_COMMON_MODE_HPM_MASK)
+-		return REGULATOR_MODE_NORMAL;
++	reg &= SPMI_COMMON_MODE_HPM_MASK | SPMI_COMMON_MODE_AUTO_MASK;
+ 
+-	if (reg & SPMI_COMMON_MODE_AUTO_MASK)
++	switch (reg) {
++	case SPMI_COMMON_MODE_HPM_MASK:
++		return REGULATOR_MODE_NORMAL;
++	case SPMI_COMMON_MODE_AUTO_MASK:
+ 		return REGULATOR_MODE_FAST;
+-
+-	return REGULATOR_MODE_IDLE;
++	default:
++		return REGULATOR_MODE_IDLE;
++	}
+ }
+ 
+ static int
+@@ -925,12 +928,19 @@ spmi_regulator_common_set_mode(struct regulator_dev *rdev, unsigned int mode)
+ {
+ 	struct spmi_regulator *vreg = rdev_get_drvdata(rdev);
+ 	u8 mask = SPMI_COMMON_MODE_HPM_MASK | SPMI_COMMON_MODE_AUTO_MASK;
+-	u8 val = 0;
++	u8 val;
+ 
+-	if (mode == REGULATOR_MODE_NORMAL)
++	switch (mode) {
++	case REGULATOR_MODE_NORMAL:
+ 		val = SPMI_COMMON_MODE_HPM_MASK;
+-	else if (mode == REGULATOR_MODE_FAST)
++		break;
++	case REGULATOR_MODE_FAST:
+ 		val = SPMI_COMMON_MODE_AUTO_MASK;
++		break;
++	default:
++		val = 0;
++		break;
++	}
+ 
+ 	return spmi_vreg_update_bits(vreg, SPMI_COMMON_REG_MODE, val, mask);
+ }
 -- 
 2.17.1
 
