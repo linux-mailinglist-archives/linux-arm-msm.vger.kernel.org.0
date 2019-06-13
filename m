@@ -2,146 +2,158 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 0083243C92
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 13 Jun 2019 17:36:45 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 707C343CC3
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 13 Jun 2019 17:38:08 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728764AbfFMPgi (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 13 Jun 2019 11:36:38 -0400
-Received: from mail-pf1-f193.google.com ([209.85.210.193]:37618 "EHLO
-        mail-pf1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728692AbfFMPgg (ORCPT
+        id S1732444AbfFMPhu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 13 Jun 2019 11:37:50 -0400
+Received: from mail-io1-f66.google.com ([209.85.166.66]:43694 "EHLO
+        mail-io1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1732619AbfFMPht (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 13 Jun 2019 11:36:36 -0400
-Received: by mail-pf1-f193.google.com with SMTP id 19so11243357pfa.4
-        for <linux-arm-msm@vger.kernel.org>; Thu, 13 Jun 2019 08:36:36 -0700 (PDT)
+        Thu, 13 Jun 2019 11:37:49 -0400
+Received: by mail-io1-f66.google.com with SMTP id k20so17874871ios.10;
+        Thu, 13 Jun 2019 08:37:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=dIxmbqoHolBJ5JcAhkZwY20MNsxdVQHEXSvHFfDlnuo=;
-        b=T1xzSsA9CWPyw7MWBoY1BkfuWJPaojXzqycfSspyble27NyBTeDRkcyEZlH3+A5O3T
-         Z6NEGv0WS/CcB1j1VNYkJchhJJ9R9qZXDRNePgDjSugQ1t0q8105sxVsOZRxc+TLwaqs
-         7kV//PH0M1EB4KS7oeLAVuKDggdnPQjpP8SIC2JqHFNKJG42LdxB9rFX6PDVXIKLsRT0
-         6ULmpK6ETnJzaxuVhH0qZBw3k4cP2Za66kFl4eSE8OeQt0XCpjtZUKr+pjRA8J0H0usm
-         QCJAafRqj3DAkuKtPOiLbmIvPRSGJTbM3N4gy3M8+ZeF1U2doaNJUOH0OO+R0Rz64xah
-         d8oQ==
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=5i3fllaM3zGVPRCjpemlXnZ90CuYrEwzTiEoElVhFe8=;
+        b=Opg/Cz53GyZCtD8gdSvINfrJq82ClNEH2vJpIYLZbDB0mFJSOBPNRSnMuvc/ETy/u7
+         3YSWspqqmO5FLQQeR1kCnj+/U4ZHiJsRiCJRNMNw1L0SF2wJHkafnoo29cUd6kie8j30
+         5cyuXzzbbW2FEKDfoz7nPqdZ5xYVR8xXomfI9tUNAvmNdPLMvBspKsVE1PSfi4WSUW7m
+         9OGHjF5Ed29skI3yLFbkvr9rhcWepSFeBIx63dE4dhB1orw7jkqAPJhyJ9Lo/9yM96oq
+         B9pdy6+hEleo9Fbds6FkIa+8+xYNaINnWxBFiYG74h+rQS1l1Hkdvg2cnxXoieNejmna
+         j2mg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=dIxmbqoHolBJ5JcAhkZwY20MNsxdVQHEXSvHFfDlnuo=;
-        b=d057VmCrqJ1TpurvQfA4eVBznrVoI9laFJsFspsE4MmX7AKG8neeFQntPI7iz4H4zp
-         GYNV8GpNg8iatFIr1tcYIgNJt1o1uiOlhZwssGGPUNb/gfgDumww6E5fyoIhyo9n0SfP
-         hqPVafx16eYhluNaSEvUmPZwwHQQ6Gs6LdIKGdgYNUGK8Yk+90Nax1j8rX63UMajjFKl
-         5HoJlOVk7ozI3fAyRdZftyrFeq8/LtZctE4zB8Uk4Zgi1u/etleadrCtoRuK0e2ZEcdI
-         e8zIt0//5KK/BWLft6T9VS52bjdaFpnDOQFBdsruc+6vThc+xVUa43nSIwKeb0BdeynT
-         zogg==
-X-Gm-Message-State: APjAAAVUQqa+cG4Sb1jbcKyDB9l5IBrHqy+14rhs/fo+RIHX0+BXQGb9
-        bRN9vrBlRJpItLriOqc64CCMSg==
-X-Google-Smtp-Source: APXvYqzi2uLTJsw+edMFJq+DNQyvGd0PcsK9UYvnv+v8xA1dRESupytCXLoyfUCnalLWUD65g6ISdQ==
-X-Received: by 2002:a63:52:: with SMTP id 79mr30999563pga.381.1560440195944;
-        Thu, 13 Jun 2019 08:36:35 -0700 (PDT)
-Received: from builder (104-188-17-28.lightspeed.sndgca.sbcglobal.net. [104.188.17.28])
-        by smtp.gmail.com with ESMTPSA id t13sm276008pjo.13.2019.06.13.08.36.35
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Thu, 13 Jun 2019 08:36:35 -0700 (PDT)
-Date:   Thu, 13 Jun 2019 08:36:33 -0700
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
-Cc:     lgirdwood@gmail.com, broonie@kernel.org, agross@kernel.org,
-        robh+dt@kernel.org, mark.rutland@arm.com,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        devicetree@vger.kernel.org,
-        Jorge Ramirez <jorge.ramirez-ortiz@linaro.org>
-Subject: Re: [PATCH v3 6/7] dt-bindings: qcom_spmi: Document pms405 support
-Message-ID: <20190613153633.GF6792@builder>
-References: <20190613142157.8674-1-jeffrey.l.hugo@gmail.com>
- <20190613142416.8985-1-jeffrey.l.hugo@gmail.com>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=5i3fllaM3zGVPRCjpemlXnZ90CuYrEwzTiEoElVhFe8=;
+        b=AG77fa0gpED2GrZZelJP35nnYpFduYMOQVQ5R6egnc1nfiSlxxsm7oz3evsoGOqSaZ
+         X8fwtvyUzg5x5zuhRdLlLVBg8OifZO2Ytp7y8+yfCmVDorC6pGU9H1o3MRriZ4izObk9
+         oqoi+pYwwWh/G4bExw4NcQgJFbAKcdQJL97SJgpJoWnoVYuLdo9oO0FJr01cmAxJsB8H
+         aVW2p9mA5eMvaI9uo1l0mru/L29ONkA0jCnliSU6KgBAjiVywLdB4pf7lmlV7gA2JePC
+         XGlWHrukOhzO4jrwPqyotGim7FjuMr++nuJkRlEkPLrqSxhuBbo+RiwFVBHHZWaKYGMO
+         MJ9g==
+X-Gm-Message-State: APjAAAUOy5XDJjf4OdwyzATII34LyCQWscjwQ3c+9jpP+G1m4oXigU90
+        sMeHpYFBBk0dAbhfm9niSLYn8QZD7IKIcLB55Uk=
+X-Google-Smtp-Source: APXvYqwfUacV62ukDncawPLzKOEtROrJgrS0BIzPwynxnGl7fBiV1KhINj78l/YVKnvaiUlBeEdXQsYQ2XfmhId0Zac=
+X-Received: by 2002:a02:c50a:: with SMTP id s10mr30311468jam.106.1560440268724;
+ Thu, 13 Jun 2019 08:37:48 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20190613142416.8985-1-jeffrey.l.hugo@gmail.com>
-User-Agent: Mutt/1.10.0 (2018-05-17)
+References: <20190613142157.8674-1-jeffrey.l.hugo@gmail.com>
+ <20190613142239.8779-1-jeffrey.l.hugo@gmail.com> <20190613151209.GB6792@builder>
+ <20190613152430.GC6792@builder>
+In-Reply-To: <20190613152430.GC6792@builder>
+From:   Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
+Date:   Thu, 13 Jun 2019 09:37:38 -0600
+Message-ID: <CAOCk7NpLz-6kM2X=HOh4ZcEw4bzhKcjd=8664HX43w1V+ffeag@mail.gmail.com>
+Subject: Re: [PATCH v3 2/7] drivers: regulator: qcom_spmi: Refactor get_mode/set_mode
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     lgirdwood@gmail.com, broonie@kernel.org,
+        Andy Gross <agross@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Mark Rutland <mark.rutland@arm.com>,
+        MSM <linux-arm-msm@vger.kernel.org>,
+        lkml <linux-kernel@vger.kernel.org>, devicetree@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu 13 Jun 07:24 PDT 2019, Jeffrey Hugo wrote:
+On Thu, Jun 13, 2019 at 9:24 AM Bjorn Andersson
+<bjorn.andersson@linaro.org> wrote:
+>
+> On Thu 13 Jun 08:12 PDT 2019, Bjorn Andersson wrote:
+>
+> > On Thu 13 Jun 07:22 PDT 2019, Jeffrey Hugo wrote:
+> >
+> > > spmi_regulator_common_get_mode and spmi_regulator_common_set_mode use
+> > > multi-level ifs which mirror a switch statement.  Refactor to use a switch
+> > > statement to make the code flow more clear.
+> > >
+> > > Signed-off-by: Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
+> > > ---
+> > >  drivers/regulator/qcom_spmi-regulator.c | 28 ++++++++++++++++---------
+> > >  1 file changed, 18 insertions(+), 10 deletions(-)
+> > >
+> > > diff --git a/drivers/regulator/qcom_spmi-regulator.c b/drivers/regulator/qcom_spmi-regulator.c
+> > > index fd55438c25d6..1c18fe5969b5 100644
+> > > --- a/drivers/regulator/qcom_spmi-regulator.c
+> > > +++ b/drivers/regulator/qcom_spmi-regulator.c
+> > > @@ -911,13 +911,14 @@ static unsigned int spmi_regulator_common_get_mode(struct regulator_dev *rdev)
+> > >
+> > >     spmi_vreg_read(vreg, SPMI_COMMON_REG_MODE, &reg, 1);
+> > >
+> > > -   if (reg & SPMI_COMMON_MODE_HPM_MASK)
+>
+> Sorry, didn't see the & here. Don't you need to mask out the mode bits
+> before turning this into a switch?
 
-> From: Jorge Ramirez <jorge.ramirez-ortiz@linaro.org>
-> 
-> The PMS405 supports 5 SMPS and 13 LDO regulators.
-> 
-> Signed-off-by: Jorge Ramirez-Ortiz <jorge.ramirez-ortiz@linaro.org>
-> Reviewed-by: Rob Herring <robh@kernel.org>
-> Signed-off-by: Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
-> ---
->  .../regulator/qcom,spmi-regulator.txt         | 24 +++++++++++++++++++
->  1 file changed, 24 insertions(+)
-> 
-> diff --git a/Documentation/devicetree/bindings/regulator/qcom,spmi-regulator.txt b/Documentation/devicetree/bindings/regulator/qcom,spmi-regulator.txt
-> index ba94bc2d407a..19cffb239094 100644
-> --- a/Documentation/devicetree/bindings/regulator/qcom,spmi-regulator.txt
-> +++ b/Documentation/devicetree/bindings/regulator/qcom,spmi-regulator.txt
-> @@ -10,6 +10,7 @@ Qualcomm SPMI Regulators
->  			"qcom,pm8941-regulators"
->  			"qcom,pm8994-regulators"
->  			"qcom,pmi8994-regulators"
-> +			"qcom,pms405-regulators"
->  
->  - interrupts:
->  	Usage: optional
-> @@ -111,6 +112,29 @@ Qualcomm SPMI Regulators
->  	Definition: Reference to regulator supplying the input pin, as
->  		    described in the data sheet.
->  
-> +- vdd_s1-supply:
-> +- vdd_s2-supply:
-> +- vdd_s3-supply:
-> +- vdd_s4-supply:
-> +- vdd_s5-supply:
-> +- vdd_l1-supply:
-> +- vdd_l2-supply:
-> +- vdd_l3-supply:
-> +- vdd_l4-supply:
-> +- vdd_l5-supply:
-> +- vdd_l6-supply:
-> +- vdd_l7-supply:
-> +- vdd_l8-supply:
-> +- vdd_l9-supply:
-> +- vdd_l10-supply:
-> +- vdd_l11-supply:
-> +- vdd_l12-supply:
-> +- vdd_l13-supply:
+Ah.  Yes.  I read the documentation wrong when doing this.  Will fix.
 
-No, the supply pins are as follows:
-
-- vdd_l1_l2-supply:
-- vdd_l3_l8-supply:
-- vdd_l4-supply:
-- vdd_l5_l6-supply:
-- vdd_l10_l11_l12_l13-supply:
-- vdd_l7-supply:
-- vdd_l9-supply:
-- vdd_s1-supply:
-- vdd_s2-supply:
-- vdd_s3-supply:
-- vdd_s4-supply:
-- vdd_s5-supply:
-
-
-Regards,
-Bjorn
-
-> +	Usage: optional (pms405 only)
-> +	Value type: <phandle>
-> +	Definition: Reference to regulator supplying the input pin, as
-> +		    described in the data sheet.
-> +
->  - qcom,saw-reg:
->  	Usage: optional
->  	Value type: <phandle>
-> -- 
-> 2.17.1
-> 
+>
+> > > +   switch (reg) {
+> > > +   case SPMI_COMMON_MODE_HPM_MASK:
+> > >             return REGULATOR_MODE_NORMAL;
+> > > -
+> > > -   if (reg & SPMI_COMMON_MODE_AUTO_MASK)
+> > > +   case SPMI_COMMON_MODE_AUTO_MASK:
+> > >             return REGULATOR_MODE_FAST;
+> > > -
+> > > -   return REGULATOR_MODE_IDLE;
+> > > +   default:
+> > > +           return REGULATOR_MODE_IDLE;
+> > > +   }
+> > >  }
+> > >
+> > >  static int
+> > > @@ -925,12 +926,19 @@ spmi_regulator_common_set_mode(struct regulator_dev *rdev, unsigned int mode)
+> > >  {
+> > >     struct spmi_regulator *vreg = rdev_get_drvdata(rdev);
+> > >     u8 mask = SPMI_COMMON_MODE_HPM_MASK | SPMI_COMMON_MODE_AUTO_MASK;
+> > > -   u8 val = 0;
+> > > +   u8 val;
+> > >
+> > > -   if (mode == REGULATOR_MODE_NORMAL)
+> > > +   switch (mode) {
+> > > +   case REGULATOR_MODE_NORMAL:
+> > >             val = SPMI_COMMON_MODE_HPM_MASK;
+> > > -   else if (mode == REGULATOR_MODE_FAST)
+> > > +           break;
+> > > +   case REGULATOR_MODE_FAST:
+> > >             val = SPMI_COMMON_MODE_AUTO_MASK;
+> > > +           break;
+> > > +   default:
+> > > +           val = 0;
+> > > +           break;
+> > > +   }
+> >
+> > For this part:
+> > Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+> > >
+> > >     return spmi_vreg_update_bits(vreg, SPMI_COMMON_REG_MODE, val, mask);
+> > >  }
+> > > @@ -1834,9 +1842,9 @@ static int qcom_spmi_regulator_probe(struct platform_device *pdev)
+> > >                     }
+> > >             }
+> > >
+> > > -           if (vreg->logical_type == SPMI_REGULATOR_LOGICAL_TYPE_HFS430) {
+> >
+> > Squash this into patch 1.
+> >
+> > Regards,
+> > Bjorn
+> >
+> > > +           if (vreg->set_points->count == 1) {
+> > >                     /* since there is only one range */
+> > > -                   range = spmi_regulator_find_range(vreg);
+> > > +                   range = vreg->set_points->range;
+> > >                     vreg->desc.uV_step = range->step_uV;
+> > >             }
+> > >
+> > > --
+> > > 2.17.1
+> > >
