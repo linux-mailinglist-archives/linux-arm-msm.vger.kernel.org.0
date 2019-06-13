@@ -2,132 +2,104 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id D74E143ACD
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 13 Jun 2019 17:23:57 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id EDBEC4381D
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 13 Jun 2019 17:04:00 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732705AbfFMPXw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 13 Jun 2019 11:23:52 -0400
-Received: from mail.kernel.org ([198.145.29.99]:51252 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1731777AbfFMMYG (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 13 Jun 2019 08:24:06 -0400
-Received: from localhost (83-86-89-107.cable.dynamic.v4.ziggo.nl [83.86.89.107])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 7AF0821773;
-        Thu, 13 Jun 2019 12:24:04 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1560428645;
-        bh=ylIuBR5yn6EAKJkZL96zcsc3cHp7vPCBtpQ1H9nxhuw=;
-        h=Date:From:To:Cc:Subject:From;
-        b=bOyO5TaMLcD0owl1N4BpMw+OuphlFIoRdk4t2MUxea63aPdOd4AEEX4AqEpA3dQ7m
-         w5iTYcM5zYoJtkOXRloA2EmL3kF0apL5Bh9eocOjtVdJ8XQiYxb754ToOL69plriSm
-         XLPV4JpzEVCah0M5xam9cIbABra6qCiTXCVOWXes=
-Date:   Thu, 13 Jun 2019 14:24:02 +0200
-From:   Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>
-Cc:     linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org
-Subject: [PATCH] msm: no need to check return value of debugfs_create
- functions
-Message-ID: <20190613122402.GA30678@kroah.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-User-Agent: Mutt/1.12.0 (2019-05-25)
+        id S1732649AbfFMPDj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 13 Jun 2019 11:03:39 -0400
+Received: from mail-pl1-f195.google.com ([209.85.214.195]:37826 "EHLO
+        mail-pl1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727012AbfFMOWC (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 13 Jun 2019 10:22:02 -0400
+Received: by mail-pl1-f195.google.com with SMTP id bh12so8227255plb.4;
+        Thu, 13 Jun 2019 07:22:01 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id;
+        bh=eKOd4vO1UgFYSd+YAFiidpo1Y+51qTryroNSM0EM6GI=;
+        b=eO3M8sdZsGzs0H+XeWXXhP+/9/J3q8AyrU/LKxC0EoDBiBUsZQaEHmvPqze41Hi3Gy
+         8T1a9l8xTLBHaDbUedvbWzCxLITXWlKRgaBDKY5LW50hQPiCBSBPuDVumPj+hnzA8+96
+         XAlw5oijtu7E4enl0WyVGwT83+MU5lm9Vo8DHEFYChsYFLlJwR/zNB4m+TWDbkDBpP3f
+         ZmzobNt4cxnG9eQ4hzUuEGzvyWf5rfjDlJudsfLWnTgLAwxKUHaV4nOpyrEUYyAwuf9T
+         HxRUH0dlc+SHqax0Oo6So5xs94pYmCpwCLlWXqLpCDNCU7EYOp8CLvIOyhNWOzeauUKs
+         nhVg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=eKOd4vO1UgFYSd+YAFiidpo1Y+51qTryroNSM0EM6GI=;
+        b=VxYSDtV1j2AFqJrXbBUDETKuBB552yTJKzi5zAaguG6etKk+un2yH6w/xMqFU/1NoR
+         Nl7bgjgFZX/aQnGDe5GHASnvOv/9mu+/ZL5DV1tj/iBNg08J7BMzxOBtFfybJ7XhmsuX
+         o9Z/tJX7A0zflyExKg45TfdnVPFiNtc3HxW1G0Vs+ABRH0MIo7nl80Sy4kSHyHfyJOgw
+         +5XFJ2xZ7mDEKklovtCoYmzMM+/b0+auiK0MU8z3n0kwOHAJm7GNvi9Dg1nSzhIm9rym
+         Ha/YeW+nWVNDh8UBUTr9E9rk5IrwpbPc90acWxIQz2uHUNST67gAN4eEuxuaXmZ34g3V
+         ghQA==
+X-Gm-Message-State: APjAAAXE8pUzSf2AC414nu8F4K0GcZfGXiaE0YQKkYAmiFz7K+3d5XFS
+        HHimTZKKbqPSfSufVQx6gzPNYG1x
+X-Google-Smtp-Source: APXvYqwhE5ITe5ZjVSgpSHcaRMbgiJJg+SWmf1fmZzODXRPQhGkSQTmLCcwIhDmkBiIyoxFiOIK8fQ==
+X-Received: by 2002:a17:902:a5ca:: with SMTP id t10mr81922020plq.98.1560435721094;
+        Thu, 13 Jun 2019 07:22:01 -0700 (PDT)
+Received: from aw-bldr-10.qualcomm.com (i-global254.qualcomm.com. [199.106.103.254])
+        by smtp.gmail.com with ESMTPSA id c124sm3029689pfa.115.2019.06.13.07.21.59
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Thu, 13 Jun 2019 07:22:00 -0700 (PDT)
+From:   Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
+Cc:     agross@kernel.org, bjorn.andersson@linaro.org, lgirdwood@gmail.com,
+        broonie@kernel.org, robh+dt@kernel.org, mark.rutland@arm.com,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        devicetree@vger.kernel.org, Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
+Subject: [PATCH v2 0/7] PM8005 and PMS405 regulator support
+Date:   Thu, 13 Jun 2019 07:21:57 -0700
+Message-Id: <20190613142157.8674-1-jeffrey.l.hugo@gmail.com>
+X-Mailer: git-send-email 2.17.1
+To:     unlisted-recipients:; (no To-header on input)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-When calling debugfs functions, there is no need to ever check the
-return value.  The function can work or not, but the code logic should
-never do something different based on this.
+The MSM8998 MTP reference platform supplies VDD_GFX from s1 of the
+pm8005 PMIC.  VDD_GFX is needed to turn on the GPU.  As we are looking
+to bring up the GPU, add the support for pm8005 and wire up s1 in a
+basic manner so that we have this dependency out of the way and can
+focus on enabling the GPU driver.
 
-Cc: Rob Clark <robdclark@gmail.com>
-Cc: Sean Paul <sean@poorly.run>
-Cc: David Airlie <airlied@linux.ie>
-Cc: Daniel Vetter <daniel@ffwll.ch>
-Cc: linux-arm-msm@vger.kernel.org
-Cc: dri-devel@lists.freedesktop.org
-Cc: freedreno@lists.freedesktop.org
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
----
- drivers/gpu/drm/msm/msm_perf.c | 15 ++-------------
- drivers/gpu/drm/msm/msm_rd.c   | 15 ++-------------
- 2 files changed, 4 insertions(+), 26 deletions(-)
+The s3 regulator of PMS405 is used for voltage scaling of the CPU on
+QCS404.
 
-diff --git a/drivers/gpu/drm/msm/msm_perf.c b/drivers/gpu/drm/msm/msm_perf.c
-index 5ab21bd2decb..95948cfe7a12 100644
---- a/drivers/gpu/drm/msm/msm_perf.c
-+++ b/drivers/gpu/drm/msm/msm_perf.c
-@@ -205,7 +205,6 @@ int msm_perf_debugfs_init(struct drm_minor *minor)
- {
- 	struct msm_drm_private *priv = minor->dev->dev_private;
- 	struct msm_perf_state *perf;
--	struct dentry *ent;
- 
- 	/* only create on first minor: */
- 	if (priv->perf)
-@@ -220,19 +219,9 @@ int msm_perf_debugfs_init(struct drm_minor *minor)
- 	mutex_init(&perf->read_lock);
- 	priv->perf = perf;
- 
--	ent = debugfs_create_file("perf", S_IFREG | S_IRUGO,
--			minor->debugfs_root, perf, &perf_debugfs_fops);
--	if (!ent) {
--		DRM_ERROR("Cannot create /sys/kernel/debug/dri/%pd/perf\n",
--				minor->debugfs_root);
--		goto fail;
--	}
--
-+	debugfs_create_file("perf", S_IFREG | S_IRUGO, minor->debugfs_root,
-+			    perf, &perf_debugfs_fops);
- 	return 0;
--
--fail:
--	msm_perf_debugfs_cleanup(priv);
--	return -1;
- }
- 
- void msm_perf_debugfs_cleanup(struct msm_drm_private *priv)
-diff --git a/drivers/gpu/drm/msm/msm_rd.c b/drivers/gpu/drm/msm/msm_rd.c
-index d21172933d92..46f7eb6a7eaa 100644
---- a/drivers/gpu/drm/msm/msm_rd.c
-+++ b/drivers/gpu/drm/msm/msm_rd.c
-@@ -244,7 +244,6 @@ static void rd_cleanup(struct msm_rd_state *rd)
- static struct msm_rd_state *rd_init(struct drm_minor *minor, const char *name)
- {
- 	struct msm_rd_state *rd;
--	struct dentry *ent;
- 	int ret = 0;
- 
- 	rd = kzalloc(sizeof(*rd), GFP_KERNEL);
-@@ -258,20 +257,10 @@ static struct msm_rd_state *rd_init(struct drm_minor *minor, const char *name)
- 
- 	init_waitqueue_head(&rd->fifo_event);
- 
--	ent = debugfs_create_file(name, S_IFREG | S_IRUGO,
--			minor->debugfs_root, rd, &rd_debugfs_fops);
--	if (!ent) {
--		DRM_ERROR("Cannot create /sys/kernel/debug/dri/%pd/%s\n",
--				minor->debugfs_root, name);
--		ret = -ENOMEM;
--		goto fail;
--	}
-+	debugfs_create_file(name, S_IFREG | S_IRUGO, minor->debugfs_root, rd,
-+			    &rd_debugfs_fops);
- 
- 	return rd;
--
--fail:
--	rd_cleanup(rd);
--	return ERR_PTR(ret);
- }
- 
- int msm_rd_debugfs_init(struct drm_minor *minor)
+Both PMICs are very similar in design, so add the base support with one,
+and trivially add the support for the other on top.
+
+v3:
+-Allow PMS405 regulators to be enabled and disabled, instead of the
+outdated "always on" concept
+
+v2:
+-Perform if statement cleanups per review discussion
+-Pull in linear range support since its related, and simple
+-Rework the PM8005 to minimize special cases in the driver
+-"common2" is now ftsmps426 since that design first implemented it
+-Reworked the PMS405 changes on top, since they are related to pm8005 and
+trivial
+
+Jeffrey Hugo (4):
+  drivers: regulator: qcom_spmi: Refactor get_mode/set_mode
+  dt-bindings: qcom_spmi: Document PM8005 regulators
+  regulator: qcom_spmi: Add support for PM8005
+  arm64: dts: msm8998-mtp: Add pm8005_s1 regulator
+
+Jorge Ramirez (2):
+  dt-bindings: qcom_spmi: Document pms405 support
+  drivers: regulator: qcom: add PMS405 SPMI regulator
+
+Jorge Ramirez-Ortiz (1):
+  drivers: regulator: qcom_spmi: enable linear range info
+
+ .../regulator/qcom,spmi-regulator.txt         |  28 +++
+ arch/arm64/boot/dts/qcom/msm8998-mtp.dtsi     |  17 ++
+ drivers/regulator/qcom_spmi-regulator.c       | 233 +++++++++++++++++-
+ 3 files changed, 271 insertions(+), 7 deletions(-)
+
 -- 
-2.22.0
+2.17.1
 
