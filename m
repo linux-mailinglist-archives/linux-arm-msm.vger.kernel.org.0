@@ -2,90 +2,74 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 079E84384F
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 13 Jun 2019 17:05:18 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 2EA0E438E3
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 13 Jun 2019 17:09:40 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732461AbfFMPFM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 13 Jun 2019 11:05:12 -0400
-Received: from ns.iliad.fr ([212.27.33.1]:58456 "EHLO ns.iliad.fr"
+        id S1732760AbfFMPJg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 13 Jun 2019 11:09:36 -0400
+Received: from ns.iliad.fr ([212.27.33.1]:59686 "EHLO ns.iliad.fr"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1732540AbfFMPFL (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 13 Jun 2019 11:05:11 -0400
+        id S1732357AbfFMPJf (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 13 Jun 2019 11:09:35 -0400
 Received: from ns.iliad.fr (localhost [127.0.0.1])
-        by ns.iliad.fr (Postfix) with ESMTP id EC80020C0F;
-        Thu, 13 Jun 2019 17:05:08 +0200 (CEST)
+        by ns.iliad.fr (Postfix) with ESMTP id 29F3320C0F;
+        Thu, 13 Jun 2019 17:09:34 +0200 (CEST)
 Received: from [192.168.108.49] (freebox.vlq16.iliad.fr [213.36.7.13])
-        by ns.iliad.fr (Postfix) with ESMTP id D67B020BC5;
-        Thu, 13 Jun 2019 17:05:08 +0200 (CEST)
-Subject: Re: [PATCH v1] clk: qcom: msm8916: Don't build support by default
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     Stephen Boyd <sboyd@kernel.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        linux-clk <linux-clk@vger.kernel.org>,
+        by ns.iliad.fr (Postfix) with ESMTP id 13F6920BC5;
+        Thu, 13 Jun 2019 17:09:34 +0200 (CEST)
+From:   Marc Gonzalez <marc.w.gonzalez@free.fr>
+Subject: [PATCH v2] clk: qcom: msm8916: Don't build by default
+To:     Stephen Boyd <sboyd@kernel.org>,
+        Michael Turquette <mturquette@baylibre.com>
+Cc:     linux-clk <linux-clk@vger.kernel.org>,
         MSM <linux-arm-msm@vger.kernel.org>,
         Georgi Djakov <georgi.djakov@linaro.org>,
-        Amit Kucheria <amit.kucheria@linaro.org>
-References: <49b95f19-4da6-4491-6ed7-5238ecfc35a8@free.fr>
- <20190612191347.GE22737@tuxbook-pro>
-From:   Marc Gonzalez <marc.w.gonzalez@free.fr>
-Message-ID: <ca7c9fbd-d611-6ab6-6d23-54dfc4c2f165@free.fr>
-Date:   Thu, 13 Jun 2019 17:05:08 +0200
+        Amit Kucheria <amit.kucheria@linaro.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>
+Message-ID: <d654907d-a3a2-a00f-d6f5-3a34ae25ebcf@free.fr>
+Date:   Thu, 13 Jun 2019 17:09:34 +0200
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
  Thunderbird/60.6.1
 MIME-Version: 1.0
-In-Reply-To: <20190612191347.GE22737@tuxbook-pro>
 Content-Type: text/plain; charset=utf-8
 Content-Language: en-US
 Content-Transfer-Encoding: 7bit
-X-Virus-Scanned: ClamAV using ClamSMTP ; ns.iliad.fr ; Thu Jun 13 17:05:08 2019 +0200 (CEST)
+X-Virus-Scanned: ClamAV using ClamSMTP ; ns.iliad.fr ; Thu Jun 13 17:09:34 2019 +0200 (CEST)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 12/06/2019 21:13, Bjorn Andersson wrote:
+QCOM_A53PLL and QCOM_CLK_APCS_MSM8916 stand out as the only options
+built by default. Let's bring them back in line with the rest.
 
-> On Wed 12 Jun 08:52 PDT 2019, Marc Gonzalez wrote:
-> 
->> Build QCOM_A53PLL and QCOM_CLK_APCS_MSM8916 by default only when
->> we're building MSM_GCC_8916.
->>
->> Signed-off-by: Marc Gonzalez <marc.w.gonzalez@free.fr>
-> 
-> Not sure why these are default at all.
-> 
-> But both drivers are used on platforms other than 8916 as well, so if
-> anything a fix would be to rename the APCS_MSM8916 to something more
-> generic (such as QCOM_CLK_APCS_GLOBAL) - but then the content should be
-> updated and the APCS mailbox driver as well...
+Signed-off-by: Marc Gonzalez <marc.w.gonzalez@free.fr>
+---
+Changes from v1:
+- Drop the default altogether, instead of changing it to 'default MSM_GCC_8916'
+---
+ drivers/clk/qcom/Kconfig | 2 --
+ 1 file changed, 2 deletions(-)
 
-Used on platforms other than 8916?  do you see that?
-
-$ git grep compatible drivers/clk/qcom/a53-pll.c
-	{ .compatible = "qcom,msm8916-a53pll" },
-
-$ git grep qcom,msm8916-a53pll arch/arm64/boot/dts
-arch/arm64/boot/dts/qcom/msm8916.dtsi:                  compatible = "qcom,msm8916-a53pll";
-
-
-drivers/clk/qcom/apcs-msm8916.c doesn't seem to support DT...
-
-$ git grep qcom-apcs-msm8916-clk
-drivers/clk/qcom/apcs-msm8916.c:                .name = "qcom-apcs-msm8916-clk",
-drivers/mailbox/qcom-apcs-ipc-mailbox.c:                                                          "qcom-apcs-msm8916-clk",
-
-	if (of_device_is_compatible(np, "qcom,msm8916-apcs-kpss-global")) {
-		apcs->clk = platform_device_register_data(&pdev->dev, "qcom-apcs-msm8916-clk", -1, NULL, 0);
-
-
-$ git grep qcom,msm8916-apcs-kpss-global
-Documentation/devicetree/bindings/mailbox/qcom,apcs-kpss-global.txt:                "qcom,msm8916-apcs-kpss-global",
-Documentation/devicetree/bindings/mailbox/qcom,apcs-kpss-global.txt:            compatible = "qcom,msm8916-apcs-kpss-global";
-arch/arm64/boot/dts/qcom/msm8916.dtsi:                  compatible = "qcom,msm8916-apcs-kpss-global", "syscon";
-drivers/mailbox/qcom-apcs-ipc-mailbox.c:        if (of_device_is_compatible(np, "qcom,msm8916-apcs-kpss-global")) {
-drivers/mailbox/qcom-apcs-ipc-mailbox.c:        { .compatible = "qcom,msm8916-apcs-kpss-global", .data = (void *)8 },
-
-
-Are you sure about other platforms?
-
-Regards.
+diff --git a/drivers/clk/qcom/Kconfig b/drivers/clk/qcom/Kconfig
+index e1ff83cc361e..6461a1aa7325 100644
+--- a/drivers/clk/qcom/Kconfig
++++ b/drivers/clk/qcom/Kconfig
+@@ -21,7 +21,6 @@ if COMMON_CLK_QCOM
+ 
+ config QCOM_A53PLL
+ 	tristate "MSM8916 A53 PLL"
+-	default ARCH_QCOM
+ 	help
+ 	  Support for the A53 PLL on MSM8916 devices. It provides
+ 	  the CPU with frequencies above 1GHz.
+@@ -31,7 +30,6 @@ config QCOM_A53PLL
+ config QCOM_CLK_APCS_MSM8916
+ 	tristate "MSM8916 APCS Clock Controller"
+ 	depends on QCOM_APCS_IPC || COMPILE_TEST
+-	default ARCH_QCOM
+ 	help
+ 	  Support for the APCS Clock Controller on msm8916 devices. The
+ 	  APCS is managing the mux and divider which feeds the CPUs.
+-- 
+2.17.1
