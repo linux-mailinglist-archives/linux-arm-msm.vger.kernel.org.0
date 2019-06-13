@@ -2,958 +2,352 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id CF4F044F59
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 14 Jun 2019 00:40:06 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4837844F86
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 14 Jun 2019 00:49:54 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727242AbfFMWjq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 13 Jun 2019 18:39:46 -0400
-Received: from mail-ed1-f68.google.com ([209.85.208.68]:33390 "EHLO
-        mail-ed1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727377AbfFMWjq (ORCPT
+        id S1726201AbfFMWtx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 13 Jun 2019 18:49:53 -0400
+Received: from mail-pg1-f193.google.com ([209.85.215.193]:41826 "EHLO
+        mail-pg1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727028AbfFMWtx (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 13 Jun 2019 18:39:46 -0400
-Received: by mail-ed1-f68.google.com with SMTP id i11so553449edq.0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 13 Jun 2019 15:39:44 -0700 (PDT)
+        Thu, 13 Jun 2019 18:49:53 -0400
+Received: by mail-pg1-f193.google.com with SMTP id 83so328342pgg.8
+        for <linux-arm-msm@vger.kernel.org>; Thu, 13 Jun 2019 15:49:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=tcd-ie.20150623.gappssmtp.com; s=20150623;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=FaCFxVfgQP5McbVWnVsoPjXbr3efETOs6+Wdgacd+8E=;
-        b=LIr0k+A714PbEePdzOuQmy/B+BvUVXWQocX7xS86aeXOpTr+Gb2z5PHhfX42+ijM/v
-         9ySyLlU023R3eSBxZTGUFVdoDxl7tDXQ6I1X7MS7CkCkBEa89zmKcuUX+Z6P+3dzgi3g
-         xLFkXTAtGCggJtBTWLUog3GrCK9V9hfg1hD+8Wol8lBHW5rzFFJj/uJ+30qgfpzUYZQD
-         zqDO88+JlK5XBr1psF6j7r2hboONTBC/0Nd+hRrgcRhKCsHVjTrrsdn6Qhl/o0zQ7Kx1
-         nlO91tviw3IlcFIPXJJwIUvGQNZVtiYuSVxyDqLIyB9LSq8Qt+6sqUqLd+2D7747ZGzH
-         2BsA==
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=k6Xar2glLHwQeNn6R1ji8rZ9NF01iMIAzLJ4xoiuLOY=;
+        b=Y8DKBr1/TsIOIuzwitB3T1W7YWN+CXqNcp/VuBQwp74GtNJDL5X2GasFcG2Lo2kWDV
+         7IQ1vqNT4HbVYbsXJMkkMGFokpdIL5TmjLYtabsqqPhs3nGq6+oiVXUeIHl9k2RqOGuT
+         NjDfQ8VREFp5cE4s2EjbifQ7cPeGpKfq9kgxcdsnH5I/nI7Ya3CDaH1klpqD5Q1hyCWV
+         4QQypBWDfoeWdhUglJa9i4/lIWGmoceNbKiZNyGDarIvrhSoG+HKtCiS+QIXfKVmjYas
+         FVzx2SD8qGZm8aNmNcMOCcCMBU7tuj9YrhUKR+kSVrOB9tLEYH//+1X7pV8D5kK8FbZ4
+         1ykw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=FaCFxVfgQP5McbVWnVsoPjXbr3efETOs6+Wdgacd+8E=;
-        b=jaKMVFu00+ULGRa8FnmhiW+1QxRNpTdjgnjhKzWT+UlSIUrd6/ZI2K1rK10EBgSCK2
-         W+svpUPIfjAy0CtvaqQY/xfscMq2Ra1FccIOZHqXCIaHGpcO0ZVWkCMRH0TvPOAHeZAn
-         SomJ9xDGKBzkM+pvOOQ1qjbURIU+4xibnlTO/C4BMh00Y/ND74Zgkzl3ws21hEs9KJo1
-         tC9e2l34ffteCpS6sJs2+GfXiRZa9rtUn7HrFQeT9vWYKfPzxdyp+XFX4swUXOI+CsF8
-         Rph9RB8aHhjV1ey3ics4kqxAKCI43PUb5XmvbsXcQQbCYNJnw8w18hHlFrC5wjuFsG6Q
-         chMA==
-X-Gm-Message-State: APjAAAXoY7OIUrmq0y5uxJWNNDww0B1u1t9OvG7D/dGXm9AZkQ4CbNGM
-        wRPlxn1ucLmkagSbhnkx+sK7mnEXW4lw+Q==
-X-Google-Smtp-Source: APXvYqziA83Y6fLVFK0fVVASPFLql/CB+jbi0PdvqdfuVPYOvBv9A61teoZtJN6W0qvpQQJ1y1vqtg==
-X-Received: by 2002:a17:906:b741:: with SMTP id fx1mr77864769ejb.45.1560465583095;
-        Thu, 13 Jun 2019 15:39:43 -0700 (PDT)
-Received: from localhost.localdomain ([2a02:8084:a0:bc00:8042:d435:a754:1f22])
-        by smtp.googlemail.com with ESMTPSA id s16sm216522eji.27.2019.06.13.15.39.41
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=k6Xar2glLHwQeNn6R1ji8rZ9NF01iMIAzLJ4xoiuLOY=;
+        b=QaZkU+XxscI9+RLVWFVzyqN7ZUamMPaw3wLJfOnl6P4jrS30e9JJZp90nkg6eHdi5j
+         iiJ4XW+as88WVw5JxwFQWoGxldN/cOScJ0DHEq7+BBqJyGtYlQ9eY9L1bN/TfFIv+Hsd
+         4yFfxuArtBxOw9KhbdzAJw5uMdwr+ngGQAApZPRgZNn/6zIuzljpaHejmePRVeL50wwh
+         kz2BvpcawhI1Lj6rpU7LT04Qkk8Nzu7I31iLVlu2wr9kZnhh+Enb7PDNDQYEJpNcXKfH
+         VPoWv3PfG7VHiS+FxMFKEwUTPOXEpzO63RDQlkrD0nUDCOHmUJuMV2tADCiZmZqASnDj
+         +n3A==
+X-Gm-Message-State: APjAAAWG0IZhDxSOaZK821sKlHqbHHNqKz/mC2N6H9VuInqnctk+pQaR
+        D4FroRP05wuLKUuEj/ulr2SXag==
+X-Google-Smtp-Source: APXvYqxv559mQ4O7aVghviV8Rq+W2Pn31ny2ZF7QJw7w3BDGwuUqZdShgfe4eC1vvJrSJN59i6HZnw==
+X-Received: by 2002:a17:90a:2224:: with SMTP id c33mr7832372pje.22.1560466191944;
+        Thu, 13 Jun 2019 15:49:51 -0700 (PDT)
+Received: from minitux (104-188-17-28.lightspeed.sndgca.sbcglobal.net. [104.188.17.28])
+        by smtp.gmail.com with ESMTPSA id m16sm732798pfd.127.2019.06.13.15.49.50
         (version=TLS1_3 cipher=AEAD-AES256-GCM-SHA384 bits=256/256);
-        Thu, 13 Jun 2019 15:39:42 -0700 (PDT)
-From:   Tom Murphy <murphyt7@tcd.ie>
-To:     iommu@lists.linux-foundation.org
-Cc:     Tom Murphy <murphyt7@tcd.ie>, Joerg Roedel <joro@8bytes.org>,
-        Will Deacon <will.deacon@arm.com>,
-        Robin Murphy <robin.murphy@arm.com>,
-        Marek Szyprowski <m.szyprowski@samsung.com>,
-        Kukjin Kim <kgene@kernel.org>,
-        Krzysztof Kozlowski <krzk@kernel.org>,
-        David Woodhouse <dwmw2@infradead.org>,
-        Andy Gross <agross@kernel.org>,
-        David Brown <david.brown@linaro.org>,
-        Matthias Brugger <matthias.bgg@gmail.com>,
-        Rob Clark <robdclark@gmail.com>,
-        Heiko Stuebner <heiko@sntech.de>,
-        Gerald Schaefer <gerald.schaefer@de.ibm.com>,
-        Thierry Reding <thierry.reding@gmail.com>,
-        Jonathan Hunter <jonathanh@nvidia.com>,
-        Jean-Philippe Brucker <jean-philippe.brucker@arm.com>,
-        linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
-        linux-samsung-soc@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-mediatek@lists.infradead.org,
-        linux-rockchip@lists.infradead.org, linux-s390@vger.kernel.org,
-        linux-tegra@vger.kernel.org,
-        virtualization@lists.linux-foundation.org
-Subject: [PATCH v4 5/5] iommu/amd: Convert AMD iommu driver to the dma-iommu api
-Date:   Thu, 13 Jun 2019 23:39:00 +0100
-Message-Id: <20190613223901.9523-6-murphyt7@tcd.ie>
-X-Mailer: git-send-email 2.20.1
-In-Reply-To: <20190613223901.9523-1-murphyt7@tcd.ie>
-References: <20190613223901.9523-1-murphyt7@tcd.ie>
+        Thu, 13 Jun 2019 15:49:51 -0700 (PDT)
+Date:   Thu, 13 Jun 2019 15:49:49 -0700
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     Robin Murphy <robin.murphy@arm.com>
+Cc:     Joerg Roedel <joro@8bytes.org>, Will Deacon <will.deacon@arm.com>,
+        Vivek Gautam <vivek.gautam@codeaurora.org>,
+        Jeffrey Hugo <jhugo@codeaurora.org>,
+        Patrick Daly <pdaly@codeaurora.org>,
+        iommu@lists.linux-foundation.org, linux-kernel@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org, linux-arm-msm@vger.kernel.org
+Subject: Re: [RFC 1/2] iommu: arm-smmu: Handoff SMR registers and context
+ banks
+Message-ID: <20190613224949.GF4814@minitux>
+References: <20190605210856.20677-1-bjorn.andersson@linaro.org>
+ <20190605210856.20677-2-bjorn.andersson@linaro.org>
+ <25f19f09-ab19-a7b3-c31a-f5f29b29fef8@arm.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <25f19f09-ab19-a7b3-c31a-f5f29b29fef8@arm.com>
+X-TUID: ToS7Bn5soDWZ
+User-Agent: Mutt/1.12.0 (2019-05-25)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Convert the AMD iommu driver to the dma-iommu api. Remove the iova
-handling and reserve region code from the AMD iommu driver.
+On Thu 13 Jun 04:23 PDT 2019, Robin Murphy wrote:
 
-Signed-off-by: Tom Murphy <murphyt7@tcd.ie>
----
- drivers/iommu/Kconfig     |   1 +
- drivers/iommu/amd_iommu.c | 677 ++++----------------------------------
- 2 files changed, 68 insertions(+), 610 deletions(-)
+> On 05/06/2019 22:08, Bjorn Andersson wrote:
+> > Boot splash screen or EFI framebuffer requires the display hardware to
+> > operate while the Linux iommu driver probes. Therefore, we cannot simply
+> > wipe out the SMR register settings programmed by the bootloader.
+> > 
+> > Detect which SMR registers are in use during probe, and which context
+> > banks they are associated with. Reserve these context banks for the
+> > first Linux device whose stream-id matches the SMR register.
+> > 
+> > Any existing page-tables will be discarded.
+> 
+> That doesn't seem particularly useful :/
+> 
 
-diff --git a/drivers/iommu/Kconfig b/drivers/iommu/Kconfig
-index d47913883d1e..19f966db02a8 100644
---- a/drivers/iommu/Kconfig
-+++ b/drivers/iommu/Kconfig
-@@ -138,6 +138,7 @@ config AMD_IOMMU
- 	select PCI_PASID
- 	select IOMMU_API
- 	select IOMMU_IOVA
-+	select IOMMU_DMA
- 	depends on X86_64 && PCI && ACPI
- 	---help---
- 	  With this option you can enable support for AMD IOMMU hardware in
-diff --git a/drivers/iommu/amd_iommu.c b/drivers/iommu/amd_iommu.c
-index fd8da60f7359..ed881c2d8a6b 100644
---- a/drivers/iommu/amd_iommu.c
-+++ b/drivers/iommu/amd_iommu.c
-@@ -20,6 +20,7 @@
- #include <linux/scatterlist.h>
- #include <linux/dma-mapping.h>
- #include <linux/dma-direct.h>
-+#include <linux/dma-iommu.h>
- #include <linux/iommu-helper.h>
- #include <linux/iommu.h>
- #include <linux/delay.h>
-@@ -89,8 +90,6 @@ const struct iommu_ops amd_iommu_ops;
- static ATOMIC_NOTIFIER_HEAD(ppr_notifier);
- int amd_iommu_max_glx_val = -1;
- 
--static const struct dma_map_ops amd_iommu_dma_ops;
--
- /*
-  * general struct to manage commands send to an IOMMU
-  */
-@@ -103,21 +102,6 @@ struct kmem_cache *amd_iommu_irq_cache;
- static void update_domain(struct protection_domain *domain);
- static int protection_domain_init(struct protection_domain *domain);
- static void detach_device(struct device *dev);
--static void iova_domain_flush_tlb(struct iova_domain *iovad);
--
--/*
-- * Data container for a dma_ops specific protection domain
-- */
--struct dma_ops_domain {
--	/* generic protection domain information */
--	struct protection_domain domain;
--
--	/* IOVA RB-Tree */
--	struct iova_domain iovad;
--};
--
--static struct iova_domain reserved_iova_ranges;
--static struct lock_class_key reserved_rbtree_key;
- 
- /****************************************************************************
-  *
-@@ -188,12 +172,6 @@ static struct protection_domain *to_pdomain(struct iommu_domain *dom)
- 	return container_of(dom, struct protection_domain, domain);
- }
- 
--static struct dma_ops_domain* to_dma_ops_domain(struct protection_domain *domain)
--{
--	BUG_ON(domain->flags != PD_DMA_OPS_MASK);
--	return container_of(domain, struct dma_ops_domain, domain);
--}
--
- static struct iommu_dev_data *alloc_dev_data(u16 devid)
- {
- 	struct iommu_dev_data *dev_data;
-@@ -1267,12 +1245,6 @@ static void domain_flush_pages(struct protection_domain *domain,
- 	__domain_flush_pages(domain, address, size, 0);
- }
- 
--/* Flush the whole IO/TLB for a given protection domain */
--static void domain_flush_tlb(struct protection_domain *domain)
--{
--	__domain_flush_pages(domain, 0, CMD_INV_IOMMU_ALL_PAGES_ADDRESS, 0);
--}
--
- /* Flush the whole IO/TLB for a given protection domain - including PDE */
- static void domain_flush_tlb_pde(struct protection_domain *domain)
- {
-@@ -1674,43 +1646,6 @@ static unsigned long iommu_unmap_page(struct protection_domain *dom,
- 	return unmapped;
- }
- 
--/****************************************************************************
-- *
-- * The next functions belong to the address allocator for the dma_ops
-- * interface functions.
-- *
-- ****************************************************************************/
--
--
--static unsigned long dma_ops_alloc_iova(struct device *dev,
--					struct dma_ops_domain *dma_dom,
--					unsigned int pages, u64 dma_mask)
--{
--	unsigned long pfn = 0;
--
--	pages = __roundup_pow_of_two(pages);
--
--	if (dma_mask > DMA_BIT_MASK(32))
--		pfn = alloc_iova_fast(&dma_dom->iovad, pages,
--				      IOVA_PFN(DMA_BIT_MASK(32)), false);
--
--	if (!pfn)
--		pfn = alloc_iova_fast(&dma_dom->iovad, pages,
--				      IOVA_PFN(dma_mask), true);
--
--	return (pfn << PAGE_SHIFT);
--}
--
--static void dma_ops_free_iova(struct dma_ops_domain *dma_dom,
--			      unsigned long address,
--			      unsigned int pages)
--{
--	pages = __roundup_pow_of_two(pages);
--	address >>= PAGE_SHIFT;
--
--	free_iova_fast(&dma_dom->iovad, address, pages);
--}
--
- /****************************************************************************
-  *
-  * The next functions belong to the domain allocation. A domain is
-@@ -1787,38 +1722,23 @@ static void free_gcr3_table(struct protection_domain *domain)
- 	free_page((unsigned long)domain->gcr3_tbl);
- }
- 
--static void dma_ops_domain_flush_tlb(struct dma_ops_domain *dom)
--{
--	domain_flush_tlb(&dom->domain);
--	domain_flush_complete(&dom->domain);
--}
--
--static void iova_domain_flush_tlb(struct iova_domain *iovad)
--{
--	struct dma_ops_domain *dom;
--
--	dom = container_of(iovad, struct dma_ops_domain, iovad);
--
--	dma_ops_domain_flush_tlb(dom);
--}
--
- /*
-  * Free a domain, only used if something went wrong in the
-  * allocation path and we need to free an already allocated page table
-  */
--static void dma_ops_domain_free(struct dma_ops_domain *dom)
-+static void dma_ops_domain_free(struct protection_domain *domain)
- {
--	if (!dom)
-+	if (!domain)
- 		return;
- 
--	put_iova_domain(&dom->iovad);
-+	iommu_put_dma_cookie(&domain->domain);
- 
--	free_pagetable(&dom->domain);
-+	free_pagetable(domain);
- 
--	if (dom->domain.id)
--		domain_id_free(dom->domain.id);
-+	if (domain->id)
-+		domain_id_free(domain->id);
- 
--	kfree(dom);
-+	kfree(domain);
- }
- 
- /*
-@@ -1826,35 +1746,30 @@ static void dma_ops_domain_free(struct dma_ops_domain *dom)
-  * It also initializes the page table and the address allocator data
-  * structures required for the dma_ops interface
-  */
--static struct dma_ops_domain *dma_ops_domain_alloc(void)
-+static struct protection_domain *dma_ops_domain_alloc(void)
- {
--	struct dma_ops_domain *dma_dom;
-+	struct protection_domain *domain;
- 
--	dma_dom = kzalloc(sizeof(struct dma_ops_domain), GFP_KERNEL);
--	if (!dma_dom)
-+	domain = kzalloc(sizeof(struct protection_domain), GFP_KERNEL);
-+	if (!domain)
- 		return NULL;
- 
--	if (protection_domain_init(&dma_dom->domain))
--		goto free_dma_dom;
--
--	dma_dom->domain.mode = PAGE_MODE_3_LEVEL;
--	dma_dom->domain.pt_root = (void *)get_zeroed_page(GFP_KERNEL);
--	dma_dom->domain.flags = PD_DMA_OPS_MASK;
--	if (!dma_dom->domain.pt_root)
--		goto free_dma_dom;
--
--	init_iova_domain(&dma_dom->iovad, PAGE_SIZE, IOVA_START_PFN);
-+	if (protection_domain_init(domain))
-+		goto free_domain;
- 
--	if (init_iova_flush_queue(&dma_dom->iovad, iova_domain_flush_tlb, NULL))
--		goto free_dma_dom;
-+	domain->mode = PAGE_MODE_3_LEVEL;
-+	domain->pt_root = (void *)get_zeroed_page(GFP_KERNEL);
-+	domain->flags = PD_DMA_OPS_MASK;
-+	if (!domain->pt_root)
-+		goto free_domain;
- 
--	/* Initialize reserved ranges */
--	copy_reserved_iova(&reserved_iova_ranges, &dma_dom->iovad);
-+	if (iommu_get_dma_cookie(&domain->domain) == -ENOMEM)
-+		goto free_domain;
- 
--	return dma_dom;
-+	return domain;
- 
--free_dma_dom:
--	dma_ops_domain_free(dma_dom);
-+free_domain:
-+	dma_ops_domain_free(domain);
- 
- 	return NULL;
- }
-@@ -2233,8 +2148,8 @@ static int amd_iommu_add_device(struct device *dev)
- 	domain = iommu_get_domain_for_dev(dev);
- 	if (domain->type == IOMMU_DOMAIN_IDENTITY)
- 		dev_data->passthrough = true;
--	else
--		dev->dma_ops = &amd_iommu_dma_ops;
-+	else if (domain->type == IOMMU_DOMAIN_DMA)
-+		iommu_setup_dma_ops(dev, IOVA_START_PFN << PAGE_SHIFT, 0);
- 
- out:
- 	iommu_completion_wait(iommu);
-@@ -2268,43 +2183,32 @@ static struct iommu_group *amd_iommu_device_group(struct device *dev)
- 	return acpihid_device_group(dev);
- }
- 
-+static int amd_iommu_domain_get_attr(struct iommu_domain *domain,
-+		enum iommu_attr attr, void *data)
-+{
-+	switch (domain->type) {
-+	case IOMMU_DOMAIN_UNMANAGED:
-+		return -ENODEV;
-+	case IOMMU_DOMAIN_DMA:
-+		switch (attr) {
-+		case DOMAIN_ATTR_DMA_USE_FLUSH_QUEUE:
-+			*(int *)data = !amd_iommu_unmap_flush;
-+			return 0;
-+		default:
-+			return -ENODEV;
-+		}
-+		break;
-+	default:
-+		return -EINVAL;
-+	}
-+}
-+
- /*****************************************************************************
-  *
-  * The next functions belong to the dma_ops mapping/unmapping code.
-  *
-  *****************************************************************************/
- 
--/*
-- * In the dma_ops path we only have the struct device. This function
-- * finds the corresponding IOMMU, the protection domain and the
-- * requestor id for a given device.
-- * If the device is not yet associated with a domain this is also done
-- * in this function.
-- */
--static struct protection_domain *get_domain(struct device *dev)
--{
--	struct protection_domain *domain;
--	struct iommu_domain *io_domain;
--
--	if (!check_device(dev))
--		return ERR_PTR(-EINVAL);
--
--	domain = get_dev_data(dev)->domain;
--	if (domain == NULL && get_dev_data(dev)->defer_attach) {
--		get_dev_data(dev)->defer_attach = false;
--		io_domain = iommu_get_domain_for_dev(dev);
--		domain = to_pdomain(io_domain);
--		attach_device(dev, domain);
--	}
--	if (domain == NULL)
--		return ERR_PTR(-EBUSY);
--
--	if (!dma_ops_domain(domain))
--		return ERR_PTR(-EBUSY);
--
--	return domain;
--}
--
- static void update_device_table(struct protection_domain *domain)
- {
- 	struct iommu_dev_data *dev_data;
-@@ -2335,447 +2239,6 @@ static void update_domain(struct protection_domain *domain)
- 	domain->updated = false;
- }
- 
--static int dir2prot(enum dma_data_direction direction)
--{
--	if (direction == DMA_TO_DEVICE)
--		return IOMMU_PROT_IR;
--	else if (direction == DMA_FROM_DEVICE)
--		return IOMMU_PROT_IW;
--	else if (direction == DMA_BIDIRECTIONAL)
--		return IOMMU_PROT_IW | IOMMU_PROT_IR;
--	else
--		return 0;
--}
--
--/*
-- * This function contains common code for mapping of a physically
-- * contiguous memory region into DMA address space. It is used by all
-- * mapping functions provided with this IOMMU driver.
-- * Must be called with the domain lock held.
-- */
--static dma_addr_t __map_single(struct device *dev,
--			       struct dma_ops_domain *dma_dom,
--			       phys_addr_t paddr,
--			       size_t size,
--			       enum dma_data_direction direction,
--			       u64 dma_mask)
--{
--	dma_addr_t offset = paddr & ~PAGE_MASK;
--	dma_addr_t address, start, ret;
--	unsigned int pages;
--	int prot = 0;
--	int i;
--
--	pages = iommu_num_pages(paddr, size, PAGE_SIZE);
--	paddr &= PAGE_MASK;
--
--	address = dma_ops_alloc_iova(dev, dma_dom, pages, dma_mask);
--	if (!address)
--		goto out;
--
--	prot = dir2prot(direction);
--
--	start = address;
--	for (i = 0; i < pages; ++i) {
--		ret = iommu_map_page(&dma_dom->domain, start, paddr,
--				     PAGE_SIZE, prot, GFP_ATOMIC);
--		if (ret)
--			goto out_unmap;
--
--		paddr += PAGE_SIZE;
--		start += PAGE_SIZE;
--	}
--	address += offset;
--
--	domain_flush_np_cache(&dma_dom->domain, address, size);
--
--out:
--	return address;
--
--out_unmap:
--
--	for (--i; i >= 0; --i) {
--		start -= PAGE_SIZE;
--		iommu_unmap_page(&dma_dom->domain, start, PAGE_SIZE);
--	}
--
--	domain_flush_tlb(&dma_dom->domain);
--	domain_flush_complete(&dma_dom->domain);
--
--	dma_ops_free_iova(dma_dom, address, pages);
--
--	return DMA_MAPPING_ERROR;
--}
--
--/*
-- * Does the reverse of the __map_single function. Must be called with
-- * the domain lock held too
-- */
--static void __unmap_single(struct dma_ops_domain *dma_dom,
--			   dma_addr_t dma_addr,
--			   size_t size,
--			   int dir)
--{
--	dma_addr_t i, start;
--	unsigned int pages;
--
--	pages = iommu_num_pages(dma_addr, size, PAGE_SIZE);
--	dma_addr &= PAGE_MASK;
--	start = dma_addr;
--
--	for (i = 0; i < pages; ++i) {
--		iommu_unmap_page(&dma_dom->domain, start, PAGE_SIZE);
--		start += PAGE_SIZE;
--	}
--
--	if (amd_iommu_unmap_flush) {
--		domain_flush_tlb(&dma_dom->domain);
--		domain_flush_complete(&dma_dom->domain);
--		dma_ops_free_iova(dma_dom, dma_addr, pages);
--	} else {
--		pages = __roundup_pow_of_two(pages);
--		queue_iova(&dma_dom->iovad, dma_addr >> PAGE_SHIFT, pages, 0);
--	}
--}
--
--/*
-- * The exported map_single function for dma_ops.
-- */
--static dma_addr_t map_page(struct device *dev, struct page *page,
--			   unsigned long offset, size_t size,
--			   enum dma_data_direction dir,
--			   unsigned long attrs)
--{
--	phys_addr_t paddr = page_to_phys(page) + offset;
--	struct protection_domain *domain;
--	struct dma_ops_domain *dma_dom;
--	u64 dma_mask;
--
--	domain = get_domain(dev);
--	if (PTR_ERR(domain) == -EINVAL)
--		return (dma_addr_t)paddr;
--	else if (IS_ERR(domain))
--		return DMA_MAPPING_ERROR;
--
--	dma_mask = *dev->dma_mask;
--	dma_dom = to_dma_ops_domain(domain);
--
--	return __map_single(dev, dma_dom, paddr, size, dir, dma_mask);
--}
--
--/*
-- * The exported unmap_single function for dma_ops.
-- */
--static void unmap_page(struct device *dev, dma_addr_t dma_addr, size_t size,
--		       enum dma_data_direction dir, unsigned long attrs)
--{
--	struct protection_domain *domain;
--	struct dma_ops_domain *dma_dom;
--
--	domain = get_domain(dev);
--	if (IS_ERR(domain))
--		return;
--
--	dma_dom = to_dma_ops_domain(domain);
--
--	__unmap_single(dma_dom, dma_addr, size, dir);
--}
--
--static int sg_num_pages(struct device *dev,
--			struct scatterlist *sglist,
--			int nelems)
--{
--	unsigned long mask, boundary_size;
--	struct scatterlist *s;
--	int i, npages = 0;
--
--	mask          = dma_get_seg_boundary(dev);
--	boundary_size = mask + 1 ? ALIGN(mask + 1, PAGE_SIZE) >> PAGE_SHIFT :
--				   1UL << (BITS_PER_LONG - PAGE_SHIFT);
--
--	for_each_sg(sglist, s, nelems, i) {
--		int p, n;
--
--		s->dma_address = npages << PAGE_SHIFT;
--		p = npages % boundary_size;
--		n = iommu_num_pages(sg_phys(s), s->length, PAGE_SIZE);
--		if (p + n > boundary_size)
--			npages += boundary_size - p;
--		npages += n;
--	}
--
--	return npages;
--}
--
--/*
-- * The exported map_sg function for dma_ops (handles scatter-gather
-- * lists).
-- */
--static int map_sg(struct device *dev, struct scatterlist *sglist,
--		  int nelems, enum dma_data_direction direction,
--		  unsigned long attrs)
--{
--	int mapped_pages = 0, npages = 0, prot = 0, i;
--	struct protection_domain *domain;
--	struct dma_ops_domain *dma_dom;
--	struct scatterlist *s;
--	unsigned long address;
--	u64 dma_mask;
--	int ret;
--
--	domain = get_domain(dev);
--	if (IS_ERR(domain))
--		return 0;
--
--	dma_dom  = to_dma_ops_domain(domain);
--	dma_mask = *dev->dma_mask;
--
--	npages = sg_num_pages(dev, sglist, nelems);
--
--	address = dma_ops_alloc_iova(dev, dma_dom, npages, dma_mask);
--	if (address == DMA_MAPPING_ERROR)
--		goto out_err;
--
--	prot = dir2prot(direction);
--
--	/* Map all sg entries */
--	for_each_sg(sglist, s, nelems, i) {
--		int j, pages = iommu_num_pages(sg_phys(s), s->length, PAGE_SIZE);
--
--		for (j = 0; j < pages; ++j) {
--			unsigned long bus_addr, phys_addr;
--
--			bus_addr  = address + s->dma_address + (j << PAGE_SHIFT);
--			phys_addr = (sg_phys(s) & PAGE_MASK) + (j << PAGE_SHIFT);
--			ret = iommu_map_page(domain, bus_addr, phys_addr, PAGE_SIZE, prot, GFP_ATOMIC);
--			if (ret)
--				goto out_unmap;
--
--			mapped_pages += 1;
--		}
--	}
--
--	/* Everything is mapped - write the right values into s->dma_address */
--	for_each_sg(sglist, s, nelems, i) {
--		/*
--		 * Add in the remaining piece of the scatter-gather offset that
--		 * was masked out when we were determining the physical address
--		 * via (sg_phys(s) & PAGE_MASK) earlier.
--		 */
--		s->dma_address += address + (s->offset & ~PAGE_MASK);
--		s->dma_length   = s->length;
--	}
--
--	if (s)
--		domain_flush_np_cache(domain, s->dma_address, s->dma_length);
--
--	return nelems;
--
--out_unmap:
--	dev_err(dev, "IOMMU mapping error in map_sg (io-pages: %d reason: %d)\n",
--		npages, ret);
--
--	for_each_sg(sglist, s, nelems, i) {
--		int j, pages = iommu_num_pages(sg_phys(s), s->length, PAGE_SIZE);
--
--		for (j = 0; j < pages; ++j) {
--			unsigned long bus_addr;
--
--			bus_addr  = address + s->dma_address + (j << PAGE_SHIFT);
--			iommu_unmap_page(domain, bus_addr, PAGE_SIZE);
--
--			if (--mapped_pages == 0)
--				goto out_free_iova;
--		}
--	}
--
--out_free_iova:
--	free_iova_fast(&dma_dom->iovad, address >> PAGE_SHIFT, npages);
--
--out_err:
--	return 0;
--}
--
--/*
-- * The exported map_sg function for dma_ops (handles scatter-gather
-- * lists).
-- */
--static void unmap_sg(struct device *dev, struct scatterlist *sglist,
--		     int nelems, enum dma_data_direction dir,
--		     unsigned long attrs)
--{
--	struct protection_domain *domain;
--	struct dma_ops_domain *dma_dom;
--	unsigned long startaddr;
--	int npages;
--
--	domain = get_domain(dev);
--	if (IS_ERR(domain))
--		return;
--
--	startaddr = sg_dma_address(sglist) & PAGE_MASK;
--	dma_dom   = to_dma_ops_domain(domain);
--	npages    = sg_num_pages(dev, sglist, nelems);
--
--	__unmap_single(dma_dom, startaddr, npages << PAGE_SHIFT, dir);
--}
--
--/*
-- * The exported alloc_coherent function for dma_ops.
-- */
--static void *alloc_coherent(struct device *dev, size_t size,
--			    dma_addr_t *dma_addr, gfp_t flag,
--			    unsigned long attrs)
--{
--	u64 dma_mask = dev->coherent_dma_mask;
--	struct protection_domain *domain;
--	struct dma_ops_domain *dma_dom;
--	struct page *page;
--
--	domain = get_domain(dev);
--	if (PTR_ERR(domain) == -EINVAL) {
--		page = alloc_pages(flag, get_order(size));
--		*dma_addr = page_to_phys(page);
--		return page_address(page);
--	} else if (IS_ERR(domain))
--		return NULL;
--
--	dma_dom   = to_dma_ops_domain(domain);
--	size	  = PAGE_ALIGN(size);
--	dma_mask  = dev->coherent_dma_mask;
--	flag     &= ~(__GFP_DMA | __GFP_HIGHMEM | __GFP_DMA32);
--	flag     |= __GFP_ZERO;
--
--	page = alloc_pages(flag | __GFP_NOWARN,  get_order(size));
--	if (!page) {
--		if (!gfpflags_allow_blocking(flag))
--			return NULL;
--
--		page = dma_alloc_from_contiguous(dev, size >> PAGE_SHIFT,
--					get_order(size), flag & __GFP_NOWARN);
--		if (!page)
--			return NULL;
--	}
--
--	if (!dma_mask)
--		dma_mask = *dev->dma_mask;
--
--	*dma_addr = __map_single(dev, dma_dom, page_to_phys(page),
--				 size, DMA_BIDIRECTIONAL, dma_mask);
--
--	if (*dma_addr == DMA_MAPPING_ERROR)
--		goto out_free;
--
--	return page_address(page);
--
--out_free:
--
--	if (!dma_release_from_contiguous(dev, page, size >> PAGE_SHIFT))
--		__free_pages(page, get_order(size));
--
--	return NULL;
--}
--
--/*
-- * The exported free_coherent function for dma_ops.
-- */
--static void free_coherent(struct device *dev, size_t size,
--			  void *virt_addr, dma_addr_t dma_addr,
--			  unsigned long attrs)
--{
--	struct protection_domain *domain;
--	struct dma_ops_domain *dma_dom;
--	struct page *page;
--
--	page = virt_to_page(virt_addr);
--	size = PAGE_ALIGN(size);
--
--	domain = get_domain(dev);
--	if (IS_ERR(domain))
--		goto free_mem;
--
--	dma_dom = to_dma_ops_domain(domain);
--
--	__unmap_single(dma_dom, dma_addr, size, DMA_BIDIRECTIONAL);
--
--free_mem:
--	if (!dma_release_from_contiguous(dev, page, size >> PAGE_SHIFT))
--		__free_pages(page, get_order(size));
--}
--
--/*
-- * This function is called by the DMA layer to find out if we can handle a
-- * particular device. It is part of the dma_ops.
-- */
--static int amd_iommu_dma_supported(struct device *dev, u64 mask)
--{
--	if (!dma_direct_supported(dev, mask))
--		return 0;
--	return check_device(dev);
--}
--
--static const struct dma_map_ops amd_iommu_dma_ops = {
--	.alloc		= alloc_coherent,
--	.free		= free_coherent,
--	.map_page	= map_page,
--	.unmap_page	= unmap_page,
--	.map_sg		= map_sg,
--	.unmap_sg	= unmap_sg,
--	.dma_supported	= amd_iommu_dma_supported,
--};
--
--static int init_reserved_iova_ranges(void)
--{
--	struct pci_dev *pdev = NULL;
--	struct iova *val;
--
--	init_iova_domain(&reserved_iova_ranges, PAGE_SIZE, IOVA_START_PFN);
--
--	lockdep_set_class(&reserved_iova_ranges.iova_rbtree_lock,
--			  &reserved_rbtree_key);
--
--	/* MSI memory range */
--	val = reserve_iova(&reserved_iova_ranges,
--			   IOVA_PFN(MSI_RANGE_START), IOVA_PFN(MSI_RANGE_END));
--	if (!val) {
--		pr_err("Reserving MSI range failed\n");
--		return -ENOMEM;
--	}
--
--	/* HT memory range */
--	val = reserve_iova(&reserved_iova_ranges,
--			   IOVA_PFN(HT_RANGE_START), IOVA_PFN(HT_RANGE_END));
--	if (!val) {
--		pr_err("Reserving HT range failed\n");
--		return -ENOMEM;
--	}
--
--	/*
--	 * Memory used for PCI resources
--	 * FIXME: Check whether we can reserve the PCI-hole completly
--	 */
--	for_each_pci_dev(pdev) {
--		int i;
--
--		for (i = 0; i < PCI_NUM_RESOURCES; ++i) {
--			struct resource *r = &pdev->resource[i];
--
--			if (!(r->flags & IORESOURCE_MEM))
--				continue;
--
--			val = reserve_iova(&reserved_iova_ranges,
--					   IOVA_PFN(r->start),
--					   IOVA_PFN(r->end));
--			if (!val) {
--				pci_err(pdev, "Reserve pci-resource range %pR failed\n", r);
--				return -ENOMEM;
--			}
--		}
--	}
--
--	return 0;
--}
--
- int __init amd_iommu_init_api(void)
- {
- 	int ret, err = 0;
-@@ -2784,10 +2247,6 @@ int __init amd_iommu_init_api(void)
- 	if (ret)
- 		return ret;
- 
--	ret = init_reserved_iova_ranges();
--	if (ret)
--		return ret;
--
- 	err = bus_set_iommu(&pci_bus_type, &amd_iommu_ops);
- 	if (err)
- 		return err;
-@@ -2888,7 +2347,6 @@ static struct protection_domain *protection_domain_alloc(void)
- static struct iommu_domain *amd_iommu_domain_alloc(unsigned type)
- {
- 	struct protection_domain *pdomain;
--	struct dma_ops_domain *dma_domain;
- 
- 	switch (type) {
- 	case IOMMU_DOMAIN_UNMANAGED:
-@@ -2909,12 +2367,11 @@ static struct iommu_domain *amd_iommu_domain_alloc(unsigned type)
- 
- 		break;
- 	case IOMMU_DOMAIN_DMA:
--		dma_domain = dma_ops_domain_alloc();
--		if (!dma_domain) {
-+		pdomain = dma_ops_domain_alloc();
-+		if (!pdomain) {
- 			pr_err("Failed to allocate\n");
- 			return NULL;
- 		}
--		pdomain = &dma_domain->domain;
- 		break;
- 	case IOMMU_DOMAIN_IDENTITY:
- 		pdomain = protection_domain_alloc();
-@@ -2933,7 +2390,6 @@ static struct iommu_domain *amd_iommu_domain_alloc(unsigned type)
- static void amd_iommu_domain_free(struct iommu_domain *dom)
- {
- 	struct protection_domain *domain;
--	struct dma_ops_domain *dma_dom;
- 
- 	domain = to_pdomain(dom);
- 
-@@ -2948,8 +2404,7 @@ static void amd_iommu_domain_free(struct iommu_domain *dom)
- 	switch (dom->type) {
- 	case IOMMU_DOMAIN_DMA:
- 		/* Now release the domain */
--		dma_dom = to_dma_ops_domain(domain);
--		dma_ops_domain_free(dma_dom);
-+		dma_ops_domain_free(domain);
- 		break;
- 	default:
- 		if (domain->mode != PAGE_MODE_NONE)
-@@ -3005,6 +2460,7 @@ static int amd_iommu_attach_device(struct iommu_domain *dom,
- 		return -EINVAL;
- 
- 	dev_data = dev->archdata.iommu;
-+	dev_data->defer_attach = false;
- 
- 	iommu = amd_iommu_rlookup_table[dev_data->devid];
- 	if (!iommu)
-@@ -3161,19 +2617,6 @@ static void amd_iommu_put_resv_regions(struct device *dev,
- 		kfree(entry);
- }
- 
--static void amd_iommu_apply_resv_region(struct device *dev,
--				      struct iommu_domain *domain,
--				      struct iommu_resv_region *region)
--{
--	struct dma_ops_domain *dma_dom = to_dma_ops_domain(to_pdomain(domain));
--	unsigned long start, end;
--
--	start = IOVA_PFN(region->start);
--	end   = IOVA_PFN(region->start + region->length - 1);
--
--	WARN_ON_ONCE(reserve_iova(&dma_dom->iovad, start, end) == NULL);
--}
--
- static bool amd_iommu_is_attach_deferred(struct iommu_domain *domain,
- 					 struct device *dev)
- {
-@@ -3206,9 +2649,9 @@ const struct iommu_ops amd_iommu_ops = {
- 	.add_device = amd_iommu_add_device,
- 	.remove_device = amd_iommu_remove_device,
- 	.device_group = amd_iommu_device_group,
-+	.domain_get_attr = amd_iommu_domain_get_attr,
- 	.get_resv_regions = amd_iommu_get_resv_regions,
- 	.put_resv_regions = amd_iommu_put_resv_regions,
--	.apply_resv_region = amd_iommu_apply_resv_region,
- 	.is_attach_deferred = amd_iommu_is_attach_deferred,
- 	.pgsize_bitmap	= AMD_IOMMU_PGSIZES,
- 	.flush_iotlb_all = amd_iommu_flush_iotlb_all,
-@@ -3523,9 +2966,23 @@ EXPORT_SYMBOL(amd_iommu_complete_ppr);
- struct iommu_domain *amd_iommu_get_v2_domain(struct pci_dev *pdev)
- {
- 	struct protection_domain *pdomain;
-+	struct iommu_domain *io_domain;
-+	struct device *dev = &pdev->dev;
-+
-+	if (!check_device(dev))
-+		return NULL;
-+
-+	pdomain = get_dev_data(dev)->domain;
-+	if (pdomain == NULL && get_dev_data(dev)->defer_attach) {
-+		get_dev_data(dev)->defer_attach = false;
-+		io_domain = iommu_get_domain_for_dev(dev);
-+		pdomain = to_pdomain(io_domain);
-+		attach_device(dev, pdomain);
-+	}
-+	if (pdomain == NULL)
-+		return NULL;
- 
--	pdomain = get_domain(&pdev->dev);
--	if (IS_ERR(pdomain))
-+	if (!dma_ops_domain(pdomain))
- 		return NULL;
- 
- 	/* Only return IOMMUv2 domains */
--- 
-2.20.1
+In my case all valid CBs have TTBR0 and TTBR1 as 0, so I don't have a
+page table. So all I need is a matching stream to keep the display
+hardware satisfied.
 
+Is this perhaps the thing that's mentioned as "S2CR bypass" mode?
+
+> Either way, if firmware did set up a translation context, is there any
+> guarantee that its pagetables haven't already been stomped on by Linux (e.g.
+> via memtest)?
+> 
+
+The only way I can think of is if the bootloader would allocate these in
+a chunk of memory which it removes from the memory ranges communicated
+to the kernel.
+
+In order to support this I believe we would need some logic that
+remap the existing page tables and clone them into new ones, and then
+update the CBs to match the existing configuration.
+
+But as I said, this is beyond our current needs.
+
+> > Heavily based on downstream implementation by Patrick Daly
+> > <pdaly@codeaurora.org>.
+> > 
+> > Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+> > ---
+> >   drivers/iommu/arm-smmu-regs.h |  2 +
+> >   drivers/iommu/arm-smmu.c      | 80 ++++++++++++++++++++++++++++++++---
+> >   2 files changed, 77 insertions(+), 5 deletions(-)
+> > 
+> > diff --git a/drivers/iommu/arm-smmu-regs.h b/drivers/iommu/arm-smmu-regs.h
+> > index e9132a926761..8c1fd84032a2 100644
+> > --- a/drivers/iommu/arm-smmu-regs.h
+> > +++ b/drivers/iommu/arm-smmu-regs.h
+> > @@ -105,7 +105,9 @@
+> >   #define ARM_SMMU_GR0_SMR(n)		(0x800 + ((n) << 2))
+> >   #define SMR_VALID			(1 << 31)
+> >   #define SMR_MASK_SHIFT			16
+> > +#define SMR_MASK_MASK			0x7fff
+> >   #define SMR_ID_SHIFT			0
+> > +#define SMR_ID_MASK			0xffff
+> 
+> The SMR ID and MASK fields are either both 15 bits or both 16 bits,
+> depending on EXIDS. This mix-and-match is plain wrong either way.
+> 
+
+Okay, I will read up some more on how these pieces works.
+
+> >   #define ARM_SMMU_GR0_S2CR(n)		(0xc00 + ((n) << 2))
+> >   #define S2CR_CBNDX_SHIFT		0
+> > diff --git a/drivers/iommu/arm-smmu.c b/drivers/iommu/arm-smmu.c
+> > index 5e54cc0a28b3..c8629a656b42 100644
+> > --- a/drivers/iommu/arm-smmu.c
+> > +++ b/drivers/iommu/arm-smmu.c
+> > @@ -135,6 +135,7 @@ struct arm_smmu_s2cr {
+> >   	enum arm_smmu_s2cr_type		type;
+> >   	enum arm_smmu_s2cr_privcfg	privcfg;
+> >   	u8				cbndx;
+> > +	bool				handoff;
+> >   };
+> >   #define s2cr_init_val (struct arm_smmu_s2cr){				\
+> > @@ -399,9 +400,22 @@ static int arm_smmu_register_legacy_master(struct device *dev,
+> >   	return err;
+> >   }
+> > -static int __arm_smmu_alloc_bitmap(unsigned long *map, int start, int end)
+> > +static int __arm_smmu_alloc_cb(struct arm_smmu_device *smmu, int start,
+> > +			       struct device *dev)
+> >   {
+> > +	struct iommu_fwspec *fwspec = dev_iommu_fwspec_get(dev);
+> > +	unsigned long *map = smmu->context_map;
+> > +	int end = smmu->num_context_banks;
+> > +	int cbndx;
+> >   	int idx;
+> > +	int i;
+> > +
+> > +	for_each_cfg_sme(fwspec, i, idx) {
+> > +		if (smmu->s2crs[idx].handoff) {
+> > +			cbndx = smmu->s2crs[idx].cbndx;
+> > +			goto found_handoff;
+> > +		}
+> > +	}
+> >   	do {
+> >   		idx = find_next_zero_bit(map, end, start);
+> > @@ -410,6 +424,17 @@ static int __arm_smmu_alloc_bitmap(unsigned long *map, int start, int end)
+> >   	} while (test_and_set_bit(idx, map));
+> >   	return idx;
+> > +
+> > +found_handoff:
+> > +	for (i = 0; i < smmu->num_mapping_groups; i++) {
+> > +		if (smmu->s2crs[i].cbndx == cbndx) {
+> > +			smmu->s2crs[i].cbndx = 0;
+> > +			smmu->s2crs[i].handoff = false;
+> > +			smmu->s2crs[i].count--;
+> > +		}
+> > +	}
+> > +
+> > +	return cbndx;
+> >   }
+> >   static void __arm_smmu_free_bitmap(unsigned long *map, int idx)
+> > @@ -759,7 +784,8 @@ static void arm_smmu_write_context_bank(struct arm_smmu_device *smmu, int idx)
+> >   }
+> >   static int arm_smmu_init_domain_context(struct iommu_domain *domain,
+> > -					struct arm_smmu_device *smmu)
+> > +					struct arm_smmu_device *smmu,
+> > +					struct device *dev)
+> >   {
+> >   	int irq, start, ret = 0;
+> >   	unsigned long ias, oas;
+> > @@ -873,8 +899,7 @@ static int arm_smmu_init_domain_context(struct iommu_domain *domain,
+> >   		ret = -EINVAL;
+> >   		goto out_unlock;
+> >   	}
+> > -	ret = __arm_smmu_alloc_bitmap(smmu->context_map, start,
+> > -				      smmu->num_context_banks);
+> > +	ret = __arm_smmu_alloc_cb(smmu, start, dev);
+> >   	if (ret < 0)
+> >   		goto out_unlock;
+> > @@ -1264,7 +1289,7 @@ static int arm_smmu_attach_dev(struct iommu_domain *domain, struct device *dev)
+> >   		return ret;
+> >   	/* Ensure that the domain is finalised */
+> > -	ret = arm_smmu_init_domain_context(domain, smmu);
+> > +	ret = arm_smmu_init_domain_context(domain, smmu, dev);
+> >   	if (ret < 0)
+> >   		goto rpm_put;
+> > @@ -1798,6 +1823,49 @@ static void arm_smmu_device_reset(struct arm_smmu_device *smmu)
+> >   	writel(reg, ARM_SMMU_GR0_NS(smmu) + ARM_SMMU_GR0_sCR0);
+> >   }
+> > +static void arm_smmu_read_smr_state(struct arm_smmu_device *smmu)
+> > +{
+> > +	u32 privcfg;
+> > +	u32 cbndx;
+> > +	u32 mask;
+> > +	u32 type;
+> > +	u32 s2cr;
+> > +	u32 smr;
+> > +	u32 id;
+> > +	int i;
+> > +
+> > +	for (i = 0; i < smmu->num_mapping_groups; i++) {
+> > +		smr = readl_relaxed(ARM_SMMU_GR0(smmu) + ARM_SMMU_GR0_SMR(i));
+> 
+> What about stream indexing?
+> 
+> > +		mask = (smr >> SMR_MASK_SHIFT) & SMR_MASK_MASK;
+> > +		id = smr & SMR_ID_MASK;
+> > +		if (!(smr & SMR_VALID))
+> 
+> EXIDs again...
+> 
+> > +			continue;
+> > +
+> > +		s2cr = readl_relaxed(ARM_SMMU_GR0(smmu) + ARM_SMMU_GR0_S2CR(i));
+> > +		type = (s2cr >> S2CR_TYPE_SHIFT) & S2CR_TYPE_MASK;
+> > +		cbndx = (s2cr >> S2CR_CBNDX_SHIFT) & S2CR_CBNDX_MASK;
+> > +		privcfg = (s2cr >> S2CR_PRIVCFG_SHIFT) & S2CR_PRIVCFG_MASK;
+> > +		if (type != S2CR_TYPE_TRANS)
+> > +			continue;
+> 
+> How can you tell whether an SMR or S2CR has been programmed by the firmware,
+> or that its UNKNOWN reset value is junk which just happens to look
+> plausible?
+> 
+
+My expectation was that the reset value of these registers would have
+some sane value, preferably without SMR_VALID being set.
+
+> > +
+> > +		/* Populate the SMR */
+> > +		smmu->smrs[i].mask = mask;
+> > +		smmu->smrs[i].id = id;
+> > +		smmu->smrs[i].valid = true;
+> > +
+> > +		/* Populate the S2CR */
+> > +		smmu->s2crs[i].group = NULL;
+> > +		smmu->s2crs[i].count = 1;
+> > +		smmu->s2crs[i].type = type;
+> > +		smmu->s2crs[i].privcfg = privcfg;
+> > +		smmu->s2crs[i].cbndx = cbndx;
+> > +		smmu->s2crs[i].handoff = true;
+> > +
+> > +		/* Mark the context bank as busy */
+> > +		bitmap_set(smmu->context_map, cbndx, 1);
+> 
+> Does anything prevent the SMMU being suspended between here and whenever the
+> relevant drivers(s) show up to properly establish the device links?
+> 
+
+There's nothing that prevents a system suspend before such drivers are
+inserted and attached.
+
+> > +	}
+> > +}
+> > +
+> >   static int arm_smmu_id_size_to_bits(int size)
+> >   {
+> >   	switch (size) {
+> > @@ -2023,6 +2091,8 @@ static int arm_smmu_device_cfg_probe(struct arm_smmu_device *smmu)
+> >   		dev_notice(smmu->dev, "\tStage-2: %lu-bit IPA -> %lu-bit PA\n",
+> >   			   smmu->ipa_size, smmu->pa_size);
+> > +	arm_smmu_read_smr_state(smmu);
+> > +
+> >   	return 0;
+> >   }
+> 
+> Stepping back from the implementation details, I also have concerns that
+> this will interact badly with kexec/kdump,
+
+I didn't consider kexec, which I expect would also rule out the type of
+DT properties that downstream uses to trigger some of this behavior (as
+the same DT would be used by the launched system).
+
+> but mostly the fact that it's at
+> best a partial workaround, rather than a real solution to the fundamental
+> problem that initialising an IOMMU can break EFIFB/bootsplash/etc.,
+> *regardless* of whether the firmware is even aware of said IOMMU at all -
+> I've already been living with this on my Juno board for months since EDK2
+> gained Arm HDLCD support. AFAICS this can only be solved by some sort of
+> RMRR-like mechanism, i.e. firmware providing explicit information about what
+> address ranges are currently in use by which devices. I've been pondering
+> what a DT-based implementation might look like for a while now, and I guess
+> it's probably time to raise it with the IORT spec owners as well.
+> 
+
+In the downstream DT targets a static reserved-memory region is used to
+ensure Linux doesn't stomp on the actual framebuffer data and iirc the
+ACPI firmware has the EFIFB memory region removed as well.
+
+So I was expecting a translation of this particular region, but that's
+not what we're seeing. But regardless, Linux needs to be aware of it
+somehow, it's just that there's no link between the SMMU configuration
+and this region as of today.
+
+
+As a concrete example, booting a SDM845 based phone with this patch set
+(and some debug prints) indicates that I have SMRs for primary and
+secondary display pipe and then four entries for the various storage
+devices.
+
+> That said, once we've perfected our WIP design for keeping invasive
+> implementation details out of the way of each other and the core
+> architectural driver flow, I wouldn't rule out the possibility of slotting
+> something like this in as a qcom-specific feature if the "we can't change
+> the firmware" argument is going to come up.
+> 
+
+While it's possible to alter the firmware for specific (and future)
+devices, figuring out a way to do this in the kernel will be necessary
+for the majority of existing devices. In many cases we can work around
+this problem by configuring the bootloader to not do a splash screen but
+with EFIFB on the laptops we do not have this ability (and that's why
+these patches has not shown up until now).
+
+I'm very much interested in us coming up with a sustainable, generic
+solution that we can work with the firmware guys on implementing beyond
+the current needs.
+
+
+I will read up on the stream ids and EXIDs and make the read back of
+SMRs conditioned on the qcom compatible.
+
+Thanks Robin
+
+Regards,
+Bjorn
