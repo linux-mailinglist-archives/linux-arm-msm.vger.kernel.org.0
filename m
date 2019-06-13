@@ -2,48 +2,48 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 999734432B
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 13 Jun 2019 18:30:07 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 7AC514432D
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 13 Jun 2019 18:30:08 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2392416AbfFMQ1e (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 13 Jun 2019 12:27:34 -0400
-Received: from mail-pf1-f194.google.com ([209.85.210.194]:47061 "EHLO
-        mail-pf1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2392410AbfFMQ1c (ORCPT
+        id S2391677AbfFMQ1i (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 13 Jun 2019 12:27:38 -0400
+Received: from mail-pf1-f193.google.com ([209.85.210.193]:43150 "EHLO
+        mail-pf1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1731233AbfFMQ1e (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 13 Jun 2019 12:27:32 -0400
-Received: by mail-pf1-f194.google.com with SMTP id 81so12147347pfy.13;
-        Thu, 13 Jun 2019 09:27:31 -0700 (PDT)
+        Thu, 13 Jun 2019 12:27:34 -0400
+Received: by mail-pf1-f193.google.com with SMTP id i189so12151341pfg.10;
+        Thu, 13 Jun 2019 09:27:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=IszorbYpZ8EP1Tp+nYz4SokI6QENBhp1O9rNXrNQTYg=;
-        b=CQ18UcaJLPYS/u6Oo5otSFFQ7Ecriq4cKTb+yUFrnQ8mDlkdVFjdraR/sG7mwrbfzt
-         w8430KSMbyef/tMS+IkO5hME1L9flVDQFWFPD8neeaCMQkgB6f4nEziS8Xg9752KnHa0
-         36/X+0NI440Psui6njrXRDPWczTwak5kRpJmMazWysWKXZLfiJ+UiHLYDBEh6y4h3kZQ
-         9PpUKF/2rjgq+5r1CeBnwisBRwrOUdvCztqfJxXrLoPHuyh2U5A/ah80mky6jnOWXDtg
-         ev/u/kfEiqAyPZd9EOCcPyI8E4hYpcmIACwxYluSmBqoDA3N8UebR87b38ShqeI7uV1e
-         9G5w==
+        bh=Q4z+1lD6L8nleD1j+L3SnZJFelsfjWSFPaZVMarGO8g=;
+        b=fOYdYWOhF3ZyKvMjqvLUfJ0cwxcI5mFQycuQv7JzdfadQaDqxSFq88q2ia+Tnbvmkp
+         6Nh3M7lCMtpSP9bipGQFNCbzwS7L6213Z/3b8crNq9lKGyjnS/r1gcWlg5qW9/WfvPbJ
+         L9BeU+t7EzCCUq2B9wGxOz7SLQdop76XwPlwXbKsg3I9b0dLuxgMn/dPxX4saClyok43
+         T0HQfzWKw8m4CtBi73JACE7kTioBqo4MZCayRF2hMy89yDz8gZkTOIRA5G+cVrhLwLVM
+         pL+v/aWmDUGF2gdG3/Qaezrp3xOQ8+OMTA1nAyrOJxYbgApp67WZDvw4lKGpiPO5k8fR
+         /p7g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=IszorbYpZ8EP1Tp+nYz4SokI6QENBhp1O9rNXrNQTYg=;
-        b=i/J1r81816OVMowpmE0KUh5elxNChCSu125oy4CwqPHzSRGYlDZvkP3geqopjf6PBk
-         vPGHO+Q8FSz6vQBQkL0dl6I7ZyrKZ/dhP0Abg6SocDJyeM34JzWMCvCN1H7y/yu08kDL
-         scvS5WCpAbaiz0kPXWXfOLGqW9/9he60hzmTli1Gfc4rFwoVd2WttJR80iUOpZDucCFL
-         1f8dwWVTKrpASJfYg81/TuUxh27D2P3ZaTNdPR7D9U7QX3gji5PnaDuqR6oCC+4hK1JE
-         jhqviUyvXnY282OmmsJXCloqs6oXc8nKRv8jm1mypf9PvTsovAm9MXKOgZF2QFi5FMG5
-         W50g==
-X-Gm-Message-State: APjAAAWjK3R7ipqAtJEqzSPBRTuZ2Y53IMWZF3yjdGrfcVH0K9qupjbK
-        bGezIE84H3/DqPqPO9tGUh8=
-X-Google-Smtp-Source: APXvYqxufy0T2XKD0lth4cHLWERwXJoOmg14CS0iBJUyYk6CLpJnRVrFofyyxkm03jlk+bd+w9w2OA==
-X-Received: by 2002:a63:1516:: with SMTP id v22mr32253463pgl.204.1560443251259;
-        Thu, 13 Jun 2019 09:27:31 -0700 (PDT)
+        bh=Q4z+1lD6L8nleD1j+L3SnZJFelsfjWSFPaZVMarGO8g=;
+        b=JewR8kRGzmhsdhT6o5lD9v0SxAZmKKCMCmkyt5g16mr9WmKatHyymKovIw+iFkvgkD
+         jrMF604FRp6b7niCcDj1lewh9YEA92nlW68Y0eziV1CDp9OKZoLkj2iIrx977WZSFiw7
+         qyK+PxWuHtYT6+DTG0BX3jTNzcKgACK8FoVD14fbA0DckOg+v9VMKCegd1/E0NsdAOF4
+         MM2YPMnCjNvMvgG6n8smHR5FG9MJo9HW2+6fd5JrouCoBsYhl3fo4tiHnkKdXIyvFHDt
+         euX9/dnnnEdEMQfPab0PA1CrkEdrNZH8hymjX8dMqaFVQNLCgOa2ev/b4hOK87HBQXfn
+         1BMg==
+X-Gm-Message-State: APjAAAUfMz2g1ygMVAuxgerCL2QXCnNYhLGZKX+sjiwOWfsngDPpI2ip
+        X4s5kRQvU00pzU6l00+C2nU=
+X-Google-Smtp-Source: APXvYqxX/RanT51RYSaVZsxeTP+rQPGVZ62n+jf0t5emIHsrys1734E1A4fccZi67O/PQXiUedWBeQ==
+X-Received: by 2002:a65:64d5:: with SMTP id t21mr32140036pgv.310.1560443254129;
+        Thu, 13 Jun 2019 09:27:34 -0700 (PDT)
 Received: from localhost (68.168.130.77.16clouds.com. [68.168.130.77])
-        by smtp.gmail.com with ESMTPSA id t26sm289990pgu.43.2019.06.13.09.27.30
+        by smtp.gmail.com with ESMTPSA id l23sm261906pgh.68.2019.06.13.09.27.33
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Thu, 13 Jun 2019 09:27:30 -0700 (PDT)
+        Thu, 13 Jun 2019 09:27:33 -0700 (PDT)
 From:   Yangtao Li <tiny.windzz@gmail.com>
 To:     joro@8bytes.org, m.szyprowski@samsung.com, kgene@kernel.org,
         krzk@kernel.org, will.deacon@arm.com, robin.murphy@arm.com,
@@ -54,9 +54,9 @@ Cc:     iommu@lists.linux-foundation.org, linux-kernel@vger.kernel.org,
         linux-samsung-soc@vger.kernel.org, linux-arm-msm@vger.kernel.org,
         linux-rockchip@lists.infradead.org, linux-tegra@vger.kernel.org,
         Yangtao Li <tiny.windzz@gmail.com>
-Subject: [PATCH 07/10] iommu/io-pgtable-arm: convert to SPDX license tags
-Date:   Thu, 13 Jun 2019 12:27:00 -0400
-Message-Id: <20190613162703.986-7-tiny.windzz@gmail.com>
+Subject: [PATCH 08/10] iommu/sysfs: convert to SPDX license tags
+Date:   Thu, 13 Jun 2019 12:27:01 -0400
+Message-Id: <20190613162703.986-8-tiny.windzz@gmail.com>
 X-Mailer: git-send-email 2.17.0
 In-Reply-To: <20190613162703.986-1-tiny.windzz@gmail.com>
 References: <20190613162703.986-1-tiny.windzz@gmail.com>
@@ -69,33 +69,27 @@ Updates license to use SPDX-License-Identifier.
 
 Signed-off-by: Yangtao Li <tiny.windzz@gmail.com>
 ---
- drivers/iommu/io-pgtable-arm.c | 13 +------------
- 1 file changed, 1 insertion(+), 12 deletions(-)
+ drivers/iommu/iommu-sysfs.c | 5 +----
+ 1 file changed, 1 insertion(+), 4 deletions(-)
 
-diff --git a/drivers/iommu/io-pgtable-arm.c b/drivers/iommu/io-pgtable-arm.c
-index 4e21efbc4459..6282c45eefaa 100644
---- a/drivers/iommu/io-pgtable-arm.c
-+++ b/drivers/iommu/io-pgtable-arm.c
-@@ -1,18 +1,7 @@
+diff --git a/drivers/iommu/iommu-sysfs.c b/drivers/iommu/iommu-sysfs.c
+index 44127d54e943..a193758c8122 100644
+--- a/drivers/iommu/iommu-sysfs.c
++++ b/drivers/iommu/iommu-sysfs.c
+@@ -1,12 +1,9 @@
 +// SPDX-License-Identifier: GPL-2.0
  /*
-  * CPU-agnostic ARM page table allocator.
+  * IOMMU sysfs class support
   *
+  * Copyright (C) 2014 Red Hat, Inc.  All rights reserved.
+  *     Author: Alex Williamson <alex.williamson@redhat.com>
+- *
 - * This program is free software; you can redistribute it and/or modify
 - * it under the terms of the GNU General Public License version 2 as
 - * published by the Free Software Foundation.
-- *
-- * This program is distributed in the hope that it will be useful,
-- * but WITHOUT ANY WARRANTY; without even the implied warranty of
-- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-- * GNU General Public License for more details.
-- *
-- * You should have received a copy of the GNU General Public License
-- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
-- *
-  * Copyright (C) 2014 ARM Limited
-  *
-  * Author: Will Deacon <will.deacon@arm.com>
+  */
+ 
+ #include <linux/device.h>
 -- 
 2.17.0
 
