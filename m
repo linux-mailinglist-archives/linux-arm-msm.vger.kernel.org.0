@@ -2,104 +2,99 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id EDBEC4381D
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 13 Jun 2019 17:04:00 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 669FD4381F
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 13 Jun 2019 17:04:01 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732649AbfFMPDj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        id S1732499AbfFMPDj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
         Thu, 13 Jun 2019 11:03:39 -0400
-Received: from mail-pl1-f195.google.com ([209.85.214.195]:37826 "EHLO
-        mail-pl1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727012AbfFMOWC (ORCPT
+Received: from mail-pg1-f196.google.com ([209.85.215.196]:42714 "EHLO
+        mail-pg1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1732491AbfFMOWf (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 13 Jun 2019 10:22:02 -0400
-Received: by mail-pl1-f195.google.com with SMTP id bh12so8227255plb.4;
-        Thu, 13 Jun 2019 07:22:01 -0700 (PDT)
+        Thu, 13 Jun 2019 10:22:35 -0400
+Received: by mail-pg1-f196.google.com with SMTP id l19so8454838pgh.9;
+        Thu, 13 Jun 2019 07:22:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id;
-        bh=eKOd4vO1UgFYSd+YAFiidpo1Y+51qTryroNSM0EM6GI=;
-        b=eO3M8sdZsGzs0H+XeWXXhP+/9/J3q8AyrU/LKxC0EoDBiBUsZQaEHmvPqze41Hi3Gy
-         8T1a9l8xTLBHaDbUedvbWzCxLITXWlKRgaBDKY5LW50hQPiCBSBPuDVumPj+hnzA8+96
-         XAlw5oijtu7E4enl0WyVGwT83+MU5lm9Vo8DHEFYChsYFLlJwR/zNB4m+TWDbkDBpP3f
-         ZmzobNt4cxnG9eQ4hzUuEGzvyWf5rfjDlJudsfLWnTgLAwxKUHaV4nOpyrEUYyAwuf9T
-         HxRUH0dlc+SHqax0Oo6So5xs94pYmCpwCLlWXqLpCDNCU7EYOp8CLvIOyhNWOzeauUKs
-         nhVg==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=BygsFeH7Nr66mPQvbX5gJcEmwzV3pSewGfseE3W/ZuQ=;
+        b=gd0JYIfXIL1RfnCKpBfbXBfhfhaYXUpgDJgWzXPPJ78lgZXum7AA4tnx42ArjzsDem
+         2DIOpRZcjaiY5QWf7P4VAYW5jIoQu2IYUF+EIfgHlNYVg0o5Q0KEroNi2TqL7uX+5UE5
+         d873eFtfm/F1zBqDHhXnMFYJbu+riZyUMMEe3MGy60H2vVpJuUzXqKGLkpXkdv2Fq/G+
+         eFVnJzhHWxKuu8P0O+bL9mTfYeNbgqy3YYu0A1NNkabWPskuVYOcAV9jqpNORL3EiUNs
+         JseMZa6Zzr7xAp2T5fHM6cywX1agIFf8ZejSWcw1XBNMjFddoxaihuDr8yNMwVYfMDC8
+         k1kA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id;
-        bh=eKOd4vO1UgFYSd+YAFiidpo1Y+51qTryroNSM0EM6GI=;
-        b=VxYSDtV1j2AFqJrXbBUDETKuBB552yTJKzi5zAaguG6etKk+un2yH6w/xMqFU/1NoR
-         Nl7bgjgFZX/aQnGDe5GHASnvOv/9mu+/ZL5DV1tj/iBNg08J7BMzxOBtFfybJ7XhmsuX
-         o9Z/tJX7A0zflyExKg45TfdnVPFiNtc3HxW1G0Vs+ABRH0MIo7nl80Sy4kSHyHfyJOgw
-         +5XFJ2xZ7mDEKklovtCoYmzMM+/b0+auiK0MU8z3n0kwOHAJm7GNvi9Dg1nSzhIm9rym
-         Ha/YeW+nWVNDh8UBUTr9E9rk5IrwpbPc90acWxIQz2uHUNST67gAN4eEuxuaXmZ34g3V
-         ghQA==
-X-Gm-Message-State: APjAAAXE8pUzSf2AC414nu8F4K0GcZfGXiaE0YQKkYAmiFz7K+3d5XFS
-        HHimTZKKbqPSfSufVQx6gzPNYG1x
-X-Google-Smtp-Source: APXvYqwhE5ITe5ZjVSgpSHcaRMbgiJJg+SWmf1fmZzODXRPQhGkSQTmLCcwIhDmkBiIyoxFiOIK8fQ==
-X-Received: by 2002:a17:902:a5ca:: with SMTP id t10mr81922020plq.98.1560435721094;
-        Thu, 13 Jun 2019 07:22:01 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references;
+        bh=BygsFeH7Nr66mPQvbX5gJcEmwzV3pSewGfseE3W/ZuQ=;
+        b=KYAb9HtL3BMPZz25cTnbTs+IHii6zK9u5qZzi20bI+LkItSQ5z7cLiw5VHVmbWaTGC
+         +9ek6N0GUoGxqDGQcCihn6uiDNhUsLi6i7XuEDqrmL8HXtD4lY4QoGFHLPEyybDI5UCC
+         5pVzNXhPiaIgMP0h45erksxD24S8d3cSc25fL9GD3MCcyd3FlLyZTtDVLA1F1Yb6Pl6L
+         FbJkTK0+RATe3zkNIxbCnnhKwhQnxmXcMzmrPiSMgzwwfgqT0H8tcotq4EfZWmDtzMZt
+         fMeX+UPmoLrYqP5vdvh7SFGw7gwuxWZRsPOHXkEw+tMNd55zhC92jcPjf5Xu/BGJrQhW
+         0iyg==
+X-Gm-Message-State: APjAAAVZ0Q6NCap+MiY8/AAmDLMU29Lgk23ZJ9gJ4gwwPLVWxTMVqnsH
+        1HurNJYplq4RCVMVGE4D6QQ=
+X-Google-Smtp-Source: APXvYqwRqQM+4uXL0A8LxwKNYDDjg75B1Han4lvXfELR9x6t60qzXQmtOjRTAvE8kxy1xJuYpevXBw==
+X-Received: by 2002:a17:90a:8c0c:: with SMTP id a12mr5912373pjo.67.1560435754375;
+        Thu, 13 Jun 2019 07:22:34 -0700 (PDT)
 Received: from aw-bldr-10.qualcomm.com (i-global254.qualcomm.com. [199.106.103.254])
-        by smtp.gmail.com with ESMTPSA id c124sm3029689pfa.115.2019.06.13.07.21.59
+        by smtp.gmail.com with ESMTPSA id 133sm3415622pfa.92.2019.06.13.07.22.32
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 13 Jun 2019 07:22:00 -0700 (PDT)
+        Thu, 13 Jun 2019 07:22:33 -0700 (PDT)
 From:   Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
-Cc:     agross@kernel.org, bjorn.andersson@linaro.org, lgirdwood@gmail.com,
-        broonie@kernel.org, robh+dt@kernel.org, mark.rutland@arm.com,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        devicetree@vger.kernel.org, Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
-Subject: [PATCH v2 0/7] PM8005 and PMS405 regulator support
-Date:   Thu, 13 Jun 2019 07:21:57 -0700
-Message-Id: <20190613142157.8674-1-jeffrey.l.hugo@gmail.com>
+To:     lgirdwood@gmail.com, broonie@kernel.org
+Cc:     agross@kernel.org, bjorn.andersson@linaro.org, robh+dt@kernel.org,
+        mark.rutland@arm.com, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
+        Jorge Ramirez-Ortiz <jorge.ramirez-ortiz@linaro.org>,
+        Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
+Subject: [PATCH v3 1/7] drivers: regulator: qcom_spmi: enable linear range info
+Date:   Thu, 13 Jun 2019 07:22:31 -0700
+Message-Id: <20190613142231.8728-1-jeffrey.l.hugo@gmail.com>
 X-Mailer: git-send-email 2.17.1
-To:     unlisted-recipients:; (no To-header on input)
+In-Reply-To: <20190613142157.8674-1-jeffrey.l.hugo@gmail.com>
+References: <20190613142157.8674-1-jeffrey.l.hugo@gmail.com>
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The MSM8998 MTP reference platform supplies VDD_GFX from s1 of the
-pm8005 PMIC.  VDD_GFX is needed to turn on the GPU.  As we are looking
-to bring up the GPU, add the support for pm8005 and wire up s1 in a
-basic manner so that we have this dependency out of the way and can
-focus on enabling the GPU driver.
+From: Jorge Ramirez-Ortiz <jorge.ramirez-ortiz@linaro.org>
 
-The s3 regulator of PMS405 is used for voltage scaling of the CPU on
-QCS404.
+Signed-off-by: Jorge Ramirez-Ortiz <jorge.ramirez-ortiz@linaro.org>
+Signed-off-by: Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
+---
+ drivers/regulator/qcom_spmi-regulator.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-Both PMICs are very similar in design, so add the base support with one,
-and trivially add the support for the other on top.
-
-v3:
--Allow PMS405 regulators to be enabled and disabled, instead of the
-outdated "always on" concept
-
-v2:
--Perform if statement cleanups per review discussion
--Pull in linear range support since its related, and simple
--Rework the PM8005 to minimize special cases in the driver
--"common2" is now ftsmps426 since that design first implemented it
--Reworked the PMS405 changes on top, since they are related to pm8005 and
-trivial
-
-Jeffrey Hugo (4):
-  drivers: regulator: qcom_spmi: Refactor get_mode/set_mode
-  dt-bindings: qcom_spmi: Document PM8005 regulators
-  regulator: qcom_spmi: Add support for PM8005
-  arm64: dts: msm8998-mtp: Add pm8005_s1 regulator
-
-Jorge Ramirez (2):
-  dt-bindings: qcom_spmi: Document pms405 support
-  drivers: regulator: qcom: add PMS405 SPMI regulator
-
-Jorge Ramirez-Ortiz (1):
-  drivers: regulator: qcom_spmi: enable linear range info
-
- .../regulator/qcom,spmi-regulator.txt         |  28 +++
- arch/arm64/boot/dts/qcom/msm8998-mtp.dtsi     |  17 ++
- drivers/regulator/qcom_spmi-regulator.c       | 233 +++++++++++++++++-
- 3 files changed, 271 insertions(+), 7 deletions(-)
-
+diff --git a/drivers/regulator/qcom_spmi-regulator.c b/drivers/regulator/qcom_spmi-regulator.c
+index 53a61fb65642..fd55438c25d6 100644
+--- a/drivers/regulator/qcom_spmi-regulator.c
++++ b/drivers/regulator/qcom_spmi-regulator.c
+@@ -1744,6 +1744,7 @@ MODULE_DEVICE_TABLE(of, qcom_spmi_regulator_match);
+ static int qcom_spmi_regulator_probe(struct platform_device *pdev)
+ {
+ 	const struct spmi_regulator_data *reg;
++	const struct spmi_voltage_range *range;
+ 	const struct of_device_id *match;
+ 	struct regulator_config config = { };
+ 	struct regulator_dev *rdev;
+@@ -1833,6 +1834,12 @@ static int qcom_spmi_regulator_probe(struct platform_device *pdev)
+ 			}
+ 		}
+ 
++		if (vreg->logical_type == SPMI_REGULATOR_LOGICAL_TYPE_HFS430) {
++			/* since there is only one range */
++			range = spmi_regulator_find_range(vreg);
++			vreg->desc.uV_step = range->step_uV;
++		}
++
+ 		config.dev = dev;
+ 		config.driver_data = vreg;
+ 		config.regmap = regmap;
 -- 
 2.17.1
 
