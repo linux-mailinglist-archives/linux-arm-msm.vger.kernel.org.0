@@ -2,124 +2,168 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 8BB0443F2B
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 13 Jun 2019 17:55:29 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id DAB1C43EF8
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 13 Jun 2019 17:54:15 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731928AbfFMPzR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 13 Jun 2019 11:55:17 -0400
-Received: from mail-wm1-f65.google.com ([209.85.128.65]:36415 "EHLO
-        mail-wm1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1731558AbfFMIw6 (ORCPT
+        id S1731577AbfFMPyM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 13 Jun 2019 11:54:12 -0400
+Received: from mail-qk1-f196.google.com ([209.85.222.196]:44154 "EHLO
+        mail-qk1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1731582AbfFMIzq (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 13 Jun 2019 04:52:58 -0400
-Received: by mail-wm1-f65.google.com with SMTP id u8so9216808wmm.1
-        for <linux-arm-msm@vger.kernel.org>; Thu, 13 Jun 2019 01:52:57 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to
-         :user-agent;
-        bh=Lcs2ag+JWd9LLpjNoidl6yxCYy5aNsRikxLQuGKzVzU=;
-        b=aThNGW7+I2PxRdhTNPV1LIhF0/5UJHVr6LSBQpWYfs9mymFpbdG0+eLwcuD+s8sSB5
-         CHOJAEAIZTXTkJqs/TqV6VH1/6I6+rikSUTduZJCk79S8Hk9UfkJ1XfHzjMkHtKZs0tK
-         ZlBBsvvs+mVji5Lwc21wIDSZNvTHmP3HB49j6W+heCALno3MD9xs+WEpPpN3zFjxXiOW
-         O7iuKmnGS4AljVYDGrYPvT2Yi9OBB+FCXpttSSbyOBt8OTsYQ0IUGeJVZnFrz6QJFn6Q
-         s8LeaL9BzwtyyXFLkJGfTsRJTTnS+kmZHtYyXuE97oWxfqxjy0Dx5PgKSMOvcQF8yleU
-         B1qQ==
+        Thu, 13 Jun 2019 04:55:46 -0400
+Received: by mail-qk1-f196.google.com with SMTP id p144so82626qke.11
+        for <linux-arm-msm@vger.kernel.org>; Thu, 13 Jun 2019 01:55:45 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        bh=Lcs2ag+JWd9LLpjNoidl6yxCYy5aNsRikxLQuGKzVzU=;
-        b=Ts8TvQoYm8fh/QEGv8NxqkP+KPNdpKDRGkpquVqSHKkh8CgYTsWjIlCnYSg4kX0YGc
-         LGB3KmxjlBm5PSEIQFAz5T7H1zbcmstjRy9PBrcBBzo8P3sp72P4qecHSIQNeeG4Yhk0
-         Wz29Z35XPRu1gOfnefbHESBkZyEu1O5WJe6QHrmTxUINTO3495xpkzmnE6VjmVrx+nOZ
-         FUhIyVLSo/ovAhzmbBTCQRC8wzqjXY9JOMgmG1F1+V8R83B6E8URTyg17uJkBIcv1Ylz
-         /1xvElNIApDcD4GbPLd3lzBDCZsZxXsoG3uoj0Ced8KB3ssxt7J6GTU5snFwuvYUIAJh
-         fKbw==
-X-Gm-Message-State: APjAAAUybvOTx99ju9LA9Yr7UMizDQPUTMllOPLUhzEwYmV5yiBbxCWR
-        FyFYf6zfUPE0ZTsa3OeTRqAO5A==
-X-Google-Smtp-Source: APXvYqybK0Nj/fHviz/pGDZHrRpbNts9oH2DSs1lQLgmXDT7aDSFDqouW7z3b4vqEk65dYuSlWyFoA==
-X-Received: by 2002:a7b:c776:: with SMTP id x22mr2668542wmk.55.1560415976540;
-        Thu, 13 Jun 2019 01:52:56 -0700 (PDT)
-Received: from dell ([2.27.35.243])
-        by smtp.gmail.com with ESMTPSA id c5sm1837184wma.19.2019.06.13.01.52.55
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Thu, 13 Jun 2019 01:52:56 -0700 (PDT)
-Date:   Thu, 13 Jun 2019 09:52:54 +0100
-From:   Lee Jones <lee.jones@linaro.org>
-To:     Wolfram Sang <wsa@the-dreams.de>
-Cc:     alokc@codeaurora.org, andy.gross@linaro.org,
-        david.brown@linaro.org, wsa+renesas@sang-engineering.com,
-        bjorn.andersson@linaro.org, linus.walleij@linaro.org,
-        balbi@kernel.org, gregkh@linuxfoundation.org,
-        ard.biesheuvel@linaro.org, jlhugo@gmail.com,
-        linux-i2c@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-gpio@vger.kernel.org, linux-usb@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v3 1/8] i2c: i2c-qcom-geni: Provide support for ACPI
-Message-ID: <20190613085254.GA16364@dell>
-References: <20190610084213.1052-1-lee.jones@linaro.org>
- <20190612103453.ccet2pneairnlpcc@ninjato>
- <20190612104011.GA4660@dell>
- <20190612104459.gvji3qxym5s4odfq@ninjato>
- <20190613085204.GF4660@dell>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=EbsOELQCvto0Fo9I2AuJ/Y7svHsBZcOWHg1RzxD+F5w=;
+        b=eh4C6rs57IckJaqWvK0NRw2r6McECyhh7hkt1scnK1wzcFhgAiFzOdOU0LvhE4/9qH
+         NUy+j4/MhufOX3OqcJMV4p08U9BpaahPvvDj9w/9iZsns8s08eE+OS1kIc8efR3Dr9IG
+         /OqHv8ZkKB6YDjrcQI7zLCcRBQDttaiRz2ol3LLqCevSzNHkIHjkQYQdfpmook0ON+3b
+         VRWxT2/oPgVV9nhkiqx3kO5H3dboO+m8wel3JAC0aLilnKhwvmNQw55JZAHQutFQY011
+         RIkyl9L3pZdd0zXMBDSOFTHyig3ggbl47B/K2nq9LYO+YWh2df6ZRj+Y0R04dGRMaSmz
+         kb0g==
+X-Gm-Message-State: APjAAAX5KS74D8ZnpiYF7vSl7+EcheRV446hNJ2PJHtaucdphp4JBA6Y
+        Pc0TvK7Im3HImix0scoXsKFtCk0ADkzXyHtJS9t/SQ==
+X-Google-Smtp-Source: APXvYqzj78vh0ZV37F1d7+jB5lITaJMY5BUoqTd1zQhUK7GP/qiI4GL+OEOfawaB6HDtVc7YSfEfR01C+IbSyXcwyV4=
+X-Received: by 2002:a37:ea16:: with SMTP id t22mr70882953qkj.337.1560416144985;
+ Thu, 13 Jun 2019 01:55:44 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20190613085204.GF4660@dell>
-User-Agent: Mutt/1.9.4 (2018-02-28)
+References: <20190612212604.32089-1-jeffrey.l.hugo@gmail.com>
+ <20190612212721.32195-1-jeffrey.l.hugo@gmail.com> <20190612214636.GA40779@dtor-ws>
+ <84e7d83f-e133-0281-612a-94d8c4319040@codeaurora.org>
+In-Reply-To: <84e7d83f-e133-0281-612a-94d8c4319040@codeaurora.org>
+From:   Benjamin Tissoires <benjamin.tissoires@redhat.com>
+Date:   Thu, 13 Jun 2019 10:55:31 +0200
+Message-ID: <CAO-hwJJUivfzFj-Downqt8nY3iTwF8-oq_iBqs1Dxyx92HdYPw@mail.gmail.com>
+Subject: Re: Re: [PATCH v6 2/5] HID: quirks: Refactor ELAN 400 and 401 handling
+To:     Jeffrey Hugo <jhugo@codeaurora.org>
+Cc:     Dmitry Torokhov <dmitry.torokhov@gmail.com>,
+        Jeffrey Hugo <jeffrey.l.hugo@gmail.com>,
+        Jiri Kosina <jikos@kernel.org>,
+        Hans de Goede <hdegoede@redhat.com>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Lee Jones <lee.jones@linaro.org>, xnox@ubuntu.com,
+        Rob Herring <robh+dt@kernel.org>,
+        Mark Rutland <mark.rutland@arm.com>,
+        "open list:HID CORE LAYER" <linux-input@vger.kernel.org>,
+        DTML <devicetree@vger.kernel.org>,
+        MSM <linux-arm-msm@vger.kernel.org>,
+        lkml <linux-kernel@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, 13 Jun 2019, Lee Jones wrote:
+On Thu, Jun 13, 2019 at 12:20 AM Jeffrey Hugo <jhugo@codeaurora.org> wrote:
+>
+> On 6/12/2019 3:46 PM, Dmitry Torokhov wrote:
+> > On Wed, Jun 12, 2019 at 02:27:21PM -0700, Jeffrey Hugo wrote:
+> >> There needs to be coordination between hid-quirks and the elan_i2c driver
+> >> about which devices are handled by what drivers.  Currently, both use
+> >> whitelists, which results in valid devices being unhandled by default,
+> >> when they should not be rejected by hid-quirks.  This is quickly becoming
+> >> an issue.
+> >>
+> >> Since elan_i2c has a maintained whitelist of what devices it will handle,
+> >> which is now in a header file that hid-quirks can access, use that to
+> >> implement a blacklist in hid-quirks so that only the devices that need to
+> >> be handled by elan_i2c get rejected by hid-quirks, and everything else is
+> >> handled by default.
+> >>
+> >> Suggested-by: Benjamin Tissoires <benjamin.tissoires@redhat.com>
+> >> Signed-off-by: Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
+> >> ---
+> >>   drivers/hid/hid-quirks.c | 27 ++++++++++++++++-----------
+> >>   1 file changed, 16 insertions(+), 11 deletions(-)
+> >>
+> >> diff --git a/drivers/hid/hid-quirks.c b/drivers/hid/hid-quirks.c
+> >> index e5ca6fe2ca57..bd81bb090222 100644
+> >> --- a/drivers/hid/hid-quirks.c
+> >> +++ b/drivers/hid/hid-quirks.c
+> >> @@ -16,6 +16,7 @@
+> >>   #include <linux/export.h>
+> >>   #include <linux/slab.h>
+> >>   #include <linux/mutex.h>
+> >> +#include <linux/input/elan-i2c-ids.h>
+> >>
+> >>   #include "hid-ids.h"
+> >>
+> >> @@ -914,6 +915,8 @@ static const struct hid_device_id hid_mouse_ignore_list[] = {
+> >>
+> >>   bool hid_ignore(struct hid_device *hdev)
+> >>   {
+> >> +    int i;
+> >> +
+> >>      if (hdev->quirks & HID_QUIRK_NO_IGNORE)
+> >>              return false;
+> >>      if (hdev->quirks & HID_QUIRK_IGNORE)
+> >> @@ -978,18 +981,20 @@ bool hid_ignore(struct hid_device *hdev)
+> >>              break;
+> >>      case USB_VENDOR_ID_ELAN:
+> >>              /*
+> >> -             * Many Elan devices have a product id of 0x0401 and are handled
+> >> -             * by the elan_i2c input driver. But the ACPI HID ELAN0800 dev
+> >> -             * is not (and cannot be) handled by that driver ->
+> >> -             * Ignore all 0x0401 devs except for the ELAN0800 dev.
+> >> +             * Blacklist of everything that gets handled by the elan_i2c
+> >> +             * input driver.  This avoids disabling valid touchpads and
+> >> +             * other ELAN devices.
+> >>               */
+> >> -            if (hdev->product == 0x0401 &&
+> >> -                strncmp(hdev->name, "ELAN0800", 8) != 0)
+> >> -                    return true;
+> >> -            /* Same with product id 0x0400 */
+> >> -            if (hdev->product == 0x0400 &&
+> >> -                strncmp(hdev->name, "QTEC0001", 8) != 0)
+> >> -                    return true;
+> >> +            if ((hdev->product == 0x0401 || hdev->product == 0x0400)) {
+> >> +                    for (i = 0; strlen(elan_acpi_id[i].id); ++i)
+> >> +                            if (!strncmp(hdev->name, elan_acpi_id[i].id,
+> >> +                                         strlen(elan_acpi_id[i].id)))
+> >> +                                    return true;
+> >> +                    for (i = 0; strlen(elan_of_match[i].name); ++i)
+> >> +                            if (!strncmp(hdev->name, elan_of_match[i].name,
+> >> +                                         strlen(elan_of_match[i].name)))
+> >> +                                    return true;
+> >
+> > Do we really need to blacklist the OF case here? I thought that in ACPI
+> > case we have clashes as HID gets matched by elan_i2c and CID is matched
+> > by i2c-hid, but I do not believe we'll run into the same situation on OF
+> > systems.
+>
+> I think its the safer approach.
+>
+> On an OF system, such as patch 3 in the series, the "hid-over-i2c" will
+> end up running through this (kind of the whole reason why this series
+> exists).  The vendor and product ids will still match, so we'll end up
+> going through the lists to see if the hdev->name (the compatible string)
+> will match the blacklist.  "hid-over-i2c" won't match the blacklist, but
+> if there is a more specific compatible, it might.
+>
+> In that case, not matching OF would work, however how it could break
+> today is if both "hid-over-i2c" and "elan,ekth3000" were listed for the
+> same device, and elan_i2c was not compiled.  In that case, if we skip
+> the OF part of the black list, hid-quirks will not reject the device,
+> and you'll probably have some odd behavior instead of the obvious "the
+> device doesn't work because the correct driver isn't present" behavior.
+>
+> While that scenario might be far fetched since having both
+> "hid-over-i2c" and "elan,ekth3000" probably violates the OF bindings,
+> its still safer to include the OF case in the blacklist against future
+> scenarios.
+>
+>
 
-> On Wed, 12 Jun 2019, Wolfram Sang wrote:
-> 
-> > 
-> > > There are no cross-subsystem build dependencies on any of these
-> > > patches.  The only reason they are bundled together in the same
-> > > patch-set is for cross-subsystem visibility and understanding.
-> > > 
-> > > There is wide interest in these devices.
-> > 
-> > I see. That would have been a great cover-letter, Lee ;) Thanks for the
-> > heads up!
-> 
-> :)
-> 
-> > > > Also, the current maintainer entry for this driver looks like:
-> > > > 
-> > > > drivers/i2c/busses/i2c-qcom-geni.c:
-> > > >         Andy Gross <agross@kernel.org> (maintainer:ARM/QUALCOMM SUPPORT)
-> > > >         David Brown <david.brown@linaro.org> (maintainer:ARM/QUALCOMM SUPPORT)
-> > > >         Alok Chauhan <alokc@codeaurora.org> (supporter:QUALCOMM GENERIC INTERFACE I2C DRIVER)
-> > > > 
-> > > > I didn't hear from those people yet, would be great to have their acks.
-> > > 
-> > > I will see if I can rouse them from their slumber.
-> > 
-> > Please do. If they are not to reach, we probably need to update the
-> > entry...
-> 
-> I contacted both of them.
-> 
->  Andy doesn't touch anything that isn't QUP based (8994 and older).
-> 
->  David doesn't deal with MSM platforms if Andy is available. 
-> 
-> So I guess the decision is yours.  Seeing at this patch is pretty
-> trivial and has our ACPI expert's Ack, the decision shouldn't be a
-> difficult one.
+Dmitry, if you are happy with Jeffrey's answer, feel free to take this
+through your tree and add:
+Acked-by: Benjamin Tissoires <benjamin.tissoires@redhat.com>
 
-BTW, v4 has collected Acks and a cover-letter. :)
+I don't expect any major conflicts given on where the code is located.
 
--- 
-Lee Jones [李琼斯]
-Linaro Services Technical Lead
-Linaro.org │ Open source software for ARM SoCs
-Follow Linaro: Facebook | Twitter | Blog
+Cheers,
+Benjamin
