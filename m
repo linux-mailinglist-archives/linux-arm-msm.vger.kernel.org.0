@@ -2,79 +2,78 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 7EE5844F8C
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 14 Jun 2019 00:51:23 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 046F544FE2
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 14 Jun 2019 01:13:43 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726486AbfFMWvR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 13 Jun 2019 18:51:17 -0400
-Received: from mail-qt1-f196.google.com ([209.85.160.196]:40045 "EHLO
-        mail-qt1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725809AbfFMWvQ (ORCPT
+        id S1726583AbfFMXNl (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 13 Jun 2019 19:13:41 -0400
+Received: from mail-qk1-f196.google.com ([209.85.222.196]:38859 "EHLO
+        mail-qk1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726327AbfFMXNl (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 13 Jun 2019 18:51:16 -0400
-Received: by mail-qt1-f196.google.com with SMTP id a15so349092qtn.7;
-        Thu, 13 Jun 2019 15:51:16 -0700 (PDT)
+        Thu, 13 Jun 2019 19:13:41 -0400
+Received: by mail-qk1-f196.google.com with SMTP id a27so523145qkk.5;
+        Thu, 13 Jun 2019 16:13:40 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=cv40RcWOMVy1JZtFpd3gJTvQihsNZLPm+qc6d4re47Q=;
-        b=M2lOgqiWtCviKLghJXWvHZ5liLTVVea03ffggYN8yipes+R5cf00bYA//BhTKxGOaY
-         DPgl1CtZ5ydcUz0IaIOtusTfRraVM7VNBI8Q4yk2MOhUgy3CGIL5acCtCIDweMH1k3P4
-         b/hU951sC0wrhYebApSRXrol575ioNJhRO0PDHdvi+n05jhpONxg3EWjW+kiUiIqPy2b
-         SQVz5TJ50w0+CDvlJTrrT/Gh2gKw9lU2d64umNxDp/cA7LSYsaSOcdvTK5sOMeIIVIdW
-         AGHPfkIDnhzOCOIT0h0jvybU0duCGypcC6iQCx3H0reddt4aQ/8oWEEpx57rQsuDbN/5
-         4k6Q==
-X-Gm-Message-State: APjAAAUTU+BtppkaA1Jbl+kg4a8faCbPMBPaEM001x2PAcyzCGqfRwH4
-        rnJ2VvSnW8d1qp4/Ppa2EyaPBEE=
-X-Google-Smtp-Source: APXvYqzyrbusjb6nMpbIGijvU32NhrU/T6DUb/Ee8K0MWe1C4b1O2CixCC2mnFnW35EKNJT+hN11+g==
-X-Received: by 2002:a0c:aecd:: with SMTP id n13mr5670753qvd.182.1560466275579;
-        Thu, 13 Jun 2019 15:51:15 -0700 (PDT)
+        bh=ycBe9I5qE6I0844UHWF0cICH9VE+GutrjkLafm0KuQ0=;
+        b=jQUhsTd6gbD+KAVYVHdjhg2zUDxs71zM9XNmXVVGzQIWbyRGVSVdgVX0l59RETqoPu
+         9NEgpFIdHHnIllgxHlR41C06YwqYUe0k31LgP1koMGJXSjmu1q8wdChThDlLvVztUOnB
+         hRPnRFJKPluPI+SOBb0jdWg3KB+95llCtwM8VIzbHgFvabZRXzIwJfUJwmLThYMaVj0S
+         IMkuOw57mJILIEX4kfXZMrj7q3GjcjAbO4dXTfHnMMMPtSQzOIGfjL1dLm0WMRLdUffT
+         GsOP/JYhg23W18eXfLUwD5qw1GPkMuoRGK6VDcKboEHVDRv/H4JB6LpYmfwoXEDpat2X
+         VrdQ==
+X-Gm-Message-State: APjAAAXF6u+rTFHBRHMzrQ/I0lEPb4g9pBZqNxSrYru2ZY7l5g+1ONs5
+        t9SGW6l5JwIXdTEYNUlIRw==
+X-Google-Smtp-Source: APXvYqw7wFVMUzPvVknVlsd9YvZvCuNzLEqnuiZQgeVTZnf5WoP8b9G7izEepEdaqiC5EoHKr9M0/g==
+X-Received: by 2002:a05:620a:1206:: with SMTP id u6mr72012736qkj.88.1560467620109;
+        Thu, 13 Jun 2019 16:13:40 -0700 (PDT)
 Received: from localhost ([64.188.179.243])
-        by smtp.gmail.com with ESMTPSA id p23sm402566qkm.55.2019.06.13.15.51.14
+        by smtp.gmail.com with ESMTPSA id d26sm599727qkl.97.2019.06.13.16.13.38
         (version=TLS1_3 cipher=AEAD-AES256-GCM-SHA384 bits=256/256);
-        Thu, 13 Jun 2019 15:51:15 -0700 (PDT)
-Date:   Thu, 13 Jun 2019 16:51:14 -0600
+        Thu, 13 Jun 2019 16:13:39 -0700 (PDT)
+Date:   Thu, 13 Jun 2019 17:13:38 -0600
 From:   Rob Herring <robh@kernel.org>
-To:     Stephen Boyd <swboyd@chromium.org>
+To:     Amit Kucheria <amit.kucheria@linaro.org>
 Cc:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org, devicetree@vger.kernel.org,
-        Evan Green <evgreen@chromium.org>,
-        Will Deacon <will.deacon@arm.com>,
-        Catalin Marinas <catalin.marinas@arm.com>,
-        Dan Williams <dan.j.williams@intel.com>
-Subject: Re: [RFC/PATCH 1/5] reserved_mem: Add a devm_memremap_reserved_mem()
- API
-Message-ID: <20190613225114.GA16158@bogus>
-References: <20190517164746.110786-1-swboyd@chromium.org>
- <20190517164746.110786-2-swboyd@chromium.org>
+        bjorn.andersson@linaro.org, agross@kernel.org,
+        niklas.cassel@linaro.org, marc.w.gonzalez@free.fr,
+        sibis@codeaurora.org, daniel.lezcano@linaro.org,
+        Andy Gross <andy.gross@linaro.org>,
+        David Brown <david.brown@linaro.org>,
+        Li Yang <leoyang.li@nxp.com>, Shawn Guo <shawnguo@kernel.org>,
+        devicetree@vger.kernel.org
+Subject: Re: [PATCH v2 2/9] Documentation: arm: Link idle-states binding to
+ "enable-method" property
+Message-ID: <20190613231338.GA23667@bogus>
+References: <cover.1558430617.git.amit.kucheria@linaro.org>
+ <9dc4ce06143de48039e841c337fafa7cb9c8d7d2.1558430617.git.amit.kucheria@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20190517164746.110786-2-swboyd@chromium.org>
+In-Reply-To: <9dc4ce06143de48039e841c337fafa7cb9c8d7d2.1558430617.git.amit.kucheria@linaro.org>
 User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, 17 May 2019 09:47:42 -0700, Stephen Boyd wrote:
-> We have a few drivers that need to get a reserved memory region, request
-> the region, and map the reserved memory with memremap(). Add an API to
-> do this all in one function call.
+On Tue, 21 May 2019 15:05:12 +0530, Amit Kucheria wrote:
+> The "enable-method" property for cpu nodes needs to be "psci" for CPU
+> idle management to be setup correctly.
 > 
-> Cc: Evan Green <evgreen@chromium.org>
-> Cc: Rob Herring <robh+dt@kernel.org>
-> Cc: Bjorn Andersson <bjorn.andersson@linaro.org>
-> Cc: Andy Gross <agross@kernel.org>
-> Cc: Will Deacon <will.deacon@arm.com>
-> Cc: Catalin Marinas <catalin.marinas@arm.com>
-> Cc: Dan Williams <dan.j.williams@intel.com>
-> Signed-off-by: Stephen Boyd <swboyd@chromium.org>
+> Add a note to the binding documentation to this effect to make it
+> obvious.
+> 
+> Signed-off-by: Amit Kucheria <amit.kucheria@linaro.org>
+> Acked-by: Sudeep Holla <sudeep.holla@arm.com>
 > ---
->  drivers/of/of_reserved_mem.c    | 45 +++++++++++++++++++++++++++++++++
->  include/linux/of_reserved_mem.h |  6 +++++
->  2 files changed, 51 insertions(+)
+>  .../devicetree/bindings/arm/idle-states.txt         | 13 ++++++++++---
+>  1 file changed, 10 insertions(+), 3 deletions(-)
 > 
 
-Reviewed-by: Rob Herring <robh@kernel.org>
+Applied, thanks.
+
+Rob
