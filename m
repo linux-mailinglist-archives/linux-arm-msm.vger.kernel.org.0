@@ -2,101 +2,163 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 24F9843EE8
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 13 Jun 2019 17:53:57 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B4FFE43EAE
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 13 Jun 2019 17:52:28 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726325AbfFMPxq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 13 Jun 2019 11:53:46 -0400
-Received: from mail-wm1-f47.google.com ([209.85.128.47]:39147 "EHLO
-        mail-wm1-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1731595AbfFMI52 (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 13 Jun 2019 04:57:28 -0400
-Received: by mail-wm1-f47.google.com with SMTP id z23so9215603wma.4;
-        Thu, 13 Jun 2019 01:57:27 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=iTc7pkQE7oYIi5Tpm8V4ZpSzYMCgq4jwm9PdqCuT8KQ=;
-        b=bF0VHOhiXklHX7toUG8Z6iKgvhfsMkGA7P/ETJzRztQ/j4qWN3iWThkhFG/qeJ0EPI
-         oEYadE5A+YmD7M54wbT98jsXnhiyWer7EsFpP2IhyFEz64p97i0QisADuCWABntzcmcB
-         tiX5bWPPtxkAqboy5hoNYCQyuo8MYW59KS+ij4As20TJtQoLKXPxGaeG6fwawMG3a0sQ
-         7wbkdG70X/OUpSctSZVfWGYA64YquU3pJTw6IYCB9aYWzGl33ug5V9CpHebckq4T7SLV
-         erV7TGs6pQl9qb8Hlj44CORUO35HHLbqroxTr0s249qYEruEH96rGmiyYIYOlXnY+KSi
-         Zrvw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=iTc7pkQE7oYIi5Tpm8V4ZpSzYMCgq4jwm9PdqCuT8KQ=;
-        b=WDd9hkvHcX89H1Boumx6P2AcY72mC3ne4R4gyBeZIak+/cTy6vyA2AQ9plMoG5dqwW
-         Y1jK/dAjclNTmZgoRcgEeiY5RRAJLJvM/bH7YtrepKaGhOD3ZxK6pJBgdYr5Wh6kJiPc
-         6xW4N3+kNS1/w7V51nRBzlTU7mjEbh6kqHuLQSZbdr1z5qLpt2x4ceuvYAomQxe4EBGR
-         hnbqXJbDF51r5TOHldvX8k8xjNLjz4oojtuLX1rxCKtRu3blqXYY+VRFcIb0g+Hpwn8F
-         9SU7R1Y3qWNIac+v8gY2srz40wu+u8qT1b4MCvI44JpRvQ2oXh0GLeJRSXZ+VUj5N82v
-         1eqg==
-X-Gm-Message-State: APjAAAWFArgJg71qeZXyFy4we6HN7ur4bkaSzUEK1wGkcEaCNFtdZztb
-        fessBUFLysCAXtnscIhhom4=
-X-Google-Smtp-Source: APXvYqxfKZPFzSQgRbvPc2K4axpRnhCZmruX7sKl8YaXA22qKpUpYCZQPxVeOfMECWNTuV9EPe/+Og==
-X-Received: by 2002:a1c:448b:: with SMTP id r133mr2854522wma.114.1560416246274;
-        Thu, 13 Jun 2019 01:57:26 -0700 (PDT)
-Received: from gmail.com (net-37-119-6-250.cust.vodafonedsl.it. [37.119.6.250])
-        by smtp.gmail.com with ESMTPSA id x129sm2689276wmg.44.2019.06.13.01.57.25
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 13 Jun 2019 01:57:25 -0700 (PDT)
-Date:   Thu, 13 Jun 2019 10:57:25 +0200
-From:   Paolo Pisati <p.pisati@gmail.com>
-To:     Niklas Cassel <niklas.cassel@linaro.org>
-Cc:     Paolo Pisati <p.pisati@gmail.com>,
+        id S1726707AbfFMPwS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 13 Jun 2019 11:52:18 -0400
+Received: from ns.iliad.fr ([212.27.33.1]:58270 "EHLO ns.iliad.fr"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1731649AbfFMJKm (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 13 Jun 2019 05:10:42 -0400
+Received: from ns.iliad.fr (localhost [127.0.0.1])
+        by ns.iliad.fr (Postfix) with ESMTP id 84C7C20AC3;
+        Thu, 13 Jun 2019 11:10:39 +0200 (CEST)
+Received: from [192.168.108.49] (freebox.vlq16.iliad.fr [213.36.7.13])
+        by ns.iliad.fr (Postfix) with ESMTP id 6B7F0207ED;
+        Thu, 13 Jun 2019 11:10:39 +0200 (CEST)
+Subject: Re: [PATCH] phy: qcom-qmp: Correct READY_STATUS poll break condition
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Kishon Vijay Abraham I <kishon@ti.com>
+Cc:     MSM <linux-arm-msm@vger.kernel.org>,
+        LKML <linux-kernel@vger.kernel.org>,
+        Evan Green <evgreen@chromium.org>,
         Vivek Gautam <vivek.gautam@codeaurora.org>,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: msm8996: qcom-qmp: apq8096-db820c fails to boot, reset back to
- fastboot and locks up
-Message-ID: <20190613085725.GA11403@harukaze>
-References: <20190610134401.GA12964@harukaze>
- <20190611171225.GA21992@centauri.ideon.se>
- <20190612131735.GB11167@centauri>
- <20190612140911.GA16863@harukaze>
- <20190612162048.GA30551@centauri>
+        Niklas Cassel <niklas.cassel@linaro.org>,
+        Stanimir Varbanov <svarbanov@mm-sol.com>
+References: <20190604232443.3417-1-bjorn.andersson@linaro.org>
+ <619d2559-6d88-e795-76e0-3078236933ef@free.fr>
+ <20190612172501.GY4814@minitux>
+From:   Marc Gonzalez <marc.w.gonzalez@free.fr>
+Message-ID: <3570d880-2b76-88ae-8721-e75cf5acec4c@free.fr>
+Date:   Thu, 13 Jun 2019 11:10:39 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+ Thunderbird/60.6.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20190612162048.GA30551@centauri>
-User-Agent: Mutt/1.5.24 (2015-08-30)
+In-Reply-To: <20190612172501.GY4814@minitux>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
+X-Virus-Scanned: ClamAV using ClamSMTP ; ns.iliad.fr ; Thu Jun 13 11:10:39 2019 +0200 (CEST)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Jun 12, 2019 at 06:20:48PM +0200, Niklas Cassel wrote:
+On 12/06/2019 19:25, Bjorn Andersson wrote:
+
+> On Wed 12 Jun 09:24 PDT 2019, Marc Gonzalez wrote:
 > 
-> Can you still reproduce the reboot?
+>> On 05/06/2019 01:24, Bjorn Andersson wrote:
+>>
+>>> After issuing a PHY_START request to the QMP, the hardware documentation
+>>> states that the software should wait for the PCS_READY_STATUS to become 1.
+>>>
+>>> With the introduction of c9b589791fc1 ("phy: qcom: Utilize UFS reset
+>>> controller") an additional 1ms delay was introduced between the start
+>>> request and the check of the status bit. This greatly increases the
+>>> chances for the hardware to actually becoming ready before the status
+>>> bit is read.
+>>>
+>>> The result can be seen in that UFS PHY enabling is now reported as a
+>>> failure in 10% of the boots on SDM845, which is a clear regression from
+>>> the previous rare/occasional failure.
+>>>
+>>> This patch fixes the "break condition" of the poll to check for the
+>>> correct state of the status bit.
+>>>
+>>> Unfortunately PCIe on 8996 and 8998 does not specify the mask_pcs_ready
+>>> register, which means that the code checks a bit that's always 0. So the
+>>> patch also fixes these, in order to not regress these targets.
+>>>
+>>> Cc: stable@vger.kernel.org
+>>> Cc: Evan Green <evgreen@chromium.org>
+>>> Cc: Marc Gonzalez <marc.w.gonzalez@free.fr>
+>>> Cc: Vivek Gautam <vivek.gautam@codeaurora.org>
+>>> Fixes: 73d7ec899bd8 ("phy: qcom-qmp: Add msm8998 PCIe QMP PHY support")
+>>> Fixes: e78f3d15e115 ("phy: qcom-qmp: new qmp phy driver for qcom-chipsets")
+>>> Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+>>> ---
+>>>
+>>> @Kishon, this is a regression spotted in v5.2-rc1, so please consider applying
+>>> this towards v5.2.
+>>>
+>>>  drivers/phy/qualcomm/phy-qcom-qmp.c | 4 +++-
+>>>  1 file changed, 3 insertions(+), 1 deletion(-)
+>>>
+>>> diff --git a/drivers/phy/qualcomm/phy-qcom-qmp.c b/drivers/phy/qualcomm/phy-qcom-qmp.c
+>>> index cd91b4179b10..43abdfd0deed 100644
+>>> --- a/drivers/phy/qualcomm/phy-qcom-qmp.c
+>>> +++ b/drivers/phy/qualcomm/phy-qcom-qmp.c
+>>> @@ -1074,6 +1074,7 @@ static const struct qmp_phy_cfg msm8996_pciephy_cfg = {
+>>>  
+>>>  	.start_ctrl		= PCS_START | PLL_READY_GATE_EN,
+>>>  	.pwrdn_ctrl		= SW_PWRDN | REFCLK_DRV_DSBL,
+>>> +	.mask_pcs_ready		= PHYSTATUS,
+>>>  	.mask_com_pcs_ready	= PCS_READY,
+>>>  
+>>>  	.has_phy_com_ctrl	= true,
+>>> @@ -1253,6 +1254,7 @@ static const struct qmp_phy_cfg msm8998_pciephy_cfg = {
+>>>  
+>>>  	.start_ctrl             = SERDES_START | PCS_START,
+>>>  	.pwrdn_ctrl		= SW_PWRDN | REFCLK_DRV_DSBL,
+>>> +	.mask_pcs_ready		= PHYSTATUS,
+>>>  	.mask_com_pcs_ready	= PCS_READY,
+>>>  };
+>>>  
+>>> @@ -1547,7 +1549,7 @@ static int qcom_qmp_phy_enable(struct phy *phy)
+>>>  	status = pcs + cfg->regs[QPHY_PCS_READY_STATUS];
+>>>  	mask = cfg->mask_pcs_ready;
+>>>  
+>>> -	ret = readl_poll_timeout(status, val, !(val & mask), 1,
+>>> +	ret = readl_poll_timeout(status, val, val & mask, 1,
+>>>  				 PHY_INIT_COMPLETE_TIMEOUT);
+>>>  	if (ret) {
+>>>  		dev_err(qmp->dev, "phy initialization timed-out\n");
+>>
+>> Your patch made me realize that:
+>> msm8998_pciephy_cfg.has_phy_com_ctrl = false
+>> thus
+>> msm8998_pciephy_cfg.mask_com_pcs_ready is useless, AFAICT.
+> 
+> While 8998 has a COM block, it does (among other things) not have a
+> ready bit. So afaict has_phy_com_ctrl = false is correct.
 
---- a/arch/arm64/boot/dts/qcom/apq8096-db820c.dtsi
-+++ b/arch/arm64/boot/dts/qcom/apq8096-db820c.dtsi
-@@ -447,12 +447,12 @@
-                        };
- 
-                        pcie@608000 {
--                               status = "okay";
-+                               status = "disabled";
-                                perst-gpio = <&msmgpio 130 GPIO_ACTIVE_LOW>;
-                        };
- 
-                        pcie@610000 {
--                               status = "okay";
-+                               status = "disabled";
-                                perst-gpio = <&msmgpio 114 GPIO_ACTIVE_LOW>;
-                        };
-                };
+Pfff... Working blind without the HPG sucks...
 
-disabling the two other pci controllers (and leaving your previous patch
-applied), made the issue more frequent: i was never able to boot to user space
-three times in a row without experiencing a crash, previously it was more
-sporadic.
+> The addition of mask_pcs_ready is part of resolving the regression in
+> 5.2, so I suggest that we remove mask_com_pcs_ready separately.
 
-On the other hand, now i can reproduce the issue more easily this way.
--- 
-bye,
-p.
+I agree that it should be done separately.
+I'll send a patch on top of yours.
+
+>> (I copied msm8996_pciephy_cfg for msm8998_pciephy_cfg)
+>>
+>> Does msm8996_pciephy_cfg really need both mask_pcs_ready AND
+>> mask_com_pcs_ready?
+> 
+> 8996 has a COM block and it contains both the control bits and the
+> status bits, so that looks correct.
+
+Thanks for checking.
+
+>> I'll test your patch tomorrow.
+> 
+> I appreciate that.
+
+Here are my observations for a 8998 board:
+
+1) If I apply only the readl_poll_timeout() fix (not the mask_pcs_ready fixup)
+qcom_pcie_probe() fails with a timeout in phy_init.
+=> this is in line with your regression analysis.
+
+2) Your patch also fixes a long-standing bug in UFS init whereby sending
+lots of information to the console during phy init would lead to an
+incorrectly diagnosed time-out.
+
+Good stuff!
+
+Reviewed-by: Marc Gonzalez <marc.w.gonzalez@free.fr>
+Tested-by: Marc Gonzalez <marc.w.gonzalez@free.fr>
+
+Regards.
