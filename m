@@ -2,126 +2,55 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 1996C454BF
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 14 Jun 2019 08:32:16 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D7EC44557B
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 14 Jun 2019 09:13:04 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725884AbfFNGcO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 14 Jun 2019 02:32:14 -0400
-Received: from mail-pl1-f193.google.com ([209.85.214.193]:41210 "EHLO
-        mail-pl1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725836AbfFNGcO (ORCPT
+        id S1726071AbfFNHM5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 14 Jun 2019 03:12:57 -0400
+Received: from bombadil.infradead.org ([198.137.202.133]:60754 "EHLO
+        bombadil.infradead.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725843AbfFNHM4 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 14 Jun 2019 02:32:14 -0400
-Received: by mail-pl1-f193.google.com with SMTP id s24so578833plr.8
-        for <linux-arm-msm@vger.kernel.org>; Thu, 13 Jun 2019 23:32:14 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=+B7qKXGJFcpQLr7qp/Npmcr+UB+pLON9p4u3OT4sydE=;
-        b=IteYjWMcdrUIqBhhG5AEnX6ufnl4qdQ94/AhbuAqyXzyusOiHbjueExr31Z/7k3vK1
-         8qxjudR4xriHfmMP9c6US25vQWx1jXjkH8k/Mu3slZvFI70Hc9fpA4PC3oQ3cfq1GnBz
-         DfiY/Ib8YY5gn+P1ODVqEgVHY/OCOLDh+1M7OSwV8m1AeZ5bgYJrZvSrMPc7hH111ZRA
-         oE5TmKKmdmW3InOVhB9xPk5eSBVIU7YqJ2GCgHUCJMKB/rJVw1WSQxmqP9gSfpKZ/htO
-         va49FUHCzSBqKq6qVHw9WUMQZMZWYPylyZmguBUq1jqSAbUvDs/rqipmfDendsqMUjtu
-         zJtQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=+B7qKXGJFcpQLr7qp/Npmcr+UB+pLON9p4u3OT4sydE=;
-        b=EM1haYLjUO8KdiRnPQCHAlK/ZAIJozPpVl3jghAZSlS+9W6zQF5UT6/qKL0UYrcggT
-         rtuIfNuVqfRrME9VXnpKEjConTI2HPeUVx0XqWyJeOzxYNSqGpO2XRFXB8x3z3PSnPkl
-         4TwddodKSh6sJ8I/3bMBsbAthFifa8tJHyf0c8JaoqDEPDvw/d0eURzhIyNU5YxkGVym
-         qDCOe7G35F/2Fe7WncTe6R772cJI/1FNypzTj1mmXedWIfS4FY8KAnDy3v6TAPEkfyeO
-         EwatSBAM09mbS589jjjZKIGWqlbGj9GoOdZAnWcW3S6gWAetBOPZHD3urBhZpollyRIK
-         LmnA==
-X-Gm-Message-State: APjAAAUlr2WAc0YISCpVnjdLhRizC0khRCQ9vmwKQGyqbUkwy0dl74Ot
-        0kuT/dg+6uYToUgKq3ImjUAKbw==
-X-Google-Smtp-Source: APXvYqwaUgWQWH6DKaYdF1Cdc9oLYapZi22Rqa6xAUqkllNSLwfCxqoVWtlD/qftHOdi36hhnvLW8A==
-X-Received: by 2002:a17:902:2ba9:: with SMTP id l38mr85574068plb.300.1560493933681;
-        Thu, 13 Jun 2019 23:32:13 -0700 (PDT)
-Received: from localhost ([122.172.66.84])
-        by smtp.gmail.com with ESMTPSA id x25sm1719091pfm.48.2019.06.13.23.32.12
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 13 Jun 2019 23:32:12 -0700 (PDT)
-Date:   Fri, 14 Jun 2019 12:02:10 +0530
-From:   Viresh Kumar <viresh.kumar@linaro.org>
-To:     Rajendra Nayak <rnayak@codeaurora.org>
-Cc:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-pm@vger.kernel.org, linux-serial@vger.kernel.org,
-        linux-spi@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        linux-scsi@vger.kernel.org, swboyd@chromium.org,
-        ulf.hansson@linaro.org, dianders@chromium.org, rafael@kernel.org
-Subject: Re: [RFC v2 02/11] OPP: Make dev_pm_opp_set_rate() with freq=0 as
- valid
-Message-ID: <20190614063210.lfsquoycronah3fe@vireshk-i7>
-References: <20190320094918.20234-1-rnayak@codeaurora.org>
- <20190320094918.20234-3-rnayak@codeaurora.org>
+        Fri, 14 Jun 2019 03:12:56 -0400
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+        d=infradead.org; s=bombadil.20170209; h=In-Reply-To:Content-Type:MIME-Version
+        :References:Message-ID:Subject:Cc:To:From:Date:Sender:Reply-To:
+        Content-Transfer-Encoding:Content-ID:Content-Description:Resent-Date:
+        Resent-From:Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:List-Id:
+        List-Help:List-Unsubscribe:List-Subscribe:List-Post:List-Owner:List-Archive;
+         bh=iTqU4HCutRR3uOJUYQ45ZU7506Sl5CfUv5xpSiuoAIU=; b=s1QW40cdUPPbUO6WyXX5MasT2
+        zpUzI0yFs1dQWyfV9pw8s8UglBzqG+hjlADCXiVES4YrjrDEhXQvqU3LokO6gSsZwbjRHmb+6ZyE1
+        FuDxJYef6OyM+Hxt2LP7pNdGVoMXpMHIdsuXRR2OX42DSoYiurBP9/ocQAMN4Eta7uIzpXrzg9fmp
+        Y6r0Be3/EI5gOKvt4DARL3XPteJl0Va8ohPC+ryF0kMr7AlVaHJTI5rRsCiDRjvakeLyezkJsw8fG
+        3bMGg1n2z31C8vbZYnB2aHllCUjOCFyLrkeM3GqhFS7vfUhCcWJNuI/OTr0WLGQyWdFBmmlWt2b+L
+        5rQEFqwrg==;
+Received: from hch by bombadil.infradead.org with local (Exim 4.92 #3 (Red Hat Linux))
+        id 1hbgOE-0000yO-1z; Fri, 14 Jun 2019 07:12:46 +0000
+Date:   Fri, 14 Jun 2019 00:12:46 -0700
+From:   Christoph Hellwig <hch@infradead.org>
+To:     Yangtao Li <tiny.windzz@gmail.com>
+Cc:     joro@8bytes.org, m.szyprowski@samsung.com, kgene@kernel.org,
+        krzk@kernel.org, will.deacon@arm.com, robin.murphy@arm.com,
+        agross@kernel.org, david.brown@linaro.org, robdclark@gmail.com,
+        heiko@sntech.de, thierry.reding@gmail.com, jonathanh@nvidia.com,
+        linux-samsung-soc@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-rockchip@lists.infradead.org,
+        iommu@lists.linux-foundation.org, linux-tegra@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org
+Subject: Re: [PATCH 01/10] iommu/exynos: convert to SPDX license tags
+Message-ID: <20190614071245.GA2950@infradead.org>
+References: <20190613162703.986-1-tiny.windzz@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20190320094918.20234-3-rnayak@codeaurora.org>
-User-Agent: NeoMutt/20180716-391-311a52
+In-Reply-To: <20190613162703.986-1-tiny.windzz@gmail.com>
+User-Agent: Mutt/1.11.4 (2019-03-13)
+X-SRS-Rewrite: SMTP reverse-path rewritten from <hch@infradead.org> by bombadil.infradead.org. See http://www.infradead.org/rpr.html
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 20-03-19, 15:19, Rajendra Nayak wrote:
-> For devices with performance state, we use dev_pm_opp_set_rate()
-> to set the appropriate clk rate and the performance state.
-> We do need a way to *remove* the performance state vote when
-> we idle the device and turn the clocks off. Use dev_pm_opp_set_rate()
-> with freq=0 to achieve this.
-> 
-> Signed-off-by: Rajendra Nayak <rnayak@codeaurora.org>
-> Signed-off-by: Stephen Boyd <swboyd@chromium.org>
-> ---
->  drivers/opp/core.c | 18 ++++++++++++------
->  1 file changed, 12 insertions(+), 6 deletions(-)
-
-What about this instead ?
-
-diff --git a/drivers/opp/core.c b/drivers/opp/core.c
-index 2fe96c2363a3..9accf8bb6afc 100644
---- a/drivers/opp/core.c
-+++ b/drivers/opp/core.c
-@@ -711,7 +711,7 @@ static int _set_required_opps(struct device *dev,
- 
-        /* Single genpd case */
-        if (!genpd_virt_devs) {
--               pstate = opp->required_opps[0]->pstate;
-+               pstate = likely(opp) ? opp->required_opps[0]->pstate : 0;
-                ret = dev_pm_genpd_set_performance_state(dev, pstate);
-                if (ret) {
-                        dev_err(dev, "Failed to set performance state of %s: %d (%d)\n",
-@@ -729,7 +729,7 @@ static int _set_required_opps(struct device *dev,
-        mutex_lock(&opp_table->genpd_virt_dev_lock);
- 
-        for (i = 0; i < opp_table->required_opp_count; i++) {
--               pstate = opp->required_opps[i]->pstate;
-+               pstate = likely(opp) ? opp->required_opps[i]->pstate : 0;
- 
-                if (!genpd_virt_devs[i])
-                        continue;
-@@ -770,14 +770,13 @@ int dev_pm_opp_set_rate(struct device *dev, unsigned long target_freq)
- 
-        if (unlikely(!target_freq)) {
-                if (opp_table->required_opp_tables) {
--                       /* drop the performance state vote */
--                       dev_pm_genpd_set_performance_state(dev, 0);
--                       return 0;
-+                       ret = _set_required_opps(dev, opp_table, NULL);
-                } else {
--                       dev_err(dev, "%s: Invalid target frequency %lu\n", __func__,
--                               target_freq);
--                       return -EINVAL;
-+                       dev_err(dev, "target frequency can't be 0\n");
-+                       ret = -EINVAL;
-                }
-+
-+               goto put_opp_table;
-        }
- 
-        clk = opp_table->clk;
+Thomas Gleixner is doing automated SPDX conversion that directly
+got to Linux at the moment.  I'd avoid doing more manual ones for
+now as it will just create conflicts.
