@@ -2,80 +2,110 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 5824D45DE3
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 14 Jun 2019 15:15:55 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 552B445EB4
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 14 Jun 2019 15:45:00 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728197AbfFNNPy (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 14 Jun 2019 09:15:54 -0400
-Received: from ns.iliad.fr ([212.27.33.1]:48526 "EHLO ns.iliad.fr"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1728196AbfFNNPy (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 14 Jun 2019 09:15:54 -0400
-Received: from ns.iliad.fr (localhost [127.0.0.1])
-        by ns.iliad.fr (Postfix) with ESMTP id 59A3E20A5C;
-        Fri, 14 Jun 2019 15:15:53 +0200 (CEST)
-Received: from [192.168.108.49] (freebox.vlq16.iliad.fr [213.36.7.13])
-        by ns.iliad.fr (Postfix) with ESMTP id 4555020C11;
-        Fri, 14 Jun 2019 15:15:53 +0200 (CEST)
-Subject: Re: [PATCH v3 3/4] iommu/arm-smmu: Add support to handle Qcom's
- wait-for-safe logic
-To:     Vivek Gautam <vivek.gautam@codeaurora.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>
-References: <20190612071554.13573-1-vivek.gautam@codeaurora.org>
- <20190612071554.13573-4-vivek.gautam@codeaurora.org>
-Cc:     MSM <linux-arm-msm@vger.kernel.org>,
-        Linux ARM <linux-arm-kernel@lists.infradead.org>
-From:   Marc Gonzalez <marc.w.gonzalez@free.fr>
-Message-ID: <6f85b50d-4ee8-d33a-37c9-72d45eb50a9d@free.fr>
-Date:   Fri, 14 Jun 2019 15:15:53 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.6.1
+        id S1727922AbfFNNos (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 14 Jun 2019 09:44:48 -0400
+Received: from mail-ed1-f67.google.com ([209.85.208.67]:39077 "EHLO
+        mail-ed1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727382AbfFNNos (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 14 Jun 2019 09:44:48 -0400
+Received: by mail-ed1-f67.google.com with SMTP id m10so3582337edv.6;
+        Fri, 14 Jun 2019 06:44:46 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=FyXT1/kbK0Pc0+G6zGZqye5FjmJZlP77pOonEO/PaPQ=;
+        b=KTLc22d+VHdXQX9yTHxxeZAKtARZ/ECZeI8Z+jiZgBfad0n3CwWYhhZglbRBJI+gcq
+         /EbAZfHMUJDvxkK1SDjadK8v69gz1WzZ9in05yZ+MTOAonOXYCimuSmuqGBcIwPtB3MO
+         VdQiNupNkxbgQaTcFAFq0VFESHr7WPE0G/p/5t+s15VmKyqHeVIm7YLZ1OnGwe0FUhw4
+         DJDNryNbIjkjXP9m/XXHxkkC30iZjaeqpqaJhaQDY+hPjJgVgnfZ1Ftq0c1z6xBYefLs
+         F02wlMEyaWx6gw/ZtrTafxwV0lMSLL29SZ7q3lD7Ia84KhwxIaOO0eUfVlju0RvKyTzR
+         dwvQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=FyXT1/kbK0Pc0+G6zGZqye5FjmJZlP77pOonEO/PaPQ=;
+        b=cR36R51wqbZsxIxos7hSGYu6pkTsEqDhIbxLvHXGk7BNabq1YbOEzZvsQT0dPS1owU
+         WqktvObca587vpv3hvH03Ai20aWl6N5KsdhNQOjAfEBWKCD1dGQIYT2l3o1k+R8jQnip
+         ud3U8W2M4gVh6PncoySi3/JzrAnWNbVF2BYY+c8Ele1abVomffDkc2VHMV1eijEO2R3H
+         YlhOrOjVrIssGsofjchGj6JMITk9F7xWn2oIZSNr7+JofQR9zueKNluOPEq8B3SnQKXU
+         V6o432/77g61A4rnN53LNISK17MnoKn6U0VGdtBGD0JZsGRo7ZTPuGeE2KyhmQ5ZZiBn
+         lIDA==
+X-Gm-Message-State: APjAAAVlJ3cloju1PAm0HpTumzA/kzFThnr6hCY8momIs3TZgr4fuBEd
+        6GAbyRkzfS8ADSRYReQ4mENiC6oTCXXNRi0/gIw=
+X-Google-Smtp-Source: APXvYqyS7dvDPfKGWqFi8rhkMR2nmF7A7n7GP/bNJ2bxTRiaVtMdcYXXV3XZ1yOe+WxfGspubCcyJKhSVkzEO54Hrso=
+X-Received: by 2002:a17:906:951:: with SMTP id j17mr56132952ejd.174.1560519885436;
+ Fri, 14 Jun 2019 06:44:45 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <20190612071554.13573-4-vivek.gautam@codeaurora.org>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
-X-Virus-Scanned: ClamAV using ClamSMTP ; ns.iliad.fr ; Fri Jun 14 15:15:53 2019 +0200 (CEST)
+References: <20190612212604.32089-1-jeffrey.l.hugo@gmail.com> <20190612212748.32246-1-jeffrey.l.hugo@gmail.com>
+In-Reply-To: <20190612212748.32246-1-jeffrey.l.hugo@gmail.com>
+From:   Rob Clark <robdclark@gmail.com>
+Date:   Fri, 14 Jun 2019 06:44:31 -0700
+Message-ID: <CAF6AEGvAkCqNXg-NwxfpYJteWs6hfBnOb0yJN6vQOnmMck-HDQ@mail.gmail.com>
+Subject: Re: [PATCH v6 3/5] arm64: dts: qcom: Add Lenovo Miix 630
+To:     Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
+Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>, agross@kernel.org,
+        Benjamin Tissoires <benjamin.tissoires@redhat.com>,
+        Dmitry Torokhov <dmitry.torokhov@gmail.com>, jikos@kernel.org,
+        Hans de Goede <hdegoede@redhat.com>,
+        Lee Jones <lee.jones@linaro.org>, xnox@ubuntu.com,
+        Rob Herring <robh+dt@kernel.org>,
+        Mark Rutland <mark.rutland@arm.com>,
+        linux-input@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 12/06/2019 09:15, Vivek Gautam wrote:
+On Thu, Jun 13, 2019 at 10:17 AM Jeffrey Hugo <jeffrey.l.hugo@gmail.com> wrote:
+>
+> This adds the initial DT for the Lenovo Miix 630 laptop.  Supported
+> functionality includes USB (host), microSD-card, keyboard, and trackpad.
+>
+> Signed-off-by: Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
+> ---
 
-> This change is inspired by the downstream change from Patrick Daly
-> to address performance issues with display and camera by handling
-> this wait-for-safe within separte io-pagetable ops to do TLB
-> maintenance. So a big thanks to him for the change.
-> 
-> Without this change the UFS reads are pretty slow:
-> $ time dd if=/dev/sda of=/dev/zero bs=1048576 count=10 conv=sync
-> 10+0 records in
-> 10+0 records out
-> 10485760 bytes (10.0MB) copied, 22.394903 seconds, 457.2KB/s
-> real    0m 22.39s
-> user    0m 0.00s
-> sys     0m 0.01s
-> 
-> With this change they are back to rock!
-> $ time dd if=/dev/sda of=/dev/zero bs=1048576 count=300 conv=sync
-> 300+0 records in
-> 300+0 records out
-> 314572800 bytes (300.0MB) copied, 1.030541 seconds, 291.1MB/s
-> real    0m 1.03s
-> user    0m 0.00s
-> sys     0m 0.54s
+[snip]
 
-This issue does not affect msm8998, I presume?
+> diff --git a/arch/arm64/boot/dts/qcom/msm8998-lenovo-miix-630.dts b/arch/arm64/boot/dts/qcom/msm8998-lenovo-miix-630.dts
+> new file mode 100644
+> index 000000000000..407c6a32911c
+> --- /dev/null
+> +++ b/arch/arm64/boot/dts/qcom/msm8998-lenovo-miix-630.dts
+> @@ -0,0 +1,30 @@
+> +// SPDX-License-Identifier: GPL-2.0
+> +/* Copyright (c) 2019, Jeffrey Hugo. All rights reserved. */
+> +
+> +/dts-v1/;
+> +
+> +#include "msm8998-clamshell.dtsi"
+> +
+> +/ {
+> +       model = "Lenovo Miix 630";
+> +       compatible = "lenovo,miix-630", "qcom,msm8998";
+> +};
 
-Nevertheless, I see much lower performance on msm8998:
 
-# dd if=/dev/sde of=/dev/null bs=1M status=progress
-3892314112 bytes (3.9 GB, 3.6 GiB) copied, 50.0042 s, 77.8 MB/s
+So, I'm not sure if there is some precedent for this (but maybe we
+haven't really had this problem before).. but as I mentioned on
+#arch64-laptops, I think we should put vendor/product/board-id strings
+from SMBIOS table in the dts files.  That could be used by grub to
+find the correct dtb file to load in a generic way.  (Ie, look for a
+match of all three strings, and maybe fallback to a match on just
+vendor+product??)
 
-80 MB/s on msm8998 -- vs -- 300 MB/s on sdm845
+At any rate, how the strings are used can be refined later.  But I
+think we should include the strings from the beginning for anything
+that is booting via UEFI.  It's perhaps more useful than the
+compatible string.
 
-Do you have the interconnect patches on sdm845 that allow boosting
-the clock/bandwidth for specific HW blocks?
-
-Regards.
+BR,
+-R
