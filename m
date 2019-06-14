@@ -2,73 +2,103 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id DF6D746BEC
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 14 Jun 2019 23:36:13 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 1EBEF46C1A
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 14 Jun 2019 23:47:57 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726071AbfFNVgM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 14 Jun 2019 17:36:12 -0400
-Received: from asavdk3.altibox.net ([109.247.116.14]:48200 "EHLO
-        asavdk3.altibox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725809AbfFNVgM (ORCPT
+        id S1726126AbfFNVr4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 14 Jun 2019 17:47:56 -0400
+Received: from merlin.infradead.org ([205.233.59.134]:44734 "EHLO
+        merlin.infradead.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725886AbfFNVr4 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 14 Jun 2019 17:36:12 -0400
-Received: from ravnborg.org (unknown [158.248.194.18])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by asavdk3.altibox.net (Postfix) with ESMTPS id 837A32002E;
-        Fri, 14 Jun 2019 23:36:07 +0200 (CEST)
-Date:   Fri, 14 Jun 2019 23:36:06 +0200
-From:   Sam Ravnborg <sam@ravnborg.org>
-To:     Daniel Vetter <daniel.vetter@ffwll.ch>
-Cc:     DRI Development <dri-devel@lists.freedesktop.org>,
-        linux-aspeed@lists.ozlabs.org, nouveau@lists.freedesktop.org,
-        virtualization@lists.linux-foundation.org,
-        Daniel Vetter <daniel.vetter@intel.com>,
-        linux-stm32@st-md-mailman.stormreply.com,
-        linux-samsung-soc@vger.kernel.org, lima@lists.freedesktop.org,
-        amd-gfx@lists.freedesktop.org, linux-rockchip@lists.infradead.org,
-        VMware Graphics <linux-graphics-maintainer@vmware.com>,
-        NXP Linux Team <linux-imx@nxp.com>,
-        spice-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
-        Intel Graphics Development <intel-gfx@lists.freedesktop.org>,
-        etnaviv@lists.freedesktop.org, xen-devel@lists.xenproject.org,
-        linux-tegra@vger.kernel.org, linux-amlogic@lists.infradead.org,
-        linux-arm-kernel@lists.infradead.org,
-        linux-renesas-soc@vger.kernel.org, freedreno@lists.freedesktop.org
-Subject: Re: [PATCH 06/59] drm/prime: Actually remove DRIVER_PRIME everywhere
-Message-ID: <20190614213606.GB19476@ravnborg.org>
-References: <20190614203615.12639-1-daniel.vetter@ffwll.ch>
- <20190614203615.12639-7-daniel.vetter@ffwll.ch>
+        Fri, 14 Jun 2019 17:47:56 -0400
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+        d=infradead.org; s=merlin.20170209; h=Content-Transfer-Encoding:Content-Type:
+        MIME-Version:Date:Message-ID:Subject:From:Cc:To:Sender:Reply-To:Content-ID:
+        Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
+        :Resent-Message-ID:In-Reply-To:References:List-Id:List-Help:List-Unsubscribe:
+        List-Subscribe:List-Post:List-Owner:List-Archive;
+        bh=wzC8vZgSSQGb7hN6P1xIMe6bYH9lHcYisu8r8AFK2H8=; b=GLuFpb0BZX74mB1qgZFze5uUYQ
+        3P8Du3lWi/2YkIOnz2jLM1PhWDDThgyCfbZCBTrIwj4W5wwp3xpyme/BPDgRAUuk+Ifmi2KYbzQHR
+        abY1CjdU2lhhmdaUMVvIMujYE3Y2W9DABEs1YysMaOjiLvNEU2sITk0nceFSoLVO5uJ9Gs9dxwGIR
+        zLkkNMVFYmHRAcuhK4EXNfEDi+Jifq/dcKtMwqUeTn2b/f7SH1tsAY88np4aVK6HCXuvNgMhALdyN
+        PkClyOQ8Oez3rHrfOSR2uJFB4OBBwBXWlhQpAMuNVejBsNjblJ/tWPSfSWmnnbVgR07pe9wg0ubWv
+        xRZjSAVw==;
+Received: from static-50-53-52-16.bvtn.or.frontiernet.net ([50.53.52.16] helo=midway.dunlab)
+        by merlin.infradead.org with esmtpsa (Exim 4.92 #3 (Red Hat Linux))
+        id 1hbu35-0004Jy-1t; Fri, 14 Jun 2019 21:47:51 +0000
+To:     LKML <linux-kernel@vger.kernel.org>, linux-arm-msm@vger.kernel.org
+Cc:     Bjorn Andersson <bjorn.andersson@sonymobile.com>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Andy Gross <andy.gross@linaro.org>,
+        David Brown <david.brown@linaro.org>,
+        Andrew Morton <akpm@linux-foundation.org>
+From:   Randy Dunlap <rdunlap@infradead.org>
+Subject: [PATCH -next] soc: qcom: fix QCOM_AOSS_QMP dependency and build
+ errors
+Message-ID: <6d97f8dc-f980-7825-4aa6-27f56b25bc3a@infradead.org>
+Date:   Fri, 14 Jun 2019 14:47:48 -0700
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+ Thunderbird/60.7.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20190614203615.12639-7-daniel.vetter@ffwll.ch>
-User-Agent: Mutt/1.10.1 (2018-07-13)
-X-CMAE-Score: 0
-X-CMAE-Analysis: v=2.3 cv=dqr19Wo4 c=1 sm=1 tr=0
-        a=UWs3HLbX/2nnQ3s7vZ42gw==:117 a=UWs3HLbX/2nnQ3s7vZ42gw==:17
-        a=jpOVt7BSZ2e4Z31A5e1TngXxSK0=:19 a=kj9zAlcOel0A:10
-        a=GAxTd-NkrUytLa5Px2AA:9 a=CjuIK1q_8ugA:10
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Daniel.
+From: Randy Dunlap <rdunlap@infradead.org>
 
-Minor nitpick..
+Fix Kconfig warning and subsequent build errors that are caused
+when PM_GENERIC_DOMAINS=y but CONFIG_PM is not set/enabled.
 
-> diff --git a/drivers/gpu/drm/i915/i915_drv.c b/drivers/gpu/drm/i915/i915_drv.c
-> index 65d599065709..4fd09a9ad67a 100644
-> --- a/drivers/gpu/drm/i915/i915_drv.c
-> +++ b/drivers/gpu/drm/i915/i915_drv.c
-> @@ -3193,7 +3193,7 @@ static struct drm_driver driver = {
->  	 * deal with them for Intel hardware.
->  	 */
->  	.driver_features =
-> -	    DRIVER_GEM | DRIVER_PRIME |
-> +	    DRIVER_GEM | 
->  	    DRIVER_RENDER | DRIVER_MODESET | DRIVER_ATOMIC | DRIVER_SYNCOBJ,
-Adds a whitespace.
+WARNING: unmet direct dependencies detected for PM_GENERIC_DOMAINS
+  Depends on [n]: PM [=n]
+  Selected by [m]:
+  - QCOM_AOSS_QMP [=m] && (ARCH_QCOM || COMPILE_TEST [=y]) && MAILBOX [=y] && COMMON_CLK [=y]
 
-	Sam
+Fixes these build errors:
+
+../drivers/base/power/domain.c: In function ‘genpd_queue_power_off_work’:
+../drivers/base/power/domain.c:485:13: error: ‘pm_wq’ undeclared (first use in this function)
+  queue_work(pm_wq, &genpd->power_off_work);
+../drivers/base/power/domain.c:485:13: note: each undeclared identifier is reported only once for each function it appears in
+../drivers/base/power/domain.c: In function ‘genpd_dev_pm_qos_notifier’:
+../drivers/base/power/domain.c:675:25: error: ‘struct dev_pm_info’ has no member named ‘ignore_children’
+   if (!dev || dev->power.ignore_children)
+../drivers/base/power/domain.c: In function ‘rtpm_status_str’:
+../drivers/base/power/domain.c:2754:16: error: ‘struct dev_pm_info’ has no member named ‘runtime_error’
+  if (dev->power.runtime_error)
+../drivers/base/power/domain.c:2756:21: error: ‘struct dev_pm_info’ has no member named ‘disable_depth’
+  else if (dev->power.disable_depth)
+../drivers/base/power/domain.c:2758:21: error: ‘struct dev_pm_info’ has no member named ‘runtime_status’
+  else if (dev->power.runtime_status < ARRAY_SIZE(status_lookup))
+../drivers/base/power/domain.c:2759:31: error: ‘struct dev_pm_info’ has no member named ‘runtime_status’
+   p = status_lookup[dev->power.runtime_status];
+../drivers/base/power/domain_governor.c: In function ‘default_suspend_ok’:
+../drivers/base/power/domain_governor.c:82:17: error: ‘struct dev_pm_info’ has no member named ‘ignore_children’
+
+Signed-off-by: Randy Dunlap <rdunlap@infradead.org>
+Cc: Bjorn Andersson <bjorn.andersson@sonymobile.com>
+Cc: Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc: Andy Gross <andy.gross@linaro.org>
+Cc: David Brown <david.brown@linaro.org>
+---
+ drivers/soc/qcom/Kconfig |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+--- linux-next-20190614.orig/drivers/soc/qcom/Kconfig
++++ linux-next-20190614/drivers/soc/qcom/Kconfig
+@@ -8,7 +8,7 @@ config QCOM_AOSS_QMP
+ 	tristate "Qualcomm AOSS Driver"
+ 	depends on ARCH_QCOM || COMPILE_TEST
+ 	depends on MAILBOX
+-	depends on COMMON_CLK
++	depends on COMMON_CLK && PM
+ 	select PM_GENERIC_DOMAINS
+ 	help
+ 	  This driver provides the means of communicating with and controlling
+
+
