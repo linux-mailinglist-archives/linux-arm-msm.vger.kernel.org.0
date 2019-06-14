@@ -2,100 +2,155 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 9102A4533B
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 14 Jun 2019 06:06:20 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C6299453FF
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 14 Jun 2019 07:27:43 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725846AbfFNEGO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 14 Jun 2019 00:06:14 -0400
-Received: from mail-pl1-f195.google.com ([209.85.214.195]:44999 "EHLO
-        mail-pl1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725648AbfFNEGO (ORCPT
+        id S1726115AbfFNF1i (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 14 Jun 2019 01:27:38 -0400
+Received: from mail-pl1-f170.google.com ([209.85.214.170]:43890 "EHLO
+        mail-pl1-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725767AbfFNF1h (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 14 Jun 2019 00:06:14 -0400
-Received: by mail-pl1-f195.google.com with SMTP id t7so413805plr.11
-        for <linux-arm-msm@vger.kernel.org>; Thu, 13 Jun 2019 21:06:14 -0700 (PDT)
+        Fri, 14 Jun 2019 01:27:37 -0400
+Received: by mail-pl1-f170.google.com with SMTP id cl9so504341plb.10
+        for <linux-arm-msm@vger.kernel.org>; Thu, 13 Jun 2019 22:27:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to:user-agent;
-        bh=HYi2Erj5A4oaNpZveV/ioy8G/sKMQ9krWJqQ69RYiWk=;
-        b=P2EpDp7qWge4+8ecQWnVMZOR6neN2WO+Rlvl8kxFBws0yMA8ei6dEqDewubbLCAHZ5
-         vgxHS8aQNp6EOL0mH5yOipqOx1jU8jckeapXz7HXYuqDOmN1ryynO9TAuMiWkak7sYXj
-         sMaM6fkTEMMUp0S6WTJsNjI7LyrIADEgcfLbds3hX/1DV9/z38CKTSArow+3sU3NlEjq
-         j0ZO63hn76UMSLxp4g1JzmaNa0YDkVoi8Lrqr7TPAAgziXokSLLLmN178mLdzkIA9hfu
-         sl+hsLJC8veEGQg23BCh5UBdT3EBjj/jZpUSfrfyNB/4WmvyzfNqGC7vPXpd+byORwDb
-         b8cw==
+        bh=gpmRrAai2U/u8FOxmf1mMEHtb8C5DvBiK/78zCxWoN8=;
+        b=FdtBwKkGrvc8PbkOh7IgHRgb+bO406Z3RgusnYcYmsIkqRO8qW5ggLC/SPBKMfBsK2
+         PesYYhBmzjDv4oFUeFgNGNgrVn9OhG6mawN1KgvA5PRLbqEZ4r6b2BDd4mu+7LMJKEoC
+         v3zMw08i6e4xTK71w47QkprUWXzQQe3AMsDDNfZ10xd3gFDUKOzG9z8e+mmrzznd3gME
+         p8R3KCVWTAOEb0hwDzrOw0tpa2pEI7n7eVqcO+zZvOtCqlSoIh4M/i74FRgLRGoRwaMG
+         M8uzUA+O3fsjv2HRPPyu8ZZVN8th2KR+5YcNfF+x7GMwHxgW03ayzewUvHxZTgiEOzWR
+         b1GA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=HYi2Erj5A4oaNpZveV/ioy8G/sKMQ9krWJqQ69RYiWk=;
-        b=eMQGCpfNnpBiHJDwB/hod2AfC90CxT0S/3T/irEPPSjf76ISiJBnSuxBZePrD2SkEE
-         K6tjsqgmNhGbLljKs8Lo4wggSXL4ls+hBg1FahOxWyQvbrBjVSs8iq15wftvnIWBFZyD
-         60wH7MCyLXVVSKYzbwqEiwbrSnEnffTGh7XXhR7zMHOkmldCGsF53FEzcnT/qWrtRBXN
-         iJPzKJ5RAA9M7plfcO+oxRUueP13IDrFVfhm2ZzBw40ay6x8s03kMK38jJOs9dVkjydL
-         +3M2RnjmNf8hXvsoSSSx84C8syBTcuPpWMAWbHEC6gqZXVumtCvGFVkj7z6T2GsfE2Mh
-         qNvA==
-X-Gm-Message-State: APjAAAXP/AKVBe6B0NJN9jcQiGO7NrrpyaPipfeM8Bdnlh3alHwErho1
-        eGeI/3MRN/sZpHwl8QukBpRdCg==
-X-Google-Smtp-Source: APXvYqyhaMIs28kbVZNlUk+Wgt9nb24TgswP+lgjinRe2HtMOF/hf2X+O3ATUsRqbG7Qqm/WoQqjoA==
-X-Received: by 2002:a17:902:9a49:: with SMTP id x9mr71030064plv.282.1560485173702;
-        Thu, 13 Jun 2019 21:06:13 -0700 (PDT)
-Received: from tuxbook-pro (104-188-17-28.lightspeed.sndgca.sbcglobal.net. [104.188.17.28])
-        by smtp.gmail.com with ESMTPSA id t24sm1115739pfh.113.2019.06.13.21.06.12
-        (version=TLS1_3 cipher=AEAD-AES256-GCM-SHA384 bits=256/256);
-        Thu, 13 Jun 2019 21:06:13 -0700 (PDT)
-Date:   Thu, 13 Jun 2019 21:06:59 -0700
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Vivek Gautam <vivek.gautam@codeaurora.org>
-Cc:     agross@kernel.org, robh+dt@kernel.org, will.deacon@arm.com,
-        robin.murphy@arm.com, joro@8bytes.org,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        iommu@lists.linux-foundation.org, linux-kernel@vger.kernel.org,
-        david.brown@linaro.org
-Subject: Re: [PATCH v3 4/4] arm64: dts/sdm845: Enable FW implemented safe
- sequence handler on MTP
-Message-ID: <20190614040659.GL22737@tuxbook-pro>
-References: <20190612071554.13573-1-vivek.gautam@codeaurora.org>
- <20190612071554.13573-5-vivek.gautam@codeaurora.org>
+        bh=gpmRrAai2U/u8FOxmf1mMEHtb8C5DvBiK/78zCxWoN8=;
+        b=meIdrIeB5obKVsYRs1UoUVm1YpLDN6rLRvpgnRa2zLf/VOLB1rclyz57g9iDO9HdiO
+         pp4yEEuRtuxyc0177gJ2rLXwaB5EjEFFDlAEaPDFMpHK1F7kbNQv3MFCNpKDNooXSM9r
+         oGkpO1brWkR2njR43LjsZwrYJxy5d7tEyNyqr5MA07aqocGoTN9fnoS/rN4xiK493eK6
+         OcDhedhqr4sGsm2oigKO56ckPumsPRobQdUZtTstuPE8S6kTqyLmO0vWx/3+mjYdRGjp
+         823CGW3bCfN365gGqiu030z/E+bX2GRiLsULOd2YUQdsRbDUkgVvB2IFI7xjJHRLKbHS
+         2h4Q==
+X-Gm-Message-State: APjAAAXQ5PEL/JRvR/7Gh8AQ1jPZtycia9p3xQBL97JXmfdS6ONd3ITR
+        n7FAeYY2X2bGFwiZhBTh8LFbf94xHkQ=
+X-Google-Smtp-Source: APXvYqyzY+ZcDwS257e/DcRosvfsCUeYIQheDqeTIxEJrU3JUxKmTdM1JbGHllR8eOi2yEYOZ8KXFQ==
+X-Received: by 2002:a17:902:7c90:: with SMTP id y16mr1583679pll.238.1560490056827;
+        Thu, 13 Jun 2019 22:27:36 -0700 (PDT)
+Received: from localhost ([122.172.66.84])
+        by smtp.gmail.com with ESMTPSA id f88sm2289322pjg.5.2019.06.13.22.27.34
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Thu, 13 Jun 2019 22:27:34 -0700 (PDT)
+Date:   Fri, 14 Jun 2019 10:57:32 +0530
+From:   Viresh Kumar <viresh.kumar@linaro.org>
+To:     swboyd@chromium.org, Rajendra Nayak <rnayak@codeaurora.org>,
+        vincent.guittot@linaro.org, mturquette@baylibre.com
+Cc:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-pm@vger.kernel.org, linux-serial@vger.kernel.org,
+        linux-spi@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        linux-scsi@vger.kernel.org, ulf.hansson@linaro.org,
+        dianders@chromium.org, rafael@kernel.org
+Subject: Re: [RFC v2 01/11] OPP: Don't overwrite rounded clk rate
+Message-ID: <20190614052732.4w6vvwwich2h4cgu@vireshk-i7>
+References: <20190320094918.20234-1-rnayak@codeaurora.org>
+ <20190320094918.20234-2-rnayak@codeaurora.org>
+ <20190611105432.x3nzqiib35t6mvyg@vireshk-i7>
+ <c173a57d-a4de-99f7-e8d8-28a7612f4ca3@codeaurora.org>
+ <20190612082506.m735bsk7bjijf2yg@vireshk-i7>
+ <20190613095419.lfjeko7nmxtix2n4@vireshk-i7>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20190612071554.13573-5-vivek.gautam@codeaurora.org>
-User-Agent: Mutt/1.11.4 (2019-03-13)
+In-Reply-To: <20190613095419.lfjeko7nmxtix2n4@vireshk-i7>
+User-Agent: NeoMutt/20180716-391-311a52
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed 12 Jun 00:15 PDT 2019, Vivek Gautam wrote:
-
-> Indicate on MTP SDM845 that firmware implements handler to
-> TLB invalidate erratum SCM call where SAFE sequence is toggled
-> to achieve optimum performance on real-time clients, such as
-> display and camera.
+On 13-06-19, 15:24, Viresh Kumar wrote:
+> I am confused as hell on what we should be doing and what we are doing
+> right now. And if we should do better.
 > 
-> Signed-off-by: Vivek Gautam <vivek.gautam@codeaurora.org>
-
-Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
-
-> ---
->  arch/arm64/boot/dts/qcom/sdm845.dtsi | 1 +
->  1 file changed, 1 insertion(+)
+> Let me explain with an example.
 > 
-> diff --git a/arch/arm64/boot/dts/qcom/sdm845.dtsi b/arch/arm64/boot/dts/qcom/sdm845.dtsi
-> index 78ec373a2b18..6a73d9744a71 100644
-> --- a/arch/arm64/boot/dts/qcom/sdm845.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sdm845.dtsi
-> @@ -2368,6 +2368,7 @@
->  			compatible = "qcom,sdm845-smmu-500", "arm,mmu-500";
->  			reg = <0 0x15000000 0 0x80000>;
->  			#iommu-cells = <2>;
-> +			qcom,smmu-500-fw-impl-safe-errata;
->  			#global-interrupts = <1>;
->  			interrupts = <GIC_SPI 65 IRQ_TYPE_LEVEL_HIGH>,
->  				     <GIC_SPI 96 IRQ_TYPE_LEVEL_HIGH>,
-> -- 
-> QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
-> of Code Aurora Forum, hosted by The Linux Foundation
+> - The clock provider supports following frequencies: 500, 600, 700,
+>   800, 900, 1000 MHz.
 > 
+> - The OPP table contains/supports only a subset: 500, 700, 1000 MHz.
+> 
+> Now, the request to change the frequency starts from cpufreq
+> governors, like schedutil when they calls:
+> 
+> __cpufreq_driver_target(policy, 599 MHz, CPUFREQ_RELATION_L);
+> 
+> CPUFREQ_RELATION_L means: lowest frequency at or above target. And so
+> I would expect the frequency to get set to 600MHz (if we look at clock
+> driver) or 700MHz (if we look at OPP table). I think we should decide
+> this thing from the OPP table only as that's what the platform guys
+> want us to use. So, we should end up with 700 MHz.
+> 
+> Then we land into dev_pm_opp_set_rate(), which does this (which is
+> code copied from earlier version of cpufreq-dt driver):
+> 
+> - clk_round_rate(clk, 599 MHz).
+> 
+>   clk_round_rate() returns the highest frequency lower than target. So
+>   it must return 500 MHz (I haven't tested this yet, all theoretical).
+> 
+> - _find_freq_ceil(opp_table, 500 MHz).
+> 
+>   This works like CPUFREQ_RELATION_L, so we find lowest frequency >=
+>   target freq. And so we should get: 500 MHz itself as OPP table has
+>   it.
+> 
+> - clk_set_rate(clk, 500 MHz).
+> 
+>   This must be doing round-rate again, but I think we will settle with
+>   500 MHz eventually.
+> 
+> 
+> Now the questionnaire:
+> 
+> - Is this whole exercise correct ?
+
+No, I missed the call to cpufreq_frequency_table_target() in
+__cpufreq_driver_target() which finds the exact frequency from cpufreq table
+(which was created using opp table) and so we never screw up here. Sorry for
+confusing everyone on this :(
+
+> Now lets move to this patch, which makes it more confusing.
+> 
+> The OPP tables for CPUs and GPUs should already be somewhat like fmax
+> tables for particular voltage values and that's why both cpufreq and
+> OPP core try to find a frequency higher than target so we choose the
+> most optimum one power-efficiency wise.
+> 
+> For cases where the OPP table is only a subset of the clk-providers
+> table (almost always), if we let the clock provider to find the
+> nearest frequency (which is lower) we will run the CPU/GPU at a
+> not-so-optimal frequency. i.e. if 500, 600, 700 MHz all need voltage
+> to be 1.2 V, we should be running at 700 always, while we may end up
+> running at 500 MHz.
+
+This won't happen for CPUs because of the reason I explained earlier. cpufreq
+core does the rounding before calling dev_pm_opp_set_rate(). And no other
+devices use dev_pm_opp_set_rate() right now apart from CPUs, so we are not going
+to break anything.
+
+> This kind of behavior (introduced by this patch) is important for
+> other devices which want to run at the nearest frequency to target
+> one, but not for CPUs/GPUs. So, we need to tag these IO devices
+> separately, maybe from DT ? So we select the closest match instead of
+> most optimal one.
+
+Hmm, so this patch won't break anything and I am inclined to apply it again :)
+
+Does anyone see any other issues with it, which I might be missing ?
+
+-- 
+viresh
