@@ -2,124 +2,115 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id EACDF46012
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 14 Jun 2019 16:09:09 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id CCFFE46083
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 14 Jun 2019 16:20:27 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728367AbfFNOJJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 14 Jun 2019 10:09:09 -0400
-Received: from mail-ed1-f66.google.com ([209.85.208.66]:37311 "EHLO
-        mail-ed1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727382AbfFNOJJ (ORCPT
+        id S1728633AbfFNOUW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 14 Jun 2019 10:20:22 -0400
+Received: from mail-wm1-f65.google.com ([209.85.128.65]:56088 "EHLO
+        mail-wm1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728285AbfFNOUS (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 14 Jun 2019 10:09:09 -0400
-Received: by mail-ed1-f66.google.com with SMTP id w13so3711520eds.4;
-        Fri, 14 Jun 2019 07:09:07 -0700 (PDT)
+        Fri, 14 Jun 2019 10:20:18 -0400
+Received: by mail-wm1-f65.google.com with SMTP id a15so2551522wmj.5
+        for <linux-arm-msm@vger.kernel.org>; Fri, 14 Jun 2019 07:20:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=GQTbMofHx6ihnY6hv/q/Pjtwumkc7ogl2iTrngkVtvc=;
-        b=V0fqh/ToYT65uEuFt6uNfdklxYbXJW90bygOIQrCOe1G5s+fy3oUGD74h+NjAMMeB3
-         BBZHRgx1vzsnOGS/nstZAzpBV7gMG0ZqrG/36RAfHZAgQocOeBa+sTuLgU3VgU2uZDx/
-         Ffc98er/pmLyyxcYbLRUsx5q+p08rd6mpMEXDvxojsXq52XzYDiIBVtGRLUo3ITFouNL
-         M176HRXmPGUyjFRBy8Od7R31GNWv1JpggyPfrQuUSA2puNj7aoLcdfFpOkJQ1unGJQKM
-         ufptnveFLuUASMzZsWdjoRvGXL0xkEoz9+krC3mBJgiKGhYisySboo8jK/71mutI3Sd9
-         jK6Q==
+        d=linaro.org; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=Ty57fS8FEMMkyXkp+DBY1O/OWs9quJnipD1xbuIqd/0=;
+        b=jEyWyusNNcy/zIbSz97DCVXFWo6liOcR3UroHiqapt1gsw21z6NUzdxOP/hmEgFDBX
+         t1czRS7WpYV+PhrzE3HFYeek6Du6wzUsF1/pN008841LWOFHasdvj6d+dFsDXf+hlrJU
+         owQrDqnNU5/CublkS+8W0dU/rjeHgad6VMBxd8pnSRMEdPRJTt1X2bt1uaQJXAL1e/5q
+         U/gmBDF5avTuXoNJUV7zOCQIGoZGpk0ulZIOp7Et4rU7grQ325ujdHK3kP5Y7lhQvg5X
+         KWcolpqX/LJTn4nS4d4FeoGz8lrZ3u9tUQ3Ld6Z6/atadBGm/XGdJH91UL7cE7YTfnk/
+         qBtw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=GQTbMofHx6ihnY6hv/q/Pjtwumkc7ogl2iTrngkVtvc=;
-        b=GXV9zdCp0xNYIXemUahFfhLV2jbDmg9afQAFzQe1GnWCMg+owRdkgTT3xj3foekTLO
-         hReEpc4a7wcVtdPDyYsaeWoSqJvce8KlIVcvaK+Uv64iJ3w//5b83jNkA1SsSHLvU1ET
-         qZjiXHhnywXO4xTgQw8rbpVBiRi5SP5Ko0Nt7ELmb1U0vvg1fJtUOu7JsOEW6nQC+yu2
-         X+kl3JCaZy0IuVi2YRxqp1RxhXBjyxRhsOh+kEgkvjaNukOGeoZe1dfoF3rg+lg/Uizf
-         0nn7LJlv0a7XmJchnhUlJp02Vdk4rykJBlXI8FY564ZYx09TCQp1k0ttz+WYPpObs+DV
-         lUIg==
-X-Gm-Message-State: APjAAAXCRCBbY1zJoo00o1UjkGvSxV74oj/6XcL8OOT2DaaVnlvIJ4nd
-        hhCR/GsQYbF8odAECSryHp/UNAJPXFCy/3TgHsI=
-X-Google-Smtp-Source: APXvYqxLabx2dayIi0z0mrk5mYOCWKcsBoXZf+gdfmFIbIEppEoh4K9PusScfsC/Ujb/OusUUWU5Okr0/cgVa9nC+zE=
-X-Received: by 2002:a17:906:583:: with SMTP id 3mr14648315ejn.278.1560521346837;
- Fri, 14 Jun 2019 07:09:06 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=Ty57fS8FEMMkyXkp+DBY1O/OWs9quJnipD1xbuIqd/0=;
+        b=ES02EYFofJ8XbkUyjsNEX4gn7g7hXE9GSuuL88/xL5Zr4IG66KD9cQ7qhDLMLquFMU
+         LW5gp38n8xEJQdRx6XavNF2ZhlvhLSmmOCLgpBsAG74dh/LMe5PjaATp+MthIsxOcQsi
+         SxV4p2w/BlcrNVtQo8Af+IQRO0d7vYobT2XPvDY3vmK5kddUv6bjchZTKbqOCDNaLg5L
+         hNWYMi+XjQv9NGl+ilE3xvAcUzaYuHdh5bBuvxUxvCsfJMWIBSYwPVrDRGNiPymHc8G0
+         kn6dpVfh38TrD2WzBF1wsLzuz6ZmYnOiHM1ZcvjxD41JulDMgdwu8v7fVbfs6L4VTCX2
+         5pGA==
+X-Gm-Message-State: APjAAAXkf09uD+ex5/w3au2VGXp+N3bfnPAd2G8Gy2fughUSgOjym669
+        EQy1vs60nNhIw1hKbfjxaQTF6A==
+X-Google-Smtp-Source: APXvYqxpNPUsDaAEg7ZHJS2hvOSurHBke9twjY/3loroMi7xipncRW4bBwmksKoG12q4fxRVq1yzYQ==
+X-Received: by 2002:a1c:b1d5:: with SMTP id a204mr118305wmf.101.1560522016576;
+        Fri, 14 Jun 2019 07:20:16 -0700 (PDT)
+Received: from srini-hackbox.lan (cpc89974-aztw32-2-0-cust43.18-1.cable.virginm.net. [86.30.250.44])
+        by smtp.gmail.com with ESMTPSA id j7sm3990080wru.54.2019.06.14.07.20.15
+        (version=TLS1_3 cipher=AEAD-AES256-GCM-SHA384 bits=256/256);
+        Fri, 14 Jun 2019 07:20:15 -0700 (PDT)
+From:   Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+To:     vkoul@kernel.org
+Cc:     dmaengine@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, sricharan@codeaurora.org,
+        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+Subject: [PATCH] dmaengine: qcom-bam: fix circular buffer handling
+Date:   Fri, 14 Jun 2019 15:20:12 +0100
+Message-Id: <20190614142012.31384-1-srinivas.kandagatla@linaro.org>
+X-Mailer: git-send-email 2.21.0
 MIME-Version: 1.0
-References: <20190612212604.32089-1-jeffrey.l.hugo@gmail.com>
- <20190612212748.32246-1-jeffrey.l.hugo@gmail.com> <CAF6AEGvAkCqNXg-NwxfpYJteWs6hfBnOb0yJN6vQOnmMck-HDQ@mail.gmail.com>
-In-Reply-To: <CAF6AEGvAkCqNXg-NwxfpYJteWs6hfBnOb0yJN6vQOnmMck-HDQ@mail.gmail.com>
-From:   Rob Clark <robdclark@gmail.com>
-Date:   Fri, 14 Jun 2019 07:08:52 -0700
-Message-ID: <CAF6AEGtUjxuL3y5pyzKz5HJV7KyXmKxmVxqcm3DraAKvkB0xmw@mail.gmail.com>
-Subject: Re: [PATCH v6 3/5] arm64: dts: qcom: Add Lenovo Miix 630
-To:     Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
-Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>, agross@kernel.org,
-        Benjamin Tissoires <benjamin.tissoires@redhat.com>,
-        Dmitry Torokhov <dmitry.torokhov@gmail.com>, jikos@kernel.org,
-        Hans de Goede <hdegoede@redhat.com>,
-        Lee Jones <lee.jones@linaro.org>, xnox@ubuntu.com,
-        Rob Herring <robh+dt@kernel.org>,
-        Mark Rutland <mark.rutland@arm.com>,
-        linux-input@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, Jun 14, 2019 at 6:44 AM Rob Clark <robdclark@gmail.com> wrote:
->
-> On Thu, Jun 13, 2019 at 10:17 AM Jeffrey Hugo <jeffrey.l.hugo@gmail.com> wrote:
-> >
-> > This adds the initial DT for the Lenovo Miix 630 laptop.  Supported
-> > functionality includes USB (host), microSD-card, keyboard, and trackpad.
-> >
-> > Signed-off-by: Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
-> > ---
->
-> [snip]
->
-> > diff --git a/arch/arm64/boot/dts/qcom/msm8998-lenovo-miix-630.dts b/arch/arm64/boot/dts/qcom/msm8998-lenovo-miix-630.dts
-> > new file mode 100644
-> > index 000000000000..407c6a32911c
-> > --- /dev/null
-> > +++ b/arch/arm64/boot/dts/qcom/msm8998-lenovo-miix-630.dts
-> > @@ -0,0 +1,30 @@
-> > +// SPDX-License-Identifier: GPL-2.0
-> > +/* Copyright (c) 2019, Jeffrey Hugo. All rights reserved. */
-> > +
-> > +/dts-v1/;
-> > +
-> > +#include "msm8998-clamshell.dtsi"
-> > +
-> > +/ {
-> > +       model = "Lenovo Miix 630";
-> > +       compatible = "lenovo,miix-630", "qcom,msm8998";
-> > +};
->
->
-> So, I'm not sure if there is some precedent for this (but maybe we
-> haven't really had this problem before).. but as I mentioned on
-> #arch64-laptops, I think we should put vendor/product/board-id strings
-> from SMBIOS table in the dts files.  That could be used by grub to
-> find the correct dtb file to load in a generic way.  (Ie, look for a
-> match of all three strings, and maybe fallback to a match on just
-> vendor+product??)
->
-> At any rate, how the strings are used can be refined later.  But I
-> think we should include the strings from the beginning for anything
-> that is booting via UEFI.  It's perhaps more useful than the
-> compatible string.
->
+For some reason arguments to most of the circular buffers
+macros are used in reverse, tail is used for head and vice versa.
 
+This leads to bam thinking that there is an extra descriptor at the
+end and leading to retransmitting descriptor which was not scheduled
+by any driver. This happens after MAX_DESCRIPTORS (4096) are scheduled
+and done, so most of the drivers would not notice this, unless they are
+heavily using bam dma. Originally found this issue while testing
+SoundWire over SlimBus on DB845c which uses DMA very heavily for
+read/writes.
 
-perhaps something like:
+Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+---
+ drivers/dma/qcom/bam_dma.c | 9 ++++-----
+ 1 file changed, 4 insertions(+), 5 deletions(-)
 
-   dmi-compatible = "LENOVO 81JL/LNVNB161216", "LENOVO 81JL";
+diff --git a/drivers/dma/qcom/bam_dma.c b/drivers/dma/qcom/bam_dma.c
+index cb860cb53c27..43d7b0a9713a 100644
+--- a/drivers/dma/qcom/bam_dma.c
++++ b/drivers/dma/qcom/bam_dma.c
+@@ -350,8 +350,8 @@ static const struct reg_offset_data bam_v1_7_reg_info[] = {
+ #define BAM_DESC_FIFO_SIZE	SZ_32K
+ #define MAX_DESCRIPTORS (BAM_DESC_FIFO_SIZE / sizeof(struct bam_desc_hw) - 1)
+ #define BAM_FIFO_SIZE	(SZ_32K - 8)
+-#define IS_BUSY(chan)	(CIRC_SPACE(bchan->tail, bchan->head,\
+-			 MAX_DESCRIPTORS + 1) == 0)
++#define IS_BUSY(chan)	(CIRC_SPACE(bchan->head, bchan->tail,\
++			 MAX_DESCRIPTORS) == 0)
+ 
+ struct bam_chan {
+ 	struct virt_dma_chan vc;
+@@ -806,7 +806,7 @@ static u32 process_channel_irqs(struct bam_device *bdev)
+ 		offset /= sizeof(struct bam_desc_hw);
+ 
+ 		/* Number of bytes available to read */
+-		avail = CIRC_CNT(offset, bchan->head, MAX_DESCRIPTORS + 1);
++		avail = CIRC_CNT(bchan->head, offset, MAX_DESCRIPTORS);
+ 
+ 		list_for_each_entry_safe(async_desc, tmp,
+ 					 &bchan->desc_list, desc_node) {
+@@ -997,8 +997,7 @@ static void bam_start_dma(struct bam_chan *bchan)
+ 			bam_apply_new_config(bchan, async_desc->dir);
+ 
+ 		desc = async_desc->curr_desc;
+-		avail = CIRC_SPACE(bchan->tail, bchan->head,
+-				   MAX_DESCRIPTORS + 1);
++		avail = CIRC_SPACE(bchan->head, bchan->tail, MAX_DESCRIPTORS);
+ 
+ 		if (async_desc->num_desc > avail)
+ 			async_desc->xfer_len = avail;
+-- 
+2.21.0
 
-??
-
-(well, those are the strings from my yoga c630, not sure what they are
-on the miix 630.. but you get the idea)
-
-BR,
--R
