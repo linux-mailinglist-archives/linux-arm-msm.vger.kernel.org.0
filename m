@@ -2,82 +2,73 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id E1A5F46BBA
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 14 Jun 2019 23:17:39 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id DF6D746BEC
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 14 Jun 2019 23:36:13 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726300AbfFNVRe (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 14 Jun 2019 17:17:34 -0400
-Received: from sauhun.de ([88.99.104.3]:57240 "EHLO pokefinder.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726030AbfFNVRe (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 14 Jun 2019 17:17:34 -0400
-Received: from localhost (p5486CF81.dip0.t-ipconnect.de [84.134.207.129])
-        by pokefinder.org (Postfix) with ESMTPSA id C6D022CF690;
-        Fri, 14 Jun 2019 23:17:31 +0200 (CEST)
-Date:   Fri, 14 Jun 2019 23:17:31 +0200
-From:   Wolfram Sang <wsa@the-dreams.de>
-To:     Lee Jones <lee.jones@linaro.org>
-Cc:     alokc@codeaurora.org, agross@kernel.org, david.brown@linaro.org,
-        wsa+renesas@sang-engineering.com, bjorn.andersson@linaro.org,
-        balbi@kernel.org, gregkh@linuxfoundation.org,
-        ard.biesheuvel@linaro.org, jlhugo@gmail.com,
-        linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
-        linux-i2c@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-gpio@vger.kernel.org, linux-usb@vger.kernel.or
-Subject: Re: [PATCH v4 2/6] i2c: i2c-qcom-geni: Signify successful driver
- probe
-Message-ID: <20190614211731.GI17899@ninjato>
-References: <20190612142654.9639-1-lee.jones@linaro.org>
- <20190612142654.9639-3-lee.jones@linaro.org>
+        id S1726071AbfFNVgM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 14 Jun 2019 17:36:12 -0400
+Received: from asavdk3.altibox.net ([109.247.116.14]:48200 "EHLO
+        asavdk3.altibox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725809AbfFNVgM (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 14 Jun 2019 17:36:12 -0400
+Received: from ravnborg.org (unknown [158.248.194.18])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by asavdk3.altibox.net (Postfix) with ESMTPS id 837A32002E;
+        Fri, 14 Jun 2019 23:36:07 +0200 (CEST)
+Date:   Fri, 14 Jun 2019 23:36:06 +0200
+From:   Sam Ravnborg <sam@ravnborg.org>
+To:     Daniel Vetter <daniel.vetter@ffwll.ch>
+Cc:     DRI Development <dri-devel@lists.freedesktop.org>,
+        linux-aspeed@lists.ozlabs.org, nouveau@lists.freedesktop.org,
+        virtualization@lists.linux-foundation.org,
+        Daniel Vetter <daniel.vetter@intel.com>,
+        linux-stm32@st-md-mailman.stormreply.com,
+        linux-samsung-soc@vger.kernel.org, lima@lists.freedesktop.org,
+        amd-gfx@lists.freedesktop.org, linux-rockchip@lists.infradead.org,
+        VMware Graphics <linux-graphics-maintainer@vmware.com>,
+        NXP Linux Team <linux-imx@nxp.com>,
+        spice-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
+        Intel Graphics Development <intel-gfx@lists.freedesktop.org>,
+        etnaviv@lists.freedesktop.org, xen-devel@lists.xenproject.org,
+        linux-tegra@vger.kernel.org, linux-amlogic@lists.infradead.org,
+        linux-arm-kernel@lists.infradead.org,
+        linux-renesas-soc@vger.kernel.org, freedreno@lists.freedesktop.org
+Subject: Re: [PATCH 06/59] drm/prime: Actually remove DRIVER_PRIME everywhere
+Message-ID: <20190614213606.GB19476@ravnborg.org>
+References: <20190614203615.12639-1-daniel.vetter@ffwll.ch>
+ <20190614203615.12639-7-daniel.vetter@ffwll.ch>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="PWfwoUCx3AFJRUBq"
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20190612142654.9639-3-lee.jones@linaro.org>
+In-Reply-To: <20190614203615.12639-7-daniel.vetter@ffwll.ch>
 User-Agent: Mutt/1.10.1 (2018-07-13)
+X-CMAE-Score: 0
+X-CMAE-Analysis: v=2.3 cv=dqr19Wo4 c=1 sm=1 tr=0
+        a=UWs3HLbX/2nnQ3s7vZ42gw==:117 a=UWs3HLbX/2nnQ3s7vZ42gw==:17
+        a=jpOVt7BSZ2e4Z31A5e1TngXxSK0=:19 a=kj9zAlcOel0A:10
+        a=GAxTd-NkrUytLa5Px2AA:9 a=CjuIK1q_8ugA:10
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+Hi Daniel.
 
---PWfwoUCx3AFJRUBq
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Minor nitpick..
 
-On Wed, Jun 12, 2019 at 03:26:50PM +0100, Lee Jones wrote:
-> The Qualcomm Geni I2C driver currently probes silently which can be
-> confusing when debugging potential issues.  Add a low level (INFO)
-> print when each I2C controller is successfully initially set-up.
->=20
-> Signed-off-by: Lee Jones <lee.jones@linaro.org>
-> Acked-by: Ard Biesheuvel <ard.biesheuvel@linaro.org>
-> Acked-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+> diff --git a/drivers/gpu/drm/i915/i915_drv.c b/drivers/gpu/drm/i915/i915_drv.c
+> index 65d599065709..4fd09a9ad67a 100644
+> --- a/drivers/gpu/drm/i915/i915_drv.c
+> +++ b/drivers/gpu/drm/i915/i915_drv.c
+> @@ -3193,7 +3193,7 @@ static struct drm_driver driver = {
+>  	 * deal with them for Intel hardware.
+>  	 */
+>  	.driver_features =
+> -	    DRIVER_GEM | DRIVER_PRIME |
+> +	    DRIVER_GEM | 
+>  	    DRIVER_RENDER | DRIVER_MODESET | DRIVER_ATOMIC | DRIVER_SYNCOBJ,
+Adds a whitespace.
 
-Applied to for-next, thanks!
-
-Alok, are you still there? Your ack is missed here...
-
-
---PWfwoUCx3AFJRUBq
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAABCgAdFiEEOZGx6rniZ1Gk92RdFA3kzBSgKbYFAl0EDusACgkQFA3kzBSg
-KbaF5A//eOUYXPdT2ti6Q1bKBj1UFPE+GDDgTGN5/r9/yp/CvXDI2rmQRzYZ4Hzw
-gu+c+ZlfvgufyiS3nOri6r8RgiSRqWPRUCKK+PZNGdiYg7bjmHGSzYj3QwprXu6Y
-vorDbXJ8AsnSr3/LAqO+vwzxwJIUdUNu51svi+IYKw0t+v7mbxfSKbl6vTCmrums
-DepavKTDuQKnoLD6RX7E89ffTw/wvnR5kR/kGlIeAmcOHYCWyNZhdmrNLSqhZdmf
-Ki1TTIq8D0dHoVKia0GdkcCBeegTHBpfwkiDzRl9ubpPaZen6T3ny5mrbyTWV2wF
-Xn3H7nYSiT2jbY35k09RINb1G2YSc6zHClcgIAdx0OO9Zs1OXV4s5sdHvjzHR1ep
-SbpBxZ+ndXOt+Eyo4aXSpK8In3noXs0RZiw+kf7DxUKQWOb465hHb7aX7cCwp2Fv
-kjHYMgizH6agnT5ApVTa4GLF/NQ2uTj+EmWjgwhFmPWsnfjS1rCOrvWkizGx1dpn
-55ROyQ1sS8fIRk4lhKJa0H54up9gg4ql07O0qMvkwRUkLvBnEedob5AapJp2jg2b
-FKH9EhHky3pgSWkrlChUiNcRsBtF9IKORupVYGjhDfKGo+dQMvrEhgFIpcPINk2E
-1zRvv6B2/eRrDN13n6Kztrfil3fRYOEYmbSn01W7loWGu51o2LE=
-=OtA8
------END PGP SIGNATURE-----
-
---PWfwoUCx3AFJRUBq--
+	Sam
