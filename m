@@ -2,63 +2,60 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id F1EF746A92
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 14 Jun 2019 22:38:22 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 43FBA46A96
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 14 Jun 2019 22:38:24 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728509AbfFNUiO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        id S1727174AbfFNUiO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
         Fri, 14 Jun 2019 16:38:14 -0400
-Received: from mail-ed1-f66.google.com ([209.85.208.66]:44428 "EHLO
-        mail-ed1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727174AbfFNUhT (ORCPT
+Received: from mail-pf1-f194.google.com ([209.85.210.194]:37382 "EHLO
+        mail-pf1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727335AbfFNUhT (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
         Fri, 14 Jun 2019 16:37:19 -0400
-Received: by mail-ed1-f66.google.com with SMTP id k8so5198118edr.11
-        for <linux-arm-msm@vger.kernel.org>; Fri, 14 Jun 2019 13:37:18 -0700 (PDT)
+Received: by mail-pf1-f194.google.com with SMTP id 19so2100184pfa.4
+        for <linux-arm-msm@vger.kernel.org>; Fri, 14 Jun 2019 13:37:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ffwll.ch; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=kQ8UHufwWNTTgSokamGs0VFlz+rFtI/LHqZSwoXLdZQ=;
-        b=jvhoh6wm8ifEGI9+HrQ3lAHO4ydWoN2wxaV3vn5pbUcjYmpo4Scds/Qbr1ftmywGn/
-         UTGHjXzjQ7jT2A3HMTWQiFH9AR+KNZ277LF1QvbUhudX/uFDkP+zFtX8kns97a+Rzoop
-         dtCG6oakORnAJEjmqEHM3I8rNUw5nT/t/JZwk=
+        d=chromium.org; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=6vrmhhZaEzM19h9Zlx4Mo9l21Q8Z/1tpB8JbdgO/6Q0=;
+        b=Wx04VyZXSi7uEkn+qcquHj3EoBnN4m9FX9vJIgJ6cgeChrc10QLuaKpp7+rGSiDvGN
+         Sk53gojxneIiAZ8hn+pPpC6+ljGcvOasLCV6lMxQw1+3d6Tp7bsi0XiXzlyoQRZ2r0b1
+         rCNafT3ZKZUrDMLDEKZq4H1mERd0VafFAJUpw=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=kQ8UHufwWNTTgSokamGs0VFlz+rFtI/LHqZSwoXLdZQ=;
-        b=ByG0lcz792jqepN42TuPCo/yxE6qbGhz0ws7lDuUO3cSgqR2gUlJL4lcF818g+UuiU
-         u/G3EmVnrms8g3yMO4492gFqbVgteNbu5Abg1JfVt+PU9Dcn1PXwHsOqxU1GcPOrCsQZ
-         iJk4s5uLQnuvmwuYTZKtFVjxo5JB+DBrCbNagT4RijDCEtnNq4N1jZ2mTU3kdpFsjt2Z
-         Nc0WEy9d90wahx65xYNv2HV4GEum4jmB7Qf0jGJdJXDuu3yqPVsRTeCWrNylDOw8w1xa
-         gfbsb3hWDs7DXZ9iB/9FDEhZFzIZM96/gXx98Q5nCZslEqkkWe3jlBlUgDvx+0k85YMH
-         qf4Q==
-X-Gm-Message-State: APjAAAX5+13LBFQLUY7giTOxkUYVCq3oZu76jNAqoANSNASl/gvaevtP
-        fPVGSsvUD8c996mV0Xi1IpepxWoZ1vU=
-X-Google-Smtp-Source: APXvYqyK6VvDvj7T1kTB9MdPOGrQCwMd5ois0SBU0b1hPA5QXVn9O+zvIFjOdvxCLc1Iaz5Esr5Qaw==
-X-Received: by 2002:a50:90e7:: with SMTP id d36mr103589766eda.202.1560544638224;
-        Fri, 14 Jun 2019 13:37:18 -0700 (PDT)
-Received: from phenom.ffwll.local ([2a02:168:569e:0:3106:d637:d723:e855])
-        by smtp.gmail.com with ESMTPSA id n15sm1166672edd.49.2019.06.14.13.37.17
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=6vrmhhZaEzM19h9Zlx4Mo9l21Q8Z/1tpB8JbdgO/6Q0=;
+        b=qR50dJygpYKnqneUQIjfv9/2SIM+rvfsn1XCO9hhy0gP9PAoS3JW92fWsQoEnNzB6l
+         zivoeXEzMVh+t/H55BsmZTxpCwz0e3oVhMcGnzSMbv+pVo/BHB1j+RiQlHyQXsv/AVDC
+         oy9hWPHKWamnQewX3dXfeL2kA9zP3VL+XLlB48JNngFdLV4M52HWgbrmSfPWsSkCc1zi
+         D8QIJhi9wbPKc9VKNaYtEwRHVCMJaU8wn6EhkqJG0hc86kdkyLqNRRtlc7hflxH36Gw+
+         GFxAUvjBCyNM4+D5j9cx8NbfHDrlz/XmAds3XwrptQlJ530mIHPTcup0DYYTDwkj6pSb
+         UMPg==
+X-Gm-Message-State: APjAAAXvQjOfC2rbxseST2HPIr/ExbZbsTf4LKjxTPH/4jDofHpx4Jen
+        Bn4Z24yse3Uj/BxSA8TPalS/6g==
+X-Google-Smtp-Source: APXvYqzfpvXhgutGtT3dFx0GfX5kTtc8h04BE0rk7Qac+K8Ljsdx6ZzVsIxdzlj/CBTPmUiseBZrxw==
+X-Received: by 2002:a63:6005:: with SMTP id u5mr28274041pgb.123.1560544639097;
+        Fri, 14 Jun 2019 13:37:19 -0700 (PDT)
+Received: from smtp.gmail.com ([2620:15c:202:1:fa53:7765:582b:82b9])
+        by smtp.gmail.com with ESMTPSA id x5sm3673187pjp.21.2019.06.14.13.37.18
         (version=TLS1_3 cipher=AEAD-AES256-GCM-SHA384 bits=256/256);
-        Fri, 14 Jun 2019 13:37:17 -0700 (PDT)
-From:   Daniel Vetter <daniel.vetter@ffwll.ch>
-To:     DRI Development <dri-devel@lists.freedesktop.org>
-Cc:     Intel Graphics Development <intel-gfx@lists.freedesktop.org>,
-        Daniel Vetter <daniel.vetter@ffwll.ch>,
-        Daniel Vetter <daniel.vetter@intel.com>,
-        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        Jeykumar Sankaran <jsanka@codeaurora.org>,
-        Jordan Crouse <jcrouse@codeaurora.org>,
-        Bruce Wang <bzwang@chromium.org>,
-        Fritz Koenig <frkoenig@google.com>,
-        linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org
-Subject: [PATCH 49/59] drm/msm: Use drm_gem_fb_prepare_fb
-Date:   Fri, 14 Jun 2019 22:36:05 +0200
-Message-Id: <20190614203615.12639-50-daniel.vetter@ffwll.ch>
-X-Mailer: git-send-email 2.20.1
-In-Reply-To: <20190614203615.12639-1-daniel.vetter@ffwll.ch>
-References: <20190614203615.12639-1-daniel.vetter@ffwll.ch>
+        Fri, 14 Jun 2019 13:37:18 -0700 (PDT)
+From:   Stephen Boyd <swboyd@chromium.org>
+To:     Dan Williams <dan.j.williams@intel.com>
+Cc:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org, devicetree@vger.kernel.org,
+        Evan Green <evgreen@chromium.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Will Deacon <will.deacon@arm.com>,
+        Catalin Marinas <catalin.marinas@arm.com>
+Subject: [PATCH v2 0/5] Read-only memremap()
+Date:   Fri, 14 Jun 2019 13:37:12 -0700
+Message-Id: <20190614203717.75479-1-swboyd@chromium.org>
+X-Mailer: git-send-email 2.22.0.410.gd8fdbe21b5-goog
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Sender: linux-arm-msm-owner@vger.kernel.org
@@ -66,56 +63,46 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-msm has switched over to drm_fb->obj[] a while ago already, so we can
-just use the helper.
+This patch series implements a read-only version of memremap() via
+a new MEMREMAP_RO flag. If this is passed in the mapping call, we'll
+try to map the memory region as read-only if it doesn't intersect
+with an existing mapping. Otherwise, we'll try to fallback to other
+flags to try to map the memory that way.
 
-Signed-off-by: Daniel Vetter <daniel.vetter@intel.com>
-Cc: Rob Clark <robdclark@gmail.com>
-Cc: Sean Paul <sean@poorly.run>
-Cc: Jeykumar Sankaran <jsanka@codeaurora.org>
-Cc: Jordan Crouse <jcrouse@codeaurora.org>
-Cc: Bruce Wang <bzwang@chromium.org>
-Cc: Fritz Koenig <frkoenig@google.com>
-Cc: Daniel Vetter <daniel.vetter@ffwll.ch>
-Cc: linux-arm-msm@vger.kernel.org
-Cc: freedreno@lists.freedesktop.org
----
- drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c | 5 +----
- drivers/gpu/drm/msm/msm_atomic.c          | 5 +----
- 2 files changed, 2 insertions(+), 8 deletions(-)
+The main use case I have is to map the command-db memory region on
+Qualcomm devices with a read-only mapping. It's already a const marked
+pointer and the API returns const pointers as well, so this series makes
+sure that even stray writes can't modify the memory. To get there we
+introduce a devm version of memremap() for a reserved memory region, add
+a memremap() flag, and implement support for that flag on arm64.
 
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
-index d831cedb55ec..b10855374a8d 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
-@@ -792,10 +792,7 @@ static int dpu_plane_prepare_fb(struct drm_plane *plane,
- 	 *       we can use msm_atomic_prepare_fb() instead of doing the
- 	 *       implicit fence and fb prepare by hand here.
- 	 */
--	obj = msm_framebuffer_bo(new_state->fb, 0);
--	fence = reservation_object_get_excl_rcu(obj->resv);
--	if (fence)
--		drm_atomic_set_fence_for_plane(new_state, fence);
-+	drm_gem_fb_prepare_fb(plane, new_state);
- 
- 	if (pstate->aspace) {
- 		ret = msm_framebuffer_prepare(new_state->fb,
-diff --git a/drivers/gpu/drm/msm/msm_atomic.c b/drivers/gpu/drm/msm/msm_atomic.c
-index 131c23a267ee..e501c6f8d67b 100644
---- a/drivers/gpu/drm/msm/msm_atomic.c
-+++ b/drivers/gpu/drm/msm/msm_atomic.c
-@@ -54,10 +54,7 @@ int msm_atomic_prepare_fb(struct drm_plane *plane,
- 	if (!new_state->fb)
- 		return 0;
- 
--	obj = msm_framebuffer_bo(new_state->fb, 0);
--	fence = reservation_object_get_excl_rcu(obj->resv);
--
--	drm_atomic_set_fence_for_plane(new_state, fence);
-+	drm_gem_fb_prepare_fb(plane, new_state);
- 
- 	return msm_framebuffer_prepare(new_state->fb, kms->aspace);
- }
+Changes from v1:
+ * Picked up tags and rebased to v5.2-rc3
+
+Cc: Evan Green <evgreen@chromium.org>
+Cc: Rob Herring <robh+dt@kernel.org>
+Cc: Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc: Andy Gross <agross@kernel.org>
+Cc: Will Deacon <will.deacon@arm.com>
+Cc: Catalin Marinas <catalin.marinas@arm.com>
+
+Stephen Boyd (5):
+  reserved_mem: Add a devm_memremap_reserved_mem() API
+  soc: qcom: cmd-db: Migrate to devm_memremap_reserved_mem()
+  memremap: Add support for read-only memory mappings
+  arm64: Add support for arch_memremap_ro()
+  soc: qcom: cmd-db: Map with read-only mappings
+
+ arch/arm64/include/asm/io.h     |  1 +
+ drivers/of/of_reserved_mem.c    | 45 +++++++++++++++++++++++++++++++++
+ drivers/soc/qcom/cmd-db.c       | 14 +++-------
+ include/linux/io.h              |  1 +
+ include/linux/of_reserved_mem.h |  6 +++++
+ kernel/iomem.c                  | 15 +++++++++--
+ 6 files changed, 70 insertions(+), 12 deletions(-)
+
+
+base-commit: f2c7c76c5d0a443053e94adb9f0918fa2fb85c3a
 -- 
-2.20.1
+Sent by a computer through tubes
 
