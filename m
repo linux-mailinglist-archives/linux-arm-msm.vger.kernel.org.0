@@ -2,96 +2,99 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id A0EA846EA8
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 15 Jun 2019 09:06:48 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id BA13C47107
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 15 Jun 2019 17:50:25 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725943AbfFOHGo (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 15 Jun 2019 03:06:44 -0400
-Received: from mail-pl1-f193.google.com ([209.85.214.193]:38494 "EHLO
-        mail-pl1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725830AbfFOHGo (ORCPT
+        id S1726754AbfFOPuY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 15 Jun 2019 11:50:24 -0400
+Received: from mail-wm1-f65.google.com ([209.85.128.65]:56276 "EHLO
+        mail-wm1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726405AbfFOPuY (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 15 Jun 2019 03:06:44 -0400
-Received: by mail-pl1-f193.google.com with SMTP id f97so1929854plb.5
-        for <linux-arm-msm@vger.kernel.org>; Sat, 15 Jun 2019 00:06:44 -0700 (PDT)
+        Sat, 15 Jun 2019 11:50:24 -0400
+Received: by mail-wm1-f65.google.com with SMTP id a15so5209690wmj.5;
+        Sat, 15 Jun 2019 08:50:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=nxfStrkoZ2f5uEaotGyNxBrt2oeXGj2yoJPwauA88HM=;
-        b=BQljxYEsUcWx6IMUJWs3lt9f4P2pNVaKin9m6xUqR9H9LNqOdMLDtclGLYX11b74io
-         /xFEGeBJUthHOtnhoFu6naZs+pQbH2gprvEvYfgRxH1hJLMfXIrliNCKf2aBfrL4enuO
-         7Jv7couBfgBKbghqyfQquAUp2sor9PX1xt9xuNXyiM07hJTt6cWmghGQgeWoq8ZpGQf8
-         FpuXUGUnhT9PI2i6c89dZ6NAn/sNJU2eMwtAcXD7mNiXaJfr/8yTjQfGJExcfmCscggp
-         pdz6hm4bizPtTC3WfYTyvqGNMdfT2/aNGpADPBNdFn6bwXUK/xdRBDhURgEaIVYh2244
-         5UFA==
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=fCnxcuBISnCFMkS4CaXGr8LMwEuRq/IrT37Bl4TOGh4=;
+        b=oDrN3FIrIFBF30pElj4VmuGcUjcw1qR0CtlyNdG/UJgVLADKFLAEqFg4CULrX1ewbd
+         EiVaBluytK9RPLn1T31RfddunY5GK4eo/hOXxO0FWwO+Ri/vD46fRIV9aR8geI+i44jD
+         BS1dI9M94WeUbYc1VGMokk8cJCtM0tcmNi/baThN7WemK7SNjUBeG300PlTbZ1WfYQM+
+         c653nCj2E04+vyoji6W8zlxTrUyedcAVkKPD84HQN7Kr5a5wUUgeeJyLAkgkHlN1k3Fo
+         2GJP6X8cwWQT5sLo23jSJONVVI4yGdrVadGyKMwb6mCT8tIMiDli2B+UOXbqngkpRiEn
+         QTvA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=nxfStrkoZ2f5uEaotGyNxBrt2oeXGj2yoJPwauA88HM=;
-        b=oiZQul55PL+ExGE4SZWpXkc3Cw7ue7HvNLX8sHLMnwfVSe4mCa/PKMYbIgJsCwGcdp
-         /8k4jh1HjCHlY4b6z6nkYAcXud8dSsHgB8RjKxTJS4prZqc2krbz4uZ0dpWMtlKRjHv2
-         n7HGTp3C4aPAFns80qn5YgRz6xRTJbZEHgiO7uEZZIOikEesAiCY5i8t9clfOqWATZwv
-         Fx+OzwXSWL93nEwpwDPcZyoqKXC3K7J+h97o+2Bq8PZ/rUc8oe2U1y3UWuFOxyAJPxXl
-         v2iMu014vPJMFYUW2RLGjymEiNpeC1+JpfA77kgBMoPpK18Up8IQiseHodehAJK+vX/o
-         c80A==
-X-Gm-Message-State: APjAAAVVwlWEeU67r8jPAp3ftNdUlfWxCJeAghtRfYzb2qbP/c/2PUDA
-        ImCWPT6PrwFX/z8HIXTB11ZzNg==
-X-Google-Smtp-Source: APXvYqwRyuDbMyXOtqz9wjhQN4oYSmEs4Kbc4rLpIiSEpz/Xzcy8mvo3twNZXhAZt/2ICZStoevA0w==
-X-Received: by 2002:a17:902:29a7:: with SMTP id h36mr45551825plb.158.1560582403432;
-        Sat, 15 Jun 2019 00:06:43 -0700 (PDT)
-Received: from tuxbook-pro (104-188-17-28.lightspeed.sndgca.sbcglobal.net. [104.188.17.28])
-        by smtp.gmail.com with ESMTPSA id p2sm7963869pfb.118.2019.06.15.00.06.41
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=fCnxcuBISnCFMkS4CaXGr8LMwEuRq/IrT37Bl4TOGh4=;
+        b=K6K3H/8565YSRl297P7oCoZLca2YZQjao+dIhPP3n+oEELgzspeXiB6lIT+oqPKYLW
+         +UBMpqlftvQeVeVI8q86nHRIlNcUC79b0ZfFFWdB7R62DBeO+9RN9FZ+Na1D8B6uF49H
+         iHcuWCDby6zuNMH/cqeIyvINuuYsX50EgSt2vHhH6efxctORguR3KxEVbkSLS4X6VKWU
+         fNr16PVzwy4wuYgpuOxnTxvr2cGeb+ry3bSLKowXhL+nM1szsoQBvLElp/4+sqEnAUcm
+         oR4I9rllMHwSjzdOTo1WxzaDvCCbexdN/GMiHG1TgIN9LC72xKcBpNi+Q9n+apmBBCRP
+         FmwA==
+X-Gm-Message-State: APjAAAWz0mW6dTaoCbQYZ3UAKvKvFEk+E5OwJFIkJPgi7cJy2kQzxRrI
+        hj5HITTTsyd/BqL4aySeI3Zv3WU2uvQ=
+X-Google-Smtp-Source: APXvYqwgrDLe1sR+kqURXVgPIh6Qp7jjSpzcV0oQSqmHkgPfVLJQ40UYVwsVp75Iuxm60ew4zFl4ng==
+X-Received: by 2002:a1c:6a17:: with SMTP id f23mr11916738wmc.91.1560613822175;
+        Sat, 15 Jun 2019 08:50:22 -0700 (PDT)
+Received: from debian64.daheim (pD9E2960F.dip0.t-ipconnect.de. [217.226.150.15])
+        by smtp.gmail.com with ESMTPSA id 128sm8065848wme.12.2019.06.15.08.50.21
         (version=TLS1_3 cipher=AEAD-AES256-GCM-SHA384 bits=256/256);
-        Sat, 15 Jun 2019 00:06:42 -0700 (PDT)
-Date:   Sat, 15 Jun 2019 00:07:29 -0700
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Rob Herring <robh@kernel.org>
-Cc:     Andy Gross <agross@kernel.org>,
+        Sat, 15 Jun 2019 08:50:21 -0700 (PDT)
+Received: from chuck by debian64.daheim with local (Exim 4.92)
+        (envelope-from <chunkeey@gmail.com>)
+        id 1hcAwe-00070w-Ua; Sat, 15 Jun 2019 17:50:20 +0200
+From:   Christian Lamparter <chunkeey@gmail.com>
+To:     linux-arm-msm@vger.kernel.org
+Cc:     Abhishek Sahu <absahu@codeaurora.org>,
+        Andy Gross <agross@kernel.org>,
         David Brown <david.brown@linaro.org>,
-        Mark Rutland <mark.rutland@arm.com>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v2] soc: qcom: apr: Don't use reg for domain id
-Message-ID: <20190615070729.GB31088@tuxbook-pro>
-References: <20190523150153.13136-1-bjorn.andersson@linaro.org>
- <20190614165724.GA3083@bogus>
+        linux-kernel@vger.kernel.org, Pavel Kubelun <be.dissent@gmail.com>
+Subject: [PATCH] ipq40xx: fix high resolution timer
+Date:   Sat, 15 Jun 2019 17:50:20 +0200
+Message-Id: <20190615155020.26922-1-chunkeey@gmail.com>
+X-Mailer: git-send-email 2.20.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20190614165724.GA3083@bogus>
-User-Agent: Mutt/1.11.4 (2019-03-13)
+Content-Transfer-Encoding: 8bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri 14 Jun 09:57 PDT 2019, Rob Herring wrote:
+From: Abhishek Sahu <absahu@codeaurora.org>
 
-> On Thu, 23 May 2019 08:01:53 -0700, Bjorn Andersson wrote:
-> > The reg property represents the address and size on the bus that a
-> > device lives, but for APR the parent is a rpmsg bus, which does not have
-> > numerical addresses. Simply defining #address/#size-cells to 1 and 0,
-> > respectively, to silence the compiler is not an appropriate solution.
-> > 
-> > Replace the use of "reg" with an APR specific property.
-> > 
-> > Reviewed-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-> > Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
-> > ---
-> > 
-> > Changes since v1:
-> > - Fixed example to match change
-> > 
-> >  Documentation/devicetree/bindings/soc/qcom/qcom,apr.txt | 6 +++---
-> >  drivers/soc/qcom/apr.c                                  | 2 +-
-> >  2 files changed, 4 insertions(+), 4 deletions(-)
-> > 
-> 
-> Reviewed-by: Rob Herring <robh@kernel.org>
+Cherry-picked from CAF QSDK repo with Change-Id
+I7c00b3c74d97c2a30ac9f05e18b511a0550fd459.
 
-Thanks Rob, patch applied.
+Original commit message:
+The kernel is failing in switching the timer for high resolution
+mode and clock source operates in 10ms resolution. The always-on
+property needs to be given for timer device tree node to make
+clock source working in 1ns resolution.
 
-Regards,
-Bjorn
+Signed-off-by: Abhishek Sahu <absahu@codeaurora.org>
+Signed-off-by: Pavel Kubelun <be.dissent@gmail.com>
+Signed-off-by: Christian Lamparter <chunkeey@gmail.com>
+---
+ arch/arm/boot/dts/qcom-ipq4019.dtsi | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/arch/arm/boot/dts/qcom-ipq4019.dtsi b/arch/arm/boot/dts/qcom-ipq4019.dtsi
+index 83eb5c29274b..c7fa9f61e1f1 100644
+--- a/arch/arm/boot/dts/qcom-ipq4019.dtsi
++++ b/arch/arm/boot/dts/qcom-ipq4019.dtsi
+@@ -165,6 +165,7 @@
+ 			     <1 4 0xf08>,
+ 			     <1 1 0xf08>;
+ 		clock-frequency = <48000000>;
++		always-on;
+ 	};
+ 
+ 	soc {
+-- 
+2.20.1
+
