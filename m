@@ -2,50 +2,50 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 01A4547621
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 16 Jun 2019 19:42:57 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B3BD54763B
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 16 Jun 2019 19:52:51 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726683AbfFPRm4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 16 Jun 2019 13:42:56 -0400
-Received: from mail-pf1-f196.google.com ([209.85.210.196]:38823 "EHLO
-        mail-pf1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726470AbfFPRmz (ORCPT
+        id S1727313AbfFPRwq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 16 Jun 2019 13:52:46 -0400
+Received: from mail-pf1-f194.google.com ([209.85.210.194]:40627 "EHLO
+        mail-pf1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727328AbfFPRwq (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 16 Jun 2019 13:42:55 -0400
-Received: by mail-pf1-f196.google.com with SMTP id a186so4359358pfa.5
-        for <linux-arm-msm@vger.kernel.org>; Sun, 16 Jun 2019 10:42:55 -0700 (PDT)
+        Sun, 16 Jun 2019 13:52:46 -0400
+Received: by mail-pf1-f194.google.com with SMTP id p184so4358660pfp.7
+        for <linux-arm-msm@vger.kernel.org>; Sun, 16 Jun 2019 10:52:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to:user-agent;
-        bh=VO7zaCyhtYCv5/pYPEOpaqTuj9RzI+pPqxayb3u5KrQ=;
-        b=E6ypAV7ah+6QPhVC+81/TmriH5kiwIW3yBefIT6/UZalvKxhpZ5qv33YYJG5Ha5pd9
-         /+Bb5+4iaqzNqexvspAViIRLQ/2DjzNk17I9h9DaKbIHuN/Mb61q6wgdqPw7o0Oi23KQ
-         XLYGKAhfheQYTmD7AWUEuNP219C/tfsBo4+IV9Yd0QzvQOzsXCgqWL4ApGonFglOW1gO
-         uIfvQJkW+i4eWuHCQou9gMmjMukpCYUsy4bKOUyFjtnVpPDDiJtc9LKWyKTLnlzKLCvn
-         +2/Drz9CSNCdfZLs7iQHwuYespDAW9ThxF56eaHQJp8tLxRDAcyNzWVbyhzc5IvXye2q
-         mxVA==
+        bh=JSCuClmggpz8Xfy1dDZDwdk/cubpXsrLwAGotENzbKs=;
+        b=CAzgrNFEKMdQpKgdGp/nqhCidH9CG88O48QbLwiUEoSO86bgyNCfkCi4c1YmJGcr3t
+         9reAJ4a2fc6dhF0UHSHKxMYzlUqJrqFv3TPCvSGp3FNu5mdaA3/FrgxOyi3pt+JqQBHa
+         BJWVMOtI436ml6J3QkvvtOWPX8wVlmjVT1exTobvGdN5Lcx/X4u2TRmCIs5IL77TK2AE
+         eplwcT0cqZlwMZPSwtKUM0UCEF6a5mG9GNQEwMUt1rM9sy3dFvTg3VkAEIdYXhg414Mm
+         zpCaoqI/KoFao5GFJn1dlLJwgzYOSbHmQsaALDZ/U0paTEoWHmjZamXoJsV11Z2BzOQP
+         CgXw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=VO7zaCyhtYCv5/pYPEOpaqTuj9RzI+pPqxayb3u5KrQ=;
-        b=Ut25noj5utFqVxTv0lYKzv6cf7UZNCHQiE3PNIP8UzXI0UkCzDWdcQbIOqhDtISrmq
-         o+/0XlFmCmjZae7idZ8UvyIEkBOg/FIyt4RusmSOIStdOQV6U281HKeQTxmf3o3l8vNN
-         kcVIQyFlJ4hDzh4ksefqwhEsDPNvTK47TMFpq6/QaKZBJE1WQa6r0phyAaLXZrB2hYu7
-         utFzKQefI8Sk4mRRszmz4uTZYD2JNUtYLge3Jt2VOdhLGoUICn1wsoD2GJR3k/vUYcLh
-         lbpUGXau6AT4JGUUtD15nQ326nIy0o5ZLLtF2RFXn0P7EEqeAUx2lK1XxU6FykWnlajN
-         w7Qg==
-X-Gm-Message-State: APjAAAXCXXaej2temzE4G8zIb7IYe8SeOnEl9X5B6BIgGZlm/zH4qdav
-        rv9bpcLJqXk8kF5i1Xjqyn/jdQ==
-X-Google-Smtp-Source: APXvYqyvq8iUKBGDlzVU0jxWwFc6QWJYExh3pNkXSN2atfAMzIvwO4vh8OKBBUYkG5sVg2kbv5VUcg==
-X-Received: by 2002:a17:90b:f0e:: with SMTP id br14mr7923991pjb.117.1560706975061;
-        Sun, 16 Jun 2019 10:42:55 -0700 (PDT)
+        bh=JSCuClmggpz8Xfy1dDZDwdk/cubpXsrLwAGotENzbKs=;
+        b=MX97Pk7CXKtmdd8CFGfJM50cQS+lK1/AF17Pl4f6uWTqoMnTb/B0YxntC08MSp3aA9
+         HI6jM1m3pqY15m5YelY2+qLiBHgTweSEXjQ3diPG5YL2rK/1rSEdiUMQZwP4Z6pmuITi
+         xyPjlh3k6lMoHgi2DzWIazbs7kuDDF9n9g0CcGxtLTLyoR6aelExTHzbCM2McGeM20Ge
+         GEicjIIofsBo9o18ZeuIJeJv4R7S5THpcGx6hI6ZvldKI6GuL+IEYjszIDWgOsHBYBvf
+         4ipnQPiXcX9/cJnd0EZr3ahUOiWvtug3Zac5ADVk37loj0yo5f2BBzMYbwVlvuSCZkdh
+         6ciA==
+X-Gm-Message-State: APjAAAW2Phru9CCjZbsBEDHJkVPaRWI7QL6EjAfGL+zFNVOpyeMQpWJA
+        9GxGnMwX+mmq3Xu+unWz3V9jUg==
+X-Google-Smtp-Source: APXvYqzBrAgp10q9l+iA/huCnFxShpqf46svP3+PCfO0K562mdIaJ33xStj1QgDq0AwmzgkwOWBoCA==
+X-Received: by 2002:a17:90a:af8e:: with SMTP id w14mr22577232pjq.89.1560707565526;
+        Sun, 16 Jun 2019 10:52:45 -0700 (PDT)
 Received: from tuxbook-pro (104-188-17-28.lightspeed.sndgca.sbcglobal.net. [104.188.17.28])
-        by smtp.gmail.com with ESMTPSA id 12sm8736073pfi.60.2019.06.16.10.42.53
+        by smtp.gmail.com with ESMTPSA id u5sm8716191pgp.19.2019.06.16.10.52.44
         (version=TLS1_3 cipher=AEAD-AES256-GCM-SHA384 bits=256/256);
-        Sun, 16 Jun 2019 10:42:54 -0700 (PDT)
-Date:   Sun, 16 Jun 2019 10:43:41 -0700
+        Sun, 16 Jun 2019 10:52:44 -0700 (PDT)
+Date:   Sun, 16 Jun 2019 10:53:32 -0700
 From:   Bjorn Andersson <bjorn.andersson@linaro.org>
 To:     Brian Masney <masneyb@onstation.org>
 Cc:     agross@kernel.org, david.brown@linaro.org, robdclark@gmail.com,
@@ -54,15 +54,15 @@ Cc:     agross@kernel.org, david.brown@linaro.org, robdclark@gmail.com,
         linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
         dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
         devicetree@vger.kernel.org
-Subject: Re: [PATCH 1/6] dt-bindings: soc: qcom: add On Chip MEMory (OCMEM)
- bindings
-Message-ID: <20190616174341.GP22737@tuxbook-pro>
+Subject: Re: [PATCH 3/6] firmware: qcom: scm: add support to restore secure
+ config
+Message-ID: <20190616175332.GQ22737@tuxbook-pro>
 References: <20190616132930.6942-1-masneyb@onstation.org>
- <20190616132930.6942-2-masneyb@onstation.org>
+ <20190616132930.6942-4-masneyb@onstation.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20190616132930.6942-2-masneyb@onstation.org>
+In-Reply-To: <20190616132930.6942-4-masneyb@onstation.org>
 User-Agent: Mutt/1.11.4 (2019-03-13)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
@@ -71,96 +71,164 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 On Sun 16 Jun 06:29 PDT 2019, Brian Masney wrote:
 
-> Add device tree bindings for the On Chip Memory (OCMEM) that is present
-> on some Qualcomm Snapdragon SoCs.
+> From: Rob Clark <robdclark@gmail.com>
 > 
+> Add support to restore the secure configuration that is needed by the
+> On Chip MEMory (OCMEM) that is present on some Snapdragon devices.
+> 
+> Signed-off-by: Rob Clark <robdclark@gmail.com>
+> [masneyb@onstation.org: ported to latest kernel; minor reformatting.]
 > Signed-off-by: Brian Masney <masneyb@onstation.org>
-> ---
->  .../bindings/soc/qcom/qcom,ocmem.yaml         | 66 +++++++++++++++++++
->  1 file changed, 66 insertions(+)
->  create mode 100644 Documentation/devicetree/bindings/soc/qcom/qcom,ocmem.yaml
-> 
-> diff --git a/Documentation/devicetree/bindings/soc/qcom/qcom,ocmem.yaml b/Documentation/devicetree/bindings/soc/qcom/qcom,ocmem.yaml
-> new file mode 100644
-> index 000000000000..5e3ae6311a16
-> --- /dev/null
-> +++ b/Documentation/devicetree/bindings/soc/qcom/qcom,ocmem.yaml
-> @@ -0,0 +1,66 @@
-> +# SPDX-License-Identifier: (GPL-2.0 OR BSD-2-Clause)
-> +%YAML 1.2
-> +---
-> +$id: http://devicetree.org/schemas/soc/qcom/qcom,ocmem.yaml#
-> +$schema: http://devicetree.org/meta-schemas/core.yaml#
-> +
-> +title: On Chip Memory (OCMEM) that is present on some Qualcomm Snapdragon SoCs.
-> +
-> +maintainers:
-> +  - Brian Masney <masneyb@onstation.org>
-> +
-> +description: |
-> +  The On Chip Memory (OCMEM) allocator allows various clients to allocate memory
-> +  from OCMEM based on performance, latency and power requirements. This is
-> +  typically used by the GPU, camera/video, and audio components on some
-> +  Snapdragon SoCs.
-> +
-> +properties:
-> +  compatible:
-> +    const: qcom,ocmem-msm8974
 
-qcom,msm8974-ocmem
-
-> +
-> +  reg:
-> +    items:
-> +      - description: Control registers
-> +      - description: OCMEM address range
-> +
-> +  reg-names:
-> +    items:
-> +      - const: ocmem_ctrl_physical
-> +      - const: ocmem_physical
-
-Drop the "_physical" part, it's given by this being "reg".
+This went upstream for 64-bit with config abbreviated cfg, so please
+implement __qcom_scm_restore_sec_cfg() for 32-bit and add the defines
+instead.
 
 Regards,
 Bjorn
 
+> ---
+> Rob's last version of this patch:
+> https://patchwork.kernel.org/patch/7340701/
+> 
+>  drivers/firmware/qcom_scm-32.c | 21 +++++++++++++++++++++
+>  drivers/firmware/qcom_scm-64.c |  6 ++++++
+>  drivers/firmware/qcom_scm.c    | 23 +++++++++++++++++++++++
+>  drivers/firmware/qcom_scm.h    |  6 ++++++
+>  include/linux/qcom_scm.h       | 13 +++++++++++++
+>  5 files changed, 69 insertions(+)
+> 
+> diff --git a/drivers/firmware/qcom_scm-32.c b/drivers/firmware/qcom_scm-32.c
+> index 215061c581e1..089b47124933 100644
+> --- a/drivers/firmware/qcom_scm-32.c
+> +++ b/drivers/firmware/qcom_scm-32.c
+> @@ -442,6 +442,27 @@ int __qcom_scm_hdcp_req(struct device *dev, struct qcom_scm_hdcp_req *req,
+>  		req, req_cnt * sizeof(*req), resp, sizeof(*resp));
+>  }
+>  
+> +int __qcom_scm_restore_sec_config(struct device *dev, u32 sec_id,
+> +				  u32 ctx_bank_num)
+> +{
+> +	struct msm_scm_sec_cfg {
+> +		__le32 id;
+> +		__le32 ctx_bank_num;
+> +	} cfg;
+> +	int ret, scm_ret = 0;
 > +
-> +  clocks:
-> +    items:
-> +      - description: Core clock
-> +      - description: Interface clock
+> +	cfg.id = cpu_to_le32(sec_id);
+> +	cfg.ctx_bank_num = cpu_to_le32(sec_id);
 > +
-> +  clock-names:
-> +    items:
-> +      - const: core
-> +      - const: iface
+> +	ret = qcom_scm_call(dev, QCOM_SCM_MP_SVC, QCOM_SCM_MP_RESTORE_SEC_CFG,
+> +			    &cfg, sizeof(cfg), &scm_ret, sizeof(scm_ret));
 > +
-> +required:
-> +  - compatible
-> +  - reg
-> +  - reg-names
-> +  - clocks
-> +  - clock-names
+> +	if (ret || scm_ret)
+> +		return ret ? ret : -EINVAL;
 > +
-> +examples:
-> +  - |
-> +      #include <dt-bindings/clock/qcom,rpmcc.h>
-> +      #include <dt-bindings/clock/qcom,mmcc-msm8974.h>
+> +	return 0;
+> +}
 > +
-> +      ocmem: ocmem@fdd00000 {
-> +        compatible = "qcom,ocmem-msm8974";
+>  void __qcom_scm_init(void)
+>  {
+>  }
+> diff --git a/drivers/firmware/qcom_scm-64.c b/drivers/firmware/qcom_scm-64.c
+> index 91d5ad7cf58b..b6b78da7f9c9 100644
+> --- a/drivers/firmware/qcom_scm-64.c
+> +++ b/drivers/firmware/qcom_scm-64.c
+> @@ -241,6 +241,12 @@ int __qcom_scm_hdcp_req(struct device *dev, struct qcom_scm_hdcp_req *req,
+>  	return ret;
+>  }
+>  
+> +int __qcom_scm_restore_sec_config(struct device *dev, u32 sec_id,
+> +				  u32 ctx_bank_num)
+> +{
+> +	return -ENOTSUPP;
+> +}
 > +
-> +        reg = <0xfdd00000 0x2000>,
-> +               <0xfec00000 0x180000>;
-> +        reg-names = "ocmem_ctrl_physical",
-> +                    "ocmem_physical";
+>  void __qcom_scm_init(void)
+>  {
+>  	u64 cmd;
+> diff --git a/drivers/firmware/qcom_scm.c b/drivers/firmware/qcom_scm.c
+> index 2ddc118dba1b..5495ef994c5d 100644
+> --- a/drivers/firmware/qcom_scm.c
+> +++ b/drivers/firmware/qcom_scm.c
+> @@ -170,6 +170,29 @@ int qcom_scm_hdcp_req(struct qcom_scm_hdcp_req *req, u32 req_cnt, u32 *resp)
+>  }
+>  EXPORT_SYMBOL(qcom_scm_hdcp_req);
+>  
+> +/**
+> + * qcom_scm_restore_sec_config_available() - Check if secure environment
+> + * supports restore security config interface.
+> + *
+> + * Return true if restore-cfg interface is supported, false if not.
+> + */
+> +bool qcom_scm_restore_sec_config_available(void)
+> +{
+> +	return __qcom_scm_is_call_available(__scm->dev, QCOM_SCM_MP_SVC,
+> +					    QCOM_SCM_MP_RESTORE_SEC_CFG);
+> +}
+> +EXPORT_SYMBOL(qcom_scm_restore_sec_config_available);
 > +
-> +        clocks = <&rpmcc RPM_SMD_OCMEMGX_CLK>,
-> +                  <&mmcc OCMEMCX_OCMEMNOC_CLK>;
-> +        clock-names = "core",
-> +                      "iface";
-> +      };
+> +/**
+> + * qcom_scm_restore_sec_config() - call restore-cfg interface
+> + */
+> +int qcom_scm_restore_sec_config(struct device *dev,
+> +				enum qcom_scm_sec_dev_id sec_id)
+> +{
+> +	return __qcom_scm_restore_sec_config(dev, sec_id, 0);
+> +}
+> +EXPORT_SYMBOL(qcom_scm_restore_sec_config);
+> +
+>  /**
+>   * qcom_scm_pas_supported() - Check if the peripheral authentication service is
+>   *			      available for the given peripherial
+> diff --git a/drivers/firmware/qcom_scm.h b/drivers/firmware/qcom_scm.h
+> index 99506bd873c0..bccc7d10c5c2 100644
+> --- a/drivers/firmware/qcom_scm.h
+> +++ b/drivers/firmware/qcom_scm.h
+> @@ -42,6 +42,12 @@ extern int __qcom_scm_hdcp_req(struct device *dev,
+>  
+>  extern void __qcom_scm_init(void);
+>  
+> +#define QCOM_SCM_MP_SVC			0xc
+> +#define QCOM_SCM_MP_RESTORE_SEC_CFG	0x2
+> +
+> +extern int __qcom_scm_restore_sec_config(struct device *dev, u32 sec_id,
+> +					 u32 ctx_bank_num);
+> +
+>  #define QCOM_SCM_SVC_PIL		0x2
+>  #define QCOM_SCM_PAS_INIT_IMAGE_CMD	0x1
+>  #define QCOM_SCM_PAS_MEM_SETUP_CMD	0x2
+> diff --git a/include/linux/qcom_scm.h b/include/linux/qcom_scm.h
+> index 3f12cc77fb58..b5c0afaca955 100644
+> --- a/include/linux/qcom_scm.h
+> +++ b/include/linux/qcom_scm.h
+> @@ -24,6 +24,16 @@ struct qcom_scm_vmperm {
+>  	int perm;
+>  };
+>  
+> +enum qcom_scm_sec_dev_id {
+> +	QCOM_SCM_MDSS_DEV_ID	= 1,
+> +	QCOM_SCM_OCMEM_DEV_ID	= 5,
+> +	QCOM_SCM_PCIE0_DEV_ID	= 11,
+> +	QCOM_SCM_PCIE1_DEV_ID	= 12,
+> +	QCOM_SCM_GFX_DEV_ID	= 18,
+> +	QCOM_SCM_UFS_DEV_ID	= 19,
+> +	QCOM_SCM_ICE_DEV_ID	= 20,
+> +};
+> +
+>  #define QCOM_SCM_VMID_HLOS       0x3
+>  #define QCOM_SCM_VMID_MSS_MSA    0xF
+>  #define QCOM_SCM_VMID_WLAN       0x18
+> @@ -41,6 +51,9 @@ extern bool qcom_scm_is_available(void);
+>  extern bool qcom_scm_hdcp_available(void);
+>  extern int qcom_scm_hdcp_req(struct qcom_scm_hdcp_req *req, u32 req_cnt,
+>  			     u32 *resp);
+> +extern bool qcom_scm_restore_sec_config_available(void);
+> +extern int qcom_scm_restore_sec_config(struct device *dev,
+> +				       enum qcom_scm_sec_dev_id sec_id);
+>  extern bool qcom_scm_pas_supported(u32 peripheral);
+>  extern int qcom_scm_pas_init_image(u32 peripheral, const void *metadata,
+>  				   size_t size);
 > -- 
 > 2.20.1
 > 
