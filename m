@@ -2,73 +2,113 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 23AD947E9C
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Jun 2019 11:38:45 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 973DD47ED2
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Jun 2019 11:50:34 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725983AbfFQJio (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 17 Jun 2019 05:38:44 -0400
-Received: from mail.kernel.org ([198.145.29.99]:53074 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1725837AbfFQJin (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 17 Jun 2019 05:38:43 -0400
-Received: from localhost (unknown [122.178.208.218])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        id S1727561AbfFQJud (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 17 Jun 2019 05:50:33 -0400
+Received: from smtp.codeaurora.org ([198.145.29.96]:56560 "EHLO
+        smtp.codeaurora.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726065AbfFQJud (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 17 Jun 2019 05:50:33 -0400
+Received: by smtp.codeaurora.org (Postfix, from userid 1000)
+        id DAE3560A63; Mon, 17 Jun 2019 09:50:31 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
+        s=default; t=1560765031;
+        bh=G+Mh/Th62W8DiS2tkdPJylcX50k7ywJSYRreIQb9Vb0=;
+        h=Subject:To:Cc:References:From:Date:In-Reply-To:From;
+        b=T5U8wSvMh8oAM0FBKhDwK64rOWuB408NqixPM8QSIWO6ERQOT9X4pEHjbugP9RLYZ
+         fi2A2Yz6/0Ayk+GBIpSNKguVVCwn/SECg/L1RK0+m4hK21MZqBG4DGXr+paQoy7KUj
+         oyqbjXJ4M91jrdR3dIFxbTtRGgB8EcDEVDuD2288=
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        pdx-caf-mail.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.7 required=2.0 tests=ALL_TRUSTED,BAYES_00,
+        DKIM_INVALID,DKIM_SIGNED,SPF_NONE autolearn=no autolearn_force=no
+        version=3.4.0
+Received: from [10.79.129.104] (blr-bdr-fw-01_globalnat_allzones-outside.qualcomm.com [103.229.18.19])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
         (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 81B682085A;
-        Mon, 17 Jun 2019 09:38:42 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1560764323;
-        bh=1MmPNbYWZDKNu+tc8X2hB5HstMq/o4InRnTu+0NxeX4=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=l5ZQs+Ws1wpbolkQeLk4pmztF464THsCz5/kU6dg08HqAvIizOfA+uPBdYpwm43Q2
-         0SptEJfjZu+aic1Q/cGFLXFZQlKAn/9YDKWXYuXjluyoFLjcr/6Ims+5W+jEuC8zg2
-         sflA3O5D/6NJEcsd/GIvI25Mm7v4yIo2oSr7mHmk=
-Date:   Mon, 17 Jun 2019 15:05:34 +0530
-From:   Vinod Koul <vkoul@kernel.org>
-To:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Cc:     Linus Walleij <linus.walleij@linaro.org>,
-        linux-arm-msm@vger.kernel.org,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Prasad Sodagudi <psodagud@codeaurora.org>,
-        Andy Gross <agross@kernel.org>,
-        David Brown <david.brown@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Mark Rutland <mark.rutland@arm.com>,
-        linux-gpio@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org,
-        "Isaac J . Manjarres" <isaacm@codeaurora.org>
-Subject: Re: [PATCH 1/2] dt-bindings: pinctrl: qcom: Add SM8150 pinctrl
- binding
-Message-ID: <20190617093534.GI2962@vkoul-mobl>
-References: <20190614053032.24208-1-vkoul@kernel.org>
- <20190617063732.GA18010@mani>
+        (Authenticated sender: vivek.gautam@smtp.codeaurora.org)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 7462E60274;
+        Mon, 17 Jun 2019 09:50:30 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
+        s=default; t=1560765031;
+        bh=G+Mh/Th62W8DiS2tkdPJylcX50k7ywJSYRreIQb9Vb0=;
+        h=Subject:To:Cc:References:From:Date:In-Reply-To:From;
+        b=T5U8wSvMh8oAM0FBKhDwK64rOWuB408NqixPM8QSIWO6ERQOT9X4pEHjbugP9RLYZ
+         fi2A2Yz6/0Ayk+GBIpSNKguVVCwn/SECg/L1RK0+m4hK21MZqBG4DGXr+paQoy7KUj
+         oyqbjXJ4M91jrdR3dIFxbTtRGgB8EcDEVDuD2288=
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 7462E60274
+Authentication-Results: pdx-caf-mail.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: pdx-caf-mail.web.codeaurora.org; spf=none smtp.mailfrom=vivek.gautam@codeaurora.org
+Subject: Re: [PATCH v3 3/4] iommu/arm-smmu: Add support to handle Qcom's
+ wait-for-safe logic
+To:     Marc Gonzalez <marc.w.gonzalez@free.fr>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     MSM <linux-arm-msm@vger.kernel.org>,
+        Linux ARM <linux-arm-kernel@lists.infradead.org>
+References: <20190612071554.13573-1-vivek.gautam@codeaurora.org>
+ <20190612071554.13573-4-vivek.gautam@codeaurora.org>
+ <6f85b50d-4ee8-d33a-37c9-72d45eb50a9d@free.fr>
+From:   Vivek Gautam <vivek.gautam@codeaurora.org>
+Message-ID: <ec7bdccb-f8db-6dce-2454-ac2073be2c45@codeaurora.org>
+Date:   Mon, 17 Jun 2019 15:20:28 +0530
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:60.0) Gecko/20100101
+ Thunderbird/60.7.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20190617063732.GA18010@mani>
-User-Agent: Mutt/1.11.3 (2019-02-01)
+In-Reply-To: <6f85b50d-4ee8-d33a-37c9-72d45eb50a9d@free.fr>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Content-Language: en-US
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 17-06-19, 12:07, Manivannan Sadhasivam wrote:
-> Hey Vinod,
-> 
-> On Fri, Jun 14, 2019 at 11:00:31AM +0530, Vinod Koul wrote:
-> > From: Prasad Sodagudi <psodagud@codeaurora.org>
-> > 
-> > Add the binding for the TLMM pinctrl block found in the SM8150 platform.
-> > 
-> > Signed-off-by: Prasad Sodagudi <psodagud@codeaurora.org>
-> > Signed-off-by: Isaac J. Manjarres <isaacm@codeaurora.org>
-> > Signed-off-by: Vinod Koul <vkoul@kernel.org>
-> > ---
-> >  .../bindings/pinctrl/qcom,sm8150-pinctrl      | 200 ++++++++++++++++++
-> 
-> Looks like you missed the .txt extension for binding :-)
 
-Looks like I did :( Thanks for pointing Mani!
 
--- 
-~Vinod
+On 6/14/2019 6:45 PM, Marc Gonzalez wrote:
+> On 12/06/2019 09:15, Vivek Gautam wrote:
+>
+>> This change is inspired by the downstream change from Patrick Daly
+>> to address performance issues with display and camera by handling
+>> this wait-for-safe within separte io-pagetable ops to do TLB
+>> maintenance. So a big thanks to him for the change.
+>>
+>> Without this change the UFS reads are pretty slow:
+>> $ time dd if=/dev/sda of=/dev/zero bs=1048576 count=10 conv=sync
+>> 10+0 records in
+>> 10+0 records out
+>> 10485760 bytes (10.0MB) copied, 22.394903 seconds, 457.2KB/s
+>> real    0m 22.39s
+>> user    0m 0.00s
+>> sys     0m 0.01s
+>>
+>> With this change they are back to rock!
+>> $ time dd if=/dev/sda of=/dev/zero bs=1048576 count=300 conv=sync
+>> 300+0 records in
+>> 300+0 records out
+>> 314572800 bytes (300.0MB) copied, 1.030541 seconds, 291.1MB/s
+>> real    0m 1.03s
+>> user    0m 0.00s
+>> sys     0m 0.54s
+> This issue does not affect msm8998, I presume?
+>
+> Nevertheless, I see much lower performance on msm8998:
+>
+> # dd if=/dev/sde of=/dev/null bs=1M status=progress
+> 3892314112 bytes (3.9 GB, 3.6 GiB) copied, 50.0042 s, 77.8 MB/s
+>
+> 80 MB/s on msm8998 -- vs -- 300 MB/s on sdm845
+>
+> Do you have the interconnect patches on sdm845 that allow boosting
+> the clock/bandwidth for specific HW blocks?
+
+Umm, No. This is the upstream 5.2-rc4 plus 4-6 patches to enable display 
+and fix splash screen.
+Is this the performance for UFS? The numbers i posted were for UFS.
+
+Thanks
+Vivek
