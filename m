@@ -2,112 +2,96 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id EFF1248C09
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Jun 2019 20:36:51 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 8AE8548C0E
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Jun 2019 20:37:26 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726005AbfFQSgv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 17 Jun 2019 14:36:51 -0400
-Received: from mail-pf1-f195.google.com ([209.85.210.195]:45842 "EHLO
-        mail-pf1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725844AbfFQSgu (ORCPT
+        id S1726048AbfFQShV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 17 Jun 2019 14:37:21 -0400
+Received: from mail-pl1-f196.google.com ([209.85.214.196]:35257 "EHLO
+        mail-pl1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725844AbfFQShU (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 17 Jun 2019 14:36:50 -0400
-Received: by mail-pf1-f195.google.com with SMTP id r1so6134406pfq.12;
-        Mon, 17 Jun 2019 11:36:50 -0700 (PDT)
+        Mon, 17 Jun 2019 14:37:20 -0400
+Received: by mail-pl1-f196.google.com with SMTP id p1so4458099plo.2;
+        Mon, 17 Jun 2019 11:37:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id;
-        bh=LKGeNlPZwIGVNZZsS9uYLIodxN+fkjvFRMre01BWKLg=;
-        b=RRJM6381xq6M0GpIu/gfVDCailz8RcvtlHMPnWE8WwYag1fHjW13rFxzw0CbXmwyZU
-         y1X5Ovp/uCXCMC4nm+fmGkjfO8CsEY8xPZ/hWcihO+jCtgZLBmlHRCyQqr4qyY6r0P+2
-         PtOf3StZ7r09RdG1XVGr0aUH/ylCUi13eS7Ykgmsm+Q6h1xQ0MY39v27A4xA2S9px6Os
-         jC7DGXDFVcatK/e/qfkwAtifPNh2mN1wUslDh9b2nKKiAdZtCKlHJXhUGQsLgvCweN7m
-         PKYMnUKggWmUHs6KzSfkdgrJ3jnDIIefWfcPidclO7nOgyOuErxQsbLwfvbeNiweySQP
-         4A/A==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=pNCtTqN2On7Akbg5ZQ6dO9GyNd+lckTzvjUJWbNQ7ao=;
+        b=cppmxtv9KfPrFVS95mmdcAGwbghcR3q6HELiPCXGP8Llbz0uz+dI47v2tmK9Qx4gdU
+         zqCN4+FGJGDFikhXAypa+pATh/nhdG4MPNcgFrsRrPP7V+1sbT3ir6xcZPQayCXs/hKY
+         g8fAkV2RoXJ3xGTd+e9ZUGHF3b6ExdaYW9YBBpiYSBxnzxztxoMJqRoWIIyszlzLTWuv
+         eRQMHGBP0slbR44LyHnGbslcvvcYdmlH9p5NyIbFRfB3opNKI5MuOYTWTLMkpxwfRYbV
+         LXAuJPxE6yk8Gj+UibeeQqCKxNDQyDif7taRrXJM0PxldzCk+vtdOuzaRI+fU1XE3ciY
+         9eew==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id;
-        bh=LKGeNlPZwIGVNZZsS9uYLIodxN+fkjvFRMre01BWKLg=;
-        b=kfDQ6+OU9BjRLHrnaJZgzYMCZpau/TpeYUxQL3mlPYOmA7rS4bzZU+OqUfoH3xZG7d
-         YvK72rIPodzLPJJyVInHoF0wyzaV5SIU04CJ+X8PsmMvffur9A5+ZHxnDe/3jBt4i/Bi
-         xbAEjd4/ImjNkiBnXfEFekxmIlkafmzWue3nj8BD6fGu+Yj4GuAeDqcViUMccQ0AHBvq
-         AC2W7y+aldcahUxkyDMGXKgnUuP4OMHWDrujcQKVkjBmQf29WgmKAtowum/BnC0OQ9LJ
-         84iivVqBo37lPfy3CX/nYhOS8fwhXoGsWaaaYxnnGParOx9UO+jns/+1pMPE4l++SHuD
-         4imQ==
-X-Gm-Message-State: APjAAAV8nNx9o+xDpca9qZXcZVw00CbKVKZwgTnYFn1Oj69gFzBkG/7z
-        aEGPytuol2NxCAli5mZc7Fa1Obsh
-X-Google-Smtp-Source: APXvYqyjy89E8tz6+xKj6FtuzHozyTb/rdTmJNYjxAKF9KzFUQVJZImITEuwiEwSuqcRVbLhOh8HXA==
-X-Received: by 2002:a62:a511:: with SMTP id v17mr112104356pfm.129.1560796608695;
-        Mon, 17 Jun 2019 11:36:48 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references;
+        bh=pNCtTqN2On7Akbg5ZQ6dO9GyNd+lckTzvjUJWbNQ7ao=;
+        b=n7RI/ufTnlnkNxNmNteS7I/lvXvPL1KUeiewjwGTaJRHEpV5c9t0bg298v1GHYb9su
+         Ce8JoUqLxASMXhgiZWTmdOLhm0EkSMyB4t1D76AKRoPDdgicjSLLUzYFDrCW3o3sFO3E
+         p0qGH9hB5mrX1xUxoDIX8ar64/EJRsEVSmcGFl2pCdKotMcC2UWpuHJxB2zXLYZbHjFB
+         T6SDB//UNuOpdvk95LIlvhm/PDWYgOzA3SUKSDv7TuAcJnDAhfmvL++Y1LIUOgIbpnt/
+         HFI6EyBBK0ebBs17UAmKjRwbY6GQoYx25Lq2D7CB92d05JvX2tzA8SvviCeEY1jP8rVG
+         45dw==
+X-Gm-Message-State: APjAAAVD5M/1ENnIAjEJEsaWqQ+b5Xx6++iZk3fCoqHmxAT2wRW9YvvZ
+        Vbg+Q+5Ya+GSbJAeYXo5qbk=
+X-Google-Smtp-Source: APXvYqyRIRHg6gMGrA70ZHt12EDv2nOd2Sc+DfCdHhHcq35f5zXe8FA2xvVho+l5pWCImt4YiDrGCA==
+X-Received: by 2002:a17:902:7b84:: with SMTP id w4mr813896pll.22.1560796640235;
+        Mon, 17 Jun 2019 11:37:20 -0700 (PDT)
 Received: from aw-bldr-10.qualcomm.com (i-global254.qualcomm.com. [199.106.103.254])
-        by smtp.gmail.com with ESMTPSA id 137sm13010823pfz.116.2019.06.17.11.36.46
+        by smtp.gmail.com with ESMTPSA id j14sm12832230pfn.120.2019.06.17.11.37.18
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 17 Jun 2019 11:36:48 -0700 (PDT)
+        Mon, 17 Jun 2019 11:37:19 -0700 (PDT)
 From:   Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
-Cc:     agross@kernel.org, bjorn.andersson@linaro.org, lgirdwood@gmail.com,
-        broonie@kernel.org, robh+dt@kernel.org, mark.rutland@arm.com,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        devicetree@vger.kernel.org, Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
-Subject: [PATCH v5 0/5] PM8005 and PMS405 regulator support
-Date:   Mon, 17 Jun 2019 11:36:43 -0700
-Message-Id: <20190617183643.13449-1-jeffrey.l.hugo@gmail.com>
+To:     lgirdwood@gmail.com, broonie@kernel.org
+Cc:     agross@kernel.org, bjorn.andersson@linaro.org, robh+dt@kernel.org,
+        mark.rutland@arm.com, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
+        Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
+Subject: [PATCH v5 1/5] dt-bindings: qcom_spmi: Document PM8005 regulators
+Date:   Mon, 17 Jun 2019 11:37:16 -0700
+Message-Id: <20190617183716.13501-1-jeffrey.l.hugo@gmail.com>
 X-Mailer: git-send-email 2.17.1
-To:     unlisted-recipients:; (no To-header on input)
+In-Reply-To: <20190617183643.13449-1-jeffrey.l.hugo@gmail.com>
+References: <20190617183643.13449-1-jeffrey.l.hugo@gmail.com>
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The MSM8998 MTP reference platform supplies VDD_GFX from s1 of the
-pm8005 PMIC.  VDD_GFX is needed to turn on the GPU.  As we are looking
-to bring up the GPU, add the support for pm8005 and wire up s1 in a
-basic manner so that we have this dependency out of the way and can
-focus on enabling the GPU driver.
+Document the dt bindings for the PM8005 regulators which are usually used
+for VDD of standalone blocks on a SoC like the GPU.
 
-The s3 regulator of PMS405 is used for voltage scaling of the CPU on
-QCS404.
+Signed-off-by: Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
+Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+---
+ .../devicetree/bindings/regulator/qcom,spmi-regulator.txt     | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-Both PMICs are very similar in design, so add the base support with one,
-and trivially add the support for the other on top.
-
-v5:
--drop accepted changes
--.get_voltage -> .get_voltage_sel
--made set_mode be 1:1 between API and hw
-
-v4:
--fix the linear range change to use the correct implementation
--mask out the non-mode bits when reading the hardware reg
--correct the pms405 supply pins listing
--correct the pms405 s3 supply name in the match struct
--correct subject names to be more aligned with the subsystem history
-
-v3:
--Allow PMS405 regulators to be enabled and disabled, instead of the
-outdated "always on" concept
-
-v2:
--Perform if statement cleanups per review discussion
--Pull in linear range support since its related, and simple
--Rework the PM8005 to minimize special cases in the driver
--"common2" is now ftsmps426 since that design first implemented it
--Reworked the PMS405 changes on top, since they are related to pm8005
-and trivial
-
-Jeffrey Hugo (3):
-  dt-bindings: qcom_spmi: Document PM8005 regulators
-  regulator: qcom_spmi: Add support for PM8005
-  arm64: dts: msm8998-mtp: Add pm8005_s1 regulator
-
-Jorge Ramirez (2):
-  dt-bindings: qcom_spmi: Document pms405 support
-  regulator: qcom_spmi: add PMS405 SPMI regulator
-
- .../regulator/qcom,spmi-regulator.txt         |  22 ++
- arch/arm64/boot/dts/qcom/msm8998-mtp.dtsi     |  17 ++
- drivers/regulator/qcom_spmi-regulator.c       | 213 ++++++++++++++++++
- 3 files changed, 252 insertions(+)
-
+diff --git a/Documentation/devicetree/bindings/regulator/qcom,spmi-regulator.txt b/Documentation/devicetree/bindings/regulator/qcom,spmi-regulator.txt
+index 406f2e570c50..ba94bc2d407a 100644
+--- a/Documentation/devicetree/bindings/regulator/qcom,spmi-regulator.txt
++++ b/Documentation/devicetree/bindings/regulator/qcom,spmi-regulator.txt
+@@ -4,6 +4,7 @@ Qualcomm SPMI Regulators
+ 	Usage: required
+ 	Value type: <string>
+ 	Definition: must be one of:
++			"qcom,pm8005-regulators"
+ 			"qcom,pm8841-regulators"
+ 			"qcom,pm8916-regulators"
+ 			"qcom,pm8941-regulators"
+@@ -120,6 +121,9 @@ The regulator node houses sub-nodes for each regulator within the device. Each
+ sub-node is identified using the node's name, with valid values listed for each
+ of the PMICs below.
+ 
++pm8005:
++	s1, s2, s3, s4
++
+ pm8841:
+ 	s1, s2, s3, s4, s5, s6, s7, s8
+ 
 -- 
 2.17.1
 
