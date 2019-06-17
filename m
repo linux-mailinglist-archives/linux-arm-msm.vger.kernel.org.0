@@ -2,136 +2,70 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id A74C647FC6
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Jun 2019 12:35:29 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 8214C47FF8
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Jun 2019 12:48:16 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726882AbfFQKf2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 17 Jun 2019 06:35:28 -0400
-Received: from smtp.codeaurora.org ([198.145.29.96]:55274 "EHLO
-        smtp.codeaurora.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726091AbfFQKf2 (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 17 Jun 2019 06:35:28 -0400
-Received: by smtp.codeaurora.org (Postfix, from userid 1000)
-        id 6844560770; Mon, 17 Jun 2019 10:35:25 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
-        s=default; t=1560767726;
-        bh=aTWPLJInIlt+CJHFbSDhIUEcaDKLsK68r/oR8Ij464E=;
-        h=Subject:To:References:Cc:From:Date:In-Reply-To:From;
-        b=RWJWHyg5ajnUDWx6bqjdQWb5CFqmzzeGIxaUpsbTUD5vg2R2qoPEUZkA0tpmbgkCT
-         ujf4B+swG6f6puziwEnGFoS70PAr3ZCJ8bacv6elOJFxupLlqhe0oIHdeMD+2jiIgY
-         ihsNWxPR/dXaV2556ke9HfFzD2bwAZq9kWe8cXSo=
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        pdx-caf-mail.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.7 required=2.0 tests=ALL_TRUSTED,BAYES_00,
-        DKIM_INVALID,DKIM_SIGNED,SPF_NONE autolearn=no autolearn_force=no
-        version=3.4.0
-Received: from [10.204.78.89] (blr-c-bdr-fw-01_globalnat_allzones-outside.qualcomm.com [103.229.19.19])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: neeraju@smtp.codeaurora.org)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 31BE960237;
-        Mon, 17 Jun 2019 10:35:21 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
-        s=default; t=1560767725;
-        bh=aTWPLJInIlt+CJHFbSDhIUEcaDKLsK68r/oR8Ij464E=;
-        h=Subject:To:References:Cc:From:Date:In-Reply-To:From;
-        b=ZvuoDROJl7O9qCSp1Wns+yGOQBhfgx/WauQTdhK8Q8Etxrnbua9QqiuamUTSv+mAr
-         5Sm4IToZDX/erfRH5BYpwh1sw5tzJdrHDtpymI/j7eWkn0HIHFFeVJNM3J65buu3hE
-         Rnpy625qZG/7MJ510us7aKWr6ToPpAgakJjJS1uA=
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 31BE960237
-Authentication-Results: pdx-caf-mail.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: pdx-caf-mail.web.codeaurora.org; spf=none smtp.mailfrom=neeraju@codeaurora.org
-Subject: Re: Fwd: Re: [PATCH] pinctrl: qcom: Clear status bit on irq_unmask
-To:     Stephen Boyd <sboyd@kernel.org>, tengfeif@codeaurora.org,
-        Linus Walleij <linus.walleij@linaro.org>,
-        bjorn.andersson@linaro.org
-References: <20190611185102.368ED21744@mail.kernel.org>
- <671f87d6-f4a4-6d2c-967b-e1aa0677d83e@codeaurora.org>
-Cc:     LKML <linux-kernel@vger.kernel.org>, linux-gpio@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, sramana@codeaurora.org
-From:   Neeraj Upadhyay <neeraju@codeaurora.org>
-Message-ID: <b0fdbcb1-4d5d-5c60-4150-7762a577cd10@codeaurora.org>
-Date:   Mon, 17 Jun 2019 16:05:19 +0530
+        id S1727385AbfFQKsP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 17 Jun 2019 06:48:15 -0400
+Received: from ns.iliad.fr ([212.27.33.1]:53100 "EHLO ns.iliad.fr"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726039AbfFQKsP (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 17 Jun 2019 06:48:15 -0400
+Received: from ns.iliad.fr (localhost [127.0.0.1])
+        by ns.iliad.fr (Postfix) with ESMTP id 699D620732;
+        Mon, 17 Jun 2019 12:48:13 +0200 (CEST)
+Received: from [192.168.108.49] (freebox.vlq16.iliad.fr [213.36.7.13])
+        by ns.iliad.fr (Postfix) with ESMTP id 55E4A206B8;
+        Mon, 17 Jun 2019 12:48:13 +0200 (CEST)
+Subject: Re: [PATCH v3 3/4] iommu/arm-smmu: Add support to handle Qcom's
+ wait-for-safe logic
+To:     Vivek Gautam <vivek.gautam@codeaurora.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     MSM <linux-arm-msm@vger.kernel.org>,
+        Linux ARM <linux-arm-kernel@lists.infradead.org>
+References: <20190612071554.13573-1-vivek.gautam@codeaurora.org>
+ <20190612071554.13573-4-vivek.gautam@codeaurora.org>
+ <6f85b50d-4ee8-d33a-37c9-72d45eb50a9d@free.fr>
+ <ec7bdccb-f8db-6dce-2454-ac2073be2c45@codeaurora.org>
+From:   Marc Gonzalez <marc.w.gonzalez@free.fr>
+Message-ID: <c6d30912-17b3-3349-e742-bbf0ff02a50f@free.fr>
+Date:   Mon, 17 Jun 2019 12:48:13 +0200
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.4.0
+ Thunderbird/60.6.1
 MIME-Version: 1.0
-In-Reply-To: <671f87d6-f4a4-6d2c-967b-e1aa0677d83e@codeaurora.org>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 7bit
+In-Reply-To: <ec7bdccb-f8db-6dce-2454-ac2073be2c45@codeaurora.org>
+Content-Type: text/plain; charset=utf-8
 Content-Language: en-US
+Content-Transfer-Encoding: 7bit
+X-Virus-Scanned: ClamAV using ClamSMTP ; ns.iliad.fr ; Mon Jun 17 12:48:13 2019 +0200 (CEST)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On 17/06/2019 11:50, Vivek Gautam wrote:
 
-> Quoting tengfeif@codeaurora.org (2019-06-11 03:41:26)
->> On 2019-06-10 22:51, Stephen Boyd wrote:
->> > Quoting Linus Walleij (2019-06-07 14:08:10)
->> >> On Fri, May 31, 2019 at 8:52 AM Tengfei Fan 
->> <tengfeif@codeaurora.org> >> wrote:
->> >> >> > The gpio interrupt status bit is getting set after the
->> >> > irq is disabled and causing an immediate interrupt after
->> >> > enablling the irq, so clear status bit on irq_unmask.
->> >> >
->> >> > Signed-off-by: Tengfei Fan <tengfeif@codeaurora.org>
->> >> >> This looks pretty serious, can one of the Qcom maintainers ACK
->> >> this?
->> >> >> Should it be sent to fixes and even stable?
->> >> >> Fixes: tag?
->> >> > > How is the interrupt status bit getting set after the irq is 
->> disabled?
->> > It looks like this is a level type interrupt? I thought that after
->> > commit b55326dc969e ("pinctrl: msm: Really mask level interrupts to
->> > prevent latching") this wouldn't be a problem. Am I wrong, or is qcom
->> > just clearing out patches on drivers and this is the last one that 
->> > needs
->> > to be upstreamed?
+> On 6/14/2019 6:45 PM, Marc Gonzalez wrote:
+>
+>> # dd if=/dev/sde of=/dev/null bs=1M status=progress
+>> 3892314112 bytes (3.9 GB, 3.6 GiB) copied, 50.0042 s, 77.8 MB/s
 >>
->> Your patch(commit b55326dc969e) can cover our issue, and my patch is 
->> no longer needed.
->> Your patch isn't included in our code, so I submitted this patch.
->
-> Alright cool. Sounds like this patch can be dropped then and you can
-> pick up the patch from upstream into your vendor kernel.
->
+>> 80 MB/s on msm8998 -- vs -- 300 MB/s on sdm845
+>>
+>> Do you have the interconnect patches on sdm845 that allow boosting
+>> the clock/bandwidth for specific HW blocks?
+> 
+> Umm, No. This is the upstream 5.2-rc4 plus 4-6 patches to enable display 
+> and fix splash screen.
+> Is this the performance for UFS? The numbers I posted were for UFS.
 
-Hi Stephen, there is one use case with is not covered by commit 
-b55326dc969e (
+Correct, the numbers I provided were for msm8998 UFS...
 
-"pinctrl: msm: Really mask level interrupts to prevent latching"). That 
-happens when
+Basically, it looks like sdm845 UFS is 4x faster than msm8998 UFS
+using upstream. Which is surprising (may depend on specific Flash
+chip in use though).
 
-gpio line is toggled between i/o mode and interrupt mode :
+Would be good if somebody with both boards could post numbers.
+I'll try to post "fresh" numbers when I can.
 
-1. GPIO is configured as irq line. Peripheral raises interrupt.
-
-2. IRQ handler runs and disables the irq line (through wq work).
-
-3. GPIO is configured for input and and data is received from the 
-peripheral.
-
-4. Now, when GPIO is re-enabled as irq, we see spurious irq, and there 
-isn't
-
-any data received on the gpio line, when it is read back after 
-configuring as input.
-
-This can happen for both edge and level interrupts.
-
-Patch https://lkml.org/lkml/2019/6/17/226 tries to cover this use case. 
-Can you please
-
-provide your comments?
-
-
-Thanks
-
-Neeraj
-
--- 
-QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a
-member of the Code Aurora Forum, hosted by The Linux Foundation
-
+Regards.
