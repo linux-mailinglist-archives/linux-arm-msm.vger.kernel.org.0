@@ -2,133 +2,142 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 31BBD486CE
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Jun 2019 17:17:44 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 55F2A48703
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Jun 2019 17:27:27 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728279AbfFQPRd (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 17 Jun 2019 11:17:33 -0400
-Received: from mail-io1-f66.google.com ([209.85.166.66]:33914 "EHLO
-        mail-io1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728267AbfFQPRc (ORCPT
+        id S1728614AbfFQPYv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 17 Jun 2019 11:24:51 -0400
+Received: from heliosphere.sirena.org.uk ([172.104.155.198]:52062 "EHLO
+        heliosphere.sirena.org.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726822AbfFQPYt (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 17 Jun 2019 11:17:32 -0400
-Received: by mail-io1-f66.google.com with SMTP id k8so22102463iot.1;
-        Mon, 17 Jun 2019 08:17:32 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=3+wD3SVXZ3PrXa1HtjvCKKY1g2uXLotDdh/IZjbwZD4=;
-        b=XW0NKdf8HYq8QBc4Mxuma9s8F0Gia3HEyU125mLUA7j/kI9hW+ksgPSsrEAbd0r2JU
-         rAIP4ROAGs+4Mft6ygNPQmeunP+4KdhfWgNzmdSIiWlD99x6hcDUcitu2sVS229onCY3
-         Vb04HaUnieL1TmikiqpAkjJRRNjvY3JzJ9tpNYF8l6CNZYsj9ikncEZihBy4ONe/RFnd
-         Itu9TtwwXfkFNRIOnpgbeJl8qJ11JmreOrGU0kTkL6im2jAJUGaXLgD5rCMrjIfJa0h+
-         K+u49csTAsCMIpv0GBJJU/z+ygok9Q5T62cq4TKiIPTu8bo+RgL6kvt9WJHiXsIXuUTH
-         FbyA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=3+wD3SVXZ3PrXa1HtjvCKKY1g2uXLotDdh/IZjbwZD4=;
-        b=aVLzkshRYxJisro94B2XXCGi1TqRuqq8gU++ketjNrkAQFtQUsdnfh1vuf9IWAZ2sm
-         yt5SMoDyzDOpG9xsUFGyLC4+qeuA6mkyeVIZ/5E6wcGeNfzGHTu3k4jdCb+bf4c9WxZX
-         CMSbI+RsFBSQ0HLup1HYBNNu/L3+GYV+dj+g29stZnavo+Has4UaBVz4Bd/ES4urahOu
-         /q3oManMH8JqL3pza4mT00MdGtheYvNyXS+9JZhp/R3rd8hQWlrNEi/6l50oxh0vcIO0
-         TY7PNng5DnCGqKyK6EFIV5GKryaFoQyYKk8yxb70vIwsincxgxepgUbKJhMtiRQLxVkK
-         8B4Q==
-X-Gm-Message-State: APjAAAU/KFkDeKrPY5IUKv8grkxY4779iFv5iqUCj6TYz+rSEuvK7xXf
-        gN/bh39VO2bZvXc+ho0DfTPBj/7XH8bsIGYdnpXE6hWF
-X-Google-Smtp-Source: APXvYqzHko/RHOucNVkRDhgeF7jxqsQrYHP/teYkSGuN2gCpAyHtQ4kD7zLzznSbAeTHSrrBWQClAN66pqYh6uIt6ZA=
-X-Received: by 2002:a6b:901:: with SMTP id t1mr228382ioi.42.1560784651888;
- Mon, 17 Jun 2019 08:17:31 -0700 (PDT)
-MIME-Version: 1.0
-References: <20190613212436.6940-1-jeffrey.l.hugo@gmail.com>
- <20190613212553.10541-1-jeffrey.l.hugo@gmail.com> <20190613212553.10541-2-jeffrey.l.hugo@gmail.com>
- <20190617150502.GU5316@sirena.org.uk>
-In-Reply-To: <20190617150502.GU5316@sirena.org.uk>
-From:   Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
-Date:   Mon, 17 Jun 2019 09:17:21 -0600
-Message-ID: <CAOCk7NrwYezbVyLKOZdxgGRVemKtBmHKP+fSO0a2p3bCPNdW3w@mail.gmail.com>
-Subject: Re: [PATCH v4 4/7] regulator: qcom_spmi: Add support for PM8005
-To:     Mark Brown <broonie@kernel.org>
-Cc:     lgirdwood@gmail.com, Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Mark Rutland <mark.rutland@arm.com>,
-        MSM <linux-arm-msm@vger.kernel.org>,
-        lkml <linux-kernel@vger.kernel.org>, devicetree@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+        Mon, 17 Jun 2019 11:24:49 -0400
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+        d=sirena.org.uk; s=20170815-heliosphere; h=Date:Message-Id:In-Reply-To:
+        Subject:Cc:To:From:Sender:Reply-To:MIME-Version:Content-Type:
+        Content-Transfer-Encoding:Content-ID:Content-Description:Resent-Date:
+        Resent-From:Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:References:
+        List-Id:List-Help:List-Unsubscribe:List-Subscribe:List-Post:List-Owner:
+        List-Archive; bh=FGYGt9gR3ov0mDYFBrKxZVHm7Q6JC8o022bDhrc2nks=; b=sgV9DYSdi17l
+        bXgPQR71kqZ1Os9L7ZHn5N9IsX02P/ySrrZgxuo+MoIm9RIp5y08NjpUhq+zGI8ImlMqPenYSlMYQ
+        cz80uDmUWQFmegcK2Vi3D+A3k3/5fl+tq0fEiSqOoCjGXUilWHh4kLYAadyIjpXrG9bJ91IkMHWri
+        4yOK8=;
+Received: from cpc102320-sgyl38-2-0-cust46.18-2.cable.virginm.net ([82.37.168.47] helo=finisterre.sirena.org.uk)
+        by heliosphere.sirena.org.uk with esmtpsa (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+        (Exim 4.89)
+        (envelope-from <broonie@sirena.org.uk>)
+        id 1hctUz-0001zj-Ll; Mon, 17 Jun 2019 15:24:45 +0000
+Received: by finisterre.sirena.org.uk (Postfix, from userid 1000)
+        id 34116440046; Mon, 17 Jun 2019 16:24:45 +0100 (BST)
+From:   Mark Brown <broonie@kernel.org>
+To:     Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
+Cc:     agross@kernel.org, bjorn.andersson@linaro.org, broonie@kernel.org,
+        devicetree@vger.kernel.org, lgirdwood@gmail.com,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Mark Brown <broonie@kernel.org>, mark.rutland@arm.com,
+        robh+dt@kernel.org
+Subject: Applied "regulator: qcom_spmi: Refactor get_mode/set_mode" to the regulator tree
+In-Reply-To: <20190613212531.10452-2-jeffrey.l.hugo@gmail.com>
+X-Patchwork-Hint: ignore
+Message-Id: <20190617152445.34116440046@finisterre.sirena.org.uk>
+Date:   Mon, 17 Jun 2019 16:24:45 +0100 (BST)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Jun 17, 2019 at 9:05 AM Mark Brown <broonie@kernel.org> wrote:
->
-> On Thu, Jun 13, 2019 at 02:25:53PM -0700, Jeffrey Hugo wrote:
->
-> > +static int spmi_regulator_ftsmps426_set_voltage(struct regulator_dev *rdev,
-> > +                                           unsigned selector)
-> > +{
-> > +     struct spmi_regulator *vreg = rdev_get_drvdata(rdev);
-> > +     u8 buf[2];
-> > +     int mV;
-> > +
-> > +     mV = spmi_regulator_common_list_voltage(rdev, selector) / 1000;
-> > +
-> > +     buf[0] = mV & 0xff;
-> > +     buf[1] = mV >> 8;
-> > +     return spmi_vreg_write(vreg, SPMI_FTSMPS426_REG_VOLTAGE_LSB, buf, 2);
-> > +}
->
-> This could just be a set_voltage_sel(), no need for it to be a
-> set_voltage() operation....
+The patch
 
-This is a set_voltage_sel() in spmi_ftsmps426_ops.  Is the issue because this
-function is "spmi_regulator_ftsmps426_set_voltage" and not
-"spmi_regulator_ftsmps426_set_voltage_sel"?
+   regulator: qcom_spmi: Refactor get_mode/set_mode
 
->
-> > +static int spmi_regulator_ftsmps426_get_voltage(struct regulator_dev *rdev)
-> > +{
-> > +     struct spmi_regulator *vreg = rdev_get_drvdata(rdev);
-> > +     u8 buf[2];
-> > +
-> > +     spmi_vreg_read(vreg, SPMI_FTSMPS426_REG_VOLTAGE_LSB, buf, 2);
-> > +
-> > +     return (((unsigned int)buf[1] << 8) | (unsigned int)buf[0]) * 1000;
-> > +}
->
-> ...or if the conversion is this trivial why do the list_voltage() lookup
-> above?
+has been applied to the regulator tree at
 
-We already have code in the driver to convert a selector to the
-voltage.  Why duplicate
-that inline in spmi_regulator_ftsmps426_set_voltage?
+   https://git.kernel.org/pub/scm/linux/kernel/git/broonie/regulator.git for-5.3
 
->
-> > +spmi_regulator_ftsmps426_set_mode(struct regulator_dev *rdev, unsigned int mode)
-> > +{
-> > +     struct spmi_regulator *vreg = rdev_get_drvdata(rdev);
-> > +     u8 mask = SPMI_FTSMPS426_MODE_MASK;
-> > +     u8 val;
-> > +
-> > +     switch (mode) {
-> > +     case REGULATOR_MODE_NORMAL:
-> > +             val = SPMI_FTSMPS426_MODE_HPM_MASK;
-> > +             break;
-> > +     case REGULATOR_MODE_FAST:
-> > +             val = SPMI_FTSMPS426_MODE_AUTO_MASK;
-> > +             break;
-> > +     default:
-> > +             val = SPMI_FTSMPS426_MODE_LPM_MASK;
-> > +             break;
-> > +     }
->
-> This should validate, it shouldn't just translate invalid values into
-> valid ones.
+All being well this means that it will be integrated into the linux-next
+tree (usually sometime in the next 24 hours) and sent to Linus during
+the next merge window (or sooner if it is a bug fix), however if
+problems are discovered then the patch may be dropped or reverted.  
 
-Validate what?  The other defines are REGULATOR_MODE_IDLE
-and REGULATOR_MODE_STANDBY which correspond to the LPM
-mode.  Or are you suggesting that regulator framework is going to pass
-REGULATOR_MODE_INVALID to this operation?
+You may get further e-mails resulting from automated or manual testing
+and review of the tree, please engage with people reporting problems and
+send followup patches addressing any issues that are reported if needed.
+
+If any updates are required or you are submitting further changes they
+should be sent as incremental updates against current git, existing
+patches will not be replaced.
+
+Please add any relevant lists and maintainers to the CCs when replying
+to this mail.
+
+Thanks,
+Mark
+
+From ba576a6232dc06605f4edfaeea9b526ba7724f84 Mon Sep 17 00:00:00 2001
+From: Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
+Date: Thu, 13 Jun 2019 14:25:31 -0700
+Subject: [PATCH] regulator: qcom_spmi: Refactor get_mode/set_mode
+
+spmi_regulator_common_get_mode and spmi_regulator_common_set_mode use
+multi-level ifs which mirror a switch statement.  Refactor to use a switch
+statement to make the code flow more clear.
+
+Signed-off-by: Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
+Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+Signed-off-by: Mark Brown <broonie@kernel.org>
+---
+ drivers/regulator/qcom_spmi-regulator.c | 26 +++++++++++++++++--------
+ 1 file changed, 18 insertions(+), 8 deletions(-)
+
+diff --git a/drivers/regulator/qcom_spmi-regulator.c b/drivers/regulator/qcom_spmi-regulator.c
+index 42c429d50743..1b3383a24c9d 100644
+--- a/drivers/regulator/qcom_spmi-regulator.c
++++ b/drivers/regulator/qcom_spmi-regulator.c
+@@ -911,13 +911,16 @@ static unsigned int spmi_regulator_common_get_mode(struct regulator_dev *rdev)
+ 
+ 	spmi_vreg_read(vreg, SPMI_COMMON_REG_MODE, &reg, 1);
+ 
+-	if (reg & SPMI_COMMON_MODE_HPM_MASK)
+-		return REGULATOR_MODE_NORMAL;
++	reg &= SPMI_COMMON_MODE_HPM_MASK | SPMI_COMMON_MODE_AUTO_MASK;
+ 
+-	if (reg & SPMI_COMMON_MODE_AUTO_MASK)
++	switch (reg) {
++	case SPMI_COMMON_MODE_HPM_MASK:
++		return REGULATOR_MODE_NORMAL;
++	case SPMI_COMMON_MODE_AUTO_MASK:
+ 		return REGULATOR_MODE_FAST;
+-
+-	return REGULATOR_MODE_IDLE;
++	default:
++		return REGULATOR_MODE_IDLE;
++	}
+ }
+ 
+ static int
+@@ -925,12 +928,19 @@ spmi_regulator_common_set_mode(struct regulator_dev *rdev, unsigned int mode)
+ {
+ 	struct spmi_regulator *vreg = rdev_get_drvdata(rdev);
+ 	u8 mask = SPMI_COMMON_MODE_HPM_MASK | SPMI_COMMON_MODE_AUTO_MASK;
+-	u8 val = 0;
++	u8 val;
+ 
+-	if (mode == REGULATOR_MODE_NORMAL)
++	switch (mode) {
++	case REGULATOR_MODE_NORMAL:
+ 		val = SPMI_COMMON_MODE_HPM_MASK;
+-	else if (mode == REGULATOR_MODE_FAST)
++		break;
++	case REGULATOR_MODE_FAST:
+ 		val = SPMI_COMMON_MODE_AUTO_MASK;
++		break;
++	default:
++		val = 0;
++		break;
++	}
+ 
+ 	return spmi_vreg_update_bits(vreg, SPMI_COMMON_REG_MODE, val, mask);
+ }
+-- 
+2.20.1
+
