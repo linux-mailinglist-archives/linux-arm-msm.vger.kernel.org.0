@@ -2,29 +2,29 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 447B4480A6
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Jun 2019 13:29:26 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 29A6848118
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Jun 2019 13:43:29 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727771AbfFQL3A (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 17 Jun 2019 07:29:00 -0400
-Received: from s3.sipsolutions.net ([144.76.43.62]:40282 "EHLO
+        id S1726424AbfFQLmz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 17 Jun 2019 07:42:55 -0400
+Received: from s3.sipsolutions.net ([144.76.43.62]:40640 "EHLO
         sipsolutions.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725681AbfFQL3A (ORCPT
+        with ESMTP id S1725763AbfFQLmz (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 17 Jun 2019 07:29:00 -0400
+        Mon, 17 Jun 2019 07:42:55 -0400
 Received: by sipsolutions.net with esmtpsa (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
         (Exim 4.92)
         (envelope-from <johannes@sipsolutions.net>)
-        id 1hcpoX-0003Tn-Jd; Mon, 17 Jun 2019 13:28:41 +0200
-Message-ID: <066e9b39f937586f0f922abf801351553ec2ba1d.camel@sipsolutions.net>
+        id 1hcq22-0003pC-6x; Mon, 17 Jun 2019 13:42:38 +0200
+Message-ID: <dbb32f185d2c3a654083ee0a7188379e1f88d899.camel@sipsolutions.net>
 Subject: Re: [PATCH v2 00/17] net: introduce Qualcomm IPA driver
 From:   Johannes Berg <johannes@sipsolutions.net>
-To:     Arnd Bergmann <arnd@arndb.de>
-Cc:     Alex Elder <elder@linaro.org>, abhishek.esse@gmail.com,
+To:     Arnd Bergmann <arnd@arndb.de>, Dan Williams <dcbw@redhat.com>
+Cc:     Subash Abhinov Kasiviswanathan <subashab@codeaurora.org>,
+        Alex Elder <elder@linaro.org>, abhishek.esse@gmail.com,
         Ben Chan <benchan@google.com>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
         cpratapa@codeaurora.org, David Miller <davem@davemloft.net>,
-        Dan Williams <dcbw@redhat.com>,
         DTML <devicetree@vger.kernel.org>,
         Eric Caruso <ejcaruso@google.com>, evgreen@chromium.org,
         Ilias Apalodimas <ilias.apalodimas@linaro.org>,
@@ -32,14 +32,19 @@ Cc:     Alex Elder <elder@linaro.org>, abhishek.esse@gmail.com,
         linux-arm-msm@vger.kernel.org,
         Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
         linux-soc@vger.kernel.org, Networking <netdev@vger.kernel.org>,
-        Subash Abhinov Kasiviswanathan <subashab@codeaurora.org>,
         syadagir@codeaurora.org
-Date:   Mon, 17 Jun 2019 13:28:39 +0200
-In-Reply-To: <CAK8P3a0kV-i7BJJ2X6C=5n65rSGfo8fUiC4J_G-+M8EctYKbkg@mail.gmail.com> (sfid-20190611_135708_651569_0097B773)
+Date:   Mon, 17 Jun 2019 13:42:36 +0200
+In-Reply-To: <CAK8P3a2nzZKtshYfomOOSYkqx5HdU15Wr9b+3va0B1euNhFOAg@mail.gmail.com> (sfid-20190612_170637_190349_3B0027EE)
 References: <380a6185-7ad1-6be0-060b-e6e5d4126917@linaro.org>
          <a94676381a5ca662c848f7a725562f721c43ce76.camel@sipsolutions.net>
          <CAK8P3a0kV-i7BJJ2X6C=5n65rSGfo8fUiC4J_G-+M8EctYKbkg@mail.gmail.com>
-         (sfid-20190611_135708_651569_0097B773)
+         <fc0d08912bc10ad089eb74034726308375279130.camel@redhat.com>
+         <36bca57c999f611353fd9741c55bb2a7@codeaurora.org>
+         <153fafb91267147cf22e2bf102dd822933ec823a.camel@redhat.com>
+         <CAK8P3a2Y+tcL1-V57dtypWHndNT3eDJdcKj29c_v+k8o1HHQig@mail.gmail.com>
+         <f4249aa5f5acdd90275eda35aa16f3cfb29d29be.camel@redhat.com>
+         <CAK8P3a2nzZKtshYfomOOSYkqx5HdU15Wr9b+3va0B1euNhFOAg@mail.gmail.com>
+         (sfid-20190612_170637_190349_3B0027EE)
 Content-Type: text/plain; charset="UTF-8"
 X-Mailer: Evolution 3.28.5 (3.28.5-2.fc28) 
 Mime-Version: 1.0
@@ -49,121 +54,127 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, 2019-06-11 at 13:56 +0200, Arnd Bergmann wrote:
-> On Tue, Jun 11, 2019 at 10:12 AM Johannes Berg
-> <johannes@sipsolutions.net> wrote:
-> 
-> > > As I've made clear before, my work on this has been focused on the IPA transport,
-> > > and some of this higher-level LTE architecture is new to me.  But it
-> > > seems pretty clear that an abstracted WWAN subsystem is a good plan,
-> > > because these devices represent a superset of what a "normal" netdev
-> > > implements.
+On Wed, 2019-06-12 at 17:06 +0200, Arnd Bergmann wrote:
+> On Wed, Jun 12, 2019 at 4:28 PM Dan Williams <dcbw@redhat.com> wrote:
+> > On Wed, 2019-06-12 at 10:31 +0200, Arnd Bergmann wrote:
+> > > On Tue, Jun 11, 2019 at 7:23 PM Dan Williams <dcbw@redhat.com> wrote:
 > > 
-> > I'm not sure I'd actually call it a superset. By themselves, these
-> > netdevs are actually completely useless to the network stack, AFAICT.
-> > Therefore, the overlap with netdevs you can really use with the network
-> > stack is pretty small?
+> > I was trying to make the point that rmnet doesn't need to care about
+> > how the QMAP packets get to the device itself; it can be pretty generic
+> > so that it can be used by IPA/qmi_wwan/rmnet_smd/etc.
 > 
-> I think Alex meant the concept of having a type of netdev with a generic
-> user space interface for wwan and similar to a wlan device, as I understood
-> you had suggested as well, as opposed to a stacked device as in
-> rmnet or those drivers it seems to be modeled after (vlan, ip tunnel, ...)/.
+> rmnet at the moment is completely generic in that regard already,
+> however it is implemented as a tunnel driver talking to another
+> device rather than an abstraction layer below that driver.
 
-I guess. It is indeed currently modelled after the stacked devices, but
-those regular netdevs are inherently useful by themselves, you don't
-*have* to tunnel or use VLANs after all.
+It doesn't really actually *do* much other than muck with the headers a
+small amount, but even that isn't really much.
 
-With rmnet, the underlying netdev *isn't* useful by itself, because
-you're always forced to have the stacked rmnet device on top.
+You can probably implement that far more efficiently on some devices
+where you have a semi-decent DMA engine that at least supports S/G.
 
-
-> > > HOWEVER I disagree with your suggestion that the IPA code should
-> > > not be committed until after that is all sorted out.  In part it's
-> > > for selfish reasons, but I think there are legitimate reasons to
-> > > commit IPA now *knowing* that it will need to be adapted to fit
-> > > into the generic model that gets defined and developed.  Here
-> > > are some reasons why.
+> > > I understand that the rmnet model was intended to provide a cleaner
+> > > abstraction, but it's not how we normally structure subsystems in
+> > > Linux, and moving to a model more like how wireless_dev works
+> > > would improve both readability and performance, as you describe
+> > > it, it would be more like (ignoring for now the need for multiple
+> > > connections):
+> > > 
+> > >    ipa_dev
+> > >         rmnet_dev
+> > >                wwan_dev
+> > >                       net_device
 > > 
-> > I can't really argue with those, though I would point out that the
-> > converse also holds - if we commit to this now, then we will have to
-> > actually keep the API offered by IPA/rmnet today, so we cannot actually
-> > remove the netdev again, even if we do migrate it to offer support for a
-> > WWAN framework in the future.
+> > Perhaps I'm assuming too much from this diagram but this shows a 1:1
+> > between wwan_dev and "lower" devices.
+
+I guess the fuller picture would be something like
+
+ipa_dev
+	rmnet_dev
+		wwan_dev
+			net_device*
+
+(i.e. with multiple net_devices)
+
+> > What Johannes is proposing (IIRC) is something a bit looser where a
+> > wwan_dev does not necessarily provide netdev itself, but is instead the
+> > central point that various channels (control, data, gps, sim card, etc)
+> > register with. That way the wwan_dev can provide an overall view of the
+> > WWAN device to userspace, and userspace can talk to the wwan_dev to ask
+> > the lower drivers (ipa, rmnet, etc) to create new channels (netdev,
+> > tty, otherwise) when the control channel has told the modem firmware to
+> > expect one.
+
+Yeah, that's more what I had in mind after all our discussions (will
+continue this below).
+
+> Right, as I noted above, I simplified it a bit. We probably want to
+> have multiple net_device instances for an ipa_dev, so there has
+> to be a 1:n relationship instead of 1:1 at one of the intermediate
+> levels, but it's not obvious which level that should be.
 > 
-> Right. The interface to support rmnet might be simple enough to keep
-> next to what becomes the generic interface, but it will always continue
-> to be an annoyance.
+> In theory we could even have a single net_device instance correspond
+> to the ipa_dev, but then have multiple IP addresses bound to it,
+> so each IP address corresponds to a channel/queue/napi_struct,
+> but the user visible object remains a single device.
 
-Not easily, because fundamentally it requires an underlying netdev to
-have an ifindex, so it wouldn't just be another API to keep around
-(which I'd classify as an annoyance) but also a whole separate netdev
-that's exposed by this IPA driver, for basically this purpose only.
-
-> > I dunno if it really has to be months. I think we can cobble something
-> > together relatively quickly that addresses the needs of IPA more
-> > specifically, and then extend later?
-> > 
-> > But OTOH it may make sense to take a more paced approach and think
-> > about the details more carefully than we have over in the other thread so far.
-> 
-> I would hope that as soon as we can agree on a general approach, it
-> would also be possible to merge a minimal implementation into the kernel
-> along with IPA. Alex already mentioned that IPA in its current state does
-> not actually support more than one data channel, so the necessary
-> setup for it becomes even simpler.
-
-Interesting, I'm not even sure how the driver can stop multiple channels
-in the rmnet model?
-
-> At the moment, the rmnet configuration in include/uapi/linux/if_link.h
-> is almost trivial, with the three pieces of information needed being
-> an IFLA_LINK to point to the real device (not needed if there is only
-> one device per channel, instead of two), the IFLA_RMNET_MUX_ID
-> setting the ID of the muxing channel (not needed if there is only
-> one channel ?), a way to specify software bridging between channels
-> (not useful if there is only one channel) 
-
-I think the MUX ID is something we *would* want, and we'd probably want
-a channel type as well, so as to not paint ourselves into a corner where
-the default ends up being whatever IPA supports right now.
-
-The software bridging is very questionable to start with, I'd advocate
-not supporting that at all but adding tracepoints or similar if needed
-for debugging instead.
+I don't think this latter (multiple IP addresses) works well - you want
+a hardware specific header ("ETH_P_MAP") to carry the channel ID,
+without looking up the IP address and all that.
 
 
-> and a few flags that I assume
-> must match the remote end:
-> 
-> #define RMNET_FLAGS_INGRESS_DEAGGREGATION         (1U << 0)
-> #define RMNET_FLAGS_INGRESS_MAP_COMMANDS          (1U << 1)
-> #define RMNET_FLAGS_INGRESS_MAP_CKSUMV4           (1U << 2)
-> #define RMNET_FLAGS_EGRESS_MAP_CKSUMV4            (1U << 3)
+But anyway, as I alluded to above, I had something like this in mind:
 
-I don't really know about these.
+driver_dev
+  struct device *dev (USB, PCI, ...)
+  net_device NA
+  net_device NB
+  tty TA
+ ...
 
-> > If true though, then I think this would be the killer argument *in
-> > favour* of *not* merging this - because that would mean we *don't* have
-> > to actually keep the rmnet API around for all foreseeable future.
-> 
-> I would agree with that. From the code I can see no other driver
-> including the rmnet protocol header (see the discussion about moving
-> the header to include/linux in order to merge ipa), and I don't see
-> any other driver referencing ETH_P_MAP either. My understanding
-> is that any driver used by rmnet would require both, but they are
-> all out-of-tree at the moment.
+(I'm cutting out the rmnet layer here for now)
 
-I guess that would mean we have more work to do here, but it also means
-we don't have to support these interfaces forever.
+while having a separate that just links all the pieces together:
 
-I'm not *entirely* convinced though. rmnet in itself doesn't really seem
-to require anything from the underlying netdev, so if there's a driver
-that just blindly passes things through to the hardware expecting the
-right configuration, we wouldn't really see it this way?
+wwan_device W
+  ---> dev
+  ---> NA
+  ---> NB
+  ---> TA
 
-OTOH, such a driver would probably blow up completely if somebody tried
-to use it without rmnet on top, and so it would at least have to check
-for ETH_P_MAP?
+So the driver is still responsible for creating the netdevs (or can of
+course delegate that to an "rmnet" library), but then all it also does
+is register the netdevs with the WWAN core like
+
+	wwan_add_netdev(dev, NA)
+
+and the WWAN core would allocate the wwan_device W for this.
+
+That way, the drivers can concentrate on providing all the necessary
+bits, and - crucially - even *different* drivers can end up linking to
+the same wwan_device. For example, if you have a modem that has a multi-
+function USB device, then an ethernet driver might create the netdev and
+a tty driver might create the control channel, but if they both agree on
+using the right "struct device" instance, you can still get the correct
+wwan_device out of it all.
+
+And, in fact, some should then be
+
+	wwan_maybe_add_netdev(dev, N)
+
+because the ethernet driver may not know if it attached to a modem or
+not, but if the control channel also attaches it's a modem for sure,
+with that ethernet channel attached to it.
+
+Additionally, I'm thinking API such as
+
+	wwan_add(dev, &ops, opsdata)
+
+that doesn't automatically attach any channels, but provides "ops" to
+the core to create appropriate channels. I think this latter would be
+something for IPA/rmnet to use, perhaps for rmnet to offer the right ops
+structure.
 
 johannes
 
