@@ -2,230 +2,146 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 193BD47DE6
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Jun 2019 11:07:44 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 1DF4547E8B
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Jun 2019 11:35:13 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727965AbfFQJHn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 17 Jun 2019 05:07:43 -0400
-Received: from mail-lj1-f194.google.com ([209.85.208.194]:39639 "EHLO
-        mail-lj1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727963AbfFQJHn (ORCPT
+        id S1725906AbfFQJfH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 17 Jun 2019 05:35:07 -0400
+Received: from smtp.codeaurora.org ([198.145.29.96]:47804 "EHLO
+        smtp.codeaurora.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725837AbfFQJfH (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 17 Jun 2019 05:07:43 -0400
-Received: by mail-lj1-f194.google.com with SMTP id v18so8528743ljh.6
-        for <linux-arm-msm@vger.kernel.org>; Mon, 17 Jun 2019 02:07:41 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=/TxligxYY+aC6zWv3opQDSxtXze7SE7PmAaCKTySTbw=;
-        b=OneVp8OoS59dMfuq/SVYMseCzQMdKItcQ9lOFapT7muQ91/cHSc9gI+mm1EskhPgWJ
-         GxqVIKdh4rtjOt5d7TxbpV0zqSy0zC/I+8yOGIJWzlnzMY/mMRIr/g36Ry9EGvTEiBn8
-         Q7JLH2gJMb3Jnmf/kG9LlXnb6KjRMOMwJbc+IAVbRwf600Y9OslI4zNgq1ZBclOalNVy
-         W4DPtpI690/UWbXIkguNC6uEyrXLAwEEDkC1aq6cS1Isj5l0PndwjSNeGfpPb8ES9aL2
-         Cec4hz3bXFPFVNsp4N0V6fpTHFN9/MeQhcXF5WIq7gdRVfTUsHymJyRUM9f+D8EKIb3Q
-         NWbQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=/TxligxYY+aC6zWv3opQDSxtXze7SE7PmAaCKTySTbw=;
-        b=Hvk67wig9eW29qfq8odqHmWY4ZVg76tNsE3kuuyJ9STKsl5fDVit9kJVxzeBZelWAF
-         c0msmaB+hirN84WNVOUNWyMN6d4bFJE8qRh53+0wvqHyeq+ZKVHufTVUsZkWd5O+Ylsf
-         TgN0GqlOPbhdrGC05oXwP0iYW4v49ESsCkQuW8sTvGtHwxg1ed3ZTf3UFfrMJZD049zd
-         KuSwlmYTU5QRP9YrhDbAugmLvzK0khdwXw3UE9e7SQHvdH5uTRqO/eOhva/zBwqH7wfP
-         o//BDX7Dz0Z8Z2WxTT+9vnd2lY3LqfVmpp9A2BGdSzOgXvCU47/0uO7mJcQvuhMJrqjA
-         cHJQ==
-X-Gm-Message-State: APjAAAXVih5VtxO5RngpeRLCM0AZyTL2RSbb90ZU2hn0O0kEcT6ZfMiy
-        /loovolVD+ZWLP/D4ElfPvFKtA==
-X-Google-Smtp-Source: APXvYqzT3vJzFja/mIdCxlpicnnkGB232vyK8CsXjU7jJNTIiyqc91dE/5odfcwqIBnVGt0bssu39Q==
-X-Received: by 2002:a2e:9610:: with SMTP id v16mr12037660ljh.229.1560762461168;
-        Mon, 17 Jun 2019 02:07:41 -0700 (PDT)
-Received: from [192.168.27.209] ([37.157.136.206])
-        by smtp.googlemail.com with ESMTPSA id v2sm2024909ljb.65.2019.06.17.02.07.40
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 17 Jun 2019 02:07:40 -0700 (PDT)
-Subject: Re: [PATCH 5/5] media: venus: Update core selection
-To:     Aniket Masule <amasule@codeaurora.org>, linux-media@vger.kernel.org
-Cc:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        vgarodia@codeaurora.org
-References: <1560233130-27264-1-git-send-email-amasule@codeaurora.org>
- <1560233130-27264-6-git-send-email-amasule@codeaurora.org>
-From:   Stanimir Varbanov <stanimir.varbanov@linaro.org>
-Message-ID: <8f2e1cf4-9d9c-088b-740f-d8bf1c9028df@linaro.org>
-Date:   Mon, 17 Jun 2019 12:07:39 +0300
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.7.0
-MIME-Version: 1.0
-In-Reply-To: <1560233130-27264-6-git-send-email-amasule@codeaurora.org>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+        Mon, 17 Jun 2019 05:35:07 -0400
+Received: by smtp.codeaurora.org (Postfix, from userid 1000)
+        id 7D9E7608BA; Mon, 17 Jun 2019 09:35:06 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
+        s=default; t=1560764106;
+        bh=OJbahePcE2ec6ZxEJb8UDNZ0O+db2KmSKPFs24UUzRE=;
+        h=From:To:Cc:Subject:Date:From;
+        b=W1ZOcvRXsqJrU2jAsG2JlT2lsG5XC05Mb5P35CsQe9y+3au/pNLvVmNALeeeWc1R1
+         SHPCrQvsR1gu/4+inLNSHBuZ7Vw3UTSB/coiTp/baZSXvyxqnD0FvofGGPNeZH/zsb
+         FlBDaYGIHgedIS7bdbg7JY5J7SkCOoVmoooVPVWE=
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        pdx-caf-mail.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.7 required=2.0 tests=ALL_TRUSTED,BAYES_00,
+        DKIM_INVALID,DKIM_SIGNED,SPF_NONE autolearn=no autolearn_force=no
+        version=3.4.0
+Received: from neeraju-linux.qualcomm.com (blr-c-bdr-fw-01_globalnat_allzones-outside.qualcomm.com [103.229.19.19])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: neeraju@smtp.codeaurora.org)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 525A960867;
+        Mon, 17 Jun 2019 09:35:03 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
+        s=default; t=1560764106;
+        bh=OJbahePcE2ec6ZxEJb8UDNZ0O+db2KmSKPFs24UUzRE=;
+        h=From:To:Cc:Subject:Date:From;
+        b=W1ZOcvRXsqJrU2jAsG2JlT2lsG5XC05Mb5P35CsQe9y+3au/pNLvVmNALeeeWc1R1
+         SHPCrQvsR1gu/4+inLNSHBuZ7Vw3UTSB/coiTp/baZSXvyxqnD0FvofGGPNeZH/zsb
+         FlBDaYGIHgedIS7bdbg7JY5J7SkCOoVmoooVPVWE=
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 525A960867
+Authentication-Results: pdx-caf-mail.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: pdx-caf-mail.web.codeaurora.org; spf=none smtp.mailfrom=neeraju@codeaurora.org
+From:   Neeraj Upadhyay <neeraju@codeaurora.org>
+To:     bjorn.andersson@linaro.org, sboyd@codeaurora.org,
+        linus.walleij@linaro.org, timur@codeaurora.org
+Cc:     linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org,
+        linux-kernel@vger.kernel.org,
+        Srinivas Ramana <sramana@codeaurora.org>,
+        Neeraj Upadhyay <neeraju@codeaurora.org>
+Subject: [PATCH v2] pinctrl: qcom: Add irq_enable callback for msm gpio
+Date:   Mon, 17 Jun 2019 15:04:50 +0530
+Message-Id: <1560764090-22740-1-git-send-email-neeraju@codeaurora.org>
+X-Mailer: git-send-email 1.9.1
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Aniket,
+From: Srinivas Ramana <sramana@codeaurora.org>
 
-On 6/11/19 9:05 AM, Aniket Masule wrote:
-> Present core assignment is static. Introduced load balancing
-> across the cores. Load on earch core is calculated and core
-> with minimum load is assigned to given instance.
-> 
-> Signed-off-by: Aniket Masule <amasule@codeaurora.org>
-> ---
->  drivers/media/platform/qcom/venus/helpers.c | 50 +++++++++++++++++++++++++----
->  drivers/media/platform/qcom/venus/helpers.h |  2 +-
->  drivers/media/platform/qcom/venus/vdec.c    |  5 +--
->  drivers/media/platform/qcom/venus/venc.c    |  4 ++-
->  4 files changed, 51 insertions(+), 10 deletions(-)
-> 
-> diff --git a/drivers/media/platform/qcom/venus/helpers.c b/drivers/media/platform/qcom/venus/helpers.c
-> index edb653e..38d617b 100644
-> --- a/drivers/media/platform/qcom/venus/helpers.c
-> +++ b/drivers/media/platform/qcom/venus/helpers.c
-> @@ -497,6 +497,16 @@ static int load_scale_clocks(struct venus_inst *inst)
->  		return scale_clocks_vpu4(inst);
->  }
->  
-> +int set_core_usage(struct venus_inst *inst, u32 usage)
-> +{
-> +	const u32 ptype = HFI_PROPERTY_CONFIG_VIDEOCORES_USAGE;
-> +	struct hfi_videocores_usage_type cu;
-> +
-> +	cu.video_core_enable_mask = usage;
-> +
-> +	return hfi_session_set_property(inst, ptype, &cu);
-> +}
-> +
->  static void fill_buffer_desc(const struct venus_buffer *buf,
->  			     struct hfi_buffer_desc *bd, bool response)
->  {
-> @@ -800,19 +810,47 @@ int venus_helper_set_work_mode(struct venus_inst *inst, u32 mode)
->  }
->  EXPORT_SYMBOL_GPL(venus_helper_set_work_mode);
->  
-> -int venus_helper_set_core_usage(struct venus_inst *inst, u32 usage)
-> +int venus_helper_decide_core(struct venus_inst *inst, u32 cores_max)
+Introduce the irq_enable callback which will be same as irq_unmask
+except that it will also clear the status bit before unmask.
 
-I think venus_helper_set_core is better?
+This will help in clearing any erroneous interrupts that would
+have got latched when the interrupt is not in use.
 
->  {
-> -	const u32 ptype = HFI_PROPERTY_CONFIG_VIDEOCORES_USAGE;
-> -	struct hfi_videocores_usage_type cu;
-> +	struct venus_core *core = inst->core;
-> +	u32 min_core_id = 0, core0_load = 0, core1_load = 0;
-> +	unsigned long min_load, max_freq, cur_inst_load;
-> +	int ret;
->  
->  	if (!IS_V4(inst->core))
->  		return 0;
->  
-> -	cu.video_core_enable_mask = usage;
-> +	core0_load = load_per_core(core, VIDC_CORE_ID_1);
-> +	core1_load = load_per_core(core, VIDC_CORE_ID_2);
->  
-> -	return hfi_session_set_property(inst, ptype, &cu);
-> +	min_core_id = core0_load < core1_load ? VIDC_CORE_ID_1 : VIDC_CORE_ID_2;
-> +	min_load = min(core0_load, core1_load);
-> +
-> +	if (cores_max < VIDC_CORE_ID_1) {
-> +		min_core_id = VIDC_CORE_ID_1;
-> +		min_load = core0_load;
-> +	}
+There may be devices like UART which can use the same gpio line
+for data rx as well as a wakeup gpio when in suspend. The data that
+was flowing on the line may latch the interrupt and when we enable
+the interrupt before going to suspend, this would trigger the
+unexpected interrupt. This change helps clearing the interrupt
+so that these unexpected interrupts gets cleared.
 
-could you please move that fragment just after IS_V4 check and return an
-error if cores_max < VIDC_CORE_ID_1.
+Signed-off-by: Srinivas Ramana <sramana@codeaurora.org>
+Signed-off-by: Neeraj Upadhyay <neeraju@codeaurora.org>
+---
 
-> +
-> +	cur_inst_load = load_per_instance(inst) *
-> +		inst->clk_data.codec_data->vpp_cycles;
-> +	max_freq = core->res->freq_tbl[0].freq;
-> +
-> +	if ((cur_inst_load + min_load)	> max_freq) {
-> +		dev_warn(core->dev, "HW is overloaded, needed: %lu max: %lu\n",
-> +			 cur_inst_load, max_freq);
-> +		return -EINVAL;
-> +	}
-> +
-> +	ret = set_core_usage(inst, min_core_id);
-> +
-> +	if (ret)
-> +		return ret;
-> +
-> +	inst->clk_data.core_id = min_core_id;
-> +
-> +	return 0;
->  }
-> -EXPORT_SYMBOL_GPL(venus_helper_set_core_usage);
-> +EXPORT_SYMBOL_GPL(venus_helper_decide_core);
->  
->  int venus_helper_init_codec_data(struct venus_inst *inst)
->  {
-> diff --git a/drivers/media/platform/qcom/venus/helpers.h b/drivers/media/platform/qcom/venus/helpers.h
-> index f9360a8..c41ceb3 100644
-> --- a/drivers/media/platform/qcom/venus/helpers.h
-> +++ b/drivers/media/platform/qcom/venus/helpers.h
-> @@ -42,7 +42,7 @@ int venus_helper_set_output_resolution(struct venus_inst *inst,
->  				       u32 buftype);
->  int venus_helper_set_work_mode(struct venus_inst *inst, u32 mode);
->  int venus_helper_init_codec_data(struct venus_inst *inst);
-> -int venus_helper_set_core_usage(struct venus_inst *inst, u32 usage);
-> +int venus_helper_decide_core(struct venus_inst *inst, u32 cores_max);
->  int venus_helper_set_num_bufs(struct venus_inst *inst, unsigned int input_bufs,
->  			      unsigned int output_bufs,
->  			      unsigned int output2_bufs);
-> diff --git a/drivers/media/platform/qcom/venus/vdec.c b/drivers/media/platform/qcom/venus/vdec.c
-> index 51795fd..9f988ba 100644
-> --- a/drivers/media/platform/qcom/venus/vdec.c
-> +++ b/drivers/media/platform/qcom/venus/vdec.c
-> @@ -544,14 +544,15 @@ static int vdec_output_conf(struct venus_inst *inst)
->  	u32 height = inst->out_height;
->  	u32 out_fmt, out2_fmt;
->  	bool ubwc = false;
-> -	u32 ptype;
-> +	u32 ptype, cores_max;
->  	int ret;
->  
->  	ret = venus_helper_set_work_mode(inst, VIDC_WORK_MODE_2);
->  	if (ret)
->  		return ret;
->  
-> -	ret = venus_helper_set_core_usage(inst, VIDC_CORE_ID_1);
-> +	cores_max = core_num_max(inst);
+Changes since v1:
+- Extracted common code into __msm_gpio_irq_unmask().
 
-please move core_max calculation in the venus_helper_decide_core() here
-and below.
+ drivers/pinctrl/qcom/pinctrl-msm.c | 25 ++++++++++++++++++++++++-
+ 1 file changed, 24 insertions(+), 1 deletion(-)
 
-> +	ret = venus_helper_decide_core(inst, cores_max);
->  	if (ret)
->  		return ret;
->  
-> diff --git a/drivers/media/platform/qcom/venus/venc.c b/drivers/media/platform/qcom/venus/venc.c
-> index 792cdce..ed39efd 100644
-> --- a/drivers/media/platform/qcom/venus/venc.c
-> +++ b/drivers/media/platform/qcom/venus/venc.c
-> @@ -654,13 +654,15 @@ static int venc_set_properties(struct venus_inst *inst)
->  	struct hfi_quantization quant;
->  	struct hfi_quantization_range quant_range;
->  	u32 ptype, rate_control, bitrate, profile = 0, level = 0;
-> +	u32 cores_max;
->  	int ret;
->  
->  	ret = venus_helper_set_work_mode(inst, VIDC_WORK_MODE_2);
->  	if (ret)
->  		return ret;
->  
-> -	ret = venus_helper_set_core_usage(inst, VIDC_CORE_ID_2);
-> +	cores_max = core_num_max(inst);
-> +	ret = venus_helper_decide_core(inst, cores_max);
->  	if (ret)
->  		return ret;
->  
-> 
-
+diff --git a/drivers/pinctrl/qcom/pinctrl-msm.c b/drivers/pinctrl/qcom/pinctrl-msm.c
+index 6e319bc..2a127f0 100644
+--- a/drivers/pinctrl/qcom/pinctrl-msm.c
++++ b/drivers/pinctrl/qcom/pinctrl-msm.c
+@@ -729,7 +729,7 @@ static void msm_gpio_irq_mask(struct irq_data *d)
+ 	raw_spin_unlock_irqrestore(&pctrl->lock, flags);
+ }
+ 
+-static void msm_gpio_irq_unmask(struct irq_data *d)
++static void __msm_gpio_irq_unmask(struct irq_data *d, bool status_clear)
+ {
+ 	struct gpio_chip *gc = irq_data_get_irq_chip_data(d);
+ 	struct msm_pinctrl *pctrl = gpiochip_get_data(gc);
+@@ -741,6 +741,17 @@ static void msm_gpio_irq_unmask(struct irq_data *d)
+ 
+ 	raw_spin_lock_irqsave(&pctrl->lock, flags);
+ 
++	if (status_clear) {
++		/*
++		 * clear the interrupt status bit before unmask to avoid
++		 * any erroneous interrupts that would have got latched
++		 * when the interrupt is not in use.
++		 */
++		val = msm_readl_intr_status(pctrl, g);
++		val &= ~BIT(g->intr_status_bit);
++		msm_writel_intr_status(val, pctrl, g);
++	}
++
+ 	val = msm_readl_intr_cfg(pctrl, g);
+ 	val |= BIT(g->intr_raw_status_bit);
+ 	val |= BIT(g->intr_enable_bit);
+@@ -751,6 +762,17 @@ static void msm_gpio_irq_unmask(struct irq_data *d)
+ 	raw_spin_unlock_irqrestore(&pctrl->lock, flags);
+ }
+ 
++static void msm_gpio_irq_enable(struct irq_data *d)
++{
++
++	__msm_gpio_irq_unmask(d, true);
++}
++
++static void msm_gpio_irq_unmask(struct irq_data *d)
++{
++	__msm_gpio_irq_unmask(d, false);
++}
++
+ static void msm_gpio_irq_ack(struct irq_data *d)
+ {
+ 	struct gpio_chip *gc = irq_data_get_irq_chip_data(d);
+@@ -978,6 +1000,7 @@ static int msm_gpio_init(struct msm_pinctrl *pctrl)
+ 	chip->need_valid_mask = msm_gpio_needs_valid_mask(pctrl);
+ 
+ 	pctrl->irq_chip.name = "msmgpio";
++	pctrl->irq_chip.irq_enable = msm_gpio_irq_enable;
+ 	pctrl->irq_chip.irq_mask = msm_gpio_irq_mask;
+ 	pctrl->irq_chip.irq_unmask = msm_gpio_irq_unmask;
+ 	pctrl->irq_chip.irq_ack = msm_gpio_irq_ack;
 -- 
-regards,
-Stan
+QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a
+member of the Code Aurora Forum, hosted by The Linux Foundation
+
