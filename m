@@ -2,83 +2,80 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 1CC824864B
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Jun 2019 16:58:58 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 7DA5148682
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Jun 2019 17:04:47 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727404AbfFQO64 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 17 Jun 2019 10:58:56 -0400
-Received: from heliosphere.sirena.org.uk ([172.104.155.198]:36616 "EHLO
-        heliosphere.sirena.org.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726215AbfFQO64 (ORCPT
+        id S1727765AbfFQPEe (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 17 Jun 2019 11:04:34 -0400
+Received: from mail-io1-f66.google.com ([209.85.166.66]:44034 "EHLO
+        mail-io1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726215AbfFQPEe (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 17 Jun 2019 10:58:56 -0400
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-        d=sirena.org.uk; s=20170815-heliosphere; h=In-Reply-To:Content-Type:
-        MIME-Version:References:Message-ID:Subject:Cc:To:From:Date:Sender:Reply-To:
-        Content-Transfer-Encoding:Content-ID:Content-Description:Resent-Date:
-        Resent-From:Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:List-Id:
-        List-Help:List-Unsubscribe:List-Subscribe:List-Post:List-Owner:List-Archive;
-         bh=KrQp+kHGo/s8VYNxSYJcNa3J6gA8cYR0tmZplHF5Dfw=; b=oJd2LEYu9LVw8yHwIIprxwQot
-        K4fJL9MOSXojhTUAcRT99AUXtqYnTjMiaybDUGAOkCcATtGdYG59fNIX57WtSUuWjTMbuFjSQwKI3
-        m5LWmuYa2HqBZURiLF4RZ9sjngucE+phqpi5dbFG/1u1RM+rG0IS1cd5xFBo3GSyKFAf0=;
-Received: from cpc102320-sgyl38-2-0-cust46.18-2.cable.virginm.net ([82.37.168.47] helo=finisterre.sirena.org.uk)
-        by heliosphere.sirena.org.uk with esmtpsa (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
-        (Exim 4.89)
-        (envelope-from <broonie@sirena.org.uk>)
-        id 1hct5x-0001sI-Oj; Mon, 17 Jun 2019 14:58:53 +0000
-Received: by finisterre.sirena.org.uk (Postfix, from userid 1000)
-        id 448F6440046; Mon, 17 Jun 2019 15:58:53 +0100 (BST)
-Date:   Mon, 17 Jun 2019 15:58:53 +0100
-From:   Mark Brown <broonie@kernel.org>
-To:     Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
-Cc:     agross@kernel.org, bjorn.andersson@linaro.org, lgirdwood@gmail.com,
-        robh+dt@kernel.org, mark.rutland@arm.com,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        devicetree@vger.kernel.org
-Subject: Re: [PATCH v4 0/7] PM8005 and PMS405 regulator support
-Message-ID: <20190617145853.GT5316@sirena.org.uk>
-References: <20190613212436.6940-1-jeffrey.l.hugo@gmail.com>
+        Mon, 17 Jun 2019 11:04:34 -0400
+Received: by mail-io1-f66.google.com with SMTP id s7so21808277iob.11;
+        Mon, 17 Jun 2019 08:04:34 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=OTD1u2qNrb/0/7aEjHb4eOnJekVh9jkQY4qQ+7iNk2U=;
+        b=AVdsXp5/9GFfwzExr0pUZOVDtunnFEYvPOMPfLBxUeDtlVYqUVcIUGRINBBKYj0jMz
+         n1CGyzri5StuE2A3ImnDJmyduzxp/w5qGp7UjAubUKf9gTtoTi+qcK2NzjBfqDi72yg8
+         r/4+V1bcJma7sNsRbVtyYNZQXybIPuKScQVrVZsO0UEFC+UzPllVqN4yZktMSQbhJvKc
+         QMoby1OdZDUtbXb6K8bDBAq/n9tX7VNIi5k9ZRGD4DL1yq94SIOmpkxRBWihzpEBer4A
+         6brBXcRe8K0jFNz+Cb/7QlG28VzvrBpk/zgvAezoPF9WahN+CUIvDEB0Yv59vMlwOjQz
+         joaQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=OTD1u2qNrb/0/7aEjHb4eOnJekVh9jkQY4qQ+7iNk2U=;
+        b=UaNI48AVvJFN9sD0xhZFQrAKIyuU75p5WDq/ke/WJEXe+AKvIoPgUW5tn8jJJ8lJAv
+         VxzRyFtqZg+LKMeg01AZwWwWcstw6Z4G6YZjRrO5IgyYq4fxGA/oXFu+Gy0tc0fLxpeN
+         HHv+/kMJxqp5deH7AiH0g6T3HdpZhyyGL2ybvITAXsqkSHyXmTv024Guff5nqlDa56xd
+         C4zV73RKrSgNoe3P2C1dWLwNZnBTD8WK+TuEBwS06o/cvumyHNpy5CxsFET6MBT3AZ3v
+         hxtiOhV2lLOSICo6C+2GpN7iP37A426Nxwt0ID96MmEtSYxYBNC360wF8eZZWHyIG4II
+         TliQ==
+X-Gm-Message-State: APjAAAXA2N60PHL9vTR5M/SI6w0WIXOYl5OiaTlT0okOeoOP2YylXibF
+        6I0FpbIerIMNa61000IXFX6XRt239DNbFC6L2LPCPQ==
+X-Google-Smtp-Source: APXvYqzJOUOditiAVeURtLpNoIA2f2xjXKzFaadRj+FHCpzqHhDXq/Ren1Xv/Tc1KCFpN37LcghdUAE+7q4iELERadU=
+X-Received: by 2002:a5d:8049:: with SMTP id b9mr171243ior.199.1560783873997;
+ Mon, 17 Jun 2019 08:04:33 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="NZ00oluAJr3A0NMv"
-Content-Disposition: inline
-In-Reply-To: <20190613212436.6940-1-jeffrey.l.hugo@gmail.com>
-X-Cookie: Editing is a rewording activity.
-User-Agent: Mutt/1.10.1 (2018-07-13)
+References: <20190613212436.6940-1-jeffrey.l.hugo@gmail.com> <20190617145853.GT5316@sirena.org.uk>
+In-Reply-To: <20190617145853.GT5316@sirena.org.uk>
+From:   Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
+Date:   Mon, 17 Jun 2019 09:04:23 -0600
+Message-ID: <CAOCk7NrSBjbyJ3YJoF22i9ysxVTw38SvsaSi9JwVrj7W8er24A@mail.gmail.com>
+Subject: Re: [PATCH v4 0/7] PM8005 and PMS405 regulator support
+To:     Mark Brown <broonie@kernel.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        lgirdwood@gmail.com, Rob Herring <robh+dt@kernel.org>,
+        Mark Rutland <mark.rutland@arm.com>,
+        MSM <linux-arm-msm@vger.kernel.org>,
+        lkml <linux-kernel@vger.kernel.org>, devicetree@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On Mon, Jun 17, 2019 at 8:58 AM Mark Brown <broonie@kernel.org> wrote:
+>
+> On Thu, Jun 13, 2019 at 02:24:36PM -0700, Jeffrey Hugo wrote:
+> > The MSM8998 MTP reference platform supplies VDD_GFX from s1 of the
+> > pm8005 PMIC.  VDD_GFX is needed to turn on the GPU.  As we are looking
+> > to bring up the GPU, add the support for pm8005 and wire up s1 in a
+> > basic manner so that we have this dependency out of the way and can
+> > focus on enabling the GPU driver.
+>
+> There's something really weird with the threading in how you posted
+> these, a few of the patches are in reply to the prior patch so indented
+> a level down.
 
---NZ00oluAJr3A0NMv
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+Sorry about that.  Bjorn pointed it out to me, and I think I figured
+out the glitch on
+my end.
 
-On Thu, Jun 13, 2019 at 02:24:36PM -0700, Jeffrey Hugo wrote:
-> The MSM8998 MTP reference platform supplies VDD_GFX from s1 of the
-> pm8005 PMIC.  VDD_GFX is needed to turn on the GPU.  As we are looking
-> to bring up the GPU, add the support for pm8005 and wire up s1 in a
-> basic manner so that we have this dependency out of the way and can
-> focus on enabling the GPU driver.
-
-There's something really weird with the threading in how you posted
-these, a few of the patches are in reply to the prior patch so indented
-a level down.
-
---NZ00oluAJr3A0NMv
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAl0HqqwACgkQJNaLcl1U
-h9D8RQf+OxNLRt9KY0qAKM/axbtNoK16v0PmHjNYLhYl5yBMi63SehdoXh1DkZY5
-pBVOnlHPnB3usazND0knM12bH9x/qWXJZeA4PPGCDwUz2SOJRxIYr7wsKNmNjV/u
-nZwsZ0dCbIFjRTZ8YCrc2FTsjCUVylqDeHzFJJ/I9nstD8POAs043rd5FIuNlGGS
-sb2Qhu94o6C8u7YUjWciJ3zjXtQM5rfcuxVpMpxX8dg55PPvk6cTeSnQwto+lpeU
-HypcRzk7F36tl5ElZPhf/WkPycNHdx8h+0oy85CVQ4/bqNb8rNDUFymfDE5qGI4o
-6qoIyaY8tuzHoiLnJNXFhtl6YzjKbw==
-=dHUK
------END PGP SIGNATURE-----
-
---NZ00oluAJr3A0NMv--
+Are you ok to proceed in the review, or do you want a repost?
