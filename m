@@ -2,70 +2,168 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 8214C47FF8
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Jun 2019 12:48:16 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 447B4480A6
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Jun 2019 13:29:26 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727385AbfFQKsP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 17 Jun 2019 06:48:15 -0400
-Received: from ns.iliad.fr ([212.27.33.1]:53100 "EHLO ns.iliad.fr"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726039AbfFQKsP (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 17 Jun 2019 06:48:15 -0400
-Received: from ns.iliad.fr (localhost [127.0.0.1])
-        by ns.iliad.fr (Postfix) with ESMTP id 699D620732;
-        Mon, 17 Jun 2019 12:48:13 +0200 (CEST)
-Received: from [192.168.108.49] (freebox.vlq16.iliad.fr [213.36.7.13])
-        by ns.iliad.fr (Postfix) with ESMTP id 55E4A206B8;
-        Mon, 17 Jun 2019 12:48:13 +0200 (CEST)
-Subject: Re: [PATCH v3 3/4] iommu/arm-smmu: Add support to handle Qcom's
- wait-for-safe logic
-To:     Vivek Gautam <vivek.gautam@codeaurora.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     MSM <linux-arm-msm@vger.kernel.org>,
-        Linux ARM <linux-arm-kernel@lists.infradead.org>
-References: <20190612071554.13573-1-vivek.gautam@codeaurora.org>
- <20190612071554.13573-4-vivek.gautam@codeaurora.org>
- <6f85b50d-4ee8-d33a-37c9-72d45eb50a9d@free.fr>
- <ec7bdccb-f8db-6dce-2454-ac2073be2c45@codeaurora.org>
-From:   Marc Gonzalez <marc.w.gonzalez@free.fr>
-Message-ID: <c6d30912-17b3-3349-e742-bbf0ff02a50f@free.fr>
-Date:   Mon, 17 Jun 2019 12:48:13 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.6.1
-MIME-Version: 1.0
-In-Reply-To: <ec7bdccb-f8db-6dce-2454-ac2073be2c45@codeaurora.org>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
+        id S1727771AbfFQL3A (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 17 Jun 2019 07:29:00 -0400
+Received: from s3.sipsolutions.net ([144.76.43.62]:40282 "EHLO
+        sipsolutions.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725681AbfFQL3A (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 17 Jun 2019 07:29:00 -0400
+Received: by sipsolutions.net with esmtpsa (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+        (Exim 4.92)
+        (envelope-from <johannes@sipsolutions.net>)
+        id 1hcpoX-0003Tn-Jd; Mon, 17 Jun 2019 13:28:41 +0200
+Message-ID: <066e9b39f937586f0f922abf801351553ec2ba1d.camel@sipsolutions.net>
+Subject: Re: [PATCH v2 00/17] net: introduce Qualcomm IPA driver
+From:   Johannes Berg <johannes@sipsolutions.net>
+To:     Arnd Bergmann <arnd@arndb.de>
+Cc:     Alex Elder <elder@linaro.org>, abhishek.esse@gmail.com,
+        Ben Chan <benchan@google.com>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        cpratapa@codeaurora.org, David Miller <davem@davemloft.net>,
+        Dan Williams <dcbw@redhat.com>,
+        DTML <devicetree@vger.kernel.org>,
+        Eric Caruso <ejcaruso@google.com>, evgreen@chromium.org,
+        Ilias Apalodimas <ilias.apalodimas@linaro.org>,
+        Linux ARM <linux-arm-kernel@lists.infradead.org>,
+        linux-arm-msm@vger.kernel.org,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        linux-soc@vger.kernel.org, Networking <netdev@vger.kernel.org>,
+        Subash Abhinov Kasiviswanathan <subashab@codeaurora.org>,
+        syadagir@codeaurora.org
+Date:   Mon, 17 Jun 2019 13:28:39 +0200
+In-Reply-To: <CAK8P3a0kV-i7BJJ2X6C=5n65rSGfo8fUiC4J_G-+M8EctYKbkg@mail.gmail.com> (sfid-20190611_135708_651569_0097B773)
+References: <380a6185-7ad1-6be0-060b-e6e5d4126917@linaro.org>
+         <a94676381a5ca662c848f7a725562f721c43ce76.camel@sipsolutions.net>
+         <CAK8P3a0kV-i7BJJ2X6C=5n65rSGfo8fUiC4J_G-+M8EctYKbkg@mail.gmail.com>
+         (sfid-20190611_135708_651569_0097B773)
+Content-Type: text/plain; charset="UTF-8"
+X-Mailer: Evolution 3.28.5 (3.28.5-2.fc28) 
+Mime-Version: 1.0
 Content-Transfer-Encoding: 7bit
-X-Virus-Scanned: ClamAV using ClamSMTP ; ns.iliad.fr ; Mon Jun 17 12:48:13 2019 +0200 (CEST)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 17/06/2019 11:50, Vivek Gautam wrote:
-
-> On 6/14/2019 6:45 PM, Marc Gonzalez wrote:
->
->> # dd if=/dev/sde of=/dev/null bs=1M status=progress
->> 3892314112 bytes (3.9 GB, 3.6 GiB) copied, 50.0042 s, 77.8 MB/s
->>
->> 80 MB/s on msm8998 -- vs -- 300 MB/s on sdm845
->>
->> Do you have the interconnect patches on sdm845 that allow boosting
->> the clock/bandwidth for specific HW blocks?
+On Tue, 2019-06-11 at 13:56 +0200, Arnd Bergmann wrote:
+> On Tue, Jun 11, 2019 at 10:12 AM Johannes Berg
+> <johannes@sipsolutions.net> wrote:
 > 
-> Umm, No. This is the upstream 5.2-rc4 plus 4-6 patches to enable display 
-> and fix splash screen.
-> Is this the performance for UFS? The numbers I posted were for UFS.
+> > > As I've made clear before, my work on this has been focused on the IPA transport,
+> > > and some of this higher-level LTE architecture is new to me.  But it
+> > > seems pretty clear that an abstracted WWAN subsystem is a good plan,
+> > > because these devices represent a superset of what a "normal" netdev
+> > > implements.
+> > 
+> > I'm not sure I'd actually call it a superset. By themselves, these
+> > netdevs are actually completely useless to the network stack, AFAICT.
+> > Therefore, the overlap with netdevs you can really use with the network
+> > stack is pretty small?
+> 
+> I think Alex meant the concept of having a type of netdev with a generic
+> user space interface for wwan and similar to a wlan device, as I understood
+> you had suggested as well, as opposed to a stacked device as in
+> rmnet or those drivers it seems to be modeled after (vlan, ip tunnel, ...)/.
 
-Correct, the numbers I provided were for msm8998 UFS...
+I guess. It is indeed currently modelled after the stacked devices, but
+those regular netdevs are inherently useful by themselves, you don't
+*have* to tunnel or use VLANs after all.
 
-Basically, it looks like sdm845 UFS is 4x faster than msm8998 UFS
-using upstream. Which is surprising (may depend on specific Flash
-chip in use though).
+With rmnet, the underlying netdev *isn't* useful by itself, because
+you're always forced to have the stacked rmnet device on top.
 
-Would be good if somebody with both boards could post numbers.
-I'll try to post "fresh" numbers when I can.
 
-Regards.
+> > > HOWEVER I disagree with your suggestion that the IPA code should
+> > > not be committed until after that is all sorted out.  In part it's
+> > > for selfish reasons, but I think there are legitimate reasons to
+> > > commit IPA now *knowing* that it will need to be adapted to fit
+> > > into the generic model that gets defined and developed.  Here
+> > > are some reasons why.
+> > 
+> > I can't really argue with those, though I would point out that the
+> > converse also holds - if we commit to this now, then we will have to
+> > actually keep the API offered by IPA/rmnet today, so we cannot actually
+> > remove the netdev again, even if we do migrate it to offer support for a
+> > WWAN framework in the future.
+> 
+> Right. The interface to support rmnet might be simple enough to keep
+> next to what becomes the generic interface, but it will always continue
+> to be an annoyance.
+
+Not easily, because fundamentally it requires an underlying netdev to
+have an ifindex, so it wouldn't just be another API to keep around
+(which I'd classify as an annoyance) but also a whole separate netdev
+that's exposed by this IPA driver, for basically this purpose only.
+
+> > I dunno if it really has to be months. I think we can cobble something
+> > together relatively quickly that addresses the needs of IPA more
+> > specifically, and then extend later?
+> > 
+> > But OTOH it may make sense to take a more paced approach and think
+> > about the details more carefully than we have over in the other thread so far.
+> 
+> I would hope that as soon as we can agree on a general approach, it
+> would also be possible to merge a minimal implementation into the kernel
+> along with IPA. Alex already mentioned that IPA in its current state does
+> not actually support more than one data channel, so the necessary
+> setup for it becomes even simpler.
+
+Interesting, I'm not even sure how the driver can stop multiple channels
+in the rmnet model?
+
+> At the moment, the rmnet configuration in include/uapi/linux/if_link.h
+> is almost trivial, with the three pieces of information needed being
+> an IFLA_LINK to point to the real device (not needed if there is only
+> one device per channel, instead of two), the IFLA_RMNET_MUX_ID
+> setting the ID of the muxing channel (not needed if there is only
+> one channel ?), a way to specify software bridging between channels
+> (not useful if there is only one channel) 
+
+I think the MUX ID is something we *would* want, and we'd probably want
+a channel type as well, so as to not paint ourselves into a corner where
+the default ends up being whatever IPA supports right now.
+
+The software bridging is very questionable to start with, I'd advocate
+not supporting that at all but adding tracepoints or similar if needed
+for debugging instead.
+
+
+> and a few flags that I assume
+> must match the remote end:
+> 
+> #define RMNET_FLAGS_INGRESS_DEAGGREGATION         (1U << 0)
+> #define RMNET_FLAGS_INGRESS_MAP_COMMANDS          (1U << 1)
+> #define RMNET_FLAGS_INGRESS_MAP_CKSUMV4           (1U << 2)
+> #define RMNET_FLAGS_EGRESS_MAP_CKSUMV4            (1U << 3)
+
+I don't really know about these.
+
+> > If true though, then I think this would be the killer argument *in
+> > favour* of *not* merging this - because that would mean we *don't* have
+> > to actually keep the rmnet API around for all foreseeable future.
+> 
+> I would agree with that. From the code I can see no other driver
+> including the rmnet protocol header (see the discussion about moving
+> the header to include/linux in order to merge ipa), and I don't see
+> any other driver referencing ETH_P_MAP either. My understanding
+> is that any driver used by rmnet would require both, but they are
+> all out-of-tree at the moment.
+
+I guess that would mean we have more work to do here, but it also means
+we don't have to support these interfaces forever.
+
+I'm not *entirely* convinced though. rmnet in itself doesn't really seem
+to require anything from the underlying netdev, so if there's a driver
+that just blindly passes things through to the hardware expecting the
+right configuration, we wouldn't really see it this way?
+
+OTOH, such a driver would probably blow up completely if somebody tried
+to use it without rmnet on top, and so it would at least have to check
+for ETH_P_MAP?
+
+johannes
+
