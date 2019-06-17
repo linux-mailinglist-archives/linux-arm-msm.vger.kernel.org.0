@@ -2,57 +2,57 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id B64364910D
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Jun 2019 22:13:34 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4582249110
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Jun 2019 22:13:37 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727027AbfFQUNe (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 17 Jun 2019 16:13:34 -0400
-Received: from mail-qt1-f196.google.com ([209.85.160.196]:42549 "EHLO
-        mail-qt1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726048AbfFQUNe (ORCPT
+        id S1726685AbfFQUNg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 17 Jun 2019 16:13:36 -0400
+Received: from mail-qt1-f195.google.com ([209.85.160.195]:35872 "EHLO
+        mail-qt1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726048AbfFQUNg (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 17 Jun 2019 16:13:34 -0400
-Received: by mail-qt1-f196.google.com with SMTP id s15so12383016qtk.9
-        for <linux-arm-msm@vger.kernel.org>; Mon, 17 Jun 2019 13:13:33 -0700 (PDT)
+        Mon, 17 Jun 2019 16:13:36 -0400
+Received: by mail-qt1-f195.google.com with SMTP id p15so12424210qtl.3
+        for <linux-arm-msm@vger.kernel.org>; Mon, 17 Jun 2019 13:13:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=poorly.run; s=google;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=Jxs1S2d2hEiLW82WrQt+RxzLo4SztRkqjbe0RaFo6/s=;
-        b=O0ax73sp/+EuyzNDsfHkAAsUf01j89TC19eFeVjyMhAJUyZBseS7i+o3vyhXU4+kQb
-         Qfp+/WmglUwkpelFJfRmAmrKs+mLPd0yY2NpFF1175iGrouehTBzW2E0zwTMmR0vdxv5
-         3vTg6NSaVTshR+GKQNLU3mdAxrED5JF0wTxmWt7EZm7woMaTRlvMuotfkUbDP3h3Yypb
-         hkfr3DYmJ6DKxz22HEGkVaj0eZCKfebHZZY+ftqSS3KKgHKn6HndcpnROlgPdin5BJMf
-         JNeFXLKkZDYcmUTBtlzoODykuOYO/yzwv7HBowQwUnsTqZpMOLazwxmBR+B3dZkqN1oG
-         k03g==
+        bh=eW5UYe8I4qvCNc714+7hSZS3b/NQZnllHNBPJZkv2eY=;
+        b=cTj2H0fFpMLV68ZtM8KoMdCOc4uIpHZdR68OxZTYdpYvkn8ssFMPpu+rO9RxdPNA9a
+         9Nqzd+cVkEe1tOuxwJTnJ87Gge3kDSG8kYngKvZfUyOY4lKUH2fUeAxjd8IDC/z0/FXa
+         LcWXJaKSkrnASvMWWDkpT4S645E2cRsdNGaxXecflkaUnnqhDZfIK+qIbxx8VSeF4JBR
+         Rix4NO3lIrUV//pL71dWZWyYr3MNzgNyWD2DmUu8Fqn+yT2rwysJoNudAYfUZJlxXK9B
+         3AtEASA43KTp+jtX1spMSmx+HtzgOy5CKeNMhKH+1BsXHVyMni937yC6aRKMQHQsXYGH
+         RajQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=Jxs1S2d2hEiLW82WrQt+RxzLo4SztRkqjbe0RaFo6/s=;
-        b=KBFEBSVNLigylZOcoWvTeYnMoIYoGmmko9htfPj5dUuxSrrwxYc9q6kbL1ISbeCGvJ
-         1i7ZDHm/uycXj9sfAI3gNgaAamkUZHO7hv5OKVT4EAVbVDnpn9OqV1AdWk+pseNRM2zu
-         ZGnfo9xZwhajgxlQPkbryJfGmUUkda8uCnujOxatNvq6WNcaZ/kwN0Fbf1/JjMp89dS7
-         J94em0wfk/+zN81WRpwuCk7O5EgQoZ47+9H4lLfnsTB6v0xyifkkSQo/gGoz+Tw5SbLg
-         L6Z6rkBRyda2C2GBmFsXijF5BxGXYzQGChuCdewgMrlhoEEBqInGVSl1qWCZBW3cd0Id
-         frJg==
-X-Gm-Message-State: APjAAAVivW92+eo2BmIZedQBJk1QOTr0RSLrDYt+Qdtau8RZkYiz+PMv
-        uAK5RH4v+gFmmWI1hbVXsqtMWg==
-X-Google-Smtp-Source: APXvYqxrCCqUNZYscrPplWQuYI6u4SH9DgjdX5HyNqBtvGiURcPXRZ1zswf+fS5gy+aDHRDdNa7TWg==
-X-Received: by 2002:aed:3ac5:: with SMTP id o63mr24476334qte.309.1560802413064;
-        Mon, 17 Jun 2019 13:13:33 -0700 (PDT)
+        bh=eW5UYe8I4qvCNc714+7hSZS3b/NQZnllHNBPJZkv2eY=;
+        b=rrNODSFd+7OEJzzHSqJAkyOqhVeBuMEN8lOjj48vr3pCWCorl9FAmWLDFveyIh2Wfn
+         0BxLQEGZ6PaphTvlsOZWd6zvz+Fiuct5edEm5KHbjMMgh/WKGTLxYt1tH2/1kEIvr1lJ
+         GoJYDgsEtThtzf5XFTY8ypy59+5HtO9pguWGw/3Icza8Tc7HrCYLb+pkXyuoZ1C+jKmW
+         x6couI4Yvs6XVqC5M5GlnXzQs5YA+Z3RU7U/IIdA13X6AZ0Uc33VxFciQYY8dIWX53nB
+         kkOB9nbhbzSbpbZr4+YsZGVZeG4XBzrhiq/5RFo7m4glPvD/NPsh8RvD52fTYhVC4ru1
+         6VBw==
+X-Gm-Message-State: APjAAAXnwpUbPuBKoFg4ZCe71pu6VPL3mvtQMYdyN7SbjfJhXqbd/L4K
+        5AjYed8OsBi7HjEMzrg51ph9ZA==
+X-Google-Smtp-Source: APXvYqy0nkpRBCX5jT4q6yqC4LA6QLk30UxErp74KBr3V96+SlASaTXo3caNWvDOhCc9VLbG+OJ5zw==
+X-Received: by 2002:a0c:aed0:: with SMTP id n16mr23668643qvd.101.1560802415854;
+        Mon, 17 Jun 2019 13:13:35 -0700 (PDT)
 Received: from rosewood.cam.corp.google.com ([100.100.175.19])
-        by smtp.gmail.com with ESMTPSA id r36sm7071563qte.71.2019.06.17.13.13.32
+        by smtp.gmail.com with ESMTPSA id r36sm7071563qte.71.2019.06.17.13.13.35
         (version=TLS1_3 cipher=AEAD-AES256-GCM-SHA384 bits=256/256);
-        Mon, 17 Jun 2019 13:13:32 -0700 (PDT)
+        Mon, 17 Jun 2019 13:13:35 -0700 (PDT)
 From:   Sean Paul <sean@poorly.run>
 To:     dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org
 Cc:     Sean Paul <seanpaul@chromium.org>, Rob Clark <robdclark@gmail.com>,
         Sean Paul <sean@poorly.run>, David Airlie <airlied@linux.ie>,
         Daniel Vetter <daniel@ffwll.ch>, linux-arm-msm@vger.kernel.org
-Subject: [PATCH 08/13] drm/msm/dsi: Don't store dsi host mode_flags in msm_dsi
-Date:   Mon, 17 Jun 2019 16:12:53 -0400
-Message-Id: <20190617201301.133275-5-sean@poorly.run>
+Subject: [PATCH 09/13] drm/msm/dsi: Pull out panel init code into function
+Date:   Mon, 17 Jun 2019 16:12:54 -0400
+Message-Id: <20190617201301.133275-6-sean@poorly.run>
 X-Mailer: git-send-email 2.22.0.410.gd8fdbe21b5-goog
 In-Reply-To: <20190617201301.133275-1-sean@poorly.run>
 References: <20190617200405.131843-1-sean@poorly.run>
@@ -66,86 +66,56 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 From: Sean Paul <seanpaul@chromium.org>
 
-It's a bit dangerous to store the flags in msm_dsi since there's no way to
-tell when they're populated. Fortunately the only place that uses them
-is the same place that fills them. So just use a local variable and
-delete the struct member.
+Pull all of the panel init code out of detect() and put it in its own
+function. This will be useful in future patches where it's moved from
+detect().
 
 Signed-off-by: Sean Paul <seanpaul@chromium.org>
 ---
- drivers/gpu/drm/msm/dsi/dsi.h         |  1 -
- drivers/gpu/drm/msm/dsi/dsi_manager.c | 17 +++++++++--------
- 2 files changed, 9 insertions(+), 9 deletions(-)
+ drivers/gpu/drm/msm/dsi/dsi_manager.c | 16 ++++++++++++----
+ 1 file changed, 12 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/gpu/drm/msm/dsi/dsi.h b/drivers/gpu/drm/msm/dsi/dsi.h
-index 8bdc48ca0b67..e0bbe8128aef 100644
---- a/drivers/gpu/drm/msm/dsi/dsi.h
-+++ b/drivers/gpu/drm/msm/dsi/dsi.h
-@@ -79,7 +79,6 @@ struct msm_dsi {
- 	 */
- 	struct drm_panel *panel;
- 	struct drm_bridge *external_bridge;
--	unsigned long device_flags;
- 
- 	struct device *phy_dev;
- 	bool phy_enabled;
 diff --git a/drivers/gpu/drm/msm/dsi/dsi_manager.c b/drivers/gpu/drm/msm/dsi/dsi_manager.c
-index 56b8091b75e7..735fff79ae67 100644
+index 735fff79ae67..855139195769 100644
 --- a/drivers/gpu/drm/msm/dsi/dsi_manager.c
 +++ b/drivers/gpu/drm/msm/dsi/dsi_manager.c
-@@ -233,6 +233,12 @@ static int dsi_mgr_bridge_get_id(struct drm_bridge *bridge)
- 	return dsi_bridge->id;
+@@ -239,17 +239,14 @@ static bool dsi_mgr_is_cmd_mode(struct msm_dsi *msm_dsi)
+ 	return !(host_flags & MIPI_DSI_MODE_VIDEO);
  }
  
-+static bool dsi_mgr_is_cmd_mode(struct msm_dsi *msm_dsi)
-+{
-+	unsigned long host_flags = msm_dsi_host_get_mode_flags(msm_dsi->host);
-+	return !(host_flags & MIPI_DSI_MODE_VIDEO);
-+}
-+
- static enum drm_connector_status dsi_mgr_connector_detect(
- 		struct drm_connector *connector, bool force)
+-static enum drm_connector_status dsi_mgr_connector_detect(
+-		struct drm_connector *connector, bool force)
++static void msm_dsi_manager_panel_init(struct drm_connector *connector, u8 id)
  {
-@@ -241,17 +247,15 @@ static enum drm_connector_status dsi_mgr_connector_detect(
+-	int id = dsi_mgr_connector_get_id(connector);
+ 	struct msm_dsi *msm_dsi = dsi_mgr_get_dsi(id);
  	struct msm_dsi *other_dsi = dsi_mgr_get_other_dsi(id);
  	struct msm_drm_private *priv = connector->dev->dev_private;
  	struct msm_kms *kms = priv->kms;
-+	bool cmd_mode;
+ 	bool cmd_mode;
  
- 	DBG("id=%d", id);
+-	DBG("id=%d", id);
  	if (!msm_dsi->panel) {
  		msm_dsi->panel = msm_dsi_host_get_panel(msm_dsi->host);
--		msm_dsi->device_flags = msm_dsi_host_get_mode_flags(
--						msm_dsi->host);
  
- 		/* There is only 1 panel in the global panel list
- 		 * for dual DSI mode. Therefore slave dsi should get
--		 * the drm_panel instance from master dsi, and
--		 * keep using the panel flags got from the current DSI link.
-+		 * the drm_panel instance from master dsi.
- 		 */
- 		if (!msm_dsi->panel && IS_DUAL_DSI() &&
- 			!IS_MASTER_DSI_LINK(id) && other_dsi)
-@@ -259,9 +263,8 @@ static enum drm_connector_status dsi_mgr_connector_detect(
- 						other_dsi->host);
+@@ -292,6 +289,17 @@ static enum drm_connector_status dsi_mgr_connector_detect(
+ 				pr_err("mdp does not support dual DSI\n");
+ 		}
+ 	}
++}
++
++static enum drm_connector_status dsi_mgr_connector_detect(
++		struct drm_connector *connector, bool force)
++{
++	int id = dsi_mgr_connector_get_id(connector);
++	struct msm_dsi *msm_dsi = dsi_mgr_get_dsi(id);
++
++	DBG("id=%d", id);
++	if (!msm_dsi->panel)
++		msm_dsi_manager_panel_init(connector, id);
  
- 
-+		cmd_mode = dsi_mgr_is_cmd_mode(msm_dsi);
- 		if (msm_dsi->panel && kms->funcs->set_encoder_mode) {
--			bool cmd_mode = !(msm_dsi->device_flags &
--					  MIPI_DSI_MODE_VIDEO);
- 			struct drm_encoder *encoder =
- 					msm_dsi_get_encoder(msm_dsi);
- 
-@@ -277,8 +280,6 @@ static enum drm_connector_status dsi_mgr_connector_detect(
- 		 */
- 		if (msm_dsi->panel && IS_DUAL_DSI() &&
- 			other_dsi && other_dsi->panel) {
--			bool cmd_mode = !(msm_dsi->device_flags &
--						MIPI_DSI_MODE_VIDEO);
- 			struct drm_encoder *encoder = msm_dsi_get_encoder(
- 					dsi_mgr_get_dsi(DSI_ENCODER_MASTER));
- 			struct drm_encoder *slave_enc = msm_dsi_get_encoder(
+ 	return msm_dsi->panel ? connector_status_connected :
+ 		connector_status_disconnected;
 -- 
 Sean Paul, Software Engineer, Google / Chromium OS
 
