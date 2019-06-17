@@ -2,57 +2,57 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 7B2AA490C6
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Jun 2019 22:04:39 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 8A0B9490E7
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Jun 2019 22:09:38 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726642AbfFQUEj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 17 Jun 2019 16:04:39 -0400
-Received: from mail-qt1-f193.google.com ([209.85.160.193]:46830 "EHLO
-        mail-qt1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726455AbfFQUEi (ORCPT
+        id S1727875AbfFQUJi (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 17 Jun 2019 16:09:38 -0400
+Received: from mail-qk1-f194.google.com ([209.85.222.194]:46580 "EHLO
+        mail-qk1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726023AbfFQUJi (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 17 Jun 2019 16:04:38 -0400
-Received: by mail-qt1-f193.google.com with SMTP id h21so12320579qtn.13
-        for <linux-arm-msm@vger.kernel.org>; Mon, 17 Jun 2019 13:04:38 -0700 (PDT)
+        Mon, 17 Jun 2019 16:09:38 -0400
+Received: by mail-qk1-f194.google.com with SMTP id x18so7011499qkn.13
+        for <linux-arm-msm@vger.kernel.org>; Mon, 17 Jun 2019 13:09:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=poorly.run; s=google;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=hAfYkP7d2WvxOZhRBCRJTvRlF3xI0tTIFNDwNnfuAj0=;
-        b=IzC6Yy+dyUFQKAxj9w03NH/zDg/rd4E2TwI45rSFseDlnwX6v6+kw8gp9VzqmxCDIk
-         vJB6gvNsKZeEfPQSLfmv0f8EIe9wnUf6b29SjNovXXgi/+5FcZo4I8vsBkGqRnRBL8XO
-         5UwD/IvU1nCgpQ49aNWBT9qoVIaZlHeP3dAm+nYmmOxT0hjEWc7nC8OVfaARo5YOXAX2
-         ktOc87n3NNWW3Ml6qgLtu2Rda09quP3phgUuyD52cU10F4aJFECK1Q6eqVeL+sCFoI9U
-         KgMEtLHvE9NjShWyK6S6KFd1RIIxLzJgJuKZ2eTmlgTSNS5orC2XSbAbpY6KZkuBoH97
-         kM0Q==
+        bh=rnuYMa6vIBfYmE14DNuXdWYP2V9cYpPN1XP5Rkgp6fA=;
+        b=IpQnUzLOlbu+Z8jGufVfx562/7WbHg41yXFqDIQIi/BDind+eo4DiBrXchQ5WX0KqX
+         HEyXsjSljsaXbvdxgD4jW9j8AigGx1JbUhrbQUsTZkB+qPxKxCw8ryGoMYEjnkqcLq97
+         Yy53/Ir6PneTDgVfMIHrUb7XbYotmhcfaxyxeYef2LS3RXeaM2fmVjMvAl838spPVeAJ
+         Eaj5KkvdmS5lsvBNwM5JYTVgP9eXdfmVI3+cgtAhMVj9+j0dskQCbI4r70QX3UwtO+Mf
+         LuQqvX0Rm4FcOt0rALKeSDiy1SwjGsiBXzPSxbBlarDBruZG1U/VAwHYDmtBDMGwzxBR
+         nFLQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=hAfYkP7d2WvxOZhRBCRJTvRlF3xI0tTIFNDwNnfuAj0=;
-        b=GVDjJkFpqLBVk5ShMMd580k8xbCGQZfFHF3zHS1q513VaRgS8Flvn1AB6Kkpb4WHEd
-         CRiKmJ2qGUxdHNdnRIclarx9CLdPRFX17MBMI+QtiP57ZMtoVEimnyotRdUyBzMzB6eh
-         Jbrh1IoaPEPsDo3fDCWHF25GDRxmjMC05rpYs1pKNlh/9yZQ1hnEKdGDRL20dtI0fKMN
-         2URBthyRHl2VFzisPwiBaDPwTHPWrvlgX1+Xa7tdr5K08UBTJ3JZa+BmO5HWndtGqzxc
-         sgsZ7WmuNUwftAEr7XO5FKVryyaiVctkw4YXfTGcvBq/7V3FtXf9FILO8IwQlHKOjj0Y
-         acrA==
-X-Gm-Message-State: APjAAAU6b/FxQbT9WCBA6Vre6YV8w0txaai3nCPAjt7EMNuWQ75etMDM
-        GT9xGOeyazayB9SDTLj3lZoDDA==
-X-Google-Smtp-Source: APXvYqwF2TgSDN5Rp6djhjPuzRXU95E/oIoie46EqS3shh+tm7T9bkobuH8gat0UT8KQouFk+bGu9A==
-X-Received: by 2002:ac8:38c5:: with SMTP id g5mr97751585qtc.299.1560801877766;
-        Mon, 17 Jun 2019 13:04:37 -0700 (PDT)
+        bh=rnuYMa6vIBfYmE14DNuXdWYP2V9cYpPN1XP5Rkgp6fA=;
+        b=U/VUJK8ZMWgaJ8V5Ok16KcN9R5awe9dwUJeYLH6iz9qDYm8/a8fC4ZFqdHLxfL0RW7
+         6/dhhhvVn6tr8gnA050IcWQD0ZWxAiBwtsjIeZXcd9qQRtLcVOelSNlWirD2XbGNvbai
+         0YAp9T1uxIcqbkEAZyAugH57LjgcbmNukVSgbGPuarhO85baxAUEWeeKtMDv5xhFSbfq
+         KO5u1RSHx5okUW76uZ6Yzgq+0PTQvgQCv0JzlNK48l0tYYzTMQDjRpNPk5HyS53BY3Ui
+         6Gm93EsiPLvzlSYN0f/EFDnFA04cLe2ZHENKV/R56JdqEwsJRRbY8i8xJonNkcD9fz9B
+         mwkg==
+X-Gm-Message-State: APjAAAXCB7Qf/mFkf5Bmxk15KE1pG+0wKsMtT1H7LV9p6SbFHBLCp1DA
+        MKZDkaCyVoUjtUzQahSFHULDNA==
+X-Google-Smtp-Source: APXvYqzsEntNgVAPgcjag9ZN8RYTpVZ7OhVksMaCG0wgtxyD8CuLCaHM1I/CD5xcFOVbil7MXHowtw==
+X-Received: by 2002:a37:4d82:: with SMTP id a124mr19092881qkb.72.1560802177050;
+        Mon, 17 Jun 2019 13:09:37 -0700 (PDT)
 Received: from rosewood.cam.corp.google.com ([100.100.175.19])
-        by smtp.gmail.com with ESMTPSA id j26sm8584794qtj.70.2019.06.17.13.04.37
+        by smtp.gmail.com with ESMTPSA id n5sm7962291qta.29.2019.06.17.13.09.36
         (version=TLS1_3 cipher=AEAD-AES256-GCM-SHA384 bits=256/256);
-        Mon, 17 Jun 2019 13:04:37 -0700 (PDT)
+        Mon, 17 Jun 2019 13:09:36 -0700 (PDT)
 From:   Sean Paul <sean@poorly.run>
 To:     dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org
 Cc:     Sean Paul <seanpaul@chromium.org>, Rob Clark <robdclark@gmail.com>,
         Sean Paul <sean@poorly.run>, David Airlie <airlied@linux.ie>,
         Daniel Vetter <daniel@ffwll.ch>, linux-arm-msm@vger.kernel.org
-Subject: [RESEND PATCH 02/13] drm/msm/dpu: Fix mmu init/destroy functions
-Date:   Mon, 17 Jun 2019 16:03:46 -0400
-Message-Id: <20190617200405.131843-2-sean@poorly.run>
+Subject: [PATCH 03/13] drm/msm/phy/dsi_phy: Set pll to NULL in case initialization fails
+Date:   Mon, 17 Jun 2019 16:09:17 -0400
+Message-Id: <20190617200920.133104-1-sean@poorly.run>
 X-Mailer: git-send-email 2.22.0.410.gd8fdbe21b5-goog
 In-Reply-To: <20190617200405.131843-1-sean@poorly.run>
 References: <20190617200405.131843-1-sean@poorly.run>
@@ -65,72 +65,33 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 From: Sean Paul <seanpaul@chromium.org>
 
-There's a comment in _dpu_kms_hw_destroy() that reads "safe to call
-these more than once during shutdown", referring to
-_dpu_kms_mmu_destroy(). Unfortunately that's not the case, mmu_destroy
-will fail hard if it's called twice. So fix that function to ensure it
-can be called multiple times without burning.
-
-While I'm at it, fix the error paths in _dpu_kms_mmu_init() to properly
-clean up the iommu domain and not call _dpu_kms_mmu_destroy() when
-things are only partially setup.
+We have if (!phy->pll) checks scattered through the driver and if
+phy->pll is an error pointer, those checks will pass and bad things will
+happen :(
 
 Signed-off-by: Sean Paul <seanpaul@chromium.org>
 ---
- drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c | 17 ++++++++---------
- 1 file changed, 8 insertions(+), 9 deletions(-)
+ drivers/gpu/drm/msm/dsi/phy/dsi_phy.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
-index 885bf88afa3e..d50afbb37a0a 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
-@@ -729,12 +729,16 @@ static int _dpu_kms_mmu_destroy(struct dpu_kms *dpu_kms)
- {
- 	struct msm_mmu *mmu;
+diff --git a/drivers/gpu/drm/msm/dsi/phy/dsi_phy.c b/drivers/gpu/drm/msm/dsi/phy/dsi_phy.c
+index 1760483b247e..6491b0ceab23 100644
+--- a/drivers/gpu/drm/msm/dsi/phy/dsi_phy.c
++++ b/drivers/gpu/drm/msm/dsi/phy/dsi_phy.c
+@@ -616,10 +616,12 @@ static int dsi_phy_driver_probe(struct platform_device *pdev)
+ 		goto fail;
  
-+	if (!dpu_kms->base.aspace)
-+		return 0;
-+
- 	mmu = dpu_kms->base.aspace->mmu;
+ 	phy->pll = msm_dsi_pll_init(pdev, phy->cfg->type, phy->id);
+-	if (IS_ERR_OR_NULL(phy->pll))
++	if (IS_ERR_OR_NULL(phy->pll)) {
+ 		DRM_DEV_INFO(dev,
+ 			"%s: pll init failed: %ld, need separate pll clk driver\n",
+ 			__func__, PTR_ERR(phy->pll));
++		phy->pll = NULL;
++	}
  
- 	mmu->funcs->detach(mmu, (const char **)iommu_ports,
- 			ARRAY_SIZE(iommu_ports));
- 	msm_gem_address_space_put(dpu_kms->base.aspace);
+ 	dsi_phy_disable_resource(phy);
  
-+	dpu_kms->base.aspace = NULL;
- 	return 0;
- }
- 
-@@ -754,25 +758,20 @@ static int _dpu_kms_mmu_init(struct dpu_kms *dpu_kms)
- 	aspace = msm_gem_address_space_create(dpu_kms->dev->dev,
- 			domain, "dpu1");
- 	if (IS_ERR(aspace)) {
--		ret = PTR_ERR(aspace);
--		goto fail;
-+		iommu_domain_free(domain);
-+		return PTR_ERR(aspace);
- 	}
- 
--	dpu_kms->base.aspace = aspace;
--
- 	ret = aspace->mmu->funcs->attach(aspace->mmu, iommu_ports,
- 			ARRAY_SIZE(iommu_ports));
- 	if (ret) {
- 		DPU_ERROR("failed to attach iommu %d\n", ret);
- 		msm_gem_address_space_put(aspace);
--		goto fail;
-+		return ret;
- 	}
- 
-+	dpu_kms->base.aspace = aspace;
- 	return 0;
--fail:
--	_dpu_kms_mmu_destroy(dpu_kms);
--
--	return ret;
- }
- 
- static struct dss_clk *_dpu_kms_get_clk(struct dpu_kms *dpu_kms,
 -- 
 Sean Paul, Software Engineer, Google / Chromium OS
 
