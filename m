@@ -2,154 +2,88 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 36E9547682
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 16 Jun 2019 20:55:53 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 897F347777
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Jun 2019 02:18:54 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726266AbfFPSzv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 16 Jun 2019 14:55:51 -0400
-Received: from mail-pl1-f193.google.com ([209.85.214.193]:35800 "EHLO
-        mail-pl1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726016AbfFPSzv (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 16 Jun 2019 14:55:51 -0400
-Received: by mail-pl1-f193.google.com with SMTP id p1so3152041plo.2
-        for <linux-arm-msm@vger.kernel.org>; Sun, 16 Jun 2019 11:55:51 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=nByq7PxBYO/HndonaLBb5oHmEIAYGRGMS68VxuzBGRk=;
-        b=giYKqR3uuQzsw5eaDqiRp2acTNqFnPZNGfkvdyqIK6e9DdG1wdGpT2902CyfnnL0+V
-         gQV/aJZxaJ766T6k8+tdS9q6HW3KDh1ON4bIkNDME3gU/wcQzaLxtbC5DMFeOI1oZA7/
-         Vi0T1Efpctouh5bCEQWcjjTvLDLMvGyKAezVaGE0pIjmDJJSB0vQjP13WPB3uxVAWzXH
-         grHH4ruo8iX4GTXQYV3nWBhGHy6qSq59TnG7lWUepXuSUDu3hKnm1vR0eqdKeHDvECRh
-         Fqgyr2FnnzfW15sdK1rzgQS07lJkkV4w1FTg2PGUDgsQC3e1j+2LJ8eKpFLS9INoLzW+
-         0c5Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=nByq7PxBYO/HndonaLBb5oHmEIAYGRGMS68VxuzBGRk=;
-        b=dKG76YLPW9wUSQwFUZ4OHsOE74uRCBOrGobIlrrfPxUFMmJsYqO0uVlb/O5KGU4ZQC
-         WeyMMRy1LL22bYbhj3LZ4FNrAmH9SCIfhB423y4lFTPdBf5C4RZbAL2CR55LftkkMNXw
-         d6/CWXJ8WwdJOudQx7CeEXZQfs7tisVsMR0LNLBVFJh8Yh4OjelqHCUe/YrhAjmHHqzw
-         IXqy/b4olrnPK/6eb0ynYufmWPoUtN74gqiBHjjUBGmAisfxJLBoFrN0XhIAOYF2dQhj
-         n78FLxtMhkHwYEyEb+eAlQUnrDaT0A9zn9rH5Tbra8xn1PLNyQqJ9Y4s3rGtDJIhn8tS
-         3biw==
-X-Gm-Message-State: APjAAAXtyb69q8N7ixBx/KzxEkJEqiHKtLz15vaSgqlG22CJeO/woZer
-        O1R+C7yVj9LAaOucu8Lf5Nzi3kSkxHs=
-X-Google-Smtp-Source: APXvYqzUHZZlZnoW14+Duy31K1F+WZSjH7lpsaz63YuG6cjBQRIqHcMWMDFgTS9Bd5mK9+hjxuMVbg==
-X-Received: by 2002:a17:902:24c:: with SMTP id 70mr103472422plc.2.1560711350661;
-        Sun, 16 Jun 2019 11:55:50 -0700 (PDT)
-Received: from tuxbook-pro (104-188-17-28.lightspeed.sndgca.sbcglobal.net. [104.188.17.28])
-        by smtp.gmail.com with ESMTPSA id m41sm12325765pje.18.2019.06.16.11.55.49
-        (version=TLS1_3 cipher=AEAD-AES256-GCM-SHA384 bits=256/256);
-        Sun, 16 Jun 2019 11:55:49 -0700 (PDT)
-Date:   Sun, 16 Jun 2019 11:56:37 -0700
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Sebastian Reichel <sre@kernel.org>,
-        John Stultz <john.stultz@linaro.org>
-Cc:     lkml <linux-kernel@vger.kernel.org>,
-        Andy Gross <agross@kernel.org>,
-        David Brown <david.brown@linaro.org>,
-        Amit Pundir <amit.pundir@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Mark Rutland <mark.rutland@arm.com>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org
-Subject: Re: [PATCH v3 2/3] reset: qcom-pon: Add support for gen2 pon
-Message-ID: <20190616185637.GE31088@tuxbook-pro>
-References: <20190614231451.45998-1-john.stultz@linaro.org>
- <20190614231451.45998-2-john.stultz@linaro.org>
+        id S1727469AbfFQASy (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 16 Jun 2019 20:18:54 -0400
+Received: from onstation.org ([52.200.56.107]:54760 "EHLO onstation.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1727322AbfFQASx (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Sun, 16 Jun 2019 20:18:53 -0400
+Received: from localhost (c-98-239-145-235.hsd1.wv.comcast.net [98.239.145.235])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        (Authenticated sender: masneyb)
+        by onstation.org (Postfix) with ESMTPSA id 523DC3E956;
+        Mon, 17 Jun 2019 00:18:52 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=onstation.org;
+        s=default; t=1560730732;
+        bh=wqA8kfgeU/wUimDPIjCQxIw3A0hNMdWnQpZyfBayxSU=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=k8G3nAUTxcqNgWImzT7xSUUpvFWnN0uIXQY0GSCS5P4TBF3nLsLWog4BZA6HedlLN
+         Fe1ps7X05QlQkibypgS1bULvBX066jBkqIn5KG3pWVgoIPG/ZtMEiovQ63Ur8yjS8J
+         aVmk4fijaFoLxcWSZedSPwER1/S1LOwGaFbjs4oY=
+Date:   Sun, 16 Jun 2019 20:18:51 -0400
+From:   Brian Masney <masneyb@onstation.org>
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     agross@kernel.org, david.brown@linaro.org, robdclark@gmail.com,
+        sean@poorly.run, robh+dt@kernel.org, airlied@linux.ie,
+        daniel@ffwll.ch, mark.rutland@arm.com, jonathan@marek.ca,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
+        devicetree@vger.kernel.org
+Subject: Re: [PATCH 6/6] drm/msm/gpu: add ocmem init/cleanup functions
+Message-ID: <20190617001851.GA19038@onstation.org>
+References: <20190616132930.6942-1-masneyb@onstation.org>
+ <20190616132930.6942-7-masneyb@onstation.org>
+ <20190616180633.GS22737@tuxbook-pro>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20190614231451.45998-2-john.stultz@linaro.org>
-User-Agent: Mutt/1.11.4 (2019-03-13)
+In-Reply-To: <20190616180633.GS22737@tuxbook-pro>
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri 14 Jun 16:14 PDT 2019, John Stultz wrote:
+Hi Bjorn,
 
-> Add support for gen2 pon register so "reboot bootloader" can
-> work on pixel3 and db845.
+On Sun, Jun 16, 2019 at 11:06:33AM -0700, Bjorn Andersson wrote:
+> > diff --git a/drivers/gpu/drm/msm/adreno/adreno_gpu.c b/drivers/gpu/drm/msm/adreno/adreno_gpu.c
+> > index 6f7f4114afcf..e0a9409c8a32 100644
+> > --- a/drivers/gpu/drm/msm/adreno/adreno_gpu.c
+> > +++ b/drivers/gpu/drm/msm/adreno/adreno_gpu.c
+> > @@ -29,6 +29,10 @@
+> >  #include "msm_gem.h"
+> >  #include "msm_mmu.h"
+> >  
+> > +#ifdef CONFIG_QCOM_OCMEM
+> > +#  include <soc/qcom/ocmem.h>
+> > +#endif
 > 
-> Cc: Andy Gross <agross@kernel.org>
-> Cc: David Brown <david.brown@linaro.org>
-> Cc: Bjorn Andersson <bjorn.andersson@linaro.org>
-> Cc: Amit Pundir <amit.pundir@linaro.org>
-> Cc: Rob Herring <robh+dt@kernel.org>
-> Cc: Mark Rutland <mark.rutland@arm.com>
-> Cc: Sebastian Reichel <sre@kernel.org>
-> Cc: linux-arm-msm@vger.kernel.org
-> Cc: devicetree@vger.kernel.org
-> Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
-> Signed-off-by: John Stultz <john.stultz@linaro.org>
+> This file exists (after the previous patch), so no need to make its
+> inclusion conditional.
 > 
+> > +
+> >  static bool zap_available = true;
+> >  
+> >  static int zap_shader_load_mdt(struct msm_gpu *gpu, const char *fwname,
+> > @@ -897,6 +901,43 @@ static int adreno_get_pwrlevels(struct device *dev,
+> >  	return 0;
+> >  }
+> >  
+> > +int adreno_gpu_ocmem_init(struct device *dev, struct adreno_gpu *adreno_gpu,
+> > +			  struct adreno_ocmem *adreno_ocmem)
+> > +{
+> > +#ifdef CONFIG_QCOM_OCMEM
+> 
+> No need to make this conditional.
 
-Sebastian, please take the first two patches through your tree and we'll
-pick the dts patch through arm-soc.
+I have these #ifdefs for the a5xx and a6xx GPUs that don't have ocmem
+in the SoC. Without the #ifdefs, those systems would need to have the
+ocmem driver in their kernel.
 
-Regards,
-Bjorn
+Thanks for the quick review on the patch set!
 
-> v2:
-> * Split out dts changes into separate path
-> * Minor cleanups and remove unused variables
-> ---
->  drivers/power/reset/qcom-pon.c | 12 +++++++++---
->  1 file changed, 9 insertions(+), 3 deletions(-)
-> 
-> diff --git a/drivers/power/reset/qcom-pon.c b/drivers/power/reset/qcom-pon.c
-> index 3fa1642d4c543..22a743a0bf28c 100644
-> --- a/drivers/power/reset/qcom-pon.c
-> +++ b/drivers/power/reset/qcom-pon.c
-> @@ -14,11 +14,15 @@
->  
->  #define PON_SOFT_RB_SPARE		0x8f
->  
-> +#define GEN1_REASON_SHIFT		2
-> +#define GEN2_REASON_SHIFT		1
-> +
->  struct pm8916_pon {
->  	struct device *dev;
->  	struct regmap *regmap;
->  	u32 baseaddr;
->  	struct reboot_mode_driver reboot_mode;
-> +	long reason_shift;
->  };
->  
->  static int pm8916_reboot_mode_write(struct reboot_mode_driver *reboot,
-> @@ -30,7 +34,7 @@ static int pm8916_reboot_mode_write(struct reboot_mode_driver *reboot,
->  
->  	ret = regmap_update_bits(pon->regmap,
->  				 pon->baseaddr + PON_SOFT_RB_SPARE,
-> -				 0xfc, magic << 2);
-> +				 0xfc, magic << pon->reason_shift);
->  	if (ret < 0)
->  		dev_err(pon->dev, "update reboot mode bits failed\n");
->  
-> @@ -60,6 +64,7 @@ static int pm8916_pon_probe(struct platform_device *pdev)
->  		return error;
->  
->  	pon->reboot_mode.dev = &pdev->dev;
-> +	pon->reason_shift = (long)of_device_get_match_data(&pdev->dev);
->  	pon->reboot_mode.write = pm8916_reboot_mode_write;
->  	error = devm_reboot_mode_register(&pdev->dev, &pon->reboot_mode);
->  	if (error) {
-> @@ -73,8 +78,9 @@ static int pm8916_pon_probe(struct platform_device *pdev)
->  }
->  
->  static const struct of_device_id pm8916_pon_id_table[] = {
-> -	{ .compatible = "qcom,pm8916-pon" },
-> -	{ .compatible = "qcom,pms405-pon" },
-> +	{ .compatible = "qcom,pm8916-pon", .data = (void *)GEN1_REASON_SHIFT },
-> +	{ .compatible = "qcom,pms405-pon", .data = (void *)GEN1_REASON_SHIFT },
-> +	{ .compatible = "qcom,pm8998-pon", .data = (void *)GEN2_REASON_SHIFT },
->  	{ }
->  };
->  MODULE_DEVICE_TABLE(of, pm8916_pon_id_table);
-> -- 
-> 2.17.1
-> 
+Brian
