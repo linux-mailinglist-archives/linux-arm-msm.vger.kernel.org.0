@@ -2,306 +2,138 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 3BAC147904
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Jun 2019 06:19:51 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5689E47949
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Jun 2019 06:25:15 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726005AbfFQETp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 17 Jun 2019 00:19:45 -0400
-Received: from mail-pf1-f193.google.com ([209.85.210.193]:38069 "EHLO
-        mail-pf1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725778AbfFQETp (ORCPT
+        id S1726029AbfFQEZI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 17 Jun 2019 00:25:08 -0400
+Received: from smtp.codeaurora.org ([198.145.29.96]:53192 "EHLO
+        smtp.codeaurora.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725989AbfFQEZI (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 17 Jun 2019 00:19:45 -0400
-Received: by mail-pf1-f193.google.com with SMTP id a186so4918305pfa.5
-        for <linux-arm-msm@vger.kernel.org>; Sun, 16 Jun 2019 21:19:44 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=su04xXw6GGHIofn8gHd4eVNyLDpa8LxhUwEEkPCpQSc=;
-        b=YJhjCP+avzmLyCZ57MYpCElLTjwZ23ewu4kgW4XKVBE7MtmciCKZ1j3hIAmIE/XUxE
-         fcx2PDdatG4zisiSu7a2wrnHc7+C7A0ENUCoIB8gekNnJDRORrJr1SWUuEfD6JD6/qe+
-         SXfRlGxJ4kPCstyaTescr1Akp7yfq8ksLq8rRsT4M74j3SmkRrGPjhbDdllBSC1wiQTL
-         XYmhvwOeuJFQy/4ZqYQXAuoQrObbN8xIxamP6brJMwyt9o0DbISe6/p/ta0SRGsXqpGA
-         RkeYUipqaOmPfE0+VewVya4V4kZfJXYXeRlaKpra2II3mJa3h+gbmYYnkTHfR62kMiOY
-         zt2g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=su04xXw6GGHIofn8gHd4eVNyLDpa8LxhUwEEkPCpQSc=;
-        b=E/bBqdihkVaNOT/3BBa7RpKlnCmDWi0w0L4VUI6SzkfNubFDlj4qQQIIpLEbQqTDSE
-         jbGULPh49nu51NFhhIAPAtTVzLBtXw3XOCUwOpvmhPF+yiI1u3wjBdz1H3wYp6lBMfGU
-         qkB1HZ5Ghh5rIFnLkesULF1Kp8gCfm1fU9tlLa4ABUKHk3OZp9JmrgejIHOBaQiWFynn
-         P+1F+t3VvtnTAAql+hgjt0yLOx8Ann/uQhDlDOe5mAeppbRZBCcWyMiecLWrAoVQH6uM
-         X+tZRfV+Rj972KNLKbXYJtU/RBaEf2Nb2Q0RYji8EKhAmy/RDgnAIZK5uqfYpouDDWLo
-         enGQ==
-X-Gm-Message-State: APjAAAXLYOFk7dCOvnFyUkQC8z5gzD0DNeYK3rgUqu5De95ONV8QL2Ya
-        PrgKBCxjqiCxBni0SLnpDx9ZiQ==
-X-Google-Smtp-Source: APXvYqzv4B+xbIgPU1Wr28MlogF/SGpcxZD14TGttwkrvvwt0+IyKNSX+kQV7wtwLOWxFafGuZfk3Q==
-X-Received: by 2002:a17:90a:3225:: with SMTP id k34mr23875597pjb.31.1560745183911;
-        Sun, 16 Jun 2019 21:19:43 -0700 (PDT)
-Received: from tuxbook-pro (104-188-17-28.lightspeed.sndgca.sbcglobal.net. [104.188.17.28])
-        by smtp.gmail.com with ESMTPSA id j8sm9497867pfi.148.2019.06.16.21.19.42
-        (version=TLS1_3 cipher=AEAD-AES256-GCM-SHA384 bits=256/256);
-        Sun, 16 Jun 2019 21:19:43 -0700 (PDT)
-Date:   Sun, 16 Jun 2019 21:20:32 -0700
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Vinod Koul <vkoul@kernel.org>
-Cc:     Linus Walleij <linus.walleij@linaro.org>,
-        linux-arm-msm@vger.kernel.org,
-        Prasad Sodagudi <psodagud@codeaurora.org>,
-        Andy Gross <agross@kernel.org>,
-        David Brown <david.brown@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Mark Rutland <mark.rutland@arm.com>,
-        linux-gpio@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org,
-        "Isaac J . Manjarres" <isaacm@codeaurora.org>
-Subject: Re: [PATCH 1/2] dt-bindings: pinctrl: qcom: Add SM8150 pinctrl
- binding
-Message-ID: <20190617042032.GE750@tuxbook-pro>
-References: <20190614053032.24208-1-vkoul@kernel.org>
+        Mon, 17 Jun 2019 00:25:08 -0400
+Received: by smtp.codeaurora.org (Postfix, from userid 1000)
+        id 7616160735; Mon, 17 Jun 2019 04:25:06 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
+        s=default; t=1560745506;
+        bh=5HZNkcP2zjhga4bMIOWXDoG0/nXxrlZAjw0ECMvGYK8=;
+        h=Subject:To:Cc:References:From:Date:In-Reply-To:From;
+        b=kQVJ9Osh3eNJuFAi59AX3O0oOU/n2R1TLKeFsvszpLQZT49bJMj86kNYSvp7k6e+J
+         5RPT6GNe3kh9dMasg/eJlxZnFiHsAI9fTu/bzk9oq1kQaQ2tikD3pkVWsd3LaXag9a
+         hTlnLJOVQjC7nbGJBX0MOWdSTiKTWm5+JadThbZ8=
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        pdx-caf-mail.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.7 required=2.0 tests=ALL_TRUSTED,BAYES_00,
+        DKIM_INVALID,DKIM_SIGNED,SPF_NONE autolearn=no autolearn_force=no
+        version=3.4.0
+Received: from [10.131.117.43] (blr-bdr-fw-01_globalnat_allzones-outside.qualcomm.com [103.229.18.19])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: rnayak@smtp.codeaurora.org)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id D977860735;
+        Mon, 17 Jun 2019 04:25:01 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
+        s=default; t=1560745505;
+        bh=5HZNkcP2zjhga4bMIOWXDoG0/nXxrlZAjw0ECMvGYK8=;
+        h=Subject:To:Cc:References:From:Date:In-Reply-To:From;
+        b=G3dth9pBIldbPRyid5w1N1yL/bTUx8NuG1TbpDv3Y2g4jKBqOHr9ICd/Ucdl2ISGf
+         zpAQa/+hK2ijNE1odvZQHhIT8OEW/U9CuNLp5iSChIt6UAp8Sz4aHfprpBQPeE1gcH
+         FgAekDIFTXanc5VeqZtXhzbOybouHaMjoY15PVN8=
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org D977860735
+Authentication-Results: pdx-caf-mail.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: pdx-caf-mail.web.codeaurora.org; spf=none smtp.mailfrom=rnayak@codeaurora.org
+Subject: Re: [RFC v2 01/11] OPP: Don't overwrite rounded clk rate
+To:     Viresh Kumar <viresh.kumar@linaro.org>
+Cc:     swboyd@chromium.org, vincent.guittot@linaro.org,
+        mturquette@baylibre.com, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
+        linux-serial@vger.kernel.org, linux-spi@vger.kernel.org,
+        dri-devel@lists.freedesktop.org, linux-scsi@vger.kernel.org,
+        ulf.hansson@linaro.org, dianders@chromium.org, rafael@kernel.org
+References: <20190320094918.20234-1-rnayak@codeaurora.org>
+ <20190320094918.20234-2-rnayak@codeaurora.org>
+ <20190611105432.x3nzqiib35t6mvyg@vireshk-i7>
+ <c173a57d-a4de-99f7-e8d8-28a7612f4ca3@codeaurora.org>
+ <20190612082506.m735bsk7bjijf2yg@vireshk-i7>
+ <20190613095419.lfjeko7nmxtix2n4@vireshk-i7>
+ <20190614052732.4w6vvwwich2h4cgu@vireshk-i7>
+ <20190617035058.veo7uwqjrpa6kykt@vireshk-i7>
+ <a912c8b2-080d-7ab7-670b-b687ec3a2c92@codeaurora.org>
+ <20190617041721.5xdr3kl4xxe6gy4m@vireshk-i7>
+From:   Rajendra Nayak <rnayak@codeaurora.org>
+Message-ID: <a97f991d-539a-ce22-834b-ce19944e4f57@codeaurora.org>
+Date:   Mon, 17 Jun 2019 09:55:00 +0530
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
+ Thunderbird/60.7.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20190614053032.24208-1-vkoul@kernel.org>
-User-Agent: Mutt/1.11.4 (2019-03-13)
+In-Reply-To: <20190617041721.5xdr3kl4xxe6gy4m@vireshk-i7>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu 13 Jun 22:30 PDT 2019, Vinod Koul wrote:
 
-> From: Prasad Sodagudi <psodagud@codeaurora.org>
+
+On 6/17/2019 9:47 AM, Viresh Kumar wrote:
+> On 17-06-19, 09:37, Rajendra Nayak wrote:
+>>
+>>
+>> On 6/17/2019 9:20 AM, Viresh Kumar wrote:
+>>> On 14-06-19, 10:57, Viresh Kumar wrote:
+>>>> Hmm, so this patch won't break anything and I am inclined to apply it again :)
+>>>>
+>>>> Does anyone see any other issues with it, which I might be missing ?
+>>>
+>>> I have updated the commit log a bit more to clarify on things, please let me
+>>> know if it looks okay.
+>>>
+>>>       opp: Don't overwrite rounded clk rate
+>>>       The OPP table normally contains 'fmax' values corresponding to the
+>>>       voltage or performance levels of each OPP, but we don't necessarily want
+>>>       all the devices to run at fmax all the time. Running at fmax makes sense
+>>>       for devices like CPU/GPU, which have a finite amount of work to do and
+>>>       since a specific amount of energy is consumed at an OPP, its better to
+>>>       run at the highest possible frequency for that voltage value.
+>>>       On the other hand, we have IO devices which need to run at specific
+>>>       frequencies only for their proper functioning, instead of maximum
+>>>       possible frequency.
+>>>       The OPP core currently roundup to the next possible OPP for a frequency
+>>>       and select the fmax value. To support the IO devices by the OPP core,
+>>>       lets do the roundup to fetch the voltage or performance state values,
+>>>       but not use the OPP frequency value. Rather use the value returned by
+>>>       clk_round_rate().
+>>>       The current user, cpufreq, of dev_pm_opp_set_rate() already does the
+>>>       rounding to the next OPP before calling this routine and it won't
+>>>       have any side affects because of this change.
+>>
+>> Looks good to me. Should this also be documented someplace that dev_pm_opp_set_rate()
+>> would not be able to distinguish between its users trying to scale CPU/GPU's vs IO
+>> devices, so its the callers responsibility to round it accordingly before calling the
+>> API?
 > 
-> Add the binding for the TLMM pinctrl block found in the SM8150 platform.
-> 
-> Signed-off-by: Prasad Sodagudi <psodagud@codeaurora.org>
-> Signed-off-by: Isaac J. Manjarres <isaacm@codeaurora.org>
-> Signed-off-by: Vinod Koul <vkoul@kernel.org>
-> ---
->  .../bindings/pinctrl/qcom,sm8150-pinctrl      | 200 ++++++++++++++++++
->  1 file changed, 200 insertions(+)
->  create mode 100644 Documentation/devicetree/bindings/pinctrl/qcom,sm8150-pinctrl
-> 
-> diff --git a/Documentation/devicetree/bindings/pinctrl/qcom,sm8150-pinctrl b/Documentation/devicetree/bindings/pinctrl/qcom,sm8150-pinctrl
-> new file mode 100644
-> index 000000000000..4f21d18b0be2
-> --- /dev/null
-> +++ b/Documentation/devicetree/bindings/pinctrl/qcom,sm8150-pinctrl
-> @@ -0,0 +1,200 @@
-> +Qualcomm SM8150 TLMM block
-> +
-> +This binding describes the Top Level Mode Multiplexer block found in the
-> +QCS404 platform.
-> +
-> +- compatible:
-> +	Usage: required
-> +	Value type: <string>
-> +	Definition: must be "qcom,sm8150-pinctrl"
-> +
-> +- reg:
-> +	Usage: required
-> +	Value type: <prop-encoded-array>
-> +	Definition: the base address and size of the north, south , west
+> diff --git a/drivers/opp/core.c b/drivers/opp/core.c
+> index 0fbc77f05048..bae94bfa1e96 100644
+> --- a/drivers/opp/core.c
+> +++ b/drivers/opp/core.c
+> @@ -751,8 +751,11 @@ static int _set_required_opps(struct device *dev,
+>    * @dev:        device for which we do this operation
+>    * @target_freq: frequency to achieve
+>    *
+> - * This configures the power-supplies and clock source to the levels specified
+> - * by the OPP corresponding to the target_freq.
+> + * This configures the power-supplies to the levels specified by the OPP
+> + * corresponding to the target_freq, and programs the clock to a value <=
+> + * target_freq, as rounded by clk_round_rate(). Device wanting to run at fmax
+> + * provided by the opp, should have already rounded to the target OPP's
+> + * frequency.
+>    */
 
-Extra space after south.
+Perfect, thanks.
 
-> +		    and east TLMM tiles.
-> +
-> +- reg-names:
-> +	Usage: required
-> +	Value type: <prop-encoded-array>
-> +	Defintiion: names for the cells of reg, must contain "north", "south"
-> +		    "west" and "east".
-> +
-> +- interrupts:
-> +	Usage: required
-> +	Value type: <prop-encoded-array>
-> +	Definition: should specify the TLMM summary IRQ.
-> +
-> +- interrupt-controller:
-> +	Usage: required
-> +	Value type: <none>
-> +	Definition: identifies this node as an interrupt controller
-> +
-> +- #interrupt-cells:
-> +	Usage: required
-> +	Value type: <u32>
-> +	Definition: must be 2. Specifying the pin number and flags, as defined
-> +		    in <dt-bindings/interrupt-controller/irq.h>
-> +
-> +- gpio-controller:
-> +	Usage: required
-> +	Value type: <none>
-> +	Definition: identifies this node as a gpio controller
-> +
-> +- #gpio-cells:
-> +	Usage: required
-> +	Value type: <u32>
-> +	Definition: must be 2. Specifying the pin number and flags, as defined
-> +		    in <dt-bindings/gpio/gpio.h>
-> +
-
-Please also document gpio-ranges and gpio-reserved-ranges.
-
-> +Please refer to ../gpio/gpio.txt and ../interrupt-controller/interrupts.txt for
-> +a general description of GPIO and interrupt bindings.
-> +
-> +Please refer to pinctrl-bindings.txt in this directory for details of the
-> +common pinctrl bindings used by client devices, including the meaning of the
-> +phrase "pin configuration node".
-> +
-> +The pin configuration nodes act as a container for an arbitrary number of
-> +subnodes. Each of these subnodes represents some desired configuration for a
-> +pin, a group, or a list of pins or groups. This configuration can include the
-> +mux function to select on those pin(s)/group(s), and various pin configuration
-> +parameters, such as pull-up, drive strength, etc.
-> +
-> +
-> +PIN CONFIGURATION NODES:
-> +
-> +The name of each subnode is not important; all subnodes should be enumerated
-> +and processed purely based on their content.
-> +
-> +Each subnode only affects those parameters that are explicitly listed. In
-> +other words, a subnode that lists a mux function but no pin configuration
-> +parameters implies no information about any pin configuration parameters.
-> +Similarly, a pin subnode that describes a pullup parameter implies no
-> +information about e.g. the mux function.
-> +
-> +
-> +The following generic properties as defined in pinctrl-bindings.txt are valid
-> +to specify in a pin configuration subnode:
-> +
-> +- pins:
-> +	Usage: required
-> +	Value type: <string-array>
-> +	Definition: List of gpio pins affected by the properties specified in
-> +		    this subnode.
-> +
-> +		    Valid pins are:
-> +		      gpio0-gpio149
-> +		        Supports mux, bias and drive-strength
-> +
-> +		      sdc1_clk, sdc1_cmd, sdc1_data sdc2_clk, sdc2_cmd,
-> +		      sdc2_data sdc1_rclk
-> +		        Supports bias and drive-strength
-> +
-> +		      ufs_reset
-> +		        Supports bias and drive-strength
-> +
-> +- function:
-> +	Usage: required
-> +	Value type: <string>
-> +	Definition: Specify the alternative function to be configured for the
-> +		    specified pins. Functions are only valid for gpio pins.
-> +		    Valid values are:
-> +
-> +		    blsp_uart1, blsp_spi1, blsp_i2c1, blsp_uim1, atest_tsens,
-> +		    bimc_dte1, dac_calib0, blsp_spi8, blsp_uart8, blsp_uim8,
-> +		    qdss_cti_trig_out_b, bimc_dte0, dac_calib1, qdss_cti_trig_in_b,
-> +		    dac_calib2, atest_tsens2, atest_usb1, blsp_spi10, blsp_uart10,
-> +		    blsp_uim10, atest_bbrx1, atest_usb13, atest_bbrx0, atest_usb12,
-> +		    mdp_vsync, edp_lcd, blsp_i2c10, atest_gpsadc1, atest_usb11,
-> +		    atest_gpsadc0, edp_hot, atest_usb10, m_voc, dac_gpio, atest_char,
-> +		    cam_mclk, pll_bypassnl, qdss_stm7, blsp_i2c8, qdss_tracedata_b,
-> +		    pll_reset, qdss_stm6, qdss_stm5, qdss_stm4, atest_usb2, cci_i2c,
-> +		    qdss_stm3, dac_calib3, atest_usb23, atest_char3, dac_calib4,
-> +		    qdss_stm2, atest_usb22, atest_char2, qdss_stm1, dac_calib5,
-> +		    atest_usb21, atest_char1, dbg_out, qdss_stm0, dac_calib6,
-> +		    atest_usb20, atest_char0, dac_calib10, qdss_stm10,
-> +		    qdss_cti_trig_in_a, cci_timer4, blsp_spi6, blsp_uart6, blsp_uim6,
-> +		    blsp2_spi, qdss_stm9, qdss_cti_trig_out_a, dac_calib11,
-> +		    qdss_stm8, cci_timer0, qdss_stm13, dac_calib7, cci_timer1,
-> +		    qdss_stm12, dac_calib8, cci_timer2, blsp1_spi, qdss_stm11,
-> +		    dac_calib9, cci_timer3, cci_async, dac_calib12, blsp_i2c6,
-> +		    qdss_tracectl_a, dac_calib13, qdss_traceclk_a, dac_calib14,
-> +		    dac_calib15, hdmi_rcv, dac_calib16, hdmi_cec, pwr_modem,
-> +		    dac_calib17, hdmi_ddc, pwr_nav, dac_calib18, pwr_crypto,
-> +		    dac_calib19, hdmi_hot, dac_calib20, dac_calib21, pci_e0,
-> +		    dac_calib22, dac_calib23, dac_calib24, tsif1_sync, dac_calib25,
-> +		    sd_write, tsif1_error, blsp_spi2, blsp_uart2, blsp_uim2,
-> +		    qdss_cti, blsp_i2c2, blsp_spi3, blsp_uart3, blsp_uim3, blsp_i2c3,
-> +		    uim3, blsp_spi9, blsp_uart9, blsp_uim9, blsp10_spi, blsp_i2c9,
-> +		    blsp_spi7, blsp_uart7, blsp_uim7, qdss_tracedata_a, blsp_i2c7,
-> +		    qua_mi2s, gcc_gp1_clk_a, ssc_irq, uim4, blsp_spi11, blsp_uart11,
-> +		    blsp_uim11, gcc_gp2_clk_a, gcc_gp3_clk_a, blsp_i2c11, cri_trng0,
-> +		    cri_trng1, cri_trng, qdss_stm18, pri_mi2s, qdss_stm17, blsp_spi4,
-> +		    blsp_uart4, blsp_uim4, qdss_stm16, qdss_stm15, blsp_i2c4,
-> +		    qdss_stm14, dac_calib26, spkr_i2s, audio_ref, lpass_slimbus,
-> +		    isense_dbg, tsense_pwm1, tsense_pwm2, btfm_slimbus, ter_mi2s,
-> +		    qdss_stm22, qdss_stm21, qdss_stm20, qdss_stm19, gcc_gp1_clk_b,
-> +		    sec_mi2s, blsp_spi5, blsp_uart5, blsp_uim5, gcc_gp2_clk_b,
-> +		    gcc_gp3_clk_b, blsp_i2c5, blsp_spi12, blsp_uart12, blsp_uim12,
-> +		    qdss_stm25, qdss_stm31, blsp_i2c12, qdss_stm30, qdss_stm29,
-> +		    tsif1_clk, qdss_stm28, tsif1_en, tsif1_data, sdc4_cmd, qdss_stm27,
-> +		    qdss_traceclk_b, tsif2_error, sdc43, vfr_1, qdss_stm26, tsif2_clk,
-> +		    sdc4_clk, qdss_stm24, tsif2_en, sdc42, qdss_stm23, qdss_tracectl_b,
-> +		    sd_card, tsif2_data, sdc41, tsif2_sync, sdc40, mdp_vsync_p_b,
-> +		    ldo_en, mdp_vsync_s_b, ldo_update, blsp11_uart_tx_b, blsp11_uart_rx_b,
-> +		    blsp11_i2c_sda_b, prng_rosc, blsp11_i2c_scl_b, uim2, uim1, uim_batt,
-> +		    pci_e2, pa_indicator, adsp_ext, ddr_bist, qdss_tracedata_11,
-> +		    qdss_tracedata_12, modem_tsync, nav_dr, nav_pps, pci_e1, gsm_tx,
-> +		    qspi_cs, ssbi2, ssbi1, mss_lte, qspi_clk, qspi0, qspi1, qspi2, qspi3,
-> +		    gpio
-> +
-> +- bias-disable:
-> +	Usage: optional
-> +	Value type: <none>
-> +	Definition: The specified pins should be configued as no pull.
-> +
-> +- bias-pull-down:
-> +	Usage: optional
-> +	Value type: <none>
-> +	Definition: The specified pins should be configued as pull down.
-> +
-> +- bias-pull-up:
-> +	Usage: optional
-> +	Value type: <none>
-> +	Definition: The specified pins should be configued as pull up.
-> +
-> +- output-high:
-> +	Usage: optional
-> +	Value type: <none>
-> +	Definition: The specified pins are configured in output mode, driven
-> +		    high.
-> +		    Not valid for sdc pins.
-> +
-> +- output-low:
-> +	Usage: optional
-> +	Value type: <none>
-> +	Definition: The specified pins are configured in output mode, driven
-> +		    low.
-> +		    Not valid for sdc pins.
-> +
-> +- drive-strength:
-> +	Usage: optional
-> +	Value type: <u32>
-> +	Definition: Selects the drive strength for the specified pins, in mA.
-> +		    Valid values are: 2, 4, 6, 8, 10, 12, 14 and 16
-> +
-> +Example:
-> +
-> +	tlmm: pinctrl@3000000 {
-> +		compatible = "qcom,sm8150-pinctrl";
-> +		reg = <0x03100000 0x300000>,
-> +		      <0x03500000 0x300000>,
-> +		      <0x03900000 0x300000>,
-> +		      <0x03D00000 0x300000>;
-> +		reg-names = "west", "east", "north", "south";
-> +		interrupts = <GIC_SPI 208 IRQ_TYPE_LEVEL_HIGH>;
-> +		gpio-controller;
-> +		#gpio-cells = <2>;
-> +		interrupt-controller;
-> +		#interrupt-cells = <2>;
-
-You're missing the required gpio-ranges from the example, see e.g.
-msm8996 (and please send a patch to the binding you based this on).
-
-> +	};
-
-Regards,
-Bjorn
+-- 
+QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
+of Code Aurora Forum, hosted by The Linux Foundation
