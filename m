@@ -2,113 +2,155 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 973DD47ED2
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Jun 2019 11:50:34 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C009A47F65
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Jun 2019 12:14:40 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727561AbfFQJud (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 17 Jun 2019 05:50:33 -0400
-Received: from smtp.codeaurora.org ([198.145.29.96]:56560 "EHLO
-        smtp.codeaurora.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726065AbfFQJud (ORCPT
+        id S1726302AbfFQKOi (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 17 Jun 2019 06:14:38 -0400
+Received: from mail-wr1-f67.google.com ([209.85.221.67]:33323 "EHLO
+        mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728106AbfFQKOi (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 17 Jun 2019 05:50:33 -0400
-Received: by smtp.codeaurora.org (Postfix, from userid 1000)
-        id DAE3560A63; Mon, 17 Jun 2019 09:50:31 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
-        s=default; t=1560765031;
-        bh=G+Mh/Th62W8DiS2tkdPJylcX50k7ywJSYRreIQb9Vb0=;
-        h=Subject:To:Cc:References:From:Date:In-Reply-To:From;
-        b=T5U8wSvMh8oAM0FBKhDwK64rOWuB408NqixPM8QSIWO6ERQOT9X4pEHjbugP9RLYZ
-         fi2A2Yz6/0Ayk+GBIpSNKguVVCwn/SECg/L1RK0+m4hK21MZqBG4DGXr+paQoy7KUj
-         oyqbjXJ4M91jrdR3dIFxbTtRGgB8EcDEVDuD2288=
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        pdx-caf-mail.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.7 required=2.0 tests=ALL_TRUSTED,BAYES_00,
-        DKIM_INVALID,DKIM_SIGNED,SPF_NONE autolearn=no autolearn_force=no
-        version=3.4.0
-Received: from [10.79.129.104] (blr-bdr-fw-01_globalnat_allzones-outside.qualcomm.com [103.229.18.19])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: vivek.gautam@smtp.codeaurora.org)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 7462E60274;
-        Mon, 17 Jun 2019 09:50:30 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
-        s=default; t=1560765031;
-        bh=G+Mh/Th62W8DiS2tkdPJylcX50k7ywJSYRreIQb9Vb0=;
-        h=Subject:To:Cc:References:From:Date:In-Reply-To:From;
-        b=T5U8wSvMh8oAM0FBKhDwK64rOWuB408NqixPM8QSIWO6ERQOT9X4pEHjbugP9RLYZ
-         fi2A2Yz6/0Ayk+GBIpSNKguVVCwn/SECg/L1RK0+m4hK21MZqBG4DGXr+paQoy7KUj
-         oyqbjXJ4M91jrdR3dIFxbTtRGgB8EcDEVDuD2288=
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 7462E60274
-Authentication-Results: pdx-caf-mail.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: pdx-caf-mail.web.codeaurora.org; spf=none smtp.mailfrom=vivek.gautam@codeaurora.org
-Subject: Re: [PATCH v3 3/4] iommu/arm-smmu: Add support to handle Qcom's
- wait-for-safe logic
-To:     Marc Gonzalez <marc.w.gonzalez@free.fr>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     MSM <linux-arm-msm@vger.kernel.org>,
-        Linux ARM <linux-arm-kernel@lists.infradead.org>
-References: <20190612071554.13573-1-vivek.gautam@codeaurora.org>
- <20190612071554.13573-4-vivek.gautam@codeaurora.org>
- <6f85b50d-4ee8-d33a-37c9-72d45eb50a9d@free.fr>
-From:   Vivek Gautam <vivek.gautam@codeaurora.org>
-Message-ID: <ec7bdccb-f8db-6dce-2454-ac2073be2c45@codeaurora.org>
-Date:   Mon, 17 Jun 2019 15:20:28 +0530
-User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:60.0) Gecko/20100101
- Thunderbird/60.7.0
+        Mon, 17 Jun 2019 06:14:38 -0400
+Received: by mail-wr1-f67.google.com with SMTP id n9so9319988wru.0
+        for <linux-arm-msm@vger.kernel.org>; Mon, 17 Jun 2019 03:14:36 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:content-transfer-encoding:in-reply-to
+         :user-agent;
+        bh=0h7IM4lrz+H9Hm55K4LDe4S6XuzNxvQo2AKIRNvmLBw=;
+        b=Pr7pW/pDVfmnr1f95jMU1cjpSQB6d5bTyGiKUHuQmECYAAmlvQ2YmHiXyDHzGHWt6+
+         cXEDSmKaSOEcy4gxQX8e4uqO0XleQxrbMWtM/p2M7wbrleb/gJxdcfVA4QzH1AS7ljHo
+         dlXnrwUvlTmmn5PUk2gfTHyqFb55p4K/J/MTA99zw/pXDWZ2Vm5R8MIqQLdu+FsEJYHM
+         c9XX7Hny7i4JQgqqvxwpkMXV8Hlr8hYhuYuyGxSdco6PT/Szg/fVWye6R/EOZJsm8b21
+         5pkz82OGwz0MSywdlg8AnAe1OnItyssC/hAWvgcYqic959IYI2obFsLxC/PBOANecqjJ
+         JHiQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        bh=0h7IM4lrz+H9Hm55K4LDe4S6XuzNxvQo2AKIRNvmLBw=;
+        b=kkqbOfppooQLWdvsy+yWSVsw2FRxduRerTpg10Eau+iyaF3iaPUiNH9yA3JH6XCnbB
+         ukMixwXdcHZO6uylnr2JDk7610EgLZiHDax98JZuA+CgFy1nO/axM10zK3nvd4hcYAn7
+         30cQRlmumCGYDBHfxDty/wdLeIkvLY+HYrLSDR8XZik9p7PKm0TOCDwEJc4BTB4efnDk
+         UsakRojIXuItNrvdIWv0V9KE8//3x2L6SHJoWm62XgjvJ0ISS6wsvO/duBwrdImNz3kQ
+         TFtquzMibyCzAG/diRZtTrGyjQC8Q0wyNvrxuwlCK4ncnRtzFg9R+/uxzLCeScgP6UGt
+         iCAg==
+X-Gm-Message-State: APjAAAWiKS8YnNXQwEgEKo8/sYdDoWjgVZlF9OVh5rSZ5SXmwh6v2pRM
+        vDreWUH2T9cQN2YsCu64/6Q4qA==
+X-Google-Smtp-Source: APXvYqxM183T4T8pUHIJPMxjfA6ieRjPgyyNwqF9AptFukBr31lpl3EdpNm5vAtxOqsCKbTl9IykQw==
+X-Received: by 2002:a5d:6449:: with SMTP id d9mr19355586wrw.192.1560766475722;
+        Mon, 17 Jun 2019 03:14:35 -0700 (PDT)
+Received: from dell ([2.27.35.243])
+        by smtp.gmail.com with ESMTPSA id b6sm10592370wrx.85.2019.06.17.03.14.34
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Mon, 17 Jun 2019 03:14:35 -0700 (PDT)
+Date:   Mon, 17 Jun 2019 11:14:33 +0100
+From:   Lee Jones <lee.jones@linaro.org>
+To:     alokc@codeaurora.org, agross@kernel.org, david.brown@linaro.org,
+        wsa+renesas@sang-engineering.com, bjorn.andersson@linaro.org,
+        balbi@kernel.org, gregkh@linuxfoundation.org,
+        ard.biesheuvel@linaro.org, jlhugo@gmail.com
+Cc:     linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
+        linux-i2c@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-gpio@vger.kernel.org, linux-usb@vger.kernel.or
+Subject: Re: [PATCH v4 3/6] soc: qcom: geni: Add support for ACPI
+Message-ID: <20190617101433.GF16364@dell>
+References: <20190612142654.9639-1-lee.jones@linaro.org>
+ <20190612142654.9639-4-lee.jones@linaro.org>
 MIME-Version: 1.0
-In-Reply-To: <6f85b50d-4ee8-d33a-37c9-72d45eb50a9d@free.fr>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Content-Language: en-US
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20190612142654.9639-4-lee.jones@linaro.org>
+User-Agent: Mutt/1.9.4 (2018-02-28)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+David, Andy,
 
+Since there does not appear to be any other Maintainers for this
+file/subsystem, one of you guys are going to have to at least
+review/ack it.
 
-On 6/14/2019 6:45 PM, Marc Gonzalez wrote:
-> On 12/06/2019 09:15, Vivek Gautam wrote:
->
->> This change is inspired by the downstream change from Patrick Daly
->> to address performance issues with display and camera by handling
->> this wait-for-safe within separte io-pagetable ops to do TLB
->> maintenance. So a big thanks to him for the change.
->>
->> Without this change the UFS reads are pretty slow:
->> $ time dd if=/dev/sda of=/dev/zero bs=1048576 count=10 conv=sync
->> 10+0 records in
->> 10+0 records out
->> 10485760 bytes (10.0MB) copied, 22.394903 seconds, 457.2KB/s
->> real    0m 22.39s
->> user    0m 0.00s
->> sys     0m 0.01s
->>
->> With this change they are back to rock!
->> $ time dd if=/dev/sda of=/dev/zero bs=1048576 count=300 conv=sync
->> 300+0 records in
->> 300+0 records out
->> 314572800 bytes (300.0MB) copied, 1.030541 seconds, 291.1MB/s
->> real    0m 1.03s
->> user    0m 0.00s
->> sys     0m 0.54s
-> This issue does not affect msm8998, I presume?
->
-> Nevertheless, I see much lower performance on msm8998:
->
-> # dd if=/dev/sde of=/dev/null bs=1M status=progress
-> 3892314112 bytes (3.9 GB, 3.6 GiB) copied, 50.0042 s, 77.8 MB/s
->
-> 80 MB/s on msm8998 -- vs -- 300 MB/s on sdm845
->
-> Do you have the interconnect patches on sdm845 that allow boosting
-> the clock/bandwidth for specific HW blocks?
+Which route do changes to this file usually take?
 
-Umm, No. This is the upstream 5.2-rc4 plus 4-6 patches to enable display 
-and fix splash screen.
-Is this the performance for UFS? The numbers i posted were for UFS.
+At worst I can take them, but I need maintainer Acks to do so.
 
-Thanks
-Vivek
+===========================
+
+> When booting with ACPI as the active set of configuration tables,
+> all; clocks, regulators, pin functions ect are expected to be at
+> their ideal values/levels/rates, thus the associated frameworks
+> are unavailable.  Ensure calls to these APIs are shielded when
+> ACPI is enabled.
+> 
+> Signed-off-by: Lee Jones <lee.jones@linaro.org>
+> Acked-by: Ard Biesheuvel <ard.biesheuvel@linaro.org>
+> ---
+>  drivers/soc/qcom/qcom-geni-se.c | 21 +++++++++++++++------
+>  1 file changed, 15 insertions(+), 6 deletions(-)
+> 
+> diff --git a/drivers/soc/qcom/qcom-geni-se.c b/drivers/soc/qcom/qcom-geni-se.c
+> index 6b8ef01472e9..d5cf953b4337 100644
+> --- a/drivers/soc/qcom/qcom-geni-se.c
+> +++ b/drivers/soc/qcom/qcom-geni-se.c
+> @@ -1,6 +1,7 @@
+>  // SPDX-License-Identifier: GPL-2.0
+>  // Copyright (c) 2017-2018, The Linux Foundation. All rights reserved.
+>  
+> +#include <linux/acpi.h>
+>  #include <linux/clk.h>
+>  #include <linux/slab.h>
+>  #include <linux/dma-mapping.h>
+> @@ -450,6 +451,9 @@ int geni_se_resources_off(struct geni_se *se)
+>  {
+>  	int ret;
+>  
+> +	if (has_acpi_companion(se->dev))
+> +		return 0;
+> +
+>  	ret = pinctrl_pm_select_sleep_state(se->dev);
+>  	if (ret)
+>  		return ret;
+> @@ -487,6 +491,9 @@ int geni_se_resources_on(struct geni_se *se)
+>  {
+>  	int ret;
+>  
+> +	if (has_acpi_companion(se->dev))
+> +		return 0;
+> +
+>  	ret = geni_se_clks_on(se);
+>  	if (ret)
+>  		return ret;
+> @@ -724,12 +731,14 @@ static int geni_se_probe(struct platform_device *pdev)
+>  	if (IS_ERR(wrapper->base))
+>  		return PTR_ERR(wrapper->base);
+>  
+> -	wrapper->ahb_clks[0].id = "m-ahb";
+> -	wrapper->ahb_clks[1].id = "s-ahb";
+> -	ret = devm_clk_bulk_get(dev, NUM_AHB_CLKS, wrapper->ahb_clks);
+> -	if (ret) {
+> -		dev_err(dev, "Err getting AHB clks %d\n", ret);
+> -		return ret;
+> +	if (!has_acpi_companion(&pdev->dev)) {
+> +		wrapper->ahb_clks[0].id = "m-ahb";
+> +		wrapper->ahb_clks[1].id = "s-ahb";
+> +		ret = devm_clk_bulk_get(dev, NUM_AHB_CLKS, wrapper->ahb_clks);
+> +		if (ret) {
+> +			dev_err(dev, "Err getting AHB clks %d\n", ret);
+> +			return ret;
+> +		}
+>  	}
+>  
+>  	dev_set_drvdata(dev, wrapper);
+
+-- 
+Lee Jones [李琼斯]
+Linaro Services Technical Lead
+Linaro.org │ Open source software for ARM SoCs
+Follow Linaro: Facebook | Twitter | Blog
