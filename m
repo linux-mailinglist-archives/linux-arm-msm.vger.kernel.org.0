@@ -2,172 +2,132 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id B2DD6487EC
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Jun 2019 17:53:03 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 74CDA48843
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Jun 2019 18:04:45 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726047AbfFQPxC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 17 Jun 2019 11:53:02 -0400
-Received: from mail-pf1-f194.google.com ([209.85.210.194]:43893 "EHLO
-        mail-pf1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726292AbfFQPxC (ORCPT
+        id S1726292AbfFQQEL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 17 Jun 2019 12:04:11 -0400
+Received: from heliosphere.sirena.org.uk ([172.104.155.198]:33350 "EHLO
+        heliosphere.sirena.org.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727936AbfFQQEE (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 17 Jun 2019 11:53:02 -0400
-Received: by mail-pf1-f194.google.com with SMTP id i189so5904910pfg.10
-        for <linux-arm-msm@vger.kernel.org>; Mon, 17 Jun 2019 08:53:02 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=S7ngWg/dGvSzj0XneHYvcMjpcrrpDF4uBht8DDV+QYs=;
-        b=G4LBGiEmM7N7aIJmmY1skkNswt4oG70FpRVD37PbcmRquCrnzjUdp2lCOY99RwIVHX
-         N1mdEC594UDi6fzJ+aobJJhRKLxZCZVXfJWnoEHWNsf1mo51QN2L4z/cOQLA+2dITEB2
-         dlQgw4SrB3hrlWzDcEdh2on6KV3JfJCjVO2H82FqUJgMY02jsR3N/PN1r5xkFB8mtAN+
-         APq4ct77N64uWRwcdYjo3ijnDphMDR4rdoAsyZo5KWJRyI4i+W0ll9UYvIbt8MB1hH2W
-         Z6NztCa2ZolulhfNm7OBhdi0+UYBf9nGSSy1AIKbEVLXzak6W/XmxFs4gckV9CtbWpzh
-         yMRw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=S7ngWg/dGvSzj0XneHYvcMjpcrrpDF4uBht8DDV+QYs=;
-        b=Oozxx6Grhz3Nq+VhFti/O38ctBHPD+mAMLQLVtNGU02hhoVO3uXnx1nwD7ghkSiHSs
-         mUJQE5QW5qBXd8tNBWUW62YjqWGHfiH59zA+8/9+mbKdh0uNairdgwwY/Gi/Pi9e6QgS
-         u4imwOCMFlWmidcGCMSNe+LMv/YekqUOzAPBksOsQYzK8dztg2NvDHh009nbzwYw35ON
-         TnKTADutayRlklJ7kgibXYe1fy02P9s8ZLoHDDSGdUiK8eHcOenzRCn3lzzmtRNbIE9e
-         FxBzalCqZ5Mt9734BLf1Gl2oTpVbfZvYVIFv7I8Cb+2o3T7wSwB+jMgR7YpF2iRY/xjs
-         80Rg==
-X-Gm-Message-State: APjAAAUhiQPFtCe3Kh0d6uQ5SN6dyAyMwM/rcwSeUZAnj56ZMXh168f5
-        +5M4e77/xH4R8kAK2w/av7Az4g==
-X-Google-Smtp-Source: APXvYqybOZhxiXhuBUOnJwTzhWqMpnNpfp4se+O2qoQaSVz1X3cfFIsxYq6MSI4nIqECK5Zcufg0Cg==
-X-Received: by 2002:a62:fb0a:: with SMTP id x10mr8950272pfm.224.1560786781740;
-        Mon, 17 Jun 2019 08:53:01 -0700 (PDT)
-Received: from tuxbook-pro (104-188-17-28.lightspeed.sndgca.sbcglobal.net. [104.188.17.28])
-        by smtp.gmail.com with ESMTPSA id l68sm8871042pjb.8.2019.06.17.08.52.59
-        (version=TLS1_3 cipher=AEAD-AES256-GCM-SHA384 bits=256/256);
-        Mon, 17 Jun 2019 08:53:01 -0700 (PDT)
-Date:   Mon, 17 Jun 2019 08:53:51 -0700
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Marc Gonzalez <marc.w.gonzalez@free.fr>
-Cc:     Stanimir Varbanov <svarbanov@mm-sol.com>,
-        Jeffrey Hugo <jhugo@codeaurora.org>,
-        Vivek Gautam <vivek.gautam@codeaurora.org>,
+        Mon, 17 Jun 2019 12:04:04 -0400
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+        d=sirena.org.uk; s=20170815-heliosphere; h=In-Reply-To:Content-Type:
+        MIME-Version:References:Message-ID:Subject:Cc:To:From:Date:Sender:Reply-To:
+        Content-Transfer-Encoding:Content-ID:Content-Description:Resent-Date:
+        Resent-From:Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:List-Id:
+        List-Help:List-Unsubscribe:List-Subscribe:List-Post:List-Owner:List-Archive;
+         bh=CLbL6cpc9U7h527k8o/1MxF91Z/CtBA1frPv8iuvv78=; b=CzHAVvqyU0UCgx6eMsims7dJ2
+        21zkbdbIB6UEFSRRnA57/6BGsabwS5TzyehbKe065AwrEI+Ea8uu06M5wRo3ll3Jn6jhnbLpwF0Sl
+        IOTHYtT2w6FjoIkYv1ipdWRbjt8XoDTPgR2Md3Qq2tadbnCiQxqlDjm0N7aPvyrwsu9LQ=;
+Received: from cpc102320-sgyl38-2-0-cust46.18-2.cable.virginm.net ([82.37.168.47] helo=finisterre.sirena.org.uk)
+        by heliosphere.sirena.org.uk with esmtpsa (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+        (Exim 4.89)
+        (envelope-from <broonie@sirena.org.uk>)
+        id 1hcu6x-000279-GA; Mon, 17 Jun 2019 16:03:59 +0000
+Received: by finisterre.sirena.org.uk (Postfix, from userid 1000)
+        id CBA86440046; Mon, 17 Jun 2019 17:03:58 +0100 (BST)
+Date:   Mon, 17 Jun 2019 17:03:58 +0100
+From:   Mark Brown <broonie@kernel.org>
+To:     Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
+Cc:     lgirdwood@gmail.com, Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Mark Rutland <mark.rutland@arm.com>,
         MSM <linux-arm-msm@vger.kernel.org>,
-        PCI <linux-pci@vger.kernel.org>
-Subject: Re: [PATCH v3] arm64: dts: qcom: msm8998: Add PCIe PHY and RC nodes
-Message-ID: <20190617155351.GG31088@tuxbook-pro>
-References: <f9d9afc3-06cb-a0bf-e420-8188f8255a88@free.fr>
- <c41c4057-8352-3b8e-1bdb-631df1ec3cd8@free.fr>
+        lkml <linux-kernel@vger.kernel.org>, devicetree@vger.kernel.org
+Subject: Re: [PATCH v4 4/7] regulator: qcom_spmi: Add support for PM8005
+Message-ID: <20190617160358.GC5316@sirena.org.uk>
+References: <20190613212436.6940-1-jeffrey.l.hugo@gmail.com>
+ <20190613212553.10541-1-jeffrey.l.hugo@gmail.com>
+ <20190613212553.10541-2-jeffrey.l.hugo@gmail.com>
+ <20190617150502.GU5316@sirena.org.uk>
+ <CAOCk7NrwYezbVyLKOZdxgGRVemKtBmHKP+fSO0a2p3bCPNdW3w@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="l8YfOjwMha7d9KWK"
 Content-Disposition: inline
-In-Reply-To: <c41c4057-8352-3b8e-1bdb-631df1ec3cd8@free.fr>
-User-Agent: Mutt/1.11.4 (2019-03-13)
+In-Reply-To: <CAOCk7NrwYezbVyLKOZdxgGRVemKtBmHKP+fSO0a2p3bCPNdW3w@mail.gmail.com>
+X-Cookie: Editing is a rewording activity.
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu 11 Apr 01:50 PDT 2019, Marc Gonzalez wrote:
 
-> Add MSM8998 PCIe QMP PHY and PCIe root complex DT nodes.
-> 
-> Based on the following DTS downstream:
-> https://source.codeaurora.org/quic/la/kernel/msm-4.4/tree/arch/arm/boot/dts/qcom/msm8998.dtsi?h=LE.UM.1.3.r3.25#n2537
-> 
-> Signed-off-by: Marc Gonzalez <marc.w.gonzalez@free.fr>
+--l8YfOjwMha7d9KWK
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 
-Applied
+On Mon, Jun 17, 2019 at 09:17:21AM -0600, Jeffrey Hugo wrote:
+> On Mon, Jun 17, 2019 at 9:05 AM Mark Brown <broonie@kernel.org> wrote:
 
-Thanks,
-Bjorn
+> > > +static int spmi_regulator_ftsmps426_set_voltage(struct regulator_dev *rdev,
+> > > +                                           unsigned selector)
+> > > +{
 
-> ---
-> Changes from v2:
-> 	- Move all X-names props *after* corresponding X(s) prop
-> 	- Drop comments
-> ---
->  arch/arm64/boot/dts/qcom/msm8998.dtsi | 69 +++++++++++++++++++++++++++
->  1 file changed, 69 insertions(+)
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/msm8998.dtsi b/arch/arm64/boot/dts/qcom/msm8998.dtsi
-> index f807ea3e2c6e..dab3333e21f4 100644
-> --- a/arch/arm64/boot/dts/qcom/msm8998.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/msm8998.dtsi
-> @@ -621,6 +621,75 @@
->  				<GIC_SPI 369 IRQ_TYPE_EDGE_RISING>;
->  		};
->  
-> +		pcie0: pci@1c00000 {
-> +			compatible = "qcom,pcie-msm8996";
-> +			reg =	<0x01c00000 0x2000>,
-> +				<0x1b000000 0xf1d>,
-> +				<0x1b000f20 0xa8>,
-> +				<0x1b100000 0x100000>;
-> +			reg-names = "parf", "dbi", "elbi", "config";
-> +			device_type = "pci";
-> +			linux,pci-domain = <0>;
-> +			bus-range = <0x00 0xff>;
-> +			#address-cells = <3>;
-> +			#size-cells = <2>;
-> +			num-lanes = <1>;
-> +			phys = <&pciephy>;
-> +			phy-names = "pciephy";
-> +
-> +			ranges = <0x01000000 0x0 0x1b200000 0x1b200000 0x0 0x100000>,
-> +				 <0x02000000 0x0 0x1b300000 0x1b300000 0x0 0xd00000>;
-> +
-> +			#interrupt-cells = <1>;
-> +			interrupts = <GIC_SPI 405 IRQ_TYPE_LEVEL_HIGH>;
-> +			interrupt-names = "msi";
-> +			interrupt-map-mask = <0 0 0 0x7>;
-> +			interrupt-map =	<0 0 0 1 &intc 0 135 IRQ_TYPE_LEVEL_HIGH>,
-> +					<0 0 0 2 &intc 0 136 IRQ_TYPE_LEVEL_HIGH>,
-> +					<0 0 0 3 &intc 0 138 IRQ_TYPE_LEVEL_HIGH>,
-> +					<0 0 0 4 &intc 0 139 IRQ_TYPE_LEVEL_HIGH>;
-> +
-> +			clocks = <&gcc GCC_PCIE_0_PIPE_CLK>,
-> +				 <&gcc GCC_PCIE_0_MSTR_AXI_CLK>,
-> +				 <&gcc GCC_PCIE_0_SLV_AXI_CLK>,
-> +				 <&gcc GCC_PCIE_0_CFG_AHB_CLK>,
-> +				 <&gcc GCC_PCIE_0_AUX_CLK>;
-> +			clock-names = "pipe", "bus_master", "bus_slave", "cfg", "aux";
-> +
-> +			power-domains = <&gcc PCIE_0_GDSC>;
-> +			iommu-map = <0x100 &anoc1_smmu 0x1480 1>;
-> +			perst-gpios = <&tlmm 35 GPIO_ACTIVE_LOW>;
-> +		};
-> +
-> +		phy@1c06000 {
-> +			compatible = "qcom,msm8998-qmp-pcie-phy";
-> +			reg = <0x01c06000 0x18c>;
-> +			#address-cells = <1>;
-> +			#size-cells = <1>;
-> +			ranges;
-> +
-> +			clocks = <&gcc GCC_PCIE_PHY_AUX_CLK>,
-> +				 <&gcc GCC_PCIE_0_CFG_AHB_CLK>,
-> +				 <&gcc GCC_PCIE_CLKREF_CLK>;
-> +			clock-names = "aux", "cfg_ahb", "ref";
-> +
-> +			resets = <&gcc GCC_PCIE_0_PHY_BCR>, <&gcc GCC_PCIE_PHY_BCR>;
-> +			reset-names = "phy", "common";
-> +
-> +			vdda-phy-supply = <&vreg_l1a_0p875>;
-> +			vdda-pll-supply = <&vreg_l2a_1p2>;
-> +
-> +			pciephy: lane@1c06800 {
-> +				reg = <0x01c06200 0x128>, <0x01c06400 0x1fc>, <0x01c06800 0x20c>;
-> +				#phy-cells = <0>;
-> +
-> +				clocks = <&gcc GCC_PCIE_0_PIPE_CLK>;
-> +				clock-names = "pipe0";
-> +				clock-output-names = "pcie_0_pipe_clk_src";
-> +				#clock-cells = <0>;
-> +			};
-> +		};
-> +
->  		tcsr_mutex_regs: syscon@1f40000 {
->  			compatible = "syscon";
->  			reg = <0x1f40000 0x20000>;
-> -- 
-> 2.17.1
+> > > +     mV = spmi_regulator_common_list_voltage(rdev, selector) / 1000;
+
+> > This could just be a set_voltage_sel(), no need for it to be a
+> > set_voltage() operation....
+
+> This is a set_voltage_sel() in spmi_ftsmps426_ops.  Is the issue because this
+> function is "spmi_regulator_ftsmps426_set_voltage" and not
+> "spmi_regulator_ftsmps426_set_voltage_sel"?
+
+Well, that's certainly confusing naming and there's some confusion in
+the code about what a selector is - it's supposed to be a raw register
+value so if you're having to convert it into a voltage something is
+going wrong.  Just implement a set_voltage() operation?
+
+> We already have code in the driver to convert a selector to the
+> voltage.  Why duplicate
+> that inline in spmi_regulator_ftsmps426_set_voltage?
+
+Either work with selectors or work with voltages, don't mix and match
+the two.
+
+> > > +     switch (mode) {
+> > > +     case REGULATOR_MODE_NORMAL:
+> > > +             val = SPMI_FTSMPS426_MODE_HPM_MASK;
+> > > +             break;
+> > > +     case REGULATOR_MODE_FAST:
+> > > +             val = SPMI_FTSMPS426_MODE_AUTO_MASK;
+> > > +             break;
+> > > +     default:
+> > > +             val = SPMI_FTSMPS426_MODE_LPM_MASK;
+> > > +             break;
+> > > +     }
+
+> > This should validate, it shouldn't just translate invalid values into
+> > valid ones.
+
+> Validate what?  The other defines are REGULATOR_MODE_IDLE
+> and REGULATOR_MODE_STANDBY which correspond to the LPM
+> mode.  Or are you suggesting that regulator framework is going to pass
+> REGULATOR_MODE_INVALID to this operation?
+
+You should be validating that the argument passed in is one that the
+driver understands, your assumption will break if we add any new modes
+and in any case there should be a 1:1 mapping between hardware and API
+modes so you shouldn't be translating two different API modes into the
+same hardware mode.
+
+--l8YfOjwMha7d9KWK
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAl0Hue0ACgkQJNaLcl1U
+h9BokQf/fWdp7er8/W74adT1KeOqQi4nPS93SO7dWKuu7q1YNud8ppBRNgmG3djL
+xaZh1dTIqVx2GICGfhZA3uEYPTsgPfNiM0ENiApp8OqfxX8VE5J6Ww01ikPQq08J
+Hgwb5piOsDD1uQWUr07Y7R3eoZeKmFCWBRAxUSdNSFBdbQy/v1Of2Yl98/ghbP7Z
+c8Au/mllEECB2Ew4rFXJXse1R19p0feZxxw2DQUPPB+AQ46TstNc487vUoSKNxJp
+8D2BxD5Ph+8wT9lHUimBTNyNhBtRo8wiO0yXOe7xWR8w3rJxMUGe1jNJqFO4olqf
+KFAvYXEW+12HBtSq7ZaqNi5iCB/XJg==
+=GX4O
+-----END PGP SIGNATURE-----
+
+--l8YfOjwMha7d9KWK--
