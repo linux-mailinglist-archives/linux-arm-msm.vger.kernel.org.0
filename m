@@ -2,120 +2,153 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 640AA4A38A
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Jun 2019 16:11:33 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 461534A46F
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Jun 2019 16:49:57 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729831AbfFROLS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 18 Jun 2019 10:11:18 -0400
-Received: from gate.crashing.org ([63.228.1.57]:32992 "EHLO gate.crashing.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1729743AbfFROLR (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 18 Jun 2019 10:11:17 -0400
-Received: from localhost (localhost.localdomain [127.0.0.1])
-        by gate.crashing.org (8.14.1/8.14.1) with ESMTP id x5IEB0wY002489;
-        Tue, 18 Jun 2019 09:11:01 -0500
-Message-ID: <03865a8c403d3f26aab65d758daa900ab175de08.camel@kernel.crashing.org>
-Subject: Re: [PATCH v4] driver core: Fix use-after-free and double free on
- glue directory
-From:   Benjamin Herrenschmidt <benh@kernel.crashing.org>
-To:     Muchun Song <smuchun@gmail.com>,
-        Greg KH <gregkh@linuxfoundation.org>
-Cc:     "Rafael J. Wysocki" <rafael@kernel.org>,
-        Prateek Sood <prsood@codeaurora.org>,
-        Mukesh Ojha <mojha@codeaurora.org>, gkohli@codeaurora.org,
-        linux-kernel <linux-kernel@vger.kernel.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        zhaowuyun@wingtech.com
-Date:   Wed, 19 Jun 2019 00:11:00 +1000
-In-Reply-To: <CAPSr9jFG17YnQC3UZrTZjqytB5wpTMeqqqOcJ7Sf6gAr8o5Uhg@mail.gmail.com>
-References: <20190516142342.28019-1-smuchun@gmail.com>
-         <20190524190443.GB29565@kroah.com>
-         <CAPSr9jH3sowszuNtBaTM1Wdi9vW+iakYX1G3arj+2_r5r7bYwQ@mail.gmail.com>
-         <CAPSr9jFG17YnQC3UZrTZjqytB5wpTMeqqqOcJ7Sf6gAr8o5Uhg@mail.gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-X-Mailer: Evolution 3.28.5-0ubuntu0.18.04.1 
-Mime-Version: 1.0
-Content-Transfer-Encoding: 8bit
+        id S1729406AbfFROtz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 18 Jun 2019 10:49:55 -0400
+Received: from mail-wm1-f65.google.com ([209.85.128.65]:37148 "EHLO
+        mail-wm1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729420AbfFROtx (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 18 Jun 2019 10:49:53 -0400
+Received: by mail-wm1-f65.google.com with SMTP id f17so3590524wme.2
+        for <linux-arm-msm@vger.kernel.org>; Tue, 18 Jun 2019 07:49:51 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=Bw9Az1sDvYftv6OoenbcNn/WFNLrPeZPeUya6SiZhJE=;
+        b=udv6A62ft/6+VkDzxa/PEOUwv3/ZITu7g/8w9iRR9ReSzG9lypxa62Pi4r9SN/Hhll
+         FxiwNMpXKfogjWbeqkzE2jV1lTTjRsI5u2Ncn8o1StwJg3GwNsiQ0HTrn5K0u/7RXh8S
+         e1Q4tcAQsalTh9bGi3YD4OfZYOGVt+uw3PnER43NYbFCThzlpqmKHcTqPQw3ZVPe9tWG
+         PH1NVJSU5xUCVBCrz1s0Olr29daX709FTtmsAxJ+DWL2f1e3r2fWhIlvai+QmhWcokqz
+         +sesl3yqFuJNNFqf70VfLr0azantLnGN1l0EabSUQ1F3+PVqxu2f2zGH9FeOGs9C6sdr
+         aP+A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=Bw9Az1sDvYftv6OoenbcNn/WFNLrPeZPeUya6SiZhJE=;
+        b=dj7mrAcY4SA6+6QmUIUqb0lEVtAw5Cdtq3c/ZLL5U/Ow945Vgz7+fSI8f7JlfS4u6i
+         Djm+FyGH69b0XARPJOdAKITnA1X8/C63KYxTwlObvW70F0Ioy6XjB3AsquW5WyMsmRwY
+         hR7pPESp5sZv4rlfdIAZ+ZnGUga6PKb5OkAUlGVRyvpP4piS2QSHYkbn93NfhGrHitJF
+         JFREyRVgAPZXVGUZ0SmU6M9KnXRjJX5RVlYWwKl574kOIcdvh4WduHQXiBmT9x51kLhJ
+         G4f37uRlu1eonHWbvRvBSgQQOX8+GWgNJSaqxotEU/FE4gdESSBHYn7c0uzTv/DVh69/
+         4j9g==
+X-Gm-Message-State: APjAAAUYTD/2AUxoSQ7wBkJC50C87a/xuYwDEAKE3IhI6lhYAT7FeQ1H
+        25wHeDrjPAtAJEjXKxmEXUHxV1c/70kJqg==
+X-Google-Smtp-Source: APXvYqy81kOsWTfc3qI9cyUFMvjSdlsf4pF4JIm5L+OGMDjbnEgEg9Dfd3m/D9WpbJsDGd8xvzXW1Q==
+X-Received: by 2002:a7b:c74a:: with SMTP id w10mr3834115wmk.99.1560869390770;
+        Tue, 18 Jun 2019 07:49:50 -0700 (PDT)
+Received: from [192.168.86.34] (cpc89974-aztw32-2-0-cust43.18-1.cable.virginm.net. [86.30.250.44])
+        by smtp.googlemail.com with ESMTPSA id j189sm3881237wmb.48.2019.06.18.07.49.49
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Tue, 18 Jun 2019 07:49:50 -0700 (PDT)
+Subject: Re: [PATCH] dmaengine: qcom-bam: fix circular buffer handling
+To:     Sricharan R <sricharan@codeaurora.org>, vkoul@kernel.org
+Cc:     dmaengine@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org
+References: <20190614142012.31384-1-srinivas.kandagatla@linaro.org>
+ <f4522b78-b406-954c-57b7-923e6ab31f96@codeaurora.org>
+From:   Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+Message-ID: <ab29c08b-d509-a275-f208-ace1041a27af@linaro.org>
+Date:   Tue, 18 Jun 2019 15:49:49 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+ Thunderbird/60.6.1
+MIME-Version: 1.0
+In-Reply-To: <f4522b78-b406-954c-57b7-923e6ab31f96@codeaurora.org>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, 2019-06-18 at 21:40 +0800, Muchun Song wrote:
-> Ping guys ? I think this is worth fixing.
+Hi Sricharan,
 
-I agree :-)
-
-My opinion hasn't changed though, the right fix isn't making guesses
-based on the refcount but solve the actual race which is the mutex
-being dropped between looking for the object existence and deciding to
-create it :-)
-
-Cheers,
-Ben.
-
-> Muchun Song <smuchun@gmail.com> 于2019年5月25日周六 下午8:15写道：
+On 18/06/2019 08:13, Sricharan R wrote:
+> Hi Srini,
 > 
-> > 
-> > Hi greg k-h,
-> > 
-> > Greg KH <gregkh@linuxfoundation.org> 于2019年5月25日周六 上午3:04写道：
-> > > 
-> > > On Thu, May 16, 2019 at 10:23:42PM +0800, Muchun Song wrote:
-> > > > There is a race condition between removing glue directory and
-> > > > adding a new
-> > > > device under the glue directory. It can be reproduced in
-> > > > following test:
-> > > 
-> > > <snip>
-> > > 
-> > > Is this related to:
-> > >         Subject: [PATCH v3] drivers: core: Remove glue dirs early
-> > > only when refcount is 1
-> > > 
-> > > ?
-> > > 
-> > > If so, why is the solution so different?
-> > 
-> > In the v1 patch, the solution is that remove glue dirs early only
-> > when
-> > refcount is 1. So
-> > the v1 patch like below:
-> > 
-> > @@ -1825,7 +1825,7 @@ static void cleanup_glue_dir(struct device
-> > *dev,
-> > struct kobject *glue_dir)
-> >                 return;
-> > 
-> >         mutex_lock(&gdp_mutex);
-> > -       if (!kobject_has_children(glue_dir))
-> > +       if (!kobject_has_children(glue_dir) && kref_read(&glue_dir-
-> > >kref) == 1)
-> >                 kobject_del(glue_dir);
-> >         kobject_put(glue_dir);
-> >         mutex_unlock(&gdp_mutex);
-> > -----------------------------------------------------------------
-> > ------
-> > 
-> > But from Ben's suggestion as below:
-> > 
-> > I find relying on the object count for such decisions rather
-> > fragile as
-> > it could be taken temporarily for other reasons, couldn't it ? In
-> > which
-> > case we would just fail...
-> > 
-> > Ideally, the looking up of the glue dir and creation of its child
-> > should be protected by the same lock instance (the gdp_mutex in
-> > that
-> > case).
-> > -----------------------------------------------------------------
-> > ------
-> > 
-> > So another solution is used from Ben's suggestion in the v2 patch.
-> > But
-> > I forgot to update the commit message until the v4 patch. Thanks.
-> > 
-> > Yours,
-> > Muchun
+> On 6/14/2019 7:50 PM, Srinivas Kandagatla wrote:
+>> For some reason arguments to most of the circular buffers
+>> macros are used in reverse, tail is used for head and vice versa.
+>>
+>> This leads to bam thinking that there is an extra descriptor at the
+>> end and leading to retransmitting descriptor which was not scheduled
+>> by any driver. This happens after MAX_DESCRIPTORS (4096) are scheduled
+>> and done, so most of the drivers would not notice this, unless they are
+>> heavily using bam dma. Originally found this issue while testing
+>> SoundWire over SlimBus on DB845c which uses DMA very heavily for
+>> read/writes.
+>>
+>> Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+>> ---
+>>   drivers/dma/qcom/bam_dma.c | 9 ++++-----
+>>   1 file changed, 4 insertions(+), 5 deletions(-)
+>>
+>> diff --git a/drivers/dma/qcom/bam_dma.c b/drivers/dma/qcom/bam_dma.c
+>> index cb860cb53c27..43d7b0a9713a 100644
+>> --- a/drivers/dma/qcom/bam_dma.c
+>> +++ b/drivers/dma/qcom/bam_dma.c
+>> @@ -350,8 +350,8 @@ static const struct reg_offset_data bam_v1_7_reg_info[] = {
+>>   #define BAM_DESC_FIFO_SIZE	SZ_32K
+>>   #define MAX_DESCRIPTORS (BAM_DESC_FIFO_SIZE / sizeof(struct bam_desc_hw) - 1)
+>>   #define BAM_FIFO_SIZE	(SZ_32K - 8)
+>> -#define IS_BUSY(chan)	(CIRC_SPACE(bchan->tail, bchan->head,\
+>> -			 MAX_DESCRIPTORS + 1) == 0)
+>> +#define IS_BUSY(chan)	(CIRC_SPACE(bchan->head, bchan->tail,\
+>> +			 MAX_DESCRIPTORS) == 0)
+>>   
+>>   struct bam_chan {
+>>   	struct virt_dma_chan vc;
+>> @@ -806,7 +806,7 @@ static u32 process_channel_irqs(struct bam_device *bdev)
+>>   		offset /= sizeof(struct bam_desc_hw);
+>>   
+>>   		/* Number of bytes available to read */
+>> -		avail = CIRC_CNT(offset, bchan->head, MAX_DESCRIPTORS + 1);
+>> +		avail = CIRC_CNT(bchan->head, offset, MAX_DESCRIPTORS);
+>>
+>   one question, so MAX_DESCRIPTORS is already a mask,
+>      #define MAX_DESCRIPTORS (BAM_DESC_FIFO_SIZE / sizeof(struct bam_desc_hw) - 1)
+> 
+>   CIRC_CNT/SPACE macros also does a size - 1, so would it not be a problem if we
+>   just pass MAX_DESCRIPTORS ?
 
+Thanks for looking at this,
+TBH, usage of CIRC_* macros is only valid for power-of-2 buffers,
+In bam case MAX_DESCRIPTORS is 4095.
+Am really not sure why 8 bytes have been removed from fifo data buffer size.
+So basically usage of these macros is incorrect in bam case, this need 
+to be fixed properly.
+
+Do you agree?
+
+Vinod, can you hold off with this patch, I will try to find some time 
+this week to cook up a better patch removing the usage of these macros.
+
+
+
+thanks,
+srini
+
+> 
+> Regards,
+>   Sricharan
+>    
+>>   		list_for_each_entry_safe(async_desc, tmp,
+>>   					 &bchan->desc_list, desc_node) {
+>> @@ -997,8 +997,7 @@ static void bam_start_dma(struct bam_chan *bchan)
+>>   			bam_apply_new_config(bchan, async_desc->dir);
+>>   
+>>   		desc = async_desc->curr_desc;
+>> -		avail = CIRC_SPACE(bchan->tail, bchan->head,
+>> -				   MAX_DESCRIPTORS + 1);
+>> +		avail = CIRC_SPACE(bchan->head, bchan->tail, MAX_DESCRIPTORS);
+>>   
+>>   		if (async_desc->num_desc > avail)
+>>   			async_desc->xfer_len = avail;
+>>
+> 
