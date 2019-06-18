@@ -2,67 +2,67 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 4D8324ABBC
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Jun 2019 22:25:35 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 18C3E4ABBD
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Jun 2019 22:25:38 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730671AbfFRUZ0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 18 Jun 2019 16:25:26 -0400
-Received: from mail-qk1-f194.google.com ([209.85.222.194]:44547 "EHLO
-        mail-qk1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725909AbfFRUZZ (ORCPT
+        id S1730341AbfFRUZh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 18 Jun 2019 16:25:37 -0400
+Received: from mail-qt1-f193.google.com ([209.85.160.193]:32852 "EHLO
+        mail-qt1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725909AbfFRUZh (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 18 Jun 2019 16:25:25 -0400
-Received: by mail-qk1-f194.google.com with SMTP id p144so9435086qke.11;
-        Tue, 18 Jun 2019 13:25:25 -0700 (PDT)
+        Tue, 18 Jun 2019 16:25:37 -0400
+Received: by mail-qt1-f193.google.com with SMTP id x2so17124986qtr.0;
+        Tue, 18 Jun 2019 13:25:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=+J13HW6Ql7AVbYnId9Z2QZkxRcrcMv8VFcAxxJspMsw=;
-        b=m+HxYuSmzA49hIX2C0R/5k+lHUKTIv1oK6hQCco3oEPOdHPlkqevF72yM+yYin7kua
-         QzrAxnvVqHxxjWLAbb3t56f7b8EC4dkXbCIx7AOuMRYf+gQzgU0FA42UoJ/BddGOIWrU
-         XYBbLaRsmrdKpe9RwQ72o0TKKEZOTT5cAZM5o9kzYniijBjFp3F+SKk3x/Istrhyf0OC
-         bazZli+kqlvHDv4zh3JqtKHnNb364yPF7y5OQawsRysIarus7HGQ44iLbukMiA47Kxoy
-         wGCux6njKAkW+nCyx9U1Oab1OGdGexPnBZHE65mwdTKY+/LAo0cKGdUQExLg+s7ck9gH
-         BPvg==
+        bh=TIBkr0/rm+35I5D7kp+sjlYQTXR18bhJrUdb3/bbQ84=;
+        b=JzIaP7LAy2wIvaikkMC1orlL4s5PdBVDz4CL4pDrdsxcbFxQRrSSI6av7lg5iyWeJx
+         D6gxxbjD9PKpHOyVDhnbqfDiULIz7Xrzm7DrPEROmjz+evt2xCbXAQAjwSdYq0SrjMam
+         d65vYOkms8s/UaeijLu6MzXEPxKO8aykgjttdDO1+xZjpgTpLNInekcKX+0TQHd+OxcI
+         V4TM/sPVhXKFA4BoLbdMkvLYn5r4Mu1t5pcdHsKUK/MNscjvtiMsWyHt30Z+qnUMFpR4
+         BuVXt6I5vzGJdtx/Gx734zD92abVTPq+3S2GCnodb4U//4k8vFeAWOzGN3SlX87A/LVu
+         2PCA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=+J13HW6Ql7AVbYnId9Z2QZkxRcrcMv8VFcAxxJspMsw=;
-        b=XTYCNFqU7xy/JRtdbLTT4MsGPzvy0PhBMCEyStyWlG4CD7gb+njpkHS17/IGv6vcoz
-         8MIaSbNDM6YY8QJwgVoHXkJDks0NksUxR24Hvi67BqxsCE7MI233jW45FdIdXaoovgKk
-         +OCyPFLR7NXzs61Pqe1zg1VMKAcJfrD2SuOkoEqKWCR7m0biW+lwwqJ/FpcpoynzxC0w
-         FBmSoDsBhfdXh2cQMbqTCHk5PX5vr6t73/KNJDtHEQLc4PYaTBnOye0tvqEHKUqRjMpN
-         zI1VWZ8DmEajghjclZEk0sG+5OEberWe9vx9NYXdYvGNsXEfDW+TIO+xcw5waFDbh0sg
-         91Hg==
-X-Gm-Message-State: APjAAAVlxZsS4ByVuFrnSFtr9ANsM0AzTTM1O/gzYrDbx71b9GSpVaUa
-        PuyLKLtIJnzaZpXSZC3h6D4=
-X-Google-Smtp-Source: APXvYqxNDvLChkQUBiXIko0dDMbNastU/9GEX6agttSnnnTf19sIWCx8uUHQaJTRlVcJjODqD+0iUg==
-X-Received: by 2002:a05:620a:10b2:: with SMTP id h18mr30836066qkk.14.1560889524900;
-        Tue, 18 Jun 2019 13:25:24 -0700 (PDT)
+        bh=TIBkr0/rm+35I5D7kp+sjlYQTXR18bhJrUdb3/bbQ84=;
+        b=BupaAMYqFcSJrHqnSwZ5VFHIQgii+xuBNeLKkD+P33jdAu+SV53NWdkznz53uS5TVz
+         7ZU4CrevrZmKfY+H11tbCzS/vDiDRUsCLhgwNQtZzCCkyaJ/myNxkzzdIu5MsFCl4Ztp
+         9UkIMj5zT68F1B63Zt8WOe8Rsspw+mmnGl0FdEYQeq37QStVgEigqpvKLThhzunZFhQw
+         WN+8n45XQ+hZyDZj6X78Jt194H9kLLKWSUSJ74+ar3JrPFdbfQwjmAxfKH+avWe9YsYB
+         1FZqFggqxiuS8Qz8n6sIepbnTdLq8mDHyN8VAI8a6sMxfiXOpnCRp+SURhhrSs/H1JlS
+         iW3A==
+X-Gm-Message-State: APjAAAUyLerBHQigDvrslC07elD9wJO90gJeSmV07As429pj+6vP4AZw
+        DHhM3J3tF0T02OrzCS1tei0=
+X-Google-Smtp-Source: APXvYqzC40YKPX8T0MLddHulG6MVab9KyzdiIugXiY2lSC7GvTD8kn2aajJ7FYhNz2sI74Hn0qiCWg==
+X-Received: by 2002:a0c:bd9a:: with SMTP id n26mr29411009qvg.25.1560889535497;
+        Tue, 18 Jun 2019 13:25:35 -0700 (PDT)
 Received: from localhost ([2601:184:4780:7861:5010:5849:d76d:b714])
-        by smtp.gmail.com with ESMTPSA id r17sm9594246qtf.26.2019.06.18.13.25.24
+        by smtp.gmail.com with ESMTPSA id k15sm7617420qtg.22.2019.06.18.13.25.34
         (version=TLS1_3 cipher=AEAD-AES256-GCM-SHA384 bits=256/256);
-        Tue, 18 Jun 2019 13:25:24 -0700 (PDT)
+        Tue, 18 Jun 2019 13:25:35 -0700 (PDT)
 From:   Rob Clark <robdclark@gmail.com>
 To:     dri-devel@lists.freedesktop.org
 Cc:     linux-arm-msm@vger.kernel.org, Sean Paul <seanpaul@chromium.org>,
         Georgi Djakov <georgi.djakov@linaro.org>,
-        Jayant Shekhar <jshekhar@codeaurora.org>,
-        Sravanthi Kollukuduru <skolluku@codeaurora.org>,
-        Rob Herring <robh@kernel.org>,
+        Abhinav Kumar <abhinavk@codeaurora.org>,
+        Sean Paul <sean@poorly.run>,
         Rob Clark <robdclark@chromium.org>,
-        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        Rob Clark <robdclark@gmail.com>,
         David Airlie <airlied@linux.ie>,
         Daniel Vetter <daniel@ffwll.ch>,
-        Rob Herring <robh+dt@kernel.org>,
-        Mark Rutland <mark.rutland@arm.com>,
-        freedreno@lists.freedesktop.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: [PATCH 3/5] dt-bindings: msm/disp: Introduce interconnect bindings for MDSS on SDM845
-Date:   Tue, 18 Jun 2019 13:24:11 -0700
-Message-Id: <20190618202425.15259-4-robdclark@gmail.com>
+        Jordan Crouse <jcrouse@codeaurora.org>,
+        Jayant Shekhar <jshekhar@codeaurora.org>,
+        Stephen Boyd <swboyd@chromium.org>,
+        Jeykumar Sankaran <jsanka@codeaurora.org>,
+        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org
+Subject: [PATCH 4/5] drm/msm/dpu: add icc voting in dpu_mdss_init
+Date:   Tue, 18 Jun 2019 13:24:12 -0700
+Message-Id: <20190618202425.15259-5-robdclark@gmail.com>
 X-Mailer: git-send-email 2.20.1
 In-Reply-To: <20190618202425.15259-1-robdclark@gmail.com>
 References: <20190618202425.15259-1-robdclark@gmail.com>
@@ -73,60 +73,75 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Jayant Shekhar <jshekhar@codeaurora.org>
+From: Abhinav Kumar <abhinavk@codeaurora.org>
 
-Add interconnect properties such as interconnect provider specifier
-, the edge source and destination ports which are required by the
-interconnect API to configure interconnect path for MDSS.
+dpu_mdss_destroy() can get called not just from
+msm_drm_uninit() but also from msm_drm_bind() in case
+of any failures.
 
-Changes in v2:
-	- None
+dpu_mdss_destroy() removes the icc voting by calling
+icc_put. This could accidentally remove the voting
+done by pm_runtime_enable.
 
-Changes in v3:
-	- Remove common property definitions (Rob Herring)
+To make the voting balanced add a minimum vote in
+dpu_mdss_init() to avoid any unclocked access.
 
-Changes in v4:
-	- Use port macros and change port string names (Georgi Djakov)
+This change depends on the following patch which
+introduces interconnect binding to MDSS driver:
 
-Changes in v5-v7:
-	- None
+https://patchwork.codeaurora.org/patch/708155/
 
-Signed-off-by: Sravanthi Kollukuduru <skolluku@codeaurora.org>
-Signed-off-by: Jayant Shekhar <jshekhar@codeaurora.org>
-Reviewed-by: Rob Herring <robh@kernel.org>
+Signed-off-by: Abhinav Kumar <abhinavk@codeaurora.org>
+Reviewed-by: Sean Paul <sean@poorly.run>
 Signed-off-by: Rob Clark <robdclark@chromium.org>
 ---
- Documentation/devicetree/bindings/display/msm/dpu.txt | 10 ++++++++++
- 1 file changed, 10 insertions(+)
+ drivers/gpu/drm/msm/disp/dpu1/dpu_mdss.c | 18 ++++++++++++++----
+ 1 file changed, 14 insertions(+), 4 deletions(-)
 
-diff --git a/Documentation/devicetree/bindings/display/msm/dpu.txt b/Documentation/devicetree/bindings/display/msm/dpu.txt
-index ad2e8830324e..a61dd40f3792 100644
---- a/Documentation/devicetree/bindings/display/msm/dpu.txt
-+++ b/Documentation/devicetree/bindings/display/msm/dpu.txt
-@@ -28,6 +28,11 @@ Required properties:
- - #address-cells: number of address cells for the MDSS children. Should be 1.
- - #size-cells: Should be 1.
- - ranges: parent bus address space is the same as the child bus address space.
-+- interconnects : interconnect path specifier for MDSS according to
-+  Documentation/devicetree/bindings/interconnect/interconnect.txt. Should be
-+  2 paths corresponding to 2 AXI ports.
-+- interconnect-names : MDSS will have 2 port names to differentiate between the
-+  2 interconnect paths defined with interconnect specifier.
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_mdss.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_mdss.c
+index b1d0437ac7b6..986915bbbc02 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/dpu_mdss.c
++++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_mdss.c
+@@ -49,6 +49,16 @@ static int dpu_mdss_parse_data_bus_icc_path(struct drm_device *dev,
+ 	return 0;
+ }
  
- Optional properties:
- - assigned-clocks: list of clock specifiers for clocks needing rate assignment
-@@ -86,6 +91,11 @@ Example:
- 		interrupt-controller;
- 		#interrupt-cells = <1>;
- 
-+		interconnects = <&rsc_hlos MASTER_MDP0 &rsc_hlos SLAVE_EBI1>,
-+				<&rsc_hlos MASTER_MDP1 &rsc_hlos SLAVE_EBI1>;
++static void dpu_mdss_icc_request_bw(struct msm_mdss *mdss)
++{
++	struct dpu_mdss *dpu_mdss = to_dpu_mdss(mdss);
++	int i;
++	u64 avg_bw = dpu_mdss->num_paths ? MAX_BW / dpu_mdss->num_paths : 0;
 +
-+		interconnect-names = "mdp0-mem", "mdp1-mem";
++	for (i = 0; i < dpu_mdss->num_paths; i++)
++		icc_set_bw(dpu_mdss->path[i], avg_bw, kBps_to_icc(MAX_BW));
++}
 +
- 		iommus = <&apps_iommu 0>;
+ static void dpu_mdss_irq(struct irq_desc *desc)
+ {
+ 	struct dpu_mdss *dpu_mdss = irq_desc_get_handler_data(desc);
+@@ -160,11 +170,9 @@ static int dpu_mdss_enable(struct msm_mdss *mdss)
+ {
+ 	struct dpu_mdss *dpu_mdss = to_dpu_mdss(mdss);
+ 	struct dss_module_power *mp = &dpu_mdss->mp;
+-	int ret, i;
+-	u64 avg_bw = dpu_mdss->num_paths ? MAX_BW / dpu_mdss->num_paths : 0;
++	int ret;
  
- 		#address-cells = <2>;
+-	for (i = 0; i < dpu_mdss->num_paths; i++)
+-		icc_set_bw(dpu_mdss->path[i], avg_bw, kBps_to_icc(MAX_BW));
++	dpu_mdss_icc_request_bw(mdss);
+ 
+ 	ret = msm_dss_enable_clk(mp->clk_config, mp->num_clk, true);
+ 	if (ret)
+@@ -277,6 +285,8 @@ int dpu_mdss_init(struct drm_device *dev)
+ 
+ 	pm_runtime_enable(dev->dev);
+ 
++	dpu_mdss_icc_request_bw(priv->mdss);
++
+ 	pm_runtime_get_sync(dev->dev);
+ 	dpu_mdss->hwversion = readl_relaxed(dpu_mdss->mmio);
+ 	pm_runtime_put_sync(dev->dev);
 -- 
 2.20.1
 
