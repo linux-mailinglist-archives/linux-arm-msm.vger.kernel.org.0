@@ -2,47 +2,47 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 23D5049A79
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Jun 2019 09:24:03 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A304D49A1E
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Jun 2019 09:14:05 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726248AbfFRHYC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 18 Jun 2019 03:24:02 -0400
-Received: from mail-pf1-f194.google.com ([209.85.210.194]:38157 "EHLO
-        mail-pf1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725870AbfFRHYC (ORCPT
+        id S1729006AbfFRHOE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 18 Jun 2019 03:14:04 -0400
+Received: from mail-oi1-f194.google.com ([209.85.167.194]:38013 "EHLO
+        mail-oi1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725919AbfFRHOD (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 18 Jun 2019 03:24:02 -0400
-Received: by mail-pf1-f194.google.com with SMTP id a186so7120235pfa.5
-        for <linux-arm-msm@vger.kernel.org>; Tue, 18 Jun 2019 00:24:01 -0700 (PDT)
+        Tue, 18 Jun 2019 03:14:03 -0400
+Received: by mail-oi1-f194.google.com with SMTP id v186so8301027oie.5
+        for <linux-arm-msm@vger.kernel.org>; Tue, 18 Jun 2019 00:14:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=from:to:cc:subject:date:message-id;
-        bh=uMkMCv3BUoXLIY8oihfQPbNdvfEpRTYBkVyHKvMXCxo=;
-        b=UP65qTPR+PVH9R0yUIf3Ua5dHgffMfh1HjiizGbyeCEXQQUsZFNt0BjYxnfbEPb5e2
-         kZwfswFy6tbao8QG4VlChvqNNFukKdpctn9FAr9GtQd7OtbChbaAPuetVqBYc1Blz0Ym
-         Orx2Bct4ZzJVysUVAoWLSWwruldUs6tZ41avYyUzE6F67T1emdnH2W1/bQVKrLrLOFp1
-         71U3k6pGrAM+iAkp1Y6ZHWu00zVise80ZQJ+Vk4x71o51zkVP7JIovJy4wkrjXQXxGwl
-         uaVDgxs6aV+yDxqakjKg0Vc1CeuofaTiBaRnTefmmeJMRRZoVVLBsgHPZWWuhErnTo9e
-         8uYg==
+        bh=qy2FdR6Glct2vKzJvpmQSCzJgy5iEEmaOujs7pDw8GA=;
+        b=txKOyGl5liwOrHwHqS2y2mJP8cEAM78gyygiX00CliWDz6qGxGNqNLaI0IG40Ubte6
+         dwib17D3CUTO1QHXmNrenNhpQbKksG1Xj4A1LymqmiYp9wnKSadK5xTbq++TY0KawAqy
+         rNcolgypU2uUX7pP8cL1IuKBcQGL6a8/YpZ+Rl/J3iqLapjNb7ckxwQLjYPQC9PHx14G
+         YJHN86dCj3jNpF8cMN3j8pMStWU5BMB/O3bZwJhogFpINSwsByfimmbiQhw4UZguHOiB
+         PZFTKn89HPPYhDqP2v+E90CW9K3tTpUOazXAtiRlnXwJiy5P38/Jr0A3RzYpIeOpAvgY
+         IAQQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id;
-        bh=uMkMCv3BUoXLIY8oihfQPbNdvfEpRTYBkVyHKvMXCxo=;
-        b=ejqOfbHi7PWKlqN11udTcNmXT1zz3V4AVO29/wlugwRnaxLjRcwDMZuwbh1T0AyRVL
-         rZSNN2/EDUC0623fOFMy+dscTQTWsYR1b1MnNAxSm9xyGEEMWv3GveDijkG761YtVtT1
-         q2VyN3hVgmW31/ePLThT9hX8W2K8QSlHmcw6GMw7w66rA1ODhHVkZ7pFoPUqCt7/kCBR
-         uqAXcKQ+ZsH6qm3CEJux2Gb1yjnrbGzN14vJSFnhiVoEEmCbkhupw5E4zeBBQORcJ8QO
-         LKezKVe40+i1lLqUgFouThrdA/rr0w4fcptkQ5J3LwPwpMzYlBTM19SGZ8zD/t/KcC0m
-         SvyA==
-X-Gm-Message-State: APjAAAXDO0FAn0sQ78KqUTHh7vfLKupKdnTBLsaxl2dR9CgfHIbnVzsI
-        4Tg5MU/JtjH+tADfIfK9WLUWvA==
-X-Google-Smtp-Source: APXvYqzT9yDFgrWXzL17w6F+6WzZOHPFNClSCnrZ/Me4Pzh7JrexSnochsWdQoaHG6kWd9P0e63z2g==
-X-Received: by 2002:a62:fb10:: with SMTP id x16mr119211653pfm.112.1560835484882;
-        Mon, 17 Jun 2019 22:24:44 -0700 (PDT)
+        bh=qy2FdR6Glct2vKzJvpmQSCzJgy5iEEmaOujs7pDw8GA=;
+        b=TlXV59qTChw54IX7iNQMgk8yKtEqcTBowN+LUVuMNhl4qJl1DYvGBC4X5qc8WQkpFB
+         pnBe/GDgKTmOgCIlMtHaLKwDDEtcKyNSdnqWcCIl6u1X0piPmFOks8khzfElivZkJbyy
+         g+I2uI28svGGPNhVg7BRO9u2AwfPaT9N4EgCclz2K1O/iSXUfMVZaU34ZvCPYWuogVxv
+         Tfs0GLsw2n0CaXaOR6j43La48PqnHX+YJS79EJe8ov7y6dmQqnJxnbfuFtZJl9JzXbhc
+         ORIrpNgqKGBzFfMOh1X9EaHJ5i7zgdTYMI+AwL+rLtlHf8GyTMOSfFWplz6TCjbAuXxK
+         BlxA==
+X-Gm-Message-State: APjAAAUGhnFic7nES1lqEEJqToIYjwJWe6vUVyKx/hB7FmhGPB/ytuor
+        gMsYh5wYKjUgG2XY67vdy83yqMLPUbQ=
+X-Google-Smtp-Source: APXvYqwabpjxe1V064XCNOyWH8q4caObRzcly+FAT/rfy5W97dlFHwq5/HtzdJi92MY/4evDYT1X7g==
+X-Received: by 2002:a63:224a:: with SMTP id t10mr947130pgm.289.1560835550760;
+        Mon, 17 Jun 2019 22:25:50 -0700 (PDT)
 Received: from localhost.localdomain (104-188-17-28.lightspeed.sndgca.sbcglobal.net. [104.188.17.28])
-        by smtp.gmail.com with ESMTPSA id b15sm13176070pfi.141.2019.06.17.22.24.44
+        by smtp.gmail.com with ESMTPSA id i133sm10011704pfe.75.2019.06.17.22.25.49
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 17 Jun 2019 22:24:44 -0700 (PDT)
+        Mon, 17 Jun 2019 22:25:50 -0700 (PDT)
 From:   Bjorn Andersson <bjorn.andersson@linaro.org>
 To:     Andy Gross <agross@kernel.org>
 Cc:     David Brown <david.brown@linaro.org>,
@@ -51,63 +51,36 @@ Cc:     David Brown <david.brown@linaro.org>,
         linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
         linux-kernel@vger.kernel.org,
         Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-Subject: [PATCH] arm64: dts: qcom: msm8996: Rename smmu nodes
-Date:   Mon, 17 Jun 2019 22:24:41 -0700
-Message-Id: <20190618052441.32306-1-bjorn.andersson@linaro.org>
+Subject: [PATCH] arm64: dts: qcom: msm8996: Correct apr-domain property
+Date:   Mon, 17 Jun 2019 22:25:47 -0700
+Message-Id: <20190618052547.32376-1-bjorn.andersson@linaro.org>
 X-Mailer: git-send-email 2.18.0
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Node names shouldn't include "qcom," and should whenever possible use
-a generic identifier. Resolve this by renaming the smmu nodes "iommu".
+The domain specifier was changed from using "reg" to "qcom,apr-domain",
+update the dts accordingly.
 
 Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
 ---
- arch/arm64/boot/dts/qcom/msm8996.dtsi | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ arch/arm64/boot/dts/qcom/msm8996.dtsi | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/arch/arm64/boot/dts/qcom/msm8996.dtsi b/arch/arm64/boot/dts/qcom/msm8996.dtsi
-index 2ecd9d775d61..c934e00434c7 100644
+index c934e00434c7..1a139cfb240d 100644
 --- a/arch/arm64/boot/dts/qcom/msm8996.dtsi
 +++ b/arch/arm64/boot/dts/qcom/msm8996.dtsi
-@@ -1163,7 +1163,7 @@
- 			};
- 		};
+@@ -1831,7 +1831,7 @@
+ 				power-domains = <&gcc HLOS1_VOTE_LPASS_ADSP_GDSC>;
+ 				compatible = "qcom,apr-v2";
+ 				qcom,smd-channels = "apr_audio_svc";
+-				reg = <APR_DOMAIN_ADSP>;
++				qcom,apr-domain = <APR_DOMAIN_ADSP>;
+ 				#address-cells = <1>;
+ 				#size-cells = <0>;
  
--		vfe_smmu: arm,smmu@da0000 {
-+		vfe_smmu: iommu@da0000 {
- 			compatible = "qcom,msm8996-smmu-v2", "qcom,smmu-v2";
- 			reg = <0xda0000 0x10000>;
- 
-@@ -1314,7 +1314,7 @@
- 			};
- 		};
- 
--		adreno_smmu: arm,smmu@b40000 {
-+		adreno_smmu: iommu@b40000 {
- 			compatible = "qcom,msm8996-smmu-v2", "qcom,smmu-v2";
- 			reg = <0xb40000 0x10000>;
- 
-@@ -1331,7 +1331,7 @@
- 			power-domains = <&mmcc GPU_GDSC>;
- 		};
- 
--		mdp_smmu: arm,smmu@d00000 {
-+		mdp_smmu: iommu@d00000 {
- 			compatible = "qcom,msm8996-smmu-v2", "qcom,smmu-v2";
- 			reg = <0xd00000 0x10000>;
- 
-@@ -1347,7 +1347,7 @@
- 			power-domains = <&mmcc MDSS_GDSC>;
- 		};
- 
--		lpass_q6_smmu: arm,smmu-lpass_q6@1600000 {
-+		lpass_q6_smmu: iommu@1600000 {
- 			compatible = "qcom,msm8996-smmu-v2", "qcom,smmu-v2";
- 			reg = <0x1600000 0x20000>;
- 			#iommu-cells = <1>;
 -- 
 2.18.0
 
