@@ -2,147 +2,262 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 9B5354ABFA
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Jun 2019 22:40:23 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D64894ABFE
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Jun 2019 22:42:20 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730555AbfFRUkT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 18 Jun 2019 16:40:19 -0400
-Received: from mail-io1-f68.google.com ([209.85.166.68]:35485 "EHLO
-        mail-io1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730341AbfFRUkS (ORCPT
+        id S1730358AbfFRUmF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 18 Jun 2019 16:42:05 -0400
+Received: from mail-qt1-f195.google.com ([209.85.160.195]:36075 "EHLO
+        mail-qt1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1730350AbfFRUmF (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 18 Jun 2019 16:40:18 -0400
-Received: by mail-io1-f68.google.com with SMTP id m24so33089830ioo.2
-        for <linux-arm-msm@vger.kernel.org>; Tue, 18 Jun 2019 13:40:18 -0700 (PDT)
+        Tue, 18 Jun 2019 16:42:05 -0400
+Received: by mail-qt1-f195.google.com with SMTP id p15so17177656qtl.3
+        for <linux-arm-msm@vger.kernel.org>; Tue, 18 Jun 2019 13:42:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=MfLSn4IF5wybAl5GDySiZqesfAaDpqnR8BFc78pzytk=;
-        b=Z+ctTLfSDipdCZANZRnHUF9ESh4EeXsPNOdYN7dN/Yv5lb/w8pHdcbQzOLNoybteIu
-         BFqcsejICW20tEAGWVGq3v/hF9vVVBdjOb/CbxrmBv2VXDWUKFG1UtD20ZTOGJC0Hqfk
-         cxL7COmiKriXDFr9zGxmctQiv9XMCYnLlfRxr40XcIqIYpHpFAsJUmUudJrGxWv0g5Im
-         joBBVUX7dYh27jcY4519aG/5bKVjZIFaZjVHrkemYh1QT8TXSXeO3s+k1Wfj0kNLp5mn
-         RcrVKKLJzz1ve6CQgvz26pQlkG6bR3CRbMfkaXYLiL8o2Bd6PyUPL2AYm97T3E8h6Y1A
-         +Stw==
+        d=poorly.run; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=sIyXF/EzZipTYqrIluZkq/5+UTS8byL1khSMDYNgjl0=;
+        b=Z0iwbsTWYrYJl7fKykmsYH4TK1f6rLcLerOklZtHs1BMCUQd12tIkE5PnTFzM4n7pi
+         crG+hbmqoSCM+QNJHlAkGWa7zxUJCzQM+SDlUbSJaqUcVBeZgRTxk5vUzPLF5UoyWa3P
+         aL0Kh9ji0ML4btsWj+JuIo0Vw5uaA5WGu8yM9vTgMDpYUj9JD29qyk0OpAMRdP/nfJ4I
+         zrccJrHyfN1+BZE/xEs8xCjMgLk7Qgv3hnf5Ge+jShrcb2+OeJl8l2f+lQZ4iR0jwLsN
+         gaUa5oFUkCKE/dv9K38yeujMGf6Vzed0U9TC8mlX1nS+dgWyiqHDp2b8fn3NhCUYnkF4
+         WXnw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=MfLSn4IF5wybAl5GDySiZqesfAaDpqnR8BFc78pzytk=;
-        b=Fr/z/R5xX3KMT2L7NxbPS+xQepQwBDJX9+JbBeuaUofVi/S2TxJfl+3NrJrpdFAcE1
-         CV5yWMoVlkprOn3mIwCzy9T6WcyintlzN6Jbw8fJoNJcaVfpRUUot1bcOFNfOK2irTSi
-         Mtg6iz3sREJQ2mI2E82QaZtZlgD4gaAZSWDMm4A+VlIHuHc5HNpLKT7fUPkw0w2japcF
-         Qb9ei1tGFJjy6Rgqmkd/YIvgdSnIrChnLQ2+gvakb5D8EbCFyneq5wk0+A4t1EIS+OpM
-         U2tKqSnTDlT6fmYSFbLPqBT/HMKUNItyHL8yOaySo8n7ECvVR64I+F8X3nEbP+eKaanq
-         udBA==
-X-Gm-Message-State: APjAAAVqBQ/9BE83X65NtxgBhh3FXZtNi9n72qmY9NGxW8NqlJl3/Za9
-        70MRtyMO934U4X+HB8LsXntat9YGUmUW1DDv5K622w==
-X-Google-Smtp-Source: APXvYqwHUY7qBPiLOGX5pdFwZAxJ1uEsjSWrLmgv9QqiXptoPr8OJOtUaNqDY2LZTSYqzqDDoQ7K8P6TIMwVe4aYhQY=
-X-Received: by 2002:a05:6638:29a:: with SMTP id c26mr5627375jaq.98.1560890417929;
- Tue, 18 Jun 2019 13:40:17 -0700 (PDT)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=sIyXF/EzZipTYqrIluZkq/5+UTS8byL1khSMDYNgjl0=;
+        b=swJalM78txRCeaaYlTRh3MnPcK368FVaWxK59JhTlHE7WFHyY8va6JvN//dm8FLLor
+         KNK1BUYacJEoc87wKstDxqi89WRnuDmxx6gd0HcwoF9WE7nMdFRwrW1zNjscCdcExUbg
+         8N6ULpRej0KcjkyCk2T3aIjr9Q38aT9lMCROS0z3f5QBQrrk5EYAHKLZZYtJmk71VfCF
+         gRPsTEoWZA7S2q9qmLTIVm8NZjlFgNFv7q1fuT8ELwac59rhJZ5BwZiWuC6XAL64XkLi
+         p+N9mLAv/++G6dkbg1BGmCHm1SOTGSkPfY6NHnGbiSKOD07snD6D1QOe9efHq5pP/eS6
+         mJvw==
+X-Gm-Message-State: APjAAAWVzzL2nx1Uim5NReQ6kWjVQDHyVJuCZEfbgwW6AgfsBHW9N8qS
+        ICvWmRA1xKAoukmV1T67f3tWFw==
+X-Google-Smtp-Source: APXvYqzG4FV1GER3TEOBclI2H7u38D8xfKStoBg533TdSJHWwbLjRPAwjz1iX+pTjoEUZr9jurx6Xg==
+X-Received: by 2002:aed:3fc5:: with SMTP id w5mr85910114qth.317.1560890523926;
+        Tue, 18 Jun 2019 13:42:03 -0700 (PDT)
+Received: from localhost ([2620:0:1013:11:89c6:2139:5435:371d])
+        by smtp.gmail.com with ESMTPSA id g10sm8262045qki.37.2019.06.18.13.42.02
+        (version=TLS1_3 cipher=AEAD-AES256-GCM-SHA384 bits=256/256);
+        Tue, 18 Jun 2019 13:42:03 -0700 (PDT)
+Date:   Tue, 18 Jun 2019 16:42:02 -0400
+From:   Sean Paul <sean@poorly.run>
+To:     Rob Clark <robdclark@gmail.com>
+Cc:     dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
+        Sean Paul <seanpaul@chromium.org>,
+        Georgi Djakov <georgi.djakov@linaro.org>,
+        Jayant Shekhar <jshekhar@codeaurora.org>,
+        Sravanthi Kollukuduru <skolluku@codeaurora.org>,
+        Rob Clark <robdclark@chromium.org>,
+        Sean Paul <sean@poorly.run>, David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Jordan Crouse <jcrouse@codeaurora.org>,
+        Jeykumar Sankaran <jsanka@codeaurora.org>,
+        Stephen Boyd <swboyd@chromium.org>,
+        Abhinav Kumar <abhinavk@codeaurora.org>,
+        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 2/5] drm/msm/dpu: Integrate interconnect API in MDSS
+Message-ID: <20190618204202.GE25413@art_vandelay>
+References: <20190618202425.15259-1-robdclark@gmail.com>
+ <20190618202425.15259-3-robdclark@gmail.com>
 MIME-Version: 1.0
-References: <20190618202623.GA53651@gerhold.net>
-In-Reply-To: <20190618202623.GA53651@gerhold.net>
-From:   Mathieu Poirier <mathieu.poirier@linaro.org>
-Date:   Tue, 18 Jun 2019 14:40:06 -0600
-Message-ID: <CANLsYkyViZmpwAPyd7huMC=QRvH3sd0VchJuL-E4+vuYnb0g9A@mail.gmail.com>
-Subject: Re: Coresight causes synchronous external abort on msm8916
-To:     Stephan Gerhold <stephan@gerhold.net>
-Cc:     Andy Gross <agross@kernel.org>,
-        David Brown <david.brown@linaro.org>,
-        Suzuki K Poulose <suzuki.poulose@arm.com>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        linux-arm-kernel <linux-arm-kernel@lists.infradead.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20190618202425.15259-3-robdclark@gmail.com>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, 18 Jun 2019 at 14:26, Stephan Gerhold <stephan@gerhold.net> wrote:
->
-> Hi,
->
-> I'm trying to run mainline Linux on a smartphone with MSM8916 SoC.
-> It works surprisingly well, but the coresight devices seem to cause the
-> following crash shortly after userspace starts:
->
->     Internal error: synchronous external abort: 96000010 [#1] PREEMPT SMP
->     Modules linked in:
->     CPU: 0 PID: 32 Comm: kworker/0:1 Not tainted 5.2.0-rc5 #7
->     Hardware name: Samsung Galaxy A5 (SM-A500FU) (DT)
->     Workqueue: events amba_deferred_retry_func
->     pstate: 60000005 (nZCv daif -PAN -UAO)
->     pc : amba_device_try_add+0x104/0x2f0
->     lr : amba_device_try_add+0xf0/0x2f0
->     sp : ffff00001181bd40
->     x29: ffff00001181bd40 x28: 0000000000000000
->     x27: ffff80007b258b38 x26: ffff000010f490a0
->     x25: 0000000000000000 x24: ffff000011b35000
->     x23: 0000000000000000 x22: ffff80007b316ed8
->     x21: 0000000000001000 x20: 0000000000000000
->     x19: ffff80007b316c00 x18: 0000000000000000
->     x17: 0000000000000000 x16: 0000000000000000
->     x15: 0000000000000000 x14: ffffffffffffffff
->     x13: 0000000000000000 x12: 0000000000000001
->     x11: 0000000000000000 x10: 0000000000000980
->     x9 : ffff00001181ba00 x8 : ffff80007b126a20
->     x7 : ffff80007a5e0500 x6 : ffff80007b126040
->     x5 : 0000000000000002 x4 : ffff80007db85ba0
->     x3 : 0000000000000000 x2 : ffff000011b35fe0
->     x1 : 0000000000000000 x0 : 0000000000000000
->     Call trace:
->      amba_device_try_add+0x104/0x2f0
->      amba_deferred_retry_func+0x48/0xc8
->      process_one_work+0x1e0/0x320
->      worker_thread+0x40/0x428
->      kthread+0x120/0x128
->      ret_from_fork+0x10/0x18
->     Code: 35000ac0 d10082a2 52800001 8b020302 (b9400040)
->     ---[ end trace b664cbefc1cb2294 ]---
->
-> In this case I'm using a simple device tree similar to apq8016-sbc,
-> but it also happens using something as simple as msm8916-mtp.dts
-> on this particular device.
->   (Attached: dmesg log with msm8916-mtp.dts and arm64 defconfig)
->
-> I can avoid the crash and boot without any further problems by disabling
-> every coresight device defined in msm8916.dtsi, e.g.:
->
->         tpiu@820000 { status = "disabled"; };
->         funnel@821000 { status = "disabled"; };
->         replicator@824000 { status = "disabled"; };
->         etf@825000 { status = "disabled"; };
->         etr@826000 { status = "disabled"; };
->         funnel@841000 { status = "disabled"; };
->         debug@850000 { status = "disabled"; };
->         debug@852000 { status = "disabled"; };
->         debug@854000 { status = "disabled"; };
->         debug@856000 { status = "disabled"; };
->         etm@85c000 { status = "disabled"; };
->         etm@85d000 { status = "disabled"; };
->         etm@85e000 { status = "disabled"; };
->         etm@85f000 { status = "disabled"; };
->
-> I don't have any use for coresight at the moment,
-> but it seems somewhat odd to put this in the device specific dts.
->
-> Any idea what could be causing this crash?
+On Tue, Jun 18, 2019 at 01:24:10PM -0700, Rob Clark wrote:
+> From: Jayant Shekhar <jshekhar@codeaurora.org>
+> 
+> The interconnect framework is designed to provide a
+> standard kernel interface to control the settings of
+> the interconnects on a SoC.
+> 
+> The interconnect API uses a consumer/provider-based model,
+> where the providers are the interconnect buses and the
+> consumers could be various drivers.
+> 
+> MDSS is one of the interconnect consumers which uses the
+> interconnect APIs to get the path between endpoints and
+> set its bandwidth requirement for the given interconnected
+> path.
+> 
+> Changes in v2:
+> 	- Remove error log and unnecessary check (Jordan Crouse)
+> 
+> Changes in v3:
+> 	- Code clean involving variable name change, removal
+> 	  of extra paranthesis and variables (Matthias Kaehlcke)
+> 
+> Changes in v4:
+> 	- Add comments, spacings, tabs, proper port name
+> 	  and icc macro (Georgi Djakov)
+> 
+> Changes in v5:
+> 	- Commit text and parenthesis alignment (Georgi Djakov)
+> 
+> Changes in v6:
+> 	- Change to new icc_set API's (Doug Anderson)
+> 
+> Changes in v7:
+> 	- Fixed a typo
+> 
+> Changes in v8:
+> 	- Handle the of_icc_get() returning NULL case.  In practice
+> 	  icc_set_bw() will gracefully handle the case of a NULL path,
+> 	  but it's probably best for clarity to keep num_paths=0 in
+> 	  this case.
+> 
+> Signed-off-by: Sravanthi Kollukuduru <skolluku@codeaurora.org>
+> Signed-off-by: Jayant Shekhar <jshekhar@codeaurora.org>
+> Signed-off-by: Rob Clark <robdclark@chromium.org>
+> Acked-by: Georgi Djakov <georgi.djakov@linaro.org>
 
-CS and CPUidle don't play well together on most boards, something I am
-actively looking into at this very moment.  To avoid the problem
-either disable CS or CPUidle.
+Reviewed-by: Sean Paul <sean@poorly.run>
 
-Mathieu
+> ---
+>  drivers/gpu/drm/msm/disp/dpu1/dpu_mdss.c | 49 ++++++++++++++++++++++--
+>  1 file changed, 45 insertions(+), 4 deletions(-)
+> 
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_mdss.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_mdss.c
+> index 7316b4ab1b85..b1d0437ac7b6 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_mdss.c
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_mdss.c
+> @@ -4,11 +4,15 @@
+>   */
+>  
+>  #include "dpu_kms.h"
+> +#include <linux/interconnect.h>
+>  
+>  #define to_dpu_mdss(x) container_of(x, struct dpu_mdss, base)
+>  
+>  #define HW_INTR_STATUS			0x0010
+>  
+> +/* Max BW defined in KBps */
+> +#define MAX_BW				6800000
+> +
+>  struct dpu_irq_controller {
+>  	unsigned long enabled_mask;
+>  	struct irq_domain *domain;
+> @@ -21,8 +25,30 @@ struct dpu_mdss {
+>  	u32 hwversion;
+>  	struct dss_module_power mp;
+>  	struct dpu_irq_controller irq_controller;
+> +	struct icc_path *path[2];
+> +	u32 num_paths;
+>  };
+>  
+> +static int dpu_mdss_parse_data_bus_icc_path(struct drm_device *dev,
+> +						struct dpu_mdss *dpu_mdss)
+> +{
+> +	struct icc_path *path0 = of_icc_get(dev->dev, "mdp0-mem");
+> +	struct icc_path *path1 = of_icc_get(dev->dev, "mdp1-mem");
+> +
+> +	if (IS_ERR_OR_NULL(path0))
+> +		return PTR_ERR_OR_ZERO(path0);
+> +
+> +	dpu_mdss->path[0] = path0;
+> +	dpu_mdss->num_paths = 1;
+> +
+> +	if (!IS_ERR_OR_NULL(path1)) {
+> +		dpu_mdss->path[1] = path1;
+> +		dpu_mdss->num_paths++;
+> +	}
+> +
+> +	return 0;
+> +}
+> +
+>  static void dpu_mdss_irq(struct irq_desc *desc)
+>  {
+>  	struct dpu_mdss *dpu_mdss = irq_desc_get_handler_data(desc);
+> @@ -134,7 +160,11 @@ static int dpu_mdss_enable(struct msm_mdss *mdss)
+>  {
+>  	struct dpu_mdss *dpu_mdss = to_dpu_mdss(mdss);
+>  	struct dss_module_power *mp = &dpu_mdss->mp;
+> -	int ret;
+> +	int ret, i;
+> +	u64 avg_bw = dpu_mdss->num_paths ? MAX_BW / dpu_mdss->num_paths : 0;
+> +
+> +	for (i = 0; i < dpu_mdss->num_paths; i++)
+> +		icc_set_bw(dpu_mdss->path[i], avg_bw, kBps_to_icc(MAX_BW));
+>  
+>  	ret = msm_dss_enable_clk(mp->clk_config, mp->num_clk, true);
+>  	if (ret)
+> @@ -147,12 +177,15 @@ static int dpu_mdss_disable(struct msm_mdss *mdss)
+>  {
+>  	struct dpu_mdss *dpu_mdss = to_dpu_mdss(mdss);
+>  	struct dss_module_power *mp = &dpu_mdss->mp;
+> -	int ret;
+> +	int ret, i;
+>  
+>  	ret = msm_dss_enable_clk(mp->clk_config, mp->num_clk, false);
+>  	if (ret)
+>  		DPU_ERROR("clock disable failed, ret:%d\n", ret);
+>  
+> +	for (i = 0; i < dpu_mdss->num_paths; i++)
+> +		icc_set_bw(dpu_mdss->path[i], 0, 0);
+> +
+>  	return ret;
+>  }
+>  
+> @@ -163,6 +196,7 @@ static void dpu_mdss_destroy(struct drm_device *dev)
+>  	struct dpu_mdss *dpu_mdss = to_dpu_mdss(priv->mdss);
+>  	struct dss_module_power *mp = &dpu_mdss->mp;
+>  	int irq;
+> +	int i;
+>  
+>  	pm_runtime_suspend(dev->dev);
+>  	pm_runtime_disable(dev->dev);
+> @@ -172,6 +206,9 @@ static void dpu_mdss_destroy(struct drm_device *dev)
+>  	msm_dss_put_clk(mp->clk_config, mp->num_clk);
+>  	devm_kfree(&pdev->dev, mp->clk_config);
+>  
+> +	for (i = 0; i < dpu_mdss->num_paths; i++)
+> +		icc_put(dpu_mdss->path[i]);
+> +
+>  	if (dpu_mdss->mmio)
+>  		devm_iounmap(&pdev->dev, dpu_mdss->mmio);
+>  	dpu_mdss->mmio = NULL;
+> @@ -211,6 +248,10 @@ int dpu_mdss_init(struct drm_device *dev)
+>  	}
+>  	dpu_mdss->mmio_len = resource_size(res);
+>  
+> +	ret = dpu_mdss_parse_data_bus_icc_path(dev, dpu_mdss);
+> +	if (ret)
+> +		return ret;
+> +
+>  	mp = &dpu_mdss->mp;
+>  	ret = msm_dss_parse_clock(pdev, mp);
+>  	if (ret) {
+> @@ -232,14 +273,14 @@ int dpu_mdss_init(struct drm_device *dev)
+>  	irq_set_chained_handler_and_data(irq, dpu_mdss_irq,
+>  					 dpu_mdss);
+>  
+> +	priv->mdss = &dpu_mdss->base;
+> +
+>  	pm_runtime_enable(dev->dev);
+>  
+>  	pm_runtime_get_sync(dev->dev);
+>  	dpu_mdss->hwversion = readl_relaxed(dpu_mdss->mmio);
+>  	pm_runtime_put_sync(dev->dev);
+>  
+> -	priv->mdss = &dpu_mdss->base;
+> -
+>  	return ret;
+>  
+>  irq_error:
+> -- 
+> 2.20.1
+> 
 
-> I'm not sure if this is a device-specific issue or possibly some kind of
-> configuration problem.
->   Or is this feature only working on development boards?
->
-> Thanks in advance!
-> Stephan
-> _______________________________________________
-> linux-arm-kernel mailing list
-> linux-arm-kernel@lists.infradead.org
-> http://lists.infradead.org/mailman/listinfo/linux-arm-kernel
+-- 
+Sean Paul, Software Engineer, Google / Chromium OS
