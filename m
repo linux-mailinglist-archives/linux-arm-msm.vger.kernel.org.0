@@ -2,33 +2,33 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 39A154A9F1
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Jun 2019 20:33:48 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 456654A9E5
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Jun 2019 20:33:38 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730414AbfFRSdj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 18 Jun 2019 14:33:39 -0400
-Received: from heliosphere.sirena.org.uk ([172.104.155.198]:47498 "EHLO
+        id S1727616AbfFRSdZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 18 Jun 2019 14:33:25 -0400
+Received: from heliosphere.sirena.org.uk ([172.104.155.198]:47536 "EHLO
         heliosphere.sirena.org.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730322AbfFRSdY (ORCPT
+        with ESMTP id S1730326AbfFRSdZ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 18 Jun 2019 14:33:24 -0400
+        Tue, 18 Jun 2019 14:33:25 -0400
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
         d=sirena.org.uk; s=20170815-heliosphere; h=Date:Message-Id:In-Reply-To:
         Subject:Cc:To:From:Sender:Reply-To:MIME-Version:Content-Type:
         Content-Transfer-Encoding:Content-ID:Content-Description:Resent-Date:
         Resent-From:Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:References:
         List-Id:List-Help:List-Unsubscribe:List-Subscribe:List-Post:List-Owner:
-        List-Archive; bh=JH15I45wvSjOkRsZsNSoHidVfHhOQ5pap5NUnb96BRA=; b=ptr2Ld+M/DIU
-        wW1cV+GUiKBVXRdZEY4uBQJkZIqUwHtnLk5zbmcngmgn8IkghlZ3RjD8Rg5DGpGcWdJhPi2XSruI5
-        SGU/oE3FCttngpCKNQWQjsG1fLDhweGBYeagAW+khLn9NU1+3M5OVL1ajOnubDsVBp7FXedI4SsQJ
-        iWmsg=;
+        List-Archive; bh=sJ1/yFnBoKTboXWrZrp0z327Jb8us3etQDsMDSr/xWA=; b=UUWWrbjBHjzS
+        NvuSUGoCX5thvmDc4uE7WHy2gDb9QsfA4WD3pxSzMdSbukghUC/MBcb3XsLpunFQr9eOFVu/n8lPb
+        G4GHATQLxc3GmSEif98KtLdO2X/s2VsYVKMBpW3I89NdESP4iz0BVlxXQluHotG7dF8r0Yffgk5NA
+        IFBX0=;
 Received: from [2001:470:1f1d:6b5:7e7a:91ff:fede:4a45] (helo=finisterre.sirena.org.uk)
         by heliosphere.sirena.org.uk with esmtpsa (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
         (Exim 4.89)
         (envelope-from <broonie@sirena.org.uk>)
-        id 1hdIv2-0005Ku-Ks; Tue, 18 Jun 2019 18:33:20 +0000
+        id 1hdIv3-0005L8-Q4; Tue, 18 Jun 2019 18:33:21 +0000
 Received: by finisterre.sirena.org.uk (Postfix, from userid 1000)
-        id 210B8440046; Tue, 18 Jun 2019 19:33:20 +0100 (BST)
+        id 4C87F440046; Tue, 18 Jun 2019 19:33:21 +0100 (BST)
 From:   Mark Brown <broonie@kernel.org>
 To:     Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
 Cc:     agross@kernel.org, bjorn.andersson@linaro.org, broonie@kernel.org,
@@ -36,11 +36,11 @@ Cc:     agross@kernel.org, bjorn.andersson@linaro.org, broonie@kernel.org,
         linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
         Mark Brown <broonie@kernel.org>, mark.rutland@arm.com,
         robh+dt@kernel.org
-Subject: Applied "arm64: dts: msm8998-mtp: Add pm8005_s1 regulator" to the regulator tree
-In-Reply-To: <20190617183759.13605-1-jeffrey.l.hugo@gmail.com>
+Subject: Applied "dt-bindings: qcom_spmi: Document PM8005 regulators" to the regulator tree
+In-Reply-To: <20190617183716.13501-1-jeffrey.l.hugo@gmail.com>
 X-Patchwork-Hint: ignore
-Message-Id: <20190618183320.210B8440046@finisterre.sirena.org.uk>
-Date:   Tue, 18 Jun 2019 19:33:20 +0100 (BST)
+Message-Id: <20190618183321.4C87F440046@finisterre.sirena.org.uk>
+Date:   Tue, 18 Jun 2019 19:33:21 +0100 (BST)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
@@ -48,7 +48,7 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 The patch
 
-   arm64: dts: msm8998-mtp: Add pm8005_s1 regulator
+   dt-bindings: qcom_spmi: Document PM8005 regulators
 
 has been applied to the regulator tree at
 
@@ -73,50 +73,42 @@ to this mail.
 Thanks,
 Mark
 
-From 1c3f37d11023ff5b57135bc2bbacf4816baa67df Mon Sep 17 00:00:00 2001
+From 4fe0676b04edc5032ffdc3fed00b670e1cfef049 Mon Sep 17 00:00:00 2001
 From: Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
-Date: Mon, 17 Jun 2019 11:37:58 -0700
-Subject: [PATCH] arm64: dts: msm8998-mtp: Add pm8005_s1 regulator
+Date: Mon, 17 Jun 2019 11:37:16 -0700
+Subject: [PATCH] dt-bindings: qcom_spmi: Document PM8005 regulators
 
-The pm8005_s1 is VDD_GFX, and needs to be on to enable the GPU.
-This should be hooked up to the GPU CPR, but we don't have support for that
-yet, so until then, just turn on the regulator and keep it on so that we
-can focus on basic GPU bringup.
+Document the dt bindings for the PM8005 regulators which are usually used
+for VDD of standalone blocks on a SoC like the GPU.
 
 Signed-off-by: Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
 Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
 Signed-off-by: Mark Brown <broonie@kernel.org>
 ---
- arch/arm64/boot/dts/qcom/msm8998-mtp.dtsi | 17 +++++++++++++++++
- 1 file changed, 17 insertions(+)
+ .../devicetree/bindings/regulator/qcom,spmi-regulator.txt     | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/arch/arm64/boot/dts/qcom/msm8998-mtp.dtsi b/arch/arm64/boot/dts/qcom/msm8998-mtp.dtsi
-index f09f3e03f708..108667ce4f31 100644
---- a/arch/arm64/boot/dts/qcom/msm8998-mtp.dtsi
-+++ b/arch/arm64/boot/dts/qcom/msm8998-mtp.dtsi
-@@ -27,6 +27,23 @@
- 	status = "okay";
- };
+diff --git a/Documentation/devicetree/bindings/regulator/qcom,spmi-regulator.txt b/Documentation/devicetree/bindings/regulator/qcom,spmi-regulator.txt
+index 406f2e570c50..ba94bc2d407a 100644
+--- a/Documentation/devicetree/bindings/regulator/qcom,spmi-regulator.txt
++++ b/Documentation/devicetree/bindings/regulator/qcom,spmi-regulator.txt
+@@ -4,6 +4,7 @@ Qualcomm SPMI Regulators
+ 	Usage: required
+ 	Value type: <string>
+ 	Definition: must be one of:
++			"qcom,pm8005-regulators"
+ 			"qcom,pm8841-regulators"
+ 			"qcom,pm8916-regulators"
+ 			"qcom,pm8941-regulators"
+@@ -120,6 +121,9 @@ The regulator node houses sub-nodes for each regulator within the device. Each
+ sub-node is identified using the node's name, with valid values listed for each
+ of the PMICs below.
  
-+&pm8005_lsid1 {
-+	pm8005-regulators {
-+		compatible = "qcom,pm8005-regulators";
++pm8005:
++	s1, s2, s3, s4
 +
-+		vdd_s1-supply = <&vph_pwr>;
-+
-+		pm8005_s1: s1 { /* VDD_GFX supply */
-+			regulator-min-microvolt = <524000>;
-+			regulator-max-microvolt = <1100000>;
-+			regulator-enable-ramp-delay = <500>;
-+
-+			/* hack until we rig up the gpu consumer */
-+			regulator-always-on;
-+		};
-+	};
-+};
-+
- &qusb2phy {
- 	status = "okay";
+ pm8841:
+ 	s1, s2, s3, s4, s5, s6, s7, s8
  
 -- 
 2.20.1
