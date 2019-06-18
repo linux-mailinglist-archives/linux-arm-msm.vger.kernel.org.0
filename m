@@ -2,59 +2,53 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 989374ACDA
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Jun 2019 23:09:08 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 2BBD44AD28
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Jun 2019 23:16:09 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730510AbfFRVGs (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 18 Jun 2019 17:06:48 -0400
-Received: from mail-qk1-f196.google.com ([209.85.222.196]:45992 "EHLO
-        mail-qk1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730653AbfFRVGs (ORCPT
+        id S1730510AbfFRVPs (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 18 Jun 2019 17:15:48 -0400
+Received: from smtp.codeaurora.org ([198.145.29.96]:55442 "EHLO
+        smtp.codeaurora.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1730350AbfFRVPs (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 18 Jun 2019 17:06:48 -0400
-Received: by mail-qk1-f196.google.com with SMTP id s22so9533227qkj.12;
-        Tue, 18 Jun 2019 14:06:47 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=PhQShykXloliKPMckMupDfwZ8pnrhdgE2i1x2GgfEmI=;
-        b=ukYtKO2nfsZfAhueJCu8NbbqpXKNV9imjzRX1HUortW+t4FD/FJfJfeITZ+1twwwMg
-         CI2wrEqy7Tv8NSh6F4EHTfafRnZRLBn5pVzJ+gcrfUNj67UVHaZ3WJIZHCu/K8939Ljo
-         5BZtqE7tx/uXsAuwxDTT6zVHQgbAj9HjZjB4SOG/R/NIZws5VlUqUH9J/WAXJEsLRroA
-         dKatXBmMA4gYt5raPpWpjxrvRYR1gtqcfbNAdCOrza8z6NfwqXITHwTHTM9LhPONR2Wk
-         3OSzjSHvQpFO0EQR+hcnpTxX60v5YOC6zkQFFKvVKpCfoRu2zkOAB7ye+dTklVHrj/RC
-         wl3A==
-X-Gm-Message-State: APjAAAUV8A7HskDg77MLPUGecQnpUyN54i+hN1lCfX6hcx8TII1r7rpY
-        7jum8HwifWtM9SsZPmZPni0O96vaooHfRDK9lz8=
-X-Google-Smtp-Source: APXvYqyldOckhcLwc1fQrwZ7LnDDOLS2W9t7zPz5YSzYHLSMEwkWyDge/ONSs2cFdXB+lyGj7IX6kT1wQZim1MIdYpE=
-X-Received: by 2002:ae9:e608:: with SMTP id z8mr87456546qkf.182.1560892007052;
- Tue, 18 Jun 2019 14:06:47 -0700 (PDT)
+        Tue, 18 Jun 2019 17:15:48 -0400
+Received: by smtp.codeaurora.org (Postfix, from userid 1000)
+        id A466560FED; Tue, 18 Jun 2019 21:15:45 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
+        s=default; t=1560892546;
+        bh=YZxqpwNwj9xP1mVakWl4GnRWhuxU+h/l52kLOjkWX3Y=;
+        h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
+        b=IVOJN7iw7SLfamnGPFOAHWKxlR24qZGI+fJflD1GHP+Oo/BkYwgUJIRH8PyDeOjIX
+         yWdNc+O9P4dYI5N0wCG8AHfCVvLmPw/X/UKLIfyjXkZNDQzm9mCb+/zEFpUXJLPOBP
+         01BzNaRPwCzmRCWihbrOMK4u18fWzfMXFHFzCzHg=
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        pdx-caf-mail.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.7 required=2.0 tests=ALL_TRUSTED,BAYES_00,
+        DKIM_INVALID,DKIM_SIGNED autolearn=no autolearn_force=no version=3.4.0
+Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
+        by smtp.codeaurora.org (Postfix) with ESMTP id 3E048608BA;
+        Tue, 18 Jun 2019 21:15:43 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
+        s=default; t=1560892544;
+        bh=YZxqpwNwj9xP1mVakWl4GnRWhuxU+h/l52kLOjkWX3Y=;
+        h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
+        b=TOVI6NUYG8I82CcnESxWEYgB0kYG+0CZ96pkTfQAcneB00XUWHiCLDk9M8clfZqdU
+         enPHMCLJDTDCNtKey6d8+AOJmN1NmXdJC6F943mG9WsGQugpIFqi8+l8PUVpxBt6uk
+         U7rdCNWQ7xeD9PerfSVkAPcLATq9szGad+VzOXQU=
 MIME-Version: 1.0
-References: <380a6185-7ad1-6be0-060b-e6e5d4126917@linaro.org>
- <a94676381a5ca662c848f7a725562f721c43ce76.camel@sipsolutions.net>
- <CAK8P3a0kV-i7BJJ2X6C=5n65rSGfo8fUiC4J_G-+M8EctYKbkg@mail.gmail.com>
- <fc0d08912bc10ad089eb74034726308375279130.camel@redhat.com>
- <36bca57c999f611353fd9741c55bb2a7@codeaurora.org> <153fafb91267147cf22e2bf102dd822933ec823a.camel@redhat.com>
- <CAK8P3a2Y+tcL1-V57dtypWHndNT3eDJdcKj29c_v+k8o1HHQig@mail.gmail.com>
- <f4249aa5f5acdd90275eda35aa16f3cfb29d29be.camel@redhat.com>
- <CAK8P3a2nzZKtshYfomOOSYkqx5HdU15Wr9b+3va0B1euNhFOAg@mail.gmail.com>
- <dbb32f185d2c3a654083ee0a7188379e1f88d899.camel@sipsolutions.net>
- <d533b708-c97a-710d-1138-3ae79107f209@linaro.org> <abdfc6b3a9981bcdef40f85f5442a425ce109010.camel@sipsolutions.net>
- <CAK8P3a3ksrFTo2+dLB+doLeY+kPP7rYxv2O7BwvjYgK2cwCTuQ@mail.gmail.com>
- <97cbfb3723607c95d78e25785262ae7b0acdb11c.camel@sipsolutions.net>
- <CAK8P3a29+JKbDdS9ikhgaKa-AJ1qd1sDMTAfzivGh5wN4VL88A@mail.gmail.com> <54a5acb6cf26ebc6447f8ebcbdcb8e0eed693ab3.camel@sipsolutions.net>
-In-Reply-To: <54a5acb6cf26ebc6447f8ebcbdcb8e0eed693ab3.camel@sipsolutions.net>
-From:   Arnd Bergmann <arnd@arndb.de>
-Date:   Tue, 18 Jun 2019 23:06:29 +0200
-Message-ID: <CAK8P3a3r95gXMdq7s9GF=37v6t4kR+-2iyC6bnmUDVuM+bn80Q@mail.gmail.com>
-Subject: Re: [PATCH v2 00/17] net: introduce Qualcomm IPA driver
-To:     Johannes Berg <johannes@sipsolutions.net>
-Cc:     Alex Elder <elder@linaro.org>, Dan Williams <dcbw@redhat.com>,
-        Subash Abhinov Kasiviswanathan <subashab@codeaurora.org>,
-        abhishek.esse@gmail.com, Ben Chan <benchan@google.com>,
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
+Content-Transfer-Encoding: 7bit
+Date:   Tue, 18 Jun 2019 15:15:42 -0600
+From:   Subash Abhinov Kasiviswanathan <subashab@codeaurora.org>
+To:     Arnd Bergmann <arnd@arndb.de>
+Cc:     Johannes Berg <johannes@sipsolutions.net>,
+        Alex Elder <elder@linaro.org>, abhishek.esse@gmail.com,
+        Ben Chan <benchan@google.com>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
         cpratapa@codeaurora.org, David Miller <davem@davemloft.net>,
+        Dan Williams <dcbw@redhat.com>,
         DTML <devicetree@vger.kernel.org>,
         Eric Caruso <ejcaruso@google.com>, evgreen@chromium.org,
         Ilias Apalodimas <ilias.apalodimas@linaro.org>,
@@ -63,36 +57,97 @@ Cc:     Alex Elder <elder@linaro.org>, Dan Williams <dcbw@redhat.com>,
         Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
         linux-soc@vger.kernel.org, Networking <netdev@vger.kernel.org>,
         syadagir@codeaurora.org
-Content-Type: text/plain; charset="UTF-8"
+Subject: Re: [PATCH v2 00/17] net: introduce Qualcomm IPA driver
+In-Reply-To: <CAK8P3a2onXpxiE4y9PzRwuPM2dh=h_BKz7Eb0=LLPgBbZoK1bQ@mail.gmail.com>
+References: <380a6185-7ad1-6be0-060b-e6e5d4126917@linaro.org>
+ <a94676381a5ca662c848f7a725562f721c43ce76.camel@sipsolutions.net>
+ <CAK8P3a0kV-i7BJJ2X6C=5n65rSGfo8fUiC4J_G-+M8EctYKbkg@mail.gmail.com>
+ <066e9b39f937586f0f922abf801351553ec2ba1d.camel@sipsolutions.net>
+ <b3686626-e2d8-bc9c-6dd0-9ebb137715af@linaro.org>
+ <b23a83c18055470c5308fcd1eed018056371fc1d.camel@sipsolutions.net>
+ <CAK8P3a1FeUQR3pgoQxHoRK05JGORyR+TFATVQiijLWtFKTv6OQ@mail.gmail.com>
+ <613cdfde488eb23d7207c7ba6258662702d04840.camel@sipsolutions.net>
+ <CAK8P3a2onXpxiE4y9PzRwuPM2dh=h_BKz7Eb0=LLPgBbZoK1bQ@mail.gmail.com>
+Message-ID: <6c70950d0c78bc02a3d016918ec3929e@codeaurora.org>
+X-Sender: subashab@codeaurora.org
+User-Agent: Roundcube Webmail/1.2.5
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Jun 18, 2019 at 10:39 PM Johannes Berg
-<johannes@sipsolutions.net> wrote:
-> On Tue, 2019-06-18 at 22:33 +0200, Arnd Bergmann wrote:
+On 2019-06-18 14:55, Arnd Bergmann wrote:
+> On Tue, Jun 18, 2019 at 10:36 PM Johannes Berg
+> <johannes@sipsolutions.net> wrote:
+>> 
+>> On Tue, 2019-06-18 at 21:59 +0200, Arnd Bergmann wrote:
+>> >
+>> > From my understanding, the ioctl interface would create the lower
+>> > netdev after talking to the firmware, and then user space would use
+>> > the rmnet interface to create a matching upper-level device for that.
+>> > This is an artifact of the strong separation of ipa and rmnet in the
+>> > code.
+>> 
+>> Huh. But if rmnet has muxing, and IPA supports that, why would you 
+>> ever
+>> need multiple lower netdevs?
+> 
+> From my reading of the code, there is always exactly a 1:1 relationship
+> between an rmnet netdev an an ipa netdev. rmnet does the encapsulation/
+> decapsulation of the qmap data and forwards it to the ipa netdev,
+> which then just passes data through between a hardware queue and
+> its netdevice.
+> 
 
-> It seems to me though that this is far more complex than what I'm
-> proposing? What I'm proposing there doesn't even need any userspace
-> involvement, as long as all the pieces are in the different sub-drivers,
-> they'd fall out automatically.
->
-> And realistically, the wwan_device falls out anyway at some point, the
-> only question is if we really make one specific driver be the "owner" of
-> it. I'm suggesting that we don't, and just make its lifetime depend on
-> the links to parts it has (unless something like IPA actually wants to
-> be an owner).
+There is a n:1 relationship between rmnet and IPA.
+rmnet does the de-muxing to multiple netdevs based on the mux id
+in the MAP header for RX packets and vice versa.
 
-My feeling so far is that having the wwan_device be owned by a device
-gives a nicer abstraction model that is also simpler for the common
-case. A device driver like ipa would end up with a probe() function
-that does does wwan_device_alloc/wwan_device_register, corresponding
-to alloc_etherdev/register_netdev, and then communicates through
-callbacks.
+> [side note: on top of that, rmnet also does "aggregation", which may
+>  be a confusing term that only means transferring multiple frames
+>  at once]
+> 
+>> > ipa definitely has multiple hardware queues, and the Alex'
+>> > driver does implement  the data path on those, just not the
+>> > configuration to enable them.
+>> 
+>> OK, but perhaps you don't actually have enough to use one for each
+>> session?
+> 
+> I'm lacking the terminology here, but what I understood was that
+> the netdev and queue again map to a session.
+> 
+>> > Guessing once more, I suspect the the XON/XOFF flow control
+>> > was a workaround for the fact that rmnet and ipa have separate
+>> > queues. The hardware channel on IPA may fill up, but user space
+>> > talks to rmnet and still add more frames to it because it doesn't
+>> > know IPA is busy.
+>> >
+>> > Another possible explanation would be that this is actually
+>> > forwarding state from the base station to tell the driver to
+>> > stop sending data over the air.
+>> 
+>> Yeah, but if you actually have a hardware queue per upper netdev then
+>> you don't really need this - you just stop the netdev queue when the
+>> hardware queue is full, and you have flow control automatically.
+>> 
+>> So I really don't see any reason to have these messages going back and
+>> forth unless you plan to have multiple sessions muxed on a single
+>> hardware queue.
+> 
 
-I agree the compound device case would get more complex by
-shoehorning it into this model, but that can be a valid tradeoff
-if it's the exceptional case rather than the common one.
+Hardware may flow control specific PDNs (rmnet interfaces) based on QoS 
+-
+not necessarily only in case of hardware queue full.
 
-      Arnd
+> Sure, I definitely understand what you mean, and I agree that would
+> be the right way to do it. All I said is that this is not how it was 
+> done
+> in rmnet (this was again my main concern about the rmnet design
+> after I learned it was required for ipa) ;-)
+> 
+>      Arnd
+
+-- 
+Qualcomm Innovation Center, Inc. is a member of Code Aurora Forum,
+a Linux Foundation Collaborative Project
