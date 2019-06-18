@@ -2,121 +2,92 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id D2C914AB84
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Jun 2019 22:16:01 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 082EA4ABA7
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Jun 2019 22:24:35 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730358AbfFRUPz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 18 Jun 2019 16:15:55 -0400
-Received: from s3.sipsolutions.net ([144.76.43.62]:47524 "EHLO
-        sipsolutions.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729331AbfFRUPz (ORCPT
+        id S1730176AbfFRUYe (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 18 Jun 2019 16:24:34 -0400
+Received: from mail-qt1-f194.google.com ([209.85.160.194]:38873 "EHLO
+        mail-qt1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729961AbfFRUYe (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 18 Jun 2019 16:15:55 -0400
-Received: by sipsolutions.net with esmtpsa (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
-        (Exim 4.92)
-        (envelope-from <johannes@sipsolutions.net>)
-        id 1hdKW4-0006Xp-Hi; Tue, 18 Jun 2019 22:15:40 +0200
-Message-ID: <97cbfb3723607c95d78e25785262ae7b0acdb11c.camel@sipsolutions.net>
-Subject: Re: [PATCH v2 00/17] net: introduce Qualcomm IPA driver
-From:   Johannes Berg <johannes@sipsolutions.net>
-To:     Arnd Bergmann <arnd@arndb.de>
-Cc:     Alex Elder <elder@linaro.org>, Dan Williams <dcbw@redhat.com>,
-        Subash Abhinov Kasiviswanathan <subashab@codeaurora.org>,
-        abhishek.esse@gmail.com, Ben Chan <benchan@google.com>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        cpratapa@codeaurora.org, David Miller <davem@davemloft.net>,
-        DTML <devicetree@vger.kernel.org>,
-        Eric Caruso <ejcaruso@google.com>, evgreen@chromium.org,
-        Ilias Apalodimas <ilias.apalodimas@linaro.org>,
-        Linux ARM <linux-arm-kernel@lists.infradead.org>,
-        linux-arm-msm@vger.kernel.org,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-        linux-soc@vger.kernel.org, Networking <netdev@vger.kernel.org>,
-        syadagir@codeaurora.org
-Date:   Tue, 18 Jun 2019 22:15:38 +0200
-In-Reply-To: <CAK8P3a3ksrFTo2+dLB+doLeY+kPP7rYxv2O7BwvjYgK2cwCTuQ@mail.gmail.com> (sfid-20190618_220958_615605_BA64D8AA)
-References: <380a6185-7ad1-6be0-060b-e6e5d4126917@linaro.org>
-         <a94676381a5ca662c848f7a725562f721c43ce76.camel@sipsolutions.net>
-         <CAK8P3a0kV-i7BJJ2X6C=5n65rSGfo8fUiC4J_G-+M8EctYKbkg@mail.gmail.com>
-         <fc0d08912bc10ad089eb74034726308375279130.camel@redhat.com>
-         <36bca57c999f611353fd9741c55bb2a7@codeaurora.org>
-         <153fafb91267147cf22e2bf102dd822933ec823a.camel@redhat.com>
-         <CAK8P3a2Y+tcL1-V57dtypWHndNT3eDJdcKj29c_v+k8o1HHQig@mail.gmail.com>
-         <f4249aa5f5acdd90275eda35aa16f3cfb29d29be.camel@redhat.com>
-         <CAK8P3a2nzZKtshYfomOOSYkqx5HdU15Wr9b+3va0B1euNhFOAg@mail.gmail.com>
-         <dbb32f185d2c3a654083ee0a7188379e1f88d899.camel@sipsolutions.net>
-         <d533b708-c97a-710d-1138-3ae79107f209@linaro.org>
-         <abdfc6b3a9981bcdef40f85f5442a425ce109010.camel@sipsolutions.net>
-         <CAK8P3a3ksrFTo2+dLB+doLeY+kPP7rYxv2O7BwvjYgK2cwCTuQ@mail.gmail.com>
-         (sfid-20190618_220958_615605_BA64D8AA)
-Content-Type: text/plain; charset="UTF-8"
-X-Mailer: Evolution 3.28.5 (3.28.5-2.fc28) 
-Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
+        Tue, 18 Jun 2019 16:24:34 -0400
+Received: by mail-qt1-f194.google.com with SMTP id n11so17066383qtl.5
+        for <linux-arm-msm@vger.kernel.org>; Tue, 18 Jun 2019 13:24:33 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=MOjw9BHWo3T0l7S3HTHH3vMaG0gZSQ2JDUl5dsuqsG8=;
+        b=dhgqGKJRQYeZ5wNr0CU80k43oKxmMrcbwu87Xx/12miDILLgt9ZCqpaaOkteCPM2U+
+         l7kj/4GPfvgF3O+gOwNnBaSuzdAFZafzhTRXkw6zWyEB42jgGcTWXSa2peqsn7xalZEB
+         eI5R6cGeCpe3kxGJP74JoWeKbwnYhfTHIjte4lf/jIyoWckJuLp+Fvg/3GA3Kk/lP4m7
+         C9HTU09CPakaTTFYp4YoBKr+SECrp9oV/vBugwVaQtTeQw1vXTcYXZxmEcaQTEgBWj+9
+         5N8q6QPeq9zudjkVo8WjnwzWGeEuegBE+0qlyI3NTDAigfAn79nl5hlGwl0nbuD40t+l
+         eTJA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=MOjw9BHWo3T0l7S3HTHH3vMaG0gZSQ2JDUl5dsuqsG8=;
+        b=Qw3+LjJtqtOUsQSUA2fDhR8+rkOe/IHrYf/ZolmgKmJju5G84lwsQES7DIm+J+kOsj
+         TBJSQClcOf811qLBvjNK96OOoVm296qf3DFzE3Hajip3y8UlCFG7X9sDI7XG7HjjjJf4
+         p3k+xW+wulp+ZDdUeMyHVxZuo4wOKYbQRfZHHbyvGeNHfp/EWlr0Vh1iAUU9h8o2hnlj
+         Boj6pBO8O9XS81bgNOiY+/N6LpK+QNhui73ykyfI6Occb9uEZ+GaokGBzVJjblrNBE5b
+         PVvbbrIcHUDaBg3+0imdEhgrVevw8N4KrzXeH1tqYW8+fZwHbJHTXJqqZRH0p1SrMQoL
+         C7yw==
+X-Gm-Message-State: APjAAAUOR+CpIhsC8YyeaoAJMUa0uTx6c/RnEvjPjkZcxwP5pxMstNj/
+        XNnHLdaC+TEUcVllD44vdVw=
+X-Google-Smtp-Source: APXvYqydfwJ5cnp6fT1knf4RuCLh1+NLiNl0Xink+Hs1XytUjAPJARWNPVAhqmBKCLyWY67k3z6LRg==
+X-Received: by 2002:a0c:a182:: with SMTP id e2mr28217546qva.15.1560889473369;
+        Tue, 18 Jun 2019 13:24:33 -0700 (PDT)
+Received: from localhost ([2601:184:4780:7861:5010:5849:d76d:b714])
+        by smtp.gmail.com with ESMTPSA id o71sm8516554qke.18.2019.06.18.13.24.32
+        (version=TLS1_3 cipher=AEAD-AES256-GCM-SHA384 bits=256/256);
+        Tue, 18 Jun 2019 13:24:32 -0700 (PDT)
+From:   Rob Clark <robdclark@gmail.com>
+To:     dri-devel@lists.freedesktop.org
+Cc:     linux-arm-msm@vger.kernel.org, Sean Paul <seanpaul@chromium.org>,
+        Georgi Djakov <georgi.djakov@linaro.org>,
+        Rob Clark <robdclark@chromium.org>
+Subject: [PATCH 0/5] drm/msm: mdp5+dpu interconnect support
+Date:   Tue, 18 Jun 2019 13:24:08 -0700
+Message-Id: <20190618202425.15259-1-robdclark@gmail.com>
+X-Mailer: git-send-email 2.20.1
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, 2019-06-18 at 22:09 +0200, Arnd Bergmann wrote:
-> 
-> > One is the whole multi-function device, where a single WWAN device is
-> > composed of channels offered by actually different drivers, e.g. for a
-> > typical USB device you might have something like cdc_ether and the
-> > usb_wwan TTY driver. In this way, we need to "compose" the WWAN device
-> > similarly, e.g. by using the underlying USB device "struct device"
-> > pointer to tie it together.
-> > 
-> > The other is something like IPA or the Intel modem driver, where the
-> > device is actually a single (e.g. PCIe) device and just has a single
-> > driver, but that single driver offers different channels.
-> 
-> I would hope we can simplify this to expect only the second model,
-> where you have a 'struct device' corresponding to hardware and the
-> driver for it creates one wwan_device that user space talks to.
+From: Rob Clark <robdclark@chromium.org>
 
-I'm not sure.
+Most of this is a resend of things that have already been posted to
+list.  I've rebased the DPU patches, which was somewhat conflicty due to
+other changes and refactoring in the DPU code.
 
-Fundamentally, we have drivers in Linux for the ethernet part, for the
-TTY part, and for whatever other part might be in a given USB multi-
-function device.
+Abhinav Kumar (1):
+  drm/msm/dpu: add icc voting in dpu_mdss_init
 
-> Clearly the multi-function device hardware has to be handled somehow,
-> but it would seem much cleaner in the long run to do that using
-> a special workaround rather than putting this into the core interface.
+Georgi Djakov (1):
+  drm/msm/mdp5: Use the interconnect API
 
-I don't think it really makes the core interface much more complex or
-difficult though, and it feels easier than writing a completely
-different USB driver yet again for all these devices?
+Jayant Shekhar (3):
+  drm/msm/dpu: clean up references of DPU custom bus scaling
+  drm/msm/dpu: Integrate interconnect API in MDSS
+  dt-bindings: msm/disp: Introduce interconnect bindings for MDSS on
+    SDM845
 
-As far as I understand from Dan, sometimes they really are no different
-from a generic USB TTY and a generic USB ethernet, except you know that
-if those show up together it's a modem.
+ .../devicetree/bindings/display/msm/dpu.txt   |  10 +
+ drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.c | 174 +++++++-----------
+ drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.h |   4 +-
+ drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c      |  11 +-
+ drivers/gpu/drm/msm/disp/dpu1/dpu_mdss.c      |  57 +++++-
+ drivers/gpu/drm/msm/disp/dpu1/dpu_trace.h     |  22 +--
+ drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c      |  14 ++
+ 7 files changed, 158 insertions(+), 134 deletions(-)
 
-> E.g. have a driver that lets you create a wwan_device by passing
-> netdev and a tty chardev into a configuration interface, and from that
-> point on use the generic wwan abstraction.
-
-Yeah, but where do you hang that driver? Maybe the TTY function is
-actually a WWAN specific USB driver, but the ethernet is something
-generic that can also work with pure ethernet USB devices, and it's
-difficult to figure out how to tie those together. The modules could
-load in completely different order, or even the ethernet module could
-load but the TTY one doesn't because it's not configured, or vice versa.
-
-> > Now, it's not clear to me where IPA actually falls, because so far we've
-> > been talking about the IPA driver only as providing *netdevs*, not any
-> > control channels, so I'm not actually sure where the control channel is.
-> 
-> The IPA driver today only handles the data path, because Alex removed
-> the control channel. IPA is the driver that needs to talk to the hardware,
-> both for data and control when finished. rmnet is a pure software construct
-> that also contains both a data and control side and is designed to be
-> independent of the lower hardware.
-
-I'd actually be interested in what the control path should be like.
-
-Is it also muxed on QMAP in the same way?
-
-johannes
+-- 
+2.20.1
 
