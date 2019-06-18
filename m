@@ -2,21 +2,21 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 5244F4AA38
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Jun 2019 20:49:01 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5D1E24AA92
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Jun 2019 21:03:56 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730148AbfFRStA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 18 Jun 2019 14:49:00 -0400
-Received: from s3.sipsolutions.net ([144.76.43.62]:45808 "EHLO
+        id S1730415AbfFRTDu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 18 Jun 2019 15:03:50 -0400
+Received: from s3.sipsolutions.net ([144.76.43.62]:45964 "EHLO
         sipsolutions.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729642AbfFRStA (ORCPT
+        with ESMTP id S1730231AbfFRTDu (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 18 Jun 2019 14:49:00 -0400
+        Tue, 18 Jun 2019 15:03:50 -0400
 Received: by sipsolutions.net with esmtpsa (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
         (Exim 4.92)
         (envelope-from <johannes@sipsolutions.net>)
-        id 1hdJ9q-0004lc-GY; Tue, 18 Jun 2019 20:48:38 +0200
-Message-ID: <967604dd8d466a99b865649174f8b9cd34b2560e.camel@sipsolutions.net>
+        id 1hdJOJ-000510-0v; Tue, 18 Jun 2019 21:03:35 +0200
+Message-ID: <abdfc6b3a9981bcdef40f85f5442a425ce109010.camel@sipsolutions.net>
 Subject: Re: [PATCH v2 00/17] net: introduce Qualcomm IPA driver
 From:   Johannes Berg <johannes@sipsolutions.net>
 To:     Alex Elder <elder@linaro.org>, Arnd Bergmann <arnd@arndb.de>,
@@ -33,8 +33,8 @@ Cc:     Subash Abhinov Kasiviswanathan <subashab@codeaurora.org>,
         Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
         linux-soc@vger.kernel.org, Networking <netdev@vger.kernel.org>,
         syadagir@codeaurora.org
-Date:   Tue, 18 Jun 2019 20:48:33 +0200
-In-Reply-To: <850eed1d-0fec-c396-6e91-b5f1f8440ded@linaro.org> (sfid-20190618_172042_951332_21BBC6A6)
+Date:   Tue, 18 Jun 2019 21:03:31 +0200
+In-Reply-To: <d533b708-c97a-710d-1138-3ae79107f209@linaro.org> (sfid-20190618_154530_836620_A8CD82A2)
 References: <380a6185-7ad1-6be0-060b-e6e5d4126917@linaro.org>
          <a94676381a5ca662c848f7a725562f721c43ce76.camel@sipsolutions.net>
          <CAK8P3a0kV-i7BJJ2X6C=5n65rSGfo8fUiC4J_G-+M8EctYKbkg@mail.gmail.com>
@@ -45,9 +45,8 @@ References: <380a6185-7ad1-6be0-060b-e6e5d4126917@linaro.org>
          <f4249aa5f5acdd90275eda35aa16f3cfb29d29be.camel@redhat.com>
          <CAK8P3a2nzZKtshYfomOOSYkqx5HdU15Wr9b+3va0B1euNhFOAg@mail.gmail.com>
          <dbb32f185d2c3a654083ee0a7188379e1f88d899.camel@sipsolutions.net>
-         <e6ba8a9063e63506c0b88a70418d74ca4efe85cd.camel@sipsolutions.net>
-         <850eed1d-0fec-c396-6e91-b5f1f8440ded@linaro.org>
-         (sfid-20190618_172042_951332_21BBC6A6)
+         <d533b708-c97a-710d-1138-3ae79107f209@linaro.org>
+         (sfid-20190618_154530_836620_A8CD82A2)
 Content-Type: text/plain; charset="UTF-8"
 X-Mailer: Evolution 3.28.5 (3.28.5-2.fc28) 
 Mime-Version: 1.0
@@ -57,110 +56,116 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Just to add to Dan's response, I think he's captured our discussions and
-thoughts well.
+On Tue, 2019-06-18 at 08:45 -0500, Alex Elder wrote:
 
-> First, a few terms (correct or improve as you like):
+> If it had a well-defined way of creating new channels to be
+> multiplexed over the connection to the modem, the IPA driver
+> (rather than the rmnet driver) could present network interfaces
+> for each and perform the multiplexing.  
 
-Thanks for defining, we don't do that nearly often enough.
+Right. That's what I was thinking of.
 
-> - WWAN device is a hardware device (like IPA) that presents a
->   connection between AP and modem, and presents an interface
->   that allows the use of that connection to be managed.
+I actually expect this to fare much better going forward with 5G around
+the corner, since you'll want to eventually take advantage of multi-
+queue TX or RSS for RX, queue size control and what not, as speeds
+increase.
 
-Yes. But I was actually thinking of a "wwan_dev" to be a separate
-structure, not *directly* owned by a single driver and used to represent
-the hardware like a (hypothetical) "struct ipa_dev".
+Because of these things I think the whole "layered netdev" approach is
+actually *wrong* rather than just inconvenient.
 
-> - WWAN netdevice represents a Linux network interface, with its
->   operations and queues, etc., but implements a standardized
->   set of WWAN-specific operations.  It represents a logical
-> ' channel whose data is multiplexed over the WWAN device.
+In particular, in the Intel driver, you're going to have multiple
+hardware queues, one for each ongoing session. This means that
+multiplexing it over a layered netdev like rmnet or something like VLAN
+(which some driver does too) actually prevents us from doing this
+properly - it means we need to implement ndo_select_queue() and multiple
+queues on the underlying netdev etc., and then we no longer have the
+ability to use actual multi-queue. It becomes messy very very quickly.
 
-I'm not sure I'd asy it has much WWAN-specific operations? But yeah, I
-guess it might.
+> As I think Arnd
+> suggested, this could at least partially be done with library
+> code (to be shared with other "back-end" interfaces) rather
+> than using a layered driver.  This applies to aggregation,
+> channel flow control, and checksum offload as well.
 
-> - WWAN channel is a user space abstraction that corresponds
->   with a WWAN netdevice (but I'm not clear on all the ways
->   they differ or interact).
+Right.
 
-As Dan said, this could be a different abstraction than a netdevice,
-like a TTY, etc.
+> But I'm only familiar with IPA; I don't know whether the above
+> statements make any sense for other "back-end" drivers.
 
-> - The WWAN core is kernel code that presents abstractions
->   for WWAN devices and netdevices, so they can be managed
->   in a generic way.  It is for configuration and communication
->   and is not at all involved in the data path.
-> 
-> You're saying that the WWAN driver space calls wwan_add()
-> to register itself as a new WWAN device.
+I think they do, in different ways. Intel probably wouldn't have a
+library - there isn't actually much of a MUX header because there are
+different hardware queues for the different sessions.
 
-Assuming it knows that it is in fact a WWAN device, like IPA.
+> This is great.  The start of a more concrete discussion of the
+> pieces that are missing...
 
-> You're also saying that a WWAN device "attaches" a WWAN
-> netdevice, which is basically notifying the WWAN core
-> that the new netdev/channel is available for use.
-> - I trust that a "tentative" attachement is necessary.  But
->   I'm not sure what makes it transition into becoming a
->   "real" one, or how that event gets communicated.
+:-)
 
-I think Dan explained this one well. This wasn't actually on my radar
-until he pointed it out.
+I think I said before - it should be pretty easy to mold some code
+around the API I proposed there and have something reasonably functional
+soon.
 
-Really this only exists with USB devices that appear as multiple
-functions (ethernet, tty, ...) but still represent a single WWAN device,
-with each function not necessarily being aware of that since it's just a
-function driver.
+> That would be nice.  I believe you're saying that (in my case)
+> the IPA driver creates and owns the netdevices.
 
-Hopefully at least one of the function drivers will be able to figure it
-out, and then we can combine all of the functions into the WWAN device
-abstraction.
+Yes.
 
-[snip - Dan's explanations are great]
+> But I think the IPA driver would register with the WWAN core as
+> a "provider," and then the WWAN core would subsequently request
+> that it instantiate netdevices to represent channels on demand
+> (rather than registering them).
 
-Dan also said:
+Yeah, I guess you could call it that way.
 
-> > I read "attach" here as simply associating an existing netdev with the
-> > "parent" WWAN device. A purely Linux operation that is only book-
-> > keeping and may not have any interaction with the modem. 
+Really there are two possible ways (and they intersect to some extent).
 
-Now I'm replying out of thread, but yes, that's what I had in mind. What
-I meant by attaching (in this case) is just that you actually mark that
-it is (or might be, if tentatively attached) part of a WWAN device.
+One is the whole multi-function device, where a single WWAN device is
+composed of channels offered by actually different drivers, e.g. for a
+typical USB device you might have something like cdc_ether and the
+usb_wwan TTY driver. In this way, we need to "compose" the WWAN device
+similarly, e.g. by using the underlying USB device "struct device"
+pointer to tie it together.
 
-> - Are there any attributes that are only optionally supported,
->   and if so, how are the supported ones communicated?
+The other is something like IPA or the Intel modem driver, where the
+device is actually a single (e.g. PCIe) device and just has a single
+driver, but that single driver offers different channels.
 
-As Dan said, good point. I hadn't really considered that for now. I sort
-of know that we need it, but for the sake of simplicity decided to elide
-it for now. I'm just not sure what really are needed, and netlink
-attributes make adding them (and discovering the valid ones) pretty easy
-in the future, when a need arises.
+Now, it's not clear to me where IPA actually falls, because so far we've
+been talking about the IPA driver only as providing *netdevs*, not any
+control channels, so I'm not actually sure where the control channel is.
 
-> - Which WWAN channel attributes must be set *before* the
->   channel is activated, and can't be changed?  Are there any
->   that can be changed dynamically?
+For the Intel device, however, the control channel is definitely
+provided by exactly the same driver as the data channels (netdevs).
 
-It's a good question. I threw a "u32 pdn" in there, but I'm not actually
-sure that's what you *really* need?
+"provider" is a good word, and in fact the Intel driver would also be a
+provider for a GNSS channel (TBD how to represent, a tty?), one or
+multiple debug/tracing channels, data channels (netdevs), AT command
+channels (mbim, ...?) (again tbd how to represent, ttys?), etc.
 
-Maybe the modem and userspace just agree on some arbitrary "session
-identifier"? Dan mentions "MUX ID" or "MBIM Session ID", maybe there
-really is no good general term for this and we should just call it a
-"session identifier" and agree that it depends on the control protocol
-(MBIM vs. QMI vs. ...)?
+What I showed in the header files I posted so far was the provider only
+having "data channel" ops (create/remove a netdev) but for each channel
+type we either want a new method there, or we just change the method to
+be something like
 
-> And while the whole point of this is to make things generic,
-> it might be nice to have a way to implement a new feature
-> before it can be "standardized".
+	int (*create_channel)(..., enum wwan_chan_type chan_type, ...);
 
-Not sure I understand this?
+and simply require that the channel is attached to the wwan device with
+the representation-specific call (wwan_attach_netdev, wwan_attach_tty,
+...).
 
-FWIW, I actually came to this because we want to upstream a driver for
-an Intel modem, but ... can't really make up our mind on whether or not
-to use VLAN tags, something like rmnet (but we obviously cannot use
-rmnet, so that'd be another vendor specific interface like rmnet), or
-sysfs, or any of the other methods we have today ... :-)
+This is a bit less comfortable because then it's difficult to know what
+was actually created upon the request, so it's probably better to have
+different methods for the different types of representations (like I had
+- add_netdev, add_tty, ...).
+
+Note also that I said "representation-specific", while passing a
+"channel type", so for this we'd actually need a convention on what
+channel type has what kind of representation, which again gets awkward.
+Better to make it explicit.
+
+(And even then, we might be able to let userspace have some control,
+e.g. the driver might be able to create a debug channel as both a TTY or
+something else)
 
 johannes
 
