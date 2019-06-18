@@ -2,138 +2,122 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id B05524AC05
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Jun 2019 22:44:28 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C4FAB4AC5D
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Jun 2019 22:57:30 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730350AbfFRUo1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 18 Jun 2019 16:44:27 -0400
-Received: from mail-io1-f68.google.com ([209.85.166.68]:35571 "EHLO
-        mail-io1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730341AbfFRUo1 (ORCPT
+        id S1731054AbfFRUzn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 18 Jun 2019 16:55:43 -0400
+Received: from mail-qk1-f196.google.com ([209.85.222.196]:40707 "EHLO
+        mail-qk1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1730696AbfFRUzn (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 18 Jun 2019 16:44:27 -0400
-Received: by mail-io1-f68.google.com with SMTP id m24so33115706ioo.2;
-        Tue, 18 Jun 2019 13:44:27 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=a72KOM/txntfmB99IxHWW0QKe5DAoHdDFqzs/tLeZAU=;
-        b=GxA/N9uny+NZFEUb7AtULKqb8Ajxz7iTbt3Ei3hBq0QRSOsoa7MU9rulCbQ0m8EReR
-         dE2Lia0ULFg65uPitn7uvoXu3kv2jNZj37vxH9z7Wy2VppPKwYNLOvC5HC4f15t0hkIr
-         GgQwJUFn7jX5RDOfFmOLENjcrrN1jwtmyxXNyIRqDDCY0VY0wQnNLQYm8Iy0Y/ZljoJE
-         LuVEsXfIZyHANdv1Nu5XFr/iprpqTLNwf0ncamYOJIj7l7jiGRLie6cyk8k08J1v7DPj
-         1ae3KpyY0HvRyGdIL3DXert/tCJbNpMQd5lYjgI8AgW9fklGrvJqFu6/5C58kfdJu+zS
-         7agQ==
+        Tue, 18 Jun 2019 16:55:43 -0400
+Received: by mail-qk1-f196.google.com with SMTP id c70so9510297qkg.7;
+        Tue, 18 Jun 2019 13:55:42 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=a72KOM/txntfmB99IxHWW0QKe5DAoHdDFqzs/tLeZAU=;
-        b=iIaZMAKJAQHBtUl3iSp6e/CgubUrswRObZ/OYj6mRvm19R2/ICU7cNpOkeYXVJuvdh
-         dTNiPyor6hoG/BBUkwpiFkqdBQjmfR/zy8IM72/iQeyrsuQl+yYqm49BGgkFBLx01uMX
-         Gumcab/0KaRT1iqkG+jAah1IndVr4BE6K0vuE0S4jxA4vAav5rEARHj2PndG3qugaijR
-         kuY/n0T8nk9E2mOVbgrYVAJEWrNa7270cWfhrsl4oOVoO/JP9lKFG4KDpTetnuc1YBlx
-         ///wYopLqEkxlVIhlpkz9IsEuhkWueU6+F7uU+4sxhOgJXhgbwgSrITWk4h/dvWjyIQc
-         n1YQ==
-X-Gm-Message-State: APjAAAXs/OGEoD1sDoGJU9CrQOO1x0fuPG30fGjcSg8t2oNbexuiZUpZ
-        COGb7aS9SOBQlsQts7LM2+fMsmeiPm9n3GWWaTA=
-X-Google-Smtp-Source: APXvYqxbySU81wsAKNVUl0cXCPZBOmJuLDgdov2SODjSSaCWp2BuHkbnaOEoYGJRizW6ZpyupRoe52WDZcTefI/O2N8=
-X-Received: by 2002:a02:b10b:: with SMTP id r11mr5142549jah.140.1560890666538;
- Tue, 18 Jun 2019 13:44:26 -0700 (PDT)
+        bh=z9lpWmnxIWG+yn/Q8Kt9kwRJEp4w7nP1RsHOAevW2cM=;
+        b=Lx9Lm9CcnfKktj4As+zPwaFTt0OTeUrHAf77gSVInDvmQltvUYWM3kQAEdI1Lqq7W7
+         OQDotAMRlw26NGgIuudnjT+8LbOlXA+ru+sEaiyQLRx0JGfAAShJK59tKGq9VdeJk5x4
+         zq8iDS2x85Fb8QdyGBMXYlR7N0lh9EOoc3n+5MSyVWtXs5dGuH6BLRuWQNgpAQIZm/gc
+         77FJvxVtldaSQTzY3OPZslDGK0MZx471Sq2tvpUIv/UZ7qyw44E717BDpr0oVBHvP4Q4
+         gF2rSqXsx+5383F41tcTRr2t2rwWW1zJH0xkGokB0+iPQyYQ0X2/zOrgxI7U4i6pD8NS
+         RiAg==
+X-Gm-Message-State: APjAAAXTg+BMEMuYycDGfCEsKcBMNRAJVt352Tls34f7k2xXrGWQp8X7
+        5AZNRh79EcBpXvO6BcBSaHTzdqGsGWEzcEppbSM=
+X-Google-Smtp-Source: APXvYqzMQnj8mooGUNvWO59G0b2ABKwAdRoB6ahNoB3XWyhRG2+Kc2tlKvSqhoNGKyDN+miPCnbs/N9GlnSM6tCUpFo=
+X-Received: by 2002:a37:a4d3:: with SMTP id n202mr8318000qke.84.1560891341993;
+ Tue, 18 Jun 2019 13:55:41 -0700 (PDT)
 MIME-Version: 1.0
-References: <20190618202425.15259-1-robdclark@gmail.com> <20190618202425.15259-6-robdclark@gmail.com>
-In-Reply-To: <20190618202425.15259-6-robdclark@gmail.com>
-From:   Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
-Date:   Tue, 18 Jun 2019 14:44:16 -0600
-Message-ID: <CAOCk7NoTN6JEo7B=8P=T4C3t_Xr8eQUX=KG9j4N+jXZ8Pw2f4g@mail.gmail.com>
-Subject: Re: [Freedreno] [PATCH 5/5] drm/msm/mdp5: Use the interconnect API
-To:     Rob Clark <robdclark@gmail.com>
-Cc:     "open list:DRM PANEL DRIVERS" <dri-devel@lists.freedesktop.org>,
-        Rob Clark <robdclark@chromium.org>,
-        freedreno <freedreno@lists.freedesktop.org>,
-        Rajesh Yadav <ryadav@codeaurora.org>,
-        Boris Brezillon <bbrezillon@kernel.org>,
-        David Airlie <airlied@linux.ie>,
-        MSM <linux-arm-msm@vger.kernel.org>,
-        lkml <linux-kernel@vger.kernel.org>,
-        Mamta Shukla <mamtashukla555@gmail.com>,
-        Sean Paul <seanpaul@chromium.org>,
-        Daniel Vetter <daniel@ffwll.ch>, Sean Paul <sean@poorly.run>,
-        Georgi Djakov <georgi.djakov@linaro.org>
+References: <380a6185-7ad1-6be0-060b-e6e5d4126917@linaro.org>
+ <a94676381a5ca662c848f7a725562f721c43ce76.camel@sipsolutions.net>
+ <CAK8P3a0kV-i7BJJ2X6C=5n65rSGfo8fUiC4J_G-+M8EctYKbkg@mail.gmail.com>
+ <066e9b39f937586f0f922abf801351553ec2ba1d.camel@sipsolutions.net>
+ <b3686626-e2d8-bc9c-6dd0-9ebb137715af@linaro.org> <b23a83c18055470c5308fcd1eed018056371fc1d.camel@sipsolutions.net>
+ <CAK8P3a1FeUQR3pgoQxHoRK05JGORyR+TFATVQiijLWtFKTv6OQ@mail.gmail.com> <613cdfde488eb23d7207c7ba6258662702d04840.camel@sipsolutions.net>
+In-Reply-To: <613cdfde488eb23d7207c7ba6258662702d04840.camel@sipsolutions.net>
+From:   Arnd Bergmann <arnd@arndb.de>
+Date:   Tue, 18 Jun 2019 22:55:23 +0200
+Message-ID: <CAK8P3a2onXpxiE4y9PzRwuPM2dh=h_BKz7Eb0=LLPgBbZoK1bQ@mail.gmail.com>
+Subject: Re: [PATCH v2 00/17] net: introduce Qualcomm IPA driver
+To:     Johannes Berg <johannes@sipsolutions.net>
+Cc:     Alex Elder <elder@linaro.org>, abhishek.esse@gmail.com,
+        Ben Chan <benchan@google.com>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        cpratapa@codeaurora.org, David Miller <davem@davemloft.net>,
+        Dan Williams <dcbw@redhat.com>,
+        DTML <devicetree@vger.kernel.org>,
+        Eric Caruso <ejcaruso@google.com>, evgreen@chromium.org,
+        Ilias Apalodimas <ilias.apalodimas@linaro.org>,
+        Linux ARM <linux-arm-kernel@lists.infradead.org>,
+        linux-arm-msm@vger.kernel.org,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        linux-soc@vger.kernel.org, Networking <netdev@vger.kernel.org>,
+        Subash Abhinov Kasiviswanathan <subashab@codeaurora.org>,
+        syadagir@codeaurora.org
 Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Jun 18, 2019 at 2:25 PM Rob Clark <robdclark@gmail.com> wrote:
+On Tue, Jun 18, 2019 at 10:36 PM Johannes Berg
+<johannes@sipsolutions.net> wrote:
 >
-> From: Georgi Djakov <georgi.djakov@linaro.org>
+> On Tue, 2019-06-18 at 21:59 +0200, Arnd Bergmann wrote:
+> >
+> > From my understanding, the ioctl interface would create the lower
+> > netdev after talking to the firmware, and then user space would use
+> > the rmnet interface to create a matching upper-level device for that.
+> > This is an artifact of the strong separation of ipa and rmnet in the
+> > code.
 >
-> The interconnect API provides an interface for consumer drivers to
-> express their bandwidth needs in the SoC. This data is aggregated
-> and the on-chip interconnect hardware is configured to the most
-> appropriate power/performance profile.
->
-> Use the API to configure the interconnects and request bandwidth
-> between DDR and the display hardware (MDP port(s) and rotator
-> downscaler).
->
-> v2: update the path names to be consistent with dpu, handle the NULL
->     path case, updated commit msg from Georgi.
->
-> Signed-off-by: Georgi Djakov <georgi.djakov@linaro.org>
-> Signed-off-by: Rob Clark <robdclark@chromium.org>
-> ---
->  drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c | 14 ++++++++++++++
->  1 file changed, 14 insertions(+)
->
-> diff --git a/drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c b/drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c
-> index 97179bec8902..eeac429acf40 100644
-> --- a/drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c
-> +++ b/drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c
-> @@ -16,6 +16,7 @@
->   * this program.  If not, see <http://www.gnu.org/licenses/>.
->   */
->
-> +#include <linux/interconnect.h>
->  #include <linux/of_irq.h>
->
->  #include "msm_drv.h"
-> @@ -1050,6 +1051,19 @@ static const struct component_ops mdp5_ops = {
->
->  static int mdp5_dev_probe(struct platform_device *pdev)
->  {
-> +       struct icc_path *path0 = of_icc_get(&pdev->dev, "mdp0-mem");
-> +       struct icc_path *path1 = of_icc_get(&pdev->dev, "mdp1-mem");
-> +       struct icc_path *path_rot = of_icc_get(&pdev->dev, "rotator-mem");
-> +
-> +       if (IS_ERR_OR_NULL(path0))
-> +               return PTR_ERR_OR_ZERO(path0);
+> Huh. But if rmnet has muxing, and IPA supports that, why would you ever
+> need multiple lower netdevs?
 
-Umm, am I misunderstanding something?  It seems like of_icc_get()
-returns NULL if the property doesn't exist.  Won't this be backwards
-incompatible?  Existing DTs won't specify the property, and I don't
-believe the property is supported on all targets.  Seems like we'll
-break things by not calling the below component_add() if the
-interconnect is not supported, specified, or the interconnect driver
-is not compiled.
+From my reading of the code, there is always exactly a 1:1 relationship
+between an rmnet netdev an an ipa netdev. rmnet does the encapsulation/
+decapsulation of the qmap data and forwards it to the ipa netdev,
+which then just passes data through between a hardware queue and
+its netdevice.
 
-> +       icc_set_bw(path0, 0, MBps_to_icc(6400));
-> +
-> +       if (!IS_ERR_OR_NULL(path1))
-> +               icc_set_bw(path1, 0, MBps_to_icc(6400));
-> +       if (!IS_ERR_OR_NULL(path_rot))
-> +               icc_set_bw(path_rot, 0, MBps_to_icc(6400));
-> +
->         DBG("");
->         return component_add(&pdev->dev, &mdp5_ops);
->  }
-> --
-> 2.20.1
+[side note: on top of that, rmnet also does "aggregation", which may
+ be a confusing term that only means transferring multiple frames
+ at once]
+
+> > ipa definitely has multiple hardware queues, and the Alex'
+> > driver does implement  the data path on those, just not the
+> > configuration to enable them.
 >
-> _______________________________________________
-> Freedreno mailing list
-> Freedreno@lists.freedesktop.org
-> https://lists.freedesktop.org/mailman/listinfo/freedreno
+> OK, but perhaps you don't actually have enough to use one for each
+> session?
+
+I'm lacking the terminology here, but what I understood was that
+the netdev and queue again map to a session.
+
+> > Guessing once more, I suspect the the XON/XOFF flow control
+> > was a workaround for the fact that rmnet and ipa have separate
+> > queues. The hardware channel on IPA may fill up, but user space
+> > talks to rmnet and still add more frames to it because it doesn't
+> > know IPA is busy.
+> >
+> > Another possible explanation would be that this is actually
+> > forwarding state from the base station to tell the driver to
+> > stop sending data over the air.
+>
+> Yeah, but if you actually have a hardware queue per upper netdev then
+> you don't really need this - you just stop the netdev queue when the
+> hardware queue is full, and you have flow control automatically.
+>
+> So I really don't see any reason to have these messages going back and
+> forth unless you plan to have multiple sessions muxed on a single
+> hardware queue.
+
+Sure, I definitely understand what you mean, and I agree that would
+be the right way to do it. All I said is that this is not how it was done
+in rmnet (this was again my main concern about the rmnet design
+after I learned it was required for ipa) ;-)
+
+     Arnd
