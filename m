@@ -2,66 +2,84 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 649754A4DA
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Jun 2019 17:12:11 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 850D04A530
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Jun 2019 17:20:55 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727097AbfFRPMG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 18 Jun 2019 11:12:06 -0400
-Received: from mail-wr1-f68.google.com ([209.85.221.68]:42693 "EHLO
-        mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729249AbfFRPME (ORCPT
+        id S1729395AbfFRPUt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 18 Jun 2019 11:20:49 -0400
+Received: from mail-io1-f66.google.com ([209.85.166.66]:33008 "EHLO
+        mail-io1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729701AbfFRPUm (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 18 Jun 2019 11:12:04 -0400
-Received: by mail-wr1-f68.google.com with SMTP id x17so14397047wrl.9
-        for <linux-arm-msm@vger.kernel.org>; Tue, 18 Jun 2019 08:12:03 -0700 (PDT)
+        Tue, 18 Jun 2019 11:20:42 -0400
+Received: by mail-io1-f66.google.com with SMTP id u13so30820591iop.0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 18 Jun 2019 08:20:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=subject:to:cc:references:from:message-id:date:user-agent
          :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=XMfa9NJpDXh8dDL9yFLkdc/RmjSvoaHVSjRiYPgy7AU=;
-        b=RzFJ/8d2DQVpdpSN66TgWH5FYsc9Os+fcsszwdEdRiHoXMgA1PIV3bLurXKkC7Yfm2
-         WouFAm13XKYXcw2na3YdFMwyVTomRiE8GcJt7T0UkpCALOrQqSInLzUwFkKfsM2JiAKW
-         axUHeuXw1lVc5yE9i0Nno/wdZI8oyrbEgvtmwDzTRYtZcIp30ff4W0yvUt2j7xoA/gTZ
-         wyC+bN6bQhAd750oPFey+eCSuBBvM3yTCzeAeBlUC83k4E7dzSdV5lcDYAFUBwa1CSOt
-         KlTXHV8Lm/JLy7emfb3OUwFyo8Y3WlHJhQTy+jrci8gAf78nCdsOuN2ZG2JIv2gv7chT
-         pr/g==
+        bh=Gm6zrt3+jyOk79FjVLjqIif+2ZGmPF1/TjoosYPa/aY=;
+        b=HhgTn3B5frcZ87brr7+01lN2WHNxic6G3R1o8OJlYQqfp1hc1M3WllIY/XNiGPHaCI
+         Y49KrIQF61r5gxzA3PSinDixPJnXEsEXx6srKhi+lH5frsHNq772xLo9rU0uJRQ0ebi3
+         3w56DiGhe4EdCPahcmsF3c9JTDGkepUtjqCViyswiVcC0HxhoXjc78KopLoqO0ENMWUL
+         AWvZTUtqNEkFjvosSqLLdX6t7RDLdskTguOS4heP41b4rfNadXsjMO1ltzxQBUjRiV9x
+         3lNj2/XsHUqF5UiCjHgOaLMMf59YVbkgLlt7NZqFdjvl3iv8Wi3VgT4dH65UXvzeg9f7
+         8obg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:subject:to:cc:references:from:message-id:date
          :user-agent:mime-version:in-reply-to:content-language
          :content-transfer-encoding;
-        bh=XMfa9NJpDXh8dDL9yFLkdc/RmjSvoaHVSjRiYPgy7AU=;
-        b=do+pDS091gzynjT1mU2Byk2NQZuUgw4R4zbCEEov8khfhhPaKcHVqa4cMN0vwVeZ8f
-         O9o0sHNm0v0LJFiEHMQHfEcDJXHq4IKzVbOCgq45iT3al8djp60XCk1N7IvOYOl41GTE
-         6jkLJ7vQDD6X5b40HdJCFbnxeU/06P2baTsexNYa4GsTUy7G3SuN1m1/tTPh6JEck4nW
-         Ozryzdp85DhoGav2JZTztFLfrrTEvafFWe9HecT6MgUyMQV8gphID+oar07UKYkzCw1L
-         6A0yZaqM4gfDeh/FgVEBMdzpWxoK1uXZYqHoy9peNzeSdEtq4fconeBiOOJ7VTbqxrjs
-         S2ww==
-X-Gm-Message-State: APjAAAXhhx6tHV2glHGmHeb6J5ilXu/deH4dP0r3ql5mh6IJANF0MWiN
-        nXhjG7j2HWEBbMmqd1bLOVID0Owwe3YsXA==
-X-Google-Smtp-Source: APXvYqyrqTtNMWynSOgiXHoVZjhnncDqEEw1XV2KrhXPMaVDno3t7MXb5Vtc1ZRd/MUwl+UmMXGINA==
-X-Received: by 2002:a5d:488b:: with SMTP id g11mr5139572wrq.72.1560870722429;
-        Tue, 18 Jun 2019 08:12:02 -0700 (PDT)
-Received: from [192.168.86.34] (cpc89974-aztw32-2-0-cust43.18-1.cable.virginm.net. [86.30.250.44])
-        by smtp.googlemail.com with ESMTPSA id x83sm2964625wmb.42.2019.06.18.08.12.01
+        bh=Gm6zrt3+jyOk79FjVLjqIif+2ZGmPF1/TjoosYPa/aY=;
+        b=XyeLsTAXeqfNRop8H2FKnxM0pRhOame+nllssLyRCHiteULqffcSV/+PKruO150gne
+         p2WSAmFWj2ZYMVwjEGVgeLb0ApVWPXEDs4u/Yvwkrc0VsViEFeEgUveBt0FXC8GfKCRC
+         cIJl31jvC9n2QwE9YYTzhl+VzuHtGcdPKUL1CNUBdWTxbfJ2eC5tumJo2WKj1MaVjn7G
+         5Qr5MxQ1WHHxgOcPi9wxBXSXRewwLg0HgaOGI90//HrcAQgVnTwhT0AMU4qQH9gzPd3l
+         Cmo6TnOJma9RKzaO6yY8ufRzA4eXC2L3USqqNc6As2fKoqo1XqHfVZ2kBdYyH+IZybYQ
+         CoDA==
+X-Gm-Message-State: APjAAAWV+fLHvh/HQ9kk600MA+9KcEWyeREeRsCgYeBJYP2TuIYfe4er
+        YKuDuD//daH/ZhihoXL4mf8vXg==
+X-Google-Smtp-Source: APXvYqzN+CqWZh0iUp59ZmRZ1rXHigzZ346x42zx/+UeRjEIKpJjL/46ZcKoAoNJbjiPleDHtpFqWg==
+X-Received: by 2002:a5d:9d90:: with SMTP id 16mr1935330ion.132.1560871241374;
+        Tue, 18 Jun 2019 08:20:41 -0700 (PDT)
+Received: from [172.22.22.26] (c-71-195-29-92.hsd1.mn.comcast.net. [71.195.29.92])
+        by smtp.googlemail.com with ESMTPSA id h18sm12796116iob.80.2019.06.18.08.20.39
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 18 Jun 2019 08:12:01 -0700 (PDT)
-Subject: Re: [PATCH] dmaengine: qcom-bam: fix circular buffer handling
-To:     Sricharan R <sricharan@codeaurora.org>, vkoul@kernel.org
-Cc:     dmaengine@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org
-References: <20190614142012.31384-1-srinivas.kandagatla@linaro.org>
- <f4522b78-b406-954c-57b7-923e6ab31f96@codeaurora.org>
- <d84af3ad-5ba4-0f24-fd30-2fa20cf85658@linaro.org>
- <2d370a33-fa16-45ca-cf82-9d775349f806@codeaurora.org>
-From:   Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-Message-ID: <544851f6-58b8-2506-01ce-5c4d1f93fb3c@linaro.org>
-Date:   Tue, 18 Jun 2019 16:12:01 +0100
+        Tue, 18 Jun 2019 08:20:40 -0700 (PDT)
+Subject: Re: [PATCH v2 00/17] net: introduce Qualcomm IPA driver
+To:     Johannes Berg <johannes@sipsolutions.net>,
+        Arnd Bergmann <arnd@arndb.de>, Dan Williams <dcbw@redhat.com>
+Cc:     Subash Abhinov Kasiviswanathan <subashab@codeaurora.org>,
+        abhishek.esse@gmail.com, Ben Chan <benchan@google.com>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        cpratapa@codeaurora.org, David Miller <davem@davemloft.net>,
+        DTML <devicetree@vger.kernel.org>,
+        Eric Caruso <ejcaruso@google.com>, evgreen@chromium.org,
+        Ilias Apalodimas <ilias.apalodimas@linaro.org>,
+        Linux ARM <linux-arm-kernel@lists.infradead.org>,
+        linux-arm-msm@vger.kernel.org,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        linux-soc@vger.kernel.org, Networking <netdev@vger.kernel.org>,
+        syadagir@codeaurora.org
+References: <380a6185-7ad1-6be0-060b-e6e5d4126917@linaro.org>
+ <a94676381a5ca662c848f7a725562f721c43ce76.camel@sipsolutions.net>
+ <CAK8P3a0kV-i7BJJ2X6C=5n65rSGfo8fUiC4J_G-+M8EctYKbkg@mail.gmail.com>
+ <fc0d08912bc10ad089eb74034726308375279130.camel@redhat.com>
+ <36bca57c999f611353fd9741c55bb2a7@codeaurora.org>
+ <153fafb91267147cf22e2bf102dd822933ec823a.camel@redhat.com>
+ <CAK8P3a2Y+tcL1-V57dtypWHndNT3eDJdcKj29c_v+k8o1HHQig@mail.gmail.com>
+ <f4249aa5f5acdd90275eda35aa16f3cfb29d29be.camel@redhat.com>
+ <CAK8P3a2nzZKtshYfomOOSYkqx5HdU15Wr9b+3va0B1euNhFOAg@mail.gmail.com>
+ <dbb32f185d2c3a654083ee0a7188379e1f88d899.camel@sipsolutions.net>
+ <e6ba8a9063e63506c0b88a70418d74ca4efe85cd.camel@sipsolutions.net>
+From:   Alex Elder <elder@linaro.org>
+Message-ID: <850eed1d-0fec-c396-6e91-b5f1f8440ded@linaro.org>
+Date:   Tue, 18 Jun 2019 10:20:39 -0500
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.6.1
+ Thunderbird/60.7.0
 MIME-Version: 1.0
-In-Reply-To: <2d370a33-fa16-45ca-cf82-9d775349f806@codeaurora.org>
-Content-Type: text/plain; charset=utf-8; format=flowed
+In-Reply-To: <e6ba8a9063e63506c0b88a70418d74ca4efe85cd.camel@sipsolutions.net>
+Content-Type: text/plain; charset=utf-8
 Content-Language: en-US
 Content-Transfer-Encoding: 7bit
 Sender: linux-arm-msm-owner@vger.kernel.org
@@ -69,13 +87,81 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On 6/17/19 7:25 AM, Johannes Berg wrote:
+> On Mon, 2019-06-17 at 13:42 +0200, Johannes Berg wrote:
+> 
+>> But anyway, as I alluded to above, I had something like this in mind:
+> 
+> I forgot to state this here, but this was *heavily* influenced by
+> discussions with Dan - many thanks to him.
 
+Thanks for getting even more concrete with this.  Code is the
+most concise way of describing things, once the general ideas
+seem to be coming together.
 
-On 18/06/2019 15:56, Sricharan R wrote:
->    So MAX_DESCRIPTORS is used in driver for masking head/tail pointers.
->    That's why we have to pass MAX_DESCRIPTORS + 1 so that it works
->    when the Macros does a size - 1
-Isn't that incorrect to do that, pretending to have more descriptors 
-than we actually have?
+I'm not going to comment on the specific code bits, but I have
+some more general questions and comments on the design.  Some
+of these are simply due to my lack of knowledge of how WWAN/modem
+interactions normally work.
 
---srini
+First, a few terms (correct or improve as you like):
+- WWAN device is a hardware device (like IPA) that presents a
+  connection between AP and modem, and presents an interface
+  that allows the use of that connection to be managed.
+- WWAN netdevice represents a Linux network interface, with its
+  operations and queues, etc., but implements a standardized
+  set of WWAN-specific operations.  It represents a logical
+' channel whose data is multiplexed over the WWAN device.
+- WWAN channel is a user space abstraction that corresponds
+  with a WWAN netdevice (but I'm not clear on all the ways
+  they differ or interact).
+- The WWAN core is kernel code that presents abstractions
+  for WWAN devices and netdevices, so they can be managed
+  in a generic way.  It is for configuration and communication
+  and is not at all involved in the data path.
+
+You're saying that the WWAN driver space calls wwan_add()
+to register itself as a new WWAN device.
+
+You're also saying that a WWAN device "attaches" a WWAN
+netdevice, which is basically notifying the WWAN core
+that the new netdev/channel is available for use.
+- I trust that a "tentative" attachement is necessary.  But
+  I'm not sure what makes it transition into becoming a
+  "real" one, or how that event gets communicated.
+
+Some questions:
+- What causes a new channel to be created?  Is it initiated
+  by the WWAN device driver?  Does the modem request that
+  it get created?  User space?  Both?
+- What causes a created channel to be removed?
+- You distinguish between attaching a netdevice and (what
+  I'll call) activating it.  What causes activation?
+- How are the attributes of a WWAN device or channel set,
+  or communicated?
+- Are there any attributes that are only optionally supported,
+  and if so, how are the supported ones communicated?
+- Which WWAN channel attributes must be set *before* the
+  channel is activated, and can't be changed?  Are there any
+  that can be changed dynamically?
+
+And while the whole point of this is to make things generic,
+it might be nice to have a way to implement a new feature
+before it can be "standardized".
+
+Thanks.
+
+					-Alex
+
+PS  I don't want to exclude anybody but we could probably start
+    a different mail chain on this topic...
+
+>> driver_dev
+>>   struct device *dev (USB, PCI, ...)
+>>   net_device NA
+>>   net_device NB
+>>   tty TA
+>>  ...
+>>
+
+. . .
