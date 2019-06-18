@@ -2,140 +2,128 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 6067A4AB43
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Jun 2019 21:59:39 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 082D44AB58
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Jun 2019 22:04:32 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730350AbfFRT7i (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 18 Jun 2019 15:59:38 -0400
-Received: from mail-qk1-f193.google.com ([209.85.222.193]:43118 "EHLO
-        mail-qk1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730242AbfFRT7i (ORCPT
+        id S1730284AbfFRUE1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 18 Jun 2019 16:04:27 -0400
+Received: from mail-pg1-f195.google.com ([209.85.215.195]:38582 "EHLO
+        mail-pg1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1730189AbfFRUE1 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 18 Jun 2019 15:59:38 -0400
-Received: by mail-qk1-f193.google.com with SMTP id m14so9402256qka.10;
-        Tue, 18 Jun 2019 12:59:37 -0700 (PDT)
+        Tue, 18 Jun 2019 16:04:27 -0400
+Received: by mail-pg1-f195.google.com with SMTP id v11so8262182pgl.5
+        for <linux-arm-msm@vger.kernel.org>; Tue, 18 Jun 2019 13:04:27 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=vAeqHyw6RagaEliqavOvZJ2tWkD0tQerTi99czZ7j54=;
+        b=Y0SmQ/Q9ZkciYInJWgfVb/m+PnqweV6Vw493C5o0NZIaQlRJgLvkcKIV3z/hZwMUlT
+         9kY5x67BFTdBJAIUKve2catt0LClJmdpBXSauyMnrGSMj9uBjKdlSjAGX14xL22QJVWi
+         DkVRnLg9/aB/JJg+bV8QbJ6H5VCPnEqpi5h7bldfNl8kJGMxU+aOpqUsPjWmKW8dC0H9
+         /QFVy1hI/pwUr0tvY1VYBQVKPeVcXxHE011OTqRwczN1nFnM4thyC7UQUxPQMJiGKluU
+         kYPRZykIsBCyPDuO/sulFZe397uvd084spd3dckoNkhTz9W+uIOnPE3zUIXmP+LXHyEb
+         W6AA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=i7s7c5OcKeclqiywXdqj12aC74/yCawdjmwihldgF1s=;
-        b=DHYGvxMY6OdMmnVu97ZGrFSVib8SRuY7TON32T/WhGsFNnFlkQ1f1kv9vMlV/haBZt
-         /6aF86FrHiAnjzCuqggjGVz6aoe4JBMOvO2d1ytDTwhFGAT9RyNFwdQnQlyKa9VtlNNF
-         lhzjnlNHnlItH3fkA2C9tHFHdM/5e2ABgVH2w6sWulkzNXLo+fey7K1AGDsprucjVqOn
-         pZq/Ow89YzMHzuMecmbQRxEYu/lzcoey7jCaLgrI8bE+F35p/ivIRazoGkoaONlvSz20
-         08hll5eQhwYvmJS/QKLby6Sl4eCk6Co4hQ+Ai62L/AoodhhJkzRM5zDSW/9ncU/J1Hs0
-         dO5w==
-X-Gm-Message-State: APjAAAWaAF1SUlyLJ36PbDZXBfnjGusFdQyksjFkp4KCHkTcBceXmbFW
-        2AGep7KUTG6v0S54p7YZirWRPJUNVyDgmvn8Yd8=
-X-Google-Smtp-Source: APXvYqy6dw17Y5hPbpJB1iwj6Y5EiqPTo9iLm7ZATxD+K27A0WaDVgnTPbaE839sYu0LKjhIqohaX9442ZVn9lHIr6Q=
-X-Received: by 2002:a37:a4d3:: with SMTP id n202mr8102665qke.84.1560887976962;
- Tue, 18 Jun 2019 12:59:36 -0700 (PDT)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=vAeqHyw6RagaEliqavOvZJ2tWkD0tQerTi99czZ7j54=;
+        b=sgWoUn2CH39Ya/Z3mghsmSRxCznouj291JiEZPbcgmqKBoiS6G4gT/1FQNNjrJPB+U
+         S4dajSqkdoeXjOQUhGsnJWgulOcT+yDNKrevaAiE/6QWHkhsl2eHcMUEpvPXQVpNvc1z
+         KetzantVEYiRUJP4qeEcIM8+qb7mIgvuoq6gotj1/KBNzx1oJTdk3CyEzpruQiYQQWnP
+         +HqiNN+P2FTiBWMME3+BjrxAerUZhw/GhMqCimUhVbzmxqyT2AaJ0OuO1v0RMxsOr1oH
+         iPFT2siWO35MdKzLFutoldrx0qyCYoOckx7s1PaKyoofVimA9mY9dFVVkJ/9B0FfXAhT
+         /byA==
+X-Gm-Message-State: APjAAAU/ZfRPRyTwyqIDDGm73QufoNeMQADNzrM2/hzmA9TVLMqUFm/F
+        d3xDpps6OrazzlFjew6DbaY4Lw==
+X-Google-Smtp-Source: APXvYqziW6L+bjnki/hEVBA5wM6lqP9xgFoBR8esg+frVAp27tb7dC/Sks29kliKkIUIwjigjNPdQg==
+X-Received: by 2002:aa7:8acb:: with SMTP id b11mr120623855pfd.115.1560888266696;
+        Tue, 18 Jun 2019 13:04:26 -0700 (PDT)
+Received: from minitux (104-188-17-28.lightspeed.sndgca.sbcglobal.net. [104.188.17.28])
+        by smtp.gmail.com with ESMTPSA id l13sm2750876pjq.20.2019.06.18.13.04.25
+        (version=TLS1_3 cipher=AEAD-AES256-GCM-SHA384 bits=256/256);
+        Tue, 18 Jun 2019 13:04:26 -0700 (PDT)
+Date:   Tue, 18 Jun 2019 13:04:24 -0700
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     Marc Gonzalez <marc.w.gonzalez@free.fr>
+Cc:     Andy Gross <agross@kernel.org>, Rob Herring <robh+dt@kernel.org>,
+        MSM <linux-arm-msm@vger.kernel.org>,
+        Linux ARM <linux-arm-kernel@lists.infradead.org>
+Subject: Re: [PATCH] arm64: dts: qcom: msm8996: Rename smmu nodes
+Message-ID: <20190618200424.GH4814@minitux>
+References: <20190618052441.32306-1-bjorn.andersson@linaro.org>
+ <fbe71878-a129-1b11-d978-48a99b292086@free.fr>
 MIME-Version: 1.0
-References: <380a6185-7ad1-6be0-060b-e6e5d4126917@linaro.org>
- <a94676381a5ca662c848f7a725562f721c43ce76.camel@sipsolutions.net>
- <CAK8P3a0kV-i7BJJ2X6C=5n65rSGfo8fUiC4J_G-+M8EctYKbkg@mail.gmail.com>
- <066e9b39f937586f0f922abf801351553ec2ba1d.camel@sipsolutions.net>
- <b3686626-e2d8-bc9c-6dd0-9ebb137715af@linaro.org> <b23a83c18055470c5308fcd1eed018056371fc1d.camel@sipsolutions.net>
-In-Reply-To: <b23a83c18055470c5308fcd1eed018056371fc1d.camel@sipsolutions.net>
-From:   Arnd Bergmann <arnd@arndb.de>
-Date:   Tue, 18 Jun 2019 21:59:19 +0200
-Message-ID: <CAK8P3a1FeUQR3pgoQxHoRK05JGORyR+TFATVQiijLWtFKTv6OQ@mail.gmail.com>
-Subject: Re: [PATCH v2 00/17] net: introduce Qualcomm IPA driver
-To:     Johannes Berg <johannes@sipsolutions.net>
-Cc:     Alex Elder <elder@linaro.org>, abhishek.esse@gmail.com,
-        Ben Chan <benchan@google.com>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        cpratapa@codeaurora.org, David Miller <davem@davemloft.net>,
-        Dan Williams <dcbw@redhat.com>,
-        DTML <devicetree@vger.kernel.org>,
-        Eric Caruso <ejcaruso@google.com>, evgreen@chromium.org,
-        Ilias Apalodimas <ilias.apalodimas@linaro.org>,
-        Linux ARM <linux-arm-kernel@lists.infradead.org>,
-        linux-arm-msm@vger.kernel.org,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-        linux-soc@vger.kernel.org, Networking <netdev@vger.kernel.org>,
-        Subash Abhinov Kasiviswanathan <subashab@codeaurora.org>,
-        syadagir@codeaurora.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <fbe71878-a129-1b11-d978-48a99b292086@free.fr>
+User-Agent: Mutt/1.12.0 (2019-05-25)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Jun 18, 2019 at 9:14 PM Johannes Berg <johannes@sipsolutions.net> wrote:
-> On Tue, 2019-06-18 at 08:16 -0500, Alex Elder wrote:
-> > On 6/17/19 6:28 AM, Johannes Berg wrote:
-> > So getting back to your question, the IPA in its current form only
-> > has a single "multiplexed" channel carried over the connection
-> > between the AP and modem.  Previously (and in the future) there
-> > was a way to add or remove channels.
->
-> What would those channels do?
->
-> I've not really been very clear with the differentiation between a
-> channel and what's multiplexed inside of the channel.
->
-> Using the terminology you defined in your other mail, are you saying
-> that IPA (originally) allowed multiple *connections* to the device, or
-> is there basically just one connection, with multiple (QMAP-muxed)
-> *channels* on top of it?
->
-> If the latter, why did IPA need ioctls, rather than rmnet?
+On Tue 18 Jun 00:39 PDT 2019, Marc Gonzalez wrote:
 
-From my understanding, the ioctl interface would create the lower
-netdev after talking to the firmware, and then user space would use
-the rmnet interface to create a matching upper-level device for that.
-This is an artifact of the strong separation of ipa and rmnet in the
-code.
+> On 18/06/2019 07:24, Bjorn Andersson wrote:
+> 
+> > Node names shouldn't include "qcom," and should whenever possible use
+> > a generic identifier. Resolve this by renaming the smmu nodes "iommu".
+> 
+> You mention "qcom" here, but the prefix you changed is "arm"
+> /me confused ^_^
+> 
 
-> > > The software bridging is very questionable to start with, I'd advocate
-> > > not supporting that at all but adding tracepoints or similar if needed
-> > > for debugging instead.
-> >
-> > To be honest I don't understand the connection between software
-> > bridging and debugging, but that's OK.
->
-> It's a mess. Basically, AFAICT, the only use for the rmnet bridging is
-> in fact debugging. What it does, again AFAICT, is mirror out all the
-> rmnet packets to the bridge if you attach it to a bridge, so that then
-> you can attach another netdev to the bridge and forward all the rmnet
-> packets to another system for debugging.
->
-> It's a very weird way of doing this, IMHO.
+Thanks for proof reading my patches Marc
+I'll respin this.
 
-My understanding for this was that the idea is to use it for
-connecting bridging between distinct hardware devices behind
-ipa: if IPA drives both a USB-ether gadget and the 5G modem,
-you can use to talk to Linux running rmnet, but you can also
-use rmnet to provide fast usb tethering to 5g and bypass the
-rest of the network stack. That again may have been a wrong
-guess on my part.
+Regards,
+Bjorn
 
-> > I believe the only QMAP commands are for doing essentially
-> > XON/XOFF flow control on a single channel.  In the course of
-> > the e-mail discussion in the past few weeks I've come to see
-> > why that would be necessary.
->
-> It does make sense, because you only have a single hardware (DMA)
-> channel in these cases, so you implement flow control in software on
-> top.
->
-> (As I said before, the Intel modem uses different hardware channels for
-> different sessions, so doesn't need something like this - the hardware
-> ring just fills up and there's your flow control)
-
-ipa definitely has multiple hardware queues, and the Alex'
-driver does implement  the data path on those, just not the
-configuration to enable them.
-
-Guessing once more, I suspect the the XON/XOFF flow control
-was a workaround for the fact that rmnet and ipa have separate
-queues. The hardware channel on IPA may fill up, but user space
-talks to rmnet and still add more frames to it because it doesn't
-know IPA is busy.
-
-Another possible explanation would be that this is actually
-forwarding state from the base station to tell the driver to
-stop sending data over the air.
-
-       Arnd
+> 
+> >  arch/arm64/boot/dts/qcom/msm8996.dtsi | 8 ++++----
+> >  1 file changed, 4 insertions(+), 4 deletions(-)
+> > 
+> > diff --git a/arch/arm64/boot/dts/qcom/msm8996.dtsi b/arch/arm64/boot/dts/qcom/msm8996.dtsi
+> > index 2ecd9d775d61..c934e00434c7 100644
+> > --- a/arch/arm64/boot/dts/qcom/msm8996.dtsi
+> > +++ b/arch/arm64/boot/dts/qcom/msm8996.dtsi
+> > @@ -1163,7 +1163,7 @@
+> >  			};
+> >  		};
+> >  
+> > -		vfe_smmu: arm,smmu@da0000 {
+> > +		vfe_smmu: iommu@da0000 {
+> >  			compatible = "qcom,msm8996-smmu-v2", "qcom,smmu-v2";
+> >  			reg = <0xda0000 0x10000>;
+> >  
+> > @@ -1314,7 +1314,7 @@
+> >  			};
+> >  		};
+> >  
+> > -		adreno_smmu: arm,smmu@b40000 {
+> > +		adreno_smmu: iommu@b40000 {
+> >  			compatible = "qcom,msm8996-smmu-v2", "qcom,smmu-v2";
+> >  			reg = <0xb40000 0x10000>;
+> >  
+> > @@ -1331,7 +1331,7 @@
+> >  			power-domains = <&mmcc GPU_GDSC>;
+> >  		};
+> >  
+> > -		mdp_smmu: arm,smmu@d00000 {
+> > +		mdp_smmu: iommu@d00000 {
+> >  			compatible = "qcom,msm8996-smmu-v2", "qcom,smmu-v2";
+> >  			reg = <0xd00000 0x10000>;
+> >  
+> > @@ -1347,7 +1347,7 @@
+> >  			power-domains = <&mmcc MDSS_GDSC>;
+> >  		};
+> >  
+> > -		lpass_q6_smmu: arm,smmu-lpass_q6@1600000 {
+> > +		lpass_q6_smmu: iommu@1600000 {
+> >  			compatible = "qcom,msm8996-smmu-v2", "qcom,smmu-v2";
+> >  			reg = <0x1600000 0x20000>;
+> >  			#iommu-cells = <1>;
+> > 
