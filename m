@@ -2,128 +2,106 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 082D44AB58
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Jun 2019 22:04:32 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 163E94AB7B
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Jun 2019 22:10:05 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730284AbfFRUE1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 18 Jun 2019 16:04:27 -0400
-Received: from mail-pg1-f195.google.com ([209.85.215.195]:38582 "EHLO
-        mail-pg1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730189AbfFRUE1 (ORCPT
+        id S1730576AbfFRUJ6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 18 Jun 2019 16:09:58 -0400
+Received: from mail-qt1-f196.google.com ([209.85.160.196]:36753 "EHLO
+        mail-qt1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729331AbfFRUJ5 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 18 Jun 2019 16:04:27 -0400
-Received: by mail-pg1-f195.google.com with SMTP id v11so8262182pgl.5
-        for <linux-arm-msm@vger.kernel.org>; Tue, 18 Jun 2019 13:04:27 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=vAeqHyw6RagaEliqavOvZJ2tWkD0tQerTi99czZ7j54=;
-        b=Y0SmQ/Q9ZkciYInJWgfVb/m+PnqweV6Vw493C5o0NZIaQlRJgLvkcKIV3z/hZwMUlT
-         9kY5x67BFTdBJAIUKve2catt0LClJmdpBXSauyMnrGSMj9uBjKdlSjAGX14xL22QJVWi
-         DkVRnLg9/aB/JJg+bV8QbJ6H5VCPnEqpi5h7bldfNl8kJGMxU+aOpqUsPjWmKW8dC0H9
-         /QFVy1hI/pwUr0tvY1VYBQVKPeVcXxHE011OTqRwczN1nFnM4thyC7UQUxPQMJiGKluU
-         kYPRZykIsBCyPDuO/sulFZe397uvd084spd3dckoNkhTz9W+uIOnPE3zUIXmP+LXHyEb
-         W6AA==
+        Tue, 18 Jun 2019 16:09:57 -0400
+Received: by mail-qt1-f196.google.com with SMTP id p15so17049557qtl.3;
+        Tue, 18 Jun 2019 13:09:56 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=vAeqHyw6RagaEliqavOvZJ2tWkD0tQerTi99czZ7j54=;
-        b=sgWoUn2CH39Ya/Z3mghsmSRxCznouj291JiEZPbcgmqKBoiS6G4gT/1FQNNjrJPB+U
-         S4dajSqkdoeXjOQUhGsnJWgulOcT+yDNKrevaAiE/6QWHkhsl2eHcMUEpvPXQVpNvc1z
-         KetzantVEYiRUJP4qeEcIM8+qb7mIgvuoq6gotj1/KBNzx1oJTdk3CyEzpruQiYQQWnP
-         +HqiNN+P2FTiBWMME3+BjrxAerUZhw/GhMqCimUhVbzmxqyT2AaJ0OuO1v0RMxsOr1oH
-         iPFT2siWO35MdKzLFutoldrx0qyCYoOckx7s1PaKyoofVimA9mY9dFVVkJ/9B0FfXAhT
-         /byA==
-X-Gm-Message-State: APjAAAU/ZfRPRyTwyqIDDGm73QufoNeMQADNzrM2/hzmA9TVLMqUFm/F
-        d3xDpps6OrazzlFjew6DbaY4Lw==
-X-Google-Smtp-Source: APXvYqziW6L+bjnki/hEVBA5wM6lqP9xgFoBR8esg+frVAp27tb7dC/Sks29kliKkIUIwjigjNPdQg==
-X-Received: by 2002:aa7:8acb:: with SMTP id b11mr120623855pfd.115.1560888266696;
-        Tue, 18 Jun 2019 13:04:26 -0700 (PDT)
-Received: from minitux (104-188-17-28.lightspeed.sndgca.sbcglobal.net. [104.188.17.28])
-        by smtp.gmail.com with ESMTPSA id l13sm2750876pjq.20.2019.06.18.13.04.25
-        (version=TLS1_3 cipher=AEAD-AES256-GCM-SHA384 bits=256/256);
-        Tue, 18 Jun 2019 13:04:26 -0700 (PDT)
-Date:   Tue, 18 Jun 2019 13:04:24 -0700
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Marc Gonzalez <marc.w.gonzalez@free.fr>
-Cc:     Andy Gross <agross@kernel.org>, Rob Herring <robh+dt@kernel.org>,
-        MSM <linux-arm-msm@vger.kernel.org>,
-        Linux ARM <linux-arm-kernel@lists.infradead.org>
-Subject: Re: [PATCH] arm64: dts: qcom: msm8996: Rename smmu nodes
-Message-ID: <20190618200424.GH4814@minitux>
-References: <20190618052441.32306-1-bjorn.andersson@linaro.org>
- <fbe71878-a129-1b11-d978-48a99b292086@free.fr>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=gnX6xKMGivJziLWPy0MXzH36uFV6fP8h9GWYY0vF4dQ=;
+        b=m61DGYRiH4zZ9hFgpxAh13UTMN3/FEYp7iVKeDYmpZp9omXoPgZheRm9uFKZI2mwAD
+         i/z4cEFGIgdQkzcuuBnp+FtTJB87cwcENcag6ZzaB2b1y+Te7hLrB48rnb/H8mgWNpoJ
+         HMDBlyzbta3tMDsUXAGfaHKT+KruOjRfrKXc2fq+R+Bg3c0asrSPtgiGQS1mn6FvqEnQ
+         PfECf7HoGAxufv/kBNz/kL3BGsYtbmnuVXCLIQ7q2u5XSa1TyjS0MfzgFwY33USOa41B
+         MdHv5kU3Vg2WuIXel2MiHiQIo4+Ue3d0w4x562T961l5aie3V4dalNHgBMp+v0G0IKE2
+         xNow==
+X-Gm-Message-State: APjAAAUj76xd2VFLUYN+1lUVtUJWmBVGNP67tn0ZkPfiaW8Ecro4p4df
+        xxOfChfC3YNbfz8zGayJgV0h8reS1pgbzhuXhtw=
+X-Google-Smtp-Source: APXvYqzMxSZbNKZMyYx2SIWSteQCuWwP6hDYpVFmbIVCBXlz3S9dXHNlAfNiln2W3gebm9oJkPV+di6FaYLU9Wb0Sxs=
+X-Received: by 2002:a0c:87ab:: with SMTP id 40mr28470984qvj.93.1560888596401;
+ Tue, 18 Jun 2019 13:09:56 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <fbe71878-a129-1b11-d978-48a99b292086@free.fr>
-User-Agent: Mutt/1.12.0 (2019-05-25)
+References: <380a6185-7ad1-6be0-060b-e6e5d4126917@linaro.org>
+ <a94676381a5ca662c848f7a725562f721c43ce76.camel@sipsolutions.net>
+ <CAK8P3a0kV-i7BJJ2X6C=5n65rSGfo8fUiC4J_G-+M8EctYKbkg@mail.gmail.com>
+ <fc0d08912bc10ad089eb74034726308375279130.camel@redhat.com>
+ <36bca57c999f611353fd9741c55bb2a7@codeaurora.org> <153fafb91267147cf22e2bf102dd822933ec823a.camel@redhat.com>
+ <CAK8P3a2Y+tcL1-V57dtypWHndNT3eDJdcKj29c_v+k8o1HHQig@mail.gmail.com>
+ <f4249aa5f5acdd90275eda35aa16f3cfb29d29be.camel@redhat.com>
+ <CAK8P3a2nzZKtshYfomOOSYkqx5HdU15Wr9b+3va0B1euNhFOAg@mail.gmail.com>
+ <dbb32f185d2c3a654083ee0a7188379e1f88d899.camel@sipsolutions.net>
+ <d533b708-c97a-710d-1138-3ae79107f209@linaro.org> <abdfc6b3a9981bcdef40f85f5442a425ce109010.camel@sipsolutions.net>
+In-Reply-To: <abdfc6b3a9981bcdef40f85f5442a425ce109010.camel@sipsolutions.net>
+From:   Arnd Bergmann <arnd@arndb.de>
+Date:   Tue, 18 Jun 2019 22:09:38 +0200
+Message-ID: <CAK8P3a3ksrFTo2+dLB+doLeY+kPP7rYxv2O7BwvjYgK2cwCTuQ@mail.gmail.com>
+Subject: Re: [PATCH v2 00/17] net: introduce Qualcomm IPA driver
+To:     Johannes Berg <johannes@sipsolutions.net>
+Cc:     Alex Elder <elder@linaro.org>, Dan Williams <dcbw@redhat.com>,
+        Subash Abhinov Kasiviswanathan <subashab@codeaurora.org>,
+        abhishek.esse@gmail.com, Ben Chan <benchan@google.com>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        cpratapa@codeaurora.org, David Miller <davem@davemloft.net>,
+        DTML <devicetree@vger.kernel.org>,
+        Eric Caruso <ejcaruso@google.com>, evgreen@chromium.org,
+        Ilias Apalodimas <ilias.apalodimas@linaro.org>,
+        Linux ARM <linux-arm-kernel@lists.infradead.org>,
+        linux-arm-msm@vger.kernel.org,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        linux-soc@vger.kernel.org, Networking <netdev@vger.kernel.org>,
+        syadagir@codeaurora.org
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue 18 Jun 00:39 PDT 2019, Marc Gonzalez wrote:
+On Tue, Jun 18, 2019 at 9:03 PM Johannes Berg <johannes@sipsolutions.net> wrote:
+> On Tue, 2019-06-18 at 08:45 -0500, Alex Elder wrote:
 
-> On 18/06/2019 07:24, Bjorn Andersson wrote:
-> 
-> > Node names shouldn't include "qcom," and should whenever possible use
-> > a generic identifier. Resolve this by renaming the smmu nodes "iommu".
-> 
-> You mention "qcom" here, but the prefix you changed is "arm"
-> /me confused ^_^
-> 
+> Really there are two possible ways (and they intersect to some extent).
+>
+> One is the whole multi-function device, where a single WWAN device is
+> composed of channels offered by actually different drivers, e.g. for a
+> typical USB device you might have something like cdc_ether and the
+> usb_wwan TTY driver. In this way, we need to "compose" the WWAN device
+> similarly, e.g. by using the underlying USB device "struct device"
+> pointer to tie it together.
+>
+> The other is something like IPA or the Intel modem driver, where the
+> device is actually a single (e.g. PCIe) device and just has a single
+> driver, but that single driver offers different channels.
 
-Thanks for proof reading my patches Marc
-I'll respin this.
+I would hope we can simplify this to expect only the second model,
+where you have a 'struct device' corresponding to hardware and the
+driver for it creates one wwan_device that user space talks to.
 
-Regards,
-Bjorn
+Clearly the multi-function device hardware has to be handled somehow,
+but it would seem much cleaner in the long run to do that using
+a special workaround rather than putting this into the core interface.
 
-> 
-> >  arch/arm64/boot/dts/qcom/msm8996.dtsi | 8 ++++----
-> >  1 file changed, 4 insertions(+), 4 deletions(-)
-> > 
-> > diff --git a/arch/arm64/boot/dts/qcom/msm8996.dtsi b/arch/arm64/boot/dts/qcom/msm8996.dtsi
-> > index 2ecd9d775d61..c934e00434c7 100644
-> > --- a/arch/arm64/boot/dts/qcom/msm8996.dtsi
-> > +++ b/arch/arm64/boot/dts/qcom/msm8996.dtsi
-> > @@ -1163,7 +1163,7 @@
-> >  			};
-> >  		};
-> >  
-> > -		vfe_smmu: arm,smmu@da0000 {
-> > +		vfe_smmu: iommu@da0000 {
-> >  			compatible = "qcom,msm8996-smmu-v2", "qcom,smmu-v2";
-> >  			reg = <0xda0000 0x10000>;
-> >  
-> > @@ -1314,7 +1314,7 @@
-> >  			};
-> >  		};
-> >  
-> > -		adreno_smmu: arm,smmu@b40000 {
-> > +		adreno_smmu: iommu@b40000 {
-> >  			compatible = "qcom,msm8996-smmu-v2", "qcom,smmu-v2";
-> >  			reg = <0xb40000 0x10000>;
-> >  
-> > @@ -1331,7 +1331,7 @@
-> >  			power-domains = <&mmcc GPU_GDSC>;
-> >  		};
-> >  
-> > -		mdp_smmu: arm,smmu@d00000 {
-> > +		mdp_smmu: iommu@d00000 {
-> >  			compatible = "qcom,msm8996-smmu-v2", "qcom,smmu-v2";
-> >  			reg = <0xd00000 0x10000>;
-> >  
-> > @@ -1347,7 +1347,7 @@
-> >  			power-domains = <&mmcc MDSS_GDSC>;
-> >  		};
-> >  
-> > -		lpass_q6_smmu: arm,smmu-lpass_q6@1600000 {
-> > +		lpass_q6_smmu: iommu@1600000 {
-> >  			compatible = "qcom,msm8996-smmu-v2", "qcom,smmu-v2";
-> >  			reg = <0x1600000 0x20000>;
-> >  			#iommu-cells = <1>;
-> > 
+E.g. have a driver that lets you create a wwan_device by passing
+netdev and a tty chardev into a configuration interface, and from that
+point on use the generic wwan abstraction.
+
+> Now, it's not clear to me where IPA actually falls, because so far we've
+> been talking about the IPA driver only as providing *netdevs*, not any
+> control channels, so I'm not actually sure where the control channel is.
+
+The IPA driver today only handles the data path, because Alex removed
+the control channel. IPA is the driver that needs to talk to the hardware,
+both for data and control when finished. rmnet is a pure software construct
+that also contains both a data and control side and is designed to be
+independent of the lower hardware.
+
+      Arnd
