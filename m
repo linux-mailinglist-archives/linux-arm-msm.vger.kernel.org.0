@@ -2,295 +2,100 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 1F4BF49CE0
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Jun 2019 11:17:39 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id CFBFA49EC3
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Jun 2019 12:59:41 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729220AbfFRJRh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 18 Jun 2019 05:17:37 -0400
-Received: from mail-lf1-f66.google.com ([209.85.167.66]:32864 "EHLO
-        mail-lf1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729322AbfFRJRc (ORCPT
+        id S1729521AbfFRK7l (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 18 Jun 2019 06:59:41 -0400
+Received: from heliosphere.sirena.org.uk ([172.104.155.198]:47608 "EHLO
+        heliosphere.sirena.org.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725934AbfFRK7k (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 18 Jun 2019 05:17:32 -0400
-Received: by mail-lf1-f66.google.com with SMTP id y17so8718754lfe.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 18 Jun 2019 02:17:31 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=3TVZIODXW9fTNQP0Nr5jsK6hHZLqYcNyQIOWRyhGq4U=;
-        b=er4prw9SvJjN7QKkAxQ3ofJ6n3ul7dept5aTmc3MORFbfctZ3bxJWAtvrazrtqro3M
-         VfjdyCKsS0Xryw8sddwONHp8HZdvktIF31vP70JjcfB6PERknwiH05ZTnynSR4yJpdgB
-         8frXZSU8j8bFrMiNy+hVpgV6Pp0bFzuM45ai5AZFPYjWI+02uc3yklIRiIZtefTBLJc5
-         J2dkt78VUvq4tRohZuPQ+nIIjcebp9uVr729GBC/g5Ex7fPVkLpQ/QxyOg5+ff2xvkxd
-         8CosBE/fqQwYAUte2VCmf1Roe//zKbiUSntiahz3CJYOEJaNtk7kYgqfIneBEzlMomoI
-         utqw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=3TVZIODXW9fTNQP0Nr5jsK6hHZLqYcNyQIOWRyhGq4U=;
-        b=bGPkJ3tJInD0j0tDkpp6kPry+0Kh9CUcVgjuN7HZunyWNbNUfmXdNKQUxiuHrBILNM
-         lk4+kwkTAfPBdo+4f4+HomDZx2BHaAEs/8xnSpu3KDOdk1/RGhY2rAp6o0X3QPdcZOld
-         Et6PMz+gwtzY2tuJKbxdsg85WGu8nkO411NBnT0+KophzKjljkf2CpVgSxVvHd8UK9py
-         KMmOH0IBFuzJE4oANUoqC18CLBJNmQBHxteSHvaVJP32nt8Lptt7Yxms/spas4S5u/5i
-         4QUCCvzoVj9VIZj56TmiBac3RR4Wyr9AZRTBfI3NbSGcK0abYFPzhrCajM8+jKpwsdWv
-         vjSw==
-X-Gm-Message-State: APjAAAWtfkIN/FKSlB0swBjRkn8i57e3LAXA5KOMGs1FcPxFUj5dF5XT
-        j9e1y1HLCgwgGiJTfqLYBXGrRw==
-X-Google-Smtp-Source: APXvYqyuG3e+wTlklwRHcHfXGE4tQWqtvkv5/3Vye+tW3f2kSXPmL4y0/L4TwTjCPSBp+DebkMokog==
-X-Received: by 2002:ac2:5467:: with SMTP id e7mr34389176lfn.23.1560849450527;
-        Tue, 18 Jun 2019 02:17:30 -0700 (PDT)
-Received: from localhost.localdomain ([212.45.67.2])
-        by smtp.googlemail.com with ESMTPSA id b9sm2497444ljj.92.2019.06.18.02.17.28
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Tue, 18 Jun 2019 02:17:29 -0700 (PDT)
-From:   Georgi Djakov <georgi.djakov@linaro.org>
-To:     linux-pm@vger.kernel.org
-Cc:     daidavid1@codeaurora.org, vincent.guittot@linaro.org,
-        bjorn.andersson@linaro.org, amit.kucheria@linaro.org,
-        evgreen@chromium.org, dianders@chromium.org,
-        seansw@qti.qualcomm.com, linux-kernel@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org,
-        linux-arm-msm@vger.kernel.org, georgi.djakov@linaro.org
-Subject: [PATCH v2 2/2] interconnect: qcom: Add tagging and wake/sleep support for sdm845
-Date:   Tue, 18 Jun 2019 12:17:24 +0300
-Message-Id: <20190618091724.28232-3-georgi.djakov@linaro.org>
-X-Mailer: git-send-email 2.21.0
-In-Reply-To: <20190618091724.28232-1-georgi.djakov@linaro.org>
-References: <20190618091724.28232-1-georgi.djakov@linaro.org>
+        Tue, 18 Jun 2019 06:59:40 -0400
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+        d=sirena.org.uk; s=20170815-heliosphere; h=In-Reply-To:Content-Type:
+        MIME-Version:References:Message-ID:Subject:Cc:To:From:Date:Sender:Reply-To:
+        Content-Transfer-Encoding:Content-ID:Content-Description:Resent-Date:
+        Resent-From:Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:List-Id:
+        List-Help:List-Unsubscribe:List-Subscribe:List-Post:List-Owner:List-Archive;
+         bh=Q2jJFJeqAvHW5xjduMI/BTDoLMuuZxXoXruOimW2zSI=; b=ZlTWG/CJBcnrLlZPmdiOAf3yG
+        TTqKHnwT2VevOiAAtguh0Qwc/04W2njZ37TI5hdm1YGsBa0qVrSs7qKTF1mayVxVTREfbMGtCPcUA
+        aVudYh0OL3vEna9c1pzwa80ChEldhHITnGE3lIP0JUchiMTtNU9Ul09f3agMhxEp2FrjQ=;
+Received: from [2001:470:1f1d:6b5:7e7a:91ff:fede:4a45] (helo=finisterre.sirena.org.uk)
+        by heliosphere.sirena.org.uk with esmtpsa (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+        (Exim 4.89)
+        (envelope-from <broonie@sirena.org.uk>)
+        id 1hdBpw-0004vy-1d; Tue, 18 Jun 2019 10:59:36 +0000
+Received: by finisterre.sirena.org.uk (Postfix, from userid 1000)
+        id 7A4E2440046; Tue, 18 Jun 2019 11:59:35 +0100 (BST)
+Date:   Tue, 18 Jun 2019 11:59:35 +0100
+From:   Mark Brown <broonie@kernel.org>
+To:     Nisha Kumari <nishakumari@codeaurora.org>
+Cc:     bjorn.andersson@linaro.org, robh+dt@kernel.org,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        agross@kernel.org, lgirdwood@gmail.com, mark.rutland@arm.com,
+        david.brown@linaro.org, linux-kernel@vger.kernel.org,
+        kgunda@codeaurora.org, rnayak@codeaurora.org
+Subject: Re: [PATCH 3/4] regulator: Add labibb driver
+Message-ID: <20190618105935.GM5316@sirena.org.uk>
+References: <1560337252-27193-1-git-send-email-nishakumari@codeaurora.org>
+ <1560337252-27193-4-git-send-email-nishakumari@codeaurora.org>
+ <20190613172518.GN5316@sirena.org.uk>
+ <577d6e90-0bed-ff2e-32dc-e64c3118458f@codeaurora.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="sbU44GGDGzBBUYp9"
+Content-Disposition: inline
+In-Reply-To: <577d6e90-0bed-ff2e-32dc-e64c3118458f@codeaurora.org>
+X-Cookie: Editing is a rewording activity.
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: David Dai <daidavid1@codeaurora.org>
 
-Add support for wake and sleep commands by using a tag to indicate
-whether or not the aggregate and set requests fall into execution
-state specific bucket.
+--sbU44GGDGzBBUYp9
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 
-Signed-off-by: David Dai <daidavid1@codeaurora.org>
-Signed-off-by: Georgi Djakov <georgi.djakov@linaro.org>
----
- drivers/interconnect/qcom/sdm845.c | 129 ++++++++++++++++++++++-------
- 1 file changed, 98 insertions(+), 31 deletions(-)
+On Tue, Jun 18, 2019 at 11:51:18AM +0530, Nisha Kumari wrote:
+> On 6/13/2019 10:55 PM, Mark Brown wrote:
 
-diff --git a/drivers/interconnect/qcom/sdm845.c b/drivers/interconnect/qcom/sdm845.c
-index fb526004c82e..c100aab39415 100644
---- a/drivers/interconnect/qcom/sdm845.c
-+++ b/drivers/interconnect/qcom/sdm845.c
-@@ -66,6 +66,17 @@ struct bcm_db {
- #define SDM845_MAX_BCM_PER_NODE	2
- #define SDM845_MAX_VCD		10
- 
-+#define QCOM_ICC_BUCKET_AMC		0
-+#define QCOM_ICC_BUCKET_WAKE		1
-+#define QCOM_ICC_BUCKET_SLEEP		2
-+#define QCOM_ICC_NUM_BUCKETS		3
-+#define QCOM_ICC_TAG_AMC		BIT(QCOM_ICC_BUCKET_AMC)
-+#define QCOM_ICC_TAG_WAKE		BIT(QCOM_ICC_BUCKET_WAKE)
-+#define QCOM_ICC_TAG_SLEEP		BIT(QCOM_ICC_BUCKET_SLEEP)
-+#define QCOM_ICC_TAG_ACTIVE_ONLY	(QCOM_ICC_TAG_AMC | QCOM_ICC_TAG_WAKE)
-+#define QCOM_ICC_TAG_ALWAYS		(QCOM_ICC_TAG_AMC | QCOM_ICC_TAG_WAKE |\
-+					 QCOM_ICC_TAG_SLEEP)
-+
- /**
-  * struct qcom_icc_node - Qualcomm specific interconnect nodes
-  * @name: the node name used in debugfs
-@@ -75,7 +86,9 @@ struct bcm_db {
-  * @channels: num of channels at this node
-  * @buswidth: width of the interconnect between a node and the bus
-  * @sum_avg: current sum aggregate value of all avg bw requests
-+ * @sum_avg_cached: previous sum aggregate value of all avg bw requests
-  * @max_peak: current max aggregate value of all peak bw requests
-+ * @max_peak_cached: previous max aggregate value of all peak bw requests
-  * @bcms: list of bcms associated with this logical node
-  * @num_bcms: num of @bcms
-  */
-@@ -86,8 +99,10 @@ struct qcom_icc_node {
- 	u16 num_links;
- 	u16 channels;
- 	u16 buswidth;
--	u64 sum_avg;
--	u64 max_peak;
-+	u64 sum_avg[QCOM_ICC_NUM_BUCKETS];
-+	u64 sum_avg_cached[QCOM_ICC_NUM_BUCKETS];
-+	u64 max_peak[QCOM_ICC_NUM_BUCKETS];
-+	u64 max_peak_cached[QCOM_ICC_NUM_BUCKETS];
- 	struct qcom_icc_bcm *bcms[SDM845_MAX_BCM_PER_NODE];
- 	size_t num_bcms;
- };
-@@ -112,8 +127,8 @@ struct qcom_icc_bcm {
- 	const char *name;
- 	u32 type;
- 	u32 addr;
--	u64 vote_x;
--	u64 vote_y;
-+	u64 vote_x[QCOM_ICC_NUM_BUCKETS];
-+	u64 vote_y[QCOM_ICC_NUM_BUCKETS];
- 	bool dirty;
- 	bool keepalive;
- 	struct bcm_db aux_data;
-@@ -555,7 +570,7 @@ inline void tcs_cmd_gen(struct tcs_cmd *cmd, u64 vote_x, u64 vote_y,
- 		cmd->wait = true;
- }
- 
--static void tcs_list_gen(struct list_head *bcm_list,
-+static void tcs_list_gen(struct list_head *bcm_list, int bucket,
- 			 struct tcs_cmd tcs_list[SDM845_MAX_VCD],
- 			 int n[SDM845_MAX_VCD])
- {
-@@ -573,8 +588,8 @@ static void tcs_list_gen(struct list_head *bcm_list,
- 			commit = true;
- 			cur_vcd_size = 0;
- 		}
--		tcs_cmd_gen(&tcs_list[idx], bcm->vote_x, bcm->vote_y,
--			    bcm->addr, commit);
-+		tcs_cmd_gen(&tcs_list[idx], bcm->vote_x[bucket],
-+			    bcm->vote_y[bucket], bcm->addr, commit);
- 		idx++;
- 		n[batch]++;
- 		/*
-@@ -595,32 +610,39 @@ static void tcs_list_gen(struct list_head *bcm_list,
- 
- static void bcm_aggregate(struct qcom_icc_bcm *bcm)
- {
--	size_t i;
--	u64 agg_avg = 0;
--	u64 agg_peak = 0;
-+	size_t i, bucket;
-+	u64 agg_avg[QCOM_ICC_NUM_BUCKETS] = {0};
-+	u64 agg_peak[QCOM_ICC_NUM_BUCKETS] = {0};
- 	u64 temp;
- 
--	for (i = 0; i < bcm->num_nodes; i++) {
--		temp = bcm->nodes[i]->sum_avg * bcm->aux_data.width;
--		do_div(temp, bcm->nodes[i]->buswidth * bcm->nodes[i]->channels);
--		agg_avg = max(agg_avg, temp);
-+	for (bucket = 0; bucket < QCOM_ICC_NUM_BUCKETS; bucket++) {
-+		for (i = 0; i < bcm->num_nodes; i++) {
-+			temp = bcm->nodes[i]->sum_avg_cached[bucket] * bcm->aux_data.width;
-+			do_div(temp, bcm->nodes[i]->buswidth * bcm->nodes[i]->channels);
-+			agg_avg[bucket] = max(agg_avg[bucket], temp);
- 
--		temp = bcm->nodes[i]->max_peak * bcm->aux_data.width;
--		do_div(temp, bcm->nodes[i]->buswidth);
--		agg_peak = max(agg_peak, temp);
--	}
-+			temp = bcm->nodes[i]->max_peak_cached[bucket] * bcm->aux_data.width;
-+			do_div(temp, bcm->nodes[i]->buswidth);
-+			agg_peak[bucket] = max(agg_peak[bucket], temp);
- 
--	temp = agg_avg * 1000ULL;
--	do_div(temp, bcm->aux_data.unit);
--	bcm->vote_x = temp;
-+			bcm->nodes[i]->sum_avg[bucket] = 0;
-+			bcm->nodes[i]->max_peak[bucket] = 0;
-+		}
- 
--	temp = agg_peak * 1000ULL;
--	do_div(temp, bcm->aux_data.unit);
--	bcm->vote_y = temp;
-+		temp = agg_avg[bucket] * 1000ULL;
-+		do_div(temp, bcm->aux_data.unit);
-+		bcm->vote_x[bucket] = temp;
- 
--	if (bcm->keepalive && bcm->vote_x == 0 && bcm->vote_y == 0) {
--		bcm->vote_x = 1;
--		bcm->vote_y = 1;
-+		temp = agg_peak[bucket] * 1000ULL;
-+		do_div(temp, bcm->aux_data.unit);
-+		bcm->vote_y[bucket] = temp;
-+	}
-+
-+	if (bcm->keepalive && bcm->vote_x[0] == 0 && bcm->vote_y[0] == 0) {
-+		bcm->vote_x[QCOM_ICC_BUCKET_AMC] = 1;
-+		bcm->vote_x[QCOM_ICC_BUCKET_WAKE] = 1;
-+		bcm->vote_y[QCOM_ICC_BUCKET_AMC] = 1;
-+		bcm->vote_y[QCOM_ICC_BUCKET_WAKE] = 1;
- 	}
- 
- 	bcm->dirty = false;
-@@ -631,15 +653,25 @@ static int qcom_icc_aggregate(struct icc_node *node, u32 tag, u32 avg_bw,
- {
- 	size_t i;
- 	struct qcom_icc_node *qn;
-+	unsigned long tag_word = (unsigned long)tag;
- 
- 	qn = node->data;
- 
-+	if (!tag)
-+		tag_word = QCOM_ICC_TAG_ALWAYS;
-+
-+	for (i = 0; i < QCOM_ICC_NUM_BUCKETS; i++) {
-+		if (test_bit(i, &tag_word)) {
-+			qn->sum_avg[i] += avg_bw;
-+			qn->max_peak[i] = max_t(u32, qn->max_peak[i], peak_bw);
-+			qn->sum_avg_cached[i] = qn->sum_avg[i];
-+			qn->max_peak_cached[i] = qn->max_peak[i];
-+		}
-+	}
-+
- 	*agg_avg += avg_bw;
- 	*agg_peak = max_t(u32, *agg_peak, peak_bw);
- 
--	qn->sum_avg = *agg_avg;
--	qn->max_peak = *agg_peak;
--
- 	for (i = 0; i < qn->num_bcms; i++)
- 		qn->bcms[i]->dirty = true;
- 
-@@ -675,7 +707,7 @@ static int qcom_icc_set(struct icc_node *src, struct icc_node *dst)
- 	 * Construct the command list based on a pre ordered list of BCMs
- 	 * based on VCD.
- 	 */
--	tcs_list_gen(&commit_list, cmds, commit_idx);
-+	tcs_list_gen(&commit_list, QCOM_ICC_BUCKET_AMC, cmds, commit_idx);
- 
- 	if (!commit_idx[0])
- 		return ret;
-@@ -693,6 +725,41 @@ static int qcom_icc_set(struct icc_node *src, struct icc_node *dst)
- 		return ret;
- 	}
- 
-+	INIT_LIST_HEAD(&commit_list);
-+
-+	for (i = 0; i < qp->num_bcms; i++) {
-+		/*
-+		 * Only generate WAKE and SLEEP commands if a resource's
-+		 * requirements change as the execution environment transitions
-+		 * between different power states.
-+		 */
-+		if (qp->bcms[i]->vote_x[QCOM_ICC_BUCKET_WAKE] !=
-+		    qp->bcms[i]->vote_x[QCOM_ICC_BUCKET_SLEEP] ||
-+		    qp->bcms[i]->vote_y[QCOM_ICC_BUCKET_WAKE] !=
-+		    qp->bcms[i]->vote_y[QCOM_ICC_BUCKET_SLEEP]) {
-+			list_add_tail(&qp->bcms[i]->list, &commit_list);
-+		}
-+	}
-+
-+	if (list_empty(&commit_list))
-+		return ret;
-+
-+	tcs_list_gen(&commit_list, QCOM_ICC_BUCKET_WAKE, cmds, commit_idx);
-+
-+	ret = rpmh_write_batch(qp->dev, RPMH_WAKE_ONLY_STATE, cmds, commit_idx);
-+	if (ret) {
-+		pr_err("Error sending WAKE RPMH requests (%d)\n", ret);
-+		return ret;
-+	}
-+
-+	tcs_list_gen(&commit_list, QCOM_ICC_BUCKET_SLEEP, cmds, commit_idx);
-+
-+	ret = rpmh_write_batch(qp->dev, RPMH_SLEEP_STATE, cmds, commit_idx);
-+	if (ret) {
-+		pr_err("Error sending SLEEP RPMH requests (%d)\n", ret);
-+		return ret;
-+	}
-+
- 	return ret;
- }
- 
+> > > +	labibb->lab_vreg.vreg_enabled = 1;
+> > What function does this serve?  It never seems to be read.
+> Its used in next patch for handling interrupts
+
+It'd be better to move this code into the patch where it's used then.
+
+> > > +		if (val & IBB_STATUS1_VREG_OK_BIT) {
+> > > +			labibb->ibb_vreg.vreg_enabled = 1;
+> > > +			return 0;
+> > > +		}
+> > > +	}
+
+> > This is doing more than the other regulator was but it's not clear why -
+> > is it just that the delays are different for the two regulators?
+
+> LAB regulator comes up in first try, so we did not added much delay in that
+> like IBB. Planning to make equal no of retries for both in next patch so
+> that code can be reused.
+
+Is there actually a need for polling at all?
+
+--sbU44GGDGzBBUYp9
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAl0IxBYACgkQJNaLcl1U
+h9DGQQf9Fn7TqN/dXa0DWnKZiNKqKqQOQ0wKS8WelZLNW4v6/5KFIyrz+82a3s8p
+r7RFFxI24fxs2p8pztsKCXeh1izQCVTOW/FbP5rML9FGkMVoNeGw7YseKvmiIPpn
+vF9XsDTNRe9RIQ4UOMqwMNvauR5eHR9aPtLDtZ0tspewoj2fNtszc40LqZJsA+Kq
+pzf6Mk4JZr6ZcteH3fnBoGDsW9mNEYmc3Iq1ypR4nuxcLwOUpilFssOzYAziTt2D
+we0Cz/kP/ANEk7/f6YJLfDMKiKJMhddbI37MvIktRpMuLw7chcQJcS9buuvIHAiE
+wQNNKWGz/eyWI+Ke81ZfjeXzLO8Raw==
+=im0z
+-----END PGP SIGNATURE-----
+
+--sbU44GGDGzBBUYp9--
