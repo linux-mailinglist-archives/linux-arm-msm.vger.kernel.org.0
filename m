@@ -2,88 +2,116 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 4EE8C49BC8
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Jun 2019 10:13:04 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0C63849C4B
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Jun 2019 10:45:01 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725970AbfFRINC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 18 Jun 2019 04:13:02 -0400
-Received: from mail-wm1-f66.google.com ([209.85.128.66]:38843 "EHLO
-        mail-wm1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726091AbfFRINC (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 18 Jun 2019 04:13:02 -0400
-Received: by mail-wm1-f66.google.com with SMTP id s15so2120475wmj.3
-        for <linux-arm-msm@vger.kernel.org>; Tue, 18 Jun 2019 01:13:00 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=A1EQqhov8GIAHcRALyrTo95BX/wMNvkrcX1BAH+gcHU=;
-        b=fVFXPhPqKIKjaT2O6gcVuMT+Bp6qsx0D3k8Zab+TsU468kSMjEi7t1AsBPaFFPoVGz
-         YFt/t7e/lBHvir+0dDviw50OaKw8BoS1n8ag7dkiF8QctNTnM1PtVwTt2klkB1GC/GPi
-         3uhFkk5SmeidcOT84y94qnWZY2C1t+NVDsRq2nj8hNuTpsnkgvubcHK/ibV6f7gWWDiS
-         nE4AEYUnk6DAPts40QJ2RSBxr0lSGkNGeR/Aw79iXvFYWUeKgls21JHuI6X3sT+2du3/
-         kHUsei92oxxLKcb+ZgCYHddMVQZMUiuHD7uUFiICCl0LydhP4PX9hRpuY/+6F64V2C88
-         qC6A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=A1EQqhov8GIAHcRALyrTo95BX/wMNvkrcX1BAH+gcHU=;
-        b=VAmSogzkiKrscWoSKB4MpevHyljlQZvHHooCDqF8xcVrLD7RWwsQ69/Q8iCmkxBVSB
-         3dJTnSGNhTZXHpZrTBCcNXXXrcmRiFbbqMFXyQCG2jIuC3vCPkt3Ja6jKD60pHJKFECQ
-         vqHM/k1xWw24UnCarYiVNbq4ASkYg3LzKl5zROm5BTHquORp+R3/CR+ha1mOc+OGJ882
-         5bjITYb7zNJSAc2Jt8n/gO0SUU2dBmZJqmp94Lz9mTcCus09KyljpMLCqXk2W1869H/c
-         xsnGRDlPQFdcaxLoSVMkTeEzDxczJ2Ts3ti9wyXklBv8IQ1vCABwuIsnd/k/DoN4Jwpr
-         hswg==
-X-Gm-Message-State: APjAAAWpzNmVQKsl9sZFzTSrhewEksS1+INHKO6j1qcuCq4McHh7PJp2
-        V0TIKKjn5Jfhb0NdcESlheZ7w8OHpl687w==
-X-Google-Smtp-Source: APXvYqzIrn8u/txhtI7DRk2qYrbC/FWvYlvylHwE4xyIyB3aOYH2N7Zh2XTDr4RKjkCNwWcHIIYflw==
-X-Received: by 2002:a1c:dc45:: with SMTP id t66mr2360140wmg.63.1560845579797;
-        Tue, 18 Jun 2019 01:12:59 -0700 (PDT)
-Received: from [192.168.86.34] (cpc89974-aztw32-2-0-cust43.18-1.cable.virginm.net. [86.30.250.44])
-        by smtp.googlemail.com with ESMTPSA id 32sm30733908wra.35.2019.06.18.01.12.58
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 18 Jun 2019 01:12:59 -0700 (PDT)
-Subject: Re: [PATCH] ASoC: qcom: common: Fix NULL pointer in of parser
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Patrick Lai <plai@codeaurora.org>,
-        Banajit Goswami <bgoswami@codeaurora.org>,
-        Liam Girdwood <lgirdwood@gmail.com>,
-        Mark Brown <broonie@kernel.org>,
-        Jaroslav Kysela <perex@perex.cz>, Takashi Iwai <tiwai@suse.com>
-Cc:     alsa-devel@alsa-project.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org
-References: <20190618052813.32523-1-bjorn.andersson@linaro.org>
-From:   Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-Message-ID: <ad8ef1b1-a69c-df2f-cec4-d69278b570dc@linaro.org>
-Date:   Tue, 18 Jun 2019 09:12:58 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.6.1
+        id S1729109AbfFRIo4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 18 Jun 2019 04:44:56 -0400
+Received: from mga04.intel.com ([192.55.52.120]:56891 "EHLO mga04.intel.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726330AbfFRIoz (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 18 Jun 2019 04:44:55 -0400
+X-Amp-Result: UNKNOWN
+X-Amp-Original-Verdict: FILE UNKNOWN
+X-Amp-File-Uploaded: False
+Received: from fmsmga003.fm.intel.com ([10.253.24.29])
+  by fmsmga104.fm.intel.com with ESMTP/TLS/DHE-RSA-AES256-GCM-SHA384; 18 Jun 2019 01:44:55 -0700
+X-ExtLoop1: 1
+Received: from pipin.fi.intel.com (HELO pipin) ([10.237.72.175])
+  by FMSMGA003.fm.intel.com with ESMTP; 18 Jun 2019 01:44:52 -0700
+From:   Felipe Balbi <balbi@kernel.org>
+To:     Lee Jones <lee.jones@linaro.org>
+Cc:     alokc@codeaurora.org, agross@kernel.org, david.brown@linaro.org,
+        bjorn.andersson@linaro.org, gregkh@linuxfoundation.org,
+        ard.biesheuvel@linaro.org, jlhugo@gmail.com,
+        linux-arm-msm@vger.kernel.org, linux-usb@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org
+Subject: Re: [RESEND v4 0/4] I2C: DWC3 USB: Add support for ACPI based AArch64 Laptops
+In-Reply-To: <20190618080828.GJ16364@dell>
+References: <20190617125105.6186-1-lee.jones@linaro.org> <87lfy0gym0.fsf@linux.intel.com> <20190617132349.GI16364@dell> <87a7efgxw7.fsf@linux.intel.com> <20190618080828.GJ16364@dell>
+Date:   Tue, 18 Jun 2019 11:44:48 +0300
+Message-ID: <87wohjffjz.fsf@linux.intel.com>
 MIME-Version: 1.0
-In-Reply-To: <20190618052813.32523-1-bjorn.andersson@linaro.org>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Type: multipart/signed; boundary="=-=-=";
+        micalg=pgp-sha256; protocol="application/pgp-signature"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Thanks Bjorn for this patch.
+--=-=-=
+Content-Type: text/plain
+Content-Transfer-Encoding: quoted-printable
 
-On 18/06/2019 06:28, Bjorn Andersson wrote:
-> A snd_soc_dai_link_component is allocated and associated with the first
-> link, so when the code tries to assign the of_node of the second link's
-> "cpu" member it dereferences a NULL pointer.
-> 
-> Fix this by moving the allocation and assignement of
-> snd_soc_dai_link_components into the loop, giving us one pair per link.
-> 
-> Fixes: 1e36ea360ab9 ("ASoC: qcom: common: use modern dai_link style")
-> Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
 
-I think the original patch did not realize that there are multiple links!
+Hi,
 
-Acked-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+Lee Jones <lee.jones@linaro.org> writes:
+> On Tue, 18 Jun 2019, Felipe Balbi wrote:
+>> Lee Jones <lee.jones@linaro.org> writes:
+>> > On Mon, 17 Jun 2019, Felipe Balbi wrote:
+>> >
+>> >> Lee Jones <lee.jones@linaro.org> writes:
+>> >>=20
+>> >> > This patch-set ensures the kernel is bootable on the newly released
+>> >> > AArch64 based Laptops using ACPI configuration tables.  The Pinctrl
+>> >> > changes have been accepted, leaving only I2C (keyboard, touchpad,
+>> >> > touchscreen, fingerprint, etc, HID device) and USB (root filesystem,
+>> >> > camera, networking, etc) enablement.
+>> >> >
+>> >> > RESEND: Stripped I2C patches as they have also been merged into
+>> >> >         their respective subsystem.
+>> >> >
+>> >> > v4:
+>> >> >  * Collecting Acks
+>> >> >  * Adding Andy Gross' new email
+>> >> >  * Removing applied Pinctrl patches
+>> >> >
+>> >> > Lee Jones (4):
+>> >> >   soc: qcom: geni: Add support for ACPI
+>> >> >   usb: dwc3: qcom: Add support for booting with ACPI
+>> >> >   usb: dwc3: qcom: Start USB in 'host mode' on the SDM845
+>> >> >   usb: dwc3: qcom: Improve error handling
+>> >>=20
+>> >> pushed to testing/next
+>> >
+>> > Sounds promising, thanks Felipe.
+>> >
+>> > OOI, what is your process?
+>> >
+>> > How does do the patches typically sit in there?
+>>=20
+>> I'll probably merge to my 'next' branch today. I leave them in
+>> testing/next for a couple days, usually, so 0-day can run its thing and
+>> I get a chance of at least boot testing on our machines in the lab here.
+>>=20
+>> Since this doesn't touch anything "generic", I don't _have_ to boot
+>> test, so I'll probably merge to 'next' today.
+>
+> You're a star.  Thanks Felipe.
+
+it's in my 'next' now. Should be in tomorrow's linux next.
+
+=2D-=20
+balbi
+
+--=-=-=
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAEBCAAdFiEElLzh7wn96CXwjh2IzL64meEamQYFAl0IpIAACgkQzL64meEa
+mQbfwxAAiJetJXp+PQT5+Erhw0RVJLt2IbC6/mEQKg82EfTN4MVOBIRu0W3HIl6O
+4dCCBxcDa2YvpSIZZTyxfx/2uyrxQo1qctq5GW2uXCutmMBndc6+c3ttvROphyO5
+GYwhzp2bey9uGAO0FsDxXLoeIhJ2wOt30/cgslh2E4a6ql4RHRbCGaTGqQAh+snG
+RT5cZeGCvFtwj0R7NEqutqIqDkXAjf3NmHR5vzeNATpaM9WruHUu1kElsMxpDUhb
+1lK7GS/4KnRqkKnR3SSTGHiAq4XrVl58BGzPFrj/v9Km/C+XYhClb5m3Tr6yQl07
+fIGMmi5oQ3ylEUStFu1aA7U2xWpotPVQak8skMBxTQPGPyZWW6CAOA2dNcYvtJPl
+1SV7PSWppLi66p8ienUDmZWhIa5kXW+p79p5kssnsU9yNy6aR7RCnUR9BInr+siq
+6vZszRKkdcvadUTYS+yTvMGtxDegzPgetX8SI3jnvWpcxwkMSyCh6Dqa8rtKu8fN
+QMzl8eaKXOWCxOPGf87r9irnC+KagFRlKIdpSLJKu2UEHZvLVHCjyEKwwINzyMMz
+f21PMcHPZ/WBsiVqgHiiOC3mV6ELT0wioOI1kSSLC0nvMS8zaIALtt19QonF88uW
+bg1mNfyOz4mqbwn3up4axpMwLnUUgGy+bvuVtWDP3dPcA/LE1TU=
+=iXuK
+-----END PGP SIGNATURE-----
+--=-=-=--
