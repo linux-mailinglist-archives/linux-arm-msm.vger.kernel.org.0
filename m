@@ -2,152 +2,144 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 2BBD44AD28
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Jun 2019 23:16:09 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id DD8044AD2F
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Jun 2019 23:17:34 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730510AbfFRVPs (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 18 Jun 2019 17:15:48 -0400
-Received: from smtp.codeaurora.org ([198.145.29.96]:55442 "EHLO
-        smtp.codeaurora.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730350AbfFRVPs (ORCPT
+        id S1730520AbfFRVRb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 18 Jun 2019 17:17:31 -0400
+Received: from mail-oi1-f193.google.com ([209.85.167.193]:43035 "EHLO
+        mail-oi1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1730301AbfFRVRb (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 18 Jun 2019 17:15:48 -0400
-Received: by smtp.codeaurora.org (Postfix, from userid 1000)
-        id A466560FED; Tue, 18 Jun 2019 21:15:45 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
-        s=default; t=1560892546;
-        bh=YZxqpwNwj9xP1mVakWl4GnRWhuxU+h/l52kLOjkWX3Y=;
-        h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
-        b=IVOJN7iw7SLfamnGPFOAHWKxlR24qZGI+fJflD1GHP+Oo/BkYwgUJIRH8PyDeOjIX
-         yWdNc+O9P4dYI5N0wCG8AHfCVvLmPw/X/UKLIfyjXkZNDQzm9mCb+/zEFpUXJLPOBP
-         01BzNaRPwCzmRCWihbrOMK4u18fWzfMXFHFzCzHg=
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        pdx-caf-mail.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.7 required=2.0 tests=ALL_TRUSTED,BAYES_00,
-        DKIM_INVALID,DKIM_SIGNED autolearn=no autolearn_force=no version=3.4.0
-Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
-        by smtp.codeaurora.org (Postfix) with ESMTP id 3E048608BA;
-        Tue, 18 Jun 2019 21:15:43 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
-        s=default; t=1560892544;
-        bh=YZxqpwNwj9xP1mVakWl4GnRWhuxU+h/l52kLOjkWX3Y=;
-        h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
-        b=TOVI6NUYG8I82CcnESxWEYgB0kYG+0CZ96pkTfQAcneB00XUWHiCLDk9M8clfZqdU
-         enPHMCLJDTDCNtKey6d8+AOJmN1NmXdJC6F943mG9WsGQugpIFqi8+l8PUVpxBt6uk
-         U7rdCNWQ7xeD9PerfSVkAPcLATq9szGad+VzOXQU=
+        Tue, 18 Jun 2019 17:17:31 -0400
+Received: by mail-oi1-f193.google.com with SMTP id w79so8854111oif.10
+        for <linux-arm-msm@vger.kernel.org>; Tue, 18 Jun 2019 14:17:30 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=OVaisiOXoE8CbQX92HOyrJL+g6lUDABMWhLy1INrNs8=;
+        b=Oz5HV1moPPoMk0SLnChqqtEqzhvfYwLU7u/hCFBWGfivTj/kHAznEvBv4R467lgKUO
+         L2o4N+QjgGqsEEMT4nhuu34XkAv6TAvuLPG4rGiFrzyjtN+WuhwAOlydPGmDrk1cHusX
+         sQaGvh6JEmDt3/1c+1QEanNN00IfKCa9rHtZo=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=OVaisiOXoE8CbQX92HOyrJL+g6lUDABMWhLy1INrNs8=;
+        b=izdnhsW1R97pv2vxDocPmYj7DWxob2yEo9A3tMtTvULjbr1oIllIrpZGQA2iwcQxCW
+         SqxrT27eiPWZ36tlqqke5v9J5jnoilhQDRDnrdeHkowJqroh/ajCEt36bA0n/FCbSQ9P
+         SvmhZ0IzovNHDQehH3MwFfFHoR8vEGfK2WkeOok0s0bptQUxCi5krRHtZJHsFy3AKyug
+         bMdGaoikK15MCs1aT8VHKJQpLpG29a+LQQ6Fys0KsPr4Zd2SvU/+RbNoaEnHvHPKu3Tx
+         7GKlK1PqseSvFMJIE4x6BSF5r256+1LzdiqkHV101rd8Hbikq3VRZKho1qZKyDHEXLQe
+         X+gA==
+X-Gm-Message-State: APjAAAWZUaxqsiyc5kbvXxk7n5ZCjktI08ZSC0h8ETobOxkBwpSKbEKF
+        pWieSpyVtF7ksGe2UznF2fRj/kAYwq0XPkUpDriJGA==
+X-Google-Smtp-Source: APXvYqwM5rdsu+2tscwSovuh/8/Anb5UmSPJu6tA1nsFIQjp4jCtEseqbfenFAQRa0EWvJ+Wgrw8cDcYjC5BdexcaM0=
+X-Received: by 2002:aca:ab13:: with SMTP id u19mr396863oie.127.1560892650121;
+ Tue, 18 Jun 2019 14:17:30 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
-Content-Transfer-Encoding: 7bit
-Date:   Tue, 18 Jun 2019 15:15:42 -0600
-From:   Subash Abhinov Kasiviswanathan <subashab@codeaurora.org>
-To:     Arnd Bergmann <arnd@arndb.de>
-Cc:     Johannes Berg <johannes@sipsolutions.net>,
-        Alex Elder <elder@linaro.org>, abhishek.esse@gmail.com,
-        Ben Chan <benchan@google.com>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        cpratapa@codeaurora.org, David Miller <davem@davemloft.net>,
-        Dan Williams <dcbw@redhat.com>,
-        DTML <devicetree@vger.kernel.org>,
-        Eric Caruso <ejcaruso@google.com>, evgreen@chromium.org,
-        Ilias Apalodimas <ilias.apalodimas@linaro.org>,
-        Linux ARM <linux-arm-kernel@lists.infradead.org>,
-        linux-arm-msm@vger.kernel.org,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-        linux-soc@vger.kernel.org, Networking <netdev@vger.kernel.org>,
-        syadagir@codeaurora.org
-Subject: Re: [PATCH v2 00/17] net: introduce Qualcomm IPA driver
-In-Reply-To: <CAK8P3a2onXpxiE4y9PzRwuPM2dh=h_BKz7Eb0=LLPgBbZoK1bQ@mail.gmail.com>
-References: <380a6185-7ad1-6be0-060b-e6e5d4126917@linaro.org>
- <a94676381a5ca662c848f7a725562f721c43ce76.camel@sipsolutions.net>
- <CAK8P3a0kV-i7BJJ2X6C=5n65rSGfo8fUiC4J_G-+M8EctYKbkg@mail.gmail.com>
- <066e9b39f937586f0f922abf801351553ec2ba1d.camel@sipsolutions.net>
- <b3686626-e2d8-bc9c-6dd0-9ebb137715af@linaro.org>
- <b23a83c18055470c5308fcd1eed018056371fc1d.camel@sipsolutions.net>
- <CAK8P3a1FeUQR3pgoQxHoRK05JGORyR+TFATVQiijLWtFKTv6OQ@mail.gmail.com>
- <613cdfde488eb23d7207c7ba6258662702d04840.camel@sipsolutions.net>
- <CAK8P3a2onXpxiE4y9PzRwuPM2dh=h_BKz7Eb0=LLPgBbZoK1bQ@mail.gmail.com>
-Message-ID: <6c70950d0c78bc02a3d016918ec3929e@codeaurora.org>
-X-Sender: subashab@codeaurora.org
-User-Agent: Roundcube Webmail/1.2.5
+References: <20190618202425.15259-1-robdclark@gmail.com> <20190618202425.15259-6-robdclark@gmail.com>
+ <CAOCk7NoTN6JEo7B=8P=T4C3t_Xr8eQUX=KG9j4N+jXZ8Pw2f4g@mail.gmail.com>
+In-Reply-To: <CAOCk7NoTN6JEo7B=8P=T4C3t_Xr8eQUX=KG9j4N+jXZ8Pw2f4g@mail.gmail.com>
+From:   Rob Clark <robdclark@chromium.org>
+Date:   Tue, 18 Jun 2019 14:17:16 -0700
+Message-ID: <CAJs_Fx4ys6CsgfrLHsU_8DKmgNAB6DbF+AQaHOJzwfzMFKj-Tw@mail.gmail.com>
+Subject: Re: [Freedreno] [PATCH 5/5] drm/msm/mdp5: Use the interconnect API
+To:     Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
+Cc:     Rob Clark <robdclark@gmail.com>,
+        "open list:DRM PANEL DRIVERS" <dri-devel@lists.freedesktop.org>,
+        freedreno <freedreno@lists.freedesktop.org>,
+        Rajesh Yadav <ryadav@codeaurora.org>,
+        Boris Brezillon <bbrezillon@kernel.org>,
+        David Airlie <airlied@linux.ie>,
+        MSM <linux-arm-msm@vger.kernel.org>,
+        lkml <linux-kernel@vger.kernel.org>,
+        Mamta Shukla <mamtashukla555@gmail.com>,
+        Sean Paul <seanpaul@chromium.org>,
+        Daniel Vetter <daniel@ffwll.ch>, Sean Paul <sean@poorly.run>,
+        Georgi Djakov <georgi.djakov@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2019-06-18 14:55, Arnd Bergmann wrote:
-> On Tue, Jun 18, 2019 at 10:36 PM Johannes Berg
-> <johannes@sipsolutions.net> wrote:
->> 
->> On Tue, 2019-06-18 at 21:59 +0200, Arnd Bergmann wrote:
->> >
->> > From my understanding, the ioctl interface would create the lower
->> > netdev after talking to the firmware, and then user space would use
->> > the rmnet interface to create a matching upper-level device for that.
->> > This is an artifact of the strong separation of ipa and rmnet in the
->> > code.
->> 
->> Huh. But if rmnet has muxing, and IPA supports that, why would you 
->> ever
->> need multiple lower netdevs?
-> 
-> From my reading of the code, there is always exactly a 1:1 relationship
-> between an rmnet netdev an an ipa netdev. rmnet does the encapsulation/
-> decapsulation of the qmap data and forwards it to the ipa netdev,
-> which then just passes data through between a hardware queue and
-> its netdevice.
-> 
+On Tue, Jun 18, 2019 at 1:44 PM Jeffrey Hugo <jeffrey.l.hugo@gmail.com> wrote:
+>
+> On Tue, Jun 18, 2019 at 2:25 PM Rob Clark <robdclark@gmail.com> wrote:
+> >
+> > From: Georgi Djakov <georgi.djakov@linaro.org>
+> >
+> > The interconnect API provides an interface for consumer drivers to
+> > express their bandwidth needs in the SoC. This data is aggregated
+> > and the on-chip interconnect hardware is configured to the most
+> > appropriate power/performance profile.
+> >
+> > Use the API to configure the interconnects and request bandwidth
+> > between DDR and the display hardware (MDP port(s) and rotator
+> > downscaler).
+> >
+> > v2: update the path names to be consistent with dpu, handle the NULL
+> >     path case, updated commit msg from Georgi.
+> >
+> > Signed-off-by: Georgi Djakov <georgi.djakov@linaro.org>
+> > Signed-off-by: Rob Clark <robdclark@chromium.org>
+> > ---
+> >  drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c | 14 ++++++++++++++
+> >  1 file changed, 14 insertions(+)
+> >
+> > diff --git a/drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c b/drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c
+> > index 97179bec8902..eeac429acf40 100644
+> > --- a/drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c
+> > +++ b/drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c
+> > @@ -16,6 +16,7 @@
+> >   * this program.  If not, see <http://www.gnu.org/licenses/>.
+> >   */
+> >
+> > +#include <linux/interconnect.h>
+> >  #include <linux/of_irq.h>
+> >
+> >  #include "msm_drv.h"
+> > @@ -1050,6 +1051,19 @@ static const struct component_ops mdp5_ops = {
+> >
+> >  static int mdp5_dev_probe(struct platform_device *pdev)
+> >  {
+> > +       struct icc_path *path0 = of_icc_get(&pdev->dev, "mdp0-mem");
+> > +       struct icc_path *path1 = of_icc_get(&pdev->dev, "mdp1-mem");
+> > +       struct icc_path *path_rot = of_icc_get(&pdev->dev, "rotator-mem");
+> > +
+> > +       if (IS_ERR_OR_NULL(path0))
+> > +               return PTR_ERR_OR_ZERO(path0);
+>
+> Umm, am I misunderstanding something?  It seems like of_icc_get()
+> returns NULL if the property doesn't exist.  Won't this be backwards
+> incompatible?  Existing DTs won't specify the property, and I don't
+> believe the property is supported on all targets.  Seems like we'll
+> break things by not calling the below component_add() if the
+> interconnect is not supported, specified, or the interconnect driver
+> is not compiled.
 
-There is a n:1 relationship between rmnet and IPA.
-rmnet does the de-muxing to multiple netdevs based on the mux id
-in the MAP header for RX packets and vice versa.
+hmm, right, I guess I should test this w/out the dts patch.. probably
+should just revert back to the previous logic..
 
-> [side note: on top of that, rmnet also does "aggregation", which may
->  be a confusing term that only means transferring multiple frames
->  at once]
-> 
->> > ipa definitely has multiple hardware queues, and the Alex'
->> > driver does implement  the data path on those, just not the
->> > configuration to enable them.
->> 
->> OK, but perhaps you don't actually have enough to use one for each
->> session?
-> 
-> I'm lacking the terminology here, but what I understood was that
-> the netdev and queue again map to a session.
-> 
->> > Guessing once more, I suspect the the XON/XOFF flow control
->> > was a workaround for the fact that rmnet and ipa have separate
->> > queues. The hardware channel on IPA may fill up, but user space
->> > talks to rmnet and still add more frames to it because it doesn't
->> > know IPA is busy.
->> >
->> > Another possible explanation would be that this is actually
->> > forwarding state from the base station to tell the driver to
->> > stop sending data over the air.
->> 
->> Yeah, but if you actually have a hardware queue per upper netdev then
->> you don't really need this - you just stop the netdev queue when the
->> hardware queue is full, and you have flow control automatically.
->> 
->> So I really don't see any reason to have these messages going back and
->> forth unless you plan to have multiple sessions muxed on a single
->> hardware queue.
-> 
+BR,
+-R
 
-Hardware may flow control specific PDNs (rmnet interfaces) based on QoS 
--
-not necessarily only in case of hardware queue full.
-
-> Sure, I definitely understand what you mean, and I agree that would
-> be the right way to do it. All I said is that this is not how it was 
-> done
-> in rmnet (this was again my main concern about the rmnet design
-> after I learned it was required for ipa) ;-)
-> 
->      Arnd
-
--- 
-Qualcomm Innovation Center, Inc. is a member of Code Aurora Forum,
-a Linux Foundation Collaborative Project
+> > +       icc_set_bw(path0, 0, MBps_to_icc(6400));
+> > +
+> > +       if (!IS_ERR_OR_NULL(path1))
+> > +               icc_set_bw(path1, 0, MBps_to_icc(6400));
+> > +       if (!IS_ERR_OR_NULL(path_rot))
+> > +               icc_set_bw(path_rot, 0, MBps_to_icc(6400));
+> > +
+> >         DBG("");
+> >         return component_add(&pdev->dev, &mdp5_ops);
+> >  }
+> > --
+> > 2.20.1
+> >
+> > _______________________________________________
+> > Freedreno mailing list
+> > Freedreno@lists.freedesktop.org
+> > https://lists.freedesktop.org/mailman/listinfo/freedreno
