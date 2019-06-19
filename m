@@ -2,86 +2,123 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id DA5864BA25
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Jun 2019 15:39:07 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 95CF24BA76
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Jun 2019 15:47:59 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726143AbfFSNjG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 19 Jun 2019 09:39:06 -0400
-Received: from mail-lf1-f66.google.com ([209.85.167.66]:45133 "EHLO
-        mail-lf1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730340AbfFSNjG (ORCPT
+        id S1726518AbfFSNr6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 19 Jun 2019 09:47:58 -0400
+Received: from mail-lf1-f68.google.com ([209.85.167.68]:47025 "EHLO
+        mail-lf1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726047AbfFSNr6 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 19 Jun 2019 09:39:06 -0400
-Received: by mail-lf1-f66.google.com with SMTP id u10so12130799lfm.12
-        for <linux-arm-msm@vger.kernel.org>; Wed, 19 Jun 2019 06:39:05 -0700 (PDT)
+        Wed, 19 Jun 2019 09:47:58 -0400
+Received: by mail-lf1-f68.google.com with SMTP id z15so12148218lfh.13
+        for <linux-arm-msm@vger.kernel.org>; Wed, 19 Jun 2019 06:47:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=lixom-net.20150623.gappssmtp.com; s=20150623;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=0VIXks4JVJi6NW7o9HNww47+bDvO8ASarITv0RvaBUo=;
-        b=TqIC1pHo984jnhUkBBpDE0frE4b7fL4HoMZfMOx6EY0sGxeCVv0XkMOMEFBvyjOgmQ
-         JHVJ9qYUVIZmg76cGOylZeRwyVluGLhfQiLWSM0tF/Kzq0GhtEsWFpjrsAqv2nj5kWa4
-         1mtTk7zYKgzyt1hptU5230z6b5TZIVaqRuAbPeVnL1rEtW1W5Tclzj0SHw8QxQyrsGuY
-         1D7ox+dUdrqpErS+26V31uEc+jk97Bywe+Wo7/szLRJwuSUF2OJiskKzTxy2ME4QO484
-         TQ36ueN6d7/Zz6G1J0tF3dMAF8UJaow8GIwibn1c3Hh2Nr3toVeaDHJwpJFX5xZm003n
-         a9Rg==
+        d=linaro.org; s=google;
+        h=subject:to:cc:references:from:message-id:date:mime-version
+         :in-reply-to:content-language:content-transfer-encoding;
+        bh=V71TuYyJBQZMB8iSTLXwUqcPqDsSqQpONYCVL0IqAhs=;
+        b=MJOoT/Yd96siJFdM1ZwK2VE2ScNBN91KlC4JlWQlIBDbuv21irtE71wJSE/AcmUZNG
+         9NNIF0I4HzkMYGPtmukksDUGGEvId+jvDucWOIlSBemb8+fT6iAExWUMMaHrQYWmkjpy
+         x1PKyydf+QGK6jfpVyGSoyK6ZSd7eEUpphuVakwWsEYdjjNJZN8YPn4CGejJENpHLUB1
+         o5bP9QWP2kC63ltwUJP+M2sZ9/C6oCsaI2XG7N2GX+Rr1fHStFzft3Pb18DmLOgxg4o+
+         +aWANI/xzKrYGSQOWjz9ocRYdT3EWQjee8gRUQ/2FmXwcncVKzoC7TTmLfqjwrYzeD5D
+         53VA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=0VIXks4JVJi6NW7o9HNww47+bDvO8ASarITv0RvaBUo=;
-        b=OsF1a+GlmnL116jAQxZVOfSgMS6uP2FoLsDz9zizi+bzBWAOWlH8PVqKRwEIJyyCO4
-         hx2epdjmOT3pIlpDHNMD+seHUdb+7Ggg3NL4ykvXatNphh6Ln16l2tMsiY5QrvMi9el7
-         d5sPAQEZmqMpHMNzlDLX4CnmDA9FZO5jBYgexemyKTkmXOnHKDAFkz9P7HVdQ6Bi7P1/
-         LNw8dHbIa/FJA42CxrkHWDA5lTYn3Q3/glSGXUoWPTccZwk0iVjyCSIKJg8K0wnoM8Te
-         AMivHmI2T5t7iPYFWJnAAXn96NjEIQNx7MgebkYZQt+GkQoONWWR1O2Qy3WAvvSnQSCi
-         CDxg==
-X-Gm-Message-State: APjAAAUnLqv6XyAKGIQB8TkYhFTEUImM2hEi4cakL009ErKyKndoEx3t
-        W52ehiH7arvOz5rucaebUpnaJg==
-X-Google-Smtp-Source: APXvYqzr/XXLfjI7uNapd/di0jPGKmIFm17xwjLoTuYr6O6ArJTj+H64hYp1vfV66Fz4Kz20uLWHkQ==
-X-Received: by 2002:a19:4a49:: with SMTP id x70mr24014323lfa.151.1560951544755;
-        Wed, 19 Jun 2019 06:39:04 -0700 (PDT)
-Received: from localhost (h85-30-9-151.cust.a3fiber.se. [85.30.9.151])
-        by smtp.gmail.com with ESMTPSA id q13sm2665763lfk.65.2019.06.19.06.39.02
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 19 Jun 2019 06:39:03 -0700 (PDT)
-Date:   Wed, 19 Jun 2019 06:17:44 -0700
-From:   Olof Johansson <olof@lixom.net>
-To:     Andy Gross <agross@kernel.org>
-Cc:     linux-arm-msm@vger.kernel.org,
-        Bjorn Andersson <bjorn.andersson@linaro.org>, arm@kernel.org,
-        linux-arm-kernel@lists.infradead.org
-Subject: Re: [PATCH] arm64: qcom: qcs404: Add reset-cells to GCC node
-Message-ID: <20190619131744.qk56iqqd4cxttdxp@localhost>
-References: <1560053972-32273-1-git-send-email-agross@kernel.org>
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=V71TuYyJBQZMB8iSTLXwUqcPqDsSqQpONYCVL0IqAhs=;
+        b=GWjrujKHzQvhIGuvN0iqQqS9nsuCPY1Wuhc3eoi0lUSd1XMRpUnR3/ZflZRk0KzHEG
+         icpMIkA4ZWH1be0FxdT5eI5KU9TqmkaOHcIIynxMg801apinBxqTzdV6VFhXoLXlS0/U
+         fMtNrRqu9rzR33W9t0pEjn7NSCqCmGBBchFKBY6U/ss8OgDW2KkZ4zyy0pqOeVRMx4Th
+         Py+0T9f1BtQpi4I69BnhP04+LmA3ZMd25d7uFPgKbkR8tJv98Tey+Xn0rsSj4EX61vMT
+         YyIQk9O+7cOZunv+BVdBiPssJjiNhxxAob8+JLxaGfWWYNesaO1F6Q/fWnEQC/vE7Z6T
+         lfTw==
+X-Gm-Message-State: APjAAAVTXsPDFu4Rgii7Y3DxI+cKSGU2yV0sQuVoZI4Y5hc0MCxCUtTN
+        Uqw4R6oSfcw5C5eL+MZy0/eC0w==
+X-Google-Smtp-Source: APXvYqwSwOMeWjRGmbgc5tZsilRBhTUIfIdyXVUsHSm8TUNydzV9hn40uq0Asa2OvzPidjC4UmcQsA==
+X-Received: by 2002:ac2:514b:: with SMTP id q11mr3245922lfd.33.1560952076792;
+        Wed, 19 Jun 2019 06:47:56 -0700 (PDT)
+Received: from macbook.djakov.com ([212.45.67.2])
+        by smtp.googlemail.com with ESMTPSA id p27sm2723672lfo.16.2019.06.19.06.47.55
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Wed, 19 Jun 2019 06:47:56 -0700 (PDT)
+Subject: Re: [PATCH v3] clk: qcom: msm8916: Don't build drivers by default
+To:     Marc Gonzalez <marc.w.gonzalez@free.fr>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Michael Turquette <mturquette@baylibre.com>
+Cc:     linux-clk <linux-clk@vger.kernel.org>,
+        MSM <linux-arm-msm@vger.kernel.org>,
+        Amit Kucheria <amit.kucheria@linaro.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>
+References: <0171956f-b367-9f3b-f690-71657d8c50ec@free.fr>
+From:   Georgi Djakov <georgi.djakov@linaro.org>
+Message-ID: <fe935706-b18d-8966-a447-c1fb2be25c85@linaro.org>
+Date:   Wed, 19 Jun 2019 16:47:53 +0300
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <1560053972-32273-1-git-send-email-agross@kernel.org>
-User-Agent: NeoMutt/20170113 (1.7.2)
+In-Reply-To: <0171956f-b367-9f3b-f690-71657d8c50ec@free.fr>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Sat, Jun 08, 2019 at 11:19:32PM -0500, Andy Gross wrote:
-> This patch adds a reset-cells property to the gcc controller on the QCS404.
-> Without this in place, we get warnings like the following if nodes reference
-> a gcc reset:
+On 19.06.19 14:44, Marc Gonzalez wrote:
+> QCOM_A53PLL and QCOM_CLK_APCS_MSM8916 stand out as the only options
+> built by default. List them in defconfig after dropping the default.
 > 
-> arch/arm64/boot/dts/qcom/qcs404.dtsi:261.38-310.5: Warning (resets_property):
-> /soc@0/remoteproc@b00000: Missing property '#reset-cells' in node
-> /soc@0/clock-controller@1800000 or bad phandle (referred from resets[0])
->   also defined at arch/arm64/boot/dts/qcom/qcs404-evb.dtsi:82.18-84.3
->   DTC     arch/arm64/boot/dts/qcom/qcs404-evb-4000.dtb
-> arch/arm64/boot/dts/qcom/qcs404.dtsi:261.38-310.5: Warning (resets_property):
-> /soc@0/remoteproc@b00000: Missing property '#reset-cells' in node
-> /soc@0/clock-controller@1800000 or bad phandle (referred from resets[0])
->   also defined at arch/arm64/boot/dts/qcom/qcs404-evb.dtsi:82.18-84.3
+> Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+> Signed-off-by: Marc Gonzalez <marc.w.gonzalez@free.fr>
+> ---
+>  arch/arm64/configs/defconfig | 2 ++
+>  drivers/clk/qcom/Kconfig     | 2 --
+>  2 files changed, 2 insertions(+), 2 deletions(-)
+
+Hi Marc,
+
+Sorry, I wasn't very clear. IMHO the defconfig change should be a
+separate patch and the v2 of this patch is ok as it is. It would just
+make things easier to merge.
+
+Thanks,
+Georgi
 > 
-> Signed-off-by: Andy Gross <agross@kernel.org>
+> diff --git a/arch/arm64/configs/defconfig b/arch/arm64/configs/defconfig
+> index 5a8e853833cf..3277944626c2 100644
+> --- a/arch/arm64/configs/defconfig
+> +++ b/arch/arm64/configs/defconfig
+> @@ -658,6 +658,8 @@ CONFIG_CLK_IMX8MQ=y
+>  CONFIG_CLK_IMX8QXP=y
+>  CONFIG_TI_SCI_CLK=y
+>  CONFIG_COMMON_CLK_QCOM=y
+> +CONFIG_QCOM_A53PLL=y
+> +CONFIG_QCOM_CLK_APCS_MSM8916=y
+>  CONFIG_QCOM_CLK_SMD_RPM=y
+>  CONFIG_QCOM_CLK_RPMH=y
+>  CONFIG_IPQ_GCC_8074=y
+> diff --git a/drivers/clk/qcom/Kconfig b/drivers/clk/qcom/Kconfig
+> index e1ff83cc361e..6461a1aa7325 100644
+> --- a/drivers/clk/qcom/Kconfig
+> +++ b/drivers/clk/qcom/Kconfig
+> @@ -21,7 +21,6 @@ if COMMON_CLK_QCOM
+>  
+>  config QCOM_A53PLL
+>  	tristate "MSM8916 A53 PLL"
+> -	default ARCH_QCOM
+>  	help
+>  	  Support for the A53 PLL on MSM8916 devices. It provides
+>  	  the CPU with frequencies above 1GHz.
+> @@ -31,7 +30,6 @@ config QCOM_A53PLL
+>  config QCOM_CLK_APCS_MSM8916
+>  	tristate "MSM8916 APCS Clock Controller"
+>  	depends on QCOM_APCS_IPC || COMPILE_TEST
+> -	default ARCH_QCOM
+>  	help
+>  	  Support for the APCS Clock Controller on msm8916 devices. The
+>  	  APCS is managing the mux and divider which feeds the CPUs.
+> 
 
-Applied to arm/dt. Thanks!
-
-
--Olof
