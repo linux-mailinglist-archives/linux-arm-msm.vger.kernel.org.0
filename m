@@ -2,89 +2,91 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 504C64B045
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Jun 2019 04:57:27 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 2C8734B188
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Jun 2019 07:42:43 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729042AbfFSC50 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 18 Jun 2019 22:57:26 -0400
-Received: from userp2130.oracle.com ([156.151.31.86]:42672 "EHLO
-        userp2130.oracle.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726689AbfFSC50 (ORCPT
+        id S1730915AbfFSFme (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 19 Jun 2019 01:42:34 -0400
+Received: from mail-wm1-f67.google.com ([209.85.128.67]:54356 "EHLO
+        mail-wm1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726246AbfFSFm3 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 18 Jun 2019 22:57:26 -0400
-Received: from pps.filterd (userp2130.oracle.com [127.0.0.1])
-        by userp2130.oracle.com (8.16.0.27/8.16.0.27) with SMTP id x5J2mvxB063861;
-        Wed, 19 Jun 2019 02:57:13 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=to : cc : subject :
- from : references : date : in-reply-to : message-id : mime-version :
- content-type; s=corp-2018-07-02;
- bh=jOw2OdivlqkkGBM0Pa1lRxjpLqeeu3++qv7MZf0yotc=;
- b=uCOy5cIQ0+DHvEuvHOzF2o3VVdQD8a8oYwmMScOnE8ueSHNvOMxtUCbOjY3dkEOyQ7uc
- mpY1t9Snub/olPyosCfiy5Vhkq7IEfInuSf8G5NWhQVYXsUVYGchVJjvu7KgTRJu3tzY
- Ht52ASqKjr7GqEsGjsF3UWnq+uLs43PdArRbadBuddHoV6l4d8Hf3v8gKUMq6bg5f/FS
- Sk/7HdKDMuOdWKRL6HiGnWbt+3lFaOn/KwbdfrzedHmpTuowUeHLVpvcHV2ir9pdukWw
- p6vjQjFwthwslzJ33gModuxx2arm+vFpZcuEsbLiYgAzurBwJk0yTaohb4uhQlsBQ6V0 8A== 
-Received: from aserp3020.oracle.com (aserp3020.oracle.com [141.146.126.70])
-        by userp2130.oracle.com with ESMTP id 2t78098qmn-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
-        Wed, 19 Jun 2019 02:57:13 +0000
-Received: from pps.filterd (aserp3020.oracle.com [127.0.0.1])
-        by aserp3020.oracle.com (8.16.0.27/8.16.0.27) with SMTP id x5J2uXQE104616;
-        Wed, 19 Jun 2019 02:57:13 GMT
-Received: from userv0121.oracle.com (userv0121.oracle.com [156.151.31.72])
-        by aserp3020.oracle.com with ESMTP id 2t77ynjw1r-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
-        Wed, 19 Jun 2019 02:57:12 +0000
-Received: from abhmp0011.oracle.com (abhmp0011.oracle.com [141.146.116.17])
-        by userv0121.oracle.com (8.14.4/8.13.8) with ESMTP id x5J2vA4T016828;
-        Wed, 19 Jun 2019 02:57:10 GMT
-Received: from ca-mkp.ca.oracle.com (/10.159.214.123)
-        by default (Oracle Beehive Gateway v4.0)
-        with ESMTP ; Tue, 18 Jun 2019 19:57:09 -0700
-To:     Lee Jones <lee.jones@linaro.org>
+        Wed, 19 Jun 2019 01:42:29 -0400
+Received: by mail-wm1-f67.google.com with SMTP id g135so292385wme.4
+        for <linux-arm-msm@vger.kernel.org>; Tue, 18 Jun 2019 22:42:25 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:content-transfer-encoding:in-reply-to
+         :user-agent;
+        bh=/cpf3zq+TFw4UEIBZS68FxYFecgYH1xkj5zf5lev0W8=;
+        b=cCHl/gxL/zXc4WXMsveXwVsU3cxUW+ACFRX97VZSnWNLVolF18pOwLb4cZ5wfy5RnJ
+         3REAqJcFK/oGI2QJKcdjOZzJo77brsZ933bk0GZFC6Yb2FeFRu/ZUcdxus4jSMt5QMmv
+         cb5mKHlWsJqPkUdz1B5NnEwJWJoHUrL5L43sT51FshRXu6kSGA18KFYUDbdIq3gciajm
+         RcT5NEUePlSW1DD27FCL//Db+0LRRjSYEJXPvbTgus3ZYx7ERKnhVKaedqbEpQlbN+J+
+         As7P0XNVfOhDqFB3DaVhv4y3AmIyWNhEna4XviYfA0OCDgHVzB72f+z0351/UGM/LxtR
+         RG9g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        bh=/cpf3zq+TFw4UEIBZS68FxYFecgYH1xkj5zf5lev0W8=;
+        b=etF3TLOT5KVy5tHWV0R9yfw8+9R+oVknH/OYqQwe8SxSX2swLyJIcvQF78U5lqHgVw
+         7moP/As04lrQUU4onyvWgHGyUnZB8B2WMj/OcXUBqf0dceUWdaWJGIr7KS+wkZsst039
+         kL1210Tm6/8/JSRw71a3Fe4LJwtQuxcd3//KomWGZhuQ88ctz57sNTOBYfrL4xF0obW7
+         1lQMYxHBKXhNBcGsDePSezx1PIC3nimDSNJQjuvm4vXeXS3lmz0sUguFnB/A2WJ9u/MD
+         Uk+erkYJelfJXgLnvAuMayldhwwKg9+ImFocce8djtMY4HL8sXAvY7nNBHIX7C2rt/C9
+         JV1Q==
+X-Gm-Message-State: APjAAAX6CUKXbQZ/OlV4ZMwi3yLoRxygANcSm6fB27XGePW6W60UkZ08
+        aRKC/WX4sEt2upje1thxb2lDRw==
+X-Google-Smtp-Source: APXvYqz1GbEe2qolDZxYNYoUdvQZ5fsE8k6qQo1nlTIumvRmIvonzAOQdnQDSY6CuatAS38KNkwUlw==
+X-Received: by 2002:a1c:6c0a:: with SMTP id h10mr6205898wmc.40.1560922945130;
+        Tue, 18 Jun 2019 22:42:25 -0700 (PDT)
+Received: from dell ([2.27.35.243])
+        by smtp.gmail.com with ESMTPSA id u18sm293652wmd.19.2019.06.18.22.42.24
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Tue, 18 Jun 2019 22:42:24 -0700 (PDT)
+Date:   Wed, 19 Jun 2019 06:42:22 +0100
+From:   Lee Jones <lee.jones@linaro.org>
+To:     "Martin K. Petersen" <martin.petersen@oracle.com>
 Cc:     agross@kernel.org, david.brown@linaro.org, alim.akhtar@samsung.com,
         avri.altman@wdc.com, pedrom.sousa@synopsys.com, jejb@linux.ibm.com,
-        martin.petersen@oracle.com, linux-arm-msm@vger.kernel.org,
-        linux-scsi@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
-        linux-kernel@vger.kernel.org, ard.biesheuvel@linaro.org,
-        jlhugo@gmail.com, bjorn.andersson@linaro.org
-Subject: Re: [PATCH 1/1] scsi: ufs-qcom: Add support for platforms booting ACPI
-From:   "Martin K. Petersen" <martin.petersen@oracle.com>
-Organization: Oracle Corporation
+        linux-arm-msm@vger.kernel.org, linux-scsi@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
+        ard.biesheuvel@linaro.org, jlhugo@gmail.com,
+        bjorn.andersson@linaro.org
+Subject: Re: [PATCH 1/1] scsi: ufs-qcom: Add support for platforms booting
+ ACPI
+Message-ID: <20190619054222.GE18371@dell>
 References: <20190617115454.3226-1-lee.jones@linaro.org>
-Date:   Tue, 18 Jun 2019 22:57:06 -0400
-In-Reply-To: <20190617115454.3226-1-lee.jones@linaro.org> (Lee Jones's message
-        of "Mon, 17 Jun 2019 12:54:54 +0100")
-Message-ID: <yq1zhmeuvst.fsf@oracle.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1.92 (gnu/linux)
+ <yq1zhmeuvst.fsf@oracle.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Proofpoint-Virus-Version: vendor=nai engine=6000 definitions=9292 signatures=668687
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 suspectscore=0 malwarescore=0
- phishscore=0 bulkscore=0 spamscore=0 mlxscore=0 mlxlogscore=836
- adultscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.0.1-1810050000 definitions=main-1906190021
-X-Proofpoint-Virus-Version: vendor=nai engine=6000 definitions=9292 signatures=668687
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 priorityscore=1501 malwarescore=0
- suspectscore=0 phishscore=0 bulkscore=0 spamscore=0 clxscore=1011
- lowpriorityscore=0 mlxscore=0 impostorscore=0 mlxlogscore=888 adultscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.0.1-1810050000
- definitions=main-1906190021
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <yq1zhmeuvst.fsf@oracle.com>
+User-Agent: Mutt/1.9.4 (2018-02-28)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+Ard, Martin,
 
-Lee,
+On Tue, 18 Jun 2019, Martin K. Petersen wrote:
+> > New Qualcomm AArch64 based laptops are now available which use UFS
+> > as their primary data storage medium.  These devices are supplied
+> > with ACPI support out of the box.  This patch ensures the Qualcomm
+> > UFS driver will be bound when the "QCOM24A5" H/W device is
+> > advertised as present.
+> 
+> Applied to 5.3/scsi-queue. Thanks!
 
-> New Qualcomm AArch64 based laptops are now available which use UFS
-> as their primary data storage medium.  These devices are supplied
-> with ACPI support out of the box.  This patch ensures the Qualcomm
-> UFS driver will be bound when the "QCOM24A5" H/W device is
-> advertised as present.
-
-Applied to 5.3/scsi-queue. Thanks!
+Ideal.  Thanks for your help.
 
 -- 
-Martin K. Petersen	Oracle Linux Engineering
+Lee Jones [李琼斯]
+Linaro Services Technical Lead
+Linaro.org │ Open source software for ARM SoCs
+Follow Linaro: Facebook | Twitter | Blog
