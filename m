@@ -2,22 +2,22 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 4BD324BDC4
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Jun 2019 18:12:09 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 6BEB34BDC8
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Jun 2019 18:12:35 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729061AbfFSQMI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 19 Jun 2019 12:12:08 -0400
-Received: from lhrrgout.huawei.com ([185.176.76.210]:33025 "EHLO huawei.com"
+        id S1727068AbfFSQMf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 19 Jun 2019 12:12:35 -0400
+Received: from lhrrgout.huawei.com ([185.176.76.210]:33026 "EHLO huawei.com"
         rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-        id S1727818AbfFSQMI (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 19 Jun 2019 12:12:08 -0400
-Received: from lhreml707-cah.china.huawei.com (unknown [172.18.7.106])
-        by Forcepoint Email with ESMTP id 1F98AD9B5587FB2C3542;
-        Wed, 19 Jun 2019 17:12:05 +0100 (IST)
-Received: from [127.0.0.1] (10.202.227.157) by lhreml707-cah.china.huawei.com
- (10.201.108.48) with Microsoft SMTP Server id 14.3.408.0; Wed, 19 Jun 2019
- 17:12:00 +0100
-Subject: Re: [PATCH v2 07/11] arm64: dts: hi6220: Update coresight DT bindings
+        id S1726251AbfFSQMe (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 19 Jun 2019 12:12:34 -0400
+Received: from LHREML711-CAH.china.huawei.com (unknown [172.18.7.108])
+        by Forcepoint Email with ESMTP id 6F02E688331B27644478;
+        Wed, 19 Jun 2019 17:12:33 +0100 (IST)
+Received: from [127.0.0.1] (10.202.227.157) by LHREML711-CAH.china.huawei.com
+ (10.201.108.34) with Microsoft SMTP Server id 14.3.408.0; Wed, 19 Jun 2019
+ 17:12:31 +0100
+Subject: Re: [PATCH v2 01/11] ARM: dts: hip04: Update coresight DT bindings
 To:     Leo Yan <leo.yan@linaro.org>, Rob Herring <robh+dt@kernel.org>,
         "Mark Rutland" <mark.rutland@arm.com>,
         Suzuki K Poulose <suzuki.poulose@arm.com>,
@@ -44,14 +44,14 @@ CC:     Guodong Xu <guodong.xu@linaro.org>,
         Zhangfei Gao <zhangfei.gao@linaro.org>,
         Haojian Zhuang <haojian.zhuang@linaro.org>
 References: <20190508021902.10358-1-leo.yan@linaro.org>
- <20190508021902.10358-8-leo.yan@linaro.org>
+ <20190508021902.10358-2-leo.yan@linaro.org>
 From:   Wei Xu <xuwei5@hisilicon.com>
-Message-ID: <bab80295-7c83-3a3f-cb76-aa64fb93a5e7@hisilicon.com>
-Date:   Wed, 19 Jun 2019 17:11:59 +0100
+Message-ID: <ee33f0b2-e016-7c2f-feca-6b9e2bfe1e43@hisilicon.com>
+Date:   Wed, 19 Jun 2019 17:12:31 +0100
 User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
  Thunderbird/60.4.0
 MIME-Version: 1.0
-In-Reply-To: <20190508021902.10358-8-leo.yan@linaro.org>
+In-Reply-To: <20190508021902.10358-2-leo.yan@linaro.org>
 Content-Type: text/plain; charset="utf-8"
 Content-Language: en-US
 Content-Transfer-Encoding: 7bit
