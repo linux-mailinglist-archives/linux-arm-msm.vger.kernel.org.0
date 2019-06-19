@@ -2,131 +2,122 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id E4EF34B7B4
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Jun 2019 14:12:15 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B59DA4B816
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Jun 2019 14:23:42 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727067AbfFSMMP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 19 Jun 2019 08:12:15 -0400
-Received: from heliosphere.sirena.org.uk ([172.104.155.198]:47274 "EHLO
-        heliosphere.sirena.org.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726999AbfFSMMO (ORCPT
+        id S1727085AbfFSMXf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 19 Jun 2019 08:23:35 -0400
+Received: from mail-qt1-f196.google.com ([209.85.160.196]:43198 "EHLO
+        mail-qt1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727068AbfFSMXe (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 19 Jun 2019 08:12:14 -0400
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-        d=sirena.org.uk; s=20170815-heliosphere; h=Date:Message-Id:In-Reply-To:
-        Subject:Cc:To:From:Sender:Reply-To:MIME-Version:Content-Type:
-        Content-Transfer-Encoding:Content-ID:Content-Description:Resent-Date:
-        Resent-From:Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:References:
-        List-Id:List-Help:List-Unsubscribe:List-Subscribe:List-Post:List-Owner:
-        List-Archive; bh=KsVUVPFQSt4YdSE0JrBFYWec/Nl7s39JWoWi0hS5mGo=; b=Gzud2BYECkQY
-        UUEpjnMelyyubd5o1uU9C2CHaHEB+AvoqYdaZOlep0ECsp7VtB2vPpvrdeAEfbWAc8N457ugSGxsj
-        FY2t6vPNpkgsZGcl63Mao4kvE7OvrGaJ56GU084JEdo9xvDXQ6v15mKIfUYEEwvMP7NVhVOQsRUVB
-        Vwb8w=;
-Received: from [2001:470:1f1d:6b5:7e7a:91ff:fede:4a45] (helo=finisterre.sirena.org.uk)
-        by heliosphere.sirena.org.uk with esmtpsa (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
-        (Exim 4.89)
-        (envelope-from <broonie@sirena.org.uk>)
-        id 1hdZRd-0007Ci-4L; Wed, 19 Jun 2019 12:12:05 +0000
-Received: by finisterre.sirena.org.uk (Postfix, from userid 1000)
-        id 933A144004F; Wed, 19 Jun 2019 13:12:04 +0100 (BST)
-From:   Mark Brown <broonie@kernel.org>
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     alsa-devel@alsa-project.org,
-        Banajit Goswami <bgoswami@codeaurora.org>,
-        Jaroslav Kysela <perex@perex.cz>,
-        Liam Girdwood <lgirdwood@gmail.com>,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Mark Brown <broonie@kernel.org>,
-        Patrick Lai <plai@codeaurora.org>,
-        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-        Takashi Iwai <tiwai@suse.com>
-Subject: Applied "ASoC: qcom: common: Fix NULL pointer in of parser" to the asoc tree
-In-Reply-To: <20190618052813.32523-1-bjorn.andersson@linaro.org>
-X-Patchwork-Hint: ignore
-Message-Id: <20190619121204.933A144004F@finisterre.sirena.org.uk>
-Date:   Wed, 19 Jun 2019 13:12:04 +0100 (BST)
+        Wed, 19 Jun 2019 08:23:34 -0400
+Received: by mail-qt1-f196.google.com with SMTP id w17so13152921qto.10;
+        Wed, 19 Jun 2019 05:23:34 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=QrX9o1dbIy2aZ5toQHumMIX6sMGzZ/T6xkwZyYDZz14=;
+        b=ZH75fDzvgr+v351pzpuF1wJIiGNKCEkUhTepEs8Cqhf2jd9FDqo41i05rqFiKXA992
+         qFTGU/iCJEG54ltzIArO9Zu0HRVoyNGqOxxhA6iunyxSYANAdMeL7HUFCtXFSzCWuniL
+         wlu9c0XjafBUdKXJaa3Zjyeoz9d0sdnRn8ES8YDqDR7n6GK7O6fO9f1aNydFSw1tuYqS
+         PRpN1Z1M6PvU8JGE6FgrE4YGxz0eB8TdaibiGhB/PzV/G0GOM6+2AwwgyKWP1c/dlhX1
+         3EZy5YBz/O1L9RwZ914eJxoaN8u2C9A6lgQbveV1Ws5q6LJWeiYNIC3m3XzNKejZbzOC
+         dvnA==
+X-Gm-Message-State: APjAAAVygYy3jledueOgj3pYEuLAUeAEUs6/wtn/TG+6SLphvm/w4RAK
+        qs2zAhlVbvYSXSdy/AAhy/YT/cq3WiyoRJD1JzI=
+X-Google-Smtp-Source: APXvYqxcz8Ej40t9XcWhbMi4v3hKL5jyoIkAsv3W8QipVsdMt2GfYFsVX2pYCz87FZfPkpHzUHY9w66Ewxo5eLZoIvA=
+X-Received: by 2002:aed:33a4:: with SMTP id v33mr70766520qtd.18.1560947013427;
+ Wed, 19 Jun 2019 05:23:33 -0700 (PDT)
+MIME-Version: 1.0
+References: <380a6185-7ad1-6be0-060b-e6e5d4126917@linaro.org>
+ <a94676381a5ca662c848f7a725562f721c43ce76.camel@sipsolutions.net>
+ <CAK8P3a0kV-i7BJJ2X6C=5n65rSGfo8fUiC4J_G-+M8EctYKbkg@mail.gmail.com>
+ <066e9b39f937586f0f922abf801351553ec2ba1d.camel@sipsolutions.net>
+ <b3686626-e2d8-bc9c-6dd0-9ebb137715af@linaro.org> <b23a83c18055470c5308fcd1eed018056371fc1d.camel@sipsolutions.net>
+ <CAK8P3a1FeUQR3pgoQxHoRK05JGORyR+TFATVQiijLWtFKTv6OQ@mail.gmail.com>
+ <613cdfde488eb23d7207c7ba6258662702d04840.camel@sipsolutions.net>
+ <CAK8P3a2onXpxiE4y9PzRwuPM2dh=h_BKz7Eb0=LLPgBbZoK1bQ@mail.gmail.com> <6c70950d0c78bc02a3d016918ec3929e@codeaurora.org>
+In-Reply-To: <6c70950d0c78bc02a3d016918ec3929e@codeaurora.org>
+From:   Arnd Bergmann <arnd@arndb.de>
+Date:   Wed, 19 Jun 2019 14:23:16 +0200
+Message-ID: <CAK8P3a3e+U85yHTeE4dHa4okLVHgBd8Kke9=FytzvMwz+wB0sQ@mail.gmail.com>
+Subject: Re: [PATCH v2 00/17] net: introduce Qualcomm IPA driver
+To:     Subash Abhinov Kasiviswanathan <subashab@codeaurora.org>
+Cc:     Johannes Berg <johannes@sipsolutions.net>,
+        Alex Elder <elder@linaro.org>, abhishek.esse@gmail.com,
+        Ben Chan <benchan@google.com>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        cpratapa@codeaurora.org, David Miller <davem@davemloft.net>,
+        Dan Williams <dcbw@redhat.com>,
+        DTML <devicetree@vger.kernel.org>,
+        Eric Caruso <ejcaruso@google.com>, evgreen@chromium.org,
+        Ilias Apalodimas <ilias.apalodimas@linaro.org>,
+        Linux ARM <linux-arm-kernel@lists.infradead.org>,
+        linux-arm-msm@vger.kernel.org,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        linux-soc@vger.kernel.org, Networking <netdev@vger.kernel.org>,
+        syadagir@codeaurora.org
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The patch
+On Tue, Jun 18, 2019 at 11:15 PM Subash Abhinov Kasiviswanathan
+<subashab@codeaurora.org> wrote:
+>
+> On 2019-06-18 14:55, Arnd Bergmann wrote:
+> > On Tue, Jun 18, 2019 at 10:36 PM Johannes Berg
+> > <johannes@sipsolutions.net> wrote:
+> >>
+> >> On Tue, 2019-06-18 at 21:59 +0200, Arnd Bergmann wrote:
+> >> >
+> >> > From my understanding, the ioctl interface would create the lower
+> >> > netdev after talking to the firmware, and then user space would use
+> >> > the rmnet interface to create a matching upper-level device for that.
+> >> > This is an artifact of the strong separation of ipa and rmnet in the
+> >> > code.
+> >>
+> >> Huh. But if rmnet has muxing, and IPA supports that, why would you
+> >> ever
+> >> need multiple lower netdevs?
+> >
+> > From my reading of the code, there is always exactly a 1:1 relationship
+> > between an rmnet netdev an an ipa netdev. rmnet does the encapsulation/
+> > decapsulation of the qmap data and forwards it to the ipa netdev,
+> > which then just passes data through between a hardware queue and
+> > its netdevice.
+> >
+>
+> There is a n:1 relationship between rmnet and IPA.
+> rmnet does the de-muxing to multiple netdevs based on the mux id
+> in the MAP header for RX packets and vice versa.
 
-   ASoC: qcom: common: Fix NULL pointer in of parser
+Oh, so you mean that even though IPA supports multiple channels
+and multiple netdev instances for a physical device, all the
+rmnet devices end up being thrown into a single channel in IPA?
 
-has been applied to the asoc tree at
+What are the other channels for in IPA? I understand that there
+is one channel for commands that is separate, while the others
+are for network devices, but that seems to make no sense if
+we only use a single channel for rmnet data.
 
-   https://git.kernel.org/pub/scm/linux/kernel/git/broonie/sound.git for-5.3
+> >> Yeah, but if you actually have a hardware queue per upper netdev then
+> >> you don't really need this - you just stop the netdev queue when the
+> >> hardware queue is full, and you have flow control automatically.
+> >>
+> >> So I really don't see any reason to have these messages going back and
+> >> forth unless you plan to have multiple sessions muxed on a single
+> >> hardware queue.
+> >
+>
+> Hardware may flow control specific PDNs (rmnet interfaces) based on QoS
+> -
+> not necessarily only in case of hardware queue full.
 
-All being well this means that it will be integrated into the linux-next
-tree (usually sometime in the next 24 hours) and sent to Linus during
-the next merge window (or sooner if it is a bug fix), however if
-problems are discovered then the patch may be dropped or reverted.  
+Right, I guess that makes sense if everything ends up in a
+single queue in IPA.
 
-You may get further e-mails resulting from automated or manual testing
-and review of the tree, please engage with people reporting problems and
-send followup patches addressing any issues that are reported if needed.
-
-If any updates are required or you are submitting further changes they
-should be sent as incremental updates against current git, existing
-patches will not be replaced.
-
-Please add any relevant lists and maintainers to the CCs when replying
-to this mail.
-
-Thanks,
-Mark
-
-From 16395ceee11f8f8af764bac76adc20a43ba1a153 Mon Sep 17 00:00:00 2001
-From: Bjorn Andersson <bjorn.andersson@linaro.org>
-Date: Mon, 17 Jun 2019 22:28:13 -0700
-Subject: [PATCH] ASoC: qcom: common: Fix NULL pointer in of parser
-
-A snd_soc_dai_link_component is allocated and associated with the first
-link, so when the code tries to assign the of_node of the second link's
-"cpu" member it dereferences a NULL pointer.
-
-Fix this by moving the allocation and assignement of
-snd_soc_dai_link_components into the loop, giving us one pair per link.
-
-Fixes: 1e36ea360ab9 ("ASoC: qcom: common: use modern dai_link style")
-Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
-Acked-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-Signed-off-by: Mark Brown <broonie@kernel.org>
----
- sound/soc/qcom/common.c | 16 ++++++++--------
- 1 file changed, 8 insertions(+), 8 deletions(-)
-
-diff --git a/sound/soc/qcom/common.c b/sound/soc/qcom/common.c
-index c7a878507220..97488b5cc515 100644
---- a/sound/soc/qcom/common.c
-+++ b/sound/soc/qcom/common.c
-@@ -42,17 +42,17 @@ int qcom_snd_parse_of(struct snd_soc_card *card)
- 	card->num_links = num_links;
- 	link = card->dai_link;
- 
--	dlc = devm_kzalloc(dev, 2 * sizeof(*dlc), GFP_KERNEL);
--	if (!dlc)
--		return -ENOMEM;
-+	for_each_child_of_node(dev->of_node, np) {
-+		dlc = devm_kzalloc(dev, 2 * sizeof(*dlc), GFP_KERNEL);
-+		if (!dlc)
-+			return -ENOMEM;
- 
--	link->cpus	= &dlc[0];
--	link->platforms	= &dlc[1];
-+		link->cpus	= &dlc[0];
-+		link->platforms	= &dlc[1];
- 
--	link->num_cpus		= 1;
--	link->num_platforms	= 1;
-+		link->num_cpus		= 1;
-+		link->num_platforms	= 1;
- 
--	for_each_child_of_node(dev->of_node, np) {
- 		cpu = of_get_child_by_name(np, "cpu");
- 		platform = of_get_child_by_name(np, "platform");
- 		codec = of_get_child_by_name(np, "codec");
--- 
-2.20.1
-
+      Arnd
