@@ -2,93 +2,95 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 843E74C0A1
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Jun 2019 20:16:59 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id F3B8A4C0B6
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Jun 2019 20:21:59 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726322AbfFSSQ6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 19 Jun 2019 14:16:58 -0400
-Received: from mail-wr1-f67.google.com ([209.85.221.67]:37272 "EHLO
-        mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726259AbfFSSQ6 (ORCPT
+        id S1726330AbfFSSVy (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 19 Jun 2019 14:21:54 -0400
+Received: from smtp.codeaurora.org ([198.145.29.96]:41290 "EHLO
+        smtp.codeaurora.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726265AbfFSSVy (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 19 Jun 2019 14:16:58 -0400
-Received: by mail-wr1-f67.google.com with SMTP id v14so261266wrr.4
-        for <linux-arm-msm@vger.kernel.org>; Wed, 19 Jun 2019 11:16:57 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=KUfLyApZ5AwkW9imsp2WRnl5X/PfSEjVc3u7oW3Doog=;
-        b=WdDNnA6lznVGqEp9pRzxOJCwP8r9S6Oya03237rOEHm7XlJKozJXSCXZ2GuP78pA+g
-         nlgwN5KtnNgzu1oxWjPtXST52wHS6M9wvZX7rUrMnglRR46nycAkTPoaK+3cCil9YX8Y
-         YYaujc5kUbCIbxOH+TAPrPcD95TF/D0J6FOGnY8xY6Hqgc4gGiMkj+MPj/jwwA216QzZ
-         WAgaeDiHHO/Je889WzarHg1JJ/jokv9T8oWWo+y4og7qYcfDuSvI036vaMaslFHJAlw6
-         px9HYu/LeHrYo8WV6WHq/MZx1hhAugaBx9KGjGAaYQP75MDn4tmBg5d9p6uY33tCgF4x
-         Nt0Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=KUfLyApZ5AwkW9imsp2WRnl5X/PfSEjVc3u7oW3Doog=;
-        b=LYDrCejd9QOAd53Jm7NWWr+v6HJzbDXzPBnBJ9nm64AXlpva7QATLBOfEADWfxJAJV
-         aXdSQlgBNR0tOAswh6t2Ugivj58wiiGZxa7y4wy1ktKFnYj++uT056kmxoKj4ji6ODIs
-         61hVDFbywHsIeuuU44xNLpsrbq6Mzago4qXOIZBx6Y5Vs6LRI7RLiB5yfNO1gzgvWNGm
-         iv/9Q+25TXAzqMW4CPX7se4SXLFfbjpvS5A97h2llbgv2XY49F6MO9bm10tIRg9g4aGM
-         vTvI0mTfpMXTP89N31X9ZRmN5Fj7dm8YHKhRKE/MII0dlXE7v2r884h4J9crZit5FkwC
-         QQCw==
-X-Gm-Message-State: APjAAAXU2UV4NtZAF3ntlJeL1v8sFR89vQIEBIj/pwJo7LnyHPx8VR8f
-        cGz5b6NFegUdD8ljhWtMkEFQYw==
-X-Google-Smtp-Source: APXvYqysIa7yB7+ZaVWnQPKAicicBYiFlTH1tQoPMtYEJ9avZgZbvM6vmyIp3EAshKxTRp9m38X+IQ==
-X-Received: by 2002:adf:f951:: with SMTP id q17mr60175084wrr.173.1560968216764;
-        Wed, 19 Jun 2019 11:16:56 -0700 (PDT)
-Received: from localhost.localdomain (14.red-79-146-87.dynamicip.rima-tde.net. [79.146.87.14])
-        by smtp.gmail.com with ESMTPSA id d18sm29977759wrb.90.2019.06.19.11.16.55
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Wed, 19 Jun 2019 11:16:56 -0700 (PDT)
-From:   Jorge Ramirez-Ortiz <jorge.ramirez-ortiz@linaro.org>
-To:     jorge.ramirez-ortiz@linaro.org, agross@kernel.org,
-        david.brown@linaro.org, robh+dt@kernel.org, mark.rutland@arm.com,
-        bjorn.andersson@linaro.org
-Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, jeffrey.l.hugo@gmail.com,
-        niklas.cassel@linaro.org
-Subject: [PATCH] arm64: dts: qcom: qcs404-evb: fix vdd_apc supply
-Date:   Wed, 19 Jun 2019 20:16:53 +0200
-Message-Id: <20190619181653.29407-1-jorge.ramirez-ortiz@linaro.org>
-X-Mailer: git-send-email 2.21.0
+        Wed, 19 Jun 2019 14:21:54 -0400
+Received: by smtp.codeaurora.org (Postfix, from userid 1000)
+        id ED6696090E; Wed, 19 Jun 2019 18:21:53 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
+        s=default; t=1560968514;
+        bh=ZVW7rMnSzf5tgpVqQWif1NMUXOC0s7ohk9A350pigjQ=;
+        h=Date:From:To:Subject:References:In-Reply-To:From;
+        b=O6dgRUsjCJRtoWbxywsl0jTz5cbqgwukxfuEroxRxMDj+DWNGWXY8ECwi20d3Kasa
+         bNfTeZemL7yDf1qvcVds6efN9HIbm1pwq9WGj/9ilxl0tX6JvK2S2M5/MWpbZRDzGT
+         AHFK0W+iOiMhYcTIruJLMcNpW1qBjkE56IhyOTuA=
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        pdx-caf-mail.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.7 required=2.0 tests=ALL_TRUSTED,BAYES_00,
+        DKIM_INVALID,DKIM_SIGNED,SPF_NONE autolearn=no autolearn_force=no
+        version=3.4.0
+Received: from jcrouse1-lnx.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: jcrouse@smtp.codeaurora.org)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id DB4446019D;
+        Wed, 19 Jun 2019 18:21:51 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
+        s=default; t=1560968513;
+        bh=ZVW7rMnSzf5tgpVqQWif1NMUXOC0s7ohk9A350pigjQ=;
+        h=Date:From:To:Subject:References:In-Reply-To:From;
+        b=JM2dl7TzVPPe6ioGsZSuYsPfSg370cRaYcWa6PiMhi1S4nLFzU0BXt8aY+t3yE1Pp
+         8dSCB0hwBAWf9OGjGCDxJLE7I8FT1M0CgBNj7ut5gyrjFZCqsG3jwOAMlLc7dEBIDV
+         7SY//+eypfsd6xRkbMjRPEMJQRvLCXAAKF7lt6t4=
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org DB4446019D
+Authentication-Results: pdx-caf-mail.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: pdx-caf-mail.web.codeaurora.org; spf=none smtp.mailfrom=jcrouse@codeaurora.org
+Date:   Wed, 19 Jun 2019 12:21:50 -0600
+From:   Jordan Crouse <jcrouse@codeaurora.org>
+To:     Brian Masney <masneyb@onstation.org>, agross@kernel.org,
+        david.brown@linaro.org, robdclark@gmail.com, sean@poorly.run,
+        robh+dt@kernel.org, mark.rutland@arm.com,
+        devicetree@vger.kernel.org, jonathan@marek.ca, airlied@linux.ie,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        dri-devel@lists.freedesktop.org, bjorn.andersson@linaro.org,
+        daniel@ffwll.ch, freedreno@lists.freedesktop.org
+Subject: Re: [Freedreno] [PATCH 6/6] drm/msm/gpu: add ocmem init/cleanup
+ functions
+Message-ID: <20190619182149.GD17590@jcrouse1-lnx.qualcomm.com>
+Mail-Followup-To: Brian Masney <masneyb@onstation.org>, agross@kernel.org,
+        david.brown@linaro.org, robdclark@gmail.com, sean@poorly.run,
+        robh+dt@kernel.org, mark.rutland@arm.com,
+        devicetree@vger.kernel.org, jonathan@marek.ca, airlied@linux.ie,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        dri-devel@lists.freedesktop.org, bjorn.andersson@linaro.org,
+        daniel@ffwll.ch, freedreno@lists.freedesktop.org
+References: <20190616132930.6942-1-masneyb@onstation.org>
+ <20190616132930.6942-7-masneyb@onstation.org>
+ <20190619181526.GC17590@jcrouse1-lnx.qualcomm.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20190619181526.GC17590@jcrouse1-lnx.qualcomm.com>
+User-Agent: Mutt/1.5.24 (2015-08-30)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The invalid definition in the supply causes the Qualcomm's EVB-1000
-and EVB-4000 not to boot.
+On Wed, Jun 19, 2019 at 12:15:26PM -0600, Jordan Crouse wrote:
+> On Sun, Jun 16, 2019 at 09:29:30AM -0400, Brian Masney wrote:
+> > The files a3xx_gpu.c and a4xx_gpu.c have ifdefs for the OCMEM support
+> > that was missing upstream. Add two new functions (adreno_gpu_ocmem_init
+> > and adreno_gpu_ocmem_cleanup) that removes some duplicated code. We also
+> > need to change the ifdef check for CONFIG_MSM_OCMEM to CONFIG_QCOM_OCMEM
+> > now that OCMEM support is upstream.
 
-Fix the boot issue by correctly defining the supply: vdd_s3 (namely
-"vdd_apc") is actually connected to vph_pwr.
+Sorry for reviewing v1 when there was a v2 in flight. That will teach me to not
+keep up on my email. I think you caught most of this, but a few things I still
+saw.
 
-Reported-by: Niklas Cassel <niklas.cassel@linaro.org>
-Tested-by: Jorge Ramirez-Ortiz <jorge.ramirez-ortiz@linaro.org>
-Signed-off-by: Jorge Ramirez-Ortiz <jorge.ramirez-ortiz@linaro.org>
----
- arch/arm64/boot/dts/qcom/qcs404-evb.dtsi | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+<snip>
 
-diff --git a/arch/arm64/boot/dts/qcom/qcs404-evb.dtsi b/arch/arm64/boot/dts/qcom/qcs404-evb.dtsi
-index b6092a742675..11c0a7137823 100644
---- a/arch/arm64/boot/dts/qcom/qcs404-evb.dtsi
-+++ b/arch/arm64/boot/dts/qcom/qcs404-evb.dtsi
-@@ -65,7 +65,7 @@
- };
- 
- &pms405_spmi_regulators {
--	vdd_s3-supply = <&pms405_s3>;
-+	vdd_s3-supply = <&vph_pwr>;
- 
- 	pms405_s3: s3 {
- 		regulator-always-on;
+Jordan
+
 -- 
-2.21.0
-
+The Qualcomm Innovation Center, Inc. is a member of Code Aurora Forum,
+a Linux Foundation Collaborative Project
