@@ -2,90 +2,191 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 95D364BC13
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Jun 2019 16:54:55 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 923414BD21
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Jun 2019 17:40:12 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729369AbfFSOyy (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 19 Jun 2019 10:54:54 -0400
-Received: from mail.kernel.org ([198.145.29.99]:50950 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1725899AbfFSOyy (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 19 Jun 2019 10:54:54 -0400
-Received: from mail-qt1-f169.google.com (mail-qt1-f169.google.com [209.85.160.169])
+        id S1726958AbfFSPkC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 19 Jun 2019 11:40:02 -0400
+Received: from smtp.codeaurora.org ([198.145.29.96]:37526 "EHLO
+        smtp.codeaurora.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725899AbfFSPkC (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 19 Jun 2019 11:40:02 -0400
+Received: by smtp.codeaurora.org (Postfix, from userid 1000)
+        id 4836560300; Wed, 19 Jun 2019 15:40:00 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
+        s=default; t=1560958800;
+        bh=N7OYhxJf4HieDElspvISZS06uvWIa6aZs0RQzxGXlFw=;
+        h=Subject:To:Cc:References:From:Date:In-Reply-To:From;
+        b=KzSJtbNsOFKEL2Fn7y6uxBTqGbhwDR5SFtOyOdCNwGDGfrHNBQoWptwJItgbT9UbY
+         Y5sIDfaGBfOwZiorqyv/J19mtNkgTmMtQdM2UByYRNNN8FKWuNeNrrumVIjLDXNQNC
+         UnqT2Ha0GGvHyD5iWkIUzZsAyLcMkZDpEzyPZZ58=
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        pdx-caf-mail.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.7 required=2.0 tests=ALL_TRUSTED,BAYES_00,
+        DKIM_INVALID,DKIM_SIGNED,SPF_NONE autolearn=no autolearn_force=no
+        version=3.4.0
+Received: from [10.226.58.28] (i-global254.qualcomm.com [199.106.103.254])
         (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
         (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id D55352182B;
-        Wed, 19 Jun 2019 14:54:52 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1560956093;
-        bh=1o2dMj31GORXJZyOFULgtIRqexZMCNTkB7pR8LOrtJ4=;
-        h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
-        b=WNj4iaYt8/G5RaEDTSZfDsFjp6NVfp8+Eao8HcnQtl2WtIz059/SPsFZ4/w3uv6px
-         67wlVpxhLvDfoTpoFbQZQOAr/v7soTPuK6Nq2xYD/iP4ju2Ax69/FF6c5ubeEBqbUi
-         4WJLwK3hQRENzyYmfVF27jQgQQ9f/GPh1m75B4zw=
-Received: by mail-qt1-f169.google.com with SMTP id s15so20195623qtk.9;
-        Wed, 19 Jun 2019 07:54:52 -0700 (PDT)
-X-Gm-Message-State: APjAAAVAxoTRzbQzaweSqxVwyrC5mo06bdWQCc1JF5ZdL39QRzkjj1X+
-        0TywWYfga3YGMqgVkiAtEF+wR68xDK4k7bi8cA==
-X-Google-Smtp-Source: APXvYqyIsFoKeKt8JjG9xmjujYGTtwkYLYLaB8h+ix0Pl7lN0krfkUYZCEy8rme8HA3CdujMucRPRNSAzdKC1rAn+e4=
-X-Received: by 2002:aed:3fb0:: with SMTP id s45mr53667104qth.136.1560956092103;
- Wed, 19 Jun 2019 07:54:52 -0700 (PDT)
+        (Authenticated sender: jhugo@smtp.codeaurora.org)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 6286E60850;
+        Wed, 19 Jun 2019 15:39:58 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
+        s=default; t=1560958799;
+        bh=N7OYhxJf4HieDElspvISZS06uvWIa6aZs0RQzxGXlFw=;
+        h=Subject:To:Cc:References:From:Date:In-Reply-To:From;
+        b=AOXyrESbQfXfIszltxu3JVMVMxIhqIRrmSvIvxz5LEUst3PaE6xkZ95dHsURHsgGi
+         YN7LK0nGinFaRgSj46bqQOze8GJAFpjY6wv+i8C7okau93fAlE+/dIX5OoCV/SdX6+
+         F9/1gg+WzU+hY8k4/9YFHpOVrL1DY1fBa0JDcEOg=
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 6286E60850
+Authentication-Results: pdx-caf-mail.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: pdx-caf-mail.web.codeaurora.org; spf=none smtp.mailfrom=jhugo@codeaurora.org
+Subject: Re: [PATCH v6 2/5] HID: quirks: Refactor ELAN 400 and 401 handling
+To:     Benjamin Tissoires <benjamin.tissoires@redhat.com>,
+        Dmitry Torokhov <dmitry.torokhov@gmail.com>
+Cc:     Jeffrey Hugo <jeffrey.l.hugo@gmail.com>,
+        Jiri Kosina <jikos@kernel.org>,
+        Hans de Goede <hdegoede@redhat.com>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Lee Jones <lee.jones@linaro.org>, xnox@ubuntu.com,
+        Rob Herring <robh+dt@kernel.org>,
+        Mark Rutland <mark.rutland@arm.com>,
+        "open list:HID CORE LAYER" <linux-input@vger.kernel.org>,
+        DTML <devicetree@vger.kernel.org>,
+        MSM <linux-arm-msm@vger.kernel.org>,
+        lkml <linux-kernel@vger.kernel.org>
+References: <20190612212604.32089-1-jeffrey.l.hugo@gmail.com>
+ <20190612212721.32195-1-jeffrey.l.hugo@gmail.com>
+ <20190612214636.GA40779@dtor-ws>
+ <84e7d83f-e133-0281-612a-94d8c4319040@codeaurora.org>
+ <CAO-hwJJUivfzFj-Downqt8nY3iTwF8-oq_iBqs1Dxyx92HdYPw@mail.gmail.com>
+From:   Jeffrey Hugo <jhugo@codeaurora.org>
+Message-ID: <e480240e-993b-5f09-f29c-7b5c57a67260@codeaurora.org>
+Date:   Wed, 19 Jun 2019 09:39:57 -0600
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:60.0) Gecko/20100101
+ Thunderbird/60.7.0
 MIME-Version: 1.0
-References: <1559754961-26783-1-git-send-email-sricharan@codeaurora.org> <1559754961-26783-3-git-send-email-sricharan@codeaurora.org>
-In-Reply-To: <1559754961-26783-3-git-send-email-sricharan@codeaurora.org>
-From:   Rob Herring <robh+dt@kernel.org>
-Date:   Wed, 19 Jun 2019 08:54:40 -0600
-X-Gmail-Original-Message-ID: <CAL_Jsq+0TLtLiX17nRSyVWrJM2_UvLEVMsp7Hf2e3hU7fh4WGg@mail.gmail.com>
-Message-ID: <CAL_Jsq+0TLtLiX17nRSyVWrJM2_UvLEVMsp7Hf2e3hU7fh4WGg@mail.gmail.com>
-Subject: Re: [PATCH 2/6] dt-bindings: qcom: Add ipq6018 bindings
-To:     Sricharan R <sricharan@codeaurora.org>
-Cc:     Stephen Boyd <sboyd@codeaurora.org>,
-        Linus Walleij <linus.walleij@linaro.org>,
-        Andy Gross <agross@kernel.org>, devicetree@vger.kernel.org,
-        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
-        linux-clk <linux-clk@vger.kernel.org>,
-        "open list:GPIO SUBSYSTEM" <linux-gpio@vger.kernel.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        "open list:ARM/QUALCOMM SUPPORT" <linux-soc@vger.kernel.org>,
-        "moderated list:ARM/FREESCALE IMX / MXC ARM ARCHITECTURE" 
-        <linux-arm-kernel@lists.infradead.org>
-Content-Type: text/plain; charset="UTF-8"
+In-Reply-To: <CAO-hwJJUivfzFj-Downqt8nY3iTwF8-oq_iBqs1Dxyx92HdYPw@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Jun 5, 2019 at 11:16 AM Sricharan R <sricharan@codeaurora.org> wrote:
->
-> Signed-off-by: Sricharan R <sricharan@codeaurora.org>
-> Signed-off-by: speriaka <speriaka@codeaurora.org>
-> ---
->  Documentation/devicetree/bindings/arm/qcom.yaml | 2 ++
->  1 file changed, 2 insertions(+)
->
-> diff --git a/Documentation/devicetree/bindings/arm/qcom.yaml b/Documentation/devicetree/bindings/arm/qcom.yaml
-> index f6316ab..7b19028 100644
-> --- a/Documentation/devicetree/bindings/arm/qcom.yaml
-> +++ b/Documentation/devicetree/bindings/arm/qcom.yaml
-> @@ -36,6 +36,7 @@ description: |
->         mdm9615
->         ipq8074
->         sdm845
-> +       ipq6018
+On 6/13/2019 2:55 AM, Benjamin Tissoires wrote:
+> On Thu, Jun 13, 2019 at 12:20 AM Jeffrey Hugo <jhugo@codeaurora.org> wrote:
+>>
+>> On 6/12/2019 3:46 PM, Dmitry Torokhov wrote:
+>>> On Wed, Jun 12, 2019 at 02:27:21PM -0700, Jeffrey Hugo wrote:
+>>>> There needs to be coordination between hid-quirks and the elan_i2c driver
+>>>> about which devices are handled by what drivers.  Currently, both use
+>>>> whitelists, which results in valid devices being unhandled by default,
+>>>> when they should not be rejected by hid-quirks.  This is quickly becoming
+>>>> an issue.
+>>>>
+>>>> Since elan_i2c has a maintained whitelist of what devices it will handle,
+>>>> which is now in a header file that hid-quirks can access, use that to
+>>>> implement a blacklist in hid-quirks so that only the devices that need to
+>>>> be handled by elan_i2c get rejected by hid-quirks, and everything else is
+>>>> handled by default.
+>>>>
+>>>> Suggested-by: Benjamin Tissoires <benjamin.tissoires@redhat.com>
+>>>> Signed-off-by: Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
+>>>> ---
+>>>>    drivers/hid/hid-quirks.c | 27 ++++++++++++++++-----------
+>>>>    1 file changed, 16 insertions(+), 11 deletions(-)
+>>>>
+>>>> diff --git a/drivers/hid/hid-quirks.c b/drivers/hid/hid-quirks.c
+>>>> index e5ca6fe2ca57..bd81bb090222 100644
+>>>> --- a/drivers/hid/hid-quirks.c
+>>>> +++ b/drivers/hid/hid-quirks.c
+>>>> @@ -16,6 +16,7 @@
+>>>>    #include <linux/export.h>
+>>>>    #include <linux/slab.h>
+>>>>    #include <linux/mutex.h>
+>>>> +#include <linux/input/elan-i2c-ids.h>
+>>>>
+>>>>    #include "hid-ids.h"
+>>>>
+>>>> @@ -914,6 +915,8 @@ static const struct hid_device_id hid_mouse_ignore_list[] = {
+>>>>
+>>>>    bool hid_ignore(struct hid_device *hdev)
+>>>>    {
+>>>> +    int i;
+>>>> +
+>>>>       if (hdev->quirks & HID_QUIRK_NO_IGNORE)
+>>>>               return false;
+>>>>       if (hdev->quirks & HID_QUIRK_IGNORE)
+>>>> @@ -978,18 +981,20 @@ bool hid_ignore(struct hid_device *hdev)
+>>>>               break;
+>>>>       case USB_VENDOR_ID_ELAN:
+>>>>               /*
+>>>> -             * Many Elan devices have a product id of 0x0401 and are handled
+>>>> -             * by the elan_i2c input driver. But the ACPI HID ELAN0800 dev
+>>>> -             * is not (and cannot be) handled by that driver ->
+>>>> -             * Ignore all 0x0401 devs except for the ELAN0800 dev.
+>>>> +             * Blacklist of everything that gets handled by the elan_i2c
+>>>> +             * input driver.  This avoids disabling valid touchpads and
+>>>> +             * other ELAN devices.
+>>>>                */
+>>>> -            if (hdev->product == 0x0401 &&
+>>>> -                strncmp(hdev->name, "ELAN0800", 8) != 0)
+>>>> -                    return true;
+>>>> -            /* Same with product id 0x0400 */
+>>>> -            if (hdev->product == 0x0400 &&
+>>>> -                strncmp(hdev->name, "QTEC0001", 8) != 0)
+>>>> -                    return true;
+>>>> +            if ((hdev->product == 0x0401 || hdev->product == 0x0400)) {
+>>>> +                    for (i = 0; strlen(elan_acpi_id[i].id); ++i)
+>>>> +                            if (!strncmp(hdev->name, elan_acpi_id[i].id,
+>>>> +                                         strlen(elan_acpi_id[i].id)))
+>>>> +                                    return true;
+>>>> +                    for (i = 0; strlen(elan_of_match[i].name); ++i)
+>>>> +                            if (!strncmp(hdev->name, elan_of_match[i].name,
+>>>> +                                         strlen(elan_of_match[i].name)))
+>>>> +                                    return true;
+>>>
+>>> Do we really need to blacklist the OF case here? I thought that in ACPI
+>>> case we have clashes as HID gets matched by elan_i2c and CID is matched
+>>> by i2c-hid, but I do not believe we'll run into the same situation on OF
+>>> systems.
+>>
+>> I think its the safer approach.
+>>
+>> On an OF system, such as patch 3 in the series, the "hid-over-i2c" will
+>> end up running through this (kind of the whole reason why this series
+>> exists).  The vendor and product ids will still match, so we'll end up
+>> going through the lists to see if the hdev->name (the compatible string)
+>> will match the blacklist.  "hid-over-i2c" won't match the blacklist, but
+>> if there is a more specific compatible, it might.
+>>
+>> In that case, not matching OF would work, however how it could break
+>> today is if both "hid-over-i2c" and "elan,ekth3000" were listed for the
+>> same device, and elan_i2c was not compiled.  In that case, if we skip
+>> the OF part of the black list, hid-quirks will not reject the device,
+>> and you'll probably have some odd behavior instead of the obvious "the
+>> device doesn't work because the correct driver isn't present" behavior.
+>>
+>> While that scenario might be far fetched since having both
+>> "hid-over-i2c" and "elan,ekth3000" probably violates the OF bindings,
+>> its still safer to include the OF case in the blacklist against future
+>> scenarios.
+>>
+>>
+> 
+> Dmitry, if you are happy with Jeffrey's answer, feel free to take this
+> through your tree and add:
+> Acked-by: Benjamin Tissoires <benjamin.tissoires@redhat.com>
+> 
+> I don't expect any major conflicts given on where the code is located.
 
-You need to add actual schema for this, not just a description.
+Ping?
 
->
->    The 'board' element must be one of the following strings:
->
-> @@ -45,6 +46,7 @@ description: |
->         mtp
->         sbc
->         hk01
-> +       cp01-c1
->
->    The 'soc_version' and 'board_version' elements take the form of v<Major>.<Minor>
->    where the minor number may be omitted when it's zero, i.e.  v1.0 is the same
-> --
-> QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member of Code Aurora Forum, hosted by The Linux Foundation
->
+Dmitry, are you happy with things?  I would really like to see this 
+queued for 5.3, and it seems like the window to do so is rapidly closing.
+
