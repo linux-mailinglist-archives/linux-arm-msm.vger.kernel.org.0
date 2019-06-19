@@ -2,100 +2,109 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 30FB94C105
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Jun 2019 20:47:45 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C6A574C119
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Jun 2019 20:56:46 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726518AbfFSSro (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 19 Jun 2019 14:47:44 -0400
-Received: from smtp.codeaurora.org ([198.145.29.96]:52672 "EHLO
-        smtp.codeaurora.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726175AbfFSSro (ORCPT
+        id S1726380AbfFSS4p (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 19 Jun 2019 14:56:45 -0400
+Received: from mail-pl1-f196.google.com ([209.85.214.196]:34379 "EHLO
+        mail-pl1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726109AbfFSS4p (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 19 Jun 2019 14:47:44 -0400
-Received: by smtp.codeaurora.org (Postfix, from userid 1000)
-        id BFC886063F; Wed, 19 Jun 2019 18:47:42 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
-        s=default; t=1560970062;
-        bh=1yZ8gW4omtDGb+oqxDGLEnHBunqq4YkklbYTCwDXY3U=;
-        h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
-        b=kQIh5jOa/cXWbooFqk3WCsn70ABRuoV0jnfVYeJSkyHfIFkju+3qmGPNMdevfks3e
-         f2aBzUFDFi1wJmBElItePeSJlBzfqspKFXRjp/1g9ElfshPGiseUjQG0rTGega79Xr
-         IfBUZMyHrJlFlYzC6kSekM3CXRd102LAksKVSjrU=
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        pdx-caf-mail.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.7 required=2.0 tests=ALL_TRUSTED,BAYES_00,
-        DKIM_INVALID,DKIM_SIGNED autolearn=no autolearn_force=no version=3.4.0
-Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
-        by smtp.codeaurora.org (Postfix) with ESMTP id DADCA6063F;
-        Wed, 19 Jun 2019 18:47:41 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
-        s=default; t=1560970061;
-        bh=1yZ8gW4omtDGb+oqxDGLEnHBunqq4YkklbYTCwDXY3U=;
-        h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
-        b=EYJPfomCH0dyi8k+h1DqgHcD2V+VGlCjTr2UW5kMNzdEfu1KOLIsNdJLhoktaOzmA
-         m/h33t+EefNSvWuAkeKELMtnzWcc+qBxt8d9cgJtkGZ48T9SKBFnd9AXK8qipv82lA
-         v0cg/okvJwlKbZsTmYQvUj8EwjwxzJTMZbjQGxjY=
-MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
-Content-Transfer-Encoding: 7bit
-Date:   Wed, 19 Jun 2019 12:47:41 -0600
-From:   Subash Abhinov Kasiviswanathan <subashab@codeaurora.org>
-To:     Arnd Bergmann <arnd@arndb.de>
-Cc:     Johannes Berg <johannes@sipsolutions.net>,
-        Alex Elder <elder@linaro.org>, abhishek.esse@gmail.com,
-        Ben Chan <benchan@google.com>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        cpratapa@codeaurora.org, David Miller <davem@davemloft.net>,
-        Dan Williams <dcbw@redhat.com>,
-        DTML <devicetree@vger.kernel.org>,
-        Eric Caruso <ejcaruso@google.com>, evgreen@chromium.org,
-        Ilias Apalodimas <ilias.apalodimas@linaro.org>,
-        Linux ARM <linux-arm-kernel@lists.infradead.org>,
-        linux-arm-msm@vger.kernel.org,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-        linux-soc@vger.kernel.org, Networking <netdev@vger.kernel.org>,
-        syadagir@codeaurora.org
-Subject: Re: [PATCH v2 00/17] net: introduce Qualcomm IPA driver
-In-Reply-To: <CAK8P3a3e+U85yHTeE4dHa4okLVHgBd8Kke9=FytzvMwz+wB0sQ@mail.gmail.com>
-References: <380a6185-7ad1-6be0-060b-e6e5d4126917@linaro.org>
- <a94676381a5ca662c848f7a725562f721c43ce76.camel@sipsolutions.net>
- <CAK8P3a0kV-i7BJJ2X6C=5n65rSGfo8fUiC4J_G-+M8EctYKbkg@mail.gmail.com>
- <066e9b39f937586f0f922abf801351553ec2ba1d.camel@sipsolutions.net>
- <b3686626-e2d8-bc9c-6dd0-9ebb137715af@linaro.org>
- <b23a83c18055470c5308fcd1eed018056371fc1d.camel@sipsolutions.net>
- <CAK8P3a1FeUQR3pgoQxHoRK05JGORyR+TFATVQiijLWtFKTv6OQ@mail.gmail.com>
- <613cdfde488eb23d7207c7ba6258662702d04840.camel@sipsolutions.net>
- <CAK8P3a2onXpxiE4y9PzRwuPM2dh=h_BKz7Eb0=LLPgBbZoK1bQ@mail.gmail.com>
- <6c70950d0c78bc02a3d016918ec3929e@codeaurora.org>
- <CAK8P3a3e+U85yHTeE4dHa4okLVHgBd8Kke9=FytzvMwz+wB0sQ@mail.gmail.com>
-Message-ID: <2926e45fd7ff62fd7c4af9b338bf0caa@codeaurora.org>
-X-Sender: subashab@codeaurora.org
-User-Agent: Roundcube Webmail/1.2.5
+        Wed, 19 Jun 2019 14:56:45 -0400
+Received: by mail-pl1-f196.google.com with SMTP id i2so202378plt.1;
+        Wed, 19 Jun 2019 11:56:45 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id;
+        bh=OkzFZAuud0Hfdg+gFLkDdFw2KlS0o4maAGobdQqqxOw=;
+        b=K09sKTfzk/1V1FVb91KhHBhulMdP9dNiW6yCmG1LmZh0tzpexURLjG/yaLbz0FfkoG
+         UXr+4qqSEzDqDYENevwQmTYDbrOBIDNHLIieLlfKQCjBD44KXcipKhl2bOUgqGzNBCvr
+         3bO75bXzvM7Ae5tjrDiogwG4DzrlyAbgfT61ScataheFtrDfDX2tiI04bDGVJPVqkycV
+         tdy/tkT1zZup0CmFnE5myLMDyAXBWjN0vgLk6SSF8sczFWxO8mqA6tyrb4sAFNUxAp5C
+         sY37aK1w4F6aveM/j7giDolEiIDnja2EiD99h8XYRuP+Q55t7W8UO5dPfkm0IwbU/sR8
+         bdAw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=OkzFZAuud0Hfdg+gFLkDdFw2KlS0o4maAGobdQqqxOw=;
+        b=DVSS0dKtZF+VL25XzhkYz8pLi8RBnF+vbTvDSCqIKhjvBU7IAk6ATItc9LnB2+PVFE
+         qZ4Y7rJG/GsNw7CbyHoIvE41kFqpQcvLufQtZ/QYGnGAylcx6OlDxn+YdmHSjgDDHffn
+         cA+1YmiwAZEd0ozL3h00jzkjUglWKuF0umP/XitFwuL6PPe2t7xZu7Fkxaf3R2Yk1hvt
+         S8Ma85KdrqiHpklAWznebsG6h1IvXiNvbvuO6WeOr1j5OHjM5lD0qY1egWD/753Qd6mc
+         UqHWENrpkedbcS7E/PR/1DJGF2AGsim8FLZXBvTO1gaW6/VJLrxRzuBvIbbNTDKXIaYK
+         CZ5A==
+X-Gm-Message-State: APjAAAU1xMt6Uj5ap6uj0R1FXjWNUJMBxrElcvWrCEiLgwRkl9e6vgC+
+        iRwwDu0hU/O3CWvJrEH3Syg=
+X-Google-Smtp-Source: APXvYqxqdyV3MHM7B6JUL4lVQy99pP4kEfyZIwn/ip1Zpfjp5DnHT/byaPd6NIZ2CtYIS7swafeFfw==
+X-Received: by 2002:a17:902:b187:: with SMTP id s7mr29283066plr.309.1560970605062;
+        Wed, 19 Jun 2019 11:56:45 -0700 (PDT)
+Received: from aw-bldr-10.qualcomm.com (i-global254.qualcomm.com. [199.106.103.254])
+        by smtp.gmail.com with ESMTPSA id b26sm21627842pfo.129.2019.06.19.11.56.43
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Wed, 19 Jun 2019 11:56:44 -0700 (PDT)
+From:   Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
+To:     bjorn.andersson@linaro.org, lgirdwood@gmail.com,
+        broonie@kernel.org, jorge.ramirez-ortiz@linaro.org
+Cc:     linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
+Subject: [PATCH] regulator: qcom_spmi: Fix math of spmi_regulator_set_voltage_time_sel
+Date:   Wed, 19 Jun 2019 11:56:36 -0700
+Message-Id: <20190619185636.10831-1-jeffrey.l.hugo@gmail.com>
+X-Mailer: git-send-email 2.17.1
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
->> There is a n:1 relationship between rmnet and IPA.
->> rmnet does the de-muxing to multiple netdevs based on the mux id
->> in the MAP header for RX packets and vice versa.
-> 
-> Oh, so you mean that even though IPA supports multiple channels
-> and multiple netdev instances for a physical device, all the
-> rmnet devices end up being thrown into a single channel in IPA?
-> 
-> What are the other channels for in IPA? I understand that there
-> is one channel for commands that is separate, while the others
-> are for network devices, but that seems to make no sense if
-> we only use a single channel for rmnet data.
-> 
+spmi_regulator_set_voltage_time_sel() calculates the amount of delay
+needed as the result of setting a new voltage.  Essentially this is the
+absolute difference of the old and new voltages, divided by the slew rate.
 
-AFAIK, the other channels are for use cases like tethering.
-There is only a single channel which is used for RX
-data which is then de-muxed using rmnet.
+The implementation of spmi_regulator_set_voltage_time_sel() is wrong.
 
+It attempts to calculate the difference in voltages by using the
+difference in selectors and multiplying by the voltage step between
+selectors.  This ignores the possibility that the old and new selectors
+might be from different ranges, which have different step values.  Also,
+the difference between the selectors may encapsulate N ranges inbetween,
+so a summation of each selector change from old to new would be needed.
+
+Lets avoid all of that complexity, and just get the actual voltage
+represented by both the old and new selector, and use those to directly
+compute the voltage delta.  This is more straight forward, and has the
+side benifit of avoiding issues with regulator implementations that don't
+have hardware register support to get the current configured range.
+
+Fixes: e92a4047419c ("regulator: Add QCOM SPMI regulator driver")
+Reported-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+Reported-by: Jorge Ramirez-Ortiz <jorge.ramirez-ortiz@linaro.org>
+Signed-off-by: Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
+---
+ drivers/regulator/qcom_spmi-regulator.c | 8 ++------
+ 1 file changed, 2 insertions(+), 6 deletions(-)
+
+diff --git a/drivers/regulator/qcom_spmi-regulator.c b/drivers/regulator/qcom_spmi-regulator.c
+index 13f83be50076..877df33e0246 100644
+--- a/drivers/regulator/qcom_spmi-regulator.c
++++ b/drivers/regulator/qcom_spmi-regulator.c
+@@ -813,14 +813,10 @@ static int spmi_regulator_set_voltage_time_sel(struct regulator_dev *rdev,
+ 		unsigned int old_selector, unsigned int new_selector)
+ {
+ 	struct spmi_regulator *vreg = rdev_get_drvdata(rdev);
+-	const struct spmi_voltage_range *range;
+ 	int diff_uV;
+ 
+-	range = spmi_regulator_find_range(vreg);
+-	if (!range)
+-		return -EINVAL;
+-
+-	diff_uV = abs(new_selector - old_selector) * range->step_uV;
++	diff_uV = abs(spmi_regulator_common_list_voltage(rdev, new_selector) -
++		      spmi_regulator_common_list_voltage(rdev, old_selector));
+ 
+ 	return DIV_ROUND_UP(diff_uV, vreg->slew_rate);
+ }
 -- 
-Qualcomm Innovation Center, Inc. is a member of Code Aurora Forum,
-a Linux Foundation Collaborative Project
+2.17.1
+
