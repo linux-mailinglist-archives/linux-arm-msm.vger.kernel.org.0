@@ -2,115 +2,100 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 92EEC4C0EE
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Jun 2019 20:39:12 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 30FB94C105
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Jun 2019 20:47:45 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726191AbfFSSjL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 19 Jun 2019 14:39:11 -0400
-Received: from mo4-p00-ob.smtp.rzone.de ([81.169.146.162]:8968 "EHLO
-        mo4-p00-ob.smtp.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726175AbfFSSjL (ORCPT
+        id S1726518AbfFSSro (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 19 Jun 2019 14:47:44 -0400
+Received: from smtp.codeaurora.org ([198.145.29.96]:52672 "EHLO
+        smtp.codeaurora.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726175AbfFSSro (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 19 Jun 2019 14:39:11 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; t=1560969549;
-        s=strato-dkim-0002; d=gerhold.net;
-        h=In-Reply-To:References:Message-ID:Subject:Cc:To:From:Date:
-        X-RZG-CLASS-ID:X-RZG-AUTH:From:Subject:Sender;
-        bh=yE9t/HpOhUCCw92yGlKlu+arbDgwr4eDSSJxIXUUaY0=;
-        b=ajhnJvPHZK+S9Xsmcw8SLK+xKb+/osPrBMbKu485FZYgoB4QqROmyw8Y7CYKGulTq/
-        PbnO8fB1NLlh8MaA8xFjYU4qq9osInmUU19SmLWjo9NiGgz4ZDMTdU3KWec3ixGS4N6z
-        ZLzWw43krkED/s4Y9688kSQYC7tVKz167MT/RzLMQIkMNQPhc+hrEtGxu3W7+gyrSUAv
-        60QVUdE0WOT2GqZocoVZMbR5HKw4qjL2xFiZOKqqlLLoNOf7m7cuMVaAfg2mt/v2q5wC
-        Dw/arM0j+Lc6nwxAxq2xzKAGBJ7a8qC4LOTvEdqyaH+eTs/4JhtlNl3xgf+AWbYjw9mt
-        ijMw==
-X-RZG-AUTH: ":P3gBZUipdd93FF5ZZvYFPugejmSTVR2nRPhVOQ/OcYgojyw4j34+u267EpF+OQRc4oDXF5yRxHE="
-X-RZG-CLASS-ID: mo00
-Received: from gerhold.net
-        by smtp.strato.de (RZmta 44.24 AUTH)
-        with ESMTPSA id m0a13fv5JId57Jh
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (curve secp521r1 with 521 ECDH bits, eq. 15360 bits RSA))
-        (Client did not present a certificate);
-        Wed, 19 Jun 2019 20:39:05 +0200 (CEST)
-Date:   Wed, 19 Jun 2019 20:39:04 +0200
-From:   Stephan Gerhold <stephan@gerhold.net>
-To:     Suzuki K Poulose <suzuki.poulose@arm.com>
-Cc:     agross@kernel.org, david.brown@linaro.org,
-        mathieu.poirier@linaro.org, linux-arm-msm@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org
-Subject: Re: Coresight causes synchronous external abort on msm8916
-Message-ID: <20190619183904.GB937@gerhold.net>
-References: <20190618202623.GA53651@gerhold.net>
- <a51f117f-c48d-d3f4-c3d1-9b584e3a055f@arm.com>
+        Wed, 19 Jun 2019 14:47:44 -0400
+Received: by smtp.codeaurora.org (Postfix, from userid 1000)
+        id BFC886063F; Wed, 19 Jun 2019 18:47:42 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
+        s=default; t=1560970062;
+        bh=1yZ8gW4omtDGb+oqxDGLEnHBunqq4YkklbYTCwDXY3U=;
+        h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
+        b=kQIh5jOa/cXWbooFqk3WCsn70ABRuoV0jnfVYeJSkyHfIFkju+3qmGPNMdevfks3e
+         f2aBzUFDFi1wJmBElItePeSJlBzfqspKFXRjp/1g9ElfshPGiseUjQG0rTGega79Xr
+         IfBUZMyHrJlFlYzC6kSekM3CXRd102LAksKVSjrU=
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        pdx-caf-mail.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.7 required=2.0 tests=ALL_TRUSTED,BAYES_00,
+        DKIM_INVALID,DKIM_SIGNED autolearn=no autolearn_force=no version=3.4.0
+Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
+        by smtp.codeaurora.org (Postfix) with ESMTP id DADCA6063F;
+        Wed, 19 Jun 2019 18:47:41 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
+        s=default; t=1560970061;
+        bh=1yZ8gW4omtDGb+oqxDGLEnHBunqq4YkklbYTCwDXY3U=;
+        h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
+        b=EYJPfomCH0dyi8k+h1DqgHcD2V+VGlCjTr2UW5kMNzdEfu1KOLIsNdJLhoktaOzmA
+         m/h33t+EefNSvWuAkeKELMtnzWcc+qBxt8d9cgJtkGZ48T9SKBFnd9AXK8qipv82lA
+         v0cg/okvJwlKbZsTmYQvUj8EwjwxzJTMZbjQGxjY=
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <a51f117f-c48d-d3f4-c3d1-9b584e3a055f@arm.com>
-User-Agent: Mutt/1.12.0 (2019-05-25)
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
+Content-Transfer-Encoding: 7bit
+Date:   Wed, 19 Jun 2019 12:47:41 -0600
+From:   Subash Abhinov Kasiviswanathan <subashab@codeaurora.org>
+To:     Arnd Bergmann <arnd@arndb.de>
+Cc:     Johannes Berg <johannes@sipsolutions.net>,
+        Alex Elder <elder@linaro.org>, abhishek.esse@gmail.com,
+        Ben Chan <benchan@google.com>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        cpratapa@codeaurora.org, David Miller <davem@davemloft.net>,
+        Dan Williams <dcbw@redhat.com>,
+        DTML <devicetree@vger.kernel.org>,
+        Eric Caruso <ejcaruso@google.com>, evgreen@chromium.org,
+        Ilias Apalodimas <ilias.apalodimas@linaro.org>,
+        Linux ARM <linux-arm-kernel@lists.infradead.org>,
+        linux-arm-msm@vger.kernel.org,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        linux-soc@vger.kernel.org, Networking <netdev@vger.kernel.org>,
+        syadagir@codeaurora.org
+Subject: Re: [PATCH v2 00/17] net: introduce Qualcomm IPA driver
+In-Reply-To: <CAK8P3a3e+U85yHTeE4dHa4okLVHgBd8Kke9=FytzvMwz+wB0sQ@mail.gmail.com>
+References: <380a6185-7ad1-6be0-060b-e6e5d4126917@linaro.org>
+ <a94676381a5ca662c848f7a725562f721c43ce76.camel@sipsolutions.net>
+ <CAK8P3a0kV-i7BJJ2X6C=5n65rSGfo8fUiC4J_G-+M8EctYKbkg@mail.gmail.com>
+ <066e9b39f937586f0f922abf801351553ec2ba1d.camel@sipsolutions.net>
+ <b3686626-e2d8-bc9c-6dd0-9ebb137715af@linaro.org>
+ <b23a83c18055470c5308fcd1eed018056371fc1d.camel@sipsolutions.net>
+ <CAK8P3a1FeUQR3pgoQxHoRK05JGORyR+TFATVQiijLWtFKTv6OQ@mail.gmail.com>
+ <613cdfde488eb23d7207c7ba6258662702d04840.camel@sipsolutions.net>
+ <CAK8P3a2onXpxiE4y9PzRwuPM2dh=h_BKz7Eb0=LLPgBbZoK1bQ@mail.gmail.com>
+ <6c70950d0c78bc02a3d016918ec3929e@codeaurora.org>
+ <CAK8P3a3e+U85yHTeE4dHa4okLVHgBd8Kke9=FytzvMwz+wB0sQ@mail.gmail.com>
+Message-ID: <2926e45fd7ff62fd7c4af9b338bf0caa@codeaurora.org>
+X-Sender: subashab@codeaurora.org
+User-Agent: Roundcube Webmail/1.2.5
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi,
-
-On Wed, Jun 19, 2019 at 09:49:03AM +0100, Suzuki K Poulose wrote:
-> Hi Stephan,
+>> There is a n:1 relationship between rmnet and IPA.
+>> rmnet does the de-muxing to multiple netdevs based on the mux id
+>> in the MAP header for RX packets and vice versa.
 > 
-> On 18/06/2019 21:26, Stephan Gerhold wrote:
-> > Hi,
-> > 
-> > I'm trying to run mainline Linux on a smartphone with MSM8916 SoC.
-> > It works surprisingly well, but the coresight devices seem to cause the
-> > following crash shortly after userspace starts:
-> > 
-> >      Internal error: synchronous external abort: 96000010 [#1] PREEMPT SMP
+> Oh, so you mean that even though IPA supports multiple channels
+> and multiple netdev instances for a physical device, all the
+> rmnet devices end up being thrown into a single channel in IPA?
 > 
-> ...
+> What are the other channels for in IPA? I understand that there
+> is one channel for commands that is separate, while the others
+> are for network devices, but that seems to make no sense if
+> we only use a single channel for rmnet data.
 > 
-> 
-> > 
-> > In this case I'm using a simple device tree similar to apq8016-sbc,
-> > but it also happens using something as simple as msm8916-mtp.dts
-> > on this particular device.
-> >    (Attached: dmesg log with msm8916-mtp.dts and arm64 defconfig)
-> > 
-> > I can avoid the crash and boot without any further problems by disabling
-> > every coresight device defined in msm8916.dtsi, e.g.:
-> > 
-> > 	tpiu@820000 { status = "disabled"; };
-> 
-> ...
-> 
-> > 
-> > I don't have any use for coresight at the moment,
-> > but it seems somewhat odd to put this in the device specific dts.
-> > 
-> > Any idea what could be causing this crash?
-> 
-> This is mostly due to the missing power domain support. The CoreSight
-> components are usually in a debug power domain. So unless that is turned on,
-> (either by specifying proper power domain ids for power management protocol
-> supported by the firmware OR via other hacks - e.g, connecting a DS-5 to
-> keep the debug power domain turned on , this works on Juno -).
 
-Interesting, thanks a lot!
+AFAIK, the other channels are for use cases like tethering.
+There is only a single channel which is used for RX
+data which is then de-muxed using rmnet.
 
-In this case I'm wondering how it works on the Dragonboard 410c.
-Does it enable these power domains in the firmware?
-  (Assuming it boots without this error...)
-
-If coresight is not working properly on all/most msm8916 devices,
-shouldn't coresight be disabled by default in msm8916.dtsi?
-At least until those power domains can be set up by the kernel.
-
-If this is a device-specific issue, what would be an acceptable solution
-for mainline?
-Can I turn on these power domains from the kernel?
-Or is it fine to disable coresight for this device with the snippet above?
-
-I'm not actually trying to use coresight, I just want the device to boot :)
-And since I am considering submitting my device tree for inclusion in
-mainline, I want to ask in advance how I should tackle this problem.
-
-Thanks!
-Stephan
+-- 
+Qualcomm Innovation Center, Inc. is a member of Code Aurora Forum,
+a Linux Foundation Collaborative Project
