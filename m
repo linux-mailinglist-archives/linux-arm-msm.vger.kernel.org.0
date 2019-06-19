@@ -2,179 +2,153 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 36F6B4BF5B
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Jun 2019 19:10:25 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0465D4BFD7
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Jun 2019 19:39:36 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726379AbfFSRKY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 19 Jun 2019 13:10:24 -0400
-Received: from mail-io1-f66.google.com ([209.85.166.66]:44384 "EHLO
-        mail-io1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726246AbfFSRKX (ORCPT
+        id S1727124AbfFSRjf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 19 Jun 2019 13:39:35 -0400
+Received: from mo4-p00-ob.smtp.rzone.de ([81.169.146.163]:34100 "EHLO
+        mo4-p00-ob.smtp.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726380AbfFSRje (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 19 Jun 2019 13:10:23 -0400
-Received: by mail-io1-f66.google.com with SMTP id s7so130199iob.11;
-        Wed, 19 Jun 2019 10:10:23 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=XhL3s8+n+4LGUXBuzDp4IsaYK1WrhS3U2p4eeQfXjpc=;
-        b=Snh4HaJ6D0gAdd3snS+p+l4+PyNNuEzBd8e/jVTUOHHlzXx4CxhQ4o4GUdIFkEDllk
-         55RoOzINcofFZx5xJODItpcMV4uKLjUbdCrDvy1P4RrP1lGTdG+UElUZvIbveOtMyhwF
-         MMnVn1DMI64NE5pvU+drxmV0fNfO0SFdVnX6yTN5YDcg0+lFlOvm/eePCee43VAgxJRk
-         9bQN3hFsYtz+k6cAGDfr7Gpk43yhi5DKNgf3SwsjlT4iDytUnUJVZ9SBBr970csxyhTn
-         nqQa60emHJz62OLCpV7GgYacW2mkwaXwLUpZoLH6qU/q7d9Zxz/mRoJilxCCJBsxFLbV
-         vn0w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=XhL3s8+n+4LGUXBuzDp4IsaYK1WrhS3U2p4eeQfXjpc=;
-        b=Z9RAhFMZozHbCtgJN7E1YU1JRDHcHDWNIBFaIVBrITkOc086CmhTVV97WUV7g6LwpL
-         MMg04tuqjmYPqrN8HW4ST8iF38A32VUvLiPb7iSQBVIWWjvy/lMcKWBto5CD5hNc8Q+T
-         PhyYbfu+Xd39j9Hgpzh2ANwxeLZschKQK358PLqL0hry7RpIZSzvh9+4VeFTE2F0Lq3F
-         N4es9r/5GgT9pQDHB4RVHxvwvULdzOZ/3/RUfRw2XKwz2KiklwHNedCf1gGYyoF06M8W
-         ac6309CDiztbVIC3UPCY3H4DfVFEHsvB77jaY4t4F/7vz2G7C9t6pT7QClGEOEndZxkw
-         5pwQ==
-X-Gm-Message-State: APjAAAXYvYSjP+kHWDqVlLmbtZLVfig/938R4YnqKMqDqtBbtPqEx3ze
-        PgLCO8ZvOxZeNq5D6Hhn2sc=
-X-Google-Smtp-Source: APXvYqyxuMh3AG1RHmRopVXp6U25HjpMxXsOWehKV/m73XRb63Gl7uuwLz5wbKfIqGVJJNv53nnN1A==
-X-Received: by 2002:a5d:8c81:: with SMTP id g1mr5171499ion.239.1560964222523;
-        Wed, 19 Jun 2019 10:10:22 -0700 (PDT)
-Received: from localhost ([8.46.75.67])
-        by smtp.gmail.com with ESMTPSA id l5sm16367942ioq.83.2019.06.19.10.10.20
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 19 Jun 2019 10:10:21 -0700 (PDT)
-Date:   Wed, 19 Jun 2019 12:10:10 -0500
-From:   Dmitry Torokhov <dmitry.torokhov@gmail.com>
-To:     Jeffrey Hugo <jhugo@codeaurora.org>
-Cc:     Jeffrey Hugo <jeffrey.l.hugo@gmail.com>,
-        benjamin.tissoires@redhat.com, jikos@kernel.org,
-        hdegoede@redhat.com, bjorn.andersson@linaro.org, agross@kernel.org,
-        lee.jones@linaro.org, xnox@ubuntu.com, robh+dt@kernel.org,
-        mark.rutland@arm.com, linux-input@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: Re: Re: [PATCH v6 2/5] HID: quirks: Refactor ELAN 400 and 401
- handling
-Message-ID: <20190619171010.24c25oenpmjpiayw@penguin>
-References: <20190612212604.32089-1-jeffrey.l.hugo@gmail.com>
- <20190612212721.32195-1-jeffrey.l.hugo@gmail.com>
- <20190612214636.GA40779@dtor-ws>
- <84e7d83f-e133-0281-612a-94d8c4319040@codeaurora.org>
+        Wed, 19 Jun 2019 13:39:34 -0400
+X-Greylist: delayed 76371 seconds by postgrey-1.27 at vger.kernel.org; Wed, 19 Jun 2019 13:39:33 EDT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; t=1560965969;
+        s=strato-dkim-0002; d=gerhold.net;
+        h=In-Reply-To:References:Message-ID:Subject:Cc:To:From:Date:
+        X-RZG-CLASS-ID:X-RZG-AUTH:From:Subject:Sender;
+        bh=XYYSEo8xkLqEkhoToj39ayE5dpK53KVud0IYJso7SWw=;
+        b=HEpnVVHQj+XKDc9EIHBhpXt8BewN2w+xxxApgbDjrOM7x8S1zPPljIoJCyXgBwrA1k
+        +Jz35OyGg690BqCVUMbYJghY8nlJllQluTnLcqmICbGdsgsLTwLqmQX2FTRn2lKR8MGv
+        9EW+NMhXiLtqykuNS+xx5IGHNKmSAQeSO0yZ37nMxBLtme7+bkprQIthl7aSanm8ztdJ
+        ZCN+3AVxQYHGOAGeynfaXVLwqJg+rUvLYW3y3Ivr8JYOUWTgGkXXIWT8SQ/Se92ASnvZ
+        Rj5baMqguzRhYCqfYsAO5rR9sW/PBsYo6lYdIooufyb6wjmGOzLv1k8dt4GKv4ODR67g
+        k3bA==
+X-RZG-AUTH: ":P3gBZUipdd93FF5ZZvYFPugejmSTVR2nRPhVOQ/OcYgojyw4j34+u267EpF+OQRc4oDXF5yRxHE="
+X-RZG-CLASS-ID: mo00
+Received: from gerhold.net
+        by smtp.strato.de (RZmta 44.24 AUTH)
+        with ESMTPSA id m0a13fv5JHdM7Dr
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (curve secp521r1 with 521 ECDH bits, eq. 15360 bits RSA))
+        (Client did not present a certificate);
+        Wed, 19 Jun 2019 19:39:22 +0200 (CEST)
+Date:   Wed, 19 Jun 2019 19:39:12 +0200
+From:   Stephan Gerhold <stephan@gerhold.net>
+To:     Mathieu Poirier <mathieu.poirier@linaro.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        David Brown <david.brown@linaro.org>,
+        Suzuki K Poulose <suzuki.poulose@arm.com>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        linux-arm-kernel <linux-arm-kernel@lists.infradead.org>
+Subject: Re: Coresight causes synchronous external abort on msm8916
+Message-ID: <20190619173743.GA937@gerhold.net>
+References: <20190618202623.GA53651@gerhold.net>
+ <CANLsYkyViZmpwAPyd7huMC=QRvH3sd0VchJuL-E4+vuYnb0g9A@mail.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <84e7d83f-e133-0281-612a-94d8c4319040@codeaurora.org>
-User-Agent: NeoMutt/20170113 (1.7.2)
+In-Reply-To: <CANLsYkyViZmpwAPyd7huMC=QRvH3sd0VchJuL-E4+vuYnb0g9A@mail.gmail.com>
+User-Agent: Mutt/1.12.0 (2019-05-25)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Jun 12, 2019 at 04:20:42PM -0600, Jeffrey Hugo wrote:
-> On 6/12/2019 3:46 PM, Dmitry Torokhov wrote:
-> > On Wed, Jun 12, 2019 at 02:27:21PM -0700, Jeffrey Hugo wrote:
-> > > There needs to be coordination between hid-quirks and the elan_i2c driver
-> > > about which devices are handled by what drivers.  Currently, both use
-> > > whitelists, which results in valid devices being unhandled by default,
-> > > when they should not be rejected by hid-quirks.  This is quickly becoming
-> > > an issue.
-> > > 
-> > > Since elan_i2c has a maintained whitelist of what devices it will handle,
-> > > which is now in a header file that hid-quirks can access, use that to
-> > > implement a blacklist in hid-quirks so that only the devices that need to
-> > > be handled by elan_i2c get rejected by hid-quirks, and everything else is
-> > > handled by default.
-> > > 
-> > > Suggested-by: Benjamin Tissoires <benjamin.tissoires@redhat.com>
-> > > Signed-off-by: Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
-> > > ---
-> > >   drivers/hid/hid-quirks.c | 27 ++++++++++++++++-----------
-> > >   1 file changed, 16 insertions(+), 11 deletions(-)
-> > > 
-> > > diff --git a/drivers/hid/hid-quirks.c b/drivers/hid/hid-quirks.c
-> > > index e5ca6fe2ca57..bd81bb090222 100644
-> > > --- a/drivers/hid/hid-quirks.c
-> > > +++ b/drivers/hid/hid-quirks.c
-> > > @@ -16,6 +16,7 @@
-> > >   #include <linux/export.h>
-> > >   #include <linux/slab.h>
-> > >   #include <linux/mutex.h>
-> > > +#include <linux/input/elan-i2c-ids.h>
-> > >   #include "hid-ids.h"
-> > > @@ -914,6 +915,8 @@ static const struct hid_device_id hid_mouse_ignore_list[] = {
-> > >   bool hid_ignore(struct hid_device *hdev)
-> > >   {
-> > > +	int i;
-> > > +
-> > >   	if (hdev->quirks & HID_QUIRK_NO_IGNORE)
-> > >   		return false;
-> > >   	if (hdev->quirks & HID_QUIRK_IGNORE)
-> > > @@ -978,18 +981,20 @@ bool hid_ignore(struct hid_device *hdev)
-> > >   		break;
-> > >   	case USB_VENDOR_ID_ELAN:
-> > >   		/*
-> > > -		 * Many Elan devices have a product id of 0x0401 and are handled
-> > > -		 * by the elan_i2c input driver. But the ACPI HID ELAN0800 dev
-> > > -		 * is not (and cannot be) handled by that driver ->
-> > > -		 * Ignore all 0x0401 devs except for the ELAN0800 dev.
-> > > +		 * Blacklist of everything that gets handled by the elan_i2c
-> > > +		 * input driver.  This avoids disabling valid touchpads and
-> > > +		 * other ELAN devices.
-> > >   		 */
-> > > -		if (hdev->product == 0x0401 &&
-> > > -		    strncmp(hdev->name, "ELAN0800", 8) != 0)
-> > > -			return true;
-> > > -		/* Same with product id 0x0400 */
-> > > -		if (hdev->product == 0x0400 &&
-> > > -		    strncmp(hdev->name, "QTEC0001", 8) != 0)
-> > > -			return true;
-> > > +		if ((hdev->product == 0x0401 || hdev->product == 0x0400)) {
-> > > +			for (i = 0; strlen(elan_acpi_id[i].id); ++i)
-> > > +				if (!strncmp(hdev->name, elan_acpi_id[i].id,
-> > > +					     strlen(elan_acpi_id[i].id)))
-> > > +					return true;
-> > > +			for (i = 0; strlen(elan_of_match[i].name); ++i)
-> > > +				if (!strncmp(hdev->name, elan_of_match[i].name,
-> > > +					     strlen(elan_of_match[i].name)))
-> > > +					return true;
-> > 
-> > Do we really need to blacklist the OF case here? I thought that in ACPI
-> > case we have clashes as HID gets matched by elan_i2c and CID is matched
-> > by i2c-hid, but I do not believe we'll run into the same situation on OF
-> > systems.
+On Tue, Jun 18, 2019 at 02:40:06PM -0600, Mathieu Poirier wrote:
+> On Tue, 18 Jun 2019 at 14:26, Stephan Gerhold <stephan@gerhold.net> wrote:
+> >
+> > Hi,
+> >
+> > I'm trying to run mainline Linux on a smartphone with MSM8916 SoC.
+> > It works surprisingly well, but the coresight devices seem to cause the
+> > following crash shortly after userspace starts:
+> >
+> >     Internal error: synchronous external abort: 96000010 [#1] PREEMPT SMP
+> >     Modules linked in:
+> >     CPU: 0 PID: 32 Comm: kworker/0:1 Not tainted 5.2.0-rc5 #7
+> >     Hardware name: Samsung Galaxy A5 (SM-A500FU) (DT)
+> >     Workqueue: events amba_deferred_retry_func
+> >     pstate: 60000005 (nZCv daif -PAN -UAO)
+> >     pc : amba_device_try_add+0x104/0x2f0
+> >     lr : amba_device_try_add+0xf0/0x2f0
+> >     sp : ffff00001181bd40
+> >     x29: ffff00001181bd40 x28: 0000000000000000
+> >     x27: ffff80007b258b38 x26: ffff000010f490a0
+> >     x25: 0000000000000000 x24: ffff000011b35000
+> >     x23: 0000000000000000 x22: ffff80007b316ed8
+> >     x21: 0000000000001000 x20: 0000000000000000
+> >     x19: ffff80007b316c00 x18: 0000000000000000
+> >     x17: 0000000000000000 x16: 0000000000000000
+> >     x15: 0000000000000000 x14: ffffffffffffffff
+> >     x13: 0000000000000000 x12: 0000000000000001
+> >     x11: 0000000000000000 x10: 0000000000000980
+> >     x9 : ffff00001181ba00 x8 : ffff80007b126a20
+> >     x7 : ffff80007a5e0500 x6 : ffff80007b126040
+> >     x5 : 0000000000000002 x4 : ffff80007db85ba0
+> >     x3 : 0000000000000000 x2 : ffff000011b35fe0
+> >     x1 : 0000000000000000 x0 : 0000000000000000
+> >     Call trace:
+> >      amba_device_try_add+0x104/0x2f0
+> >      amba_deferred_retry_func+0x48/0xc8
+> >      process_one_work+0x1e0/0x320
+> >      worker_thread+0x40/0x428
+> >      kthread+0x120/0x128
+> >      ret_from_fork+0x10/0x18
+> >     Code: 35000ac0 d10082a2 52800001 8b020302 (b9400040)
+> >     ---[ end trace b664cbefc1cb2294 ]---
+> >
+> > In this case I'm using a simple device tree similar to apq8016-sbc,
+> > but it also happens using something as simple as msm8916-mtp.dts
+> > on this particular device.
+> >   (Attached: dmesg log with msm8916-mtp.dts and arm64 defconfig)
+> >
+> > I can avoid the crash and boot without any further problems by disabling
+> > every coresight device defined in msm8916.dtsi, e.g.:
+> >
+> >         tpiu@820000 { status = "disabled"; };
+> >         funnel@821000 { status = "disabled"; };
+> >         replicator@824000 { status = "disabled"; };
+> >         etf@825000 { status = "disabled"; };
+> >         etr@826000 { status = "disabled"; };
+> >         funnel@841000 { status = "disabled"; };
+> >         debug@850000 { status = "disabled"; };
+> >         debug@852000 { status = "disabled"; };
+> >         debug@854000 { status = "disabled"; };
+> >         debug@856000 { status = "disabled"; };
+> >         etm@85c000 { status = "disabled"; };
+> >         etm@85d000 { status = "disabled"; };
+> >         etm@85e000 { status = "disabled"; };
+> >         etm@85f000 { status = "disabled"; };
+> >
+> > I don't have any use for coresight at the moment,
+> > but it seems somewhat odd to put this in the device specific dts.
+> >
+> > Any idea what could be causing this crash?
 > 
-> I think its the safer approach.
-> 
-> On an OF system, such as patch 3 in the series, the "hid-over-i2c" will end
-> up running through this (kind of the whole reason why this series exists).
-> The vendor and product ids will still match, so we'll end up going through
-> the lists to see if the hdev->name (the compatible string) will match the
-> blacklist.  "hid-over-i2c" won't match the blacklist, but if there is a more
-> specific compatible, it might.
-> 
-> In that case, not matching OF would work, however how it could break today
-> is if both "hid-over-i2c" and "elan,ekth3000" were listed for the same
-> device, and elan_i2c was not compiled.  In that case, if we skip the OF part
-> of the black list, hid-quirks will not reject the device, and you'll
-> probably have some odd behavior instead of the obvious "the device doesn't
-> work because the correct driver isn't present" behavior.
-> 
-> While that scenario might be far fetched since having both "hid-over-i2c"
-> and "elan,ekth3000" probably violates the OF bindings, its still safer to
-> include the OF case in the blacklist against future scenarios.
+> CS and CPUidle don't play well together on most boards, something I am
+> actively looking into at this very moment.  To avoid the problem
+> either disable CS or CPUidle.
 
-Yes, I believe it is quite far fetched. We are talking about someone
-setting compatible sting to something that is decidedly not compatible.
-I.e. we know that devices driven by elan_i2c are not compatible with
-hi-over-i2c driver/protocol, so why do we expect that they both will be
-specified in the same compatible string? I know ACPI case is messier in
-this regard as 2 drivers look at the different data items when
-evaluating whether they should bind to the device, but here we are
-dealing with the same string.
+Thanks for the very quick suggestion!
 
-Thanks.
+In my case, CPUidle seems unlikely to be the cause - unfortunately all
+the msm8916 phones and tablets were released with a firmware that does
+not support PSCI. Therefore cpuidle is not working properly either. :(
 
--- 
-Dmitry
+To be absolutely sure I have attempted to disable cpuidle by commenting
+out related parts in the device tree. I booted with cpuidle.off=1 on the
+kernel command line but the error persists.
+
+> 
+> Mathieu
+> 
+> > I'm not sure if this is a device-specific issue or possibly some kind of
+> > configuration problem.
+> >   Or is this feature only working on development boards?
+> >
+> > Thanks in advance!
+> > Stephan
+> > _______________________________________________
+> > linux-arm-kernel mailing list
+> > linux-arm-kernel@lists.infradead.org
+> > http://lists.infradead.org/mailman/listinfo/linux-arm-kernel
