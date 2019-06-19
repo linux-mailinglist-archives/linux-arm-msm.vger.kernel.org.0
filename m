@@ -2,140 +2,138 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id E18BA4C18F
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Jun 2019 21:34:33 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 1C0D94C1A7
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Jun 2019 21:44:02 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726479AbfFSTed (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 19 Jun 2019 15:34:33 -0400
-Received: from mail-ed1-f68.google.com ([209.85.208.68]:35080 "EHLO
-        mail-ed1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726449AbfFSTed (ORCPT
+        id S1730294AbfFSToB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 19 Jun 2019 15:44:01 -0400
+Received: from mail-wr1-f67.google.com ([209.85.221.67]:45717 "EHLO
+        mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726230AbfFSToB (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 19 Jun 2019 15:34:33 -0400
-Received: by mail-ed1-f68.google.com with SMTP id p26so984761edr.2;
-        Wed, 19 Jun 2019 12:34:31 -0700 (PDT)
+        Wed, 19 Jun 2019 15:44:01 -0400
+Received: by mail-wr1-f67.google.com with SMTP id f9so459728wre.12
+        for <linux-arm-msm@vger.kernel.org>; Wed, 19 Jun 2019 12:43:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=THobvFVL09XSyltyeDex0p205QhNWgK6SrrZ8MzneQA=;
-        b=qkAU4lzVR8pD0q7s3wTMXWwwctgkn6AyecK1oGeEzPW544duJpM1T62XcuuWZ0d4Nl
-         zRqdQ484DkC+4lw2RhVzt7wwKA9rjSxV/7J0NT4XBEABI4GnroLmimLQfKfi9OvurIjK
-         9YMCaAJwm2ILCGqRmd8fNEp/PB0M+8ioVO+gYgTjN5dun9zKGo6iJxMbjtrzDkqom790
-         uyB7lvatO9bTnBnWrfkS8RNXMfgZc0q4yoeZk3lW+gJe1eZ5+NrbHAjpGSydOs2IctDr
-         kmOve+Ie0+Sp6xZF4khcebNAssYM89P/fmVg30bniNQjT6uW6kPk+rkwhIYTiXAigGFp
-         /ieA==
+        d=linaro.org; s=google;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=Qz5txo1KwkBvBHoDyJ3LT+c6ecU35PqENjJXCaNsN/o=;
+        b=QTRhVOuP+ncTHLfMxLPNc7mDSZnu0vzHbnraWFzAEt4Gq58i6kr6Af9MIRYtqqMN9+
+         tBB6MdEBt8e+jejDZgSRWNhVlLHH5cT6nqYzZAt8peiOkb8L/WtFRFx6APoEOdh/MGdj
+         qzLPqmoqgYlA2/FqJVapOf5UoZvFrNDYbvbKy+w56YpyEuRsP2S6gALxkzKhKckKxWop
+         5sL+kR8Z3QMoHhQMLoPSnNlDtXzBlhUv8XXhHBdTFKb8vc981suz8A6d424kiQuS5r5e
+         Pv0D1B1jCGYHvhNHRUr2ribEIvlQ3yskPVd9YLIHw779vgXoZONr3opkQxkTqrZJ1Mvz
+         BD6Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=THobvFVL09XSyltyeDex0p205QhNWgK6SrrZ8MzneQA=;
-        b=OT9gmhJVAJLuh1YBxNErueOt3kI2wCg0pSseGC2q90oLRlH2WIv/4fQMJyT5OxP1b1
-         aDcK1cSJM5OHzfy6wNu70lEHnb6pxe6ENPMBEPbcvVqtuHqE7jzm9Gti8G+bUQdL6u6r
-         dQ5K4g3dhwZnxy/sZiwQ2MUEvQ3qTrEPeAL2fljPYV7RArriB2lBV8lqMXIBUpm1aAqb
-         zW9frEWcK8Dn5GN/2NtDDaibSO4L8UJBMIZgpr9gv8hZLZYf2ju9jUMWUnvjGUIma86B
-         fmwAvgpcHtqSsLbnwogR9VnmpWHcDto2WHYZYrWxFuZ9EIAQCdLR7Y4H3wEkoxjkO9Ga
-         8lpA==
-X-Gm-Message-State: APjAAAUtlr9K0MraRCr3r7gqoz817EZYhTk88POxX3YQA/2iABh8kOGn
-        UOT1GbcjE0xmaw5F0d7EOqUyQo6kqCjTmR/HAlo=
-X-Google-Smtp-Source: APXvYqxk9fS9U2I8X+hk8DhrqrHLwuYAa4HV2Cxkgcl/SZNyR0vvlgU2C434c4NqG47uDXxQ3ZSCXdwsooZq6+fez8k=
-X-Received: by 2002:a50:c351:: with SMTP id q17mr3699542edb.264.1560972870960;
- Wed, 19 Jun 2019 12:34:30 -0700 (PDT)
-MIME-Version: 1.0
-References: <20190619161913.102998-1-natechancellor@gmail.com>
- <20190619191722.25811-1-natechancellor@gmail.com> <20190619193237.GG25413@art_vandelay>
-In-Reply-To: <20190619193237.GG25413@art_vandelay>
-From:   Rob Clark <robdclark@gmail.com>
-Date:   Wed, 19 Jun 2019 12:34:14 -0700
-Message-ID: <CAF6AEGuf_88J6Airv2uJyiQSyk_4E2YCdYcb2eedQt6GXPpoLA@mail.gmail.com>
-Subject: Re: [PATCH v2] drm/msm/dsi: Add parentheses to quirks check in dsi_phy_hw_v3_0_lane_settings
-To:     Sean Paul <sean@poorly.run>
-Cc:     Nathan Chancellor <natechancellor@gmail.com>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        dri-devel <dri-devel@lists.freedesktop.org>,
-        freedreno <freedreno@lists.freedesktop.org>,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-        clang-built-linux@googlegroups.com,
-        kbuild test robot <lkp@intel.com>,
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=Qz5txo1KwkBvBHoDyJ3LT+c6ecU35PqENjJXCaNsN/o=;
+        b=mTiaV6npBIL2z6ejwSp6OV44l6UwqZhz7Y5a4VRMShw5vPK+/wAwBTkBR9qqjv+Piq
+         W/mnnhFBucW0rSfOxJK18IZ33joCMod5kBr1air/p9gTUc14jjTYvEp0R0uYybeJoJ5Q
+         hCy2upLdyGs7hgA24lng2caWykpuCxtuUWjPN07tYBt0B1v3QJgATbOkPSvwIfPZXJBi
+         scQIKjGA2OcljFtGno8sahBbm3VyEgq+nhpeaDAJLty/usJTnfohxjCVJFLMWtuRYLbH
+         1RmTeQ+btWHeEIZjRHsfhTgBEuaPuJBCaLDY+G/kkvmqCMtD/PbTfPY9JPto2HethMTg
+         c5ow==
+X-Gm-Message-State: APjAAAU7Q0xEV+5hyiJ4itcZszuxY7LiliWj7w8DAc6wFXW2hgFG/ZJU
+        rwgaDg1vHC+rwc47QetEyykukBgqPvw=
+X-Google-Smtp-Source: APXvYqwAjh2mhC/drFhVM9X6mlNr0Hfoa9dHcXKRFDDNQxdHBW5hqlCqwoOuHP+jxNEmI+iXmqA4yw==
+X-Received: by 2002:a05:6000:146:: with SMTP id r6mr75973646wrx.237.1560973439075;
+        Wed, 19 Jun 2019 12:43:59 -0700 (PDT)
+Received: from [192.168.1.6] (14.red-79-146-87.dynamicip.rima-tde.net. [79.146.87.14])
+        by smtp.gmail.com with ESMTPSA id g2sm2452057wmh.0.2019.06.19.12.43.58
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Wed, 19 Jun 2019 12:43:58 -0700 (PDT)
+Subject: Re: [PATCH] regulator: qcom_spmi: Fix math of
+ spmi_regulator_set_voltage_time_sel
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>,
         Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+Cc:     lgirdwood@gmail.com, broonie@kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20190619185636.10831-1-jeffrey.l.hugo@gmail.com>
+ <20190619190557.GL4814@minitux>
+From:   Jorge Ramirez <jorge.ramirez-ortiz@linaro.org>
+Message-ID: <871848c2-d600-fb20-1d5d-c196ea5aba44@linaro.org>
+Date:   Wed, 19 Jun 2019 21:43:57 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+ Thunderbird/60.2.1
+MIME-Version: 1.0
+In-Reply-To: <20190619190557.GL4814@minitux>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Jun 19, 2019 at 12:32 PM Sean Paul <sean@poorly.run> wrote:
->
-> On Wed, Jun 19, 2019 at 12:17:23PM -0700, Nathan Chancellor wrote:
-> > Clang warns:
-> >
-> > drivers/gpu/drm/msm/dsi/phy/dsi_phy_10nm.c:80:6: warning: logical not is
-> > only applied to the left hand side of this bitwise operator
-> > [-Wlogical-not-parentheses]
-> >         if (!phy->cfg->quirks & V3_0_0_10NM_OLD_TIMINGS_QUIRK) {
-> >             ^                 ~
-> > drivers/gpu/drm/msm/dsi/phy/dsi_phy_10nm.c:80:6: note: add parentheses
-> > after the '!' to evaluate the bitwise operator first
-> >         if (!phy->cfg->quirks & V3_0_0_10NM_OLD_TIMINGS_QUIRK) {
-> >             ^
-> >              (                                               )
-> > drivers/gpu/drm/msm/dsi/phy/dsi_phy_10nm.c:80:6: note: add parentheses
-> > around left hand side expression to silence this warning
-> >         if (!phy->cfg->quirks & V3_0_0_10NM_OLD_TIMINGS_QUIRK) {
-> >             ^
-> >             (                )
-> > 1 warning generated.
-> >
-> > Add parentheses around the bitwise AND so it is evaluated first then
-> > negated.
-> >
-> > Fixes: 3dbbf8f09e83 ("drm/msm/dsi: Add old timings quirk for 10nm phy")
->
-> Hmm, so it looks like this patch isn't upstream. What tree are you basing this
-> on?
+On 6/19/19 21:05, Bjorn Andersson wrote:
+> On Wed 19 Jun 11:56 PDT 2019, Jeffrey Hugo wrote:
+> 
+>> spmi_regulator_set_voltage_time_sel() calculates the amount of delay
+>> needed as the result of setting a new voltage.  Essentially this is the
+>> absolute difference of the old and new voltages, divided by the slew rate.
+>>
+>> The implementation of spmi_regulator_set_voltage_time_sel() is wrong.
+>>
+>> It attempts to calculate the difference in voltages by using the
+>> difference in selectors and multiplying by the voltage step between
+>> selectors.  This ignores the possibility that the old and new selectors
+>> might be from different ranges, which have different step values.  Also,
+>> the difference between the selectors may encapsulate N ranges inbetween,
+>> so a summation of each selector change from old to new would be needed.
+>>
+>> Lets avoid all of that complexity, and just get the actual voltage
+>> represented by both the old and new selector, and use those to directly
+>> compute the voltage delta.  This is more straight forward, and has the
+>> side benifit of avoiding issues with regulator implementations that don't
+>> have hardware register support to get the current configured range.
+>>
+>> Fixes: e92a4047419c ("regulator: Add QCOM SPMI regulator driver")
+>> Reported-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+>> Reported-by: Jorge Ramirez-Ortiz <jorge.ramirez-ortiz@linaro.org>
+>> Signed-off-by: Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
+> 
+> Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
 
-it is in msm-next-staging.. (which will be pushed to msm-next after
-some testing)
+Tested on EVB-4000 using the cpufreq patchset that I still need to
+repost v3  [1]
 
-I've pulled Nathan's patch in on top..
+Tested-by: Jorge Ramirez-Ortiz <jorge.ramirez-ortiz@linaro.org>
 
-BR,
--R
 
->
-> Sean
->
-> > Link: https://github.com/ClangBuiltLinux/linux/issues/547
-> > Reported-by: kbuild test robot <lkp@intel.com>
-> > Reviewed-by: Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
-> > Reviewed-by: Sean Paul <sean@poorly.run>
-> > Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
-> > ---
-> >
-> > v1 -> v2:
-> >
-> > * Fix broken link (thanks to Sean for pointing it out)
-> > * Add Sean's reviewed-by
-> >
-> >  drivers/gpu/drm/msm/dsi/phy/dsi_phy_10nm.c | 2 +-
-> >  1 file changed, 1 insertion(+), 1 deletion(-)
-> >
-> > diff --git a/drivers/gpu/drm/msm/dsi/phy/dsi_phy_10nm.c b/drivers/gpu/drm/msm/dsi/phy/dsi_phy_10nm.c
-> > index eb28937f4b34..47403d4f2d28 100644
-> > --- a/drivers/gpu/drm/msm/dsi/phy/dsi_phy_10nm.c
-> > +++ b/drivers/gpu/drm/msm/dsi/phy/dsi_phy_10nm.c
-> > @@ -77,7 +77,7 @@ static void dsi_phy_hw_v3_0_lane_settings(struct msm_dsi_phy *phy)
-> >                             tx_dctrl[i]);
-> >       }
-> >
-> > -     if (!phy->cfg->quirks & V3_0_0_10NM_OLD_TIMINGS_QUIRK) {
-> > +     if (!(phy->cfg->quirks & V3_0_0_10NM_OLD_TIMINGS_QUIRK)) {
-> >               /* Toggle BIT 0 to release freeze I/0 */
-> >               dsi_phy_write(lane_base + REG_DSI_10nm_PHY_LN_TX_DCTRL(3), 0x05);
-> >               dsi_phy_write(lane_base + REG_DSI_10nm_PHY_LN_TX_DCTRL(3), 0x04);
-> > --
-> > 2.22.0
-> >
->
-> --
-> Sean Paul, Software Engineer, Google / Chromium OS
+[1] https://patchwork.kernel.org/cover/10784383/
+
+> 
+>> ---
+>>  drivers/regulator/qcom_spmi-regulator.c | 8 ++------
+>>  1 file changed, 2 insertions(+), 6 deletions(-)
+>>
+>> diff --git a/drivers/regulator/qcom_spmi-regulator.c b/drivers/regulator/qcom_spmi-regulator.c
+>> index 13f83be50076..877df33e0246 100644
+>> --- a/drivers/regulator/qcom_spmi-regulator.c
+>> +++ b/drivers/regulator/qcom_spmi-regulator.c
+>> @@ -813,14 +813,10 @@ static int spmi_regulator_set_voltage_time_sel(struct regulator_dev *rdev,
+>>  		unsigned int old_selector, unsigned int new_selector)
+>>  {
+>>  	struct spmi_regulator *vreg = rdev_get_drvdata(rdev);
+>> -	const struct spmi_voltage_range *range;
+>>  	int diff_uV;
+>>  
+>> -	range = spmi_regulator_find_range(vreg);
+>> -	if (!range)
+>> -		return -EINVAL;
+>> -
+>> -	diff_uV = abs(new_selector - old_selector) * range->step_uV;
+>> +	diff_uV = abs(spmi_regulator_common_list_voltage(rdev, new_selector) -
+>> +		      spmi_regulator_common_list_voltage(rdev, old_selector));
+>>  
+>>  	return DIV_ROUND_UP(diff_uV, vreg->slew_rate);
+>>  }
+>> -- 
+>> 2.17.1
+>>
+> 
+
