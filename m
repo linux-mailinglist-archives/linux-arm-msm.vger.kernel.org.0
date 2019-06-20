@@ -2,124 +2,604 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 319044D997
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Jun 2019 20:40:36 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 768E44D9BD
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Jun 2019 20:50:56 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726062AbfFTSkf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 20 Jun 2019 14:40:35 -0400
-Received: from mail-pg1-f194.google.com ([209.85.215.194]:33138 "EHLO
-        mail-pg1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726019AbfFTSkf (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 20 Jun 2019 14:40:35 -0400
-Received: by mail-pg1-f194.google.com with SMTP id m4so1422540pgk.0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 20 Jun 2019 11:40:34 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=3E9yCKMWHtYXo9wRsncEUScya2BBzWft7CLBUWLLdV4=;
-        b=hyhR05T+yMmKFbyV70Y25z06JF/z+EPcG98dgh4y79hyhyESfyRzRqbb8kiCD0aPJs
-         Z5Jcgf2l1gQpElDrQ5+D7lXj/T+7NHLv0bbjO9ZNoB1Kzb29SyBOv0l9Y+s+B6xqITAh
-         X2AMd8FFR/8JtjLiRFbBhvHdwplbb75LkMbwycM/9mWp+Vga/Y+i/zCU5z6uwgPfshpk
-         /vgG5wH1DxpmNGZbV/fymrtWs0aBvAI9Qwh3bgh3wln1U8JfOPeDGUtBysELMquUiuQS
-         XMMEfBnrg1hdTHDE+c4bbDEqWEwssQWMTbskVcIKztYdquafiypCwze429NBLMVxZbbo
-         c2Mw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=3E9yCKMWHtYXo9wRsncEUScya2BBzWft7CLBUWLLdV4=;
-        b=Ae9d0Fnpi61tHM9deoX35gK09VpupOju1sp0mNALHpHcLwBryoewwYPmDFyJh9fTu1
-         ItJA9VqLzz/6dfRB/VxDOTyw0VSPnhXJ8DiwOeUqPvJOt97omc2BolQHq6nn4QwBUL0k
-         c7+IG4fxJ6b2h83FnPRM+Yqr7Ir2cpxutXB+p3kCVBI9Y+PKKUsiEI1HIAZL/DsTfYyD
-         SF25p/1Sw9Qw3KidmkULeqSmZQ0hXPJmKuxqsSvNNDZV0qDMIN1el8Ti9jmFVBJT3e/j
-         N5OACgYOsWIgA++14wLa4TqWnG8d9ExdtwBg3k9Z8p7gixRM6vkgvpfT2tOj8r/jIFEo
-         ocIQ==
-X-Gm-Message-State: APjAAAVG/PogaULDMSj6BWWEEMalPQvi+GoIeqUz9Pl9oOqPrx0Q2hqr
-        K+eJJm3qKjZro2Z6xU6LGQ7/Fw==
-X-Google-Smtp-Source: APXvYqw670I70MZtHBEfqVjppQCLZyKZubkBQX7oucoHQkaeWDMjIPR6gtBFCP8G2slIEMY6I2t52g==
-X-Received: by 2002:aa7:8157:: with SMTP id d23mr132293116pfn.92.1561056034189;
-        Thu, 20 Jun 2019 11:40:34 -0700 (PDT)
-Received: from tuxbook-pro (104-188-17-28.lightspeed.sndgca.sbcglobal.net. [104.188.17.28])
-        by smtp.gmail.com with ESMTPSA id 14sm320978pgo.70.2019.06.20.11.40.32
-        (version=TLS1_3 cipher=AEAD-AES256-GCM-SHA384 bits=256/256);
-        Thu, 20 Jun 2019 11:40:33 -0700 (PDT)
-Date:   Thu, 20 Jun 2019 11:41:24 -0700
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Marc Gonzalez <marc.w.gonzalez@free.fr>
-Cc:     Linus Walleij <linus.walleij@linaro.org>,
-        MSM <linux-arm-msm@vger.kernel.org>,
-        gpio <linux-gpio@vger.kernel.org>,
-        Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
-Subject: Re: How to write "modern" pinctrl DT node
-Message-ID: <20190620184124.GB24205@tuxbook-pro>
-References: <18ab4b1c-e74e-410a-a504-f524e46c42ac@free.fr>
- <20190611180516.GO4814@minitux>
- <be298c01-53b8-a954-5de0-3f302265f1cb@free.fr>
+        id S1725987AbfFTSuz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 20 Jun 2019 14:50:55 -0400
+Received: from mga01.intel.com ([192.55.52.88]:46367 "EHLO mga01.intel.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726062AbfFTSuz (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 20 Jun 2019 14:50:55 -0400
+X-Amp-Result: SKIPPED(no attachment in message)
+X-Amp-File-Uploaded: False
+Received: from fmsmga008.fm.intel.com ([10.253.24.58])
+  by fmsmga101.fm.intel.com with ESMTP/TLS/DHE-RSA-AES256-GCM-SHA384; 20 Jun 2019 11:50:54 -0700
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="5.63,397,1557212400"; 
+   d="scan'208";a="160756473"
+Received: from stinkbox.fi.intel.com (HELO stinkbox) ([10.237.72.174])
+  by fmsmga008.fm.intel.com with SMTP; 20 Jun 2019 11:50:49 -0700
+Received: by stinkbox (sSMTP sendmail emulation); Thu, 20 Jun 2019 21:50:49 +0300
+From:   Ville Syrjala <ville.syrjala@linux.intel.com>
+To:     dri-devel@lists.freedesktop.org
+Cc:     intel-gfx@lists.freedesktop.org,
+        Russell King <linux@armlinux.org.uk>,
+        Neil Armstrong <narmstrong@baylibre.com>,
+        Rob Clark <robdclark@gmail.com>,
+        Tomi Valkeinen <tomi.valkeinen@ti.com>,
+        Thierry Reding <thierry.reding@gmail.com>,
+        Sam Ravnborg <sam@ravnborg.org>,
+        Benjamin Gaignard <benjamin.gaignard@linaro.org>,
+        Vincent Abriou <vincent.abriou@st.com>,
+        linux-amlogic@lists.infradead.org, linux-arm-msm@vger.kernel.org,
+        freedreno@lists.freedesktop.org, Ilia Mirkin <imirkin@alum.mit.edu>
+Subject: [PATCH 1/2] drm: Pretty print mode flags
+Date:   Thu, 20 Jun 2019 21:50:48 +0300
+Message-Id: <20190620185049.8974-1-ville.syrjala@linux.intel.com>
+X-Mailer: git-send-email 2.21.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <be298c01-53b8-a954-5de0-3f302265f1cb@free.fr>
-User-Agent: Mutt/1.11.4 (2019-03-13)
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu 20 Jun 04:02 PDT 2019, Marc Gonzalez wrote:
+From: Ville Syrjälä <ville.syrjala@linux.intel.com>
 
-> On 11/06/2019 20:05, Bjorn Andersson wrote:
-> 
-> > Also, what's up with tsif0 vs tsif1?
-> 
-> Some people count from 0; other people count from 1.
-> 
-> The HW programming guide mentions TSIF_0 and TSIF_1.
-> The pinctrl driver defines tsif1 and tsif2.
-> 
-> I propose we use 0 and 1 consistently everywhere.
-> 
+Decode the mode flags when printing the modeline so that I
+no longer have to decode the hex number myself.
 
-I do like when the tlmm functions matches the hardware block naming
-(which for some reason is not always the case). So I'm good with your
-suggestion.
+To do this neatly I made the caller provide a temporary
+on stack buffer where we can produce the results. I choce 64
+bytes as a reasonable size for this. The worst case I think
+is > 100 bytes but that kind of mode would be nonsense anyway
+so I figured correct decoding isn't as important in such
+cases.
 
-> > PS. I would suggest that you send a patch to the MSM8998 pinctrl driver
-> > (and binding) where you squash tsifN_* to tsifN. It would break
-> > backwards compatibility, but I think we can take that risk now before
-> > someone starts to use it... And after that you can go with your proposed
-> > squashed node.
-> 
-> Here's what I have right now:
-> 
-> $ git ls --stat 85c02fb4dfd1..HEAD
-> 5ed38c44a92a (HEAD -> tsif-fixup) Fixup qcom,msm8998-pinctrl.txt example
->  Documentation/devicetree/bindings/pinctrl/qcom,msm8998-pinctrl.txt | 14 ++++----------
->  1 file changed, 4 insertions(+), 10 deletions(-)
-> 823402af81a6 Fixup qcom,msm8998-pinctrl.txt binding
->  Documentation/devicetree/bindings/pinctrl/qcom,msm8998-pinctrl.txt | 5 ++---
->  1 file changed, 2 insertions(+), 3 deletions(-)
-> afb686b8b3e7 Squash all 5 tsif1 pins together
->  drivers/pinctrl/qcom/pinctrl-msm8998.c | 38 +++++++++-----------------------------
->  1 file changed, 9 insertions(+), 29 deletions(-)
-> 8e4d31c8d455 Squash all 5 tsif0 pins together
->  drivers/pinctrl/qcom/pinctrl-msm8998.c | 38 +++++++++-----------------------------
->  1 file changed, 9 insertions(+), 29 deletions(-)
-> ee850fa510a6 sed -i 's/tsif2/tsif1/g' drivers/pinctrl/qcom/pinctrl-msm8998.c
->  drivers/pinctrl/qcom/pinctrl-msm8998.c | 40 ++++++++++++++++++++--------------------
->  1 file changed, 20 insertions(+), 20 deletions(-)
-> c7ffe4075623 sed -i 's/tsif1/tsif0/g' drivers/pinctrl/qcom/pinctrl-msm8998.c
->  drivers/pinctrl/qcom/pinctrl-msm8998.c | 40 ++++++++++++++++++++--------------------
->  1 file changed, 20 insertions(+), 20 deletions(-)
-> 
-> I'm wondering if the series needs to be split up (as it is) or squashed
-> into a single patch (might be harder to review for mistakes).
-> 
-> What do you think?
->
+Cc: Russell King <linux@armlinux.org.uk>
+Cc: Neil Armstrong <narmstrong@baylibre.com>
+Cc: Rob Clark <robdclark@gmail.com>
+Cc: Tomi Valkeinen <tomi.valkeinen@ti.com>
+Cc: Thierry Reding <thierry.reding@gmail.com>
+Cc: Sam Ravnborg <sam@ravnborg.org>
+Cc: Benjamin Gaignard <benjamin.gaignard@linaro.org>
+Cc: Vincent Abriou <vincent.abriou@st.com>
+Cc: linux-amlogic@lists.infradead.org
+Cc: linux-arm-msm@vger.kernel.org
+Cc: freedreno@lists.freedesktop.org
+Cc: Ilia Mirkin <imirkin@alum.mit.edu>
+Signed-off-by: Ville Syrjälä <ville.syrjala@linux.intel.com>
+---
+ drivers/gpu/drm/armada/armada_crtc.c          |   3 +-
+ drivers/gpu/drm/drm_atomic.c                  |   3 +-
+ drivers/gpu/drm/drm_modes.c                   | 116 +++++++++++++++++-
+ drivers/gpu/drm/i915/i915_debugfs.c           |   3 +-
+ drivers/gpu/drm/meson/meson_dw_hdmi.c         |   3 +-
+ drivers/gpu/drm/meson/meson_venc.c            |   4 +-
+ drivers/gpu/drm/msm/disp/mdp4/mdp4_crtc.c     |   3 +-
+ .../gpu/drm/msm/disp/mdp4/mdp4_dsi_encoder.c  |   3 +-
+ .../gpu/drm/msm/disp/mdp4/mdp4_dtv_encoder.c  |   3 +-
+ .../gpu/drm/msm/disp/mdp4/mdp4_lcdc_encoder.c |   3 +-
+ .../gpu/drm/msm/disp/mdp5/mdp5_cmd_encoder.c  |   4 +-
+ drivers/gpu/drm/msm/disp/mdp5/mdp5_crtc.c     |   3 +-
+ drivers/gpu/drm/msm/disp/mdp5/mdp5_encoder.c  |   3 +-
+ drivers/gpu/drm/msm/dsi/dsi_manager.c         |   3 +-
+ drivers/gpu/drm/msm/edp/edp_bridge.c          |   3 +-
+ drivers/gpu/drm/omapdrm/omap_connector.c      |   5 +-
+ drivers/gpu/drm/omapdrm/omap_crtc.c           |   3 +-
+ drivers/gpu/drm/panel/panel-ronbo-rb070d30.c  |   3 +-
+ drivers/gpu/drm/sti/sti_crtc.c                |   3 +-
+ include/drm/drm_modes.h                       |  14 ++-
+ 20 files changed, 165 insertions(+), 23 deletions(-)
 
-Go for one patch.
+diff --git a/drivers/gpu/drm/armada/armada_crtc.c b/drivers/gpu/drm/armada/armada_crtc.c
+index ba4a3fab7745..ce9335682bd2 100644
+--- a/drivers/gpu/drm/armada/armada_crtc.c
++++ b/drivers/gpu/drm/armada/armada_crtc.c
+@@ -262,6 +262,7 @@ static void armada_drm_crtc_mode_set_nofb(struct drm_crtc *crtc)
+ 	unsigned long flags;
+ 	unsigned i;
+ 	bool interlaced = !!(adj->flags & DRM_MODE_FLAG_INTERLACE);
++	char buf[DRM_MODE_FLAGS_BUF_LEN];
+ 
+ 	i = 0;
+ 	rm = adj->crtc_hsync_start - adj->crtc_hdisplay;
+@@ -270,7 +271,7 @@ static void armada_drm_crtc_mode_set_nofb(struct drm_crtc *crtc)
+ 	tm = adj->crtc_vtotal - adj->crtc_vsync_end;
+ 
+ 	DRM_DEBUG_KMS("[CRTC:%d:%s] mode " DRM_MODE_FMT "\n",
+-		      crtc->base.id, crtc->name, DRM_MODE_ARG(adj));
++		      crtc->base.id, crtc->name, DRM_MODE_ARG(adj, buf));
+ 	DRM_DEBUG_KMS("lm %d rm %d tm %d bm %d\n", lm, rm, tm, bm);
+ 
+ 	/* Now compute the divider for real */
+diff --git a/drivers/gpu/drm/drm_atomic.c b/drivers/gpu/drm/drm_atomic.c
+index 419381abbdd1..81caf91fbd72 100644
+--- a/drivers/gpu/drm/drm_atomic.c
++++ b/drivers/gpu/drm/drm_atomic.c
+@@ -380,6 +380,7 @@ static void drm_atomic_crtc_print_state(struct drm_printer *p,
+ 		const struct drm_crtc_state *state)
+ {
+ 	struct drm_crtc *crtc = state->crtc;
++	char buf[DRM_MODE_FLAGS_BUF_LEN];
+ 
+ 	drm_printf(p, "crtc[%u]: %s\n", crtc->base.id, crtc->name);
+ 	drm_printf(p, "\tenable=%d\n", state->enable);
+@@ -393,7 +394,7 @@ static void drm_atomic_crtc_print_state(struct drm_printer *p,
+ 	drm_printf(p, "\tplane_mask=%x\n", state->plane_mask);
+ 	drm_printf(p, "\tconnector_mask=%x\n", state->connector_mask);
+ 	drm_printf(p, "\tencoder_mask=%x\n", state->encoder_mask);
+-	drm_printf(p, "\tmode: " DRM_MODE_FMT "\n", DRM_MODE_ARG(&state->mode));
++	drm_printf(p, "\tmode: " DRM_MODE_FMT "\n", DRM_MODE_ARG(&state->mode, buf));
+ 
+ 	if (crtc->funcs->atomic_print_state)
+ 		crtc->funcs->atomic_print_state(p, state);
+diff --git a/drivers/gpu/drm/drm_modes.c b/drivers/gpu/drm/drm_modes.c
+index 57e6408288c8..3d15c600295a 100644
+--- a/drivers/gpu/drm/drm_modes.c
++++ b/drivers/gpu/drm/drm_modes.c
+@@ -45,6 +45,118 @@
+ 
+ #include "drm_crtc_internal.h"
+ 
++static char *snprint_cont(char *buf, int *len,
++			  const char *str, bool last)
++{
++	int r;
++
++	r = snprintf(buf, *len, "%s%s", str, last ? "" : ",");
++	if (r >= *len)
++		return buf;
++
++	*len -= r;
++	buf += r;
++
++	return buf;
++}
++
++#define MODE_STR(x) { .name = #x, .flag = DRM_MODE_FLAG_ ## x, }
++
++static const struct {
++	const char *name;
++	u32 flag;
++} mode_flags[] = {
++	MODE_STR(PHSYNC),
++	MODE_STR(NHSYNC),
++	MODE_STR(PVSYNC),
++	MODE_STR(NVSYNC),
++	MODE_STR(INTERLACE),
++	MODE_STR(CSYNC),
++	MODE_STR(PCSYNC),
++	MODE_STR(NCSYNC),
++	MODE_STR(DBLSCAN),
++	MODE_STR(HSKEW),
++	MODE_STR(DBLCLK),
++	MODE_STR(CLKDIV2),
++};
++
++#undef MODE_STR
++#define MODE_STR(x) [DRM_MODE_FLAG_3D_ ## x >> 14] = #x
++
++static const char * const stereo_flags[] = {
++	MODE_STR(NONE),
++	MODE_STR(FRAME_PACKING),
++	MODE_STR(FIELD_ALTERNATIVE),
++	MODE_STR(LINE_ALTERNATIVE),
++	MODE_STR(SIDE_BY_SIDE_FULL),
++	MODE_STR(L_DEPTH),
++	MODE_STR(L_DEPTH_GFX_GFX_DEPTH),
++	MODE_STR(TOP_AND_BOTTOM),
++	MODE_STR(SIDE_BY_SIDE_HALF),
++};
++
++#undef MODE_STR
++#define MODE_STR(x) [DRM_MODE_FLAG_PIC_AR_ ## x >> 19] = #x
++
++static const char * const aspect_flags[] = {
++	MODE_STR(NONE),
++	MODE_STR(4_3),
++	MODE_STR(16_9),
++	MODE_STR(64_27),
++	MODE_STR(256_135),
++};
++
++#undef MODE_STR
++
++const char *drm_get_mode_flags_name(char *buf, int len, u32 flags)
++{
++	char *ptr = buf;
++	int i;
++
++	if (len == 0)
++		return buf;
++
++	buf[0] = '\0';
++
++	if (flags & DRM_MODE_FLAG_3D_MASK) {
++		int stereo = (flags & DRM_MODE_FLAG_3D_MASK) >> 14;
++
++		if (stereo < ARRAY_SIZE(stereo_flags)) {
++			flags &= ~DRM_MODE_FLAG_3D_MASK;
++			ptr = snprint_cont(ptr, &len,
++					   stereo_flags[stereo], !flags);
++		}
++	}
++
++	if (flags & DRM_MODE_FLAG_PIC_AR_MASK) {
++		int aspect = (flags & DRM_MODE_FLAG_PIC_AR_MASK) >> 19;
++
++		if (aspect < ARRAY_SIZE(aspect_flags)) {
++			flags &= ~DRM_MODE_FLAG_PIC_AR_MASK;
++			ptr = snprint_cont(ptr, &len,
++					   aspect_flags[aspect], !flags);
++		}
++	}
++
++	for (i = 0; i < ARRAY_SIZE(mode_flags); i++) {
++		u32 flag = mode_flags[i].flag;
++
++		if ((flags & flag) == 0)
++			continue;
++
++		flags &= ~flag;
++
++		ptr = snprint_cont(ptr, &len,
++				   mode_flags[i].name, !flags);
++	}
++
++	if (flags)
++		ptr = snprint_cont(ptr, &len, "?", true);
++
++	return buf;
++}
++EXPORT_SYMBOL(drm_get_mode_flags_name);
++
+ /**
+  * drm_mode_debug_printmodeline - print a mode to dmesg
+  * @mode: mode to print
+@@ -53,7 +165,9 @@
+  */
+ void drm_mode_debug_printmodeline(const struct drm_display_mode *mode)
+ {
+-	DRM_DEBUG_KMS("Modeline " DRM_MODE_FMT "\n", DRM_MODE_ARG(mode));
++	char buf[DRM_MODE_FLAGS_BUF_LEN];
++
++	DRM_DEBUG_KMS("Modeline " DRM_MODE_FMT "\n", DRM_MODE_ARG(mode, buf));
+ }
+ EXPORT_SYMBOL(drm_mode_debug_printmodeline);
+ 
+diff --git a/drivers/gpu/drm/i915/i915_debugfs.c b/drivers/gpu/drm/i915/i915_debugfs.c
+index 62cf34db9280..18a3ff8e1461 100644
+--- a/drivers/gpu/drm/i915/i915_debugfs.c
++++ b/drivers/gpu/drm/i915/i915_debugfs.c
+@@ -2539,12 +2539,13 @@ static int i915_dmc_info(struct seq_file *m, void *unused)
+ static void intel_seq_print_mode(struct seq_file *m, int tabs,
+ 				 struct drm_display_mode *mode)
+ {
++	char buf[DRM_MODE_FLAGS_BUF_LEN];
+ 	int i;
+ 
+ 	for (i = 0; i < tabs; i++)
+ 		seq_putc(m, '\t');
+ 
+-	seq_printf(m, DRM_MODE_FMT "\n", DRM_MODE_ARG(mode));
++	seq_printf(m, DRM_MODE_FMT "\n", DRM_MODE_ARG(mode, buf));
+ }
+ 
+ static void intel_encoder_info(struct seq_file *m,
+diff --git a/drivers/gpu/drm/meson/meson_dw_hdmi.c b/drivers/gpu/drm/meson/meson_dw_hdmi.c
+index df3f9ddd2234..30e53a043ba6 100644
+--- a/drivers/gpu/drm/meson/meson_dw_hdmi.c
++++ b/drivers/gpu/drm/meson/meson_dw_hdmi.c
+@@ -610,13 +610,14 @@ dw_hdmi_mode_valid(struct drm_connector *connector,
+ 		   const struct drm_display_mode *mode)
+ {
+ 	struct meson_drm *priv = connector->dev->dev_private;
++	char buf[DRM_MODE_FLAGS_BUF_LEN];
+ 	unsigned int vclk_freq;
+ 	unsigned int venc_freq;
+ 	unsigned int hdmi_freq;
+ 	int vic = drm_match_cea_mode(mode);
+ 	enum drm_mode_status status;
+ 
+-	DRM_DEBUG_DRIVER("Modeline " DRM_MODE_FMT "\n", DRM_MODE_ARG(mode));
++	DRM_DEBUG_DRIVER("Modeline " DRM_MODE_FMT "\n", DRM_MODE_ARG(mode, buf));
+ 
+ 	/* If sink max TMDS clock, we reject the mode */
+ 	if (connector->display_info.max_tmds_clock &&
+diff --git a/drivers/gpu/drm/meson/meson_venc.c b/drivers/gpu/drm/meson/meson_venc.c
+index 7b7a0d8d737c..09acbc06f9f3 100644
+--- a/drivers/gpu/drm/meson/meson_venc.c
++++ b/drivers/gpu/drm/meson/meson_venc.c
+@@ -987,9 +987,11 @@ void meson_venc_hdmi_mode_set(struct meson_drm *priv, int vic,
+ 	if (meson_venc_hdmi_supported_vic(vic)) {
+ 		vmode = meson_venc_hdmi_get_vic_vmode(vic);
+ 		if (!vmode) {
++			char buf[DRM_MODE_FLAGS_BUF_LEN];
++
+ 			dev_err(priv->dev, "%s: Fatal Error, unsupported mode "
+ 				DRM_MODE_FMT "\n", __func__,
+-				DRM_MODE_ARG(mode));
++				DRM_MODE_ARG(mode, buf));
+ 			return;
+ 		}
+ 	} else {
+diff --git a/drivers/gpu/drm/msm/disp/mdp4/mdp4_crtc.c b/drivers/gpu/drm/msm/disp/mdp4/mdp4_crtc.c
+index 0cfd4c06b610..f68d9f74b0e4 100644
+--- a/drivers/gpu/drm/msm/disp/mdp4/mdp4_crtc.c
++++ b/drivers/gpu/drm/msm/disp/mdp4/mdp4_crtc.c
+@@ -238,6 +238,7 @@ static void mdp4_crtc_mode_set_nofb(struct drm_crtc *crtc)
+ 	enum mdp4_dma dma = mdp4_crtc->dma;
+ 	int ovlp = mdp4_crtc->ovlp;
+ 	struct drm_display_mode *mode;
++	char buf[DRM_MODE_FLAGS_BUF_LEN];
+ 
+ 	if (WARN_ON(!crtc->state))
+ 		return;
+@@ -245,7 +246,7 @@ static void mdp4_crtc_mode_set_nofb(struct drm_crtc *crtc)
+ 	mode = &crtc->state->adjusted_mode;
+ 
+ 	DBG("%s: set mode: " DRM_MODE_FMT,
+-			mdp4_crtc->name, DRM_MODE_ARG(mode));
++	    mdp4_crtc->name, DRM_MODE_ARG(mode, buf));
+ 
+ 	mdp4_write(mdp4_kms, REG_MDP4_DMA_SRC_SIZE(dma),
+ 			MDP4_DMA_SRC_SIZE_WIDTH(mode->hdisplay) |
+diff --git a/drivers/gpu/drm/msm/disp/mdp4/mdp4_dsi_encoder.c b/drivers/gpu/drm/msm/disp/mdp4/mdp4_dsi_encoder.c
+index caa39b4621e3..2e0dca4d2484 100644
+--- a/drivers/gpu/drm/msm/disp/mdp4/mdp4_dsi_encoder.c
++++ b/drivers/gpu/drm/msm/disp/mdp4/mdp4_dsi_encoder.c
+@@ -55,10 +55,11 @@ static void mdp4_dsi_encoder_mode_set(struct drm_encoder *encoder,
+ 	uint32_t dsi_hsync_skew, vsync_period, vsync_len, ctrl_pol;
+ 	uint32_t display_v_start, display_v_end;
+ 	uint32_t hsync_start_x, hsync_end_x;
++	char buf[DRM_MODE_FLAGS_BUF_LEN];
+ 
+ 	mode = adjusted_mode;
+ 
+-	DBG("set mode: " DRM_MODE_FMT, DRM_MODE_ARG(mode));
++	DBG("set mode: " DRM_MODE_FMT, DRM_MODE_ARG(mode, buf));
+ 
+ 	ctrl_pol = 0;
+ 	if (mode->flags & DRM_MODE_FLAG_NHSYNC)
+diff --git a/drivers/gpu/drm/msm/disp/mdp4/mdp4_dtv_encoder.c b/drivers/gpu/drm/msm/disp/mdp4/mdp4_dtv_encoder.c
+index 259d51971401..e88ac070a672 100644
+--- a/drivers/gpu/drm/msm/disp/mdp4/mdp4_dtv_encoder.c
++++ b/drivers/gpu/drm/msm/disp/mdp4/mdp4_dtv_encoder.c
+@@ -101,10 +101,11 @@ static void mdp4_dtv_encoder_mode_set(struct drm_encoder *encoder,
+ 	uint32_t dtv_hsync_skew, vsync_period, vsync_len, ctrl_pol;
+ 	uint32_t display_v_start, display_v_end;
+ 	uint32_t hsync_start_x, hsync_end_x;
++	char buf[DRM_MODE_FLAGS_BUF_LEN];
+ 
+ 	mode = adjusted_mode;
+ 
+-	DBG("set mode: " DRM_MODE_FMT, DRM_MODE_ARG(mode));
++	DBG("set mode: " DRM_MODE_FMT, DRM_MODE_ARG(mode, buf));
+ 
+ 	mdp4_dtv_encoder->pixclock = mode->clock * 1000;
+ 
+diff --git a/drivers/gpu/drm/msm/disp/mdp4/mdp4_lcdc_encoder.c b/drivers/gpu/drm/msm/disp/mdp4/mdp4_lcdc_encoder.c
+index df6f9803a1d7..99bdae9c945b 100644
+--- a/drivers/gpu/drm/msm/disp/mdp4/mdp4_lcdc_encoder.c
++++ b/drivers/gpu/drm/msm/disp/mdp4/mdp4_lcdc_encoder.c
+@@ -270,10 +270,11 @@ static void mdp4_lcdc_encoder_mode_set(struct drm_encoder *encoder,
+ 	uint32_t lcdc_hsync_skew, vsync_period, vsync_len, ctrl_pol;
+ 	uint32_t display_v_start, display_v_end;
+ 	uint32_t hsync_start_x, hsync_end_x;
++	char buf[DRM_MODE_FLAGS_BUF_LEN];
+ 
+ 	mode = adjusted_mode;
+ 
+-	DBG("set mode: " DRM_MODE_FMT, DRM_MODE_ARG(mode));
++	DBG("set mode: " DRM_MODE_FMT, DRM_MODE_ARG(mode, buf));
+ 
+ 	mdp4_lcdc_encoder->pixclock = mode->clock * 1000;
+ 
+diff --git a/drivers/gpu/drm/msm/disp/mdp5/mdp5_cmd_encoder.c b/drivers/gpu/drm/msm/disp/mdp5/mdp5_cmd_encoder.c
+index eeef41fcd4e1..6bffbebee8bb 100644
+--- a/drivers/gpu/drm/msm/disp/mdp5/mdp5_cmd_encoder.c
++++ b/drivers/gpu/drm/msm/disp/mdp5/mdp5_cmd_encoder.c
+@@ -124,9 +124,11 @@ void mdp5_cmd_encoder_mode_set(struct drm_encoder *encoder,
+ 			       struct drm_display_mode *mode,
+ 			       struct drm_display_mode *adjusted_mode)
+ {
++	char buf[DRM_MODE_FLAGS_BUF_LEN];
++
+ 	mode = adjusted_mode;
+ 
+-	DBG("set mode: " DRM_MODE_FMT, DRM_MODE_ARG(mode));
++	DBG("set mode: " DRM_MODE_FMT, DRM_MODE_ARG(mode, buf));
+ 	pingpong_tearcheck_setup(encoder, mode);
+ 	mdp5_crtc_set_pipeline(encoder->crtc);
+ }
+diff --git a/drivers/gpu/drm/msm/disp/mdp5/mdp5_crtc.c b/drivers/gpu/drm/msm/disp/mdp5/mdp5_crtc.c
+index c3751c95b452..888a25d1da8b 100644
+--- a/drivers/gpu/drm/msm/disp/mdp5/mdp5_crtc.c
++++ b/drivers/gpu/drm/msm/disp/mdp5/mdp5_crtc.c
+@@ -378,13 +378,14 @@ static void mdp5_crtc_mode_set_nofb(struct drm_crtc *crtc)
+ 	u32 mixer_width, val;
+ 	unsigned long flags;
+ 	struct drm_display_mode *mode;
++	char buf[DRM_MODE_FLAGS_BUF_LEN];
+ 
+ 	if (WARN_ON(!crtc->state))
+ 		return;
+ 
+ 	mode = &crtc->state->adjusted_mode;
+ 
+-	DBG("%s: set mode: " DRM_MODE_FMT, crtc->name, DRM_MODE_ARG(mode));
++	DBG("%s: set mode: " DRM_MODE_FMT, crtc->name, DRM_MODE_ARG(mode, buf));
+ 
+ 	mixer_width = mode->hdisplay;
+ 	if (r_mixer)
+diff --git a/drivers/gpu/drm/msm/disp/mdp5/mdp5_encoder.c b/drivers/gpu/drm/msm/disp/mdp5/mdp5_encoder.c
+index 820a62c40063..809118bb6965 100644
+--- a/drivers/gpu/drm/msm/disp/mdp5/mdp5_encoder.c
++++ b/drivers/gpu/drm/msm/disp/mdp5/mdp5_encoder.c
+@@ -115,10 +115,11 @@ static void mdp5_vid_encoder_mode_set(struct drm_encoder *encoder,
+ 	uint32_t hsync_start_x, hsync_end_x;
+ 	uint32_t format = 0x2100;
+ 	unsigned long flags;
++	char buf[DRM_MODE_FLAGS_BUF_LEN];
+ 
+ 	mode = adjusted_mode;
+ 
+-	DBG("set mode: " DRM_MODE_FMT, DRM_MODE_ARG(mode));
++	DBG("set mode: " DRM_MODE_FMT, DRM_MODE_ARG(mode, buf));
+ 
+ 	ctrl_pol = 0;
+ 
+diff --git a/drivers/gpu/drm/msm/dsi/dsi_manager.c b/drivers/gpu/drm/msm/dsi/dsi_manager.c
+index ec6cb0f7f206..1bf2f503b84b 100644
+--- a/drivers/gpu/drm/msm/dsi/dsi_manager.c
++++ b/drivers/gpu/drm/msm/dsi/dsi_manager.c
+@@ -527,8 +527,9 @@ static void dsi_mgr_bridge_mode_set(struct drm_bridge *bridge,
+ 	struct msm_dsi *other_dsi = dsi_mgr_get_other_dsi(id);
+ 	struct mipi_dsi_host *host = msm_dsi->host;
+ 	bool is_dual_dsi = IS_DUAL_DSI();
++	char buf[DRM_MODE_FLAGS_BUF_LEN];
+ 
+-	DBG("set mode: " DRM_MODE_FMT, DRM_MODE_ARG(mode));
++	DBG("set mode: " DRM_MODE_FMT, DRM_MODE_ARG(mode, buf));
+ 
+ 	if (is_dual_dsi && !IS_MASTER_DSI_LINK(id))
+ 		return;
+diff --git a/drivers/gpu/drm/msm/edp/edp_bridge.c b/drivers/gpu/drm/msm/edp/edp_bridge.c
+index 2950bba4aca9..0844345862ef 100644
+--- a/drivers/gpu/drm/msm/edp/edp_bridge.c
++++ b/drivers/gpu/drm/msm/edp/edp_bridge.c
+@@ -51,8 +51,9 @@ static void edp_bridge_mode_set(struct drm_bridge *bridge,
+ 	struct drm_connector *connector;
+ 	struct edp_bridge *edp_bridge = to_edp_bridge(bridge);
+ 	struct msm_edp *edp = edp_bridge->edp;
++	char buf[DRM_MODE_FLAGS_BUF_LEN];
+ 
+-	DBG("set mode: " DRM_MODE_FMT, DRM_MODE_ARG(mode));
++	DBG("set mode: " DRM_MODE_FMT, DRM_MODE_ARG(mode, buf));
+ 
+ 	list_for_each_entry(connector, &dev->mode_config.connector_list, head) {
+ 		if ((connector->encoder != NULL) &&
+diff --git a/drivers/gpu/drm/omapdrm/omap_connector.c b/drivers/gpu/drm/omapdrm/omap_connector.c
+index 5967283934e1..4ce29288c70e 100644
+--- a/drivers/gpu/drm/omapdrm/omap_connector.c
++++ b/drivers/gpu/drm/omapdrm/omap_connector.c
+@@ -276,6 +276,7 @@ static enum drm_mode_status omap_connector_mode_valid(struct drm_connector *conn
+ 	struct omap_connector *omap_connector = to_omap_connector(connector);
+ 	struct drm_display_mode new_mode = { { 0 } };
+ 	enum drm_mode_status status;
++	char buf[DRM_MODE_FLAGS_BUF_LEN];
+ 
+ 	status = omap_connector_mode_fixup(omap_connector->output, mode,
+ 					   &new_mode);
+@@ -288,8 +289,8 @@ static enum drm_mode_status omap_connector_mode_valid(struct drm_connector *conn
+ 
+ done:
+ 	DBG("connector: mode %s: " DRM_MODE_FMT,
+-			(status == MODE_OK) ? "valid" : "invalid",
+-			DRM_MODE_ARG(mode));
++	    (status == MODE_OK) ? "valid" : "invalid",
++	    DRM_MODE_ARG(mode, buf));
+ 
+ 	return status;
+ }
+diff --git a/drivers/gpu/drm/omapdrm/omap_crtc.c b/drivers/gpu/drm/omapdrm/omap_crtc.c
+index d61215494617..221459d6abe9 100644
+--- a/drivers/gpu/drm/omapdrm/omap_crtc.c
++++ b/drivers/gpu/drm/omapdrm/omap_crtc.c
+@@ -553,9 +553,10 @@ static void omap_crtc_mode_set_nofb(struct drm_crtc *crtc)
+ {
+ 	struct omap_crtc *omap_crtc = to_omap_crtc(crtc);
+ 	struct drm_display_mode *mode = &crtc->state->adjusted_mode;
++	char buf[DRM_MODE_FLAGS_BUF_LEN];
+ 
+ 	DBG("%s: set mode: " DRM_MODE_FMT,
+-	    omap_crtc->name, DRM_MODE_ARG(mode));
++	    omap_crtc->name, DRM_MODE_ARG(mode, buf));
+ 
+ 	drm_display_mode_to_videomode(mode, &omap_crtc->vm);
+ }
+diff --git a/drivers/gpu/drm/panel/panel-ronbo-rb070d30.c b/drivers/gpu/drm/panel/panel-ronbo-rb070d30.c
+index 3c15764f0c03..468ebdca94f4 100644
+--- a/drivers/gpu/drm/panel/panel-ronbo-rb070d30.c
++++ b/drivers/gpu/drm/panel/panel-ronbo-rb070d30.c
+@@ -126,12 +126,13 @@ static int rb070d30_panel_get_modes(struct drm_panel *panel)
+ 	struct rb070d30_panel *ctx = panel_to_rb070d30_panel(panel);
+ 	struct drm_display_mode *mode;
+ 	static const u32 bus_format = MEDIA_BUS_FMT_RGB888_1X24;
++	char buf[DRM_MODE_FLAGS_BUF_LEN];
+ 
+ 	mode = drm_mode_duplicate(panel->drm, &default_mode);
+ 	if (!mode) {
+ 		DRM_DEV_ERROR(&ctx->dsi->dev,
+ 			      "Failed to add mode " DRM_MODE_FMT "\n",
+-			      DRM_MODE_ARG(&default_mode));
++			      DRM_MODE_ARG(&default_mode, buf));
+ 		return -EINVAL;
+ 	}
+ 
+diff --git a/drivers/gpu/drm/sti/sti_crtc.c b/drivers/gpu/drm/sti/sti_crtc.c
+index dc64fbfc4e61..bc9602f519d7 100644
+--- a/drivers/gpu/drm/sti/sti_crtc.c
++++ b/drivers/gpu/drm/sti/sti_crtc.c
+@@ -54,11 +54,12 @@ sti_crtc_mode_set(struct drm_crtc *crtc, struct drm_display_mode *mode)
+ 	struct sti_compositor *compo = dev_get_drvdata(dev);
+ 	struct clk *compo_clk, *pix_clk;
+ 	int rate = mode->clock * 1000;
++	char buf[DRM_MODE_FLAGS_BUF_LEN];
+ 
+ 	DRM_DEBUG_KMS("CRTC:%d (%s) mode: (%s)\n",
+ 		      crtc->base.id, sti_mixer_to_str(mixer), mode->name);
+ 
+-	DRM_DEBUG_KMS(DRM_MODE_FMT "\n", DRM_MODE_ARG(mode));
++	DRM_DEBUG_KMS(DRM_MODE_FMT "\n", DRM_MODE_ARG(mode, buf));
+ 
+ 	if (mixer->id == STI_MIXER_MAIN) {
+ 		compo_clk = compo->clk_compo_main;
+diff --git a/include/drm/drm_modes.h b/include/drm/drm_modes.h
+index 083f16747369..3962dbf82100 100644
+--- a/include/drm/drm_modes.h
++++ b/include/drm/drm_modes.h
+@@ -428,20 +428,27 @@ struct drm_display_mode {
+ 	struct list_head export_head;
+ };
+ 
++/**
++ * DRM_MODE_FLAGS_BUF_LEN - reasonable size for the buffer passed to DRM_MODE_ARG()
++ */
++#define DRM_MODE_FLAGS_BUF_LEN 64
++
+ /**
+  * DRM_MODE_FMT - printf string for &struct drm_display_mode
+  */
+-#define DRM_MODE_FMT    "\"%s\": %d %d %d %d %d %d %d %d %d %d 0x%x 0x%x"
++#define DRM_MODE_FMT    "\"%s\": %d %d %d %d %d %d %d %d %d %d 0x%x 0x%x %s"
+ 
+ /**
+  * DRM_MODE_ARG - printf arguments for &struct drm_display_mode
+  * @m: display mode
++ * @b: buffer for temporary string
+  */
+-#define DRM_MODE_ARG(m) \
++#define DRM_MODE_ARG(m, b) \
+ 	(m)->name, (m)->vrefresh, (m)->clock, \
+ 	(m)->hdisplay, (m)->hsync_start, (m)->hsync_end, (m)->htotal, \
+ 	(m)->vdisplay, (m)->vsync_start, (m)->vsync_end, (m)->vtotal, \
+-	(m)->type, (m)->flags
++	(m)->type, (m)->flags, \
++	drm_get_mode_flags_name(b, sizeof(b), (m)->flags)
+ 
+ #define obj_to_mode(x) container_of(x, struct drm_display_mode, base)
+ 
+@@ -542,5 +549,6 @@ drm_mode_parse_command_line_for_connector(const char *mode_option,
+ struct drm_display_mode *
+ drm_mode_create_from_cmdline_mode(struct drm_device *dev,
+ 				  struct drm_cmdline_mode *cmd);
++const char *drm_get_mode_flags_name(char *buf, int len, u32 flags);
+ 
+ #endif /* __DRM_MODES_H__ */
+-- 
+2.21.0
 
-Regards,
-Bjorn
