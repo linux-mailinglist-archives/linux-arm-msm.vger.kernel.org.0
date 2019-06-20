@@ -2,89 +2,155 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 490FC4C4F0
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Jun 2019 03:25:24 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 386EA4C669
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Jun 2019 07:01:56 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731028AbfFTBZQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 19 Jun 2019 21:25:16 -0400
-Received: from mx1.redhat.com ([209.132.183.28]:37384 "EHLO mx1.redhat.com"
+        id S1731206AbfFTFBz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 20 Jun 2019 01:01:55 -0400
+Received: from mail.kernel.org ([198.145.29.99]:59810 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726096AbfFTBZQ (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 19 Jun 2019 21:25:16 -0400
-Received: from smtp.corp.redhat.com (int-mx07.intmail.prod.int.phx2.redhat.com [10.5.11.22])
-        (using TLSv1.2 with cipher AECDH-AES256-SHA (256/256 bits))
+        id S1725875AbfFTFBz (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 20 Jun 2019 01:01:55 -0400
+Received: from hector.attlocal.net (107-207-74-175.lightspeed.austtx.sbcglobal.net [107.207.74.175])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
         (No client certificate requested)
-        by mx1.redhat.com (Postfix) with ESMTPS id C2744307D925;
-        Thu, 20 Jun 2019 01:25:15 +0000 (UTC)
-Received: from ovpn-112-53.rdu2.redhat.com (ovpn-112-53.rdu2.redhat.com [10.10.112.53])
-        by smtp.corp.redhat.com (Postfix) with ESMTP id 5B4E81001DD2;
-        Thu, 20 Jun 2019 01:25:12 +0000 (UTC)
-Message-ID: <7c0e8909cee17623565ef88445b0497d5504fe1c.camel@redhat.com>
-Subject: Re: [PATCH v2 00/17] net: introduce Qualcomm IPA driver
-From:   Dan Williams <dcbw@redhat.com>
-To:     Subash Abhinov Kasiviswanathan <subashab@codeaurora.org>,
-        Arnd Bergmann <arnd@arndb.de>
-Cc:     Johannes Berg <johannes@sipsolutions.net>,
-        Alex Elder <elder@linaro.org>, abhishek.esse@gmail.com,
-        Ben Chan <benchan@google.com>,
+        by mail.kernel.org (Postfix) with ESMTPSA id 131A6208CB;
+        Thu, 20 Jun 2019 05:01:52 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=default; t=1561006913;
+        bh=phnydbrve6D9xWDJP0v1HDzHr04Ms8FK11DaWWwlAs4=;
+        h=From:To:Cc:Subject:Date:From;
+        b=obsCth2fJ+sYkH022X1dCT2N735J26yg3H/XHCPb+ieerpVgDdtmkjy0969DG9YJR
+         SSCsVA9A4Mr31pUX4F0o8mflebca1itWNk+g3O5gsjxDqLxSZr2ULjVRpVWm1G/MR3
+         e9+RKx0A8tVtmt61XxjIYbMkwdI5adwqgOIrqyqg=
+From:   Andy Gross <agross@kernel.org>
+To:     arm@kernel.org
+Cc:     linux-arm-msm@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        cpratapa@codeaurora.org, David Miller <davem@davemloft.net>,
-        DTML <devicetree@vger.kernel.org>,
-        Eric Caruso <ejcaruso@google.com>, evgreen@chromium.org,
-        Ilias Apalodimas <ilias.apalodimas@linaro.org>,
-        Linux ARM <linux-arm-kernel@lists.infradead.org>,
-        linux-arm-msm@vger.kernel.org,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-        linux-soc@vger.kernel.org, Networking <netdev@vger.kernel.org>,
-        syadagir@codeaurora.org
-Date:   Wed, 19 Jun 2019 20:25:11 -0500
-In-Reply-To: <2926e45fd7ff62fd7c4af9b338bf0caa@codeaurora.org>
-References: <380a6185-7ad1-6be0-060b-e6e5d4126917@linaro.org>
-         <a94676381a5ca662c848f7a725562f721c43ce76.camel@sipsolutions.net>
-         <CAK8P3a0kV-i7BJJ2X6C=5n65rSGfo8fUiC4J_G-+M8EctYKbkg@mail.gmail.com>
-         <066e9b39f937586f0f922abf801351553ec2ba1d.camel@sipsolutions.net>
-         <b3686626-e2d8-bc9c-6dd0-9ebb137715af@linaro.org>
-         <b23a83c18055470c5308fcd1eed018056371fc1d.camel@sipsolutions.net>
-         <CAK8P3a1FeUQR3pgoQxHoRK05JGORyR+TFATVQiijLWtFKTv6OQ@mail.gmail.com>
-         <613cdfde488eb23d7207c7ba6258662702d04840.camel@sipsolutions.net>
-         <CAK8P3a2onXpxiE4y9PzRwuPM2dh=h_BKz7Eb0=LLPgBbZoK1bQ@mail.gmail.com>
-         <6c70950d0c78bc02a3d016918ec3929e@codeaurora.org>
-         <CAK8P3a3e+U85yHTeE4dHa4okLVHgBd8Kke9=FytzvMwz+wB0sQ@mail.gmail.com>
-         <2926e45fd7ff62fd7c4af9b338bf0caa@codeaurora.org>
-Content-Type: text/plain; charset="UTF-8"
-User-Agent: Evolution 3.30.5 (3.30.5-1.fc29) 
-MIME-Version: 1.0
-Content-Transfer-Encoding: 7bit
-X-Scanned-By: MIMEDefang 2.84 on 10.5.11.22
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.5.16 (mx1.redhat.com [10.5.110.48]); Thu, 20 Jun 2019 01:25:16 +0000 (UTC)
+        Olof Johansson <olof@lixom.net>,
+        Kevin Hilman <khilman@baylibre.com>,
+        Arnd Bergmann <arnd@arndb.de>
+Subject: [GIT PULL] Qualcomm ARM64 DT updates for 5.3
+Date:   Thu, 20 Jun 2019 00:01:48 -0500
+Message-Id: <1561006911-28519-1-git-send-email-agross@kernel.org>
+X-Mailer: git-send-email 2.7.4
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, 2019-06-19 at 12:47 -0600, Subash Abhinov Kasiviswanathan
-wrote:
-> > > There is a n:1 relationship between rmnet and IPA.
-> > > rmnet does the de-muxing to multiple netdevs based on the mux id
-> > > in the MAP header for RX packets and vice versa.
-> > 
-> > Oh, so you mean that even though IPA supports multiple channels
-> > and multiple netdev instances for a physical device, all the
-> > rmnet devices end up being thrown into a single channel in IPA?
-> > 
-> > What are the other channels for in IPA? I understand that there
-> > is one channel for commands that is separate, while the others
-> > are for network devices, but that seems to make no sense if
-> > we only use a single channel for rmnet data.
-> > 
-> 
-> AFAIK, the other channels are for use cases like tethering.
-> There is only a single channel which is used for RX
-> data which is then de-muxed using rmnet.
+The following changes since commit a188339ca5a396acc588e5851ed7e19f66b0ebd9:
 
-That seems odd, since tethering is no different than any other data
-channel in QMI, just that it may have a different APN and QoS
-guarantees.
+  Linux 5.2-rc1 (2019-05-19 15:47:09 -0700)
 
-Dan
+are available in the git repository at:
 
+  git://git.kernel.org/pub/scm/linux/kernel/git/qcom/linux.git tags/qcom-arm64-for-5.3
+
+for you to fetch changes up to 2410fd450c09a126aefefc9106b4652285b5d60f:
+
+  arm64: dts: qcom: qcs404-evb: fix vdd_apc supply (2019-06-19 23:50:52 -0500)
+
+----------------------------------------------------------------
+Qualcomm ARM64 Updates for v5.3
+
+* Switch to use second gen PON on PM8998
+* Add PSCI cupidle states for MSM8996, MSM8998,and SDM845
+* Add MSM8996 UFS phy reset controller
+* Add propre cpu capacity scaling on MSM8996
+* Fixups for APR domain, legacy clocks, and PSCI entry latency on MSM8996
+* Enable SMMUs on MSM8996
+* Add Dragonboard 845C
+* Add Q6V5, GPU, GMU, and AOSS QMP node on SDM845
+* Fixup CPU topology on SDM845
+* Change USB1 to be peripheral on SDM845 MTP
+* Add PCIe Phy, RC nodes, ANOC1 SMMU, and RPMPD node on MSM8998
+* Update coresight bindings for MSM8916
+* Update idle state names and entry-method on MSM8916
+* Add PCIe, RPMPD, LPASS, Q6, TCSR, TuringCC, PSCI cpuidle states,
+  and CDSP on QCS404
+* Add reset-cells property to QCS404 GCC node
+* Fixup s3 max voltage, l3 min voltage, drive strength typo, and
+  s3 supply definition on QCS404-evb
+* Fixup ADC outputs and VADC calibration on PMS405
+
+----------------------------------------------------------------
+Amit Kucheria (8):
+      arm64: dts: sdm845: Fix up CPU topology
+      arm64: dts: qcom: pms405: calibrate the VADC correctly
+      arm64: dts: qcom: pms405: Rename adc outputs as per schematics
+      arm64: dts: qcom: msm8916: Add entry-method property for the idle-states node
+      arm64: dts: qcom: msm8916: Use more generic idle state names
+      arm64: dts: qcom: msm8996: Add PSCI cpuidle low power states
+      arm64: dts: msm8996: Add proper capacity scaling for the cpus
+      arm64: dts: qcom: msm8998: Add PSCI cpuidle low power states
+
+Andy Gross (1):
+      arm64: dts: qcom-qcs404: Add reset-cells to GCC node
+
+Bjorn Andersson (14):
+      arm64: dts: qcom: sdm845-mtp: Make USB1 peripheral
+      arm64: dts: qcom: qcs404: Add turingcc node
+      arm64: dts: qcom: qcs404-evb: Mark CDSP clocks protected
+      arm64: dts: qcom: qcs404: Add TCSR node
+      arm64: dts: qcom: qcs404: Fully describe the CDSP
+      arm64: dts: qcom: qcs404: Move lpass and q6 into soc
+      arm64: dts: qcom: qcs404: Add rpmpd node
+      arm64: dts: qcom: Add AOSS QMP node
+      arm64: dts: qcom: msm8996: Stop using legacy clock names
+      arm64: dts: qcom: qcs404: Add PCIe related nodes
+      arm64: dts: qcom: qcs404-evb: Enable PCIe
+      arm64: dts: qcom: Add Dragonboard 845c
+      arm64: dts: qcom: msm8996: Correct apr-domain property
+      arm64: dts: qcom: msm8996: Enable SMMUs
+
+Evan Green (1):
+      arm64: dts: msm8996: Add UFS PHY reset controller
+
+John Stultz (1):
+      arm64: dts: qcom: pm8998: Use qcom,pm8998-pon binding for second gen pon
+
+Jordan Crouse (2):
+      arm64: dts: sdm845: Add gpu and gmu device nodes
+      arm64: dts: sdm845: Add zap shader region for GPU
+
+Jorge Ramirez-Ortiz (1):
+      arm64: dts: qcom: qcs404-evb: fix vdd_apc supply
+
+Leo Yan (1):
+      arm64: dts: qcom-msm8916: Update coresight DT bindings
+
+Marc Gonzalez (2):
+      arm64: dts: qcom: msm8998: Add ANOC1 SMMU node
+      arm64: dts: qcom: msm8998: Add PCIe PHY and RC nodes
+
+Niklas Cassel (4):
+      arm64: dts: qcom: qcs404-evb: fix l3 min voltage
+      arm64: dts: qcom: qcs404-evb: increase s3 max voltage
+      arm64: dts: qcom: qcs404: Add PSCI cpuidle low power states
+      arm64: dts: msm8996: fix PSCI entry-latency-us
+
+Raju P.L.S.S.S.N (1):
+      arm64: dts: qcom: sdm845: Add PSCI cpuidle low power states
+
+Sibi Sankar (2):
+      arm64: dts: qcom: msm8998: Add rpmpd node
+      arm64: dts: qcom: sdm845: Add Q6V5 MSS node
+
+Vinod Koul (1):
+      arm64: dts: qcom: qcs404-evb: Fix typo
+
+ arch/arm64/boot/dts/qcom/Makefile          |   1 +
+ arch/arm64/boot/dts/qcom/msm8916.dtsi      |  17 +-
+ arch/arm64/boot/dts/qcom/msm8996.dtsi      |  59 +--
+ arch/arm64/boot/dts/qcom/msm8998.dtsi      | 185 ++++++++++
+ arch/arm64/boot/dts/qcom/pm8998.dtsi       |   2 +-
+ arch/arm64/boot/dts/qcom/pms405.dtsi       |  20 +-
+ arch/arm64/boot/dts/qcom/qcs404-evb.dtsi   |  43 ++-
+ arch/arm64/boot/dts/qcom/qcs404.dtsi       | 364 ++++++++++++++-----
+ arch/arm64/boot/dts/qcom/sdm845-db845c.dts | 557 +++++++++++++++++++++++++++++
+ arch/arm64/boot/dts/qcom/sdm845-mtp.dts    |   4 +-
+ arch/arm64/boot/dts/qcom/sdm845.dtsi       | 283 ++++++++++++++-
+ 11 files changed, 1393 insertions(+), 142 deletions(-)
+ create mode 100644 arch/arm64/boot/dts/qcom/sdm845-db845c.dts
