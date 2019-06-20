@@ -2,87 +2,81 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id E70634CC87
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Jun 2019 13:03:16 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 09DCA4CD3D
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Jun 2019 13:54:58 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730660AbfFTLDO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 20 Jun 2019 07:03:14 -0400
-Received: from ns.iliad.fr ([212.27.33.1]:33118 "EHLO ns.iliad.fr"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1730730AbfFTLCr (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 20 Jun 2019 07:02:47 -0400
-Received: from ns.iliad.fr (localhost [127.0.0.1])
-        by ns.iliad.fr (Postfix) with ESMTP id B20532067B;
-        Thu, 20 Jun 2019 13:02:45 +0200 (CEST)
-Received: from [192.168.108.49] (freebox.vlq16.iliad.fr [213.36.7.13])
-        by ns.iliad.fr (Postfix) with ESMTP id 9A63B20600;
-        Thu, 20 Jun 2019 13:02:45 +0200 (CEST)
-Subject: Re: How to write "modern" pinctrl DT node
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     Linus Walleij <linus.walleij@linaro.org>,
-        MSM <linux-arm-msm@vger.kernel.org>,
-        gpio <linux-gpio@vger.kernel.org>,
-        Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
-References: <18ab4b1c-e74e-410a-a504-f524e46c42ac@free.fr>
- <20190611180516.GO4814@minitux>
-From:   Marc Gonzalez <marc.w.gonzalez@free.fr>
-Message-ID: <be298c01-53b8-a954-5de0-3f302265f1cb@free.fr>
-Date:   Thu, 20 Jun 2019 13:02:45 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.6.1
+        id S1726404AbfFTLy5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 20 Jun 2019 07:54:57 -0400
+Received: from heliosphere.sirena.org.uk ([172.104.155.198]:36060 "EHLO
+        heliosphere.sirena.org.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726392AbfFTLy5 (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 20 Jun 2019 07:54:57 -0400
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+        d=sirena.org.uk; s=20170815-heliosphere; h=In-Reply-To:Content-Type:
+        MIME-Version:References:Message-ID:Subject:Cc:To:From:Date:Sender:Reply-To:
+        Content-Transfer-Encoding:Content-ID:Content-Description:Resent-Date:
+        Resent-From:Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:List-Id:
+        List-Help:List-Unsubscribe:List-Subscribe:List-Post:List-Owner:List-Archive;
+         bh=pC92AbMeAeuM1T81sizF6eWRPi6h6pllvejcDmmv2V8=; b=TrRakVNmkK/8YPkzBbNp1pB1m
+        qge2i4Bqb2TIMqS8mc9jmF0NEgMLOuUpVBGtPHfx0knv7T91/rD8+4fwQ5GpX6QSxkpRx8jEp0BhC
+        ND7BpEpnbkojnfb+mmjaw3ekmrw81dVvyJDxsAoqHqETMSTr5LaS3jzgPNvczFxn7jOdM=;
+Received: from [2001:470:1f1d:6b5:7e7a:91ff:fede:4a45] (helo=finisterre.sirena.org.uk)
+        by heliosphere.sirena.org.uk with esmtpsa (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+        (Exim 4.89)
+        (envelope-from <broonie@sirena.org.uk>)
+        id 1hdveZ-0000Lu-Su; Thu, 20 Jun 2019 11:54:55 +0000
+Received: by finisterre.sirena.org.uk (Postfix, from userid 1000)
+        id 609C2440046; Thu, 20 Jun 2019 12:54:55 +0100 (BST)
+Date:   Thu, 20 Jun 2019 12:54:55 +0100
+From:   Mark Brown <broonie@kernel.org>
+To:     Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
+Cc:     bjorn.andersson@linaro.org, lgirdwood@gmail.com,
+        jorge.ramirez-ortiz@linaro.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: Re: [PATCH] regulator: qcom_spmi: Fix math of
+ spmi_regulator_set_voltage_time_sel
+Message-ID: <20190620115455.GD5316@sirena.org.uk>
+References: <20190619185636.10831-1-jeffrey.l.hugo@gmail.com>
 MIME-Version: 1.0
-In-Reply-To: <20190611180516.GO4814@minitux>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
-X-Virus-Scanned: ClamAV using ClamSMTP ; ns.iliad.fr ; Thu Jun 20 13:02:45 2019 +0200 (CEST)
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="Aqxj+GViP82BhQLt"
+Content-Disposition: inline
+In-Reply-To: <20190619185636.10831-1-jeffrey.l.hugo@gmail.com>
+X-Cookie: Editing is a rewording activity.
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 11/06/2019 20:05, Bjorn Andersson wrote:
 
-> Also, what's up with tsif0 vs tsif1?
+--Aqxj+GViP82BhQLt
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 
-Some people count from 0; other people count from 1.
+On Wed, Jun 19, 2019 at 11:56:36AM -0700, Jeffrey Hugo wrote:
 
-The HW programming guide mentions TSIF_0 and TSIF_1.
-The pinctrl driver defines tsif1 and tsif2.
+> Fixes: e92a4047419c ("regulator: Add QCOM SPMI regulator driver")
+> Reported-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+> Reported-by: Jorge Ramirez-Ortiz <jorge.ramirez-ortiz@linaro.org>
+> Signed-off-by: Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
 
-I propose we use 0 and 1 consistently everywhere.
+I remember pointing this out during reviews as well...
 
-> PS. I would suggest that you send a patch to the MSM8998 pinctrl driver
-> (and binding) where you squash tsifN_* to tsifN. It would break
-> backwards compatibility, but I think we can take that risk now before
-> someone starts to use it... And after that you can go with your proposed
-> squashed node.
+--Aqxj+GViP82BhQLt
+Content-Type: application/pgp-signature; name="signature.asc"
 
-Here's what I have right now:
+-----BEGIN PGP SIGNATURE-----
 
-$ git ls --stat 85c02fb4dfd1..HEAD
-5ed38c44a92a (HEAD -> tsif-fixup) Fixup qcom,msm8998-pinctrl.txt example
- Documentation/devicetree/bindings/pinctrl/qcom,msm8998-pinctrl.txt | 14 ++++----------
- 1 file changed, 4 insertions(+), 10 deletions(-)
-823402af81a6 Fixup qcom,msm8998-pinctrl.txt binding
- Documentation/devicetree/bindings/pinctrl/qcom,msm8998-pinctrl.txt | 5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
-afb686b8b3e7 Squash all 5 tsif1 pins together
- drivers/pinctrl/qcom/pinctrl-msm8998.c | 38 +++++++++-----------------------------
- 1 file changed, 9 insertions(+), 29 deletions(-)
-8e4d31c8d455 Squash all 5 tsif0 pins together
- drivers/pinctrl/qcom/pinctrl-msm8998.c | 38 +++++++++-----------------------------
- 1 file changed, 9 insertions(+), 29 deletions(-)
-ee850fa510a6 sed -i 's/tsif2/tsif1/g' drivers/pinctrl/qcom/pinctrl-msm8998.c
- drivers/pinctrl/qcom/pinctrl-msm8998.c | 40 ++++++++++++++++++++--------------------
- 1 file changed, 20 insertions(+), 20 deletions(-)
-c7ffe4075623 sed -i 's/tsif1/tsif0/g' drivers/pinctrl/qcom/pinctrl-msm8998.c
- drivers/pinctrl/qcom/pinctrl-msm8998.c | 40 ++++++++++++++++++++--------------------
- 1 file changed, 20 insertions(+), 20 deletions(-)
+iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAl0LdA4ACgkQJNaLcl1U
+h9CHHAf+MbuHjo/fmQnkrr8EoGybxlSgiwHosHysxcF574SNmSBECX7MrC4zr/ah
+McRp1zyIZVHiy2LNPj0atyiNqDLA6kfk6gxJdfaPNhMexDH3CNu83ndN+eNnryuQ
+nIwMDkX4Odh+MQPJJURibRivDu+htY88bY2thwt71C4TvwNXEvXtKHHlhYPuijp5
+K9vMP6kO/QeHOX2LAct6b5EnQMA7TcZba0T+ZODxmNECH9BDa0PDdGEnUobGMwXe
+h6HYDysrqnQArJA2qyCXe8IASf3NEkYiW0rmarGvGmnquF365NK9amuj7BbLXrOo
+yZy5FZRifFZ62ubKZQMqXTMTRH1xzQ==
+=shEP
+-----END PGP SIGNATURE-----
 
-I'm wondering if the series needs to be split up (as it is) or squashed
-into a single patch (might be harder to review for mistakes).
-
-What do you think?
-
-Regards.
+--Aqxj+GViP82BhQLt--
