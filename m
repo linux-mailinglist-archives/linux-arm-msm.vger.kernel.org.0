@@ -2,50 +2,50 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 43D424D55D
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Jun 2019 19:39:13 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 967624D567
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Jun 2019 19:43:12 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726649AbfFTRjM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 20 Jun 2019 13:39:12 -0400
-Received: from mail-pf1-f195.google.com ([209.85.210.195]:36270 "EHLO
-        mail-pf1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726526AbfFTRjM (ORCPT
+        id S1726654AbfFTRnM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 20 Jun 2019 13:43:12 -0400
+Received: from mail-pl1-f193.google.com ([209.85.214.193]:42743 "EHLO
+        mail-pl1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726523AbfFTRnL (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 20 Jun 2019 13:39:12 -0400
-Received: by mail-pf1-f195.google.com with SMTP id r7so2072636pfl.3
-        for <linux-arm-msm@vger.kernel.org>; Thu, 20 Jun 2019 10:39:12 -0700 (PDT)
+        Thu, 20 Jun 2019 13:43:11 -0400
+Received: by mail-pl1-f193.google.com with SMTP id ay6so1664867plb.9
+        for <linux-arm-msm@vger.kernel.org>; Thu, 20 Jun 2019 10:43:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to:user-agent;
-        bh=cc1ritaWfB8okWYpyfEgKKo47agXWGIBS6N2MHN/GYs=;
-        b=vuQhYp+6eDLIk8XExGRgk2rgXE+mzKmk4DsxpWyKKBSH1UjUeoVNhTmSPG5D4MFvQO
-         S/5PAdojDjzCO/n2vYXv52252MTac8DzMp3ykB5wALlce+oZPlQrJwYK0Z2PF+JrgRlm
-         8HkTr545vZgVZQxEDQTkH2Ny4G4D/tHWgb2UASI/vriwo3IdhSRwT7GN/vqadmCK7N6g
-         2EaqnxIA/oSIA5GpZNzLEYvnYWUh18CloBaCEmhWF36pkDgVptx5eKqA8NaZiN/a7CNS
-         K1Rp5udGauWwef5sJuFVAkrgF8PCbAXy+0bhNANQFFW5aehjOMqrM97PXNUYqLSgh2pm
-         dJxQ==
+        bh=1KJ0e9ekOabFfxqwKvIk2A6/zmASWNljaHVvnXYUQxY=;
+        b=NhbZE295vHsBmR1o4reSr3vcb9K8QjxL6emGCch81QYlNOzn7tv09NGjCC4euADxnF
+         kQ9KHGtlQFK1CrMuPhar8/Gj18tnyoWZvwEwjjoeZ2Y8SXMRT0ZyVfD+LvYgGCWATUny
+         i8Lyu2TMQ2OIPveZZ4LNrdJYrwqd0pP0sMzbjmZjiJMHYCcIrzLZQIWHl1FFlesbP1ox
+         NNsDRkkjMXOQfhrCxZSpHUhVEU3i+VRqLDAwl1jKSZ+erU61VvXj4/vDVX52htPpCiYG
+         gAm41dgBnAfhpb1fsukKduPkNOHXyGnyxvX6uxP9MRSJlzwV52XRAveCMA5b4uhZ74Vl
+         U+lA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=cc1ritaWfB8okWYpyfEgKKo47agXWGIBS6N2MHN/GYs=;
-        b=lHS6X0lLgh3G6ciRFL/6aU8Z72AWLVunHORuYVHhjl0NnAdkNY2TwPhIzFu2QJC5Yk
-         JklfSyv9cJxPJzg4hBiuihSF1NVjYVAcVS6LgyHO4hjCswDc3WqgoLMq0d+BhnduO6eu
-         Npal7gpdmugDQXODcSIv2to/QWPoetPDAEVU6DAR1sBEuN/RHTpubKSdLHEGenQ+6vGu
-         dq8U8pScIa9IZDEEvEhjkZaOaGCIU4S4rugqGLPyIPyZ6iTN6XSXFbPP07hdDefihzwL
-         zA1Sx1tAgyThX1lWUtCQ+s7/6sibH4MwATY3AIBDx9GzSVstTaCZH8lQK/phOloUeKJ6
-         ii3A==
-X-Gm-Message-State: APjAAAXVkLfnD+PPEmn65V/cyIcKZ7yZjrgkshMBEPGpIdHlNijlhTjM
-        mPAM5opykTxA65gMcMy1/rIhdQ==
-X-Google-Smtp-Source: APXvYqwExTPnMaUlhkHdlTdYWDKivjZXCj1uKm+C1IqlKfA29kclGbLVua9EqCTBKhqKLwndm8l9oA==
-X-Received: by 2002:a63:c301:: with SMTP id c1mr13911552pgd.41.1561052351600;
-        Thu, 20 Jun 2019 10:39:11 -0700 (PDT)
+        bh=1KJ0e9ekOabFfxqwKvIk2A6/zmASWNljaHVvnXYUQxY=;
+        b=GQu0HvwdeyrYcFd/OphRu9pfqARYfyMfxBKMK7X3VZdGLcS+s37hvNVy/PliFAHXEC
+         dEXkBWxSFC9e7D+++jlHJqjVXdpGFH1PpSfIWPvl+Z6+auG8w0GYIGqjd9/ciUeE0Gyc
+         XENSo+9OmkJVWmqhbyU/MfOlet0lSrV516XvqIX2Kn5PdOUcMkYfBbYhmw+d8BJz1FzG
+         2I0gxeNqznLjYpzs/Z4JGuhNvmS26kTNk0HCydfmtv7EREMKBvCeDlY/XOUPs/vBJX10
+         qzq0lw2AXKxNziE23r1FmSxBYbH1hOOpzGsiPYPkeTxiQBsCDuE1MszyLydny3sXU/2/
+         OmSg==
+X-Gm-Message-State: APjAAAX0Z8sRMkveJpgC3YebkzCVIcyHzKV0SipOxcd8KQEf/yUPb5Tw
+        zDrPhYUkgBBN+3Owb66kju0hY0/qVkDrKw==
+X-Google-Smtp-Source: APXvYqyrJ3P57l2hXzKwykASSM4m8XDMhpVpPOdFDF+6NySV8L9SKNqqSA+NS5K7Rf8cf9mtKD7jIQ==
+X-Received: by 2002:a17:902:2aa8:: with SMTP id j37mr82097915plb.316.1561052591240;
+        Thu, 20 Jun 2019 10:43:11 -0700 (PDT)
 Received: from xps15 (S0106002369de4dac.cg.shawcable.net. [68.147.8.254])
-        by smtp.gmail.com with ESMTPSA id p6sm221710pgs.77.2019.06.20.10.39.10
+        by smtp.gmail.com with ESMTPSA id y185sm95763pfy.110.2019.06.20.10.43.09
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Thu, 20 Jun 2019 10:39:10 -0700 (PDT)
-Date:   Thu, 20 Jun 2019 11:39:08 -0600
+        Thu, 20 Jun 2019 10:43:10 -0700 (PDT)
+Date:   Thu, 20 Jun 2019 11:43:08 -0600
 From:   Mathieu Poirier <mathieu.poirier@linaro.org>
 To:     Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
 Cc:     Suzuki K Poulose <suzuki.poulose@arm.com>,
@@ -59,67 +59,86 @@ Cc:     Suzuki K Poulose <suzuki.poulose@arm.com>,
         Sibi Sankar <sibis@codeaurora.org>,
         linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
         linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH 1/2] coresight: Set affinity to invalid for missing CPU
- phandle
-Message-ID: <20190620173908.GA5581@xps15>
+Subject: Re: [PATCH 2/2] coresight: Abort probe for missing CPU phandle
+Message-ID: <20190620174308.GB5581@xps15>
 References: <cover.1561037262.git.saiprakash.ranjan@codeaurora.org>
- <49d6554536047b9f5526c4ea33990b7c904673d3.1561037262.git.saiprakash.ranjan@codeaurora.org>
+ <d93e28fc80227f9a385130a766a24f8f39a1dcf0.1561037262.git.saiprakash.ranjan@codeaurora.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <49d6554536047b9f5526c4ea33990b7c904673d3.1561037262.git.saiprakash.ranjan@codeaurora.org>
+In-Reply-To: <d93e28fc80227f9a385130a766a24f8f39a1dcf0.1561037262.git.saiprakash.ranjan@codeaurora.org>
 User-Agent: Mutt/1.9.4 (2018-02-28)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Sai,
-
-On Thu, Jun 20, 2019 at 07:15:46PM +0530, Sai Prakash Ranjan wrote:
-> Affinity defaults to CPU0 in case of missing CPU phandle
-> and this leads to crashes in some cases because of such
-> wrong assumption. Fix this by returning -ENODEV in
-> coresight platform for such cases and then handle it
-> in the coresight drivers.
+On Thu, Jun 20, 2019 at 07:15:47PM +0530, Sai Prakash Ranjan wrote:
+> Currently the coresight etm and cpu-debug drivers
+> assume the affinity to CPU0 returned by coresight
+> platform and continue the probe in case of missing
+> CPU phandle. This is not true and leads to crash
+> in some cases, so abort the probe in case of missing
+> CPU phandle.
 > 
 > Signed-off-by: Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
 > ---
->  drivers/hwtracing/coresight/coresight-platform.c | 10 ++++++----
->  1 file changed, 6 insertions(+), 4 deletions(-)
+>  drivers/hwtracing/coresight/coresight-cpu-debug.c | 3 +++
+>  drivers/hwtracing/coresight/coresight-etm3x.c     | 3 +++
+>  drivers/hwtracing/coresight/coresight-etm4x.c     | 3 +++
+>  3 files changed, 9 insertions(+)
 > 
-> diff --git a/drivers/hwtracing/coresight/coresight-platform.c b/drivers/hwtracing/coresight/coresight-platform.c
-> index 3c5ceda8db24..b1ea60c210e1 100644
-> --- a/drivers/hwtracing/coresight/coresight-platform.c
-> +++ b/drivers/hwtracing/coresight/coresight-platform.c
-> @@ -160,15 +160,17 @@ static int of_coresight_get_cpu(struct device *dev)
+> diff --git a/drivers/hwtracing/coresight/coresight-cpu-debug.c b/drivers/hwtracing/coresight/coresight-cpu-debug.c
+> index 07a1367c733f..43f32fa71ff9 100644
+> --- a/drivers/hwtracing/coresight/coresight-cpu-debug.c
+> +++ b/drivers/hwtracing/coresight/coresight-cpu-debug.c
+> @@ -579,6 +579,9 @@ static int debug_probe(struct amba_device *adev, const struct amba_id *id)
+>  		return -ENOMEM;
 >  
->  	if (!dev->of_node)
->  		return 0;
+>  	drvdata->cpu = coresight_get_cpu(dev);
+> +	if (drvdata->cpu == -ENODEV)
+> +		return -ENODEV;
 
-An error should be returned if the above condition is true.  
+As Suzuki pointed out, simply return the error message conveyed by
+coresight_get_cpu().
+
+Also please merge both patches together to avoid bisect nightmare.
+
+Thank you for the contribution,
+Mathieu
 
 > +
-
-Spurious newline
-
->  	dn = of_parse_phandle(dev->of_node, "cpu", 0);
-> -	/* Affinity defaults to CPU0 */
-> +
-> +	/* Affinity defaults to invalid if no cpu nodes are found*/
->  	if (!dn)
-> -		return 0;
+>  	if (per_cpu(debug_drvdata, drvdata->cpu)) {
+>  		dev_err(dev, "CPU%d drvdata has already been initialized\n",
+>  			drvdata->cpu);
+> diff --git a/drivers/hwtracing/coresight/coresight-etm3x.c b/drivers/hwtracing/coresight/coresight-etm3x.c
+> index 225c2982e4fe..882e2751746c 100644
+> --- a/drivers/hwtracing/coresight/coresight-etm3x.c
+> +++ b/drivers/hwtracing/coresight/coresight-etm3x.c
+> @@ -816,6 +816,9 @@ static int etm_probe(struct amba_device *adev, const struct amba_id *id)
+>  	}
+>  
+>  	drvdata->cpu = coresight_get_cpu(dev);
+> +	if (drvdata->cpu == -ENODEV)
 > +		return -ENODEV;
 > +
->  	cpu = of_cpu_node_to_id(dn);
->  	of_node_put(dn);
+>  	desc.name  = devm_kasprintf(dev, GFP_KERNEL, "etm%d", drvdata->cpu);
+>  	if (!desc.name)
+>  		return -ENOMEM;
+> diff --git a/drivers/hwtracing/coresight/coresight-etm4x.c b/drivers/hwtracing/coresight/coresight-etm4x.c
+> index 7fe266194ab5..97d71dbbeb19 100644
+> --- a/drivers/hwtracing/coresight/coresight-etm4x.c
+> +++ b/drivers/hwtracing/coresight/coresight-etm4x.c
+> @@ -1101,6 +1101,9 @@ static int etm4_probe(struct amba_device *adev, const struct amba_id *id)
+>  	spin_lock_init(&drvdata->spinlock);
 >  
-> -	/* Affinity to CPU0 if no cpu nodes are found */
-> -	return (cpu < 0) ? 0 : cpu;
-> +	return cpu;
->  }
->  
->  /*
+>  	drvdata->cpu = coresight_get_cpu(dev);
+> +	if (drvdata->cpu == -ENODEV)
+> +		return -ENODEV;
+> +
+>  	desc.name = devm_kasprintf(dev, GFP_KERNEL, "etm%d", drvdata->cpu);
+>  	if (!desc.name)
+>  		return -ENOMEM;
 > -- 
 > QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
 > of Code Aurora Forum, hosted by The Linux Foundation
