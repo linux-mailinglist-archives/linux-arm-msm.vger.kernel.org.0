@@ -2,83 +2,89 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 6971F4CFB8
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Jun 2019 15:58:31 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 775124D044
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Jun 2019 16:22:39 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726697AbfFTN6a (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 20 Jun 2019 09:58:30 -0400
-Received: from foss.arm.com ([217.140.110.172]:39850 "EHLO foss.arm.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726686AbfFTN6a (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 20 Jun 2019 09:58:30 -0400
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id AB885344;
-        Thu, 20 Jun 2019 06:58:29 -0700 (PDT)
-Received: from [10.1.196.93] (en101.cambridge.arm.com [10.1.196.93])
-        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 39AC53F718;
-        Thu, 20 Jun 2019 06:58:28 -0700 (PDT)
-Subject: Re: [PATCH 2/2] coresight: Abort probe for missing CPU phandle
-To:     saiprakash.ranjan@codeaurora.org, mathieu.poirier@linaro.org,
-        leo.yan@linaro.org, alexander.shishkin@linux.intel.com,
-        david.brown@linaro.org, mark.rutland@arm.com
-Cc:     rnayak@codeaurora.org, vivek.gautam@codeaurora.org,
-        sibis@codeaurora.org, linux-arm-kernel@lists.infradead.org,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org
-References: <cover.1561037262.git.saiprakash.ranjan@codeaurora.org>
- <d93e28fc80227f9a385130a766a24f8f39a1dcf0.1561037262.git.saiprakash.ranjan@codeaurora.org>
-From:   Suzuki K Poulose <suzuki.poulose@arm.com>
-Message-ID: <1ddee3c1-8299-1991-eb88-151b9c3ee180@arm.com>
-Date:   Thu, 20 Jun 2019 14:58:27 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.7.0
-MIME-Version: 1.0
-In-Reply-To: <d93e28fc80227f9a385130a766a24f8f39a1dcf0.1561037262.git.saiprakash.ranjan@codeaurora.org>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+        id S1731567AbfFTOWi (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 20 Jun 2019 10:22:38 -0400
+Received: from mail-pg1-f194.google.com ([209.85.215.194]:46659 "EHLO
+        mail-pg1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1731226AbfFTOWi (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 20 Jun 2019 10:22:38 -0400
+Received: by mail-pg1-f194.google.com with SMTP id v9so1652489pgr.13;
+        Thu, 20 Jun 2019 07:22:37 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id;
+        bh=+UzUbDRAaaNqwrtJOvlpRknxT3IijEX1YVPa5qy2MtM=;
+        b=CVLcV+OS1EoECdFxLm6kqQH5hyOWXfLAQTcbmJfoV8uhVPelXUNHU17+dRpDf9Imvy
+         xLQSiRMssA7fqybdSgQ+CL/1jTHEBJ8671OlEROL3mRHI1oRq8ETGUNYAjtmWQI1KTxN
+         0ICPLA378wp/hRV6KKBbF8jStbt2es0FYkGEgv6TI2IoiazQeyylKOUtBLQHRS2f0BqZ
+         aJ4+z/WYGX0TsK39dX0sQ9aX/B4jhu+qwmQ/T8uLuLS9MBboSd5JoPOdm1K9SEW5Ui27
+         Xvj/0YMdpPhv48a/cC7NKRXPjM4qrGLF0oQoDn80zYtvIhkZZk+yXVm8qaF6EHlHZF/G
+         Y4uQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=+UzUbDRAaaNqwrtJOvlpRknxT3IijEX1YVPa5qy2MtM=;
+        b=ewXdY6PCfOCJu+21TablLONfJc/Dh+Pg8L+39vO5mz7EfEbB4bmFrlsxaH8nF5v4OO
+         vyIiMqUBZKrgzfEPYJvJj7eesHyv/l4lVbQYodOFwE/z9nR/QzdCxcR4Tmutwg2nXwQN
+         a/hrNYdxckL6YN2MlO4E7ayvbb6kZ7KR8IAUSZZJOdXW4GBt+eLVtcZ8TWffByf+BrL3
+         sHfrKFwD61AouZyujjsHGKNWajW59NSoByrb4eF/mFwduMsbanbhf1zaGQyulEURbmqR
+         Qd0r93Gt/qiy+vLbRjzRi9f34OVphi88Ep2r9z0elopW9OiyS7tmeAviqbeg5asr6y1i
+         cHmA==
+X-Gm-Message-State: APjAAAWWFkvskXCmtgOp1pP3Aa7PrIyN6+I7EA839RID86nzvEUZjelW
+        DtULGF++a/LTN+tagFc+O+LFsohr
+X-Google-Smtp-Source: APXvYqzn9PE8rSgbfO8g9ZCdmiiYdGIs3UtaOb/KrFvi/6cjeIm3mYWHTGm8mmv/MtUEK+hGbww6RA==
+X-Received: by 2002:a17:90a:cf8f:: with SMTP id i15mr3256035pju.110.1561040557622;
+        Thu, 20 Jun 2019 07:22:37 -0700 (PDT)
+Received: from aw-bldr-10.qualcomm.com (i-global254.qualcomm.com. [199.106.103.254])
+        by smtp.gmail.com with ESMTPSA id 16sm22516557pfo.65.2019.06.20.07.22.35
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Thu, 20 Jun 2019 07:22:37 -0700 (PDT)
+From:   Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
+To:     bjorn.andersson@linaro.org, lgirdwood@gmail.com,
+        broonie@kernel.org, jorge.ramirez-ortiz@linaro.org
+Cc:     linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
+Subject: [PATCH] regulator: qcom_spmi: Do NULL check for lvs
+Date:   Thu, 20 Jun 2019 07:22:28 -0700
+Message-Id: <20190620142228.11773-1-jeffrey.l.hugo@gmail.com>
+X-Mailer: git-send-email 2.17.1
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+Low-voltage switches (lvs) don't have set_points since the voltage ranges
+of the output are really controlled by the inputs.  This is a problem for
+the newly added linear range support in the probe(), as that will cause
+a null pointer dereference error on older platforms like msm8974 which
+happen to need to control some of the implemented lvs.
 
+Fix this by adding the appropriate null check.
 
-On 20/06/2019 14:45, Sai Prakash Ranjan wrote:
-> Currently the coresight etm and cpu-debug drivers
-> assume the affinity to CPU0 returned by coresight
-> platform and continue the probe in case of missing
-> CPU phandle. This is not true and leads to crash
-> in some cases, so abort the probe in case of missing
-> CPU phandle.
-> 
-> Signed-off-by: Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
-> ---
->   drivers/hwtracing/coresight/coresight-cpu-debug.c | 3 +++
->   drivers/hwtracing/coresight/coresight-etm3x.c     | 3 +++
->   drivers/hwtracing/coresight/coresight-etm4x.c     | 3 +++
->   3 files changed, 9 insertions(+)
-> 
-> diff --git a/drivers/hwtracing/coresight/coresight-cpu-debug.c b/drivers/hwtracing/coresight/coresight-cpu-debug.c
-> index 07a1367c733f..43f32fa71ff9 100644
-> --- a/drivers/hwtracing/coresight/coresight-cpu-debug.c
-> +++ b/drivers/hwtracing/coresight/coresight-cpu-debug.c
-> @@ -579,6 +579,9 @@ static int debug_probe(struct amba_device *adev, const struct amba_id *id)
->   		return -ENOMEM;
->   
->   	drvdata->cpu = coresight_get_cpu(dev);
-> +	if (drvdata->cpu == -ENODEV)
-> +		return -ENODEV;
+Fixes: 86f4ff7a0c0c ("regulator: qcom_spmi: enable linear range info")
+Reported-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+Signed-off-by: Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
+---
+ drivers/regulator/qcom_spmi-regulator.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-if (drvdata->cpu < 0)
-	return drvdata->cpu;
-
-Same everywhere below ?
-
-Also, I would like to hear Mathieu's thoughts on this change. If he's OK
-with it:
-
-Reviewed-by: Suzuki K Poulose <suzuki.poulose@arm.com> with the change above.
-
-
-
+diff --git a/drivers/regulator/qcom_spmi-regulator.c b/drivers/regulator/qcom_spmi-regulator.c
+index 877df33e0246..7f51c5fc8194 100644
+--- a/drivers/regulator/qcom_spmi-regulator.c
++++ b/drivers/regulator/qcom_spmi-regulator.c
+@@ -2045,7 +2045,7 @@ static int qcom_spmi_regulator_probe(struct platform_device *pdev)
+ 			}
+ 		}
+ 
+-		if (vreg->set_points->count == 1) {
++		if (vreg->set_points && vreg->set_points->count == 1) {
+ 			/* since there is only one range */
+ 			range = vreg->set_points->range;
+ 			vreg->desc.uV_step = range->step_uV;
+-- 
+2.17.1
 
