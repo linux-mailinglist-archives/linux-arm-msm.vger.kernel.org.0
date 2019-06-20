@@ -2,208 +2,178 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 1CAA24C77D
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Jun 2019 08:29:22 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id CCB294C915
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Jun 2019 10:12:01 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725966AbfFTG3V (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 20 Jun 2019 02:29:21 -0400
-Received: from smtp.codeaurora.org ([198.145.29.96]:54970 "EHLO
+        id S1731108AbfFTIMA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 20 Jun 2019 04:12:00 -0400
+Received: from smtp.codeaurora.org ([198.145.29.96]:43550 "EHLO
         smtp.codeaurora.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725889AbfFTG3V (ORCPT
+        with ESMTP id S1725966AbfFTIMA (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 20 Jun 2019 02:29:21 -0400
+        Thu, 20 Jun 2019 04:12:00 -0400
 Received: by smtp.codeaurora.org (Postfix, from userid 1000)
-        id A2C00609D4; Thu, 20 Jun 2019 06:29:19 +0000 (UTC)
+        id 4B66B60A24; Thu, 20 Jun 2019 08:11:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
-        s=default; t=1561012159;
-        bh=NZEClqzVfuNrG0u2LnRVLKZy/0ZXM/ymvg5lvsVu97c=;
-        h=Subject:To:Cc:References:From:Date:In-Reply-To:From;
-        b=eQvlepuJTyTBaS7/xbRkg6REHSoGkbQ8tvHEQNQj1pnI08wmEsj32xKBQGXO4Bii1
-         u/iTyCT1tQVlWIGMpdYWS9Td62oJRMnBobG/Goc654kXOf9RO0dU+ViDjyHX/ll20a
-         VorGo9miKzOFpBtr9Oq0j33sxFPSwgXmVPOBwkUI=
+        s=default; t=1561018319;
+        bh=dvU4ajc5X9Scc24IFrnqiFqzqsUgEwHjZnNW7TXMMe0=;
+        h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
+        b=A8a0vgs6wuLOa5DhlPnxpcrazX1vxYuDRWrWSzkLd/06sm6s0ntsxwPyafsFlNtE1
+         yvx0wDhjvPUbLyRKkz8WAC455jLiKdwrUt+InOQtH+AuJGDg1BHmuNl35HJripnOoK
+         1PpwxglLi7dbuMM0Cxh0rbtbGEbgvfaFSn5tItEA=
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
         pdx-caf-mail.web.codeaurora.org
 X-Spam-Level: 
 X-Spam-Status: No, score=-2.7 required=2.0 tests=ALL_TRUSTED,BAYES_00,
-        DKIM_INVALID,DKIM_SIGNED,SPF_NONE autolearn=no autolearn_force=no
-        version=3.4.0
-Received: from [10.79.136.27] (blr-bdr-fw-01_globalnat_allzones-outside.qualcomm.com [103.229.18.19])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: saiprakash.ranjan@smtp.codeaurora.org)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id B7ACF60790;
-        Thu, 20 Jun 2019 06:29:15 +0000 (UTC)
+        DKIM_INVALID,DKIM_SIGNED autolearn=no autolearn_force=no version=3.4.0
+Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
+        by smtp.codeaurora.org (Postfix) with ESMTP id 74195606FC;
+        Thu, 20 Jun 2019 08:11:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
-        s=default; t=1561012158;
-        bh=NZEClqzVfuNrG0u2LnRVLKZy/0ZXM/ymvg5lvsVu97c=;
-        h=Subject:To:Cc:References:From:Date:In-Reply-To:From;
-        b=Z9HG38za9BwP6TCnqYNrkTCLXJndecYgqvqZpNdho+EXDVCLr3K4y9xGnFpLdEjZG
-         i04T+tcuzLeemwIsDdkuik4PmeoyHQR29S3oIfAk29LxJoOTuB6HVxrBIX2GvSKrG5
-         ApGMovDptgme8bwA8VIrlFI03NmOOuCIIEz+lbzU=
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org B7ACF60790
-Authentication-Results: pdx-caf-mail.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: pdx-caf-mail.web.codeaurora.org; spf=none smtp.mailfrom=saiprakash.ranjan@codeaurora.org
-Subject: Re: Coresight causes synchronous external abort on msm8916
-To:     Stephan Gerhold <stephan@gerhold.net>,
-        Suzuki K Poulose <suzuki.poulose@arm.com>,
-        mathieu.poirier@linaro.org
-Cc:     david.brown@linaro.org, Sibi Sankar <sibis@codeaurora.org>,
-        Rajendra Nayak <rnayak@codeaurora.org>,
-        Vivek Gautam <vivek.gautam@codeaurora.org>, agross@kernel.org,
-        linux-arm-kernel@lists.infradead.org, mathieu.poirier@linaro.org,
-        linux-arm-msm@vger.kernel.org
-References: <20190618202623.GA53651@gerhold.net>
- <a51f117f-c48d-d3f4-c3d1-9b584e3a055f@arm.com>
- <20190619183904.GB937@gerhold.net>
-From:   Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
-Message-ID: <0dcea9a1-999d-7d85-267e-c3bfcfcfa95a@codeaurora.org>
-Date:   Thu, 20 Jun 2019 11:59:13 +0530
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
- Thunderbird/60.7.0
+        s=default; t=1561018318;
+        bh=dvU4ajc5X9Scc24IFrnqiFqzqsUgEwHjZnNW7TXMMe0=;
+        h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
+        b=mIpVAMaCbF25A6O5Q2W1kSuhBfKw9/MFQrVxSXyN/4+hEcaHJmGfVgMbYhyOJHTGN
+         vVy6Ry5XkWEDNXqJzuNJJJo6ilp4QfaK3WCarKedHJ8LktQ0AqzwV8Ny5d2PYK1Rcd
+         hdNpDqhM6Al521NWNQd3so6Ql+LwK98volxYAqXI=
 MIME-Version: 1.0
-In-Reply-To: <20190619183904.GB937@gerhold.net>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
 Content-Transfer-Encoding: 7bit
+Date:   Thu, 20 Jun 2019 13:41:58 +0530
+From:   amasule@codeaurora.org
+To:     Stanimir Varbanov <stanimir.varbanov@linaro.org>
+Cc:     linux-media@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, vgarodia@codeaurora.org
+Subject: Re: [PATCH 1/5] media: venus: Add codec data table
+In-Reply-To: <bc6035d8-2688-f79a-068e-bf6630dd65ef@linaro.org>
+References: <1560233130-27264-1-git-send-email-amasule@codeaurora.org>
+ <1560233130-27264-2-git-send-email-amasule@codeaurora.org>
+ <bc6035d8-2688-f79a-068e-bf6630dd65ef@linaro.org>
+Message-ID: <cc674c104d0f7bc9007285efd67e8885@codeaurora.org>
+X-Sender: amasule@codeaurora.org
+User-Agent: Roundcube Webmail/1.2.5
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Stephan,
+Hi Stan,
 
-On 6/20/2019 12:09 AM, Stephan Gerhold wrote:
-> Hi,
+On 2019-06-17 14:07, Stanimir Varbanov wrote:
+> Hi Aniket,
 > 
-> On Wed, Jun 19, 2019 at 09:49:03AM +0100, Suzuki K Poulose wrote:
->> Hi Stephan,
->>
->> On 18/06/2019 21:26, Stephan Gerhold wrote:
->>> Hi,
->>>
->>> I'm trying to run mainline Linux on a smartphone with MSM8916 SoC.
->>> It works surprisingly well, but the coresight devices seem to cause the
->>> following crash shortly after userspace starts:
->>>
->>>       Internal error: synchronous external abort: 96000010 [#1] PREEMPT SMP
->>
->> ...
->>
->>
->>>
->>> In this case I'm using a simple device tree similar to apq8016-sbc,
->>> but it also happens using something as simple as msm8916-mtp.dts
->>> on this particular device.
->>>     (Attached: dmesg log with msm8916-mtp.dts and arm64 defconfig)
->>>
->>> I can avoid the crash and boot without any further problems by disabling
->>> every coresight device defined in msm8916.dtsi, e.g.:
->>>
->>> 	tpiu@820000 { status = "disabled"; };
->>
->> ...
->>
->>>
->>> I don't have any use for coresight at the moment,
->>> but it seems somewhat odd to put this in the device specific dts.
->>>
->>> Any idea what could be causing this crash?
->>
->> This is mostly due to the missing power domain support. The CoreSight
->> components are usually in a debug power domain. So unless that is turned on,
->> (either by specifying proper power domain ids for power management protocol
->> supported by the firmware OR via other hacks - e.g, connecting a DS-5 to
->> keep the debug power domain turned on , this works on Juno -).
+> On 6/11/19 9:05 AM, Aniket Masule wrote:
+>> Add vpp cycles for for different types of codec
+>> It indicates the cycles required by video hardware
+>> to process each macroblock.
+>> 
+>> Signed-off-by: Aniket Masule <amasule@codeaurora.org>
+>> ---
+>>  drivers/media/platform/qcom/venus/core.c | 13 +++++++++++++
+>>  drivers/media/platform/qcom/venus/core.h | 15 +++++++++++++++
+>>  2 files changed, 28 insertions(+)
+>> 
+>> diff --git a/drivers/media/platform/qcom/venus/core.c 
+>> b/drivers/media/platform/qcom/venus/core.c
+>> index 7393667..43eb446 100644
+>> --- a/drivers/media/platform/qcom/venus/core.c
+>> +++ b/drivers/media/platform/qcom/venus/core.c
+>> @@ -473,9 +473,22 @@ static __maybe_unused int 
+>> venus_runtime_resume(struct device *dev)
+>>  	{  244800, 100000000 },	/* 1920x1080@30 */
+>>  };
+>> 
+>> +static struct codec_data sdm845_codec_data[] =  {
+>> +	{ V4L2_PIX_FMT_H264, VIDC_SESSION_TYPE_ENC, 675 },
+>> +	{ V4L2_PIX_FMT_HEVC, VIDC_SESSION_TYPE_ENC, 675 },
+>> +	{ V4L2_PIX_FMT_VP8, VIDC_SESSION_TYPE_ENC, 675 },
+>> +	{ V4L2_PIX_FMT_MPEG2, VIDC_SESSION_TYPE_DEC, 200 },
+>> +	{ V4L2_PIX_FMT_H264, VIDC_SESSION_TYPE_DEC, 200 },
+>> +	{ V4L2_PIX_FMT_HEVC, VIDC_SESSION_TYPE_DEC, 200 },
+>> +	{ V4L2_PIX_FMT_VP8, VIDC_SESSION_TYPE_DEC, 200 },
+>> +	{ V4L2_PIX_FMT_VP9, VIDC_SESSION_TYPE_DEC, 200 },
+>> +};
+>> +
+>>  static const struct venus_resources sdm845_res = {
+>>  	.freq_tbl = sdm845_freq_table,
+>>  	.freq_tbl_size = ARRAY_SIZE(sdm845_freq_table),
+>> +	.codec_data = sdm845_codec_data,
+>> +	.codec_data_size = ARRAY_SIZE(sdm845_codec_data),
+>>  	.clks = {"core", "iface", "bus" },
+>>  	.clks_num = 3,
+>>  	.max_load = 2563200,
+>> diff --git a/drivers/media/platform/qcom/venus/core.h 
+>> b/drivers/media/platform/qcom/venus/core.h
+>> index 7a3feb5..b1a9b43 100644
+>> --- a/drivers/media/platform/qcom/venus/core.h
+>> +++ b/drivers/media/platform/qcom/venus/core.h
+>> @@ -35,12 +35,20 @@ struct reg_val {
+>>  	u32 value;
+>>  };
+>> 
+>> +struct codec_data {
 > 
-> Interesting, thanks a lot!
+> The name is very generic, could you rename the structure to something
+> like vpp_cycles_data?
 > 
-> In this case I'm wondering how it works on the Dragonboard 410c.
-> Does it enable these power domains in the firmware?
->    (Assuming it boots without this error...)
+I will be adding vsp_cycles with next patch for bitrate based clock 
+scaling.
+So, I could rename it to codec_cycles_data.
+
+>> +u32 pixfmt;
+>> +u32 session_type;
+>> +int vpp_cycles;
 > 
-> If coresight is not working properly on all/most msm8916 devices,
-> shouldn't coresight be disabled by default in msm8916.dtsi?
-> At least until those power domains can be set up by the kernel.
+> please check your editor, those fields should have a tab to the right.
 > 
-> If this is a device-specific issue, what would be an acceptable solution
-> for mainline?
-> Can I turn on these power domains from the kernel?
-> Or is it fine to disable coresight for this device with the snippet above?
+>> +};
+>> +
+>>  struct venus_resources {
+>>  	u64 dma_mask;
+>>  	const struct freq_tbl *freq_tbl;
+>>  	unsigned int freq_tbl_size;
+>>  	const struct reg_val *reg_tbl;
+>>  	unsigned int reg_tbl_size;
+>> +	const struct codec_data *codec_data;
+>> +	unsigned int codec_data_size;
+>>  	const char * const clks[VIDC_CLKS_NUM_MAX];
+>>  	unsigned int clks_num;
+>>  	enum hfi_version hfi_version;
+>> @@ -216,6 +224,12 @@ struct venus_buffer {
+>>  	struct list_head ref_list;
+>>  };
+>> 
+>> +struct clock_data {
+>> +	u32 core_id;
+>> +	unsigned long freq;
 > 
-> I'm not actually trying to use coresight, I just want the device to boot :)
-> And since I am considering submitting my device tree for inclusion in
-> mainline, I want to ask in advance how I should tackle this problem.
+> I cannot see how this 'freq' structure field is used? I can see that 
+> you
+> fill it in 3/5 patch but you don't used nowhere.
 > 
-> Thanks!
-> Stephan
+Yes Stan, I will remove 'freq' from clock data structure.
+
+>> +	struct codec_data *codec_data;
+>> +};
 > 
-
-This doesn't seem like cpuidle or debug power domain issue, but looks
-like cpu affinity issue. Can you please try out this patch and let us
-know?
-
-diff --git a/drivers/hwtracing/coresight/coresight-cpu-debug.c 
-b/drivers/hwtracing/coresight/coresight-cpu-debug.c
-index e8819d750938..9acf9f190d42 100644
---- a/drivers/hwtracing/coresight/coresight-cpu-debug.c
-+++ b/drivers/hwtracing/coresight/coresight-cpu-debug.c
-@@ -579,7 +579,11 @@ static int debug_probe(struct amba_device *adev, 
-const struct amba_id *id)
-  	if (!drvdata)
-  		return -ENOMEM;
-
--	drvdata->cpu = np ? of_coresight_get_cpu(np) : 0;
-+	drvdata->cpu = np ? of_coresight_get_cpu(np) : -ENODEV;
-+	if (drvdata->cpu == -ENODEV) {
-+		return -ENODEV;
-+	}
-+
-  	if (per_cpu(debug_drvdata, drvdata->cpu)) {
-  		dev_err(dev, "CPU%d drvdata has already been initialized\n",
-  			drvdata->cpu);
-diff --git a/drivers/hwtracing/coresight/coresight-etm4x.c 
-b/drivers/hwtracing/coresight/coresight-etm4x.c
-index 8bb0092c7ec2..660432acbac0 100644
---- a/drivers/hwtracing/coresight/coresight-etm4x.c
-+++ b/drivers/hwtracing/coresight/coresight-etm4x.c
-@@ -1107,7 +1107,10 @@ static int etm4_probe(struct amba_device *adev, 
-const struct amba_id *id)
-
-  	spin_lock_init(&drvdata->spinlock);
-
--	drvdata->cpu = pdata ? pdata->cpu : 0;
-+	drvdata->cpu = pdata ? pdata->cpu : -ENODEV;
-+	if (drvdata->cpu == -ENODEV) {
-+		return -ENODEV;
-+       }
-
-  	cpus_read_lock();
-  	etmdrvdata[drvdata->cpu] = drvdata;
-diff --git a/drivers/hwtracing/coresight/of_coresight.c 
-b/drivers/hwtracing/coresight/of_coresight.c
-index 7045930fc958..8c1b90ba233c 100644
---- a/drivers/hwtracing/coresight/of_coresight.c
-+++ b/drivers/hwtracing/coresight/of_coresight.c
-@@ -153,14 +153,14 @@ int of_coresight_get_cpu(const struct device_node 
-*node)
-  	struct device_node *dn;
-
-  	dn = of_parse_phandle(node, "cpu", 0);
--	/* Affinity defaults to CPU0 */
-+	/* Affinity defaults to invalid */
-  	if (!dn)
--		return 0;
-+		return -ENODEV;
-  	cpu = of_cpu_node_to_id(dn);
-  	of_node_put(dn);
-
--	/* Affinity to CPU0 if no cpu nodes are found */
--	return (cpu < 0) ? 0 : cpu;
-+	/* Affinity to invalid if no cpu nodes are found */
-+	return (cpu < 0) ? -ENODEV : cpu;
-  }
-  EXPORT_SYMBOL_GPL(of_coresight_get_cpu);
-
--- 
-QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
-of Code Aurora Forum, hosted by The Linux Foundation
+> Having the fact that freq field seems not needed can we just merge the
+> fields in venus_inst structure?
+> 
+I will be adding 'freq' with next patch for bitrate based clock scaling.
+So, it would be easier if we maintain separate structure from this 
+patch.
+>> +
+>>  #define to_venus_buffer(ptr)	container_of(ptr, struct venus_buffer, 
+>> vb)
+>> 
+>>  /**
+>> @@ -275,6 +289,7 @@ struct venus_inst {
+>>  	struct list_head list;
+>>  	struct mutex lock;
+>>  	struct venus_core *core;
+>> +	struct clock_data clk_data;
+>>  	struct list_head dpbbufs;
+>>  	struct list_head internalbufs;
+>>  	struct list_head registeredbufs;
+>> 
