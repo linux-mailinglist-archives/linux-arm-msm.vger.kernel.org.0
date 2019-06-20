@@ -2,94 +2,107 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 40EDC4D495
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Jun 2019 19:11:09 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 636A94D4A1
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Jun 2019 19:13:57 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726758AbfFTRLI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 20 Jun 2019 13:11:08 -0400
-Received: from mail.kernel.org ([198.145.29.99]:43740 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726562AbfFTRLI (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 20 Jun 2019 13:11:08 -0400
-Received: from localhost (unknown [106.51.107.82])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 14F3B2082C;
-        Thu, 20 Jun 2019 17:11:04 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1561050667;
-        bh=n6B7VqKGVawxjMyw2yq5bPlq66NxeaTyVE4Kp1Ja2ZM=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=LWlLGHKfRvVKXAbg+FOMx8R3T3+6/zBofP35Xv3UB02sJZ8RbG6xzepsaHKuAw3Oe
-         Hx7hWFcZxUud2TKy0YCCXiKtFtQNuDIWamTPThRtWwkE5jZI1nfEV56+G2oecmcCI2
-         +43jxUUZG35+r9g0ikqflgR1BuWRO1SRThpYLZjQ=
-Date:   Thu, 20 Jun 2019 22:37:56 +0530
-From:   Vinod Koul <vkoul@kernel.org>
-To:     Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc:     Mathias Nyman <mathias.nyman@intel.com>,
-        linux-arm-msm@vger.kernel.org,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        linux-usb@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>,
-        Christian Lamparter <chunkeey@googlemail.com>
-Subject: Re: [PATCH 5/5] usb: xhci: allow multiple firmware versions
-Message-ID: <20190620170756.GP2962@vkoul-mobl>
-References: <20190620102154.20805-1-vkoul@kernel.org>
- <20190620102154.20805-6-vkoul@kernel.org>
- <20190620122013.GE19295@kroah.com>
+        id S1726686AbfFTRN4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 20 Jun 2019 13:13:56 -0400
+Received: from mail-pg1-f195.google.com ([209.85.215.195]:41728 "EHLO
+        mail-pg1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726649AbfFTRN4 (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 20 Jun 2019 13:13:56 -0400
+Received: by mail-pg1-f195.google.com with SMTP id y72so1905696pgd.8
+        for <linux-arm-msm@vger.kernel.org>; Thu, 20 Jun 2019 10:13:56 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=SxlO+FSAxDd632DpLfLCq/OUwvg6eaO8V3k3L6zEVyA=;
+        b=AV7X7aYgHwBXxgw3zTNxXUoIkYIRKYXuB2SNjcPxrI5cN6QdU5ft8aLqv61MezByn9
+         Skir3SYjIi4thmMA+ZaNtCXTpB8zIoHuAXP4x2Li0v0AHE1EAGklVzNFRfD5w0XcO8aw
+         NAKrZuz9PjK0bDHSL8idlm6Du30lv3oB9bEmJfs0W0uQ4mHTLhmd1jvwKR4nzmmXhZUZ
+         kMNjCskDOQAjK0P1EXeh8f4R5TVcklnmEUbjaNEPz1n8b676CIOwjjrOSGQFBJY1O2Ql
+         SU+T+HCUc9gWfrwSXFLpSwyv9XBkGr0MnctGYDbFP4ZydiyRA9B0Eq1gFCoVNhtnBbSD
+         xC4w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=SxlO+FSAxDd632DpLfLCq/OUwvg6eaO8V3k3L6zEVyA=;
+        b=q3XRRN7I9t3bWi9JPHup3hf6e8RRbav0PytqEkqX8SZooy/lJJLYf0NXEyzym2kKzx
+         ax8FqTo8lNuwuyfrclD1QS66YHix/O5vT4lmDGatjtvmE+Gmgexo2cfhWyP2p29vDXjY
+         ls36W63ikEByCJmVkZge9OJiS+L+F49i2Sqlgb55UXXwFoWR39VbOgYG6OOn6ZAaQTYE
+         npy5cbSwRh8EBAWYrKC+kI8pVG33rXHQN1TAVnP9vg5a35OQCyiRqVnQ6NxGTZoq2Fww
+         kjSVnPtglGJjui4Z8t58+XMQ2Q4BJa0YZjGWp5h7rW7wsAbWuDUXrIiwvvxmeMHS3pt+
+         hOCA==
+X-Gm-Message-State: APjAAAVGJvarlupHCfo+t1wmYkbOn+kRB/nCF2utXD/5JPXuny3gGOAm
+        hH6Owf8J+15VYOhdyg0RaLeSTg==
+X-Google-Smtp-Source: APXvYqyWa7oDW4n/vwBZPT9s8zK5XpweT+4yAE05XynKgxzqLcEa8yJCFOcFKJcqjzbZfWH02mCGRQ==
+X-Received: by 2002:a63:fa0d:: with SMTP id y13mr13773253pgh.258.1561050835591;
+        Thu, 20 Jun 2019 10:13:55 -0700 (PDT)
+Received: from builder (104-188-17-28.lightspeed.sndgca.sbcglobal.net. [104.188.17.28])
+        by smtp.gmail.com with ESMTPSA id s129sm32753pfb.186.2019.06.20.10.13.54
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Thu, 20 Jun 2019 10:13:54 -0700 (PDT)
+Date:   Thu, 20 Jun 2019 10:13:52 -0700
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
+Cc:     lgirdwood@gmail.com, broonie@kernel.org,
+        jorge.ramirez-ortiz@linaro.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: Re: [PATCH] regulator: qcom_spmi: Do NULL check for lvs
+Message-ID: <20190620171352.GA19899@builder>
+References: <20190620142228.11773-1-jeffrey.l.hugo@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20190620122013.GE19295@kroah.com>
-User-Agent: Mutt/1.11.3 (2019-02-01)
+In-Reply-To: <20190620142228.11773-1-jeffrey.l.hugo@gmail.com>
+User-Agent: Mutt/1.10.0 (2018-05-17)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 20-06-19, 14:20, Greg Kroah-Hartman wrote:
-> On Thu, Jun 20, 2019 at 03:51:54PM +0530, Vinod Koul wrote:
-> > Allow multiple firmware file versions in table and load them in
-> > increasing order as we find them in the file system.
-> > 
-> > Signed-off-by: Vinod Koul <vkoul@kernel.org>
-> > Cc: Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>
-> > Cc: Christian Lamparter <chunkeey@googlemail.com>
-> > ---
-> >  drivers/usb/host/xhci-pci.c | 39 +++++++++++++++++++++++++++++++++++++
-> >  1 file changed, 39 insertions(+)
-> > 
-> > diff --git a/drivers/usb/host/xhci-pci.c b/drivers/usb/host/xhci-pci.c
-> > index 3574afac44c5..2ee9e6bbabcb 100644
-> > --- a/drivers/usb/host/xhci-pci.c
-> > +++ b/drivers/usb/host/xhci-pci.c
-> > @@ -333,9 +333,12 @@ static const struct renesas_fw_entry {
-> >  	 *  - uPD720201 ES 2.0 sample whose revision ID is 2.
-> >  	 *  - uPD720201 ES 2.1 sample & CS sample & Mass product, ID is 3.
-> >  	 *  - uPD720202 ES 2.0 sample & CS sample & Mass product, ID is 2.
-> > +	 *
-> > +	 *  Entry expected_version should be kept in increasing order
-> 
-> Why?
+On Thu 20 Jun 07:22 PDT 2019, Jeffrey Hugo wrote:
 
-I should have explained more :)
-This is required only for the devices which have multiple versions
-available, so it will pick one try it out and if not found go to
-subsequent one. So I thought it would be make sense to keep the version
-values for a specific device (not whole table) ordered so that we can
-pick the next entry. Of course if you have better idea to manage two
-versions, am all ears :)
-
+> Low-voltage switches (lvs) don't have set_points since the voltage ranges
+> of the output are really controlled by the inputs.  This is a problem for
+> the newly added linear range support in the probe(), as that will cause
+> a null pointer dereference error on older platforms like msm8974 which
+> happen to need to control some of the implemented lvs.
 > 
-> >  	 */
-> >  	{ "K2013080.mem", 0x0014, 0x02, 0x2013 },
-> >  	{ "K2013080.mem", 0x0014, 0x03, 0x2013 },
-> > +	{ "K2026090.mem", 0x0014, 0x03, 0x2026 },
-> >  	{ "K2013080.mem", 0x0015, 0x02, 0x2013 },
-> 
-> Just put a { } entry here at the end and then you don't care about the
-> order at all.  Much simpler and easier to maintain over time.
+> Fix this by adding the appropriate null check.
 > 
 
--- 
-~Vinod
+Thanks Jeff, this resolves the regression I've seen the last couple of
+days on linux-next.
+
+Tested-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+
+Regards,
+Bjorn
+
+> Fixes: 86f4ff7a0c0c ("regulator: qcom_spmi: enable linear range info")
+> Reported-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+> Signed-off-by: Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
+> ---
+>  drivers/regulator/qcom_spmi-regulator.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+> 
+> diff --git a/drivers/regulator/qcom_spmi-regulator.c b/drivers/regulator/qcom_spmi-regulator.c
+> index 877df33e0246..7f51c5fc8194 100644
+> --- a/drivers/regulator/qcom_spmi-regulator.c
+> +++ b/drivers/regulator/qcom_spmi-regulator.c
+> @@ -2045,7 +2045,7 @@ static int qcom_spmi_regulator_probe(struct platform_device *pdev)
+>  			}
+>  		}
+>  
+> -		if (vreg->set_points->count == 1) {
+> +		if (vreg->set_points && vreg->set_points->count == 1) {
+>  			/* since there is only one range */
+>  			range = vreg->set_points->range;
+>  			vreg->desc.uV_step = range->step_uV;
+> -- 
+> 2.17.1
+> 
