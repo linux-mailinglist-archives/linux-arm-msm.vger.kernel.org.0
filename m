@@ -2,1254 +2,329 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id DC9214D3BC
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Jun 2019 18:28:54 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id BFA444D485
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Jun 2019 19:07:10 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726827AbfFTQ2x (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 20 Jun 2019 12:28:53 -0400
-Received: from mail-pl1-f180.google.com ([209.85.214.180]:36661 "EHLO
-        mail-pl1-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726675AbfFTQ2x (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 20 Jun 2019 12:28:53 -0400
-Received: by mail-pl1-f180.google.com with SMTP id k8so1608529plt.3;
-        Thu, 20 Jun 2019 09:28:52 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:date:message-id;
-        bh=4ZKn9SIkImq9+behPWZc5ze07PPRzxroUNp3IbIuFxo=;
-        b=I3sYrskbgAMR6bHRNKXcwili2ooiCE6rOTTfUVgcg6OEUD4885ZK9nRvjJ67ei/yhn
-         NHaAB/uNkNjElqXTPE3Ka5nB5vEhtDId+LF2rD96tZ0+dNYB5kYb0n2I3/PXQTetz7y8
-         SPWYhZ21s157B1Y1IV8Bu0Z72LPAOWW7qWPG/fUdf0P0njqd70uqnhYOfZjRSimBnP+X
-         gtEs+7b0Nq9s5lE4LGNJ3PSD9oG+714lx4dVr2S+7k9nzEfnIXS+Ih0BfUAK9PFySrqL
-         oUqKwYWRTr2sbeFJhXv+3g9iHZNoAjhY8p1gDj90YiYV8SQ68e0IpvlzMG0Ip/CRxJx2
-         M8Yw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:date:message-id;
-        bh=4ZKn9SIkImq9+behPWZc5ze07PPRzxroUNp3IbIuFxo=;
-        b=OpX10QjpbpwU4mRYd5jUbenniy8ah0MpfBXxNaTM2/9/9xW7Xr1mvKIWmEHNYVEC4S
-         bSjBYKB273VyDAw0tH0gl3xEECsAD7M0jcwoEFqXvh7YYHBnryi5HRHstBQD/rUwLi7f
-         K+9ks8nc/CrfvySDb7LS6PWZd7OTdtin5pgnhOgjNk/m8FgboiaRJ6Cbu1pZ14hmEce4
-         T92VRBZFXdD4ds/l216h5UAnt4mZ1aXgCJgQ9a4gVng9DAnrZ+qXeFrtAYVWtVg4Xpjh
-         Iv38yU2ididCgZGrj/34mlSVqe3AsuSnwFFuOw5QzsHH6a5trQUwhjbnfRIDVa0YqS8B
-         P8QQ==
-X-Gm-Message-State: APjAAAUhNCWiRBWoSIyQa92Fdd3drHycM8t4fKM238NC0apjs18dLkMj
-        9OELk/ALN6hnwzRW3x1CIx0=
-X-Google-Smtp-Source: APXvYqwixvbsaERqOZ6d8+PgqxDKbMAcrfnRIi+n4u7QD/d7dYL54RFkS8Gt26mxjqd+lwhpJSVfWA==
-X-Received: by 2002:a17:902:7448:: with SMTP id e8mr116753488plt.222.1561048130954;
-        Thu, 20 Jun 2019 09:28:50 -0700 (PDT)
-Received: from localhost ([2600:1700:e321:62f0:329c:23ff:fee3:9d7c])
-        by smtp.gmail.com with ESMTPSA id c18sm24265967pfc.180.2019.06.20.09.28.49
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 20 Jun 2019 09:28:50 -0700 (PDT)
-From:   Guenter Roeck <linux@roeck-us.net>
-To:     Wim Van Sebroeck <wim@linux-watchdog.org>
-Cc:     William Breathitt Gray <vilhelm.gray@gmail.com>,
-        Jerry Hoemann <jerry.hoemann@hpe.com>,
-        Vladimir Zapolskiy <vz@mleia.com>,
-        Matthias Brugger <matthias.bgg@gmail.com>,
-        Wan ZongShun <mcuos.com@gmail.com>,
-        Sylvain Lemieux <slemieux.tyco@gmail.com>,
-        Andy Gross <agross@kernel.org>,
-        David Brown <david.brown@linaro.org>,
-        linux-watchdog@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org,
-        linux-mediatek@lists.infradead.org, linux-arm-msm@vger.kernel.org,
-        Guenter Roeck <linux@roeck-us.net>
-Subject: [PATCH] watchdog: convert remaining drivers to use SPDX license identifier
-Date:   Thu, 20 Jun 2019 09:28:46 -0700
-Message-Id: <1561048126-27578-1-git-send-email-linux@roeck-us.net>
-X-Mailer: git-send-email 2.7.4
+        id S1726530AbfFTRHK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 20 Jun 2019 13:07:10 -0400
+Received: from mail.kernel.org ([198.145.29.99]:42440 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726562AbfFTRHK (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 20 Jun 2019 13:07:10 -0400
+Received: from localhost (unknown [106.51.107.82])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by mail.kernel.org (Postfix) with ESMTPSA id 8DA8220675;
+        Thu, 20 Jun 2019 17:07:07 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=default; t=1561050428;
+        bh=Nfavi00IkuMYAzCY6l3FBh3gikpBiq6TtUEzGfP7zHE=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=npWRTXHUJprhuEIxiYycR0zLTYfVgT4IGruuPrJV1ySOe7z8Bs1LHY3/inR6nzw9A
+         jfV0TECsf9gzRLnWvS1O4CiWNystn9BUXTsi+q78zXD5deGXub5uny2LJqTJQO1Vu6
+         qJzmMBc2DB0WGGm6seiFfM70dyZd5ujmxnJUs9R8=
+Date:   Thu, 20 Jun 2019 22:33:58 +0530
+From:   Vinod Koul <vkoul@kernel.org>
+To:     Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc:     Mathias Nyman <mathias.nyman@intel.com>,
+        linux-arm-msm@vger.kernel.org,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Christian Lamparter <chunkeey@googlemail.com>,
+        linux-usb@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>
+Subject: Re: [PATCH 1/5] usb: xhci: add firmware loader for uPD720201 and
+ uPD720202 w/o ROM
+Message-ID: <20190620170358.GO2962@vkoul-mobl>
+References: <20190620102154.20805-1-vkoul@kernel.org>
+ <20190620102154.20805-2-vkoul@kernel.org>
+ <20190620121902.GD19295@kroah.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20190620121902.GD19295@kroah.com>
+User-Agent: Mutt/1.11.3 (2019-02-01)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-This gets rid of the unnecessary license boilerplate, and avoids
-having to deal with individual patches one by one.
+Thanks Greg for a quick review :)
 
-No functional changes.
+On 20-06-19, 14:19, Greg Kroah-Hartman wrote:
+> On Thu, Jun 20, 2019 at 03:51:50PM +0530, Vinod Koul wrote:
+> > From: Christian Lamparter <chunkeey@googlemail.com>
+> > 
+> > This patch adds a firmware loader for the uPD720201K8-711-BAC-A
+> > and uPD720202K8-711-BAA-A variant. Both of these chips are listed
+> > in Renesas' R19UH0078EJ0500 Rev.5.00 "User's Manual: Hardware" as
+> > devices which need the firmware loader on page 2 in order to
+> > work as they "do not support the External ROM".
+> > 
+> > The "Firmware Download Sequence" is describe in chapter
+> > "7.1 FW Download Interface" R19UH0078EJ0500 Rev.5.00 page 131.
+> > 
+> > The firmware "K2013080.mem" is available from a USB3.0 Host to
+> > PCIe Adapter (PP2U-E card) "Firmware download" archive. An
+> > alternative version can be sourced from Netgear's WNDR4700 GPL
+> > archives.
+> > 
+> > The release notes of the PP2U-E's "Firmware Download" ver 2.0.1.3
+> > (2012-06-15) state that the firmware is for the following devices:
+> >  - uPD720201 ES 2.0 sample whose revision ID is 2.
+> >  - uPD720201 ES 2.1 sample & CS sample & Mass product, ID is 3.
+> >  - uPD720202 ES 2.0 sample & CS sample & Mass product, ID is 2.
+> > 
+> > If someone from Renesas is listening: It would be great, if these
+> > firmwares could be added to linux-firmware.git.
+> 
+> That paragraph does not need to be in the changelog :)
 
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
----
-Note: Several drivers include a paragraph such as
+Sure will drop :)
 
-"Neither <name> nor <company> admit liability nor
- provide warranty for any of this software. This material is
- provided "AS-IS" and at no charge."
+> >  #include <linux/slab.h>
+> >  #include <linux/module.h>
+> >  #include <linux/acpi.h>
+> > +#include <linux/firmware.h>
+> > +#include <asm/unaligned.h>
+> 
+> asm/ in a driver?  Are you sure???
 
-Presumably this is covered by the GPL license. However, since I am not
-an attorney, I am not sure, and I opted for leaving such paragraphs in
-place.
+Not sure :D, will check and remove
 
- drivers/watchdog/acquirewdt.c          |  6 +-----
- drivers/watchdog/advantechwdt.c        |  6 +-----
- drivers/watchdog/ath79_wdt.c           |  6 +-----
- drivers/watchdog/davinci_wdt.c         |  6 ++----
- drivers/watchdog/ebc-c384_wdt.c        |  9 ---------
- drivers/watchdog/eurotechwdt.c         |  6 +-----
- drivers/watchdog/ftwdt010_wdt.c        |  5 +----
- drivers/watchdog/hpwdt.c               |  6 +-----
- drivers/watchdog/iTCO_vendor_support.c |  7 +------
- drivers/watchdog/iTCO_wdt.c            |  6 +-----
- drivers/watchdog/ib700wdt.c            |  6 +-----
- drivers/watchdog/ie6xx_wdt.c           | 17 +----------------
- drivers/watchdog/imgpdc_wdt.c          |  5 +----
- drivers/watchdog/intel_scu_watchdog.c  | 19 +------------------
- drivers/watchdog/intel_scu_watchdog.h  | 17 +----------------
- drivers/watchdog/iop_wdt.c             | 14 +-------------
- drivers/watchdog/kempld_wdt.c          | 10 +---------
- drivers/watchdog/ks8695_wdt.c          |  5 +----
- drivers/watchdog/lantiq_wdt.c          |  5 +----
- drivers/watchdog/lpc18xx_wdt.c         |  5 +----
- drivers/watchdog/max77620_wdt.c        |  5 +----
- drivers/watchdog/mt7621_wdt.c          |  5 +----
- drivers/watchdog/mv64x60_wdt.c         |  6 ++----
- drivers/watchdog/nuc900_wdt.c          |  6 +-----
- drivers/watchdog/nv_tco.h              |  6 +-----
- drivers/watchdog/octeon-wdt-main.c     | 11 +----------
- drivers/watchdog/omap_wdt.c            |  6 ++----
- drivers/watchdog/omap_wdt.h            | 21 +--------------------
- drivers/watchdog/pc87413_wdt.c         |  6 +-----
- drivers/watchdog/pcwd_pci.c            |  6 +-----
- drivers/watchdog/pcwd_usb.c            |  6 +-----
- drivers/watchdog/pnx4008_wdt.c         |  5 +----
- drivers/watchdog/qcom-wdt.c            | 14 ++------------
- drivers/watchdog/retu_wdt.c            | 10 +---------
- drivers/watchdog/rn5t618_wdt.c         |  8 +-------
- drivers/watchdog/rt2880_wdt.c          |  5 +----
- drivers/watchdog/sa1100_wdt.c          |  6 +-----
- drivers/watchdog/sbc7240_wdt.c         | 11 +----------
- drivers/watchdog/sbc8360.c             |  6 +-----
- drivers/watchdog/sbsa_gwdt.c           | 10 +---------
- drivers/watchdog/sch311x_wdt.c         |  6 +-----
- drivers/watchdog/softdog.c             |  6 +-----
- drivers/watchdog/txx9wdt.c             |  5 +----
- drivers/watchdog/w83627hf_wdt.c        |  6 +-----
- drivers/watchdog/wafer5823wdt.c        |  6 +-----
- drivers/watchdog/watchdog_core.c       |  6 +-----
- drivers/watchdog/watchdog_core.h       |  6 +-----
- drivers/watchdog/watchdog_dev.c        |  6 +-----
- drivers/watchdog/wd501p.h              |  6 +-----
- drivers/watchdog/wdt.c                 |  6 +-----
- drivers/watchdog/wdt_pci.c             |  6 +-----
- 51 files changed, 54 insertions(+), 336 deletions(-)
+> > +static const struct renesas_fw_entry {
+> > +	const char *firmware_name;
+> > +	u16 device;
+> > +	u8 revision;
+> > +	u16 expected_version;
+> > +} renesas_fw_table[] = {
+> > +	/*
+> > +	 * Only the uPD720201K8-711-BAC-A or uPD720202K8-711-BAA-A
+> > +	 * are listed in R19UH0078EJ0500 Rev.5.00 as devices which
+> > +	 * need the software loader.
+> > +	 *
+> > +	 * PP2U/ReleaseNote_USB3-201-202-FW.txt:
+> > +	 *
+> > +	 * Note: This firmware is for the following devices.
+> > +	 *  - uPD720201 ES 2.0 sample whose revision ID is 2.
+> > +	 *  - uPD720201 ES 2.1 sample & CS sample & Mass product, ID is 3.
+> > +	 *  - uPD720202 ES 2.0 sample & CS sample & Mass product, ID is 2.
+> > +	 */
+> > +	{ "K2013080.mem", 0x0014, 0x02, 0x2013 },
+> > +	{ "K2013080.mem", 0x0014, 0x03, 0x2013 },
+> > +	{ "K2013080.mem", 0x0015, 0x02, 0x2013 },
+> > +};
+> 
+> No MODULE_FIRMWARE() entries as well?
 
-diff --git a/drivers/watchdog/acquirewdt.c b/drivers/watchdog/acquirewdt.c
-index 957d1255d4ca..848db958411e 100644
---- a/drivers/watchdog/acquirewdt.c
-+++ b/drivers/watchdog/acquirewdt.c
-@@ -1,3 +1,4 @@
-+// SPDX-License-Identifier: GPL-2.0+
- /*
-  *	Acquire Single Board Computer Watchdog Timer driver
-  *
-@@ -6,11 +7,6 @@
-  *	(c) Copyright 1996 Alan Cox <alan@lxorguk.ukuu.org.uk>,
-  *						All Rights Reserved.
-  *
-- *	This program is free software; you can redistribute it and/or
-- *	modify it under the terms of the GNU General Public License
-- *	as published by the Free Software Foundation; either version
-- *	2 of the License, or (at your option) any later version.
-- *
-  *	Neither Alan Cox nor CymruNet Ltd. admit liability nor provide
-  *	warranty for any of this software. This material is provided
-  *	"AS-IS" and at no charge.
-diff --git a/drivers/watchdog/advantechwdt.c b/drivers/watchdog/advantechwdt.c
-index 2766af292a71..0d02bb275b3d 100644
---- a/drivers/watchdog/advantechwdt.c
-+++ b/drivers/watchdog/advantechwdt.c
-@@ -1,3 +1,4 @@
-+// SPDX-License-Identifier: GPL-2.0+
- /*
-  *	Advantech Single Board Computer WDT driver
-  *
-@@ -9,11 +10,6 @@
-  *	(c) Copyright 1996 Alan Cox <alan@lxorguk.ukuu.org.uk>,
-  *						All Rights Reserved.
-  *
-- *	This program is free software; you can redistribute it and/or
-- *	modify it under the terms of the GNU General Public License
-- *	as published by the Free Software Foundation; either version
-- *	2 of the License, or (at your option) any later version.
-- *
-  *	Neither Alan Cox nor CymruNet Ltd. admit liability nor provide
-  *	warranty for any of this software. This material is provided
-  *	"AS-IS" and at no charge.
-diff --git a/drivers/watchdog/ath79_wdt.c b/drivers/watchdog/ath79_wdt.c
-index 02234c254b10..2cb8b4d56cce 100644
---- a/drivers/watchdog/ath79_wdt.c
-+++ b/drivers/watchdog/ath79_wdt.c
-@@ -1,3 +1,4 @@
-+// SPDX-License-Identifier: GPL-2.0
- /*
-  * Atheros AR71XX/AR724X/AR913X built-in hardware watchdog timer.
-  *
-@@ -10,11 +11,6 @@
-  *
-  * which again was based on sa1100 driver,
-  *	Copyright (C) 2000 Oleg Drokin <green@crimea.edu>
-- *
-- * This program is free software; you can redistribute it and/or modify it
-- * under the terms of the GNU General Public License version 2 as published
-- * by the Free Software Foundation.
-- *
-  */
- 
- #define pr_fmt(fmt) KBUILD_MODNAME ": " fmt
-diff --git a/drivers/watchdog/davinci_wdt.c b/drivers/watchdog/davinci_wdt.c
-index 49a81c32a1b7..2b3f3cd382ef 100644
---- a/drivers/watchdog/davinci_wdt.c
-+++ b/drivers/watchdog/davinci_wdt.c
-@@ -1,3 +1,4 @@
-+// SPDX-License-Identifier: GPL-2.0
- /*
-  * drivers/char/watchdog/davinci_wdt.c
-  *
-@@ -5,10 +6,7 @@
-  *
-  * Copyright (C) 2006-2013 Texas Instruments.
-  *
-- * 2007 (c) MontaVista Software, Inc. This file is licensed under
-- * the terms of the GNU General Public License version 2. This program
-- * is licensed "as is" without any warranty of any kind, whether express
-- * or implied.
-+ * 2007 (c) MontaVista Software, Inc.
-  */
- 
- #include <linux/module.h>
-diff --git a/drivers/watchdog/ebc-c384_wdt.c b/drivers/watchdog/ebc-c384_wdt.c
-index c176f59fea28..8ef4b0df3855 100644
---- a/drivers/watchdog/ebc-c384_wdt.c
-+++ b/drivers/watchdog/ebc-c384_wdt.c
-@@ -2,15 +2,6 @@
- /*
-  * Watchdog timer driver for the WinSystems EBC-C384
-  * Copyright (C) 2016 William Breathitt Gray
-- *
-- * This program is free software; you can redistribute it and/or modify
-- * it under the terms of the GNU General Public License, version 2, as
-- * published by the Free Software Foundation.
-- *
-- * This program is distributed in the hope that it will be useful, but
-- * WITHOUT ANY WARRANTY; without even the implied warranty of
-- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-- * General Public License for more details.
-  */
- #include <linux/device.h>
- #include <linux/dmi.h>
-diff --git a/drivers/watchdog/eurotechwdt.c b/drivers/watchdog/eurotechwdt.c
-index 89129e6fa9b6..3a83a48abcae 100644
---- a/drivers/watchdog/eurotechwdt.c
-+++ b/drivers/watchdog/eurotechwdt.c
-@@ -1,3 +1,4 @@
-+// SPDX-License-Identifier: GPL-2.0+
- /*
-  *	Eurotech CPU-1220/1410/1420 on board WDT driver
-  *
-@@ -11,11 +12,6 @@
-  *	(c) Copyright 1996-1997 Alan Cox <alan@lxorguk.ukuu.org.uk>,
-  *						All Rights Reserved.
-  *
-- *	This program is free software; you can redistribute it and/or
-- *	modify it under the terms of the GNU General Public License
-- *	as published by the Free Software Foundation; either version
-- *	2 of the License, or (at your option) any later version.
-- *
-  *	Neither Alan Cox nor CymruNet Ltd. admit liability nor provide
-  *	warranty for any of this software. This material is provided
-  *	"AS-IS" and at no charge.
-diff --git a/drivers/watchdog/ftwdt010_wdt.c b/drivers/watchdog/ftwdt010_wdt.c
-index c0b081c6fbda..09ba57d35aa4 100644
---- a/drivers/watchdog/ftwdt010_wdt.c
-+++ b/drivers/watchdog/ftwdt010_wdt.c
-@@ -1,3 +1,4 @@
-+// SPDX-License-Identifier: GPL-2.0
- /*
-  * Watchdog driver for Faraday Technology FTWDT010
-  *
-@@ -5,10 +6,6 @@
-  *
-  * Inspired by the out-of-tree drivers from OpenWRT:
-  * Copyright (C) 2009 Paulius Zaleckas <paulius.zaleckas@teltonika.lt>
-- *
-- * This program is free software; you can redistribute it and/or modify
-- * it under the terms of the GNU General Public License version 2 as
-- * published by the Free Software Foundation.
-  */
- 
- #include <linux/bitops.h>
-diff --git a/drivers/watchdog/hpwdt.c b/drivers/watchdog/hpwdt.c
-index ca7af6ae2c5d..2f1b96a02c29 100644
---- a/drivers/watchdog/hpwdt.c
-+++ b/drivers/watchdog/hpwdt.c
-@@ -1,3 +1,4 @@
-+// SPDX-License-Identifier: GPL-2.0
- /*
-  *	HPE WatchDog Driver
-  *	based on
-@@ -6,11 +7,6 @@
-  *
-  *	(c) Copyright 2018 Hewlett Packard Enterprise Development LP
-  *	Thomas Mingarelli <thomas.mingarelli@hpe.com>
-- *
-- *	This program is free software; you can redistribute it and/or
-- *	modify it under the terms of the GNU General Public License
-- *	version 2 as published by the Free Software Foundation
-- *
-  */
- 
- #define pr_fmt(fmt) KBUILD_MODNAME ": " fmt
-diff --git a/drivers/watchdog/iTCO_vendor_support.c b/drivers/watchdog/iTCO_vendor_support.c
-index 68a9d9cc2eb8..4f1b96f59349 100644
---- a/drivers/watchdog/iTCO_vendor_support.c
-+++ b/drivers/watchdog/iTCO_vendor_support.c
-@@ -1,13 +1,9 @@
-+// SPDX-License-Identifier: GPL-2.0+
- /*
-  *	intel TCO vendor specific watchdog driver support
-  *
-  *	(c) Copyright 2006-2009 Wim Van Sebroeck <wim@iguana.be>.
-  *
-- *	This program is free software; you can redistribute it and/or
-- *	modify it under the terms of the GNU General Public License
-- *	as published by the Free Software Foundation; either version
-- *	2 of the License, or (at your option) any later version.
-- *
-  *	Neither Wim Van Sebroeck nor Iguana vzw. admit liability nor
-  *	provide warranty for any of this software. This material is
-  *	provided "AS-IS" and at no charge.
-@@ -216,4 +212,3 @@ MODULE_AUTHOR("Wim Van Sebroeck <wim@iguana.be>, "
- MODULE_DESCRIPTION("Intel TCO Vendor Specific WatchDog Timer Driver Support");
- MODULE_VERSION(DRV_VERSION);
- MODULE_LICENSE("GPL");
--
-diff --git a/drivers/watchdog/iTCO_wdt.c b/drivers/watchdog/iTCO_wdt.c
-index 89cea6ce9a08..c559f706ae7e 100644
---- a/drivers/watchdog/iTCO_wdt.c
-+++ b/drivers/watchdog/iTCO_wdt.c
-@@ -1,13 +1,9 @@
-+// SPDX-License-Identifier: GPL-2.0+
- /*
-  *	intel TCO Watchdog Driver
-  *
-  *	(c) Copyright 2006-2011 Wim Van Sebroeck <wim@iguana.be>.
-  *
-- *	This program is free software; you can redistribute it and/or
-- *	modify it under the terms of the GNU General Public License
-- *	as published by the Free Software Foundation; either version
-- *	2 of the License, or (at your option) any later version.
-- *
-  *	Neither Wim Van Sebroeck nor Iguana vzw. admit liability nor
-  *	provide warranty for any of this software. This material is
-  *	provided "AS-IS" and at no charge.
-diff --git a/drivers/watchdog/ib700wdt.c b/drivers/watchdog/ib700wdt.c
-index 30d6cec582af..92fd7f33bc4d 100644
---- a/drivers/watchdog/ib700wdt.c
-+++ b/drivers/watchdog/ib700wdt.c
-@@ -1,3 +1,4 @@
-+// SPDX-License-Identifier: GPL-2.0+
- /*
-  *	IB700 Single Board Computer WDT driver
-  *
-@@ -14,11 +15,6 @@
-  *	(c) Copyright 1996 Alan Cox <alan@lxorguk.ukuu.org.uk>,
-  *						All Rights Reserved.
-  *
-- *	This program is free software; you can redistribute it and/or
-- *	modify it under the terms of the GNU General Public License
-- *	as published by the Free Software Foundation; either version
-- *	2 of the License, or (at your option) any later version.
-- *
-  *	Neither Alan Cox nor CymruNet Ltd. admit liability nor provide
-  *	warranty for any of this software. This material is provided
-  *	"AS-IS" and at no charge.
-diff --git a/drivers/watchdog/ie6xx_wdt.c b/drivers/watchdog/ie6xx_wdt.c
-index 334c098b36b6..84b92d60327b 100644
---- a/drivers/watchdog/ie6xx_wdt.c
-+++ b/drivers/watchdog/ie6xx_wdt.c
-@@ -1,24 +1,9 @@
-+// SPDX-License-Identifier: GPL-2.0
- /*
-  *      Intel Atom E6xx Watchdog driver
-  *
-  *      Copyright (C) 2011 Alexander Stein
-  *                <alexander.stein@systec-electronic.com>
-- *
-- *      This program is free software; you can redistribute it and/or
-- *      modify it under the terms of version 2 of the GNU General
-- *      Public License as published by the Free Software Foundation.
-- *
-- *      This program is distributed in the hope that it will be
-- *      useful, but WITHOUT ANY WARRANTY; without even the implied
-- *      warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR
-- *      PURPOSE.  See the GNU General Public License for more details.
-- *      You should have received a copy of the GNU General Public
-- *      License along with this program; if not, write to the Free
-- *      Software Foundation, Inc., 59 Temple Place - Suite 330,
-- *      Boston, MA  02111-1307, USA.
-- *      The full GNU General Public License is included in this
-- *      distribution in the file called COPYING.
-- *
-  */
- 
- #include <linux/module.h>
-diff --git a/drivers/watchdog/imgpdc_wdt.c b/drivers/watchdog/imgpdc_wdt.c
-index 0fc31aadeee3..613b3e64981e 100644
---- a/drivers/watchdog/imgpdc_wdt.c
-+++ b/drivers/watchdog/imgpdc_wdt.c
-@@ -1,12 +1,9 @@
-+// SPDX-License-Identifier: GPL-2.0
- /*
-  * Imagination Technologies PowerDown Controller Watchdog Timer.
-  *
-  * Copyright (c) 2014 Imagination Technologies Ltd.
-  *
-- * This program is free software; you can redistribute it and/or modify it
-- * under the terms of the GNU General Public License version 2 as published by
-- * the Free Software Foundation.
-- *
-  * Based on drivers/watchdog/sunxi_wdt.c Copyright (c) 2013 Carlo Caione
-  *                                                     2012 Henrik Nordstrom
-  *
-diff --git a/drivers/watchdog/intel_scu_watchdog.c b/drivers/watchdog/intel_scu_watchdog.c
-index f7baf75d38c0..55d3c61b95b8 100644
---- a/drivers/watchdog/intel_scu_watchdog.c
-+++ b/drivers/watchdog/intel_scu_watchdog.c
-@@ -1,25 +1,8 @@
-+// SPDX-License-Identifier: GPL-2.0
- /*
-  *      Intel_SCU 0.2:  An Intel SCU IOH Based Watchdog Device
-  *			for Intel part #(s):
-  *				- AF82MP20 PCH
-- *
-- *      Copyright (C) 2009-2010 Intel Corporation. All rights reserved.
-- *
-- *      This program is free software; you can redistribute it and/or
-- *      modify it under the terms of version 2 of the GNU General
-- *      Public License as published by the Free Software Foundation.
-- *
-- *      This program is distributed in the hope that it will be
-- *      useful, but WITHOUT ANY WARRANTY; without even the implied
-- *      warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR
-- *      PURPOSE.  See the GNU General Public License for more details.
-- *      You should have received a copy of the GNU General Public
-- *      License along with this program; if not, write to the Free
-- *      Software Foundation, Inc., 59 Temple Place - Suite 330,
-- *      Boston, MA  02111-1307, USA.
-- *      The full GNU General Public License is included in this
-- *      distribution in the file called COPYING.
-- *
-  */
- 
- #define pr_fmt(fmt) KBUILD_MODNAME ": " fmt
-diff --git a/drivers/watchdog/intel_scu_watchdog.h b/drivers/watchdog/intel_scu_watchdog.h
-index f3ac608deb6a..a532d08bbfb2 100644
---- a/drivers/watchdog/intel_scu_watchdog.h
-+++ b/drivers/watchdog/intel_scu_watchdog.h
-@@ -1,25 +1,10 @@
-+/* SPDX-License-Identifier: GPL-2.0 */
- /*
-  *      Intel_SCU 0.2:  An Intel SCU IOH Based Watchdog Device
-  *			for Intel part #(s):
-  *				- AF82MP20 PCH
-  *
-  *      Copyright (C) 2009-2010 Intel Corporation. All rights reserved.
-- *
-- *      This program is free software; you can redistribute it and/or
-- *      modify it under the terms of version 2 of the GNU General
-- *      Public License as published by the Free Software Foundation.
-- *
-- *      This program is distributed in the hope that it will be
-- *      useful, but WITHOUT ANY WARRANTY; without even the implied
-- *      warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR
-- *      PURPOSE.  See the GNU General Public License for more details.
-- *      You should have received a copy of the GNU General Public
-- *      License along with this program; if not, write to the Free
-- *      Software Foundation, Inc., 59 Temple Place - Suite 330,
-- *      Boston, MA  02111-1307, USA.
-- *      The full GNU General Public License is included in this
-- *      distribution in the file called COPYING.
-- *
-  */
- 
- #ifndef __INTEL_SCU_WATCHDOG_H
-diff --git a/drivers/watchdog/iop_wdt.c b/drivers/watchdog/iop_wdt.c
-index d910a7dec21b..fb75fe9ff1f7 100644
---- a/drivers/watchdog/iop_wdt.c
-+++ b/drivers/watchdog/iop_wdt.c
-@@ -1,3 +1,4 @@
-+// SPDX-License-Identifier: GPL-2.0
- /*
-  * drivers/char/watchdog/iop_wdt.c
-  *
-@@ -6,19 +7,6 @@
-  *
-  * Based on ixp4xx driver, Copyright 2004 (c) MontaVista, Software, Inc.
-  *
-- * This program is free software; you can redistribute it and/or modify it
-- * under the terms and conditions of the GNU General Public License,
-- * version 2, as published by the Free Software Foundation.
-- *
-- * This program is distributed in the hope it will be useful, but WITHOUT
-- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
-- * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for
-- * more details.
-- *
-- * You should have received a copy of the GNU General Public License along with
-- * this program; if not, write to the Free Software Foundation, Inc., 59 Temple
-- * Place - Suite 330, Boston, MA 02111-1307 USA.
-- *
-  *	Curt E Bruns <curt.e.bruns@intel.com>
-  *	Peter Milne <peter.milne@d-tacq.com>
-  *	Dan Williams <dan.j.williams@intel.com>
-diff --git a/drivers/watchdog/kempld_wdt.c b/drivers/watchdog/kempld_wdt.c
-index 543eb0f27a42..0b852db700bc 100644
---- a/drivers/watchdog/kempld_wdt.c
-+++ b/drivers/watchdog/kempld_wdt.c
-@@ -1,18 +1,10 @@
-+// SPDX-License-Identifier: GPL-2.0
- /*
-  * Kontron PLD watchdog driver
-  *
-  * Copyright (c) 2010-2013 Kontron Europe GmbH
-  * Author: Michael Brunner <michael.brunner@kontron.com>
-  *
-- * This program is free software; you can redistribute it and/or modify
-- * it under the terms of the GNU General Public License 2 as published
-- * by the Free Software Foundation.
-- *
-- * This program is distributed in the hope that it will be useful,
-- * but WITHOUT ANY WARRANTY; without even the implied warranty of
-- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-- * GNU General Public License for more details.
-- *
-  * Note: From the PLD watchdog point of view timeout and pretimeout are
-  *       defined differently than in the kernel.
-  *       First the pretimeout stage runs out before the timeout stage gets
-diff --git a/drivers/watchdog/ks8695_wdt.c b/drivers/watchdog/ks8695_wdt.c
-index 0565cf30017b..fb572ff3181c 100644
---- a/drivers/watchdog/ks8695_wdt.c
-+++ b/drivers/watchdog/ks8695_wdt.c
-@@ -1,11 +1,8 @@
-+// SPDX-License-Identifier: GPL-2.0
- /*
-  * Watchdog driver for Kendin/Micrel KS8695.
-  *
-  * (C) 2007 Andrew Victor
-- *
-- * This program is free software; you can redistribute it and/or modify
-- * it under the terms of the GNU General Public License version 2 as
-- * published by the Free Software Foundation.
-  */
- 
- #define pr_fmt(fmt) KBUILD_MODNAME ": " fmt
-diff --git a/drivers/watchdog/lantiq_wdt.c b/drivers/watchdog/lantiq_wdt.c
-index 4caf02ba5d49..8013b1cd544a 100644
---- a/drivers/watchdog/lantiq_wdt.c
-+++ b/drivers/watchdog/lantiq_wdt.c
-@@ -1,8 +1,5 @@
-+// SPDX-License-Identifier: GPL-2.0
- /*
-- *  This program is free software; you can redistribute it and/or modify it
-- *  under the terms of the GNU General Public License version 2 as published
-- *  by the Free Software Foundation.
-- *
-  *  Copyright (C) 2010 John Crispin <john@phrozen.org>
-  *  Copyright (C) 2017 Hauke Mehrtens <hauke@hauke-m.de>
-  *  Based on EP93xx wdt driver
-diff --git a/drivers/watchdog/lpc18xx_wdt.c b/drivers/watchdog/lpc18xx_wdt.c
-index 0e82abd71d35..751cb60b6794 100644
---- a/drivers/watchdog/lpc18xx_wdt.c
-+++ b/drivers/watchdog/lpc18xx_wdt.c
-@@ -1,12 +1,9 @@
-+// SPDX-License-Identifier: GPL-2.0
- /*
-  * NXP LPC18xx Watchdog Timer (WDT)
-  *
-  * Copyright (c) 2015 Ariel D'Alessandro <ariel@vanguardiasur.com>
-  *
-- * This program is free software; you can redistribute it and/or modify it
-- * under the terms of the GNU General Public License version 2 as published by
-- * the Free Software Foundation.
-- *
-  * Notes
-  * -----
-  * The Watchdog consists of a fixed divide-by-4 clock pre-scaler and a 24-bit
-diff --git a/drivers/watchdog/max77620_wdt.c b/drivers/watchdog/max77620_wdt.c
-index 21e0f118cb86..b5450ab5a4c7 100644
---- a/drivers/watchdog/max77620_wdt.c
-+++ b/drivers/watchdog/max77620_wdt.c
-@@ -1,13 +1,10 @@
-+// SPDX-License-Identifier: GPL-2.0
- /*
-  * Maxim MAX77620 Watchdog Driver
-  *
-  * Copyright (C) 2016 NVIDIA CORPORATION. All rights reserved.
-  *
-  * Author: Laxman Dewangan <ldewangan@nvidia.com>
-- *
-- * This program is free software; you can redistribute it and/or modify
-- * it under the terms of the GNU General Public License version 2 as
-- * published by the Free Software Foundation.
-  */
- 
- #include <linux/err.h>
-diff --git a/drivers/watchdog/mt7621_wdt.c b/drivers/watchdog/mt7621_wdt.c
-index cbb3c0dde136..c6d202d82105 100644
---- a/drivers/watchdog/mt7621_wdt.c
-+++ b/drivers/watchdog/mt7621_wdt.c
-@@ -1,13 +1,10 @@
-+// SPDX-License-Identifier: GPL-2.0
- /*
-  * Ralink MT7621/MT7628 built-in hardware watchdog timer
-  *
-  * Copyright (C) 2014 John Crispin <john@phrozen.org>
-  *
-  * This driver was based on: drivers/watchdog/rt2880_wdt.c
-- *
-- * This program is free software; you can redistribute it and/or modify it
-- * under the terms of the GNU General Public License version 2 as published
-- * by the Free Software Foundation.
-  */
- 
- #include <linux/clk.h>
-diff --git a/drivers/watchdog/mv64x60_wdt.c b/drivers/watchdog/mv64x60_wdt.c
-index c785f4f0a196..74bf7144a970 100644
---- a/drivers/watchdog/mv64x60_wdt.c
-+++ b/drivers/watchdog/mv64x60_wdt.c
-@@ -1,3 +1,4 @@
-+// SPDX-License-Identifier: GPL-2.0
- /*
-  * mv64x60_wdt.c - MV64X60 (Marvell Discovery) watchdog userspace interface
-  *
-@@ -9,10 +10,7 @@
-  *
-  * Derived from mpc8xx_wdt.c, with the following copyright.
-  *
-- * 2002 (c) Florian Schirmer <jolt@tuxbox.org> This file is licensed under
-- * the terms of the GNU General Public License version 2. This program
-- * is licensed "as is" without any warranty of any kind, whether express
-- * or implied.
-+ * 2002 (c) Florian Schirmer <jolt@tuxbox.org>
-  */
- 
- #define pr_fmt(fmt) KBUILD_MODNAME ": " fmt
-diff --git a/drivers/watchdog/nuc900_wdt.c b/drivers/watchdog/nuc900_wdt.c
-index f36eae34e848..ad3d5046a76b 100644
---- a/drivers/watchdog/nuc900_wdt.c
-+++ b/drivers/watchdog/nuc900_wdt.c
-@@ -1,12 +1,8 @@
-+// SPDX-License-Identifier: GPL-2.0
- /*
-  * Copyright (c) 2009 Nuvoton technology corporation.
-  *
-  * Wan ZongShun <mcuos.com@gmail.com>
-- *
-- * This program is free software; you can redistribute it and/or modify
-- * it under the terms of the GNU General Public License as published by
-- * the Free Software Foundation;version 2 of the License.
-- *
-  */
- 
- #include <linux/bitops.h>
-diff --git a/drivers/watchdog/nv_tco.h b/drivers/watchdog/nv_tco.h
-index c2d1d04e055b..d325e528010f 100644
---- a/drivers/watchdog/nv_tco.h
-+++ b/drivers/watchdog/nv_tco.h
-@@ -1,3 +1,4 @@
-+/* SPDX-License-Identifier: GPL-2.0+ */
- /*
-  *	nv_tco:	TCO timer driver for nVidia chipsets.
-  *
-@@ -10,11 +11,6 @@
-  *	Reserved.
-  *				http://www.kernelconcepts.de
-  *
-- *	This program is free software; you can redistribute it and/or
-- *	modify it under the terms of the GNU General Public License
-- *	as published by the Free Software Foundation; either version
-- *	2 of the License, or (at your option) any later version.
-- *
-  *	Neither kernel concepts nor Nils Faerber admit liability nor provide
-  *	warranty for any of this software. This material is provided
-  *	"AS-IS" and at no charge.
-diff --git a/drivers/watchdog/octeon-wdt-main.c b/drivers/watchdog/octeon-wdt-main.c
-index 0ec419a3f7ed..fde9e739b436 100644
---- a/drivers/watchdog/octeon-wdt-main.c
-+++ b/drivers/watchdog/octeon-wdt-main.c
-@@ -1,3 +1,4 @@
-+// SPDX-License-Identifier: GPL-2.0+
- /*
-  * Octeon Watchdog driver
-  *
-@@ -10,22 +11,12 @@
-  *	(c) Copyright 1996-1997 Alan Cox <alan@lxorguk.ukuu.org.uk>,
-  *						All Rights Reserved.
-  *
-- *	This program is free software; you can redistribute it and/or
-- *	modify it under the terms of the GNU General Public License
-- *	as published by the Free Software Foundation; either version
-- *	2 of the License, or (at your option) any later version.
-- *
-  *	Neither Alan Cox nor CymruNet Ltd. admit liability nor provide
-  *	warranty for any of this software. This material is provided
-  *	"AS-IS" and at no charge.
-  *
-  *	(c) Copyright 1995    Alan Cox <alan@lxorguk.ukuu.org.uk>
-  *
-- * This file is subject to the terms and conditions of the GNU General Public
-- * License.  See the file "COPYING" in the main directory of this archive
-- * for more details.
-- *
-- *
-  * The OCTEON watchdog has a maximum timeout of 2^32 * io_clock.
-  * For most systems this is less than 10 seconds, so to allow for
-  * software to request longer watchdog heartbeats, we maintain software
-diff --git a/drivers/watchdog/omap_wdt.c b/drivers/watchdog/omap_wdt.c
-index d49688d93f6a..9b91882fe3c4 100644
---- a/drivers/watchdog/omap_wdt.c
-+++ b/drivers/watchdog/omap_wdt.c
-@@ -1,3 +1,4 @@
-+// SPDX-License-Identifier: GPL-2.0
- /*
-  * omap_wdt.c
-  *
-@@ -6,10 +7,7 @@
-  * Author: MontaVista Software, Inc.
-  *	 <gdavis@mvista.com> or <source@mvista.com>
-  *
-- * 2003 (c) MontaVista Software, Inc. This file is licensed under the
-- * terms of the GNU General Public License version 2. This program is
-- * licensed "as is" without any warranty of any kind, whether express
-- * or implied.
-+ * 2003 (c) MontaVista Software, Inc.
-  *
-  * History:
-  *
-diff --git a/drivers/watchdog/omap_wdt.h b/drivers/watchdog/omap_wdt.h
-index 42f31ec5e90d..950b4643f3e7 100644
---- a/drivers/watchdog/omap_wdt.h
-+++ b/drivers/watchdog/omap_wdt.h
-@@ -1,3 +1,4 @@
-+/* SPDX-License-Identifier: GPL-2.0+ */
- /*
-  *  linux/drivers/char/watchdog/omap_wdt.h
-  *
-@@ -5,26 +6,6 @@
-  *      OMAP Watchdog timer register definitions
-  *
-  *  Copyright (C) 2004 Texas Instruments.
-- *
-- *  This program is free software; you can redistribute  it and/or modify it
-- *  under  the terms of  the GNU General  Public License as published by the
-- *  Free Software Foundation;  either version 2 of the  License, or (at your
-- *  option) any later version.
-- *
-- *  THIS  SOFTWARE  IS PROVIDED   ``AS  IS'' AND   ANY  EXPRESS OR IMPLIED
-- *  WARRANTIES,   INCLUDING, BUT NOT  LIMITED  TO, THE IMPLIED WARRANTIES OF
-- *  MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.  IN
-- *  NO  EVENT  SHALL   THE AUTHOR  BE    LIABLE FOR ANY   DIRECT, INDIRECT,
-- *  INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT
-- *  NOT LIMITED   TO, PROCUREMENT OF  SUBSTITUTE GOODS  OR SERVICES; LOSS OF
-- *  USE, DATA,  OR PROFITS; OR  BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
-- *  ANY THEORY OF LIABILITY, WHETHER IN  CONTRACT, STRICT LIABILITY, OR TORT
-- *  (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
-- *  THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-- *
-- *  You should have received a copy of the  GNU General Public License along
-- *  with this program; if not, write  to the Free Software Foundation, Inc.,
-- *  675 Mass Ave, Cambridge, MA 02139, USA.
-  */
- 
- #ifndef _OMAP_WATCHDOG_H
-diff --git a/drivers/watchdog/pc87413_wdt.c b/drivers/watchdog/pc87413_wdt.c
-index ca21d6c240a3..2af1a8b3f973 100644
---- a/drivers/watchdog/pc87413_wdt.c
-+++ b/drivers/watchdog/pc87413_wdt.c
-@@ -1,3 +1,4 @@
-+// SPDX-License-Identifier: GPL-2.0+
- /*
-  *      NS pc87413-wdt Watchdog Timer driver for Linux 2.6.x.x
-  *
-@@ -6,11 +7,6 @@
-  *      (C) Copyright 2006 Sven Anders, <anders@anduras.de>
-  *                     and Marcus Junker, <junker@anduras.de>
-  *
-- *      This program is free software; you can redistribute it and/or
-- *      modify it under the terms of the GNU General Public License
-- *      as published by the Free Software Foundation; either version
-- *      2 of the License, or (at your option) any later version.
-- *
-  *      Neither Sven Anders, Marcus Junker nor ANDURAS AG
-  *      admit liability nor provide warranty for any of this software.
-  *      This material is provided "AS-IS" and at no charge.
-diff --git a/drivers/watchdog/pcwd_pci.c b/drivers/watchdog/pcwd_pci.c
-index 5773d2591d3f..e30c1f762045 100644
---- a/drivers/watchdog/pcwd_pci.c
-+++ b/drivers/watchdog/pcwd_pci.c
-@@ -1,3 +1,4 @@
-+// SPDX-License-Identifier: GPL-2.0+
- /*
-  *	Berkshire PCI-PC Watchdog Card Driver
-  *
-@@ -10,11 +11,6 @@
-  *	  Matt Domsch <Matt_Domsch@dell.com>,
-  *	  Rob Radez <rob@osinvestor.com>
-  *
-- *	This program is free software; you can redistribute it and/or
-- *	modify it under the terms of the GNU General Public License
-- *	as published by the Free Software Foundation; either version
-- *	2 of the License, or (at your option) any later version.
-- *
-  *	Neither Wim Van Sebroeck nor Iguana vzw. admit liability nor
-  *	provide warranty for any of this software. This material is
-  *	provided "AS-IS" and at no charge.
-diff --git a/drivers/watchdog/pcwd_usb.c b/drivers/watchdog/pcwd_usb.c
-index 5de6182dae33..6727f8ab2d18 100644
---- a/drivers/watchdog/pcwd_usb.c
-+++ b/drivers/watchdog/pcwd_usb.c
-@@ -1,3 +1,4 @@
-+// SPDX-License-Identifier: GPL-2.0+
- /*
-  *	Berkshire USB-PC Watchdog Card Driver
-  *
-@@ -10,11 +11,6 @@
-  *	  Rob Radez <rob@osinvestor.com>,
-  *	  Greg Kroah-Hartman <greg@kroah.com>
-  *
-- *	This program is free software; you can redistribute it and/or
-- *	modify it under the terms of the GNU General Public License
-- *	as published by the Free Software Foundation; either version
-- *	2 of the License, or (at your option) any later version.
-- *
-  *	Neither Wim Van Sebroeck nor Iguana vzw. admit liability nor
-  *	provide warranty for any of this software. This material is
-  *	provided "AS-IS" and at no charge.
-diff --git a/drivers/watchdog/pnx4008_wdt.c b/drivers/watchdog/pnx4008_wdt.c
-index 124b1c66dc29..7b446b696f2b 100644
---- a/drivers/watchdog/pnx4008_wdt.c
-+++ b/drivers/watchdog/pnx4008_wdt.c
-@@ -1,3 +1,4 @@
-+// SPDX-License-Identifier: GPL-2.0
- /*
-  * drivers/char/watchdog/pnx4008_wdt.c
-  *
-@@ -11,10 +12,6 @@
-  * 2005-2006 (c) MontaVista Software, Inc.
-  *
-  * (C) 2012 Wolfram Sang, Pengutronix
-- *
-- * This file is licensed under the terms of the GNU General Public License
-- * version 2. This program is licensed "as is" without any warranty of any
-- * kind, whether express or implied.
-  */
- 
- #define pr_fmt(fmt) KBUILD_MODNAME ": " fmt
-diff --git a/drivers/watchdog/qcom-wdt.c b/drivers/watchdog/qcom-wdt.c
-index aa750d8e5045..c8416a03bc2d 100644
---- a/drivers/watchdog/qcom-wdt.c
-+++ b/drivers/watchdog/qcom-wdt.c
-@@ -1,15 +1,5 @@
--/* Copyright (c) 2014, The Linux Foundation. All rights reserved.
-- *
-- * This program is free software; you can redistribute it and/or modify
-- * it under the terms of the GNU General Public License version 2 and
-- * only version 2 as published by the Free Software Foundation.
-- *
-- * This program is distributed in the hope that it will be useful,
-- * but WITHOUT ANY WARRANTY; without even the implied warranty of
-- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-- * GNU General Public License for more details.
-- *
-- */
-+// SPDX-License-Identifier: GPL-2.0
-+/* Copyright (c) 2014, The Linux Foundation. All rights reserved. */
- #include <linux/clk.h>
- #include <linux/delay.h>
- #include <linux/io.h>
-diff --git a/drivers/watchdog/retu_wdt.c b/drivers/watchdog/retu_wdt.c
-index 39cd51df2ffc..258dfcf9cbda 100644
---- a/drivers/watchdog/retu_wdt.c
-+++ b/drivers/watchdog/retu_wdt.c
-@@ -1,3 +1,4 @@
-+// SPDX-License-Identifier: GPL-2.0+
- /*
-  * Retu watchdog driver
-  *
-@@ -5,15 +6,6 @@
-  *
-  * Based on code written by Amit Kucheria and Michael Buesch.
-  * Rewritten by Aaro Koskinen.
-- *
-- * This file is subject to the terms and conditions of the GNU General
-- * Public License. See the file "COPYING" in the main directory of this
-- * archive for more details.
-- *
-- * This program is distributed in the hope that it will be useful,
-- * but WITHOUT ANY WARRANTY; without even the implied warranty of
-- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
-- * GNU General Public License for more details.
-  */
- 
- #include <linux/slab.h>
-diff --git a/drivers/watchdog/rn5t618_wdt.c b/drivers/watchdog/rn5t618_wdt.c
-index 21fcb36f9074..b91813864487 100644
---- a/drivers/watchdog/rn5t618_wdt.c
-+++ b/drivers/watchdog/rn5t618_wdt.c
-@@ -1,14 +1,8 @@
-+// SPDX-License-Identifier: GPL-2.0
- /*
-  * Watchdog driver for Ricoh RN5T618 PMIC
-  *
-  * Copyright (C) 2014 Beniamino Galvani <b.galvani@gmail.com>
-- *
-- * This program is free software; you can redistribute it and/or
-- * modify it under the terms of the GNU General Public License
-- * version 2 as published by the Free Software Foundation.
-- *
-- * You should have received a copy of the GNU General Public License
-- * along with this program. If not, see <http://www.gnu.org/licenses/>.
-  */
- 
- #include <linux/device.h>
-diff --git a/drivers/watchdog/rt2880_wdt.c b/drivers/watchdog/rt2880_wdt.c
-index 905e60f45eec..6a65e8cee036 100644
---- a/drivers/watchdog/rt2880_wdt.c
-+++ b/drivers/watchdog/rt2880_wdt.c
-@@ -1,3 +1,4 @@
-+// SPDX-License-Identifier: GPL-2.0
- /*
-  * Ralink RT288x/RT3xxx/MT76xx built-in hardware watchdog timer
-  *
-@@ -5,10 +6,6 @@
-  * Copyright (C) 2013 John Crispin <john@phrozen.org>
-  *
-  * This driver was based on: drivers/watchdog/softdog.c
-- *
-- * This program is free software; you can redistribute it and/or modify it
-- * under the terms of the GNU General Public License version 2 as published
-- * by the Free Software Foundation.
-  */
- 
- #include <linux/clk.h>
-diff --git a/drivers/watchdog/sa1100_wdt.c b/drivers/watchdog/sa1100_wdt.c
-index bfa035e1a75e..cbd8c957182f 100644
---- a/drivers/watchdog/sa1100_wdt.c
-+++ b/drivers/watchdog/sa1100_wdt.c
-@@ -1,14 +1,10 @@
-+// SPDX-License-Identifier: GPL-2.0+
- /*
-  *	Watchdog driver for the SA11x0/PXA2xx
-  *
-  *	(c) Copyright 2000 Oleg Drokin <green@crimea.edu>
-  *	    Based on SoftDog driver by Alan Cox <alan@lxorguk.ukuu.org.uk>
-  *
-- *	This program is free software; you can redistribute it and/or
-- *	modify it under the terms of the GNU General Public License
-- *	as published by the Free Software Foundation; either version
-- *	2 of the License, or (at your option) any later version.
-- *
-  *	Neither Oleg Drokin nor iXcelerator.com admit liability nor provide
-  *	warranty for any of this software. This material is provided
-  *	"AS-IS" and at no charge.
-diff --git a/drivers/watchdog/sbc7240_wdt.c b/drivers/watchdog/sbc7240_wdt.c
-index efc81b318939..12cdee7d5069 100644
---- a/drivers/watchdog/sbc7240_wdt.c
-+++ b/drivers/watchdog/sbc7240_wdt.c
-@@ -1,19 +1,10 @@
-+// SPDX-License-Identifier: GPL-2.0
- /*
-  *	NANO7240 SBC Watchdog device driver
-  *
-  *	Based on w83877f.c by Scott Jennings,
-  *
-- *	This program is free software; you can redistribute it and/or modify
-- *	it under the terms of the GNU General Public License version 2 as
-- *	published by the Free Software Foundation;
-- *
-- *	Software distributed under the License is distributed on an "AS IS"
-- *	basis, WITHOUT WARRANTY OF ANY KIND, either express or
-- *	implied. See the License for the specific language governing
-- *	rights and limitations under the License.
-- *
-  *	(c) Copyright 2007  Gilles GIGAN <gilles.gigan@jcu.edu.au>
-- *
-  */
- 
- #define pr_fmt(fmt) KBUILD_MODNAME ": " fmt
-diff --git a/drivers/watchdog/sbc8360.c b/drivers/watchdog/sbc8360.c
-index 3396024e7b76..4f8b9912fc51 100644
---- a/drivers/watchdog/sbc8360.c
-+++ b/drivers/watchdog/sbc8360.c
-@@ -1,3 +1,4 @@
-+// SPDX-License-Identifier: GPL-2.0+
- /*
-  *	SBC8360 Watchdog driver
-  *
-@@ -19,11 +20,6 @@
-  *	(c) Copyright 1996 Alan Cox <alan@lxorguk.ukuu.org.uk>,
-  *						All Rights Reserved.
-  *
-- *	This program is free software; you can redistribute it and/or
-- *	modify it under the terms of the GNU General Public License
-- *	as published by the Free Software Foundation; either version
-- *	2 of the License, or (at your option) any later version.
-- *
-  *	Neither Alan Cox nor CymruNet Ltd. admit liability nor provide
-  *	warranty for any of this software. This material is provided
-  *	"AS-IS" and at no charge.
-diff --git a/drivers/watchdog/sbsa_gwdt.c b/drivers/watchdog/sbsa_gwdt.c
-index 3219422f67a9..fb4e1beea166 100644
---- a/drivers/watchdog/sbsa_gwdt.c
-+++ b/drivers/watchdog/sbsa_gwdt.c
-@@ -1,3 +1,4 @@
-+// SPDX-License-Identifier: GPL-2.0
- /*
-  * SBSA(Server Base System Architecture) Generic Watchdog driver
-  *
-@@ -7,15 +8,6 @@
-  *         Al Stone <al.stone@linaro.org>
-  *         Timur Tabi <timur@codeaurora.org>
-  *
-- * This program is free software; you can redistribute it and/or modify
-- * it under the terms of the GNU General Public License 2 as published
-- * by the Free Software Foundation.
-- *
-- * This program is distributed in the hope that it will be useful,
-- * but WITHOUT ANY WARRANTY; without even the implied warranty of
-- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-- * GNU General Public License for more details.
-- *
-  * ARM SBSA Generic Watchdog has two stage timeouts:
-  * the first signal (WS0) is for alerting the system by interrupt,
-  * the second one (WS1) is a real hardware reset.
-diff --git a/drivers/watchdog/sch311x_wdt.c b/drivers/watchdog/sch311x_wdt.c
-index ed6e9fac5d74..3612f1df381b 100644
---- a/drivers/watchdog/sch311x_wdt.c
-+++ b/drivers/watchdog/sch311x_wdt.c
-@@ -1,14 +1,10 @@
-+// SPDX-License-Identifier: GPL-2.0+
- /*
-  *	sch311x_wdt.c - Driver for the SCH311x Super-I/O chips
-  *			integrated watchdog.
-  *
-  *	(c) Copyright 2008 Wim Van Sebroeck <wim@iguana.be>.
-  *
-- *	This program is free software; you can redistribute it and/or
-- *	modify it under the terms of the GNU General Public License
-- *	as published by the Free Software Foundation; either version
-- *	2 of the License, or (at your option) any later version.
-- *
-  *	Neither Wim Van Sebroeck nor Iguana vzw. admit liability nor
-  *	provide warranty for any of this software. This material is
-  *	provided "AS-IS" and at no charge.
-diff --git a/drivers/watchdog/softdog.c b/drivers/watchdog/softdog.c
-index 060740625485..3e4885c1545e 100644
---- a/drivers/watchdog/softdog.c
-+++ b/drivers/watchdog/softdog.c
-@@ -1,14 +1,10 @@
-+// SPDX-License-Identifier: GPL-2.0+
- /*
-  *	SoftDog:	A Software Watchdog Device
-  *
-  *	(c) Copyright 1996 Alan Cox <alan@lxorguk.ukuu.org.uk>,
-  *							All Rights Reserved.
-  *
-- *	This program is free software; you can redistribute it and/or
-- *	modify it under the terms of the GNU General Public License
-- *	as published by the Free Software Foundation; either version
-- *	2 of the License, or (at your option) any later version.
-- *
-  *	Neither Alan Cox nor CymruNet Ltd. admit liability nor provide
-  *	warranty for any of this software. This material is provided
-  *	"AS-IS" and at no charge.
-diff --git a/drivers/watchdog/txx9wdt.c b/drivers/watchdog/txx9wdt.c
-index fcb4da5b1f4c..1c6904bd71dd 100644
---- a/drivers/watchdog/txx9wdt.c
-+++ b/drivers/watchdog/txx9wdt.c
-@@ -1,11 +1,8 @@
-+// SPDX-License-Identifier: GPL-2.0
- /*
-  * txx9wdt: A Hardware Watchdog Driver for TXx9 SoCs
-  *
-  * Copyright (C) 2007 Atsushi Nemoto <anemo@mba.ocn.ne.jp>
-- *
-- * This program is free software; you can redistribute it and/or modify
-- * it under the terms of the GNU General Public License version 2 as
-- * published by the Free Software Foundation.
-  */
- 
- #define pr_fmt(fmt) KBUILD_MODNAME ": " fmt
-diff --git a/drivers/watchdog/w83627hf_wdt.c b/drivers/watchdog/w83627hf_wdt.c
-index 3a49ba9ea608..38b31e9947aa 100644
---- a/drivers/watchdog/w83627hf_wdt.c
-+++ b/drivers/watchdog/w83627hf_wdt.c
-@@ -1,3 +1,4 @@
-+// SPDX-License-Identifier: GPL-2.0+
- /*
-  *	w83627hf/thf WDT driver
-  *
-@@ -17,11 +18,6 @@
-  *	(c) Copyright 1996 Alan Cox <alan@lxorguk.ukuu.org.uk>,
-  *						All Rights Reserved.
-  *
-- *	This program is free software; you can redistribute it and/or
-- *	modify it under the terms of the GNU General Public License
-- *	as published by the Free Software Foundation; either version
-- *	2 of the License, or (at your option) any later version.
-- *
-  *	Neither Alan Cox nor CymruNet Ltd. admit liability nor provide
-  *	warranty for any of this software. This material is provided
-  *	"AS-IS" and at no charge.
-diff --git a/drivers/watchdog/wafer5823wdt.c b/drivers/watchdog/wafer5823wdt.c
-index 0a8073b419f8..6d2071a0590d 100644
---- a/drivers/watchdog/wafer5823wdt.c
-+++ b/drivers/watchdog/wafer5823wdt.c
-@@ -1,3 +1,4 @@
-+// SPDX-License-Identifier: GPL-2.0+
- /*
-  *	ICP Wafer 5823 Single Board Computer WDT driver
-  *	http://www.icpamerica.com/wafer_5823.php
-@@ -13,11 +14,6 @@
-  *	(c) Copyright 1996-1997 Alan Cox <alan@lxorguk.ukuu.org.uk>,
-  *						All Rights Reserved.
-  *
-- *	This program is free software; you can redistribute it and/or
-- *	modify it under the terms of the GNU General Public License
-- *	as published by the Free Software Foundation; either version
-- *	2 of the License, or (at your option) any later version.
-- *
-  *	Neither Alan Cox nor CymruNet Ltd. admit liability nor provide
-  *	warranty for any of this software. This material is provided
-  *	"AS-IS" and at no charge.
-diff --git a/drivers/watchdog/watchdog_core.c b/drivers/watchdog/watchdog_core.c
-index cf3247224a6e..21e8085b848b 100644
---- a/drivers/watchdog/watchdog_core.c
-+++ b/drivers/watchdog/watchdog_core.c
-@@ -1,3 +1,4 @@
-+// SPDX-License-Identifier: GPL-2.0+
- /*
-  *	watchdog_core.c
-  *
-@@ -16,11 +17,6 @@
-  *	  Satyam Sharma <satyam@infradead.org>
-  *	  Randy Dunlap <randy.dunlap@oracle.com>
-  *
-- *	This program is free software; you can redistribute it and/or
-- *	modify it under the terms of the GNU General Public License
-- *	as published by the Free Software Foundation; either version
-- *	2 of the License, or (at your option) any later version.
-- *
-  *	Neither Alan Cox, CymruNet Ltd., Wim Van Sebroeck nor Iguana vzw.
-  *	admit liability nor provide warranty for any of this software.
-  *	This material is provided "AS-IS" and at no charge.
-diff --git a/drivers/watchdog/watchdog_core.h b/drivers/watchdog/watchdog_core.h
-index 86ff962d1e15..a5062e8e0d13 100644
---- a/drivers/watchdog/watchdog_core.h
-+++ b/drivers/watchdog/watchdog_core.h
-@@ -1,3 +1,4 @@
-+/* SPDX-License-Identifier: GPL-2.0+ */
- /*
-  *	watchdog_core.h
-  *
-@@ -16,11 +17,6 @@
-  *	  Satyam Sharma <satyam@infradead.org>
-  *	  Randy Dunlap <randy.dunlap@oracle.com>
-  *
-- *	This program is free software; you can redistribute it and/or
-- *	modify it under the terms of the GNU General Public License
-- *	as published by the Free Software Foundation; either version
-- *	2 of the License, or (at your option) any later version.
-- *
-  *	Neither Alan Cox, CymruNet Ltd., Wim Van Sebroeck nor Iguana vzw.
-  *	admit liability nor provide warranty for any of this software.
-  *	This material is provided "AS-IS" and at no charge.
-diff --git a/drivers/watchdog/watchdog_dev.c b/drivers/watchdog/watchdog_dev.c
-index edfb884044e0..dbd2ad4c9294 100644
---- a/drivers/watchdog/watchdog_dev.c
-+++ b/drivers/watchdog/watchdog_dev.c
-@@ -1,3 +1,4 @@
-+// SPDX-License-Identifier: GPL-2.0+
- /*
-  *	watchdog_dev.c
-  *
-@@ -20,11 +21,6 @@
-  *	  Satyam Sharma <satyam@infradead.org>
-  *	  Randy Dunlap <randy.dunlap@oracle.com>
-  *
-- *	This program is free software; you can redistribute it and/or
-- *	modify it under the terms of the GNU General Public License
-- *	as published by the Free Software Foundation; either version
-- *	2 of the License, or (at your option) any later version.
-- *
-  *	Neither Alan Cox, CymruNet Ltd., Wim Van Sebroeck nor Iguana vzw.
-  *	admit liability nor provide warranty for any of this software.
-  *	This material is provided "AS-IS" and at no charge.
-diff --git a/drivers/watchdog/wd501p.h b/drivers/watchdog/wd501p.h
-index 0e3a497d5626..43a4d88fd363 100644
---- a/drivers/watchdog/wd501p.h
-+++ b/drivers/watchdog/wd501p.h
-@@ -1,3 +1,4 @@
-+/* SPDX-License-Identifier: GPL-1.0+ */
- /*
-  *	Industrial Computer Source WDT500/501 driver
-  *
-@@ -11,12 +12,7 @@
-  *
-  *	http://www.cymru.net
-  *
-- *	This driver is provided under the GNU General Public License,
-- *	incorporated herein by reference. The driver is provided without
-- *	warranty or support.
-- *
-  *	Release 0.04.
-- *
-  */
- 
- 
-diff --git a/drivers/watchdog/wdt.c b/drivers/watchdog/wdt.c
-index 3d2f5ed60e88..0650100fad00 100644
---- a/drivers/watchdog/wdt.c
-+++ b/drivers/watchdog/wdt.c
-@@ -1,14 +1,10 @@
-+// SPDX-License-Identifier: GPL-2.0+
- /*
-  *	Industrial Computer Source WDT501 driver
-  *
-  *	(c) Copyright 1996-1997 Alan Cox <alan@lxorguk.ukuu.org.uk>,
-  *						All Rights Reserved.
-  *
-- *	This program is free software; you can redistribute it and/or
-- *	modify it under the terms of the GNU General Public License
-- *	as published by the Free Software Foundation; either version
-- *	2 of the License, or (at your option) any later version.
-- *
-  *	Neither Alan Cox nor CymruNet Ltd. admit liability nor provide
-  *	warranty for any of this software. This material is provided
-  *	"AS-IS" and at no charge.
-diff --git a/drivers/watchdog/wdt_pci.c b/drivers/watchdog/wdt_pci.c
-index ff3a41f47127..66303ab95685 100644
---- a/drivers/watchdog/wdt_pci.c
-+++ b/drivers/watchdog/wdt_pci.c
-@@ -1,14 +1,10 @@
-+// SPDX-License-Identifier: GPL-2.0+
- /*
-  *	Industrial Computer Source PCI-WDT500/501 driver
-  *
-  *	(c) Copyright 1996-1997 Alan Cox <alan@lxorguk.ukuu.org.uk>,
-  *						All Rights Reserved.
-  *
-- *	This program is free software; you can redistribute it and/or
-- *	modify it under the terms of the GNU General Public License
-- *	as published by the Free Software Foundation; either version
-- *	2 of the License, or (at your option) any later version.
-- *
-  *	Neither Alan Cox nor CymruNet Ltd. admit liability nor provide
-  *	warranty for any of this software. This material is provided
-  *	"AS-IS" and at no charge.
+Ah I wasnt even aware we had that, thanks for pointing it out, will add.
+
+> > +static int renesas_fw_download_image(struct pci_dev *dev,
+> > +				     const u32 *fw,
+> > +				     size_t step)
+> > +{
+> > +	size_t i;
+> > +	int err;
+> > +	u8 fw_status;
+> > +	bool data0_or_data1;
+> > +
+> > +	/*
+> > +	 * The hardware does alternate between two 32-bit pages.
+> > +	 * (This is because each row of the firmware is 8 bytes).
+> > +	 *
+> > +	 * for even steps we use DATA0, for odd steps DATA1.
+> > +	 */
+> > +	data0_or_data1 = (step & 1) == 1;
+> > +
+> > +	/* step+1. Read "Set DATAX" and confirm it is cleared. */
+> > +	for (i = 0; i < 10000; i++) {
+> > +		err = pci_read_config_byte(dev, 0xF5, &fw_status);
+> > +		if (err)
+> > +			return pcibios_err_to_errno(err);
+> > +		if (!(fw_status & BIT(data0_or_data1)))
+> > +			break;
+> > +
+> > +		udelay(1);
+> > +	}
+> > +	if (i == 10000)
+> > +		return -ETIMEDOUT;
+> > +
+> > +	/*
+> > +	 * step+2. Write FW data to "DATAX".
+> > +	 * "LSB is left" => force little endian
+> > +	 */
+> > +	err = pci_write_config_dword(dev, data0_or_data1 ? 0xFC : 0xF8,
+> > +				     (__force u32) cpu_to_le32(fw[step]));
+> > +	if (err)
+> > +		return pcibios_err_to_errno(err);
+> > +
+> > +	udelay(100);
+> > +
+> > +	/* step+3. Set "Set DATAX". */
+> > +	err = pci_write_config_byte(dev, 0xF5, BIT(data0_or_data1));
+> > +	if (err)
+> > +		return pcibios_err_to_errno(err);
+> > +
+> 
+> Shouldn't you just do a read after the write to be sure the write
+> actually went out on the wire?  Then you shouldn't have to do the
+> udelay, right?
+
+Well I am not sure that is how it works. The register is a DATA register
+on the controller. We are writing to the memory of the controller here
+and after writing DATA0 and DATA1 we check the Set DATA0 & Set DATA1
+bits and write subsequenly only when controller is ready to accept more
+data.
+
+I do recall at least for ROM load (writing to NOR flash attached to
+controller), we need to wait considerably more before the SetData0/1 was
+set and ready for subsequent write
+
+> > +static int renesas_fw_verify(struct pci_dev *dev,
+> > +			     const void *fw_data,
+> > +			     size_t length)
+> > +{
+> > +	const struct renesas_fw_entry *entry = renesas_needs_fw_dl(dev);
+> > +	u16 fw_version_pointer;
+> > +	u16 fw_version;
+> > +
+> > +	if (!entry)
+> > +		return -EINVAL;
+> > +
+> > +	/*
+> > +	 * The Firmware's Data Format is describe in
+> > +	 * "6.3 Data Format" R19UH0078EJ0500 Rev.5.00 page 124
+> > +	 */
+> > +
+> > +	/* "Each row is 8 bytes". => firmware size must be a multiple of 8. */
+> > +	if (length % 8 != 0) {
+> > +		dev_err(&dev->dev, "firmware size is not a multipe of 8.");
+> 
+> "multiple"
+
+Yes will fix
+
+> > +static int renesas_hw_check_run_stop_busy(struct pci_dev *pdev)
+> > +{
+> > +#if 0
+> > +	u32 val;
+> > +
+> > +	/*
+> > +	 * 7.1.3 Note 3: "... must not set 'FW Download Enable' when
+> > +	 * 'RUN/STOP' of USBCMD Register is set"
+> > +	 */
+> > +	val = readl(hcd->regs + 0x20);
+> > +	if (val & BIT(0)) {
+> > +		dev_err(&pdev->dev, "hardware is busy and can't receive a FW.");
+> > +		return -EBUSY;
+> > +	}
+> > +#endif
+> > +	return 0;
+> > +}
+> > +
+> 
+> Is this function still really needed anymore?
+
+Nope I will drop it unless Christian objects
+
+> > +	/*
+> > +	 * 11. After finishing writing the last data of FW, the
+> > +	 * System Software must clear "FW Download Enable"
+> > +	 */
+> > +	err = pci_write_config_byte(pdev, 0xF4, 0);
+> > +	if (err)
+> > +		return pcibios_err_to_errno(err);
+> > +
+> > +	/* 12. Read "Result Code" and confirm it is good. */
+> > +	for (i = 0; i < 10000; i++) {
+> > +		err = pci_read_config_byte(pdev, 0xF4, &fw_status);
+> > +		if (err)
+> > +			return pcibios_err_to_errno(err);
+> > +		if (fw_status & BIT(4))
+> > +			break;
+> > +
+> > +		udelay(1);
+> > +	}
+> 
+> 1000 reads???  I've heard of having to read a few times to ensure
+> something "latched" in the device, but not 1000.  Why so many?
+
+For ROM load it did need significant time, I will check if we can go down
+to 100 here
+
+> > +	if (i == 10000) {
+> > +		/* Timed out / Error - let's see if we can fix this */
+> > +		err = renesas_fw_check_running(pdev);
+> > +		switch (err) {
+> > +		case 0: /*
+> > +			 * we shouldn't end up here.
+> > +			 * maybe it took a little bit longer.
+> > +			 * But all should be well?
+> > +			 */
+> > +			break;
+> > +
+> > +		case 1: /* (No result yet? - we can try to retry) */
+> > +			if (retry_counter < 10) {
+> > +				retry_counter++;
+> > +				dev_warn(&pdev->dev, "Retry Firmware download: %d try.",
+> > +					  retry_counter);
+> > +				return renesas_fw_download(pdev, fw,
+> > +							   retry_counter);
+> 
+> recursion?
+
+I didnt encounter the need, we should remove it unless Christian objects
+
+> > +static void renesas_fw_callback(const struct firmware *fw,
+> > +				void *context)
+> > +{
+> > +	struct renesas_fw_ctx *ctx = context;
+> > +	struct pci_dev *pdev = ctx->pdev;
+> > +	struct device *parent = pdev->dev.parent;
+> > +	int err = -ENOENT;
+> > +
+> > +	if (fw) {
+> > +		err = renesas_fw_verify(pdev, fw->data, fw->size);
+> > +		if (!err) {
+> > +			err = renesas_fw_download(pdev, fw, 0);
+> > +			release_firmware(fw);
+> > +			if (!err) {
+> > +				if (ctx->resume)
+> > +					return;
+> > +
+> > +				err = xhci_pci_probe(pdev, ctx->id);
+> > +				if (!err) {
+> > +					/* everything worked */
+> > +					devm_kfree(&pdev->dev, ctx);
+> > +					return;
+> > +				}
+> > +
+> > +				/* in case of an error - fall through */
+> > +			} else {
+> > +				dev_err(&pdev->dev, "firmware failed to download (%d).",
+> > +					err);
+> > +			}
+> > +		}
+> > +	} else {
+> > +		dev_err(&pdev->dev, "firmware failed to load (%d).", err);
+> > +	}
+> 
+> This can be cleaned up a lot by just erroring out when something
+> happens, and then jumping to the end.  Not this nested if mess.
+
+will do
+
+> > +	err = renesas_fw_check_running(pdev);
+> > +	/* Also go ahead, if the firmware is running */
+> > +	if (err == 0)
+> > +		return 0;
+> > +
+> > +	/* At this point, we can be sure that the FW isn't ready. */
+> > +	return err;
+> 
+> Why not just:
+> 	return renesas_fw_check_running(pdev);
+
+sounds good, will change :)
+
 -- 
-2.7.4
-
+~Vinod
