@@ -2,31 +2,31 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id C965E4C299
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Jun 2019 22:57:17 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 490FC4C4F0
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Jun 2019 03:25:24 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726379AbfFSU5J (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 19 Jun 2019 16:57:09 -0400
-Received: from mx1.redhat.com ([209.132.183.28]:38236 "EHLO mx1.redhat.com"
+        id S1731028AbfFTBZQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 19 Jun 2019 21:25:16 -0400
+Received: from mx1.redhat.com ([209.132.183.28]:37384 "EHLO mx1.redhat.com"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726244AbfFSU5J (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 19 Jun 2019 16:57:09 -0400
-Received: from smtp.corp.redhat.com (int-mx03.intmail.prod.int.phx2.redhat.com [10.5.11.13])
+        id S1726096AbfFTBZQ (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 19 Jun 2019 21:25:16 -0400
+Received: from smtp.corp.redhat.com (int-mx07.intmail.prod.int.phx2.redhat.com [10.5.11.22])
         (using TLSv1.2 with cipher AECDH-AES256-SHA (256/256 bits))
         (No client certificate requested)
-        by mx1.redhat.com (Postfix) with ESMTPS id A385B30C1330;
-        Wed, 19 Jun 2019 20:57:06 +0000 (UTC)
+        by mx1.redhat.com (Postfix) with ESMTPS id C2744307D925;
+        Thu, 20 Jun 2019 01:25:15 +0000 (UTC)
 Received: from ovpn-112-53.rdu2.redhat.com (ovpn-112-53.rdu2.redhat.com [10.10.112.53])
-        by smtp.corp.redhat.com (Postfix) with ESMTP id DACED608A7;
-        Wed, 19 Jun 2019 20:56:59 +0000 (UTC)
-Message-ID: <414bc504bf62ea8de2ad195c00ce64dc0acb773c.camel@redhat.com>
+        by smtp.corp.redhat.com (Postfix) with ESMTP id 5B4E81001DD2;
+        Thu, 20 Jun 2019 01:25:12 +0000 (UTC)
+Message-ID: <7c0e8909cee17623565ef88445b0497d5504fe1c.camel@redhat.com>
 Subject: Re: [PATCH v2 00/17] net: introduce Qualcomm IPA driver
 From:   Dan Williams <dcbw@redhat.com>
-To:     Arnd Bergmann <arnd@arndb.de>,
-        Johannes Berg <johannes@sipsolutions.net>
-Cc:     Alex Elder <elder@linaro.org>,
-        Subash Abhinov Kasiviswanathan <subashab@codeaurora.org>,
-        abhishek.esse@gmail.com, Ben Chan <benchan@google.com>,
+To:     Subash Abhinov Kasiviswanathan <subashab@codeaurora.org>,
+        Arnd Bergmann <arnd@arndb.de>
+Cc:     Johannes Berg <johannes@sipsolutions.net>,
+        Alex Elder <elder@linaro.org>, abhishek.esse@gmail.com,
+        Ben Chan <benchan@google.com>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
         cpratapa@codeaurora.org, David Miller <davem@davemloft.net>,
         DTML <devicetree@vger.kernel.org>,
@@ -37,79 +37,54 @@ Cc:     Alex Elder <elder@linaro.org>,
         Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
         linux-soc@vger.kernel.org, Networking <netdev@vger.kernel.org>,
         syadagir@codeaurora.org
-Date:   Wed, 19 Jun 2019 15:56:58 -0500
-In-Reply-To: <CAK8P3a3r95gXMdq7s9GF=37v6t4kR+-2iyC6bnmUDVuM+bn80Q@mail.gmail.com>
+Date:   Wed, 19 Jun 2019 20:25:11 -0500
+In-Reply-To: <2926e45fd7ff62fd7c4af9b338bf0caa@codeaurora.org>
 References: <380a6185-7ad1-6be0-060b-e6e5d4126917@linaro.org>
          <a94676381a5ca662c848f7a725562f721c43ce76.camel@sipsolutions.net>
          <CAK8P3a0kV-i7BJJ2X6C=5n65rSGfo8fUiC4J_G-+M8EctYKbkg@mail.gmail.com>
-         <fc0d08912bc10ad089eb74034726308375279130.camel@redhat.com>
-         <36bca57c999f611353fd9741c55bb2a7@codeaurora.org>
-         <153fafb91267147cf22e2bf102dd822933ec823a.camel@redhat.com>
-         <CAK8P3a2Y+tcL1-V57dtypWHndNT3eDJdcKj29c_v+k8o1HHQig@mail.gmail.com>
-         <f4249aa5f5acdd90275eda35aa16f3cfb29d29be.camel@redhat.com>
-         <CAK8P3a2nzZKtshYfomOOSYkqx5HdU15Wr9b+3va0B1euNhFOAg@mail.gmail.com>
-         <dbb32f185d2c3a654083ee0a7188379e1f88d899.camel@sipsolutions.net>
-         <d533b708-c97a-710d-1138-3ae79107f209@linaro.org>
-         <abdfc6b3a9981bcdef40f85f5442a425ce109010.camel@sipsolutions.net>
-         <CAK8P3a3ksrFTo2+dLB+doLeY+kPP7rYxv2O7BwvjYgK2cwCTuQ@mail.gmail.com>
-         <97cbfb3723607c95d78e25785262ae7b0acdb11c.camel@sipsolutions.net>
-         <CAK8P3a29+JKbDdS9ikhgaKa-AJ1qd1sDMTAfzivGh5wN4VL88A@mail.gmail.com>
-         <54a5acb6cf26ebc6447f8ebcbdcb8e0eed693ab3.camel@sipsolutions.net>
-         <CAK8P3a3r95gXMdq7s9GF=37v6t4kR+-2iyC6bnmUDVuM+bn80Q@mail.gmail.com>
+         <066e9b39f937586f0f922abf801351553ec2ba1d.camel@sipsolutions.net>
+         <b3686626-e2d8-bc9c-6dd0-9ebb137715af@linaro.org>
+         <b23a83c18055470c5308fcd1eed018056371fc1d.camel@sipsolutions.net>
+         <CAK8P3a1FeUQR3pgoQxHoRK05JGORyR+TFATVQiijLWtFKTv6OQ@mail.gmail.com>
+         <613cdfde488eb23d7207c7ba6258662702d04840.camel@sipsolutions.net>
+         <CAK8P3a2onXpxiE4y9PzRwuPM2dh=h_BKz7Eb0=LLPgBbZoK1bQ@mail.gmail.com>
+         <6c70950d0c78bc02a3d016918ec3929e@codeaurora.org>
+         <CAK8P3a3e+U85yHTeE4dHa4okLVHgBd8Kke9=FytzvMwz+wB0sQ@mail.gmail.com>
+         <2926e45fd7ff62fd7c4af9b338bf0caa@codeaurora.org>
 Content-Type: text/plain; charset="UTF-8"
 User-Agent: Evolution 3.30.5 (3.30.5-1.fc29) 
 MIME-Version: 1.0
 Content-Transfer-Encoding: 7bit
-X-Scanned-By: MIMEDefang 2.79 on 10.5.11.13
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.5.16 (mx1.redhat.com [10.5.110.45]); Wed, 19 Jun 2019 20:57:07 +0000 (UTC)
+X-Scanned-By: MIMEDefang 2.84 on 10.5.11.22
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.5.16 (mx1.redhat.com [10.5.110.48]); Thu, 20 Jun 2019 01:25:16 +0000 (UTC)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, 2019-06-18 at 23:06 +0200, Arnd Bergmann wrote:
-> On Tue, Jun 18, 2019 at 10:39 PM Johannes Berg
-> <johannes@sipsolutions.net> wrote:
-> > On Tue, 2019-06-18 at 22:33 +0200, Arnd Bergmann wrote:
-> > It seems to me though that this is far more complex than what I'm
-> > proposing? What I'm proposing there doesn't even need any userspace
-> > involvement, as long as all the pieces are in the different sub-
-> > drivers,
-> > they'd fall out automatically.
+On Wed, 2019-06-19 at 12:47 -0600, Subash Abhinov Kasiviswanathan
+wrote:
+> > > There is a n:1 relationship between rmnet and IPA.
+> > > rmnet does the de-muxing to multiple netdevs based on the mux id
+> > > in the MAP header for RX packets and vice versa.
 > > 
-> > And realistically, the wwan_device falls out anyway at some point,
-> > the
-> > only question is if we really make one specific driver be the
-> > "owner" of
-> > it. I'm suggesting that we don't, and just make its lifetime depend
-> > on
-> > the links to parts it has (unless something like IPA actually wants
-> > to
-> > be an owner).
+> > Oh, so you mean that even though IPA supports multiple channels
+> > and multiple netdev instances for a physical device, all the
+> > rmnet devices end up being thrown into a single channel in IPA?
+> > 
+> > What are the other channels for in IPA? I understand that there
+> > is one channel for commands that is separate, while the others
+> > are for network devices, but that seems to make no sense if
+> > we only use a single channel for rmnet data.
+> > 
 > 
-> My feeling so far is that having the wwan_device be owned by a device
-> gives a nicer abstraction model that is also simpler for the common
-> case. A device driver like ipa would end up with a probe() function
-> that does does wwan_device_alloc/wwan_device_register, corresponding
-> to alloc_etherdev/register_netdev, and then communicates through
-> callbacks.
-> 
-> I agree the compound device case would get more complex by
-> shoehorning it into this model, but that can be a valid tradeoff
-> if it's the exceptional case rather than the common one.
+> AFAIK, the other channels are for use cases like tethering.
+> There is only a single channel which is used for RX
+> data which is then de-muxed using rmnet.
 
-In my experience, the compound device model is by far the most
-prevalent for regular Linux distros or anything *not* running on an SoC
-with an integrated modem.
-
-But it's also quite common for Android, no? drivers/net/ethernet/msm/
-has rmnet and IPA ethernet drivers while arch/arm/mach-msm/ has various
-SMD-related control channel drivers like smd_tty.c and smd_qmi.c and
-smd_nmea.c. At least that's how I remember older SMD-based devices
-being in the 8xxx and 9xxx time.
-
-Ideally those setups can benefit from this framework as well, without
-having to write entirely new composite drivers for those devices.
+That seems odd, since tethering is no different than any other data
+channel in QMI, just that it may have a different APN and QoS
+guarantees.
 
 Dan
 
