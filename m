@@ -2,604 +2,281 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 768E44D9BD
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Jun 2019 20:50:56 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 7DDCB4DA03
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Jun 2019 21:12:54 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725987AbfFTSuz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 20 Jun 2019 14:50:55 -0400
-Received: from mga01.intel.com ([192.55.52.88]:46367 "EHLO mga01.intel.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726062AbfFTSuz (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 20 Jun 2019 14:50:55 -0400
-X-Amp-Result: SKIPPED(no attachment in message)
-X-Amp-File-Uploaded: False
-Received: from fmsmga008.fm.intel.com ([10.253.24.58])
-  by fmsmga101.fm.intel.com with ESMTP/TLS/DHE-RSA-AES256-GCM-SHA384; 20 Jun 2019 11:50:54 -0700
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.63,397,1557212400"; 
-   d="scan'208";a="160756473"
-Received: from stinkbox.fi.intel.com (HELO stinkbox) ([10.237.72.174])
-  by fmsmga008.fm.intel.com with SMTP; 20 Jun 2019 11:50:49 -0700
-Received: by stinkbox (sSMTP sendmail emulation); Thu, 20 Jun 2019 21:50:49 +0300
-From:   Ville Syrjala <ville.syrjala@linux.intel.com>
-To:     dri-devel@lists.freedesktop.org
-Cc:     intel-gfx@lists.freedesktop.org,
-        Russell King <linux@armlinux.org.uk>,
-        Neil Armstrong <narmstrong@baylibre.com>,
-        Rob Clark <robdclark@gmail.com>,
-        Tomi Valkeinen <tomi.valkeinen@ti.com>,
-        Thierry Reding <thierry.reding@gmail.com>,
-        Sam Ravnborg <sam@ravnborg.org>,
-        Benjamin Gaignard <benjamin.gaignard@linaro.org>,
-        Vincent Abriou <vincent.abriou@st.com>,
-        linux-amlogic@lists.infradead.org, linux-arm-msm@vger.kernel.org,
-        freedreno@lists.freedesktop.org, Ilia Mirkin <imirkin@alum.mit.edu>
-Subject: [PATCH 1/2] drm: Pretty print mode flags
-Date:   Thu, 20 Jun 2019 21:50:48 +0300
-Message-Id: <20190620185049.8974-1-ville.syrjala@linux.intel.com>
-X-Mailer: git-send-email 2.21.0
+        id S1726196AbfFTTMt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 20 Jun 2019 15:12:49 -0400
+Received: from mail-wm1-f68.google.com ([209.85.128.68]:38467 "EHLO
+        mail-wm1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725897AbfFTTMt (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 20 Jun 2019 15:12:49 -0400
+Received: by mail-wm1-f68.google.com with SMTP id s15so4206501wmj.3;
+        Thu, 20 Jun 2019 12:12:46 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=y4d2TTY7mSr277lgDdMkDVjGzhj2N4s+8wNSpS9iUIA=;
+        b=qUBgf+pd7kJjzpwKQUKDJeGuVn3UQw7yuhypZ2qpO5FywswqGvzPBEzswdZMFykUoO
+         DJq1FwM84EmhqaNWwIlHx3ZIPrwfiiSfWdcvRnnflKb9X/r/ZVlCvPCGLbZ2pDfJbQm9
+         Q190EFz6Zu6FaohtXLYSnXpfaMtbOhRu9gvWegWLS/Yn9XD8nXpky+ejlL5H+PGP8yxc
+         hKRMYy/A9ra4eWjfUkYPLYLWl2TDj95wHODmP3c4f8hgW3IrLgfuJcfS8IYUn22gjIU8
+         LFJUF5+fLAZLe2swjt7i+gbYDXY/u/V0c1wuQukGj/lTTYoh+8dUZ+4d6jCfaaAYqUfa
+         Dprw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=y4d2TTY7mSr277lgDdMkDVjGzhj2N4s+8wNSpS9iUIA=;
+        b=FCcZYRQZH0kTacACT3tGiihUo3ShmINmcsZ+K+1B8mYLEwW8Q+de5QIWx94MaGp1vU
+         lIvG5O1ItLpBgijOlLHI/690+RDi3mV4aTRZ6CwYxvvQy3CraOxakA7isYH1XkfYkrxt
+         toWwRldl4A0abXvQZMMU11WByCFBeQ9BSVOwtP6Dxv7rCl0f12a6AkkmHGfz+m+4q7aK
+         UMJZFhYKt2B63R+zm/oGXNU21neYv5435GXZUwq2GltDwV6zUczD71D8jwajtWPwBG3j
+         rpfh/rHOUKT+o2rVu+h7weAKWPHRVL4bNQxB80o5IBSD2I/PmuvPu6V39ps/chxYtBSY
+         Puwg==
+X-Gm-Message-State: APjAAAUASgxhLHMjclobnOdY/FjF2Z7+l4SgoQjm1QMMxO1pLmjfEkKk
+        q782gAVuhJA2fii36hBJKuw=
+X-Google-Smtp-Source: APXvYqypdSTzfRtXCn4ujhA6kTClU7x/5hIydCI3Czd2BgJpOuUoc1UAXW0JlNC/howV9fVr8YXBwQ==
+X-Received: by 2002:a1c:4c1a:: with SMTP id z26mr344925wmf.2.1561057965778;
+        Thu, 20 Jun 2019 12:12:45 -0700 (PDT)
+Received: from debian64.daheim (pD9E29A96.dip0.t-ipconnect.de. [217.226.154.150])
+        by smtp.gmail.com with ESMTPSA id y17sm797691wrg.18.2019.06.20.12.12.44
+        (version=TLS1_3 cipher=AEAD-AES256-GCM-SHA384 bits=256/256);
+        Thu, 20 Jun 2019 12:12:44 -0700 (PDT)
+Received: from localhost.daheim ([127.0.0.1] helo=debian64.localnet)
+        by debian64.daheim with esmtp (Exim 4.92)
+        (envelope-from <chunkeey@gmail.com>)
+        id 1he2UF-0005g1-U3; Thu, 20 Jun 2019 21:12:43 +0200
+From:   Christian Lamparter <chunkeey@gmail.com>
+To:     Vinod Koul <vkoul@kernel.org>
+Cc:     Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Mathias Nyman <mathias.nyman@intel.com>,
+        linux-arm-msm@vger.kernel.org,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Christian Lamparter <chunkeey@googlemail.com>,
+        linux-usb@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>
+Subject: Re: [PATCH 1/5] usb: xhci: add firmware loader for uPD720201 and uPD720202 w/o ROM
+Date:   Thu, 20 Jun 2019 21:12:43 +0200
+Message-ID: <2465888.R7Jb3LzrEU@debian64>
+In-Reply-To: <20190620170358.GO2962@vkoul-mobl>
+References: <20190620102154.20805-1-vkoul@kernel.org> <20190620121902.GD19295@kroah.com> <20190620170358.GO2962@vkoul-mobl>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset="iso-8859-1"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Ville Syrjälä <ville.syrjala@linux.intel.com>
+On Thursday, June 20, 2019 7:03:58 PM CEST Vinod Koul wrote:
+> On 20-06-19, 14:19, Greg Kroah-Hartman wrote:
+> > On Thu, Jun 20, 2019 at 03:51:50PM +0530, Vinod Koul wrote:
+> > > From: Christian Lamparter <chunkeey@googlemail.com>
+> > >=20
+> > > This patch adds a firmware loader for the uPD720201K8-711-BAC-A
+> > > and uPD720202K8-711-BAA-A variant. Both of these chips are listed
+> > > in Renesas' R19UH0078EJ0500 Rev.5.00 "User's Manual: Hardware" as
+> > > devices which need the firmware loader on page 2 in order to
+> > > work as they "do not support the External ROM".
+> > >=20
+> > > The "Firmware Download Sequence" is describe in chapter
+> > > "7.1 FW Download Interface" R19UH0078EJ0500 Rev.5.00 page 131.
+> > >=20
+> > > The firmware "K2013080.mem" is available from a USB3.0 Host to
+> > > PCIe Adapter (PP2U-E card) "Firmware download" archive. An
+> > > alternative version can be sourced from Netgear's WNDR4700 GPL
+> > > archives.
+> > >=20
+> > > The release notes of the PP2U-E's "Firmware Download" ver 2.0.1.3
+> > > (2012-06-15) state that the firmware is for the following devices:
+> > >  - uPD720201 ES 2.0 sample whose revision ID is 2.
+> > >  - uPD720201 ES 2.1 sample & CS sample & Mass product, ID is 3.
+> > >  - uPD720202 ES 2.0 sample & CS sample & Mass product, ID is 2.
+> > >=20
+> > > If someone from Renesas is listening: It would be great, if these
+> > > firmwares could be added to linux-firmware.git.
+> >=20
+> > That paragraph does not need to be in the changelog :)
+>=20
+> Sure will drop :)
 
-Decode the mode flags when printing the modeline so that I
-no longer have to decode the hex number myself.
+=2E.. those this mean that there is a firmware now? Do you have a link to i=
+t?
 
-To do this neatly I made the caller provide a temporary
-on stack buffer where we can produce the results. I choce 64
-bytes as a reasonable size for this. The worst case I think
-is > 100 bytes but that kind of mode would be nonsense anyway
-so I figured correct decoding isn't as important in such
-cases.
+>=20
+> > >  #include <linux/slab.h>
+> > >  #include <linux/module.h>
+> > >  #include <linux/acpi.h>
+> > > +#include <linux/firmware.h>
+> > > +#include <asm/unaligned.h>
+> >=20
+> > asm/ in a driver?  Are you sure???
+>=20
+> Not sure :D, will check and remove
 
-Cc: Russell King <linux@armlinux.org.uk>
-Cc: Neil Armstrong <narmstrong@baylibre.com>
-Cc: Rob Clark <robdclark@gmail.com>
-Cc: Tomi Valkeinen <tomi.valkeinen@ti.com>
-Cc: Thierry Reding <thierry.reding@gmail.com>
-Cc: Sam Ravnborg <sam@ravnborg.org>
-Cc: Benjamin Gaignard <benjamin.gaignard@linaro.org>
-Cc: Vincent Abriou <vincent.abriou@st.com>
-Cc: linux-amlogic@lists.infradead.org
-Cc: linux-arm-msm@vger.kernel.org
-Cc: freedreno@lists.freedesktop.org
-Cc: Ilia Mirkin <imirkin@alum.mit.edu>
-Signed-off-by: Ville Syrjälä <ville.syrjala@linux.intel.com>
----
- drivers/gpu/drm/armada/armada_crtc.c          |   3 +-
- drivers/gpu/drm/drm_atomic.c                  |   3 +-
- drivers/gpu/drm/drm_modes.c                   | 116 +++++++++++++++++-
- drivers/gpu/drm/i915/i915_debugfs.c           |   3 +-
- drivers/gpu/drm/meson/meson_dw_hdmi.c         |   3 +-
- drivers/gpu/drm/meson/meson_venc.c            |   4 +-
- drivers/gpu/drm/msm/disp/mdp4/mdp4_crtc.c     |   3 +-
- .../gpu/drm/msm/disp/mdp4/mdp4_dsi_encoder.c  |   3 +-
- .../gpu/drm/msm/disp/mdp4/mdp4_dtv_encoder.c  |   3 +-
- .../gpu/drm/msm/disp/mdp4/mdp4_lcdc_encoder.c |   3 +-
- .../gpu/drm/msm/disp/mdp5/mdp5_cmd_encoder.c  |   4 +-
- drivers/gpu/drm/msm/disp/mdp5/mdp5_crtc.c     |   3 +-
- drivers/gpu/drm/msm/disp/mdp5/mdp5_encoder.c  |   3 +-
- drivers/gpu/drm/msm/dsi/dsi_manager.c         |   3 +-
- drivers/gpu/drm/msm/edp/edp_bridge.c          |   3 +-
- drivers/gpu/drm/omapdrm/omap_connector.c      |   5 +-
- drivers/gpu/drm/omapdrm/omap_crtc.c           |   3 +-
- drivers/gpu/drm/panel/panel-ronbo-rb070d30.c  |   3 +-
- drivers/gpu/drm/sti/sti_crtc.c                |   3 +-
- include/drm/drm_modes.h                       |  14 ++-
- 20 files changed, 165 insertions(+), 23 deletions(-)
+I think, as long as there is a "get_unaligned_le16" defined somewhere
+it should be fine.
 
-diff --git a/drivers/gpu/drm/armada/armada_crtc.c b/drivers/gpu/drm/armada/armada_crtc.c
-index ba4a3fab7745..ce9335682bd2 100644
---- a/drivers/gpu/drm/armada/armada_crtc.c
-+++ b/drivers/gpu/drm/armada/armada_crtc.c
-@@ -262,6 +262,7 @@ static void armada_drm_crtc_mode_set_nofb(struct drm_crtc *crtc)
- 	unsigned long flags;
- 	unsigned i;
- 	bool interlaced = !!(adj->flags & DRM_MODE_FLAG_INTERLACE);
-+	char buf[DRM_MODE_FLAGS_BUF_LEN];
- 
- 	i = 0;
- 	rm = adj->crtc_hsync_start - adj->crtc_hdisplay;
-@@ -270,7 +271,7 @@ static void armada_drm_crtc_mode_set_nofb(struct drm_crtc *crtc)
- 	tm = adj->crtc_vtotal - adj->crtc_vsync_end;
- 
- 	DRM_DEBUG_KMS("[CRTC:%d:%s] mode " DRM_MODE_FMT "\n",
--		      crtc->base.id, crtc->name, DRM_MODE_ARG(adj));
-+		      crtc->base.id, crtc->name, DRM_MODE_ARG(adj, buf));
- 	DRM_DEBUG_KMS("lm %d rm %d tm %d bm %d\n", lm, rm, tm, bm);
- 
- 	/* Now compute the divider for real */
-diff --git a/drivers/gpu/drm/drm_atomic.c b/drivers/gpu/drm/drm_atomic.c
-index 419381abbdd1..81caf91fbd72 100644
---- a/drivers/gpu/drm/drm_atomic.c
-+++ b/drivers/gpu/drm/drm_atomic.c
-@@ -380,6 +380,7 @@ static void drm_atomic_crtc_print_state(struct drm_printer *p,
- 		const struct drm_crtc_state *state)
- {
- 	struct drm_crtc *crtc = state->crtc;
-+	char buf[DRM_MODE_FLAGS_BUF_LEN];
- 
- 	drm_printf(p, "crtc[%u]: %s\n", crtc->base.id, crtc->name);
- 	drm_printf(p, "\tenable=%d\n", state->enable);
-@@ -393,7 +394,7 @@ static void drm_atomic_crtc_print_state(struct drm_printer *p,
- 	drm_printf(p, "\tplane_mask=%x\n", state->plane_mask);
- 	drm_printf(p, "\tconnector_mask=%x\n", state->connector_mask);
- 	drm_printf(p, "\tencoder_mask=%x\n", state->encoder_mask);
--	drm_printf(p, "\tmode: " DRM_MODE_FMT "\n", DRM_MODE_ARG(&state->mode));
-+	drm_printf(p, "\tmode: " DRM_MODE_FMT "\n", DRM_MODE_ARG(&state->mode, buf));
- 
- 	if (crtc->funcs->atomic_print_state)
- 		crtc->funcs->atomic_print_state(p, state);
-diff --git a/drivers/gpu/drm/drm_modes.c b/drivers/gpu/drm/drm_modes.c
-index 57e6408288c8..3d15c600295a 100644
---- a/drivers/gpu/drm/drm_modes.c
-+++ b/drivers/gpu/drm/drm_modes.c
-@@ -45,6 +45,118 @@
- 
- #include "drm_crtc_internal.h"
- 
-+static char *snprint_cont(char *buf, int *len,
-+			  const char *str, bool last)
-+{
-+	int r;
-+
-+	r = snprintf(buf, *len, "%s%s", str, last ? "" : ",");
-+	if (r >= *len)
-+		return buf;
-+
-+	*len -= r;
-+	buf += r;
-+
-+	return buf;
-+}
-+
-+#define MODE_STR(x) { .name = #x, .flag = DRM_MODE_FLAG_ ## x, }
-+
-+static const struct {
-+	const char *name;
-+	u32 flag;
-+} mode_flags[] = {
-+	MODE_STR(PHSYNC),
-+	MODE_STR(NHSYNC),
-+	MODE_STR(PVSYNC),
-+	MODE_STR(NVSYNC),
-+	MODE_STR(INTERLACE),
-+	MODE_STR(CSYNC),
-+	MODE_STR(PCSYNC),
-+	MODE_STR(NCSYNC),
-+	MODE_STR(DBLSCAN),
-+	MODE_STR(HSKEW),
-+	MODE_STR(DBLCLK),
-+	MODE_STR(CLKDIV2),
-+};
-+
-+#undef MODE_STR
-+#define MODE_STR(x) [DRM_MODE_FLAG_3D_ ## x >> 14] = #x
-+
-+static const char * const stereo_flags[] = {
-+	MODE_STR(NONE),
-+	MODE_STR(FRAME_PACKING),
-+	MODE_STR(FIELD_ALTERNATIVE),
-+	MODE_STR(LINE_ALTERNATIVE),
-+	MODE_STR(SIDE_BY_SIDE_FULL),
-+	MODE_STR(L_DEPTH),
-+	MODE_STR(L_DEPTH_GFX_GFX_DEPTH),
-+	MODE_STR(TOP_AND_BOTTOM),
-+	MODE_STR(SIDE_BY_SIDE_HALF),
-+};
-+
-+#undef MODE_STR
-+#define MODE_STR(x) [DRM_MODE_FLAG_PIC_AR_ ## x >> 19] = #x
-+
-+static const char * const aspect_flags[] = {
-+	MODE_STR(NONE),
-+	MODE_STR(4_3),
-+	MODE_STR(16_9),
-+	MODE_STR(64_27),
-+	MODE_STR(256_135),
-+};
-+
-+#undef MODE_STR
-+
-+const char *drm_get_mode_flags_name(char *buf, int len, u32 flags)
-+{
-+	char *ptr = buf;
-+	int i;
-+
-+	if (len == 0)
-+		return buf;
-+
-+	buf[0] = '\0';
-+
-+	if (flags & DRM_MODE_FLAG_3D_MASK) {
-+		int stereo = (flags & DRM_MODE_FLAG_3D_MASK) >> 14;
-+
-+		if (stereo < ARRAY_SIZE(stereo_flags)) {
-+			flags &= ~DRM_MODE_FLAG_3D_MASK;
-+			ptr = snprint_cont(ptr, &len,
-+					   stereo_flags[stereo], !flags);
-+		}
-+	}
-+
-+	if (flags & DRM_MODE_FLAG_PIC_AR_MASK) {
-+		int aspect = (flags & DRM_MODE_FLAG_PIC_AR_MASK) >> 19;
-+
-+		if (aspect < ARRAY_SIZE(aspect_flags)) {
-+			flags &= ~DRM_MODE_FLAG_PIC_AR_MASK;
-+			ptr = snprint_cont(ptr, &len,
-+					   aspect_flags[aspect], !flags);
-+		}
-+	}
-+
-+	for (i = 0; i < ARRAY_SIZE(mode_flags); i++) {
-+		u32 flag = mode_flags[i].flag;
-+
-+		if ((flags & flag) == 0)
-+			continue;
-+
-+		flags &= ~flag;
-+
-+		ptr = snprint_cont(ptr, &len,
-+				   mode_flags[i].name, !flags);
-+	}
-+
-+	if (flags)
-+		ptr = snprint_cont(ptr, &len, "?", true);
-+
-+	return buf;
-+}
-+EXPORT_SYMBOL(drm_get_mode_flags_name);
-+
- /**
-  * drm_mode_debug_printmodeline - print a mode to dmesg
-  * @mode: mode to print
-@@ -53,7 +165,9 @@
-  */
- void drm_mode_debug_printmodeline(const struct drm_display_mode *mode)
- {
--	DRM_DEBUG_KMS("Modeline " DRM_MODE_FMT "\n", DRM_MODE_ARG(mode));
-+	char buf[DRM_MODE_FLAGS_BUF_LEN];
-+
-+	DRM_DEBUG_KMS("Modeline " DRM_MODE_FMT "\n", DRM_MODE_ARG(mode, buf));
- }
- EXPORT_SYMBOL(drm_mode_debug_printmodeline);
- 
-diff --git a/drivers/gpu/drm/i915/i915_debugfs.c b/drivers/gpu/drm/i915/i915_debugfs.c
-index 62cf34db9280..18a3ff8e1461 100644
---- a/drivers/gpu/drm/i915/i915_debugfs.c
-+++ b/drivers/gpu/drm/i915/i915_debugfs.c
-@@ -2539,12 +2539,13 @@ static int i915_dmc_info(struct seq_file *m, void *unused)
- static void intel_seq_print_mode(struct seq_file *m, int tabs,
- 				 struct drm_display_mode *mode)
- {
-+	char buf[DRM_MODE_FLAGS_BUF_LEN];
- 	int i;
- 
- 	for (i = 0; i < tabs; i++)
- 		seq_putc(m, '\t');
- 
--	seq_printf(m, DRM_MODE_FMT "\n", DRM_MODE_ARG(mode));
-+	seq_printf(m, DRM_MODE_FMT "\n", DRM_MODE_ARG(mode, buf));
- }
- 
- static void intel_encoder_info(struct seq_file *m,
-diff --git a/drivers/gpu/drm/meson/meson_dw_hdmi.c b/drivers/gpu/drm/meson/meson_dw_hdmi.c
-index df3f9ddd2234..30e53a043ba6 100644
---- a/drivers/gpu/drm/meson/meson_dw_hdmi.c
-+++ b/drivers/gpu/drm/meson/meson_dw_hdmi.c
-@@ -610,13 +610,14 @@ dw_hdmi_mode_valid(struct drm_connector *connector,
- 		   const struct drm_display_mode *mode)
- {
- 	struct meson_drm *priv = connector->dev->dev_private;
-+	char buf[DRM_MODE_FLAGS_BUF_LEN];
- 	unsigned int vclk_freq;
- 	unsigned int venc_freq;
- 	unsigned int hdmi_freq;
- 	int vic = drm_match_cea_mode(mode);
- 	enum drm_mode_status status;
- 
--	DRM_DEBUG_DRIVER("Modeline " DRM_MODE_FMT "\n", DRM_MODE_ARG(mode));
-+	DRM_DEBUG_DRIVER("Modeline " DRM_MODE_FMT "\n", DRM_MODE_ARG(mode, buf));
- 
- 	/* If sink max TMDS clock, we reject the mode */
- 	if (connector->display_info.max_tmds_clock &&
-diff --git a/drivers/gpu/drm/meson/meson_venc.c b/drivers/gpu/drm/meson/meson_venc.c
-index 7b7a0d8d737c..09acbc06f9f3 100644
---- a/drivers/gpu/drm/meson/meson_venc.c
-+++ b/drivers/gpu/drm/meson/meson_venc.c
-@@ -987,9 +987,11 @@ void meson_venc_hdmi_mode_set(struct meson_drm *priv, int vic,
- 	if (meson_venc_hdmi_supported_vic(vic)) {
- 		vmode = meson_venc_hdmi_get_vic_vmode(vic);
- 		if (!vmode) {
-+			char buf[DRM_MODE_FLAGS_BUF_LEN];
-+
- 			dev_err(priv->dev, "%s: Fatal Error, unsupported mode "
- 				DRM_MODE_FMT "\n", __func__,
--				DRM_MODE_ARG(mode));
-+				DRM_MODE_ARG(mode, buf));
- 			return;
- 		}
- 	} else {
-diff --git a/drivers/gpu/drm/msm/disp/mdp4/mdp4_crtc.c b/drivers/gpu/drm/msm/disp/mdp4/mdp4_crtc.c
-index 0cfd4c06b610..f68d9f74b0e4 100644
---- a/drivers/gpu/drm/msm/disp/mdp4/mdp4_crtc.c
-+++ b/drivers/gpu/drm/msm/disp/mdp4/mdp4_crtc.c
-@@ -238,6 +238,7 @@ static void mdp4_crtc_mode_set_nofb(struct drm_crtc *crtc)
- 	enum mdp4_dma dma = mdp4_crtc->dma;
- 	int ovlp = mdp4_crtc->ovlp;
- 	struct drm_display_mode *mode;
-+	char buf[DRM_MODE_FLAGS_BUF_LEN];
- 
- 	if (WARN_ON(!crtc->state))
- 		return;
-@@ -245,7 +246,7 @@ static void mdp4_crtc_mode_set_nofb(struct drm_crtc *crtc)
- 	mode = &crtc->state->adjusted_mode;
- 
- 	DBG("%s: set mode: " DRM_MODE_FMT,
--			mdp4_crtc->name, DRM_MODE_ARG(mode));
-+	    mdp4_crtc->name, DRM_MODE_ARG(mode, buf));
- 
- 	mdp4_write(mdp4_kms, REG_MDP4_DMA_SRC_SIZE(dma),
- 			MDP4_DMA_SRC_SIZE_WIDTH(mode->hdisplay) |
-diff --git a/drivers/gpu/drm/msm/disp/mdp4/mdp4_dsi_encoder.c b/drivers/gpu/drm/msm/disp/mdp4/mdp4_dsi_encoder.c
-index caa39b4621e3..2e0dca4d2484 100644
---- a/drivers/gpu/drm/msm/disp/mdp4/mdp4_dsi_encoder.c
-+++ b/drivers/gpu/drm/msm/disp/mdp4/mdp4_dsi_encoder.c
-@@ -55,10 +55,11 @@ static void mdp4_dsi_encoder_mode_set(struct drm_encoder *encoder,
- 	uint32_t dsi_hsync_skew, vsync_period, vsync_len, ctrl_pol;
- 	uint32_t display_v_start, display_v_end;
- 	uint32_t hsync_start_x, hsync_end_x;
-+	char buf[DRM_MODE_FLAGS_BUF_LEN];
- 
- 	mode = adjusted_mode;
- 
--	DBG("set mode: " DRM_MODE_FMT, DRM_MODE_ARG(mode));
-+	DBG("set mode: " DRM_MODE_FMT, DRM_MODE_ARG(mode, buf));
- 
- 	ctrl_pol = 0;
- 	if (mode->flags & DRM_MODE_FLAG_NHSYNC)
-diff --git a/drivers/gpu/drm/msm/disp/mdp4/mdp4_dtv_encoder.c b/drivers/gpu/drm/msm/disp/mdp4/mdp4_dtv_encoder.c
-index 259d51971401..e88ac070a672 100644
---- a/drivers/gpu/drm/msm/disp/mdp4/mdp4_dtv_encoder.c
-+++ b/drivers/gpu/drm/msm/disp/mdp4/mdp4_dtv_encoder.c
-@@ -101,10 +101,11 @@ static void mdp4_dtv_encoder_mode_set(struct drm_encoder *encoder,
- 	uint32_t dtv_hsync_skew, vsync_period, vsync_len, ctrl_pol;
- 	uint32_t display_v_start, display_v_end;
- 	uint32_t hsync_start_x, hsync_end_x;
-+	char buf[DRM_MODE_FLAGS_BUF_LEN];
- 
- 	mode = adjusted_mode;
- 
--	DBG("set mode: " DRM_MODE_FMT, DRM_MODE_ARG(mode));
-+	DBG("set mode: " DRM_MODE_FMT, DRM_MODE_ARG(mode, buf));
- 
- 	mdp4_dtv_encoder->pixclock = mode->clock * 1000;
- 
-diff --git a/drivers/gpu/drm/msm/disp/mdp4/mdp4_lcdc_encoder.c b/drivers/gpu/drm/msm/disp/mdp4/mdp4_lcdc_encoder.c
-index df6f9803a1d7..99bdae9c945b 100644
---- a/drivers/gpu/drm/msm/disp/mdp4/mdp4_lcdc_encoder.c
-+++ b/drivers/gpu/drm/msm/disp/mdp4/mdp4_lcdc_encoder.c
-@@ -270,10 +270,11 @@ static void mdp4_lcdc_encoder_mode_set(struct drm_encoder *encoder,
- 	uint32_t lcdc_hsync_skew, vsync_period, vsync_len, ctrl_pol;
- 	uint32_t display_v_start, display_v_end;
- 	uint32_t hsync_start_x, hsync_end_x;
-+	char buf[DRM_MODE_FLAGS_BUF_LEN];
- 
- 	mode = adjusted_mode;
- 
--	DBG("set mode: " DRM_MODE_FMT, DRM_MODE_ARG(mode));
-+	DBG("set mode: " DRM_MODE_FMT, DRM_MODE_ARG(mode, buf));
- 
- 	mdp4_lcdc_encoder->pixclock = mode->clock * 1000;
- 
-diff --git a/drivers/gpu/drm/msm/disp/mdp5/mdp5_cmd_encoder.c b/drivers/gpu/drm/msm/disp/mdp5/mdp5_cmd_encoder.c
-index eeef41fcd4e1..6bffbebee8bb 100644
---- a/drivers/gpu/drm/msm/disp/mdp5/mdp5_cmd_encoder.c
-+++ b/drivers/gpu/drm/msm/disp/mdp5/mdp5_cmd_encoder.c
-@@ -124,9 +124,11 @@ void mdp5_cmd_encoder_mode_set(struct drm_encoder *encoder,
- 			       struct drm_display_mode *mode,
- 			       struct drm_display_mode *adjusted_mode)
- {
-+	char buf[DRM_MODE_FLAGS_BUF_LEN];
-+
- 	mode = adjusted_mode;
- 
--	DBG("set mode: " DRM_MODE_FMT, DRM_MODE_ARG(mode));
-+	DBG("set mode: " DRM_MODE_FMT, DRM_MODE_ARG(mode, buf));
- 	pingpong_tearcheck_setup(encoder, mode);
- 	mdp5_crtc_set_pipeline(encoder->crtc);
- }
-diff --git a/drivers/gpu/drm/msm/disp/mdp5/mdp5_crtc.c b/drivers/gpu/drm/msm/disp/mdp5/mdp5_crtc.c
-index c3751c95b452..888a25d1da8b 100644
---- a/drivers/gpu/drm/msm/disp/mdp5/mdp5_crtc.c
-+++ b/drivers/gpu/drm/msm/disp/mdp5/mdp5_crtc.c
-@@ -378,13 +378,14 @@ static void mdp5_crtc_mode_set_nofb(struct drm_crtc *crtc)
- 	u32 mixer_width, val;
- 	unsigned long flags;
- 	struct drm_display_mode *mode;
-+	char buf[DRM_MODE_FLAGS_BUF_LEN];
- 
- 	if (WARN_ON(!crtc->state))
- 		return;
- 
- 	mode = &crtc->state->adjusted_mode;
- 
--	DBG("%s: set mode: " DRM_MODE_FMT, crtc->name, DRM_MODE_ARG(mode));
-+	DBG("%s: set mode: " DRM_MODE_FMT, crtc->name, DRM_MODE_ARG(mode, buf));
- 
- 	mixer_width = mode->hdisplay;
- 	if (r_mixer)
-diff --git a/drivers/gpu/drm/msm/disp/mdp5/mdp5_encoder.c b/drivers/gpu/drm/msm/disp/mdp5/mdp5_encoder.c
-index 820a62c40063..809118bb6965 100644
---- a/drivers/gpu/drm/msm/disp/mdp5/mdp5_encoder.c
-+++ b/drivers/gpu/drm/msm/disp/mdp5/mdp5_encoder.c
-@@ -115,10 +115,11 @@ static void mdp5_vid_encoder_mode_set(struct drm_encoder *encoder,
- 	uint32_t hsync_start_x, hsync_end_x;
- 	uint32_t format = 0x2100;
- 	unsigned long flags;
-+	char buf[DRM_MODE_FLAGS_BUF_LEN];
- 
- 	mode = adjusted_mode;
- 
--	DBG("set mode: " DRM_MODE_FMT, DRM_MODE_ARG(mode));
-+	DBG("set mode: " DRM_MODE_FMT, DRM_MODE_ARG(mode, buf));
- 
- 	ctrl_pol = 0;
- 
-diff --git a/drivers/gpu/drm/msm/dsi/dsi_manager.c b/drivers/gpu/drm/msm/dsi/dsi_manager.c
-index ec6cb0f7f206..1bf2f503b84b 100644
---- a/drivers/gpu/drm/msm/dsi/dsi_manager.c
-+++ b/drivers/gpu/drm/msm/dsi/dsi_manager.c
-@@ -527,8 +527,9 @@ static void dsi_mgr_bridge_mode_set(struct drm_bridge *bridge,
- 	struct msm_dsi *other_dsi = dsi_mgr_get_other_dsi(id);
- 	struct mipi_dsi_host *host = msm_dsi->host;
- 	bool is_dual_dsi = IS_DUAL_DSI();
-+	char buf[DRM_MODE_FLAGS_BUF_LEN];
- 
--	DBG("set mode: " DRM_MODE_FMT, DRM_MODE_ARG(mode));
-+	DBG("set mode: " DRM_MODE_FMT, DRM_MODE_ARG(mode, buf));
- 
- 	if (is_dual_dsi && !IS_MASTER_DSI_LINK(id))
- 		return;
-diff --git a/drivers/gpu/drm/msm/edp/edp_bridge.c b/drivers/gpu/drm/msm/edp/edp_bridge.c
-index 2950bba4aca9..0844345862ef 100644
---- a/drivers/gpu/drm/msm/edp/edp_bridge.c
-+++ b/drivers/gpu/drm/msm/edp/edp_bridge.c
-@@ -51,8 +51,9 @@ static void edp_bridge_mode_set(struct drm_bridge *bridge,
- 	struct drm_connector *connector;
- 	struct edp_bridge *edp_bridge = to_edp_bridge(bridge);
- 	struct msm_edp *edp = edp_bridge->edp;
-+	char buf[DRM_MODE_FLAGS_BUF_LEN];
- 
--	DBG("set mode: " DRM_MODE_FMT, DRM_MODE_ARG(mode));
-+	DBG("set mode: " DRM_MODE_FMT, DRM_MODE_ARG(mode, buf));
- 
- 	list_for_each_entry(connector, &dev->mode_config.connector_list, head) {
- 		if ((connector->encoder != NULL) &&
-diff --git a/drivers/gpu/drm/omapdrm/omap_connector.c b/drivers/gpu/drm/omapdrm/omap_connector.c
-index 5967283934e1..4ce29288c70e 100644
---- a/drivers/gpu/drm/omapdrm/omap_connector.c
-+++ b/drivers/gpu/drm/omapdrm/omap_connector.c
-@@ -276,6 +276,7 @@ static enum drm_mode_status omap_connector_mode_valid(struct drm_connector *conn
- 	struct omap_connector *omap_connector = to_omap_connector(connector);
- 	struct drm_display_mode new_mode = { { 0 } };
- 	enum drm_mode_status status;
-+	char buf[DRM_MODE_FLAGS_BUF_LEN];
- 
- 	status = omap_connector_mode_fixup(omap_connector->output, mode,
- 					   &new_mode);
-@@ -288,8 +289,8 @@ static enum drm_mode_status omap_connector_mode_valid(struct drm_connector *conn
- 
- done:
- 	DBG("connector: mode %s: " DRM_MODE_FMT,
--			(status == MODE_OK) ? "valid" : "invalid",
--			DRM_MODE_ARG(mode));
-+	    (status == MODE_OK) ? "valid" : "invalid",
-+	    DRM_MODE_ARG(mode, buf));
- 
- 	return status;
- }
-diff --git a/drivers/gpu/drm/omapdrm/omap_crtc.c b/drivers/gpu/drm/omapdrm/omap_crtc.c
-index d61215494617..221459d6abe9 100644
---- a/drivers/gpu/drm/omapdrm/omap_crtc.c
-+++ b/drivers/gpu/drm/omapdrm/omap_crtc.c
-@@ -553,9 +553,10 @@ static void omap_crtc_mode_set_nofb(struct drm_crtc *crtc)
- {
- 	struct omap_crtc *omap_crtc = to_omap_crtc(crtc);
- 	struct drm_display_mode *mode = &crtc->state->adjusted_mode;
-+	char buf[DRM_MODE_FLAGS_BUF_LEN];
- 
- 	DBG("%s: set mode: " DRM_MODE_FMT,
--	    omap_crtc->name, DRM_MODE_ARG(mode));
-+	    omap_crtc->name, DRM_MODE_ARG(mode, buf));
- 
- 	drm_display_mode_to_videomode(mode, &omap_crtc->vm);
- }
-diff --git a/drivers/gpu/drm/panel/panel-ronbo-rb070d30.c b/drivers/gpu/drm/panel/panel-ronbo-rb070d30.c
-index 3c15764f0c03..468ebdca94f4 100644
---- a/drivers/gpu/drm/panel/panel-ronbo-rb070d30.c
-+++ b/drivers/gpu/drm/panel/panel-ronbo-rb070d30.c
-@@ -126,12 +126,13 @@ static int rb070d30_panel_get_modes(struct drm_panel *panel)
- 	struct rb070d30_panel *ctx = panel_to_rb070d30_panel(panel);
- 	struct drm_display_mode *mode;
- 	static const u32 bus_format = MEDIA_BUS_FMT_RGB888_1X24;
-+	char buf[DRM_MODE_FLAGS_BUF_LEN];
- 
- 	mode = drm_mode_duplicate(panel->drm, &default_mode);
- 	if (!mode) {
- 		DRM_DEV_ERROR(&ctx->dsi->dev,
- 			      "Failed to add mode " DRM_MODE_FMT "\n",
--			      DRM_MODE_ARG(&default_mode));
-+			      DRM_MODE_ARG(&default_mode, buf));
- 		return -EINVAL;
- 	}
- 
-diff --git a/drivers/gpu/drm/sti/sti_crtc.c b/drivers/gpu/drm/sti/sti_crtc.c
-index dc64fbfc4e61..bc9602f519d7 100644
---- a/drivers/gpu/drm/sti/sti_crtc.c
-+++ b/drivers/gpu/drm/sti/sti_crtc.c
-@@ -54,11 +54,12 @@ sti_crtc_mode_set(struct drm_crtc *crtc, struct drm_display_mode *mode)
- 	struct sti_compositor *compo = dev_get_drvdata(dev);
- 	struct clk *compo_clk, *pix_clk;
- 	int rate = mode->clock * 1000;
-+	char buf[DRM_MODE_FLAGS_BUF_LEN];
- 
- 	DRM_DEBUG_KMS("CRTC:%d (%s) mode: (%s)\n",
- 		      crtc->base.id, sti_mixer_to_str(mixer), mode->name);
- 
--	DRM_DEBUG_KMS(DRM_MODE_FMT "\n", DRM_MODE_ARG(mode));
-+	DRM_DEBUG_KMS(DRM_MODE_FMT "\n", DRM_MODE_ARG(mode, buf));
- 
- 	if (mixer->id == STI_MIXER_MAIN) {
- 		compo_clk = compo->clk_compo_main;
-diff --git a/include/drm/drm_modes.h b/include/drm/drm_modes.h
-index 083f16747369..3962dbf82100 100644
---- a/include/drm/drm_modes.h
-+++ b/include/drm/drm_modes.h
-@@ -428,20 +428,27 @@ struct drm_display_mode {
- 	struct list_head export_head;
- };
- 
-+/**
-+ * DRM_MODE_FLAGS_BUF_LEN - reasonable size for the buffer passed to DRM_MODE_ARG()
-+ */
-+#define DRM_MODE_FLAGS_BUF_LEN 64
-+
- /**
-  * DRM_MODE_FMT - printf string for &struct drm_display_mode
-  */
--#define DRM_MODE_FMT    "\"%s\": %d %d %d %d %d %d %d %d %d %d 0x%x 0x%x"
-+#define DRM_MODE_FMT    "\"%s\": %d %d %d %d %d %d %d %d %d %d 0x%x 0x%x %s"
- 
- /**
-  * DRM_MODE_ARG - printf arguments for &struct drm_display_mode
-  * @m: display mode
-+ * @b: buffer for temporary string
-  */
--#define DRM_MODE_ARG(m) \
-+#define DRM_MODE_ARG(m, b) \
- 	(m)->name, (m)->vrefresh, (m)->clock, \
- 	(m)->hdisplay, (m)->hsync_start, (m)->hsync_end, (m)->htotal, \
- 	(m)->vdisplay, (m)->vsync_start, (m)->vsync_end, (m)->vtotal, \
--	(m)->type, (m)->flags
-+	(m)->type, (m)->flags, \
-+	drm_get_mode_flags_name(b, sizeof(b), (m)->flags)
- 
- #define obj_to_mode(x) container_of(x, struct drm_display_mode, base)
- 
-@@ -542,5 +549,6 @@ drm_mode_parse_command_line_for_connector(const char *mode_option,
- struct drm_display_mode *
- drm_mode_create_from_cmdline_mode(struct drm_device *dev,
- 				  struct drm_cmdline_mode *cmd);
-+const char *drm_get_mode_flags_name(char *buf, int len, u32 flags);
- 
- #endif /* __DRM_MODES_H__ */
--- 
-2.21.0
+This was a loong ago, the loader was developped on a PowerPC 464, but
+from what I remember it was checkpatch that didn't like the "unaligned"
+poking around in the firmware below.
+
+> > > +static int renesas_fw_download_image(struct pci_dev *dev,
+> > > +				     const u32 *fw,
+> > > +				     size_t step)
+> > > +{
+> > > +	size_t i;
+> > > +	int err;
+> > > +	u8 fw_status;
+> > > +	bool data0_or_data1;
+> > > +
+> > > +	/*
+> > > +	 * The hardware does alternate between two 32-bit pages.
+> > > +	 * (This is because each row of the firmware is 8 bytes).
+> > > +	 *
+> > > +	 * for even steps we use DATA0, for odd steps DATA1.
+> > > +	 */
+> > > +	data0_or_data1 =3D (step & 1) =3D=3D 1;
+> > > +
+> > > +	/* step+1. Read "Set DATAX" and confirm it is cleared. */
+> > > +	for (i =3D 0; i < 10000; i++) {
+> > > +		err =3D pci_read_config_byte(dev, 0xF5, &fw_status);
+> > > +		if (err)
+> > > +			return pcibios_err_to_errno(err);
+> > > +		if (!(fw_status & BIT(data0_or_data1)))
+> > > +			break;
+> > > +
+> > > +		udelay(1);
+> > > +	}
+> > > +	if (i =3D=3D 10000)
+> > > +		return -ETIMEDOUT;
+> > > +
+> > > +	/*
+> > > +	 * step+2. Write FW data to "DATAX".
+> > > +	 * "LSB is left" =3D> force little endian
+> > > +	 */
+> > > +	err =3D pci_write_config_dword(dev, data0_or_data1 ? 0xFC : 0xF8,
+> > > +				     (__force u32) cpu_to_le32(fw[step]));
+> > > +	if (err)
+> > > +		return pcibios_err_to_errno(err);
+> > > +
+> > > +	udelay(100);
+> > > +
+> > > +	/* step+3. Set "Set DATAX". */
+> > > +	err =3D pci_write_config_byte(dev, 0xF5, BIT(data0_or_data1));
+> > > +	if (err)
+> > > +		return pcibios_err_to_errno(err);
+> > > +
+> >=20
+> > Shouldn't you just do a read after the write to be sure the write
+> > actually went out on the wire?  Then you shouldn't have to do the
+> > udelay, right?
+>=20
+> Well I am not sure that is how it works. The register is a DATA register
+> on the controller. We are writing to the memory of the controller here
+> and after writing DATA0 and DATA1 we check the Set DATA0 & Set DATA1
+> bits and write subsequenly only when controller is ready to accept more
+> data.
+>=20
+> I do recall at least for ROM load (writing to NOR flash attached to
+> controller), we need to wait considerably more before the SetData0/1 was
+> set and ready for subsequent write
+
+OffTopic: There's some leeway here. From what I remember you could just push
+the data through DATA0 and cut down on the logic. But this was slower than
+using both DATA0 and DATA1.
+
+The udelay was placed because I vaguely remember that polling SET DATA0
+over and over slowed down the firmware download.
+So the intention was to have the 100=B5s as a baseline and then we don't
+slow down and waste more cycles in "step+1".
+
+>=20
+> > > +static int renesas_hw_check_run_stop_busy(struct pci_dev *pdev)
+> > > +{
+> > > +#if 0
+> > > +	u32 val;
+> > > +
+> > > +	/*
+> > > +	 * 7.1.3 Note 3: "... must not set 'FW Download Enable' when
+> > > +	 * 'RUN/STOP' of USBCMD Register is set"
+> > > +	 */
+> > > +	val =3D readl(hcd->regs + 0x20);
+> > > +	if (val & BIT(0)) {
+> > > +		dev_err(&pdev->dev, "hardware is busy and can't receive a FW.");
+> > > +		return -EBUSY;
+> > > +	}
+> > > +#endif
+> > > +	return 0;
+> > > +}
+> > > +
+> >=20
+> > Is this function still really needed anymore?
+>=20
+> Nope I will drop it unless Christian objects
+
+You can drop it. From what I remember it was used for a minimal backup
+solution that would simply prevent stuck the xhci-pci modules. (never
+heard from Greg or Filipe)
+
+> > > +	/*
+> > > +	 * 11. After finishing writing the last data of FW, the
+> > > +	 * System Software must clear "FW Download Enable"
+> > > +	 */
+> > > +	err =3D pci_write_config_byte(pdev, 0xF4, 0);
+> > > +	if (err)
+> > > +		return pcibios_err_to_errno(err);
+> > > +
+> > > +	/* 12. Read "Result Code" and confirm it is good. */
+> > > +	for (i =3D 0; i < 10000; i++) {
+> > > +		err =3D pci_read_config_byte(pdev, 0xF4, &fw_status);
+> > > +		if (err)
+> > > +			return pcibios_err_to_errno(err);
+> > > +		if (fw_status & BIT(4))
+> > > +			break;
+> > > +
+> > > +		udelay(1);
+> > > +	}
+> >=20
+> > 1000 reads???  I've heard of having to read a few times to ensure
+> > something "latched" in the device, but not 1000.  Why so many?
+>=20
+> For ROM load it did need significant time, I will check if we can go down
+> to 100 here
+yes, it takes a while! Though you could use a bigger udelay here and do
+less retries.=20
+
+> > > +	if (i =3D=3D 10000) {
+> > > +		/* Timed out / Error - let's see if we can fix this */
+> > > +		err =3D renesas_fw_check_running(pdev);
+> > > +		switch (err) {
+> > > +		case 0: /*
+> > > +			 * we shouldn't end up here.
+> > > +			 * maybe it took a little bit longer.
+> > > +			 * But all should be well?
+> > > +			 */
+> > > +			break;
+> > > +
+> > > +		case 1: /* (No result yet? - we can try to retry) */
+> > > +			if (retry_counter < 10) {
+> > > +				retry_counter++;
+> > > +				dev_warn(&pdev->dev, "Retry Firmware download: %d try.",
+> > > +					  retry_counter);
+> > > +				return renesas_fw_download(pdev, fw,
+> > > +							   retry_counter);
+> >=20
+> > recursion?
+>=20
+> I didnt encounter the need, we should remove it unless Christian objects
+
+Sure, I think it should be safe to just say that there was a timeout and th=
+en abort.
+
+Cheers,
+Christian
+
+
 
