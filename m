@@ -2,90 +2,106 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 1EFAA4D2DD
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Jun 2019 18:10:22 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 446D34D2FD
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Jun 2019 18:13:24 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726661AbfFTQKV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 20 Jun 2019 12:10:21 -0400
-Received: from smtp.codeaurora.org ([198.145.29.96]:59906 "EHLO
-        smtp.codeaurora.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726654AbfFTQKV (ORCPT
+        id S1731979AbfFTQNM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 20 Jun 2019 12:13:12 -0400
+Received: from mail-wm1-f67.google.com ([209.85.128.67]:54060 "EHLO
+        mail-wm1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1732170AbfFTQNL (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 20 Jun 2019 12:10:21 -0400
-Received: by smtp.codeaurora.org (Postfix, from userid 1000)
-        id E3E816090F; Thu, 20 Jun 2019 16:10:19 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
-        s=default; t=1561047019;
-        bh=c+3aFyFm/rHxZsXwmsaa8gZe+tDKRvfjN/JtdoBhohk=;
-        h=Subject:To:Cc:References:From:Date:In-Reply-To:From;
-        b=AAJToONAZdgHDZhyzwm16hq7ikjQrFqnVcNAr2ejhWHeVcGNAcAjUvTlDAw87MYmM
-         kWSyGUPi2LyhgPx9XvV8xt4gMhgD4VeHEQRa1WbaGolsHxlgWsHBJyRmV88bpEFxgX
-         riejGTFKaRnEv/NP9XDQf3Xu73xowmbne5MQp7tw=
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        pdx-caf-mail.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.7 required=2.0 tests=ALL_TRUSTED,BAYES_00,
-        DKIM_INVALID,DKIM_SIGNED,SPF_NONE autolearn=no autolearn_force=no
-        version=3.4.0
-Received: from [10.79.136.27] (blr-bdr-fw-01_globalnat_allzones-outside.qualcomm.com [103.229.18.19])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: saiprakash.ranjan@smtp.codeaurora.org)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id ADB4B6087F;
-        Thu, 20 Jun 2019 16:10:15 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
-        s=default; t=1561047018;
-        bh=c+3aFyFm/rHxZsXwmsaa8gZe+tDKRvfjN/JtdoBhohk=;
-        h=Subject:To:Cc:References:From:Date:In-Reply-To:From;
-        b=VgtcJ2Oid3anwp7PhUeB1dWBnTG33+bPyT5WuNkyCiIo93T/o0/7d543tHKIvEErv
-         QUbewcFV9GRlsJ/M6Ao80aJTPhqBjQTkiAJVq73sW2+W3b8tFuhtfcjAI6SDTcp8+F
-         MGBuINdqojz0F0bRBc8y6DLvGS/MhKDzg25Jzd7c=
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org ADB4B6087F
-Authentication-Results: pdx-caf-mail.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: pdx-caf-mail.web.codeaurora.org; spf=none smtp.mailfrom=saiprakash.ranjan@codeaurora.org
-Subject: Re: [PATCH 2/2] coresight: Abort probe for missing CPU phandle
-To:     Suzuki K Poulose <suzuki.poulose@arm.com>,
-        mathieu.poirier@linaro.org, leo.yan@linaro.org,
-        alexander.shishkin@linux.intel.com, david.brown@linaro.org,
-        mark.rutland@arm.com
-Cc:     rnayak@codeaurora.org, vivek.gautam@codeaurora.org,
-        sibis@codeaurora.org, linux-arm-kernel@lists.infradead.org,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org
-References: <cover.1561037262.git.saiprakash.ranjan@codeaurora.org>
- <d93e28fc80227f9a385130a766a24f8f39a1dcf0.1561037262.git.saiprakash.ranjan@codeaurora.org>
- <1ddee3c1-8299-1991-eb88-151b9c3ee180@arm.com>
- <e3e13629-a723-8b08-cbae-5a3295170900@codeaurora.org>
- <0182216b-5495-bcf7-bb0e-869133b24830@arm.com>
-From:   Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
-Message-ID: <ff99f1b5-7a04-a11a-7bbc-1a6a68908113@codeaurora.org>
-Date:   Thu, 20 Jun 2019 21:40:13 +0530
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
- Thunderbird/60.7.0
+        Thu, 20 Jun 2019 12:13:11 -0400
+Received: by mail-wm1-f67.google.com with SMTP id x15so3642555wmj.3
+        for <linux-arm-msm@vger.kernel.org>; Thu, 20 Jun 2019 09:13:10 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=m3w0mEC2GZ5BObknViffH07pdi6drJIwjps8rVJ93V0=;
+        b=K4j32GkJokKSPB3bvPltU4oa+cDxqg2sC2LehPoPPdAxIDKXVDyYSCDuD9boSIHAQN
+         cyZOIryW0eqv6rDDy5l4RWlvB0NczUW00tX/uJlam7I0/Q1qLovO5WQoJM9RxInKOHk2
+         zuZ3A+YB3+rj6O3FR+fAl80T7yHluqMJShoOccPixXHypQivQCBONYc61IEi4/ddX9AY
+         yYHuHY+BRrwou5V9SOZOmuE7hfNU2qk8eo22STU3XG274qR+nR0FrlCxhLr2WfkQoZqk
+         uwyArSPX2xNPSVcki9+OQHLt8FHgSowHWa1dhG5XdZTBQs6O3gl3quGYhqwcUUka81Am
+         CbVA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=m3w0mEC2GZ5BObknViffH07pdi6drJIwjps8rVJ93V0=;
+        b=Hh6Tecu6Q30otaoam0yGpGooGGppN9Qg3qo9I+H2brArTPomQVARqZIYzkxyIMOlOs
+         AGxxjj8X7G6oqjIVQuuv4JlNfD8w+Zo9Zl6eB/5aQDZsc4cGC1rbd/iJiu7S4uKPQCLy
+         DBdSMX0lPwhi6b/2V5gexA2jxQCr+VXwd47SHvWbi5OJZ6t6NofeWUKoLW5OA/XSn5CC
+         NrXl8q137HZkU7On+lfqu5prvtj5tpn7hJNBvfrrvux6sI85+Co6HB6W+I5buYdvPxGY
+         Wwgx1V4qMj2CBM1xt5NbRL2Uuw23i9RmPQpZm5s3FL5XuH8OlL0RyOl9UKZsyPR2uAtT
+         95DA==
+X-Gm-Message-State: APjAAAXyLuZnYqJ7Vji6SNtLzJChWmlTH1Kxzx4U5tnxYVX/fdNTgrj0
+        m9cmgB4P70BNFtyS28mPLlXhVieoclU=
+X-Google-Smtp-Source: APXvYqyXHVxT8FjhIPbg2nTCl0NkK4CwmiA8tHb9CoeBq9UqH6qpveUiA7qdl6NRIq2PvFzG4/9cfw==
+X-Received: by 2002:a7b:c7d7:: with SMTP id z23mr304901wmk.46.1561047189880;
+        Thu, 20 Jun 2019 09:13:09 -0700 (PDT)
+Received: from debian64.daheim (pD9E29A96.dip0.t-ipconnect.de. [217.226.154.150])
+        by smtp.gmail.com with ESMTPSA id o126sm11024wmo.1.2019.06.20.09.13.08
+        (version=TLS1_3 cipher=AEAD-AES256-GCM-SHA384 bits=256/256);
+        Thu, 20 Jun 2019 09:13:08 -0700 (PDT)
+Received: from chuck by debian64.daheim with local (Exim 4.92)
+        (envelope-from <chunkeey@gmail.com>)
+        id 1hdzgS-00049m-0t; Thu, 20 Jun 2019 18:13:08 +0200
+From:   Christian Lamparter <chunkeey@gmail.com>
+To:     linux-arm-msm@vger.kernel.org
+Cc:     David Brown <david.brown@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Marc Gonzalez <marc.w.gonzalez@free.fr>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Pavel Kubelun <be.dissent@gmail.com>,
+        Sricharan R <sricharan@codeaurora.org>
+Subject: [PATCH v3] ARM: dts: qcom: ipq4019: fix high resolution timer
+Date:   Thu, 20 Jun 2019 18:13:07 +0200
+Message-Id: <20190620161308.15936-1-chunkeey@gmail.com>
+X-Mailer: git-send-email 2.20.1
 MIME-Version: 1.0
-In-Reply-To: <0182216b-5495-bcf7-bb0e-869133b24830@arm.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 6/20/2019 8:53 PM, Suzuki K Poulose wrote:
-> 
-> 
-> 
-> Please wait for Mathieu's thoughts on it. And in general I would wait
-> for feedback from the people in a version, before posting another one,
-> to reduce the number of respins.
-> 
+From: Abhishek Sahu <absahu@codeaurora.org>
 
-Mathieu already said he was OK in the other thread, but I will wait for
-some more feedbacks.
+The kernel is not switching the timer to the high resolution
+mode and clock source keeps operating in with a just a lousy
+10ms resolution.
 
-Thanks,
-Sai
+The always-on property needs to be given for xo clock source
+(which is the sole external oscillator) in the device tree
+node to get to the 1ns high resolution mode.
 
+Signed-off-by: Abhishek Sahu <absahu@codeaurora.org>
+Signed-off-by: Pavel Kubelun <be.dissent@gmail.com>
+Signed-off-by: Christian Lamparter <chunkeey@gmail.com>
+---
+
+v3: fixed empty line, removed changeid reference and fluff,
+    reworded message.
+
+v2: fixed subject [Abhishek Sahu is bouncing]
+---
+ arch/arm/boot/dts/qcom-ipq4019.dtsi | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/arch/arm/boot/dts/qcom-ipq4019.dtsi b/arch/arm/boot/dts/qcom-ipq4019.dtsi
+index bbcb7db810f7..0e3e79442c50 100644
+--- a/arch/arm/boot/dts/qcom-ipq4019.dtsi
++++ b/arch/arm/boot/dts/qcom-ipq4019.dtsi
+@@ -169,6 +169,7 @@
+ 			     <1 4 0xf08>,
+ 			     <1 1 0xf08>;
+ 		clock-frequency = <48000000>;
++		always-on;
+ 	};
+ 
+ 	soc {
 -- 
-QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
-of Code Aurora Forum, hosted by The Linux Foundation
+2.20.1
+
