@@ -2,157 +2,208 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 8D1554C778
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Jun 2019 08:26:46 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 1CAA24C77D
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Jun 2019 08:29:22 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726072AbfFTG0q (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 20 Jun 2019 02:26:46 -0400
-Received: from lelv0142.ext.ti.com ([198.47.23.249]:33322 "EHLO
-        lelv0142.ext.ti.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725871AbfFTG0q (ORCPT
+        id S1725966AbfFTG3V (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 20 Jun 2019 02:29:21 -0400
+Received: from smtp.codeaurora.org ([198.145.29.96]:54970 "EHLO
+        smtp.codeaurora.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725889AbfFTG3V (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 20 Jun 2019 02:26:46 -0400
-Received: from lelv0266.itg.ti.com ([10.180.67.225])
-        by lelv0142.ext.ti.com (8.15.2/8.15.2) with ESMTP id x5K6Qf3k043755;
-        Thu, 20 Jun 2019 01:26:41 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ti.com;
-        s=ti-com-17Q1; t=1561012001;
-        bh=ojwATia8TEiy+wBWqxMCof1vsBQdy9/5roRADid+l7M=;
-        h=Subject:To:CC:References:From:Date:In-Reply-To;
-        b=w7PdRtoAbFDtPkfRisscvNCkd4sWUihoBp7aH4qQEI3D9KE+Ii42IT9tJyqZCnRN8
-         HSFOSNpX2nfyBiO7m1GK1mCeRbF4zhy0I0ftsDvAaBiH7upbx8jgQ20C7reEE4d13O
-         7II5T2CQZ6E0+bt6Q0s/HZiHYDX0TlsDZcPBcoeA=
-Received: from DLEE115.ent.ti.com (dlee115.ent.ti.com [157.170.170.26])
-        by lelv0266.itg.ti.com (8.15.2/8.15.2) with ESMTPS id x5K6QfVl101008
-        (version=TLSv1.2 cipher=AES256-GCM-SHA384 bits=256 verify=FAIL);
-        Thu, 20 Jun 2019 01:26:41 -0500
-Received: from DLEE108.ent.ti.com (157.170.170.38) by DLEE115.ent.ti.com
- (157.170.170.26) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256_P256) id 15.1.1713.5; Thu, 20
- Jun 2019 01:26:40 -0500
-Received: from lelv0327.itg.ti.com (10.180.67.183) by DLEE108.ent.ti.com
- (157.170.170.38) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256_P256) id 15.1.1713.5 via
- Frontend Transport; Thu, 20 Jun 2019 01:26:40 -0500
-Received: from [172.24.190.233] (ileax41-snat.itg.ti.com [10.172.224.153])
-        by lelv0327.itg.ti.com (8.15.2/8.15.2) with ESMTP id x5K6Qa3Q114861;
-        Thu, 20 Jun 2019 01:26:38 -0500
-Subject: Re: [PATCH v1] phy: qcom-qmp: Raise qcom_qmp_phy_enable() polling
- delay
-To:     Marc Gonzalez <marc.w.gonzalez@free.fr>,
-        Vivek Gautam <vivek.gautam@codeaurora.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Douglas Anderson <dianders@chromium.org>
-CC:     MSM <linux-arm-msm@vger.kernel.org>,
-        LKML <linux-kernel@vger.kernel.org>
-References: <92d97c68-d226-6290-37d6-f46f42ea604b@free.fr>
- <a3a50cf5-083a-5aa8-e77c-6feb2f2fd866@codeaurora.org>
- <134f4648-682e-5fed-60e7-bc25985dd7e9@free.fr>
-From:   Kishon Vijay Abraham I <kishon@ti.com>
-Message-ID: <e9d7667d-7ed4-d97e-b010-d61b214e6451@ti.com>
-Date:   Thu, 20 Jun 2019 11:55:11 +0530
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+        Thu, 20 Jun 2019 02:29:21 -0400
+Received: by smtp.codeaurora.org (Postfix, from userid 1000)
+        id A2C00609D4; Thu, 20 Jun 2019 06:29:19 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
+        s=default; t=1561012159;
+        bh=NZEClqzVfuNrG0u2LnRVLKZy/0ZXM/ymvg5lvsVu97c=;
+        h=Subject:To:Cc:References:From:Date:In-Reply-To:From;
+        b=eQvlepuJTyTBaS7/xbRkg6REHSoGkbQ8tvHEQNQj1pnI08wmEsj32xKBQGXO4Bii1
+         u/iTyCT1tQVlWIGMpdYWS9Td62oJRMnBobG/Goc654kXOf9RO0dU+ViDjyHX/ll20a
+         VorGo9miKzOFpBtr9Oq0j33sxFPSwgXmVPOBwkUI=
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        pdx-caf-mail.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.7 required=2.0 tests=ALL_TRUSTED,BAYES_00,
+        DKIM_INVALID,DKIM_SIGNED,SPF_NONE autolearn=no autolearn_force=no
+        version=3.4.0
+Received: from [10.79.136.27] (blr-bdr-fw-01_globalnat_allzones-outside.qualcomm.com [103.229.18.19])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: saiprakash.ranjan@smtp.codeaurora.org)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id B7ACF60790;
+        Thu, 20 Jun 2019 06:29:15 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
+        s=default; t=1561012158;
+        bh=NZEClqzVfuNrG0u2LnRVLKZy/0ZXM/ymvg5lvsVu97c=;
+        h=Subject:To:Cc:References:From:Date:In-Reply-To:From;
+        b=Z9HG38za9BwP6TCnqYNrkTCLXJndecYgqvqZpNdho+EXDVCLr3K4y9xGnFpLdEjZG
+         i04T+tcuzLeemwIsDdkuik4PmeoyHQR29S3oIfAk29LxJoOTuB6HVxrBIX2GvSKrG5
+         ApGMovDptgme8bwA8VIrlFI03NmOOuCIIEz+lbzU=
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org B7ACF60790
+Authentication-Results: pdx-caf-mail.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: pdx-caf-mail.web.codeaurora.org; spf=none smtp.mailfrom=saiprakash.ranjan@codeaurora.org
+Subject: Re: Coresight causes synchronous external abort on msm8916
+To:     Stephan Gerhold <stephan@gerhold.net>,
+        Suzuki K Poulose <suzuki.poulose@arm.com>,
+        mathieu.poirier@linaro.org
+Cc:     david.brown@linaro.org, Sibi Sankar <sibis@codeaurora.org>,
+        Rajendra Nayak <rnayak@codeaurora.org>,
+        Vivek Gautam <vivek.gautam@codeaurora.org>, agross@kernel.org,
+        linux-arm-kernel@lists.infradead.org, mathieu.poirier@linaro.org,
+        linux-arm-msm@vger.kernel.org
+References: <20190618202623.GA53651@gerhold.net>
+ <a51f117f-c48d-d3f4-c3d1-9b584e3a055f@arm.com>
+ <20190619183904.GB937@gerhold.net>
+From:   Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
+Message-ID: <0dcea9a1-999d-7d85-267e-c3bfcfcfa95a@codeaurora.org>
+Date:   Thu, 20 Jun 2019 11:59:13 +0530
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
  Thunderbird/60.7.0
 MIME-Version: 1.0
-In-Reply-To: <134f4648-682e-5fed-60e7-bc25985dd7e9@free.fr>
-Content-Type: text/plain; charset="utf-8"
+In-Reply-To: <20190619183904.GB937@gerhold.net>
+Content-Type: text/plain; charset=utf-8; format=flowed
 Content-Language: en-US
-Content-Transfer-Encoding: 8bit
-X-EXCLAIMER-MD-CONFIG: e1e8a2fd-e40a-4ac6-ac9b-f7e9cc9ee180
+Content-Transfer-Encoding: 7bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi,
+Hi Stephan,
 
-On 14/06/19 6:08 PM, Marc Gonzalez wrote:
-> + Doug (who is familiar with usleep_range quirks)
+On 6/20/2019 12:09 AM, Stephan Gerhold wrote:
+> Hi,
 > 
-> On 14/06/2019 11:50, Vivek Gautam wrote:
-> 
->> On 6/13/2019 5:02 PM, Marc Gonzalez wrote:
+> On Wed, Jun 19, 2019 at 09:49:03AM +0100, Suzuki K Poulose wrote:
+>> Hi Stephan,
 >>
->>> readl_poll_timeout() calls usleep_range() to sleep between reads.
->>> usleep_range() doesn't work efficiently for tiny values.
+>> On 18/06/2019 21:26, Stephan Gerhold wrote:
+>>> Hi,
 >>>
->>> Raise the polling delay in qcom_qmp_phy_enable() to bring it in line
->>> with the delay in qcom_qmp_phy_com_init().
+>>> I'm trying to run mainline Linux on a smartphone with MSM8916 SoC.
+>>> It works surprisingly well, but the coresight devices seem to cause the
+>>> following crash shortly after userspace starts:
 >>>
->>> Signed-off-by: Marc Gonzalez <marc.w.gonzalez@free.fr>
->>> ---
->>> Vivek, do you remember why you didn't use the same delay value in
->>> qcom_qmp_phy_enable) and qcom_qmp_phy_com_init() ?
+>>>       Internal error: synchronous external abort: 96000010 [#1] PREEMPT SMP
 >>
->> phy_qcom_init() thingy came from the PCIE phy driver from downstream
->> msm-3.18 PCIE did something as below:
-> 
-> FWIW and IMO, drivers/pci/host/pci-msm.c is a good example of how not to write
-> a device driver. It's huge (7000+ lines) because it handles multiple platforms
-> via ifdefs, and lumps everything together (phy, core IP, SoC specific glue)
-> in a single file.
-> 
->> -----
->> do {
->>          if (pcie_phy_is_ready(dev))
->>                  break;
->>          retries++;
->>          usleep_range(REFCLK_STABILIZATION_DELAY_US_MIN,
->>                                   REFCLK_STABILIZATION_DELAY_US_MAX);
->> } while (retries < PHY_READY_TIMEOUT_COUNT);
+>> ...
 >>
->> REFCLK_STABILIZATION_DELAY_US_MIN/MAX ==> 1000/1005
->> PHY_READY_TIMEOUT_COUNT ==> 10
->> -----
-> 
-> https://source.codeaurora.org/quic/la/kernel/msm-4.4/tree/drivers/pci/host/pci-msm.c?h=LE.UM.1.3.r3.25#n4624
-> 
-> https://source.codeaurora.org/quic/la/kernel/msm-4.4/tree/drivers/pci/host/pci-msm.c?h=LE.UM.1.3.r3.25#n1721
-> 
-> readl_relaxed(dev->phy + PCIE_N_PCS_STATUS(dev->rc_idx, dev->common_phy)) & BIT(6)
-> is equivalent to:
-> the check in qcom_qmp_phy_enable()
-> 
-> readl_relaxed(dev->phy + PCIE_COM_PCS_READY_STATUS) & 0x1
-> is equivalent to:
-> the check in qcom_qmp_phy_com_init()
-> 
-> I'll take a closer look, using some printks, to narrow down the run-time
-> execution path.
-> 
->> phy_enable() from the usb phy driver from downstream.
->>   /* Wait for PHY initialization to be done */
->>   do {
->>           if (readl_relaxed(phy->base +
->>                   phy->phy_reg[USB3_PHY_PCS_STATUS]) & PHYSTATUS)
->>                   usleep_range(1, 2);
->> else
->> break;
->>   } while (--init_timeout_usec);
 >>
->> init_timeout_usec ==> 1000
->> -----
->> USB never had a COM_PHY status bit.
+>>>
+>>> In this case I'm using a simple device tree similar to apq8016-sbc,
+>>> but it also happens using something as simple as msm8916-mtp.dts
+>>> on this particular device.
+>>>     (Attached: dmesg log with msm8916-mtp.dts and arm64 defconfig)
+>>>
+>>> I can avoid the crash and boot without any further problems by disabling
+>>> every coresight device defined in msm8916.dtsi, e.g.:
+>>>
+>>> 	tpiu@820000 { status = "disabled"; };
 >>
->> So clearly the resolutions were different.
+>> ...
 >>
->> Does this change solve an issue at hand?
+>>>
+>>> I don't have any use for coresight at the moment,
+>>> but it seems somewhat odd to put this in the device specific dts.
+>>>
+>>> Any idea what could be causing this crash?
+>>
+>> This is mostly due to the missing power domain support. The CoreSight
+>> components are usually in a debug power domain. So unless that is turned on,
+>> (either by specifying proper power domain ids for power management protocol
+>> supported by the firmware OR via other hacks - e.g, connecting a DS-5 to
+>> keep the debug power domain turned on , this works on Juno -).
 > 
-> The issue is usleep_range() being misused ^_^
+> Interesting, thanks a lot!
 > 
-> Although usleep_range() takes unsigned longs as parameters, it is
-> not appropriate over the entire 0-2^64 range.
+> In this case I'm wondering how it works on the Dragonboard 410c.
+> Does it enable these power domains in the firmware?
+>    (Assuming it boots without this error...)
 > 
-> a) It should not be used with tiny values, because the cost of programming
-> the timer interrupt, and processing the resulting IRQ would dominate.
+> If coresight is not working properly on all/most msm8916 devices,
+> shouldn't coresight be disabled by default in msm8916.dtsi?
+> At least until those power domains can be set up by the kernel.
 > 
-> b) It should not be used with large values (above 2000000/HZ) because
-> msleep() is more efficient, and is acceptable for these ranges.
+> If this is a device-specific issue, what would be an acceptable solution
+> for mainline?
+> Can I turn on these power domains from the kernel?
+> Or is it fine to disable coresight for this device with the snippet above?
+> 
+> I'm not actually trying to use coresight, I just want the device to boot :)
+> And since I am considering submitting my device tree for inclusion in
+> mainline, I want to ask in advance how I should tackle this problem.
+> 
+> Thanks!
+> Stephan
+> 
 
-Documentation/timers/timers-howto.txt has all the information on the various
-kernel delay/sleep mechanisms. For < ~10us, it recommends to use udelay
-(readx_poll_timeout_atomic). Depending on the actual timeout to be used, the
-delay mechanism in timers-howto.txt should be used.
+This doesn't seem like cpuidle or debug power domain issue, but looks
+like cpu affinity issue. Can you please try out this patch and let us
+know?
 
-Thanks
-Kishon
+diff --git a/drivers/hwtracing/coresight/coresight-cpu-debug.c 
+b/drivers/hwtracing/coresight/coresight-cpu-debug.c
+index e8819d750938..9acf9f190d42 100644
+--- a/drivers/hwtracing/coresight/coresight-cpu-debug.c
++++ b/drivers/hwtracing/coresight/coresight-cpu-debug.c
+@@ -579,7 +579,11 @@ static int debug_probe(struct amba_device *adev, 
+const struct amba_id *id)
+  	if (!drvdata)
+  		return -ENOMEM;
+
+-	drvdata->cpu = np ? of_coresight_get_cpu(np) : 0;
++	drvdata->cpu = np ? of_coresight_get_cpu(np) : -ENODEV;
++	if (drvdata->cpu == -ENODEV) {
++		return -ENODEV;
++	}
++
+  	if (per_cpu(debug_drvdata, drvdata->cpu)) {
+  		dev_err(dev, "CPU%d drvdata has already been initialized\n",
+  			drvdata->cpu);
+diff --git a/drivers/hwtracing/coresight/coresight-etm4x.c 
+b/drivers/hwtracing/coresight/coresight-etm4x.c
+index 8bb0092c7ec2..660432acbac0 100644
+--- a/drivers/hwtracing/coresight/coresight-etm4x.c
++++ b/drivers/hwtracing/coresight/coresight-etm4x.c
+@@ -1107,7 +1107,10 @@ static int etm4_probe(struct amba_device *adev, 
+const struct amba_id *id)
+
+  	spin_lock_init(&drvdata->spinlock);
+
+-	drvdata->cpu = pdata ? pdata->cpu : 0;
++	drvdata->cpu = pdata ? pdata->cpu : -ENODEV;
++	if (drvdata->cpu == -ENODEV) {
++		return -ENODEV;
++       }
+
+  	cpus_read_lock();
+  	etmdrvdata[drvdata->cpu] = drvdata;
+diff --git a/drivers/hwtracing/coresight/of_coresight.c 
+b/drivers/hwtracing/coresight/of_coresight.c
+index 7045930fc958..8c1b90ba233c 100644
+--- a/drivers/hwtracing/coresight/of_coresight.c
++++ b/drivers/hwtracing/coresight/of_coresight.c
+@@ -153,14 +153,14 @@ int of_coresight_get_cpu(const struct device_node 
+*node)
+  	struct device_node *dn;
+
+  	dn = of_parse_phandle(node, "cpu", 0);
+-	/* Affinity defaults to CPU0 */
++	/* Affinity defaults to invalid */
+  	if (!dn)
+-		return 0;
++		return -ENODEV;
+  	cpu = of_cpu_node_to_id(dn);
+  	of_node_put(dn);
+
+-	/* Affinity to CPU0 if no cpu nodes are found */
+-	return (cpu < 0) ? 0 : cpu;
++	/* Affinity to invalid if no cpu nodes are found */
++	return (cpu < 0) ? -ENODEV : cpu;
+  }
+  EXPORT_SYMBOL_GPL(of_coresight_get_cpu);
+
+-- 
+QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
+of Code Aurora Forum, hosted by The Linux Foundation
