@@ -2,25 +2,25 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 649094D86D
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Jun 2019 20:26:46 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 902ED4D84C
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Jun 2019 20:26:06 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727230AbfFTS0b (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 20 Jun 2019 14:26:31 -0400
-Received: from smtp.codeaurora.org ([198.145.29.96]:35086 "EHLO
+        id S1727459AbfFTSH7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 20 Jun 2019 14:07:59 -0400
+Received: from smtp.codeaurora.org ([198.145.29.96]:36546 "EHLO
         smtp.codeaurora.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726721AbfFTSGH (ORCPT
+        with ESMTP id S1728014AbfFTSH6 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 20 Jun 2019 14:06:07 -0400
+        Thu, 20 Jun 2019 14:07:58 -0400
 Received: by smtp.codeaurora.org (Postfix, from userid 1000)
-        id C715A60CEC; Thu, 20 Jun 2019 18:06:05 +0000 (UTC)
+        id 6ED3061215; Thu, 20 Jun 2019 18:07:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
-        s=default; t=1561053965;
-        bh=xqFrw2iEUDGfrGwNGjX8WKf97VfRNbSs18+LFwCkO+4=;
+        s=default; t=1561054076;
+        bh=7oF5FYVB4lfqoUS0Whfvt1/H7DjfkYY/IRM8xOGXllU=;
         h=Subject:To:Cc:References:From:Date:In-Reply-To:From;
-        b=h1+pfyX4F+q6dq4Nh7cgxgSLcie8FSD23ddcS7kFr3JlAl8rSfvpZYyohlptGR8+U
-         DmPFKU4RFQnEvi5ilanp3qUJ+Or9OEWaN4I2ZZPfhnc0w+FXdEzKR/AsQoxGTLBpid
-         GxT2zeaJUtXYYPLmj5HFTBWv1XSo5Is/bacUcc1A=
+        b=ZEoATi2NY3mmajhG/7O9iXBPacMeW6VD1Oubpnmld7rQE/vcTJOa4ZqpA+kbax24f
+         d7qXwOFoi5FbB3tSRKAIqG7EiQAzmQKk027S5VQpPMkjFMcm7M9jbKKGWiPpa+9fCy
+         IjthsOiW/Hq5NL12PcJ3S3SjMjOIz2ZqWuxuHHVQ=
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
         pdx-caf-mail.web.codeaurora.org
 X-Spam-Level: 
@@ -31,20 +31,19 @@ Received: from [192.168.1.100] (unknown [157.45.245.98])
         (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
         (No client certificate requested)
         (Authenticated sender: saiprakash.ranjan@smtp.codeaurora.org)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id CAD5860ACE;
-        Thu, 20 Jun 2019 18:05:56 +0000 (UTC)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 4309760E57;
+        Thu, 20 Jun 2019 18:07:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
-        s=default; t=1561053963;
-        bh=xqFrw2iEUDGfrGwNGjX8WKf97VfRNbSs18+LFwCkO+4=;
+        s=default; t=1561054074;
+        bh=7oF5FYVB4lfqoUS0Whfvt1/H7DjfkYY/IRM8xOGXllU=;
         h=Subject:To:Cc:References:From:Date:In-Reply-To:From;
-        b=fyIrHi0kTh7H+/xl5q7YA4c1k1jZjRQbz+F2RzehTRGhfvuQ2drjAd1ngvj+nt4k2
-         9PulOeBcArJzpAwwS3mNYhND6rZcuzHwtvppHvqqyto41vw29dwJnOKsKt02AD6Yla
-         kgVpN1slAGcfy/IPYu7CbVk2waSwQJ0fdxDVVoy4=
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org CAD5860ACE
+        b=agu9uSKcqLRU1u8dTJcRsoe5C4M6B+ntgNfLUgVMBz+jj2LE6WkQBaXE3SkqP0MRu
+         rf/B6aRW/MyrsRTed2F2jFmJj/pBTu8sUwSSjIn4CfprmjyP0nhwACjGX/x33JPI5O
+         CinIvimXEuZa97ng+wQ2GNtkrUmfHVtjjgP3ZopA=
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 4309760E57
 Authentication-Results: pdx-caf-mail.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
 Authentication-Results: pdx-caf-mail.web.codeaurora.org; spf=none smtp.mailfrom=saiprakash.ranjan@codeaurora.org
-Subject: Re: [PATCH 1/2] coresight: Set affinity to invalid for missing CPU
- phandle
+Subject: Re: [PATCH 2/2] coresight: Abort probe for missing CPU phandle
 To:     Mathieu Poirier <mathieu.poirier@linaro.org>
 Cc:     Suzuki K Poulose <suzuki.poulose@arm.com>,
         Leo Yan <leo.yan@linaro.org>,
@@ -58,15 +57,15 @@ Cc:     Suzuki K Poulose <suzuki.poulose@arm.com>,
         linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
         linux-arm-msm@vger.kernel.org
 References: <cover.1561037262.git.saiprakash.ranjan@codeaurora.org>
- <49d6554536047b9f5526c4ea33990b7c904673d3.1561037262.git.saiprakash.ranjan@codeaurora.org>
- <20190620173908.GA5581@xps15>
+ <d93e28fc80227f9a385130a766a24f8f39a1dcf0.1561037262.git.saiprakash.ranjan@codeaurora.org>
+ <20190620174308.GB5581@xps15>
 From:   Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
-Message-ID: <64f67948-3b7f-422b-0ab7-2393b6083514@codeaurora.org>
-Date:   Thu, 20 Jun 2019 23:35:53 +0530
+Message-ID: <94bd685a-1c03-f234-7d3c-e5df0856845b@codeaurora.org>
+Date:   Thu, 20 Jun 2019 23:37:45 +0530
 User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
  Thunderbird/60.7.0
 MIME-Version: 1.0
-In-Reply-To: <20190620173908.GA5581@xps15>
+In-Reply-To: <20190620174308.GB5581@xps15>
 Content-Type: text/plain; charset=utf-8; format=flowed
 Content-Language: en-US
 Content-Transfer-Encoding: 7bit
@@ -79,43 +78,25 @@ Hi Mathieu,
 
 Thanks for the review comments.
 
-On 6/20/2019 11:09 PM, Mathieu Poirier wrote:
-> Hi Sai,
-> 
-> On Thu, Jun 20, 2019 at 07:15:46PM +0530, Sai Prakash Ranjan wrote:
->> Affinity defaults to CPU0 in case of missing CPU phandle
->> and this leads to crashes in some cases because of such
->> wrong assumption. Fix this by returning -ENODEV in
->> coresight platform for such cases and then handle it
->> in the coresight drivers.
->>
->> Signed-off-by: Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
->> ---
->>   drivers/hwtracing/coresight/coresight-platform.c | 10 ++++++----
->>   1 file changed, 6 insertions(+), 4 deletions(-)
->>
->> diff --git a/drivers/hwtracing/coresight/coresight-platform.c b/drivers/hwtracing/coresight/coresight-platform.c
->> index 3c5ceda8db24..b1ea60c210e1 100644
->> --- a/drivers/hwtracing/coresight/coresight-platform.c
->> +++ b/drivers/hwtracing/coresight/coresight-platform.c
->> @@ -160,15 +160,17 @@ static int of_coresight_get_cpu(struct device *dev)
+On 6/20/2019 11:13 PM, Mathieu Poirier wrote:
+> On Thu, Jun 20, 2019 at 07:15:47PM +0530, Sai Prakash Ranjan wrote:
+>> diff --git a/drivers/hwtracing/coresight/coresight-cpu-debug.c b/drivers/hwtracing/coresight/coresight-cpu-debug.c
+>> index 07a1367c733f..43f32fa71ff9 100644
+>> --- a/drivers/hwtracing/coresight/coresight-cpu-debug.c
+>> +++ b/drivers/hwtracing/coresight/coresight-cpu-debug.c
+>> @@ -579,6 +579,9 @@ static int debug_probe(struct amba_device *adev, const struct amba_id *id)
+>>   		return -ENOMEM;
 >>   
->>   	if (!dev->of_node)
->>   		return 0;
+>>   	drvdata->cpu = coresight_get_cpu(dev);
+>> +	if (drvdata->cpu == -ENODEV)
+>> +		return -ENODEV;
 > 
-> An error should be returned if the above condition is true.
+> As Suzuki pointed out, simply return the error message conveyed by
+> coresight_get_cpu().
 > 
+> Also please merge both patches together to avoid bisect nightmare.
 
-Will do it, thanks.
-
->> +
-> 
-> Spurious newline
-> 
-
-This was on purpose, the code looks much cleaner.
-
--Sai
+Sure, will do it.
 
 -- 
 QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
