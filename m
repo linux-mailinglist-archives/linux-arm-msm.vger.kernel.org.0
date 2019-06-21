@@ -2,142 +2,220 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 0B5F14EB65
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Jun 2019 17:00:16 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 8C5634ECD3
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Jun 2019 18:10:03 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726049AbfFUO74 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 21 Jun 2019 10:59:56 -0400
-Received: from mail-pl1-f194.google.com ([209.85.214.194]:39901 "EHLO
-        mail-pl1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725985AbfFUO7z (ORCPT
+        id S1726045AbfFUQKD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 21 Jun 2019 12:10:03 -0400
+Received: from mo4-p01-ob.smtp.rzone.de ([81.169.146.165]:28745 "EHLO
+        mo4-p01-ob.smtp.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726032AbfFUQKC (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 21 Jun 2019 10:59:55 -0400
-Received: by mail-pl1-f194.google.com with SMTP id b7so3138354pls.6;
-        Fri, 21 Jun 2019 07:59:55 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=Abt4RqBWuzAO1Yg7V0VfRrHk6H4CsqP60Bl2BbL+bIU=;
-        b=es3ZixTrMIQWERBBC4ZFxsre0+V0N1n5T37wF/Sp7+W8FY5o3DUuV4bOTJNNnjHnqW
-         H9BWQ9OaVZlrjlA5cf1e9Ps5Y/icmTiTyCZ0XdA1lxGBZlycq+5ozTTmQXjmmK1nLwq3
-         F/z/ObhC5et1xwz+cA/fibKLqYcSonF2WmfzLy1o+S3TyQgzSQuITF96rHl0xVqxnCC0
-         p0BiwDoCjfHwUZbEOlSdPFfBO3qrXje0nmDjyY9LA6L799NWzBkZD6x1+jm50HvXWd5A
-         8xx8FdRb6lQ9zhfcOMLkmzVO71nOEfAyYhvlcvjkGu1F7/0aLe/UFuAdnLVD9IZSJf5w
-         mZCw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=Abt4RqBWuzAO1Yg7V0VfRrHk6H4CsqP60Bl2BbL+bIU=;
-        b=JE/2FFhFugJn/FAxCKNASEz27Q9u6LtIPRxv6PHb1ivx6C9hDR+HNshDDUq0HM35Kb
-         1qDZPwM/JJGiP7yc434/aJ45Xs4w1OdeAkwE5dsrLdofMHemJfkffBKA4GHoC4wl9PLO
-         o9MvrO3OhAkCg2zMzbYy4KMjpps5Oqqy5vx4CiIr3JJnAoyJTHF9GpLpCYHoAVrjbfvk
-         hgcuLyIdl7PBTHXY3MhxMU7Xj3ve1Q0kcEkgnhlPJBGDEfU9mJdlLXjEBqdEZUysF1EA
-         ValKwLN8tY4NTrcl6CoRMvemYxabXXOdcKxFPIJVyTG24vcYT44sp3F6PpDgpLKzN05A
-         sQfA==
-X-Gm-Message-State: APjAAAUCh60fg90XGanW52FovqYD5St+R6RZvHPtp5ZngoKDTR6rKG+a
-        hxz2p+vCtjw0tDFYzx2R++F0IDlj
-X-Google-Smtp-Source: APXvYqwaN0DOlyRP1f7amX1tgxpd1DIPm8wkTbTuuLQ1d9NPXLh6MqnBwKFpM/rNnqeAVfFJX64mIg==
-X-Received: by 2002:a17:902:d715:: with SMTP id w21mr132670828ply.234.1561129194997;
-        Fri, 21 Jun 2019 07:59:54 -0700 (PDT)
-Received: from aw-bldr-10.qualcomm.com (i-global254.qualcomm.com. [199.106.103.254])
-        by smtp.gmail.com with ESMTPSA id o13sm3049745pje.28.2019.06.21.07.59.53
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 21 Jun 2019 07:59:54 -0700 (PDT)
-From:   Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
-To:     bjorn.andersson@linaro.org, agross@kernel.org
-Cc:     benjamin.tissoires@redhat.com, dmitry.torokhov@gmail.com,
-        jikos@kernel.org, hdegoede@redhat.com, lee.jones@linaro.org,
-        xnox@ubuntu.com, robh+dt@kernel.org, mark.rutland@arm.com,
-        linux-input@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
-Subject: [PATCH v8 5/5] arm64: dts: qcom: Add Asus NovaGo TP370QL
-Date:   Fri, 21 Jun 2019 07:59:51 -0700
-Message-Id: <20190621145951.38844-1-jeffrey.l.hugo@gmail.com>
-X-Mailer: git-send-email 2.17.1
-In-Reply-To: <20190621144854.38568-1-jeffrey.l.hugo@gmail.com>
-References: <20190621144854.38568-1-jeffrey.l.hugo@gmail.com>
+        Fri, 21 Jun 2019 12:10:02 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; t=1561133398;
+        s=strato-dkim-0002; d=gerhold.net;
+        h=In-Reply-To:References:Message-ID:Subject:Cc:To:From:Date:
+        X-RZG-CLASS-ID:X-RZG-AUTH:From:Subject:Sender;
+        bh=Emdotc5KZs0nYoiDHIIYAIdqYH7BCst4xsvTGCscKW0=;
+        b=pRYC03+J0iOg/M7XJ58i+0/u6VSk1x7Cns7PsStZ4fkbIdIY4+z05IGLa+jFy7sJkk
+        5rnm6t53iegZRyBTvxoptVkG943HpMIfsw7ENiwuQGj25JCqZVYhygxHlkCYJr0V4fMQ
+        BxvTetvvqv4FbnKKRFae88ra9rBlTgjsBjNtVSMOpW3EJHTCbhsstRU0uTYnVUwRgDFv
+        DiYeFvdb6yrW9l3gK+Tm3LuA2HzeoOs792YKItvKwyWdlO0NTHdTUnQBet1LU0o0d3s5
+        F3GS6PTBfSJq/VMREWL/9hfW6Jb1Meyk8pTJsoCXNpX4Ol7LOFhSJCmkeEiCvBEuYhAO
+        quwQ==
+X-RZG-AUTH: ":P3gBZUipdd93FF5ZZvYFPugejmSTVR2nRPhVOQ/OcYgojyw4j34+u26zEodhPgRDZ8b5Ic/FbYo="
+X-RZG-CLASS-ID: mo00
+Received: from gerhold.net
+        by smtp.strato.de (RZmta 44.24 DYNA|AUTH)
+        with ESMTPSA id m0a13fv5LG6gGTs
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (curve secp521r1 with 521 ECDH bits, eq. 15360 bits RSA))
+        (Client did not present a certificate);
+        Fri, 21 Jun 2019 18:06:42 +0200 (CEST)
+Date:   Fri, 21 Jun 2019 18:06:31 +0200
+From:   Stephan Gerhold <stephan@gerhold.net>
+To:     Mathieu Poirier <mathieu.poirier@linaro.org>,
+        Suzuki K Poulose <suzuki.poulose@arm.com>,
+        Sudeep Holla <sudeep.holla@arm.com>
+Cc:     Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>,
+        David Brown <david.brown@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        linux-arm-kernel <linux-arm-kernel@lists.infradead.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>
+Subject: Re: Coresight causes synchronous external abort on msm8916
+Message-ID: <20190621160631.GA34922@gerhold.net>
+References: <20190618202623.GA53651@gerhold.net>
+ <a51f117f-c48d-d3f4-c3d1-9b584e3a055f@arm.com>
+ <20190619183904.GB937@gerhold.net>
+ <CANLsYkxaX2=Bp_BWWUFimC-UmP3L5g=CU7tqjd+xoFVcWG38tA@mail.gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CANLsYkxaX2=Bp_BWWUFimC-UmP3L5g=CU7tqjd+xoFVcWG38tA@mail.gmail.com>
+User-Agent: Mutt/1.12.0 (2019-05-25)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-This adds the initial DT for the Asus NovaGo TP370QL laptop.  Supported
-functionality includes USB (host), microSD-card, keyboard, and trackpad.
+Hi all,
 
-Signed-off-by: Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
----
- arch/arm64/boot/dts/qcom/Makefile             |  1 +
- .../dts/qcom/msm8998-asus-novago-tp370ql.dts  | 47 +++++++++++++++++++
- 2 files changed, 48 insertions(+)
- create mode 100644 arch/arm64/boot/dts/qcom/msm8998-asus-novago-tp370ql.dts
+Thanks for all your replies!
 
-diff --git a/arch/arm64/boot/dts/qcom/Makefile b/arch/arm64/boot/dts/qcom/Makefile
-index 76436f33a013..5cd1844a6d33 100644
---- a/arch/arm64/boot/dts/qcom/Makefile
-+++ b/arch/arm64/boot/dts/qcom/Makefile
-@@ -6,6 +6,7 @@ dtb-$(CONFIG_ARCH_QCOM)	+= msm8916-mtp.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= msm8992-bullhead-rev-101.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= msm8994-angler-rev-101.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= msm8996-mtp.dtb
-+dtb-$(CONFIG_ARCH_QCOM)	+= msm8998-asus-novago-tp370ql.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= msm8998-hp-envy-x2.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= msm8998-lenovo-miix-630.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= msm8998-mtp.dtb
-diff --git a/arch/arm64/boot/dts/qcom/msm8998-asus-novago-tp370ql.dts b/arch/arm64/boot/dts/qcom/msm8998-asus-novago-tp370ql.dts
-new file mode 100644
-index 000000000000..db5821be1e2f
---- /dev/null
-+++ b/arch/arm64/boot/dts/qcom/msm8998-asus-novago-tp370ql.dts
-@@ -0,0 +1,47 @@
-+// SPDX-License-Identifier: GPL-2.0
-+/* Copyright (c) 2019, Jeffrey Hugo. All rights reserved. */
-+
-+/dts-v1/;
-+
-+#include "msm8998-clamshell.dtsi"
-+
-+/ {
-+	model = "Asus NovaGo TP370QL";
-+	compatible = "asus,novago-tp370ql", "qcom,msm8998";
-+};
-+
-+&blsp1_i2c6 {
-+	status = "okay";
-+
-+	touchpad@15 {
-+		compatible = "hid-over-i2c";
-+		interrupt-parent = <&tlmm>;
-+		interrupts = <0x7b IRQ_TYPE_LEVEL_LOW>;
-+		reg = <0x15>;
-+		hid-descr-addr = <0x0001>;
-+
-+		pinctrl-names = "default";
-+		pinctrl-0 = <&touchpad>;
-+	};
-+
-+	keyboard@3a {
-+		compatible = "hid-over-i2c";
-+		interrupt-parent = <&tlmm>;
-+		interrupts = <0x25 IRQ_TYPE_LEVEL_LOW>;
-+		reg = <0x3a>;
-+		hid-descr-addr = <0x0001>;
-+	};
-+};
-+
-+&sdhc2 {
-+	cd-gpios = <&tlmm 95 GPIO_ACTIVE_HIGH>;
-+};
-+
-+&tlmm {
-+	touchpad: touchpad {
-+		config {
-+			pins = "gpio123";
-+			bias-pull-up;
-+		};
-+	};
-+};
--- 
-2.17.1
+On Wed, Jun 19, 2019 at 02:16:38PM -0600, Mathieu Poirier wrote:
+> On Wed, 19 Jun 2019 at 12:39, Stephan Gerhold <stephan@gerhold.net> wrote:
+> >
+> > Hi,
+> >
+> > On Wed, Jun 19, 2019 at 09:49:03AM +0100, Suzuki K Poulose wrote:
+> > > Hi Stephan,
+> > >
+> > > On 18/06/2019 21:26, Stephan Gerhold wrote:
+> > > > Hi,
+> > > >
+> > > > I'm trying to run mainline Linux on a smartphone with MSM8916 SoC.
+> > > > It works surprisingly well, but the coresight devices seem to cause the
+> > > > following crash shortly after userspace starts:
+> > > >
+> > > >      Internal error: synchronous external abort: 96000010 [#1] PREEMPT SMP
+> > >
+> > > ...
+> > >
+> > >
+> > > >
+> > > > In this case I'm using a simple device tree similar to apq8016-sbc,
+> > > > but it also happens using something as simple as msm8916-mtp.dts
+> > > > on this particular device.
+> > > >    (Attached: dmesg log with msm8916-mtp.dts and arm64 defconfig)
+> > > >
+> > > > I can avoid the crash and boot without any further problems by disabling
+> > > > every coresight device defined in msm8916.dtsi, e.g.:
+> > > >
+> > > >     tpiu@820000 { status = "disabled"; };
+> > >
+> > > ...
+> > >
+> > > >
+> > > > I don't have any use for coresight at the moment,
+> > > > but it seems somewhat odd to put this in the device specific dts.
+> > > >
+> > > > Any idea what could be causing this crash?
+> > >
+> > > This is mostly due to the missing power domain support. The CoreSight
+> > > components are usually in a debug power domain. So unless that is turned on,
+> > > (either by specifying proper power domain ids for power management protocol
+> > > supported by the firmware OR via other hacks - e.g, connecting a DS-5 to
+> > > keep the debug power domain turned on , this works on Juno -).
+> >
+> > Interesting, thanks a lot!
+> >
+> > In this case I'm wondering how it works on the Dragonboard 410c.
+> 
+> There can be two problems:
+> 
+> 1) CPUidle is enabled on your platform and as I pointed out before,
+> that won't work.  There are patches circulating[1] to fix that problem
+> but it still needs a little bit of work.
 
+I tried disabling cpuidle (see [1]), but unfortunately it did not help.
+
+[1]: https://lore.kernel.org/linux-arm-msm/20190619173743.GA937@gerhold.net/
+
+>
+> 2) As Suzuki pointed out the debug power domain may not be enabled by
+> default on your platform, something I would understand if it is a
+> production device.  There is nothing I can do on that front.
+
+Indeed, this is a production device.
+The downstream (production) kernel does not seem to have coresight
+enabled, so it is very well possible that the debug power domain is not
+enabled by the firmware.
+
+> 
+> [1]. https://www.spinics.net/lists/arm-kernel/msg735707.html
+> 
+> > Does it enable these power domains in the firmware?
+> >   (Assuming it boots without this error...)
+> 
+> The debug power domain is enabled by default on the 410c and the board
+> boots without error.
+
+Good to know, thank you!
+
+> 
+> >
+> > If coresight is not working properly on all/most msm8916 devices,
+> > shouldn't coresight be disabled by default in msm8916.dtsi?
+> 
+> It is in the defconfig for arm64, as such it shouldn't bother you.
+
+Indeed, I already have CONFIG_CORESIGHT disabled.
+At the moment, I'm using arm64 defconfig as-is, with no modifications.
+
+So the error happens in the AMBA bus code even when CONFIG_CORESIGHT is
+disabled, as Suzuki suspected [2].
+
+[2]: https://lore.kernel.org/linux-arm-msm/6bb74dcc-62e4-5310-5884-9c4b82ce5be9@arm.com/
+
+> 
+> > At least until those power domains can be set up by the kernel.
+> >
+> > If this is a device-specific issue, what would be an acceptable solution
+> > for mainline?
+> > Can I turn on these power domains from the kernel?
+> 
+> Yes, if you have the SoC's TRM.
+
+I guess "TRM" refers to Technical Reference Manual?
+Unfortunately, I don't have access to any documentation that is not
+publicly available on the Internet.
+
+> 
+> > Or is it fine to disable coresight for this device with the snippet above?
+> >
+> > I'm not actually trying to use coresight, I just want the device to boot :)
+> > And since I am considering submitting my device tree for inclusion in
+> > mainline, I want to ask in advance how I should tackle this problem.
+> 
+> Simply don't enable coresight in the kernel config if the code isn't
+> mature enough to properly handle the relevant power domains using the
+> PM runtime API.
+
+The error occurs without CONFIG_CORESIGHT, and I believe there is no
+way to disable CONFIG_AMBA (it is selected by CONFIG_ARM64 and included
+in arm64 defconfig).
+
+So, assuming it is the debug power domain, I believe I can make the
+device boot successfully by either:
+
+ (a) Turning on the debug power domain:
+     It seems like the kernel cannot do this on msm8916 at the moment(?)
+     (msm8916.dtsi does not declare any power domain in the coresight
+      device tree nodes)
+
+     I cannot modify the firmware of this device,
+     so I'm afraid I have absolutely no idea how to turn it on. :/
+
+ (b) Preventing the crash:
+     Is there some way to:
+
+      (1) Add a check in the AMBA bus code to verify if the power
+          domain is actually turned on?
+     or
+      (2) Recover from the "synchronous external abort" and continue
+          booting after printing an error/warning?
+          (At the moment, userspace seems to continue for a while,
+           but stops working at some point after the error...)
+
+     Otherwise, there is still the option to prevent the AMBA bus code
+     from running by disabling the affected device tree nodes.
+     That's what the debug@850000 { status = "disabled"; }; ... snippet
+     from my first mail [3] does, and it is the only way to make the
+     kernel boot successfully at the moment.
+
+     It wouldn't affect any other device if placed in the DTS for my
+     device (i.e. *not* in the shared msm8916.dtsi).
+
+What do you think?
+Stephan
+
+[3]: https://lore.kernel.org/linux-arm-msm/20190618202623.GA53651@gerhold.net/
