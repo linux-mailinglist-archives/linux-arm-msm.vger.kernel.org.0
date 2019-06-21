@@ -2,104 +2,188 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 7F8BA4DFC6
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Jun 2019 06:34:27 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5ED424DFCD
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Jun 2019 06:45:55 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725951AbfFUEeY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 21 Jun 2019 00:34:24 -0400
-Received: from mail-io1-f66.google.com ([209.85.166.66]:43233 "EHLO
-        mail-io1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725876AbfFUEeX (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 21 Jun 2019 00:34:23 -0400
-Received: by mail-io1-f66.google.com with SMTP id k20so75954ios.10;
-        Thu, 20 Jun 2019 21:34:23 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=ica3ySUaR522yE/ZMxZYijSnhD1xDLlEp+v8Cx/mej0=;
-        b=Mxa9wvtP/UVcehlG+S94/uUMn1COAyoRZ2nTdlBsJ3zad9huyWhwYg/cSWnwOFXbOz
-         lrmnwE1Ha/V1irJ03HR0I9WNPsv0kaCxzt4z8cy0KJMIgB49TKsVhNqNBUoxVLIZ/zWc
-         mVha4mE8S1zpx44V9n5k/ORXV9M4TCZjXUtYknxYbCu2JI+SGYniuPlW84Z19kN7IjUT
-         cQoHtsbVqvxzOBherxXPhGvK137Jsm/Om0hvM5zNbsl3vpkuiDvvCSDVqYnWxfeKm1xT
-         SBoOj7gPBq2khCIR1k3yR+m/yZHVdHpRmC0oOGLT1nM/t0+UWtqP4VY2Lrk1MNKwAm/e
-         7QpQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=ica3ySUaR522yE/ZMxZYijSnhD1xDLlEp+v8Cx/mej0=;
-        b=WHQK/toU5lubVf5UhB5peFInL4xyfo8JwNE0iGHo3zqrU9AC+sceCsKwfOiNJk8WAN
-         2u98GGRHkjIRFHq7iVrmqGcylIPuRRLqM3JzVlI74/fhbA5uSXYS+h0wFSBlJ6MmT90O
-         mA/D+8YrkKP/H4ssK/x5Gxn7Q2WU+HLr+q0Rm5aD713L+56xaUuOH45YWvnGjxUXkpX2
-         CjCxZOH2k7dmcKqnQXfjQQc1hhotuMPSgRSKX2bjjDFRFN73qoLrqv5Lp4Xv960IAOWB
-         lKQyy2pWfC0hcA0oikjurQZQtKOJKV3ZMEG3Vn+XdUFE0XtN9MYQYdULjQKmqQ216YXK
-         RQIA==
-X-Gm-Message-State: APjAAAVePo1DPVbtqHqDo/G9uLNl+cEfHkHEdy+3T55J9sIisdp4luYj
-        SfIxRfsM3F3I99vwQrxvwmFpU805p9IVM+O2hVI=
-X-Google-Smtp-Source: APXvYqypTQWp8EcBhntIVc2vxfGSjLvBmtNgQYl5tub6+s8/UsvK5TV6Kcvr1YAq20lnIcw9L9ct7MBwgyUvalDzaD0=
-X-Received: by 2002:a5e:de4d:: with SMTP id e13mr20647673ioq.272.1561091662310;
- Thu, 20 Jun 2019 21:34:22 -0700 (PDT)
-MIME-Version: 1.0
-References: <20190620142801.11827-1-jeffrey.l.hugo@gmail.com> <20190620143318.11880-1-jeffrey.l.hugo@gmail.com>
-In-Reply-To: <20190620143318.11880-1-jeffrey.l.hugo@gmail.com>
-From:   Dmitry Torokhov <dmitry.torokhov@gmail.com>
-Date:   Thu, 20 Jun 2019 21:34:10 -0700
-Message-ID: <CAKdAkRRstvEWXtwnLCMKoW6PcCz0W3+M9iYqVFshJpw6y_=9bA@mail.gmail.com>
-Subject: Re: [PATCH v7 1/5] Input: elan_i2c: Export the device id whitelist
-To:     Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
-Cc:     Benjamin Tissoires <benjamin.tissoires@redhat.com>,
-        Jiri Kosina <jikos@kernel.org>,
-        Hans de Goede <hdegoede@redhat.com>,
+        id S1725985AbfFUEpy (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 21 Jun 2019 00:45:54 -0400
+Received: from mail.kernel.org ([198.145.29.99]:37344 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1725832AbfFUEpy (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 21 Jun 2019 00:45:54 -0400
+Received: from localhost (unknown [106.201.116.189])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by mail.kernel.org (Postfix) with ESMTPSA id 3365F2083B;
+        Fri, 21 Jun 2019 04:45:50 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=default; t=1561092352;
+        bh=Mhw2ACRYptcCFbtFmoBv2yAE619tqf6iPtrxajbwUZ0=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=q0IPszvkSKTbvzSTsC/RZHyy+SqY6C+g5XHtTFfT1RrgVZK/gSs3/gyq20TSOOmSL
+         M39OaieIlhYsty+eRXMDjvwZDfmwrbUkd22+YWil+mSd+xdy/eE48VbQkF2fmx4Z0c
+         DEYyshSCPE4kqhNpWQD0LuECpywKZ/evzLtPUXR4=
+Date:   Fri, 21 Jun 2019 10:12:42 +0530
+From:   Vinod Koul <vkoul@kernel.org>
+To:     Christian Lamparter <chunkeey@gmail.com>
+Cc:     Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Mathias Nyman <mathias.nyman@intel.com>,
+        linux-arm-msm@vger.kernel.org,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        agross@kernel.org, Lee Jones <lee.jones@linaro.org>,
-        xnox@ubuntu.com, Rob Herring <robh+dt@kernel.org>,
-        Mark Rutland <mark.rutland@arm.com>,
-        "linux-input@vger.kernel.org" <linux-input@vger.kernel.org>,
-        DTML <devicetree@vger.kernel.org>,
-        "open list:ARM/QUALCOMM SUPPORT" <linux-arm-msm@vger.kernel.org>,
-        lkml <linux-kernel@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+        Christian Lamparter <chunkeey@googlemail.com>,
+        linux-usb@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>
+Subject: Re: [PATCH 1/5] usb: xhci: add firmware loader for uPD720201 and
+ uPD720202 w/o ROM
+Message-ID: <20190621044242.GQ2962@vkoul-mobl>
+References: <20190620102154.20805-1-vkoul@kernel.org>
+ <20190620121902.GD19295@kroah.com>
+ <20190620170358.GO2962@vkoul-mobl>
+ <2465888.R7Jb3LzrEU@debian64>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <2465888.R7Jb3LzrEU@debian64>
+User-Agent: Mutt/1.11.3 (2019-02-01)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Jeffrey,
+On 20-06-19, 21:12, Christian Lamparter wrote:
+> On Thursday, June 20, 2019 7:03:58 PM CEST Vinod Koul wrote:
+> > On 20-06-19, 14:19, Greg Kroah-Hartman wrote:
+> > > On Thu, Jun 20, 2019 at 03:51:50PM +0530, Vinod Koul wrote:
+> > > > From: Christian Lamparter <chunkeey@googlemail.com>
+> > > > 
+> > > > This patch adds a firmware loader for the uPD720201K8-711-BAC-A
+> > > > and uPD720202K8-711-BAA-A variant. Both of these chips are listed
+> > > > in Renesas' R19UH0078EJ0500 Rev.5.00 "User's Manual: Hardware" as
+> > > > devices which need the firmware loader on page 2 in order to
+> > > > work as they "do not support the External ROM".
+> > > > 
+> > > > The "Firmware Download Sequence" is describe in chapter
+> > > > "7.1 FW Download Interface" R19UH0078EJ0500 Rev.5.00 page 131.
+> > > > 
+> > > > The firmware "K2013080.mem" is available from a USB3.0 Host to
+> > > > PCIe Adapter (PP2U-E card) "Firmware download" archive. An
+> > > > alternative version can be sourced from Netgear's WNDR4700 GPL
+> > > > archives.
+> > > > 
+> > > > The release notes of the PP2U-E's "Firmware Download" ver 2.0.1.3
+> > > > (2012-06-15) state that the firmware is for the following devices:
+> > > >  - uPD720201 ES 2.0 sample whose revision ID is 2.
+> > > >  - uPD720201 ES 2.1 sample & CS sample & Mass product, ID is 3.
+> > > >  - uPD720202 ES 2.0 sample & CS sample & Mass product, ID is 2.
+> > > > 
+> > > > If someone from Renesas is listening: It would be great, if these
+> > > > firmwares could be added to linux-firmware.git.
+> > > 
+> > > That paragraph does not need to be in the changelog :)
+> > 
+> > Sure will drop :)
+> 
+> ... those this mean that there is a firmware now? Do you have a link to it?
 
-On Thu, Jun 20, 2019 at 7:33 AM Jeffrey Hugo <jeffrey.l.hugo@gmail.com> wrote:
->  #ifdef CONFIG_OF
-> -static const struct of_device_id elan_of_match[] = {
-> -       { .compatible = "elan,ekth3000" },
-> -       { /* sentinel */ }
-> -};
+Unfortunately it is not public yet!
 
-I think OF IDs should stay in this file since we agreed HID will not
-be checking them.
+> > > >  #include <linux/slab.h>
+> > > >  #include <linux/module.h>
+> > > >  #include <linux/acpi.h>
+> > > > +#include <linux/firmware.h>
+> > > > +#include <asm/unaligned.h>
+> > > 
+> > > asm/ in a driver?  Are you sure???
+> > 
+> > Not sure :D, will check and remove
+> 
+> I think, as long as there is a "get_unaligned_le16" defined somewhere
+> it should be fine.
+> 
+> This was a loong ago, the loader was developped on a PowerPC 464, but
+> from what I remember it was checkpatch that didn't like the "unaligned"
+> poking around in the firmware below.
 
->  MODULE_DEVICE_TABLE(of, elan_of_match);
->  #endif
->
-> diff --git a/include/linux/input/elan-i2c-ids.h b/include/linux/input/elan-i2c-ids.h
-> new file mode 100644
-> index 000000000000..8130bbebbdda
-> --- /dev/null
-> +++ b/include/linux/input/elan-i2c-ids.h
-> @@ -0,0 +1,68 @@
-> +/* SPDX-License-Identifier: GPL-2.0 */
-> +/*
-> + * Elan I2C Touchpad devide whitelist
+It seems we have this in include/linux/unaligned/access_ok.h, so I will
+add that instead
 
-s/devide/device/
+> > > > +static int renesas_fw_download_image(struct pci_dev *dev,
+> > > > +				     const u32 *fw,
+> > > > +				     size_t step)
+> > > > +{
+> > > > +	size_t i;
+> > > > +	int err;
+> > > > +	u8 fw_status;
+> > > > +	bool data0_or_data1;
+> > > > +
+> > > > +	/*
+> > > > +	 * The hardware does alternate between two 32-bit pages.
+> > > > +	 * (This is because each row of the firmware is 8 bytes).
+> > > > +	 *
+> > > > +	 * for even steps we use DATA0, for odd steps DATA1.
+> > > > +	 */
+> > > > +	data0_or_data1 = (step & 1) == 1;
+> > > > +
+> > > > +	/* step+1. Read "Set DATAX" and confirm it is cleared. */
+> > > > +	for (i = 0; i < 10000; i++) {
+> > > > +		err = pci_read_config_byte(dev, 0xF5, &fw_status);
+> > > > +		if (err)
+> > > > +			return pcibios_err_to_errno(err);
+> > > > +		if (!(fw_status & BIT(data0_or_data1)))
+> > > > +			break;
+> > > > +
+> > > > +		udelay(1);
+> > > > +	}
+> > > > +	if (i == 10000)
+> > > > +		return -ETIMEDOUT;
+> > > > +
+> > > > +	/*
+> > > > +	 * step+2. Write FW data to "DATAX".
+> > > > +	 * "LSB is left" => force little endian
+> > > > +	 */
+> > > > +	err = pci_write_config_dword(dev, data0_or_data1 ? 0xFC : 0xF8,
+> > > > +				     (__force u32) cpu_to_le32(fw[step]));
+> > > > +	if (err)
+> > > > +		return pcibios_err_to_errno(err);
+> > > > +
+> > > > +	udelay(100);
+> > > > +
+> > > > +	/* step+3. Set "Set DATAX". */
+> > > > +	err = pci_write_config_byte(dev, 0xF5, BIT(data0_or_data1));
+> > > > +	if (err)
+> > > > +		return pcibios_err_to_errno(err);
+> > > > +
+> > > 
+> > > Shouldn't you just do a read after the write to be sure the write
+> > > actually went out on the wire?  Then you shouldn't have to do the
+> > > udelay, right?
+> > 
+> > Well I am not sure that is how it works. The register is a DATA register
+> > on the controller. We are writing to the memory of the controller here
+> > and after writing DATA0 and DATA1 we check the Set DATA0 & Set DATA1
+> > bits and write subsequenly only when controller is ready to accept more
+> > data.
+> > 
+> > I do recall at least for ROM load (writing to NOR flash attached to
+> > controller), we need to wait considerably more before the SetData0/1 was
+> > set and ready for subsequent write
+> 
+> OffTopic: There's some leeway here. From what I remember you could just push
+> the data through DATA0 and cut down on the logic. But this was slower than
+> using both DATA0 and DATA1.
+> 
+> The udelay was placed because I vaguely remember that polling SET DATA0
+> over and over slowed down the firmware download.
+> So the intention was to have the 100µs as a baseline and then we don't
+> slow down and waste more cycles in "step+1".
 
-> + *
-> + * Copyright (C) 2019 Jeffrey Hugo.  All rights reserved.
+Yes I have seen that as well, lesser polling helps. I will reduce cycles
+and add delay.
 
-This just moves the code around. If anything I'd say it should keep
-the original Elan copyright.
+Btw would it be possible for you to test the series?
 
-Thanks.
+Thanks for quick reply, will post v2 shortly
 
 -- 
-Dmitry
+~Vinod
