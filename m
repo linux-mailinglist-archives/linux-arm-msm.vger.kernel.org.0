@@ -2,110 +2,138 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id C3F664EF5E
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Jun 2019 21:25:27 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 885C74EF8F
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Jun 2019 21:41:39 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726396AbfFUTZ1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 21 Jun 2019 15:25:27 -0400
-Received: from mail.z3ntu.xyz ([128.199.32.197]:39314 "EHLO mail.z3ntu.xyz"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726266AbfFUTZ1 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 21 Jun 2019 15:25:27 -0400
-Received: from g550jk.localnet (80-110-121-20.cgn.dynamic.surfer.at [80.110.121.20])
-        by mail.z3ntu.xyz (Postfix) with ESMTPSA id DDD3EC663D;
-        Fri, 21 Jun 2019 19:25:23 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=z3ntu.xyz; s=z3ntu;
-        t=1561145124; bh=HlfvDRv1zWzENIDFIHiWiXrRjeuASpykgmq5MVyk/4s=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References;
-        b=X5uKBNmULH5RZmrECX8UHikZYwliCJOk09xdllZiJTVCcO4nKBbMvTckGunvBpjVw
-         cz6ETGpdTNUvcXxJYoO3qWbawlhEfNLJySS7y+PKm6JmsVV5pujTNa7NZscKfuTOB6
-         OtUdSPXkTBncnyAP0bIGlBMTa8G3sz58DkVjjRqs=
-From:   Luca Weiss <luca@z3ntu.xyz>
-To:     Brian Masney <masneyb@onstation.org>
-Cc:     linux-arm-msm@vger.kernel.org,
-        ~martijnbraam/pmos-upstream@lists.sr.ht,
-        Andy Gross <agross@kernel.org>,
-        David Brown <david.brown@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Mark Rutland <mark.rutland@arm.com>,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] ARM: dts: msm8974-FP2: add reboot-mode node
-Date:   Fri, 21 Jun 2019 21:25:17 +0200
-Message-ID: <4607058.UzJteFJyig@g550jk>
-In-Reply-To: <20190621000122.GA13036@onstation.org>
-References: <20190620225824.2845-1-luca@z3ntu.xyz> <20190621000122.GA13036@onstation.org>
+        id S1726010AbfFUTlj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 21 Jun 2019 15:41:39 -0400
+Received: from mail-wr1-f68.google.com ([209.85.221.68]:36034 "EHLO
+        mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725985AbfFUTli (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 21 Jun 2019 15:41:38 -0400
+Received: by mail-wr1-f68.google.com with SMTP id n4so6442152wrs.3;
+        Fri, 21 Jun 2019 12:41:36 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=3systKa+Hf4qC2jaG3AjlrFBz0jY6HiFgy5kIInPZyA=;
+        b=NLFcAIzJgQC5f+4dP79+WzoN2aitRR76c7mWvmCCPV4uCawGWkfNCv+sp8q02aMeZ0
+         QLs8F9F5ZxQHU2zMr1pDMg0mJZ9NIdhh0dS+ovi7D6fypSw0WxWOEBv0r2KegNP2cPUT
+         MPEvxb6Ty11Q1G3CueeX4lHLUV3LnS2L//E+LvJgzdLSPkGhNb+VfMITeDOK7fQD5iwq
+         YsrLpfxE3QHD1RAR2Wa82xAU4mvglXsvD/2J1OI0VKiNKP26WO4LfLOLqhZjPrADrH4v
+         QWQ/OZtVZNWrAdDHUqF1UPSTnakH3EedOOt5ZYtWEaYOWTw6vrRdLKUNAa9IeR0woh3c
+         7RBg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=3systKa+Hf4qC2jaG3AjlrFBz0jY6HiFgy5kIInPZyA=;
+        b=nz4NDUYM3IOo9ycEEiRVIyNZmTMQ9gevibf4INGDIlWORn9gCSRCAEkhfjCu4fKEZq
+         Y3T5jdJ9hPQmgCDJ3dl3J1sFZaiQ+1Q3OJxqUIHABQnRgRHAJ7+MZ/QNiXKVqTIoU+ta
+         A6J3UpUZzo/zJiE3EQ4judNyD7o9Beo8b/Ra6NXykUj2wUtDUaGZwAhXyCQil4AwVF7e
+         ABzzdjizALBsLpIagWYVyY0HsfOj1ozfjejtg6mZM7XUtFcnGX9pvmqIAaaYYZJscFUm
+         iaNQ0yiBiRXNHCesrRAjdUrYquUOC+xyHfAiIafuOxZ3MfDmyHNwFVyS9hUknf60AvKN
+         eZ6Q==
+X-Gm-Message-State: APjAAAVEY/UyHAJjqyhwGD9d7jXi6gQrjcRAlRgpZLKjmIEHzAmqzlug
+        NqLI3Wd4K9YvxZubjDyDqwY=
+X-Google-Smtp-Source: APXvYqxaj/OzULPesBpIwooy+0eOaACaAA/gzFy/CQ5q+tz/e3X0fiWlukbCm3LdvH2dHk7gBO+6ww==
+X-Received: by 2002:adf:f34b:: with SMTP id e11mr11601910wrp.230.1561146096000;
+        Fri, 21 Jun 2019 12:41:36 -0700 (PDT)
+Received: from debian64.daheim (pD9E297F7.dip0.t-ipconnect.de. [217.226.151.247])
+        by smtp.gmail.com with ESMTPSA id t6sm3622441wmb.29.2019.06.21.12.41.34
+        (version=TLS1_3 cipher=AEAD-AES256-GCM-SHA384 bits=256/256);
+        Fri, 21 Jun 2019 12:41:34 -0700 (PDT)
+Received: from localhost.daheim ([127.0.0.1] helo=debian64.localnet)
+        by debian64.daheim with esmtp (Exim 4.92)
+        (envelope-from <chunkeey@gmail.com>)
+        id 1hePPi-0006bH-8c; Fri, 21 Jun 2019 21:41:34 +0200
+From:   Christian Lamparter <chunkeey@gmail.com>
+To:     Vinod Koul <vkoul@kernel.org>
+Cc:     Mathias Nyman <mathias.nyman@intel.com>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        linux-arm-msm@vger.kernel.org,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>,
+        Christian Lamparter <chunkeey@googlemail.com>,
+        linux-usb@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v2 0/5]  usb: xhci: Add support for Renesas USB controllers
+Date:   Fri, 21 Jun 2019 21:41:33 +0200
+Message-ID: <11747914.jfR0NPdACA@debian64>
+In-Reply-To: <20190621085913.8722-1-vkoul@kernel.org>
+References: <20190621085913.8722-1-vkoul@kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; boundary="nextPart1702504.p497Uvq6SK"; micalg="pgp-sha256"; protocol="application/pgp-signature"
+Content-Transfer-Encoding: 7Bit
+Content-Type: text/plain; charset="us-ascii"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
---nextPart1702504.p497Uvq6SK
-Content-Transfer-Encoding: 7Bit
-Content-Type: text/plain; charset="us-ascii"
-
-On Freitag, 21. Juni 2019 02:01:22 CEST you wrote:
-> I think that it makes sense to put this snippet in qcom-msm8974.dtsi
-> with a status of disabled, and then enable it in
-> qcom-msm8974-fairphone-fp2.dts like so:
+On Friday, June 21, 2019 10:59:08 AM CEST Vinod Koul wrote:
+> This series add support for Renesas USB controllers uPD720201 and uPD720202.
+> These require firmware to be loaded and in case devices have ROM those can
+> also be programmed if empty. If ROM is programmed, it runs from ROM as well.
 > 
-> imem@fe805000 {
-> 	status = "ok";
-> };
-
-Do you want me to put the whole node in the the dtsi file? Even though these 
-values are the same, there are also custom vendor-specified values for specific 
-phones.
-
-This opens another question, which values we should put into the dts files. For 
-example in the fairphone 2 bootloader source there's also the unused
-#define ALARM_BOOT        0x77665503
-
-and behind a #if VERIFIED_BOOT :
-#define DM_VERITY_LOGGING    0x77665508
-#define DM_VERITY_ENFORCING  0x77665509
-#define DM_VERITY_KEYSCLEAR  0x7766550A
-
-and 0x77665501 ("mode-normal") isn't used in the bootloader at all.
-
-On the Linux kernel side, it has bootloader (0x77665500), recovery 
-(0x77665502), rtc (0x77665503), oem-* (0x6f656d00 | somevalue), edl (some 
-other addresses), and the else statements writes the 0x77665501 value in my 
-patch.
-
-> What's the pmOS utility that utilizes this? I'll test it on the Nexus 5.
-
-"reboot-mode" at https://gitlab.com/postmarketOS/pmaports/merge_requests/442
-
-> Thanks,
+> This includes two patches from Christian which supported these controllers
+> w/o ROM and later my patches for ROM support and multiple firmware versions.
 > 
-> Brian
+> Changes in v2:
+>   used macros for timeout count and delay
+>   removed renesas_fw_alive_check
+>   cleaned renesas_fw_callback
+>   removed recurion for renesas_fw_download
+>   added MODULE_FIRMWARE
+>   added comment for multiple fw order
+> 
+> Christian Lamparter (2):
+>   usb: xhci: add firmware loader for uPD720201 and uPD720202 w/o ROM
+>   usb: xhci: handle uPD720201 and uPD720202 w/o ROM
+> 
+> Vinod Koul (3):
+>   usb: xhci: Use register defined and field names
+>   usb: xhci: Add ROM loader for uPD720201
+>   usb: xhci: allow multiple firmware versions
+> 
+>  drivers/usb/host/xhci-pci.c | 942 ++++++++++++++++++++++++++++++++++++
+>  1 file changed, 942 insertions(+)
+> 
 
+bootlog from a Netgear WNDR4700 with a 32GiB USB3 Stick attached to the 
+Renesas uPD720202K8-711-BAA-A chip.
 
---nextPart1702504.p497Uvq6SK
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: This is a digitally signed message part.
-Content-Transfer-Encoding: 7Bit
+[   13.523094] xhci_hcd 0000:45:00.0: firmware size is not a multiple of 8.
+[   13.868071] xhci_hcd 0000:45:00.0: xHCI Host Controller
+[   13.873325] xhci_hcd 0000:45:00.0: new USB bus registered, assigned bus number 2
+[   13.886296] xhci_hcd 0000:45:00.0: hcc params 0x014051cf hci version 0x100 quirks 0x0000000101000090
+[   13.902719] usbcore: registered new interface driver usb-storage
+[   13.909277] kmodloader: done loading kernel modules from /etc/modules-boot.d/*
+[   13.917336] hub 2-0:1.0: USB hub found
+[   13.921432] init: - preinit -
+[   13.930356] hub 2-0:1.0: 2 ports detected
+[   13.942869] xhci_hcd 0000:45:00.0: xHCI Host Controller
+[   13.948122] xhci_hcd 0000:45:00.0: new USB bus registered, assigned bus number 3
+[   13.955514] xhci_hcd 0000:45:00.0: Host supports USB 3.0  SuperSpeed
+[   13.981227] usb usb3: We don't know the algorithms for LPM for this host, disabling LPM.
+[   13.997141] hub 3-0:1.0: USB hub found
+[   14.004375] hub 3-0:1.0: 2 ports detected
+[   14.375644] usb-storage 1-1:1.0: USB Mass Storage device detected
+[   14.382247] scsi host1: usb-storage 1-1:1.0
+[   14.438959] usb 3-2: new SuperSpeed Gen 1 USB device number 2 using xhci_hcd
+[   14.467746] usb-storage 3-2:1.0: USB Mass Storage device detected
+[   14.474241] scsi host2: usb-storage 3-2:1.0
+[   15.394562] scsi 1:0:0:0: Direct-Access     Generic  STORAGE DEVICE   9454 PQ: 0 ANSI: 0
+[   15.405183] sd 1:0:0:0: [sda] Attached SCSI removable disk
+[   15.522448] scsi 2:0:0:0: Direct-Access     SanDisk  Ultra            1.00 PQ: 0 ANSI: 6
+[   15.531952] sd 2:0:0:0: [sdb] 60063744 512-byte logical blocks: (30.8 GB/28.6 GiB)
+[   15.541007] sd 2:0:0:0: [sdb] Write Protect is off
+[   15.546808] sd 2:0:0:0: [sdb] Write cache: disabled, read cache: enabled, doesn't support DPO or FUA
+[   15.574567]  sdb: sdb1
+[   15.580581] sd 2:0:0:0: [sdb] Attached SCSI removable disk
 
------BEGIN PGP SIGNATURE-----
+This is working.
 
-iQIzBAABCAAdFiEE66ocILd+OiPORlvAOY2pEqPLBhkFAl0NLx0ACgkQOY2pEqPL
-BhnupQ/+J5X6iAzE9VLMNps5lmr199+6n3YYOUtSk5H2cFxggDEpTM5xY3fxbNPD
-vVzkoL0EgcAu8N5V+FyBCkuG77a16NIls9c+UXDIGMKSs8RdfU5d3BbEYJNWSqUX
-mztUFZGQDqs8l9Ho1QaslS6f5mgIpgPHgY9kfmlqBikX0XtK4I+rE4EXatZ65K4Z
-eAb2RQtX+22aBPxMGInd20Eb19Hn/6TAzPEFW1oCAjauG8ObcNpjuLPM9eZ1Kefw
-ZmmHUznGDibDM/zsQC7HgbNTGCWJMStWCZze+LCANc/p8Oy2AgbDt/wKWg2azpiE
-+T0QqKM7LMaH468hPuyfG4EkPGdC3ROBKIIV/VoaU1XijR2Jnjuyx4gA9EPsLWTK
-MajOUIur3W9+7j1v3GFtkYntuk557Kxus5gO0T2hQGk7DuQRjAIOLiacg2n3X7sb
-aeE+Gat1nA++HwQM3VChm3rMPruY17FyioONl4bnDhI8PMg8xTFb7ym8iaL8gMeY
-CBqAR3LZp/vQSAmbkIQHQ8taVfJNePTGvBooDtkuY0+Hh9qfwBpOaRm6jw9MgT8c
-DlXnXvlkKPVNAkRbFOYeZKrLS5GH1ANlKP9V3Fdd4XoH+YEwf37Gd4wMukVeOadW
-GHIemce2KyzLYeHU3lL2XLYSGUyjz6lB7ENTpDb0OdTkSocAnx0=
-=FshW
------END PGP SIGNATURE-----
-
---nextPart1702504.p497Uvq6SK--
-
+Tested-by: Christian Lamparter <chunkeey@gmail.com>
 
 
