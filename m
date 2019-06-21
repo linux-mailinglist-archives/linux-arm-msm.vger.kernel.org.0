@@ -2,90 +2,99 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 366D64EFBA
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Jun 2019 21:59:27 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 314A34EFF9
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Jun 2019 22:21:19 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725992AbfFUT70 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 21 Jun 2019 15:59:26 -0400
-Received: from mail-wm1-f67.google.com ([209.85.128.67]:55153 "EHLO
-        mail-wm1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725985AbfFUT70 (ORCPT
+        id S1726010AbfFUUVO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 21 Jun 2019 16:21:14 -0400
+Received: from mail-ed1-f65.google.com ([209.85.208.65]:35146 "EHLO
+        mail-ed1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725985AbfFUUVO (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 21 Jun 2019 15:59:26 -0400
-Received: by mail-wm1-f67.google.com with SMTP id g135so7319510wme.4;
-        Fri, 21 Jun 2019 12:59:24 -0700 (PDT)
+        Fri, 21 Jun 2019 16:21:14 -0400
+Received: by mail-ed1-f65.google.com with SMTP id w20so4147725edd.2;
+        Fri, 21 Jun 2019 13:21:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=rrgP+tN7q+KdQueUxlF4aRY0BkMcXUVAckmsuIhwpT0=;
-        b=L8tes+emvST9pmj/IRzX9+hojeOq4GZDIGhXxywVATI8gFUF36BSHIDNOPx7EIFvlg
-         Dqe2ZBXumHdHNB1+AaiBqOA2ciM0EzKSuqJHmqrR4CY5zxj6myfpVBLFs6HNNVHzuJ/1
-         nhMcwOfXVXk1CSdtsVbkKXKgFp1yssRB/NXBEV/sbWRH0Q58Q/2V8sNWgQyyq00gNLee
-         R7uLrPpIAr8oMpiNVuhE+zjJn6CY+v2PDedNHna3YUOukRp4NOqOualC7fuoGOqHVCqx
-         iH80DV2EdO8Fwg7g5PpHdcs0d4hG6uqbt8HgPDt6BbL37SL9c1CIx0hSkPA+0C12TLn/
-         tLMg==
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=jqSjyrMoWRwF+do82t/l3WMtzN9PwjpWvsfZitq7qSk=;
+        b=WdnB5LAW59jSJgUEDunfjsU/5l5fFVMI3/eFRKtiTEoiHYu4a2QM5fsze+aO0wy1eT
+         2RpyXxFNo442c3fpamyEnpJe2I4B894rtJNhsdukEVui7mO8Ub4QTH02oqJZbRz9+gDu
+         Yh+V9rejvZTuC2rYZCKUl1QDy3JF0rvYIP57MVf0Qi0nZ16LZ4vLNfFBHjxv5bB+G7cm
+         8sesRSWyB3sf2HBMeGhlbk/CfiVf1Gi0NEcP6c0kDemuXE75s8Zjswio36544k8KmfY5
+         Rw1VwYDeyxqzXxghdOEWplgmZdtLUHnTidI6tt8dT81iDIBfMpA29CYxKoBn2Pt3L+oq
+         zq4w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=rrgP+tN7q+KdQueUxlF4aRY0BkMcXUVAckmsuIhwpT0=;
-        b=YfTFUWBlurPB21AnPQS1yRWZHjlIzJcnJAG7tEtiuagqZKSPzHHkVlhtbGHaOTn4Zw
-         kaQPZo3m5PwymEv4PMXx/cphMVmrhMMOuWJKaXPEjsh0FnW+JD7UXPWdTlK2b7hQlXAb
-         7DIjf8xPv+4UZXR6n4IYs3elIJAomAyk03jwg5Gp2QZstTLFWe0xybTVIwHhYSXngby/
-         HTlqseS20/46ph5DJVHiECFPi5pX5aZ7A9rjPCEC2zzu/H4Ve7lhVluHGeJzjwfg9THl
-         4ONZ5P6vFvVjzshdwzn780I4oMjqu4fvZifjf+Cpwi9teOrnxQffW/srqj4EP2+HHWTy
-         A7Qw==
-X-Gm-Message-State: APjAAAWJekkrbYi/PRy02wNYGCjoFuj/RfMEwbgsTmH6/Yl7WOFKzKKB
-        PqUjkvoBa8TzO5sYYUv27sA=
-X-Google-Smtp-Source: APXvYqxBKJ3IjnD6wDUtMi2m6hREJvgcNdbUZ0ji3JRi+mfPQSCt2CnZ9Or3TiA5SwO0YHSVt46P6g==
-X-Received: by 2002:a1c:a654:: with SMTP id p81mr4872126wme.36.1561147163961;
-        Fri, 21 Jun 2019 12:59:23 -0700 (PDT)
-Received: from debian64.daheim (pD9E297F7.dip0.t-ipconnect.de. [217.226.151.247])
-        by smtp.gmail.com with ESMTPSA id g19sm2198006wmg.10.2019.06.21.12.59.23
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=jqSjyrMoWRwF+do82t/l3WMtzN9PwjpWvsfZitq7qSk=;
+        b=Btq1tA7NV53bbP/PKx0LAd239vHW3eaVMtU49rwaEsy7FOfpBPMFYLQ4NRGUC5yMxU
+         wBcFB67J33egyJH7YV9MhtZdjeEbwqoz7y6RHecaoodC6O6+hibD8zSDjJPsrMaGC28+
+         EHpkIaGGhGQX5pTqmOLx3XGFq5+xh30ixvZ5WdtZFYtexTIMfKIP0gvsJXn5Xv0jwlz2
+         Z08mBl2U1Yh2jnNkAuyh0lXk9+Fyca6GdCnb4fGtRwKsDtW0Zqogx4HxeYJJolOSC0lS
+         YMqrzaC6VIG4hjYbVcZog45SR7PU28IkV6IsfA7eE+p5VPzlIF0JzFci/ospp30MAjzM
+         9g9w==
+X-Gm-Message-State: APjAAAUkQTzNso405tSfkGoyr6kxyA2BPh9/nVk8OkG1LDVR/t6puaHV
+        nADn7oty4fg+hFPBRkaQKNM=
+X-Google-Smtp-Source: APXvYqzenDJfKSir67f/YQyStUGcpJj5rohxQxWjWh4nYxPfnU6E8IJwdl+sHHnJnp30ejMd6+Dgpw==
+X-Received: by 2002:a17:906:1596:: with SMTP id k22mr22688551ejd.102.1561148471594;
+        Fri, 21 Jun 2019 13:21:11 -0700 (PDT)
+Received: from localhost.localdomain ([2a01:4f9:2b:2b15::2])
+        by smtp.gmail.com with ESMTPSA id g8sm585031eje.1.2019.06.21.13.21.10
         (version=TLS1_3 cipher=AEAD-AES256-GCM-SHA384 bits=256/256);
-        Fri, 21 Jun 2019 12:59:23 -0700 (PDT)
-Received: from localhost.daheim ([127.0.0.1] helo=debian64.localnet)
-        by debian64.daheim with esmtp (Exim 4.92)
-        (envelope-from <chunkeey@gmail.com>)
-        id 1hePgw-0006iD-KX; Fri, 21 Jun 2019 21:59:22 +0200
-From:   Christian Lamparter <chunkeey@gmail.com>
-To:     Vinod Koul <vkoul@kernel.org>
-Cc:     Mathias Nyman <mathias.nyman@intel.com>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        linux-arm-msm@vger.kernel.org,
+        Fri, 21 Jun 2019 13:21:10 -0700 (PDT)
+From:   Nathan Chancellor <natechancellor@gmail.com>
+To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Christian Lamparter <chunkeey@googlemail.com>,
-        Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>,
-        linux-usb@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v2 1/5] usb: xhci: add firmware loader for uPD720201 and uPD720202 w/o ROM
-Date:   Fri, 21 Jun 2019 21:59:22 +0200
-Message-ID: <1897697.zOhlaAKarQ@debian64>
-In-Reply-To: <20190621085913.8722-2-vkoul@kernel.org>
-References: <20190621085913.8722-1-vkoul@kernel.org> <20190621085913.8722-2-vkoul@kernel.org>
+        Linus Walleij <linus.walleij@linaro.org>
+Cc:     linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org,
+        linux-kernel@vger.kernel.org, clang-built-linux@googlegroups.com,
+        Lee Jones <lee.jones@linaro.org>,
+        Nathan Chancellor <natechancellor@gmail.com>
+Subject: [PATCH] pinctrl: qcom: sdm845: Fix CONFIG preprocessor guard
+Date:   Fri, 21 Jun 2019 13:20:43 -0700
+Message-Id: <20190621202043.95967-1-natechancellor@gmail.com>
+X-Mailer: git-send-email 2.22.0
 MIME-Version: 1.0
-Content-Transfer-Encoding: 7Bit
-Content-Type: text/plain; charset="us-ascii"
+X-Patchwork-Bot: notify
+Content-Transfer-Encoding: 8bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Friday, June 21, 2019 10:59:09 AM CEST Vinod Koul wrote:
-> +	/*
-> +	 * The Firmware's Data Format is describe in
-> +	 * "6.3 Data Format" R19UH0078EJ0500 Rev.5.00 page 124
-> +	 */
-> +
-> +	/* "Each row is 8 bytes". => firmware size must be a multiple of 8. */
-> +	if (length % 8 != 0)
-> +		dev_warn(&dev->dev, "firmware size is not a multiple of 8.");
+Clang warns when CONFIG_ACPI is unset:
 
-It doesn't look like this holds true for the newer K2026090.mem which
-arguably fixes a lot of bugs over K2013080.mem. I think we should remove
-this check and message.
+ drivers/pinctrl/qcom/pinctrl-sdm845.c:1320:5: warning: 'CONFIG_ACPI' is
+ not defined, evaluates to 0 [-Wundef]
+ #if CONFIG_ACPI
+     ^
+ 1 warning generated.
 
-Cheers,
-Christian
+Use ifdef instead of if to resolve this.
 
+Fixes: a229105d7a1e ("pinctrl: qcom: sdm845: Provide ACPI support")
+Link: https://github.com/ClangBuiltLinux/linux/issues/569
+Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
+---
+ drivers/pinctrl/qcom/pinctrl-sdm845.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/drivers/pinctrl/qcom/pinctrl-sdm845.c b/drivers/pinctrl/qcom/pinctrl-sdm845.c
+index 06790e5ece6c..39f498c09906 100644
+--- a/drivers/pinctrl/qcom/pinctrl-sdm845.c
++++ b/drivers/pinctrl/qcom/pinctrl-sdm845.c
+@@ -1317,7 +1317,7 @@ static int sdm845_pinctrl_probe(struct platform_device *pdev)
+ 	return ret;
+ }
+ 
+-#if CONFIG_ACPI
++#ifdef CONFIG_ACPI
+ static const struct acpi_device_id sdm845_pinctrl_acpi_match[] = {
+ 	{ "QCOM0217"},
+ 	{ },
+-- 
+2.22.0
 
