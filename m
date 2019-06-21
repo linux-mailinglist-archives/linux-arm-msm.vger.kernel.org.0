@@ -2,156 +2,93 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 96E4E4E296
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Jun 2019 11:03:03 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 1036E4E3AD
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Jun 2019 11:37:16 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726612AbfFUJCv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 21 Jun 2019 05:02:51 -0400
-Received: from mail.kernel.org ([198.145.29.99]:39444 "EHLO mail.kernel.org"
+        id S1726260AbfFUJhP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 21 Jun 2019 05:37:15 -0400
+Received: from foss.arm.com ([217.140.110.172]:53634 "EHLO foss.arm.com"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726597AbfFUJCv (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 21 Jun 2019 05:02:51 -0400
-Received: from localhost.localdomain (unknown [106.201.116.189])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 0AAD121537;
-        Fri, 21 Jun 2019 09:02:46 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1561107769;
-        bh=tTo2Wlvf680AhD4G4TZwBLGKrQJmR21YpnfXx+58EXY=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=bwiB3dtiO2nHAVh/YgM0Fmg2K0/An4hyL2VRSCPkVNebFN6fruXzYrNxRljTr4C4C
-         2W6dB/d49arZr0826eQO5B+uz84cnBKZQttY+4e0DAZBzf3oB5zWGy46dh35W8hQzs
-         it+8lgqcVnOv4xtL8KKsUkYYC1tNry0zEQbI4OCA=
-From:   Vinod Koul <vkoul@kernel.org>
-To:     Mathias Nyman <mathias.nyman@intel.com>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc:     linux-arm-msm@vger.kernel.org,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Vinod Koul <vkoul@kernel.org>,
-        Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>,
-        Christian Lamparter <chunkeey@googlemail.com>,
-        linux-usb@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: [PATCH v2 5/5] usb: xhci: allow multiple firmware versions
-Date:   Fri, 21 Jun 2019 14:29:13 +0530
-Message-Id: <20190621085913.8722-6-vkoul@kernel.org>
-X-Mailer: git-send-email 2.20.1
-In-Reply-To: <20190621085913.8722-1-vkoul@kernel.org>
-References: <20190621085913.8722-1-vkoul@kernel.org>
+        id S1726210AbfFUJhP (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 21 Jun 2019 05:37:15 -0400
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 68334142F;
+        Fri, 21 Jun 2019 02:37:14 -0700 (PDT)
+Received: from [10.37.13.79] (unknown [10.37.13.79])
+        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 2ED413F246;
+        Fri, 21 Jun 2019 02:37:12 -0700 (PDT)
+Subject: Re: [PATCHv2 2/2] coresight: Abort probe if cpus are not available
+To:     saiprakash.ranjan@codeaurora.org, mathieu.poirier@linaro.org,
+        leo.yan@linaro.org, robh+dt@kernel.org, devicetree@vger.kernel.org,
+        alexander.shishkin@linux.intel.com, david.brown@linaro.org,
+        mark.rutland@arm.com
+Cc:     rnayak@codeaurora.org, vivek.gautam@codeaurora.org,
+        sibis@codeaurora.org, linux-arm-kernel@lists.infradead.org,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org
+References: <cover.1561054498.git.saiprakash.ranjan@codeaurora.org>
+ <65050e4cb2b0433f3cb9b1ca0bf6ec49d0751086.1561054498.git.saiprakash.ranjan@codeaurora.org>
+From:   Suzuki K Poulose <suzuki.poulose@arm.com>
+Message-ID: <d6e6a32e-4e15-5bc8-42f9-6cfe72fc0910@arm.com>
+Date:   Fri, 21 Jun 2019 10:40:02 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
+ Thunderbird/52.7.0
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+In-Reply-To: <65050e4cb2b0433f3cb9b1ca0bf6ec49d0751086.1561054498.git.saiprakash.ranjan@codeaurora.org>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Allow multiple firmware file versions in table and load them in
-increasing order as we find them in the file system.
+On 06/20/2019 07:31 PM, Sai Prakash Ranjan wrote:
+> Currently coresight etm and cpu-debug will go ahead with
+> the probe even when corresponding cpus are not available
+> and error out later in the probe path. In such cases, it
+> is better to abort the probe earlier.
+> 
+> Without this, setting *nosmp* will throw below errors:
+> 
+>   [    5.910622] coresight-cpu-debug 850000.debug: Coresight debug-CPU0 initialized
+>   [    5.914266] coresight-cpu-debug 852000.debug: CPU1 debug arch init failed
+>   [    5.921474] coresight-cpu-debug 854000.debug: CPU2 debug arch init failed
+>   [    5.928328] coresight-cpu-debug 856000.debug: CPU3 debug arch init failed
+>   [    5.935330] coresight etm0: CPU0: ETM v4.0 initialized
+>   [    5.941875] coresight-etm4x 85d000.etm: ETM arch init failed
+>   [    5.946794] coresight-etm4x: probe of 85d000.etm failed with error -22
+>   [    5.952707] coresight-etm4x 85e000.etm: ETM arch init failed
+>   [    5.958945] coresight-etm4x: probe of 85e000.etm failed with error -22
+>   [    5.964853] coresight-etm4x 85f000.etm: ETM arch init failed
+>   [    5.971096] coresight-etm4x: probe of 85f000.etm failed with error -22
 
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
-Cc: Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>
-Cc: Christian Lamparter <chunkeey@googlemail.com>
----
- drivers/usb/host/xhci-pci.c | 46 +++++++++++++++++++++++++++++++++++--
- 1 file changed, 44 insertions(+), 2 deletions(-)
+That is expected. What else do you expect ?
 
-diff --git a/drivers/usb/host/xhci-pci.c b/drivers/usb/host/xhci-pci.c
-index 771948ce3d38..1fb890984d6d 100644
---- a/drivers/usb/host/xhci-pci.c
-+++ b/drivers/usb/host/xhci-pci.c
-@@ -336,13 +336,19 @@ static const struct renesas_fw_entry {
- 	 *  - uPD720201 ES 2.0 sample whose revision ID is 2.
- 	 *  - uPD720201 ES 2.1 sample & CS sample & Mass product, ID is 3.
- 	 *  - uPD720202 ES 2.0 sample & CS sample & Mass product, ID is 2.
-+	 *
-+	 *  Entry expected_version should be kept in increasing order for a
-+	 *  chip, so that driver will pick first version and if that fails
-+	 *  then next one will be picked
- 	 */
- 	{ "K2013080.mem", 0x0014, 0x02, 0x2013 },
- 	{ "K2013080.mem", 0x0014, 0x03, 0x2013 },
-+	{ "K2026090.mem", 0x0014, 0x03, 0x2026 },
- 	{ "K2013080.mem", 0x0015, 0x02, 0x2013 },
- };
- 
- MODULE_FIRMWARE("K2013080.mem");
-+MODULE_FIRMWARE("K2026090.mem");
- 
- static const struct renesas_fw_entry *renesas_needs_fw_dl(struct pci_dev *dev)
- {
-@@ -363,6 +369,24 @@ static const struct renesas_fw_entry *renesas_needs_fw_dl(struct pci_dev *dev)
- 	return NULL;
- }
- 
-+static const struct
-+renesas_fw_entry *renesas_get_next_entry(struct pci_dev *dev,
-+					 const struct renesas_fw_entry *entry)
-+{
-+	const struct renesas_fw_entry *next_entry;
-+	size_t i;
-+
-+	for (i = 0; i < ARRAY_SIZE(renesas_fw_table); i++) {
-+		next_entry = &renesas_fw_table[i];
-+		if (next_entry->device == dev->device &&
-+		    next_entry->revision == dev->revision &&
-+		    next_entry->expected_version > entry->expected_version)
-+			return next_entry;
-+	}
-+
-+	return NULL;
-+}
-+
- static int renesas_fw_download_image(struct pci_dev *dev,
- 				     const u32 *fw,
- 				     size_t step)
-@@ -709,6 +733,7 @@ struct renesas_fw_ctx {
- 	struct pci_dev *pdev;
- 	const struct pci_device_id *id;
- 	bool resume;
-+	const struct renesas_fw_entry *entry;
- };
- 
- static int xhci_pci_probe(struct pci_dev *pdev,
-@@ -968,13 +993,29 @@ static void renesas_fw_callback(const struct firmware *fw,
- 	struct renesas_fw_ctx *ctx = context;
- 	struct pci_dev *pdev = ctx->pdev;
- 	struct device *parent = pdev->dev.parent;
-+	const struct renesas_fw_entry *next_entry;
- 	bool rom;
- 	int err;
- 
- 	if (!fw) {
- 		dev_err(&pdev->dev, "firmware failed to load\n");
--
--		goto cleanup;
-+		/*
-+		 * we didn't find firmware, check if we have another
-+		 * entry for this device
-+		 */
-+		next_entry = renesas_get_next_entry(ctx->pdev, ctx->entry);
-+		if (next_entry) {
-+			ctx->entry = next_entry;
-+			dev_dbg(&pdev->dev, "Found next entry, requesting: %s\n",
-+				next_entry->firmware_name);
-+			request_firmware_nowait(THIS_MODULE, 1,
-+						next_entry->firmware_name,
-+						&pdev->dev, GFP_KERNEL,
-+						ctx, renesas_fw_callback);
-+			return;
-+		} else {
-+			goto cleanup;
-+		}
- 	}
- 
- 	err = renesas_fw_verify(pdev, fw->data, fw->size);
-@@ -1072,6 +1113,7 @@ static int renesas_fw_download_to_hw(struct pci_dev *pdev,
- 	ctx->pdev = pdev;
- 	ctx->resume = do_resume;
- 	ctx->id = id;
-+	ctx->entry = entry;
- 
- 	pci_dev_get(pdev);
- 	err = request_firmware_nowait(THIS_MODULE, 1, entry->firmware_name,
--- 
-2.20.1
+> 
+> Signed-off-by: Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
+> ---
+>   drivers/hwtracing/coresight/coresight-platform.c | 3 +++
+>   1 file changed, 3 insertions(+)
+> 
+> diff --git a/drivers/hwtracing/coresight/coresight-platform.c b/drivers/hwtracing/coresight/coresight-platform.c
+> index 8b03fa573684..3f4559596c6b 100644
+> --- a/drivers/hwtracing/coresight/coresight-platform.c
+> +++ b/drivers/hwtracing/coresight/coresight-platform.c
+> @@ -168,6 +168,9 @@ static int of_coresight_get_cpu(struct device *dev)
+>   	cpu = of_cpu_node_to_id(dn);
+>   	of_node_put(dn);
+>   
+> +	if (num_online_cpus() <= cpu)
+> +		return -ENODEV;
 
+That is a pointless and terribly wrong check. What if you have only 2
+online CPUs (CPU0 and CPU4) and you were processing the ETM for CPU4 ?
+
+More over you should simply let the driver handle a case where the CPU
+is not online. May be the driver could register a hotplug notifier and
+bring itself up when the CPU comes online.
+
+So, please drop this patch.
+
+Kind regards
+Suzuki
