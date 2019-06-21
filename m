@@ -2,109 +2,110 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 26A164ED29
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Jun 2019 18:30:25 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C3F664EF5E
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Jun 2019 21:25:27 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726032AbfFUQaY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 21 Jun 2019 12:30:24 -0400
-Received: from foss.arm.com ([217.140.110.172]:35818 "EHLO foss.arm.com"
+        id S1726396AbfFUTZ1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 21 Jun 2019 15:25:27 -0400
+Received: from mail.z3ntu.xyz ([128.199.32.197]:39314 "EHLO mail.z3ntu.xyz"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726018AbfFUQaY (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 21 Jun 2019 12:30:24 -0400
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 8C8E9344;
-        Fri, 21 Jun 2019 09:30:23 -0700 (PDT)
-Received: from e107155-lin (e107155-lin.cambridge.arm.com [10.1.196.42])
-        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 50DAD3F575;
-        Fri, 21 Jun 2019 09:30:22 -0700 (PDT)
-Date:   Fri, 21 Jun 2019 17:30:12 +0100
-From:   Sudeep Holla <sudeep.holla@arm.com>
-To:     Suzuki K Poulose <suzuki.poulose@arm.com>, stephan@gerhold.net
-Cc:     mathieu.poirier@linaro.org, david.brown@linaro.org,
-        saiprakash.ranjan@codeaurora.org, agross@kernel.org,
-        linux-arm-kernel@lists.infradead.org,
-        linux-arm-msm@vger.kernel.org, Sudeep Holla <sudeep.holla@arm.com>
-Subject: Re: Coresight causes synchronous external abort on msm8916
-Message-ID: <20190621163012.GA32249@e107155-lin>
-References: <20190618202623.GA53651@gerhold.net>
- <a51f117f-c48d-d3f4-c3d1-9b584e3a055f@arm.com>
- <20190619183904.GB937@gerhold.net>
- <CANLsYkxaX2=Bp_BWWUFimC-UmP3L5g=CU7tqjd+xoFVcWG38tA@mail.gmail.com>
- <20190621160631.GA34922@gerhold.net>
- <14bd9196-538f-f641-59e1-0c04960890aa@arm.com>
+        id S1726266AbfFUTZ1 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 21 Jun 2019 15:25:27 -0400
+Received: from g550jk.localnet (80-110-121-20.cgn.dynamic.surfer.at [80.110.121.20])
+        by mail.z3ntu.xyz (Postfix) with ESMTPSA id DDD3EC663D;
+        Fri, 21 Jun 2019 19:25:23 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=z3ntu.xyz; s=z3ntu;
+        t=1561145124; bh=HlfvDRv1zWzENIDFIHiWiXrRjeuASpykgmq5MVyk/4s=;
+        h=From:To:Cc:Subject:Date:In-Reply-To:References;
+        b=X5uKBNmULH5RZmrECX8UHikZYwliCJOk09xdllZiJTVCcO4nKBbMvTckGunvBpjVw
+         cz6ETGpdTNUvcXxJYoO3qWbawlhEfNLJySS7y+PKm6JmsVV5pujTNa7NZscKfuTOB6
+         OtUdSPXkTBncnyAP0bIGlBMTa8G3sz58DkVjjRqs=
+From:   Luca Weiss <luca@z3ntu.xyz>
+To:     Brian Masney <masneyb@onstation.org>
+Cc:     linux-arm-msm@vger.kernel.org,
+        ~martijnbraam/pmos-upstream@lists.sr.ht,
+        Andy Gross <agross@kernel.org>,
+        David Brown <david.brown@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Mark Rutland <mark.rutland@arm.com>,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH] ARM: dts: msm8974-FP2: add reboot-mode node
+Date:   Fri, 21 Jun 2019 21:25:17 +0200
+Message-ID: <4607058.UzJteFJyig@g550jk>
+In-Reply-To: <20190621000122.GA13036@onstation.org>
+References: <20190620225824.2845-1-luca@z3ntu.xyz> <20190621000122.GA13036@onstation.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <14bd9196-538f-f641-59e1-0c04960890aa@arm.com>
-User-Agent: Mutt/1.9.4 (2018-02-28)
+Content-Type: multipart/signed; boundary="nextPart1702504.p497Uvq6SK"; micalg="pgp-sha256"; protocol="application/pgp-signature"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi,
+--nextPart1702504.p497Uvq6SK
+Content-Transfer-Encoding: 7Bit
+Content-Type: text/plain; charset="us-ascii"
 
-On Fri, Jun 21, 2019 at 05:16:28PM +0100, Suzuki K Poulose wrote:
-> Hi Stephan
->
-> On 21/06/2019 17:06, Stephan Gerhold wrote:
-> >
-> >   (b) Preventing the crash:
-> >       Is there some way to:
-> >
-> >        (1) Add a check in the AMBA bus code to verify if the power
-> >            domain is actually turned on?
->
-> No, there isn't, unless the DT tells you that device is disabled, just like
-> your patch does.
->
+On Freitag, 21. Juni 2019 02:01:22 CEST you wrote:
+> I think that it makes sense to put this snippet in qcom-msm8974.dtsi
+> with a status of disabled, and then enable it in
+> qcom-msm8974-fairphone-fp2.dts like so:
+> 
+> imem@fe805000 {
+> 	status = "ok";
+> };
 
-Suzuki has already covered most of the points. Just wanted to add the
-reason why kernel behaves the way it does. Kernel needs to deal with
-absence of power domain info in DT by assuming the device is ready to
-use. IIRC, even disabling few PM configuration, it behaves the same.
+Do you want me to put the whole node in the the dtsi file? Even though these 
+values are the same, there are also custom vendor-specified values for specific 
+phones.
 
-So yes, you need to explicitly disable in DT. Sorry if I misled you
-earlier. I assumed the firmware and platform was tested to work, but
-just missing configuration was causing the reported issue. If the
-firmware doesn't enable PD by default and has no mechanism to enable
-it, then disabling the device in DT is best way.
+This opens another question, which values we should put into the dts files. For 
+example in the fairphone 2 bootloader source there's also the unused
+#define ALARM_BOOT        0x77665503
 
-> >       or
-> >        (2) Recover from the "synchronous external abort" and continue
-> >            booting after printing an error/warning?
-> >            (At the moment, userspace seems to continue for a while,
-> >             but stops working at some point after the error...)
->
-> Unfortunately, no. There is no way to do that from the kernel.
->
-> >
-> >       Otherwise, there is still the option to prevent the AMBA bus code
-> >       from running by disabling the affected device tree nodes.
-> >       That's what the debug@850000 { status = "disabled"; }; ... snippet
-> >       from my first mail [3] does, and it is the only way to make the
-> >       kernel boot successfully at the moment.
->
-> For your board, I would say, this is the best option and the reasonable
-> solution.
->
-> >
-> >       It wouldn't affect any other device if placed in the DTS for my
-> >       device (i.e. *not* in the shared msm8916.dtsi).
->
-> Ultimately, the device tree is based on the assumption that you are running with
-> a firmware that supports the power domain and thus is fine for upstream. If
-> someone is using a firmware that doesn't support this, it is better to disable
-> the nodes, just like you did.
->
-> Personally I would leave the upstream DTS as it is and expect the user to
-> fixup his DTS for the firmware.
->
-If there are known versions of firmware to work/not and they can be
-discovered in bootloader or so, then affected platform can patch DT
-to mark the device "disabled"(In case you can't disable it in upstream
-without affecting other platforms)
+and behind a #if VERIFIED_BOOT :
+#define DM_VERITY_LOGGING    0x77665508
+#define DM_VERITY_ENFORCING  0x77665509
+#define DM_VERITY_KEYSCLEAR  0x7766550A
 
---
-Regards,
-Sudeep
+and 0x77665501 ("mode-normal") isn't used in the bootloader at all.
+
+On the Linux kernel side, it has bootloader (0x77665500), recovery 
+(0x77665502), rtc (0x77665503), oem-* (0x6f656d00 | somevalue), edl (some 
+other addresses), and the else statements writes the 0x77665501 value in my 
+patch.
+
+> What's the pmOS utility that utilizes this? I'll test it on the Nexus 5.
+
+"reboot-mode" at https://gitlab.com/postmarketOS/pmaports/merge_requests/442
+
+> Thanks,
+> 
+> Brian
+
+
+--nextPart1702504.p497Uvq6SK
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: This is a digitally signed message part.
+Content-Transfer-Encoding: 7Bit
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAABCAAdFiEE66ocILd+OiPORlvAOY2pEqPLBhkFAl0NLx0ACgkQOY2pEqPL
+BhnupQ/+J5X6iAzE9VLMNps5lmr199+6n3YYOUtSk5H2cFxggDEpTM5xY3fxbNPD
+vVzkoL0EgcAu8N5V+FyBCkuG77a16NIls9c+UXDIGMKSs8RdfU5d3BbEYJNWSqUX
+mztUFZGQDqs8l9Ho1QaslS6f5mgIpgPHgY9kfmlqBikX0XtK4I+rE4EXatZ65K4Z
+eAb2RQtX+22aBPxMGInd20Eb19Hn/6TAzPEFW1oCAjauG8ObcNpjuLPM9eZ1Kefw
+ZmmHUznGDibDM/zsQC7HgbNTGCWJMStWCZze+LCANc/p8Oy2AgbDt/wKWg2azpiE
++T0QqKM7LMaH468hPuyfG4EkPGdC3ROBKIIV/VoaU1XijR2Jnjuyx4gA9EPsLWTK
+MajOUIur3W9+7j1v3GFtkYntuk557Kxus5gO0T2hQGk7DuQRjAIOLiacg2n3X7sb
+aeE+Gat1nA++HwQM3VChm3rMPruY17FyioONl4bnDhI8PMg8xTFb7ym8iaL8gMeY
+CBqAR3LZp/vQSAmbkIQHQ8taVfJNePTGvBooDtkuY0+Hh9qfwBpOaRm6jw9MgT8c
+DlXnXvlkKPVNAkRbFOYeZKrLS5GH1ANlKP9V3Fdd4XoH+YEwf37Gd4wMukVeOadW
+GHIemce2KyzLYeHU3lL2XLYSGUyjz6lB7ENTpDb0OdTkSocAnx0=
+=FshW
+-----END PGP SIGNATURE-----
+
+--nextPart1702504.p497Uvq6SK--
+
+
+
