@@ -2,100 +2,80 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 9E7C84F013
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Jun 2019 22:41:33 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 8423D4F316
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 22 Jun 2019 03:22:04 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726066AbfFUUl3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 21 Jun 2019 16:41:29 -0400
-Received: from mail-pf1-f193.google.com ([209.85.210.193]:43663 "EHLO
-        mail-pf1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725992AbfFUUl3 (ORCPT
+        id S1726321AbfFVBVv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 21 Jun 2019 21:21:51 -0400
+Received: from mail-pl1-f193.google.com ([209.85.214.193]:37942 "EHLO
+        mail-pl1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726244AbfFVBVv (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 21 Jun 2019 16:41:29 -0400
-Received: by mail-pf1-f193.google.com with SMTP id i189so4153348pfg.10
-        for <linux-arm-msm@vger.kernel.org>; Fri, 21 Jun 2019 13:41:29 -0700 (PDT)
+        Fri, 21 Jun 2019 21:21:51 -0400
+Received: by mail-pl1-f193.google.com with SMTP id g4so3786795plb.5
+        for <linux-arm-msm@vger.kernel.org>; Fri, 21 Jun 2019 18:21:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=qWTzX9MzfA/u/Gk1JqbnxD3tgG+hmJryjHkJZCkg4lo=;
-        b=i8wirE+YGtYSRJmDmz8NIGPbUbZZ6wAIROs728P47J0H9VjwSXA/3ZaK1kHUfvim2g
-         Pl/Ngf6h6PtfVhN4xm/uXfyB8VVE77ARKZjsW08DzeSjU8WMA4Rjl98IijSoo6l05l88
-         0w8pIcHaXP3YfbGwN4BeR6z1e0aKeC0KdQpgckdWOkfDYoOwT1F0+RRCmOP5jmiC5y22
-         ko3yZSOy8WzY6nzCVR87nDMUwl4qQKMY8i+5ujYLw1V55cxSXCygR9qt2WsUvr0Umtja
-         osAdTZ4eWgntYxLCo4Bg4vr3uRtnGlusW6RYE9BWN70NSoCdWZW4yrp/piccIgRmkauO
-         EXZQ==
+        d=linaro.org; s=google;
+        h=from:to:cc:subject:date:message-id;
+        bh=gfKY55VDFmH9sfDf7QmSwnOcZWdz3/zPBcS1vbxTeIs=;
+        b=vSE0SwOpKpJr4NR9EMm+8dVlG2peppROnIGEZle3TSjbPYS/NAc3/8BaXLuoGTies0
+         nW1NbiYojr581BtnqZNlK3MJSythEOHVVihKngZUfmHVIMpsqUYWdw3IhT2sqHsV6sWi
+         W4BIIOjK7yTDtJqj6eTDHISx+Nyl3A1NgqTXsv85rTbrlaBbEHGdSSYIfsVcXMHZp0nT
+         oE2xzNxcPuzvVpIaOSx0u5orCPE/PvCFXZ/gGLN0HcqPW6q5yJj1NzwzTuey2x/FjTbU
+         yNezDim0JlOy9KIv8aPaJR7SZmsGwSxPhVCbPTqtLYWdjKc2aGPEvVL4xVk2z+rXD2LP
+         lgdg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=qWTzX9MzfA/u/Gk1JqbnxD3tgG+hmJryjHkJZCkg4lo=;
-        b=k1AKoi4z2KCVhZxQk7A4VK0TJ0wM+T5J6ELK8rEUOan5yvVXAZsBBfaDr/hLp5eBNl
-         r0/TYQcyJyk70NQpurWZ26qrTm8+kftzOyz61OAN1aEIAeIkKlqfII6zQ5d+drE+/pzk
-         rPKB+MExUScVNuMJ7XxYfFunqYInVOzCdTHtW1iMAdu4ewbc7P3iWUXmHsuszWq6y4nc
-         EV5BZsC0KFTYPG+b5VhpEITyV+X5qOgewXmVSZP9Gm+UKErO7q2IWAiJPLMxsdbkHkzT
-         YlNqHN+BuNrK8JuPoQJ8ILtMefmqM/5ZI6XerAYfiD10Tu5jDrBHj4u7rVAw2osfUEP/
-         4K9g==
-X-Gm-Message-State: APjAAAUF9RjntGI1kknvZGBf/8SdgiBBkG5v4JeE3ODVz7Zxyd3eY9SR
-        v58SWb0MK92XevxzYH7W38EFNIppBCe0vUI3iak9yg==
-X-Google-Smtp-Source: APXvYqyq342BLmVtOIG4HSACeRf6++pMT1eaBYTIF0JERgZ6y5GX/QPX/sXUFSF3ypMufH5vBQuKkqpCHhihV8Twza4=
-X-Received: by 2002:a17:90a:bf02:: with SMTP id c2mr9075257pjs.73.1561149688206;
- Fri, 21 Jun 2019 13:41:28 -0700 (PDT)
-MIME-Version: 1.0
-References: <20190621202043.95967-1-natechancellor@gmail.com>
-In-Reply-To: <20190621202043.95967-1-natechancellor@gmail.com>
-From:   Nick Desaulniers <ndesaulniers@google.com>
-Date:   Fri, 21 Jun 2019 13:41:17 -0700
-Message-ID: <CAKwvOdnP+XMn4BMHRcFeO=TCLxjhKk5NBrpmSyZnsAtwFj+gTw@mail.gmail.com>
-Subject: Re: [PATCH] pinctrl: qcom: sdm845: Fix CONFIG preprocessor guard
-To:     Nathan Chancellor <natechancellor@gmail.com>
-Cc:     Andy Gross <agross@kernel.org>,
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=gfKY55VDFmH9sfDf7QmSwnOcZWdz3/zPBcS1vbxTeIs=;
+        b=ergevVaX6naZQpFHLD6kqauOxsVjhIoyIYqykVlnza/mC6enmnQA/jCk7h2JrXYJTt
+         sRYC3vsAgXKa4xkBlPpXfF4TVVIkZRXjf9nLqm/XzjqxKG+8iAww4gnSdDgcTtweThl7
+         RXXdLlWU1ubK+CU0hrxjJfVdvD/hyJu0vDfhdvBhqyXB4njl/ejEn195blxF/r9ea+Wb
+         uUQTjch3gBKqLOnzUrU9jSQbS526qZpDLFOIY8W0VyD3qxpux7usS2+4LA4L1AMApeuH
+         Va76rKO47vOlNo5i9MeQ0YeUI/eov9N2FFABQ0V3sVMnjAH63KzTkhR9LUglaiCwcKx0
+         MIhQ==
+X-Gm-Message-State: APjAAAUWBm2ZcsjM86FoCuvTLMZIJDQOfLSPAYUZPcfv2by0Dg5RCuGT
+        J9jAZNiIXKXsHqq8jLiFFIeObw==
+X-Google-Smtp-Source: APXvYqxsniCk8koIB+ws7n/g/Mm25oCraW+Hf6E/gRtPZkKce1g20AUH+H4Ip7W2ECP6AiHn+PnBgg==
+X-Received: by 2002:a17:902:8a8a:: with SMTP id p10mr52642916plo.88.1561166510236;
+        Fri, 21 Jun 2019 18:21:50 -0700 (PDT)
+Received: from localhost.localdomain (104-188-17-28.lightspeed.sndgca.sbcglobal.net. [104.188.17.28])
+        by smtp.gmail.com with ESMTPSA id u5sm3539148pgp.19.2019.06.21.18.21.48
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Fri, 21 Jun 2019 18:21:49 -0700 (PDT)
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     Andy Gross <agross@kernel.org>, Ohad Ben-Cohen <ohad@wizery.com>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Linus Walleij <linus.walleij@linaro.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        linux-gpio@vger.kernel.org, LKML <linux-kernel@vger.kernel.org>,
-        clang-built-linux <clang-built-linux@googlegroups.com>,
-        Lee Jones <lee.jones@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
+        Sibi Sankar <sibis@codeaurora.org>
+Cc:     linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: [PATCH 0/2] soc: qcom: mdt_loader: Support loading non-split firmware
+Date:   Fri, 21 Jun 2019 18:21:44 -0700
+Message-Id: <20190622012146.19719-1-bjorn.andersson@linaro.org>
+X-Mailer: git-send-email 2.18.0
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, Jun 21, 2019 at 1:21 PM Nathan Chancellor
-<natechancellor@gmail.com> wrote:
->
-> Clang warns when CONFIG_ACPI is unset:
->
->  drivers/pinctrl/qcom/pinctrl-sdm845.c:1320:5: warning: 'CONFIG_ACPI' is
->  not defined, evaluates to 0 [-Wundef]
->  #if CONFIG_ACPI
->      ^
->  1 warning generated.
->
-> Use ifdef instead of if to resolve this.
->
-> Fixes: a229105d7a1e ("pinctrl: qcom: sdm845: Provide ACPI support")
-> Link: https://github.com/ClangBuiltLinux/linux/issues/569
-> Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
+Typically the firmware files for the various remoteprocs is split in a number
+of files. But in some releases these files are available in their unsplit form.
 
-Thanks for the patch.
-Reviewed-by: Nick Desaulniers <ndesaulniers@google.com>
+Extend the mdt loader to detect the unsplit firmware and load it transparently.
 
-> ---
->  drivers/pinctrl/qcom/pinctrl-sdm845.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
->
-> diff --git a/drivers/pinctrl/qcom/pinctrl-sdm845.c b/drivers/pinctrl/qcom/pinctrl-sdm845.c
-> index 06790e5ece6c..39f498c09906 100644
-> --- a/drivers/pinctrl/qcom/pinctrl-sdm845.c
-> +++ b/drivers/pinctrl/qcom/pinctrl-sdm845.c
-> @@ -1317,7 +1317,7 @@ static int sdm845_pinctrl_probe(struct platform_device *pdev)
->         return ret;
->  }
->
-> -#if CONFIG_ACPI
-> +#ifdef CONFIG_ACPI
+Also expose the function that compose the metadata header for validation and
+use this from the modem remoteproc driver, so that it can support unsplit files
+as well.
 
-Thanks,
-~Nick Desaulniers
+Bjorn Andersson (2):
+  soc: qcom: mdt_loader: Support loading non-split images
+  remoteproc: qcom: q6v5-mss: Support loading non-split images
+
+ drivers/remoteproc/qcom_q6v5_mss.c  | 33 ++++++++---
+ drivers/soc/qcom/mdt_loader.c       | 88 ++++++++++++++++++++++++++++-
+ include/linux/soc/qcom/mdt_loader.h |  2 +
+ 3 files changed, 112 insertions(+), 11 deletions(-)
+
+-- 
+2.18.0
+
