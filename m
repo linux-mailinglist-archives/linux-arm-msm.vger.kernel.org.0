@@ -2,116 +2,85 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 426084F92C
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 23 Jun 2019 01:58:36 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 115084FA7A
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 23 Jun 2019 08:20:05 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726494AbfFVX62 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 22 Jun 2019 19:58:28 -0400
-Received: from mail-pg1-f193.google.com ([209.85.215.193]:36890 "EHLO
-        mail-pg1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726343AbfFVX61 (ORCPT
+        id S1726263AbfFWGUE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 23 Jun 2019 02:20:04 -0400
+Received: from mail-pg1-f196.google.com ([209.85.215.196]:36563 "EHLO
+        mail-pg1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725268AbfFWGUD (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 22 Jun 2019 19:58:27 -0400
-Received: by mail-pg1-f193.google.com with SMTP id 145so5117874pgh.4;
-        Sat, 22 Jun 2019 16:58:26 -0700 (PDT)
+        Sun, 23 Jun 2019 02:20:03 -0400
+Received: by mail-pg1-f196.google.com with SMTP id f21so5377289pgi.3;
+        Sat, 22 Jun 2019 23:20:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to:user-agent;
-        bh=lZUHpH2M+Wyx1Nixzo+rxEWVRPouZAupWhJLtRBuER4=;
-        b=J+Qc6kFzXV9b/IP8VxIZb1nSUz8aJcZTeIw+r3UN1METyQW9w7rkYFTtp56KtdH7lH
-         dv/f1e3OsdYTzUCOYAxPRRqAjAC1WERCoOVmaNwhVLBRsK2w7s0aC2H/PgTASU1glaGb
-         doSeUQo478cuImKQX8AO4FRa/K2aLaIJ0gS9Bv78EaX/zEG3Ym0uJr2cwoKXzdFFtrzU
-         ZSgYf9VmyhFjW73xz4JOErU0I+RjjDjFEGbmd2VXVoBnegagFdnA0UTeT4vJ+VbVZDKs
-         Z8fuUo2uN4rQp1lI+W6KG521AyDCqpM+RDjnfFau9GmlvmL1E1o0tglE0OS9MbhmQUeI
-         EIsQ==
+        bh=9mpCqrfelo6ivquuYH6Epll54kxr4fDopqaPM+KB73k=;
+        b=GjowxUFQ7hLaKNIKBcKBbwUlvOyGLvAxlsVjUwdrofHopuEPo+a1UkhztXW44sqgZh
+         YRZKZ4lngUtqadckqRzHd1p99LYjwfpPfivMkXf8tjS41D1FlG/ZEeUWM8t8Xf+hTjIx
+         N1lKhW3Wc9EAGQ9dFVq1MuLaZDmVtz9IkjWBe1N83PSmIbbtfw/+e0DfBp2886olDpLa
+         9fxrtUKEoKB+trUP2fHwOxcy8k7iV/xWRxfWrvn2y+xUYX7Q2hRYF4eUTYj+dcwtMEYq
+         9IMEsFBmD+xGOr4V52DKHrrRW9ivLZzuBc5G61dLPQHnTIzplPQtOxOXgsz4WrtgiiXU
+         804g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=lZUHpH2M+Wyx1Nixzo+rxEWVRPouZAupWhJLtRBuER4=;
-        b=LfqLtCe0GbHkm6UGfZKwymUrXcyMSFNIKqKIuEzeWN1BiIfwK0X9TawpY6KpBHl1k0
-         SfRBE3LCJu3wbAQzhtDlCKKsqI0KtsbGpZFqUFLyOyyWoEXO1fI6uTcMKvo1HvmoMeT4
-         Ot/6sbHlToDqVrvru2By5zom4IpmMYrp6RgXDmWHd8JcHhcjnjBKqQUTNZXb8E+LF3zH
-         0tD/RjUuMQnYCmxbQV6wxtk+uAlx4aVeGzCE5apxtFsmeFMspEKCYAozP5dSXiXqn0NJ
-         K9Oe0E9V0lULdpdu8RFJwLJpnMQ9nMGFHhzhIJdSosywtrvEQ4ez0EzEDkvJZHD/U5NF
-         B4WA==
-X-Gm-Message-State: APjAAAVmVhXTwGjA0sAKU7NO8VJhQxZLI4vMIPVmg/wpXVrrwG2Fizdb
-        /v56Qfnumy4RI874kGHORzQ=
-X-Google-Smtp-Source: APXvYqyjw3Hl7M5bTbfpARaC/m/3jkVGHllSCS84kbpa2Q8bhzRaDSNMWuamR84mgLSgh3AETTooUQ==
-X-Received: by 2002:a17:90a:2224:: with SMTP id c33mr15573423pje.22.1561247906433;
-        Sat, 22 Jun 2019 16:58:26 -0700 (PDT)
-Received: from icarus ([2001:268:c145:c721:c70:4af9:86e2:2])
-        by smtp.gmail.com with ESMTPSA id o74sm10340916pfg.91.2019.06.22.16.58.19
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Sat, 22 Jun 2019 16:58:25 -0700 (PDT)
-Date:   Sun, 23 Jun 2019 08:58:03 +0900
-From:   William Breathitt Gray <vilhelm.gray@gmail.com>
-To:     Guenter Roeck <linux@roeck-us.net>
-Cc:     Wim Van Sebroeck <wim@linux-watchdog.org>,
-        Jerry Hoemann <jerry.hoemann@hpe.com>,
-        Vladimir Zapolskiy <vz@mleia.com>,
-        Matthias Brugger <matthias.bgg@gmail.com>,
-        Wan ZongShun <mcuos.com@gmail.com>,
-        Sylvain Lemieux <slemieux.tyco@gmail.com>,
-        Andy Gross <agross@kernel.org>,
-        David Brown <david.brown@linaro.org>,
-        linux-watchdog@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org,
-        linux-mediatek@lists.infradead.org, linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH] watchdog: convert remaining drivers to use SPDX license
- identifier
-Message-ID: <20190622235803.GA3286@icarus>
-References: <1561048126-27578-1-git-send-email-linux@roeck-us.net>
+        bh=9mpCqrfelo6ivquuYH6Epll54kxr4fDopqaPM+KB73k=;
+        b=sqxGVIeiE4tNWMH5FgwxmrYXumE+Rve0YsMEsHC86pm2F1+XMLpZiMocGOQwJT+i84
+         L3XnDE9e66Z1dAQTWPnsGcxSVYDVuDbJSjAVnHq6otMbta7HEXtCF0RubZw1hm1pwz0f
+         ggdkkQqMWFbt/i5O+OawcanTNq4hb+As/5/gEk/bgiu5dIWfcjnUhe6jYLnDyn/v3WFF
+         EsSN2pEQiZPS++obiBPYBwUAsQX+GbzAVPrWXh03LR9SFvbgL+74/p2hr43ceJlswk6M
+         0xMcQ7cXKuDtWyKz6h6uv72Kk3xgpvdTY2I09cl28vEewSPOc04lHv66NMZlYgfG6UaC
+         6NZg==
+X-Gm-Message-State: APjAAAUejIRXFBrFty/TysuNEbvbZTcryhMvIgXI9NhyZJvIaBgOPJ/y
+        isk2hBaa6xo0G1YAhI7QWxFk2Omn
+X-Google-Smtp-Source: APXvYqxqBjv4+ha3Zmefe6KLGx/lx639gdMDP84kzUmCaXXSDPbDyQbP9a2WhTXO6Rx/bexVWBcWHA==
+X-Received: by 2002:a65:6241:: with SMTP id q1mr26168583pgv.24.1561270802696;
+        Sat, 22 Jun 2019 23:20:02 -0700 (PDT)
+Received: from dtor-ws ([2620:15c:202:201:3adc:b08c:7acc:b325])
+        by smtp.gmail.com with ESMTPSA id cx22sm8104481pjb.25.2019.06.22.23.20.01
+        (version=TLS1_3 cipher=AEAD-AES256-GCM-SHA384 bits=256/256);
+        Sat, 22 Jun 2019 23:20:01 -0700 (PDT)
+Date:   Sat, 22 Jun 2019 23:20:00 -0700
+From:   Dmitry Torokhov <dmitry.torokhov@gmail.com>
+To:     Jeffrey Hugo <jeffrey.l.hugo@gmail.com>,
+        benjamin.tissoires@redhat.com
+Cc:     benjamin.tissoires@redhat.com, jikos@kernel.org,
+        hdegoede@redhat.com, bjorn.andersson@linaro.org, agross@kernel.org,
+        lee.jones@linaro.org, xnox@ubuntu.com, robh+dt@kernel.org,
+        mark.rutland@arm.com, linux-input@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v8 1/5] Input: elan_i2c: Export the device id whitelist
+Message-ID: <20190623062000.GB204275@dtor-ws>
+References: <20190621144854.38568-1-jeffrey.l.hugo@gmail.com>
+ <20190621145042.38637-1-jeffrey.l.hugo@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <1561048126-27578-1-git-send-email-linux@roeck-us.net>
-User-Agent: Mutt/1.12.1 (2019-06-15)
+In-Reply-To: <20190621145042.38637-1-jeffrey.l.hugo@gmail.com>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Jun 20, 2019 at 09:28:46AM -0700, Guenter Roeck wrote:
-> This gets rid of the unnecessary license boilerplate, and avoids
-> having to deal with individual patches one by one.
+On Fri, Jun 21, 2019 at 07:50:42AM -0700, Jeffrey Hugo wrote:
+> Elan_i2c and hid-quirks work in conjunction to decide which devices each
+> driver will handle.  Elan_i2c has a whitelist of devices that should be
+> consumed by hid-quirks so that there is one master list of devices to
+> handoff between the drivers.  Put the ids in a header file so that
+> hid-quirks can consume it instead of duplicating the list.
 > 
-> No functional changes.
-> 
-> Signed-off-by: Guenter Roeck <linux@roeck-us.net>
-> ---
-> Note: Several drivers include a paragraph such as
-> 
-> "Neither <name> nor <company> admit liability nor
->  provide warranty for any of this software. This material is
->  provided "AS-IS" and at no charge."
-> 
-> Presumably this is covered by the GPL license. However, since I am not
-> an attorney, I am not sure, and I opted for leaving such paragraphs in
-> place.
-[...]
->  drivers/watchdog/ebc-c384_wdt.c        |  9 ---------
-[...]
-> diff --git a/drivers/watchdog/ebc-c384_wdt.c b/drivers/watchdog/ebc-c384_wdt.c
-> index c176f59fea28..8ef4b0df3855 100644
-> --- a/drivers/watchdog/ebc-c384_wdt.c
-> +++ b/drivers/watchdog/ebc-c384_wdt.c
-> @@ -2,15 +2,6 @@
->  /*
->   * Watchdog timer driver for the WinSystems EBC-C384
->   * Copyright (C) 2016 William Breathitt Gray
-> - *
-> - * This program is free software; you can redistribute it and/or modify
-> - * it under the terms of the GNU General Public License, version 2, as
-> - * published by the Free Software Foundation.
-> - *
-> - * This program is distributed in the hope that it will be useful, but
-> - * WITHOUT ANY WARRANTY; without even the implied warranty of
-> - * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-> - * General Public License for more details.
->   */
->  #include <linux/device.h>
->  #include <linux/dmi.h>
+> Signed-off-by: Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
 
-Acked-by: William Breathitt Gray <vilhelm.gray@gmail.com>
+Benjamin, are you happy with this version?
+
+Thanks.
+
+-- 
+Dmitry
