@@ -2,85 +2,134 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 115084FA7A
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 23 Jun 2019 08:20:05 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 163764FB2E
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 23 Jun 2019 12:53:35 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726263AbfFWGUE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 23 Jun 2019 02:20:04 -0400
-Received: from mail-pg1-f196.google.com ([209.85.215.196]:36563 "EHLO
-        mail-pg1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725268AbfFWGUD (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 23 Jun 2019 02:20:03 -0400
-Received: by mail-pg1-f196.google.com with SMTP id f21so5377289pgi.3;
-        Sat, 22 Jun 2019 23:20:03 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=9mpCqrfelo6ivquuYH6Epll54kxr4fDopqaPM+KB73k=;
-        b=GjowxUFQ7hLaKNIKBcKBbwUlvOyGLvAxlsVjUwdrofHopuEPo+a1UkhztXW44sqgZh
-         YRZKZ4lngUtqadckqRzHd1p99LYjwfpPfivMkXf8tjS41D1FlG/ZEeUWM8t8Xf+hTjIx
-         N1lKhW3Wc9EAGQ9dFVq1MuLaZDmVtz9IkjWBe1N83PSmIbbtfw/+e0DfBp2886olDpLa
-         9fxrtUKEoKB+trUP2fHwOxcy8k7iV/xWRxfWrvn2y+xUYX7Q2hRYF4eUTYj+dcwtMEYq
-         9IMEsFBmD+xGOr4V52DKHrrRW9ivLZzuBc5G61dLPQHnTIzplPQtOxOXgsz4WrtgiiXU
-         804g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=9mpCqrfelo6ivquuYH6Epll54kxr4fDopqaPM+KB73k=;
-        b=sqxGVIeiE4tNWMH5FgwxmrYXumE+Rve0YsMEsHC86pm2F1+XMLpZiMocGOQwJT+i84
-         L3XnDE9e66Z1dAQTWPnsGcxSVYDVuDbJSjAVnHq6otMbta7HEXtCF0RubZw1hm1pwz0f
-         ggdkkQqMWFbt/i5O+OawcanTNq4hb+As/5/gEk/bgiu5dIWfcjnUhe6jYLnDyn/v3WFF
-         EsSN2pEQiZPS++obiBPYBwUAsQX+GbzAVPrWXh03LR9SFvbgL+74/p2hr43ceJlswk6M
-         0xMcQ7cXKuDtWyKz6h6uv72Kk3xgpvdTY2I09cl28vEewSPOc04lHv66NMZlYgfG6UaC
-         6NZg==
-X-Gm-Message-State: APjAAAUejIRXFBrFty/TysuNEbvbZTcryhMvIgXI9NhyZJvIaBgOPJ/y
-        isk2hBaa6xo0G1YAhI7QWxFk2Omn
-X-Google-Smtp-Source: APXvYqxqBjv4+ha3Zmefe6KLGx/lx639gdMDP84kzUmCaXXSDPbDyQbP9a2WhTXO6Rx/bexVWBcWHA==
-X-Received: by 2002:a65:6241:: with SMTP id q1mr26168583pgv.24.1561270802696;
-        Sat, 22 Jun 2019 23:20:02 -0700 (PDT)
-Received: from dtor-ws ([2620:15c:202:201:3adc:b08c:7acc:b325])
-        by smtp.gmail.com with ESMTPSA id cx22sm8104481pjb.25.2019.06.22.23.20.01
-        (version=TLS1_3 cipher=AEAD-AES256-GCM-SHA384 bits=256/256);
-        Sat, 22 Jun 2019 23:20:01 -0700 (PDT)
-Date:   Sat, 22 Jun 2019 23:20:00 -0700
-From:   Dmitry Torokhov <dmitry.torokhov@gmail.com>
-To:     Jeffrey Hugo <jeffrey.l.hugo@gmail.com>,
-        benjamin.tissoires@redhat.com
-Cc:     benjamin.tissoires@redhat.com, jikos@kernel.org,
-        hdegoede@redhat.com, bjorn.andersson@linaro.org, agross@kernel.org,
-        lee.jones@linaro.org, xnox@ubuntu.com, robh+dt@kernel.org,
-        mark.rutland@arm.com, linux-input@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v8 1/5] Input: elan_i2c: Export the device id whitelist
-Message-ID: <20190623062000.GB204275@dtor-ws>
-References: <20190621144854.38568-1-jeffrey.l.hugo@gmail.com>
- <20190621145042.38637-1-jeffrey.l.hugo@gmail.com>
+        id S1726429AbfFWKxe (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 23 Jun 2019 06:53:34 -0400
+Received: from onstation.org ([52.200.56.107]:35478 "EHLO onstation.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726350AbfFWKxe (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Sun, 23 Jun 2019 06:53:34 -0400
+Received: from localhost (c-98-239-145-235.hsd1.wv.comcast.net [98.239.145.235])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        (Authenticated sender: masneyb)
+        by onstation.org (Postfix) with ESMTPSA id BE38C3E951;
+        Sun, 23 Jun 2019 10:53:32 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=onstation.org;
+        s=default; t=1561287212;
+        bh=QWDzJTgK2u7G6sVT2aNJPw8wBx+pnsIuHGrHBw4hX1M=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=SylbMrRuiOpN+Ee4P8jjYh0jWnVZKwulHNxQV4dWtYocaTVcBa+/PJSnMhp9LvI+S
+         uvG0O/rv8p5g0s2cuL4rw5aUVVcBJitbSXMwx+6oGa+Ss7yl34WPGBMQPFU5E/RPk6
+         UUEIzMp5beHwB+fPqSUYXjd8m4Y0HrSj1BLAlkmc=
+Date:   Sun, 23 Jun 2019 06:53:32 -0400
+From:   Brian Masney <masneyb@onstation.org>
+To:     Stephen Boyd <sboyd@kernel.org>,
+        "thierry.reding@gmail.com" <thierry.reding@gmail.com>
+Cc:     Linus Walleij <linus.walleij@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        David Brown <david.brown@linaro.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Mark Rutland <mark.rutland@arm.com>,
+        MSM <linux-arm-msm@vger.kernel.org>,
+        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
+        <devicetree@vger.kernel.org>,
+        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>
+Subject: Re: [PATCH RESEND] ARM: dts: qcom: msm8974-hammerhead: add device
+ tree bindings for vibrator
+Message-ID: <20190623105332.GA25506@onstation.org>
+References: <20190516085018.2207-1-masneyb@onstation.org>
+ <20190520142149.D56DA214AE@mail.kernel.org>
+ <CACRpkdZxu1LfK11OHEx5L_4kyjMZ7qERpvDzFj5u3Pk2kD1qRA@mail.gmail.com>
+ <20190529101231.GA14540@basecamp>
+ <CACRpkdY-TcF7rizbPz=UcHrFvDgPJD68vbovNdcWP-aBYppp=g@mail.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20190621145042.38637-1-jeffrey.l.hugo@gmail.com>
-User-Agent: Mutt/1.10.1 (2018-07-13)
+In-Reply-To: <CACRpkdY-TcF7rizbPz=UcHrFvDgPJD68vbovNdcWP-aBYppp=g@mail.gmail.com>
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, Jun 21, 2019 at 07:50:42AM -0700, Jeffrey Hugo wrote:
-> Elan_i2c and hid-quirks work in conjunction to decide which devices each
-> driver will handle.  Elan_i2c has a whitelist of devices that should be
-> consumed by hid-quirks so that there is one master list of devices to
-> handoff between the drivers.  Put the ids in a header file so that
-> hid-quirks can consume it instead of duplicating the list.
+Hi Stephen and Thierry,
+
+On Fri, May 31, 2019 at 12:51:38PM +0200, Linus Walleij wrote:
+> On Wed, May 29, 2019 at 12:12 PM Brian Masney <masneyb@onstation.org> wrote:
 > 
-> Signed-off-by: Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
+> > My first revision of this vibrator driver used the Linux PWM framework
+> > due to the variable duty cycle:
+> 
+> So what I perceive if I get the thread right is that actually a lot of
+> qcom clocks (all with the M/N/D counter set-up) have variable duty
+> cycle. Very few consumers use that feature.
+> 
+> It would be a bit much to ask that they all be implemented as PWMs
+> and then cast into clocks for the 50/50 dutycycle case, I get that.
+> 
+> What about simply doing both?
+> 
+> Export the same clocks from the clk and pwm frameworks and be
+> happy. Of course with some mutex inside the driver so that it can't
+> be used from both ends at the same time.
 
-Benjamin, are you happy with this version?
+Do you have any feedback about this? As far as I understand, there are
+two options on the table right now:
 
-Thanks.
+1) Add support for the duty cycle to the qcom clk driver and write a
+   general purpose clk-vibra driver for the input subsystem.
 
--- 
-Dmitry
+2) Do what Linus suggests above. We can use v1 of this series from last
+   September (see below for link) that adds this to the pwm subsystem.
+   The locking would need to be added so that it won't conflict with the
+   clk subsystem. This can be tied into the input subsystem with the
+   existing pwm-vibra driver.
+
+Either case, the msm-vibrator driver that I added to the input subsystem
+will be dropped.
+
+Thanks,
+
+Brian
+
+> 
+> Further Thierry comments
+> https://lore.kernel.org/lkml/20181012114749.GC31561@ulmo/
+> 
+> > The device itself doesn't seem to be a
+> > generic PWM in the way that the PWM framework
+> > expects it.
+> 
+> I don't see why.  I just look at this function from the original
+> patch series:
+> 
+> +static int msm_vibra_pwm_config(struct pwm_chip *chip, struct pwm_device *pwm,
+> + int duty_ns, int period_ns)
+> +{
+> + struct msm_vibra_pwm *msm_pwm = to_msm_vibra_pwm(chip);
+> + int d_reg_val;
+> +
+> + d_reg_val = 127 - (((duty_ns / 1000) * 126) / (period_ns / 1000));
+> +
+> + msm_vibra_pwm_write(msm_pwm, REG_CFG_RCGR,
+> +    (2 << 12) | /* dual edge mode */
+> +    (0 << 8) |  /* cxo */
+> +    (7 << 0));
+> + msm_vibra_pwm_write(msm_pwm, REG_M, 1);
+> + msm_vibra_pwm_write(msm_pwm, REG_N, 128);
+> + msm_vibra_pwm_write(msm_pwm, REG_D, d_reg_val);
+> + msm_vibra_pwm_write(msm_pwm, REG_CMD_RCGR, 1);
+> + msm_vibra_pwm_write(msm_pwm, REG_CBCR, 1);
+> +
+> + return 0;
+> +}
+> 
+> How is this NOT a a generic PWM in the way that the PWM
+> framework expects it? It configures the period and duty cycle on
+> a square wave, that is what a generic PWM is in my book.
+> 
+> Yours,
+> Linus Walleij
