@@ -2,146 +2,142 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id DDD54518DF
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 24 Jun 2019 18:41:27 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 101F15193C
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 24 Jun 2019 19:04:01 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730100AbfFXQlT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 24 Jun 2019 12:41:19 -0400
-Received: from mail-qk1-f193.google.com ([209.85.222.193]:37530 "EHLO
-        mail-qk1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726700AbfFXQlT (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 24 Jun 2019 12:41:19 -0400
-Received: by mail-qk1-f193.google.com with SMTP id d15so10238206qkl.4;
-        Mon, 24 Jun 2019 09:41:18 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=UdA6Y6qkEPNcox/R4AD5p5PdgoW5IX8dJGvSgmjWmkg=;
-        b=JhxxntTYearder/a/p+OquDHNuX8jeZ9N2/zYjAaTHici1QdHNF3fXDeq+Qdy/ZELO
-         L28sxhlC4z73NiXjlOsmiGjIcgJxbK/4MBgu38/p6eIT5eTdF9nzIA6jlWhEF3TifzWE
-         LK70Fmoxgz0yWkXHzS4INQEof6R+A2BE9JX8Y2uvjVqkexfMaMendyllHIMS7k6eYaPp
-         QEp1Qa1KoKtTbyeCKaGp5HLl1TP2iS+haRKQkqIsq453Arb2D/ifMTObojJlN5VzUNSi
-         GJQzL2MnimDz+k/Wkv9t6LoyanZlY3neCtq5cmbLIOUFpPUiiIXyQK0hxYBDw/0YTI43
-         XuQw==
-X-Gm-Message-State: APjAAAWs0IPTFOKO2up/cHi5MamuliTC1GqqtjYWAFnZBg3hOJKTuiKm
-        F2r/jeRQD2cVK3ykHHr8HKL3ZQgvbjepAP95O54=
-X-Google-Smtp-Source: APXvYqx9IXxZ67+F4onDygsWo++RwTBrZyAF3TvR7CC3NoZfdYBTRnVe65OvdwgLfjKt586ottXwhlgpI1RplTtFttg=
-X-Received: by 2002:a05:620a:12db:: with SMTP id e27mr111628534qkl.352.1561394477622;
- Mon, 24 Jun 2019 09:41:17 -0700 (PDT)
-MIME-Version: 1.0
-References: <380a6185-7ad1-6be0-060b-e6e5d4126917@linaro.org>
- <a94676381a5ca662c848f7a725562f721c43ce76.camel@sipsolutions.net>
- <CAK8P3a0kV-i7BJJ2X6C=5n65rSGfo8fUiC4J_G-+M8EctYKbkg@mail.gmail.com>
- <fc0d08912bc10ad089eb74034726308375279130.camel@redhat.com>
- <36bca57c999f611353fd9741c55bb2a7@codeaurora.org> <153fafb91267147cf22e2bf102dd822933ec823a.camel@redhat.com>
- <CAK8P3a2Y+tcL1-V57dtypWHndNT3eDJdcKj29c_v+k8o1HHQig@mail.gmail.com>
- <f4249aa5f5acdd90275eda35aa16f3cfb29d29be.camel@redhat.com>
- <CAK8P3a2nzZKtshYfomOOSYkqx5HdU15Wr9b+3va0B1euNhFOAg@mail.gmail.com>
- <dbb32f185d2c3a654083ee0a7188379e1f88d899.camel@sipsolutions.net>
- <d533b708-c97a-710d-1138-3ae79107f209@linaro.org> <abdfc6b3a9981bcdef40f85f5442a425ce109010.camel@sipsolutions.net>
- <db34aa39-6cf1-4844-1bfe-528e391c3729@linaro.org>
-In-Reply-To: <db34aa39-6cf1-4844-1bfe-528e391c3729@linaro.org>
-From:   Arnd Bergmann <arnd@arndb.de>
-Date:   Mon, 24 Jun 2019 18:40:57 +0200
-Message-ID: <CAK8P3a1ixL9ZjYz=pWTxvMfeD89S6QxSeHt9ZCL9dkCNV5pMHQ@mail.gmail.com>
-Subject: Re: [PATCH v2 00/17] net: introduce Qualcomm IPA driver
-To:     Alex Elder <elder@linaro.org>
-Cc:     Johannes Berg <johannes@sipsolutions.net>,
-        Dan Williams <dcbw@redhat.com>,
-        Subash Abhinov Kasiviswanathan <subashab@codeaurora.org>,
-        abhishek.esse@gmail.com, Ben Chan <benchan@google.com>,
+        id S1729194AbfFXRDz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 24 Jun 2019 13:03:55 -0400
+Received: from mail.kernel.org ([198.145.29.99]:49908 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726920AbfFXRDz (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 24 Jun 2019 13:03:55 -0400
+Received: from willie-the-truck (236.31.169.217.in-addr.arpa [217.169.31.236])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by mail.kernel.org (Postfix) with ESMTPSA id 5CD1720645;
+        Mon, 24 Jun 2019 17:03:52 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=default; t=1561395834;
+        bh=jD2uK5kCwexPBSnlloDzcLqIftPyzxTGZFnE/+MKxQM=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=flxl+4YatLVLP2cePA3e4X7Wh66OFz4Df7unTW3gX7IS3uVUqtmUW+bqjszBy3MvG
+         B5+DWZMnFBCVb3RpJ84i30TPyvr0bD5egtvEfqu+i+MV+3OoTkg4GQIa76HRa4YYRU
+         Rrf1OiPhakYPRzxa7pXFv2aNJhrv/KGzo07Sm2To=
+Date:   Mon, 24 Jun 2019 18:03:49 +0100
+From:   Will Deacon <will@kernel.org>
+To:     Vivek Gautam <vivek.gautam@codeaurora.org>
+Cc:     Will Deacon <will.deacon@arm.com>,
+        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
+        <devicetree@vger.kernel.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        open list <linux-kernel@vger.kernel.org>,
+        robh+dt <robh+dt@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        cpratapa@codeaurora.org, David Miller <davem@davemloft.net>,
-        DTML <devicetree@vger.kernel.org>,
-        Eric Caruso <ejcaruso@google.com>, evgreen@chromium.org,
-        Ilias Apalodimas <ilias.apalodimas@linaro.org>,
-        Linux ARM <linux-arm-kernel@lists.infradead.org>,
-        linux-arm-msm@vger.kernel.org,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-        linux-soc@vger.kernel.org, Networking <netdev@vger.kernel.org>,
-        syadagir@codeaurora.org
-Content-Type: text/plain; charset="UTF-8"
+        David Brown <david.brown@linaro.org>,
+        "list@263.net:IOMMU DRIVERS <iommu@lists.linux-foundation.org>, Joerg
+        Roedel <joro@8bytes.org>," <iommu@lists.linux-foundation.org>,
+        Andy Gross <agross@kernel.org>,
+        Robin Murphy <robin.murphy@arm.com>
+Subject: Re: [PATCH v3 3/4] iommu/arm-smmu: Add support to handle Qcom's
+ wait-for-safe logic
+Message-ID: <20190624170348.7dncuc5qezqeyvq2@willie-the-truck>
+References: <20190612071554.13573-1-vivek.gautam@codeaurora.org>
+ <20190612071554.13573-4-vivek.gautam@codeaurora.org>
+ <20190614040520.GK22737@tuxbook-pro>
+ <3e1f5e03-6448-8730-056d-fc47bdd71b3f@codeaurora.org>
+ <20190618175218.GH4270@fuggles.cambridge.arm.com>
+ <CAFp+6iEynLa=Jt_-oAwt4zmzxzhEXtWNCmghz6rFzcpQVGwrMg@mail.gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CAFp+6iEynLa=Jt_-oAwt4zmzxzhEXtWNCmghz6rFzcpQVGwrMg@mail.gmail.com>
+User-Agent: NeoMutt/20170113 (1.7.2)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Jun 24, 2019 at 6:21 PM Alex Elder <elder@linaro.org> wrote:
-> On 6/18/19 2:03 PM, Johannes Berg wrote:
->
-> > Really there are two possible ways (and they intersect to some extent).
+[+Krishna]
+
+Hi Vivek,
+
+On Mon, Jun 24, 2019 at 03:58:32PM +0530, Vivek Gautam wrote:
+> On Tue, Jun 18, 2019 at 11:22 PM Will Deacon <will.deacon@arm.com> wrote:
+> > On Fri, Jun 14, 2019 at 02:48:07PM +0530, Vivek Gautam wrote:
+> > > On 6/14/2019 9:35 AM, Bjorn Andersson wrote:
+> > > > On Wed 12 Jun 00:15 PDT 2019, Vivek Gautam wrote:
+> > > > > diff --git a/drivers/iommu/arm-smmu.c b/drivers/iommu/arm-smmu.c
+> > > > > index 0ad086da399c..3c3ad43eda97 100644
+> > > > > --- a/drivers/iommu/arm-smmu.c
+> > > > > +++ b/drivers/iommu/arm-smmu.c
+> > > > > @@ -39,6 +39,7 @@
+> > > > >   #include <linux/pci.h>
+> > > > >   #include <linux/platform_device.h>
+> > > > >   #include <linux/pm_runtime.h>
+> > > > > +#include <linux/qcom_scm.h>
+> > > > >   #include <linux/slab.h>
+> > > > >   #include <linux/spinlock.h>
+> > > > > @@ -177,6 +178,7 @@ struct arm_smmu_device {
+> > > > >           u32                             features;
+> > > > >   #define ARM_SMMU_OPT_SECURE_CFG_ACCESS (1 << 0)
+> > > > > +#define ARM_SMMU_OPT_QCOM_FW_IMPL_SAFE_ERRATA (1 << 1)
+> > > > >           u32                             options;
+> > > > >           enum arm_smmu_arch_version      version;
+> > > > >           enum arm_smmu_implementation    model;
+> > > > > @@ -262,6 +264,7 @@ static bool using_legacy_binding, using_generic_binding;
+> > > > >   static struct arm_smmu_option_prop arm_smmu_options[] = {
+> > > > >           { ARM_SMMU_OPT_SECURE_CFG_ACCESS, "calxeda,smmu-secure-config-access" },
+> > > > > + { ARM_SMMU_OPT_QCOM_FW_IMPL_SAFE_ERRATA, "qcom,smmu-500-fw-impl-safe-errata" },
+> > > > This should be added to the DT binding as well.
+> > >
+> > > Ah right. I missed that. Will add this and respin unless Robin and Will have
+> > > concerns with this change.
 > >
-> > One is the whole multi-function device, where a single WWAN device is
-> > composed of channels offered by actually different drivers, e.g. for a
-> > typical USB device you might have something like cdc_ether and the
-> > usb_wwan TTY driver. In this way, we need to "compose" the WWAN device
-> > similarly, e.g. by using the underlying USB device "struct device"
-> > pointer to tie it together.
->
-> I *think* this model makes the most sense.  But at this point
-> it would take very little to convince me otherwise...  (And then
-> I saw Arnd's message advocating the other one, unfortunately...)
->
-> > The other is something like IPA or the Intel modem driver, where the
-> > device is actually a single (e.g. PCIe) device and just has a single
-> > driver, but that single driver offers different channels.
->
-> What I don't like about this is that it's more monolithic.  It
-> seems better to have the low-level IPA or Intel modem driver (or
-> any other driver that can support communication between the AP
-> and WWAN device) present communication paths that other function-
-> specific drivers can attach to and use.
+> > My only concern really is whether it's safe for us to turn this off. It's
+> > clear that somebody went to a lot of effort to add this extra goodness to
+> > the IP, but your benchmarks suggest they never actually tried it out after
+> > they finished building it.
+> >
+> > Is there some downside I'm not seeing from disabling this stuff?
+> 
+> This wait-for-safe is a TLB invalidation enhancement to help display
+> and camera devices.
+> The SMMU hardware throttles the invalidations so that clients such as
+> display and camera can indicate when to start the invalidation.
+> So the SMMU essentially reduces the rate at which invalidations are
+> serviced from its queue. This also throttles the invalidations from
+> other masters too.
+> 
+> On sdm845, the software is expected to serialize the invalidation
+> command loading into SMMU invalidation FIFO using hardware locks
+> (downstream code [2]), and is also expected to throttle non-real time
+> clients while waiting for SAFE==1 (downstream code[2]). We don't do
+> any of these yet, and as per my understanding as this wait-for-safe is
+> enabled by the bootloader in a one time config, this logic reduces
+> performance of devices such as usb and ufs.
+> 
+> There's isn't any downside from disabling this logic until we have all
+> the pieces together from downstream in upstream kernels, and until we
+> have sdm845 devices that are running with full display/gfx stack
+> running. That's when we plan to revisit this and enable all the pieces
+> to get display and USB/UFS working with their optimum performance.
 
-I did not understand Johannes description as two competing models
-for the same code, but rather two kinds of existing hardware that
-a new driver system would have to deal with.
+Generally, I'd agree that approaching this incrementally makes sense, but
+in this case you're adding new device-tree properties
+("qcom,smmu-500-fw-impl-safe-errata") in order to do so, which seems
+questionable if they're only going to be used in the short-term and will
+be obsolete once Linux knows how to drive the device properly.
 
-I was trying to simplify it to just having the second model, by adding
-a hack to support the first, but my view was rather unpopular so
-far, so if everyone agrees on one way to do it, don't worry about me ;-)
+Instead, I think this needs to be part of a separate file that is maintained
+by you, which follows on from the work that Krishna is doing for nvidia
+built on top of Robin's prototype patches:
 
-> > Now, it's not clear to me where IPA actually falls, because so far we've
-> > been talking about the IPA driver only as providing *netdevs*, not any
-> > control channels, so I'm not actually sure where the control channel is.
->
-> There is user space code that handles all of this, and as far as I
-> can tell, parts of it will always remain proprietary.
+http://linux-arm.org/git?p=linux-rm.git;a=shortlog;h=refs/heads/iommu/smmu-impl
 
-Two replies on this:
+Once we have that, you can key this behaviour off the compatible string
+rather than having to add quirk properties to reflect the transient needs of
+Linux.
 
-- to answer Johannes question, my understanding is that the interface
-  between kernel and firmware/hardware for IPA has a single 'struct
-  device' that is used for both the data and the control channels,
-  rather than having a data channel and an independent control device,
-  so this falls into the same category as the Intel one (please correct
-  me on that)
+Krishna -- how have you been getting on with the branch above?
 
-- The user space being proprietary is exactly what we need to avoid
-  with the wwan subsystem. We need to be able to use the same
-  method for setting up Intel, Qualcomm, Samsung, Unisoc or
-  Hisilicon modems or anything else that hooks into the subsystem,
-  and support that in network manager as well as the Android
-  equivalent.
-  If Qualcomm wants to provide their own proprietary user space
-  solution, we can't stop them, but then that should also work on
-  all the others unless they intentionally break it. ;-)
-
-> > and simply require that the channel is attached to the wwan device with
-> > the representation-specific call (wwan_attach_netdev, wwan_attach_tty,
-> > ...).
->
-> Or maybe have the WWAN device present interfaces with attributes,
-> and have drivers that are appropriate for each interface attach
-> to only the ones they recognize they support.
-
-I think you both mean the same thing here, a structure with callback
-pointers that may or may not be filled by the driver depending on its
-capabilities.
-
-What we should try to avoid though is a way to add driver private
-interfaces that risk having multiple drivers create similar functionality
-in incompatible ways.
-
-        Arnd
+Will
