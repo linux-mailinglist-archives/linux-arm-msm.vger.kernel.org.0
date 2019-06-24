@@ -2,142 +2,141 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 101F15193C
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 24 Jun 2019 19:04:01 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 62A0851948
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 24 Jun 2019 19:06:24 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729194AbfFXRDz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 24 Jun 2019 13:03:55 -0400
-Received: from mail.kernel.org ([198.145.29.99]:49908 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726920AbfFXRDz (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 24 Jun 2019 13:03:55 -0400
-Received: from willie-the-truck (236.31.169.217.in-addr.arpa [217.169.31.236])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 5CD1720645;
-        Mon, 24 Jun 2019 17:03:52 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1561395834;
-        bh=jD2uK5kCwexPBSnlloDzcLqIftPyzxTGZFnE/+MKxQM=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=flxl+4YatLVLP2cePA3e4X7Wh66OFz4Df7unTW3gX7IS3uVUqtmUW+bqjszBy3MvG
-         B5+DWZMnFBCVb3RpJ84i30TPyvr0bD5egtvEfqu+i+MV+3OoTkg4GQIa76HRa4YYRU
-         Rrf1OiPhakYPRzxa7pXFv2aNJhrv/KGzo07Sm2To=
-Date:   Mon, 24 Jun 2019 18:03:49 +0100
-From:   Will Deacon <will@kernel.org>
-To:     Vivek Gautam <vivek.gautam@codeaurora.org>
-Cc:     Will Deacon <will.deacon@arm.com>,
-        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
-        <devicetree@vger.kernel.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        open list <linux-kernel@vger.kernel.org>,
-        robh+dt <robh+dt@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        David Brown <david.brown@linaro.org>,
-        "list@263.net:IOMMU DRIVERS <iommu@lists.linux-foundation.org>, Joerg
-        Roedel <joro@8bytes.org>," <iommu@lists.linux-foundation.org>,
-        Andy Gross <agross@kernel.org>,
-        Robin Murphy <robin.murphy@arm.com>
-Subject: Re: [PATCH v3 3/4] iommu/arm-smmu: Add support to handle Qcom's
- wait-for-safe logic
-Message-ID: <20190624170348.7dncuc5qezqeyvq2@willie-the-truck>
-References: <20190612071554.13573-1-vivek.gautam@codeaurora.org>
- <20190612071554.13573-4-vivek.gautam@codeaurora.org>
- <20190614040520.GK22737@tuxbook-pro>
- <3e1f5e03-6448-8730-056d-fc47bdd71b3f@codeaurora.org>
- <20190618175218.GH4270@fuggles.cambridge.arm.com>
- <CAFp+6iEynLa=Jt_-oAwt4zmzxzhEXtWNCmghz6rFzcpQVGwrMg@mail.gmail.com>
+        id S1732299AbfFXRGU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 24 Jun 2019 13:06:20 -0400
+Received: from mail-io1-f42.google.com ([209.85.166.42]:44807 "EHLO
+        mail-io1-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1732287AbfFXRGU (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 24 Jun 2019 13:06:20 -0400
+Received: by mail-io1-f42.google.com with SMTP id s7so561278iob.11
+        for <linux-arm-msm@vger.kernel.org>; Mon, 24 Jun 2019 10:06:19 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=subject:from:to:cc:references:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=iIXdeX2JiRmx4C9yHa4fiJw6+gLhZXZOz5wFmnOuZdE=;
+        b=jxF6qb/sV7LdwL/M+hfpYLQ7N5FXZV6n9NR3jTyAGA+GplqKPu7nlY6GaDSV5WogpJ
+         x5eIKLRlaYb94Or4C1um7mn7WyMOo4dBdef5p/nzVyUgjbyXrx8JH7EhAEca6FLfEfje
+         nyB4Moc3cuXQ0mGOOtjDIj4Yowe3z2ODg6M4k2rpxg1D/1N9whY5BWQw6//5kdkEdi++
+         Omw24Pvpq26FKnGtYJzLgnIvZHvyge1Woqy//RM3pArEUqeRr720cxBaRtcWL83at+Fi
+         iFRy/xrZO9pexKsKLe8Zyr1lGXPKKen7I1pj+mLedfcptv9lvd/L17l65g1nM3cIwimg
+         3tOQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:from:to:cc:references:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=iIXdeX2JiRmx4C9yHa4fiJw6+gLhZXZOz5wFmnOuZdE=;
+        b=YOak3/LzCRlsxK31evk4n3f9VaLRmV4hFqJtL97Hr8Gs6b/KWkxGbwzYRI2enONtU0
+         +hj/yD7bcrepMCdzmHmhEBUeQ0iUe7poXt0a8aRnyaG96plGScUFLaDSPwbdLUFOGx0J
+         Fp/h3xY9j/ZWz3YttP+/o3ekRKljzOJsIlznp4Mcw/e3i8pY7Ohp1tcOw0sray7GvrD3
+         v5czSZNsXclFS4rC1hOomNF3VAadXVJU0e6QSCWnVb2HLXVwnxX4mUCkx/rFtSyBOlnt
+         BIyUKfwQOLVOMn19Dwk8K9DWBrzWaNErhItKmreNrbfNfcPyVvKM4nuyVS85uiWg0i9R
+         Uo5w==
+X-Gm-Message-State: APjAAAUjLGrHgOUnyDxUbVHBndpX8Xr1vNhEqBPgxbPA9MDnB+uwV+QO
+        v7ufiCGWm4h67MyqxE2vQqs1HHKr1ksxhg==
+X-Google-Smtp-Source: APXvYqzVK8rqKQbqdwhHrTlxmKezzfLMdoJwvbpSG0OfjEOVBy5BTJ9p5dUhS23rTre1cQZCfpntYA==
+X-Received: by 2002:a6b:8bce:: with SMTP id n197mr18564360iod.299.1561395978680;
+        Mon, 24 Jun 2019 10:06:18 -0700 (PDT)
+Received: from [172.22.22.26] (c-71-195-29-92.hsd1.mn.comcast.net. [71.195.29.92])
+        by smtp.googlemail.com with ESMTPSA id z1sm24593121ioh.52.2019.06.24.10.06.17
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Mon, 24 Jun 2019 10:06:18 -0700 (PDT)
+Subject: Re: WWAN Controller Framework (was IPA [PATCH v2 00/17])
+From:   Alex Elder <elder@linaro.org>
+To:     davem@davemloft.net, arnd@arndb.de, bjorn.andersson@linaro.org,
+        ilias.apalodimas@linaro.org, Dan Williams <dcbw@redhat.com>,
+        Johannes Berg <johannes@sipsolutions.net>
+Cc:     evgreen@chromium.org, benchan@google.com, ejcaruso@google.com,
+        cpratapa@codeaurora.org, syadagir@codeaurora.org,
+        subashab@codeaurora.org, abhishek.esse@gmail.com,
+        netdev@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-soc@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org, linux-arm-msm@vger.kernel.org
+References: <20190531035348.7194-1-elder@linaro.org>
+ <23ff4cce-1fee-98ab-3608-1fd09c2d97f1@linaro.org>
+Message-ID: <6dae9d1c-ceae-7e88-fe61-f4cda82820ea@linaro.org>
+Date:   Mon, 24 Jun 2019 12:06:16 -0500
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+ Thunderbird/60.7.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAFp+6iEynLa=Jt_-oAwt4zmzxzhEXtWNCmghz6rFzcpQVGwrMg@mail.gmail.com>
-User-Agent: NeoMutt/20170113 (1.7.2)
+In-Reply-To: <23ff4cce-1fee-98ab-3608-1fd09c2d97f1@linaro.org>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-[+Krishna]
+Sorry, I neglected to add Dan and Johannes--who have been
+primary contributors in this discussion--to this.  Adding now.
 
-Hi Vivek,
+					-Alex
 
-On Mon, Jun 24, 2019 at 03:58:32PM +0530, Vivek Gautam wrote:
-> On Tue, Jun 18, 2019 at 11:22 PM Will Deacon <will.deacon@arm.com> wrote:
-> > On Fri, Jun 14, 2019 at 02:48:07PM +0530, Vivek Gautam wrote:
-> > > On 6/14/2019 9:35 AM, Bjorn Andersson wrote:
-> > > > On Wed 12 Jun 00:15 PDT 2019, Vivek Gautam wrote:
-> > > > > diff --git a/drivers/iommu/arm-smmu.c b/drivers/iommu/arm-smmu.c
-> > > > > index 0ad086da399c..3c3ad43eda97 100644
-> > > > > --- a/drivers/iommu/arm-smmu.c
-> > > > > +++ b/drivers/iommu/arm-smmu.c
-> > > > > @@ -39,6 +39,7 @@
-> > > > >   #include <linux/pci.h>
-> > > > >   #include <linux/platform_device.h>
-> > > > >   #include <linux/pm_runtime.h>
-> > > > > +#include <linux/qcom_scm.h>
-> > > > >   #include <linux/slab.h>
-> > > > >   #include <linux/spinlock.h>
-> > > > > @@ -177,6 +178,7 @@ struct arm_smmu_device {
-> > > > >           u32                             features;
-> > > > >   #define ARM_SMMU_OPT_SECURE_CFG_ACCESS (1 << 0)
-> > > > > +#define ARM_SMMU_OPT_QCOM_FW_IMPL_SAFE_ERRATA (1 << 1)
-> > > > >           u32                             options;
-> > > > >           enum arm_smmu_arch_version      version;
-> > > > >           enum arm_smmu_implementation    model;
-> > > > > @@ -262,6 +264,7 @@ static bool using_legacy_binding, using_generic_binding;
-> > > > >   static struct arm_smmu_option_prop arm_smmu_options[] = {
-> > > > >           { ARM_SMMU_OPT_SECURE_CFG_ACCESS, "calxeda,smmu-secure-config-access" },
-> > > > > + { ARM_SMMU_OPT_QCOM_FW_IMPL_SAFE_ERRATA, "qcom,smmu-500-fw-impl-safe-errata" },
-> > > > This should be added to the DT binding as well.
-> > >
-> > > Ah right. I missed that. Will add this and respin unless Robin and Will have
-> > > concerns with this change.
-> >
-> > My only concern really is whether it's safe for us to turn this off. It's
-> > clear that somebody went to a lot of effort to add this extra goodness to
-> > the IP, but your benchmarks suggest they never actually tried it out after
-> > they finished building it.
-> >
-> > Is there some downside I'm not seeing from disabling this stuff?
+On 6/24/19 11:30 AM, Alex Elder wrote:
+> OK I want to try to organize a little more concisely some of the
+> discussion on this, because there is a very large amount of volume
+> to date and I think we need to try to narrow the focus back down
+> again.
 > 
-> This wait-for-safe is a TLB invalidation enhancement to help display
-> and camera devices.
-> The SMMU hardware throttles the invalidations so that clients such as
-> display and camera can indicate when to start the invalidation.
-> So the SMMU essentially reduces the rate at which invalidations are
-> serviced from its queue. This also throttles the invalidations from
-> other masters too.
+> I'm going to use a few terms here.  Some of these I really don't
+> like, but I want to be unambiguous *and* (at least for now) I want
+> to avoid the very overloaded term "device".
 > 
-> On sdm845, the software is expected to serialize the invalidation
-> command loading into SMMU invalidation FIFO using hardware locks
-> (downstream code [2]), and is also expected to throttle non-real time
-> clients while waiting for SAFE==1 (downstream code[2]). We don't do
-> any of these yet, and as per my understanding as this wait-for-safe is
-> enabled by the bootloader in a one time config, this logic reduces
-> performance of devices such as usb and ufs.
+> I have lots more to say, but let's start with a top-level picture,
+> to make sure we're all on the same page.
 > 
-> There's isn't any downside from disabling this logic until we have all
-> the pieces together from downstream in upstream kernels, and until we
-> have sdm845 devices that are running with full display/gfx stack
-> running. That's when we plan to revisit this and enable all the pieces
-> to get display and USB/UFS working with their optimum performance.
+>          WWAN Communication
+>          Channel (Physical)
+>                  |     ------------------------
+> ------------     v     |           :+ Control |  \
+> |          |-----------|           :+ Data    |  |
+> |    AP    |           | WWAN unit :+ Voice   |   > Functions
+> |          |===========|           :+ GPS     |  |
+> ------------     ^     |           :+ ...     |  /
+>                  |     -------------------------
+>           Multiplexed WWAN
+>            Communication
+>          Channel (Physical)
+> 
+> - The *AP* is the main CPU complex that's running Linux on one or
+>   more CPU cores.
+> - A *WWAN unit* is an entity that shares one or more physical
+>   *WWAN communication channels* with the AP.
+> - A *WWAN communication channel* is a bidirectional means of
+>   carrying data between the AP and WWAN unit.
+> - A WWAN communication channel carries data using a *WWAN protocol*.
+> - A WWAN unit implements one or more *WWAN functions*, such as
+>   5G data, LTE voice, GPS, and so on.
+> - A WWAN unit shall implement a *WWAN control function*, used to
+>   manage the use of other WWAN functions, as well as the WWAN unit
+>   itself.
+> - The AP communicates with a WWAN function using a WWAN protocol.
+> - A WWAN physical channel can be *multiplexed*, in which case it
+>   carries the data for one or more *WWAN logical channels*.
+> - A multiplexed WWAN communication channel uses a *WWAN wultiplexing
+>   protocol*, which is used to separate independent data streams
+>   carrying other WWAN protocols.
+> - A WWAN logical channel carries a bidirectional stream of WWAN
+>   protocol data between an entity on the AP and a WWAN function.
+> 
+> Does that adequately represent a very high-level picture of what
+> we're trying to manage?
+> 
+> And if I understand it right, the purpose of the generic framework
+> being discussed is to define a common mechanism for managing (i.e.,
+> discovering, creating, destroying, querying, configuring, enabling,
+> disabling, etc.) WWAN units and the functions they implement, along
+> with the communication and logical channels used to communicate with
+> them.
+> 
+> Comments?
+> 
+> 					-Alex
+> 
 
-Generally, I'd agree that approaching this incrementally makes sense, but
-in this case you're adding new device-tree properties
-("qcom,smmu-500-fw-impl-safe-errata") in order to do so, which seems
-questionable if they're only going to be used in the short-term and will
-be obsolete once Linux knows how to drive the device properly.
-
-Instead, I think this needs to be part of a separate file that is maintained
-by you, which follows on from the work that Krishna is doing for nvidia
-built on top of Robin's prototype patches:
-
-http://linux-arm.org/git?p=linux-rm.git;a=shortlog;h=refs/heads/iommu/smmu-impl
-
-Once we have that, you can key this behaviour off the compatible string
-rather than having to add quirk properties to reflect the transient needs of
-Linux.
-
-Krishna -- how have you been getting on with the branch above?
-
-Will
