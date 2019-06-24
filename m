@@ -2,94 +2,80 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 2FD6950A2D
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 24 Jun 2019 13:53:56 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5E78250A35
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 24 Jun 2019 13:56:00 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726715AbfFXLxz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 24 Jun 2019 07:53:55 -0400
-Received: from mail.kernel.org ([198.145.29.99]:37392 "EHLO mail.kernel.org"
+        id S1727638AbfFXLz7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 24 Jun 2019 07:55:59 -0400
+Received: from ns.iliad.fr ([212.27.33.1]:54742 "EHLO ns.iliad.fr"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726679AbfFXLxz (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 24 Jun 2019 07:53:55 -0400
-Received: from willie-the-truck (236.31.169.217.in-addr.arpa [217.169.31.236])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id BD100212F5;
-        Mon, 24 Jun 2019 11:53:52 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1561377234;
-        bh=DPkbnAX2UC8HCyA8iQCpieXXckaaIIzpSDhByDPzn7Y=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=G8wC7xM9KFMtvOYu/kOVa2McfZiycme1sJMB4laZoRfGXGAGxgIe7MIfXLQhc8m2m
-         /hdHyPsY8pRnYQbF5ft5LW2dkkPKET0OwfkBg31pxiBy90cEVRNKtqVeRUmkH9RQLL
-         uV2aZb1cM9c8ClPfyvJg5QO6FlwjOKMf0hSks0D4=
-Date:   Mon, 24 Jun 2019 12:53:49 +0100
-From:   Will Deacon <will@kernel.org>
-To:     Will Deacon <will.deacon@arm.com>, bjorn.andersson@linaro.org
-Cc:     Robin Murphy <robin.murphy@arm.com>,
-        Joerg Roedel <joro@8bytes.org>,
-        linux-arm-kernel@lists.infradead.org,
-        iommu@lists.linux-foundation.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org,
-        Vivek Gautam <vgautam@qti.qualcomm.com>
-Subject: Re: [PATCH] iommu: io-pgtable: Support non-coherent page tables
-Message-ID: <20190624115349.f62uqypyt7l73skf@willie-the-truck>
-References: <20190515233234.22990-1-bjorn.andersson@linaro.org>
- <20190618173929.GG4270@fuggles.cambridge.arm.com>
+        id S1727579AbfFXLz7 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 24 Jun 2019 07:55:59 -0400
+Received: from ns.iliad.fr (localhost [127.0.0.1])
+        by ns.iliad.fr (Postfix) with ESMTP id 02C7520598;
+        Mon, 24 Jun 2019 13:55:58 +0200 (CEST)
+Received: from [192.168.108.49] (freebox.vlq16.iliad.fr [213.36.7.13])
+        by ns.iliad.fr (Postfix) with ESMTP id BF36F202C7;
+        Mon, 24 Jun 2019 13:55:57 +0200 (CEST)
+Subject: Re: [PATCH v1] phy: qcom-qmp: Raise qcom_qmp_phy_enable() polling
+ delay
+To:     Kishon Vijay Abraham I <kishon@ti.com>,
+        Vivek Gautam <vivek.gautam@codeaurora.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Douglas Anderson <dianders@chromium.org>
+Cc:     MSM <linux-arm-msm@vger.kernel.org>,
+        LKML <linux-kernel@vger.kernel.org>
+References: <92d97c68-d226-6290-37d6-f46f42ea604b@free.fr>
+ <a3a50cf5-083a-5aa8-e77c-6feb2f2fd866@codeaurora.org>
+ <134f4648-682e-5fed-60e7-bc25985dd7e9@free.fr>
+ <e9d7667d-7ed4-d97e-b010-d61b214e6451@ti.com>
+From:   Marc Gonzalez <marc.w.gonzalez@free.fr>
+Message-ID: <967571b1-358f-09c3-dee6-0e664ab3c3d3@free.fr>
+Date:   Mon, 24 Jun 2019 13:55:57 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+ Thunderbird/60.6.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20190618173929.GG4270@fuggles.cambridge.arm.com>
-User-Agent: NeoMutt/20170113 (1.7.2)
+In-Reply-To: <e9d7667d-7ed4-d97e-b010-d61b214e6451@ti.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
+X-Virus-Scanned: ClamAV using ClamSMTP ; ns.iliad.fr ; Mon Jun 24 13:55:58 2019 +0200 (CEST)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi again, Bjorn,
+On 20/06/2019 08:25, Kishon Vijay Abraham I wrote:
 
-On Tue, Jun 18, 2019 at 06:39:33PM +0100, Will Deacon wrote:
-> On Wed, May 15, 2019 at 04:32:34PM -0700, Bjorn Andersson wrote:
-> > Describe the memory related to page table walks as non-cachable for iommu
-> > instances that are not DMA coherent.
-> > 
-> > Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
-> > ---
-> >  drivers/iommu/io-pgtable-arm.c | 12 +++++++++---
-> >  1 file changed, 9 insertions(+), 3 deletions(-)
-> > 
-> > diff --git a/drivers/iommu/io-pgtable-arm.c b/drivers/iommu/io-pgtable-arm.c
-> > index 4e21efbc4459..68ff22ffd2cb 100644
-> > --- a/drivers/iommu/io-pgtable-arm.c
-> > +++ b/drivers/iommu/io-pgtable-arm.c
-> > @@ -803,9 +803,15 @@ arm_64_lpae_alloc_pgtable_s1(struct io_pgtable_cfg *cfg, void *cookie)
-> >  		return NULL;
-> >  
-> >  	/* TCR */
-> > -	reg = (ARM_LPAE_TCR_SH_IS << ARM_LPAE_TCR_SH0_SHIFT) |
-> > -	      (ARM_LPAE_TCR_RGN_WBWA << ARM_LPAE_TCR_IRGN0_SHIFT) |
-> > -	      (ARM_LPAE_TCR_RGN_WBWA << ARM_LPAE_TCR_ORGN0_SHIFT);
-> > +	if (cfg->quirks & IO_PGTABLE_QUIRK_NO_DMA) {
-> > +		reg = (ARM_LPAE_TCR_SH_IS << ARM_LPAE_TCR_SH0_SHIFT) |
-> > +		      (ARM_LPAE_TCR_RGN_WBWA << ARM_LPAE_TCR_IRGN0_SHIFT) |
-> > +		      (ARM_LPAE_TCR_RGN_WBWA << ARM_LPAE_TCR_ORGN0_SHIFT);
-> > +	} else {
-> > +		reg = (ARM_LPAE_TCR_SH_IS << ARM_LPAE_TCR_SH0_SHIFT) |
+> On 14/06/19 6:08 PM, Marc Gonzalez wrote:
 > 
-> Nit: this should be outer-shareable (ARM_LPAE_TCR_SH_OS).
+>> The issue is usleep_range() being misused ^_^
+>>
+>> Although usleep_range() takes unsigned longs as parameters, it is
+>> not appropriate over the entire 0-2^64 range.
+>>
+>> a) It should not be used with tiny values, because the cost of programming
+>> the timer interrupt, and processing the resulting IRQ would dominate.
+>>
+>> b) It should not be used with large values (above 2000000/HZ) because
+>> msleep() is more efficient, and is acceptable for these ranges.
 > 
-> > +		      (ARM_LPAE_TCR_RGN_NC << ARM_LPAE_TCR_IRGN0_SHIFT) |
-> > +		      (ARM_LPAE_TCR_RGN_NC << ARM_LPAE_TCR_ORGN0_SHIFT);
-> > +	}
-> 
-> Should we also be doing something similar for the short-descriptor code
-> in io-pgtable-arm-v7s.c? Looks like you just need to use ARM_V7S_RGN_NC
-> instead of ARM_V7S_RGN_WBWA when initialising ttbr0 for non-coherent
-> SMMUs.
+> Documentation/timers/timers-howto.txt has all the information on the various
+> kernel delay/sleep mechanisms. For < ~10us, it recommends to use udelay
+> (readx_poll_timeout_atomic). Depending on the actual timeout to be used, the
+> delay mechanism in timers-howto.txt should be used.
 
-Do you plan to respin this? I'll need it this week if you're shooting for
-5.3.
+Hello Kishon,
 
-Thanks,
+I believe the proposed patch does the right thing:
 
-Will
+a) polling for the ready bit is not done in atomic context,
+therefore we don't need to busy-loop
+
+b) since we're ultimately calling usleep_range(), we should
+pass an appropriate parameter, such as max_us = 10
+(instead of max_us = 1, which is outside usleep_range spec)
+
+Maybe it would help if someone reviewed this patch.
+
+Regards.
