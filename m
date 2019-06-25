@@ -2,146 +2,171 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id A059B55152
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Jun 2019 16:15:02 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A8FA15516C
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Jun 2019 16:20:15 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728858AbfFYOPB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 25 Jun 2019 10:15:01 -0400
-Received: from smtp.codeaurora.org ([198.145.29.96]:43524 "EHLO
-        smtp.codeaurora.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727070AbfFYOPB (ORCPT
+        id S1728866AbfFYOUI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 25 Jun 2019 10:20:08 -0400
+Received: from s3.sipsolutions.net ([144.76.43.62]:36574 "EHLO
+        sipsolutions.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727070AbfFYOUI (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 25 Jun 2019 10:15:01 -0400
-Received: by smtp.codeaurora.org (Postfix, from userid 1000)
-        id ACFFE60709; Tue, 25 Jun 2019 14:14:59 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
-        s=default; t=1561472100;
-        bh=l93+BVnlcMYbPv/B3MtkkvFbxlDUUawmAE3SnOFBacw=;
-        h=From:To:Cc:Subject:Date:From;
-        b=gmgD1+2aDCDUiWfEmSyUPM2v5JWRZ9MF0/0PVeT3NYZKrrJ0qir3b1NSo0RXU0djw
-         k1p5dJZ1m7xQOo7myXYz++CU9J7bIDxhQ+nw6eGgRdLqOTUQBquLAXzJuy8w3N0j5q
-         3/N3ij91Mao2vPjSzffkhpupgApoYKyV/nBMBjCE=
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        pdx-caf-mail.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.7 required=2.0 tests=ALL_TRUSTED,BAYES_00,
-        DKIM_INVALID,DKIM_SIGNED,SPF_NONE autolearn=no autolearn_force=no
-        version=3.4.0
-Received: from neeraju-linux.qualcomm.com (blr-c-bdr-fw-01_globalnat_allzones-outside.qualcomm.com [103.229.19.19])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: neeraju@smtp.codeaurora.org)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 002576028D;
-        Tue, 25 Jun 2019 14:14:54 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
-        s=default; t=1561472097;
-        bh=l93+BVnlcMYbPv/B3MtkkvFbxlDUUawmAE3SnOFBacw=;
-        h=From:To:Cc:Subject:Date:From;
-        b=QTDbqujJQ5m8SgLELvYglSZwnr1b8JeXi3vNE7DPxwuQG8B3RxVGjRpG5eRUDmY7c
-         rW8NZO8/cv9XYRHRYuk8ktmE/5dfZHXPt0vwV9uJDygk8f7X5n9LrUsYFv28zX4OFF
-         8Nxgx1gwa6ApF9TbAmFeDRrbtDPFxt30uILzgMAc=
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 002576028D
-Authentication-Results: pdx-caf-mail.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: pdx-caf-mail.web.codeaurora.org; spf=none smtp.mailfrom=neeraju@codeaurora.org
-From:   Neeraj Upadhyay <neeraju@codeaurora.org>
-To:     linus.walleij@linaro.org, bjorn.andersson@linaro.org,
-        sboyd@kernel.org, timur@codeaurora.org
-Cc:     linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org,
-        linux-kernel@vger.kernel.org,
-        Srinivas Ramana <sramana@codeaurora.org>,
-        Neeraj Upadhyay <neeraju@codeaurora.org>
-Subject: [PATCH v3] pinctrl: qcom: Add irq_enable callback for msm gpio
-Date:   Tue, 25 Jun 2019 19:44:46 +0530
-Message-Id: <1561472086-23360-1-git-send-email-neeraju@codeaurora.org>
-X-Mailer: git-send-email 1.9.1
+        Tue, 25 Jun 2019 10:20:08 -0400
+Received: by sipsolutions.net with esmtpsa (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+        (Exim 4.92)
+        (envelope-from <johannes@sipsolutions.net>)
+        id 1hfmId-0005Mb-Le; Tue, 25 Jun 2019 16:19:55 +0200
+Message-ID: <efbcb3b84ff0a7d7eab875c37f3a5fa77e21d324.camel@sipsolutions.net>
+Subject: Re: [PATCH v2 00/17] net: introduce Qualcomm IPA driver
+From:   Johannes Berg <johannes@sipsolutions.net>
+To:     Arnd Bergmann <arnd@arndb.de>, Alex Elder <elder@linaro.org>
+Cc:     Dan Williams <dcbw@redhat.com>,
+        Subash Abhinov Kasiviswanathan <subashab@codeaurora.org>,
+        abhishek.esse@gmail.com, Ben Chan <benchan@google.com>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        cpratapa@codeaurora.org, David Miller <davem@davemloft.net>,
+        DTML <devicetree@vger.kernel.org>,
+        Eric Caruso <ejcaruso@google.com>, evgreen@chromium.org,
+        Ilias Apalodimas <ilias.apalodimas@linaro.org>,
+        Linux ARM <linux-arm-kernel@lists.infradead.org>,
+        linux-arm-msm@vger.kernel.org,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        linux-soc@vger.kernel.org, Networking <netdev@vger.kernel.org>,
+        syadagir@codeaurora.org
+Date:   Tue, 25 Jun 2019 16:19:54 +0200
+In-Reply-To: <CAK8P3a1ixL9ZjYz=pWTxvMfeD89S6QxSeHt9ZCL9dkCNV5pMHQ@mail.gmail.com> (sfid-20190624_184119_378618_FFFDB00F)
+References: <380a6185-7ad1-6be0-060b-e6e5d4126917@linaro.org>
+         <a94676381a5ca662c848f7a725562f721c43ce76.camel@sipsolutions.net>
+         <CAK8P3a0kV-i7BJJ2X6C=5n65rSGfo8fUiC4J_G-+M8EctYKbkg@mail.gmail.com>
+         <fc0d08912bc10ad089eb74034726308375279130.camel@redhat.com>
+         <36bca57c999f611353fd9741c55bb2a7@codeaurora.org>
+         <153fafb91267147cf22e2bf102dd822933ec823a.camel@redhat.com>
+         <CAK8P3a2Y+tcL1-V57dtypWHndNT3eDJdcKj29c_v+k8o1HHQig@mail.gmail.com>
+         <f4249aa5f5acdd90275eda35aa16f3cfb29d29be.camel@redhat.com>
+         <CAK8P3a2nzZKtshYfomOOSYkqx5HdU15Wr9b+3va0B1euNhFOAg@mail.gmail.com>
+         <dbb32f185d2c3a654083ee0a7188379e1f88d899.camel@sipsolutions.net>
+         <d533b708-c97a-710d-1138-3ae79107f209@linaro.org>
+         <abdfc6b3a9981bcdef40f85f5442a425ce109010.camel@sipsolutions.net>
+         <db34aa39-6cf1-4844-1bfe-528e391c3729@linaro.org>
+         <CAK8P3a1ixL9ZjYz=pWTxvMfeD89S6QxSeHt9ZCL9dkCNV5pMHQ@mail.gmail.com>
+         (sfid-20190624_184119_378618_FFFDB00F)
+Content-Type: text/plain; charset="UTF-8"
+X-Mailer: Evolution 3.28.5 (3.28.5-3.fc28) 
+Mime-Version: 1.0
+Content-Transfer-Encoding: 7bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Srinivas Ramana <sramana@codeaurora.org>
+On Mon, 2019-06-24 at 18:40 +0200, Arnd Bergmann wrote:
+> On Mon, Jun 24, 2019 at 6:21 PM Alex Elder <elder@linaro.org> wrote:
+> > On 6/18/19 2:03 PM, Johannes Berg wrote:
+> > 
+> > > Really there are two possible ways (and they intersect to some extent).
+> > > 
+> > > One is the whole multi-function device, where a single WWAN device is
+> > > composed of channels offered by actually different drivers, e.g. for a
+> > > typical USB device you might have something like cdc_ether and the
+> > > usb_wwan TTY driver. In this way, we need to "compose" the WWAN device
+> > > similarly, e.g. by using the underlying USB device "struct device"
+> > > pointer to tie it together.
+> > 
+> > I *think* this model makes the most sense.  But at this point
+> > it would take very little to convince me otherwise...  (And then
+> > I saw Arnd's message advocating the other one, unfortunately...)
+> > 
+> > > The other is something like IPA or the Intel modem driver, where the
+> > > device is actually a single (e.g. PCIe) device and just has a single
+> > > driver, but that single driver offers different channels.
+> > 
+> > What I don't like about this is that it's more monolithic.  It
+> > seems better to have the low-level IPA or Intel modem driver (or
+> > any other driver that can support communication between the AP
+> > and WWAN device) present communication paths that other function-
+> > specific drivers can attach to and use.
+> 
+> I did not understand Johannes description as two competing models
+> for the same code, but rather two kinds of existing hardware that
+> a new driver system would have to deal with.
 
-Introduce the irq_enable callback which will be same as irq_unmask
-except that it will also clear the status bit before unmask.
+Right.
 
-This will help in clearing any erroneous interrupts that would
-have got latched when the interrupt is not in use.
+> I was trying to simplify it to just having the second model, by adding
+> a hack to support the first, but my view was rather unpopular so
+> far, so if everyone agrees on one way to do it, don't worry about me ;-)
 
-There may be devices like UART which can use the same gpio line
-for data rx as well as a wakeup gpio when in suspend. The data that
-was flowing on the line may latch the interrupt and when we enable
-the interrupt before going to suspend, this would trigger the
-unexpected interrupt. This change helps clearing the interrupt
-so that these unexpected interrupts gets cleared.
+:-)
 
-Signed-off-by: Srinivas Ramana <sramana@codeaurora.org>
-Signed-off-by: Neeraj Upadhyay <neeraju@codeaurora.org>
----
+However, to also reply to Alex: I don't know exactly how IPA works, but
+for the Intel modem at least you can't fundamentally have two drivers
+for different parts of the functionality, since it's just a single piece
+of hardware and you need to allocate hardware resources from a common
+pool etc. So you cannot split the driver into "Intel modem control
+channel driver" and "Intel modem data channel driver". In fact, it's
+just a single "struct device" on the PCIe bus that you can bind to, and
+only one driver can bind at a time.
 
-Changes since v2:
-- Renamed function to msm_gpio_irq_clear_unmask()
+So, IOW, I'm not sure I see how you'd split that up. I guess you could
+if you actually do something like the "rmnet" model, and I suppose
+you're free to do that for IPA if you like, but I tend to think that's
+actually a burden, not a win since you just get more complex code that
+needs to interact with more pieces. A single driver for a single
+hardware that knows about the few types of channels seems simpler to me.
 
- drivers/pinctrl/qcom/pinctrl-msm.c | 25 ++++++++++++++++++++++++-
- 1 file changed, 24 insertions(+), 1 deletion(-)
+> - to answer Johannes question, my understanding is that the interface
+>   between kernel and firmware/hardware for IPA has a single 'struct
+>   device' that is used for both the data and the control channels,
+>   rather than having a data channel and an independent control device,
+>   so this falls into the same category as the Intel one (please correct
+>   me on that)
 
-diff --git a/drivers/pinctrl/qcom/pinctrl-msm.c b/drivers/pinctrl/qcom/pinctrl-msm.c
-index 6e319bc..0223755 100644
---- a/drivers/pinctrl/qcom/pinctrl-msm.c
-+++ b/drivers/pinctrl/qcom/pinctrl-msm.c
-@@ -729,7 +729,7 @@ static void msm_gpio_irq_mask(struct irq_data *d)
- 	raw_spin_unlock_irqrestore(&pctrl->lock, flags);
- }
- 
--static void msm_gpio_irq_unmask(struct irq_data *d)
-+static void msm_gpio_irq_clear_unmask(struct irq_data *d, bool status_clear)
- {
- 	struct gpio_chip *gc = irq_data_get_irq_chip_data(d);
- 	struct msm_pinctrl *pctrl = gpiochip_get_data(gc);
-@@ -741,6 +741,17 @@ static void msm_gpio_irq_unmask(struct irq_data *d)
- 
- 	raw_spin_lock_irqsave(&pctrl->lock, flags);
- 
-+	if (status_clear) {
-+		/*
-+		 * clear the interrupt status bit before unmask to avoid
-+		 * any erroneous interrupts that would have got latched
-+		 * when the interrupt is not in use.
-+		 */
-+		val = msm_readl_intr_status(pctrl, g);
-+		val &= ~BIT(g->intr_status_bit);
-+		msm_writel_intr_status(val, pctrl, g);
-+	}
-+
- 	val = msm_readl_intr_cfg(pctrl, g);
- 	val |= BIT(g->intr_raw_status_bit);
- 	val |= BIT(g->intr_enable_bit);
-@@ -751,6 +762,17 @@ static void msm_gpio_irq_unmask(struct irq_data *d)
- 	raw_spin_unlock_irqrestore(&pctrl->lock, flags);
- }
- 
-+static void msm_gpio_irq_enable(struct irq_data *d)
-+{
-+
-+	msm_gpio_irq_clear_unmask(d, true);
-+}
-+
-+static void msm_gpio_irq_unmask(struct irq_data *d)
-+{
-+	msm_gpio_irq_clear_unmask(d, false);
-+}
-+
- static void msm_gpio_irq_ack(struct irq_data *d)
- {
- 	struct gpio_chip *gc = irq_data_get_irq_chip_data(d);
-@@ -978,6 +1000,7 @@ static int msm_gpio_init(struct msm_pinctrl *pctrl)
- 	chip->need_valid_mask = msm_gpio_needs_valid_mask(pctrl);
- 
- 	pctrl->irq_chip.name = "msmgpio";
-+	pctrl->irq_chip.irq_enable = msm_gpio_irq_enable;
- 	pctrl->irq_chip.irq_mask = msm_gpio_irq_mask;
- 	pctrl->irq_chip.irq_unmask = msm_gpio_irq_unmask;
- 	pctrl->irq_chip.irq_ack = msm_gpio_irq_ack;
--- 
-QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a
-member of the Code Aurora Forum, hosted by The Linux Foundation
+That sounds about the same then, right.
+
+Are the control channels to IPA are actually also tunnelled over the
+rmnet protocol? And even if they are, perhaps they have a different
+hardware queue or so? That'd be the case for Intel - different hardware
+queue, same (or at least similar) protocol spoken for the DMA hardware
+itself, but different contents of the messages obviously.
+
+> - The user space being proprietary is exactly what we need to avoid
+>   with the wwan subsystem. We need to be able to use the same
+>   method for setting up Intel, Qualcomm, Samsung, Unisoc or
+>   Hisilicon modems or anything else that hooks into the subsystem,
+>   and support that in network manager as well as the Android
+>   equivalent.
+>   If Qualcomm wants to provide their own proprietary user space
+>   solution, we can't stop them, but then that should also work on
+>   all the others unless they intentionally break it. ;-)
+
+:-)
+
+I tend to think there's always going to be some level of specific
+handling here, because e.g. the Intel modem can expose MBIM or AT
+command control channels, but not much else (that'd be useful for us
+anyway, since we don't know how to speak debug protocol etc.). Other
+modems will expose *only* AT commands, or *only* MBIM, and yet others
+may also offer QMI and then that might be preferable.
+
+> > > and simply require that the channel is attached to the wwan device with
+> > > the representation-specific call (wwan_attach_netdev, wwan_attach_tty,
+> > > ...).
+> > 
+> > Or maybe have the WWAN device present interfaces with attributes,
+> > and have drivers that are appropriate for each interface attach
+> > to only the ones they recognize they support.
+> 
+> I think you both mean the same thing here, a structure with callback
+> pointers that may or may not be filled by the driver depending on its
+> capabilities.
+
+:-)
+
+> What we should try to avoid though is a way to add driver private
+> interfaces that risk having multiple drivers create similar functionality
+> in incompatible ways.
+
+Right.
+
+johannes
 
