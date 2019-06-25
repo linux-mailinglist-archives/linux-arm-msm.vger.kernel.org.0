@@ -2,49 +2,49 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id D3052554E0
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Jun 2019 18:47:51 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B044B554E1
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Jun 2019 18:47:53 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731773AbfFYQru (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 25 Jun 2019 12:47:50 -0400
-Received: from mail-wr1-f67.google.com ([209.85.221.67]:37216 "EHLO
-        mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1731664AbfFYQrt (ORCPT
+        id S1731934AbfFYQrw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 25 Jun 2019 12:47:52 -0400
+Received: from mail-wr1-f68.google.com ([209.85.221.68]:42203 "EHLO
+        mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1731763AbfFYQrv (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 25 Jun 2019 12:47:49 -0400
-Received: by mail-wr1-f67.google.com with SMTP id v14so18681114wrr.4
-        for <linux-arm-msm@vger.kernel.org>; Tue, 25 Jun 2019 09:47:48 -0700 (PDT)
+        Tue, 25 Jun 2019 12:47:51 -0400
+Received: by mail-wr1-f68.google.com with SMTP id x17so18646504wrl.9
+        for <linux-arm-msm@vger.kernel.org>; Tue, 25 Jun 2019 09:47:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=7eEjWytHo14d2wy5W+tNOY0jTfYkPmqHS9SlIMebT7c=;
-        b=IxyUGn+UrZ+bnbjJipqX8Tqr/n5Yw6lxFKwRmp2JnOX2l2ltpJwYjzdfcGcgWUJN9F
-         WNLe0y0I++0SHoHm8xeEyfqzAlOioa4k0z2moHs9hrOg6RwJ//dJQV1Ee2OGRe/3j5Hp
-         62fpJ3/UXSAor4BUpfnIej1/cuQE+ztaAJxvjNBHIuh5iBR8yJTizPh0Zp9RoaX9la45
-         AWR/0bwRoG2+sRvo9HyVfH2OPDFOOqIWZNy+o9PQBCWR1GehhyJndZbaLo/DZ5YJV0+1
-         cfHb4PtMG78DUKmH0BG6bnNrDdfmVTQNqtRcghH86R5fGo6RpffmFD9aLff+DYw58R3E
-         6JcQ==
+        bh=Hb0DqlkBsrvPKyzItQugKJEv/KIpj1AeWcG12Ck6UPE=;
+        b=iVQI7uw+9TJW1LUgkZIdU1khMT6YRAAAPFeP5xoXOMCjxxssCK6FX5y45dwYFhuBZf
+         ad3dkl4ahiYiMS4+ngzduIaDly+kPD09FVDHnAs0RoGCnyMn1o+50xfWF+XX+a1Li4Nh
+         4OQO3uDVRwDEbuJPELgvTWKDROygls1JdxY4iB0FNAZfd2rwmUKGzr5YA7wOq6SCJIms
+         5GV8aV3fa5LB5VSXLFvr2r7hpHzE0ckwCLsXV1Cw5Q4aazezsX5eWUunXfNfMjw2hHO+
+         OP3fvGC6HYSIkBSgfs1509UnyTeAyHKTzn1OnT/2JXW2GlGQyinlzjw1F9T1uymYEvmw
+         xRDQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=7eEjWytHo14d2wy5W+tNOY0jTfYkPmqHS9SlIMebT7c=;
-        b=s9ZXF3sx6eGy5iOKz32IpjvL2IjKH72nLza3tTh4kZVz45Z49nsZxfP+YBaukTYgEJ
-         48FF7zMEebE0u+/GCtBiouI0ODleVFQggy5FcKs36yw2MXJPH/qiYnkNXLwltbXS6eLY
-         oUcfTo+0UQkiHSlQaFziEhjzv/kkDw1+w4ociHKorkBJ//urlljzQ/fI2w2aDcU5V/g3
-         KZrAl7/+CG2trOcu9WUm8J8JhubNE+f/u7rsSIsFQ0FcYs+w0Eqy4blh8nOA5qwjYBi+
-         9QAhmB8nemFqt1Hcc36swIG4aYC0R/9Z+39yEvmnRgn/wsX/AHgSEfPvd1+YvzwHX4j7
-         qzmg==
-X-Gm-Message-State: APjAAAXSH6GDCRKs3WzJR4asZ4Ud6uV9IIZmJwg+dBxVJy3ZEZ3VXszN
-        4koTHy61yc7nf2xH5rLVmCeg3A==
-X-Google-Smtp-Source: APXvYqy2Usw9GKw00Bg4lc9/CCqNSi0YvbljOkEbw/xyGvesb5SsyGkFWWx+viRnUehPAPaizW+rCg==
-X-Received: by 2002:a5d:5189:: with SMTP id k9mr112089wrv.45.1561481267921;
-        Tue, 25 Jun 2019 09:47:47 -0700 (PDT)
+        bh=Hb0DqlkBsrvPKyzItQugKJEv/KIpj1AeWcG12Ck6UPE=;
+        b=kufqON8tMdUzsO7f4lYyFoBQAU6GuxOE+AWVKhmSt+v9HDcuWqe0FKJBazIU+M8uFC
+         ZU+qsUERhVLE8Hbd3QPNdX4PG14wPnXaPy/Pnsx9awahImLwaHUmv3Ko6eqD1T/Irkf0
+         SiX/jsekr133ggJRAJltJSTHS+2JrcDHML33fBOF613PqG0CeoKrQXb+NDpU3irqdCYB
+         wQraYVfCosaLsQxCvLGXgTHpTGymxVbsCmKeg40hWn4IZnuFfGK4AAHT46wg29Fq6WgR
+         AqYcPYZgIJ4zSnUsmGS0OG6/Qkd8/ny4XkkoO+TGkHZFMaVu2NjAjg3eKh3TBkt+WCbh
+         YbpA==
+X-Gm-Message-State: APjAAAV3uW99Hg4KsxsKYnnemHAunoiHlToD/OK9V+DAW0xywFCYdhMG
+        A6aMbDhhIn0F/lvlHIMScV7DGQ==
+X-Google-Smtp-Source: APXvYqz8+v1c8nAuEU127PL7q6EUv4iK4qRsCJaWUaXoCqhPm/o+SmElE/RNDaRh0QSWCS9bF3xtZQ==
+X-Received: by 2002:adf:f8cf:: with SMTP id f15mr100970085wrq.333.1561481269628;
+        Tue, 25 Jun 2019 09:47:49 -0700 (PDT)
 Received: from localhost.localdomain (30.red-83-34-200.dynamicip.rima-tde.net. [83.34.200.30])
-        by smtp.gmail.com with ESMTPSA id d18sm42594476wrb.90.2019.06.25.09.47.46
+        by smtp.gmail.com with ESMTPSA id d18sm42594476wrb.90.2019.06.25.09.47.47
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Tue, 25 Jun 2019 09:47:47 -0700 (PDT)
+        Tue, 25 Jun 2019 09:47:49 -0700 (PDT)
 From:   Jorge Ramirez-Ortiz <jorge.ramirez-ortiz@linaro.org>
 To:     jorge.ramirez-ortiz@linaro.org, sboyd@kernel.org,
         bjorn.andersson@linaro.org, david.brown@linaro.org,
@@ -58,9 +58,9 @@ Cc:     vkoul@kernel.org, niklas.cassel@linaro.org,
         devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
         linux-arm-kernel@lists.infradead.org, linux-clk@vger.kernel.org,
         linux-arm-msm@vger.kernel.org, khasim.mohammed@linaro.org
-Subject: [PATCH v3 06/14] clk: qcom: hfpll: get parent clock names from DT
-Date:   Tue, 25 Jun 2019 18:47:25 +0200
-Message-Id: <20190625164733.11091-7-jorge.ramirez-ortiz@linaro.org>
+Subject: [PATCH v3 07/14] clk: qcom: hfpll: register as clock provider
+Date:   Tue, 25 Jun 2019 18:47:26 +0200
+Message-Id: <20190625164733.11091-8-jorge.ramirez-ortiz@linaro.org>
 X-Mailer: git-send-email 2.21.0
 In-Reply-To: <20190625164733.11091-1-jorge.ramirez-ortiz@linaro.org>
 References: <20190625164733.11091-1-jorge.ramirez-ortiz@linaro.org>
@@ -71,47 +71,45 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Allow accessing the parent clock name required for the driver
-operation using the device tree node.
-
-This permits extending the driver to other platforms without having to
-modify its source code.
-
-For backwards compatibility leave the previous value as default.
+Make the output of the high frequency pll a clock provider.
+On the QCS404 this PLL controls cpu frequency scaling.
 
 Co-developed-by: Niklas Cassel <niklas.cassel@linaro.org>
 Signed-off-by: Niklas Cassel <niklas.cassel@linaro.org>
 Signed-off-by: Jorge Ramirez-Ortiz <jorge.ramirez-ortiz@linaro.org>
+Acked-by: Stephen Boyd <sboyd@kernel.org>
 ---
- drivers/clk/qcom/hfpll.c | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ drivers/clk/qcom/hfpll.c | 10 +++++++++-
+ 1 file changed, 9 insertions(+), 1 deletion(-)
 
 diff --git a/drivers/clk/qcom/hfpll.c b/drivers/clk/qcom/hfpll.c
-index a6de7101430c..87b7f46d27e0 100644
+index 87b7f46d27e0..0ffed0d41c50 100644
 --- a/drivers/clk/qcom/hfpll.c
 +++ b/drivers/clk/qcom/hfpll.c
-@@ -52,6 +52,7 @@ static int qcom_hfpll_probe(struct platform_device *pdev)
- 	void __iomem *base;
+@@ -53,6 +53,7 @@ static int qcom_hfpll_probe(struct platform_device *pdev)
  	struct regmap *regmap;
  	struct clk_hfpll *h;
-+	struct clk *pclk;
+ 	struct clk *pclk;
++	int ret;
  	struct clk_init_data init = {
  		.parent_names = (const char *[]){ "xo" },
  		.num_parents = 1,
-@@ -75,6 +76,13 @@ static int qcom_hfpll_probe(struct platform_device *pdev)
- 					  0, &init.name))
- 		return -ENODEV;
- 
-+	/* get parent clock from device tree (optional) */
-+	pclk = devm_clk_get(dev, "xo");
-+	if (!IS_ERR(pclk))
-+		init.parent_names = (const char *[]){ __clk_get_name(pclk) };
-+	else if (PTR_ERR(pclk) == -EPROBE_DEFER)
-+		return -EPROBE_DEFER;
-+
- 	h->d = &hdata;
+@@ -87,7 +88,14 @@ static int qcom_hfpll_probe(struct platform_device *pdev)
  	h->clkr.hw.init = &init;
  	spin_lock_init(&h->lock);
+ 
+-	return devm_clk_register_regmap(&pdev->dev, &h->clkr);
++	ret = devm_clk_register_regmap(dev, &h->clkr);
++	if (ret) {
++		dev_err(dev, "failed to register regmap clock: %d\n", ret);
++		return ret;
++	}
++
++	return devm_of_clk_add_hw_provider(dev, of_clk_hw_simple_get,
++					   &h->clkr.hw);
+ }
+ 
+ static struct platform_driver qcom_hfpll_driver = {
 -- 
 2.21.0
 
