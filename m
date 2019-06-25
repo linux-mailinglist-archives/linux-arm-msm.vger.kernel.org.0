@@ -2,49 +2,49 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id B044B554E1
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Jun 2019 18:47:53 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 379E455501
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Jun 2019 18:48:35 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731934AbfFYQrw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 25 Jun 2019 12:47:52 -0400
-Received: from mail-wr1-f68.google.com ([209.85.221.68]:42203 "EHLO
-        mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1731763AbfFYQrv (ORCPT
+        id S1729660AbfFYQsa (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 25 Jun 2019 12:48:30 -0400
+Received: from mail-wm1-f65.google.com ([209.85.128.65]:53826 "EHLO
+        mail-wm1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729983AbfFYQrw (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 25 Jun 2019 12:47:51 -0400
-Received: by mail-wr1-f68.google.com with SMTP id x17so18646504wrl.9
-        for <linux-arm-msm@vger.kernel.org>; Tue, 25 Jun 2019 09:47:50 -0700 (PDT)
+        Tue, 25 Jun 2019 12:47:52 -0400
+Received: by mail-wm1-f65.google.com with SMTP id x15so3548941wmj.3
+        for <linux-arm-msm@vger.kernel.org>; Tue, 25 Jun 2019 09:47:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=Hb0DqlkBsrvPKyzItQugKJEv/KIpj1AeWcG12Ck6UPE=;
-        b=iVQI7uw+9TJW1LUgkZIdU1khMT6YRAAAPFeP5xoXOMCjxxssCK6FX5y45dwYFhuBZf
-         ad3dkl4ahiYiMS4+ngzduIaDly+kPD09FVDHnAs0RoGCnyMn1o+50xfWF+XX+a1Li4Nh
-         4OQO3uDVRwDEbuJPELgvTWKDROygls1JdxY4iB0FNAZfd2rwmUKGzr5YA7wOq6SCJIms
-         5GV8aV3fa5LB5VSXLFvr2r7hpHzE0ckwCLsXV1Cw5Q4aazezsX5eWUunXfNfMjw2hHO+
-         OP3fvGC6HYSIkBSgfs1509UnyTeAyHKTzn1OnT/2JXW2GlGQyinlzjw1F9T1uymYEvmw
-         xRDQ==
+        bh=Vx/+X3vW6hJ0UUO6xl7D37Dkvgf50ba92tNd21qhLhY=;
+        b=KZCNsdmNk7fr6BtssB1l/nVXpWdNqpSJ17yuMZvs0iwZmznPE2I2mOYe64nOOkJKmT
+         gmOTA980HH8aQQ4rKNBtqizvvIwxdBN5CFwNZC+P9muuWAm3s0pO+ZX6YviPklw9ZVDQ
+         ESRUpR9S6teNWngx5x//WKH1YKQ/Dip0Pl+xpB3m6ZZGWX8Z7ZHY3glRn6Yv+IweM+fZ
+         nWa7wcsPGrUVnfdi4g7uwSQ9qek27rtnC/pHiA2rwr1Pqh1IGatTCAH7nqANnOAMuvP8
+         nCocUPBWvQlTd8xI9+Jpl/cxqko6zgosqSRJI2ADqYZWWjoQHL3H2wKM9/r5UQLHBulO
+         EFSg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=Hb0DqlkBsrvPKyzItQugKJEv/KIpj1AeWcG12Ck6UPE=;
-        b=kufqON8tMdUzsO7f4lYyFoBQAU6GuxOE+AWVKhmSt+v9HDcuWqe0FKJBazIU+M8uFC
-         ZU+qsUERhVLE8Hbd3QPNdX4PG14wPnXaPy/Pnsx9awahImLwaHUmv3Ko6eqD1T/Irkf0
-         SiX/jsekr133ggJRAJltJSTHS+2JrcDHML33fBOF613PqG0CeoKrQXb+NDpU3irqdCYB
-         wQraYVfCosaLsQxCvLGXgTHpTGymxVbsCmKeg40hWn4IZnuFfGK4AAHT46wg29Fq6WgR
-         AqYcPYZgIJ4zSnUsmGS0OG6/Qkd8/ny4XkkoO+TGkHZFMaVu2NjAjg3eKh3TBkt+WCbh
-         YbpA==
-X-Gm-Message-State: APjAAAV3uW99Hg4KsxsKYnnemHAunoiHlToD/OK9V+DAW0xywFCYdhMG
-        A6aMbDhhIn0F/lvlHIMScV7DGQ==
-X-Google-Smtp-Source: APXvYqz8+v1c8nAuEU127PL7q6EUv4iK4qRsCJaWUaXoCqhPm/o+SmElE/RNDaRh0QSWCS9bF3xtZQ==
-X-Received: by 2002:adf:f8cf:: with SMTP id f15mr100970085wrq.333.1561481269628;
-        Tue, 25 Jun 2019 09:47:49 -0700 (PDT)
+        bh=Vx/+X3vW6hJ0UUO6xl7D37Dkvgf50ba92tNd21qhLhY=;
+        b=e5ebAyHcw5hwHNmCnAU7Kdo1WQs2bjGCNFauXFsX8yGuI2ahnNjforTtxTD2brXC4N
+         jMaQQWxEGHdKh/CPnjlcqdoHBhcjF7UWHL30J5Ed5gwi/W3a7mi5Uy8ZJkYJBNSFNtsI
+         77GxoKWZf7rPQm3O5vZF7GVjWgnF4j3/viRtmwjF+vDqfqFPVgWQda4WbfrdII+fqD3n
+         L5JIYkhymnQ/39GW4dgCw8FjANz3mJ6+KH9G1N9F8OYgro+zCk2fw5pwx6lZKQH6MRcy
+         plruGNzBbqz5EwCM8adwaqfGfA4BDPK1sHBNSeThiIKWFJqKr4k09OiFq4tE9fOw4Oyp
+         MLcg==
+X-Gm-Message-State: APjAAAWncM8HD/SEnYWxjWlUk3XaYtXch7p0kVCoDvIiRH6iI2MYSflN
+        djW7DLmtjo0LAeGXIH9RuQcJEA==
+X-Google-Smtp-Source: APXvYqyV1gu/I4EtxDw41R2+bbmPhZ3ozBjCCna7xrSe18ZqJS/Ruc5Yad+b7pkWtrjkSEOK4fwyPQ==
+X-Received: by 2002:a1c:7f54:: with SMTP id a81mr20757954wmd.170.1561481271296;
+        Tue, 25 Jun 2019 09:47:51 -0700 (PDT)
 Received: from localhost.localdomain (30.red-83-34-200.dynamicip.rima-tde.net. [83.34.200.30])
-        by smtp.gmail.com with ESMTPSA id d18sm42594476wrb.90.2019.06.25.09.47.47
+        by smtp.gmail.com with ESMTPSA id d18sm42594476wrb.90.2019.06.25.09.47.49
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Tue, 25 Jun 2019 09:47:49 -0700 (PDT)
+        Tue, 25 Jun 2019 09:47:50 -0700 (PDT)
 From:   Jorge Ramirez-Ortiz <jorge.ramirez-ortiz@linaro.org>
 To:     jorge.ramirez-ortiz@linaro.org, sboyd@kernel.org,
         bjorn.andersson@linaro.org, david.brown@linaro.org,
@@ -58,9 +58,9 @@ Cc:     vkoul@kernel.org, niklas.cassel@linaro.org,
         devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
         linux-arm-kernel@lists.infradead.org, linux-clk@vger.kernel.org,
         linux-arm-msm@vger.kernel.org, khasim.mohammed@linaro.org
-Subject: [PATCH v3 07/14] clk: qcom: hfpll: register as clock provider
-Date:   Tue, 25 Jun 2019 18:47:26 +0200
-Message-Id: <20190625164733.11091-8-jorge.ramirez-ortiz@linaro.org>
+Subject: [PATCH v3 08/14] clk: qcom: hfpll: CLK_IGNORE_UNUSED
+Date:   Tue, 25 Jun 2019 18:47:27 +0200
+Message-Id: <20190625164733.11091-9-jorge.ramirez-ortiz@linaro.org>
 X-Mailer: git-send-email 2.21.0
 In-Reply-To: <20190625164733.11091-1-jorge.ramirez-ortiz@linaro.org>
 References: <20190625164733.11091-1-jorge.ramirez-ortiz@linaro.org>
@@ -71,45 +71,53 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Make the output of the high frequency pll a clock provider.
-On the QCS404 this PLL controls cpu frequency scaling.
+When COMMON_CLK_DISABLED_UNUSED is set, in an effort to save power and
+to keep the software model of the clock in line with reality, the
+framework transverses the clock tree and disables those clocks that
+were enabled by the firmware but have not been enabled by any device
+driver.
+
+If CPUFREQ is enabled, early during the system boot, it might attempt
+to change the CPU frequency ("set_rate"). If the HFPLL is selected as
+a provider, it will then change the rate for this clock.
+
+As boot continues, clk_disable_unused_subtree will run. Since it wont
+find a valid counter (enable_count) for a clock that is actually
+enabled it will attempt to disable it which will cause the CPU to
+stop. Notice that in this driver, calls to check whether the clock is
+enabled are routed via the is_enabled callback which queries the
+hardware.
+
+The following commit, rather than marking the clock critical and
+forcing the clock to be always enabled, addresses the above scenario
+making sure the clock is not disabled but it continues to rely on the
+firmware to enable the clock.
 
 Co-developed-by: Niklas Cassel <niklas.cassel@linaro.org>
 Signed-off-by: Niklas Cassel <niklas.cassel@linaro.org>
 Signed-off-by: Jorge Ramirez-Ortiz <jorge.ramirez-ortiz@linaro.org>
-Acked-by: Stephen Boyd <sboyd@kernel.org>
 ---
- drivers/clk/qcom/hfpll.c | 10 +++++++++-
- 1 file changed, 9 insertions(+), 1 deletion(-)
+ drivers/clk/qcom/hfpll.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
 diff --git a/drivers/clk/qcom/hfpll.c b/drivers/clk/qcom/hfpll.c
-index 87b7f46d27e0..0ffed0d41c50 100644
+index 0ffed0d41c50..d5fd27938e7b 100644
 --- a/drivers/clk/qcom/hfpll.c
 +++ b/drivers/clk/qcom/hfpll.c
-@@ -53,6 +53,7 @@ static int qcom_hfpll_probe(struct platform_device *pdev)
- 	struct regmap *regmap;
- 	struct clk_hfpll *h;
- 	struct clk *pclk;
-+	int ret;
- 	struct clk_init_data init = {
+@@ -58,6 +58,13 @@ static int qcom_hfpll_probe(struct platform_device *pdev)
  		.parent_names = (const char *[]){ "xo" },
  		.num_parents = 1,
-@@ -87,7 +88,14 @@ static int qcom_hfpll_probe(struct platform_device *pdev)
- 	h->clkr.hw.init = &init;
- 	spin_lock_init(&h->lock);
+ 		.ops = &clk_ops_hfpll,
++		/*
++		 * rather than marking the clock critical and forcing the clock
++		 * to be always enabled, we make sure that the clock is not
++		 * disabled: the firmware remains responsible of enabling this
++		 * clock (for more info check the commit log)
++		 */
++		.flags = CLK_IGNORE_UNUSED,
+ 	};
  
--	return devm_clk_register_regmap(&pdev->dev, &h->clkr);
-+	ret = devm_clk_register_regmap(dev, &h->clkr);
-+	if (ret) {
-+		dev_err(dev, "failed to register regmap clock: %d\n", ret);
-+		return ret;
-+	}
-+
-+	return devm_of_clk_add_hw_provider(dev, of_clk_hw_simple_get,
-+					   &h->clkr.hw);
- }
- 
- static struct platform_driver qcom_hfpll_driver = {
+ 	h = devm_kzalloc(dev, sizeof(*h), GFP_KERNEL);
 -- 
 2.21.0
 
