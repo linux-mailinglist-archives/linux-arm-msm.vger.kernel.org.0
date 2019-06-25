@@ -2,142 +2,104 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id A91EE52638
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Jun 2019 10:15:07 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A8B1652752
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Jun 2019 10:59:00 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727338AbfFYIPG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 25 Jun 2019 04:15:06 -0400
-Received: from smtp.codeaurora.org ([198.145.29.96]:40884 "EHLO
-        smtp.codeaurora.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726663AbfFYIPG (ORCPT
+        id S1730524AbfFYI7A (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 25 Jun 2019 04:59:00 -0400
+Received: from mail-lf1-f65.google.com ([209.85.167.65]:42974 "EHLO
+        mail-lf1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1730851AbfFYI67 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 25 Jun 2019 04:15:06 -0400
-Received: by smtp.codeaurora.org (Postfix, from userid 1000)
-        id D6BAF6119C; Tue, 25 Jun 2019 08:15:04 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
-        s=default; t=1561450504;
-        bh=tF5NPZ0H/3FHb44lXZyZY+m/e8WunM2g9yK7vFajX7k=;
-        h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
-        b=KOdR5GcC3Prkqbk66qruXBXCkFPwX0R1HocvQstA6yp6v+1tVY+74THSoOzFsTM6o
-         9cDBTKsLP28CkD7eH+AH0AoYbPNZ5PfBrfk4ZBe8EaHX8HtrHBgRHwxtuPrkE4F1eH
-         s782NKRsGwlaegD209RUMLIMUb2F9Yl9e1TPeiTg=
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        pdx-caf-mail.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.7 required=2.0 tests=ALL_TRUSTED,BAYES_00,
-        DKIM_INVALID,DKIM_SIGNED,SPF_NONE autolearn=no autolearn_force=no
-        version=3.4.0
-Received: from mail-ed1-f46.google.com (mail-ed1-f46.google.com [209.85.208.46])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: vivek.gautam@smtp.codeaurora.org)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 96B8D6119D;
-        Tue, 25 Jun 2019 08:15:03 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
-        s=default; t=1561450503;
-        bh=tF5NPZ0H/3FHb44lXZyZY+m/e8WunM2g9yK7vFajX7k=;
-        h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
-        b=HIalXy1ANOXrfiLZ8dbVWHqQbiwwOP5qyzDp0PEMZDaClsygmIdN/RdLYTyJYxA8e
-         BWCdev+QjKtpjKFERuW+j14CgXjmq+fI+AZcVDuOM2hMNXtWMMUw+nCfVDujdMGDSf
-         tommX8rKI9PDPayM311EfbbzFjZeWy97uySWKIco=
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 96B8D6119D
-Authentication-Results: pdx-caf-mail.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: pdx-caf-mail.web.codeaurora.org; spf=none smtp.mailfrom=vivek.gautam@codeaurora.org
-Received: by mail-ed1-f46.google.com with SMTP id k8so25767647edr.11;
-        Tue, 25 Jun 2019 01:15:03 -0700 (PDT)
-X-Gm-Message-State: APjAAAXjJzXQ7GVwbpqZcmzxbX4ByH0YRjlpyTTAwKwBTgKnegJab0Cr
-        47ai7IDzRnm1NQqD/mKW23QnQteH3vD3933akzY=
-X-Google-Smtp-Source: APXvYqw34jrrW75pGQVi4um9K7uzDN64ryGaJmYyhFFoItu6JCD/57g2dKkPOZZeKk7TZsBB45DPi2yBrYQOhQDSXw0=
-X-Received: by 2002:a05:6402:12d2:: with SMTP id k18mr51404888edx.197.1561450502322;
- Tue, 25 Jun 2019 01:15:02 -0700 (PDT)
+        Tue, 25 Jun 2019 04:58:59 -0400
+Received: by mail-lf1-f65.google.com with SMTP id x144so4610524lfa.9
+        for <linux-arm-msm@vger.kernel.org>; Tue, 25 Jun 2019 01:58:58 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=V+kChTzQrd3nmy4kJUu2g6Bqv0SUkWeG4jA8/ofAZg8=;
+        b=PDip88KV2Zc0xPh+7nuBk+Uw1g8JiP1Xh9eJnc2f+YFDb1bpGtSFn7QQd0iA1UwJ3A
+         AZHjwKXC3kVfpk0xM1DH31wKIp/mqDhcqw8gu2IZCM5MAbxqvbtg4LFWLDGsP6gFMkWO
+         ua8XZFGsQ3HzZorGf+8s6cMRsY/Ci0OCClzOJBXp3T/QW0oi8tVkBhTZ1Uo6uAb8uosy
+         D7hamd540RRzTjo/BWFXXJby4XkOSdu/ZSXBDI6CAcoHJMsi8596yHU2LKkynOQBFVw8
+         /5McPRI/hncwobKG6fZdGueR/hChNnaSPRCKQPBOaobG0cyisKp/A7Wvo1/5CPanekFL
+         b2Xg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=V+kChTzQrd3nmy4kJUu2g6Bqv0SUkWeG4jA8/ofAZg8=;
+        b=YJHcYTvzSc4S9gskp5FLm6TBe8mabfMymwebhS8KKWGECSbAWw8dBwJedwSHH757Xs
+         ht6Iv+I24SefRuba8VXyCoRYZjdixpc4M9U88kSMMjL+1iiGK0N4Pf3Ghbta2C/xRURk
+         qqUx2YRlMfXMD3vIWEkuI+KTYTL5keU/7qA47FjT4v2xmQDdhLbeg8mpXHBVOxlTJai8
+         Zt1ScKZ+W8ajneRo7BbDLQwzPwVNCgr4ZoCjgGjchJPOY4+s+S4kcX4NqZ6O/afqJihQ
+         Kc0LkWxixD7/0huO8wtmSDtG5tmmoF/xVXhdlg2qNatdr4c+7wI+Ky00m/bo5NfGHKKn
+         H9/Q==
+X-Gm-Message-State: APjAAAV12N75tHRdtPquJdsv5K/tHtXcW/JBY/Vge9PwQTWCAMdffLtY
+        bK/RZ6+TPihd27bM9G/AK8LSqHQhfGoLlj9WazF92w==
+X-Google-Smtp-Source: APXvYqzzb40u6wurDlM2Fjs+HJlarr9mnj7e3anmVcuTqtUwuM5vMPDwJECaz/ZcV29P/oMJ6JU05Pf1Rj7u2PKHDOI=
+X-Received: by 2002:ac2:50c4:: with SMTP id h4mr24507877lfm.61.1561453137773;
+ Tue, 25 Jun 2019 01:58:57 -0700 (PDT)
 MIME-Version: 1.0
-References: <20190619001602.4890-1-bjorn.andersson@linaro.org>
-In-Reply-To: <20190619001602.4890-1-bjorn.andersson@linaro.org>
-From:   Vivek Gautam <vivek.gautam@codeaurora.org>
-Date:   Tue, 25 Jun 2019 13:44:51 +0530
-X-Gmail-Original-Message-ID: <CAFp+6iH3z2_2ZaNYjP7q7504+khgVNiozuKHq3BVLrEwQBz5sg@mail.gmail.com>
-Message-ID: <CAFp+6iH3z2_2ZaNYjP7q7504+khgVNiozuKHq3BVLrEwQBz5sg@mail.gmail.com>
-Subject: Re: [PATCH v2] arm64: dts: qcom: msm8996: Rename smmu nodes
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        David Brown <david.brown@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Mark Rutland <mark.rutland@arm.com>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
-        <devicetree@vger.kernel.org>,
-        open list <linux-kernel@vger.kernel.org>
+References: <1560764090-22740-1-git-send-email-neeraju@codeaurora.org>
+In-Reply-To: <1560764090-22740-1-git-send-email-neeraju@codeaurora.org>
+From:   Linus Walleij <linus.walleij@linaro.org>
+Date:   Tue, 25 Jun 2019 10:58:45 +0200
+Message-ID: <CACRpkdZ4BoZzX7pVw4HYBzSMvhnyu_oVNoiiLk3ME05nnG1T3Q@mail.gmail.com>
+Subject: Re: [PATCH v2] pinctrl: qcom: Add irq_enable callback for msm gpio
+To:     Neeraj Upadhyay <neeraju@codeaurora.org>
+Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Stephen Boyd <sboyd@codeaurora.org>,
+        Timur Tabi <timur@codeaurora.org>,
+        MSM <linux-arm-msm@vger.kernel.org>,
+        "open list:GPIO SUBSYSTEM" <linux-gpio@vger.kernel.org>,
+        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
+        Srinivas Ramana <sramana@codeaurora.org>
 Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Jun 19, 2019 at 5:46 AM Bjorn Andersson
-<bjorn.andersson@linaro.org> wrote:
->
-> Node names shouldn't include a vendor prefix and should whenever
-> possible use a generic identifier. Resolve this by renaming the smmu
-> nodes "iommu".
+On Mon, Jun 17, 2019 at 11:35 AM Neeraj Upadhyay <neeraju@codeaurora.org> wrote:
 
-The bindings too say so :)
-Reviewed-by: Vivek Gautam <vivek.gautam@codeaurora.org>
+> From: Srinivas Ramana <sramana@codeaurora.org>
+>
+> Introduce the irq_enable callback which will be same as irq_unmask
+> except that it will also clear the status bit before unmask.
+>
+> This will help in clearing any erroneous interrupts that would
+> have got latched when the interrupt is not in use.
+>
+> There may be devices like UART which can use the same gpio line
+> for data rx as well as a wakeup gpio when in suspend. The data that
+> was flowing on the line may latch the interrupt and when we enable
+> the interrupt before going to suspend, this would trigger the
+> unexpected interrupt. This change helps clearing the interrupt
+> so that these unexpected interrupts gets cleared.
+>
+> Signed-off-by: Srinivas Ramana <sramana@codeaurora.org>
+> Signed-off-by: Neeraj Upadhyay <neeraju@codeaurora.org>
 
->
-> Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
-> ---
->
+Overall this looks good to me, waiting for Bjorn's review.
+
 > Changes since v1:
-> - Updated commit message to talk about vendor prefix rather than qcom,
->
->  arch/arm64/boot/dts/qcom/msm8996.dtsi | 8 ++++----
->  1 file changed, 4 insertions(+), 4 deletions(-)
->
-> diff --git a/arch/arm64/boot/dts/qcom/msm8996.dtsi b/arch/arm64/boot/dts/qcom/msm8996.dtsi
-> index 2ecd9d775d61..c934e00434c7 100644
-> --- a/arch/arm64/boot/dts/qcom/msm8996.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/msm8996.dtsi
-> @@ -1163,7 +1163,7 @@
->                         };
->                 };
->
-> -               vfe_smmu: arm,smmu@da0000 {
-> +               vfe_smmu: iommu@da0000 {
->                         compatible = "qcom,msm8996-smmu-v2", "qcom,smmu-v2";
->                         reg = <0xda0000 0x10000>;
->
-> @@ -1314,7 +1314,7 @@
->                         };
->                 };
->
-> -               adreno_smmu: arm,smmu@b40000 {
-> +               adreno_smmu: iommu@b40000 {
->                         compatible = "qcom,msm8996-smmu-v2", "qcom,smmu-v2";
->                         reg = <0xb40000 0x10000>;
->
-> @@ -1331,7 +1331,7 @@
->                         power-domains = <&mmcc GPU_GDSC>;
->                 };
->
-> -               mdp_smmu: arm,smmu@d00000 {
-> +               mdp_smmu: iommu@d00000 {
->                         compatible = "qcom,msm8996-smmu-v2", "qcom,smmu-v2";
->                         reg = <0xd00000 0x10000>;
->
-> @@ -1347,7 +1347,7 @@
->                         power-domains = <&mmcc MDSS_GDSC>;
->                 };
->
-> -               lpass_q6_smmu: arm,smmu-lpass_q6@1600000 {
-> +               lpass_q6_smmu: iommu@1600000 {
->                         compatible = "qcom,msm8996-smmu-v2", "qcom,smmu-v2";
->                         reg = <0x1600000 0x20000>;
->                         #iommu-cells = <1>;
-> --
-> 2.18.0
->
+> - Extracted common code into __msm_gpio_irq_unmask().
 
+Please don't name functions __like __that.
 
--- 
-QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
-of Code Aurora Forum, hosted by The Linux Foundation
+> -static void msm_gpio_irq_unmask(struct irq_data *d)
+> +static void __msm_gpio_irq_unmask(struct irq_data *d, bool status_clear)
+
+Instead of __unclear __underscore __semantic use something
+really descriptive like
+
+static void msm_gpio_irq_clear_irq()
+
+That is what it does, right?
+
+Other than that it looks fine.
+
+Yours,
+Linus Walleij
