@@ -2,81 +2,85 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id A8ED95508F
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Jun 2019 15:39:37 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B09C355114
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Jun 2019 16:07:45 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729096AbfFYNjb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 25 Jun 2019 09:39:31 -0400
-Received: from mail.kernel.org ([198.145.29.99]:46940 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1727406AbfFYNjb (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 25 Jun 2019 09:39:31 -0400
-Received: from willie-the-truck (236.31.169.217.in-addr.arpa [217.169.31.236])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id B8A042133F;
-        Tue, 25 Jun 2019 13:39:28 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1561469970;
-        bh=3muJjXWRycZv3Y/JtYQgT9Oc/WMSWIxkkMKqCMNX5RI=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=hiUdQSgP3fzkh9uQINSrEWWxdCpnUcZOSUINFQIWpnmazGlfb+eIkvMic2wa1obwq
-         MOYLBIk3dgpziyQsVjbfSEPXsH6+/BUjsU3tczSc0CNj21IRV5UqpLgjpqguUV3p1v
-         BvJY98/KPveTSOl42McksrdQHTu0QRNQQWXrFSnU=
-Date:   Tue, 25 Jun 2019 14:39:25 +0100
-From:   Will Deacon <will@kernel.org>
-To:     Vivek Gautam <vivek.gautam@codeaurora.org>
-Cc:     "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
-        <devicetree@vger.kernel.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Will Deacon <will.deacon@arm.com>,
-        open list <linux-kernel@vger.kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        David Brown <david.brown@linaro.org>,
-        "list@263.net:IOMMU DRIVERS <iommu@lists.linux-foundation.org>, Joerg
-        Roedel <joro@8bytes.org>," <iommu@lists.linux-foundation.org>,
-        robh+dt <robh+dt@kernel.org>, Andy Gross <agross@kernel.org>,
-        Robin Murphy <robin.murphy@arm.com>
-Subject: Re: [PATCH v3 3/4] iommu/arm-smmu: Add support to handle Qcom's
- wait-for-safe logic
-Message-ID: <20190625133924.fqq3y7p3i3fqem5p@willie-the-truck>
-References: <20190612071554.13573-1-vivek.gautam@codeaurora.org>
- <20190612071554.13573-4-vivek.gautam@codeaurora.org>
- <20190614040520.GK22737@tuxbook-pro>
- <3e1f5e03-6448-8730-056d-fc47bdd71b3f@codeaurora.org>
- <20190618175218.GH4270@fuggles.cambridge.arm.com>
- <CAFp+6iEynLa=Jt_-oAwt4zmzxzhEXtWNCmghz6rFzcpQVGwrMg@mail.gmail.com>
- <20190624170348.7dncuc5qezqeyvq2@willie-the-truck>
- <CAFp+6iF0TQtAy2JFXk6zjX5GpjeLFesqPZV6ezbDXmc85yvMEA@mail.gmail.com>
+        id S1727919AbfFYOHo (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 25 Jun 2019 10:07:44 -0400
+Received: from mail-lj1-f194.google.com ([209.85.208.194]:44737 "EHLO
+        mail-lj1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727705AbfFYOHo (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 25 Jun 2019 10:07:44 -0400
+Received: by mail-lj1-f194.google.com with SMTP id k18so16393765ljc.11
+        for <linux-arm-msm@vger.kernel.org>; Tue, 25 Jun 2019 07:07:43 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=24XJTrHa0Yc4s3sKxxyNRNMHk8lPxt030dDP8xPw5N4=;
+        b=dBTA9gXzvS9VHnSTxJ5VXq8BgDgH6lEyEC2arXbYVK3n3XqvVQxKWCN0aZsPBo7dNb
+         NDF6mOHe5LhwpJp06hWsnvYcL6kDXe7UOikKtHyR3zJr6c8uDR3bW9CEJjbwSMqB9Mt5
+         LuXHubjT/cdVNrbJHgjGvpV1HB82R5cvlHQ60TwKD77obG/HNRbkSByaGpwJFz5TnINr
+         HLEK0cRLiOvK/8pvjvW2zGYDslsRXV0MmQkXndzpPlAtDceFvMD/dgrEU5rDSMLVAgXy
+         g0Q6tT5nnF/hsp1ONNrpUiYScx47fPgEFw4n7+oMQkHkQAnPt3kpMz6KIU3p8M6g7xHZ
+         /LIQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=24XJTrHa0Yc4s3sKxxyNRNMHk8lPxt030dDP8xPw5N4=;
+        b=jOax+Ai1gBAHgrovQ/hRTDTVf4B94jxc9sEOOEtFHWFiuEbOV6olNfshhwiiNBzFPu
+         l+WhW1DGIOopOZyEAL6SN4aBHtfCV4yWvkB1BV6OtkmZ2a9aFBe/HrrV2oDslyjzsaOI
+         QrGUaqq3oCgpIVipGfYqvU8noOrd1Zd9sXkoSLFdfpm8dKd2d5yWOyOOQR4zxIqTmUlK
+         UTG4FIIOD5qOu2oIztj5OK8v1u5kp1Sws5sc9vdHcuyuDaK5u1XplVkJhVH57MyCXVaN
+         swjuF89HodvNuYHnmhpZh+R/xGja7kt4HP/bHkI08YWlxBOtvgb3/XiXNoSfQh5/HqBU
+         GmfQ==
+X-Gm-Message-State: APjAAAV2B+Lk90TO2uDUjQPWdWrybKyCEgrGiSQdWDHT2oJzxwEeBufg
+        iBsT7Rk6Ubs80hp7mMyi/AZE9CAw+n/RyLYiec5+Jg==
+X-Google-Smtp-Source: APXvYqyjrDxpNXoWoBRzWyreU6t0oFZefNmzaDjlnTXV6ya4jhyfq+7zm2Vv8USOB8y4emzxmQG1awzZwLIh1cr2/8E=
+X-Received: by 2002:a2e:a0d5:: with SMTP id f21mr52627090ljm.69.1561471662514;
+ Tue, 25 Jun 2019 07:07:42 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAFp+6iF0TQtAy2JFXk6zjX5GpjeLFesqPZV6ezbDXmc85yvMEA@mail.gmail.com>
-User-Agent: NeoMutt/20170113 (1.7.2)
+References: <20190621202043.95967-1-natechancellor@gmail.com>
+In-Reply-To: <20190621202043.95967-1-natechancellor@gmail.com>
+From:   Linus Walleij <linus.walleij@linaro.org>
+Date:   Tue, 25 Jun 2019 16:07:30 +0200
+Message-ID: <CACRpkdZFvNNodNas2hQ-4iuS-UgHapMR-Y8f715Hbj_PH04iRQ@mail.gmail.com>
+Subject: Re: [PATCH] pinctrl: qcom: sdm845: Fix CONFIG preprocessor guard
+To:     Nathan Chancellor <natechancellor@gmail.com>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        MSM <linux-arm-msm@vger.kernel.org>,
+        "open list:GPIO SUBSYSTEM" <linux-gpio@vger.kernel.org>,
+        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
+        clang-built-linux@googlegroups.com,
+        Lee Jones <lee.jones@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Jun 25, 2019 at 12:34:56PM +0530, Vivek Gautam wrote:
-> On Mon, Jun 24, 2019 at 10:33 PM Will Deacon <will@kernel.org> wrote:
-> > Instead, I think this needs to be part of a separate file that is maintained
-> > by you, which follows on from the work that Krishna is doing for nvidia
-> > built on top of Robin's prototype patches:
-> >
-> > http://linux-arm.org/git?p=linux-rm.git;a=shortlog;h=refs/heads/iommu/smmu-impl
-> 
-> Looking at this branch quickly, it seem there can be separate implementation
-> level configuration file that can be added.
-> But will this also handle separate page table ops when required in future.
+On Fri, Jun 21, 2019 at 10:21 PM Nathan Chancellor
+<natechancellor@gmail.com> wrote:
 
-Nothing's set in stone, but having the implementation-specific code
-constrain the page-table format (especially wrt quirks) sounds reasonable to
-me. I'm currently waiting for Krishna to respin the nvidia changes [1] on
-top of this so that we can see how well the abstractions are holding up.
+> Clang warns when CONFIG_ACPI is unset:
+>
+>  drivers/pinctrl/qcom/pinctrl-sdm845.c:1320:5: warning: 'CONFIG_ACPI' is
+>  not defined, evaluates to 0 [-Wundef]
+>  #if CONFIG_ACPI
+>      ^
+>  1 warning generated.
+>
+> Use ifdef instead of if to resolve this.
+>
+> Fixes: a229105d7a1e ("pinctrl: qcom: sdm845: Provide ACPI support")
+> Link: https://github.com/ClangBuiltLinux/linux/issues/569
+> Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
 
-I certainly won't merge the stuff until we have a user.
+Patch applied with the ACKs.
+I'm sure Bjorn doesn't mind.
 
-Will
-
-[1] https://lkml.kernel.org/r/1543887414-18209-1-git-send-email-vdumpa@nvidia.com
+Yours,
+Linus Walleij
