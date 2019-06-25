@@ -2,393 +2,206 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 7D1485239E
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Jun 2019 08:35:15 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 99070523ED
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Jun 2019 09:05:17 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729446AbfFYGfM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 25 Jun 2019 02:35:12 -0400
-Received: from mail.kernel.org ([198.145.29.99]:41854 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1729419AbfFYGfM (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 25 Jun 2019 02:35:12 -0400
-Received: from localhost.localdomain (unknown [106.201.40.23])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        id S1726712AbfFYHFN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 25 Jun 2019 03:05:13 -0400
+Received: from smtp.codeaurora.org ([198.145.29.96]:33808 "EHLO
+        smtp.codeaurora.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726397AbfFYHFN (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 25 Jun 2019 03:05:13 -0400
+Received: by smtp.codeaurora.org (Postfix, from userid 1000)
+        id D3F2F607DE; Tue, 25 Jun 2019 07:05:11 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
+        s=default; t=1561446312;
+        bh=4N/BCQSsMk9kqvdWn3ha3xLftdz1843VcRc6I5jXtM0=;
+        h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
+        b=NC8qjC79C5Fg7PzYzQpqFRb69qRUqQgHKBtvpUS6OJx7HVuaWNh8T8O5MV4eP109S
+         1HgoTHqEw276dWOr1SJQ11TdQD4MOL8Z02NOq+HdHjgmcaLyhruNBD4wPkLHWqMCKn
+         3GRKotsRxMmyKjiZN9Im8dpa+XjW/uotsR/I8QBY=
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        pdx-caf-mail.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.7 required=2.0 tests=ALL_TRUSTED,BAYES_00,
+        DKIM_INVALID,DKIM_SIGNED,SPF_NONE autolearn=no autolearn_force=no
+        version=3.4.0
+Received: from mail-ed1-f52.google.com (mail-ed1-f52.google.com [209.85.208.52])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
         (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 9C3E920665;
-        Tue, 25 Jun 2019 06:35:07 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1561444511;
-        bh=RlYLtJRgVt5OLW4cCnEiBeIExmuKVyYQKzvlmaDjfEU=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=QQblvpm3ux1Cb3RS0MhJlJKc81YsCnjO7SuR82AQTFY9vkBgcEcr2md/I9KyO6/WO
-         gYhiDFu4dj7N7D0/dy4NKHR7wbhFrnF8X2WIHpRpsaHvNN0vT7BBLoyVd245OCwlfX
-         rScYMhoCt0PQLO67nlMq7Mg3IR8yO9e/DTrynxi4=
-From:   Vinod Koul <vkoul@kernel.org>
-To:     Stephen Boyd <sboyd@kernel.org>
-Cc:     linux-arm-msm@vger.kernel.org,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Deepak Katragadda <dkatraga@codeaurora.org>,
-        Andy Gross <agross@kernel.org>,
-        David Brown <david.brown@linaro.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        linux-clk@vger.kernel.org, Taniya Das <tdas@codeaurora.org>,
-        Vinod Koul <vkoul@kernel.org>
-Subject: [PATCH v3 2/3] clk: qcom: clk-alpha-pll: Add support for Trion PLLs
-Date:   Tue, 25 Jun 2019 12:01:39 +0530
-Message-Id: <20190625063140.17106-3-vkoul@kernel.org>
-X-Mailer: git-send-email 2.20.1
-In-Reply-To: <20190625063140.17106-1-vkoul@kernel.org>
-References: <20190625063140.17106-1-vkoul@kernel.org>
+        (Authenticated sender: vivek.gautam@smtp.codeaurora.org)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 810C660D35;
+        Tue, 25 Jun 2019 07:05:09 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
+        s=default; t=1561446309;
+        bh=4N/BCQSsMk9kqvdWn3ha3xLftdz1843VcRc6I5jXtM0=;
+        h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
+        b=AV2jdOHrweSYZn30LLL2sFGVil30bCPNm7cJj9pLsh/jH55hcILm18varwhtbYW19
+         C0H5gi7AI1IYhrj534RIvAHUU+5U5zC8borvNyFNL7ZVAJGITUp27qUHyCjVClKqoE
+         tDcqvj0k/yeEs/3yNqTrDpjRR/GVXG3eE5n3JMWE=
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 810C660D35
+Authentication-Results: pdx-caf-mail.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: pdx-caf-mail.web.codeaurora.org; spf=none smtp.mailfrom=vivek.gautam@codeaurora.org
+Received: by mail-ed1-f52.google.com with SMTP id w13so25554723eds.4;
+        Tue, 25 Jun 2019 00:05:09 -0700 (PDT)
+X-Gm-Message-State: APjAAAUs55jgZq7qQmiv7cXwwxfIxKkrNghJy6OgmWrurPXf8UmGa6ro
+        nRuQjgmamlWFfXCWWnpe209zTNlo/DKX3g/EdQ4=
+X-Google-Smtp-Source: APXvYqw4ea9lzM4JrtqZAtGHkuco3ytv6PJqElNZoVg2rFRo/Orhj9+G+vfP00mjoxzM/Bk8IOr2E4Su/rVWt/pFy7Q=
+X-Received: by 2002:a50:9413:: with SMTP id p19mr146764994eda.224.1561446308141;
+ Tue, 25 Jun 2019 00:05:08 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <20190612071554.13573-1-vivek.gautam@codeaurora.org>
+ <20190612071554.13573-4-vivek.gautam@codeaurora.org> <20190614040520.GK22737@tuxbook-pro>
+ <3e1f5e03-6448-8730-056d-fc47bdd71b3f@codeaurora.org> <20190618175218.GH4270@fuggles.cambridge.arm.com>
+ <CAFp+6iEynLa=Jt_-oAwt4zmzxzhEXtWNCmghz6rFzcpQVGwrMg@mail.gmail.com> <20190624170348.7dncuc5qezqeyvq2@willie-the-truck>
+In-Reply-To: <20190624170348.7dncuc5qezqeyvq2@willie-the-truck>
+From:   Vivek Gautam <vivek.gautam@codeaurora.org>
+Date:   Tue, 25 Jun 2019 12:34:56 +0530
+X-Gmail-Original-Message-ID: <CAFp+6iF0TQtAy2JFXk6zjX5GpjeLFesqPZV6ezbDXmc85yvMEA@mail.gmail.com>
+Message-ID: <CAFp+6iF0TQtAy2JFXk6zjX5GpjeLFesqPZV6ezbDXmc85yvMEA@mail.gmail.com>
+Subject: Re: [PATCH v3 3/4] iommu/arm-smmu: Add support to handle Qcom's
+ wait-for-safe logic
+To:     Will Deacon <will@kernel.org>
+Cc:     "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
+        <devicetree@vger.kernel.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        Will Deacon <will.deacon@arm.com>,
+        open list <linux-kernel@vger.kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        David Brown <david.brown@linaro.org>,
+        "list@263.net:IOMMU DRIVERS <iommu@lists.linux-foundation.org>, Joerg
+        Roedel <joro@8bytes.org>," <iommu@lists.linux-foundation.org>,
+        "robh+dt" <robh+dt@kernel.org>, Andy Gross <agross@kernel.org>,
+        Robin Murphy <robin.murphy@arm.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Deepak Katragadda <dkatraga@codeaurora.org>
+Hi Will,
 
-Add programming sequence support for managing the Trion
-PLLs.
 
-Signed-off-by: Deepak Katragadda <dkatraga@codeaurora.org>
-Signed-off-by: Taniya Das <tdas@codeaurora.org>
-[vkoul: port to upstream and tidy-up]
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
----
- drivers/clk/qcom/clk-alpha-pll.c | 228 +++++++++++++++++++++++++++++++
- drivers/clk/qcom/clk-alpha-pll.h |   7 +
- 2 files changed, 235 insertions(+)
+On Mon, Jun 24, 2019 at 10:33 PM Will Deacon <will@kernel.org> wrote:
+>
+> [+Krishna]
+>
+> Hi Vivek,
+>
+> On Mon, Jun 24, 2019 at 03:58:32PM +0530, Vivek Gautam wrote:
+> > On Tue, Jun 18, 2019 at 11:22 PM Will Deacon <will.deacon@arm.com> wrote:
+> > > On Fri, Jun 14, 2019 at 02:48:07PM +0530, Vivek Gautam wrote:
+> > > > On 6/14/2019 9:35 AM, Bjorn Andersson wrote:
+> > > > > On Wed 12 Jun 00:15 PDT 2019, Vivek Gautam wrote:
+> > > > > > diff --git a/drivers/iommu/arm-smmu.c b/drivers/iommu/arm-smmu.c
+> > > > > > index 0ad086da399c..3c3ad43eda97 100644
+> > > > > > --- a/drivers/iommu/arm-smmu.c
+> > > > > > +++ b/drivers/iommu/arm-smmu.c
+> > > > > > @@ -39,6 +39,7 @@
+> > > > > >   #include <linux/pci.h>
+> > > > > >   #include <linux/platform_device.h>
+> > > > > >   #include <linux/pm_runtime.h>
+> > > > > > +#include <linux/qcom_scm.h>
+> > > > > >   #include <linux/slab.h>
+> > > > > >   #include <linux/spinlock.h>
+> > > > > > @@ -177,6 +178,7 @@ struct arm_smmu_device {
+> > > > > >           u32                             features;
+> > > > > >   #define ARM_SMMU_OPT_SECURE_CFG_ACCESS (1 << 0)
+> > > > > > +#define ARM_SMMU_OPT_QCOM_FW_IMPL_SAFE_ERRATA (1 << 1)
+> > > > > >           u32                             options;
+> > > > > >           enum arm_smmu_arch_version      version;
+> > > > > >           enum arm_smmu_implementation    model;
+> > > > > > @@ -262,6 +264,7 @@ static bool using_legacy_binding, using_generic_binding;
+> > > > > >   static struct arm_smmu_option_prop arm_smmu_options[] = {
+> > > > > >           { ARM_SMMU_OPT_SECURE_CFG_ACCESS, "calxeda,smmu-secure-config-access" },
+> > > > > > + { ARM_SMMU_OPT_QCOM_FW_IMPL_SAFE_ERRATA, "qcom,smmu-500-fw-impl-safe-errata" },
+> > > > > This should be added to the DT binding as well.
+> > > >
+> > > > Ah right. I missed that. Will add this and respin unless Robin and Will have
+> > > > concerns with this change.
+> > >
+> > > My only concern really is whether it's safe for us to turn this off. It's
+> > > clear that somebody went to a lot of effort to add this extra goodness to
+> > > the IP, but your benchmarks suggest they never actually tried it out after
+> > > they finished building it.
+> > >
+> > > Is there some downside I'm not seeing from disabling this stuff?
+> >
+> > This wait-for-safe is a TLB invalidation enhancement to help display
+> > and camera devices.
+> > The SMMU hardware throttles the invalidations so that clients such as
+> > display and camera can indicate when to start the invalidation.
+> > So the SMMU essentially reduces the rate at which invalidations are
+> > serviced from its queue. This also throttles the invalidations from
+> > other masters too.
+> >
+> > On sdm845, the software is expected to serialize the invalidation
+> > command loading into SMMU invalidation FIFO using hardware locks
+> > (downstream code [2]), and is also expected to throttle non-real time
+> > clients while waiting for SAFE==1 (downstream code[2]). We don't do
+> > any of these yet, and as per my understanding as this wait-for-safe is
+> > enabled by the bootloader in a one time config, this logic reduces
+> > performance of devices such as usb and ufs.
+> >
+> > There's isn't any downside from disabling this logic until we have all
+> > the pieces together from downstream in upstream kernels, and until we
+> > have sdm845 devices that are running with full display/gfx stack
+> > running. That's when we plan to revisit this and enable all the pieces
+> > to get display and USB/UFS working with their optimum performance.
+>
+> Generally, I'd agree that approaching this incrementally makes sense, but
+> in this case you're adding new device-tree properties
+> ("qcom,smmu-500-fw-impl-safe-errata") in order to do so, which seems
+> questionable if they're only going to be used in the short-term and will
+> be obsolete once Linux knows how to drive the device properly.
 
-diff --git a/drivers/clk/qcom/clk-alpha-pll.c b/drivers/clk/qcom/clk-alpha-pll.c
-index 2c6773188761..30210f5c6726 100644
---- a/drivers/clk/qcom/clk-alpha-pll.c
-+++ b/drivers/clk/qcom/clk-alpha-pll.c
-@@ -32,6 +32,7 @@
- # define PLL_LOCK_DET		BIT(31)
- 
- #define PLL_L_VAL(p)		((p)->offset + (p)->regs[PLL_OFF_L_VAL])
-+#define PLL_CAL_L_VAL(p)	((p)->offset + (p)->regs[PLL_OFF_CAL_L_VAL])
- #define PLL_ALPHA_VAL(p)	((p)->offset + (p)->regs[PLL_OFF_ALPHA_VAL])
- #define PLL_ALPHA_VAL_U(p)	((p)->offset + (p)->regs[PLL_OFF_ALPHA_VAL_U])
- 
-@@ -44,14 +45,17 @@
- # define PLL_VCO_MASK		0x3
- 
- #define PLL_USER_CTL_U(p)	((p)->offset + (p)->regs[PLL_OFF_USER_CTL_U])
-+#define PLL_USER_CTL_U1(p)	((p)->offset + (p)->regs[PLL_OFF_USER_CTL_U1])
- 
- #define PLL_CONFIG_CTL(p)	((p)->offset + (p)->regs[PLL_OFF_CONFIG_CTL])
- #define PLL_CONFIG_CTL_U(p)	((p)->offset + (p)->regs[PLL_OFF_CONFIG_CTL_U])
-+#define PLL_CONFIG_CTL_U1(p)	((p)->offset + (p)->regs[PLL_OFF_CONFIG_CTL_U11])
- #define PLL_TEST_CTL(p)		((p)->offset + (p)->regs[PLL_OFF_TEST_CTL])
- #define PLL_TEST_CTL_U(p)	((p)->offset + (p)->regs[PLL_OFF_TEST_CTL_U])
- #define PLL_STATUS(p)		((p)->offset + (p)->regs[PLL_OFF_STATUS])
- #define PLL_OPMODE(p)		((p)->offset + (p)->regs[PLL_OFF_OPMODE])
- #define PLL_FRAC(p)		((p)->offset + (p)->regs[PLL_OFF_FRAC])
-+#define PLL_CAL_VAL(p)		((p)->offset + (p)->regs[PLL_OFF_CAL_VAL])
- 
- const u8 clk_alpha_pll_regs[][PLL_OFF_MAX_REGS] = {
- 	[CLK_ALPHA_PLL_TYPE_DEFAULT] =  {
-@@ -96,6 +100,22 @@ const u8 clk_alpha_pll_regs[][PLL_OFF_MAX_REGS] = {
- 		[PLL_OFF_OPMODE] = 0x2c,
- 		[PLL_OFF_FRAC] = 0x38,
- 	},
-+	[CLK_ALPHA_PLL_TYPE_TRION] = {
-+		[PLL_OFF_L_VAL] = 0x04,
-+		[PLL_OFF_CAL_L_VAL] = 0x08,
-+		[PLL_OFF_USER_CTL] = 0x0c,
-+		[PLL_OFF_USER_CTL_U] = 0x10,
-+		[PLL_OFF_USER_CTL_U1] = 0x14,
-+		[PLL_OFF_CONFIG_CTL] = 0x18,
-+		[PLL_OFF_CONFIG_CTL_U] = 0x1c,
-+		[PLL_OFF_CONFIG_CTL_U1] = 0x20,
-+		[PLL_OFF_TEST_CTL] = 0x24,
-+		[PLL_OFF_TEST_CTL_U] = 0x28,
-+		[PLL_OFF_STATUS] = 0x30,
-+		[PLL_OFF_OPMODE] = 0x38,
-+		[PLL_OFF_ALPHA_VAL] = 0x40,
-+		[PLL_OFF_CAL_VAL] = 0x44,
-+	},
- };
- EXPORT_SYMBOL_GPL(clk_alpha_pll_regs);
- 
-@@ -120,6 +140,10 @@ EXPORT_SYMBOL_GPL(clk_alpha_pll_regs);
- #define FABIA_PLL_OUT_MASK	0x7
- #define FABIA_PLL_RATE_MARGIN	500
- 
-+#define TRION_PLL_STANDBY	0x0
-+#define TRION_PLL_RUN		0x1
-+#define TRION_PLL_OUT_MASK	0x7
-+
- #define pll_alpha_width(p)					\
- 		((PLL_ALPHA_VAL_U(p) - PLL_ALPHA_VAL(p) == 4) ?	\
- 				 ALPHA_REG_BITWIDTH : ALPHA_REG_16BIT_WIDTH)
-@@ -730,6 +754,130 @@ static long alpha_pll_huayra_round_rate(struct clk_hw *hw, unsigned long rate,
- 	return alpha_huayra_pll_round_rate(rate, *prate, &l, &a);
- }
- 
-+static int trion_pll_is_enabled(struct clk_alpha_pll *pll,
-+				struct regmap *regmap)
-+{
-+	u32 mode_regval, opmode_regval;
-+	int ret;
-+
-+	ret = regmap_read(regmap, PLL_MODE(pll), &mode_regval);
-+	ret |= regmap_read(regmap, PLL_OPMODE(pll), &opmode_regval);
-+	if (ret)
-+		return 0;
-+
-+	return ((opmode_regval & TRION_PLL_RUN) && (mode_regval & PLL_OUTCTRL));
-+}
-+
-+static int clk_trion_pll_is_enabled(struct clk_hw *hw)
-+{
-+	struct clk_alpha_pll *pll = to_clk_alpha_pll(hw);
-+
-+	return trion_pll_is_enabled(pll, pll->clkr.regmap);
-+}
-+
-+static int clk_trion_pll_enable(struct clk_hw *hw)
-+{
-+	struct clk_alpha_pll *pll = to_clk_alpha_pll(hw);
-+	struct regmap *regmap = pll->clkr.regmap;
-+	u32 val;
-+	int ret;
-+
-+	ret = regmap_read(regmap, PLL_MODE(pll), &val);
-+	if (ret)
-+		return ret;
-+
-+	/* If in FSM mode, just vote for it */
-+	if (val & PLL_VOTE_FSM_ENA) {
-+		ret = clk_enable_regmap(hw);
-+		if (ret)
-+			return ret;
-+		return wait_for_pll_enable_active(pll);
-+	}
-+
-+	/* Set operation mode to RUN */
-+	regmap_write(regmap, PLL_OPMODE(pll), TRION_PLL_RUN);
-+
-+	ret = wait_for_pll_enable_lock(pll);
-+	if (ret)
-+		return ret;
-+
-+	/* Enable the PLL outputs */
-+	ret = regmap_update_bits(regmap, PLL_USER_CTL(pll),
-+				 TRION_PLL_OUT_MASK, TRION_PLL_OUT_MASK);
-+	if (ret)
-+		return ret;
-+
-+	/* Enable the global PLL outputs */
-+	return regmap_update_bits(regmap, PLL_MODE(pll),
-+				 PLL_OUTCTRL, PLL_OUTCTRL);
-+}
-+
-+static void clk_trion_pll_disable(struct clk_hw *hw)
-+{
-+	struct clk_alpha_pll *pll = to_clk_alpha_pll(hw);
-+	struct regmap *regmap = pll->clkr.regmap;
-+	u32 val;
-+	int ret;
-+
-+	ret = regmap_read(regmap, PLL_MODE(pll), &val);
-+	if (ret)
-+		return;
-+
-+	/* If in FSM mode, just unvote it */
-+	if (val & PLL_VOTE_FSM_ENA) {
-+		clk_disable_regmap(hw);
-+		return;
-+	}
-+
-+	/* Disable the global PLL output */
-+	ret = regmap_update_bits(regmap, PLL_MODE(pll), PLL_OUTCTRL, 0);
-+	if (ret)
-+		return;
-+
-+	/* Disable the PLL outputs */
-+	ret = regmap_update_bits(regmap, PLL_USER_CTL(pll),
-+				 TRION_PLL_OUT_MASK, 0);
-+	if (ret)
-+		return;
-+
-+	/* Place the PLL mode in STANDBY */
-+	regmap_write(regmap, PLL_OPMODE(pll), TRION_PLL_STANDBY);
-+	regmap_update_bits(regmap, PLL_MODE(pll), PLL_RESET_N, PLL_RESET_N);
-+}
-+
-+static unsigned long
-+clk_trion_pll_recalc_rate(struct clk_hw *hw, unsigned long parent_rate)
-+{
-+	struct clk_alpha_pll *pll = to_clk_alpha_pll(hw);
-+	struct regmap *regmap = pll->clkr.regmap;
-+	u32 l, frac;
-+	u64 prate = parent_rate;
-+
-+	regmap_read(regmap, PLL_L_VAL(pll), &l);
-+	regmap_read(regmap, PLL_ALPHA_VAL(pll), &frac);
-+
-+	return alpha_pll_calc_rate(prate, l, frac, ALPHA_REG_16BIT_WIDTH);
-+}
-+
-+static long clk_trion_pll_round_rate(struct clk_hw *hw, unsigned long rate,
-+				     unsigned long *prate)
-+{
-+	struct clk_alpha_pll *pll = to_clk_alpha_pll(hw);
-+	unsigned long min_freq, max_freq;
-+	u32 l;
-+	u64 a;
-+
-+	rate = alpha_pll_round_rate(rate, *prate,
-+				    &l, &a, ALPHA_REG_16BIT_WIDTH);
-+	if (!pll->vco_table || alpha_pll_find_vco(pll, rate))
-+		return rate;
-+
-+	min_freq = pll->vco_table[0].min_freq;
-+	max_freq = pll->vco_table[pll->num_vco - 1].max_freq;
-+
-+	return clamp(rate, min_freq, max_freq);
-+}
-+
- const struct clk_ops clk_alpha_pll_ops = {
- 	.enable = clk_alpha_pll_enable,
- 	.disable = clk_alpha_pll_disable,
-@@ -760,6 +908,15 @@ const struct clk_ops clk_alpha_pll_hwfsm_ops = {
- };
- EXPORT_SYMBOL_GPL(clk_alpha_pll_hwfsm_ops);
- 
-+const struct clk_ops clk_trion_fixed_pll_ops = {
-+	.enable = clk_trion_pll_enable,
-+	.disable = clk_trion_pll_disable,
-+	.is_enabled = clk_trion_pll_is_enabled,
-+	.recalc_rate = clk_trion_pll_recalc_rate,
-+	.round_rate = clk_trion_pll_round_rate,
-+};
-+EXPORT_SYMBOL_GPL(clk_trion_fixed_pll_ops);
-+
- static unsigned long
- clk_alpha_pll_postdiv_recalc_rate(struct clk_hw *hw, unsigned long parent_rate)
- {
-@@ -1053,6 +1210,77 @@ static unsigned long clk_alpha_pll_postdiv_fabia_recalc_rate(struct clk_hw *hw,
- 	return (parent_rate / div);
- }
- 
-+static unsigned long
-+clk_trion_pll_postdiv_recalc_rate(struct clk_hw *hw, unsigned long parent_rate)
-+{
-+	struct clk_alpha_pll_postdiv *pll = to_clk_alpha_pll_postdiv(hw);
-+	struct regmap *regmap = pll->clkr.regmap;
-+	u32 i, div = 1, val;
-+
-+	regmap_read(regmap, PLL_USER_CTL(pll), &val);
-+
-+	val >>= pll->post_div_shift;
-+	val &= PLL_POST_DIV_MASK(pll);
-+
-+	for (i = 0; i < pll->num_post_div; i++) {
-+		if (pll->post_div_table[i].val == val) {
-+			div = pll->post_div_table[i].div;
-+			break;
-+		}
-+	}
-+
-+	return (parent_rate / div);
-+}
-+
-+static long
-+clk_trion_pll_postdiv_round_rate(struct clk_hw *hw, unsigned long rate,
-+				 unsigned long *prate)
-+{
-+	struct clk_alpha_pll_postdiv *pll = to_clk_alpha_pll_postdiv(hw);
-+
-+	return divider_round_rate(hw, rate, prate, pll->post_div_table,
-+				  pll->width, CLK_DIVIDER_ROUND_CLOSEST);
-+};
-+
-+static int
-+clk_trion_pll_postdiv_set_rate(struct clk_hw *hw, unsigned long rate,
-+			       unsigned long parent_rate)
-+{
-+	struct clk_alpha_pll_postdiv *pll = to_clk_alpha_pll_postdiv(hw);
-+	struct regmap *regmap = pll->clkr.regmap;
-+	int i, val = 0, div, ret;
-+
-+	/*
-+	 * If the PLL is in FSM mode, then treat the set_rate callback
-+	 * as a no-operation.
-+	 */
-+	ret = regmap_read(regmap, PLL_MODE(pll), &val);
-+	if (ret)
-+		return ret;
-+
-+	if (val & PLL_VOTE_FSM_ENA)
-+		return 0;
-+
-+	div = DIV_ROUND_UP_ULL(parent_rate, rate);
-+	for (i = 0; i < pll->num_post_div; i++) {
-+		if (pll->post_div_table[i].div == div) {
-+			val = pll->post_div_table[i].val;
-+			break;
-+		}
-+	}
-+
-+	return regmap_update_bits(regmap, PLL_USER_CTL(pll),
-+				  PLL_POST_DIV_MASK(pll) << PLL_POST_DIV_SHIFT,
-+				  val << PLL_POST_DIV_SHIFT);
-+}
-+
-+const struct clk_ops clk_trion_pll_postdiv_ops = {
-+	.recalc_rate = clk_trion_pll_postdiv_recalc_rate,
-+	.round_rate = clk_trion_pll_postdiv_round_rate,
-+	.set_rate = clk_trion_pll_postdiv_set_rate,
-+};
-+EXPORT_SYMBOL_GPL(clk_trion_pll_postdiv_ops);
-+
- static long clk_alpha_pll_postdiv_fabia_round_rate(struct clk_hw *hw,
- 				unsigned long rate, unsigned long *prate)
- {
-diff --git a/drivers/clk/qcom/clk-alpha-pll.h b/drivers/clk/qcom/clk-alpha-pll.h
-index 66755f0f84fc..15f27f4b06df 100644
---- a/drivers/clk/qcom/clk-alpha-pll.h
-+++ b/drivers/clk/qcom/clk-alpha-pll.h
-@@ -13,22 +13,27 @@ enum {
- 	CLK_ALPHA_PLL_TYPE_HUAYRA,
- 	CLK_ALPHA_PLL_TYPE_BRAMMO,
- 	CLK_ALPHA_PLL_TYPE_FABIA,
-+	CLK_ALPHA_PLL_TYPE_TRION,
- 	CLK_ALPHA_PLL_TYPE_MAX,
- };
- 
- enum {
- 	PLL_OFF_L_VAL,
-+	PLL_OFF_CAL_L_VAL,
- 	PLL_OFF_ALPHA_VAL,
- 	PLL_OFF_ALPHA_VAL_U,
- 	PLL_OFF_USER_CTL,
- 	PLL_OFF_USER_CTL_U,
-+	PLL_OFF_USER_CTL_U1,
- 	PLL_OFF_CONFIG_CTL,
- 	PLL_OFF_CONFIG_CTL_U,
-+	PLL_OFF_CONFIG_CTL_U1,
- 	PLL_OFF_TEST_CTL,
- 	PLL_OFF_TEST_CTL_U,
- 	PLL_OFF_STATUS,
- 	PLL_OFF_OPMODE,
- 	PLL_OFF_FRAC,
-+	PLL_OFF_CAL_VAL,
- 	PLL_OFF_MAX_REGS
- };
- 
-@@ -117,5 +122,7 @@ void clk_alpha_pll_configure(struct clk_alpha_pll *pll, struct regmap *regmap,
- 			     const struct alpha_pll_config *config);
- void clk_fabia_pll_configure(struct clk_alpha_pll *pll, struct regmap *regmap,
- 				const struct alpha_pll_config *config);
-+extern const struct clk_ops clk_trion_fixed_pll_ops;
-+extern const struct clk_ops clk_trion_pll_postdiv_ops;
- 
- #endif
+This device tree property will still be valid when we handle the wait-for-safe
+properly for sdm845.
+("qcom,smmu-500-fw-impl-safe-errata") property represents just that the
+firmware has handles to do the entire sequence -
+* read the secure register
+* set/reset the bits in the register to enable/disable wait-for-safe for certain
+  devices.
+And this is valid when firmware masks access to this register from any other
+EE.
+So we don't have to do anything that, for example, we were doing for sdm845
+based cheza's firmware [1] that implements simple scm handlers to read/write
+secure registers.
+
+And fyi, some of the newer SoCs too have this logic, and kernel can have that
+extra bit of page-table-ops to handle wait-safe toggling.
+
+[1] https://lore.kernel.org/patchwork/patch/983917/
+>
+> Instead, I think this needs to be part of a separate file that is maintained
+> by you, which follows on from the work that Krishna is doing for nvidia
+> built on top of Robin's prototype patches:
+>
+> http://linux-arm.org/git?p=linux-rm.git;a=shortlog;h=refs/heads/iommu/smmu-impl
+
+Looking at this branch quickly, it seem there can be separate implementation
+level configuration file that can be added.
+But will this also handle separate page table ops when required in future.
+
+Best regards
+Vivek
+
+>
+> Once we have that, you can key this behaviour off the compatible string
+> rather than having to add quirk properties to reflect the transient needs of
+> Linux.
+>
+> Krishna -- how have you been getting on with the branch above?
+>
+> Will
+> _______________________________________________
+> iommu mailing list
+> iommu@lists.linux-foundation.org
+> https://lists.linuxfoundation.org/mailman/listinfo/iommu
+
+
+
 -- 
-2.20.1
-
+QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
+of Code Aurora Forum, hosted by The Linux Foundation
