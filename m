@@ -2,93 +2,97 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 139B8552DB
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Jun 2019 17:06:34 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E15185546E
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Jun 2019 18:27:43 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731938AbfFYPGd (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 25 Jun 2019 11:06:33 -0400
-Received: from mail-qk1-f194.google.com ([209.85.222.194]:45462 "EHLO
-        mail-qk1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730607AbfFYPGd (ORCPT
+        id S1729188AbfFYQ1n (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 25 Jun 2019 12:27:43 -0400
+Received: from smtp.codeaurora.org ([198.145.29.96]:60980 "EHLO
+        smtp.codeaurora.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726740AbfFYQ1m (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 25 Jun 2019 11:06:33 -0400
-Received: by mail-qk1-f194.google.com with SMTP id s22so12838001qkj.12;
-        Tue, 25 Jun 2019 08:06:32 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=bELmNNrnslYbuDFKjG/eQ34XIMdof74I0tg6yMjaKmA=;
-        b=aYnVPF7zd1KE6zNs306l3HZM/2M5rLu9+bVjs4QvJiF2jbGzsH1JuOsZQqSrAfSNX+
-         VUpY+0MvQFofyB8uhggGXMl5YQBuHFaBZeqqya2qhf7bbfe+OtccC3SuKJUDiSJDUT1E
-         /zQalvONctY/tAqo6dX24Q5xSvR2iyVQ5nkCOfDdoSHOeq6J3NERy4CeiNwZH7Knn76H
-         7jlMOBk/cP2BrsfrIWm6ajCFLoygSzCMc162Vg5JTUIUwwOBv0N5VOCQFCQHbA55jqC3
-         4U6Rji/vRptvBs55J8COtor4tENBxhApB/NGsknY9ppLIkcKokKRRAEZLFTLKbt1whmE
-         Un7g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=bELmNNrnslYbuDFKjG/eQ34XIMdof74I0tg6yMjaKmA=;
-        b=NK0wRnpgyrNq+YCy6IHMYgJVLu3bbGYzc4uNA3Lyc6rUbSUoF0juWRBUtpxSNM+x/k
-         Q271QtIXvjQPXJ0M4XOGzf+z2xdy6Rskx3oBP4WVbS1eILw9g7t0YeVj8kRSim2/7fY0
-         V+kskgtH7mjsVJPwzqOVl7CBYpzgthwEq5bWo+/c6o//DtYawgEbKJwB83mxLGN9FlMZ
-         iVcfEIQUUg2v9ks1Y6qrDto8csBDNJo2S4EXptAsjEn3/xkf828OkrqiTqmhq4C1e8if
-         LfaneUe8ixNlPJwCc79TvVqXW2su9xGHK075+yG3f9dahsoUwFqltPOUgcN23njB/KVV
-         0iwg==
-X-Gm-Message-State: APjAAAVZVM2QbFVE3SqXJgMUKEKkAZyhs22uJULPP4iPEtVbXT162O+X
-        gH35hxx2GzFVt4FxXeuxg9saWEN7Rjz7AC5hLGU=
-X-Google-Smtp-Source: APXvYqyx0QseH6SXwVmzmo+9GWLxHuefdKjKG8yiwmM0xM37iwxfQ7PzIdCh9+Lkkc3hvdOoPafVm/r8iodbKy+oXl0=
-X-Received: by 2002:a37:ea0c:: with SMTP id t12mr56728789qkj.117.1561475192105;
- Tue, 25 Jun 2019 08:06:32 -0700 (PDT)
-MIME-Version: 1.0
-References: <20190516142342.28019-1-smuchun@gmail.com> <20190524190443.GB29565@kroah.com>
- <CAPSr9jH3sowszuNtBaTM1Wdi9vW+iakYX1G3arj+2_r5r7bYwQ@mail.gmail.com>
- <CAPSr9jFG17YnQC3UZrTZjqytB5wpTMeqqqOcJ7Sf6gAr8o5Uhg@mail.gmail.com>
- <20190618152859.GB1912@kroah.com> <CAPSr9jFMKb1bQAbCFLqP2+fb60kcbyJ+cDspkL5FH28CNKFz3A@mail.gmail.com>
- <20190618161340.GA13983@kroah.com> <e3e064d85790a56b661ef9641e02c571540c6f44.camel@kernel.crashing.org>
-In-Reply-To: <e3e064d85790a56b661ef9641e02c571540c6f44.camel@kernel.crashing.org>
-From:   Muchun Song <smuchun@gmail.com>
-Date:   Tue, 25 Jun 2019 23:06:22 +0800
-Message-ID: <CAPSr9jExG2C6U0D2TN-PUxgi9waD5QkSR-icxNPP1w9nJx3GUQ@mail.gmail.com>
-Subject: Re: [PATCH v4] driver core: Fix use-after-free and double free on
- glue directory
-To:     Benjamin Herrenschmidt <benh@kernel.crashing.org>,
-        Greg KH <gregkh@linuxfoundation.org>
-Cc:     "Rafael J. Wysocki" <rafael@kernel.org>,
-        Prateek Sood <prsood@codeaurora.org>,
-        Mukesh Ojha <mojha@codeaurora.org>, gkohli@codeaurora.org,
-        linux-kernel <linux-kernel@vger.kernel.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        zhaowuyun@wingtech.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+        Tue, 25 Jun 2019 12:27:42 -0400
+Received: by smtp.codeaurora.org (Postfix, from userid 1000)
+        id BB7BF608CE; Tue, 25 Jun 2019 16:27:40 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
+        s=default; t=1561480061;
+        bh=OQmDurrz4oeNBssRUIUWXCS8QrhdrRt1sbFPXIyNCxA=;
+        h=From:To:Cc:Subject:Date:From;
+        b=K/4eFNIq4GRXMTG6YCm+xJUEsGKVok8IKCvSd7u7fwYRgRSH52ZIWBP4/S/KhB1F8
+         J1wk0dlzTZbUO7/4ercXe1fVz3MuJXfuk3ubHq3/2xMoIP4r+huj9pgmpt/I+gqCTT
+         f1lg6BviW+yDMiehBXM6I4yrkhAC+W+jF23nmwY4=
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        pdx-caf-mail.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.7 required=2.0 tests=ALL_TRUSTED,BAYES_00,
+        DKIM_INVALID,DKIM_SIGNED,SPF_NONE autolearn=no autolearn_force=no
+        version=3.4.0
+Received: from amasule-linux.qualcomm.com (blr-c-bdr-fw-01_globalnat_allzones-outside.qualcomm.com [103.229.19.19])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: amasule@codeaurora.org)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 147816025A;
+        Tue, 25 Jun 2019 16:27:37 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
+        s=default; t=1561480060;
+        bh=OQmDurrz4oeNBssRUIUWXCS8QrhdrRt1sbFPXIyNCxA=;
+        h=From:To:Cc:Subject:Date:From;
+        b=FYMt7zlKERj993qidX4lwevPK0RPksf8hE013NRIDOBprvkaXDsCqiw78IbcwU4Ws
+         EZ1XT2AsKTrSdkaCmk/1NDJB/tlDBfjj+h4LKeKWrT031B4bBFLowGn+9hfQlvjWri
+         VECFMwPqnSadJg1fgGL5MOKkn73KZEvVRALVfbzY=
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 147816025A
+Authentication-Results: pdx-caf-mail.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: pdx-caf-mail.web.codeaurora.org; spf=none smtp.mailfrom=amasule@codeaurora.org
+From:   Aniket Masule <amasule@codeaurora.org>
+To:     linux-media@vger.kernel.org, stanimir.varbanov@linaro.org
+Cc:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        vgarodia@codeaurora.org, Aniket Masule <amasule@codeaurora.org>
+Subject: [PATCH v3 0/4] media: venus: Update clock scaling and core selection
+Date:   Tue, 25 Jun 2019 21:57:20 +0530
+Message-Id: <1561480044-11834-1-git-send-email-amasule@codeaurora.org>
+X-Mailer: git-send-email 1.9.1
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Benjamin Herrenschmidt <benh@kernel.crashing.org> =E4=BA=8E2019=E5=B9=B46=
-=E6=9C=8819=E6=97=A5=E5=91=A8=E4=B8=89 =E4=B8=8A=E5=8D=885:51=E5=86=99=E9=
-=81=93=EF=BC=9A
->
-> On Tue, 2019-06-18 at 18:13 +0200, Greg KH wrote:
-> >
-> > Again, I am totally confused and do not see a patch in an email that
-> > I
-> > can apply...
-> >
-> > Someone needs to get people to agree here...
->
-> I think he was hoping you would chose which solution you prefered here
+In this patch series, clock scaling and core selection methods are
+updated. Current clock scaling and core selection methods are same
+for vpu4 and previous versions. Introducing load calculations using
+vpp cycles, which indicates the cycles required by video hardware to
+process each macroblock. Clock scaling is now done more precisely using
+vpp cycles. Instance is assigned to core with minimum load, instead of
+of static assignment.
 
-Yeah, right, I am hoping you would chose which solution you prefered here.
-Thanks.
+Changes since v2 addressing the comments:
+ - Codec_data and vpp_cycles have renamed to codec_freq_data and
+   vpp_freq respectively.
+ - Conditional check in patch 4 for checking max cores available
+   is updated to VIDC_CORE_ID_2.
+ - venus_helper_decide_core renamed to venus_helper_set_core.
+ - scale_clocks_vpu4 renamed scale_clocks_v4.
 
-> :-) His original or the one I suggested instead. I don't think there's
-> anybody else with understanding of sysfs guts around to form an
-> opinion.
->
+For comment on freq fied in clk_data structure, it is getting initialized
+and used in scale_clocks_v4 function. 
 
-Yours,
-Muchun
+
+Aniket Masule (4):
+  media: venus: Add codec data table
+  media: venus: Update clock scaling
+  media: venus: Add interface for load per core
+  media: venus: Update core selection
+
+ drivers/media/platform/qcom/venus/core.c       |  13 ++
+ drivers/media/platform/qcom/venus/core.h       |  15 ++
+ drivers/media/platform/qcom/venus/helpers.c    | 190 +++++++++++++++++++++++--
+ drivers/media/platform/qcom/venus/helpers.h    |   3 +-
+ drivers/media/platform/qcom/venus/hfi_helper.h |   1 +
+ drivers/media/platform/qcom/venus/hfi_parser.h |   5 +
+ drivers/media/platform/qcom/venus/vdec.c       |   6 +-
+ drivers/media/platform/qcom/venus/venc.c       |   6 +-
+ 8 files changed, 226 insertions(+), 13 deletions(-)
+
+-- 
+The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
+a Linux Foundation Collaborative Project
+
