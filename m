@@ -2,144 +2,97 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id BAA0D57136
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 Jun 2019 21:02:33 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 85A1A573A9
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 Jun 2019 23:32:47 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726293AbfFZTC1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 26 Jun 2019 15:02:27 -0400
-Received: from smtp.codeaurora.org ([198.145.29.96]:34276 "EHLO
-        smtp.codeaurora.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726239AbfFZTC1 (ORCPT
+        id S1726373AbfFZVcm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 26 Jun 2019 17:32:42 -0400
+Received: from mail-pg1-f193.google.com ([209.85.215.193]:43819 "EHLO
+        mail-pg1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726223AbfFZVcm (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 26 Jun 2019 15:02:27 -0400
-Received: by smtp.codeaurora.org (Postfix, from userid 1000)
-        id 04EE2611D1; Wed, 26 Jun 2019 19:02:24 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
-        s=default; t=1561575746;
-        bh=ssCLH2DoKTlXWGV9yiNUwpiNQxntMU7hy1HNqKFxCCg=;
-        h=Subject:To:Cc:References:From:Date:In-Reply-To:From;
-        b=IcVVxpUgpLgqP/+0mEHeUqYXovFSKQStMg2jAbz0yVjJOFb3AbG9rVchvEvQ3Pn5M
-         2nETwgXMFXuDOnCgrecuHG4VYGd0jyvRELr7sjEpTA9y7nOETgHRd5QXDd8zqOwB1p
-         M00B3YidJkFCFlWnAwnMWG1SdAyNpejpk4YS0BFI=
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        pdx-caf-mail.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.7 required=2.0 tests=ALL_TRUSTED,BAYES_00,
-        DKIM_INVALID,DKIM_SIGNED,SPF_NONE autolearn=no autolearn_force=no
-        version=3.4.0
-Received: from [192.168.1.100] (unknown [157.45.87.48])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: saiprakash.ranjan@smtp.codeaurora.org)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 02D37611C3;
-        Wed, 26 Jun 2019 19:02:16 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
-        s=default; t=1561575743;
-        bh=ssCLH2DoKTlXWGV9yiNUwpiNQxntMU7hy1HNqKFxCCg=;
-        h=Subject:To:Cc:References:From:Date:In-Reply-To:From;
-        b=oQTNqSlBgSWSEUG6XfeB1st98U6hzR/AGOTiQ15o5PkdK1RlhOT1Dp8Ogl/L8ITFh
-         5oOTx3dBfanB5UeBvQMs40Wb4khZ/Qc7d0xpXDHFT35O+l6/V6qT7S+TfGXhgGrVtc
-         tv7kxa597Do8x+Un4bBvHmHuyhhwxCD/RZSqFlt8=
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 02D37611C3
-Authentication-Results: pdx-caf-mail.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: pdx-caf-mail.web.codeaurora.org; spf=none smtp.mailfrom=saiprakash.ranjan@codeaurora.org
-Subject: Re: [PATCHv3 1/1] coresight: Do not default to CPU0 for missing CPU
- phandle
-To:     Mathieu Poirier <mathieu.poirier@linaro.org>
-Cc:     Suzuki K Poulose <suzuki.poulose@arm.com>,
-        Leo Yan <leo.yan@linaro.org>, Rob Herring <robh+dt@kernel.org>,
-        devicetree@vger.kernel.org,
-        Alexander Shishkin <alexander.shishkin@linux.intel.com>,
-        Andy Gross <andy.gross@linaro.org>,
-        David Brown <david.brown@linaro.org>,
-        Mark Rutland <mark.rutland@arm.com>,
-        Rajendra Nayak <rnayak@codeaurora.org>,
-        Vivek Gautam <vivek.gautam@codeaurora.org>,
-        Sibi Sankar <sibis@codeaurora.org>,
-        linux-arm-kernel <linux-arm-kernel@lists.infradead.org>,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>
-References: <cover.1561346998.git.saiprakash.ranjan@codeaurora.org>
- <635466ab6a27781966bb083e93d2ca2729473ced.1561346998.git.saiprakash.ranjan@codeaurora.org>
- <CANLsYky6D5EsCL2vOa4hHaqTQRXbN+TT0pSzFrykDL_fHEkiBQ@mail.gmail.com>
-From:   Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
-Message-ID: <68fea180-c3a4-b7d9-09b6-1d3ddbc89f9d@codeaurora.org>
-Date:   Thu, 27 Jun 2019 00:32:14 +0530
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
- Thunderbird/60.7.2
+        Wed, 26 Jun 2019 17:32:42 -0400
+Received: by mail-pg1-f193.google.com with SMTP id f25so1807360pgv.10
+        for <linux-arm-msm@vger.kernel.org>; Wed, 26 Jun 2019 14:32:42 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=message-id:mime-version:content-transfer-encoding:in-reply-to
+         :references:subject:to:cc:from:user-agent:date;
+        bh=xaNe52gTlH7uRzDXkViS1kydi/Gmc6DAN/0reN+QD/8=;
+        b=HGVs1bclAbOEXXG+00ww1YiAcgPJaUDs8c6KhzZs0qSXho81TRV1hIRDYI4p3P+oS5
+         wxJihsS1sEj2TMViHikFUkrsrQGyTia8SAyrkZaPBkVceiLL4rujCxA/m5LRUoCr2ZpX
+         bS1Ukkj1FBQTy+QAHrTZIcv/ZmCGwUEuolewg=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:message-id:mime-version
+         :content-transfer-encoding:in-reply-to:references:subject:to:cc:from
+         :user-agent:date;
+        bh=xaNe52gTlH7uRzDXkViS1kydi/Gmc6DAN/0reN+QD/8=;
+        b=civ+oqs4Tz/n+uDH++FS7nfHbQ0WF3zST1hzVgQOWdaGQv/RJu0sgxtvlYSi4lrpLp
+         pTjlQi03XWv4itYt9t0J8cZ9j4bdpzrc/ypJfS2K+M1kjCt7/LQmpBL80qJLzwJGsIjx
+         VJGPgDCuXseWzciE219YBs1rPGAAIj7USvsqFzxb4fUXeaao0S8dnYivpyByk89uclHk
+         /iWrEFCW71ZXGRk4W7/BBukGMRMhmMZogdBiQTGjzq08D0xQ9RNXDrBige9ECG241Ty1
+         gsbjyBIpABKnU0QQfcp6ob+BUpyOtMGLEbiAWvNZtcYb9+FccvOJL2nCyGyuHpeNIlJh
+         wdMw==
+X-Gm-Message-State: APjAAAUHkG2lxlZJcYluds1JeDEWYvHsgQTuPbFuPK/LNoH0DUmCsiu+
+        /tJm9HC/eptGGFwLT2ihSQCJjw==
+X-Google-Smtp-Source: APXvYqx1s5f135al8fvcz9ybaaaQrPCh6UykGfmm1OcWMXuY9lKQcBeG5D68heUPHZLR1mClZF5ETQ==
+X-Received: by 2002:a17:90a:24e4:: with SMTP id i91mr1546271pje.9.1561584761690;
+        Wed, 26 Jun 2019 14:32:41 -0700 (PDT)
+Received: from chromium.org ([2620:15c:202:1:fa53:7765:582b:82b9])
+        by smtp.gmail.com with ESMTPSA id x3sm5124124pja.4.2019.06.26.14.32.41
+        (version=TLS1_3 cipher=AEAD-AES256-GCM-SHA384 bits=256/256);
+        Wed, 26 Jun 2019 14:32:41 -0700 (PDT)
+Message-ID: <5d13e479.1c69fb81.dd08b.b1e4@mx.google.com>
+Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
-In-Reply-To: <CANLsYky6D5EsCL2vOa4hHaqTQRXbN+TT0pSzFrykDL_fHEkiBQ@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <1561550047-19600-1-git-send-email-amasule@codeaurora.org>
+References: <1561550047-19600-1-git-send-email-amasule@codeaurora.org>
+Subject: Re: [PATCH] arm64: dts: sdm845: Add video nodes
+To:     Aniket Masule <amasule@codeaurora.org>, andy.gross@linaro.org,
+        david.brown@linaro.org, mark.rutland@arm.com, robh+dt@kernel.org
+Cc:     devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, mgottam@codeaurora.org,
+        vgarodia@codeaurora.org, Aniket Masule <amasule@codeaurora.org>
+From:   Stephen Boyd <swboyd@chromium.org>
+User-Agent: alot/0.8.1
+Date:   Wed, 26 Jun 2019 14:32:40 -0700
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Mathieu,
+Quoting Aniket Masule (2019-06-26 04:54:07)
+> This adds video nodes to sdm845 based on the examples
+> in the bindings.
+>=20
+> Signed-off-by: Malathi Gottam <mgottam@codeaurora.org>
 
-On 6/26/2019 11:11 PM, Mathieu Poirier wrote:
-> Hi Sai,
-> 
-> On Sun, 23 Jun 2019 at 21:36, Sai Prakash Ranjan
-> <saiprakash.ranjan@codeaurora.org> wrote:
->> diff --git a/drivers/hwtracing/coresight/coresight-platform.c b/drivers/hwtracing/coresight/coresight-platform.c
->> index 3c5ceda8db24..4990da2c13e9 100644
->> --- a/drivers/hwtracing/coresight/coresight-platform.c
->> +++ b/drivers/hwtracing/coresight/coresight-platform.c
->> @@ -159,16 +159,16 @@ static int of_coresight_get_cpu(struct device *dev)
->>          struct device_node *dn;
->>
->>          if (!dev->of_node)
->> -               return 0;
->> +               return -ENODEV;
->> +
->>          dn = of_parse_phandle(dev->of_node, "cpu", 0);
->> -       /* Affinity defaults to CPU0 */
->>          if (!dn)
->> -               return 0;
->> +               return -ENODEV;
->> +
->>          cpu = of_cpu_node_to_id(dn);
->>          of_node_put(dn);
->>
->> -       /* Affinity to CPU0 if no cpu nodes are found */
->> -       return (cpu < 0) ? 0 : cpu;
->> +       return cpu;
->>   }
-> 
-> Function of_coresight_get_cpu() needs to return -ENODEV rather than 0
-> when !CONFIG_OF
-> 
->>
->>   /*
->> @@ -734,14 +734,14 @@ static int acpi_coresight_get_cpu(struct device *dev)
->>          struct acpi_device *adev = ACPI_COMPANION(dev);
->>
->>          if (!adev)
->> -               return 0;
->> +               return -ENODEV;
->>          status = acpi_get_parent(adev->handle, &cpu_handle);
->>          if (ACPI_FAILURE(status))
->> -               return 0;
->> +               return -ENODEV;
->>
->>          cpu = acpi_handle_to_logical_cpuid(cpu_handle);
->>          if (cpu >= nr_cpu_ids)
->> -               return 0;
->> +               return -ENODEV;
->>          return cpu;
->>   }
->>
-> 
-> Same as above, but for !CONFIG_ACPI
-> 
+There should be a From: line with this person's name in the email if
+they're the author. Otherwise this sign-off chain doesn't make sense and
+it should most likely have a Co-developed-by tag instead.
 
-Have fixed and resent, thanks Mathieu.
+> Signed-off-by: Aniket Masule <amasule@codeaurora.org>
+> ---
+>  arch/arm64/boot/dts/qcom/sdm845.dtsi | 30 ++++++++++++++++++++++++++++++
+>  1 file changed, 30 insertions(+)
+>=20
+> diff --git a/arch/arm64/boot/dts/qcom/sdm845.dtsi b/arch/arm64/boot/dts/q=
+com/sdm845.dtsi
+> index fcb9330..ff94cfa 100644
+> --- a/arch/arm64/boot/dts/qcom/sdm845.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/sdm845.dtsi
+> @@ -2437,6 +2437,36 @@
+>                                 <GIC_SPI 425 IRQ_TYPE_LEVEL_HIGH>;
+>                         iommus =3D <&apps_smmu 0x0040 0x1>;
+>                 };
+> +
+> +               video-codec@aa00000 {
 
--Sai
+This needs to be sorted by address. It doesn't come after 18800000 (the
+address of the node above).
 
--- 
-QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
-of Code Aurora Forum, hosted by The Linux Foundation
+> +                       compatible =3D "qcom,sdm845-venus";
+> +                       reg =3D <0x0aa00000 0xff000>;
+> +                       interrupts =3D <GIC_SPI 174 IRQ_TYPE_LEVEL_HIGH>;
