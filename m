@@ -2,102 +2,99 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id AA1BF56C87
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 Jun 2019 16:46:20 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 517C556CC3
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 Jun 2019 16:49:16 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727945AbfFZOqT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 26 Jun 2019 10:46:19 -0400
-Received: from ns.iliad.fr ([212.27.33.1]:54152 "EHLO ns.iliad.fr"
+        id S1728522AbfFZOsw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 26 Jun 2019 10:48:52 -0400
+Received: from mail.kernel.org ([198.145.29.99]:49792 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1727139AbfFZOqT (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 26 Jun 2019 10:46:19 -0400
-Received: from ns.iliad.fr (localhost [127.0.0.1])
-        by ns.iliad.fr (Postfix) with ESMTP id E9ADF2097A;
-        Wed, 26 Jun 2019 16:46:16 +0200 (CEST)
-Received: from [192.168.108.49] (freebox.vlq16.iliad.fr [213.36.7.13])
-        by ns.iliad.fr (Postfix) with ESMTP id D4858205C8;
-        Wed, 26 Jun 2019 16:46:16 +0200 (CEST)
-Subject: Re: [PATCH v1] pinctrl: msm8998: Squash TSIF pins together
-To:     Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
-Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Linus Walleij <linus.walleij@linaro.org>,
-        MSM <linux-arm-msm@vger.kernel.org>,
-        gpio <linux-gpio@vger.kernel.org>
-References: <18ab4b1c-e74e-410a-a504-f524e46c42ac@free.fr>
- <20190611180516.GO4814@minitux>
- <be298c01-53b8-a954-5de0-3f302265f1cb@free.fr>
- <20190620184124.GB24205@tuxbook-pro>
- <57d0644d-164f-58e7-6c07-9608da4233a3@free.fr>
- <CAOCk7Nqi6j07TzH0tp8x8NzwqX1CAG8wj55Yvxw2tVC8cXhxmQ@mail.gmail.com>
-From:   Marc Gonzalez <marc.w.gonzalez@free.fr>
-Message-ID: <2b531817-b1eb-da8c-9edf-25a0b9b2acda@free.fr>
-Date:   Wed, 26 Jun 2019 16:46:16 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.6.1
+        id S1728520AbfFZOsv (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 26 Jun 2019 10:48:51 -0400
+Received: from willie-the-truck (236.31.169.217.in-addr.arpa [217.169.31.236])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by mail.kernel.org (Postfix) with ESMTPSA id A227A205C9;
+        Wed, 26 Jun 2019 14:48:48 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=default; t=1561560530;
+        bh=Q0fkJnt5Wk/wU807scvnJI4s4UA4UjwWKB0s0wc3Xm0=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=FVyyJTKAehLp05zG/pwe9Aa0/ZSb6jmhAh7fYWRrQXRe15i7Nde+lWOqOrHb21zCS
+         I5b5iC0ODpC6vtRvyZwwNJHkjG6b2B82I8tgZ7I8FFj5w751IN+kgPwk5zvzxXWuut
+         Ad9RXJbltpQ3GJ3YyUAXj1PB4wW1p/znSA1zDdnw=
+Date:   Wed, 26 Jun 2019 15:48:45 +0100
+From:   Will Deacon <will@kernel.org>
+To:     Vivek Gautam <vivek.gautam@codeaurora.org>
+Cc:     "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
+        <devicetree@vger.kernel.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        Will Deacon <will.deacon@arm.com>,
+        open list <linux-kernel@vger.kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        David Brown <david.brown@linaro.org>,
+        "list@263.net:IOMMU DRIVERS <iommu@lists.linux-foundation.org>, Joerg
+        Roedel <joro@8bytes.org>," <iommu@lists.linux-foundation.org>,
+        robh+dt <robh+dt@kernel.org>, Andy Gross <agross@kernel.org>,
+        Robin Murphy <robin.murphy@arm.com>
+Subject: Re: [PATCH v3 3/4] iommu/arm-smmu: Add support to handle Qcom's
+ wait-for-safe logic
+Message-ID: <20190626144844.key3n6ueb6skgkp4@willie-the-truck>
+References: <20190612071554.13573-1-vivek.gautam@codeaurora.org>
+ <20190612071554.13573-4-vivek.gautam@codeaurora.org>
+ <20190614040520.GK22737@tuxbook-pro>
+ <3e1f5e03-6448-8730-056d-fc47bdd71b3f@codeaurora.org>
+ <20190618175218.GH4270@fuggles.cambridge.arm.com>
+ <CAFp+6iEynLa=Jt_-oAwt4zmzxzhEXtWNCmghz6rFzcpQVGwrMg@mail.gmail.com>
+ <20190624170348.7dncuc5qezqeyvq2@willie-the-truck>
+ <CAFp+6iF0TQtAy2JFXk6zjX5GpjeLFesqPZV6ezbDXmc85yvMEA@mail.gmail.com>
+ <20190625133924.fqq3y7p3i3fqem5p@willie-the-truck>
+ <CAFp+6iH-KzX7x1j8AAuKJcOP6v=fyP-yLvaeeE_Ly3oueu_ngg@mail.gmail.com>
 MIME-Version: 1.0
-In-Reply-To: <CAOCk7Nqi6j07TzH0tp8x8NzwqX1CAG8wj55Yvxw2tVC8cXhxmQ@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
-X-Virus-Scanned: ClamAV using ClamSMTP ; ns.iliad.fr ; Wed Jun 26 16:46:16 2019 +0200 (CEST)
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CAFp+6iH-KzX7x1j8AAuKJcOP6v=fyP-yLvaeeE_Ly3oueu_ngg@mail.gmail.com>
+User-Agent: NeoMutt/20170113 (1.7.2)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 26/06/2019 16:42, Jeffrey Hugo wrote:
-
-> On Wed, Jun 26, 2019 at 8:40 AM Marc Gonzalez <marc.w.gonzalez@free.fr> wrote:
->
->> Preamble: Rename tsif1 to tsif0, tsif2 to tsif1.
->> Squash tsif0 pins into a single function. Same for tsif1.
->>
->> Signed-off-by: Marc Gonzalez <marc.w.gonzalez@free.fr>
->> ---
->>  .../bindings/pinctrl/qcom,msm8998-pinctrl.txt | 19 ++---
->>  drivers/pinctrl/qcom/pinctrl-msm8998.c        | 76 +++++--------------
->>  2 files changed, 24 insertions(+), 71 deletions(-)
->>
->> diff --git a/Documentation/devicetree/bindings/pinctrl/qcom,msm8998-pinctrl.txt b/Documentation/devicetree/bindings/pinctrl/qcom,msm8998-pinctrl.txt
->> index 00174f08ba1d..47b0f30a39e9 100644
->> --- a/Documentation/devicetree/bindings/pinctrl/qcom,msm8998-pinctrl.txt
->> +++ b/Documentation/devicetree/bindings/pinctrl/qcom,msm8998-pinctrl.txt
->> @@ -124,9 +124,8 @@ to specify in a pin configuration subnode:
->>                     qlink_request, qua_mi2s, sd_card, sd_write, sdc40, sdc41,
->>                     sdc42, sdc43, sdc4_clk, sdc4_cmd, sec_mi2s, sp_cmu,
->>                     spkr_i2s, ssbi1, ssc_irq, ter_mi2s, tgu_ch0, tgu_ch1,
->> -                   tsense_pwm1, tsense_pwm2, tsif1_clk, tsif1_data, tsif1_en,
->> -                   tsif1_error, tsif1_sync, tsif2_clk, tsif2_data, tsif2_en,
->> -                   tsif2_error, tsif2_sync, uim1_clk, uim1_data, uim1_present,
->> +                   tsense_pwm1, tsense_pwm2, tsif0, tsif1,
->> +                   uim1_clk, uim1_data, uim1_present,
->>                     uim1_reset, uim2_clk, uim2_data, uim2_present, uim2_reset,
->>                     uim_batt, usb_phy, vfr_1, vsense_clkout, vsense_data0,
->>                     vsense_data1, vsense_mode, wlan1_adc0, wlan1_adc1,
->> @@ -179,15 +178,9 @@ Example:
->>                 #interrupt-cells = <2>;
->>
->>                 uart_console_active: uart_console_active {
->> -                       mux {
->> -                               pins = "gpio4", "gpio5";
->> -                               function = "blsp_uart8_a";
->> -                       };
->> -
->> -                       config {
->> -                               pins = "gpio4", "gpio5";
->> -                               drive-strength = <2>;
->> -                               bias-disable;
->> -                       };
->> +                       pins = "gpio4", "gpio5";
->> +                       function = "blsp_uart8_a";
->> +                       drive-strength = <2>;
->> +                       bias-disable;
->>                 };
+On Wed, Jun 26, 2019 at 12:03:02PM +0530, Vivek Gautam wrote:
+> On Tue, Jun 25, 2019 at 7:09 PM Will Deacon <will@kernel.org> wrote:
+> >
+> > On Tue, Jun 25, 2019 at 12:34:56PM +0530, Vivek Gautam wrote:
+> > > On Mon, Jun 24, 2019 at 10:33 PM Will Deacon <will@kernel.org> wrote:
+> > > > Instead, I think this needs to be part of a separate file that is maintained
+> > > > by you, which follows on from the work that Krishna is doing for nvidia
+> > > > built on top of Robin's prototype patches:
+> > > >
+> > > > http://linux-arm.org/git?p=linux-rm.git;a=shortlog;h=refs/heads/iommu/smmu-impl
+> > >
+> > > Looking at this branch quickly, it seem there can be separate implementation
+> > > level configuration file that can be added.
+> > > But will this also handle separate page table ops when required in future.
+> >
+> > Nothing's set in stone, but having the implementation-specific code
+> > constrain the page-table format (especially wrt quirks) sounds reasonable to
+> > me. I'm currently waiting for Krishna to respin the nvidia changes [1] on
+> > top of this so that we can see how well the abstractions are holding up.
 > 
-> Whats with these "uart" changes?  Modernizing the example?  Doesn't
-> seem related to the commit text...
+> Sure. Would you want me to try Robin's branch and take out the qualcomm
+> related stuff to its own implementation? Or, would you like me to respin this
+> series so that you can take it in to enable SDM845 boards such as, MTP
+> and dragonboard to have a sane build - debian, etc. so people benefit
+> out of it.
 
-Good point. I squashed one commit too many. I'll drop that hunk
-in v2. (Yes, I meant to document the syntax recommended by Bjorn.)
+I can't take this series without Acks on the firmware calling changes, and I
+plan to send my 5.3 patches to Joerg at the end of the week so they get some
+time in -next. In which case, I think it may be worth you having a play with
+the branch above so we can get a better idea of any additional smmu_impl hooks
+you may need.
 
-Regards.
+> Qualcomm stuff is lying in qcom-smmu and arm-smmu and may take some
+> time to stub out the implementation related details.
+
+Not sure I follow you here. Are you talking about qcom_iommu.c?
+
+Will
