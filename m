@@ -2,234 +2,174 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id D6E7156FBE
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 Jun 2019 19:42:14 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 1ACF756FCB
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 Jun 2019 19:45:38 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726387AbfFZRmK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 26 Jun 2019 13:42:10 -0400
-Received: from mail-io1-f67.google.com ([209.85.166.67]:46029 "EHLO
-        mail-io1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726239AbfFZRmK (ORCPT
+        id S1726542AbfFZRpc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 26 Jun 2019 13:45:32 -0400
+Received: from s3.sipsolutions.net ([144.76.43.62]:46722 "EHLO
+        sipsolutions.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726239AbfFZRpb (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 26 Jun 2019 13:42:10 -0400
-Received: by mail-io1-f67.google.com with SMTP id e3so6839885ioc.12
-        for <linux-arm-msm@vger.kernel.org>; Wed, 26 Jun 2019 10:42:09 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=ZKsEzAEn+zTozZeyiV/e1LwfvFOgAuBk1MCTImiKLZA=;
-        b=onBGOizxsfiCRd7+gXbaT4hAW6mqsDds5B4NbecGa5qCbrZwUlZKaUd8d9sc91lChN
-         6p5GnD6ymeH10NabPIoVjBxJ2cieNgGYlB7B2r47VOuUCSzlgnGhfpMC12zEohslJRMy
-         YGkCnl6tXZ+lCkt57UOzxqs04jbh4VNyBHxxAYH4lAI2Eg0ZKN2e5XExnBhMHhCqgrlm
-         WjffAFmf1Yu2L9onBnMGPP8XZ1pzdMJebNqHY6nbp8CcAP04BXFe4GZpZiFbVTWdQdX8
-         J136o+dqdFHN6P0Ge8G2KnzX/2vsduc71V5PcFarONPkW4LBJ+ECv0Z+8zmthoeVj4Sx
-         2UFg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=ZKsEzAEn+zTozZeyiV/e1LwfvFOgAuBk1MCTImiKLZA=;
-        b=SGUO6SICLHkax7QYxmhvMqVG9grnwjf1KNGwW5wUJuFehMxDJjGEtCg+NbzX+S9LTR
-         h8WMgoCF3VhTJJz4xBVKo8UFVHV5AAmXMz1yqlsYBQJmL2sePnCKD4WKaoCl7AAnEF11
-         G49GW/aPYbKzFuUdDy49gstrJmBCa52Poieh95wO4T+dRfFr3d3G9qErsWBWY/hzjEts
-         G4zlz7AApQwi0m2UI2bmG+APQG90nKpWxXoacIEHome6nptFv6Zo/7UBWMeqQbErtDGK
-         Zk8PJcYOTTV6/i3isSeqBk6E2kDQ0wgZi8QZ/BYQRLe02g47QIGTB8WA9iE8wjvPMfUT
-         TgfQ==
-X-Gm-Message-State: APjAAAUamKE0RRF+RDUnJY9XueN2LcdglaRqE7n+2HyWUDkgAUW8oiv8
-        msPD5VmpDG26DT3inKYb/Utlx0Qn1UZidOcpBvq5YQ==
-X-Google-Smtp-Source: APXvYqzP67fOblQX+UL3RTr8NEKsVBKZNmmryeKDByfNumC6w51Z6JbSESfRJHVRXeUS4Dcqs0atYnirT3xgPzBD4GQ=
-X-Received: by 2002:a5d:9613:: with SMTP id w19mr6438554iol.140.1561570929448;
- Wed, 26 Jun 2019 10:42:09 -0700 (PDT)
-MIME-Version: 1.0
-References: <cover.1561346998.git.saiprakash.ranjan@codeaurora.org> <635466ab6a27781966bb083e93d2ca2729473ced.1561346998.git.saiprakash.ranjan@codeaurora.org>
-In-Reply-To: <635466ab6a27781966bb083e93d2ca2729473ced.1561346998.git.saiprakash.ranjan@codeaurora.org>
-From:   Mathieu Poirier <mathieu.poirier@linaro.org>
-Date:   Wed, 26 Jun 2019 11:41:58 -0600
-Message-ID: <CANLsYky6D5EsCL2vOa4hHaqTQRXbN+TT0pSzFrykDL_fHEkiBQ@mail.gmail.com>
-Subject: Re: [PATCHv3 1/1] coresight: Do not default to CPU0 for missing CPU phandle
-To:     Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
-Cc:     Suzuki K Poulose <suzuki.poulose@arm.com>,
-        Leo Yan <leo.yan@linaro.org>, Rob Herring <robh+dt@kernel.org>,
-        devicetree@vger.kernel.org,
-        Alexander Shishkin <alexander.shishkin@linux.intel.com>,
-        Andy Gross <andy.gross@linaro.org>,
-        David Brown <david.brown@linaro.org>,
-        Mark Rutland <mark.rutland@arm.com>,
-        Rajendra Nayak <rnayak@codeaurora.org>,
-        Vivek Gautam <vivek.gautam@codeaurora.org>,
-        Sibi Sankar <sibis@codeaurora.org>,
-        linux-arm-kernel <linux-arm-kernel@lists.infradead.org>,
+        Wed, 26 Jun 2019 13:45:31 -0400
+Received: by sipsolutions.net with esmtpsa (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+        (Exim 4.92)
+        (envelope-from <johannes@sipsolutions.net>)
+        id 1hgByp-0007sg-J1; Wed, 26 Jun 2019 19:45:11 +0200
+Message-ID: <8bcefe5c5e4697a0c0b1543ef386bc8268c19d76.camel@sipsolutions.net>
+Subject: Re: [PATCH v2 00/17] net: introduce Qualcomm IPA driver
+From:   Johannes Berg <johannes@sipsolutions.net>
+To:     Alex Elder <elder@linaro.org>, Arnd Bergmann <arnd@arndb.de>
+Cc:     Dan Williams <dcbw@redhat.com>,
+        Subash Abhinov Kasiviswanathan <subashab@codeaurora.org>,
+        abhishek.esse@gmail.com, Ben Chan <benchan@google.com>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        cpratapa@codeaurora.org, David Miller <davem@davemloft.net>,
+        DTML <devicetree@vger.kernel.org>,
+        Eric Caruso <ejcaruso@google.com>, evgreen@chromium.org,
+        Ilias Apalodimas <ilias.apalodimas@linaro.org>,
+        Linux ARM <linux-arm-kernel@lists.infradead.org>,
+        linux-arm-msm@vger.kernel.org,
         Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>
+        linux-soc@vger.kernel.org, Networking <netdev@vger.kernel.org>,
+        syadagir@codeaurora.org
+Date:   Wed, 26 Jun 2019 19:45:07 +0200
+In-Reply-To: <edea19ef-f225-bdcd-f394-77e326d1d3ad@linaro.org> (sfid-20190626_153939_653069_ADB7A601)
+References: <380a6185-7ad1-6be0-060b-e6e5d4126917@linaro.org>
+         <a94676381a5ca662c848f7a725562f721c43ce76.camel@sipsolutions.net>
+         <CAK8P3a0kV-i7BJJ2X6C=5n65rSGfo8fUiC4J_G-+M8EctYKbkg@mail.gmail.com>
+         <fc0d08912bc10ad089eb74034726308375279130.camel@redhat.com>
+         <36bca57c999f611353fd9741c55bb2a7@codeaurora.org>
+         <153fafb91267147cf22e2bf102dd822933ec823a.camel@redhat.com>
+         <CAK8P3a2Y+tcL1-V57dtypWHndNT3eDJdcKj29c_v+k8o1HHQig@mail.gmail.com>
+         <f4249aa5f5acdd90275eda35aa16f3cfb29d29be.camel@redhat.com>
+         <CAK8P3a2nzZKtshYfomOOSYkqx5HdU15Wr9b+3va0B1euNhFOAg@mail.gmail.com>
+         <dbb32f185d2c3a654083ee0a7188379e1f88d899.camel@sipsolutions.net>
+         <d533b708-c97a-710d-1138-3ae79107f209@linaro.org>
+         <abdfc6b3a9981bcdef40f85f5442a425ce109010.camel@sipsolutions.net>
+         <db34aa39-6cf1-4844-1bfe-528e391c3729@linaro.org>
+         <CAK8P3a1ixL9ZjYz=pWTxvMfeD89S6QxSeHt9ZCL9dkCNV5pMHQ@mail.gmail.com>
+         <efbcb3b84ff0a7d7eab875c37f3a5fa77e21d324.camel@sipsolutions.net>
+         <edea19ef-f225-bdcd-f394-77e326d1d3ad@linaro.org>
+         (sfid-20190626_153939_653069_ADB7A601)
 Content-Type: text/plain; charset="UTF-8"
+X-Mailer: Evolution 3.28.5 (3.28.5-3.fc28) 
+Mime-Version: 1.0
+Content-Transfer-Encoding: 7bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Sai,
+On Wed, 2019-06-26 at 08:39 -0500, Alex Elder wrote:
 
-On Sun, 23 Jun 2019 at 21:36, Sai Prakash Ranjan
-<saiprakash.ranjan@codeaurora.org> wrote:
->
-> Coresight platform support assumes that a missing "cpu" phandle
-> defaults to CPU0. This could be problematic and unnecessarily binds
-> components to CPU0, where they may not be. Let us make the DT binding
-> rules a bit stricter by not defaulting to CPU0 for missing "cpu"
-> affinity information.
->
-> Also in coresight etm and cpu-debug drivers, abort the probe
-> for such cases.
->
-> Signed-off-by: Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
-> ---
->  .../bindings/arm/coresight-cpu-debug.txt         |  4 ++--
->  .../devicetree/bindings/arm/coresight.txt        |  8 +++++---
->  .../hwtracing/coresight/coresight-cpu-debug.c    |  3 +++
->  drivers/hwtracing/coresight/coresight-etm3x.c    |  3 +++
->  drivers/hwtracing/coresight/coresight-etm4x.c    |  3 +++
->  drivers/hwtracing/coresight/coresight-platform.c | 16 ++++++++--------
->  6 files changed, 24 insertions(+), 13 deletions(-)
->
-> diff --git a/Documentation/devicetree/bindings/arm/coresight-cpu-debug.txt b/Documentation/devicetree/bindings/arm/coresight-cpu-debug.txt
-> index 298291211ea4..f1de3247c1b7 100644
-> --- a/Documentation/devicetree/bindings/arm/coresight-cpu-debug.txt
-> +++ b/Documentation/devicetree/bindings/arm/coresight-cpu-debug.txt
-> @@ -26,8 +26,8 @@ Required properties:
->                 processor core is clocked by the internal CPU clock, so it
->                 is enabled with CPU clock by default.
->
-> -- cpu : the CPU phandle the debug module is affined to. When omitted
-> -       the module is considered to belong to CPU0.
-> +- cpu : the CPU phandle the debug module is affined to. Do not assume it
-> +        to default to CPU0 if omitted.
->
->  Optional properties:
->
-> diff --git a/Documentation/devicetree/bindings/arm/coresight.txt b/Documentation/devicetree/bindings/arm/coresight.txt
-> index 8a88ddebc1a2..fcc3bacfd8bc 100644
-> --- a/Documentation/devicetree/bindings/arm/coresight.txt
-> +++ b/Documentation/devicetree/bindings/arm/coresight.txt
-> @@ -59,6 +59,11 @@ its hardware characteristcs.
->
->         * port or ports: see "Graph bindings for Coresight" below.
->
-> +* Additional required property for Embedded Trace Macrocell (version 3.x and
-> +  version 4.x):
-> +       * cpu: the cpu phandle this ETM/PTM is affined to. Do not
-> +         assume it to default to CPU0 if omitted.
-> +
->  * Additional required properties for System Trace Macrocells (STM):
->         * reg: along with the physical base address and length of the register
->           set as described above, another entry is required to describe the
-> @@ -87,9 +92,6 @@ its hardware characteristcs.
->         * arm,cp14: must be present if the system accesses ETM/PTM management
->           registers via co-processor 14.
->
-> -       * cpu: the cpu phandle this ETM/PTM is affined to. When omitted the
-> -         source is considered to belong to CPU0.
-> -
->  * Optional property for TMC:
->
->         * arm,buffer-size: size of contiguous buffer space for TMC ETR
-> diff --git a/drivers/hwtracing/coresight/coresight-cpu-debug.c b/drivers/hwtracing/coresight/coresight-cpu-debug.c
-> index 07a1367c733f..58bfd6319f65 100644
-> --- a/drivers/hwtracing/coresight/coresight-cpu-debug.c
-> +++ b/drivers/hwtracing/coresight/coresight-cpu-debug.c
-> @@ -579,6 +579,9 @@ static int debug_probe(struct amba_device *adev, const struct amba_id *id)
->                 return -ENOMEM;
->
->         drvdata->cpu = coresight_get_cpu(dev);
-> +       if (drvdata->cpu < 0)
-> +               return drvdata->cpu;
-> +
->         if (per_cpu(debug_drvdata, drvdata->cpu)) {
->                 dev_err(dev, "CPU%d drvdata has already been initialized\n",
->                         drvdata->cpu);
-> diff --git a/drivers/hwtracing/coresight/coresight-etm3x.c b/drivers/hwtracing/coresight/coresight-etm3x.c
-> index 225c2982e4fe..e2cb6873c3f2 100644
-> --- a/drivers/hwtracing/coresight/coresight-etm3x.c
-> +++ b/drivers/hwtracing/coresight/coresight-etm3x.c
-> @@ -816,6 +816,9 @@ static int etm_probe(struct amba_device *adev, const struct amba_id *id)
->         }
->
->         drvdata->cpu = coresight_get_cpu(dev);
-> +       if (drvdata->cpu < 0)
-> +               return drvdata->cpu;
-> +
->         desc.name  = devm_kasprintf(dev, GFP_KERNEL, "etm%d", drvdata->cpu);
->         if (!desc.name)
->                 return -ENOMEM;
-> diff --git a/drivers/hwtracing/coresight/coresight-etm4x.c b/drivers/hwtracing/coresight/coresight-etm4x.c
-> index 7fe266194ab5..7bcac8896fc1 100644
-> --- a/drivers/hwtracing/coresight/coresight-etm4x.c
-> +++ b/drivers/hwtracing/coresight/coresight-etm4x.c
-> @@ -1101,6 +1101,9 @@ static int etm4_probe(struct amba_device *adev, const struct amba_id *id)
->         spin_lock_init(&drvdata->spinlock);
->
->         drvdata->cpu = coresight_get_cpu(dev);
-> +       if (drvdata->cpu < 0)
-> +               return drvdata->cpu;
-> +
->         desc.name = devm_kasprintf(dev, GFP_KERNEL, "etm%d", drvdata->cpu);
->         if (!desc.name)
->                 return -ENOMEM;
-> diff --git a/drivers/hwtracing/coresight/coresight-platform.c b/drivers/hwtracing/coresight/coresight-platform.c
-> index 3c5ceda8db24..4990da2c13e9 100644
-> --- a/drivers/hwtracing/coresight/coresight-platform.c
-> +++ b/drivers/hwtracing/coresight/coresight-platform.c
-> @@ -159,16 +159,16 @@ static int of_coresight_get_cpu(struct device *dev)
->         struct device_node *dn;
->
->         if (!dev->of_node)
-> -               return 0;
-> +               return -ENODEV;
-> +
->         dn = of_parse_phandle(dev->of_node, "cpu", 0);
-> -       /* Affinity defaults to CPU0 */
->         if (!dn)
-> -               return 0;
-> +               return -ENODEV;
-> +
->         cpu = of_cpu_node_to_id(dn);
->         of_node_put(dn);
->
-> -       /* Affinity to CPU0 if no cpu nodes are found */
-> -       return (cpu < 0) ? 0 : cpu;
-> +       return cpu;
->  }
+> > However, to also reply to Alex: I don't know exactly how IPA works, but
+> > for the Intel modem at least you can't fundamentally have two drivers
+> > for different parts of the functionality, since it's just a single piece
+> > of hardware and you need to allocate hardware resources from a common
+> > pool etc. So you cannot split the driver into "Intel modem control
+> > channel driver" and "Intel modem data channel driver". In fact, it's
+> > just a single "struct device" on the PCIe bus that you can bind to, and
+> > only one driver can bind at a time.
+> 
+> Interesting.  So a single modem driver needs to implement
+> *all* of the features/functions?  Like GPS or data log or
+> whatever, all needs to share the same struct device?
+> Or does what you're describing apply to a subset of the
+> modem's functionality?  Or something else?
 
-Function of_coresight_get_cpu() needs to return -ENODEV rather than 0
-when !CONFIG_OF
+Well, what is even the "implement the functions"? I mean, as kernel
+drivers we're really just in the business of providing communication
+channels to those functions. E.g. if you have a GNSS/GPS device, you
+might just have another TTY channel with NMEA data coming out, or
+something like that, right?
 
->
->  /*
-> @@ -734,14 +734,14 @@ static int acpi_coresight_get_cpu(struct device *dev)
->         struct acpi_device *adev = ACPI_COMPANION(dev);
->
->         if (!adev)
-> -               return 0;
-> +               return -ENODEV;
->         status = acpi_get_parent(adev->handle, &cpu_handle);
->         if (ACPI_FAILURE(status))
-> -               return 0;
-> +               return -ENODEV;
->
->         cpu = acpi_handle_to_logical_cpuid(cpu_handle);
->         if (cpu >= nr_cpu_ids)
-> -               return 0;
-> +               return -ENODEV;
->         return cpu;
->  }
->
+But from a kernel POV yes, I don't see how you could create multiple
+function drivers for something behind the same PCIe device (unless it
+actually appeared as multiple virtual functions or such, like the bigger
+ethernet NICs, but it doesn't).
 
-Same as above, but for !CONFIG_ACPI
+But this points out to me that I was actually not quite accurate when I
+spoke about struct device before in the USB context with function
+drivers, but I have to do some research before I can correct myself
+correctly.
 
-Thanks,
-Mathieu
+> > So, IOW, I'm not sure I see how you'd split that up. I guess you could
+> > if you actually do something like the "rmnet" model, and I suppose
+> > you're free to do that for IPA if you like, but I tend to think that's
+> > actually a burden, not a win since you just get more complex code that
+> > needs to interact with more pieces. A single driver for a single
+> > hardware that knows about the few types of channels seems simpler to me.
+> > 
+> > > - to answer Johannes question, my understanding is that the interface
+> > >   between kernel and firmware/hardware for IPA has a single 'struct
+> > >   device' that is used for both the data and the control channels,
+> > >   rather than having a data channel and an independent control device,
+> > >   so this falls into the same category as the Intel one (please correct
+> > >   me on that)
+> 
+> I don't think that's quite right, but it might be partially
+> right.  There is a single device representing IPA, but the
+> picture is a little more complicated.
+> 
+> The IPA hardware is actually something that sits *between* the
+> AP and the modem.  It implements one form of communication
+> pathway (IP data), but there are others (including QMI, which
+> presents a network-like interface but it's actually implemented
+> via clever use of shared memory and interrupts).
 
-> --
-> QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
-> of Code Aurora Forum, hosted by The Linux Foundation
->
+OK.
+
+Well, I guess this then might eventually become a bit of a hybrid - you
+eventually want one WWAN device to represent it all to userspace, but
+might actually have multiple devices with different drivers (from the
+kernel POV)?
+
+But this is more like all the USB devices work. I just have to figure
+out how to correctly tie them together - "struct device" may or may not
+be right? I need to check how this functions.
+
+I guess for something where you have DT (like you allude to elsewhere)
+you could just capture all this in DT by having some phandle link or
+something?
+
+> What we're talking about here is WWAN/modem management more
+> generally though.  It *sounds* like the Intel modem is
+> more like a single device, which requires a single driver,
+> that seems to implement a bunch of distinct functions.
+
+Yes.
+
+> On this I'm not very knowledgeable but for Qualcomm there is
+> user space code that is in charge of overall management of
+> the modem.  It implements what I think you're calling control
+> functions, negotiating with the modem to allow new data channels
+> to be created.  Normally the IPA driver would provide information
+> to user space about available resources, but would only make a
+> communication pathway available when requested.
+
+Right.
+
+> > Are the control channels to IPA are actually also tunnelled over the
+> > rmnet protocol? And even if they are, perhaps they have a different
+> > hardware queue or so? That'd be the case for Intel - different hardware
+> > queue, same (or at least similar) protocol spoken for the DMA hardware
+> > itself, but different contents of the messages obviously.
+> 
+> I want to be careful talking about "control" but for IPA it comes
+> from user space.  For the purpose of getting initial code upstream,
+> all of that control functionality (which was IOCTL based) has been
+> removed, and a fixed configuration is assumed.
+
+But something that's ioctl based is just one form of "control" pathway.
+I was thinking of the AT or MBIM commands "control" channel. And then
+ioctls are likely something that terminates in the *driver*, right? I
+mean, the driver wouldn't get an ioctl and actually talk AT commands to
+the device ...
+
+But yes, the various control planes are confusing, we need to
+disentangle that. I tried over in the other email by layering where the
+control terminates.
+
+johannes
+
