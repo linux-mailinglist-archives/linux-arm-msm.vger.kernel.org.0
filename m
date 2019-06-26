@@ -2,130 +2,121 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id CF81956262
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 Jun 2019 08:33:22 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B9848562E9
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 Jun 2019 09:10:17 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726076AbfFZGdS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 26 Jun 2019 02:33:18 -0400
-Received: from smtp.codeaurora.org ([198.145.29.96]:48720 "EHLO
-        smtp.codeaurora.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725930AbfFZGdS (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 26 Jun 2019 02:33:18 -0400
-Received: by smtp.codeaurora.org (Postfix, from userid 1000)
-        id 044406085C; Wed, 26 Jun 2019 06:33:16 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
-        s=default; t=1561530797;
-        bh=y47EEs3j4rFzzvuVXrP3J8qbvCWGuKExlUyEKd82I3U=;
-        h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
-        b=WXPNfFc7x8o1APQwf2+yUaKgztd49KbSbqeJuRMssVZUx0iomT0YMLRYC13NC5GLJ
-         Ro+GVuouTTYIJ797GZL6qLuxapN54wXlOhY1MHI3OWXLLoq5Kg5OLyn47dxZuqt4qz
-         iUIFRybXuErG0sEBvtHyyS95+DGdqCoSm4sLg8kQ=
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        pdx-caf-mail.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.7 required=2.0 tests=ALL_TRUSTED,BAYES_00,
-        DKIM_INVALID,DKIM_SIGNED,SPF_NONE autolearn=no autolearn_force=no
-        version=3.4.0
-Received: from mail-ed1-f42.google.com (mail-ed1-f42.google.com [209.85.208.42])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        id S1725930AbfFZHKM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 26 Jun 2019 03:10:12 -0400
+Received: from mail.kernel.org ([198.145.29.99]:49672 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1725790AbfFZHKM (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 26 Jun 2019 03:10:12 -0400
+Received: from localhost (unknown [106.201.40.23])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        (Authenticated sender: vivek.gautam@smtp.codeaurora.org)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 3FB076021C;
-        Wed, 26 Jun 2019 06:33:16 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
-        s=default; t=1561530796;
-        bh=y47EEs3j4rFzzvuVXrP3J8qbvCWGuKExlUyEKd82I3U=;
-        h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
-        b=jQKSqoT+OGc8qK8Cb0iV+ye/w4DWERiv1kTftNL9AIgnn//NI911jxMDig+YJht0O
-         YnwT3aDe/XWiP+7Mr36XIL10jnMh3o3aEXDtUm79gOIG39ZLp/q1WVMrtYj0EtvkMO
-         3TUP3A5gdmO2R+drNSNvRhjCPL9n1GCgI0NboenE=
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 3FB076021C
-Authentication-Results: pdx-caf-mail.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: pdx-caf-mail.web.codeaurora.org; spf=none smtp.mailfrom=vivek.gautam@codeaurora.org
-Received: by mail-ed1-f42.google.com with SMTP id k8so1553038edr.11;
-        Tue, 25 Jun 2019 23:33:16 -0700 (PDT)
-X-Gm-Message-State: APjAAAWG+ZAZzmRPGYjKkQ7vBlmFPSmz2hCtRO7TAkmlEJs0UFqc/6dp
-        a4SFonCIT49qeWlxfPEnYFHKH+NZmvWNDBpJSxc=
-X-Google-Smtp-Source: APXvYqzcofv0J7lRvmc0VYLV63Qeh9E/WHjj9IAHvvhUT2XF9QKRxQkifiF3lHlmVsEOxNk/acWViwQ7ifuOVtKvPYA=
-X-Received: by 2002:a17:906:6582:: with SMTP id x2mr2509409ejn.2.1561530795089;
- Tue, 25 Jun 2019 23:33:15 -0700 (PDT)
-MIME-Version: 1.0
-References: <20190612071554.13573-1-vivek.gautam@codeaurora.org>
- <20190612071554.13573-4-vivek.gautam@codeaurora.org> <20190614040520.GK22737@tuxbook-pro>
- <3e1f5e03-6448-8730-056d-fc47bdd71b3f@codeaurora.org> <20190618175218.GH4270@fuggles.cambridge.arm.com>
- <CAFp+6iEynLa=Jt_-oAwt4zmzxzhEXtWNCmghz6rFzcpQVGwrMg@mail.gmail.com>
- <20190624170348.7dncuc5qezqeyvq2@willie-the-truck> <CAFp+6iF0TQtAy2JFXk6zjX5GpjeLFesqPZV6ezbDXmc85yvMEA@mail.gmail.com>
- <20190625133924.fqq3y7p3i3fqem5p@willie-the-truck>
-In-Reply-To: <20190625133924.fqq3y7p3i3fqem5p@willie-the-truck>
-From:   Vivek Gautam <vivek.gautam@codeaurora.org>
-Date:   Wed, 26 Jun 2019 12:03:02 +0530
-X-Gmail-Original-Message-ID: <CAFp+6iH-KzX7x1j8AAuKJcOP6v=fyP-yLvaeeE_Ly3oueu_ngg@mail.gmail.com>
-Message-ID: <CAFp+6iH-KzX7x1j8AAuKJcOP6v=fyP-yLvaeeE_Ly3oueu_ngg@mail.gmail.com>
-Subject: Re: [PATCH v3 3/4] iommu/arm-smmu: Add support to handle Qcom's
- wait-for-safe logic
-To:     Will Deacon <will@kernel.org>
-Cc:     "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
-        <devicetree@vger.kernel.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Will Deacon <will.deacon@arm.com>,
-        open list <linux-kernel@vger.kernel.org>,
+        by mail.kernel.org (Postfix) with ESMTPSA id 440012085A;
+        Wed, 26 Jun 2019 07:10:10 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=default; t=1561533011;
+        bh=AUEWjtPdMoOuK2irlTMWvyn/3X6hMlzz74tKCbXQNgE=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=GZk0dd5D/1FQvDSac92ZUKviP86dIfsRQl2WHoYCuGqQWYeSyFUrrXQuBhMHEX/ZA
+         CeJStsNxjsGnI28G7TNBgRkYBRHzC+C9ISPyeTuCLC+lxkpkI+e4epQCO4zA6vH9fr
+         6mK9Satqrlew9vRtbJIZ8doQi+Ji2KyPugGjcn3Q=
+Date:   Wed, 26 Jun 2019 12:36:58 +0530
+From:   Vinod Koul <vkoul@kernel.org>
+To:     Mathias Nyman <mathias.nyman@intel.com>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc:     linux-arm-msm@vger.kernel.org,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        David Brown <david.brown@linaro.org>,
-        "list@263.net:IOMMU DRIVERS <iommu@lists.linux-foundation.org>, Joerg
-        Roedel <joro@8bytes.org>," <iommu@lists.linux-foundation.org>,
-        "robh+dt" <robh+dt@kernel.org>, Andy Gross <agross@kernel.org>,
-        Robin Murphy <robin.murphy@arm.com>
-Content-Type: text/plain; charset="UTF-8"
+        Christian Lamparter <chunkeey@googlemail.com>,
+        Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>,
+        linux-usb@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Christian Lamparter <chunkeey@gmail.com>
+Subject: Re: [PATCH v3 1/4] usb: xhci: add firmware loader for uPD720201 and
+ uPD720202 w/o ROM
+Message-ID: <20190626070658.GP2962@vkoul-mobl>
+References: <20190624061126.11938-1-vkoul@kernel.org>
+ <20190624061126.11938-2-vkoul@kernel.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20190624061126.11938-2-vkoul@kernel.org>
+User-Agent: Mutt/1.11.3 (2019-02-01)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Jun 25, 2019 at 7:09 PM Will Deacon <will@kernel.org> wrote:
->
-> On Tue, Jun 25, 2019 at 12:34:56PM +0530, Vivek Gautam wrote:
-> > On Mon, Jun 24, 2019 at 10:33 PM Will Deacon <will@kernel.org> wrote:
-> > > Instead, I think this needs to be part of a separate file that is maintained
-> > > by you, which follows on from the work that Krishna is doing for nvidia
-> > > built on top of Robin's prototype patches:
-> > >
-> > > http://linux-arm.org/git?p=linux-rm.git;a=shortlog;h=refs/heads/iommu/smmu-impl
-> >
-> > Looking at this branch quickly, it seem there can be separate implementation
-> > level configuration file that can be added.
-> > But will this also handle separate page table ops when required in future.
->
-> Nothing's set in stone, but having the implementation-specific code
-> constrain the page-table format (especially wrt quirks) sounds reasonable to
-> me. I'm currently waiting for Krishna to respin the nvidia changes [1] on
-> top of this so that we can see how well the abstractions are holding up.
+On 24-06-19, 11:41, Vinod Koul wrote:
+> From: Christian Lamparter <chunkeey@googlemail.com>
+> 
+> This patch adds a firmware loader for the uPD720201K8-711-BAC-A
+> and uPD720202K8-711-BAA-A variant. Both of these chips are listed
+> in Renesas' R19UH0078EJ0500 Rev.5.00 "User's Manual: Hardware" as
+> devices which need the firmware loader on page 2 in order to
+> work as they "do not support the External ROM".
+> 
+> The "Firmware Download Sequence" is describe in chapter
+> "7.1 FW Download Interface" R19UH0078EJ0500 Rev.5.00 page 131.
+> 
+> The firmware "K2013080.mem" is available from a USB3.0 Host to
+> PCIe Adapter (PP2U-E card) "Firmware download" archive. An
+> alternative version can be sourced from Netgear's WNDR4700 GPL
+> archives.
+> 
+> The release notes of the PP2U-E's "Firmware Download" ver 2.0.1.3
+> (2012-06-15) state that the firmware is for the following devices:
+>  - uPD720201 ES 2.0 sample whose revision ID is 2.
+>  - uPD720201 ES 2.1 sample & CS sample & Mass product, ID is 3.
+>  - uPD720202 ES 2.0 sample & CS sample & Mass product, ID is 2.
+> 
+> Cc: Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>
+> Signed-off-by: Christian Lamparter <chunkeey@googlemail.com>
+> Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+> [vkoul: fixed comments:
+> 	used macros for timeout count and delay
+> 	removed renesas_fw_alive_check
+> 	cleaned renesas_fw_callback
+> 	removed recurion for renesas_fw_download
+> 	added MODULE_FIRMWARE
+> 	removed length check]
+> Tested-by: Christian Lamparter <chunkeey@gmail.com>
+> Signed-off-by: Vinod Koul <vkoul@kernel.org>
+> ---
+>  drivers/usb/host/xhci-pci.c | 454 ++++++++++++++++++++++++++++++++++++
+>  1 file changed, 454 insertions(+)
+> 
+> diff --git a/drivers/usb/host/xhci-pci.c b/drivers/usb/host/xhci-pci.c
+> index c2fe218e051f..89ca46dd6825 100644
+> --- a/drivers/usb/host/xhci-pci.c
+> +++ b/drivers/usb/host/xhci-pci.c
+> @@ -12,6 +12,8 @@
+>  #include <linux/slab.h>
+>  #include <linux/module.h>
+>  #include <linux/acpi.h>
+> +#include <linux/firmware.h>
+> +#include <linux/unaligned/access_ok.h>
+>  
+>  #include "xhci.h"
+>  #include "xhci-trace.h"
+> @@ -55,6 +57,9 @@
+>  #define PCI_DEVICE_ID_AMD_PROMONTORYA_1			0x43bc
+>  #define PCI_DEVICE_ID_ASMEDIA_1042A_XHCI		0x1142
+>  
+> +#define RENESAS_RETRY	1000
+> +#define RENESAS_DELAY	10
 
-Sure. Would you want me to try Robin's branch and take out the qualcomm
-related stuff to its own implementation? Or, would you like me to respin this
-series so that you can take it in to enable SDM845 boards such as, MTP
-and dragonboard to have a sane build - debian, etc. so people benefit
-out of it.
-Qualcomm stuff is lying in qcom-smmu and arm-smmu and may take some
-time to stub out the implementation related details.
-Let me know your take.
+So some devices are exhibiting failure on both ROM programming as well
+as RAM load with messages:
 
-Thanks & regards
-Vivek
+ROM Download Step 34 failed at position 136 bytes
+Firmware Download Step 2 failed at position 8 bytes with (-110)
 
->
-> I certainly won't merge the stuff until we have a user.
->
-> Will
->
-> [1] https://lkml.kernel.org/r/1543887414-18209-1-git-send-email-vdumpa@nvidia.com
-> _______________________________________________
-> iommu mailing list
-> iommu@lists.linux-foundation.org
-> https://lists.linuxfoundation.org/mailman/listinfo/iommu
+So I am going to revert to older delay values! With those we dont get a
+failures. yeah looks like ROM load takes a while on these
 
-
+Thanks
 
 -- 
-QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
-of Code Aurora Forum, hosted by The Linux Foundation
+~Vinod
