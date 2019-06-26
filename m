@@ -2,91 +2,103 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id B76DA5702B
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 Jun 2019 20:00:26 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id DF88B57124
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 Jun 2019 21:00:01 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726583AbfFZSAZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 26 Jun 2019 14:00:25 -0400
-Received: from mail-pg1-f196.google.com ([209.85.215.196]:40656 "EHLO
-        mail-pg1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726042AbfFZSAZ (ORCPT
+        id S1726469AbfFZS7y (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 26 Jun 2019 14:59:54 -0400
+Received: from smtp.codeaurora.org ([198.145.29.96]:58788 "EHLO
+        smtp.codeaurora.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726465AbfFZS7y (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 26 Jun 2019 14:00:25 -0400
-Received: by mail-pg1-f196.google.com with SMTP id w10so1561263pgj.7;
-        Wed, 26 Jun 2019 11:00:24 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id;
-        bh=FTgn6r6fcSmHF8w98dfXXuAN9IuTef3VgDyLMVSYVPY=;
-        b=VGr5ZXAJt+EIRsczuWIzhQbJHSaDJO4BnpDAA2L+zSr9WZQ67LAlB5Q7t8XI1Fe2CS
-         O7lTk/jAw4mS/C69rYPzGuWh4IjkbRyjA5rcG0WAfbOgQRW/vLQLw8KBW8g3YHnjXYv0
-         pQPmTeQyE4gRy8vXmpJ4JUWY0BRmmey+G61TPTyDU8qJSEUVuVQp08i3JOg7QTRPhMv9
-         vqWbe2Q2A+TqXNrzKaUc8mPdBC8a1xE3/4n5zXNHNfMR1W3OhMUozMED4V29h2Eos7vU
-         zI4/3w2G8mwYhx5MTg2bBL+wdBCXnbIbvhwnnW4Mz3cdPFEmW2FDep2Ee9TsjE+q5BAd
-         JUZA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id;
-        bh=FTgn6r6fcSmHF8w98dfXXuAN9IuTef3VgDyLMVSYVPY=;
-        b=n2V2ihHbiPl6rDNTO9qFlECR3mlFtgGIPT30ezfzTyUlQx3ECW7EfPj36bpgUu3PSt
-         CbZC7TOhWusY80U2xb8MwxMLq6uKhxAefHfw7w7nrGUJqrdV1faAqWfcubJsxyQYgGnG
-         QdQktPPAnr3PsYF5BMseRUiDFnuhneSJ0cXImUYJi8cd8euFJuyAaNkkmWNgl1gc7ejg
-         kyppZmm26Zgdvzt8FOC3vTrsEqWb7Va4NgKtitUpM/Kn6oSPanPK+GpuzjuF1y0ivMp4
-         d7GsvesnFh7CIIWka1m9a2GUC0ntCLle520bYR0qHASkQDadP2DCSlQPEk1Rp6SUuo18
-         0wkw==
-X-Gm-Message-State: APjAAAW04l70q/yXAh4tjF6fEtPh79LBlHHVfBuZ+ki/7UHqF+nel+KN
-        QCqpR/ncpu56FjWFENpTH+c=
-X-Google-Smtp-Source: APXvYqxblxs8elOmJc/hGTQslan92I5J9OvEgxlBKcw95tBWYgQr9RXJHq6hIrs4/GYP2+H0OBX3IQ==
-X-Received: by 2002:a17:90a:9503:: with SMTP id t3mr370826pjo.47.1561572024205;
-        Wed, 26 Jun 2019 11:00:24 -0700 (PDT)
-Received: from aw-bldr-10.qualcomm.com (i-global254.qualcomm.com. [199.106.103.254])
-        by smtp.gmail.com with ESMTPSA id v4sm20106391pff.45.2019.06.26.11.00.22
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 26 Jun 2019 11:00:23 -0700 (PDT)
-From:   Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
-To:     robdclark@gmail.com, sean@poorly.run, airlied@linux.ie,
-        daniel@ffwll.ch
-Cc:     bjorn.andersson@linaro.org, linux-arm-msm@vger.kernel.org,
-        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
-        linux-kernel@vger.kernel.org,
-        Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
-Subject: [PATCH] drm: msm: Fix add_gpu_components
-Date:   Wed, 26 Jun 2019 11:00:15 -0700
-Message-Id: <20190626180015.45242-1-jeffrey.l.hugo@gmail.com>
-X-Mailer: git-send-email 2.17.1
+        Wed, 26 Jun 2019 14:59:54 -0400
+Received: by smtp.codeaurora.org (Postfix, from userid 1000)
+        id 730B360256; Wed, 26 Jun 2019 18:59:53 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
+        s=default; t=1561575593;
+        bh=8WgmiRB1fwqFJ3XjC6N9Q04m667OxWcKK9L96wS4Tsk=;
+        h=From:To:Cc:Subject:Date:From;
+        b=DiGQj/UCkPmZa72HQzDxW4zNutbh5CkGyKYgjGrx21p7af4nxtho4B4A/ZKpYBV8F
+         WlgCcZIiMsT/MQ2+crA5LLgoFe2mbaPLJMh3YGhNpLCiKiqJiKMCvOYspTAk6ppU8o
+         K1fZ+h5n83zqLshZJH6P+zo/bWqdn4kEacfaBffk=
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        pdx-caf-mail.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.7 required=2.0 tests=ALL_TRUSTED,BAYES_00,
+        DKIM_INVALID,DKIM_SIGNED,SPF_NONE autolearn=no autolearn_force=no
+        version=3.4.0
+Received: from blr-ubuntu-311.qualcomm.com (blr-bdr-fw-01_globalnat_allzones-outside.qualcomm.com [103.229.18.19])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: saiprakash.ranjan@codeaurora.org)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 068EF60256;
+        Wed, 26 Jun 2019 18:59:48 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
+        s=default; t=1561575592;
+        bh=8WgmiRB1fwqFJ3XjC6N9Q04m667OxWcKK9L96wS4Tsk=;
+        h=From:To:Cc:Subject:Date:From;
+        b=lVROsomG7J5KhvmiaQqdVdDRFW7mH6K987cKEcd1d5bHXrc5xj0UQZjFlgPkzwq5Q
+         UKG8tPaqsSdcEUAXecDp8aEBRuqQGWqm1gv52oEyT1klSqMqTruUH8CUCYYQNX4ob+
+         b9N8VxS9AB49FVVpdDafTXmexFiCMKIGiG6BYShE=
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 068EF60256
+Authentication-Results: pdx-caf-mail.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: pdx-caf-mail.web.codeaurora.org; spf=none smtp.mailfrom=saiprakash.ranjan@codeaurora.org
+From:   Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
+To:     Mathieu Poirier <mathieu.poirier@linaro.org>,
+        Suzuki K Poulose <suzuki.poulose@arm.com>,
+        Rob Herring <robh+dt@kernel.org>, devicetree@vger.kernel.org,
+        Leo Yan <leo.yan@linaro.org>,
+        Alexander Shishkin <alexander.shishkin@linux.intel.com>,
+        David Brown <david.brown@linaro.org>,
+        Mark Rutland <mark.rutland@arm.com>
+Cc:     Rajendra Nayak <rnayak@codeaurora.org>,
+        Vivek Gautam <vivek.gautam@codeaurora.org>,
+        Sibi Sankar <sibis@codeaurora.org>,
+        linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org,
+        Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
+Subject: [PATCHv4 0/1] coresight: Do not default to CPU0 for missing CPU phandle
+Date:   Thu, 27 Jun 2019 00:29:29 +0530
+Message-Id: <cover.1561575087.git.saiprakash.ranjan@codeaurora.org>
+X-Mailer: git-send-email 2.22.0
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-add_gpu_components() adds found GPU nodes from the DT to the match list,
-regardless of the status of the nodes.  This is a problem, because if the
-nodes are disabled, they should not be on the match list because they will
-not be matched.  This prevents display from initing if a GPU node is
-defined, but it's status is disabled.
+In case of missing CPU phandle, the affinity is set default to
+CPU0 which is not a correct assumption. Fix this in coresight
+platform to set affinity to invalid and abort the probe in drivers.
+Also update the dt-bindings accordingly.
 
-Fix this by checking the node's status before adding it to the match list.
+v4:
+ * Fix return for !CONFIG_ACPI and !CONFIG_OF.
 
-Fixes: dc3ea265b856 ("drm/msm: Drop the gpu binding")
-Signed-off-by: Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
----
- drivers/gpu/drm/msm/msm_drv.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+v3:
+ * Addressed review comments from Suzuki and updated
+   acpi_coresight_get_cpu.
+ * Removed patch 2 which had invalid check for online
+   cpus.
 
-diff --git a/drivers/gpu/drm/msm/msm_drv.c b/drivers/gpu/drm/msm/msm_drv.c
-index ab64ab470de7..4aeb84f1d874 100644
---- a/drivers/gpu/drm/msm/msm_drv.c
-+++ b/drivers/gpu/drm/msm/msm_drv.c
-@@ -1279,7 +1279,8 @@ static int add_gpu_components(struct device *dev,
- 	if (!np)
- 		return 0;
- 
--	drm_of_component_match_add(dev, matchptr, compare_of, np);
-+	if (of_device_is_available(np))
-+		drm_of_component_match_add(dev, matchptr, compare_of, np);
- 
- 	of_node_put(np);
- 
+v2:
+ * Addressed review comments from Suzuki and Mathieu.
+ * Allows the probe of etm and cpu-debug to abort earlier
+   in case of unavailability of respective cpus.
+
+Sai Prakash Ranjan (1):
+  coresight: Do not default to CPU0 for missing CPU phandle
+
+ .../bindings/arm/coresight-cpu-debug.txt      |  4 ++--
+ .../devicetree/bindings/arm/coresight.txt     |  8 +++++---
+ .../hwtracing/coresight/coresight-cpu-debug.c |  3 +++
+ drivers/hwtracing/coresight/coresight-etm3x.c |  3 +++
+ drivers/hwtracing/coresight/coresight-etm4x.c |  3 +++
+ .../hwtracing/coresight/coresight-platform.c  | 20 +++++++++----------
+ 6 files changed, 26 insertions(+), 15 deletions(-)
+
 -- 
-2.17.1
+QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
+of Code Aurora Forum, hosted by The Linux Foundation
 
