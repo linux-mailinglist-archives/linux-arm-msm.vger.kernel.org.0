@@ -2,130 +2,259 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 9646856B68
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 Jun 2019 15:59:13 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D1D3356C54
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 Jun 2019 16:39:08 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727579AbfFZN7I (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 26 Jun 2019 09:59:08 -0400
-Received: from mail-qk1-f196.google.com ([209.85.222.196]:39362 "EHLO
-        mail-qk1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726131AbfFZN7H (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 26 Jun 2019 09:59:07 -0400
-Received: by mail-qk1-f196.google.com with SMTP id i125so1695128qkd.6;
-        Wed, 26 Jun 2019 06:59:07 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=pXxa75AgHN+kU67J58uXazk7bwNbQuP7iiHjqwf4SQ4=;
-        b=gWVaiNG0AiSBIu6RNEZ0S4AHFqEJe2bvqxr04kC5HxBjVUnql1ZJyobnXjQMbPOFd8
-         WYg9lwyQPObS8rNb0s2h6h/m1TducNij9eOejFBq/n0/3QLqw5JvF6pn38PHBw1aRc3W
-         xOJParZGaq5mFy8SggNuC+9HGtLMKPVWBrr+j+sHc3X89MD8Z0y6xm6lCPKQ3pe7Qc0/
-         RLvycB36FIJ+kzCNVWi1UfNeLosSNxBlRqnsAmratmfst533DatZ0Y47k7Af8nOBNzXX
-         WirHVGfoG1m6N0/J7gaQqRIVbpD8+Li+TMiPw+fjS3g7KUfr0akSzzLqWMACpGP505eo
-         PpFA==
-X-Gm-Message-State: APjAAAWnb8iQ/mmxvFyaFGUGjBRL4eKeqPJBaLAH1qYjSgPSHYGW8PGv
-        xVK5yw7wxCjTYEbWNfjXi4fTbDPOjCE0g5+Z0U8=
-X-Google-Smtp-Source: APXvYqzCvw9vZuTjsXYQyBmuA+cZgPu3mswH6EYEmNOv8664CbCqBtT59doitfBhiAj6kcOMBfEiw3S5FFDSDbmyUmo=
-X-Received: by 2002:a37:76c5:: with SMTP id r188mr3978511qkc.394.1561557546341;
- Wed, 26 Jun 2019 06:59:06 -0700 (PDT)
+        id S1727985AbfFZOjB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 26 Jun 2019 10:39:01 -0400
+Received: from ns.iliad.fr ([212.27.33.1]:52258 "EHLO ns.iliad.fr"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1728048AbfFZOjA (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 26 Jun 2019 10:39:00 -0400
+Received: from ns.iliad.fr (localhost [127.0.0.1])
+        by ns.iliad.fr (Postfix) with ESMTP id C48BF202C1;
+        Wed, 26 Jun 2019 16:38:58 +0200 (CEST)
+Received: from [192.168.108.49] (freebox.vlq16.iliad.fr [213.36.7.13])
+        by ns.iliad.fr (Postfix) with ESMTP id AF924201B5;
+        Wed, 26 Jun 2019 16:38:58 +0200 (CEST)
+Subject: [PATCH v1] pinctrl: msm8998: Squash TSIF pins together
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Linus Walleij <linus.walleij@linaro.org>
+Cc:     MSM <linux-arm-msm@vger.kernel.org>,
+        gpio <linux-gpio@vger.kernel.org>,
+        Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
+References: <18ab4b1c-e74e-410a-a504-f524e46c42ac@free.fr>
+ <20190611180516.GO4814@minitux>
+ <be298c01-53b8-a954-5de0-3f302265f1cb@free.fr>
+ <20190620184124.GB24205@tuxbook-pro>
+From:   Marc Gonzalez <marc.w.gonzalez@free.fr>
+Message-ID: <57d0644d-164f-58e7-6c07-9608da4233a3@free.fr>
+Date:   Wed, 26 Jun 2019 16:38:58 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+ Thunderbird/60.6.1
 MIME-Version: 1.0
-References: <380a6185-7ad1-6be0-060b-e6e5d4126917@linaro.org>
- <a94676381a5ca662c848f7a725562f721c43ce76.camel@sipsolutions.net>
- <CAK8P3a0kV-i7BJJ2X6C=5n65rSGfo8fUiC4J_G-+M8EctYKbkg@mail.gmail.com>
- <fc0d08912bc10ad089eb74034726308375279130.camel@redhat.com>
- <36bca57c999f611353fd9741c55bb2a7@codeaurora.org> <153fafb91267147cf22e2bf102dd822933ec823a.camel@redhat.com>
- <CAK8P3a2Y+tcL1-V57dtypWHndNT3eDJdcKj29c_v+k8o1HHQig@mail.gmail.com>
- <f4249aa5f5acdd90275eda35aa16f3cfb29d29be.camel@redhat.com>
- <CAK8P3a2nzZKtshYfomOOSYkqx5HdU15Wr9b+3va0B1euNhFOAg@mail.gmail.com>
- <dbb32f185d2c3a654083ee0a7188379e1f88d899.camel@sipsolutions.net>
- <d533b708-c97a-710d-1138-3ae79107f209@linaro.org> <abdfc6b3a9981bcdef40f85f5442a425ce109010.camel@sipsolutions.net>
- <db34aa39-6cf1-4844-1bfe-528e391c3729@linaro.org> <CAK8P3a1ixL9ZjYz=pWTxvMfeD89S6QxSeHt9ZCL9dkCNV5pMHQ@mail.gmail.com>
- <efbcb3b84ff0a7d7eab875c37f3a5fa77e21d324.camel@sipsolutions.net> <edea19ef-f225-bdcd-f394-77e326d1d3ad@linaro.org>
-In-Reply-To: <edea19ef-f225-bdcd-f394-77e326d1d3ad@linaro.org>
-From:   Arnd Bergmann <arnd@arndb.de>
-Date:   Wed, 26 Jun 2019 15:58:48 +0200
-Message-ID: <CAK8P3a3wHe_6ay8P+F9Vo=k19P5fifs6RWozxFF5nGYYjO_=Xw@mail.gmail.com>
-Subject: Re: [PATCH v2 00/17] net: introduce Qualcomm IPA driver
-To:     Alex Elder <elder@linaro.org>
-Cc:     Johannes Berg <johannes@sipsolutions.net>,
-        Dan Williams <dcbw@redhat.com>,
-        Subash Abhinov Kasiviswanathan <subashab@codeaurora.org>,
-        abhishek.esse@gmail.com, Ben Chan <benchan@google.com>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        cpratapa@codeaurora.org, David Miller <davem@davemloft.net>,
-        DTML <devicetree@vger.kernel.org>,
-        Eric Caruso <ejcaruso@google.com>, evgreen@chromium.org,
-        Ilias Apalodimas <ilias.apalodimas@linaro.org>,
-        Linux ARM <linux-arm-kernel@lists.infradead.org>,
-        linux-arm-msm@vger.kernel.org,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-        linux-soc@vger.kernel.org, Networking <netdev@vger.kernel.org>,
-        syadagir@codeaurora.org
-Content-Type: text/plain; charset="UTF-8"
+In-Reply-To: <20190620184124.GB24205@tuxbook-pro>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
+X-Virus-Scanned: ClamAV using ClamSMTP ; ns.iliad.fr ; Wed Jun 26 16:38:58 2019 +0200 (CEST)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Jun 26, 2019 at 3:39 PM Alex Elder <elder@linaro.org> wrote:
-> On 6/25/19 9:19 AM, Johannes Berg wrote:
-> > On Mon, 2019-06-24 at 18:40 +0200, Arnd Bergmann wrote:
->
-> > So, IOW, I'm not sure I see how you'd split that up. I guess you could
-> > if you actually do something like the "rmnet" model, and I suppose
-> > you're free to do that for IPA if you like, but I tend to think that's
-> > actually a burden, not a win since you just get more complex code that
-> > needs to interact with more pieces. A single driver for a single
-> > hardware that knows about the few types of channels seems simpler to me.
-> >
-> >> - to answer Johannes question, my understanding is that the interface
-> >>   between kernel and firmware/hardware for IPA has a single 'struct
-> >>   device' that is used for both the data and the control channels,
-> >>   rather than having a data channel and an independent control device,
-> >>   so this falls into the same category as the Intel one (please correct
-> >>   me on that)
->
-> I don't think that's quite right, but it might be partially
-> right.  There is a single device representing IPA, but the
-> picture is a little more complicated.
->
-> The IPA hardware is actually something that sits *between* the
-> AP and the modem.  It implements one form of communication
-> pathway (IP data), but there are others (including QMI, which
-> presents a network-like interface but it's actually implemented
-> via clever use of shared memory and interrupts).
+Preamble: Rename tsif1 to tsif0, tsif2 to tsif1.
+Squash tsif0 pins into a single function. Same for tsif1.
 
-Can you clarify how QMI fits in here? Do you mean one has to
-talk to both IPA and QMI to use the modem, or are these two
-alternative implementations for the same basic purpose?
+Signed-off-by: Marc Gonzalez <marc.w.gonzalez@free.fr>
+---
+ .../bindings/pinctrl/qcom,msm8998-pinctrl.txt | 19 ++---
+ drivers/pinctrl/qcom/pinctrl-msm8998.c        | 76 +++++--------------
+ 2 files changed, 24 insertions(+), 71 deletions(-)
 
-> > That sounds about the same then, right.
-> >
-> > Are the control channels to IPA are actually also tunnelled over the
-> > rmnet protocol? And even if they are, perhaps they have a different
-> > hardware queue or so? That'd be the case for Intel - different hardware
-> > queue, same (or at least similar) protocol spoken for the DMA hardware
-> > itself, but different contents of the messages obviously.
->
-> I want to be careful talking about "control" but for IPA it comes
-> from user space.  For the purpose of getting initial code upstream,
-> all of that control functionality (which was IOCTL based) has been
-> removed, and a fixed configuration is assumed.
-
-My previous understanding was that from the hardware perspective
-there is only one control interface, which is for IPA. Part of this
-is abstracted to user space with ioctl commands to the IPA driver,
-and then one must set up rmnet to match these by configuring
-an rmnet device over netlink messages from user space, but
-rmnet does not have a control protocol with the hardware.
-
-The exception here is the flow control, which is handled using
-in-band XON/OFF messages from the modem to rmnet (and
-corresponding Acks the other way) that IPA just passes through.
-
-If we also need to talk to QMI, that would be something completely
-different though.
-
-       Arnd
+diff --git a/Documentation/devicetree/bindings/pinctrl/qcom,msm8998-pinctrl.txt b/Documentation/devicetree/bindings/pinctrl/qcom,msm8998-pinctrl.txt
+index 00174f08ba1d..47b0f30a39e9 100644
+--- a/Documentation/devicetree/bindings/pinctrl/qcom,msm8998-pinctrl.txt
++++ b/Documentation/devicetree/bindings/pinctrl/qcom,msm8998-pinctrl.txt
+@@ -124,9 +124,8 @@ to specify in a pin configuration subnode:
+ 		    qlink_request, qua_mi2s, sd_card, sd_write, sdc40, sdc41,
+ 		    sdc42, sdc43, sdc4_clk, sdc4_cmd, sec_mi2s, sp_cmu,
+ 		    spkr_i2s, ssbi1, ssc_irq, ter_mi2s, tgu_ch0, tgu_ch1,
+-		    tsense_pwm1, tsense_pwm2, tsif1_clk, tsif1_data, tsif1_en,
+-		    tsif1_error, tsif1_sync, tsif2_clk, tsif2_data, tsif2_en,
+-		    tsif2_error, tsif2_sync, uim1_clk, uim1_data, uim1_present,
++		    tsense_pwm1, tsense_pwm2, tsif0, tsif1,
++		    uim1_clk, uim1_data, uim1_present,
+ 		    uim1_reset, uim2_clk, uim2_data, uim2_present, uim2_reset,
+ 		    uim_batt, usb_phy, vfr_1, vsense_clkout, vsense_data0,
+ 		    vsense_data1, vsense_mode, wlan1_adc0, wlan1_adc1,
+@@ -179,15 +178,9 @@ Example:
+ 		#interrupt-cells = <2>;
+ 
+ 		uart_console_active: uart_console_active {
+-			mux {
+-				pins = "gpio4", "gpio5";
+-				function = "blsp_uart8_a";
+-			};
+-
+-			config {
+-				pins = "gpio4", "gpio5";
+-				drive-strength = <2>;
+-				bias-disable;
+-			};
++			pins = "gpio4", "gpio5";
++			function = "blsp_uart8_a";
++			drive-strength = <2>;
++			bias-disable;
+ 		};
+ 	};
+diff --git a/drivers/pinctrl/qcom/pinctrl-msm8998.c b/drivers/pinctrl/qcom/pinctrl-msm8998.c
+index 00d7b94bc3f1..a05f41fe2706 100644
+--- a/drivers/pinctrl/qcom/pinctrl-msm8998.c
++++ b/drivers/pinctrl/qcom/pinctrl-msm8998.c
+@@ -581,16 +581,8 @@ enum msm8998_functions {
+ 	msm_mux_tgu_ch1,
+ 	msm_mux_tsense_pwm1,
+ 	msm_mux_tsense_pwm2,
+-	msm_mux_tsif1_clk,
+-	msm_mux_tsif1_data,
+-	msm_mux_tsif1_en,
+-	msm_mux_tsif1_error,
+-	msm_mux_tsif1_sync,
+-	msm_mux_tsif2_clk,
+-	msm_mux_tsif2_data,
+-	msm_mux_tsif2_en,
+-	msm_mux_tsif2_error,
+-	msm_mux_tsif2_sync,
++	msm_mux_tsif0,
++	msm_mux_tsif1,
+ 	msm_mux_uim1_clk,
+ 	msm_mux_uim1_data,
+ 	msm_mux_uim1_present,
+@@ -692,9 +684,6 @@ static const char * const atest_usb13_groups[] = {
+ static const char * const bimc_dte1_groups[] = {
+ 	"gpio8", "gpio10",
+ };
+-static const char * const tsif1_sync_groups[] = {
+-	"gpio9",
+-};
+ static const char * const wlan1_adc0_groups[] = {
+ 	"gpio9",
+ };
+@@ -863,9 +852,6 @@ static const char * const lpass_slimbus_groups[] = {
+ static const char * const sd_write_groups[] = {
+ 	"gpio40",
+ };
+-static const char * const tsif1_error_groups[] = {
+-	"gpio40",
+-};
+ static const char * const blsp_spi6_groups[] = {
+ 	"gpio41", "gpio42", "gpio43", "gpio44",
+ };
+@@ -1048,11 +1034,8 @@ static const char * const blsp_uim2_b_groups[] = {
+ static const char * const blsp_i2c5_groups[] = {
+ 	"gpio87", "gpio88",
+ };
+-static const char * const tsif1_clk_groups[] = {
+-	"gpio89",
+-};
+-static const char * const tsif1_en_groups[] = {
+-	"gpio90",
++static const char * const tsif0_groups[] = {
++	"gpio9", "gpio40", "gpio89", "gpio90", "gpio91",
+ };
+ static const char * const mdp_vsync0_groups[] = {
+ 	"gpio90",
+@@ -1075,17 +1058,14 @@ static const char * const tgu_ch0_groups[] = {
+ static const char * const qdss_cti1_b_groups[] = {
+ 	"gpio90", "gpio91",
+ };
+-static const char * const tsif1_data_groups[] = {
+-	"gpio91",
+-};
+ static const char * const sdc4_cmd_groups[] = {
+ 	"gpio91",
+ };
+ static const char * const tgu_ch1_groups[] = {
+ 	"gpio91",
+ };
+-static const char * const tsif2_error_groups[] = {
+-	"gpio92",
++static const char * const tsif1_groups[] = {
++	"gpio92", "gpio93", "gpio94", "gpio95", "gpio96",
+ };
+ static const char * const sdc43_groups[] = {
+ 	"gpio92",
+@@ -1093,30 +1073,18 @@ static const char * const sdc43_groups[] = {
+ static const char * const vfr_1_groups[] = {
+ 	"gpio92",
+ };
+-static const char * const tsif2_clk_groups[] = {
+-	"gpio93",
+-};
+ static const char * const sdc4_clk_groups[] = {
+ 	"gpio93",
+ };
+-static const char * const tsif2_en_groups[] = {
+-	"gpio94",
+-};
+ static const char * const sdc42_groups[] = {
+ 	"gpio94",
+ };
+ static const char * const sd_card_groups[] = {
+ 	"gpio95",
+ };
+-static const char * const tsif2_data_groups[] = {
+-	"gpio95",
+-};
+ static const char * const sdc41_groups[] = {
+ 	"gpio95",
+ };
+-static const char * const tsif2_sync_groups[] = {
+-	"gpio96",
+-};
+ static const char * const sdc40_groups[] = {
+ 	"gpio96",
+ };
+@@ -1355,16 +1323,8 @@ static const struct msm_function msm8998_functions[] = {
+ 	FUNCTION(tgu_ch1),
+ 	FUNCTION(tsense_pwm1),
+ 	FUNCTION(tsense_pwm2),
+-	FUNCTION(tsif1_clk),
+-	FUNCTION(tsif1_data),
+-	FUNCTION(tsif1_en),
+-	FUNCTION(tsif1_error),
+-	FUNCTION(tsif1_sync),
+-	FUNCTION(tsif2_clk),
+-	FUNCTION(tsif2_data),
+-	FUNCTION(tsif2_en),
+-	FUNCTION(tsif2_error),
+-	FUNCTION(tsif2_sync),
++	FUNCTION(tsif0),
++	FUNCTION(tsif1),
+ 	FUNCTION(uim1_clk),
+ 	FUNCTION(uim1_data),
+ 	FUNCTION(uim1_present),
+@@ -1396,7 +1356,7 @@ static const struct msm_pingroup msm8998_groups[] = {
+ 	PINGROUP(6, WEST, blsp_spi8, blsp_uart8_a, blsp_i2c8, _, _, _, _, _, _),
+ 	PINGROUP(7, WEST, blsp_spi8, blsp_uart8_a, blsp_i2c8, ddr_bist, _, atest_tsens2, atest_usb1, _, _),
+ 	PINGROUP(8, EAST, blsp_spi4, blsp_uart1_b, blsp_uim1_b, _, ddr_bist, _, wlan1_adc1, atest_usb13, bimc_dte1),
+-	PINGROUP(9, EAST, blsp_spi4, blsp_uart1_b, blsp_uim1_b, tsif1_sync, ddr_bist, _, wlan1_adc0, atest_usb12, bimc_dte0),
++	PINGROUP(9, EAST, blsp_spi4, blsp_uart1_b, blsp_uim1_b, tsif0, ddr_bist, _, wlan1_adc0, atest_usb12, bimc_dte0),
+ 	PINGROUP(10, EAST, mdp_vsync_a, blsp_spi4, blsp_uart1_b, blsp_i2c4, ddr_bist, atest_gpsadc1, wlan2_adc1, atest_usb11, bimc_dte1),
+ 	PINGROUP(11, EAST, mdp_vsync_a, edp_lcd, blsp_spi4, blsp_uart1_b, blsp_i2c4, dbg_out, atest_gpsadc0, wlan2_adc0, atest_usb10),
+ 	PINGROUP(12, EAST, mdp_vsync, m_voc, _, _, _, _, _, _, _),
+@@ -1427,7 +1387,7 @@ static const struct msm_pingroup msm8998_groups[] = {
+ 	PINGROUP(37, NORTH, agera_pll, _, _, _, _, _, _, _, _),
+ 	PINGROUP(38, WEST, usb_phy, _, _, _, _, _, _, _, _),
+ 	PINGROUP(39, WEST, lpass_slimbus, _, _, _, _, _, _, _, _),
+-	PINGROUP(40, EAST, sd_write, tsif1_error, _, _, _, _, _, _, _),
++	PINGROUP(40, EAST, sd_write, tsif0, _, _, _, _, _, _, _),
+ 	PINGROUP(41, EAST, blsp_spi6, blsp_uart3_b, blsp_uim3_b, _, qdss, _, _, _, _),
+ 	PINGROUP(42, EAST, blsp_spi6, blsp_uart3_b, blsp_uim3_b, _, qdss, _, _, _, _),
+ 	PINGROUP(43, EAST, blsp_spi6, blsp_uart3_b, blsp_i2c6, _, qdss, _, _, _, _),
+@@ -1476,14 +1436,14 @@ static const struct msm_pingroup msm8998_groups[] = {
+ 	PINGROUP(86, EAST, blsp_spi5, blsp_uart2_b, blsp_uim2_b, _, _, _, _, _, _),
+ 	PINGROUP(87, EAST, blsp_spi5, blsp_uart2_b, blsp_i2c5, _, _, _, _, _, _),
+ 	PINGROUP(88, EAST, blsp_spi5, blsp_uart2_b, blsp_i2c5, _, _, _, _, _, _),
+-	PINGROUP(89, EAST, tsif1_clk, phase_flag, _, _, _, _, _, _, _),
+-	PINGROUP(90, EAST, tsif1_en, mdp_vsync0, mdp_vsync1, mdp_vsync2, mdp_vsync3, blsp1_spi, tgu_ch0, qdss_cti1_b, _),
+-	PINGROUP(91, EAST, tsif1_data, sdc4_cmd, tgu_ch1, phase_flag, qdss_cti1_b, _, _, _, _),
+-	PINGROUP(92, EAST, tsif2_error, sdc43, vfr_1, phase_flag, _, _, _, _, _),
+-	PINGROUP(93, EAST, tsif2_clk, sdc4_clk, _, qdss, _, _, _, _, _),
+-	PINGROUP(94, EAST, tsif2_en, sdc42, _, _, _, _, _, _, _),
+-	PINGROUP(95, EAST, tsif2_data, sdc41, _, _, _, _, _, _, _),
+-	PINGROUP(96, EAST, tsif2_sync, sdc40, phase_flag, _, _, _, _, _, _),
++	PINGROUP(89, EAST, tsif0, phase_flag, _, _, _, _, _, _, _),
++	PINGROUP(90, EAST, tsif0, mdp_vsync0, mdp_vsync1, mdp_vsync2, mdp_vsync3, blsp1_spi, tgu_ch0, qdss_cti1_b, _),
++	PINGROUP(91, EAST, tsif0, sdc4_cmd, tgu_ch1, phase_flag, qdss_cti1_b, _, _, _, _),
++	PINGROUP(92, EAST, tsif1, sdc43, vfr_1, phase_flag, _, _, _, _, _),
++	PINGROUP(93, EAST, tsif1, sdc4_clk, _, qdss, _, _, _, _, _),
++	PINGROUP(94, EAST, tsif1, sdc42, _, _, _, _, _, _, _),
++	PINGROUP(95, EAST, tsif1, sdc41, _, _, _, _, _, _, _),
++	PINGROUP(96, EAST, tsif1, sdc40, phase_flag, _, _, _, _, _, _),
+ 	PINGROUP(97, WEST, _, mdp_vsync_b, ldo_en, _, _, _, _, _, _),
+ 	PINGROUP(98, WEST, _, mdp_vsync_b, ldo_update, _, _, _, _, _, _),
+ 	PINGROUP(99, WEST, _, _, _, _, _, _, _, _, _),
+-- 
+2.17.1
