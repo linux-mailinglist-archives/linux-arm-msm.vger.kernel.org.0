@@ -2,96 +2,119 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id B5A2E58884
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 27 Jun 2019 19:36:01 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 06B995898D
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 27 Jun 2019 20:13:19 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726640AbfF0Rfw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 27 Jun 2019 13:35:52 -0400
-Received: from mail-pf1-f193.google.com ([209.85.210.193]:33041 "EHLO
-        mail-pf1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726542AbfF0Rfv (ORCPT
+        id S1726523AbfF0SNS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 27 Jun 2019 14:13:18 -0400
+Received: from mail-qk1-f196.google.com ([209.85.222.196]:43770 "EHLO
+        mail-qk1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726498AbfF0SNR (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 27 Jun 2019 13:35:51 -0400
-Received: by mail-pf1-f193.google.com with SMTP id x15so1590411pfq.0;
-        Thu, 27 Jun 2019 10:35:51 -0700 (PDT)
+        Thu, 27 Jun 2019 14:13:17 -0400
+Received: by mail-qk1-f196.google.com with SMTP id m14so2538020qka.10
+        for <linux-arm-msm@vger.kernel.org>; Thu, 27 Jun 2019 11:13:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id;
-        bh=01KFyhJUV3RoNriqLf5yZvf+oiqWf/wBU4j/uLg4Xuc=;
-        b=uBVdbE3Jhxyv437CFJJGnINzZBdXk56Qp/pNpZfZPaOVfVl+sZMXIyYzWjz8o0VFnJ
-         T+JSipaAlS39HZMZj0VHrh5JLWeYKWebAhdklZafCZzcg8OnY3Ev3gx3zHCi1p9pmUYW
-         Lf1rupKSulkylrYR17QzTHWsFDKqc2zLyd8zaAcCT7NurEi89oquIGSkmr/cGCKN6D1m
-         8r4MqtBJmIQ7xPm6zn+kW2YGk2ElBGUveuQ3AZWvEmJmINhu4x2v4BEi7lJKh3BVPwGg
-         2olzaHXAxVT9n3DBpWU8gxoD1qZPQVbZM/sDKnRTzXt+hoVP+po5g+GYJ2q1+hdki7r3
-         P70Q==
+        d=linaro.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=achxTO4wJS2fcy+fUTW8FntaVv1vHUgFzLLxG1fhXOw=;
+        b=eNWXsQ0exTa1bSakdTqOObGEKGnEgDwblZVQJJhMc6tmDj1FOYA3GcFlLKKZEzd1Cz
+         PI1/WySjJmmOesMQoLAuP+etojDEqkaHSv6lb+JY73A3B+3a1HiX+heGo1ia1cUK6Z1+
+         ptU2jD38bfQFl4WxKH8Zd2QcTi8jQQ0x6t3PeyLMitPC9SFto7PhMElWCdS5MMm4cI/7
+         Y637ZXCORBvtnEfNFooPmgcvnnW9dlt59aW86uO0x+Q3Ans2TezNzWkbTN6KH/h3/k7Y
+         SO2yFoMWPEHLq70bMYSorYbVTSi1oA9Ju9XuG7+HTQscnd7xxkK4iBbErwrUfwGYXnE+
+         Yb+Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id;
-        bh=01KFyhJUV3RoNriqLf5yZvf+oiqWf/wBU4j/uLg4Xuc=;
-        b=avtPmgt36j/jua3Y6oAM+Jg6LJZidjpZXWuMFJk2ZYpMGkxhDq+T1HXB0sILvOZOE6
-         xtL6mLN4IeVJ3CwuXv2w9Kb9MGITxZvYU5DI8zHdaUREqxuAPbobmw+wlf1Fjj6mQLcq
-         Nwg4fIeAXqWpeWNIzX1tnHVT0Rp4qQS3lTS9fajPi+93ft+SJMG4hNh0LedYN8Ua0MLf
-         tJ5RhvWp1JdyrbkScesfEtvKzxCtLKvRxxeImxd+VeKS7VP5s4KlOr7tdlQJ4ZGUO5py
-         dbkjADn1zmlx7C7+iBN9qX12I2wHQI5b8OamVtIvarKNtZoh7uEULyaDrqbzLIzOfYJH
-         +YPQ==
-X-Gm-Message-State: APjAAAWQH3nNT6dih0BCxVrOJWrk3dLYCF2nVBI2ZVmlcUiWpDbOIMOh
-        j2bL5SRvjIRjUb5LG9Q4m5wQcJzXqJTkKw==
-X-Google-Smtp-Source: APXvYqx+SNOeQczFkdaeBwmZhm/+mJTRZpohDTl9JOaOaz6UQcducOrh5q7I2LNI6Zl46a6QPO1zNg==
-X-Received: by 2002:a63:c34c:: with SMTP id e12mr4711054pgd.195.1561656951061;
-        Thu, 27 Jun 2019 10:35:51 -0700 (PDT)
-Received: from hfq-skylake.ipads-lab.se.sjtu.edu.cn ([202.120.40.82])
-        by smtp.googlemail.com with ESMTPSA id p68sm4011548pfb.80.2019.06.27.10.35.48
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 27 Jun 2019 10:35:50 -0700 (PDT)
-From:   Fuqian Huang <huangfq.daxian@gmail.com>
-Cc:     Fuqian Huang <huangfq.daxian@gmail.com>,
-        Sinan Kaya <okaya@kernel.org>, Andy Gross <agross@kernel.org>,
-        David Brown <david.brown@linaro.org>,
-        Dan Williams <dan.j.williams@intel.com>,
-        Vinod Koul <vkoul@kernel.org>,
-        linux-arm-kernel@lists.infradead.org,
-        linux-arm-msm@vger.kernel.org, dmaengine@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: [PATCH 13/87] qcom: hidma_ll: Remove call to memset after dmam_alloc_coherent
-Date:   Fri, 28 Jun 2019 01:35:44 +0800
-Message-Id: <20190627173544.2509-1-huangfq.daxian@gmail.com>
-X-Mailer: git-send-email 2.11.0
-To:     unlisted-recipients:; (no To-header on input)
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=achxTO4wJS2fcy+fUTW8FntaVv1vHUgFzLLxG1fhXOw=;
+        b=pIRQQKnxy+rKKW4y9O5FGhJUlfkxkCzsHx4cuNvABfcF91t6/rmiQPwW5x0Jt4tTGU
+         On2YIc3rbRCkGXnUQNRVxoSq57lLtq1vqB7xRLGnI5nAqrFOXsiWli/txxA1JQDZ+Nph
+         iU5ouI69BJt390uHgIcYDLqZW/CHgc2hAVmkAvdXvA2M7RgbB9Z2tUzyzjm/G2mKXpLt
+         O6O1dz67uxo3DmjgVvtkxkgqd47PIE0uCmX+396GqE0KyMqVG00bP4O0ImLMJdJ6SBvF
+         KvlmkeeQfFnMyw3Ae5kNhvrN671mu4SRPctxC2tRIixqzvU6qJHSZ4S4beI7cHsd36Zp
+         L4Kw==
+X-Gm-Message-State: APjAAAWgW9vhfMBLwyrQv9BuTOpU8pQdSat48llfTUAwd32a6GYwMXx/
+        s/r5FkQ7rA1/ftSRoPaW3rj6mJ8nZAgY+d7cArytfw==
+X-Google-Smtp-Source: APXvYqwy7qrDg0HYHuRZfowIs3mJ0VwSKLbwaN0ySbdrrf99WLvEu5Te/G7yoyWBHxruC9YCspZoJRpGtsabOzFcrXE=
+X-Received: by 2002:a05:620a:1285:: with SMTP id w5mr4441274qki.302.1561659197011;
+ Thu, 27 Jun 2019 11:13:17 -0700 (PDT)
+MIME-Version: 1.0
+References: <20190627140215.29353-1-niklas.cassel@linaro.org>
+In-Reply-To: <20190627140215.29353-1-niklas.cassel@linaro.org>
+From:   Amit Kucheria <amit.kucheria@linaro.org>
+Date:   Thu, 27 Jun 2019 23:43:05 +0530
+Message-ID: <CAP245DVTcQ5DXiSHWud42tOXFXAy7LFkqGsfUDoY0cm+7wQCBA@mail.gmail.com>
+Subject: Re: [PATCH] arm64: dts: qcom: qcs404: Add missing space for
+ cooling-cells property
+To:     Niklas Cassel <niklas.cassel@linaro.org>
+Cc:     Andy Gross <agross@kernel.org>, Rob Herring <robh+dt@kernel.org>,
+        Mark Rutland <mark.rutland@arm.com>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        DTML <devicetree@vger.kernel.org>,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-    In commit af7ddd8a627c
-("Merge tag 'dma-mapping-4.21' of git://git.infradead.org/users/hch/dma-mapping"),
-    dmam_alloc_coherent has already zeroed the memory.
-    So memset is not needed.
+On Thu, Jun 27, 2019 at 7:32 PM Niklas Cassel <niklas.cassel@linaro.org> wrote:
+>
+> There should be a space both before and after the equal sign.
+> Add a missing space for the cooling cells property.
+>
+> Fixes: f48cee3239a1 ("arm64: dts: qcom: qcs404: Add thermal zones for each sensor")
+> Signed-off-by: Niklas Cassel <niklas.cassel@linaro.org>
 
-Signed-off-by: Fuqian Huang <huangfq.daxian@gmail.com>
----
- drivers/dma/qcom/hidma_ll.c | 2 --
- 1 file changed, 2 deletions(-)
+Acked-by: Amit Kucheria <amit.kucheria@linaro.org>
 
-diff --git a/drivers/dma/qcom/hidma_ll.c b/drivers/dma/qcom/hidma_ll.c
-index 5bf8b145c427..bb4471e84e48 100644
---- a/drivers/dma/qcom/hidma_ll.c
-+++ b/drivers/dma/qcom/hidma_ll.c
-@@ -749,7 +749,6 @@ struct hidma_lldev *hidma_ll_init(struct device *dev, u32 nr_tres,
- 	if (!lldev->tre_ring)
- 		return NULL;
- 
--	memset(lldev->tre_ring, 0, (HIDMA_TRE_SIZE + 1) * nr_tres);
- 	lldev->tre_ring_size = HIDMA_TRE_SIZE * nr_tres;
- 	lldev->nr_tres = nr_tres;
- 
-@@ -769,7 +768,6 @@ struct hidma_lldev *hidma_ll_init(struct device *dev, u32 nr_tres,
- 	if (!lldev->evre_ring)
- 		return NULL;
- 
--	memset(lldev->evre_ring, 0, (HIDMA_EVRE_SIZE + 1) * nr_tres);
- 	lldev->evre_ring_size = HIDMA_EVRE_SIZE * nr_tres;
- 
- 	/* the EVRE ring has to be EVRE_SIZE aligned */
--- 
-2.11.0
-
+> ---
+>  arch/arm64/boot/dts/qcom/qcs404.dtsi | 8 ++++----
+>  1 file changed, 4 insertions(+), 4 deletions(-)
+>
+> diff --git a/arch/arm64/boot/dts/qcom/qcs404.dtsi b/arch/arm64/boot/dts/qcom/qcs404.dtsi
+> index 01a51f381850..3d0789775009 100644
+> --- a/arch/arm64/boot/dts/qcom/qcs404.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/qcs404.dtsi
+> @@ -35,7 +35,7 @@
+>                         enable-method = "psci";
+>                         cpu-idle-states = <&CPU_SLEEP_0>;
+>                         next-level-cache = <&L2_0>;
+> -                       #cooling-cells= <2>;
+> +                       #cooling-cells = <2>;
+>                 };
+>
+>                 CPU1: cpu@101 {
+> @@ -45,7 +45,7 @@
+>                         enable-method = "psci";
+>                         cpu-idle-states = <&CPU_SLEEP_0>;
+>                         next-level-cache = <&L2_0>;
+> -                       #cooling-cells= <2>;
+> +                       #cooling-cells = <2>;
+>                 };
+>
+>                 CPU2: cpu@102 {
+> @@ -55,7 +55,7 @@
+>                         enable-method = "psci";
+>                         cpu-idle-states = <&CPU_SLEEP_0>;
+>                         next-level-cache = <&L2_0>;
+> -                       #cooling-cells= <2>;
+> +                       #cooling-cells = <2>;
+>                 };
+>
+>                 CPU3: cpu@103 {
+> @@ -65,7 +65,7 @@
+>                         enable-method = "psci";
+>                         cpu-idle-states = <&CPU_SLEEP_0>;
+>                         next-level-cache = <&L2_0>;
+> -                       #cooling-cells= <2>;
+> +                       #cooling-cells = <2>;
+>                 };
+>
+>                 L2_0: l2-cache {
+> --
+> 2.21.0
+>
