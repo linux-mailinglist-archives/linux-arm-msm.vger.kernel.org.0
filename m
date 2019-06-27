@@ -2,138 +2,103 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 05E1858D5F
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 27 Jun 2019 23:50:30 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D0F5E58EC3
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 28 Jun 2019 01:49:33 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726472AbfF0Vu3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 27 Jun 2019 17:50:29 -0400
-Received: from mail.kernel.org ([198.145.29.99]:39878 "EHLO mail.kernel.org"
+        id S1726860AbfF0Xtb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 27 Jun 2019 19:49:31 -0400
+Received: from mail.kernel.org ([198.145.29.99]:34384 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726384AbfF0Vu3 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 27 Jun 2019 17:50:29 -0400
+        id S1726563AbfF0Xtb (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 27 Jun 2019 19:49:31 -0400
 Received: from kernel.org (unknown [104.132.0.74])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 757982063F;
-        Thu, 27 Jun 2019 21:50:27 +0000 (UTC)
+        by mail.kernel.org (Postfix) with ESMTPSA id B78E520815;
+        Thu, 27 Jun 2019 23:49:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1561672227;
-        bh=+hnLXFnOo9VFV9gApTYWkYCpMs8WYGse15USRK+DkWA=;
+        s=default; t=1561679369;
+        bh=DPfoFDaQ0osnbl2xTlc3KM41TZ8uixeInq46nR6zOn8=;
         h=In-Reply-To:References:To:From:Subject:Cc:Date:From;
-        b=nvqJiF3RGfDK9ZM/Klv4gK3SaINpieIK6jbGjahb1SD1jabIfv8ddey4f5RgBgSdf
-         GzA+zcjrF8FuVVty7+HfCHYz3fhGplKhuLN1ZPb3zuZCfk9TS/NyxSLv6goadj4FFU
-         HdCBE/OqVMgulzoChl6/ZWwWn2VNXMPbtbuLwxBQ=
+        b=IrbogHQm/l14pPv3a7QeEDVXQO+JiyRJfBAx8wE5snW7UwJrjnxkFdi9V7lmzOrEI
+         Po5a7CnbBM7me/pNjIdZI04CJsyHvfrzlPfc/a2oGLR6ITPsI+ae6RjFZEeC2G5GqO
+         XJhBZob3sGfJRIJcZsst0xI8yhZJf56ux8RpTtHQ=
 Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <20190625063140.17106-3-vkoul@kernel.org>
-References: <20190625063140.17106-1-vkoul@kernel.org> <20190625063140.17106-3-vkoul@kernel.org>
-To:     Vinod Koul <vkoul@kernel.org>
+In-Reply-To: <20190625005434.GA6401@onstation.org>
+References: <20190516085018.2207-1-masneyb@onstation.org> <20190520142149.D56DA214AE@mail.kernel.org> <CACRpkdZxu1LfK11OHEx5L_4kyjMZ7qERpvDzFj5u3Pk2kD1qRA@mail.gmail.com> <20190529101231.GA14540@basecamp> <CACRpkdY-TcF7rizbPz=UcHrFvDgPJD68vbovNdcWP-aBYppp=g@mail.gmail.com> <20190623105332.GA25506@onstation.org> <CACRpkdYTaM+sBs-bhaXVtAwFtp6+_PWWJ_k9jobd7qB41HubDg@mail.gmail.com> <20190625005434.GA6401@onstation.org>
+To:     Brian Masney <masneyb@onstation.org>,
+        Linus Walleij <linus.walleij@linaro.org>
 From:   Stephen Boyd <sboyd@kernel.org>
-Subject: Re: [PATCH v3 2/3] clk: qcom: clk-alpha-pll: Add support for Trion PLLs
-Cc:     linux-arm-msm@vger.kernel.org,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Deepak Katragadda <dkatraga@codeaurora.org>,
+Subject: Re: [PATCH RESEND] ARM: dts: qcom: msm8974-hammerhead: add device tree bindings for vibrator
+Cc:     "thierry.reding@gmail.com" <thierry.reding@gmail.com>,
         Andy Gross <agross@kernel.org>,
         David Brown <david.brown@linaro.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        linux-clk@vger.kernel.org, Taniya Das <tdas@codeaurora.org>,
-        Vinod Koul <vkoul@kernel.org>
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Mark Rutland <mark.rutland@arm.com>,
+        MSM <linux-arm-msm@vger.kernel.org>,
+        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
+        <devicetree@vger.kernel.org>,
+        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>
 User-Agent: alot/0.8.1
-Date:   Thu, 27 Jun 2019 14:50:26 -0700
-Message-Id: <20190627215027.757982063F@mail.kernel.org>
+Date:   Thu, 27 Jun 2019 16:49:28 -0700
+Message-Id: <20190627234929.B78E520815@mail.kernel.org>
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Vinod Koul (2019-06-24 23:31:39)
-> diff --git a/drivers/clk/qcom/clk-alpha-pll.c b/drivers/clk/qcom/clk-alph=
-a-pll.c
-> index 2c6773188761..30210f5c6726 100644
-> --- a/drivers/clk/qcom/clk-alpha-pll.c
-> +++ b/drivers/clk/qcom/clk-alpha-pll.c
-> @@ -32,6 +32,7 @@
->  # define PLL_LOCK_DET          BIT(31)
-> =20
->  #define PLL_L_VAL(p)           ((p)->offset + (p)->regs[PLL_OFF_L_VAL])
-> +#define PLL_CAL_L_VAL(p)       ((p)->offset + (p)->regs[PLL_OFF_CAL_L_VA=
-L])
->  #define PLL_ALPHA_VAL(p)       ((p)->offset + (p)->regs[PLL_OFF_ALPHA_VA=
-L])
->  #define PLL_ALPHA_VAL_U(p)     ((p)->offset + (p)->regs[PLL_OFF_ALPHA_VA=
-L_U])
-> =20
-> @@ -44,14 +45,17 @@
->  # define PLL_VCO_MASK          0x3
-> =20
->  #define PLL_USER_CTL_U(p)      ((p)->offset + (p)->regs[PLL_OFF_USER_CTL=
-_U])
-> +#define PLL_USER_CTL_U1(p)     ((p)->offset + (p)->regs[PLL_OFF_USER_CTL=
-_U1])
-> =20
->  #define PLL_CONFIG_CTL(p)      ((p)->offset + (p)->regs[PLL_OFF_CONFIG_C=
-TL])
->  #define PLL_CONFIG_CTL_U(p)    ((p)->offset + (p)->regs[PLL_OFF_CONFIG_C=
-TL_U])
-> +#define PLL_CONFIG_CTL_U1(p)   ((p)->offset + (p)->regs[PLL_OFF_CONFIG_C=
-TL_U11])
+Quoting Brian Masney (2019-06-24 17:54:34)
+> On Tue, Jun 25, 2019 at 12:29:29AM +0200, Linus Walleij wrote:
+> > On Sun, Jun 23, 2019 at 12:53 PM Brian Masney <masneyb@onstation.org> w=
+rote:
+> >=20
+> > > 2) Do what Linus suggests above. We can use v1 of this series from la=
+st
+> > >    September (see below for link) that adds this to the pwm subsystem.
+> > >    The locking would need to be added so that it won't conflict with =
+the
+> > >    clk subsystem. This can be tied into the input subsystem with the
+> > >    existing pwm-vibra driver.
+> >=20
+> > What I imagined was that the clk driver would double as a pwm driver.
+> > Just register both interfaces.
+> >=20
+> > There are already plenty of combines clk+reset drivers for example.
+> >=20
+> > Otherwise I'm all for this approach (but that's just me).
+>=20
+> I agree that this makes sense. I especially like that it'll allow us
+> to use the existing pwm-vibra driver in the input subsystem with this
+> approach.
+>=20
 
-This looks like a typo, U11 vs U1. So I don't think this has been
-compile tested....
+This whole discussion is ignoring that clk_set_duty_cycle() exists.
+Maybe you can look back on the history of why the duty cycle API was
+added to the clk framework to make a strong argument for the replacement
+of this API with your proposal of registering to two different
+frameworks instead?
 
->  #define PLL_TEST_CTL(p)                ((p)->offset + (p)->regs[PLL_OFF_=
-TEST_CTL])
->  #define PLL_TEST_CTL_U(p)      ((p)->offset + (p)->regs[PLL_OFF_TEST_CTL=
-_U])
->  #define PLL_STATUS(p)          ((p)->offset + (p)->regs[PLL_OFF_STATUS])
->  #define PLL_OPMODE(p)          ((p)->offset + (p)->regs[PLL_OFF_OPMODE])
->  #define PLL_FRAC(p)            ((p)->offset + (p)->regs[PLL_OFF_FRAC])
-> +#define PLL_CAL_VAL(p)         ((p)->offset + (p)->regs[PLL_OFF_CAL_VAL])
-> =20
->  const u8 clk_alpha_pll_regs[][PLL_OFF_MAX_REGS] =3D {
->         [CLK_ALPHA_PLL_TYPE_DEFAULT] =3D  {
->  const struct clk_ops clk_alpha_pll_ops =3D {
->         .enable =3D clk_alpha_pll_enable,
->         .disable =3D clk_alpha_pll_disable,
-> @@ -1053,6 +1210,77 @@ static unsigned long clk_alpha_pll_postdiv_fabia_r=
-ecalc_rate(struct clk_hw *hw,
-[...]
-> +
-> +static int
-> +clk_trion_pll_postdiv_set_rate(struct clk_hw *hw, unsigned long rate,
-> +                              unsigned long parent_rate)
-> +{
-> +       struct clk_alpha_pll_postdiv *pll =3D to_clk_alpha_pll_postdiv(hw=
-);
-> +       struct regmap *regmap =3D pll->clkr.regmap;
-> +       int i, val =3D 0, div, ret;
-> +
-> +       /*
-> +        * If the PLL is in FSM mode, then treat the set_rate callback
-> +        * as a no-operation.
+Here's the first few parts of the commit text of 9fba738a53dd ("clk: add
+duty cycle support"):
 
-And this is OK? Shouldn't we fail because we can't change to the rate
-that's desired?
+    Add the possibility to apply and query the clock signal duty cycle rati=
+o.
 
-> +        */
-> +       ret =3D regmap_read(regmap, PLL_MODE(pll), &val);
-> +       if (ret)
-> +               return ret;
-> +
-> +       if (val & PLL_VOTE_FSM_ENA)
-> +               return 0;
-> +
-> +       div =3D DIV_ROUND_UP_ULL(parent_rate, rate);
-> +       for (i =3D 0; i < pll->num_post_div; i++) {
-> +               if (pll->post_div_table[i].div =3D=3D div) {
-> +                       val =3D pll->post_div_table[i].val;
-> +                       break;
-> +               }
-> +       }
-> +
-> +       return regmap_update_bits(regmap, PLL_USER_CTL(pll),
-> +                                 PLL_POST_DIV_MASK(pll) << PLL_POST_DIV_=
-SHIFT,
-> +                                 val << PLL_POST_DIV_SHIFT);
-> +}
+    This is useful when the duty cycle of the clock signal depends on some
+    other parameters controlled by the clock framework.
+
+    For example, the duty cycle of a divider may depends on the raw divider
+    setting (ratio =3D N / div) , which is controlled by the CCF. In such c=
+ase,
+    going through the pwm framework to control the duty cycle ratio of this
+    clock would be a burden.
+
+In the case of qcom clks, I seem to recall the frequency of the clk
+depends on the duty cycle settings. The duty cycle is constrained by the
+M/N values which determine the frequency of the clk after it's
+pre-divided. We did some sort of bit trick to set the duty cycle to the
+N value inverted or something so that we always got 50% duty cycle.
+
