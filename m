@@ -2,103 +2,115 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id D0F5E58EC3
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 28 Jun 2019 01:49:33 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 2B90B59180
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 28 Jun 2019 04:47:06 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726860AbfF0Xtb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 27 Jun 2019 19:49:31 -0400
-Received: from mail.kernel.org ([198.145.29.99]:34384 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726563AbfF0Xtb (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 27 Jun 2019 19:49:31 -0400
-Received: from kernel.org (unknown [104.132.0.74])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id B78E520815;
-        Thu, 27 Jun 2019 23:49:29 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1561679369;
-        bh=DPfoFDaQ0osnbl2xTlc3KM41TZ8uixeInq46nR6zOn8=;
-        h=In-Reply-To:References:To:From:Subject:Cc:Date:From;
-        b=IrbogHQm/l14pPv3a7QeEDVXQO+JiyRJfBAx8wE5snW7UwJrjnxkFdi9V7lmzOrEI
-         Po5a7CnbBM7me/pNjIdZI04CJsyHvfrzlPfc/a2oGLR6ITPsI+ae6RjFZEeC2G5GqO
-         XJhBZob3sGfJRIJcZsst0xI8yhZJf56ux8RpTtHQ=
-Content-Type: text/plain; charset="utf-8"
-MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <20190625005434.GA6401@onstation.org>
-References: <20190516085018.2207-1-masneyb@onstation.org> <20190520142149.D56DA214AE@mail.kernel.org> <CACRpkdZxu1LfK11OHEx5L_4kyjMZ7qERpvDzFj5u3Pk2kD1qRA@mail.gmail.com> <20190529101231.GA14540@basecamp> <CACRpkdY-TcF7rizbPz=UcHrFvDgPJD68vbovNdcWP-aBYppp=g@mail.gmail.com> <20190623105332.GA25506@onstation.org> <CACRpkdYTaM+sBs-bhaXVtAwFtp6+_PWWJ_k9jobd7qB41HubDg@mail.gmail.com> <20190625005434.GA6401@onstation.org>
-To:     Brian Masney <masneyb@onstation.org>,
-        Linus Walleij <linus.walleij@linaro.org>
-From:   Stephen Boyd <sboyd@kernel.org>
-Subject: Re: [PATCH RESEND] ARM: dts: qcom: msm8974-hammerhead: add device tree bindings for vibrator
-Cc:     "thierry.reding@gmail.com" <thierry.reding@gmail.com>,
-        Andy Gross <agross@kernel.org>,
+        id S1726833AbfF1Cqx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 27 Jun 2019 22:46:53 -0400
+Received: from mail-pl1-f193.google.com ([209.85.214.193]:40935 "EHLO
+        mail-pl1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726817AbfF1Cqx (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 27 Jun 2019 22:46:53 -0400
+Received: by mail-pl1-f193.google.com with SMTP id a93so2360256pla.7;
+        Thu, 27 Jun 2019 19:46:52 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id;
+        bh=04GljEtl2h3DmnTzFw9yoiLkqcADLLyfQ+DeoECtL/g=;
+        b=DfYRJv3o9Bcrqrgqw90Ljs1hZlo0ut9UVtzdSkOf+R1UrqOE5qgOpWli4VXM0vexVS
+         kcLQdIIY41qtuPt77bpfXCCz78DVSEt8nHQLWrbGGHdvoUJiz0AHcKv0zey3ymekMWQW
+         3ZYA8ry/J/fEnLyaQxY/BCrVNKg3WvLn+S+OzgWsXccwFp47WifaGx+EJq/hvLPyjB5T
+         MReyTie+sBqblJjpj/MiGCu3GI5I5tLhd2JdRgoeCaOJaKr2J4U4bH/SxUo06oabCEJW
+         tSJtSMgB5G+PcmJykIpGyPCl2lY/vlSPJFcP9+0kFoqBvtyZKe04tgqrO4PjH2qf54hN
+         q8Xg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=04GljEtl2h3DmnTzFw9yoiLkqcADLLyfQ+DeoECtL/g=;
+        b=V/wIPX6CW+2PXvu9P1h6h893H9ZSX+9n07VADXMMIUCql8qeJbAD8Qk1U5MnIxt8o3
+         IjhGSona3m5xDfVpymk5fvWX2b+8pIxBGJMA+5C4aCfByd9w4nrVpS/Yn8ea1nVXykI2
+         3LYHWPl+PzsQs9HfvsmM8pmmZbLkzdb4byfwTMXgWXsLhKghSyPgUtc10jQFOCJuihNT
+         WNbhnhLZ+qnXdRIwhr1PjFSe9Xu79+4xm1IPZbz5fFfBl2jsc6LoDkmAFyUGdhLb9p45
+         bi7lVFKtMme4DSDCjZEH+vam3UKl6rmNpXcUf4qKreoo7LY4K6oR48lqD+67J5wRpV9Q
+         WLFw==
+X-Gm-Message-State: APjAAAUkRJpPaoZOk1WieYSC9dDz91lxnttPkBj+HB/rxH0c7HPuBXXG
+        qFh33YfBe2S+foEQdu6lth0=
+X-Google-Smtp-Source: APXvYqwZWLNOSYNebra3h7VxqKFQWWgskOaNU9GLrmfb1nSa3+umdvA8TKyiTag+IOKEC5NcyTD2Fg==
+X-Received: by 2002:a17:902:9a42:: with SMTP id x2mr8693861plv.106.1561690012576;
+        Thu, 27 Jun 2019 19:46:52 -0700 (PDT)
+Received: from hfq-skylake.ipads-lab.se.sjtu.edu.cn ([202.120.40.82])
+        by smtp.googlemail.com with ESMTPSA id j15sm450696pfr.146.2019.06.27.19.46.47
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Thu, 27 Jun 2019 19:46:52 -0700 (PDT)
+From:   Fuqian Huang <huangfq.daxian@gmail.com>
+Cc:     Fuqian Huang <huangfq.daxian@gmail.com>,
+        Dan Williams <dan.j.williams@intel.com>,
+        Vinod Koul <vkoul@kernel.org>, Shawn Guo <shawnguo@kernel.org>,
+        Sascha Hauer <s.hauer@pengutronix.de>,
+        Pengutronix Kernel Team <kernel@pengutronix.de>,
+        Fabio Estevam <festevam@gmail.com>,
+        NXP Linux Team <linux-imx@nxp.com>,
+        Sinan Kaya <okaya@kernel.org>, Andy Gross <agross@kernel.org>,
         David Brown <david.brown@linaro.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Mark Rutland <mark.rutland@arm.com>,
-        MSM <linux-arm-msm@vger.kernel.org>,
-        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
-        <devicetree@vger.kernel.org>,
-        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>
-User-Agent: alot/0.8.1
-Date:   Thu, 27 Jun 2019 16:49:28 -0700
-Message-Id: <20190627234929.B78E520815@mail.kernel.org>
+        dmaengine@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org
+Subject: [PATCH v2 06/27] dma: remove memset after dma_alloc_coherent/dmam_alloc_coherent
+Date:   Fri, 28 Jun 2019 10:46:42 +0800
+Message-Id: <20190628024642.15089-1-huangfq.daxian@gmail.com>
+X-Mailer: git-send-email 2.11.0
+To:     unlisted-recipients:; (no To-header on input)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Brian Masney (2019-06-24 17:54:34)
-> On Tue, Jun 25, 2019 at 12:29:29AM +0200, Linus Walleij wrote:
-> > On Sun, Jun 23, 2019 at 12:53 PM Brian Masney <masneyb@onstation.org> w=
-rote:
-> >=20
-> > > 2) Do what Linus suggests above. We can use v1 of this series from la=
-st
-> > >    September (see below for link) that adds this to the pwm subsystem.
-> > >    The locking would need to be added so that it won't conflict with =
-the
-> > >    clk subsystem. This can be tied into the input subsystem with the
-> > >    existing pwm-vibra driver.
-> >=20
-> > What I imagined was that the clk driver would double as a pwm driver.
-> > Just register both interfaces.
-> >=20
-> > There are already plenty of combines clk+reset drivers for example.
-> >=20
-> > Otherwise I'm all for this approach (but that's just me).
->=20
-> I agree that this makes sense. I especially like that it'll allow us
-> to use the existing pwm-vibra driver in the input subsystem with this
-> approach.
->=20
+In commit af7ddd8a627c
+("Merge tag 'dma-mapping-4.21' of git://git.infradead.org/users/hch/dma-mapping"),
+dma_alloc_coherent/dmam_alloc_coherent has already zeroed the memory.
+So memset is not needed.
 
-This whole discussion is ignoring that clk_set_duty_cycle() exists.
-Maybe you can look back on the history of why the duty cycle API was
-added to the clk framework to make a strong argument for the replacement
-of this API with your proposal of registering to two different
-frameworks instead?
+Signed-off-by: Fuqian Huang <huangfq.daxian@gmail.com>
+---
+ drivers/dma/imx-sdma.c      | 4 ----
+ drivers/dma/qcom/hidma_ll.c | 2 --
+ 2 files changed, 6 deletions(-)
 
-Here's the first few parts of the commit text of 9fba738a53dd ("clk: add
-duty cycle support"):
-
-    Add the possibility to apply and query the clock signal duty cycle rati=
-o.
-
-    This is useful when the duty cycle of the clock signal depends on some
-    other parameters controlled by the clock framework.
-
-    For example, the duty cycle of a divider may depends on the raw divider
-    setting (ratio =3D N / div) , which is controlled by the CCF. In such c=
-ase,
-    going through the pwm framework to control the duty cycle ratio of this
-    clock would be a burden.
-
-In the case of qcom clks, I seem to recall the frequency of the clk
-depends on the duty cycle settings. The duty cycle is constrained by the
-M/N values which determine the frequency of the clk after it's
-pre-divided. We did some sort of bit trick to set the duty cycle to the
-N value inverted or something so that we always got 50% duty cycle.
+diff --git a/drivers/dma/imx-sdma.c b/drivers/dma/imx-sdma.c
+index 99d9f431ae2c..54d86359bdf8 100644
+--- a/drivers/dma/imx-sdma.c
++++ b/drivers/dma/imx-sdma.c
+@@ -1886,10 +1886,6 @@ static int sdma_init(struct sdma_engine *sdma)
+ 	sdma->context_phys = ccb_phys +
+ 		MAX_DMA_CHANNELS * sizeof (struct sdma_channel_control);
+ 
+-	/* Zero-out the CCB structures array just allocated */
+-	memset(sdma->channel_control, 0,
+-			MAX_DMA_CHANNELS * sizeof (struct sdma_channel_control));
+-
+ 	/* disable all channels */
+ 	for (i = 0; i < sdma->drvdata->num_events; i++)
+ 		writel_relaxed(0, sdma->regs + chnenbl_ofs(sdma, i));
+diff --git a/drivers/dma/qcom/hidma_ll.c b/drivers/dma/qcom/hidma_ll.c
+index 5bf8b145c427..bb4471e84e48 100644
+--- a/drivers/dma/qcom/hidma_ll.c
++++ b/drivers/dma/qcom/hidma_ll.c
+@@ -749,7 +749,6 @@ struct hidma_lldev *hidma_ll_init(struct device *dev, u32 nr_tres,
+ 	if (!lldev->tre_ring)
+ 		return NULL;
+ 
+-	memset(lldev->tre_ring, 0, (HIDMA_TRE_SIZE + 1) * nr_tres);
+ 	lldev->tre_ring_size = HIDMA_TRE_SIZE * nr_tres;
+ 	lldev->nr_tres = nr_tres;
+ 
+@@ -769,7 +768,6 @@ struct hidma_lldev *hidma_ll_init(struct device *dev, u32 nr_tres,
+ 	if (!lldev->evre_ring)
+ 		return NULL;
+ 
+-	memset(lldev->evre_ring, 0, (HIDMA_EVRE_SIZE + 1) * nr_tres);
+ 	lldev->evre_ring_size = HIDMA_EVRE_SIZE * nr_tres;
+ 
+ 	/* the EVRE ring has to be EVRE_SIZE aligned */
+-- 
+2.11.0
 
