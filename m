@@ -2,52 +2,52 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id D5FE05942F
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 28 Jun 2019 08:29:06 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id CAC7D59431
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 28 Jun 2019 08:29:32 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726645AbfF1G3G (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 28 Jun 2019 02:29:06 -0400
-Received: from mail-io1-f67.google.com ([209.85.166.67]:36722 "EHLO
-        mail-io1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726574AbfF1G3F (ORCPT
+        id S1726719AbfF1G3c (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 28 Jun 2019 02:29:32 -0400
+Received: from mail-io1-f68.google.com ([209.85.166.68]:41068 "EHLO
+        mail-io1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726574AbfF1G3c (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 28 Jun 2019 02:29:05 -0400
-Received: by mail-io1-f67.google.com with SMTP id h6so10246352ioh.3
-        for <linux-arm-msm@vger.kernel.org>; Thu, 27 Jun 2019 23:29:05 -0700 (PDT)
+        Fri, 28 Jun 2019 02:29:32 -0400
+Received: by mail-io1-f68.google.com with SMTP id w25so10167378ioc.8
+        for <linux-arm-msm@vger.kernel.org>; Thu, 27 Jun 2019 23:29:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=lixom-net.20150623.gappssmtp.com; s=20150623;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=saTGILFM6srmwaj5/tNn2pJ+i33z1aHVJBPvZqZ/BAQ=;
-        b=D0mMAxAkyRFOSeWJJs8lfk5+0GEaORmZ8+PuHou6ahBwjFSXkKZu/YUjPwnOlrnGSn
-         /ZMaoM+bsUqfcSKl3JuySQsMv7/z9C4LVUivLTai5w7Eh63PwbrS5LBV7hgeLF/7fZW/
-         7gnmj837H7fBE+tgJyfBtjNJ9paoXMvqFQZfemXCW6OflwfLhYof+jarlgyA5g2qNRKp
-         GPo6HwCBT2+23G0VYYByJu14Ul8JtxQFjdDopcPCYWN+GwSWuy/Hnebh/yaIxv/w23uZ
-         eH1dU9WPiK6rETD/XYVO2zoEu0nqXGv3kvSX16LSxRsrrek2YLgq0w0Nzo4p1VZNHTMV
-         detg==
+        bh=yzdMu9wmm3sT//zZC0WGHtjFo3HffuvV4wa2Jufeytk=;
+        b=hEf6FU5gQSt2RhXB3QMF6tTZmHNr/2cV3SkScLpMDBVwX+GjqNwijSVRQcysUiAbEg
+         I5p4jqappCKkhMJFjnTYsijKCMdbjvTc9XX/Vcc7NWLI7ysJWG+C8srNfPReoAh8wwpY
+         lTyVBtgowHU9ND0uamYCDEgzU9fDbn/75zoqU0AEafJIQnpudhWA+TwNb4dqrA0CzkqC
+         rDh39Md3WOy6aGJhrWryJtfuJvN1LIxzM/wNxqyYaaXRe2R2uPY50VKvo6ilf3BiIwae
+         MH8nIXBfmhho+TgNWCuvF8RJ0tHvCGDgUWMQcpbAg5RjQ913c/rzyYBIhgiY+5TFn410
+         B6qg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=saTGILFM6srmwaj5/tNn2pJ+i33z1aHVJBPvZqZ/BAQ=;
-        b=ky8Nvd5wx210WSlPN3P9wsmzE66pDzS2ISpD17y0hCNzxpN+b/Bqf1cAFK52LKs9m6
-         ilT8UXy83mg0foW8U4qPh30vXN4Z0j5R2G6JNXHCCB7GC4WLnEzaENv9MPcu7VnMXDr3
-         lRlroBoYs48hpg06DBtd8LJB6CzeC8uVqNTIV9lVx0VX2sql1MvrkfdmqZv7zSvJ4haE
-         ngrgeFB7XXXube9KsVY6E5n3o+5LhbyMnc4Z3/C0lZrzalyAyvfZzMCCrzbs4n9/qem9
-         f718BTm1vKiTHjl+a94SpxmKu3lscsgaKGRDc2UwUyrB338kes74qYuo0/FqU1f35Iw3
-         IzBA==
-X-Gm-Message-State: APjAAAWL7PBYXfz+yKJW0drLEOZwbU0Dtb1azK03i/8YmhadHh29vQJa
-        ict1geeg4/zKaeopDuckxGQPEXZy4vtGXkbDvDxKGw==
-X-Google-Smtp-Source: APXvYqx3P+LmmIyDtQh34wT0i4pWVu04xgifzi8AuxYP1ModA6Zlva0Pj6Fel0+bK1DzBPsPdaJY+uky6uQUE++iGPA=
-X-Received: by 2002:a5d:94d0:: with SMTP id y16mr5555373ior.123.1561703344930;
- Thu, 27 Jun 2019 23:29:04 -0700 (PDT)
+        bh=yzdMu9wmm3sT//zZC0WGHtjFo3HffuvV4wa2Jufeytk=;
+        b=jfNouxppX87Iso7uNJVZGJT56zYd/5zujLpP7dwu3fa9fS6Oe1iG6os91BGAI++IEl
+         8sH0+OW3ODNXH5DhMhoPIy4AX1Q3BE15g7fPClxzQlfT+O9EoXlQUO3wREiExPFTRNo6
+         1fsvxS+CVPBASjbj4zn4P+hndRzCpmHTHazGSkRQfOrF+dCZl4IRcUaEU1EGfzOiT16X
+         MvX1+yBUNEwOXOAV3Fd8MxobhSmWCFJrwakP9y6EZCuj75pGLrZewotVMK3+6y8EcMBE
+         4CBWhXIz4vBbV81dQjKE/sXqCwKHS99Ff7IQwrsr6ODpYHcLTeNx6NEpwaQYpwMQN6wF
+         +J6Q==
+X-Gm-Message-State: APjAAAWeb89XFGHJyp4vbAVNqkq7Lsz6ELvTTNzdiRzTjY7CUroqVaWC
+        Hdg1KmCHQwQS+tTO2H0SonyXoX9fvxfzAHypow+eHg==
+X-Google-Smtp-Source: APXvYqwBFox1JXGIEl2wH0JghlBvyept7dRaynmj11z4pFrRjtaIr0i0sREvQNzUv7Ybu5uC+ZMeE61et116WVQ9aEY=
+X-Received: by 2002:a02:c519:: with SMTP id s25mr9025538jam.11.1561703371334;
+ Thu, 27 Jun 2019 23:29:31 -0700 (PDT)
 MIME-Version: 1.0
-References: <1561700182-18108-1-git-send-email-agross@kernel.org>
-In-Reply-To: <1561700182-18108-1-git-send-email-agross@kernel.org>
+References: <1561700182-18108-1-git-send-email-agross@kernel.org> <1561700182-18108-2-git-send-email-agross@kernel.org>
+In-Reply-To: <1561700182-18108-2-git-send-email-agross@kernel.org>
 From:   Olof Johansson <olof@lixom.net>
-Date:   Fri, 28 Jun 2019 14:28:53 +0800
-Message-ID: <CAOesGMhQKastVvjUdmH=-zTzejHZ-QOXr6=qJDD2XqoHQJPrJg@mail.gmail.com>
-Subject: Re: [GIT PULL] Qualcomm ARM64 DT updates for 5.3 Part 2
+Date:   Fri, 28 Jun 2019 14:29:19 +0800
+Message-ID: <CAOesGMiTrSaWPb8T4waNbHoHVUVAiCpcgor-C-FKuzr=4ZfVpQ@mail.gmail.com>
+Subject: Re: [GIT PULL] Qualcomm Device Tree updates for 5.3 Part 2
 To:     Andy Gross <agross@kernel.org>
 Cc:     ARM-SoC Maintainers <arm@kernel.org>,
         linux-arm-msm <linux-arm-msm@vger.kernel.org>,
@@ -61,21 +61,28 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi,
-
 On Fri, Jun 28, 2019 at 1:36 PM Andy Gross <agross@kernel.org> wrote:
 >
-> The following changes since commit 2410fd450c09a126aefefc9106b4652285b5d60f:
+> The following changes since commit 489bacb29818865d2db63d4800f4ddff56929031:
 >
->   arm64: dts: qcom: qcs404-evb: fix vdd_apc supply (2019-06-19 23:50:52 -0500)
+>   ARM: dts: qcom: msm8974-hammerhead: add support for display (2019-06-16 11:27:45 -0700)
 >
 > are available in the git repository at:
 >
->   git://git.kernel.org/pub/scm/linux/kernel/git/qcom/linux.git tags/qcom-arm64-for-5.3-2
+>   git://git.kernel.org/pub/scm/linux/kernel/git/qcom/linux.git tags/qcom-dts-for-5.3-2
 >
-> for you to fetch changes up to 8291e15108cde33c3e086a34af5381c95cc7aa87:
+> for you to fetch changes up to e9146339515ece09ee651f122a51a26ae652ab80:
 >
->   arm64: dts: qcom: qcs404: Add missing space for cooling-cells property (2019-06-28 00:20:37 -0500)
+>   ARM: dts: msm8974-FP2: Add vibration motor (2019-06-25 13:29:32 -0500)
+>
+> ----------------------------------------------------------------
+> Qualcomm Device Tree Changes for v5.3
+>
+> * Add vibrator motor for MSM8974 based Fairphone 2
+>
+> ----------------------------------------------------------------
+> Luca Weiss (1):
+>       ARM: dts: msm8974-FP2: Add vibration motor
 
 Merged, thanks!
 
