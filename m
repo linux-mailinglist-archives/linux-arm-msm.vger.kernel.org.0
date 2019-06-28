@@ -2,124 +2,234 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id AF14159C26
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 28 Jun 2019 14:57:44 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E3B0559C3C
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 28 Jun 2019 15:00:26 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726882AbfF1M5n (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 28 Jun 2019 08:57:43 -0400
-Received: from mail-ed1-f65.google.com ([209.85.208.65]:38384 "EHLO
-        mail-ed1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726558AbfF1M5n (ORCPT
+        id S1726884AbfF1NA0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 28 Jun 2019 09:00:26 -0400
+Received: from mail-wm1-f68.google.com ([209.85.128.68]:37981 "EHLO
+        mail-wm1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726697AbfF1NAZ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 28 Jun 2019 08:57:43 -0400
-Received: by mail-ed1-f65.google.com with SMTP id r12so10778770edo.5;
-        Fri, 28 Jun 2019 05:57:42 -0700 (PDT)
+        Fri, 28 Jun 2019 09:00:25 -0400
+Received: by mail-wm1-f68.google.com with SMTP id s15so8887221wmj.3
+        for <linux-arm-msm@vger.kernel.org>; Fri, 28 Jun 2019 06:00:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=6ueum79s2anlYRWAS9FzgzUG5wD5wG/lgkeWFXCOZvM=;
-        b=Vsvc9FDKFPgRzauk8Np3VxKo8ItjOarCG/RlvXleY2TbKd28c/x/ep7DNZ2QsaFtp+
-         qPSDxgbdaCVLAqkDqePuAf4kl1Gs+fC421GxUCMubv5o3NHu37Q/B7uFx3zKlYCBCo62
-         DmrkABGvkTzrFhmRrV2eZEswUp+1+/IH3k0Y4+9APWCbJK9CrbH8GWoTzvFwonJOEhod
-         JSUAMZmjsu6UFkipC2194iWXuqzUzdV2EEHWRI5SVToBk2QGi6wnHjvqC7iL4i/QGyPe
-         EChj5ytcdah2+5MBwfJQMcFvMc73KIHiTSIgRs7kmPMwFXI904fprhovqJVFndOWvapW
-         fLWA==
+        d=linaro.org; s=google;
+        h=from:to:cc:subject:date:message-id;
+        bh=phd6grQaPeAKpxGCc8e9yaooyxfgwldd6Z0yhWR1iak=;
+        b=R2iSA2g3Ls9YJZ8155Z6dZbfM9TXzEMWMS8nJZVcJwAWIG+jOf2gWrQFMRlujxAKnc
+         0S5hQ8sAXBaT27zBNs7azSbhGlAz2jdL9M2KvTiQyW8le+Uez+cU1fnicdQpdjaO58NN
+         lE/sONL5XKDfuTFVZ4Z/jp0AIKOgvBTLhC9mDbHaoH48pLEEO7Yt+zcPQLsbusf5VEoV
+         CSmt6RxIJ5w31LA1KWX+Nhw90WMLPKNkCaAcEq7VExv3/1yncVTwoGJoF9I1ibdQkf94
+         gllASUZ7vkStpFWOD13XIbCzA6BvKHaavRiFg3YgbeAc6rrBbvwDLEZbvDKyVafxNQAv
+         IJWQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=6ueum79s2anlYRWAS9FzgzUG5wD5wG/lgkeWFXCOZvM=;
-        b=lYsMv7lhf9v20T5PllNPPggBsdr1LBir7F7F28Qqe/Nr/IYc4v+gYZDN3+2JsbQAR8
-         yQ2h2RNwl9yu5nViP2sKb5zBBXi4M4EyhZ4D+tBbphPoRTIRli9gR/dNMIfngJ8vqfmh
-         Rhg2lKLY45lZhK0zvZVvl6JnGeCCM3I0JCKOTfWrBUo/bszob8JfpnR47vnALfMl1OmQ
-         bSGBn+Gk76XWSbMvEKWWHVNnTjdLQbRXjpjCGUxHuHEXV6dN9XdKMVwALvlABApSWR50
-         vJwhtiyHo7nuTXN+Ck4d6RJca0lqyWEe+DwekhhzDDdLpTw3OQV+K+6afyJmo+aXFnSy
-         kvsA==
-X-Gm-Message-State: APjAAAXo3dZ8hvEiTuEIJ5tiQ8LvwW0FMXMm+hd8fb8yyCYoufrBn3/h
-        VxJ2CuN+l4i4eFbWSqOwWKbB7zlGptP83fredTA=
-X-Google-Smtp-Source: APXvYqx/IMk24rdtcifnHuLMV6DCNhTAzYuxxQja93vW7hEYjOvG7wHyp/9qq5VtECkxVyq2rfOAvLhGOZyY7X4lzP4=
-X-Received: by 2002:a17:906:951:: with SMTP id j17mr8540123ejd.174.1561726661672;
- Fri, 28 Jun 2019 05:57:41 -0700 (PDT)
-MIME-Version: 1.0
-References: <20190627020515.5660-1-masneyb@onstation.org>
-In-Reply-To: <20190627020515.5660-1-masneyb@onstation.org>
-From:   Rob Clark <robdclark@gmail.com>
-Date:   Fri, 28 Jun 2019 05:57:26 -0700
-Message-ID: <CAF6AEGvFE46aKCBP5de_Bx_hFcTyF0Vc9B1PebBZjGZmw9zh2g@mail.gmail.com>
-Subject: Re: [Freedreno] [PATCH] drm/msm: correct NULL pointer dereference in context_init
-To:     Brian Masney <masneyb@onstation.org>
-Cc:     Jordan Crouse <jcrouse@codeaurora.org>,
-        Rob Clark <robdclark@chromium.org>,
-        Sean Paul <seanpaul@chromium.org>,
-        Jean-Philippe Brucker <jean-philippe.brucker@arm.com>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Douglas Anderson <dianders@chromium.org>,
-        dri-devel <dri-devel@lists.freedesktop.org>,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-        David Airlie <airlied@linux.ie>,
-        "Kristian H. Kristensen" <hoegsberg@google.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        freedreno <freedreno@lists.freedesktop.org>
-Content-Type: text/plain; charset="UTF-8"
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=phd6grQaPeAKpxGCc8e9yaooyxfgwldd6Z0yhWR1iak=;
+        b=Ng92WjfHJcCcG8u/2QUNfh0Ap7hYqlCEaka2T16pco7HWVWFzkxLBYhV+c0UJJ73YG
+         H7TINaB2Gxcsxhl2OM6CQ6dDRK18uWcf/C9Cx64z7pgv/cr+UDevravZ8ADkDTsIxkxa
+         iQWcWp/dkfnqFRKvqCBbUlA75h0rRqpjXDkjhrSfqdKsp5XocB99gGsTmEekP/o6CO2s
+         xjAyUTBjWPnTr/0e38o+C6OBrF7ofNGu6+gzq+sG6L7gMCBq/Ichqz+QTqFsIzDjdYa7
+         0bOdfgTKMI+kwpFzeCpX2iFDiEBtry8Rv1RA0gjYkmwUUXPawFwNylPqBzX2krnSHzkd
+         vj8w==
+X-Gm-Message-State: APjAAAXicLojAC9q/F5oGTPUuUHk4mWYxjRNz91Z9gOUNcN6vPsv6Dcn
+        Wf3aTwq+mkIr32H/ijo4ZPJcyw==
+X-Google-Smtp-Source: APXvYqxOm3l1AGHuh7dTn+a9WVN6btU7RpwaLearjhiH/vNsp/s0ppDemaLZPZU95gRHvk7Fa1n4mQ==
+X-Received: by 2002:a1c:1a06:: with SMTP id a6mr7223207wma.128.1561726822914;
+        Fri, 28 Jun 2019 06:00:22 -0700 (PDT)
+Received: from localhost.localdomain ([37.157.136.206])
+        by smtp.gmail.com with ESMTPSA id w20sm3717174wra.96.2019.06.28.06.00.21
+        (version=TLS1_3 cipher=AEAD-AES256-GCM-SHA384 bits=256/256);
+        Fri, 28 Jun 2019 06:00:22 -0700 (PDT)
+From:   Stanimir Varbanov <stanimir.varbanov@linaro.org>
+To:     linux-media@vger.kernel.org
+Cc:     Mauro Carvalho Chehab <mchehab@kernel.org>,
+        Hans Verkuil <hverkuil@xs4all.nl>,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        Vikash Garodia <vgarodia@codeaurora.org>,
+        Tomasz Figa <tfiga@chromium.org>,
+        Alexandre Courbot <acourbot@chromium.org>,
+        Stanimir Varbanov <stanimir.varbanov@linaro.org>
+Subject: [PATCH v2 00/11] Venus stateful Codec API
+Date:   Fri, 28 Jun 2019 15:59:51 +0300
+Message-Id: <20190628130002.24293-1-stanimir.varbanov@linaro.org>
+X-Mailer: git-send-email 2.17.1
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Jun 26, 2019 at 7:05 PM Brian Masney <masneyb@onstation.org> wrote:
->
-> Correct attempted NULL pointer dereference in context_init() when
-> running without an IOMMU.
->
-> Signed-off-by: Brian Masney <masneyb@onstation.org>
-> Fixes: 295b22ae596c ("drm/msm: Pass the MMU domain index in struct msm_file_private")
-> ---
-> The no IOMMU case seems like functionality that we may want to keep
-> based on this comment:
-> https://elixir.bootlin.com/linux/latest/source/drivers/gpu/drm/msm/adreno/a3xx_gpu.c#L523
-> Once I get the msm8974 interconnect driver done, I'm going to look into
-> what needs to be done to get the IOMMU working on the Nexus 5.
->
-> Alternatively, for development purposes, maybe we could have a NOOP
-> IOMMU driver that would allow us to remove these NULL checks that are
-> sprinkled throughout the code. I haven't looked into this in detail.
-> Thoughts?
+Hello,
 
-yeah, we probably want to keep !iommu support, it is at least useful
-for bringup of new (or old) devices.  But tends to bitrot a since it
-isn't a case that gets tested much once iommu is in place.  Perhaps
-there is a way to have a null iommu/aspace, although I'm not quite
-sure how that would work..
+Here is v2 of the Venus transition to stateful codec API
+compliance. The v2 can be found at [1].
 
-Anyways,
+Changes since v1:
+ * codec_state is now enum
+ * dropped IS_OUT and IS_CAP macros and use vb2_start_streaming_called()
+ * corrected g_fmt and reconfig logic
+ * s/vdec_dst_buffers_done/vdec_cancel_dst_buffers
+ * use v4l2_m2m_ioctl_try_decoder_cmd M2M helper
+ * various fixes to make v4l2-compliance pass the streaming test
 
-Reviewed-by: Rob Clark <robdclark@gmail.com>
+To test the streaming with --stream-from-hdr v4l2-compliance option I have
+to make the following hack (it is needed because the size of decoder input
+buffers (OUTPUT queue) is not enough for the h264 bitstream, i.e the driver
+default resolution is 64x64 but the h264 stream is 320x240):
 
-(I guess this can go in via drm-misc-fixes unless we get some more
-fixes to justify sending msm-fixes MR..)
+diff --git a/utils/v4l2-compliance/v4l2-test-buffers.cpp b/utils/v4l2-compliance/v4l2-test-buffers.cpp
+index c71dcf65b721..dc0fcf20d3e4 100644
+--- a/utils/v4l2-compliance/v4l2-test-buffers.cpp
++++ b/utils/v4l2-compliance/v4l2-test-buffers.cpp
+@@ -1294,6 +1294,11 @@ int testMmap(struct node *node, unsigned frame_count, enum poll_mode pollmode)
+                                        fmt.s_sizeimage(fmt.g_sizeimage(p) * 2, p);
+                        }
+                        fail_on_test(q.create_bufs(node, 1, &fmt));
++
++                       for (unsigned p = 0; p < fmt.g_num_planes(); p++)
++                               fmt.s_sizeimage(fmt.g_sizeimage(p) * 2, p);
++                       node->s_fmt(fmt);
++
+                        fail_on_test(q.reqbufs(node, 2));
+                }
+                if (v4l_type_is_output(type))
+ 
+... and with it the output of the test is:
 
->
->  drivers/gpu/drm/msm/msm_drv.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
->
-> diff --git a/drivers/gpu/drm/msm/msm_drv.c b/drivers/gpu/drm/msm/msm_drv.c
-> index 451bd4508793..83047cb2c735 100644
-> --- a/drivers/gpu/drm/msm/msm_drv.c
-> +++ b/drivers/gpu/drm/msm/msm_drv.c
-> @@ -619,7 +619,7 @@ static int context_init(struct drm_device *dev, struct drm_file *file)
->
->         msm_submitqueue_init(dev, ctx);
->
-> -       ctx->aspace = priv->gpu->aspace;
-> +       ctx->aspace = priv->gpu ? priv->gpu->aspace : NULL;
->         file->driver_priv = ctx;
->
->         return 0;
-> --
-> 2.20.1
->
-> _______________________________________________
-> Freedreno mailing list
-> Freedreno@lists.freedesktop.org
-> https://lists.freedesktop.org/mailman/listinfo/freedreno
+dragonboard-410c:~/v4l-utils$ v4l2-compliance --stream-from-hdr test-25fps.h264.hdr -s250 -d /dev/video1
+v4l2-compliance SHA: 08fed4d0edb1492b91d9d1054c36fed95c372eaa, 64 bits                                                                                                                                             
+                                                                                                                                                                                                                   
+Compliance test for qcom-venus device /dev/video1:
+
+Driver Info:
+        Driver name      : qcom-venus
+        Card type        : Qualcomm Venus video decoder
+        Bus info         : platform:qcom-venus
+        Driver version   : 5.2.0
+        Capabilities     : 0x84204000
+                Video Memory-to-Memory Multiplanar
+                Streaming
+                Extended Pix Format
+                Device Capabilities
+        Device Caps      : 0x04204000
+                Video Memory-to-Memory Multiplanar
+                Streaming
+                Extended Pix Format
+        Detected Stateful Decoder
+
+Required ioctls:
+        test VIDIOC_QUERYCAP: OK
+
+Allow for multiple opens:
+        test second /dev/video1 open: OK
+        test VIDIOC_QUERYCAP: OK
+        test VIDIOC_G/S_PRIORITY: OK
+        test for unlimited opens: OK
+
+Debug ioctls:
+        test VIDIOC_DBG_G/S_REGISTER: OK (Not Supported)
+        test VIDIOC_LOG_STATUS: OK (Not Supported)
+
+Input ioctls:
+        test VIDIOC_G/S_TUNER/ENUM_FREQ_BANDS: OK (Not Supported)
+        test VIDIOC_G/S_FREQUENCY: OK (Not Supported)
+        test VIDIOC_S_HW_FREQ_SEEK: OK (Not Supported)
+        test VIDIOC_ENUMAUDIO: OK (Not Supported)
+        test VIDIOC_G/S/ENUMINPUT: OK (Not Supported)
+        test VIDIOC_G/S_AUDIO: OK (Not Supported)
+        Inputs: 0 Audio Inputs: 0 Tuners: 0
+
+Output ioctls:
+        test VIDIOC_G/S_MODULATOR: OK (Not Supported)
+        test VIDIOC_G/S_FREQUENCY: OK (Not Supported)
+        test VIDIOC_ENUMAUDOUT: OK (Not Supported)
+        test VIDIOC_G/S/ENUMOUTPUT: OK (Not Supported)
+        test VIDIOC_G/S_AUDOUT: OK (Not Supported)
+        Outputs: 0 Audio Outputs: 0 Modulators: 0
+
+Input/Output configuration ioctls:
+        test VIDIOC_ENUM/G/S/QUERY_STD: OK (Not Supported)
+        test VIDIOC_ENUM/G/S/QUERY_DV_TIMINGS: OK (Not Supported)
+        test VIDIOC_DV_TIMINGS_CAP: OK (Not Supported)
+        test VIDIOC_G/S_EDID: OK (Not Supported)
+
+Control ioctls:
+        test VIDIOC_QUERY_EXT_CTRL/QUERYMENU: OK
+        test VIDIOC_QUERYCTRL: OK
+        test VIDIOC_G/S_CTRL: OK
+        test VIDIOC_G/S/TRY_EXT_CTRLS: OK
+        test VIDIOC_(UN)SUBSCRIBE_EVENT/DQEVENT: OK
+        test VIDIOC_G/S_JPEGCOMP: OK (Not Supported)
+        Standard Controls: 9 Private Controls: 0
+
+Format ioctls:
+        test VIDIOC_ENUM_FMT/FRAMESIZES/FRAMEINTERVALS: OK
+        test VIDIOC_G/S_PARM: OK (Not Supported)
+        test VIDIOC_G_FBUF: OK (Not Supported)
+        test VIDIOC_G_FMT: OK
+        test VIDIOC_TRY_FMT: OK
+        test VIDIOC_S_FMT: OK
+        test VIDIOC_G_SLICED_VBI_CAP: OK (Not Supported)
+        test Cropping: OK
+        test Composing: OK
+        test Scaling: OK
+
+Codec ioctls:
+        test VIDIOC_(TRY_)ENCODER_CMD: OK (Not Supported)
+        test VIDIOC_G_ENC_INDEX: OK (Not Supported)
+        test VIDIOC_(TRY_)DECODER_CMD: OK
+
+Buffer ioctls:
+        test VIDIOC_REQBUFS/CREATE_BUFS/QUERYBUF: OK
+        test VIDIOC_EXPBUF: OK
+        test Requests: OK (Not Supported)
+
+Test input 0:
+
+Streaming ioctls:
+        test read/write: OK (Not Supported)
+        test blocking wait: OK
+        Video Capture Multiplanar: Captured 251 buffers   
+        test MMAP (select): OK
+        Video Capture Multiplanar: Captured 251 buffers   
+        test MMAP (epoll): OK
+        test USERPTR (select): OK (Not Supported)
+        test DMABUF: Cannot test, specify --expbuf-device
+
+Total for qcom-venus device /dev/video1: 49, Succeeded: 49, Failed: 0, Warnings: 0
+
+regards,
+Stan
+
+[1] https://lore.kernel.org/lkml/0fc547f46d2ff90a2a8adf957cca7297@codeaurora.org/T/
+
+Malathi Gottam (1):
+  venus: venc: amend buffer size for bitstream plane
+
+Stanimir Varbanov (10):
+  venus: helpers: export few helper functions
+  venus: hfi: add type argument to hfi flush function
+  venus: hfi: export few HFI functions
+  venus: hfi: return an error if session_init is already called
+  venus: helpers: add three more helper functions
+  venus: vdec_ctrls: get real minimum buffers for capture
+  venus: vdec: allow bigger sizeimage set by clients
+  venus: make decoder compliant with stateful codec API
+  venus: helpers: handle correctly vbuf field
+  venus: dec: populate properly timestamps and flags for capture buffers
+
+ drivers/media/platform/qcom/venus/core.h      |  32 +-
+ drivers/media/platform/qcom/venus/helpers.c   | 199 ++++++-
+ drivers/media/platform/qcom/venus/helpers.h   |  12 +
+ drivers/media/platform/qcom/venus/hfi.c       |  11 +-
+ drivers/media/platform/qcom/venus/hfi.h       |   2 +-
+ drivers/media/platform/qcom/venus/vdec.c      | 537 ++++++++++++++----
+ .../media/platform/qcom/venus/vdec_ctrls.c    |   7 +-
+ drivers/media/platform/qcom/venus/venc.c      |  13 +-
+ 8 files changed, 656 insertions(+), 157 deletions(-)
+
+-- 
+2.17.1
+
