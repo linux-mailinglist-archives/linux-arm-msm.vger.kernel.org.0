@@ -2,204 +2,97 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id DB29159C48
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 28 Jun 2019 15:00:49 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 7E4F359D0A
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 28 Jun 2019 15:37:20 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727309AbfF1NAr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 28 Jun 2019 09:00:47 -0400
-Received: from mail-wm1-f68.google.com ([209.85.128.68]:34865 "EHLO
-        mail-wm1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727282AbfF1NAr (ORCPT
+        id S1726691AbfF1NhT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 28 Jun 2019 09:37:19 -0400
+Received: from lb1-smtp-cloud9.xs4all.net ([194.109.24.22]:45915 "EHLO
+        lb1-smtp-cloud9.xs4all.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1726664AbfF1NhT (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 28 Jun 2019 09:00:47 -0400
-Received: by mail-wm1-f68.google.com with SMTP id c6so8925903wml.0
-        for <linux-arm-msm@vger.kernel.org>; Fri, 28 Jun 2019 06:00:45 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=TR1Hba1QrF3cEEzn3qEIOV5K3aBhII0u0pIDhReHlh8=;
-        b=e3FyYuBcdyXCr8tu+V0BBik4G4XLrsxKndZgWReb+1PpRb/aflqYGdutUkHLDdDfUc
-         AVhy23fH93ft+4qxhOqwdArNyvPo3J1MoptKwut8Co9GeAHKqXwYmwLgyENX1OZoa4WY
-         TOSAxwubfjnPI/DAdnpof0CnFnwOe12Xo1caJBzO4B2x+Dd4BWQEK9OWS1rCd59KbZ8o
-         TRezmk0HKVUWy5gAyapLOBLhKvllCUbuCSoedmO2IOLAcCxXvt8UkoD7k1mJGrNUBulb
-         w4d7uIAdx8yAZXWC9+rtNDwM08d2TQgoTe8e+aBC6qX7Y/ibf4fYTj+cwiL5Qn6agOfm
-         /Hpg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=TR1Hba1QrF3cEEzn3qEIOV5K3aBhII0u0pIDhReHlh8=;
-        b=fmHNNjBJnOoJ6cUA+0Vw6gw3o28KEaFLTimV6bvSiuG6GNIix69JZuyrxMKccwkjWg
-         EiMm78Ft4Ohh6ebhNIw++hLmWEL19TZNzmWAS5W7Kv+FjWmvvhaMiDLUQltnE1mSqCfB
-         1hAMXjX7/AnC2YiL7OQJ+dHCNqq5TACVTGl/W9+83OJ7+bzMyndJanPLCRImpCxu+KEQ
-         RmEXQQ4QZIprnGOaeT06Y7RiwJUyw3gvpHyVCaCLYZQisRWS0yR+iL4/Oqn5urB5zR44
-         BWzL1H3uZHq+cm5MTeFK4Gwr9B7K/QBEEP4/Owu9ZMUpAICz8HXsJQ/oYk7+CBqjj4F1
-         HUkw==
-X-Gm-Message-State: APjAAAXyEOpOVMQxIKnj4h9YItFMZ7QV4hSWVP5LzZN6fEhRsGq/kRLa
-        kpB4fYA2V6OeO9mgiQYDr8NYDw==
-X-Google-Smtp-Source: APXvYqzy3/dCPyQLpnS6kdYiaqXA2xm79CQwSoNVqokTq4OlM2hvmgufVAd/exldwuS/K5iGRWkTgg==
-X-Received: by 2002:a1c:1a06:: with SMTP id a6mr7224331wma.128.1561726844493;
-        Fri, 28 Jun 2019 06:00:44 -0700 (PDT)
-Received: from localhost.localdomain ([37.157.136.206])
-        by smtp.gmail.com with ESMTPSA id w20sm3717174wra.96.2019.06.28.06.00.43
-        (version=TLS1_3 cipher=AEAD-AES256-GCM-SHA384 bits=256/256);
-        Fri, 28 Jun 2019 06:00:43 -0700 (PDT)
-From:   Stanimir Varbanov <stanimir.varbanov@linaro.org>
-To:     linux-media@vger.kernel.org
+        Fri, 28 Jun 2019 09:37:19 -0400
+Received: from [192.168.2.10] ([46.9.252.75])
+        by smtp-cloud9.xs4all.net with ESMTPA
+        id gr3vhmL0sSfvXgr3yhS9im; Fri, 28 Jun 2019 15:37:17 +0200
+Subject: Re: [PATCH v2 00/11] Venus stateful Codec API
+To:     Stanimir Varbanov <stanimir.varbanov@linaro.org>,
+        linux-media@vger.kernel.org
 Cc:     Mauro Carvalho Chehab <mchehab@kernel.org>,
-        Hans Verkuil <hverkuil@xs4all.nl>,
         linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
         Vikash Garodia <vgarodia@codeaurora.org>,
         Tomasz Figa <tfiga@chromium.org>,
-        Alexandre Courbot <acourbot@chromium.org>,
-        Stanimir Varbanov <stanimir.varbanov@linaro.org>
-Subject: [PATCH v2 11/11] venus: dec: populate properly timestamps and flags for capture buffers
-Date:   Fri, 28 Jun 2019 16:00:02 +0300
-Message-Id: <20190628130002.24293-12-stanimir.varbanov@linaro.org>
-X-Mailer: git-send-email 2.17.1
-In-Reply-To: <20190628130002.24293-1-stanimir.varbanov@linaro.org>
+        Alexandre Courbot <acourbot@chromium.org>
 References: <20190628130002.24293-1-stanimir.varbanov@linaro.org>
+From:   Hans Verkuil <hverkuil@xs4all.nl>
+Message-ID: <9c3399a8-4fc6-3117-10ee-3395cee034da@xs4all.nl>
+Date:   Fri, 28 Jun 2019 15:37:11 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+ Thunderbird/60.6.1
+MIME-Version: 1.0
+In-Reply-To: <20190628130002.24293-1-stanimir.varbanov@linaro.org>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
+X-CMAE-Envelope: MS4wfK9Yvy8TSAOpVdctQbKSiaJLdA9YrUHCjxTdzggXbbTuxa7REtky8kGOIOb0Go0+ghoOFhwS6Sd+J15tIhOPYuG6KaD46wEG65xvFborgAFOOOuojzqe
+ f0k8c45tWPL0tji79rPDFc5usfkKvGzp6rVkp6TjCYuqYWLptx/W6m0x4y07y4k+XwUXjc9NyQGqgOnSIGP+WY0wOwA61KAHWqhS4n0Pmc9rKk3K2hF7XKAB
+ eeVoBlkv1c+GDBvdy9YCsLTei+5Wk4e9z7qwx/Vw4ZoRdebqJmCA7JWp2hn8NlpxW2hyIyu0+c9Te/GslgwaCEv1LcdChXm0AjLWnmVZ6+lgaw4VPfhTdOYd
+ wHOWhr7oK9yBfEPFHbzfaV/1QQlaISRQ3M+xqbiugi7arRhp1gc9wjCZQG4zNBq+DZ6xra5BbUmMTZf8izG5Rn6ssTJacw==
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Cache flags, timestamps and timecode structure of OUTPUT buffers
-in per-instance structure array and fill correctly the same when
-the CAPTURE buffers are done.
+On 6/28/19 2:59 PM, Stanimir Varbanov wrote:
+> Hello,
+> 
+> Here is v2 of the Venus transition to stateful codec API
+> compliance. The v2 can be found at [1].
+> 
+> Changes since v1:
+>  * codec_state is now enum
+>  * dropped IS_OUT and IS_CAP macros and use vb2_start_streaming_called()
+>  * corrected g_fmt and reconfig logic
+>  * s/vdec_dst_buffers_done/vdec_cancel_dst_buffers
+>  * use v4l2_m2m_ioctl_try_decoder_cmd M2M helper
+>  * various fixes to make v4l2-compliance pass the streaming test
+> 
+> To test the streaming with --stream-from-hdr v4l2-compliance option I have
+> to make the following hack (it is needed because the size of decoder input
+> buffers (OUTPUT queue) is not enough for the h264 bitstream, i.e the driver
+> default resolution is 64x64 but the h264 stream is 320x240):
+> 
+> diff --git a/utils/v4l2-compliance/v4l2-test-buffers.cpp b/utils/v4l2-compliance/v4l2-test-buffers.cpp
+> index c71dcf65b721..dc0fcf20d3e4 100644
+> --- a/utils/v4l2-compliance/v4l2-test-buffers.cpp
+> +++ b/utils/v4l2-compliance/v4l2-test-buffers.cpp
+> @@ -1294,6 +1294,11 @@ int testMmap(struct node *node, unsigned frame_count, enum poll_mode pollmode)
+>                                         fmt.s_sizeimage(fmt.g_sizeimage(p) * 2, p);
+>                         }
+>                         fail_on_test(q.create_bufs(node, 1, &fmt));
+> +
+> +                       for (unsigned p = 0; p < fmt.g_num_planes(); p++)
+> +                               fmt.s_sizeimage(fmt.g_sizeimage(p) * 2, p);
+> +                       node->s_fmt(fmt);
+> +
+>                         fail_on_test(q.reqbufs(node, 2));
+>                 }
+>                 if (v4l_type_is_output(type))
 
-This will make v4l2-compliance decoder streaming test happy.
+Does the venus driver set sizeimage based on the given output resolution?
 
-Signed-off-by: Stanimir Varbanov <stanimir.varbanov@linaro.org>
----
- drivers/media/platform/qcom/venus/core.h    |  8 +++
- drivers/media/platform/qcom/venus/helpers.c | 54 +++++++++++++++++++++
- drivers/media/platform/qcom/venus/helpers.h |  2 +
- drivers/media/platform/qcom/venus/vdec.c    |  2 +
- 4 files changed, 66 insertions(+)
+E.g. if v4l2-compliance would first set the output resolution to 320x240,
+is the returned sizeimage value OK in that case?
 
-diff --git a/drivers/media/platform/qcom/venus/core.h b/drivers/media/platform/qcom/venus/core.h
-index 139b5d786375..5c6d4145138d 100644
---- a/drivers/media/platform/qcom/venus/core.h
-+++ b/drivers/media/platform/qcom/venus/core.h
-@@ -220,6 +220,13 @@ enum venus_dec_state {
- 	VENUS_DEC_STATE_DRC		= 7
- };
- 
-+struct venus_ts_metadata {
-+	bool used;
-+	u64 ts_ns;
-+	u64 ts_us;
-+	u32 flags;
-+	struct v4l2_timecode tc;
-+};
- 
- /**
-  * struct venus_inst - holds per instance parameters
-@@ -305,6 +312,7 @@ struct venus_inst {
- 	wait_queue_head_t reconf_wait;
- 	unsigned int subscriptions;
- 	int buf_count;
-+	struct venus_ts_metadata tss[VIDEO_MAX_FRAME];
- 	u64 fps;
- 	struct v4l2_fract timeperframe;
- 	const struct venus_format *fmt_out;
-diff --git a/drivers/media/platform/qcom/venus/helpers.c b/drivers/media/platform/qcom/venus/helpers.c
-index c948c4e809b5..b42a1fce273a 100644
---- a/drivers/media/platform/qcom/venus/helpers.c
-+++ b/drivers/media/platform/qcom/venus/helpers.c
-@@ -463,6 +463,57 @@ static void return_buf_error(struct venus_inst *inst,
- 	v4l2_m2m_buf_done(vbuf, VB2_BUF_STATE_ERROR);
- }
- 
-+static void
-+put_ts_metadata(struct venus_inst *inst, struct vb2_v4l2_buffer *vbuf)
-+{
-+	struct vb2_buffer *vb = &vbuf->vb2_buf;
-+	unsigned int i;
-+	int slot = -1;
-+	u64 ts_us = vb->timestamp;
-+
-+	for (i = 0; i < ARRAY_SIZE(inst->tss); i++) {
-+		if (!inst->tss[i].used) {
-+			slot = i;
-+			break;
-+		}
-+	}
-+
-+	if (slot == -1) {
-+		dev_dbg(inst->core->dev, "%s: no free slot\n", __func__);
-+		return;
-+	}
-+
-+	do_div(ts_us, NSEC_PER_USEC);
-+
-+	inst->tss[slot].used = true;
-+	inst->tss[slot].flags = vbuf->flags;
-+	inst->tss[slot].tc = vbuf->timecode;
-+	inst->tss[slot].ts_us = ts_us;
-+	inst->tss[slot].ts_ns = vb->timestamp;
-+}
-+
-+void venus_helper_get_ts_metadata(struct venus_inst *inst, u64 timestamp_us,
-+				  struct vb2_v4l2_buffer *vbuf)
-+{
-+	struct vb2_buffer *vb = &vbuf->vb2_buf;
-+	unsigned int i;
-+
-+	for (i = 0; i < ARRAY_SIZE(inst->tss); ++i) {
-+		if (!inst->tss[i].used)
-+			continue;
-+
-+		if (inst->tss[i].ts_us != timestamp_us)
-+			continue;
-+
-+		inst->tss[i].used = false;
-+		vbuf->flags |= inst->tss[i].flags;
-+		vbuf->timecode = inst->tss[i].tc;
-+		vb->timestamp = inst->tss[i].ts_ns;
-+		break;
-+	}
-+}
-+EXPORT_SYMBOL(venus_helper_get_ts_metadata);
-+
- static int
- session_process_buf(struct venus_inst *inst, struct vb2_v4l2_buffer *vbuf)
- {
-@@ -487,6 +538,9 @@ session_process_buf(struct venus_inst *inst, struct vb2_v4l2_buffer *vbuf)
- 
- 		if (vbuf->flags & V4L2_BUF_FLAG_LAST || !fdata.filled_len)
- 			fdata.flags |= HFI_BUFFERFLAG_EOS;
-+
-+		if (inst->session_type == VIDC_SESSION_TYPE_DEC)
-+			put_ts_metadata(inst, vbuf);
- 	} else if (type == V4L2_BUF_TYPE_VIDEO_CAPTURE_MPLANE) {
- 		if (inst->session_type == VIDC_SESSION_TYPE_ENC)
- 			fdata.buffer_type = HFI_BUFFER_OUTPUT;
-diff --git a/drivers/media/platform/qcom/venus/helpers.h b/drivers/media/platform/qcom/venus/helpers.h
-index f2e111555bd9..791c35c64ca3 100644
---- a/drivers/media/platform/qcom/venus/helpers.h
-+++ b/drivers/media/platform/qcom/venus/helpers.h
-@@ -63,4 +63,6 @@ int venus_helper_unregister_bufs(struct venus_inst *inst);
- int venus_helper_load_scale_clocks(struct venus_core *core);
- int venus_helper_process_initial_cap_bufs(struct venus_inst *inst);
- int venus_helper_process_initial_out_bufs(struct venus_inst *inst);
-+void venus_helper_get_ts_metadata(struct venus_inst *inst, u64 timestamp_us,
-+				  struct vb2_v4l2_buffer *vbuf);
- #endif
-diff --git a/drivers/media/platform/qcom/venus/vdec.c b/drivers/media/platform/qcom/venus/vdec.c
-index 336d49132d19..0b7d65db5cdc 100644
---- a/drivers/media/platform/qcom/venus/vdec.c
-+++ b/drivers/media/platform/qcom/venus/vdec.c
-@@ -1135,6 +1135,8 @@ static void vdec_buf_done(struct venus_inst *inst, unsigned int buf_type,
- 		vbuf->sequence = inst->sequence_out++;
- 	}
- 
-+	venus_helper_get_ts_metadata(inst, timestamp_us, vbuf);
-+
- 	if (hfi_flags & HFI_BUFFERFLAG_READONLY)
- 		venus_helper_acquire_buf_ref(vbuf);
- 
--- 
-2.17.1
+And this also means that the venus driver requires each buffer to have
+a single compressed frame, right? I.e. it can't be spread over multiple
+OUTPUT buffers.
 
+We really need to let userspace know about such restrictions.
+
+Stanimir, can you list the restrictions of the decoder for the various
+codecs?
+
+Regards,
+
+	Hans
