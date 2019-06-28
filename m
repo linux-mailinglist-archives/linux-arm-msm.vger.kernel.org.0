@@ -2,175 +2,124 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id D046E59B72
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 28 Jun 2019 14:33:13 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id AF14159C26
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 28 Jun 2019 14:57:44 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726947AbfF1MdI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 28 Jun 2019 08:33:08 -0400
-Received: from bombadil.infradead.org ([198.137.202.133]:39198 "EHLO
-        bombadil.infradead.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726926AbfF1Maj (ORCPT
+        id S1726882AbfF1M5n (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 28 Jun 2019 08:57:43 -0400
+Received: from mail-ed1-f65.google.com ([209.85.208.65]:38384 "EHLO
+        mail-ed1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726558AbfF1M5n (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 28 Jun 2019 08:30:39 -0400
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-        d=infradead.org; s=bombadil.20170209; h=Sender:Content-Transfer-Encoding:
-        MIME-Version:References:In-Reply-To:Message-Id:Date:Subject:Cc:To:From:
-        Reply-To:Content-Type:Content-ID:Content-Description:Resent-Date:Resent-From:
-        Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:
-        List-Unsubscribe:List-Subscribe:List-Post:List-Owner:List-Archive;
-        bh=JKCqIHV1YuF0BSogkUbroVBUzOT9ZPq/zkchQ58FrUY=; b=ZXy2eKnc4pRwloaqI3XC2oyCnO
-        mSruPT4ToVz+viuoujlGR2Nb1bfe941rUUWhmbOJOSL2I6yy9IcrT1ncrEeUx4KxMP6My68U2RV/Y
-        ulN/2Blm3ld+wtnPIi8+YdAaNZa0wIVp6OgB6R8DUlfcWmNTia2ZDUZG34pKk+bO+I30zP+XvXdTQ
-        NhKas929i2SepX4p+LXsfa5bT0miQgebVn9zOrhK5tNR/TxxO7qUS0jwm9oXBMtfpcwcA0mdsPS23
-        ZsBNOhQg2iNaIb3vgV1LPUtVBGc57PznVsqkBOUbSjq2k0QCv6euM1BGOzzF/2ohcn0UA6h/nNjt9
-        MIc8A0PQ==;
-Received: from [186.213.242.156] (helo=bombadil.infradead.org)
-        by bombadil.infradead.org with esmtpsa (Exim 4.92 #3 (Red Hat Linux))
-        id 1hgq1T-00054t-US; Fri, 28 Jun 2019 12:30:36 +0000
-Received: from mchehab by bombadil.infradead.org with local (Exim 4.92)
-        (envelope-from <mchehab@bombadil.infradead.org>)
-        id 1hgq1S-0005R9-0z; Fri, 28 Jun 2019 09:30:34 -0300
-From:   Mauro Carvalho Chehab <mchehab+samsung@kernel.org>
-To:     Linux Doc Mailing List <linux-doc@vger.kernel.org>
-Cc:     Mauro Carvalho Chehab <mchehab+samsung@kernel.org>,
-        Mauro Carvalho Chehab <mchehab@infradead.org>,
-        linux-kernel@vger.kernel.org, Jonathan Corbet <corbet@lwn.net>,
-        Shaokun Zhang <zhangshaokun@hisilicon.com>,
-        Khuong Dinh <khuong@os.amperecomputing.com>,
-        Will Deacon <will@kernel.org>,
-        Mark Rutland <mark.rutland@arm.com>,
-        Andy Gross <agross@kernel.org>,
-        linux-arm-kernel@lists.infradead.org, linux-arm-msm@vger.kernel.org
-Subject: [PATCH 03/39] docs: perf: move to the admin-guide
-Date:   Fri, 28 Jun 2019 09:29:56 -0300
-Message-Id: <cf054e7044bbba8d73ad032a0a1c9790afbfd510.1561724493.git.mchehab+samsung@kernel.org>
-X-Mailer: git-send-email 2.21.0
-In-Reply-To: <cover.1561724493.git.mchehab+samsung@kernel.org>
-References: <cover.1561724493.git.mchehab+samsung@kernel.org>
+        Fri, 28 Jun 2019 08:57:43 -0400
+Received: by mail-ed1-f65.google.com with SMTP id r12so10778770edo.5;
+        Fri, 28 Jun 2019 05:57:42 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=6ueum79s2anlYRWAS9FzgzUG5wD5wG/lgkeWFXCOZvM=;
+        b=Vsvc9FDKFPgRzauk8Np3VxKo8ItjOarCG/RlvXleY2TbKd28c/x/ep7DNZ2QsaFtp+
+         qPSDxgbdaCVLAqkDqePuAf4kl1Gs+fC421GxUCMubv5o3NHu37Q/B7uFx3zKlYCBCo62
+         DmrkABGvkTzrFhmRrV2eZEswUp+1+/IH3k0Y4+9APWCbJK9CrbH8GWoTzvFwonJOEhod
+         JSUAMZmjsu6UFkipC2194iWXuqzUzdV2EEHWRI5SVToBk2QGi6wnHjvqC7iL4i/QGyPe
+         EChj5ytcdah2+5MBwfJQMcFvMc73KIHiTSIgRs7kmPMwFXI904fprhovqJVFndOWvapW
+         fLWA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=6ueum79s2anlYRWAS9FzgzUG5wD5wG/lgkeWFXCOZvM=;
+        b=lYsMv7lhf9v20T5PllNPPggBsdr1LBir7F7F28Qqe/Nr/IYc4v+gYZDN3+2JsbQAR8
+         yQ2h2RNwl9yu5nViP2sKb5zBBXi4M4EyhZ4D+tBbphPoRTIRli9gR/dNMIfngJ8vqfmh
+         Rhg2lKLY45lZhK0zvZVvl6JnGeCCM3I0JCKOTfWrBUo/bszob8JfpnR47vnALfMl1OmQ
+         bSGBn+Gk76XWSbMvEKWWHVNnTjdLQbRXjpjCGUxHuHEXV6dN9XdKMVwALvlABApSWR50
+         vJwhtiyHo7nuTXN+Ck4d6RJca0lqyWEe+DwekhhzDDdLpTw3OQV+K+6afyJmo+aXFnSy
+         kvsA==
+X-Gm-Message-State: APjAAAXo3dZ8hvEiTuEIJ5tiQ8LvwW0FMXMm+hd8fb8yyCYoufrBn3/h
+        VxJ2CuN+l4i4eFbWSqOwWKbB7zlGptP83fredTA=
+X-Google-Smtp-Source: APXvYqx/IMk24rdtcifnHuLMV6DCNhTAzYuxxQja93vW7hEYjOvG7wHyp/9qq5VtECkxVyq2rfOAvLhGOZyY7X4lzP4=
+X-Received: by 2002:a17:906:951:: with SMTP id j17mr8540123ejd.174.1561726661672;
+ Fri, 28 Jun 2019 05:57:41 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <20190627020515.5660-1-masneyb@onstation.org>
+In-Reply-To: <20190627020515.5660-1-masneyb@onstation.org>
+From:   Rob Clark <robdclark@gmail.com>
+Date:   Fri, 28 Jun 2019 05:57:26 -0700
+Message-ID: <CAF6AEGvFE46aKCBP5de_Bx_hFcTyF0Vc9B1PebBZjGZmw9zh2g@mail.gmail.com>
+Subject: Re: [Freedreno] [PATCH] drm/msm: correct NULL pointer dereference in context_init
+To:     Brian Masney <masneyb@onstation.org>
+Cc:     Jordan Crouse <jcrouse@codeaurora.org>,
+        Rob Clark <robdclark@chromium.org>,
+        Sean Paul <seanpaul@chromium.org>,
+        Jean-Philippe Brucker <jean-philippe.brucker@arm.com>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        Douglas Anderson <dianders@chromium.org>,
+        dri-devel <dri-devel@lists.freedesktop.org>,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        David Airlie <airlied@linux.ie>,
+        "Kristian H. Kristensen" <hoegsberg@google.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        freedreno <freedreno@lists.freedesktop.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The perf infrastructure is used for userspace to track issues.
-At least a good part of what's described here is related to
-it.
+On Wed, Jun 26, 2019 at 7:05 PM Brian Masney <masneyb@onstation.org> wrote:
+>
+> Correct attempted NULL pointer dereference in context_init() when
+> running without an IOMMU.
+>
+> Signed-off-by: Brian Masney <masneyb@onstation.org>
+> Fixes: 295b22ae596c ("drm/msm: Pass the MMU domain index in struct msm_file_private")
+> ---
+> The no IOMMU case seems like functionality that we may want to keep
+> based on this comment:
+> https://elixir.bootlin.com/linux/latest/source/drivers/gpu/drm/msm/adreno/a3xx_gpu.c#L523
+> Once I get the msm8974 interconnect driver done, I'm going to look into
+> what needs to be done to get the IOMMU working on the Nexus 5.
+>
+> Alternatively, for development purposes, maybe we could have a NOOP
+> IOMMU driver that would allow us to remove these NULL checks that are
+> sprinkled throughout the code. I haven't looked into this in detail.
+> Thoughts?
 
-So, add it to the admin-guide.
+yeah, we probably want to keep !iommu support, it is at least useful
+for bringup of new (or old) devices.  But tends to bitrot a since it
+isn't a case that gets tested much once iommu is in place.  Perhaps
+there is a way to have a null iommu/aspace, although I'm not quite
+sure how that would work..
 
-Signed-off-by: Mauro Carvalho Chehab <mchehab+samsung@kernel.org>
----
- Documentation/admin-guide/index.rst                    | 1 +
- Documentation/{ => admin-guide}/perf/arm-ccn.rst       | 0
- Documentation/{ => admin-guide}/perf/arm_dsu_pmu.rst   | 0
- Documentation/{ => admin-guide}/perf/hisi-pmu.rst      | 0
- Documentation/{ => admin-guide}/perf/index.rst         | 2 --
- Documentation/{ => admin-guide}/perf/qcom_l2_pmu.rst   | 0
- Documentation/{ => admin-guide}/perf/qcom_l3_pmu.rst   | 0
- Documentation/{ => admin-guide}/perf/thunderx2-pmu.rst | 0
- Documentation/{ => admin-guide}/perf/xgene-pmu.rst     | 0
- MAINTAINERS                                            | 4 ++--
- drivers/perf/qcom_l3_pmu.c                             | 2 +-
- 11 files changed, 4 insertions(+), 5 deletions(-)
- rename Documentation/{ => admin-guide}/perf/arm-ccn.rst (100%)
- rename Documentation/{ => admin-guide}/perf/arm_dsu_pmu.rst (100%)
- rename Documentation/{ => admin-guide}/perf/hisi-pmu.rst (100%)
- rename Documentation/{ => admin-guide}/perf/index.rst (95%)
- rename Documentation/{ => admin-guide}/perf/qcom_l2_pmu.rst (100%)
- rename Documentation/{ => admin-guide}/perf/qcom_l3_pmu.rst (100%)
- rename Documentation/{ => admin-guide}/perf/thunderx2-pmu.rst (100%)
- rename Documentation/{ => admin-guide}/perf/xgene-pmu.rst (100%)
+Anyways,
 
-diff --git a/Documentation/admin-guide/index.rst b/Documentation/admin-guide/index.rst
-index 0066b198cad4..b7e6d18f80ca 100644
---- a/Documentation/admin-guide/index.rst
-+++ b/Documentation/admin-guide/index.rst
-@@ -38,6 +38,7 @@ problems and bugs in particular.
-    ramoops
-    dynamic-debug-howto
-    init
-+   perf/index
- 
- This is the beginning of a section with information of interest to
- application developers.  Documents covering various aspects of the kernel
-diff --git a/Documentation/perf/arm-ccn.rst b/Documentation/admin-guide/perf/arm-ccn.rst
-similarity index 100%
-rename from Documentation/perf/arm-ccn.rst
-rename to Documentation/admin-guide/perf/arm-ccn.rst
-diff --git a/Documentation/perf/arm_dsu_pmu.rst b/Documentation/admin-guide/perf/arm_dsu_pmu.rst
-similarity index 100%
-rename from Documentation/perf/arm_dsu_pmu.rst
-rename to Documentation/admin-guide/perf/arm_dsu_pmu.rst
-diff --git a/Documentation/perf/hisi-pmu.rst b/Documentation/admin-guide/perf/hisi-pmu.rst
-similarity index 100%
-rename from Documentation/perf/hisi-pmu.rst
-rename to Documentation/admin-guide/perf/hisi-pmu.rst
-diff --git a/Documentation/perf/index.rst b/Documentation/admin-guide/perf/index.rst
-similarity index 95%
-rename from Documentation/perf/index.rst
-rename to Documentation/admin-guide/perf/index.rst
-index 4bf848e27f26..9d445451ea18 100644
---- a/Documentation/perf/index.rst
-+++ b/Documentation/admin-guide/perf/index.rst
-@@ -1,5 +1,3 @@
--:orphan:
--
- ===========================
- Performance monitor support
- ===========================
-diff --git a/Documentation/perf/qcom_l2_pmu.rst b/Documentation/admin-guide/perf/qcom_l2_pmu.rst
-similarity index 100%
-rename from Documentation/perf/qcom_l2_pmu.rst
-rename to Documentation/admin-guide/perf/qcom_l2_pmu.rst
-diff --git a/Documentation/perf/qcom_l3_pmu.rst b/Documentation/admin-guide/perf/qcom_l3_pmu.rst
-similarity index 100%
-rename from Documentation/perf/qcom_l3_pmu.rst
-rename to Documentation/admin-guide/perf/qcom_l3_pmu.rst
-diff --git a/Documentation/perf/thunderx2-pmu.rst b/Documentation/admin-guide/perf/thunderx2-pmu.rst
-similarity index 100%
-rename from Documentation/perf/thunderx2-pmu.rst
-rename to Documentation/admin-guide/perf/thunderx2-pmu.rst
-diff --git a/Documentation/perf/xgene-pmu.rst b/Documentation/admin-guide/perf/xgene-pmu.rst
-similarity index 100%
-rename from Documentation/perf/xgene-pmu.rst
-rename to Documentation/admin-guide/perf/xgene-pmu.rst
-diff --git a/MAINTAINERS b/MAINTAINERS
-index 9d3a408f5ce1..55996c9f2e0a 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -1139,7 +1139,7 @@ APPLIED MICRO (APM) X-GENE SOC PMU
- M:	Khuong Dinh <khuong@os.amperecomputing.com>
- S:	Supported
- F:	drivers/perf/xgene_pmu.c
--F:	Documentation/perf/xgene-pmu.rst
-+F:	Documentation/admin-guide/perf/xgene-pmu.rst
- F:	Documentation/devicetree/bindings/perf/apm-xgene-pmu.txt
- 
- APTINA CAMERA SENSOR PLL
-@@ -7207,7 +7207,7 @@ M:	Shaokun Zhang <zhangshaokun@hisilicon.com>
- W:	http://www.hisilicon.com
- S:	Supported
- F:	drivers/perf/hisilicon
--F:	Documentation/perf/hisi-pmu.rst
-+F:	Documentation/admin-guide/perf/hisi-pmu.rst
- 
- HISILICON ROCE DRIVER
- M:	Lijun Ou <oulijun@huawei.com>
-diff --git a/drivers/perf/qcom_l3_pmu.c b/drivers/perf/qcom_l3_pmu.c
-index 90f88ce5192b..656e830798d9 100644
---- a/drivers/perf/qcom_l3_pmu.c
-+++ b/drivers/perf/qcom_l3_pmu.c
-@@ -8,7 +8,7 @@
-  * the slices. User space needs to aggregate to individual counts to provide
-  * a global picture.
-  *
-- * See Documentation/perf/qcom_l3_pmu.rst for more details.
-+ * See Documentation/admin-guide/perf/qcom_l3_pmu.rst for more details.
-  *
-  * Copyright (c) 2015-2017, The Linux Foundation. All rights reserved.
-  */
--- 
-2.21.0
+Reviewed-by: Rob Clark <robdclark@gmail.com>
 
+(I guess this can go in via drm-misc-fixes unless we get some more
+fixes to justify sending msm-fixes MR..)
+
+>
+>  drivers/gpu/drm/msm/msm_drv.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+>
+> diff --git a/drivers/gpu/drm/msm/msm_drv.c b/drivers/gpu/drm/msm/msm_drv.c
+> index 451bd4508793..83047cb2c735 100644
+> --- a/drivers/gpu/drm/msm/msm_drv.c
+> +++ b/drivers/gpu/drm/msm/msm_drv.c
+> @@ -619,7 +619,7 @@ static int context_init(struct drm_device *dev, struct drm_file *file)
+>
+>         msm_submitqueue_init(dev, ctx);
+>
+> -       ctx->aspace = priv->gpu->aspace;
+> +       ctx->aspace = priv->gpu ? priv->gpu->aspace : NULL;
+>         file->driver_priv = ctx;
+>
+>         return 0;
+> --
+> 2.20.1
+>
+> _______________________________________________
+> Freedreno mailing list
+> Freedreno@lists.freedesktop.org
+> https://lists.freedesktop.org/mailman/listinfo/freedreno
