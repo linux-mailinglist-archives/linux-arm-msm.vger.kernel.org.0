@@ -2,90 +2,395 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id C58C159A0F
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 28 Jun 2019 14:10:13 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 6239659AB7
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 28 Jun 2019 14:22:59 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726689AbfF1MKM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 28 Jun 2019 08:10:12 -0400
-Received: from smtp.codeaurora.org ([198.145.29.96]:50168 "EHLO
-        smtp.codeaurora.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726564AbfF1MKM (ORCPT
+        id S1727300AbfF1MWl (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 28 Jun 2019 08:22:41 -0400
+Received: from bombadil.infradead.org ([198.137.202.133]:58856 "EHLO
+        bombadil.infradead.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726835AbfF1MUr (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 28 Jun 2019 08:10:12 -0400
-Received: by smtp.codeaurora.org (Postfix, from userid 1000)
-        id 310D3606E1; Fri, 28 Jun 2019 12:10:11 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
-        s=default; t=1561723811;
-        bh=IM0ROSdcJWhLOg7FCXzXiT+dphADA/BQMxzLdqyE4gI=;
-        h=From:To:Cc:Subject:Date:From;
-        b=Ribzsnv2aF/9i/B7bXu+14xOkRG10YQkY/ldJhblqja/UFtmbf8PxWaFppHZ59Muu
-         ATWN4CBESNwU/qixtNHpbm0mMNQgeOBrNIQNag/O8jGXvYq5XcXRnimbDN8mcanOI6
-         LDveRWrq/0h9TYl82ETex+srUu6BRznEy1+wfUCQ=
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        pdx-caf-mail.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.7 required=2.0 tests=ALL_TRUSTED,BAYES_00,
-        DKIM_INVALID,DKIM_SIGNED,SPF_NONE autolearn=no autolearn_force=no
-        version=3.4.0
-Received: from srichara-linux.qualcomm.com (blr-c-bdr-fw-01_globalnat_allzones-outside.qualcomm.com [103.229.19.19])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: sricharan@smtp.codeaurora.org)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id AB0066070D;
-        Fri, 28 Jun 2019 12:10:07 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
-        s=default; t=1561723810;
-        bh=IM0ROSdcJWhLOg7FCXzXiT+dphADA/BQMxzLdqyE4gI=;
-        h=From:To:Cc:Subject:Date:From;
-        b=D3YzX8aS3Ume7ylmpcOIg+TFPBPZGvS0u0pfcfUXLozP0OADlZ8tV4oiMaTs3S/HU
-         Na4/YK31FQW/aElURBQk5puXU5CP797RLEMb+5kHlf2f+EKnUnkb3+QkVyYazjT9Cn
-         0K+e05vjGcXa1ypvY9OUeapTSy/E/0LCds1QPcCY=
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org AB0066070D
-Authentication-Results: pdx-caf-mail.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: pdx-caf-mail.web.codeaurora.org; spf=none smtp.mailfrom=sricharan@codeaurora.org
-From:   Sricharan R <sricharan@codeaurora.org>
-To:     agross@kernel.org, david.brown@linaro.org,
-        dan.j.williams@intel.com, vkoul@kernel.org,
-        linux-arm-msm@vger.kernel.org, dmaengine@vger.kernel.org,
-        linux-kernel@vger.kernel.org, srinivas.kandagatla@linaro.org
-Cc:     stable@vger.kernel.org, sricharan@codeaurora.org
-Subject: [PATCH] dmaengine: qcom: bam_dma: Fix completed descriptors count
-Date:   Fri, 28 Jun 2019 17:39:46 +0530
-Message-Id: <1561723786-22500-1-git-send-email-sricharan@codeaurora.org>
-X-Mailer: git-send-email 1.9.1
+        Fri, 28 Jun 2019 08:20:47 -0400
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+        d=infradead.org; s=bombadil.20170209; h=Sender:Content-Transfer-Encoding:
+        MIME-Version:References:In-Reply-To:Message-Id:Date:Subject:Cc:To:From:
+        Reply-To:Content-Type:Content-ID:Content-Description:Resent-Date:Resent-From:
+        Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:
+        List-Unsubscribe:List-Subscribe:List-Post:List-Owner:List-Archive;
+        bh=o7CYzJHzCZGLgrtE5snQRdRbRXFwiHaLdDaG2tN6uwM=; b=pNElJl4qAmPj8SOPr/FiDFM74J
+        GLJ1HsGIbIzdUyGCsaNs27pGFlNrFotuAErcGh4PU8r1VcB9njx18KbrQJtsJgFMWfN1kK+Og1nr+
+        iN6o9Ml6npnEbzrKw0wBdcrlAIDwZCyFNIufHHv5P9KrjjNNPfe5tTtC8SDBITba71Y4Kj6/aIwbI
+        gViaQlrQT/TScSZFcEGNJ5Ye5JiLbN9Q9ZY8RYA6QPfSMz8y3DGoy8RQ7maOGBXQpnym/Lf136j3/
+        mjunqrGcYhOXtC6I7eQxBADClBU9HxH5CSP8ClKQPniEA2FQjbIU47OEnc8ssAfBlpjgigB5YidyN
+        rOW0RURA==;
+Received: from [186.213.242.156] (helo=bombadil.infradead.org)
+        by bombadil.infradead.org with esmtpsa (Exim 4.92 #3 (Red Hat Linux))
+        id 1hgprw-0000AQ-1F; Fri, 28 Jun 2019 12:20:44 +0000
+Received: from mchehab by bombadil.infradead.org with local (Exim 4.92)
+        (envelope-from <mchehab@bombadil.infradead.org>)
+        id 1hgpru-00059r-3y; Fri, 28 Jun 2019 09:20:42 -0300
+From:   Mauro Carvalho Chehab <mchehab+samsung@kernel.org>
+To:     Linux Doc Mailing List <linux-doc@vger.kernel.org>
+Cc:     Mauro Carvalho Chehab <mchehab+samsung@kernel.org>,
+        Mauro Carvalho Chehab <mchehab@infradead.org>,
+        linux-kernel@vger.kernel.org, Jonathan Corbet <corbet@lwn.net>,
+        Andy Gross <agross@kernel.org>, Will Deacon <will@kernel.org>,
+        Mark Rutland <mark.rutland@arm.com>,
+        linux-arm-msm@vger.kernel.org, linux-arm-kernel@lists.infradead.org
+Subject: [PATCH 38/43] docs: perf: convert to ReST
+Date:   Fri, 28 Jun 2019 09:20:34 -0300
+Message-Id: <f983005d7d210802a75dbcf48259ccf3346cc94e.1561723980.git.mchehab+samsung@kernel.org>
+X-Mailer: git-send-email 2.21.0
+In-Reply-To: <cover.1561723979.git.mchehab+samsung@kernel.org>
+References: <cover.1561723979.git.mchehab+samsung@kernel.org>
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-One space is left unused in circular FIFO to differentiate
-'full' and 'empty' cases. So take that in to account while
-counting for the descriptors completed.
+Rename the perf documentation files to ReST, add an
+index for them and adjust in order to produce a nice html
+output via the Sphinx build system.
 
-Fixes the issue reported here,
-	https://lkml.org/lkml/2019/6/18/669
+At its new index.rst, let's add a :orphan: while this is not linked to
+the main index.rst file, in order to avoid build warnings.
 
-Cc: stable@vger.kernel.org
-Reported-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-Signed-off-by: Sricharan R <sricharan@codeaurora.org>
+Signed-off-by: Mauro Carvalho Chehab <mchehab+samsung@kernel.org>
 ---
- drivers/dma/qcom/bam_dma.c | 3 +++
- 1 file changed, 3 insertions(+)
+ .../perf/{arm-ccn.txt => arm-ccn.rst}         | 18 +++++-----
+ .../perf/{arm_dsu_pmu.txt => arm_dsu_pmu.rst} |  5 +--
+ .../perf/{hisi-pmu.txt => hisi-pmu.rst}       | 35 +++++++++++--------
+ Documentation/perf/index.rst                  | 16 +++++++++
+ .../perf/{qcom_l2_pmu.txt => qcom_l2_pmu.rst} |  3 +-
+ .../perf/{qcom_l3_pmu.txt => qcom_l3_pmu.rst} |  3 +-
+ .../{thunderx2-pmu.txt => thunderx2-pmu.rst}  | 25 ++++++-------
+ .../perf/{xgene-pmu.txt => xgene-pmu.rst}     |  3 +-
+ MAINTAINERS                                   |  4 +--
+ drivers/perf/qcom_l3_pmu.c                    |  2 +-
+ 10 files changed, 72 insertions(+), 42 deletions(-)
+ rename Documentation/perf/{arm-ccn.txt => arm-ccn.rst} (86%)
+ rename Documentation/perf/{arm_dsu_pmu.txt => arm_dsu_pmu.rst} (92%)
+ rename Documentation/perf/{hisi-pmu.txt => hisi-pmu.rst} (73%)
+ create mode 100644 Documentation/perf/index.rst
+ rename Documentation/perf/{qcom_l2_pmu.txt => qcom_l2_pmu.rst} (94%)
+ rename Documentation/perf/{qcom_l3_pmu.txt => qcom_l3_pmu.rst} (93%)
+ rename Documentation/perf/{thunderx2-pmu.txt => thunderx2-pmu.rst} (73%)
+ rename Documentation/perf/{xgene-pmu.txt => xgene-pmu.rst} (96%)
 
-diff --git a/drivers/dma/qcom/bam_dma.c b/drivers/dma/qcom/bam_dma.c
-index 4b43844..8e90a40 100644
---- a/drivers/dma/qcom/bam_dma.c
-+++ b/drivers/dma/qcom/bam_dma.c
-@@ -799,6 +799,9 @@ static u32 process_channel_irqs(struct bam_device *bdev)
- 		/* Number of bytes available to read */
- 		avail = CIRC_CNT(offset, bchan->head, MAX_DESCRIPTORS + 1);
+diff --git a/Documentation/perf/arm-ccn.txt b/Documentation/perf/arm-ccn.rst
+similarity index 86%
+rename from Documentation/perf/arm-ccn.txt
+rename to Documentation/perf/arm-ccn.rst
+index 15cdb7bc57c3..832b0c64023a 100644
+--- a/Documentation/perf/arm-ccn.txt
++++ b/Documentation/perf/arm-ccn.rst
+@@ -1,3 +1,4 @@
++==========================
+ ARM Cache Coherent Network
+ ==========================
  
-+		if (offset < bchan->head)
-+			avail--;
+@@ -29,6 +30,7 @@ Crosspoint watchpoint-based events (special "event" value 0xfe)
+ require "xp" and "vc" as as above plus "port" (device port index),
+ "dir" (transmit/receive direction), comparator values ("cmp_l"
+ and "cmp_h") and "mask", being index of the comparator mask.
 +
- 		list_for_each_entry_safe(async_desc, tmp,
- 					 &bchan->desc_list, desc_node) {
- 			/* Not enough data to read */
+ Masks are defined separately from the event description
+ (due to limited number of the config values) in the "cmp_mask"
+ directory, with first 8 configurable by user and additional
+@@ -44,16 +46,16 @@ request the events on this processor (if not, the perf_event->cpu value
+ will be overwritten anyway). In case of this processor being offlined,
+ the events are migrated to another one and the attribute is updated.
+ 
+-Example of perf tool use:
++Example of perf tool use::
+ 
+-/ # perf list | grep ccn
+-  ccn/cycles/                                        [Kernel PMU event]
+-<...>
+-  ccn/xp_valid_flit,xp=?,port=?,vc=?,dir=?/          [Kernel PMU event]
+-<...>
++  / # perf list | grep ccn
++    ccn/cycles/                                        [Kernel PMU event]
++  <...>
++    ccn/xp_valid_flit,xp=?,port=?,vc=?,dir=?/          [Kernel PMU event]
++  <...>
+ 
+-/ # perf stat -a -e ccn/cycles/,ccn/xp_valid_flit,xp=1,port=0,vc=1,dir=1/ \
+-                                                                       sleep 1
++  / # perf stat -a -e ccn/cycles/,ccn/xp_valid_flit,xp=1,port=0,vc=1,dir=1/ \
++                                                                         sleep 1
+ 
+ The driver does not support sampling, therefore "perf record" will
+ not work. Per-task (without "-a") perf sessions are not supported.
+diff --git a/Documentation/perf/arm_dsu_pmu.txt b/Documentation/perf/arm_dsu_pmu.rst
+similarity index 92%
+rename from Documentation/perf/arm_dsu_pmu.txt
+rename to Documentation/perf/arm_dsu_pmu.rst
+index d611e15f5add..7fd34db75d13 100644
+--- a/Documentation/perf/arm_dsu_pmu.txt
++++ b/Documentation/perf/arm_dsu_pmu.rst
+@@ -1,3 +1,4 @@
++==================================
+ ARM DynamIQ Shared Unit (DSU) PMU
+ ==================================
+ 
+@@ -13,7 +14,7 @@ PMU doesn't support process specific events and cannot be used in sampling mode.
+ The DSU provides a bitmap for a subset of implemented events via hardware
+ registers. There is no way for the driver to determine if the other events
+ are available or not. Hence the driver exposes only those events advertised
+-by the DSU, in "events" directory under :
++by the DSU, in "events" directory under::
+ 
+   /sys/bus/event_sources/devices/arm_dsu_<N>/
+ 
+@@ -23,6 +24,6 @@ and use the raw event code for the unlisted events.
+ The driver also exposes the CPUs connected to the DSU instance in "associated_cpus".
+ 
+ 
+-e.g usage :
++e.g usage::
+ 
+ 	perf stat -a -e arm_dsu_0/cycles/
+diff --git a/Documentation/perf/hisi-pmu.txt b/Documentation/perf/hisi-pmu.rst
+similarity index 73%
+rename from Documentation/perf/hisi-pmu.txt
+rename to Documentation/perf/hisi-pmu.rst
+index 267a028b2741..404a5c3d9d00 100644
+--- a/Documentation/perf/hisi-pmu.txt
++++ b/Documentation/perf/hisi-pmu.rst
+@@ -1,5 +1,7 @@
++======================================================
+ HiSilicon SoC uncore Performance Monitoring Unit (PMU)
+ ======================================================
++
+ The HiSilicon SoC chip includes various independent system device PMUs
+ such as L3 cache (L3C), Hydra Home Agent (HHA) and DDRC. These PMUs are
+ independent and have hardware logic to gather statistics and performance
+@@ -11,11 +13,13 @@ called Super CPU cluster (SCCL) and is made up of 6 CCLs. Each SCCL has
+ two HHAs (0 - 1) and four DDRCs (0 - 3), respectively.
+ 
+ HiSilicon SoC uncore PMU driver
+----------------------------------------
++-------------------------------
++
+ Each device PMU has separate registers for event counting, control and
+ interrupt, and the PMU driver shall register perf PMU drivers like L3C,
+ HHA and DDRC etc. The available events and configuration options shall
+-be described in the sysfs, see :
++be described in the sysfs, see:
++
+ /sys/devices/hisi_sccl{X}_<l3c{Y}/hha{Y}/ddrc{Y}>/, or
+ /sys/bus/event_source/devices/hisi_sccl{X}_<l3c{Y}/hha{Y}/ddrc{Y}>.
+ The "perf list" command shall list the available events from sysfs.
+@@ -24,27 +28,30 @@ Each L3C, HHA and DDRC is registered as a separate PMU with perf. The PMU
+ name will appear in event listing as hisi_sccl<sccl-id>_module<index-id>.
+ where "sccl-id" is the identifier of the SCCL and "index-id" is the index of
+ module.
++
+ e.g. hisi_sccl3_l3c0/rd_hit_cpipe is READ_HIT_CPIPE event of L3C index #0 in
+ SCCL ID #3.
++
+ e.g. hisi_sccl1_hha0/rx_operations is RX_OPERATIONS event of HHA index #0 in
+ SCCL ID #1.
+ 
+ The driver also provides a "cpumask" sysfs attribute, which shows the CPU core
+ ID used to count the uncore PMU event.
+ 
+-Example usage of perf:
+-$# perf list
+-hisi_sccl3_l3c0/rd_hit_cpipe/ [kernel PMU event]
+-------------------------------------------
+-hisi_sccl3_l3c0/wr_hit_cpipe/ [kernel PMU event]
+-------------------------------------------
+-hisi_sccl1_l3c0/rd_hit_cpipe/ [kernel PMU event]
+-------------------------------------------
+-hisi_sccl1_l3c0/wr_hit_cpipe/ [kernel PMU event]
+-------------------------------------------
++Example usage of perf::
+ 
+-$# perf stat -a -e hisi_sccl3_l3c0/rd_hit_cpipe/ sleep 5
+-$# perf stat -a -e hisi_sccl3_l3c0/config=0x02/ sleep 5
++  $# perf list
++  hisi_sccl3_l3c0/rd_hit_cpipe/ [kernel PMU event]
++  ------------------------------------------
++  hisi_sccl3_l3c0/wr_hit_cpipe/ [kernel PMU event]
++  ------------------------------------------
++  hisi_sccl1_l3c0/rd_hit_cpipe/ [kernel PMU event]
++  ------------------------------------------
++  hisi_sccl1_l3c0/wr_hit_cpipe/ [kernel PMU event]
++  ------------------------------------------
++
++  $# perf stat -a -e hisi_sccl3_l3c0/rd_hit_cpipe/ sleep 5
++  $# perf stat -a -e hisi_sccl3_l3c0/config=0x02/ sleep 5
+ 
+ The current driver does not support sampling. So "perf record" is unsupported.
+ Also attach to a task is unsupported as the events are all uncore.
+diff --git a/Documentation/perf/index.rst b/Documentation/perf/index.rst
+new file mode 100644
+index 000000000000..4bf848e27f26
+--- /dev/null
++++ b/Documentation/perf/index.rst
+@@ -0,0 +1,16 @@
++:orphan:
++
++===========================
++Performance monitor support
++===========================
++
++.. toctree::
++   :maxdepth: 1
++
++   hisi-pmu
++   qcom_l2_pmu
++   qcom_l3_pmu
++   arm-ccn
++   xgene-pmu
++   arm_dsu_pmu
++   thunderx2-pmu
+diff --git a/Documentation/perf/qcom_l2_pmu.txt b/Documentation/perf/qcom_l2_pmu.rst
+similarity index 94%
+rename from Documentation/perf/qcom_l2_pmu.txt
+rename to Documentation/perf/qcom_l2_pmu.rst
+index b25b97659ab9..c130178a4a55 100644
+--- a/Documentation/perf/qcom_l2_pmu.txt
++++ b/Documentation/perf/qcom_l2_pmu.rst
+@@ -1,3 +1,4 @@
++=====================================================================
+ Qualcomm Technologies Level-2 Cache Performance Monitoring Unit (PMU)
+ =====================================================================
+ 
+@@ -28,7 +29,7 @@ The driver provides a "cpumask" sysfs attribute which contains a mask
+ consisting of one CPU per cluster which will be used to handle all the PMU
+ events on that cluster.
+ 
+-Examples for use with perf:
++Examples for use with perf::
+ 
+   perf stat -e l2cache_0/config=0x001/,l2cache_0/config=0x042/ -a sleep 1
+ 
+diff --git a/Documentation/perf/qcom_l3_pmu.txt b/Documentation/perf/qcom_l3_pmu.rst
+similarity index 93%
+rename from Documentation/perf/qcom_l3_pmu.txt
+rename to Documentation/perf/qcom_l3_pmu.rst
+index 96b3a9444a0d..a3d014a46bfd 100644
+--- a/Documentation/perf/qcom_l3_pmu.txt
++++ b/Documentation/perf/qcom_l3_pmu.rst
+@@ -1,3 +1,4 @@
++===========================================================================
+ Qualcomm Datacenter Technologies L3 Cache Performance Monitoring Unit (PMU)
+ ===========================================================================
+ 
+@@ -17,7 +18,7 @@ The hardware implements 32bit event counters and has a flat 8bit event space
+ exposed via the "event" format attribute. In addition to the 32bit physical
+ counters the driver supports virtual 64bit hardware counters by using hardware
+ counter chaining. This feature is exposed via the "lc" (long counter) format
+-flag. E.g.:
++flag. E.g.::
+ 
+   perf stat -e l3cache_0_0/read-miss,lc/
+ 
+diff --git a/Documentation/perf/thunderx2-pmu.txt b/Documentation/perf/thunderx2-pmu.rst
+similarity index 73%
+rename from Documentation/perf/thunderx2-pmu.txt
+rename to Documentation/perf/thunderx2-pmu.rst
+index dffc57143736..08e33675853a 100644
+--- a/Documentation/perf/thunderx2-pmu.txt
++++ b/Documentation/perf/thunderx2-pmu.rst
+@@ -1,3 +1,4 @@
++=============================================================
+ Cavium ThunderX2 SoC Performance Monitoring Unit (PMU UNCORE)
+ =============================================================
+ 
+@@ -24,18 +25,18 @@ and configuration options under sysfs, see
+ The driver does not support sampling, therefore "perf record" will not
+ work. Per-task perf sessions are also not supported.
+ 
+-Examples:
++Examples::
+ 
+-# perf stat -a -e uncore_dmc_0/cnt_cycles/ sleep 1
++  # perf stat -a -e uncore_dmc_0/cnt_cycles/ sleep 1
+ 
+-# perf stat -a -e \
+-uncore_dmc_0/cnt_cycles/,\
+-uncore_dmc_0/data_transfers/,\
+-uncore_dmc_0/read_txns/,\
+-uncore_dmc_0/write_txns/ sleep 1
++  # perf stat -a -e \
++  uncore_dmc_0/cnt_cycles/,\
++  uncore_dmc_0/data_transfers/,\
++  uncore_dmc_0/read_txns/,\
++  uncore_dmc_0/write_txns/ sleep 1
+ 
+-# perf stat -a -e \
+-uncore_l3c_0/read_request/,\
+-uncore_l3c_0/read_hit/,\
+-uncore_l3c_0/inv_request/,\
+-uncore_l3c_0/inv_hit/ sleep 1
++  # perf stat -a -e \
++  uncore_l3c_0/read_request/,\
++  uncore_l3c_0/read_hit/,\
++  uncore_l3c_0/inv_request/,\
++  uncore_l3c_0/inv_hit/ sleep 1
+diff --git a/Documentation/perf/xgene-pmu.txt b/Documentation/perf/xgene-pmu.rst
+similarity index 96%
+rename from Documentation/perf/xgene-pmu.txt
+rename to Documentation/perf/xgene-pmu.rst
+index d7cff4454e5b..644f8ed89152 100644
+--- a/Documentation/perf/xgene-pmu.txt
++++ b/Documentation/perf/xgene-pmu.rst
+@@ -1,3 +1,4 @@
++================================================
+ APM X-Gene SoC Performance Monitoring Unit (PMU)
+ ================================================
+ 
+@@ -33,7 +34,7 @@ each PMU, please refer to APM X-Gene User Manual.
+ Each perf driver also provides a "cpumask" sysfs attribute, which contains a
+ single CPU ID of the processor which will be used to handle all the PMU events.
+ 
+-Example for perf tool use:
++Example for perf tool use::
+ 
+  / # perf list | grep -e l3c -e iob -e mcb -e mc
+    l3c0/ackq-full/                                    [Kernel PMU event]
+diff --git a/MAINTAINERS b/MAINTAINERS
+index 808f65e06ad8..f5a2121294b3 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -1139,7 +1139,7 @@ APPLIED MICRO (APM) X-GENE SOC PMU
+ M:	Khuong Dinh <khuong@os.amperecomputing.com>
+ S:	Supported
+ F:	drivers/perf/xgene_pmu.c
+-F:	Documentation/perf/xgene-pmu.txt
++F:	Documentation/perf/xgene-pmu.rst
+ F:	Documentation/devicetree/bindings/perf/apm-xgene-pmu.txt
+ 
+ APTINA CAMERA SENSOR PLL
+@@ -7207,7 +7207,7 @@ M:	Shaokun Zhang <zhangshaokun@hisilicon.com>
+ W:	http://www.hisilicon.com
+ S:	Supported
+ F:	drivers/perf/hisilicon
+-F:	Documentation/perf/hisi-pmu.txt
++F:	Documentation/perf/hisi-pmu.rst
+ 
+ HISILICON ROCE DRIVER
+ M:	Lijun Ou <oulijun@huawei.com>
+diff --git a/drivers/perf/qcom_l3_pmu.c b/drivers/perf/qcom_l3_pmu.c
+index 15b8c10c2b2b..90f88ce5192b 100644
+--- a/drivers/perf/qcom_l3_pmu.c
++++ b/drivers/perf/qcom_l3_pmu.c
+@@ -8,7 +8,7 @@
+  * the slices. User space needs to aggregate to individual counts to provide
+  * a global picture.
+  *
+- * See Documentation/perf/qcom_l3_pmu.txt for more details.
++ * See Documentation/perf/qcom_l3_pmu.rst for more details.
+  *
+  * Copyright (c) 2015-2017, The Linux Foundation. All rights reserved.
+  */
 -- 
-QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member of Code Aurora Forum, hosted by The Linux Foundation
+2.21.0
 
