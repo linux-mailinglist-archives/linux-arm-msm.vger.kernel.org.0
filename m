@@ -2,48 +2,48 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 8005159C5C
+	by mail.lfdr.de (Postfix) with ESMTP id E882E59C5D
 	for <lists+linux-arm-msm@lfdr.de>; Fri, 28 Jun 2019 15:01:33 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727179AbfF1NBP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        id S1727127AbfF1NBP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
         Fri, 28 Jun 2019 09:01:15 -0400
-Received: from mail-wr1-f67.google.com ([209.85.221.67]:38920 "EHLO
-        mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727168AbfF1NAd (ORCPT
+Received: from mail-wr1-f65.google.com ([209.85.221.65]:36265 "EHLO
+        mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727179AbfF1NAe (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 28 Jun 2019 09:00:33 -0400
-Received: by mail-wr1-f67.google.com with SMTP id x4so6214368wrt.6
-        for <linux-arm-msm@vger.kernel.org>; Fri, 28 Jun 2019 06:00:31 -0700 (PDT)
+        Fri, 28 Jun 2019 09:00:34 -0400
+Received: by mail-wr1-f65.google.com with SMTP id n4so6230402wrs.3
+        for <linux-arm-msm@vger.kernel.org>; Fri, 28 Jun 2019 06:00:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=VYK6CuTcwUpXBzrv+57CELDw4v8ANQ9M8j2TEI8QevU=;
-        b=OIaKx5bzcFJ9iQHFSo+vkoZWC/Js1VgIC5YdEtJwkq7wImjmgHDI3Uzb744irl1vpQ
-         lSddEYDCwDSh34+o4ro84ykmsc9xLCAayQqTNUgOTO6rqSUotym41jym5H/msjWYLD3l
-         kJHcPqhpcmB23hEAcomtgsmv89peFjdasBXG9H3Ajmt1aENoGFFc/V1RnUzHCoNTR9fD
-         zBO62HZL75a3W5rtJ785/KdQG9CPnx03rCAAk525/vZK4LHr+b/HBGU+7E4EQS6GZ8R9
-         LjE0IN3KSd4yjsSa1QhUIwN74CjyczAOVlT/xu/Pih7CgJTXqMyMKTQkZw5htQgLQLLY
-         QuWQ==
+        bh=GDdYN5kQt5oodJg9h0fQ+PGqnlQ6057Y5ThAbiMCFHE=;
+        b=aStCg4HrF6BmAN5ZprxLweMHT3TIAHKj9unAhcfV7uHqCXxK/8cTWppGWhbH6ZIp28
+         X1QPv8tS/qz0Nlfbj4S7cWYVVp7LxyG+w+c6yBHwIHX3raV4D1AfsFzmFUuBghwvbcFv
+         b+W4geq0zgQs+TlGDuYDGhYHSWbOaXWX1d35Ijn1iH7mZcWV8bjjBoQo3AFPPkWcg1eW
+         24QBV7tmPeX4wF/K953B6FL5UGulav6XLBmO+/XtUGvPCh42HQObW993Q35MrOM2mhxa
+         7fHSc/28OoOlsMRatKMoqX1LuISEQ6/3YoixCLbhReBc7C4wC8aX16RVtlAOmpCJEZha
+         30IQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=VYK6CuTcwUpXBzrv+57CELDw4v8ANQ9M8j2TEI8QevU=;
-        b=nf0OI4GMG2ZoAzmxC4utYqx46g5D6td7vN/qY3B98+WncYxGjzUe8lY04gaAC2a7J0
-         YfXTQvgVJVwKgAO0itcws+hMrCiiENrD4gTEZPWR+noyT5+xNuHoWspoznySMmDqsf0z
-         TXPTnjU4/arwn+Pz5PDSYE78gn6LehgKypY/WlOdQ6/Wygjrpydc4797FyLsIfwVG40O
-         9Ix+1a58WgwzVSNlbCcNNskOq4acTecRrkfNySHApyLejoBM32fA9p8MrGYN+5uPhtu8
-         aSwpSY0DLRx1N5xaC+cYuucQdAm8Zu53vPOmXYq9dKgDpOkzIdRXlHZw/6P2vua6G1vb
-         1pVg==
-X-Gm-Message-State: APjAAAWP1OjoDiT1c5E+uDKbDzCqdAYbI7aIb8LexlmYPdHfFfk6QpcO
-        VQszmSaFl8p/jgCJoOoLLdgjrg==
-X-Google-Smtp-Source: APXvYqxPm7/w3dC2Be75DCjYjTGgOTR+ITso4/oe/Ozp4FTCj2vyklT8/WnkYPF9RrqfphHcRujieQ==
-X-Received: by 2002:adf:ee03:: with SMTP id y3mr3958702wrn.128.1561726831149;
-        Fri, 28 Jun 2019 06:00:31 -0700 (PDT)
+        bh=GDdYN5kQt5oodJg9h0fQ+PGqnlQ6057Y5ThAbiMCFHE=;
+        b=mklE9uDdYtr/g7ee10gbSoNfww0K+X9wzWZtfeI3dVvGZi3Y2pm4uD5Giy19YhRch0
+         v8GUU+0vfKHMe58ZU0h88D3J0toDmffIwsOBgzgCzwYX1lYvwwqsqlgu8VMBKw04z1YC
+         qWzggs1Rb5bq2afqR4kzw6x4Jno2r7CIrfFJ3oyoEKrAcfMUb5S9QD02WLeja9/Twhwx
+         TwJF+dPAOyZZIjSS9a3MoY1gE+KcErg3iZ7LXVLA4b8X18xvsEch7nKGBJrqaFlUVUIv
+         QQFyGhcLqWGNalZSoK4lalLwGt5CtiwigmOFluE043GdZ+ZmOxpNXcHFeT8cGowExlCv
+         4g5w==
+X-Gm-Message-State: APjAAAXNTtefB9fVPizynjDLkw+A/LICqglsawkxQov5HEURD1erjI8t
+        bz0iQT5gcOMCvYd+x9O9wfaPWg==
+X-Google-Smtp-Source: APXvYqzAMjgfvkBAsqsXR2nTrtCLwi+m0gA4PqiKPkXUxBqR7O8NMRf7ciY88v3cOTrTAD5w1d/2nw==
+X-Received: by 2002:adf:e2c7:: with SMTP id d7mr7602029wrj.272.1561726832700;
+        Fri, 28 Jun 2019 06:00:32 -0700 (PDT)
 Received: from localhost.localdomain ([37.157.136.206])
-        by smtp.gmail.com with ESMTPSA id w20sm3717174wra.96.2019.06.28.06.00.30
+        by smtp.gmail.com with ESMTPSA id w20sm3717174wra.96.2019.06.28.06.00.31
         (version=TLS1_3 cipher=AEAD-AES256-GCM-SHA384 bits=256/256);
-        Fri, 28 Jun 2019 06:00:30 -0700 (PDT)
+        Fri, 28 Jun 2019 06:00:32 -0700 (PDT)
 From:   Stanimir Varbanov <stanimir.varbanov@linaro.org>
 To:     linux-media@vger.kernel.org
 Cc:     Mauro Carvalho Chehab <mchehab@kernel.org>,
@@ -53,9 +53,9 @@ Cc:     Mauro Carvalho Chehab <mchehab@kernel.org>,
         Tomasz Figa <tfiga@chromium.org>,
         Alexandre Courbot <acourbot@chromium.org>,
         Stanimir Varbanov <stanimir.varbanov@linaro.org>
-Subject: [PATCH v2 04/11] venus: hfi: export few HFI functions
-Date:   Fri, 28 Jun 2019 15:59:55 +0300
-Message-Id: <20190628130002.24293-5-stanimir.varbanov@linaro.org>
+Subject: [PATCH v2 05/11] venus: hfi: return an error if session_init is already called
+Date:   Fri, 28 Jun 2019 15:59:56 +0300
+Message-Id: <20190628130002.24293-6-stanimir.varbanov@linaro.org>
 X-Mailer: git-send-email 2.17.1
 In-Reply-To: <20190628130002.24293-1-stanimir.varbanov@linaro.org>
 References: <20190628130002.24293-1-stanimir.varbanov@linaro.org>
@@ -64,50 +64,28 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Export few HFI functions to use them from decoder to implement
-more granular control needed for stateful Codec API compliance.
+This makes hfi_session_init to return an error when it is
+already called without a call to hfi_session_deinit.
 
 Signed-off-by: Stanimir Varbanov <stanimir.varbanov@linaro.org>
 ---
- drivers/media/platform/qcom/venus/hfi.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/media/platform/qcom/venus/hfi.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
 diff --git a/drivers/media/platform/qcom/venus/hfi.c b/drivers/media/platform/qcom/venus/hfi.c
-index 7c5bf5cb32de..82eb889ab541 100644
+index 82eb889ab541..3d8b1284d1f3 100644
 --- a/drivers/media/platform/qcom/venus/hfi.c
 +++ b/drivers/media/platform/qcom/venus/hfi.c
-@@ -276,6 +276,7 @@ int hfi_session_start(struct venus_inst *inst)
+@@ -198,6 +198,9 @@ int hfi_session_init(struct venus_inst *inst, u32 pixfmt)
+ 	const struct hfi_ops *ops = core->ops;
+ 	int ret;
  
- 	return 0;
- }
-+EXPORT_SYMBOL_GPL(hfi_session_start);
++	if (inst->state != INST_UNINIT)
++		return -EINVAL;
++
+ 	inst->hfi_codec = to_codec_type(pixfmt);
+ 	reinit_completion(&inst->done);
  
- int hfi_session_stop(struct venus_inst *inst)
- {
-@@ -299,6 +300,7 @@ int hfi_session_stop(struct venus_inst *inst)
- 
- 	return 0;
- }
-+EXPORT_SYMBOL_GPL(hfi_session_stop);
- 
- int hfi_session_continue(struct venus_inst *inst)
- {
-@@ -328,6 +330,7 @@ int hfi_session_abort(struct venus_inst *inst)
- 
- 	return 0;
- }
-+EXPORT_SYMBOL_GPL(hfi_session_abort);
- 
- int hfi_session_load_res(struct venus_inst *inst)
- {
-@@ -374,6 +377,7 @@ int hfi_session_unload_res(struct venus_inst *inst)
- 
- 	return 0;
- }
-+EXPORT_SYMBOL_GPL(hfi_session_unload_res);
- 
- int hfi_session_flush(struct venus_inst *inst, u32 type)
- {
 -- 
 2.17.1
 
