@@ -2,65 +2,82 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 4A5ED59378
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 28 Jun 2019 07:36:26 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D5FE05942F
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 28 Jun 2019 08:29:06 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726622AbfF1FgZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 28 Jun 2019 01:36:25 -0400
-Received: from mail.kernel.org ([198.145.29.99]:56240 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726240AbfF1FgZ (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 28 Jun 2019 01:36:25 -0400
-Received: from localhost (107-207-74-175.lightspeed.austtx.sbcglobal.net [107.207.74.175])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 7B2E4214AF;
-        Fri, 28 Jun 2019 05:36:24 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1561700184;
-        bh=+8IwKueaEBLXU1EoGhnReZv3KnbikWL+cKVAqL3KuRA=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=aNIUI4H+fKdm3axVeyiTFeo3h8A0jNA9fx7qKQgY3iNCJPbZ8QiMFeGFo/T9bMLms
-         UnO6d/pU/vsERJbQcnc+svA7YhISIa3ahaY2ThIIwhzGd7/pHgkwalJ6Ui3O/PmhTD
-         ybwe3ov62qzMkvZsYA27UudRS69zZmQphFY6wLGQ=
-From:   Andy Gross <agross@kernel.org>
-To:     arm@kernel.org
-Cc:     linux-arm-msm@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Arnd Bergmann <arnd@arndb.de>, Olof Johansson <olof@lixom.net>,
-        Kevin Hilman <khilman@baylibre.com>
-Subject: [GIT PULL] Qualcomm Device Tree updates for 5.3 Part 2
-Date:   Fri, 28 Jun 2019 00:36:22 -0500
-Message-Id: <1561700182-18108-2-git-send-email-agross@kernel.org>
-X-Mailer: git-send-email 2.7.4
-In-Reply-To: <1561700182-18108-1-git-send-email-agross@kernel.org>
+        id S1726645AbfF1G3G (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 28 Jun 2019 02:29:06 -0400
+Received: from mail-io1-f67.google.com ([209.85.166.67]:36722 "EHLO
+        mail-io1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726574AbfF1G3F (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 28 Jun 2019 02:29:05 -0400
+Received: by mail-io1-f67.google.com with SMTP id h6so10246352ioh.3
+        for <linux-arm-msm@vger.kernel.org>; Thu, 27 Jun 2019 23:29:05 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=lixom-net.20150623.gappssmtp.com; s=20150623;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=saTGILFM6srmwaj5/tNn2pJ+i33z1aHVJBPvZqZ/BAQ=;
+        b=D0mMAxAkyRFOSeWJJs8lfk5+0GEaORmZ8+PuHou6ahBwjFSXkKZu/YUjPwnOlrnGSn
+         /ZMaoM+bsUqfcSKl3JuySQsMv7/z9C4LVUivLTai5w7Eh63PwbrS5LBV7hgeLF/7fZW/
+         7gnmj837H7fBE+tgJyfBtjNJ9paoXMvqFQZfemXCW6OflwfLhYof+jarlgyA5g2qNRKp
+         GPo6HwCBT2+23G0VYYByJu14Ul8JtxQFjdDopcPCYWN+GwSWuy/Hnebh/yaIxv/w23uZ
+         eH1dU9WPiK6rETD/XYVO2zoEu0nqXGv3kvSX16LSxRsrrek2YLgq0w0Nzo4p1VZNHTMV
+         detg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=saTGILFM6srmwaj5/tNn2pJ+i33z1aHVJBPvZqZ/BAQ=;
+        b=ky8Nvd5wx210WSlPN3P9wsmzE66pDzS2ISpD17y0hCNzxpN+b/Bqf1cAFK52LKs9m6
+         ilT8UXy83mg0foW8U4qPh30vXN4Z0j5R2G6JNXHCCB7GC4WLnEzaENv9MPcu7VnMXDr3
+         lRlroBoYs48hpg06DBtd8LJB6CzeC8uVqNTIV9lVx0VX2sql1MvrkfdmqZv7zSvJ4haE
+         ngrgeFB7XXXube9KsVY6E5n3o+5LhbyMnc4Z3/C0lZrzalyAyvfZzMCCrzbs4n9/qem9
+         f718BTm1vKiTHjl+a94SpxmKu3lscsgaKGRDc2UwUyrB338kes74qYuo0/FqU1f35Iw3
+         IzBA==
+X-Gm-Message-State: APjAAAWL7PBYXfz+yKJW0drLEOZwbU0Dtb1azK03i/8YmhadHh29vQJa
+        ict1geeg4/zKaeopDuckxGQPEXZy4vtGXkbDvDxKGw==
+X-Google-Smtp-Source: APXvYqx3P+LmmIyDtQh34wT0i4pWVu04xgifzi8AuxYP1ModA6Zlva0Pj6Fel0+bK1DzBPsPdaJY+uky6uQUE++iGPA=
+X-Received: by 2002:a5d:94d0:: with SMTP id y16mr5555373ior.123.1561703344930;
+ Thu, 27 Jun 2019 23:29:04 -0700 (PDT)
+MIME-Version: 1.0
 References: <1561700182-18108-1-git-send-email-agross@kernel.org>
+In-Reply-To: <1561700182-18108-1-git-send-email-agross@kernel.org>
+From:   Olof Johansson <olof@lixom.net>
+Date:   Fri, 28 Jun 2019 14:28:53 +0800
+Message-ID: <CAOesGMhQKastVvjUdmH=-zTzejHZ-QOXr6=qJDD2XqoHQJPrJg@mail.gmail.com>
+Subject: Re: [GIT PULL] Qualcomm ARM64 DT updates for 5.3 Part 2
+To:     Andy Gross <agross@kernel.org>
+Cc:     ARM-SoC Maintainers <arm@kernel.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        Linux ARM Mailing List <linux-arm-kernel@lists.infradead.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Arnd Bergmann <arnd@arndb.de>,
+        Kevin Hilman <khilman@baylibre.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The following changes since commit 489bacb29818865d2db63d4800f4ddff56929031:
+Hi,
 
-  ARM: dts: qcom: msm8974-hammerhead: add support for display (2019-06-16 11:27:45 -0700)
+On Fri, Jun 28, 2019 at 1:36 PM Andy Gross <agross@kernel.org> wrote:
+>
+> The following changes since commit 2410fd450c09a126aefefc9106b4652285b5d60f:
+>
+>   arm64: dts: qcom: qcs404-evb: fix vdd_apc supply (2019-06-19 23:50:52 -0500)
+>
+> are available in the git repository at:
+>
+>   git://git.kernel.org/pub/scm/linux/kernel/git/qcom/linux.git tags/qcom-arm64-for-5.3-2
+>
+> for you to fetch changes up to 8291e15108cde33c3e086a34af5381c95cc7aa87:
+>
+>   arm64: dts: qcom: qcs404: Add missing space for cooling-cells property (2019-06-28 00:20:37 -0500)
 
-are available in the git repository at:
+Merged, thanks!
 
-  git://git.kernel.org/pub/scm/linux/kernel/git/qcom/linux.git tags/qcom-dts-for-5.3-2
 
-for you to fetch changes up to e9146339515ece09ee651f122a51a26ae652ab80:
-
-  ARM: dts: msm8974-FP2: Add vibration motor (2019-06-25 13:29:32 -0500)
-
-----------------------------------------------------------------
-Qualcomm Device Tree Changes for v5.3
-
-* Add vibrator motor for MSM8974 based Fairphone 2
-
-----------------------------------------------------------------
-Luca Weiss (1):
-      ARM: dts: msm8974-FP2: Add vibration motor
-
- arch/arm/boot/dts/qcom-msm8974-fairphone-fp2.dts | 6 ++++++
- 1 file changed, 6 insertions(+)
+-Olof
