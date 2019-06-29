@@ -2,116 +2,94 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id D6F1A5AAF1
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 29 Jun 2019 14:31:33 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 773CD5AB2A
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 29 Jun 2019 15:01:56 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726912AbfF2Mbd (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 29 Jun 2019 08:31:33 -0400
-Received: from mail.kernel.org ([198.145.29.99]:43238 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726906AbfF2Mbc (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 29 Jun 2019 08:31:32 -0400
-Received: from localhost (unknown [106.51.109.168])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 65733214AF;
-        Sat, 29 Jun 2019 12:31:30 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1561811491;
-        bh=UutNK23f1qA5A/3q2Xw5HEUUXGymUirMrS/TYddBjqI=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=rpy6GKPzoOyVy5Zdz5BwpBiPHvlQMKaaUO7LJMYYbBFQ+Fl1uc416wy32r+VQQDAf
-         uJI4a1c7krbC1wyXsoe6yGljlhXxAGTBaEaUvln0lI0aWO3oo1xcxpgowgnveGrgU2
-         fZwg42TX1snYNdm+oCfUToUZoenws7rw9F7B7dmk=
-Date:   Sat, 29 Jun 2019 17:58:22 +0530
-From:   Vinod Koul <vkoul@kernel.org>
-To:     Stephen Boyd <sboyd@kernel.org>
-Cc:     linux-arm-msm@vger.kernel.org,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Deepak Katragadda <dkatraga@codeaurora.org>,
-        Andy Gross <agross@kernel.org>,
-        David Brown <david.brown@linaro.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        linux-clk@vger.kernel.org, Taniya Das <tdas@codeaurora.org>
-Subject: Re: [PATCH v3 2/3] clk: qcom: clk-alpha-pll: Add support for Trion
- PLLs
-Message-ID: <20190629122822.GE2911@vkoul-mobl>
-References: <20190625063140.17106-1-vkoul@kernel.org>
- <20190625063140.17106-3-vkoul@kernel.org>
- <20190627215027.757982063F@mail.kernel.org>
+        id S1726723AbfF2NBz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 29 Jun 2019 09:01:55 -0400
+Received: from mail-lf1-f67.google.com ([209.85.167.67]:36656 "EHLO
+        mail-lf1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726716AbfF2NBz (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Sat, 29 Jun 2019 09:01:55 -0400
+Received: by mail-lf1-f67.google.com with SMTP id q26so5787556lfc.3
+        for <linux-arm-msm@vger.kernel.org>; Sat, 29 Jun 2019 06:01:53 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=DbpuIcCBG2OY5e1NmpBE7wz6kAerHOIPdrXSJOYlBOk=;
+        b=efVnvG6gsnh3l0XcsGPL7A1HnlxKgumwKIBMGtiqOMwHhdusEpWZaOWf+MqEF7BL5W
+         WqbtG12LDpX6unXqMqDWTdVfM4zRrQmh4gqLzTx89lJEYR79woEb8W89uVlvW7MlFHEL
+         Zp08PLKv6Na6vEgUdeNTUl5SJw8p7T4ZPUq94KcIME4V87xJpVQbKIHwoCK6jGRKWDu3
+         Ngbb1bNlSk8+QAUVLVkhjTR0J8X3cz7gs99b/MC0wyJ4D28Wm9EDPnT2vEzHjH3XqEc/
+         mhWNLYEUuhbeHtzFK/maFVDyz7mEP4hs1UZ+jfHb6VE7oiGbwu1a/LhUoF08NL8U/zFo
+         qWJA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=DbpuIcCBG2OY5e1NmpBE7wz6kAerHOIPdrXSJOYlBOk=;
+        b=V5utg/8rqKXKQxLeQ9NCKLYXIq/AsWzsh90MFyXLktCgEWCOGymIIvS44Zbpovydmf
+         Xvx3A79Q3Pb1QMRB7Fj0iuFZ79gqswxMB3T8Q7rPTFOV/VfG7C+nw1duNTlNLVo2FHlG
+         WMK36ePTXsrPAdWuX+1UBLdmDnoUyAJeL8pW7oHtHSKW3H6HxKltoxqHSp6EvOy3e7rB
+         kWgsZldTOJQPdrmZx0yWIjITE/66Wr4onbGVsxXFkZMPGqKCe2HxFs+S1yAbHEJ7XjoE
+         HVAYtuI4REcQBOHy+bkjGQ0QouYzis65qpUEKV3+TrCevwGV4lFzE3RjKXgs4Hgm5bDP
+         gh5w==
+X-Gm-Message-State: APjAAAU1aUWtMURsKyk27wmeX9OtU37ysuR05baSTMHXZXZGR4jUnopR
+        BrKaACox0Pmwdk/LZel5lFM5eA==
+X-Google-Smtp-Source: APXvYqwOS0pDKXe1RTOO0fPQa8iQngPginDmqxsbSy4gahwb7Y9qnEGHUp2+11mR/5U04XqewQh3gw==
+X-Received: by 2002:ac2:5636:: with SMTP id b22mr4172787lff.2.1561813313145;
+        Sat, 29 Jun 2019 06:01:53 -0700 (PDT)
+Received: from localhost.localdomain (c-22cd225c.014-348-6c756e10.bbcust.telenor.se. [92.34.205.34])
+        by smtp.gmail.com with ESMTPSA id v2sm1354500lfi.52.2019.06.29.06.01.51
+        (version=TLS1_3 cipher=AEAD-AES256-GCM-SHA384 bits=256/256);
+        Sat, 29 Jun 2019 06:01:51 -0700 (PDT)
+From:   Linus Walleij <linus.walleij@linaro.org>
+To:     dri-devel@lists.freedesktop.org,
+        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+        Maxime Ripard <maxime.ripard@bootlin.com>,
+        Sean Paul <sean@poorly.run>
+Cc:     linux-arm-kernel@lists.infradead.org,
+        Linus Walleij <linus.walleij@linaro.org>,
+        Rob Clark <robdclark@gmail.com>, linux-arm-msm@vger.kernel.org,
+        freedreno@lists.freedesktop.org
+Subject: [PATCH 1/7] drm/msm/mdp4: Drop unused GPIO include
+Date:   Sat, 29 Jun 2019 14:59:27 +0200
+Message-Id: <20190629125933.679-1-linus.walleij@linaro.org>
+X-Mailer: git-send-email 2.20.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20190627215027.757982063F@mail.kernel.org>
-User-Agent: Mutt/1.11.3 (2019-02-01)
+Content-Transfer-Encoding: 8bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 27-06-19, 14:50, Stephen Boyd wrote:
-> Quoting Vinod Koul (2019-06-24 23:31:39)
-> > diff --git a/drivers/clk/qcom/clk-alpha-pll.c b/drivers/clk/qcom/clk-alpha-pll.c
-> > index 2c6773188761..30210f5c6726 100644
-> > --- a/drivers/clk/qcom/clk-alpha-pll.c
-> > +++ b/drivers/clk/qcom/clk-alpha-pll.c
-> > @@ -32,6 +32,7 @@
-> >  # define PLL_LOCK_DET          BIT(31)
-> >  
-> >  #define PLL_L_VAL(p)           ((p)->offset + (p)->regs[PLL_OFF_L_VAL])
-> > +#define PLL_CAL_L_VAL(p)       ((p)->offset + (p)->regs[PLL_OFF_CAL_L_VAL])
-> >  #define PLL_ALPHA_VAL(p)       ((p)->offset + (p)->regs[PLL_OFF_ALPHA_VAL])
-> >  #define PLL_ALPHA_VAL_U(p)     ((p)->offset + (p)->regs[PLL_OFF_ALPHA_VAL_U])
-> >  
-> > @@ -44,14 +45,17 @@
-> >  # define PLL_VCO_MASK          0x3
-> >  
-> >  #define PLL_USER_CTL_U(p)      ((p)->offset + (p)->regs[PLL_OFF_USER_CTL_U])
-> > +#define PLL_USER_CTL_U1(p)     ((p)->offset + (p)->regs[PLL_OFF_USER_CTL_U1])
-> >  
-> >  #define PLL_CONFIG_CTL(p)      ((p)->offset + (p)->regs[PLL_OFF_CONFIG_CTL])
-> >  #define PLL_CONFIG_CTL_U(p)    ((p)->offset + (p)->regs[PLL_OFF_CONFIG_CTL_U])
-> > +#define PLL_CONFIG_CTL_U1(p)   ((p)->offset + (p)->regs[PLL_OFF_CONFIG_CTL_U11])
-> 
-> This looks like a typo, U11 vs U1. So I don't think this has been
-> compile tested....
+This file is not using any symbols from <linux/gpio.h> so just
+drop this include.
 
-Not sure how this has happened, I have this in my test br too. Will fix
-this
+Cc: Rob Clark <robdclark@gmail.com>
+Cc: Sean Paul <sean@poorly.run>
+Cc: linux-arm-msm@vger.kernel.org
+Cc: freedreno@lists.freedesktop.org
+Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
+---
+ drivers/gpu/drm/msm/disp/mdp4/mdp4_lvds_connector.c | 2 --
+ 1 file changed, 2 deletions(-)
 
-> >  #define PLL_TEST_CTL(p)                ((p)->offset + (p)->regs[PLL_OFF_TEST_CTL])
-> >  #define PLL_TEST_CTL_U(p)      ((p)->offset + (p)->regs[PLL_OFF_TEST_CTL_U])
-> >  #define PLL_STATUS(p)          ((p)->offset + (p)->regs[PLL_OFF_STATUS])
-> >  #define PLL_OPMODE(p)          ((p)->offset + (p)->regs[PLL_OFF_OPMODE])
-> >  #define PLL_FRAC(p)            ((p)->offset + (p)->regs[PLL_OFF_FRAC])
-> > +#define PLL_CAL_VAL(p)         ((p)->offset + (p)->regs[PLL_OFF_CAL_VAL])
-> >  
-> >  const u8 clk_alpha_pll_regs[][PLL_OFF_MAX_REGS] = {
-> >         [CLK_ALPHA_PLL_TYPE_DEFAULT] =  {
-> >  const struct clk_ops clk_alpha_pll_ops = {
-> >         .enable = clk_alpha_pll_enable,
-> >         .disable = clk_alpha_pll_disable,
-> > @@ -1053,6 +1210,77 @@ static unsigned long clk_alpha_pll_postdiv_fabia_recalc_rate(struct clk_hw *hw,
-> [...]
-> > +
-> > +static int
-> > +clk_trion_pll_postdiv_set_rate(struct clk_hw *hw, unsigned long rate,
-> > +                              unsigned long parent_rate)
-> > +{
-> > +       struct clk_alpha_pll_postdiv *pll = to_clk_alpha_pll_postdiv(hw);
-> > +       struct regmap *regmap = pll->clkr.regmap;
-> > +       int i, val = 0, div, ret;
-> > +
-> > +       /*
-> > +        * If the PLL is in FSM mode, then treat the set_rate callback
-> > +        * as a no-operation.
-> 
-> And this is OK? Shouldn't we fail because we can't change to the rate
-> that's desired?
-
-Agreed, we should error out.
-Also looking at other PLLs I see we check for FSM in clk enabled
-and I guess we should do it there for this as well, will move
-
+diff --git a/drivers/gpu/drm/msm/disp/mdp4/mdp4_lvds_connector.c b/drivers/gpu/drm/msm/disp/mdp4/mdp4_lvds_connector.c
+index 5368e621999c..753579914d0c 100644
+--- a/drivers/gpu/drm/msm/disp/mdp4/mdp4_lvds_connector.c
++++ b/drivers/gpu/drm/msm/disp/mdp4/mdp4_lvds_connector.c
+@@ -16,8 +16,6 @@
+  * this program.  If not, see <http://www.gnu.org/licenses/>.
+  */
+ 
+-#include <linux/gpio.h>
+-
+ #include "mdp4_kms.h"
+ 
+ struct mdp4_lvds_connector {
 -- 
-~Vinod
+2.20.1
+
