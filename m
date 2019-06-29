@@ -2,49 +2,49 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id EC3335AB31
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 29 Jun 2019 15:02:03 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 604DD5AB34
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 29 Jun 2019 15:02:07 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726817AbfF2NCD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 29 Jun 2019 09:02:03 -0400
-Received: from mail-lj1-f194.google.com ([209.85.208.194]:35514 "EHLO
-        mail-lj1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726716AbfF2NCD (ORCPT
+        id S1726819AbfF2NCH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 29 Jun 2019 09:02:07 -0400
+Received: from mail-lf1-f68.google.com ([209.85.167.68]:46560 "EHLO
+        mail-lf1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726716AbfF2NCG (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 29 Jun 2019 09:02:03 -0400
-Received: by mail-lj1-f194.google.com with SMTP id x25so8639985ljh.2
-        for <linux-arm-msm@vger.kernel.org>; Sat, 29 Jun 2019 06:02:02 -0700 (PDT)
+        Sat, 29 Jun 2019 09:02:06 -0400
+Received: by mail-lf1-f68.google.com with SMTP id z15so5729369lfh.13
+        for <linux-arm-msm@vger.kernel.org>; Sat, 29 Jun 2019 06:02:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=lniFIm91gCkBVo8OT7Qc6rB8XEZiKvYZhCGqRwQxgRg=;
-        b=R/OUJdhNfZGHaJoOsvmC50TZU4KNiySqOFuqTZkhUMlRuF2aiKO7gw52YdVXItSgcn
-         yULpt7pmN8Q0FFQWwWXuiz9aPOeB3pvaPkb6xxb4hn467Tb4aGWSL9SCavDLu8IkKmmy
-         qrTeh6vZQGGT0xcFf5zz72dp/fegF92Xn8K1lsaMp74Y52ZV+yXlor4P8xA3LvmbAVRg
-         tyhC8dkj7Wq74VCB6f5GSAxCnIBTYFRJrgHvcNYjkbMf39LLwokl+2KRAWR7rROFUhJW
-         510SqwEGSIvRO7vwvVY/+PCm/RmKugHh6Jbbn1ODQskyPdvHfCTEPIlI0+NbNPr/JqAa
-         NqSA==
+        bh=2KRTAU6ehPX/xpH0HKMaZdgcL0pE06VvF+Cz0lSkdGM=;
+        b=oIll79elm1tF0VCcLp+Ng7l/OtHRjW3+0tBcilR4GYUeAnu3R6/Tedhi0bc9XsRg6T
+         +qRPVUxXAmDbf3sj21K2PQ3L7OjFaGPFZIMphP/X/UfJfX+2WL59aqU6pJOg2OssIe8x
+         3piXFJldqvugqPHWGtZv/T1hV7YJQUruoE+3Pj5dJeN4Ae1/hZP6n0ZesOEa/5MS9Mzi
+         qzOKI21XULgKL/ldq3TNUGorYUQ34j0w6zB94iDk/jKaqce80x2goGU/wAlbsamJwz+R
+         28p9Mw/Ie9Bd2PrC0yCh1J/VeWnbNfZtT22ymuou/9SV2PvPo1k7TGBExHXNTzbRRVml
+         txtg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=lniFIm91gCkBVo8OT7Qc6rB8XEZiKvYZhCGqRwQxgRg=;
-        b=nPztyCtpIs3x7LU6dfs3NnlcTetSiGTINrnb0Q+VZPyUAmH/EB8sxZ99z0czHROeaq
-         vr6l6P3YHyJEXt/KESYQCeRNM/e7YkAgV2b++cZ4ma88BCwvUhh+t48FC1ITUEZbVT//
-         IIv5NuffXLKN+pRRMckMfmUwb+7yBaat79tXI9+ZsnZOGAYmfsV1kQ18Ra0J8uYQnZIb
-         Tc2SCLXAC2Aj6vZ/PZQHlzml5q15GBtNFpBCIjaNZuC2OZgC7H/dj1Kwvat44uoW5s90
-         Ns/hFYaV0JbyMYRLLNZ646F1Jtq0PmnNIntBgo1JnZtvt4nN9qu7bXGDhdnheOJft5Cx
-         mwXg==
-X-Gm-Message-State: APjAAAURC8dVNJrn/AWnhs/mbLe6WN2EXKxtjEdAatBunZZHb5USTFvZ
-        49PDmUJn+OQEXfZoiWmpruNEeg==
-X-Google-Smtp-Source: APXvYqwVGU+xg50XiekYht3IIxEqFHM099dgUifn3T0K/F2g1KQaP1T9fAtfYeTQ4lNEuy0h1An6cA==
-X-Received: by 2002:a2e:8744:: with SMTP id q4mr8768966ljj.77.1561813321447;
-        Sat, 29 Jun 2019 06:02:01 -0700 (PDT)
+        bh=2KRTAU6ehPX/xpH0HKMaZdgcL0pE06VvF+Cz0lSkdGM=;
+        b=SfVVkxMDske7MsLH1aKHBphLotSHQDBbASOGvUS8mfAjp76Z+kE3JWWckO41qFD0Y0
+         pkKWC08DXYyFuUgR/hfKXc3d8nknrGA3U7Nazbh2UW+XmMPVNY3nLYp9MTe2GlIbJGxD
+         hTuGoY0U1W3VPGFvv47ar6D737io5TCuTgJ4lQkJFmHkAUVVIAIWJnmZ9t4RQlTImU2o
+         7XSXstscjoq5Oj2huUbYEweY9R/SLxd51o0GiL6GlvQXY+/vVrUwQa4qvkSdUeUpXjj8
+         0b0x5JsloIrJ/PFL3uK92ifpEjTQstdw2a+zqKrfLNOKQnBleLMZ2x1kh5aLmkqHm4MR
+         Z4Qg==
+X-Gm-Message-State: APjAAAUhKXrDVPY9Z+Cy8Uh+uk6hYN6D/qEZDWjXkPRgqIcMyCpWu5F8
+        HpIR683suuvGaeLntpAnMryS6A==
+X-Google-Smtp-Source: APXvYqyisZIfrxWe3N5Szh1GWTfKSxX3a3LffxrfYVO394S3qG3CuHcrkb/6yrrtWRGEB7o6fAik4A==
+X-Received: by 2002:a05:6512:30a:: with SMTP id t10mr7348435lfp.22.1561813323803;
+        Sat, 29 Jun 2019 06:02:03 -0700 (PDT)
 Received: from localhost.localdomain (c-22cd225c.014-348-6c756e10.bbcust.telenor.se. [92.34.205.34])
-        by smtp.gmail.com with ESMTPSA id v2sm1354500lfi.52.2019.06.29.06.02.00
+        by smtp.gmail.com with ESMTPSA id v2sm1354500lfi.52.2019.06.29.06.02.02
         (version=TLS1_3 cipher=AEAD-AES256-GCM-SHA384 bits=256/256);
-        Sat, 29 Jun 2019 06:02:00 -0700 (PDT)
+        Sat, 29 Jun 2019 06:02:02 -0700 (PDT)
 From:   Linus Walleij <linus.walleij@linaro.org>
 To:     dri-devel@lists.freedesktop.org,
         Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
@@ -54,9 +54,9 @@ Cc:     linux-arm-kernel@lists.infradead.org,
         Linus Walleij <linus.walleij@linaro.org>,
         Rob Clark <robdclark@gmail.com>, linux-arm-msm@vger.kernel.org,
         freedreno@lists.freedesktop.org
-Subject: [PATCH 4/7] gpio: of: Support some legacy Qualcomm HDMI bindings
-Date:   Sat, 29 Jun 2019 14:59:30 +0200
-Message-Id: <20190629125933.679-4-linus.walleij@linaro.org>
+Subject: [PATCH 5/7] drm/msm/hdmi: Convert to use GPIO descriptors
+Date:   Sat, 29 Jun 2019 14:59:31 +0200
+Message-Id: <20190629125933.679-5-linus.walleij@linaro.org>
 X-Mailer: git-send-email 2.20.1
 In-Reply-To: <20190629125933.679-1-linus.walleij@linaro.org>
 References: <20190629125933.679-1-linus.walleij@linaro.org>
@@ -67,12 +67,17 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Insteaf of the MSM DRM code going around and inspecting the
-device tree nodes by itself to find "qcom,misc" GPIO phandles,
-we add a quirk to the core so that if "qcom,misc-gpios" and
-"qcom,misc-gpio" isn't found, we try to find just
-"qcom,misc" as a last resort. Provide an explicit whitelist
-for those GPIOs.
+This switches the MSM HDMI code to use GPIO descriptors.
+Normally we would fetch the GPIOs from the device with the
+flags GPIOD_IN or GPIOD_OUT_[LOW|HIGH] to set up the lines
+immediately, but since the code seems eager to actively
+drive the lines high/low when turning HDMI on and off, we
+just fetch the GPIOs as-is and keep the code explicitly
+driving them.
+
+The old code would try legacy bindings (GPIOs without any
+"-gpios" suffix) but this has been moved to the gpiolib
+as a quirk by the previous patch.
 
 Cc: Rob Clark <robdclark@gmail.com>
 Cc: Sean Paul <sean@poorly.run>
@@ -80,74 +85,222 @@ Cc: linux-arm-msm@vger.kernel.org
 Cc: freedreno@lists.freedesktop.org
 Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
 ---
-Rob/Sean: if the approach is overall OK I will merge this
-one patch already for v5.3 so the rest can be queued for
-v5.4 later.
----
- drivers/gpio/gpiolib-of.c | 43 +++++++++++++++++++++++++++++++++++++++
- 1 file changed, 43 insertions(+)
+ drivers/gpu/drm/msm/hdmi/hdmi.c           | 66 +++++++++++------------
+ drivers/gpu/drm/msm/hdmi/hdmi.h           |  4 +-
+ drivers/gpu/drm/msm/hdmi/hdmi_connector.c | 42 +++++----------
+ 3 files changed, 45 insertions(+), 67 deletions(-)
 
-diff --git a/drivers/gpio/gpiolib-of.c b/drivers/gpio/gpiolib-of.c
-index aec7bd86ae7e..c927eaf6c88f 100644
---- a/drivers/gpio/gpiolib-of.c
-+++ b/drivers/gpio/gpiolib-of.c
-@@ -286,6 +286,45 @@ static struct gpio_desc *of_find_regulator_gpio(struct device *dev, const char *
- 	return desc;
+diff --git a/drivers/gpu/drm/msm/hdmi/hdmi.c b/drivers/gpu/drm/msm/hdmi/hdmi.c
+index e247d6942a49..c8e8268c76e2 100644
+--- a/drivers/gpu/drm/msm/hdmi/hdmi.c
++++ b/drivers/gpu/drm/msm/hdmi/hdmi.c
+@@ -436,38 +436,6 @@ static const struct {
+ 	{ "qcom,hdmi-tx-mux-lpm", true, 1, "HDMI_MUX_LPM" },
+ };
+ 
+-static int msm_hdmi_get_gpio(struct device_node *of_node, const char *name)
+-{
+-	int gpio;
+-
+-	/* try with the gpio names as in the table (downstream bindings) */
+-	gpio = of_get_named_gpio(of_node, name, 0);
+-	if (gpio < 0) {
+-		char name2[32];
+-
+-		/* try with the gpio names as in the upstream bindings */
+-		snprintf(name2, sizeof(name2), "%s-gpios", name);
+-		gpio = of_get_named_gpio(of_node, name2, 0);
+-		if (gpio < 0) {
+-			char name3[32];
+-
+-			/*
+-			 * try again after stripping out the "qcom,hdmi-tx"
+-			 * prefix. This is mainly to match "hpd-gpios" used
+-			 * in the upstream bindings
+-			 */
+-			if (sscanf(name2, "qcom,hdmi-tx-%s", name3))
+-				gpio = of_get_named_gpio(of_node, name3, 0);
+-		}
+-
+-		if (gpio < 0) {
+-			DBG("failed to get gpio: %s (%d)", name, gpio);
+-			gpio = -1;
+-		}
+-	}
+-	return gpio;
+-}
+-
+ /*
+  * HDMI audio codec callbacks
+  */
+@@ -593,11 +561,39 @@ static int msm_hdmi_bind(struct device *dev, struct device *master, void *data)
+ 	hdmi_cfg->qfprom_mmio_name = "qfprom_physical";
+ 
+ 	for (i = 0; i < HDMI_MAX_NUM_GPIO; i++) {
+-		hdmi_cfg->gpios[i].num = msm_hdmi_get_gpio(of_node,
+-						msm_hdmi_gpio_pdata[i].name);
++		const char *name = msm_hdmi_gpio_pdata[i].name;
++		struct gpio_desc *gpiod;
++
++		/*
++		 * We are fetching the GPIO lines "as is" since the connector
++		 * code is enabling and disabling the lines. Until that point
++		 * the power-on default value will be kept.
++		 */
++		gpiod = devm_gpiod_get_optional(dev, name, GPIOD_ASIS);
++		/* This will catch e.g. -PROBE_DEFER */
++		if (IS_ERR(gpiod))
++			return PTR_ERR(gpiod);
++		if (!gpiod) {
++			/* Try a second time, stripping down the name */
++			char name3[32];
++
++			/*
++			 * Try again after stripping out the "qcom,hdmi-tx"
++			 * prefix. This is mainly to match "hpd-gpios" used
++			 * in the upstream bindings.
++			 */
++			if (sscanf(name, "qcom,hdmi-tx-%s", name3))
++				gpiod = devm_gpiod_get_optional(dev, name3, GPIOD_ASIS);
++			if (IS_ERR(gpiod))
++				return PTR_ERR(gpiod);
++			if (!gpiod)
++				DBG("failed to get gpio: %s", name);
++		}
++		hdmi_cfg->gpios[i].gpiod = gpiod;
++		if (gpiod)
++			gpiod_set_consumer_name(gpiod, msm_hdmi_gpio_pdata[i].label);
+ 		hdmi_cfg->gpios[i].output = msm_hdmi_gpio_pdata[i].output;
+ 		hdmi_cfg->gpios[i].value = msm_hdmi_gpio_pdata[i].value;
+-		hdmi_cfg->gpios[i].label = msm_hdmi_gpio_pdata[i].label;
+ 	}
+ 
+ 	dev->platform_data = hdmi_cfg;
+diff --git a/drivers/gpu/drm/msm/hdmi/hdmi.h b/drivers/gpu/drm/msm/hdmi/hdmi.h
+index 5c5df6ab2a57..3ef956e8de71 100644
+--- a/drivers/gpu/drm/msm/hdmi/hdmi.h
++++ b/drivers/gpu/drm/msm/hdmi/hdmi.h
+@@ -22,6 +22,7 @@
+ #include <linux/clk.h>
+ #include <linux/platform_device.h>
+ #include <linux/regulator/consumer.h>
++#include <linux/gpio/consumer.h>
+ #include <linux/hdmi.h>
+ 
+ #include "msm_drv.h"
+@@ -33,10 +34,9 @@ struct hdmi_phy;
+ struct hdmi_platform_config;
+ 
+ struct hdmi_gpio_data {
+-	int num;
++	struct gpio_desc *gpiod;
+ 	bool output;
+ 	int value;
+-	const char *label;
+ };
+ 
+ struct hdmi_audio {
+diff --git a/drivers/gpu/drm/msm/hdmi/hdmi_connector.c b/drivers/gpu/drm/msm/hdmi/hdmi_connector.c
+index a6eeab2c4dc3..c4e9f6d7960f 100644
+--- a/drivers/gpu/drm/msm/hdmi/hdmi_connector.c
++++ b/drivers/gpu/drm/msm/hdmi/hdmi_connector.c
+@@ -15,7 +15,7 @@
+  * this program.  If not, see <http://www.gnu.org/licenses/>.
+  */
+ 
+-#include <linux/gpio.h>
++#include <linux/gpio/consumer.h>
+ #include <linux/pinctrl/consumer.h>
+ 
+ #include "msm_kms.h"
+@@ -79,30 +79,21 @@ static void msm_hdmi_phy_reset(struct hdmi *hdmi)
+ 
+ static int gpio_config(struct hdmi *hdmi, bool on)
+ {
+-	struct device *dev = &hdmi->pdev->dev;
+ 	const struct hdmi_platform_config *config = hdmi->config;
+-	int ret, i;
++	int i;
+ 
+ 	if (on) {
+ 		for (i = 0; i < HDMI_MAX_NUM_GPIO; i++) {
+ 			struct hdmi_gpio_data gpio = config->gpios[i];
+ 
+-			if (gpio.num != -1) {
+-				ret = gpio_request(gpio.num, gpio.label);
+-				if (ret) {
+-					DRM_DEV_ERROR(dev,
+-						"'%s'(%d) gpio_request failed: %d\n",
+-						gpio.label, gpio.num, ret);
+-					goto err;
+-				}
+-
++			if (gpio.gpiod) {
+ 				if (gpio.output) {
+-					gpio_direction_output(gpio.num,
+-							      gpio.value);
++					gpiod_direction_output(gpio.gpiod,
++							       gpio.value);
+ 				} else {
+-					gpio_direction_input(gpio.num);
+-					gpio_set_value_cansleep(gpio.num,
+-								gpio.value);
++					gpiod_direction_input(gpio.gpiod);
++					gpiod_set_value_cansleep(gpio.gpiod,
++								 gpio.value);
+ 				}
+ 			}
+ 		}
+@@ -112,29 +103,20 @@ static int gpio_config(struct hdmi *hdmi, bool on)
+ 		for (i = 0; i < HDMI_MAX_NUM_GPIO; i++) {
+ 			struct hdmi_gpio_data gpio = config->gpios[i];
+ 
+-			if (gpio.num == -1)
++			if (!gpio.gpiod)
+ 				continue;
+ 
+ 			if (gpio.output) {
+ 				int value = gpio.value ? 0 : 1;
+ 
+-				gpio_set_value_cansleep(gpio.num, value);
++				gpiod_set_value_cansleep(gpio.gpiod, value);
+ 			}
+-
+-			gpio_free(gpio.num);
+ 		};
+ 
+ 		DBG("gpio off");
+ 	}
+ 
+ 	return 0;
+-err:
+-	while (i--) {
+-		if (config->gpios[i].num != -1)
+-			gpio_free(config->gpios[i].num);
+-	}
+-
+-	return ret;
  }
  
-+/*
-+ * Some non-standard Qualcomm HDMI GPIOs need to be supported as they exist
-+ * in random old device trees out there.
-+ */
-+static struct gpio_desc *of_find_hdmi_gpio(struct device *dev,
-+					   const char *con_id,
-+					   enum of_gpio_flags *of_flags)
-+{
-+	/*
-+	 * These are the connection IDs we accept as legacy GPIO phandles.
-+	 * If we get here, the same prefix ending with "-gpio" and "-gpios"
-+	 * has already been tried so now we finally try with no suffix.
-+	 */
-+	const char *whitelist[] = {
-+		"qcom,hdmi-tx-ddc-clk",
-+		"qcom,hdmi-tx-ddc-data",
-+		"qcom,hdmi-tx-hpd",
-+		"qcom,hdmi-tx-mux-en",
-+		"qcom,hdmi-tx-mux-sel",
-+		"qcom,hdmi-tx-mux-lpm",
-+	};
-+	struct device_node *np = dev->of_node;
-+	struct gpio_desc *desc;
-+	int i;
-+
-+	if (!IS_ENABLED(CONFIG_DRM_MSM))
-+		return ERR_PTR(-ENOENT);
-+
-+	if (!con_id)
-+		return ERR_PTR(-ENOENT);
-+
-+	i = match_string(whitelist, ARRAY_SIZE(whitelist), con_id);
-+	if (i < 0)
-+		return ERR_PTR(-ENOENT);
-+
-+	desc = of_get_named_gpiod_flags(np, con_id, 0, of_flags);
-+	return desc;
-+}
-+
- struct gpio_desc *of_find_gpio(struct device *dev, const char *con_id,
- 			       unsigned int idx, unsigned long *flags)
- {
-@@ -330,6 +369,10 @@ struct gpio_desc *of_find_gpio(struct device *dev, const char *con_id,
- 	if (IS_ERR(desc) && PTR_ERR(desc) != -EPROBE_DEFER)
- 		desc = of_find_regulator_gpio(dev, con_id, &of_flags);
+ static void enable_hpd_clocks(struct hdmi *hdmi, bool enable)
+@@ -322,7 +304,7 @@ static enum drm_connector_status detect_gpio(struct hdmi *hdmi)
+ 	const struct hdmi_platform_config *config = hdmi->config;
+ 	struct hdmi_gpio_data hpd_gpio = config->gpios[HPD_GPIO_INDEX];
  
-+	/* Special handling for HDMI GPIOs if used */
-+	if (IS_ERR(desc) && PTR_ERR(desc) != -EPROBE_DEFER)
-+		desc = of_find_hdmi_gpio(dev, con_id, &of_flags);
-+
- 	if (IS_ERR(desc))
- 		return desc;
+-	return gpio_get_value(hpd_gpio.num) ?
++	return gpiod_get_value(hpd_gpio.gpiod) ?
+ 			connector_status_connected :
+ 			connector_status_disconnected;
+ }
+@@ -341,7 +323,7 @@ static enum drm_connector_status hdmi_connector_detect(
+ 	 * some platforms may not have hpd gpio. Rely only on the status
+ 	 * provided by REG_HDMI_HPD_INT_STATUS in this case.
+ 	 */
+-	if (hpd_gpio.num == -1)
++	if (!hpd_gpio.gpiod)
+ 		return detect_reg(hdmi);
  
+ 	do {
 -- 
 2.20.1
 
