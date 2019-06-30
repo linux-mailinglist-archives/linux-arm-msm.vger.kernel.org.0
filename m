@@ -2,191 +2,124 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 38AC15B215
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 30 Jun 2019 23:35:27 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4B1C55B226
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 30 Jun 2019 23:51:18 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726651AbfF3VfW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 30 Jun 2019 17:35:22 -0400
-Received: from mail-ed1-f65.google.com ([209.85.208.65]:45429 "EHLO
-        mail-ed1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726620AbfF3VfW (ORCPT
+        id S1726647AbfF3VvR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 30 Jun 2019 17:51:17 -0400
+Received: from mail-ed1-f68.google.com ([209.85.208.68]:39615 "EHLO
+        mail-ed1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726618AbfF3VvR (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 30 Jun 2019 17:35:22 -0400
-Received: by mail-ed1-f65.google.com with SMTP id a14so19246600edv.12;
-        Sun, 30 Jun 2019 14:35:20 -0700 (PDT)
+        Sun, 30 Jun 2019 17:51:17 -0400
+Received: by mail-ed1-f68.google.com with SMTP id m10so19334711edv.6;
+        Sun, 30 Jun 2019 14:51:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=drW2YTBKN6ODzV8fpJChJUilq9RUfbBjnjppu5Nuk2w=;
-        b=cJ6bekFPnfqGyakEnAscY4w+19vNzVvyQTnuLMUpd9zx0kBpuoYqRAfbyxgMnI15JD
-         QQBafOwtBzLUiUz+e5G4jv7g2YcEXJ0SJR1H/Okt7ZOsYgpstIqNb9k/EY5gK761qMMN
-         /6FC0Ap2qs6nnorET907XIZsxwZOlYwLLFr/4Dyw5AjFGaSPm6KrJykDIsLlGmFRMtWJ
-         056BNBqVLWyhMdP8yWQ5CzLV0SArxzqim2kozKYIXmVWiRra9m4xlwYa+rqVQ2PWsct2
-         NK6DGHZ0/1Uh1b9NOdEkAMw0/fKw6hNs9dSMT32jigjyzg5lEQJvmdbzngP/Ung2Hrrs
-         TrCg==
+        bh=cEH/o2HqpCknJy9nBRwsk/dmMAy15QQ1nN1L9qQycZE=;
+        b=swHJlUxLQh9WSUVWMGFVfNaERr7FI/U6xHa2WiwUDplT1QHGinlHfeOkVEPbAeWKDy
+         SDrlERC+XPDRlLP7VBhI3Eut+59BpwzU9FLLsH9aCpKdxED/oh2XR1QL/5yNqJmannXG
+         kOXgIw1N7U3JROMuXrxtr8ecLR4WvNYeJ70EUbVIv3ZsNzazYxGVlNbyZXf2Oz4BtNyc
+         bcxkuzq/rX31WUekCwhk5G/KFOlZAs8asUrjs8FCzwMcRKGP0bH148HifFS18/3OEJ3+
+         i67q3WrMmFjxhWDDiUGjmAK0bPcSUNacn+qfeg7jziurh5wsb0IgE17PJkaHAOAdryWr
+         6EEg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=drW2YTBKN6ODzV8fpJChJUilq9RUfbBjnjppu5Nuk2w=;
-        b=kqk/P/ssXphs5Z7vS+qX+jlF571w61R/DJXXlVdve0Cf8HL+eHy/5vl30U55xwbDGc
-         hH5UZZ/zgxlJsafEtpr5zmaeNbop6o2jqiME8V8zQckWZx8msPSag0cKDR2u+x784UmT
-         //4ft4aqGTOl50wucmT2wxY/Y+we26v6nB8ftQ011ixHB8nOfLxlFWsxxFygSAX6qvUD
-         A51lHge4hGtbw5eQpIUODsJXkI57qiwm7V8/DlirqE8ZiOn2LWpa70jqOUwRWhHC8t+V
-         mSmNQHihZ76o67G0cmNW5tdzpO6WxP7hWlJnxyz0ZBg4ntSqh8cO1cPHWKXM4U7m1oqS
-         7Llw==
-X-Gm-Message-State: APjAAAVCupjyCbxCHqeP7SH5wewKVPXi9pw1dieZNNJmL5cCMWgvN+tO
-        ddqy6J5svsK2adGtRiazFaPj3e6JJltIpACqmno=
-X-Google-Smtp-Source: APXvYqyfzt5ulq5SOtHkjn3qBwTNbdXmkvyLV9Y0HOd765n8mKeEG94kxcuB56qn/tdJ6mZ6/TSKAUbb6wKfdt+MToo=
-X-Received: by 2002:a17:906:e241:: with SMTP id gq1mr19281848ejb.265.1561930519755;
- Sun, 30 Jun 2019 14:35:19 -0700 (PDT)
+        bh=cEH/o2HqpCknJy9nBRwsk/dmMAy15QQ1nN1L9qQycZE=;
+        b=jSACQBF9c4o+DJ9DFKUCnOxJYlTU3F5wMSma2ZKKP/dGHw6ue4s5kxwVe6QiWoID1z
+         PBSbxGbeAMCJwk5ChzhBiP1PJQNQYrQw+lKJhTKrgEX3KvOBcx0BbnlKurqH10iuW2ue
+         VeFVESxNuYHSwkLKSBQz7YMR02N927dgZbNUJLQWitA1+i5fv4vnHorPRB7PGxW50sfA
+         ssObpCfsCPLT/BMsWM8wfc2SO1FDrhH37hcKBrR8qi84K8V8UsH9TevpxQNvR8GKCEIh
+         Iwi7IwpNeGQnHvl/ehmkdG4tY0zc2HDJ4CYqk7lO9M6GrnT4V4x5UcVceN3SV8cyCj6e
+         U2HA==
+X-Gm-Message-State: APjAAAWNwV8aZ6yytsyE6Cm8gLDw+TujFX8Ko0PODM30jxI0IKmXh5nD
+        pH324TFO1izjhbmQhpLULs9FP+YxXY7rmJQSzVo=
+X-Google-Smtp-Source: APXvYqwqSO7bWu5n9I4u0fubDx1l3J2iji+w1ZRrnKG2OiBWNy76A/X+iG46a48ivT0yJjFdJt+MkLstJA8aFc8wAQI=
+X-Received: by 2002:a17:906:85d4:: with SMTP id i20mr20309832ejy.256.1561931475535;
+ Sun, 30 Jun 2019 14:51:15 -0700 (PDT)
 MIME-Version: 1.0
-References: <20190630203614.5290-1-robdclark@gmail.com> <20190630204723.GH7043@pendragon.ideasonboard.com>
- <CAF6AEGvA-wVyC4jJC-nZU-pdVH=KYtye9twDgup-Nq0C_+wtvQ@mail.gmail.com> <20190630211520.GI7043@pendragon.ideasonboard.com>
-In-Reply-To: <20190630211520.GI7043@pendragon.ideasonboard.com>
+References: <20190630203614.5290-1-robdclark@gmail.com> <20190630203614.5290-5-robdclark@gmail.com>
+ <20190630211726.GJ7043@pendragon.ideasonboard.com>
+In-Reply-To: <20190630211726.GJ7043@pendragon.ideasonboard.com>
 From:   Rob Clark <robdclark@gmail.com>
-Date:   Sun, 30 Jun 2019 14:35:04 -0700
-Message-ID: <CAF6AEGtA=xB6QCAZK0oiv4DVd3VvVX-f=C_+23tW2fBqyfLqbw@mail.gmail.com>
-Subject: Re: [PATCH 0/4] drm+dt+efi: support devices with multiple possible panels
+Date:   Sun, 30 Jun 2019 14:50:59 -0700
+Message-ID: <CAF6AEGu7XschmqWz_t9xWk_kFQoE=U-KTSB_+k9-SDAYNDdFww@mail.gmail.com>
+Subject: Re: [PATCH 4/4] drm/bridge: ti-sn65dsi86: use helper to lookup panel-id
 To:     Laurent Pinchart <laurent.pinchart@ideasonboard.com>
 Cc:     dri-devel <dri-devel@lists.freedesktop.org>,
         linux-arm-msm <linux-arm-msm@vger.kernel.org>,
         freedreno <freedreno@lists.freedesktop.org>,
         aarch64-laptops@lists.linaro.org,
         Rob Clark <robdclark@chromium.org>,
-        Ard Biesheuvel <ard.biesheuvel@linaro.org>,
-        Catalin Marinas <catalin.marinas@arm.com>,
-        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
-        <devicetree@vger.kernel.org>, Ingo Molnar <mingo@kernel.org>,
-        Julien Thierry <julien.thierry@arm.com>,
-        "open list:EXTENSIBLE FIRMWARE INTERFACE (EFI)" 
-        <linux-efi@vger.kernel.org>,
-        open list <linux-kernel@vger.kernel.org>,
-        Lukas Wunner <lukas@wunner.de>,
-        Steve Capper <steve.capper@arm.com>,
-        Will Deacon <will@kernel.org>
+        Andrzej Hajda <a.hajda@samsung.com>,
+        David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Sun, Jun 30, 2019 at 2:15 PM Laurent Pinchart
+On Sun, Jun 30, 2019 at 2:17 PM Laurent Pinchart
 <laurent.pinchart@ideasonboard.com> wrote:
 >
 > Hi Rob,
 >
-> On Sun, Jun 30, 2019 at 02:05:21PM -0700, Rob Clark wrote:
-> > On Sun, Jun 30, 2019 at 1:47 PM Laurent Pinchart wrote:
-> > > On Sun, Jun 30, 2019 at 01:36:04PM -0700, Rob Clark wrote:
-> > > > From: Rob Clark <robdclark@chromium.org>
-> > > >
-> > > > Now that we can deal gracefully with bootloader (firmware) initialized
-> > > > display on aarch64 laptops[1], the next step is to deal with the fact
-> > > > that the same model of laptop can have one of multiple different panels.
-> > > > (For the yoga c630 that I have, I know of at least two possible panels,
-> > > > there might be a third.)
-> > >
-> > > I have to ask the obvious question: why doesn't the boot loader just
-> > > pass a correct DT to Linux ? There's no point in passing a list of
-> > > panels that are not there, this seems quite a big hack to me. A proper
-> > > boot loader should construct the DT based on hardware detection.
+> Thank you for the patch.
+>
+> On Sun, Jun 30, 2019 at 01:36:08PM -0700, Rob Clark wrote:
+> > From: Rob Clark <robdclark@chromium.org>
 > >
-> > Hi Laurent,
+> > Use the drm_of_find_panel_id() helper to decide which endpoint to use
+> > when looking up panel.  This way we can support devices that have
+> > multiple possible panels, such as the aarch64 laptops.
 > >
-> > Actually the bootloader on these devices is passing *no* dt (they boot
-> > ACPI, we are loading dtb from grub currently)
+> > Signed-off-by: Rob Clark <robdclark@chromium.org>
+> > ---
+> >  drivers/gpu/drm/bridge/ti-sn65dsi86.c | 5 +++--
+> >  1 file changed, 3 insertions(+), 2 deletions(-)
+> >
+> > diff --git a/drivers/gpu/drm/bridge/ti-sn65dsi86.c b/drivers/gpu/drm/bridge/ti-sn65dsi86.c
+> > index 2719d9c0864b..56c66a43f1a6 100644
+> > --- a/drivers/gpu/drm/bridge/ti-sn65dsi86.c
+> > +++ b/drivers/gpu/drm/bridge/ti-sn65dsi86.c
+> > @@ -790,7 +790,7 @@ static int ti_sn_bridge_probe(struct i2c_client *client,
+> >                             const struct i2c_device_id *id)
+> >  {
+> >       struct ti_sn_bridge *pdata;
+> > -     int ret;
+> > +     int ret, panel_id;
+> >
+> >       if (!i2c_check_functionality(client->adapter, I2C_FUNC_I2C)) {
+> >               DRM_ERROR("device doesn't support I2C\n");
+> > @@ -811,7 +811,8 @@ static int ti_sn_bridge_probe(struct i2c_client *client,
+> >
+> >       pdata->dev = &client->dev;
+> >
+> > -     ret = drm_of_find_panel_or_bridge(pdata->dev->of_node, 1, 0,
+> > +     panel_id = drm_of_find_panel_id();
+> > +     ret = drm_of_find_panel_or_bridge(pdata->dev->of_node, 1, panel_id,
+> >                                         &pdata->panel, NULL);
+> >       if (ret) {
+> >               DRM_ERROR("could not find any panel node\n");
 >
-> Ah, the broken promises of ACPI on ARM64. I wonder how long it will take
-> before a public acknowledgement that it was a bad idea. Bad ideas happen
-> and can be forgiven, but stubborness in claiming it was the right
-> decision is another story.
+> No, I'm sorry, but that's a no-go. We can't patch every single bridge
+> driver to support this hack. We need a solution implemented at another
+> level that will not spread throughout the whole subsystem.
 >
-> (Not that you can be blamed for this of course :-))
 
-To be fair, I think the only blame here is that MS let qcom get away
-with some things in their ACPI and UEFI implementation..  I think
-we'll need to shift to ACPI eventually for these laptops, in order to
-keep up.  DT isn't a thing that would scale with the volume of x86
-laptops that exist, and if aarch64 laptops get there too, we'll need
-ACPI.  Lets face it, the # of different dt devices supported upstream
-is a drop in the bucket compared to number of *actually physically
-different* x86 devices supported by upstream.  (And I don't mean
-individual models of laptops, but different production runs where they
-picked a different panel or trackpad or whatever.)
+it could be possible to make a better helper.. but really there aren't
+*that* many bridge drivers
 
-But we have a lot of upstream work to get there to support how ACPI
-works on these things:
-
- * The new Platform Extension Plugin (PEP) model for device power
-   control
- * untangling drm bridge hookup from DT
- * untangling drm panel hook from DT
- * figuring out how to deal with mis-matches between dt device
-   model and ACPI device model
-
-There is some early work for ACPI support for these devices, but
-realistically I think it is going to take a better part of a year to
-get there.  Until then we rely on DT.
-
-That isn't to say my proposal doesn't make a ton of sense.  We also
-need to solve this problem for DT based devices, and I think
-/chosen/panel-id makes a *ton* of sense for those devices.
-
-> > I think normally a device built w/ dt in mind would populate
-> > /chosen/panel-id directly (rather than the way it is currently
-> > populated based on reading an efi variable prior to ExitBootServices).
-> > But that is considerably easier ask than having it re-write of_graph
-> > bindings. Either way, we aren't in control of the bootloader on these
-> > devices,
->
-> If you can't control the initial boot loader, then I see two options,
-> none of which you will like I'm afraid.
->
-> - As you pass the DT to Linux from grub, there's your intermediate boot
->   loader where you can construct a valid DT.
-
-not really a solution that is going to scale
-
-> - If the ACPI cult needs to be venerated, then drivers should be
->   converted to support ACPI without the need for DT.
-
-we're working on it
-
-> A possible a middleground could be a platform driver (in
-> drivers/firmware/efi/ ? in drivers/platform/ ?) that will patch the DT
-> to instantiate the right panel based on the information retrieved from
-> the boot loader. We will need something similar for the Intel IPU3
-> camera driver, as Intel decided to come up with two different ACPI
-> "bindings", one for Windows and one for Chrome OS, leaving Windows
-> machine impossible to handle from a kernel driver due to required
-> information being hardcoded in Windows drivers shipped by Intel. This is
-> thus an option that may (unfortunately) need to become more widespread
-> for ACPI-based systems.
-
-again, a kernel (or bootloader) side massively intrusive re-write the
-dt approach isn't going to scale.  If you keep it simple, ie.
-/chosen/panel-id I can see a possibility to move my patch from
-drivers/firmware/efi into an earlier stage.  But if it has to re-write
-graph, that falls apart as soon as a new device comes along with a
-different bridge, or perhaps some vendor decides to use dsi directly
-and forego the bridge.
-
-usually (from what I've seen so far) there are a few gpios to probe to
-decide which panel you have.  So after a few lines of gpio banging you
-can either ask fw engineers to set appropriate node in chosen.. or
-re-write of_graph bindings.  I think the former has a chance of
-gaining traction on android devices.. latter not so much.  You are
-really making too big of an ask for fw engineers ;-)
-
-> > so it is a matter of coming up with something that works on actual hw
-> > that we don't like rather than idealized hw that we don't have ;-)
->
-> That doesn't however justify not going for the best solution we can
-> achieve. What do you like best in the above ? :-)
-
-I want a solution that is achievable ;-)
+suggestions ofc welcome, but I think one way or another we are going
+to need to patch bridges by the time we get to adding ACPI support, so
+really trivial couple line patches to the handful of bridges we have
+isn't really something that worries me
 
 BR,
 -R
