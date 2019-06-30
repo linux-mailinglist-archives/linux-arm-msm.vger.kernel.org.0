@@ -2,184 +2,163 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 5AD3C5AFDE
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 30 Jun 2019 15:16:09 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id BB1835AFE3
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 30 Jun 2019 15:26:38 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726563AbfF3NQI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 30 Jun 2019 09:16:08 -0400
-Received: from mail-qt1-f195.google.com ([209.85.160.195]:41206 "EHLO
-        mail-qt1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726500AbfF3NQI (ORCPT
+        id S1726509AbfF3N0h (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 30 Jun 2019 09:26:37 -0400
+Received: from mail-ed1-f66.google.com ([209.85.208.66]:43233 "EHLO
+        mail-ed1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726500AbfF3N0h (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 30 Jun 2019 09:16:08 -0400
-Received: by mail-qt1-f195.google.com with SMTP id d17so11720687qtj.8;
-        Sun, 30 Jun 2019 06:16:07 -0700 (PDT)
+        Sun, 30 Jun 2019 09:26:37 -0400
+Received: by mail-ed1-f66.google.com with SMTP id e3so18285044edr.10
+        for <linux-arm-msm@vger.kernel.org>; Sun, 30 Jun 2019 06:26:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=tU2QjlplILF/dSwxFDxnwqJmz4lOyuJ9m7+FabAB1TM=;
-        b=umgpvucg5VZShrp5PSpC9dvsc75qP858M/zMR+GQN3iy05FW3gMeOsPQKRagKs74JB
-         S71vE+eQvwM15M5hNZPq8iw7IkZlmTeUs3GDuZO0lHh4+TB0X4PhQ0Zg5a9NNPZYlYDl
-         a5iubN/yE1fnk39HOgrk5GGpv/8RDlVu5IfRt9EGd8JIL0NInLSpOspXY3ujxn52suu5
-         7BamjYtEf9OkpVw9DWGkWzHfAEyQDwecwKkWSlXLhNmVzG0gEuC8N+kOA/4e4y2qX5B1
-         7jKGSBDRJ0xkbhnFSYI7ewsyQgGKpoK6m3LAgWu0E1OgMvSKtPOeFYNsBVjff5m7Jtpb
-         fQOA==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=TR/U35GOSzbg7ErKFjslW1/rjmDfua81/9ryZaRuObY=;
+        b=Tk0wJIMf02ZT9yzKyXRjQ1yuzqF24JjisloZxoU9WjFL18PJuddVZIAvQxqGZ+wLg/
+         4mpu1+VgJ3s9pL8u1uF8phaixMqcr8+gWI/aH/AOrq7yx8wMH6SkloINNcQf83knVXVE
+         RPGzPWJ81VUK29UOfDgngVY6GzmQbDM5WsZuCGEblaiqKGgnn8vDJTsk+RvsJTn3bNwb
+         cZ6Yqs9ns/p+Ned0aNAoDApN3tkPWSyzhb2CwPT9FGhz0TMFEGlzFpKYHf2nbhFG2R1m
+         DgJ5N1oKowFGkQA2swBEYet28zhFjO0FBvxda0cVgdDLP2CjWJEwrJeXlo1ZB/a1wVNU
+         80fg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=tU2QjlplILF/dSwxFDxnwqJmz4lOyuJ9m7+FabAB1TM=;
-        b=K3xMFpWHy8ML1qdJ3H9EMMvb+4EUM2SMJTGhL05Eo0nMjJ6mDLmlNEI7SZmktUcq/S
-         zQciDSUDMZie6oiMt2d+vIUSVbG1qwba8Ip2p8vyQbyTEfUIF47B1OVwjA+CC+CfvTXA
-         k8HzPUx9IW9+oPJE4pVkYq0+Vf36bGzEAxgdA9l2bxrIOe9xTBbeMBPLUKR57ipjhiUV
-         NVWl0b+B/Hs7vRjp43F1XBcYE3OUQsQCJ1ZUaafU1aiIIFqmQPqGcioh3wRgTPECW6jZ
-         b+GkLkmsZmzcQf0idT20j2Tqe2m5PyuOjlPLZf4/7WBHl6qXSmFVzn9UQ9QSytknXkJY
-         9Egg==
-X-Gm-Message-State: APjAAAXTv5MYvbgI2PQ6GJbUK885H0nl21vZNZG8Qw5wIt5kMnEL38jG
-        V3iqmjLO6xpS16WFS1kJeXM+4HcgG1g=
-X-Google-Smtp-Source: APXvYqwO7sW3wpg5LURjILC5Z3weemfzsZ/DWUaABvf+rrgN/vo/Lh9n08WNd6xIZ2wcJwkEuNaDOg==
-X-Received: by 2002:ac8:18b2:: with SMTP id s47mr15559015qtj.75.1561900566858;
-        Sun, 30 Jun 2019 06:16:06 -0700 (PDT)
-Received: from localhost ([2601:184:4780:7861:5010:5849:d76d:b714])
-        by smtp.gmail.com with ESMTPSA id l6sm3643043qkf.83.2019.06.30.06.16.06
-        (version=TLS1_3 cipher=AEAD-AES256-GCM-SHA384 bits=256/256);
-        Sun, 30 Jun 2019 06:16:06 -0700 (PDT)
-From:   Rob Clark <robdclark@gmail.com>
-To:     dri-devel@lists.freedesktop.org
-Cc:     freedreno@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
-        Rob Clark <robdclark@chromium.org>,
-        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Sibi Sankar <sibis@codeaurora.org>,
-        Chandan Uddaraju <chandanu@codeaurora.org>,
-        Jordan Crouse <jcrouse@codeaurora.org>,
-        Abhinav Kumar <abhinavk@codeaurora.org>,
-        linux-kernel@vger.kernel.org
-Subject: [PATCH 3/3] drm/msm/dsi: make sure we have panel or bridge earlier
-Date:   Sun, 30 Jun 2019 06:14:43 -0700
-Message-Id: <20190630131445.25712-4-robdclark@gmail.com>
-X-Mailer: git-send-email 2.20.1
-In-Reply-To: <20190630131445.25712-1-robdclark@gmail.com>
-References: <20190630131445.25712-1-robdclark@gmail.com>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=TR/U35GOSzbg7ErKFjslW1/rjmDfua81/9ryZaRuObY=;
+        b=Ld7C6XrZbPx2XUl8adEjheVBCVse8DdCngC8xB61r7+IV7IMM9J3yWju/0iK8bEcHO
+         dFgocCfWAGmeuWR6CvcgIiyrMXg6VhDT7FBfDR6YRSdHIXcSs2C/3jG9W1i5qkFMs7Ri
+         5YcUEqCCW94qCL6+uPGaxA6xlbKPRXCxawsC0iRC//nntjkcy8B6Pb3ZsEImwg0oNDti
+         YsgoKBQo/fLfv+DUzcS9dOTj53lzR7sOH0Jb7INOX8E2pTAflTY7d9GwZzTTu5LvMG0N
+         omxxd8D0s5tA/aFCLTkc0gjt4tYggU5Kw+EOgLC57XG1zrG7zOIUU1BG2UUfzW31WvJp
+         JWHw==
+X-Gm-Message-State: APjAAAXEyTRNMwwo1pgETSsLohaUdMT7TNzmn/4fGoWEz0PE/OcEil8F
+        BuEd5PydgfdTNybQE2t9F4B3gGJ8DIB/s4LspvU=
+X-Google-Smtp-Source: APXvYqzOPJhV5cAVdRoldfDPOHtp/lTr0+e/QzIsU2Vql/2sUpxAKqhx17GBjBu63jJC1o7jG/OSbnfjAlPJtxM2mAE=
+X-Received: by 2002:a50:a544:: with SMTP id z4mr22877808edb.71.1561901195731;
+ Sun, 30 Jun 2019 06:26:35 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <20190629125933.679-1-linus.walleij@linaro.org> <20190629125933.679-4-linus.walleij@linaro.org>
+In-Reply-To: <20190629125933.679-4-linus.walleij@linaro.org>
+From:   Rob Clark <robdclark@gmail.com>
+Date:   Sun, 30 Jun 2019 06:26:19 -0700
+Message-ID: <CAF6AEGun2QEMVyO+L3W0UJubgzVPrFr5jkVoTOwHpy9b4MeJMQ@mail.gmail.com>
+Subject: Re: [PATCH 4/7] gpio: of: Support some legacy Qualcomm HDMI bindings
+To:     Linus Walleij <linus.walleij@linaro.org>
+Cc:     dri-devel <dri-devel@lists.freedesktop.org>,
+        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+        Maxime Ripard <maxime.ripard@bootlin.com>,
+        Sean Paul <sean@poorly.run>,
+        "moderated list:ARM/FREESCALE IMX / MXC ARM ARCHITECTURE" 
+        <linux-arm-kernel@lists.infradead.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        freedreno <freedreno@lists.freedesktop.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Rob Clark <robdclark@chromium.org>
+On Sat, Jun 29, 2019 at 6:02 AM Linus Walleij <linus.walleij@linaro.org> wrote:
+>
+> Insteaf of the MSM DRM code going around and inspecting the
+> device tree nodes by itself to find "qcom,misc" GPIO phandles,
+> we add a quirk to the core so that if "qcom,misc-gpios" and
+> "qcom,misc-gpio" isn't found, we try to find just
+> "qcom,misc" as a last resort. Provide an explicit whitelist
+> for those GPIOs.
+>
+> Cc: Rob Clark <robdclark@gmail.com>
+> Cc: Sean Paul <sean@poorly.run>
+> Cc: linux-arm-msm@vger.kernel.org
+> Cc: freedreno@lists.freedesktop.org
+> Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
+> ---
+> Rob/Sean: if the approach is overall OK I will merge this
+> one patch already for v5.3 so the rest can be queued for
+> v5.4 later.
 
-If we are going to -EPROBE_DEFER due to panel/bridge not probed yet, we
-want to do it before we start touching hardware.
+I'm ok with this.. although I wonder if we need to try this hard for
+backwards compat?  At least I don't see any upstream dts
+using the old names.  Maybe it is ok to just look the other way and break them.
 
-Signed-off-by: Rob Clark <robdclark@chromium.org>
----
- drivers/gpu/drm/msm/dsi/dsi.h         |  2 +-
- drivers/gpu/drm/msm/dsi/dsi_host.c    | 30 +++++++++++++--------------
- drivers/gpu/drm/msm/dsi/dsi_manager.c |  9 +++-----
- 3 files changed, 19 insertions(+), 22 deletions(-)
+IIRC the old names were based on old downstream android kernel
+bindings.. but upstream snapdragon support is pretty good these days
+and it has been years since I've had to do drm/msm development by
+backporting the upstream driver to a crusty old android kernel.
 
-diff --git a/drivers/gpu/drm/msm/dsi/dsi.h b/drivers/gpu/drm/msm/dsi/dsi.h
-index 53bb124e8259..e15e7534ccd9 100644
---- a/drivers/gpu/drm/msm/dsi/dsi.h
-+++ b/drivers/gpu/drm/msm/dsi/dsi.h
-@@ -171,7 +171,7 @@ int msm_dsi_host_set_display_mode(struct mipi_dsi_host *host,
- struct drm_panel *msm_dsi_host_get_panel(struct mipi_dsi_host *host);
- unsigned long msm_dsi_host_get_mode_flags(struct mipi_dsi_host *host);
- struct drm_bridge *msm_dsi_host_get_bridge(struct mipi_dsi_host *host);
--int msm_dsi_host_register(struct mipi_dsi_host *host, bool check_defer);
-+int msm_dsi_host_register(struct mipi_dsi_host *host);
- void msm_dsi_host_unregister(struct mipi_dsi_host *host);
- int msm_dsi_host_set_src_pll(struct mipi_dsi_host *host,
- 			struct msm_dsi_pll *src_pll);
-diff --git a/drivers/gpu/drm/msm/dsi/dsi_host.c b/drivers/gpu/drm/msm/dsi/dsi_host.c
-index 1ae2f5522979..8e5b0ba9431e 100644
---- a/drivers/gpu/drm/msm/dsi/dsi_host.c
-+++ b/drivers/gpu/drm/msm/dsi/dsi_host.c
-@@ -1824,6 +1824,20 @@ int msm_dsi_host_init(struct msm_dsi *msm_dsi)
- 		goto fail;
- 	}
- 
-+	/*
-+	 * Make sure we have panel or bridge early, before we start
-+	 * touching the hw.  If bootloader enabled the display, we
-+	 * want to be sure to keep it running until the bridge/panel
-+	 * is probed and we are all ready to go.  Otherwise we'll
-+	 * kill the display and then -EPROBE_DEFER
-+	 */
-+	if (IS_ERR(of_drm_find_panel(msm_host->device_node)) &&
-+			!of_drm_find_bridge(msm_host->device_node)) {
-+		pr_err("%s: no panel or bridge yet\n", __func__);
-+		return -EPROBE_DEFER;
-+	}
-+
-+
- 	msm_host->ctrl_base = msm_ioremap(pdev, "dsi_ctrl", "DSI CTRL");
- 	if (IS_ERR(msm_host->ctrl_base)) {
- 		pr_err("%s: unable to map Dsi ctrl base\n", __func__);
-@@ -1941,7 +1955,7 @@ int msm_dsi_host_modeset_init(struct mipi_dsi_host *host,
- 	return 0;
- }
- 
--int msm_dsi_host_register(struct mipi_dsi_host *host, bool check_defer)
-+int msm_dsi_host_register(struct mipi_dsi_host *host)
- {
- 	struct msm_dsi_host *msm_host = to_msm_dsi_host(host);
- 	int ret;
-@@ -1955,20 +1969,6 @@ int msm_dsi_host_register(struct mipi_dsi_host *host, bool check_defer)
- 			return ret;
- 
- 		msm_host->registered = true;
--
--		/* If the panel driver has not been probed after host register,
--		 * we should defer the host's probe.
--		 * It makes sure panel is connected when fbcon detects
--		 * connector status and gets the proper display mode to
--		 * create framebuffer.
--		 * Don't try to defer if there is nothing connected to the dsi
--		 * output
--		 */
--		if (check_defer && msm_host->device_node) {
--			if (IS_ERR(of_drm_find_panel(msm_host->device_node)))
--				if (!of_drm_find_bridge(msm_host->device_node))
--					return -EPROBE_DEFER;
--		}
- 	}
- 
- 	return 0;
-diff --git a/drivers/gpu/drm/msm/dsi/dsi_manager.c b/drivers/gpu/drm/msm/dsi/dsi_manager.c
-index ff39ce6150ad..cd3450dc3481 100644
---- a/drivers/gpu/drm/msm/dsi/dsi_manager.c
-+++ b/drivers/gpu/drm/msm/dsi/dsi_manager.c
-@@ -82,7 +82,7 @@ static int dsi_mgr_setup_components(int id)
- 	int ret;
- 
- 	if (!IS_DUAL_DSI()) {
--		ret = msm_dsi_host_register(msm_dsi->host, true);
-+		ret = msm_dsi_host_register(msm_dsi->host);
- 		if (ret)
- 			return ret;
- 
-@@ -101,14 +101,11 @@ static int dsi_mgr_setup_components(int id)
- 		/* Register slave host first, so that slave DSI device
- 		 * has a chance to probe, and do not block the master
- 		 * DSI device's probe.
--		 * Also, do not check defer for the slave host,
--		 * because only master DSI device adds the panel to global
--		 * panel list. The panel's device is the master DSI device.
- 		 */
--		ret = msm_dsi_host_register(slave_link_dsi->host, false);
-+		ret = msm_dsi_host_register(slave_link_dsi->host);
- 		if (ret)
- 			return ret;
--		ret = msm_dsi_host_register(master_link_dsi->host, true);
-+		ret = msm_dsi_host_register(master_link_dsi->host);
- 		if (ret)
- 			return ret;
- 
--- 
-2.20.1
+BR,
+-R
 
+> ---
+>  drivers/gpio/gpiolib-of.c | 43 +++++++++++++++++++++++++++++++++++++++
+>  1 file changed, 43 insertions(+)
+>
+> diff --git a/drivers/gpio/gpiolib-of.c b/drivers/gpio/gpiolib-of.c
+> index aec7bd86ae7e..c927eaf6c88f 100644
+> --- a/drivers/gpio/gpiolib-of.c
+> +++ b/drivers/gpio/gpiolib-of.c
+> @@ -286,6 +286,45 @@ static struct gpio_desc *of_find_regulator_gpio(struct device *dev, const char *
+>         return desc;
+>  }
+>
+> +/*
+> + * Some non-standard Qualcomm HDMI GPIOs need to be supported as they exist
+> + * in random old device trees out there.
+> + */
+> +static struct gpio_desc *of_find_hdmi_gpio(struct device *dev,
+> +                                          const char *con_id,
+> +                                          enum of_gpio_flags *of_flags)
+> +{
+> +       /*
+> +        * These are the connection IDs we accept as legacy GPIO phandles.
+> +        * If we get here, the same prefix ending with "-gpio" and "-gpios"
+> +        * has already been tried so now we finally try with no suffix.
+> +        */
+> +       const char *whitelist[] = {
+> +               "qcom,hdmi-tx-ddc-clk",
+> +               "qcom,hdmi-tx-ddc-data",
+> +               "qcom,hdmi-tx-hpd",
+> +               "qcom,hdmi-tx-mux-en",
+> +               "qcom,hdmi-tx-mux-sel",
+> +               "qcom,hdmi-tx-mux-lpm",
+> +       };
+> +       struct device_node *np = dev->of_node;
+> +       struct gpio_desc *desc;
+> +       int i;
+> +
+> +       if (!IS_ENABLED(CONFIG_DRM_MSM))
+> +               return ERR_PTR(-ENOENT);
+> +
+> +       if (!con_id)
+> +               return ERR_PTR(-ENOENT);
+> +
+> +       i = match_string(whitelist, ARRAY_SIZE(whitelist), con_id);
+> +       if (i < 0)
+> +               return ERR_PTR(-ENOENT);
+> +
+> +       desc = of_get_named_gpiod_flags(np, con_id, 0, of_flags);
+> +       return desc;
+> +}
+> +
+>  struct gpio_desc *of_find_gpio(struct device *dev, const char *con_id,
+>                                unsigned int idx, unsigned long *flags)
+>  {
+> @@ -330,6 +369,10 @@ struct gpio_desc *of_find_gpio(struct device *dev, const char *con_id,
+>         if (IS_ERR(desc) && PTR_ERR(desc) != -EPROBE_DEFER)
+>                 desc = of_find_regulator_gpio(dev, con_id, &of_flags);
+>
+> +       /* Special handling for HDMI GPIOs if used */
+> +       if (IS_ERR(desc) && PTR_ERR(desc) != -EPROBE_DEFER)
+> +               desc = of_find_hdmi_gpio(dev, con_id, &of_flags);
+> +
+>         if (IS_ERR(desc))
+>                 return desc;
+>
+> --
+> 2.20.1
+>
