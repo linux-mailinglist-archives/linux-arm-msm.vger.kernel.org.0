@@ -2,146 +2,138 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id E18BD5AF35
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 30 Jun 2019 09:19:08 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E19D05AFCE
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 30 Jun 2019 14:47:47 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726578AbfF3HTD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 30 Jun 2019 03:19:03 -0400
-Received: from mail-pf1-f194.google.com ([209.85.210.194]:40177 "EHLO
-        mail-pf1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725959AbfF3HTD (ORCPT
+        id S1726509AbfF3Mrq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 30 Jun 2019 08:47:46 -0400
+Received: from mail-qk1-f196.google.com ([209.85.222.196]:34047 "EHLO
+        mail-qk1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726500AbfF3Mrq (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 30 Jun 2019 03:19:03 -0400
-Received: by mail-pf1-f194.google.com with SMTP id p184so4997089pfp.7;
-        Sun, 30 Jun 2019 00:19:02 -0700 (PDT)
+        Sun, 30 Jun 2019 08:47:46 -0400
+Received: by mail-qk1-f196.google.com with SMTP id t8so8899619qkt.1;
+        Sun, 30 Jun 2019 05:47:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=lqmewgLdox3q6xeJleJbddpt+EE2+zPuCoLU7Opy5NU=;
-        b=efWyaDxla4encwtVoRQlQMgzCCy1yi9jsLij1Mj7K2vjKBK6SiQXu1lY3DhcfakNjx
-         XI2MXwwdeNce4iLXPk9TD3vhIOknXMbUWiMd3dkncW2LDID6UFwrwfnKYMjybMiVPkI8
-         JGqCzfEYkvUG7OXgnjphZ0KMNmhGBTVudIB5NPMdIyiq8Co6Eu43vIdVYD3zSYoRu/2w
-         cdo+SPbBYixsF9i7cs+hnQ3JJvkc8MwB9BtI2plvpG4J62o1UjS2rlK4p2NV+sBSbtV5
-         hQMtUA1qE0Kfu/L846Df0zH129iNWzhQQLoYdCjqS38EA4wlJ5UDN7ZK574gvageYbcG
-         4CUA==
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=t3NBRelcVNRRw+RFPngDYC9BWfE+P0zgYLat4rYCV1Q=;
+        b=p+x7qPUHCxUv2jRoxomZbQsK2Iigsp9wix/13yErFTnhyS6qq5QjWt+mOLP2OfEpXq
+         w302DafhUYJ4TYKN9yctny6hYLZgUjbdBC5IrdfE2jrP5bnP7oDuoOynwoCplHkWGNDr
+         kY9eiSxtMyGO/INb/4uddNWepnoRhVOpb85nHVid/fPe8QfQBz9wVYldoExXDTAWjum+
+         xbJbqAeoOFRyw1e37Aw4PJ7OgJy2TlSHNnIeglb3RwLZvU/SeSUliDsMHM78zzShC94J
+         7UbZBWxunzSpK3RtSy0ei5INFdm5MSyRzch3h8k+86nK9C46IUhn15pWhISA2g4GxX7t
+         NRWA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=lqmewgLdox3q6xeJleJbddpt+EE2+zPuCoLU7Opy5NU=;
-        b=g6lhQGr6FTlIXhcAWUZ8MFftUjGoNXK29CcY7J479nAuwRmqX4VIZv8dzm5hgJy1n7
-         v9rq/UYe75f/5n8m8MiKf7+hA0AoejIQRDnXSZtGIvudmr/5PN+ClEEFhN/B3qRiekoU
-         V1h+cf16jIpxPSs2l8v9SxQWCy+crYhYaqecqPiNTGjHE1HHGh7JAcwUgwIktWXdH0yO
-         tahsIiXIGnnv8C+EsaYhojH85eEZdD9FhXaPMd/wqIoIicyBfvVJaBYreOk6VjlScONU
-         T6sbYqAacr7Ag12m/UqHD6GP3xBTSzvdYgKj3DIWPSyKYuV2nt8/LEihsMQyp+ZEHEx4
-         sPlw==
-X-Gm-Message-State: APjAAAWKlK/yPGIhA+RIDPcx5TY8KLzKTtV+pyQy2Xm0IHeIIk6iZNtJ
-        YswbN8hvKE5AFzsOfdAzPts=
-X-Google-Smtp-Source: APXvYqxq1FfZolN72MUIb2gYPB+AVLb5ynmNoJoQGYQapzNp7erPqeCrhwH73WodcdxI5ce42NeFoA==
-X-Received: by 2002:a17:90a:ff17:: with SMTP id ce23mr561811pjb.47.1561879142087;
-        Sun, 30 Jun 2019 00:19:02 -0700 (PDT)
-Received: from dtor-ws ([2620:15c:202:201:3adc:b08c:7acc:b325])
-        by smtp.gmail.com with ESMTPSA id s20sm6386360pfe.169.2019.06.30.00.19.01
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=t3NBRelcVNRRw+RFPngDYC9BWfE+P0zgYLat4rYCV1Q=;
+        b=rO0ZzSkkVK9mkLVcKfZNaA+W6JZK+EZDzhjYRPectfzKn9XcrIP8ApM8Mxh5T2TEjo
+         cyFg1gRao4XUQuW78TYSTj1TCVMMoH41o48o4UoQp4iAJ8R04BO+bpd5hsz9z7hn0Lfm
+         7qrvlgRuVKsuYxm9JZdj8/1o8s+yrybR1t0JjGGwQbqffCMBCskHwiYDNq8pR5juRBSo
+         YzIei/8cyickYVFzm2E4jvxCAie1HozdyE9klLAoAcHBch2V5fNOe5rqWi8KOPRn8ykJ
+         9wCkKh04FooGKFx5HVXbR01SWTfdaixBFwcAmwGfTtOYaD8cRwabWFw45plrSqeCKkn3
+         q1qg==
+X-Gm-Message-State: APjAAAVaW4sWUsxfBFE5D5M8qaJQ4DDlTP8zGP4goKtZ+Jfrln16wkIV
+        20u40Z3i5lVzz6wBWhV19Us=
+X-Google-Smtp-Source: APXvYqyIyUYukkDxRx7t79cs57tG26rWbuzJPdYsR1pGolt/m1xirpeDO6OapATzvjaB5ZgubI9puw==
+X-Received: by 2002:a37:a247:: with SMTP id l68mr15234079qke.89.1561898865197;
+        Sun, 30 Jun 2019 05:47:45 -0700 (PDT)
+Received: from localhost ([2601:184:4780:7861:5010:5849:d76d:b714])
+        by smtp.gmail.com with ESMTPSA id d17sm3388167qtp.84.2019.06.30.05.47.44
         (version=TLS1_3 cipher=AEAD-AES256-GCM-SHA384 bits=256/256);
-        Sun, 30 Jun 2019 00:19:01 -0700 (PDT)
-Date:   Sun, 30 Jun 2019 00:18:59 -0700
-From:   Dmitry Torokhov <dmitry.torokhov@gmail.com>
-To:     Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
-Cc:     benjamin.tissoires@redhat.com, jikos@kernel.org,
-        hdegoede@redhat.com, bjorn.andersson@linaro.org, agross@kernel.org,
-        lee.jones@linaro.org, xnox@ubuntu.com, robh+dt@kernel.org,
-        mark.rutland@arm.com, linux-input@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v8 2/5] HID: quirks: Refactor ELAN 400 and 401 handling
-Message-ID: <20190630071859.GD91171@dtor-ws>
-References: <20190621144854.38568-1-jeffrey.l.hugo@gmail.com>
- <20190621145312.38688-1-jeffrey.l.hugo@gmail.com>
+        Sun, 30 Jun 2019 05:47:44 -0700 (PDT)
+From:   Rob Clark <robdclark@gmail.com>
+To:     dri-devel@lists.freedesktop.org
+Cc:     Rob Clark <robdclark@chromium.org>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>, linux-arm-msm@vger.kernel.org,
+        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org
+Subject: [PATCH] drm/msm: stop abusing dma_map/unmap for cache
+Date:   Sun, 30 Jun 2019 05:47:22 -0700
+Message-Id: <20190630124735.27786-1-robdclark@gmail.com>
+X-Mailer: git-send-email 2.20.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20190621145312.38688-1-jeffrey.l.hugo@gmail.com>
-User-Agent: Mutt/1.10.1 (2018-07-13)
+Content-Transfer-Encoding: 8bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, Jun 21, 2019 at 07:53:12AM -0700, Jeffrey Hugo wrote:
-> There needs to be coordination between hid-quirks and the elan_i2c driver
-> about which devices are handled by what drivers.  Currently, both use
-> whitelists, which results in valid devices being unhandled by default,
-> when they should not be rejected by hid-quirks.  This is quickly becoming
-> an issue.
-> 
-> Since elan_i2c has a maintained whitelist of what devices it will handle,
-> which is now in a header file that hid-quirks can access, use that to
-> implement a blacklist in hid-quirks so that only the devices that need to
-> be handled by elan_i2c get rejected by hid-quirks, and everything else is
-> handled by default.
-> 
-> Suggested-by: Benjamin Tissoires <benjamin.tissoires@redhat.com>
-> Signed-off-by: Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
-> Acked-by: Benjamin Tissoires <benjamin.tissoires@redhat.com>
+From: Rob Clark <robdclark@chromium.org>
 
-Applied, thank you.
+Recently splats like this started showing up:
 
-> ---
->  drivers/hid/hid-quirks.c | 22 +++++++++++-----------
->  1 file changed, 11 insertions(+), 11 deletions(-)
-> 
-> diff --git a/drivers/hid/hid-quirks.c b/drivers/hid/hid-quirks.c
-> index e5ca6fe2ca57..48ed4caf0ebc 100644
-> --- a/drivers/hid/hid-quirks.c
-> +++ b/drivers/hid/hid-quirks.c
-> @@ -16,6 +16,7 @@
->  #include <linux/export.h>
->  #include <linux/slab.h>
->  #include <linux/mutex.h>
-> +#include <linux/input/elan-i2c-ids.h>
->  
->  #include "hid-ids.h"
->  
-> @@ -914,6 +915,8 @@ static const struct hid_device_id hid_mouse_ignore_list[] = {
->  
->  bool hid_ignore(struct hid_device *hdev)
->  {
-> +	int i;
-> +
->  	if (hdev->quirks & HID_QUIRK_NO_IGNORE)
->  		return false;
->  	if (hdev->quirks & HID_QUIRK_IGNORE)
-> @@ -978,18 +981,15 @@ bool hid_ignore(struct hid_device *hdev)
->  		break;
->  	case USB_VENDOR_ID_ELAN:
->  		/*
-> -		 * Many Elan devices have a product id of 0x0401 and are handled
-> -		 * by the elan_i2c input driver. But the ACPI HID ELAN0800 dev
-> -		 * is not (and cannot be) handled by that driver ->
-> -		 * Ignore all 0x0401 devs except for the ELAN0800 dev.
-> +		 * Blacklist of everything that gets handled by the elan_i2c
-> +		 * input driver.  This avoids disabling valid touchpads and
-> +		 * other ELAN devices.
->  		 */
-> -		if (hdev->product == 0x0401 &&
-> -		    strncmp(hdev->name, "ELAN0800", 8) != 0)
-> -			return true;
-> -		/* Same with product id 0x0400 */
-> -		if (hdev->product == 0x0400 &&
-> -		    strncmp(hdev->name, "QTEC0001", 8) != 0)
-> -			return true;
-> +		if ((hdev->product == 0x0401 || hdev->product == 0x0400))
-> +			for (i = 0; strlen(elan_acpi_id[i].id); ++i)
-> +				if (!strncmp(hdev->name, elan_acpi_id[i].id,
-> +					     strlen(elan_acpi_id[i].id)))
-> +					return true;
->  		break;
->  	}
->  
-> -- 
-> 2.17.1
-> 
+   WARNING: CPU: 4 PID: 251 at drivers/iommu/dma-iommu.c:451 __iommu_dma_unmap+0xb8/0xc0
+   Modules linked in: ath10k_snoc ath10k_core fuse msm ath mac80211 uvcvideo cfg80211 videobuf2_vmalloc videobuf2_memops vide
+   CPU: 4 PID: 251 Comm: kworker/u16:4 Tainted: G        W         5.2.0-rc5-next-20190619+ #2317
+   Hardware name: LENOVO 81JL/LNVNB161216, BIOS 9UCN23WW(V1.06) 10/25/2018
+   Workqueue: msm msm_gem_free_work [msm]
+   pstate: 80c00005 (Nzcv daif +PAN +UAO)
+   pc : __iommu_dma_unmap+0xb8/0xc0
+   lr : __iommu_dma_unmap+0x54/0xc0
+   sp : ffff0000119abce0
+   x29: ffff0000119abce0 x28: 0000000000000000
+   x27: ffff8001f9946648 x26: ffff8001ec271068
+   x25: 0000000000000000 x24: ffff8001ea3580a8
+   x23: ffff8001f95ba010 x22: ffff80018e83ba88
+   x21: ffff8001e548f000 x20: fffffffffffff000
+   x19: 0000000000001000 x18: 00000000c00001fe
+   x17: 0000000000000000 x16: 0000000000000000
+   x15: ffff000015b70068 x14: 0000000000000005
+   x13: 0003142cc1be1768 x12: 0000000000000001
+   x11: ffff8001f6de9100 x10: 0000000000000009
+   x9 : ffff000015b78000 x8 : 0000000000000000
+   x7 : 0000000000000001 x6 : fffffffffffff000
+   x5 : 0000000000000fff x4 : ffff00001065dbc8
+   x3 : 000000000000000d x2 : 0000000000001000
+   x1 : fffffffffffff000 x0 : 0000000000000000
+   Call trace:
+    __iommu_dma_unmap+0xb8/0xc0
+    iommu_dma_unmap_sg+0x98/0xb8
+    put_pages+0x5c/0xf0 [msm]
+    msm_gem_free_work+0x10c/0x150 [msm]
+    process_one_work+0x1e0/0x330
+    worker_thread+0x40/0x438
+    kthread+0x12c/0x130
+    ret_from_fork+0x10/0x18
+   ---[ end trace afc0dc5ab81a06bf ]---
 
+Not quite sure what triggered that, but we really shouldn't be abusing
+dma_{map,unmap}_sg() for cache maint.
+
+Signed-off-by: Rob Clark <robdclark@chromium.org>
+Cc: Stephen Boyd <sboyd@kernel.org>
+---
+ drivers/gpu/drm/msm/msm_gem.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/drivers/gpu/drm/msm/msm_gem.c b/drivers/gpu/drm/msm/msm_gem.c
+index d31d9f927887..3b84cbdcafa3 100644
+--- a/drivers/gpu/drm/msm/msm_gem.c
++++ b/drivers/gpu/drm/msm/msm_gem.c
+@@ -108,7 +108,7 @@ static struct page **get_pages(struct drm_gem_object *obj)
+ 		 * because display controller, GPU, etc. are not coherent:
+ 		 */
+ 		if (msm_obj->flags & (MSM_BO_WC|MSM_BO_UNCACHED))
+-			dma_map_sg(dev->dev, msm_obj->sgt->sgl,
++			dma_sync_sg_for_device(dev->dev, msm_obj->sgt->sgl,
+ 					msm_obj->sgt->nents, DMA_BIDIRECTIONAL);
+ 	}
+ 
+@@ -138,7 +138,7 @@ static void put_pages(struct drm_gem_object *obj)
+ 			 * GPU, etc. are not coherent:
+ 			 */
+ 			if (msm_obj->flags & (MSM_BO_WC|MSM_BO_UNCACHED))
+-				dma_unmap_sg(obj->dev->dev, msm_obj->sgt->sgl,
++				dma_sync_sg_for_cpu(obj->dev->dev, msm_obj->sgt->sgl,
+ 					     msm_obj->sgt->nents,
+ 					     DMA_BIDIRECTIONAL);
+ 
 -- 
-Dmitry
+2.20.1
+
