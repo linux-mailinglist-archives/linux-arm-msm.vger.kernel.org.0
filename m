@@ -2,774 +2,142 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id C83C25B01F
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 30 Jun 2019 16:22:30 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A2C365B02B
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 30 Jun 2019 17:02:41 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726509AbfF3OWa (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 30 Jun 2019 10:22:30 -0400
-Received: from asavdk4.altibox.net ([109.247.116.15]:42916 "EHLO
-        asavdk4.altibox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726500AbfF3OW3 (ORCPT
+        id S1726513AbfF3PCk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 30 Jun 2019 11:02:40 -0400
+Received: from mail-qk1-f194.google.com ([209.85.222.194]:46369 "EHLO
+        mail-qk1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726500AbfF3PCk (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 30 Jun 2019 10:22:29 -0400
-Received: from ravnborg.org (unknown [158.248.194.18])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by asavdk4.altibox.net (Postfix) with ESMTPS id 4D8FC80415;
-        Sun, 30 Jun 2019 16:22:20 +0200 (CEST)
-Date:   Sun, 30 Jun 2019 16:22:19 +0200
-From:   Sam Ravnborg <sam@ravnborg.org>
-To:     dri-devel@lists.freedesktop.org, Rob Clark <robdclark@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Jordan Crouse <jcrouse@codeaurora.org>,
-        Jeykumar Sankaran <jsanka@codeaurora.org>,
-        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>
-Cc:     Paul Kocialkowski <paul.kocialkowski@bootlin.com>,
-        Maxime Ripard <maxime.ripard@bootlin.com>,
-        freedreno@lists.freedesktop.org,
-        Carsten Behling <carsten.behling@googlemail.com>,
-        Jonathan Marek <jonathan@marek.ca>,
-        David Airlie <airlied@linux.ie>,
-        Mamta Shukla <mamtashukla555@gmail.com>,
-        Bruce Wang <bzwang@chromium.org>,
-        Shayenne Moura <shayenneluzmoura@gmail.com>,
-        Sibi Sankar <sibis@codeaurora.org>,
-        linux-arm-msm@vger.kernel.org,
-        Todor Tomov <todor.tomov@linaro.org>,
-        Sean Paul <sean@poorly.run>
-Subject: Re: [PATCH v1] drm/msm: drop use of drmP.h
-Message-ID: <20190630142218.GB5444@ravnborg.org>
-References: <20190630052133.6175-1-sam@ravnborg.org>
+        Sun, 30 Jun 2019 11:02:40 -0400
+Received: by mail-qk1-f194.google.com with SMTP id x18so9001857qkn.13;
+        Sun, 30 Jun 2019 08:02:39 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=5lx5bobu9/exdQA9ScehUUIHniGcpbQg/3rhLERFmFU=;
+        b=ANB4+oPVTXKbrn3gwLwrInQVorEEVfLz1AenzOULMh5ogimvvH9zfX7OdX182mzQ14
+         tzwUwmvm6i8aaFAGWYQALivl8JJagQhUD+79zEg01qNPAO+CP7qjaR77XAKnBDiYGuLi
+         9G9oxkOQqa2OELtJ/vkpKDlLCDmpdcuCLhLl4aPi5ilzmEVkoxLQZ02Q5jn5OehSfuBf
+         XHGvi1mOvTmCFWCWiXTqWluvIthT9jInjrzzVk6Fn4pp7cstTRq0oDod3kldzK/xoJer
+         OA+dHSMHIangPMRQabPVmwlVFpoSfRW1u2EFeeDdZ8jeFVRJqASdOE56yzeqJfF/cohL
+         naxg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=5lx5bobu9/exdQA9ScehUUIHniGcpbQg/3rhLERFmFU=;
+        b=hyBukGSpefq1C4EouOaKUL8yhhjSihegNn4Nit14u6jHnKCQKaa/lZAHA3mhJfYfgR
+         lAKuXGcqJ5kElGXN1oBEb6CzMtjHJNXPbGqVuB/eYUnKhdLkZ6nrH3sWQLCQglKcM+2s
+         buu7bkdzHQK0vDQb32jbsO38WOD9PKoZf1qTd9MNUapeYACI1QKjHsbzs3QG6dp4V9N9
+         mW7PmX0mu70bGxSLj/agAfTdEK4BmvInNZIyyoOLbioWxDz823PkRgYV5+O7x5tsVVd8
+         uI/8gkd4hSrJwTFDiglB4FE/iY/o5WnjK/TJatjRY998UmaGG13huOJCrQirUnUN2JLj
+         pM5A==
+X-Gm-Message-State: APjAAAWC7gOtIUsnRoJuGI1Q+cyVGvF2y3uEsr/nVIdZL7JULbuWJAXe
+        UA0N8TOPQw35qS9sBr3zs2U=
+X-Google-Smtp-Source: APXvYqwpXAyQFSxCpHHjU7XY2qL+Bo4Tffb/HW97wxtLTMlnaORSn5dfNhcRe9Ku9lyC4TNU2Y+Tng==
+X-Received: by 2002:a37:9cf:: with SMTP id 198mr16688485qkj.351.1561906959260;
+        Sun, 30 Jun 2019 08:02:39 -0700 (PDT)
+Received: from localhost ([2601:184:4780:7861:5010:5849:d76d:b714])
+        by smtp.gmail.com with ESMTPSA id y3sm3956962qtj.46.2019.06.30.08.02.37
+        (version=TLS1_3 cipher=AEAD-AES256-GCM-SHA384 bits=256/256);
+        Sun, 30 Jun 2019 08:02:38 -0700 (PDT)
+From:   Rob Clark <robdclark@gmail.com>
+To:     dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org
+Cc:     freedreno@lists.freedesktop.org, aarch64-laptops@lists.linaro.org,
+        linux-clk@vger.kernel.org, linux-pm@vger.kernel.org,
+        Rob Clark <robdclark@chromium.org>
+Subject: [PATCH 0/5] drm+clk+genpd: support for bootloader enabled display
+Date:   Sun, 30 Jun 2019 08:01:38 -0700
+Message-Id: <20190630150230.7878-1-robdclark@gmail.com>
+X-Mailer: git-send-email 2.20.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20190630052133.6175-1-sam@ravnborg.org>
-User-Agent: Mutt/1.10.1 (2018-07-13)
-X-CMAE-Score: 0
-X-CMAE-Analysis: v=2.3 cv=VcLZwmh9 c=1 sm=1 tr=0
-        a=UWs3HLbX/2nnQ3s7vZ42gw==:117 a=UWs3HLbX/2nnQ3s7vZ42gw==:17
-        a=jpOVt7BSZ2e4Z31A5e1TngXxSK0=:19 a=kj9zAlcOel0A:10 a=pGLkceISAAAA:8
-        a=LpQP-O61AAAA:8 a=QyXUC8HyAAAA:8 a=7gkXJVJtAAAA:8 a=cm27Pg_UAAAA:8
-        a=RAbU-raeAAAA:8 a=mK_AVkanAAAA:8 a=P-IC7800AAAA:8 a=KKAkSRfTAAAA:8
-        a=VwQbUJbxAAAA:8 a=e5mUnYsNAAAA:8 a=mDV3o1hIAAAA:8 a=vMu0rPO_DUfMDCNS_WUA:9
-        a=CjuIK1q_8ugA:10 a=pioyyrs4ZptJ924tMmac:22 a=E9Po1WZjFZOl8hwRPBS3:22
-        a=xmb-EsYY8bH0VWELuYED:22 a=JiizpSU_mAIq9zsZDqn2:22
-        a=3gWm3jAn84ENXaBijsEo:22 a=d3PnA9EDa4IxuAV0gXij:22
-        a=cvBusfyB2V15izCimMoJ:22 a=AjGcO6oz07-iQ99wixmX:22
-        a=Vxmtnl_E_bksehYqCbjh:22 a=_FVE-zBwftR9WsbkzFJk:22
+Content-Transfer-Encoding: 8bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Strange...
-git send-email did not send this to all recipients listed as Cc: ?!?!?
+From: Rob Clark <robdclark@chromium.org>
 
-Added the following persons missing in the mail:
-> Cc: Rob Clark <robdclark@gmail.com>
-> Cc: Daniel Vetter <daniel@ffwll.ch>
-> Cc: Jordan Crouse <jcrouse@codeaurora.org>
-> Cc: Jeykumar Sankaran <jsanka@codeaurora.org>
-> Cc: Maarten Lankhorst <maarten.lankhorst@linux.intel.com>
+The aarch64 laptops which ship with windows, have the display by the
+bootloader, and efifb (yah!).  But unlike x86 laptops, device power
+management isn't handled via ACPI[1].  Currently the CCF and genpd
+frameworks will turn off power domains and clocks that they think are
+unused.  This is rather unfortunate, as it kills efifb scanout before
+getting to userspace and getting to the point where we can try to
+probe the real display driver.
 
-After sending out 40 mails I am not too happy to discover this.
+Also it has a few side-effects in that we can't set rate on running
+clocks (in many cases).
 
-Added the persons missing.
+The first two patches let us flag clocks and power domains which
+might have been enabled by the bootloader, so we know not to disable
+them in late_initcall.
 
-	Sam
+The next two update drm/msm to cleanly shut down clocks which might
+already be running.  *Eventually* we'll want to detect that scanout
+is already running, and readback the hw state, to avoid briefly
+disabling the screen while the driver loads.  But that is a big pile
+of (mostly) drm/msm work.  (Windows also seems to have this problem,
+it appears to do a modeset during boot.. so I guess the first step
+is to at least not suck more than windows ;-))
 
-On Sun, Jun 30, 2019 at 07:21:33AM +0200, Sam Ravnborg wrote:
-> Drop the deprecated drmP.h header file, and trim msm_drv.h
-> to the relevant include files.
-> 
-> This resulted in a suprisingly many edits as many files relied
-> on headers included via msm_drv.h.
-> But msm_drv.h is not supposed to carry include files it do not need, so
-> the individual files have to include what extra they needs.
-> 
-> Signed-off-by: Sam Ravnborg <sam@ravnborg.org>
-> Cc: Rob Clark <robdclark@gmail.com>
-> Cc: Sean Paul <sean@poorly.run>
-> Cc: David Airlie <airlied@linux.ie>
-> Cc: Daniel Vetter <daniel@ffwll.ch>
-> Cc: Jordan Crouse <jcrouse@codeaurora.org>
-> Cc: Jeykumar Sankaran <jsanka@codeaurora.org>
-> Cc: Bruce Wang <bzwang@chromium.org>
-> Cc: Shayenne Moura <shayenneluzmoura@gmail.com>
-> Cc: Mamta Shukla <mamtashukla555@gmail.com>
-> Cc: Jonathan Marek <jonathan@marek.ca>
-> Cc: Carsten Behling <carsten.behling@googlemail.com>
-> Cc: Maarten Lankhorst <maarten.lankhorst@linux.intel.com>
-> Cc: Maxime Ripard <maxime.ripard@bootlin.com>
-> Cc: Paul Kocialkowski <paul.kocialkowski@bootlin.com>
-> Cc: Sibi Sankar <sibis@codeaurora.org>
-> Cc: Todor Tomov <todor.tomov@linaro.org>
-> Cc: linux-arm-msm@vger.kernel.org
-> Cc: freedreno@lists.freedesktop.org
-> ---
-> The patch is build tested using several configs and
-> several architectures (including arm, arm64, x86).
-> 
-> The patch is based on drm-misc.
-> 
-> If patch is OK, please apply to your tree
-> as this driver is maintained outside drm-misc.
-> 
-> I am happy to rebase on another tree, just let me know.
-> 
->         Sam
-> 
->  drivers/gpu/drm/msm/adreno/a5xx_debugfs.c         |  4 +++-
->  drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c          |  2 ++
->  drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c       |  8 +++++---
->  drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h    |  1 -
->  drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c           |  6 ++++--
->  drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h           |  2 ++
->  drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c         |  1 +
->  drivers/gpu/drm/msm/disp/dpu1/dpu_vbif.c          |  1 +
->  drivers/gpu/drm/msm/disp/mdp4/mdp4_crtc.c         |  1 +
->  drivers/gpu/drm/msm/disp/mdp4/mdp4_irq.c          |  1 +
->  drivers/gpu/drm/msm/disp/mdp4/mdp4_kms.c          |  3 +++
->  drivers/gpu/drm/msm/disp/mdp4/mdp4_lcdc_encoder.c |  2 ++
->  drivers/gpu/drm/msm/disp/mdp4/mdp4_plane.c        |  2 ++
->  drivers/gpu/drm/msm/disp/mdp5/mdp5_crtc.c         |  3 +++
->  drivers/gpu/drm/msm/disp/mdp5/mdp5_irq.c          |  1 +
->  drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c          |  6 ++++++
->  drivers/gpu/drm/msm/disp/mdp5/mdp5_plane.c        |  2 ++
->  drivers/gpu/drm/msm/disp/mdp5/mdp5_smp.c          |  1 +
->  drivers/gpu/drm/msm/dsi/dsi_host.c                |  8 +++++---
->  drivers/gpu/drm/msm/dsi/phy/dsi_phy_14nm.c        |  2 ++
->  drivers/gpu/drm/msm/dsi/phy/dsi_phy_28nm_8960.c   |  2 ++
->  drivers/gpu/drm/msm/dsi/pll/dsi_pll.h             |  2 +-
->  drivers/gpu/drm/msm/hdmi/hdmi_bridge.c            |  2 ++
->  drivers/gpu/drm/msm/hdmi/hdmi_connector.c         |  1 +
->  drivers/gpu/drm/msm/hdmi/hdmi_phy_8996.c          |  1 +
->  drivers/gpu/drm/msm/hdmi/hdmi_phy_8x60.c          |  2 ++
->  drivers/gpu/drm/msm/hdmi/hdmi_pll_8960.c          |  2 ++
->  drivers/gpu/drm/msm/msm_atomic.c                  |  1 +
->  drivers/gpu/drm/msm/msm_debugfs.c                 |  5 +++++
->  drivers/gpu/drm/msm/msm_drv.c                     | 10 +++++++++-
->  drivers/gpu/drm/msm/msm_drv.h                     |  1 -
->  drivers/gpu/drm/msm/msm_fb.c                      |  2 ++
->  drivers/gpu/drm/msm/msm_fbdev.c                   |  1 +
->  drivers/gpu/drm/msm/msm_gem.c                     |  2 ++
->  drivers/gpu/drm/msm/msm_gem_prime.c               |  6 ++++--
->  drivers/gpu/drm/msm/msm_gem_submit.c              |  4 ++++
->  drivers/gpu/drm/msm/msm_gpummu.c                  |  2 ++
->  drivers/gpu/drm/msm/msm_perf.c                    |  3 +++
->  drivers/gpu/drm/msm/msm_rd.c                      |  7 +++++--
->  drivers/gpu/drm/msm/msm_submitqueue.c             |  2 ++
->  40 files changed, 98 insertions(+), 17 deletions(-)
-> 
-> diff --git a/drivers/gpu/drm/msm/adreno/a5xx_debugfs.c b/drivers/gpu/drm/msm/adreno/a5xx_debugfs.c
-> index 3041c500c5cd..2eafad831226 100644
-> --- a/drivers/gpu/drm/msm/adreno/a5xx_debugfs.c
-> +++ b/drivers/gpu/drm/msm/adreno/a5xx_debugfs.c
-> @@ -2,9 +2,11 @@
->  /* Copyright (c) 2016-2017 The Linux Foundation. All rights reserved.
->   */
->  
-> -
->  #include <linux/types.h>
->  #include <linux/debugfs.h>
-> +
-> +#include <drm/drm_debugfs.h>
-> +#include <drm/drm_file.h>
->  #include <drm/drm_print.h>
->  
->  #include "a5xx_gpu.h"
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
-> index 3772f745589d..053ad94a12c6 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
-> @@ -20,11 +20,13 @@
->  #include <linux/sort.h>
->  #include <linux/debugfs.h>
->  #include <linux/ktime.h>
-> +
->  #include <drm/drm_crtc.h>
->  #include <drm/drm_flip_work.h>
->  #include <drm/drm_mode.h>
->  #include <drm/drm_probe_helper.h>
->  #include <drm/drm_rect.h>
-> +#include <drm/drm_vblank.h>
->  
->  #include "dpu_kms.h"
->  #include "dpu_hw_lm.h"
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
-> index 82bf16d61a45..57c5f9443a4a 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
-> @@ -17,14 +17,16 @@
->   */
->  
->  #define pr_fmt(fmt)	"[drm:%s:%d] " fmt, __func__, __LINE__
-> -#include <linux/kthread.h>
->  #include <linux/debugfs.h>
-> +#include <linux/kthread.h>
->  #include <linux/seq_file.h>
->  
-> -#include "msm_drv.h"
-> -#include "dpu_kms.h"
->  #include <drm/drm_crtc.h>
-> +#include <drm/drm_file.h>
->  #include <drm/drm_probe_helper.h>
-> +
-> +#include "msm_drv.h"
-> +#include "dpu_kms.h"
->  #include "dpu_hwio.h"
->  #include "dpu_hw_catalog.h"
->  #include "dpu_hw_intf.h"
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h
-> index 90f439812088..ec76b8687a98 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h
-> @@ -9,7 +9,6 @@
->  #include <linux/bug.h>
->  #include <linux/bitmap.h>
->  #include <linux/err.h>
-> -#include <drm/drmP.h>
->  
->  /**
->   * Max hardware block count: For ex: max 12 SSPP pipes or
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
-> index 885bf88afa3e..57f33bc26916 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
-> @@ -18,10 +18,12 @@
->  
->  #define pr_fmt(fmt)	"[drm:%s:%d] " fmt, __func__, __LINE__
->  
-> -#include <drm/drm_crtc.h>
->  #include <linux/debugfs.h>
-> -#include <linux/of_irq.h>
->  #include <linux/dma-buf.h>
-> +#include <linux/of_irq.h>
-> +
-> +#include <drm/drm_crtc.h>
-> +#include <drm/drm_file.h>
->  
->  #include "msm_drv.h"
->  #include "msm_mmu.h"
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h
-> index 31e9ef96ca5d..297fbef8e5d7 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h
-> @@ -19,6 +19,8 @@
->  #ifndef __DPU_KMS_H__
->  #define __DPU_KMS_H__
->  
-> +#include <drm/drm_drv.h>
-> +
->  #include "msm_drv.h"
->  #include "msm_kms.h"
->  #include "msm_mmu.h"
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
-> index a4d7ab97bb8e..f5f312d41853 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
-> @@ -22,6 +22,7 @@
->  #include <linux/dma-buf.h>
->  
->  #include <drm/drm_atomic_uapi.h>
-> +#include <drm/drm_file.h>
->  #include <drm/drm_gem_framebuffer_helper.h>
->  
->  #include "msm_drv.h"
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_vbif.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_vbif.c
-> index 3c9236bb291c..0ae820e20b40 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_vbif.c
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_vbif.c
-> @@ -5,6 +5,7 @@
->  #define pr_fmt(fmt)	"[drm:%s:%d] " fmt, __func__, __LINE__
->  
->  #include <linux/debugfs.h>
-> +#include <linux/delay.h>
->  
->  #include "dpu_vbif.h"
->  #include "dpu_hw_vbif.h"
-> diff --git a/drivers/gpu/drm/msm/disp/mdp4/mdp4_crtc.c b/drivers/gpu/drm/msm/disp/mdp4/mdp4_crtc.c
-> index 0cfd4c06b610..a8a58ea826d6 100644
-> --- a/drivers/gpu/drm/msm/disp/mdp4/mdp4_crtc.c
-> +++ b/drivers/gpu/drm/msm/disp/mdp4/mdp4_crtc.c
-> @@ -19,6 +19,7 @@
->  #include <drm/drm_flip_work.h>
->  #include <drm/drm_mode.h>
->  #include <drm/drm_probe_helper.h>
-> +#include <drm/drm_vblank.h>
->  
->  #include "mdp4_kms.h"
->  
-> diff --git a/drivers/gpu/drm/msm/disp/mdp4/mdp4_irq.c b/drivers/gpu/drm/msm/disp/mdp4/mdp4_irq.c
-> index b764d7f10312..8b284b2d9489 100644
-> --- a/drivers/gpu/drm/msm/disp/mdp4/mdp4_irq.c
-> +++ b/drivers/gpu/drm/msm/disp/mdp4/mdp4_irq.c
-> @@ -16,6 +16,7 @@
->   */
->  
->  #include <drm/drm_print.h>
-> +#include <drm/drm_vblank.h>
->  
->  #include "msm_drv.h"
->  #include "mdp4_kms.h"
-> diff --git a/drivers/gpu/drm/msm/disp/mdp4/mdp4_kms.c b/drivers/gpu/drm/msm/disp/mdp4/mdp4_kms.c
-> index e437aa806f7b..7e7c03936af0 100644
-> --- a/drivers/gpu/drm/msm/disp/mdp4/mdp4_kms.c
-> +++ b/drivers/gpu/drm/msm/disp/mdp4/mdp4_kms.c
-> @@ -15,6 +15,9 @@
->   * this program.  If not, see <http://www.gnu.org/licenses/>.
->   */
->  
-> +#include <linux/delay.h>
-> +
-> +#include <drm/drm_vblank.h>
->  
->  #include "msm_drv.h"
->  #include "msm_gem.h"
-> diff --git a/drivers/gpu/drm/msm/disp/mdp4/mdp4_lcdc_encoder.c b/drivers/gpu/drm/msm/disp/mdp4/mdp4_lcdc_encoder.c
-> index df6f9803a1d7..f6062fe15bd0 100644
-> --- a/drivers/gpu/drm/msm/disp/mdp4/mdp4_lcdc_encoder.c
-> +++ b/drivers/gpu/drm/msm/disp/mdp4/mdp4_lcdc_encoder.c
-> @@ -16,6 +16,8 @@
->   * this program.  If not, see <http://www.gnu.org/licenses/>.
->   */
->  
-> +#include <linux/delay.h>
-> +
->  #include <drm/drm_crtc.h>
->  #include <drm/drm_probe_helper.h>
->  
-> diff --git a/drivers/gpu/drm/msm/disp/mdp4/mdp4_plane.c b/drivers/gpu/drm/msm/disp/mdp4/mdp4_plane.c
-> index 005066f7154d..b202faee2492 100644
-> --- a/drivers/gpu/drm/msm/disp/mdp4/mdp4_plane.c
-> +++ b/drivers/gpu/drm/msm/disp/mdp4/mdp4_plane.c
-> @@ -15,6 +15,8 @@
->   * this program.  If not, see <http://www.gnu.org/licenses/>.
->   */
->  
-> +#include <drm/drm_fourcc.h>
-> +
->  #include "mdp4_kms.h"
->  
->  #define DOWN_SCALE_MAX	8
-> diff --git a/drivers/gpu/drm/msm/disp/mdp5/mdp5_crtc.c b/drivers/gpu/drm/msm/disp/mdp5/mdp5_crtc.c
-> index c3751c95b452..1017246bc3db 100644
-> --- a/drivers/gpu/drm/msm/disp/mdp5/mdp5_crtc.c
-> +++ b/drivers/gpu/drm/msm/disp/mdp5/mdp5_crtc.c
-> @@ -17,10 +17,13 @@
->   */
->  
->  #include <linux/sort.h>
-> +
->  #include <drm/drm_mode.h>
->  #include <drm/drm_crtc.h>
->  #include <drm/drm_flip_work.h>
-> +#include <drm/drm_fourcc.h>
->  #include <drm/drm_probe_helper.h>
-> +#include <drm/drm_vblank.h>
->  
->  #include "mdp5_kms.h"
->  
-> diff --git a/drivers/gpu/drm/msm/disp/mdp5/mdp5_irq.c b/drivers/gpu/drm/msm/disp/mdp5/mdp5_irq.c
-> index 280e368bc9bb..a62f9c06d3c1 100644
-> --- a/drivers/gpu/drm/msm/disp/mdp5/mdp5_irq.c
-> +++ b/drivers/gpu/drm/msm/disp/mdp5/mdp5_irq.c
-> @@ -18,6 +18,7 @@
->  #include <linux/irq.h>
->  
->  #include <drm/drm_print.h>
-> +#include <drm/drm_vblank.h>
->  
->  #include "msm_drv.h"
->  #include "mdp5_kms.h"
-> diff --git a/drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c b/drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c
-> index 97179bec8902..ff000b3d39c3 100644
-> --- a/drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c
-> +++ b/drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c
-> @@ -16,8 +16,14 @@
->   * this program.  If not, see <http://www.gnu.org/licenses/>.
->   */
->  
-> +#include <linux/delay.h>
->  #include <linux/of_irq.h>
->  
-> +#include <drm/drm_debugfs.h>
-> +#include <drm/drm_drv.h>
-> +#include <drm/drm_file.h>
-> +#include <drm/drm_vblank.h>
-> +
->  #include "msm_drv.h"
->  #include "msm_gem.h"
->  #include "msm_mmu.h"
-> diff --git a/drivers/gpu/drm/msm/disp/mdp5/mdp5_plane.c b/drivers/gpu/drm/msm/disp/mdp5/mdp5_plane.c
-> index 1105c2433f14..55b0b60893dc 100644
-> --- a/drivers/gpu/drm/msm/disp/mdp5/mdp5_plane.c
-> +++ b/drivers/gpu/drm/msm/disp/mdp5/mdp5_plane.c
-> @@ -16,7 +16,9 @@
->   * this program.  If not, see <http://www.gnu.org/licenses/>.
->   */
->  
-> +#include <drm/drm_fourcc.h>
->  #include <drm/drm_print.h>
-> +
->  #include "mdp5_kms.h"
->  
->  struct mdp5_plane {
-> diff --git a/drivers/gpu/drm/msm/disp/mdp5/mdp5_smp.c b/drivers/gpu/drm/msm/disp/mdp5/mdp5_smp.c
-> index 2834837f4d3e..620413f9367f 100644
-> --- a/drivers/gpu/drm/msm/disp/mdp5/mdp5_smp.c
-> +++ b/drivers/gpu/drm/msm/disp/mdp5/mdp5_smp.c
-> @@ -16,6 +16,7 @@
->   * this program.  If not, see <http://www.gnu.org/licenses/>.
->   */
->  
-> +#include <drm/drm_fourcc.h>
->  #include <drm/drm_util.h>
->  
->  #include "mdp5_kms.h"
-> diff --git a/drivers/gpu/drm/msm/dsi/dsi_host.c b/drivers/gpu/drm/msm/dsi/dsi_host.c
-> index dbf490176c2c..95b32f167a79 100644
-> --- a/drivers/gpu/drm/msm/dsi/dsi_host.c
-> +++ b/drivers/gpu/drm/msm/dsi/dsi_host.c
-> @@ -5,19 +5,21 @@
->  
->  #include <linux/clk.h>
->  #include <linux/delay.h>
-> +#include <linux/dma-mapping.h>
->  #include <linux/err.h>
->  #include <linux/gpio.h>
->  #include <linux/gpio/consumer.h>
->  #include <linux/interrupt.h>
-> +#include <linux/mfd/syscon.h>
->  #include <linux/of_device.h>
->  #include <linux/of_gpio.h>
-> +#include <linux/of_graph.h>
->  #include <linux/of_irq.h>
->  #include <linux/pinctrl/consumer.h>
-> -#include <linux/of_graph.h>
-> +#include <linux/regmap.h>
->  #include <linux/regulator/consumer.h>
->  #include <linux/spinlock.h>
-> -#include <linux/mfd/syscon.h>
-> -#include <linux/regmap.h>
-> +
->  #include <video/mipi_display.h>
->  
->  #include "dsi.h"
-> diff --git a/drivers/gpu/drm/msm/dsi/phy/dsi_phy_14nm.c b/drivers/gpu/drm/msm/dsi/phy/dsi_phy_14nm.c
-> index c3a61876470f..1594f1422372 100644
-> --- a/drivers/gpu/drm/msm/dsi/phy/dsi_phy_14nm.c
-> +++ b/drivers/gpu/drm/msm/dsi/phy/dsi_phy_14nm.c
-> @@ -3,6 +3,8 @@
->   * Copyright (c) 2016, The Linux Foundation. All rights reserved.
->   */
->  
-> +#include <linux/delay.h>
-> +
->  #include "dsi_phy.h"
->  #include "dsi.xml.h"
->  
-> diff --git a/drivers/gpu/drm/msm/dsi/phy/dsi_phy_28nm_8960.c b/drivers/gpu/drm/msm/dsi/phy/dsi_phy_28nm_8960.c
-> index a198f51d47b4..f22583353957 100644
-> --- a/drivers/gpu/drm/msm/dsi/phy/dsi_phy_28nm_8960.c
-> +++ b/drivers/gpu/drm/msm/dsi/phy/dsi_phy_28nm_8960.c
-> @@ -3,6 +3,8 @@
->   * Copyright (c) 2012-2015, The Linux Foundation. All rights reserved.
->   */
->  
-> +#include <linux/delay.h>
-> +
->  #include "dsi_phy.h"
->  #include "dsi.xml.h"
->  
-> diff --git a/drivers/gpu/drm/msm/dsi/pll/dsi_pll.h b/drivers/gpu/drm/msm/dsi/pll/dsi_pll.h
-> index 118bebe53de3..c6a3623f905d 100644
-> --- a/drivers/gpu/drm/msm/dsi/pll/dsi_pll.h
-> +++ b/drivers/gpu/drm/msm/dsi/pll/dsi_pll.h
-> @@ -6,8 +6,8 @@
->  #ifndef __DSI_PLL_H__
->  #define __DSI_PLL_H__
->  
-> -#include <linux/clk.h>
->  #include <linux/clk-provider.h>
-> +#include <linux/delay.h>
->  
->  #include "dsi.h"
->  
-> diff --git a/drivers/gpu/drm/msm/hdmi/hdmi_bridge.c b/drivers/gpu/drm/msm/hdmi/hdmi_bridge.c
-> index 03197b8959ba..867691ea7900 100644
-> --- a/drivers/gpu/drm/msm/hdmi/hdmi_bridge.c
-> +++ b/drivers/gpu/drm/msm/hdmi/hdmi_bridge.c
-> @@ -15,6 +15,8 @@
->   * this program.  If not, see <http://www.gnu.org/licenses/>.
->   */
->  
-> +#include <linux/delay.h>
-> +
->  #include "hdmi.h"
->  
->  struct hdmi_bridge {
-> diff --git a/drivers/gpu/drm/msm/hdmi/hdmi_connector.c b/drivers/gpu/drm/msm/hdmi/hdmi_connector.c
-> index a6eeab2c4dc3..e3dc4e781558 100644
-> --- a/drivers/gpu/drm/msm/hdmi/hdmi_connector.c
-> +++ b/drivers/gpu/drm/msm/hdmi/hdmi_connector.c
-> @@ -15,6 +15,7 @@
->   * this program.  If not, see <http://www.gnu.org/licenses/>.
->   */
->  
-> +#include <linux/delay.h>
->  #include <linux/gpio.h>
->  #include <linux/pinctrl/consumer.h>
->  
-> diff --git a/drivers/gpu/drm/msm/hdmi/hdmi_phy_8996.c b/drivers/gpu/drm/msm/hdmi/hdmi_phy_8996.c
-> index fe82ad38aa7a..a8f3b2cbfdc5 100644
-> --- a/drivers/gpu/drm/msm/hdmi/hdmi_phy_8996.c
-> +++ b/drivers/gpu/drm/msm/hdmi/hdmi_phy_8996.c
-> @@ -4,6 +4,7 @@
->   */
->  
->  #include <linux/clk-provider.h>
-> +#include <linux/delay.h>
->  
->  #include "hdmi.h"
->  
-> diff --git a/drivers/gpu/drm/msm/hdmi/hdmi_phy_8x60.c b/drivers/gpu/drm/msm/hdmi/hdmi_phy_8x60.c
-> index a68eea4153fc..e1bd9b357617 100644
-> --- a/drivers/gpu/drm/msm/hdmi/hdmi_phy_8x60.c
-> +++ b/drivers/gpu/drm/msm/hdmi/hdmi_phy_8x60.c
-> @@ -15,6 +15,8 @@
->   * this program.  If not, see <http://www.gnu.org/licenses/>.
->   */
->  
-> +#include <linux/delay.h>
-> +
->  #include "hdmi.h"
->  
->  static void hdmi_phy_8x60_powerup(struct hdmi_phy *phy,
-> diff --git a/drivers/gpu/drm/msm/hdmi/hdmi_pll_8960.c b/drivers/gpu/drm/msm/hdmi/hdmi_pll_8960.c
-> index c6dae6e437f9..eff970f8ab8c 100644
-> --- a/drivers/gpu/drm/msm/hdmi/hdmi_pll_8960.c
-> +++ b/drivers/gpu/drm/msm/hdmi/hdmi_pll_8960.c
-> @@ -17,6 +17,8 @@
->   */
->  
->  #include <linux/clk-provider.h>
-> +#include <linux/delay.h>
-> +
->  #include "hdmi.h"
->  
->  struct hdmi_pll_8960 {
-> diff --git a/drivers/gpu/drm/msm/msm_atomic.c b/drivers/gpu/drm/msm/msm_atomic.c
-> index 3b13ea0ea92f..c0cb8e7b1a33 100644
-> --- a/drivers/gpu/drm/msm/msm_atomic.c
-> +++ b/drivers/gpu/drm/msm/msm_atomic.c
-> @@ -17,6 +17,7 @@
->  
->  #include <drm/drm_atomic_uapi.h>
->  #include <drm/drm_gem_framebuffer_helper.h>
-> +#include <drm/drm_vblank.h>
->  
->  #include "msm_drv.h"
->  #include "msm_gem.h"
-> diff --git a/drivers/gpu/drm/msm/msm_debugfs.c b/drivers/gpu/drm/msm/msm_debugfs.c
-> index 67ef300559cf..b3ae7b7ab5d8 100644
-> --- a/drivers/gpu/drm/msm/msm_debugfs.c
-> +++ b/drivers/gpu/drm/msm/msm_debugfs.c
-> @@ -16,7 +16,12 @@
->   */
->  
->  #ifdef CONFIG_DEBUG_FS
-> +
->  #include <linux/debugfs.h>
-> +
-> +#include <drm/drm_debugfs.h>
-> +#include <drm/drm_file.h>
-> +
->  #include "msm_drv.h"
->  #include "msm_gpu.h"
->  #include "msm_kms.h"
-> diff --git a/drivers/gpu/drm/msm/msm_drv.c b/drivers/gpu/drm/msm/msm_drv.c
-> index b2503e8a313b..6857a2a95e92 100644
-> --- a/drivers/gpu/drm/msm/msm_drv.c
-> +++ b/drivers/gpu/drm/msm/msm_drv.c
-> @@ -16,9 +16,18 @@
->   * this program.  If not, see <http://www.gnu.org/licenses/>.
->   */
->  
-> +#include <linux/dma-mapping.h>
->  #include <linux/kthread.h>
-> +#include <linux/uaccess.h>
->  #include <uapi/linux/sched/types.h>
-> +
-> +#include <drm/drm_drv.h>
-> +#include <drm/drm_file.h>
-> +#include <drm/drm_ioctl.h>
-> +#include <drm/drm_irq.h>
-> +#include <drm/drm_prime.h>
->  #include <drm/drm_of.h>
-> +#include <drm/drm_vblank.h>
->  
->  #include "msm_drv.h"
->  #include "msm_debugfs.h"
-> @@ -28,7 +37,6 @@
->  #include "msm_kms.h"
->  #include "adreno/adreno_gpu.h"
->  
-> -
->  /*
->   * MSM driver version:
->   * - 1.0.0 - initial interface
-> diff --git a/drivers/gpu/drm/msm/msm_drv.h b/drivers/gpu/drm/msm/msm_drv.h
-> index e20e6b429804..ff008892f777 100644
-> --- a/drivers/gpu/drm/msm/msm_drv.h
-> +++ b/drivers/gpu/drm/msm/msm_drv.h
-> @@ -36,7 +36,6 @@
->  #include <linux/sizes.h>
->  #include <linux/kthread.h>
->  
-> -#include <drm/drmP.h>
->  #include <drm/drm_atomic.h>
->  #include <drm/drm_atomic_helper.h>
->  #include <drm/drm_plane_helper.h>
-> diff --git a/drivers/gpu/drm/msm/msm_fb.c b/drivers/gpu/drm/msm/msm_fb.c
-> index 68fa2c8f61e6..88c35206096a 100644
-> --- a/drivers/gpu/drm/msm/msm_fb.c
-> +++ b/drivers/gpu/drm/msm/msm_fb.c
-> @@ -16,6 +16,8 @@
->   */
->  
->  #include <drm/drm_crtc.h>
-> +#include <drm/drm_file.h>
-> +#include <drm/drm_fourcc.h>
->  #include <drm/drm_gem_framebuffer_helper.h>
->  #include <drm/drm_probe_helper.h>
->  
-> diff --git a/drivers/gpu/drm/msm/msm_fbdev.c b/drivers/gpu/drm/msm/msm_fbdev.c
-> index d088299babf3..d776512f97cd 100644
-> --- a/drivers/gpu/drm/msm/msm_fbdev.c
-> +++ b/drivers/gpu/drm/msm/msm_fbdev.c
-> @@ -17,6 +17,7 @@
->  
->  #include <drm/drm_crtc.h>
->  #include <drm/drm_fb_helper.h>
-> +#include <drm/drm_fourcc.h>
->  
->  #include "msm_drv.h"
->  #include "msm_kms.h"
-> diff --git a/drivers/gpu/drm/msm/msm_gem.c b/drivers/gpu/drm/msm/msm_gem.c
-> index 404b6fea9e35..eb3a9080c75a 100644
-> --- a/drivers/gpu/drm/msm/msm_gem.c
-> +++ b/drivers/gpu/drm/msm/msm_gem.c
-> @@ -20,6 +20,8 @@
->  #include <linux/dma-buf.h>
->  #include <linux/pfn_t.h>
->  
-> +#include <drm/drm_prime.h>
-> +
->  #include "msm_drv.h"
->  #include "msm_fence.h"
->  #include "msm_gem.h"
-> diff --git a/drivers/gpu/drm/msm/msm_gem_prime.c b/drivers/gpu/drm/msm/msm_gem_prime.c
-> index 60bb290700ce..1c957a6e7c23 100644
-> --- a/drivers/gpu/drm/msm/msm_gem_prime.c
-> +++ b/drivers/gpu/drm/msm/msm_gem_prime.c
-> @@ -15,11 +15,13 @@
->   * this program.  If not, see <http://www.gnu.org/licenses/>.
->   */
->  
-> +#include <linux/dma-buf.h>
-> +
-> +#include <drm/drm_prime.h>
-> +
->  #include "msm_drv.h"
->  #include "msm_gem.h"
->  
-> -#include <linux/dma-buf.h>
-> -
->  struct sg_table *msm_gem_prime_get_sg_table(struct drm_gem_object *obj)
->  {
->  	struct msm_gem_object *msm_obj = to_msm_bo(obj);
-> diff --git a/drivers/gpu/drm/msm/msm_gem_submit.c b/drivers/gpu/drm/msm/msm_gem_submit.c
-> index 1b681306aca3..ae776448f0e5 100644
-> --- a/drivers/gpu/drm/msm/msm_gem_submit.c
-> +++ b/drivers/gpu/drm/msm/msm_gem_submit.c
-> @@ -15,7 +15,11 @@
->   * this program.  If not, see <http://www.gnu.org/licenses/>.
->   */
->  
-> +#include <linux/file.h>
->  #include <linux/sync_file.h>
-> +#include <linux/uaccess.h>
-> +
-> +#include <drm/drm_file.h>
->  
->  #include "msm_drv.h"
->  #include "msm_gpu.h"
-> diff --git a/drivers/gpu/drm/msm/msm_gpummu.c b/drivers/gpu/drm/msm/msm_gpummu.c
-> index 27312b553dd8..34f643a0c28a 100644
-> --- a/drivers/gpu/drm/msm/msm_gpummu.c
-> +++ b/drivers/gpu/drm/msm/msm_gpummu.c
-> @@ -1,6 +1,8 @@
->  // SPDX-License-Identifier: GPL-2.0
->  /* Copyright (c) 2018 The Linux Foundation. All rights reserved. */
->  
-> +#include <linux/dma-mapping.h>
-> +
->  #include "msm_drv.h"
->  #include "msm_mmu.h"
->  #include "adreno/adreno_gpu.h"
-> diff --git a/drivers/gpu/drm/msm/msm_perf.c b/drivers/gpu/drm/msm/msm_perf.c
-> index 5ab21bd2decb..655ecc2dbcc8 100644
-> --- a/drivers/gpu/drm/msm/msm_perf.c
-> +++ b/drivers/gpu/drm/msm/msm_perf.c
-> @@ -26,6 +26,9 @@
->  #ifdef CONFIG_DEBUG_FS
->  
->  #include <linux/debugfs.h>
-> +#include <linux/uaccess.h>
-> +
-> +#include <drm/drm_file.h>
->  
->  #include "msm_drv.h"
->  #include "msm_gpu.h"
-> diff --git a/drivers/gpu/drm/msm/msm_rd.c b/drivers/gpu/drm/msm/msm_rd.c
-> index d21172933d92..283890ac3f66 100644
-> --- a/drivers/gpu/drm/msm/msm_rd.c
-> +++ b/drivers/gpu/drm/msm/msm_rd.c
-> @@ -42,11 +42,14 @@
->  
->  #ifdef CONFIG_DEBUG_FS
->  
-> -#include <linux/kfifo.h>
-> -#include <linux/debugfs.h>
->  #include <linux/circ_buf.h>
-> +#include <linux/debugfs.h>
-> +#include <linux/kfifo.h>
-> +#include <linux/uaccess.h>
->  #include <linux/wait.h>
->  
-> +#include <drm/drm_file.h>
-> +
->  #include "msm_drv.h"
->  #include "msm_gpu.h"
->  #include "msm_gem.h"
-> diff --git a/drivers/gpu/drm/msm/msm_submitqueue.c b/drivers/gpu/drm/msm/msm_submitqueue.c
-> index c70e00e22c4c..001fbf537440 100644
-> --- a/drivers/gpu/drm/msm/msm_submitqueue.c
-> +++ b/drivers/gpu/drm/msm/msm_submitqueue.c
-> @@ -3,6 +3,8 @@
->   */
->  
->  #include <linux/kref.h>
-> +#include <linux/uaccess.h>
-> +
->  #include "msm_gpu.h"
->  
->  void msm_submitqueue_destroy(struct kref *kref)
-> -- 
-> 2.20.1
-> 
-> _______________________________________________
-> dri-devel mailing list
-> dri-devel@lists.freedesktop.org
-> https://lists.freedesktop.org/mailman/listinfo/dri-devel
+The last patch updates the bridge driver to handle the case where
+display is already active.  (AFAICT it is the same bridge chip used
+so far on all the aarch64 laptops.)  Because the bridge driver can
+be probed before the drm driver, and in fact you might end up with
+a bridge driver but no drm driver, care must be taken to not disable
+the bridge until the drm driver is ready to go, so:
+
+  * Request enable gpio ASIS to avoid pulling down the enable
+    gpio
+
+  * Defer enabling runpm in the case that the bridge is already
+    running until bridge->attach().  This is a point where we
+    know the drm driver is ready to do a modeset.
+
+(There are a couple related cleanups in drm/msm to avoid touching
+the hw until we are past the point where we might -EPROBE_DEFER[2]
+which I sent seperately as they are probably interesting to fewer
+people.)
+
+This has been tested on a lenovo yoga c630.  I've a wip/c630 branch[3]
+with this and various other work-in-progress stuff for this laptop.
+Next step, figuring out how to pick the proper panel driver, from
+the two or three possibilites that ship on this laptop ;-)
+
+[1] On windows, they use a "Platform Extension Plugin" (PEP) driver
+[2] https://patchwork.freedesktop.org/series/62999/
+[3] https://github.com/freedreno/kernel-msm/commits/wip/c630
+
+Rob Clark (5):
+  clk: inherit clocks enabled by bootloader
+  genpd/gdsc: inherit display powerdomain from bootloader
+  drm/msm/dsi: split clk rate setting and enable
+  drm/msm/dsi: get the clocks into OFF state at init
+  drm/bridge: ti-sn65dsi86: support booloader enabled display
+
+ drivers/base/power/domain.c                | 10 ++++
+ drivers/clk/clk.c                          | 48 +++++++++++++++++++
+ drivers/clk/qcom/common.c                  | 25 ++++++++++
+ drivers/clk/qcom/dispcc-sdm845.c           | 24 +++++-----
+ drivers/clk/qcom/gcc-sdm845.c              |  3 +-
+ drivers/clk/qcom/gdsc.c                    |  5 ++
+ drivers/clk/qcom/gdsc.h                    |  1 +
+ drivers/gpu/drm/bridge/ti-sn65dsi86.c      | 12 ++++-
+ drivers/gpu/drm/msm/dsi/dsi.h              |  2 +
+ drivers/gpu/drm/msm/dsi/dsi_cfg.c          |  3 ++
+ drivers/gpu/drm/msm/dsi/dsi_cfg.h          |  1 +
+ drivers/gpu/drm/msm/dsi/dsi_host.c         | 56 +++++++++++++++++-----
+ drivers/gpu/drm/msm/dsi/pll/dsi_pll_10nm.c |  1 +
+ include/linux/clk-provider.h               | 10 ++++
+ include/linux/pm_domain.h                  |  4 ++
+ 15 files changed, 178 insertions(+), 27 deletions(-)
+
+-- 
+2.20.1
+
