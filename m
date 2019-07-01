@@ -2,86 +2,157 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 2FA6C5B80D
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  1 Jul 2019 11:30:00 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 756E65B8FF
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  1 Jul 2019 12:29:24 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728453AbfGAJ3z (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 1 Jul 2019 05:29:55 -0400
-Received: from mail-pl1-f194.google.com ([209.85.214.194]:35914 "EHLO
-        mail-pl1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728442AbfGAJ3z (ORCPT
+        id S1727959AbfGAK3T (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 1 Jul 2019 06:29:19 -0400
+Received: from smtp.codeaurora.org ([198.145.29.96]:56602 "EHLO
+        smtp.codeaurora.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726076AbfGAK3T (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 1 Jul 2019 05:29:55 -0400
-Received: by mail-pl1-f194.google.com with SMTP id k8so7052267plt.3
-        for <linux-arm-msm@vger.kernel.org>; Mon, 01 Jul 2019 02:29:54 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=wTpybW3v/xSeIVUOgP3xPSGBMKgC2isVToS27b1nrP0=;
-        b=Hrifr9KCPcs9MJqBNytC0e17vIcaOZwYLT0urhPweI/rFb5d03mJHFiFkNSM2nDw0y
-         HwFr53coaLGoVhvJk6G5fbnqIJWNWEqrOzC1rRfNtC6K0+9fQW4SDItKGnb7jUCp/QDx
-         vXFoWE7/6gn1siLyZyE5TjRDGfBfbzJt5G8TKNksKFzzEUkFm+3WzB27NGBcvCpJJclW
-         FRa9ClkXxzYNHq/m+Ycijy1n2cMx8H+oEs9uu8r7rfBmDaYXWn+uRLgTDRgCHyuxyNTU
-         6Niu+GY8uPemFkLgYmaugqnqYQl+8GVm90YmuGSw8nyg6D/HOtDoJyQx2QRVQL+n6YGG
-         9KoA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=wTpybW3v/xSeIVUOgP3xPSGBMKgC2isVToS27b1nrP0=;
-        b=gK5YFfE5+9o8Kl9SJBvPy/s2pq0EhSwifLPGUH+qcAUaDASxFGDu5/uRbA6uboCwR7
-         GlwUEW2UCohr7P/KyJDaT84vsk9ZBIbnBZWvV1yncIv/9xXkxH+6U5R+cj3JPd52QXQd
-         PiexXwfEvJK4PLssijx3bOJMRxgrSKYa0sHJXMZ93Z7TpbDztLoPYxOItVGxq1piz3/T
-         rrxEZmBAfviJFyQ+6urq+0n5UpWIwrbNUsI3GSWgZCcTkKR7X4ZXa9+OHyuCbvh0H51F
-         eF5JKKVIQfci7BTzVBo9Anmxq5eGRbuucJ2wjltKY/4SuKPXCTl8u6IOKAPGAYj1kvCF
-         oSfg==
-X-Gm-Message-State: APjAAAULjAkhQttRnRkq25d/wCMbLDid8C4btCBHm1PPD7pCQbYfVEYn
-        LVhs5Z7Er4UjeAW+dwb0HRabI+j6aYo=
-X-Google-Smtp-Source: APXvYqwSOfR6QHR0UL7PgnA+YTmHps/hUxB+aNpzGmjf2aDbrrgUmI4XIBC48UKymMy56brsDy0qmA==
-X-Received: by 2002:a17:902:7247:: with SMTP id c7mr27711408pll.202.1561973394285;
-        Mon, 01 Jul 2019 02:29:54 -0700 (PDT)
-Received: from localhost ([122.172.21.205])
-        by smtp.gmail.com with ESMTPSA id d123sm10786486pfc.144.2019.07.01.02.29.52
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 01 Jul 2019 02:29:52 -0700 (PDT)
-Date:   Mon, 1 Jul 2019 14:59:49 +0530
-From:   Viresh Kumar <viresh.kumar@linaro.org>
-To:     Sibi Sankar <sibis@codeaurora.org>
-Cc:     nm@ti.com, sboyd@kernel.org, georgi.djakov@linaro.org,
-        agross@kernel.org, david.brown@linaro.org, robh+dt@kernel.org,
-        mark.rutland@arm.com, rjw@rjwysocki.net,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-pm@vger.kernel.org,
-        saravanak@google.com
-Subject: Re: [PATCH RFC 0/4] DDR/L3 Scaling support on SDM845 SoCs
-Message-ID: <20190701092949.afenn2et2qexostt@vireshk-i7>
-References: <20190627133424.4980-1-sibis@codeaurora.org>
+        Mon, 1 Jul 2019 06:29:19 -0400
+Received: by smtp.codeaurora.org (Postfix, from userid 1000)
+        id 0B98E602F8; Mon,  1 Jul 2019 10:29:17 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
+        s=default; t=1561976957;
+        bh=cWSqOAbfEz0WFf4XUVNLEBEC9uRW9zO4ucQFc7vzM00=;
+        h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
+        b=Od0njd60uogiEn3/nAA6Sj//Hy7MvxWTACCiY6BZ7mCOjrPRHQ8axGLCk4DVEIJNd
+         3m80rMmfd9Pebpm5cl0UibXA/LcA4OzEb0xdgbQtbOChB0tFLV9X/Tye8Rvy9XT7HD
+         12zqZUBpeXwcnD0SJ+Jttx0iFgdUWpTW8r4MV2ao=
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        pdx-caf-mail.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.7 required=2.0 tests=ALL_TRUSTED,BAYES_00,
+        DKIM_INVALID,DKIM_SIGNED autolearn=no autolearn_force=no version=3.4.0
+Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
+        by smtp.codeaurora.org (Postfix) with ESMTP id 3C7896021C;
+        Mon,  1 Jul 2019 10:29:14 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
+        s=default; t=1561976955;
+        bh=cWSqOAbfEz0WFf4XUVNLEBEC9uRW9zO4ucQFc7vzM00=;
+        h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
+        b=SSn//CNdAEi+Df+wdQhcfXAiJXSvCVN2iSNFav/O7aqFuchgwHQfZH/pkp7ttFN8x
+         ZO+0JX0GlQpFX9cK/UfhTEZxMQxEOCahs6VXyZO0s5TT6NBtwRKY+7PND4UxFFIAOD
+         bar+dR4pacKtEnIOcJFVaZz2L37gQcyRsD/bVMAk=
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20190627133424.4980-1-sibis@codeaurora.org>
-User-Agent: NeoMutt/20180716-391-311a52
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
+Content-Transfer-Encoding: 7bit
+Date:   Mon, 01 Jul 2019 15:59:13 +0530
+From:   dhar@codeaurora.org
+To:     Jeykumar Sankaran <jsanka@codeaurora.org>
+Cc:     dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
+        freedreno@lists.freedesktop.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, robdclark@gmail.com,
+        seanpaul@chromium.org, hoegsberg@chromium.org,
+        abhinavk@codeaurora.org, chandanu@codeaurora.org,
+        nganji@codeaurora.org, jshekhar@codeaurora.org
+Subject: Re: drm/msm/dpu: Correct dpu encoder spinlock initialization
+In-Reply-To: <627144af54459a203f1583d2ad9b390c@codeaurora.org>
+References: <1561357632-15361-1-git-send-email-dhar@codeaurora.org>
+ <efade579f7ba59585b88ecb367422e5c@codeaurora.org>
+ <d61d7805b4ac0ec45309bf5b65841262@codeaurora.org>
+ <627144af54459a203f1583d2ad9b390c@codeaurora.org>
+Message-ID: <ea91c2c49d73af79bd6eea93a6d00a5a@codeaurora.org>
+X-Sender: dhar@codeaurora.org
+User-Agent: Roundcube Webmail/1.2.5
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 27-06-19, 19:04, Sibi Sankar wrote:
-> This RFC series aims to extend cpu based scaling support to L3/DDR on
-> SDM845 SoCs. The patch series depends on "Introduce OPP bandwidth bindings"
-> series (https://patchwork.kernel.org/cover/10912993/). A part of the
-> series will still be applicable if we decide to go ahead with the proposal
-> from Saravana as well so I decided to post this out.
+On 2019-06-26 03:10, Jeykumar Sankaran wrote:
+> On 2019-06-24 22:44, dhar@codeaurora.org wrote:
+>> On 2019-06-25 03:56, Jeykumar Sankaran wrote:
+>>> On 2019-06-23 23:27, Shubhashree Dhar wrote:
+>>>> dpu encoder spinlock should be initialized during dpu encoder
+>>>> init instead of dpu encoder setup which is part of commit.
+>>>> There are chances that vblank control uses the uninitialized
+>>>> spinlock if not initialized during encoder init.
+>>> Not much can be done if someone is performing a vblank operation
+>>> before encoder_setup is done.
+>>> Can you point to the path where this lock is acquired before
+>>> the encoder_setup?
+>>> 
+>>> Thanks
+>>> Jeykumar S.
+>>>> 
+>> 
+>> When running some dp usecase, we are hitting this callstack.
+>> 
+>> Process kworker/u16:8 (pid: 215, stack limit = 0x00000000df9dd930)
+>> Call trace:
+>>  spin_dump+0x84/0x8c
+>>  spin_dump+0x0/0x8c
+>>  do_raw_spin_lock+0x80/0xb0
+>>  _raw_spin_lock_irqsave+0x34/0x44
+>>  dpu_encoder_toggle_vblank_for_crtc+0x8c/0xe8
+>>  dpu_crtc_vblank+0x168/0x1a0
+>>  dpu_kms_enable_vblank+0[   11.648998]  vblank_ctrl_worker+0x3c/0x60
+>>  process_one_work+0x16c/0x2d8
+>>  worker_thread+0x1d8/0x2b0
+>>  kthread+0x124/0x134
+>> 
+>> Looks like vblank is getting enabled earlier causing this issue and we
+>> are using the spinlock without initializing it.
+>> 
+>> Thanks,
+>> Shubhashree
+>> 
+> DP calls into set_encoder_mode during hotplug before even notifying the
+> u/s. Can you trace out the original caller of this stack?
 > 
-> v2:
-> * Incorporated Viresh's comments from:
-> [1]https://lore.kernel.org/lkml/20190410102429.r6j6brm5kspmqxc3@vireshk-i7/
-> [2]https://lore.kernel.org/lkml/20190410112516.gnh77jcwawvld6et@vireshk-i7/
+> Even though the patch is harmless, I am not entirely convinced to move 
+> this
+> initialization. Any call which acquires the lock before encoder_setup
+> will be a no-op since there will not be any physical encoder to work 
+> with.
+> 
+> Thanks and Regards,
+> Jeykumar S.
+> 
+>>>> Change-Id: I5a18b95fa47397c834a266b22abf33a517b03a4e
+>>>> Signed-off-by: Shubhashree Dhar <dhar@codeaurora.org>
+>>>> ---
+>>>>  drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c | 3 +--
+>>>>  1 file changed, 1 insertion(+), 2 deletions(-)
+>>>> 
+>>>> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
+>>>> b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
+>>>> index 5f085b5..22938c7 100644
+>>>> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
+>>>> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
+>>>> @@ -2195,8 +2195,6 @@ int dpu_encoder_setup(struct drm_device *dev, 
+>>>> struct
+>>>> drm_encoder *enc,
+>>>>  	if (ret)
+>>>>  		goto fail;
+>>>> 
+>>>> -	spin_lock_init(&dpu_enc->enc_spinlock);
+>>>> -
+>>>>  	atomic_set(&dpu_enc->frame_done_timeout, 0);
+>>>>  	timer_setup(&dpu_enc->frame_done_timer,
+>>>>  			dpu_encoder_frame_done_timeout, 0);
+>>>> @@ -2250,6 +2248,7 @@ struct drm_encoder *dpu_encoder_init(struct
+>>>> drm_device *dev,
+>>>> 
+>>>>  	drm_encoder_helper_add(&dpu_enc->base, &dpu_encoder_helper_funcs);
+>>>> 
+>>>> +	spin_lock_init(&dpu_enc->enc_spinlock);
+>>>>  	dpu_enc->enabled = false;
+>>>> 
+>>>>  	return &dpu_enc->base;
 
-Did you get a chance to look at this ?
-
-lore.kernel.org/lkml/20190622003449.33707-1-saravanak@google.com
-
--- 
-viresh
+In dpu_crtc_vblank(), we are looping through all the encoders in the 
+present mode_config: 
+https://github.com/torvalds/linux/blob/master/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c#L1082
+and hence calling dpu_encoder_toggle_vblank_for_crtc() for all the 
+encoders. But in dpu_encoder_toggle_vblank_for_crtc(), after acquiring 
+the spinlock, we will do a early return for
+the encoders which are not currently assigned to our crtc: 
+https://github.com/torvalds/linux/blob/master/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c#L1318.
+Since the encoder_setup for the secondary encoder(dp encoder in this 
+case) is not called until dp hotplug, we are hitting kernel panic while 
+acquiring the lock.
