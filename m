@@ -2,53 +2,53 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 284965C3FF
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  1 Jul 2019 21:55:59 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A5FFB5C441
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  1 Jul 2019 22:22:40 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726642AbfGATzX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 1 Jul 2019 15:55:23 -0400
-Received: from mail-ed1-f65.google.com ([209.85.208.65]:38547 "EHLO
-        mail-ed1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726586AbfGATzX (ORCPT
+        id S1726678AbfGAUWj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 1 Jul 2019 16:22:39 -0400
+Received: from mail-io1-f68.google.com ([209.85.166.68]:43079 "EHLO
+        mail-io1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726620AbfGAUWj (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 1 Jul 2019 15:55:23 -0400
-Received: by mail-ed1-f65.google.com with SMTP id r12so24974958edo.5;
-        Mon, 01 Jul 2019 12:55:21 -0700 (PDT)
+        Mon, 1 Jul 2019 16:22:39 -0400
+Received: by mail-io1-f68.google.com with SMTP id k20so5450061ios.10;
+        Mon, 01 Jul 2019 13:22:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=aDvBdz4CIhUwGc+WxUTMAssQu59DUKrshXV4PJF0Vqo=;
-        b=U9nn1Kg5IOugwawL1Z7TRIycorfaFuo8YkKcLYXI8vSjK0RBsXQUXEaWn2POhWqroI
-         5ba+6tR7izhRX8RE1nPTzlKMBGmcSGLyLzTDZneyOzk9wJNv04HC1Jv0jYtZTh8m0Eg1
-         wbbYzRLKsxGX56VZhlzAKMJSw3SpqR3dzl0pBWNeGtohgc+g8lMql84ZmlSYTdq9OhQi
-         seQQbAmYn0XgUX64pl2k7tGpBtPQwT08SMkLZm5SjcIRLk6qlXKFFulJqrF38P7xywlG
-         e3JFe8zOpwYgr8EtnvmVuMs0P6U/pcNbv6WBtfdzQW/eKUKqDyva8Zb91ru3ewVtFPxC
-         sEyg==
+        bh=I1GjeEITaALvhm8pAAmaP+3EXBqqOojgJYfM1DzUyl4=;
+        b=ljiAZQXjCG4pFHtSRCcPXocbqglD4vhZPuwJC84rX30dPSNf0N3UPo8R08EQtHKzcD
+         bPlDY6tg/r4gkkYT8VsXyWWjkfqZBRr7VnuAU82Q3x02rfFkrr+9dhSo+QsdhFaqeAPD
+         FEzS5DKZj9LBi8UzkRXTkKcm8mtLHJBWYDDdFuAZU+lxwY5be8vvc2lxXhT4IE+vu0Un
+         BNfU7vLcCgzf3Xa7Ztrf3h8T1HKncve6yvVG5RaE50d0YdarMfYu9/X2E4VIx2S8JIFl
+         TSQEb4RkZ/ozuP/OJ8bWIz9tmQF53PKa/rJCQ0SC7uwfoMldSqlRWIYp8TrBcDXKXpkK
+         dkwA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=aDvBdz4CIhUwGc+WxUTMAssQu59DUKrshXV4PJF0Vqo=;
-        b=Q1GrPdmx+n2JTQrqevsA5UKBCh7VrbYjeRkEb5DL0GlsguaUQqiujWTS0wkFAYTY1H
-         3R+QjrUQuMg9dt2qa6gfPehAVmgfIeVMVMntkYZp4mC16jpwhGV0s4RvWkkVmWOVDodo
-         7aMC6e4My7/jRN8Y9uGrchivzxCX0pIvu139tjirYy5EshfIYW2eGqBPmuQwa+sbV93f
-         +U8QtJkrmmAped6ie/D/VAFDkapU70oOA6YzVDzhYhzrIM+0Ym9pnI5AxS3D6Wl0ZkZq
-         MAAZuCjQPdj7Kk5RcUaLrZ49ug+D5TTFhCmKO5ciABzgNbUziuLurjnUfRWula9IiJ3o
-         769g==
-X-Gm-Message-State: APjAAAX4V+ZYGeC3W5SfeOaA20IhZVXuvwi6l0GeF4K1SPmbEplN7SpJ
-        zmYcZP5gqbuvAMTv41WTei6+SCsGGJD4350qXE4=
-X-Google-Smtp-Source: APXvYqxRkskgrX6ttwwTzfZWxYIUz7bV7uQgkLArcijalzyyJWLD/+AWOAPLPdaO2F7CFX7FQozjAXt7BLsZ79S0Xj8=
-X-Received: by 2002:a50:9468:: with SMTP id q37mr31076816eda.163.1562010921237;
- Mon, 01 Jul 2019 12:55:21 -0700 (PDT)
+        bh=I1GjeEITaALvhm8pAAmaP+3EXBqqOojgJYfM1DzUyl4=;
+        b=W91EkpkGY2rymQij3B2hExV7Bf0QBmenOY6AumliGa2+Qb8J40EqNSbBFVjNwnxNoc
+         At80IZaLE8n9zslmroHR/lz3xQJh2XqCr3yymRGEg2d2MJrNO4t+RGhJDBgom+mHKGIT
+         vlhn30m8wkxyi/AravbNo/B9qWnznuamMCPRsEF8+816uQuYe4UaUb8k5UeUa520IP6M
+         +ewKmkUIQwCvYARWr33i2q5kIuWwNPSG21PqaMMqpmmLPoxL0/5smGdPY71S0/PrMl0w
+         j8wasUBC5g+KvA+ulLF6euidmx42W7EJtNk7YNsdWrdQqz7/80HzZwNhBLWBj3nsxSJN
+         7DyA==
+X-Gm-Message-State: APjAAAX1y/QuZVOOm1bXInzCI3MgV0V7YqCk1Bd7m64UEmQdMOk+RQAA
+        uufd4NgXy8YbifgZG6ks2+96s+Z8Ou/3QtJpRC0=
+X-Google-Smtp-Source: APXvYqxVBTG47CwHCdrXmA5JNt7wro7euLefJZUOOmQ+NthLv4IjR3SFYlhyAyNGvyaQ7VNb5UxSB7N5f7nMOOlzbGA=
+X-Received: by 2002:a6b:901:: with SMTP id t1mr22675024ioi.42.1562012558828;
+ Mon, 01 Jul 2019 13:22:38 -0700 (PDT)
 MIME-Version: 1.0
-References: <20190701174120.15551-1-jeffrey.l.hugo@gmail.com>
-In-Reply-To: <20190701174120.15551-1-jeffrey.l.hugo@gmail.com>
-From:   Rob Clark <robdclark@gmail.com>
-Date:   Mon, 1 Jul 2019 12:55:05 -0700
-Message-ID: <CAF6AEGsGRcuk3xnWG8KspW4wzG38o-Xg8tybnND9Lb24PWP5dw@mail.gmail.com>
-Subject: Re: [PATCH] drm/msm/mdp5: Use eariler mixers when possible
-To:     Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
+References: <20190701173907.15494-1-jeffrey.l.hugo@gmail.com> <CAF6AEGu=Pv5mCKA7QDVGPjhFShmD2cfKWNZk26PTQSSQzbzKXA@mail.gmail.com>
+In-Reply-To: <CAF6AEGu=Pv5mCKA7QDVGPjhFShmD2cfKWNZk26PTQSSQzbzKXA@mail.gmail.com>
+From:   Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
+Date:   Mon, 1 Jul 2019 14:22:27 -0600
+Message-ID: <CAOCk7NqvDgUJ6Nr217ftaB5R6i3LCMbdsiEOhrmt9-StPfV5kg@mail.gmail.com>
+Subject: Re: [PATCH] drm/msm/mdp5: Use drm_device for creating gem address space
+To:     Rob Clark <robdclark@gmail.com>
 Cc:     Sean Paul <sean@poorly.run>, David Airlie <airlied@linux.ie>,
         Daniel Vetter <daniel@ffwll.ch>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
@@ -62,61 +62,35 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Jul 1, 2019 at 10:41 AM Jeffrey Hugo <jeffrey.l.hugo@gmail.com> wrote:
+On Mon, Jul 1, 2019 at 1:45 PM Rob Clark <robdclark@gmail.com> wrote:
 >
-> When assigning a mixer, we will iterate through the entire list looking for
-> a suitable match.  This results in selecting the last match.  We should
-> stop at the first match, since lower numbered mixers will typically have
-> more capabilities, and are likely to be what the bootloader used, if we
-> are looking to reuse the bootloader config in future.
-
-I think for matching bootloader config, we need to read it out of the
-hw and do it the hard way, rather than making assumptions.
-
-For picking hwpipe for a plane, I made an effort to pick the available
-hwpipe w/ the *least* capabilities that fit the requirements (ie.
-scaling/yuv/etc) in order to leave the more capable hwpipe available
-for future use.  Not sure if same approach would make sense for
-mixers?  But not sure if picking something that bootloader probably
-also would have picked is a great argument.
-
-I do have some (now ancient) code from db410/mdp5 to read out he hw
-state.. I *think* that might have post-dated dynamically picking
-mixers.  (The older mdp5 on db410c also had to deal with figuring out
-SMP block config, iirc.. thankfully newer mdp5 doesn't have to deal
-with that.)
-
-BR,
--R
-
+> On Mon, Jul 1, 2019 at 10:39 AM Jeffrey Hugo <jeffrey.l.hugo@gmail.com> wrote:
+> >
+> > Creating the msm gem address space requires a reference to the dev where
+> > the iommu is located.  The driver currently assumes this is the same as
+> > the platform device, which breaks when the iommu is outside of the
+> > platform device.  Use the drm_device instead, which happens to always have
+> > a reference to the proper device.
+> >
+> > Signed-off-by: Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
+> > ---
+> >  drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c | 2 +-
+> >  1 file changed, 1 insertion(+), 1 deletion(-)
+> >
+> > diff --git a/drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c b/drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c
+> > index 4a60f5fca6b0..1347a5223918 100644
+> > --- a/drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c
+> > +++ b/drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c
+> > @@ -702,7 +702,7 @@ struct msm_kms *mdp5_kms_init(struct drm_device *dev)
+> >         mdelay(16);
+> >
+> >         if (config->platform.iommu) {
+> > -               aspace = msm_gem_address_space_create(&pdev->dev,
+> > +               aspace = msm_gem_address_space_create(dev->dev,
+> >                                 config->platform.iommu, "mdp5");
 >
-> Signed-off-by: Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
-> ---
->  drivers/gpu/drm/msm/disp/mdp5/mdp5_mixer.c | 11 +++++++++++
->  1 file changed, 11 insertions(+)
->
-> diff --git a/drivers/gpu/drm/msm/disp/mdp5/mdp5_mixer.c b/drivers/gpu/drm/msm/disp/mdp5/mdp5_mixer.c
-> index 954db683ae44..1638042ad974 100644
-> --- a/drivers/gpu/drm/msm/disp/mdp5/mdp5_mixer.c
-> +++ b/drivers/gpu/drm/msm/disp/mdp5/mdp5_mixer.c
-> @@ -96,6 +96,17 @@ int mdp5_mixer_assign(struct drm_atomic_state *s, struct drm_crtc *crtc,
->                  */
->                 if (!(*mixer) || cur->caps & MDP_LM_CAP_PAIR)
->                         *mixer = cur;
-> +
-> +               /*
-> +                * We have everything we could want, exit early.
-> +                * We have a valid mixer, that mixer pairs with another if we
-> +                * need that ability in future, and we have a right mixer if
-> +                * needed.
-> +                * Later LMs could be less optimal
-> +                */
-> +               if (*mixer && (*mixer)->caps & MDP_LM_CAP_PAIR &&
-> +                   ((r_mixer && *r_mixer) || !r_mixer))
-> +                       break;
->         }
->
->         if (!(*mixer))
-> --
-> 2.17.1
->
+> hmm, do you have a tree somewhere with your dt files?  This makes me
+> think the display iommu is hooked up somewhere differently compared
+> to, say, msm8916.dtsi
+
+I'll post something somewhere and forward it to you.
