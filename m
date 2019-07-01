@@ -2,94 +2,91 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id CBDE75BFE1
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  1 Jul 2019 17:32:24 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 6E2465BFD4
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  1 Jul 2019 17:29:38 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729280AbfGAPcT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 1 Jul 2019 11:32:19 -0400
-Received: from smtp.codeaurora.org ([198.145.29.96]:52792 "EHLO
-        smtp.codeaurora.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726076AbfGAPcT (ORCPT
+        id S1729308AbfGAP31 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 1 Jul 2019 11:29:27 -0400
+Received: from mail-lf1-f65.google.com ([209.85.167.65]:36385 "EHLO
+        mail-lf1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729233AbfGAP3V (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 1 Jul 2019 11:32:19 -0400
-Received: by smtp.codeaurora.org (Postfix, from userid 1000)
-        id 80CE36087F; Mon,  1 Jul 2019 15:32:18 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
-        s=default; t=1561995138;
-        bh=FoV2coVDXy5ivyKrTBUVcDFYj8JMXwYeCYY1wHzBNqM=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=hcB5s7w/YylEBdd3fgb1QxbRHIR/9sv8E4zr8AeDj9iSrKYl6WTpmrUBH5qknIHLG
-         qpxMt9dJWMUvi55fR9CS4hqotkejgOGnK8pSwH3Yid81UWTiY82z+eOXVIkAougWBD
-         DuZdj6cJR+yoXY46OKP45Pv06MoAM/3+grVpVQxg=
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        pdx-caf-mail.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.7 required=2.0 tests=ALL_TRUSTED,BAYES_00,
-        DKIM_INVALID,DKIM_SIGNED,SPF_NONE autolearn=no autolearn_force=no
-        version=3.4.0
-Received: from codeaurora.org (i-global254.qualcomm.com [199.106.103.254])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: ilina@smtp.codeaurora.org)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 03EC6607DF;
-        Mon,  1 Jul 2019 15:32:16 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
-        s=default; t=1561995137;
-        bh=FoV2coVDXy5ivyKrTBUVcDFYj8JMXwYeCYY1wHzBNqM=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=GefpQLdNw9i+ssCyYSXd1UxNOlipWaRVR42ei50Ifykd2UisMaw1MNg/aAc0ibe6Z
-         qiZn9pDGh4cqzmfdmm2qGPRTP8XwiNgSAPCiwS1CroVb1sKYqdgd/R25IDcFdp1s7n
-         6TNPQ25UpNosJYInAYULjrnVXeimwvKWCWgbs6ag=
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 03EC6607DF
-Authentication-Results: pdx-caf-mail.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: pdx-caf-mail.web.codeaurora.org; spf=none smtp.mailfrom=ilina@codeaurora.org
-From:   Lina Iyer <ilina@codeaurora.org>
-To:     andy.gross@linaro.org, bjorn.andersson@linaro.org
-Cc:     linux-arm-msm@vger.kernel.org, linux-soc@vger.kernel.org,
-        rnayak@codeaurora.org, linux-kernel@vger.kernel.org,
-        linux-pm@vger.kernel.org, swboyd@chromium.org,
-        dianders@chromium.org, mkshah@codeaurora.org,
-        Lina Iyer <ilina@codeaurora.org>
-Subject: [PATCH 2/2] drivers: qcom: rpmh-rsc: fix read back of trigger register
-Date:   Mon,  1 Jul 2019 09:29:07 -0600
-Message-Id: <20190701152907.16407-2-ilina@codeaurora.org>
-X-Mailer: git-send-email 2.22.0
-In-Reply-To: <20190701152907.16407-1-ilina@codeaurora.org>
-References: <20190701152907.16407-1-ilina@codeaurora.org>
+        Mon, 1 Jul 2019 11:29:21 -0400
+Received: by mail-lf1-f65.google.com with SMTP id q26so9119615lfc.3
+        for <linux-arm-msm@vger.kernel.org>; Mon, 01 Jul 2019 08:29:20 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=SOvEzIsyPYSWoFpceKvBPzRNKwkTSAIVrMTKJiszK48=;
+        b=JWEisIGnTrJG4aQ3q4jIgAOPzd8kW/+9VKiP4BKx1byI/FJGlLm5h1BCz7GVF9wygr
+         s+b7qmoxpgsOUS9uaFZcrlumh6txTejxR/pBZNRcsRt3Uhtl6aTBmst6cpHuirxwrGdC
+         NHUxDgDXUGC4stfKORU/UYvBjEf/ZaAIn/e94WeyfJzUw+Txrwgs2Q8fMLSChNkQ/UtA
+         R2RQqH+QaKBJVvV8gTZ84Iw+uHKbipvXNnVv1q56vw4Cnp7N2n1u7v/OsjK8F0B2frUE
+         Y7NYDQlPjVf0i3+OvqkAkSzFzFu0Rd/rLyCvRZMXsz9UQgVr7dkiaWRlPpfxNZwvx9YY
+         O/1g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=SOvEzIsyPYSWoFpceKvBPzRNKwkTSAIVrMTKJiszK48=;
+        b=WsMM7AOAn+Mbnm2/A9PmZfBVm779WK1Q9U3yiCetjygRyhhqROg5ml7OJOmGJPKBQm
+         t//lDMmNi5JuGAEt+vRujz5ZM/kbz3BrvKr3p6nqm7/q5Y6fIpzK4EMZW/9Pccj5FiNL
+         fscg1BhZlyez17wG4AgP6XeAdyTK2arF9ZMCyuMLENR2qXiRi5mq7czr9mSh2wqtxjRz
+         FbvKwhq5er5MaFOOxpg5FKPyDsplGMAdivs0/Dw5JiubVRCKNL0GyREfqSDvpJ1k62bB
+         jhWSC2Y5Ggq7xbOf9B+IVtX8j4itwE0SnNTr7YJGlykohrAxIFlIs7569uyvZmOglCQr
+         eELw==
+X-Gm-Message-State: APjAAAWlGyZLmV2aGHC0LHPb3xzoGtyPPZ3/EICiJLBFFmN51TgdQ/yv
+        VNMt9wIYNn/vzSjytI3uxy3eKA==
+X-Google-Smtp-Source: APXvYqwUvpqn/mr43CFHEsb/8WcOP2CsUKU/Z3SbznwJvpse4MzzqIf3giHXr01yQcLxIRKL1UoEYg==
+X-Received: by 2002:a19:750b:: with SMTP id y11mr12011957lfe.16.1561994959680;
+        Mon, 01 Jul 2019 08:29:19 -0700 (PDT)
+Received: from [192.168.27.209] ([37.157.136.206])
+        by smtp.googlemail.com with ESMTPSA id q4sm3742689lje.99.2019.07.01.08.29.18
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Mon, 01 Jul 2019 08:29:18 -0700 (PDT)
+Subject: Re: [PATCH] media: venus: Update to bitrate based clock scaling
+To:     Aniket Masule <amasule@codeaurora.org>, linux-media@vger.kernel.org
+Cc:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        vgarodia@codeaurora.org
+References: <1561537416-2067-1-git-send-email-amasule@codeaurora.org>
+From:   Stanimir Varbanov <stanimir.varbanov@linaro.org>
+Message-ID: <562ad77d-1259-b757-03be-3fd9d56ad8ec@linaro.org>
+Date:   Mon, 1 Jul 2019 18:29:17 +0300
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+ Thunderbird/60.7.1
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+In-Reply-To: <1561537416-2067-1-git-send-email-amasule@codeaurora.org>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-When triggering a TCS to send its contents, reading back the trigger
-value may return an incorrect value. That is because, writing the
-trigger may raise an interrupt which could be handled immediately and
-the trigger value could be reset in the interrupt handler. By doing a
-read back we may end up spinning waiting for the value we wrote.
+Hi Aniket,
 
-Fixes: 658628 ("drivers: qcom: rpmh-rsc: add RPMH controller for QCOM
-SoCs")
-Signed-off-by: Lina Iyer <ilina@codeaurora.org>
----
- drivers/soc/qcom/rpmh-rsc.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+On 6/26/19 11:23 AM, Aniket Masule wrote:
+> This patch introduces bitrate based clock scaling. Also, clock scaling is now
+> triggered before buffer being queued to the device. This checks for frequency
+> requirement throughout the session and updates clock with correct frequency only
+> if requirement is changed.
+> 
+> Aniket Masule (1):
+>   media: venus: Update to bitrate based clock scaling
 
-diff --git a/drivers/soc/qcom/rpmh-rsc.c b/drivers/soc/qcom/rpmh-rsc.c
-index 92461311aef3..2fc2fa879480 100644
---- a/drivers/soc/qcom/rpmh-rsc.c
-+++ b/drivers/soc/qcom/rpmh-rsc.c
-@@ -300,7 +300,7 @@ static void __tcs_trigger(struct rsc_drv *drv, int tcs_id)
- 	enable = TCS_AMC_MODE_ENABLE;
- 	write_tcs_reg_sync(drv, RSC_DRV_CONTROL, tcs_id, enable);
- 	enable |= TCS_AMC_MODE_TRIGGER;
--	write_tcs_reg_sync(drv, RSC_DRV_CONTROL, tcs_id, enable);
-+	write_tcs_reg(drv, RSC_DRV_CONTROL, tcs_id, enable);
- }
- 
- static int check_for_req_inflight(struct rsc_drv *drv, struct tcs_group *tcs,
+You don't need cover letter for one patch. Also, please include this
+patch in "venus: Update clock scaling and core selection" series.
+
+> 
+>  drivers/media/platform/qcom/venus/core.c    | 16 +++++------
+>  drivers/media/platform/qcom/venus/core.h    |  1 +
+>  drivers/media/platform/qcom/venus/helpers.c | 43 +++++++++++++++++++++++++----
+>  3 files changed, 47 insertions(+), 13 deletions(-)
+> 
+
 -- 
-The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
-a Linux Foundation Collaborative Project
-
+regards,
+Stan
