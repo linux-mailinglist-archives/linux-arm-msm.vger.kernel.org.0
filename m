@@ -2,95 +2,83 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 065AA5C6EA
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Jul 2019 04:05:05 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 95CEC5C86A
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Jul 2019 06:37:00 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726638AbfGBCFE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 1 Jul 2019 22:05:04 -0400
-Received: from mail-pg1-f194.google.com ([209.85.215.194]:46043 "EHLO
-        mail-pg1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726486AbfGBCFD (ORCPT
+        id S1725834AbfGBEgw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 2 Jul 2019 00:36:52 -0400
+Received: from smtp.codeaurora.org ([198.145.29.96]:52190 "EHLO
+        smtp.codeaurora.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725648AbfGBEgw (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 1 Jul 2019 22:05:03 -0400
-Received: by mail-pg1-f194.google.com with SMTP id o13so2381762pgp.12
-        for <linux-arm-msm@vger.kernel.org>; Mon, 01 Jul 2019 19:05:03 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=GkukRNl2S7AKUKXitorWgt7om1NyQvPM7opONDpmqPY=;
-        b=rJeeRdylJOz5NeR9L9X3bJI26hQEjwb18eXhnGmp8pjy5+jWI9pgWlkOLZ0o2m/OcB
-         jN7o/ya9MPvlixbTkl2XRXqWDEDWjl5Ds42PG/Wckv8t///EJpk3/tf+C/gjvbRyYh0Z
-         P3GNpljXNtfh2WBb5+OAZb0iiSI3WkYz4nAiW/q1yTyZVg1J0eTC+wBe5Ew+ISOQJBHO
-         BYn0s5IE9xb/QHxpgtYaPQ5h5M91ZJ2u9Czv+xkPupREJjpcIKlLrnLtmGsmgHo9qa4Q
-         M338Ns28ORRgsjB9Lgvjaf3Jgxk+gdg58jTJijW3h8JSgi74heA7U/shs+EVocAri/mH
-         d6QA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=GkukRNl2S7AKUKXitorWgt7om1NyQvPM7opONDpmqPY=;
-        b=eolMiPryVfXvCqyHJDzEEXTI99wQQ7XmxArc6sPEJVnILkd/iKCH3n8qVQxmustSTR
-         yTlE+LKfxbw0h7tv+9hqkU1fIyFmaV2r7Qjs6G9myvoynpm0Bum/BFEJtEoagQ53vHcD
-         wnJ4tHf07Tpm7bYnkpt66X0DADSr8EY87p+t3GbKntS+F8m5/TmCFnrfAeBssQ9CUf8W
-         T9d6RBqszNmuyvlGHj625DTWdeuxTYn1P0tkYr9DZ8sz0NHJIOE7fA9hUohZPzXCfja9
-         fT7KjHAczjn9cd4vyHA1oTco8G5ycliG7MRQfsQKYNEnxAfh47o2z5RStbk2SAHjG2HT
-         Xj8g==
-X-Gm-Message-State: APjAAAUcng/XVDlzcBOYeg0BOAnS49aFb1dbX9o04FazdUdMjr7V8MCt
-        Mz4AjpRlfXBQte+8mveiO7JJsg==
-X-Google-Smtp-Source: APXvYqyPgKu+jIUNPCSoiBBTNt4IHiwOHu/QQGgwn9U3xBo9NbJ70oCRf13HF+icPFpm5l4tunLnhg==
-X-Received: by 2002:a65:6541:: with SMTP id a1mr27540440pgw.409.1562033102876;
-        Mon, 01 Jul 2019 19:05:02 -0700 (PDT)
-Received: from builder (104-188-17-28.lightspeed.sndgca.sbcglobal.net. [104.188.17.28])
-        by smtp.gmail.com with ESMTPSA id u23sm12678065pfn.140.2019.07.01.19.05.01
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Mon, 01 Jul 2019 19:05:02 -0700 (PDT)
-Date:   Mon, 1 Jul 2019 19:04:59 -0700
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Andy Gross <agross@kernel.org>, Ohad Ben-Cohen <ohad@wizery.com>,
-        Sibi Sankar <sibis@codeaurora.org>
-Cc:     linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 0/2] soc: qcom: mdt_loader: Support loading non-split
- firmware
-Message-ID: <20190702020459.GF1263@builder>
-References: <20190622012146.19719-1-bjorn.andersson@linaro.org>
+        Tue, 2 Jul 2019 00:36:52 -0400
+Received: by smtp.codeaurora.org (Postfix, from userid 1000)
+        id 6AE64607CA; Tue,  2 Jul 2019 04:36:51 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
+        s=default; t=1562042211;
+        bh=mgMehHvBkR+GBicy9Yj53pOCNoXk3pHBimhXl6uHn/A=;
+        h=From:To:Cc:Subject:Date:From;
+        b=lQnrgPrzoP6tXmO5ymf566ofe+JYIhP7Ukizfg70CdRNzrx5D7BN31R81R8dHnlHP
+         ZDORrOnyo3G43pfN+9bRAMhltfeJThv1A4vKgcKz/eycel6CPncf8mfnZI/EYQKkEe
+         njQugLVEGwVo6prDaTUGW6UF+jPFkZYBlmXsXWuI=
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        pdx-caf-mail.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.7 required=2.0 tests=ALL_TRUSTED,BAYES_00,
+        DKIM_INVALID,DKIM_SIGNED,SPF_NONE autolearn=no autolearn_force=no
+        version=3.4.0
+Received: from blr-ubuntu-173.qualcomm.com (blr-bdr-fw-01_globalnat_allzones-outside.qualcomm.com [103.229.18.19])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: rnayak@smtp.codeaurora.org)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 14DF1601B4;
+        Tue,  2 Jul 2019 04:36:48 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
+        s=default; t=1562042210;
+        bh=mgMehHvBkR+GBicy9Yj53pOCNoXk3pHBimhXl6uHn/A=;
+        h=From:To:Cc:Subject:Date:From;
+        b=CkiwfEX3pcuHxLNmwyGKq8LBRXwjpaBuphjz11/WOeKqNXuIiaeTCcu4d1khnnP+0
+         ccCC5bzpxoZ/zzuSezeXNJrAW6Qkr1uaKxFTq9SoUR8zXZqSIzR2ZodNLmm0Q4lpp+
+         BTR7eJ1IIdr7Ulmy/VBEL6qTr8TIP9BeYYjadYxI=
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 14DF1601B4
+Authentication-Results: pdx-caf-mail.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: pdx-caf-mail.web.codeaurora.org; spf=none smtp.mailfrom=rnayak@codeaurora.org
+From:   Rajendra Nayak <rnayak@codeaurora.org>
+To:     vireshk@kernel.org, sboyd@kernel.org
+Cc:     linux-pm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org,
+        Rajendra Nayak <rnayak@codeaurora.org>
+Subject: [PATCH 1/2] opp: Export dev_pm_opp_set_genpd_virt_dev()
+Date:   Tue,  2 Jul 2019 10:06:42 +0530
+Message-Id: <20190702043643.1746-1-rnayak@codeaurora.org>
+X-Mailer: git-send-email 2.21.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20190622012146.19719-1-bjorn.andersson@linaro.org>
-User-Agent: Mutt/1.10.0 (2018-05-17)
+Content-Transfer-Encoding: 8bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri 21 Jun 18:21 PDT 2019, Bjorn Andersson wrote:
+Export dev_pm_opp_set_genpd_virt_dev() so loadable modules can use it.
 
-> Typically the firmware files for the various remoteprocs is split in a number
-> of files. But in some releases these files are available in their unsplit form.
-> 
-> Extend the mdt loader to detect the unsplit firmware and load it transparently.
-> 
-> Also expose the function that compose the metadata header for validation and
-> use this from the modem remoteproc driver, so that it can support unsplit files
-> as well.
-> 
+Signed-off-by: Rajendra Nayak <rnayak@codeaurora.org>
+---
+ drivers/opp/core.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-Applied the two patches. Thanks Andy & Jeff.
+diff --git a/drivers/opp/core.c b/drivers/opp/core.c
+index 8fbdbedc009c..ae033bb1e5b7 100644
+--- a/drivers/opp/core.c
++++ b/drivers/opp/core.c
+@@ -1797,6 +1797,7 @@ struct opp_table *dev_pm_opp_set_genpd_virt_dev(struct device *dev,
+ 
+ 	return opp_table;
+ }
++EXPORT_SYMBOL_GPL(dev_pm_opp_set_genpd_virt_dev);
+ 
+ /**
+  * dev_pm_opp_put_genpd_virt_dev() - Releases resources blocked for genpd device.
+-- 
+QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
+of Code Aurora Forum, hosted by The Linux Foundation
 
-Regards,
-Bjorn
-
-> Bjorn Andersson (2):
->   soc: qcom: mdt_loader: Support loading non-split images
->   remoteproc: qcom: q6v5-mss: Support loading non-split images
-> 
->  drivers/remoteproc/qcom_q6v5_mss.c  | 33 ++++++++---
->  drivers/soc/qcom/mdt_loader.c       | 88 ++++++++++++++++++++++++++++-
->  include/linux/soc/qcom/mdt_loader.h |  2 +
->  3 files changed, 112 insertions(+), 11 deletions(-)
-> 
-> -- 
-> 2.18.0
-> 
