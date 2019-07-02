@@ -2,96 +2,74 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 865995C9C5
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Jul 2019 09:09:28 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B90B25CDF0
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Jul 2019 12:54:15 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725858AbfGBHJ2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 2 Jul 2019 03:09:28 -0400
-Received: from mga07.intel.com ([134.134.136.100]:37163 "EHLO mga07.intel.com"
+        id S1726733AbfGBKyK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 2 Jul 2019 06:54:10 -0400
+Received: from mail.kernel.org ([198.145.29.99]:60876 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1725802AbfGBHJ1 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 2 Jul 2019 03:09:27 -0400
-X-Amp-Result: SKIPPED(no attachment in message)
-X-Amp-File-Uploaded: False
-Received: from fmsmga003.fm.intel.com ([10.253.24.29])
-  by orsmga105.jf.intel.com with ESMTP/TLS/DHE-RSA-AES256-GCM-SHA384; 02 Jul 2019 00:08:45 -0700
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.63,442,1557212400"; 
-   d="scan'208";a="171683707"
-Received: from ahunter-desktop.fi.intel.com (HELO [10.237.72.122]) ([10.237.72.122])
-  by FMSMGA003.fm.intel.com with ESMTP; 02 Jul 2019 00:08:43 -0700
-Subject: Re: [PATCH v2] mmc: sdhci-msm: fix mutex while in spinlock
-To:     Jorge Ramirez-Ortiz <jorge.ramirez-ortiz@linaro.org>,
-        agross@kernel.org, ulf.hansson@linaro.org
-Cc:     bjorn.andersson@linaro.org, linux-arm-msm@vger.kernel.org,
-        linux-mmc@vger.kernel.org, linux-kernel@vger.kernel.org,
-        khasim.mohammed@linaro.org, vinod.koul@linaro.org
-References: <20190701150125.2602-1-jorge.ramirez-ortiz@linaro.org>
-From:   Adrian Hunter <adrian.hunter@intel.com>
-Organization: Intel Finland Oy, Registered Address: PL 281, 00181 Helsinki,
- Business Identity Code: 0357606 - 4, Domiciled in Helsinki
-Message-ID: <96f6f560-25fd-f33c-0b0d-eab6b67aa979@intel.com>
-Date:   Tue, 2 Jul 2019 10:07:34 +0300
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.7.1
+        id S1725767AbfGBKyK (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 2 Jul 2019 06:54:10 -0400
+Received: from vkoul-mobl.Dlink (unknown [49.207.58.199])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by mail.kernel.org (Postfix) with ESMTPSA id 37A3020659;
+        Tue,  2 Jul 2019 10:54:05 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=default; t=1562064849;
+        bh=p/6kpZRVuYcmAKV9AA32HXPzBIcdjFZSr6MNglqmZU4=;
+        h=From:To:Cc:Subject:Date:From;
+        b=s10W2HPOfV17SKau5EJj3XHdMNWutjyA2L8emWuqeBcgNjN4wv2AlsdoM++r4WWaf
+         JxgVJ3z5dd0JaZK8oM8zpKAwfpZgxNxxbzBL0ZHd1+EuqK32wQ0wGMS41DFgD6R2UO
+         7gkppgnp7T9gFLTb8f2W2JAdJJQYJtNDTlErxNy4=
+From:   Vinod Koul <vkoul@kernel.org>
+To:     Linus Walleij <linus.walleij@linaro.org>
+Cc:     linux-arm-msm@vger.kernel.org,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Vinod Koul <vkoul@kernel.org>, Andy Gross <agross@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Mark Rutland <mark.rutland@arm.com>,
+        linux-gpio@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: [PATCH v2 0/3] ipinctrl: qcom: Add support for SM8150
+Date:   Tue,  2 Jul 2019 16:20:42 +0530
+Message-Id: <20190702105045.27646-1-vkoul@kernel.org>
+X-Mailer: git-send-email 2.20.1
 MIME-Version: 1.0
-In-Reply-To: <20190701150125.2602-1-jorge.ramirez-ortiz@linaro.org>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 1/07/19 6:01 PM, Jorge Ramirez-Ortiz wrote:
-> mutexes can sleep and therefore should not be taken while holding a
-> spinlock. move clk_get_rate (can sleep) outside the spinlock protected
-> region.
-> 
-> Fixes: 83736352e0ca ("mmc: sdhci-msm: Update DLL reset sequence")
-> Cc: stable@vger.kernel.org
-> Signed-off-by: Jorge Ramirez-Ortiz <jorge.ramirez-ortiz@linaro.org>
-> Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+This series adds binding and driver for SM8150 pinctrl block. Also fixes one
+binding missing gpio node for msm8998.
 
-Acked-by: Adrian Hunter <adrian.hunter@intel.com>
+Changes since v2:
+ - Order the function names and squash functions
+ - document gpio-ranges and gpio-reserved-ranges
+ - change ufs reset to be after gpios
+ - fix pin58 having qdss_cti twice
+ - remove .owner
+ - Add one patch for missing gpio nodes
 
-> ---
->  drivers/mmc/host/sdhci-msm.c | 9 ++++++---
->  1 file changed, 6 insertions(+), 3 deletions(-)
-> 
-> diff --git a/drivers/mmc/host/sdhci-msm.c b/drivers/mmc/host/sdhci-msm.c
-> index 5fc76a1993d0..9cf14b359c14 100644
-> --- a/drivers/mmc/host/sdhci-msm.c
-> +++ b/drivers/mmc/host/sdhci-msm.c
-> @@ -575,11 +575,14 @@ static int msm_init_cm_dll(struct sdhci_host *host)
->  	struct sdhci_pltfm_host *pltfm_host = sdhci_priv(host);
->  	struct sdhci_msm_host *msm_host = sdhci_pltfm_priv(pltfm_host);
->  	int wait_cnt = 50;
-> -	unsigned long flags;
-> +	unsigned long flags, xo_clk = 0;
->  	u32 config;
->  	const struct sdhci_msm_offset *msm_offset =
->  					msm_host->offset;
->  
-> +	if (msm_host->use_14lpp_dll_reset && !IS_ERR_OR_NULL(msm_host->xo_clk))
-> +		xo_clk = clk_get_rate(msm_host->xo_clk);
-> +
->  	spin_lock_irqsave(&host->lock, flags);
->  
->  	/*
-> @@ -627,10 +630,10 @@ static int msm_init_cm_dll(struct sdhci_host *host)
->  		config &= CORE_FLL_CYCLE_CNT;
->  		if (config)
->  			mclk_freq = DIV_ROUND_CLOSEST_ULL((host->clock * 8),
-> -					clk_get_rate(msm_host->xo_clk));
-> +					xo_clk);
->  		else
->  			mclk_freq = DIV_ROUND_CLOSEST_ULL((host->clock * 4),
-> -					clk_get_rate(msm_host->xo_clk));
-> +					xo_clk);
->  
->  		config = readl_relaxed(host->ioaddr +
->  				msm_offset->core_dll_config_2);
-> 
+Prasad Sodagudi (2):
+  dt-bindings: pinctrl: qcom: Add SM8150 pinctrl binding
+  pinctrl: qcom: Add SM8150 pinctrl driver
+
+Vinod Koul (1):
+  dt-bindings: pinctrl: qcom: Document missing gpio nodes
+
+ .../bindings/pinctrl/qcom,msm8998-pinctrl.txt |   10 +
+ .../bindings/pinctrl/qcom,sm8150-pinctrl.txt  |  190 ++
+ drivers/pinctrl/qcom/Kconfig                  |    9 +
+ drivers/pinctrl/qcom/Makefile                 |    1 +
+ drivers/pinctrl/qcom/pinctrl-sm8150.c         | 1548 +++++++++++++++++
+ 5 files changed, 1758 insertions(+)
+ create mode 100644 Documentation/devicetree/bindings/pinctrl/qcom,sm8150-pinctrl.txt
+ create mode 100644 drivers/pinctrl/qcom/pinctrl-sm8150.c
+
+-- 
+2.20.1
 
