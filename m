@@ -2,144 +2,93 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 431385D10A
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Jul 2019 15:53:29 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 86B4E5D1FC
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Jul 2019 16:47:01 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726635AbfGBNxX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 2 Jul 2019 09:53:23 -0400
-Received: from mail-ed1-f67.google.com ([209.85.208.67]:38410 "EHLO
-        mail-ed1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726430AbfGBNxX (ORCPT
+        id S1725981AbfGBOqz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 2 Jul 2019 10:46:55 -0400
+Received: from smtp.codeaurora.org ([198.145.29.96]:45626 "EHLO
+        smtp.codeaurora.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725940AbfGBOqz (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 2 Jul 2019 09:53:23 -0400
-Received: by mail-ed1-f67.google.com with SMTP id r12so27372828edo.5;
-        Tue, 02 Jul 2019 06:53:21 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=AoEb1XK5dWnAb/XBdu/lZ2XdsXhNA2v9oOFATUDjbD0=;
-        b=rRQSPxyTMuRnQn9dQ6uPjqvkwKpDvf2xgxGrMy0XuEWVzfk3IEvNkguAVRY9nRJYfo
-         gZah0iQhsaCPAwpjLSCemmq8gLLTpII+ti5c6I6TUMrtAzYuZhTP0K1rp+4RCDDgpWzE
-         bZc0osHIzLMqxhMLGZhWF899HZ4WnRIySFcnFDj5Ms0T0D+3dNcKCDkMzSF5SWga0uyP
-         VpYLcBDsXv2y3SSGlYyIshk4eC28J6M+XEqfASKd8VFtHF2FBaPTuCruVMppchbac3Ax
-         AEP45WNtQ+9COLmubIsqWyYzl1QLchUtPfD4LccbjDoAwgxuqOVjD3OBBIag2Lf/5D08
-         PWFg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=AoEb1XK5dWnAb/XBdu/lZ2XdsXhNA2v9oOFATUDjbD0=;
-        b=HqrLaYe8Yucz1MVcz6FqmiXKITW1gpkazj/Zj7QCXeT6Nhv7o6rRwjrNauI29r5Raf
-         3ELw65cDmgqOrA5m1D2nxitsTjz8OfpDWgTjeeh7n3mvzgQhZv+hap4QbeevCNFK1w4G
-         +Nu9zY6C0NRUPa1/0Gf7Q2z5B59KvYihJbiKr8yOPJrr/NH6zpGwn0M7VWhLqACcBwHF
-         hoEmJQ7XOKQZgSC8JXKVpJe/ePKKoYGAuvINMLiegbQhpraMSv7I1r6U/b+u4bjb7veI
-         vLsiJ9jh+l2VJWILap7NIW4SMWrbbG4YYCK28nelql0Q/eiwyGX/J6tktG61CeJlU94G
-         bD3Q==
-X-Gm-Message-State: APjAAAWFnA3qXjxhrPd2Jvdmwi/EZU52fg/09EfKIl2+KR9ugKwt2O3+
-        2nQDsiFuPeUU/qiv0tSOn0JG1GanxQCiIBMvuvbkDf9ZdWc=
-X-Google-Smtp-Source: APXvYqyI5MP1Q8XIiLRjo4pLVTzxgZBBN8zypGreqic/xheUF0/IxxIdEzjsWYjgmlEDl7MpPt0LDnPWwQX2r7zymnI=
-X-Received: by 2002:a17:906:3f87:: with SMTP id b7mr28163648ejj.164.1562075600813;
- Tue, 02 Jul 2019 06:53:20 -0700 (PDT)
-MIME-Version: 1.0
-References: <20190630150230.7878-1-robdclark@gmail.com> <20190630150230.7878-5-robdclark@gmail.com>
- <75a2921d-bf1a-c4c1-6d9a-122474eface4@codeaurora.org> <CAF6AEGufiSU_sFZFdLH=KT5iCQGwccszURqAQCHd=dhuZafvZg@mail.gmail.com>
- <9fbf9226-578a-90aa-693d-9ea4fcda8281@codeaurora.org>
-In-Reply-To: <9fbf9226-578a-90aa-693d-9ea4fcda8281@codeaurora.org>
-From:   Rob Clark <robdclark@gmail.com>
-Date:   Tue, 2 Jul 2019 06:53:05 -0700
-Message-ID: <CAF6AEGuze-mnUQy36UvB-JCp3KUASgTa+0dh4i_AFdmYX0tzuw@mail.gmail.com>
-Subject: Re: [PATCH 4/5] drm/msm/dsi: get the clocks into OFF state at init
-To:     Jeffrey Hugo <jhugo@codeaurora.org>
-Cc:     dri-devel <dri-devel@lists.freedesktop.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        freedreno <freedreno@lists.freedesktop.org>,
-        aarch64-laptops@lists.linaro.org,
-        linux-clk <linux-clk@vger.kernel.org>,
-        Linux PM <linux-pm@vger.kernel.org>,
-        Rob Clark <robdclark@chromium.org>,
-        Sean Paul <sean@poorly.run>, David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Jordan Crouse <jcrouse@codeaurora.org>,
-        Abhinav Kumar <abhinavk@codeaurora.org>,
-        Sibi Sankar <sibis@codeaurora.org>,
-        Mamta Shukla <mamtashukla555@gmail.com>,
-        Chandan Uddaraju <chandanu@codeaurora.org>,
-        Rajesh Yadav <ryadav@codeaurora.org>,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+        Tue, 2 Jul 2019 10:46:55 -0400
+Received: by smtp.codeaurora.org (Postfix, from userid 1000)
+        id A9D786083E; Tue,  2 Jul 2019 14:46:54 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
+        s=default; t=1562078814;
+        bh=GL5oxwciHlPA4OKTaH0DTDL7syhHG0cECRKJ9aG3R9M=;
+        h=From:To:Cc:Subject:Date:From;
+        b=a+Z9cFdlhKPQwzMIsRxLHEH3TpnV8NRbwR/8+QhI7YAn5uPsI0Jx424723D6+uFYh
+         nE9OcXG1Uag94sQ9ZwYNvw3t1wseLY1Enw5Sy/M9bcvqTP1e+MTzASeRzt8LT2+Ez0
+         DN2fs6orHEsIQAyCTceQiogti/BilIF43KrHvbtU=
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        pdx-caf-mail.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.7 required=2.0 tests=ALL_TRUSTED,BAYES_00,
+        DKIM_INVALID,DKIM_SIGNED,SPF_NONE autolearn=no autolearn_force=no
+        version=3.4.0
+Received: from amasule-linux.qualcomm.com (blr-c-bdr-fw-01_globalnat_allzones-outside.qualcomm.com [103.229.19.19])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: amasule@codeaurora.org)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 401436025A;
+        Tue,  2 Jul 2019 14:46:51 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
+        s=default; t=1562078814;
+        bh=GL5oxwciHlPA4OKTaH0DTDL7syhHG0cECRKJ9aG3R9M=;
+        h=From:To:Cc:Subject:Date:From;
+        b=a+Z9cFdlhKPQwzMIsRxLHEH3TpnV8NRbwR/8+QhI7YAn5uPsI0Jx424723D6+uFYh
+         nE9OcXG1Uag94sQ9ZwYNvw3t1wseLY1Enw5Sy/M9bcvqTP1e+MTzASeRzt8LT2+Ez0
+         DN2fs6orHEsIQAyCTceQiogti/BilIF43KrHvbtU=
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 401436025A
+Authentication-Results: pdx-caf-mail.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: pdx-caf-mail.web.codeaurora.org; spf=none smtp.mailfrom=amasule@codeaurora.org
+From:   Aniket Masule <amasule@codeaurora.org>
+To:     linux-media@vger.kernel.org, stanimir.varbanov@linaro.org
+Cc:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        vgarodia@codeaurora.org, Aniket Masule <amasule@codeaurora.org>
+Subject: [PATCH v4 0/4] media: venus: Update clock scaling and core selection
+Date:   Tue,  2 Jul 2019 20:16:23 +0530
+Message-Id: <1562078787-516-1-git-send-email-amasule@codeaurora.org>
+X-Mailer: git-send-email 1.9.1
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Jul 1, 2019 at 12:07 PM Jeffrey Hugo <jhugo@codeaurora.org> wrote:
->
-> On 7/1/2019 12:58 PM, Rob Clark wrote:
-> > On Mon, Jul 1, 2019 at 11:37 AM Jeffrey Hugo <jhugo@codeaurora.org> wrote:
-> >>
-> >> On 6/30/2019 9:01 AM, Rob Clark wrote:
-> >>> From: Rob Clark <robdclark@chromium.org>
-> >>>
-> >>> Do an extra enable/disable cycle at init, to get the clks into disabled
-> >>> state in case bootloader left them enabled.
-> >>>
-> >>> In case they were already enabled, the clk_prepare_enable() has no real
-> >>> effect, other than getting the enable_count/prepare_count into the right
-> >>> state so that we can disable clocks in the correct order.  This way we
-> >>> avoid having stuck clocks when we later want to do a modeset and set the
-> >>> clock rates.
-> >>>
-> >>> Signed-off-by: Rob Clark <robdclark@chromium.org>
-> >>> ---
-> >>>    drivers/gpu/drm/msm/dsi/dsi_host.c         | 18 +++++++++++++++---
-> >>>    drivers/gpu/drm/msm/dsi/pll/dsi_pll_10nm.c |  1 +
-> >>>    2 files changed, 16 insertions(+), 3 deletions(-)
-> >>>
-> >>> diff --git a/drivers/gpu/drm/msm/dsi/pll/dsi_pll_10nm.c b/drivers/gpu/drm/msm/dsi/pll/dsi_pll_10nm.c
-> >>> index aabab6311043..d0172d8db882 100644
-> >>> --- a/drivers/gpu/drm/msm/dsi/pll/dsi_pll_10nm.c
-> >>> +++ b/drivers/gpu/drm/msm/dsi/pll/dsi_pll_10nm.c
-> >>> @@ -354,6 +354,7 @@ static int dsi_pll_10nm_lock_status(struct dsi_pll_10nm *pll)
-> >>>        if (rc)
-> >>>                pr_err("DSI PLL(%d) lock failed, status=0x%08x\n",
-> >>>                       pll->id, status);
-> >>> +rc = 0; // HACK, this will fail if PLL already running..
-> >>
-> >> Umm, why?  Is this intentional?
-> >>
-> >
-> > I need to sort out a proper solution for this.. but PLL lock will fail
-> > if the clk is already running (which, in that case, is fine since it
-> > is already running and locked), which will cause the clk_enable to
-> > fail..
-> >
-> > I guess there is some way that I can check that clk is already running
-> > and skip this check..
->
->
-> I'm sorry, but this makes no sense to me.  What clock are we talking
-> about here?
->
-> If the pll is locked, the the lock check should just drop through.  If
-> the pll cannot lock, you have an issue.  I'm confused as to how any of
-> the downstream clocks can actually be running if the pll isn't locked.
->
-> I feel like we are not yet on the same page about what situation you
-> seem to be in.  Can you describe in exacting detail?
->
+In this patch series, clock scaling and core selection methods are
+updated. Current clock scaling and core selection methods are same
+for vpu4 and previous versions. Introducing load calculations using
+vpp cycles, which indicates the cycles required by video hardware to
+process each macroblock. Also adding vsp cycles, cycles require by
+stream processor. Clock scaling is now done more precisely using vpp
+and vsp cycles. Instance is assigned to core with minimum load, instead
+of static assignment.
 
-So, I went back to check some of the kernel logs, and actually the
-case where we were hitting the PLL lock fail was -EPROBE_DEFER cases,
-so what was happening is the enable/disable cycle would succeed the
-first time, but then we'd -EPROBE_DEFER.  Then after a suspend/resume
-cycle, we'd try again, but this time pll's were reset to power on
-state, and we weren't setting rate.
+Changes since v3:
+ - vsp_cycles and vpp_cyles are now unsigned long.
+ - Core number counting aligned with VIDC_CORE_ID_.
+ - Aligned hardware overload handling of scale_clocks_v4 with scale_clocks.
+ - Added bitrate based clock scaling patch in this patch series.
+ - Instance state check is now moved from scale_clocks to load_scale_clocks.
 
-With the other patchset[1] I sent over the weekend, this should no
-longer be a problem so I can drop the hack.
+Aniket Masule (4):
+  media: venus: Add codec data table
+  media: venus: Update clock scaling
+  media: venus: Update to bitrate based clock scaling
+  media: venus: Update core selection
 
-BR,
--R
+ drivers/media/platform/qcom/venus/core.c       |  13 ++
+ drivers/media/platform/qcom/venus/core.h       |  16 ++
+ drivers/media/platform/qcom/venus/helpers.c    | 213 +++++++++++++++++++++++--
+ drivers/media/platform/qcom/venus/helpers.h    |   3 +-
+ drivers/media/platform/qcom/venus/hfi_helper.h |   1 +
+ drivers/media/platform/qcom/venus/hfi_parser.h |   5 +
+ drivers/media/platform/qcom/venus/vdec.c       |   6 +-
+ drivers/media/platform/qcom/venus/venc.c       |   6 +-
+ 8 files changed, 250 insertions(+), 13 deletions(-)
 
-[1] https://patchwork.freedesktop.org/series/63000/
+-- 
+The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
+a Linux Foundation Collaborative Project
+
