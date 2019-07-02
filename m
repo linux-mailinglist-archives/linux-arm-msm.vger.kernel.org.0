@@ -2,137 +2,210 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 4F4325D912
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Jul 2019 02:33:49 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A3B355D8F1
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Jul 2019 02:31:28 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727171AbfGCAds (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 2 Jul 2019 20:33:48 -0400
-Received: from mail-qk1-f175.google.com ([209.85.222.175]:45543 "EHLO
-        mail-qk1-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726652AbfGCAds (ORCPT
+        id S1726963AbfGCAbN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 2 Jul 2019 20:31:13 -0400
+Received: from mail-wr1-f67.google.com ([209.85.221.67]:46484 "EHLO
+        mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727053AbfGCAbN (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 2 Jul 2019 20:33:48 -0400
-Received: by mail-qk1-f175.google.com with SMTP id s22so363317qkj.12;
-        Tue, 02 Jul 2019 17:33:48 -0700 (PDT)
+        Tue, 2 Jul 2019 20:31:13 -0400
+Received: by mail-wr1-f67.google.com with SMTP id n4so633946wrw.13
+        for <linux-arm-msm@vger.kernel.org>; Tue, 02 Jul 2019 17:31:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=f88teEGjW0nN2FOE42nXfLv5A25XcE0eqQQ8ZnR07JU=;
-        b=Ll0agao4aIAnYcVNBBJOi+jd2NnL7QD8TFl2aymNrYa8HK9DfMy3v495p9gROFHA/u
-         tBjVOgT8daPT5d2w7eD0aIAJcOnV2Rm0aXDybT+G8nVx45y3yWG9lhFLBDmME6FqEjta
-         Ijtfff8L3j7Mg5evQw8L84tr7CfFcwbnR7f3OrWMYv8cO2+3YB5og9XSOe+WXbhBmh0X
-         zMnRegRXhZdqaIRGzM4fRFZzs3v+M9wwYnC0urB7YLmpETZ8ohPdGl9Q9vwZkX3eIeTH
-         GDEss+h6oeE5WZoM2Or2mJg/DW82eGWfRdwgsyXaTb+yeU+DW8GtpUyBE2U19ecsdLAX
-         3X5g==
+        d=linaro.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=4YffUmnYIYJSGCAfaNSWP1ayns5cp2QU4CpDgCgvPRE=;
+        b=efh0X4llLVWHu5Dg5iUHBFsqpiD3EAhHy0GSa4Rw1Z7MEpgWK+3Wx+qU22FGbxHH7z
+         Adqbj+oS3WaHZfvWf6Z7S+kxCLU3wfHEVZrZXPQPnhxe3AiJcZlGG/GqThd7oay8i3Lu
+         NEYlEK6E22/86kHuucUfo79XlxYDZKnuvzCEjbzM4HoeZPb33jKOfVMj79vrfpfqnJOk
+         fZI6hEX5hOZEWVoKzAxYMsbE4rVMB/nB3/IY0ffXy+zFTvD1MZeGhq7oJIEsguBrXKfD
+         uX817r4HZk99anNjIxdo0b4kaqF2C3Os/U+eWl9WkoCMVZI5nNNSfkrMJiOopDM6DQeC
+         ns6A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=f88teEGjW0nN2FOE42nXfLv5A25XcE0eqQQ8ZnR07JU=;
-        b=dkO8Oj1OO0+YaSFpUegTNolee5yulUY5/cVjPbgRPtMqn2pSeQgsPQLhqOZ4bZUlux
-         jkzftMq913vFCIsMGpyibgCG+sa/xrnaAo+QrHvPkVrzIoMYo/+utm/Qj2C78oWoSDWz
-         gp/j6RezdSqSYXelxp9U3I45oaQ4T0aEBmh+9KfLuGHPjvkC8ONFFvrsjHRySl8szcv6
-         JL7q7Af5uxCrjC0IEl2l9CrJbY3l2RTOLI79lNZ2krzXWENmv5OiuV8ClfzKK41NSRhL
-         n9QN9/GI0yvfvlB883Nek3eBBOA8NvojxYjwbPjTZSIPNWnbhxyM5DOjYxdp1Mevfp50
-         yU8Q==
-X-Gm-Message-State: APjAAAU7yd4BEcENQkH7qVDcnrOIDdQUW2OiCJtwD3a9S7SeCB5Sdqcu
-        9Cki7Fl1iq8MRUheZRU7uZ46MZPJn0+xbQ==
-X-Google-Smtp-Source: APXvYqwAlzApaqBBZtvqYr3CR/RH/kfQMFwRY/ZWxa5i4JJUxMfatKd6fTCEHxCx0jSEgts8E1Dq7w==
-X-Received: by 2002:a37:a882:: with SMTP id r124mr27068226qke.398.1562099242989;
-        Tue, 02 Jul 2019 13:27:22 -0700 (PDT)
-Received: from localhost ([2601:184:4780:7861:5010:5849:d76d:b714])
-        by smtp.gmail.com with ESMTPSA id r17sm10510qtf.26.2019.07.02.13.27.22
-        (version=TLS1_3 cipher=AEAD-AES256-GCM-SHA384 bits=256/256);
-        Tue, 02 Jul 2019 13:27:22 -0700 (PDT)
-From:   Rob Clark <robdclark@gmail.com>
-To:     iommu@lists.linux-foundation.org, dri-devel@lists.freedesktop.org
-Cc:     aarch64-laptops@lists.linaro.org,
-        Jordan Crouse <jcrouse@codeaurora.org>,
-        Rob Clark <robdclark@chromium.org>,
-        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Jonathan Marek <jonathan@marek.ca>,
-        Daniel Mack <daniel@zonque.org>,
-        Mamta Shukla <mamtashukla555@gmail.com>,
-        Jeykumar Sankaran <jsanka@codeaurora.org>,
-        Abhinav Kumar <abhinavk@codeaurora.org>,
-        Bruce Wang <bzwang@chromium.org>,
-        Boris Brezillon <bbrezillon@kernel.org>,
-        linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org,
-        linux-kernel@vger.kernel.org
-Subject: [PATCH 2/2] drm/msm: mark devices where iommu is managed by driver
-Date:   Tue,  2 Jul 2019 13:26:19 -0700
-Message-Id: <20190702202631.32148-3-robdclark@gmail.com>
-X-Mailer: git-send-email 2.20.1
-In-Reply-To: <20190702202631.32148-1-robdclark@gmail.com>
-References: <20190702202631.32148-1-robdclark@gmail.com>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=4YffUmnYIYJSGCAfaNSWP1ayns5cp2QU4CpDgCgvPRE=;
+        b=f+ZG5yv06AkjIfSxO7GrTtLh5Y8wKwBpdBmOgl53+i1joXBaCkGV+EmUR0ebpBPgp/
+         sRIv5jT3MGK2I/9OlpdGl5M4YSvYaHh3qe9NQJUpKaVp/IgD9d5Zt8gh+ogt/EQAdA6e
+         EWo44366HdgZGEaVm9rf+QULuCXzr0uo+ma86RNzj1H5BVTHCrTtlR9qSudlAG2Y1Lgz
+         FBFH+fTb7acry2EEaCLCwn8AoMFLaBoP4C9KXQECJ9IQS4ig6qh/yv0PM2UkU2fmh2XW
+         J7008o2qOOw1+wxsw+jP8yL128ToOo1aTdEScW/uy0WheBqt3oPS30/p1AI8oAgWgBhA
+         AMcg==
+X-Gm-Message-State: APjAAAXf9409sOKu3d6O6CZJQTLVOhs0w+Msu26P6EAV+i4zJiVs4jDs
+        nadx3y9Dz0VjkTUyhMCweMiyMfuXc40170vTrhwjZlIl2HU=
+X-Google-Smtp-Source: APXvYqzqh9h/4RdbB/jYJGIotsVwMAaDcHyyKvBN+Zzh6AUchrrkcMUDuARE9cbiaNpeM76kcPfTnmDJ1m48uONJYvY=
+X-Received: by 2002:a5d:5589:: with SMTP id i9mr15370525wrv.198.1562099197663;
+ Tue, 02 Jul 2019 13:26:37 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <20190630203614.5290-1-robdclark@gmail.com> <20190630203614.5290-3-robdclark@gmail.com>
+In-Reply-To: <20190630203614.5290-3-robdclark@gmail.com>
+From:   Ard Biesheuvel <ard.biesheuvel@linaro.org>
+Date:   Tue, 2 Jul 2019 22:26:22 +0200
+Message-ID: <CAKv+Gu_8BOt+f8RTspHo+se-=igZba1zL0+jWLV2HuuUXCKYpA@mail.gmail.com>
+Subject: Re: [PATCH 2/4] efi/libstub: detect panel-id
+To:     Rob Clark <robdclark@gmail.com>
+Cc:     dri-devel <dri-devel@lists.freedesktop.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        freedreno@lists.freedesktop.org, aarch64-laptops@lists.linaro.org,
+        Rob Clark <robdclark@chromium.org>,
+        Ingo Molnar <mingo@kernel.org>, Will Deacon <will@kernel.org>,
+        Leif Lindholm <leif.lindholm@linaro.org>,
+        Alexander Graf <agraf@suse.de>,
+        Steve Capper <steve.capper@arm.com>,
+        Lukas Wunner <lukas@wunner.de>,
+        Julien Thierry <julien.thierry@arm.com>,
+        linux-efi <linux-efi@vger.kernel.org>,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Rob Clark <robdclark@chromium.org>
+On Sun, 30 Jun 2019 at 22:36, Rob Clark <robdclark@gmail.com> wrote:
+>
+> From: Rob Clark <robdclark@chromium.org>
+>
+> On snapdragon aarch64 laptops, a 'UEFIDisplayInfo' variable is provided
+> to communicate some information about the display.  Crutially it has the
+> panel-id, so the appropriate panel driver can be selected.  Read this
+> out and stash in /chosen/panel-id so that display driver can use it to
+> pick the appropriate panel.
+>
+> Signed-off-by: Rob Clark <robdclark@chromium.org>
 
-Signed-off-by: Rob Clark <robdclark@chromium.org>
----
- drivers/gpu/drm/msm/adreno/adreno_device.c | 1 +
- drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c    | 1 +
- drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c   | 1 +
- drivers/gpu/drm/msm/msm_drv.c              | 1 +
- 4 files changed, 4 insertions(+)
+Hi Rob,
 
-diff --git a/drivers/gpu/drm/msm/adreno/adreno_device.c b/drivers/gpu/drm/msm/adreno/adreno_device.c
-index b907245d3d96..d9ac8c4cd866 100644
---- a/drivers/gpu/drm/msm/adreno/adreno_device.c
-+++ b/drivers/gpu/drm/msm/adreno/adreno_device.c
-@@ -441,6 +441,7 @@ static struct platform_driver adreno_driver = {
- 		.name = "adreno",
- 		.of_match_table = dt_match,
- 		.pm = &adreno_pm_ops,
-+		.driver_manages_iommu = true,
- 	},
- };
- 
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
-index 39378ace57a6..001fa7986f31 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
-@@ -1127,6 +1127,7 @@ static struct platform_driver dpu_driver = {
- 		.name = "msm_dpu",
- 		.of_match_table = dpu_dt_match,
- 		.pm = &dpu_pm_ops,
-+		.driver_manages_iommu = true,
- 	},
- };
- 
-diff --git a/drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c b/drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c
-index 97179bec8902..2a1b8709d0dc 100644
---- a/drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c
-+++ b/drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c
-@@ -1100,6 +1100,7 @@ static struct platform_driver mdp5_driver = {
- 		.name = "msm_mdp",
- 		.of_match_table = mdp5_dt_match,
- 		.pm = &mdp5_pm_ops,
-+		.driver_manages_iommu = true,
- 	},
- };
- 
-diff --git a/drivers/gpu/drm/msm/msm_drv.c b/drivers/gpu/drm/msm/msm_drv.c
-index 31deb87abfc6..16094b8c5418 100644
---- a/drivers/gpu/drm/msm/msm_drv.c
-+++ b/drivers/gpu/drm/msm/msm_drv.c
-@@ -1352,6 +1352,7 @@ static struct platform_driver msm_platform_driver = {
- 		.name   = "msm",
- 		.of_match_table = dt_match,
- 		.pm     = &msm_pm_ops,
-+		.driver_manages_iommu = true,
- 	},
- };
- 
--- 
-2.20.1
+I understand why you are doing this, but this *really* belongs elsewhere.
 
+So we are dealing with a platform that violates the UEFI spec, since
+it does not bother to implement variable services at runtime (because
+MS let the vendor get away with this).
+
+First of all, to pass data between the EFI stub and the OS proper, we
+should use a configuration table rather than a DT property, since the
+former is ACPI/DT agnostic. Also, I'd like the consumer of the data to
+actually interpret it, i.e., just dump the whole opaque thing into a
+config table in the stub, and do the parsing in the OS proper.
+
+However, I am not thrilled at adding code to the stub that
+unconditionally looks for some variable with some magic name on all
+ARM/arm64 EFI systems, so this will need to live under a Kconfig
+option that depends on ARM64 (and does not default to y)
+
+
+
+> ---
+>  drivers/firmware/efi/libstub/arm-stub.c | 49 +++++++++++++++++++++++++
+>  drivers/firmware/efi/libstub/efistub.h  |  2 +
+>  drivers/firmware/efi/libstub/fdt.c      |  9 +++++
+>  3 files changed, 60 insertions(+)
+>
+> diff --git a/drivers/firmware/efi/libstub/arm-stub.c b/drivers/firmware/efi/libstub/arm-stub.c
+> index 04e6ecd72cd9..999813252e0d 100644
+> --- a/drivers/firmware/efi/libstub/arm-stub.c
+> +++ b/drivers/firmware/efi/libstub/arm-stub.c
+> @@ -69,6 +69,53 @@ static struct screen_info *setup_graphics(efi_system_table_t *sys_table_arg)
+>         return si;
+>  }
+>
+> +/*
+> + * We (at least currently) don't care about most of the fields, just
+> + * panel_id:
+> + */
+> +struct mdp_disp_info {
+> +       u32 version_info;
+> +       u32 pad0[9];
+> +       u32 panel_id;
+> +       u32 pad1[17];
+> +};
+> +
+> +#define MDP_DISP_INFO_VERSION_MAGIC 0xaa
+> +
+> +static void get_panel_id(efi_system_table_t *sys_table_arg,
+> +                        unsigned long fdt_addr)
+> +{
+> +       efi_guid_t gop_proto = EFI_GRAPHICS_OUTPUT_PROTOCOL_GUID;
+> +       efi_status_t status;
+> +       struct mdp_disp_info *disp_info;
+> +       unsigned long size = 0;
+> +
+> +       status = efi_call_runtime(get_variable, L"UEFIDisplayInfo",
+> +                                 &gop_proto, NULL, &size, NULL);
+> +       if (status == EFI_NOT_FOUND)
+> +               return;
+> +
+> +       status = efi_call_early(allocate_pool, EFI_LOADER_DATA, size,
+> +                               (void **)&disp_info);
+> +       if (status != EFI_SUCCESS)
+> +               return;
+> +
+> +       status = efi_call_runtime(get_variable, L"UEFIDisplayInfo",
+> +                                 &gop_proto, NULL, &size, disp_info);
+> +       if (status != EFI_SUCCESS)
+> +               goto cleanup;
+> +
+> +       if ((disp_info->version_info >> 16) != MDP_DISP_INFO_VERSION_MAGIC)
+> +               goto cleanup;
+> +
+> +       efi_printk(sys_table_arg, "found a panel-id!\n");
+> +
+> +       set_chosen_panel_id(fdt_addr, disp_info->panel_id);
+> +
+> +cleanup:
+> +       efi_call_early(free_pool, disp_info);
+> +}
+> +
+>  void install_memreserve_table(efi_system_table_t *sys_table_arg)
+>  {
+>         struct linux_efi_memreserve *rsv;
+> @@ -229,6 +276,8 @@ unsigned long efi_entry(void *handle, efi_system_table_t *sys_table,
+>         if (!fdt_addr)
+>                 pr_efi(sys_table, "Generating empty DTB\n");
+>
+> +       get_panel_id(sys_table, fdt_addr);
+> +
+>         status = handle_cmdline_files(sys_table, image, cmdline_ptr, "initrd=",
+>                                       efi_get_max_initrd_addr(dram_base,
+>                                                               *image_addr),
+> diff --git a/drivers/firmware/efi/libstub/efistub.h b/drivers/firmware/efi/libstub/efistub.h
+> index 1b1dfcaa6fb9..8832cb9a7a40 100644
+> --- a/drivers/firmware/efi/libstub/efistub.h
+> +++ b/drivers/firmware/efi/libstub/efistub.h
+> @@ -39,6 +39,8 @@ void efi_char16_printk(efi_system_table_t *, efi_char16_t *);
+>
+>  unsigned long get_dram_base(efi_system_table_t *sys_table_arg);
+>
+> +void set_chosen_panel_id(unsigned long fdt_addr, unsigned panel_id);
+> +
+>  efi_status_t allocate_new_fdt_and_exit_boot(efi_system_table_t *sys_table,
+>                                             void *handle,
+>                                             unsigned long *new_fdt_addr,
+> diff --git a/drivers/firmware/efi/libstub/fdt.c b/drivers/firmware/efi/libstub/fdt.c
+> index 5440ba17a1c5..cb6ea160a40a 100644
+> --- a/drivers/firmware/efi/libstub/fdt.c
+> +++ b/drivers/firmware/efi/libstub/fdt.c
+> @@ -200,6 +200,15 @@ static efi_status_t update_fdt_memmap(void *fdt, struct efi_boot_memmap *map)
+>         return EFI_SUCCESS;
+>  }
+>
+> +void set_chosen_panel_id(unsigned long fdt_addr, unsigned panel_id)
+> +{
+> +       void *fdt = (void *)fdt_addr;
+> +       int node = fdt_subnode_offset(fdt, 0, "chosen");
+> +       u32 fdt_val32 = cpu_to_fdt32(panel_id);
+> +
+> +       fdt_setprop_var(fdt, node, "panel-id", fdt_val32);
+> +}
+> +
+>  #ifndef EFI_FDT_ALIGN
+>  # define EFI_FDT_ALIGN EFI_PAGE_SIZE
+>  #endif
+> --
+> 2.20.1
+>
