@@ -2,186 +2,128 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 4D02B5D6B0
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Jul 2019 21:15:30 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C1C3B5DB24
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Jul 2019 03:50:22 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726962AbfGBTPZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 2 Jul 2019 15:15:25 -0400
-Received: from smtp.codeaurora.org ([198.145.29.96]:49670 "EHLO
-        smtp.codeaurora.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726329AbfGBTPZ (ORCPT
+        id S1727100AbfGCBuV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 2 Jul 2019 21:50:21 -0400
+Received: from mail-qt1-f193.google.com ([209.85.160.193]:38685 "EHLO
+        mail-qt1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726329AbfGCBuV (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 2 Jul 2019 15:15:25 -0400
-Received: by smtp.codeaurora.org (Postfix, from userid 1000)
-        id C8A2D607B9; Tue,  2 Jul 2019 19:15:23 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
-        s=default; t=1562094923;
-        bh=X8Aoljm0LYeyxBEqbEVId7mUQqHptsmMGCGTKktZVAA=;
-        h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
-        b=N/PcbyT58Do7LICpzhWUA4B3V217FV7Ad9lbkyim+DNPhlNSr7cWqiwqV7OYKJ4hd
-         YQmrx995MCms606pArLo4LiTFwCY/wvGw228u+vz6nw/AMJ7EPyxjWp6WoxSYzuYxz
-         CFIii91QxvHmYF7aCBDJVcoU5XwhQbZPo5zJQgQU=
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        pdx-caf-mail.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.7 required=2.0 tests=ALL_TRUSTED,BAYES_00,
-        DKIM_INVALID,DKIM_SIGNED autolearn=no autolearn_force=no version=3.4.0
-Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
-        by smtp.codeaurora.org (Postfix) with ESMTP id C6F8C60746;
-        Tue,  2 Jul 2019 19:15:22 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
-        s=default; t=1562094922;
-        bh=X8Aoljm0LYeyxBEqbEVId7mUQqHptsmMGCGTKktZVAA=;
-        h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
-        b=lHcJ/6o71zHCEADhRs23OU6NF+fNeaAPkCHRI05v5co4mdYEj3f7sPw5dx+lZhLQe
-         SRAbtSg4y9iUnsw603C34us7Wsql3rW0zwF1DPBSYa6yBz2BrRNMxmNwCMFDKg2dF4
-         gWsdl5907wyfFiDc6aRnjlssZQ3V6wedqenCYRm4=
+        Tue, 2 Jul 2019 21:50:21 -0400
+Received: by mail-qt1-f193.google.com with SMTP id n11so826062qtl.5;
+        Tue, 02 Jul 2019 18:50:21 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=aM7TEuKumvUMe3SbB3+XmY4I8aQKFrST7xx8ZApBOcM=;
+        b=Y0c3Zbx/HklkB3ZQUMPUnd3cuD2+CXBd/qv6pY0OkEJTg/+z03wi0oF1CvFJYsaUkZ
+         4zHdADC6xI/bjao5kJDJAheklnpxnkP641vjkWWAD6dXp83EK+bgIBqRrhp5R+e9GhCz
+         zCGy7sAlE3XsPTlqcBMQPxFhUYqm5Yg2JhxtQejc7AlhxkxL1xSYYXRVk6l4V/OzXbVr
+         F2N4nVUleb2SyZc8sgC2poSaaQ+CgHZiuCRWIi+78YgA4bpPN5KzS8h7SHnC0qrpdgs/
+         YZxrEttZo98QKBCnwb20wNLc3UgkTsaMpeRea2ivIhOm1ixPyotAxAUbQecsF1pxUnqv
+         E1Mg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=aM7TEuKumvUMe3SbB3+XmY4I8aQKFrST7xx8ZApBOcM=;
+        b=WdoTkpU5Tgrc0jYoCvIk/+u664gzb+skwTTi/c56O9eaQZ0+T85W5dskBAOmrnrhNW
+         mfQgDIJHVUpe9uobnMnLfhnocWJMfeaF9CnBnxQQprsFc5NO7wHbKsozH8+KI2Q+etoN
+         /PfKntP/PDmi5mk57UKO+ZZs0BRYCMyfHnVWzYr6u+4JV2oLGt66joD57jBgumVQZm1z
+         rY7J6bHPya7aWFwA548AtRHPMosjHGu7RzguMatpBziJqUT7QK8aZ4kH/dek1Jk6w4wh
+         mpabUIkYEDyzOmsxSHArDDQGuq1/hY6YrvF9IyW6zEVt50vHOceoti00QMIZwzZDR5od
+         TbdQ==
+X-Gm-Message-State: APjAAAXNigybF3xK/JP6c8AdRgkeUEIyJJ0xaWRlauTIljPm6KEN4wFw
+        oCt+VpSIpm+GXzoMEknZrVTKiod2xDnNDg==
+X-Google-Smtp-Source: APXvYqxHJBmk2g0xpgV4VUHGsLMtAzHIfVL3nv7QBsGBAXs8stUf9sYJU+dbtd2Yxf85Z4tgzUX1Cw==
+X-Received: by 2002:a0c:b755:: with SMTP id q21mr27605171qve.92.1562099204529;
+        Tue, 02 Jul 2019 13:26:44 -0700 (PDT)
+Received: from localhost ([2601:184:4780:7861:5010:5849:d76d:b714])
+        by smtp.gmail.com with ESMTPSA id f6sm6267017qkk.79.2019.07.02.13.26.43
+        (version=TLS1_3 cipher=AEAD-AES256-GCM-SHA384 bits=256/256);
+        Tue, 02 Jul 2019 13:26:44 -0700 (PDT)
+From:   Rob Clark <robdclark@gmail.com>
+To:     iommu@lists.linux-foundation.org, dri-devel@lists.freedesktop.org
+Cc:     aarch64-laptops@lists.linaro.org,
+        Jordan Crouse <jcrouse@codeaurora.org>,
+        Rob Clark <robdclark@chromium.org>,
+        Abhinav Kumar <abhinavk@codeaurora.org>,
+        Andy Shevchenko <andy.shevchenko@gmail.com>,
+        Bartosz Golaszewski <brgl@bgdev.pl>,
+        Boris Brezillon <bbrezillon@kernel.org>,
+        Bruce Wang <bzwang@chromium.org>,
+        Daniel Mack <daniel@zonque.org>,
+        Daniel Vetter <daniel.vetter@ffwll.ch>,
+        freedreno@lists.freedesktop.org (open list:DRM DRIVER FOR MSM ADRENO
+        GPU), Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Heikki Krogerus <heikki.krogerus@linux.intel.com>,
+        Jeykumar Sankaran <jsanka@codeaurora.org>,
+        Joe Perches <joe@perches.com>, Joerg Roedel <jroedel@suse.de>,
+        Jonathan Marek <jonathan@marek.ca>,
+        linux-arm-msm@vger.kernel.org (open list:DRM DRIVER FOR MSM ADRENO GPU),
+        linux-kernel@vger.kernel.org (open list),
+        Mamta Shukla <mamtashukla555@gmail.com>,
+        "Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+        Rasmus Villemoes <linux@rasmusvillemoes.dk>,
+        Sean Paul <seanpaul@chromium.org>,
+        Sudeep Holla <sudeep.holla@arm.com>,
+        Ulf Hansson <ulf.hansson@linaro.org>,
+        Vivek Gautam <vivek.gautam@codeaurora.org>
+Subject: [PATCH 0/2] iommu: handle drivers that manage iommu directly
+Date:   Tue,  2 Jul 2019 13:26:17 -0700
+Message-Id: <20190702202631.32148-1-robdclark@gmail.com>
+X-Mailer: git-send-email 2.20.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
-Content-Transfer-Encoding: 7bit
-Date:   Tue, 02 Jul 2019 12:15:22 -0700
-From:   Jeykumar Sankaran <jsanka@codeaurora.org>
-To:     dhar@codeaurora.org
-Cc:     dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
-        freedreno@lists.freedesktop.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, robdclark@gmail.com,
-        seanpaul@chromium.org, hoegsberg@chromium.org,
-        abhinavk@codeaurora.org, chandanu@codeaurora.org,
-        nganji@codeaurora.org, jshekhar@codeaurora.org
-Subject: Re: drm/msm/dpu: Correct dpu encoder spinlock initialization
-In-Reply-To: <f9a7786cce817c7d1a646b052ba1a679@codeaurora.org>
-References: <1561357632-15361-1-git-send-email-dhar@codeaurora.org>
- <efade579f7ba59585b88ecb367422e5c@codeaurora.org>
- <d61d7805b4ac0ec45309bf5b65841262@codeaurora.org>
- <627144af54459a203f1583d2ad9b390c@codeaurora.org>
- <ea91c2c49d73af79bd6eea93a6d00a5a@codeaurora.org>
- <f9a7786cce817c7d1a646b052ba1a679@codeaurora.org>
-Message-ID: <87b59fd6d89f4096243770edefc5e97b@codeaurora.org>
-X-Sender: jsanka@codeaurora.org
-User-Agent: Roundcube Webmail/1.2.5
+Content-Transfer-Encoding: 8bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2019-07-02 11:21, Jeykumar Sankaran wrote:
-> On 2019-07-01 03:29, dhar@codeaurora.org wrote:
->> On 2019-06-26 03:10, Jeykumar Sankaran wrote:
->>> On 2019-06-24 22:44, dhar@codeaurora.org wrote:
->>>> On 2019-06-25 03:56, Jeykumar Sankaran wrote:
->>>>> On 2019-06-23 23:27, Shubhashree Dhar wrote:
->>>>>> dpu encoder spinlock should be initialized during dpu encoder
->>>>>> init instead of dpu encoder setup which is part of commit.
->>>>>> There are chances that vblank control uses the uninitialized
->>>>>> spinlock if not initialized during encoder init.
->>>>> Not much can be done if someone is performing a vblank operation
->>>>> before encoder_setup is done.
->>>>> Can you point to the path where this lock is acquired before
->>>>> the encoder_setup?
->>>>> 
->>>>> Thanks
->>>>> Jeykumar S.
->>>>>> 
->>>> 
->>>> When running some dp usecase, we are hitting this callstack.
->>>> 
->>>> Process kworker/u16:8 (pid: 215, stack limit = 0x00000000df9dd930)
->>>> Call trace:
->>>>  spin_dump+0x84/0x8c
->>>>  spin_dump+0x0/0x8c
->>>>  do_raw_spin_lock+0x80/0xb0
->>>>  _raw_spin_lock_irqsave+0x34/0x44
->>>>  dpu_encoder_toggle_vblank_for_crtc+0x8c/0xe8
->>>>  dpu_crtc_vblank+0x168/0x1a0
->>>>  dpu_kms_enable_vblank+0[   11.648998]  vblank_ctrl_worker+0x3c/0x60
->>>>  process_one_work+0x16c/0x2d8
->>>>  worker_thread+0x1d8/0x2b0
->>>>  kthread+0x124/0x134
->>>> 
->>>> Looks like vblank is getting enabled earlier causing this issue and 
->>>> we
->>>> are using the spinlock without initializing it.
->>>> 
->>>> Thanks,
->>>> Shubhashree
->>>> 
->>> DP calls into set_encoder_mode during hotplug before even notifying 
->>> the
->>> u/s. Can you trace out the original caller of this stack?
->>> 
->>> Even though the patch is harmless, I am not entirely convinced to 
->>> move this
->>> initialization. Any call which acquires the lock before encoder_setup
->>> will be a no-op since there will not be any physical encoder to work 
->>> with.
->>> 
->>> Thanks and Regards,
->>> Jeykumar S.
->>> 
->>>>>> Change-Id: I5a18b95fa47397c834a266b22abf33a517b03a4e
->>>>>> Signed-off-by: Shubhashree Dhar <dhar@codeaurora.org>
->>>>>> ---
->>>>>>  drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c | 3 +--
->>>>>>  1 file changed, 1 insertion(+), 2 deletions(-)
->>>>>> 
->>>>>> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
->>>>>> b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
->>>>>> index 5f085b5..22938c7 100644
->>>>>> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
->>>>>> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
->>>>>> @@ -2195,8 +2195,6 @@ int dpu_encoder_setup(struct drm_device 
->>>>>> *dev, struct
->>>>>> drm_encoder *enc,
->>>>>>  	if (ret)
->>>>>>  		goto fail;
->>>>>> 
->>>>>> -	spin_lock_init(&dpu_enc->enc_spinlock);
->>>>>> -
->>>>>>  	atomic_set(&dpu_enc->frame_done_timeout, 0);
->>>>>>  	timer_setup(&dpu_enc->frame_done_timer,
->>>>>>  			dpu_encoder_frame_done_timeout, 0);
->>>>>> @@ -2250,6 +2248,7 @@ struct drm_encoder *dpu_encoder_init(struct
->>>>>> drm_device *dev,
->>>>>> 
->>>>>>  	drm_encoder_helper_add(&dpu_enc->base, 
->>>>>> &dpu_encoder_helper_funcs);
->>>>>> 
->>>>>> +	spin_lock_init(&dpu_enc->enc_spinlock);
->>>>>>  	dpu_enc->enabled = false;
->>>>>> 
->>>>>>  	return &dpu_enc->base;
->> 
->> In dpu_crtc_vblank(), we are looping through all the encoders in the
->> present mode_config:
->> https://github.com/torvalds/linux/blob/master/drivers/gpu/drm/msm/disp/dpu
->> 1/dpu_crtc.c#L1082
->> and hence calling dpu_encoder_toggle_vblank_for_crtc() for all the
->> encoders. But in dpu_encoder_toggle_vblank_for_crtc(), after acquiring
->> the spinlock, we will do a early return for
->> the encoders which are not currently assigned to our crtc:
->> https://github.com/torvalds/linux/blob/master/drivers/gpu/drm/msm/disp/dpu
->> 1/dpu_encoder.c#L1318.
->> Since the encoder_setup for the secondary encoder(dp encoder in this
->> case) is not called until dp hotplug, we are hitting kernel panic
->> while acquiring the lock.
-> This is the sequence in which the events are expected to happen:
-> 
-> 1) DP connector is instantiated with an inactive state
-> 2) Hot plug on DP
-> 3) DP connector is activated
-> 4) User space attaches a CRTC to the activated connector
-> 5) CRTC is enabled
-> 6) CRTC_VBLANK_ON is called
-> 7) dpu_crtc_vblank is called.
-> 
-> So can you help tracing out why dpu_crtc_vblank is called when the 
-> connector
-> is not activated yet (no hotplug)?
+From: Rob Clark <robdclark@chromium.org>
 
-Overlooked the loop which iterates through *all* the encoders 
-irrespective of their
-activated status.
+One of the challenges we need to handle to enable the aarch64 laptops
+upstream is dealing with the fact that the bootloader enables the
+display and takes the corresponding SMMU context-bank out of BYPASS.
+Unfortunately, currently, the IOMMU framework attaches a DMA (or
+potentially an IDENTITY) domain before the driver is probed and has
+a chance to intervene and shutdown[1] scanout.  Which makes things go
+horribly wrong.
 
-Reviewed-by: Jeykumar Sankaran <jsanka@codeaurora.org>
+This also happens to solve a problem that is blocking us from supporting
+per-context pagetables on the GPU, due to domain that is attached before
+driver has a chance to attach it's own domain for the GPU.
+
+But since the driver is managing it's own iommu domains directly, and
+does not use dev->iommu_group->default_domain at all, the simple
+solution to both problems is to just avoid attaching that domain in the
+first place.
+
+[1] Eventually we want to be able to do a seemless transition from
+    efifb to drm/msm... but first step is to get the core (iommu,
+    clk, genpd) pieces in place, so a first step of disabling the
+    display before first modeset enables us to get all of the
+    dependencies outside of drm/msm in place.  And this at least
+    gets us parity with windows (which also appears to do a modeset
+    between bootloader and HLSO).  After that there is a bunch of
+    drm/msm work that is probably not interesting to folks outside
+    of dri-devel.
+
+Rob Clark (2):
+  iommu: add support for drivers that manage iommu explicitly
+  drm/msm: mark devices where iommu is managed by driver
+
+ drivers/gpu/drm/msm/adreno/adreno_device.c |  1 +
+ drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c    |  1 +
+ drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c   |  1 +
+ drivers/gpu/drm/msm/msm_drv.c              |  1 +
+ drivers/iommu/iommu.c                      | 11 +++++++++++
+ include/linux/device.h                     |  3 ++-
+ 6 files changed, 17 insertions(+), 1 deletion(-)
+
+-- 
+2.20.1
 
