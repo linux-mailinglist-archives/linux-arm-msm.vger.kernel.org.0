@@ -2,107 +2,154 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id F1F585D91A
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Jul 2019 02:35:16 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 66E9C5D95B
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Jul 2019 02:41:31 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727080AbfGCAeg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 2 Jul 2019 20:34:36 -0400
-Received: from mail-io1-f67.google.com ([209.85.166.67]:40599 "EHLO
-        mail-io1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726736AbfGCAeg (ORCPT
+        id S1727212AbfGCAlV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 2 Jul 2019 20:41:21 -0400
+Received: from mail-wr1-f67.google.com ([209.85.221.67]:36343 "EHLO
+        mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726963AbfGCAlV (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 2 Jul 2019 20:34:36 -0400
-Received: by mail-io1-f67.google.com with SMTP id n5so676221ioc.7;
-        Tue, 02 Jul 2019 17:34:35 -0700 (PDT)
+        Tue, 2 Jul 2019 20:41:21 -0400
+Received: by mail-wr1-f67.google.com with SMTP id n4so701532wrs.3
+        for <linux-arm-msm@vger.kernel.org>; Tue, 02 Jul 2019 17:41:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
+        d=linaro.org; s=google;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=I1EqOkAJ16JrzJYbRJsKM2M5z/cziA7sysWiFBw1wCQ=;
-        b=cHbuCUvN+s8Lxw2Gyg3gi4DFYo+F4B8Y2Kkpc1I2sZAekDpolXvsjxL2vCLw+zBEqh
-         XqJBFdv4ZmCJk7ExnlSoa231CpUFJrcpmHzSb6QDviDzMXT80sTIefoueo7dajOTdTbi
-         aSPGfyYr4g1yfJTGDte3QRKpLEKt1aqtYlMj+ltHYK9bVYthpd6JxS8HV8gAdXOBjeLa
-         uTskqhloZdHDc8VdGHBGGTqQcEBxsoj4u5Nv/wU43dV0lo6VBVMpKiI5X6sDz/w7Ybgg
-         oCN/1Oo3aDlnsbAFjFi5ldNCfMPtrnA2qTcQ7ew+gfk4C/znPwGU2nex1jNx62tD5fmB
-         J9iw==
+        bh=F9/H9RAoH6E0au9JZUxTVdK2VUAjq3U7v2tg4NjLm2E=;
+        b=SK3VY71b9UfihRePdJGtKBSdbFrEGcoMgA1+oLMpx0UPe6Zi3uDRyGD2EMNmRcqIq+
+         l0yxeXPdzy0dawH3rtJ13sku4q+pHqx7YfCt0T/4f0C1De+u9h4Kz7vk989kCRBNZ824
+         mTFjAk2XxdC4yvnm3rbUtw188u5UCkTkf8iB9ychSLYnKHzkYHKzxWzg/0qF5Kfv/9Ig
+         /GrTrehl6RSlBv6Ck2krL2WRej8+bAHwkMfScnrp4Eezc+lmMKJpg/mT/Sg9laJXC7bT
+         NPJ2fF2dt1HcWXS/Ex0YgUuMz0yKlYeezBAJ9Kv3upJ4MbSyUkw1RN7KepizvqV+xWfx
+         5AhQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=I1EqOkAJ16JrzJYbRJsKM2M5z/cziA7sysWiFBw1wCQ=;
-        b=SU6OceEQM4IhouTK4HKhjslxEWRHAF1qrvr9w3/5SGMIxSnF2UgxRlu3d8lj6qq8dB
-         OgyiuRS+k11Poq7aDnyVCoQm9OkdvVfVWfgJOGXlbXjUiChdxbrBgikkIMOU/Qu029aJ
-         a9ACX3jr46sS/sGYlZWE+YNNzJ5e7+yqQGbgc34Urk7tftd8GziorjFH3ESdyeuX14M4
-         +d8D2C5hPW5kc+0/ZT6/aNp+4O+pDcv8ifxFcmke/Td6GFS87518EUHBidWHHoA+JHDN
-         Z3LDnEhMsy+wpl9/bldazeM9790vfNcfsRDGqo5vmnQYZ6xcokboCoYzn6tileD7QyNc
-         RGPA==
-X-Gm-Message-State: APjAAAVn2NugxIQlKqr6V4ApAi4P5+DMqebtDhd+HEDV2pQcbOzOlHtG
-        CCL2D9D0iHNMMnYOQZOLM2p/al1yJimGaC4vnNEPyA==
-X-Google-Smtp-Source: APXvYqz2ea1Co87gENT0Z1FYNhMJZ2SZm3RqcDFrMzN+sTpYjy5Oh6gRJ+UNd2Qx/1ivh+Y0WvJG4xn2CxoR0RmeRwA=
-X-Received: by 2002:a02:ac09:: with SMTP id a9mr39228087jao.48.1562102997246;
- Tue, 02 Jul 2019 14:29:57 -0700 (PDT)
+        bh=F9/H9RAoH6E0au9JZUxTVdK2VUAjq3U7v2tg4NjLm2E=;
+        b=BaZiqj40ayKWKqXsZal7XgFbZdLDh8RmrhhclQ5Qo8yb2v6rtzrueqC3/tsNol5lP2
+         NDJeDERJRI/WdogtA7FykwsKyXg/DVsXfSkXAxRMXWD3FjsrQjvLuuD66NmZGKtBNfou
+         +UwAM6RUsemaBZOOYmCU8bF0MAB7q0c9HGMriEX34oEROb3s5K8ZYr5t9wdBIhjEx3Mj
+         7Pz+gA3cGU0UzHNkMkSkVd3yC910OzE59TF7l1nWmHouodifJmtTQyyzlxEdP1UI7Vug
+         Dz1eb+ChjaYp4MktxdE3ouRMNfc3C4/JlHlti739k1tUvzYmejHb21egfCKRxbl3O9rY
+         kNhw==
+X-Gm-Message-State: APjAAAUsaU1KY+ugOI6hVYBSwDWff5XSiVlk8aYHmj6/FEU18IJXMJhS
+        YAav6QY9RMRNsRqf5MNByEVC6ZNDhY7ELPst/DcGzh0Rsd0=
+X-Google-Smtp-Source: APXvYqwncd3iUgHVxdaYlFV1ID7X2V0/XLGwEniTYBbvfKVWOvdTx6vknWmPXyn5a8WQ1T7hGJ+i80nMqSq/lFM6R0k=
+X-Received: by 2002:a5d:6743:: with SMTP id l3mr14273796wrw.241.1562104410996;
+ Tue, 02 Jul 2019 14:53:30 -0700 (PDT)
 MIME-Version: 1.0
-References: <20190630131445.25712-1-robdclark@gmail.com> <20190630131445.25712-4-robdclark@gmail.com>
- <CAOCk7NpyYSiDHP84E4bQiTA1Wk9Sd4w-F8-Zqu9tKtDoUTsFDw@mail.gmail.com>
-In-Reply-To: <CAOCk7NpyYSiDHP84E4bQiTA1Wk9Sd4w-F8-Zqu9tKtDoUTsFDw@mail.gmail.com>
-From:   Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
-Date:   Tue, 2 Jul 2019 15:29:47 -0600
-Message-ID: <CAOCk7NrxsbAd9sp6m9RSfkRjwW5GZH7qJv2fd78bogas-4YMWA@mail.gmail.com>
-Subject: Re: [Freedreno] [PATCH 3/3] drm/msm/dsi: make sure we have panel or
- bridge earlier
+References: <20190630203614.5290-1-robdclark@gmail.com> <20190630203614.5290-3-robdclark@gmail.com>
+ <CAKv+Gu_8BOt+f8RTspHo+se-=igZba1zL0+jWLV2HuuUXCKYpA@mail.gmail.com>
+ <CAKv+Gu-KhPJxxJA3+J813OPcnoAD4nHq6MhiRTJSd_5y1dPNnw@mail.gmail.com> <CAF6AEGv+uAXVV6Q78n=jP0YRDjYn9OS=Xec9MU0+_7EBirxF5w@mail.gmail.com>
+In-Reply-To: <CAF6AEGv+uAXVV6Q78n=jP0YRDjYn9OS=Xec9MU0+_7EBirxF5w@mail.gmail.com>
+From:   Ard Biesheuvel <ard.biesheuvel@linaro.org>
+Date:   Tue, 2 Jul 2019 23:53:16 +0200
+Message-ID: <CAKv+Gu9pH9=AnNee7B-z0sP3rGJ-0Qnpziyx445M30KWC=Vq+w@mail.gmail.com>
+Subject: Re: [PATCH 2/4] efi/libstub: detect panel-id
 To:     Rob Clark <robdclark@gmail.com>
-Cc:     "open list:DRM PANEL DRIVERS" <dri-devel@lists.freedesktop.org>,
-        Rob Clark <robdclark@chromium.org>,
-        David Airlie <airlied@linux.ie>,
-        MSM <linux-arm-msm@vger.kernel.org>,
-        Jordan Crouse <jcrouse@codeaurora.org>,
-        Abhinav Kumar <abhinavk@codeaurora.org>,
-        lkml <linux-kernel@vger.kernel.org>, Sean Paul <sean@poorly.run>,
-        Sibi Sankar <sibis@codeaurora.org>,
-        Daniel Vetter <daniel@ffwll.ch>,
+Cc:     dri-devel <dri-devel@lists.freedesktop.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
         freedreno <freedreno@lists.freedesktop.org>,
-        Chandan Uddaraju <chandanu@codeaurora.org>
+        aarch64-laptops@lists.linaro.org,
+        Rob Clark <robdclark@chromium.org>,
+        Ingo Molnar <mingo@kernel.org>, Will Deacon <will@kernel.org>,
+        Leif Lindholm <leif.lindholm@linaro.org>,
+        Steve Capper <steve.capper@arm.com>,
+        Lukas Wunner <lukas@wunner.de>,
+        Julien Thierry <julien.thierry@arm.com>,
+        linux-efi <linux-efi@vger.kernel.org>,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Jul 2, 2019 at 2:30 PM Jeffrey Hugo <jeffrey.l.hugo@gmail.com> wrote:
+On Tue, 2 Jul 2019 at 23:02, Rob Clark <robdclark@gmail.com> wrote:
 >
-> On Sun, Jun 30, 2019 at 7:16 AM Rob Clark <robdclark@gmail.com> wrote:
-> > --- a/drivers/gpu/drm/msm/dsi/dsi_host.c
-> > +++ b/drivers/gpu/drm/msm/dsi/dsi_host.c
-> > @@ -1824,6 +1824,20 @@ int msm_dsi_host_init(struct msm_dsi *msm_dsi)
-> >                 goto fail;
-> >         }
+> On Tue, Jul 2, 2019 at 1:35 PM Ard Biesheuvel <ard.biesheuvel@linaro.org> wrote:
 > >
-> > +       /*
-> > +        * Make sure we have panel or bridge early, before we start
-> > +        * touching the hw.  If bootloader enabled the display, we
-> > +        * want to be sure to keep it running until the bridge/panel
-> > +        * is probed and we are all ready to go.  Otherwise we'll
-> > +        * kill the display and then -EPROBE_DEFER
-> > +        */
-> > +       if (IS_ERR(of_drm_find_panel(msm_host->device_node)) &&
-> > +                       !of_drm_find_bridge(msm_host->device_node)) {
-> > +               pr_err("%s: no panel or bridge yet\n", __func__);
+> > On Tue, 2 Jul 2019 at 22:26, Ard Biesheuvel <ard.biesheuvel@linaro.org> wrote:
+> > >
+> > > On Sun, 30 Jun 2019 at 22:36, Rob Clark <robdclark@gmail.com> wrote:
+> > > >
+> > > > From: Rob Clark <robdclark@chromium.org>
+> > > >
+> > > > On snapdragon aarch64 laptops, a 'UEFIDisplayInfo' variable is provided
+> > > > to communicate some information about the display.  Crutially it has the
+> > > > panel-id, so the appropriate panel driver can be selected.  Read this
+> > > > out and stash in /chosen/panel-id so that display driver can use it to
+> > > > pick the appropriate panel.
+> > > >
+> > > > Signed-off-by: Rob Clark <robdclark@chromium.org>
+> > >
+> > > Hi Rob,
+> > >
+> > > I understand why you are doing this, but this *really* belongs elsewhere.
+> > >
+> > > So we are dealing with a platform that violates the UEFI spec, since
+> > > it does not bother to implement variable services at runtime (because
+> > > MS let the vendor get away with this).
+> > >
+> >
+> > To clarify, the above remark applies to populating the DT from the OS
+> > rather than from the firmware.
 >
-> pr_err() doesn't seem right for a probe defer condition.  pr_dbg?
+> yeah, it isn't pretty, but there *are* some other similar cases where
+> efi-stub is populating DT.. (like update_fdt_memmap() and
+> kaslr-seed)..
 >
-> > +               return -EPROBE_DEFER;
-> > +       }
-> > +
-> > +
+
+True, but those don't describe the hardware.
+
+> it would be kinda nice to have an early-quirks mechanism where this
+> could fit, but I thought that might be equally unpopular ;-)
 >
-> Tested-by: Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
-> Reviewed-by: Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
 
-Actually, I'm sorry, I'm now NACKing this.
+Very :-)
 
-Turns out this prevents the panel/bridge from ever probing if its a
-child node of the dsi device, since mipi_dsi_host_register() is never
-called.
+> >
+> > > First of all, to pass data between the EFI stub and the OS proper, we
+> > > should use a configuration table rather than a DT property, since the
+> > > former is ACPI/DT agnostic. Also, I'd like the consumer of the data to
+> > > actually interpret it, i.e., just dump the whole opaque thing into a
+> > > config table in the stub, and do the parsing in the OS proper.
+> > >
+> > > However, I am not thrilled at adding code to the stub that
+> > > unconditionally looks for some variable with some magic name on all
+> > > ARM/arm64 EFI systems, so this will need to live under a Kconfig
+> > > option that depends on ARM64 (and does not default to y)
+>
+> I defn can add this under kconfig.. is it ok if that option is
+> select'd by ARCH_QCOM?
+>
 
-This probably works for you on the c630 because the bridge hangs off
-the i2c bus.
+I guess some mobile SOC/snapdragon symbol would be more appropriate,
+but given that qcom left the server business, I guess it hardly
+matters, so default y if ARM64 && ARCH_QCOM is fine with me
+
+> (Just trying to minimize the things that can go wrong and the "I get a
+> blank screen at boot" bug reports I get ;-))
+>
+
+Sure
+
+> > ... but saving variables at boot time for consumption at runtime is
+> > something that we will likely see more of in the future.
+>
+> I think this will be nice, but it also doesn't address the need for a
+> quirk to get this into /chosen..  I guess we *could* use a shim or
+> something that runs before the kernel to do this.  But that just seems
+> like a logistical/support nightmare.  There is one kernel, and there
+> are N distro's, so debugging a users "I don't get a screen at boot"
+> problem because their distro missed some shim patch really just
+> doesn't seem like a headache I want to have.
+>
+
+I'd argue that this does not belong in /chosen in the first place,
+i.e., it doesn't belong in the DT at all if the OS can access the
+config table (and therefore the variable) directly.
