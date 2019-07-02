@@ -2,250 +2,127 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id E148A5D20A
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Jul 2019 16:47:21 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 3F2E75D29E
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Jul 2019 17:20:34 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727189AbfGBOrQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 2 Jul 2019 10:47:16 -0400
-Received: from smtp.codeaurora.org ([198.145.29.96]:46084 "EHLO
-        smtp.codeaurora.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726917AbfGBOrP (ORCPT
+        id S1726308AbfGBPUd (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 2 Jul 2019 11:20:33 -0400
+Received: from perceval.ideasonboard.com ([213.167.242.64]:56150 "EHLO
+        perceval.ideasonboard.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725780AbfGBPUd (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 2 Jul 2019 10:47:15 -0400
-Received: by smtp.codeaurora.org (Postfix, from userid 1000)
-        id C31D760ADE; Tue,  2 Jul 2019 14:47:14 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
-        s=default; t=1562078834;
-        bh=3KrI789LEGYcOzwd4WxFj41Rh3w9pkSiXtKVAsyXLlI=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=Ef9VmhPeNXxOXMb1B7lAu7cvLmtNEZk2hg0puNtelB4ynPZpcRBij9Hne1MPCEtgs
-         epCpgvNtjxAc0A0xg5u0R9JWMvGJ+TwwbSE957TOO6zGe+lMJn39SGBa/+xZhTlEyi
-         2ZabaZWAjBZthPl8EPpJxyLFkBoXWvfi2YQnMvJE=
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        pdx-caf-mail.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.7 required=2.0 tests=ALL_TRUSTED,BAYES_00,
-        DKIM_INVALID,DKIM_SIGNED,SPF_NONE autolearn=no autolearn_force=no
-        version=3.4.0
-Received: from amasule-linux.qualcomm.com (blr-c-bdr-fw-01_globalnat_allzones-outside.qualcomm.com [103.229.19.19])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: amasule@codeaurora.org)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 2817C60A97;
-        Tue,  2 Jul 2019 14:47:11 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
-        s=default; t=1562078834;
-        bh=3KrI789LEGYcOzwd4WxFj41Rh3w9pkSiXtKVAsyXLlI=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=Ef9VmhPeNXxOXMb1B7lAu7cvLmtNEZk2hg0puNtelB4ynPZpcRBij9Hne1MPCEtgs
-         epCpgvNtjxAc0A0xg5u0R9JWMvGJ+TwwbSE957TOO6zGe+lMJn39SGBa/+xZhTlEyi
-         2ZabaZWAjBZthPl8EPpJxyLFkBoXWvfi2YQnMvJE=
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 2817C60A97
-Authentication-Results: pdx-caf-mail.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: pdx-caf-mail.web.codeaurora.org; spf=none smtp.mailfrom=amasule@codeaurora.org
-From:   Aniket Masule <amasule@codeaurora.org>
-To:     linux-media@vger.kernel.org, stanimir.varbanov@linaro.org
-Cc:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        vgarodia@codeaurora.org, Aniket Masule <amasule@codeaurora.org>
-Subject: [PATCH v4 4/4] media: venus: Update core selection
-Date:   Tue,  2 Jul 2019 20:16:27 +0530
-Message-Id: <1562078787-516-5-git-send-email-amasule@codeaurora.org>
-X-Mailer: git-send-email 1.9.1
-In-Reply-To: <1562078787-516-1-git-send-email-amasule@codeaurora.org>
-References: <1562078787-516-1-git-send-email-amasule@codeaurora.org>
+        Tue, 2 Jul 2019 11:20:33 -0400
+Received: from pendragon.ideasonboard.com (dfj612yhrgyx302h3jwwy-3.rev.dnainternet.fi [IPv6:2001:14ba:21f5:5b00:ce28:277f:58d7:3ca4])
+        by perceval.ideasonboard.com (Postfix) with ESMTPSA id 83D8C255;
+        Tue,  2 Jul 2019 17:20:30 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=ideasonboard.com;
+        s=mail; t=1562080830;
+        bh=MQPbS86dIXLIzRT7cKc2d+ifqWU4LvOkgbT4PqUtUs8=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=AjyAX71LRoe8eRV+OuUkmQlR9YQO/vf1ZVwhHDHWiea63RF+ToCjI1skAe8BqYFZ/
+         PmWK4A7hGuqGDfDm0bX9JeknSYfL9JDtJjYykDHFVlViecPn3Xsmu1jZJpC4V4Uonz
+         xTA1y9MKIbsTw5Dc5U5MuggGLuy54MMFTBhSYe+g=
+Date:   Tue, 2 Jul 2019 18:20:11 +0300
+From:   Laurent Pinchart <laurent.pinchart@ideasonboard.com>
+To:     Rob Clark <robdclark@gmail.com>
+Cc:     dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
+        freedreno@lists.freedesktop.org, aarch64-laptops@lists.linaro.org,
+        linux-clk@vger.kernel.org, linux-pm@vger.kernel.org,
+        Rob Clark <robdclark@chromium.org>,
+        Andrzej Hajda <a.hajda@samsung.com>,
+        David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 5/5] drm/bridge: ti-sn65dsi86: support booloader enabled
+ display
+Message-ID: <20190702152011.GE5033@pendragon.ideasonboard.com>
+References: <20190630150230.7878-1-robdclark@gmail.com>
+ <20190630150230.7878-6-robdclark@gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20190630150230.7878-6-robdclark@gmail.com>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Present core assignment is static. Introduced load balancing
-across the cores. Load on earch core is calculated and core
-with minimum load is assigned to given instance.
+Hi Rob,
 
-Signed-off-by: Aniket Masule <amasule@codeaurora.org>
----
- drivers/media/platform/qcom/venus/helpers.c    | 69 +++++++++++++++++++++++---
- drivers/media/platform/qcom/venus/helpers.h    |  2 +-
- drivers/media/platform/qcom/venus/hfi_helper.h |  1 +
- drivers/media/platform/qcom/venus/hfi_parser.h |  5 ++
- drivers/media/platform/qcom/venus/vdec.c       |  2 +-
- drivers/media/platform/qcom/venus/venc.c       |  2 +-
- 6 files changed, 72 insertions(+), 9 deletions(-)
+Thank you for the patch.
 
-diff --git a/drivers/media/platform/qcom/venus/helpers.c b/drivers/media/platform/qcom/venus/helpers.c
-index 5726d86..321e9f7 100644
---- a/drivers/media/platform/qcom/venus/helpers.c
-+++ b/drivers/media/platform/qcom/venus/helpers.c
-@@ -26,6 +26,7 @@
- #include "helpers.h"
- #include "hfi_helper.h"
- #include "hfi_venus_io.h"
-+#include "hfi_parser.h"
- 
- struct intbuf {
- 	struct list_head list;
-@@ -331,6 +332,24 @@ static u32 load_per_instance(struct venus_inst *inst)
- 	return mbs * inst->fps;
- }
- 
-+static u32 load_per_core(struct venus_core *core, u32 core_id)
-+{
-+	struct venus_inst *inst = NULL;
-+	u32 mbs_per_sec = 0, load = 0;
-+
-+	mutex_lock(&core->lock);
-+	list_for_each_entry(inst, &core->instances, list) {
-+		if (!(inst->clk_data.core_id == core_id))
-+			continue;
-+
-+		mbs_per_sec = load_per_instance(inst);
-+		load = mbs_per_sec * inst->clk_data.codec_freq_data->vpp_freq;
-+	}
-+	mutex_unlock(&core->lock);
-+
-+	return load;
-+}
-+
- static u32 load_per_type(struct venus_core *core, u32 session_type)
- {
- 	struct venus_inst *inst = NULL;
-@@ -505,6 +524,16 @@ static int load_scale_clocks(struct venus_inst *inst)
- 	return scale_clocks(inst);
- }
- 
-+int set_core_usage(struct venus_inst *inst, u32 usage)
-+{
-+	const u32 ptype = HFI_PROPERTY_CONFIG_VIDEOCORES_USAGE;
-+	struct hfi_videocores_usage_type cu;
-+
-+	cu.video_core_enable_mask = usage;
-+
-+	return hfi_session_set_property(inst, ptype, &cu);
-+}
-+
- static void fill_buffer_desc(const struct venus_buffer *buf,
- 			     struct hfi_buffer_desc *bd, bool response)
- {
-@@ -808,19 +837,47 @@ int venus_helper_set_work_mode(struct venus_inst *inst, u32 mode)
- }
- EXPORT_SYMBOL_GPL(venus_helper_set_work_mode);
- 
--int venus_helper_set_core_usage(struct venus_inst *inst, u32 usage)
-+int venus_helper_set_core(struct venus_inst *inst)
- {
--	const u32 ptype = HFI_PROPERTY_CONFIG_VIDEOCORES_USAGE;
--	struct hfi_videocores_usage_type cu;
-+	struct venus_core *core = inst->core;
-+	u32 min_core_id = 0, core1_load = 0, core2_load = 0;
-+	unsigned long min_load, max_freq, cur_inst_load;
-+	u32 cores_max;
-+	int ret;
- 
- 	if (!IS_V4(inst->core))
- 		return 0;
- 
--	cu.video_core_enable_mask = usage;
-+	core1_load = load_per_core(core, VIDC_CORE_ID_1);
-+	core2_load = load_per_core(core, VIDC_CORE_ID_2);
-+	min_core_id = core1_load < core2_load ? VIDC_CORE_ID_1 : VIDC_CORE_ID_2;
-+	min_load = min(core1_load, core2_load);
-+	cores_max = core_num_max(inst);
- 
--	return hfi_session_set_property(inst, ptype, &cu);
-+	if (cores_max < VIDC_CORE_ID_2) {
-+		min_core_id = VIDC_CORE_ID_1;
-+		min_load = core1_load;
-+	}
-+
-+	cur_inst_load = load_per_instance(inst) *
-+		inst->clk_data.codec_freq_data->vpp_freq;
-+	max_freq = core->res->freq_tbl[0].freq;
-+
-+	if ((cur_inst_load + min_load)	> max_freq) {
-+		dev_warn(core->dev, "HW is overloaded, needed: %lu max: %lu\n",
-+			 cur_inst_load, max_freq);
-+		return -EINVAL;
-+	}
-+
-+	ret = set_core_usage(inst, min_core_id);
-+	if (ret)
-+		return ret;
-+
-+	inst->clk_data.core_id = min_core_id;
-+
-+	return 0;
- }
--EXPORT_SYMBOL_GPL(venus_helper_set_core_usage);
-+EXPORT_SYMBOL_GPL(venus_helper_set_core);
- 
- int venus_helper_init_codec_freq_data(struct venus_inst *inst)
- {
-diff --git a/drivers/media/platform/qcom/venus/helpers.h b/drivers/media/platform/qcom/venus/helpers.h
-index 2c13245..1034111 100644
---- a/drivers/media/platform/qcom/venus/helpers.h
-+++ b/drivers/media/platform/qcom/venus/helpers.h
-@@ -42,7 +42,7 @@ int venus_helper_set_output_resolution(struct venus_inst *inst,
- 				       u32 buftype);
- int venus_helper_set_work_mode(struct venus_inst *inst, u32 mode);
- int venus_helper_init_codec_freq_data(struct venus_inst *inst);
--int venus_helper_set_core_usage(struct venus_inst *inst, u32 usage);
-+int venus_helper_set_core(struct venus_inst *inst);
- int venus_helper_set_num_bufs(struct venus_inst *inst, unsigned int input_bufs,
- 			      unsigned int output_bufs,
- 			      unsigned int output2_bufs);
-diff --git a/drivers/media/platform/qcom/venus/hfi_helper.h b/drivers/media/platform/qcom/venus/hfi_helper.h
-index 34ea503..f3d1018 100644
---- a/drivers/media/platform/qcom/venus/hfi_helper.h
-+++ b/drivers/media/platform/qcom/venus/hfi_helper.h
-@@ -559,6 +559,7 @@ struct hfi_bitrate {
- #define HFI_CAPABILITY_LCU_SIZE				0x14
- #define HFI_CAPABILITY_HIER_P_HYBRID_NUM_ENH_LAYERS	0x15
- #define HFI_CAPABILITY_MBS_PER_SECOND_POWERSAVE		0x16
-+#define HFI_CAPABILITY_MAX_VIDEOCORES		0x2B
- 
- struct hfi_capability {
- 	u32 capability_type;
-diff --git a/drivers/media/platform/qcom/venus/hfi_parser.h b/drivers/media/platform/qcom/venus/hfi_parser.h
-index 3e931c7..264e6dd 100644
---- a/drivers/media/platform/qcom/venus/hfi_parser.h
-+++ b/drivers/media/platform/qcom/venus/hfi_parser.h
-@@ -107,4 +107,9 @@ static inline u32 frate_step(struct venus_inst *inst)
- 	return cap_step(inst, HFI_CAPABILITY_FRAMERATE);
- }
- 
-+static inline u32 core_num_max(struct venus_inst *inst)
-+{
-+	return cap_max(inst, HFI_CAPABILITY_MAX_VIDEOCORES);
-+}
-+
- #endif
-diff --git a/drivers/media/platform/qcom/venus/vdec.c b/drivers/media/platform/qcom/venus/vdec.c
-index d037f80..620e060 100644
---- a/drivers/media/platform/qcom/venus/vdec.c
-+++ b/drivers/media/platform/qcom/venus/vdec.c
-@@ -551,7 +551,7 @@ static int vdec_output_conf(struct venus_inst *inst)
- 	if (ret)
- 		return ret;
- 
--	ret = venus_helper_set_core_usage(inst, VIDC_CORE_ID_1);
-+	ret = venus_helper_set_core(inst);
- 	if (ret)
- 		return ret;
- 
-diff --git a/drivers/media/platform/qcom/venus/venc.c b/drivers/media/platform/qcom/venus/venc.c
-index cdddc82..28e76cc 100644
---- a/drivers/media/platform/qcom/venus/venc.c
-+++ b/drivers/media/platform/qcom/venus/venc.c
-@@ -660,7 +660,7 @@ static int venc_set_properties(struct venus_inst *inst)
- 	if (ret)
- 		return ret;
- 
--	ret = venus_helper_set_core_usage(inst, VIDC_CORE_ID_2);
-+	ret = venus_helper_set_core(inst);
- 	if (ret)
- 		return ret;
- 
+On Sun, Jun 30, 2019 at 08:01:43AM -0700, Rob Clark wrote:
+> From: Rob Clark <robdclark@chromium.org>
+> 
+> Request the enable gpio ASIS to avoid disabling bridge during probe, if
+> already enabled.  And if already enabled, defer enabling runpm until
+> attach to avoid cutting off the power to the bridge.
+> 
+> Once we get to attach, we know panel and drm driver are probed
+> successfully, so at this point it i s safe to enable runpm and reset the
+> bridge.  If we do it earlier, we kill efifb (in the case that panel or
+> drm driver do not probe successfully, giving the user no way to see what
+> is going on.
+> 
+> Signed-off-by: Rob Clark <robdclark@chromium.org>
+> ---
+>  drivers/gpu/drm/bridge/ti-sn65dsi86.c | 12 ++++++++++--
+>  1 file changed, 10 insertions(+), 2 deletions(-)
+> 
+> diff --git a/drivers/gpu/drm/bridge/ti-sn65dsi86.c b/drivers/gpu/drm/bridge/ti-sn65dsi86.c
+> index 7a046bcdd81b..8bdc33576992 100644
+> --- a/drivers/gpu/drm/bridge/ti-sn65dsi86.c
+> +++ b/drivers/gpu/drm/bridge/ti-sn65dsi86.c
+> @@ -257,6 +257,12 @@ static int ti_sn_bridge_attach(struct drm_bridge *bridge)
+>  						   .node = NULL,
+>  						 };
+>  
+> +	if (gpiod_get_value(pdata->enable_gpio)) {
+> +		pm_runtime_enable(pdata->dev);
+
+Does this need to be balanced with a pm_runtime_disable() call ? Bridges
+can be attached and detached at runtime when reloading the display
+controller drivers, so you need to ensure that detach/re-attach cycles
+work.
+
+> +		ti_sn_bridge_resume(pdata->dev);
+> +		ti_sn_bridge_suspend(pdata->dev);
+> +	}
+> +
+>  	ret = drm_connector_init(bridge->dev, &pdata->connector,
+>  				 &ti_sn_bridge_connector_funcs,
+>  				 DRM_MODE_CONNECTOR_eDP);
+> @@ -813,7 +819,7 @@ static int ti_sn_bridge_probe(struct i2c_client *client,
+>  	dev_set_drvdata(&client->dev, pdata);
+>  
+>  	pdata->enable_gpio = devm_gpiod_get(pdata->dev, "enable",
+> -					    GPIOD_OUT_LOW);
+> +					    GPIOD_ASIS);
+>  	if (IS_ERR(pdata->enable_gpio)) {
+>  		DRM_ERROR("failed to get enable gpio from DT\n");
+>  		ret = PTR_ERR(pdata->enable_gpio);
+> @@ -843,7 +849,9 @@ static int ti_sn_bridge_probe(struct i2c_client *client,
+>  	if (ret)
+>  		return ret;
+>  
+> -	pm_runtime_enable(pdata->dev);
+> +	if (!gpiod_get_value(pdata->enable_gpio)) {
+> +		pm_runtime_enable(pdata->dev);
+> +	}
+
+If I understand the issue correctly, this is part of an effort to avoid
+disabling a potentially display output until we get as close as possible
+to display handover, right ? Is there a drawback in always enabling
+runtime PM when the bridge is attached instead of at probe time ? I
+think we need to come up with a set of rules for bridge driver authors,
+otherwise we'll end up with incompatible expectations of bridge drivers
+and display controller drivers.
+
+>  
+>  	i2c_set_clientdata(client, pdata);
+>  
+
 -- 
-The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
-a Linux Foundation Collaborative Project
+Regards,
 
+Laurent Pinchart
