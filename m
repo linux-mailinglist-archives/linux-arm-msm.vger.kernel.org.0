@@ -2,57 +2,63 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 76F4D5D336
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Jul 2019 17:44:30 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id BE5AB5D33C
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Jul 2019 17:44:40 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726252AbfGBPo3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 2 Jul 2019 11:44:29 -0400
-Received: from mail-qt1-f194.google.com ([209.85.160.194]:45028 "EHLO
-        mail-qt1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726213AbfGBPo3 (ORCPT
+        id S1727039AbfGBPof (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 2 Jul 2019 11:44:35 -0400
+Received: from mail-qk1-f175.google.com ([209.85.222.175]:35926 "EHLO
+        mail-qk1-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726213AbfGBPof (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 2 Jul 2019 11:44:29 -0400
-Received: by mail-qt1-f194.google.com with SMTP id x47so18933381qtk.11
-        for <linux-arm-msm@vger.kernel.org>; Tue, 02 Jul 2019 08:44:28 -0700 (PDT)
+        Tue, 2 Jul 2019 11:44:35 -0400
+Received: by mail-qk1-f175.google.com with SMTP id g18so14488659qkl.3;
+        Tue, 02 Jul 2019 08:44:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=kfWPWLek+Gy43+eezXfh8eVjBj+6pFJ2g4xROl/XX14=;
-        b=m8sHp+PesxAz+xrB+8tq6DQqXluhdgjCtQ9rw6c+GGyf2EHzLqGzXBPZullZNv25iR
-         rJN72x1FYIR5JfAt20csjgoJReIUsyZnHI+k8Juc+WZqQOhAEAyLy6FCYAc3EvkVhDe/
-         z+KxNVhA0ADLOk6+r/CoL4Ruql9+LRxIXTBr1AtFkU1QMCIM8j0VgS4SY88Gvz8ha+Iz
-         ppuFTtyidQHZJlEnK8EFT/xQfJab4b99W6Oy6XdvhcLoiQDgGAixtJ4oUl5A4bZ7grHP
-         rBMADZirN1Fj7/IdDv2RVJiDQGnxoNHubC/Pxn5GPiK2x5Kef4T/58KFd4kBPgTV4tpn
-         jq0w==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=0SNIqZ1eXNTXTiBWnYdzokV/6s0LphXPV28wgFgO7+Y=;
+        b=A/SfDAFXG8B33NLAuR2aHJKfJq4Yy7L2nviUpcX6L2uRGij6Mq2/MxO7ekS9lkxJ1X
+         e1S7zhlW85oULhG1Dfxve8SFAOlLmOGKCkEfOJ9efMIUlS7JC5S1XOhhToUtbZugfnfP
+         q+vSwNgnRZTFRjkg+B3LXhmTWckczqo0qf7A1iiV33mCAnUWdonnm/dQc4trsf9lzEyS
+         M4KmtaNo6J9m3X2NP++/fVQX4pIwZ/9msZdflOc9RmJoHoksAXDDxYx8B+cBYMXwMkXf
+         Pi1RF8ffg6LSphQ6nPrFZoFMGq4a9bPJ+5h+iYhVMCA5cQwi2A67s8YGsQwRH1PuDmmr
+         LXtA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=kfWPWLek+Gy43+eezXfh8eVjBj+6pFJ2g4xROl/XX14=;
-        b=BnT/aC7lMzyqeRLwfI+5hrtmUrMmMuSDYSUbmfUHMfewQ/FtHNIfUdcnYIXlMAitzK
-         CzcsfIG95KFMoXzsti4tXGC2YnBfJlLKuMKxj/D9je/ffad1g1Ml+0icMmZKkKbbruXr
-         CXRgctrGGc4PzzNbYRezuG6Ovf7zpn4Pu0bV7MqrCBSspYsTOVSPIBg2CZqzfeeYB+d0
-         AoZECIa+9cSsjIMC5tFeYi9KRq205pceZAnsPI4cv4F+kLpGVKn+PDy7yJXT6zPG3EYY
-         6+zv3zywcyBbPINnOOH+VKoPNzHyDJckTasX48dCbRCAz3Wd3TBApNYoOjBkeX1/c4xX
-         riSQ==
-X-Gm-Message-State: APjAAAWpiQCpawSHuTaNY72NpGpkktfgfFWxMXPUBKhSmYObS+ZAXOj/
-        +XMg8svvPfAY4F0QP7lievQ=
-X-Google-Smtp-Source: APXvYqxf14HBJmxdCsYRgJfYZHCwqdsOiHgJT0V1QUIyldFt4FZFC7ZkBJlaa591ZIzt78Xi/9TbVQ==
-X-Received: by 2002:ac8:2d17:: with SMTP id n23mr25779712qta.132.1562082268324;
-        Tue, 02 Jul 2019 08:44:28 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=0SNIqZ1eXNTXTiBWnYdzokV/6s0LphXPV28wgFgO7+Y=;
+        b=rp3lu7yGJcVPku590YZvUiCW/nHnR/UBcVbilQ7MGFAq8fSnbCsGNo/jXIrZiiRGfu
+         Q55nNDJyhXIQ3izLsM9oNviIfwlcRc5G77ZqS6Ajwa6n/dL6smbQpKDg1hGe+uucG50L
+         PdiaASIq88DQjSo6iMNhiE78KSNOXd8n6KokgwV0tbi8NmDMsFMD5ZvISSmeWFnge7tZ
+         hXhO/qqpAAG0LU6JO6QAEWNkSQsPgFuQZHj+ais46EfY+CGOiFZmfRp7hIbRFPohJheq
+         jr2eAsSenbPSFuRIuy0KJ6wGPYmbH3q2QeW7JIS3EmYsHLd4h2vlXoE/wYv1DMxcDRv5
+         YEug==
+X-Gm-Message-State: APjAAAXlOHF+bSUV2k13Z6svLTjQLd2axclLntp+eHtBfGrc7M9idsFM
+        NQvjw6YBSVXXIwSrJHaRl74Nhun67z8=
+X-Google-Smtp-Source: APXvYqy/DQiaFs1LsX0WgEbqxRdbnX6EGJXOOnXyMa0gYPhm28oRBjSKtRB4pJgIl/8V5uuGMGyMYg==
+X-Received: by 2002:a37:8741:: with SMTP id j62mr23578387qkd.78.1562082274356;
+        Tue, 02 Jul 2019 08:44:34 -0700 (PDT)
 Received: from localhost ([2601:184:4780:7861:5010:5849:d76d:b714])
-        by smtp.gmail.com with ESMTPSA id c127sm6362897qkg.121.2019.07.02.08.44.27
+        by smtp.gmail.com with ESMTPSA id c192sm6389184qkg.33.2019.07.02.08.44.33
         (version=TLS1_3 cipher=AEAD-AES256-GCM-SHA384 bits=256/256);
-        Tue, 02 Jul 2019 08:44:27 -0700 (PDT)
+        Tue, 02 Jul 2019 08:44:33 -0700 (PDT)
 From:   Rob Clark <robdclark@gmail.com>
 To:     dri-devel@lists.freedesktop.org
 Cc:     linux-arm-msm@vger.kernel.org, Sean Paul <seanpaul@chromium.org>,
-        Rob Clark <robdclark@chromium.org>
-Subject: [PATCH 0/3] drm/bridge: ti-sn65dsi86: debugfs and mode_flags fix
-Date:   Tue,  2 Jul 2019 08:44:15 -0700
-Message-Id: <20190702154419.20812-1-robdclark@gmail.com>
+        Rob Clark <robdclark@chromium.org>,
+        Andrzej Hajda <a.hajda@samsung.com>,
+        Laurent Pinchart <Laurent.pinchart@ideasonboard.com>,
+        David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>, linux-kernel@vger.kernel.org
+Subject: [PATCH 1/3] drm/bridge: ti-sn65dsi86: add link to datasheet
+Date:   Tue,  2 Jul 2019 08:44:16 -0700
+Message-Id: <20190702154419.20812-2-robdclark@gmail.com>
 X-Mailer: git-send-email 2.20.1
+In-Reply-To: <20190702154419.20812-1-robdclark@gmail.com>
+References: <20190702154419.20812-1-robdclark@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Sender: linux-arm-msm-owner@vger.kernel.org
@@ -62,23 +68,26 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 From: Rob Clark <robdclark@chromium.org>
 
-In process of debugging panel on my lenovo yoga c630, I noticed some
-errors in the dsi->mode_flags, which I guess were just cargo-cult'd?
+The bridge has pretty good docs, lets add a link to make them easier to
+find.
 
-Since dumping the status regs was useful to notice this problem, I
-cleaned it up and turned it into debugfs.  The last patch corrects the
-mode_flags.
+Signed-off-by: Rob Clark <robdclark@chromium.org>
+---
+ drivers/gpu/drm/bridge/ti-sn65dsi86.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-Tested on cheza and c630.
-
-Rob Clark (3):
-  drm/bridge: ti-sn65dsi86: add link to datasheet
-  drm/bridge: ti-sn65dsi86: add debugfs
-  drm/bridge: ti-sn65dsi86: correct dsi mode_flags
-
- drivers/gpu/drm/bridge/ti-sn65dsi86.c | 46 +++++++++++++++++++++++++--
- 1 file changed, 44 insertions(+), 2 deletions(-)
-
+diff --git a/drivers/gpu/drm/bridge/ti-sn65dsi86.c b/drivers/gpu/drm/bridge/ti-sn65dsi86.c
+index bcca9173c72a..f1a2493b86d9 100644
+--- a/drivers/gpu/drm/bridge/ti-sn65dsi86.c
++++ b/drivers/gpu/drm/bridge/ti-sn65dsi86.c
+@@ -1,6 +1,7 @@
+ // SPDX-License-Identifier: GPL-2.0
+ /*
+  * Copyright (c) 2018, The Linux Foundation. All rights reserved.
++ * datasheet: http://www.ti.com/lit/ds/symlink/sn65dsi86.pdf
+  */
+ 
+ #include <linux/clk.h>
 -- 
 2.20.1
 
