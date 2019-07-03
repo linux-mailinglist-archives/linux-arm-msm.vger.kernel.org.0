@@ -2,116 +2,112 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 0581B5E24F
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Jul 2019 12:47:22 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id CC2A55E3CA
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Jul 2019 14:25:46 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726434AbfGCKrV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 3 Jul 2019 06:47:21 -0400
-Received: from smtp.codeaurora.org ([198.145.29.96]:46746 "EHLO
-        smtp.codeaurora.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725796AbfGCKrU (ORCPT
+        id S1726255AbfGCMZq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 3 Jul 2019 08:25:46 -0400
+Received: from mail-ed1-f68.google.com ([209.85.208.68]:43064 "EHLO
+        mail-ed1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725933AbfGCMZq (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 3 Jul 2019 06:47:20 -0400
-Received: by smtp.codeaurora.org (Postfix, from userid 1000)
-        id 85181607DE; Wed,  3 Jul 2019 10:47:19 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
-        s=default; t=1562150839;
-        bh=EAJJi3gmJ59kawq1tWepQWDrFAsUgd0cWTVqW/judU4=;
-        h=Subject:To:Cc:References:From:Date:In-Reply-To:From;
-        b=WK27Jb9pkWRSAxcPsRmy5QIWoQupZzOYKc7Jc6Zm/2f8cyFJpClrwCtDxld4k++Cd
-         t2/95dRl7oAstI5/iFUdaJDJEiTOkWIT4+j0R800ByPERVpHwzO4HejV6CdCV21bKj
-         gS1ptQkWUrSKYDsNEDPrJ3Fv6cx77tbvTRXTN7gc=
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        pdx-caf-mail.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.7 required=2.0 tests=ALL_TRUSTED,BAYES_00,
-        DKIM_INVALID,DKIM_SIGNED,SPF_NONE autolearn=no autolearn_force=no
-        version=3.4.0
-Received: from [10.79.43.141] (blr-bdr-fw-01_globalnat_allzones-outside.qualcomm.com [103.229.18.19])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: rnayak@smtp.codeaurora.org)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 5CF766025A;
-        Wed,  3 Jul 2019 10:47:17 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
-        s=default; t=1562150839;
-        bh=EAJJi3gmJ59kawq1tWepQWDrFAsUgd0cWTVqW/judU4=;
-        h=Subject:To:Cc:References:From:Date:In-Reply-To:From;
-        b=WK27Jb9pkWRSAxcPsRmy5QIWoQupZzOYKc7Jc6Zm/2f8cyFJpClrwCtDxld4k++Cd
-         t2/95dRl7oAstI5/iFUdaJDJEiTOkWIT4+j0R800ByPERVpHwzO4HejV6CdCV21bKj
-         gS1ptQkWUrSKYDsNEDPrJ3Fv6cx77tbvTRXTN7gc=
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 5CF766025A
-Authentication-Results: pdx-caf-mail.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: pdx-caf-mail.web.codeaurora.org; spf=none smtp.mailfrom=rnayak@codeaurora.org
-Subject: Re: [PATCH 2/2] opp: Manage empty OPP tables with clk handle
-To:     Viresh Kumar <viresh.kumar@linaro.org>
-Cc:     vireshk@kernel.org, sboyd@kernel.org, linux-pm@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org
-References: <20190702043643.1746-1-rnayak@codeaurora.org>
- <20190702043643.1746-2-rnayak@codeaurora.org>
- <20190703085026.xe3hwxqah76b7np3@vireshk-i7>
- <95cf4e44-d57a-9aa4-40ce-3b7013e10813@codeaurora.org>
- <20190703094746.l354nwp2gwuwhiu4@vireshk-i7>
-From:   Rajendra Nayak <rnayak@codeaurora.org>
-Message-ID: <c8e42b38-8ce0-c02c-98d3-6d6598dc3fad@codeaurora.org>
-Date:   Wed, 3 Jul 2019 16:17:15 +0530
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
- Thunderbird/60.7.2
+        Wed, 3 Jul 2019 08:25:46 -0400
+Received: by mail-ed1-f68.google.com with SMTP id e3so1870849edr.10;
+        Wed, 03 Jul 2019 05:25:44 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=MPb7Hz/aUpRJZzTZLNZiyzmAnZP9z54WdoZUYMn88X0=;
+        b=vHchkMOvsHv8kCbADBZUi1vqLd4RTY+FiPP9Lcmq+0/ksI+sEADt3BL/B6j1XPh4sv
+         8mVZ5lV2G5n5tMEJRJFIZ0fo979d1UN6QoxOmHlllEUg3J1Pwy2ex1GT3DhC1CpuQtWl
+         2gXnxt80cMG1BqF8rJSpfWYyGXRpHG8QCgnHjyNStOeM3/WYWkFB3oyfCYxA5xm0DUxc
+         x9s6+4ojoKtayGxCeER/E4qGN6dWO2A/1tiAUiMgIpdOyxz3m267eY7/dEf651rPsIzO
+         edygRg5PthgrTVRS6jqy504BnS7OQUcdBI4bM2kXuffv+e/FTrmLzf/3XoY/PuZrOtVf
+         nVRw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=MPb7Hz/aUpRJZzTZLNZiyzmAnZP9z54WdoZUYMn88X0=;
+        b=WaTyt2AiOLLpx9OGOBXkWzBS2uRUeWXh9GnG9t7ShB4+rjNgxIKbqAfTAr7KGrZ2/6
+         dZ91zYkU6vttlH6uth/3JFxmiZdEtDnTpkdLeyf/6JZhweTCgNHj7AGamCI3lQwPWuzi
+         5eelBRQo3bDDS+R4YBRPLKrnn8khGRywuo2gkoA8FqTi9FaqJDV67vqX1SwyM5XHASss
+         HNVPi2x0v/sThIjp6QGUtrAsm5IoWl+YiS5gzXn8wC2da3YIFZh6QXk235gaflhuQWIX
+         wwOP9QAwJ2kxh0yeSe40o70sTmeFyeqz94hmLeX8eJv2c8bwHqIjwIIQYDMpU82xH8rQ
+         fHOQ==
+X-Gm-Message-State: APjAAAVEs3NyXDflWuablzs55V3eaA63e0DnOCOMyXMr0c6VlZkj0Z9Q
+        xdeIc11l49y3NGMdb8AneQH5e/XnXOlGAh15Vk4=
+X-Google-Smtp-Source: APXvYqwwqBwoR0MKYgtbC2RmXe+Vq0vZxW7XMvoTuUUUmhoh1kZpu2I3IiFIpogQ8NwcLjzrOgckudH6yN1/qTMZEO8=
+X-Received: by 2002:a17:906:3612:: with SMTP id q18mr34803196ejb.278.1562156744041;
+ Wed, 03 Jul 2019 05:25:44 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <20190703094746.l354nwp2gwuwhiu4@vireshk-i7>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+References: <20190701173907.15494-1-jeffrey.l.hugo@gmail.com> <20190703040843.GA27383@builder>
+In-Reply-To: <20190703040843.GA27383@builder>
+From:   Rob Clark <robdclark@gmail.com>
+Date:   Wed, 3 Jul 2019 05:25:27 -0700
+Message-ID: <CAF6AEGvwMj+R6KbFYbatx8AuF+5mztc7246ocKXfRWnpphv9NA@mail.gmail.com>
+Subject: Re: [PATCH] drm/msm/mdp5: Use drm_device for creating gem address space
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     Jeffrey Hugo <jeffrey.l.hugo@gmail.com>,
+        Sean Paul <sean@poorly.run>, David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        dri-devel <dri-devel@lists.freedesktop.org>,
+        freedreno <freedreno@lists.freedesktop.org>,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On Tue, Jul 2, 2019 at 9:08 PM Bjorn Andersson
+<bjorn.andersson@linaro.org> wrote:
+>
+> On Mon 01 Jul 10:39 PDT 2019, Jeffrey Hugo wrote:
+>
+> > Creating the msm gem address space requires a reference to the dev where
+> > the iommu is located.  The driver currently assumes this is the same as
+> > the platform device, which breaks when the iommu is outside of the
+> > platform device.  Use the drm_device instead, which happens to always have
+> > a reference to the proper device.
+> >
+> > Signed-off-by: Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
+>
+> Sorry, but on db820c this patch results in:
+>
+> [   64.803263] msm_mdp 901000.mdp: [drm:mdp5_kms_init [msm]] *ERROR* failed to attach iommu: -19
+>
+> Followed by 3 oopses as we're trying to fail the initialization.
 
+yeah, that is kinda what I suspected would happen.  I guess to deal
+with how things are hooked up on 8998, perhaps the best thing is to
+first try &pdev->dev, and then if that fails try dev->dev
 
-On 7/3/2019 3:17 PM, Viresh Kumar wrote:
-> On 03-07-19, 14:41, Rajendra Nayak wrote:
->> []..
->>>
->>> Explain the rationale behind this code here in a comment.
->>>
->>>> +	if (!_get_opp_count(opp_table)) {
->>>> +		ret = _generic_set_opp_clk_only(dev, clk, freq);
->>>> +		goto put_opp_table;
->>>> +	}
->>>> +
->>>>    	temp_freq = old_freq;
->>>>    	old_opp = _find_freq_ceil(opp_table, &temp_freq);
->>>>    	if (IS_ERR(old_opp)) {
->>>
->>> Also, rebase over the OPP branch please:
->>
->> thanks, I will fix/rebase and repost,
->> in the meantime while I was testing this a little more I realized I also need
->> something like the change below to avoid a refcount mismatch WARN when empty OPP
->> table is removed using dev_pm_opp_of_remove_table()
->>
->> diff --git a/drivers/opp/core.c b/drivers/opp/core.c
->> index fa7d4d6d37b3..20128a88baf2 100644
->> --- a/drivers/opp/core.c
->> +++ b/drivers/opp/core.c
->> @@ -2118,7 +2118,8 @@ void _dev_pm_opp_find_and_remove_table(struct device *dev)
->>                  return;
->>          }
->> -       _put_opp_list_kref(opp_table);
->> +       if (_get_opp_count(opp_table))
->> +               _put_opp_list_kref(opp_table);
->>          /* Drop reference taken by _find_opp_table() */
->>          dev_pm_opp_put_opp_table(opp_table);
->>
->> Does this look like a good way to fix it?
-> 
-> No. If an OPP table only has dynamic OPPs, this will still generate
-> warning. Below is the fix I would suggest. Please test it, I haven't
-> tested it at all :)
+BR,
+-R
 
-thanks, yes, this seems to work.
-
--- 
-QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
-of Code Aurora Forum, hosted by The Linux Foundation
+> Regards,
+> Bjorn
+>
+> > ---
+> >  drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c | 2 +-
+> >  1 file changed, 1 insertion(+), 1 deletion(-)
+> >
+> > diff --git a/drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c b/drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c
+> > index 4a60f5fca6b0..1347a5223918 100644
+> > --- a/drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c
+> > +++ b/drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c
+> > @@ -702,7 +702,7 @@ struct msm_kms *mdp5_kms_init(struct drm_device *dev)
+> >       mdelay(16);
+> >
+> >       if (config->platform.iommu) {
+> > -             aspace = msm_gem_address_space_create(&pdev->dev,
+> > +             aspace = msm_gem_address_space_create(dev->dev,
+> >                               config->platform.iommu, "mdp5");
+> >               if (IS_ERR(aspace)) {
+> >                       ret = PTR_ERR(aspace);
+> > --
+> > 2.17.1
+> >
