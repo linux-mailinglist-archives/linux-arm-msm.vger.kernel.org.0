@@ -2,91 +2,120 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 4858C5DFBE
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Jul 2019 10:26:51 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 082B85E031
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Jul 2019 10:50:32 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726670AbfGCI0t (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 3 Jul 2019 04:26:49 -0400
-Received: from mail-lf1-f67.google.com ([209.85.167.67]:37971 "EHLO
-        mail-lf1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727264AbfGCI0q (ORCPT
+        id S1727108AbfGCIub (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 3 Jul 2019 04:50:31 -0400
+Received: from mail-pf1-f195.google.com ([209.85.210.195]:37533 "EHLO
+        mail-pf1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727045AbfGCIub (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 3 Jul 2019 04:26:46 -0400
-Received: by mail-lf1-f67.google.com with SMTP id b11so1128693lfa.5
-        for <linux-arm-msm@vger.kernel.org>; Wed, 03 Jul 2019 01:26:44 -0700 (PDT)
+        Wed, 3 Jul 2019 04:50:31 -0400
+Received: by mail-pf1-f195.google.com with SMTP id 19so909257pfa.4
+        for <linux-arm-msm@vger.kernel.org>; Wed, 03 Jul 2019 01:50:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=oH+9JEmEdviHn94a7cG/CrP0XnCuvPvdHugovk+1QmU=;
-        b=Yr0j9Ul0MKP0dkHoy9so7SqHZjz9YPD/8RtaQYq/QS7hJpMV/YgCE0T28eXT7jCvlS
-         yQmRZqNvwMQEyd90J4bhV4PHy5Gm9rZDQYOpw2HFGrqYnG13mxGub7/M3rR+pIskS9RH
-         1ZhsY0q7Hm/aXru8eSnmkm75xGDWYmso+K5aSBOYCjI/wj4NuxVFuJ9B+ojMYRnIcO8d
-         ix3snxZ0ZJj71x7B6n368jZ9X6YaizA+Ee6+uCLuReo2lBUjxx1g9henIp9r5WGP0WwN
-         b1C0fz0nbOuKbXmvt7NjhZPWDwy5iWE/yLpyxrSwtom7abqcgKnr4Xu5GbBkbajHu7wK
-         5jhA==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=p7Mwi+H6HZIn3w7nyOMbXeZ9EymSOeovkKyUhkxyEYU=;
+        b=ndWouWyT9VteUojTYfkNpzV/u5gtKQXODryjvDKT6HTffruCiKrqt6NAvfH/0+pOCb
+         Bdg7dNQ03xUoGzy7iIz+ZBNDEh/Kx0l5OSpGAg8OCaWlXmRHjH2rrR6m9Zg5MIah7vVJ
+         PS3OVqn2u9uUNC66jAm3wVVEVwSmfJ+EPRXmLqnEhocIpzVLwA0xFuN1Zlc/jtlF9Chd
+         QLyflkrFf5ORh3Oe+NCRsf/QFL4iXTaBYGf9zTKAMjD8O5wCGW8o+yJ3+GWq2j6Sx39z
+         RkVApV9Kr6tkTQTwrHYS/gPdqtZlsWC5Sl2euJi51vz9iuBDmkN47uDi0sg7X1bKdOud
+         rKZQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=oH+9JEmEdviHn94a7cG/CrP0XnCuvPvdHugovk+1QmU=;
-        b=r9SFt7GojNRJ2ZKMqqxV91dNRE7cMd51JjFj9bWGNB1eCi7raryfoeJXoWTvyXb8fz
-         sN1kf8nFo8qhQWJAqt7WhA5doff/htbyzhoFZosRpy+lwHawnmDXiiCEEuWPQT7EOwaz
-         Zgxu73wDgc+YrxaQ1neKosn+OjX3i64WobqKficyId+D2phkSUkC7DV+DGkkwyT+K0zM
-         lJyMQiCB3VrZKNN4AZMa8SoiBZYIkRxXkr8r4tx3h2g/s7veJxLmvqgNp/5L/L3Sv9Aa
-         JIVSV667UN7LPg0AAaFOgsVhWfBCbN2oELjAgNZZBPZwB5CjP9SEIvuVUpUMRen0pVij
-         1DkQ==
-X-Gm-Message-State: APjAAAVaCMSGbn6exkr912/pYckHwLVatTNzBRCaLVCtacuPSGeDZ8dC
-        uobno+hbhVmcAZa7VlRNxh1BvbwYqcejHUVbCAYDpg==
-X-Google-Smtp-Source: APXvYqymr6EoLSqXvq3rkC3hBxhdSlL8Q76rBENOFxvbDxQXxxcFrCLNfqvoaHdBizGqM1M/jk306H+kUmo4riz9AkI=
-X-Received: by 2002:ac2:5382:: with SMTP id g2mr16672551lfh.92.1562142403839;
- Wed, 03 Jul 2019 01:26:43 -0700 (PDT)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=p7Mwi+H6HZIn3w7nyOMbXeZ9EymSOeovkKyUhkxyEYU=;
+        b=UJwnXvlQILjaEKFW6UTPTaQCyK1gzBDU3ezplAjtCgjz2H3N804s1fymbES1WgqHUq
+         4SUkmLZkUfINGHDlf6J9844oakGdGyHw4KTy/F7PnmYkeK1kX66OB7AGdDSD80VIc24Q
+         SDBDGaqaD8GPo5v9vKnqQ0RQ8raZKTCP2QPStzT0Oc13Z4u1M+ea2uUGhDxJxCKxwrkS
+         Y/mis3+tU6Ey2JhPUYNyGbUHXW/EdMGYBz38lWPzHUEY+QtErPelZVaWoOZY262kgY9Z
+         1oX16OJ6GGVkQosnI10WR7SWlb/ENLi4fahZbLqrUfg5tXOoLEmVaBhgihmAwVLmqaCt
+         aogA==
+X-Gm-Message-State: APjAAAXLGvVVYZMf4SNb60NSst3ddj++UrEhms2OJAXSFztW8bCo2qPx
+        8ABdQPP/xinT12NBQ6Fvq/oyoA==
+X-Google-Smtp-Source: APXvYqwYw863+ZtXrlxlXbcbTj6csoTEgcmVyvsmlZ80hBDLYlJ/AwMgdsKvnrUhj272v5BwPP/rwg==
+X-Received: by 2002:a65:4087:: with SMTP id t7mr12236199pgp.10.1562143830510;
+        Wed, 03 Jul 2019 01:50:30 -0700 (PDT)
+Received: from localhost ([122.172.21.205])
+        by smtp.gmail.com with ESMTPSA id i7sm1434195pjk.24.2019.07.03.01.50.28
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Wed, 03 Jul 2019 01:50:29 -0700 (PDT)
+Date:   Wed, 3 Jul 2019 14:20:26 +0530
+From:   Viresh Kumar <viresh.kumar@linaro.org>
+To:     Rajendra Nayak <rnayak@codeaurora.org>
+Cc:     vireshk@kernel.org, sboyd@kernel.org, linux-pm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org
+Subject: Re: [PATCH 2/2] opp: Manage empty OPP tables with clk handle
+Message-ID: <20190703085026.xe3hwxqah76b7np3@vireshk-i7>
+References: <20190702043643.1746-1-rnayak@codeaurora.org>
+ <20190702043643.1746-2-rnayak@codeaurora.org>
 MIME-Version: 1.0
-References: <1561472086-23360-1-git-send-email-neeraju@codeaurora.org>
-In-Reply-To: <1561472086-23360-1-git-send-email-neeraju@codeaurora.org>
-From:   Linus Walleij <linus.walleij@linaro.org>
-Date:   Wed, 3 Jul 2019 10:26:32 +0200
-Message-ID: <CACRpkdbfTTnEbCM4R_F_KYN9ys=VwCLQ5d1cYsx9LQOyTd5dwA@mail.gmail.com>
-Subject: Re: [PATCH v3] pinctrl: qcom: Add irq_enable callback for msm gpio
-To:     Neeraj Upadhyay <neeraju@codeaurora.org>
-Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Timur Tabi <timur@codeaurora.org>,
-        MSM <linux-arm-msm@vger.kernel.org>,
-        "open list:GPIO SUBSYSTEM" <linux-gpio@vger.kernel.org>,
-        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
-        Srinivas Ramana <sramana@codeaurora.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20190702043643.1746-2-rnayak@codeaurora.org>
+User-Agent: NeoMutt/20180716-391-311a52
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Jun 25, 2019 at 4:14 PM Neeraj Upadhyay <neeraju@codeaurora.org> wrote:
+On 02-07-19, 10:06, Rajendra Nayak wrote:
+> With OPP core now supporting DVFS for IO devices, we have instances of
+> IO devices (same IP block) with require an OPP on some platforms/SoCs
 
-> From: Srinivas Ramana <sramana@codeaurora.org>
->
-> Introduce the irq_enable callback which will be same as irq_unmask
-> except that it will also clear the status bit before unmask.
->
-> This will help in clearing any erroneous interrupts that would
-> have got latched when the interrupt is not in use.
->
-> There may be devices like UART which can use the same gpio line
-> for data rx as well as a wakeup gpio when in suspend. The data that
-> was flowing on the line may latch the interrupt and when we enable
-> the interrupt before going to suspend, this would trigger the
-> unexpected interrupt. This change helps clearing the interrupt
-> so that these unexpected interrupts gets cleared.
->
-> Signed-off-by: Srinivas Ramana <sramana@codeaurora.org>
-> Signed-off-by: Neeraj Upadhyay <neeraju@codeaurora.org>
+                             which
+
+> while just needing to scale the clock on some others.
+
+Blank line here.
+
+> In order to avoid conditional code in every driver, (to check for 
+
+                                                    remove ,
+
+> availability of OPPs and then deciding to do either dev_pm_opp_set_rate()
+> or clk_set_rate()) add support to manage empty OPP tables with a clk handle.
+
+Blank line here.
+
+> This makes dev_pm_opp_set_rate() equivalent of a clk_set_rate() for devices
+> with just a clk and no OPPs specified.
+> 
+> Signed-off-by: Rajendra Nayak <rnayak@codeaurora.org>
 > ---
->
-> Changes since v2:
-> - Renamed function to msm_gpio_irq_clear_unmask()
+>  drivers/opp/core.c | 5 +++++
+>  1 file changed, 5 insertions(+)
+> 
+> diff --git a/drivers/opp/core.c b/drivers/opp/core.c
+> index ae033bb1e5b7..fa7d4d6d37b3 100644
+> --- a/drivers/opp/core.c
+> +++ b/drivers/opp/core.c
+> @@ -801,6 +801,11 @@ int dev_pm_opp_set_rate(struct device *dev, unsigned long target_freq)
+>  		goto put_opp_table;
+>  	}
+>  
 
-Patch applied, unless Bjorn complains!
+Explain the rationale behind this code here in a comment.
 
-Yours,
-Linus Walleij
+> +	if (!_get_opp_count(opp_table)) {
+> +		ret = _generic_set_opp_clk_only(dev, clk, freq);
+> +		goto put_opp_table;
+> +	}
+> +
+>  	temp_freq = old_freq;
+>  	old_opp = _find_freq_ceil(opp_table, &temp_freq);
+>  	if (IS_ERR(old_opp)) {
+
+Also, rebase over the OPP branch please:
+
+git://git.kernel.org/pub/scm/linux/kernel/git/vireshk/pm.git opp/linux-next
+
+or pm/linux-next
+
+-- 
+viresh
