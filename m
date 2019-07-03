@@ -2,129 +2,92 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id D3C1B5E772
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Jul 2019 17:09:17 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 8FEDF5E77C
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Jul 2019 17:10:20 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726973AbfGCPJF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 3 Jul 2019 11:09:05 -0400
-Received: from mail-io1-f65.google.com ([209.85.166.65]:34290 "EHLO
+        id S1726760AbfGCPKJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 3 Jul 2019 11:10:09 -0400
+Received: from mail-io1-f65.google.com ([209.85.166.65]:39916 "EHLO
         mail-io1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725944AbfGCPJE (ORCPT
+        with ESMTP id S1726473AbfGCPKI (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 3 Jul 2019 11:09:04 -0400
-Received: by mail-io1-f65.google.com with SMTP id k8so5647565iot.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 03 Jul 2019 08:09:04 -0700 (PDT)
+        Wed, 3 Jul 2019 11:10:08 -0400
+Received: by mail-io1-f65.google.com with SMTP id r185so5591510iod.6;
+        Wed, 03 Jul 2019 08:10:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=aw5rLTOGHVOuWpYtoQJzQDQQgJgAlYekgr7JwjSCTt4=;
-        b=PzY9C3Nt2MIKEZNxYLjxFAW+9SjQY8TUYm3Ms5POWyhTT2ApqoPbKFQ+Huyjq362ba
-         xHD5+bbNMJ44ZGBQEcQnRc++AwHkwyWrGkF44qTJ+LHDqL/BP8BA9QJc07DoauOkqhxA
-         llBHa2jdVUepqJR1eBXUIgC4FhdpNVATbqohNl3nujVWrD3h3dAsNnB+ty+BVONWXeqo
-         18smc6JQii8rSR2Y3ZUNGs1w5YgcMZPEiOvzoDGdLb/Shl5ciZSeIF2sUYjp5vpw1oL+
-         zidqZ1jJ7lqsGxAuGBO6IKcNjw6v9iChWJkhSnadVtiWogEw10vPbfdFmsDp4XCHWMiw
-         IQaw==
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=4tBeQ15keJRuzad4ERXIDpILI/nTmHRA/IZ5Wy12SIY=;
+        b=Kwjl9r08+wXXoiN7tk3DWvDtFrJpEccsm62jss4sY9SfrWV26ulm9a3JOfJUxHmx7N
+         ehnLYqfv1Bt9MXCPQtbN5rT42RI4XGhCDypgyS9k5Tfir6+5Nu1f/Hqphsyay/q/l4NA
+         cA6nHKqA6BXqsZfKoGe4YBQ6tF22kOQ/o2u6LwBr9PY0WPF2rGrJLEchvXtnf4jMV607
+         FH7GaCt/uON5U/+J0ntxesMHutIiyrchvocnI1k+FuPUgEcEBqOoA2aZo3Cmee9uUUjj
+         +jdhx2TJH6g0kj5g/7R7WRR8+8zlr/C2poqXaeVNeakFCFDvMgpp6fdaFb+YyyIbVG7N
+         ZP2A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=aw5rLTOGHVOuWpYtoQJzQDQQgJgAlYekgr7JwjSCTt4=;
-        b=i10rqhD/eT7RACdLB+UnOgDzVVJNhboq7In9U/DlBmOpNZEB3wWjjKIqhTw6EBSdQY
-         Br+pBfgR0iZgS81bHYwobsUua993d1MfKFdB+wrAm5hAh4sna78+fN1eTB63l/lHJ0cu
-         qnobrcd7LvqFm3adnloK0+fSYGWng99bwt1ncGNPtAJEmPkmfTvinxj1GzHwWi8lR8mN
-         DhBgOlQvRnlHD39XU0cH4uuL2v/vRTaHqaEFrhxPl3kRndor4Fbtj6JFb5OBByKRUDPR
-         6++nD5xsxWFaRW2ju7pcaPrsl7Doz1yLvKW/72sbfPCelHFF91ZSuo3JqLKpRc/sY7j2
-         rAmw==
-X-Gm-Message-State: APjAAAXJpUBdNmth0l3fNeVFEihwkIasEjEOOx1PJQtDh2a9mXk2+E9p
-        7XnVXNmnmGuagpdeCSTkrS4IQQF36UfIrQ==
-X-Google-Smtp-Source: APXvYqylDJ9H/znMIYSM76cME/p8SyRkZWaMigsqEugGbrfBUtutBbJz5lC5zaZVFp89G+a78FlD6Q==
-X-Received: by 2002:a6b:c915:: with SMTP id z21mr13020446iof.182.1562166543298;
-        Wed, 03 Jul 2019 08:09:03 -0700 (PDT)
-Received: from [172.22.22.26] (c-71-195-29-92.hsd1.mn.comcast.net. [71.195.29.92])
-        by smtp.googlemail.com with ESMTPSA id f4sm2434872iok.56.2019.07.03.08.09.01
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 03 Jul 2019 08:09:02 -0700 (PDT)
-Subject: Re: [PATCH v2 02/17] dt-bindings: soc: qcom: add IPA bindings
-To:     Alex Elder <elder@ieee.org>, Rob Herring <robh+dt@kernel.org>
-Cc:     David Miller <davem@davemloft.net>, Arnd Bergmann <arnd@arndb.de>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Ilias Apalodimas <ilias.apalodimas@linaro.org>,
-        Mark Rutland <mark.rutland@arm.com>,
-        devicetree@vger.kernel.org, Evan Green <evgreen@chromium.org>,
-        Ben Chan <benchan@google.com>,
-        Eric Caruso <ejcaruso@google.com>, cpratapa@codeaurora.org,
-        syadagir@codeaurora.org, subashab@codeaurora.org,
-        abhishek.esse@gmail.com, netdev <netdev@vger.kernel.org>,
-        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
-        "open list:ARM/QUALCOMM SUPPORT" <linux-soc@vger.kernel.org>,
-        "moderated list:ARM/FREESCALE IMX / MXC ARM ARCHITECTURE" 
-        <linux-arm-kernel@lists.infradead.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>
-References: <20190531035348.7194-1-elder@linaro.org>
- <20190531035348.7194-3-elder@linaro.org>
- <CAL_JsqLFk3=YN+V=RVxq9xWQTrPA9_0zW+eFrdXkGkCnM_sBkA@mail.gmail.com>
- <bcb7f599-3c22-da27-c92b-4c1903a5ea06@ieee.org>
-From:   Alex Elder <elder@linaro.org>
-Message-ID: <76c1db4f-20b7-4b4b-541c-aa8baa12e7cc@linaro.org>
-Date:   Wed, 3 Jul 2019 10:09:01 -0500
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.7.2
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=4tBeQ15keJRuzad4ERXIDpILI/nTmHRA/IZ5Wy12SIY=;
+        b=FKW2mryGH5aqWCTTMFnE9cImsSK6rkCSpCtjrhA9ulOe9OhQCCvByGphpq9lTHdRX2
+         KLVWMAlw6Gwk/axj47Z3k6SNJABM6xtOfg9+izouB+hVHwIDThHHO5V2sSim8tJl7LwP
+         Oago4MTgDNctb32eHjx5izKefo3iKr0DMOFlF0RZWY/mJc5PYZKNgREB1/OjMGvoMw+y
+         3D+I17EmOrbOn4rndW8Ux1AqCB2w9zsDcesubYQvdR42kYDTUENvziQlsBMinyCQXX54
+         vHhaxjb22OM2jXxdjvtB7NuK3fXmABkqFGk21Tv2rnC2qcgQOo25hF9PYtAVbijscfwE
+         8Gng==
+X-Gm-Message-State: APjAAAU9pskGHcQKGmViMR3Qn5VMARBRV02n/nk7ajejii2SUswcrLCK
+        cRSW8Pou4gfEcHsSMW1Vv4zE/YnIfJ/ZFoIGBuRDNQ==
+X-Google-Smtp-Source: APXvYqynbo0TvCuoYXiCZt+eOeNeSj1rTV/qRqThMPaa0pfxvV2Mi/VojWfBO0/yJi3CyvK++1xCXJsBnVwJOSOnsE8=
+X-Received: by 2002:a02:bca:: with SMTP id 193mr43442848jad.46.1562166607574;
+ Wed, 03 Jul 2019 08:10:07 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <bcb7f599-3c22-da27-c92b-4c1903a5ea06@ieee.org>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+References: <20190701173907.15494-1-jeffrey.l.hugo@gmail.com>
+ <20190703040843.GA27383@builder> <CAF6AEGvwMj+R6KbFYbatx8AuF+5mztc7246ocKXfRWnpphv9NA@mail.gmail.com>
+In-Reply-To: <CAF6AEGvwMj+R6KbFYbatx8AuF+5mztc7246ocKXfRWnpphv9NA@mail.gmail.com>
+From:   Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
+Date:   Wed, 3 Jul 2019 09:09:57 -0600
+Message-ID: <CAOCk7Nr_LYhGOcUCMA83MQ8Xc4zRPfNcSkD6aGJFAcD_udDU-A@mail.gmail.com>
+Subject: Re: [PATCH] drm/msm/mdp5: Use drm_device for creating gem address space
+To:     Rob Clark <robdclark@gmail.com>
+Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Sean Paul <sean@poorly.run>, David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        dri-devel <dri-devel@lists.freedesktop.org>,
+        freedreno <freedreno@lists.freedesktop.org>,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 6/10/19 9:11 PM, Alex Elder wrote:
-> On 6/10/19 5:08 PM, Rob Herring wrote:
->> On Thu, May 30, 2019 at 9:53 PM Alex Elder <elder@linaro.org> wrote:
->>>
->>> Add the binding definitions for the "qcom,ipa" device tree node.
->>>
->>> Signed-off-by: Alex Elder <elder@linaro.org>
->>> ---
->>>  .../devicetree/bindings/net/qcom,ipa.yaml     | 180 ++++++++++++++++++
->>>  1 file changed, 180 insertions(+)
->>>  create mode 100644 Documentation/devicetree/bindings/net/qcom,ipa.yaml
->>>
->>> diff --git a/Documentation/devicetree/bindings/net/qcom,ipa.yaml b/Documentation/devicetree/bindings/net/qcom,ipa.yaml
->>> new file mode 100644
->>> index 000000000000..0037fc278a61
->>> --- /dev/null
->>> +++ b/Documentation/devicetree/bindings/net/qcom,ipa.yaml
->>> @@ -0,0 +1,180 @@
->>> +# SPDX-License-Identifier: GPL-2.0
->>
->> New bindings are preferred to be dual GPL-2.0 and BSD-2-Clause. But
->> that's really a decision for the submitter.
-> 
-> Thanks Rob.  I'll ask Qualcomm if there's any problem
-> with doing that; I presume not.  If I re-submit this
-> with dual copyright, I will include your Reviewed-by
-> despite the change, OK?
+On Wed, Jul 3, 2019 at 6:25 AM Rob Clark <robdclark@gmail.com> wrote:
+>
+> On Tue, Jul 2, 2019 at 9:08 PM Bjorn Andersson
+> <bjorn.andersson@linaro.org> wrote:
+> >
+> > On Mon 01 Jul 10:39 PDT 2019, Jeffrey Hugo wrote:
+> >
+> > > Creating the msm gem address space requires a reference to the dev where
+> > > the iommu is located.  The driver currently assumes this is the same as
+> > > the platform device, which breaks when the iommu is outside of the
+> > > platform device.  Use the drm_device instead, which happens to always have
+> > > a reference to the proper device.
+> > >
+> > > Signed-off-by: Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
+> >
+> > Sorry, but on db820c this patch results in:
+> >
+> > [   64.803263] msm_mdp 901000.mdp: [drm:mdp5_kms_init [msm]] *ERROR* failed to attach iommu: -19
+> >
+> > Followed by 3 oopses as we're trying to fail the initialization.
+>
+> yeah, that is kinda what I suspected would happen.  I guess to deal
+> with how things are hooked up on 8998, perhaps the best thing is to
+> first try &pdev->dev, and then if that fails try dev->dev
 
-FYI I have the go-ahead to use dual GPL-2.0 and BSD-2-Clause
-bindings on this, and will mark it that way whenever I next
-post this code for review.
-
-I will also be updating other Qualcomm bindings to have a
-dual copyright (in a separate series).  We'll want to
-get an ack from appropriate Code Aurora developers on
-those (I'll provide more detail at the time those get
-posted).
-
-					-Alex
-
-> 					-Alex
-> 
->>
->> Reviewed-by: Rob Herring <robh@kernel.org>
->>
-> 
-
+Thanks for the test feedback Bjorn.  Its unfortunate this solution
+didn't work as I expected.  I'll give Rob's suggestion a shot and spin
+another version.
