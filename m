@@ -2,161 +2,291 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id E01755DEB5
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Jul 2019 09:19:02 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 341215DEB0
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Jul 2019 09:17:55 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727006AbfGCHSq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 3 Jul 2019 03:18:46 -0400
-Received: from m15-111.126.com ([220.181.15.111]:37509 "EHLO m15-111.126.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726490AbfGCHSp (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 3 Jul 2019 03:18:45 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=126.com;
-        s=s110527; h=From:Subject:Date:Message-Id:MIME-Version; bh=HZ4Vk
-        pL6aGo6U7cksnhAK8oRn4iP7jzv9EJrkIAr4t0=; b=oA/QlhYjeEn0Z1HQw0XQ+
-        huyWWaN9BkIeoWVA7RUdKJ0j1vrEAJdPSQYlqEXWSVgn07nC1zIQMJnZyTBTtUG4
-        s2gE+os/XIldlOEFsALMRIlADKcS+sTi5Zv0M7LTluBUMIr0lCyAtzgMbqMBWuy7
-        Zi+aA4B1HYjJU/Y+6G+ikc=
-Received: from localhost.localdomain (unknown [159.226.223.206])
-        by smtp1 (Coremail) with SMTP id C8mowAA3O2+wVhxd6QiWEQ--.47747S2;
-        Wed, 03 Jul 2019 15:18:08 +0800 (CST)
-From:   Lu Shuaibing <shuaibinglu@126.com>
-To:     andy.gross@linaro.org
-Cc:     david.brown@linaro.org, linux-arm-msm@vger.kernel.org,
-        linux-soc@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Lu Shuaibing <shuaibinglu@126.com>
-Subject: [PATCH] soc: qcom: msm_bus: initialize cldata->handle field
-Date:   Wed,  3 Jul 2019 15:18:06 +0800
-Message-Id: <20190703071806.15896-1-shuaibinglu@126.com>
-X-Mailer: git-send-email 2.19.1
+        id S1727217AbfGCHRy (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 3 Jul 2019 03:17:54 -0400
+Received: from mail-pl1-f193.google.com ([209.85.214.193]:42678 "EHLO
+        mail-pl1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727198AbfGCHRy (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 3 Jul 2019 03:17:54 -0400
+Received: by mail-pl1-f193.google.com with SMTP id ay6so705811plb.9
+        for <linux-arm-msm@vger.kernel.org>; Wed, 03 Jul 2019 00:17:54 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=CkSNIC/xMFh1PVeLKzGySSfGIsN4lOVrNTJAEwJ5JpY=;
+        b=Nb0tRuyqoNgiky7Q4UId9CWY881ulwXjjr8XCsQ4027DD7P8g9O6cIfKpMhRM+A6BF
+         VWGAeP+8OD3NN9dUM/T/OQNOOvrQjByiLvM8PFk7t7EDEhl6gO6cV7AHn4JF/AN7F2xV
+         PaJkCdDa0JOgQ4hbUR+29/nZxvxLO/Y8Skm7Y6FNrtV3FCrnvgzROHb2EqVrND5r6EHp
+         kkpRpKwKMXlsxoUq7x3xnnmUP8NBZ6CU9KPNZxLMrMfOgfZyU6jMKCdpOHXWYNbt5xvK
+         u1y2XnLnQsdzPRIDlezCHeehInudV9m03mIM7yCSL+B8vFU+UfiqIEm+8hRiNmMp/BLH
+         rIOA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=CkSNIC/xMFh1PVeLKzGySSfGIsN4lOVrNTJAEwJ5JpY=;
+        b=bwdpV2RPZGf8Q51etJhWFdgLhGxOMouTtOU99PswzFi2BUKRKC/GNJXXVrGZyQ63xT
+         V4El6gp8G0mf5nTgU6IzWj295CVu1xE6+MDaN4PGYGyMHcqNFjvZ9Qd2t4NekRFjGBwZ
+         vPFL8hJ2vGB3ySOke1YSYkDFuyS00nMVGgg/Qw6RvlF55HFco4WLoMbH3WUf1K1lOI1F
+         TAh+slyt6QglC7aSUHhokJdfZgH20lc52B6tLGgRuWmR57shDX7E1J5vhZRFsxFQ1KmU
+         N49U9WDUltkZHtmyoYCsonmWpmwz187kuGZUul8m3pb/Amla1VwzqiO2sMa17ijx4VF5
+         hGLA==
+X-Gm-Message-State: APjAAAUNs4W/1g+2PS7ujJgEG3r3lRDGsh07qLcSGgGLTxjYSvvXsuC1
+        +iSLNf3wKHVuxWsJtyWfKrLTYtJnzZA=
+X-Google-Smtp-Source: APXvYqzjycPKphbvA2NlNoaOrMEu3Adfxu4eARsLs+l+1PGYQcmJ8Fk86Kv5nY2tJg/LfACrKsPHBw==
+X-Received: by 2002:a17:902:2aa8:: with SMTP id j37mr38741111plb.316.1562138273660;
+        Wed, 03 Jul 2019 00:17:53 -0700 (PDT)
+Received: from tuxbook-pro (104-188-17-28.lightspeed.sndgca.sbcglobal.net. [104.188.17.28])
+        by smtp.gmail.com with ESMTPSA id s24sm1480249pfh.133.2019.07.03.00.17.52
+        (version=TLS1_3 cipher=AEAD-AES256-GCM-SHA384 bits=256/256);
+        Wed, 03 Jul 2019 00:17:53 -0700 (PDT)
+Date:   Wed, 3 Jul 2019 00:18:45 -0700
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     Vinod Koul <vkoul@kernel.org>
+Cc:     Linus Walleij <linus.walleij@linaro.org>,
+        linux-arm-msm@vger.kernel.org,
+        Prasad Sodagudi <psodagud@codeaurora.org>,
+        Andy Gross <agross@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Mark Rutland <mark.rutland@arm.com>,
+        linux-gpio@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org,
+        "Isaac J . Manjarres" <isaacm@codeaurora.org>
+Subject: Re: [PATCH v2 2/3] dt-bindings: pinctrl: qcom: Add SM8150 pinctrl
+ binding
+Message-ID: <20190703071845.GH12249@tuxbook-pro>
+References: <20190702105045.27646-1-vkoul@kernel.org>
+ <20190702105045.27646-3-vkoul@kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: C8mowAA3O2+wVhxd6QiWEQ--.47747S2
-X-Coremail-Antispam: 1Uf129KBjvJXoW3AF1kZw1UKrWkCF4UGryrCrg_yoWxWF13p3
-        98X3yIkF48A3y7Aa1UCr1rXw1vyF4UCay8Ar9YqF1DArWUGwnrtw1UJF1rJr4q9FW5A3W7
-        Ja4DKr48tryUJw7anT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
-        9KBjDUYxBIdaVFxhVjvjDU0xZFpf9x07jxJ5OUUUUU=
-X-Originating-IP: [159.226.223.206]
-X-CM-SenderInfo: 5vkxtxpelqwzbx6rjloofrz/1tbi2RDmq1pD8+CQygAAsU
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20190702105045.27646-3-vkoul@kernel.org>
+User-Agent: Mutt/1.11.4 (2019-03-13)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The initialize cldata->handle in msm_bus_dbg_client_data() or this
-field could be used uninitialized in msm_bus_dbg_rec_transaction().
-KUMSAN(KernelUninitializedMemorySantizer, a new error detection tool)
-reports this bug.
+On Tue 02 Jul 03:50 PDT 2019, Vinod Koul wrote:
 
-[  435.087052] ==================================================================
-[  435.087086] BUG: KUMSAN: uninit-use in msm_bus_dbg_rec_transaction+0x7c/0x50c
-[  435.087106] Read of size 8 at addr ffffffc0d1338008 by task kworker/7:0/3039
-[  435.087119]
-[  435.087141] CPU: 7 PID: 3039 Comm: kworker/7:0 Tainted: G    B           4.9.124-dirty #83
-[  435.087157] Hardware name: Google Inc. MSM sdm670 B4 PVT v1.0 (DT)
-[  435.087180] Workqueue: pm pm_runtime_work
-[  435.087193] Call trace:
-[  435.087213] [<ffffff900808eaa0>] dump_backtrace+0x0/0x3b4
-[  435.087234] [<ffffff900808ee70>] show_stack+0x1c/0x24
-[  435.087255] [<ffffff900866b52c>] dump_stack+0xb8/0xe8
-[  435.087276] [<ffffff90082f1398>] kasan_report+0x2a8/0x630
-[  435.087297] [<ffffff90082ef1b4>] __asan_load8+0x190/0x198
-[  435.087317] [<ffffff9008817f1c>] msm_bus_dbg_rec_transaction+0x7c/0x50c
-[  435.087338] [<ffffff900880bfe4>] update_bw_adhoc+0x74/0x2ec
-[  435.087359] [<ffffff9008800e1c>] msm_bus_scale_update_bw+0x44/0x84
-[  435.087382] [<ffffff9009469e84>] geni_se_rmv_ab_ib+0x258/0x3c0
-[  435.087403] [<ffffff900946a0ac>] se_geni_clks_off+0xc0/0x160
-[  435.087425] [<ffffff9008ed9878>] geni_i2c_runtime_suspend+0x40/0x84
-[  435.087446] [<ffffff9008b8bee8>] pm_generic_runtime_suspend+0x58/0x8c
-[  435.087467] [<ffffff9008b8f5fc>] rpm_callback+0x160/0x1bc
-[  435.087488] [<ffffff9008b8f820>] rpm_suspend+0x1c8/0xa04
-[  435.087507] [<ffffff9008b922b0>] pm_runtime_work+0x12c/0x148
-[  435.087527] [<ffffff90080eb7d4>] process_one_work+0x288/0x830
-[  435.087547] [<ffffff90080ebe1c>] worker_thread+0xa0/0x818
-[  435.087566] [<ffffff90080f660c>] kthread+0x128/0x148
-[  435.087585] [<ffffff9008083980>] ret_from_fork+0x10/0x50
-[  435.087597]
-[  435.087611] Allocated by task 1:
-[  435.087631] kasan_kmalloc+0x12c/0x1e0
-[  435.087649] kmem_cache_alloc_trace+0x138/0x290
-[  435.087667] msm_bus_dbg_client_data+0x898/0xad4
-[  435.087687] register_client_adhoc+0x5c0/0x670
-[  435.087705] msm_bus_scale_register_client+0x2c/0x68
-[  435.087725] arm_smmu_init_power_resources+0x43c/0x4cc
-[  435.087743] qsmmuv500_tbu_probe+0x17c/0x1f0
-[  435.087762] platform_drv_probe+0x7c/0x140
-[  435.087781] driver_probe_device+0x170/0x710
-[  435.087800] __device_attach_driver+0x10c/0x1f0
-[  435.087818] bus_for_each_drv+0xbc/0x11c
-[  435.087836] __device_attach+0x174/0x21c
-[  435.087854] device_initial_probe+0x1c/0x24
-[  435.087872] bus_probe_device+0xfc/0x10c
-[  435.087889] device_add+0x718/0x990
-[  435.087909] of_device_add+0x68/0x94
-[  435.087928] of_platform_device_create_pdata+0xe4/0x150
-[  435.087947] of_platform_bus_create+0x1f0/0x62c
-[  435.087966] of_platform_populate+0x8c/0x154
-[  435.087983] qsmmuv500_arch_init+0x40c/0x474
-[  435.088001] arm_smmu_device_dt_probe+0x1b40/0x1ec4
-[  435.088020] platform_drv_probe+0x7c/0x140
-[  435.088039] driver_probe_device+0x170/0x710
-[  435.088057] __driver_attach+0x1c4/0x1c8
-[  435.088074] bus_for_each_dev+0xc4/0x124
-[  435.088092] driver_attach+0x34/0x40
-[  435.088110] bus_add_driver+0x260/0x3f4
-[  435.088128] driver_register+0x108/0x214
-[  435.088147] __platform_driver_register+0x84/0x90
-[  435.088168] arm_smmu_init.part.60+0x4c/0x1bc
-[  435.088186] arm_smmu_init+0x24/0x38
-[  435.088203] do_one_initcall+0x64/0x1c0
-[  435.088223] kernel_init_freeable+0x26c/0x344
-[  435.088244] kernel_init+0x18/0x19c
-[  435.088261] ret_from_fork+0x10/0x50
-[  435.088272]
-[  435.088286] Freed by task 0:
-[  435.088298] (stack is not available)
-[  435.088309]
-[  435.088327] The buggy address belongs to the object at ffffffc0d1338000\x0a which belongs to the cache kmalloc-8192 of size 8192
-[  435.088355] The buggy address is located 8 bytes inside of\x0a 8192-byte region [ffffffc0d1338000, ffffffc0d133a000)
-[  435.088378] The buggy address belongs to the page:
-[  435.088397] page:ffffffbf0344ce00 count:1 mapcount:0 mapping:          (null) index:0x0 compound_mapcount: 0
-[  435.088420] flags: 0x4000000000004080(slab|head)
-[  435.088434] page dumped because: kasan: bad access detected
-[  435.088446]
-[  435.088459] Memory state around the buggy address:
-[  435.088479] ffffffc0d1337fe0: 20 ea 01 05 27 49 04 aa 03 ab 20 46 29 f0 7a fa
-[  435.088497] ffffffc0d1337ff0: 04 98 03 9a a0 f5 fa 60 04 90 d9 f8 04 10 45 ea
-[  435.088516] >ffffffc0d1338000: 18 a3 32 d1 c0 ff ff ff aa aa aa aa aa aa aa aa
-[  435.088531] ________________________________________________________^__________
-[  435.088549] ffffffc0d1338010: ff ff ff ff 06 00 00 00 00 00 00 00 aa aa aa aa
-[  435.088568] ffffffc0d1338020: 00 d4 d3 c7 c0 ff ff ff 28 a1 33 d1 c0 ff ff ff
-[  435.088580]
-[  435.088593] Memory state around the buggy address:
-[  435.088610] ffffffc0d1337f00: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-[  435.088629] ffffffc0d1337f80: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-[  435.088647] >ffffffc0d1338000: 00 ff 00 0f 00 00 00 ff ff ff ff ff ff ff ff ff
-[  435.088662] _______________________^___________________________________________
-[  435.088680] ffffffc0d1338080: ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff
-[  435.088698] ffffffc0d1338100: ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff
-[  435.088713] ==================================================================
+> From: Prasad Sodagudi <psodagud@codeaurora.org>
+> 
+> Add the binding for the TLMM pinctrl block found in the SM8150 platform.
+> 
+> Signed-off-by: Prasad Sodagudi <psodagud@codeaurora.org>
+> Signed-off-by: Isaac J. Manjarres <isaacm@codeaurora.org>
+> [vkoul: add missing nodes of gpio range and reserved
+> 	rewrote function names and order them]
+> Signed-off-by: Vinod Koul <vkoul@kernel.org>
 
-Signed-off-by: Lu Shuaibing <shuaibinglu@126.com>
----
- drivers/soc/qcom/msm_bus/msm_bus_dbg.c | 1 +
- 1 file changed, 1 insertion(+)
+Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
 
-diff --git a/drivers/soc/qcom/msm_bus/msm_bus_dbg.c b/drivers/soc/qcom/msm_bus/msm_bus_dbg.c
-index df292336f08b..7ef82ba997f7 100644
---- a/drivers/soc/qcom/msm_bus/msm_bus_dbg.c
-+++ b/drivers/soc/qcom/msm_bus/msm_bus_dbg.c
-@@ -446,6 +446,7 @@ static int msm_bus_dbg_record_client(const struct msm_bus_scale_pdata *pdata,
- 	cldata->clid = clid;
- 	cldata->file = file;
- 	cldata->size = 0;
-+	cldata->handle = NULL;
- 	rt_mutex_lock(&msm_bus_dbg_cllist_lock);
- 	list_add_tail(&cldata->list, &cl_list);
- 	rt_mutex_unlock(&msm_bus_dbg_cllist_lock);
--- 
-2.19.1
-
+> ---
+>  .../bindings/pinctrl/qcom,sm8150-pinctrl.txt  | 190 ++++++++++++++++++
+>  1 file changed, 190 insertions(+)
+>  create mode 100644 Documentation/devicetree/bindings/pinctrl/qcom,sm8150-pinctrl.txt
+> 
+> diff --git a/Documentation/devicetree/bindings/pinctrl/qcom,sm8150-pinctrl.txt b/Documentation/devicetree/bindings/pinctrl/qcom,sm8150-pinctrl.txt
+> new file mode 100644
+> index 000000000000..fa37733e5102
+> --- /dev/null
+> +++ b/Documentation/devicetree/bindings/pinctrl/qcom,sm8150-pinctrl.txt
+> @@ -0,0 +1,190 @@
+> +Qualcomm SM8150 TLMM block
+> +
+> +This binding describes the Top Level Mode Multiplexer block found in the
+> +QCS404 platform.
+> +
+> +- compatible:
+> +	Usage: required
+> +	Value type: <string>
+> +	Definition: must be "qcom,sm8150-pinctrl"
+> +
+> +- reg:
+> +	Usage: required
+> +	Value type: <prop-encoded-array>
+> +	Definition: the base address and size of the north, south, west
+> +		    and east TLMM tiles.
+> +
+> +- reg-names:
+> +	Usage: required
+> +	Value type: <prop-encoded-array>
+> +	Defintiion: names for the cells of reg, must contain "north", "south"
+> +		    "west" and "east".
+> +
+> +- interrupts:
+> +	Usage: required
+> +	Value type: <prop-encoded-array>
+> +	Definition: should specify the TLMM summary IRQ.
+> +
+> +- interrupt-controller:
+> +	Usage: required
+> +	Value type: <none>
+> +	Definition: identifies this node as an interrupt controller
+> +
+> +- #interrupt-cells:
+> +	Usage: required
+> +	Value type: <u32>
+> +	Definition: must be 2. Specifying the pin number and flags, as defined
+> +		    in <dt-bindings/interrupt-controller/irq.h>
+> +
+> +- gpio-controller:
+> +	Usage: required
+> +	Value type: <none>
+> +	Definition: identifies this node as a gpio controller
+> +
+> +- #gpio-cells:
+> +	Usage: required
+> +	Value type: <u32>
+> +	Definition: must be 2. Specifying the pin number and flags, as defined
+> +		    in <dt-bindings/gpio/gpio.h>
+> +
+> +- gpio-ranges:
+> +	Usage: required
+> +	Value type: <prop-encoded-array>
+> +	Definition:  see ../gpio/gpio.txt
+> +
+> +- gpio-reserved-ranges:
+> +	Usage: optional
+> +	Value type: <prop-encoded-array>
+> +	Definition: see ../gpio/gpio.txt
+> +
+> +Please refer to ../gpio/gpio.txt and ../interrupt-controller/interrupts.txt for
+> +a general description of GPIO and interrupt bindings.
+> +
+> +Please refer to pinctrl-bindings.txt in this directory for details of the
+> +common pinctrl bindings used by client devices, including the meaning of the
+> +phrase "pin configuration node".
+> +
+> +The pin configuration nodes act as a container for an arbitrary number of
+> +subnodes. Each of these subnodes represents some desired configuration for a
+> +pin, a group, or a list of pins or groups. This configuration can include the
+> +mux function to select on those pin(s)/group(s), and various pin configuration
+> +parameters, such as pull-up, drive strength, etc.
+> +
+> +
+> +PIN CONFIGURATION NODES:
+> +
+> +The name of each subnode is not important; all subnodes should be enumerated
+> +and processed purely based on their content.
+> +
+> +Each subnode only affects those parameters that are explicitly listed. In
+> +other words, a subnode that lists a mux function but no pin configuration
+> +parameters implies no information about any pin configuration parameters.
+> +Similarly, a pin subnode that describes a pullup parameter implies no
+> +information about e.g. the mux function.
+> +
+> +
+> +The following generic properties as defined in pinctrl-bindings.txt are valid
+> +to specify in a pin configuration subnode:
+> +
+> +- pins:
+> +	Usage: required
+> +	Value type: <string-array>
+> +	Definition: List of gpio pins affected by the properties specified in
+> +		    this subnode.
+> +
+> +		    Valid pins are:
+> +		      gpio0-gpio149
+> +		        Supports mux, bias and drive-strength
+> +
+> +		      sdc1_clk, sdc1_cmd, sdc1_data sdc2_clk, sdc2_cmd,
+> +		      sdc2_data sdc1_rclk
+> +		        Supports bias and drive-strength
+> +
+> +		      ufs_reset
+> +		        Supports bias and drive-strength
+> +
+> +- function:
+> +	Usage: required
+> +	Value type: <string>
+> +	Definition: Specify the alternative function to be configured for the
+> +		    specified pins. Functions are only valid for gpio pins.
+> +		    Valid values are:
+> +
+> +		    adsp_ext, agera_pll, aoss_cti, ddr_pxi2, atest_char,
+> +		    atest_char0, atest_char1, atest_char2, atest_char3,
+> +		    audio_ref, atest_usb1, atest_usb2, atest_usb10,
+> +		    atest_usb11, atest_usb12, atest_usb13, atest_usb20,
+> +		    atest_usb21, atest_usb22, atest_usb2, atest_usb23,
+> +		    btfm_slimbus, cam_mclk, cci_async, cci_i2c, cci_timer0,
+> +		    cci_timer1, cci_timer2, cci_timer3, cci_timer4,
+> +		    cri_trng, cri_trng0, cri_trng1, dbg_out, ddr_bist,
+> +		    ddr_pxi0, ddr_pxi1, ddr_pxi3, edp_hot, edp_lcd,
+> +		    emac_phy, emac_pps, gcc_gp1, gcc_gp2, gcc_gp3, gpio,
+> +		    hs1_mi2s, hs2_mi2s, hs3_mi2s, jitter_bist,
+> +		    lpass_slimbus, mdp_vsync, mdp_vsync0, mdp_vsync1,
+> +		    mdp_vsync2, mdp_vsync3, mss_lte, m_voc, nav_pps,
+> +		    pa_indicator, pci_e0, phase_flag, pll_bypassnl,
+> +		    pll_bist, pci_e1, pll_reset, pri_mi2s, pri_mi2s_ws,
+> +		    prng_rosc, qdss, qdss_cti, qlink_request, qlink_enable,
+> +		    qspi0, qspi1, qspi2, qspi3, qspi_clk, qspi_cs, qua_mi2s,
+> +		    qup0, qup1, qup2, qup3, qup4, qup5, qup6, qup7, qup8,
+> +		    qup9, qup10, qup11, qup12, qup13, qup14, qup15, qup16,
+> +		    qup17, qup18, qup19, qup_l4, qup_l5, qup_l6, rgmii,
+> +		    sdc4, sd_write, sec_mi2s, spkr_i2s, sp_cmu, ter_mi2s,
+> +		    tgu_ch0, tgu_ch1, tgu_ch2, tgu_ch3, tsense_pwm1,
+> +		    tsense_pwm2, tsif1, tsif2, uim1, uim2, uim_batt,
+> +		    usb2phy_ac, usb_phy, vfr_1, vsense_trigger, wlan1_adc0,
+> +		    wlan1_adc1, wlan2_adc0, wlan2_adc1, wmss_reset
+> +
+> +- bias-disable:
+> +	Usage: optional
+> +	Value type: <none>
+> +	Definition: The specified pins should be configued as no pull.
+> +
+> +- bias-pull-down:
+> +	Usage: optional
+> +	Value type: <none>
+> +	Definition: The specified pins should be configued as pull down.
+> +
+> +- bias-pull-up:
+> +	Usage: optional
+> +	Value type: <none>
+> +	Definition: The specified pins should be configued as pull up.
+> +
+> +- output-high:
+> +	Usage: optional
+> +	Value type: <none>
+> +	Definition: The specified pins are configured in output mode, driven
+> +		    high.
+> +		    Not valid for sdc pins.
+> +
+> +- output-low:
+> +	Usage: optional
+> +	Value type: <none>
+> +	Definition: The specified pins are configured in output mode, driven
+> +		    low.
+> +		    Not valid for sdc pins.
+> +
+> +- drive-strength:
+> +	Usage: optional
+> +	Value type: <u32>
+> +	Definition: Selects the drive strength for the specified pins, in mA.
+> +		    Valid values are: 2, 4, 6, 8, 10, 12, 14 and 16
+> +
+> +Example:
+> +
+> +	tlmm: pinctrl@3000000 {
+> +		compatible = "qcom,sm8150-pinctrl";
+> +		reg = <0x03100000 0x300000>,
+> +		      <0x03500000 0x300000>,
+> +		      <0x03900000 0x300000>,
+> +		      <0x03D00000 0x300000>;
+> +		reg-names = "west", "east", "north", "south";
+> +		interrupts = <GIC_SPI 208 IRQ_TYPE_LEVEL_HIGH>;
+> +		gpio-controller;
+> +		#gpio-cells = <2>;
+> +		gpio-ranges = <&tlmm 0 0 175>;
+> +		gpio-reserved-ranges = <0 4>, <126 4>;
+> +		interrupt-controller;
+> +		#interrupt-cells = <2>;
+> +	};
+> -- 
+> 2.20.1
+> 
