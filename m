@@ -2,120 +2,107 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 082B85E031
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Jul 2019 10:50:32 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 3AFCE5E09E
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Jul 2019 11:11:19 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727108AbfGCIub (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 3 Jul 2019 04:50:31 -0400
-Received: from mail-pf1-f195.google.com ([209.85.210.195]:37533 "EHLO
-        mail-pf1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727045AbfGCIub (ORCPT
+        id S1727103AbfGCJLR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 3 Jul 2019 05:11:17 -0400
+Received: from smtp.codeaurora.org ([198.145.29.96]:48244 "EHLO
+        smtp.codeaurora.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727212AbfGCJLR (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 3 Jul 2019 04:50:31 -0400
-Received: by mail-pf1-f195.google.com with SMTP id 19so909257pfa.4
-        for <linux-arm-msm@vger.kernel.org>; Wed, 03 Jul 2019 01:50:30 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=p7Mwi+H6HZIn3w7nyOMbXeZ9EymSOeovkKyUhkxyEYU=;
-        b=ndWouWyT9VteUojTYfkNpzV/u5gtKQXODryjvDKT6HTffruCiKrqt6NAvfH/0+pOCb
-         Bdg7dNQ03xUoGzy7iIz+ZBNDEh/Kx0l5OSpGAg8OCaWlXmRHjH2rrR6m9Zg5MIah7vVJ
-         PS3OVqn2u9uUNC66jAm3wVVEVwSmfJ+EPRXmLqnEhocIpzVLwA0xFuN1Zlc/jtlF9Chd
-         QLyflkrFf5ORh3Oe+NCRsf/QFL4iXTaBYGf9zTKAMjD8O5wCGW8o+yJ3+GWq2j6Sx39z
-         RkVApV9Kr6tkTQTwrHYS/gPdqtZlsWC5Sl2euJi51vz9iuBDmkN47uDi0sg7X1bKdOud
-         rKZQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=p7Mwi+H6HZIn3w7nyOMbXeZ9EymSOeovkKyUhkxyEYU=;
-        b=UJwnXvlQILjaEKFW6UTPTaQCyK1gzBDU3ezplAjtCgjz2H3N804s1fymbES1WgqHUq
-         4SUkmLZkUfINGHDlf6J9844oakGdGyHw4KTy/F7PnmYkeK1kX66OB7AGdDSD80VIc24Q
-         SDBDGaqaD8GPo5v9vKnqQ0RQ8raZKTCP2QPStzT0Oc13Z4u1M+ea2uUGhDxJxCKxwrkS
-         Y/mis3+tU6Ey2JhPUYNyGbUHXW/EdMGYBz38lWPzHUEY+QtErPelZVaWoOZY262kgY9Z
-         1oX16OJ6GGVkQosnI10WR7SWlb/ENLi4fahZbLqrUfg5tXOoLEmVaBhgihmAwVLmqaCt
-         aogA==
-X-Gm-Message-State: APjAAAXLGvVVYZMf4SNb60NSst3ddj++UrEhms2OJAXSFztW8bCo2qPx
-        8ABdQPP/xinT12NBQ6Fvq/oyoA==
-X-Google-Smtp-Source: APXvYqwYw863+ZtXrlxlXbcbTj6csoTEgcmVyvsmlZ80hBDLYlJ/AwMgdsKvnrUhj272v5BwPP/rwg==
-X-Received: by 2002:a65:4087:: with SMTP id t7mr12236199pgp.10.1562143830510;
-        Wed, 03 Jul 2019 01:50:30 -0700 (PDT)
-Received: from localhost ([122.172.21.205])
-        by smtp.gmail.com with ESMTPSA id i7sm1434195pjk.24.2019.07.03.01.50.28
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 03 Jul 2019 01:50:29 -0700 (PDT)
-Date:   Wed, 3 Jul 2019 14:20:26 +0530
-From:   Viresh Kumar <viresh.kumar@linaro.org>
-To:     Rajendra Nayak <rnayak@codeaurora.org>
+        Wed, 3 Jul 2019 05:11:17 -0400
+Received: by smtp.codeaurora.org (Postfix, from userid 1000)
+        id 1652060A97; Wed,  3 Jul 2019 09:11:15 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
+        s=default; t=1562145076;
+        bh=nX45R+dm6a1Jwcb05CDNUgx4njh6ZeQnVggN92Rhfok=;
+        h=Subject:To:Cc:References:From:Date:In-Reply-To:From;
+        b=IwyYn5xbQlKBd5czIMxMeX5+JmCORmGtYPOCCMxJFf7o2tP6ZeF1DdLW/kjhKQumd
+         NjKU5M9dpWYKu8mD1sOjnlx50LUzcmRDUDLh7e2l1u3m9U8Eu1eMf0Po03lF7kmzvY
+         B/NWYtuyNak548lgxE8K1YPt77Xx6H7Da8MiJW34=
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        pdx-caf-mail.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.7 required=2.0 tests=ALL_TRUSTED,BAYES_00,
+        DKIM_INVALID,DKIM_SIGNED,SPF_NONE autolearn=no autolearn_force=no
+        version=3.4.0
+Received: from [10.79.43.141] (blr-bdr-fw-01_globalnat_allzones-outside.qualcomm.com [103.229.18.19])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: rnayak@smtp.codeaurora.org)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 9D41360A0A;
+        Wed,  3 Jul 2019 09:11:12 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
+        s=default; t=1562145074;
+        bh=nX45R+dm6a1Jwcb05CDNUgx4njh6ZeQnVggN92Rhfok=;
+        h=Subject:To:Cc:References:From:Date:In-Reply-To:From;
+        b=cEu0Eo/koIVPkWdry5K4U/iyWjCti1fQO0gIETQh0RFInFA5nvbtyEAz1rDl/ze/X
+         sEzNwmGt7Nn2mjoQgj1ac/6VIG54hQ2COGaHhsAU8NwEh8JqvE1y5GAFKo/njRBwRd
+         k7lg2EPqkAdJvYnIg4tkseG4OiD17285DOvKauH8=
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 9D41360A0A
+Authentication-Results: pdx-caf-mail.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: pdx-caf-mail.web.codeaurora.org; spf=none smtp.mailfrom=rnayak@codeaurora.org
+Subject: Re: [PATCH 2/2] opp: Manage empty OPP tables with clk handle
+To:     Viresh Kumar <viresh.kumar@linaro.org>
 Cc:     vireshk@kernel.org, sboyd@kernel.org, linux-pm@vger.kernel.org,
         linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH 2/2] opp: Manage empty OPP tables with clk handle
-Message-ID: <20190703085026.xe3hwxqah76b7np3@vireshk-i7>
 References: <20190702043643.1746-1-rnayak@codeaurora.org>
  <20190702043643.1746-2-rnayak@codeaurora.org>
+ <20190703085026.xe3hwxqah76b7np3@vireshk-i7>
+From:   Rajendra Nayak <rnayak@codeaurora.org>
+Message-ID: <95cf4e44-d57a-9aa4-40ce-3b7013e10813@codeaurora.org>
+Date:   Wed, 3 Jul 2019 14:41:10 +0530
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
+ Thunderbird/60.7.2
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20190702043643.1746-2-rnayak@codeaurora.org>
-User-Agent: NeoMutt/20180716-391-311a52
+In-Reply-To: <20190703085026.xe3hwxqah76b7np3@vireshk-i7>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 02-07-19, 10:06, Rajendra Nayak wrote:
-> With OPP core now supporting DVFS for IO devices, we have instances of
-> IO devices (same IP block) with require an OPP on some platforms/SoCs
-
-                             which
-
-> while just needing to scale the clock on some others.
-
-Blank line here.
-
-> In order to avoid conditional code in every driver, (to check for 
-
-                                                    remove ,
-
-> availability of OPPs and then deciding to do either dev_pm_opp_set_rate()
-> or clk_set_rate()) add support to manage empty OPP tables with a clk handle.
-
-Blank line here.
-
-> This makes dev_pm_opp_set_rate() equivalent of a clk_set_rate() for devices
-> with just a clk and no OPPs specified.
+[]..
+>>   
 > 
-> Signed-off-by: Rajendra Nayak <rnayak@codeaurora.org>
-> ---
->  drivers/opp/core.c | 5 +++++
->  1 file changed, 5 insertions(+)
+> Explain the rationale behind this code here in a comment.
 > 
-> diff --git a/drivers/opp/core.c b/drivers/opp/core.c
-> index ae033bb1e5b7..fa7d4d6d37b3 100644
-> --- a/drivers/opp/core.c
-> +++ b/drivers/opp/core.c
-> @@ -801,6 +801,11 @@ int dev_pm_opp_set_rate(struct device *dev, unsigned long target_freq)
->  		goto put_opp_table;
->  	}
->  
+>> +	if (!_get_opp_count(opp_table)) {
+>> +		ret = _generic_set_opp_clk_only(dev, clk, freq);
+>> +		goto put_opp_table;
+>> +	}
+>> +
+>>   	temp_freq = old_freq;
+>>   	old_opp = _find_freq_ceil(opp_table, &temp_freq);
+>>   	if (IS_ERR(old_opp)) {
+> 
+> Also, rebase over the OPP branch please:
 
-Explain the rationale behind this code here in a comment.
+thanks, I will fix/rebase and repost,
+in the meantime while I was testing this a little more I realized I also need
+something like the change below to avoid a refcount mismatch WARN when empty OPP
+table is removed using dev_pm_opp_of_remove_table()
 
-> +	if (!_get_opp_count(opp_table)) {
-> +		ret = _generic_set_opp_clk_only(dev, clk, freq);
-> +		goto put_opp_table;
-> +	}
-> +
->  	temp_freq = old_freq;
->  	old_opp = _find_freq_ceil(opp_table, &temp_freq);
->  	if (IS_ERR(old_opp)) {
+diff --git a/drivers/opp/core.c b/drivers/opp/core.c
+index fa7d4d6d37b3..20128a88baf2 100644
+--- a/drivers/opp/core.c
++++ b/drivers/opp/core.c
+@@ -2118,7 +2118,8 @@ void _dev_pm_opp_find_and_remove_table(struct device *dev)
+                 return;
+         }
+  
+-       _put_opp_list_kref(opp_table);
++       if (_get_opp_count(opp_table))
++               _put_opp_list_kref(opp_table);
+  
+         /* Drop reference taken by _find_opp_table() */
+         dev_pm_opp_put_opp_table(opp_table);
 
-Also, rebase over the OPP branch please:
-
-git://git.kernel.org/pub/scm/linux/kernel/git/vireshk/pm.git opp/linux-next
-
-or pm/linux-next
+Does this look like a good way to fix it?
 
 -- 
-viresh
+QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
+of Code Aurora Forum, hosted by The Linux Foundation
