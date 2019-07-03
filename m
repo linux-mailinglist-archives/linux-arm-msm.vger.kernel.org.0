@@ -2,58 +2,58 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 2AF845EEC4
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Jul 2019 23:45:17 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 094D55EEC6
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Jul 2019 23:46:07 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726902AbfGCVpQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 3 Jul 2019 17:45:16 -0400
-Received: from mail-pf1-f194.google.com ([209.85.210.194]:41020 "EHLO
-        mail-pf1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726821AbfGCVpQ (ORCPT
+        id S1726821AbfGCVqG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 3 Jul 2019 17:46:06 -0400
+Received: from mail-pl1-f195.google.com ([209.85.214.195]:39052 "EHLO
+        mail-pl1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726550AbfGCVqF (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 3 Jul 2019 17:45:16 -0400
-Received: by mail-pf1-f194.google.com with SMTP id m30so1893451pff.8;
-        Wed, 03 Jul 2019 14:45:16 -0700 (PDT)
+        Wed, 3 Jul 2019 17:46:05 -0400
+Received: by mail-pl1-f195.google.com with SMTP id b7so1927736pls.6;
+        Wed, 03 Jul 2019 14:46:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=rblKGIlJDkSzRoKjZR0ET2T3JOcuW5SkJJUuNM12yX4=;
-        b=XOB4vVcYBhzEHCUq87ZYRWQIOXEMrLuy250Kzgu+UOWDM4Qj3EMhvKXiAIQMvezsV1
-         tTlvp2W/AJaPQuzPDD7K8vH1H+yHsUEfUEZPj0qExIR/HrLFXrQCssEZj4abmJ6EBlJp
-         6SUNWUXL8cnY2Y0qYAue60xyhK7PRnjwunXwdjbnrVggsbfW1VkOTNCraDV0WUxnhS1m
-         V6B1ZK62xyCeohV7kPa4aQVKC/AdOQr9x6ZICa8GMI+CBMLzerypxLBF+PG+Z44fwoMD
-         JlPYcZWgpUnfi4Sri+cAm+qQXQu9V0Imiu4JpNpdkyYPctK1ZTCwR5NaYzN79Pd7BVaZ
-         0bbQ==
+        bh=zx6p9K9lBYtbVfdxa7E9OnZzYHo7cm8q4NKF1jFk2vQ=;
+        b=fj3T9tNJFEWbtVpZXRo+hjywY6BfqlB3kcFaMZt1Bfzs3mV57SVLLVWlo7/ANdnUDn
+         Rxpg115anMep/E9qFsA8CtRjKbtzrbfrPKrwHnIR60RCysDKx4JdE5VakjTfI4dmOpYo
+         8VzlERbiw/ypU/xXiolpy+oP/lIFtk1PEKTqXXTsSRbwxzMSuGW+gxuCYqyEQjn8mzZO
+         mwdI91c/ZFeaZzxGCHTCiGhzRNdMDQhpUbpZYtV9cB74RkZUC1u4UvUfHpgpZXC6chol
+         EO6CWBgKnZ8gJy4s0OHWjUy8uur3njDB+5DciKQVUCLanWN5gJ4MzihEkMamYzSdrSni
+         zCVA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=rblKGIlJDkSzRoKjZR0ET2T3JOcuW5SkJJUuNM12yX4=;
-        b=P3A8oZjX8TX6O3hRQ2i5uZyHDhuInYFvAIKZFirQa7SHKmtsCLt4sfOD1O2Vq/8eUw
-         etscgw2taq+QhB35KccJDs3Fr/sUsIPCmd4UPcErihdYDG3J9VVPeqvI/YglYLvfHGLB
-         0cs2Jq7q487t6HVzjHqsqqD8pueMZuzXp/ahLEb51cIg/tEZezn7ZoNrBqje4NIC0jT8
-         2hAhU01hEZBupr688xFZQ6NggxuM7GVJRo/wGHFZK0NV9ximf/gmCFnTuAgX/85Zw7hE
-         2MAcP+sAhxsK8IV8LXBaNTvqZeay9oc3ge5hl0YuFWQTotlOJ/JKi50/2jP3exYYPvCJ
-         gqSg==
-X-Gm-Message-State: APjAAAXMhhJqUznVj9hhr/2DEn/KnHvu8QCxgOcxg47szHnlqyTl9GjE
-        3gwohd752mzot5t9hmqRsgI=
-X-Google-Smtp-Source: APXvYqziW6uz8kvYxiLE8i06vq1Y2XLf9uMisxKM0llLNGE8dLv+QCJtNMLwxKg8jzpKrGeCHGMrrA==
-X-Received: by 2002:a63:545c:: with SMTP id e28mr40705619pgm.374.1562190315688;
-        Wed, 03 Jul 2019 14:45:15 -0700 (PDT)
+        bh=zx6p9K9lBYtbVfdxa7E9OnZzYHo7cm8q4NKF1jFk2vQ=;
+        b=ouRB92W9cwuF622P1Dm3JtD1InqNS8bD4V4qS61UmN9oAhQSZQCzIoNUokT0/epmB9
+         Xd5bYrC/s5H2VUvQTDhMwsJODa8HsBsxcnrui9aR1Hy/eg1O1iKfgAf+pDI1CT7MljDG
+         YJoQ4rQD9pgWA2yy/5LQYBhG8txe4O1rJdbPHLUl3Bc1mwzp4CAei6TSyYiLotyaW2Z0
+         E/ZtQyXUIO5vDPNQpdT3i8lxE4es1Hlwd4W7f7tMkPCsazv2RAS/MqRUXKUrQMD6A6KH
+         Qjzzcu18AEP6/vCB1yqi5QVOh5V3A+moM1W3tDD4vXTYQEi7qFhNnDZ30pHJUML4zDzh
+         K7AA==
+X-Gm-Message-State: APjAAAVQGXm0PTpQEYcGNGmzas3LoVBpHnCaaFz1nFBFumxwHmUW8rzp
+        rbW/bCWZ+/XR7NGw336oAYY=
+X-Google-Smtp-Source: APXvYqx16nR2nWAm9waiTKlwYBW1mcVclHa0AJSa1jWJk8KRcugsb0ueWRyGFc0m86URdEj47nYudg==
+X-Received: by 2002:a17:902:467:: with SMTP id 94mr44502981ple.131.1562190365060;
+        Wed, 03 Jul 2019 14:46:05 -0700 (PDT)
 Received: from aw-bldr-10.qualcomm.com (i-global254.qualcomm.com. [199.106.103.254])
-        by smtp.gmail.com with ESMTPSA id o14sm2895434pjp.29.2019.07.03.14.45.14
+        by smtp.gmail.com with ESMTPSA id f72sm3485566pjg.10.2019.07.03.14.46.03
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 03 Jul 2019 14:45:15 -0700 (PDT)
+        Wed, 03 Jul 2019 14:46:04 -0700 (PDT)
 From:   Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
-To:     broonie@kernel.org
-Cc:     a.hajda@samsung.com, Laurent.pinchart@ideasonboard.com,
-        airlied@linux.ie, daniel@ffwll.ch, robdclark@gmail.com,
+To:     a.hajda@samsung.com, Laurent.pinchart@ideasonboard.com,
+        airlied@linux.ie, daniel@ffwll.ch
+Cc:     broonie@kernel.org, robdclark@gmail.com,
         bjorn.andersson@linaro.org, dri-devel@lists.freedesktop.org,
         linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
         Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
-Subject: [PATCH 1/2] regmap: Add DSI bus support
-Date:   Wed,  3 Jul 2019 14:45:12 -0700
-Message-Id: <20190703214512.41319-1-jeffrey.l.hugo@gmail.com>
+Subject: [PATCH 2/2] drm/bridge: ti-sn65dsi86: Add support to be a DSI device
+Date:   Wed,  3 Jul 2019 14:45:59 -0700
+Message-Id: <20190703214559.41368-1-jeffrey.l.hugo@gmail.com>
 X-Mailer: git-send-email 2.17.1
 In-Reply-To: <20190703214326.41269-1-jeffrey.l.hugo@gmail.com>
 References: <20190703214326.41269-1-jeffrey.l.hugo@gmail.com>
@@ -62,192 +62,282 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add basic support with a simple implementation that utilizes the generic
-read/write commands to allow device registers to be configured.
+The ti-sn65dsi86 can be configured in two ways - via i2c or "inband" via
+DSI.  The DSI option can be useful on platforms where the i2c link does
+not seem to be wired up.
+
+To support configuration via DSI, register as a DSI device, use the
+provided DSI device instead of creating our own, and utilize the regmap-dsi
+support to abstract away the init differences between i2c and DSI.
 
 Signed-off-by: Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
 ---
- drivers/base/regmap/Kconfig      |  6 +++-
- drivers/base/regmap/Makefile     |  1 +
- drivers/base/regmap/regmap-dsi.c | 62 ++++++++++++++++++++++++++++++++
- include/linux/regmap.h           | 37 +++++++++++++++++++
- 4 files changed, 105 insertions(+), 1 deletion(-)
- create mode 100644 drivers/base/regmap/regmap-dsi.c
+ drivers/gpu/drm/bridge/Kconfig        |   1 +
+ drivers/gpu/drm/bridge/ti-sn65dsi86.c | 160 +++++++++++++++++++-------
+ 2 files changed, 117 insertions(+), 44 deletions(-)
 
-diff --git a/drivers/base/regmap/Kconfig b/drivers/base/regmap/Kconfig
-index c8bbf5322720..27669afa9d95 100644
---- a/drivers/base/regmap/Kconfig
-+++ b/drivers/base/regmap/Kconfig
-@@ -4,7 +4,7 @@
- # subsystems should select the appropriate symbols.
+diff --git a/drivers/gpu/drm/bridge/Kconfig b/drivers/gpu/drm/bridge/Kconfig
+index ee777469293a..b74c8ef47cb6 100644
+--- a/drivers/gpu/drm/bridge/Kconfig
++++ b/drivers/gpu/drm/bridge/Kconfig
+@@ -143,6 +143,7 @@ config DRM_TI_SN65DSI86
+ 	depends on OF
+ 	select DRM_KMS_HELPER
+ 	select REGMAP_I2C
++	select REGMAP_DSI
+ 	select DRM_PANEL
+ 	select DRM_MIPI_DSI
+ 	help
+diff --git a/drivers/gpu/drm/bridge/ti-sn65dsi86.c b/drivers/gpu/drm/bridge/ti-sn65dsi86.c
+index b77a52d05061..45fb91afd01b 100644
+--- a/drivers/gpu/drm/bridge/ti-sn65dsi86.c
++++ b/drivers/gpu/drm/bridge/ti-sn65dsi86.c
+@@ -258,18 +258,22 @@ static int ti_sn_bridge_attach(struct drm_bridge *bridge)
+ 	 * will satisfy most of the existing host drivers. Once the host driver
+ 	 * is fixed we can move the below code to bridge probe safely.
+ 	 */
+-	host = of_find_mipi_dsi_host_by_node(pdata->host_node);
+-	if (!host) {
+-		DRM_ERROR("failed to find dsi host\n");
+-		ret = -ENODEV;
+-		goto err_dsi_host;
+-	}
+-
+-	dsi = mipi_dsi_device_register_full(host, &info);
+-	if (IS_ERR(dsi)) {
+-		DRM_ERROR("failed to create dsi device\n");
+-		ret = PTR_ERR(dsi);
+-		goto err_dsi_host;
++	if (!pdata->dsi) {
++		host = of_find_mipi_dsi_host_by_node(pdata->host_node);
++		if (!host) {
++			DRM_ERROR("failed to find dsi host\n");
++			ret = -ENODEV;
++			goto err_dsi_host;
++		}
++
++		dsi = mipi_dsi_device_register_full(host, &info);
++		if (IS_ERR(dsi)) {
++			DRM_ERROR("failed to create dsi device\n");
++			ret = PTR_ERR(dsi);
++			goto err_dsi_host;
++		}
++	} else {
++		dsi = pdata->dsi;
+ 	}
  
- config REGMAP
--	default y if (REGMAP_I2C || REGMAP_SPI || REGMAP_SPMI || REGMAP_W1 || REGMAP_AC97 || REGMAP_MMIO || REGMAP_IRQ || REGMAP_I3C)
-+	default y if (REGMAP_I2C || REGMAP_SPI || REGMAP_SPMI || REGMAP_W1 || REGMAP_AC97 || REGMAP_MMIO || REGMAP_IRQ || REGMAP_I3C || REGMAP_DSI)
- 	select IRQ_DOMAIN if REGMAP_IRQ
- 	bool
+ 	/* TODO: setting to 4 lanes always for now */
+@@ -290,7 +294,9 @@ static int ti_sn_bridge_attach(struct drm_bridge *bridge)
+ 		DRM_ERROR("failed to attach dsi to host\n");
+ 		goto err_dsi_attach;
+ 	}
+-	pdata->dsi = dsi;
++
++	if (!pdata->dsi)
++		pdata->dsi = dsi;
  
-@@ -53,3 +53,7 @@ config REGMAP_SCCB
- config REGMAP_I3C
- 	tristate
- 	depends on I3C
+ 	/* attach panel to bridge */
+ 	drm_panel_attach(pdata->panel, &pdata->connector);
+@@ -298,7 +304,8 @@ static int ti_sn_bridge_attach(struct drm_bridge *bridge)
+ 	return 0;
+ 
+ err_dsi_attach:
+-	mipi_dsi_device_unregister(dsi);
++	if (!pdata->dsi)
++		mipi_dsi_device_unregister(dsi);
+ err_dsi_host:
+ 	drm_connector_cleanup(&pdata->connector);
+ 	return ret;
+@@ -656,30 +663,23 @@ static int ti_sn_bridge_parse_dsi_host(struct ti_sn_bridge *pdata)
+ 	return 0;
+ }
+ 
+-static int ti_sn_bridge_probe(struct i2c_client *client,
+-			      const struct i2c_device_id *id)
++static int ti_sn_bridge_common_probe(struct device *dev, struct regmap *regmap,
++				     struct mipi_dsi_device *dsi)
+ {
+ 	struct ti_sn_bridge *pdata;
+ 	int ret;
+ 
+-	if (!i2c_check_functionality(client->adapter, I2C_FUNC_I2C)) {
+-		DRM_ERROR("device doesn't support I2C\n");
+-		return -ENODEV;
+-	}
+-
+-	pdata = devm_kzalloc(&client->dev, sizeof(struct ti_sn_bridge),
++	pdata = devm_kzalloc(dev, sizeof(struct ti_sn_bridge),
+ 			     GFP_KERNEL);
+ 	if (!pdata)
+ 		return -ENOMEM;
+ 
+-	pdata->regmap = devm_regmap_init_i2c(client,
+-					     &ti_sn_bridge_regmap_config);
+-	if (IS_ERR(pdata->regmap)) {
+-		DRM_ERROR("regmap i2c init failed\n");
+-		return PTR_ERR(pdata->regmap);
+-	}
++	pdata->regmap = regmap;
+ 
+-	pdata->dev = &client->dev;
++	pdata->dev = dev;
 +
-+config REGMAP_DSI
-+	tristate
-+	depends on DRM_MIPI_DSI
-diff --git a/drivers/base/regmap/Makefile b/drivers/base/regmap/Makefile
-index ff6c7d8ec1cd..c1cc81f3986f 100644
---- a/drivers/base/regmap/Makefile
-+++ b/drivers/base/regmap/Makefile
-@@ -17,3 +17,4 @@ obj-$(CONFIG_REGMAP_W1) += regmap-w1.o
- obj-$(CONFIG_REGMAP_SOUNDWIRE) += regmap-sdw.o
- obj-$(CONFIG_REGMAP_SCCB) += regmap-sccb.o
- obj-$(CONFIG_REGMAP_I3C) += regmap-i3c.o
-+obj-$(CONFIG_REGMAP_DSI) += regmap-dsi.o
-diff --git a/drivers/base/regmap/regmap-dsi.c b/drivers/base/regmap/regmap-dsi.c
-new file mode 100644
-index 000000000000..0c2900e2fee0
---- /dev/null
-+++ b/drivers/base/regmap/regmap-dsi.c
-@@ -0,0 +1,62 @@
-+// SPDX-License-Identifier: GPL-2.0
-+//
-+// Register map access API - DSI support
-+//
-+// Copyright (c) 2019 Jeffrey Hugo
-+
-+#include <drm/drm_mipi_dsi.h>
-+#include <linux/regmap.h>
-+#include <linux/module.h>
-+
-+#include "internal.h"
-+
-+static int dsi_reg_write(void *context, unsigned int reg, unsigned int val)
++	if (dsi)
++		pdata->dsi = dsi;
+ 
+ 	ret = drm_of_find_panel_or_bridge(pdata->dev->of_node, 1, 0,
+ 					  &pdata->panel, NULL);
+@@ -688,7 +688,7 @@ static int ti_sn_bridge_probe(struct i2c_client *client,
+ 		return ret;
+ 	}
+ 
+-	dev_set_drvdata(&client->dev, pdata);
++	dev_set_drvdata(dev, pdata);
+ 
+ 	pdata->enable_gpio = devm_gpiod_get(pdata->dev, "enable",
+ 					    GPIOD_OUT_LOW);
+@@ -719,25 +719,21 @@ static int ti_sn_bridge_probe(struct i2c_client *client,
+ 
+ 	pm_runtime_enable(pdata->dev);
+ 
+-	i2c_set_clientdata(client, pdata);
+-
+ 	pdata->aux.name = "ti-sn65dsi86-aux";
+-	pdata->aux.dev = pdata->dev;
++	pdata->aux.dev = dev;
+ 	pdata->aux.transfer = ti_sn_aux_transfer;
+ 	drm_dp_aux_register(&pdata->aux);
+ 
+ 	pdata->bridge.funcs = &ti_sn_bridge_funcs;
+-	pdata->bridge.of_node = client->dev.of_node;
++	pdata->bridge.of_node = dev->of_node;
+ 
+ 	drm_bridge_add(&pdata->bridge);
+ 
+ 	return 0;
+ }
+ 
+-static int ti_sn_bridge_remove(struct i2c_client *client)
++static int ti_sn_bridge_common_remove(struct ti_sn_bridge *pdata)
+ {
+-	struct ti_sn_bridge *pdata = i2c_get_clientdata(client);
+-
+ 	if (!pdata)
+ 		return -EINVAL;
+ 
+@@ -755,11 +751,53 @@ static int ti_sn_bridge_remove(struct i2c_client *client)
+ 	return 0;
+ }
+ 
+-static struct i2c_device_id ti_sn_bridge_id[] = {
++static int ti_sn_bridge_i2c_remove(struct i2c_client *client)
 +{
-+	struct device *dev = context;
-+	struct mipi_dsi_device *dsi = to_mipi_dsi_device(dev);
-+	char payload[2];
-+	int ret;
-+
-+	payload[0] = (char)reg;
-+	payload[1] = (char)val;
-+
-+	ret = mipi_dsi_generic_write(dsi, payload, 2);
-+	return ret < 0 ? ret : 0;
++	return ti_sn_bridge_common_remove(i2c_get_clientdata(client));
 +}
 +
-+static int dsi_reg_read(void *context, unsigned int reg, unsigned int *val)
++static int ti_sn_bridge_i2c_probe(struct i2c_client *client,
++			      const struct i2c_device_id *id)
 +{
-+	struct device *dev = context;
-+	struct mipi_dsi_device *dsi = to_mipi_dsi_device(dev);
-+	int ret;
++	struct regmap *regmap;
 +
-+	ret = mipi_dsi_generic_read(dsi, &reg, 1, val, 1);
-+	return ret < 0 ? ret : 0;
++	if (!i2c_check_functionality(client->adapter, I2C_FUNC_I2C)) {
++		DRM_ERROR("device doesn't support I2C\n");
++		return -ENODEV;
++	}
++
++	regmap = devm_regmap_init_i2c(client, &ti_sn_bridge_regmap_config);
++	if (IS_ERR(regmap)) {
++		DRM_ERROR("regmap i2c init failed\n");
++		return PTR_ERR(regmap);
++	}
++
++	return ti_sn_bridge_common_probe(&client->dev, regmap, NULL);
 +}
 +
-+static struct regmap_bus dsi_bus = {
-+	.reg_write = dsi_reg_write,
-+	.reg_read = dsi_reg_read,
++static int ti_sn_bridge_dsi_probe(struct mipi_dsi_device *dsi)
++{
++	struct regmap *regmap;
++
++	regmap = devm_regmap_init_dsi(dsi, &ti_sn_bridge_regmap_config);
++	if (IS_ERR(regmap)) {
++		DRM_ERROR("regmap dsi init failed\n");
++		return PTR_ERR(regmap);
++	}
++
++	return ti_sn_bridge_common_probe(&dsi->dev, regmap, dsi);
++}
++
++static int ti_sn_bridge_dsi_remove(struct mipi_dsi_device *dsi)
++{
++	return ti_sn_bridge_common_remove(mipi_dsi_get_drvdata(dsi));
++}
++
++static struct i2c_device_id ti_sn_bridge_i2c_id[] = {
+ 	{ "ti,sn65dsi86", 0},
+ 	{},
+ };
+-MODULE_DEVICE_TABLE(i2c, ti_sn_bridge_id);
++MODULE_DEVICE_TABLE(i2c, ti_sn_bridge_i2c_id);
+ 
+ static const struct of_device_id ti_sn_bridge_match_table[] = {
+ 	{.compatible = "ti,sn65dsi86"},
+@@ -767,17 +805,51 @@ static const struct of_device_id ti_sn_bridge_match_table[] = {
+ };
+ MODULE_DEVICE_TABLE(of, ti_sn_bridge_match_table);
+ 
+-static struct i2c_driver ti_sn_bridge_driver = {
++static struct i2c_driver ti_sn_bridge_i2c_driver = {
+ 	.driver = {
+ 		.name = "ti_sn65dsi86",
+ 		.of_match_table = ti_sn_bridge_match_table,
+ 		.pm = &ti_sn_bridge_pm_ops,
+ 	},
+-	.probe = ti_sn_bridge_probe,
+-	.remove = ti_sn_bridge_remove,
+-	.id_table = ti_sn_bridge_id,
++	.probe = ti_sn_bridge_i2c_probe,
++	.remove = ti_sn_bridge_i2c_remove,
++	.id_table = ti_sn_bridge_i2c_id,
+ };
+-module_i2c_driver(ti_sn_bridge_driver);
++
++static struct mipi_dsi_driver ti_sn_bridge_dsi_driver = {
++	.driver = {
++		.name = "ti_sn65dsi86",
++		.of_match_table = ti_sn_bridge_match_table,
++		.pm = &ti_sn_bridge_pm_ops,
++	},
++	.probe = ti_sn_bridge_dsi_probe,
++	.remove = ti_sn_bridge_dsi_remove,
 +};
 +
-+struct regmap *__regmap_init_dsi(struct mipi_dsi_device *dsi,
-+				 const struct regmap_config *config,
-+				 struct lock_class_key *lock_key,
-+				 const char *lock_name)
++static int __init tisn65dsi86_init(void)
 +{
-+	return __regmap_init(&dsi->dev, &dsi_bus, &dsi->dev, config,
-+			     lock_key, lock_name);
-+}
-+EXPORT_SYMBOL_GPL(__regmap_init_dsi);
++	int ret;
 +
-+struct regmap *__devm_regmap_init_dsi(struct mipi_dsi_device *dsi,
-+				      const struct regmap_config *config,
-+				      struct lock_class_key *lock_key,
-+				      const char *lock_name)
++	ret = i2c_add_driver(&ti_sn_bridge_i2c_driver);
++
++	if (ret)
++		return ret;
++
++	ret = mipi_dsi_driver_register(&ti_sn_bridge_dsi_driver);
++
++	if (ret)
++		i2c_del_driver(&ti_sn_bridge_i2c_driver);
++
++	return ret;
++}
++module_init(tisn65dsi86_init);
++
++static void __exit tisn65dsi86_exit(void)
 +{
-+	return __devm_regmap_init(&dsi->dev, &dsi_bus, &dsi->dev, config,
-+				  lock_key, lock_name);
++	i2c_del_driver(&ti_sn_bridge_i2c_driver);
++	mipi_dsi_driver_unregister(&ti_sn_bridge_dsi_driver);
 +}
-+EXPORT_SYMBOL_GPL(__devm_regmap_init_dsi);
-+
-+MODULE_LICENSE("GPL");
-diff --git a/include/linux/regmap.h b/include/linux/regmap.h
-index dfe493ac692d..858239f7859f 100644
---- a/include/linux/regmap.h
-+++ b/include/linux/regmap.h
-@@ -32,6 +32,7 @@ struct regmap_range_cfg;
- struct regmap_field;
- struct snd_ac97;
- struct sdw_slave;
-+struct mipi_dsi_device;
++module_exit(tisn65dsi86_exit);
  
- /* An enum of all the supported cache types */
- enum regcache_type {
-@@ -573,6 +574,10 @@ struct regmap *__regmap_init_sdw(struct sdw_slave *sdw,
- 				 const struct regmap_config *config,
- 				 struct lock_class_key *lock_key,
- 				 const char *lock_name);
-+struct regmap *__regmap_init_dsi(struct mipi_dsi_device *dsi,
-+				 const struct regmap_config *config,
-+				 struct lock_class_key *lock_key,
-+				 const char *lock_name);
- 
- struct regmap *__devm_regmap_init(struct device *dev,
- 				  const struct regmap_bus *bus,
-@@ -626,6 +631,10 @@ struct regmap *__devm_regmap_init_i3c(struct i3c_device *i3c,
- 				 const struct regmap_config *config,
- 				 struct lock_class_key *lock_key,
- 				 const char *lock_name);
-+struct regmap *__devm_regmap_init_dsi(struct mipi_dsi_device *dsi,
-+				 const struct regmap_config *config,
-+				 struct lock_class_key *lock_key,
-+				 const char *lock_name);
- /*
-  * Wrapper for regmap_init macros to include a unique lockdep key and name
-  * for each call. No-op if CONFIG_LOCKDEP is not set.
-@@ -812,6 +821,19 @@ bool regmap_ac97_default_volatile(struct device *dev, unsigned int reg);
- 	__regmap_lockdep_wrapper(__regmap_init_sdw, #config,		\
- 				sdw, config)
- 
-+/**
-+ * regmap_init_dsi() - Initialise register map
-+ *
-+ * @dsi: Device that will be interacted with
-+ * @config: Configuration for register map
-+ *
-+ * The return value will be an ERR_PTR() on error or a valid pointer to
-+ * a struct regmap.
-+ */
-+#define regmap_init_dsi(dsi, config)					\
-+	__regmap_lockdep_wrapper(__regmap_init_dsi, #config,		\
-+				dsi, config)
-+
- 
- /**
-  * devm_regmap_init() - Initialise managed register map
-@@ -999,6 +1021,21 @@ bool regmap_ac97_default_volatile(struct device *dev, unsigned int reg);
- 	__regmap_lockdep_wrapper(__devm_regmap_init_i3c, #config,	\
- 				i3c, config)
- 
-+/**
-+ * devm_regmap_init_dsi() - Initialise managed register map
-+ *
-+ * @dsi: Device that will be interacted with
-+ * @config: Configuration for register map
-+ *
-+ * The return value will be an ERR_PTR() on error or a valid pointer
-+ * to a struct regmap. The regmap will be automatically freed by the
-+ * device management code.
-+ */
-+#define devm_regmap_init_dsi(dsi, config)				\
-+	__regmap_lockdep_wrapper(__devm_regmap_init_dsi, #config,       \
-+				dsi, config)
-+
-+
- int regmap_mmio_attach_clk(struct regmap *map, struct clk *clk);
- void regmap_mmio_detach_clk(struct regmap *map);
- void regmap_exit(struct regmap *map);
+ MODULE_AUTHOR("Sandeep Panda <spanda@codeaurora.org>");
+ MODULE_DESCRIPTION("sn65dsi86 DSI to eDP bridge driver");
 -- 
 2.17.1
 
