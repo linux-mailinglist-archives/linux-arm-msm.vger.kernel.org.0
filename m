@@ -2,145 +2,84 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 3E1DB5D8EE
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Jul 2019 02:31:08 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D22765DD20
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Jul 2019 05:57:18 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727114AbfGCAax (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 2 Jul 2019 20:30:53 -0400
-Received: from mail-ed1-f65.google.com ([209.85.208.65]:42467 "EHLO
-        mail-ed1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726963AbfGCAaw (ORCPT
+        id S1727108AbfGCD5S (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 2 Jul 2019 23:57:18 -0400
+Received: from smtp.codeaurora.org ([198.145.29.96]:38302 "EHLO
+        smtp.codeaurora.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727025AbfGCD5R (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 2 Jul 2019 20:30:52 -0400
-Received: by mail-ed1-f65.google.com with SMTP id z25so289911edq.9;
-        Tue, 02 Jul 2019 17:30:51 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=SUMBHjqHxfFISJ4tsGh6gHnVJafzY5uBObk9/M1SI6Y=;
-        b=p4QfsUpxZBUPSNbm9a2ya6+yOVBLb06CncvEKO0qxtLknZ9dc5s45n/yCCCk8pVAGr
-         kTtuJCFsVLSmNXI13tt/3c+qkzMeuAESDbdCbiFxU8ZGu73hjgvAB7S/EKz0qJg50PM0
-         mggd9oJOp7fMPe31Y0DXLnsbQg44FXj8SGYjCyvHT1W/uN6YXAprbpsjvRGAUJjnYqRY
-         UbDxAZ046ar2qRfBKMqC0yk+pCMu82zzkmqLwb0ooQKB2mTZVaIkovBFit3MwyXI7wOa
-         w8KYcr5NOXHJ2fqa9bjhrPr+UG3CdQ92BH7V+3eVd900MzHNSuuuaZW55wl9e7h6e4PB
-         vpLQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=SUMBHjqHxfFISJ4tsGh6gHnVJafzY5uBObk9/M1SI6Y=;
-        b=aVNjQ3aZKn5OZO6na5MU7plZ2bIrRI4uKGXUdogHKc83QwSguIIWojeTQ6a98RJsoY
-         seUCji2cu6dDrRoai6omiLtnJNGl9aCP8lokwtBo0iHvcEfeNNaiMRwxbf55M1jjmjZ/
-         wKrZ6vd7qOi5YS9fXauI1ZGNUoypzd5cKYVawj1/qa79TGAndm5st5RctIA83j4tKex6
-         +MCqM1iFMMjZAkvGK1dUYUsmZMJVbMMK4xsR5ToS6E9fcO5s1uYN7YjgOj+SkJwI1gi8
-         mRqrLXCigMVnFiSPCjeyNPoc4qB7TUtCz/AuF7TFimruNZhHteLUdS7r1yW5KT6uKT7G
-         sR0Q==
-X-Gm-Message-State: APjAAAUEb3xclV+iEMHuPIodvsXJzHwrFrAskdb9Mv29M+8tmv8+1g1g
-        TVlQIbeBrkovOrG7/E0htTtfVmNDeORQGsqLuL+4aToXaVs=
-X-Google-Smtp-Source: APXvYqx4j4OCiYpTjzpwx7oNckBn+SqKRP14iTHp1P6MaiYoDQDLUnA3ecoEITujxJ6YGjIOt/liDhVugoLpxJ8Knu0=
-X-Received: by 2002:a50:9468:: with SMTP id q37mr38323779eda.163.1562107743736;
- Tue, 02 Jul 2019 15:49:03 -0700 (PDT)
+        Tue, 2 Jul 2019 23:57:17 -0400
+Received: by smtp.codeaurora.org (Postfix, from userid 1000)
+        id 55BBA6038E; Wed,  3 Jul 2019 03:57:17 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
+        s=default; t=1562126237;
+        bh=Aq4cCJDxYrULJtxL5b8KPbo01q6oair5ivvgUrHGj6Y=;
+        h=From:To:Cc:Subject:Date:From;
+        b=a18CdN/RaEcu548QrtYRLupKrQAp2ZRPD+2Ht2MuLkNTeAYVz3i8DlToH0menNywH
+         dprrU6XyNbkWRIRuiOMcT4JLrtq+UgLVWUcOwT2O1sDCecYhFLx0RD5+hYvK6VUbmj
+         r906kT8IdA9KO48nWcaYRP2l4lXLAe97H6cgn0JM=
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        pdx-caf-mail.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.7 required=2.0 tests=ALL_TRUSTED,BAYES_00,
+        DKIM_INVALID,DKIM_SIGNED,SPF_NONE autolearn=no autolearn_force=no
+        version=3.4.0
+Received: from govinds-linux.qualcomm.com (blr-c-bdr-fw-01_globalnat_allzones-outside.qualcomm.com [103.229.19.19])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: govinds@smtp.codeaurora.org)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 337DF6038E;
+        Wed,  3 Jul 2019 03:57:14 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
+        s=default; t=1562126236;
+        bh=Aq4cCJDxYrULJtxL5b8KPbo01q6oair5ivvgUrHGj6Y=;
+        h=From:To:Cc:Subject:Date:From;
+        b=n6JWO34Mw4XbxIkJ5pVYQLK0Kb9XAhSRICWo/9GRxn8NWvJHLkgpuaUnUHUylBQBS
+         hEhydJy1vV7e281f9BHERULra8pGFSIPprxkrfrBkcGuQEShSkBbIb4T+/SKs7fFta
+         YtAP734tO2DRzgqOopGQpt34xYQhrIwklYGIhu8o=
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 337DF6038E
+Authentication-Results: pdx-caf-mail.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: pdx-caf-mail.web.codeaurora.org; spf=none smtp.mailfrom=govinds@codeaurora.org
+From:   Govind Singh <govinds@codeaurora.org>
+To:     ath10k@lists.infradead.org
+Cc:     linux-wireless@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, Govind Singh <govinds@codeaurora.org>
+Subject: [PATCH 0/3] Move voltage regulator config to driver private data
+Date:   Wed,  3 Jul 2019 09:27:08 +0530
+Message-Id: <20190703035711.25592-1-govinds@codeaurora.org>
+X-Mailer: git-send-email 2.21.0
 MIME-Version: 1.0
-References: <20190630203614.5290-1-robdclark@gmail.com> <20190630203614.5290-3-robdclark@gmail.com>
- <CAKv+Gu_8BOt+f8RTspHo+se-=igZba1zL0+jWLV2HuuUXCKYpA@mail.gmail.com>
- <CAKv+Gu-KhPJxxJA3+J813OPcnoAD4nHq6MhiRTJSd_5y1dPNnw@mail.gmail.com>
- <CAF6AEGv+uAXVV6Q78n=jP0YRDjYn9OS=Xec9MU0+_7EBirxF5w@mail.gmail.com> <20190702215953.wdqges66hx3ge4jr@bivouac.eciton.net>
-In-Reply-To: <20190702215953.wdqges66hx3ge4jr@bivouac.eciton.net>
-From:   Rob Clark <robdclark@gmail.com>
-Date:   Tue, 2 Jul 2019 15:48:48 -0700
-Message-ID: <CAF6AEGvm62rcm4Lp4a+QmqFweVQ0QWXLDoN2CP8=40BdwiiVbQ@mail.gmail.com>
-Subject: Re: [PATCH 2/4] efi/libstub: detect panel-id
-To:     Leif Lindholm <leif.lindholm@linaro.org>
-Cc:     Ard Biesheuvel <ard.biesheuvel@linaro.org>,
-        dri-devel <dri-devel@lists.freedesktop.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        freedreno <freedreno@lists.freedesktop.org>,
-        aarch64-laptops@lists.linaro.org,
-        Rob Clark <robdclark@chromium.org>,
-        Ingo Molnar <mingo@kernel.org>, Will Deacon <will@kernel.org>,
-        Alexander Graf <agraf@suse.de>,
-        Steve Capper <steve.capper@arm.com>,
-        Lukas Wunner <lukas@wunner.de>,
-        Julien Thierry <julien.thierry@arm.com>,
-        linux-efi <linux-efi@vger.kernel.org>,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Jul 2, 2019 at 2:59 PM Leif Lindholm <leif.lindholm@linaro.org> wrote:
->
-> On Tue, Jul 02, 2019 at 02:01:49PM -0700, Rob Clark wrote:
-> > > > So we are dealing with a platform that violates the UEFI spec, since
-> > > > it does not bother to implement variable services at runtime (because
-> > > > MS let the vendor get away with this).
-> > >
-> > > To clarify, the above remark applies to populating the DT from the OS
-> > > rather than from the firmware.
-> >
-> > yeah, it isn't pretty, but there *are* some other similar cases where
-> > efi-stub is populating DT.. (like update_fdt_memmap() and
-> > kaslr-seed)..
->
-> The problem isn't with the stub updating the DT, the problem is what
-> it updates it with.
->
-> update_fdt_memmap() is the stub filling in the information it
-> communicates to the main kernel.
->
-> kaslr-seed sets a standard property using a standard interface if that
-> interface is available to it at the point of execution.
->
-> Since what we're doing here is dressing up an ACPI platform to make it
-> look like it was a DT platform, and since we have the ability to tweak
-> the DT before ever passing it to the kernel, let's just do that.
->
-> Yes, I know I said I'd rather not, but it's way nicer than sticking
-> platform-specific hacks into the EFI stub.
->
-> (If adding it as a DT property is indeed the thing to do.)
->
-> > > ... but saving variables at boot time for consumption at runtime is
-> > > something that we will likely see more of in the future.
-> >
-> > I think this will be nice, but it also doesn't address the need for a
-> > quirk to get this into /chosen..  I guess we *could* use a shim or
-> > something that runs before the kernel to do this.  But that just seems
-> > like a logistical/support nightmare.
-> >
-> > There is one kernel, and there
-> > are N distro's, so debugging a users "I don't get a screen at boot"
-> > problem because their distro missed some shim patch really just
-> > doesn't seem like a headache I want to have.
->
-> The distros should not need to be aware *at all* of the hacks required
-> to disguise these platforms as DT platforms.
->
-> If they do, they're already device-specific installers and have
-> already accepted the logistical/support nightmare.
->
+WCN3990 voltage regulator config is varying b/w different MSM platforms ex: SDM845/
+QCS404. In order to have scalable config, move regulator config to driver
+private data.
 
-I guess I'm not *against* a DT loader shim populating the panel-id
-over into /chosen.. I had it in mind as a backup plan.  Ofc still need
-to get dt folks to buy into /chosen/panel-id but for DT boot I think
-that is the best option.  (At least the /chosen/panel-id approach
-doesn't require the shim to be aware of how the panel is wired up to
-dsi controller and whether their is a bridge in between, and that
-short of thing, so the panel-id approach seems more maintainable that
-other options.)
+Tested HW: WCN3990(SDM845/QCS404)
+Tested FW: WLAN.HL.3.1-01040-QCAHLSWMTPLZ-1
 
-I am a bit fearful of problems arising from different distros and
-users using different versions of shim, and how to manage that.  I
-guess if somehow "shim thing" was part of the kernel, there would by
-one less moving part... I'd know if user had kernel vX.Y.Z they'd be
-good to go vs not.  But *also* depending on a new-enough version of a
-shim, where the version # is probably not easily apparent to the end
-user, sounds a bit scary from the "all the things that can go wrong"
-point of view.  Maybe I'm paranoid, but I'm a bit worried about how to
-manage that.
+Govind Singh (3):
+  dt: bindings: update compatible dt properties for WCN3990 wifi node
+  ath10k: Move regulator config to driver private data
+  arm64: dts: qcom: qcs404: Modify wifi dt node for SDM845/QCS404
+    devices
 
-BR,
--R
+ .../bindings/net/wireless/qcom,ath10k.txt     |  2 +
+ arch/arm64/boot/dts/qcom/qcs404-evb.dtsi      |  3 ++
+ arch/arm64/boot/dts/qcom/qcs404.dtsi          |  2 +-
+ arch/arm64/boot/dts/qcom/sdm845.dtsi          |  2 +-
+ drivers/net/wireless/ath/ath10k/snoc.c        | 38 +++++++++++++++----
+ drivers/net/wireless/ath/ath10k/snoc.h        | 23 ++++++-----
+ 6 files changed, 51 insertions(+), 19 deletions(-)
+
+-- 
+The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
+a Linux Foundation Collaborative Project
+
