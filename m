@@ -2,189 +2,137 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id B4E6A5EAF2
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Jul 2019 19:55:01 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E4EAD5ED1D
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Jul 2019 22:03:04 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726991AbfGCRzB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 3 Jul 2019 13:55:01 -0400
-Received: from mail-wm1-f65.google.com ([209.85.128.65]:50853 "EHLO
-        mail-wm1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726678AbfGCRzB (ORCPT
+        id S1726902AbfGCUDE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 3 Jul 2019 16:03:04 -0400
+Received: from mail-io1-f65.google.com ([209.85.166.65]:42094 "EHLO
+        mail-io1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726656AbfGCUDE (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 3 Jul 2019 13:55:01 -0400
-Received: by mail-wm1-f65.google.com with SMTP id n9so3126228wmi.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 03 Jul 2019 10:54:59 -0700 (PDT)
+        Wed, 3 Jul 2019 16:03:04 -0400
+Received: by mail-io1-f65.google.com with SMTP id u19so7796195ior.9
+        for <linux-arm-msm@vger.kernel.org>; Wed, 03 Jul 2019 13:03:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=iC3yaTa9Zv23N3R7uNs2zkiGKU8tLMgZakv4khIWziI=;
-        b=ezQW1HqYiasnn2IejNRSlbVBL00j/KJXgBYKahj9Jo2znBoOvxVWiKvvWn1kP5zH/E
-         gZGYtb1Osr1Yk6J/M1XBG5qIXvrR5YeWSDaxC7pQdBWKPZjlouT/TgmCYEK6Gak6VGqJ
-         1NGu1wIePcRZSuqvoHg4adXXiBu5AYc+rtqUDobIb0lzGBLUZ9RRFiI2zfVfFJl35hEF
-         E2l5IjU5yRZk5hVrLMgUo1qusJ5j2cGpeB1uDfuAJPOtlMb8DrglYtskifpYDUcxhxjp
-         ItYuWOwrSt86OS+F1Wz4MAVxOe7XjoVim7XLXelwDDfdY9djS8avS8SpvEm1S8eF/gA6
-         MjBw==
+        bh=UKh+fnCjeVqcQm0IwUHZUc5vltmZ8E0kqz9Ok6uJVI4=;
+        b=EIIpKwYigj//ohw/Hx/d7USCLYQ6Yz7CE5EleU+SyrJULC2Fj/eLP/4fOYzc89xM75
+         8ifdTZ2G88o7ItmphKYgUPbJB+abRou6TKyNi7KyE+2xJEXze5Lp4Z9e5BNv8RchqzQ9
+         wEdy6vOTEm2EaFnEJxAfuww3pGtAweWtCXg3SkK4hTV3xFwZeQr3Sc/G5MBsWKrFSkLm
+         xjrb1E3oqGmHMNVHWVZ8gxN3WOr6b/PsqLUhI9snTyH8Z9pnjPntS9aFwjJ6i6+P01xf
+         iR1aDSllthbZYMqBxEdAPvCd592QwZ1nwWYrXyD1vmy2zvCAJODbOW4U/7pkPL5ePznv
+         OK5w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=iC3yaTa9Zv23N3R7uNs2zkiGKU8tLMgZakv4khIWziI=;
-        b=ImDfuz6gA71kII7phH31p5gzZUDv3cg76GGPFdtN1nrcLlaiHroPzJ1N0cBR//nGz9
-         OKdtS7CtJ6ZBebRBGDlG3zfAMBrs5hx3UJTwOadCG9qKzeHy1l1uFMQbG2pCzXA+2TMb
-         li/6WZIPrCcfwRpGAcWu6xBbh2Y74T7B+VgjNSks2f8gSA8RJ+X1QPYO8mQ2fqDxBHEv
-         dBXt8qqv8Ow2I7lq3nCEO9+J0DMEBqVcLj3sm+SQR/nWOhfmTeHUFtnvMiDIGMRCaDlo
-         TYZ5sS3DnK1rFxgLT5f8LBM387iceYd7f4yjNZsOPTe+h3E5DtWmaC1EKwQM4lYAy8p1
-         Ybag==
-X-Gm-Message-State: APjAAAV8IORKPmeg3AfLhu9UYcPRzkXZkFchkKm8ZsCLGgH4GZY/KcB1
-        AA+NiT3hWdFLAoRwc09AKJXm4vlFMDjrAB+8+SDFoA==
-X-Google-Smtp-Source: APXvYqzZS1NTKUToA2Buor/C5A6sez5Obmg98g9LIv8BmymHB5yzHcyQ7kuI9IMQNbSf7XPpkIKZWVJEd2k4U83H2/k=
-X-Received: by 2002:a7b:c0d0:: with SMTP id s16mr8249422wmh.136.1562176498161;
- Wed, 03 Jul 2019 10:54:58 -0700 (PDT)
+        bh=UKh+fnCjeVqcQm0IwUHZUc5vltmZ8E0kqz9Ok6uJVI4=;
+        b=G/IFS4wlhDTYEsv7Tkumcs2c23ufANlFnNI2qYMBXJeuEeSwHdl+5HMdWuiWx7bhWV
+         Wy5rHYTzXuQpZUSjn4K9w1Z1OnuMWY60tdS4yZoi6aCxEJaaddiI5WUBPJQLD+h8y/sX
+         tPVYEWsafwX4YNsJlv7eAYludHMKoxdw/GuJ8+5WB7GuNdlH5ztpZWzo29A34ZfnIMKj
+         Vy86QgVZbCRIA4dMVaipqi9nPKdzxRa9qakDLUGUIXmsIlfiJpyvg1AzlVc+Si3HvNFE
+         V/jBSD4CpSCsMTD7gMPn+saL/ppm8REHdA/gpyUpcP/k/diIpeZd11GgrsyGwbmXyNuj
+         xiew==
+X-Gm-Message-State: APjAAAVwOincFuSfAooRqMGL05AgvXRziOL5a1i7XdPnkNbn7b1OWiXr
+        WYcfx2DA5WbqUvzX617nNOtm5/M5FHx5tQdpw0jZVg==
+X-Google-Smtp-Source: APXvYqwoE6c94VoRDisMNtWzyjcFI4tXdYpggqbejcxRg98CE8mWN8SWLgyCum0KXlMbwrRNVk/eX+bCnISJDGHcvbo=
+X-Received: by 2002:a02:7642:: with SMTP id z63mr31807037jab.36.1562184183245;
+ Wed, 03 Jul 2019 13:03:03 -0700 (PDT)
 MIME-Version: 1.0
-References: <20190630203614.5290-1-robdclark@gmail.com> <20190630203614.5290-3-robdclark@gmail.com>
- <CAKv+Gu_8BOt+f8RTspHo+se-=igZba1zL0+jWLV2HuuUXCKYpA@mail.gmail.com>
- <CAKv+Gu-KhPJxxJA3+J813OPcnoAD4nHq6MhiRTJSd_5y1dPNnw@mail.gmail.com>
- <CAF6AEGv+uAXVV6Q78n=jP0YRDjYn9OS=Xec9MU0+_7EBirxF5w@mail.gmail.com>
- <20190702215953.wdqges66hx3ge4jr@bivouac.eciton.net> <CAF6AEGvm62rcm4Lp4a+QmqFweVQ0QWXLDoN2CP8=40BdwiiVbQ@mail.gmail.com>
- <20190703163311.gtbo72dzpkpjvpi5@bivouac.eciton.net> <CAF6AEGtL2hJ0poNY9yK7vBxc9-zoY5AeZqKsVoJvxbBwM_yrGw@mail.gmail.com>
-In-Reply-To: <CAF6AEGtL2hJ0poNY9yK7vBxc9-zoY5AeZqKsVoJvxbBwM_yrGw@mail.gmail.com>
-From:   Ard Biesheuvel <ard.biesheuvel@linaro.org>
-Date:   Wed, 3 Jul 2019 19:54:42 +0200
-Message-ID: <CAKv+Gu87OJhYY3j0gmx9MgfWP-5fsaUqWFdAJNeJ-RwwXCau-g@mail.gmail.com>
-Subject: Re: [PATCH 2/4] efi/libstub: detect panel-id
-To:     Rob Clark <robdclark@gmail.com>
-Cc:     Leif Lindholm <leif.lindholm@linaro.org>,
-        dri-devel <dri-devel@lists.freedesktop.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        freedreno <freedreno@lists.freedesktop.org>,
-        aarch64-laptops@lists.linaro.org,
-        Rob Clark <robdclark@chromium.org>,
-        Ingo Molnar <mingo@kernel.org>, Will Deacon <will@kernel.org>,
-        Steve Capper <steve.capper@arm.com>,
-        Lukas Wunner <lukas@wunner.de>,
-        Julien Thierry <julien.thierry@arm.com>,
-        linux-efi <linux-efi@vger.kernel.org>,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>
+References: <cover.1561659046.git.saiprakash.ranjan@codeaurora.org> <2afedb941294af7ba0658496b4aca3759a4e43ff.1561659046.git.saiprakash.ranjan@codeaurora.org>
+In-Reply-To: <2afedb941294af7ba0658496b4aca3759a4e43ff.1561659046.git.saiprakash.ranjan@codeaurora.org>
+From:   Mathieu Poirier <mathieu.poirier@linaro.org>
+Date:   Wed, 3 Jul 2019 14:02:52 -0600
+Message-ID: <CANLsYkxvh+qUDvqG45o7qh61Noq=a=BJ4-p68ipdzxYt6n5bNA@mail.gmail.com>
+Subject: Re: [PATCHv5 1/2] dt-bindings: coresight: Change CPU phandle to
+ required property
+To:     Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
+Cc:     Suzuki K Poulose <suzuki.poulose@arm.com>,
+        Rob Herring <robh+dt@kernel.org>, devicetree@vger.kernel.org,
+        Leo Yan <leo.yan@linaro.org>,
+        Alexander Shishkin <alexander.shishkin@linux.intel.com>,
+        David Brown <david.brown@linaro.org>,
+        Mark Rutland <mark.rutland@arm.com>,
+        Rajendra Nayak <rnayak@codeaurora.org>,
+        Vivek Gautam <vivek.gautam@codeaurora.org>,
+        Sibi Sankar <sibis@codeaurora.org>,
+        linux-arm-kernel <linux-arm-kernel@lists.infradead.org>,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, 3 Jul 2019 at 19:41, Rob Clark <robdclark@gmail.com> wrote:
->
-> On Wed, Jul 3, 2019 at 9:33 AM Leif Lindholm <leif.lindholm@linaro.org> wrote:
-> >
-> > On Tue, Jul 02, 2019 at 03:48:48PM -0700, Rob Clark wrote:
-> > > > > There is one kernel, and there
-> > > > > are N distro's, so debugging a users "I don't get a screen at boot"
-> > > > > problem because their distro missed some shim patch really just
-> > > > > doesn't seem like a headache I want to have.
-> > > >
-> > > > The distros should not need to be aware *at all* of the hacks required
-> > > > to disguise these platforms as DT platforms.
-> > > >
-> > > > If they do, they're already device-specific installers and have
-> > > > already accepted the logistical/support nightmare.
-> > >
-> > > I guess I'm not *against* a DT loader shim populating the panel-id
-> > > over into /chosen.. I had it in mind as a backup plan.  Ofc still need
-> > > to get dt folks to buy into /chosen/panel-id but for DT boot I think
-> > > that is the best option.  (At least the /chosen/panel-id approach
-> > > doesn't require the shim to be aware of how the panel is wired up to
-> > > dsi controller and whether their is a bridge in between, and that
-> > > short of thing, so the panel-id approach seems more maintainable that
-> > > other options.)
-> >
-> > I am leaning like Ard towards preferring a configuration table though.
->
-> Ok, if you want the DT loader to propagate UEFIDisplayInfo to a config
-> table, I can update the drm parts of my patchset to look for that in
-> addition to /chosen/panel-id
->
-> > That removes the question of no runtime services (needing to manually
-> > cache things, at least until EBBR 1.2 (?) is out and in use), and
-> > means we don't have to use different paths for DT and ACPI. Now we
-> > have UEFI in U-Boot, do we really need to worry about the non-UEFI
-> > case?
->
-> I've mixed feelings about requiring UEFI..  I definitely want to give
-> qcom an incentive to turn on GOP and full UEFI boot for future android
-> devices.  OTOH there are quite a few devices out there that aren't
-> UEFI boot.  But I guess if drm falls back to /chosen/panel-id we are
-> covered.
->
-> > > I am a bit fearful of problems arising from different distros and
-> > > users using different versions of shim, and how to manage that.  I
-> > > guess if somehow "shim thing" was part of the kernel, there would by
-> > > one less moving part...
-> >
-> > Sure, but that's insurance against bindings changing
-> > non-backwards-compatibly - which there are ways to prevent, and which
-> > streamlining the design for really isn't the way to discourage...
-> >
-> > Distros have no need to worry about the DT loader - the whole point of
-> > it is to remove the need for the distro to worry about anything other
-> > than getting the required drivers in.
->
-> I'm a bit more concerned about DT loader getting into the business of
-> DT fixup..  I guess if we don't do that, it is less of a concern.  But
-> if we relied on it to fixup DT for installed panel, we could probably
-> make it work semi-generically on existing devices that have bridge and
-> panel wired up same way.  But seems like some of the 835 laptops have
-> bridge hooked up as child of dsi bus instead.  And someday we could
-> see devices using dsi directly, etc.
->
-> (It would be really nice to see DT loader able to pick the correct
-> .dtb based on smbios tables tho ;-).. but maybe different topic)
->
+Hi Greg,
 
-I think this is the only sane way of doing things: the DT loader,
-which is tied much more closely to the platform, does whatever it
-needs to do to infer from UEFI variables and/or ACPI or SMBIOS tables
-which bundled DT it installs, and whether/how it needs to fix things
-up. This indeed constitutes a moving part separate from the OS, but
-this is the only way that scales. Getting DTs for these devices into
-distros is *not* what we should be doing.
-
-> > > I'd know if user had kernel vX.Y.Z they'd be
-> > > good to go vs not.  But *also* depending on a new-enough version of a
-> > > shim, where the version # is probably not easily apparent to the end
-> > > user, sounds a bit scary from the "all the things that can go wrong"
-> > > point of view.  Maybe I'm paranoid, but I'm a bit worried about how to
-> > > manage that.
-> >
-> > Until the hardware abstractions provided by the system firmware (ACPI)
-> > is supported, these platforms are not going to be appropriate for
-> > end users anyway. No matter how many not-quite-upstream hacks distros
-> > include, they won't be able to support the next minor spin that comes
-> > off the production line and is no longer compatible with existing DTs.
+On Thu, 27 Jun 2019 at 12:15, Sai Prakash Ranjan
+<saiprakash.ranjan@codeaurora.org> wrote:
 >
-> yeah, that will be a problem.. and also switching to older kernel
-> after upgrading when in-flight dt bindings evolve.  Having one less
-> moving part would be nice.
+> Do not assume the affinity to CPU0 if cpu phandle is omitted.
+> Update the DT binding rules to reflect the same by changing it
+> to a required property.
 >
+> Signed-off-by: Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
+> Reviewed-by: Suzuki K Poulose <suzuki.poulose@arm.com>
 
-The whole point of the discussion we have been having for years is
-that for production use cases, we should not be dealing with evolving
-in-flight DT binding in the first place. If we ship a DT loader with a
-certain version of the binding and there is a need to change it, we
-can only do so if we retain support for the old binding as well.
+I'm all good with this patch - can you pick this up for the coming
+merge window?  If not I'll simply keep it in my tree for 5.4.
 
-> Maybe if adding a config table for UEFIDisplayInfo, you could also add
-> one for DT loader version, so (at least if user is able to get far
-> enough to get dmesg) we could see that more easily?
+Tested-by: Mathieu Poirier <mathieu.poirier@linaro.org>
+Reviewed-by: Mathieu Poirier <mathieu.poirier@linaro.org>
+
+> ---
+>  .../devicetree/bindings/arm/coresight-cpu-debug.txt       | 4 ++--
+>  Documentation/devicetree/bindings/arm/coresight.txt       | 8 +++++---
+>  2 files changed, 7 insertions(+), 5 deletions(-)
 >
-
-I'd prefer it if the DT loader were in charge of creating the
-UEFIDisplayInfo config tables, but given that we'll need to deal with
-platforms that don't implement runtime variable services, it is
-something I would be able to live with in the stub.
-
-In summary, working around platform limitations that prevent us from
-delivering an accurate DT to the OS should preferably be addressed in
-a platform specific pre-OS component. I haven't had the chance to look
-at leif's code yet, but from what I understand, we have pretty much
-what we need with the exception of the panel/gop variable handling,
-no?
+> diff --git a/Documentation/devicetree/bindings/arm/coresight-cpu-debug.txt b/Documentation/devicetree/bindings/arm/coresight-cpu-debug.txt
+> index 298291211ea4..f1de3247c1b7 100644
+> --- a/Documentation/devicetree/bindings/arm/coresight-cpu-debug.txt
+> +++ b/Documentation/devicetree/bindings/arm/coresight-cpu-debug.txt
+> @@ -26,8 +26,8 @@ Required properties:
+>                 processor core is clocked by the internal CPU clock, so it
+>                 is enabled with CPU clock by default.
+>
+> -- cpu : the CPU phandle the debug module is affined to. When omitted
+> -       the module is considered to belong to CPU0.
+> +- cpu : the CPU phandle the debug module is affined to. Do not assume it
+> +        to default to CPU0 if omitted.
+>
+>  Optional properties:
+>
+> diff --git a/Documentation/devicetree/bindings/arm/coresight.txt b/Documentation/devicetree/bindings/arm/coresight.txt
+> index 8a88ddebc1a2..fcc3bacfd8bc 100644
+> --- a/Documentation/devicetree/bindings/arm/coresight.txt
+> +++ b/Documentation/devicetree/bindings/arm/coresight.txt
+> @@ -59,6 +59,11 @@ its hardware characteristcs.
+>
+>         * port or ports: see "Graph bindings for Coresight" below.
+>
+> +* Additional required property for Embedded Trace Macrocell (version 3.x and
+> +  version 4.x):
+> +       * cpu: the cpu phandle this ETM/PTM is affined to. Do not
+> +         assume it to default to CPU0 if omitted.
+> +
+>  * Additional required properties for System Trace Macrocells (STM):
+>         * reg: along with the physical base address and length of the register
+>           set as described above, another entry is required to describe the
+> @@ -87,9 +92,6 @@ its hardware characteristcs.
+>         * arm,cp14: must be present if the system accesses ETM/PTM management
+>           registers via co-processor 14.
+>
+> -       * cpu: the cpu phandle this ETM/PTM is affined to. When omitted the
+> -         source is considered to belong to CPU0.
+> -
+>  * Optional property for TMC:
+>
+>         * arm,buffer-size: size of contiguous buffer space for TMC ETR
+> --
+> QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
+> of Code Aurora Forum, hosted by The Linux Foundation
+>
