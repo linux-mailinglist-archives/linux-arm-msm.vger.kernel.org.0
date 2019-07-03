@@ -2,92 +2,137 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 8FEDF5E77C
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Jul 2019 17:10:20 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C147D5E928
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Jul 2019 18:33:16 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726760AbfGCPKJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 3 Jul 2019 11:10:09 -0400
-Received: from mail-io1-f65.google.com ([209.85.166.65]:39916 "EHLO
-        mail-io1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726473AbfGCPKI (ORCPT
+        id S1727200AbfGCQdP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 3 Jul 2019 12:33:15 -0400
+Received: from mail-wr1-f66.google.com ([209.85.221.66]:39011 "EHLO
+        mail-wr1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727074AbfGCQdP (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 3 Jul 2019 11:10:08 -0400
-Received: by mail-io1-f65.google.com with SMTP id r185so5591510iod.6;
-        Wed, 03 Jul 2019 08:10:07 -0700 (PDT)
+        Wed, 3 Jul 2019 12:33:15 -0400
+Received: by mail-wr1-f66.google.com with SMTP id x4so3542271wrt.6
+        for <linux-arm-msm@vger.kernel.org>; Wed, 03 Jul 2019 09:33:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=4tBeQ15keJRuzad4ERXIDpILI/nTmHRA/IZ5Wy12SIY=;
-        b=Kwjl9r08+wXXoiN7tk3DWvDtFrJpEccsm62jss4sY9SfrWV26ulm9a3JOfJUxHmx7N
-         ehnLYqfv1Bt9MXCPQtbN5rT42RI4XGhCDypgyS9k5Tfir6+5Nu1f/Hqphsyay/q/l4NA
-         cA6nHKqA6BXqsZfKoGe4YBQ6tF22kOQ/o2u6LwBr9PY0WPF2rGrJLEchvXtnf4jMV607
-         FH7GaCt/uON5U/+J0ntxesMHutIiyrchvocnI1k+FuPUgEcEBqOoA2aZo3Cmee9uUUjj
-         +jdhx2TJH6g0kj5g/7R7WRR8+8zlr/C2poqXaeVNeakFCFDvMgpp6fdaFb+YyyIbVG7N
-         ZP2A==
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=AWfKUBqVWZzAawswGY+ZSjKKRhaQkfyUJM16meMSkPo=;
+        b=SqQC20u2dDoRyp5jcv3M6XGoifJsMIxnNea7QFL8/kVvb2UCAA8flUyKrqI9ejZsxZ
+         kU2lTzUeRu2H0DRUt9A/+YcW0WKC5DXZvqhA47BbU1PJov63d4B7xFHu0rxghzEBubbZ
+         fkMx1vyy/KTqcrRxJ+wHbzR2RcWI1bsuYQcvYx643PjJlTEsXtRRS7kMcAVARcFXauGR
+         aiyn9SU9SWjPsZCxZay9+2jPSeswBVq0FudAScZpXG6CCQBNvCRRCMx6Rv+uQbeWlscd
+         Okt/CDrAd7xyJqLMP7lTdjQCS5owlIquNQtdAenesffTZrDbAuwzfwfl/va0He7LjOa8
+         g+YA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=4tBeQ15keJRuzad4ERXIDpILI/nTmHRA/IZ5Wy12SIY=;
-        b=FKW2mryGH5aqWCTTMFnE9cImsSK6rkCSpCtjrhA9ulOe9OhQCCvByGphpq9lTHdRX2
-         KLVWMAlw6Gwk/axj47Z3k6SNJABM6xtOfg9+izouB+hVHwIDThHHO5V2sSim8tJl7LwP
-         Oago4MTgDNctb32eHjx5izKefo3iKr0DMOFlF0RZWY/mJc5PYZKNgREB1/OjMGvoMw+y
-         3D+I17EmOrbOn4rndW8Ux1AqCB2w9zsDcesubYQvdR42kYDTUENvziQlsBMinyCQXX54
-         vHhaxjb22OM2jXxdjvtB7NuK3fXmABkqFGk21Tv2rnC2qcgQOo25hF9PYtAVbijscfwE
-         8Gng==
-X-Gm-Message-State: APjAAAU9pskGHcQKGmViMR3Qn5VMARBRV02n/nk7ajejii2SUswcrLCK
-        cRSW8Pou4gfEcHsSMW1Vv4zE/YnIfJ/ZFoIGBuRDNQ==
-X-Google-Smtp-Source: APXvYqynbo0TvCuoYXiCZt+eOeNeSj1rTV/qRqThMPaa0pfxvV2Mi/VojWfBO0/yJi3CyvK++1xCXJsBnVwJOSOnsE8=
-X-Received: by 2002:a02:bca:: with SMTP id 193mr43442848jad.46.1562166607574;
- Wed, 03 Jul 2019 08:10:07 -0700 (PDT)
-MIME-Version: 1.0
-References: <20190701173907.15494-1-jeffrey.l.hugo@gmail.com>
- <20190703040843.GA27383@builder> <CAF6AEGvwMj+R6KbFYbatx8AuF+5mztc7246ocKXfRWnpphv9NA@mail.gmail.com>
-In-Reply-To: <CAF6AEGvwMj+R6KbFYbatx8AuF+5mztc7246ocKXfRWnpphv9NA@mail.gmail.com>
-From:   Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
-Date:   Wed, 3 Jul 2019 09:09:57 -0600
-Message-ID: <CAOCk7Nr_LYhGOcUCMA83MQ8Xc4zRPfNcSkD6aGJFAcD_udDU-A@mail.gmail.com>
-Subject: Re: [PATCH] drm/msm/mdp5: Use drm_device for creating gem address space
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=AWfKUBqVWZzAawswGY+ZSjKKRhaQkfyUJM16meMSkPo=;
+        b=UZ8lvowKarJqiq0y7ri9T/j1VRexPW6Buo88W++IM46oFt22G3yJXiX/SKhv9JCjhp
+         lAyGSK/U3vUTprUprwn5xiW3g/qnIJDRB2l3/nP9Gry/uKDmEHcKFDBaqMdUfqHfEkMW
+         7xM2/8ELY+5oQlDCVqwbhLLxollcD2debX9nQsNuZYiG6bZNpGOcCbMzBESmpNp0KUNy
+         ZxKRPgp12qVKhpLvjbtHY1NDVmgLBocRfF4ppox45WWRiFmA6TJUh0EWGmJhg5JHH+YZ
+         wPBKH/OqWQCtkSVUD3WJ8NPCEih1GjZparSQ+tN6vvy8V/ajhAzidI41Uz2esSsDhtqN
+         SBQg==
+X-Gm-Message-State: APjAAAW/d9mJmAExaGY7NcKCn41sdrzNPP1X1TylcSNMCUQa59R7Jqdu
+        yg8y2v37pbN2PeF/FGd+ifeJLA==
+X-Google-Smtp-Source: APXvYqzyUKfEjD5zZwvYgn+6s0isuDDnar2rnm433earCTxIt7v2XJpN1VkPtyIJdyIZ37VlPS+lgw==
+X-Received: by 2002:a5d:438f:: with SMTP id i15mr24566996wrq.37.1562171594030;
+        Wed, 03 Jul 2019 09:33:14 -0700 (PDT)
+Received: from bivouac.eciton.net (bivouac.eciton.net. [2a00:1098:0:86:1000:23:0:2])
+        by smtp.gmail.com with ESMTPSA id x11sm1849858wmi.26.2019.07.03.09.33.13
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Wed, 03 Jul 2019 09:33:13 -0700 (PDT)
+Date:   Wed, 3 Jul 2019 17:33:11 +0100
+From:   Leif Lindholm <leif.lindholm@linaro.org>
 To:     Rob Clark <robdclark@gmail.com>
-Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Sean Paul <sean@poorly.run>, David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+Cc:     Ard Biesheuvel <ard.biesheuvel@linaro.org>,
         dri-devel <dri-devel@lists.freedesktop.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
         freedreno <freedreno@lists.freedesktop.org>,
+        aarch64-laptops@lists.linaro.org,
+        Rob Clark <robdclark@chromium.org>,
+        Ingo Molnar <mingo@kernel.org>, Will Deacon <will@kernel.org>,
+        Steve Capper <steve.capper@arm.com>,
+        Lukas Wunner <lukas@wunner.de>,
+        Julien Thierry <julien.thierry@arm.com>,
+        linux-efi <linux-efi@vger.kernel.org>,
         Linux Kernel Mailing List <linux-kernel@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Subject: Re: [PATCH 2/4] efi/libstub: detect panel-id
+Message-ID: <20190703163311.gtbo72dzpkpjvpi5@bivouac.eciton.net>
+References: <20190630203614.5290-1-robdclark@gmail.com>
+ <20190630203614.5290-3-robdclark@gmail.com>
+ <CAKv+Gu_8BOt+f8RTspHo+se-=igZba1zL0+jWLV2HuuUXCKYpA@mail.gmail.com>
+ <CAKv+Gu-KhPJxxJA3+J813OPcnoAD4nHq6MhiRTJSd_5y1dPNnw@mail.gmail.com>
+ <CAF6AEGv+uAXVV6Q78n=jP0YRDjYn9OS=Xec9MU0+_7EBirxF5w@mail.gmail.com>
+ <20190702215953.wdqges66hx3ge4jr@bivouac.eciton.net>
+ <CAF6AEGvm62rcm4Lp4a+QmqFweVQ0QWXLDoN2CP8=40BdwiiVbQ@mail.gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CAF6AEGvm62rcm4Lp4a+QmqFweVQ0QWXLDoN2CP8=40BdwiiVbQ@mail.gmail.com>
+User-Agent: NeoMutt/20170113 (1.7.2)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Jul 3, 2019 at 6:25 AM Rob Clark <robdclark@gmail.com> wrote:
->
-> On Tue, Jul 2, 2019 at 9:08 PM Bjorn Andersson
-> <bjorn.andersson@linaro.org> wrote:
+On Tue, Jul 02, 2019 at 03:48:48PM -0700, Rob Clark wrote:
+> > > There is one kernel, and there
+> > > are N distro's, so debugging a users "I don't get a screen at boot"
+> > > problem because their distro missed some shim patch really just
+> > > doesn't seem like a headache I want to have.
 > >
-> > On Mon 01 Jul 10:39 PDT 2019, Jeffrey Hugo wrote:
+> > The distros should not need to be aware *at all* of the hacks required
+> > to disguise these platforms as DT platforms.
 > >
-> > > Creating the msm gem address space requires a reference to the dev where
-> > > the iommu is located.  The driver currently assumes this is the same as
-> > > the platform device, which breaks when the iommu is outside of the
-> > > platform device.  Use the drm_device instead, which happens to always have
-> > > a reference to the proper device.
-> > >
-> > > Signed-off-by: Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
-> >
-> > Sorry, but on db820c this patch results in:
-> >
-> > [   64.803263] msm_mdp 901000.mdp: [drm:mdp5_kms_init [msm]] *ERROR* failed to attach iommu: -19
-> >
-> > Followed by 3 oopses as we're trying to fail the initialization.
->
-> yeah, that is kinda what I suspected would happen.  I guess to deal
-> with how things are hooked up on 8998, perhaps the best thing is to
-> first try &pdev->dev, and then if that fails try dev->dev
+> > If they do, they're already device-specific installers and have
+> > already accepted the logistical/support nightmare.
+> 
+> I guess I'm not *against* a DT loader shim populating the panel-id
+> over into /chosen.. I had it in mind as a backup plan.  Ofc still need
+> to get dt folks to buy into /chosen/panel-id but for DT boot I think
+> that is the best option.  (At least the /chosen/panel-id approach
+> doesn't require the shim to be aware of how the panel is wired up to
+> dsi controller and whether their is a bridge in between, and that
+> short of thing, so the panel-id approach seems more maintainable that
+> other options.)
 
-Thanks for the test feedback Bjorn.  Its unfortunate this solution
-didn't work as I expected.  I'll give Rob's suggestion a shot and spin
-another version.
+I am leaning like Ard towards preferring a configuration table though.
+
+That removes the question of no runtime services (needing to manually
+cache things, at least until EBBR 1.2 (?) is out and in use), and
+means we don't have to use different paths for DT and ACPI. Now we
+have UEFI in U-Boot, do we really need to worry about the non-UEFI
+case?
+
+> I am a bit fearful of problems arising from different distros and
+> users using different versions of shim, and how to manage that.  I
+> guess if somehow "shim thing" was part of the kernel, there would by
+> one less moving part...
+
+Sure, but that's insurance against bindings changing
+non-backwards-compatibly - which there are ways to prevent, and which
+streamlining the design for really isn't the way to discourage...
+
+Distros have no need to worry about the DT loader - the whole point of
+it is to remove the need for the distro to worry about anything other
+than getting the required drivers in.
+
+> I'd know if user had kernel vX.Y.Z they'd be
+> good to go vs not.  But *also* depending on a new-enough version of a
+> shim, where the version # is probably not easily apparent to the end
+> user, sounds a bit scary from the "all the things that can go wrong"
+> point of view.  Maybe I'm paranoid, but I'm a bit worried about how to
+> manage that.
+
+Until the hardware abstractions provided by the system firmware (ACPI)
+is supported, these platforms are not going to be appropriate for
+end users anyway. No matter how many not-quite-upstream hacks distros
+include, they won't be able to support the next minor spin that comes
+off the production line and is no longer compatible with existing DTs.
+
+/
+    Leif
