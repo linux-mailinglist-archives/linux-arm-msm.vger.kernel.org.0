@@ -2,25 +2,25 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 7AADE5F606
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Jul 2019 11:53:19 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 1B93A5F608
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Jul 2019 11:53:29 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727481AbfGDJxR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 4 Jul 2019 05:53:17 -0400
-Received: from smtp.codeaurora.org ([198.145.29.96]:58130 "EHLO
+        id S1727517AbfGDJx0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 4 Jul 2019 05:53:26 -0400
+Received: from smtp.codeaurora.org ([198.145.29.96]:58812 "EHLO
         smtp.codeaurora.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727478AbfGDJxQ (ORCPT
+        with ESMTP id S1727508AbfGDJxZ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 4 Jul 2019 05:53:16 -0400
+        Thu, 4 Jul 2019 05:53:25 -0400
 Received: by smtp.codeaurora.org (Postfix, from userid 1000)
-        id EE46A60A43; Thu,  4 Jul 2019 09:53:15 +0000 (UTC)
+        id 777A460AE0; Thu,  4 Jul 2019 09:53:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
-        s=default; t=1562233996;
-        bh=QeoQfyhhocOPz+WPQ+yiBCio4xbmUZqRMcevfLOOPG8=;
-        h=From:To:Cc:Subject:Date:From;
-        b=DKxhRfGV7xFoWzoSKDCMbeFKcpQ7YccX2r40ktJwOPGVVC3bLUCz7NtZEg555wJdu
-         xWDpVSJdhxMrZSQg6eGXOZltHUDs7e4qoDb4enP8HeVQh/tLKFUnkKn3ONs76FAhTB
-         N5sd4kCxprK4O6y6OaT/pJfROoAkad8i1zcefHiM=
+        s=default; t=1562234004;
+        bh=lSCRmpdQlCEd/Kj8Ntu2jR3/PZflhefTpXcBTNR9qDk=;
+        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+        b=Y4uuTthmGafAC0u/UrIeqk12SrX26Bg6zbfUaqfUNB+A/rQapXdLSOh3Semg+idZg
+         m+LkjMQlXRaNlodRbxv5H6dozjMPAuUZ1RO1L6wu65nUnkhSC/7uO1LGLUWMKuV+6C
+         38cTy0rkYkvVRTIuiDJA9hIgvj8iXiuNux9+pBBQ=
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
         pdx-caf-mail.web.codeaurora.org
 X-Spam-Level: 
@@ -31,16 +31,16 @@ Received: from blr-ubuntu-311.qualcomm.com (blr-bdr-fw-01_globalnat_allzones-out
         (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
         (No client certificate requested)
         (Authenticated sender: saiprakash.ranjan@codeaurora.org)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id EBFD860388;
-        Thu,  4 Jul 2019 09:53:10 +0000 (UTC)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 414FB60A44;
+        Thu,  4 Jul 2019 09:53:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
-        s=default; t=1562233995;
-        bh=QeoQfyhhocOPz+WPQ+yiBCio4xbmUZqRMcevfLOOPG8=;
-        h=From:To:Cc:Subject:Date:From;
-        b=CH5IIIxktA5ZMJmlg7boC+GmPk5bhNpN0D/joDdldLgZ6H4vfk56ZPhQKcxGCdHIf
-         AFKTmzi6Ab4KBn9RjxrQVRl4YGK4gbs2dmDiGg+JsFrDyOifQi1ix6U65jVQuecwlV
-         lhA/qXUAvv04w45OXOW7g2ftYdNO8pghZ8gGJx7o=
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org EBFD860388
+        s=default; t=1562234001;
+        bh=lSCRmpdQlCEd/Kj8Ntu2jR3/PZflhefTpXcBTNR9qDk=;
+        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+        b=IDed2RoA9pvh4fkzjnfjW6cplh1uxpriqW9kZW7wY1JcEwBlX+Kf3AuiSDv0b8shZ
+         aciHGwkeIZJrSFlm6YdhGA78o9Y5wrMeLIssWaKwXzYnhVaT1ajxY9N3v0nW/aGAD6
+         iVD37F0EqmGjwBQbqSp3UIo4yNVH0q1fTimnZBEA=
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 414FB60A44
 Authentication-Results: pdx-caf-mail.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
 Authentication-Results: pdx-caf-mail.web.codeaurora.org; spf=none smtp.mailfrom=saiprakash.ranjan@codeaurora.org
 From:   Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
@@ -59,10 +59,12 @@ Cc:     Rajendra Nayak <rnayak@codeaurora.org>,
         linux-arm-msm@vger.kernel.org,
         Marc Gonzalez <marc.w.gonzalez@free.fr>,
         Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
-Subject: [RESEND PATCHv5 0/2] coresight: Do not default to CPU0 for missing CPU phandle
-Date:   Thu,  4 Jul 2019 15:23:03 +0530
-Message-Id: <cover.1562229018.git.saiprakash.ranjan@codeaurora.org>
+Subject: [RESEND PATCHv5 1/2] dt-bindings: coresight: Change CPU phandle to required property
+Date:   Thu,  4 Jul 2019 15:23:04 +0530
+Message-Id: <0f7f4105d5ffea6ca4313271f3b3fee69da2106a.1562229018.git.saiprakash.ranjan@codeaurora.org>
 X-Mailer: git-send-email 2.22.0
+In-Reply-To: <cover.1562229018.git.saiprakash.ranjan@codeaurora.org>
+References: <cover.1562229018.git.saiprakash.ranjan@codeaurora.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Sender: linux-arm-msm-owner@vger.kernel.org
@@ -70,42 +72,60 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-In case of missing CPU phandle, the affinity is set default to
-CPU0 which is not a correct assumption. Fix this in coresight
-platform to set affinity to invalid and abort the probe in drivers.
-Also update the dt-bindings accordingly.
+Do not assume the affinity to CPU0 if cpu phandle is omitted.
+Update the DT binding rules to reflect the same by changing it
+to a required property.
 
-Resending with tags added.
+Signed-off-by: Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
+Reviewed-by: Suzuki K Poulose <suzuki.poulose@arm.com>
+Tested-by: Mathieu Poirier <mathieu.poirier@linaro.org>
+Reviewed-by: Mathieu Poirier <mathieu.poirier@linaro.org>
+---
+ .../devicetree/bindings/arm/coresight-cpu-debug.txt       | 4 ++--
+ Documentation/devicetree/bindings/arm/coresight.txt       | 8 +++++---
+ 2 files changed, 7 insertions(+), 5 deletions(-)
 
-v5:
- * Separate out the dt-bindings patch.
-
-v4:
- * Fix return for !CONFIG_ACPI and !CONFIG_OF.
-
-v3:
- * Addressed review comments from Suzuki and updated
-   acpi_coresight_get_cpu.
- * Removed patch 2 which had invalid check for online
-   cpus.
-
-v2:
- * Addressed review comments from Suzuki and Mathieu.
- * Allows the probe of etm and cpu-debug to abort earlier
-   in case of unavailability of respective cpus.
-
-Sai Prakash Ranjan (2):
-  dt-bindings: coresight: Change CPU phandle to required property
-  coresight: Do not default to CPU0 for missing CPU phandle
-
- .../bindings/arm/coresight-cpu-debug.txt      |  4 ++--
- .../devicetree/bindings/arm/coresight.txt     |  8 +++++---
- .../hwtracing/coresight/coresight-cpu-debug.c |  3 +++
- drivers/hwtracing/coresight/coresight-etm3x.c |  3 +++
- drivers/hwtracing/coresight/coresight-etm4x.c |  3 +++
- .../hwtracing/coresight/coresight-platform.c  | 20 +++++++++----------
- 6 files changed, 26 insertions(+), 15 deletions(-)
-
+diff --git a/Documentation/devicetree/bindings/arm/coresight-cpu-debug.txt b/Documentation/devicetree/bindings/arm/coresight-cpu-debug.txt
+index 298291211ea4..f1de3247c1b7 100644
+--- a/Documentation/devicetree/bindings/arm/coresight-cpu-debug.txt
++++ b/Documentation/devicetree/bindings/arm/coresight-cpu-debug.txt
+@@ -26,8 +26,8 @@ Required properties:
+ 		processor core is clocked by the internal CPU clock, so it
+ 		is enabled with CPU clock by default.
+ 
+-- cpu : the CPU phandle the debug module is affined to. When omitted
+-	the module is considered to belong to CPU0.
++- cpu : the CPU phandle the debug module is affined to. Do not assume it
++        to default to CPU0 if omitted.
+ 
+ Optional properties:
+ 
+diff --git a/Documentation/devicetree/bindings/arm/coresight.txt b/Documentation/devicetree/bindings/arm/coresight.txt
+index 8a88ddebc1a2..fcc3bacfd8bc 100644
+--- a/Documentation/devicetree/bindings/arm/coresight.txt
++++ b/Documentation/devicetree/bindings/arm/coresight.txt
+@@ -59,6 +59,11 @@ its hardware characteristcs.
+ 
+ 	* port or ports: see "Graph bindings for Coresight" below.
+ 
++* Additional required property for Embedded Trace Macrocell (version 3.x and
++  version 4.x):
++	* cpu: the cpu phandle this ETM/PTM is affined to. Do not
++	  assume it to default to CPU0 if omitted.
++
+ * Additional required properties for System Trace Macrocells (STM):
+ 	* reg: along with the physical base address and length of the register
+ 	  set as described above, another entry is required to describe the
+@@ -87,9 +92,6 @@ its hardware characteristcs.
+ 	* arm,cp14: must be present if the system accesses ETM/PTM management
+ 	  registers via co-processor 14.
+ 
+-	* cpu: the cpu phandle this ETM/PTM is affined to. When omitted the
+-	  source is considered to belong to CPU0.
+-
+ * Optional property for TMC:
+ 
+ 	* arm,buffer-size: size of contiguous buffer space for TMC ETR
 -- 
 QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
 of Code Aurora Forum, hosted by The Linux Foundation
