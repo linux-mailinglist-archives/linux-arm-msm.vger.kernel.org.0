@@ -2,83 +2,80 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 088F85F412
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Jul 2019 09:47:27 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B13725F450
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Jul 2019 10:08:27 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727415AbfGDHqz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 4 Jul 2019 03:46:55 -0400
-Received: from mail-lj1-f194.google.com ([209.85.208.194]:45188 "EHLO
-        mail-lj1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725945AbfGDHqz (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 4 Jul 2019 03:46:55 -0400
-Received: by mail-lj1-f194.google.com with SMTP id m23so5141643lje.12
-        for <linux-arm-msm@vger.kernel.org>; Thu, 04 Jul 2019 00:46:54 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=FbowtTXJF3QFhJ+0g3CanF/mErH/8mwP+8HtXFh3lcU=;
-        b=JJTwPDrnOaJhqi5LfDKpVC6A4J6s/xgYjGmVsxsNAfBJx54YwIp1Q5SEY5yhOS6m8F
-         l7JwbLFP41q855m/5ZZVp45EX3qVmQfsBZfdGAp3wbCjRHhG6IEmMlCDwNnVpHCrCrcA
-         MRa6MP4wchKhRQy4C1wMh8mO16q/YzH3HnzGm+0vyPLMDWsyVC4hFcxhl6koNh7W/D98
-         Msw/H2o7jzcS1Uhr3wmHJMUuaiPgheSDyjPC13FX5Q/s/B3OR9V5g7QSkJxXLtnG++hv
-         JVy6fZZn1uHAr6KybCjG7j0kxx0v3ECcED7PJ91Dp0NlKSmR4tuFyFGYKVm4Ark/kZ+M
-         5lNw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=FbowtTXJF3QFhJ+0g3CanF/mErH/8mwP+8HtXFh3lcU=;
-        b=kF8Ud7WVp+AlN3A1bKJZxRwCjJGL9khUP8d5m+zEv0ZJkkkPm0cW3d6S28eN2gE6a0
-         cYNhjxYu8vyyhrid1XbWchWe+3d/NlJzUchdQaYJoqovo31kWhRLqDaXI3umgL4vuGJe
-         H+vCxg81IEALc6YBIpTg+zrEirmLA/zibC1RAdcEpvwfJpnNMugC+4h9nnmzonLH4aWR
-         anHS5kTJugc2kiQP+Rq2tKECETrRJpKyHjp837zww6gJpSDEX4wvCkgjWClI52g4d+Uu
-         Y71jZa8lbeA6JoeBdi6WhDqqe/WPYo6jpie7lQ/n/lUKVhZorgW+r4fXYEXKH82xJKO7
-         1etA==
-X-Gm-Message-State: APjAAAX4c0Q8ohdtO8N3M9lMkoTBloTst3r8St5yl+YAZd+EexbkMZKB
-        0f8nOXLY6PM72OCWLl3u5851vEiXoU2ljx+xvLfL+Q==
-X-Google-Smtp-Source: APXvYqzqg5P2vMEvtlnyJnlnLPgWS8atGO17WX4nId84bAvMCyKUN49Rj0v1zHwWQYFxM9dFj68ZveRig2GhLolmJSQ=
-X-Received: by 2002:a2e:9048:: with SMTP id n8mr2128406ljg.37.1562226413734;
- Thu, 04 Jul 2019 00:46:53 -0700 (PDT)
+        id S1726679AbfGDII1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 4 Jul 2019 04:08:27 -0400
+Received: from ns.iliad.fr ([212.27.33.1]:46572 "EHLO ns.iliad.fr"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726199AbfGDII1 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 4 Jul 2019 04:08:27 -0400
+Received: from ns.iliad.fr (localhost [127.0.0.1])
+        by ns.iliad.fr (Postfix) with ESMTP id 1E46320AC3;
+        Thu,  4 Jul 2019 10:08:25 +0200 (CEST)
+Received: from [192.168.108.49] (freebox.vlq16.iliad.fr [213.36.7.13])
+        by ns.iliad.fr (Postfix) with ESMTP id 04561206B9;
+        Thu,  4 Jul 2019 10:08:25 +0200 (CEST)
+Subject: Re: [PATCHv5 1/2] dt-bindings: coresight: Change CPU phandle to
+ required property
+To:     Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>,
+        Mathieu Poirier <mathieu.poirier@linaro.org>
+Cc:     Linux ARM <linux-arm-kernel@lists.infradead.org>,
+        MSM <linux-arm-msm@vger.kernel.org>
+References: <cover.1561659046.git.saiprakash.ranjan@codeaurora.org>
+ <2afedb941294af7ba0658496b4aca3759a4e43ff.1561659046.git.saiprakash.ranjan@codeaurora.org>
+ <CANLsYkxvh+qUDvqG45o7qh61Noq=a=BJ4-p68ipdzxYt6n5bNA@mail.gmail.com>
+ <8fb5947e-acf8-faff-5594-2a32151ebee7@codeaurora.org>
+ <20190704070239.GB32707@kroah.com>
+From:   Marc Gonzalez <marc.w.gonzalez@free.fr>
+Message-ID: <72dff807-7172-7882-83fc-d7ff4cafe39f@free.fr>
+Date:   Thu, 4 Jul 2019 10:08:24 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+ Thunderbird/60.6.1
 MIME-Version: 1.0
-References: <20190702105045.27646-1-vkoul@kernel.org> <20190702105045.27646-3-vkoul@kernel.org>
-In-Reply-To: <20190702105045.27646-3-vkoul@kernel.org>
-From:   Linus Walleij <linus.walleij@linaro.org>
-Date:   Thu, 4 Jul 2019 09:46:42 +0200
-Message-ID: <CACRpkdYuhUNggeVQ-urVKkV-Pa64zy_hJEb5d3wJ2K3MvBQB8w@mail.gmail.com>
-Subject: Re: [PATCH v2 2/3] dt-bindings: pinctrl: qcom: Add SM8150 pinctrl binding
-To:     Vinod Koul <vkoul@kernel.org>
-Cc:     MSM <linux-arm-msm@vger.kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Prasad Sodagudi <psodagud@codeaurora.org>,
-        Andy Gross <agross@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Mark Rutland <mark.rutland@arm.com>,
-        "open list:GPIO SUBSYSTEM" <linux-gpio@vger.kernel.org>,
-        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
-        <devicetree@vger.kernel.org>,
-        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
-        "Isaac J . Manjarres" <isaacm@codeaurora.org>
-Content-Type: text/plain; charset="UTF-8"
+In-Reply-To: <20190704070239.GB32707@kroah.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
+X-Virus-Scanned: ClamAV using ClamSMTP ; ns.iliad.fr ; Thu Jul  4 10:08:25 2019 +0200 (CEST)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Jul 2, 2019 at 12:54 PM Vinod Koul <vkoul@kernel.org> wrote:
+[ Trimming recipients list ]
 
-> From: Prasad Sodagudi <psodagud@codeaurora.org>
+On 04/07/2019 09:02, Greg Kroah-Hartman wrote:
+
+> On Thu, Jul 04, 2019 at 12:13:40PM +0530, Sai Prakash Ranjan wrote:
 >
-> Add the binding for the TLMM pinctrl block found in the SM8150 platform.
->
-> Signed-off-by: Prasad Sodagudi <psodagud@codeaurora.org>
-> Signed-off-by: Isaac J. Manjarres <isaacm@codeaurora.org>
-> [vkoul: add missing nodes of gpio range and reserved
->         rewrote function names and order them]
-> Signed-off-by: Vinod Koul <vkoul@kernel.org>
+>> On 7/4/2019 1:32 AM, Mathieu Poirier wrote:
+>>
+>>> Hi Greg,
+>>>
+>>> On Thu, 27 Jun 2019 at 12:15, Sai Prakash Ranjan wrote:
+>>>>
+>>>> Do not assume the affinity to CPU0 if cpu phandle is omitted.
+>>>> Update the DT binding rules to reflect the same by changing it
+>>>> to a required property.
+>>>>
+>>>> Signed-off-by: Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
+>>>> Reviewed-by: Suzuki K Poulose <suzuki.poulose@arm.com>
+>>>
+>>> I'm all good with this patch - can you pick this up for the coming
+>>> merge window?  If not I'll simply keep it in my tree for 5.4.
+>>>
+>>> Tested-by: Mathieu Poirier <mathieu.poirier@linaro.org>
+>>> Reviewed-by: Mathieu Poirier <mathieu.poirier@linaro.org>
+>>
+>> I think you missed adding Greg, adding him now ;)
+> 
+> I don't see any patch here for me to actually take :(
 
-Patch applied with Bjorn's ACK.
+I see what you're doing here ^_^
 
-Yours,
-Linus Walleij
+https://lore.kernel.org/patchwork/patch/1094935/
+
+Regards.
