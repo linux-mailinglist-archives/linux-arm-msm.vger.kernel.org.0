@@ -2,165 +2,210 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 554EA5F976
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Jul 2019 15:57:15 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 2CF915F982
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Jul 2019 16:00:38 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727266AbfGDN5O (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 4 Jul 2019 09:57:14 -0400
-Received: from mail-ed1-f65.google.com ([209.85.208.65]:39855 "EHLO
-        mail-ed1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727044AbfGDN5O (ORCPT
+        id S1727229AbfGDOAh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 4 Jul 2019 10:00:37 -0400
+Received: from mail-ed1-f66.google.com ([209.85.208.66]:35585 "EHLO
+        mail-ed1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727044AbfGDOAh (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 4 Jul 2019 09:57:14 -0400
-Received: by mail-ed1-f65.google.com with SMTP id m10so5512247edv.6;
-        Thu, 04 Jul 2019 06:57:13 -0700 (PDT)
+        Thu, 4 Jul 2019 10:00:37 -0400
+Received: by mail-ed1-f66.google.com with SMTP id w20so5542713edd.2;
+        Thu, 04 Jul 2019 07:00:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=FFyR56GUnLHy2geI3ziIJleBntP257KjNAIucLrVbto=;
-        b=sSMe3KUnCE/9cEqVz610EGJodOlNiM7nWzbx1zZ79RtpzxbcLa33M2jDifYqiexG0+
-         vAZ5VR8pdueSNKBYIlI9C2zj7yyaHLKqycY6QbNU5Caqk1xm0PFg28WJr+StMyTPC2tG
-         KtltdHgdepdP1B+TgssB4nk3tZIaXH2SZtfn173dD5iaP5NJLzhrd8Y/YGXG0g1FhGt6
-         mmmiJ7M+4sNbgyTNadHtLZz3XXN23H5PQ1+aHa635fHwO6L802KYN4412D7UeT43pOuF
-         /o+CMaU/9P57X0KNIgp9sJcaBMYHt/QfKjNSuIFP5slziNmx+Ia3Z3AwMwFXVhaMZETS
-         g5Ag==
+        bh=HMTl4ePFhkH/NYoGcX+X5eP1rO1yNge0+/aoWl+3Kxc=;
+        b=By1AtMX5jEZPJ4J24SQyPaKTsYJ2JtL1Y0VZb/VDK2/3CrPleHUSdY2QElWAXtMNxi
+         k7Sb0CmFoCdLCGhArhTOHz5aLfafjqLS9dsxVpGvpF8ZodStmt6qLJ0uC1UMjxHXL/i/
+         C0d319P/ztxBHeB3kTRoOnJRddbG9Bqg6+D6cytnVG/lHqBqktMG+TfWLqu2EXySXpdB
+         WGmDLg5jwOxrCWrTOxgJnZKTtFfzB6V/vQVAThp4Q6dEIET/jeq1ele2FG8kFfSqp2pq
+         AApQx8YFNMPJZUig2WjBXBDEcahQRBmZReUru5bqOU+s4I5E0fKW53HkHkPPArMDDP/W
+         hqDw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=FFyR56GUnLHy2geI3ziIJleBntP257KjNAIucLrVbto=;
-        b=kqjg/KspZwa8h9gdpBoEboYVkwfpWz8EjDfKStPUxOSHCA5oEJd7utwPPp2gDwnAUl
-         7ft1Tx3QaZTy7ndLCCWKsXKS/5P0qkV6zxZlB11dASjaj+jLkURMooTnH3QcHdk7S0/b
-         CEM80+v2tjnC2o1iHtckHCvUFa6XSBI2/D8eGU+pqYEbKhiu+JPEyFwsA2MrK0IAd2Kq
-         pBkn4pW13BMnJA5ZbW/SPvzzNLb969iR7eYn2pexj7c/hMbDnXnI6OfUJKK3+9Jm3f8H
-         A/YjVVDipvhKvM8muTwPxGZBE2Rvv6awx1yWuop2pYDNhWF/8LgAbDMn7rzxSmOYyvIe
-         L2yA==
-X-Gm-Message-State: APjAAAVPAxDndF25/A3jnPACjBHe2VRnbJNRFnR0go1X6ogJ/S2yckrc
-        UFwyZeK6+pMglN17TnIYU8ibt5EoECUCVqS5vmg=
-X-Google-Smtp-Source: APXvYqxCy5T2qYf8AtD/5du5tJyhwcoh7sEdY75fT+3dvw6D36Axv5jy7pbWYHuZwdh4ciPM2RDUPV1BkT6JF3v8oSI=
-X-Received: by 2002:a17:906:e241:: with SMTP id gq1mr39043190ejb.265.1562248632457;
- Thu, 04 Jul 2019 06:57:12 -0700 (PDT)
+        bh=HMTl4ePFhkH/NYoGcX+X5eP1rO1yNge0+/aoWl+3Kxc=;
+        b=srL5CfhWmu2xynW1eQf2gHz0f1o89CzBxoYlKiOeguT1CbMOobbQGpUHLOQOaK28Yf
+         uoc2h/CC2Z0xf4KCuFx5/A7VKHxPJzz3+EM0akDhbHUdRN9xmY+K7OYlrWPyJz1Wys3P
+         iKiCrQzX8QohqGr/bqf4Jn/ddfWZs+i/ZntQmSYdwPJM+n1w68JXsxk0z0imUgkC3ZNW
+         1xxpoRBUETKtcquhbqe+oOJJK641VBNroYhzf75K8Atn/fPfwAWw+fMnfmBSLM52hVO/
+         SmnW2lpP+3K3PudP7Def5WzeE2t0EVsxa8oW2p2R0Gi8llwTBwOSnloPFzG3p7WDB8xs
+         MR5g==
+X-Gm-Message-State: APjAAAXvl2Ii92UHQOQJopXAuyieo7T90igLE5mURNp0sep4hYU3549W
+        oRuhGPvCiqT7qzEIzQfxOYki+F/diMjQTPDBcfU=
+X-Google-Smtp-Source: APXvYqzt53qJ6zbCj1CHOqsKdMrnqupwCudH0gFOg52VQqIxQGj4vvfOJvh9gAgbdIhPO7ETsnkN6Wn04FcbqusBGnI=
+X-Received: by 2002:a17:906:85d4:: with SMTP id i20mr40872552ejy.256.1562248834738;
+ Thu, 04 Jul 2019 07:00:34 -0700 (PDT)
 MIME-Version: 1.0
-References: <20190702154419.20812-1-robdclark@gmail.com> <CGME20190702154441epcas2p2cba89e3a84216d9a8da43438a9648e03@epcas2p2.samsung.com>
- <20190702154419.20812-3-robdclark@gmail.com> <1b56a11c-194d-0eca-4dd1-48e91820eafb@samsung.com>
- <20190704123511.GG6569@pendragon.ideasonboard.com>
-In-Reply-To: <20190704123511.GG6569@pendragon.ideasonboard.com>
+References: <20190630131445.25712-1-robdclark@gmail.com> <CGME20190630131612epcas1p22f241f3e6edc3976f7abedcb74f86e3a@epcas1p2.samsung.com>
+ <20190630131445.25712-4-robdclark@gmail.com> <8a88e865-68a1-37e2-93a1-efd50a778c47@samsung.com>
+In-Reply-To: <8a88e865-68a1-37e2-93a1-efd50a778c47@samsung.com>
 From:   Rob Clark <robdclark@gmail.com>
-Date:   Thu, 4 Jul 2019 06:56:56 -0700
-Message-ID: <CAF6AEGvYJ6iA5B+thJuBC=pFStuhsn87xrrcWAZyroWj5xKMZA@mail.gmail.com>
-Subject: Re: [PATCH 2/3] drm/bridge: ti-sn65dsi86: add debugfs
-To:     Laurent Pinchart <laurent.pinchart@ideasonboard.com>
-Cc:     Andrzej Hajda <a.hajda@samsung.com>,
-        dri-devel <dri-devel@lists.freedesktop.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Sean Paul <seanpaul@chromium.org>,
+Date:   Thu, 4 Jul 2019 07:00:18 -0700
+Message-ID: <CAF6AEGuRFb1y4rXY5kqgPpZ=timF4rBcUsfxSKtv0ZqOopc03Q@mail.gmail.com>
+Subject: Re: [PATCH 3/3] drm/msm/dsi: make sure we have panel or bridge earlier
+To:     Andrzej Hajda <a.hajda@samsung.com>
+Cc:     dri-devel <dri-devel@lists.freedesktop.org>,
         Rob Clark <robdclark@chromium.org>,
         David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        Abhinav Kumar <abhinavk@codeaurora.org>,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        Sean Paul <sean@poorly.run>,
+        Sibi Sankar <sibis@codeaurora.org>,
+        freedreno <freedreno@lists.freedesktop.org>,
+        Chandan Uddaraju <chandanu@codeaurora.org>
 Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Jul 4, 2019 at 5:35 AM Laurent Pinchart
-<laurent.pinchart@ideasonboard.com> wrote:
+On Wed, Jul 3, 2019 at 11:39 PM Andrzej Hajda <a.hajda@samsung.com> wrote:
 >
-> Hello,
->
-> On Thu, Jul 04, 2019 at 02:31:20PM +0200, Andrzej Hajda wrote:
-> > On 02.07.2019 17:44, Rob Clark wrote:
-> > > From: Rob Clark <robdclark@chromium.org>
-> > >
-> > > Add a debugfs file to show status registers.
-> > >
-> > > Signed-off-by: Rob Clark <robdclark@chromium.org>
-> > > ---
-> > >  drivers/gpu/drm/bridge/ti-sn65dsi86.c | 42 +++++++++++++++++++++++++++
-> > >  1 file changed, 42 insertions(+)
-> > >
-> > > diff --git a/drivers/gpu/drm/bridge/ti-sn65dsi86.c b/drivers/gpu/drm/bridge/ti-sn65dsi86.c
-> > > index f1a2493b86d9..a6f27648c015 100644
-> > > --- a/drivers/gpu/drm/bridge/ti-sn65dsi86.c
-> > > +++ b/drivers/gpu/drm/bridge/ti-sn65dsi86.c
-> > > @@ -5,6 +5,7 @@
-> > >   */
-> > >
-> > >  #include <linux/clk.h>
-> > > +#include <linux/debugfs.h>
-> > >  #include <linux/gpio/consumer.h>
-> > >  #include <linux/i2c.h>
-> > >  #include <linux/iopoll.h>
-> > > @@ -109,6 +110,7 @@ struct ti_sn_bridge {
-> > >     struct drm_dp_aux               aux;
-> > >     struct drm_bridge               bridge;
-> > >     struct drm_connector            connector;
-> > > +   struct dentry                   *debugfs;
-> > >     struct device_node              *host_node;
-> > >     struct mipi_dsi_device          *dsi;
-> > >     struct clk                      *refclk;
-> > > @@ -178,6 +180,42 @@ static const struct dev_pm_ops ti_sn_bridge_pm_ops = {
-> > >     SET_RUNTIME_PM_OPS(ti_sn_bridge_suspend, ti_sn_bridge_resume, NULL)
-> > >  };
-> > >
-> > > +static int status_show(struct seq_file *s, void *data)
-> > > +{
-> > > +   struct ti_sn_bridge *pdata = s->private;
-> > > +   unsigned int reg, val;
-> > > +
-> > > +   seq_puts(s, "STATUS REGISTERS:\n");
->
-> NO NEED TO SHOUT :-)
->
-> > > +
-> > > +   pm_runtime_get_sync(pdata->dev);
-> > > +
-> > > +   /* IRQ Status Registers, see Table 31 in datasheet */
-> > > +   for (reg = 0xf0; reg <= 0xf8; reg++) {
-> > > +           regmap_read(pdata->regmap, reg, &val);
-> > > +           seq_printf(s, "[0x%02x] = 0x%08x\n", reg, val);
-> > > +   }
-> > > +
-> > > +   pm_runtime_put(pdata->dev);
-> > > +
-> > > +   return 0;
-> > > +}
-> > > +
-> > > +DEFINE_SHOW_ATTRIBUTE(status);
-> > > +
-> > > +static void ti_sn_debugfs_init(struct ti_sn_bridge *pdata)
-> > > +{
-> > > +   pdata->debugfs = debugfs_create_dir("ti_sn65dsi86", NULL);
+> On 30.06.2019 15:14, Rob Clark wrote:
+> > From: Rob Clark <robdclark@chromium.org>
 > >
-> > If some day we will have board with two such bridges there will be a
-> > problem.
+> > If we are going to -EPROBE_DEFER due to panel/bridge not probed yet, we
+> > want to do it before we start touching hardware.
 >
-> Could we use the platform device name for this ?
-
-hmm, yeah, that would solve the 2x bridges issue
-
-> > Anyway:
-> >
-> > Reviewed-by: Andrzej Hajda <a.hajda@samsung.com>
-> >
-> > > +
-> > > +   debugfs_create_file("status", 0600, pdata->debugfs, pdata,
-> > > +                   &status_fops);
-> > > +}
-> > > +
-> > > +static void ti_sn_debugfs_remove(struct ti_sn_bridge *pdata)
-> > > +{
-> > > +   debugfs_remove_recursive(pdata->debugfs);
-> > > +   pdata->debugfs = NULL;
-> > > +}
-> > > +
 >
-> You need to conditionally-compile this based on CONFIG_DEBUG_FS.
+> As the evidence shows, if the driver create bus (mipi-dsi), then it
+> should not defer probing due to lack of sink (panel/bridge), because the
+> sink will not appear without the bus.
+>
+> Instead of defer probing you can defer component binding, or if you like
+> challenges you can implement dynamic sink binding :)
+>
 
-Hmm, is that really true?  Debugfs appears to be sufficently stub'd w/
-inline no-ops in the !CONFIG_DEBUG_FS case
+I have something working that doesn't require this patch.. although it
+does require CCF to export a function to check if clks are enabled so
+the driver can detect if the display is already enabled.  (Well, there
+kind of is, __clk_is_enabled().. but currently in clk-provider.h)
+
+So we can drop this patch.
 
 BR,
 -R
+
+>
+> Regards
+>
+> Andrzej
+>
+>
+>
+>
+> >
+> > Signed-off-by: Rob Clark <robdclark@chromium.org>
+> > ---
+> >  drivers/gpu/drm/msm/dsi/dsi.h         |  2 +-
+> >  drivers/gpu/drm/msm/dsi/dsi_host.c    | 30 +++++++++++++--------------
+> >  drivers/gpu/drm/msm/dsi/dsi_manager.c |  9 +++-----
+> >  3 files changed, 19 insertions(+), 22 deletions(-)
+> >
+> > diff --git a/drivers/gpu/drm/msm/dsi/dsi.h b/drivers/gpu/drm/msm/dsi/dsi.h
+> > index 53bb124e8259..e15e7534ccd9 100644
+> > --- a/drivers/gpu/drm/msm/dsi/dsi.h
+> > +++ b/drivers/gpu/drm/msm/dsi/dsi.h
+> > @@ -171,7 +171,7 @@ int msm_dsi_host_set_display_mode(struct mipi_dsi_host *host,
+> >  struct drm_panel *msm_dsi_host_get_panel(struct mipi_dsi_host *host);
+> >  unsigned long msm_dsi_host_get_mode_flags(struct mipi_dsi_host *host);
+> >  struct drm_bridge *msm_dsi_host_get_bridge(struct mipi_dsi_host *host);
+> > -int msm_dsi_host_register(struct mipi_dsi_host *host, bool check_defer);
+> > +int msm_dsi_host_register(struct mipi_dsi_host *host);
+> >  void msm_dsi_host_unregister(struct mipi_dsi_host *host);
+> >  int msm_dsi_host_set_src_pll(struct mipi_dsi_host *host,
+> >                       struct msm_dsi_pll *src_pll);
+> > diff --git a/drivers/gpu/drm/msm/dsi/dsi_host.c b/drivers/gpu/drm/msm/dsi/dsi_host.c
+> > index 1ae2f5522979..8e5b0ba9431e 100644
+> > --- a/drivers/gpu/drm/msm/dsi/dsi_host.c
+> > +++ b/drivers/gpu/drm/msm/dsi/dsi_host.c
+> > @@ -1824,6 +1824,20 @@ int msm_dsi_host_init(struct msm_dsi *msm_dsi)
+> >               goto fail;
+> >       }
+> >
+> > +     /*
+> > +      * Make sure we have panel or bridge early, before we start
+> > +      * touching the hw.  If bootloader enabled the display, we
+> > +      * want to be sure to keep it running until the bridge/panel
+> > +      * is probed and we are all ready to go.  Otherwise we'll
+> > +      * kill the display and then -EPROBE_DEFER
+> > +      */
+> > +     if (IS_ERR(of_drm_find_panel(msm_host->device_node)) &&
+> > +                     !of_drm_find_bridge(msm_host->device_node)) {
+> > +             pr_err("%s: no panel or bridge yet\n", __func__);
+> > +             return -EPROBE_DEFER;
+> > +     }
+> > +
+> > +
+> >       msm_host->ctrl_base = msm_ioremap(pdev, "dsi_ctrl", "DSI CTRL");
+> >       if (IS_ERR(msm_host->ctrl_base)) {
+> >               pr_err("%s: unable to map Dsi ctrl base\n", __func__);
+> > @@ -1941,7 +1955,7 @@ int msm_dsi_host_modeset_init(struct mipi_dsi_host *host,
+> >       return 0;
+> >  }
+> >
+> > -int msm_dsi_host_register(struct mipi_dsi_host *host, bool check_defer)
+> > +int msm_dsi_host_register(struct mipi_dsi_host *host)
+> >  {
+> >       struct msm_dsi_host *msm_host = to_msm_dsi_host(host);
+> >       int ret;
+> > @@ -1955,20 +1969,6 @@ int msm_dsi_host_register(struct mipi_dsi_host *host, bool check_defer)
+> >                       return ret;
+> >
+> >               msm_host->registered = true;
+> > -
+> > -             /* If the panel driver has not been probed after host register,
+> > -              * we should defer the host's probe.
+> > -              * It makes sure panel is connected when fbcon detects
+> > -              * connector status and gets the proper display mode to
+> > -              * create framebuffer.
+> > -              * Don't try to defer if there is nothing connected to the dsi
+> > -              * output
+> > -              */
+> > -             if (check_defer && msm_host->device_node) {
+> > -                     if (IS_ERR(of_drm_find_panel(msm_host->device_node)))
+> > -                             if (!of_drm_find_bridge(msm_host->device_node))
+> > -                                     return -EPROBE_DEFER;
+> > -             }
+> >       }
+> >
+> >       return 0;
+> > diff --git a/drivers/gpu/drm/msm/dsi/dsi_manager.c b/drivers/gpu/drm/msm/dsi/dsi_manager.c
+> > index ff39ce6150ad..cd3450dc3481 100644
+> > --- a/drivers/gpu/drm/msm/dsi/dsi_manager.c
+> > +++ b/drivers/gpu/drm/msm/dsi/dsi_manager.c
+> > @@ -82,7 +82,7 @@ static int dsi_mgr_setup_components(int id)
+> >       int ret;
+> >
+> >       if (!IS_DUAL_DSI()) {
+> > -             ret = msm_dsi_host_register(msm_dsi->host, true);
+> > +             ret = msm_dsi_host_register(msm_dsi->host);
+> >               if (ret)
+> >                       return ret;
+> >
+> > @@ -101,14 +101,11 @@ static int dsi_mgr_setup_components(int id)
+> >               /* Register slave host first, so that slave DSI device
+> >                * has a chance to probe, and do not block the master
+> >                * DSI device's probe.
+> > -              * Also, do not check defer for the slave host,
+> > -              * because only master DSI device adds the panel to global
+> > -              * panel list. The panel's device is the master DSI device.
+> >                */
+> > -             ret = msm_dsi_host_register(slave_link_dsi->host, false);
+> > +             ret = msm_dsi_host_register(slave_link_dsi->host);
+> >               if (ret)
+> >                       return ret;
+> > -             ret = msm_dsi_host_register(master_link_dsi->host, true);
+> > +             ret = msm_dsi_host_register(master_link_dsi->host);
+> >               if (ret)
+> >                       return ret;
+> >
+>
+>
