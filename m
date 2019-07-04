@@ -2,81 +2,76 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 7765E5F329
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Jul 2019 09:02:43 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id CC7565F40B
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Jul 2019 09:47:23 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726120AbfGDHCm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 4 Jul 2019 03:02:42 -0400
-Received: from mail.kernel.org ([198.145.29.99]:58504 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1725920AbfGDHCm (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 4 Jul 2019 03:02:42 -0400
-Received: from localhost (83-86-89-107.cable.dynamic.v4.ziggo.nl [83.86.89.107])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id E9F8A2133F;
-        Thu,  4 Jul 2019 07:02:40 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1562223761;
-        bh=0oIb/xCT3XLGQm//gpuwzJhTfVxSSNj2HGbdu4q2mfo=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=kjkmVNUHh0i1R1QHDk14Ed8hJdp8t230pxRxwJn6cLt81ivp639YfvpxGTRi7tn0h
-         /J/az8RDFGBthzhsjX6ZC/A/W8fGVcfRvEDa35V/zj0ML+uR/v7GTNksOtZd+31Wkp
-         L//KiTeWpyM1eP0YTr9N/I570G2ubODK7xbbowhI=
-Date:   Thu, 4 Jul 2019 09:02:39 +0200
-From:   Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To:     Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
-Cc:     Mathieu Poirier <mathieu.poirier@linaro.org>,
-        Suzuki K Poulose <suzuki.poulose@arm.com>,
-        Rob Herring <robh+dt@kernel.org>, devicetree@vger.kernel.org,
-        Leo Yan <leo.yan@linaro.org>,
-        Alexander Shishkin <alexander.shishkin@linux.intel.com>,
-        David Brown <david.brown@linaro.org>,
-        Mark Rutland <mark.rutland@arm.com>,
-        Rajendra Nayak <rnayak@codeaurora.org>,
-        Vivek Gautam <vivek.gautam@codeaurora.org>,
-        Sibi Sankar <sibis@codeaurora.org>,
-        linux-arm-kernel <linux-arm-kernel@lists.infradead.org>,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>
-Subject: Re: [PATCHv5 1/2] dt-bindings: coresight: Change CPU phandle to
- required property
-Message-ID: <20190704070239.GB32707@kroah.com>
-References: <cover.1561659046.git.saiprakash.ranjan@codeaurora.org>
- <2afedb941294af7ba0658496b4aca3759a4e43ff.1561659046.git.saiprakash.ranjan@codeaurora.org>
- <CANLsYkxvh+qUDvqG45o7qh61Noq=a=BJ4-p68ipdzxYt6n5bNA@mail.gmail.com>
- <8fb5947e-acf8-faff-5594-2a32151ebee7@codeaurora.org>
+        id S1727058AbfGDHpm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 4 Jul 2019 03:45:42 -0400
+Received: from mail-lj1-f195.google.com ([209.85.208.195]:40707 "EHLO
+        mail-lj1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726085AbfGDHpm (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 4 Jul 2019 03:45:42 -0400
+Received: by mail-lj1-f195.google.com with SMTP id a21so5183523ljh.7
+        for <linux-arm-msm@vger.kernel.org>; Thu, 04 Jul 2019 00:45:40 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=VqIbRmpqLMGOAT/gnCMxZj540BB+nzZMlAbEvE7fDYw=;
+        b=LaqgVE1ssRbhWRJYHPBJhjqh1E8z7JtSWBk911qy/D6r9hoZ3eK1gS+E0H4HqyNfo+
+         X2d7vDwKXfMv1lslLTwS47ZIau/5Xn0/1EgFb2Rup+kBttMFiDvppkhRTITPthtcNJwj
+         2kDGQBGwgicxgJSJlTRgCgbR+lMO6pGTpiGY5Dl1irjYQavim9ri6XiOh7HtXgUTV+q2
+         qY+teMEzE0tgqp6rf674urI9PnH8HCyBhwie21kZy9Anw3Df+hVf83jSHwdaMBKy5iG+
+         5BR2O7VurH+pRwKn6pW0JZ4IKVIsN35yPePp/ilP3wgAYhhb7LTFswtXr1ORP6PWbfNE
+         WL6A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=VqIbRmpqLMGOAT/gnCMxZj540BB+nzZMlAbEvE7fDYw=;
+        b=eMCUjLLrJVnRE1qA7h8xxpN2QwcsVES+HRu4EfG6JssuZogdxmkw7z7QkHZZehsaft
+         4I1aC32mRdrXAjig2eHTOVtVX9DLL9gkY1DZZz8y9imHNTWRpXoNmU/mTAxww//+iVJL
+         0vx7v29QL5tJIFE9ftXUUvjuZ7qjm+8myWUQ60DCGuxgflexQaQgDao77io72klsc5fJ
+         J6VBF9T6YCzb0E3RYBckRXFCr2LEe6xpYcY/nPdBP7+1W2AXncMse8Ceu+7nqmkQiR7m
+         0hLvliNd+5sL+oyOb1mAYJmNe2Iu/kUwvIge9XnGOVCIMZYtbp1g6HMC78rnicGq20/w
+         zj+g==
+X-Gm-Message-State: APjAAAVZRzQEz9PYbNYviLfybl6r1q/AxHroqtqi7rKEgOL5rIhkwS1b
+        tsjYqCui4K768lh0L4ENR6vlkpeo8viktHBrfJDpjA==
+X-Google-Smtp-Source: APXvYqyvGakK4ylSdsFrtpyn/uqOct9HbmkohFRyFJ5vpJo68nXnvqeMHK72Apyap33ZaUPwqSHgwe9f8bkEGi5kvxI=
+X-Received: by 2002:a2e:a0d5:: with SMTP id f21mr24161474ljm.69.1562226340137;
+ Thu, 04 Jul 2019 00:45:40 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <8fb5947e-acf8-faff-5594-2a32151ebee7@codeaurora.org>
-User-Agent: Mutt/1.12.1 (2019-06-15)
+References: <20190702105045.27646-1-vkoul@kernel.org> <20190702105045.27646-2-vkoul@kernel.org>
+In-Reply-To: <20190702105045.27646-2-vkoul@kernel.org>
+From:   Linus Walleij <linus.walleij@linaro.org>
+Date:   Thu, 4 Jul 2019 09:45:28 +0200
+Message-ID: <CACRpkdatEKYaZF1LEy-O4qfbBFeMQihp4m3Y5TmgBQcXA+v2qg@mail.gmail.com>
+Subject: Re: [PATCH v2 1/3] dt-bindings: pinctrl: qcom: Document missing gpio nodes
+To:     Vinod Koul <vkoul@kernel.org>
+Cc:     MSM <linux-arm-msm@vger.kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Mark Rutland <mark.rutland@arm.com>,
+        "open list:GPIO SUBSYSTEM" <linux-gpio@vger.kernel.org>,
+        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
+        <devicetree@vger.kernel.org>,
+        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Jul 04, 2019 at 12:13:40PM +0530, Sai Prakash Ranjan wrote:
-> On 7/4/2019 1:32 AM, Mathieu Poirier wrote:
-> > Hi Greg,
-> > 
-> > On Thu, 27 Jun 2019 at 12:15, Sai Prakash Ranjan
-> > <saiprakash.ranjan@codeaurora.org> wrote:
-> > > 
-> > > Do not assume the affinity to CPU0 if cpu phandle is omitted.
-> > > Update the DT binding rules to reflect the same by changing it
-> > > to a required property.
-> > > 
-> > > Signed-off-by: Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
-> > > Reviewed-by: Suzuki K Poulose <suzuki.poulose@arm.com>
-> > 
-> > I'm all good with this patch - can you pick this up for the coming
-> > merge window?  If not I'll simply keep it in my tree for 5.4.
-> > 
-> > Tested-by: Mathieu Poirier <mathieu.poirier@linaro.org>
-> > Reviewed-by: Mathieu Poirier <mathieu.poirier@linaro.org>
-> > 
-> 
-> I think you missed adding Greg, adding him now ;)
+On Tue, Jul 2, 2019 at 12:54 PM Vinod Koul <vkoul@kernel.org> wrote:
 
-I don't see any patch here for me to actually take :(
+> The bindings for msm8998-pinctrl was missing gpio-ranges and
+> gpio-reserved-ranges, so document them as well
+>
+> Signed-off-by: Vinod Koul <vkoul@kernel.org>
+
+Patch applied with Bjorn's ACK.
+
+Yours,
+Linus Walleij
