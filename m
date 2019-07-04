@@ -2,197 +2,411 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 57A045F60D
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Jul 2019 11:53:47 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4769E5F623
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Jul 2019 11:59:22 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727556AbfGDJxb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 4 Jul 2019 05:53:31 -0400
-Received: from smtp.codeaurora.org ([198.145.29.96]:59194 "EHLO
-        smtp.codeaurora.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727551AbfGDJxa (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 4 Jul 2019 05:53:30 -0400
-Received: by smtp.codeaurora.org (Postfix, from userid 1000)
-        id CF9DC6118E; Thu,  4 Jul 2019 09:53:28 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
-        s=default; t=1562234008;
-        bh=Dx/nOPbZkwpJ9AHATBiKD0jqD2Sgzm8Dt1KVZbF6eG4=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=lvHWqRBOhp6SEzkNcdt23bLzDH3HjX9S57WAYxHoqEnVW9UvRAHRYLQImXWnsmCJ/
-         fzkpmJlLVDd8aAJ6TdQKs7CJljY6NvbL78/iQUDHVyt9D6TbApzXLSkbTNZpsQnkeA
-         CmKf9o7jOwFs1D4AkxNHF0xq90W3ljrOT3PD1kUc=
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        pdx-caf-mail.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.7 required=2.0 tests=ALL_TRUSTED,BAYES_00,
-        DKIM_INVALID,DKIM_SIGNED,SPF_NONE autolearn=no autolearn_force=no
-        version=3.4.0
-Received: from blr-ubuntu-311.qualcomm.com (blr-bdr-fw-01_globalnat_allzones-outside.qualcomm.com [103.229.18.19])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: saiprakash.ranjan@codeaurora.org)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 251E360F3C;
-        Thu,  4 Jul 2019 09:53:22 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
-        s=default; t=1562234007;
-        bh=Dx/nOPbZkwpJ9AHATBiKD0jqD2Sgzm8Dt1KVZbF6eG4=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=cqOAQYncrTYsCYObK1Vj8Zl7HFj6XCUaBbBOhCwFveZmGHr/UWQtod2S8sDsw8hhg
-         Bbn8Su2I/nQ81R9NLVLQ/XNexUlIgnXGOVPjHIHqJxs81wGEOmn2YcomYtsn3oxJ5C
-         dE1BJ8L4CzK/t50Ma3GIIFccVPq2uM9fMjk9fyxc=
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 251E360F3C
-Authentication-Results: pdx-caf-mail.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: pdx-caf-mail.web.codeaurora.org; spf=none smtp.mailfrom=saiprakash.ranjan@codeaurora.org
-From:   Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
-To:     Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Mathieu Poirier <mathieu.poirier@linaro.org>,
-        Suzuki K Poulose <suzuki.poulose@arm.com>,
-        Leo Yan <leo.yan@linaro.org>,
-        Alexander Shishkin <alexander.shishkin@linux.intel.com>,
-        Andy Gross <andy.gross@linaro.org>,
-        David Brown <david.brown@linaro.org>,
-        Mark Rutland <mark.rutland@arm.com>
-Cc:     Rajendra Nayak <rnayak@codeaurora.org>,
-        Vivek Gautam <vivek.gautam@codeaurora.org>,
-        Sibi Sankar <sibis@codeaurora.org>,
-        linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org,
-        Marc Gonzalez <marc.w.gonzalez@free.fr>,
-        Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
-Subject: [RESEND PATCHv5 2/2] coresight: Do not default to CPU0 for missing CPU phandle
-Date:   Thu,  4 Jul 2019 15:23:05 +0530
-Message-Id: <f1955ea19c714cf64ea54ec356a9aa85f3cd17b8.1562229018.git.saiprakash.ranjan@codeaurora.org>
-X-Mailer: git-send-email 2.22.0
-In-Reply-To: <cover.1562229018.git.saiprakash.ranjan@codeaurora.org>
-References: <cover.1562229018.git.saiprakash.ranjan@codeaurora.org>
+        id S1727387AbfGDJ6s (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 4 Jul 2019 05:58:48 -0400
+Received: from ns.iliad.fr ([212.27.33.1]:39500 "EHLO ns.iliad.fr"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1727223AbfGDJ6s (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 4 Jul 2019 05:58:48 -0400
+Received: from ns.iliad.fr (localhost [127.0.0.1])
+        by ns.iliad.fr (Postfix) with ESMTP id BE98820BD5;
+        Thu,  4 Jul 2019 11:58:45 +0200 (CEST)
+Received: from [192.168.108.49] (freebox.vlq16.iliad.fr [213.36.7.13])
+        by ns.iliad.fr (Postfix) with ESMTP id A61FC205C8;
+        Thu,  4 Jul 2019 11:58:45 +0200 (CEST)
+From:   Marc Gonzalez <marc.w.gonzalez@free.fr>
+Subject: [PATCH v2] media: si2168: Refactor command setup code
+To:     Antti Palosaari <crope@iki.fi>,
+        Mauro Carvalho Chehab <mchehab@kernel.org>,
+        =?UTF-8?Q?Jonathan_Neusch=c3=a4fer?= <j.neuschaefer@gmx.net>
+Cc:     linux-media <linux-media@vger.kernel.org>,
+        LKML <linux-kernel@vger.kernel.org>,
+        MSM <linux-arm-msm@vger.kernel.org>,
+        Brad Love <brad@nextdimension.cc>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>
+Message-ID: <c28a0da0-7264-4d23-94f1-3bd614383843@free.fr>
+Date:   Thu, 4 Jul 2019 11:58:45 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+ Thunderbird/60.6.1
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
+X-Virus-Scanned: ClamAV using ClamSMTP ; ns.iliad.fr ; Thu Jul  4 11:58:45 2019 +0200 (CEST)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Coresight platform support assumes that a missing "cpu" phandle
-defaults to CPU0. This could be problematic and unnecessarily binds
-components to CPU0, where they may not be. In coresight etm and
-cpu-debug drivers, abort the probe for such cases.
+From ceb5f687f3f7dab2fb9d5b34408d9cf83a0be228 Mon Sep 17 00:00:00 2001
+From: Marc Gonzalez <marc.w.gonzalez@free.fr>
+Date: Mon, 1 Jul 2019 12:58:31 +0200
+Subject: [PATCH v2] media: si2168: Refactor command setup code
 
-Signed-off-by: Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
-Reviewed-by: Suzuki K Poulose <suzuki.poulose@arm.com>
-Tested-by: Mathieu Poirier <mathieu.poirier@linaro.org>
-Reviewed-by: Mathieu Poirier <mathieu.poirier@linaro.org>
+Refactor the command setup code, and let the compiler determine
+the size of each command.
+
+Signed-off-by: Marc Gonzalez <marc.w.gonzalez@free.fr>
 ---
- .../hwtracing/coresight/coresight-cpu-debug.c |  3 +++
- drivers/hwtracing/coresight/coresight-etm3x.c |  3 +++
- drivers/hwtracing/coresight/coresight-etm4x.c |  3 +++
- .../hwtracing/coresight/coresight-platform.c  | 20 +++++++++----------
- 4 files changed, 19 insertions(+), 10 deletions(-)
+Changes from v1:
+- Use a real function to populate struct si2168_cmd *cmd, and a trivial
+macro wrapping it (macro because sizeof).
+---
+ drivers/media/dvb-frontends/si2168.c | 146 +++++++++------------------
+ 1 file changed, 45 insertions(+), 101 deletions(-)
 
-diff --git a/drivers/hwtracing/coresight/coresight-cpu-debug.c b/drivers/hwtracing/coresight/coresight-cpu-debug.c
-index 07a1367c733f..58bfd6319f65 100644
---- a/drivers/hwtracing/coresight/coresight-cpu-debug.c
-+++ b/drivers/hwtracing/coresight/coresight-cpu-debug.c
-@@ -579,6 +579,9 @@ static int debug_probe(struct amba_device *adev, const struct amba_id *id)
- 		return -ENOMEM;
+diff --git a/drivers/media/dvb-frontends/si2168.c b/drivers/media/dvb-frontends/si2168.c
+index c64b360ce6b5..5e81e076369c 100644
+--- a/drivers/media/dvb-frontends/si2168.c
++++ b/drivers/media/dvb-frontends/si2168.c
+@@ -12,6 +12,16 @@
  
- 	drvdata->cpu = coresight_get_cpu(dev);
-+	if (drvdata->cpu < 0)
-+		return drvdata->cpu;
+ static const struct dvb_frontend_ops si2168_ops;
+ 
++static void cmd_setup(struct si2168_cmd *cmd, char *args, int wlen, int rlen)
++{
++	memcpy(cmd->args, args, wlen);
++	cmd->wlen = wlen;
++	cmd->rlen = rlen;
++}
 +
- 	if (per_cpu(debug_drvdata, drvdata->cpu)) {
- 		dev_err(dev, "CPU%d drvdata has already been initialized\n",
- 			drvdata->cpu);
-diff --git a/drivers/hwtracing/coresight/coresight-etm3x.c b/drivers/hwtracing/coresight/coresight-etm3x.c
-index 225c2982e4fe..e2cb6873c3f2 100644
---- a/drivers/hwtracing/coresight/coresight-etm3x.c
-+++ b/drivers/hwtracing/coresight/coresight-etm3x.c
-@@ -816,6 +816,9 @@ static int etm_probe(struct amba_device *adev, const struct amba_id *id)
++#define CMD_SETUP(cmd, args, rlen) \
++	cmd_setup(cmd, args, sizeof(args) - 1, rlen)
++
+ /* execute firmware command */
+ static int si2168_cmd_execute(struct i2c_client *client, struct si2168_cmd *cmd)
+ {
+@@ -84,15 +94,13 @@ static int si2168_ts_bus_ctrl(struct dvb_frontend *fe, int acquire)
+ 	dev_dbg(&client->dev, "%s acquire: %d\n", __func__, acquire);
+ 
+ 	/* set TS_MODE property */
+-	memcpy(cmd.args, "\x14\x00\x01\x10\x10\x00", 6);
++	CMD_SETUP(&cmd, "\x14\x00\x01\x10\x10\x00", 4);
+ 	if (acquire)
+ 		cmd.args[4] |= dev->ts_mode;
+ 	else
+ 		cmd.args[4] |= SI2168_TS_TRISTATE;
+ 	if (dev->ts_clock_gapped)
+ 		cmd.args[4] |= 0x40;
+-	cmd.wlen = 6;
+-	cmd.rlen = 4;
+ 	ret = si2168_cmd_execute(client, &cmd);
+ 
+ 	return ret;
+@@ -116,19 +124,13 @@ static int si2168_read_status(struct dvb_frontend *fe, enum fe_status *status)
+ 
+ 	switch (c->delivery_system) {
+ 	case SYS_DVBT:
+-		memcpy(cmd.args, "\xa0\x01", 2);
+-		cmd.wlen = 2;
+-		cmd.rlen = 13;
++		CMD_SETUP(&cmd, "\xa0\x01", 13);
+ 		break;
+ 	case SYS_DVBC_ANNEX_A:
+-		memcpy(cmd.args, "\x90\x01", 2);
+-		cmd.wlen = 2;
+-		cmd.rlen = 9;
++		CMD_SETUP(&cmd, "\x90\x01", 9);
+ 		break;
+ 	case SYS_DVBT2:
+-		memcpy(cmd.args, "\x50\x01", 2);
+-		cmd.wlen = 2;
+-		cmd.rlen = 14;
++		CMD_SETUP(&cmd, "\x50\x01", 14);
+ 		break;
+ 	default:
+ 		ret = -EINVAL;
+@@ -165,9 +167,7 @@ static int si2168_read_status(struct dvb_frontend *fe, enum fe_status *status)
+ 
+ 	/* BER */
+ 	if (*status & FE_HAS_VITERBI) {
+-		memcpy(cmd.args, "\x82\x00", 2);
+-		cmd.wlen = 2;
+-		cmd.rlen = 3;
++		CMD_SETUP(&cmd, "\x82\x00", 3);
+ 		ret = si2168_cmd_execute(client, &cmd);
+ 		if (ret)
+ 			goto err;
+@@ -198,9 +198,7 @@ static int si2168_read_status(struct dvb_frontend *fe, enum fe_status *status)
+ 
+ 	/* UCB */
+ 	if (*status & FE_HAS_SYNC) {
+-		memcpy(cmd.args, "\x84\x01", 2);
+-		cmd.wlen = 2;
+-		cmd.rlen = 3;
++		CMD_SETUP(&cmd, "\x84\x01", 3);
+ 		ret = si2168_cmd_execute(client, &cmd);
+ 		if (ret)
+ 			goto err;
+@@ -286,22 +284,18 @@ static int si2168_set_frontend(struct dvb_frontend *fe)
+ 			goto err;
  	}
  
- 	drvdata->cpu = coresight_get_cpu(dev);
-+	if (drvdata->cpu < 0)
-+		return drvdata->cpu;
-+
- 	desc.name  = devm_kasprintf(dev, GFP_KERNEL, "etm%d", drvdata->cpu);
- 	if (!desc.name)
- 		return -ENOMEM;
-diff --git a/drivers/hwtracing/coresight/coresight-etm4x.c b/drivers/hwtracing/coresight/coresight-etm4x.c
-index 7fe266194ab5..7bcac8896fc1 100644
---- a/drivers/hwtracing/coresight/coresight-etm4x.c
-+++ b/drivers/hwtracing/coresight/coresight-etm4x.c
-@@ -1101,6 +1101,9 @@ static int etm4_probe(struct amba_device *adev, const struct amba_id *id)
- 	spin_lock_init(&drvdata->spinlock);
+-	memcpy(cmd.args, "\x88\x02\x02\x02\x02", 5);
+-	cmd.wlen = 5;
+-	cmd.rlen = 5;
++	CMD_SETUP(&cmd, "\x88\x02\x02\x02\x02", 5);
+ 	ret = si2168_cmd_execute(client, &cmd);
+ 	if (ret)
+ 		goto err;
  
- 	drvdata->cpu = coresight_get_cpu(dev);
-+	if (drvdata->cpu < 0)
-+		return drvdata->cpu;
-+
- 	desc.name = devm_kasprintf(dev, GFP_KERNEL, "etm%d", drvdata->cpu);
- 	if (!desc.name)
- 		return -ENOMEM;
-diff --git a/drivers/hwtracing/coresight/coresight-platform.c b/drivers/hwtracing/coresight/coresight-platform.c
-index 3c5ceda8db24..cf580ffbc27c 100644
---- a/drivers/hwtracing/coresight/coresight-platform.c
-+++ b/drivers/hwtracing/coresight/coresight-platform.c
-@@ -159,16 +159,16 @@ static int of_coresight_get_cpu(struct device *dev)
- 	struct device_node *dn;
+ 	/* that has no big effect */
+ 	if (c->delivery_system == SYS_DVBT)
+-		memcpy(cmd.args, "\x89\x21\x06\x11\xff\x98", 6);
++		CMD_SETUP(&cmd, "\x89\x21\x06\x11\xff\x98", 3);
+ 	else if (c->delivery_system == SYS_DVBC_ANNEX_A)
+-		memcpy(cmd.args, "\x89\x21\x06\x11\x89\xf0", 6);
++		CMD_SETUP(&cmd, "\x89\x21\x06\x11\x89\xf0", 3);
+ 	else if (c->delivery_system == SYS_DVBT2)
+-		memcpy(cmd.args, "\x89\x21\x06\x11\x89\x20", 6);
+-	cmd.wlen = 6;
+-	cmd.rlen = 3;
++		CMD_SETUP(&cmd, "\x89\x21\x06\x11\x89\x20", 3);
+ 	ret = si2168_cmd_execute(client, &cmd);
+ 	if (ret)
+ 		goto err;
+@@ -318,103 +312,77 @@ static int si2168_set_frontend(struct dvb_frontend *fe)
+ 			goto err;
+ 	}
  
- 	if (!dev->of_node)
--		return 0;
-+		return -ENODEV;
-+
- 	dn = of_parse_phandle(dev->of_node, "cpu", 0);
--	/* Affinity defaults to CPU0 */
- 	if (!dn)
--		return 0;
-+		return -ENODEV;
-+
- 	cpu = of_cpu_node_to_id(dn);
- 	of_node_put(dn);
+-	memcpy(cmd.args, "\x51\x03", 2);
+-	cmd.wlen = 2;
+-	cmd.rlen = 12;
++	CMD_SETUP(&cmd, "\x51\x03", 12);
+ 	ret = si2168_cmd_execute(client, &cmd);
+ 	if (ret)
+ 		goto err;
  
--	/* Affinity to CPU0 if no cpu nodes are found */
--	return (cpu < 0) ? 0 : cpu;
-+	return cpu;
- }
+-	memcpy(cmd.args, "\x12\x08\x04", 3);
+-	cmd.wlen = 3;
+-	cmd.rlen = 3;
++	CMD_SETUP(&cmd, "\x12\x08\x04", 3);
+ 	ret = si2168_cmd_execute(client, &cmd);
+ 	if (ret)
+ 		goto err;
  
- /*
-@@ -310,7 +310,7 @@ of_get_coresight_platform_data(struct device *dev,
+-	memcpy(cmd.args, "\x14\x00\x0c\x10\x12\x00", 6);
+-	cmd.wlen = 6;
+-	cmd.rlen = 4;
++	CMD_SETUP(&cmd, "\x14\x00\x0c\x10\x12\x00", 4);
+ 	ret = si2168_cmd_execute(client, &cmd);
+ 	if (ret)
+ 		goto err;
  
- static inline int of_coresight_get_cpu(struct device *dev)
- {
--	return 0;
-+	return -ENODEV;
- }
- #endif
+-	memcpy(cmd.args, "\x14\x00\x06\x10\x24\x00", 6);
+-	cmd.wlen = 6;
+-	cmd.rlen = 4;
++	CMD_SETUP(&cmd, "\x14\x00\x06\x10\x24\x00", 4);
+ 	ret = si2168_cmd_execute(client, &cmd);
+ 	if (ret)
+ 		goto err;
  
-@@ -734,14 +734,14 @@ static int acpi_coresight_get_cpu(struct device *dev)
- 	struct acpi_device *adev = ACPI_COMPANION(dev);
+-	memcpy(cmd.args, "\x14\x00\x07\x10\x00\x24", 6);
+-	cmd.wlen = 6;
+-	cmd.rlen = 4;
++	CMD_SETUP(&cmd, "\x14\x00\x07\x10\x00\x24", 4);
+ 	ret = si2168_cmd_execute(client, &cmd);
+ 	if (ret)
+ 		goto err;
  
- 	if (!adev)
--		return 0;
-+		return -ENODEV;
- 	status = acpi_get_parent(adev->handle, &cpu_handle);
- 	if (ACPI_FAILURE(status))
--		return 0;
-+		return -ENODEV;
+-	memcpy(cmd.args, "\x14\x00\x0a\x10\x00\x00", 6);
++	CMD_SETUP(&cmd, "\x14\x00\x0a\x10\x00\x00", 4);
+ 	cmd.args[4] = delivery_system | bandwidth;
+ 	if (dev->spectral_inversion)
+ 		cmd.args[5] |= 1;
+-	cmd.wlen = 6;
+-	cmd.rlen = 4;
+ 	ret = si2168_cmd_execute(client, &cmd);
+ 	if (ret)
+ 		goto err;
  
- 	cpu = acpi_handle_to_logical_cpuid(cpu_handle);
- 	if (cpu >= nr_cpu_ids)
--		return 0;
-+		return -ENODEV;
- 	return cpu;
- }
+ 	/* set DVB-C symbol rate */
+ 	if (c->delivery_system == SYS_DVBC_ANNEX_A) {
+-		memcpy(cmd.args, "\x14\x00\x02\x11", 4);
++		CMD_SETUP(&cmd, "\x14\x00\x02\x11\x00\x00", 4);
+ 		cmd.args[4] = ((c->symbol_rate / 1000) >> 0) & 0xff;
+ 		cmd.args[5] = ((c->symbol_rate / 1000) >> 8) & 0xff;
+-		cmd.wlen = 6;
+-		cmd.rlen = 4;
+ 		ret = si2168_cmd_execute(client, &cmd);
+ 		if (ret)
+ 			goto err;
+ 	}
  
-@@ -769,7 +769,7 @@ acpi_get_coresight_platform_data(struct device *dev,
+-	memcpy(cmd.args, "\x14\x00\x0f\x10\x10\x00", 6);
+-	cmd.wlen = 6;
+-	cmd.rlen = 4;
++	CMD_SETUP(&cmd, "\x14\x00\x0f\x10\x10\x00", 4);
+ 	ret = si2168_cmd_execute(client, &cmd);
+ 	if (ret)
+ 		goto err;
  
- static inline int acpi_coresight_get_cpu(struct device *dev)
- {
--	return 0;
-+	return -ENODEV;
- }
- #endif
+-	memcpy(cmd.args, "\x14\x00\x09\x10\xe3\x08", 6);
++	CMD_SETUP(&cmd, "\x14\x00\x09\x10\xe3\x08", 4);
+ 	cmd.args[5] |= dev->ts_clock_inv ? 0x00 : 0x10;
+-	cmd.wlen = 6;
+-	cmd.rlen = 4;
+ 	ret = si2168_cmd_execute(client, &cmd);
+ 	if (ret)
+ 		goto err;
  
+-	memcpy(cmd.args, "\x14\x00\x08\x10\xd7\x05", 6);
++	CMD_SETUP(&cmd, "\x14\x00\x08\x10\xd7\x05", 4);
+ 	cmd.args[5] |= dev->ts_clock_inv ? 0x00 : 0x10;
+-	cmd.wlen = 6;
+-	cmd.rlen = 4;
+ 	ret = si2168_cmd_execute(client, &cmd);
+ 	if (ret)
+ 		goto err;
+ 
+-	memcpy(cmd.args, "\x14\x00\x01\x12\x00\x00", 6);
+-	cmd.wlen = 6;
+-	cmd.rlen = 4;
++	CMD_SETUP(&cmd, "\x14\x00\x01\x12\x00\x00", 4);
+ 	ret = si2168_cmd_execute(client, &cmd);
+ 	if (ret)
+ 		goto err;
+ 
+-	memcpy(cmd.args, "\x14\x00\x01\x03\x0c\x00", 6);
+-	cmd.wlen = 6;
+-	cmd.rlen = 4;
++	CMD_SETUP(&cmd, "\x14\x00\x01\x03\x0c\x00", 4);
+ 	ret = si2168_cmd_execute(client, &cmd);
+ 	if (ret)
+ 		goto err;
+ 
+-	memcpy(cmd.args, "\x85", 1);
+-	cmd.wlen = 1;
+-	cmd.rlen = 1;
++	CMD_SETUP(&cmd, "\x85", 1);
+ 	ret = si2168_cmd_execute(client, &cmd);
+ 	if (ret)
+ 		goto err;
+@@ -444,26 +412,20 @@ static int si2168_init(struct dvb_frontend *fe)
+ 	dev_dbg(&client->dev, "\n");
+ 
+ 	/* initialize */
+-	memcpy(cmd.args, "\xc0\x12\x00\x0c\x00\x0d\x16\x00\x00\x00\x00\x00\x00", 13);
+-	cmd.wlen = 13;
+-	cmd.rlen = 0;
++	CMD_SETUP(&cmd, "\xc0\x12\x00\x0c\x00\x0d\x16\x00\x00\x00\x00\x00\x00", 0);
+ 	ret = si2168_cmd_execute(client, &cmd);
+ 	if (ret)
+ 		goto err;
+ 
+ 	if (dev->warm) {
+ 		/* resume */
+-		memcpy(cmd.args, "\xc0\x06\x08\x0f\x00\x20\x21\x01", 8);
+-		cmd.wlen = 8;
+-		cmd.rlen = 1;
++		CMD_SETUP(&cmd, "\xc0\x06\x08\x0f\x00\x20\x21\x01", 1);
+ 		ret = si2168_cmd_execute(client, &cmd);
+ 		if (ret)
+ 			goto err;
+ 
+ 		udelay(100);
+-		memcpy(cmd.args, "\x85", 1);
+-		cmd.wlen = 1;
+-		cmd.rlen = 1;
++		CMD_SETUP(&cmd, "\x85", 1);
+ 		ret = si2168_cmd_execute(client, &cmd);
+ 		if (ret)
+ 			goto err;
+@@ -472,9 +434,7 @@ static int si2168_init(struct dvb_frontend *fe)
+ 	}
+ 
+ 	/* power up */
+-	memcpy(cmd.args, "\xc0\x06\x01\x0f\x00\x20\x20\x01", 8);
+-	cmd.wlen = 8;
+-	cmd.rlen = 1;
++	CMD_SETUP(&cmd, "\xc0\x06\x01\x0f\x00\x20\x20\x01", 1);
+ 	ret = si2168_cmd_execute(client, &cmd);
+ 	if (ret)
+ 		goto err;
+@@ -542,17 +502,13 @@ static int si2168_init(struct dvb_frontend *fe)
+ 
+ 	release_firmware(fw);
+ 
+-	memcpy(cmd.args, "\x01\x01", 2);
+-	cmd.wlen = 2;
+-	cmd.rlen = 1;
++	CMD_SETUP(&cmd, "\x01\x01", 1);
+ 	ret = si2168_cmd_execute(client, &cmd);
+ 	if (ret)
+ 		goto err;
+ 
+ 	/* query firmware version */
+-	memcpy(cmd.args, "\x11", 1);
+-	cmd.wlen = 1;
+-	cmd.rlen = 10;
++	CMD_SETUP(&cmd, "\x11", 10);
+ 	ret = si2168_cmd_execute(client, &cmd);
+ 	if (ret)
+ 		goto err;
+@@ -610,9 +566,7 @@ static int si2168_sleep(struct dvb_frontend *fe)
+ 	if (dev->version > ('B' << 24 | 4 << 16 | 0 << 8 | 11 << 0))
+ 		dev->warm = false;
+ 
+-	memcpy(cmd.args, "\x13", 1);
+-	cmd.wlen = 1;
+-	cmd.rlen = 0;
++	CMD_SETUP(&cmd, "\x13", 0);
+ 	ret = si2168_cmd_execute(client, &cmd);
+ 	if (ret)
+ 		goto err;
+@@ -638,9 +592,7 @@ static int si2168_select(struct i2c_mux_core *muxc, u32 chan)
+ 	struct si2168_cmd cmd;
+ 
+ 	/* open I2C gate */
+-	memcpy(cmd.args, "\xc0\x0d\x01", 3);
+-	cmd.wlen = 3;
+-	cmd.rlen = 0;
++	CMD_SETUP(&cmd, "\xc0\x0d\x01", 0);
+ 	ret = si2168_cmd_execute(client, &cmd);
+ 	if (ret)
+ 		goto err;
+@@ -658,9 +610,7 @@ static int si2168_deselect(struct i2c_mux_core *muxc, u32 chan)
+ 	struct si2168_cmd cmd;
+ 
+ 	/* close I2C gate */
+-	memcpy(cmd.args, "\xc0\x0d\x00", 3);
+-	cmd.wlen = 3;
+-	cmd.rlen = 0;
++	CMD_SETUP(&cmd, "\xc0\x0d\x00", 0);
+ 	ret = si2168_cmd_execute(client, &cmd);
+ 	if (ret)
+ 		goto err;
+@@ -753,25 +703,19 @@ static int si2168_probe(struct i2c_client *client,
+ 	mutex_init(&dev->i2c_mutex);
+ 
+ 	/* Initialize */
+-	memcpy(cmd.args, "\xc0\x12\x00\x0c\x00\x0d\x16\x00\x00\x00\x00\x00\x00", 13);
+-	cmd.wlen = 13;
+-	cmd.rlen = 0;
++	CMD_SETUP(&cmd, "\xc0\x12\x00\x0c\x00\x0d\x16\x00\x00\x00\x00\x00\x00", 0);
+ 	ret = si2168_cmd_execute(client, &cmd);
+ 	if (ret)
+ 		goto err_kfree;
+ 
+ 	/* Power up */
+-	memcpy(cmd.args, "\xc0\x06\x01\x0f\x00\x20\x20\x01", 8);
+-	cmd.wlen = 8;
+-	cmd.rlen = 1;
++	CMD_SETUP(&cmd, "\xc0\x06\x01\x0f\x00\x20\x20\x01", 1);
+ 	ret = si2168_cmd_execute(client, &cmd);
+ 	if (ret)
+ 		goto err_kfree;
+ 
+ 	/* Query chip revision */
+-	memcpy(cmd.args, "\x02", 1);
+-	cmd.wlen = 1;
+-	cmd.rlen = 13;
++	CMD_SETUP(&cmd, "\x02", 13);
+ 	ret = si2168_cmd_execute(client, &cmd);
+ 	if (ret)
+ 		goto err_kfree;
 -- 
-QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
-of Code Aurora Forum, hosted by The Linux Foundation
-
+2.17.1
