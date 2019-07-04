@@ -2,105 +2,157 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id DFB775FCDA
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Jul 2019 20:22:10 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 6933A5FE0D
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Jul 2019 23:10:28 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726743AbfGDSWJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 4 Jul 2019 14:22:09 -0400
-Received: from mail-pl1-f196.google.com ([209.85.214.196]:39793 "EHLO
-        mail-pl1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726024AbfGDSWJ (ORCPT
+        id S1727091AbfGDVK1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 4 Jul 2019 17:10:27 -0400
+Received: from perceval.ideasonboard.com ([213.167.242.64]:35062 "EHLO
+        perceval.ideasonboard.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726871AbfGDVK1 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 4 Jul 2019 14:22:09 -0400
-Received: by mail-pl1-f196.google.com with SMTP id b7so3426039pls.6
-        for <linux-arm-msm@vger.kernel.org>; Thu, 04 Jul 2019 11:22:08 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=49RKdZb8IIkI3+0BX8wWpyu8JU1kt+cg0DgkZkLzmHQ=;
-        b=bxZiuhbvu7gj8r66QOfCt00uKvIwZGfRFI7lp3ObZkA0J8E7LZqzN7oVsp5hGVxHIr
-         bxdHg4b6TP7BtDl2ZBoQdNlax8PghFlFmcysYTK/ju8LcoZ8m8m19UdonvTku9pWkgs2
-         Iaa7US2TJ0WtgNgnBtbWdL7QZIQlg9jRN0LWoQpguW7/DBPGYG9j2k0bVSK0cP5tQLBI
-         UP+ztfnbWV/kS18DUDIIq1Bw/ji+CYnftI3Au1MpqhLMEpThBe0N4ryRHnJNTKf76fWa
-         GDndeDIp2DhbEYehzut1mQQ7WwnsyCVsOsv74wErEsiQz/r7a6hQ6kQLAwY6+kHfR3AD
-         pXdw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=49RKdZb8IIkI3+0BX8wWpyu8JU1kt+cg0DgkZkLzmHQ=;
-        b=b/QcBYbXhMWq4kheGGPo7Ow1+V1CWzCWkprLs/7VktC1VOSO5dBfmaBFnR+eWWtluY
-         M1h8W0AqxHDDLaM2dthVXbyiCrTh2QVqvlUZn+IgIyGFTPqXDWNRNtmU755y3TWUYjXg
-         tEHM7xV0BZNa1IhxhR+wLPJRjFiz7wKRWJrggWEy4//0JWw1n2C3oPSXupdVZcwoGd4V
-         bkN5PBo9daKrdW8Yp1pPAX5lCfvAoUlf5OB8kt+UF9m9DDg9w4S+wFRS+VSgh6I1TZpV
-         Ui4xAYaFQoZBCY08hBYOdsWu1+xxVHlK8iSnWMZ+sU6VqnxGDzQV72xXtib0dyPflREt
-         We4w==
-X-Gm-Message-State: APjAAAV4FkzGaQj1E28QeE2dg+/puBIhbX4gOrHGfmrrCEY9Bsg8SGtT
-        JxTVWDyFGUUidF7+spejOKuJGg==
-X-Google-Smtp-Source: APXvYqwEPNKxrXbrR8Sdnw3wDwHG5QxDj+xW59knWJIH0vuARI+MCJ+AEmaVAbAb7mYceyZZ81YJ5A==
-X-Received: by 2002:a17:902:ff11:: with SMTP id f17mr51796069plj.121.1562264528372;
-        Thu, 04 Jul 2019 11:22:08 -0700 (PDT)
-Received: from builder (104-188-17-28.lightspeed.sndgca.sbcglobal.net. [104.188.17.28])
-        by smtp.gmail.com with ESMTPSA id k16sm6647443pfa.87.2019.07.04.11.22.07
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Thu, 04 Jul 2019 11:22:07 -0700 (PDT)
-Date:   Thu, 4 Jul 2019 11:22:05 -0700
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     YueHaibing <yuehaibing@huawei.com>
-Cc:     ohad@wizery.com, jeffrey.l.hugo@gmail.com, agross@kernel.org,
-        linux-kernel@vger.kernel.org, linux-remoteproc@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH] remoteproc: qcom: q6v5-mss: Fix build error without
- QCOM_MDT_LOADER
-Message-ID: <20190704182205.GH1263@builder>
-References: <20190704064649.51748-1-yuehaibing@huawei.com>
+        Thu, 4 Jul 2019 17:10:27 -0400
+Received: from pendragon.ideasonboard.com (dfj612yhrgyx302h3jwwy-3.rev.dnainternet.fi [IPv6:2001:14ba:21f5:5b00:ce28:277f:58d7:3ca4])
+        by perceval.ideasonboard.com (Postfix) with ESMTPSA id C4F3C24B;
+        Thu,  4 Jul 2019 23:10:24 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=ideasonboard.com;
+        s=mail; t=1562274624;
+        bh=rH5bR+9lFkKtZCDqwCe8OuU9RTZKTQrIQJBkM0CbF3I=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=FCDjPpeCNkj1EFXAIg9h/NzwKcGsKZmLD7agdaR1+cVt7JK7zHSn1M4g4HlG/aOvH
+         1qGga4AH5et1WH+DOXF7QSWYGsZibj8vneYOfJZVMVbNpsKkcj4Fumwl4JfHAl8Ude
+         A2HXM0xBa6cY8K0LRFVuMfpl4D0sbHRWItMo/Wqo=
+Date:   Fri, 5 Jul 2019 00:10:04 +0300
+From:   Laurent Pinchart <laurent.pinchart@ideasonboard.com>
+To:     Rob Clark <robdclark@gmail.com>
+Cc:     Andrzej Hajda <a.hajda@samsung.com>,
+        dri-devel <dri-devel@lists.freedesktop.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        Sean Paul <seanpaul@chromium.org>,
+        Rob Clark <robdclark@chromium.org>,
+        David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>
+Subject: Re: [PATCH 2/3] drm/bridge: ti-sn65dsi86: add debugfs
+Message-ID: <20190704211004.GH5024@pendragon.ideasonboard.com>
+References: <20190702154419.20812-1-robdclark@gmail.com>
+ <CGME20190702154441epcas2p2cba89e3a84216d9a8da43438a9648e03@epcas2p2.samsung.com>
+ <20190702154419.20812-3-robdclark@gmail.com>
+ <1b56a11c-194d-0eca-4dd1-48e91820eafb@samsung.com>
+ <20190704123511.GG6569@pendragon.ideasonboard.com>
+ <CAF6AEGvYJ6iA5B+thJuBC=pFStuhsn87xrrcWAZyroWj5xKMZA@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20190704064649.51748-1-yuehaibing@huawei.com>
-User-Agent: Mutt/1.10.0 (2018-05-17)
+In-Reply-To: <CAF6AEGvYJ6iA5B+thJuBC=pFStuhsn87xrrcWAZyroWj5xKMZA@mail.gmail.com>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed 03 Jul 23:46 PDT 2019, YueHaibing wrote:
+Hi Rob,
 
-> If QCOM_Q6V5_MSS is set but QCOM_MDT_LOADER is not,
-> building will fails:
+On Thu, Jul 04, 2019 at 06:56:56AM -0700, Rob Clark wrote:
+> On Thu, Jul 4, 2019 at 5:35 AM Laurent Pinchartwrote:
+> > On Thu, Jul 04, 2019 at 02:31:20PM +0200, Andrzej Hajda wrote:
+> > > On 02.07.2019 17:44, Rob Clark wrote:
+> > > > From: Rob Clark <robdclark@chromium.org>
+> > > >
+> > > > Add a debugfs file to show status registers.
+> > > >
+> > > > Signed-off-by: Rob Clark <robdclark@chromium.org>
+> > > > ---
+> > > >  drivers/gpu/drm/bridge/ti-sn65dsi86.c | 42 +++++++++++++++++++++++++++
+> > > >  1 file changed, 42 insertions(+)
+> > > >
+> > > > diff --git a/drivers/gpu/drm/bridge/ti-sn65dsi86.c b/drivers/gpu/drm/bridge/ti-sn65dsi86.c
+> > > > index f1a2493b86d9..a6f27648c015 100644
+> > > > --- a/drivers/gpu/drm/bridge/ti-sn65dsi86.c
+> > > > +++ b/drivers/gpu/drm/bridge/ti-sn65dsi86.c
+> > > > @@ -5,6 +5,7 @@
+> > > >   */
+> > > >
+> > > >  #include <linux/clk.h>
+> > > > +#include <linux/debugfs.h>
+> > > >  #include <linux/gpio/consumer.h>
+> > > >  #include <linux/i2c.h>
+> > > >  #include <linux/iopoll.h>
+> > > > @@ -109,6 +110,7 @@ struct ti_sn_bridge {
+> > > >     struct drm_dp_aux               aux;
+> > > >     struct drm_bridge               bridge;
+> > > >     struct drm_connector            connector;
+> > > > +   struct dentry                   *debugfs;
+> > > >     struct device_node              *host_node;
+> > > >     struct mipi_dsi_device          *dsi;
+> > > >     struct clk                      *refclk;
+> > > > @@ -178,6 +180,42 @@ static const struct dev_pm_ops ti_sn_bridge_pm_ops = {
+> > > >     SET_RUNTIME_PM_OPS(ti_sn_bridge_suspend, ti_sn_bridge_resume, NULL)
+> > > >  };
+> > > >
+> > > > +static int status_show(struct seq_file *s, void *data)
+> > > > +{
+> > > > +   struct ti_sn_bridge *pdata = s->private;
+> > > > +   unsigned int reg, val;
+> > > > +
+> > > > +   seq_puts(s, "STATUS REGISTERS:\n");
+> >
+> > NO NEED TO SHOUT :-)
+> >
+> > > > +
+> > > > +   pm_runtime_get_sync(pdata->dev);
+> > > > +
+> > > > +   /* IRQ Status Registers, see Table 31 in datasheet */
+> > > > +   for (reg = 0xf0; reg <= 0xf8; reg++) {
+> > > > +           regmap_read(pdata->regmap, reg, &val);
+> > > > +           seq_printf(s, "[0x%02x] = 0x%08x\n", reg, val);
+> > > > +   }
+> > > > +
+> > > > +   pm_runtime_put(pdata->dev);
+> > > > +
+> > > > +   return 0;
+> > > > +}
+> > > > +
+> > > > +DEFINE_SHOW_ATTRIBUTE(status);
+> > > > +
+> > > > +static void ti_sn_debugfs_init(struct ti_sn_bridge *pdata)
+> > > > +{
+> > > > +   pdata->debugfs = debugfs_create_dir("ti_sn65dsi86", NULL);
+> > >
+> > > If some day we will have board with two such bridges there will be a
+> > > problem.
+> >
+> > Could we use the platform device name for this ?
 > 
-> drivers/remoteproc/qcom_q6v5_mss.o: In function `q6v5_start':
-> qcom_q6v5_mss.c:(.text+0x3260): undefined reference to `qcom_mdt_read_metadata'
+> hmm, yeah, that would solve the 2x bridges issue
 > 
-> Add QCOM_MDT_LOADER dependency for QCOM_Q6V5_MSS.
+> > > Anyway:
+> > >
+> > > Reviewed-by: Andrzej Hajda <a.hajda@samsung.com>
+> > >
+> > > > +
+> > > > +   debugfs_create_file("status", 0600, pdata->debugfs, pdata,
+> > > > +                   &status_fops);
+> > > > +}
+> > > > +
+> > > > +static void ti_sn_debugfs_remove(struct ti_sn_bridge *pdata)
+> > > > +{
+> > > > +   debugfs_remove_recursive(pdata->debugfs);
+> > > > +   pdata->debugfs = NULL;
+> > > > +}
+> > > > +
+> >
+> > You need to conditionally-compile this based on CONFIG_DEBUG_FS.
 > 
-> Reported-by: Hulk Robot <hulkci@huawei.com>
-> Fixes: f04b91383456 ("remoteproc: qcom: q6v5-mss: Support loading non-split images")
-> Signed-off-by: YueHaibing <yuehaibing@huawei.com>
+> Hmm, is that really true?  Debugfs appears to be sufficently stub'd w/
+> inline no-ops in the !CONFIG_DEBUG_FS case
 
-Thanks for catching this, Applied.
+You're right, my bad. I wonder if the compiler will optimise the above
+two functions out. It might warrant a CONFIG_DEBUG_FS check here for
+that reason, but that's really bikeshedding. So with the 2x bridges
+issue addressed, I think the patch will be good.
 
+-- 
 Regards,
-Bjorn
 
-> ---
->  drivers/remoteproc/Kconfig | 1 +
->  1 file changed, 1 insertion(+)
-> 
-> diff --git a/drivers/remoteproc/Kconfig b/drivers/remoteproc/Kconfig
-> index 9b0f0cb..28ed306 100644
-> --- a/drivers/remoteproc/Kconfig
-> +++ b/drivers/remoteproc/Kconfig
-> @@ -116,6 +116,7 @@ config QCOM_Q6V5_MSS
->  	depends on RPMSG_QCOM_GLINK_SMEM || RPMSG_QCOM_GLINK_SMEM=n
->  	depends on QCOM_SYSMON || QCOM_SYSMON=n
->  	select MFD_SYSCON
-> +	select QCOM_MDT_LOADER
->  	select QCOM_Q6V5_COMMON
->  	select QCOM_RPROC_COMMON
->  	select QCOM_SCM
-> -- 
-> 2.7.4
-> 
-> 
+Laurent Pinchart
