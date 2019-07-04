@@ -2,127 +2,141 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 79BE35F903
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Jul 2019 15:18:59 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 61B9C5F95B
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Jul 2019 15:51:42 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727044AbfGDNS7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 4 Jul 2019 09:18:59 -0400
-Received: from mailout2.w1.samsung.com ([210.118.77.12]:57652 "EHLO
-        mailout2.w1.samsung.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725945AbfGDNS6 (ORCPT
+        id S1727199AbfGDNvm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 4 Jul 2019 09:51:42 -0400
+Received: from mail-ed1-f66.google.com ([209.85.208.66]:42581 "EHLO
+        mail-ed1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727026AbfGDNvl (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 4 Jul 2019 09:18:58 -0400
-Received: from eucas1p2.samsung.com (unknown [182.198.249.207])
-        by mailout2.w1.samsung.com (KnoxPortal) with ESMTP id 20190704131857euoutp02fbd87d3f61ceeb21c43bd280e9fcd427~uNsQ-gS8u1019010190euoutp02C
-        for <linux-arm-msm@vger.kernel.org>; Thu,  4 Jul 2019 13:18:57 +0000 (GMT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 mailout2.w1.samsung.com 20190704131857euoutp02fbd87d3f61ceeb21c43bd280e9fcd427~uNsQ-gS8u1019010190euoutp02C
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=samsung.com;
-        s=mail20170921; t=1562246337;
-        bh=pWS5uTzed4I4itabuM22N0z+ZBA0Fku7rHWXF8l5i4Y=;
-        h=Subject:To:Cc:From:Date:In-Reply-To:References:From;
-        b=vBVX8xcr6OyvUNeC3h7Pn62pAy8z4ZVdorJQJbE7cW56sKQzgKopgNmD5AZkU6mCi
-         WfscY/puNu12IDNmquhODpHmV2LFuJr27FdpCBm0aJxfHiMWlhtIsu3k49NLazVzS8
-         gZYFx7vJlXtDfamYnzvuL3Ny5htGzlq78mJ8nva8=
-Received: from eusmges3new.samsung.com (unknown [203.254.199.245]) by
-        eucas1p2.samsung.com (KnoxPortal) with ESMTP id
-        20190704131856eucas1p261fa99892b032f702603259215f946b1~uNsQdWXwF0897508975eucas1p2L;
-        Thu,  4 Jul 2019 13:18:56 +0000 (GMT)
-Received: from eucas1p2.samsung.com ( [182.198.249.207]) by
-        eusmges3new.samsung.com (EUCPMTA) with SMTP id B0.6B.04325.0CCFD1D5; Thu,  4
-        Jul 2019 14:18:56 +0100 (BST)
-Received: from eusmtrp1.samsung.com (unknown [182.198.249.138]) by
-        eucas1p2.samsung.com (KnoxPortal) with ESMTPA id
-        20190704131855eucas1p214a64282c2c4a34f914856de5375e384~uNsPu0OBt2966129661eucas1p2r;
-        Thu,  4 Jul 2019 13:18:55 +0000 (GMT)
-Received: from eusmgms2.samsung.com (unknown [182.198.249.180]) by
-        eusmtrp1.samsung.com (KnoxPortal) with ESMTP id
-        20190704131855eusmtrp106ab7f9cc474ab2190ee53c92a772628~uNsPg1VFr1038010380eusmtrp1J;
-        Thu,  4 Jul 2019 13:18:55 +0000 (GMT)
-X-AuditID: cbfec7f5-b75ff700000010e5-61-5d1dfcc047a9
-Received: from eusmtip2.samsung.com ( [203.254.199.222]) by
-        eusmgms2.samsung.com (EUCPMTA) with SMTP id EA.B7.04140.FBCFD1D5; Thu,  4
-        Jul 2019 14:18:55 +0100 (BST)
-Received: from [106.120.51.74] (unknown [106.120.51.74]) by
-        eusmtip2.samsung.com (KnoxPortal) with ESMTPA id
-        20190704131855eusmtip210c90421921eeba5b581e1ca23781466~uNsPONUK90902209022eusmtip2E;
-        Thu,  4 Jul 2019 13:18:55 +0000 (GMT)
-Subject: Re: [PATCH 0/3] drm/bridge: ti-sn65dsi86: debugfs and mode_flags
- fix
-To:     Rob Clark <robdclark@gmail.com>, dri-devel@lists.freedesktop.org
-Cc:     Rob Clark <robdclark@chromium.org>, linux-arm-msm@vger.kernel.org,
-        Sean Paul <seanpaul@chromium.org>
-From:   Andrzej Hajda <a.hajda@samsung.com>
-Message-ID: <081baf6c-6b29-f7d5-37ea-d1ecb217846a@samsung.com>
-Date:   Thu, 4 Jul 2019 15:18:49 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
-        Thunderbird/60.7.1
+        Thu, 4 Jul 2019 09:51:41 -0400
+Received: by mail-ed1-f66.google.com with SMTP id z25so5479390edq.9;
+        Thu, 04 Jul 2019 06:51:40 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=B2NJUH3gYGgBtbx3WN1Ity0pDWugJQ7jF9R1ADUX4lk=;
+        b=hmowFyFGkwXbEFC/kyfNcBrt9V9cHjiQIm+Z0EQg+YQlW5rfQRBhO6IWD/BOPARcU8
+         ejkMVH9q8Bv/mYnS9q+JYZEaMW6sagrnojzOC/UCdqT3UYZIjmJv7Ok7r+uMy0DWvY2q
+         G5LjM3qwC79ZEsjXxJ0NSXeUDTWElwdMq1sg4TDlJPFAn7vz9L3Kwr5DLPndWA2aCO4w
+         IB/oKVx3QJxAdG6Tq411VPBtbkIiFTSiT3hkWex2/NgQhoJVAqWD0dH+LHbaf/Tbrcbx
+         1M15JCpoSLDBP5ASs7mwSbbI91QiAFOyTYcOBf7okxvzYFcPQesKfXn0kM/zjR+Jzwwq
+         DICw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=B2NJUH3gYGgBtbx3WN1Ity0pDWugJQ7jF9R1ADUX4lk=;
+        b=dCr6fzGm9rML/HyST07z3XMwPl0a/itl5n3d7VL/8hDQ3c5dy8suykniEDIaUhjXPI
+         kwjrZpqm4zW1BGMzzGPmGmN+5tPivLGCzxRSSY8N4aZ+Ptcn5I1b+AQVFSPYog6XTks9
+         e8knkUib2mImr5JxDHuRsBCQEl8z2ReX8opXaXFD5vWDzVeyHzviJkrQXxHC1ZOZTyFx
+         KATzBgzDgDtAri7/x9XmkQSr7+mC1QVLsvFc2EZWejNB8TqpDX1AWOl6MrdE2DH/Fsu6
+         KidQ8L9/Sv487vCPhMGyVb0FBvSdNOjT2NIIVi5To8sDH5phQ3WktKXq6r+J3ZOsgb0d
+         EQuQ==
+X-Gm-Message-State: APjAAAV5vhLAnL1pT9Xq6WvSA2s2XrKDk4ITGbbvQoeg6tKdUpdsujvX
+        LF3MEMfduCuGK7LIi2rmItywA03dPrv22238i9Y=
+X-Google-Smtp-Source: APXvYqy0BJY/7zHhJ8fIDLe2X+6WEGO81pJJSvAlHI679eDU3T2nzWxvLXnNB4Rdv1E6hpJcX38qgxrxWALFF2nDlLo=
+X-Received: by 2002:a17:906:6802:: with SMTP id k2mr14814143ejr.174.1562248299953;
+ Thu, 04 Jul 2019 06:51:39 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <20190702154419.20812-1-robdclark@gmail.com>
-Content-Transfer-Encoding: 7bit
-Content-Language: en-US
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFprFKsWRmVeSWpSXmKPExsWy7djP87oH/sjGGpx9LWxx5et7NouJ+8+y
-        W1z7+ZjZ4vnCH8wWdzecZXRg9ZjdcJHFY+esu+we97uPM3l83iQXwBLFZZOSmpNZllqkb5fA
-        lfG48yh7QS9bxbG57xgbGD+xdDFyckgImEjs/TmBvYuRi0NIYAWjxI13OxghnC+MEg8mbGGD
-        cD4zSjQ8WMQE0/L1xEtmiMRyRomds96zgSSEBN4ySmw+6Q9iCwv4S/yeO5MZxBYRcJE4cek3
-        K4jNLJAl8Wj6T7DdbAKaEn833wTr5RWwk7j89iFYnEVARWL/qRtgvaICERKXt+xihKgRlDg5
-        8wlQDQcHp4ClxJ55XBAj5SW2v53DDGGLS9x6Mp8J5DYJgensEhfO/WCGONpFYuXhuVA/C0u8
-        Or6FHcKWkTg9uQcqXi9xf0ULM0RzB6PE1g07oZqtJQ4fv8gKspgZ6Oj1u/Qhwo4SV+ftZgcJ
-        SwjwSdx4KwhxA5/EpG3TmSHCvBIdbUIQ1YoS989uhRooLrH0wle2CYxKs5A8NgvJN7OQfDML
-        Ye8CRpZVjOKppcW56anFxnmp5XrFibnFpXnpesn5uZsYgSnm9L/jX3cw7vuTdIhRgINRiYf3
-        wRaZWCHWxLLiytxDjBIczEoivN9/A4V4UxIrq1KL8uOLSnNSiw8xSnOwKInzVjM8iBYSSE8s
-        Sc1OTS1ILYLJMnFwSjUwrtuiunD/FmvlTJUnp93Nq6SKLybOncxuFH1h/3POAuWOdd9P6lxY
-        nN+p/VGfe2uDl8yifXEXK7Z8eLxg9cWosyvyw1M+fFm7J/tal3vYjzvd3BJRk+RrflxvMv4o
-        4huV0ZR8+8G0WA4xhvsyrxIk5zr/XfGSq5pZd7WKScDFh/x/ShquTXzGrsRSnJFoqMVcVJwI
-        AJz3+X0tAwAA
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFlrHIsWRmVeSWpSXmKPExsVy+t/xe7r7/8jGGrzcq2px5et7NouJ+8+y
-        W1z7+ZjZ4vnCH8wWdzecZXRg9ZjdcJHFY+esu+we97uPM3l83iQXwBKlZ1OUX1qSqpCRX1xi
-        qxRtaGGkZ2hpoWdkYqlnaGwea2VkqqRvZ5OSmpNZllqkb5egl/G48yh7QS9bxbG57xgbGD+x
-        dDFyckgImEh8PfGSuYuRi0NIYCmjxOEz09ggEuISu+e/ZYawhSX+XOtigyh6zSjxfedSsCJh
-        AV+JNec3sYLYIgIuEicu/QazmQWyJI4ueMAK0dDDKLH77y6wBjYBTYm/m2+C2bwCdhKX3z4E
-        O4NFQEVi/6kbYNtEBSIk+tpmQ9UISpyc+QSohoODU8BSYs88Loj56hJ/5l1ihrDlJba/nQNl
-        i0vcejKfaQKj0Cwk3bOQtMxC0jILScsCRpZVjCKppcW56bnFRnrFibnFpXnpesn5uZsYgXG1
-        7djPLTsYu94FH2IU4GBU4uF9sEUmVog1say4MvcQowQHs5II7/ffQCHelMTKqtSi/Pii0pzU
-        4kOMpkC/TWSWEk3OB8Z8Xkm8oamhuYWlobmxubGZhZI4b4fAwRghgfTEktTs1NSC1CKYPiYO
-        TqkGxpn7lsp9Svx/12Oy5CTVabN07kpelFk0+Up96MNnbbnb0vtetG0Sv/Zv4/ZCN7NoJ5+W
-        1b8P6Bx5Zt90+NsqkZIrb/5k7mifVzjh7hVD4bdPFF46lOTvOuXzp1h+X3b5o8q9VdKP3hqv
-        WqLIr3c8U7JGIefkLiWPpq0K13yvGF/00HvGOde45aESS3FGoqEWc1FxIgA/3f6mwQIAAA==
-X-CMS-MailID: 20190704131855eucas1p214a64282c2c4a34f914856de5375e384
-X-Msg-Generator: CA
-Content-Type: text/plain; charset="utf-8"
-X-RootMTR: 20190702154436epcas2p3fdaaa095c15a116a0be7e5313469151f
-X-EPHeader: CA
-CMS-TYPE: 201P
-X-CMS-RootMailID: 20190702154436epcas2p3fdaaa095c15a116a0be7e5313469151f
-References: <CGME20190702154436epcas2p3fdaaa095c15a116a0be7e5313469151f@epcas2p3.samsung.com>
-        <20190702154419.20812-1-robdclark@gmail.com>
+References: <20190702202631.32148-1-robdclark@gmail.com> <20190702202631.32148-2-robdclark@gmail.com>
+ <20190704082001.GD6546@8bytes.org>
+In-Reply-To: <20190704082001.GD6546@8bytes.org>
+From:   Rob Clark <robdclark@gmail.com>
+Date:   Thu, 4 Jul 2019 06:51:23 -0700
+Message-ID: <CAF6AEGtjMqoFprY+r6zwUxxpm9iFfN-n-uNad3w9vxOCcTrQJA@mail.gmail.com>
+Subject: Re: [PATCH 1/2] iommu: add support for drivers that manage iommu explicitly
+To:     Joerg Roedel <joro@8bytes.org>
+Cc:     "list@263.net:IOMMU DRIVERS <iommu@lists.linux-foundation.org>, Joerg
+        Roedel <joro@8bytes.org>," <iommu@lists.linux-foundation.org>,
+        dri-devel <dri-devel@lists.freedesktop.org>,
+        aarch64-laptops@lists.linaro.org,
+        Jordan Crouse <jcrouse@codeaurora.org>,
+        Rob Clark <robdclark@chromium.org>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        "Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+        Ulf Hansson <ulf.hansson@linaro.org>,
+        Rasmus Villemoes <linux@rasmusvillemoes.dk>,
+        Heikki Krogerus <heikki.krogerus@linux.intel.com>,
+        Vivek Gautam <vivek.gautam@codeaurora.org>,
+        Bartosz Golaszewski <brgl@bgdev.pl>,
+        Joe Perches <joe@perches.com>,
+        Sudeep Holla <sudeep.holla@arm.com>,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 02.07.2019 17:44, Rob Clark wrote:
-> From: Rob Clark <robdclark@chromium.org>
+On Thu, Jul 4, 2019 at 1:20 AM Joerg Roedel <joro@8bytes.org> wrote:
 >
-> In process of debugging panel on my lenovo yoga c630, I noticed some
-> errors in the dsi->mode_flags, which I guess were just cargo-cult'd?
+> Hi Rob,
 >
-> Since dumping the status regs was useful to notice this problem, I
-> cleaned it up and turned it into debugfs.  The last patch corrects the
-> mode_flags.
+> On Tue, Jul 02, 2019 at 01:26:18PM -0700, Rob Clark wrote:
+> > 1) In some cases the bootloader takes the iommu out of bypass and
+> >    enables the display.  This is in particular a problem on the aarch64
+> >    laptops that exist these days, and modern snapdragon android devices.
+> >    (Older devices also enabled the display in bootloader but did not
+> >    take the iommu out of bypass.)  Attaching a DMA or IDENTITY domain
+> >    while scanout is active, before the driver has a chance to intervene,
+> >    makes things go *boom*
 >
-> Tested on cheza and c630.
->
-> Rob Clark (3):
->   drm/bridge: ti-sn65dsi86: add link to datasheet
->   drm/bridge: ti-sn65dsi86: add debugfs
->   drm/bridge: ti-sn65dsi86: correct dsi mode_flags
->
->  drivers/gpu/drm/bridge/ti-sn65dsi86.c | 46 +++++++++++++++++++++++++--
->  1 file changed, 44 insertions(+), 2 deletions(-)
->
-Queued to drm-misc-next.
+> Just to make sure I get this right: The bootloader inializes the SMMU
+> and creates non-identity mappings for the GPU? And when the SMMU driver
+> in Linux takes over this breaks display output.
 
---
-Regards
-Andrzej
+correct
 
+> > +     /*
+> > +      * If driver is going to manage iommu directly, then avoid
+> > +      * attaching any non driver managed domain.  There could
+> > +      * be already active dma underway (ie. scanout in case of
+> > +      * bootloader enabled display), and interfering with that
+> > +      * will make things go *boom*
+> > +      */
+> > +     if ((domain->type != IOMMU_DOMAIN_UNMANAGED) &&
+> > +         dev->driver && dev->driver->driver_manages_iommu)
+> > +             return 0;
+> > +
+>
+> When the default domain is attached, there is usually no driver attached
+> yet. I think this needs to be communicated by the firmware to Linux and
+> the code should check against that.
+
+At least for the OF case, it happens in the of_dma_configure() which
+happens from really_probe(), so there is normally a driver.  There are
+a few exceptional cases, where drivers call of_dma_configure() on
+their own sub-device without a driver attached (hence the need to
+check if dev->driver is NULL).
+
+I'm also interested in the ACPI case eventually... the aarch64
+"windows" laptops do have ACPI.  But for now we are booting with DT
+since there is quite a lot of work before we get to point of using
+ACPI.  (In particular, under windows, device power management is done
+thru a Platform Extension  Plugin (PEP), but so far linux has no such
+mechanism.)
+
+We really don't have control of the firmware.  But when arm-smmu is
+probed it can read back the hw state and figure out what is going on
+(with an RFC series[1] from Bjorn which was posted earlier), so we
+don't really need to depend on the firmware.
+
+> > -     bool suppress_bind_attrs;       /* disables bind/unbind via sysfs */
+> > +     bool suppress_bind_attrs:1;     /* disables bind/unbind via sysfs */
+> > +     bool driver_manages_iommu:1;    /* driver manages IOMMU explicitly */
+>
+> How does this field get set?
+
+
+It is set in the driver in the second patch[2] in this series.
+
+BR,
+-R
+
+[1] https://www.spinics.net/lists/arm-kernel/msg732246.html
+[2] https://patchwork.freedesktop.org/patch/315291/
