@@ -2,77 +2,76 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 060EA5F9C9
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Jul 2019 16:12:17 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id AB6AC5FD13
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Jul 2019 20:41:48 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727247AbfGDOMQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 4 Jul 2019 10:12:16 -0400
-Received: from mail-vk1-f172.google.com ([209.85.221.172]:44394 "EHLO
-        mail-vk1-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726875AbfGDOMQ (ORCPT
+        id S1727212AbfGDSlq convert rfc822-to-8bit (ORCPT
+        <rfc822;lists+linux-arm-msm@lfdr.de>); Thu, 4 Jul 2019 14:41:46 -0400
+Received: from smtp2.qwestoffice.com ([64.26.60.191]:45012 "EHLO
+        smtp2.qwestoffice.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726881AbfGDSlp (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 4 Jul 2019 10:12:16 -0400
-Received: by mail-vk1-f172.google.com with SMTP id w186so646046vkd.11;
-        Thu, 04 Jul 2019 07:12:15 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=RwjzuKWAb+6lrK93GKCiLTg/Hx2Y3ZoRRbWD2cO622U=;
-        b=eyl34Yv8nX2KUyU4Fz2gdHGh6L+62UalJ2nIsVtaOpKgXSDHi7opEv3U5Yzg/59msm
-         PnHxUWlp9USlqhzSE0E2TbyMn4cMd5mm/UQw5rbieQxZSfI2433j7KlaWK+95M95Xp/V
-         Sv2VgS14C2Dsqipw12Cx/oR0vpLaEkN3TMsRE0PKTPmkYvmQvdOmE1mBFdWdj2fn1zfM
-         3/BkK3rgoGe9bZSWtmpiuf5trPShc5Bw/yHu2vV+yDpreZba+MIZ/DdCCPCtGIg/O6WF
-         LBPj2NIkS8S5aH7FT+S6HdQzPX+IGGjWN+GUa5jiH6/EHbXvFYkBBsTw9CKZ8/o3/vtQ
-         YyxQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=RwjzuKWAb+6lrK93GKCiLTg/Hx2Y3ZoRRbWD2cO622U=;
-        b=exlTx/douHJdzsQoFyaJZjUM3lDhx8SVzFaLHXBET7e2TBK55itd6N914VgfwixIrA
-         RFQeoPYR1sNzesewJbOeOhEbykAoxIOCbtL0P6ptd4BiwL9Dji72CY6eNk+TzDfAkfOQ
-         wQdpYOIaFspj1Cq7saA7YMlo7A2rHIKZBb1zjgCkG1/Jk9jCszLKrFXfSfW1yRl1bnce
-         Ypx/utk3jU/TJig1CjDT0F5PwRUVAjntGFiE6pnRnUis9q1ujnmkC21BaHE+B+O6n8Nx
-         lYAwq0UdWws0h37ZHbHygdePcigMzPaAmy1EGRleUTwzZwgABbw7m/laaF8ETvMHGAxf
-         MWGw==
-X-Gm-Message-State: APjAAAVPGx8PcIXY+XiCHiKDkBoRgk/nrC4A+pnoTMU1OducNQz0FReq
-        MmaCrtrU2nkiMEdakAExsWvSnVWPz8m4t+v2s44=
-X-Google-Smtp-Source: APXvYqy8X3yxVQW7mmHhj2pfnE6gtj/r+XF3IEI0IzGYwRt810JGgoyuihiWEQWD5b9s73RvwHLKrvZOx+G2cwyj0GA=
-X-Received: by 2002:a1f:2242:: with SMTP id i63mr8314223vki.69.1562249535108;
- Thu, 04 Jul 2019 07:12:15 -0700 (PDT)
+        Thu, 4 Jul 2019 14:41:45 -0400
+X-Greylist: delayed 11871 seconds by postgrey-1.27 at vger.kernel.org; Thu, 04 Jul 2019 14:41:44 EDT
+Received: from smtpauth04b.mfg.siteprotect.com ([64.26.60.161] helo=smtpauth02.mfg.siteprotect.com)
+        by semf09.mfg.siteprotect.com with esmtps (TLSv1.2:ECDHE-RSA-AES256-GCM-SHA384:256)
+        (Exim 4.89)
+        (envelope-from <pastoraltland@qwestoffice.net>)
+        id 1hj3Zv-0006PG-9q; Thu, 04 Jul 2019 11:23:22 -0400
+Received: from favour.homerouter.cpe (unknown [160.152.36.127])
+        (Authenticated sender: ronaldadamson@qwestoffice.net)
+        by smtpauth02.mfg.siteprotect.com (Postfix) with ESMTPSA id 45fhYb0l3XzfqfRl;
+        Thu,  4 Jul 2019 11:22:42 -0400 (EDT)
+Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
-References: <20190704023546.4503-1-huangfq.daxian@gmail.com>
-In-Reply-To: <20190704023546.4503-1-huangfq.daxian@gmail.com>
-From:   Emil Velikov <emil.l.velikov@gmail.com>
-Date:   Thu, 4 Jul 2019 15:12:23 +0100
-Message-ID: <CACvgo53Dgdx5NhMaOAc9AhfvvbjX17RfuT71bMLR6G4RKhY=AQ@mail.gmail.com>
-Subject: Re: [Patch v2 02/10] drm/msm: using dev_get_drvdata directly
-To:     Fuqian Huang <huangfq.daxian@gmail.com>
-Cc:     freedreno@lists.freedesktop.org, David Airlie <airlied@linux.ie>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        "Linux-Kernel@Vger. Kernel. Org" <linux-kernel@vger.kernel.org>,
-        ML dri-devel <dri-devel@lists.freedesktop.org>,
-        Sean Paul <sean@poorly.run>
-Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8BIT
+Content-Description: Mail message body
+Subject: Contract Offer
+To:     Recipients <pastoraltland@qwestoffice.net>
+From:   "SAKI NISHIYO" <pastoraltland@qwestoffice.net>
+Date:   Thu, 04 Jul 2019 09:22:36 -0600
+Reply-To: kiyoshihomma21@gmail.com
+Authentication-Results: mfg.siteprotect.com; auth=pass smtp.auth=ronaldadamson@qwestoffice.net smtp.mailfrom=<pastoraltland@qwestoffice.net>
+Message-ID: <E1hj3Zv-0006PG-9q@semf09.mfg.siteprotect.com>
+X-Originating-IP: 64.26.60.161
+X-portal.siteprotect.com-Domain: qwest.outbound
+X-portal.siteprotect.com-Username: 64.26.60.161
+Authentication-Results: mfg.siteprotect.com; auth=pass smtp.auth=64.26.60.161@qwest.outbound
+X-portal.siteprotect.com-Outgoing-Class: unsure
+X-portal.siteprotect.com-Outgoing-Evidence: Combined (0.70)
+X-Recommended-Action: accept
+X-Filter-ID: Mvzo4OR0dZXEDF/gcnlw0Ud2CCyxmm2KHETL0VYw/ASpSDasLI4SayDByyq9LIhVbzyrHWng2i1b
+ UBO0sHTeRUTNWdUk1Ol2OGx3IfrIJKyP9eGNFz9TW9u+Jt8z2T3KgVEyf6K3Efn/WVy8nPF64hdp
+ rMyyV3jQxzlFgRHUN3UkGv6rbYIA5i4iJb1B4q4FDYxT42d7cZa4Np3LaHNTBcNFkE+VKbWysqMQ
+ EPfUmo9xUBQaCsN5XvOMJey3iFEHWlSgRvo8xuzI9LcYvrSYtsouyNwReNKN7W5TBhmqjFWbzu42
+ nS6l4k41zD64ZKWtW15E39tA7+K4hMZtrwZLmFvcsMVNxZBnI45lrbqmRD7cQe+rvoMjuMxAHVUu
+ HrNjyJlgq1q/lpsHQZYrMUVKyKvhtuVx2mtimsBY9Doi6xCwZmm7+RfFfXNLImNSOsgb9MkcgETT
+ xxzz4RX4EungckkbWvxX+Y7PbhOMVPlQd/fJ9XumfR0XyHEWPYZNY4ScMqO+DUZp3KkhVqVjHEud
+ TQvP6sgp/Cgm9hg+aKQBPsJdMQdAIFqz0SLRTmESxOldf7j0CKTjist7O+WLg0AfiNXKeTCmBzfk
+ 5DDx+TODGGm3wL2Y4F0412ezGCyTUPanaritLjmRvUzfqnQ+GQzzA6T4ilai9FNK+SxpmBASFK60
+ IkWdWsg4DI4va0pvzkWnt1ylwZRiLBoTUnc0EP5XVL0OMoTcy/+ydAU9U1Im+y+/9C1JXfJxjUBR
+ htvwVbIpbSdsa9wKVB9HLYkqjcKV0FUdQwyvjt6QyLhxEV7DXvJPewEJRzjYg3kbrt3x8igVWmuN
+ A8WTybi1JN85FSnfKUI2ReeXB3UU4sFX4AtXBVgamSS3efP/5fqe0e0xlg09AOTmdYiIhy2F1Nqi
+ 2QhqtIRsp/pWfJlZ0AnSWEY8KhF2e8VuESCXa6Mg/Ndmv2wBbU0KKlTXzRXeCKOKJhsuYBgWfVqs
+ 1QlXN1wi3QKSJb6o2lZ8dPZ83+IFiIOX0vVYQtk/xNHIo9BZ2klihOsK3urdcepWUUyYLuP7f9uP
+ cBMoG3oHtnbjJEbPOph2rpCUcUOi4eaRxlDvAfSdh54sq15poCNQZR/ftgEGGirICdM93SsS4aMX
+ JmiJ2G0eb5ahOLo90lEiN7SMNlevCQG/psQzN6sl9Br1QBgqyARXyn4lkbtdCETGUMX6hMiF0ZL/
+ HSG7WzUrxdMKslbTvS4oMHXJzrDD9dMBG7hxbb5THGDonV+E7OMXRvgtdyMlnmWirbRkdtbDXTLE
+ u7cZVAGfDJ1LQccfC/K3w2Z5pfJMAy+1RrCsHuDjXg3PqYS15VwMO2v6WNUeDS8JjpKCcXBk7vIT
+ 2a8a/m35I1cD7TNHM5R96a5Wt7CZevZJaInfl6DPX0HYjslJO4qqGgS8PDK8zdU4S0c7sFdGT6Rv
+ Qh7eXq4XckeyESXmUcMGnmyuk6GjY4oGgi3CbTjDIcJltiAWNnKdVudhV3ykyBN6q7YFssC1iY5M
+ blAwJcqfglZzM+UQ0ML7CtHjLlFEEWsjVKUhcVFfEoXm0/FPF8PR0w363lmhE90vBuEnU177heTm
+ 3p8PkXxN564rOnvoA3wzSu+31PUYZwvawhCXDHf09EayjndPRFA8Ewn20r4xR4B6leutqnRRCuGj
+ T73eKnQhjZxPMm7N8Y4TRibnsKYQz9/xf1R8K4EgtgsN2Ij6q4Ui0HC+Xc+mMzoijciXisjtqBKt
+ wLfso20WFhziqCltx5zVKHtB9KOzNyqLFbDxV6pqWEKN
+X-Report-Abuse-To: spam@semfq03.mfg.siteprotect.com
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, 4 Jul 2019 at 08:26, Fuqian Huang <huangfq.daxian@gmail.com> wrote:
->
-> Several drivers cast a struct device pointer to a struct
-> platform_device pointer only to then call platform_get_drvdata().
-> To improve readability, these constructs can be simplified
-> by using dev_get_drvdata() directly.
->
-> Signed-off-by: Fuqian Huang <huangfq.daxian@gmail.com>
+We’d like to contract your services for a period of 12 months. Please advise if you are open to new opportunities.
 
-This patch is:
-Reviewed-by: Emil Velikov <emil.velikov@collabora.com>
+Regards,
 
-I think you want to add Jordan's ack-by from [1]
-
--Emil
-[1] https://lists.freedesktop.org/archives/dri-devel/2019-July/224928.html
+SAKI NISHIYO
