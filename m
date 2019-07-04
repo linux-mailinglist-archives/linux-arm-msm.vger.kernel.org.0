@@ -2,147 +2,162 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id F36F95F82C
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Jul 2019 14:33:41 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A56C45F83B
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Jul 2019 14:36:10 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727602AbfGDMdk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 4 Jul 2019 08:33:40 -0400
-Received: from mailout1.w1.samsung.com ([210.118.77.11]:48536 "EHLO
-        mailout1.w1.samsung.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727685AbfGDMdk (ORCPT
+        id S1727700AbfGDMfe (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 4 Jul 2019 08:35:34 -0400
+Received: from perceval.ideasonboard.com ([213.167.242.64]:53630 "EHLO
+        perceval.ideasonboard.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727686AbfGDMfe (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 4 Jul 2019 08:33:40 -0400
-Received: from eucas1p2.samsung.com (unknown [182.198.249.207])
-        by mailout1.w1.samsung.com (KnoxPortal) with ESMTP id 20190704123339euoutp01e4b58c025333394fd2a102e4eca14a03~uNEtkzey63236432364euoutp01Y
-        for <linux-arm-msm@vger.kernel.org>; Thu,  4 Jul 2019 12:33:39 +0000 (GMT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 mailout1.w1.samsung.com 20190704123339euoutp01e4b58c025333394fd2a102e4eca14a03~uNEtkzey63236432364euoutp01Y
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=samsung.com;
-        s=mail20170921; t=1562243619;
-        bh=mYLCby5nlISaQhXXuJdUjXravGum4plveihG8QiRIG4=;
-        h=Subject:To:Cc:From:Date:In-Reply-To:References:From;
-        b=imINaO/461IxCKbNTOJOzm9Xdv5whpFZyVnsuC1B0lK+MvJrA25yW1SfP78VtQRtv
-         Nyf6m0/jwJYZjiSjN//7HUT/aXGHPzt97tvaxPTYjNO8XYayzuP+jco9tfJL0dGEVP
-         8Cjw3n13J/Te9elmM7ZIsT9nN/Kpcz7yky7chRPg=
-Received: from eusmges2new.samsung.com (unknown [203.254.199.244]) by
-        eucas1p1.samsung.com (KnoxPortal) with ESMTP id
-        20190704123338eucas1p10d40920fbdb0b1427562f7df660946c3~uNEs9Mane2422424224eucas1p1O;
-        Thu,  4 Jul 2019 12:33:38 +0000 (GMT)
-Received: from eucas1p1.samsung.com ( [182.198.249.206]) by
-        eusmges2new.samsung.com (EUCPMTA) with SMTP id 12.0F.04377.222FD1D5; Thu,  4
-        Jul 2019 13:33:38 +0100 (BST)
-Received: from eusmtrp1.samsung.com (unknown [182.198.249.138]) by
-        eucas1p1.samsung.com (KnoxPortal) with ESMTPA id
-        20190704123337eucas1p1514a97326732843cca28573659266158~uNEsNoJmH2133121331eucas1p1c;
-        Thu,  4 Jul 2019 12:33:37 +0000 (GMT)
-Received: from eusmgms1.samsung.com (unknown [182.198.249.179]) by
-        eusmtrp1.samsung.com (KnoxPortal) with ESMTP id
-        20190704123337eusmtrp1e0080ccb381db80ebe5f8beaca270666~uNEr-Y2G91415714157eusmtrp1B;
-        Thu,  4 Jul 2019 12:33:37 +0000 (GMT)
-X-AuditID: cbfec7f4-113ff70000001119-60-5d1df222b385
-Received: from eusmtip2.samsung.com ( [203.254.199.222]) by
-        eusmgms1.samsung.com (EUCPMTA) with SMTP id 7E.28.04146.122FD1D5; Thu,  4
-        Jul 2019 13:33:37 +0100 (BST)
-Received: from [106.120.51.74] (unknown [106.120.51.74]) by
-        eusmtip2.samsung.com (KnoxPortal) with ESMTPA id
-        20190704123337eusmtip2c0b915691796defb198fd7bfae90e363~uNErkqYkS1170411704eusmtip2E;
-        Thu,  4 Jul 2019 12:33:36 +0000 (GMT)
-Subject: Re: [PATCH 3/3] drm/bridge: ti-sn65dsi86: correct dsi mode_flags
-To:     Jeffrey Hugo <jeffrey.l.hugo@gmail.com>,
-        Rob Clark <robdclark@gmail.com>
-Cc:     "open list:DRM PANEL DRIVERS" <dri-devel@lists.freedesktop.org>,
-        MSM <linux-arm-msm@vger.kernel.org>,
-        Sean Paul <seanpaul@chromium.org>,
+        Thu, 4 Jul 2019 08:35:34 -0400
+Received: from pendragon.ideasonboard.com (dfj612yhrgyx302h3jwwy-3.rev.dnainternet.fi [IPv6:2001:14ba:21f5:5b00:ce28:277f:58d7:3ca4])
+        by perceval.ideasonboard.com (Postfix) with ESMTPSA id 69B8E24B;
+        Thu,  4 Jul 2019 14:35:31 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=ideasonboard.com;
+        s=mail; t=1562243731;
+        bh=Qy9c/09MoK7SKFzpRxhQz3bdVH0WPLajOMka0caqEwE=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=D1iCIfxwE6MEBVnRGgssAZK9cHdcIL5jUXXBTcisAWjBswdN3fLX6KsiirANkTaja
+         R10vuXCMHzidW0cyVoFyl+0k8hqBHIvvox06FKf5bA3w6MvEIEE/RahqHQWVmxSLuk
+         QN6R33ivSnFPkHRMLENdMKrpT/hmLxucTNhb3NC0=
+Date:   Thu, 4 Jul 2019 15:35:11 +0300
+From:   Laurent Pinchart <laurent.pinchart@ideasonboard.com>
+To:     Andrzej Hajda <a.hajda@samsung.com>
+Cc:     Rob Clark <robdclark@gmail.com>, dri-devel@lists.freedesktop.org,
+        linux-arm-msm@vger.kernel.org, Sean Paul <seanpaul@chromium.org>,
         Rob Clark <robdclark@chromium.org>,
-        Laurent Pinchart <Laurent.pinchart@ideasonboard.com>,
         David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        lkml <linux-kernel@vger.kernel.org>
-From:   Andrzej Hajda <a.hajda@samsung.com>
-Message-ID: <dcb2b28d-38d9-255d-e91f-05e6e713aee0@samsung.com>
-Date:   Thu, 4 Jul 2019 14:33:32 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
-        Thunderbird/60.7.1
-MIME-Version: 1.0
-In-Reply-To: <CAOCk7Nq91abTQ02dUNY=8_mgY_kuwU4MFxdO71AjWz1nwUkBGA@mail.gmail.com>
-Content-Transfer-Encoding: 8bit
-Content-Language: en-US
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFjrEKsWRmVeSWpSXmKPExsWy7djPc7pKn2RjDS418Fn0njvJZPF/20Rm
-        iytf37NZtC3/xmzROXEJu8XE/WfZLS7vmsNmce3nY2aL5wt/MFvc3XCW0YHLY3bDRRaPvd8W
-        sHjsnHWX3WN2x0xWj+3fHrB63O8+zuTxeZNcAHsUl01Kak5mWWqRvl0CV0brjilsBRO4KiZe
-        2c7cwPiHvYuRk0NCwERi1dEdjF2MXBxCAisYJSYv+s8C4XxhlLjW28AO4XxmlFi15TNcy+Vz
-        PawgtpDAckaJlceDIYreMkqc+n+cDSQhLOApsebaMkYQW0TAR2Ld/mXMIDazwBUmiaX3bEFs
-        NgFNib+bb4LV8wrYSXTsmsACYrMIqEh8WrAerFdUIELi8pZdjBA1ghInZz4Bq+EUCJRou78C
-        aqa8RPPW2VC2uMStJ/OZQA6SELjELrHiQjsLxNUuEn1XHrJC2MISr45vgfpGRuL05B6omnqJ
-        +ytamCGaOxgltm7YyQyRsJY4fPwiUDMH0AZNifW79EFMCQFHiZfT/SFMPokbbwUhTuCTmLRt
-        OjNEmFeio00IYoaixP2zW6HmiUssvfCVbQKj0iwkj81C8swsJM/MQli7gJFlFaN4amlxbnpq
-        sVFearlecWJucWleul5yfu4mRmDKOv3v+JcdjLv+JB1iFOBgVOLhfbBFJlaINbGsuDL3EKME
-        B7OSCO/330Ah3pTEyqrUovz4otKc1OJDjNIcLErivNUMD6KFBNITS1KzU1MLUotgskwcnFIN
-        jF6ar5X7L+vI3krJCJEvefCvR3T7b77k0IPVp35u2/j35LJJfw2U5Zof3pf55f9u9t540T8O
-        q07cW75K4+Gc45veHPP9NsFuoWHXotWvvC2tSzjtEjichPOVb53R6Hpwfv2CpTMff/7X831G
-        V7WhXGgvy8qAW5EHWNeWbBERMFbjWMBcrLAuIlSJpTgj0VCLuag4EQCHbv8iVQMAAA==
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFrrOIsWRmVeSWpSXmKPExsVy+t/xe7qKn2RjDXZ0S1v0njvJZPF/20Rm
-        iytf37NZtC3/xmzROXEJu8XE/WfZLS7vmsNmce3nY2aL5wt/MFvc3XCW0YHLY3bDRRaPvd8W
-        sHjsnHWX3WN2x0xWj+3fHrB63O8+zuTxeZNcAHuUnk1RfmlJqkJGfnGJrVK0oYWRnqGlhZ6R
-        iaWeobF5rJWRqZK+nU1Kak5mWWqRvl2CXkbrjilsBRO4KiZe2c7cwPiHvYuRk0NCwETi8rke
-        1i5GLg4hgaWMEpc+fYBKiEvsnv+WGcIWlvhzrYsNoug1o0TvzStgRcICnhJrri1jBLFFBHwk
-        1u1fxgxSxCxwjUni3/yPTCAJIYEJzBLflyaA2GwCmhJ/N99kA7F5BewkOnZNYAGxWQRUJD4t
-        WA82SFQgQqKvbTZUjaDEyZlPwGo4BQIl2u6vALuIWUBd4s+8S1C2vETz1tlQtrjErSfzmSYw
-        Cs1C0j4LScssJC2zkLQsYGRZxSiSWlqcm55bbKhXnJhbXJqXrpecn7uJERip24793LyD8dLG
-        4EOMAhyMSjy8D7bIxAqxJpYVV+YeYpTgYFYS4f3+GyjEm5JYWZValB9fVJqTWnyI0RTouYnM
-        UqLJ+cAkklcSb2hqaG5haWhubG5sZqEkztshcDBGSCA9sSQ1OzW1ILUIpo+Jg1OqgbGhcqVn
-        7nWXCQYsgiVz1rqrmXzOy0y7vV+z/7XWQaml8dmp999nmW2uDWdkizWKN6w0Mj1kdF0xQ8rh
-        cONJla8GkUYTGphM73hp3WStXVTibZcV3Nk8L49lwauzRg+5dcJSevf8cL4jeXf7Qtn/+rWc
-        92773GLXFvdYUfEm9ILk59rv8gePKrEUZyQaajEXFScCAHzz3sfqAgAA
-X-CMS-MailID: 20190704123337eucas1p1514a97326732843cca28573659266158
-X-Msg-Generator: CA
-Content-Type: text/plain; charset="utf-8"
-X-RootMTR: 20190702172346epcas1p29ebecfac70d87abb5379f00cdd1a913a
-X-EPHeader: CA
-CMS-TYPE: 201P
-X-CMS-RootMailID: 20190702172346epcas1p29ebecfac70d87abb5379f00cdd1a913a
+        Daniel Vetter <daniel@ffwll.ch>, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 2/3] drm/bridge: ti-sn65dsi86: add debugfs
+Message-ID: <20190704123511.GG6569@pendragon.ideasonboard.com>
 References: <20190702154419.20812-1-robdclark@gmail.com>
-        <20190702154419.20812-4-robdclark@gmail.com>
-        <CAOCk7NrXko8xR1Ovg6HrP2ZpS83mjZoOWdae-mq_QJMRzeENLQ@mail.gmail.com>
-        <CAF6AEGsUve1NnzF2kEeW0jwgXnxZTgFaHbq-c-+CKru1jS9tWg@mail.gmail.com>
-        <CGME20190702172346epcas1p29ebecfac70d87abb5379f00cdd1a913a@epcas1p2.samsung.com>
-        <CAOCk7Nq91abTQ02dUNY=8_mgY_kuwU4MFxdO71AjWz1nwUkBGA@mail.gmail.com>
+ <CGME20190702154441epcas2p2cba89e3a84216d9a8da43438a9648e03@epcas2p2.samsung.com>
+ <20190702154419.20812-3-robdclark@gmail.com>
+ <1b56a11c-194d-0eca-4dd1-48e91820eafb@samsung.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <1b56a11c-194d-0eca-4dd1-48e91820eafb@samsung.com>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 02.07.2019 19:23, Jeffrey Hugo wrote:
-> On Tue, Jul 2, 2019 at 11:12 AM Rob Clark <robdclark@gmail.com> wrote:
->> On Tue, Jul 2, 2019 at 10:09 AM Jeffrey Hugo <jeffrey.l.hugo@gmail.com> wrote:
->>> On Tue, Jul 2, 2019 at 9:46 AM Rob Clark <robdclark@gmail.com> wrote:
->>>> -       dsi->mode_flags = MIPI_DSI_MODE_VIDEO | MIPI_DSI_MODE_VIDEO_SYNC_PULSE |
->>>> -                         MIPI_DSI_MODE_EOT_PACKET | MIPI_DSI_MODE_VIDEO_HSE;
->>>> +       dsi->mode_flags = MIPI_DSI_MODE_VIDEO;
->>> Did you check this against the datasheet?  Per my reading, EOT_PACKET
->>> and VIDEO_HSE appear valid.  I don't know about VIDEO_SYNC_PULSE.
->> The EOT flat is badly named:
->>
->> /* disable EoT packets in HS mode */
->> #define MIPI_DSI_MODE_EOT_PACKET    BIT(9)
->>
->> I can double check out HSE, but this was one of the setting
->> differences between bootloader and kernel
-> Ah yeah, you are right.  My eyes apparently skipped over the "disable".
->
-> If the bootloader is not setting the HSE, then I can't think of a
-> reason why we would be having an issue also not setting it.
->
-> Seems good to me
->
-> Reviewed-by: Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
->
->
-Yes, the flags require cleanup.
+Hello,
 
-Reviewed-by: Andrzej Hajda <a.hajda@samsung.com>
+On Thu, Jul 04, 2019 at 02:31:20PM +0200, Andrzej Hajda wrote:
+> On 02.07.2019 17:44, Rob Clark wrote:
+> > From: Rob Clark <robdclark@chromium.org>
+> >
+> > Add a debugfs file to show status registers.
+> >
+> > Signed-off-by: Rob Clark <robdclark@chromium.org>
+> > ---
+> >  drivers/gpu/drm/bridge/ti-sn65dsi86.c | 42 +++++++++++++++++++++++++++
+> >  1 file changed, 42 insertions(+)
+> >
+> > diff --git a/drivers/gpu/drm/bridge/ti-sn65dsi86.c b/drivers/gpu/drm/bridge/ti-sn65dsi86.c
+> > index f1a2493b86d9..a6f27648c015 100644
+> > --- a/drivers/gpu/drm/bridge/ti-sn65dsi86.c
+> > +++ b/drivers/gpu/drm/bridge/ti-sn65dsi86.c
+> > @@ -5,6 +5,7 @@
+> >   */
+> >  
+> >  #include <linux/clk.h>
+> > +#include <linux/debugfs.h>
+> >  #include <linux/gpio/consumer.h>
+> >  #include <linux/i2c.h>
+> >  #include <linux/iopoll.h>
+> > @@ -109,6 +110,7 @@ struct ti_sn_bridge {
+> >  	struct drm_dp_aux		aux;
+> >  	struct drm_bridge		bridge;
+> >  	struct drm_connector		connector;
+> > +	struct dentry			*debugfs;
+> >  	struct device_node		*host_node;
+> >  	struct mipi_dsi_device		*dsi;
+> >  	struct clk			*refclk;
+> > @@ -178,6 +180,42 @@ static const struct dev_pm_ops ti_sn_bridge_pm_ops = {
+> >  	SET_RUNTIME_PM_OPS(ti_sn_bridge_suspend, ti_sn_bridge_resume, NULL)
+> >  };
+> >  
+> > +static int status_show(struct seq_file *s, void *data)
+> > +{
+> > +	struct ti_sn_bridge *pdata = s->private;
+> > +	unsigned int reg, val;
+> > +
+> > +	seq_puts(s, "STATUS REGISTERS:\n");
 
- --
-Regards
-Andrzej
+NO NEED TO SHOUT :-)
 
+> > +
+> > +	pm_runtime_get_sync(pdata->dev);
+> > +
+> > +	/* IRQ Status Registers, see Table 31 in datasheet */
+> > +	for (reg = 0xf0; reg <= 0xf8; reg++) {
+> > +		regmap_read(pdata->regmap, reg, &val);
+> > +		seq_printf(s, "[0x%02x] = 0x%08x\n", reg, val);
+> > +	}
+> > +
+> > +	pm_runtime_put(pdata->dev);
+> > +
+> > +	return 0;
+> > +}
+> > +
+> > +DEFINE_SHOW_ATTRIBUTE(status);
+> > +
+> > +static void ti_sn_debugfs_init(struct ti_sn_bridge *pdata)
+> > +{
+> > +	pdata->debugfs = debugfs_create_dir("ti_sn65dsi86", NULL);
+> 
+> If some day we will have board with two such bridges there will be a
+> problem.
 
+Could we use the platform device name for this ?
+
+> Anyway:
+> 
+> Reviewed-by: Andrzej Hajda <a.hajda@samsung.com>
+> 
+> > +
+> > +	debugfs_create_file("status", 0600, pdata->debugfs, pdata,
+> > +			&status_fops);
+> > +}
+> > +
+> > +static void ti_sn_debugfs_remove(struct ti_sn_bridge *pdata)
+> > +{
+> > +	debugfs_remove_recursive(pdata->debugfs);
+> > +	pdata->debugfs = NULL;
+> > +}
+> > +
+
+You need to conditionally-compile this based on CONFIG_DEBUG_FS.
+
+> >  /* Connector funcs */
+> >  static struct ti_sn_bridge *
+> >  connector_to_ti_sn_bridge(struct drm_connector *connector)
+> > @@ -869,6 +907,8 @@ static int ti_sn_bridge_probe(struct i2c_client *client,
+> >  
+> >  	drm_bridge_add(&pdata->bridge);
+> >  
+> > +	ti_sn_debugfs_init(pdata);
+> > +
+> >  	return 0;
+> >  }
+> >  
+> > @@ -879,6 +919,8 @@ static int ti_sn_bridge_remove(struct i2c_client *client)
+> >  	if (!pdata)
+> >  		return -EINVAL;
+> >  
+> > +	ti_sn_debugfs_remove(pdata);
+> > +
+> >  	of_node_put(pdata->host_node);
+> >  
+> >  	pm_runtime_disable(pdata->dev);
+
+-- 
+Regards,
+
+Laurent Pinchart
