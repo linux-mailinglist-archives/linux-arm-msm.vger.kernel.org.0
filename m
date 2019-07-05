@@ -2,81 +2,133 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id D682760B7D
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 Jul 2019 20:39:06 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 8190C60B84
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 Jul 2019 20:46:53 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727341AbfGESjF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 5 Jul 2019 14:39:05 -0400
-Received: from mail-io1-f67.google.com ([209.85.166.67]:43558 "EHLO
-        mail-io1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725730AbfGESjF (ORCPT
+        id S1725813AbfGESqw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 5 Jul 2019 14:46:52 -0400
+Received: from asavdk3.altibox.net ([109.247.116.14]:49576 "EHLO
+        asavdk3.altibox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725730AbfGESqv (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 5 Jul 2019 14:39:05 -0400
-Received: by mail-io1-f67.google.com with SMTP id k20so20978335ios.10;
-        Fri, 05 Jul 2019 11:39:04 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=e1s/k43Uef/oTZ066ashsVWzI7Tt+ue2hhBa4/5vSY8=;
-        b=HHAshVYuxSLMcBpfsVyE710re2bMPnXjz2lor83rqUHC7wpBI9j0Umy9JS8PGUz1me
-         8bg7v5s3JYFtsPMXh47sH2xaxAkW9mvENDvNv9xQBVr+C0ZMksvV/mGRD5S6C9uEabIE
-         +iC9o+j2DqDoMgcUwu7y4xDDVWui30NxDWrxsgZ1uAFymPyeOeNWZtWXTeug/+Lzz9xR
-         MYpiM1BKSM9WNckqLDqIgdHZg5dOa38Ijwea7yN8Q4UdfuBAq64mj1AGIdETJuOXFCnr
-         s/10ufHZIWrSd9Hpq7qJQTan33d1nUwTL3l7SzJZeA73XocbIY4KW9K6pa3rL+yR6w5h
-         CbcA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=e1s/k43Uef/oTZ066ashsVWzI7Tt+ue2hhBa4/5vSY8=;
-        b=qpkJO/1RUg+WlZaVW/jzKKVK2mJVaiBBE4wOx+W6du4gfNhPlqy02lSEmnNuY/wOQI
-         5oMQmzm3/oD7WCrPKKT3pQbwx2ffFsTdoOOhwPgNjnCAq9dWknRpgaj6ZshPfBrdQfnq
-         EPLVB1Ta2GJObpz+ZvRY4Hr0xsAgNS5FHSruCRTB3av1lWJVocRVBydXV2YZ5tbOPxAU
-         pPIgyOeiUnFaDIi8nzBoqX7bbcCboAQ5idQSva8D0nwincNgUAFmOGeqmUJ5RLzMS90V
-         v6V4c471Aobtp5z26ijCGyv7OodZUfb7tVl7VhgLMpvln53klkflS5O4jWuo6KYu+8Id
-         cGZg==
-X-Gm-Message-State: APjAAAVGb8ehiNwrH+Sxe1C6uuThLB7Ja1pIGXcpftsTwvh2FOeJtkvN
-        Shgas0BIwziG28uor85KiJh72DX2iNXSM1IGI5o=
-X-Google-Smtp-Source: APXvYqwe/lOZqTMnRDY7Swtv9Fp4sctE1ATThpdg1r/J8kj+FhdaVVgjYdjeXRQ1YQvjfA/lu8RkKXTGyy+WWuejpmQ=
-X-Received: by 2002:a02:c50a:: with SMTP id s10mr6427939jam.106.1562351944338;
- Fri, 05 Jul 2019 11:39:04 -0700 (PDT)
-MIME-Version: 1.0
-References: <20190705165450.329-1-jeffrey.l.hugo@gmail.com>
- <20190705165655.456-1-jeffrey.l.hugo@gmail.com> <20190705172338.GB2788@ravnborg.org>
-In-Reply-To: <20190705172338.GB2788@ravnborg.org>
-From:   Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
-Date:   Fri, 5 Jul 2019 12:38:54 -0600
-Message-ID: <CAOCk7NoCq0k2rCC4XQm_yLxgQir1bqLwJMGwD1qDCHQJRUEC8g@mail.gmail.com>
-Subject: Re: [PATCH 1/2] dt-bindings: panel: Add Sharp LD-D5116Z01B
-To:     Sam Ravnborg <sam@ravnborg.org>
-Cc:     Rob Herring <robh+dt@kernel.org>,
-        Mark Rutland <mark.rutland@arm.com>, thierry.reding@gmail.com,
-        Dave Airlie <airlied@linux.ie>,
+        Fri, 5 Jul 2019 14:46:51 -0400
+Received: from ravnborg.org (unknown [158.248.194.18])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by asavdk3.altibox.net (Postfix) with ESMTPS id C0E0720065;
+        Fri,  5 Jul 2019 20:46:46 +0200 (CEST)
+Date:   Fri, 5 Jul 2019 20:46:44 +0200
+From:   Sam Ravnborg <sam@ravnborg.org>
+To:     Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
+Cc:     thierry.reding@gmail.com, Dave Airlie <airlied@linux.ie>,
         Daniel Vetter <daniel@ffwll.ch>,
+        Rob Herring <robh+dt@kernel.org>,
+        Mark Rutland <mark.rutland@arm.com>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
         "open list:DRM PANEL DRIVERS" <dri-devel@lists.freedesktop.org>,
         DTML <devicetree@vger.kernel.org>,
         MSM <linux-arm-msm@vger.kernel.org>,
         lkml <linux-kernel@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Subject: Re: [PATCH 2/2] drm/panel: simple: Add support for Sharp
+ LD-D5116Z01B panel
+Message-ID: <20190705184644.GA5044@ravnborg.org>
+References: <20190705165450.329-1-jeffrey.l.hugo@gmail.com>
+ <20190705165755.515-1-jeffrey.l.hugo@gmail.com>
+ <20190705172058.GA2788@ravnborg.org>
+ <CAOCk7NrVSCt18QfMs+_nW1rDMuhK_dPKWL0roESmwEEy4u3BZQ@mail.gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CAOCk7NrVSCt18QfMs+_nW1rDMuhK_dPKWL0roESmwEEy4u3BZQ@mail.gmail.com>
+User-Agent: Mutt/1.10.1 (2018-07-13)
+X-CMAE-Score: 0
+X-CMAE-Analysis: v=2.3 cv=dqr19Wo4 c=1 sm=1 tr=0
+        a=UWs3HLbX/2nnQ3s7vZ42gw==:117 a=UWs3HLbX/2nnQ3s7vZ42gw==:17
+        a=jpOVt7BSZ2e4Z31A5e1TngXxSK0=:19 a=kj9zAlcOel0A:10 a=7gkXJVJtAAAA:8
+        a=pGLkceISAAAA:8 a=XCh60BrB9CTw4ms3EqwA:9 a=CjuIK1q_8ugA:10
+        a=E9Po1WZjFZOl8hwRPBS3:22
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, Jul 5, 2019 at 11:23 AM Sam Ravnborg <sam@ravnborg.org> wrote:
->
-> Hi Jeffrey.
->
-> On Fri, Jul 05, 2019 at 09:56:55AM -0700, Jeffrey Hugo wrote:
-> > +     panel: panel {
-> > +             compatible = "sharp,ld-d5116z01b";
-> > +             power-supply = <&vlcd_3v3>;
-> > +             no-hpd
-> The binding do not mention no-hpd - but it is part of panel-simple
-> binding. Is it included in the example for any special reason?
+Hi Jeffrey.
 
-I just copied (poorly apparently since a ";" is missing) from my
-platform's dt.  There is no particular reason the example lists
-no-hpd.  I'll drop it in the next rev.
+On Fri, Jul 05, 2019 at 12:35:30PM -0600, Jeffrey Hugo wrote:
+> On Fri, Jul 5, 2019 at 11:21 AM Sam Ravnborg <sam@ravnborg.org> wrote:
+> >
+> > Hi Jeffrey.
+> >
+> > Patch looks good, but there is a few fields that are not initialized.
+> > Did you forget them, or are they not needed?
+> 
+> Thanks for the review.  Overlooked some of them.
+> 
+> >
+> > On Fri, Jul 05, 2019 at 09:57:55AM -0700, Jeffrey Hugo wrote:
+> > > The Sharp LD-D5116Z01B is a 12.3" eDP panel with a 1920X1280 resolution.
+> > >
+> > > Signed-off-by: Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
+> > > ---
+> > >  drivers/gpu/drm/panel/panel-simple.c | 26 ++++++++++++++++++++++++++
+> > >  1 file changed, 26 insertions(+)
+> > >
+> > > diff --git a/drivers/gpu/drm/panel/panel-simple.c b/drivers/gpu/drm/panel/panel-simple.c
+> > > index 5a93c4edf1e4..e6f578667324 100644
+> > > --- a/drivers/gpu/drm/panel/panel-simple.c
+> > > +++ b/drivers/gpu/drm/panel/panel-simple.c
+> > > @@ -2354,6 +2354,29 @@ static const struct panel_desc samsung_ltn140at29_301 = {
+> > >       },
+> > >  };
+> > >
+> > > +static const struct drm_display_mode sharp_ld_d5116z01b_mode = {
+> > > +     .clock = 168480,
+> > > +     .hdisplay = 1920,
+> > > +     .hsync_start = 1920 + 48,
+> > > +     .hsync_end = 1920 + 48 + 32,
+> > > +     .htotal = 1920 + 48 + 32 + 80,
+> > > +     .vdisplay = 1280,
+> > > +     .vsync_start = 1280 + 3,
+> > > +     .vsync_end = 1280 + 3 + 10,
+> > > +     .vtotal = 1280 + 3 + 10 + 57,
+> > > +     .vrefresh = 60,
+> > > +};
+> > No .flags? Is it not needed for an eDP panel?
+> 
+> The flags don't appear to make sense per my understanding of eDP.
+> Therefore I intended .flags to be 0, which it implicitly is because
+> this is a static struct.  Would you prefer I explicitly list .flags =
+> 0?
+I was not sure hence my Q. And do not set it to 0, as then someone will
+come and say this is default and delete it.
+Maybe mention it in the changelog.
+
+
+> 
+> >
+> > > +
+> > > +static const struct panel_desc sharp_ld_d5116z01b = {
+> > > +     .modes = &sharp_ld_d5116z01b_mode,
+> > > +     .num_modes = 1,
+> > > +     .bpc = 8,
+> > > +     .size = {
+> > > +             .width = 260,
+> > > +             .height = 120,
+> > > +     },
+> > > +};
+> > No .bus_format?
+> 
+> Ah, yes.  Looks like it should be MEDIA_BUS_FMT_RGB888_1X24
+> Will fix.
+> 
+> > No .bus_flags?
+> 
+> eDP is differential signaling, so what I see generally doesn't apply,
+> but DRM_BUS_FLAG_DATA_MSB_TO_LSB does apply, so I'll add that.
+
+With your changes you can add my:
+Reviewed-by: Sam Ravnborg <sam@ravnborg.org>
+
+On both patches.
+
+	Sam
