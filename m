@@ -2,157 +2,198 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 6933A5FE0D
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Jul 2019 23:10:28 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 438EB60187
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 Jul 2019 09:33:49 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727091AbfGDVK1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 4 Jul 2019 17:10:27 -0400
-Received: from perceval.ideasonboard.com ([213.167.242.64]:35062 "EHLO
-        perceval.ideasonboard.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726871AbfGDVK1 (ORCPT
+        id S1726436AbfGEHds (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 5 Jul 2019 03:33:48 -0400
+Received: from smtp.codeaurora.org ([198.145.29.96]:43210 "EHLO
+        smtp.codeaurora.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725862AbfGEHds (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 4 Jul 2019 17:10:27 -0400
-Received: from pendragon.ideasonboard.com (dfj612yhrgyx302h3jwwy-3.rev.dnainternet.fi [IPv6:2001:14ba:21f5:5b00:ce28:277f:58d7:3ca4])
-        by perceval.ideasonboard.com (Postfix) with ESMTPSA id C4F3C24B;
-        Thu,  4 Jul 2019 23:10:24 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=ideasonboard.com;
-        s=mail; t=1562274624;
-        bh=rH5bR+9lFkKtZCDqwCe8OuU9RTZKTQrIQJBkM0CbF3I=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=FCDjPpeCNkj1EFXAIg9h/NzwKcGsKZmLD7agdaR1+cVt7JK7zHSn1M4g4HlG/aOvH
-         1qGga4AH5et1WH+DOXF7QSWYGsZibj8vneYOfJZVMVbNpsKkcj4Fumwl4JfHAl8Ude
-         A2HXM0xBa6cY8K0LRFVuMfpl4D0sbHRWItMo/Wqo=
-Date:   Fri, 5 Jul 2019 00:10:04 +0300
-From:   Laurent Pinchart <laurent.pinchart@ideasonboard.com>
-To:     Rob Clark <robdclark@gmail.com>
-Cc:     Andrzej Hajda <a.hajda@samsung.com>,
-        dri-devel <dri-devel@lists.freedesktop.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Sean Paul <seanpaul@chromium.org>,
-        Rob Clark <robdclark@chromium.org>,
-        David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>
-Subject: Re: [PATCH 2/3] drm/bridge: ti-sn65dsi86: add debugfs
-Message-ID: <20190704211004.GH5024@pendragon.ideasonboard.com>
-References: <20190702154419.20812-1-robdclark@gmail.com>
- <CGME20190702154441epcas2p2cba89e3a84216d9a8da43438a9648e03@epcas2p2.samsung.com>
- <20190702154419.20812-3-robdclark@gmail.com>
- <1b56a11c-194d-0eca-4dd1-48e91820eafb@samsung.com>
- <20190704123511.GG6569@pendragon.ideasonboard.com>
- <CAF6AEGvYJ6iA5B+thJuBC=pFStuhsn87xrrcWAZyroWj5xKMZA@mail.gmail.com>
+        Fri, 5 Jul 2019 03:33:48 -0400
+Received: by smtp.codeaurora.org (Postfix, from userid 1000)
+        id 8488260AA8; Fri,  5 Jul 2019 07:33:47 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
+        s=default; t=1562312027;
+        bh=nPMhnj+zcNooc/1ChtGLQSB7ksNEaj/QPLBEWR76RO0=;
+        h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
+        b=BihSJiKeUDChR6i3Dp7K6l69lFTP6+7D7jDvkYQ4xNGZdjp+87ihRex3SwcxuVlOA
+         7rEvma0l9tyeikvl41PXuopht8chWiBSiyboifQCdgg+Bjgm0wki4niVK26LyjMMj0
+         0zYkqVR8c/7wh8B0e8hs4qlLmM9mveQEvUHHryLM=
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        pdx-caf-mail.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.7 required=2.0 tests=ALL_TRUSTED,BAYES_00,
+        DKIM_INVALID,DKIM_SIGNED autolearn=no autolearn_force=no version=3.4.0
+Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
+        by smtp.codeaurora.org (Postfix) with ESMTP id ABF54607EB;
+        Fri,  5 Jul 2019 07:33:46 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
+        s=default; t=1562312026;
+        bh=nPMhnj+zcNooc/1ChtGLQSB7ksNEaj/QPLBEWR76RO0=;
+        h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
+        b=QBOBVX4Dag+b/K6K7G8Iza+n8Ph3SCMq4bPS0cIlgZuF5oTo2gb+epe0RRCFAmH6w
+         vN3y/S+/ltKWEH8NS0Jrk7FidcVwwBAhCGJV+Cimb/xiCbWuWgTpdeAibIXvk7JVAs
+         gOBRFRYZFF6HAZPcOT9SsAle7zI+lwNlFCJ8I5Os=
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <CAF6AEGvYJ6iA5B+thJuBC=pFStuhsn87xrrcWAZyroWj5xKMZA@mail.gmail.com>
-User-Agent: Mutt/1.10.1 (2018-07-13)
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
+Content-Transfer-Encoding: 7bit
+Date:   Fri, 05 Jul 2019 13:03:46 +0530
+From:   Harish Bandi <c-hbandi@codeaurora.org>
+To:     marcel@holtmann.org
+Cc:     linux-bluetooth@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        bgodavar@codeaurora.org, anubhavg@codeaurora.org
+Subject: Doubt/issue in hci_dev_do_close
+In-Reply-To: <a75d686f28a2c73562e9bbf5b601d37c@codeaurora.org>
+References: <1553689723-21017-2-git-send-email-c-hbandi@codeaurora.org>
+ <201903290535.u5TF12SC%lkp@intel.com> <20190328212320.GF112750@google.com>
+ <a75d686f28a2c73562e9bbf5b601d37c@codeaurora.org>
+Message-ID: <e0f4f7acffb3abd2c0d1790a7cd79905@codeaurora.org>
+X-Sender: c-hbandi@codeaurora.org
+User-Agent: Roundcube Webmail/1.2.5
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Rob,
 
-On Thu, Jul 04, 2019 at 06:56:56AM -0700, Rob Clark wrote:
-> On Thu, Jul 4, 2019 at 5:35 AM Laurent Pinchartwrote:
-> > On Thu, Jul 04, 2019 at 02:31:20PM +0200, Andrzej Hajda wrote:
-> > > On 02.07.2019 17:44, Rob Clark wrote:
-> > > > From: Rob Clark <robdclark@chromium.org>
-> > > >
-> > > > Add a debugfs file to show status registers.
-> > > >
-> > > > Signed-off-by: Rob Clark <robdclark@chromium.org>
-> > > > ---
-> > > >  drivers/gpu/drm/bridge/ti-sn65dsi86.c | 42 +++++++++++++++++++++++++++
-> > > >  1 file changed, 42 insertions(+)
-> > > >
-> > > > diff --git a/drivers/gpu/drm/bridge/ti-sn65dsi86.c b/drivers/gpu/drm/bridge/ti-sn65dsi86.c
-> > > > index f1a2493b86d9..a6f27648c015 100644
-> > > > --- a/drivers/gpu/drm/bridge/ti-sn65dsi86.c
-> > > > +++ b/drivers/gpu/drm/bridge/ti-sn65dsi86.c
-> > > > @@ -5,6 +5,7 @@
-> > > >   */
-> > > >
-> > > >  #include <linux/clk.h>
-> > > > +#include <linux/debugfs.h>
-> > > >  #include <linux/gpio/consumer.h>
-> > > >  #include <linux/i2c.h>
-> > > >  #include <linux/iopoll.h>
-> > > > @@ -109,6 +110,7 @@ struct ti_sn_bridge {
-> > > >     struct drm_dp_aux               aux;
-> > > >     struct drm_bridge               bridge;
-> > > >     struct drm_connector            connector;
-> > > > +   struct dentry                   *debugfs;
-> > > >     struct device_node              *host_node;
-> > > >     struct mipi_dsi_device          *dsi;
-> > > >     struct clk                      *refclk;
-> > > > @@ -178,6 +180,42 @@ static const struct dev_pm_ops ti_sn_bridge_pm_ops = {
-> > > >     SET_RUNTIME_PM_OPS(ti_sn_bridge_suspend, ti_sn_bridge_resume, NULL)
-> > > >  };
-> > > >
-> > > > +static int status_show(struct seq_file *s, void *data)
-> > > > +{
-> > > > +   struct ti_sn_bridge *pdata = s->private;
-> > > > +   unsigned int reg, val;
-> > > > +
-> > > > +   seq_puts(s, "STATUS REGISTERS:\n");
-> >
-> > NO NEED TO SHOUT :-)
-> >
-> > > > +
-> > > > +   pm_runtime_get_sync(pdata->dev);
-> > > > +
-> > > > +   /* IRQ Status Registers, see Table 31 in datasheet */
-> > > > +   for (reg = 0xf0; reg <= 0xf8; reg++) {
-> > > > +           regmap_read(pdata->regmap, reg, &val);
-> > > > +           seq_printf(s, "[0x%02x] = 0x%08x\n", reg, val);
-> > > > +   }
-> > > > +
-> > > > +   pm_runtime_put(pdata->dev);
-> > > > +
-> > > > +   return 0;
-> > > > +}
-> > > > +
-> > > > +DEFINE_SHOW_ATTRIBUTE(status);
-> > > > +
-> > > > +static void ti_sn_debugfs_init(struct ti_sn_bridge *pdata)
-> > > > +{
-> > > > +   pdata->debugfs = debugfs_create_dir("ti_sn65dsi86", NULL);
-> > >
-> > > If some day we will have board with two such bridges there will be a
-> > > problem.
-> >
-> > Could we use the platform device name for this ?
-> 
-> hmm, yeah, that would solve the 2x bridges issue
-> 
-> > > Anyway:
-> > >
-> > > Reviewed-by: Andrzej Hajda <a.hajda@samsung.com>
-> > >
-> > > > +
-> > > > +   debugfs_create_file("status", 0600, pdata->debugfs, pdata,
-> > > > +                   &status_fops);
-> > > > +}
-> > > > +
-> > > > +static void ti_sn_debugfs_remove(struct ti_sn_bridge *pdata)
-> > > > +{
-> > > > +   debugfs_remove_recursive(pdata->debugfs);
-> > > > +   pdata->debugfs = NULL;
-> > > > +}
-> > > > +
-> >
-> > You need to conditionally-compile this based on CONFIG_DEBUG_FS.
-> 
-> Hmm, is that really true?  Debugfs appears to be sufficently stub'd w/
-> inline no-ops in the !CONFIG_DEBUG_FS case
+Hi Marcel/Bluetooth Maintainers,
 
-You're right, my bad. I wonder if the compiler will optimise the above
-two functions out. It might warrant a CONFIG_DEBUG_FS check here for
-that reason, but that's really bikeshedding. So with the 2x bridges
-issue addressed, I think the patch will be good.
+In hci_dev_do_close first it is sending vendor specific shutdown routine 
+and then after some operations it is sending
+the hci_reset command.
+However in vendor specific shutdown routine if vendor already powered 
+off the vendor chip. In those cases it will not
+send the HCI_RESET command. That may lead to bug or some cleanup 
+operations not done properly in Chip.
+Is there any specific reason why it is sending vendor specific shutdown 
+routine first and then sending HCI_RESET command.
 
--- 
-Regards,
 
-Laurent Pinchart
+int hci_dev_do_close(struct hci_dev *hdev)
+{
+	bool auto_off;
+
+	BT_DBG("%s %p", hdev->name, hdev);
+
+	if (!hci_dev_test_flag(hdev, HCI_UNREGISTER) &&
+	    !hci_dev_test_flag(hdev, HCI_USER_CHANNEL) &&
+	    test_bit(HCI_UP, &hdev->flags)) {
+		/* Execute vendor specific shutdown routine */
+		if (hdev->shutdown)
+			hdev->shutdown(hdev);
+	}
+
+	cancel_delayed_work(&hdev->power_off);
+
+	hci_request_cancel_all(hdev);
+	hci_req_sync_lock(hdev);
+
+	if (!test_and_clear_bit(HCI_UP, &hdev->flags)) {
+		cancel_delayed_work_sync(&hdev->cmd_timer);
+		hci_req_sync_unlock(hdev);
+		return 0;
+	}
+
+	hci_leds_update_powered(hdev, false);
+
+	/* Flush RX and TX works */
+	flush_work(&hdev->tx_work);
+	flush_work(&hdev->rx_work);
+
+	if (hdev->discov_timeout > 0) {
+		hdev->discov_timeout = 0;
+		hci_dev_clear_flag(hdev, HCI_DISCOVERABLE);
+		hci_dev_clear_flag(hdev, HCI_LIMITED_DISCOVERABLE);
+	}
+
+	if (hci_dev_test_and_clear_flag(hdev, HCI_SERVICE_CACHE))
+		cancel_delayed_work(&hdev->service_cache);
+
+	if (hci_dev_test_flag(hdev, HCI_MGMT)) {
+		struct adv_info *adv_instance;
+
+		cancel_delayed_work_sync(&hdev->rpa_expired);
+
+		list_for_each_entry(adv_instance, &hdev->adv_instances, list)
+			cancel_delayed_work_sync(&adv_instance->rpa_expired_cb);
+	}
+
+	/* Avoid potential lockdep warnings from the *_flush() calls by
+	 * ensuring the workqueue is empty up front.
+	 */
+	drain_workqueue(hdev->workqueue);
+
+	hci_dev_lock(hdev);
+
+	hci_discovery_set_state(hdev, DISCOVERY_STOPPED);
+
+	auto_off = hci_dev_test_and_clear_flag(hdev, HCI_AUTO_OFF);
+
+	if (!auto_off && hdev->dev_type == HCI_PRIMARY &&
+	    !hci_dev_test_flag(hdev, HCI_USER_CHANNEL) &&
+	    hci_dev_test_flag(hdev, HCI_MGMT))
+		__mgmt_power_off(hdev);
+
+	hci_inquiry_cache_flush(hdev);
+	hci_pend_le_actions_clear(hdev);
+	hci_conn_hash_flush(hdev);
+	hci_dev_unlock(hdev);
+
+	smp_unregister(hdev);
+
+	hci_sock_dev_event(hdev, HCI_DEV_DOWN);
+
+	if (hdev->flush)
+		hdev->flush(hdev);
+
+	/* Reset device */
+	skb_queue_purge(&hdev->cmd_q);
+	atomic_set(&hdev->cmd_cnt, 1);
+	if (test_bit(HCI_QUIRK_RESET_ON_CLOSE, &hdev->quirks) &&
+	    !auto_off && !hci_dev_test_flag(hdev, HCI_UNCONFIGURED)) {
+		set_bit(HCI_INIT, &hdev->flags);
+		__hci_req_sync(hdev, hci_reset_req, 0, HCI_CMD_TIMEOUT, NULL);
+		clear_bit(HCI_INIT, &hdev->flags);
+	}
+
+	/* flush cmd  work */
+	flush_work(&hdev->cmd_work);
+
+	/* Drop queues */
+	skb_queue_purge(&hdev->rx_q);
+	skb_queue_purge(&hdev->cmd_q);
+	skb_queue_purge(&hdev->raw_q);
+
+	/* Drop last sent command */
+	if (hdev->sent_cmd) {
+		cancel_delayed_work_sync(&hdev->cmd_timer);
+		kfree_skb(hdev->sent_cmd);
+		hdev->sent_cmd = NULL;
+	}
+
+	clear_bit(HCI_RUNNING, &hdev->flags);
+	hci_sock_dev_event(hdev, HCI_DEV_CLOSE);
+
+	/* After this point our queues are empty
+	 * and no tasks are scheduled. */
+	hdev->close(hdev);
+
+	/* Clear flags */
+	hdev->flags &= BIT(HCI_RAW);
+	hci_dev_clear_volatile_flags(hdev);
+
+	/* Controller radio is available but is currently powered down */
+	hdev->amp_status = AMP_STATUS_POWERED_DOWN;
+
+	memset(hdev->eir, 0, sizeof(hdev->eir));
+	memset(hdev->dev_class, 0, sizeof(hdev->dev_class));
+	bacpy(&hdev->random_addr, BDADDR_ANY);
+
+	hci_req_sync_unlock(hdev);
+
+	hci_dev_put(hdev);
+	return 0;
+}
