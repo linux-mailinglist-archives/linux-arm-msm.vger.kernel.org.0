@@ -2,89 +2,149 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id DC5FB603AA
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 Jul 2019 11:59:20 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 273A9604D4
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 Jul 2019 12:56:10 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727295AbfGEJ7T (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 5 Jul 2019 05:59:19 -0400
-Received: from mail-lf1-f65.google.com ([209.85.167.65]:45980 "EHLO
-        mail-lf1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728407AbfGEJ7K (ORCPT
+        id S1727853AbfGEK4H (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 5 Jul 2019 06:56:07 -0400
+Received: from mail-lj1-f194.google.com ([209.85.208.194]:45869 "EHLO
+        mail-lj1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726005AbfGEK4G (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 5 Jul 2019 05:59:10 -0400
-Received: by mail-lf1-f65.google.com with SMTP id u10so5923062lfm.12
-        for <linux-arm-msm@vger.kernel.org>; Fri, 05 Jul 2019 02:59:09 -0700 (PDT)
+        Fri, 5 Jul 2019 06:56:06 -0400
+Received: by mail-lj1-f194.google.com with SMTP id m23so8818514lje.12
+        for <linux-arm-msm@vger.kernel.org>; Fri, 05 Jul 2019 03:56:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=8UXki+BGW0EGKLauIq9G4YH7VjmEUNy+rZBQlchQV0U=;
-        b=lnJtEzXEZe0doduKlbk4FsWysXDk5x3ZaYdVRE2m2HdMgKmN+9pMmfeZ74dUL40Bqx
-         GKroKrKPXbNqogYNyCfbD0qnrR38ZXrNqRIWwfOBTpaMh+5sap1mG+e4Js8+KmcTU+Jr
-         IteVA8mle8jUFaUKZtYM64SPwDKAsywcgGzkwMkVzXtqHijduZpYbjSBERVDhYgbiWeN
-         xIOzFcbs+n4yqEK0zHbZm67WI3TbCR4D/0cH/5AnacG8eXnU7jtGYwAdR2vvs1opAy6k
-         Vhmiw6Fwp+w2lZt0YGY6O3U/TwsU4v6QOsx+K6Zg2FLoja6Bwd6ejEzzKu40KOFYkgoE
-         qZPQ==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=3xu1/speEFCXSiXRSbZnm/9GE/p4iKFv14b8BpRdtlY=;
+        b=CBjNqDX9T61gMaoe+QPElnfl8CkVihscPQPnXFHq+5WOvBvzuqdgkoCZExRLCS7XNE
+         9wYMkpeQbScEbsMiCJM08uevfE66FrwmfFRShozpl3Ozv1kg4wGITJACcMYe4OB9Db+h
+         QQER8OXKEvxxS5tVBjHomipg/VblBBvLszBEdH0pifItMHra0Ms9HuPf2h9MOJXyRVJM
+         verUHUi7Yd7YU5VTc9LGEmfrU3L6qTK/m3Qp1tm9lYbA1S4N77zEUUMD43MCVQYRZ1dC
+         UX6PhC+okR/2hoFoorF+VnOtBinI/3byniTpmCYkv4m9kvlWXfkPRsZsXn5f6YJ8Aeki
+         c+Nw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=8UXki+BGW0EGKLauIq9G4YH7VjmEUNy+rZBQlchQV0U=;
-        b=bpDI3jLpb6YzUd2IUE1HY1RCTVmTjH/ZQgp7MRbRREYQHpqThCnOpHXToiwyMLBRBS
-         Xv6lKNJlZ8a2EHsf14HYQAH1N8/P0pLYqlyITFU/0bEDZVYhDXG+Z0SU1QrpImynkBtz
-         XAUEo3PRHDReHev7Lirsfxhc3WLwUtKssMMTUaLv/IyuSEaTzLYfdilDBSkVSz5COR+g
-         3bvDqttQcDsuLkCk569zkL0lO54L+zMXK25lG5BLu42o8qXBro7um3NVmljfvl6hDHTy
-         wxaGSX3QiJxrxbhqktqTmG6P6jrhy0B3DAVK/8J+ddl/biHwrb7yOFNPffCXR9Sy7P28
-         HJGw==
-X-Gm-Message-State: APjAAAVpnmmmQlsdAepYGsIxLB2R9X5uZlJlQnsMJWnPeSueD7PeYIYZ
-        sLgwFop90l8bipP8jSpvnqms8N7BcJs=
-X-Google-Smtp-Source: APXvYqx6rO1fNB5391rPvpkrYN/KMXGjcLhiY8z8sZn5pk4g2lfDFIX7Ayg+RCvVMaFMn8GxNlkjgA==
-X-Received: by 2002:ac2:546a:: with SMTP id e10mr1587427lfn.75.1562320748340;
-        Fri, 05 Jul 2019 02:59:08 -0700 (PDT)
-Received: from localhost.localdomain (ua-83-226-34-119.bbcust.telenor.se. [83.226.34.119])
-        by smtp.gmail.com with ESMTPSA id 199sm1697601ljf.44.2019.07.05.02.59.07
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=3xu1/speEFCXSiXRSbZnm/9GE/p4iKFv14b8BpRdtlY=;
+        b=VkW04adistg1ZPiKj8z532QmEIIrisotnvdjRmT5Y7l063zxlrdKTgXT5rGGJJ0b04
+         qBjl5rrfWh9NtKlJM4zgyQdsr5bxgvwTphSll9c9FNgM81euWJ5CbsFr8A28zC1z3haX
+         Eu38LK6U+BveLjj8+tnJ3nGuvmrOKsiJgoC3266XqgzH7e4j7F62st/+J+PUtTyUKP8p
+         3wFMrY0y7YBRogM0Oqtcd5h5oZjEV9YFAAjL1pgfpdpG2neXXyCmNl7vcZR0XWs6der5
+         xuS/5QRyWiLP5UF/Kx7Z2qtDynudRjtsesLkDnLmDL8uE4hfF2w0rqZrSiZQ+Ot8xc2/
+         p9Hw==
+X-Gm-Message-State: APjAAAXsinFvejR8I5sJiF5aUw+UcBtRx9r8AadpGmuG81gwdEmHDv9R
+        rmCCStEQdIs9TT1qVP+KyT1cyA==
+X-Google-Smtp-Source: APXvYqxP5oT32mxbY71s6qYMsp0B25ccv4pugYVqy4PVIrTAmwn9+OSbYCoGVNh8Z66E5fSZVMtm1g==
+X-Received: by 2002:a2e:8591:: with SMTP id b17mr1732603lji.71.1562324164453;
+        Fri, 05 Jul 2019 03:56:04 -0700 (PDT)
+Received: from centauri (ua-83-226-34-119.bbcust.telenor.se. [83.226.34.119])
+        by smtp.gmail.com with ESMTPSA id h22sm1704161ljj.105.2019.07.05.03.56.03
         (version=TLS1_3 cipher=AEAD-AES256-GCM-SHA384 bits=256/256);
-        Fri, 05 Jul 2019 02:59:07 -0700 (PDT)
+        Fri, 05 Jul 2019 03:56:03 -0700 (PDT)
+Date:   Fri, 5 Jul 2019 12:56:01 +0200
 From:   Niklas Cassel <niklas.cassel@linaro.org>
-To:     linux-kernel@vger.kernel.org
-Cc:     linux-arm-msm@vger.kernel.org, jorge.ramirez-ortiz@linaro.org,
-        sboyd@kernel.org, vireshk@kernel.org, bjorn.andersson@linaro.org,
-        ulf.hansson@linaro.org, Niklas Cassel <niklas.cassel@linaro.org>,
-        Catalin Marinas <catalin.marinas@arm.com>,
-        Will Deacon <will@kernel.org>,
-        linux-arm-kernel@lists.infradead.org
-Subject: [PATCH 13/13] arm64: defconfig: enable CONFIG_ARM_QCOM_CPUFREQ_NVMEM
-Date:   Fri,  5 Jul 2019 11:57:24 +0200
-Message-Id: <20190705095726.21433-14-niklas.cassel@linaro.org>
-X-Mailer: git-send-email 2.21.0
-In-Reply-To: <20190705095726.21433-1-niklas.cassel@linaro.org>
-References: <20190705095726.21433-1-niklas.cassel@linaro.org>
+To:     Viresh Kumar <viresh.kumar@linaro.org>
+Cc:     Andy Gross <andy.gross@linaro.org>,
+        David Brown <david.brown@linaro.org>,
+        Viresh Kumar <vireshk@kernel.org>, Nishanth Menon <nm@ti.com>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Mark Rutland <mark.rutland@arm.com>,
+        linux-arm-msm@vger.kernel.org, jorge.ramirez-ortiz@linaro.org,
+        linux-pm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: Re: [RFC PATCH 6/9] dt-bindings: opp: Add qcom-opp bindings with
+ properties needed for CPR
+Message-ID: <20190705105601.GA22327@centauri>
+References: <20190404050931.9812-1-niklas.cassel@linaro.org>
+ <20190404050931.9812-7-niklas.cassel@linaro.org>
+ <20190409092352.joayvxyo77e6lehl@vireshk-i7>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20190409092352.joayvxyo77e6lehl@vireshk-i7>
+User-Agent: Mutt/1.12.0 (2019-05-25)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Enable CONFIG_ARM_QCOM_CPUFREQ_NVMEM.
+On Tue, Apr 09, 2019 at 02:53:52PM +0530, Viresh Kumar wrote:
+> On 04-04-19, 07:09, Niklas Cassel wrote:
+> > Add qcom-opp bindings with properties needed for Core Power Reduction (CPR).
+> > 
+> > CPR is included in a great variety of Qualcomm SoC, e.g. msm8916 and msm8996,
+> > and was first introduced in msm8974.
+> > 
+> > Co-developed-by: Jorge Ramirez-Ortiz <jorge.ramirez-ortiz@linaro.org>
+> > Signed-off-by: Jorge Ramirez-Ortiz <jorge.ramirez-ortiz@linaro.org>
+> > Signed-off-by: Niklas Cassel <niklas.cassel@linaro.org>
+> > ---
+> >  .../devicetree/bindings/opp/qcom-opp.txt      | 24 +++++++++++++++++++
+> >  1 file changed, 24 insertions(+)
+> >  create mode 100644 Documentation/devicetree/bindings/opp/qcom-opp.txt
+> > 
+> > diff --git a/Documentation/devicetree/bindings/opp/qcom-opp.txt b/Documentation/devicetree/bindings/opp/qcom-opp.txt
+> > new file mode 100644
+> > index 000000000000..d24280467db7
+> > --- /dev/null
+> > +++ b/Documentation/devicetree/bindings/opp/qcom-opp.txt
+> > @@ -0,0 +1,24 @@
+> > +Qualcomm OPP bindings to describe OPP nodes
+> > +
+> > +The bindings are based on top of the operating-points-v2 bindings
+> > +described in Documentation/devicetree/bindings/opp/opp.txt
+> > +Additional properties are described below.
+> > +
+> > +* OPP Table Node
+> > +
+> > +Required properties:
+> > +- compatible: Allow OPPs to express their compatibility. It should be:
+> > +  "operating-points-v2-qcom-level"
+> > +
+> > +* OPP Node
+> > +
+> > +Optional properties:
+> > +- opp-hz: Frequency in Hz, expressed as a 64-bit big-endian integer. Even
+> > +  though a power domain doesn't need a opp-hz, there can be devices in the
+> > +  power domain that need to know the highest supported frequency for each
+> > +  corner/level (e.g. CPR), in order to properly initialize the hardware.
+> > +
+> > +- qcom,opp-fuse-level: A positive value representing the fuse corner/level
+> > +  associated with this OPP node. Sometimes several corners/levels shares
+> > +  a certain fuse corner/level. A fuse corner/level contains e.g. ref uV,
+> > +  min uV, and max uV.
+> 
+> I know we discussed this sometime back and so you implemented it this way.
+> 
+> Looking at the implementation of the CPR driver, I now wonder if that was a good
+> choice. Technically a single domain can manage many devices, a big and a little
+> CPU for example and then we will have different highest frequencies for both of
+> them. How will we configure the CPR hardware in such a case ? Isn't the
+> programming per-device ?
 
-Signed-off-by: Niklas Cassel <niklas.cassel@linaro.org>
----
- arch/arm64/configs/defconfig | 1 +
- 1 file changed, 1 insertion(+)
+Hello Viresh,
 
-diff --git a/arch/arm64/configs/defconfig b/arch/arm64/configs/defconfig
-index d1e8ad5d3079..ae458572d9be 100644
---- a/arch/arm64/configs/defconfig
-+++ b/arch/arm64/configs/defconfig
-@@ -84,6 +84,7 @@ CONFIG_ACPI_CPPC_CPUFREQ=m
- CONFIG_ARM_ARMADA_37XX_CPUFREQ=y
- CONFIG_ARM_SCPI_CPUFREQ=y
- CONFIG_ARM_IMX_CPUFREQ_DT=m
-+CONFIG_ARM_QCOM_CPUFREQ_NVMEM=y
- CONFIG_ARM_TEGRA186_CPUFREQ=y
- CONFIG_ARM_SCPI_PROTOCOL=y
- CONFIG_RASPBERRYPI_FIRMWARE=y
--- 
-2.21.0
+I just posted this RFC as a real patch series:
+https://patchwork.kernel.org/project/linux-arm-msm/list/?series=142447
 
+Note that I disregarded your review comment above, because
+this patch series only adds support for CPRv2, which is used
+in e.g. msm8916 and qcs404.
+There does not exist any QCOM SoC with CPRv2 for big little.
+
+For big little, there is CPRv3, which is very different from CPRv2.
+CPRv3 will require new and more complex DT bindings.
+
+Right now we don't even have plans to upstream a driver for CPRv3.
+Part of the reason is that CPR, for newer QCOM SoCs like sdm845,
+is now performed automatically by the Operating State Manager (OSM),
+for which we already have a kernel driver: drivers/cpufreq/qcom-cpufreq-hw.c
+
+
+Kind regards,
+Niklas
