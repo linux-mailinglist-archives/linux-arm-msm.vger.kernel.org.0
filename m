@@ -2,149 +2,82 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 273A9604D4
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 Jul 2019 12:56:10 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D62C860AA9
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 Jul 2019 18:54:59 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727853AbfGEK4H (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 5 Jul 2019 06:56:07 -0400
-Received: from mail-lj1-f194.google.com ([209.85.208.194]:45869 "EHLO
-        mail-lj1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726005AbfGEK4G (ORCPT
+        id S1725791AbfGEQy4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 5 Jul 2019 12:54:56 -0400
+Received: from mail-pf1-f193.google.com ([209.85.210.193]:41875 "EHLO
+        mail-pf1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725730AbfGEQy4 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 5 Jul 2019 06:56:06 -0400
-Received: by mail-lj1-f194.google.com with SMTP id m23so8818514lje.12
-        for <linux-arm-msm@vger.kernel.org>; Fri, 05 Jul 2019 03:56:05 -0700 (PDT)
+        Fri, 5 Jul 2019 12:54:56 -0400
+Received: by mail-pf1-f193.google.com with SMTP id m30so4549925pff.8;
+        Fri, 05 Jul 2019 09:54:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=3xu1/speEFCXSiXRSbZnm/9GE/p4iKFv14b8BpRdtlY=;
-        b=CBjNqDX9T61gMaoe+QPElnfl8CkVihscPQPnXFHq+5WOvBvzuqdgkoCZExRLCS7XNE
-         9wYMkpeQbScEbsMiCJM08uevfE66FrwmfFRShozpl3Ozv1kg4wGITJACcMYe4OB9Db+h
-         QQER8OXKEvxxS5tVBjHomipg/VblBBvLszBEdH0pifItMHra0Ms9HuPf2h9MOJXyRVJM
-         verUHUi7Yd7YU5VTc9LGEmfrU3L6qTK/m3Qp1tm9lYbA1S4N77zEUUMD43MCVQYRZ1dC
-         UX6PhC+okR/2hoFoorF+VnOtBinI/3byniTpmCYkv4m9kvlWXfkPRsZsXn5f6YJ8Aeki
-         c+Nw==
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id;
+        bh=L0b++Cz1DwGWHz8E2aHIDiGlzeh1G15jnzGEGv6N1Ps=;
+        b=r8evzbtHvy2h/zqYmnDCCyQvt4RnwSQxMKEapzC+A3hoFUeqAbWZt4hsZqtLoeBxQl
+         EVwT7iSyFNtnkWNqWnmn+GvUTetKo8BkVXiYAtEtUUyj5MaPS6F9FCQcpGgyjbXSUaCp
+         ILN+BsrEu8QfBHKNV2AsgY8i/SJeqGJk5YTF6n9QPiw/fjmU/QZiRtsvJwLkLrDW1Bxx
+         Bmg+AR4rjNJnGNIc6muTjci9aUduBqGvVMJ8CDAJHiv2EwAloA+KdaSEud7MGnoBUIV5
+         UsfyezlvYuj+lvLVIeU012tTXnFG83JOTlskReNgxz3nPGImHj7Wo5tFv6ovRfprmvZO
+         +jsw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=3xu1/speEFCXSiXRSbZnm/9GE/p4iKFv14b8BpRdtlY=;
-        b=VkW04adistg1ZPiKj8z532QmEIIrisotnvdjRmT5Y7l063zxlrdKTgXT5rGGJJ0b04
-         qBjl5rrfWh9NtKlJM4zgyQdsr5bxgvwTphSll9c9FNgM81euWJ5CbsFr8A28zC1z3haX
-         Eu38LK6U+BveLjj8+tnJ3nGuvmrOKsiJgoC3266XqgzH7e4j7F62st/+J+PUtTyUKP8p
-         3wFMrY0y7YBRogM0Oqtcd5h5oZjEV9YFAAjL1pgfpdpG2neXXyCmNl7vcZR0XWs6der5
-         xuS/5QRyWiLP5UF/Kx7Z2qtDynudRjtsesLkDnLmDL8uE4hfF2w0rqZrSiZQ+Ot8xc2/
-         p9Hw==
-X-Gm-Message-State: APjAAAXsinFvejR8I5sJiF5aUw+UcBtRx9r8AadpGmuG81gwdEmHDv9R
-        rmCCStEQdIs9TT1qVP+KyT1cyA==
-X-Google-Smtp-Source: APXvYqxP5oT32mxbY71s6qYMsp0B25ccv4pugYVqy4PVIrTAmwn9+OSbYCoGVNh8Z66E5fSZVMtm1g==
-X-Received: by 2002:a2e:8591:: with SMTP id b17mr1732603lji.71.1562324164453;
-        Fri, 05 Jul 2019 03:56:04 -0700 (PDT)
-Received: from centauri (ua-83-226-34-119.bbcust.telenor.se. [83.226.34.119])
-        by smtp.gmail.com with ESMTPSA id h22sm1704161ljj.105.2019.07.05.03.56.03
-        (version=TLS1_3 cipher=AEAD-AES256-GCM-SHA384 bits=256/256);
-        Fri, 05 Jul 2019 03:56:03 -0700 (PDT)
-Date:   Fri, 5 Jul 2019 12:56:01 +0200
-From:   Niklas Cassel <niklas.cassel@linaro.org>
-To:     Viresh Kumar <viresh.kumar@linaro.org>
-Cc:     Andy Gross <andy.gross@linaro.org>,
-        David Brown <david.brown@linaro.org>,
-        Viresh Kumar <vireshk@kernel.org>, Nishanth Menon <nm@ti.com>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Mark Rutland <mark.rutland@arm.com>,
-        linux-arm-msm@vger.kernel.org, jorge.ramirez-ortiz@linaro.org,
-        linux-pm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: Re: [RFC PATCH 6/9] dt-bindings: opp: Add qcom-opp bindings with
- properties needed for CPR
-Message-ID: <20190705105601.GA22327@centauri>
-References: <20190404050931.9812-1-niklas.cassel@linaro.org>
- <20190404050931.9812-7-niklas.cassel@linaro.org>
- <20190409092352.joayvxyo77e6lehl@vireshk-i7>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20190409092352.joayvxyo77e6lehl@vireshk-i7>
-User-Agent: Mutt/1.12.0 (2019-05-25)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=L0b++Cz1DwGWHz8E2aHIDiGlzeh1G15jnzGEGv6N1Ps=;
+        b=EABaCzWw8KlSvE23kG8fsh0ixBx4+nf7DXCvSj7teXN1NVt+R/QAdmNTAyBUuTvDZ+
+         BViNhuy6BWJ3T1wA80QIdS7S29rtpj7Df/91IYQWZLNP70bcEeOFyGBkPDrvy1CbdSmy
+         nKzhbHRJLcJsV8sGDnS3kqW9b1ECO35T455b40Y4Oe3Nt9x4mx1wVyhFGgUwqrDAjtHK
+         Bbh1zGUFTJj5J7CoP519f+ZJH+XuRciXpSGGIs0soawl3rRTVdCWSQZjQSsEgpKspKDa
+         tKUC4EbU7+rfOn4UD/twBQ+xLARcl4tbr22D0PKBtKjQRkRh62lraA5Xhx1W6E2kfdpO
+         tFgA==
+X-Gm-Message-State: APjAAAUgXRaioY6OIXlBOwot9fVdWCEadbrLej8OKRvVyNdxMxpBgDB2
+        QuCkgK3O6u3mU3BDILro/24=
+X-Google-Smtp-Source: APXvYqyyW8jKS41MUK89FU5reGeNsJZYJND8bEG5SSJ2bU/tlPCV9U3sQ4VgzxjWQuHQfXZRtNcTsw==
+X-Received: by 2002:a63:5610:: with SMTP id k16mr6565617pgb.335.1562345695389;
+        Fri, 05 Jul 2019 09:54:55 -0700 (PDT)
+Received: from aw-bldr-10.qualcomm.com (i-global254.qualcomm.com. [199.106.103.254])
+        by smtp.gmail.com with ESMTPSA id b126sm11066744pfa.126.2019.07.05.09.54.53
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Fri, 05 Jul 2019 09:54:54 -0700 (PDT)
+From:   Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
+Cc:     robh+dt@kernel.org, mark.rutland@arm.com, thierry.reding@gmail.com,
+        sam@ravnborg.org, airlied@linux.ie, daniel@ffwll.ch,
+        bjorn.andersson@linaro.org, dri-devel@lists.freedesktop.org,
+        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org,
+        Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
+Subject: [PATCH 0/2] Add Sharp panel option for Lenovo Miix 630
+Date:   Fri,  5 Jul 2019 09:54:50 -0700
+Message-Id: <20190705165450.329-1-jeffrey.l.hugo@gmail.com>
+X-Mailer: git-send-email 2.17.1
+To:     unlisted-recipients:; (no To-header on input)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Apr 09, 2019 at 02:53:52PM +0530, Viresh Kumar wrote:
-> On 04-04-19, 07:09, Niklas Cassel wrote:
-> > Add qcom-opp bindings with properties needed for Core Power Reduction (CPR).
-> > 
-> > CPR is included in a great variety of Qualcomm SoC, e.g. msm8916 and msm8996,
-> > and was first introduced in msm8974.
-> > 
-> > Co-developed-by: Jorge Ramirez-Ortiz <jorge.ramirez-ortiz@linaro.org>
-> > Signed-off-by: Jorge Ramirez-Ortiz <jorge.ramirez-ortiz@linaro.org>
-> > Signed-off-by: Niklas Cassel <niklas.cassel@linaro.org>
-> > ---
-> >  .../devicetree/bindings/opp/qcom-opp.txt      | 24 +++++++++++++++++++
-> >  1 file changed, 24 insertions(+)
-> >  create mode 100644 Documentation/devicetree/bindings/opp/qcom-opp.txt
-> > 
-> > diff --git a/Documentation/devicetree/bindings/opp/qcom-opp.txt b/Documentation/devicetree/bindings/opp/qcom-opp.txt
-> > new file mode 100644
-> > index 000000000000..d24280467db7
-> > --- /dev/null
-> > +++ b/Documentation/devicetree/bindings/opp/qcom-opp.txt
-> > @@ -0,0 +1,24 @@
-> > +Qualcomm OPP bindings to describe OPP nodes
-> > +
-> > +The bindings are based on top of the operating-points-v2 bindings
-> > +described in Documentation/devicetree/bindings/opp/opp.txt
-> > +Additional properties are described below.
-> > +
-> > +* OPP Table Node
-> > +
-> > +Required properties:
-> > +- compatible: Allow OPPs to express their compatibility. It should be:
-> > +  "operating-points-v2-qcom-level"
-> > +
-> > +* OPP Node
-> > +
-> > +Optional properties:
-> > +- opp-hz: Frequency in Hz, expressed as a 64-bit big-endian integer. Even
-> > +  though a power domain doesn't need a opp-hz, there can be devices in the
-> > +  power domain that need to know the highest supported frequency for each
-> > +  corner/level (e.g. CPR), in order to properly initialize the hardware.
-> > +
-> > +- qcom,opp-fuse-level: A positive value representing the fuse corner/level
-> > +  associated with this OPP node. Sometimes several corners/levels shares
-> > +  a certain fuse corner/level. A fuse corner/level contains e.g. ref uV,
-> > +  min uV, and max uV.
-> 
-> I know we discussed this sometime back and so you implemented it this way.
-> 
-> Looking at the implementation of the CPR driver, I now wonder if that was a good
-> choice. Technically a single domain can manage many devices, a big and a little
-> CPU for example and then we will have different highest frequencies for both of
-> them. How will we configure the CPR hardware in such a case ? Isn't the
-> programming per-device ?
+The Lenovo Miix 630 laptop can be found with one of two panels - a BOE
+or Sharp option.  This likely provides options during manufacturing.
 
-Hello Viresh,
+These panels connect via eDP, however they sit behind a DSI to eDP
+bridge on the laptop, so they can easily be handled by the existing
+simple panel code.
 
-I just posted this RFC as a real patch series:
-https://patchwork.kernel.org/project/linux-arm-msm/list/?series=142447
+This series adds support for the Sharp option.
 
-Note that I disregarded your review comment above, because
-this patch series only adds support for CPRv2, which is used
-in e.g. msm8916 and qcs404.
-There does not exist any QCOM SoC with CPRv2 for big little.
+Jeffrey Hugo (2):
+  dt-bindings: panel: Add Sharp LD-D5116Z01B
+  drm/panel: simple: Add support for Sharp LD-D5116Z01B panel
 
-For big little, there is CPRv3, which is very different from CPRv2.
-CPRv3 will require new and more complex DT bindings.
+ .../display/panel/sharp,ld-d5116z01b.txt      | 27 +++++++++++++++++++
+ drivers/gpu/drm/panel/panel-simple.c          | 26 ++++++++++++++++++
+ 2 files changed, 53 insertions(+)
+ create mode 100644 Documentation/devicetree/bindings/display/panel/sharp,ld-d5116z01b.txt
 
-Right now we don't even have plans to upstream a driver for CPRv3.
-Part of the reason is that CPR, for newer QCOM SoCs like sdm845,
-is now performed automatically by the Operating State Manager (OSM),
-for which we already have a kernel driver: drivers/cpufreq/qcom-cpufreq-hw.c
+-- 
+2.17.1
 
-
-Kind regards,
-Niklas
