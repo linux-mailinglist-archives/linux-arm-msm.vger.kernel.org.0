@@ -2,101 +2,87 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 11AC7625FA
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  8 Jul 2019 18:19:56 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 63E83626AD
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  8 Jul 2019 18:57:03 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730172AbfGHQTz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 8 Jul 2019 12:19:55 -0400
-Received: from mail-pg1-f195.google.com ([209.85.215.195]:33436 "EHLO
-        mail-pg1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730166AbfGHQTz (ORCPT
+        id S1727667AbfGHQ45 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 8 Jul 2019 12:56:57 -0400
+Received: from mail-pl1-f193.google.com ([209.85.214.193]:41376 "EHLO
+        mail-pl1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726318AbfGHQ45 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 8 Jul 2019 12:19:55 -0400
-Received: by mail-pg1-f195.google.com with SMTP id m4so7955483pgk.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 08 Jul 2019 09:19:55 -0700 (PDT)
+        Mon, 8 Jul 2019 12:56:57 -0400
+Received: by mail-pl1-f193.google.com with SMTP id m9so4900785pls.8;
+        Mon, 08 Jul 2019 09:56:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=JjxNl+aiJVwEFW037TdFYNIV+aj3YXwaO56vKokp4fg=;
-        b=nWoMlYKCccZZ2MjCx59nKlI6EYqkKIeBd3VbbpagSDmMYpRzp/OD3BgiOWEYuxCbHp
-         hshG8hoxEOe+kukeVrh4/jx/TZ68YiQ66RN87l3xj4+ZHxgfZDiyKl8IZWSvBbLTAAhf
-         PgVHA7EibMHH0dxw6zx2gu7c5ZpZcCE2yj/5kied+vHtvPfLpLoEGJ+dTcM46zew/26S
-         2H7uqEwqttTzFLDDGyeaU15G3izIPwX1r4mDmI0TffWtxdrEyVFmBEpAEu+ADT4u1d9t
-         +8FRZg7hem0ic92FEHU09XqaNFM+SsZnN9nnke+wZ7B5eTYn/uDMvQrkg5OlP8KeOdD8
-         CvEg==
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id;
+        bh=h9r+VBBTVWSCdJBffHlUJNCOFtycb1gerbLXlsMiOzY=;
+        b=tEwy1HFLIrJ5CWhvDLpbBbZ+CJNNht4hGoux3ys80/gp7vDn6CgdhRPYX2Kfj+kik2
+         7A5AWAZkH2tV6SPHyXjGafKxqgwCVjZeiTtkEjxk6V+m1yAjOPaZItx7sai5eH8qlv1w
+         cOF3pQ29AoByWfQY/CbZZoI/YzLZeB6ZbkLVAEoH/MIEpeEMPjvUZv/9cABGlwBDCIBh
+         NQEBiP52svk5Y1P5mmLBEqjYoI75k/Dp6vh2oYw5uaSpIheDtI82dE3aOgEFy5aTVfR4
+         Ki9DrvGBPjchrhQy5vyLRvcK7SNsNcTwlUK4hNjo05JDy0Y2m8AlEm6IMQlKeaCCItBn
+         TZSg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=JjxNl+aiJVwEFW037TdFYNIV+aj3YXwaO56vKokp4fg=;
-        b=smkjl0C+R/wMWanvybYECfUmoaTxaslITpTOrL9Q53oszLVFvI6XaBiwH6y+p6TkCy
-         rLufdsbz/fRgVG0uWuX4WbTGI5MZcUIEo0cXHbQo1+RRdLjiZb8aJ4iDiyypQttveWXH
-         fwM6JUFUcEB1TmuqT4yocG/j5VfJAPAMooBf1SPqSndfOztoquix06MutLHS7gnPDptk
-         U6QjbXSs5jGWWiwk134CG5JFTxsBtHugZK2QSCe0m9TPiulgHJ5TmltjM43vIe6uFVP8
-         l6GuIzFsBA7v+BA6YXxrBqLGB8a9I9+AnH5L1z4bG2OdNk6U+uuUwd7ljBDQIKiFgYeq
-         0oFA==
-X-Gm-Message-State: APjAAAWkE9QBz3d1zOOKLgqdNdnC5+81qkayv8YJ3ZVWV1KEQNBCyjpH
-        lRo4bFXrMeS0YLq5EbF4Jpep4A==
-X-Google-Smtp-Source: APXvYqwij11T4wwzyudmfil9rmzXYXboSTKEP6zw+14xHbmF42E/H/8UkklpLuq3ltX0xpIwSD4NLg==
-X-Received: by 2002:a17:90a:fa07:: with SMTP id cm7mr26270251pjb.138.1562602794573;
-        Mon, 08 Jul 2019 09:19:54 -0700 (PDT)
-Received: from builder (104-188-17-28.lightspeed.sndgca.sbcglobal.net. [104.188.17.28])
-        by smtp.gmail.com with ESMTPSA id h9sm4072165pgh.51.2019.07.08.09.19.53
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Mon, 08 Jul 2019 09:19:53 -0700 (PDT)
-Date:   Mon, 8 Jul 2019 09:19:51 -0700
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Fuqian Huang <huangfq.daxian@gmail.com>
-Cc:     Andy Gross <agross@kernel.org>,
-        David Brown <david.brown@linaro.org>,
-        Kishon Vijay Abraham I <kishon@ti.com>,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 12/14] phy: qcom-qmp: Replace devm_add_action() followed
- by failure action with devm_add_action_or_reset()
-Message-ID: <20190708161951.GD27383@builder>
-References: <20190708123401.12173-1-huangfq.daxian@gmail.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20190708123401.12173-1-huangfq.daxian@gmail.com>
-User-Agent: Mutt/1.10.0 (2018-05-17)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=h9r+VBBTVWSCdJBffHlUJNCOFtycb1gerbLXlsMiOzY=;
+        b=njSCd295fGMgXzLCSLA1/x0Le1SqDqBB8ZYf/HXVuPSxS860SQrXHe+gvI5luAxs0I
+         OpN4e9ZGX2gWCN88oeEbD/S3DWuM9LH0EI4zTAhmaVJTCzLx9n6MnFR1DOzQ6+GRt93j
+         MUO9+/X615aoDxklcETeuTjRh9g4eWOpNobAavUBPaci2CDBatvjU6GGdGUyLjO02m9F
+         kW5hidoY6UA7uQ52s4opXdxRarhR6zu+mPf45xM7ODOIsTcdAn9eSzaPmo9AxNDxcVNF
+         zqld1wu6pD/dn5QnD5Xha5Zl6vnrqaBSNHFE/I2osMnnrXC58SjezMSaI7WlBdx5+k4i
+         Va6g==
+X-Gm-Message-State: APjAAAUNaDHv9p0a9dLMESAiNG3aEXzK4yAJv3h8j9tosHGRQcyT5WBd
+        4waOLU6NKvcA7B3fR3Fv75s=
+X-Google-Smtp-Source: APXvYqzHvGmppRrzPEjtQdPhP/3o9PUDcn9diLtmnLjouaYphDPcfrmI2K9TbM9LgJHSch9egv+XrA==
+X-Received: by 2002:a17:902:6b07:: with SMTP id o7mr25722173plk.180.1562605016733;
+        Mon, 08 Jul 2019 09:56:56 -0700 (PDT)
+Received: from aw-bldr-10.qualcomm.com (i-global254.qualcomm.com. [199.106.103.254])
+        by smtp.gmail.com with ESMTPSA id h21sm15908389pgg.75.2019.07.08.09.56.54
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Mon, 08 Jul 2019 09:56:56 -0700 (PDT)
+From:   Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
+To:     robh+dt@kernel.org, mark.rutland@arm.com, thierry.reding@gmail.com,
+        sam@ravnborg.org, airlied@linux.ie, daniel@ffwll.ch
+Cc:     bjorn.andersson@linaro.org, dri-devel@lists.freedesktop.org,
+        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org,
+        Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
+Subject: [PATCH v2 0/2] Add Sharp panel option for Lenovo Miix 630
+Date:   Mon,  8 Jul 2019 09:56:47 -0700
+Message-Id: <20190708165647.46224-1-jeffrey.l.hugo@gmail.com>
+X-Mailer: git-send-email 2.17.1
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon 08 Jul 05:34 PDT 2019, Fuqian Huang wrote:
+The Lenovo Miix 630 laptop can be found with one of two panels - a BOE
+or Sharp option.  This likely provides options during manufacturing.
 
-> devm_add_action_or_reset() is introduced as a helper function which 
-> internally calls devm_add_action(). If devm_add_action() fails 
-> then it will execute the action mentioned and return the error code.
-> This reduce source code size (avoid writing the action twice) 
-> and reduce the likelyhood of bugs.
-> 
-> Signed-off-by: Fuqian Huang <huangfq.daxian@gmail.com>
+These panels connect via eDP, however they sit behind a DSI to eDP
+bridge on the laptop, so they can easily be handled by the existing
+simple panel code.
 
-Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+This series adds support for the Sharp option.
 
-> ---
->  drivers/phy/qualcomm/phy-qcom-qmp.c | 4 +---
->  1 file changed, 1 insertion(+), 3 deletions(-)
-> 
-> diff --git a/drivers/phy/qualcomm/phy-qcom-qmp.c b/drivers/phy/qualcomm/phy-qcom-qmp.c
-> index cd91b4179b10..677916f8968c 100644
-> --- a/drivers/phy/qualcomm/phy-qcom-qmp.c
-> +++ b/drivers/phy/qualcomm/phy-qcom-qmp.c
-> @@ -1837,9 +1837,7 @@ static int phy_pipe_clk_register(struct qcom_qmp *qmp, struct device_node *np)
->  	 * Roll a devm action because the clock provider is the child node, but
->  	 * the child node is not actually a device.
->  	 */
-> -	ret = devm_add_action(qmp->dev, phy_pipe_clk_release_provider, np);
-> -	if (ret)
-> -		phy_pipe_clk_release_provider(np);
-> +	ret = devm_add_action_or_reset(qmp->dev, phy_pipe_clk_release_provider, np);
->  
->  	return ret;
->  }
-> -- 
-> 2.11.0
-> 
+v2:
+-removed no-hpd from dt example
+-added .bus_format and .bus_flags fields based on reviews
+-added .flags after Bjorn pointed me to something I missed
+-added Sam's reviewed-by tags
+
+Jeffrey Hugo (2):
+  dt-bindings: panel: Add Sharp LD-D5116Z01B
+  drm/panel: simple: Add support for Sharp LD-D5116Z01B panel
+
+ .../display/panel/sharp,ld-d5116z01b.txt      | 26 +++++++++++++++++
+ drivers/gpu/drm/panel/panel-simple.c          | 29 +++++++++++++++++++
+ 2 files changed, 55 insertions(+)
+ create mode 100644 Documentation/devicetree/bindings/display/panel/sharp,ld-d5116z01b.txt
+
+-- 
+2.17.1
+
