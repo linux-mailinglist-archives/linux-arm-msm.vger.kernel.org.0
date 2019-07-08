@@ -2,89 +2,104 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 0A74561E7B
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  8 Jul 2019 14:34:10 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C24E46213C
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  8 Jul 2019 17:12:32 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727373AbfGHMeJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 8 Jul 2019 08:34:09 -0400
-Received: from mail-pf1-f195.google.com ([209.85.210.195]:42185 "EHLO
-        mail-pf1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729546AbfGHMeI (ORCPT
+        id S1726318AbfGHPMb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 8 Jul 2019 11:12:31 -0400
+Received: from mail-pl1-f193.google.com ([209.85.214.193]:37674 "EHLO
+        mail-pl1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725966AbfGHPMb (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 8 Jul 2019 08:34:08 -0400
-Received: by mail-pf1-f195.google.com with SMTP id q10so7542873pff.9;
-        Mon, 08 Jul 2019 05:34:08 -0700 (PDT)
+        Mon, 8 Jul 2019 11:12:31 -0400
+Received: by mail-pl1-f193.google.com with SMTP id b3so5127645plr.4;
+        Mon, 08 Jul 2019 08:12:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id;
-        bh=MLBd5ipjuaWF6DPUTaW+cEXsKPZzvPBtYteZGdDRUQE=;
-        b=QAfQI1Osqd5bdsUrWqNxZ+YpMGNRLWV/QZ6vENHH3tpny6tIAzEm1Avgsfby2LVc+n
-         adBKiLITz808aavsIoGPAKq/8Zcxd9oRX65sceUiH0WIur57j2cPq0TWuVZZK44zXps7
-         N4E3893BiIQ3FgPvrlMUtiTvWvrjTaaGc8Y1Hfx6MeLbviQOdknDiou5+rEu9XIUjUAo
-         JKV/4zlwk0MU4MXXVKNtGCvQLC5kNKLCv2RFj10liqDtYsTGSNtZ32cShAyKJCr3mMUG
-         kLihxN7XrH6eFuBoAle7lZiER/CyLZFv0e7xeY5OK4I2azfOKvgprF9s7co7z2zmu5an
-         5/gw==
+        bh=0ZlZQON9aXZI6W+/rm8yZm1Su8lHYcjbQIV3vB7p7ls=;
+        b=WLG9PY/b56egrw6ro2o0M9u014Bd6pXU/gKDM9DWFKxH39OIF3810maRQKFlW5uRIq
+         pN+4h9otmfgFm2UMQ05iVf/Mz/oGsvnbZgMWTSNQujR8HC+qUf73scnCmGiRJH+v0k08
+         smv9KF8upZ4PAvBORJTFLeotH0hcXF9rwCuDgCTGs1M8R9cApI/vNYc7JLSeqATcqdfI
+         h9abqenJJqCvOVVx0LKtp2nIG/lIyiqsEPUtvRfgGJ5jymTuV3QTGxV7KiDXtnfmeQCk
+         IVOu6WplVBtQMIhTvR1thGTS8x4ieB5i5f/al64O31QA5Ml7yJ3AQVYX0yGYLoBoqLwD
+         PgJw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id;
-        bh=MLBd5ipjuaWF6DPUTaW+cEXsKPZzvPBtYteZGdDRUQE=;
-        b=fv+fcOY1bi0cyLVnxDbs5ilpKmWbM4mvMM5BFNhOG/4RRNIDhg5gmNQl09hlPYjnel
-         rkYhzlzIH2++ye20KQNwQnLd9zWcwaXpCev/Bv1dS4DtXf/7TOmjZyyyCzqW63sgG/lE
-         3smnhk2aFNrNFMxZOJAf3geYK9O9optOQ5eTXiy/2dLJLdtU+QRO8eLdbfeu+FhT33TB
-         FBku0wePbm2T02ccCLl9a23uTXShTngTFoInMiWp9MnRYvqQgFR9cRqp/Nd1ARy4MhN2
-         8YvxyZIjmtofdpJigTd2ZRPfU6hyaU/VXUSjuxTmGEbJ5YEU9vDeQaDi5zp7UVixq3wQ
-         BI/A==
-X-Gm-Message-State: APjAAAVj3cFSSqD6iuzehDj/r9YUA7AzEpPTuPY4b5/OKSMiu1V3KRMz
-        E7M3y+yaWDi4IxXIVSDbnY0=
-X-Google-Smtp-Source: APXvYqyKFw0r73ZmDpQMocBH3EYWI8p0Qk7BJEIJYtWShA0+vleBlChH9teodpWZczWpIqeHhtmGbQ==
-X-Received: by 2002:a17:90a:d14a:: with SMTP id t10mr25445609pjw.85.1562589248247;
-        Mon, 08 Jul 2019 05:34:08 -0700 (PDT)
-Received: from hfq-skylake.ipads-lab.se.sjtu.edu.cn ([202.120.40.82])
-        by smtp.googlemail.com with ESMTPSA id w22sm18200733pfi.175.2019.07.08.05.34.05
+        bh=0ZlZQON9aXZI6W+/rm8yZm1Su8lHYcjbQIV3vB7p7ls=;
+        b=uYOct0+wvqNwwBBTyNFFdnU/uVaetnVjvHCWcw+bD/hKA1RXhrTlIJbUqFOXnbKOBm
+         nTjoc+1minjXfYby7CAG4xZSJMQZEQTY+H/wCuhOk90B2PJj7RFARc6NnETL4y8xD+W8
+         56bV/arjwOG7WCGEGZqhOnAQ87AQNpNeDXEwrVoaKdGO+KAFLTf0ZON/USSruXh4OW53
+         6urZ0cChSp6I/BwFrchFaE6G9TLdbA8mJiIBC7xdad4fjnCl4UtuLtF5/tqLyPApX0Sn
+         NhAqtEePs20vrrpu8tBDnU2swl6vtQIJ/IgwHKPKOOu72f15lps8KxSZ5EYNA0T8ldL0
+         8lCg==
+X-Gm-Message-State: APjAAAXUswhjy8T6jwVVp/fNzGQnNRr0NIHcrH0PLZgm/ujCE2Newx5P
+        Kl+tXv5j5Y3vRxTWVAVhuzQ=
+X-Google-Smtp-Source: APXvYqzGcOLSRTDXNOYk/ZPO4pPqDF4I8CW3Kxig9leWs34URU+rJA8ZvqMFQ9pnLLDKwfcSi1JXAg==
+X-Received: by 2002:a17:902:b20d:: with SMTP id t13mr24385288plr.229.1562598750859;
+        Mon, 08 Jul 2019 08:12:30 -0700 (PDT)
+Received: from aw-bldr-10.qualcomm.com (i-global254.qualcomm.com. [199.106.103.254])
+        by smtp.gmail.com with ESMTPSA id q198sm23082354pfq.155.2019.07.08.08.12.29
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 08 Jul 2019 05:34:07 -0700 (PDT)
-From:   Fuqian Huang <huangfq.daxian@gmail.com>
-Cc:     Andy Gross <agross@kernel.org>,
-        David Brown <david.brown@linaro.org>,
-        Kishon Vijay Abraham I <kishon@ti.com>,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Fuqian Huang <huangfq.daxian@gmail.com>
-Subject: [PATCH 12/14] phy: qcom-qmp: Replace devm_add_action() followed by failure action with devm_add_action_or_reset()
-Date:   Mon,  8 Jul 2019 20:34:01 +0800
-Message-Id: <20190708123401.12173-1-huangfq.daxian@gmail.com>
-X-Mailer: git-send-email 2.11.0
-To:     unlisted-recipients:; (no To-header on input)
+        Mon, 08 Jul 2019 08:12:30 -0700 (PDT)
+From:   Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
+To:     robdclark@gmail.com, sean@poorly.run, airlied@linux.ie,
+        daniel@ffwll.ch, bjorn.andersson@linaro.org
+Cc:     linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org,
+        Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
+Subject: [PATCH v2] drm/msm/mdp5: Find correct node for creating gem address space
+Date:   Mon,  8 Jul 2019 08:12:24 -0700
+Message-Id: <20190708151224.22555-1-jeffrey.l.hugo@gmail.com>
+X-Mailer: git-send-email 2.17.1
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-devm_add_action_or_reset() is introduced as a helper function which 
-internally calls devm_add_action(). If devm_add_action() fails 
-then it will execute the action mentioned and return the error code.
-This reduce source code size (avoid writing the action twice) 
-and reduce the likelyhood of bugs.
+Creating the msm gem address space requires a reference to the dev where
+the iommu is located.  The driver currently assumes this is the same as
+the platform device, which breaks when the iommu is outside of the
+platform device (ie in the parent).  Default to using the platform device,
+but check to see if that has an iommu reference, and if not, use the parent
+device instead.  This should handle all the various iommu designs for
+mdp5 supported systems.
 
-Signed-off-by: Fuqian Huang <huangfq.daxian@gmail.com>
+Signed-off-by: Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
 ---
- drivers/phy/qualcomm/phy-qcom-qmp.c | 4 +---
- 1 file changed, 1 insertion(+), 3 deletions(-)
 
-diff --git a/drivers/phy/qualcomm/phy-qcom-qmp.c b/drivers/phy/qualcomm/phy-qcom-qmp.c
-index cd91b4179b10..677916f8968c 100644
---- a/drivers/phy/qualcomm/phy-qcom-qmp.c
-+++ b/drivers/phy/qualcomm/phy-qcom-qmp.c
-@@ -1837,9 +1837,7 @@ static int phy_pipe_clk_register(struct qcom_qmp *qmp, struct device_node *np)
- 	 * Roll a devm action because the clock provider is the child node, but
- 	 * the child node is not actually a device.
- 	 */
--	ret = devm_add_action(qmp->dev, phy_pipe_clk_release_provider, np);
--	if (ret)
--		phy_pipe_clk_release_provider(np);
-+	ret = devm_add_action_or_reset(qmp->dev, phy_pipe_clk_release_provider, np);
+v2: It turns out there isn't a universal way to get the iommu device, so 
+check to see if its in the current node or parent
+
+ drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
+
+diff --git a/drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c b/drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c
+index 4a60f5fca6b0..02dc7d426cb0 100644
+--- a/drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c
++++ b/drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c
+@@ -663,6 +663,7 @@ struct msm_kms *mdp5_kms_init(struct drm_device *dev)
+ 	struct msm_kms *kms;
+ 	struct msm_gem_address_space *aspace;
+ 	int irq, i, ret;
++	struct device *iommu_dev;
  
- 	return ret;
- }
+ 	/* priv->kms would have been populated by the MDP5 driver */
+ 	kms = priv->kms;
+@@ -702,7 +703,11 @@ struct msm_kms *mdp5_kms_init(struct drm_device *dev)
+ 	mdelay(16);
+ 
+ 	if (config->platform.iommu) {
+-		aspace = msm_gem_address_space_create(&pdev->dev,
++		iommu_dev = &pdev->dev;
++		if (!iommu_dev->iommu_fwspec)
++			iommu_dev = iommu_dev->parent;
++
++		aspace = msm_gem_address_space_create(iommu_dev,
+ 				config->platform.iommu, "mdp5");
+ 		if (IS_ERR(aspace)) {
+ 			ret = PTR_ERR(aspace);
 -- 
-2.11.0
+2.17.1
 
