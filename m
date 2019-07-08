@@ -2,108 +2,117 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 6159D62472
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  8 Jul 2019 17:42:57 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 82DA1625D8
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  8 Jul 2019 18:10:31 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731401AbfGHPY7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 8 Jul 2019 11:24:59 -0400
-Received: from smtp.codeaurora.org ([198.145.29.96]:50560 "EHLO
-        smtp.codeaurora.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2388393AbfGHPY6 (ORCPT
+        id S2390583AbfGHQKb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 8 Jul 2019 12:10:31 -0400
+Received: from mail-pl1-f194.google.com ([209.85.214.194]:42404 "EHLO
+        mail-pl1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1730119AbfGHQKa (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 8 Jul 2019 11:24:58 -0400
-Received: by smtp.codeaurora.org (Postfix, from userid 1000)
-        id E4D9460F37; Mon,  8 Jul 2019 15:24:56 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
-        s=default; t=1562599496;
-        bh=LaN53jeBYi5tmPR5ezGeeym0cUuS5a/xgbX3lDsZMh8=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=ONNmY6hh8UETji6VY4CPGNI9BNgDf1TfHiCcbM8ph7nNlivKTcA8F4ptLXFT27cQf
-         +nCkVIfIRYCHNcUpZldX8dvnHlQ/VCitu7yWegFZoy4CIY13H0J3o1KVd7lXPpnNmR
-         h7v//ZnmbhGp8EESOjxSCQhsGJeljGtl1F+wkgc0=
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        pdx-caf-mail.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.7 required=2.0 tests=ALL_TRUSTED,BAYES_00,
-        DKIM_INVALID,DKIM_SIGNED,SPF_NONE autolearn=no autolearn_force=no
-        version=3.4.0
-Received: from jcrouse1-lnx.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: jcrouse@smtp.codeaurora.org)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 33C9360DAD;
-        Mon,  8 Jul 2019 15:24:55 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
-        s=default; t=1562599496;
-        bh=LaN53jeBYi5tmPR5ezGeeym0cUuS5a/xgbX3lDsZMh8=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=ONNmY6hh8UETji6VY4CPGNI9BNgDf1TfHiCcbM8ph7nNlivKTcA8F4ptLXFT27cQf
-         +nCkVIfIRYCHNcUpZldX8dvnHlQ/VCitu7yWegFZoy4CIY13H0J3o1KVd7lXPpnNmR
-         h7v//ZnmbhGp8EESOjxSCQhsGJeljGtl1F+wkgc0=
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 33C9360DAD
-Authentication-Results: pdx-caf-mail.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: pdx-caf-mail.web.codeaurora.org; spf=none smtp.mailfrom=jcrouse@codeaurora.org
-Date:   Mon, 8 Jul 2019 09:24:53 -0600
-From:   Jordan Crouse <jcrouse@codeaurora.org>
-To:     Rob Clark <robdclark@gmail.com>
-Cc:     dri-devel@lists.freedesktop.org,
-        Rob Clark <robdclark@chromium.org>,
-        Sean Paul <sean@poorly.run>, David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>, linux-arm-msm@vger.kernel.org,
-        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] drm/msm/a6xx: add missing MODULE_FIRMWARE()
-Message-ID: <20190708152453.GB10188@jcrouse1-lnx.qualcomm.com>
-Mail-Followup-To: Rob Clark <robdclark@gmail.com>,
-        dri-devel@lists.freedesktop.org, Rob Clark <robdclark@chromium.org>,
-        Sean Paul <sean@poorly.run>, David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>, linux-arm-msm@vger.kernel.org,
-        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org
-References: <20190703140055.26300-1-robdclark@gmail.com>
+        Mon, 8 Jul 2019 12:10:30 -0400
+Received: by mail-pl1-f194.google.com with SMTP id ay6so8512728plb.9
+        for <linux-arm-msm@vger.kernel.org>; Mon, 08 Jul 2019 09:10:30 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=fDCoSY5K0ITJqQYvscwo5UxJiyuZc3RyIH7jJSLU88U=;
+        b=CfLjv4t9r4Kg2mSofS2nlQZMto3UY4mstJJjBcy91IFpxTd6+xOv3VwdVLcgFVUdVW
+         j5PVsTuIkjKvjex7sWx70GltkB3B71Am79TnP0MeO+ihAkpGOpOQDafpfMi9i7wnEUUH
+         3OHP5VEf+64cy0LL8hikc/pn1wZ/KR2jge1woKA5a6tL1EGf27T4yOG48LdVyh8xewdi
+         4/+ddMjgJKskc5Ivy46J/G5z+QyT2ZWcf3TxK2wuJqimj0xykazxXmlcv65ZFjE1aIJl
+         TYa/I2day1zmNig/jiZU9ScLfIp2yEcPl0pav2+YEs06oGpQ0n42my45uw5pfHQBvory
+         TtXA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=fDCoSY5K0ITJqQYvscwo5UxJiyuZc3RyIH7jJSLU88U=;
+        b=JfoyBrdYFUQxs/E+CmEd0DLRhr8Wgoud1GA7Ip/da21wWLP9m6mmS9SZ/j5TP47Gw1
+         MN0KbiwedFnY6sp8xsVLka/kDR0K5QMYqnYzppmqfBFAzLSaJbRlWxase3O4+ICULTTk
+         uaZQ9UDFCG8uv/XduRrTPDKQT5+T30ArhXR2uBN+LIVmyRDAgMajXzf8eHC+qCbMiCb3
+         yfiOwJWKMscn7ZBqV1VB9ZMwK/iTdVDU0FLLONjYzqg4P1tbKpNCDw8Ua4qRAtAyy0VW
+         qy9+hby3zDrJK8RhButA0/+UJfYC101dqzEFSsO3ql9yPefv/XHyKI8/W+g9Gk1ZGIct
+         iQrg==
+X-Gm-Message-State: APjAAAXjmNPydpBNqtC5ndv4wKKadPB4akYWSd17TwAExgiu/2zmkmoY
+        ueyaxRgAtIG7hQ6ZTu1Qrq7HGQ==
+X-Google-Smtp-Source: APXvYqzD1aivQBDf69llf3avbBHNfxtRkZ9eXNatyrc78REwbz16rreOTstsv5QqjSoYFjtGpjbuhQ==
+X-Received: by 2002:a17:902:4623:: with SMTP id o32mr25633974pld.112.1562602229878;
+        Mon, 08 Jul 2019 09:10:29 -0700 (PDT)
+Received: from builder (104-188-17-28.lightspeed.sndgca.sbcglobal.net. [104.188.17.28])
+        by smtp.gmail.com with ESMTPSA id j20sm5476488pfr.113.2019.07.08.09.10.28
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Mon, 08 Jul 2019 09:10:29 -0700 (PDT)
+Date:   Mon, 8 Jul 2019 09:10:26 -0700
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
+Cc:     robdclark@gmail.com, sean@poorly.run, airlied@linux.ie,
+        daniel@ffwll.ch, linux-arm-msm@vger.kernel.org,
+        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
+        linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v2] drm/msm/mdp5: Find correct node for creating gem
+ address space
+Message-ID: <20190708161026.GB27383@builder>
+References: <20190708151224.22555-1-jeffrey.l.hugo@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20190703140055.26300-1-robdclark@gmail.com>
-User-Agent: Mutt/1.5.24 (2015-08-30)
+In-Reply-To: <20190708151224.22555-1-jeffrey.l.hugo@gmail.com>
+User-Agent: Mutt/1.10.0 (2018-05-17)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Jul 03, 2019 at 07:00:35AM -0700, Rob Clark wrote:
-> From: Rob Clark <robdclark@chromium.org>
+On Mon 08 Jul 08:12 PDT 2019, Jeffrey Hugo wrote:
+
+> Creating the msm gem address space requires a reference to the dev where
+> the iommu is located.  The driver currently assumes this is the same as
+> the platform device, which breaks when the iommu is outside of the
+> platform device (ie in the parent).  Default to using the platform device,
+> but check to see if that has an iommu reference, and if not, use the parent
+> device instead.  This should handle all the various iommu designs for
+> mdp5 supported systems.
 > 
-> For platforms that require the "zap shader" to take the GPU out of
-> secure mode at boot, we also need the zap fw to end up in the initrd.
-> 
-> Signed-off-by: Rob Clark <robdclark@chromium.org>
+> Signed-off-by: Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
+
+Tested-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+
 > ---
->  drivers/gpu/drm/msm/adreno/adreno_device.c | 4 ++++
->  1 file changed, 4 insertions(+)
 > 
-> diff --git a/drivers/gpu/drm/msm/adreno/adreno_device.c b/drivers/gpu/drm/msm/adreno/adreno_device.c
-> index d9ac8c4cd866..aa64514afd5c 100644
-> --- a/drivers/gpu/drm/msm/adreno/adreno_device.c
-> +++ b/drivers/gpu/drm/msm/adreno/adreno_device.c
-> @@ -174,6 +174,10 @@ MODULE_FIRMWARE("qcom/a530_zap.b01");
->  MODULE_FIRMWARE("qcom/a530_zap.b02");
->  MODULE_FIRMWARE("qcom/a630_sqe.fw");
->  MODULE_FIRMWARE("qcom/a630_gmu.bin");
-> +MODULE_FIRMWARE("qcom/a630_zap.mdt");
-> +MODULE_FIRMWARE("qcom/a630_zap.b00");
-> +MODULE_FIRMWARE("qcom/a630_zap.b01");
-> +MODULE_FIRMWARE("qcom/a630_zap.b02");
-
-Hopefully we are in the very last days of the split PIL so we can leave this
-ugliness behind us once and for all.
-
-Reviewed-by: Jordan Crouse <jcrouse@codeaurora.org>
-
->  static inline bool _rev_match(uint8_t entry, uint8_t id)
->  {
+> v2: It turns out there isn't a universal way to get the iommu device, so 
+> check to see if its in the current node or parent
+> 
+>  drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c | 7 ++++++-
+>  1 file changed, 6 insertions(+), 1 deletion(-)
+> 
+> diff --git a/drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c b/drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c
+> index 4a60f5fca6b0..02dc7d426cb0 100644
+> --- a/drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c
+> +++ b/drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c
+> @@ -663,6 +663,7 @@ struct msm_kms *mdp5_kms_init(struct drm_device *dev)
+>  	struct msm_kms *kms;
+>  	struct msm_gem_address_space *aspace;
+>  	int irq, i, ret;
+> +	struct device *iommu_dev;
+>  
+>  	/* priv->kms would have been populated by the MDP5 driver */
+>  	kms = priv->kms;
+> @@ -702,7 +703,11 @@ struct msm_kms *mdp5_kms_init(struct drm_device *dev)
+>  	mdelay(16);
+>  
+>  	if (config->platform.iommu) {
+> -		aspace = msm_gem_address_space_create(&pdev->dev,
+> +		iommu_dev = &pdev->dev;
+> +		if (!iommu_dev->iommu_fwspec)
+> +			iommu_dev = iommu_dev->parent;
+> +
+> +		aspace = msm_gem_address_space_create(iommu_dev,
+>  				config->platform.iommu, "mdp5");
+>  		if (IS_ERR(aspace)) {
+>  			ret = PTR_ERR(aspace);
 > -- 
-> 2.20.1
+> 2.17.1
 > 
-
--- 
-The Qualcomm Innovation Center, Inc. is a member of Code Aurora Forum,
-a Linux Foundation Collaborative Project
