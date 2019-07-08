@@ -2,122 +2,97 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 1FEF0626BE
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  8 Jul 2019 18:58:33 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 7FA3B627FE
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  8 Jul 2019 20:10:26 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2390524AbfGHQ6R (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 8 Jul 2019 12:58:17 -0400
-Received: from mail-pl1-f194.google.com ([209.85.214.194]:44005 "EHLO
-        mail-pl1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2387616AbfGHQ6Q (ORCPT
+        id S1729552AbfGHSKZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 8 Jul 2019 14:10:25 -0400
+Received: from smtp.codeaurora.org ([198.145.29.96]:53710 "EHLO
+        smtp.codeaurora.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728921AbfGHSKZ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 8 Jul 2019 12:58:16 -0400
-Received: by mail-pl1-f194.google.com with SMTP id cl9so8555213plb.10;
-        Mon, 08 Jul 2019 09:58:16 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=T1w86HYowDLmCMH8t5cBhr+6c2jCirc20RP6wN4si70=;
-        b=WRYTWK7F5Ug23w8882zblyMsDIYjkcH4ACBYvdFKP4HL+HoJF1SflMX5UPfAE18J9s
-         HOCDZ+7FN/A8VyoDiR58OWig3Sbj4SSt6eO+ZgLGUnQlHF1VlI0ye9BaFZ9w3O9mNoDd
-         V8D64/xzPpIE0ptFL9EASiMiMRdaXsOXqu3JeLfO6kTmqz128xjw4FWNo1nnm3UWV1Wr
-         6hm6o3QWjC+zTUMjI5GtOmVAFivpp6vN/fh8mcTxXOFDwzAzgHovj/Zr4Jhp1+RVNM/I
-         8vdtJYAdy18AzDQOw4OpGLMLqr4FMX78KI5jjJHg9k39D4D5HVsKIOxogpqEwR/B3v30
-         K27A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=T1w86HYowDLmCMH8t5cBhr+6c2jCirc20RP6wN4si70=;
-        b=WN696e4q1QzcyVLCW1QQYTvw+zX24ZQRa6o17J5Qvuno8bYr34smCmEdn7O+asUeJm
-         mOPGpqrO+xTaYNNhnbwOXyYiiwKjGlha5qfKDry9zWlI90OEjzhqfSnuzNA4jQOljoaY
-         MfDuZfECw2shb8N/lao2Pdu1kW2syXQUZRQQWMc8pXEuWlKyTwkqtK4IBnwLndqhnXnP
-         fdGA39G2W7VmNW6lN2nlcx2unYbKMBbCA1BmDruF6x3EcAV6PqX7sehuiYKSXgn+e0gL
-         LyBacVNOMyTbL9IBqSSElJH0LxwHkEud1d1RQqG3/JPQCPxG8kgMjRQr+IYUPtNFeLll
-         yVJA==
-X-Gm-Message-State: APjAAAWkji+loa/s2PuKCNqG/VrtcxDiRfg743hxy1eePb46JdV1IZzv
-        n1tRsHuCpzOP3opyZsH7JBE=
-X-Google-Smtp-Source: APXvYqyFG3Gc3x/EWlA+SYYdLs8gzBuzL0sMqRKNFy/azUlajXonAhGrBaf2rrvEJ6mwe/wrQGrUCg==
-X-Received: by 2002:a17:902:f089:: with SMTP id go9mr26326216plb.81.1562605096151;
-        Mon, 08 Jul 2019 09:58:16 -0700 (PDT)
-Received: from aw-bldr-10.qualcomm.com (i-global254.qualcomm.com. [199.106.103.254])
-        by smtp.gmail.com with ESMTPSA id z13sm66698pjn.32.2019.07.08.09.58.14
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 08 Jul 2019 09:58:15 -0700 (PDT)
-From:   Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
-To:     thierry.reding@gmail.com, sam@ravnborg.org, airlied@linux.ie,
-        daniel@ffwll.ch
-Cc:     robh+dt@kernel.org, mark.rutland@arm.com,
-        bjorn.andersson@linaro.org, dri-devel@lists.freedesktop.org,
-        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org,
-        Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
-Subject: [PATCH v2 2/2] drm/panel: simple: Add support for Sharp LD-D5116Z01B panel
-Date:   Mon,  8 Jul 2019 09:58:11 -0700
-Message-Id: <20190708165811.46370-1-jeffrey.l.hugo@gmail.com>
-X-Mailer: git-send-email 2.17.1
-In-Reply-To: <20190708165647.46224-1-jeffrey.l.hugo@gmail.com>
-References: <20190708165647.46224-1-jeffrey.l.hugo@gmail.com>
+        Mon, 8 Jul 2019 14:10:25 -0400
+Received: by smtp.codeaurora.org (Postfix, from userid 1000)
+        id 0499B602F0; Mon,  8 Jul 2019 18:10:24 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
+        s=default; t=1562609425;
+        bh=RYakAtzfd68XjS32CGKsM0PJUck7IxLNDzXB/YezXpk=;
+        h=From:To:Cc:Subject:Date:From;
+        b=nzo2HGF31VxQFTF3dOkr3lAawdIBm572BTtiysNdUUrDlfsnj7MgSOZSCr2qYJZyu
+         WTzxV9tpJKAmoWRFcBRJAMo/6k27R/u4ZCGaByfef0HdwP4bFuJtzIkIOYdQoEvdO0
+         YOOzk22d7pEeBHVs3/rQVTY1jDYrPhzSPGSsz9tM=
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        pdx-caf-mail.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.7 required=2.0 tests=ALL_TRUSTED,BAYES_00,
+        DKIM_INVALID,DKIM_SIGNED,SPF_NONE autolearn=no autolearn_force=no
+        version=3.4.0
+Received: from jcrouse1-lnx.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: jcrouse@smtp.codeaurora.org)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id D16A0602F0;
+        Mon,  8 Jul 2019 18:10:22 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
+        s=default; t=1562609424;
+        bh=RYakAtzfd68XjS32CGKsM0PJUck7IxLNDzXB/YezXpk=;
+        h=From:To:Cc:Subject:Date:From;
+        b=Ad8kI3O0+s4YwlFbID8kBOAt4b+HDkQfXy2QX0s0abp4uoLt2JeVkl/JMoUFDReJx
+         QcUmPJrxrh2tq5JHtIuKztBpxSxPNlycZqPUsd7JE2ThrlOES8O+KGPYSfOAjdK2/g
+         eM6KtmEGxjI1Fjn3YPRMS2eXN4+9Rr+RgTxFDfmk=
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org D16A0602F0
+Authentication-Results: pdx-caf-mail.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: pdx-caf-mail.web.codeaurora.org; spf=none smtp.mailfrom=jcrouse@codeaurora.org
+From:   Jordan Crouse <jcrouse@codeaurora.org>
+To:     freedreno@lists.freedesktop.org
+Cc:     jean-philippe.brucker@arm.com, linux-arm-msm@vger.kernel.org,
+        dianders@chromimum.org, hoegsberg@google.com,
+        baolu.lu@linux.intel.com, Will Deacon <will@kernel.org>,
+        Robin Murphy <robin.murphy@arm.com>,
+        Rob Herring <robh@kernel.org>,
+        Zhen Lei <thunder.leizhen@huawei.com>,
+        linux-kernel@vger.kernel.org, iommu@lists.linux-foundation.org,
+        Joerg Roedel <joro@8bytes.org>,
+        linux-arm-kernel@lists.infradead.org
+Subject: [PATCH v2 0/3] iommu/arm-smmu: Split pagetable support
+Date:   Mon,  8 Jul 2019 12:10:15 -0600
+Message-Id: <1562609418-25446-1-git-send-email-jcrouse@codeaurora.org>
+X-Mailer: git-send-email 2.7.4
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The Sharp LD-D5116Z01B is a 12.3" eDP panel with a 1920X1280 resolution.
+This series implements split pagetable support for arm-smmu-v2 devices. You have
+seen this code before as part of [1] but I split it from the other features
+to make it easier to review / merge.
 
-Signed-off-by: Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
-Reviewed-by: Sam Ravnborg <sam@ravnborg.org>
----
- drivers/gpu/drm/panel/panel-simple.c | 29 ++++++++++++++++++++++++++++
- 1 file changed, 29 insertions(+)
+This series adds a new format type to io-pgtable-arm to enable TTBR0 and
+TTBR1. Because of the way that the registers are mixed up it makes the most
+sense to enable them together instead of trying to create two different
+pagetables and merge them together later in the arm-smmu drive.
 
-diff --git a/drivers/gpu/drm/panel/panel-simple.c b/drivers/gpu/drm/panel/panel-simple.c
-index 5a93c4edf1e4..a8808b13c370 100644
---- a/drivers/gpu/drm/panel/panel-simple.c
-+++ b/drivers/gpu/drm/panel/panel-simple.c
-@@ -2354,6 +2354,32 @@ static const struct panel_desc samsung_ltn140at29_301 = {
- 	},
- };
- 
-+static const struct drm_display_mode sharp_ld_d5116z01b_mode = {
-+	.clock = 168480,
-+	.hdisplay = 1920,
-+	.hsync_start = 1920 + 48,
-+	.hsync_end = 1920 + 48 + 32,
-+	.htotal = 1920 + 48 + 32 + 80,
-+	.vdisplay = 1280,
-+	.vsync_start = 1280 + 3,
-+	.vsync_end = 1280 + 3 + 10,
-+	.vtotal = 1280 + 3 + 10 + 57,
-+	.vrefresh = 60,
-+	.flags = DRM_MODE_FLAG_PHSYNC | DRM_MODE_FLAG_PVSYNC,
-+};
-+
-+static const struct panel_desc sharp_ld_d5116z01b = {
-+	.modes = &sharp_ld_d5116z01b_mode,
-+	.num_modes = 1,
-+	.bpc = 8,
-+	.size = {
-+		.width = 260,
-+		.height = 120,
-+	},
-+	.bus_format = MEDIA_BUS_FMT_RGB888_1X24,
-+	.bus_flags = DRM_BUS_FLAG_DATA_MSB_TO_LSB,
-+};
-+
- static const struct drm_display_mode sharp_lq035q7db03_mode = {
- 	.clock = 5500,
- 	.hdisplay = 240,
-@@ -3002,6 +3028,9 @@ static const struct of_device_id platform_of_match[] = {
- 	}, {
- 		.compatible = "samsung,ltn140at29-301",
- 		.data = &samsung_ltn140at29_301,
-+	}, {
-+		.compatible = "sharp,ld-d5116z01b",
-+		.data = &sharp_ld_d5116z01b,
- 	}, {
- 		.compatible = "sharp,lq035q7db03",
- 		.data = &sharp_lq035q7db03,
+This will be used later by the drm/msm driver to enable split pagetables
+as part of the effort to implement per-context pagetables [2].
+
+Thanks,
+Jordan
+
+[1] https://patchwork.freedesktop.org/series/57441/
+[2] https://patchwork.freedesktop.org/patch/307616/?series=57441&rev=3
+
+Jordan Crouse (3):
+  iommu: Add DOMAIN_ATTR_SPLIT_TABLES
+  iommu/io-pgtable-arm: Add support for AARCH64 split pagetables
+  iommu/arm-smmu: Add support for DOMAIN_ATTR_SPLIT_TABLES
+
+ drivers/iommu/arm-smmu.c       |  16 ++-
+ drivers/iommu/io-pgtable-arm.c | 261 +++++++++++++++++++++++++++++++++++++----
+ drivers/iommu/io-pgtable.c     |   1 +
+ include/linux/io-pgtable.h     |   2 +
+ include/linux/iommu.h          |   1 +
+ 5 files changed, 256 insertions(+), 25 deletions(-)
+
 -- 
-2.17.1
+2.7.4
 
