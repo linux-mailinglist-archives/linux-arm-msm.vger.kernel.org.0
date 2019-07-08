@@ -2,58 +2,59 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 01841626B9
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  8 Jul 2019 18:57:59 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 1FEF0626BE
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  8 Jul 2019 18:58:33 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2389850AbfGHQ56 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 8 Jul 2019 12:57:58 -0400
-Received: from mail-pg1-f194.google.com ([209.85.215.194]:40310 "EHLO
-        mail-pg1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726318AbfGHQ55 (ORCPT
+        id S2390524AbfGHQ6R (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 8 Jul 2019 12:58:17 -0400
+Received: from mail-pl1-f194.google.com ([209.85.214.194]:44005 "EHLO
+        mail-pl1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2387616AbfGHQ6Q (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 8 Jul 2019 12:57:57 -0400
-Received: by mail-pg1-f194.google.com with SMTP id w10so7985764pgj.7;
-        Mon, 08 Jul 2019 09:57:57 -0700 (PDT)
+        Mon, 8 Jul 2019 12:58:16 -0400
+Received: by mail-pl1-f194.google.com with SMTP id cl9so8555213plb.10;
+        Mon, 08 Jul 2019 09:58:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=xDwSUm2ymU/W1fSZho5QIri1l9GMHXrnnJtJgPD9q8c=;
-        b=cUqnE1qJhl3aN0kYxeb2SjpcgFwRj4ZP4G1SQBx2d9jsqA2OItxE1MuXGX5OceJ9rJ
-         /i18h7EhofDQiCMmSS9BSVtNTifgQi5NTpjlwB09P9BRk49ZfAqEW/Q8QxakZdxMdy+H
-         u2/s7QFSBF2LXOEwYXdTUZ10znesq9ATfZ/7W1EYB0nysxpT73RkiT85DuXmfDlDt78Y
-         4WosOgy8yX5QSD8LD5gbB5YRe/+8AoOqah8y0FHeFgN9SZDtig2WKmsQBflUW9ZADZa7
-         YVJNqDr2Wj9xCF2VPteY0mHl3inFSA2SNcESc9a792f2A+s+lvWnKKur6/QUixjwTQKs
-         2R+A==
+        bh=T1w86HYowDLmCMH8t5cBhr+6c2jCirc20RP6wN4si70=;
+        b=WRYTWK7F5Ug23w8882zblyMsDIYjkcH4ACBYvdFKP4HL+HoJF1SflMX5UPfAE18J9s
+         HOCDZ+7FN/A8VyoDiR58OWig3Sbj4SSt6eO+ZgLGUnQlHF1VlI0ye9BaFZ9w3O9mNoDd
+         V8D64/xzPpIE0ptFL9EASiMiMRdaXsOXqu3JeLfO6kTmqz128xjw4FWNo1nnm3UWV1Wr
+         6hm6o3QWjC+zTUMjI5GtOmVAFivpp6vN/fh8mcTxXOFDwzAzgHovj/Zr4Jhp1+RVNM/I
+         8vdtJYAdy18AzDQOw4OpGLMLqr4FMX78KI5jjJHg9k39D4D5HVsKIOxogpqEwR/B3v30
+         K27A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=xDwSUm2ymU/W1fSZho5QIri1l9GMHXrnnJtJgPD9q8c=;
-        b=NuGM7Eul+vrN4yyt8E2QPxVxkEHtJsfmTEisYHyABpndeRx3Aqo33b1G2xvovo8ggu
-         SxczYvZ9QDwBa25KiJQPrqP7dr3AnP/2RYwPVgPYWNoAylkZRJXe68kUpOrUJ6Qfsq5M
-         4wLzBFCW2lL912qSDQm2gLJ0aD4UI+e3t3NyWn95YRRqIPRIkyv4uxgsO9F8VELZpdMT
-         4Zh24J+lB7aLpHBVvRC7YD0Xvx20QRW8HJcH02xrypP2eTTXKjqj7dIqkDgrZk4+Y76f
-         Wu5xJ5YNItdXjYDXPGuiH+reUQidnNeOlwywVVVD27DeLwTAZlqv2IkZz6pBGySsEejx
-         mw+Q==
-X-Gm-Message-State: APjAAAWJXQCfClDqCFq6wLWgqbDkWtpDLBN3dBvC2gHO5jJGgOyUFtLq
-        MNYKn2QcmeePjwsgXs0xYEo=
-X-Google-Smtp-Source: APXvYqzSJot1VXmkklME31WkeSKMsCOKZxANzmuc2CzhjLcyvTi751cZbwfGTLg8UoLNQEdOMtdGbQ==
-X-Received: by 2002:a65:62ca:: with SMTP id m10mr25029485pgv.57.1562605077213;
-        Mon, 08 Jul 2019 09:57:57 -0700 (PDT)
+        bh=T1w86HYowDLmCMH8t5cBhr+6c2jCirc20RP6wN4si70=;
+        b=WN696e4q1QzcyVLCW1QQYTvw+zX24ZQRa6o17J5Qvuno8bYr34smCmEdn7O+asUeJm
+         mOPGpqrO+xTaYNNhnbwOXyYiiwKjGlha5qfKDry9zWlI90OEjzhqfSnuzNA4jQOljoaY
+         MfDuZfECw2shb8N/lao2Pdu1kW2syXQUZRQQWMc8pXEuWlKyTwkqtK4IBnwLndqhnXnP
+         fdGA39G2W7VmNW6lN2nlcx2unYbKMBbCA1BmDruF6x3EcAV6PqX7sehuiYKSXgn+e0gL
+         LyBacVNOMyTbL9IBqSSElJH0LxwHkEud1d1RQqG3/JPQCPxG8kgMjRQr+IYUPtNFeLll
+         yVJA==
+X-Gm-Message-State: APjAAAWkji+loa/s2PuKCNqG/VrtcxDiRfg743hxy1eePb46JdV1IZzv
+        n1tRsHuCpzOP3opyZsH7JBE=
+X-Google-Smtp-Source: APXvYqyFG3Gc3x/EWlA+SYYdLs8gzBuzL0sMqRKNFy/azUlajXonAhGrBaf2rrvEJ6mwe/wrQGrUCg==
+X-Received: by 2002:a17:902:f089:: with SMTP id go9mr26326216plb.81.1562605096151;
+        Mon, 08 Jul 2019 09:58:16 -0700 (PDT)
 Received: from aw-bldr-10.qualcomm.com (i-global254.qualcomm.com. [199.106.103.254])
-        by smtp.gmail.com with ESMTPSA id d16sm12280022pgb.4.2019.07.08.09.57.55
+        by smtp.gmail.com with ESMTPSA id z13sm66698pjn.32.2019.07.08.09.58.14
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 08 Jul 2019 09:57:56 -0700 (PDT)
+        Mon, 08 Jul 2019 09:58:15 -0700 (PDT)
 From:   Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
-To:     robh+dt@kernel.org, mark.rutland@arm.com, thierry.reding@gmail.com,
-        sam@ravnborg.org, airlied@linux.ie, daniel@ffwll.ch
-Cc:     bjorn.andersson@linaro.org, dri-devel@lists.freedesktop.org,
+To:     thierry.reding@gmail.com, sam@ravnborg.org, airlied@linux.ie,
+        daniel@ffwll.ch
+Cc:     robh+dt@kernel.org, mark.rutland@arm.com,
+        bjorn.andersson@linaro.org, dri-devel@lists.freedesktop.org,
         devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
         linux-kernel@vger.kernel.org,
         Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
-Subject: [PATCH v2 1/2] dt-bindings: panel: Add Sharp LD-D5116Z01B
-Date:   Mon,  8 Jul 2019 09:57:53 -0700
-Message-Id: <20190708165753.46275-1-jeffrey.l.hugo@gmail.com>
+Subject: [PATCH v2 2/2] drm/panel: simple: Add support for Sharp LD-D5116Z01B panel
+Date:   Mon,  8 Jul 2019 09:58:11 -0700
+Message-Id: <20190708165811.46370-1-jeffrey.l.hugo@gmail.com>
 X-Mailer: git-send-email 2.17.1
 In-Reply-To: <20190708165647.46224-1-jeffrey.l.hugo@gmail.com>
 References: <20190708165647.46224-1-jeffrey.l.hugo@gmail.com>
@@ -67,42 +68,56 @@ The Sharp LD-D5116Z01B is a 12.3" eDP panel with a 1920X1280 resolution.
 Signed-off-by: Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
 Reviewed-by: Sam Ravnborg <sam@ravnborg.org>
 ---
- .../display/panel/sharp,ld-d5116z01b.txt      | 26 +++++++++++++++++++
- 1 file changed, 26 insertions(+)
- create mode 100644 Documentation/devicetree/bindings/display/panel/sharp,ld-d5116z01b.txt
+ drivers/gpu/drm/panel/panel-simple.c | 29 ++++++++++++++++++++++++++++
+ 1 file changed, 29 insertions(+)
 
-diff --git a/Documentation/devicetree/bindings/display/panel/sharp,ld-d5116z01b.txt b/Documentation/devicetree/bindings/display/panel/sharp,ld-d5116z01b.txt
-new file mode 100644
-index 000000000000..fd9cf39bde77
---- /dev/null
-+++ b/Documentation/devicetree/bindings/display/panel/sharp,ld-d5116z01b.txt
-@@ -0,0 +1,26 @@
-+Sharp LD-D5116Z01B 12.3" WUXGA+ eDP panel
+diff --git a/drivers/gpu/drm/panel/panel-simple.c b/drivers/gpu/drm/panel/panel-simple.c
+index 5a93c4edf1e4..a8808b13c370 100644
+--- a/drivers/gpu/drm/panel/panel-simple.c
++++ b/drivers/gpu/drm/panel/panel-simple.c
+@@ -2354,6 +2354,32 @@ static const struct panel_desc samsung_ltn140at29_301 = {
+ 	},
+ };
+ 
++static const struct drm_display_mode sharp_ld_d5116z01b_mode = {
++	.clock = 168480,
++	.hdisplay = 1920,
++	.hsync_start = 1920 + 48,
++	.hsync_end = 1920 + 48 + 32,
++	.htotal = 1920 + 48 + 32 + 80,
++	.vdisplay = 1280,
++	.vsync_start = 1280 + 3,
++	.vsync_end = 1280 + 3 + 10,
++	.vtotal = 1280 + 3 + 10 + 57,
++	.vrefresh = 60,
++	.flags = DRM_MODE_FLAG_PHSYNC | DRM_MODE_FLAG_PVSYNC,
++};
 +
-+Required properties:
-+- compatible: should be "sharp,ld-d5116z01b"
-+- power-supply: regulator to provide the VCC supply voltage (3.3 volts)
++static const struct panel_desc sharp_ld_d5116z01b = {
++	.modes = &sharp_ld_d5116z01b_mode,
++	.num_modes = 1,
++	.bpc = 8,
++	.size = {
++		.width = 260,
++		.height = 120,
++	},
++	.bus_format = MEDIA_BUS_FMT_RGB888_1X24,
++	.bus_flags = DRM_BUS_FLAG_DATA_MSB_TO_LSB,
++};
 +
-+This binding is compatible with the simple-panel binding.
-+
-+The device node can contain one 'port' child node with one child
-+'endpoint' node, according to the bindings defined in [1]. This
-+node should describe panel's video bus.
-+
-+[1]: Documentation/devicetree/bindings/media/video-interfaces.txt
-+
-+Example:
-+
-+	panel: panel {
-+		compatible = "sharp,ld-d5116z01b";
-+		power-supply = <&vlcd_3v3>;
-+
-+		port {
-+			panel_ep: endpoint {
-+				remote-endpoint = <&bridge_out_ep>;
-+			};
-+		};
-+	};
+ static const struct drm_display_mode sharp_lq035q7db03_mode = {
+ 	.clock = 5500,
+ 	.hdisplay = 240,
+@@ -3002,6 +3028,9 @@ static const struct of_device_id platform_of_match[] = {
+ 	}, {
+ 		.compatible = "samsung,ltn140at29-301",
+ 		.data = &samsung_ltn140at29_301,
++	}, {
++		.compatible = "sharp,ld-d5116z01b",
++		.data = &sharp_ld_d5116z01b,
+ 	}, {
+ 		.compatible = "sharp,lq035q7db03",
+ 		.data = &sharp_lq035q7db03,
 -- 
 2.17.1
 
