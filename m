@@ -2,127 +2,257 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 00718628D9
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  8 Jul 2019 21:01:17 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 2502962986
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  8 Jul 2019 21:28:25 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2388713AbfGHTBC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 8 Jul 2019 15:01:02 -0400
-Received: from smtp.codeaurora.org ([198.145.29.96]:43610 "EHLO
-        smtp.codeaurora.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1732447AbfGHTBA (ORCPT
+        id S1731716AbfGHT0W (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 8 Jul 2019 15:26:22 -0400
+Received: from mail-pg1-f194.google.com ([209.85.215.194]:34517 "EHLO
+        mail-pg1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2404166AbfGHT0Q (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 8 Jul 2019 15:01:00 -0400
-Received: by smtp.codeaurora.org (Postfix, from userid 1000)
-        id E223660E3F; Mon,  8 Jul 2019 19:00:58 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
-        s=default; t=1562612459;
-        bh=8vvsLWPcHr0znTAIRbRfTb5WuDfVnCumJ8bN1RXKkaU=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=WCBItDyqdXQ80M9E9W6GK6F8HiOenmBMy9khHqj+UHTf1bVEVKH2STolV1x8ZzkRp
-         ubmbSGE7TN9Y6LO+rWtkn1xf7oAMVPY/7icta+tV0M+6uK/16Vcn5phSInNFl3O9wj
-         yZT6sC8ILmXaZzoc8ADGFpNJm2Qoj1aLxvnalEoQ=
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        pdx-caf-mail.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.7 required=2.0 tests=ALL_TRUSTED,BAYES_00,
-        DKIM_INVALID,DKIM_SIGNED,SPF_NONE autolearn=no autolearn_force=no
-        version=3.4.0
-Received: from jcrouse1-lnx.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: jcrouse@smtp.codeaurora.org)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 3F59660E40;
-        Mon,  8 Jul 2019 19:00:55 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
-        s=default; t=1562612456;
-        bh=8vvsLWPcHr0znTAIRbRfTb5WuDfVnCumJ8bN1RXKkaU=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=Upbw5W/djHsjIjuGf3gIhOy7HFDE4loB2ekFEU8qBMXVqNg4kaM4fLsyTssaxk5D1
-         jHSu0mL/YhTYrNDb71e9+JvNqt7t87D7uj2fjYpvwVSQ3zTjPtmx0/wb2H8ffeXsmY
-         92papmWE9htJ+GplCCwMzha46zOrNt6UtgY+Rvf0=
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 3F59660E40
-Authentication-Results: pdx-caf-mail.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: pdx-caf-mail.web.codeaurora.org; spf=none smtp.mailfrom=jcrouse@codeaurora.org
-From:   Jordan Crouse <jcrouse@codeaurora.org>
-To:     freedreno@lists.freedesktop.org
-Cc:     jean-philippe.brucker@arm.com, linux-arm-msm@vger.kernel.org,
-        hoegsberg@google.com, dianders@chromium.org,
-        baolu.lu@linux.intel.com, Will Deacon <will@kernel.org>,
-        linux-kernel@vger.kernel.org, iommu@lists.linux-foundation.org,
-        Robin Murphy <robin.murphy@arm.com>,
-        Joerg Roedel <joro@8bytes.org>,
-        linux-arm-kernel@lists.infradead.org
-Subject: [RESEND PATCH v2 3/3] iommu/arm-smmu: Add support for DOMAIN_ATTR_SPLIT_TABLES
-Date:   Mon,  8 Jul 2019 13:00:47 -0600
-Message-Id: <1562612447-19856-4-git-send-email-jcrouse@codeaurora.org>
-X-Mailer: git-send-email 2.7.4
-In-Reply-To: <1562612447-19856-1-git-send-email-jcrouse@codeaurora.org>
-References: <1562612447-19856-1-git-send-email-jcrouse@codeaurora.org>
+        Mon, 8 Jul 2019 15:26:16 -0400
+Received: by mail-pg1-f194.google.com with SMTP id p10so8184874pgn.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 08 Jul 2019 12:26:15 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=HxfZuw01tuRQlI3u5x7pWAP9zYOxJGJcmWPvFAPk6as=;
+        b=BkK5QJIKT0J2d2OkK0pM+sLi0kUL/QZVjVWzmRavRYnqNFJ/hkUf18htyGDJnHzTGc
+         eAKYdfsit4sS+aYHPLTCt9MUtCLY+x3SsQoLoN7Gdv25yzh/++ugk+Z4V5/3cTfcjRKh
+         NVRZgCLjgf2K0MYUrt5CcHKsdAt7j2Z4eDkMpuxNKFsewo4rdOgWIYkkNp9+GLVV4Jk4
+         O7otQyEmxC22qw9ITvLwRU/y1L0IzZp/i0Xb9vCHxi2qFiks+t2tECGeIUrR6hMyqdWU
+         mZcQGaijGsyDT7WXQqrZmK+zzDwIb/5JD5nYfqcydGXYIfEiycdQD7BmhuRSmo0kmfZc
+         t7ZA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=HxfZuw01tuRQlI3u5x7pWAP9zYOxJGJcmWPvFAPk6as=;
+        b=hZlhxk3mFpnzXMYmpg9C1PtJ5ibqh5E7l2nqmCxueRQg/T+zuQPH27/aYnmYQYxE4n
+         VCtdrV3cc0saCPxKd32Idv8BVMjvM7TYht5v1kF26Vld+SIP/gU/GZHbQy8dnLAK3ygo
+         Qa68GGYxJc7WyfZs08GayliSWDfjXUZiho6ztU30YoFz+x+d3X0xFx0xsaDrwFG6mxVY
+         sOCwttqA5eWucrRd28jL7RN5qHCdKIJ4JdVrme/4qNO9yvuubzks2LulrNpiAOZYaav9
+         KUm8fHzO3KOQOCfdtLAL12NnwOiqyW7dMwXGtH3MdNJgF2obAlxeXzRRaLwRD8lWK1Ft
+         nqHw==
+X-Gm-Message-State: APjAAAWX1rxdnh8Tl83XbWZsuV9lg/yuKxI9FYmHe0pvl7vuPg4KilXa
+        TX1ANncHRM5cDeoRImFV/3LiZA==
+X-Google-Smtp-Source: APXvYqw+pAcqr/xA1niNx2ZJZRMX6HHEsJq5NJaAqjp7dEa1Zr3sTl6gVBuGUSL7HUilkdcVkKIlNg==
+X-Received: by 2002:a63:18d:: with SMTP id 135mr25833845pgb.62.1562613975220;
+        Mon, 08 Jul 2019 12:26:15 -0700 (PDT)
+Received: from minitux (104-188-17-28.lightspeed.sndgca.sbcglobal.net. [104.188.17.28])
+        by smtp.gmail.com with ESMTPSA id f88sm309324pjg.5.2019.07.08.12.26.13
+        (version=TLS1_3 cipher=AEAD-AES256-GCM-SHA384 bits=256/256);
+        Mon, 08 Jul 2019 12:26:14 -0700 (PDT)
+Date:   Mon, 8 Jul 2019 12:26:12 -0700
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     Georgi Djakov <georgi.djakov@linaro.org>
+Cc:     robh+dt@kernel.org, agross@kernel.org, vkoul@kernel.org,
+        evgreen@chromium.org, daidavid1@codeaurora.org,
+        linux-pm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org
+Subject: Re: [PATCH v4 1/5] dt-bindings: interconnect: Add Qualcomm QCS404 DT
+ bindings
+Message-ID: <20190708192612.GE30636@minitux>
+References: <20190613151323.10850-1-georgi.djakov@linaro.org>
+ <20190613151323.10850-2-georgi.djakov@linaro.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20190613151323.10850-2-georgi.djakov@linaro.org>
+User-Agent: Mutt/1.12.0 (2019-05-25)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-When DOMAIN_ATTR_SPLIT_TABLES is specified for pass ARM_64_LPAE_SPLIT_S1
-to io_pgtable_ops to allocate and initialize TTBR0 and TTBR1 pagetables.
+On Thu 13 Jun 08:13 PDT 2019, Georgi Djakov wrote:
 
-v3: Moved all the pagetable specific work into io-pgtable-arm
-in a previous patch.
+> The Qualcomm QCS404 platform has several buses that could be controlled
+> and tuned according to the bandwidth demand.
+> 
+> Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+> Signed-off-by: Georgi Djakov <georgi.djakov@linaro.org>
+> ---
+> 
+> v4:
+> - Add the DT header into this patch.
+> - Pick Bjorn's r-b.
+> 
+> v3:
+> - Add a reg property and move the interconnect nodes under the "soc" node.
+> 
+> v2:
+> - No changes.
+> 
+>  .../bindings/interconnect/qcom,qcs404.txt     | 46 ++++++++++
+>  .../dt-bindings/interconnect/qcom,qcs404.h    | 88 +++++++++++++++++++
+>  2 files changed, 134 insertions(+)
+>  create mode 100644 Documentation/devicetree/bindings/interconnect/qcom,qcs404.txt
+>  create mode 100644 include/dt-bindings/interconnect/qcom,qcs404.h
+> 
+> diff --git a/Documentation/devicetree/bindings/interconnect/qcom,qcs404.txt b/Documentation/devicetree/bindings/interconnect/qcom,qcs404.txt
+> new file mode 100644
+> index 000000000000..14a827268dda
+> --- /dev/null
+> +++ b/Documentation/devicetree/bindings/interconnect/qcom,qcs404.txt
+> @@ -0,0 +1,46 @@
+> +Qualcomm QCS404 Network-On-Chip interconnect driver binding
+> +-----------------------------------------------------------
+> +
+> +Required properties :
+> +- compatible : shall contain only one of the following:
+> +			"qcom,qcs404-bimc"
+> +			"qcom,qcs404-pcnoc"
+> +			"qcom,qcs404-snoc"
+> +- #interconnect-cells : should contain 1
+> +
+> +Optional properties :
+> +reg : specifies the physical base address and size of registers
+> +clocks : list of phandles and specifiers to all interconnect bus clocks
+> +clock-names : clock names should include both "bus_clk" and "bus_a_clk"
 
-Signed-off-by: Jordan Crouse <jcrouse@codeaurora.org>
----
+Spoke to Rob about this patch, and I don't think these properties should
+not be described as optional.
 
- drivers/iommu/arm-smmu.c | 16 +++++++++++++++-
- 1 file changed, 15 insertions(+), 1 deletion(-)
+The reg isn't used unless we're implementing support for QoS, but let's
+include them in the binding as required anyways.
 
-diff --git a/drivers/iommu/arm-smmu.c b/drivers/iommu/arm-smmu.c
-index 653b6b3..7a6b4bb 100644
---- a/drivers/iommu/arm-smmu.c
-+++ b/drivers/iommu/arm-smmu.c
-@@ -257,6 +257,7 @@ struct arm_smmu_domain {
- 	bool				non_strict;
- 	struct mutex			init_mutex; /* Protects smmu pointer */
- 	spinlock_t			cb_lock; /* Serialises ATS1* ops and TLB syncs */
-+	u32 attributes;
- 	struct iommu_domain		domain;
- };
- 
-@@ -832,7 +833,11 @@ static int arm_smmu_init_domain_context(struct iommu_domain *domain,
- 		ias = smmu->va_size;
- 		oas = smmu->ipa_size;
- 		if (cfg->fmt == ARM_SMMU_CTX_FMT_AARCH64) {
--			fmt = ARM_64_LPAE_S1;
-+			if (smmu_domain->attributes &
-+				(1 << DOMAIN_ATTR_SPLIT_TABLES))
-+				fmt = ARM_64_LPAE_SPLIT_S1;
-+			else
-+				fmt = ARM_64_LPAE_S1;
- 		} else if (cfg->fmt == ARM_SMMU_CTX_FMT_AARCH32_L) {
- 			fmt = ARM_32_LPAE_S1;
- 			ias = min(ias, 32UL);
-@@ -1582,6 +1587,10 @@ static int arm_smmu_domain_get_attr(struct iommu_domain *domain,
- 		case DOMAIN_ATTR_NESTING:
- 			*(int *)data = (smmu_domain->stage == ARM_SMMU_DOMAIN_NESTED);
- 			return 0;
-+		case DOMAIN_ATTR_SPLIT_TABLES:
-+			*(int *)data = !!(smmu_domain->attributes &
-+				(1 << DOMAIN_ATTR_SPLIT_TABLES));
-+			return 0;
- 		default:
- 			return -ENODEV;
- 		}
-@@ -1622,6 +1631,11 @@ static int arm_smmu_domain_set_attr(struct iommu_domain *domain,
- 			else
- 				smmu_domain->stage = ARM_SMMU_DOMAIN_S1;
- 			break;
-+		case DOMAIN_ATTR_SPLIT_TABLES:
-+			if (*((int *)data))
-+				smmu_domain->attributes |=
-+					(1 << DOMAIN_ATTR_SPLIT_TABLES);
-+			break;
- 		default:
- 			ret = -ENODEV;
- 		}
--- 
-2.7.4
+Iirc the two clocks are required with the current implementation, but
+shouldn't there be an iface clock as well, for accessing the QoS
+register space?
 
+
+PS. As I read this again, please drop _clk from the two clocks names -
+we know they are clocks...
+
+Regards,
+Bjorn
+
+> +
+> +Example:
+> +
+> +soc {
+> +	...
+> +	bimc: interconnect@400000 {
+> +		reg = <0x00400000 0x80000>;
+> +		compatible = "qcom,qcs404-bimc";
+> +		#interconnect-cells = <1>;
+> +		clock-names = "bus_clk", "bus_a_clk";
+> +		clocks = <&rpmcc RPM_SMD_BIMC_CLK>,
+> +			<&rpmcc RPM_SMD_BIMC_A_CLK>;
+> +	};
+> +
+> +	pnoc: interconnect@500000 {
+> +		reg = <0x00500000 0x15080>;
+> +		compatible = "qcom,qcs404-pcnoc";
+> +		#interconnect-cells = <1>;
+> +		clock-names = "bus_clk", "bus_a_clk";
+> +		clocks = <&rpmcc RPM_SMD_PNOC_CLK>,
+> +			<&rpmcc RPM_SMD_PNOC_A_CLK>;
+> +	};
+> +
+> +	snoc: interconnect@580000 {
+> +		reg = <0x00580000 0x23080>;
+> +		compatible = "qcom,qcs404-snoc";
+> +		#interconnect-cells = <1>;
+> +		clock-names = "bus_clk", "bus_a_clk";
+> +		clocks = <&rpmcc RPM_SMD_SNOC_CLK>,
+> +			<&rpmcc RPM_SMD_SNOC_A_CLK>;
+> +	};
+> +};
+> diff --git a/include/dt-bindings/interconnect/qcom,qcs404.h b/include/dt-bindings/interconnect/qcom,qcs404.h
+> new file mode 100644
+> index 000000000000..960f6e39c5f2
+> --- /dev/null
+> +++ b/include/dt-bindings/interconnect/qcom,qcs404.h
+> @@ -0,0 +1,88 @@
+> +/* SPDX-License-Identifier: GPL-2.0 */
+> +/*
+> + * Qualcomm interconnect IDs
+> + *
+> + * Copyright (c) 2019, Linaro Ltd.
+> + * Author: Georgi Djakov <georgi.djakov@linaro.org>
+> + */
+> +
+> +#ifndef __DT_BINDINGS_INTERCONNECT_QCOM_QCS404_H
+> +#define __DT_BINDINGS_INTERCONNECT_QCOM_QCS404_H
+> +
+> +#define MASTER_AMPSS_M0			0
+> +#define MASTER_OXILI			1
+> +#define MASTER_MDP_PORT0		2
+> +#define MASTER_SNOC_BIMC_1		3
+> +#define MASTER_TCU_0			4
+> +#define SLAVE_EBI_CH0			5
+> +#define SLAVE_BIMC_SNOC			6
+> +
+> +#define MASTER_SPDM			0
+> +#define MASTER_BLSP_1			1
+> +#define MASTER_BLSP_2			2
+> +#define MASTER_XI_USB_HS1		3
+> +#define MASTER_CRYPT0			4
+> +#define MASTER_SDCC_1			5
+> +#define MASTER_SDCC_2			6
+> +#define MASTER_SNOC_PCNOC		7
+> +#define MASTER_QPIC			8
+> +#define PCNOC_INT_0			9
+> +#define PCNOC_INT_2			10
+> +#define PCNOC_INT_3			11
+> +#define PCNOC_S_0			12
+> +#define PCNOC_S_1			13
+> +#define PCNOC_S_2			14
+> +#define PCNOC_S_3			15
+> +#define PCNOC_S_4			16
+> +#define PCNOC_S_6			17
+> +#define PCNOC_S_7			18
+> +#define PCNOC_S_8			19
+> +#define PCNOC_S_9			20
+> +#define PCNOC_S_10			21
+> +#define PCNOC_S_11			22
+> +#define SLAVE_SPDM			23
+> +#define SLAVE_PDM			24
+> +#define SLAVE_PRNG			25
+> +#define SLAVE_TCSR			26
+> +#define SLAVE_SNOC_CFG			27
+> +#define SLAVE_MESSAGE_RAM		28
+> +#define SLAVE_DISP_SS_CFG		29
+> +#define SLAVE_GPU_CFG			30
+> +#define SLAVE_BLSP_1			31
+> +#define SLAVE_BLSP_2			32
+> +#define SLAVE_TLMM_NORTH		33
+> +#define SLAVE_PCIE			34
+> +#define SLAVE_ETHERNET			35
+> +#define SLAVE_TLMM_EAST			36
+> +#define SLAVE_TCU			37
+> +#define SLAVE_PMIC_ARB			38
+> +#define SLAVE_SDCC_1			39
+> +#define SLAVE_SDCC_2			40
+> +#define SLAVE_TLMM_SOUTH		41
+> +#define SLAVE_USB_HS			42
+> +#define SLAVE_USB3			43
+> +#define SLAVE_CRYPTO_0_CFG		44
+> +#define SLAVE_PCNOC_SNOC		45
+> +
+> +#define MASTER_QDSS_BAM			0
+> +#define MASTER_BIMC_SNOC		1
+> +#define MASTER_PCNOC_SNOC		2
+> +#define MASTER_QDSS_ETR			3
+> +#define MASTER_EMAC			4
+> +#define MASTER_PCIE			5
+> +#define MASTER_USB3			6
+> +#define QDSS_INT			7
+> +#define SNOC_INT_0			8
+> +#define SNOC_INT_1			9
+> +#define SNOC_INT_2			10
+> +#define SLAVE_KPSS_AHB			11
+> +#define SLAVE_WCSS			12
+> +#define SLAVE_SNOC_BIMC_1		13
+> +#define SLAVE_IMEM			14
+> +#define SLAVE_SNOC_PCNOC		15
+> +#define SLAVE_QDSS_STM			16
+> +#define SLAVE_CATS_0			17
+> +#define SLAVE_CATS_1			18
+> +#define SLAVE_LPASS			19
+> +
+> +#endif
