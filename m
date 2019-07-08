@@ -2,121 +2,89 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 2B67261E0C
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  8 Jul 2019 13:56:50 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0A74561E7B
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  8 Jul 2019 14:34:10 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730670AbfGHL4d (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 8 Jul 2019 07:56:33 -0400
-Received: from mail-vs1-f65.google.com ([209.85.217.65]:35750 "EHLO
-        mail-vs1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730669AbfGHL4c (ORCPT
+        id S1727373AbfGHMeJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 8 Jul 2019 08:34:09 -0400
+Received: from mail-pf1-f195.google.com ([209.85.210.195]:42185 "EHLO
+        mail-pf1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729546AbfGHMeI (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 8 Jul 2019 07:56:32 -0400
-Received: by mail-vs1-f65.google.com with SMTP id u124so7986904vsu.2
-        for <linux-arm-msm@vger.kernel.org>; Mon, 08 Jul 2019 04:56:31 -0700 (PDT)
+        Mon, 8 Jul 2019 08:34:08 -0400
+Received: by mail-pf1-f195.google.com with SMTP id q10so7542873pff.9;
+        Mon, 08 Jul 2019 05:34:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=yQ8W16JFocd/InfO/cTB4TM+C2DG5Zh65kAxr22aAgw=;
-        b=vydbS4JFbSJNqkIOFQ0D5/ZnJvmP882sgm8pA2xzk4cuTgDSOkGzTVrCU7NlK1CHgj
-         SeVTb2hAwwAVEHoWdfMjszU5gR1i2vAC2ytmDeRkD2DQKevdCkwkhTxdJ9DAuA4OOLXc
-         L+DiEDMXIDsVRF69tivAPriiX+mLRJJP/F8BJW7Zrm3c7XAoM2S5mMdB3x103YBx6qjU
-         ET0hAMjxwDXYy06Z1sfWreTdzOc+cLHtOD6sBYmBa32KhbFzUOvw5S8HtpwULzfxhAlz
-         VBLQItAy3bYqRK1eGWBrim8oTn+dzLA2lyHEbtogg8vL9deO78/vilh9C+dvly2mEJGF
-         H4UA==
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id;
+        bh=MLBd5ipjuaWF6DPUTaW+cEXsKPZzvPBtYteZGdDRUQE=;
+        b=QAfQI1Osqd5bdsUrWqNxZ+YpMGNRLWV/QZ6vENHH3tpny6tIAzEm1Avgsfby2LVc+n
+         adBKiLITz808aavsIoGPAKq/8Zcxd9oRX65sceUiH0WIur57j2cPq0TWuVZZK44zXps7
+         N4E3893BiIQ3FgPvrlMUtiTvWvrjTaaGc8Y1Hfx6MeLbviQOdknDiou5+rEu9XIUjUAo
+         JKV/4zlwk0MU4MXXVKNtGCvQLC5kNKLCv2RFj10liqDtYsTGSNtZ32cShAyKJCr3mMUG
+         kLihxN7XrH6eFuBoAle7lZiER/CyLZFv0e7xeY5OK4I2azfOKvgprF9s7co7z2zmu5an
+         5/gw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=yQ8W16JFocd/InfO/cTB4TM+C2DG5Zh65kAxr22aAgw=;
-        b=CW/roWfE+yGg/RyzFP2F1wwHyN61J8HVUsPYOEJf+QR7QNI7mv9zFTEV/fPY+pSquS
-         pgLZ+lo/Vre5lmDB5vYvoAAp+fy7eEb2hEwyvv8XA+d338YffLzp/nMqynLVuuHkbesp
-         rqpyuTJTRmsmL7WVccaLwSGXF6WcsKDV7kXNAMJm2XyTE16nfHHMgJspp6Mk1TzBPNL5
-         DvnHMiuuHDBkCGffXxflUEYGoYwe/cYk3ZdZMYfeGhvG4DshIfl4EBigVLaw/+0Z6slD
-         kE+1L077nGypGqxIIkbvzKDw3Eoc2l9XXnDVePyBZs3aV4VR6k9t+93xgxY2MMTPaM6O
-         hauA==
-X-Gm-Message-State: APjAAAVItqM9Dl4R+WKydgQuYjnxTZETbJR6KhwO/zLrJUf9kQKyAx07
-        w5r/p6BJKCCOSAaISN49FNvPiHa/XC7dRbo01kBq3A==
-X-Google-Smtp-Source: APXvYqzidSJWbMyu5YA4UU0sFo+5kRhKxrroJqRjJoabzcjT+jV61fswOw7eZKxNfepxVIMJc+BMC7osp4ifP26Gdx4=
-X-Received: by 2002:a67:8709:: with SMTP id j9mr10023670vsd.35.1562586991328;
- Mon, 08 Jul 2019 04:56:31 -0700 (PDT)
-MIME-Version: 1.0
-References: <20190701150125.2602-1-jorge.ramirez-ortiz@linaro.org>
-In-Reply-To: <20190701150125.2602-1-jorge.ramirez-ortiz@linaro.org>
-From:   Ulf Hansson <ulf.hansson@linaro.org>
-Date:   Mon, 8 Jul 2019 13:55:55 +0200
-Message-ID: <CAPDyKFrcB3Pqe+yiz4T5mL5wQ-2bATyO3aE+hy4T2Ueeu22g1Q@mail.gmail.com>
-Subject: Re: [PATCH v2] mmc: sdhci-msm: fix mutex while in spinlock
-To:     Jorge Ramirez-Ortiz <jorge.ramirez-ortiz@linaro.org>
-Cc:     agross@kernel.org, Adrian Hunter <adrian.hunter@intel.com>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        "linux-mmc@vger.kernel.org" <linux-mmc@vger.kernel.org>,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-        Khasim Syed Mohammed <khasim.mohammed@linaro.org>,
-        vinod.koul@linaro.org
-Content-Type: text/plain; charset="UTF-8"
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=MLBd5ipjuaWF6DPUTaW+cEXsKPZzvPBtYteZGdDRUQE=;
+        b=fv+fcOY1bi0cyLVnxDbs5ilpKmWbM4mvMM5BFNhOG/4RRNIDhg5gmNQl09hlPYjnel
+         rkYhzlzIH2++ye20KQNwQnLd9zWcwaXpCev/Bv1dS4DtXf/7TOmjZyyyCzqW63sgG/lE
+         3smnhk2aFNrNFMxZOJAf3geYK9O9optOQ5eTXiy/2dLJLdtU+QRO8eLdbfeu+FhT33TB
+         FBku0wePbm2T02ccCLl9a23uTXShTngTFoInMiWp9MnRYvqQgFR9cRqp/Nd1ARy4MhN2
+         8YvxyZIjmtofdpJigTd2ZRPfU6hyaU/VXUSjuxTmGEbJ5YEU9vDeQaDi5zp7UVixq3wQ
+         BI/A==
+X-Gm-Message-State: APjAAAVj3cFSSqD6iuzehDj/r9YUA7AzEpPTuPY4b5/OKSMiu1V3KRMz
+        E7M3y+yaWDi4IxXIVSDbnY0=
+X-Google-Smtp-Source: APXvYqyKFw0r73ZmDpQMocBH3EYWI8p0Qk7BJEIJYtWShA0+vleBlChH9teodpWZczWpIqeHhtmGbQ==
+X-Received: by 2002:a17:90a:d14a:: with SMTP id t10mr25445609pjw.85.1562589248247;
+        Mon, 08 Jul 2019 05:34:08 -0700 (PDT)
+Received: from hfq-skylake.ipads-lab.se.sjtu.edu.cn ([202.120.40.82])
+        by smtp.googlemail.com with ESMTPSA id w22sm18200733pfi.175.2019.07.08.05.34.05
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Mon, 08 Jul 2019 05:34:07 -0700 (PDT)
+From:   Fuqian Huang <huangfq.daxian@gmail.com>
+Cc:     Andy Gross <agross@kernel.org>,
+        David Brown <david.brown@linaro.org>,
+        Kishon Vijay Abraham I <kishon@ti.com>,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Fuqian Huang <huangfq.daxian@gmail.com>
+Subject: [PATCH 12/14] phy: qcom-qmp: Replace devm_add_action() followed by failure action with devm_add_action_or_reset()
+Date:   Mon,  8 Jul 2019 20:34:01 +0800
+Message-Id: <20190708123401.12173-1-huangfq.daxian@gmail.com>
+X-Mailer: git-send-email 2.11.0
+To:     unlisted-recipients:; (no To-header on input)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, 1 Jul 2019 at 17:01, Jorge Ramirez-Ortiz
-<jorge.ramirez-ortiz@linaro.org> wrote:
->
-> mutexes can sleep and therefore should not be taken while holding a
-> spinlock. move clk_get_rate (can sleep) outside the spinlock protected
-> region.
->
-> Fixes: 83736352e0ca ("mmc: sdhci-msm: Update DLL reset sequence")
-> Cc: stable@vger.kernel.org
-> Signed-off-by: Jorge Ramirez-Ortiz <jorge.ramirez-ortiz@linaro.org>
-> Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+devm_add_action_or_reset() is introduced as a helper function which 
+internally calls devm_add_action(). If devm_add_action() fails 
+then it will execute the action mentioned and return the error code.
+This reduce source code size (avoid writing the action twice) 
+and reduce the likelyhood of bugs.
 
-Applied for next, thanks!
+Signed-off-by: Fuqian Huang <huangfq.daxian@gmail.com>
+---
+ drivers/phy/qualcomm/phy-qcom-qmp.c | 4 +---
+ 1 file changed, 1 insertion(+), 3 deletions(-)
 
-Kind regards
-Uffe
+diff --git a/drivers/phy/qualcomm/phy-qcom-qmp.c b/drivers/phy/qualcomm/phy-qcom-qmp.c
+index cd91b4179b10..677916f8968c 100644
+--- a/drivers/phy/qualcomm/phy-qcom-qmp.c
++++ b/drivers/phy/qualcomm/phy-qcom-qmp.c
+@@ -1837,9 +1837,7 @@ static int phy_pipe_clk_register(struct qcom_qmp *qmp, struct device_node *np)
+ 	 * Roll a devm action because the clock provider is the child node, but
+ 	 * the child node is not actually a device.
+ 	 */
+-	ret = devm_add_action(qmp->dev, phy_pipe_clk_release_provider, np);
+-	if (ret)
+-		phy_pipe_clk_release_provider(np);
++	ret = devm_add_action_or_reset(qmp->dev, phy_pipe_clk_release_provider, np);
+ 
+ 	return ret;
+ }
+-- 
+2.11.0
 
-
-> ---
->  drivers/mmc/host/sdhci-msm.c | 9 ++++++---
->  1 file changed, 6 insertions(+), 3 deletions(-)
->
-> diff --git a/drivers/mmc/host/sdhci-msm.c b/drivers/mmc/host/sdhci-msm.c
-> index 5fc76a1993d0..9cf14b359c14 100644
-> --- a/drivers/mmc/host/sdhci-msm.c
-> +++ b/drivers/mmc/host/sdhci-msm.c
-> @@ -575,11 +575,14 @@ static int msm_init_cm_dll(struct sdhci_host *host)
->         struct sdhci_pltfm_host *pltfm_host = sdhci_priv(host);
->         struct sdhci_msm_host *msm_host = sdhci_pltfm_priv(pltfm_host);
->         int wait_cnt = 50;
-> -       unsigned long flags;
-> +       unsigned long flags, xo_clk = 0;
->         u32 config;
->         const struct sdhci_msm_offset *msm_offset =
->                                         msm_host->offset;
->
-> +       if (msm_host->use_14lpp_dll_reset && !IS_ERR_OR_NULL(msm_host->xo_clk))
-> +               xo_clk = clk_get_rate(msm_host->xo_clk);
-> +
->         spin_lock_irqsave(&host->lock, flags);
->
->         /*
-> @@ -627,10 +630,10 @@ static int msm_init_cm_dll(struct sdhci_host *host)
->                 config &= CORE_FLL_CYCLE_CNT;
->                 if (config)
->                         mclk_freq = DIV_ROUND_CLOSEST_ULL((host->clock * 8),
-> -                                       clk_get_rate(msm_host->xo_clk));
-> +                                       xo_clk);
->                 else
->                         mclk_freq = DIV_ROUND_CLOSEST_ULL((host->clock * 4),
-> -                                       clk_get_rate(msm_host->xo_clk));
-> +                                       xo_clk);
->
->                 config = readl_relaxed(host->ioaddr +
->                                 msm_offset->core_dll_config_2);
-> --
-> 2.21.0
->
