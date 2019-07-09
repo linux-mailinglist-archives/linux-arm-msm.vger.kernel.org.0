@@ -2,217 +2,296 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id AC479637D0
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Jul 2019 16:22:23 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 7DACC638AB
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Jul 2019 17:31:48 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726641AbfGIOWO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 9 Jul 2019 10:22:14 -0400
-Received: from foss.arm.com ([217.140.110.172]:45170 "EHLO foss.arm.com"
+        id S1726211AbfGIPbr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 9 Jul 2019 11:31:47 -0400
+Received: from foss.arm.com ([217.140.110.172]:46138 "EHLO foss.arm.com"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726374AbfGIOWN (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 9 Jul 2019 10:22:13 -0400
+        id S1726154AbfGIPbr (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 9 Jul 2019 11:31:47 -0400
 Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id E9D0D28;
-        Tue,  9 Jul 2019 07:22:12 -0700 (PDT)
-Received: from [10.1.197.61] (usa-sjc-imap-foss1.foss.arm.com [10.121.207.14])
-        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id AC83B3F738;
-        Tue,  9 Jul 2019 07:22:11 -0700 (PDT)
-Subject: Re: [PATCH] arm64: Explicitly set pstate.ssbs for el0 on kernel entry
-To:     Neeraj Upadhyay <neeraju@codeaurora.org>, will@kernel.org,
-        mark.rutland@arm.com, julien.thierry@arm.com, tglx@linutronix.de
-Cc:     linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, gkohli@codeaurora.org,
-        parthd@codeaurora.org
-References: <1562671333-3563-1-git-send-email-neeraju@codeaurora.org>
- <62c4fed5-39ac-adc9-3bc5-56eb5234a9d1@arm.com>
- <386316d0-f844-d88c-8b78-0ffc4ffe0aaa@codeaurora.org>
-From:   Marc Zyngier <marc.zyngier@arm.com>
-Openpgp: preference=signencrypt
-Autocrypt: addr=marc.zyngier@arm.com; prefer-encrypt=mutual; keydata=
- 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
- Z46HaNmN2hZS/oJ69c1DI5Rcww==
-Organization: ARM Ltd
-Message-ID: <f65bb888-b623-25e4-4f01-ae4fbb635e94@arm.com>
-Date:   Tue, 9 Jul 2019 15:22:09 +0100
-User-Agent: Mozilla/5.0 (X11; Linux aarch64; rv:60.0) Gecko/20100101
- Thunderbird/60.7.2
+        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id BD0DF2B;
+        Tue,  9 Jul 2019 08:31:45 -0700 (PDT)
+Received: from e121166-lin.cambridge.arm.com (unknown [10.1.196.255])
+        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 3389F3F246;
+        Tue,  9 Jul 2019 08:31:43 -0700 (PDT)
+Date:   Tue, 9 Jul 2019 16:31:38 +0100
+From:   Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>
+To:     Ulf Hansson <ulf.hansson@linaro.org>
+Cc:     Sudeep Holla <sudeep.holla@arm.com>,
+        Mark Rutland <mark.rutland@arm.com>,
+        linux-arm-kernel@lists.infradead.org,
+        "Rafael J . Wysocki" <rjw@rjwysocki.net>,
+        Daniel Lezcano <daniel.lezcano@linaro.org>,
+        "Raju P . L . S . S . S . N" <rplsssn@codeaurora.org>,
+        Amit Kucheria <amit.kucheria@linaro.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Niklas Cassel <niklas.cassel@linaro.org>,
+        Tony Lindgren <tony@atomide.com>,
+        Kevin Hilman <khilman@kernel.org>,
+        Lina Iyer <ilina@codeaurora.org>,
+        Viresh Kumar <viresh.kumar@linaro.org>,
+        Vincent Guittot <vincent.guittot@linaro.org>,
+        Geert Uytterhoeven <geert+renesas@glider.be>,
+        Souvik Chakravarty <souvik.chakravarty@arm.com>,
+        linux-pm@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 10/18] drivers: firmware: psci: Add hierarchical domain
+ idle states converter
+Message-ID: <20190709153138.GA22871@e121166-lin.cambridge.arm.com>
+References: <20190513192300.653-1-ulf.hansson@linaro.org>
+ <20190513192300.653-11-ulf.hansson@linaro.org>
 MIME-Version: 1.0
-In-Reply-To: <386316d0-f844-d88c-8b78-0ffc4ffe0aaa@codeaurora.org>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20190513192300.653-11-ulf.hansson@linaro.org>
+User-Agent: Mutt/1.9.4 (2018-02-28)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 09/07/2019 15:18, Neeraj Upadhyay wrote:
-> Hi Marc,
+On Mon, May 13, 2019 at 09:22:52PM +0200, Ulf Hansson wrote:
+> If the hierarchical CPU topology is used, but the OS initiated mode isn't
+> supported, we need to rely solely on the regular cpuidle framework to
+> manage the idle state selection, rather than using genpd and its governor.
 > 
-> On 7/9/19 6:38 PM, Marc Zyngier wrote:
->> Hi Neeraj,
->>
->> On 09/07/2019 12:22, Neeraj Upadhyay wrote:
->>> For cpus which do not support pstate.ssbs feature, el0
->>> might not retain spsr.ssbs. This is problematic, if this
->>> task migrates to a cpu supporting this feature, thus
->>> relying on its state to be correct. On kernel entry,
->>> explicitly set spsr.ssbs, so that speculation is enabled
->>> for el0, when this task migrates to a cpu supporting
->>> ssbs feature. Restoring state at kernel entry ensures
->>> that el0 ssbs state is always consistent while we are
->>> in el1.
->>>
->>> As alternatives are applied by boot cpu, at the end of smp
->>> init, presence/absence of ssbs feature on boot cpu, is used
->>> for deciding, whether the capability is uniformly provided.
->> I've seen the same issue, but went for a slightly different
->> approach, see below.
->>
->>> Signed-off-by: Neeraj Upadhyay <neeraju@codeaurora.org>
->>> ---
->>>   arch/arm64/kernel/cpu_errata.c | 16 ++++++++++++++++
->>>   arch/arm64/kernel/entry.S      | 26 +++++++++++++++++++++++++-
->>>   2 files changed, 41 insertions(+), 1 deletion(-)
->>>
->>> diff --git a/arch/arm64/kernel/cpu_errata.c b/arch/arm64/kernel/cpu_errata.c
->>> index ca11ff7..c84a56d 100644
->>> --- a/arch/arm64/kernel/cpu_errata.c
->>> +++ b/arch/arm64/kernel/cpu_errata.c
->>> @@ -336,6 +336,22 @@ void __init arm64_enable_wa2_handling(struct alt_instr *alt,
->>>   		*updptr = cpu_to_le32(aarch64_insn_gen_nop());
->>>   }
->>>   
->>> +void __init arm64_restore_ssbs_state(struct alt_instr *alt,
->>> +				     __le32 *origptr, __le32 *updptr,
->>> +				     int nr_inst)
->>> +{
->>> +	BUG_ON(nr_inst != 1);
->>> +	/*
->>> +	 * Only restore EL0 SSBS state on EL1 entry if cpu does not
->>> +	 * support the capability and capability is present for at
->>> +	 * least one cpu and if the SSBD state allows it to
->>> +	 * be changed.
->>> +	 */
->>> +	if (!this_cpu_has_cap(ARM64_SSBS) && cpus_have_cap(ARM64_SSBS) &&
->>> +	    arm64_get_ssbd_state() != ARM64_SSBD_FORCE_ENABLE)
->>> +		*updptr = cpu_to_le32(aarch64_insn_gen_nop());
->>> +}
->>> +
->>>   void arm64_set_ssbd_mitigation(bool state)
->>>   {
->>>   	if (!IS_ENABLED(CONFIG_ARM64_SSBD)) {
->>> diff --git a/arch/arm64/kernel/entry.S b/arch/arm64/kernel/entry.S
->>> index 9cdc459..7e79305 100644
->>> --- a/arch/arm64/kernel/entry.S
->>> +++ b/arch/arm64/kernel/entry.S
->>> @@ -143,6 +143,25 @@ alternative_cb_end
->>>   #endif
->>>   	.endm
->>>   
->>> +	// This macro updates spsr. It also corrupts the condition
->>> +	// codes state.
->>> +	.macro	restore_ssbs_state, saved_spsr, tmp
->>> +#ifdef CONFIG_ARM64_SSBD
->>> +alternative_cb	arm64_restore_ssbs_state
->>> +	b	.L__asm_ssbs_skip\@
->>> +alternative_cb_end
->>> +	ldr	\tmp, [tsk, #TSK_TI_FLAGS]
->>> +	tbnz	\tmp, #TIF_SSBD, .L__asm_ssbs_skip\@
->>> +	tst	\saved_spsr, #PSR_MODE32_BIT	// native task?
->>> +	b.ne	.L__asm_ssbs_compat\@
->>> +	orr	\saved_spsr, \saved_spsr, #PSR_SSBS_BIT
->>> +	b	.L__asm_ssbs_skip\@
->>> +.L__asm_ssbs_compat\@:
->>> +	orr	\saved_spsr, \saved_spsr, #PSR_AA32_SSBS_BIT
->>> +.L__asm_ssbs_skip\@:
->>> +#endif
->>> +	.endm
->> Although this is in keeping with the rest of entry.S (perfectly
->> unreadable ;-), I think we can do something a bit simpler, that
->> doesn't rely on patching. Also, this doesn't seem to take the
->> SSBD options such as ARM64_SSBD_FORCE_ENABLE into account.
+> For this reason, introduce a new PSCI DT helper function,
+> psci_dt_pm_domains_parse_states(), which parses and converts the
+> hierarchically described domain idle states from DT, into regular flattened
+> cpuidle states. The converted states are added to the existing cpuidle
+> driver's array of idle states, which make them available for cpuidle.
 > 
-> arm64_restore_ssbs_state has a check for ARM64_SSBD_FORCE_ENABLE,
+> Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
+> ---
 > 
-> does that look wrong?
+> Changes:
+> 	- Some simplification of the code.
+> 
+> ---
+>  drivers/firmware/psci/psci.h           |   5 ++
+>  drivers/firmware/psci/psci_pm_domain.c | 118 +++++++++++++++++++++++++
+>  2 files changed, 123 insertions(+)
+> 
+> diff --git a/drivers/firmware/psci/psci.h b/drivers/firmware/psci/psci.h
+> index 00d2e3dcef49..c36e0e6649e9 100644
+> --- a/drivers/firmware/psci/psci.h
+> +++ b/drivers/firmware/psci/psci.h
+> @@ -3,6 +3,7 @@
+>  #ifndef __PSCI_H
+>  #define __PSCI_H
+>  
+> +struct cpuidle_driver;
+>  struct device_node;
+>  
+>  int psci_set_osi_mode(void);
+> @@ -13,8 +14,12 @@ void psci_set_domain_state(u32 state);
+>  int psci_dt_parse_state_node(struct device_node *np, u32 *state);
+>  #ifdef CONFIG_PM_GENERIC_DOMAINS_OF
+>  int psci_dt_init_pm_domains(struct device_node *np);
+> +int psci_dt_pm_domains_parse_states(struct cpuidle_driver *drv,
+> +		struct device_node *cpu_node, u32 *psci_states);
+>  #else
+>  static inline int psci_dt_init_pm_domains(struct device_node *np) { return 0; }
+> +static inline int psci_dt_pm_domains_parse_states(struct cpuidle_driver *drv,
+> +		struct device_node *cpu_node, u32 *psci_states) { return 0; }
+>  #endif
+>  #endif
+>  
+> diff --git a/drivers/firmware/psci/psci_pm_domain.c b/drivers/firmware/psci/psci_pm_domain.c
+> index 3c6ca846caf4..3aa645dba81b 100644
+> --- a/drivers/firmware/psci/psci_pm_domain.c
+> +++ b/drivers/firmware/psci/psci_pm_domain.c
+> @@ -14,6 +14,10 @@
+>  #include <linux/pm_domain.h>
+>  #include <linux/slab.h>
+>  #include <linux/string.h>
+> +#include <linux/cpuidle.h>
+> +#include <linux/cpu_pm.h>
+> +
+> +#include <asm/cpuidle.h>
+>  
+>  #include "psci.h"
+>  
+> @@ -104,6 +108,53 @@ static void psci_pd_free_states(struct genpd_power_state *states,
+>  	kfree(states);
+>  }
+>  
+> +static int psci_pd_enter_pc(struct cpuidle_device *dev,
+> +			struct cpuidle_driver *drv, int idx)
+> +{
+> +	return CPU_PM_CPU_IDLE_ENTER(arm_cpuidle_suspend, idx);
+> +}
+> +
+> +static void psci_pd_enter_s2idle_pc(struct cpuidle_device *dev,
+> +			struct cpuidle_driver *drv, int idx)
+> +{
+> +	psci_pd_enter_pc(dev, drv, idx);
+> +}
+> +
+> +static void psci_pd_convert_states(struct cpuidle_state *idle_state,
+> +			u32 *psci_state, struct genpd_power_state *state)
+> +{
+> +	u32 *state_data = state->data;
+> +	u64 target_residency_us = state->residency_ns;
+> +	u64 exit_latency_us = state->power_on_latency_ns +
+> +			state->power_off_latency_ns;
+> +
+> +	*psci_state = *state_data;
+> +	do_div(target_residency_us, 1000);
+> +	idle_state->target_residency = target_residency_us;
+> +	do_div(exit_latency_us, 1000);
+> +	idle_state->exit_latency = exit_latency_us;
+> +	idle_state->enter = &psci_pd_enter_pc;
+> +	idle_state->enter_s2idle = &psci_pd_enter_s2idle_pc;
+> +	idle_state->flags |= CPUIDLE_FLAG_TIMER_STOP;
 
-No, I just focused on the rest of the asm code and missed it, apologies.
+This is arbitrary and not necessarily true.
 
+I think that this patch is useful to represent my reservations about the
+current approach. As a matter of fact, idle state entry will always be a
+CPUidle decision.
+
+You only need PM domain information to understand when all CPUs
+in a power domain are actually idle but that's all genPD can do
+in this respect.
+
+I think this patchset would be much simpler if both CPUidle and
+genPD governor would work on *one* set of idle states, globally
+indexed (and that would be true for PSCI suspend parameters too).
+
+To work with a unified set of idle states between CPUidle and genPD
+(tossing some ideas around):
+
+- We can implement a genPD CPUidle governor that in its select method
+  takes into account genPD information (for instance by avoiding
+  selection of idle states that require multiple cpus to be in idle
+  to be effectively active)
+- We can use genPD to enable/disable CPUidle states through runtime
+  PM information
+
+There may be other ways. My point is that current code, with two (or
+more if the hierarchy grows) sets of idle states across two subsystems
+(CPUidle and genPD) is not very well defined and honestly very hard to
+grasp and prone to errors.
+
+> +
+> +	strncpy(idle_state->name, to_of_node(state->fwnode)->name,
+> +		CPUIDLE_NAME_LEN - 1);
+> +	strncpy(idle_state->desc, to_of_node(state->fwnode)->name,
+> +		CPUIDLE_NAME_LEN - 1);
+> +}
+> +
+> +static bool psci_pd_is_provider(struct device_node *np)
+> +{
+> +	struct psci_pd_provider *pd_prov, *it;
+> +
+> +	list_for_each_entry_safe(pd_prov, it, &psci_pd_providers, link) {
+> +		if (pd_prov->node == np)
+> +			return true;
+> +	}
+> +
+> +	return false;
+> +}
+> +
+>  static int psci_pd_init(struct device_node *np)
+>  {
+>  	struct generic_pm_domain *pd;
+> @@ -265,4 +316,71 @@ int psci_dt_init_pm_domains(struct device_node *np)
+>  	pr_err("failed to create CPU PM domains ret=%d\n", ret);
+>  	return ret;
+>  }
+> +
+> +int psci_dt_pm_domains_parse_states(struct cpuidle_driver *drv,
+> +			struct device_node *cpu_node, u32 *psci_states)
+> +{
+> +	struct genpd_power_state *pd_states;
+> +	struct of_phandle_args args;
+> +	int ret, pd_state_count, i, state_idx, psci_idx;
+> +	u32 cpu_psci_state = psci_states[drv->state_count - 2];
+
+This (-2) is very dodgy and I doubt it would work on hierarchies going
+above "cluster" level.
+
+As I say above, I think we should work towards a single array of
+idle states to be selected by a CPUidle governor using genPD
+runtime information to bias the results according to the number
+of CPUs in a genPD that entered/exit idle.
+
+To be more precise, all idles states should be "domain-idle-state"
+compatible, even the CPU ones, the distinction between what CPUidle
+and genPD manage is a bit stretched IMO in this patchset.
+
+We will have a chance to talk about this but I thought I would
+comment publically if anyone else is willing to chime in, this
+is not a PSCI problem at all, it is a CPUidle/genPD coexistence
+design problem which is much broader.
+
+Lorenzo
+
+> +	struct device_node *np = of_node_get(cpu_node);
+> +
+> +
+> +	/* Walk the CPU topology to find compatible domain idle states. */
+> +	while (np) {
+> +		ret = of_parse_phandle_with_args(np, "power-domains",
+> +					"#power-domain-cells", 0, &args);
+> +		of_node_put(np);
+> +		if (ret)
+> +			return 0;
+> +
+> +		np = args.np;
+> +
+> +		/* Verify that the node represents a psci pd provider. */
+> +		if (!psci_pd_is_provider(np)) {
+> +			of_node_put(np);
+> +			return 0;
+> +		}
+> +
+> +		/* Parse for compatible domain idle states. */
+> +		ret = psci_pd_parse_states(np, &pd_states, &pd_state_count);
+> +		if (ret) {
+> +			of_node_put(np);
+> +			return ret;
+> +		}
+> +
+> +		i = 0;
+> +		while (i < pd_state_count) {
+> +
+> +			state_idx = drv->state_count;
+> +			if (state_idx >= CPUIDLE_STATE_MAX) {
+> +				pr_warn("exceeding max cpuidle states\n");
+> +				of_node_put(np);
+> +				return 0;
+> +			}
+> +
+> +			/* WFI state is not part of psci_states. */
+> +			psci_idx = state_idx - 1 + i;
+> +			psci_pd_convert_states(&drv->states[state_idx + i],
+> +					&psci_states[psci_idx], &pd_states[i]);
+> +
+> +			/*
+> +			 * In the hierarchical CPU topology the master PM domain
+> +			 * idle state's DT property, "arm,psci-suspend-param",
+> +			 * don't contain the bits for the idle state of the CPU,
+> +			 * let's add those here.
+> +			 */
+> +			psci_states[psci_idx] |= cpu_psci_state;
+> +			pr_debug("psci-power-state %#x index %d\n",
+> +				psci_states[psci_idx], psci_idx);
+> +
+> +			drv->state_count++;
+> +			i++;
+> +		}
+> +		psci_pd_free_states(pd_states, pd_state_count);
+> +	}
+> +
+> +	return 0;
+> +}
+>  #endif
+> -- 
+> 2.17.1
 > 
->>
->>> +
->>>   	.macro	kernel_entry, el, regsize = 64
->>>   	.if	\regsize == 32
->>>   	mov	w0, w0				// zero upper 32 bits of x0
->>> @@ -182,8 +201,13 @@ alternative_cb_end
->>>   	str	x20, [tsk, #TSK_TI_ADDR_LIMIT]
->>>   	/* No need to reset PSTATE.UAO, hardware's already set it to 0 for us */
->>>   	.endif /* \el == 0 */
->>> -	mrs	x22, elr_el1
->>>   	mrs	x23, spsr_el1
->>> +
->>> +	.if	\el == 0
->>> +	restore_ssbs_state x23, x22
->>> +	.endif
->>> +
->>> +	mrs	x22, elr_el1
->>>   	stp	lr, x21, [sp, #S_LR]
->>>   
->>>   	/*
->>>
->> How about the patch below?
-> 
-> Looks good; was just going to mention PF_KTHREAD check, but Mark R. has 
-> already
-> 
-> given detailed information about it.
-
-Yup, well spotted. I'll respin it shortly and we can then work out
-whether that's really a better approach.
-
-Thanks,
-
-	M.
--- 
-Jazz is not dead. It just smells funny...
