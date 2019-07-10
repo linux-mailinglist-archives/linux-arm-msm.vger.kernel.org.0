@@ -2,596 +2,176 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id B994A64BDD
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Jul 2019 20:05:45 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 3FD4864BE5
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Jul 2019 20:08:47 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727438AbfGJSFp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 10 Jul 2019 14:05:45 -0400
-Received: from smtp.codeaurora.org ([198.145.29.96]:60100 "EHLO
-        smtp.codeaurora.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727315AbfGJSFp (ORCPT
+        id S1727928AbfGJSIq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 10 Jul 2019 14:08:46 -0400
+Received: from mail-io1-f68.google.com ([209.85.166.68]:36324 "EHLO
+        mail-io1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727315AbfGJSIq (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 10 Jul 2019 14:05:45 -0400
-Received: by smtp.codeaurora.org (Postfix, from userid 1000)
-        id 1B28460A0A; Wed, 10 Jul 2019 18:05:42 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
-        s=default; t=1562781942;
-        bh=Q/M+Y3hgIcs/x4Evw8WkCZO9QbiJl0A4/J4QbxvDNdY=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=N1GK7zEw8QG8nzxKgmf0mEFSqezssn1zGGPg5+3gLeonDPQWsLyurT6T9Ng9IK/H2
-         3XcMVSZGyxTEZ7MGAbppd3bA7qRGXollgLQuwzECfUOn8i6qhqIbakNRn9Bp4v8nMA
-         P0k3XFZ3UblKgqbZCnhFWnw4xwVG2KHV/XWkIfeE=
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        pdx-caf-mail.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.7 required=2.0 tests=ALL_TRUSTED,BAYES_00,
-        DKIM_INVALID,DKIM_SIGNED,SPF_NONE autolearn=no autolearn_force=no
-        version=3.4.0
-Received: from jcrouse1-lnx.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: jcrouse@smtp.codeaurora.org)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 57C3C6058E;
-        Wed, 10 Jul 2019 18:05:37 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
-        s=default; t=1562781938;
-        bh=Q/M+Y3hgIcs/x4Evw8WkCZO9QbiJl0A4/J4QbxvDNdY=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=JcYJkkaR+GhyFm33ItH25B1sRStM2jTIQzxNU5LZYZox6eGXni2EkQco+QfviC/4T
-         pRMdUoPmTx0fexL71TuSs90XMlR4Fep71USqUuZ6NM1xesmvjFTRtvmaWRBkaScRM4
-         YHyEJqLdgDT3Vf7AsbOENGBMFaYhwC9P0Wx6DygU=
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 57C3C6058E
-Authentication-Results: pdx-caf-mail.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: pdx-caf-mail.web.codeaurora.org; spf=none smtp.mailfrom=jcrouse@codeaurora.org
-Date:   Wed, 10 Jul 2019 12:05:35 -0600
-From:   Jordan Crouse <jcrouse@codeaurora.org>
-To:     Robin Murphy <robin.murphy@arm.com>
-Cc:     freedreno@lists.freedesktop.org, jean-philippe.brucker@arm.com,
-        linux-arm-msm@vger.kernel.org, hoegsberg@google.com,
-        dianders@chromium.org, baolu.lu@linux.intel.com,
-        Will Deacon <will@kernel.org>, Rob Herring <robh@kernel.org>,
-        Zhen Lei <thunder.leizhen@huawei.com>,
-        linux-kernel@vger.kernel.org, iommu@lists.linux-foundation.org,
-        Alyssa Rosenzweig <alyssa@rosenzweig.io>,
-        Joerg Roedel <joro@8bytes.org>,
-        linux-arm-kernel@lists.infradead.org
-Subject: Re: [RESEND PATCH v2 2/3] iommu/io-pgtable-arm: Add support for
- AARCH64 split pagetables
-Message-ID: <20190710180535.GA26247@jcrouse1-lnx.qualcomm.com>
-Mail-Followup-To: Robin Murphy <robin.murphy@arm.com>,
-        freedreno@lists.freedesktop.org, jean-philippe.brucker@arm.com,
-        linux-arm-msm@vger.kernel.org, hoegsberg@google.com,
-        dianders@chromium.org, baolu.lu@linux.intel.com,
-        Will Deacon <will@kernel.org>, Rob Herring <robh@kernel.org>,
-        Zhen Lei <thunder.leizhen@huawei.com>, linux-kernel@vger.kernel.org,
-        iommu@lists.linux-foundation.org,
-        Alyssa Rosenzweig <alyssa@rosenzweig.io>,
-        Joerg Roedel <joro@8bytes.org>,
-        linux-arm-kernel@lists.infradead.org
-References: <1562612447-19856-1-git-send-email-jcrouse@codeaurora.org>
- <1562612447-19856-3-git-send-email-jcrouse@codeaurora.org>
- <d9c1a115-ca4f-efda-4ba2-adefbd802849@arm.com>
+        Wed, 10 Jul 2019 14:08:46 -0400
+Received: by mail-io1-f68.google.com with SMTP id o9so6770944iom.3;
+        Wed, 10 Jul 2019 11:08:45 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=Fz3fi7LB0BiFDGV+8+VIRpi9pQLp8pdFvuuAWIAJi68=;
+        b=D7kcnPqw3vNj6m+ygFV3r8wUS+Dkb6C1MkFYCjrl+lubL/TqUrmceN7NgqtNnsV5J0
+         brPWeXWugL8BzDy3S/KYPulBVG3DTnicywWVUPwHIBK7WW8s/hVZEEL330/IBUECDxw3
+         mQ0bhYBmUoHptQmekc/pbMihVX3CWjiXMMK+3/k4G3gZ1GFBSUakOixGvfOlTvyP4+CZ
+         3YwnROJOtRZEq/O2FDgvZnozS/TGtTMZR58XWa9OgoPI2Iq/n8M9m8KxTef2WB3nWXoi
+         eZmsai7v5/Nzwfv9OPUDFjar9vq4KlTGJuRbGXHc/lxaF5AOkIr9GxnCtHQBR8bYMDxE
+         XXyQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=Fz3fi7LB0BiFDGV+8+VIRpi9pQLp8pdFvuuAWIAJi68=;
+        b=MRaxQNuhHl4A/H31AERdlNE0wCJ9uRpnBjra79+Aq2HC72ki6UiP3wLcceBn9aet9+
+         u1+uPsUqILro/ZoQ67AF/srzjwA5NFSREVQO3/mkV2Eg4ODNGEXEPdUOKl9X4tOABLgP
+         okBOfANYAOveymTL9b9fZUwwL0CA6/8qjU8IKKd47FHylwbtOmfMucLwITUcRok+Gp5Q
+         lMPl2/POC9oGp01vOmiz/kyTl9FGsYwipOAvBQQxsgr3UABiHZFvL3WEevsKlFeJMS/h
+         G+7qL/lv6nBvuc55rxVpZnFzBsML2kuguzTlWm0uu2Xt6l3Yah5kPc0UPPp9eQ5jDZqs
+         C1mg==
+X-Gm-Message-State: APjAAAUocK+atZQWFSgo5Glewz8feLqXHqb7VR1SI3UcCZOrBEPf300j
+        m1vC1qh5Al4iQXhC0rKyI/diZIgGeMUtEbOBq0A=
+X-Google-Smtp-Source: APXvYqwrWaPVnaCJyvAxYPInwznOn4T9MDdhCibZlw9XeVmn1hF+0dUXkt2lxu/f0Bwqbmx3QTO7mmrXYA+5Dq3ofqA=
+X-Received: by 2002:a6b:901:: with SMTP id t1mr8202186ioi.42.1562782124855;
+ Wed, 10 Jul 2019 11:08:44 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <d9c1a115-ca4f-efda-4ba2-adefbd802849@arm.com>
-User-Agent: Mutt/1.5.24 (2015-08-30)
+References: <20190703214326.41269-1-jeffrey.l.hugo@gmail.com>
+ <20190703214512.41319-1-jeffrey.l.hugo@gmail.com> <20190706010604.GG20625@sirena.org.uk>
+In-Reply-To: <20190706010604.GG20625@sirena.org.uk>
+From:   Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
+Date:   Wed, 10 Jul 2019 12:08:34 -0600
+Message-ID: <CAOCk7No77CDRE=bnBVGzYw9ixWKO4PMBBWksm4JEeh3ydfOk+g@mail.gmail.com>
+Subject: Re: [PATCH 1/2] regmap: Add DSI bus support
+To:     Mark Brown <broonie@kernel.org>
+Cc:     Andrzej Hajda <a.hajda@samsung.com>,
+        Laurent Pinchart <Laurent.pinchart@ideasonboard.com>,
+        Dave Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Rob Clark <robdclark@gmail.com>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        "open list:DRM PANEL DRIVERS" <dri-devel@lists.freedesktop.org>,
+        MSM <linux-arm-msm@vger.kernel.org>,
+        lkml <linux-kernel@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Jul 10, 2019 at 05:45:37PM +0100, Robin Murphy wrote:
-> Hi Jordan,
-> 
-> On 08/07/2019 20:00, Jordan Crouse wrote:
-> >Add a new sub-format ARM_64_LPAE_SPLIT_S1 to create and set up split
-> >pagetables (TTBR0 and TTBR1). The initialization function sets up the
-> >correct va_size and sign extension bits and programs the TCR registers.
-> >Split pagetable formats use their own own map/unmap wrappers to ensure
-> >that the correct pagetable is selected based on the incoming iova but
-> >most of the heavy lifting is common to the other formats.
-> 
-> I'm somewhat concerned that this implementation is very closely tied to the
-> current Adreno use-case, and won't easily generalise in future to other
-> potential TTBR1 uses which have been tossed around, like
-> SMMUv3-without-substream-ID.
+On Fri, Jul 5, 2019 at 7:06 PM Mark Brown <broonie@kernel.org> wrote:
+>
+> On Wed, Jul 03, 2019 at 02:45:12PM -0700, Jeffrey Hugo wrote:
+> > Add basic support with a simple implementation that utilizes the generic
+> > read/write commands to allow device registers to be configured.
+>
+> This looks good to me but I really don't know anything about DSI,
+> I'd appreciate some review from other people who do.  I take it
+> there's some spec thing in DSI that says registers and bytes must
+> both be 8 bit?
 
-I haven't heard about these use-cases. I figured v3 would be all PASID all the
-time. If you have details, I can see if I can avoid painting v3 into a corner.
+DSI appears to reside under DRM, and the DRM maintainers are copied on
+this thread, so hopefully they will chime in.
 
-> Furthermore, even for the Adreno pretend-PASID case it appears to be a bit
-> too fragile for comfort - given that a DOMAIN_ATTR_SPLIT_TABLES domain
-> doesn't look any different from a regular one from the users' point of view,
-> what's to stop them making "without PASID" mappings in the lower half of the
-> address space, and thus unwittingly pulling the rug out from under their own
-> feet upon attaching an aux domain? In fact allocating a TTBR0 table at all
-> for the main domain seems like little more than a waste of memory.
+Context on DSI:
+The MIPI (Mobile Industry Processor Interface) Alliance DSI (Display
+Serial Interface) spec defines an interface between host processors
+and displays for embedded applications (smartphones and the like).
+The spec itself is private to MIPI members, although I suspect if you
+run some queries on your preferred search engine, you may find some
+accessible copies of it floating around somewhere.
 
-That makes sense. Would it work better if we made a type ARM_64_LPAE_TTBR1_S1
-that only allocated memory for TTBR1 and set TBR.EDP0 to trigger faults for
-TTBR0?
+The spec defines some specific messages that run over the DSI link.
+Most of those are grouped into the purposes of sending pixel data over
+to the display, or configuring gamma, etc.  As far as I can tell, DSI
+does not require these operations be backed by registers, however the
+several implementations I've seen do it that way.  The spec does
+mandate that to configure something like gamma, one needs to send a
+message with a specific address, and payload.
 
-Then we could get rid of most of the extra stuff in io-pgtable-arm.c and I think
-that would meet most of your concerns. 
+The addresses for these spec defined messages are 8-bit wide, so 256
+valid "destinations".  However, the payload is variable.  Most of the
+defined operations take an 8-bit payload, but there are a few that I
+see with 16-bit payloads.
 
-Jordan
+The DSI spec defines two mechanisms for implementation specific
+configuration (what I'm attempting to do with this series).  You can
+use a spec defined message to select a different set of registers
+(called a different page), after which point, the addresses of the
+messages target implementation specific functionality.  I've seen this
+used a lot on the specific panels which can be directly connected to
+DSI.  The second mechanism is to use the generic read/write messages,
+which the spec says are implementation defined - essentially the spec
+defines the message type but the contents of the message are not spec
+defined.  This is the mechanism the TI bridge uses.
 
-> >
-> >Signed-off-by: Jordan Crouse <jcrouse@codeaurora.org>
-> >---
-> >
-> >  drivers/iommu/io-pgtable-arm.c | 261 +++++++++++++++++++++++++++++++++++++----
-> >  drivers/iommu/io-pgtable.c     |   1 +
-> >  include/linux/io-pgtable.h     |   2 +
-> >  3 files changed, 240 insertions(+), 24 deletions(-)
-> >
-> >diff --git a/drivers/iommu/io-pgtable-arm.c b/drivers/iommu/io-pgtable-arm.c
-> >index 161a7d56..aec35e5 100644
-> >--- a/drivers/iommu/io-pgtable-arm.c
-> >+++ b/drivers/iommu/io-pgtable-arm.c
-> >@@ -118,7 +118,12 @@
-> >  #define ARM_LPAE_TCR_TG0_64K		(1 << 14)
-> >  #define ARM_LPAE_TCR_TG0_16K		(2 << 14)
-> >+#define ARM_LPAE_TCR_TG1_4K		(0 << 30)
-> >+#define ARM_LPAE_TCR_TG1_64K		(1 << 30)
-> >+#define ARM_LPAE_TCR_TG1_16K		(2 << 30)
-> >+
-> >  #define ARM_LPAE_TCR_SH0_SHIFT		12
-> >+#define ARM_LPAE_TCR_SH1_SHIFT		28
-> >  #define ARM_LPAE_TCR_SH0_MASK		0x3
-> >  #define ARM_LPAE_TCR_SH_NS		0
-> >  #define ARM_LPAE_TCR_SH_OS		2
-> >@@ -126,6 +131,8 @@
-> >  #define ARM_LPAE_TCR_ORGN0_SHIFT	10
-> >  #define ARM_LPAE_TCR_IRGN0_SHIFT	8
-> >+#define ARM_LPAE_TCR_ORGN1_SHIFT	26
-> >+#define ARM_LPAE_TCR_IRGN1_SHIFT	24
-> >  #define ARM_LPAE_TCR_RGN_MASK		0x3
-> >  #define ARM_LPAE_TCR_RGN_NC		0
-> >  #define ARM_LPAE_TCR_RGN_WBWA		1
-> >@@ -136,6 +143,7 @@
-> >  #define ARM_LPAE_TCR_SL0_MASK		0x3
-> >  #define ARM_LPAE_TCR_T0SZ_SHIFT		0
-> >+#define ARM_LPAE_TCR_T1SZ_SHIFT		16
-> >  #define ARM_LPAE_TCR_SZ_MASK		0xf
-> >  #define ARM_LPAE_TCR_PS_SHIFT		16
-> >@@ -152,6 +160,14 @@
-> >  #define ARM_LPAE_TCR_PS_48_BIT		0x5ULL
-> >  #define ARM_LPAE_TCR_PS_52_BIT		0x6ULL
-> >+#define ARM_LPAE_TCR_SEP_SHIFT		47
-> >+#define ARM_LPAE_TCR_SEP_31		(0x0ULL << ARM_LPAE_TCR_SEP_SHIFT)
-> >+#define ARM_LPAE_TCR_SEP_35		(0x1ULL << ARM_LPAE_TCR_SEP_SHIFT)
-> >+#define ARM_LPAE_TCR_SEP_39		(0x2ULL << ARM_LPAE_TCR_SEP_SHIFT)
-> >+#define ARM_LPAE_TCR_SEP_41		(0x3ULL << ARM_LPAE_TCR_SEP_SHIFT)
-> >+#define ARM_LPAE_TCR_SEP_43		(0x4ULL << ARM_LPAE_TCR_SEP_SHIFT)
-> >+#define ARM_LPAE_TCR_SEP_UPSTREAM	(0x7ULL << ARM_LPAE_TCR_SEP_SHIFT)
-> 
-> This is a specific detail of SMMUv2, and nothing to do with the LPAE/AArch64
-> VMSA formats.
-> 
-> >+
-> >  #define ARM_LPAE_MAIR_ATTR_SHIFT(n)	((n) << 3)
-> >  #define ARM_LPAE_MAIR_ATTR_MASK		0xff
-> >  #define ARM_LPAE_MAIR_ATTR_DEVICE	0x04
-> >@@ -179,11 +195,12 @@ struct arm_lpae_io_pgtable {
-> >  	struct io_pgtable	iop;
-> >  	int			levels;
-> >+	u32			sep;
-> >  	size_t			pgd_size;
-> >  	unsigned long		pg_shift;
-> >  	unsigned long		bits_per_level;
-> >-	void			*pgd;
-> >+	void			*pgd[2];
-> >  };
-> >  typedef u64 arm_lpae_iopte;
-> >@@ -426,7 +443,8 @@ static arm_lpae_iopte arm_lpae_prot_to_pte(struct arm_lpae_io_pgtable *data,
-> >  	arm_lpae_iopte pte;
-> >  	if (data->iop.fmt == ARM_64_LPAE_S1 ||
-> >-	    data->iop.fmt == ARM_32_LPAE_S1) {
-> >+	    data->iop.fmt == ARM_32_LPAE_S1 ||
-> >+	    data->iop.fmt == ARM_64_LPAE_SPLIT_S1) {
-> >  		pte = ARM_LPAE_PTE_nG;
-> >  		if (!(prot & IOMMU_WRITE) && (prot & IOMMU_READ))
-> >  			pte |= ARM_LPAE_PTE_AP_RDONLY;
-> >@@ -470,11 +488,10 @@ static arm_lpae_iopte arm_lpae_prot_to_pte(struct arm_lpae_io_pgtable *data,
-> >  	return pte;
-> >  }
-> >-static int arm_lpae_map(struct io_pgtable_ops *ops, unsigned long iova,
-> >-			phys_addr_t paddr, size_t size, int iommu_prot)
-> >+static int _arm_lpae_map(struct arm_lpae_io_pgtable *data, unsigned long iova,
-> >+			phys_addr_t paddr, size_t size, int iommu_prot,
-> >+			arm_lpae_iopte *ptep)
-> >  {
-> >-	struct arm_lpae_io_pgtable *data = io_pgtable_ops_to_data(ops);
-> >-	arm_lpae_iopte *ptep = data->pgd;
-> >  	int ret, lvl = ARM_LPAE_START_LVL(data);
-> >  	arm_lpae_iopte prot;
-> >@@ -497,12 +514,39 @@ static int arm_lpae_map(struct io_pgtable_ops *ops, unsigned long iova,
-> >  	return ret;
-> >  }
-> >+static int arm_lpae_split_map(struct io_pgtable_ops *ops, unsigned long iova,
-> >+		phys_addr_t paddr, size_t size, int iommu_prot)
-> >+{
-> >+	struct arm_lpae_io_pgtable *data = io_pgtable_ops_to_data(ops);
-> >+	unsigned long mask = 1UL << data->sep;
-> >+	arm_lpae_iopte *ptep;
-> >+
-> >+	if (iova & mask) {
-> >+		ptep = data->pgd[1];
-> >+		iova &= (mask - 1);
-> >+	} else
-> >+		ptep = data->pgd[0];
-> 
-> AFAICS, this logic effectively aliases the TTBR1 region across the entire
-> upper half of the address hole, so bogus IOVAs may corrupt valid mappings
-> instead of giving errors as expected.
-> 
-> >+
-> >+	return _arm_lpae_map(data, iova, paddr, size, iommu_prot, ptep);
-> >+}
-> >+
-> >+static int arm_lpae_map(struct io_pgtable_ops *ops, unsigned long iova,
-> >+			phys_addr_t paddr, size_t size, int iommu_prot)
-> >+{
-> >+	struct arm_lpae_io_pgtable *data = io_pgtable_ops_to_data(ops);
-> >+
-> >+	return _arm_lpae_map(data, iova, paddr, size, iommu_prot, data->pgd[0]);
-> >+}
-> >+
-> >  static void __arm_lpae_free_pgtable(struct arm_lpae_io_pgtable *data, int lvl,
-> >  				    arm_lpae_iopte *ptep)
-> >  {
-> >  	arm_lpae_iopte *start, *end;
-> >  	unsigned long table_size;
-> >+	if (!ptep)
-> >+		return;
-> >+
-> >  	if (lvl == ARM_LPAE_START_LVL(data))
-> >  		table_size = data->pgd_size;
-> >  	else
-> >@@ -532,7 +576,8 @@ static void arm_lpae_free_pgtable(struct io_pgtable *iop)
-> >  {
-> >  	struct arm_lpae_io_pgtable *data = io_pgtable_to_data(iop);
-> >-	__arm_lpae_free_pgtable(data, ARM_LPAE_START_LVL(data), data->pgd);
-> >+	__arm_lpae_free_pgtable(data, ARM_LPAE_START_LVL(data), data->pgd[0]);
-> >+	__arm_lpae_free_pgtable(data, ARM_LPAE_START_LVL(data), data->pgd[1]);
-> >  	kfree(data);
-> >  }
-> >@@ -643,11 +688,28 @@ static size_t __arm_lpae_unmap(struct arm_lpae_io_pgtable *data,
-> >  	return __arm_lpae_unmap(data, iova, size, lvl + 1, ptep);
-> >  }
-> >+static size_t arm_lpae_split_unmap(struct io_pgtable_ops *ops,
-> >+				   unsigned long iova, size_t size)
-> >+{
-> >+	struct arm_lpae_io_pgtable *data = io_pgtable_ops_to_data(ops);
-> >+	unsigned long mask = 1UL << data->sep;
-> >+	arm_lpae_iopte *ptep;
-> >+	int lvl = ARM_LPAE_START_LVL(data);
-> >+
-> >+	if (iova & mask) {
-> >+		ptep = data->pgd[1];
-> >+		iova &= (mask - 1);
-> >+	} else
-> >+		ptep = data->pgd[0];
-> >+
-> >+	return __arm_lpae_unmap(data, iova, size, lvl, ptep);
-> >+}
-> >+
-> >  static size_t arm_lpae_unmap(struct io_pgtable_ops *ops, unsigned long iova,
-> >  			     size_t size)
-> >  {
-> >  	struct arm_lpae_io_pgtable *data = io_pgtable_ops_to_data(ops);
-> >-	arm_lpae_iopte *ptep = data->pgd;
-> >+	arm_lpae_iopte *ptep = data->pgd[0];
-> >  	int lvl = ARM_LPAE_START_LVL(data);
-> >  	if (WARN_ON(iova >= (1ULL << data->iop.cfg.ias)))
-> >@@ -656,11 +718,11 @@ static size_t arm_lpae_unmap(struct io_pgtable_ops *ops, unsigned long iova,
-> >  	return __arm_lpae_unmap(data, iova, size, lvl, ptep);
-> >  }
-> >-static phys_addr_t arm_lpae_iova_to_phys(struct io_pgtable_ops *ops,
-> >-					 unsigned long iova)
-> >+static phys_addr_t _arm_lpae_iova_to_phys(struct arm_lpae_io_pgtable *data,
-> >+					  unsigned long iova,
-> >+					  arm_lpae_iopte *ptep)
-> >  {
-> >-	struct arm_lpae_io_pgtable *data = io_pgtable_ops_to_data(ops);
-> >-	arm_lpae_iopte pte, *ptep = data->pgd;
-> >+	arm_lpae_iopte pte;
-> >  	int lvl = ARM_LPAE_START_LVL(data);
-> >  	do {
-> >@@ -692,6 +754,31 @@ static phys_addr_t arm_lpae_iova_to_phys(struct io_pgtable_ops *ops,
-> >  	return iopte_to_paddr(pte, data) | iova;
-> >  }
-> >+
-> >+static phys_addr_t arm_lpae_split_iova_to_phys(struct io_pgtable_ops *ops,
-> >+					       unsigned long iova)
-> >+{
-> >+	struct arm_lpae_io_pgtable *data = io_pgtable_ops_to_data(ops);
-> >+	unsigned long mask = 1UL << data->sep;
-> >+	arm_lpae_iopte *ptep;
-> >+
-> >+	if (iova & mask) {
-> >+		ptep = data->pgd[1];
-> >+		iova &= (mask - 1);
-> >+	} else
-> >+		ptep = data->pgd[0];
-> >+
-> >+	return _arm_lpae_iova_to_phys(data, iova, ptep);
-> >+}
-> >+
-> >+static phys_addr_t arm_lpae_iova_to_phys(struct io_pgtable_ops *ops,
-> >+					 unsigned long iova)
-> >+{
-> >+	struct arm_lpae_io_pgtable *data = io_pgtable_ops_to_data(ops);
-> >+
-> >+	return _arm_lpae_iova_to_phys(data, iova, data->pgd[0]);
-> >+}
-> >+
-> >  static void arm_lpae_restrict_pgsizes(struct io_pgtable_cfg *cfg)
-> >  {
-> >  	unsigned long granule, page_sizes;
-> >@@ -771,6 +858,9 @@ arm_lpae_alloc_pgtable(struct io_pgtable_cfg *cfg)
-> >  	pgd_bits = va_bits - (data->bits_per_level * (data->levels - 1));
-> >  	data->pgd_size = 1UL << (pgd_bits + ilog2(sizeof(arm_lpae_iopte)));
-> >+	data->pgd[0] = NULL;
-> >+	data->pgd[1] = NULL;
-> >+
-> >  	data->iop.ops = (struct io_pgtable_ops) {
-> >  		.map		= arm_lpae_map,
-> >  		.unmap		= arm_lpae_unmap,
-> >@@ -780,8 +870,8 @@ arm_lpae_alloc_pgtable(struct io_pgtable_cfg *cfg)
-> >  	return data;
-> >  }
-> >-static struct io_pgtable *
-> >-arm_64_lpae_alloc_pgtable_s1(struct io_pgtable_cfg *cfg, void *cookie)
-> >+static struct arm_lpae_io_pgtable *
-> >+_arm_64_lpae_alloc_pgtable_s1(struct io_pgtable_cfg *cfg)
-> >  {
-> >  	u64 reg;
-> >  	struct arm_lpae_io_pgtable *data;
-> >@@ -845,8 +935,6 @@ arm_64_lpae_alloc_pgtable_s1(struct io_pgtable_cfg *cfg, void *cookie)
-> >  	reg |= (64ULL - cfg->ias) << ARM_LPAE_TCR_T0SZ_SHIFT;
-> >-	/* Disable speculative walks through TTBR1 */
-> >-	reg |= ARM_LPAE_TCR_EPD1;
-> 
-> Not setting EPD1 at all could potentially lead to problems for systems not
-> using split tables.
-> 
-> >  	cfg->arm_lpae_s1_cfg.tcr = reg;
-> >  	/* MAIRs */
-> >@@ -863,24 +951,143 @@ arm_64_lpae_alloc_pgtable_s1(struct io_pgtable_cfg *cfg, void *cookie)
-> >  	cfg->arm_lpae_s1_cfg.mair[1] = 0;
-> >  	/* Looking good; allocate a pgd */
-> >-	data->pgd = __arm_lpae_alloc_pages(data->pgd_size, GFP_KERNEL, cfg);
-> >-	if (!data->pgd)
-> >+	data->pgd[0] = __arm_lpae_alloc_pages(data->pgd_size, GFP_KERNEL, cfg);
-> >+	if (!data->pgd[0])
-> >  		goto out_free_data;
-> >  	/* Ensure the empty pgd is visible before any actual TTBR write */
-> >  	wmb();
-> >  	/* TTBRs */
-> >-	cfg->arm_lpae_s1_cfg.ttbr[0] = virt_to_phys(data->pgd);
-> >+	cfg->arm_lpae_s1_cfg.ttbr[0] = virt_to_phys(data->pgd[0]);
-> >  	cfg->arm_lpae_s1_cfg.ttbr[1] = 0;
-> >+	return data;
-> >+
-> >+out_free_data:
-> >+	kfree(data);
-> >+	return NULL;
-> >+}
-> >+
-> >+
-> >+/* Allocate split pagetables */
-> >+static struct io_pgtable *
-> >+arm_64_lpae_alloc_pgtable_split_s1(struct io_pgtable_cfg *cfg, void *cookie)
-> >+{
-> >+	u64 reg;
-> >+	struct arm_lpae_io_pgtable *data;
-> >+	u32 sep;
-> >+
-> >+	/* Figure out what the sign extension bit should be */
-> >+	switch (cfg->ias) {
-> 
-> IAS only tells you how wide the SMMU's address input is; what you really
-> care about for sign extension is how wide the relevant masters' address
-> *outputs* are. There's no way we can know that here, so AFAICS the only
-> truly robust answer is for the caller requesting split tables to also
-> provide the appropriate split point.
-> 
-> >+	case 32:
-> >+	case 36:
-> >+	case 40:
-> >+	case 42:
-> >+	case 44:
-> >+		sep = cfg->ias - 1;
-> >+		/* Adjust the address size to account for the extension bit */
-> >+		cfg->ias--;
-> >+		break;
-> >+	case 48:
-> >+		/* IAS of 48 is a special case, it has a dedicated bit */
-> 
-> That's not only not VMSA, but not even any architected SMMU behaviour; it
-> just happens to be the way that one user of io-pgtable-arm currently mangles
-> its IAS values.
-> 
-> Robin.
-> 
-> >+		sep = 48;
-> >+		break;
-> >+	default:
-> >+		return NULL;
-> >+	}
-> >+
-> >+	data = _arm_64_lpae_alloc_pgtable_s1(cfg);
-> >+	if (!data)
-> >+		return NULL;
-> >+
-> >+	/* Add the TTBR1 settings */
-> >+	reg = cfg->arm_lpae_s1_cfg.tcr;
-> >+
-> >+	/* TCR */
-> >+	reg |= (ARM_LPAE_TCR_SH_IS << ARM_LPAE_TCR_SH1_SHIFT) |
-> >+	      (ARM_LPAE_TCR_RGN_WBWA << ARM_LPAE_TCR_IRGN1_SHIFT) |
-> >+	      (ARM_LPAE_TCR_RGN_WBWA << ARM_LPAE_TCR_ORGN1_SHIFT);
-> >+
-> >+	switch (ARM_LPAE_GRANULE(data)) {
-> >+	case SZ_4K:
-> >+		reg |= ARM_LPAE_TCR_TG1_4K;
-> >+		break;
-> >+	case SZ_16K:
-> >+		reg |= ARM_LPAE_TCR_TG1_16K;
-> >+		break;
-> >+	case SZ_64K:
-> >+		reg |= ARM_LPAE_TCR_TG1_64K;
-> >+		break;
-> >+	}
-> >+
-> >+	reg |= (64ULL - cfg->ias) << ARM_LPAE_TCR_T1SZ_SHIFT;
-> >+
-> >+	switch (sep) {
-> >+	case 31:
-> >+		reg |= ARM_LPAE_TCR_SEP_31;
-> >+		break;
-> >+	case 35:
-> >+		reg |= ARM_LPAE_TCR_SEP_35;
-> >+		break;
-> >+	case 39:
-> >+		reg |= ARM_LPAE_TCR_SEP_39;
-> >+		break;
-> >+	case 41:
-> >+		reg |= ARM_LPAE_TCR_SEP_41;
-> >+		break;
-> >+	case 43:
-> >+		reg |= ARM_LPAE_TCR_SEP_43;
-> >+		break;
-> >+	case 48:
-> >+		reg |= ARM_LPAE_TCR_SEP_UPSTREAM;
-> >+		break;
-> >+	}
-> >+
-> >+	cfg->arm_lpae_s1_cfg.tcr = reg;
-> >+
-> >+	/* Allocate the TTBR1 pagetable */
-> >+	data->pgd[1] = __arm_lpae_alloc_pages(data->pgd_size, GFP_KERNEL, cfg);
-> >+	if (!data->pgd[1])
-> >+		goto out_free_data;
-> >+
-> >+	/* Override the data ops with split table specific ops */
-> >+	data->iop.ops = (struct io_pgtable_ops) {
-> >+		.map		= arm_lpae_split_map,
-> >+		.unmap		= arm_lpae_split_unmap,
-> >+		.iova_to_phys	= arm_lpae_split_iova_to_phys,
-> >+	};
-> >+
-> >+	/*
-> >+	 * remember the sign extension bit, we'll need it later to figure out
-> >+	 * which pagetable to use
-> >+	 */
-> >+	data->sep = sep;
-> >+
-> >+	/* Ensure the empty pgd is visible before any actual TTBR write */
-> >+	wmb();
-> >+
-> >+	cfg->arm_lpae_s1_cfg.ttbr[1] = virt_to_phys(data->pgd[1]);
-> >  	return &data->iop;
-> >  out_free_data:
-> >+	__arm_lpae_free_pages(data->pgd[0], data->pgd_size, cfg);
-> >  	kfree(data);
-> >  	return NULL;
-> >  }
-> >  static struct io_pgtable *
-> >+arm_64_lpae_alloc_pgtable_s1(struct io_pgtable_cfg *cfg, void *cookie)
-> >+{
-> >+	struct arm_lpae_io_pgtable *data;
-> >+
-> >+	data = _arm_64_lpae_alloc_pgtable_s1(cfg);
-> >+	if (!data)
-> >+		return NULL;
-> >+
-> >+	return &data->iop;
-> >+}
-> >+
-> >+static struct io_pgtable *
-> >  arm_64_lpae_alloc_pgtable_s2(struct io_pgtable_cfg *cfg, void *cookie)
-> >  {
-> >  	u64 reg, sl;
-> >@@ -960,15 +1167,15 @@ arm_64_lpae_alloc_pgtable_s2(struct io_pgtable_cfg *cfg, void *cookie)
-> >  	cfg->arm_lpae_s2_cfg.vtcr = reg;
-> >  	/* Allocate pgd pages */
-> >-	data->pgd = __arm_lpae_alloc_pages(data->pgd_size, GFP_KERNEL, cfg);
-> >-	if (!data->pgd)
-> >+	data->pgd[0] = __arm_lpae_alloc_pages(data->pgd_size, GFP_KERNEL, cfg);
-> >+	if (!data->pgd[0])
-> >  		goto out_free_data;
-> >  	/* Ensure the empty pgd is visible before any actual TTBR write */
-> >  	wmb();
-> >  	/* VTTBR */
-> >-	cfg->arm_lpae_s2_cfg.vttbr = virt_to_phys(data->pgd);
-> >+	cfg->arm_lpae_s2_cfg.vttbr = virt_to_phys(data->pgd[0]);
-> >  	return &data->iop;
-> >  out_free_data:
-> >@@ -1041,6 +1248,11 @@ struct io_pgtable_init_fns io_pgtable_arm_64_lpae_s1_init_fns = {
-> >  	.free	= arm_lpae_free_pgtable,
-> >  };
-> >+struct io_pgtable_init_fns io_pgtable_arm_64_lpae_split_s1_init_fns = {
-> >+	.alloc	= arm_64_lpae_alloc_pgtable_split_s1,
-> >+	.free	= arm_lpae_free_pgtable,
-> >+};
-> >+
-> >  struct io_pgtable_init_fns io_pgtable_arm_64_lpae_s2_init_fns = {
-> >  	.alloc	= arm_64_lpae_alloc_pgtable_s2,
-> >  	.free	= arm_lpae_free_pgtable,
-> >@@ -1095,9 +1307,9 @@ static void __init arm_lpae_dump_ops(struct io_pgtable_ops *ops)
-> >  	pr_err("cfg: pgsize_bitmap 0x%lx, ias %u-bit\n",
-> >  		cfg->pgsize_bitmap, cfg->ias);
-> >-	pr_err("data: %d levels, 0x%zx pgd_size, %lu pg_shift, %lu bits_per_level, pgd @ %p\n",
-> >+	pr_err("data: %d levels, 0x%zx pgd_size, %lu pg_shift, %lu bits_per_level, pgd @ %p %p\n",
-> >  		data->levels, data->pgd_size, data->pg_shift,
-> >-		data->bits_per_level, data->pgd);
-> >+		data->bits_per_level, data->pgd[0], data->pgd[1]);
-> >  }
-> >  #define __FAIL(ops, i)	({						\
-> >@@ -1112,6 +1324,7 @@ static int __init arm_lpae_run_tests(struct io_pgtable_cfg *cfg)
-> >  	static const enum io_pgtable_fmt fmts[] = {
-> >  		ARM_64_LPAE_S1,
-> >  		ARM_64_LPAE_S2,
-> >+		ARM_64_LPAE_SPLIT_S1,
-> >  	};
-> >  	int i, j;
-> >diff --git a/drivers/iommu/io-pgtable.c b/drivers/iommu/io-pgtable.c
-> >index ced53e5..ed1985f 100644
-> >--- a/drivers/iommu/io-pgtable.c
-> >+++ b/drivers/iommu/io-pgtable.c
-> >@@ -20,6 +20,7 @@ io_pgtable_init_table[IO_PGTABLE_NUM_FMTS] = {
-> >  	[ARM_64_LPAE_S1] = &io_pgtable_arm_64_lpae_s1_init_fns,
-> >  	[ARM_64_LPAE_S2] = &io_pgtable_arm_64_lpae_s2_init_fns,
-> >  	[ARM_MALI_LPAE] = &io_pgtable_arm_mali_lpae_init_fns,
-> >+	[ARM_64_LPAE_SPLIT_S1] = &io_pgtable_arm_64_lpae_split_s1_init_fns,
-> >  #endif
-> >  #ifdef CONFIG_IOMMU_IO_PGTABLE_ARMV7S
-> >  	[ARM_V7S] = &io_pgtable_arm_v7s_init_fns,
-> >diff --git a/include/linux/io-pgtable.h b/include/linux/io-pgtable.h
-> >index b5a450a..2ed0e6a 100644
-> >--- a/include/linux/io-pgtable.h
-> >+++ b/include/linux/io-pgtable.h
-> >@@ -10,6 +10,7 @@ enum io_pgtable_fmt {
-> >  	ARM_32_LPAE_S1,
-> >  	ARM_32_LPAE_S2,
-> >  	ARM_64_LPAE_S1,
-> >+	ARM_64_LPAE_SPLIT_S1,
-> >  	ARM_64_LPAE_S2,
-> >  	ARM_V7S,
-> >  	ARM_MALI_LPAE,
-> >@@ -211,6 +212,7 @@ extern struct io_pgtable_init_fns io_pgtable_arm_32_lpae_s1_init_fns;
-> >  extern struct io_pgtable_init_fns io_pgtable_arm_32_lpae_s2_init_fns;
-> >  extern struct io_pgtable_init_fns io_pgtable_arm_64_lpae_s1_init_fns;
-> >  extern struct io_pgtable_init_fns io_pgtable_arm_64_lpae_s2_init_fns;
-> >+extern struct io_pgtable_init_fns io_pgtable_arm_64_lpae_split_s1_init_fns;
-> >  extern struct io_pgtable_init_fns io_pgtable_arm_v7s_init_fns;
-> >  extern struct io_pgtable_init_fns io_pgtable_arm_mali_lpae_init_fns;
-> >
+As the contents of the generic read/write messages are implementation
+defined, the answer to your question seems to be no - the spec does
+not define that the registers are 8-bit addressable, and 8-bit wide.
 
--- 
-The Qualcomm Innovation Center, Inc. is a member of Code Aurora Forum,
-a Linux Foundation Collaborative Project
+In running this series more, I actually found a bug with it.  It turns
+out that the TI bridge requires 16-bit addressing (LSB ordering), with
+the upper 8-bit reserved for future use, but only on reads.  Writes
+are 8-bit addressing.  This is part of that implementation specific
+details.
+
+I think perhaps the discussion needs to step back a bit, and decide
+how flexible do we want this regmap over DSI to be?  I think its
+usefulness comes from when a device can be configured via multiple
+interfaces, so I don't expect it to be useful for every DSI interface.
+It seems like the DSI panels use DSI directly to craft their
+configuration.  As a result, we are probably looking at just devices
+which use the generic read/write commands, but sadly the format for
+those is not universal per the spec.  From the implementations I've
+seen, I suspect 8-bit addressing of 8-bit wide registers to be the
+most common, but apparently there is an exception to that already in
+the one device that I care about.
+
+Do we want to go forward with this regmap support just for the one TI
+device, and see what other usecases come out of it, and attempt to
+solve those as we go?
+
+>
+> A couple of minor comments, no need to resend just for these:
+>
+> > +       payload[0] = (char)reg;
+> > +       payload[1] = (char)val;
+>
+> Do you need the casts?
+
+Apparently not.  I was assuming the compiler would complain about
+implicit truncation.
+
+>
+> > +     ret = mipi_dsi_generic_write(dsi, payload, 2);
+> > +     return ret < 0 ? ret : 0;
+>
+> Please just write an if statement, it helps with legibility.
+
+Uhh, sure.  There appear to be several instances of the trinary
+operator in drivers/base/regmap/ but if an explicit if statement here
+makes you happy, then I'll do it.
+
+>
+> > +struct regmap *__regmap_init_dsi(struct mipi_dsi_device *dsi,
+> > +                              const struct regmap_config *config,
+> > +                              struct lock_class_key *lock_key,
+> > +                              const char *lock_name)
+> > +{
+> > +     return __regmap_init(&dsi->dev, &dsi_bus, &dsi->dev, config,
+> > +                          lock_key, lock_name);
+> > +}
+> > +EXPORT_SYMBOL_GPL(__regmap_init_dsi);
+>
+> Perhaps validate that the config is OK (mainly the register/value
+> sizes)?  Though I'm not sure it's worth it so perhaps not - up to
+> you.
+
+Probably.  Based on the above discussion, should I be making use of
+reg_read/reg_write in the config?
