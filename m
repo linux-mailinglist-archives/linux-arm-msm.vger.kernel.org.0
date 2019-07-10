@@ -2,133 +2,104 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 522BA647E0
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Jul 2019 16:14:41 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5F4F3647E6
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Jul 2019 16:14:49 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726957AbfGJOOk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 10 Jul 2019 10:14:40 -0400
-Received: from mail.kernel.org ([198.145.29.99]:39390 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726458AbfGJOOk (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 10 Jul 2019 10:14:40 -0400
-Received: from willie-the-truck (236.31.169.217.in-addr.arpa [217.169.31.236])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id DAF772064B;
-        Wed, 10 Jul 2019 14:14:36 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1562768078;
-        bh=DyLQkR+SqZg30UD4WGgKKVBfPXf9H8Fp5j0gQLSjm1M=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=Uv3XWiYycqQdOA9/aSy6OPad/nv4oF5fG/eYmZR921Lj5iSjaS116QIYDQi5XGtjy
-         97SSz7GWaEcn5oTyCpIQR8LU9e7nTbEKOnfCeXSHuxLRdk65zZZrVRN1Yge8y5i6Ec
-         DKc/PijLSM5tkGjiPgCKRl5Gv7qFM23n5caCPXH0=
-Date:   Wed, 10 Jul 2019 15:14:34 +0100
-From:   Will Deacon <will@kernel.org>
-To:     Stephen Boyd <swboyd@chromium.org>
-Cc:     Dan Williams <dan.j.williams@intel.com>,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org, devicetree@vger.kernel.org,
-        Evan Green <evgreen@chromium.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Will Deacon <will.deacon@arm.com>,
-        Catalin Marinas <catalin.marinas@arm.com>
-Subject: Re: [PATCH v2 3/5] memremap: Add support for read-only memory
- mappings
-Message-ID: <20190710141433.7ama3gncss3y6dcx@willie-the-truck>
-References: <20190614203717.75479-1-swboyd@chromium.org>
- <20190614203717.75479-4-swboyd@chromium.org>
+        id S1727374AbfGJOOo (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 10 Jul 2019 10:14:44 -0400
+Received: from smtp.codeaurora.org ([198.145.29.96]:59054 "EHLO
+        smtp.codeaurora.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726458AbfGJOOo (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 10 Jul 2019 10:14:44 -0400
+Received: by smtp.codeaurora.org (Postfix, from userid 1000)
+        id B4448616BA; Wed, 10 Jul 2019 14:14:38 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
+        s=default; t=1562768082;
+        bh=tT33zEBA9PtRD/IyowYg4/egpUqKgsUqXRsSxZ2TsDc=;
+        h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
+        b=PlLcypq+S5CJ+uDTIOt7PtM6y7uf12suXgocabiOn517FPnNl/Ie1GMLbc4PtqJsq
+         0STdtJnFsAv1YGvg9DDwJBlwf8/MN+OAGqH0SKQuAKh7cuzd0c/u7e8jc9UJ3lBIQU
+         F+3GLfH6X5SJEu/vfQu7MFwDko22xyg0UwpmHjRg=
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        pdx-caf-mail.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.7 required=2.0 tests=ALL_TRUSTED,BAYES_00,
+        DKIM_INVALID,DKIM_SIGNED autolearn=no autolearn_force=no version=3.4.0
+Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
+        by smtp.codeaurora.org (Postfix) with ESMTP id 5FB4E61157;
+        Wed, 10 Jul 2019 14:14:37 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
+        s=default; t=1562768077;
+        bh=tT33zEBA9PtRD/IyowYg4/egpUqKgsUqXRsSxZ2TsDc=;
+        h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
+        b=A0fzCeMqOmcCgRGdt06AnbTMN+K+nOl11BW5LXKKOg9nv0wJ4SqKwRNWRWSP8l31I
+         WD6h2jkw/gAXKmkKN7LJk+n3dnI/pwXhRA8no7A0PODXrfxo7f2fnWMaXp5LcqfmV9
+         t3WOvWrdtZRINX/fROacge/ouizD+RvUGse9pmII=
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20190614203717.75479-4-swboyd@chromium.org>
-User-Agent: NeoMutt/20170113 (1.7.2)
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
+Content-Transfer-Encoding: 7bit
+Date:   Wed, 10 Jul 2019 19:44:37 +0530
+From:   Sibi Sankar <sibis@codeaurora.org>
+To:     Viresh Kumar <viresh.kumar@linaro.org>
+Cc:     nm@ti.com, sboyd@kernel.org, georgi.djakov@linaro.org,
+        agross@kernel.org, david.brown@linaro.org, robh+dt@kernel.org,
+        mark.rutland@arm.com, rjw@rjwysocki.net,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-pm@vger.kernel.org,
+        saravanak@google.com, linux-kernel-owner@vger.kernel.org,
+        adharmap@codeaurora.org
+Subject: Re: [PATCH RFC 0/4] DDR/L3 Scaling support on SDM845 SoCs
+In-Reply-To: <20190701092949.afenn2et2qexostt@vireshk-i7>
+References: <20190627133424.4980-1-sibis@codeaurora.org>
+ <20190701092949.afenn2et2qexostt@vireshk-i7>
+Message-ID: <d2e3b5bf3aa6ee740f004b7b770bef26@codeaurora.org>
+X-Sender: sibis@codeaurora.org
+User-Agent: Roundcube Webmail/1.2.5
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, Jun 14, 2019 at 01:37:15PM -0700, Stephen Boyd wrote:
-> Sometimes we have memories that are supposed to be read-only, but when
-> we map these regions the best we can do is map them as write-back with
-> MEMREMAP_WB. Introduce a read-only memory mapping (MEMREMAP_RO) that
-> allows us to map reserved memory regions as read-only. This way, we're
-> less likely to see these special memory regions become corrupted by
-> stray writes to them.
-> 
-> Cc: Evan Green <evgreen@chromium.org>
-> Cc: Rob Herring <robh+dt@kernel.org>
-> Cc: Bjorn Andersson <bjorn.andersson@linaro.org>
-> Cc: Andy Gross <agross@kernel.org>
-> Cc: Will Deacon <will.deacon@arm.com>
-> Cc: Catalin Marinas <catalin.marinas@arm.com>
-> Cc: Dan Williams <dan.j.williams@intel.com>
-> Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
-> Signed-off-by: Stephen Boyd <swboyd@chromium.org>
-> ---
->  include/linux/io.h |  1 +
->  kernel/iomem.c     | 15 +++++++++++++--
->  2 files changed, 14 insertions(+), 2 deletions(-)
-> 
-> diff --git a/include/linux/io.h b/include/linux/io.h
-> index 32e30e8fb9db..16c7f4498869 100644
-> --- a/include/linux/io.h
-> +++ b/include/linux/io.h
-> @@ -159,6 +159,7 @@ enum {
->  	MEMREMAP_WC = 1 << 2,
->  	MEMREMAP_ENC = 1 << 3,
->  	MEMREMAP_DEC = 1 << 4,
-> +	MEMREMAP_RO = 1 << 5,
->  };
->  
->  void *memremap(resource_size_t offset, size_t size, unsigned long flags);
-> diff --git a/kernel/iomem.c b/kernel/iomem.c
-> index 93c264444510..10d5ef0ff09e 100644
-> --- a/kernel/iomem.c
-> +++ b/kernel/iomem.c
-> @@ -19,6 +19,13 @@ static void *arch_memremap_wb(resource_size_t offset, unsigned long size)
->  }
->  #endif
->  
-> +#ifndef arch_memremap_ro
-> +static void *arch_memremap_ro(resource_size_t offset, unsigned long size)
-> +{
-> +	return NULL;
-> +}
-> +#endif
-> +
->  #ifndef arch_memremap_can_ram_remap
->  static bool arch_memremap_can_ram_remap(resource_size_t offset, size_t size,
->  					unsigned long flags)
-> @@ -84,7 +91,10 @@ void *memremap(resource_size_t offset, size_t size, unsigned long flags)
->  	}
->  
->  	/* Try all mapping types requested until one returns non-NULL */
-> -	if (flags & MEMREMAP_WB) {
-> +	if ((flags & MEMREMAP_RO) && is_ram != REGION_INTERSECTS)
-> +		addr = arch_memremap_ro(offset, size);
-> +
-> +	if (!addr && (flags & MEMREMAP_WB)) {
->  		/*
->  		 * MEMREMAP_WB is special in that it can be satisfied
->  		 * from the direct map.  Some archs depend on the
-> @@ -103,7 +113,8 @@ void *memremap(resource_size_t offset, size_t size, unsigned long flags)
->  	 * address mapping.  Enforce that this mapping is not aliasing
->  	 * System RAM.
->  	 */
-> -	if (!addr && is_ram == REGION_INTERSECTS && flags != MEMREMAP_WB) {
-> +	if (!addr && is_ram == REGION_INTERSECTS &&
-> +	    (flags != MEMREMAP_WB || flags != MEMREMAP_RO)) {
->  		WARN_ONCE(1, "memremap attempted on ram %pa size: %#lx\n",
->  				&offset, (unsigned long) size);
->  		return NULL;
+Hey Viresh,
 
-This function seems a little confused about whether 'flags' is really a
-bitmap of flags, or whether it is equal to exactly one entry in the enum.
-Given that I think it's sensible for somebody to specify 'MEMREMAP_RO |
-MEMREMAP_WT', then we probably need to start checking these things a bit
-more thoroughly so we can reject unsupported combinations at the very least.
+On 2019-07-01 14:59, Viresh Kumar wrote:
+> On 27-06-19, 19:04, Sibi Sankar wrote:
+>> This RFC series aims to extend cpu based scaling support to L3/DDR on
+>> SDM845 SoCs. The patch series depends on "Introduce OPP bandwidth 
+>> bindings"
+>> series (https://patchwork.kernel.org/cover/10912993/). A part of the
+>> series will still be applicable if we decide to go ahead with the 
+>> proposal
+>> from Saravana as well so I decided to post this out.
+>> 
+>> v2:
+>> * Incorporated Viresh's comments from:
+>> [1]https://lore.kernel.org/lkml/20190410102429.r6j6brm5kspmqxc3@vireshk-i7/
+>> [2]https://lore.kernel.org/lkml/20190410112516.gnh77jcwawvld6et@vireshk-i7/
+> 
+> Did you get a chance to look at this ?
+> 
+> lore.kernel.org/lkml/20190622003449.33707-1-saravanak@google.com
 
-Will
+Yes, I have v2 of cpufreq passive governor
+patch in the works based on Saravana's
+series. I plan on posting it out end of
+week. I had sent this series out
+since a portion (specifically update_
+voltage helper and adding opp_tables
+to cpufreq-hw driver) would remain
+constant irrespective of the path
+we choose.
+
+FWIW, on SDM845 SoCs we cannot use a
+rpmh_write_batch based icc_set on
+cpufreq fast switch pathw since it
+uses the "wait_for_completion" api.
+
+
+-- 
+-- Sibi Sankar --
+Qualcomm Innovation Center, Inc. is a member of Code Aurora Forum,
+a Linux Foundation Collaborative Project.
