@@ -2,197 +2,289 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id DF3BD65ADE
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Jul 2019 17:48:43 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A358865B20
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Jul 2019 17:59:34 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728571AbfGKPsU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 11 Jul 2019 11:48:20 -0400
-Received: from alexa-out-blr-02.qualcomm.com ([103.229.18.198]:25150 "EHLO
-        alexa-out-blr.qualcomm.com" rhost-flags-OK-OK-OK-FAIL)
-        by vger.kernel.org with ESMTP id S1726833AbfGKPrw (ORCPT
+        id S1728413AbfGKP72 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 11 Jul 2019 11:59:28 -0400
+Received: from mail-pf1-f194.google.com ([209.85.210.194]:43373 "EHLO
+        mail-pf1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728394AbfGKP72 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 11 Jul 2019 11:47:52 -0400
-X-Greylist: delayed 367 seconds by postgrey-1.27 at vger.kernel.org; Thu, 11 Jul 2019 11:47:41 EDT
-Received: from ironmsg02-blr.qualcomm.com ([10.86.208.131])
-  by alexa-out-blr.qualcomm.com with ESMTP/TLS/AES256-SHA; 11 Jul 2019 21:11:33 +0530
-X-IronPort-AV: E=McAfee;i="6000,8403,9314"; a="10317409"
-Received: from gokulsri-linux.qualcomm.com ([10.201.2.207])
-  by ironmsg02-blr.qualcomm.com with ESMTP; 11 Jul 2019 21:11:11 +0530
-Received: by gokulsri-linux.qualcomm.com (Postfix, from userid 432570)
-        id 7699335D4; Thu, 11 Jul 2019 21:11:09 +0530 (IST)
-From:   Gokul Sriram Palanisamy <gokulsri@codeaurora.org>
-To:     agross@kernel.org, david.brown@linaro.org, robh+dt@kernel.org,
-        mark.rutland@arm.com, mturquette@baylibre.com, sboyd@kernel.org,
-        jassisinghbrar@gmail.com, ohad@wizery.com,
-        bjorn.andersson@linaro.org, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-clk@vger.kernel.org, linux-remoteproc@vger.kernel.org,
-        sricharan@codeaurora.org, gokulsri@codeaurora.org
-Subject: [PATCH 12/12] arm64: dts: qcom: Enable Q6v5 WCSS for ipq8074 SoC
-Date:   Thu, 11 Jul 2019 21:11:08 +0530
-Message-Id: <1562859668-14209-13-git-send-email-gokulsri@codeaurora.org>
-X-Mailer: git-send-email 1.9.1
-In-Reply-To: <1562859668-14209-1-git-send-email-gokulsri@codeaurora.org>
-References: <1562859668-14209-1-git-send-email-gokulsri@codeaurora.org>
+        Thu, 11 Jul 2019 11:59:28 -0400
+Received: by mail-pf1-f194.google.com with SMTP id i189so2956121pfg.10
+        for <linux-arm-msm@vger.kernel.org>; Thu, 11 Jul 2019 08:59:28 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=z1TXVCEJuCBRp7RMzPbLjsuYtlEFOBFPBVvDsWzX7EY=;
+        b=BHJF7aMjbgg+nZdOU4F1oBUP70FwW4FDZSvRWzwFJv1nvUdeUI0rEfsi0EbYq8es3V
+         tz3mHHherNH4MuSxa5+a/8SuvMPTiplC2J2XRaUAOIjDUfZcm3xhMpaiKMMParmJGIK5
+         yWmOgxz/UcQaWzIpzokj2ioZsn/sHMR3qukGaF9v7kpLCGt4VFS1HEX/iWcap1OouY7p
+         J6Ncv1ly6Wtd74S3xbQtnbzeL1GR0NS3euyY+8eo6QcbmO57N0irBBl1wOTSyVzhGsI/
+         A6zqD9mznDFN++gUSnYg8z1IBJfakO1AfNStwfwkNqgU4XRP0WZLE0A9Ln7tnz+mN1Q8
+         /MUg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=z1TXVCEJuCBRp7RMzPbLjsuYtlEFOBFPBVvDsWzX7EY=;
+        b=uFJ0Hk8m7L+cUD5kfNjfhhj4w8oBTsY7qwEnj8KxJVfMOiwYqUPp/Gb7Y3CbpPjJh4
+         8Ed3gld1xDlX8HX54PSoH5F6Td+oBxa9DOJon++atevNaSd03aJH+QuaVddTJL82x0MV
+         z8L2r57xb9EkuhYyscSXHDScBr2QKyhlkiAjqTnRt7NapkWYzUyWzTMWP6ddWW/lAbEP
+         Hk05BB8Fkc8DNXiRmaJbW5J9G8rynPkaKE8+XSwtAzlIN02Y6RkdN099gVdT1mlOTeUy
+         wnD8+swjFaujqnPOAejCTcRDJPOFxTLtmJncz7hymFYlo/ODfsxkn8Dj0I9rxK6T4IW/
+         rO6A==
+X-Gm-Message-State: APjAAAV5gnHlSp/R0HqFlrr8X5DkCXaV781ab+2WYQtn9XxuUgzP+UC0
+        JsI6JMoxzxeO8DMNdkzcEahecQ==
+X-Google-Smtp-Source: APXvYqygyKQJJ7J6fQsTI8CdGQ2Ene4ldT26xvXqSG745rHtvBX+5QBvRDTYnxfpEVFPjrvAYD1Acw==
+X-Received: by 2002:a17:90a:d58c:: with SMTP id v12mr5586795pju.7.1562860767500;
+        Thu, 11 Jul 2019 08:59:27 -0700 (PDT)
+Received: from tuxbook-pro (104-188-17-28.lightspeed.sndgca.sbcglobal.net. [104.188.17.28])
+        by smtp.gmail.com with ESMTPSA id a12sm12653314pje.3.2019.07.11.08.59.26
+        (version=TLS1_3 cipher=AEAD-AES256-GCM-SHA384 bits=256/256);
+        Thu, 11 Jul 2019 08:59:26 -0700 (PDT)
+Date:   Thu, 11 Jul 2019 09:00:32 -0700
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     Vivek Gautam <vivek.gautam@codeaurora.org>
+Cc:     agross@kernel.org, linux-arm-msm@vger.kernel.org,
+        jcrouse@codeaurora.org, rishabhb@codeaurora.org,
+        vnkgutta@codeaurora.org, evgreen@chromium.org,
+        linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 2/2] soc: qcom: llcc-plat: Make the driver more generic
+Message-ID: <20190711160032.GR7234@tuxbook-pro>
+References: <20190711110340.16672-1-vivek.gautam@codeaurora.org>
+ <20190711110340.16672-2-vivek.gautam@codeaurora.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20190711110340.16672-2-vivek.gautam@codeaurora.org>
+User-Agent: Mutt/1.11.4 (2019-03-13)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Enable remoteproc WCSS PIL driver with glink
-and ssr subdevices. Also configures shared memory
-and enables smp2p and mailboxes required for IPC.
+On Thu 11 Jul 04:03 PDT 2019, Vivek Gautam wrote:
 
-Signed-off-by: Gokul Sriram Palanisamy <gokulsri@codeaurora.org>
-Signed-off-by: Sricharan R <sricharan@codeaurora.org>
-Signed-off-by: Nikhil Prakash V <nprakash@codeaurora.org>
----
- arch/arm64/boot/dts/qcom/ipq8074.dtsi | 125 ++++++++++++++++++++++++++++++++++
- 1 file changed, 125 insertions(+)
+> - Remove 'sdm845' from names, and use 'plat' instead.
+> - Move SCT_ENTRY macro to header file.
+> - Create a new config structure to asssign to of-match-data.
+> 
 
-diff --git a/arch/arm64/boot/dts/qcom/ipq8074.dtsi b/arch/arm64/boot/dts/qcom/ipq8074.dtsi
-index 6a61a63..c24e3f6 100644
---- a/arch/arm64/boot/dts/qcom/ipq8074.dtsi
-+++ b/arch/arm64/boot/dts/qcom/ipq8074.dtsi
-@@ -10,6 +10,22 @@
- 	model = "Qualcomm Technologies, Inc. IPQ8074";
- 	compatible = "qcom,ipq8074";
- 
-+	reserved-memory {
-+		#address-cells = <2>;
-+		#size-cells = <2>;
-+		ranges;
-+
-+		smem_region:smem@4ab00000 {
-+			no-map;
-+			reg = <0x0 0x4ab00000 0x0 0x00100000>;
-+		};
-+
-+		q6_region: q6@4b000000 {
-+			no-map;
-+			reg = <0x0 0x4b000000 0x0 0x05f00000>;
-+		};
-+	};
-+
- 	firmware {
- 		scm {
- 			compatible = "qcom,scm-ipq8074", "qcom,scm";
-@@ -431,6 +447,115 @@
- 				      "axi_m_sticky";
- 			status = "disabled";
- 		};
-+		apcs: syscon@b111000 {
-+			compatible = "syscon";
-+			reg = <0x0B111000 0x1000>;
-+		};
-+
-+		wcss: smp2p-wcss {
-+			compatible = "qcom,smp2p";
-+			qcom,smem = <435>, <428>;
-+
-+			interrupt-parent = <&intc>;
-+			interrupts = <0 322 1>;
-+
-+			qcom,ipc = <&apcs 8 9>;
-+
-+			qcom,local-pid = <0>;
-+			qcom,remote-pid = <1>;
-+
-+			wcss_smp2p_out: master-kernel {
-+				qcom,entry-name = "master-kernel";
-+				qcom,smp2p-feature-ssr-ack;
-+				#qcom,smem-state-cells = <1>;
-+			};
-+
-+			wcss_smp2p_in: slave-kernel {
-+				qcom,entry-name = "slave-kernel";
-+
-+				interrupt-controller;
-+				#interrupt-cells = <2>;
-+			};
-+		};
-+
-+		tcsr_q6_block: syscon@1945000 {
-+			compatible = "syscon";
-+			reg = <0x1945000 0xE000>;
-+		};
-+
-+		tcsr_mutex_block: syscon@193d000 {
-+			compatible = "syscon";
-+			reg = <0x1905000 0x8000>;
-+		};
-+
-+		tcsr_mutex: hwlock@193d000 {
-+			compatible = "qcom,tcsr-mutex";
-+			syscon = <&tcsr_mutex_block 0 0x80>;
-+			#hwlock-cells = <1>;
-+		};
-+
-+		smem: qcom,smem@4AB00000 {
-+			compatible = "qcom,smem";
-+			memory-region = <&smem_region>;
-+			hwlocks = <&tcsr_mutex 0>;
-+		};
-+
-+		apcs_glb: mailbox@b111000 {
-+			compatible = "qcom,ipq8074-apcs-apps-global";
-+			reg = <0xb111000 0x1000>;
-+
-+			#mbox-cells = <1>;
-+		};
-+
-+		q6v5_wcss: q6v5_wcss@CD00000 {
-+			compatible = "qcom,ipq8074-wcss-pil";
-+			reg = <0xCD00000 0x4040>,
-+			      <0x4AB000 0x20>;
-+			reg-names = "qdsp6",
-+				    "rmb";
-+			qca,auto-restart;
-+			qca,extended-intc;
-+			interrupts-extended = <&intc 0 325 1>,
-+					      <&wcss_smp2p_in 0 0>,
-+					      <&wcss_smp2p_in 1 0>,
-+					      <&wcss_smp2p_in 2 0>,
-+					      <&wcss_smp2p_in 3 0>;
-+			interrupt-names = "wdog",
-+					  "fatal",
-+					  "ready",
-+					  "handover",
-+					  "stop-ack";
-+
-+			resets = <&gcc GCC_WCSSAON_RESET>,
-+				 <&gcc GCC_WCSS_BCR>,
-+				 <&gcc GCC_WCSS_Q6_BCR>;
-+
-+			reset-names = "wcss_aon_reset",
-+				      "wcss_reset",
-+				      "wcss_q6_reset";
-+
-+			clocks = <&gcc GCC_PRNG_AHB_CLK>;
-+			clock-names = "prng";
-+
-+			qcom,halt-regs = <&tcsr_q6_block 0xA000 0xD000 0x0>;
-+
-+			qcom,smem-states = <&wcss_smp2p_out 0>,
-+					   <&wcss_smp2p_out 1>;
-+			qcom,smem-state-names = "shutdown",
-+						"stop";
-+
-+			memory-region = <&q6_region>;
-+
-+			glink-edge {
-+				interrupts = <GIC_SPI 321 IRQ_TYPE_EDGE_RISING>;
-+				qcom,remote-pid = <1>;
-+				mboxes = <&apcs_glb 8>;
-+
-+				rpm_requests {
-+					qcom,glink-channels = "IPCRTR";
-+				};
-+			};
-+		};
- 	};
- 
- 	cpus {
--- 
-QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member of Code Aurora Forum, hosted by The Linux Foundation
+I interpret the intention of these two patches as that you want to add
+some new platform without having to create one llcc-xyz.c per platform.
 
+If that's the case then the only user of this macro would be in plat.c,
+so I don't see a reason for moving it to the header file.
+
+> Signed-off-by: Vivek Gautam <vivek.gautam@codeaurora.org>
+> ---
+>  drivers/soc/qcom/llcc-plat.c       | 77 ++++++++++++--------------------------
+>  include/linux/soc/qcom/llcc-qcom.h | 45 ++++++++++++++++++++++
+>  2 files changed, 68 insertions(+), 54 deletions(-)
+> 
+> diff --git a/drivers/soc/qcom/llcc-plat.c b/drivers/soc/qcom/llcc-plat.c
+> index 86600d97c36d..31cff0f75b53 100644
+> --- a/drivers/soc/qcom/llcc-plat.c
+> +++ b/drivers/soc/qcom/llcc-plat.c
+> @@ -1,6 +1,6 @@
+>  // SPDX-License-Identifier: GPL-2.0
+>  /*
+> - * Copyright (c) 2017-2018, The Linux Foundation. All rights reserved.
+> + * Copyright (c) 2017-2019, The Linux Foundation. All rights reserved.
+>   *
+>   */
+>  
+> @@ -10,47 +10,7 @@
+>  #include <linux/of_device.h>
+>  #include <linux/soc/qcom/llcc-qcom.h>
+>  
+> -/*
+> - * SCT(System Cache Table) entry contains of the following members:
+
+Should have caught this during previous review, but this comment simply
+duplicates the kerneldoc for struct llcc_slice_config.
+
+> - * usecase_id: Unique id for the client's use case
+> - * slice_id: llcc slice id for each client
+> - * max_cap: The maximum capacity of the cache slice provided in KB
+> - * priority: Priority of the client used to select victim line for replacement
+> - * fixed_size: Boolean indicating if the slice has a fixed capacity
+> - * bonus_ways: Bonus ways are additional ways to be used for any slice,
+> - *		if client ends up using more than reserved cache ways. Bonus
+> - *		ways are allocated only if they are not reserved for some
+> - *		other client.
+> - * res_ways: Reserved ways for the cache slice, the reserved ways cannot
+> - *		be used by any other client than the one its assigned to.
+> - * cache_mode: Each slice operates as a cache, this controls the mode of the
+> - *             slice: normal or TCM(Tightly Coupled Memory)
+> - * probe_target_ways: Determines what ways to probe for access hit. When
+> - *                    configured to 1 only bonus and reserved ways are probed.
+> - *                    When configured to 0 all ways in llcc are probed.
+> - * dis_cap_alloc: Disable capacity based allocation for a client
+> - * retain_on_pc: If this bit is set and client has maintained active vote
+> - *               then the ways assigned to this client are not flushed on power
+> - *               collapse.
+> - * activate_on_init: Activate the slice immediately after the SCT is programmed
+> - */
+> -#define SCT_ENTRY(uid, sid, mc, p, fs, bway, rway, cmod, ptw, dca, rp, a) \
+
+This simply maps macro arguments 1:1 to struct members, there's no need
+for a macro for this.
+
+> -	{					\
+> -		.usecase_id = uid,		\
+> -		.slice_id = sid,		\
+> -		.max_cap = mc,			\
+> -		.priority = p,			\
+> -		.fixed_size = fs,		\
+> -		.bonus_ways = bway,		\
+> -		.res_ways = rway,		\
+> -		.cache_mode = cmod,		\
+> -		.probe_target_ways = ptw,	\
+> -		.dis_cap_alloc = dca,		\
+> -		.retain_on_pc = rp,		\
+> -		.activate_on_init = a,		\
+> -	}
+> -
+> -static struct llcc_slice_config sdm845_data[] =  {
+> +static const struct llcc_slice_config sdm845_data[] =  {
+>  	SCT_ENTRY(LLCC_CPUSS,    1,  2816, 1, 0, 0xffc, 0x2,   0, 0, 1, 1, 1),
+>  	SCT_ENTRY(LLCC_VIDSC0,   2,  512,  2, 1, 0x0,   0x0f0, 0, 0, 1, 1, 0),
+>  	SCT_ENTRY(LLCC_VIDSC1,   3,  512,  2, 1, 0x0,   0x0f0, 0, 0, 1, 1, 0),
+> @@ -71,30 +31,39 @@ static struct llcc_slice_config sdm845_data[] =  {
+>  	SCT_ENTRY(LLCC_AUDHW,    22, 1024, 1, 1, 0xffc, 0x2,   0, 0, 1, 1, 0),
+>  };
+>  
+> -static int sdm845_qcom_llcc_remove(struct platform_device *pdev)
+> +static const struct qcom_llcc_config sdm845_cfg = {
+> +	.sct_data	= sdm845_data,
+> +	.size		= ARRAY_SIZE(sdm845_data),
+> +};
+> +
+> +static int qcom_plat_llcc_remove(struct platform_device *pdev)
+>  {
+>  	return qcom_llcc_remove(pdev);
+>  }
+>  
+> -static int sdm845_qcom_llcc_probe(struct platform_device *pdev)
+> +static int qcom_plat_llcc_probe(struct platform_device *pdev)
+>  {
+> -	return qcom_llcc_probe(pdev, sdm845_data, ARRAY_SIZE(sdm845_data));
+> +	const struct qcom_llcc_config *cfg;
+> +
+> +	cfg = of_device_get_match_data(&pdev->dev);
+> +
+> +	return qcom_llcc_probe(pdev, cfg->sct_data, cfg->size);
+>  }
+>  
+> -static const struct of_device_id sdm845_qcom_llcc_of_match[] = {
+> -	{ .compatible = "qcom,sdm845-llcc", },
+> +static const struct of_device_id qcom_plat_llcc_of_match[] = {
+> +	{ .compatible = "qcom,sdm845-llcc", .data = &sdm845_cfg },
+>  	{ }
+>  };
+>  
+> -static struct platform_driver sdm845_qcom_llcc_driver = {
+> +static struct platform_driver qcom_plat_llcc_driver = {
+>  	.driver = {
+> -		.name = "sdm845-llcc",
+> -		.of_match_table = sdm845_qcom_llcc_of_match,
+> +		.name = "qcom-plat-llcc",
+
+With this being the "one and only llcc driver", why not making it
+"qcom_llcc"?
+
+> +		.of_match_table = qcom_plat_llcc_of_match,
+>  	},
+> -	.probe = sdm845_qcom_llcc_probe,
+> -	.remove = sdm845_qcom_llcc_remove,
+> +	.probe = qcom_plat_llcc_probe,
+> +	.remove = qcom_plat_llcc_remove,
+>  };
+> -module_platform_driver(sdm845_qcom_llcc_driver);
+> +module_platform_driver(qcom_plat_llcc_driver);
+>  
+> -MODULE_DESCRIPTION("QCOM sdm845 LLCC driver");
+> +MODULE_DESCRIPTION("QCOM platform LLCC driver");
+>  MODULE_LICENSE("GPL v2");
+> diff --git a/include/linux/soc/qcom/llcc-qcom.h b/include/linux/soc/qcom/llcc-qcom.h
+
+This file should be describing the public interface to the llcc, the
+private pieces is better kept in drivers/soc/qcom/llcc.h
+
+But this patch makes me wonder if there's a need to split llcc-slice and
+llcc-plat (and have a header file to describe API between them) instead
+of just having one file.
+
+Regards,
+Bjorn
+
+> index eb71a50b8afc..8776bb5d3891 100644
+> --- a/include/linux/soc/qcom/llcc-qcom.h
+> +++ b/include/linux/soc/qcom/llcc-qcom.h
+> @@ -27,6 +27,46 @@
+>  #define LLCC_MDMPNG      21
+>  #define LLCC_AUDHW       22
+>  
+> +/*
+> + * SCT(System Cache Table) entry contains of the following members:
+> + * usecase_id: Unique id for the client's use case
+> + * slice_id: llcc slice id for each client
+> + * max_cap: The maximum capacity of the cache slice provided in KB
+> + * priority: Priority of the client used to select victim line for replacement
+> + * fixed_size: Boolean indicating if the slice has a fixed capacity
+> + * bonus_ways: Bonus ways are additional ways to be used for any slice,
+> + *		if client ends up using more than reserved cache ways. Bonus
+> + *		ways are allocated only if they are not reserved for some
+> + *		other client.
+> + * res_ways: Reserved ways for the cache slice, the reserved ways cannot
+> + *		be used by any other client than the one its assigned to.
+> + * cache_mode: Each slice operates as a cache, this controls the mode of the
+> + *             slice: normal or TCM(Tightly Coupled Memory)
+> + * probe_target_ways: Determines what ways to probe for access hit. When
+> + *                    configured to 1 only bonus and reserved ways are probed.
+> + *                    When configured to 0 all ways in llcc are probed.
+> + * dis_cap_alloc: Disable capacity based allocation for a client
+> + * retain_on_pc: If this bit is set and client has maintained active vote
+> + *               then the ways assigned to this client are not flushed on power
+> + *               collapse.
+> + * activate_on_init: Activate the slice immediately after the SCT is programmed
+> + */
+> +#define SCT_ENTRY(uid, sid, mc, p, fs, bway, rway, cmod, ptw, dca, rp, a) \
+> +	{					\
+> +		.usecase_id = uid,		\
+> +		.slice_id = sid,		\
+> +		.max_cap = mc,			\
+> +		.priority = p,			\
+> +		.fixed_size = fs,		\
+> +		.bonus_ways = bway,		\
+> +		.res_ways = rway,		\
+> +		.cache_mode = cmod,		\
+> +		.probe_target_ways = ptw,	\
+> +		.dis_cap_alloc = dca,		\
+> +		.retain_on_pc = rp,		\
+> +		.activate_on_init = a,		\
+> +	}
+> +
+>  /**
+>   * llcc_slice_desc - Cache slice descriptor
+>   * @slice_id: llcc slice id
+> @@ -67,6 +107,11 @@ struct llcc_slice_config {
+>  	bool activate_on_init;
+>  };
+>  
+> +struct qcom_llcc_config {
+> +	const struct llcc_slice_config *sct_data;
+> +	int size;
+> +};
+> +
+>  /**
+>   * llcc_drv_data - Data associated with the llcc driver
+>   * @regmap: regmap associated with the llcc device
+> -- 
+> QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
+> of Code Aurora Forum, hosted by The Linux Foundation
+> 
