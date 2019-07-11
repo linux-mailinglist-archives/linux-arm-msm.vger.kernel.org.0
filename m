@@ -2,123 +2,82 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 6E4F065DBD
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Jul 2019 18:45:12 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 63B1B65DD2
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Jul 2019 18:49:40 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728413AbfGKQpM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 11 Jul 2019 12:45:12 -0400
-Received: from mail-pf1-f194.google.com ([209.85.210.194]:42468 "EHLO
-        mail-pf1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728325AbfGKQpL (ORCPT
+        id S1728405AbfGKQti (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 11 Jul 2019 12:49:38 -0400
+Received: from perceval.ideasonboard.com ([213.167.242.64]:52510 "EHLO
+        perceval.ideasonboard.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727956AbfGKQti (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 11 Jul 2019 12:45:11 -0400
-Received: by mail-pf1-f194.google.com with SMTP id q10so3011063pff.9
-        for <linux-arm-msm@vger.kernel.org>; Thu, 11 Jul 2019 09:45:11 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=jwuRR8Q1l0rKbX4Ve134b1iXf6no8US/0ODaV1OtfJg=;
-        b=fXMfPXQFw+BMXHj5sB7D5SZbRLL4yLO7dCFEcqra0z5M/ZOltBbf3Zj/Aao1hET4GD
-         3azphRfZ11zhgbXjs3N4nbnKMwUU7+4dw6YKKXllbd+DssNy3TxDGCgkmV1ikNcZxL7/
-         2ICwcXgXIJkPJwzLWiM4/yASDDXjIQa7HjC9IImhuA+FU4yWlR8FfIzidpqktofkWi8v
-         Va0bLm/egQy7D/+XBHgq+GtkBfu9c1Y6IPWhZN8mcQmY/Fa8JG1MM4eSiK3ha3usflxA
-         5VzG7L1PfesBb/hDoETF7jtEOnM6ltMdpQbSzf5oDTXZHnTRFG58VhAlAl5/e8gh0nzi
-         EL3g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=jwuRR8Q1l0rKbX4Ve134b1iXf6no8US/0ODaV1OtfJg=;
-        b=DUM8tkjdpaWAn4luuJl8ntPnRIb285bc5FrM3MOGD2hszU+vqLrT5ZQQQVNqdXSHFQ
-         vM93DolFzejvixFwg6HxoRF+4AL1T2Z7f3JZIfk8cPaaxulWZOlUfQ+ShLT/dMLm4Zue
-         Jw0uoHFNqbHJQBIZoUu9mb9pOXMOi2pej440dv2lqd2X7/5+rMhNHCqlNfm+8yTFaQYS
-         S47jeGd49WcbZFl0mSSckSodg37MQ6ZvkRgYOCbdNejHCqZWgyreWwyLuF/0fetDqW5I
-         fjlKtm1liYr18fWZB+Ys8IoQNwP+OHdkUybU0h3T9QH0/6LsUySl3OJvgucKrayKNaI8
-         IUKQ==
-X-Gm-Message-State: APjAAAV2eqVaKPFILD5xCC9tVb884zSeqzK7gS/DXkHzKsI8pWXrI5WP
-        4+tfDNsLAAnDWS3buUVNSqtouA==
-X-Google-Smtp-Source: APXvYqy1hl1yTY2tAfPT4CfLcn/3WL5Tytxe1BBNzeHmDCMgcsWevHevzfTkFxpehMNWKiRgxKFHTg==
-X-Received: by 2002:a17:90a:2343:: with SMTP id f61mr6002098pje.130.1562863511049;
-        Thu, 11 Jul 2019 09:45:11 -0700 (PDT)
-Received: from tuxbook-pro (104-188-17-28.lightspeed.sndgca.sbcglobal.net. [104.188.17.28])
-        by smtp.gmail.com with ESMTPSA id l189sm7116203pfl.7.2019.07.11.09.45.09
-        (version=TLS1_3 cipher=AEAD-AES256-GCM-SHA384 bits=256/256);
-        Thu, 11 Jul 2019 09:45:10 -0700 (PDT)
-Date:   Thu, 11 Jul 2019 09:46:19 -0700
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Brian Masney <masneyb@onstation.org>
-Cc:     robdclark@gmail.com, sean@poorly.run, airlied@linux.ie,
-        daniel@ffwll.ch, linux-arm-msm@vger.kernel.org,
-        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
-        linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] drm/msm/phy/dsi_phy: silence -EPROBE_DEFER warnings
-Message-ID: <20190711164619.GT7234@tuxbook-pro>
-References: <20190706111138.2238-1-masneyb@onstation.org>
+        Thu, 11 Jul 2019 12:49:38 -0400
+Received: from pendragon.ideasonboard.com (softbank126163157105.bbtec.net [126.163.157.105])
+        by perceval.ideasonboard.com (Postfix) with ESMTPSA id 9128F31C;
+        Thu, 11 Jul 2019 18:49:35 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=ideasonboard.com;
+        s=mail; t=1562863776;
+        bh=LoR2g2XS7GgKN9XWxIyf9Qtnhr3+f3A2ozL+HHxPIyo=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=QVwtxWHK5+cwWwak52s3iKytaDhY6/SeGYNM/YrTlepIBisZT4ki2OESwB5BrjmZB
+         J4Doki+FWESXM5ScBEol/URQP9HFIMIAgMZrq3FwTYaEEv57iHhtxPAXKjB0itFkkq
+         qY2PoKLZYCa7baYnCUnnem7b/TaIT4WYkey8EqBc=
+Date:   Thu, 11 Jul 2019 19:49:08 +0300
+From:   Laurent Pinchart <laurent.pinchart@ideasonboard.com>
+To:     Rob Clark <robdclark@gmail.com>
+Cc:     dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
+        Rob Clark <robdclark@chromium.org>,
+        Andrzej Hajda <a.hajda@samsung.com>,
+        David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH] drm/bridge: ti-sn65dsi86: use dev name for debugfs
+Message-ID: <20190711164908.GO5247@pendragon.ideasonboard.com>
+References: <20190706203105.7810-1-robdclark@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20190706111138.2238-1-masneyb@onstation.org>
-User-Agent: Mutt/1.11.4 (2019-03-13)
+In-Reply-To: <20190706203105.7810-1-robdclark@gmail.com>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Sat 06 Jul 04:11 PDT 2019, Brian Masney wrote:
+Hi Rob,
 
-> The following errors show up when booting the Nexus 5:
+Thank you for the patch.
+
+On Sat, Jul 06, 2019 at 01:31:02PM -0700, Rob Clark wrote:
+> From: Rob Clark <robdclark@chromium.org>
 > 
-> msm_dsi_phy fd922a00.dsi-phy: [drm:dsi_phy_driver_probe] *ERROR*
->  dsi_phy_regulator_init: failed to init regulator, ret=-517
-> msm_dsi_phy fd922a00.dsi-phy: [drm:dsi_phy_driver_probe] *ERROR*
->  dsi_phy_driver_probe: failed to init regulator
+> This should be more future-proof if we ever encounter a device with two
+> of these bridges.
 > 
-> dsi_phy_regulator_init() already logs the error, so no need to log
-> the same error a second time in dsi_phy_driver_probe(). This patch
-> also changes dsi_phy_regulator_init() to not log the error if the
-> error code is -EPROBE_DEFER to reduce noise in dmesg.
-> 
-> Signed-off-by: Brian Masney <masneyb@onstation.org>
+> Suggested-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
+> Signed-off-by: Rob Clark <robdclark@chromium.org>
 > ---
->  drivers/gpu/drm/msm/dsi/phy/dsi_phy.c | 11 ++++++-----
->  1 file changed, 6 insertions(+), 5 deletions(-)
+>  drivers/gpu/drm/bridge/ti-sn65dsi86.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
 > 
-> diff --git a/drivers/gpu/drm/msm/dsi/phy/dsi_phy.c b/drivers/gpu/drm/msm/dsi/phy/dsi_phy.c
-> index 4097eca1b3ef..d0e1cc6728dc 100644
-> --- a/drivers/gpu/drm/msm/dsi/phy/dsi_phy.c
-> +++ b/drivers/gpu/drm/msm/dsi/phy/dsi_phy.c
-> @@ -396,8 +396,11 @@ static int dsi_phy_regulator_init(struct msm_dsi_phy *phy)
+> diff --git a/drivers/gpu/drm/bridge/ti-sn65dsi86.c b/drivers/gpu/drm/bridge/ti-sn65dsi86.c
+> index c8fb45e7b06d..9f4ff88d4a10 100644
+> --- a/drivers/gpu/drm/bridge/ti-sn65dsi86.c
+> +++ b/drivers/gpu/drm/bridge/ti-sn65dsi86.c
+> @@ -204,7 +204,7 @@ DEFINE_SHOW_ATTRIBUTE(status);
 >  
->  	ret = devm_regulator_bulk_get(dev, num, s);
->  	if (ret < 0) {
-> -		DRM_DEV_ERROR(dev, "%s: failed to init regulator, ret=%d\n",
-> -						__func__, ret);
-> +		if (ret != -EPROBE_DEFER)
-> +			DRM_DEV_ERROR(dev,
-> +				      "%s: failed to init regulator, ret=%d\n",
-> +				      __func__, ret);
+>  static void ti_sn_debugfs_init(struct ti_sn_bridge *pdata)
+>  {
+> -	pdata->debugfs = debugfs_create_dir("ti_sn65dsi86", NULL);
+> +	pdata->debugfs = debugfs_create_dir(dev_name(pdata->dev), NULL);
 
-Some {} wouldn't hurt here, but not a big deal.
+That should work, but won't it become quite confusing for users ? I
+wonder if the directory name shouldn't be prefixed with the driver name.
+Something like "ti_sn65dsi86:%s", dev_name(pdata->dev).
 
-Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+>  	debugfs_create_file("status", 0600, pdata->debugfs, pdata,
+>  			&status_fops);
 
-> +
->  		return ret;
->  	}
->  
-> @@ -584,10 +587,8 @@ static int dsi_phy_driver_probe(struct platform_device *pdev)
->  	}
->  
->  	ret = dsi_phy_regulator_init(phy);
-> -	if (ret) {
-> -		DRM_DEV_ERROR(dev, "%s: failed to init regulator\n", __func__);
-> +	if (ret)
->  		goto fail;
-> -	}
->  
->  	phy->ahb_clk = msm_clk_get(pdev, "iface");
->  	if (IS_ERR(phy->ahb_clk)) {
-> -- 
-> 2.20.1
-> 
+-- 
+Regards,
+
+Laurent Pinchart
