@@ -2,183 +2,113 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 7D3C265EC4
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Jul 2019 19:39:41 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id DE72D65ED9
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Jul 2019 19:42:45 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728583AbfGKRje (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 11 Jul 2019 13:39:34 -0400
-Received: from mail-pg1-f194.google.com ([209.85.215.194]:38120 "EHLO
-        mail-pg1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728268AbfGKRje (ORCPT
+        id S1728194AbfGKRmp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 11 Jul 2019 13:42:45 -0400
+Received: from mail-ed1-f67.google.com ([209.85.208.67]:42049 "EHLO
+        mail-ed1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727612AbfGKRmp (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 11 Jul 2019 13:39:34 -0400
-Received: by mail-pg1-f194.google.com with SMTP id z75so3281177pgz.5
-        for <linux-arm-msm@vger.kernel.org>; Thu, 11 Jul 2019 10:39:33 -0700 (PDT)
+        Thu, 11 Jul 2019 13:42:45 -0400
+Received: by mail-ed1-f67.google.com with SMTP id v15so6622892eds.9;
+        Thu, 11 Jul 2019 10:42:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=HFZ1x9Bwz0GUDiOhP+7WxNPTOOqtjhEpu7L1QSIu54o=;
-        b=kqlroZe7s+T13xYRD1th/uV6N3YkpWdMDzxIIFwQ3gDiLT3wa7qh4YgQEuuSkugzgL
-         /uXB2s+618wSOpYeEZEOx6Zo55mhAdfZv/xCopvHTtWqNOKJeYU4lgzerllcKFHYhijw
-         gdiTnf31KYPqhs4yGxw35020hpX2r6WA+B2RPXfPw4V4of15OtygEKGbF714c9A1Xd5W
-         4wKQiw62KZEMrT6SZa0nDXpVHa8q9AvAxMR3hm6Po+LZ12pKj2EMBkKdJf4QBV/ilvFC
-         eleQlxQf1VpsKLBBysZ3aGGheMnoi1f+o6NOiqHTH4Qo35DRdhokkSp4EOoU6am5pStB
-         1e6w==
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=sDCTVVop4NPgBu2WxG9CKMJq6Rz5EG8pMIpMsrokx0Q=;
+        b=YrfPuLnRDGVP7eg9cdZpsaPagof75FJD/41u5WhkrwxGuDOcBTDryC1LGTVQDUE3Bf
+         rPk8w59kCJaAwUXAAxjhHXoC8HXSuyRcUwHai+6q84ZaQXDlpGjlXszEcKAPBQG7OtZJ
+         fQN//8VLoNKtd51RzFI3jX1+9S7kqlIl9b9p95xhpp1DrnuYxEwiL2RRhViwPJ1sqzzN
+         Rlnx1rYFqSF3+WHhZfNEudYW/p2m8AWHkGUoUsiJMOyTHIebhjbhnK0KXy9LKbjbEH8v
+         sZRR4WypeArW8HJbWs7UzZqWVkBIYNzEd4mfpizDhvtkOoSvggwr/l2AHDNYZgcIslT0
+         fcZQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=HFZ1x9Bwz0GUDiOhP+7WxNPTOOqtjhEpu7L1QSIu54o=;
-        b=dy1RyXp2bggvEECvN8LcQf1zpmGYYeN94HfMH3kAJ0wSttVmukkVOOO0zOAxruST3I
-         q/pAYpALldB44Migcb4CQN/LXjmXC3tT2VuEkuXaoUWD6X4iZ6WvgYS9MEdPeXDBwyLw
-         a8xGDQQYXyhvGlXj9nt3cxRKL75soHw6qa2TbQ5NIhPGL0YYjAKOa6y9KQrPZl/4lDoA
-         4gINkM/zaihKsbZyUXHIFvdC8gepPoY6da/SgHW6d3T5gLbzdW3EvoWZRBUElXiiHDzL
-         vksYGDYAjbijUS386BZtuM3x1yq8oq5wORHsz6rNXAxekWL0ydhXgq2AiJwnu+ULX2Mc
-         wbAA==
-X-Gm-Message-State: APjAAAWnHp/QnGgC5fyLYRgmeghFdiiRYEmSdZO77N0ahvAoSNCEVE74
-        fnP+8kfnrkQg41fgtdUXfu735g==
-X-Google-Smtp-Source: APXvYqx53DWisrIUx8wtw7I10qDwRqbUe57mjMuQjMcDn74PJCZFUDQRHQVTvfGYi0yrHyXySpJJsw==
-X-Received: by 2002:a17:90a:7148:: with SMTP id g8mr6263776pjs.51.1562866772910;
-        Thu, 11 Jul 2019 10:39:32 -0700 (PDT)
-Received: from tuxbook-pro (104-188-17-28.lightspeed.sndgca.sbcglobal.net. [104.188.17.28])
-        by smtp.gmail.com with ESMTPSA id i124sm13165127pfe.61.2019.07.11.10.39.30
-        (version=TLS1_3 cipher=AEAD-AES256-GCM-SHA384 bits=256/256);
-        Thu, 11 Jul 2019 10:39:32 -0700 (PDT)
-Date:   Thu, 11 Jul 2019 10:40:43 -0700
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Sibi Sankar <sibis@codeaurora.org>
-Cc:     viresh.kumar@linaro.org, nm@ti.com, sboyd@kernel.org,
-        georgi.djakov@linaro.org, agross@kernel.org,
-        david.brown@linaro.org, robh+dt@kernel.org, mark.rutland@arm.com,
-        rjw@rjwysocki.net, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-pm@vger.kernel.org, saravanak@google.com
-Subject: Re: [PATCH RFC 2/4] OPP: Add and export helper to set bandwidth
-Message-ID: <20190711174043.GU7234@tuxbook-pro>
-References: <20190627133424.4980-1-sibis@codeaurora.org>
- <20190627133424.4980-3-sibis@codeaurora.org>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=sDCTVVop4NPgBu2WxG9CKMJq6Rz5EG8pMIpMsrokx0Q=;
+        b=DuAD9q/yg0OJXx449hnrsqioiIcnJ2uhIXXo5frsyedn23xusXNTQs5nbpgInGMeTH
+         0YU2IG+XUwc3MUP6pYs/n+dCMs8NSNt8UlqdctPCLX3/hYx/jkPmVSPb0d/IuP74RYzs
+         891kQCxoIWfU14e2g4DfmqCvhefY/IJlwkpxol15gP7bqvelZQ20CY2kkCFvCLzqgAr5
+         I84VImvGN7vxD3luanqLTmwwcMq/du0v70m3SL2ZlB11P35PNnvWLrPqLLdR9Wwwlp0b
+         6Ks9RcZAtqesP6h1npom+/71mXsL2n+Omx7VbrFxv4vo6FI11tQIk95vM0oYyy02mFOS
+         z0qw==
+X-Gm-Message-State: APjAAAWKo+kwzbWB3FDm+5few+VlPoL/qqn2yqcd0l31VFVe4WJRTvGp
+        JOC5+7ZYn8RvF+4IRvmBOfhIuHi0L+uOBRghR4s=
+X-Google-Smtp-Source: APXvYqybvEj2gI8a+mKBgq/L1/X8hSAoV6wPjO69HykrLFeoq6zIaiUwmcQ6LeSMTx1h28aL9hhcTtZYF32EUx/Iurw=
+X-Received: by 2002:a50:9203:: with SMTP id i3mr4933489eda.302.1562866963151;
+ Thu, 11 Jul 2019 10:42:43 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20190627133424.4980-3-sibis@codeaurora.org>
-User-Agent: Mutt/1.11.4 (2019-03-13)
+References: <20190706203105.7810-1-robdclark@gmail.com> <20190711164908.GO5247@pendragon.ideasonboard.com>
+In-Reply-To: <20190711164908.GO5247@pendragon.ideasonboard.com>
+From:   Rob Clark <robdclark@gmail.com>
+Date:   Thu, 11 Jul 2019 10:42:31 -0700
+Message-ID: <CAF6AEGvF78tT4aHv1SO56zMD_0FaX=TF+2MmAATTM9rnqLvEsQ@mail.gmail.com>
+Subject: Re: [PATCH] drm/bridge: ti-sn65dsi86: use dev name for debugfs
+To:     Laurent Pinchart <laurent.pinchart@ideasonboard.com>
+Cc:     dri-devel <dri-devel@lists.freedesktop.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        Rob Clark <robdclark@chromium.org>,
+        Andrzej Hajda <a.hajda@samsung.com>,
+        David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu 27 Jun 06:34 PDT 2019, Sibi Sankar wrote:
+On Thu, Jul 11, 2019 at 9:49 AM Laurent Pinchart
+<laurent.pinchart@ideasonboard.com> wrote:
+>
+> Hi Rob,
+>
+> Thank you for the patch.
+>
+> On Sat, Jul 06, 2019 at 01:31:02PM -0700, Rob Clark wrote:
+> > From: Rob Clark <robdclark@chromium.org>
+> >
+> > This should be more future-proof if we ever encounter a device with two
+> > of these bridges.
+> >
+> > Suggested-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
+> > Signed-off-by: Rob Clark <robdclark@chromium.org>
+> > ---
+> >  drivers/gpu/drm/bridge/ti-sn65dsi86.c | 2 +-
+> >  1 file changed, 1 insertion(+), 1 deletion(-)
+> >
+> > diff --git a/drivers/gpu/drm/bridge/ti-sn65dsi86.c b/drivers/gpu/drm/bridge/ti-sn65dsi86.c
+> > index c8fb45e7b06d..9f4ff88d4a10 100644
+> > --- a/drivers/gpu/drm/bridge/ti-sn65dsi86.c
+> > +++ b/drivers/gpu/drm/bridge/ti-sn65dsi86.c
+> > @@ -204,7 +204,7 @@ DEFINE_SHOW_ATTRIBUTE(status);
+> >
+> >  static void ti_sn_debugfs_init(struct ti_sn_bridge *pdata)
+> >  {
+> > -     pdata->debugfs = debugfs_create_dir("ti_sn65dsi86", NULL);
+> > +     pdata->debugfs = debugfs_create_dir(dev_name(pdata->dev), NULL);
+>
+> That should work, but won't it become quite confusing for users ? I
+> wonder if the directory name shouldn't be prefixed with the driver name.
+> Something like "ti_sn65dsi86:%s", dev_name(pdata->dev).
 
-> Add and export 'dev_pm_opp_set_bw' to set the bandwidth
-> levels associated with an OPP for a given frequency.
-> 
+*maybe*, if they are badly named in dt?  In the end the target
+audience is really to help developers and people bringing up a new
+board, so maybe my way encourages them to use sensible names in dt ;-)
 
-While this looks quite reasonable I'm uncertain about the overall OPP
-API.
+BR,
+-R
 
-With the profiling based (bwmon/llcc) approach we would acquire the peak
-bandwidth from the OPP table and calculate the average dynamically,
-based on measurements and heuristics.
 
-For that I think we will have a struct dev_pm_opp at hand (e.g. from
-devfreq_recommended_opp() or similar), from which we want to read the
-peak value and then apply the icc vote. Or would we want to update the
-avg bw and then apply the opp using a method like this? (In which case
-we probably don't want to pass a freq, but a struct dev_pm_opp *, to
-avoid the additional lookup)
-
-Regards,
-Bjorn
-
-> Signed-off-by: Sibi Sankar <sibis@codeaurora.org>
-> ---
->  drivers/opp/core.c     | 46 ++++++++++++++++++++++++++++++++++++++++++
->  include/linux/pm_opp.h |  6 ++++++
->  2 files changed, 52 insertions(+)
-> 
-> diff --git a/drivers/opp/core.c b/drivers/opp/core.c
-> index c85c04dc2c7de..78f42960860d1 100644
-> --- a/drivers/opp/core.c
-> +++ b/drivers/opp/core.c
-> @@ -746,6 +746,52 @@ static int _set_required_opps(struct device *dev,
->  	return ret;
->  }
->  
-> +/**
-> + * dev_pm_opp_set_bw() - Configures OPP bandwidth levels
-> + * @dev:	device for which we do this operation
-> + * @freq:	bandwidth values to set with matching 'freq'
-> + *
-> + * This configures the bandwidth to the levels specified
-> + * by the OPP corresponding to the given frequency.
-> + *
-> + * Return: 0 on success or a negative error value.
-> + */
-> +int dev_pm_opp_set_bw(struct device *dev, unsigned long freq)
-> +{
-> +	struct opp_table *opp_table;
-> +	struct dev_pm_opp *opp;
-> +	int ret = 0;
-> +	int i;
-> +
-> +	opp = dev_pm_opp_find_freq_exact(dev, freq, true);
-> +	if (IS_ERR(opp))
-> +		return PTR_ERR(opp);
-> +
-> +	opp_table = _find_opp_table(dev);
-> +	if (IS_ERR(opp_table)) {
-> +		dev_err(dev, "%s: device opp table doesn't exist\n", __func__);
-> +		ret = PTR_ERR(opp_table);
-> +		goto put_opp;
-> +	}
-> +
-> +	if (IS_ERR_OR_NULL(opp_table->paths)) {
-> +		ret = -ENODEV;
-> +		goto put_opp_table;
-> +	}
-> +
-> +	for (i = 0; i < opp_table->path_count; i++) {
-> +		ret = icc_set_bw(opp_table->paths[i], opp->bandwidth[i].avg,
-> +				 opp->bandwidth[i].peak);
-> +	}
-> +
-> +put_opp_table:
-> +	dev_pm_opp_put_opp_table(opp_table);
-> +put_opp:
-> +	dev_pm_opp_put(opp);
-> +	return ret;
-> +}
-> +EXPORT_SYMBOL_GPL(dev_pm_opp_set_bw);
-> +
->  /**
->   * dev_pm_opp_set_rate() - Configure new OPP based on frequency
->   * @dev:	 device for which we do this operation
-> diff --git a/include/linux/pm_opp.h b/include/linux/pm_opp.h
-> index a17c462974851..1cdc2d0a2b20e 100644
-> --- a/include/linux/pm_opp.h
-> +++ b/include/linux/pm_opp.h
-> @@ -152,6 +152,7 @@ struct opp_table *dev_pm_opp_attach_genpd(struct device *dev, const char **names
->  void dev_pm_opp_detach_genpd(struct opp_table *opp_table);
->  int dev_pm_opp_xlate_performance_state(struct opp_table *src_table, struct opp_table *dst_table, unsigned int pstate);
->  int dev_pm_opp_set_rate(struct device *dev, unsigned long target_freq);
-> +int dev_pm_opp_set_bw(struct device *dev, unsigned long freq);
->  int dev_pm_opp_set_sharing_cpus(struct device *cpu_dev, const struct cpumask *cpumask);
->  int dev_pm_opp_get_sharing_cpus(struct device *cpu_dev, struct cpumask *cpumask);
->  void dev_pm_opp_remove_table(struct device *dev);
-> @@ -336,6 +337,11 @@ static inline int dev_pm_opp_set_rate(struct device *dev, unsigned long target_f
->  	return -ENOTSUPP;
->  }
->  
-> +static inline int dev_pm_opp_set_bw(struct device *dev, unsigned long freq)
-> +{
-> +	return -ENOTSUPP;
-> +}
-> +
->  static inline int dev_pm_opp_set_sharing_cpus(struct device *cpu_dev, const struct cpumask *cpumask)
->  {
->  	return -ENOTSUPP;
-> -- 
-> The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
-> a Linux Foundation Collaborative Project
-> 
+>
+> >       debugfs_create_file("status", 0600, pdata->debugfs, pdata,
+> >                       &status_fops);
+>
+> --
+> Regards,
+>
+> Laurent Pinchart
