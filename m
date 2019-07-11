@@ -2,131 +2,127 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id EE17F6592D
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Jul 2019 16:42:10 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id CF15965935
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Jul 2019 16:43:16 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728517AbfGKOmK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 11 Jul 2019 10:42:10 -0400
-Received: from heliosphere.sirena.org.uk ([172.104.155.198]:51056 "EHLO
-        heliosphere.sirena.org.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728678AbfGKOmK (ORCPT
+        id S1728692AbfGKOnP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 11 Jul 2019 10:43:15 -0400
+Received: from mail-pf1-f193.google.com ([209.85.210.193]:33571 "EHLO
+        mail-pf1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728624AbfGKOnP (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 11 Jul 2019 10:42:10 -0400
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-        d=sirena.org.uk; s=20170815-heliosphere; h=In-Reply-To:Content-Type:
-        MIME-Version:References:Message-ID:Subject:Cc:To:From:Date:Sender:Reply-To:
-        Content-Transfer-Encoding:Content-ID:Content-Description:Resent-Date:
-        Resent-From:Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:List-Id:
-        List-Help:List-Unsubscribe:List-Subscribe:List-Post:List-Owner:List-Archive;
-         bh=+HlbWEQmRduQNmwZFRzhfjm5S2Nl7jUTbuTLfBpBQqk=; b=Wou5o/MPpOc6TgukRzTBE/GH+
-        RjTTLTQbUoZs3rqtFDNYiTTqcywlE97WS1aQvfu0aZSweV6wT+FTGnPpwgRC7hPVC1T1yktQXgFF0
-        y4n54l2AWJtFqwvW014NATDZc/TT5iZI6BS4La50RlA2uClTaigHVREvsuAgme/SIif/I=;
-Received: from [217.140.106.52] (helo=fitzroy.sirena.org.uk)
-        by heliosphere.sirena.org.uk with esmtpsa (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256)
-        (Exim 4.92)
-        (envelope-from <broonie@sirena.co.uk>)
-        id 1hlaGm-0002Ug-9P; Thu, 11 Jul 2019 14:42:00 +0000
-Received: by fitzroy.sirena.org.uk (Postfix, from userid 1000)
-        id 7990FD02DA8; Thu, 11 Jul 2019 15:41:59 +0100 (BST)
-Date:   Thu, 11 Jul 2019 15:41:59 +0100
-From:   Mark Brown <broonie@kernel.org>
-To:     Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
-Cc:     Andrzej Hajda <a.hajda@samsung.com>,
-        Laurent Pinchart <Laurent.pinchart@ideasonboard.com>,
-        Dave Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Rob Clark <robdclark@gmail.com>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        "open list:DRM PANEL DRIVERS" <dri-devel@lists.freedesktop.org>,
-        MSM <linux-arm-msm@vger.kernel.org>,
-        lkml <linux-kernel@vger.kernel.org>
-Subject: Re: [PATCH 1/2] regmap: Add DSI bus support
-Message-ID: <20190711144159.GH14859@sirena.co.uk>
-References: <20190703214326.41269-1-jeffrey.l.hugo@gmail.com>
- <20190703214512.41319-1-jeffrey.l.hugo@gmail.com>
- <20190706010604.GG20625@sirena.org.uk>
- <CAOCk7No77CDRE=bnBVGzYw9ixWKO4PMBBWksm4JEeh3ydfOk+g@mail.gmail.com>
+        Thu, 11 Jul 2019 10:43:15 -0400
+Received: by mail-pf1-f193.google.com with SMTP id g2so2878673pfq.0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 11 Jul 2019 07:43:14 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=bVnXpkhdRXKYktl+iS83oNTlUAhPFObnKhn5LwokMJw=;
+        b=PZ5eH3m7RNSLXRKexjamxhZJZMNP9oQiQvVuxRDtw+D/ARroDOjKRysZHlb3hjgV7H
+         +OHnQYpdLV/spoUrGR/xtUx3I42+R02Ro/1dS5X7wPoWi23Yfi0V6MqtVZPC4xMheGaL
+         pwUxFBL8lcHM4TvvDyfanulX+9K44w0WOpODtrdkRXKU+fO+XNgquQYjDohnPTKhHFyn
+         8qyQF4IrY8XCVyxdrUuqcZGRJ4/aWbGCHKue63IF9WPU68/9IxfE3tfCeJi9t1UMeV5Q
+         ukde9mAMmG8sz4B9tBM4TMd3G74FeEtSRQcNTlFiRHq/tKBkPuvEMCuWLtlvq8Vb5rkp
+         /6YA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=bVnXpkhdRXKYktl+iS83oNTlUAhPFObnKhn5LwokMJw=;
+        b=DvxrZY73WjHPCMnuxLKX5kIPOxR7g+siZM2xt/t/J1rI2UBsi2+mA/+P10RHAvTaAF
+         HbGY7g0YhIWuzM0GmLFbdXDFKlvfYLQu9/34Uf7/U3a1tX+o4bKry8fm3JJ0RAh7+5k/
+         T3qn5RUV4O7WErnn1kiMp3hsv+C64rOeZHo7X3l4bIjt+Zj2KII6/dOUKormmwfJXfB2
+         a5BC1c2zyNOP+gbHqIiU2gVSYzZQFl4cdXYPHSp3G4PjtK0VgDw9mApuBgMMOFmKKroj
+         rTpZS5KtmDdppi4n+JLdzU3VvGx/I/XGYSorYID5ZxvHf+epuOgjDHcMc1fGbCP8zy2o
+         PCBQ==
+X-Gm-Message-State: APjAAAVklrlMf50/srlr2e0zNvOxWMQUikfsdgDw0dwAiQ8O72ym/A6G
+        cAphrAIkpjUcnm4mnwy/X3vekw==
+X-Google-Smtp-Source: APXvYqxu5aCDxjj3fkcv7rULRhrqZhb+7XDdmM9S1aURNZVTU+dFXJ+uf4wJfqTHgfPQXF/t8LDwGA==
+X-Received: by 2002:a17:90a:bf02:: with SMTP id c2mr5310288pjs.73.1562856194457;
+        Thu, 11 Jul 2019 07:43:14 -0700 (PDT)
+Received: from tuxbook-pro (104-188-17-28.lightspeed.sndgca.sbcglobal.net. [104.188.17.28])
+        by smtp.gmail.com with ESMTPSA id g14sm6276112pgn.8.2019.07.11.07.43.12
+        (version=TLS1_3 cipher=AEAD-AES256-GCM-SHA384 bits=256/256);
+        Thu, 11 Jul 2019 07:43:13 -0700 (PDT)
+Date:   Thu, 11 Jul 2019 07:44:24 -0700
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     Jorge Ramirez-Ortiz <jorge.ramirez-ortiz@linaro.org>
+Cc:     sboyd@kernel.org, david.brown@linaro.org, jassisinghbrar@gmail.com,
+        mark.rutland@arm.com, mturquette@baylibre.com, robh+dt@kernel.org,
+        will.deacon@arm.com, arnd@arndb.de, horms+renesas@verge.net.au,
+        heiko@sntech.de, sibis@codeaurora.org,
+        enric.balletbo@collabora.com, jagan@amarulasolutions.com,
+        olof@lixom.net, vkoul@kernel.org, niklas.cassel@linaro.org,
+        georgi.djakov@linaro.org, amit.kucheria@linaro.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org, linux-clk@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, khasim.mohammed@linaro.org
+Subject: Re: [PATCH v3 02/14] mbox: qcom: add APCS child device for QCS404
+Message-ID: <20190711144424.GD7234@tuxbook-pro>
+References: <20190625164733.11091-1-jorge.ramirez-ortiz@linaro.org>
+ <20190625164733.11091-3-jorge.ramirez-ortiz@linaro.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="aF3LVLvitz/VQU3c"
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <CAOCk7No77CDRE=bnBVGzYw9ixWKO4PMBBWksm4JEeh3ydfOk+g@mail.gmail.com>
-X-Cookie: Visit beautiful Vergas, Minnesota.
-User-Agent: Mutt/1.10.1 (2018-07-13)
+In-Reply-To: <20190625164733.11091-3-jorge.ramirez-ortiz@linaro.org>
+User-Agent: Mutt/1.11.4 (2019-03-13)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On Tue 25 Jun 09:47 PDT 2019, Jorge Ramirez-Ortiz wrote:
 
---aF3LVLvitz/VQU3c
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+> There is clock controller functionality in the APCS hardware block of
+> qcs404 devices similar to msm8916.
+> 
+> Co-developed-by: Niklas Cassel <niklas.cassel@linaro.org>
+> Signed-off-by: Niklas Cassel <niklas.cassel@linaro.org>
+> Signed-off-by: Jorge Ramirez-Ortiz <jorge.ramirez-ortiz@linaro.org>
+> ---
+>  drivers/mailbox/qcom-apcs-ipc-mailbox.c | 18 ++++++++++--------
+>  1 file changed, 10 insertions(+), 8 deletions(-)
+> 
+> diff --git a/drivers/mailbox/qcom-apcs-ipc-mailbox.c b/drivers/mailbox/qcom-apcs-ipc-mailbox.c
+> index 705e17a5479c..a05dc3aabac7 100644
+> --- a/drivers/mailbox/qcom-apcs-ipc-mailbox.c
+> +++ b/drivers/mailbox/qcom-apcs-ipc-mailbox.c
+> @@ -89,16 +89,18 @@ static int qcom_apcs_ipc_probe(struct platform_device *pdev)
+>  		return ret;
+>  	}
+>  
+> -	if (of_device_is_compatible(np, "qcom,msm8916-apcs-kpss-global")) {
+> -		apcs->clk = platform_device_register_data(&pdev->dev,
+> -							  "qcom-apcs-msm8916-clk",
+> -							  -1, NULL, 0);
+> -		if (IS_ERR(apcs->clk))
+> -			dev_err(&pdev->dev, "failed to register APCS clk\n");
+> -	}
+> -
+>  	platform_set_drvdata(pdev, apcs);
+>  
+> +	if (!of_device_is_compatible(np, "qcom,msm8916-apcs-kpss-global") &&
+> +	    !of_device_is_compatible(np, "qcom,qcs404-apcs-apps-global"))
 
-On Wed, Jul 10, 2019 at 12:08:34PM -0600, Jeffrey Hugo wrote:
-> On Fri, Jul 5, 2019 at 7:06 PM Mark Brown <broonie@kernel.org> wrote:
+If the remainder of the function was a long snippet I think this would
+motivate the somewhat unusual early return. But I think it would be
+cleaner to just add to the existing conditional.
 
-> The addresses for these spec defined messages are 8-bit wide, so 256
-> valid "destinations".  However, the payload is variable.  Most of the
-> defined operations take an 8-bit payload, but there are a few that I
-> see with 16-bit payloads.
+Regards,
+Bjorn
 
-Oh, good, variable register sizes, what a market leading idea :(
-That basically doesn't work with regmap, you need to either
-define one regmap per register size and attach them to the device
-or use reg_read() and reg_write() and hide the complexity in
-there.
-
-> As the contents of the generic read/write messages are implementation
-> defined, the answer to your question seems to be no - the spec does
-> not define that the registers are 8-bit addressable, and 8-bit wide.
-
-The code definitely ought to at least be more flexible then.
-Right now it's very hard coded.
-
-> I think perhaps the discussion needs to step back a bit, and decide
-> how flexible do we want this regmap over DSI to be?  I think its
-> usefulness comes from when a device can be configured via multiple
-> interfaces, so I don't expect it to be useful for every DSI interface.
-> It seems like the DSI panels use DSI directly to craft their
-> configuration.  As a result, we are probably looking at just devices
-> which use the generic read/write commands, but sadly the format for
-> those is not universal per the spec.  From the implementations I've
-> seen, I suspect 8-bit addressing of 8-bit wide registers to be the
-> most common, but apparently there is an exception to that already in
-> the one device that I care about.
-
-It's relatively easy to add a bunch of special cases in - look at
-how the I2C code handles it, keying off a combination of the
-register configuration and the capabilities of the host
-controller.  I guess for this it'd mainly be the register
-configuration.  You might find the reg_read()/reg_write()
-interface better than the raw buffer one for some of the formats,
-it does let=20
-
-> Do we want to go forward with this regmap support just for the one TI
-> device, and see what other usecases come out of it, and attempt to
-> solve those as we go?
-
-I have no strong opinions here, it looks fine from a framework
-point of view though it's unclear to me if viewing it as a
-register map meshes well with how the hardware is designed or not
-- it seems plausible though.
-
---aF3LVLvitz/VQU3c
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAl0nSrQACgkQJNaLcl1U
-h9Dqygf/XOpd88JPRHZWBN+yYZ3UHJfhBe6xy8/HfJBBT8sXXA2L3k7rHpRMmhKk
-RC58a6kuy8mDm+tQhIgEwHUlFotAHGk8kn0yNQuVK0XNL4zvAqdcQHV+gsn//x6G
-R3PQrLboonlT69lWDNW4dI1zc78mY6FzKQRtFa7kmIYZ5hr/WwtR9TfpReeUxLCr
-P5FYi4QzBp3uloWecgLExYmFZj3IHznUWpp8Hm11JDXyrpVShOMJCiA99q/W9N6A
-ALxrijQlTenDH7gMw7YEaDhnl+osCa392CguDJiSNbDW7usZ+5WGOF7TGOLu8F+u
-udGDeMVl9eOc7g2CHoRTEg6/WtQv/A==
-=1lgs
------END PGP SIGNATURE-----
-
---aF3LVLvitz/VQU3c--
+> +		return 0;
+> +
+> +	apcs->clk = platform_device_register_data(&pdev->dev,
+> +						  "qcom-apcs-msm8916-clk",
+> +						  -1, NULL, 0);
+> +	if (IS_ERR(apcs->clk))
+> +		dev_err(&pdev->dev, "failed to register APCS clk\n");
+> +
+>  	return 0;
+>  }
+>  
+> -- 
+> 2.21.0
+> 
