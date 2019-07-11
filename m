@@ -2,50 +2,50 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 94A1565A66
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Jul 2019 17:26:16 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 374B265A6C
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Jul 2019 17:26:28 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728987AbfGKP0I (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 11 Jul 2019 11:26:08 -0400
-Received: from mail-pl1-f196.google.com ([209.85.214.196]:41620 "EHLO
-        mail-pl1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728985AbfGKP0G (ORCPT
+        id S1729011AbfGKP0V (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 11 Jul 2019 11:26:21 -0400
+Received: from mail-pl1-f193.google.com ([209.85.214.193]:44093 "EHLO
+        mail-pl1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728988AbfGKP0V (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 11 Jul 2019 11:26:06 -0400
-Received: by mail-pl1-f196.google.com with SMTP id m9so3191556pls.8
-        for <linux-arm-msm@vger.kernel.org>; Thu, 11 Jul 2019 08:26:06 -0700 (PDT)
+        Thu, 11 Jul 2019 11:26:21 -0400
+Received: by mail-pl1-f193.google.com with SMTP id t14so3192148plr.11
+        for <linux-arm-msm@vger.kernel.org>; Thu, 11 Jul 2019 08:26:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to:user-agent;
-        bh=9jqKL10SfPBHX8ip9SjN9bbGfYwLa0UEkg7TV5tI+44=;
-        b=Ai33U1cb/AuUPGwciTGPKsb8cL0yezdO4orewd1YNIYc2T4/AMDQiliCn4BrgHRPxY
-         vEETBjvOfm7iQYPsPTa+4SfomDLYmhdxcvTz8z43WGVQk1PkjHmPEtfSRDdum1qWGHYW
-         MSilOaZIxICmIN+BM8S3RqU6CE1wP97gLp0f4vL5ac/XJ4GSOv/Dw/ZfNPpx+FyLRFDR
-         VWI5R2VfhQs931xNuTpJdYKo1Adtk3eIbfpi/3aIHkmzSLyHYQZXw9C66524u0DAQNoc
-         bBIi9a0w1YREf0fgWqEzGwGfgiMlIKbpF798d0jFtgRmx/8pSEyzkMTr/O32/Ln6sJeN
-         yZMw==
+        bh=xDOt/R012GpKF8HFEzGHxZ6VjWpUHMuTKXU3bjn70dk=;
+        b=XSctE8NXzUrCLSA48gznsH/hlb0BzkA5MbyTNJycR46hL6HiqrgU/6XHxtjagPCsv0
+         Vo4OMLScsUWTecg2LnFFpgUXJx7kXpn2DKRdohk/ZxtTbLQTwScsWKBBA/fqN09ZwpZH
+         vL25IK6OAQx/Lydn0fgtrOITuktmovLNBnzi7SMhC1mwfgd6PJlGsLNEaFv8FC4zaaDB
+         2ZoY2vdtm1JzNKi22EAZ8IjEMtitc645F+sidjRLsoP/lvLgDVE7c6oT+9Q0uQLSUvQ5
+         pSTsqU1epdgnfCqfXlB4MjudmmiF77Nmvf1V4DYhkuIQPpNh9YBKJj3cB7MG57BETduu
+         Gb2Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=9jqKL10SfPBHX8ip9SjN9bbGfYwLa0UEkg7TV5tI+44=;
-        b=kyluYwEXpFBkWG7qx51efOmIMWlZbLjg+Rr4TfdCLh9vRQVVfKUmubCrWYq7yYN1n5
-         YyshMitKcmio0cnjm5/n73h6ndZaZBhqOtgLlPKfgBUUuPbv4LQLDqmGNCy1MAnEm280
-         K4G8dczLzhsrbJTqOz2lYS1Q5dA97/DnQBb6NOJmJae3n19DMMGjOHU8/1YEw7rPujY7
-         3zh/oAs/gqw8MsTm3mu7xCWw4g+GKebNUA6B9KBsUJ6F5cHcevDj6kMV/yKarCE1WymY
-         gHvWKrkig+oXrl2kymaySDMYKO5Oa1QjDesKNI0WybpA+/A/vzkCtrUfM35e5BvVbFK9
-         io+w==
-X-Gm-Message-State: APjAAAXrx0pH/v6wYRhAvLO3Sl9I5ycddTREeVKPDqPY6L2+U+tpt5Vy
-        n6xBm4AVpaHpP2PJaq0/nTASWw==
-X-Google-Smtp-Source: APXvYqyi5VNP+LKJHngY4Cs3k5DfNNUN1ljoMrjNS1v+CpK76lG427Jq4WFgS6YE/HD2LWMQMvA0qQ==
-X-Received: by 2002:a17:902:aa88:: with SMTP id d8mr5039813plr.274.1562858765582;
-        Thu, 11 Jul 2019 08:26:05 -0700 (PDT)
+        bh=xDOt/R012GpKF8HFEzGHxZ6VjWpUHMuTKXU3bjn70dk=;
+        b=AR1IK99lEnCY3ZE5/dtpRuUv+YuTH1LTmANmgZiklleJuri/dQ27DNNjIBo4Le057G
+         QB+y6bZUBwPIQzBNiibxbIzDsFXWRfpOac6iBwgULUIFEjKkkno7dWz7TFzv18xI/Y+O
+         rPJqc7H0LWhDWY9XsE+aMJL67Z7R4pbo0x6RvaWwl4NIFtxxvWAD24X6GKuR0m9SBNDT
+         edEUOdXYy5/o1+Rl7hSbYdJeNFOARpk683X32W1W1xeGY9s2K0nnb5s4tLuIRSc0mrDU
+         fL+DldZqqewEtcMPKKlCdBxloThQ5hofrb7PFhj1Kw40tg9FBNnW/pl6e1Z3T3Lbq+3K
+         9JZw==
+X-Gm-Message-State: APjAAAUNflJ97zn9v4wL/vQLkUX8LUxOXuZI9fe0VJ1cA62S3JBDK0IT
+        SQkkg4RH/eFNg8lN7HJcDRh4+Q==
+X-Google-Smtp-Source: APXvYqwBujVJjsQORJ3cp1UkTkrULW8ipykYaV1DbpWN8jqWqpo9mYpGbrYwdO7z3fWkki2TUSWFgQ==
+X-Received: by 2002:a17:902:b713:: with SMTP id d19mr5304484pls.267.1562858780510;
+        Thu, 11 Jul 2019 08:26:20 -0700 (PDT)
 Received: from tuxbook-pro (104-188-17-28.lightspeed.sndgca.sbcglobal.net. [104.188.17.28])
-        by smtp.gmail.com with ESMTPSA id q19sm7117085pfc.62.2019.07.11.08.26.03
+        by smtp.gmail.com with ESMTPSA id c98sm5642922pje.1.2019.07.11.08.26.18
         (version=TLS1_3 cipher=AEAD-AES256-GCM-SHA384 bits=256/256);
-        Thu, 11 Jul 2019 08:26:04 -0700 (PDT)
-Date:   Thu, 11 Jul 2019 08:27:14 -0700
+        Thu, 11 Jul 2019 08:26:19 -0700 (PDT)
+Date:   Thu, 11 Jul 2019 08:27:30 -0700
 From:   Bjorn Andersson <bjorn.andersson@linaro.org>
 To:     Jorge Ramirez-Ortiz <jorge.ramirez-ortiz@linaro.org>
 Cc:     sboyd@kernel.org, david.brown@linaro.org, jassisinghbrar@gmail.com,
@@ -58,15 +58,14 @@ Cc:     sboyd@kernel.org, david.brown@linaro.org, jassisinghbrar@gmail.com,
         devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
         linux-arm-kernel@lists.infradead.org, linux-clk@vger.kernel.org,
         linux-arm-msm@vger.kernel.org, khasim.mohammed@linaro.org
-Subject: Re: [PATCH v3 12/14] arm64: dts: qcom: qcs404: Add the clocks for
- APCS mux/divider
-Message-ID: <20190711152714.GM7234@tuxbook-pro>
+Subject: Re: [PATCH v3 14/14] arm64: defconfig: Enable HFPLL
+Message-ID: <20190711152730.GN7234@tuxbook-pro>
 References: <20190625164733.11091-1-jorge.ramirez-ortiz@linaro.org>
- <20190625164733.11091-13-jorge.ramirez-ortiz@linaro.org>
+ <20190625164733.11091-15-jorge.ramirez-ortiz@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20190625164733.11091-13-jorge.ramirez-ortiz@linaro.org>
+In-Reply-To: <20190625164733.11091-15-jorge.ramirez-ortiz@linaro.org>
 User-Agent: Mutt/1.11.4 (2019-03-13)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
@@ -75,33 +74,31 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 On Tue 25 Jun 09:47 PDT 2019, Jorge Ramirez-Ortiz wrote:
 
-> Specify the clocks that feed the APCS mux/divider instead of using
-> default hardcoded values in the source code.
+> The high frequency pll is required on compatible Qualcomm SoCs to
+> support the CPU frequency scaling feature.
 > 
-> Co-developed-by: Niklas Cassel <niklas.cassel@linaro.org>
-> Signed-off-by: Niklas Cassel <niklas.cassel@linaro.org>
-> Signed-off-by: Jorge Ramirez-Ortiz <jorge.ramirez-ortiz@linaro.org>
 
 Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
 
+> Co-developed-by: Niklas Cassel <niklas.cassel@linaro.org>
+> Signed-off-by: Niklas Cassel <niklas.cassel@linaro.org>
+> Signed-off-by: Jorge Ramirez-Ortiz <jorge.ramirez-ortiz@linaro.org>
 > ---
->  arch/arm64/boot/dts/qcom/qcs404.dtsi | 3 +++
->  1 file changed, 3 insertions(+)
+>  arch/arm64/configs/defconfig | 1 +
+>  1 file changed, 1 insertion(+)
 > 
-> diff --git a/arch/arm64/boot/dts/qcom/qcs404.dtsi b/arch/arm64/boot/dts/qcom/qcs404.dtsi
-> index 94471aa31979..9569686dbc41 100644
-> --- a/arch/arm64/boot/dts/qcom/qcs404.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/qcs404.dtsi
-> @@ -850,6 +850,9 @@
->  			compatible = "qcom,qcs404-apcs-apps-global", "syscon";
->  			reg = <0x0b011000 0x1000>;
->  			#mbox-cells = <1>;
-> +			clocks = <&gcc GCC_GPLL0_AO_OUT_MAIN>, <&apcs_hfpll>;
-> +			clock-names = "aux", "pll";
-> +			#clock-cells = <0>;
->  		};
->  
->  		apcs_hfpll: clock-controller@b016000 {
+> diff --git a/arch/arm64/configs/defconfig b/arch/arm64/configs/defconfig
+> index fbbc065415d4..7cc4ad24dfe5 100644
+> --- a/arch/arm64/configs/defconfig
+> +++ b/arch/arm64/configs/defconfig
+> @@ -671,6 +671,7 @@ CONFIG_MSM_MMCC_8996=y
+>  CONFIG_MSM_GCC_8998=y
+>  CONFIG_QCS_GCC_404=y
+>  CONFIG_SDM_GCC_845=y
+> +CONFIG_QCOM_HFPLL=y
+>  CONFIG_HWSPINLOCK=y
+>  CONFIG_HWSPINLOCK_QCOM=y
+>  CONFIG_ARM_MHU=y
 > -- 
 > 2.21.0
 > 
