@@ -2,50 +2,50 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id CF15965935
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Jul 2019 16:43:16 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B97A76593F
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Jul 2019 16:44:48 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728692AbfGKOnP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 11 Jul 2019 10:43:15 -0400
-Received: from mail-pf1-f193.google.com ([209.85.210.193]:33571 "EHLO
-        mail-pf1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728624AbfGKOnP (ORCPT
+        id S1728641AbfGKOos (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 11 Jul 2019 10:44:48 -0400
+Received: from mail-pg1-f196.google.com ([209.85.215.196]:35243 "EHLO
+        mail-pg1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728401AbfGKOos (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 11 Jul 2019 10:43:15 -0400
-Received: by mail-pf1-f193.google.com with SMTP id g2so2878673pfq.0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 11 Jul 2019 07:43:14 -0700 (PDT)
+        Thu, 11 Jul 2019 10:44:48 -0400
+Received: by mail-pg1-f196.google.com with SMTP id s27so3067017pgl.2
+        for <linux-arm-msm@vger.kernel.org>; Thu, 11 Jul 2019 07:44:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to:user-agent;
-        bh=bVnXpkhdRXKYktl+iS83oNTlUAhPFObnKhn5LwokMJw=;
-        b=PZ5eH3m7RNSLXRKexjamxhZJZMNP9oQiQvVuxRDtw+D/ARroDOjKRysZHlb3hjgV7H
-         +OHnQYpdLV/spoUrGR/xtUx3I42+R02Ro/1dS5X7wPoWi23Yfi0V6MqtVZPC4xMheGaL
-         pwUxFBL8lcHM4TvvDyfanulX+9K44w0WOpODtrdkRXKU+fO+XNgquQYjDohnPTKhHFyn
-         8qyQF4IrY8XCVyxdrUuqcZGRJ4/aWbGCHKue63IF9WPU68/9IxfE3tfCeJi9t1UMeV5Q
-         ukde9mAMmG8sz4B9tBM4TMd3G74FeEtSRQcNTlFiRHq/tKBkPuvEMCuWLtlvq8Vb5rkp
-         /6YA==
+        bh=AeWgNBL0vGG9Q0W1XyAtTTadhrtMpodZjMiQ47VNvNo=;
+        b=jAcuVEQQIMZ8TtPCtZhvvkOswtz9kMXpu3/fl/zZ8r2p4lBere/WDYW8TgghDn2afu
+         Fl6E9jUg+eQKbEvv/wdRFpHjhczPrnpR5mV+JSSzuFvBpBnBvIeuSylHd1+G+y4gm8m/
+         WHejBbnCV+/tD3TGRTKQo0gCHz786gypWQuMPD6gZ5PqSYfzSg8ZJONaxqVNSimqfhfr
+         z/qYC+ij9SNjlI/oFpP5tVSy2t785VOBlar9uPk9Q2NnaKVczX3MfmeWMQplMkOxL8FU
+         rrVL4yRhgm7uTQBxiRofM6yk/8gBYjhhjLfj9GmvY5rUUnPYIc4CCwVzDDRjF12o1f8j
+         DE/A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=bVnXpkhdRXKYktl+iS83oNTlUAhPFObnKhn5LwokMJw=;
-        b=DvxrZY73WjHPCMnuxLKX5kIPOxR7g+siZM2xt/t/J1rI2UBsi2+mA/+P10RHAvTaAF
-         HbGY7g0YhIWuzM0GmLFbdXDFKlvfYLQu9/34Uf7/U3a1tX+o4bKry8fm3JJ0RAh7+5k/
-         T3qn5RUV4O7WErnn1kiMp3hsv+C64rOeZHo7X3l4bIjt+Zj2KII6/dOUKormmwfJXfB2
-         a5BC1c2zyNOP+gbHqIiU2gVSYzZQFl4cdXYPHSp3G4PjtK0VgDw9mApuBgMMOFmKKroj
-         rTpZS5KtmDdppi4n+JLdzU3VvGx/I/XGYSorYID5ZxvHf+epuOgjDHcMc1fGbCP8zy2o
-         PCBQ==
-X-Gm-Message-State: APjAAAVklrlMf50/srlr2e0zNvOxWMQUikfsdgDw0dwAiQ8O72ym/A6G
-        cAphrAIkpjUcnm4mnwy/X3vekw==
-X-Google-Smtp-Source: APXvYqxu5aCDxjj3fkcv7rULRhrqZhb+7XDdmM9S1aURNZVTU+dFXJ+uf4wJfqTHgfPQXF/t8LDwGA==
-X-Received: by 2002:a17:90a:bf02:: with SMTP id c2mr5310288pjs.73.1562856194457;
-        Thu, 11 Jul 2019 07:43:14 -0700 (PDT)
+        bh=AeWgNBL0vGG9Q0W1XyAtTTadhrtMpodZjMiQ47VNvNo=;
+        b=CAQSSdqrEQOSmVj6Lhi7lp45xbQ4QSwYgz2InuC5Xpu2I84Vhue4+GnHQv2WVVpEig
+         Emqw61yXqK5/c//4ur7WmUGbJzEX6IxqIuSf3bpULjdBr0RRpGhImt3N4MQKo0EpjYH+
+         tDliDO6uoPF2wDPq7vfYec6J2pOMwpcDBah6oTaqg0GJIt2eEVCmK8xtk7O7FaH6+oSQ
+         LHExWc8bhlFNoWIZkkqOr03AXdTNokpydrv7I226cdzeIOglRC6iXTvuOJqIrhN4q7l8
+         3v2jGWAaOoNgWXR/qoSuRC7ul6Qh4xqCoEAubpv2XrytS0WYiH/6U25ddR+bWOOmBvkI
+         OJQA==
+X-Gm-Message-State: APjAAAUMAYOoylK6ET51q+0l0VmV2+o0HorZjZ5z7OGRbnToOh00erHj
+        N6GFVJPPjfZv/4G8YZI0KO7MCg==
+X-Google-Smtp-Source: APXvYqzZnI4QvrJWH5nNTwi3+akS6nULSvCsZQrVF3PWvIzD3Iw3lEJpqz8SxmHZU7/6w9TFNAqhAA==
+X-Received: by 2002:a17:90a:23ce:: with SMTP id g72mr5299751pje.77.1562856287236;
+        Thu, 11 Jul 2019 07:44:47 -0700 (PDT)
 Received: from tuxbook-pro (104-188-17-28.lightspeed.sndgca.sbcglobal.net. [104.188.17.28])
-        by smtp.gmail.com with ESMTPSA id g14sm6276112pgn.8.2019.07.11.07.43.12
+        by smtp.gmail.com with ESMTPSA id a5sm4953523pjv.21.2019.07.11.07.44.45
         (version=TLS1_3 cipher=AEAD-AES256-GCM-SHA384 bits=256/256);
-        Thu, 11 Jul 2019 07:43:13 -0700 (PDT)
-Date:   Thu, 11 Jul 2019 07:44:24 -0700
+        Thu, 11 Jul 2019 07:44:46 -0700 (PDT)
+Date:   Thu, 11 Jul 2019 07:45:57 -0700
 From:   Bjorn Andersson <bjorn.andersson@linaro.org>
 To:     Jorge Ramirez-Ortiz <jorge.ramirez-ortiz@linaro.org>
 Cc:     sboyd@kernel.org, david.brown@linaro.org, jassisinghbrar@gmail.com,
@@ -58,14 +58,15 @@ Cc:     sboyd@kernel.org, david.brown@linaro.org, jassisinghbrar@gmail.com,
         devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
         linux-arm-kernel@lists.infradead.org, linux-clk@vger.kernel.org,
         linux-arm-msm@vger.kernel.org, khasim.mohammed@linaro.org
-Subject: Re: [PATCH v3 02/14] mbox: qcom: add APCS child device for QCS404
-Message-ID: <20190711144424.GD7234@tuxbook-pro>
+Subject: Re: [PATCH v3 04/14] dt-bindings: mailbox: qcom: Add clock-name
+ optional property
+Message-ID: <20190711144557.GE7234@tuxbook-pro>
 References: <20190625164733.11091-1-jorge.ramirez-ortiz@linaro.org>
- <20190625164733.11091-3-jorge.ramirez-ortiz@linaro.org>
+ <20190625164733.11091-5-jorge.ramirez-ortiz@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20190625164733.11091-3-jorge.ramirez-ortiz@linaro.org>
+In-Reply-To: <20190625164733.11091-5-jorge.ramirez-ortiz@linaro.org>
 User-Agent: Mutt/1.11.4 (2019-03-13)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
@@ -74,55 +75,71 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 On Tue 25 Jun 09:47 PDT 2019, Jorge Ramirez-Ortiz wrote:
 
-> There is clock controller functionality in the APCS hardware block of
-> qcs404 devices similar to msm8916.
+> When the APCS clock is registered (platform dependent), it retrieves
+> its parent names from hardcoded values in the driver.
+> 
+> The following commit allows the DT node to provide such clock names to
+> the platform data based clock driver therefore avoiding having to
+> explicitly embed those names in the clock driver source code.
 > 
 > Co-developed-by: Niklas Cassel <niklas.cassel@linaro.org>
 > Signed-off-by: Niklas Cassel <niklas.cassel@linaro.org>
 > Signed-off-by: Jorge Ramirez-Ortiz <jorge.ramirez-ortiz@linaro.org>
+> Reviewed-by: Rob Herring <robh@kernel.org>
+
+Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+
 > ---
->  drivers/mailbox/qcom-apcs-ipc-mailbox.c | 18 ++++++++++--------
->  1 file changed, 10 insertions(+), 8 deletions(-)
+>  .../mailbox/qcom,apcs-kpss-global.txt         | 24 ++++++++++++++++---
+>  1 file changed, 21 insertions(+), 3 deletions(-)
 > 
-> diff --git a/drivers/mailbox/qcom-apcs-ipc-mailbox.c b/drivers/mailbox/qcom-apcs-ipc-mailbox.c
-> index 705e17a5479c..a05dc3aabac7 100644
-> --- a/drivers/mailbox/qcom-apcs-ipc-mailbox.c
-> +++ b/drivers/mailbox/qcom-apcs-ipc-mailbox.c
-> @@ -89,16 +89,18 @@ static int qcom_apcs_ipc_probe(struct platform_device *pdev)
->  		return ret;
->  	}
->  
-> -	if (of_device_is_compatible(np, "qcom,msm8916-apcs-kpss-global")) {
-> -		apcs->clk = platform_device_register_data(&pdev->dev,
-> -							  "qcom-apcs-msm8916-clk",
-> -							  -1, NULL, 0);
-> -		if (IS_ERR(apcs->clk))
-> -			dev_err(&pdev->dev, "failed to register APCS clk\n");
-> -	}
-> -
->  	platform_set_drvdata(pdev, apcs);
->  
-> +	if (!of_device_is_compatible(np, "qcom,msm8916-apcs-kpss-global") &&
-> +	    !of_device_is_compatible(np, "qcom,qcs404-apcs-apps-global"))
-
-If the remainder of the function was a long snippet I think this would
-motivate the somewhat unusual early return. But I think it would be
-cleaner to just add to the existing conditional.
-
-Regards,
-Bjorn
-
-> +		return 0;
+> diff --git a/Documentation/devicetree/bindings/mailbox/qcom,apcs-kpss-global.txt b/Documentation/devicetree/bindings/mailbox/qcom,apcs-kpss-global.txt
+> index 1232fc9fc709..b69310322b09 100644
+> --- a/Documentation/devicetree/bindings/mailbox/qcom,apcs-kpss-global.txt
+> +++ b/Documentation/devicetree/bindings/mailbox/qcom,apcs-kpss-global.txt
+> @@ -18,10 +18,11 @@ platforms.
+>  	Usage: required
+>  	Value type: <prop-encoded-array>
+>  	Definition: must specify the base address and size of the global block
 > +
-> +	apcs->clk = platform_device_register_data(&pdev->dev,
-> +						  "qcom-apcs-msm8916-clk",
-> +						  -1, NULL, 0);
-> +	if (IS_ERR(apcs->clk))
-> +		dev_err(&pdev->dev, "failed to register APCS clk\n");
-> +
->  	return 0;
->  }
+>  - clocks:
+> -	Usage: required if #clocks-cells property is present
+> -	Value type: <phandle>
+> -	Definition: phandle to the input PLL, which feeds the APCS mux/divider
+> +	Usage: required if #clock-names property is present
+> +	Value type: <phandle array>
+> +	Definition: phandles to the two parent clocks of the clock driver.
 >  
+>  - #mbox-cells:
+>  	Usage: required
+> @@ -33,6 +34,12 @@ platforms.
+>  	Value type: <u32>
+>  	Definition: as described in clock.txt, must be 0
+>  
+> +- clock-names:
+> +	Usage: required if the platform data based clock driver needs to
+> +	retrieve the parent clock names from device tree.
+> +	This will requires two mandatory clocks to be defined.
+> +	Value type: <string-array>
+> +	Definition: must be "aux" and "pll"
+>  
+>  = EXAMPLE
+>  The following example describes the APCS HMSS found in MSM8996 and part of the
+> @@ -65,3 +72,14 @@ Below is another example of the APCS binding on MSM8916 platforms:
+>  		clocks = <&a53pll>;
+>  		#clock-cells = <0>;
+>  	};
+> +
+> +Below is another example of the APCS binding on QCS404 platforms:
+> +
+> +	apcs_glb: mailbox@b011000 {
+> +		compatible = "qcom,qcs404-apcs-apps-global", "syscon";
+> +		reg = <0x0b011000 0x1000>;
+> +		#mbox-cells = <1>;
+> +		clocks = <&gcc GCC_GPLL0_AO_OUT_MAIN>, <&apcs_hfpll>;
+> +		clock-names = "aux", "pll";
+> +		#clock-cells = <0>;
+> +	};
 > -- 
 > 2.21.0
 > 
