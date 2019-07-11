@@ -2,228 +2,103 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id B6D6F658AF
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Jul 2019 16:21:31 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 82CE56591F
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Jul 2019 16:36:19 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728506AbfGKOVb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 11 Jul 2019 10:21:31 -0400
-Received: from mail-pf1-f194.google.com ([209.85.210.194]:37539 "EHLO
-        mail-pf1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728484AbfGKOVb (ORCPT
+        id S1728654AbfGKOgN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 11 Jul 2019 10:36:13 -0400
+Received: from mail-pf1-f196.google.com ([209.85.210.196]:34843 "EHLO
+        mail-pf1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728529AbfGKOgN (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 11 Jul 2019 10:21:31 -0400
-Received: by mail-pf1-f194.google.com with SMTP id 19so2841747pfa.4
-        for <linux-arm-msm@vger.kernel.org>; Thu, 11 Jul 2019 07:21:30 -0700 (PDT)
+        Thu, 11 Jul 2019 10:36:13 -0400
+Received: by mail-pf1-f196.google.com with SMTP id u14so2868374pfn.2
+        for <linux-arm-msm@vger.kernel.org>; Thu, 11 Jul 2019 07:36:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=Awpujz9r/neB3EOz35gTs3qfspG2l2LEyx+qOFwQWtc=;
-        b=itMw7Ebpfg3uMHx+Cp6KsA/Jzruj3ROpTQpU9KFExu0AV2HoMbkQ4B5z08DRqTZ4LZ
-         kd2MMKFWuwP4QkUSsyb7fRuNAYfFPwlgP9KidEUMzEO8/HNsW+pUHEiZnagno2r1/1uW
-         Bjo8poHGBtyy3cYaA0ViTzf9RPiXyGmVyMOfuwdibIqkoHOjOdcL4c1LYOAKWFYuSXjH
-         GdkkY22AYUXcV9hRqzXd4wVDoHHdaYxxndjmYX1x1OiSq+BN/rZYViGkXGyLq6XwRR4O
-         HsgqkdvgeflDjPyOPM07rlJTP8EkWvCrhlJfx3i8B2kKgtrQK4muI0eWSOdKkCHnawZj
-         a5Iw==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=NI8ueteaj89rqZ5qyru0FAVjhgBE62EIuzbdLtCxeKE=;
+        b=cBiNl8trXGosCTmFvIf1MABw+fY+EVySwYoqRsdJ4JVY5BGj8y3q9IhczgvhEaXDHL
+         F0s+sTFh7UoajjJlMFq+/NDjewYjvgjpX5y4wMmqN91q4GbArNbdy9an8ETi6mpZHBzH
+         9jF0+pekIj16fRZ6vivsubJDhz+CI4ksAG6FlrkvGGSS7pNGxVzmiztes70DheBRpAzg
+         9xYLylJoHtRRqDszezdpDtwds9HSQh8WHR4a6nOYIMy6cWqFTGvCKlvxo8ddAN4sQymO
+         rhwmaCzc9yw8FFwrjSHvcYPXMegGC5MlBW3Api+uWcS+KuSjaoIawHY8wN82biItP3Gg
+         yvHg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=Awpujz9r/neB3EOz35gTs3qfspG2l2LEyx+qOFwQWtc=;
-        b=qedLvWfLn+NXL1x/b4mEnQZrmgvQ14GmfVMVbeJjDh/4F2QCLANWsEECAyyh32PQ/n
-         bEwL1NJelk3BZPIZmoSfV+rZiAFir0+8WYFV2TKbEUIGmKAzHifD05o1pkweJsCKy9jb
-         4Gmq9g4kkkHDLkH0/nmpn9D+cBSh9G9BahYVeMEwJ97WL+hFdfABENSXKUVtM8G8ve96
-         qCK9GRMZbLDa2p0Mpqj8dJKVzNIVVMoysO73jtElXAembrUcOjHv2dWR82GytSmera0V
-         typarSF4ftKyulfPKtoQLO/09mpHodbLo+n6ZjpAXOLnadRuiMFzoOPeLnmwzV4/4Ehi
-         NcjA==
-X-Gm-Message-State: APjAAAXjfm/BWBfYPQ+bCh8F9zutO7Vyme1+BcdBI2eY4X2zOD3EPccR
-        Eo4qaBLOpYHpj/R8WQOap9uD0Wd1WpK95Q==
-X-Google-Smtp-Source: APXvYqwXCzJ0oJtitLVGfwHJo2XK58B5/l/357wPbMNsJfi7bE/SM5jnO449QeEKT1JYb29a4ctIEA==
-X-Received: by 2002:a63:5d54:: with SMTP id o20mr4769342pgm.413.1562854889992;
-        Thu, 11 Jul 2019 07:21:29 -0700 (PDT)
-Received: from localhost ([49.248.58.252])
-        by smtp.gmail.com with ESMTPSA id q4sm5408674pjq.27.2019.07.11.07.21.28
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Thu, 11 Jul 2019 07:21:29 -0700 (PDT)
-From:   Amit Kucheria <amit.kucheria@linaro.org>
-To:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        "Rafael J. Wysocki" <rjw@rjwysocki.net>,
-        Len Brown <len.brown@intel.com>, Pavel Machek <pavel@ucw.cz>
-Cc:     linux-pm@vger.kernel.org
-Subject: [PATCH v2] PM: QoS: Get rid of unused flags
-Date:   Thu, 11 Jul 2019 19:51:25 +0530
-Message-Id: <e9e7bc3be3b51e68ae1a0f934c3724bd86f5f9af.1562854650.git.amit.kucheria@linaro.org>
-X-Mailer: git-send-email 2.17.1
-In-Reply-To: <cover.1562854650.git.amit.kucheria@linaro.org>
-References: <cover.1562854650.git.amit.kucheria@linaro.org>
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=NI8ueteaj89rqZ5qyru0FAVjhgBE62EIuzbdLtCxeKE=;
+        b=nCUExarCb7hVWOMLEZDDpQDkLUsWB9QMtLLeU+Sl1F1FggXbgqrf41lyLf1OLaUOO6
+         M91lDZfDccczq1SvdauNXMOjpsiITacwJbgJMKcikThQLc6ZJTo1Sm2Wr61C9glpmw3Z
+         2Oe9C4cIP3ufxbktbPB8w2yK1lZBUAATeE/O3IKW9EnriNkY97KO/Xq9CvBWH0wTLYtl
+         QpN2n4scp8im2yDaWtzZ5Iko88XB8EIoi4UVsma65Y3Y+U4HSJDcXvG4xYawRbud2D1C
+         qADnqHSyzxsj3AWPyLPsEU6MQmzsSGA6cvMSnAxqmg2OlRyH74aM12Yg3xoDiwyjMwdi
+         k/Qg==
+X-Gm-Message-State: APjAAAXuITeVQTQDrq0LEwGJPomnNT/uOMwrhqSbz1Ul6KJMjBz3kxTu
+        Fp8TGrylxcq8wu/q9Z/NlRUu0A==
+X-Google-Smtp-Source: APXvYqz82P7lOd6wmnkvJ/9R8IhUwO4X1ef7XuOJL659cKsBmpHcSpp10bqgBCy6pMqMFsQQfs7M+A==
+X-Received: by 2002:a63:3f48:: with SMTP id m69mr4684981pga.17.1562855772275;
+        Thu, 11 Jul 2019 07:36:12 -0700 (PDT)
+Received: from tuxbook-pro (104-188-17-28.lightspeed.sndgca.sbcglobal.net. [104.188.17.28])
+        by smtp.gmail.com with ESMTPSA id g1sm14756235pgg.27.2019.07.11.07.36.10
+        (version=TLS1_3 cipher=AEAD-AES256-GCM-SHA384 bits=256/256);
+        Thu, 11 Jul 2019 07:36:11 -0700 (PDT)
+Date:   Thu, 11 Jul 2019 07:37:21 -0700
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     Jorge Ramirez-Ortiz <jorge.ramirez-ortiz@linaro.org>
+Cc:     sboyd@kernel.org, david.brown@linaro.org, jassisinghbrar@gmail.com,
+        mark.rutland@arm.com, mturquette@baylibre.com, robh+dt@kernel.org,
+        will.deacon@arm.com, arnd@arndb.de, horms+renesas@verge.net.au,
+        heiko@sntech.de, sibis@codeaurora.org,
+        enric.balletbo@collabora.com, jagan@amarulasolutions.com,
+        olof@lixom.net, vkoul@kernel.org, niklas.cassel@linaro.org,
+        georgi.djakov@linaro.org, amit.kucheria@linaro.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org, linux-clk@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, khasim.mohammed@linaro.org
+Subject: Re: [PATCH v3 03/14] mbox: qcom: replace integer with valid macro
+Message-ID: <20190711143721.GC7234@tuxbook-pro>
+References: <20190625164733.11091-1-jorge.ramirez-ortiz@linaro.org>
+ <20190625164733.11091-4-jorge.ramirez-ortiz@linaro.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20190625164733.11091-4-jorge.ramirez-ortiz@linaro.org>
+User-Agent: Mutt/1.11.4 (2019-03-13)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The network_latency and network_throughput flags for PM-QoS have not
-found much use in drivers or in userspace since they were introduced.
+On Tue 25 Jun 09:47 PDT 2019, Jorge Ramirez-Ortiz wrote:
 
-Commit 4a733ef1bea7 ("mac80211: remove PM-QoS listener") removed the
-only user PM_QOS_NETWORK_LATENCY in the kernel a while ago and there
-don't seem to be any userspace tools using the character device files
-either.
+> Use the correct macro when registering the platform device.
+> 
+> Co-developed-by: Niklas Cassel <niklas.cassel@linaro.org>
+> Signed-off-by: Niklas Cassel <niklas.cassel@linaro.org>
+> Signed-off-by: Jorge Ramirez-Ortiz <jorge.ramirez-ortiz@linaro.org>
 
-PM_QOS_MEMORY_BANDWIDTH was never even added to the trace events.
+Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
 
-Remove all the flags except cpu_dma_latency.
-
-Signed-off-by: Amit Kucheria <amit.kucheria@linaro.org>
----
-Changes from v1:
-- Rebased on linux-next to deal with .rst conversion of docs
-
-I've looked around for use of /dev/network_throughput and
-/dev/network_bandwidth) and not found any userspace programs that seem to
-use this currently. So this shouldn't be breaking our ABI contract with
-userspace.
-
-
- Documentation/power/pm_qos_interface.rst |  5 +--
- include/linux/pm_qos.h                   |  6 ---
- include/trace/events/power.h             |  8 +---
- kernel/power/qos.c                       | 48 ------------------------
- 4 files changed, 4 insertions(+), 63 deletions(-)
-
-diff --git a/Documentation/power/pm_qos_interface.rst b/Documentation/power/pm_qos_interface.rst
-index 945fc6d760c9..a00d607107ec 100644
---- a/Documentation/power/pm_qos_interface.rst
-+++ b/Documentation/power/pm_qos_interface.rst
-@@ -7,8 +7,7 @@ performance expectations by drivers, subsystems and user space applications on
- one of the parameters.
- 
- Two different PM QoS frameworks are available:
--1. PM QoS classes for cpu_dma_latency, network_latency, network_throughput,
--memory_bandwidth.
-+1. PM QoS classes for cpu_dma_latency
- 2. the per-device PM QoS framework provides the API to manage the per-device latency
- constraints and PM QoS flags.
- 
-@@ -79,7 +78,7 @@ cleanup of a process, the interface requires the process to register its
- parameter requests in the following way:
- 
- To register the default pm_qos target for the specific parameter, the process
--must open one of /dev/[cpu_dma_latency, network_latency, network_throughput]
-+must open /dev/cpu_dma_latency
- 
- As long as the device node is held open that process has a registered
- request on the parameter.
-diff --git a/include/linux/pm_qos.h b/include/linux/pm_qos.h
-index 6ea1ae373d77..2a3c237b1910 100644
---- a/include/linux/pm_qos.h
-+++ b/include/linux/pm_qos.h
-@@ -13,9 +13,6 @@
- enum {
- 	PM_QOS_RESERVED = 0,
- 	PM_QOS_CPU_DMA_LATENCY,
--	PM_QOS_NETWORK_LATENCY,
--	PM_QOS_NETWORK_THROUGHPUT,
--	PM_QOS_MEMORY_BANDWIDTH,
- 
- 	/* insert new class ID */
- 	PM_QOS_NUM_CLASSES,
-@@ -33,9 +30,6 @@ enum pm_qos_flags_status {
- #define PM_QOS_LATENCY_ANY_NS	((s64)PM_QOS_LATENCY_ANY * NSEC_PER_USEC)
- 
- #define PM_QOS_CPU_DMA_LAT_DEFAULT_VALUE	(2000 * USEC_PER_SEC)
--#define PM_QOS_NETWORK_LAT_DEFAULT_VALUE	(2000 * USEC_PER_SEC)
--#define PM_QOS_NETWORK_THROUGHPUT_DEFAULT_VALUE	0
--#define PM_QOS_MEMORY_BANDWIDTH_DEFAULT_VALUE	0
- #define PM_QOS_RESUME_LATENCY_DEFAULT_VALUE	PM_QOS_LATENCY_ANY
- #define PM_QOS_RESUME_LATENCY_NO_CONSTRAINT	PM_QOS_LATENCY_ANY
- #define PM_QOS_RESUME_LATENCY_NO_CONSTRAINT_NS	PM_QOS_LATENCY_ANY_NS
-diff --git a/include/trace/events/power.h b/include/trace/events/power.h
-index f7aece721aed..7457e238e1b7 100644
---- a/include/trace/events/power.h
-+++ b/include/trace/events/power.h
-@@ -379,9 +379,7 @@ DECLARE_EVENT_CLASS(pm_qos_request,
- 
- 	TP_printk("pm_qos_class=%s value=%d",
- 		  __print_symbolic(__entry->pm_qos_class,
--			{ PM_QOS_CPU_DMA_LATENCY,	"CPU_DMA_LATENCY" },
--			{ PM_QOS_NETWORK_LATENCY,	"NETWORK_LATENCY" },
--			{ PM_QOS_NETWORK_THROUGHPUT,	"NETWORK_THROUGHPUT" }),
-+			{ PM_QOS_CPU_DMA_LATENCY,	"CPU_DMA_LATENCY" }),
- 		  __entry->value)
- );
- 
-@@ -426,9 +424,7 @@ TRACE_EVENT(pm_qos_update_request_timeout,
- 
- 	TP_printk("pm_qos_class=%s value=%d, timeout_us=%ld",
- 		  __print_symbolic(__entry->pm_qos_class,
--			{ PM_QOS_CPU_DMA_LATENCY,	"CPU_DMA_LATENCY" },
--			{ PM_QOS_NETWORK_LATENCY,	"NETWORK_LATENCY" },
--			{ PM_QOS_NETWORK_THROUGHPUT,	"NETWORK_THROUGHPUT" }),
-+			{ PM_QOS_CPU_DMA_LATENCY,	"CPU_DMA_LATENCY" }),
- 		  __entry->value, __entry->timeout_us)
- );
- 
-diff --git a/kernel/power/qos.c b/kernel/power/qos.c
-index 33e3febaba53..9568a2fe7c11 100644
---- a/kernel/power/qos.c
-+++ b/kernel/power/qos.c
-@@ -78,57 +78,9 @@ static struct pm_qos_object cpu_dma_pm_qos = {
- 	.name = "cpu_dma_latency",
- };
- 
--static BLOCKING_NOTIFIER_HEAD(network_lat_notifier);
--static struct pm_qos_constraints network_lat_constraints = {
--	.list = PLIST_HEAD_INIT(network_lat_constraints.list),
--	.target_value = PM_QOS_NETWORK_LAT_DEFAULT_VALUE,
--	.default_value = PM_QOS_NETWORK_LAT_DEFAULT_VALUE,
--	.no_constraint_value = PM_QOS_NETWORK_LAT_DEFAULT_VALUE,
--	.type = PM_QOS_MIN,
--	.notifiers = &network_lat_notifier,
--};
--static struct pm_qos_object network_lat_pm_qos = {
--	.constraints = &network_lat_constraints,
--	.name = "network_latency",
--};
--
--
--static BLOCKING_NOTIFIER_HEAD(network_throughput_notifier);
--static struct pm_qos_constraints network_tput_constraints = {
--	.list = PLIST_HEAD_INIT(network_tput_constraints.list),
--	.target_value = PM_QOS_NETWORK_THROUGHPUT_DEFAULT_VALUE,
--	.default_value = PM_QOS_NETWORK_THROUGHPUT_DEFAULT_VALUE,
--	.no_constraint_value = PM_QOS_NETWORK_THROUGHPUT_DEFAULT_VALUE,
--	.type = PM_QOS_MAX,
--	.notifiers = &network_throughput_notifier,
--};
--static struct pm_qos_object network_throughput_pm_qos = {
--	.constraints = &network_tput_constraints,
--	.name = "network_throughput",
--};
--
--
--static BLOCKING_NOTIFIER_HEAD(memory_bandwidth_notifier);
--static struct pm_qos_constraints memory_bw_constraints = {
--	.list = PLIST_HEAD_INIT(memory_bw_constraints.list),
--	.target_value = PM_QOS_MEMORY_BANDWIDTH_DEFAULT_VALUE,
--	.default_value = PM_QOS_MEMORY_BANDWIDTH_DEFAULT_VALUE,
--	.no_constraint_value = PM_QOS_MEMORY_BANDWIDTH_DEFAULT_VALUE,
--	.type = PM_QOS_SUM,
--	.notifiers = &memory_bandwidth_notifier,
--};
--static struct pm_qos_object memory_bandwidth_pm_qos = {
--	.constraints = &memory_bw_constraints,
--	.name = "memory_bandwidth",
--};
--
--
- static struct pm_qos_object *pm_qos_array[] = {
- 	&null_pm_qos,
- 	&cpu_dma_pm_qos,
--	&network_lat_pm_qos,
--	&network_throughput_pm_qos,
--	&memory_bandwidth_pm_qos,
- };
- 
- static ssize_t pm_qos_power_write(struct file *filp, const char __user *buf,
--- 
-2.17.1
-
+> ---
+>  drivers/mailbox/qcom-apcs-ipc-mailbox.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+> 
+> diff --git a/drivers/mailbox/qcom-apcs-ipc-mailbox.c b/drivers/mailbox/qcom-apcs-ipc-mailbox.c
+> index a05dc3aabac7..c8088e9caf02 100644
+> --- a/drivers/mailbox/qcom-apcs-ipc-mailbox.c
+> +++ b/drivers/mailbox/qcom-apcs-ipc-mailbox.c
+> @@ -97,7 +97,7 @@ static int qcom_apcs_ipc_probe(struct platform_device *pdev)
+>  
+>  	apcs->clk = platform_device_register_data(&pdev->dev,
+>  						  "qcom-apcs-msm8916-clk",
+> -						  -1, NULL, 0);
+> +						  PLATFORM_DEVID_NONE, NULL, 0);
+>  	if (IS_ERR(apcs->clk))
+>  		dev_err(&pdev->dev, "failed to register APCS clk\n");
+>  
+> -- 
+> 2.21.0
+> 
