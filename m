@@ -2,145 +2,114 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 9083C64C11
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Jul 2019 20:28:53 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 8F1CC654EA
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Jul 2019 13:03:58 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727976AbfGJS2x (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 10 Jul 2019 14:28:53 -0400
-Received: from mail-pg1-f194.google.com ([209.85.215.194]:45720 "EHLO
-        mail-pg1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727242AbfGJS2x (ORCPT
+        id S1728055AbfGKLD5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 11 Jul 2019 07:03:57 -0400
+Received: from smtp.codeaurora.org ([198.145.29.96]:33736 "EHLO
+        smtp.codeaurora.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728024AbfGKLD5 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 10 Jul 2019 14:28:53 -0400
-Received: by mail-pg1-f194.google.com with SMTP id o13so1617864pgp.12;
-        Wed, 10 Jul 2019 11:28:52 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=X2wPmom3sJSwZ6VYG/6JKsbwq16BGxAUHYVA29t4WUs=;
-        b=bdE1SnlndmJmWXI4tshCAMHf1y6EjPIbK8Fbzi7N09M0t7c7CXz9jPaAF+U4zpK2Ar
-         qgCiZ/PtW4leBd9a9AxyI8AX8KAj2qjw9PES2Zr2jdM0CYFXuuMwafu1VW3XyuIX85ze
-         WyeGDguVLVu37gQ+z7B90eyFqfNkom1MP3LikG5lNXvgTOw7RM96ogRtu5S7/ndJUKBX
-         SFSf82JGBHHIEmapCMaggiqsSGmD80h/HwjFTvWjD5i1CXq8qlzCKfCl22YLtstT+vsh
-         abGOlhy9STPiO77wHf6EZUAMV63/A7eAJBWH/kg8JCzyNogW1v4N+kxJ1fDAn8+Wu7uz
-         ddfQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=X2wPmom3sJSwZ6VYG/6JKsbwq16BGxAUHYVA29t4WUs=;
-        b=mJhQbxV02/aZS4ZIhBRHQEWogTHEUOezzeSGhJqHTFL9MsLOlbmzrGdjRNMq4OoHid
-         x8p7NBNPgkDKsRroQ+SgbXhb/D98N5DQmCIw9/0VNdCD+BZBhfVSfFrneJE5diTiAoPM
-         cAAstayO7G4fm5MARvtbaKlOLV6+P3oCQw50OEObYhV5tu9gBugAqM47oClGvl2d16MZ
-         wKebb76nMwIXIP5oVbyCymCX2GAUGj3nTO6azCyGfu+b/vShLSOcB7ORzAKOOqPaYe7H
-         Hpm6J+wC+28/gByQzJ3658xnQtwHSLGpV7Td3GJDN7qJkvBmiggwCGf5UFS2wU/mKGzR
-         e6cg==
-X-Gm-Message-State: APjAAAVIWcVPBAzMksrxkN+KVc0WO4jd7TvNWr5sXRhhD4oFjFYHDYOW
-        tQkUfpchd5M+aYBRjWswLjM=
-X-Google-Smtp-Source: APXvYqzxVJwORPZh7pa+tFmbtMmG7GfDyUMvQifbBp9D3WGXW+RU3JFqDMMKkm/CNidWkfL1FXSk/Q==
-X-Received: by 2002:a65:454c:: with SMTP id x12mr38500524pgr.354.1562783332011;
-        Wed, 10 Jul 2019 11:28:52 -0700 (PDT)
-Received: from localhost ([2620:15c:f:fd00:4c3b:936:8dc5:a2ad])
-        by smtp.gmail.com with ESMTPSA id d16sm2943054pgb.4.2019.07.10.11.28.50
-        (version=TLS1_3 cipher=AEAD-AES256-GCM-SHA384 bits=256/256);
-        Wed, 10 Jul 2019 11:28:51 -0700 (PDT)
-From:   Rob Clark <robdclark@gmail.com>
-To:     iommu@lists.linux-foundation.org
-Cc:     linux-arm-msm@vger.kernel.org, aarch64-laptops@lists.linaro.org,
-        Rob Clark <robdclark@chromium.org>,
-        Will Deacon <will@kernel.org>,
-        Robin Murphy <robin.murphy@arm.com>,
-        Joerg Roedel <joro@8bytes.org>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        "Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
-        Rasmus Villemoes <linux@rasmusvillemoes.dk>,
-        Andy Shevchenko <andy.shevchenko@gmail.com>,
-        Andrew Morton <akpm@linux-foundation.org>,
-        Heikki Krogerus <heikki.krogerus@linux.intel.com>,
-        Bartosz Golaszewski <brgl@bgdev.pl>,
-        Sudeep Holla <sudeep.holla@arm.com>,
-        Joe Perches <joe@perches.com>,
-        linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org
-Subject: [PATCH v2] iommu: add support for drivers that manage iommu explicitly
-Date:   Wed, 10 Jul 2019 11:28:30 -0700
-Message-Id: <20190710182844.25032-1-robdclark@gmail.com>
-X-Mailer: git-send-email 2.20.1
-In-Reply-To: <20190702202631.32148-2-robdclark@gmail.com>
-References: <20190702202631.32148-2-robdclark@gmail.com>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+        Thu, 11 Jul 2019 07:03:57 -0400
+Received: by smtp.codeaurora.org (Postfix, from userid 1000)
+        id 19A18609EF; Thu, 11 Jul 2019 11:03:55 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
+        s=default; t=1562843036;
+        bh=P8qQ6Aa5k5s6i04D8hFXQyMGNzAbRB0F2DGbOTaj1pk=;
+        h=From:To:Cc:Subject:Date:From;
+        b=EF/Y3Nx8KtwMYduBLS/aDGQOxA11vsNZtoSULSZGbkjNnquHAIjkzNK90l7MIjFjX
+         WeKWnfg5q1rIDVyWCRka0qLr+NsmVWUy/Rv8i5q5zATZfD4tGX5ASoGNid11L/knN2
+         EVXQoEernruAExcEMtu/eoUqsBaU29JqIrroyEno=
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        pdx-caf-mail.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.7 required=2.0 tests=ALL_TRUSTED,BAYES_00,
+        DKIM_INVALID,DKIM_SIGNED,SPF_NONE autolearn=no autolearn_force=no
+        version=3.4.0
+Received: from blr-ubuntu-41.ap.qualcomm.com (blr-bdr-fw-01_globalnat_allzones-outside.qualcomm.com [103.229.18.19])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: vivek.gautam@smtp.codeaurora.org)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id A9615607EB;
+        Thu, 11 Jul 2019 11:03:52 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
+        s=default; t=1562843035;
+        bh=P8qQ6Aa5k5s6i04D8hFXQyMGNzAbRB0F2DGbOTaj1pk=;
+        h=From:To:Cc:Subject:Date:From;
+        b=RTgtRLAiXLb0bb01LZ+b0oP1GObDr+LqTHWB9J0t52fqqf0RFxYVdTqCrGvlJdDRI
+         TqXJ+yI5cNOqpbL3BnBN8SdvMpHnUrlw3ihzfKlMShNpZj2ntm98VhC13OZ0MiG8sx
+         b0D0w+lYGuLPOCnPfdj3OOVTh6XY5TMaRLK/oDhg=
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org A9615607EB
+Authentication-Results: pdx-caf-mail.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: pdx-caf-mail.web.codeaurora.org; spf=none smtp.mailfrom=vivek.gautam@codeaurora.org
+From:   Vivek Gautam <vivek.gautam@codeaurora.org>
+To:     agross@kernel.org, linux-arm-msm@vger.kernel.org
+Cc:     bjorn.andersson@linaro.org, jcrouse@codeaurora.org,
+        rishabhb@codeaurora.org, vnkgutta@codeaurora.org,
+        evgreen@chromium.org, linux-kernel@vger.kernel.org,
+        Vivek Gautam <vivek.gautam@codeaurora.org>
+Subject: [PATCH 1/2] soc: qcom: llcc: Rename llcc-sdm845 to llcc-plat
+Date:   Thu, 11 Jul 2019 16:33:39 +0530
+Message-Id: <20190711110340.16672-1-vivek.gautam@codeaurora.org>
+X-Mailer: git-send-email 2.16.1.72.g5be1f00a9a70
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Rob Clark <robdclark@chromium.org>
+To avoid adding files for each future supported SoCs rename
+the file to a generic name - llcc-plat, so that llcc configuration
+tables for other SoCs can be added in the same driver.
 
-Avoid attaching any non-driver managed domain if the driver indicates
-that it manages the iommu directly.
-
-This avoids a problem on devices where the bootloader takes the SMMU out
-of bypass and enables scanout, such as is the case on snapdragon aarch64
-laptops and newer snapdragon android devices.  Attaching an IDENTITY or
-DMA domain before the driver has a chance to intervene will break efifb
-scanout and start triggering iommu faults.
-
-If the driver manages the iommu directly (as does drm/msm), it can
-shut down scanout when it is ready to take over the display, before
-attaching an UNMANAGED domain.
-
-Signed-off-by: Rob Clark <robdclark@chromium.org>
+Signed-off-by: Vivek Gautam <vivek.gautam@codeaurora.org>
 ---
-v2. Move the check into arm_smmu_attach_dev() (as I *think* this is
-    what Robin preferred; update commit msg to focus on the display
-    related issue that this solves.
+ drivers/soc/qcom/Kconfig                        | 10 +++++-----
+ drivers/soc/qcom/Makefile                       |  2 +-
+ drivers/soc/qcom/{llcc-sdm845.c => llcc-plat.c} |  0
+ 3 files changed, 6 insertions(+), 6 deletions(-)
+ rename drivers/soc/qcom/{llcc-sdm845.c => llcc-plat.c} (100%)
 
-We also need Bjorn's patch set to inherit SMR and CB config during
-init:
-
-https://www.spinics.net/lists/arm-kernel/msg732246.html
-
- drivers/iommu/arm-smmu.c | 11 +++++++++++
- include/linux/device.h   |  3 ++-
- 2 files changed, 13 insertions(+), 1 deletion(-)
-
-diff --git a/drivers/iommu/arm-smmu.c b/drivers/iommu/arm-smmu.c
-index 1a5efa7c8767..4a80710124db 100644
---- a/drivers/iommu/arm-smmu.c
-+++ b/drivers/iommu/arm-smmu.c
-@@ -1411,6 +1411,17 @@ static int arm_smmu_attach_dev(struct iommu_domain *domain, struct device *dev)
- 		return -ENXIO;
- 	}
+diff --git a/drivers/soc/qcom/Kconfig b/drivers/soc/qcom/Kconfig
+index a6d1bfb17279..8110d415b18e 100644
+--- a/drivers/soc/qcom/Kconfig
++++ b/drivers/soc/qcom/Kconfig
+@@ -62,13 +62,13 @@ config QCOM_LLCC
+ 	  to clients that use the LLCC. Say yes here to enable LLCC slice
+ 	  driver.
  
-+	/*
-+	 * If driver is going to manage iommu directly, then avoid
-+	 * attaching any non driver managed domain.  There could
-+	 * be already active dma underway (ie. scanout in case of
-+	 * bootloader enabled display), and interfering with that
-+	 * will make things go *boom*
-+	 */
-+	if ((domain->type != IOMMU_DOMAIN_UNMANAGED) &&
-+	    dev->driver && dev->driver->driver_manages_iommu)
-+		return 0;
-+
- 	/*
- 	 * FIXME: The arch/arm DMA API code tries to attach devices to its own
- 	 * domains between of_xlate() and add_device() - we have no way to cope
-diff --git a/include/linux/device.h b/include/linux/device.h
-index e138baabe01e..d98aa4d3c8c3 100644
---- a/include/linux/device.h
-+++ b/include/linux/device.h
-@@ -282,7 +282,8 @@ struct device_driver {
- 	struct module		*owner;
- 	const char		*mod_name;	/* used for built-in modules */
+-config QCOM_SDM845_LLCC
+-	tristate "Qualcomm Technologies, Inc. SDM845 LLCC driver"
++config QCOM_PLAT_LLCC
++	tristate "Qualcomm Technologies, Inc. platform LLCC driver"
+ 	depends on QCOM_LLCC
+ 	help
+-	  Say yes here to enable the LLCC driver for SDM845. This provides
+-	  data required to configure LLCC so that clients can start using the
+-	  LLCC slices.
++	  Say yes here to enable the LLCC driver for Qcom platforms, such as
++	  SDM845. This provides data required to configure LLCC so that
++	  clients can start using the LLCC slices.
  
--	bool suppress_bind_attrs;	/* disables bind/unbind via sysfs */
-+	bool suppress_bind_attrs:1;	/* disables bind/unbind via sysfs */
-+	bool driver_manages_iommu:1;	/* driver manages IOMMU explicitly */
- 	enum probe_type probe_type;
- 
- 	const struct of_device_id	*of_match_table;
+ config QCOM_MDT_LOADER
+ 	tristate
+diff --git a/drivers/soc/qcom/Makefile b/drivers/soc/qcom/Makefile
+index eeb088beb15f..3bf26667d7ee 100644
+--- a/drivers/soc/qcom/Makefile
++++ b/drivers/soc/qcom/Makefile
+@@ -21,6 +21,6 @@ obj-$(CONFIG_QCOM_SMSM)	+= smsm.o
+ obj-$(CONFIG_QCOM_WCNSS_CTRL) += wcnss_ctrl.o
+ obj-$(CONFIG_QCOM_APR) += apr.o
+ obj-$(CONFIG_QCOM_LLCC) += llcc-slice.o
+-obj-$(CONFIG_QCOM_SDM845_LLCC) += llcc-sdm845.o
++obj-$(CONFIG_QCOM_PLAT_LLCC) += llcc-plat.o
+ obj-$(CONFIG_QCOM_RPMHPD) += rpmhpd.o
+ obj-$(CONFIG_QCOM_RPMPD) += rpmpd.o
+diff --git a/drivers/soc/qcom/llcc-sdm845.c b/drivers/soc/qcom/llcc-plat.c
+similarity index 100%
+rename from drivers/soc/qcom/llcc-sdm845.c
+rename to drivers/soc/qcom/llcc-plat.c
 -- 
-2.20.1
+QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
+of Code Aurora Forum, hosted by The Linux Foundation
 
