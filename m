@@ -2,251 +2,171 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id E0C9C654EC
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Jul 2019 13:04:05 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 84939657B6
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Jul 2019 15:11:57 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728298AbfGKLEA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 11 Jul 2019 07:04:00 -0400
-Received: from smtp.codeaurora.org ([198.145.29.96]:33796 "EHLO
-        smtp.codeaurora.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728024AbfGKLD7 (ORCPT
+        id S1728596AbfGKNL5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 11 Jul 2019 09:11:57 -0400
+Received: from mailout2.w1.samsung.com ([210.118.77.12]:34864 "EHLO
+        mailout2.w1.samsung.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728552AbfGKNL4 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 11 Jul 2019 07:03:59 -0400
-Received: by smtp.codeaurora.org (Postfix, from userid 1000)
-        id CAF7A60DB3; Thu, 11 Jul 2019 11:03:58 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
-        s=default; t=1562843038;
-        bh=L93FB1uglHy+RXCU4rSQkxj+vgA1oeF54LVXpag5T1Y=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=cMNKr7wgpp3sQ/qWr7b38DRWZRe0ITB4YteM0APgpZPCeLWRMT2qzReiQB0mWVXlG
-         5+WVC2jxLuijci07O93TsYRelKPMtvyLZ9Uu6tBHumaZAbXnnqouV2Sst74UXzS79L
-         WdboTJmevqzBsNHahvTcyXriZdT9bLb58u8Qpp9A=
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        pdx-caf-mail.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.7 required=2.0 tests=ALL_TRUSTED,BAYES_00,
-        DKIM_INVALID,DKIM_SIGNED,SPF_NONE autolearn=no autolearn_force=no
-        version=3.4.0
-Received: from blr-ubuntu-41.ap.qualcomm.com (blr-bdr-fw-01_globalnat_allzones-outside.qualcomm.com [103.229.18.19])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: vivek.gautam@smtp.codeaurora.org)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id A0FFB60863;
-        Thu, 11 Jul 2019 11:03:55 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
-        s=default; t=1562843038;
-        bh=L93FB1uglHy+RXCU4rSQkxj+vgA1oeF54LVXpag5T1Y=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=cMNKr7wgpp3sQ/qWr7b38DRWZRe0ITB4YteM0APgpZPCeLWRMT2qzReiQB0mWVXlG
-         5+WVC2jxLuijci07O93TsYRelKPMtvyLZ9Uu6tBHumaZAbXnnqouV2Sst74UXzS79L
-         WdboTJmevqzBsNHahvTcyXriZdT9bLb58u8Qpp9A=
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org A0FFB60863
-Authentication-Results: pdx-caf-mail.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: pdx-caf-mail.web.codeaurora.org; spf=none smtp.mailfrom=vivek.gautam@codeaurora.org
-From:   Vivek Gautam <vivek.gautam@codeaurora.org>
-To:     agross@kernel.org, linux-arm-msm@vger.kernel.org
-Cc:     bjorn.andersson@linaro.org, jcrouse@codeaurora.org,
-        rishabhb@codeaurora.org, vnkgutta@codeaurora.org,
-        evgreen@chromium.org, linux-kernel@vger.kernel.org,
-        Vivek Gautam <vivek.gautam@codeaurora.org>
-Subject: [PATCH 2/2] soc: qcom: llcc-plat: Make the driver more generic
-Date:   Thu, 11 Jul 2019 16:33:40 +0530
-Message-Id: <20190711110340.16672-2-vivek.gautam@codeaurora.org>
-X-Mailer: git-send-email 2.16.1.72.g5be1f00a9a70
-In-Reply-To: <20190711110340.16672-1-vivek.gautam@codeaurora.org>
-References: <20190711110340.16672-1-vivek.gautam@codeaurora.org>
+        Thu, 11 Jul 2019 09:11:56 -0400
+Received: from eucas1p2.samsung.com (unknown [182.198.249.207])
+        by mailout2.w1.samsung.com (KnoxPortal) with ESMTP id 20190711131155euoutp02f01f8f580c6c47420ac0db59f4aa73d5~wXHH2AJny0289302893euoutp025
+        for <linux-arm-msm@vger.kernel.org>; Thu, 11 Jul 2019 13:11:55 +0000 (GMT)
+DKIM-Filter: OpenDKIM Filter v2.11.0 mailout2.w1.samsung.com 20190711131155euoutp02f01f8f580c6c47420ac0db59f4aa73d5~wXHH2AJny0289302893euoutp025
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=samsung.com;
+        s=mail20170921; t=1562850715;
+        bh=A+nnjQatvmXOarwKNwWj8FEyKdvOWMGUijR8qmV+HFI=;
+        h=Subject:To:Cc:From:Date:In-Reply-To:References:From;
+        b=LwqsOLoORbuJ84tBJs2VYFuNVS2a5pvGvqPo3CNN9l1h184spaJVDblTy3uXlzZUG
+         whAekOqRXyOkIqW6GgVHnbDYoA3lV2c37jdglNYKePEpPAOIoL0OWbpMtLK2GLqKfc
+         mxpLQnhIx8ZmXx6i/6uDJZcROyovPgcqVq2/Zv3Y=
+Received: from eusmges3new.samsung.com (unknown [203.254.199.245]) by
+        eucas1p1.samsung.com (KnoxPortal) with ESMTP id
+        20190711131154eucas1p1de5161ddfd5eec47f8c1ae424fd27364~wXHHPz5M22081420814eucas1p1z;
+        Thu, 11 Jul 2019 13:11:54 +0000 (GMT)
+Received: from eucas1p2.samsung.com ( [182.198.249.207]) by
+        eusmges3new.samsung.com (EUCPMTA) with SMTP id 4C.D2.04325.A95372D5; Thu, 11
+        Jul 2019 14:11:54 +0100 (BST)
+Received: from eusmtrp1.samsung.com (unknown [182.198.249.138]) by
+        eucas1p1.samsung.com (KnoxPortal) with ESMTPA id
+        20190711131153eucas1p17e1221ea0392ba004fd531a3350ebdf9~wXHGjdp6I2079720797eucas1p1f;
+        Thu, 11 Jul 2019 13:11:53 +0000 (GMT)
+Received: from eusmgms1.samsung.com (unknown [182.198.249.179]) by
+        eusmtrp1.samsung.com (KnoxPortal) with ESMTP id
+        20190711131153eusmtrp130912cf28dbd4314cb6fb6f5a0d7ef2e~wXHGVMr5c0407904079eusmtrp17;
+        Thu, 11 Jul 2019 13:11:53 +0000 (GMT)
+X-AuditID: cbfec7f5-b8fff700000010e5-87-5d27359a9ac2
+Received: from eusmtip2.samsung.com ( [203.254.199.222]) by
+        eusmgms1.samsung.com (EUCPMTA) with SMTP id BE.BE.04146.995372D5; Thu, 11
+        Jul 2019 14:11:53 +0100 (BST)
+Received: from [106.120.51.74] (unknown [106.120.51.74]) by
+        eusmtip2.samsung.com (KnoxPortal) with ESMTPA id
+        20190711131153eusmtip29d95ddab3c7a0ff71d021ba29ffaee5f~wXHF0--tu0112201122eusmtip2O;
+        Thu, 11 Jul 2019 13:11:53 +0000 (GMT)
+Subject: Re: [PATCH 1/2] regmap: Add DSI bus support
+To:     Mark Brown <broonie@kernel.org>,
+        Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
+Cc:     Laurent.pinchart@ideasonboard.com, airlied@linux.ie,
+        daniel@ffwll.ch, robdclark@gmail.com, bjorn.andersson@linaro.org,
+        dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+From:   Andrzej Hajda <a.hajda@samsung.com>
+Message-ID: <64ca3a74-374f-d4f3-bee6-a607cc5c0fc5@samsung.com>
+Date:   Thu, 11 Jul 2019 15:11:56 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+        Thunderbird/68.0
+MIME-Version: 1.0
+In-Reply-To: <20190706010604.GG20625@sirena.org.uk>
+Content-Type: text/plain; charset="windows-1252"
+Content-Transfer-Encoding: 7bit
+Content-Language: en-US
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFjrFKsWRmVeSWpSXmKPExsWy7djP87qzTNVjDdZfEbHoPXeSyeL0/ncs
+        FlMfPmGz+L9tIrPFla/v2Szaln9jtuicuITdYuL+s+wWl3fNYbN4vvAHswOXx95vC1g8ds66
+        y+4xu2Mmq8emVZ1sHneu7WHz2P7tAavH/e7jTB6fN8kFcERx2aSk5mSWpRbp2yVwZWx+sImx
+        4LBgxacb7xkbGD/wdjFyckgImEjM3T6RsYuRi0NIYAWjxJxLR1ggnC+MEpumr2CHcD4zShx8
+        cw8owwHW8nSdN0R8OaPEs2OvWSGct4wSj5ZOYAKZKwxUtG7pAWYQW0TAR6Jh+n42EJtZ4C6j
+        xO5N/CA2m4CmxN/NN8HivAJ2EktvLWQFsVkEVCWuL5sFZosKhEn8XNAJVSMocXLmExYQm1PA
+        WKL73Vl2iJkGEkcWzWGFsOUltr+dwwxhi0vcejKfCeQ4CYF77BIn989hhHjaRaJn1WcWCFtY
+        4tXxLewQtozE6ck9UPF6ifsrWpghmjsYJbZu2MkMkbCWOHz8IiuE7Six6PtiaLDwSdx4Kwix
+        mE9i0rbpzBBhXomONiGIakWJ+2e3Qk0Rl1h64SvbBEalWUhem4XknVlI3pmF5J0FjCyrGMVT
+        S4tz01OLjfNSy/WKE3OLS/PS9ZLzczcxAlPY6X/Hv+5g3Pcn6RCjAAejEg8vx1vVWCHWxLLi
+        ytxDjBIczEoivPvclWOFeFMSK6tSi/Lji0pzUosPMUpzsCiJ81YzPIgWEkhPLEnNTk0tSC2C
+        yTJxcEo1MOp8PWf4KOaCZFL47KPXL5xsqp78n4FBNawn5NrRHe1fJybP8NntdTbn8l1Rm79i
+        B0TjVl380GhY/fOflb/ofYlfBRX7tPifO6/8ynKhRK6gSNp3ipjy7oW8Um/2iG/yL/Pff/7j
+        YudnVqeqJ73v2DI5hfuNpM5apaWKpV2R8/bsP+4seSR31UolluKMREMt5qLiRAAExmsjXQMA
+        AA==
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFrrNIsWRmVeSWpSXmKPExsVy+t/xe7ozTdVjDd78l7foPXeSyeL0/ncs
+        FlMfPmGz+L9tIrPFla/v2Szaln9jtuicuITdYuL+s+wWl3fNYbN4vvAHswOXx95vC1g8ds66
+        y+4xu2Mmq8emVZ1sHneu7WHz2P7tAavH/e7jTB6fN8kFcETp2RTll5akKmTkF5fYKkUbWhjp
+        GVpa6BmZWOoZGpvHWhmZKunb2aSk5mSWpRbp2yXoZWx+sImx4LBgxacb7xkbGD/wdjFycEgI
+        mEg8XefdxcjFISSwlFHiwPSXrF2MnEBxcYnd898yQ9jCEn+udbFBFL1mlHhy/A1YQhioed3S
+        A2C2iICPRMP0/WBFzAJ3GSW2HnvHDtHxjlHi3Zx/YFVsApoSfzffZAOxeQXsJJbeWgi2jkVA
+        VeL6slmsICeJCoRJHD2RB1EiKHFy5hMWEJtTwFii+91ZdhCbWUBPYsf1X6wQtrzE9rdzmCFs
+        cYlbT+YzTWAUmoWkfRaSlllIWmYhaVnAyLKKUSS1tDg3PbfYUK84Mbe4NC9dLzk/dxMjMGK3
+        Hfu5eQfjpY3BhxgFOBiVeHh/3FONFWJNLCuuzD3EKMHBrCTCu89dOVaINyWxsiq1KD++qDQn
+        tfgQoynQbxOZpUST84HJJK8k3tDU0NzC0tDc2NzYzEJJnLdD4GCMkEB6YklqdmpqQWoRTB8T
+        B6dUA6PH9tb+B2dFJhpsypITefplxvWLm5VEThcy8FUmcLp2Jga8erTwetThFOOYTnO9RVu4
+        FTxT/j4oaN24Vumq6dplpw8d7XvBbXFdxz2Jrd++55P2h+W+FY/eZE22flsqx1YSzNbDI7lW
+        o+PGracCusIckg+1dY4HnLc6vnJ/go7/4hJLMZX9n5RYijMSDbWYi4oTAUQO67zuAgAA
+X-CMS-MailID: 20190711131153eucas1p17e1221ea0392ba004fd531a3350ebdf9
+X-Msg-Generator: CA
+X-RootMTR: 20190706010615epcas2p343102f858a7fadaf6785f7ece105f1a7
+X-EPHeader: CA
+CMS-TYPE: 201P
+X-CMS-RootMailID: 20190706010615epcas2p343102f858a7fadaf6785f7ece105f1a7
+References: <20190703214326.41269-1-jeffrey.l.hugo@gmail.com>
+        <20190703214512.41319-1-jeffrey.l.hugo@gmail.com>
+        <CGME20190706010615epcas2p343102f858a7fadaf6785f7ece105f1a7@epcas2p3.samsung.com>
+        <20190706010604.GG20625@sirena.org.uk>
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-- Remove 'sdm845' from names, and use 'plat' instead.
-- Move SCT_ENTRY macro to header file.
-- Create a new config structure to asssign to of-match-data.
+On 06.07.2019 03:06, Mark Brown wrote:
+> On Wed, Jul 03, 2019 at 02:45:12PM -0700, Jeffrey Hugo wrote:
+>> Add basic support with a simple implementation that utilizes the generic
+>> read/write commands to allow device registers to be configured.
+> This looks good to me but I really don't know anything about DSI,
+> I'd appreciate some review from other people who do.  I take it
+> there's some spec thing in DSI that says registers and bytes must
+> both be 8 bit?
 
-Signed-off-by: Vivek Gautam <vivek.gautam@codeaurora.org>
----
- drivers/soc/qcom/llcc-plat.c       | 77 ++++++++++++--------------------------
- include/linux/soc/qcom/llcc-qcom.h | 45 ++++++++++++++++++++++
- 2 files changed, 68 insertions(+), 54 deletions(-)
 
-diff --git a/drivers/soc/qcom/llcc-plat.c b/drivers/soc/qcom/llcc-plat.c
-index 86600d97c36d..31cff0f75b53 100644
---- a/drivers/soc/qcom/llcc-plat.c
-+++ b/drivers/soc/qcom/llcc-plat.c
-@@ -1,6 +1,6 @@
- // SPDX-License-Identifier: GPL-2.0
- /*
-- * Copyright (c) 2017-2018, The Linux Foundation. All rights reserved.
-+ * Copyright (c) 2017-2019, The Linux Foundation. All rights reserved.
-  *
-  */
- 
-@@ -10,47 +10,7 @@
- #include <linux/of_device.h>
- #include <linux/soc/qcom/llcc-qcom.h>
- 
--/*
-- * SCT(System Cache Table) entry contains of the following members:
-- * usecase_id: Unique id for the client's use case
-- * slice_id: llcc slice id for each client
-- * max_cap: The maximum capacity of the cache slice provided in KB
-- * priority: Priority of the client used to select victim line for replacement
-- * fixed_size: Boolean indicating if the slice has a fixed capacity
-- * bonus_ways: Bonus ways are additional ways to be used for any slice,
-- *		if client ends up using more than reserved cache ways. Bonus
-- *		ways are allocated only if they are not reserved for some
-- *		other client.
-- * res_ways: Reserved ways for the cache slice, the reserved ways cannot
-- *		be used by any other client than the one its assigned to.
-- * cache_mode: Each slice operates as a cache, this controls the mode of the
-- *             slice: normal or TCM(Tightly Coupled Memory)
-- * probe_target_ways: Determines what ways to probe for access hit. When
-- *                    configured to 1 only bonus and reserved ways are probed.
-- *                    When configured to 0 all ways in llcc are probed.
-- * dis_cap_alloc: Disable capacity based allocation for a client
-- * retain_on_pc: If this bit is set and client has maintained active vote
-- *               then the ways assigned to this client are not flushed on power
-- *               collapse.
-- * activate_on_init: Activate the slice immediately after the SCT is programmed
-- */
--#define SCT_ENTRY(uid, sid, mc, p, fs, bway, rway, cmod, ptw, dca, rp, a) \
--	{					\
--		.usecase_id = uid,		\
--		.slice_id = sid,		\
--		.max_cap = mc,			\
--		.priority = p,			\
--		.fixed_size = fs,		\
--		.bonus_ways = bway,		\
--		.res_ways = rway,		\
--		.cache_mode = cmod,		\
--		.probe_target_ways = ptw,	\
--		.dis_cap_alloc = dca,		\
--		.retain_on_pc = rp,		\
--		.activate_on_init = a,		\
--	}
--
--static struct llcc_slice_config sdm845_data[] =  {
-+static const struct llcc_slice_config sdm845_data[] =  {
- 	SCT_ENTRY(LLCC_CPUSS,    1,  2816, 1, 0, 0xffc, 0x2,   0, 0, 1, 1, 1),
- 	SCT_ENTRY(LLCC_VIDSC0,   2,  512,  2, 1, 0x0,   0x0f0, 0, 0, 1, 1, 0),
- 	SCT_ENTRY(LLCC_VIDSC1,   3,  512,  2, 1, 0x0,   0x0f0, 0, 0, 1, 1, 0),
-@@ -71,30 +31,39 @@ static struct llcc_slice_config sdm845_data[] =  {
- 	SCT_ENTRY(LLCC_AUDHW,    22, 1024, 1, 1, 0xffc, 0x2,   0, 0, 1, 1, 0),
- };
- 
--static int sdm845_qcom_llcc_remove(struct platform_device *pdev)
-+static const struct qcom_llcc_config sdm845_cfg = {
-+	.sct_data	= sdm845_data,
-+	.size		= ARRAY_SIZE(sdm845_data),
-+};
-+
-+static int qcom_plat_llcc_remove(struct platform_device *pdev)
- {
- 	return qcom_llcc_remove(pdev);
- }
- 
--static int sdm845_qcom_llcc_probe(struct platform_device *pdev)
-+static int qcom_plat_llcc_probe(struct platform_device *pdev)
- {
--	return qcom_llcc_probe(pdev, sdm845_data, ARRAY_SIZE(sdm845_data));
-+	const struct qcom_llcc_config *cfg;
-+
-+	cfg = of_device_get_match_data(&pdev->dev);
-+
-+	return qcom_llcc_probe(pdev, cfg->sct_data, cfg->size);
- }
- 
--static const struct of_device_id sdm845_qcom_llcc_of_match[] = {
--	{ .compatible = "qcom,sdm845-llcc", },
-+static const struct of_device_id qcom_plat_llcc_of_match[] = {
-+	{ .compatible = "qcom,sdm845-llcc", .data = &sdm845_cfg },
- 	{ }
- };
- 
--static struct platform_driver sdm845_qcom_llcc_driver = {
-+static struct platform_driver qcom_plat_llcc_driver = {
- 	.driver = {
--		.name = "sdm845-llcc",
--		.of_match_table = sdm845_qcom_llcc_of_match,
-+		.name = "qcom-plat-llcc",
-+		.of_match_table = qcom_plat_llcc_of_match,
- 	},
--	.probe = sdm845_qcom_llcc_probe,
--	.remove = sdm845_qcom_llcc_remove,
-+	.probe = qcom_plat_llcc_probe,
-+	.remove = qcom_plat_llcc_remove,
- };
--module_platform_driver(sdm845_qcom_llcc_driver);
-+module_platform_driver(qcom_plat_llcc_driver);
- 
--MODULE_DESCRIPTION("QCOM sdm845 LLCC driver");
-+MODULE_DESCRIPTION("QCOM platform LLCC driver");
- MODULE_LICENSE("GPL v2");
-diff --git a/include/linux/soc/qcom/llcc-qcom.h b/include/linux/soc/qcom/llcc-qcom.h
-index eb71a50b8afc..8776bb5d3891 100644
---- a/include/linux/soc/qcom/llcc-qcom.h
-+++ b/include/linux/soc/qcom/llcc-qcom.h
-@@ -27,6 +27,46 @@
- #define LLCC_MDMPNG      21
- #define LLCC_AUDHW       22
- 
-+/*
-+ * SCT(System Cache Table) entry contains of the following members:
-+ * usecase_id: Unique id for the client's use case
-+ * slice_id: llcc slice id for each client
-+ * max_cap: The maximum capacity of the cache slice provided in KB
-+ * priority: Priority of the client used to select victim line for replacement
-+ * fixed_size: Boolean indicating if the slice has a fixed capacity
-+ * bonus_ways: Bonus ways are additional ways to be used for any slice,
-+ *		if client ends up using more than reserved cache ways. Bonus
-+ *		ways are allocated only if they are not reserved for some
-+ *		other client.
-+ * res_ways: Reserved ways for the cache slice, the reserved ways cannot
-+ *		be used by any other client than the one its assigned to.
-+ * cache_mode: Each slice operates as a cache, this controls the mode of the
-+ *             slice: normal or TCM(Tightly Coupled Memory)
-+ * probe_target_ways: Determines what ways to probe for access hit. When
-+ *                    configured to 1 only bonus and reserved ways are probed.
-+ *                    When configured to 0 all ways in llcc are probed.
-+ * dis_cap_alloc: Disable capacity based allocation for a client
-+ * retain_on_pc: If this bit is set and client has maintained active vote
-+ *               then the ways assigned to this client are not flushed on power
-+ *               collapse.
-+ * activate_on_init: Activate the slice immediately after the SCT is programmed
-+ */
-+#define SCT_ENTRY(uid, sid, mc, p, fs, bway, rway, cmod, ptw, dca, rp, a) \
-+	{					\
-+		.usecase_id = uid,		\
-+		.slice_id = sid,		\
-+		.max_cap = mc,			\
-+		.priority = p,			\
-+		.fixed_size = fs,		\
-+		.bonus_ways = bway,		\
-+		.res_ways = rway,		\
-+		.cache_mode = cmod,		\
-+		.probe_target_ways = ptw,	\
-+		.dis_cap_alloc = dca,		\
-+		.retain_on_pc = rp,		\
-+		.activate_on_init = a,		\
-+	}
-+
- /**
-  * llcc_slice_desc - Cache slice descriptor
-  * @slice_id: llcc slice id
-@@ -67,6 +107,11 @@ struct llcc_slice_config {
- 	bool activate_on_init;
- };
- 
-+struct qcom_llcc_config {
-+	const struct llcc_slice_config *sct_data;
-+	int size;
-+};
-+
- /**
-  * llcc_drv_data - Data associated with the llcc driver
-  * @regmap: regmap associated with the llcc device
--- 
-QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
-of Code Aurora Forum, hosted by The Linux Foundation
+I am little bit confused about regmap usage here. On the one hand it
+nicely fits to this specific driver, probably because it already uses
+regmap_i2c.
+
+On the other it will be unusable for almost all current DSI drivers and
+probably for most new drivers. Why?
+
+1. DSI protocol defines actually more than 30 types of transactions[1],
+but this patchset implements only few of them (dsi generic write/read
+family). Is it possible to implement multiple types of transactions in
+regmap?
+
+2. There is already some set of helpers which uses dsi bus, rewriting it
+on regmap is possible or driver could use of regmap and direct access
+together, the question is if it is really necessary.
+
+3. DSI devices are no MFDs so regmap abstraction has no big value added
+(correct me, if there are other significant benefits).
+
+
+[1]:
+https://elixir.bootlin.com/linux/latest/source/include/video/mipi_display.h#L15
+
+
+Regards
+
+Andrzej
+
+
+>
+> A couple of minor comments, no need to resend just for these:
+>
+>> +       payload[0] = (char)reg;
+>> +       payload[1] = (char)val;
+> Do you need the casts?
+>
+>> +	ret = mipi_dsi_generic_write(dsi, payload, 2);
+>> +	return ret < 0 ? ret : 0;
+> Please just write an if statement, it helps with legibility.
+>
+>> +struct regmap *__regmap_init_dsi(struct mipi_dsi_device *dsi,
+>> +				 const struct regmap_config *config,
+>> +				 struct lock_class_key *lock_key,
+>> +				 const char *lock_name)
+>> +{
+>> +	return __regmap_init(&dsi->dev, &dsi_bus, &dsi->dev, config,
+>> +			     lock_key, lock_name);
+>> +}
+>> +EXPORT_SYMBOL_GPL(__regmap_init_dsi);
+> Perhaps validate that the config is OK (mainly the register/value
+> sizes)?  Though I'm not sure it's worth it so perhaps not - up to
+> you.
+
 
