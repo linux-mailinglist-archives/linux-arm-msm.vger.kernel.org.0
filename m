@@ -2,170 +2,125 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 544A767132
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 Jul 2019 16:17:32 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 3272467145
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 Jul 2019 16:22:46 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727495AbfGLORb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 12 Jul 2019 10:17:31 -0400
-Received: from smtp.codeaurora.org ([198.145.29.96]:34732 "EHLO
-        smtp.codeaurora.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727089AbfGLORa (ORCPT
+        id S1726992AbfGLOWp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 12 Jul 2019 10:22:45 -0400
+Received: from mail-io1-f66.google.com ([209.85.166.66]:43608 "EHLO
+        mail-io1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726602AbfGLOWp (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 12 Jul 2019 10:17:30 -0400
-Received: by smtp.codeaurora.org (Postfix, from userid 1000)
-        id 7180F618DC; Fri, 12 Jul 2019 14:17:29 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
-        s=default; t=1562941049;
-        bh=j34YjdOI22zXeGZb1tMjjkyFGeXTEfmtACkRK82dp6w=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=oyW9mtD/R3K+xw45vMeHawqWd6bNOhhaCcfkniWrpcN9LGqGO2WQCREnlWXtRdur1
-         MH33lAw2psv27U+iYMWYSGdJWWLAPH2ZmhYPB8f/fxljvbBsq20+LaTtO2/eYNpuQ7
-         JtvazmXLbROL41rn+6tHeVhwPqYSE/xFbKxQEqJo=
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        pdx-caf-mail.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.7 required=2.0 tests=ALL_TRUSTED,BAYES_00,
-        DKIM_INVALID,DKIM_SIGNED,SPF_NONE autolearn=no autolearn_force=no
-        version=3.4.0
-Received: from blr-ubuntu-253.qualcomm.com (blr-bdr-fw-01_globalnat_allzones-outside.qualcomm.com [103.229.18.19])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: saiprakash.ranjan@codeaurora.org)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id BC901617A3;
-        Fri, 12 Jul 2019 14:17:23 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
-        s=default; t=1562941048;
-        bh=j34YjdOI22zXeGZb1tMjjkyFGeXTEfmtACkRK82dp6w=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=I1Q43Zi+CwcMNDPK2F6kSyCxRvtugaCZMOTtnNkdIXixxWFZrk+NDqO8R3OfC1BUH
-         R5Wi4gkotdTEOSAkbCh4dMcuG9JIf/2zv7896yGOGbTHm9sqEz+SN/+N17tLAl2OdP
-         hqDUsmOsxRXrdOLUomowCpCVjIKcVKyXrtidbFgY=
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org BC901617A3
-Authentication-Results: pdx-caf-mail.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: pdx-caf-mail.web.codeaurora.org; spf=none smtp.mailfrom=saiprakash.ranjan@codeaurora.org
-From:   Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
-To:     Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Mathieu Poirier <mathieu.poirier@linaro.org>,
-        Suzuki K Poulose <suzuki.poulose@arm.com>,
-        Leo Yan <leo.yan@linaro.org>,
-        Alexander Shishkin <alexander.shishkin@linux.intel.com>,
-        Mike Leach <mike.leach@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        devicetree@vger.kernel.org, David Brown <david.brown@linaro.org>,
-        Mark Rutland <mark.rutland@arm.com>
-Cc:     Rajendra Nayak <rnayak@codeaurora.org>,
-        Vivek Gautam <vivek.gautam@codeaurora.org>,
-        Sibi Sankar <sibis@codeaurora.org>,
-        linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org,
-        Marc Gonzalez <marc.w.gonzalez@free.fr>,
-        Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
-Subject: [PATCHv8 5/5] coresight: cpu-debug: Add support for Qualcomm Kryo
-Date:   Fri, 12 Jul 2019 19:46:27 +0530
-Message-Id: <e2c4cc7c6ccaa5695f25af20c8e487ac53b39955.1562940244.git.saiprakash.ranjan@codeaurora.org>
-X-Mailer: git-send-email 2.22.0
-In-Reply-To: <cover.1562940244.git.saiprakash.ranjan@codeaurora.org>
-References: <cover.1562940244.git.saiprakash.ranjan@codeaurora.org>
+        Fri, 12 Jul 2019 10:22:45 -0400
+Received: by mail-io1-f66.google.com with SMTP id k20so20646843ios.10;
+        Fri, 12 Jul 2019 07:22:44 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=nGPJaLLrwimgpDuREnLtjr8F7xnTIflmgbQ9hHlyOpQ=;
+        b=h9jOcluIb6ww2CKPkNW/sCP5MUssFNFfo0eU3XK9p5+YpV+7emWd40fuQ0aguUlM9O
+         SfMrf+m/5YOcM1qa0dWndBpgkz4Qf9EGlyTiqz+6Y7JfRFAgXKOiqXiCzMj/UING1hQK
+         scP1RFCeJ3R4/WI+CNFRDFjyahtAk+rWVWR0IuQj7nPfOfOJ66wZq62M+xb3Dc8zqLHh
+         7OKh5uoWtjoEXRLbSMp+jHa1EJkzjK5EAf3zVnOt4gap7JtE0RNtC7abt3UjoaIXQZKZ
+         9vyQ3Ys5NMV/5OAzKCJeNjBwZ+sbQ1MsrhJazHGjIncJuDsrADav8uSg9bJTbg3Z6slp
+         LwRw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=nGPJaLLrwimgpDuREnLtjr8F7xnTIflmgbQ9hHlyOpQ=;
+        b=oZ+oPpzLAOR3A+9KAikTmIFIC3wdZz6Hv7CwnwHEjwMHmpa3pPffGEHJk5ejPpiAwq
+         bBokLNdTyrVa2Z+w++qllOOFUd7hbYBm41lAEwH/cvgN6Ud23h0QCEYjz7mOJQp9awHU
+         5xNalTFxXgrb8ddPFr4z/sW8Q07jY/DU/PokwbjxWkGWOCKDqCo+eu1CUUKirzLTocpC
+         rKKQ7QuaF62o6hbdRFgL6SzhixkgMbXhoj6fr8XRMppkwv+n5cFF9bFuOf7v/qlYqz7Z
+         oXnKIRcv1O4rZ9EycjvaLwL8AmxCARN0ZVxHOisagXlCKlVQ9zMPB6993drf0voUMlgr
+         ShHQ==
+X-Gm-Message-State: APjAAAW4TT3qdQJM/w5w7ZO3MW8MYAMSOwdgI5SyL6WWU9M6Htgr2ZC6
+        ZJKXoBYH0LgX/F/wOscvkX7K2TCvQx4AM5lcYrg=
+X-Google-Smtp-Source: APXvYqyd1oIXsBnzN7dG75lZKkuN70UrVbbdWWU17WfiRt880v2QjEESBBiu9clKHIbyAFlTaHjA8LuvFTEITgzhLUI=
+X-Received: by 2002:a6b:3b89:: with SMTP id i131mr10329306ioa.33.1562941364182;
+ Fri, 12 Jul 2019 07:22:44 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <20190703214326.41269-1-jeffrey.l.hugo@gmail.com>
+ <20190703214512.41319-1-jeffrey.l.hugo@gmail.com> <CGME20190706010615epcas2p343102f858a7fadaf6785f7ece105f1a7@epcas2p3.samsung.com>
+ <20190706010604.GG20625@sirena.org.uk> <64ca3a74-374f-d4f3-bee6-a607cc5c0fc5@samsung.com>
+ <CAF6AEGtGjKRA3A8v6pgaXLgpeiLZuz6HuDSFRjKrNp4iQNVZtA@mail.gmail.com> <10b1313f-7a60-df04-a9e3-76649b74f2f0@samsung.com>
+In-Reply-To: <10b1313f-7a60-df04-a9e3-76649b74f2f0@samsung.com>
+From:   Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
+Date:   Fri, 12 Jul 2019 08:22:33 -0600
+Message-ID: <CAOCk7NoyCmPQF3s4GWD1Oa4t5hdqi6vdcOdHyJpo3Gc1JQqXcw@mail.gmail.com>
+Subject: Re: [PATCH 1/2] regmap: Add DSI bus support
+To:     Andrzej Hajda <a.hajda@samsung.com>
+Cc:     Rob Clark <robdclark@gmail.com>, Mark Brown <broonie@kernel.org>,
+        Laurent Pinchart <Laurent.pinchart@ideasonboard.com>,
+        David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        dri-devel <dri-devel@lists.freedesktop.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add support for coresight CPU debug module on Qualcomm
-Kryo CPUs. This patch adds the UCI entries for Kryo CPUs
-found on MSM8996 which shares the same PIDs as ETMs.
+On Fri, Jul 12, 2019 at 7:01 AM Andrzej Hajda <a.hajda@samsung.com> wrote:
+>
+> On 11.07.2019 15:56, Rob Clark wrote:
+> > On Thu, Jul 11, 2019 at 6:11 AM Andrzej Hajda <a.hajda@samsung.com> wrote:
+> >> On 06.07.2019 03:06, Mark Brown wrote:
+> >>> On Wed, Jul 03, 2019 at 02:45:12PM -0700, Jeffrey Hugo wrote:
+> >>>> Add basic support with a simple implementation that utilizes the generic
+> >>>> read/write commands to allow device registers to be configured.
+> >>> This looks good to me but I really don't know anything about DSI,
+> >>> I'd appreciate some review from other people who do.  I take it
+> >>> there's some spec thing in DSI that says registers and bytes must
+> >>> both be 8 bit?
+> >>
+> >> I am little bit confused about regmap usage here. On the one hand it
+> >> nicely fits to this specific driver, probably because it already uses
+> >> regmap_i2c.
+> >>
+> >> On the other it will be unusable for almost all current DSI drivers and
+> >> probably for most new drivers. Why?
+> >>
+> >> 1. DSI protocol defines actually more than 30 types of transactions[1],
+> >> but this patchset implements only few of them (dsi generic write/read
+> >> family). Is it possible to implement multiple types of transactions in
+> >> regmap?
+> >>
+> >> 2. There is already some set of helpers which uses dsi bus, rewriting it
+> >> on regmap is possible or driver could use of regmap and direct access
+> >> together, the question is if it is really necessary.
+> >>
+> >> 3. DSI devices are no MFDs so regmap abstraction has no big value added
+> >> (correct me, if there are other significant benefits).
+> >>
+> > I assume it is not *just* this one bridge that can be programmed over
+> > either i2c or dsi, depending on how things are wired up on the board.
+> > It certainly would be nice for regmap to support this case, so we
+> > don't have to write two different bridge drivers for the same bridge.
+> > I wouldn't expect a panel that is only programmed via dsi to use this.
+>
+>
+> On the other side supporting DSI and I2C in one driver is simply matter
+> of writing proper accesors.
 
-Without this, below error is observed on MSM8996:
+To me, this reads like your counter argument to not using regmap, is
+to reinvent regmap.  Maybe I don't understand what you are proposing
+here, but it sounds like remove the regmap support, define sn65
+specific accessors that just before sending the write to the bus does
+a check if the access needs to go over i2c or DSI.  Feels like a
+clunky version of regmap to me.  Why not use the existing "generic"
+framework?
 
-[    5.429867] OF: graph: no port node found in /soc/debug@3810000
-[    5.429938] coresight-etm4x: probe of 3810000.debug failed with error -22
-[    5.435415] coresight-cpu-debug 3810000.debug: Coresight debug-CPU0 initialized
-[    5.446474] OF: graph: no port node found in /soc/debug@3910000
-[    5.448927] coresight-etm4x: probe of 3910000.debug failed with error -22
-[    5.454681] coresight-cpu-debug 3910000.debug: Coresight debug-CPU1 initialized
-[    5.487765] OF: graph: no port node found in /soc/debug@3a10000
-[    5.488007] coresight-etm4x: probe of 3a10000.debug failed with error -22
-[    5.493024] coresight-cpu-debug 3a10000.debug: Coresight debug-CPU2 initialized
-[    5.501802] OF: graph: no port node found in /soc/debug@3b10000
-[    5.512901] coresight-etm4x: probe of 3b10000.debug failed with error -22
-[    5.513192] coresight-cpu-debug 3b10000.debug: Coresight debug-CPU3 initialized
-
-Signed-off-by: Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
----
- .../hwtracing/coresight/coresight-cpu-debug.c | 33 +++++++++----------
- drivers/hwtracing/coresight/coresight-priv.h  | 10 +++---
- 2 files changed, 21 insertions(+), 22 deletions(-)
-
-diff --git a/drivers/hwtracing/coresight/coresight-cpu-debug.c b/drivers/hwtracing/coresight/coresight-cpu-debug.c
-index 2463aa7ab4f6..96544b348c27 100644
---- a/drivers/hwtracing/coresight/coresight-cpu-debug.c
-+++ b/drivers/hwtracing/coresight/coresight-cpu-debug.c
-@@ -646,24 +646,23 @@ static int debug_remove(struct amba_device *adev)
- 	return 0;
- }
- 
-+static const struct amba_cs_uci_id uci_id_debug[] = {
-+	{
-+		/*  CPU Debug UCI data */
-+		.devarch	= 0x47706a15,
-+		.devarch_mask	= 0xfff0ffff,
-+		.devtype	= 0x00000015,
-+	}
-+};
-+
- static const struct amba_id debug_ids[] = {
--	{       /* Debug for Cortex-A53 */
--		.id	= 0x000bbd03,
--		.mask	= 0x000fffff,
--	},
--	{       /* Debug for Cortex-A57 */
--		.id	= 0x000bbd07,
--		.mask	= 0x000fffff,
--	},
--	{       /* Debug for Cortex-A72 */
--		.id	= 0x000bbd08,
--		.mask	= 0x000fffff,
--	},
--	{       /* Debug for Cortex-A73 */
--		.id	= 0x000bbd09,
--		.mask	= 0x000fffff,
--	},
--	{ 0, 0 },
-+	CS_AMBA_ID(0x000bbd03),				/* Cortex-A53 */
-+	CS_AMBA_ID(0x000bbd07),				/* Cortex-A57 */
-+	CS_AMBA_ID(0x000bbd08),				/* Cortex-A72 */
-+	CS_AMBA_ID(0x000bbd09),				/* Cortex-A73 */
-+	CS_AMBA_UCI_ID(0x000f0205, uci_id_debug),	/* Qualcomm Kryo */
-+	CS_AMBA_UCI_ID(0x000f0211, uci_id_debug),	/* Qualcomm Kryo */
-+	{},
- };
- 
- static struct amba_driver debug_driver = {
-diff --git a/drivers/hwtracing/coresight/coresight-priv.h b/drivers/hwtracing/coresight/coresight-priv.h
-index 7d401790dd7e..41ae5863104d 100644
---- a/drivers/hwtracing/coresight/coresight-priv.h
-+++ b/drivers/hwtracing/coresight/coresight-priv.h
-@@ -185,11 +185,11 @@ static inline int etm_writel_cp14(u32 off, u32 val) { return 0; }
- 	}
- 
- /* coresight AMBA ID, full UCI structure: id table entry. */
--#define CS_AMBA_UCI_ID(pid, uci_ptr)	\
--	{				\
--		.id	= pid,		\
--		.mask	= 0x000fffff,	\
--		.data	= uci_ptr	\
-+#define CS_AMBA_UCI_ID(pid, uci_ptr)		\
-+	{					\
-+		.id	= pid,			\
-+		.mask	= 0x000fffff,		\
-+		.data	= (void *)uci_ptr	\
- 	}
- 
- /* extract the data value from a UCI structure given amba_id pointer. */
--- 
-QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
-of Code Aurora Forum, hosted by The Linux Foundation
-
+To your point that DSI defines over 30 message types, yes it does, but
+that seems to be outside of the scope.  How many of those are actually
+for doing register access?  I'm thinking just 4 (technically a hair
+more than that because of the multiple version of the same message) -
+generic read, generic write, dcs read, dcs write.  I don't view regmap
+as a generic abstraction layer over a particular mechanism, and thus
+needs to support everything that mechanism does.  Sending sync
+commands, or pixel data over DSI is outside the scope of regmap to me.
