@@ -2,25 +2,25 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 09F0C67124
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 Jul 2019 16:17:09 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 8DC1D67127
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 Jul 2019 16:17:14 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726266AbfGLORH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 12 Jul 2019 10:17:07 -0400
-Received: from smtp.codeaurora.org ([198.145.29.96]:32880 "EHLO
+        id S1727383AbfGLORN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 12 Jul 2019 10:17:13 -0400
+Received: from smtp.codeaurora.org ([198.145.29.96]:33566 "EHLO
         smtp.codeaurora.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727127AbfGLORG (ORCPT
+        with ESMTP id S1727127AbfGLORN (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 12 Jul 2019 10:17:06 -0400
+        Fri, 12 Jul 2019 10:17:13 -0400
 Received: by smtp.codeaurora.org (Postfix, from userid 1000)
-        id EC8D161155; Fri, 12 Jul 2019 14:17:04 +0000 (UTC)
+        id 8FD2D61634; Fri, 12 Jul 2019 14:17:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
-        s=default; t=1562941024;
-        bh=IaVR+XgZBmBKt+8oSbkeeD2w9sDjl2Rb6qCvLQNeJ88=;
+        s=default; t=1562941031;
+        bh=/pLe9vZQO6Ht0XZmpHYvl+A8xQ+ZLIUscgUQaN23i0o=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=oevr4Myd7RMEqmsmsQQCsB2GoiuD8EX/6eeyjEwHLUbQTLD6atEzFEZ+jxqhdKyil
-         KGdAdlUDh2gRP40nil8rH2PTjcIeNee9tHWVYhN1EXkWNfn79rXPITGEUYHrS/0FXk
-         om13DWD+3Yye3aSTzVg8vo9z/DQWCuku927MheFU=
+        b=Xd1Mzac/P2sUAjxf9rIGhKOSxSDsqqCMI8AnkAJZI8+Ufi2qF+/JlcdLAt3kjhMP2
+         ltBNPnDV+aDL+Fg1LBFKkeDD37yWbM8AAAlAU8XBOxqOQccvv44xLwIeqgOoB4KsXY
+         6Zol+bvGYcVUirfjFfNycHnRnANi6n3nVYN6uCGo=
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
         pdx-caf-mail.web.codeaurora.org
 X-Spam-Level: 
@@ -31,16 +31,16 @@ Received: from blr-ubuntu-253.qualcomm.com (blr-bdr-fw-01_globalnat_allzones-out
         (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
         (No client certificate requested)
         (Authenticated sender: saiprakash.ranjan@codeaurora.org)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 7EA5460F38;
-        Fri, 12 Jul 2019 14:16:58 +0000 (UTC)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id C4ADD61194;
+        Fri, 12 Jul 2019 14:17:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
-        s=default; t=1562941023;
-        bh=IaVR+XgZBmBKt+8oSbkeeD2w9sDjl2Rb6qCvLQNeJ88=;
+        s=default; t=1562941030;
+        bh=/pLe9vZQO6Ht0XZmpHYvl+A8xQ+ZLIUscgUQaN23i0o=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=AjJwJzwNf791Anc2FX9nLaUbW7aAUYuwaHKBPMtD22LGFe0i4wbzFRzni2U9Q8K6j
-         rymYDCbAxO9Dn6hcvsy7AyFEjB69Z/2BskX/LAxP0n/kMCVIlu5/9g68qpsS2rrn4o
-         xu5T5tKJMaT/ifIubsABN8eFMLIW9CIHFqotVJME=
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 7EA5460F38
+        b=BvDeoIsaDMTtjDvnqFiw1Plfr16g6EJI53fWbbH9pSL8TFuM4GQ0BoomufjET4Hk0
+         mYTfeMd/wTI7+fmJDIFgo4cAFS0avqKetTaFqWM9A1Dn9tZB9C3kAaut2bEcvgYXbh
+         H35byHV2Zyjrvcu9W/oKMbpPU52ZTg3bG6QeMFBg=
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org C4ADD61194
 Authentication-Results: pdx-caf-mail.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
 Authentication-Results: pdx-caf-mail.web.codeaurora.org; spf=none smtp.mailfrom=saiprakash.ranjan@codeaurora.org
 From:   Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
@@ -61,9 +61,9 @@ Cc:     Rajendra Nayak <rnayak@codeaurora.org>,
         linux-arm-msm@vger.kernel.org,
         Marc Gonzalez <marc.w.gonzalez@free.fr>,
         Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
-Subject: [PATCHv8 1/5] arm64: dts: qcom: sdm845: Add Coresight support
-Date:   Fri, 12 Jul 2019 19:46:23 +0530
-Message-Id: <52550ed9bbc10dca860eb1700aef5c97f644327b.1562940244.git.saiprakash.ranjan@codeaurora.org>
+Subject: [PATCHv8 2/5] arm64: dts: qcom: msm8998: Add Coresight support
+Date:   Fri, 12 Jul 2019 19:46:24 +0530
+Message-Id: <e510df23f741205fac9030f2c95d06d607549caa.1562940244.git.saiprakash.ranjan@codeaurora.org>
 X-Mailer: git-send-email 2.22.0
 In-Reply-To: <cover.1562940244.git.saiprakash.ranjan@codeaurora.org>
 References: <cover.1562940244.git.saiprakash.ranjan@codeaurora.org>
@@ -74,37 +74,37 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add coresight components found on Qualcomm SDM845 SoC.
+Enable coresight support by adding device nodes for the
+available source, sinks and channel blocks on MSM8998.
 
 Signed-off-by: Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
 Reviewed-by: Mathieu Poirier <mathieu.poirier@linaro.org>
 Acked-by: Suzuki K Poulose <suzuki.poulose@arm.com>
 ---
- arch/arm64/boot/dts/qcom/sdm845.dtsi | 451 +++++++++++++++++++++++++++
- 1 file changed, 451 insertions(+)
+ arch/arm64/boot/dts/qcom/msm8998.dtsi | 435 ++++++++++++++++++++++++++
+ 1 file changed, 435 insertions(+)
 
-diff --git a/arch/arm64/boot/dts/qcom/sdm845.dtsi b/arch/arm64/boot/dts/qcom/sdm845.dtsi
-index 4babff5f19b5..5d7e3f8e0f91 100644
---- a/arch/arm64/boot/dts/qcom/sdm845.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sdm845.dtsi
-@@ -1815,6 +1815,457 @@
- 			clock-names = "xo";
+diff --git a/arch/arm64/boot/dts/qcom/msm8998.dtsi b/arch/arm64/boot/dts/qcom/msm8998.dtsi
+index c13ed7aeb1e0..ad9cb5e8675d 100644
+--- a/arch/arm64/boot/dts/qcom/msm8998.dtsi
++++ b/arch/arm64/boot/dts/qcom/msm8998.dtsi
+@@ -822,6 +822,441 @@
+ 			#interrupt-cells = <0x2>;
  		};
  
 +		stm@6002000 {
 +			compatible = "arm,coresight-stm", "arm,primecell";
-+			reg = <0 0x06002000 0 0x1000>,
-+			      <0 0x16280000 0 0x180000>;
-+			reg-names = "stm-base", "stm-stimulus-base";
++			reg = <0x06002000 0x1000>,
++			      <0x16280000 0x180000>;
++			reg-names = "stm-base", "stm-data-base";
 +
-+			clocks = <&aoss_qmp>;
-+			clock-names = "apb_pclk";
++			clocks = <&rpmcc RPM_SMD_QDSS_CLK>, <&rpmcc RPM_SMD_QDSS_A_CLK>;
++			clock-names = "apb_pclk", "atclk";
 +
 +			out-ports {
 +				port {
 +					stm_out: endpoint {
-+						remote-endpoint =
-+						  <&funnel0_in7>;
++						remote-endpoint = <&funnel0_in7>;
 +					};
 +				};
 +			};
@@ -112,10 +112,10 @@ index 4babff5f19b5..5d7e3f8e0f91 100644
 +
 +		funnel@6041000 {
 +			compatible = "arm,coresight-funnel", "arm,primecell";
-+			reg = <0 0x06041000 0 0x1000>;
++			reg = <0x06041000 0x1000>;
 +
-+			clocks = <&aoss_qmp>;
-+			clock-names = "apb_pclk";
++			clocks = <&rpmcc RPM_SMD_QDSS_CLK>, <&rpmcc RPM_SMD_QDSS_A_CLK>;
++			clock-names = "apb_pclk", "atclk";
 +
 +			out-ports {
 +				port {
@@ -139,18 +139,18 @@ index 4babff5f19b5..5d7e3f8e0f91 100644
 +			};
 +		};
 +
-+		funnel@6043000 {
++		funnel@6042000 {
 +			compatible = "arm,coresight-funnel", "arm,primecell";
-+			reg = <0 0x06043000 0 0x1000>;
++			reg = <0x06042000 0x1000>;
 +
-+			clocks = <&aoss_qmp>;
-+			clock-names = "apb_pclk";
++			clocks = <&rpmcc RPM_SMD_QDSS_CLK>, <&rpmcc RPM_SMD_QDSS_A_CLK>;
++			clock-names = "apb_pclk", "atclk";
 +
 +			out-ports {
 +				port {
-+					funnel2_out: endpoint {
++					funnel1_out: endpoint {
 +						remote-endpoint =
-+						  <&merge_funnel_in2>;
++						  <&merge_funnel_in1>;
 +					};
 +				};
 +			};
@@ -159,9 +159,9 @@ index 4babff5f19b5..5d7e3f8e0f91 100644
 +				#address-cells = <1>;
 +				#size-cells = <0>;
 +
-+				port@5 {
-+					reg = <5>;
-+					funnel2_in5: endpoint {
++				port@6 {
++					reg = <6>;
++					funnel1_in6: endpoint {
 +						remote-endpoint =
 +						  <&apss_merge_funnel_out>;
 +					};
@@ -171,15 +171,16 @@ index 4babff5f19b5..5d7e3f8e0f91 100644
 +
 +		funnel@6045000 {
 +			compatible = "arm,coresight-funnel", "arm,primecell";
-+			reg = <0 0x06045000 0 0x1000>;
++			reg = <0x06045000 0x1000>;
 +
-+			clocks = <&aoss_qmp>;
-+			clock-names = "apb_pclk";
++			clocks = <&rpmcc RPM_SMD_QDSS_CLK>, <&rpmcc RPM_SMD_QDSS_A_CLK>;
++			clock-names = "apb_pclk", "atclk";
 +
 +			out-ports {
 +				port {
 +					merge_funnel_out: endpoint {
-+						remote-endpoint = <&etf_in>;
++						remote-endpoint =
++						  <&etf_in>;
 +					};
 +				};
 +			};
@@ -196,11 +197,11 @@ index 4babff5f19b5..5d7e3f8e0f91 100644
 +					};
 +				};
 +
-+				port@2 {
-+					reg = <2>;
-+					merge_funnel_in2: endpoint {
++				port@1 {
++					reg = <1>;
++					merge_funnel_in1: endpoint {
 +						remote-endpoint =
-+						  <&funnel2_out>;
++						  <&funnel1_out>;
 +					};
 +				};
 +			};
@@ -208,10 +209,10 @@ index 4babff5f19b5..5d7e3f8e0f91 100644
 +
 +		replicator@6046000 {
 +			compatible = "arm,coresight-dynamic-replicator", "arm,primecell";
-+			reg = <0 0x06046000 0 0x1000>;
++			reg = <0x06046000 0x1000>;
 +
-+			clocks = <&aoss_qmp>;
-+			clock-names = "apb_pclk";
++			clocks = <&rpmcc RPM_SMD_QDSS_CLK>, <&rpmcc RPM_SMD_QDSS_A_CLK>;
++			clock-names = "apb_pclk", "atclk";
 +
 +			out-ports {
 +				port {
@@ -232,10 +233,10 @@ index 4babff5f19b5..5d7e3f8e0f91 100644
 +
 +		etf@6047000 {
 +			compatible = "arm,coresight-tmc", "arm,primecell";
-+			reg = <0 0x06047000 0 0x1000>;
++			reg = <0x06047000 0x1000>;
 +
-+			clocks = <&aoss_qmp>;
-+			clock-names = "apb_pclk";
++			clocks = <&rpmcc RPM_SMD_QDSS_CLK>, <&rpmcc RPM_SMD_QDSS_A_CLK>;
++			clock-names = "apb_pclk", "atclk";
 +
 +			out-ports {
 +				port {
@@ -247,11 +248,7 @@ index 4babff5f19b5..5d7e3f8e0f91 100644
 +			};
 +
 +			in-ports {
-+				#address-cells = <1>;
-+				#size-cells = <0>;
-+
-+				port@1 {
-+					reg = <1>;
++				port {
 +					etf_in: endpoint {
 +						remote-endpoint =
 +						  <&merge_funnel_out>;
@@ -262,10 +259,10 @@ index 4babff5f19b5..5d7e3f8e0f91 100644
 +
 +		etr@6048000 {
 +			compatible = "arm,coresight-tmc", "arm,primecell";
-+			reg = <0 0x06048000 0 0x1000>;
++			reg = <0x06048000 0x1000>;
 +
-+			clocks = <&aoss_qmp>;
-+			clock-names = "apb_pclk";
++			clocks = <&rpmcc RPM_SMD_QDSS_CLK>, <&rpmcc RPM_SMD_QDSS_A_CLK>;
++			clock-names = "apb_pclk", "atclk";
 +			arm,scatter-gather;
 +
 +			in-ports {
@@ -278,14 +275,14 @@ index 4babff5f19b5..5d7e3f8e0f91 100644
 +			};
 +		};
 +
-+		etm@7040000 {
++		etm@7840000 {
 +			compatible = "arm,coresight-etm4x", "arm,primecell";
-+			reg = <0 0x07040000 0 0x1000>;
++			reg = <0x07840000 0x1000>;
++
++			clocks = <&rpmcc RPM_SMD_QDSS_CLK>, <&rpmcc RPM_SMD_QDSS_A_CLK>;
++			clock-names = "apb_pclk", "atclk";
 +
 +			cpu = <&CPU0>;
-+
-+			clocks = <&aoss_qmp>;
-+			clock-names = "apb_pclk";
 +
 +			out-ports {
 +				port {
@@ -297,14 +294,14 @@ index 4babff5f19b5..5d7e3f8e0f91 100644
 +			};
 +		};
 +
-+		etm@7140000 {
++		etm@7940000 {
 +			compatible = "arm,coresight-etm4x", "arm,primecell";
-+			reg = <0 0x07140000 0 0x1000>;
++			reg = <0x07940000 0x1000>;
++
++			clocks = <&rpmcc RPM_SMD_QDSS_CLK>, <&rpmcc RPM_SMD_QDSS_A_CLK>;
++			clock-names = "apb_pclk", "atclk";
 +
 +			cpu = <&CPU1>;
-+
-+			clocks = <&aoss_qmp>;
-+			clock-names = "apb_pclk";
 +
 +			out-ports {
 +				port {
@@ -316,14 +313,14 @@ index 4babff5f19b5..5d7e3f8e0f91 100644
 +			};
 +		};
 +
-+		etm@7240000 {
++		etm@7a40000 {
 +			compatible = "arm,coresight-etm4x", "arm,primecell";
-+			reg = <0 0x07240000 0 0x1000>;
++			reg = <0x07a40000 0x1000>;
++
++			clocks = <&rpmcc RPM_SMD_QDSS_CLK>, <&rpmcc RPM_SMD_QDSS_A_CLK>;
++			clock-names = "apb_pclk", "atclk";
 +
 +			cpu = <&CPU2>;
-+
-+			clocks = <&aoss_qmp>;
-+			clock-names = "apb_pclk";
 +
 +			out-ports {
 +				port {
@@ -335,14 +332,14 @@ index 4babff5f19b5..5d7e3f8e0f91 100644
 +			};
 +		};
 +
-+		etm@7340000 {
++		etm@7b40000 {
 +			compatible = "arm,coresight-etm4x", "arm,primecell";
-+			reg = <0 0x07340000 0 0x1000>;
++			reg = <0x07b40000 0x1000>;
++
++			clocks = <&rpmcc RPM_SMD_QDSS_CLK>, <&rpmcc RPM_SMD_QDSS_A_CLK>;
++			clock-names = "apb_pclk", "atclk";
 +
 +			cpu = <&CPU3>;
-+
-+			clocks = <&aoss_qmp>;
-+			clock-names = "apb_pclk";
 +
 +			out-ports {
 +				port {
@@ -354,88 +351,12 @@ index 4babff5f19b5..5d7e3f8e0f91 100644
 +			};
 +		};
 +
-+		etm@7440000 {
++		funnel@7b60000 { /* APSS Funnel */
 +			compatible = "arm,coresight-etm4x", "arm,primecell";
-+			reg = <0 0x07440000 0 0x1000>;
++			reg = <0x07b60000 0x1000>;
 +
-+			cpu = <&CPU4>;
-+
-+			clocks = <&aoss_qmp>;
-+			clock-names = "apb_pclk";
-+
-+			out-ports {
-+				port {
-+					etm4_out: endpoint {
-+						remote-endpoint =
-+						  <&apss_funnel_in4>;
-+					};
-+				};
-+			};
-+		};
-+
-+		etm@7540000 {
-+			compatible = "arm,coresight-etm4x", "arm,primecell";
-+			reg = <0 0x07540000 0 0x1000>;
-+
-+			cpu = <&CPU5>;
-+
-+			clocks = <&aoss_qmp>;
-+			clock-names = "apb_pclk";
-+
-+			out-ports {
-+				port {
-+					etm5_out: endpoint {
-+						remote-endpoint =
-+						  <&apss_funnel_in5>;
-+					};
-+				};
-+			};
-+		};
-+
-+		etm@7640000 {
-+			compatible = "arm,coresight-etm4x", "arm,primecell";
-+			reg = <0 0x07640000 0 0x1000>;
-+
-+			cpu = <&CPU6>;
-+
-+			clocks = <&aoss_qmp>;
-+			clock-names = "apb_pclk";
-+
-+			out-ports {
-+				port {
-+					etm6_out: endpoint {
-+						remote-endpoint =
-+						  <&apss_funnel_in6>;
-+					};
-+				};
-+			};
-+		};
-+
-+		etm@7740000 {
-+			compatible = "arm,coresight-etm4x", "arm,primecell";
-+			reg = <0 0x07740000 0 0x1000>;
-+
-+			cpu = <&CPU7>;
-+
-+			clocks = <&aoss_qmp>;
-+			clock-names = "apb_pclk";
-+
-+			out-ports {
-+				port {
-+					etm7_out: endpoint {
-+						remote-endpoint =
-+						  <&apss_funnel_in7>;
-+					};
-+				};
-+			};
-+		};
-+
-+		funnel@7800000 { /* APSS Funnel */
-+			compatible = "arm,coresight-funnel", "arm,primecell";
-+			reg = <0 0x07800000 0 0x1000>;
-+
-+			clocks = <&aoss_qmp>;
-+			clock-names = "apb_pclk";
++			clocks = <&rpmcc RPM_SMD_QDSS_CLK>, <&rpmcc RPM_SMD_QDSS_A_CLK>;
++			clock-names = "apb_pclk", "atclk";
 +
 +			out-ports {
 +				port {
@@ -516,18 +437,18 @@ index 4babff5f19b5..5d7e3f8e0f91 100644
 +			};
 +		};
 +
-+		funnel@7810000 {
++		funnel@7b70000 {
 +			compatible = "arm,coresight-funnel", "arm,primecell";
-+			reg = <0 0x07810000 0 0x1000>;
++			reg = <0x07b70000 0x1000>;
 +
-+			clocks = <&aoss_qmp>;
-+			clock-names = "apb_pclk";
++			clocks = <&rpmcc RPM_SMD_QDSS_CLK>, <&rpmcc RPM_SMD_QDSS_A_CLK>;
++			clock-names = "apb_pclk", "atclk";
 +
 +			out-ports {
 +				port {
 +					apss_merge_funnel_out: endpoint {
 +						remote-endpoint =
-+						  <&funnel2_in5>;
++						  <&funnel1_in6>;
 +					};
 +				};
 +			};
@@ -542,9 +463,73 @@ index 4babff5f19b5..5d7e3f8e0f91 100644
 +			};
 +		};
 +
- 		sdhc_2: sdhci@8804000 {
- 			compatible = "qcom,sdm845-sdhci", "qcom,sdhci-msm-v5";
- 			reg = <0 0x08804000 0 0x1000>;
++		etm@7c40000 {
++			compatible = "arm,coresight-etm4x", "arm,primecell";
++			reg = <0x07c40000 0x1000>;
++
++			clocks = <&rpmcc RPM_SMD_QDSS_CLK>, <&rpmcc RPM_SMD_QDSS_A_CLK>;
++			clock-names = "apb_pclk", "atclk";
++
++			cpu = <&CPU4>;
++
++			port{
++				etm4_out: endpoint {
++					remote-endpoint = <&apss_funnel_in4>;
++				};
++			};
++		};
++
++		etm@7d40000 {
++			compatible = "arm,coresight-etm4x", "arm,primecell";
++			reg = <0x07d40000 0x1000>;
++
++			clocks = <&rpmcc RPM_SMD_QDSS_CLK>, <&rpmcc RPM_SMD_QDSS_A_CLK>;
++			clock-names = "apb_pclk", "atclk";
++
++			cpu = <&CPU5>;
++
++			port{
++				etm5_out: endpoint {
++					remote-endpoint = <&apss_funnel_in5>;
++				};
++			};
++		};
++
++		etm@7e40000 {
++			compatible = "arm,coresight-etm4x", "arm,primecell";
++			reg = <0x07e40000 0x1000>;
++
++			clocks = <&rpmcc RPM_SMD_QDSS_CLK>, <&rpmcc RPM_SMD_QDSS_A_CLK>;
++			clock-names = "apb_pclk", "atclk";
++
++			cpu = <&CPU6>;
++
++			port{
++				etm6_out: endpoint {
++					remote-endpoint = <&apss_funnel_in6>;
++				};
++			};
++		};
++
++		etm@7f40000 {
++			compatible = "arm,coresight-etm4x", "arm,primecell";
++			reg = <0x07f40000 0x1000>;
++
++			clocks = <&rpmcc RPM_SMD_QDSS_CLK>, <&rpmcc RPM_SMD_QDSS_A_CLK>;
++			clock-names = "apb_pclk", "atclk";
++
++			cpu = <&CPU7>;
++
++			port{
++				etm7_out: endpoint {
++					remote-endpoint = <&apss_funnel_in7>;
++				};
++			};
++		};
++
+ 		spmi_bus: spmi@800f000 {
+ 			compatible = "qcom,spmi-pmic-arb";
+ 			reg =	<0x800f000 0x1000>,
 -- 
 QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
 of Code Aurora Forum, hosted by The Linux Foundation
