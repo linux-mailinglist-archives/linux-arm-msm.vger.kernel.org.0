@@ -2,105 +2,60 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 8F49A67B0C
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 13 Jul 2019 17:48:59 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E764B67CA9
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 14 Jul 2019 04:13:45 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727664AbfGMPs6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 13 Jul 2019 11:48:58 -0400
-Received: from mail.z3ntu.xyz ([128.199.32.197]:41512 "EHLO mail.z3ntu.xyz"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1727626AbfGMPs6 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 13 Jul 2019 11:48:58 -0400
-Received: from localhost.localdomain (80-123-55-184.adsl.highway.telekom.at [80.123.55.184])
-        by mail.z3ntu.xyz (Postfix) with ESMTPSA id 9D810C01AE;
-        Sat, 13 Jul 2019 15:48:55 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=z3ntu.xyz; s=z3ntu;
-        t=1563032936; bh=VSHu3v+OVsPMLdoN+xclQVva8pOG9Vg0Z9Vj3ic1jvk=;
-        h=From:To:Cc:Subject:Date;
-        b=RUn0wUIkGpgGgNHmytAugA2b4rdAo5iLAuYearxVpAmfLIegWbBwWGG3EYsOXhvj5
-         zq4yCzWYLaA1h7cOM7/ea46QvGBINFfdwiAtNMLvasC28Zx12to6gZp/FilnC8dUIK
-         TVXkUGbZGlP3veCfyB8cc7onirFvr12OkR/gs9hA=
-From:   Luca Weiss <luca@z3ntu.xyz>
-To:     linux-arm-msm@vger.kernel.org
-Cc:     ~martijnbraam/pmos-upstream@lists.sr.ht,
-        Luca Weiss <luca@z3ntu.xyz>,
-        Brian Masney <masneyb@onstation.org>,
-        Andy Gross <agross@kernel.org>,
-        David Brown <david.brown@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Mark Rutland <mark.rutland@arm.com>,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: [PATCH v2] ARM: dts: msm8974-FP2: add reboot-mode node
-Date:   Sat, 13 Jul 2019 17:48:06 +0200
-Message-Id: <20190713154805.17159-1-luca@z3ntu.xyz>
-X-Mailer: git-send-email 2.22.0
+        id S1727538AbfGNCNp convert rfc822-to-8bit (ORCPT
+        <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 13 Jul 2019 22:13:45 -0400
+Received: from mail.iara.government.bg ([95.43.208.99]:38426 "EHLO
+        iara.government.bg" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1727490AbfGNCNo (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Sat, 13 Jul 2019 22:13:44 -0400
+Received: from localhost (localhost [127.0.0.1])
+        by iara.government.bg (Postfix) with ESMTP id C86D92CC10F;
+        Sat, 13 Jul 2019 09:40:22 +0300 (EEST)
+Received: from iara.government.bg ([127.0.0.1])
+        by localhost (iara.government.bg [127.0.0.1]) (amavisd-new, port 10032)
+        with ESMTP id QZbhdCER4hSq; Sat, 13 Jul 2019 09:40:22 +0300 (EEST)
+Received: from localhost (localhost [127.0.0.1])
+        by iara.government.bg (Postfix) with ESMTP id 3D50332D28B;
+        Sat, 13 Jul 2019 03:16:27 +0300 (EEST)
+X-Virus-Scanned: amavisd-new at iara.government.bg
+Received: from iara.government.bg ([127.0.0.1])
+        by localhost (iara.government.bg [127.0.0.1]) (amavisd-new, port 10026)
+        with ESMTP id efpRoFK5nAdW; Sat, 13 Jul 2019 03:16:27 +0300 (EEST)
+Received: from [10.108.11.57] (unknown [105.12.6.226])
+        by iara.government.bg (Postfix) with ESMTPSA id EE16E2EACC7;
+        Sat, 13 Jul 2019 02:37:09 +0300 (EEST)
+Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 8BIT
+Content-Description: Mail message body
+Subject: =?utf-8?b?RndkOiBSZTog4oKsIDIsMDAwLDAwMC4wMCBFdXJv?=
+To:     Recipients <silistra@iara.government.bg>
+From:   silistra@iara.government.bg
+Date:   Fri, 12 Jul 2019 16:36:54 -0700
+Reply-To: carfleon@gmail.com
+Message-Id: <20190712233709.EE16E2EACC7@iara.government.bg>
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-This enables userspace to signal the bootloader to go into the
-bootloader or recovery mode.
+Lieber Freund,
 
-The magic values can be found in both the downstream kernel and the LK
-kernel (bootloader).
+Ich bin Herr Richard Wahl der Mega-Gewinner von $ 533M In Mega Millions Jackpot spende ich an 5 zufällige Personen, wenn Sie diese E-Mail erhalten, dann wurde Ihre E-Mail nach einem Spinball ausgewählt. Ich habe den größten Teil meines Vermögens auf eine Reihe von Wohltätigkeitsorganisationen und Organisationen verteilt. Ich habe mich freiwillig dazu entschieden, Ihnen den Betrag von € 2.000.000,00 zu spenden eine der ausgewählten 5, um meine Gewinne zu überprüfen, finden Sie auf meiner You Tube Seite unten.
 
-Reviewed-by: Brian Masney <masneyb@onstation.org>
-Signed-off-by: Luca Weiss <luca@z3ntu.xyz>
----
-Changes v1 -> v2:
-- Move the majority of the node into the board dts, just keep the magic
-  values in the device-specific dts.
+UHR MICH HIER: https://www.youtube.com/watch?v=tne02ExNDrw
 
- arch/arm/boot/dts/qcom-msm8974-fairphone-fp2.dts | 10 ++++++++++
- arch/arm/boot/dts/qcom-msm8974.dtsi              | 11 +++++++++++
- 2 files changed, 21 insertions(+)
+Das ist dein Spendencode: [DF00430342018]
 
-diff --git a/arch/arm/boot/dts/qcom-msm8974-fairphone-fp2.dts b/arch/arm/boot/dts/qcom-msm8974-fairphone-fp2.dts
-index 643c57f84818..ff4a3e0aa746 100644
---- a/arch/arm/boot/dts/qcom-msm8974-fairphone-fp2.dts
-+++ b/arch/arm/boot/dts/qcom-msm8974-fairphone-fp2.dts
-@@ -338,6 +338,16 @@
- 			};
- 		};
- 	};
-+
-+	imem@fe805000 {
-+		status = "okay";
-+
-+		reboot-mode {
-+			mode-normal	= <0x77665501>;
-+			mode-bootloader	= <0x77665500>;
-+			mode-recovery	= <0x77665502>;
-+		};
-+	};
- };
- 
- &spmi_bus {
-diff --git a/arch/arm/boot/dts/qcom-msm8974.dtsi b/arch/arm/boot/dts/qcom-msm8974.dtsi
-index 45b5c8ef0374..1927430bded7 100644
---- a/arch/arm/boot/dts/qcom-msm8974.dtsi
-+++ b/arch/arm/boot/dts/qcom-msm8974.dtsi
-@@ -1085,6 +1085,17 @@
- 				};
- 			};
- 		};
-+
-+		imem@fe805000 {
-+			status = "disabled";
-+			compatible = "syscon", "simple-mfd";
-+			reg = <0xfe805000 0x1000>;
-+
-+			reboot-mode {
-+				compatible = "syscon-reboot-mode";
-+				offset = <0x65c>;
-+			};
-+		};
- 	};
- 
- 	smd {
--- 
-2.22.0
+Antworten Sie mit dem Spendencode auf diese E-Mail: liezlnatashavanessa@gmail.com
 
+Ich hoffe, Sie und Ihre Familie glücklich zu machen.
+
+Grüße
+
+Herr Richard Wahl
