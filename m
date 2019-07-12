@@ -2,110 +2,128 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 8BBDA67394
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 Jul 2019 18:49:35 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 88DC56748B
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 Jul 2019 19:45:51 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727058AbfGLQtf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 12 Jul 2019 12:49:35 -0400
-Received: from smtp.codeaurora.org ([198.145.29.96]:50146 "EHLO
-        smtp.codeaurora.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726982AbfGLQte (ORCPT
+        id S1727266AbfGLRpu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 12 Jul 2019 13:45:50 -0400
+Received: from bombadil.infradead.org ([198.137.202.133]:42924 "EHLO
+        bombadil.infradead.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727024AbfGLRpu (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 12 Jul 2019 12:49:34 -0400
-Received: by smtp.codeaurora.org (Postfix, from userid 1000)
-        id 2763B60A4E; Fri, 12 Jul 2019 16:49:34 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
-        s=default; t=1562950174;
-        bh=b1svF/gTguro1nK1BVoRt1d04OC7/a9WZZ0GYcXlh8Q=;
-        h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
-        b=oHQbmGmHLU25x9yoH6gar5agOqbHYYwLbTBTI7AnUFQ539bfMmqzyvxMQ9X5JSY1f
-         XcEudci5ZxW5guTKNvJo0dX9Yy2LtzCIOMpqpmacIxekLYt6l2qHCeAGTLZGtszkek
-         90vAhuwQbyUgp6TlnpCO3rblvYOYYTXSCUSDPNag=
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        pdx-caf-mail.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.7 required=2.0 tests=ALL_TRUSTED,BAYES_00,
-        DKIM_INVALID,DKIM_SIGNED autolearn=no autolearn_force=no version=3.4.0
-Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
-        by smtp.codeaurora.org (Postfix) with ESMTP id 33FC960213;
-        Fri, 12 Jul 2019 16:49:33 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
-        s=default; t=1562950173;
-        bh=b1svF/gTguro1nK1BVoRt1d04OC7/a9WZZ0GYcXlh8Q=;
-        h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
-        b=Z26V7meMV9wSWGr9zlpTxsWeTq+y5Z9D7WaIEAdBJkpsc7uQntNv+ZZNhYirWM+lS
-         5ya4cgcn3AFDmiWO2TBF2ZIl58c0kAHecFjXowk2W7RJT7fm4lmJqQNP9c7M7IALtg
-         ws8Dk7oOQzCd68ZquBweSEHPNux2Hzq67xFtFk/E=
+        Fri, 12 Jul 2019 13:45:50 -0400
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+        d=infradead.org; s=bombadil.20170209; h=Content-Transfer-Encoding:
+        Content-Type:MIME-Version:References:In-Reply-To:Message-ID:Subject:Cc:To:
+        From:Date:Sender:Reply-To:Content-ID:Content-Description:Resent-Date:
+        Resent-From:Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:List-Id:
+        List-Help:List-Unsubscribe:List-Subscribe:List-Post:List-Owner:List-Archive;
+         bh=NxeFOSM4MwQ991fBRbEDEiqzzEYscNx/lH42noQqaEA=; b=iiOsW3Vw8rpy77HSY+BGojEg3
+        r1DgZZuXVeaAX4pU32jCzEMbZcE4HtuLLezPLqvzJT0Tbt0N3T085kmHs53uch75CG27pJliMnDq/
+        /Yb90FjffjE6mabThCuHYTbXItDblO8gBVgcMq2JAjeN8yK56sjN172naX00teqIbfYq4mtWssMYz
+        o/V/KPzcVb8qs/8iJTx+iqmSqmkgOPprMGp/YeoYVJtCZXDI9OLxcZOMroQluNZzk055ejii7IN7e
+        Xat7kvGXGALkxQXnexd0HUOmM9Ad936A2+82kIK9u/NqCMC1G1c3qBhSX08mgsBqND4u1Ih6t370d
+        bXzgvZE3A==;
+Received: from [186.213.242.57] (helo=coco.lan)
+        by bombadil.infradead.org with esmtpsa (Exim 4.92 #3 (Red Hat Linux))
+        id 1hlzc6-0006HD-MB; Fri, 12 Jul 2019 17:45:42 +0000
+Date:   Fri, 12 Jul 2019 14:45:37 -0300
+From:   Mauro Carvalho Chehab <mchehab+samsung@kernel.org>
+To:     Brad Love <brad@nextdimension.cc>
+Cc:     Marc Gonzalez <marc.w.gonzalez@free.fr>,
+        Antti Palosaari <crope@iki.fi>,
+        Jonathan =?UTF-8?B?TmV1c2Now6RmZXI=?= <j.neuschaefer@gmx.net>,
+        linux-media <linux-media@vger.kernel.org>,
+        LKML <linux-kernel@vger.kernel.org>,
+        MSM <linux-arm-msm@vger.kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>
+Subject: Re: [PATCH v3] media: si2168: Refactor command setup code
+Message-ID: <20190712144537.2bad2482@coco.lan>
+In-Reply-To: <bde6e367-61a4-7501-2459-eecad5db1d1b@nextdimension.cc>
+References: <544859b5-108a-1909-d612-64f67a02aeec@free.fr>
+        <bde6e367-61a4-7501-2459-eecad5db1d1b@nextdimension.cc>
+X-Mailer: Claws Mail 3.17.3 (GTK+ 2.24.32; x86_64-redhat-linux-gnu)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
-Content-Transfer-Encoding: 7bit
-Date:   Fri, 12 Jul 2019 22:19:33 +0530
-From:   saiprakash.ranjan@codeaurora.org
-To:     Suzuki K Poulose <suzuki.poulose@arm.com>
-Cc:     gregkh@linuxfoundation.org, mathieu.poirier@linaro.org,
-        leo.yan@linaro.org, alexander.shishkin@linux.intel.com,
-        mike.leach@linaro.org, robh+dt@kernel.org,
-        bjorn.andersson@linaro.org, devicetree@vger.kernel.org,
-        david.brown@linaro.org, mark.rutland@arm.com,
-        rnayak@codeaurora.org, vivek.gautam@codeaurora.org,
-        sibis@codeaurora.org, linux-arm-kernel@lists.infradead.org,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        marc.w.gonzalez@free.fr, devicetree-owner@vger.kernel.org
-Subject: Re: [PATCHv8 1/5] arm64: dts: qcom: sdm845: Add Coresight support
-In-Reply-To: <06c1a087-53f7-4841-1ae3-07ccbed22a72@arm.com>
-References: <cover.1562940244.git.saiprakash.ranjan@codeaurora.org>
- <52550ed9bbc10dca860eb1700aef5c97f644327b.1562940244.git.saiprakash.ranjan@codeaurora.org>
- <06c1a087-53f7-4841-1ae3-07ccbed22a72@arm.com>
-Message-ID: <8b82793e7b693dbb922ef4fdbffdb76f@codeaurora.org>
-X-Sender: saiprakash.ranjan@codeaurora.org
-User-Agent: Roundcube Webmail/1.2.5
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Suzuki,
+Em Fri, 12 Jul 2019 10:47:17 -0500
+Brad Love <brad@nextdimension.cc> escreveu:
 
-On 2019-07-12 22:14, Suzuki K Poulose wrote:
-> Hi Sai,
-> 
-> On 12/07/2019 15:16, Sai Prakash Ranjan wrote:
->> Add coresight components found on Qualcomm SDM845 SoC.
-> 
->> 
->> Signed-off-by: Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
->> Reviewed-by: Mathieu Poirier <mathieu.poirier@linaro.org>
->> Acked-by: Suzuki K Poulose <suzuki.poulose@arm.com>
->> ---
->>   arch/arm64/boot/dts/qcom/sdm845.dtsi | 451 
->> +++++++++++++++++++++++++++
->>   1 file changed, 451 insertions(+)
->> 
->> diff --git a/arch/arm64/boot/dts/qcom/sdm845.dtsi 
->> b/arch/arm64/boot/dts/qcom/sdm845.dtsi
->> index 4babff5f19b5..5d7e3f8e0f91 100644
->> --- a/arch/arm64/boot/dts/qcom/sdm845.dtsi
->> +++ b/arch/arm64/boot/dts/qcom/sdm845.dtsi
->> @@ -1815,6 +1815,457 @@
->>   			clock-names = "xo";
->>   		};
->>   +		stm@6002000 {
->> +			compatible = "arm,coresight-stm", "arm,primecell";
->> +			reg = <0 0x06002000 0 0x1000>,
->> +			      <0 0x16280000 0 0x180000>;
->> +			reg-names = "stm-base", "stm-stimulus-base";
->> +
->> +			clocks = <&aoss_qmp>;
->> +			clock-names = "apb_pclk";
-> 
-> 
-> Which tree is this based on ? I can't see aoss_qmp anywhere under 
-> dts/qcom
-> on 5.2-rc7.
-> 
+> Hi Marc,
+>=20
+> Replying inline.
+>=20
+>=20
+> On 04/07/2019 05.33, Marc Gonzalez wrote:
+> > Refactor the command setup code, and let the compiler determine
+> > the size of each command.
+> >
+> > Reviewed-by: Jonathan Neusch=C3=A4fer <j.neuschaefer@gmx.net>
+> > Signed-off-by: Marc Gonzalez <marc.w.gonzalez@free.fr>
+> > ---
+> > Changes from v1:
+> > - Use a real function to populate struct si2168_cmd *cmd, and a trivial
+> > macro wrapping it (macro because sizeof).
+> > Changes from v2:
+> > - Fix header mess
+> > - Add Jonathan's tag
+> > ---
+> >  drivers/media/dvb-frontends/si2168.c | 146 +++++++++------------------
+> >  1 file changed, 45 insertions(+), 101 deletions(-)
+> >
+> > diff --git a/drivers/media/dvb-frontends/si2168.c b/drivers/media/dvb-f=
+rontends/si2168.c
+> > index c64b360ce6b5..5e81e076369c 100644
+> > --- a/drivers/media/dvb-frontends/si2168.c
+> > +++ b/drivers/media/dvb-frontends/si2168.c
+> > @@ -12,6 +12,16 @@
+> > =20
+> >  static const struct dvb_frontend_ops si2168_ops;
+> > =20
+> > +static void cmd_setup(struct si2168_cmd *cmd, char *args, int wlen, in=
+t rlen)
+> > +{
+> > +	memcpy(cmd->args, args, wlen);
+> > +	cmd->wlen =3D wlen;
+> > +	cmd->rlen =3D rlen;
+> > +}
+> > + =20
+>=20
+>=20
+> struct si2168_cmd.args is u8, not char. I also think const should apply
+> to the pointer.
+>=20
+>=20
+> > +#define CMD_SETUP(cmd, args, rlen) \
+> > +	cmd_setup(cmd, args, sizeof(args) - 1, rlen)
+> > + =20
+>=20
+>=20
+> This is only a valid helper if args is a null terminated string. It just
+> so happens that every instance in this driver is, but that could be a
+> silent pitfall if someone used a u8 array with this macro.
 
-It's based on linux-next.
+Actually, it is uglier than that. Of one writes something like:
 
-Thanks,
-Sai
+	char buf[20];
+
+	buf[0] =3D 0x20;
+	buf[1] =3D 0x03;
+
+	CMD_SETUP(cmd, buf, 0);
+
+	// some other init, up to 5 values, then another CMD_SETUP()
+
+
+sizeof() will evaluate to 20, and not to 2, with would be the
+expected buffer size, and it will pass 18 random values.
+
+IMHO, using sizeof() here is a very bad idea.
+
+Regards,
+Mauro
