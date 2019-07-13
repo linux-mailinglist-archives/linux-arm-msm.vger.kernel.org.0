@@ -2,91 +2,143 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 7CDFC6766F
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 13 Jul 2019 00:11:32 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 7B40F67750
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 13 Jul 2019 02:49:26 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727749AbfGLWLb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 12 Jul 2019 18:11:31 -0400
-Received: from smtp4-g21.free.fr ([212.27.42.4]:8534 "EHLO smtp4-g21.free.fr"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1727362AbfGLWLb (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 12 Jul 2019 18:11:31 -0400
-Received: from [192.168.1.91] (unknown [77.207.133.132])
-        (Authenticated sender: marc.w.gonzalez)
-        by smtp4-g21.free.fr (Postfix) with ESMTPSA id 542C419F574;
-        Sat, 13 Jul 2019 00:11:12 +0200 (CEST)
-Subject: Re: [PATCH v3] media: si2168: Refactor command setup code
-To:     Mauro Carvalho Chehab <mchehab+samsung@kernel.org>,
-        Brad Love <brad@nextdimension.cc>
-Cc:     Antti Palosaari <crope@iki.fi>,
-        =?UTF-8?Q?Jonathan_Neusch=c3=a4fer?= <j.neuschaefer@gmx.net>,
-        linux-media <linux-media@vger.kernel.org>,
-        LKML <linux-kernel@vger.kernel.org>,
-        MSM <linux-arm-msm@vger.kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>
-References: <544859b5-108a-1909-d612-64f67a02aeec@free.fr>
- <bde6e367-61a4-7501-2459-eecad5db1d1b@nextdimension.cc>
- <20190712144537.2bad2482@coco.lan>
-From:   Marc Gonzalez <marc.w.gonzalez@free.fr>
-Message-ID: <10f064c5-1634-c9f9-fcc9-6ab51b7f8f0b@free.fr>
-Date:   Sat, 13 Jul 2019 00:11:12 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.7.2
+        id S1727392AbfGMAtZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 12 Jul 2019 20:49:25 -0400
+Received: from mail-ed1-f66.google.com ([209.85.208.66]:46939 "EHLO
+        mail-ed1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727236AbfGMAtZ (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 12 Jul 2019 20:49:25 -0400
+Received: by mail-ed1-f66.google.com with SMTP id d4so10618589edr.13;
+        Fri, 12 Jul 2019 17:49:23 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=SyqVAgQMOHYXey7EnkAylgSqwsoD6phOjM6qtdZ4mNw=;
+        b=qCl3ma6CyklmWDLlR3q/xIlLZoVBiD9DmK8Y9WaGemh0o9qNRjqZTzHmJ3eFCAPTN8
+         YlrlYwBw7Xn5sK9INOZX9VpMfClNM/AcDFUSvmpvwPrcV8bKHWgcMrHKnwNZJ/4M/TYP
+         XQueTm7VyWhkf8SlUBudIVxfxYDsGG153oobZgRYKIOxZ/j2Px189vGz30Xpls/gHtwk
+         AXhO1SRUHspmO1N2c619aD+utfQedV8vNrePHMXQoCw1m4EJHYDQDnQKLDh2mYDV7tdv
+         QRe9tuGfk1+hMAv+5EJqJNJSsOwwKCLtGBoEiOrV8M8W3KSY0IIICfHJrCtgBqJ6TWzx
+         KTCQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=SyqVAgQMOHYXey7EnkAylgSqwsoD6phOjM6qtdZ4mNw=;
+        b=aRDLdFvWxHKWTPreHM4yqedRkBsA4A68E1iQXyOoExOExqkJku0v9rH11Rf/83wQBN
+         KUD4qTV591osddzY+w3t1HT11hDKhWqVxnpMTsV1G8vY3woDx+VG9cDAbV9pgA31X5oa
+         P+UbjU2fEVt8hifN/l9A+MaaI9USrMbhf3gzJtm9sOEaFB5LsaRrFxqu/WJxCEY2JmZN
+         cZA2FUu7mAoous+Sfh76U/u4P4ZHbhUxOsHvQBBT4wrqDxzq/6CY0Yl1su6gnZjaTktT
+         t3AoxZ0zIB8mlfbUp6soG9fn7x9W1D4CqxzmkgXZtbYGf12+frGdRqPdcpgiPXSCpnlM
+         erKg==
+X-Gm-Message-State: APjAAAWFEpm7wpcwz6/w7uAlTj6mlwfHRoL9rBSp1Nk24iiUIIGELDE1
+        +gDA1vJRl9+TdoYQQbqKrdj85ZHARvyBpdcquf8=
+X-Google-Smtp-Source: APXvYqyDnrpj8iAQ6BNq+8gwo2b3Md7G97ZUOdYET+TJa+t9rbuRiFvlgq0grhmuNKjhyvRktnY5DBaQMrRBZYG2t2Q=
+X-Received: by 2002:a17:906:3f87:: with SMTP id b7mr10538910ejj.164.1562978962599;
+ Fri, 12 Jul 2019 17:49:22 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <20190712144537.2bad2482@coco.lan>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+References: <20190703214326.41269-1-jeffrey.l.hugo@gmail.com>
+ <20190703214512.41319-1-jeffrey.l.hugo@gmail.com> <CGME20190706010615epcas2p343102f858a7fadaf6785f7ece105f1a7@epcas2p3.samsung.com>
+ <20190706010604.GG20625@sirena.org.uk> <64ca3a74-374f-d4f3-bee6-a607cc5c0fc5@samsung.com>
+ <CAF6AEGtGjKRA3A8v6pgaXLgpeiLZuz6HuDSFRjKrNp4iQNVZtA@mail.gmail.com>
+ <10b1313f-7a60-df04-a9e3-76649b74f2f0@samsung.com> <CAOCk7NoyCmPQF3s4GWD1Oa4t5hdqi6vdcOdHyJpo3Gc1JQqXcw@mail.gmail.com>
+In-Reply-To: <CAOCk7NoyCmPQF3s4GWD1Oa4t5hdqi6vdcOdHyJpo3Gc1JQqXcw@mail.gmail.com>
+From:   Rob Clark <robdclark@gmail.com>
+Date:   Fri, 12 Jul 2019 17:49:11 -0700
+Message-ID: <CAF6AEGu8NY14qkzO1qU1TGX4VrUvQU3vZbDXjA_UNBqqODGucQ@mail.gmail.com>
+Subject: Re: [PATCH 1/2] regmap: Add DSI bus support
+To:     Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
+Cc:     Andrzej Hajda <a.hajda@samsung.com>,
+        Mark Brown <broonie@kernel.org>,
+        Laurent Pinchart <Laurent.pinchart@ideasonboard.com>,
+        David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        dri-devel <dri-devel@lists.freedesktop.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 12/07/2019 19:45, Mauro Carvalho Chehab wrote:
+On Fri, Jul 12, 2019 at 7:22 AM Jeffrey Hugo <jeffrey.l.hugo@gmail.com> wrote:
+>
+> On Fri, Jul 12, 2019 at 7:01 AM Andrzej Hajda <a.hajda@samsung.com> wrote:
+> >
+> > On 11.07.2019 15:56, Rob Clark wrote:
+> > > On Thu, Jul 11, 2019 at 6:11 AM Andrzej Hajda <a.hajda@samsung.com> wrote:
+> > >> On 06.07.2019 03:06, Mark Brown wrote:
+> > >>> On Wed, Jul 03, 2019 at 02:45:12PM -0700, Jeffrey Hugo wrote:
+> > >>>> Add basic support with a simple implementation that utilizes the generic
+> > >>>> read/write commands to allow device registers to be configured.
+> > >>> This looks good to me but I really don't know anything about DSI,
+> > >>> I'd appreciate some review from other people who do.  I take it
+> > >>> there's some spec thing in DSI that says registers and bytes must
+> > >>> both be 8 bit?
+> > >>
+> > >> I am little bit confused about regmap usage here. On the one hand it
+> > >> nicely fits to this specific driver, probably because it already uses
+> > >> regmap_i2c.
+> > >>
+> > >> On the other it will be unusable for almost all current DSI drivers and
+> > >> probably for most new drivers. Why?
+> > >>
+> > >> 1. DSI protocol defines actually more than 30 types of transactions[1],
+> > >> but this patchset implements only few of them (dsi generic write/read
+> > >> family). Is it possible to implement multiple types of transactions in
+> > >> regmap?
+> > >>
+> > >> 2. There is already some set of helpers which uses dsi bus, rewriting it
+> > >> on regmap is possible or driver could use of regmap and direct access
+> > >> together, the question is if it is really necessary.
+> > >>
+> > >> 3. DSI devices are no MFDs so regmap abstraction has no big value added
+> > >> (correct me, if there are other significant benefits).
+> > >>
+> > > I assume it is not *just* this one bridge that can be programmed over
+> > > either i2c or dsi, depending on how things are wired up on the board.
+> > > It certainly would be nice for regmap to support this case, so we
+> > > don't have to write two different bridge drivers for the same bridge.
+> > > I wouldn't expect a panel that is only programmed via dsi to use this.
+> >
+> >
+> > On the other side supporting DSI and I2C in one driver is simply matter
+> > of writing proper accesors.
+>
+> To me, this reads like your counter argument to not using regmap, is
+> to reinvent regmap.  Maybe I don't understand what you are proposing
+> here, but it sounds like remove the regmap support, define sn65
+> specific accessors that just before sending the write to the bus does
+> a check if the access needs to go over i2c or DSI.  Feels like a
+> clunky version of regmap to me.  Why not use the existing "generic"
+> framework?
+>
+> To your point that DSI defines over 30 message types, yes it does, but
+> that seems to be outside of the scope.  How many of those are actually
+> for doing register access?  I'm thinking just 4 (technically a hair
+> more than that because of the multiple version of the same message) -
+> generic read, generic write, dcs read, dcs write.  I don't view regmap
+> as a generic abstraction layer over a particular mechanism, and thus
+> needs to support everything that mechanism does.  Sending sync
+> commands, or pixel data over DSI is outside the scope of regmap to me.
 
-> Brad Love <brad@nextdimension.cc> escreveu:
-> 
->> On 04/07/2019 05.33, Marc Gonzalez wrote:
->>
->>> +#define CMD_SETUP(cmd, args, rlen) \
->>> +	cmd_setup(cmd, args, sizeof(args) - 1, rlen)
->>> +  
->>
->> This is only a valid helper if args is a null terminated string. It just
->> so happens that every instance in this driver is, but that could be a
->> silent pitfall if someone used a u8 array with this macro.
-> 
-> Actually, it is uglier than that. If one writes something like:
-> 
-> 	char buf[20];
-> 
-> 	buf[0] = 0x20;
-> 	buf[1] = 0x03;
-> 
-> 	CMD_SETUP(cmd, buf, 0);
-> 
-> 	// some other init, up to 5 values, then another CMD_SETUP()
+I'm w/ jhugo on this one.. if you are working w/ a device that can be
+programmed via i2c or dsi, regmap and limiting yourself to the small
+subset of dsi cmds which map to i2c reads/writes, makes a ton of
+sense.  (And I'm almost certain this bridge isn't the only such
+device.)
 
-I'm not sure what you mean in the // comment.
-What kind of init? Why up to 5 values? Why another CMD_SETUP?
+That isn't to say you should use regmap for devices that are only
+programmed over dsi.  That would be silly.  The original argument
+about this not being usable by most DSI devices is really a
+non-sequitur.
 
-> sizeof() will evaluate to 20, and not to 2, with would be the
-> expected buffer size, and it will pass 18 random values.
-> 
-> IMHO, using sizeof() here is a very bad idea.
-
-You may have a point...
-(Though I'm not proposing a kernel API function, merely code
-refactoring for a single file that's unlikely to change going
-forward.)
-
-It's also bad form to repeat the cmd size (twice) when the compiler
-can figure it out automatically for string literals (which is 95%
-of the use-cases).
-
-I can drop the macro, and just use the helper...
-
-Or maybe there's a GCC extension to test that an argument is a
-string literal...
-
-Regards.
+BR,
+-R
