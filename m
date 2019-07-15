@@ -2,101 +2,98 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 95F52680B5
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 14 Jul 2019 20:31:19 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 1E9736827F
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 15 Jul 2019 05:17:43 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728278AbfGNSbS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 14 Jul 2019 14:31:18 -0400
-Received: from smtp.gentoo.org ([140.211.166.183]:48000 "EHLO smtp.gentoo.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1728218AbfGNSbS (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 14 Jul 2019 14:31:18 -0400
-Received: from [IPv6:2001:a62:1aa0:1f01:8bef:1c55:1564:aa8] (unknown [IPv6:2001:a62:1aa0:1f01:8bef:1c55:1564:aa8])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: zzam)
-        by smtp.gentoo.org (Postfix) with ESMTPSA id DEB7A347B24;
-        Sun, 14 Jul 2019 18:31:15 +0000 (UTC)
-Subject: Re: [PATCH v3] media: si2168: Refactor command setup code
-To:     Mauro Carvalho Chehab <mchehab+samsung@kernel.org>,
-        Marc Gonzalez <marc.w.gonzalez@free.fr>
-Cc:     Brad Love <brad@nextdimension.cc>, Antti Palosaari <crope@iki.fi>,
-        =?UTF-8?Q?Jonathan_Neusch=c3=a4fer?= <j.neuschaefer@gmx.net>,
-        linux-media <linux-media@vger.kernel.org>,
-        LKML <linux-kernel@vger.kernel.org>,
-        MSM <linux-arm-msm@vger.kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>
-References: <544859b5-108a-1909-d612-64f67a02aeec@free.fr>
- <bde6e367-61a4-7501-2459-eecad5db1d1b@nextdimension.cc>
- <20190712144537.2bad2482@coco.lan>
- <10f064c5-1634-c9f9-fcc9-6ab51b7f8f0b@free.fr>
- <20190713070256.3495de51@coco.lan>
-From:   Matthias Schwarzott <zzam@gentoo.org>
-Message-ID: <13f74614-69b8-00e1-2072-ba390d5aa2cb@gentoo.org>
-Date:   Sun, 14 Jul 2019 20:31:18 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.7.0
-MIME-Version: 1.0
-In-Reply-To: <20190713070256.3495de51@coco.lan>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-GB
-Content-Transfer-Encoding: 7bit
+        id S1729080AbfGODRb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 14 Jul 2019 23:17:31 -0400
+Received: from mail-pg1-f195.google.com ([209.85.215.195]:34395 "EHLO
+        mail-pg1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726074AbfGODRb (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Sun, 14 Jul 2019 23:17:31 -0400
+Received: by mail-pg1-f195.google.com with SMTP id n9so777160pgc.1;
+        Sun, 14 Jul 2019 20:17:30 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id;
+        bh=aF4g/95JsdU94BtU3dUNZxklmtVOywGbbXwlWkP3bEw=;
+        b=AIwQPJeW8q5cgrnpiKU3/rcJC4cWM0mD0TRh2AhbAKuuTHK9Ky05V+G9OjRBhm1bq7
+         P3lG5WmWAhujTpKwkyqQFPRA5cKkN06Mp3lvBVABIxOtNSKkc+X3C8ctbtdtvx+OUUnS
+         2yACjj2pmoqqeCn+r29ZJFswPGymFo8fx/k6WJ9rQzWHs3eZL0+18gPPgvHF7LLhKMgX
+         LpvmGzMqzdQSdggMynJ0hg5dEiYNwHc1fOfRs9N94OcXgkLPDOUNlNhrzQF/39rOIJN6
+         IwtGgeIMToWtMQTUb1HOrswIdbJzlwoe0nSY21deOuTdERhc8SmPnjPI4YgHXT2a5pmt
+         Q3gA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=aF4g/95JsdU94BtU3dUNZxklmtVOywGbbXwlWkP3bEw=;
+        b=Q26A6V0Q31RWXoyikPQtKFxQMrqBaFLSt26V8LSUkxky9ZsQELpN4myKbbTyP5ykrK
+         aiCPQwizvLilhd3puT6mkPyo5CKR4sRxgRoQ0/hsWl3jVlmoIZ4lGuF9pF0N/1AW/sSr
+         KyDZ/7AnIKifXnsC44pr6KRWAkRBlh4tnAM6TOI7Y5+qIAlP2fkZ7ApRsGH+uEv88rd7
+         InOTHUgzEj6TsfsFC7L/k0/SqTYCjf5qMbE0NvmbpYQrTO6RHO6l1fv640i/D/uk/yGZ
+         momayGsG5jUmksiITJzVCOyVfsWJmrYig6FXCEEFHUUJHHuUDUJCN+omxhvNnCdB3RDm
+         Sz+A==
+X-Gm-Message-State: APjAAAW3XeEVLCJNwxSMqvXQGV3m0WWEb52x84bttIsM4b18S0EGBd7E
+        YhOvC17tU4rBJzdZOcnfpkM=
+X-Google-Smtp-Source: APXvYqyOe7zFXYz7ZSjmhhIOJzZrjismG1PRArYqe4qOQOu3/AyhmMPK2wwt0AqYDUsIUDfb78ZzRA==
+X-Received: by 2002:a65:4103:: with SMTP id w3mr13523619pgp.1.1563160650409;
+        Sun, 14 Jul 2019 20:17:30 -0700 (PDT)
+Received: from hfq-skylake.ipads-lab.se.sjtu.edu.cn ([202.120.40.82])
+        by smtp.googlemail.com with ESMTPSA id u3sm13720277pjn.5.2019.07.14.20.17.27
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Sun, 14 Jul 2019 20:17:30 -0700 (PDT)
+From:   Fuqian Huang <huangfq.daxian@gmail.com>
+Cc:     Sinan Kaya <okaya@kernel.org>, Andy Gross <agross@kernel.org>,
+        David Brown <david.brown@linaro.org>,
+        Vinod Koul <vkoul@kernel.org>,
+        linux-arm-kernel@lists.infradead.org,
+        linux-arm-msm@vger.kernel.org, dmaengine@vger.kernel.org,
+        linux-kernel@vger.kernel.org,
+        Fuqian Huang <huangfq.daxian@gmail.com>
+Subject: [PATCH v3 04/24] dmaengine: qcom_hidma: Remove call to memset after dmam_alloc_coherent
+Date:   Mon, 15 Jul 2019 11:17:23 +0800
+Message-Id: <20190715031723.6375-1-huangfq.daxian@gmail.com>
+X-Mailer: git-send-email 2.11.0
+To:     unlisted-recipients:; (no To-header on input)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Am 13.07.19 um 12:02 schrieb Mauro Carvalho Chehab:
-> Em Sat, 13 Jul 2019 00:11:12 +0200
-> Marc Gonzalez <marc.w.gonzalez@free.fr> escreveu:
-> 
->> On 12/07/2019 19:45, Mauro Carvalho Chehab wrote:
->>
->>> Brad Love <brad@nextdimension.cc> escreveu:
->>>   
->>> IMHO, using sizeof() here is a very bad idea.  
->>
->> You may have a point...
->> (Though I'm not proposing a kernel API function, merely code
->> refactoring for a single file that's unlikely to change going
->> forward.)
-> 
-> Yes, I know, but we had already some bugs due to the usage of
-> sizeof() on similar macros at drivers in the past.
-> 
->> It's also bad form to repeat the cmd size (twice) when the compiler
->> can figure it out automatically for string literals (which is 95%
->> of the use-cases).
->>
->> I can drop the macro, and just use the helper...
-> 
-> The helper function sounds fine.
-> 
->>
->> Or maybe there's a GCC extension to test that an argument is a
->> string literal...
-> 
-> If this could be evaluated by some advanced macro logic that
-> would work not only with gcc but also with clang, then a
-> macro that does what you proposed could be useful.
-> 
-> There are some ways to check the type of a macro argument, but I'm
-> not sure if are there any way for it to distinguish between a
-> string constant from a char * array.
-> 
-Maybe something like this will prevent compilation if the argument is no
-string literal:
+In commit 518a2f1925c3
+("dma-mapping: zero memory returned from dma_alloc_*"),
+dma_alloc_coherent has already zeroed the memory.
+So memset is not needed.
 
-#define CMD_SETUP(cmd, args, rlen) \
-	cmd_setup(cmd, args "", sizeof(args) - 1, rlen)
+Signed-off-by: Fuqian Huang <huangfq.daxian@gmail.com>
+---
+Changes in v3:
+  - Use actual commit rather than the merge commit in the commit message
 
-Another idea is a check like:
+ drivers/dma/qcom/hidma_ll.c | 2 --
+ 1 file changed, 2 deletions(-)
 
-#define CMD_SETUP(cmd, args, rlen) \
-	do { \
-		BUILD_BUG_ON(#args[0] != "\""); \
-		cmd_setup(cmd, args "", sizeof(args) - 1, rlen) \
-	} while(0)
+diff --git a/drivers/dma/qcom/hidma_ll.c b/drivers/dma/qcom/hidma_ll.c
+index 5bf8b145c427..bb4471e84e48 100644
+--- a/drivers/dma/qcom/hidma_ll.c
++++ b/drivers/dma/qcom/hidma_ll.c
+@@ -749,7 +749,6 @@ struct hidma_lldev *hidma_ll_init(struct device *dev, u32 nr_tres,
+ 	if (!lldev->tre_ring)
+ 		return NULL;
+ 
+-	memset(lldev->tre_ring, 0, (HIDMA_TRE_SIZE + 1) * nr_tres);
+ 	lldev->tre_ring_size = HIDMA_TRE_SIZE * nr_tres;
+ 	lldev->nr_tres = nr_tres;
+ 
+@@ -769,7 +768,6 @@ struct hidma_lldev *hidma_ll_init(struct device *dev, u32 nr_tres,
+ 	if (!lldev->evre_ring)
+ 		return NULL;
+ 
+-	memset(lldev->evre_ring, 0, (HIDMA_EVRE_SIZE + 1) * nr_tres);
+ 	lldev->evre_ring_size = HIDMA_EVRE_SIZE * nr_tres;
+ 
+ 	/* the EVRE ring has to be EVRE_SIZE aligned */
+-- 
+2.11.0
 
-Regards
-Matthias
