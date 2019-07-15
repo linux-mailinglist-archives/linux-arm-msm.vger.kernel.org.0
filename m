@@ -2,98 +2,64 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 8D01969835
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 15 Jul 2019 17:17:27 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 508B4698B1
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 15 Jul 2019 17:59:39 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731056AbfGOPRK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 15 Jul 2019 11:17:10 -0400
-Received: from mail-qt1-f196.google.com ([209.85.160.196]:45706 "EHLO
-        mail-qt1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730221AbfGOPRK (ORCPT
+        id S1730545AbfGOP7E (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 15 Jul 2019 11:59:04 -0400
+Received: from mail-lj1-f195.google.com ([209.85.208.195]:39945 "EHLO
+        mail-lj1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1730503AbfGOP7E (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 15 Jul 2019 11:17:10 -0400
-Received: by mail-qt1-f196.google.com with SMTP id x22so11091350qtp.12;
-        Mon, 15 Jul 2019 08:17:09 -0700 (PDT)
+        Mon, 15 Jul 2019 11:59:04 -0400
+Received: by mail-lj1-f195.google.com with SMTP id m8so16776524lji.7
+        for <linux-arm-msm@vger.kernel.org>; Mon, 15 Jul 2019 08:59:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:subject:to:cc:references:openpgp:autocrypt:message-id
-         :date:user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=E/egqeiPmeR+wTmeoTlfpr/9l78nB77vFY1VUyDOmQo=;
-        b=fdAmHhIIQ5M5U7SJWntEaFH5x/7ZSNGV/zJLzvCc6oy4ze5UqIr+ewk8gIlu3LdeuD
-         bSVEyGeFqfynptNWDeMxR39rY9enAHf0Fv1HLodHpi15tfBmQUEXzcug2siLXm7QiiV+
-         nvoFtKO/+CJy9ikan9o/6tAq9hW4sFK4dBkAI48pIMeG2iYFU+HZnSor5brUWCEWjDSW
-         IqydetLko55QSdg+D97dxHsmuqyEdIZtiX2rG9LU3EpWaMWJpfmlcAWAVyFkW3BRMDCt
-         wYMyell5jTZlhr0A5x34LrJqIB+pLUrHN9vlFu3BF4RmKpB8O9BH0bblbyQTl1+semWS
-         Q6Hw==
+        d=linaro.org; s=google;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=HjbeDhOV51A8sdpXnqafwlfJ9iwiNhonhrxyNQUI16E=;
+        b=N+eU86f/1K4jXpLed142Olwx09e8H8Iivx69wTDwzoqwqFbC8Pe3Y7pdRrF6bmBl1f
+         JhdQC7tAw/WwyEYSmz5ltzaNJ2xL7+fD+UmUOm4E4KvTPROstgSY6AXe9Tm8qYYPrS2K
+         c9J9vJzxL6CrmTWBVQwLKPD9vYqRpjkpgcdwY/4H4sO7/+cMGdHMI64j+DBSE+dvsFc5
+         xTJlfTlD5s0iyTDoz9gh5jLj5fLF4b2spjq3k7oowVEbmTqoKHcNx483USXg1drtBEFk
+         buTzA7D5lMjlsRhVlWy3p5a+YlYB7pORyFDmytvW9qASNVxT/sQoj7DRdWrapqSeaqXn
+         F8dw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:subject:to:cc:references:openpgp
-         :autocrypt:message-id:date:user-agent:mime-version:in-reply-to
-         :content-language:content-transfer-encoding;
-        bh=E/egqeiPmeR+wTmeoTlfpr/9l78nB77vFY1VUyDOmQo=;
-        b=dFa5nhVHprauNC67XuYkZUsyv9Ot6zcU6BVsiegyz5AdyfXpmzvlQ2qdxwC+Xdl0t+
-         YVTYganwwziYJXgkeyMD18oxbLY8F0PNYl31awfoeMwHIN8Xoh8cbZXPpRv3vWa0R/xC
-         gLUHTYB4Q1OjxunkahfLQn3qDFkk2In4FqU3tputEAw6aLE9gYM9vmsbTO6LcTiPfiA/
-         XFrznnUnVJDEOC38TsNlkQ40951XeIKzPPgRGlU0kN7sObaCI/DF++1rdTRrb7LWDKiO
-         lHLw9GaX/EJPCHHqJTqJppblRFHw0DrGwm/GI0kgdDPKWNneBSL0D1GirIxUdFIY3E6U
-         2SyA==
-X-Gm-Message-State: APjAAAXECgRkddBdwz2IIKCVeCntbN8nZILDRhs8/Nva+Hl4DvHaQB3Z
-        l2Rg3tuT83M4FHfYHCStclc=
-X-Google-Smtp-Source: APXvYqw+Jj/zJuzoP/WabIMtvOAfiFGap4BYM3yfG3iS6kDjoZ16oLEcwXvluS9Yi+h/DsFIMYTcnQ==
-X-Received: by 2002:ac8:1106:: with SMTP id c6mr17077663qtj.332.1563203829090;
-        Mon, 15 Jul 2019 08:17:09 -0700 (PDT)
-Received: from [10.84.150.27] ([167.220.148.27])
-        by smtp.gmail.com with ESMTPSA id q17sm3683624qtl.13.2019.07.15.08.17.08
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=HjbeDhOV51A8sdpXnqafwlfJ9iwiNhonhrxyNQUI16E=;
+        b=pZhBnBOQxBX6QAKY8dH3KV0r50cU5TL79KT4XCIvhCo1VGYkLSa6YwzmKiUpgrfwv/
+         nPm08kIeWzyNS/cGDkPoVIJYS9Bh+VogR+7PiJDkFFbsy/1RXyIWsaZ3exBiYuxgvInL
+         sAIjyJZVB0gjOEgBo0cz3Hpk5nP1OYhZU2lF9jZb/+8K6CeMJRlHPvYjswtlLeYq4NGj
+         97pz2pewl7YtsTfj/31CQ6aSMYfWnMpoVjjZqYKIvrrzg4k9vXc/22BAzBi4EfiYZkad
+         pg4oqrtmlXhEo+jeKuGYgXhIC4Z276b9uKjpbKriSbeAj8WNQriDBt50+YtqsVCX7DtT
+         y5oA==
+X-Gm-Message-State: APjAAAUBkF/rcVGe+/iyUHn0H1H4j+sHxbuRBDlyMMJg+k8RCrkEwOng
+        1e1fhIaPaEsDNngF9htOeWduRMyiJSjCKw==
+X-Google-Smtp-Source: APXvYqzV20YelwwZmVujNBOuf0KewDUAlMY5R7oPdGUPxlJpzk4n5D9ibscxmdTuGZoa2l4u193jag==
+X-Received: by 2002:a2e:3e01:: with SMTP id l1mr11682242lja.208.1563206342726;
+        Mon, 15 Jul 2019 08:59:02 -0700 (PDT)
+Received: from [192.168.27.209] ([37.157.136.206])
+        by smtp.googlemail.com with ESMTPSA id f24sm2633350lfk.72.2019.07.15.08.59.01
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 15 Jul 2019 08:17:08 -0700 (PDT)
-From:   Sinan Kaya <Okaya@kernel.org>
-X-Google-Original-From: Sinan Kaya <okaya@kernel.org>
-Subject: Re: [PATCH v3 04/24] dmaengine: qcom_hidma: Remove call to memset
- after dmam_alloc_coherent
-To:     Fuqian Huang <huangfq.daxian@gmail.com>
-Cc:     Andy Gross <agross@kernel.org>,
-        David Brown <david.brown@linaro.org>,
-        Vinod Koul <vkoul@kernel.org>,
-        linux-arm Mailing List <linux-arm-kernel@lists.infradead.org>,
-        linux-arm-msm@vger.kernel.org, dmaengine@vger.kernel.org,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-        Robin Murphy <robin.murphy@arm.com>,
-        Christoph Hellwig <hch@infradead.org>
-References: <20190715031723.6375-1-huangfq.daxian@gmail.com>
- <72c45b14-f0c0-9d1c-0953-eea70ce513a0@kernel.org>
- <CABXRUiQXweOLRTpdyhx9xT_B1VBmoSoNm=_+Qr4prmz7u1QRFA@mail.gmail.com>
-Openpgp: preference=signencrypt
-Autocrypt: addr=okaya@kernel.org; keydata=
- mQENBFrnOrUBCADGOL0kF21B6ogpOkuYvz6bUjO7NU99PKhXx1MfK/AzK+SFgxJF7dMluoF6
- uT47bU7zb7HqACH6itTgSSiJeSoq86jYoq5s4JOyaj0/18Hf3/YBah7AOuwk6LtV3EftQIhw
- 9vXqCnBwP/nID6PQ685zl3vH68yzF6FVNwbDagxUz/gMiQh7scHvVCjiqkJ+qu/36JgtTYYw
- 8lGWRcto6gr0eTF8Wd8f81wspmUHGsFdN/xPsZPKMw6/on9oOj3AidcR3P9EdLY4qQyjvcNC
- V9cL9b5I/Ud9ghPwW4QkM7uhYqQDyh3SwgEFudc+/RsDuxjVlg9CFnGhS0nPXR89SaQZABEB
- AAG0HVNpbmFuIEtheWEgPG9rYXlhQGtlcm5lbC5vcmc+iQFOBBMBCAA4FiEEYdOlMSE+a7/c
- ckrQvGF4I+4LAFcFAlztcAoCGwMFCwkIBwIGFQoJCAsCBBYCAwECHgECF4AACgkQvGF4I+4L
- AFfidAf/VKHInxep0Z96iYkIq42432HTZUrxNzG9IWk4HN7c3vTJKv2W+b9pgvBF1SmkyQSy
- 8SJ3Zd98CO6FOHA1FigFyZahVsme+T0GsS3/OF1kjrtMktoREr8t0rK0yKpCTYVdlkHadxmR
- Qs5xLzW1RqKlrNigKHI2yhgpMwrpzS+67F1biT41227sqFzW9urEl/jqGJXaB6GV+SRKSHN+
- ubWXgE1NkmfAMeyJPKojNT7ReL6eh3BNB/Xh1vQJew+AE50EP7o36UXghoUktnx6cTkge0ZS
- qgxuhN33cCOU36pWQhPqVSlLTZQJVxuCmlaHbYWvye7bBOhmiuNKhOzb3FcgT7kBDQRa5zq1
- AQgAyRq/7JZKOyB8wRx6fHE0nb31P75kCnL3oE+smKW/sOcIQDV3C7mZKLf472MWB1xdr4Tm
- eXeL/wT0QHapLn5M5wWghC80YvjjdolHnlq9QlYVtvl1ocAC28y43tKJfklhHiwMNDJfdZbw
- 9lQ2h+7nccFWASNUu9cqZOABLvJcgLnfdDpnSzOye09VVlKr3NHgRyRZa7me/oFJCxrJlKAl
- 2hllRLt0yV08o7i14+qmvxI2EKLX9zJfJ2rGWLTVe3EJBnCsQPDzAUVYSnTtqELu2AGzvDiM
- gatRaosnzhvvEK+kCuXuCuZlRWP7pWSHqFFuYq596RRG5hNGLbmVFZrCxQARAQABiQEfBBgB
- CAAJBQJa5zq1AhsMAAoJELxheCPuCwBX2UYH/2kkMC4mImvoClrmcMsNGijcZHdDlz8NFfCI
- gSb3NHkarnA7uAg8KJuaHUwBMk3kBhv2BGPLcmAknzBIehbZ284W7u3DT9o1Y5g+LDyx8RIi
- e7pnMcC+bE2IJExCVf2p3PB1tDBBdLEYJoyFz/XpdDjZ8aVls/pIyrq+mqo5LuuhWfZzPPec
- 9EiM2eXpJw+Rz+vKjSt1YIhg46YbdZrDM2FGrt9ve3YaM5H0lzJgq/JQPKFdbd5MB0X37Qc+
- 2m/A9u9SFnOovA42DgXUyC2cSbIJdPWOK9PnzfXqF3sX9Aol2eLUmQuLpThJtq5EHu6FzJ7Y
- L+s0nPaNMKwv/Xhhm6Y=
-Message-ID: <245ffd79-316c-e985-d1da-2ccea6d29636@kernel.org>
-Date:   Mon, 15 Jul 2019 11:17:07 -0400
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
- Thunderbird/60.8.0
+        Mon, 15 Jul 2019 08:59:01 -0700 (PDT)
+Subject: Re: [PATCH v4 3/4] media: venus: Update to bitrate based clock
+ scaling
+To:     Aniket Masule <amasule@codeaurora.org>, linux-media@vger.kernel.org
+Cc:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        vgarodia@codeaurora.org
+References: <1562078787-516-1-git-send-email-amasule@codeaurora.org>
+ <1562078787-516-4-git-send-email-amasule@codeaurora.org>
+From:   Stanimir Varbanov <stanimir.varbanov@linaro.org>
+Message-ID: <06248dce-2c01-279b-20be-4dfcafbd792f@linaro.org>
+Date:   Mon, 15 Jul 2019 18:58:58 +0300
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+ Thunderbird/60.7.2
 MIME-Version: 1.0
-In-Reply-To: <CABXRUiQXweOLRTpdyhx9xT_B1VBmoSoNm=_+Qr4prmz7u1QRFA@mail.gmail.com>
+In-Reply-To: <1562078787-516-4-git-send-email-amasule@codeaurora.org>
 Content-Type: text/plain; charset=utf-8
 Content-Language: en-US
 Content-Transfer-Encoding: 7bit
@@ -102,10 +68,88 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 7/15/2019 1:43 AM, Fuqian Huang wrote:
-> Should I rewrite the commit log? Just mention that dma_alloc_coherent
-> has already
-> zeroed the memory and not to reference the commit?
+Hi,
 
-I'd like to hear from Robin Murphy that arm smmu driver follows this as
-well.
+On 7/2/19 5:46 PM, Aniket Masule wrote:
+> Introduced clock scaling using bitrate, preavious
+> calculations consider only the cycles per mb.
+> Also, clock scaling is now triggered before every
+> buffer being queued to the device. This helps in
+> deciding precise clock cycles required.
+> 
+> Signed-off-by: Aniket Masule <amasule@codeaurora.org>
+> ---
+>  drivers/media/platform/qcom/venus/helpers.c | 31 +++++++++++++++++++++++++----
+>  1 file changed, 27 insertions(+), 4 deletions(-)
+> 
+> diff --git a/drivers/media/platform/qcom/venus/helpers.c b/drivers/media/platform/qcom/venus/helpers.c
+> index 2c976e4..5726d86 100644
+> --- a/drivers/media/platform/qcom/venus/helpers.c
+> +++ b/drivers/media/platform/qcom/venus/helpers.c
+> @@ -399,17 +399,26 @@ static int scale_clocks(struct venus_inst *inst)
+>  	return ret;
+>  }
+>  
+> -static unsigned long calculate_vpp_freq(struct venus_inst *inst)
+> +static unsigned long calculate_inst_freq(struct venus_inst *inst,
+> +					 unsigned long filled_len)
+>  {
+> -	unsigned long vpp_freq = 0;
+> +	unsigned long vpp_freq = 0, vsp_freq = 0;
+> +	u64 fps = inst->fps;
+>  	u32 mbs_per_sec;
+>  
+>  	mbs_per_sec = load_per_instance(inst);
+>  	vpp_freq = mbs_per_sec * inst->clk_data.codec_freq_data->vpp_freq;
+>  	/* 21 / 20 is overhead factor */
+>  	vpp_freq += vpp_freq / 20;
+> +	vsp_freq = mbs_per_sec * inst->clk_data.codec_freq_data->vsp_freq;
+>  
+> -	return vpp_freq;
+> +	/* 10 / 7 is overhead factor */
+> +	if (inst->session_type == VIDC_SESSION_TYPE_ENC)
+> +		vsp_freq += (inst->controls.enc.bitrate * 10) / 7;
+> +	else
+> +		vsp_freq += ((fps * filled_len * 8) * 10) / 7;
+> +
+> +	return max(vpp_freq, vsp_freq);
+>  }
+>  
+>  static int scale_clocks_v4(struct venus_inst *inst)
+> @@ -417,13 +426,27 @@ static int scale_clocks_v4(struct venus_inst *inst)
+>  	struct venus_core *core = inst->core;
+>  	const struct freq_tbl *table = core->res->freq_tbl;
+>  	unsigned int num_rows = core->res->freq_tbl_size;
+> +	struct v4l2_m2m_ctx *m2m_ctx = inst->m2m_ctx;
+>  	struct clk *clk = core->clks[0];
+>  	struct device *dev = core->dev;
+>  	unsigned int i;
+>  	unsigned long freq = 0, freq_core1 = 0, freq_core2 = 0;
+> +	unsigned long filled_len = 0;
+> +	struct venus_buffer *buf, *n;
+> +	struct vb2_buffer *vb;
+>  	int ret;
+>  
+> -	freq = calculate_vpp_freq(inst);
+> +	mutex_lock(&inst->lock);
+> +	v4l2_m2m_for_each_src_buf_safe(m2m_ctx, buf, n) {
+> +		vb = &buf->vb.vb2_buf;
+> +		filled_len = max(filled_len, vb2_get_plane_payload(vb, 0));
+> +	}
+> +	mutex_unlock(&inst->lock);
+> +
+> +	if (inst->session_type == VIDC_SESSION_TYPE_DEC && !filled_len)
+> +		return 0;
+> +
+> +	freq = calculate_inst_freq(inst, filled_len);
+>  
+>  	if (freq > table[0].freq)
+>  		dev_warn(dev, "HW is overloaded, needed: %lu max: %lu\n",
+> 
+
+The original patch has a call to load_scale_clocks from
+venus_helper_vb2_buf_queue, why it is not included here?
+
+-- 
+regards,
+Stan
