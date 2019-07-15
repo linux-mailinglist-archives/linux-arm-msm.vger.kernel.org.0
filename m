@@ -2,64 +2,63 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 508B4698B1
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 15 Jul 2019 17:59:39 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4EB9D698C9
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 15 Jul 2019 18:02:52 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730545AbfGOP7E (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 15 Jul 2019 11:59:04 -0400
-Received: from mail-lj1-f195.google.com ([209.85.208.195]:39945 "EHLO
-        mail-lj1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730503AbfGOP7E (ORCPT
+        id S1731220AbfGOQBA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 15 Jul 2019 12:01:00 -0400
+Received: from mail-lf1-f66.google.com ([209.85.167.66]:36161 "EHLO
+        mail-lf1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1731011AbfGOQBA (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 15 Jul 2019 11:59:04 -0400
-Received: by mail-lj1-f195.google.com with SMTP id m8so16776524lji.7
-        for <linux-arm-msm@vger.kernel.org>; Mon, 15 Jul 2019 08:59:03 -0700 (PDT)
+        Mon, 15 Jul 2019 12:01:00 -0400
+Received: by mail-lf1-f66.google.com with SMTP id q26so11392333lfc.3
+        for <linux-arm-msm@vger.kernel.org>; Mon, 15 Jul 2019 09:00:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=subject:to:cc:references:from:message-id:date:user-agent
          :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=HjbeDhOV51A8sdpXnqafwlfJ9iwiNhonhrxyNQUI16E=;
-        b=N+eU86f/1K4jXpLed142Olwx09e8H8Iivx69wTDwzoqwqFbC8Pe3Y7pdRrF6bmBl1f
-         JhdQC7tAw/WwyEYSmz5ltzaNJ2xL7+fD+UmUOm4E4KvTPROstgSY6AXe9Tm8qYYPrS2K
-         c9J9vJzxL6CrmTWBVQwLKPD9vYqRpjkpgcdwY/4H4sO7/+cMGdHMI64j+DBSE+dvsFc5
-         xTJlfTlD5s0iyTDoz9gh5jLj5fLF4b2spjq3k7oowVEbmTqoKHcNx483USXg1drtBEFk
-         buTzA7D5lMjlsRhVlWy3p5a+YlYB7pORyFDmytvW9qASNVxT/sQoj7DRdWrapqSeaqXn
-         F8dw==
+        bh=jG4VdXmMyoFpVc6NE61bUixbe9slfFe01xROPhYpMig=;
+        b=e5PTHPzJ994GNrOlaHnu48Kx8anQPqPS+EE773SxOJVUZ/SYAuvGcwf8gdsTmOC+uW
+         6pQdRNNPUSnorHQJeyfyIJ4SQyRQhrT6N6HVWQoa8NYljURxsNcAUd8rnlkJVPsT2V7Y
+         adM/O1IBhBvTw/kJxUc+/sHbrAaqXuqtvDRI8UN74N1+AGDrUiecIXZRqsVY02GuP9Sm
+         Gbe67YjBkXNaTkWph3pf7vm01CpMn4DNnOHYqwbW1A9mA5NXdpI9RWf0GAxjuoDNKh4V
+         npdUlFUBKhNyUms2UrEFu+XvmGG3ySH5mCdHydaDo07riYRjgGalP3VlGFU5edXYrKbi
+         Ibrg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:subject:to:cc:references:from:message-id:date
          :user-agent:mime-version:in-reply-to:content-language
          :content-transfer-encoding;
-        bh=HjbeDhOV51A8sdpXnqafwlfJ9iwiNhonhrxyNQUI16E=;
-        b=pZhBnBOQxBX6QAKY8dH3KV0r50cU5TL79KT4XCIvhCo1VGYkLSa6YwzmKiUpgrfwv/
-         nPm08kIeWzyNS/cGDkPoVIJYS9Bh+VogR+7PiJDkFFbsy/1RXyIWsaZ3exBiYuxgvInL
-         sAIjyJZVB0gjOEgBo0cz3Hpk5nP1OYhZU2lF9jZb/+8K6CeMJRlHPvYjswtlLeYq4NGj
-         97pz2pewl7YtsTfj/31CQ6aSMYfWnMpoVjjZqYKIvrrzg4k9vXc/22BAzBi4EfiYZkad
-         pg4oqrtmlXhEo+jeKuGYgXhIC4Z276b9uKjpbKriSbeAj8WNQriDBt50+YtqsVCX7DtT
-         y5oA==
-X-Gm-Message-State: APjAAAUBkF/rcVGe+/iyUHn0H1H4j+sHxbuRBDlyMMJg+k8RCrkEwOng
-        1e1fhIaPaEsDNngF9htOeWduRMyiJSjCKw==
-X-Google-Smtp-Source: APXvYqzV20YelwwZmVujNBOuf0KewDUAlMY5R7oPdGUPxlJpzk4n5D9ibscxmdTuGZoa2l4u193jag==
-X-Received: by 2002:a2e:3e01:: with SMTP id l1mr11682242lja.208.1563206342726;
-        Mon, 15 Jul 2019 08:59:02 -0700 (PDT)
+        bh=jG4VdXmMyoFpVc6NE61bUixbe9slfFe01xROPhYpMig=;
+        b=Gzwbf72rzy2nPOTiqLkTNNfZA5OYViLpTzSuN4ngIQgL/6U+XhBwwuyXUTVkgB8M4K
+         K8bB+4uMpYs8CUC7lm2mUfh6Euwb9z22RHLn6zug1rZCpSvczfnNR48o8LTaLx6B6dml
+         Wn8XucfuJYof6T/IjJm2kNA+edymm/JziMKDcKniLHL40LqgZclk1L3Sfu5fwAyRwkCy
+         zqFCgRhqIsgDNVzejhssNIRsrCIte/V1yQLrJHVNOYGTa1Qa7qaNJwhVRjvilYFi3nTk
+         CSDKzoJQIy0qvzTXoVk6cvHy1aUyNw4S/Qc6FsHXMHr8ip9EHAgvOhqZ3BIcyVwQoV20
+         Eo+g==
+X-Gm-Message-State: APjAAAUd4DRhozLszFjNEGg8YyBZd1r/Ba+3Cdlt8qTgkaH0K8+j7u0k
+        jZT/FGEWjhxlxNu2X9e85RyhuA==
+X-Google-Smtp-Source: APXvYqzpO/d721H8WmEWknLzWu8P2CBGQsu+CdgDvcYjaeYxVVcvsWqTCVaZyda1gLViNxrDs++qQQ==
+X-Received: by 2002:ac2:5b49:: with SMTP id i9mr11725604lfp.116.1563206458930;
+        Mon, 15 Jul 2019 09:00:58 -0700 (PDT)
 Received: from [192.168.27.209] ([37.157.136.206])
-        by smtp.googlemail.com with ESMTPSA id f24sm2633350lfk.72.2019.07.15.08.59.01
+        by smtp.googlemail.com with ESMTPSA id w1sm2408001lfe.50.2019.07.15.09.00.57
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 15 Jul 2019 08:59:01 -0700 (PDT)
-Subject: Re: [PATCH v4 3/4] media: venus: Update to bitrate based clock
- scaling
+        Mon, 15 Jul 2019 09:00:58 -0700 (PDT)
+Subject: Re: [PATCH v4 4/4] media: venus: Update core selection
 To:     Aniket Masule <amasule@codeaurora.org>, linux-media@vger.kernel.org
 Cc:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
         vgarodia@codeaurora.org
 References: <1562078787-516-1-git-send-email-amasule@codeaurora.org>
- <1562078787-516-4-git-send-email-amasule@codeaurora.org>
+ <1562078787-516-5-git-send-email-amasule@codeaurora.org>
 From:   Stanimir Varbanov <stanimir.varbanov@linaro.org>
-Message-ID: <06248dce-2c01-279b-20be-4dfcafbd792f@linaro.org>
-Date:   Mon, 15 Jul 2019 18:58:58 +0300
+Message-ID: <66c52577-fae8-9b3d-ec1d-886b97897729@linaro.org>
+Date:   Mon, 15 Jul 2019 19:00:57 +0300
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
  Thunderbird/60.7.2
 MIME-Version: 1.0
-In-Reply-To: <1562078787-516-4-git-send-email-amasule@codeaurora.org>
+In-Reply-To: <1562078787-516-5-git-send-email-amasule@codeaurora.org>
 Content-Type: text/plain; charset=utf-8
 Content-Language: en-US
 Content-Transfer-Encoding: 7bit
@@ -71,84 +70,61 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 Hi,
 
 On 7/2/19 5:46 PM, Aniket Masule wrote:
-> Introduced clock scaling using bitrate, preavious
-> calculations consider only the cycles per mb.
-> Also, clock scaling is now triggered before every
-> buffer being queued to the device. This helps in
-> deciding precise clock cycles required.
+> Present core assignment is static. Introduced load balancing
+> across the cores. Load on earch core is calculated and core
+> with minimum load is assigned to given instance.
 > 
 > Signed-off-by: Aniket Masule <amasule@codeaurora.org>
 > ---
->  drivers/media/platform/qcom/venus/helpers.c | 31 +++++++++++++++++++++++++----
->  1 file changed, 27 insertions(+), 4 deletions(-)
+>  drivers/media/platform/qcom/venus/helpers.c    | 69 +++++++++++++++++++++++---
+>  drivers/media/platform/qcom/venus/helpers.h    |  2 +-
+>  drivers/media/platform/qcom/venus/hfi_helper.h |  1 +
+>  drivers/media/platform/qcom/venus/hfi_parser.h |  5 ++
+>  drivers/media/platform/qcom/venus/vdec.c       |  2 +-
+>  drivers/media/platform/qcom/venus/venc.c       |  2 +-
+>  6 files changed, 72 insertions(+), 9 deletions(-)
 > 
 > diff --git a/drivers/media/platform/qcom/venus/helpers.c b/drivers/media/platform/qcom/venus/helpers.c
-> index 2c976e4..5726d86 100644
+> index 5726d86..321e9f7 100644
 > --- a/drivers/media/platform/qcom/venus/helpers.c
 > +++ b/drivers/media/platform/qcom/venus/helpers.c
-> @@ -399,17 +399,26 @@ static int scale_clocks(struct venus_inst *inst)
->  	return ret;
+> @@ -26,6 +26,7 @@
+>  #include "helpers.h"
+>  #include "hfi_helper.h"
+>  #include "hfi_venus_io.h"
+> +#include "hfi_parser.h"
+>  
+>  struct intbuf {
+>  	struct list_head list;
+> @@ -331,6 +332,24 @@ static u32 load_per_instance(struct venus_inst *inst)
+>  	return mbs * inst->fps;
 >  }
 >  
-> -static unsigned long calculate_vpp_freq(struct venus_inst *inst)
-> +static unsigned long calculate_inst_freq(struct venus_inst *inst,
-> +					 unsigned long filled_len)
->  {
-> -	unsigned long vpp_freq = 0;
-> +	unsigned long vpp_freq = 0, vsp_freq = 0;
-> +	u64 fps = inst->fps;
->  	u32 mbs_per_sec;
->  
->  	mbs_per_sec = load_per_instance(inst);
->  	vpp_freq = mbs_per_sec * inst->clk_data.codec_freq_data->vpp_freq;
->  	/* 21 / 20 is overhead factor */
->  	vpp_freq += vpp_freq / 20;
-> +	vsp_freq = mbs_per_sec * inst->clk_data.codec_freq_data->vsp_freq;
->  
-> -	return vpp_freq;
-> +	/* 10 / 7 is overhead factor */
-> +	if (inst->session_type == VIDC_SESSION_TYPE_ENC)
-> +		vsp_freq += (inst->controls.enc.bitrate * 10) / 7;
-> +	else
-> +		vsp_freq += ((fps * filled_len * 8) * 10) / 7;
+> +static u32 load_per_core(struct venus_core *core, u32 core_id)
+> +{
+> +	struct venus_inst *inst = NULL;
+> +	u32 mbs_per_sec = 0, load = 0;
 > +
-> +	return max(vpp_freq, vsp_freq);
->  }
->  
->  static int scale_clocks_v4(struct venus_inst *inst)
-> @@ -417,13 +426,27 @@ static int scale_clocks_v4(struct venus_inst *inst)
->  	struct venus_core *core = inst->core;
->  	const struct freq_tbl *table = core->res->freq_tbl;
->  	unsigned int num_rows = core->res->freq_tbl_size;
-> +	struct v4l2_m2m_ctx *m2m_ctx = inst->m2m_ctx;
->  	struct clk *clk = core->clks[0];
->  	struct device *dev = core->dev;
->  	unsigned int i;
->  	unsigned long freq = 0, freq_core1 = 0, freq_core2 = 0;
-> +	unsigned long filled_len = 0;
-> +	struct venus_buffer *buf, *n;
-> +	struct vb2_buffer *vb;
->  	int ret;
->  
-> -	freq = calculate_vpp_freq(inst);
-> +	mutex_lock(&inst->lock);
-> +	v4l2_m2m_for_each_src_buf_safe(m2m_ctx, buf, n) {
-> +		vb = &buf->vb.vb2_buf;
-> +		filled_len = max(filled_len, vb2_get_plane_payload(vb, 0));
-> +	}
-> +	mutex_unlock(&inst->lock);
-> +
-> +	if (inst->session_type == VIDC_SESSION_TYPE_DEC && !filled_len)
-> +		return 0;
-> +
-> +	freq = calculate_inst_freq(inst, filled_len);
->  
->  	if (freq > table[0].freq)
->  		dev_warn(dev, "HW is overloaded, needed: %lu max: %lu\n",
-> 
+> +	mutex_lock(&core->lock);
+> +	list_for_each_entry(inst, &core->instances, list) {
+> +		if (!(inst->clk_data.core_id == core_id))
 
-The original patch has a call to load_scale_clocks from
-venus_helper_vb2_buf_queue, why it is not included here?
+		if (inst->clk_data.core_id != core_id)
+
+I guess will be more readable?
+
+> +			continue;
+> +
+> +		mbs_per_sec = load_per_instance(inst);
+> +		load = mbs_per_sec * inst->clk_data.codec_freq_data->vpp_freq;
+> +	}
+> +	mutex_unlock(&core->lock);
+> +
+> +	return load;
+> +}
+> +
+
+<cut>
 
 -- 
 regards,
