@@ -2,149 +2,625 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 58AED685A1
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 15 Jul 2019 10:39:04 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 3BDB56876D
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 15 Jul 2019 12:54:32 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729245AbfGOIjC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 15 Jul 2019 04:39:02 -0400
-Received: from mailout1.w1.samsung.com ([210.118.77.11]:58043 "EHLO
-        mailout1.w1.samsung.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729257AbfGOIjC (ORCPT
+        id S1729791AbfGOKxq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 15 Jul 2019 06:53:46 -0400
+Received: from smtp-fw-6002.amazon.com ([52.95.49.90]:23243 "EHLO
+        smtp-fw-6002.amazon.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729591AbfGOKxp (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 15 Jul 2019 04:39:02 -0400
-Received: from eucas1p2.samsung.com (unknown [182.198.249.207])
-        by mailout1.w1.samsung.com (KnoxPortal) with ESMTP id 20190715083859euoutp016621d4b7e4a77b605a05c18254396146~xh99sR__93010830108euoutp01N
-        for <linux-arm-msm@vger.kernel.org>; Mon, 15 Jul 2019 08:38:59 +0000 (GMT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 mailout1.w1.samsung.com 20190715083859euoutp016621d4b7e4a77b605a05c18254396146~xh99sR__93010830108euoutp01N
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=samsung.com;
-        s=mail20170921; t=1563179939;
-        bh=KJ3DnEhLriuVeWg98K+79IN0DVUic0shWLHqhmyUMzM=;
-        h=Subject:To:Cc:From:Date:In-Reply-To:References:From;
-        b=hEYthpWLFYhVJjHE0S/wQaiOoD4M8zKN2j2dIMwkSkXNeCuluP2kkl6CGTdRFqVqP
-         x6zJ2GPXCH6zdyK/CnbBlcCVMZY8vFoGZzWrMIFMFDFjlOwmaHwaHhDYBx+EfQhESz
-         dqDFP2s1IlKrzfi9D89EjC0DgSfVqwK0sDhVwx7k=
-Received: from eusmges1new.samsung.com (unknown [203.254.199.242]) by
-        eucas1p1.samsung.com (KnoxPortal) with ESMTP id
-        20190715083858eucas1p1061be8cc96299077ac936b1afb47196e~xh98_Pl4F2177321773eucas1p1q;
-        Mon, 15 Jul 2019 08:38:58 +0000 (GMT)
-Received: from eucas1p1.samsung.com ( [182.198.249.206]) by
-        eusmges1new.samsung.com (EUCPMTA) with SMTP id C2.B4.04298.2AB3C2D5; Mon, 15
-        Jul 2019 09:38:58 +0100 (BST)
-Received: from eusmtrp2.samsung.com (unknown [182.198.249.139]) by
-        eucas1p2.samsung.com (KnoxPortal) with ESMTPA id
-        20190715083857eucas1p272d8e645daa15994fff794dbf7c26841~xh98SjSe82048420484eucas1p2k;
-        Mon, 15 Jul 2019 08:38:57 +0000 (GMT)
-Received: from eusmgms2.samsung.com (unknown [182.198.249.180]) by
-        eusmtrp2.samsung.com (KnoxPortal) with ESMTP id
-        20190715083857eusmtrp287a3b3c3f8be41c509cb66bd42b6d009~xh98Ee65X0327603276eusmtrp2e;
-        Mon, 15 Jul 2019 08:38:57 +0000 (GMT)
-X-AuditID: cbfec7f2-f13ff700000010ca-50-5d2c3ba2c4c9
-Received: from eusmtip1.samsung.com ( [203.254.199.221]) by
-        eusmgms2.samsung.com (EUCPMTA) with SMTP id A4.97.04140.1AB3C2D5; Mon, 15
-        Jul 2019 09:38:57 +0100 (BST)
-Received: from [106.120.51.74] (unknown [106.120.51.74]) by
-        eusmtip1.samsung.com (KnoxPortal) with ESMTPA id
-        20190715083857eusmtip11a4e3e0060559b732ca13b129b64540c~xh97ppbQx2302623026eusmtip1f;
-        Mon, 15 Jul 2019 08:38:57 +0000 (GMT)
-Subject: Re: [PATCH 1/2] regmap: Add DSI bus support
-To:     Mark Brown <broonie@kernel.org>
-Cc:     Jeffrey Hugo <jeffrey.l.hugo@gmail.com>,
-        Laurent.pinchart@ideasonboard.com, airlied@linux.ie,
-        daniel@ffwll.ch, robdclark@gmail.com, bjorn.andersson@linaro.org,
-        dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-From:   Andrzej Hajda <a.hajda@samsung.com>
-Message-ID: <8b74afa7-65ed-c53d-3dc2-d758361f2d62@samsung.com>
-Date:   Mon, 15 Jul 2019 10:38:55 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
-        Thunderbird/68.0
+        Mon, 15 Jul 2019 06:53:45 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+  d=amazon.com; i=@amazon.com; q=dns/txt; s=amazon201209;
+  t=1563188021; x=1594724021;
+  h=from:to:cc:subject:date:message-id:mime-version;
+  bh=EOyyHG11I2Z6Ak6ErAj9B20AxtftPw+ir535ZNv20tg=;
+  b=UyI/5F9vlhJLBgI/4UqtaBkKlqL3rI+PaJ0pFFuGDpfciOD2GZW+yPIc
+   OeGhN7d48n1lyv4JKTqWDGtf+z1NN8vMx+LRUgXlSdj82Gxr8Gccq4J+Y
+   4xC/VE7YwWbyMXULowptiRz9BP0Arsy+2BYnLGWJDaJ29bhJYgGbKhV3m
+   Q=;
+X-IronPort-AV: E=Sophos;i="5.62,493,1554768000"; 
+   d="scan'208";a="410721780"
+Received: from iad6-co-svc-p1-lb1-vlan3.amazon.com (HELO email-inbound-relay-1d-9ec21598.us-east-1.amazon.com) ([10.124.125.6])
+  by smtp-border-fw-out-6002.iad6.amazon.com with ESMTP; 15 Jul 2019 10:53:39 +0000
+Received: from EX13MTAUEA001.ant.amazon.com (iad55-ws-svc-p15-lb9-vlan3.iad.amazon.com [10.40.159.166])
+        by email-inbound-relay-1d-9ec21598.us-east-1.amazon.com (Postfix) with ESMTPS id D6EC8A231E;
+        Mon, 15 Jul 2019 10:53:33 +0000 (UTC)
+Received: from EX13D19EUB003.ant.amazon.com (10.43.166.69) by
+ EX13MTAUEA001.ant.amazon.com (10.43.61.82) with Microsoft SMTP Server (TLS)
+ id 15.0.1367.3; Mon, 15 Jul 2019 10:53:32 +0000
+Received: from ub6d44c9ce3e25c.ant.amazon.com (10.43.160.211) by
+ EX13D19EUB003.ant.amazon.com (10.43.166.69) with Microsoft SMTP Server (TLS)
+ id 15.0.1367.3; Mon, 15 Jul 2019 10:53:22 +0000
+From:   Hanna Hawa <hhhawa@amazon.com>
+To:     <thor.thayer@linux.intel.com>, <bp@alien8.de>,
+        <mchehab@kernel.org>, <james.morse@arm.com>, <rric@kernel.org>,
+        <morbidrsa@gmail.com>, <ralf@linux-mips.org>,
+        <david.daney@cavium.com>, <andy.gross@linaro.org>,
+        <david.brown@linaro.org>, <ckadabi@codeaurora.org>,
+        <vnkgutta@codeaurora.org>, <jglauber@cavium.com>,
+        <khuong@os.amperecomputing.com>
+CC:     <dwmw@amazon.co.uk>, <benh@amazon.com>, <ronenk@amazon.com>,
+        <talel@amazon.com>, <jonnyc@amazon.com>, <hanochu@amazon.com>,
+        <linux-edac@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <linux-mips@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <hhhawa@amazon.com>
+Subject: [RFC 1/1] edac: Add a counter parameter for edac_device_handle_ue/ce()
+Date:   Mon, 15 Jul 2019 13:53:07 +0300
+Message-ID: <1563187987-5847-1-git-send-email-hhhawa@amazon.com>
+X-Mailer: git-send-email 2.7.4
 MIME-Version: 1.0
-In-Reply-To: <20190711145045.GI14859@sirena.co.uk>
-Content-Type: text/plain; charset="windows-1252"
-Content-Transfer-Encoding: 7bit
-Content-Language: en-US
-X-Brightmail-Tracker: H4sIAAAAAAAAA02Sa0hTcRjG/e9cdhxNjtPwxSLzdKPsYtHlhEs0Ik4fkqgQKsRmHjTyUpta
-        1ocuhGyK4QQzl6XOa2Ym001XyszSZaKYmVhWVq4LhprlZkK5No+C337v/3me9+WBP4XJugh/
-        6nRSCq9MUiQwpAQ3dcz0bNKHbIwK1tzzYbN7OkVsl2UcZ/M+2UjWadJibL99gmQzKh0Yq9GW
-        iVmtpVvMvnpUSLLfSv5gYRKuxVGMc2bdezF3W11AcIZqDcm9G2gmuUbHR4IbzrKKuN+GFYeo
-        4xJ5LJ9wOo1Xbgk9KYmftGViZ5ukF778aCeuoGFJJvKkgN4OHRWjeCaSUDK6CkFPxjQpDFMI
-        huqqCGH4jSCropdciORMl4kFoRJBweCH+fwYAu2LKuR2+bhcteWtmJt96VXwerplzoTRahH0
-        X22YE0h6PfyrfzO3VkqHQm/OrbkwTq+BkVwt4ealdCTMFGvmPd7QWWDD3exJb4PG7PciN2N0
-        MDzTFxICB0DjWCEmsB+8tRWJ3IeB/iyGkqxJl0C5hn1gqwGhjg+MWhvEAi8Hp7lIJPBlGK66
-        jglZNQJjnRkThBB4an1JCBwO+ulSXNjpBYNj3sJdL8g15c+fkoI6Qya4A2G42zi/xQ/Ke+1k
-        DmJ0i5rpFrXRLWqjW9SmGOHVyI9PVSXG8aqtSfz5zSpFoio1KW7zqeREA3J9sa5Z668mZO+L
-        aUM0hZgl0rDYoCgZoUhTpSe2IaAwxle6x+56ksYq0i/yyuRoZWoCr2pDyyic8ZNe8vh4QkbH
-        KVL4Mzx/llcuqCLK0/8K0rWvDdvtEdhsztZfM02tjqkOuhYhL+3YO+j/oMIwNRJzzPK4rO9m
-        TeRA0LlLwJi/3/n5ZuhJr/1AtNWRpTji3PlQvi3D6LkutLW2vivgBhM9K9ZP7rg7Lres7Isb
-        MB90GvN3HW6CEWPf3/sRyfKhkK/BjqPPGSU+EbY/jzOFOxlcFa/YugFTqhT/AblKCAleAwAA
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFrrDIsWRmVeSWpSXmKPExsVy+t/xu7oLrXViDZZ0Klv0njvJZHF6/zsW
-        i6kPn7BZ/N82kdniytf3bBZty78xW3ROXMJuMXH/WXaLy7vmsFk8X/iD2YHLY++3BSweO2fd
-        ZfeY3TGT1WPTqk42jzvX9rB5bP/2gNXjfvdxJo/Pm+QCOKL0bIryS0tSFTLyi0tslaINLYz0
-        DC0t9IxMLPUMjc1jrYxMlfTtbFJSczLLUov07RL0Mj4+6WIu2MFb8fT1UdYGxvtcXYycHBIC
-        JhITvi9h72Lk4hASWMoo0XVnLSNEQlxi9/y3zBC2sMSfa11sEEWvGSVmXQbp4OQQBupet/QA
-        WJGIgLLE1e97WUCKmAU6mCRerHvECNFxmkniQvtWVpAqNgFNib+bb7KB2LwCdhIXJswAW8ci
-        oCrxeNJEoBoODlGBMImjJ/IgSgQlTs58wgJicwoYSWzvvcsEYjML6EnsuP6LFcKWl9j+dg4z
-        hC0ucevJfKYJjEKzkLTPQtIyC0nLLCQtCxhZVjGKpJYW56bnFhvpFSfmFpfmpesl5+duYgTG
-        7LZjP7fsYOx6F3yIUYCDUYmH1yFFO1aINbGsuDL3EKMEB7OSCK/tV6AQb0piZVVqUX58UWlO
-        avEhRlOg3yYyS4km5wPTSV5JvKGpobmFpaG5sbmxmYWSOG+HwMEYIYH0xJLU7NTUgtQimD4m
-        Dk6pBsYy0xf2J6W28L69duFiw9zZN4s2XNnbXZe/5Tm3nq4Eu0ToEb6GY6/mJa37ITT7UF+P
-        XX3n+WNFtUkrmHNkp1T4zWBv2BOtxK7u8s5x9abtd2tOaYjU741wVo2cOLmEl/F45cOHslq8
-        TirfXokHTn054dj9E7w/v8fJsEbsUPjGd09MtnSa9BMlluKMREMt5qLiRAAFCI9Z7wIAAA==
-X-CMS-MailID: 20190715083857eucas1p272d8e645daa15994fff794dbf7c26841
-X-Msg-Generator: CA
-X-RootMTR: 20190706010615epcas2p343102f858a7fadaf6785f7ece105f1a7
-X-EPHeader: CA
-CMS-TYPE: 201P
-X-CMS-RootMailID: 20190706010615epcas2p343102f858a7fadaf6785f7ece105f1a7
-References: <20190703214326.41269-1-jeffrey.l.hugo@gmail.com>
-        <20190703214512.41319-1-jeffrey.l.hugo@gmail.com>
-        <CGME20190706010615epcas2p343102f858a7fadaf6785f7ece105f1a7@epcas2p3.samsung.com>
-        <20190706010604.GG20625@sirena.org.uk>
-        <64ca3a74-374f-d4f3-bee6-a607cc5c0fc5@samsung.com>
-        <20190711145045.GI14859@sirena.co.uk>
+Content-Type: text/plain
+X-Originating-IP: [10.43.160.211]
+X-ClientProxiedBy: EX13D20UWA003.ant.amazon.com (10.43.160.97) To
+ EX13D19EUB003.ant.amazon.com (10.43.166.69)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 11.07.2019 16:50, Mark Brown wrote:
-> On Thu, Jul 11, 2019 at 03:11:56PM +0200, Andrzej Hajda wrote:
->
->> 1. DSI protocol defines actually more than 30 types of transactions[1],
->> but this patchset implements only few of them (dsi generic write/read
->> family). Is it possible to implement multiple types of transactions in
->> regmap?
-> You can, there's a couple of different ways depending on how
-> exactly things are done.
->
->> 3. DSI devices are no MFDs so regmap abstraction has no big value added
->> (correct me, if there are other significant benefits).
-> There's a few extra bits even if you're not using the marshalling
-> code to get things onto the bus - the main ones are the register
-> cache support (which people often use for simpler suspend/resume
-> support) and the debug and trace facilities (things like
-> tracepoints and debugfs for dumping the register map).
+Add a counter parameter in order to avoid losing errors count for edac
+device, the error count reports the number of errors reported by an edac
+device similar to the way MC_EDAC do.
 
-I do not see cache usable in bridge drivers, I guess default config will
-be caching disabled, as it is already in the driver from this patchset.
+Signed-off-by: Hanna Hawa <hhhawa@amazon.com>
+---
+ drivers/edac/altera_edac.c      | 20 ++++++++++++--------
+ drivers/edac/amd8111_edac.c     |  6 +++---
+ drivers/edac/cpc925_edac.c      |  4 ++--
+ drivers/edac/edac_device.c      | 18 ++++++++++--------
+ drivers/edac/edac_device.h      |  8 ++++++--
+ drivers/edac/highbank_l2_edac.c |  4 ++--
+ drivers/edac/mpc85xx_edac.c     |  4 ++--
+ drivers/edac/mv64x60_edac.c     |  4 ++--
+ drivers/edac/octeon_edac-l2c.c  | 20 ++++++++++----------
+ drivers/edac/octeon_edac-pc.c   |  6 +++---
+ drivers/edac/qcom_edac.c        |  8 ++++----
+ drivers/edac/thunderx_edac.c    | 10 +++++-----
+ drivers/edac/xgene_edac.c       | 26 +++++++++++++-------------
+ 13 files changed, 74 insertions(+), 64 deletions(-)
 
-So beside marshaling, we are left only with debug facilities, not a big
-gain :)
-
-Moreover as it was already written DSI is mainly used to transport
-COMMANDS to the device, with variable number of arguments - it does not
-resembles registry map at all.
-
-On the other side there is some subset of DSI devices which exposes
-register memory using MIPI DSI Generic Write/Read packets, for example:
-ti-sn65dsi86, tc358764. They fit better to regmap framework. Hard to say
-how common is this pattern. Maybe we can try with it? If yes it would be
-good to put clear remark that regmap/dsi is for such devices, to avoid
-possible confusion.
-
-
-Regards
-
-Andrzej
-
+diff --git a/drivers/edac/altera_edac.c b/drivers/edac/altera_edac.c
+index 8816f74..747dd43 100644
+--- a/drivers/edac/altera_edac.c
++++ b/drivers/edac/altera_edac.c
+@@ -616,12 +616,12 @@ static irqreturn_t altr_edac_device_handler(int irq, void *dev_id)
+ 	if (irq == drvdata->sb_irq) {
+ 		if (priv->ce_clear_mask)
+ 			writel(priv->ce_clear_mask, drvdata->base);
+-		edac_device_handle_ce(dci, 0, 0, drvdata->edac_dev_name);
++		edac_device_handle_ce(dci, 1, 0, 0, drvdata->edac_dev_name);
+ 		ret_value = IRQ_HANDLED;
+ 	} else if (irq == drvdata->db_irq) {
+ 		if (priv->ue_clear_mask)
+ 			writel(priv->ue_clear_mask, drvdata->base);
+-		edac_device_handle_ue(dci, 0, 0, drvdata->edac_dev_name);
++		edac_device_handle_ue(dci, 1, 0, 0, drvdata->edac_dev_name);
+ 		panic("\nEDAC:ECC_DEVICE[Uncorrectable errors]\n");
+ 		ret_value = IRQ_HANDLED;
+ 	} else {
+@@ -919,13 +919,15 @@ static irqreturn_t __maybe_unused altr_edac_a10_ecc_irq(int irq, void *dev_id)
+ 	if (irq == dci->sb_irq) {
+ 		writel(ALTR_A10_ECC_SERRPENA,
+ 		       base + ALTR_A10_ECC_INTSTAT_OFST);
+-		edac_device_handle_ce(dci->edac_dev, 0, 0, dci->edac_dev_name);
++		edac_device_handle_ce(dci->edac_dev, 1, 0, 0,
++				      dci->edac_dev_name);
+ 
+ 		return IRQ_HANDLED;
+ 	} else if (irq == dci->db_irq) {
+ 		writel(ALTR_A10_ECC_DERRPENA,
+ 		       base + ALTR_A10_ECC_INTSTAT_OFST);
+-		edac_device_handle_ue(dci->edac_dev, 0, 0, dci->edac_dev_name);
++		edac_device_handle_ue(dci->edac_dev, 1, 0, 0,
++				      dci->edac_dev_name);
+ 		if (dci->data->panic)
+ 			panic("\nEDAC:ECC_DEVICE[Uncorrectable errors]\n");
+ 
+@@ -1308,14 +1310,16 @@ static irqreturn_t altr_edac_a10_l2_irq(int irq, void *dev_id)
+ 		regmap_write(dci->edac->ecc_mgr_map,
+ 			     A10_SYSGMR_MPU_CLEAR_L2_ECC_OFST,
+ 			     A10_SYSGMR_MPU_CLEAR_L2_ECC_SB);
+-		edac_device_handle_ce(dci->edac_dev, 0, 0, dci->edac_dev_name);
++		edac_device_handle_ce(dci->edac_dev, 1, 0, 0,
++				      dci->edac_dev_name);
+ 
+ 		return IRQ_HANDLED;
+ 	} else if (irq == dci->db_irq) {
+ 		regmap_write(dci->edac->ecc_mgr_map,
+ 			     A10_SYSGMR_MPU_CLEAR_L2_ECC_OFST,
+ 			     A10_SYSGMR_MPU_CLEAR_L2_ECC_MB);
+-		edac_device_handle_ue(dci->edac_dev, 0, 0, dci->edac_dev_name);
++		edac_device_handle_ue(dci->edac_dev, 1, 0, 0,
++				      dci->edac_dev_name);
+ 		panic("\nEDAC:ECC_DEVICE[Uncorrectable errors]\n");
+ 
+ 		return IRQ_HANDLED;
+@@ -1652,12 +1656,12 @@ static irqreturn_t altr_edac_a10_ecc_irq_portb(int irq, void *dev_id)
+ 	if (irq == ad->sb_irq) {
+ 		writel(priv->ce_clear_mask,
+ 		       base + ALTR_A10_ECC_INTSTAT_OFST);
+-		edac_device_handle_ce(ad->edac_dev, 0, 0, ad->edac_dev_name);
++		edac_device_handle_ce(ad->edac_dev, 1, 0, 0, ad->edac_dev_name);
+ 		return IRQ_HANDLED;
+ 	} else if (irq == ad->db_irq) {
+ 		writel(priv->ue_clear_mask,
+ 		       base + ALTR_A10_ECC_INTSTAT_OFST);
+-		edac_device_handle_ue(ad->edac_dev, 0, 0, ad->edac_dev_name);
++		edac_device_handle_ue(ad->edac_dev, 1, 0, 0, ad->edac_dev_name);
+ 		return IRQ_HANDLED;
+ 	}
+ 
+diff --git a/drivers/edac/amd8111_edac.c b/drivers/edac/amd8111_edac.c
+index b5786cf..e595fab 100644
+--- a/drivers/edac/amd8111_edac.c
++++ b/drivers/edac/amd8111_edac.c
+@@ -303,7 +303,7 @@ static void amd8111_lpc_bridge_check(struct edac_device_ctl_info *edac_dev)
+ 		val8 |= IO_CTRL_1_CLEAR_MASK;
+ 		edac_pci_write_byte(dev, REG_IO_CTRL_1, val8);
+ 
+-		edac_device_handle_ue(edac_dev, 0, 0, edac_dev->ctl_name);
++		edac_device_handle_ue(edac_dev, 1, 0, 0, edac_dev->ctl_name);
+ 	}
+ 
+ 	if (at_compat_reg_broken == 0) {
+@@ -315,8 +315,8 @@ static void amd8111_lpc_bridge_check(struct edac_device_ctl_info *edac_dev)
+ 			out8 |= AT_COMPAT_CLRIOCHK;
+ 		if (out8 > 0) {
+ 			__do_outb(out8, REG_AT_COMPAT);
+-			edac_device_handle_ue(edac_dev, 0, 0,
+-						edac_dev->ctl_name);
++			edac_device_handle_ue(edac_dev, 1, 0, 0,
++					      edac_dev->ctl_name);
+ 		}
+ 	}
+ }
+diff --git a/drivers/edac/cpc925_edac.c b/drivers/edac/cpc925_edac.c
+index 3c0881a..eb74865 100644
+--- a/drivers/edac/cpc925_edac.c
++++ b/drivers/edac/cpc925_edac.c
+@@ -682,7 +682,7 @@ static void cpc925_cpu_check(struct edac_device_ctl_info *edac_dev)
+ 	cpc925_printk(KERN_INFO, "APIMASK		0x%08x\n", apimask);
+ 	cpc925_printk(KERN_INFO, "APIEXCP		0x%08x\n", apiexcp);
+ 
+-	edac_device_handle_ue(edac_dev, 0, 0, edac_dev->ctl_name);
++	edac_device_handle_ue(edac_dev, 1, 0, 0, edac_dev->ctl_name);
+ }
+ 
+ /******************** HT Link err device****************************/
+@@ -756,7 +756,7 @@ static void cpc925_htlink_check(struct edac_device_ctl_info *edac_dev)
+ 		__raw_writel(HT_LINKERR_DETECTED,
+ 				dev_info->vbase + REG_LINKERR_OFFSET);
+ 
+-	edac_device_handle_ce(edac_dev, 0, 0, edac_dev->ctl_name);
++	edac_device_handle_ce(edac_dev, 1, 0, 0, edac_dev->ctl_name);
+ }
+ 
+ static struct cpc925_dev_info cpc925_devs[] = {
+diff --git a/drivers/edac/edac_device.c b/drivers/edac/edac_device.c
+index 65cf2b9..d1de296 100644
+--- a/drivers/edac/edac_device.c
++++ b/drivers/edac/edac_device.c
+@@ -556,7 +556,8 @@ static inline int edac_device_get_panic_on_ue(struct edac_device_ctl_info
+ }
+ 
+ void edac_device_handle_ce(struct edac_device_ctl_info *edac_dev,
+-			int inst_nr, int block_nr, const char *msg)
++			   u16 error_count, int inst_nr, int block_nr,
++			   const char *msg)
+ {
+ 	struct edac_device_instance *instance;
+ 	struct edac_device_block *block = NULL;
+@@ -582,12 +583,12 @@ void edac_device_handle_ce(struct edac_device_ctl_info *edac_dev,
+ 
+ 	if (instance->nr_blocks > 0) {
+ 		block = instance->blocks + block_nr;
+-		block->counters.ce_count++;
++		block->counters.ce_count += error_count;
+ 	}
+ 
+ 	/* Propagate the count up the 'totals' tree */
+-	instance->counters.ce_count++;
+-	edac_dev->counters.ce_count++;
++	instance->counters.ce_count += error_count;
++	edac_dev->counters.ce_count += error_count;
+ 
+ 	if (edac_device_get_log_ce(edac_dev))
+ 		edac_device_printk(edac_dev, KERN_WARNING,
+@@ -598,7 +599,8 @@ void edac_device_handle_ce(struct edac_device_ctl_info *edac_dev,
+ EXPORT_SYMBOL_GPL(edac_device_handle_ce);
+ 
+ void edac_device_handle_ue(struct edac_device_ctl_info *edac_dev,
+-			int inst_nr, int block_nr, const char *msg)
++			   u16 error_count, int inst_nr, int block_nr,
++			   const char *msg)
+ {
+ 	struct edac_device_instance *instance;
+ 	struct edac_device_block *block = NULL;
+@@ -624,12 +626,12 @@ void edac_device_handle_ue(struct edac_device_ctl_info *edac_dev,
+ 
+ 	if (instance->nr_blocks > 0) {
+ 		block = instance->blocks + block_nr;
+-		block->counters.ue_count++;
++		block->counters.ue_count += error_count;
+ 	}
+ 
+ 	/* Propagate the count up the 'totals' tree */
+-	instance->counters.ue_count++;
+-	edac_dev->counters.ue_count++;
++	instance->counters.ue_count += error_count;
++	edac_dev->counters.ue_count += error_count;
+ 
+ 	if (edac_device_get_log_ue(edac_dev))
+ 		edac_device_printk(edac_dev, KERN_EMERG,
+diff --git a/drivers/edac/edac_device.h b/drivers/edac/edac_device.h
+index 1aaba74..cf1a1da 100644
+--- a/drivers/edac/edac_device.h
++++ b/drivers/edac/edac_device.h
+@@ -290,23 +290,27 @@ extern struct edac_device_ctl_info *edac_device_del_device(struct device *dev);
+  *	perform a common output and handling of an 'edac_dev' UE event
+  *
+  * @edac_dev: pointer to struct &edac_device_ctl_info
++ * @error_count: number of errors of the same type
+  * @inst_nr: number of the instance where the UE error happened
+  * @block_nr: number of the block where the UE error happened
+  * @msg: message to be printed
+  */
+ extern void edac_device_handle_ue(struct edac_device_ctl_info *edac_dev,
+-				int inst_nr, int block_nr, const char *msg);
++				  u16 error_count, int inst_nr, int block_nr,
++				  const char *msg);
+ /**
+  * edac_device_handle_ce():
+  *	perform a common output and handling of an 'edac_dev' CE event
+  *
+  * @edac_dev: pointer to struct &edac_device_ctl_info
++ * @error_count: number of errors of the same type
+  * @inst_nr: number of the instance where the CE error happened
+  * @block_nr: number of the block where the CE error happened
+  * @msg: message to be printed
+  */
+ extern void edac_device_handle_ce(struct edac_device_ctl_info *edac_dev,
+-				int inst_nr, int block_nr, const char *msg);
++				  u16 error_count, int inst_nr, int block_nr,
++				  const char *msg);
+ 
+ /**
+  * edac_device_alloc_index: Allocate a unique device index number
+diff --git a/drivers/edac/highbank_l2_edac.c b/drivers/edac/highbank_l2_edac.c
+index cd9a2bb..65f016a 100644
+--- a/drivers/edac/highbank_l2_edac.c
++++ b/drivers/edac/highbank_l2_edac.c
+@@ -39,11 +39,11 @@ static irqreturn_t highbank_l2_err_handler(int irq, void *dev_id)
+ 
+ 	if (irq == drvdata->sb_irq) {
+ 		writel(1, drvdata->base + SR_CLR_SB_ECC_INTR);
+-		edac_device_handle_ce(dci, 0, 0, dci->ctl_name);
++		edac_device_handle_ce(dci, 1, 0, 0, dci->ctl_name);
+ 	}
+ 	if (irq == drvdata->db_irq) {
+ 		writel(1, drvdata->base + SR_CLR_DB_ECC_INTR);
+-		edac_device_handle_ue(dci, 0, 0, dci->ctl_name);
++		edac_device_handle_ue(dci, 1, 0, 0, dci->ctl_name);
+ 	}
+ 
+ 	return IRQ_HANDLED;
+diff --git a/drivers/edac/mpc85xx_edac.c b/drivers/edac/mpc85xx_edac.c
+index 67f7bc3..0618a06 100644
+--- a/drivers/edac/mpc85xx_edac.c
++++ b/drivers/edac/mpc85xx_edac.c
+@@ -464,10 +464,10 @@ static void mpc85xx_l2_check(struct edac_device_ctl_info *edac_dev)
+ 	out_be32(pdata->l2_vbase + MPC85XX_L2_ERRDET, err_detect);
+ 
+ 	if (err_detect & L2_EDE_CE_MASK)
+-		edac_device_handle_ce(edac_dev, 0, 0, edac_dev->ctl_name);
++		edac_device_handle_ce(edac_dev, 1, 0, 0, edac_dev->ctl_name);
+ 
+ 	if (err_detect & L2_EDE_UE_MASK)
+-		edac_device_handle_ue(edac_dev, 0, 0, edac_dev->ctl_name);
++		edac_device_handle_ue(edac_dev, 1, 0, 0, edac_dev->ctl_name);
+ }
+ 
+ static irqreturn_t mpc85xx_l2_isr(int irq, void *dev_id)
+diff --git a/drivers/edac/mv64x60_edac.c b/drivers/edac/mv64x60_edac.c
+index 3c68bb5..005b012 100644
+--- a/drivers/edac/mv64x60_edac.c
++++ b/drivers/edac/mv64x60_edac.c
+@@ -251,7 +251,7 @@ static void mv64x60_sram_check(struct edac_device_ctl_info *edac_dev)
+ 	       readl(pdata->sram_vbase + MV64X60_SRAM_ERR_PARITY));
+ 	writel(0, pdata->sram_vbase + MV64X60_SRAM_ERR_CAUSE);
+ 
+-	edac_device_handle_ue(edac_dev, 0, 0, edac_dev->ctl_name);
++	edac_device_handle_ue(edac_dev, 1, 0, 0, edac_dev->ctl_name);
+ }
+ 
+ static irqreturn_t mv64x60_sram_isr(int irq, void *dev_id)
+@@ -417,7 +417,7 @@ static void mv64x60_cpu_check(struct edac_device_ctl_info *edac_dev)
+ 	       readl(pdata->cpu_vbase[1] + MV64x60_CPU_ERR_PARITY));
+ 	writel(0, pdata->cpu_vbase[1] + MV64x60_CPU_ERR_CAUSE);
+ 
+-	edac_device_handle_ue(edac_dev, 0, 0, edac_dev->ctl_name);
++	edac_device_handle_ue(edac_dev, 1, 0, 0, edac_dev->ctl_name);
+ }
+ 
+ static irqreturn_t mv64x60_cpu_isr(int irq, void *dev_id)
+diff --git a/drivers/edac/octeon_edac-l2c.c b/drivers/edac/octeon_edac-l2c.c
+index c33059e..8e58531 100644
+--- a/drivers/edac/octeon_edac-l2c.c
++++ b/drivers/edac/octeon_edac-l2c.c
+@@ -28,12 +28,12 @@ static void octeon_l2c_poll_oct1(struct edac_device_ctl_info *l2c)
+ 	l2t_err_reset.u64 = 0;
+ 	l2t_err.u64 = cvmx_read_csr(CVMX_L2T_ERR);
+ 	if (l2t_err.s.sec_err) {
+-		edac_device_handle_ce(l2c, 0, 0,
++		edac_device_handle_ce(l2c, 1, 0, 0,
+ 				      "Tag Single bit error (corrected)");
+ 		l2t_err_reset.s.sec_err = 1;
+ 	}
+ 	if (l2t_err.s.ded_err) {
+-		edac_device_handle_ue(l2c, 0, 0,
++		edac_device_handle_ue(l2c, 1, 0, 0,
+ 				      "Tag Double bit error (detected)");
+ 		l2t_err_reset.s.ded_err = 1;
+ 	}
+@@ -43,12 +43,12 @@ static void octeon_l2c_poll_oct1(struct edac_device_ctl_info *l2c)
+ 	l2d_err_reset.u64 = 0;
+ 	l2d_err.u64 = cvmx_read_csr(CVMX_L2D_ERR);
+ 	if (l2d_err.s.sec_err) {
+-		edac_device_handle_ce(l2c, 0, 1,
++		edac_device_handle_ce(l2c, 1, 0, 1,
+ 				      "Data Single bit error (corrected)");
+ 		l2d_err_reset.s.sec_err = 1;
+ 	}
+ 	if (l2d_err.s.ded_err) {
+-		edac_device_handle_ue(l2c, 0, 1,
++		edac_device_handle_ue(l2c, 1, 0, 1,
+ 				      "Data Double bit error (detected)");
+ 		l2d_err_reset.s.ded_err = 1;
+ 	}
+@@ -76,25 +76,25 @@ static void _octeon_l2c_poll_oct2(struct edac_device_ctl_info *l2c, int tad)
+ 		snprintf(buf2, sizeof(buf2),
+ 			 "L2D Double bit error (detected):%s", buf1);
+ 		err_tdtx_reset.s.dbe = 1;
+-		edac_device_handle_ue(l2c, tad, 1, buf2);
++		edac_device_handle_ue(l2c, 1, tad, 1, buf2);
+ 	}
+ 	if (err_tdtx.s.sbe) {
+ 		snprintf(buf2, sizeof(buf2),
+ 			 "L2D Single bit error (corrected):%s", buf1);
+ 		err_tdtx_reset.s.sbe = 1;
+-		edac_device_handle_ce(l2c, tad, 1, buf2);
++		edac_device_handle_ce(l2c, 1, tad, 1, buf2);
+ 	}
+ 	if (err_tdtx.s.vdbe) {
+ 		snprintf(buf2, sizeof(buf2),
+ 			 "VBF Double bit error (detected):%s", buf1);
+ 		err_tdtx_reset.s.vdbe = 1;
+-		edac_device_handle_ue(l2c, tad, 1, buf2);
++		edac_device_handle_ue(l2c, 1, tad, 1, buf2);
+ 	}
+ 	if (err_tdtx.s.vsbe) {
+ 		snprintf(buf2, sizeof(buf2),
+ 			 "VBF Single bit error (corrected):%s", buf1);
+ 		err_tdtx_reset.s.vsbe = 1;
+-		edac_device_handle_ce(l2c, tad, 1, buf2);
++		edac_device_handle_ce(l2c, 1, tad, 1, buf2);
+ 	}
+ 	if (err_tdtx_reset.u64)
+ 		cvmx_write_csr(CVMX_L2C_ERR_TDTX(tad), err_tdtx_reset.u64);
+@@ -111,13 +111,13 @@ static void _octeon_l2c_poll_oct2(struct edac_device_ctl_info *l2c, int tad)
+ 		snprintf(buf2, sizeof(buf2),
+ 			 "Tag Double bit error (detected):%s", buf1);
+ 		err_ttgx_reset.s.dbe = 1;
+-		edac_device_handle_ue(l2c, tad, 0, buf2);
++		edac_device_handle_ue(l2c, 1, tad, 0, buf2);
+ 	}
+ 	if (err_ttgx.s.sbe) {
+ 		snprintf(buf2, sizeof(buf2),
+ 			 "Tag Single bit error (corrected):%s", buf1);
+ 		err_ttgx_reset.s.sbe = 1;
+-		edac_device_handle_ce(l2c, tad, 0, buf2);
++		edac_device_handle_ce(l2c, 1, tad, 0, buf2);
+ 	}
+ 	if (err_ttgx_reset.u64)
+ 		cvmx_write_csr(CVMX_L2C_ERR_TTGX(tad), err_ttgx_reset.u64);
+diff --git a/drivers/edac/octeon_edac-pc.c b/drivers/edac/octeon_edac-pc.c
+index 754eced..efd0bbc 100644
+--- a/drivers/edac/octeon_edac-pc.c
++++ b/drivers/edac/octeon_edac-pc.c
+@@ -59,7 +59,7 @@ static int  co_cache_error_event(struct notifier_block *this,
+ 				   (unsigned long long)icache_err, core, cpu,
+ 				   read_c0_errorepc());
+ 		write_octeon_c0_icacheerr(0);
+-		edac_device_handle_ce(p->ed, cpu, 1, "icache");
++		edac_device_handle_ce(p->ed, 1, cpu, 1, "icache");
+ 	}
+ 	if (dcache_err & 1) {
+ 		edac_device_printk(p->ed, KERN_ERR,
+@@ -67,9 +67,9 @@ static int  co_cache_error_event(struct notifier_block *this,
+ 				   (unsigned long long)dcache_err, core, cpu,
+ 				   read_c0_errorepc());
+ 		if (event)
+-			edac_device_handle_ue(p->ed, cpu, 0, "dcache");
++			edac_device_handle_ue(p->ed, 1, cpu, 0, "dcache");
+ 		else
+-			edac_device_handle_ce(p->ed, cpu, 0, "dcache");
++			edac_device_handle_ce(p->ed, 1, cpu, 0, "dcache");
+ 
+ 		/* Clear the error indication */
+ 		if (OCTEON_IS_OCTEON2())
+diff --git a/drivers/edac/qcom_edac.c b/drivers/edac/qcom_edac.c
+index 97a27e4..8730eed 100644
+--- a/drivers/edac/qcom_edac.c
++++ b/drivers/edac/qcom_edac.c
+@@ -261,19 +261,19 @@ dump_syn_reg(struct edac_device_ctl_info *edev_ctl, int err_type, u32 bank)
+ 
+ 	switch (err_type) {
+ 	case LLCC_DRAM_CE:
+-		edac_device_handle_ce(edev_ctl, 0, bank,
++		edac_device_handle_ce(edev_ctl, 1, 0, bank,
+ 				      "LLCC Data RAM correctable Error");
+ 		break;
+ 	case LLCC_DRAM_UE:
+-		edac_device_handle_ue(edev_ctl, 0, bank,
++		edac_device_handle_ue(edev_ctl, 1, 0, bank,
+ 				      "LLCC Data RAM uncorrectable Error");
+ 		break;
+ 	case LLCC_TRAM_CE:
+-		edac_device_handle_ce(edev_ctl, 0, bank,
++		edac_device_handle_ce(edev_ctl, 1, 0, bank,
+ 				      "LLCC Tag RAM correctable Error");
+ 		break;
+ 	case LLCC_TRAM_UE:
+-		edac_device_handle_ue(edev_ctl, 0, bank,
++		edac_device_handle_ue(edev_ctl, 1, 0, bank,
+ 				      "LLCC Tag RAM uncorrectable Error");
+ 		break;
+ 	default:
+diff --git a/drivers/edac/thunderx_edac.c b/drivers/edac/thunderx_edac.c
+index 34be60f..35a186f 100644
+--- a/drivers/edac/thunderx_edac.c
++++ b/drivers/edac/thunderx_edac.c
+@@ -1151,7 +1151,7 @@ static irqreturn_t thunderx_ocx_com_threaded_isr(int irq, void *irq_id)
+ 			}
+ 
+ 		if (ctx->reg_com_int & OCX_COM_INT_CE)
+-			edac_device_handle_ce(ocx->edac_dev, 0, 0, msg);
++			edac_device_handle_ce(ocx->edac_dev, 1, 0, 0, msg);
+ 
+ 		ocx->com_ring_tail++;
+ 	}
+@@ -1220,9 +1220,9 @@ static irqreturn_t thunderx_ocx_lnk_threaded_isr(int irq, void *irq_id)
+ 		strncat(msg, other, OCX_MESSAGE_SIZE);
+ 
+ 		if (ctx->reg_com_link_int & OCX_COM_LINK_INT_UE)
+-			edac_device_handle_ue(ocx->edac_dev, 0, 0, msg);
++			edac_device_handle_ue(ocx->edac_dev, 1, 0, 0, msg);
+ 		else if (ctx->reg_com_link_int & OCX_COM_LINK_INT_CE)
+-			edac_device_handle_ce(ocx->edac_dev, 0, 0, msg);
++			edac_device_handle_ce(ocx->edac_dev, 1, 0, 0, msg);
+ 
+ 		ocx->link_ring_tail++;
+ 	}
+@@ -1899,9 +1899,9 @@ static irqreturn_t thunderx_l2c_threaded_isr(int irq, void *irq_id)
+ 		strncat(msg, other, L2C_MESSAGE_SIZE);
+ 
+ 		if (ctx->reg_int & mask_ue)
+-			edac_device_handle_ue(l2c->edac_dev, 0, 0, msg);
++			edac_device_handle_ue(l2c->edac_dev, 1, 0, 0, msg);
+ 		else if (ctx->reg_int & mask_ce)
+-			edac_device_handle_ce(l2c->edac_dev, 0, 0, msg);
++			edac_device_handle_ce(l2c->edac_dev, 1, 0, 0, msg);
+ 
+ 		l2c->ring_tail++;
+ 	}
+diff --git a/drivers/edac/xgene_edac.c b/drivers/edac/xgene_edac.c
+index e8b81d7..d31a8bb 100644
+--- a/drivers/edac/xgene_edac.c
++++ b/drivers/edac/xgene_edac.c
+@@ -574,7 +574,7 @@ static void xgene_edac_pmd_l1_check(struct edac_device_ctl_info *edac_dev,
+ 
+ 	if (val & (MEMERR_CPU_ICFESR_CERR_MASK |
+ 		   MEMERR_CPU_ICFESR_MULTCERR_MASK))
+-		edac_device_handle_ce(edac_dev, 0, 0, edac_dev->ctl_name);
++		edac_device_handle_ce(edac_dev, 1, 0, 0, edac_dev->ctl_name);
+ 
+ chk_lsu:
+ 	val = readl(pg_f + MEMERR_CPU_LSUESR_PAGE_OFFSET);
+@@ -618,7 +618,7 @@ static void xgene_edac_pmd_l1_check(struct edac_device_ctl_info *edac_dev,
+ 
+ 	if (val & (MEMERR_CPU_LSUESR_CERR_MASK |
+ 		   MEMERR_CPU_LSUESR_MULTCERR_MASK))
+-		edac_device_handle_ce(edac_dev, 0, 0, edac_dev->ctl_name);
++		edac_device_handle_ce(edac_dev, 1, 0, 0, edac_dev->ctl_name);
+ 
+ chk_mmu:
+ 	val = readl(pg_f + MEMERR_CPU_MMUESR_PAGE_OFFSET);
+@@ -665,7 +665,7 @@ static void xgene_edac_pmd_l1_check(struct edac_device_ctl_info *edac_dev,
+ 	/* Clear any HW errors */
+ 	writel(val, pg_f + MEMERR_CPU_MMUESR_PAGE_OFFSET);
+ 
+-	edac_device_handle_ce(edac_dev, 0, 0, edac_dev->ctl_name);
++	edac_device_handle_ce(edac_dev, 1, 0, 0, edac_dev->ctl_name);
+ }
+ 
+ static void xgene_edac_pmd_l2_check(struct edac_device_ctl_info *edac_dev)
+@@ -724,10 +724,10 @@ static void xgene_edac_pmd_l2_check(struct edac_device_ctl_info *edac_dev)
+ 
+ 	if (val & (MEMERR_L2C_L2ESR_ERR_MASK |
+ 		   MEMERR_L2C_L2ESR_MULTICERR_MASK))
+-		edac_device_handle_ce(edac_dev, 0, 0, edac_dev->ctl_name);
++		edac_device_handle_ce(edac_dev, 1, 0, 0, edac_dev->ctl_name);
+ 	if (val & (MEMERR_L2C_L2ESR_UCERR_MASK |
+ 		   MEMERR_L2C_L2ESR_MULTUCERR_MASK))
+-		edac_device_handle_ue(edac_dev, 0, 0, edac_dev->ctl_name);
++		edac_device_handle_ue(edac_dev, 1, 0, 0, edac_dev->ctl_name);
+ 
+ chk_l2c:
+ 	/* Check if any memory request timed out on L2 cache */
+@@ -1113,13 +1113,13 @@ static void xgene_edac_l3_check(struct edac_device_ctl_info *edac_dev)
+ 
+ 	if (ctx->version <= 1 &&
+ 	    xgene_edac_l3_promote_to_uc_err(l3cesr, l3celr)) {
+-		edac_device_handle_ue(edac_dev, 0, 0, edac_dev->ctl_name);
++		edac_device_handle_ue(edac_dev, 1, 0, 0, edac_dev->ctl_name);
+ 		return;
+ 	}
+ 	if (l3cesr & L3C_ESR_CERR_MASK)
+-		edac_device_handle_ce(edac_dev, 0, 0, edac_dev->ctl_name);
++		edac_device_handle_ce(edac_dev, 1, 0, 0, edac_dev->ctl_name);
+ 	if (l3cesr & L3C_ESR_UCERR_MASK)
+-		edac_device_handle_ue(edac_dev, 0, 0, edac_dev->ctl_name);
++		edac_device_handle_ue(edac_dev, 1, 0, 0, edac_dev->ctl_name);
+ }
+ 
+ static void xgene_edac_l3_hw_init(struct edac_device_ctl_info *edac_dev,
+@@ -1449,7 +1449,7 @@ static void xgene_edac_iob_gic_report(struct edac_device_ctl_info *edac_dev)
+ 		writel(err_addr_hi, ctx->dev_csr + GLBL_MSEC_ERRH);
+ 	}
+ 	if (reg & (SEC_ERR_MASK | MSEC_ERR_MASK))
+-		edac_device_handle_ce(edac_dev, 0, 0, edac_dev->ctl_name);
++		edac_device_handle_ce(edac_dev, 1, 0, 0, edac_dev->ctl_name);
+ 
+ 	if (reg & DED_ERR_MASK) {
+ 		err_addr_lo = readl(ctx->dev_csr + GLBL_DED_ERRL);
+@@ -1470,7 +1470,7 @@ static void xgene_edac_iob_gic_report(struct edac_device_ctl_info *edac_dev)
+ 		writel(err_addr_hi, ctx->dev_csr + GLBL_MDED_ERRH);
+ 	}
+ 	if (reg & (DED_ERR_MASK | MDED_ERR_MASK))
+-		edac_device_handle_ue(edac_dev, 0, 0, edac_dev->ctl_name);
++		edac_device_handle_ue(edac_dev, 1, 0, 0, edac_dev->ctl_name);
+ }
+ 
+ static void xgene_edac_rb_report(struct edac_device_ctl_info *edac_dev)
+@@ -1675,7 +1675,7 @@ static void xgene_edac_soc_check(struct edac_device_ctl_info *edac_dev)
+ 	if (pcp_lp_stat & CSW_SWITCH_TRACE_ERR_MASK) {
+ 		dev_info(edac_dev->dev,
+ 			 "CSW switch trace correctable memory parity error\n");
+-		edac_device_handle_ce(edac_dev, 0, 0, edac_dev->ctl_name);
++		edac_device_handle_ce(edac_dev, 1, 0, 0, edac_dev->ctl_name);
+ 	}
+ 
+ 	if (!reg)
+@@ -1685,14 +1685,14 @@ static void xgene_edac_soc_check(struct edac_device_ctl_info *edac_dev)
+ 	if (!soc_mem_err) {
+ 		dev_err(edac_dev->dev, "SoC memory parity error 0x%08X\n",
+ 			reg);
+-		edac_device_handle_ue(edac_dev, 0, 0, edac_dev->ctl_name);
++		edac_device_handle_ue(edac_dev, 1, 0, 0, edac_dev->ctl_name);
+ 		return;
+ 	}
+ 	for (i = 0; i < 31; i++) {
+ 		if (reg & (1 << i)) {
+ 			dev_err(edac_dev->dev, "%s memory parity error\n",
+ 				soc_mem_err[i]);
+-			edac_device_handle_ue(edac_dev, 0, 0,
++			edac_device_handle_ue(edac_dev, 1, 0, 0,
+ 					      edac_dev->ctl_name);
+ 		}
+ 	}
+-- 
+2.7.4
 
