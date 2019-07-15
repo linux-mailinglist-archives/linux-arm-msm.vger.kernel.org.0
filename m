@@ -2,27 +2,27 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 470FD696C4
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 15 Jul 2019 17:07:41 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id DB7B3697F7
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 15 Jul 2019 17:14:30 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2388102AbfGOOFJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 15 Jul 2019 10:05:09 -0400
-Received: from mail.kernel.org ([198.145.29.99]:51306 "EHLO mail.kernel.org"
+        id S1731479AbfGONsY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 15 Jul 2019 09:48:24 -0400
+Received: from mail.kernel.org ([198.145.29.99]:58432 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S2388097AbfGOOFI (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 15 Jul 2019 10:05:08 -0400
+        id S1731476AbfGONsY (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 15 Jul 2019 09:48:24 -0400
 Received: from sasha-vm.mshome.net (unknown [73.61.17.35])
         (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
         (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 4D1352081C;
-        Mon, 15 Jul 2019 14:05:05 +0000 (UTC)
+        by mail.kernel.org (Postfix) with ESMTPSA id 7930120651;
+        Mon, 15 Jul 2019 13:48:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1563199508;
-        bh=qhF90JaRN9H/Mne/RCsZbQjhkZdpVTzKKYmO16uQJ0s=;
+        s=default; t=1563198503;
+        bh=kMyFtTLqDFPXCD2RXSJyC9UwfPtmClLqXRL/vWMyeQY=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=kukJPrLra4Z1yMxFlUEwL6GtGFFjW8i++vPXMH/LKFkdT/q/21Xa/un1FiBoELseb
-         /yVfoJwEcQIDWYBcI9yILudMtS6+MxJnmtn+/1ySUtTtGUoBkeEBai/FP6939bQ8oR
-         Sp8InhZhyAXo4rv7lfkpJiWsAAEVezd8TmnYP4TM=
+        b=Vtt+1w6+MdTJ9wk4e6hHtPOuQKJdu7UpJQs1lGXWJQoqHMecJVz5So61AhV+4bQlO
+         lvMHQb2GAj98DbeVlh8bjZvO+z0exwnxKNt7QVyVK1yXpgHOsyyttxSBYP3Sx066Hv
+         A6GfATvJcH1Vimr7LIMpbj6U2rm1L6lPSE84C4zI=
 From:   Sasha Levin <sashal@kernel.org>
 To:     linux-kernel@vger.kernel.org, stable@vger.kernel.org
 Cc:     Wen Yang <wen.yang99@zte.com.cn>,
@@ -30,12 +30,12 @@ Cc:     Wen Yang <wen.yang99@zte.com.cn>,
         Mauro Carvalho Chehab <mchehab+samsung@kernel.org>,
         Sasha Levin <sashal@kernel.org>, linux-media@vger.kernel.org,
         linux-arm-msm@vger.kernel.org
-Subject: [PATCH AUTOSEL 5.1 026/219] media: venus: firmware: fix leaked of_node references
-Date:   Mon, 15 Jul 2019 10:00:27 -0400
-Message-Id: <20190715140341.6443-26-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 5.2 028/249] media: venus: firmware: fix leaked of_node references
+Date:   Mon, 15 Jul 2019 09:43:13 -0400
+Message-Id: <20190715134655.4076-28-sashal@kernel.org>
 X-Mailer: git-send-email 2.20.1
-In-Reply-To: <20190715140341.6443-1-sashal@kernel.org>
-References: <20190715140341.6443-1-sashal@kernel.org>
+In-Reply-To: <20190715134655.4076-1-sashal@kernel.org>
+References: <20190715134655.4076-1-sashal@kernel.org>
 MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
@@ -67,10 +67,10 @@ Signed-off-by: Sasha Levin <sashal@kernel.org>
  1 file changed, 4 insertions(+), 2 deletions(-)
 
 diff --git a/drivers/media/platform/qcom/venus/firmware.c b/drivers/media/platform/qcom/venus/firmware.c
-index 6cfa8021721e..f81449b400c4 100644
+index 1eba23409ff3..d3d1748a7ef6 100644
 --- a/drivers/media/platform/qcom/venus/firmware.c
 +++ b/drivers/media/platform/qcom/venus/firmware.c
-@@ -87,11 +87,11 @@ static int venus_load_fw(struct venus_core *core, const char *fwname,
+@@ -78,11 +78,11 @@ static int venus_load_fw(struct venus_core *core, const char *fwname,
  
  	ret = of_address_to_resource(node, 0, &r);
  	if (ret)
@@ -84,7 +84,7 @@ index 6cfa8021721e..f81449b400c4 100644
  
  	fw_size = qcom_mdt_get_size(mdt);
  	if (fw_size < 0) {
-@@ -125,6 +125,8 @@ static int venus_load_fw(struct venus_core *core, const char *fwname,
+@@ -116,6 +116,8 @@ static int venus_load_fw(struct venus_core *core, const char *fwname,
  	memunmap(mem_va);
  err_release_fw:
  	release_firmware(mdt);
