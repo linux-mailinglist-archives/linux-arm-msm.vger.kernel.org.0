@@ -2,184 +2,320 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 6464A68A61
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 15 Jul 2019 15:24:12 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 7396268D15
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 15 Jul 2019 15:56:14 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730219AbfGONYL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 15 Jul 2019 09:24:11 -0400
-Received: from mail-lf1-f67.google.com ([209.85.167.67]:37969 "EHLO
-        mail-lf1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730189AbfGONYL (ORCPT
+        id S1732803AbfGON4K (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 15 Jul 2019 09:56:10 -0400
+Received: from mail-lf1-f66.google.com ([209.85.167.66]:38990 "EHLO
+        mail-lf1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1730708AbfGON4J (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 15 Jul 2019 09:24:11 -0400
-Received: by mail-lf1-f67.google.com with SMTP id h28so10984792lfj.5
-        for <linux-arm-msm@vger.kernel.org>; Mon, 15 Jul 2019 06:24:09 -0700 (PDT)
+        Mon, 15 Jul 2019 09:56:09 -0400
+Received: by mail-lf1-f66.google.com with SMTP id v85so11058253lfa.6
+        for <linux-arm-msm@vger.kernel.org>; Mon, 15 Jul 2019 06:56:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=WAAXdPfvBtMOFdHC12T8O6g/xwGXPT4OLR0giQWXBHs=;
-        b=ZeN5hXMVWByQHXmIl3lNNWHgq/quaKKWUHLtPlJ991iiaXG7cCNKrkUrLhlKWh62Zu
-         wGEa6Z8uQLmuifbiujek4yvUUHybaGxw7Frp5JebiWFkLeqgAhuqU+HYWcEi+shp4ahZ
-         jChaAYPJmCakSFmZbrjYSFdM/JkmO3B6dWURshTo6zr/1h01XUSJgx50nxbbRtpTUK92
-         ngHdlAnSsRTEBYrZiVK+SJXPMFwHjn0l5BeRFgyNQCytzQa5jgibIm+pdfxojooWqXRG
-         a0+rshY0N9JBf8s2Zr8jbGs4oloq+Rj/8Mws92rqbpbfnKWj21brhJS2qS9KW7GxFdds
-         xz0A==
+        h=subject:to:cc:references:from:openpgp:autocrypt:message-id:date
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=AQA3rAirNvZxKwlWUk/9YJ/2ZCXTfP6FUgOkw0oiaHo=;
+        b=rGQho+rAvF5bf8OQFUILTdrWAvao0/A+FK6CXAY2yvsdgYrKy+o8nMLBDh9RN2Tevr
+         1xRWj8rhRcsS0gq5Zlv7P8XA5QHzfc7F3K2SiQjiWOG6h+0kyBDTYKrFyJJhArNqUVOu
+         OG61/tmFoHYXOxampkVklYiAjeyYqd1nj1hnUQCXAr1RydqNqEM5yRUDTrqHIDEgMeAH
+         J9WAEx8jxt/aA912sTTzAl+VZ4gal6o7aFFQiHgtu6eNBbdBri1k0RAGP69gZ/zNSV2W
+         0iG17lVk5T6lb6YdXLY5RCF1xsMI+HNFEmj1fF/6MkTcgurPNXV9im8PtM8/sPEY9hYW
+         9zyA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=WAAXdPfvBtMOFdHC12T8O6g/xwGXPT4OLR0giQWXBHs=;
-        b=apjLbntEKRWfrMVk6SRU8ZpU0t96CSQecljJLW50MTDMQ9obFb5bpy+EAbBbMiQmHV
-         qg9Ma1tIUmuGeIhT6o9IPoVXKcuO/3bkBsFQz05a1ri70gnC3LMXw//qkHdirOaxtsXC
-         moajPRwXP4pVHwuKVFyAmkP0BAsUDXEeT4p6RDvwUKagMg8XXPSibjt44P7+wijC1OWI
-         DycUO6X96zIbfDb2+i6iSLMjyKw21KV2gm/iL60AfSNaoOdCvAc+iSMzfzFcpWEPZvEH
-         U3fo1ZLUu0UGEfy08mWXsaB3HGnydeW2Z7EmGCO4ZCfFmwcsPCtdFawvXkAXZ1uCRsOk
-         jrUQ==
-X-Gm-Message-State: APjAAAWYCqBWIqGqdCrLHz5C2enKjrwyDPIr81yihUtetbMKjvEZnuVw
-        WZaADmYfzd8bk3DlV5K+laNHXw==
-X-Google-Smtp-Source: APXvYqyMkuU4RxekOy7UQ3tzp1JSzua2w50VcgWv5EMQZ8H8oK9ddCNJWjdGC2/aKK1jtE911ufOmg==
-X-Received: by 2002:a19:c503:: with SMTP id w3mr10188554lfe.139.1563197048550;
-        Mon, 15 Jul 2019 06:24:08 -0700 (PDT)
-Received: from centauri (ua-83-226-229-61.bbcust.telenor.se. [83.226.229.61])
-        by smtp.gmail.com with ESMTPSA id v22sm2358945lfe.49.2019.07.15.06.24.06
-        (version=TLS1_3 cipher=AEAD-AES256-GCM-SHA384 bits=256/256);
-        Mon, 15 Jul 2019 06:24:07 -0700 (PDT)
-Date:   Mon, 15 Jul 2019 15:24:05 +0200
-From:   Niklas Cassel <niklas.cassel@linaro.org>
-To:     Viresh Kumar <viresh.kumar@linaro.org>
-Cc:     Andy Gross <agross@kernel.org>, linux-arm-msm@vger.kernel.org,
-        jorge.ramirez-ortiz@linaro.org, sboyd@kernel.org,
-        vireshk@kernel.org, bjorn.andersson@linaro.org,
-        ulf.hansson@linaro.org, Rob Herring <robh+dt@kernel.org>,
-        Mark Rutland <mark.rutland@arm.com>,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 11/13] arm64: dts: qcom: qcs404: Add CPR and populate OPP
- table
-Message-ID: <20190715132405.GA5040@centauri>
-References: <20190705095726.21433-1-niklas.cassel@linaro.org>
- <20190705095726.21433-12-niklas.cassel@linaro.org>
- <20190710090303.tb5ue3wq6r7ofyev@vireshk-i7>
+        h=x-gm-message-state:subject:to:cc:references:from:openpgp:autocrypt
+         :message-id:date:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=AQA3rAirNvZxKwlWUk/9YJ/2ZCXTfP6FUgOkw0oiaHo=;
+        b=PGaknFPFFunx4WT0vcGxMB2xYghCT4Tmvf5XOddFl+M2FisZDBT6VgoGHp7OmwOLtG
+         7n0THnpe2Jg4V3jeCb23BYyB51gIBf2ofOwI8ckwZJwHZaZdH8djPOE7tOUi3gfFjgpM
+         y7SRsH7K8L96L6dDeX8hgMdHuZc/z1WTF2wrgtoZ+08FkoaOkPC9K7awXO4hw1Nu8ANB
+         UAdGPbsGbCyOAiJywwuzupdk0J0v/plwENhUI1Sy6ZhZddGT47kXfMjAa3gEOXgzvybW
+         5HDKjRtsGbJ+VCaB4Z9lwVMQOkiSjfaE4yKjbhksQkBYgz8dGkhVMyVobm0hrR4hHNNb
+         MiGw==
+X-Gm-Message-State: APjAAAU6sr+omxuFYveSTwrrh19xqzwyyBYt+VlTx79h0Xz308jE7Nkl
+        KMedKPeiI/BL7fHvQzqrnF5siKJ0fC8=
+X-Google-Smtp-Source: APXvYqxZy3BoIX10RJa/RUMuP0u5tclVeATru2EcWC7Od37yBECo/4x7WFtFMx+OnSoOCEC3OblWZA==
+X-Received: by 2002:ac2:568e:: with SMTP id 14mr11820863lfr.189.1563198964973;
+        Mon, 15 Jul 2019 06:56:04 -0700 (PDT)
+Received: from [10.44.66.8] ([212.45.67.2])
+        by smtp.googlemail.com with ESMTPSA id d16sm3155336ljc.96.2019.07.15.06.56.03
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Mon, 15 Jul 2019 06:56:04 -0700 (PDT)
+Subject: Re: [PATCH v4 1/5] dt-bindings: interconnect: Add Qualcomm QCS404 DT
+ bindings
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     robh+dt@kernel.org, agross@kernel.org, vkoul@kernel.org,
+        evgreen@chromium.org, daidavid1@codeaurora.org,
+        linux-pm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org
+References: <20190613151323.10850-1-georgi.djakov@linaro.org>
+ <20190613151323.10850-2-georgi.djakov@linaro.org>
+ <20190708192612.GE30636@minitux>
+From:   Georgi Djakov <georgi.djakov@linaro.org>
+Openpgp: preference=signencrypt
+Autocrypt: addr=georgi.djakov@linaro.org; prefer-encrypt=mutual; keydata=
+ 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
+ KEmKjLDvB0pePJkdTw==
+Message-ID: <70982f11-792e-6c02-056d-47582708be4f@linaro.org>
+Date:   Mon, 15 Jul 2019 16:56:03 +0300
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20190710090303.tb5ue3wq6r7ofyev@vireshk-i7>
-User-Agent: Mutt/1.12.0 (2019-05-25)
+In-Reply-To: <20190708192612.GE30636@minitux>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Jul 10, 2019 at 02:33:03PM +0530, Viresh Kumar wrote:
-> On 05-07-19, 11:57, Niklas Cassel wrote:
-> > diff --git a/arch/arm64/boot/dts/qcom/qcs404.dtsi b/arch/arm64/boot/dts/qcom/qcs404.dtsi
-> >  	cpu_opp_table: cpu-opp-table {
-> > -		compatible = "operating-points-v2";
-> > +		compatible = "operating-points-v2-kryo-cpu";
-> >  		opp-shared;
-> >  
-> >  		opp-1094400000 {
-> >  			opp-hz = /bits/ 64 <1094400000>;
-> > -			opp-microvolt = <1224000 1224000 1224000>;
-> > +			required-opps = <&cpr_opp1>;
-> >  		};
-> >  		opp-1248000000 {
-> >  			opp-hz = /bits/ 64 <1248000000>;
-> > -			opp-microvolt = <1288000 1288000 1288000>;
-> > +			required-opps = <&cpr_opp2>;
-> >  		};
-> >  		opp-1401600000 {
-> >  			opp-hz = /bits/ 64 <1401600000>;
-> > -			opp-microvolt = <1384000 1384000 1384000>;
-> > +			required-opps = <&cpr_opp3>;
-> > +		};
-> > +	};
-> > +
-> > +	cpr_opp_table: cpr-opp-table {
-> > +		compatible = "operating-points-v2-qcom-level";
-> > +
-> > +		cpr_opp1: opp1 {
-> > +			opp-level = <1>;
-> > +			qcom,opp-fuse-level = <1>;
-> > +			opp-hz = /bits/ 64 <1094400000>;
-> > +		};
-> > +		cpr_opp2: opp2 {
-> > +			opp-level = <2>;
-> > +			qcom,opp-fuse-level = <2>;
-> > +			opp-hz = /bits/ 64 <1248000000>;
-> > +		};
-> > +		cpr_opp3: opp3 {
-> > +			opp-level = <3>;
-> > +			qcom,opp-fuse-level = <3>;
-> > +			opp-hz = /bits/ 64 <1401600000>;
-> >  		};
-> >  	};
+Hi Bjorn,
+
+On 7/8/19 22:26, Bjorn Andersson wrote:
+> On Thu 13 Jun 08:13 PDT 2019, Georgi Djakov wrote:
 > 
-> - Do we ever have cases more complex than this for this version of CPR ?
-
-For e.g. CPR on msm8916, we will have 7 different frequencies in the CPU
-OPP table, but only 3 OPPs in the CPR OPP table.
-
-Each of the 7 OPPs in the CPU OPP table will have a required-opps that
-points to an OPP in the CPR OPP table.
-
-On certain msm8916:s, the speedbin efuse will limit us to only have 6
-OPPs in the CPU OPP table, but the required-opps are still the same.
-
-So I would say that it is just slightly more complex..
-
+>> The Qualcomm QCS404 platform has several buses that could be controlled
+>> and tuned according to the bandwidth demand.
+>>
+>> Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+>> Signed-off-by: Georgi Djakov <georgi.djakov@linaro.org>
+>> ---
+>>
+>> v4:
+>> - Add the DT header into this patch.
+>> - Pick Bjorn's r-b.
+>>
+>> v3:
+>> - Add a reg property and move the interconnect nodes under the "soc" node.
+>>
+>> v2:
+>> - No changes.
+>>
+>>  .../bindings/interconnect/qcom,qcs404.txt     | 46 ++++++++++
+>>  .../dt-bindings/interconnect/qcom,qcs404.h    | 88 +++++++++++++++++++
+>>  2 files changed, 134 insertions(+)
+>>  create mode 100644 Documentation/devicetree/bindings/interconnect/qcom,qcs404.txt
+>>  create mode 100644 include/dt-bindings/interconnect/qcom,qcs404.h
+>>
+>> diff --git a/Documentation/devicetree/bindings/interconnect/qcom,qcs404.txt b/Documentation/devicetree/bindings/interconnect/qcom,qcs404.txt
+>> new file mode 100644
+>> index 000000000000..14a827268dda
+>> --- /dev/null
+>> +++ b/Documentation/devicetree/bindings/interconnect/qcom,qcs404.txt
+>> @@ -0,0 +1,46 @@
+>> +Qualcomm QCS404 Network-On-Chip interconnect driver binding
+>> +-----------------------------------------------------------
+>> +
+>> +Required properties :
+>> +- compatible : shall contain only one of the following:
+>> +			"qcom,qcs404-bimc"
+>> +			"qcom,qcs404-pcnoc"
+>> +			"qcom,qcs404-snoc"
+>> +- #interconnect-cells : should contain 1
+>> +
+>> +Optional properties :
+>> +reg : specifies the physical base address and size of registers
+>> +clocks : list of phandles and specifiers to all interconnect bus clocks
+>> +clock-names : clock names should include both "bus_clk" and "bus_a_clk"
 > 
-> - What about multiple devices with same CPR table, not big LITTLE
->   CPUs, but other devices like two different type of IO devices ? What
->   will we do with opp-hz in those cases ?
+> Spoke to Rob about this patch, and I don't think these properties should
+> not be described as optional.
+> 
+> The reg isn't used unless we're implementing support for QoS, but let's
+> include them in the binding as required anyways.
 
-On all SoCs where there is a CPR for e.g. GPU, there is an additional
-CPR hardware block, so then there will also be an additional CPR OPP
-table. So I don't think that this will be a problem.
+Ok, will do it!
 
 > 
-> - If there are no such cases, can we live without opp-hz being used
->   here and reverse-engineer the highest frequency by looking directly
->   at CPUs OPP table ? i.e. by looking at required-opps field.
+> Iirc the two clocks are required with the current implementation, but
+> shouldn't there be an iface clock as well, for accessing the QoS
+> register space?
 
-This was actually my initial thought when talking to you 6+ months ago.
-However, the problem was that, from the CPR drivers' perspective, it
-only sees the CPR OPP table.
+Actually i expect this to be a list of AXI clocks of the IP blocks, whose QoS
+ports we configure. For this platform, according to downstream, it would be just
+<&gcc GCC_SYS_NOC_USB3_CLK>. For other platforms i see these are a few usb/ufs
+clocks that should be enabled while we set QoS for usb/ufs.
 
+> 
+> PS. As I read this again, please drop _clk from the two clocks names -
+> we know they are clocks...
 
-So this is the order things are called,
-from qcom-cpufreq-nvmem.c perspective:
+Sure, will do it!
 
-1) dev_pm_opp_set_supported_hw()
+Thanks,
+Georgi
 
-2) dev_pm_opp_attach_genpd() ->
-which results in
-int cpr_pd_attach_dev(struct generic_pm_domain *domain,
-		      struct device *dev)
-being called.
-This callback is inside the CPR driver, and here we have the
-CPU's (genpd virtual) struct device, and this is where we would like to
-know the opp-hz.
-The problem here is that:
-[    3.114979] cpr_pd_attach_dev: dev_pm_opp_get_opp_count for dev: genpd:0:cpu0: -19
-[    3.119610] cpr_pd_attach_dev: dev_pm_opp_get_opp_count for dev: cpu0: 0
-[    3.126489] cpr_pd_attach_dev: dev_pm_opp_get_opp_count for dev: cpr@b018000: 3
-
-While we have the CPR OPP table in the attach callback, we don't
-have the CPU OPP table, neither in the CPU struct device or the genpd virtual
-struct device.
-
-Since we have called dev_pm_opp_attach_genpd(.., .., &virt_devs) which
-attaches an OPP table to the CPU, I would have expected one of them to
-be >= 0.
-Especially since dev_name(virt_devs[0]) == genpd:0:cpu0
-
-I guess it should still be possible to parse the required-opps manually here,
-by iterating the OF nodes, however, we won't be able to use the CPU's struct
-opp_table (which is the nice representation of the OF nodes).
-
-Any suggestions?
-
-
-Kind regards,
-Niklas
+> 
+> Regards,
+> Bjorn
+> 
+>> +
+>> +Example:
+>> +
+>> +soc {
+>> +	...
+>> +	bimc: interconnect@400000 {
+>> +		reg = <0x00400000 0x80000>;
+>> +		compatible = "qcom,qcs404-bimc";
+>> +		#interconnect-cells = <1>;
+>> +		clock-names = "bus_clk", "bus_a_clk";
+>> +		clocks = <&rpmcc RPM_SMD_BIMC_CLK>,
+>> +			<&rpmcc RPM_SMD_BIMC_A_CLK>;
+>> +	};
+>> +
+>> +	pnoc: interconnect@500000 {
+>> +		reg = <0x00500000 0x15080>;
+>> +		compatible = "qcom,qcs404-pcnoc";
+>> +		#interconnect-cells = <1>;
+>> +		clock-names = "bus_clk", "bus_a_clk";
+>> +		clocks = <&rpmcc RPM_SMD_PNOC_CLK>,
+>> +			<&rpmcc RPM_SMD_PNOC_A_CLK>;
+>> +	};
+>> +
+>> +	snoc: interconnect@580000 {
+>> +		reg = <0x00580000 0x23080>;
+>> +		compatible = "qcom,qcs404-snoc";
+>> +		#interconnect-cells = <1>;
+>> +		clock-names = "bus_clk", "bus_a_clk";
+>> +		clocks = <&rpmcc RPM_SMD_SNOC_CLK>,
+>> +			<&rpmcc RPM_SMD_SNOC_A_CLK>;
+>> +	};
+>> +};
+>> diff --git a/include/dt-bindings/interconnect/qcom,qcs404.h b/include/dt-bindings/interconnect/qcom,qcs404.h
+>> new file mode 100644
+>> index 000000000000..960f6e39c5f2
+>> --- /dev/null
+>> +++ b/include/dt-bindings/interconnect/qcom,qcs404.h
+>> @@ -0,0 +1,88 @@
+>> +/* SPDX-License-Identifier: GPL-2.0 */
+>> +/*
+>> + * Qualcomm interconnect IDs
+>> + *
+>> + * Copyright (c) 2019, Linaro Ltd.
+>> + * Author: Georgi Djakov <georgi.djakov@linaro.org>
+>> + */
+>> +
+>> +#ifndef __DT_BINDINGS_INTERCONNECT_QCOM_QCS404_H
+>> +#define __DT_BINDINGS_INTERCONNECT_QCOM_QCS404_H
+>> +
+>> +#define MASTER_AMPSS_M0			0
+>> +#define MASTER_OXILI			1
+>> +#define MASTER_MDP_PORT0		2
+>> +#define MASTER_SNOC_BIMC_1		3
+>> +#define MASTER_TCU_0			4
+>> +#define SLAVE_EBI_CH0			5
+>> +#define SLAVE_BIMC_SNOC			6
+>> +
+>> +#define MASTER_SPDM			0
+>> +#define MASTER_BLSP_1			1
+>> +#define MASTER_BLSP_2			2
+>> +#define MASTER_XI_USB_HS1		3
+>> +#define MASTER_CRYPT0			4
+>> +#define MASTER_SDCC_1			5
+>> +#define MASTER_SDCC_2			6
+>> +#define MASTER_SNOC_PCNOC		7
+>> +#define MASTER_QPIC			8
+>> +#define PCNOC_INT_0			9
+>> +#define PCNOC_INT_2			10
+>> +#define PCNOC_INT_3			11
+>> +#define PCNOC_S_0			12
+>> +#define PCNOC_S_1			13
+>> +#define PCNOC_S_2			14
+>> +#define PCNOC_S_3			15
+>> +#define PCNOC_S_4			16
+>> +#define PCNOC_S_6			17
+>> +#define PCNOC_S_7			18
+>> +#define PCNOC_S_8			19
+>> +#define PCNOC_S_9			20
+>> +#define PCNOC_S_10			21
+>> +#define PCNOC_S_11			22
+>> +#define SLAVE_SPDM			23
+>> +#define SLAVE_PDM			24
+>> +#define SLAVE_PRNG			25
+>> +#define SLAVE_TCSR			26
+>> +#define SLAVE_SNOC_CFG			27
+>> +#define SLAVE_MESSAGE_RAM		28
+>> +#define SLAVE_DISP_SS_CFG		29
+>> +#define SLAVE_GPU_CFG			30
+>> +#define SLAVE_BLSP_1			31
+>> +#define SLAVE_BLSP_2			32
+>> +#define SLAVE_TLMM_NORTH		33
+>> +#define SLAVE_PCIE			34
+>> +#define SLAVE_ETHERNET			35
+>> +#define SLAVE_TLMM_EAST			36
+>> +#define SLAVE_TCU			37
+>> +#define SLAVE_PMIC_ARB			38
+>> +#define SLAVE_SDCC_1			39
+>> +#define SLAVE_SDCC_2			40
+>> +#define SLAVE_TLMM_SOUTH		41
+>> +#define SLAVE_USB_HS			42
+>> +#define SLAVE_USB3			43
+>> +#define SLAVE_CRYPTO_0_CFG		44
+>> +#define SLAVE_PCNOC_SNOC		45
+>> +
+>> +#define MASTER_QDSS_BAM			0
+>> +#define MASTER_BIMC_SNOC		1
+>> +#define MASTER_PCNOC_SNOC		2
+>> +#define MASTER_QDSS_ETR			3
+>> +#define MASTER_EMAC			4
+>> +#define MASTER_PCIE			5
+>> +#define MASTER_USB3			6
+>> +#define QDSS_INT			7
+>> +#define SNOC_INT_0			8
+>> +#define SNOC_INT_1			9
+>> +#define SNOC_INT_2			10
+>> +#define SLAVE_KPSS_AHB			11
+>> +#define SLAVE_WCSS			12
+>> +#define SLAVE_SNOC_BIMC_1		13
+>> +#define SLAVE_IMEM			14
+>> +#define SLAVE_SNOC_PCNOC		15
+>> +#define SLAVE_QDSS_STM			16
+>> +#define SLAVE_CATS_0			17
+>> +#define SLAVE_CATS_1			18
+>> +#define SLAVE_LPASS			19
+>> +
+>> +#endif
