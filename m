@@ -2,25 +2,25 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 4750E6A149
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Jul 2019 06:19:18 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 820D76A14F
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Jul 2019 06:22:12 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726502AbfGPETR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 16 Jul 2019 00:19:17 -0400
-Received: from smtp.codeaurora.org ([198.145.29.96]:39486 "EHLO
+        id S1726502AbfGPEWI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 16 Jul 2019 00:22:08 -0400
+Received: from smtp.codeaurora.org ([198.145.29.96]:43632 "EHLO
         smtp.codeaurora.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726431AbfGPETQ (ORCPT
+        with ESMTP id S1726465AbfGPEWI (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 16 Jul 2019 00:19:16 -0400
+        Tue, 16 Jul 2019 00:22:08 -0400
 Received: by smtp.codeaurora.org (Postfix, from userid 1000)
-        id 40DBA611D1; Tue, 16 Jul 2019 04:19:15 +0000 (UTC)
+        id D25CB605FE; Tue, 16 Jul 2019 04:22:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
-        s=default; t=1563250755;
-        bh=asziNOotswwKQNcqM8Xvjaq2EHtX2p3jxb3vhqL9DsU=;
+        s=default; t=1563250926;
+        bh=gMr1kGTRi06a6sSsz7Od65gf4AEFcJB1U/xs+pRKtSU=;
         h=Subject:To:Cc:References:From:Date:In-Reply-To:From;
-        b=Ae3j5C5fVIQstLd5hj1CoNUaGfGz2s/PwZJoghSZKKEvg01QlQyPeq4uFW0s7okZj
-         5QuxNscxKvTN/H+XnPV3rgOKbczxFC71BPbhvcobVofgv3XwLv8zA5Umr+0U5WOesh
-         8ZXFxXR1scvC6Rp0ZKyZOcctsgeze3X7UWWF++X4=
+        b=KxyVTtnV0rY9Js4Uqjdck4ZoazH6qLq5UoB1hwrmdTTqRwcmneo1rQIluMrvyT3fZ
+         s3KO9b8cHFoMaUKt/BYUbmzjguMPznGBcptny2wa0Q2+OuCsRG0p57Ikq/GgLysvzy
+         ZF7iMRyUHSx78oD1j01DiB7WO0fBF6HoNHMQINPs=
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
         pdx-caf-mail.web.codeaurora.org
 X-Spam-Level: 
@@ -31,20 +31,19 @@ Received: from [10.206.28.9] (blr-c-bdr-fw-01_globalnat_allzones-outside.qualcom
         (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
         (No client certificate requested)
         (Authenticated sender: tdas@smtp.codeaurora.org)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id DB59661798;
-        Tue, 16 Jul 2019 04:19:04 +0000 (UTC)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id C3644605FE;
+        Tue, 16 Jul 2019 04:22:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
-        s=default; t=1563250747;
-        bh=asziNOotswwKQNcqM8Xvjaq2EHtX2p3jxb3vhqL9DsU=;
+        s=default; t=1563250926;
+        bh=gMr1kGTRi06a6sSsz7Od65gf4AEFcJB1U/xs+pRKtSU=;
         h=Subject:To:Cc:References:From:Date:In-Reply-To:From;
-        b=YbUI9Fz83TyJdxEUPOirR+5Yg9RylDLu+TtxSC4JImbVr29bM/rz04HoRxeqUnwU/
-         mkDjYh9IKS0g4cBjZkSl2/hINbyZy4Ez73qb1s3u5uGj1cZ4Pbn6jh7l82blpjEf4N
-         6G46W0SUQ7sSU5vaw0EKhHkj+MAgdJIgxTw6Uj/o=
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org DB59661798
+        b=KxyVTtnV0rY9Js4Uqjdck4ZoazH6qLq5UoB1hwrmdTTqRwcmneo1rQIluMrvyT3fZ
+         s3KO9b8cHFoMaUKt/BYUbmzjguMPznGBcptny2wa0Q2+OuCsRG0p57Ikq/GgLysvzy
+         ZF7iMRyUHSx78oD1j01DiB7WO0fBF6HoNHMQINPs=
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org C3644605FE
 Authentication-Results: pdx-caf-mail.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
 Authentication-Results: pdx-caf-mail.web.codeaurora.org; spf=none smtp.mailfrom=tdas@codeaurora.org
-Subject: Re: [PATCH v1 2/3] clk: qcom: rcg2: Add support for hardware control
- mode
+Subject: Re: [PATCH v1 3/3] clk: qcom: rcg: update the DFS macro for RCG
 To:     Stephen Boyd <sboyd@kernel.org>,
         Michael Turquette <mturquette@baylibre.com>
 Cc:     Andy Gross <andy.gross@linaro.org>,
@@ -53,15 +52,19 @@ Cc:     Andy Gross <andy.gross@linaro.org>,
         linux-arm-msm@vger.kernel.org, linux-soc@vger.kernel.org,
         linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org
 References: <1557339895-21952-1-git-send-email-tdas@codeaurora.org>
- <1557339895-21952-3-git-send-email-tdas@codeaurora.org>
- <20190715225219.B684820665@mail.kernel.org>
+ <1557339895-21952-4-git-send-email-tdas@codeaurora.org>
+ <155742286525.14659.18081373668341127486@swboyd.mtv.corp.google.com>
+ <07bcd2df-a786-ea52-8566-70f484248952@codeaurora.org>
+ <155751085370.14659.7749105088997177801@swboyd.mtv.corp.google.com>
+ <f65811f8-42ea-6365-7822-db662eaea228@codeaurora.org>
+ <20190715224441.F12122080A@mail.kernel.org>
 From:   Taniya Das <tdas@codeaurora.org>
-Message-ID: <916e2fb3-98b9-c4e3-50e0-3581a41609d6@codeaurora.org>
-Date:   Tue, 16 Jul 2019 09:49:02 +0530
+Message-ID: <243de3a4-292b-77c0-6232-0b38d124d183@codeaurora.org>
+Date:   Tue, 16 Jul 2019 09:52:02 +0530
 User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
  Thunderbird/60.8.0
 MIME-Version: 1.0
-In-Reply-To: <20190715225219.B684820665@mail.kernel.org>
+In-Reply-To: <20190715224441.F12122080A@mail.kernel.org>
 Content-Type: text/plain; charset=utf-8; format=flowed
 Content-Language: en-US
 Content-Transfer-Encoding: 7bit
@@ -72,43 +75,47 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 Hello Stephen,
 
-Thanks for your review.
+Thanks for the review.
 
-On 7/16/2019 4:22 AM, Stephen Boyd wrote:
-> Quoting Taniya Das (2019-05-08 11:24:54)
->> diff --git a/drivers/clk/qcom/clk-rcg2.c b/drivers/clk/qcom/clk-rcg2.c
->> index 57dbac9..5bb6d45 100644
->> --- a/drivers/clk/qcom/clk-rcg2.c
->> +++ b/drivers/clk/qcom/clk-rcg2.c
->> @@ -289,6 +289,9 @@ static int __clk_rcg2_configure(struct clk_rcg2 *rcg, const struct freq_tbl *f)
->>          cfg |= rcg->parent_map[index].cfg << CFG_SRC_SEL_SHIFT;
->>          if (rcg->mnd_width && f->n && (f->m != f->n))
->>                  cfg |= CFG_MODE_DUAL_EDGE;
->> +       if (rcg->flags & HW_CLK_CTRL_MODE)
->> +               cfg |= CFG_HW_CLK_CTRL_MASK;
->> +
-> 
-> Above this we have commit bdc3bbdd40ba ("clk: qcom: Clear hardware clock
-> control bit of RCG") that clears this bit. Is it possible to always set
-> this bit and then have an override flag used in sdm845 that says to
-> _not_ set this bit? Presumably on earlier platforms writing the bit is a
-> no-op so it's safe to write the bit on those platforms.
-> 
-> This way, if it's going to be the default we can avoid setting the flag
-> and only set the flag on older platforms where it shouldn't be done for
-> some reason.
-> 
-
-Not all the subsystem clock controllers might have this hardware control
-bit set from design. Thus we want to set them based on the flag.
-
->>          return regmap_update_bits(rcg->clkr.regmap, RCG_CFG_OFFSET(rcg),
->>                                          mask, cfg);
->>   }
->> --
->> Qualcomm INDIA, on behalf of Qualcomm Innovation Center, Inc.is a member
->> of the Code Aurora Forum, hosted by the  Linux Foundation.
+On 7/16/2019 4:14 AM, Stephen Boyd wrote:
+> Quoting Taniya Das (2019-05-12 20:44:46)
+>> On 5/10/2019 11:24 PM, Stephen Boyd wrote:
+>>>>>> diff --git a/drivers/clk/qcom/clk-rcg.h b/drivers/clk/qcom/clk-rcg.h
+>>>>>> index 5562f38..e40e8f8 100644
+>>>>>> --- a/drivers/clk/qcom/clk-rcg.h
+>>>>>> +++ b/drivers/clk/qcom/clk-rcg.h
+>>>>>> @@ -171,7 +171,7 @@ struct clk_rcg_dfs_data {
+>>>>>>     };
+>>>>>>
+>>>>>>     #define DEFINE_RCG_DFS(r) \
+>>>>>> -       { .rcg = &r##_src, .init = &r##_init }
+>>>>>> +       { .rcg = &r, .init = &r##_init }
+>>>>>
+>>>>> Why do we need to rename the init data?
+>>>>>
+>>>>
+>>>> We want to manage the init data as the clock source name, so that we
+>>>> could manage to auto generate our code. So that we do not have to
+>>>> re-name the clock init data manually if the DFS source names gets
+>>>> updated at any point of time.
+>>>>
+>>>
+>>> Why is the clk name changing to not have a _src after the "root" of the
+>>> clk name? As long as I can remember, RCGs have a "_src" postfix.
+>>>
 >>
+>> Yes, the RCGs would have _src, so we do want the init data also to be
+>> generated with _src postfix. So that we do not have to manually clean up
+>> the generated code.
+>>
+> 
+> Please manually cleanup the generated code, or fix the code
+> generator to do what you want.
+> 
+
+Fixing the code manually is not what we intend to do and it is time 
+consuming with too many DFS controlled clocks. This really helps us 
+align to internal code.
 
 -- 
 QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
