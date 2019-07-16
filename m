@@ -2,113 +2,116 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 3E1BA6A489
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Jul 2019 11:07:17 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 032A36A69E
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Jul 2019 12:34:41 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727829AbfGPJHQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 16 Jul 2019 05:07:16 -0400
-Received: from mail-ed1-f66.google.com ([209.85.208.66]:44992 "EHLO
-        mail-ed1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727105AbfGPJHQ (ORCPT
+        id S1732764AbfGPKek (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 16 Jul 2019 06:34:40 -0400
+Received: from mail-pg1-f194.google.com ([209.85.215.194]:36039 "EHLO
+        mail-pg1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1732614AbfGPKej (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 16 Jul 2019 05:07:16 -0400
-Received: by mail-ed1-f66.google.com with SMTP id k8so18822347edr.11
-        for <linux-arm-msm@vger.kernel.org>; Tue, 16 Jul 2019 02:07:15 -0700 (PDT)
+        Tue, 16 Jul 2019 06:34:39 -0400
+Received: by mail-pg1-f194.google.com with SMTP id l21so9236775pgm.3
+        for <linux-arm-msm@vger.kernel.org>; Tue, 16 Jul 2019 03:34:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ffwll.ch; s=google;
-        h=sender:date:from:to:cc:subject:message-id:references:mime-version
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to:user-agent;
-        bh=I9zYEq8OFEbVpJer2Tv3zWZvHxZnxrPEy9YXzm5hW3E=;
-        b=jVSOIxdw446a+o8BYLVYYGg5IMs05dyf37q/ADNKTCwEod7L/7+EunPYbSghKFfkjc
-         EPopEXJIpzE+x1mG2bSZNlUKHCXC5YZdxNsX4okhltRLNACQhPemH6fFpoNhEKJIsVH3
-         0Yql/A2XGciBDq1AW8dhKO6q+tSEBCwdCo/kk=
+        bh=QxxqH1klgQB/FyA39Y7OEvDvoonTizxWFfioa8D1t40=;
+        b=xf2P5LIO9hWNbapEX+fdvUfYtiVCakX+hLWMydt2yN3Vw7xSuw4LTrhAOlE9eHGkXV
+         ZXri5YpyaLoSXmY3UhvAza2hQiH7V5aDWUQJKmWcA3fL9aIk8wGtUJWMjmj1He+Qg6ge
+         Zs5cM3BcdYG/rKHm6etKXh3v7rMY5IVnEKdAmdggYSVhm7n52YYFfuzU/PLKuyvfq/GN
+         LVL0VYRUrdcsrZYUUn/E58oa3rUTCBl/BofHy4fSy/2EEXbk74k0yPXKUHP281Ya0kzR
+         +7SDzP1LeZzrJ/b4YlJfzNH02EC6UxB27fLNrLdUoLkwksGoT8hJSJByjJ9vuDxqP19B
+         YeaA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:date:from:to:cc:subject:message-id
-         :references:mime-version:content-disposition:in-reply-to:user-agent;
-        bh=I9zYEq8OFEbVpJer2Tv3zWZvHxZnxrPEy9YXzm5hW3E=;
-        b=ZyRqSzBdj7uWDkuLLd/Qquenmt5Wr2938paNsxMioXkBn/pJFBvdK7Y1/FpAJ5sPNH
-         /6gHs1y1xojKktjm0ZPWOaxSH3FdCZKZ1cywrMwyGNC8i3PUFmzwsrecM+fOueGz9AAd
-         b/4SP3MpGi7V9pFHt7/90WNQeSA9McJBrix3KJ9sxVfNEE78Tqi4LOp/WhwUJvdTgBz7
-         h+TcC7y9JnMaFvumtKPLStPnF9C2nC2ZPLQFZP9GM7bC3hDFdaww5lGp+PYgK/feAGsd
-         HmBVB3yRMTBXm44rU0NOusKT7fcN7pLk0pq/g8RDsSTdZg6XR//DJXu4Wvju9kj7vLZR
-         RWXw==
-X-Gm-Message-State: APjAAAW398R/MUFELQJ7eNYE/x08MmvtDqNgYVaQu/kpZ/OMng5G9ww5
-        K0z20AU/1Kt7QUPGXLg7zGM=
-X-Google-Smtp-Source: APXvYqz1SaqX3EV9WdhysWFHXB3kEpANL5IKDHtMYu6Pa12298jeoeX++0r54iCbKMiUhb8wR9JHPg==
-X-Received: by 2002:a50:9918:: with SMTP id k24mr27533596edb.173.1563268035208;
-        Tue, 16 Jul 2019 02:07:15 -0700 (PDT)
-Received: from phenom.ffwll.local ([2a02:168:569e:0:3106:d637:d723:e855])
-        by smtp.gmail.com with ESMTPSA id q21sm4249063ejo.76.2019.07.16.02.07.14
-        (version=TLS1_3 cipher=AEAD-AES256-GCM-SHA384 bits=256/256);
-        Tue, 16 Jul 2019 02:07:14 -0700 (PDT)
-Date:   Tue, 16 Jul 2019 11:07:12 +0200
-From:   Daniel Vetter <daniel@ffwll.ch>
-To:     Jeykumar Sankaran <jsanka@codeaurora.org>
-Cc:     dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
-        linux-arm-msm@vger.kernel.org, seanpaul@chromium.org,
-        robdclark@gmail.com, pdhaval@codeaurora.org
-Subject: Re: [RFC] Expanding drm_mode_modeinfo flags
-Message-ID: <20190716090712.GY15868@phenom.ffwll.local>
-References: <1562870805-32314-1-git-send-email-jsanka@codeaurora.org>
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=QxxqH1klgQB/FyA39Y7OEvDvoonTizxWFfioa8D1t40=;
+        b=ElhYPDpjV0zYmVg/NpJifGzlbzjU5ES5eS0h3S2dz54AI2VZHHYAcpvrovrQNWAq3M
+         PPxzgcgYydMdX6IGvAjr5TVHfT3drh+CAbMHLPgAYPNaduMkkFYiyXEkzmKP5P0WaNUO
+         5F+gSLJu1mZfyZwPeMtv5kZxD4HqzH8b2AvidUiiHiSUQcE8xvZ5uLg5Cp3fHRZtndej
+         UchuKLvAm8D30JD3OVUUCSzUMuQs8j2JuzIZoYdUUD7Lo8mvzxRxxljd4xMN5tLDjiYn
+         QQJ9h3BYcbHZEdfmGdchQ5M55oz/GzlHHBYw6JGWIstEE61XWUWkPzZPM/KMVbuTm6yu
+         CggA==
+X-Gm-Message-State: APjAAAUbLrxQcz4C5v6QJ/NT7zyeYghjDzrbbIAyfG1IsiRg/0eVBxhf
+        m0q6qtQFCKeXfm5JVJxWji9MQA==
+X-Google-Smtp-Source: APXvYqw3Z2+vS2tUbGWfRTc7j//TaXFA8aoy7O2ZbYIm/MymR8ofJtuyFD8Y0klG0kA/ujSeBRNV/w==
+X-Received: by 2002:a63:5045:: with SMTP id q5mr24596211pgl.380.1563273279071;
+        Tue, 16 Jul 2019 03:34:39 -0700 (PDT)
+Received: from localhost ([122.172.28.117])
+        by smtp.gmail.com with ESMTPSA id d14sm27437543pfo.154.2019.07.16.03.34.37
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Tue, 16 Jul 2019 03:34:38 -0700 (PDT)
+Date:   Tue, 16 Jul 2019 16:04:36 +0530
+From:   Viresh Kumar <viresh.kumar@linaro.org>
+To:     Niklas Cassel <niklas.cassel@linaro.org>
+Cc:     Andy Gross <agross@kernel.org>, linux-arm-msm@vger.kernel.org,
+        jorge.ramirez-ortiz@linaro.org, sboyd@kernel.org,
+        vireshk@kernel.org, bjorn.andersson@linaro.org,
+        ulf.hansson@linaro.org, Rob Herring <robh+dt@kernel.org>,
+        Mark Rutland <mark.rutland@arm.com>,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 11/13] arm64: dts: qcom: qcs404: Add CPR and populate OPP
+ table
+Message-ID: <20190716103436.az5rdk6f3yoa3apz@vireshk-i7>
+References: <20190705095726.21433-1-niklas.cassel@linaro.org>
+ <20190705095726.21433-12-niklas.cassel@linaro.org>
+ <20190710090303.tb5ue3wq6r7ofyev@vireshk-i7>
+ <20190715132405.GA5040@centauri>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <1562870805-32314-1-git-send-email-jsanka@codeaurora.org>
-X-Operating-System: Linux phenom 4.19.0-5-amd64 
-User-Agent: Mutt/1.10.1 (2018-07-13)
+In-Reply-To: <20190715132405.GA5040@centauri>
+User-Agent: NeoMutt/20180716-391-311a52
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Jul 11, 2019 at 11:46:44AM -0700, Jeykumar Sankaran wrote:
->     Hello All, 
->     	drm_mode_modeinfo::flags is a 32 bit field currently used to
->     describe the properties of a connector mode. I see the least order 22 bits
->     are already in use. Posting this RFC to discuss on any potential plans to 
->     expand the bit range support of this field for growing mode properties and 
->     ways to handle one such property needed by the msm dpu driver.
+On 15-07-19, 15:24, Niklas Cassel wrote:
+> This was actually my initial thought when talking to you 6+ months ago.
+> However, the problem was that, from the CPR drivers' perspective, it
+> only sees the CPR OPP table.
 > 
->     msm drivers support panels which can dynamically switch between
->     video(active) and command(smart) modes. Within video mode, they also support
->     switching between resolutions seamlessly i.e. glitch free resolution switch.
->     But they cannot do a seamless switch from a resolutions from video to
->     command or vice versa. Clients need to be aware for these capablities before
->     they switch between the resolutions. Since these capabilities are identified
->     per drm_mode, we are considering the below two approaches to handle this
->     use case.
 > 
->     Option 1:
->     Attached patch adds flag values to associate a drm_mode to video/command
->     mode and to indicate its capability to do a seamless switch.
+> So this is the order things are called,
+> from qcom-cpufreq-nvmem.c perspective:
 > 
->     Option 2:
->     drm_mode_modeinfo can expose a new "private_flags" field to handle vendor
->     specific mode flags. Besides the above mentioned use case, we are also
->     expoloring methods to handle some of our display port resolution switch use
->     cases where the DP ports can be operated in a tiled/detiled modes. This 
->     approach will provide a standard channel for drm driver vendors for their 
->     growing need for drm_mode specific capabilities.
+> 1) dev_pm_opp_set_supported_hw()
 > 
->     Please provide your inputs on the options or any upstream friendly
->     recommendation to handle such custom use cases.
+> 2) dev_pm_opp_attach_genpd() ->
+> which results in
+> int cpr_pd_attach_dev(struct generic_pm_domain *domain,
+> 		      struct device *dev)
+> being called.
+> This callback is inside the CPR driver, and here we have the
+> CPU's (genpd virtual) struct device, and this is where we would like to
+> know the opp-hz.
+> The problem here is that:
+> [    3.114979] cpr_pd_attach_dev: dev_pm_opp_get_opp_count for dev: genpd:0:cpu0: -19
+> [    3.119610] cpr_pd_attach_dev: dev_pm_opp_get_opp_count for dev: cpu0: 0
+> [    3.126489] cpr_pd_attach_dev: dev_pm_opp_get_opp_count for dev: cpr@b018000: 3
 > 
->     Thanks and Regards,
->     Jeykumar S.
-> 
-> Jeykumar Sankaran (1):
->   drm: add mode flags in uapi for seamless mode switch
+> While we have the CPR OPP table in the attach callback, we don't
+> have the CPU OPP table, neither in the CPU struct device or the genpd virtual
+> struct device.
 
-I think the uapi is the trivial part here, the real deal is how userspace
-uses this. Can you pls post the patches for your compositor?
+If you can find CPU's physical number from the virtual device, then
+you can do get_cpu_device(X) and then life will be easy ?
 
-Also note that we already allow userspace to tell the kernel whether
-flickering is ok or not for a modeset. msm driver could use that to at
-least tell userspace whether a modeset change is possible. So you can
-already implement glitch-free modeset changes for at least video mode.
--Daniel
+> Since we have called dev_pm_opp_attach_genpd(.., .., &virt_devs) which
+> attaches an OPP table to the CPU, I would have expected one of them to
+> be >= 0.
+> Especially since dev_name(virt_devs[0]) == genpd:0:cpu0
+> 
+> I guess it should still be possible to parse the required-opps manually here,
+> by iterating the OF nodes, however, we won't be able to use the CPU's struct
+> opp_table (which is the nice representation of the OF nodes).
+> 
+> Any suggestions?
+
 -- 
-Daniel Vetter
-Software Engineer, Intel Corporation
-http://blog.ffwll.ch
+viresh
