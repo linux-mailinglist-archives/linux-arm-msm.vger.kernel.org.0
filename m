@@ -2,250 +2,121 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 26EDE6A1C5
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Jul 2019 07:10:02 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 96B8A6A354
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Jul 2019 09:56:39 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1733236AbfGPFJq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 16 Jul 2019 01:09:46 -0400
-Received: from smtp.codeaurora.org ([198.145.29.96]:58636 "EHLO
-        smtp.codeaurora.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726487AbfGPFJp (ORCPT
+        id S1730429AbfGPHzj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 16 Jul 2019 03:55:39 -0400
+Received: from mailout2.w1.samsung.com ([210.118.77.12]:35890 "EHLO
+        mailout2.w1.samsung.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726420AbfGPHzi (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 16 Jul 2019 01:09:45 -0400
-Received: by smtp.codeaurora.org (Postfix, from userid 1000)
-        id D306A618E1; Tue, 16 Jul 2019 05:09:44 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
-        s=default; t=1563253784;
-        bh=vCDfLBQi0vOEE29uCHWzBtitQ7FOpbXrCftD/mU+WEY=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=gzfof5Pi4FdmI4VHWsn9WOZU6tmkNq9FJuRbs3NqaepTdVOl90LAAoGzDkQKVPVpS
-         lBCHWO+NAN36hZa5dgvgrnPBfhYCyfQKekHK93VTA6TiuwM2Lz27kDVFCAdRT6Burx
-         V3Uejek6bITyoUSUFVsQI2ssAd9BvpqtmTR6TB1U=
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        pdx-caf-mail.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.7 required=2.0 tests=ALL_TRUSTED,BAYES_00,
-        DKIM_INVALID,DKIM_SIGNED,SPF_NONE autolearn=no autolearn_force=no
-        version=3.4.0
-Received: from amasule-linux.qualcomm.com (blr-c-bdr-fw-01_globalnat_allzones-outside.qualcomm.com [103.229.19.19])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: amasule@codeaurora.org)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 58306618DA;
-        Tue, 16 Jul 2019 05:09:42 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
-        s=default; t=1563253784;
-        bh=vCDfLBQi0vOEE29uCHWzBtitQ7FOpbXrCftD/mU+WEY=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=gzfof5Pi4FdmI4VHWsn9WOZU6tmkNq9FJuRbs3NqaepTdVOl90LAAoGzDkQKVPVpS
-         lBCHWO+NAN36hZa5dgvgrnPBfhYCyfQKekHK93VTA6TiuwM2Lz27kDVFCAdRT6Burx
-         V3Uejek6bITyoUSUFVsQI2ssAd9BvpqtmTR6TB1U=
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 58306618DA
-Authentication-Results: pdx-caf-mail.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: pdx-caf-mail.web.codeaurora.org; spf=none smtp.mailfrom=amasule@codeaurora.org
-From:   Aniket Masule <amasule@codeaurora.org>
-To:     linux-media@vger.kernel.org, stanimir.varbanov@linaro.org
-Cc:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        vgarodia@codeaurora.org, Aniket Masule <amasule@codeaurora.org>
-Subject: [PATCH v5 4/4] media: venus: Update core selection
-Date:   Tue, 16 Jul 2019 10:39:14 +0530
-Message-Id: <1563253754-12003-5-git-send-email-amasule@codeaurora.org>
-X-Mailer: git-send-email 1.9.1
-In-Reply-To: <1563253754-12003-1-git-send-email-amasule@codeaurora.org>
-References: <1563253754-12003-1-git-send-email-amasule@codeaurora.org>
+        Tue, 16 Jul 2019 03:55:38 -0400
+Received: from eucas1p2.samsung.com (unknown [182.198.249.207])
+        by mailout2.w1.samsung.com (KnoxPortal) with ESMTP id 20190716075536euoutp020346f7418719e14d50b23101f0aab69d~x1BX_ihGS1730617306euoutp02G
+        for <linux-arm-msm@vger.kernel.org>; Tue, 16 Jul 2019 07:55:36 +0000 (GMT)
+DKIM-Filter: OpenDKIM Filter v2.11.0 mailout2.w1.samsung.com 20190716075536euoutp020346f7418719e14d50b23101f0aab69d~x1BX_ihGS1730617306euoutp02G
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=samsung.com;
+        s=mail20170921; t=1563263736;
+        bh=z6y7NH+vNk3T1ssuE0A9cgVBd5PD4K/HolMVUCfpspA=;
+        h=Subject:To:Cc:From:Date:In-Reply-To:References:From;
+        b=Xq9GjXYzU2yfj9rZyER6r6evZXM52qEju7JwG2JwcBkbWGLRmDckElNQS+reCV8Ar
+         9FR7LBOhYn9gDAdL5aOehLQY/LkmvGM1Xs6/fpuyuPD40w6ad7+9Nx4QOjmrX3MtdI
+         Bk1XxR5/zdLmn8PnFHtIQ8IfQNfMwV0Bq2kwyWBk=
+Received: from eusmges2new.samsung.com (unknown [203.254.199.244]) by
+        eucas1p1.samsung.com (KnoxPortal) with ESMTP id
+        20190716075535eucas1p16e3c9bd2c6a81a2d69a01536d3e47b97~x1BXTan9g0611406114eucas1p1t;
+        Tue, 16 Jul 2019 07:55:35 +0000 (GMT)
+Received: from eucas1p2.samsung.com ( [182.198.249.207]) by
+        eusmges2new.samsung.com (EUCPMTA) with SMTP id A5.66.04377.7F28D2D5; Tue, 16
+        Jul 2019 08:55:35 +0100 (BST)
+Received: from eusmtrp2.samsung.com (unknown [182.198.249.139]) by
+        eucas1p2.samsung.com (KnoxPortal) with ESMTPA id
+        20190716075535eucas1p2987295d2e6c1c58d74e63751e4e6186f~x1BWnAEXV0505305053eucas1p25;
+        Tue, 16 Jul 2019 07:55:35 +0000 (GMT)
+Received: from eusmgms2.samsung.com (unknown [182.198.249.180]) by
+        eusmtrp2.samsung.com (KnoxPortal) with ESMTP id
+        20190716075534eusmtrp24dd210399b998667f2080efffbf50582~x1BWY6m7w2904429044eusmtrp24;
+        Tue, 16 Jul 2019 07:55:34 +0000 (GMT)
+X-AuditID: cbfec7f4-113ff70000001119-0f-5d2d82f7e7ec
+Received: from eusmtip2.samsung.com ( [203.254.199.222]) by
+        eusmgms2.samsung.com (EUCPMTA) with SMTP id F2.37.04140.6F28D2D5; Tue, 16
+        Jul 2019 08:55:34 +0100 (BST)
+Received: from [106.120.51.74] (unknown [106.120.51.74]) by
+        eusmtip2.samsung.com (KnoxPortal) with ESMTPA id
+        20190716075534eusmtip2fe32f7e8fda2cf154e39f4210d86b94a~x1BV-Q9qa0506705067eusmtip2D;
+        Tue, 16 Jul 2019 07:55:34 +0000 (GMT)
+Subject: Re: [PATCH] drm/bridge: ti-sn65dsi86: use dev name for debugfs
+To:     Rob Clark <robdclark@gmail.com>, dri-devel@lists.freedesktop.org
+Cc:     linux-arm-msm@vger.kernel.org, Rob Clark <robdclark@chromium.org>,
+        Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
+        David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>, linux-kernel@vger.kernel.org
+From:   Andrzej Hajda <a.hajda@samsung.com>
+Message-ID: <ac6cfa51-8b66-a98d-1a69-710e0d4c552b@samsung.com>
+Date:   Tue, 16 Jul 2019 09:55:33 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+        Thunderbird/68.0
+MIME-Version: 1.0
+In-Reply-To: <20190706203105.7810-1-robdclark@gmail.com>
+Content-Transfer-Encoding: 7bit
+Content-Language: en-US
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFtrBKsWRmVeSWpSXmKPExsWy7djP87rfm3RjDa70Klv0njvJZPF/20Rm
+        iytf37NZdE5cwm4xcf9ZdovLu+awWVz7+ZjZ4vnCH8wOHB6zGy6yeOz9toDFY+esu+wesztm
+        snps//aA1eN+93Emj8+b5ALYo7hsUlJzMstSi/TtErgyjn9ZzV7wjqli26rIBsblTF2MnBwS
+        AiYSu/esY+li5OIQEljBKPFu7nR2COcLo8TNVfdZQaqEBD4zSnybaQ3TMfXcLSaIouWMEnNf
+        Todqf8socWbCZCCHg0NYwF3izBY9kAYRAReJE5d+s4LUMAs8ZJRoPTKHHSTBJqAp8XfzTTYQ
+        m1fATmJXy02wOIuAqsS/99OYQWxRgTCJnws6oWoEJU7OfMICYnMKWEjMm3gH7AdmAXmJ7W/n
+        MEPY4hK3nswHu05C4BS7xPV1e9khznaRWNk9kRnCFpZ4dXwLVFxG4v/O+dDAqJe4v6KFGaK5
+        g1Fi64adUA3WEoePX2QF+YwZ6Or1u/Qhwo4Sa+7OBwtLCPBJ3HgrCHEDn8SkbdOZIcK8Eh1t
+        QhDVihL3z26FGigusfTCV7YJjEqzkHw2C8k3s5B8Mwth7wJGllWM4qmlxbnpqcVGeanlesWJ
+        ucWleel6yfm5mxiB6en0v+NfdjDu+pN0iFGAg1GJh/fEHp1YIdbEsuLK3EOMEhzMSiK8tl+1
+        Y4V4UxIrq1KL8uOLSnNSiw8xSnOwKInzVjM8iBYSSE8sSc1OTS1ILYLJMnFwSjUwNn1gvvw6
+        5CfDnxvHGlR+7UjY2mubsCuFV/rTDP11EaoG9Vy98UHTEyJXM375LWDEL3pb2Oxw4d+9a4Ru
+        819ZmHQzK6j8aNYV35nPtz05+zY8yuXAX/NVq9pLpGepRNUvrNBwZdmacmbTtC9dCc5zKrfu
+        vFMmyZmlF2yy+KKhoToHv0v9uX/LlFiKMxINtZiLihMBqOtFC0sDAAA=
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFjrFIsWRmVeSWpSXmKPExsVy+t/xe7rfmnRjDa7eMrLoPXeSyeL/tonM
+        Fle+vmez6Jy4hN1i4v6z7BaXd81hs7j28zGzxfOFP5gdODxmN1xk8dj7bQGLx85Zd9k9ZnfM
+        ZPXY/u0Bq8f97uNMHp83yQWwR+nZFOWXlqQqZOQXl9gqRRtaGOkZWlroGZlY6hkam8daGZkq
+        6dvZpKTmZJalFunbJehlHP+ymr3gHVPFtlWRDYzLmboYOTkkBEwkpp67BWRzcQgJLGWUuLHj
+        ECNEQlxi9/y3zBC2sMSfa11sILaQwGtGiaUHVbsYOTiEBdwlzmzRAwmLCLhInLj0mxVkDrPA
+        Q0aJSf2b2CGGdjNK/Hu0CKyZTUBT4u/mm2A2r4CdxK6Wm+wgNouAqsS/99OYQYaKCoRJHD2R
+        B1EiKHFy5hMWEJtTwEJi3sQ7YEczC6hL/Jl3iRnClpfY/nYOlC0ucevJfKYJjEKzkLTPQtIy
+        C0nLLCQtCxhZVjGKpJYW56bnFhvpFSfmFpfmpesl5+duYgTG47ZjP7fsYOx6F3yIUYCDUYmH
+        98QenVgh1sSy4srcQ4wSHMxKIry2X7VjhXhTEiurUovy44tKc1KLDzGaAv02kVlKNDkfmCry
+        SuINTQ3NLSwNzY3Njc0slMR5OwQOxggJpCeWpGanphakFsH0MXFwSjUwXtR6PHPBV9uciTzv
+        ja0j3u02lfm1dx+j2ILvYQ7VOn62lUY2MfvnrOZSOtZ32PDoysCJFp+3bNj+9aeLUThz9UNT
+        UfV/Syz5IoMKX3scfHe/LqJfcu2hLXapj2fu/rfggbLbxdCVxRn/J7Q0iNzJ2sYq9IY9qS14
+        n5doaedf6azQ3+dn/c80UWIpzkg01GIuKk4EABog2tXdAgAA
+X-CMS-MailID: 20190716075535eucas1p2987295d2e6c1c58d74e63751e4e6186f
+X-Msg-Generator: CA
+Content-Type: text/plain; charset="utf-8"
+X-RootMTR: 20190706203123epcas2p4094186d4d2d9954d6068c03b99df07a2
+X-EPHeader: CA
+CMS-TYPE: 201P
+X-CMS-RootMailID: 20190706203123epcas2p4094186d4d2d9954d6068c03b99df07a2
+References: <CGME20190706203123epcas2p4094186d4d2d9954d6068c03b99df07a2@epcas2p4.samsung.com>
+        <20190706203105.7810-1-robdclark@gmail.com>
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Present core assignment is static. Introduced load balancing
-across the cores. Load on earch core is calculated and core
-with minimum load is assigned to given instance.
+On 06.07.2019 22:31, Rob Clark wrote:
+> From: Rob Clark <robdclark@chromium.org>
+>
+> This should be more future-proof if we ever encounter a device with two
+> of these bridges.
+>
+> Suggested-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
+> Signed-off-by: Rob Clark <robdclark@chromium.org>
 
-Signed-off-by: Aniket Masule <amasule@codeaurora.org>
----
- drivers/media/platform/qcom/venus/helpers.c    | 69 +++++++++++++++++++++++---
- drivers/media/platform/qcom/venus/helpers.h    |  2 +-
- drivers/media/platform/qcom/venus/hfi_helper.h |  1 +
- drivers/media/platform/qcom/venus/hfi_parser.h |  5 ++
- drivers/media/platform/qcom/venus/vdec.c       |  2 +-
- drivers/media/platform/qcom/venus/venc.c       |  2 +-
- 6 files changed, 72 insertions(+), 9 deletions(-)
+Queued to drm-misc-next.
 
-diff --git a/drivers/media/platform/qcom/venus/helpers.c b/drivers/media/platform/qcom/venus/helpers.c
-index edf403d..d479793 100644
---- a/drivers/media/platform/qcom/venus/helpers.c
-+++ b/drivers/media/platform/qcom/venus/helpers.c
-@@ -26,6 +26,7 @@
- #include "helpers.h"
- #include "hfi_helper.h"
- #include "hfi_venus_io.h"
-+#include "hfi_parser.h"
- 
- struct intbuf {
- 	struct list_head list;
-@@ -331,6 +332,24 @@ static u32 load_per_instance(struct venus_inst *inst)
- 	return mbs * inst->fps;
- }
- 
-+static u32 load_per_core(struct venus_core *core, u32 core_id)
-+{
-+	struct venus_inst *inst = NULL;
-+	u32 mbs_per_sec = 0, load = 0;
-+
-+	mutex_lock(&core->lock);
-+	list_for_each_entry(inst, &core->instances, list) {
-+		if (inst->clk_data.core_id != core_id)
-+			continue;
-+
-+		mbs_per_sec = load_per_instance(inst);
-+		load = mbs_per_sec * inst->clk_data.codec_freq_data->vpp_freq;
-+	}
-+	mutex_unlock(&core->lock);
-+
-+	return load;
-+}
-+
- static u32 load_per_type(struct venus_core *core, u32 session_type)
- {
- 	struct venus_inst *inst = NULL;
-@@ -505,6 +524,16 @@ static int load_scale_clocks(struct venus_inst *inst)
- 	return scale_clocks(inst);
- }
- 
-+int set_core_usage(struct venus_inst *inst, u32 usage)
-+{
-+	const u32 ptype = HFI_PROPERTY_CONFIG_VIDEOCORES_USAGE;
-+	struct hfi_videocores_usage_type cu;
-+
-+	cu.video_core_enable_mask = usage;
-+
-+	return hfi_session_set_property(inst, ptype, &cu);
-+}
-+
- static void fill_buffer_desc(const struct venus_buffer *buf,
- 			     struct hfi_buffer_desc *bd, bool response)
- {
-@@ -808,19 +837,47 @@ int venus_helper_set_work_mode(struct venus_inst *inst, u32 mode)
- }
- EXPORT_SYMBOL_GPL(venus_helper_set_work_mode);
- 
--int venus_helper_set_core_usage(struct venus_inst *inst, u32 usage)
-+int venus_helper_set_core(struct venus_inst *inst)
- {
--	const u32 ptype = HFI_PROPERTY_CONFIG_VIDEOCORES_USAGE;
--	struct hfi_videocores_usage_type cu;
-+	struct venus_core *core = inst->core;
-+	u32 min_core_id = 0, core1_load = 0, core2_load = 0;
-+	unsigned long min_load, max_freq, cur_inst_load;
-+	u32 cores_max;
-+	int ret;
- 
- 	if (!IS_V4(inst->core))
- 		return 0;
- 
--	cu.video_core_enable_mask = usage;
-+	core1_load = load_per_core(core, VIDC_CORE_ID_1);
-+	core2_load = load_per_core(core, VIDC_CORE_ID_2);
-+	min_core_id = core1_load < core2_load ? VIDC_CORE_ID_1 : VIDC_CORE_ID_2;
-+	min_load = min(core1_load, core2_load);
-+	cores_max = core_num_max(inst);
- 
--	return hfi_session_set_property(inst, ptype, &cu);
-+	if (cores_max < VIDC_CORE_ID_2) {
-+		min_core_id = VIDC_CORE_ID_1;
-+		min_load = core1_load;
-+	}
-+
-+	cur_inst_load = load_per_instance(inst) *
-+		inst->clk_data.codec_freq_data->vpp_freq;
-+	max_freq = core->res->freq_tbl[0].freq;
-+
-+	if ((cur_inst_load + min_load)	> max_freq) {
-+		dev_warn(core->dev, "HW is overloaded, needed: %lu max: %lu\n",
-+			 cur_inst_load, max_freq);
-+		return -EINVAL;
-+	}
-+
-+	ret = set_core_usage(inst, min_core_id);
-+	if (ret)
-+		return ret;
-+
-+	inst->clk_data.core_id = min_core_id;
-+
-+	return 0;
- }
--EXPORT_SYMBOL_GPL(venus_helper_set_core_usage);
-+EXPORT_SYMBOL_GPL(venus_helper_set_core);
- 
- int venus_helper_init_codec_freq_data(struct venus_inst *inst)
- {
-diff --git a/drivers/media/platform/qcom/venus/helpers.h b/drivers/media/platform/qcom/venus/helpers.h
-index 2c13245..1034111 100644
---- a/drivers/media/platform/qcom/venus/helpers.h
-+++ b/drivers/media/platform/qcom/venus/helpers.h
-@@ -42,7 +42,7 @@ int venus_helper_set_output_resolution(struct venus_inst *inst,
- 				       u32 buftype);
- int venus_helper_set_work_mode(struct venus_inst *inst, u32 mode);
- int venus_helper_init_codec_freq_data(struct venus_inst *inst);
--int venus_helper_set_core_usage(struct venus_inst *inst, u32 usage);
-+int venus_helper_set_core(struct venus_inst *inst);
- int venus_helper_set_num_bufs(struct venus_inst *inst, unsigned int input_bufs,
- 			      unsigned int output_bufs,
- 			      unsigned int output2_bufs);
-diff --git a/drivers/media/platform/qcom/venus/hfi_helper.h b/drivers/media/platform/qcom/venus/hfi_helper.h
-index 34ea503..f3d1018 100644
---- a/drivers/media/platform/qcom/venus/hfi_helper.h
-+++ b/drivers/media/platform/qcom/venus/hfi_helper.h
-@@ -559,6 +559,7 @@ struct hfi_bitrate {
- #define HFI_CAPABILITY_LCU_SIZE				0x14
- #define HFI_CAPABILITY_HIER_P_HYBRID_NUM_ENH_LAYERS	0x15
- #define HFI_CAPABILITY_MBS_PER_SECOND_POWERSAVE		0x16
-+#define HFI_CAPABILITY_MAX_VIDEOCORES		0x2B
- 
- struct hfi_capability {
- 	u32 capability_type;
-diff --git a/drivers/media/platform/qcom/venus/hfi_parser.h b/drivers/media/platform/qcom/venus/hfi_parser.h
-index 3e931c7..264e6dd 100644
---- a/drivers/media/platform/qcom/venus/hfi_parser.h
-+++ b/drivers/media/platform/qcom/venus/hfi_parser.h
-@@ -107,4 +107,9 @@ static inline u32 frate_step(struct venus_inst *inst)
- 	return cap_step(inst, HFI_CAPABILITY_FRAMERATE);
- }
- 
-+static inline u32 core_num_max(struct venus_inst *inst)
-+{
-+	return cap_max(inst, HFI_CAPABILITY_MAX_VIDEOCORES);
-+}
-+
- #endif
-diff --git a/drivers/media/platform/qcom/venus/vdec.c b/drivers/media/platform/qcom/venus/vdec.c
-index d037f80..620e060 100644
---- a/drivers/media/platform/qcom/venus/vdec.c
-+++ b/drivers/media/platform/qcom/venus/vdec.c
-@@ -551,7 +551,7 @@ static int vdec_output_conf(struct venus_inst *inst)
- 	if (ret)
- 		return ret;
- 
--	ret = venus_helper_set_core_usage(inst, VIDC_CORE_ID_1);
-+	ret = venus_helper_set_core(inst);
- 	if (ret)
- 		return ret;
- 
-diff --git a/drivers/media/platform/qcom/venus/venc.c b/drivers/media/platform/qcom/venus/venc.c
-index cdddc82..28e76cc 100644
---- a/drivers/media/platform/qcom/venus/venc.c
-+++ b/drivers/media/platform/qcom/venus/venc.c
-@@ -660,7 +660,7 @@ static int venc_set_properties(struct venus_inst *inst)
- 	if (ret)
- 		return ret;
- 
--	ret = venus_helper_set_core_usage(inst, VIDC_CORE_ID_2);
-+	ret = venus_helper_set_core(inst);
- 	if (ret)
- 		return ret;
- 
--- 
-The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
-a Linux Foundation Collaborative Project
+
+Regards
+
+Andrzej
+
+
 
