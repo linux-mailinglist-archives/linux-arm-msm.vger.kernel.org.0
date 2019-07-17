@@ -2,173 +2,119 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 957A16C041
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Jul 2019 19:19:03 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4401B6C087
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Jul 2019 19:40:53 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727140AbfGQRTC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 17 Jul 2019 13:19:02 -0400
-Received: from foss.arm.com ([217.140.110.172]:49330 "EHLO foss.arm.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1725873AbfGQRTC (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 17 Jul 2019 13:19:02 -0400
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id ACFB728;
-        Wed, 17 Jul 2019 10:19:01 -0700 (PDT)
-Received: from e107155-lin (e107155-lin.cambridge.arm.com [10.1.196.42])
-        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id C30D73F71F;
-        Wed, 17 Jul 2019 10:18:58 -0700 (PDT)
-Date:   Wed, 17 Jul 2019 18:18:56 +0100
-From:   Sudeep Holla <sudeep.holla@arm.com>
-To:     Lina Iyer <ilina@codeaurora.org>
-Cc:     Ulf Hansson <ulf.hansson@linaro.org>,
-        Lorenzo Pieralisi <Lorenzo.Pieralisi@arm.com>,
-        Mark Rutland <mark.rutland@arm.com>,
-        linux-arm-kernel@lists.infradead.org,
-        "Rafael J . Wysocki" <rjw@rjwysocki.net>,
-        Daniel Lezcano <daniel.lezcano@linaro.org>,
-        "Raju P . L . S . S . S . N" <rplsssn@codeaurora.org>,
-        Amit Kucheria <amit.kucheria@linaro.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Niklas Cassel <niklas.cassel@linaro.org>,
-        Tony Lindgren <tony@atomide.com>,
-        Kevin Hilman <khilman@kernel.org>,
-        Viresh Kumar <viresh.kumar@linaro.org>,
-        Vincent Guittot <vincent.guittot@linaro.org>,
-        Geert Uytterhoeven <geert+renesas@glider.be>,
-        Souvik Chakravarty <souvik.chakravarty@arm.com>,
-        linux-pm@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org, Lina Iyer <lina.iyer@linaro.org>,
-        Andy Gross <andy.gross@linaro.org>,
-        David Brown <david.brown@linaro.org>
-Subject: Re: [PATCH 17/18] arm64: dts: Convert to the hierarchical CPU
- topology layout for MSM8916
-Message-ID: <20190717171856.GF18370@e107155-lin>
-References: <20190513192300.653-1-ulf.hansson@linaro.org>
- <20190513192300.653-18-ulf.hansson@linaro.org>
- <20190716144730.GA7250@e107155-lin>
- <20190716203631.GC25567@codeaurora.org>
+        id S2388352AbfGQRkh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 17 Jul 2019 13:40:37 -0400
+Received: from mail-io1-f66.google.com ([209.85.166.66]:36956 "EHLO
+        mail-io1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2387807AbfGQRkg (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 17 Jul 2019 13:40:36 -0400
+Received: by mail-io1-f66.google.com with SMTP id q22so47084950iog.4
+        for <linux-arm-msm@vger.kernel.org>; Wed, 17 Jul 2019 10:40:36 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=EtprvX2m2jiKjt40HUaqm6DF0L2XmUgvKFNwlwgfe5s=;
+        b=onK1uDlvUzpAH0JWEzYwI7Gvf91+DZjaIi9SPNFqZfxsb53+3NAu9LR1/dWib49xfe
+         uLFyJ7FMnIQIEGQ0aAA+BOeKB0M4zkzQtNBj+FPZfXsvN+zJTblXWCFNbsMLdd87p1PR
+         f1FYO8LUIwH3rWdYJcjYDHTdKo7cRweLAnYd5imd3r9/s3Kn8G7/qyVZ1kGVccRhQv5q
+         e/0VOtTsNvHhAcAE9qQ8EBKMHPWb1ByA5GRMc9o5r+lh1AT4G4zCxJxc7maGfwIzw2bi
+         Voqkjz3HnbhFHZQhBQxtLooaZKPUcCXzbifFxSHKQy2lB7vIH/Kk9T3ucsueYKFKCEo8
+         EZrw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=EtprvX2m2jiKjt40HUaqm6DF0L2XmUgvKFNwlwgfe5s=;
+        b=jVJVqkPWtWd6Wl7+gjt+2WwSjk+syzhweWbxUMiyh+7jnWj4TaiX3BDHogi9ehGMtl
+         vtqWIDuSlbwvtCJyNHShkbo282BeKhtZtqy5J3JbBovRPkCijcveekXWTGChQas7ur7Y
+         8jcZ6uiAjcJfxa3aXL5qTSpH56SuvbQOkHYnVffMXS0ehW/Ciwtm3+UvUR4Im2be3l3L
+         JJzDi8HJ0KB0k0Drqs8ZxGECZnaLRy0/PV6U+E+udpN9ffuXHvljMEZmOmDNNaPN0DXc
+         efbV+fkhIrOBqP21F6dnO+tI8A2OYM5m+ucnuFjnumRjdPCcWs++eEs9QGjsIFGXBWim
+         vVgQ==
+X-Gm-Message-State: APjAAAWgB/GvS7xegjMTl0DuqGipMNtpHKbGEyMAih3ZIHT2rIEIaiPc
+        L1BaQBv8sqEpghFn00zqigzaraxCR3mSY0AAiythVA==
+X-Google-Smtp-Source: APXvYqz7WG1PnvWMnC23sD+cAu0oINpZh2KIZQ4xQZPYqy1GNt03lquLmfPyqP+Hp51HDnWuG4zkofIf1ZyJXjMZovg=
+X-Received: by 2002:a5d:9dc7:: with SMTP id 7mr39088762ioo.237.1563385235830;
+ Wed, 17 Jul 2019 10:40:35 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20190716203631.GC25567@codeaurora.org>
-User-Agent: Mutt/1.9.4 (2018-02-28)
+References: <cover.1562940244.git.saiprakash.ranjan@codeaurora.org> <2694eae0731a07eeda11f666526ccff8c6b5842e.1562940244.git.saiprakash.ranjan@codeaurora.org>
+In-Reply-To: <2694eae0731a07eeda11f666526ccff8c6b5842e.1562940244.git.saiprakash.ranjan@codeaurora.org>
+From:   Mathieu Poirier <mathieu.poirier@linaro.org>
+Date:   Wed, 17 Jul 2019 11:40:24 -0600
+Message-ID: <CANLsYkw=pAmwoEmXCjLtrUtxLnE8KY5o72Of3aq_-_JHeHyhTA@mail.gmail.com>
+Subject: Re: [PATCHv8 4/5] coresight: etm4x: Add ETM PIDs for SDM845 and MSM8996
+To:     Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
+Cc:     Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Suzuki K Poulose <suzuki.poulose@arm.com>,
+        Leo Yan <leo.yan@linaro.org>,
+        Alexander Shishkin <alexander.shishkin@linux.intel.com>,
+        Mike Leach <mike.leach@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        devicetree@vger.kernel.org, David Brown <david.brown@linaro.org>,
+        Mark Rutland <mark.rutland@arm.com>,
+        Rajendra Nayak <rnayak@codeaurora.org>,
+        Vivek Gautam <vivek.gautam@codeaurora.org>,
+        Sibi Sankar <sibis@codeaurora.org>,
+        linux-arm-kernel <linux-arm-kernel@lists.infradead.org>,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        Marc Gonzalez <marc.w.gonzalez@free.fr>
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Jul 16, 2019 at 02:36:31PM -0600, Lina Iyer wrote:
-> On Tue, Jul 16 2019 at 08:47 -0600, Sudeep Holla wrote:
-> > On Mon, May 13, 2019 at 09:22:59PM +0200, Ulf Hansson wrote:
-> > > From: Lina Iyer <lina.iyer@linaro.org>
-> > >
-> > > In the hierarchical layout, we are creating power domains around each CPU
-> > > and describes the idle states for them inside the power domain provider
-> > > node. Note that, the CPU's idle states still needs to be compatible with
-> > > "arm,idle-state".
-> > >
-> > > Furthermore, represent the CPU cluster as a separate master power domain,
-> > > powering the CPU's power domains. The cluster node, contains the idle
-> > > states for the cluster and each idle state needs to be compatible with the
-> > > "domain-idle-state".
-> > >
-> > > If the running platform is using a PSCI FW that supports the OS initiated
-> > > CPU suspend mode, which likely should be the case unless the PSCI FW is
-> > > very old, this change triggers the PSCI driver to enable it.
-> > >
-> > > Cc: Andy Gross <andy.gross@linaro.org>
-> > > Cc: David Brown <david.brown@linaro.org>
-> > > Signed-off-by: Lina Iyer <lina.iyer@linaro.org>
-> > > Co-developed-by: Ulf Hansson <ulf.hansson@linaro.org>
-> > > Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
-> > > ---
-> >
-> > [...]
-> >
-> > > @@ -166,12 +170,57 @@
-> > >  				min-residency-us = <2000>;
-> > >  				local-timer-stop;
-> > >  			};
-> > > +
-> > > +			CLUSTER_RET: cluster-retention {
-> > > +				compatible = "domain-idle-state";
-> > > +				arm,psci-suspend-param = <0x1000010>;
-> > > +				entry-latency-us = <500>;
-> > > +				exit-latency-us = <500>;
-> > > +				min-residency-us = <2000>;
-> > > +			};
-> > > +
-> > > +			CLUSTER_PWRDN: cluster-gdhs {
-> > > +				compatible = "domain-idle-state";
-> > > +				arm,psci-suspend-param = <0x1000030>;
-> > > +				entry-latency-us = <2000>;
-> > > +				exit-latency-us = <2000>;
-> > > +				min-residency-us = <6000>;
-> > > +			};
-> > >  		};
-> > >  	};
-> >
-> > I was trying to understand the composition of composite state parameters
-> > in this series and that made me look at these DT examples.
-> >
-> This was meant to depict a hierarchical state format for OSI.
+On Fri, 12 Jul 2019 at 08:17, Sai Prakash Ranjan
+<saiprakash.ranjan@codeaurora.org> wrote:
+>
+> Instead of overriding the peripheral id(PID) check in AMBA
+> by hardcoding them in DT, add the PIDs to the ETM4x driver.
+> Here we use Unique Component Identifier(UCI) for MSM8996
+> since the ETM and CPU debug module shares the same PIDs.
+> SDM845 does not support CPU debug module.
+>
+> Signed-off-by: Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
+> Reviewed-by: Suzuki K Poulose <suzuki.poulose@arm.com>
+> ---
+>  drivers/hwtracing/coresight/coresight-etm4x.c | 14 +++++++++-----
+>  1 file changed, 9 insertions(+), 5 deletions(-)
+>
+> diff --git a/drivers/hwtracing/coresight/coresight-etm4x.c b/drivers/hwtracing/coresight/coresight-etm4x.c
+> index 7bcac8896fc1..28bcc0e58d7a 100644
+> --- a/drivers/hwtracing/coresight/coresight-etm4x.c
+> +++ b/drivers/hwtracing/coresight/coresight-etm4x.c
+> @@ -1192,11 +1192,15 @@ static struct amba_cs_uci_id uci_id_etm4[] = {
+>  };
+>
+>  static const struct amba_id etm4_ids[] = {
+> -       CS_AMBA_ID(0x000bb95d),         /* Cortex-A53 */
+> -       CS_AMBA_ID(0x000bb95e),         /* Cortex-A57 */
+> -       CS_AMBA_ID(0x000bb95a),         /* Cortex-A72 */
+> -       CS_AMBA_ID(0x000bb959),         /* Cortex-A73 */
+> -       CS_AMBA_UCI_ID(0x000bb9da, uci_id_etm4),        /* Cortex-A35 */
+> +       CS_AMBA_ID(0x000bb95d),                 /* Cortex-A53 */
+> +       CS_AMBA_ID(0x000bb95e),                 /* Cortex-A57 */
+> +       CS_AMBA_ID(0x000bb95a),                 /* Cortex-A72 */
+> +       CS_AMBA_ID(0x000bb959),                 /* Cortex-A73 */
+> +       CS_AMBA_UCI_ID(0x000bb9da, uci_id_etm4),/* Cortex-A35 */
+> +       CS_AMBA_UCI_ID(0x000f0205, uci_id_etm4),/* Qualcomm Kryo */
+> +       CS_AMBA_UCI_ID(0x000f0211, uci_id_etm4),/* Qualcomm Kryo */
+> +       CS_AMBA_ID(0x000bb802),                 /* Qualcomm Kryo 385 Cortex-A55 */
+> +       CS_AMBA_ID(0x000bb803),                 /* Qualcomm Kryo 385 Cortex-A75 */
+>         {},
+>  };
 >
 
-Hmm, I am more confused. We have 2 formats: original and extended.
+I have also queued this patch.
 
-1. Original:
-	31:26 Reserved. Must be zero.
-	25:24 PowerLevel
-	23:17 Reserved. Must be zero.
-	16 StateType
-	15:0 StateID
-2. Extended
-	31 Reserved. Must be zero.
-	30 StateType
-	29:28 Reserved. Must be zero.
-	27:0 StateID
-
-I was trying to match them to that. I think I commented on other patches.
-I think simple OR logic breaks with extended format easily if StateIDs
-are not carefully crafted which is not mandated and hence the trouble.
-The same holds to original format but with PowerLevel, it slightly
-relaxing things a bit but still it needs to be crafted when firmware
-decides these parameters. E.g.: what is done with HiKey platform is
-completely wrong.
-
-It's helpful if we want to avoid save/restore for retention states.
-CPU_PM_CPU_IDLE_ENTER_RETENTION vs CPU_PM_CPU_IDLE_ENTER
-
-> > What format does the above platform use ? I tried matching them to
-> > both original as well as extended format and I fail to understand.
-> > Assuming original format:
-> > 	State         power_state PowerLevel  StateType     StateID
-> > 	SPC           0x40000002   0(core)    0(Retention)  0x2 (Res0 b[29]=1?)
-> > 	CLUSTER_RET   0x1000010   1(clusters) 0(Retention)  0x10
-> > 	CLUSTER_PWRDN 0x1000030   1(clusters) 0(Retention?) 0x30
-> > Now extended format:
-> > 	State         power_state StateType     StateID
-> > 	SPC           0x40000002  0(Retention)  0x40000002 (Res0 b[29]=1?)
-> > 	CLUSTER_RET   0x1000010   0(Retention)  0x1000010
-> The composite state would comprise of CPU state and  Cluster state.
-> So for the last CPU entering idle -
-> (CLUSTER_RET | SPC)
-> 0x41000012
-> > 	CLUSTER_PWRDN 0x1000030   0(Retention?) 0x1000030
-> >
-> (CLUSTER_PWRDN | SPC)
-> 0x41000032
+> --
+> QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
+> of Code Aurora Forum, hosted by The Linux Foundation
 >
-> Hope this helps.
->
-
-I just follow OR logic. I have made wrong reference to bit 29 above(I
-can't read simple 32 bit number anymore :(), it should bit 30 and if
-this platform follow extended state, then it makes some sense. But
-I expect CLUSTER_PWRDN also to have bit 30 set. I tried to match to both
-formats and failed to understand which it follows, so thought of asking.
-
---
-Regards,
-Sudeep
