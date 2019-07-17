@@ -2,129 +2,141 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 7969F6BF3E
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Jul 2019 17:43:38 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 70E336BF57
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Jul 2019 17:53:20 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725948AbfGQPnh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 17 Jul 2019 11:43:37 -0400
-Received: from mail-lj1-f196.google.com ([209.85.208.196]:42806 "EHLO
-        mail-lj1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725993AbfGQPnh (ORCPT
+        id S1726494AbfGQPxT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 17 Jul 2019 11:53:19 -0400
+Received: from smtp.codeaurora.org ([198.145.29.96]:53962 "EHLO
+        smtp.codeaurora.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726085AbfGQPxT (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 17 Jul 2019 11:43:37 -0400
-Received: by mail-lj1-f196.google.com with SMTP id t28so24090202lje.9
-        for <linux-arm-msm@vger.kernel.org>; Wed, 17 Jul 2019 08:43:36 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=3jbOpJGViEoMZ/z1uklXsD0i54r1S51I050v7ZKNFBk=;
-        b=q5qzlnCIimWC3UjOSITeeOXZCWpKBXlqKRVFQtULyVwTJBMXe291radTFmBCIOilo2
-         rdufUMyO5g6sAT8Hny4/l/4T3ClB9Ox0fRDYQXzp+22fH24Xy/LfnWjZDlZOvtZx+s6t
-         TdaZ9T6zjMZSU//SZ4bpGc37NhFZv/gpXGsZerE1y5w12nSA9savGldFQhS/x1c3DKM5
-         q2DEO2JT52mEPuNlJwMtQNpepUdYfiytpmtMazVZ+7m9Hx23a7wioBqqEh6C57wftVfs
-         oBxa4smkhe+cX+SXaTHhdRrm7gDnWqscQGkgAOM7YrCK5dJ//s0hNZZCKNloaYU9Eh6G
-         MeCw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=3jbOpJGViEoMZ/z1uklXsD0i54r1S51I050v7ZKNFBk=;
-        b=n7M9IbFYkQzuSggPm6YnUiPs335/iuKU9zDEmqey7j4fS/sHqjzEBVBVCyGW6qZNxJ
-         dWLp/zGUdK4CxxipMzTIkV7U2e7JjusWwCZyJ12V/70INEKHiaGXjiyNBguIbr+IrVKC
-         pEXhl4obUNnsCLX+PsKkPvlWnRkoN0hcjceuL43bGbhjhBqP8YxM0NLPsX0KcOUOkKlS
-         JfwNiWoALGzYzN3RODFLw9ZO8+LKUt6/YoxJ9OxO0pvCobYnhp9CFPo9K7cnYGF4MRc0
-         nuDB7dGMwCDUa3bMMJALgap726bNx+Dy+Lty2dqV4KAbffVAqIyVjq/0zeejGEIPFy2+
-         voHw==
-X-Gm-Message-State: APjAAAWAd75zrc9HjkreF9aboMIb7fN0gKTBm2SMJWsRseye01xVBfqH
-        MW3K1HbLEvx7CyhBT+bo/aa1QOfCCYSS6w==
-X-Google-Smtp-Source: APXvYqyZAR4Yyv15+5pV6jQjFoFXs2SGDZkyijDlK7U2XKITXcR4+JjlldiqrmNTezn72knRlJTbvQ==
-X-Received: by 2002:a2e:800c:: with SMTP id j12mr21250044ljg.22.1563378215666;
-        Wed, 17 Jul 2019 08:43:35 -0700 (PDT)
-Received: from [192.168.28.181] ([37.157.136.206])
-        by smtp.googlemail.com with ESMTPSA id g5sm4578700ljj.69.2019.07.17.08.43.34
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 17 Jul 2019 08:43:34 -0700 (PDT)
-Subject: Re: [PATCH v5 4/4] media: venus: Update core selection
-To:     Aniket Masule <amasule@codeaurora.org>, linux-media@vger.kernel.org
-Cc:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        vgarodia@codeaurora.org
-References: <1563253754-12003-1-git-send-email-amasule@codeaurora.org>
- <1563253754-12003-5-git-send-email-amasule@codeaurora.org>
-From:   Stanimir Varbanov <stanimir.varbanov@linaro.org>
-Message-ID: <d9584a56-41a5-3e52-55d0-a02c5d59b823@linaro.org>
-Date:   Wed, 17 Jul 2019 18:43:31 +0300
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.7.2
-MIME-Version: 1.0
-In-Reply-To: <1563253754-12003-5-git-send-email-amasule@codeaurora.org>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+        Wed, 17 Jul 2019 11:53:19 -0400
+Received: by smtp.codeaurora.org (Postfix, from userid 1000)
+        id 8618660159; Wed, 17 Jul 2019 15:53:18 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
+        s=default; t=1563378798;
+        bh=neGF5FCENe6mEc6GArZIeGpuo6QccxA0L5Slvsy0ytU=;
+        h=From:To:Cc:Subject:Date:From;
+        b=M3Ni/Dqjle3iHnjI78cK4D5tQKQixrIpLLXoW3oy++K3PWkYs9dU7JsSbUX03bvzm
+         zXx0OwigUZ2lPAj3+7E5Ll6ABls0M4xcZHxgH8/fX0K9cbb8OilM0IvVqtd9Dh+ZfR
+         62RR9eezE6iiPLtQ6fti5/Qq9jZ0oEpIJ08SpllU=
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        pdx-caf-mail.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.7 required=2.0 tests=ALL_TRUSTED,BAYES_00,
+        DKIM_INVALID,DKIM_SIGNED,SPF_NONE autolearn=no autolearn_force=no
+        version=3.4.0
+Received: from jcrouse1-lnx.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: jcrouse@smtp.codeaurora.org)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id CC9EE6072E;
+        Wed, 17 Jul 2019 15:53:16 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
+        s=default; t=1563378797;
+        bh=neGF5FCENe6mEc6GArZIeGpuo6QccxA0L5Slvsy0ytU=;
+        h=From:To:Cc:Subject:Date:From;
+        b=YAO018CN2k4FCloPKulgx4Y9bWyS5Pw0CAz+cVs2F+PPTo9c/FPeSl3LG1PaumX3q
+         dRmoWnR+Imc/NjLnxV/aajAwq1WxP5VYxePipvXXicNE6+qP5azXCOREGGWWr4wH7I
+         7L7tE4o45tx1RbDJzlhJsZ4Ip6ZDfhvYFW6Zudy4=
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org CC9EE6072E
+Authentication-Results: pdx-caf-mail.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: pdx-caf-mail.web.codeaurora.org; spf=none smtp.mailfrom=jcrouse@codeaurora.org
+From:   Jordan Crouse <jcrouse@codeaurora.org>
+To:     freedreno@lists.freedesktop.org
+Cc:     ilina@codeaurora.org, bjorn.andersson@linaro.org,
+        linux-pm@vger.kernel.org,
+        "Raju P.L.S.S.S.N" <rplsssn@codeaurora.org>,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Andy Gross <agross@kernel.org>,
+        David Brown <david.brown@linaro.org>,
+        Georgi Djakov <georgi.djakov@linaro.org>
+Subject: [PATCH] qcom: Add BCM vote macro to TCS header
+Date:   Wed, 17 Jul 2019 09:53:13 -0600
+Message-Id: <1563378793-22023-1-git-send-email-jcrouse@codeaurora.org>
+X-Mailer: git-send-email 2.7.4
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi,
+The A6XX family of Adreno GPUs use a microcontroller to control the
+GPU clock independently. The microcontroller also has the capability
+to vote for the bus but doesn't currently do so except for one initial
+vote that is hard coded [1].
 
-On 7/16/19 8:09 AM, Aniket Masule wrote:
-> Present core assignment is static. Introduced load balancing
-> across the cores. Load on earch core is calculated and core
-> with minimum load is assigned to given instance.
-> 
-> Signed-off-by: Aniket Masule <amasule@codeaurora.org>
-> ---
->  drivers/media/platform/qcom/venus/helpers.c    | 69 +++++++++++++++++++++++---
->  drivers/media/platform/qcom/venus/helpers.h    |  2 +-
->  drivers/media/platform/qcom/venus/hfi_helper.h |  1 +
->  drivers/media/platform/qcom/venus/hfi_parser.h |  5 ++
->  drivers/media/platform/qcom/venus/vdec.c       |  2 +-
->  drivers/media/platform/qcom/venus/venc.c       |  2 +-
->  6 files changed, 72 insertions(+), 9 deletions(-)
-> 
-> diff --git a/drivers/media/platform/qcom/venus/helpers.c b/drivers/media/platform/qcom/venus/helpers.c
-> index edf403d..d479793 100644
-> --- a/drivers/media/platform/qcom/venus/helpers.c
-> +++ b/drivers/media/platform/qcom/venus/helpers.c
-> @@ -26,6 +26,7 @@
->  #include "helpers.h"
->  #include "hfi_helper.h"
->  #include "hfi_venus_io.h"
-> +#include "hfi_parser.h"
->  
->  struct intbuf {
->  	struct list_head list;
-> @@ -331,6 +332,24 @@ static u32 load_per_instance(struct venus_inst *inst)
->  	return mbs * inst->fps;
->  }
->  
-> +static u32 load_per_core(struct venus_core *core, u32 core_id)
-> +{
-> +	struct venus_inst *inst = NULL;
-> +	u32 mbs_per_sec = 0, load = 0;
-> +
-> +	mutex_lock(&core->lock);
-> +	list_for_each_entry(inst, &core->instances, list) {
-> +		if (inst->clk_data.core_id != core_id)
-> +			continue;
-> +
-> +		mbs_per_sec = load_per_instance(inst);
-> +		load = mbs_per_sec * inst->clk_data.codec_freq_data->vpp_freq;
+Currently there is no good way to construct a valid TCS command outside
+of the inner workings of the QCOM interconnect driver which is something
+that will need to be addressed for the next generation of GPU drivers.
 
-shouldn't this be load +=  mbs_per_sec * vpp_freq ? We need to calculate
-load for every instance on this core_id.
+To start the process, this change moves the TCS command macros from the
+sdm845 interconnect driver into a soc specific header to make it available
+for future efforts into this area.
 
-> +	}
-> +	mutex_unlock(&core->lock);
-> +
-> +	return load;
-> +}
-> +
+[1] https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/drivers/gpu/drm/msm/adreno/a6xx_hfi.c#n219
 
-<cut>
+Signed-off-by: Jordan Crouse <jcrouse@codeaurora.org>
+---
 
+ drivers/interconnect/qcom/sdm845.c | 17 -----------------
+ include/soc/qcom/tcs.h             | 17 +++++++++++++++++
+ 2 files changed, 17 insertions(+), 17 deletions(-)
+
+diff --git a/drivers/interconnect/qcom/sdm845.c b/drivers/interconnect/qcom/sdm845.c
+index 4915b78..79b6f01 100644
+--- a/drivers/interconnect/qcom/sdm845.c
++++ b/drivers/interconnect/qcom/sdm845.c
+@@ -20,23 +20,6 @@
+ #include <soc/qcom/rpmh.h>
+ #include <soc/qcom/tcs.h>
+ 
+-#define BCM_TCS_CMD_COMMIT_SHFT		30
+-#define BCM_TCS_CMD_COMMIT_MASK		0x40000000
+-#define BCM_TCS_CMD_VALID_SHFT		29
+-#define BCM_TCS_CMD_VALID_MASK		0x20000000
+-#define BCM_TCS_CMD_VOTE_X_SHFT		14
+-#define BCM_TCS_CMD_VOTE_MASK		0x3fff
+-#define BCM_TCS_CMD_VOTE_Y_SHFT		0
+-#define BCM_TCS_CMD_VOTE_Y_MASK		0xfffc000
+-
+-#define BCM_TCS_CMD(commit, valid, vote_x, vote_y)		\
+-	(((commit) << BCM_TCS_CMD_COMMIT_SHFT) |		\
+-	((valid) << BCM_TCS_CMD_VALID_SHFT) |			\
+-	((cpu_to_le32(vote_x) &					\
+-	BCM_TCS_CMD_VOTE_MASK) << BCM_TCS_CMD_VOTE_X_SHFT) |	\
+-	((cpu_to_le32(vote_y) &					\
+-	BCM_TCS_CMD_VOTE_MASK) << BCM_TCS_CMD_VOTE_Y_SHFT))
+-
+ #define to_qcom_provider(_provider) \
+ 	container_of(_provider, struct qcom_icc_provider, provider)
+ 
+diff --git a/include/soc/qcom/tcs.h b/include/soc/qcom/tcs.h
+index 262876a..6012a9e 100644
+--- a/include/soc/qcom/tcs.h
++++ b/include/soc/qcom/tcs.h
+@@ -53,4 +53,21 @@ struct tcs_request {
+ 	struct tcs_cmd *cmds;
+ };
+ 
++#define BCM_TCS_CMD_COMMIT_SHFT		30
++#define BCM_TCS_CMD_COMMIT_MASK		0x40000000
++#define BCM_TCS_CMD_VALID_SHFT		29
++#define BCM_TCS_CMD_VALID_MASK		0x20000000
++#define BCM_TCS_CMD_VOTE_X_SHFT		14
++#define BCM_TCS_CMD_VOTE_MASK		0x3fff
++#define BCM_TCS_CMD_VOTE_Y_SHFT		0
++#define BCM_TCS_CMD_VOTE_Y_MASK		0xfffc000
++
++#define BCM_TCS_CMD(commit, valid, vote_x, vote_y)		\
++	(((commit) << BCM_TCS_CMD_COMMIT_SHFT) |		\
++	((valid) << BCM_TCS_CMD_VALID_SHFT) |			\
++	((cpu_to_le32(vote_x) &					\
++	BCM_TCS_CMD_VOTE_MASK) << BCM_TCS_CMD_VOTE_X_SHFT) |	\
++	((cpu_to_le32(vote_y) &					\
++	BCM_TCS_CMD_VOTE_MASK) << BCM_TCS_CMD_VOTE_Y_SHFT))
++
+ #endif /* __SOC_QCOM_TCS_H__ */
 -- 
-regards,
-Stan
+2.7.4
+
