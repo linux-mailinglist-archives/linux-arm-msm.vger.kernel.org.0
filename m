@@ -2,79 +2,64 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 9EE076BE83
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Jul 2019 16:46:11 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 7969F6BF3E
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Jul 2019 17:43:38 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727242AbfGQOp5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 17 Jul 2019 10:45:57 -0400
-Received: from smtp-fw-9101.amazon.com ([207.171.184.25]:59277 "EHLO
-        smtp-fw-9101.amazon.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726620AbfGQOp4 (ORCPT
+        id S1725948AbfGQPnh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 17 Jul 2019 11:43:37 -0400
+Received: from mail-lj1-f196.google.com ([209.85.208.196]:42806 "EHLO
+        mail-lj1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725993AbfGQPnh (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 17 Jul 2019 10:45:56 -0400
+        Wed, 17 Jul 2019 11:43:37 -0400
+Received: by mail-lj1-f196.google.com with SMTP id t28so24090202lje.9
+        for <linux-arm-msm@vger.kernel.org>; Wed, 17 Jul 2019 08:43:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=amazon.com; i=@amazon.com; q=dns/txt; s=amazon201209;
-  t=1563374756; x=1594910756;
-  h=subject:to:cc:references:from:message-id:date:
-   mime-version:in-reply-to:content-transfer-encoding;
-  bh=1z0z9elD25irdrNcrFhS4p6GbresMpDTWPm/16CxXK8=;
-  b=npZoZ8j12E5e49oV4E1vrfc0QxqK81Y9FAdYo7E1RrkIsrQImT01OejA
-   xYSBcHX1ruJsABA29KBgdP6oVUUVu5SDsYJ8FzzbUM/3OD8OnEtcTq0Ck
-   IgTdRsmvI7u7SuKNCUKxvrueFw0EgS7lynaaWX94SDycBLWOwY2a7aGWV
-   k=;
-X-IronPort-AV: E=Sophos;i="5.64,274,1559520000"; 
-   d="scan'208";a="816747936"
-Received: from sea3-co-svc-lb6-vlan2.sea.amazon.com (HELO email-inbound-relay-1e-97fdccfd.us-east-1.amazon.com) ([10.47.22.34])
-  by smtp-border-fw-out-9101.sea19.amazon.com with ESMTP; 17 Jul 2019 14:45:52 +0000
-Received: from EX13MTAUWA001.ant.amazon.com (iad55-ws-svc-p15-lb9-vlan3.iad.amazon.com [10.40.159.166])
-        by email-inbound-relay-1e-97fdccfd.us-east-1.amazon.com (Postfix) with ESMTPS id C46ECA2363;
-        Wed, 17 Jul 2019 14:45:46 +0000 (UTC)
-Received: from EX13D21UWA003.ant.amazon.com (10.43.160.184) by
- EX13MTAUWA001.ant.amazon.com (10.43.160.118) with Microsoft SMTP Server (TLS)
- id 15.0.1367.3; Wed, 17 Jul 2019 14:45:46 +0000
-Received: from EX13MTAUWA001.ant.amazon.com (10.43.160.58) by
- EX13D21UWA003.ant.amazon.com (10.43.160.184) with Microsoft SMTP Server (TLS)
- id 15.0.1367.3; Wed, 17 Jul 2019 14:45:45 +0000
-Received: from [10.107.3.21] (10.107.3.21) by mail-relay.amazon.com
- (10.43.160.118) with Microsoft SMTP Server (TLS) id 15.0.1367.3 via Frontend
- Transport; Wed, 17 Jul 2019 14:45:40 +0000
-Subject: Re: [RFC 1/1] edac: Add a counter parameter for
- edac_device_handle_ue/ce()
-To:     Jan Glauber <jglauber@marvell.com>
-CC:     "thor.thayer@linux.intel.com" <thor.thayer@linux.intel.com>,
-        "bp@alien8.de" <bp@alien8.de>,
-        "mchehab@kernel.org" <mchehab@kernel.org>,
-        "james.morse@arm.com" <james.morse@arm.com>,
-        "rric@kernel.org" <rric@kernel.org>,
-        "morbidrsa@gmail.com" <morbidrsa@gmail.com>,
-        "ralf@linux-mips.org" <ralf@linux-mips.org>,
-        "david.daney@cavium.com" <david.daney@cavium.com>,
-        "andy.gross@linaro.org" <andy.gross@linaro.org>,
-        "david.brown@linaro.org" <david.brown@linaro.org>,
-        "ckadabi@codeaurora.org" <ckadabi@codeaurora.org>,
-        "vnkgutta@codeaurora.org" <vnkgutta@codeaurora.org>,
-        "jglauber@cavium.com" <jglauber@cavium.com>,
-        "khuong@os.amperecomputing.com" <khuong@os.amperecomputing.com>,
-        "dwmw@amazon.co.uk" <dwmw@amazon.co.uk>,
-        "benh@amazon.com" <benh@amazon.com>,
-        "ronenk@amazon.com" <ronenk@amazon.com>,
-        "talel@amazon.com" <talel@amazon.com>,
-        "jonnyc@amazon.com" <jonnyc@amazon.com>,
-        "hanochu@amazon.com" <hanochu@amazon.com>,
-        "linux-edac@vger.kernel.org" <linux-edac@vger.kernel.org>,
-        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
-        "linux-mips@vger.kernel.org" <linux-mips@vger.kernel.org>,
-        "linux-arm-msm@vger.kernel.org" <linux-arm-msm@vger.kernel.org>
-References: <1563187987-5847-1-git-send-email-hhhawa@amazon.com>
- <20190717120553.GA10626@hc>
-From:   "Hawa, Hanna" <hhhawa@amazon.com>
-Message-ID: <09f8d807-f4ba-de51-177b-c37ca3a9e377@amazon.com>
-Date:   Wed, 17 Jul 2019 17:45:38 +0300
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
- Thunderbird/60.8.0
+        d=linaro.org; s=google;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=3jbOpJGViEoMZ/z1uklXsD0i54r1S51I050v7ZKNFBk=;
+        b=q5qzlnCIimWC3UjOSITeeOXZCWpKBXlqKRVFQtULyVwTJBMXe291radTFmBCIOilo2
+         rdufUMyO5g6sAT8Hny4/l/4T3ClB9Ox0fRDYQXzp+22fH24Xy/LfnWjZDlZOvtZx+s6t
+         TdaZ9T6zjMZSU//SZ4bpGc37NhFZv/gpXGsZerE1y5w12nSA9savGldFQhS/x1c3DKM5
+         q2DEO2JT52mEPuNlJwMtQNpepUdYfiytpmtMazVZ+7m9Hx23a7wioBqqEh6C57wftVfs
+         oBxa4smkhe+cX+SXaTHhdRrm7gDnWqscQGkgAOM7YrCK5dJ//s0hNZZCKNloaYU9Eh6G
+         MeCw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=3jbOpJGViEoMZ/z1uklXsD0i54r1S51I050v7ZKNFBk=;
+        b=n7M9IbFYkQzuSggPm6YnUiPs335/iuKU9zDEmqey7j4fS/sHqjzEBVBVCyGW6qZNxJ
+         dWLp/zGUdK4CxxipMzTIkV7U2e7JjusWwCZyJ12V/70INEKHiaGXjiyNBguIbr+IrVKC
+         pEXhl4obUNnsCLX+PsKkPvlWnRkoN0hcjceuL43bGbhjhBqP8YxM0NLPsX0KcOUOkKlS
+         JfwNiWoALGzYzN3RODFLw9ZO8+LKUt6/YoxJ9OxO0pvCobYnhp9CFPo9K7cnYGF4MRc0
+         nuDB7dGMwCDUa3bMMJALgap726bNx+Dy+Lty2dqV4KAbffVAqIyVjq/0zeejGEIPFy2+
+         voHw==
+X-Gm-Message-State: APjAAAWAd75zrc9HjkreF9aboMIb7fN0gKTBm2SMJWsRseye01xVBfqH
+        MW3K1HbLEvx7CyhBT+bo/aa1QOfCCYSS6w==
+X-Google-Smtp-Source: APXvYqyZAR4Yyv15+5pV6jQjFoFXs2SGDZkyijDlK7U2XKITXcR4+JjlldiqrmNTezn72knRlJTbvQ==
+X-Received: by 2002:a2e:800c:: with SMTP id j12mr21250044ljg.22.1563378215666;
+        Wed, 17 Jul 2019 08:43:35 -0700 (PDT)
+Received: from [192.168.28.181] ([37.157.136.206])
+        by smtp.googlemail.com with ESMTPSA id g5sm4578700ljj.69.2019.07.17.08.43.34
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Wed, 17 Jul 2019 08:43:34 -0700 (PDT)
+Subject: Re: [PATCH v5 4/4] media: venus: Update core selection
+To:     Aniket Masule <amasule@codeaurora.org>, linux-media@vger.kernel.org
+Cc:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        vgarodia@codeaurora.org
+References: <1563253754-12003-1-git-send-email-amasule@codeaurora.org>
+ <1563253754-12003-5-git-send-email-amasule@codeaurora.org>
+From:   Stanimir Varbanov <stanimir.varbanov@linaro.org>
+Message-ID: <d9584a56-41a5-3e52-55d0-a02c5d59b823@linaro.org>
+Date:   Wed, 17 Jul 2019 18:43:31 +0300
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+ Thunderbird/60.7.2
 MIME-Version: 1.0
-In-Reply-To: <20190717120553.GA10626@hc>
-Content-Type: text/plain; charset="utf-8"; format=flowed
+In-Reply-To: <1563253754-12003-5-git-send-email-amasule@codeaurora.org>
+Content-Type: text/plain; charset=utf-8
 Content-Language: en-US
 Content-Transfer-Encoding: 7bit
 Sender: linux-arm-msm-owner@vger.kernel.org
@@ -82,24 +67,64 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Jan,
+Hi,
 
-On 7/17/2019 3:06 PM, Jan Glauber wrote:
-> Hi Hanna,
+On 7/16/19 8:09 AM, Aniket Masule wrote:
+> Present core assignment is static. Introduced load balancing
+> across the cores. Load on earch core is calculated and core
+> with minimum load is assigned to given instance.
 > 
-> I'm probably missing something but this patch looks like while it adds
-> the error_count parameter the passed values all seem to be 1. So is the
-> new parameter used otherwise, maybe in another patch?
-
-Yes in another patch. In Amazon L1/L2 edac driver [1], I'm using loop to 
-report on multiple L1 or L2 errors. After this patch I'll remove the 
-loop and pass the errors count.
-
-[1]: https://lkml.org/lkml/2019/7/15/349
-
-Thanks,
-Hanna
+> Signed-off-by: Aniket Masule <amasule@codeaurora.org>
+> ---
+>  drivers/media/platform/qcom/venus/helpers.c    | 69 +++++++++++++++++++++++---
+>  drivers/media/platform/qcom/venus/helpers.h    |  2 +-
+>  drivers/media/platform/qcom/venus/hfi_helper.h |  1 +
+>  drivers/media/platform/qcom/venus/hfi_parser.h |  5 ++
+>  drivers/media/platform/qcom/venus/vdec.c       |  2 +-
+>  drivers/media/platform/qcom/venus/venc.c       |  2 +-
+>  6 files changed, 72 insertions(+), 9 deletions(-)
 > 
-> thanks,
-> Jan
+> diff --git a/drivers/media/platform/qcom/venus/helpers.c b/drivers/media/platform/qcom/venus/helpers.c
+> index edf403d..d479793 100644
+> --- a/drivers/media/platform/qcom/venus/helpers.c
+> +++ b/drivers/media/platform/qcom/venus/helpers.c
+> @@ -26,6 +26,7 @@
+>  #include "helpers.h"
+>  #include "hfi_helper.h"
+>  #include "hfi_venus_io.h"
+> +#include "hfi_parser.h"
+>  
+>  struct intbuf {
+>  	struct list_head list;
+> @@ -331,6 +332,24 @@ static u32 load_per_instance(struct venus_inst *inst)
+>  	return mbs * inst->fps;
+>  }
+>  
+> +static u32 load_per_core(struct venus_core *core, u32 core_id)
+> +{
+> +	struct venus_inst *inst = NULL;
+> +	u32 mbs_per_sec = 0, load = 0;
+> +
+> +	mutex_lock(&core->lock);
+> +	list_for_each_entry(inst, &core->instances, list) {
+> +		if (inst->clk_data.core_id != core_id)
+> +			continue;
+> +
+> +		mbs_per_sec = load_per_instance(inst);
+> +		load = mbs_per_sec * inst->clk_data.codec_freq_data->vpp_freq;
 
+shouldn't this be load +=  mbs_per_sec * vpp_freq ? We need to calculate
+load for every instance on this core_id.
+
+> +	}
+> +	mutex_unlock(&core->lock);
+> +
+> +	return load;
+> +}
+> +
+
+<cut>
+
+-- 
+regards,
+Stan
