@@ -2,172 +2,112 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 5C0476C1FE
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Jul 2019 22:14:31 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0AAE46C2EB
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Jul 2019 00:01:51 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727106AbfGQUN2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 17 Jul 2019 16:13:28 -0400
-Received: from mail.kernel.org ([198.145.29.99]:54636 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726598AbfGQUN2 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 17 Jul 2019 16:13:28 -0400
-Received: from kernel.org (unknown [104.132.0.74])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id DCEB520880;
-        Wed, 17 Jul 2019 20:13:26 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1563394407;
-        bh=OESj9GZ0OXpMmohEHzH7DGk0qr7u6wuJQJQ0LuliQSw=;
-        h=In-Reply-To:References:Subject:To:From:Date:From;
-        b=VTLrt/Wddbda5e3atGarJZ1accoS0idhs5NItQk1iNdWwq0YssGxK6d6eXhh5gv0T
-         UiQr3SqihUMvQ6C/dzqRZLNB4z4upkfdpfvkYKcRaD+Vql/wL7TYAyEE2P1WcwtCwV
-         CKIVjQyCKC22t1MdKTmScv1kvCpK3FZdHfsbyWrg=
-Content-Type: text/plain; charset="utf-8"
+        id S1727468AbfGQWBN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 17 Jul 2019 18:01:13 -0400
+Received: from mail-ed1-f66.google.com ([209.85.208.66]:38415 "EHLO
+        mail-ed1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727382AbfGQWBM (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 17 Jul 2019 18:01:12 -0400
+Received: by mail-ed1-f66.google.com with SMTP id r12so27797250edo.5
+        for <linux-arm-msm@vger.kernel.org>; Wed, 17 Jul 2019 15:01:11 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=FFb+F89wb7hJSMQiJHwk7hej5OffexidUMya9XbA7hk=;
+        b=oOO4HCySfdifrLOFYEtyfSEuKfjxMIFRyMI8fT/5OdTEpF7FBFdmqAO/U14jAVGyJs
+         ol/8VhuynlOXcSYginVwm/AA1KPANThLMlWhsK5gYQEAxxnx1WsksfASUevRzWFLTPqS
+         dgg6ztBunGG4vHcdj/eQJvwHWeXjb0FqcZo2i81Dmldi5r59CLwsWZJ8bf1UhOzY1ORL
+         xC+WVbLsPeRxgAmYpvH2ObpmymYkF43iV/SpQBz5PujA885rxkpK7Mtjt4ub9TKi0SHw
+         jhUnuIO1cu+8D9DhSuzh8dTVE7srb0lu1aPo9wgtiIhfF0F3kdcQWf8cmpZf37FJ44Hi
+         Q2Nw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=FFb+F89wb7hJSMQiJHwk7hej5OffexidUMya9XbA7hk=;
+        b=b4wS6hVEwY1HmSzD0807fknEBTmAucDVJhckJwEJbt3C+1sT2VCPYzZff5qedLyg8a
+         opayyYYETH97stDtc+044Q9qacvMJMkrOqVNSiikAD08se1VAf68AyC2hhUYVX0PR5k6
+         QAFBp6KiKB1Jgmk425rLYXVbuiL/lfzcEdRjonchp5lD2bfQbz0xvcG07/Pk1hpn0EeB
+         1+oaSb8AjwQGaJibPgQX3LjhjEt865jYrK4PlIImMkQ5Ojv8uWYTThmtuTmRxNhoVnw3
+         xRH6AwePyIQDogAObR3kCZ5NFxMbsklz2OPmSEMQZPfKCUnMMSl2s4ne+bXz/WKGdjCh
+         lvRw==
+X-Gm-Message-State: APjAAAVa3UPGziujpNEPbP/R1IPhBZBvDLblxxjAWJWIHpUoyfBBQJiU
+        It7wf5eJ0dfk6jGc7B1+M52oNDNv2Ag/egUd0C8=
+X-Google-Smtp-Source: APXvYqxOAb62gP6sqSSMuNm8xnIBPbG9G8d5bXEYaqpixv6l9xNpJqCvvczP1b0HDVKm9l8TsPv/yUL7Iez4jU/cNLw=
+X-Received: by 2002:a50:a544:: with SMTP id z4mr36784507edb.71.1563400871020;
+ Wed, 17 Jul 2019 15:01:11 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <1562859668-14209-13-git-send-email-gokulsri@codeaurora.org>
-References: <1562859668-14209-1-git-send-email-gokulsri@codeaurora.org> <1562859668-14209-13-git-send-email-gokulsri@codeaurora.org>
-Subject: Re: [PATCH 12/12] arm64: dts: qcom: Enable Q6v5 WCSS for ipq8074 SoC
-To:     agross@kernel.org, bjorn.andersson@linaro.org,
-        david.brown@linaro.org, devicetree@vger.kernel.org,
-        gokulsri@codeaurora.org, jassisinghbrar@gmail.com,
-        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-remoteproc@vger.kernel.org,
-        mark.rutland@arm.com, mturquette@baylibre.com, ohad@wizery.com,
-        robh+dt@kernel.org, sricharan@codeaurora.org
-From:   Stephen Boyd <sboyd@kernel.org>
-User-Agent: alot/0.8.1
-Date:   Wed, 17 Jul 2019 13:13:26 -0700
-Message-Id: <20190717201326.DCEB520880@mail.kernel.org>
+References: <5d2f063c.1c69fb81.69fe8.9d45@mx.google.com> <20190717121002.GD4459@sirena.org.uk>
+In-Reply-To: <20190717121002.GD4459@sirena.org.uk>
+From:   Rob Clark <robdclark@gmail.com>
+Date:   Wed, 17 Jul 2019 15:00:59 -0700
+Message-ID: <CAF6AEGv0xjUD17-4=EHe=xOnMnkQgmtp94g473tTr2fDH0aa0A@mail.gmail.com>
+Subject: Re: next/master boot: 265 boots: 17 failed, 243 passed with 4
+ offline, 1 conflict (next-20190717)
+To:     Mark Brown <broonie@kernel.org>
+Cc:     Sean Paul <sean@poorly.run>, David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        kernel-build-reports@lists.linaro.org,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        dri-devel <dri-devel@lists.freedesktop.org>,
+        freedreno <freedreno@lists.freedesktop.org>,
+        "moderated list:ARM/FREESCALE IMX / MXC ARM ARCHITECTURE" 
+        <linux-arm-kernel@lists.infradead.org>,
+        Jordan Crouse <jcrouse@codeaurora.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Gokul Sriram Palanisamy (2019-07-11 08:41:08)
-> diff --git a/arch/arm64/boot/dts/qcom/ipq8074.dtsi b/arch/arm64/boot/dts/=
-qcom/ipq8074.dtsi
-> index 6a61a63..c24e3f6 100644
-> --- a/arch/arm64/boot/dts/qcom/ipq8074.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/ipq8074.dtsi
-> @@ -10,6 +10,22 @@
->         model =3D "Qualcomm Technologies, Inc. IPQ8074";
->         compatible =3D "qcom,ipq8074";
-> =20
-> +       reserved-memory {
-> +               #address-cells =3D <2>;
-> +               #size-cells =3D <2>;
-> +               ranges;
-> +
-> +               smem_region:smem@4ab00000 {
+On Wed, Jul 17, 2019 at 5:10 AM Mark Brown <broonie@kernel.org> wrote:
+>
+> On Wed, Jul 17, 2019 at 04:27:56AM -0700, kernelci.org bot wrote:
+>
+> Today's -next fails to boot on a couple of apq8064 boards:
+>
+> > arm:
+> >     qcom_defconfig:
+> >         gcc-8:
+> >             qcom-apq8064-cm-qs600: 1 failed lab
+> >             qcom-apq8064-ifc6410: 1 failed lab
+>
+> In both cases it looks like the error handling when we fail to get the
+> firmware for the GPU is broken, we get a crash in the initialization
+> code shortly after failing to load some firmware:
+>
+> [    4.608279] msm 5100000.mdp: Direct firmware load for qcom/a300_pm4.fw failed with error -2
+> [    4.614916] msm 5100000.mdp: [drm:adreno_request_fw] *ERROR* failed to load a300_pm4.fw
+> [    4.623229] 8<--- cut here ---
+> [    4.631111] Unable to handle kernel NULL pointer dereference at virtual address 00000088
+>
+> ...
+>
+> [    4.665947] Workqueue: events deferred_probe_work_func
+> [    4.670532] PC is at msm_open+0x64/0x90
+> [    4.675656] LR is at _raw_write_unlock+0x20/0x4c
+>
+> ...
+>
+> [    4.949553] [] (msm_open) from [] (drm_file_alloc+0x134/0x21c)
+> [    4.957703] [] (drm_file_alloc) from [] (drm_client_init+0xa8/0x124)
+> [    4.965162] [] (drm_client_init) from [] (drm_fb_helper_init.part.0+0x30/0x3c)
+> [    4.973411] [] (drm_fb_helper_init.part.0) from [] (msm_fbdev_init+0x50/0xb4)
+> [    4.982173] [] (msm_fbdev_init) from [] (msm_drm_bind+0x560/0x638)
+>
+> Full details (including full boot logs) at:
+>
+>         https://kernelci.org/boot/id/5d2ede2359b514a54b49e91b/
+>         https://kernelci.org/boot/id/5d2ede2759b514a54749e91d/
 
-Put a space between the colon and the node name. Also, just call it
-memory@4ab00000.
 
-		smem_region: memory@4ab00000 {
+jfyi, Jordan tracked this down to needing:
+https://patchwork.freedesktop.org/patch/314397/
 
-> +                       no-map;
-> +                       reg =3D <0x0 0x4ab00000 0x0 0x00100000>;
-> +               };
-> +
-> +               q6_region: q6@4b000000 {
-
-memory@
-
-> +                       no-map;
-> +                       reg =3D <0x0 0x4b000000 0x0 0x05f00000>;
-> +               };
-> +       };
-> +
->         firmware {
->                 scm {
->                         compatible =3D "qcom,scm-ipq8074", "qcom,scm";
-> @@ -431,6 +447,115 @@
->                                       "axi_m_sticky";
->                         status =3D "disabled";
->                 };
-> +               apcs: syscon@b111000 {
-
-Add a newline between nodes please.
-
-> +                       compatible =3D "syscon";
-> +                       reg =3D <0x0B111000 0x1000>;
-> +               };
-> +
-> +               wcss: smp2p-wcss {
-
-This node should be outside the soc node because it doesn't have a reg
-property
-
-> +                       compatible =3D "qcom,smp2p";
-> +                       qcom,smem =3D <435>, <428>;
-> +
-> +                       interrupt-parent =3D <&intc>;
-> +                       interrupts =3D <0 322 1>;
-> +
-> +                       qcom,ipc =3D <&apcs 8 9>;
-> +
-> +                       qcom,local-pid =3D <0>;
-> +                       qcom,remote-pid =3D <1>;
-> +
-> +                       wcss_smp2p_out: master-kernel {
-> +                               qcom,entry-name =3D "master-kernel";
-> +                               qcom,smp2p-feature-ssr-ack;
-> +                               #qcom,smem-state-cells =3D <1>;
-> +                       };
-> +
-> +                       wcss_smp2p_in: slave-kernel {
-> +                               qcom,entry-name =3D "slave-kernel";
-> +
-> +                               interrupt-controller;
-> +                               #interrupt-cells =3D <2>;
-> +                       };
-> +               };
-> +
-> +               tcsr_q6_block: syscon@1945000 {
-
-Do you really need _block in these aliases?
-
-> +                       compatible =3D "syscon";
-> +                       reg =3D <0x1945000 0xE000>;
-> +               };
-> +
-> +               tcsr_mutex_block: syscon@193d000 {
-> +                       compatible =3D "syscon";
-> +                       reg =3D <0x1905000 0x8000>;
-> +               };
-> +
-> +               tcsr_mutex: hwlock@193d000 {
-> +                       compatible =3D "qcom,tcsr-mutex";
-> +                       syscon =3D <&tcsr_mutex_block 0 0x80>;
-> +                       #hwlock-cells =3D <1>;
-> +               };
-> +
-> +               smem: qcom,smem@4AB00000 {
-
-lowercase please. And just 'smem' I guess.
-
-> +                       compatible =3D "qcom,smem";
-> +                       memory-region =3D <&smem_region>;
-> +                       hwlocks =3D <&tcsr_mutex 0>;
-> +               };
-> +
-> +               apcs_glb: mailbox@b111000 {
-> +                       compatible =3D "qcom,ipq8074-apcs-apps-global";
-> +                       reg =3D <0xb111000 0x1000>;
-
-These addresses should be padded out to 8 digits for the address part
-(not the size).
-
-> +
-> +                       #mbox-cells =3D <1>;
-> +               };
-> +
-> +               q6v5_wcss: q6v5_wcss@CD00000 {
-
-lowercase.
-
-> +                       compatible =3D "qcom,ipq8074-wcss-pil";
-> +                       reg =3D <0xCD00000 0x4040>,
-> +                             <0x4AB000 0x20>;
+BR,
+-R
