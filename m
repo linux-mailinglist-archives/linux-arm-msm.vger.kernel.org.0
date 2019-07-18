@@ -2,210 +2,84 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 4DB166C93C
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Jul 2019 08:24:22 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E7E506CAEB
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Jul 2019 10:29:12 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726090AbfGRGYS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 18 Jul 2019 02:24:18 -0400
-Received: from smtp.codeaurora.org ([198.145.29.96]:44240 "EHLO
-        smtp.codeaurora.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726000AbfGRGYS (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 18 Jul 2019 02:24:18 -0400
-Received: by smtp.codeaurora.org (Postfix, from userid 1000)
-        id DC788615E6; Thu, 18 Jul 2019 06:24:16 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
-        s=default; t=1563431056;
-        bh=/QI8ucl9LYpJopinminlJ9+z32qpUYhGxQmZgFux1Bc=;
-        h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
-        b=M7r4CJrN70QQLKwwswaPy8ChFTskWmqVNKn8odnzcaaJh4b5T+zVPVFf8tFcvf42M
-         zrLkdvEtKjoo71tTFP1TvgP7IxhDtNcegka6e8EIcmMq++J0TSIgsoejcGkV4phIuu
-         8A23B0KJNdGRrj4HZY06ChAhm/xWZvNESHke/fkA=
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        pdx-caf-mail.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.7 required=2.0 tests=ALL_TRUSTED,BAYES_00,
-        DKIM_INVALID,DKIM_SIGNED autolearn=no autolearn_force=no version=3.4.0
-Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
-        by smtp.codeaurora.org (Postfix) with ESMTP id BAB43609CD;
-        Thu, 18 Jul 2019 06:24:15 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
-        s=default; t=1563431055;
-        bh=/QI8ucl9LYpJopinminlJ9+z32qpUYhGxQmZgFux1Bc=;
-        h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
-        b=dansnQKB4/NEh6yA2vt+5WYGis1xntQJbFIFhA9OoJ8bt4AVFLiuD95c4aQBAFen3
-         OyydVtJ4kCcOiX86hbcp6PNA0NnK8kZLAJVOAAKc34Baruax9ML2+nmqOP3AZ9xfZN
-         iX3MLgjSZUwqNe5oxiodHJ8eYaQI2bVrCA2sf2aQ=
+        id S1726386AbfGRI2x (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 18 Jul 2019 04:28:53 -0400
+Received: from foss.arm.com ([217.140.110.172]:55548 "EHLO foss.arm.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726000AbfGRI2x (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 18 Jul 2019 04:28:53 -0400
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 3805F28;
+        Thu, 18 Jul 2019 01:28:52 -0700 (PDT)
+Received: from dawn-kernel.cambridge.arm.com (unknown [10.1.197.116])
+        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 147763F71F;
+        Thu, 18 Jul 2019 01:28:49 -0700 (PDT)
+Subject: Re: [PATCHv8 2/5] arm64: dts: qcom: msm8998: Add Coresight support
+To:     saiprakash.ranjan@codeaurora.org, gregkh@linuxfoundation.org,
+        mathieu.poirier@linaro.org, leo.yan@linaro.org,
+        alexander.shishkin@linux.intel.com, mike.leach@linaro.org,
+        robh+dt@kernel.org, bjorn.andersson@linaro.org,
+        devicetree@vger.kernel.org, david.brown@linaro.org,
+        mark.rutland@arm.com
+Cc:     rnayak@codeaurora.org, vivek.gautam@codeaurora.org,
+        sibis@codeaurora.org, linux-arm-kernel@lists.infradead.org,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        marc.w.gonzalez@free.fr
+References: <cover.1562940244.git.saiprakash.ranjan@codeaurora.org>
+ <e510df23f741205fac9030f2c95d06d607549caa.1562940244.git.saiprakash.ranjan@codeaurora.org>
+From:   Suzuki K Poulose <suzuki.poulose@arm.com>
+Message-ID: <3b192063-f31f-b861-d913-61d737cecc57@arm.com>
+Date:   Thu, 18 Jul 2019 09:28:48 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+ Thunderbird/60.7.2
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
+In-Reply-To: <e510df23f741205fac9030f2c95d06d607549caa.1562940244.git.saiprakash.ranjan@codeaurora.org>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
 Content-Transfer-Encoding: 7bit
-Date:   Thu, 18 Jul 2019 11:54:15 +0530
-From:   gokulsri@codeaurora.org
-To:     Stephen Boyd <sboyd@kernel.org>
-Cc:     agross@kernel.org, bjorn.andersson@linaro.org,
-        david.brown@linaro.org, devicetree@vger.kernel.org,
-        jassisinghbrar@gmail.com, linux-arm-msm@vger.kernel.org,
-        linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-remoteproc@vger.kernel.org, mark.rutland@arm.com,
-        mturquette@baylibre.com, ohad@wizery.com, robh+dt@kernel.org,
-        sricharan@codeaurora.org
-Subject: Re: [PATCH 12/12] arm64: dts: qcom: Enable Q6v5 WCSS for ipq8074 SoC
-In-Reply-To: <20190717201326.DCEB520880@mail.kernel.org>
-References: <1562859668-14209-1-git-send-email-gokulsri@codeaurora.org>
- <1562859668-14209-13-git-send-email-gokulsri@codeaurora.org>
- <20190717201326.DCEB520880@mail.kernel.org>
-Message-ID: <d818af556d18808301e12beeb8427e6e@codeaurora.org>
-X-Sender: gokulsri@codeaurora.org
-User-Agent: Roundcube Webmail/1.2.5
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2019-07-18 01:43, Stephen Boyd wrote:
-> Quoting Gokul Sriram Palanisamy (2019-07-11 08:41:08)
->> diff --git a/arch/arm64/boot/dts/qcom/ipq8074.dtsi 
->> b/arch/arm64/boot/dts/qcom/ipq8074.dtsi
->> index 6a61a63..c24e3f6 100644
->> --- a/arch/arm64/boot/dts/qcom/ipq8074.dtsi
->> +++ b/arch/arm64/boot/dts/qcom/ipq8074.dtsi
->> @@ -10,6 +10,22 @@
->>         model = "Qualcomm Technologies, Inc. IPQ8074";
->>         compatible = "qcom,ipq8074";
->> 
->> +       reserved-memory {
->> +               #address-cells = <2>;
->> +               #size-cells = <2>;
->> +               ranges;
->> +
->> +               smem_region:smem@4ab00000 {
-> 
-> Put a space between the colon and the node name. Also, just call it
-> memory@4ab00000.
+Hi Sai,
 
-  ok, will fix.
+On 12/07/2019 15:16, Sai Prakash Ranjan wrote:
+> Enable coresight support by adding device nodes for the
+> available source, sinks and channel blocks on MSM8998.
 > 
-> 		smem_region: memory@4ab00000 {
+> Signed-off-by: Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
+> Reviewed-by: Mathieu Poirier <mathieu.poirier@linaro.org>
+> Acked-by: Suzuki K Poulose <suzuki.poulose@arm.com>
+> ---
+>   arch/arm64/boot/dts/qcom/msm8998.dtsi | 435 ++++++++++++++++++++++++++
+>   1 file changed, 435 insertions(+)
 > 
->> +                       no-map;
->> +                       reg = <0x0 0x4ab00000 0x0 0x00100000>;
->> +               };
->> +
->> +               q6_region: q6@4b000000 {
-> 
-> memory@
+> diff --git a/arch/arm64/boot/dts/qcom/msm8998.dtsi b/arch/arm64/boot/dts/qcom/msm8998.dtsi
+> index c13ed7aeb1e0..ad9cb5e8675d 100644
+> --- a/arch/arm64/boot/dts/qcom/msm8998.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/msm8998.dtsi
+> @@ -822,6 +822,441 @@
 
-  ok, will fix.
-> 
->> +                       no-map;
->> +                       reg = <0x0 0x4b000000 0x0 0x05f00000>;
->> +               };
->> +       };
->> +
->>         firmware {
->>                 scm {
->>                         compatible = "qcom,scm-ipq8074", "qcom,scm";
->> @@ -431,6 +447,115 @@
->>                                       "axi_m_sticky";
->>                         status = "disabled";
->>                 };
->> +               apcs: syscon@b111000 {
-> 
-> Add a newline between nodes please.
 
-  ok, will fix.
-> 
->> +                       compatible = "syscon";
->> +                       reg = <0x0B111000 0x1000>;
->> +               };
->> +
->> +               wcss: smp2p-wcss {
-> 
-> This node should be outside the soc node because it doesn't have a reg
-> property
+		etr@6048000 {
+> +			compatible = "arm,coresight-tmc", "arm,primecell";
+> +			reg = <0x06048000 0x1000>;
+> +
+> +			clocks = <&rpmcc RPM_SMD_QDSS_CLK>, <&rpmcc RPM_SMD_QDSS_A_CLK>;
+> +			clock-names = "apb_pclk", "atclk";
+> +			arm,scatter-gather;
 
-  ok, will fix.
-> 
->> +                       compatible = "qcom,smp2p";
->> +                       qcom,smem = <435>, <428>;
->> +
->> +                       interrupt-parent = <&intc>;
->> +                       interrupts = <0 322 1>;
->> +
->> +                       qcom,ipc = <&apcs 8 9>;
->> +
->> +                       qcom,local-pid = <0>;
->> +                       qcom,remote-pid = <1>;
->> +
->> +                       wcss_smp2p_out: master-kernel {
->> +                               qcom,entry-name = "master-kernel";
->> +                               qcom,smp2p-feature-ssr-ack;
->> +                               #qcom,smem-state-cells = <1>;
->> +                       };
->> +
->> +                       wcss_smp2p_in: slave-kernel {
->> +                               qcom,entry-name = "slave-kernel";
->> +
->> +                               interrupt-controller;
->> +                               #interrupt-cells = <2>;
->> +                       };
->> +               };
->> +
->> +               tcsr_q6_block: syscon@1945000 {
-> 
-> Do you really need _block in these aliases?
+Please could you confirm that you have tested the scatter-gather mode with ETR ? 
+Either via perf/sysfs. Please could you share your results ? Unless verified
+this is going to be fatal for the system.
 
-  ok, will fix it to "tcsr_q6"
-> 
->> +                       compatible = "syscon";
->> +                       reg = <0x1945000 0xE000>;
->> +               };
->> +
->> +               tcsr_mutex_block: syscon@193d000 {
->> +                       compatible = "syscon";
->> +                       reg = <0x1905000 0x8000>;
->> +               };
->> +
->> +               tcsr_mutex: hwlock@193d000 {
->> +                       compatible = "qcom,tcsr-mutex";
->> +                       syscon = <&tcsr_mutex_block 0 0x80>;
->> +                       #hwlock-cells = <1>;
->> +               };
->> +
->> +               smem: qcom,smem@4AB00000 {
-> 
-> lowercase please. And just 'smem' I guess.
+Similarly for other platforms.
 
-  ok, will fix.
-> 
->> +                       compatible = "qcom,smem";
->> +                       memory-region = <&smem_region>;
->> +                       hwlocks = <&tcsr_mutex 0>;
->> +               };
->> +
->> +               apcs_glb: mailbox@b111000 {
->> +                       compatible = "qcom,ipq8074-apcs-apps-global";
->> +                       reg = <0xb111000 0x1000>;
-> 
-> These addresses should be padded out to 8 digits for the address part
-> (not the size).
+Kind regards
+Suzuki
 
-  ok, will fix.
-> 
->> +
->> +                       #mbox-cells = <1>;
->> +               };
->> +
->> +               q6v5_wcss: q6v5_wcss@CD00000 {
-> 
-> lowercase.
 
-  ok, will fix.
-> 
->> +                       compatible = "qcom,ipq8074-wcss-pil";
->> +                       reg = <0xCD00000 0x4040>,
->> +                             <0x4AB000 0x20>;
-
-Regards,
-  Gokul
