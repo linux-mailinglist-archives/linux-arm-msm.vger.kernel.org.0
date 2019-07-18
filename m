@@ -2,110 +2,158 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 9848B6D576
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Jul 2019 21:52:08 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 8B1256D6A0
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Jul 2019 23:49:49 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2391378AbfGRTv4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 18 Jul 2019 15:51:56 -0400
-Received: from mail-pg1-f195.google.com ([209.85.215.195]:34091 "EHLO
-        mail-pg1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727687AbfGRTv4 (ORCPT
+        id S1728022AbfGRVts (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 18 Jul 2019 17:49:48 -0400
+Received: from mail-vs1-f68.google.com ([209.85.217.68]:45377 "EHLO
+        mail-vs1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727780AbfGRVts (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 18 Jul 2019 15:51:56 -0400
-Received: by mail-pg1-f195.google.com with SMTP id n9so7132109pgc.1
-        for <linux-arm-msm@vger.kernel.org>; Thu, 18 Jul 2019 12:51:55 -0700 (PDT)
+        Thu, 18 Jul 2019 17:49:48 -0400
+Received: by mail-vs1-f68.google.com with SMTP id h28so20183054vsl.12
+        for <linux-arm-msm@vger.kernel.org>; Thu, 18 Jul 2019 14:49:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=message-id:mime-version:content-transfer-encoding:in-reply-to
-         :references:subject:to:cc:from:user-agent:date;
-        bh=zfYhBy8rXbE//COaxouGyZdN8XuohHpGRV5GXewnrg0=;
-        b=DKzzyJpgwrlpAymFb04FfC77Rz/8v2x2vMt97Uo5AbdJL5GOULus42XL9FeHmoaRKU
-         63iDopVnfj/IHyacy+pTTzrtu2JsX/GIkaMVxiVuO9aQob2DW/xay1dZuqkLoDJlE19X
-         clXgrN9nBoB9+m3VTyBOgFl4dyyN77fIsnv98=
+        d=linaro.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=vVaakzPBBxcCnU1uQoatmOIcAq9lkWIyC/ZitRYoNgg=;
+        b=X0bRe+v4iwS6jdXfFpHS/B1EX7o/Ag7+xrNChOx3rwtQf1rriCNbBBc2AORVmlG9gC
+         KVxWBeK9NBQ8gBXi8w3Av9R1Yh8r3h7xlJoRYPAOSzyytZUVC4+ejy9Cn3PMuHz9YpW/
+         IxLuV6N64nVRcqJGyugTEStIUQQsmFjSjI3Fy/4XjJOaWPe1Tv10djjEfP5VnAyre9Oz
+         +v6sV/2I3P9kSX69DLaBAK+GbpCi9bKxUIteMutCxdGAkTLk6xGcGP1HExLaCbrye+OE
+         8gxLRO/Twcav0vXVKqTdUtgl/TBIEzaP0a1edGLGuHPegpLd/TMcEm8b/qDG4Ok3mPbw
+         W7Xw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:mime-version
-         :content-transfer-encoding:in-reply-to:references:subject:to:cc:from
-         :user-agent:date;
-        bh=zfYhBy8rXbE//COaxouGyZdN8XuohHpGRV5GXewnrg0=;
-        b=DlneiV3AShXveNFM27f0vEHB38KQ3FQVQJuIobX0BLLBX8djza7P/4yEmDWn/eFHY7
-         7YfcyCvqNpXeiT5yyEgA6kYWGEF++bbEj24/ekNKpeJTi5BTLk7L50W/nTgnA2lVV2Hc
-         BDYFByXwC2CuFyngaI3XgnUl8BEFbeOXTOAg6L8QL4iTA+yVZFT4tlsHmxmxVwtDXpqM
-         JkxOl/aFOMhhCE2F1kF2qVTYec8Q4Gdm526UJjEmZwA9B/qVz7VMcRE2gZwm4g01l6u6
-         gluH1mYla1+9Gg8zydNRMwq07Opg1jQPABtGszhuIfLNpRZ8GcZkCezUOZ3L6ZLy03e0
-         SicQ==
-X-Gm-Message-State: APjAAAUXkUPaIJNL1aLOY4IAHo7bwjpWVAykkLUxOeJ37GEvaaIeLNpi
-        Q55J38rylq0fXV40TgsZiVqKNzgC/hk=
-X-Google-Smtp-Source: APXvYqzX3YfqRbUFuVRr8VkMWQFTqQ6b7l4FMXcRmJo8G3y5rS4fIdQe2lsE0s0MX+8ly1O9es6xBg==
-X-Received: by 2002:a63:205f:: with SMTP id r31mr49503340pgm.159.1563479515402;
-        Thu, 18 Jul 2019 12:51:55 -0700 (PDT)
-Received: from chromium.org ([2620:15c:202:1:fa53:7765:582b:82b9])
-        by smtp.gmail.com with ESMTPSA id y23sm30556546pfo.106.2019.07.18.12.51.54
-        (version=TLS1_3 cipher=AEAD-AES256-GCM-SHA384 bits=256/256);
-        Thu, 18 Jul 2019 12:51:54 -0700 (PDT)
-Message-ID: <5d30cdda.1c69fb81.de220.1f10@mx.google.com>
-Content-Type: text/plain; charset="utf-8"
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=vVaakzPBBxcCnU1uQoatmOIcAq9lkWIyC/ZitRYoNgg=;
+        b=JLZ9CpbjYvT+2PhjPoJKOHWvxfo5JXs2cxxK5GP4a56G9oMOul49uE6acJEyB5eRt8
+         QVl41G+rORty9I88OWbrzmdPoyDqoBj7xp6SYuMXEAXMdz0SFV5wNUiDY6tUazjufLNJ
+         AK4KEvO/OuQGXBsK8yuz+QLbPPykYWPpPVd58i7AV1vsJ02sGUQb5CTTyDKTyknrYj8N
+         jHLepRnOo+CF/sUSlDTBAR5Hi7rfXqkv47MOuuV+19LS3E1RgfY32Z4Q+yRHE5lTGv1g
+         y95O2H6eMhGl6u4W3fMUwUL1JFt6MKJwLBcT/mIAajh0vMGDO1/TacgJ/sqUhyTAIkMj
+         IZIQ==
+X-Gm-Message-State: APjAAAXjzFxtOpHqiXkrTDuQeq4rJ8Awf6y/swlKV74DatoEBZ89oSBj
+        ffV9pe4uKIw0TtNuMhyRoaHpWFO36y9TuwwokiaBFw==
+X-Google-Smtp-Source: APXvYqx6w0adJ6xepr9OilXJBz3+Zq+jx9/hhhjOwrMjwd3XZB1LUnFpt9Xc9uk4rPa7wYkP1TAGbNJcQe6BKGLWrJs=
+X-Received: by 2002:a67:e454:: with SMTP id n20mr31593172vsm.34.1563486587134;
+ Thu, 18 Jul 2019 14:49:47 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <20190630124735.27786-1-robdclark@gmail.com>
-References: <20190630124735.27786-1-robdclark@gmail.com>
-Subject: Re: [PATCH] drm/msm: stop abusing dma_map/unmap for cache
-To:     Rob Clark <robdclark@gmail.com>, dri-devel@lists.freedesktop.org
-Cc:     Rob Clark <robdclark@chromium.org>,
-        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>, linux-arm-msm@vger.kernel.org,
-        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org
-From:   Stephen Boyd <swboyd@chromium.org>
-User-Agent: alot/0.8.1
-Date:   Thu, 18 Jul 2019 12:51:53 -0700
+References: <20190513192300.653-1-ulf.hansson@linaro.org> <20190513192300.653-15-ulf.hansson@linaro.org>
+ <20190716155317.GB32490@e121166-lin.cambridge.arm.com> <CAPDyKFrJ75mo+s6GuUCTQ-nVv7C+9YJyTVmwuBZ2RKFOvOi3Nw@mail.gmail.com>
+ <20190718133053.GA27222@e121166-lin.cambridge.arm.com> <CAPDyKFr4NmichQk4uf+Wgbanh=5idKYY=37WCb6U_hNFDVYg=w@mail.gmail.com>
+ <20190718174116.GD25567@codeaurora.org>
+In-Reply-To: <20190718174116.GD25567@codeaurora.org>
+From:   Ulf Hansson <ulf.hansson@linaro.org>
+Date:   Thu, 18 Jul 2019 23:49:11 +0200
+Message-ID: <CAPDyKFrxBdZfskyp2HOb5YykkAqkBzRfW4-LLbcj1DAaL65XpA@mail.gmail.com>
+Subject: Re: [PATCH 14/18] drivers: firmware: psci: Manage runtime PM in the
+ idle path for CPUs
+To:     Lina Iyer <ilina@codeaurora.org>
+Cc:     Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
+        Sudeep Holla <sudeep.holla@arm.com>,
+        Mark Rutland <mark.rutland@arm.com>,
+        Linux ARM <linux-arm-kernel@lists.infradead.org>,
+        "Rafael J . Wysocki" <rjw@rjwysocki.net>,
+        Daniel Lezcano <daniel.lezcano@linaro.org>,
+        "Raju P . L . S . S . S . N" <rplsssn@codeaurora.org>,
+        Amit Kucheria <amit.kucheria@linaro.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Niklas Cassel <niklas.cassel@linaro.org>,
+        Tony Lindgren <tony@atomide.com>,
+        Kevin Hilman <khilman@kernel.org>,
+        Viresh Kumar <viresh.kumar@linaro.org>,
+        Vincent Guittot <vincent.guittot@linaro.org>,
+        Geert Uytterhoeven <geert+renesas@glider.be>,
+        Souvik Chakravarty <souvik.chakravarty@arm.com>,
+        Linux PM <linux-pm@vger.kernel.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Rob Clark (2019-06-30 05:47:22)
-> From: Rob Clark <robdclark@chromium.org>
->=20
-> Recently splats like this started showing up:
->=20
->    WARNING: CPU: 4 PID: 251 at drivers/iommu/dma-iommu.c:451 __iommu_dma_=
-unmap+0xb8/0xc0
->    Modules linked in: ath10k_snoc ath10k_core fuse msm ath mac80211 uvcvi=
-deo cfg80211 videobuf2_vmalloc videobuf2_memops vide
->    CPU: 4 PID: 251 Comm: kworker/u16:4 Tainted: G        W         5.2.0-=
-rc5-next-20190619+ #2317
->    Hardware name: LENOVO 81JL/LNVNB161216, BIOS 9UCN23WW(V1.06) 10/25/2018
->    Workqueue: msm msm_gem_free_work [msm]
->    pstate: 80c00005 (Nzcv daif +PAN +UAO)
->    pc : __iommu_dma_unmap+0xb8/0xc0
->    lr : __iommu_dma_unmap+0x54/0xc0
->    sp : ffff0000119abce0
->    x29: ffff0000119abce0 x28: 0000000000000000
->    x27: ffff8001f9946648 x26: ffff8001ec271068
->    x25: 0000000000000000 x24: ffff8001ea3580a8
->    x23: ffff8001f95ba010 x22: ffff80018e83ba88
->    x21: ffff8001e548f000 x20: fffffffffffff000
->    x19: 0000000000001000 x18: 00000000c00001fe
->    x17: 0000000000000000 x16: 0000000000000000
->    x15: ffff000015b70068 x14: 0000000000000005
->    x13: 0003142cc1be1768 x12: 0000000000000001
->    x11: ffff8001f6de9100 x10: 0000000000000009
->    x9 : ffff000015b78000 x8 : 0000000000000000
->    x7 : 0000000000000001 x6 : fffffffffffff000
->    x5 : 0000000000000fff x4 : ffff00001065dbc8
->    x3 : 000000000000000d x2 : 0000000000001000
->    x1 : fffffffffffff000 x0 : 0000000000000000
->    Call trace:
->     __iommu_dma_unmap+0xb8/0xc0
->     iommu_dma_unmap_sg+0x98/0xb8
->     put_pages+0x5c/0xf0 [msm]
->     msm_gem_free_work+0x10c/0x150 [msm]
->     process_one_work+0x1e0/0x330
->     worker_thread+0x40/0x438
->     kthread+0x12c/0x130
->     ret_from_fork+0x10/0x18
->    ---[ end trace afc0dc5ab81a06bf ]---
+On Thu, 18 Jul 2019 at 19:41, Lina Iyer <ilina@codeaurora.org> wrote:
+>
+> On Thu, Jul 18 2019 at 10:55 -0600, Ulf Hansson wrote:
+> >On Thu, 18 Jul 2019 at 15:31, Lorenzo Pieralisi
+> ><lorenzo.pieralisi@arm.com> wrote:
+> >>
+> >> On Thu, Jul 18, 2019 at 12:35:07PM +0200, Ulf Hansson wrote:
+> >> > On Tue, 16 Jul 2019 at 17:53, Lorenzo Pieralisi
+> >> > <lorenzo.pieralisi@arm.com> wrote:
+> >> > >
+> >> > > On Mon, May 13, 2019 at 09:22:56PM +0200, Ulf Hansson wrote:
+> >> > > > When the hierarchical CPU topology layout is used in DT, let's allow the
+> >> > > > CPU to be power managed through its PM domain, via deploying runtime PM
+> >> > > > support.
+> >> > > >
+> >> > > > To know for which idle states runtime PM reference counting is needed,
+> >> > > > let's store the index of deepest idle state for the CPU, in a per CPU
+> >> > > > variable. This allows psci_cpu_suspend_enter() to compare this index with
+> >> > > > the requested idle state index and then act accordingly.
+> >> > >
+> >> > > I do not see why a system with two CPU CPUidle states, say CPU retention
+> >> > > and CPU shutdown, should not be calling runtime PM on CPU retention
+> >> > > entry.
+> >> >
+> >> > If the CPU idle governor did select the CPU retention for the CPU, it
+> >> > was probably because the target residency for the CPU shutdown state
+> >> > could not be met.
+> >>
+> >> The kernel does not know what those cpu states represent, so, this is an
+> >> assumption you are making and it must be made clear that this code works
+> >> as long as your assumption is valid.
+> >>
+> >> If eg a "cluster" retention state has lower target_residency than
+> >> the deepest CPU idle state this assumption is wrong.
+> >
+> >Good point, you are right. I try to find a place to document this assumption.
+> >
+> >>
+> >> And CPUidle and genPD governor decisions are not synced anyway so,
+> >> again, this is an assumption, not a certainty.
+> >>
+> >> > In this case, there is no point in allowing any other deeper idle
+> >> > states for cluster/package/system, since those have even greater
+> >> > residencies, hence calling runtime PM doesn't make sense.
+> >>
+> >> On the systems you are testing on.
+> >
+> >So what you are saying typically means, that if all CPUs in the same
+> >cluster have entered the CPU retention state, on some system the
+> >cluster may also put into a cluster retention state (assuming the
+> >target residency is met)?
+> >
+> >Do you know of any systems that has these characteristics?
+> >
+> Many QCOM SoCs can do that. But with the hardware improving, the
+> power-performance benefits skew the results in favor of powering off
+> the cluster than keeping the CPU and cluster in retention.
+>
+> Kevin H and I thought of this problem earlier on. But that is a second
+> level problem to solve and definitely to be thought of after we have the
+> support for the deepest states in the kernel. We left that out for a
+> later date. The idea would have been to setup the allowable state(s) in
+> the DT for CPU and cluster state definitions and have the genpd take
+> that into consideration when deciding the idle state for the domain.
 
-Tested-by: Stephen Boyd <swboyd@chromium.org>
+Thanks for confirming.
 
+This more or less means we need to improve the hierarchical support in
+genpd to support more levels, such that it makes sense to have a genpd
+governor assigned at more than one level. This doesn't work well
+today. As I also have stated, this is on my todo list for genpd.
+
+However, I also agree with your standpoint, that let's start simple to
+enable the deepest state as a start with, then we can improve things
+on top.
+
+Kind regards
+Uffe
