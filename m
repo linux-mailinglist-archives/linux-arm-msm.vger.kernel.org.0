@@ -2,177 +2,110 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 1FC9C6D3BA
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Jul 2019 20:20:20 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9848B6D576
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Jul 2019 21:52:08 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2391189AbfGRSSp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 18 Jul 2019 14:18:45 -0400
-Received: from smtp.codeaurora.org ([198.145.29.96]:44014 "EHLO
-        smtp.codeaurora.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2391178AbfGRSSo (ORCPT
+        id S2391378AbfGRTv4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 18 Jul 2019 15:51:56 -0400
+Received: from mail-pg1-f195.google.com ([209.85.215.195]:34091 "EHLO
+        mail-pg1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727687AbfGRTv4 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 18 Jul 2019 14:18:44 -0400
-Received: by smtp.codeaurora.org (Postfix, from userid 1000)
-        id 3ED6A611D1; Thu, 18 Jul 2019 18:18:43 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
-        s=default; t=1563473924;
-        bh=s2i0fpH51lhrVs4GYLacMeK/1FuA13qFGeXtzi0LvfA=;
-        h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
-        b=cdeOP5hjJ36A34yjs6EJM8AWhARTTfc1guKVbPo5e2a3JZ4GD7KFIM5EJVTtecCbV
-         gz1gdnJX8k497gCjSh866cimbv8BOWT18LjL8soOtBeFLqex0aRCYhSnKZUd/1O8M5
-         CdSgamIMF5cnLE7jAm2lrBnWcNvDTc/OFiAIVyt8=
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        pdx-caf-mail.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.7 required=2.0 tests=ALL_TRUSTED,BAYES_00,
-        DKIM_INVALID,DKIM_SIGNED autolearn=no autolearn_force=no version=3.4.0
-Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
-        by smtp.codeaurora.org (Postfix) with ESMTP id 983BB6074F;
-        Thu, 18 Jul 2019 18:18:42 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
-        s=default; t=1563473922;
-        bh=s2i0fpH51lhrVs4GYLacMeK/1FuA13qFGeXtzi0LvfA=;
-        h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
-        b=NdFlkuGm3ew8Xa+B05bOJvE2DLw6CM7Ng46KgrHlqglPK4Yu+9c0K55tXKdh0EzuI
-         BQ4lLHfotl0ytqrbUPbMamQXsy7nmkRoFSTee5UnOU71j/wpoga5OHyGk1bg4aPzYB
-         NiV6kj1NlrPiIgQRR1ETbRQJo5r+jkcwoUqrFX+s=
+        Thu, 18 Jul 2019 15:51:56 -0400
+Received: by mail-pg1-f195.google.com with SMTP id n9so7132109pgc.1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 18 Jul 2019 12:51:55 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=message-id:mime-version:content-transfer-encoding:in-reply-to
+         :references:subject:to:cc:from:user-agent:date;
+        bh=zfYhBy8rXbE//COaxouGyZdN8XuohHpGRV5GXewnrg0=;
+        b=DKzzyJpgwrlpAymFb04FfC77Rz/8v2x2vMt97Uo5AbdJL5GOULus42XL9FeHmoaRKU
+         63iDopVnfj/IHyacy+pTTzrtu2JsX/GIkaMVxiVuO9aQob2DW/xay1dZuqkLoDJlE19X
+         clXgrN9nBoB9+m3VTyBOgFl4dyyN77fIsnv98=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:message-id:mime-version
+         :content-transfer-encoding:in-reply-to:references:subject:to:cc:from
+         :user-agent:date;
+        bh=zfYhBy8rXbE//COaxouGyZdN8XuohHpGRV5GXewnrg0=;
+        b=DlneiV3AShXveNFM27f0vEHB38KQ3FQVQJuIobX0BLLBX8djza7P/4yEmDWn/eFHY7
+         7YfcyCvqNpXeiT5yyEgA6kYWGEF++bbEj24/ekNKpeJTi5BTLk7L50W/nTgnA2lVV2Hc
+         BDYFByXwC2CuFyngaI3XgnUl8BEFbeOXTOAg6L8QL4iTA+yVZFT4tlsHmxmxVwtDXpqM
+         JkxOl/aFOMhhCE2F1kF2qVTYec8Q4Gdm526UJjEmZwA9B/qVz7VMcRE2gZwm4g01l6u6
+         gluH1mYla1+9Gg8zydNRMwq07Opg1jQPABtGszhuIfLNpRZ8GcZkCezUOZ3L6ZLy03e0
+         SicQ==
+X-Gm-Message-State: APjAAAUXkUPaIJNL1aLOY4IAHo7bwjpWVAykkLUxOeJ37GEvaaIeLNpi
+        Q55J38rylq0fXV40TgsZiVqKNzgC/hk=
+X-Google-Smtp-Source: APXvYqzX3YfqRbUFuVRr8VkMWQFTqQ6b7l4FMXcRmJo8G3y5rS4fIdQe2lsE0s0MX+8ly1O9es6xBg==
+X-Received: by 2002:a63:205f:: with SMTP id r31mr49503340pgm.159.1563479515402;
+        Thu, 18 Jul 2019 12:51:55 -0700 (PDT)
+Received: from chromium.org ([2620:15c:202:1:fa53:7765:582b:82b9])
+        by smtp.gmail.com with ESMTPSA id y23sm30556546pfo.106.2019.07.18.12.51.54
+        (version=TLS1_3 cipher=AEAD-AES256-GCM-SHA384 bits=256/256);
+        Thu, 18 Jul 2019 12:51:54 -0700 (PDT)
+Message-ID: <5d30cdda.1c69fb81.de220.1f10@mx.google.com>
+Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
-Content-Transfer-Encoding: 7bit
-Date:   Thu, 18 Jul 2019 11:18:42 -0700
-From:   Jeykumar Sankaran <jsanka@codeaurora.org>
-To:     Daniel Vetter <daniel@ffwll.ch>
-Cc:     dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
-        linux-arm-msm@vger.kernel.org, seanpaul@chromium.org,
-        robdclark@gmail.com, pdhaval@codeaurora.org,
-        Daniel Vetter <daniel.vetter@ffwll.ch>
-Subject: Re: [RFC] Expanding drm_mode_modeinfo flags
-In-Reply-To: <20190716090712.GY15868@phenom.ffwll.local>
-References: <1562870805-32314-1-git-send-email-jsanka@codeaurora.org>
- <20190716090712.GY15868@phenom.ffwll.local>
-Message-ID: <16fee2b42fa03d2cf104452223dcf5af@codeaurora.org>
-X-Sender: jsanka@codeaurora.org
-User-Agent: Roundcube Webmail/1.2.5
+Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <20190630124735.27786-1-robdclark@gmail.com>
+References: <20190630124735.27786-1-robdclark@gmail.com>
+Subject: Re: [PATCH] drm/msm: stop abusing dma_map/unmap for cache
+To:     Rob Clark <robdclark@gmail.com>, dri-devel@lists.freedesktop.org
+Cc:     Rob Clark <robdclark@chromium.org>,
+        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>, linux-arm-msm@vger.kernel.org,
+        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org
+From:   Stephen Boyd <swboyd@chromium.org>
+User-Agent: alot/0.8.1
+Date:   Thu, 18 Jul 2019 12:51:53 -0700
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2019-07-16 02:07, Daniel Vetter wrote:
-> On Thu, Jul 11, 2019 at 11:46:44AM -0700, Jeykumar Sankaran wrote:
->>     Hello All,
->>     	drm_mode_modeinfo::flags is a 32 bit field currently used to
->>     describe the properties of a connector mode. I see the least order
-> 22 bits
->>     are already in use. Posting this RFC to discuss on any potential
-> plans to
->>     expand the bit range support of this field for growing mode
-> properties and
->>     ways to handle one such property needed by the msm dpu driver.
->> 
->>     msm drivers support panels which can dynamically switch between
->>     video(active) and command(smart) modes. Within video mode, they 
->> also
-> support
->>     switching between resolutions seamlessly i.e. glitch free 
->> resolution
-> switch.
->>     But they cannot do a seamless switch from a resolutions from video
-> to
->>     command or vice versa. Clients need to be aware for these
-> capablities before
->>     they switch between the resolutions. Since these capabilities are
-> identified
->>     per drm_mode, we are considering the below two approaches to 
->> handle
-> this
->>     use case.
->> 
->>     Option 1:
->>     Attached patch adds flag values to associate a drm_mode to
-> video/command
->>     mode and to indicate its capability to do a seamless switch.
->> 
->>     Option 2:
->>     drm_mode_modeinfo can expose a new "private_flags" field to handle
-> vendor
->>     specific mode flags. Besides the above mentioned use case, we are
-> also
->>     expoloring methods to handle some of our display port resolution
-> switch use
->>     cases where the DP ports can be operated in a tiled/detiled modes.
-> This
->>     approach will provide a standard channel for drm driver vendors 
->> for
-> their
->>     growing need for drm_mode specific capabilities.
->> 
->>     Please provide your inputs on the options or any upstream friendly
->>     recommendation to handle such custom use cases.
->> 
->>     Thanks and Regards,
->>     Jeykumar S.
->> 
->> Jeykumar Sankaran (1):
->>   drm: add mode flags in uapi for seamless mode switch
-> 
-> I think the uapi is the trivial part here, the real deal is how 
-> userspace
-> uses this. Can you pls post the patches for your compositor?
-> 
-> Also note that we already allow userspace to tell the kernel whether
-> flickering is ok or not for a modeset. msm driver could use that to at
-> least tell userspace whether a modeset change is possible. So you can
-> already implement glitch-free modeset changes for at least video mode.
-> -Daniel
+Quoting Rob Clark (2019-06-30 05:47:22)
+> From: Rob Clark <robdclark@chromium.org>
+>=20
+> Recently splats like this started showing up:
+>=20
+>    WARNING: CPU: 4 PID: 251 at drivers/iommu/dma-iommu.c:451 __iommu_dma_=
+unmap+0xb8/0xc0
+>    Modules linked in: ath10k_snoc ath10k_core fuse msm ath mac80211 uvcvi=
+deo cfg80211 videobuf2_vmalloc videobuf2_memops vide
+>    CPU: 4 PID: 251 Comm: kworker/u16:4 Tainted: G        W         5.2.0-=
+rc5-next-20190619+ #2317
+>    Hardware name: LENOVO 81JL/LNVNB161216, BIOS 9UCN23WW(V1.06) 10/25/2018
+>    Workqueue: msm msm_gem_free_work [msm]
+>    pstate: 80c00005 (Nzcv daif +PAN +UAO)
+>    pc : __iommu_dma_unmap+0xb8/0xc0
+>    lr : __iommu_dma_unmap+0x54/0xc0
+>    sp : ffff0000119abce0
+>    x29: ffff0000119abce0 x28: 0000000000000000
+>    x27: ffff8001f9946648 x26: ffff8001ec271068
+>    x25: 0000000000000000 x24: ffff8001ea3580a8
+>    x23: ffff8001f95ba010 x22: ffff80018e83ba88
+>    x21: ffff8001e548f000 x20: fffffffffffff000
+>    x19: 0000000000001000 x18: 00000000c00001fe
+>    x17: 0000000000000000 x16: 0000000000000000
+>    x15: ffff000015b70068 x14: 0000000000000005
+>    x13: 0003142cc1be1768 x12: 0000000000000001
+>    x11: ffff8001f6de9100 x10: 0000000000000009
+>    x9 : ffff000015b78000 x8 : 0000000000000000
+>    x7 : 0000000000000001 x6 : fffffffffffff000
+>    x5 : 0000000000000fff x4 : ffff00001065dbc8
+>    x3 : 000000000000000d x2 : 0000000000001000
+>    x1 : fffffffffffff000 x0 : 0000000000000000
+>    Call trace:
+>     __iommu_dma_unmap+0xb8/0xc0
+>     iommu_dma_unmap_sg+0x98/0xb8
+>     put_pages+0x5c/0xf0 [msm]
+>     msm_gem_free_work+0x10c/0x150 [msm]
+>     process_one_work+0x1e0/0x330
+>     worker_thread+0x40/0x438
+>     kthread+0x12c/0x130
+>     ret_from_fork+0x10/0x18
+>    ---[ end trace afc0dc5ab81a06bf ]---
 
-I believe you are referring to the below tv property of the connector.
+Tested-by: Stephen Boyd <swboyd@chromium.org>
 
-/**
-  * @tv_flicker_reduction_property: Optional TV property to control the
-  * flicker reduction mode.
-  */
-struct drm_property *tv_flicker_reduction_property;
-
-Sure. We can use this to indicate whether the connector representing the 
-panel
-can support the dynamic glitch-free switch. But when the panel supports 
-both
-video and command mode resolutions and such glitch-free switch is 
-possible only between
-video mode resolutions, we need per resolution(drm_mode_modeinfo) 
-information
-to identify the resolutions enumerated for video mode.
-
-Below is an example of the compositor utility function which can use the 
-tv_flicker_property
-and the proposed modeinfo flags to identify glitch-free switches.
-
-  bool is_seamless_switch_supported(struct drm_mode_modeinfo src_mode, 
-struct
-                  drm_mode_modeinfo *dst_mode, bool 
-flicker_reduction_supported)
-  {
-          if (!flicker_reduction_supported) {
-                  printf("flicker reduction prop not set for the 
-connector\n");
-                  return false;
-          }
-
-          /*
-           * Seamless switch(if supported) is possible only between video 
-mode
-           * resolutions
-           */
-          if (src_mode->flags & DRM_MODE_FLAG_VIDEO_MODE &&
-                          dst_mode->flags & DRM_MODE_FLAG_VIDEO_MODE)
-                  return true;
-          else
-                  return false;
-
-  }
-
-
--- 
-Jeykumar S
