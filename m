@@ -2,56 +2,56 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 4A7E96CCCF
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Jul 2019 12:35:46 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 85E1F6CCFA
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Jul 2019 12:50:32 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727131AbfGRKfp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 18 Jul 2019 06:35:45 -0400
-Received: from mail-vs1-f65.google.com ([209.85.217.65]:38124 "EHLO
+        id S2390003AbfGRKsv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 18 Jul 2019 06:48:51 -0400
+Received: from mail-vs1-f65.google.com ([209.85.217.65]:44379 "EHLO
         mail-vs1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726513AbfGRKfp (ORCPT
+        with ESMTP id S1726485AbfGRKsv (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 18 Jul 2019 06:35:45 -0400
-Received: by mail-vs1-f65.google.com with SMTP id k9so18757101vso.5
-        for <linux-arm-msm@vger.kernel.org>; Thu, 18 Jul 2019 03:35:44 -0700 (PDT)
+        Thu, 18 Jul 2019 06:48:51 -0400
+Received: by mail-vs1-f65.google.com with SMTP id v129so18756716vsb.11
+        for <linux-arm-msm@vger.kernel.org>; Thu, 18 Jul 2019 03:48:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=bPsZyaY1avB4NmRKihmlAbRWMA/+wWnkWYAQnUJy/uc=;
-        b=hRS9tdns/W1JgD4gXX9suvoW/sEfa10WszlqRMNyTDVGE4pvXMTTfwq/5kkohrxDM7
-         W7+I5ziWAyIuiHrX/lcoOj0SJw+f5YG4xCubaO4tE70Z+vieiYB4B26jaOQUvlMI4S+U
-         xyN1krAtJQAXe2Vz8klpfFqYJMDNdZ8cfzuW9QcUmMv6R4UjK1Kq/58lPsgA4sCtpTzA
-         0qFoFw674o5/tuQ1z4FPQeyxpwMSw1+qVsC8O6HgdTQBOqM/uGIyiyS0Pf5HCXETQW4d
-         5Gyb4/sUE+H9nH3Nb/q1LqBqKoM5Uq2R4rYtA1XYgsHvHKaCOvYtSeHXrL6RULNV1DnO
-         IYpg==
+        bh=NppfMkA9YSp2bcd8lowDgozs69+YWUjU8R8XC2mh2Ng=;
+        b=EMo3sNQfR8AxwQbc/nsBmFB2MttmgcYpKR6+imTy+1EG/hxf2H1FX4coJIjBZs9MU4
+         T5gfuRfY0RJvbYIUjVknrZr6Eg6Zw3N5HG7aed/9UdUeTX7a1AlUZLU0w2OsoUoEoMMt
+         rNcp0hzFlDtjweQ0S7IYVyCrtnbDY7fv+TpkkRIQfdT9q0pWwfYCh9v0s/AYlWjWKojb
+         Q+FcvGHicvaXo3IiVCcV9apv0MI03oWm1qSfSilrp9K00e6Am331V9AMy4viOYZqv9JI
+         kKEBYgZiDcA6zHuKe3PNvCPdq/SzEDbDaWOug2ZuxcVj6N1EZ6a6yqkw7R+JUtFUrKoi
+         rCtg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=bPsZyaY1avB4NmRKihmlAbRWMA/+wWnkWYAQnUJy/uc=;
-        b=lTJN959JUPXDLIUpCxmBmSGitdgUpMSopl/Gbd6KPW15atCiE8IbhUW7B2/JNs6zff
-         ho8d+6D6ADiMgw7mAcC4/uK/APQ6vLejnOEhrjd3NaUw0SSlvRExib5wZPpDuqf99ngO
-         rtxRFcYAF2X//5HGNL7qP4Ds613FAy3W0zQD2bJzXffGjpNBOizUwEyiujEdMJ1Xceua
-         r6mIFJx8Ddy7rzmnkXzy4K07URahy/ZbnenfBlYxDwgX+qA9mScdWASU8Ok3ayTT/DH/
-         57HEnQE9Hv98KiAHnMY7DPK2ZPuvYhCJa06woYTHYv/3uv0Qsjaqv4og3fjX9ITtt3Qh
-         nFwg==
-X-Gm-Message-State: APjAAAW1c47Q/op+wkKKqAgouoLxpf96mkWvch/zdUr4BmnDxiQX2nAH
-        3xJbHKMcJBy7k9DnBJQGNV/7pUhjXR8Z6y+21Cw7Mg==
-X-Google-Smtp-Source: APXvYqzSx0aR/M+aRW6giaR+8hf163WchtvCdbWRJMcDQ/HVNG1W8viO5bTF5uxNvGiQXgL7jxarygjbk3mkugNqF9Q=
-X-Received: by 2002:a67:ee16:: with SMTP id f22mr28548547vsp.191.1563446144144;
- Thu, 18 Jul 2019 03:35:44 -0700 (PDT)
+        bh=NppfMkA9YSp2bcd8lowDgozs69+YWUjU8R8XC2mh2Ng=;
+        b=Gc0WHlrxGD5J9nGr9BGjvjtCd+ekNwvWDOwGRLv1keShZe0Lae1iMGTi4kquHfmsOa
+         UMWGs6H6anwNdQJCRBJoVkaNZ50vEtx1/dcVs7hLwAse96fDNKIctg8hMJ5nzn+zKdR8
+         Y/FAm8qwrL+nTZZs3w/NisVXwhu0Zvnm3gaKkCzFMacyXs5R3JmW5Nde9Uej2JEN2NjH
+         6kK4M0Tla/+aQjJtvgjUpKRJ+s3kBJjJU/pJ2N8awaymO8n7Ilx9P1YNHIdVUmMzuWEf
+         HXYmUgJyasbxn3/cL6LcN2rwSoMJba7czCcc+vedEDXeSEj5wS/SHuTh1rw3cscunIW+
+         Rmzw==
+X-Gm-Message-State: APjAAAVXkvm7FnTsekLPgoJ4AxiSFU9XKMJNcYVGZzffhMOTTzJm5ALO
+        C7gwO4Qo+dFzll8JiNgUeVe3GqBVnPB4+oE2Vc/Zhg==
+X-Google-Smtp-Source: APXvYqztqpfIkQ19AlRQPrqfsqTvP4cIR4ExKB8fsNIFkHPM8GZNpANZzIhR9gX186T9JnVglUf6rgxAB2sJLtT7RWg=
+X-Received: by 2002:a67:ee16:: with SMTP id f22mr28577969vsp.191.1563446930654;
+ Thu, 18 Jul 2019 03:48:50 -0700 (PDT)
 MIME-Version: 1.0
-References: <20190513192300.653-1-ulf.hansson@linaro.org> <20190513192300.653-15-ulf.hansson@linaro.org>
- <20190716155317.GB32490@e121166-lin.cambridge.arm.com>
-In-Reply-To: <20190716155317.GB32490@e121166-lin.cambridge.arm.com>
+References: <20190513192300.653-1-ulf.hansson@linaro.org> <20190513192300.653-19-ulf.hansson@linaro.org>
+ <20190716144744.GB7250@e107155-lin>
+In-Reply-To: <20190716144744.GB7250@e107155-lin>
 From:   Ulf Hansson <ulf.hansson@linaro.org>
-Date:   Thu, 18 Jul 2019 12:35:07 +0200
-Message-ID: <CAPDyKFrJ75mo+s6GuUCTQ-nVv7C+9YJyTVmwuBZ2RKFOvOi3Nw@mail.gmail.com>
-Subject: Re: [PATCH 14/18] drivers: firmware: psci: Manage runtime PM in the
- idle path for CPUs
-To:     Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>
-Cc:     Sudeep Holla <sudeep.holla@arm.com>,
+Date:   Thu, 18 Jul 2019 12:48:14 +0200
+Message-ID: <CAPDyKFpc26yL6rOnfwawL=eL649NsgTMrF1WrMHZv7AVd=3PCA@mail.gmail.com>
+Subject: Re: [PATCH 18/18] arm64: dts: hikey: Convert to the hierarchical CPU
+ topology layout
+To:     Sudeep Holla <sudeep.holla@arm.com>
+Cc:     Lorenzo Pieralisi <Lorenzo.Pieralisi@arm.com>,
         Mark Rutland <mark.rutland@arm.com>,
         Linux ARM <linux-arm-kernel@lists.infradead.org>,
         "Rafael J . Wysocki" <rjw@rjwysocki.net>,
@@ -70,52 +70,70 @@ Cc:     Sudeep Holla <sudeep.holla@arm.com>,
         Souvik Chakravarty <souvik.chakravarty@arm.com>,
         Linux PM <linux-pm@vger.kernel.org>,
         linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        Wei Xu <xuwei5@hisilicon.com>
 Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, 16 Jul 2019 at 17:53, Lorenzo Pieralisi
-<lorenzo.pieralisi@arm.com> wrote:
+On Tue, 16 Jul 2019 at 16:47, Sudeep Holla <sudeep.holla@arm.com> wrote:
 >
-> On Mon, May 13, 2019 at 09:22:56PM +0200, Ulf Hansson wrote:
-> > When the hierarchical CPU topology layout is used in DT, let's allow the
-> > CPU to be power managed through its PM domain, via deploying runtime PM
-> > support.
+> On Mon, May 13, 2019 at 09:23:00PM +0200, Ulf Hansson wrote:
+> > To enable the OS to manage last-man standing activities for a CPU, while an
+> > idle state for a group of CPUs is selected, let's convert the Hikey
+> > platform into using the hierarchical CPU topology layout.
 > >
-> > To know for which idle states runtime PM reference counting is needed,
-> > let's store the index of deepest idle state for the CPU, in a per CPU
-> > variable. This allows psci_cpu_suspend_enter() to compare this index with
-> > the requested idle state index and then act accordingly.
+> > Cc: Wei Xu <xuwei5@hisilicon.com>
+> > Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
+> > ---
+> >
+> > Changes:
+> >       - None.
+> >
+> > ---
+> >  arch/arm64/boot/dts/hisilicon/hi6220.dtsi | 87 ++++++++++++++++++++---
+> >  1 file changed, 76 insertions(+), 11 deletions(-)
+> >
+> > diff --git a/arch/arm64/boot/dts/hisilicon/hi6220.dtsi b/arch/arm64/boot/dts/hisilicon/hi6220.dtsi
+> > index 108e2a4227f6..36ff460f428f 100644
+> > --- a/arch/arm64/boot/dts/hisilicon/hi6220.dtsi
+> > +++ b/arch/arm64/boot/dts/hisilicon/hi6220.dtsi
+> >       cpus {
 >
-> I do not see why a system with two CPU CPUidle states, say CPU retention
-> and CPU shutdown, should not be calling runtime PM on CPU retention
-> entry.
-
-If the CPU idle governor did select the CPU retention for the CPU, it
-was probably because the target residency for the CPU shutdown state
-could not be met.
-
-In this case, there is no point in allowing any other deeper idle
-states for cluster/package/system, since those have even greater
-residencies, hence calling runtime PM doesn't make sense.
-
+> [...]
 >
-> The question then is what cluster/package/system states
-> are allowed for a given CPU idle state, to understand
-> what idle states can be actually entered at any hierarchy
-> level given the choice made for the CPU idle state.
+> > @@ -70,9 +128,8 @@
+> >                       };
+> >
+> >                       CLUSTER_SLEEP: cluster-sleep {
+> > -                             compatible = "arm,idle-state";
+> > -                             local-timer-stop;
+> > -                             arm,psci-suspend-param = <0x1010000>;
+> > +                             compatible = "domain-idle-state";
+> > +                             arm,psci-suspend-param = <0x1000000>;
+> >                               entry-latency-us = <1000>;
+> >                               exit-latency-us = <700>;
+> >                               min-residency-us = <2700>;
 >
-> In the case above, a CPU entering retention state should prevent
-> runtime PM selecting a cluster shutdown state; most likely firmware
-> would demote the request to cluster retention but still, we should
-> find a way to describe these dependencies.
+> Again this must be original format and as per PSCI spec, your patch
+> changes this cluster sleep state into cluster retention state which I
+> think is not what you intended.
 
-See above.
+If the hierarchical topology is used, the parameter for cluster states
+are ORed with the deepest idle state for the CPU.
 
-[...]
+CPU_SLEEP: 0x0010000
+CLUSTER_SLEEP: 0x1000000
+
+After the ORed operation
+CLUSTER_SLEEP: 0x1010000
+
+So, this indeed works as expected.
+
+However, are you saying that ORing the state parameters like above has
+other problems? I am reading your other replies...
 
 Kind regards
 Uffe
