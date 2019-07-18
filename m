@@ -2,159 +2,134 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id F16CC6D15E
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Jul 2019 17:49:54 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B0F756D268
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Jul 2019 18:55:30 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727812AbfGRPtZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 18 Jul 2019 11:49:25 -0400
-Received: from smtp.codeaurora.org ([198.145.29.96]:48996 "EHLO
-        smtp.codeaurora.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727767AbfGRPtZ (ORCPT
+        id S1727817AbfGRQz3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 18 Jul 2019 12:55:29 -0400
+Received: from mail-vs1-f67.google.com ([209.85.217.67]:35782 "EHLO
+        mail-vs1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727780AbfGRQz3 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 18 Jul 2019 11:49:25 -0400
-Received: by smtp.codeaurora.org (Postfix, from userid 1000)
-        id 259FB61195; Thu, 18 Jul 2019 15:49:23 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
-        s=default; t=1563464964;
-        bh=v5hhjA/iytoDxv8ni3GeH5pwLTR7rQrwabw5e/yLgzY=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=W44UTwtvRjwynILo9LYMGbSzofJqMKPKPmsR6yxk9HksSCWlHPSPDb+Vw0zqdd39Q
-         VW+JLcJYhc1ebrMCXO/nDQ0onkI2IVKB1SOydiUwkW5CF4CjmIa21DaYa8k+cRX+kR
-         faYf6rXT8WMpoowIETMS+svwBj7Hdu2doi4SVN08=
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        pdx-caf-mail.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.7 required=2.0 tests=ALL_TRUSTED,BAYES_00,
-        DKIM_INVALID,DKIM_SIGNED,SPF_NONE autolearn=no autolearn_force=no
-        version=3.4.0
-Received: from jcrouse1-lnx.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: jcrouse@smtp.codeaurora.org)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 5B35A61195;
-        Thu, 18 Jul 2019 15:49:21 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
-        s=default; t=1563464962;
-        bh=v5hhjA/iytoDxv8ni3GeH5pwLTR7rQrwabw5e/yLgzY=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=Tqm5NqXz54lQg0ShP9wjPWjNx5HLOVrE6qKdPt6u8BoVv1LVnSyp2l3pz0idbXzq7
-         bibMQuSOdOml73rnmAHbUrVPZLVxTTdqhGXimmfP/LPLvVzZdddTDA//6PRohgWAre
-         K/HPtYPE7SaNryJjHR09gdGo9yhYUDjb9+oNYKCI=
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 5B35A61195
-Authentication-Results: pdx-caf-mail.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: pdx-caf-mail.web.codeaurora.org; spf=none smtp.mailfrom=jcrouse@codeaurora.org
-Date:   Thu, 18 Jul 2019 09:49:19 -0600
-From:   Jordan Crouse <jcrouse@codeaurora.org>
-To:     Rob Clark <robdclark@gmail.com>
-Cc:     dri-devel@lists.freedesktop.org,
-        Rob Clark <robdclark@chromium.org>,
-        freedreno@lists.freedesktop.org, Stephen Boyd <sboyd@kernel.org>,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>, Sean Paul <sean@poorly.run>
-Subject: Re: [Freedreno] [PATCH] drm/msm: stop abusing dma_map/unmap for cache
-Message-ID: <20190718154918.GA25162@jcrouse1-lnx.qualcomm.com>
-Mail-Followup-To: Rob Clark <robdclark@gmail.com>,
-        dri-devel@lists.freedesktop.org, Rob Clark <robdclark@chromium.org>,
-        freedreno@lists.freedesktop.org, Stephen Boyd <sboyd@kernel.org>,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        David Airlie <airlied@linux.ie>, Daniel Vetter <daniel@ffwll.ch>,
-        Sean Paul <sean@poorly.run>
-References: <20190630124735.27786-1-robdclark@gmail.com>
+        Thu, 18 Jul 2019 12:55:29 -0400
+Received: by mail-vs1-f67.google.com with SMTP id u124so19603100vsu.2
+        for <linux-arm-msm@vger.kernel.org>; Thu, 18 Jul 2019 09:55:29 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=UbJA1LvVSBKZi34z8EvemKhQnL5/c6wyw0dFUXsJ7H4=;
+        b=v+KXmWJJHgzxhzH/ByzH+UGInDESBlyCnkXDLOYXkFL108hatd/9puy+QFFba3m5WD
+         bhtTKrLRw2YAQnFRC5M36S3T5i8Oe9gGBtNFE7ZdCJ/1I4gLyUmnIjKdORLB/9odeMnw
+         FhmH4wyOwzolrzleyGwIui2FQ8MLa67j+7E28mZP0dcFPtbM1CXxugMkHsdZeP6VkJ9g
+         pXT21JDk/94eK4JtwLYOUv7st8v723fVliWhRYVAZKpLQy8dM/d+IyfGekDqo5K749U+
+         kzXKq432p3MGhIBhb+v8kvOZnTcKOkNOpxCcu9VamQd7Pt/FKJqG22ZTWj0nzsbngz0X
+         0K4A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=UbJA1LvVSBKZi34z8EvemKhQnL5/c6wyw0dFUXsJ7H4=;
+        b=o1/Q+QQBCNp0gWdRd4dHXmL3P7+D3cnLK1RMJw9DC840hrgIIopc5loAs8WjZVlkMo
+         qJaAZyroHrpohUIV0qh9nDx0uB4aTueaT1U8oRZxJaMKvU//5g3B5KhYjD9YRj8IoT//
+         3XJ1Nl+YpGebGYA3qdr5NsmlQRl8J5YK8jX8v4y1Kle9ocPxbIt8GwK41x1PK0OOpMtM
+         dAVGQXW+pZpnOMjuBN66Ac+QH2E7Zfrp3mrJTv0D50Xe4RZajm/8BassJG6xZ3T0F8xc
+         H0JhJN2QyWaF3HuIq088DWroA4Jm86AdDCPdVttmMMsxjDzDz05a6V6uwPtvEsLzNmCX
+         MhGQ==
+X-Gm-Message-State: APjAAAXdD3miqtbaDo7onFFLFJ0rjhXtdLSOejBwoV8H7MdoB0Bz0ZGW
+        1VZh1UCfaZYntOHdhrk0co+ZgzvVICoggSKRqlZheQ==
+X-Google-Smtp-Source: APXvYqz3H7NW9n8k3hccLVjUE4vzSLFYDceNlDN7TRygVSGTeYT1EPbUZoWXTC9qw+g+yzQp96xVbuz30qFeCiP1+X8=
+X-Received: by 2002:a67:61c7:: with SMTP id v190mr28723774vsb.165.1563468928660;
+ Thu, 18 Jul 2019 09:55:28 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20190630124735.27786-1-robdclark@gmail.com>
-User-Agent: Mutt/1.5.24 (2015-08-30)
+References: <20190513192300.653-1-ulf.hansson@linaro.org> <20190513192300.653-15-ulf.hansson@linaro.org>
+ <20190716155317.GB32490@e121166-lin.cambridge.arm.com> <CAPDyKFrJ75mo+s6GuUCTQ-nVv7C+9YJyTVmwuBZ2RKFOvOi3Nw@mail.gmail.com>
+ <20190718133053.GA27222@e121166-lin.cambridge.arm.com>
+In-Reply-To: <20190718133053.GA27222@e121166-lin.cambridge.arm.com>
+From:   Ulf Hansson <ulf.hansson@linaro.org>
+Date:   Thu, 18 Jul 2019 18:54:52 +0200
+Message-ID: <CAPDyKFr4NmichQk4uf+Wgbanh=5idKYY=37WCb6U_hNFDVYg=w@mail.gmail.com>
+Subject: Re: [PATCH 14/18] drivers: firmware: psci: Manage runtime PM in the
+ idle path for CPUs
+To:     Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>
+Cc:     Sudeep Holla <sudeep.holla@arm.com>,
+        Mark Rutland <mark.rutland@arm.com>,
+        Linux ARM <linux-arm-kernel@lists.infradead.org>,
+        "Rafael J . Wysocki" <rjw@rjwysocki.net>,
+        Daniel Lezcano <daniel.lezcano@linaro.org>,
+        "Raju P . L . S . S . S . N" <rplsssn@codeaurora.org>,
+        Amit Kucheria <amit.kucheria@linaro.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Niklas Cassel <niklas.cassel@linaro.org>,
+        Tony Lindgren <tony@atomide.com>,
+        Kevin Hilman <khilman@kernel.org>,
+        Viresh Kumar <viresh.kumar@linaro.org>,
+        Lina Iyer <ilina@codeaurora.org>,
+        Vincent Guittot <vincent.guittot@linaro.org>,
+        Geert Uytterhoeven <geert+renesas@glider.be>,
+        Souvik Chakravarty <souvik.chakravarty@arm.com>,
+        Linux PM <linux-pm@vger.kernel.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Sun, Jun 30, 2019 at 05:47:22AM -0700, Rob Clark wrote:
-> From: Rob Clark <robdclark@chromium.org>
-> 
-> Recently splats like this started showing up:
-> 
->    WARNING: CPU: 4 PID: 251 at drivers/iommu/dma-iommu.c:451 __iommu_dma_unmap+0xb8/0xc0
->    Modules linked in: ath10k_snoc ath10k_core fuse msm ath mac80211 uvcvideo cfg80211 videobuf2_vmalloc videobuf2_memops vide
->    CPU: 4 PID: 251 Comm: kworker/u16:4 Tainted: G        W         5.2.0-rc5-next-20190619+ #2317
->    Hardware name: LENOVO 81JL/LNVNB161216, BIOS 9UCN23WW(V1.06) 10/25/2018
->    Workqueue: msm msm_gem_free_work [msm]
->    pstate: 80c00005 (Nzcv daif +PAN +UAO)
->    pc : __iommu_dma_unmap+0xb8/0xc0
->    lr : __iommu_dma_unmap+0x54/0xc0
->    sp : ffff0000119abce0
->    x29: ffff0000119abce0 x28: 0000000000000000
->    x27: ffff8001f9946648 x26: ffff8001ec271068
->    x25: 0000000000000000 x24: ffff8001ea3580a8
->    x23: ffff8001f95ba010 x22: ffff80018e83ba88
->    x21: ffff8001e548f000 x20: fffffffffffff000
->    x19: 0000000000001000 x18: 00000000c00001fe
->    x17: 0000000000000000 x16: 0000000000000000
->    x15: ffff000015b70068 x14: 0000000000000005
->    x13: 0003142cc1be1768 x12: 0000000000000001
->    x11: ffff8001f6de9100 x10: 0000000000000009
->    x9 : ffff000015b78000 x8 : 0000000000000000
->    x7 : 0000000000000001 x6 : fffffffffffff000
->    x5 : 0000000000000fff x4 : ffff00001065dbc8
->    x3 : 000000000000000d x2 : 0000000000001000
->    x1 : fffffffffffff000 x0 : 0000000000000000
->    Call trace:
->     __iommu_dma_unmap+0xb8/0xc0
->     iommu_dma_unmap_sg+0x98/0xb8
->     put_pages+0x5c/0xf0 [msm]
->     msm_gem_free_work+0x10c/0x150 [msm]
->     process_one_work+0x1e0/0x330
->     worker_thread+0x40/0x438
->     kthread+0x12c/0x130
->     ret_from_fork+0x10/0x18
->    ---[ end trace afc0dc5ab81a06bf ]---
-> 
-> Not quite sure what triggered that, but we really shouldn't be abusing
-> dma_{map,unmap}_sg() for cache maint.
+On Thu, 18 Jul 2019 at 15:31, Lorenzo Pieralisi
+<lorenzo.pieralisi@arm.com> wrote:
+>
+> On Thu, Jul 18, 2019 at 12:35:07PM +0200, Ulf Hansson wrote:
+> > On Tue, 16 Jul 2019 at 17:53, Lorenzo Pieralisi
+> > <lorenzo.pieralisi@arm.com> wrote:
+> > >
+> > > On Mon, May 13, 2019 at 09:22:56PM +0200, Ulf Hansson wrote:
+> > > > When the hierarchical CPU topology layout is used in DT, let's allow the
+> > > > CPU to be power managed through its PM domain, via deploying runtime PM
+> > > > support.
+> > > >
+> > > > To know for which idle states runtime PM reference counting is needed,
+> > > > let's store the index of deepest idle state for the CPU, in a per CPU
+> > > > variable. This allows psci_cpu_suspend_enter() to compare this index with
+> > > > the requested idle state index and then act accordingly.
+> > >
+> > > I do not see why a system with two CPU CPUidle states, say CPU retention
+> > > and CPU shutdown, should not be calling runtime PM on CPU retention
+> > > entry.
+> >
+> > If the CPU idle governor did select the CPU retention for the CPU, it
+> > was probably because the target residency for the CPU shutdown state
+> > could not be met.
+>
+> The kernel does not know what those cpu states represent, so, this is an
+> assumption you are making and it must be made clear that this code works
+> as long as your assumption is valid.
+>
+> If eg a "cluster" retention state has lower target_residency than
+> the deepest CPU idle state this assumption is wrong.
 
-I'm sure we'll see this rear its head again someday. My kingdom for leaf driver
-cache control that makes sense.
+Good point, you are right. I try to find a place to document this assumption.
 
-Reviewed-by: Jordan Crouse <jcrouse@codeaurora.org>
+>
+> And CPUidle and genPD governor decisions are not synced anyway so,
+> again, this is an assumption, not a certainty.
+>
+> > In this case, there is no point in allowing any other deeper idle
+> > states for cluster/package/system, since those have even greater
+> > residencies, hence calling runtime PM doesn't make sense.
+>
+> On the systems you are testing on.
 
-> Signed-off-by: Rob Clark <robdclark@chromium.org>
-> Cc: Stephen Boyd <sboyd@kernel.org>
-> ---
->  drivers/gpu/drm/msm/msm_gem.c | 4 ++--
->  1 file changed, 2 insertions(+), 2 deletions(-)
-> 
-> diff --git a/drivers/gpu/drm/msm/msm_gem.c b/drivers/gpu/drm/msm/msm_gem.c
-> index d31d9f927887..3b84cbdcafa3 100644
-> --- a/drivers/gpu/drm/msm/msm_gem.c
-> +++ b/drivers/gpu/drm/msm/msm_gem.c
-> @@ -108,7 +108,7 @@ static struct page **get_pages(struct drm_gem_object *obj)
->  		 * because display controller, GPU, etc. are not coherent:
->  		 */
->  		if (msm_obj->flags & (MSM_BO_WC|MSM_BO_UNCACHED))
-> -			dma_map_sg(dev->dev, msm_obj->sgt->sgl,
-> +			dma_sync_sg_for_device(dev->dev, msm_obj->sgt->sgl,
->  					msm_obj->sgt->nents, DMA_BIDIRECTIONAL);
->  	}
->  
-> @@ -138,7 +138,7 @@ static void put_pages(struct drm_gem_object *obj)
->  			 * GPU, etc. are not coherent:
->  			 */
->  			if (msm_obj->flags & (MSM_BO_WC|MSM_BO_UNCACHED))
-> -				dma_unmap_sg(obj->dev->dev, msm_obj->sgt->sgl,
-> +				dma_sync_sg_for_cpu(obj->dev->dev, msm_obj->sgt->sgl,
->  					     msm_obj->sgt->nents,
->  					     DMA_BIDIRECTIONAL);
->  
-> -- 
-> 2.20.1
-> 
-> _______________________________________________
-> Freedreno mailing list
-> Freedreno@lists.freedesktop.org
-> https://lists.freedesktop.org/mailman/listinfo/freedreno
+So what you are saying typically means, that if all CPUs in the same
+cluster have entered the CPU retention state, on some system the
+cluster may also put into a cluster retention state (assuming the
+target residency is met)?
 
--- 
-The Qualcomm Innovation Center, Inc. is a member of Code Aurora Forum,
-a Linux Foundation Collaborative Project
+Do you know of any systems that has these characteristics?
+
+[...]
+
+Kind regards
+Uffe
