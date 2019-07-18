@@ -2,120 +2,129 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 260436CEF2
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Jul 2019 15:36:47 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E9D506D12E
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Jul 2019 17:31:42 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727687AbfGRNgk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 18 Jul 2019 09:36:40 -0400
-Received: from foss.arm.com ([217.140.110.172]:58504 "EHLO foss.arm.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726715AbfGRNgk (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 18 Jul 2019 09:36:40 -0400
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 0C67D344;
-        Thu, 18 Jul 2019 06:36:39 -0700 (PDT)
-Received: from e121166-lin.cambridge.arm.com (unknown [10.1.196.255])
-        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 754163F71F;
-        Thu, 18 Jul 2019 06:36:36 -0700 (PDT)
-Date:   Thu, 18 Jul 2019 14:36:30 +0100
-From:   Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>
-To:     Ulf Hansson <ulf.hansson@linaro.org>
-Cc:     Sudeep Holla <sudeep.holla@arm.com>,
-        Mark Rutland <mark.rutland@arm.com>,
-        Linux ARM <linux-arm-kernel@lists.infradead.org>,
-        "Rafael J . Wysocki" <rjw@rjwysocki.net>,
-        Daniel Lezcano <daniel.lezcano@linaro.org>,
-        "Raju P . L . S . S . S . N" <rplsssn@codeaurora.org>,
-        Amit Kucheria <amit.kucheria@linaro.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Niklas Cassel <niklas.cassel@linaro.org>,
-        Tony Lindgren <tony@atomide.com>,
-        Kevin Hilman <khilman@kernel.org>,
-        Lina Iyer <ilina@codeaurora.org>,
-        Viresh Kumar <viresh.kumar@linaro.org>,
-        Vincent Guittot <vincent.guittot@linaro.org>,
-        Geert Uytterhoeven <geert+renesas@glider.be>,
-        Souvik Chakravarty <souvik.chakravarty@arm.com>,
-        Linux PM <linux-pm@vger.kernel.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>
-Subject: Re: [PATCH 10/18] drivers: firmware: psci: Add hierarchical domain
- idle states converter
-Message-ID: <20190718133630.GB27222@e121166-lin.cambridge.arm.com>
-References: <20190513192300.653-1-ulf.hansson@linaro.org>
- <20190513192300.653-11-ulf.hansson@linaro.org>
- <20190709153138.GA22871@e121166-lin.cambridge.arm.com>
- <CAPDyKFpd5Jip+ZDENXVC115JJgCReJa4G92aKa45Lna6BeV5-g@mail.gmail.com>
- <20190716145121.GA32490@e121166-lin.cambridge.arm.com>
- <CAPDyKFoBm9vWUcX5pjMMseYs7SAYr9v0Uc48YqsgaG9omA2MRQ@mail.gmail.com>
+        id S1727897AbfGRPbM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 18 Jul 2019 11:31:12 -0400
+Received: from mail-io1-f66.google.com ([209.85.166.66]:44822 "EHLO
+        mail-io1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727687AbfGRPbM (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 18 Jul 2019 11:31:12 -0400
+Received: by mail-io1-f66.google.com with SMTP id s7so51989117iob.11
+        for <linux-arm-msm@vger.kernel.org>; Thu, 18 Jul 2019 08:31:11 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=aKCPVJWUs1Jjo618+zN06BNfCZDhzZnUlux4ybl+pq0=;
+        b=Sm2v261v5xekTmZUZ6N0X1DwSi7Qx28ytpUwnL6RR4/HA9RM1I1uHbxQ5Tr2RsDxnF
+         uHfozpBvobDMz50HATWjhVmujLg+klkHLJ9pvtoaL0bSj4Xbwt0hy+2s95Bt9PrLwjHP
+         9WrW9oAO56vn4LHlOWXQZlyF01y48G0k5vnVYgdbvDJLuIe7VXgftZScWAzSwPg4upTL
+         MB0EMRjd0/GafWtn+YldSQCyNyizBD/TzUOX5f+PsG2DaEIfWwVFdiK2B/TZ6sY4lWjl
+         Qi26tf9hfQYQ+MtdpFd3yi9DfJfOtWqxINoykwaPsPDhZbGjJpNY3h2J1aupKeY6xiGH
+         YSKg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=aKCPVJWUs1Jjo618+zN06BNfCZDhzZnUlux4ybl+pq0=;
+        b=efBbbItHvYWjjiY7yU8iRtpezbWTVMn8nLyrlwJy2M4w2lDRy30VA3x2qIbZ5IzVwO
+         cdkTbaa9HJntF/Q5AL8OyT3tYBXfreQQqgu/MRL/Yv41hUQ3R5dXiWkOdzCNgvQSYfoZ
+         42J4IuGQzeJXIk0svssY9fE47zwZFP2ZQnx9cZJhMPHmDWDVeUPs8g7E719GJyk3F2JF
+         AN1A8YzqzIQcAg9WiCns0DJUBVR0hb9/6ap0/ZzLgpdySTmHEOfPhyWHYvcdoWB+bQk8
+         Yf1OghZGD5hxVtpwcz1KJWOIciZYqt2GbDd1FlgRSoM4+qmTfS6QjyqJFbQZwUZRTvK/
+         OEHA==
+X-Gm-Message-State: APjAAAVB2kj0gPjYiE9JzUhyQS/WXWp57SaXTdL5VzKyM6GAj56UT4Is
+        sOeF+O5G/aicdOrlrKpBnpB0vERDyEbvLmt6Bk7GGg==
+X-Google-Smtp-Source: APXvYqzG2U1bPJ/OOAVgRh5Mkg7P6+I1KqVOXN4mBoflGrY+UlQJR3tPL8mnMgJRePKuw3SKg/qvS4IJ79JZmTu478c=
+X-Received: by 2002:a05:6638:517:: with SMTP id i23mr48290113jar.71.1563463871438;
+ Thu, 18 Jul 2019 08:31:11 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAPDyKFoBm9vWUcX5pjMMseYs7SAYr9v0Uc48YqsgaG9omA2MRQ@mail.gmail.com>
-User-Agent: Mutt/1.9.4 (2018-02-28)
+References: <cover.1562940244.git.saiprakash.ranjan@codeaurora.org>
+ <2fa725fbc09306f1a95befc62715a708b4c0fad0.1562940244.git.saiprakash.ranjan@codeaurora.org>
+ <20190717170050.GB4271@xps15> <f28d9c8f-017c-c990-2f00-0ef5a62f3b40@codeaurora.org>
+In-Reply-To: <f28d9c8f-017c-c990-2f00-0ef5a62f3b40@codeaurora.org>
+From:   Mathieu Poirier <mathieu.poirier@linaro.org>
+Date:   Thu, 18 Jul 2019 09:31:00 -0600
+Message-ID: <CANLsYkx9X36OJmczNK1255y8fKJfkyVq1zyQUDihqMewcU6Kxw@mail.gmail.com>
+Subject: Re: [PATCHv8 3/5] arm64: dts: qcom: msm8996: Add Coresight support
+To:     Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
+Cc:     Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Suzuki K Poulose <suzuki.poulose@arm.com>,
+        Leo Yan <leo.yan@linaro.org>,
+        Alexander Shishkin <alexander.shishkin@linux.intel.com>,
+        Mike Leach <mike.leach@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        devicetree@vger.kernel.org, David Brown <david.brown@linaro.org>,
+        Mark Rutland <mark.rutland@arm.com>,
+        Rajendra Nayak <rnayak@codeaurora.org>,
+        Vivek Gautam <vivek.gautam@codeaurora.org>,
+        Sibi Sankar <sibis@codeaurora.org>,
+        linux-arm-kernel <linux-arm-kernel@lists.infradead.org>,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        Marc Gonzalez <marc.w.gonzalez@free.fr>
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Jul 18, 2019 at 01:43:44PM +0200, Ulf Hansson wrote:
+On Wed, 17 Jul 2019 at 23:47, Sai Prakash Ranjan
+<saiprakash.ranjan@codeaurora.org> wrote:
+>
+> Hi Mathieu,
+>
+> On 7/17/2019 10:30 PM, Mathieu Poirier wrote:
+> > On Fri, Jul 12, 2019 at 07:46:25PM +0530, Sai Prakash Ranjan wrote:
+> >> From: Vivek Gautam <vivek.gautam@codeaurora.org>
+> >>
+> >> Enable coresight support by adding device nodes for the
+> >> available source, sinks and channel blocks on msm8996.
+> >>
+> >> This also adds coresight cpu debug nodes.
+> >>
+> >> Signed-off-by: Vivek Gautam <vivek.gautam@codeaurora.org>
+> >> Signed-off-by: Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
+> >> Reviewed-by: Mathieu Poirier <mathieu.poirier@linaro.org>
+> >> Acked-By: Suzuki K Poulose <suzuki.poulose@arm.com>
+> >> ---
+> >>   arch/arm64/boot/dts/qcom/msm8996.dtsi | 434 ++++++++++++++++++++++++++
+> >>   1 file changed, 434 insertions(+)
+> >>
+> >
+> > We've gone trhough 8 iteration of this set and I'm still finding checkpatch
+> > problems, and I'm not referring to lines over 80 characters.
+> >
+>
+> I only get below 2 checkpatch warnings:
+>
+> If you are talking about the below one, then it was not added manually.
+> It was taken automatically when I pulled in the v7. Should I be
+> resending this patch for this?
 
-[...]
+That depends if you want David and Andy to pickup your patches - I am
+sure they'll point out exactly the same thing.
 
-> > > Anyway, as a suggestion to address your concern, how about this:
-> > >
-> > > 1. Move some things out to a PSCI cpuidle driver. We need to decide
-> > > more exactly on what to move and find the right level for the
-> > > interfaces.
-> >
-> > I will do it and post patches asap.
-> 
-> Okay, so I will wait for you to converting the cpuidle-arm driver into
-> a cpuidle-psci driver (and all the changes that comes with it) and
-> then base my re-base my series on top.
-> 
-> Then, would you mind sharing (even in an early phase) a
-> branch/git-tree so I can start re-basing my series on top?
-
-Sure, I should be able to post at -rc1 and will publish a branch
-here [1].
-
-> > > 2. Don't attach the CPU to the PM domain topology in case the PSCI PC
-> > > mode is used. I think this makes it easier, at least as a first step,
-> > > to understand when runtime PM needs to be used/enabled.
-> >
-> > In the PSCI CPUidle driver we can have two distinct struct
-> > cpuidle_state->enter functions for PC and OSI, no overhead
-> > for PC, runtime PM for OSI, decoupling done.
-> 
-> Good idea!
-> 
-> >
-> > We can choose one or the other depending on whether:
-> >
-> > OSI iff:
-> > - OSI is available
-> > - hierarchical idle states are present in DT
-> >
-> > otherwise PC.
-> >
-> > That's what this patch does but we will do it in a unified file.
-> 
-> Sure, it makes sense.
-> 
-> >
-> > > 3. Would it help if I volunteer to help you guys as a maintainer for
-> > > PSCI. At least for the part of the new code that becomes introduced?
-> >
-> > We will do as described above if that makes sense.
-> 
-> Yep, I am okay with your suggestions, assuming I have understood them correctly.
-> 
-> BTW, have you considered to host a git tree for PSCI so we can have
-> changes pre-integrated and tested in Stephen Rothwell's linux-next
-> tree?
-
-I will ask Stephen to pull when needed a branch in the tree below[1]
-
-[1] https://git.kernel.org/pub/scm/linux/kernel/git/lpieralisi/linux.git/
+>
+> $ ./scripts/checkpatch.pl -g 2fa725fbc09306f1a95befc62715a708b4c0fad0
+> WARNING: 'Acked-by:' is the preferred signature form
+> #14:
+> Acked-By: Suzuki K Poulose <suzuki.poulose@arm.com>
+>
+> WARNING: line over 80 characters
+> #154: FILE: arch/arm64/boot/dts/qcom/msm8996.dtsi:763:
+> +                       compatible = "arm,coresight-dynamic-replicator",
+> "arm,primecell";
+>
+> total: 0 errors, 2 warnings, 440 lines checked
+>
+>
+> -Sai
+>
+> --
+> QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
+> of Code Aurora Forum, hosted by The Linux Foundation
