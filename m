@@ -2,39 +2,39 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 7F6576DCD5
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 19 Jul 2019 06:19:44 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 323A16DC8D
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 19 Jul 2019 06:17:49 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2389184AbfGSENY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 19 Jul 2019 00:13:24 -0400
-Received: from mail.kernel.org ([198.145.29.99]:49298 "EHLO mail.kernel.org"
+        id S2388685AbfGSEQr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 19 Jul 2019 00:16:47 -0400
+Received: from mail.kernel.org ([198.145.29.99]:50874 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S2389162AbfGSENW (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 19 Jul 2019 00:13:22 -0400
+        id S2389810AbfGSEOk (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 19 Jul 2019 00:14:40 -0400
 Received: from sasha-vm.mshome.net (c-73-47-72-35.hsd1.nh.comcast.net [73.47.72.35])
         (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
         (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 07AAB21873;
-        Fri, 19 Jul 2019 04:13:20 +0000 (UTC)
+        by mail.kernel.org (Postfix) with ESMTPSA id 5C52621873;
+        Fri, 19 Jul 2019 04:14:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1563509601;
-        bh=Le25GrtF3G6bxZechcB+0t8lQQjNgYfnXpsHeSwnMoE=;
+        s=default; t=1563509679;
+        bh=6R5kTsfxW4h8wheh1BjIERizbp7s7cnbxBFp1+LGmfU=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=J74bg0uG8hnrr3uml8DadU9kJOdbm7CPbXHYa5IGQCLmLTn4OvMFxQmZv9SDKMtvH
-         JfO/Y0u/8Q09Bd8fISmNGzIhUKh/jHs3kkwdW7P76aqGcZVHARfRqKVyyp3nIvRz5+
-         +XROi4OkoEVw/6sn99y8CWNeyv5CAZqFpXLgUeh8=
+        b=2aVPN7oOZqqbX/vG2RXaS5mX3qrezCUIMaj1NSQZ+Gk2GAKyCzbg4KBr4trhrJSSL
+         NYdUqCz/DSfu0YEK81KJnq+p6xU76TU8nYGu1dEp2fhEdGkDr+ll67/U4Pyotd2KzL
+         LZZPdGjuptREP2jIDtstAUqgX88zspuUuGQ99luE=
 From:   Sasha Levin <sashal@kernel.org>
 To:     linux-kernel@vger.kernel.org, stable@vger.kernel.org
 Cc:     Jorge Ramirez-Ortiz <jorge.ramirez-ortiz@linaro.org>,
         Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
         Sasha Levin <sashal@kernel.org>, linux-arm-msm@vger.kernel.org,
         linux-serial@vger.kernel.org
-Subject: [PATCH AUTOSEL 4.9 11/45] tty: serial: msm_serial: avoid system lockup condition
-Date:   Fri, 19 Jul 2019 00:12:30 -0400
-Message-Id: <20190719041304.18849-11-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 4.4 09/35] tty: serial: msm_serial: avoid system lockup condition
+Date:   Fri, 19 Jul 2019 00:13:57 -0400
+Message-Id: <20190719041423.19322-9-sashal@kernel.org>
 X-Mailer: git-send-email 2.20.1
-In-Reply-To: <20190719041304.18849-1-sashal@kernel.org>
-References: <20190719041304.18849-1-sashal@kernel.org>
+In-Reply-To: <20190719041423.19322-1-sashal@kernel.org>
+References: <20190719041423.19322-1-sashal@kernel.org>
 MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
@@ -63,10 +63,10 @@ Signed-off-by: Sasha Levin <sashal@kernel.org>
  1 file changed, 4 insertions(+)
 
 diff --git a/drivers/tty/serial/msm_serial.c b/drivers/tty/serial/msm_serial.c
-index 7dc8272c6b15..9027455c6be1 100644
+index 5f0ded6fc4e9..eaeb098b5d6a 100644
 --- a/drivers/tty/serial/msm_serial.c
 +++ b/drivers/tty/serial/msm_serial.c
-@@ -391,10 +391,14 @@ static void msm_request_rx_dma(struct msm_port *msm_port, resource_size_t base)
+@@ -222,10 +222,14 @@ static void msm_request_rx_dma(struct msm_port *msm_port, resource_size_t base)
  
  static inline void msm_wait_for_xmitr(struct uart_port *port)
  {
