@@ -2,36 +2,36 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 7BF206DF25
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 19 Jul 2019 06:33:29 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B2D4E6DF07
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 19 Jul 2019 06:33:01 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726866AbfGSEDU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 19 Jul 2019 00:03:20 -0400
-Received: from mail.kernel.org ([198.145.29.99]:35328 "EHLO mail.kernel.org"
+        id S1730893AbfGSEcS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 19 Jul 2019 00:32:18 -0400
+Received: from mail.kernel.org ([198.145.29.99]:36194 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726316AbfGSEDU (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 19 Jul 2019 00:03:20 -0400
+        id S1729690AbfGSEEA (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 19 Jul 2019 00:04:00 -0400
 Received: from sasha-vm.mshome.net (c-73-47-72-35.hsd1.nh.comcast.net [73.47.72.35])
         (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
         (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 4E71120659;
-        Fri, 19 Jul 2019 04:03:18 +0000 (UTC)
+        by mail.kernel.org (Postfix) with ESMTPSA id 2DFAE218D0;
+        Fri, 19 Jul 2019 04:03:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1563508999;
-        bh=wYjIoONvDqvGBPSJ5Z87PQFWs5eBM5YoYB676WUvxL4=;
+        s=default; t=1563509039;
+        bh=dCMCrBXXrlPWsuWbPGNG1JXo6HFZCM3Qn+fUwg5WFGU=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=Wb4Mn2nhpygdqgprBFn7+9u04q10xfGg78yezHbiaLTEYP9FXB+sZsPSXACD7CCO2
-         Er7XDTTLDOz0qyF0OdtJPZLipSVhTum5gw4b0PsObQG5d0f4vMB3T5tMVmUeRHZyKF
-         6ndR3jKObr3Gp4tCjg5mjyND0a4yAM/WQAHXOHQQ=
+        b=rtz+wErhOBqebjzHTaaAPvqa7V3VLMCX530+EHxWt5d9IC7dAsq9kbQELhqSexN8p
+         qgzMyZkGjWqKmjLqLa2Icx1wM4XOpVAtHX8kDXikLOLSXUSlrD0S+0K21jGnmgQaLo
+         6EGBqZdWnzLXQe2OyXhjA6RwfkY9ywHkGWQjxxJQ=
 From:   Sasha Levin <sashal@kernel.org>
 To:     linux-kernel@vger.kernel.org, stable@vger.kernel.org
-Cc:     Sean Paul <seanpaul@chromium.org>,
-        Jordan Crouse <jcrouse@codeaurora.org>,
+Cc:     Jorge Ramirez-Ortiz <jorge.ramirez-ortiz@linaro.org>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
         Sasha Levin <sashal@kernel.org>, linux-arm-msm@vger.kernel.org,
-        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org
-Subject: [PATCH AUTOSEL 5.1 013/141] drm/msm/a6xx: Check for ERR or NULL before iounmap
-Date:   Fri, 19 Jul 2019 00:00:38 -0400
-Message-Id: <20190719040246.15945-13-sashal@kernel.org>
+        linux-serial@vger.kernel.org
+Subject: [PATCH AUTOSEL 5.1 036/141] tty: serial: msm_serial: avoid system lockup condition
+Date:   Fri, 19 Jul 2019 00:01:01 -0400
+Message-Id: <20190719040246.15945-36-sashal@kernel.org>
 X-Mailer: git-send-email 2.20.1
 In-Reply-To: <20190719040246.15945-1-sashal@kernel.org>
 References: <20190719040246.15945-1-sashal@kernel.org>
@@ -44,42 +44,43 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Sean Paul <seanpaul@chromium.org>
+From: Jorge Ramirez-Ortiz <jorge.ramirez-ortiz@linaro.org>
 
-[ Upstream commit 5ca4a094ba7e1369363dcbcbde8baf06ddcdc2d1 ]
+[ Upstream commit ba3684f99f1b25d2a30b6956d02d339d7acb9799 ]
 
-pdcptr and seqptr aren't necessarily valid, check them before trying to
-unmap them.
+The function msm_wait_for_xmitr can be taken with interrupts
+disabled. In order to avoid a potential system lockup - demonstrated
+under stress testing conditions on SoC QCS404/5 - make sure we wait
+for a bounded amount of time.
 
-Changes in v2:
-- None
+Tested on SoC QCS404.
 
-Cc: Jordan Crouse <jcrouse@codeaurora.org>
-Reviewed-by: Jordan Crouse <jcrouse@codeaurora.org>
-Signed-off-by: Sean Paul <seanpaul@chromium.org>
-Link: https://patchwork.freedesktop.org/patch/msgid/20190523171653.138678-3-sean@poorly.run
+Signed-off-by: Jorge Ramirez-Ortiz <jorge.ramirez-ortiz@linaro.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/msm/adreno/a6xx_gmu.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ drivers/tty/serial/msm_serial.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gmu.c b/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
-index d1662a75c7ec..9e4629c2e094 100644
---- a/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
-+++ b/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
-@@ -489,8 +489,10 @@ static void a6xx_gmu_rpmh_init(struct a6xx_gmu *gmu)
- 	wmb();
+diff --git a/drivers/tty/serial/msm_serial.c b/drivers/tty/serial/msm_serial.c
+index 23833ad952ba..3657a24913fc 100644
+--- a/drivers/tty/serial/msm_serial.c
++++ b/drivers/tty/serial/msm_serial.c
+@@ -383,10 +383,14 @@ static void msm_request_rx_dma(struct msm_port *msm_port, resource_size_t base)
  
- err:
--	devm_iounmap(gmu->dev, pdcptr);
--	devm_iounmap(gmu->dev, seqptr);
-+	if (!IS_ERR_OR_NULL(pdcptr))
-+		devm_iounmap(gmu->dev, pdcptr);
-+	if (!IS_ERR_OR_NULL(seqptr))
-+		devm_iounmap(gmu->dev, seqptr);
+ static inline void msm_wait_for_xmitr(struct uart_port *port)
+ {
++	unsigned int timeout = 500000;
++
+ 	while (!(msm_read(port, UART_SR) & UART_SR_TX_EMPTY)) {
+ 		if (msm_read(port, UART_ISR) & UART_ISR_TX_READY)
+ 			break;
+ 		udelay(1);
++		if (!timeout--)
++			break;
+ 	}
+ 	msm_write(port, UART_CR_CMD_RESET_TX_READY, UART_CR);
  }
- 
- /*
 -- 
 2.20.1
 
