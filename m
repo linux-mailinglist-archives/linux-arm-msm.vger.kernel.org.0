@@ -2,208 +2,199 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id BA29B6E059
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 19 Jul 2019 06:53:55 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 1A8E16E31A
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 19 Jul 2019 11:06:36 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726075AbfGSExy (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 19 Jul 2019 00:53:54 -0400
-Received: from smtp.codeaurora.org ([198.145.29.96]:43202 "EHLO
-        smtp.codeaurora.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725997AbfGSExy (ORCPT
+        id S1727344AbfGSJF7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 19 Jul 2019 05:05:59 -0400
+Received: from mail-ed1-f68.google.com ([209.85.208.68]:42260 "EHLO
+        mail-ed1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726036AbfGSJF6 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 19 Jul 2019 00:53:54 -0400
-Received: by smtp.codeaurora.org (Postfix, from userid 1000)
-        id 748D160F3C; Fri, 19 Jul 2019 04:53:52 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
-        s=default; t=1563512032;
-        bh=kydlOlLzdT00KlxryrfYZi8VP2BTfr3KHtAr0lNrPpQ=;
-        h=Subject:To:Cc:References:From:Date:In-Reply-To:From;
-        b=atXQYRdnDJZU4wloBXOmTIPqkWTKZ0AxjpDyhpWjeiqEw0dV3Q7HoLW4lZ64d577Q
-         bwc+nHuYWDfXz7HVxvQkCDoAPxZUQVeVKHEz9J7Gea5wW/Vje2xiwLGIJrF+Ky0mki
-         XvsCyoqkj3t1fj5ALb419etiFH5CPrlTLzft1dO0=
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        pdx-caf-mail.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.7 required=2.0 tests=ALL_TRUSTED,BAYES_00,
-        DKIM_INVALID,DKIM_SIGNED,SPF_NONE autolearn=no autolearn_force=no
-        version=3.4.0
-Received: from [10.204.78.89] (blr-c-bdr-fw-01_globalnat_allzones-outside.qualcomm.com [103.229.19.19])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: neeraju@smtp.codeaurora.org)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 937D160588;
-        Fri, 19 Jul 2019 04:53:46 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
-        s=default; t=1563512029;
-        bh=kydlOlLzdT00KlxryrfYZi8VP2BTfr3KHtAr0lNrPpQ=;
-        h=Subject:To:Cc:References:From:Date:In-Reply-To:From;
-        b=SHynQWOswiEe60bSxOs8Hp7BRQuBePtvIoVz6Y0hv84Dm2+RN4W7Tr+DvONip8k8D
-         9u58WsU9M9euo3CBwcWw9K94FGcpeo4iUildt1RAMeV/4c1GUydY2oLX49YWOTycr1
-         luh3SphL6UVqjke1VRllkG+AqGpIpjyx200VfpHQ=
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 937D160588
-Authentication-Results: pdx-caf-mail.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: pdx-caf-mail.web.codeaurora.org; spf=none smtp.mailfrom=neeraju@codeaurora.org
-Subject: Re: [PATCH] arm64: Explicitly set pstate.ssbs for el0 on kernel entry
-To:     Marc Zyngier <marc.zyngier@arm.com>, will@kernel.org,
-        mark.rutland@arm.com, julien.thierry@arm.com, tglx@linutronix.de
-Cc:     linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, gkohli@codeaurora.org,
-        parthd@codeaurora.org, tsoni@codeaurora.org
-References: <1562671333-3563-1-git-send-email-neeraju@codeaurora.org>
- <62c4fed5-39ac-adc9-3bc5-56eb5234a9d1@arm.com>
- <386316d0-f844-d88c-8b78-0ffc4ffe0aaa@codeaurora.org>
- <f65bb888-b623-25e4-4f01-ae4fbb635e94@arm.com>
-From:   Neeraj Upadhyay <neeraju@codeaurora.org>
-Message-ID: <5ed243e5-0116-6b32-0239-ae05119dfa27@codeaurora.org>
-Date:   Fri, 19 Jul 2019 10:23:44 +0530
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.4.0
+        Fri, 19 Jul 2019 05:05:58 -0400
+Received: by mail-ed1-f68.google.com with SMTP id v15so33851828eds.9
+        for <linux-arm-msm@vger.kernel.org>; Fri, 19 Jul 2019 02:05:57 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=ffwll.ch; s=google;
+        h=sender:date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=58ReAIoQq8wEmL8BTM+vhh8BmnoSmKiAjn22g3TRn8A=;
+        b=fuIUS7cZNX8+X1WJEfd5HZQkQ+XRs569C1Lk5Xt3hbdagNbt4BsmoRpGucm9Dqp7c+
+         jdV9jsXACjiH+sIdOz/TySDTN/T+SU6OeY9N4mzseUx359tmhWGabO3QCljKUZRJkO4x
+         +rgDZnjr2WHTXwLeqta/vZHku2WdnurN0Zss0=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:sender:date:from:to:cc:subject:message-id
+         :references:mime-version:content-disposition:in-reply-to:user-agent;
+        bh=58ReAIoQq8wEmL8BTM+vhh8BmnoSmKiAjn22g3TRn8A=;
+        b=UG4rOl2/fGi0wD+Z+NKKXpiUPX18jFF4qFeytjyhhxVD+2yeYmCvd4KvbsPCUI2D+J
+         wXjtHqZimPI4qLEjPUJxGw58egPIUxnLFMVbkMcClvndwa0EkfUhnzgiDYBqaIFTck9B
+         4NVmTdIa6PrvZc/w3quXDTCw4ju3fEjEtbYqJ/ABTqrmqLQOKCkYDZZ+S4zh5r2goajf
+         Dq7TGJbURrFlqMSfOGxUZQJSdGOeAJRD9jruuwNGAlYY7GzcY60gufcjuHc6wLdUJdFC
+         9cSB2ZEYckBEQhrVbFjH4cG1PbeOC8iG11lVEZwUKwt1M+Vrt/Jwtn34OiVGh9v17d9H
+         eAaQ==
+X-Gm-Message-State: APjAAAXFrYg2xqYeK2vtVhj50NFrLp8JufnHCoBo6C2+WHHV95rHNSNd
+        URqskcRs5rN8iVmqrUyL8QQ=
+X-Google-Smtp-Source: APXvYqxKWkHiETj8QiV/6v9sPPn3a6h3Fcs93lPEOlq1VTeSnK29mqw8ew8q9+aUrxxNuIZfV/ZIKA==
+X-Received: by 2002:a17:906:90cf:: with SMTP id v15mr38577072ejw.77.1563527156359;
+        Fri, 19 Jul 2019 02:05:56 -0700 (PDT)
+Received: from phenom.ffwll.local ([2a02:168:569e:0:3106:d637:d723:e855])
+        by smtp.gmail.com with ESMTPSA id w27sm8805587edw.63.2019.07.19.02.05.54
+        (version=TLS1_3 cipher=AEAD-AES256-GCM-SHA384 bits=256/256);
+        Fri, 19 Jul 2019 02:05:55 -0700 (PDT)
+Date:   Fri, 19 Jul 2019 11:05:53 +0200
+From:   Daniel Vetter <daniel@ffwll.ch>
+To:     Jeykumar Sankaran <jsanka@codeaurora.org>
+Cc:     Daniel Vetter <daniel@ffwll.ch>, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
+        seanpaul@chromium.org, robdclark@gmail.com, pdhaval@codeaurora.org,
+        Daniel Vetter <daniel.vetter@ffwll.ch>
+Subject: Re: [RFC] Expanding drm_mode_modeinfo flags
+Message-ID: <20190719090553.GF15868@phenom.ffwll.local>
+References: <1562870805-32314-1-git-send-email-jsanka@codeaurora.org>
+ <20190716090712.GY15868@phenom.ffwll.local>
+ <16fee2b42fa03d2cf104452223dcf5af@codeaurora.org>
 MIME-Version: 1.0
-In-Reply-To: <f65bb888-b623-25e4-4f01-ae4fbb635e94@arm.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Content-Language: en-US
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <16fee2b42fa03d2cf104452223dcf5af@codeaurora.org>
+X-Operating-System: Linux phenom 4.19.0-5-amd64 
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Marc,
+On Thu, Jul 18, 2019 at 11:18:42AM -0700, Jeykumar Sankaran wrote:
+> On 2019-07-16 02:07, Daniel Vetter wrote:
+> > On Thu, Jul 11, 2019 at 11:46:44AM -0700, Jeykumar Sankaran wrote:
+> > >     Hello All,
+> > >     	drm_mode_modeinfo::flags is a 32 bit field currently used to
+> > >     describe the properties of a connector mode. I see the least order
+> > 22 bits
+> > >     are already in use. Posting this RFC to discuss on any potential
+> > plans to
+> > >     expand the bit range support of this field for growing mode
+> > properties and
+> > >     ways to handle one such property needed by the msm dpu driver.
+> > > 
+> > >     msm drivers support panels which can dynamically switch between
+> > >     video(active) and command(smart) modes. Within video mode, they
+> > > also
+> > support
+> > >     switching between resolutions seamlessly i.e. glitch free
+> > > resolution
+> > switch.
+> > >     But they cannot do a seamless switch from a resolutions from video
+> > to
+> > >     command or vice versa. Clients need to be aware for these
+> > capablities before
+> > >     they switch between the resolutions. Since these capabilities are
+> > identified
+> > >     per drm_mode, we are considering the below two approaches to
+> > > handle
+> > this
+> > >     use case.
+> > > 
+> > >     Option 1:
+> > >     Attached patch adds flag values to associate a drm_mode to
+> > video/command
+> > >     mode and to indicate its capability to do a seamless switch.
+> > > 
+> > >     Option 2:
+> > >     drm_mode_modeinfo can expose a new "private_flags" field to handle
+> > vendor
+> > >     specific mode flags. Besides the above mentioned use case, we are
+> > also
+> > >     expoloring methods to handle some of our display port resolution
+> > switch use
+> > >     cases where the DP ports can be operated in a tiled/detiled modes.
+> > This
+> > >     approach will provide a standard channel for drm driver vendors
+> > > for
+> > their
+> > >     growing need for drm_mode specific capabilities.
+> > > 
+> > >     Please provide your inputs on the options or any upstream friendly
+> > >     recommendation to handle such custom use cases.
+> > > 
+> > >     Thanks and Regards,
+> > >     Jeykumar S.
+> > > 
+> > > Jeykumar Sankaran (1):
+> > >   drm: add mode flags in uapi for seamless mode switch
+> > 
+> > I think the uapi is the trivial part here, the real deal is how
+> > userspace
+> > uses this. Can you pls post the patches for your compositor?
+> > 
+> > Also note that we already allow userspace to tell the kernel whether
+> > flickering is ok or not for a modeset. msm driver could use that to at
+> > least tell userspace whether a modeset change is possible. So you can
+> > already implement glitch-free modeset changes for at least video mode.
+> > -Daniel
+> 
+> I believe you are referring to the below tv property of the connector.
+> 
+> /**
+>  * @tv_flicker_reduction_property: Optional TV property to control the
+>  * flicker reduction mode.
+>  */
+> struct drm_property *tv_flicker_reduction_property;
 
+Not even close :-)
 
-On 7/9/19 7:52 PM, Marc Zyngier wrote:
-> On 09/07/2019 15:18, Neeraj Upadhyay wrote:
->> Hi Marc,
->>
->> On 7/9/19 6:38 PM, Marc Zyngier wrote:
->>> Hi Neeraj,
->>>
->>> On 09/07/2019 12:22, Neeraj Upadhyay wrote:
->>>> For cpus which do not support pstate.ssbs feature, el0
->>>> might not retain spsr.ssbs. This is problematic, if this
->>>> task migrates to a cpu supporting this feature, thus
->>>> relying on its state to be correct. On kernel entry,
->>>> explicitly set spsr.ssbs, so that speculation is enabled
->>>> for el0, when this task migrates to a cpu supporting
->>>> ssbs feature. Restoring state at kernel entry ensures
->>>> that el0 ssbs state is always consistent while we are
->>>> in el1.
->>>>
->>>> As alternatives are applied by boot cpu, at the end of smp
->>>> init, presence/absence of ssbs feature on boot cpu, is used
->>>> for deciding, whether the capability is uniformly provided.
->>> I've seen the same issue, but went for a slightly different
->>> approach, see below.
->>>
->>>> Signed-off-by: Neeraj Upadhyay <neeraju@codeaurora.org>
->>>> ---
->>>>    arch/arm64/kernel/cpu_errata.c | 16 ++++++++++++++++
->>>>    arch/arm64/kernel/entry.S      | 26 +++++++++++++++++++++++++-
->>>>    2 files changed, 41 insertions(+), 1 deletion(-)
->>>>
->>>> diff --git a/arch/arm64/kernel/cpu_errata.c b/arch/arm64/kernel/cpu_errata.c
->>>> index ca11ff7..c84a56d 100644
->>>> --- a/arch/arm64/kernel/cpu_errata.c
->>>> +++ b/arch/arm64/kernel/cpu_errata.c
->>>> @@ -336,6 +336,22 @@ void __init arm64_enable_wa2_handling(struct alt_instr *alt,
->>>>    		*updptr = cpu_to_le32(aarch64_insn_gen_nop());
->>>>    }
->>>>    
->>>> +void __init arm64_restore_ssbs_state(struct alt_instr *alt,
->>>> +				     __le32 *origptr, __le32 *updptr,
->>>> +				     int nr_inst)
->>>> +{
->>>> +	BUG_ON(nr_inst != 1);
->>>> +	/*
->>>> +	 * Only restore EL0 SSBS state on EL1 entry if cpu does not
->>>> +	 * support the capability and capability is present for at
->>>> +	 * least one cpu and if the SSBD state allows it to
->>>> +	 * be changed.
->>>> +	 */
->>>> +	if (!this_cpu_has_cap(ARM64_SSBS) && cpus_have_cap(ARM64_SSBS) &&
->>>> +	    arm64_get_ssbd_state() != ARM64_SSBD_FORCE_ENABLE)
->>>> +		*updptr = cpu_to_le32(aarch64_insn_gen_nop());
->>>> +}
->>>> +
->>>>    void arm64_set_ssbd_mitigation(bool state)
->>>>    {
->>>>    	if (!IS_ENABLED(CONFIG_ARM64_SSBD)) {
->>>> diff --git a/arch/arm64/kernel/entry.S b/arch/arm64/kernel/entry.S
->>>> index 9cdc459..7e79305 100644
->>>> --- a/arch/arm64/kernel/entry.S
->>>> +++ b/arch/arm64/kernel/entry.S
->>>> @@ -143,6 +143,25 @@ alternative_cb_end
->>>>    #endif
->>>>    	.endm
->>>>    
->>>> +	// This macro updates spsr. It also corrupts the condition
->>>> +	// codes state.
->>>> +	.macro	restore_ssbs_state, saved_spsr, tmp
->>>> +#ifdef CONFIG_ARM64_SSBD
->>>> +alternative_cb	arm64_restore_ssbs_state
->>>> +	b	.L__asm_ssbs_skip\@
->>>> +alternative_cb_end
->>>> +	ldr	\tmp, [tsk, #TSK_TI_FLAGS]
->>>> +	tbnz	\tmp, #TIF_SSBD, .L__asm_ssbs_skip\@
->>>> +	tst	\saved_spsr, #PSR_MODE32_BIT	// native task?
->>>> +	b.ne	.L__asm_ssbs_compat\@
->>>> +	orr	\saved_spsr, \saved_spsr, #PSR_SSBS_BIT
->>>> +	b	.L__asm_ssbs_skip\@
->>>> +.L__asm_ssbs_compat\@:
->>>> +	orr	\saved_spsr, \saved_spsr, #PSR_AA32_SSBS_BIT
->>>> +.L__asm_ssbs_skip\@:
->>>> +#endif
->>>> +	.endm
->>> Although this is in keeping with the rest of entry.S (perfectly
->>> unreadable ;-), I think we can do something a bit simpler, that
->>> doesn't rely on patching. Also, this doesn't seem to take the
->>> SSBD options such as ARM64_SSBD_FORCE_ENABLE into account.
->> arm64_restore_ssbs_state has a check for ARM64_SSBD_FORCE_ENABLE,
->>
->> does that look wrong?
-> No, I just focused on the rest of the asm code and missed it, apologies.
->
->>>> +
->>>>    	.macro	kernel_entry, el, regsize = 64
->>>>    	.if	\regsize == 32
->>>>    	mov	w0, w0				// zero upper 32 bits of x0
->>>> @@ -182,8 +201,13 @@ alternative_cb_end
->>>>    	str	x20, [tsk, #TSK_TI_ADDR_LIMIT]
->>>>    	/* No need to reset PSTATE.UAO, hardware's already set it to 0 for us */
->>>>    	.endif /* \el == 0 */
->>>> -	mrs	x22, elr_el1
->>>>    	mrs	x23, spsr_el1
->>>> +
->>>> +	.if	\el == 0
->>>> +	restore_ssbs_state x23, x22
->>>> +	.endif
->>>> +
->>>> +	mrs	x22, elr_el1
->>>>    	stp	lr, x21, [sp, #S_LR]
->>>>    
->>>>    	/*
->>>>
->>> How about the patch below?
->> Looks good; was just going to mention PF_KTHREAD check, but Mark R. has
->> already
->>
->> given detailed information about it.
-> Yup, well spotted. I'll respin it shortly and we can then work out
-> whether that's really a better approach.
+I mean the DRM_MODE_ATOMIC_ALLOW_MODESET flag for the atomic ioctl. This
+is not a property of a mode, this is a property of a _transition_ between
+configurations. Some transitions can be done flicker free, others can't.
 
-Did you get chance to recheck it?
+There's then still the question of how to pick video vs command mode, but
+imo better to start with implementing the transition behaviour correctly
+first.
+-Daniel
 
-
-Thanks
-
-Neeraj
-
->
-> Thanks,
->
-> 	M.
+> 
+> Sure. We can use this to indicate whether the connector representing the
+> panel
+> can support the dynamic glitch-free switch. But when the panel supports both
+> video and command mode resolutions and such glitch-free switch is possible
+> only between
+> video mode resolutions, we need per resolution(drm_mode_modeinfo)
+> information
+> to identify the resolutions enumerated for video mode.
+> 
+> Below is an example of the compositor utility function which can use the
+> tv_flicker_property
+> and the proposed modeinfo flags to identify glitch-free switches.
+> 
+>  bool is_seamless_switch_supported(struct drm_mode_modeinfo src_mode, struct
+>                  drm_mode_modeinfo *dst_mode, bool
+> flicker_reduction_supported)
+>  {
+>          if (!flicker_reduction_supported) {
+>                  printf("flicker reduction prop not set for the
+> connector\n");
+>                  return false;
+>          }
+> 
+>          /*
+>           * Seamless switch(if supported) is possible only between video
+> mode
+>           * resolutions
+>           */
+>          if (src_mode->flags & DRM_MODE_FLAG_VIDEO_MODE &&
+>                          dst_mode->flags & DRM_MODE_FLAG_VIDEO_MODE)
+>                  return true;
+>          else
+>                  return false;
+> 
+>  }
+> 
+> 
+> -- 
+> Jeykumar S
 
 -- 
-QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a
-member of the Code Aurora Forum, hosted by The Linux Foundation
-
+Daniel Vetter
+Software Engineer, Intel Corporation
+http://blog.ffwll.ch
