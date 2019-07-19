@@ -2,85 +2,87 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 323A16DC8D
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 19 Jul 2019 06:17:49 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A7AA16DCE7
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 19 Jul 2019 06:19:52 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2388685AbfGSEQr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 19 Jul 2019 00:16:47 -0400
-Received: from mail.kernel.org ([198.145.29.99]:50874 "EHLO mail.kernel.org"
+        id S2387880AbfGSETQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 19 Jul 2019 00:19:16 -0400
+Received: from mail.kernel.org ([198.145.29.99]:54836 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S2389810AbfGSEOk (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 19 Jul 2019 00:14:40 -0400
-Received: from sasha-vm.mshome.net (c-73-47-72-35.hsd1.nh.comcast.net [73.47.72.35])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        id S2388487AbfGSETP (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 19 Jul 2019 00:19:15 -0400
+Received: from localhost (unknown [49.207.58.149])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 5C52621873;
-        Fri, 19 Jul 2019 04:14:38 +0000 (UTC)
+        by mail.kernel.org (Postfix) with ESMTPSA id 3A8D92084C;
+        Fri, 19 Jul 2019 04:19:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1563509679;
-        bh=6R5kTsfxW4h8wheh1BjIERizbp7s7cnbxBFp1+LGmfU=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=2aVPN7oOZqqbX/vG2RXaS5mX3qrezCUIMaj1NSQZ+Gk2GAKyCzbg4KBr4trhrJSSL
-         NYdUqCz/DSfu0YEK81KJnq+p6xU76TU8nYGu1dEp2fhEdGkDr+ll67/U4Pyotd2KzL
-         LZZPdGjuptREP2jIDtstAUqgX88zspuUuGQ99luE=
-From:   Sasha Levin <sashal@kernel.org>
-To:     linux-kernel@vger.kernel.org, stable@vger.kernel.org
-Cc:     Jorge Ramirez-Ortiz <jorge.ramirez-ortiz@linaro.org>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Sasha Levin <sashal@kernel.org>, linux-arm-msm@vger.kernel.org,
-        linux-serial@vger.kernel.org
-Subject: [PATCH AUTOSEL 4.4 09/35] tty: serial: msm_serial: avoid system lockup condition
-Date:   Fri, 19 Jul 2019 00:13:57 -0400
-Message-Id: <20190719041423.19322-9-sashal@kernel.org>
-X-Mailer: git-send-email 2.20.1
-In-Reply-To: <20190719041423.19322-1-sashal@kernel.org>
-References: <20190719041423.19322-1-sashal@kernel.org>
+        s=default; t=1563509955;
+        bh=pZgmxt2vofJkFOYwEbzop7NDM+n8v66Qs9syI1w3oH4=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=c90VeSS8fADvSn3H3++1HIrz7cLIvt6NyMQ7KrJZIFboBZGx4vQPzLBEoDrugrzm4
+         VuJYgYtBC1pp3xbnb/kHrwCOwZvlMDeDN9WExqrSosqghQR2YK1bvkeY/lKnDBb0FD
+         YeZVbzflgbATmvadaKXCKWHjxWeUs7JDDwGSdLUo=
+Date:   Fri, 19 Jul 2019 09:48:00 +0530
+From:   Vinod Koul <vkoul@kernel.org>
+To:     xiaofeis <xiaofeis@codeaurora.org>
+Cc:     davem@davemloft.net, netdev@vger.kernel.org, andrew@lunn.ch,
+        linux-arm-msm@vger.kernel.org, bjorn.andersson@linaro.org,
+        vivien.didelot@gmail.com, f.fainelli@gmail.com,
+        niklas.cassel@linaro.org, xiazha@codeaurora.org
+Subject: Re: [PATCH] qca8k: enable port flow control
+Message-ID: <20190719041800.GK12733@vkoul-mobl.Dlink>
+References: <1563504791-43398-1-git-send-email-xiaofeis@codeaurora.org>
 MIME-Version: 1.0
-X-stable: review
-X-Patchwork-Hint: Ignore
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <1563504791-43398-1-git-send-email-xiaofeis@codeaurora.org>
+User-Agent: Mutt/1.11.3 (2019-02-01)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Jorge Ramirez-Ortiz <jorge.ramirez-ortiz@linaro.org>
+On 19-07-19, 10:53, xiaofeis wrote:
+> Set phy device advertising to enable MAC flow control.
 
-[ Upstream commit ba3684f99f1b25d2a30b6956d02d339d7acb9799 ]
+How about:
 
-The function msm_wait_for_xmitr can be taken with interrupts
-disabled. In order to avoid a potential system lockup - demonstrated
-under stress testing conditions on SoC QCS404/5 - make sure we wait
-for a bounded amount of time.
+to Pause for enabling MAC flow control 
+> 
+> Change-Id: Ibf0f554b072fc73136ec9f7ffb90c20b25a4faae
 
-Tested on SoC QCS404.
+Please remove this
 
-Signed-off-by: Jorge Ramirez-Ortiz <jorge.ramirez-ortiz@linaro.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
----
- drivers/tty/serial/msm_serial.c | 4 ++++
- 1 file changed, 4 insertions(+)
+> Signed-off-by: Xiaofei Shen <xiaofeis@codeaurora.org>
+> ---
+>  drivers/net/dsa/qca8k.c | 4 +++-
+>  1 file changed, 3 insertions(+), 1 deletion(-)
+> 
+> diff --git a/drivers/net/dsa/qca8k.c b/drivers/net/dsa/qca8k.c
+> index d93be14..95ac081 100644
+> --- a/drivers/net/dsa/qca8k.c
+> +++ b/drivers/net/dsa/qca8k.c
+> @@ -1,7 +1,7 @@
+>  /*
+>   * Copyright (C) 2009 Felix Fietkau <nbd@nbd.name>
+>   * Copyright (C) 2011-2012 Gabor Juhos <juhosg@openwrt.org>
+> - * Copyright (c) 2015, The Linux Foundation. All rights reserved.
+> + * Copyright (c) 2015, 2019, The Linux Foundation. All rights reserved.
+>   * Copyright (c) 2016 John Crispin <john@phrozen.org>
+>   *
+>   * This program is free software; you can redistribute it and/or modify
+> @@ -800,6 +800,8 @@
+>  	qca8k_port_set_status(priv, port, 1);
+>  	priv->port_sts[port].enabled = 1;
+>  
+> +	phy->advertising |= (ADVERTISED_Pause | ADVERTISED_Asym_Pause);
+> +
+>  	return 0;
+>  }
+>  
+> -- 
+> 1.9.1
 
-diff --git a/drivers/tty/serial/msm_serial.c b/drivers/tty/serial/msm_serial.c
-index 5f0ded6fc4e9..eaeb098b5d6a 100644
---- a/drivers/tty/serial/msm_serial.c
-+++ b/drivers/tty/serial/msm_serial.c
-@@ -222,10 +222,14 @@ static void msm_request_rx_dma(struct msm_port *msm_port, resource_size_t base)
- 
- static inline void msm_wait_for_xmitr(struct uart_port *port)
- {
-+	unsigned int timeout = 500000;
-+
- 	while (!(msm_read(port, UART_SR) & UART_SR_TX_EMPTY)) {
- 		if (msm_read(port, UART_ISR) & UART_ISR_TX_READY)
- 			break;
- 		udelay(1);
-+		if (!timeout--)
-+			break;
- 	}
- 	msm_write(port, UART_CR_CMD_RESET_TX_READY, UART_CR);
- }
 -- 
-2.20.1
-
+~Vinod
