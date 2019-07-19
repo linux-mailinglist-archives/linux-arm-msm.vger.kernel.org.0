@@ -2,38 +2,36 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 453276DFAC
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 19 Jul 2019 06:38:22 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 42D8D6DFAE
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 19 Jul 2019 06:38:23 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728689AbfGSD7Z (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 18 Jul 2019 23:59:25 -0400
-Received: from mail.kernel.org ([198.145.29.99]:58944 "EHLO mail.kernel.org"
+        id S1728724AbfGSD72 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 18 Jul 2019 23:59:28 -0400
+Received: from mail.kernel.org ([198.145.29.99]:59034 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1728686AbfGSD7Y (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 18 Jul 2019 23:59:24 -0400
+        id S1728713AbfGSD71 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 18 Jul 2019 23:59:27 -0400
 Received: from sasha-vm.mshome.net (c-73-47-72-35.hsd1.nh.comcast.net [73.47.72.35])
         (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
         (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 2212F2189E;
-        Fri, 19 Jul 2019 03:59:22 +0000 (UTC)
+        by mail.kernel.org (Postfix) with ESMTPSA id E75A32189E;
+        Fri, 19 Jul 2019 03:59:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1563508763;
-        bh=dhxt8vrEK/YOQ/s69fnoSZf6HqR0cV3OukQKYT12Uq0=;
+        s=default; t=1563508766;
+        bh=IbPNnL48G2wmx8OJhUiOUoTLQOe/PDac/dWk7pRo+FQ=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=YeS6kzXV6Qw09mpw5SCui6FwlyXHpBna91RX0X7aI1mk+PzIDH2W4IoF4pRKkpKu6
-         WmPdWZ9D82UuRxE7ah/RSYGiJAFB+ZpxLfCtuivYWp/w4LqeXhl8/g1qLQgOddF+4N
-         UOOxinn+JomDKXSwvgNbhn90HzxwmS6FDaOVfVVo=
+        b=04CQa0NkZh2PLulb9hMPLXHISNfoR2wze1IMfhohf0swcMpW0A/8GCntHd9oCO1uo
+         A4VHZDOKl142W/Z1T8clYKusXCfhRzTY1omdIv52fjJRw1Be9MS6GebNI9z59SsHIE
+         6kCqdqzDliQC9ZYezsptTzYfXBqve2tGVUWMZm+I=
 From:   Sasha Levin <sashal@kernel.org>
 To:     linux-kernel@vger.kernel.org, stable@vger.kernel.org
-Cc:     Jordan Crouse <jcrouse@codeaurora.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Jeffrey Hugo <jeffrey.l.hugo@gmail.com>,
+Cc:     Sean Paul <seanpaul@chromium.org>,
         Rob Clark <robdclark@chromium.org>,
         Sasha Levin <sashal@kernel.org>, linux-arm-msm@vger.kernel.org,
         dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org
-Subject: [PATCH AUTOSEL 5.2 076/171] drm/msm/adreno: Ensure that the zap shader region is big enough
-Date:   Thu, 18 Jul 2019 23:55:07 -0400
-Message-Id: <20190719035643.14300-76-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 5.2 078/171] drm/msm: Depopulate platform on probe failure
+Date:   Thu, 18 Jul 2019 23:55:09 -0400
+Message-Id: <20190719035643.14300-78-sashal@kernel.org>
 X-Mailer: git-send-email 2.20.1
 In-Reply-To: <20190719035643.14300-1-sashal@kernel.org>
 References: <20190719035643.14300-1-sashal@kernel.org>
@@ -46,48 +44,60 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Jordan Crouse <jcrouse@codeaurora.org>
+From: Sean Paul <seanpaul@chromium.org>
 
-[ Upstream commit 6672e11cad662ce6631e04c38f92a140a99c042c ]
+[ Upstream commit 4368a1539c6b41ac3cddc06f5a5117952998804c ]
 
-Before loading the zap shader we should ensure that the reserved memory
-region is big enough to hold the loaded file.
+add_display_components() calls of_platform_populate, and we depopluate
+on pdev remove, but not when probe fails. So if we get a probe deferral
+in one of the components, we won't depopulate the platform. This causes
+the core to keep references to devices which should be destroyed, which
+causes issues when those same devices try to re-initialize on the next
+probe attempt.
 
-Signed-off-by: Jordan Crouse <jcrouse@codeaurora.org>
-Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
-Reviewed-by: Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
-Signed-off-by: Rob Clark <robdclark@chromium.org>
+I think this is the reason we had issues with the gmu's device-managed
+resources on deferral (worked around in commit 94e3a17f33a5).
+
+Reviewed-by: Rob Clark <robdclark@chromium.org>
+Signed-off-by: Sean Paul <seanpaul@chromium.org>
+Link: https://patchwork.freedesktop.org/patch/msgid/20190617201301.133275-3-sean@poorly.run
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/msm/adreno/adreno_gpu.c | 8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/msm/msm_drv.c | 14 +++++++++++---
+ 1 file changed, 11 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/gpu/drm/msm/adreno/adreno_gpu.c b/drivers/gpu/drm/msm/adreno/adreno_gpu.c
-index a9c0ac937b00..9acbbc0f3232 100644
---- a/drivers/gpu/drm/msm/adreno/adreno_gpu.c
-+++ b/drivers/gpu/drm/msm/adreno/adreno_gpu.c
-@@ -56,7 +56,6 @@ static int zap_shader_load_mdt(struct msm_gpu *gpu, const char *fwname,
- 		return ret;
+diff --git a/drivers/gpu/drm/msm/msm_drv.c b/drivers/gpu/drm/msm/msm_drv.c
+index f38d7367bd3b..4a0fe8a25ad7 100644
+--- a/drivers/gpu/drm/msm/msm_drv.c
++++ b/drivers/gpu/drm/msm/msm_drv.c
+@@ -1306,16 +1306,24 @@ static int msm_pdev_probe(struct platform_device *pdev)
  
- 	mem_phys = r.start;
--	mem_size = resource_size(&r);
+ 	ret = add_gpu_components(&pdev->dev, &match);
+ 	if (ret)
+-		return ret;
++		goto fail;
  
- 	/* Request the MDT file for the firmware */
- 	fw = adreno_request_fw(to_adreno_gpu(gpu), fwname);
-@@ -72,6 +71,13 @@ static int zap_shader_load_mdt(struct msm_gpu *gpu, const char *fwname,
- 		goto out;
- 	}
- 
-+	if (mem_size > resource_size(&r)) {
-+		DRM_DEV_ERROR(dev,
-+			"memory region is too small to load the MDT\n");
-+		ret = -E2BIG;
-+		goto out;
-+	}
+ 	/* on all devices that I am aware of, iommu's which can map
+ 	 * any address the cpu can see are used:
+ 	 */
+ 	ret = dma_set_mask_and_coherent(&pdev->dev, ~0);
+ 	if (ret)
+-		return ret;
++		goto fail;
 +
- 	/* Allocate memory for the firmware image */
- 	mem_region = memremap(mem_phys, mem_size,  MEMREMAP_WC);
- 	if (!mem_region) {
++	ret = component_master_add_with_match(&pdev->dev, &msm_drm_ops, match);
++	if (ret)
++		goto fail;
+ 
+-	return component_master_add_with_match(&pdev->dev, &msm_drm_ops, match);
++	return 0;
++
++fail:
++	of_platform_depopulate(&pdev->dev);
++	return ret;
+ }
+ 
+ static int msm_pdev_remove(struct platform_device *pdev)
 -- 
 2.20.1
 
