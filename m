@@ -2,109 +2,124 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id B2B586E836
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 19 Jul 2019 17:50:18 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 93F2A6EA97
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 19 Jul 2019 20:20:30 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728402AbfGSPuR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 19 Jul 2019 11:50:17 -0400
-Received: from ns.iliad.fr ([212.27.33.1]:43326 "EHLO ns.iliad.fr"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1728331AbfGSPuR (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 19 Jul 2019 11:50:17 -0400
-Received: from ns.iliad.fr (localhost [127.0.0.1])
-        by ns.iliad.fr (Postfix) with ESMTP id B9CA020AC3;
-        Fri, 19 Jul 2019 17:50:14 +0200 (CEST)
-Received: from [192.168.108.49] (freebox.vlq16.iliad.fr [213.36.7.13])
-        by ns.iliad.fr (Postfix) with ESMTP id 9A4F720A7E;
-        Fri, 19 Jul 2019 17:50:14 +0200 (CEST)
-Subject: Re: [PATCH] phy: qcom-qmp: Correct READY_STATUS poll break condition
-From:   Marc Gonzalez <marc.w.gonzalez@free.fr>
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Kishon Vijay Abraham I <kishon@ti.com>
-Cc:     MSM <linux-arm-msm@vger.kernel.org>,
-        LKML <linux-kernel@vger.kernel.org>,
-        Evan Green <evgreen@chromium.org>,
-        Vivek Gautam <vivek.gautam@codeaurora.org>,
-        Niklas Cassel <niklas.cassel@linaro.org>,
-        Stanimir Varbanov <svarbanov@mm-sol.com>
-References: <20190604232443.3417-1-bjorn.andersson@linaro.org>
- <619d2559-6d88-e795-76e0-3078236933ef@free.fr>
- <20190612172501.GY4814@minitux>
- <3570d880-2b76-88ae-8721-e75cf5acec4c@free.fr>
-Message-ID: <5b252fe6-9435-2aad-d0db-f6170a07b5e9@free.fr>
-Date:   Fri, 19 Jul 2019 17:50:14 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.8.0
+        id S1731376AbfGSSUZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 19 Jul 2019 14:20:25 -0400
+Received: from mail-pl1-f193.google.com ([209.85.214.193]:39755 "EHLO
+        mail-pl1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728461AbfGSSUZ (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 19 Jul 2019 14:20:25 -0400
+Received: by mail-pl1-f193.google.com with SMTP id b7so16025654pls.6
+        for <linux-arm-msm@vger.kernel.org>; Fri, 19 Jul 2019 11:20:25 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=message-id:mime-version:content-transfer-encoding:in-reply-to
+         :references:subject:to:cc:from:user-agent:date;
+        bh=M26syJ4cW7NPI3SuosUdPQTeP9LfAyv4R4zcZOR5omc=;
+        b=StxKZQU6THFXUJQCrcXp31nW4A0j02kuJ4ttDn46X3RRw7GUDQXFmw1gncEUDBBZo5
+         yeTqHL3JVWT8kOb8uEgDgx2CTMTPqvUWLnqK/U43jqsgPKdrViYR8hS00FSaxSwadwT8
+         Oz1dYGLf4pS5wt2SCQDkhAP1iycL+/pj3pvjg=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:message-id:mime-version
+         :content-transfer-encoding:in-reply-to:references:subject:to:cc:from
+         :user-agent:date;
+        bh=M26syJ4cW7NPI3SuosUdPQTeP9LfAyv4R4zcZOR5omc=;
+        b=Tk5/E5nQKpZLsSqOZynKKg3d/k3XPYC+unV99W0GZp5YngsGKPswzgZ5vJPcycf2ZY
+         g2egPPt1O/ksDIRNR5nSlQQ1sPgZNvmZftvbi4Ie8liM5U3dHu86SIB67PpIF2IM+OQ3
+         Og/jUieI3kS1BUMrSV4B03tzZ0RwMvDm3146fOyAKQbc08/iMMM7xaapDgemgldFGbqk
+         Q46JAyBpo/Ecq52KQo/E9cSFUotsaxbE/HuepM9iwOcEbuNZGubGFbMMT0efenGzFssi
+         3bjkWFSBDJKicXhCZrxUv7+RWLsvwwoZmHze5KGqmHJu3/zeT0pa8EXxd7ean5ePHWHx
+         nsWA==
+X-Gm-Message-State: APjAAAWuH5aBsQgsHvYZ4S/aX2WNInwgv5ziZcTv8JNYjixlj8T+Hug9
+        2c3GXW6agT3XTDkA5prwFD9Ajg==
+X-Google-Smtp-Source: APXvYqz/RpGKnJ45DZoI1c21p88BvZhB2sSsak8OqJzITQuJMJLtGysFhCcD7usnFqeySO8wrV6gJg==
+X-Received: by 2002:a17:902:be15:: with SMTP id r21mr57134298pls.293.1563560424619;
+        Fri, 19 Jul 2019 11:20:24 -0700 (PDT)
+Received: from chromium.org ([2620:15c:202:1:fa53:7765:582b:82b9])
+        by smtp.gmail.com with ESMTPSA id s15sm31288067pfd.183.2019.07.19.11.20.23
+        (version=TLS1_3 cipher=AEAD-AES256-GCM-SHA384 bits=256/256);
+        Fri, 19 Jul 2019 11:20:23 -0700 (PDT)
+Message-ID: <5d3209e7.1c69fb81.5ef1.5195@mx.google.com>
+Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
-In-Reply-To: <3570d880-2b76-88ae-8721-e75cf5acec4c@free.fr>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
-X-Virus-Scanned: ClamAV using ClamSMTP ; ns.iliad.fr ; Fri Jul 19 17:50:14 2019 +0200 (CEST)
+Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <20190701152907.16407-1-ilina@codeaurora.org>
+References: <20190701152907.16407-1-ilina@codeaurora.org>
+Subject: Re: [PATCH 1/2] drivers: qcom: rpmh-rsc: simplify TCS locking
+To:     Lina Iyer <ilina@codeaurora.org>, andy.gross@linaro.org,
+        bjorn.andersson@linaro.org
+Cc:     linux-arm-msm@vger.kernel.org, linux-soc@vger.kernel.org,
+        rnayak@codeaurora.org, linux-kernel@vger.kernel.org,
+        linux-pm@vger.kernel.org, dianders@chromium.org,
+        mkshah@codeaurora.org, "Raju P.L.S.S.S.N" <rplsssn@codeaurora.org>,
+        Lina Iyer <ilina@codeaurora.org>
+From:   Stephen Boyd <swboyd@chromium.org>
+User-Agent: alot/0.8.1
+Date:   Fri, 19 Jul 2019 11:20:22 -0700
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 13/06/2019 11:10, Marc Gonzalez wrote:
+Quoting Lina Iyer (2019-07-01 08:29:06)
+> From: "Raju P.L.S.S.S.N" <rplsssn@codeaurora.org>
+>=20
+> tcs->lock was introduced to serialize access with in TCS group. But
+> even without tcs->lock, drv->lock is serving the same purpose. So
+> use a single drv->lock.
 
-> Here are my observations for a 8998 board:
-> 
-> 1) If I apply only the readl_poll_timeout() fix (not the mask_pcs_ready fixup)
-> qcom_pcie_probe() fails with a timeout in phy_init.
-> => this is in line with your regression analysis.
-> 
-> 2) Your patch also fixes a long-standing bug in UFS init whereby sending
-> lots of information to the console during phy init would lead to an
-> incorrectly diagnosed time-out.
-> 
-> Good stuff!
-> 
-> Reviewed-by: Marc Gonzalez <marc.w.gonzalez@free.fr>
-> Tested-by: Marc Gonzalez <marc.w.gonzalez@free.fr>
+Isn't the downside now that we're going to be serializing access to the
+different TCSes when two are being written in parallel or waited on? I
+thought that was the whole point of splitting the lock into a TCS lock
+and a general "driver" lock that protects the global driver state vs.
+the specific TCS state.
 
-It looks like this patch fixed UFS, but broke PCIe and USB3 ^_^
+>=20
+> Other optimizations include -
+>  - Remove locking around clear_bit() in IRQ handler. clear_bit() is
+>    atomic.
+>  - Remove redundant read of TCS registers.
+>  - Use spin_lock instead of _irq variants as the locks are not held
+>    in interrupt context.
 
-qcom-qmp-phy 1c06000.phy: Registered Qcom-QMP phy
-qcom-qmp-phy c010000.phy: Registered Qcom-QMP phy
-qcom-qmp-phy 1da7000.phy: Registered Qcom-QMP phy
+Can you please split this patch up into 3 or 4 different patches? I'm
+not sure why any of these patches are marked with Fixes either. It's an
+optimization patch, not a fix patch, unless the optimization is really
+large somehow?
 
-qcom-qmp-phy 1c06000.phy: BEFORE=000000a6 AFTER=000000a6
-qcom-qmp-phy 1c06000.phy: phy initialization timed-out
-phy phy-1c06000.phy.0: phy init failed --> -110
-qcom-pcie: probe of 1c00000.pci failed with error -110
+>=20
+> Fixes: 658628 ("drivers: qcom: rpmh-rsc: add RPMH controller for QCOM
+> SoCs")
+> Signed-off-by: Raju P.L.S.S.S.N <rplsssn@codeaurora.org>
+> Signed-off-by: Lina Iyer <ilina@codeaurora.org>
+> ---
+>  drivers/soc/qcom/rpmh-internal.h |  2 --
+>  drivers/soc/qcom/rpmh-rsc.c      | 37 +++++++++++---------------------
+>  drivers/soc/qcom/rpmh.c          | 20 +++++++----------
+>  3 files changed, 21 insertions(+), 38 deletions(-)
+>=20
+> diff --git a/drivers/soc/qcom/rpmh-internal.h b/drivers/soc/qcom/rpmh-int=
+ernal.h
+> index a7bbbb67991c..969d5030860e 100644
+> --- a/drivers/soc/qcom/rpmh-internal.h
+> +++ b/drivers/soc/qcom/rpmh-internal.h
+> diff --git a/drivers/soc/qcom/rpmh-rsc.c b/drivers/soc/qcom/rpmh-rsc.c
+> index e278fc11fe5c..92461311aef3 100644
+> --- a/drivers/soc/qcom/rpmh-rsc.c
+> +++ b/drivers/soc/qcom/rpmh-rsc.c
+> @@ -93,8 +93,7 @@ static void write_tcs_reg_sync(struct rsc_drv *drv, int=
+ reg, int tcs_id,
+> =20
+>  static bool tcs_is_free(struct rsc_drv *drv, int tcs_id)
+>  {
+> -       return !test_bit(tcs_id, drv->tcs_in_use) &&
+> -              read_tcs_reg(drv, RSC_DRV_STATUS, tcs_id, 0);
+> +       return !test_bit(tcs_id, drv->tcs_in_use);
 
-qcom-qmp-phy 1da7000.phy: BEFORE=00000040 AFTER=0000000d
+This can be a different patch. Why is reading the tcs register
+redundant? Please put that information in the commit text.
 
-qcom-qmp-phy c010000.phy: BEFORE=69696969 AFTER=b7b7b7b7
-qcom-qmp-phy c010000.phy: phy initialization timed-out
-phy phy-c010000.phy.1: phy init failed --> -110
-dwc3 a800000.dwc3: failed to initialize core: -110
-dwc3: probe of a800000.dwc3 failed with error -110
-
-
-Downstream code for PCIe is:
-
-static bool pcie_phy_is_ready(struct msm_pcie_dev_t *dev)
-{
-	if (dev->phy_ver >= 0x20) {
-		if (readl_relaxed(dev->phy + PCIE_N_PCS_STATUS(dev->rc_idx, dev->common_phy)) &	BIT(6))
-			return false;
-		else
-			return true;
-	}
-
-	if (!(readl_relaxed(dev->phy + PCIE_COM_PCS_READY_STATUS) & 0x1))
-		return false;
-	else
-		return true;
-}
-
-AFAICT:
-PCIe and USB3 QMP PHYs are ready when PHYSTATUS=BIT(6) goes to 0.
-But UFS is ready when PCS_READY=BIT(0) goes to 1.
-
-
-Can someone verify that USB3 is broken on 845 with 885bd765963b?
-
-Regards.
