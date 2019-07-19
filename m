@@ -2,36 +2,36 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id E71BC6DD4C
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 19 Jul 2019 06:22:03 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id EA6336DD25
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 19 Jul 2019 06:21:46 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2388294AbfGSEWA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 19 Jul 2019 00:22:00 -0400
-Received: from mail.kernel.org ([198.145.29.99]:46476 "EHLO mail.kernel.org"
+        id S2388584AbfGSELy (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 19 Jul 2019 00:11:54 -0400
+Received: from mail.kernel.org ([198.145.29.99]:47020 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1727265AbfGSELb (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 19 Jul 2019 00:11:31 -0400
+        id S1731159AbfGSELy (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 19 Jul 2019 00:11:54 -0400
 Received: from sasha-vm.mshome.net (c-73-47-72-35.hsd1.nh.comcast.net [73.47.72.35])
         (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
         (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id BE65F2189E;
-        Fri, 19 Jul 2019 04:11:29 +0000 (UTC)
+        by mail.kernel.org (Postfix) with ESMTPSA id 404AF2189E;
+        Fri, 19 Jul 2019 04:11:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1563509490;
-        bh=k0hu+tXXzE/LMYjJCOsJt8L5xEk0a5uA+JRg9Pl1XyE=;
+        s=default; t=1563509514;
+        bh=jz7sHNyKe7PMf5YhqpKzdxcf8dmmt7SrhaGPJaDmwDw=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=yvb/HNwibcW0H4CkQ+PeftXUpU9C1rQ0lN2LK09qDowqe0+gAemkGHOcV8ecqTqFu
-         lHsaZQu3AgIlWGrdPjEQDTPcZGLKxQKQ7Lc6oc8qqyAgS/KQmTR8SwLaucpAnh7h9F
-         MiRTEjTsl9We0reb10Wro0ttGYUZn37ZCEqRW2lI=
+        b=YKvyE5MQKrUU+jmlEidfNQzZsH5ssoSo5VBYq1E7duANfYb2RD8jMRjgwRw3zMg+P
+         TeZ124R2CH2UJgreMB5O3RqPvWfD6QFWc6uPrEqdliOcX4UH9HTGctMSszlcu9ZZvy
+         mwadB5fM6L1wNwFlTP49ec66U9bV6uBwHfEemETA=
 From:   Sasha Levin <sashal@kernel.org>
 To:     linux-kernel@vger.kernel.org, stable@vger.kernel.org
-Cc:     Jorge Ramirez-Ortiz <jorge.ramirez-ortiz@linaro.org>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+Cc:     Sean Paul <seanpaul@chromium.org>,
+        Rob Clark <robdclark@chromium.org>,
         Sasha Levin <sashal@kernel.org>, linux-arm-msm@vger.kernel.org,
-        linux-serial@vger.kernel.org
-Subject: [PATCH AUTOSEL 4.14 13/60] tty: serial: msm_serial: avoid system lockup condition
-Date:   Fri, 19 Jul 2019 00:10:22 -0400
-Message-Id: <20190719041109.18262-13-sashal@kernel.org>
+        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org
+Subject: [PATCH AUTOSEL 4.14 24/60] drm/msm: Depopulate platform on probe failure
+Date:   Fri, 19 Jul 2019 00:10:33 -0400
+Message-Id: <20190719041109.18262-24-sashal@kernel.org>
 X-Mailer: git-send-email 2.20.1
 In-Reply-To: <20190719041109.18262-1-sashal@kernel.org>
 References: <20190719041109.18262-1-sashal@kernel.org>
@@ -44,43 +44,60 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Jorge Ramirez-Ortiz <jorge.ramirez-ortiz@linaro.org>
+From: Sean Paul <seanpaul@chromium.org>
 
-[ Upstream commit ba3684f99f1b25d2a30b6956d02d339d7acb9799 ]
+[ Upstream commit 4368a1539c6b41ac3cddc06f5a5117952998804c ]
 
-The function msm_wait_for_xmitr can be taken with interrupts
-disabled. In order to avoid a potential system lockup - demonstrated
-under stress testing conditions on SoC QCS404/5 - make sure we wait
-for a bounded amount of time.
+add_display_components() calls of_platform_populate, and we depopluate
+on pdev remove, but not when probe fails. So if we get a probe deferral
+in one of the components, we won't depopulate the platform. This causes
+the core to keep references to devices which should be destroyed, which
+causes issues when those same devices try to re-initialize on the next
+probe attempt.
 
-Tested on SoC QCS404.
+I think this is the reason we had issues with the gmu's device-managed
+resources on deferral (worked around in commit 94e3a17f33a5).
 
-Signed-off-by: Jorge Ramirez-Ortiz <jorge.ramirez-ortiz@linaro.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Reviewed-by: Rob Clark <robdclark@chromium.org>
+Signed-off-by: Sean Paul <seanpaul@chromium.org>
+Link: https://patchwork.freedesktop.org/patch/msgid/20190617201301.133275-3-sean@poorly.run
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/tty/serial/msm_serial.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/gpu/drm/msm/msm_drv.c | 14 +++++++++++---
+ 1 file changed, 11 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/tty/serial/msm_serial.c b/drivers/tty/serial/msm_serial.c
-index 716aa76abdf9..0e0ccc132ab0 100644
---- a/drivers/tty/serial/msm_serial.c
-+++ b/drivers/tty/serial/msm_serial.c
-@@ -391,10 +391,14 @@ static void msm_request_rx_dma(struct msm_port *msm_port, resource_size_t base)
+diff --git a/drivers/gpu/drm/msm/msm_drv.c b/drivers/gpu/drm/msm/msm_drv.c
+index 606df7bea97b..b970427e53a7 100644
+--- a/drivers/gpu/drm/msm/msm_drv.c
++++ b/drivers/gpu/drm/msm/msm_drv.c
+@@ -1097,16 +1097,24 @@ static int msm_pdev_probe(struct platform_device *pdev)
  
- static inline void msm_wait_for_xmitr(struct uart_port *port)
- {
-+	unsigned int timeout = 500000;
+ 	ret = add_gpu_components(&pdev->dev, &match);
+ 	if (ret)
+-		return ret;
++		goto fail;
+ 
+ 	/* on all devices that I am aware of, iommu's which can map
+ 	 * any address the cpu can see are used:
+ 	 */
+ 	ret = dma_set_mask_and_coherent(&pdev->dev, ~0);
+ 	if (ret)
+-		return ret;
++		goto fail;
 +
- 	while (!(msm_read(port, UART_SR) & UART_SR_TX_EMPTY)) {
- 		if (msm_read(port, UART_ISR) & UART_ISR_TX_READY)
- 			break;
- 		udelay(1);
-+		if (!timeout--)
-+			break;
- 	}
- 	msm_write(port, UART_CR_CMD_RESET_TX_READY, UART_CR);
++	ret = component_master_add_with_match(&pdev->dev, &msm_drm_ops, match);
++	if (ret)
++		goto fail;
++
++	return 0;
+ 
+-	return component_master_add_with_match(&pdev->dev, &msm_drm_ops, match);
++fail:
++	of_platform_depopulate(&pdev->dev);
++	return ret;
  }
+ 
+ static int msm_pdev_remove(struct platform_device *pdev)
 -- 
 2.20.1
 
