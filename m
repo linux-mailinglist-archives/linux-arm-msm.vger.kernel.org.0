@@ -2,36 +2,38 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 48AC16DFF3
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 19 Jul 2019 06:40:05 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 453276DFAC
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 19 Jul 2019 06:38:22 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726970AbfGSD6f (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 18 Jul 2019 23:58:35 -0400
-Received: from mail.kernel.org ([198.145.29.99]:57958 "EHLO mail.kernel.org"
+        id S1728689AbfGSD7Z (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 18 Jul 2019 23:59:25 -0400
+Received: from mail.kernel.org ([198.145.29.99]:58944 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1728084AbfGSD6e (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 18 Jul 2019 23:58:34 -0400
+        id S1728686AbfGSD7Y (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 18 Jul 2019 23:59:24 -0400
 Received: from sasha-vm.mshome.net (c-73-47-72-35.hsd1.nh.comcast.net [73.47.72.35])
         (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
         (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id DB82521851;
-        Fri, 19 Jul 2019 03:58:32 +0000 (UTC)
+        by mail.kernel.org (Postfix) with ESMTPSA id 2212F2189E;
+        Fri, 19 Jul 2019 03:59:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1563508713;
-        bh=dCMCrBXXrlPWsuWbPGNG1JXo6HFZCM3Qn+fUwg5WFGU=;
+        s=default; t=1563508763;
+        bh=dhxt8vrEK/YOQ/s69fnoSZf6HqR0cV3OukQKYT12Uq0=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=TFeVrIG9wvZAteg+X1U5murjuhOnT0N2qLn5gRNs9gcQJYb9S7FA05t9KlwAHBhCG
-         m/5kUkROXNZ9aXa2U73GrGEV/tch9zjBb8H7c7m3WxniidUTxlwPWW7ZiH7jAF1jhm
-         LCIIsqRFL7Clo4ARvijJMYGvVy2doMDkDWprcmek=
+        b=YeS6kzXV6Qw09mpw5SCui6FwlyXHpBna91RX0X7aI1mk+PzIDH2W4IoF4pRKkpKu6
+         WmPdWZ9D82UuRxE7ah/RSYGiJAFB+ZpxLfCtuivYWp/w4LqeXhl8/g1qLQgOddF+4N
+         UOOxinn+JomDKXSwvgNbhn90HzxwmS6FDaOVfVVo=
 From:   Sasha Levin <sashal@kernel.org>
 To:     linux-kernel@vger.kernel.org, stable@vger.kernel.org
-Cc:     Jorge Ramirez-Ortiz <jorge.ramirez-ortiz@linaro.org>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+Cc:     Jordan Crouse <jcrouse@codeaurora.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Jeffrey Hugo <jeffrey.l.hugo@gmail.com>,
+        Rob Clark <robdclark@chromium.org>,
         Sasha Levin <sashal@kernel.org>, linux-arm-msm@vger.kernel.org,
-        linux-serial@vger.kernel.org
-Subject: [PATCH AUTOSEL 5.2 049/171] tty: serial: msm_serial: avoid system lockup condition
-Date:   Thu, 18 Jul 2019 23:54:40 -0400
-Message-Id: <20190719035643.14300-49-sashal@kernel.org>
+        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org
+Subject: [PATCH AUTOSEL 5.2 076/171] drm/msm/adreno: Ensure that the zap shader region is big enough
+Date:   Thu, 18 Jul 2019 23:55:07 -0400
+Message-Id: <20190719035643.14300-76-sashal@kernel.org>
 X-Mailer: git-send-email 2.20.1
 In-Reply-To: <20190719035643.14300-1-sashal@kernel.org>
 References: <20190719035643.14300-1-sashal@kernel.org>
@@ -44,43 +46,48 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Jorge Ramirez-Ortiz <jorge.ramirez-ortiz@linaro.org>
+From: Jordan Crouse <jcrouse@codeaurora.org>
 
-[ Upstream commit ba3684f99f1b25d2a30b6956d02d339d7acb9799 ]
+[ Upstream commit 6672e11cad662ce6631e04c38f92a140a99c042c ]
 
-The function msm_wait_for_xmitr can be taken with interrupts
-disabled. In order to avoid a potential system lockup - demonstrated
-under stress testing conditions on SoC QCS404/5 - make sure we wait
-for a bounded amount of time.
+Before loading the zap shader we should ensure that the reserved memory
+region is big enough to hold the loaded file.
 
-Tested on SoC QCS404.
-
-Signed-off-by: Jorge Ramirez-Ortiz <jorge.ramirez-ortiz@linaro.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Jordan Crouse <jcrouse@codeaurora.org>
+Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+Reviewed-by: Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
+Signed-off-by: Rob Clark <robdclark@chromium.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/tty/serial/msm_serial.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/gpu/drm/msm/adreno/adreno_gpu.c | 8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/tty/serial/msm_serial.c b/drivers/tty/serial/msm_serial.c
-index 23833ad952ba..3657a24913fc 100644
---- a/drivers/tty/serial/msm_serial.c
-+++ b/drivers/tty/serial/msm_serial.c
-@@ -383,10 +383,14 @@ static void msm_request_rx_dma(struct msm_port *msm_port, resource_size_t base)
+diff --git a/drivers/gpu/drm/msm/adreno/adreno_gpu.c b/drivers/gpu/drm/msm/adreno/adreno_gpu.c
+index a9c0ac937b00..9acbbc0f3232 100644
+--- a/drivers/gpu/drm/msm/adreno/adreno_gpu.c
++++ b/drivers/gpu/drm/msm/adreno/adreno_gpu.c
+@@ -56,7 +56,6 @@ static int zap_shader_load_mdt(struct msm_gpu *gpu, const char *fwname,
+ 		return ret;
  
- static inline void msm_wait_for_xmitr(struct uart_port *port)
- {
-+	unsigned int timeout = 500000;
-+
- 	while (!(msm_read(port, UART_SR) & UART_SR_TX_EMPTY)) {
- 		if (msm_read(port, UART_ISR) & UART_ISR_TX_READY)
- 			break;
- 		udelay(1);
-+		if (!timeout--)
-+			break;
+ 	mem_phys = r.start;
+-	mem_size = resource_size(&r);
+ 
+ 	/* Request the MDT file for the firmware */
+ 	fw = adreno_request_fw(to_adreno_gpu(gpu), fwname);
+@@ -72,6 +71,13 @@ static int zap_shader_load_mdt(struct msm_gpu *gpu, const char *fwname,
+ 		goto out;
  	}
- 	msm_write(port, UART_CR_CMD_RESET_TX_READY, UART_CR);
- }
+ 
++	if (mem_size > resource_size(&r)) {
++		DRM_DEV_ERROR(dev,
++			"memory region is too small to load the MDT\n");
++		ret = -E2BIG;
++		goto out;
++	}
++
+ 	/* Allocate memory for the firmware image */
+ 	mem_region = memremap(mem_phys, mem_size,  MEMREMAP_WC);
+ 	if (!mem_region) {
 -- 
 2.20.1
 
