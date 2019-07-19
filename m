@@ -2,158 +2,70 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 8B1256D6A0
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Jul 2019 23:49:49 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0996D6D93E
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 19 Jul 2019 05:00:32 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728022AbfGRVts (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 18 Jul 2019 17:49:48 -0400
-Received: from mail-vs1-f68.google.com ([209.85.217.68]:45377 "EHLO
-        mail-vs1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727780AbfGRVts (ORCPT
+        id S1726066AbfGSDAV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 18 Jul 2019 23:00:21 -0400
+Received: from alexa-out-tai-02.qualcomm.com ([103.229.16.227]:42783 "EHLO
+        alexa-out-tai-02.qualcomm.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1726015AbfGSDAV (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 18 Jul 2019 17:49:48 -0400
-Received: by mail-vs1-f68.google.com with SMTP id h28so20183054vsl.12
-        for <linux-arm-msm@vger.kernel.org>; Thu, 18 Jul 2019 14:49:47 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=vVaakzPBBxcCnU1uQoatmOIcAq9lkWIyC/ZitRYoNgg=;
-        b=X0bRe+v4iwS6jdXfFpHS/B1EX7o/Ag7+xrNChOx3rwtQf1rriCNbBBc2AORVmlG9gC
-         KVxWBeK9NBQ8gBXi8w3Av9R1Yh8r3h7xlJoRYPAOSzyytZUVC4+ejy9Cn3PMuHz9YpW/
-         IxLuV6N64nVRcqJGyugTEStIUQQsmFjSjI3Fy/4XjJOaWPe1Tv10djjEfP5VnAyre9Oz
-         +v6sV/2I3P9kSX69DLaBAK+GbpCi9bKxUIteMutCxdGAkTLk6xGcGP1HExLaCbrye+OE
-         8gxLRO/Twcav0vXVKqTdUtgl/TBIEzaP0a1edGLGuHPegpLd/TMcEm8b/qDG4Ok3mPbw
-         W7Xw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=vVaakzPBBxcCnU1uQoatmOIcAq9lkWIyC/ZitRYoNgg=;
-        b=JLZ9CpbjYvT+2PhjPoJKOHWvxfo5JXs2cxxK5GP4a56G9oMOul49uE6acJEyB5eRt8
-         QVl41G+rORty9I88OWbrzmdPoyDqoBj7xp6SYuMXEAXMdz0SFV5wNUiDY6tUazjufLNJ
-         AK4KEvO/OuQGXBsK8yuz+QLbPPykYWPpPVd58i7AV1vsJ02sGUQb5CTTyDKTyknrYj8N
-         jHLepRnOo+CF/sUSlDTBAR5Hi7rfXqkv47MOuuV+19LS3E1RgfY32Z4Q+yRHE5lTGv1g
-         y95O2H6eMhGl6u4W3fMUwUL1JFt6MKJwLBcT/mIAajh0vMGDO1/TacgJ/sqUhyTAIkMj
-         IZIQ==
-X-Gm-Message-State: APjAAAXjzFxtOpHqiXkrTDuQeq4rJ8Awf6y/swlKV74DatoEBZ89oSBj
-        ffV9pe4uKIw0TtNuMhyRoaHpWFO36y9TuwwokiaBFw==
-X-Google-Smtp-Source: APXvYqx6w0adJ6xepr9OilXJBz3+Zq+jx9/hhhjOwrMjwd3XZB1LUnFpt9Xc9uk4rPa7wYkP1TAGbNJcQe6BKGLWrJs=
-X-Received: by 2002:a67:e454:: with SMTP id n20mr31593172vsm.34.1563486587134;
- Thu, 18 Jul 2019 14:49:47 -0700 (PDT)
-MIME-Version: 1.0
-References: <20190513192300.653-1-ulf.hansson@linaro.org> <20190513192300.653-15-ulf.hansson@linaro.org>
- <20190716155317.GB32490@e121166-lin.cambridge.arm.com> <CAPDyKFrJ75mo+s6GuUCTQ-nVv7C+9YJyTVmwuBZ2RKFOvOi3Nw@mail.gmail.com>
- <20190718133053.GA27222@e121166-lin.cambridge.arm.com> <CAPDyKFr4NmichQk4uf+Wgbanh=5idKYY=37WCb6U_hNFDVYg=w@mail.gmail.com>
- <20190718174116.GD25567@codeaurora.org>
-In-Reply-To: <20190718174116.GD25567@codeaurora.org>
-From:   Ulf Hansson <ulf.hansson@linaro.org>
-Date:   Thu, 18 Jul 2019 23:49:11 +0200
-Message-ID: <CAPDyKFrxBdZfskyp2HOb5YykkAqkBzRfW4-LLbcj1DAaL65XpA@mail.gmail.com>
-Subject: Re: [PATCH 14/18] drivers: firmware: psci: Manage runtime PM in the
- idle path for CPUs
-To:     Lina Iyer <ilina@codeaurora.org>
-Cc:     Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
-        Sudeep Holla <sudeep.holla@arm.com>,
-        Mark Rutland <mark.rutland@arm.com>,
-        Linux ARM <linux-arm-kernel@lists.infradead.org>,
-        "Rafael J . Wysocki" <rjw@rjwysocki.net>,
-        Daniel Lezcano <daniel.lezcano@linaro.org>,
-        "Raju P . L . S . S . S . N" <rplsssn@codeaurora.org>,
-        Amit Kucheria <amit.kucheria@linaro.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Niklas Cassel <niklas.cassel@linaro.org>,
-        Tony Lindgren <tony@atomide.com>,
-        Kevin Hilman <khilman@kernel.org>,
-        Viresh Kumar <viresh.kumar@linaro.org>,
-        Vincent Guittot <vincent.guittot@linaro.org>,
-        Geert Uytterhoeven <geert+renesas@glider.be>,
-        Souvik Chakravarty <souvik.chakravarty@arm.com>,
-        Linux PM <linux-pm@vger.kernel.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+        Thu, 18 Jul 2019 23:00:21 -0400
+X-Greylist: delayed 366 seconds by postgrey-1.27 at vger.kernel.org; Thu, 18 Jul 2019 23:00:20 EDT
+Received: from ironmsg03-tai.qualcomm.com ([10.249.140.8])
+  by alexa-out-tai-02.qualcomm.com with ESMTP; 19 Jul 2019 10:54:13 +0800
+X-IronPort-AV: E=McAfee;i="6000,8403,9322"; a="34578808"
+Received: from akronite-sh-dev01.ap.qualcomm.com ([10.231.215.213])
+  by ironmsg03-tai.qualcomm.com with ESMTP; 19 Jul 2019 10:54:01 +0800
+Received: by akronite-sh-dev01.ap.qualcomm.com (Postfix, from userid 206661)
+        id 9FB7E1F42B; Fri, 19 Jul 2019 10:54:00 +0800 (CST)
+From:   xiaofeis <xiaofeis@codeaurora.org>
+To:     davem@davemloft.net
+Cc:     vkoul@kernel.org, netdev@vger.kernel.org, andrew@lunn.ch,
+        linux-arm-msm@vger.kernel.org, bjorn.andersson@linaro.org,
+        vivien.didelot@gmail.com, f.fainelli@gmail.com,
+        niklas.cassel@linaro.org, xiazha@codeaurora.org,
+        xiaofeis <xiaofeis@codeaurora.org>
+Subject: [PATCH] qca8k: enable port flow control
+Date:   Fri, 19 Jul 2019 10:53:11 +0800
+Message-Id: <1563504791-43398-1-git-send-email-xiaofeis@codeaurora.org>
+X-Mailer: git-send-email 1.9.1
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, 18 Jul 2019 at 19:41, Lina Iyer <ilina@codeaurora.org> wrote:
->
-> On Thu, Jul 18 2019 at 10:55 -0600, Ulf Hansson wrote:
-> >On Thu, 18 Jul 2019 at 15:31, Lorenzo Pieralisi
-> ><lorenzo.pieralisi@arm.com> wrote:
-> >>
-> >> On Thu, Jul 18, 2019 at 12:35:07PM +0200, Ulf Hansson wrote:
-> >> > On Tue, 16 Jul 2019 at 17:53, Lorenzo Pieralisi
-> >> > <lorenzo.pieralisi@arm.com> wrote:
-> >> > >
-> >> > > On Mon, May 13, 2019 at 09:22:56PM +0200, Ulf Hansson wrote:
-> >> > > > When the hierarchical CPU topology layout is used in DT, let's allow the
-> >> > > > CPU to be power managed through its PM domain, via deploying runtime PM
-> >> > > > support.
-> >> > > >
-> >> > > > To know for which idle states runtime PM reference counting is needed,
-> >> > > > let's store the index of deepest idle state for the CPU, in a per CPU
-> >> > > > variable. This allows psci_cpu_suspend_enter() to compare this index with
-> >> > > > the requested idle state index and then act accordingly.
-> >> > >
-> >> > > I do not see why a system with two CPU CPUidle states, say CPU retention
-> >> > > and CPU shutdown, should not be calling runtime PM on CPU retention
-> >> > > entry.
-> >> >
-> >> > If the CPU idle governor did select the CPU retention for the CPU, it
-> >> > was probably because the target residency for the CPU shutdown state
-> >> > could not be met.
-> >>
-> >> The kernel does not know what those cpu states represent, so, this is an
-> >> assumption you are making and it must be made clear that this code works
-> >> as long as your assumption is valid.
-> >>
-> >> If eg a "cluster" retention state has lower target_residency than
-> >> the deepest CPU idle state this assumption is wrong.
-> >
-> >Good point, you are right. I try to find a place to document this assumption.
-> >
-> >>
-> >> And CPUidle and genPD governor decisions are not synced anyway so,
-> >> again, this is an assumption, not a certainty.
-> >>
-> >> > In this case, there is no point in allowing any other deeper idle
-> >> > states for cluster/package/system, since those have even greater
-> >> > residencies, hence calling runtime PM doesn't make sense.
-> >>
-> >> On the systems you are testing on.
-> >
-> >So what you are saying typically means, that if all CPUs in the same
-> >cluster have entered the CPU retention state, on some system the
-> >cluster may also put into a cluster retention state (assuming the
-> >target residency is met)?
-> >
-> >Do you know of any systems that has these characteristics?
-> >
-> Many QCOM SoCs can do that. But with the hardware improving, the
-> power-performance benefits skew the results in favor of powering off
-> the cluster than keeping the CPU and cluster in retention.
->
-> Kevin H and I thought of this problem earlier on. But that is a second
-> level problem to solve and definitely to be thought of after we have the
-> support for the deepest states in the kernel. We left that out for a
-> later date. The idea would have been to setup the allowable state(s) in
-> the DT for CPU and cluster state definitions and have the genpd take
-> that into consideration when deciding the idle state for the domain.
+Set phy device advertising to enable MAC flow control.
 
-Thanks for confirming.
+Change-Id: Ibf0f554b072fc73136ec9f7ffb90c20b25a4faae
+Signed-off-by: Xiaofei Shen <xiaofeis@codeaurora.org>
+---
+ drivers/net/dsa/qca8k.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-This more or less means we need to improve the hierarchical support in
-genpd to support more levels, such that it makes sense to have a genpd
-governor assigned at more than one level. This doesn't work well
-today. As I also have stated, this is on my todo list for genpd.
+diff --git a/drivers/net/dsa/qca8k.c b/drivers/net/dsa/qca8k.c
+index d93be14..95ac081 100644
+--- a/drivers/net/dsa/qca8k.c
++++ b/drivers/net/dsa/qca8k.c
+@@ -1,7 +1,7 @@
+ /*
+  * Copyright (C) 2009 Felix Fietkau <nbd@nbd.name>
+  * Copyright (C) 2011-2012 Gabor Juhos <juhosg@openwrt.org>
+- * Copyright (c) 2015, The Linux Foundation. All rights reserved.
++ * Copyright (c) 2015, 2019, The Linux Foundation. All rights reserved.
+  * Copyright (c) 2016 John Crispin <john@phrozen.org>
+  *
+  * This program is free software; you can redistribute it and/or modify
+@@ -800,6 +800,8 @@
+ 	qca8k_port_set_status(priv, port, 1);
+ 	priv->port_sts[port].enabled = 1;
+ 
++	phy->advertising |= (ADVERTISED_Pause | ADVERTISED_Asym_Pause);
++
+ 	return 0;
+ }
+ 
+-- 
+1.9.1
 
-However, I also agree with your standpoint, that let's start simple to
-enable the deepest state as a start with, then we can improve things
-on top.
-
-Kind regards
-Uffe
