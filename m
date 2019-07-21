@@ -2,186 +2,193 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id E6BC16F3B7
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 21 Jul 2019 16:36:08 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 865C06F4E3
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 21 Jul 2019 21:08:49 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726449AbfGUOgD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 21 Jul 2019 10:36:03 -0400
-Received: from mail-pf1-f194.google.com ([209.85.210.194]:39026 "EHLO
-        mail-pf1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726441AbfGUOgD (ORCPT
+        id S1727243AbfGUTIo (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 21 Jul 2019 15:08:44 -0400
+Received: from mail-pl1-f194.google.com ([209.85.214.194]:38510 "EHLO
+        mail-pl1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726997AbfGUTIn (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 21 Jul 2019 10:36:03 -0400
-Received: by mail-pf1-f194.google.com with SMTP id f17so12145846pfn.6
-        for <linux-arm-msm@vger.kernel.org>; Sun, 21 Jul 2019 07:36:02 -0700 (PDT)
+        Sun, 21 Jul 2019 15:08:43 -0400
+Received: by mail-pl1-f194.google.com with SMTP id az7so18044781plb.5
+        for <linux-arm-msm@vger.kernel.org>; Sun, 21 Jul 2019 12:08:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to:user-agent;
-        bh=dUXYRm/uz8K2XBOkvg3xI+TWD4KiZR/gBR+tdrB+5/M=;
-        b=u0nQEgsK5XW04foSXvHPhWir6Of8Loz+g4o1MYIxaxq55hOEcaaWNiMpb5HGyV69Mp
-         zU7SxNdTK7YpclZx+ToLBA1sXGYxMOst7ZBHPvmZjezavtjt0dCkOh+1Syq5z41v1q81
-         CNj+TO6N3SxamhlgyGY7RPZ8nVqLWTuxbi6oqlsp8HrU92n2O9ZGzCAHMy8MsvMJg7ct
-         8oaWekIuk5dKn/WDFAM/VOTVjTAixOtgtR4sTEUIR/B0t5v8ujKPs43C0WXLTJfkRPwA
-         +4IP3CoifdQcu33xzcgM5KKdfH/PyzLTXybDCY4YhqijHirIPsr/ICvB7G61iXgFTngb
-         x7kQ==
+        bh=Ylc57dC3XkA6IHMlmIjnKW4Yzv6Mn8fQS/B+VYG3i7c=;
+        b=hFXuS3UuB0qEeWg8hFp1mt5M/vafnnV/H39+mmEBKBMQ6xCuRKQgpfCFQQWhnF06iN
+         7R5W7aXngTALP/5jdXOaeKtZsqrj7d5ZLrqbckNvTHKnRtqAAjvaukLNlEST2a+4/Ej7
+         H80DYxPQ177ByL70x39ot2ehYPEiWZzh8ZPjrh/b5jnNElNiveC9S9/B3RN+3MgRNgb0
+         SwDITHJRgl1p5rVxOijsGmXd0mkG6xZmiD1vCtxFMtcqfq47+v9otgdyUDxqHWMwiPWi
+         GbypFKBSjKL/xj15JNauSeR082PcvoJkrl0+zrcM6g5JwIj5y8Tb16X1Rv08njf3KThY
+         ZbrA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=dUXYRm/uz8K2XBOkvg3xI+TWD4KiZR/gBR+tdrB+5/M=;
-        b=hiIi8yJkg5hlMmOD8qNVqbyWlMixoOboMs2lxgCISyQMc7azbpVs5jDww9QEG31Cq4
-         FA8u9AmxsvSCn0h2Mpbb+mhN0Ar0sf6+gBDPPJ1mkev263WKV9mg6grtvlemoYzFAgd6
-         l6WT2qcvhAgJ2IDs/721ERuLnjySge7DRz15RsAwTE98sU9gunBk0/RMf97mEIO+KOKy
-         6CozDAbohLPYEk1Ea6rTd0BBsP+UZbgvF4B14pqoWrEfoaDwc7KKRX5jIkrlh4qL+ZqZ
-         yMMNTnKk9PimTGuVsFhrZ55N3D0ClVY8zzF1MzZViQ1uDGg57spAIEAzR1Q0kTIT4Ie1
-         LapA==
-X-Gm-Message-State: APjAAAVmlTA6JWSMDlO7Isf4uGDxdX/hvLeQI/1dqMvP+mdSrmW5C3UE
-        P+4DgEv3Hz68hUjtNJNiEWpRDw==
-X-Google-Smtp-Source: APXvYqy6pit+B+1VE5RtCzbLoThJOVpMtSj3TBYYM5jFRngMM3NfToD4eEpQOnXJCxl5W46gRJWmTA==
-X-Received: by 2002:a63:774c:: with SMTP id s73mr66455192pgc.238.1563719761745;
-        Sun, 21 Jul 2019 07:36:01 -0700 (PDT)
-Received: from leoy-ThinkPad-X240s (li1433-81.members.linode.com. [45.33.106.81])
-        by smtp.gmail.com with ESMTPSA id o3sm68687081pje.1.2019.07.21.07.35.56
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Sun, 21 Jul 2019 07:36:00 -0700 (PDT)
-Date:   Sun, 21 Jul 2019 22:35:53 +0800
-From:   Leo Yan <leo.yan@linaro.org>
-To:     Mathieu Poirier <mathieu.poirier@linaro.org>
-Cc:     Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Suzuki K Poulose <suzuki.poulose@arm.com>,
-        Alexander Shishkin <alexander.shishkin@linux.intel.com>,
-        Mike Leach <mike.leach@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        devicetree@vger.kernel.org, David Brown <david.brown@linaro.org>,
-        Mark Rutland <mark.rutland@arm.com>,
-        Rajendra Nayak <rnayak@codeaurora.org>,
-        Vivek Gautam <vivek.gautam@codeaurora.org>,
-        Sibi Sankar <sibis@codeaurora.org>,
-        linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org,
-        Marc Gonzalez <marc.w.gonzalez@free.fr>
-Subject: Re: [PATCHv8 5/5] coresight: cpu-debug: Add support for Qualcomm Kryo
-Message-ID: <20190721143553.GA25136@leoy-ThinkPad-X240s>
-References: <cover.1562940244.git.saiprakash.ranjan@codeaurora.org>
- <e2c4cc7c6ccaa5695f25af20c8e487ac53b39955.1562940244.git.saiprakash.ranjan@codeaurora.org>
- <20190717165602.GA4271@xps15>
+        bh=Ylc57dC3XkA6IHMlmIjnKW4Yzv6Mn8fQS/B+VYG3i7c=;
+        b=eDrjq9zPP6T0KGDNv3K4Loqj2+/7FFB/1YLnyYC1bm8lY/Gp+n3JMyfICvBgBXU9rp
+         KKWzX0kXV/y4PbGbPGWX4QY8SgdGQ3vtLvOJnWemMmqXdaiRYhs8WOMmyhPpOzf6coYL
+         hZac5qE/IUQDub2HlA7h4CX/ZxQ5D5dqrNmPQxdhv+dl2FGQTRT3bGjxKSc5Dv5QOvFX
+         Wu+WLk+YRWEMoRbLke8LCDUXBfr/EAi2cxE3SPyZTwkSMhNibbjGVzz0vj7Yg7PiTCD0
+         gvBKl9FA9PwTG9Wb2DnUV6XxheMlvbhRsFSUotE+iIP5O1kzIWlX/pBgHaTh4ade70rM
+         BSHA==
+X-Gm-Message-State: APjAAAVAkcscFuyJw1KfoIByMGm09yYkMN8I3Fv5VfvRGdUHxI8fhLHN
+        Sy7FBZZlcSG9FBmeTteg4GwSBQ==
+X-Google-Smtp-Source: APXvYqzpOknbyvmRTmwYMUByzUAr778DaIFVqdKbNdR1vNVMvGgXL9ajPeFWDGgnS8HhUdoyyXXLIg==
+X-Received: by 2002:a17:902:b109:: with SMTP id q9mr61064677plr.176.1563736122702;
+        Sun, 21 Jul 2019 12:08:42 -0700 (PDT)
+Received: from tuxbook-pro (104-188-17-28.lightspeed.sndgca.sbcglobal.net. [104.188.17.28])
+        by smtp.gmail.com with ESMTPSA id h9sm34413137pgh.51.2019.07.21.12.08.41
+        (version=TLS1_3 cipher=AEAD-AES256-GCM-SHA384 bits=256/256);
+        Sun, 21 Jul 2019 12:08:42 -0700 (PDT)
+Date:   Sun, 21 Jul 2019 12:10:02 -0700
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     David Dai <daidavid1@codeaurora.org>
+Cc:     georgi.djakov@linaro.org, robh+dt@kernel.org, evgreen@google.com,
+        ilina@codeaurora.org, seansw@qti.qualcomm.com, elder@linaro.org,
+        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org
+Subject: Re: [PATCH 1/2] dt-bindings: interconnect: Update Qualcomm SDM845 DT
+ bindings
+Message-ID: <20190721191002.GH7234@tuxbook-pro>
+References: <1563568344-1274-1-git-send-email-daidavid1@codeaurora.org>
+ <1563568344-1274-2-git-send-email-daidavid1@codeaurora.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20190717165602.GA4271@xps15>
-User-Agent: Mutt/1.9.4 (2018-02-28)
+In-Reply-To: <1563568344-1274-2-git-send-email-daidavid1@codeaurora.org>
+User-Agent: Mutt/1.11.4 (2019-03-13)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Jul 17, 2019 at 10:56:02AM -0600, Mathieu Poirier wrote:
-> On Fri, Jul 12, 2019 at 07:46:27PM +0530, Sai Prakash Ranjan wrote:
-> > Add support for coresight CPU debug module on Qualcomm
-> > Kryo CPUs. This patch adds the UCI entries for Kryo CPUs
-> > found on MSM8996 which shares the same PIDs as ETMs.
-> > 
-> > Without this, below error is observed on MSM8996:
-> > 
-> > [    5.429867] OF: graph: no port node found in /soc/debug@3810000
-> > [    5.429938] coresight-etm4x: probe of 3810000.debug failed with error -22
-> > [    5.435415] coresight-cpu-debug 3810000.debug: Coresight debug-CPU0 initialized
-> > [    5.446474] OF: graph: no port node found in /soc/debug@3910000
-> > [    5.448927] coresight-etm4x: probe of 3910000.debug failed with error -22
-> > [    5.454681] coresight-cpu-debug 3910000.debug: Coresight debug-CPU1 initialized
-> > [    5.487765] OF: graph: no port node found in /soc/debug@3a10000
-> > [    5.488007] coresight-etm4x: probe of 3a10000.debug failed with error -22
-> > [    5.493024] coresight-cpu-debug 3a10000.debug: Coresight debug-CPU2 initialized
-> > [    5.501802] OF: graph: no port node found in /soc/debug@3b10000
-> > [    5.512901] coresight-etm4x: probe of 3b10000.debug failed with error -22
-> > [    5.513192] coresight-cpu-debug 3b10000.debug: Coresight debug-CPU3 initialized
-> > 
-> > Signed-off-by: Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
-> > ---
-> >  .../hwtracing/coresight/coresight-cpu-debug.c | 33 +++++++++----------
-> >  drivers/hwtracing/coresight/coresight-priv.h  | 10 +++---
-> >  2 files changed, 21 insertions(+), 22 deletions(-)
-> > 
-> > diff --git a/drivers/hwtracing/coresight/coresight-cpu-debug.c b/drivers/hwtracing/coresight/coresight-cpu-debug.c
-> > index 2463aa7ab4f6..96544b348c27 100644
-> > --- a/drivers/hwtracing/coresight/coresight-cpu-debug.c
-> > +++ b/drivers/hwtracing/coresight/coresight-cpu-debug.c
-> > @@ -646,24 +646,23 @@ static int debug_remove(struct amba_device *adev)
-> >  	return 0;
-> >  }
-> >  
-> > +static const struct amba_cs_uci_id uci_id_debug[] = {
-> > +	{
-> > +		/*  CPU Debug UCI data */
-> > +		.devarch	= 0x47706a15,
-> > +		.devarch_mask	= 0xfff0ffff,
-> > +		.devtype	= 0x00000015,
-> > +	}
-> > +};
-> > +
-> >  static const struct amba_id debug_ids[] = {
-> > -	{       /* Debug for Cortex-A53 */
-> > -		.id	= 0x000bbd03,
-> > -		.mask	= 0x000fffff,
-> > -	},
-> > -	{       /* Debug for Cortex-A57 */
-> > -		.id	= 0x000bbd07,
-> > -		.mask	= 0x000fffff,
-> > -	},
-> > -	{       /* Debug for Cortex-A72 */
-> > -		.id	= 0x000bbd08,
-> > -		.mask	= 0x000fffff,
-> > -	},
-> > -	{       /* Debug for Cortex-A73 */
-> > -		.id	= 0x000bbd09,
-> > -		.mask	= 0x000fffff,
-> > -	},
-> > -	{ 0, 0 },
-> > +	CS_AMBA_ID(0x000bbd03),				/* Cortex-A53 */
-> > +	CS_AMBA_ID(0x000bbd07),				/* Cortex-A57 */
-> > +	CS_AMBA_ID(0x000bbd08),				/* Cortex-A72 */
-> > +	CS_AMBA_ID(0x000bbd09),				/* Cortex-A73 */
-> > +	CS_AMBA_UCI_ID(0x000f0205, uci_id_debug),	/* Qualcomm Kryo */
-> > +	CS_AMBA_UCI_ID(0x000f0211, uci_id_debug),	/* Qualcomm Kryo */
-> > +	{},
-> >  };
-> >  
-> >  static struct amba_driver debug_driver = {
-> > diff --git a/drivers/hwtracing/coresight/coresight-priv.h b/drivers/hwtracing/coresight/coresight-priv.h
-> > index 7d401790dd7e..41ae5863104d 100644
-> > --- a/drivers/hwtracing/coresight/coresight-priv.h
-> > +++ b/drivers/hwtracing/coresight/coresight-priv.h
-> > @@ -185,11 +185,11 @@ static inline int etm_writel_cp14(u32 off, u32 val) { return 0; }
-> >  	}
-> >  
-> >  /* coresight AMBA ID, full UCI structure: id table entry. */
-> > -#define CS_AMBA_UCI_ID(pid, uci_ptr)	\
-> > -	{				\
-> > -		.id	= pid,		\
-> > -		.mask	= 0x000fffff,	\
-> > -		.data	= uci_ptr	\
-> > +#define CS_AMBA_UCI_ID(pid, uci_ptr)		\
-> > +	{					\
-> > +		.id	= pid,			\
-> > +		.mask	= 0x000fffff,		\
-> > +		.data	= (void *)uci_ptr	\
-> >  	}
+On Fri 19 Jul 13:32 PDT 2019, David Dai wrote:
+
+> Redefine the Network-on-Chip devices to more accurately describe
+> the interconnect topology on Qualcomm's SDM845 platform. Each
+> interconnect device can communicate with different instances of the
+> RPMh hardware which are described as RSCs(Resource State Coordinators).
 > 
-> I will pickup this patch - it will show up in my next tree when rc1 comes out.
+> Signed-off-by: David Dai <daidavid1@codeaurora.org>
 
-I tested this patch on the mainline kernel with latest commit
-f1a3b43cc1f5 ("Merge branch 'for-linus' of
-git://git.kernel.org/pub/scm/linux/kernel/git/dtor/input"). FWIW:
+I like this and we don't have any consumers in DT yet, so I think this
+is good.
 
-Tested-by: Leo Yan <leo.yan@linaro.org>
+But we need a patch to the implementation as well, to have the
+provider(s) registered with the new compatibles.
 
-P.s. Acutally I tested this patch for 5.2-rcx a few days ago and found
-a regression for CPU debug module: I observed the CPU debug module
-panic dump will stuck.  After I pulled to latest kernel code base the
-CPU debug module can work well; also works well with this patch.  F.Y.I.
+Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
 
-Thanks,
-Leo Yan
+Regards,
+Bjorn
+
+> ---
+>  .../bindings/interconnect/qcom,bcm-voter.txt       | 32 +++++++++++++++++
+>  .../bindings/interconnect/qcom,sdm845.txt          | 40 +++++++++++++++++-----
+>  2 files changed, 63 insertions(+), 9 deletions(-)
+>  create mode 100644 Documentation/devicetree/bindings/interconnect/qcom,bcm-voter.txt
+> 
+> diff --git a/Documentation/devicetree/bindings/interconnect/qcom,bcm-voter.txt b/Documentation/devicetree/bindings/interconnect/qcom,bcm-voter.txt
+> new file mode 100644
+> index 0000000..2cf7da2
+> --- /dev/null
+> +++ b/Documentation/devicetree/bindings/interconnect/qcom,bcm-voter.txt
+> @@ -0,0 +1,32 @@
+> +Qualcomm BCM-Voter interconnect driver binding
+> +-----------------------------------------------------------
+> +
+> +The Bus Clock Manager (BCM) is a dedicated hardware accelerator
+> +that manages shared system resources by aggregating requests
+> +from multiple Resource State Coordinators (RSC). Interconnect
+> +providers are able to vote for aggregated thresholds values from
+> +consumers by communicating through their respective RSCs.
+> +
+> +Required properties :
+> +- compatible : shall contain only one of the following:
+> +			"qcom,sdm845-bcm-voter",
+> +
+> +Examples:
+> +
+> +apps_rsc: rsc@179c0000 {
+> +	label = "apps_rsc";
+> +	compatible = "qcom,rpmh-rsc";
+> +
+> +	apps_bcm_voter: bcm_voter {
+> +		compatible = "qcom,sdm845-bcm-voter";
+> +	};
+> +}
+> +
+> +disp_rsc: rsc@179d0000 {
+> +	label = "disp_rsc";
+> +	compatible = "qcom,rpmh-rsc";
+> +
+> +	disp_bcm_voter: bcm_voter {
+> +		compatible = "qcom,sdm845-bcm-voter";
+> +	};
+> +}
+> diff --git a/Documentation/devicetree/bindings/interconnect/qcom,sdm845.txt b/Documentation/devicetree/bindings/interconnect/qcom,sdm845.txt
+> index 5c4f1d9..27f9ed9 100644
+> --- a/Documentation/devicetree/bindings/interconnect/qcom,sdm845.txt
+> +++ b/Documentation/devicetree/bindings/interconnect/qcom,sdm845.txt
+> @@ -4,21 +4,43 @@ Qualcomm SDM845 Network-On-Chip interconnect driver binding
+>  SDM845 interconnect providers support system bandwidth requirements through
+>  RPMh hardware accelerators known as Bus Clock Manager (BCM). The provider is
+>  able to communicate with the BCM through the Resource State Coordinator (RSC)
+> -associated with each execution environment. Provider nodes must reside within
+> -an RPMh device node pertaining to their RSC and each provider maps to a single
+> -RPMh resource.
+> +associated with each execution environment. Provider nodes must point to at
+> +least one RPMh device child node pertaining to their RSC and each provider
+> +can map to multiple RPMh resources.
+>  
+>  Required properties :
+>  - compatible : shall contain only one of the following:
+> -			"qcom,sdm845-rsc-hlos"
+> +			"qcom,sdm845-aggre1_noc",
+> +			"qcom,sdm845-aggre2_noc",
+> +			"qcom,sdm845-config_noc",
+> +			"qcom,sdm845-dc_noc",
+> +			"qcom,sdm845-gladiator_noc",
+> +			"qcom,sdm845-mem_noc",
+> +			"qcom,sdm845-mmss_noc",
+> +			"qcom,sdm845-system_noc",
+>  - #interconnect-cells : should contain 1
+> +- reg : shall contain base register location and length
+> +- qcom,bcm-voter : shall contain phandles to bcm voters
+>  
+>  Examples:
+>  
+> -apps_rsc: rsc {
+> -	rsc_hlos: interconnect {
+> -		compatible = "qcom,sdm845-rsc-hlos";
+> -		#interconnect-cells = <1>;
+> -	};
+> +aggre1_noc: interconnect@16e0000 {
+> +	compatible = "qcom,sdm845-aggre1_noc";
+> +	reg = <0x16e0000 0xd080>;
+> +	interconnect-cells = <1>;
+> +	qcom,bcm-voter = <&apps_bcm_voter>;
+>  };
+>  
+> +mmss_noc: interconnect@1740000 {
+> +	compatible = "qcom,sdm845-mmss_noc";
+> +	reg = <0x1740000 0x1c1000>;
+> +	interconnect-cells = <1>;
+> +	qcom,bcm-voter = <&apps_bcm_voter>, <&disp_bcm_voter>;
+> +};
+> +
+> +mem_noc: interconnect@1380000 {
+> +	compatible = "qcom,sdm845-mem_noc";
+> +	reg = <0 0x1380000 0 0x27200>;
+> +	#interconnect-cells = <1>;
+> +	qcom,bcm-voter = <&apps_bcm_voter>, <&disp_bcm_voter>;
+> +};
+> -- 
+> The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
+> a Linux Foundation Collaborative Project
+> 
