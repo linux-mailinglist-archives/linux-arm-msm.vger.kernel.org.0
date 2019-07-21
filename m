@@ -2,154 +2,186 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id EF8FE6EBA0
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 19 Jul 2019 22:33:02 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E6BC16F3B7
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 21 Jul 2019 16:36:08 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2388056AbfGSUcn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 19 Jul 2019 16:32:43 -0400
-Received: from smtp.codeaurora.org ([198.145.29.96]:56646 "EHLO
-        smtp.codeaurora.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2388011AbfGSUcj (ORCPT
+        id S1726449AbfGUOgD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 21 Jul 2019 10:36:03 -0400
+Received: from mail-pf1-f194.google.com ([209.85.210.194]:39026 "EHLO
+        mail-pf1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726441AbfGUOgD (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 19 Jul 2019 16:32:39 -0400
-Received: by smtp.codeaurora.org (Postfix, from userid 1000)
-        id 5A11661836; Fri, 19 Jul 2019 20:32:38 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
-        s=default; t=1563568358;
-        bh=4lOKewWx4DPDxGEDzYunri8E48SbXykONHMaszyMNJk=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=MuKW9PO3LhK8Z0Il7yDSpaw+SAFXMWLK9VM5ohg7L1e3qYimW3QZYGlkmN7fbnkQl
-         6rdx1SUOiblEWCH2sxBT5O9PBfzWtALT8nsK9dhi4DrmyJPmbMefBO76zPs3sFKL+L
-         TVZ7bS0kliC1Gm3GauDyLne6v08zogMADkD/HGbQ=
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        pdx-caf-mail.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.7 required=2.0 tests=ALL_TRUSTED,BAYES_00,
-        DKIM_INVALID,DKIM_SIGNED,SPF_NONE autolearn=no autolearn_force=no
-        version=3.4.0
-Received: from davidai-linux.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: daidavid1@smtp.codeaurora.org)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 187386182E;
-        Fri, 19 Jul 2019 20:32:37 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
-        s=default; t=1563568357;
-        bh=4lOKewWx4DPDxGEDzYunri8E48SbXykONHMaszyMNJk=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=KsvKiwi3lTIfJjgyxHQ2OXd0AU64RWvMQiGAmdvWj/qF1ZR1371E3HrgNRh3vuopV
-         rI7wcjQ4F8ddQk7xTKUsCb++p2Hq+/O3EQVBNMP3fgmPQwvwjPitC+gxmsH0XEgLQu
-         t9EiVcHVKXgz7/H700x4pNWdQilF+T0MmuOTqa0o=
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 187386182E
-Authentication-Results: pdx-caf-mail.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: pdx-caf-mail.web.codeaurora.org; spf=none smtp.mailfrom=daidavid1@codeaurora.org
-From:   David Dai <daidavid1@codeaurora.org>
-To:     georgi.djakov@linaro.org, bjorn.andersson@linaro.org,
-        robh+dt@kernel.org
-Cc:     David Dai <daidavid1@codeaurora.org>, evgreen@google.com,
-        ilina@codeaurora.org, seansw@qti.qualcomm.com, elder@linaro.org,
-        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org
-Subject: [PATCH 2/2] arm64: dts: sdm845: Redefine interconnect provider DT nodes
-Date:   Fri, 19 Jul 2019 13:32:24 -0700
-Message-Id: <1563568344-1274-3-git-send-email-daidavid1@codeaurora.org>
-X-Mailer: git-send-email 1.9.1
-In-Reply-To: <1563568344-1274-1-git-send-email-daidavid1@codeaurora.org>
-References: <1563568344-1274-1-git-send-email-daidavid1@codeaurora.org>
+        Sun, 21 Jul 2019 10:36:03 -0400
+Received: by mail-pf1-f194.google.com with SMTP id f17so12145846pfn.6
+        for <linux-arm-msm@vger.kernel.org>; Sun, 21 Jul 2019 07:36:02 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=dUXYRm/uz8K2XBOkvg3xI+TWD4KiZR/gBR+tdrB+5/M=;
+        b=u0nQEgsK5XW04foSXvHPhWir6Of8Loz+g4o1MYIxaxq55hOEcaaWNiMpb5HGyV69Mp
+         zU7SxNdTK7YpclZx+ToLBA1sXGYxMOst7ZBHPvmZjezavtjt0dCkOh+1Syq5z41v1q81
+         CNj+TO6N3SxamhlgyGY7RPZ8nVqLWTuxbi6oqlsp8HrU92n2O9ZGzCAHMy8MsvMJg7ct
+         8oaWekIuk5dKn/WDFAM/VOTVjTAixOtgtR4sTEUIR/B0t5v8ujKPs43C0WXLTJfkRPwA
+         +4IP3CoifdQcu33xzcgM5KKdfH/PyzLTXybDCY4YhqijHirIPsr/ICvB7G61iXgFTngb
+         x7kQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=dUXYRm/uz8K2XBOkvg3xI+TWD4KiZR/gBR+tdrB+5/M=;
+        b=hiIi8yJkg5hlMmOD8qNVqbyWlMixoOboMs2lxgCISyQMc7azbpVs5jDww9QEG31Cq4
+         FA8u9AmxsvSCn0h2Mpbb+mhN0Ar0sf6+gBDPPJ1mkev263WKV9mg6grtvlemoYzFAgd6
+         l6WT2qcvhAgJ2IDs/721ERuLnjySge7DRz15RsAwTE98sU9gunBk0/RMf97mEIO+KOKy
+         6CozDAbohLPYEk1Ea6rTd0BBsP+UZbgvF4B14pqoWrEfoaDwc7KKRX5jIkrlh4qL+ZqZ
+         yMMNTnKk9PimTGuVsFhrZ55N3D0ClVY8zzF1MzZViQ1uDGg57spAIEAzR1Q0kTIT4Ie1
+         LapA==
+X-Gm-Message-State: APjAAAVmlTA6JWSMDlO7Isf4uGDxdX/hvLeQI/1dqMvP+mdSrmW5C3UE
+        P+4DgEv3Hz68hUjtNJNiEWpRDw==
+X-Google-Smtp-Source: APXvYqy6pit+B+1VE5RtCzbLoThJOVpMtSj3TBYYM5jFRngMM3NfToD4eEpQOnXJCxl5W46gRJWmTA==
+X-Received: by 2002:a63:774c:: with SMTP id s73mr66455192pgc.238.1563719761745;
+        Sun, 21 Jul 2019 07:36:01 -0700 (PDT)
+Received: from leoy-ThinkPad-X240s (li1433-81.members.linode.com. [45.33.106.81])
+        by smtp.gmail.com with ESMTPSA id o3sm68687081pje.1.2019.07.21.07.35.56
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Sun, 21 Jul 2019 07:36:00 -0700 (PDT)
+Date:   Sun, 21 Jul 2019 22:35:53 +0800
+From:   Leo Yan <leo.yan@linaro.org>
+To:     Mathieu Poirier <mathieu.poirier@linaro.org>
+Cc:     Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Suzuki K Poulose <suzuki.poulose@arm.com>,
+        Alexander Shishkin <alexander.shishkin@linux.intel.com>,
+        Mike Leach <mike.leach@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        devicetree@vger.kernel.org, David Brown <david.brown@linaro.org>,
+        Mark Rutland <mark.rutland@arm.com>,
+        Rajendra Nayak <rnayak@codeaurora.org>,
+        Vivek Gautam <vivek.gautam@codeaurora.org>,
+        Sibi Sankar <sibis@codeaurora.org>,
+        linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org,
+        Marc Gonzalez <marc.w.gonzalez@free.fr>
+Subject: Re: [PATCHv8 5/5] coresight: cpu-debug: Add support for Qualcomm Kryo
+Message-ID: <20190721143553.GA25136@leoy-ThinkPad-X240s>
+References: <cover.1562940244.git.saiprakash.ranjan@codeaurora.org>
+ <e2c4cc7c6ccaa5695f25af20c8e487ac53b39955.1562940244.git.saiprakash.ranjan@codeaurora.org>
+ <20190717165602.GA4271@xps15>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20190717165602.GA4271@xps15>
+User-Agent: Mutt/1.9.4 (2018-02-28)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add the DT nodes for each of the Network-On-Chip interconnect
-buses found on SDM845 based platform and redefine the rsc_hlos
-child node as a bcm-voter device to better represent the hardware.
+On Wed, Jul 17, 2019 at 10:56:02AM -0600, Mathieu Poirier wrote:
+> On Fri, Jul 12, 2019 at 07:46:27PM +0530, Sai Prakash Ranjan wrote:
+> > Add support for coresight CPU debug module on Qualcomm
+> > Kryo CPUs. This patch adds the UCI entries for Kryo CPUs
+> > found on MSM8996 which shares the same PIDs as ETMs.
+> > 
+> > Without this, below error is observed on MSM8996:
+> > 
+> > [    5.429867] OF: graph: no port node found in /soc/debug@3810000
+> > [    5.429938] coresight-etm4x: probe of 3810000.debug failed with error -22
+> > [    5.435415] coresight-cpu-debug 3810000.debug: Coresight debug-CPU0 initialized
+> > [    5.446474] OF: graph: no port node found in /soc/debug@3910000
+> > [    5.448927] coresight-etm4x: probe of 3910000.debug failed with error -22
+> > [    5.454681] coresight-cpu-debug 3910000.debug: Coresight debug-CPU1 initialized
+> > [    5.487765] OF: graph: no port node found in /soc/debug@3a10000
+> > [    5.488007] coresight-etm4x: probe of 3a10000.debug failed with error -22
+> > [    5.493024] coresight-cpu-debug 3a10000.debug: Coresight debug-CPU2 initialized
+> > [    5.501802] OF: graph: no port node found in /soc/debug@3b10000
+> > [    5.512901] coresight-etm4x: probe of 3b10000.debug failed with error -22
+> > [    5.513192] coresight-cpu-debug 3b10000.debug: Coresight debug-CPU3 initialized
+> > 
+> > Signed-off-by: Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
+> > ---
+> >  .../hwtracing/coresight/coresight-cpu-debug.c | 33 +++++++++----------
+> >  drivers/hwtracing/coresight/coresight-priv.h  | 10 +++---
+> >  2 files changed, 21 insertions(+), 22 deletions(-)
+> > 
+> > diff --git a/drivers/hwtracing/coresight/coresight-cpu-debug.c b/drivers/hwtracing/coresight/coresight-cpu-debug.c
+> > index 2463aa7ab4f6..96544b348c27 100644
+> > --- a/drivers/hwtracing/coresight/coresight-cpu-debug.c
+> > +++ b/drivers/hwtracing/coresight/coresight-cpu-debug.c
+> > @@ -646,24 +646,23 @@ static int debug_remove(struct amba_device *adev)
+> >  	return 0;
+> >  }
+> >  
+> > +static const struct amba_cs_uci_id uci_id_debug[] = {
+> > +	{
+> > +		/*  CPU Debug UCI data */
+> > +		.devarch	= 0x47706a15,
+> > +		.devarch_mask	= 0xfff0ffff,
+> > +		.devtype	= 0x00000015,
+> > +	}
+> > +};
+> > +
+> >  static const struct amba_id debug_ids[] = {
+> > -	{       /* Debug for Cortex-A53 */
+> > -		.id	= 0x000bbd03,
+> > -		.mask	= 0x000fffff,
+> > -	},
+> > -	{       /* Debug for Cortex-A57 */
+> > -		.id	= 0x000bbd07,
+> > -		.mask	= 0x000fffff,
+> > -	},
+> > -	{       /* Debug for Cortex-A72 */
+> > -		.id	= 0x000bbd08,
+> > -		.mask	= 0x000fffff,
+> > -	},
+> > -	{       /* Debug for Cortex-A73 */
+> > -		.id	= 0x000bbd09,
+> > -		.mask	= 0x000fffff,
+> > -	},
+> > -	{ 0, 0 },
+> > +	CS_AMBA_ID(0x000bbd03),				/* Cortex-A53 */
+> > +	CS_AMBA_ID(0x000bbd07),				/* Cortex-A57 */
+> > +	CS_AMBA_ID(0x000bbd08),				/* Cortex-A72 */
+> > +	CS_AMBA_ID(0x000bbd09),				/* Cortex-A73 */
+> > +	CS_AMBA_UCI_ID(0x000f0205, uci_id_debug),	/* Qualcomm Kryo */
+> > +	CS_AMBA_UCI_ID(0x000f0211, uci_id_debug),	/* Qualcomm Kryo */
+> > +	{},
+> >  };
+> >  
+> >  static struct amba_driver debug_driver = {
+> > diff --git a/drivers/hwtracing/coresight/coresight-priv.h b/drivers/hwtracing/coresight/coresight-priv.h
+> > index 7d401790dd7e..41ae5863104d 100644
+> > --- a/drivers/hwtracing/coresight/coresight-priv.h
+> > +++ b/drivers/hwtracing/coresight/coresight-priv.h
+> > @@ -185,11 +185,11 @@ static inline int etm_writel_cp14(u32 off, u32 val) { return 0; }
+> >  	}
+> >  
+> >  /* coresight AMBA ID, full UCI structure: id table entry. */
+> > -#define CS_AMBA_UCI_ID(pid, uci_ptr)	\
+> > -	{				\
+> > -		.id	= pid,		\
+> > -		.mask	= 0x000fffff,	\
+> > -		.data	= uci_ptr	\
+> > +#define CS_AMBA_UCI_ID(pid, uci_ptr)		\
+> > +	{					\
+> > +		.id	= pid,			\
+> > +		.mask	= 0x000fffff,		\
+> > +		.data	= (void *)uci_ptr	\
+> >  	}
+> 
+> I will pickup this patch - it will show up in my next tree when rc1 comes out.
 
-Signed-off-by: David Dai <daidavid1@codeaurora.org>
----
- arch/arm64/boot/dts/qcom/sdm845.dtsi | 61 ++++++++++++++++++++++++++++++++++--
- 1 file changed, 58 insertions(+), 3 deletions(-)
+I tested this patch on the mainline kernel with latest commit
+f1a3b43cc1f5 ("Merge branch 'for-linus' of
+git://git.kernel.org/pub/scm/linux/kernel/git/dtor/input"). FWIW:
 
-diff --git a/arch/arm64/boot/dts/qcom/sdm845.dtsi b/arch/arm64/boot/dts/qcom/sdm845.dtsi
-index e7d78bc..204222e 100644
---- a/arch/arm64/boot/dts/qcom/sdm845.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sdm845.dtsi
-@@ -610,6 +610,62 @@
- 			#power-domain-cells = <1>;
- 		};
- 
-+		aggre1_noc: interconnect@16e0000 {
-+			compatible = "qcom,sdm845-aggre1_noc";
-+			reg = <0 0x16e0000 0 0xd080>;
-+			#interconnect-cells = <1>;
-+			qcom,bcm-voter = <&apps_bcm_voter>;
-+		};
-+
-+		aggre2_noc: interconnect@1700000 {
-+			compatible = "qcom,sdm845-aggre2_noc";
-+			reg = <0 0x1700000 0 0x3b100>;
-+			#interconnect-cells = <1>;
-+			qcom,bcm-voter = <&apps_bcm_voter>;
-+		};
-+
-+		config_noc: interconnect@1500000 {
-+			compatible = "qcom,sdm845-config_noc";
-+			reg = <0 0x1500000 0 0x5080>;
-+			#interconnect-cells = <1>;
-+			qcom,bcm-voter = <&apps_bcm_voter>;
-+		};
-+
-+		dc_noc: interconnect@14e0000 {
-+			compatible = "qcom,sdm845-dc_noc";
-+			reg = <0 0x14e0000 0 0x400>;
-+			#interconnect-cells = <1>;
-+			qcom,bcm-voter = <&apps_bcm_voter>;
-+		};
-+
-+		gladiator_noc: interconnect@17900000 {
-+			compatible = "qcom,sdm845-gladiator_noc";
-+			reg = <0 0x17900000 0 0xd080>;
-+			#interconnect-cells = <1>;
-+			qcom,bcm-voter = <&apps_bcm_voter>;
-+		};
-+
-+		mem_noc: interconnect@1380000 {
-+			compatible = "qcom,sdm845-mem_noc";
-+			reg = <0 0x1380000 0 0x27200>;
-+			#interconnect-cells = <1>;
-+			qcom,bcm-voter = <&apps_bcm_voter>;
-+		};
-+
-+		mmss_noc: interconnect@1740000 {
-+			compatible = "qcom,sdm845-mmss_noc";
-+			reg = <0 0x1740000 0 0x1c1000>;
-+			#interconnect-cells = <1>;
-+			qcom,bcm-voter = <&apps_bcm_voter>;
-+		};
-+
-+		system_noc: interconnect@1620000 {
-+			compatible = "qcom,sdm845-system_noc";
-+			reg = <0 0x1620000 0 0x18080>;
-+			#interconnect-cells = <1>;
-+			qcom,bcm-voter = <&apps_bcm_voter>;
-+		};
-+
- 		qfprom@784000 {
- 			compatible = "qcom,qfprom";
- 			reg = <0 0x00784000 0 0x8ff>;
-@@ -2801,9 +2857,8 @@
- 				};
- 			};
- 
--			rsc_hlos: interconnect {
--				compatible = "qcom,sdm845-rsc-hlos";
--				#interconnect-cells = <1>;
-+			apps_bcm_voter: bcm_voter {
-+				compatible = "qcom,sdm845-bcm-voter";
- 			};
- 		};
- 
--- 
-The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
-a Linux Foundation Collaborative Project
+Tested-by: Leo Yan <leo.yan@linaro.org>
 
+P.s. Acutally I tested this patch for 5.2-rcx a few days ago and found
+a regression for CPU debug module: I observed the CPU debug module
+panic dump will stuck.  After I pulled to latest kernel code base the
+CPU debug module can work well; also works well with this patch.  F.Y.I.
+
+Thanks,
+Leo Yan
