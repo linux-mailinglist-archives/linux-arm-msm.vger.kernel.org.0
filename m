@@ -2,194 +2,386 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 0FDD370D4F
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 Jul 2019 01:27:24 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A1C3670D5A
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 Jul 2019 01:33:25 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729177AbfGVX1X (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 22 Jul 2019 19:27:23 -0400
-Received: from mail-pg1-f195.google.com ([209.85.215.195]:40573 "EHLO
-        mail-pg1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728727AbfGVX1W (ORCPT
+        id S1730815AbfGVXdY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 22 Jul 2019 19:33:24 -0400
+Received: from mail-pl1-f195.google.com ([209.85.214.195]:40380 "EHLO
+        mail-pl1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1730698AbfGVXdX (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 22 Jul 2019 19:27:22 -0400
-Received: by mail-pg1-f195.google.com with SMTP id w10so18396731pgj.7
-        for <linux-arm-msm@vger.kernel.org>; Mon, 22 Jul 2019 16:27:22 -0700 (PDT)
+        Mon, 22 Jul 2019 19:33:23 -0400
+Received: by mail-pl1-f195.google.com with SMTP id a93so19768506pla.7
+        for <linux-arm-msm@vger.kernel.org>; Mon, 22 Jul 2019 16:33:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to:user-agent;
-        bh=fBgf+Q+vkinrDpZV+VgHPbylGn8fCHsgqpUkQFyCRGE=;
-        b=aUyd/VqQ72bWrzac2rWCM7rmT/HoUw2iXPuYr0Z+bkfBXXigQZkfKVG5jkHl/399lq
-         D4sEkgwJtBpTXzvRHfiydb+H12cWGeINKcHaPCo5sVClvxSL0pqogwO5lAID5lD+yYAy
-         1rW4lJlhoj7W2tX2+cuclbCbLVJKIMis+dX11k33IFe0aQZxratrEU7SisxSgrWP+eHq
-         ZR1v8+G5ouz59nsUIy784sQeHTV9kCzZtYpz8o1RKKb5vpNul1+hh/vYqhnl6XtCZew+
-         fiUwPA548dmNpqz3IIINgRYa+yxdVopVxKIGuOBMIWUfIPz5Y7zdz/8nap1g+AinMrkg
-         WnCg==
+        bh=TzlfJdYgrQoIt9U3A/d4qiVQDQEbWHWLcVCY5/nV3Ik=;
+        b=jzNyCvqdXI+gPekP2kX06K2bwc10ADvouwz8paxumGw+fYLrYsu8TkHyWZxl7MWbAg
+         33NcN3gdS6eJFgPb7/ljujmHYQmSc5NJ78mTYoqT5YEXUmn5mT956yR8VhPKrM1LbAx2
+         kTpZW0LA/se3jCZd6sZU0+UKJyWHbvBLFRKA9NvUFCG1n735WHXriy9Yme350DH8xXeh
+         nHn/X0rsSrcjqWdoo0Tcku880AXerzX4I37QmRnSgfp2AxHQrp99YlJY7x4AvSJ1xA9r
+         j3Wp0eID4u5oz/HuyafSOH1Chq7qdpbxlyLi5mXB8jt4e68lYC4ZsCI4j5Uw9L/Twqjb
+         WayQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=fBgf+Q+vkinrDpZV+VgHPbylGn8fCHsgqpUkQFyCRGE=;
-        b=tZpjxTb8LCH+Fi60orwsMEQF+/2+0smIrGWzwiew0Q1UF8y8noBPApGPZYGhz3bR7M
-         UK7IAjMmlwyphggQxRrGHvWGdSQ+N/fDK6NpxKP/u+3hnKSb+hf5obqA4HkA3rsczFzd
-         QaXavKq9OuQ79MLrLVXa7OAu+iQeBD1sc1g8d4XvFJ4bysUOdzGIQDaO9ulj9dBhh+sv
-         rr4wnWpgO3rICQD6R1SXCsSFdhkFRUm5GK3n7ShFXdUe6FjG8fdBZAOagpoDErl6bn/u
-         yn/dlYWhSHL41REcu5iYpvAwAkUwvhMCQALghlxf7kRPlLwaSmaveoNA7bdOGkveOsUh
-         4EEQ==
-X-Gm-Message-State: APjAAAXAqxba/vws2nV6ixPFN5WjNO1vTuDXp7RZo6asT8HIcy94NiMk
-        4T0PcfcPz7NspplN7dKyPkWkMA==
-X-Google-Smtp-Source: APXvYqylTKDwODTJW9tUxv6uI8K4Q/IH9Ngu43INkSMBEqXMCRUmy8x64/UM2q5Wn1rAtPv5k7gPXA==
-X-Received: by 2002:aa7:86c6:: with SMTP id h6mr2728534pfo.51.1563838041953;
-        Mon, 22 Jul 2019 16:27:21 -0700 (PDT)
-Received: from minitux (104-188-17-28.lightspeed.sndgca.sbcglobal.net. [104.188.17.28])
-        by smtp.gmail.com with ESMTPSA id b30sm59882598pfr.117.2019.07.22.16.27.20
+        bh=TzlfJdYgrQoIt9U3A/d4qiVQDQEbWHWLcVCY5/nV3Ik=;
+        b=S2yilskczZJdvVy8acsuLd4L68xOYxszBS1kGx/VKWUILTyB3O7EKg7f8qdm3xhGNl
+         PTjkyL4figTaj/V3hUpniDkTHy/+dxBURBy7xEq4i1vFQYWylaVlo7ElooTnrG2bRzDg
+         6LsGj7U/U8ZGFwyXdJxSNrWodYzWWnfDDc3mmEwmxv4oB5JRAKBattLjztMHBmQhrS5f
+         Sf/rw+YIvKn2fW/3VWm9iL8REAV0AwhskUlC/2zUftwPW0QOu1h7vikw5HZxl/Cs1jRo
+         Z1P9v8uOelko05R4SeTGYLf84GuD/Tf3p3Frn2xg9iN5gb9DtGdVpZVeeV2efIpKbaZ/
+         H/8A==
+X-Gm-Message-State: APjAAAUnFjT+SHFPtiHZHBf4hnMgJUAOM62N2q1Eg7A+RHRdGBa9JLpt
+        FJAa2u331pdhVc4zD72YSVq+tg==
+X-Google-Smtp-Source: APXvYqync7PdiwzGEaE/N0XkQSXFteGf4DXRBZAS/FIRbPwBg8yeV9IuRcToWRndIhs3H91Dvh+7tw==
+X-Received: by 2002:a17:902:5ac4:: with SMTP id g4mr79482054plm.80.1563838402751;
+        Mon, 22 Jul 2019 16:33:22 -0700 (PDT)
+Received: from tuxbook-pro (104-188-17-28.lightspeed.sndgca.sbcglobal.net. [104.188.17.28])
+        by smtp.gmail.com with ESMTPSA id o14sm33507506pjp.19.2019.07.22.16.33.21
         (version=TLS1_3 cipher=AEAD-AES256-GCM-SHA384 bits=256/256);
-        Mon, 22 Jul 2019 16:27:21 -0700 (PDT)
-Date:   Mon, 22 Jul 2019 16:27:19 -0700
+        Mon, 22 Jul 2019 16:33:22 -0700 (PDT)
+Date:   Mon, 22 Jul 2019 16:34:44 -0700
 From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Stephen Boyd <swboyd@chromium.org>
-Cc:     Andy Gross <agross@kernel.org>, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org,
-        Ian Jackson <ian.jackson@citrix.com>,
-        Julien Grall <julien.grall@arm.com>,
-        Avaneesh Kumar Dwivedi <akdwived@codeaurora.org>
-Subject: Re: [PATCH 2/3] firmware: qcom_scm: Cleanup code in
- qcom_scm_assign_mem()
-Message-ID: <20190722232719.GT30636@minitux>
-References: <23774.56553.445601.436491@mariner.uk.xensource.com>
- <20190517210923.202131-3-swboyd@chromium.org>
+To:     Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
+Cc:     agross@kernel.org, benjamin.tissoires@redhat.com,
+        dmitry.torokhov@gmail.com, jikos@kernel.org, hdegoede@redhat.com,
+        lee.jones@linaro.org, xnox@ubuntu.com, robh+dt@kernel.org,
+        mark.rutland@arm.com, linux-input@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v8 3/5] arm64: dts: qcom: Add Lenovo Miix 630
+Message-ID: <20190722233444.GA7352@tuxbook-pro>
+References: <20190621144854.38568-1-jeffrey.l.hugo@gmail.com>
+ <20190621145450.38741-1-jeffrey.l.hugo@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20190517210923.202131-3-swboyd@chromium.org>
-User-Agent: Mutt/1.12.0 (2019-05-25)
+In-Reply-To: <20190621145450.38741-1-jeffrey.l.hugo@gmail.com>
+User-Agent: Mutt/1.11.4 (2019-03-13)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri 17 May 14:09 PDT 2019, Stephen Boyd wrote:
+On Fri 21 Jun 07:54 PDT 2019, Jeffrey Hugo wrote:
 
-> There are some questionable coding styles in this function. It looks
-> quite odd to deref a pointer with array indexing that only uses the
-> first element. Also, destroying an input/output variable halfway through
-> the function and then overwriting it on success is not clear. It's
-> better to use a local variable and the kernel macros to step through
-> each bit set in a bitmask and clearly show where outputs are set.
+> This adds the initial DT for the Lenovo Miix 630 laptop.  Supported
+> functionality includes USB (host), microSD-card, keyboard, and trackpad.
 > 
-> Cc: Ian Jackson <ian.jackson@citrix.com>
-> Cc: Julien Grall <julien.grall@arm.com>
-> Cc: Bjorn Andersson <bjorn.andersson@linaro.org>
-> Cc: Avaneesh Kumar Dwivedi <akdwived@codeaurora.org>
-> Signed-off-by: Stephen Boyd <swboyd@chromium.org>
-> ---
->  drivers/firmware/qcom_scm.c | 34 ++++++++++++++++------------------
->  include/linux/qcom_scm.h    |  9 +++++----
->  2 files changed, 21 insertions(+), 22 deletions(-)
-> 
-> diff --git a/drivers/firmware/qcom_scm.c b/drivers/firmware/qcom_scm.c
-> index 0c63495cf269..153f13f72bac 100644
-> --- a/drivers/firmware/qcom_scm.c
-> +++ b/drivers/firmware/qcom_scm.c
-> @@ -443,7 +443,8 @@ EXPORT_SYMBOL(qcom_scm_set_remote_state);
->   */
->  int qcom_scm_assign_mem(phys_addr_t mem_addr, size_t mem_sz,
->  			unsigned int *srcvm,
-> -			struct qcom_scm_vmperm *newvm, int dest_cnt)
-> +			const struct qcom_scm_vmperm *newvm,
-> +			unsigned int dest_cnt)
->  {
->  	struct qcom_scm_current_perm_info *destvm;
->  	struct qcom_scm_mem_map_info *mem_to_map;
-> @@ -458,11 +459,10 @@ int qcom_scm_assign_mem(phys_addr_t mem_addr, size_t mem_sz,
->  	int next_vm;
->  	__le32 *src;
->  	void *ptr;
-> -	int ret;
-> -	int len;
-> -	int i;
-> +	int ret, i, b;
-> +	unsigned long srcvm_bits = *srcvm;
->  
-> -	src_sz = hweight_long(*srcvm) * sizeof(*src);
-> +	src_sz = hweight_long(srcvm_bits) * sizeof(*src);
->  	mem_to_map_sz = sizeof(*mem_to_map);
->  	dest_sz = dest_cnt * sizeof(*destvm);
->  	ptr_sz = ALIGN(src_sz, SZ_64) + ALIGN(mem_to_map_sz, SZ_64) +
-> @@ -475,28 +475,26 @@ int qcom_scm_assign_mem(phys_addr_t mem_addr, size_t mem_sz,
->  
->  	/* Fill source vmid detail */
->  	src = ptr;
-> -	len = hweight_long(*srcvm);
-> -	for (i = 0; i < len; i++) {
-> -		src[i] = cpu_to_le32(ffs(*srcvm) - 1);
-> -		*srcvm ^= 1 << (ffs(*srcvm) - 1);
-> -	}
-> +	i = 0;
-> +	for_each_set_bit(b, &srcvm_bits, sizeof(srcvm_bits))
+> Signed-off-by: Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
 
-The modem is sad that you only pass 8 here. Changed it to BITS_PER_LONG
-to include the modem's permission bit and applied all three patches.
+Applied patch 3-5
 
 Thanks,
 Bjorn
 
-> +		src[i++] = cpu_to_le32(b);
->  
->  	/* Fill details of mem buff to map */
->  	mem_to_map = ptr + ALIGN(src_sz, SZ_64);
->  	mem_to_map_phys = ptr_phys + ALIGN(src_sz, SZ_64);
-> -	mem_to_map[0].mem_addr = cpu_to_le64(mem_addr);
-> -	mem_to_map[0].mem_size = cpu_to_le64(mem_sz);
-> +	mem_to_map->mem_addr = cpu_to_le64(mem_addr);
-> +	mem_to_map->mem_size = cpu_to_le64(mem_sz);
->  
->  	next_vm = 0;
->  	/* Fill details of next vmid detail */
->  	destvm = ptr + ALIGN(mem_to_map_sz, SZ_64) + ALIGN(src_sz, SZ_64);
->  	dest_phys = ptr_phys + ALIGN(mem_to_map_sz, SZ_64) + ALIGN(src_sz, SZ_64);
-> -	for (i = 0; i < dest_cnt; i++) {
-> -		destvm[i].vmid = cpu_to_le32(newvm[i].vmid);
-> -		destvm[i].perm = cpu_to_le32(newvm[i].perm);
-> -		destvm[i].ctx = 0;
-> -		destvm[i].ctx_size = 0;
-> -		next_vm |= BIT(newvm[i].vmid);
-> +	for (i = 0; i < dest_cnt; i++, destvm++, newvm++) {
-> +		destvm->vmid = cpu_to_le32(newvm->vmid);
-> +		destvm->perm = cpu_to_le32(newvm->perm);
-> +		destvm->ctx = 0;
-> +		destvm->ctx_size = 0;
-> +		next_vm |= BIT(newvm->vmid);
->  	}
->  
->  	ret = __qcom_scm_assign_mem(__scm->dev, mem_to_map_phys, mem_to_map_sz,
-> diff --git a/include/linux/qcom_scm.h b/include/linux/qcom_scm.h
-> index d0aecc04c54b..1d406403c843 100644
-> --- a/include/linux/qcom_scm.h
-> +++ b/include/linux/qcom_scm.h
-> @@ -57,8 +57,9 @@ extern int qcom_scm_pas_mem_setup(u32 peripheral, phys_addr_t addr,
->  extern int qcom_scm_pas_auth_and_reset(u32 peripheral);
->  extern int qcom_scm_pas_shutdown(u32 peripheral);
->  extern int qcom_scm_assign_mem(phys_addr_t mem_addr, size_t mem_sz,
-> -			       unsigned int *src, struct qcom_scm_vmperm *newvm,
-> -			       int dest_cnt);
-> +			       unsigned int *src,
-> +			       const struct qcom_scm_vmperm *newvm,
-> +			       unsigned int dest_cnt);
->  extern void qcom_scm_cpu_power_down(u32 flags);
->  extern u32 qcom_scm_get_version(void);
->  extern int qcom_scm_set_remote_state(u32 state, u32 id);
-> @@ -95,8 +96,8 @@ qcom_scm_pas_auth_and_reset(u32 peripheral) { return -ENODEV; }
->  static inline int qcom_scm_pas_shutdown(u32 peripheral) { return -ENODEV; }
->  static inline int qcom_scm_assign_mem(phys_addr_t mem_addr, size_t mem_sz,
->  				      unsigned int *src,
-> -				      struct qcom_scm_vmperm *newvm,
-> -				      int dest_cnt) { return -ENODEV; }
-> +				      const struct qcom_scm_vmperm *newvm,
-> +				      unsigned int dest_cnt) { return -ENODEV; }
->  static inline void qcom_scm_cpu_power_down(u32 flags) {}
->  static inline u32 qcom_scm_get_version(void) { return 0; }
->  static inline u32
+> ---
+>  arch/arm64/boot/dts/qcom/Makefile             |   1 +
+>  .../boot/dts/qcom/msm8998-clamshell.dtsi      | 240 ++++++++++++++++++
+>  .../boot/dts/qcom/msm8998-lenovo-miix-630.dts |  30 +++
+>  3 files changed, 271 insertions(+)
+>  create mode 100644 arch/arm64/boot/dts/qcom/msm8998-clamshell.dtsi
+>  create mode 100644 arch/arm64/boot/dts/qcom/msm8998-lenovo-miix-630.dts
+> 
+> diff --git a/arch/arm64/boot/dts/qcom/Makefile b/arch/arm64/boot/dts/qcom/Makefile
+> index 21d548f02d39..c3e4307bcbd4 100644
+> --- a/arch/arm64/boot/dts/qcom/Makefile
+> +++ b/arch/arm64/boot/dts/qcom/Makefile
+> @@ -6,6 +6,7 @@ dtb-$(CONFIG_ARCH_QCOM)	+= msm8916-mtp.dtb
+>  dtb-$(CONFIG_ARCH_QCOM)	+= msm8992-bullhead-rev-101.dtb
+>  dtb-$(CONFIG_ARCH_QCOM)	+= msm8994-angler-rev-101.dtb
+>  dtb-$(CONFIG_ARCH_QCOM)	+= msm8996-mtp.dtb
+> +dtb-$(CONFIG_ARCH_QCOM)	+= msm8998-lenovo-miix-630.dtb
+>  dtb-$(CONFIG_ARCH_QCOM)	+= msm8998-mtp.dtb
+>  dtb-$(CONFIG_ARCH_QCOM)	+= sdm845-mtp.dtb
+>  dtb-$(CONFIG_ARCH_QCOM)	+= qcs404-evb-1000.dtb
+> diff --git a/arch/arm64/boot/dts/qcom/msm8998-clamshell.dtsi b/arch/arm64/boot/dts/qcom/msm8998-clamshell.dtsi
+> new file mode 100644
+> index 000000000000..9682d4dd7496
+> --- /dev/null
+> +++ b/arch/arm64/boot/dts/qcom/msm8998-clamshell.dtsi
+> @@ -0,0 +1,240 @@
+> +// SPDX-License-Identifier: GPL-2.0
+> +/* Copyright (c) 2019, Jeffrey Hugo. All rights reserved. */
+> +
+> +/*
+> + * Common include for MSM8998 clamshell devices, ie the Lenovo Miix 630,
+> + * Asus NovaGo TP370QL, and HP Envy x2.  All three devices are basically the
+> + * same, with differences in peripherals.
+> + */
+> +
+> +#include "msm8998.dtsi"
+> +#include "pm8998.dtsi"
+> +#include "pm8005.dtsi"
+> +
+> +/ {
+> +	chosen {
+> +	};
+> +
+> +	vph_pwr: vph-pwr-regulator {
+> +		compatible = "regulator-fixed";
+> +		regulator-name = "vph_pwr";
+> +		regulator-always-on;
+> +		regulator-boot-on;
+> +	};
+> +};
+> +
+> +&qusb2phy {
+> +	status = "okay";
+> +
+> +	vdda-pll-supply = <&vreg_l12a_1p8>;
+> +	vdda-phy-dpdm-supply = <&vreg_l24a_3p075>;
+> +};
+> +
+> +&rpm_requests {
+> +	pm8998-regulators {
+> +		compatible = "qcom,rpm-pm8998-regulators";
+> +
+> +		vdd_s1-supply = <&vph_pwr>;
+> +		vdd_s2-supply = <&vph_pwr>;
+> +		vdd_s3-supply = <&vph_pwr>;
+> +		vdd_s4-supply = <&vph_pwr>;
+> +		vdd_s5-supply = <&vph_pwr>;
+> +		vdd_s6-supply = <&vph_pwr>;
+> +		vdd_s7-supply = <&vph_pwr>;
+> +		vdd_s8-supply = <&vph_pwr>;
+> +		vdd_s9-supply = <&vph_pwr>;
+> +		vdd_s10-supply = <&vph_pwr>;
+> +		vdd_s11-supply = <&vph_pwr>;
+> +		vdd_s12-supply = <&vph_pwr>;
+> +		vdd_s13-supply = <&vph_pwr>;
+> +		vdd_l1_l27-supply = <&vreg_s7a_1p025>;
+> +		vdd_l2_l8_l17-supply = <&vreg_s3a_1p35>;
+> +		vdd_l3_l11-supply = <&vreg_s7a_1p025>;
+> +		vdd_l4_l5-supply = <&vreg_s7a_1p025>;
+> +		vdd_l6-supply = <&vreg_s5a_2p04>;
+> +		vdd_l7_l12_l14_l15-supply = <&vreg_s5a_2p04>;
+> +		vdd_l9-supply = <&vph_pwr>;
+> +		vdd_l10_l23_l25-supply = <&vph_pwr>;
+> +		vdd_l13_l19_l21-supply = <&vph_pwr>;
+> +		vdd_l16_l28-supply = <&vph_pwr>;
+> +		vdd_l18_l22-supply = <&vph_pwr>;
+> +		vdd_l20_l24-supply = <&vph_pwr>;
+> +		vdd_l26-supply = <&vreg_s3a_1p35>;
+> +		vdd_lvs1_lvs2-supply = <&vreg_s4a_1p8>;
+> +
+> +		vreg_s3a_1p35: s3 {
+> +			regulator-min-microvolt = <1352000>;
+> +			regulator-max-microvolt = <1352000>;
+> +		};
+> +		vreg_s4a_1p8: s4 {
+> +			regulator-min-microvolt = <1800000>;
+> +			regulator-max-microvolt = <1800000>;
+> +			regulator-allow-set-load;
+> +		};
+> +		vreg_s5a_2p04: s5 {
+> +			regulator-min-microvolt = <1904000>;
+> +			regulator-max-microvolt = <2040000>;
+> +		};
+> +		vreg_s7a_1p025: s7 {
+> +			regulator-min-microvolt = <900000>;
+> +			regulator-max-microvolt = <1028000>;
+> +		};
+> +		vreg_l1a_0p875: l1 {
+> +			regulator-min-microvolt = <880000>;
+> +			regulator-max-microvolt = <880000>;
+> +			regulator-allow-set-load;
+> +		};
+> +		vreg_l2a_1p2: l2 {
+> +			regulator-min-microvolt = <1200000>;
+> +			regulator-max-microvolt = <1200000>;
+> +			regulator-allow-set-load;
+> +		};
+> +		vreg_l3a_1p0: l3 {
+> +			regulator-min-microvolt = <1000000>;
+> +			regulator-max-microvolt = <1000000>;
+> +		};
+> +		vreg_l5a_0p8: l5 {
+> +			regulator-min-microvolt = <800000>;
+> +			regulator-max-microvolt = <800000>;
+> +		};
+> +		vreg_l6a_1p8: l6 {
+> +			regulator-min-microvolt = <1808000>;
+> +			regulator-max-microvolt = <1808000>;
+> +		};
+> +		vreg_l7a_1p8: l7 {
+> +			regulator-min-microvolt = <1800000>;
+> +			regulator-max-microvolt = <1800000>;
+> +		};
+> +		vreg_l8a_1p2: l8 {
+> +			regulator-min-microvolt = <1200000>;
+> +			regulator-max-microvolt = <1200000>;
+> +		};
+> +		vreg_l9a_1p8: l9 {
+> +			regulator-min-microvolt = <1808000>;
+> +			regulator-max-microvolt = <2960000>;
+> +		};
+> +		vreg_l10a_1p8: l10 {
+> +			regulator-min-microvolt = <1808000>;
+> +			regulator-max-microvolt = <2960000>;
+> +		};
+> +		vreg_l11a_1p0: l11 {
+> +			regulator-min-microvolt = <1000000>;
+> +			regulator-max-microvolt = <1000000>;
+> +		};
+> +		vreg_l12a_1p8: l12 {
+> +			regulator-min-microvolt = <1800000>;
+> +			regulator-max-microvolt = <1800000>;
+> +		};
+> +		vreg_l13a_2p95: l13 {
+> +			regulator-min-microvolt = <1808000>;
+> +			regulator-max-microvolt = <2960000>;
+> +		};
+> +		vreg_l14a_1p88: l14 {
+> +			regulator-min-microvolt = <1880000>;
+> +			regulator-max-microvolt = <1880000>;
+> +		};
+> +		vreg_15a_1p8: l15 {
+> +			regulator-min-microvolt = <1800000>;
+> +			regulator-max-microvolt = <1800000>;
+> +		};
+> +		vreg_l16a_2p7: l16 {
+> +			regulator-min-microvolt = <2704000>;
+> +			regulator-max-microvolt = <2704000>;
+> +		};
+> +		vreg_l17a_1p3: l17 {
+> +			regulator-min-microvolt = <1304000>;
+> +			regulator-max-microvolt = <1304000>;
+> +		};
+> +		vreg_l18a_2p7: l18 {
+> +			regulator-min-microvolt = <2704000>;
+> +			regulator-max-microvolt = <2704000>;
+> +		};
+> +		vreg_l19a_3p0: l19 {
+> +			regulator-min-microvolt = <3008000>;
+> +			regulator-max-microvolt = <3008000>;
+> +		};
+> +		vreg_l20a_2p95: l20 {
+> +			regulator-min-microvolt = <2960000>;
+> +			regulator-max-microvolt = <2960000>;
+> +			regulator-allow-set-load;
+> +		};
+> +		vreg_l21a_2p95: l21 {
+> +			regulator-min-microvolt = <2960000>;
+> +			regulator-max-microvolt = <2960000>;
+> +			regulator-allow-set-load;
+> +			regulator-system-load = <800000>;
+> +		};
+> +		vreg_l22a_2p85: l22 {
+> +			regulator-min-microvolt = <2864000>;
+> +			regulator-max-microvolt = <2864000>;
+> +		};
+> +		vreg_l23a_3p3: l23 {
+> +			regulator-min-microvolt = <3312000>;
+> +			regulator-max-microvolt = <3312000>;
+> +		};
+> +		vreg_l24a_3p075: l24 {
+> +			regulator-min-microvolt = <3088000>;
+> +			regulator-max-microvolt = <3088000>;
+> +		};
+> +		vreg_l25a_3p3: l25 {
+> +			regulator-min-microvolt = <3104000>;
+> +			regulator-max-microvolt = <3312000>;
+> +		};
+> +		vreg_l26a_1p2: l26 {
+> +			regulator-min-microvolt = <1200000>;
+> +			regulator-max-microvolt = <1200000>;
+> +		};
+> +		vreg_l28_3p0: l28 {
+> +			regulator-min-microvolt = <3008000>;
+> +			regulator-max-microvolt = <3008000>;
+> +		};
+> +
+> +		vreg_lvs1a_1p8: lvs1 {
+> +			regulator-min-microvolt = <1800000>;
+> +			regulator-max-microvolt = <1800000>;
+> +		};
+> +
+> +		vreg_lvs2a_1p8: lvs2 {
+> +			regulator-min-microvolt = <1800000>;
+> +			regulator-max-microvolt = <1800000>;
+> +		};
+> +
+> +	};
+> +};
+> +
+> +&tlmm {
+> +	gpio-reserved-ranges = <0 4>, <81 4>;
+> +
+> +	touchpad: touchpad {
+> +		config {
+> +			pins = "gpio123";
+> +			bias-pull-up;           /* pull up */
+> +		};
+> +	};
+> +};
+> +
+> +&sdhc2 {
+> +	status = "okay";
+> +
+> +	vmmc-supply = <&vreg_l21a_2p95>;
+> +	vqmmc-supply = <&vreg_l13a_2p95>;
+> +
+> +	pinctrl-names = "default", "sleep";
+> +	pinctrl-0 = <&sdc2_clk_on  &sdc2_cmd_on  &sdc2_data_on  &sdc2_cd_on>;
+> +	pinctrl-1 = <&sdc2_clk_off &sdc2_cmd_off &sdc2_data_off &sdc2_cd_off>;
+> +};
+> +
+> +&usb3 {
+> +	status = "okay";
+> +};
+> +
+> +&usb3_dwc3 {
+> +	dr_mode = "host"; /* Force to host until we have Type-C hooked up */
+> +};
+> +
+> +&usb3phy {
+> +	status = "okay";
+> +
+> +	vdda-phy-supply = <&vreg_l1a_0p875>;
+> +	vdda-pll-supply = <&vreg_l2a_1p2>;
+> +};
+> diff --git a/arch/arm64/boot/dts/qcom/msm8998-lenovo-miix-630.dts b/arch/arm64/boot/dts/qcom/msm8998-lenovo-miix-630.dts
+> new file mode 100644
+> index 000000000000..407c6a32911c
+> --- /dev/null
+> +++ b/arch/arm64/boot/dts/qcom/msm8998-lenovo-miix-630.dts
+> @@ -0,0 +1,30 @@
+> +// SPDX-License-Identifier: GPL-2.0
+> +/* Copyright (c) 2019, Jeffrey Hugo. All rights reserved. */
+> +
+> +/dts-v1/;
+> +
+> +#include "msm8998-clamshell.dtsi"
+> +
+> +/ {
+> +	model = "Lenovo Miix 630";
+> +	compatible = "lenovo,miix-630", "qcom,msm8998";
+> +};
+> +
+> +&blsp1_i2c6 {
+> +	status = "okay";
+> +
+> +	keyboard@3a {
+> +		compatible = "hid-over-i2c";
+> +		interrupt-parent = <&tlmm>;
+> +		interrupts = <0x79 IRQ_TYPE_LEVEL_LOW>;
+> +		reg = <0x3a>;
+> +		hid-descr-addr = <0x0001>;
+> +
+> +		pinctrl-names = "default";
+> +		pinctrl-0 = <&touchpad>;
+> +	};
+> +};
+> +
+> +&sdhc2 {
+> +	cd-gpios = <&tlmm 95 GPIO_ACTIVE_HIGH>;
+> +};
 > -- 
-> Sent by a computer through tubes
+> 2.17.1
 > 
