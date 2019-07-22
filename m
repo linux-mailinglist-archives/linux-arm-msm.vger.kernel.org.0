@@ -2,57 +2,65 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id DC6906FC33
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Jul 2019 11:31:09 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 30CE46FFC3
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Jul 2019 14:35:54 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728969AbfGVJbE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 22 Jul 2019 05:31:04 -0400
-Received: from verein.lst.de ([213.95.11.211]:58727 "EHLO verein.lst.de"
+        id S1729630AbfGVMfx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 22 Jul 2019 08:35:53 -0400
+Received: from mail.kernel.org ([198.145.29.99]:35674 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1728991AbfGVJbD (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 22 Jul 2019 05:31:03 -0400
-Received: by verein.lst.de (Postfix, from userid 2407)
-        id 2FC9B68BFE; Mon, 22 Jul 2019 11:31:00 +0200 (CEST)
-Date:   Mon, 22 Jul 2019 11:30:59 +0200
-From:   Christoph Hellwig <hch@lst.de>
-To:     Marc Gonzalez <marc.w.gonzalez@free.fr>
-Cc:     Minwoo Im <minwoo.im.dev@gmail.com>,
-        MSM <linux-arm-msm@vger.kernel.org>,
-        LKML <linux-kernel@vger.kernel.org>,
-        Andy Gross <agross@kernel.org>,
+        id S1728062AbfGVMfx (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 22 Jul 2019 08:35:53 -0400
+Received: from localhost.localdomain (unknown [223.226.98.106])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by mail.kernel.org (Postfix) with ESMTPSA id 538BF217D4;
+        Mon, 22 Jul 2019 12:35:50 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=default; t=1563798952;
+        bh=oSGvrhvOENtQr2vmF9xUHJFiLqNbNOh8MfytEV3Eyhg=;
+        h=From:To:Cc:Subject:Date:From;
+        b=WtjDF5W2xRraOLEwXIZ1rv9ZFWQ+0RT2/tCAhCmF6yi/hEcd/UWAu32vKfLe4nCI/
+         7MqSo28r55rmQDe230BcLcCPuT627cpgbO0WwbSbF/WgdmyLvlwAIWLULhQa4NaXes
+         uOOSSJEpxMfYLK2JE/CRmp8sSN1dqDgt2GV8rT80=
+From:   Vinod Koul <vkoul@kernel.org>
+To:     Andy Gross <agross@kernel.org>
+Cc:     linux-arm-msm@vger.kernel.org,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Stanimir Varbanov <svarbanov@mm-sol.com>,
-        Rob Clark <robdclark@gmail.com>,
-        Stephen Boyd <sboyd@kernel.org>, Christoph Hellwig <hch@lst.de>
-Subject: Re: [PATCH] firmware: qcom_scm: fix error for incompatible pointer
-Message-ID: <20190722093059.GA29538@lst.de>
-References: <20190719134303.7617-1-minwoo.im.dev@gmail.com> <7ea51e42-ab8a-e4e2-1833-651e2dabca3c@free.fr>
+        Vinod Koul <vkoul@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Mark Rutland <mark.rutland@arm.com>,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: [PATCH 0/5] arm64: dts: qcom: sdm845: Fix DTS warnings
+Date:   Mon, 22 Jul 2019 18:04:17 +0530
+Message-Id: <20190722123422.4571-1-vkoul@kernel.org>
+X-Mailer: git-send-email 2.20.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <7ea51e42-ab8a-e4e2-1833-651e2dabca3c@free.fr>
-User-Agent: Mutt/1.5.17 (2007-11-01)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Jul 22, 2019 at 10:38:55AM +0200, Marc Gonzalez wrote:
-> > In file included from drivers/firmware/qcom_scm.c:12:0:
-> > ./include/linux/dma-mapping.h:636:21: note: expected ‘dma_addr_t * {aka long long unsigned int *}’ but argument is of type ‘phys_addr_t * {aka unsigned int *}’
-> >  static inline void *dma_alloc_coherent(struct device *dev, size_t size,
-> >                      ^~~~~~~~~~~~~~~~~~
-> > ```
-> > 
-> > We just can cast phys_addr_t to dma_addr_t here.
-> 
-> IME, casting is rarely a proper solution.
+So this is an attempt to fix some warns on sdm845 dts. We still have bunch
+of warnings to fix after this series (dupplicate adress and node names
+having underscores etc).
 
-*nod*
+lets get long hanging ones fixed, we can see the warns with W=1 or W=2
 
-ptr_phys probably should be a dma_addr_t.  Unless this driver is so
-magic that it really wants a physical and not a dma address, in which
-case it needs to use alloc_pages instead of dma_alloc_coherent
-and then call page_to_phys on the returned page, and a very big comment
-explaining why it is so special.
+Vinod Koul (5):
+  arm64: dts: qcom: sdm845: Add unit name to soc node
+  arm64: dts: qcom: sdm845: remove unnecessary properties for dsi nodes
+  arm64: dts: qcom: sdm845: remove unit name for thermal trip points
+  arm64: dts: qcom: sdm845: remove macro from unit name
+  arm64: dts: qcom: sdm845-cheza: remove macro from unit name
+
+ arch/arm64/boot/dts/qcom/pm8998.dtsi       |  2 +-
+ arch/arm64/boot/dts/qcom/sdm845-cheza.dtsi | 10 ++--
+ arch/arm64/boot/dts/qcom/sdm845.dtsi       | 66 ++++++++++------------
+ 3 files changed, 36 insertions(+), 42 deletions(-)
+
+Thanks
+-- 
+2.20.1
+
