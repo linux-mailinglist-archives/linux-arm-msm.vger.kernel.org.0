@@ -2,87 +2,118 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id CAAA770846
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Jul 2019 20:19:02 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 3630370850
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Jul 2019 20:20:42 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731353AbfGVSSh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 22 Jul 2019 14:18:37 -0400
-Received: from mail-pf1-f195.google.com ([209.85.210.195]:35363 "EHLO
-        mail-pf1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1731345AbfGVSSg (ORCPT
+        id S1726604AbfGVSU2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 22 Jul 2019 14:20:28 -0400
+Received: from mail-yb1-f194.google.com ([209.85.219.194]:38223 "EHLO
+        mail-yb1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726718AbfGVSU2 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 22 Jul 2019 14:18:36 -0400
-Received: by mail-pf1-f195.google.com with SMTP id u14so17783029pfn.2
-        for <linux-arm-msm@vger.kernel.org>; Mon, 22 Jul 2019 11:18:36 -0700 (PDT)
+        Mon, 22 Jul 2019 14:20:28 -0400
+Received: by mail-yb1-f194.google.com with SMTP id j199so15287581ybg.5
+        for <linux-arm-msm@vger.kernel.org>; Mon, 22 Jul 2019 11:20:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=message-id:mime-version:content-transfer-encoding:in-reply-to
-         :references:subject:to:cc:from:user-agent:date;
-        bh=bdmEyD1tHGaxY1ZlrNXktYNbDBoxT67t89iQedYViU4=;
-        b=jD2XRByB77jpz8oESlV2M8e2YqHA5OWvaY91DBJGZvAV4PUjKf0YAHrFyemyl1HZci
-         ZeR+SwU0zsOjunrxl82QuMicKE2IeCYMTuXzYubRB+ZpDsmnnH4cfbM9KX3lLytNKX5l
-         HWxcBaH3SKmXPuHrKGHwHLia2CN/JsZteix6U=
+        d=poorly.run; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=i9YD5G8HAMrMrwipZFF5d7e55WgOTsCxcFVl1IuaGhA=;
+        b=ak5c6nStqCuj2CKoFKbZr8QeS33wn5Tkzs0ZNi0q36+RLFltvOc0xeXTsHIz3N4UPk
+         QJOy5ScCXwQm/3oHhiQaIpuojW2iEccYAtg35XNPm0ZlLjgw08ka4xl+NLI1yhxGKvRH
+         j6vEXEAz/p4xsMvBZEflj7DTIX37B05LXzhVk58xGpC2nt+tKbMV5UO2QYXFtxADJcTZ
+         0YUjHcpfFssACDyQZD2Pd2K9Emq+rQPEcUhyFCuwv4gM4l86SpyIiOzB215sShGcxpA7
+         UtSy4Bplog61zuI3HZX5BnDFxnRFYGq7e2dGsnSFlTGpuk5PKHBcWBEOq9v/k1WxPReP
+         E+rw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:mime-version
-         :content-transfer-encoding:in-reply-to:references:subject:to:cc:from
-         :user-agent:date;
-        bh=bdmEyD1tHGaxY1ZlrNXktYNbDBoxT67t89iQedYViU4=;
-        b=QZs3iWNYKI9MwNHW1yDaapNTb5ngGzAy7VkWntUAcZoR6S2EyJLCTCXauXXDPrHEwO
-         kukMg4Q5/EIomwqpufud+vlhaTS96IhriLyAM3GtnuWeqfl0ssNqyBQNuzGU8fTzvJbD
-         8FNMM1PzBCzt3laXk2WuIDB6mFtBpkgRFt5931hWE42XCGsaFtpGi3RzZW0kLEX6KtUL
-         OCPKd1E4iOZt5MJGjmIzoOfSBYM7pLNFxa3ZUVpfLLvTnGHeWR7lEAHh4Zqgk1/j9C1b
-         WoBFQXUOhnTt24z3wtFqRW5+ZnbPtV/D+DnmyD5PgjZSM3Qz75sOPRD74INx4mHilnXq
-         ZeLg==
-X-Gm-Message-State: APjAAAUKUVQO3/a1aBwD7ATK2+X3WYVh0eqlIMJDMxjcCUD1ItN9Y86u
-        HLBGmcu4CV+a8Hu9V2kGej/ORg==
-X-Google-Smtp-Source: APXvYqw1WCTEtPf/4QpZct5Z+fOYeJwNzW8DbpFLtGpuiaWS9d42/M5FHd2yC7A0VCS35fsC46+fHQ==
-X-Received: by 2002:aa7:9a8a:: with SMTP id w10mr1513108pfi.66.1563819516250;
-        Mon, 22 Jul 2019 11:18:36 -0700 (PDT)
-Received: from chromium.org ([2620:15c:202:1:fa53:7765:582b:82b9])
-        by smtp.gmail.com with ESMTPSA id j1sm66969694pgl.12.2019.07.22.11.18.35
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=i9YD5G8HAMrMrwipZFF5d7e55WgOTsCxcFVl1IuaGhA=;
+        b=SDZwgRrD6aV53tK/9sYvYsbZ5NtKMwXfUO6SCALJnNcXHV6IuGPpDKZ8zwgyZH99wK
+         69DhXXE3qPabFgskJKHN2myn4Z/7BwsfIvZ5OsMPje+riQH91z7+fhrwaVBNLyn0WdVL
+         LdPqhZGaRlMFFs+01b1vgYswTtEcAjQPHa2tOiJrx7qxAZZW30kgqKieFupKlP8Dj1SZ
+         qSa8FyvWuhniRZdib3VxB7yzYokIz691v9Spxgoc725GUq0G29BhSkOXRlVbuY1oUKR7
+         q9uypkf80L5mvOZtyHbscvhTxldipCHBy8vYH3Cl9i3owu68T2No/l7JZQIXlBxhWJ7m
+         35Aw==
+X-Gm-Message-State: APjAAAUABlZPlUIa2dtevXhZ8HIkGdS3aRBADrG0ESNGY5rToppG9TIu
+        ppdHiRCj9sFfSrOxqvtbmrneNg==
+X-Google-Smtp-Source: APXvYqx+kr/znTWvRUNj/wBR92LmePqwvp+IiGg/iAGQJYNSI5XDcmCJwEIZdXRoBik7k6teTSAf5g==
+X-Received: by 2002:a5b:405:: with SMTP id m5mr45459571ybp.261.1563819626843;
+        Mon, 22 Jul 2019 11:20:26 -0700 (PDT)
+Received: from localhost ([2620:0:1013:11:89c6:2139:5435:371d])
+        by smtp.gmail.com with ESMTPSA id 206sm9444775ywk.44.2019.07.22.11.20.26
         (version=TLS1_3 cipher=AEAD-AES256-GCM-SHA384 bits=256/256);
-        Mon, 22 Jul 2019 11:18:35 -0700 (PDT)
-Message-ID: <5d35fdfb.1c69fb81.5fafa.aaa9@mx.google.com>
-Content-Type: text/plain; charset="utf-8"
+        Mon, 22 Jul 2019 11:20:26 -0700 (PDT)
+Date:   Mon, 22 Jul 2019 14:20:25 -0400
+From:   Sean Paul <sean@poorly.run>
+To:     Shubhashree Dhar <dhar@codeaurora.org>
+Cc:     dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
+        freedreno@lists.freedesktop.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, robdclark@gmail.com,
+        seanpaul@chromium.org, hoegsberg@chromium.org,
+        abhinavk@codeaurora.org, jsanka@codeaurora.org,
+        chandanu@codeaurora.org, nganji@codeaurora.org,
+        jshekhar@codeaurora.org
+Subject: Re: drm/msm/dpu: Correct dpu encoder spinlock initialization
+Message-ID: <20190722182025.GF104440@art_vandelay>
+References: <1561357632-15361-1-git-send-email-dhar@codeaurora.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <20190722162003.GG25567@codeaurora.org>
-References: <20190701152907.16407-1-ilina@codeaurora.org> <5d3209e7.1c69fb81.5ef1.5195@mx.google.com> <20190722162003.GG25567@codeaurora.org>
-Subject: Re: [PATCH 1/2] drivers: qcom: rpmh-rsc: simplify TCS locking
-To:     Lina Iyer <ilina@codeaurora.org>
-Cc:     andy.gross@linaro.org, bjorn.andersson@linaro.org,
-        linux-arm-msm@vger.kernel.org, linux-soc@vger.kernel.org,
-        rnayak@codeaurora.org, linux-kernel@vger.kernel.org,
-        linux-pm@vger.kernel.org, dianders@chromium.org,
-        mkshah@codeaurora.org, "Raju P.L.S.S.S.N" <rplsssn@codeaurora.org>
-From:   Stephen Boyd <swboyd@chromium.org>
-User-Agent: alot/0.8.1
-Date:   Mon, 22 Jul 2019 11:18:34 -0700
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <1561357632-15361-1-git-send-email-dhar@codeaurora.org>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Lina Iyer (2019-07-22 09:20:03)
-> On Fri, Jul 19 2019 at 12:20 -0600, Stephen Boyd wrote:
-> >Quoting Lina Iyer (2019-07-01 08:29:06)
-> >> From: "Raju P.L.S.S.S.N" <rplsssn@codeaurora.org>
-> >>
-> >> tcs->lock was introduced to serialize access with in TCS group. But
-> >> even without tcs->lock, drv->lock is serving the same purpose. So
-> >> use a single drv->lock.
-> >
-> >Isn't the downside now that we're going to be serializing access to the
-> >different TCSes when two are being written in parallel or waited on? I
-> >thought that was the whole point of splitting the lock into a TCS lock
-> >and a general "driver" lock that protects the global driver state vs.
-> >the specific TCS state.
-> >
-> Yes but we were holding the drv->lock as well as tcs->lock for the most
-> critical of the path anyways (writing to TCS). The added complexity
-> doesn't seem to help reduce the latency that it expected to reduce.
+On Mon, Jun 24, 2019 at 11:57:12AM +0530, Shubhashree Dhar wrote:
+> dpu encoder spinlock should be initialized during dpu encoder
+> init instead of dpu encoder setup which is part of commit.
+> There are chances that vblank control uses the uninitialized
+> spinlock if not initialized during encoder init.
+> 
+> Change-Id: I5a18b95fa47397c834a266b22abf33a517b03a4e
+> Signed-off-by: Shubhashree Dhar <dhar@codeaurora.org>
 
-Ok. That sort of information should be in the commit text to explain why
-it's not helping with reducing the latency or throughput of the API.
+Thanks for your patch.
 
+I've resolved the conflict and tweaked the commit message a bit to reflect
+current reality.
+
+Applied to drm-misc-fixes for 5.3
+
+Sean
+
+> ---
+>  drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c | 3 +--
+>  1 file changed, 1 insertion(+), 2 deletions(-)
+> 
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
+> index 5f085b5..22938c7 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
+> @@ -2195,8 +2195,6 @@ int dpu_encoder_setup(struct drm_device *dev, struct drm_encoder *enc,
+>  	if (ret)
+>  		goto fail;
+>  
+> -	spin_lock_init(&dpu_enc->enc_spinlock);
+> -
+>  	atomic_set(&dpu_enc->frame_done_timeout, 0);
+>  	timer_setup(&dpu_enc->frame_done_timer,
+>  			dpu_encoder_frame_done_timeout, 0);
+> @@ -2250,6 +2248,7 @@ struct drm_encoder *dpu_encoder_init(struct drm_device *dev,
+>  
+>  	drm_encoder_helper_add(&dpu_enc->base, &dpu_encoder_helper_funcs);
+>  
+> +	spin_lock_init(&dpu_enc->enc_spinlock);
+>  	dpu_enc->enabled = false;
+>  
+>  	return &dpu_enc->base;
+> -- 
+> 1.9.1
+> 
+
+-- 
+Sean Paul, Software Engineer, Google / Chromium OS
