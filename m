@@ -2,81 +2,100 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 2754E6FB6F
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Jul 2019 10:38:59 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 48C6C6FBB4
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Jul 2019 11:06:14 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726236AbfGVIi6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 22 Jul 2019 04:38:58 -0400
-Received: from ns.iliad.fr ([212.27.33.1]:48734 "EHLO ns.iliad.fr"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1725989AbfGVIi6 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 22 Jul 2019 04:38:58 -0400
-Received: from ns.iliad.fr (localhost [127.0.0.1])
-        by ns.iliad.fr (Postfix) with ESMTP id 3001C20598;
-        Mon, 22 Jul 2019 10:38:56 +0200 (CEST)
-Received: from [192.168.108.49] (freebox.vlq16.iliad.fr [213.36.7.13])
-        by ns.iliad.fr (Postfix) with ESMTP id 188EA200A6;
-        Mon, 22 Jul 2019 10:38:56 +0200 (CEST)
-Subject: Re: [PATCH] firmware: qcom_scm: fix error for incompatible pointer
-To:     Minwoo Im <minwoo.im.dev@gmail.com>,
-        MSM <linux-arm-msm@vger.kernel.org>,
-        LKML <linux-kernel@vger.kernel.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Stanimir Varbanov <svarbanov@mm-sol.com>,
-        Rob Clark <robdclark@gmail.com>,
-        Stephen Boyd <sboyd@kernel.org>, Christoph Hellwig <hch@lst.de>
-References: <20190719134303.7617-1-minwoo.im.dev@gmail.com>
-From:   Marc Gonzalez <marc.w.gonzalez@free.fr>
-Message-ID: <7ea51e42-ab8a-e4e2-1833-651e2dabca3c@free.fr>
-Date:   Mon, 22 Jul 2019 10:38:55 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.8.0
-MIME-Version: 1.0
-In-Reply-To: <20190719134303.7617-1-minwoo.im.dev@gmail.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 8bit
-X-Virus-Scanned: ClamAV using ClamSMTP ; ns.iliad.fr ; Mon Jul 22 10:38:56 2019 +0200 (CEST)
+        id S1728311AbfGVJGN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 22 Jul 2019 05:06:13 -0400
+Received: from smtp.codeaurora.org ([198.145.29.96]:38880 "EHLO
+        smtp.codeaurora.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725989AbfGVJGN (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 22 Jul 2019 05:06:13 -0400
+Received: by smtp.codeaurora.org (Postfix, from userid 1000)
+        id 3010A61639; Mon, 22 Jul 2019 09:06:12 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
+        s=default; t=1563786372;
+        bh=Skk8yN1BQ/FRV8haTYnRCNUnzZEfrYwlXcy3MNbPGTc=;
+        h=From:To:Cc:Subject:Date:From;
+        b=V8ICTnG6m2z6JRboxwzE2LEsEW0LyBtM703/KrzBvKuhL3jRIxknD6rSZKhg8+ZG4
+         +BWbQE64bPivYzwUvJyWGz6eOzI1UPuwqyGdY2F6jZcRkfF40y1DEpeb/62Hpf62XE
+         VUX0H3jqxxzjHHl7vEx8HmFYzpT7RRU9zzdIlYAk=
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        pdx-caf-mail.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.7 required=2.0 tests=ALL_TRUSTED,BAYES_00,
+        DKIM_INVALID,DKIM_SIGNED,SPF_NONE autolearn=no autolearn_force=no
+        version=3.4.0
+Received: from amasule-linux.qualcomm.com (blr-c-bdr-fw-01_globalnat_allzones-outside.qualcomm.com [103.229.19.19])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: amasule@codeaurora.org)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id AC3A0604BE;
+        Mon, 22 Jul 2019 09:06:09 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
+        s=default; t=1563786371;
+        bh=Skk8yN1BQ/FRV8haTYnRCNUnzZEfrYwlXcy3MNbPGTc=;
+        h=From:To:Cc:Subject:Date:From;
+        b=dym/B+E1dILyC4VTJuwmchUxq0cdrAFuk1RNAuZxJLKAVSEblp1dYGB+42NZduvaw
+         2WltOhXE9aEL4JAadwqDXkn1ecvvNZDAo7rGedykj0qgHPqjwnGLHfjwh8IKL9CjTP
+         gGXDDVsJL9Sk6RgYZqrzL7xGbFY+KyhvWaRRro2Y=
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org AC3A0604BE
+Authentication-Results: pdx-caf-mail.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: pdx-caf-mail.web.codeaurora.org; spf=none smtp.mailfrom=amasule@codeaurora.org
+From:   Aniket Masule <amasule@codeaurora.org>
+To:     linux-media@vger.kernel.org, stanimir.varbanov@linaro.org
+Cc:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        vgarodia@codeaurora.org, Aniket Masule <amasule@codeaurora.org>
+Subject: [PATCH v6 0/4] media: venus: Update clock scaling and core selection
+Date:   Mon, 22 Jul 2019 14:35:56 +0530
+Message-Id: <1563786360-16467-1-git-send-email-amasule@codeaurora.org>
+X-Mailer: git-send-email 1.9.1
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Adding people who have worked on drivers/firmware/qcom_scm.c or DMA
+In this patch series, clock scaling and core selection methods are
+updated. Current clock scaling and core selection methods are same
+for vpu4 and previous versions. Introducing load calculations using
+vpp cycles, which indicates the cycles required by video hardware to
+process each macroblock. Also adding vsp cycles, cycles require by
+stream processor. Clock scaling is now done more precisely using vpp
+and vsp cycles. Instance is assigned to core with minimum load, instead
+of static assignment.
 
-On 19/07/2019 15:43, Minwoo Im wrote:
+Changes since v5:
+ - Corrected load_per_core calculations.
 
-> The following error can happen when trying to build it:
-> 
-> ```
-> drivers/firmware/qcom_scm.c: In function ‘qcom_scm_assign_mem’:
-> drivers/firmware/qcom_scm.c:460:47: error: passing argument 3 of ‘dma_alloc_coherent’ from incompatible pointer type [-Werror=incompatible-pointer-types]
->   ptr = dma_alloc_coherent(__scm->dev, ptr_sz, &ptr_phys, GFP_KERNEL);
->                                                ^
-> In file included from drivers/firmware/qcom_scm.c:12:0:
-> ./include/linux/dma-mapping.h:636:21: note: expected ‘dma_addr_t * {aka long long unsigned int *}’ but argument is of type ‘phys_addr_t * {aka unsigned int *}’
->  static inline void *dma_alloc_coherent(struct device *dev, size_t size,
->                      ^~~~~~~~~~~~~~~~~~
-> ```
-> 
-> We just can cast phys_addr_t to dma_addr_t here.
+Changes since v4:
+ - Added call to load_scale_clocks from venus_helper_vb2_buf_queue.
+ - Modified check to match core_id in core_selection.
 
-IME, casting is rarely a proper solution.
+Changes since v3:
+ - vsp_cycles and vpp_cyles are now unsigned long.
+ - Core number counting aligned with VIDC_CORE_ID_.
+ - Aligned hardware overload handling of scale_clocks_v4 with scale_clocks.
+ - Added bitrate based clock scaling patch in this patch series.
+ - Instance state check is now moved from scale_clocks to load_scale_clocks.
 
+Aniket Masule (4):
+  media: venus: Add codec data table
+  media: venus: Update clock scaling
+  media: venus: Update to bitrate based clock scaling
+  media: venus: Update core selection
 
-> diff --git a/drivers/firmware/qcom_scm.c b/drivers/firmware/qcom_scm.c
-> index 2ddc118dba1b..7f6c841fa200 100644
-> --- a/drivers/firmware/qcom_scm.c
-> +++ b/drivers/firmware/qcom_scm.c
-> @@ -457,7 +457,8 @@ int qcom_scm_assign_mem(phys_addr_t mem_addr, size_t mem_sz,
->  	ptr_sz = ALIGN(src_sz, SZ_64) + ALIGN(mem_to_map_sz, SZ_64) +
->  			ALIGN(dest_sz, SZ_64);
->  
-> -	ptr = dma_alloc_coherent(__scm->dev, ptr_sz, &ptr_phys, GFP_KERNEL);
-> +	ptr = dma_alloc_coherent(__scm->dev, ptr_sz, (dma_addr_t *) &ptr_phys,
-> +					GFP_KERNEL);
->  	if (!ptr)
->  		return -ENOMEM;
->  
+ drivers/media/platform/qcom/venus/core.c       |  13 ++
+ drivers/media/platform/qcom/venus/core.h       |  16 ++
+ drivers/media/platform/qcom/venus/helpers.c    | 215 +++++++++++++++++++++++--
+ drivers/media/platform/qcom/venus/helpers.h    |   3 +-
+ drivers/media/platform/qcom/venus/hfi_helper.h |   1 +
+ drivers/media/platform/qcom/venus/hfi_parser.h |   5 +
+ drivers/media/platform/qcom/venus/vdec.c       |   6 +-
+ drivers/media/platform/qcom/venus/venc.c       |   6 +-
+ 8 files changed, 252 insertions(+), 13 deletions(-)
+
+-- 
+The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
+a Linux Foundation Collaborative Project
 
