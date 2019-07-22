@@ -2,133 +2,109 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 5C0EA70545
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Jul 2019 18:20:22 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5126A7055D
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Jul 2019 18:24:02 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729929AbfGVQUR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 22 Jul 2019 12:20:17 -0400
-Received: from smtp.codeaurora.org ([198.145.29.96]:45300 "EHLO
-        smtp.codeaurora.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728136AbfGVQUQ (ORCPT
+        id S1730881AbfGVQYB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 22 Jul 2019 12:24:01 -0400
+Received: from mail-ed1-f66.google.com ([209.85.208.66]:40764 "EHLO
+        mail-ed1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1730158AbfGVQYB (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 22 Jul 2019 12:20:16 -0400
-Received: by smtp.codeaurora.org (Postfix, from userid 1000)
-        id 6BB4560E5A; Mon, 22 Jul 2019 16:20:15 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
-        s=default; t=1563812415;
-        bh=/fTWdA5sK7R3GGTlX+WLaXG3NYMeNG9JlI3aAlgldjs=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=CySoueQwWigAYEYnvtzBGVgk9F96erpDnj5JV7N2WtyjvYAVCX/m6wi1g4A7hGkdU
-         s9xipgdbvkoIGMVabaPWOwWDGUbwZ+nPls8aOgy2x0h003dINia/pg97VWNlcl2B8N
-         +Q/r+iEaFrVt/mD5CW82YAwvgxp9TGoFdyG8ewNk=
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        pdx-caf-mail.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.7 required=2.0 tests=ALL_TRUSTED,BAYES_00,
-        DKIM_INVALID,DKIM_SIGNED,SPF_NONE autolearn=no autolearn_force=no
-        version=3.4.0
-Received: from localhost (i-global254.qualcomm.com [199.106.103.254])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        (Authenticated sender: ilina@smtp.codeaurora.org)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id CABA160E3E;
-        Mon, 22 Jul 2019 16:20:11 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
-        s=default; t=1563812414;
-        bh=/fTWdA5sK7R3GGTlX+WLaXG3NYMeNG9JlI3aAlgldjs=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=jEwyS6U6SlafnSt6kmH0x8jwQ/v432h6vBEf/3yQ7zf2EMnY79/AabqlpE/UAjecy
-         qOcVd87lIt3E8emNLUGt7NiEo/ZbMEZcMmRd8QHCgvczIyELbWS2woZ41WdzjhQrY1
-         mN39p+0S/ycTTM2xHeDLQj74GqC3VLS9RQ5kyeIk=
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org CABA160E3E
-Authentication-Results: pdx-caf-mail.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: pdx-caf-mail.web.codeaurora.org; spf=none smtp.mailfrom=ilina@codeaurora.org
-Date:   Mon, 22 Jul 2019 10:20:03 -0600
-From:   Lina Iyer <ilina@codeaurora.org>
-To:     Stephen Boyd <swboyd@chromium.org>
-Cc:     andy.gross@linaro.org, bjorn.andersson@linaro.org,
-        linux-arm-msm@vger.kernel.org, linux-soc@vger.kernel.org,
-        rnayak@codeaurora.org, linux-kernel@vger.kernel.org,
-        linux-pm@vger.kernel.org, dianders@chromium.org,
-        mkshah@codeaurora.org, "Raju P.L.S.S.S.N" <rplsssn@codeaurora.org>
-Subject: Re: [PATCH 1/2] drivers: qcom: rpmh-rsc: simplify TCS locking
-Message-ID: <20190722162003.GG25567@codeaurora.org>
-References: <20190701152907.16407-1-ilina@codeaurora.org>
- <5d3209e7.1c69fb81.5ef1.5195@mx.google.com>
+        Mon, 22 Jul 2019 12:24:01 -0400
+Received: by mail-ed1-f66.google.com with SMTP id k8so41124761eds.7;
+        Mon, 22 Jul 2019 09:24:00 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=3hF/yndw/9iMn5LkMnQIXmMVSvMqJPR1brEffSYKm5A=;
+        b=KnzCgtP91QMek3camJEsYfFRzzhuY4Ww/kLXQ31e1jHO+Ezf8mtZJ1b/1iPepH5PzA
+         WLLtRKyA5QthErKxn2tF0Gp0gca80dViEGu/6oN7tEaFWByHj6r+IEwyftgUsNkIOpHl
+         JAUlt9nmfr6P5a/kge2fwtxnHsSv2e1+E6SfgC3Tnn0ICjHm/4bMEpCZEzQiQrPCpaCW
+         GHHNZ0VKd7LuZ/87R8EIRqfsE6HY8J5t9Ll0BvPzxanzyUbqzeB2GTKZSim73zw4T0pA
+         JVrnux0f6lCz8yxLBPH+cwJVhcAanqTqw8Lr6c/6k3uMPn1grsr3ZDG534fKF4wPVAX8
+         JMUw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=3hF/yndw/9iMn5LkMnQIXmMVSvMqJPR1brEffSYKm5A=;
+        b=IWuo7/JBjqQ55pVyvY3xtog8KoWPBnG8aHsGhah9+pyYtEWh0pbbyS+SGGyMauw3+z
+         7eWF2GMVW3Ivni/mafbtl8t0N2NkcFmNUE5jYorQ323T/k+vFci6rmWzfpz2ZxmTohXx
+         SdMgo06zIjHkuubAR6LVa4odTWe8cIeC4ee9moPrMXr4S+ueF0fzUP6urpMg+Ty+M2cb
+         V9oDJTrWn2+kQ0d41wDM8++tcGiop9XZiDHVLxQz6iQSKoaXi5vd1qB90lraBdMdMEpP
+         fDFoD/8IokTSappSbchLqAW6MPIBfSTpx96/GDbeAYNTDxjdd7LQF35sPT365HqDulep
+         LaJw==
+X-Gm-Message-State: APjAAAWHX8ELKz23mwNd+NZPgeSos/qFdOYB2+SlE2Z3ZtXb1lHCaCom
+        pZvXB/dhgrYH+tKUySHToWFNWmShZrs1TJ4r4O4=
+X-Google-Smtp-Source: APXvYqxvnE7n6rBYLjaXH+rbNyXf18kfTJLS/GQKcpYfbikX6ihBKV75fxCtNZ4ZQvBC7LjyrvO+CjV4KyuaPK440ZM=
+X-Received: by 2002:a17:906:3612:: with SMTP id q18mr55088125ejb.278.1563812639299;
+ Mon, 22 Jul 2019 09:23:59 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii; format=flowed
-Content-Disposition: inline
-In-Reply-To: <5d3209e7.1c69fb81.5ef1.5195@mx.google.com>
-User-Agent: Mutt/1.11.3 (2019-02-01)
+References: <20190702202631.32148-2-robdclark@gmail.com> <20190710182844.25032-1-robdclark@gmail.com>
+ <20190722142833.GB12009@8bytes.org> <CAF6AEGvJc2RK3GkpcXiVKsuTX81D3oahnu=qWJ9LFst1eT3tMg@mail.gmail.com>
+ <20190722154803.GG12009@8bytes.org>
+In-Reply-To: <20190722154803.GG12009@8bytes.org>
+From:   Rob Clark <robdclark@gmail.com>
+Date:   Mon, 22 Jul 2019 09:23:48 -0700
+Message-ID: <CAF6AEGvWf3ZOrbyyWjORuOVEPOcPr+JSEO78aYjhL-GVhDZnTg@mail.gmail.com>
+Subject: Re: [PATCH v2] iommu: add support for drivers that manage iommu explicitly
+To:     Joerg Roedel <joro@8bytes.org>
+Cc:     "list@263.net:IOMMU DRIVERS <iommu@lists.linux-foundation.org>, Joerg
+        Roedel <joro@8bytes.org>," <iommu@lists.linux-foundation.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        aarch64-laptops@lists.linaro.org,
+        Rob Clark <robdclark@chromium.org>,
+        Will Deacon <will@kernel.org>,
+        Robin Murphy <robin.murphy@arm.com>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        "Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+        Rasmus Villemoes <linux@rasmusvillemoes.dk>,
+        Andy Shevchenko <andy.shevchenko@gmail.com>,
+        Andrew Morton <akpm@linux-foundation.org>,
+        Heikki Krogerus <heikki.krogerus@linux.intel.com>,
+        Bartosz Golaszewski <brgl@bgdev.pl>,
+        Sudeep Holla <sudeep.holla@arm.com>,
+        Joe Perches <joe@perches.com>,
+        "moderated list:ARM/FREESCALE IMX / MXC ARM ARCHITECTURE" 
+        <linux-arm-kernel@lists.infradead.org>,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, Jul 19 2019 at 12:20 -0600, Stephen Boyd wrote:
->Quoting Lina Iyer (2019-07-01 08:29:06)
->> From: "Raju P.L.S.S.S.N" <rplsssn@codeaurora.org>
->>
->> tcs->lock was introduced to serialize access with in TCS group. But
->> even without tcs->lock, drv->lock is serving the same purpose. So
->> use a single drv->lock.
+On Mon, Jul 22, 2019 at 8:48 AM Joerg Roedel <joro@8bytes.org> wrote:
 >
->Isn't the downside now that we're going to be serializing access to the
->different TCSes when two are being written in parallel or waited on? I
->thought that was the whole point of splitting the lock into a TCS lock
->and a general "driver" lock that protects the global driver state vs.
->the specific TCS state.
+> On Mon, Jul 22, 2019 at 08:41:34AM -0700, Rob Clark wrote:
+> > It is set by the driver:
+> >
+> > https://patchwork.freedesktop.org/patch/315291/
+> >
+> > (This doesn't really belong in devicetree, since it isn't a
+> > description of the hardware, so the driver is really the only place to
+> > set this.. which is fine because it is about a detail of how the
+> > driver works.)
 >
-Yes but we were holding the drv->lock as well as tcs->lock for the most
-critical of the path anyways (writing to TCS). The added complexity
-doesn't seem to help reduce the latency that it expected to reduce.
->>
->> Other optimizations include -
->>  - Remove locking around clear_bit() in IRQ handler. clear_bit() is
->>    atomic.
->>  - Remove redundant read of TCS registers.
->>  - Use spin_lock instead of _irq variants as the locks are not held
->>    in interrupt context.
+> It is more a detail about how the firmware works. IIUC the problem is
+> that the firmware initializes the context mappings for the GPU and the
+> OS doesn't know anything about that and just overwrites them, causing
+> the firmware GPU driver to fail badly.
 >
->Can you please split this patch up into 3 or 4 different patches? I'm
->not sure why any of these patches are marked with Fixes either. It's an
->optimization patch, not a fix patch, unless the optimization is really
->large somehow?
+> So I think it is the task of the firmware to tell the OS not to touch
+> the devices mappings until the OS device driver takes over. On x86 there
+> is something similar with the RMRR/unity-map tables from the firmware.
 >
-Okay. I will try that.
->>
->> Fixes: 658628 ("drivers: qcom: rpmh-rsc: add RPMH controller for QCOM
->> SoCs")
->> Signed-off-by: Raju P.L.S.S.S.N <rplsssn@codeaurora.org>
->> Signed-off-by: Lina Iyer <ilina@codeaurora.org>
->> ---
->>  drivers/soc/qcom/rpmh-internal.h |  2 --
->>  drivers/soc/qcom/rpmh-rsc.c      | 37 +++++++++++---------------------
->>  drivers/soc/qcom/rpmh.c          | 20 +++++++----------
->>  3 files changed, 21 insertions(+), 38 deletions(-)
->>
->> diff --git a/drivers/soc/qcom/rpmh-internal.h b/drivers/soc/qcom/rpmh-internal.h
->> index a7bbbb67991c..969d5030860e 100644
->> --- a/drivers/soc/qcom/rpmh-internal.h
->> +++ b/drivers/soc/qcom/rpmh-internal.h
->> diff --git a/drivers/soc/qcom/rpmh-rsc.c b/drivers/soc/qcom/rpmh-rsc.c
->> index e278fc11fe5c..92461311aef3 100644
->> --- a/drivers/soc/qcom/rpmh-rsc.c
->> +++ b/drivers/soc/qcom/rpmh-rsc.c
->> @@ -93,8 +93,7 @@ static void write_tcs_reg_sync(struct rsc_drv *drv, int reg, int tcs_id,
->>
->>  static bool tcs_is_free(struct rsc_drv *drv, int tcs_id)
->>  {
->> -       return !test_bit(tcs_id, drv->tcs_in_use) &&
->> -              read_tcs_reg(drv, RSC_DRV_STATUS, tcs_id, 0);
->> +       return !test_bit(tcs_id, drv->tcs_in_use);
->
->This can be a diffedjusted rent patch. Why is reading the tcs register
->redundant? Please put that information in the commit text.
->
-The tcs_in_use, is adjusted along with the DRV_STS and reading the
-tcs_in_use should be enough.
 
-Thanks for your review Stephen.
+Bjorn had a patchset[1] to inherit the config from firmware/bootloader
+when arm-smmu is probed which handles that part of the problem.  My
+patch is intended to be used on top of his patchset.  This seems to me
+like the best solution, if we don't have control over the firmware.
 
---Lina
+BR,
+-R
+
+[1] https://www.spinics.net/lists/arm-kernel/msg732246.html
