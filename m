@@ -2,40 +2,41 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 89BC46FA97
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Jul 2019 09:45:35 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 80DAA6FA9C
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Jul 2019 09:45:45 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728149AbfGVHp3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 22 Jul 2019 03:45:29 -0400
-Received: from mail.kernel.org ([198.145.29.99]:59960 "EHLO mail.kernel.org"
+        id S1727659AbfGVHpc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 22 Jul 2019 03:45:32 -0400
+Received: from mail.kernel.org ([198.145.29.99]:60016 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1725773AbfGVHp2 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 22 Jul 2019 03:45:28 -0400
+        id S1725773AbfGVHpc (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 22 Jul 2019 03:45:32 -0400
 Received: from localhost.localdomain (unknown [223.226.98.106])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id E77D32229C;
-        Mon, 22 Jul 2019 07:45:22 +0000 (UTC)
+        by mail.kernel.org (Postfix) with ESMTPSA id 5F0B3206DD;
+        Mon, 22 Jul 2019 07:45:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1563781526;
-        bh=PKp+11nGpYqeQlyaTUyKzo1FppmsOZbN/ErGCiN8n40=;
+        s=default; t=1563781531;
+        bh=6JdVS0Si0kj96hOBHPz3gwtQUZFWOk98rXTpwhe8jw0=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=WehS7Gq49B01JdTitAiTYKHNCXndbGUeA5YKi5kNu8EyAJF6xzNdeii2ieqkKfVQZ
-         GscjSLGstrlUdrYxOA7yB3LfZ9xmjCquRkzBcNhq/n47SLJwoYNlR8TMxjEnlaMq5J
-         jsR7l33hrCc40V//IzzrCx5pKrpT+qWlAIN+ATeE=
+        b=KH7sAVUFWwZdwjb2wEgpHiQ9wVMFkyO7mnDbZ9Tzpz85a9HEc2vQIchN/10wIwt3n
+         g7y6mWG7DsNOYO+iymVIGE3lYVFLazye0+ATXM9hfgXtlRXK9AkWFnpJ0hZywkNqUP
+         7r21Y7BEUgRWFMwhHRzM+jywE2q7nXVyuIXdEedw=
 From:   Vinod Koul <vkoul@kernel.org>
 To:     Stephen Boyd <sboyd@kernel.org>
 Cc:     linux-arm-msm@vger.kernel.org,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
         Deepak Katragadda <dkatraga@codeaurora.org>,
         Andy Gross <agross@kernel.org>,
-        David Brown <david.brown@linaro.org>,
         Michael Turquette <mturquette@baylibre.com>,
-        linux-clk@vger.kernel.org, Taniya Das <tdas@codeaurora.org>,
-        linux-kernel@vger.kernel.org, Vinod Koul <vkoul@kernel.org>
-Subject: [PATCH v4 3/5] clk: qcom: clk-alpha-pll: Add support for Trion PLLs
-Date:   Mon, 22 Jul 2019 13:13:46 +0530
-Message-Id: <20190722074348.29582-4-vkoul@kernel.org>
+        Rob Herring <robh+dt@kernel.org>,
+        Mark Rutland <mark.rutland@arm.com>, linux-clk@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Taniya Das <tdas@codeaurora.org>, Vinod Koul <vkoul@kernel.org>
+Subject: [PATCH v4 4/5] dt-bindings: clock: Document gcc bindings for SM8150
+Date:   Mon, 22 Jul 2019 13:13:47 +0530
+Message-Id: <20190722074348.29582-5-vkoul@kernel.org>
 X-Mailer: git-send-email 2.20.1
 In-Reply-To: <20190722074348.29582-1-vkoul@kernel.org>
 References: <20190722074348.29582-1-vkoul@kernel.org>
@@ -48,337 +49,311 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 From: Deepak Katragadda <dkatraga@codeaurora.org>
 
-Add programming sequence support for managing the Trion
-PLLs.
+Document the global clock controller found on SM8150.
 
 Signed-off-by: Deepak Katragadda <dkatraga@codeaurora.org>
 Signed-off-by: Taniya Das <tdas@codeaurora.org>
-[vkoul: port to upstream and tidy-up
-	use upstream way of specifying PLLs]
+[vkoul: port to upstream and add external clocks
+	split binding to this patch]]
 Signed-off-by: Vinod Koul <vkoul@kernel.org>
 ---
- drivers/clk/qcom/clk-alpha-pll.c | 217 +++++++++++++++++++++++++++++++
- drivers/clk/qcom/clk-alpha-pll.h |   7 +
- 2 files changed, 224 insertions(+)
+ .../devicetree/bindings/clock/qcom,gcc.txt    |  21 ++
+ include/dt-bindings/clock/qcom,gcc-sm8150.h   | 243 ++++++++++++++++++
+ 2 files changed, 264 insertions(+)
+ create mode 100644 include/dt-bindings/clock/qcom,gcc-sm8150.h
 
-diff --git a/drivers/clk/qcom/clk-alpha-pll.c b/drivers/clk/qcom/clk-alpha-pll.c
-index 2c6773188761..055318f97991 100644
---- a/drivers/clk/qcom/clk-alpha-pll.c
-+++ b/drivers/clk/qcom/clk-alpha-pll.c
-@@ -32,6 +32,7 @@
- # define PLL_LOCK_DET		BIT(31)
+diff --git a/Documentation/devicetree/bindings/clock/qcom,gcc.txt b/Documentation/devicetree/bindings/clock/qcom,gcc.txt
+index 8661c3cd3ccf..d14362ad4132 100644
+--- a/Documentation/devicetree/bindings/clock/qcom,gcc.txt
++++ b/Documentation/devicetree/bindings/clock/qcom,gcc.txt
+@@ -23,6 +23,7 @@ Required properties :
+ 			"qcom,gcc-sdm630"
+ 			"qcom,gcc-sdm660"
+ 			"qcom,gcc-sdm845"
++			"qcom,gcc-sm8150"
  
- #define PLL_L_VAL(p)		((p)->offset + (p)->regs[PLL_OFF_L_VAL])
-+#define PLL_CAL_L_VAL(p)	((p)->offset + (p)->regs[PLL_OFF_CAL_L_VAL])
- #define PLL_ALPHA_VAL(p)	((p)->offset + (p)->regs[PLL_OFF_ALPHA_VAL])
- #define PLL_ALPHA_VAL_U(p)	((p)->offset + (p)->regs[PLL_OFF_ALPHA_VAL_U])
+ - reg : shall contain base register location and length
+ - #clock-cells : shall contain 1
+@@ -38,6 +39,13 @@ Documentation/devicetree/bindings/thermal/qcom-tsens.txt
+ - protected-clocks : Protected clock specifier list as per common clock
+  binding.
  
-@@ -44,14 +45,17 @@
- # define PLL_VCO_MASK		0x3
- 
- #define PLL_USER_CTL_U(p)	((p)->offset + (p)->regs[PLL_OFF_USER_CTL_U])
-+#define PLL_USER_CTL_U1(p)	((p)->offset + (p)->regs[PLL_OFF_USER_CTL_U1])
- 
- #define PLL_CONFIG_CTL(p)	((p)->offset + (p)->regs[PLL_OFF_CONFIG_CTL])
- #define PLL_CONFIG_CTL_U(p)	((p)->offset + (p)->regs[PLL_OFF_CONFIG_CTL_U])
-+#define PLL_CONFIG_CTL_U1(p)	((p)->offset + (p)->regs[PLL_OFF_CONFIG_CTL_U1])
- #define PLL_TEST_CTL(p)		((p)->offset + (p)->regs[PLL_OFF_TEST_CTL])
- #define PLL_TEST_CTL_U(p)	((p)->offset + (p)->regs[PLL_OFF_TEST_CTL_U])
- #define PLL_STATUS(p)		((p)->offset + (p)->regs[PLL_OFF_STATUS])
- #define PLL_OPMODE(p)		((p)->offset + (p)->regs[PLL_OFF_OPMODE])
- #define PLL_FRAC(p)		((p)->offset + (p)->regs[PLL_OFF_FRAC])
-+#define PLL_CAL_VAL(p)		((p)->offset + (p)->regs[PLL_OFF_CAL_VAL])
- 
- const u8 clk_alpha_pll_regs[][PLL_OFF_MAX_REGS] = {
- 	[CLK_ALPHA_PLL_TYPE_DEFAULT] =  {
-@@ -96,6 +100,22 @@ const u8 clk_alpha_pll_regs[][PLL_OFF_MAX_REGS] = {
- 		[PLL_OFF_OPMODE] = 0x2c,
- 		[PLL_OFF_FRAC] = 0x38,
- 	},
-+	[CLK_ALPHA_PLL_TYPE_TRION] = {
-+		[PLL_OFF_L_VAL] = 0x04,
-+		[PLL_OFF_CAL_L_VAL] = 0x08,
-+		[PLL_OFF_USER_CTL] = 0x0c,
-+		[PLL_OFF_USER_CTL_U] = 0x10,
-+		[PLL_OFF_USER_CTL_U1] = 0x14,
-+		[PLL_OFF_CONFIG_CTL] = 0x18,
-+		[PLL_OFF_CONFIG_CTL_U] = 0x1c,
-+		[PLL_OFF_CONFIG_CTL_U1] = 0x20,
-+		[PLL_OFF_TEST_CTL] = 0x24,
-+		[PLL_OFF_TEST_CTL_U] = 0x28,
-+		[PLL_OFF_STATUS] = 0x30,
-+		[PLL_OFF_OPMODE] = 0x38,
-+		[PLL_OFF_ALPHA_VAL] = 0x40,
-+		[PLL_OFF_CAL_VAL] = 0x44,
-+	},
- };
- EXPORT_SYMBOL_GPL(clk_alpha_pll_regs);
- 
-@@ -120,6 +140,10 @@ EXPORT_SYMBOL_GPL(clk_alpha_pll_regs);
- #define FABIA_PLL_OUT_MASK	0x7
- #define FABIA_PLL_RATE_MARGIN	500
- 
-+#define TRION_PLL_STANDBY	0x0
-+#define TRION_PLL_RUN		0x1
-+#define TRION_PLL_OUT_MASK	0x7
++For SM8150 only:
++       - clocks: a list of phandles and clock-specifier pairs,
++                 one for each entry in clock-names.
++       - clock-names: "bi_tcxo" (required)
++                      "sleep_clk" (optional)
++                      "aud_ref_clock" (optional)
 +
- #define pll_alpha_width(p)					\
- 		((PLL_ALPHA_VAL_U(p) - PLL_ALPHA_VAL(p) == 4) ?	\
- 				 ALPHA_REG_BITWIDTH : ALPHA_REG_16BIT_WIDTH)
-@@ -730,6 +754,130 @@ static long alpha_pll_huayra_round_rate(struct clk_hw *hw, unsigned long rate,
- 	return alpha_huayra_pll_round_rate(rate, *prate, &l, &a);
- }
- 
-+static int trion_pll_is_enabled(struct clk_alpha_pll *pll,
-+				struct regmap *regmap)
-+{
-+	u32 mode_regval, opmode_regval;
-+	int ret;
+ Example:
+ 	clock-controller@900000 {
+ 		compatible = "qcom,gcc-msm8960";
+@@ -71,3 +79,16 @@ Example of GCC with protected-clocks properties:
+ 				   <GCC_LPASS_Q6_AXI_CLK>,
+ 				   <GCC_LPASS_SWAY_CLK>;
+ 	};
 +
-+	ret = regmap_read(regmap, PLL_MODE(pll), &mode_regval);
-+	ret |= regmap_read(regmap, PLL_OPMODE(pll), &opmode_regval);
-+	if (ret)
-+		return 0;
++Example of GCC with clocks
++	gcc: clock-controller@100000 {
++		compatible = "qcom,gcc-sm8150";
++		reg = <0x00100000 0x1f0000>;
++		#clock-cells = <1>;
++		#reset-cells = <1>;
++		#power-domain-cells = <1>;
++		clock-names = "bi_tcxo",
++		              "sleep_clk";
++		clocks = <&rpmcc RPM_SMD_XO_CLK_SRC>,
++			 <&sleep_clk>;
++	};
+diff --git a/include/dt-bindings/clock/qcom,gcc-sm8150.h b/include/dt-bindings/clock/qcom,gcc-sm8150.h
+new file mode 100644
+index 000000000000..90d60ef94c64
+--- /dev/null
++++ b/include/dt-bindings/clock/qcom,gcc-sm8150.h
+@@ -0,0 +1,243 @@
++/* SPDX-License-Identifier: GPL-2.0 */
++/*
++ * Copyright (c) 2019, The Linux Foundation. All rights reserved.
++ */
 +
-+	return ((opmode_regval & TRION_PLL_RUN) && (mode_regval & PLL_OUTCTRL));
-+}
++#ifndef _DT_BINDINGS_CLK_QCOM_GCC_SM8150_H
++#define _DT_BINDINGS_CLK_QCOM_GCC_SM8150_H
 +
-+static int clk_trion_pll_is_enabled(struct clk_hw *hw)
-+{
-+	struct clk_alpha_pll *pll = to_clk_alpha_pll(hw);
++/* GCC clocks */
++#define GCC_AGGRE_NOC_PCIE_TBU_CLK				0
++#define GCC_AGGRE_UFS_CARD_AXI_CLK				1
++#define GCC_AGGRE_UFS_CARD_AXI_HW_CTL_CLK			2
++#define GCC_AGGRE_UFS_PHY_AXI_CLK				3
++#define GCC_AGGRE_UFS_PHY_AXI_HW_CTL_CLK			4
++#define GCC_AGGRE_USB3_PRIM_AXI_CLK				5
++#define GCC_AGGRE_USB3_SEC_AXI_CLK				6
++#define GCC_BOOT_ROM_AHB_CLK					7
++#define GCC_CAMERA_AHB_CLK					8
++#define GCC_CAMERA_HF_AXI_CLK					9
++#define GCC_CAMERA_SF_AXI_CLK					10
++#define GCC_CAMERA_XO_CLK					11
++#define GCC_CFG_NOC_USB3_PRIM_AXI_CLK				12
++#define GCC_CFG_NOC_USB3_SEC_AXI_CLK				13
++#define GCC_CPUSS_AHB_CLK					14
++#define GCC_CPUSS_AHB_CLK_SRC					15
++#define GCC_CPUSS_DVM_BUS_CLK					16
++#define GCC_CPUSS_GNOC_CLK					17
++#define GCC_CPUSS_RBCPR_CLK					18
++#define GCC_DDRSS_GPU_AXI_CLK					19
++#define GCC_DISP_AHB_CLK					20
++#define GCC_DISP_HF_AXI_CLK					21
++#define GCC_DISP_SF_AXI_CLK					22
++#define GCC_DISP_XO_CLK						23
++#define GCC_EMAC_AXI_CLK					24
++#define GCC_EMAC_PTP_CLK					25
++#define GCC_EMAC_PTP_CLK_SRC					26
++#define GCC_EMAC_RGMII_CLK					27
++#define GCC_EMAC_RGMII_CLK_SRC					28
++#define GCC_EMAC_SLV_AHB_CLK					29
++#define GCC_GP1_CLK						30
++#define GCC_GP1_CLK_SRC						31
++#define GCC_GP2_CLK						32
++#define GCC_GP2_CLK_SRC						33
++#define GCC_GP3_CLK						34
++#define GCC_GP3_CLK_SRC						35
++#define GCC_GPU_CFG_AHB_CLK					36
++#define GCC_GPU_GPLL0_CLK_SRC					37
++#define GCC_GPU_GPLL0_DIV_CLK_SRC				38
++#define GCC_GPU_IREF_CLK					39
++#define GCC_GPU_MEMNOC_GFX_CLK					40
++#define GCC_GPU_SNOC_DVM_GFX_CLK				41
++#define GCC_NPU_AT_CLK						42
++#define GCC_NPU_AXI_CLK						43
++#define GCC_NPU_CFG_AHB_CLK					44
++#define GCC_NPU_GPLL0_CLK_SRC					45
++#define GCC_NPU_GPLL0_DIV_CLK_SRC				46
++#define GCC_NPU_TRIG_CLK					47
++#define GCC_PCIE0_PHY_REFGEN_CLK				48
++#define GCC_PCIE1_PHY_REFGEN_CLK				49
++#define GCC_PCIE_0_AUX_CLK					50
++#define GCC_PCIE_0_AUX_CLK_SRC					51
++#define GCC_PCIE_0_CFG_AHB_CLK					52
++#define GCC_PCIE_0_CLKREF_CLK					53
++#define GCC_PCIE_0_MSTR_AXI_CLK					54
++#define GCC_PCIE_0_PIPE_CLK					55
++#define GCC_PCIE_0_SLV_AXI_CLK					56
++#define GCC_PCIE_0_SLV_Q2A_AXI_CLK				57
++#define GCC_PCIE_1_AUX_CLK					58
++#define GCC_PCIE_1_AUX_CLK_SRC					59
++#define GCC_PCIE_1_CFG_AHB_CLK					60
++#define GCC_PCIE_1_CLKREF_CLK					61
++#define GCC_PCIE_1_MSTR_AXI_CLK					62
++#define GCC_PCIE_1_PIPE_CLK					63
++#define GCC_PCIE_1_SLV_AXI_CLK					64
++#define GCC_PCIE_1_SLV_Q2A_AXI_CLK				65
++#define GCC_PCIE_PHY_AUX_CLK					66
++#define GCC_PCIE_PHY_REFGEN_CLK_SRC				67
++#define GCC_PDM2_CLK						68
++#define GCC_PDM2_CLK_SRC					69
++#define GCC_PDM_AHB_CLK						70
++#define GCC_PDM_XO4_CLK						71
++#define GCC_PRNG_AHB_CLK					72
++#define GCC_QMIP_CAMERA_NRT_AHB_CLK				73
++#define GCC_QMIP_CAMERA_RT_AHB_CLK				74
++#define GCC_QMIP_DISP_AHB_CLK					75
++#define GCC_QMIP_VIDEO_CVP_AHB_CLK				76
++#define GCC_QMIP_VIDEO_VCODEC_AHB_CLK				77
++#define GCC_QSPI_CNOC_PERIPH_AHB_CLK				78
++#define GCC_QSPI_CORE_CLK					79
++#define GCC_QSPI_CORE_CLK_SRC					80
++#define GCC_QUPV3_WRAP0_S0_CLK					81
++#define GCC_QUPV3_WRAP0_S0_CLK_SRC				82
++#define GCC_QUPV3_WRAP0_S1_CLK					83
++#define GCC_QUPV3_WRAP0_S1_CLK_SRC				84
++#define GCC_QUPV3_WRAP0_S2_CLK					85
++#define GCC_QUPV3_WRAP0_S2_CLK_SRC				86
++#define GCC_QUPV3_WRAP0_S3_CLK					87
++#define GCC_QUPV3_WRAP0_S3_CLK_SRC				88
++#define GCC_QUPV3_WRAP0_S4_CLK					89
++#define GCC_QUPV3_WRAP0_S4_CLK_SRC				90
++#define GCC_QUPV3_WRAP0_S5_CLK					91
++#define GCC_QUPV3_WRAP0_S5_CLK_SRC				92
++#define GCC_QUPV3_WRAP0_S6_CLK					93
++#define GCC_QUPV3_WRAP0_S6_CLK_SRC				94
++#define GCC_QUPV3_WRAP0_S7_CLK					95
++#define GCC_QUPV3_WRAP0_S7_CLK_SRC				96
++#define GCC_QUPV3_WRAP1_S0_CLK					97
++#define GCC_QUPV3_WRAP1_S0_CLK_SRC				98
++#define GCC_QUPV3_WRAP1_S1_CLK					99
++#define GCC_QUPV3_WRAP1_S1_CLK_SRC				100
++#define GCC_QUPV3_WRAP1_S2_CLK					101
++#define GCC_QUPV3_WRAP1_S2_CLK_SRC				102
++#define GCC_QUPV3_WRAP1_S3_CLK					103
++#define GCC_QUPV3_WRAP1_S3_CLK_SRC				104
++#define GCC_QUPV3_WRAP1_S4_CLK					105
++#define GCC_QUPV3_WRAP1_S4_CLK_SRC				106
++#define GCC_QUPV3_WRAP1_S5_CLK					107
++#define GCC_QUPV3_WRAP1_S5_CLK_SRC				108
++#define GCC_QUPV3_WRAP2_S0_CLK					109
++#define GCC_QUPV3_WRAP2_S0_CLK_SRC				110
++#define GCC_QUPV3_WRAP2_S1_CLK					111
++#define GCC_QUPV3_WRAP2_S1_CLK_SRC				112
++#define GCC_QUPV3_WRAP2_S2_CLK					113
++#define GCC_QUPV3_WRAP2_S2_CLK_SRC				114
++#define GCC_QUPV3_WRAP2_S3_CLK					115
++#define GCC_QUPV3_WRAP2_S3_CLK_SRC				116
++#define GCC_QUPV3_WRAP2_S4_CLK					117
++#define GCC_QUPV3_WRAP2_S4_CLK_SRC				118
++#define GCC_QUPV3_WRAP2_S5_CLK					119
++#define GCC_QUPV3_WRAP2_S5_CLK_SRC				120
++#define GCC_QUPV3_WRAP_0_M_AHB_CLK				121
++#define GCC_QUPV3_WRAP_0_S_AHB_CLK				122
++#define GCC_QUPV3_WRAP_1_M_AHB_CLK				123
++#define GCC_QUPV3_WRAP_1_S_AHB_CLK				124
++#define GCC_QUPV3_WRAP_2_M_AHB_CLK				125
++#define GCC_QUPV3_WRAP_2_S_AHB_CLK				126
++#define GCC_SDCC2_AHB_CLK					127
++#define GCC_SDCC2_APPS_CLK					128
++#define GCC_SDCC2_APPS_CLK_SRC					129
++#define GCC_SDCC4_AHB_CLK					130
++#define GCC_SDCC4_APPS_CLK					131
++#define GCC_SDCC4_APPS_CLK_SRC					132
++#define GCC_SYS_NOC_CPUSS_AHB_CLK				133
++#define GCC_TSIF_AHB_CLK					134
++#define GCC_TSIF_INACTIVITY_TIMERS_CLK				135
++#define GCC_TSIF_REF_CLK					136
++#define GCC_TSIF_REF_CLK_SRC					137
++#define GCC_UFS_CARD_AHB_CLK					138
++#define GCC_UFS_CARD_AXI_CLK					139
++#define GCC_UFS_CARD_AXI_CLK_SRC				140
++#define GCC_UFS_CARD_AXI_HW_CTL_CLK				141
++#define GCC_UFS_CARD_CLKREF_CLK					142
++#define GCC_UFS_CARD_ICE_CORE_CLK				143
++#define GCC_UFS_CARD_ICE_CORE_CLK_SRC				144
++#define GCC_UFS_CARD_ICE_CORE_HW_CTL_CLK			145
++#define GCC_UFS_CARD_PHY_AUX_CLK				146
++#define GCC_UFS_CARD_PHY_AUX_CLK_SRC				147
++#define GCC_UFS_CARD_PHY_AUX_HW_CTL_CLK				148
++#define GCC_UFS_CARD_RX_SYMBOL_0_CLK				149
++#define GCC_UFS_CARD_RX_SYMBOL_1_CLK				150
++#define GCC_UFS_CARD_TX_SYMBOL_0_CLK				151
++#define GCC_UFS_CARD_UNIPRO_CORE_CLK				152
++#define GCC_UFS_CARD_UNIPRO_CORE_CLK_SRC			153
++#define GCC_UFS_CARD_UNIPRO_CORE_HW_CTL_CLK			154
++#define GCC_UFS_MEM_CLKREF_CLK					155
++#define GCC_UFS_PHY_AHB_CLK					156
++#define GCC_UFS_PHY_AXI_CLK					157
++#define GCC_UFS_PHY_AXI_CLK_SRC					158
++#define GCC_UFS_PHY_AXI_HW_CTL_CLK				159
++#define GCC_UFS_PHY_ICE_CORE_CLK				160
++#define GCC_UFS_PHY_ICE_CORE_CLK_SRC				161
++#define GCC_UFS_PHY_ICE_CORE_HW_CTL_CLK				162
++#define GCC_UFS_PHY_PHY_AUX_CLK					163
++#define GCC_UFS_PHY_PHY_AUX_CLK_SRC				164
++#define GCC_UFS_PHY_PHY_AUX_HW_CTL_CLK				165
++#define GCC_UFS_PHY_RX_SYMBOL_0_CLK				166
++#define GCC_UFS_PHY_RX_SYMBOL_1_CLK				167
++#define GCC_UFS_PHY_TX_SYMBOL_0_CLK				168
++#define GCC_UFS_PHY_UNIPRO_CORE_CLK				169
++#define GCC_UFS_PHY_UNIPRO_CORE_CLK_SRC				170
++#define GCC_UFS_PHY_UNIPRO_CORE_HW_CTL_CLK			171
++#define GCC_USB30_PRIM_MASTER_CLK				172
++#define GCC_USB30_PRIM_MASTER_CLK_SRC				173
++#define GCC_USB30_PRIM_MOCK_UTMI_CLK				174
++#define GCC_USB30_PRIM_MOCK_UTMI_CLK_SRC			175
++#define GCC_USB30_PRIM_SLEEP_CLK				176
++#define GCC_USB30_SEC_MASTER_CLK				177
++#define GCC_USB30_SEC_MASTER_CLK_SRC				178
++#define GCC_USB30_SEC_MOCK_UTMI_CLK				179
++#define GCC_USB30_SEC_MOCK_UTMI_CLK_SRC				180
++#define GCC_USB30_SEC_SLEEP_CLK					181
++#define GCC_USB3_PRIM_CLKREF_CLK				182
++#define GCC_USB3_PRIM_PHY_AUX_CLK				183
++#define GCC_USB3_PRIM_PHY_AUX_CLK_SRC				184
++#define GCC_USB3_PRIM_PHY_COM_AUX_CLK				185
++#define GCC_USB3_PRIM_PHY_PIPE_CLK				186
++#define GCC_USB3_SEC_CLKREF_CLK					187
++#define GCC_USB3_SEC_PHY_AUX_CLK				188
++#define GCC_USB3_SEC_PHY_AUX_CLK_SRC				189
++#define GCC_USB3_SEC_PHY_COM_AUX_CLK				190
++#define GCC_USB3_SEC_PHY_PIPE_CLK				191
++#define GCC_VIDEO_AHB_CLK					192
++#define GCC_VIDEO_AXI0_CLK					193
++#define GCC_VIDEO_AXI1_CLK					194
++#define GCC_VIDEO_AXIC_CLK					195
++#define GCC_VIDEO_XO_CLK					196
++#define GPLL0							197
++#define GPLL0_OUT_EVEN						198
++#define GPLL7							199
++#define GPLL9							200
 +
-+	return trion_pll_is_enabled(pll, pll->clkr.regmap);
-+}
++/* Reset clocks */
++#define GCC_EMAC_BCR						0
++#define GCC_GPU_BCR						1
++#define GCC_MMSS_BCR						2
++#define GCC_NPU_BCR						3
++#define GCC_PCIE_0_BCR						4
++#define GCC_PCIE_0_PHY_BCR					5
++#define GCC_PCIE_1_BCR						6
++#define GCC_PCIE_1_PHY_BCR					7
++#define GCC_PCIE_PHY_BCR					8
++#define GCC_PDM_BCR						9
++#define GCC_PRNG_BCR						10
++#define GCC_QSPI_BCR						11
++#define GCC_QUPV3_WRAPPER_0_BCR					12
++#define GCC_QUPV3_WRAPPER_1_BCR					13
++#define GCC_QUPV3_WRAPPER_2_BCR					14
++#define GCC_QUSB2PHY_PRIM_BCR					15
++#define GCC_QUSB2PHY_SEC_BCR					16
++#define GCC_USB3_PHY_PRIM_BCR					17
++#define GCC_USB3_DP_PHY_PRIM_BCR				18
++#define GCC_USB3_PHY_SEC_BCR					19
++#define GCC_USB3PHY_PHY_SEC_BCR					20
++#define GCC_SDCC2_BCR						21
++#define GCC_SDCC4_BCR						22
++#define GCC_TSIF_BCR						23
++#define GCC_UFS_CARD_BCR					24
++#define GCC_UFS_PHY_BCR						25
++#define GCC_USB30_PRIM_BCR					26
++#define GCC_USB30_SEC_BCR					27
++#define GCC_USB_PHY_CFG_AHB2PHY_BCR				28
 +
-+static int clk_trion_pll_enable(struct clk_hw *hw)
-+{
-+	struct clk_alpha_pll *pll = to_clk_alpha_pll(hw);
-+	struct regmap *regmap = pll->clkr.regmap;
-+	u32 val;
-+	int ret;
-+
-+	ret = regmap_read(regmap, PLL_MODE(pll), &val);
-+	if (ret)
-+		return ret;
-+
-+	/* If in FSM mode, just vote for it */
-+	if (val & PLL_VOTE_FSM_ENA) {
-+		ret = clk_enable_regmap(hw);
-+		if (ret)
-+			return ret;
-+		return wait_for_pll_enable_active(pll);
-+	}
-+
-+	/* Set operation mode to RUN */
-+	regmap_write(regmap, PLL_OPMODE(pll), TRION_PLL_RUN);
-+
-+	ret = wait_for_pll_enable_lock(pll);
-+	if (ret)
-+		return ret;
-+
-+	/* Enable the PLL outputs */
-+	ret = regmap_update_bits(regmap, PLL_USER_CTL(pll),
-+				 TRION_PLL_OUT_MASK, TRION_PLL_OUT_MASK);
-+	if (ret)
-+		return ret;
-+
-+	/* Enable the global PLL outputs */
-+	return regmap_update_bits(regmap, PLL_MODE(pll),
-+				 PLL_OUTCTRL, PLL_OUTCTRL);
-+}
-+
-+static void clk_trion_pll_disable(struct clk_hw *hw)
-+{
-+	struct clk_alpha_pll *pll = to_clk_alpha_pll(hw);
-+	struct regmap *regmap = pll->clkr.regmap;
-+	u32 val;
-+	int ret;
-+
-+	ret = regmap_read(regmap, PLL_MODE(pll), &val);
-+	if (ret)
-+		return;
-+
-+	/* If in FSM mode, just unvote it */
-+	if (val & PLL_VOTE_FSM_ENA) {
-+		clk_disable_regmap(hw);
-+		return;
-+	}
-+
-+	/* Disable the global PLL output */
-+	ret = regmap_update_bits(regmap, PLL_MODE(pll), PLL_OUTCTRL, 0);
-+	if (ret)
-+		return;
-+
-+	/* Disable the PLL outputs */
-+	ret = regmap_update_bits(regmap, PLL_USER_CTL(pll),
-+				 TRION_PLL_OUT_MASK, 0);
-+	if (ret)
-+		return;
-+
-+	/* Place the PLL mode in STANDBY */
-+	regmap_write(regmap, PLL_OPMODE(pll), TRION_PLL_STANDBY);
-+	regmap_update_bits(regmap, PLL_MODE(pll), PLL_RESET_N, PLL_RESET_N);
-+}
-+
-+static unsigned long
-+clk_trion_pll_recalc_rate(struct clk_hw *hw, unsigned long parent_rate)
-+{
-+	struct clk_alpha_pll *pll = to_clk_alpha_pll(hw);
-+	struct regmap *regmap = pll->clkr.regmap;
-+	u32 l, frac;
-+	u64 prate = parent_rate;
-+
-+	regmap_read(regmap, PLL_L_VAL(pll), &l);
-+	regmap_read(regmap, PLL_ALPHA_VAL(pll), &frac);
-+
-+	return alpha_pll_calc_rate(prate, l, frac, ALPHA_REG_16BIT_WIDTH);
-+}
-+
-+static long clk_trion_pll_round_rate(struct clk_hw *hw, unsigned long rate,
-+				     unsigned long *prate)
-+{
-+	struct clk_alpha_pll *pll = to_clk_alpha_pll(hw);
-+	unsigned long min_freq, max_freq;
-+	u32 l;
-+	u64 a;
-+
-+	rate = alpha_pll_round_rate(rate, *prate,
-+				    &l, &a, ALPHA_REG_16BIT_WIDTH);
-+	if (!pll->vco_table || alpha_pll_find_vco(pll, rate))
-+		return rate;
-+
-+	min_freq = pll->vco_table[0].min_freq;
-+	max_freq = pll->vco_table[pll->num_vco - 1].max_freq;
-+
-+	return clamp(rate, min_freq, max_freq);
-+}
-+
- const struct clk_ops clk_alpha_pll_ops = {
- 	.enable = clk_alpha_pll_enable,
- 	.disable = clk_alpha_pll_disable,
-@@ -760,6 +908,15 @@ const struct clk_ops clk_alpha_pll_hwfsm_ops = {
- };
- EXPORT_SYMBOL_GPL(clk_alpha_pll_hwfsm_ops);
- 
-+const struct clk_ops clk_trion_fixed_pll_ops = {
-+	.enable = clk_trion_pll_enable,
-+	.disable = clk_trion_pll_disable,
-+	.is_enabled = clk_trion_pll_is_enabled,
-+	.recalc_rate = clk_trion_pll_recalc_rate,
-+	.round_rate = clk_trion_pll_round_rate,
-+};
-+EXPORT_SYMBOL_GPL(clk_trion_fixed_pll_ops);
-+
- static unsigned long
- clk_alpha_pll_postdiv_recalc_rate(struct clk_hw *hw, unsigned long parent_rate)
- {
-@@ -1053,6 +1210,66 @@ static unsigned long clk_alpha_pll_postdiv_fabia_recalc_rate(struct clk_hw *hw,
- 	return (parent_rate / div);
- }
- 
-+static unsigned long
-+clk_trion_pll_postdiv_recalc_rate(struct clk_hw *hw, unsigned long parent_rate)
-+{
-+	struct clk_alpha_pll_postdiv *pll = to_clk_alpha_pll_postdiv(hw);
-+	struct regmap *regmap = pll->clkr.regmap;
-+	u32 i, div = 1, val;
-+
-+	regmap_read(regmap, PLL_USER_CTL(pll), &val);
-+
-+	val >>= pll->post_div_shift;
-+	val &= PLL_POST_DIV_MASK(pll);
-+
-+	for (i = 0; i < pll->num_post_div; i++) {
-+		if (pll->post_div_table[i].val == val) {
-+			div = pll->post_div_table[i].div;
-+			break;
-+		}
-+	}
-+
-+	return (parent_rate / div);
-+}
-+
-+static long
-+clk_trion_pll_postdiv_round_rate(struct clk_hw *hw, unsigned long rate,
-+				 unsigned long *prate)
-+{
-+	struct clk_alpha_pll_postdiv *pll = to_clk_alpha_pll_postdiv(hw);
-+
-+	return divider_round_rate(hw, rate, prate, pll->post_div_table,
-+				  pll->width, CLK_DIVIDER_ROUND_CLOSEST);
-+};
-+
-+static int
-+clk_trion_pll_postdiv_set_rate(struct clk_hw *hw, unsigned long rate,
-+			       unsigned long parent_rate)
-+{
-+	struct clk_alpha_pll_postdiv *pll = to_clk_alpha_pll_postdiv(hw);
-+	struct regmap *regmap = pll->clkr.regmap;
-+	int i, val = 0, div;
-+
-+	div = DIV_ROUND_UP_ULL(parent_rate, rate);
-+	for (i = 0; i < pll->num_post_div; i++) {
-+		if (pll->post_div_table[i].div == div) {
-+			val = pll->post_div_table[i].val;
-+			break;
-+		}
-+	}
-+
-+	return regmap_update_bits(regmap, PLL_USER_CTL(pll),
-+				  PLL_POST_DIV_MASK(pll) << PLL_POST_DIV_SHIFT,
-+				  val << PLL_POST_DIV_SHIFT);
-+}
-+
-+const struct clk_ops clk_trion_pll_postdiv_ops = {
-+	.recalc_rate = clk_trion_pll_postdiv_recalc_rate,
-+	.round_rate = clk_trion_pll_postdiv_round_rate,
-+	.set_rate = clk_trion_pll_postdiv_set_rate,
-+};
-+EXPORT_SYMBOL_GPL(clk_trion_pll_postdiv_ops);
-+
- static long clk_alpha_pll_postdiv_fabia_round_rate(struct clk_hw *hw,
- 				unsigned long rate, unsigned long *prate)
- {
-diff --git a/drivers/clk/qcom/clk-alpha-pll.h b/drivers/clk/qcom/clk-alpha-pll.h
-index 66755f0f84fc..15f27f4b06df 100644
---- a/drivers/clk/qcom/clk-alpha-pll.h
-+++ b/drivers/clk/qcom/clk-alpha-pll.h
-@@ -13,22 +13,27 @@ enum {
- 	CLK_ALPHA_PLL_TYPE_HUAYRA,
- 	CLK_ALPHA_PLL_TYPE_BRAMMO,
- 	CLK_ALPHA_PLL_TYPE_FABIA,
-+	CLK_ALPHA_PLL_TYPE_TRION,
- 	CLK_ALPHA_PLL_TYPE_MAX,
- };
- 
- enum {
- 	PLL_OFF_L_VAL,
-+	PLL_OFF_CAL_L_VAL,
- 	PLL_OFF_ALPHA_VAL,
- 	PLL_OFF_ALPHA_VAL_U,
- 	PLL_OFF_USER_CTL,
- 	PLL_OFF_USER_CTL_U,
-+	PLL_OFF_USER_CTL_U1,
- 	PLL_OFF_CONFIG_CTL,
- 	PLL_OFF_CONFIG_CTL_U,
-+	PLL_OFF_CONFIG_CTL_U1,
- 	PLL_OFF_TEST_CTL,
- 	PLL_OFF_TEST_CTL_U,
- 	PLL_OFF_STATUS,
- 	PLL_OFF_OPMODE,
- 	PLL_OFF_FRAC,
-+	PLL_OFF_CAL_VAL,
- 	PLL_OFF_MAX_REGS
- };
- 
-@@ -117,5 +122,7 @@ void clk_alpha_pll_configure(struct clk_alpha_pll *pll, struct regmap *regmap,
- 			     const struct alpha_pll_config *config);
- void clk_fabia_pll_configure(struct clk_alpha_pll *pll, struct regmap *regmap,
- 				const struct alpha_pll_config *config);
-+extern const struct clk_ops clk_trion_fixed_pll_ops;
-+extern const struct clk_ops clk_trion_pll_postdiv_ops;
- 
- #endif
++#endif
 -- 
 2.20.1
 
