@@ -2,142 +2,152 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 7C36C7085C
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Jul 2019 20:22:33 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A86F9709D6
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Jul 2019 21:40:05 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726995AbfGVSWY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 22 Jul 2019 14:22:24 -0400
-Received: from mail-yb1-f193.google.com ([209.85.219.193]:38289 "EHLO
-        mail-yb1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726907AbfGVSWY (ORCPT
+        id S1728100AbfGVTkE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 22 Jul 2019 15:40:04 -0400
+Received: from mail-yb1-f196.google.com ([209.85.219.196]:45281 "EHLO
+        mail-yb1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726641AbfGVTkE (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 22 Jul 2019 14:22:24 -0400
-Received: by mail-yb1-f193.google.com with SMTP id j199so15289505ybg.5
-        for <linux-arm-msm@vger.kernel.org>; Mon, 22 Jul 2019 11:22:24 -0700 (PDT)
+        Mon, 22 Jul 2019 15:40:04 -0400
+Received: by mail-yb1-f196.google.com with SMTP id s41so12652133ybe.12
+        for <linux-arm-msm@vger.kernel.org>; Mon, 22 Jul 2019 12:40:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=poorly.run; s=google;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to:user-agent;
-        bh=nChDLJOZPg7dPTNM27Gi/1xsGavkYn+CO9mE5CxGd8w=;
-        b=Vk0ki42HNnol9MsZVJosQk17CkKb6y36mdKMVgVZAn2LD6+9qeDwF4ob45XpGyYdLg
-         p17NL9kJ0JMQGeO6qoaEOwfDtQetW9UoiFxjlSC6wgBXha+g+AY57eDWvRTKiV/03OGU
-         u54O4ff4XDkRGhYb7gG2emESK74nvP5F/kUyT6CAIpj3B54NvkovkSku55PrwuVTkckT
-         KnV7pSjg57YUvmmzFufiU3B43Oplk8wkzgentsMSbQNZ5lG8G+14hmrb5+07fm3NQnu0
-         AYyRduf5r7vrW3pgIBnEox0Hte4GItyMPvn6COmqz+hyyK60U0ys9Dc6cliaaLVcxX1F
-         euGQ==
+        bh=XiPi6NLGAihhHoJX1TQVxa/qSyYbhC/5nUBfiRfN5To=;
+        b=DatuO7iFd/gwaby0zE8VcAJc0UoFQHqT7eYDhZPJsVPEYuFar3ijTDWGJZ/oMnBCdn
+         NCp5AOREUGLNU/Dl5ElDs7B8Z7kfIDKXdHCT8XENb09BHD9P/OIaYVJ4LvZYQgqy3twJ
+         4VZ9Lx+eg6JJesZbxJFhpffym4RjzaZWqh8RchQ4bJWciVRW4DSxxFF1fVwXJngqdsji
+         efB18StPJsYCrMvpMIa7gFnp2t7n3WT/xrib079dw3FlU/KE03xS0q5vJO8MR/2y6IWI
+         U+0TeStphc7eDtcZZTx90NjrQ0y8Bv3ZJk6WPPbv+jhO6rFnmSUaNQEa40RruUxZGmWo
+         PeEg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=nChDLJOZPg7dPTNM27Gi/1xsGavkYn+CO9mE5CxGd8w=;
-        b=hDzS3OXXjgP37tZeEFVwgrijUWFqa+/mFzhg4MKB/rfoHYbihBA2x2nk+L/qNykhm8
-         ttU9APAPQOTPINpm96oCG4wNFOAs0kO3sg1JRX6u8n9mYd4onjdXjpaTHQVVriPhLo/x
-         1a+RNxy4cXSOdVOnK4EAjbCQn2V5+gfT67N5iF/HYjIz8NNthkd5G4d5bD+hRW4Gt+UL
-         +kXHzbLZnjhSdVuBBSlc8eMR95F4yZZbM7BV4EbWmPudD3nHv2o2BnUNSo8OpM9Npv4y
-         iSflZjHdGaR3iLmQOMEzr2CBaqqxGJ9goOCxCexL5vpu+rf+VKNyo5TgBdEXtVjBh4BR
-         b61Q==
-X-Gm-Message-State: APjAAAVSpitbAWphAd9NLJevjxCRyFkj0Fza5AYcafaCsPi56r3g1lzu
-        3vMk+av97YtLO5HIUHCmWo9s5g==
-X-Google-Smtp-Source: APXvYqyNe4/QXZs1k+6KJuGPYrieeEeXhzyaOjBwKUya6lRtwyXSjnlyvXe7M/SBsJJaQgWqVE3edw==
-X-Received: by 2002:a25:7c05:: with SMTP id x5mr43951829ybc.358.1563819743691;
-        Mon, 22 Jul 2019 11:22:23 -0700 (PDT)
+        bh=XiPi6NLGAihhHoJX1TQVxa/qSyYbhC/5nUBfiRfN5To=;
+        b=CPqWv3PodpZtsiFzCg5X0OhFMkQ7YS4IOBZIzcAlPKW6P5kObMuyCf5AkUvXe8Rqk/
+         dAng2SFauN1JcXoYMP8G1bs25ZqzXgxGaFQxn4xh4WDSq22R9CpWt3ctMw2dKLV+VjXM
+         uHCIs56tEEdr6sZmHpb0wl91JMAwO6wj0dQ7OgVUihprIqoyRT3oE71mENMAbqF5mb8G
+         oyYY0tFhh/EkEqC6zsBziVRnj///jLN4CJMpiXpVaDhB/1v+P4NLns67j8xnny18n/YF
+         YZMz5mBbdieOnzE/gG0+Pj3wck6eeqcstVHL32NASDdyqy2Y0wtHqjnvxUUx2wbZzjrL
+         +uRA==
+X-Gm-Message-State: APjAAAV6hjnnFqS6DeWrJhFqUAAeCD2oH5JmfOoWvtyI950Cc9QxCJOT
+        bc1K1zG7UXNM6/OnK5J8mUbUKA==
+X-Google-Smtp-Source: APXvYqz5SZD7hxqVmR3c0a4NmWzRdFT0snKaXz6JaYvHegDZWvbV9kes8na9VWp1p6aIBtO6/WGxtg==
+X-Received: by 2002:a25:e003:: with SMTP id x3mr40966402ybg.225.1563824403688;
+        Mon, 22 Jul 2019 12:40:03 -0700 (PDT)
 Received: from localhost ([2620:0:1013:11:89c6:2139:5435:371d])
-        by smtp.gmail.com with ESMTPSA id u123sm9932475ywu.75.2019.07.22.11.22.23
+        by smtp.gmail.com with ESMTPSA id t201sm9586068ywc.87.2019.07.22.12.40.02
         (version=TLS1_3 cipher=AEAD-AES256-GCM-SHA384 bits=256/256);
-        Mon, 22 Jul 2019 11:22:23 -0700 (PDT)
-Date:   Mon, 22 Jul 2019 14:22:22 -0400
+        Mon, 22 Jul 2019 12:40:02 -0700 (PDT)
+Date:   Mon, 22 Jul 2019 15:40:02 -0400
 From:   Sean Paul <sean@poorly.run>
 To:     Rob Clark <robdclark@gmail.com>
-Cc:     Brian Masney <masneyb@onstation.org>,
-        Jordan Crouse <jcrouse@codeaurora.org>,
+Cc:     dri-devel@lists.freedesktop.org,
         Rob Clark <robdclark@chromium.org>,
-        Sean Paul <seanpaul@chromium.org>,
-        Jean-Philippe Brucker <jean-philippe.brucker@arm.com>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Douglas Anderson <dianders@chromium.org>,
-        dri-devel <dri-devel@lists.freedesktop.org>,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        Stephen Boyd <sboyd@kernel.org>, Sean Paul <sean@poorly.run>,
         David Airlie <airlied@linux.ie>,
-        "Kristian H. Kristensen" <hoegsberg@google.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        freedreno <freedreno@lists.freedesktop.org>
-Subject: Re: [Freedreno] [PATCH] drm/msm: correct NULL pointer dereference in
- context_init
-Message-ID: <20190722182222.GG104440@art_vandelay>
-References: <20190627020515.5660-1-masneyb@onstation.org>
- <CAF6AEGvFE46aKCBP5de_Bx_hFcTyF0Vc9B1PebBZjGZmw9zh2g@mail.gmail.com>
+        Daniel Vetter <daniel@ffwll.ch>, linux-arm-msm@vger.kernel.org,
+        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH] drm/msm: stop abusing dma_map/unmap for cache
+Message-ID: <20190722194002.GI104440@art_vandelay>
+References: <20190630124735.27786-1-robdclark@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <CAF6AEGvFE46aKCBP5de_Bx_hFcTyF0Vc9B1PebBZjGZmw9zh2g@mail.gmail.com>
+In-Reply-To: <20190630124735.27786-1-robdclark@gmail.com>
 User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, Jun 28, 2019 at 05:57:26AM -0700, Rob Clark wrote:
-> On Wed, Jun 26, 2019 at 7:05 PM Brian Masney <masneyb@onstation.org> wrote:
-> >
-> > Correct attempted NULL pointer dereference in context_init() when
-> > running without an IOMMU.
-> >
-> > Signed-off-by: Brian Masney <masneyb@onstation.org>
-> > Fixes: 295b22ae596c ("drm/msm: Pass the MMU domain index in struct msm_file_private")
-> > ---
-> > The no IOMMU case seems like functionality that we may want to keep
-> > based on this comment:
-> > https://elixir.bootlin.com/linux/latest/source/drivers/gpu/drm/msm/adreno/a3xx_gpu.c#L523
-> > Once I get the msm8974 interconnect driver done, I'm going to look into
-> > what needs to be done to get the IOMMU working on the Nexus 5.
-> >
-> > Alternatively, for development purposes, maybe we could have a NOOP
-> > IOMMU driver that would allow us to remove these NULL checks that are
-> > sprinkled throughout the code. I haven't looked into this in detail.
-> > Thoughts?
+On Sun, Jun 30, 2019 at 05:47:22AM -0700, Rob Clark wrote:
+> From: Rob Clark <robdclark@chromium.org>
 > 
-> yeah, we probably want to keep !iommu support, it is at least useful
-> for bringup of new (or old) devices.  But tends to bitrot a since it
-> isn't a case that gets tested much once iommu is in place.  Perhaps
-> there is a way to have a null iommu/aspace, although I'm not quite
-> sure how that would work..
+> Recently splats like this started showing up:
 > 
-> Anyways,
+>    WARNING: CPU: 4 PID: 251 at drivers/iommu/dma-iommu.c:451 __iommu_dma_unmap+0xb8/0xc0
+>    Modules linked in: ath10k_snoc ath10k_core fuse msm ath mac80211 uvcvideo cfg80211 videobuf2_vmalloc videobuf2_memops vide
+>    CPU: 4 PID: 251 Comm: kworker/u16:4 Tainted: G        W         5.2.0-rc5-next-20190619+ #2317
+>    Hardware name: LENOVO 81JL/LNVNB161216, BIOS 9UCN23WW(V1.06) 10/25/2018
+>    Workqueue: msm msm_gem_free_work [msm]
+>    pstate: 80c00005 (Nzcv daif +PAN +UAO)
+>    pc : __iommu_dma_unmap+0xb8/0xc0
+>    lr : __iommu_dma_unmap+0x54/0xc0
+>    sp : ffff0000119abce0
+>    x29: ffff0000119abce0 x28: 0000000000000000
+>    x27: ffff8001f9946648 x26: ffff8001ec271068
+>    x25: 0000000000000000 x24: ffff8001ea3580a8
+>    x23: ffff8001f95ba010 x22: ffff80018e83ba88
+>    x21: ffff8001e548f000 x20: fffffffffffff000
+>    x19: 0000000000001000 x18: 00000000c00001fe
+>    x17: 0000000000000000 x16: 0000000000000000
+>    x15: ffff000015b70068 x14: 0000000000000005
+>    x13: 0003142cc1be1768 x12: 0000000000000001
+>    x11: ffff8001f6de9100 x10: 0000000000000009
+>    x9 : ffff000015b78000 x8 : 0000000000000000
+>    x7 : 0000000000000001 x6 : fffffffffffff000
+>    x5 : 0000000000000fff x4 : ffff00001065dbc8
+>    x3 : 000000000000000d x2 : 0000000000001000
+>    x1 : fffffffffffff000 x0 : 0000000000000000
+>    Call trace:
+>     __iommu_dma_unmap+0xb8/0xc0
+>     iommu_dma_unmap_sg+0x98/0xb8
+>     put_pages+0x5c/0xf0 [msm]
+>     msm_gem_free_work+0x10c/0x150 [msm]
+>     process_one_work+0x1e0/0x330
+>     worker_thread+0x40/0x438
+>     kthread+0x12c/0x130
+>     ret_from_fork+0x10/0x18
+>    ---[ end trace afc0dc5ab81a06bf ]---
 > 
-> Reviewed-by: Rob Clark <robdclark@gmail.com>
+> Not quite sure what triggered that, but we really shouldn't be abusing
+> dma_{map,unmap}_sg() for cache maint.
 > 
-> (I guess this can go in via drm-misc-fixes unless we get some more
-> fixes to justify sending msm-fixes MR..)
+> Signed-off-by: Rob Clark <robdclark@chromium.org>
+> Cc: Stephen Boyd <sboyd@kernel.org>
 
-Applied to drm-misc-fixes for 5.3
+Applied to -misc-fixes
+
+Thanks,
 
 Sean
 
+> ---
+>  drivers/gpu/drm/msm/msm_gem.c | 4 ++--
+>  1 file changed, 2 insertions(+), 2 deletions(-)
 > 
-> >
-> >  drivers/gpu/drm/msm/msm_drv.c | 2 +-
-> >  1 file changed, 1 insertion(+), 1 deletion(-)
-> >
-> > diff --git a/drivers/gpu/drm/msm/msm_drv.c b/drivers/gpu/drm/msm/msm_drv.c
-> > index 451bd4508793..83047cb2c735 100644
-> > --- a/drivers/gpu/drm/msm/msm_drv.c
-> > +++ b/drivers/gpu/drm/msm/msm_drv.c
-> > @@ -619,7 +619,7 @@ static int context_init(struct drm_device *dev, struct drm_file *file)
-> >
-> >         msm_submitqueue_init(dev, ctx);
-> >
-> > -       ctx->aspace = priv->gpu->aspace;
-> > +       ctx->aspace = priv->gpu ? priv->gpu->aspace : NULL;
-> >         file->driver_priv = ctx;
-> >
-> >         return 0;
-> > --
-> > 2.20.1
-> >
-> > _______________________________________________
-> > Freedreno mailing list
-> > Freedreno@lists.freedesktop.org
-> > https://lists.freedesktop.org/mailman/listinfo/freedreno
+> diff --git a/drivers/gpu/drm/msm/msm_gem.c b/drivers/gpu/drm/msm/msm_gem.c
+> index d31d9f927887..3b84cbdcafa3 100644
+> --- a/drivers/gpu/drm/msm/msm_gem.c
+> +++ b/drivers/gpu/drm/msm/msm_gem.c
+> @@ -108,7 +108,7 @@ static struct page **get_pages(struct drm_gem_object *obj)
+>  		 * because display controller, GPU, etc. are not coherent:
+>  		 */
+>  		if (msm_obj->flags & (MSM_BO_WC|MSM_BO_UNCACHED))
+> -			dma_map_sg(dev->dev, msm_obj->sgt->sgl,
+> +			dma_sync_sg_for_device(dev->dev, msm_obj->sgt->sgl,
+>  					msm_obj->sgt->nents, DMA_BIDIRECTIONAL);
+>  	}
+>  
+> @@ -138,7 +138,7 @@ static void put_pages(struct drm_gem_object *obj)
+>  			 * GPU, etc. are not coherent:
+>  			 */
+>  			if (msm_obj->flags & (MSM_BO_WC|MSM_BO_UNCACHED))
+> -				dma_unmap_sg(obj->dev->dev, msm_obj->sgt->sgl,
+> +				dma_sync_sg_for_cpu(obj->dev->dev, msm_obj->sgt->sgl,
+>  					     msm_obj->sgt->nents,
+>  					     DMA_BIDIRECTIONAL);
+>  
+> -- 
+> 2.20.1
+> 
 
 -- 
 Sean Paul, Software Engineer, Google / Chromium OS
