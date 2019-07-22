@@ -2,116 +2,63 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id A6E2C7032A
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Jul 2019 17:11:15 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id BE2FE70344
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Jul 2019 17:13:00 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727224AbfGVPLP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 22 Jul 2019 11:11:15 -0400
-Received: from mail-pg1-f196.google.com ([209.85.215.196]:41324 "EHLO
-        mail-pg1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726897AbfGVPLO (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 22 Jul 2019 11:11:14 -0400
-Received: by mail-pg1-f196.google.com with SMTP id x15so7461737pgg.8
-        for <linux-arm-msm@vger.kernel.org>; Mon, 22 Jul 2019 08:11:14 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to
-         :user-agent;
-        bh=okW2ZRllj1UmKp04aEFvJhWydriFCMDOSg9DK6KAQaA=;
-        b=wrERNdA+k3qS3VTOu/hN4vusaATGstfPhZIORk2Dy9VxFSHX2bgxeEdSe8p6U0/EAv
-         +TXWdeDvyTIgsJ4XbeVIw+X09pvmBoQ3ajv70KQJYEhdDYwDidbw8LYOGhlJQL3xwb+s
-         IOpT++HqYP41y78gpqHYg5CYNIhrDoO62Gfot61zR6PWkMAqweRs35n3muoJfpFP5YSp
-         L9zChQWF00xKxHH7Z9eLKQhAvJmvACNyIsEGIQtl4pxeUoip+l2MRBlQXFsTZTvI3dYU
-         q+bDyjaWjSPhcLl81BiJs13VqpI+EZAevtwToHpvbTk/s9Ojfxg13Un8ZgmxCf08h8xE
-         4jtw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        bh=okW2ZRllj1UmKp04aEFvJhWydriFCMDOSg9DK6KAQaA=;
-        b=er7HgpxvEs4JZe498NwI6ZeUN1b+teW4h4+mVNxuI84Df6GI8ripTb/ZZJABxaLMxg
-         xOYQaGrIQhLstR73oPg5fIqLPS8PgcsPjJA+SdOxrLA9NlDHKzc7OQHt2wakwsRrWA3a
-         RKvLa8NkKrj6252Xs4YxzabaAZ2frhA10pwvoIkJnTsanVGVQzt3zLjhLOhzMcZZxDrb
-         6C47wy1h8xS5WKj/uC4Xc2xXwK27SHrsvHyiSpXune8F1NQWQ5GHx02FdyJoDNvQQE2f
-         Vj6osG7cZDaa3O157DSGPozeFriLJCByov/wCT9xq9ZmON3plDWh3P+hC/UiHsTAWSrE
-         050Q==
-X-Gm-Message-State: APjAAAXJwJ0NsoBhS9Vd/0FIG4EB6bkeG+E6wNW4jJ5ATpuoJR+rwJ+/
-        jJBhhgSZjdtZWatXXVDup0IZSQ==
-X-Google-Smtp-Source: APXvYqyUMggcpHvQEIWA1uz/HQ0m+BWgq/e/QrwPKl6dVDM71u87KBblZBgc9PooMtK9Xla5oXXYZw==
-X-Received: by 2002:aa7:8189:: with SMTP id g9mr755670pfi.143.1563808274042;
-        Mon, 22 Jul 2019 08:11:14 -0700 (PDT)
-Received: from tuxbook-pro (104-188-17-28.lightspeed.sndgca.sbcglobal.net. [104.188.17.28])
-        by smtp.gmail.com with ESMTPSA id n140sm41835626pfd.132.2019.07.22.08.11.12
-        (version=TLS1_3 cipher=AEAD-AES256-GCM-SHA384 bits=256/256);
-        Mon, 22 Jul 2019 08:11:13 -0700 (PDT)
-Date:   Mon, 22 Jul 2019 08:12:34 -0700
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Christoph Hellwig <hch@lst.de>
-Cc:     Marc Gonzalez <marc.w.gonzalez@free.fr>,
-        Minwoo Im <minwoo.im.dev@gmail.com>,
-        MSM <linux-arm-msm@vger.kernel.org>,
-        LKML <linux-kernel@vger.kernel.org>,
-        Andy Gross <agross@kernel.org>,
-        Stanimir Varbanov <svarbanov@mm-sol.com>,
-        Rob Clark <robdclark@gmail.com>,
-        Stephen Boyd <sboyd@kernel.org>
-Subject: Re: [PATCH] firmware: qcom_scm: fix error for incompatible pointer
-Message-ID: <20190722151234.GJ7234@tuxbook-pro>
-References: <20190719134303.7617-1-minwoo.im.dev@gmail.com>
- <7ea51e42-ab8a-e4e2-1833-651e2dabca3c@free.fr>
- <20190722093059.GA29538@lst.de>
+        id S1727439AbfGVPNA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 22 Jul 2019 11:13:00 -0400
+Received: from mail.kernel.org ([198.145.29.99]:44952 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726386AbfGVPNA (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 22 Jul 2019 11:13:00 -0400
+Received: from mail-qt1-f175.google.com (mail-qt1-f175.google.com [209.85.160.175])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        by mail.kernel.org (Postfix) with ESMTPSA id 0998E21903;
+        Mon, 22 Jul 2019 15:12:59 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=default; t=1563808379;
+        bh=CTRrbtDJEmmUynhEaywLH4FjBvJM41mxMXhjYFm2FJg=;
+        h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
+        b=mLqsCo8IFjohG/jNdUX1EW+bWDtdWNlhFMzJ1yihY6oUs0KIG3BVZ+I6xtovt+CU5
+         K9ukKYvHV//9MNcFpXG1UK729ELQzngElJBMMnqj447K7Syc8Yw48EhCn8HTQn7h34
+         qp7SNfkzdyjXNBqb6xUj6eiPgaMvaiSRmN0j4MdA=
+Received: by mail-qt1-f175.google.com with SMTP id a15so38853488qtn.7;
+        Mon, 22 Jul 2019 08:12:59 -0700 (PDT)
+X-Gm-Message-State: APjAAAXu7xGRkSzq5FDDRwV5/fzCsed69sxqFpQEEGU6Fnsz0GmfzMVF
+        dURpCsksUGvP8XgEtavUVkubV9RI83iWaXH0Nw==
+X-Google-Smtp-Source: APXvYqxIRQFEcMS1UiVSIRkDYcv77oPpLIW4fghgL55Uv4ewj763NwPFIjTM3isacKZ+SynYN6dK2LIsdKC4LGjFVl0=
+X-Received: by 2002:a0c:baa1:: with SMTP id x33mr52172799qvf.200.1563808378300;
+ Mon, 22 Jul 2019 08:12:58 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=windows-1252
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20190722093059.GA29538@lst.de>
-User-Agent: Mutt/1.11.4 (2019-03-13)
+References: <20190722092211.100586-1-stephan@gerhold.net> <20190722092211.100586-3-stephan@gerhold.net>
+In-Reply-To: <20190722092211.100586-3-stephan@gerhold.net>
+From:   Rob Herring <robh+dt@kernel.org>
+Date:   Mon, 22 Jul 2019 09:12:46 -0600
+X-Gmail-Original-Message-ID: <CAL_JsqJe2L1EraVnHkjr8QOA3pG2_M3SHg3Q7EY1jXcwdznAhQ@mail.gmail.com>
+Message-ID: <CAL_JsqJe2L1EraVnHkjr8QOA3pG2_M3SHg3Q7EY1jXcwdznAhQ@mail.gmail.com>
+Subject: Re: [RFC PATCH v2 2/4] dt-bindings: qcom: Document bindings for new
+ MSM8916 devices
+To:     Stephan Gerhold <stephan@gerhold.net>
+Cc:     Andy Gross <agross@kernel.org>,
+        Mark Rutland <mark.rutland@arm.com>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        devicetree@vger.kernel.org,
+        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon 22 Jul 02:30 PDT 2019, Christoph Hellwig wrote:
+On Mon, Jul 22, 2019 at 3:27 AM Stephan Gerhold <stephan@gerhold.net> wrote:
+>
+> Document the new samsung,a3u/a5u-eur and longcheer,l8150
+> device tree bindings used in their device trees.
+>
+> Signed-off-by: Stephan Gerhold <stephan@gerhold.net>
+> ---
+>  Documentation/devicetree/bindings/arm/qcom.yaml | 8 ++++++++
+>  1 file changed, 8 insertions(+)
 
-> On Mon, Jul 22, 2019 at 10:38:55AM +0200, Marc Gonzalez wrote:
-> > > In file included from drivers/firmware/qcom_scm.c:12:0:
-> > > ./include/linux/dma-mapping.h:636:21: note: expected ‘dma_addr_t * {aka long long unsigned int *}’ but argument is of type ‘phys_addr_t * {aka unsigned int *}’
-> > >  static inline void *dma_alloc_coherent(struct device *dev, size_t size,
-> > >                      ^~~~~~~~~~~~~~~~~~
-> > > ```
-> > > 
-> > > We just can cast phys_addr_t to dma_addr_t here.
-> > 
-> > IME, casting is rarely a proper solution.
-> 
-> *nod*
-> 
-> ptr_phys probably should be a dma_addr_t.  Unless this driver is so
-> magic that it really wants a physical and not a dma address, in which
-> case it needs to use alloc_pages instead of dma_alloc_coherent
-> and then call page_to_phys on the returned page, and a very big comment
-> explaining why it is so special.
-
-The scm call takes physical addresses (which happens to be 1:1 with DMA
-addresses for this driver).
-
-This allocation started off (downstream) as a simple kmalloc(), but
-while the scm call is being executed an access from Linux will cause a
-security violation (that's not handled gracefully). The properties of
-dma_alloc is closer, so that's where the code is today.
-
-Optimally this should be something like alloc_pages() and some mechanism
-for unmapping the pages during the call. But no one has come up with a
-suitable patch for that.
-
-
-But there's a patch from Stephen for this already (not doing a
-typecast).  Apparently I missed merging this, so I'll do that.
-
-https://lore.kernel.org/linux-arm-msm/20190517210923.202131-2-swboyd@chromium.org/
-
-Regards,
-Bjorn
+Reviewed-by: Rob Herring <robh@kernel.org>
