@@ -2,226 +2,90 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 1AEE471226
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 Jul 2019 08:56:15 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C55CF7138E
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 Jul 2019 10:06:05 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730778AbfGWG4O (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 23 Jul 2019 02:56:14 -0400
-Received: from mail-ot1-f65.google.com ([209.85.210.65]:44014 "EHLO
-        mail-ot1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729771AbfGWG4N (ORCPT
+        id S1727391AbfGWIGE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 23 Jul 2019 04:06:04 -0400
+Received: from mail-pg1-f196.google.com ([209.85.215.196]:39306 "EHLO
+        mail-pg1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727375AbfGWIGE (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 23 Jul 2019 02:56:13 -0400
-Received: by mail-ot1-f65.google.com with SMTP id j11so18716033otp.10
-        for <linux-arm-msm@vger.kernel.org>; Mon, 22 Jul 2019 23:56:12 -0700 (PDT)
+        Tue, 23 Jul 2019 04:06:04 -0400
+Received: by mail-pg1-f196.google.com with SMTP id u17so19020987pgi.6
+        for <linux-arm-msm@vger.kernel.org>; Tue, 23 Jul 2019 01:06:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ffwll.ch; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=lUBHi4V0jbs+PI1x2E2emk4h7AlczmgN17NIDpKKEzg=;
-        b=GdHL0OLR9MMU8MGJo4otr/TdZFsSA0UxqtOQui0zEfIqQlhLK2CGfZW8ytl1ZmR9Ib
-         +b/U7OBC/YLwNeCzwVa6A6bH+wTX+0/gB+ti7Al0AU7B3pb6o+1hFUgBKqUK0Y7uF5bS
-         rre/ivpXSJS4E+oMcmCW+2h3serP6aFzMyvhc=
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=FnYq9WMNCA5j58+eOL9UHb7C05FMTgGEkUJ9/uOB0nA=;
+        b=QfwTwwOHlT9JCTh7ajivyrYwT21uj5fjsJH0jhDROyd6azQz03uwEyT5nfcD6GP9UM
+         +YmCIH1PFxItRaMc2hH1GMZV6jv7w/Sw9Pgy2Dqrrkyni6kiU1tqZKCzQGaHzZF4nTFX
+         ZvUd1nSN8Ijp8mMgNSyVr+y+1Kzd7tI0JFqpGo1g6WmZDMdnYQKOY8ikvcOXcpRaB6BQ
+         MZ64LX6egK4RYgXPH0f6l2SsNPfsq0fNsyo44NSaIBaBF+0jKFbk4eGwBXo3FNMP6PnI
+         GL1tSSXqoQMZ3ZxQLrHElb/XKL/PNFskcNj3Er0xmjCnzdEJctIVM6kxWUXsCpcOZ+ys
+         Ld1w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=lUBHi4V0jbs+PI1x2E2emk4h7AlczmgN17NIDpKKEzg=;
-        b=ds2bhjsRfXFlqrjl2TPUU9T4BdWtHL9WjuejWcqS+gra990JA4ngqK9o4I+kx9e6VN
-         OZENdraCh3LjBDofwFV1KEBOHeHBgUjq49MJr7zbbDeVLeyr1of3cw8OgquPnK+c8EMD
-         T+INr/E3N7Hdxcg/R8IJObesOhbSu0SkEeisL5H4ZWw4xD77ZeBt6QpGLfPPzl66d6OO
-         T1qbp5ELLuhAPqWv/qWpT/127VBT6CFWbdvajlvtq/85QODNcZouBl5f04krkLSNtsOt
-         l6ihb7/ZS7VhSX5QKpPC+iPMNTbl7OZp3H6aqhoEa5UIVyqhpGETHiaiGvBPwdKYxYc2
-         xclw==
-X-Gm-Message-State: APjAAAVBuRDhms67Oa7T0MwlVLKmnOVQe2jl9LuLJG9NvcUgJrRLTGfC
-        uW65tDbADAsoxj5eDoDwdE795Vaz2o9WTVYARZw=
-X-Google-Smtp-Source: APXvYqxMG/SxPI5o04z/vlx8y6fiZNp1fU+33+6t/Qmm0N2gqxRxW2D8d6Jjq1vmwqH0e9bSahJ/ztLebu4OqaAYz0w=
-X-Received: by 2002:a05:6830:ce:: with SMTP id x14mr36930304oto.188.1563864972359;
- Mon, 22 Jul 2019 23:56:12 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=FnYq9WMNCA5j58+eOL9UHb7C05FMTgGEkUJ9/uOB0nA=;
+        b=L7skDFHxW0+C7y96jd20qQBWmhMcycGvMaby1pNaqWpTTJrMroyDNYZszHSD75mvxB
+         zDCpOxv9pBuVVbWidqrGwrtqUXL2vVNU0w51JC6r7KmtI7wrQCwdReXNYZ1hF/Wqa1AS
+         WwGYXwxfwCB8RfKk3MloKfxT1qG4qdUriH61++UZSrJ9WZ8uI7tLr1+dcaQ5J0uBHYnK
+         FwWrCZi02bAVMIAKtRoHSsN4VP4E8W7661DPFksyM8pVD1ho8YM6P/5QG9xXR+GbJrwR
+         CfDygrE7n/GPPWYSfYk82G/3TJuxn1CEwBg3N6HvqufIxDNO34pKgYoCsPpHYD/iPlss
+         rvMA==
+X-Gm-Message-State: APjAAAUoetNP0n/e50baOXTqpchlGqqYb1zaoTkWkG1SzPLaMNeM+iQn
+        s/dVU19a7KfhFXGbMJgD+aDXdIJy
+X-Google-Smtp-Source: APXvYqzz5TAIPmw/htmUyFFGW5rC7DZQv/nFab6WS/OqoUI4VTyhXo3W7fvQieKtmT7t1P8frWXxkQ==
+X-Received: by 2002:a62:1ccd:: with SMTP id c196mr4538036pfc.102.1563869164122;
+        Tue, 23 Jul 2019 01:06:04 -0700 (PDT)
+Received: from localhost.localdomain ([122.163.0.39])
+        by smtp.gmail.com with ESMTPSA id u128sm48561967pfu.48.2019.07.23.01.06.02
+        (version=TLS1_3 cipher=AEAD-AES256-GCM-SHA384 bits=256/256);
+        Tue, 23 Jul 2019 01:06:03 -0700 (PDT)
+From:   Nishka Dasgupta <nishkadg.linux@gmail.com>
+To:     agross@kernel.org, linux-arm-msm@vger.kernel.org
+Cc:     Nishka Dasgupta <nishkadg.linux@gmail.com>
+Subject: [PATCH] bus: qcom-ebi2: Add of_node_put() before return
+Date:   Tue, 23 Jul 2019 13:35:52 +0530
+Message-Id: <20190723080552.7588-1-nishkadg.linux@gmail.com>
+X-Mailer: git-send-email 2.19.1
 MIME-Version: 1.0
-References: <1562870805-32314-1-git-send-email-jsanka@codeaurora.org>
- <20190716090712.GY15868@phenom.ffwll.local> <16fee2b42fa03d2cf104452223dcf5af@codeaurora.org>
- <20190719090553.GF15868@phenom.ffwll.local> <20190719135558.GC104440@art_vandelay>
- <20190719141528.GN5942@intel.com> <20190719142959.GD104440@art_vandelay> <afaf9da1143534422a277c2bbe8c84db@codeaurora.org>
-In-Reply-To: <afaf9da1143534422a277c2bbe8c84db@codeaurora.org>
-From:   Daniel Vetter <daniel.vetter@ffwll.ch>
-Date:   Tue, 23 Jul 2019 08:56:00 +0200
-Message-ID: <CAKMK7uEv-UB=AobTcNoqbHL2+rXTQae-MtDNkgtfgWVVHGTR_w@mail.gmail.com>
-Subject: Re: [RFC] Expanding drm_mode_modeinfo flags
-To:     Jeykumar Sankaran <jsanka@codeaurora.org>
-Cc:     Sean Paul <sean@poorly.run>,
-        =?UTF-8?B?VmlsbGUgU3lyasOkbMOk?= <ville.syrjala@linux.intel.com>,
-        freedreno <freedreno@lists.freedesktop.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        dri-devel <dri-devel@lists.freedesktop.org>,
-        pdhaval@codeaurora.org, Sean Paul <seanpaul@chromium.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Jul 23, 2019 at 1:50 AM Jeykumar Sankaran <jsanka@codeaurora.org> w=
-rote:
->
-> On 2019-07-19 07:29, Sean Paul wrote:
-> > On Fri, Jul 19, 2019 at 05:15:28PM +0300, Ville Syrj=C3=A4l=C3=A4 wrote=
-:
-> >> On Fri, Jul 19, 2019 at 09:55:58AM -0400, Sean Paul wrote:
-> >> > On Fri, Jul 19, 2019 at 11:05:53AM +0200, Daniel Vetter wrote:
-> >> > > On Thu, Jul 18, 2019 at 11:18:42AM -0700, Jeykumar Sankaran wrote:
-> >> > > > On 2019-07-16 02:07, Daniel Vetter wrote:
-> >> > > > > On Thu, Jul 11, 2019 at 11:46:44AM -0700, Jeykumar Sankaran wr=
-ote:
-> >
-> > /snip
-> >
-> >> > > > > >   drm: add mode flags in uapi for seamless mode switch
-> >> > > > >
-> >> > > > > I think the uapi is the trivial part here, the real deal is ho=
-w
-> >> > > > > userspace
-> >> > > > > uses this. Can you pls post the patches for your compositor?
-> >> > > > >
-> >> > > > > Also note that we already allow userspace to tell the kernel w=
-hether
-> >> > > > > flickering is ok or not for a modeset. msm driver could use th=
-at to at
-> >> > > > > least tell userspace whether a modeset change is possible. So =
-you can
-> >> > > > > already implement glitch-free modeset changes for at least vid=
-eo mode.
-> >> > > > > -Daniel
-> >> > > >
-> >> > > > I believe you are referring to the below tv property of the conn=
-ector.
-> >> > > >
-> >> > > > /**
-> >> > > >  * @tv_flicker_reduction_property: Optional TV property to contr=
-ol the
-> >> > > >  * flicker reduction mode.
-> >> > > >  */
-> >> > > > struct drm_property *tv_flicker_reduction_property;
-> >> > >
-> >> > > Not even close :-)
-> >> > >
-> >> > > I mean the DRM_MODE_ATOMIC_ALLOW_MODESET flag for the atomic ioctl=
-. This
-> >> > > is not a property of a mode, this is a property of a _transition_ =
-between
-> >> > > configurations. Some transitions can be done flicker free, others =
-can't.
-> >> >
-> >> > Agree that an atomic flag on a commit is the way to accomplish this.=
- It's pretty
-> >> > similar to the psr transitions, where we want to reuse most of the a=
-tomic
-> >> > circuitry, but in a specialized way. We'd also have to be careful to=
- only
-> >> > involve the drm objects which are seamless modeset aware (you could =
-imagine
-> >> > a bridge chain where the bridges downstream of the first bridge don'=
-t care).
-> >> >
-> >> > >
-> >> > > There's then still the question of how to pick video vs command mo=
-de, but
-> >> > > imo better to start with implementing the transition behaviour cor=
-rectly
-> >> > > first.
-> >> >
-> >> > Connector property? Possibly a terrible idea, but I wonder if we cou=
-ld [re]use
-> >> > the vrr properties for command mode. The docs state that the driver =
-has the
-> >> > option of putting upper and lower bounds on the refresh rate.
-> >>
-> >> Not really sure why this needs new props and whatnot. This is kinda
-> >> what
-> >> the i915 "fastset" stuff already does:
-> >> 1. userspace asks for something to be changed via atomic
-> >> 2. driver calculates whether a modeset is actually required
-> >> 3. atomic validates need_modeset() vs. DRM_MODE_ATOMIC_ALLOW_MODESET
-> >> 4. if (need_modeset) heavyweight_commit() else lightweight_commit()
-> >>
-> >> Ie. why should userspace really care about anything except the
-> >> "flickers are OK" vs. "flickers not wanted" thing?
-> >
-> > Agree, I don't think the seamless modeset (ie: changing resolution
-> > without
-> > flicker) needs a property. Just need to test the commit without
-> > ALLOW_MODESET
-> > and commit it if the test passes.
-> >
->
-> Agreed that a TEST_ONLY commit without ALLOW_MODESET flag can be used to
-> check
-> whether the modeset can be done seamless. But since there are no error
-> code returns,
-> the client cannot distinguish the test_only commit failures from other
-> invalid config failures.
->
-> Also, note that when the client sees two 1080p modes (vid/cmd) and it is
-> interested only
-> to do *only* seamless switches, without any additional flag it cannot
-> distinguish between
-> these two 1080p modes. The client has to invoke two test_only commits
-> with these
-> modes to identify the seamless one. Is that a preferred approach?
->
-> Intel's "fastset" calculates the need for modeset internally based on
-> the
-> configuration and chooses the best commit path. But the requirement here
-> is to expose the information up-front since the use case cannot afford
-> to fall back to the normal modeset when it has requested for a seamless
-> one.
->
-> >>
-> >> Also what's the benefit of using video mode if your panel supportes
-> >> command mode? Can you turn off the memory in the panel and actually
-> >> save power that way? And if there is a benefit can't the driver just
-> >> automagically switch between the two based on how often things are
-> >> getting updated? That would match how eDP PSR already works.
-> >
-> > I'm guessing video mode might have some latency benefits over command
-> > mode?
-> >
-> > Sean
->
-> Yes. Pretty much those are reasons we need to switch to video mode. But
-> instead
-> of making the decision internal to the driver based on the frequency of
-> frame updates,
-> we have proprietary use cases where the client has to trigger the switch
-> explicitly.
-> So we are trying to find ways to represent the same resolution in both
-> video/cmd modes.
+Each iteration of for_each_available_child_of_node puts the previous
+node, but in the case of a return from the middle of the loop, there is
+no put, thus causing a memory leak. Add an of_node_put before the
+return.
+Issue found with Coccinelle.
 
-If "proprietary" here means closed source or not upstream, then that's
-the part you need to fix first. See
+Signed-off-by: Nishka Dasgupta <nishkadg.linux@gmail.com>
+---
+ drivers/bus/qcom-ebi2.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-https://dri.freedesktop.org/docs/drm/gpu/drm-uapi.html#open-source-userspac=
-e-requirements
+diff --git a/drivers/bus/qcom-ebi2.c b/drivers/bus/qcom-ebi2.c
+index 03ddcf426887..0b8f53a688b8 100644
+--- a/drivers/bus/qcom-ebi2.c
++++ b/drivers/bus/qcom-ebi2.c
+@@ -353,8 +353,10 @@ static int qcom_ebi2_probe(struct platform_device *pdev)
+ 
+ 		/* Figure out the chipselect */
+ 		ret = of_property_read_u32(child, "reg", &csindex);
+-		if (ret)
++		if (ret) {
++			of_node_put(child);
+ 			return ret;
++		}
+ 
+ 		if (csindex > 5) {
+ 			dev_err(dev,
+-- 
+2.19.1
 
-Cheers, Daniel
-
->
-> Thanks and Regards,
-> Jeykumar S.
->
-> >
-> >>
-> >> --
-> >> Ville Syrj=C3=A4l=C3=A4
-> >> Intel
->
-> --
-> Jeykumar S
-
-
-
---=20
-Daniel Vetter
-Software Engineer, Intel Corporation
-+41 (0) 79 365 57 48 - http://blog.ffwll.ch
