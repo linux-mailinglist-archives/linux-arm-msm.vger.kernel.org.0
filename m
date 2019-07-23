@@ -2,118 +2,109 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 205DD71480
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 Jul 2019 11:00:56 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5B60471498
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 Jul 2019 11:08:00 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2387675AbfGWJAz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 23 Jul 2019 05:00:55 -0400
-Received: from smtp.codeaurora.org ([198.145.29.96]:48808 "EHLO
-        smtp.codeaurora.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727748AbfGWJAz (ORCPT
+        id S1726276AbfGWJH7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 23 Jul 2019 05:07:59 -0400
+Received: from asavdk3.altibox.net ([109.247.116.14]:33993 "EHLO
+        asavdk3.altibox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726352AbfGWJH7 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 23 Jul 2019 05:00:55 -0400
-Received: by smtp.codeaurora.org (Postfix, from userid 1000)
-        id 0209561157; Tue, 23 Jul 2019 09:00:54 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
-        s=default; t=1563872454;
-        bh=EVKnOWzRkie6voTuz/y+NN9iApwRNseO39HZ9ZaKztA=;
-        h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
-        b=iu7/PaC6J/cQuDrieBBS2cua4nRXyV5klWe1RXJRLji2Um8rYBpk99MlHvC49XUDQ
-         7jPng3hAcfOQGDaaMrqDg6t6ML1ZmjKjofeMYdQxyWLtDJmwtHYbehUCdgPKsubiPx
-         pfnFWlk21nrSCFTP8mRgsZ+MfA7OIl05MKdMJ98g=
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        pdx-caf-mail.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.7 required=2.0 tests=ALL_TRUSTED,BAYES_00,
-        DKIM_INVALID,DKIM_SIGNED autolearn=no autolearn_force=no version=3.4.0
-Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
-        by smtp.codeaurora.org (Postfix) with ESMTP id 49C1A60850;
-        Tue, 23 Jul 2019 09:00:53 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
-        s=default; t=1563872453;
-        bh=EVKnOWzRkie6voTuz/y+NN9iApwRNseO39HZ9ZaKztA=;
-        h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
-        b=f7h8K/NXZds7GQUIs+jKmAA2h8iL4yr4lRdC+V4qjGHGWXw0VvECrsvNDsWId3+G6
-         ulKshuZncQcWC87abYZ9AzrF7r6uHyTrCP5E+ZkCM1FuAGtXOU6+Mzfl/KIwAP9ajN
-         yNFTL6WfS/lGUdL/GuGirdsDVtO2TV9geClo2koE=
+        Tue, 23 Jul 2019 05:07:59 -0400
+Received: from ravnborg.org (unknown [158.248.194.18])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by asavdk3.altibox.net (Postfix) with ESMTPS id 89772200AE;
+        Tue, 23 Jul 2019 11:07:53 +0200 (CEST)
+Date:   Tue, 23 Jul 2019 11:07:52 +0200
+From:   Sam Ravnborg <sam@ravnborg.org>
+To:     Andrzej Pietrasiewicz <andrzej.p@collabora.com>
+Cc:     dri-devel@lists.freedesktop.org,
+        Neil Armstrong <narmstrong@baylibre.com>,
+        Maxime Ripard <maxime.ripard@bootlin.com>,
+        Douglas Anderson <dianders@chromium.org>,
+        Thierry Reding <thierry.reding@gmail.com>,
+        Laurent Pinchart <Laurent.pinchart@ideasonboard.com>,
+        kernel@collabora.com, linux-samsung-soc@vger.kernel.org,
+        linux-rockchip@lists.infradead.org,
+        Vincent Abriou <vincent.abriou@st.com>,
+        Krzysztof Kozlowski <krzk@kernel.org>,
+        Jonathan Hunter <jonathanh@nvidia.com>,
+        David Airlie <airlied@linux.ie>, Chen-Yu Tsai <wens@csie.org>,
+        Kukjin Kim <kgene@kernel.org>,
+        NXP Linux Team <linux-imx@nxp.com>,
+        Dave Airlie <airlied@redhat.com>,
+        intel-gfx@lists.freedesktop.org, freedreno@lists.freedesktop.org,
+        linux-tegra@vger.kernel.org, Jonas Karlman <jonas@kwiboo.se>,
+        linux-arm-msm@vger.kernel.org,
+        Alexios Zavras <alexios.zavras@intel.com>,
+        Mamta Shukla <mamtashukla555@gmail.com>,
+        linux-mediatek@lists.infradead.org, Jyri Sarha <jsarha@ti.com>,
+        Rodrigo Vivi <rodrigo.vivi@intel.com>,
+        Matthias Brugger <matthias.bgg@gmail.com>,
+        Thomas Gleixner <tglx@linutronix.de>,
+        Sean Paul <sean@poorly.run>,
+        Pengutronix Kernel Team <kernel@pengutronix.de>,
+        linux-arm-kernel@lists.infradead.org,
+        amd-gfx@lists.freedesktop.org,
+        Tomi Valkeinen <tomi.valkeinen@ti.com>,
+        Thomas Zimmermann <tzimmermann@suse.de>,
+        Seung-Woo Kim <sw0312.kim@samsung.com>,
+        linux-kernel@vger.kernel.org, Todor Tomov <todor.tomov@linaro.org>,
+        Kyungmin Park <kyungmin.park@samsung.com>,
+        Huang Rui <ray.huang@amd.com>,
+        Alex Deucher <alexander.deucher@amd.com>,
+        Shawn Guo <shawnguo@kernel.org>,
+        Christian =?iso-8859-1?Q?K=F6nig?= <christian.koenig@amd.com>,
+        Gerd Hoffmann <kraxel@redhat.com>
+Subject: Re: [PATCH v4 16/23] drm/mgag200: Provide ddc symlink in connector
+ sysfs directory
+Message-ID: <20190723090752.GB787@ravnborg.org>
+References: <cover.1562843413.git.andrzej.p@collabora.com>
+ <d32a6b1f0a3b79f1fbc8d0894080908526f6e61e.1562843413.git.andrzej.p@collabora.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
-Content-Transfer-Encoding: 7bit
-Date:   Tue, 23 Jul 2019 14:30:53 +0530
-From:   Sibi Sankar <sibis@codeaurora.org>
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     Ohad Ben-Cohen <ohad@wizery.com>, linux-arm-msm@vger.kernel.org,
-        linux-remoteproc@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Arun Kumar Neelakantam <aneela@codeaurora.org>,
-        Chris Lew <clew@codeaurora.org>
-Subject: Re: [PATCH] remoteproc: qcom: Move glink_ssr notification after stop
-In-Reply-To: <20190716050327.8866-1-bjorn.andersson@linaro.org>
-References: <20190716050327.8866-1-bjorn.andersson@linaro.org>
-Message-ID: <6259ebabc6183efb0045f9f990747d5e@codeaurora.org>
-X-Sender: sibis@codeaurora.org
-User-Agent: Roundcube Webmail/1.2.5
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <d32a6b1f0a3b79f1fbc8d0894080908526f6e61e.1562843413.git.andrzej.p@collabora.com>
+User-Agent: Mutt/1.10.1 (2018-07-13)
+X-CMAE-Score: 0
+X-CMAE-Analysis: v=2.3 cv=dqr19Wo4 c=1 sm=1 tr=0
+        a=UWs3HLbX/2nnQ3s7vZ42gw==:117 a=UWs3HLbX/2nnQ3s7vZ42gw==:17
+        a=jpOVt7BSZ2e4Z31A5e1TngXxSK0=:19 a=kj9zAlcOel0A:10 a=QX4gbG5DAAAA:8
+        a=akpas9ZDeQi6sww-pK0A:9 a=CjuIK1q_8ugA:10 a=AbAUZ8qAyYyZVLSsDulk:22
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Reviewed-by: Sibi Sankar <sibis@codeaurora.org>
-Tested-by: Sibi Sankar <sibis@codeaurora.org>
+Hi Andrzej.
 
-On 2019-07-16 10:33, Bjorn Andersson wrote:
-> glink_ssr is used to signal a remote processor "A" about the stopping 
-> of
-> another remote processor "B", so that in the event that remote 
-> processor
-> B is ever booted again the fifos of the glink channel between A and B 
-> is
-> in a known state.
+On Thu, Jul 11, 2019 at 01:26:43PM +0200, Andrzej Pietrasiewicz wrote:
+> Use the ddc pointer provided by the generic connector.
 > 
-> But if remote processor A receives this notification before B is
-> actually stopped the newly reset fifo indices will be interpreted as
-> there being "data" on the channel and either side of the channel will
-> enter a fatal error handler.
-> 
-> Move the glink_ssr notification to the "unprepare" state of the
-> rproc_subdev to avoid this issue.
-> 
-> This has the side effect of us not notifying the dying remote processor
-> itself about its fate, which has been seen to block in certain resource
-> constraint scenarios.
-> 
-> Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+> Signed-off-by: Andrzej Pietrasiewicz <andrzej.p@collabora.com>
 > ---
->  drivers/remoteproc/qcom_common.c | 4 ++--
->  1 file changed, 2 insertions(+), 2 deletions(-)
+>  drivers/gpu/drm/mgag200/mgag200_mode.c | 9 +++++----
+>  1 file changed, 5 insertions(+), 4 deletions(-)
 > 
-> diff --git a/drivers/remoteproc/qcom_common.c 
-> b/drivers/remoteproc/qcom_common.c
-> index 6a448429f223..60650bcc8c67 100644
-> --- a/drivers/remoteproc/qcom_common.c
-> +++ b/drivers/remoteproc/qcom_common.c
-> @@ -200,7 +200,7 @@ void qcom_unregister_ssr_notifier(struct 
-> notifier_block *nb)
->  }
->  EXPORT_SYMBOL_GPL(qcom_unregister_ssr_notifier);
-> 
-> -static void ssr_notify_stop(struct rproc_subdev *subdev, bool crashed)
-> +static void ssr_notify_unprepare(struct rproc_subdev *subdev)
->  {
->  	struct qcom_rproc_ssr *ssr = to_ssr_subdev(subdev);
-> 
-> @@ -220,7 +220,7 @@ void qcom_add_ssr_subdev(struct rproc *rproc,
-> struct qcom_rproc_ssr *ssr,
->  			 const char *ssr_name)
->  {
->  	ssr->name = ssr_name;
-> -	ssr->subdev.stop = ssr_notify_stop;
-> +	ssr->subdev.unprepare = ssr_notify_unprepare;
-> 
->  	rproc_add_subdev(rproc, &ssr->subdev);
->  }
+> diff --git a/drivers/gpu/drm/mgag200/mgag200_mode.c b/drivers/gpu/drm/mgag200/mgag200_mode.c
+> index a25054015e8c..8fb9444b2142 100644
+> --- a/drivers/gpu/drm/mgag200/mgag200_mode.c
+> +++ b/drivers/gpu/drm/mgag200/mgag200_mode.c
+> @@ -1703,6 +1703,11 @@ static struct drm_connector *mga_vga_init(struct drm_device *dev)
+>  		return NULL;
+>  
+>  	connector = &mga_connector->base;
+> +	mga_connector->i2c = mgag200_i2c_create(dev);
+> +	if (!mga_connector->i2c)
+> +		DRM_ERROR("failed to add ddc bus\n");
+> +
+> +	connector->ddc = &mga_connector->i2c->adapter;
+>  
+>  	drm_connector_init(dev, connector,
+>  			   &mga_vga_connector_funcs, DRM_MODE_CONNECTOR_VGA);
+Like on other patch, assigning connector->ddc before
+drm_connector_init() looks wrong.
 
--- 
--- Sibi Sankar --
-Qualcomm Innovation Center, Inc. is a member of Code Aurora Forum,
-a Linux Foundation Collaborative Project.
+	Sam
