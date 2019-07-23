@@ -2,111 +2,110 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 9901571876
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 Jul 2019 14:45:04 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id AB5507192E
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 Jul 2019 15:28:30 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2387963AbfGWMo5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 23 Jul 2019 08:44:57 -0400
-Received: from bhuna.collabora.co.uk ([46.235.227.227]:47924 "EHLO
-        bhuna.collabora.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1731264AbfGWMo5 (ORCPT
+        id S1731442AbfGWN23 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 23 Jul 2019 09:28:29 -0400
+Received: from mail-pg1-f193.google.com ([209.85.215.193]:43178 "EHLO
+        mail-pg1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1731095AbfGWN23 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 23 Jul 2019 08:44:57 -0400
-Received: from [127.0.0.1] (localhost [127.0.0.1])
-        (Authenticated sender: andrzej.p)
-        with ESMTPSA id 0B2192610F4
-Subject: Re: [PATCH v4 14/23] drm/tilcdc: Provide ddc symlink in connector
- sysfs directory
-To:     Sam Ravnborg <sam@ravnborg.org>
-Cc:     Neil Armstrong <narmstrong@baylibre.com>,
-        Maxime Ripard <maxime.ripard@bootlin.com>,
-        dri-devel@lists.freedesktop.org, linux-kernel@vger.kernel.org,
-        Matthias Brugger <matthias.bgg@gmail.com>,
-        Thierry Reding <thierry.reding@gmail.com>,
-        Laurent Pinchart <Laurent.pinchart@ideasonboard.com>,
-        Shawn Guo <shawnguo@kernel.org>, kernel@collabora.com,
-        linux-samsung-soc@vger.kernel.org,
-        linux-rockchip@lists.infradead.org, Sean Paul <sean@poorly.run>,
-        Krzysztof Kozlowski <krzk@kernel.org>,
-        Jonathan Hunter <jonathanh@nvidia.com>,
-        David Airlie <airlied@linux.ie>, Chen-Yu Tsai <wens@csie.org>,
-        Kukjin Kim <kgene@kernel.org>,
-        NXP Linux Team <linux-imx@nxp.com>,
-        Dave Airlie <airlied@redhat.com>,
-        Thomas Zimmermann <tzimmermann@suse.de>,
-        Jonas Karlman <jonas@kwiboo.se>, linux-arm-msm@vger.kernel.org,
-        intel-gfx@lists.freedesktop.org, Jyri Sarha <jsarha@ti.com>,
-        Alexios Zavras <alexios.zavras@intel.com>,
-        Mamta Shukla <mamtashukla555@gmail.com>,
-        linux-mediatek@lists.infradead.org,
-        Rodrigo Vivi <rodrigo.vivi@intel.com>,
-        linux-tegra@vger.kernel.org, Thomas Gleixner <tglx@linutronix.de>,
-        Vincent Abriou <vincent.abriou@st.com>,
-        linux-arm-kernel@lists.infradead.org,
-        Jernej Skrabec <jernej.skrabec@siol.net>,
-        amd-gfx@lists.freedesktop.org,
-        Tomi Valkeinen <tomi.valkeinen@ti.com>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Seung-Woo Kim <sw0312.kim@samsung.com>,
-        Douglas Anderson <dianders@chromium.org>,
-        Todor Tomov <todor.tomov@linaro.org>,
-        Kyungmin Park <kyungmin.park@samsung.com>,
-        Huang Rui <ray.huang@amd.com>,
-        Pengutronix Kernel Team <kernel@pengutronix.de>,
-        Alex Deucher <alexander.deucher@amd.com>,
-        freedreno@lists.freedesktop.org,
-        =?UTF-8?Q?Christian_K=c3=b6nig?= <christian.koenig@amd.com>,
-        Gerd Hoffmann <kraxel@redhat.com>
-References: <cover.1562843413.git.andrzej.p@collabora.com>
- <d1d415022c598fb7acd033f0f322dd67250adaa9.1562843413.git.andrzej.p@collabora.com>
- <20190723090532.GA787@ravnborg.org>
-From:   Andrzej Pietrasiewicz <andrzej.p@collabora.com>
-Message-ID: <3ad60be5-49cf-4017-4b74-53a2d6272deb@collabora.com>
-Date:   Tue, 23 Jul 2019 14:44:50 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.8.0
+        Tue, 23 Jul 2019 09:28:29 -0400
+Received: by mail-pg1-f193.google.com with SMTP id f25so19430511pgv.10;
+        Tue, 23 Jul 2019 06:28:29 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=chWP9LaVBb836yc/U3pqKBmIvWdwOkmxAAs2bRxtFvw=;
+        b=EPi3Dkd8v/VtsrHLzX7ap6XGP0FBARnBudXPyGak7HIGeeP0DQgP6QZo/or50iOxWk
+         09AytT6G0LogTTAUQbor/BUlMSMnqGu61cebV9+w6PdxzSFzlK+tp3YM0kzYX3g1e1jb
+         hEm/pPKQSC37mc2D1XXRyiLL0bOtsRym7zdxgypStpQDNns7vODvU00shptG9Ice8fO+
+         dden0FhCoJmuUx7zPLkQsf9uZWCEs7V51R3V51gLc13ATPBtoQ7gS1u9Aia52jX0VjeI
+         KXBMe7urT0Y4/phuJaqXKlQBiD5bdnVxdg/NMRnEe3h8QsXx/UUXLrEmC6jhNta8TZjX
+         064Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=chWP9LaVBb836yc/U3pqKBmIvWdwOkmxAAs2bRxtFvw=;
+        b=BXIo8oaNtJTrkwVnONpR/H8yF+8dUi9bXTXUO6HIFBS7IP8HvNfAXLOmHZx68TS0qu
+         KxK0zYXzOLfBb+dWoeF87/1aBeUPLKNnEPx5CwQV+Vwg/KvVz7xYdtZkj+rk2gS13cCH
+         Sewp7G3KN9bkCgPDlSOqrFy3ZZDDVl72U3AAamHPcMxnDRjUSS0hnpkcfJBewavvNBRj
+         ZigkqpUk4yZfEVulx7EthOUWyO/27FLLlTjXyfvqjo6AtHwWSGho44uPasYWyqSEOVAU
+         ipS3tUXdg9FNXA7/dB9lIuLU+4pfS4WhA429u155sMBzqu64ovvxYC3CL0N8ACF9aw6P
+         zWhQ==
+X-Gm-Message-State: APjAAAVRXMJQ942+wmLQrT1xsIuCPoMGHOVoPLxVmF8jkx6ni8hRdzRh
+        Ju9xRAGQtoOGwOIgaTfKJ98=
+X-Google-Smtp-Source: APXvYqz3X/UAUv4paE8QYBDSGI/zMotmoIMk0BoKtNIzOWIkcDGtI1s1U3iatxn6YH3ZETfaRIRBow==
+X-Received: by 2002:a63:c84d:: with SMTP id l13mr71688713pgi.154.1563888508740;
+        Tue, 23 Jul 2019 06:28:28 -0700 (PDT)
+Received: from localhost ([123.213.206.190])
+        by smtp.gmail.com with ESMTPSA id h1sm53656426pfo.152.2019.07.23.06.28.27
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Tue, 23 Jul 2019 06:28:27 -0700 (PDT)
+Date:   Tue, 23 Jul 2019 22:28:25 +0900
+From:   Minwoo Im <minwoo.im.dev@gmail.com>
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     Christoph Hellwig <hch@lst.de>,
+        Marc Gonzalez <marc.w.gonzalez@free.fr>,
+        MSM <linux-arm-msm@vger.kernel.org>,
+        LKML <linux-kernel@vger.kernel.org>,
+        Andy Gross <agross@kernel.org>,
+        Stanimir Varbanov <svarbanov@mm-sol.com>,
+        Rob Clark <robdclark@gmail.com>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Minwoo Im <minwoo.im.dev@gmail.com>
+Subject: Re: [PATCH] firmware: qcom_scm: fix error for incompatible pointer
+Message-ID: <20190723132825.GA7148@minwoo-desktop>
+References: <20190719134303.7617-1-minwoo.im.dev@gmail.com>
+ <7ea51e42-ab8a-e4e2-1833-651e2dabca3c@free.fr>
+ <20190722093059.GA29538@lst.de>
+ <20190722151234.GJ7234@tuxbook-pro>
 MIME-Version: 1.0
-In-Reply-To: <20190723090532.GA787@ravnborg.org>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20190722151234.GJ7234@tuxbook-pro>
+User-Agent: Mutt/1.11.4 (2019-03-13)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Sam,
-
-W dniu 23.07.2019 o 11:05, Sam Ravnborg pisze:
-> Hi Andrzej
+> > > > We just can cast phys_addr_t to dma_addr_t here.
+> > > 
+> > > IME, casting is rarely a proper solution.
+> > 
+> > *nod*
+> > 
+> > ptr_phys probably should be a dma_addr_t.  Unless this driver is so
+> > magic that it really wants a physical and not a dma address, in which
+> > case it needs to use alloc_pages instead of dma_alloc_coherent
+> > and then call page_to_phys on the returned page, and a very big comment
+> > explaining why it is so special.
 > 
-> On Thu, Jul 11, 2019 at 01:26:41PM +0200, Andrzej Pietrasiewicz wrote:
->> Use the ddc pointer provided by the generic connector.
->>
->> Signed-off-by: Andrzej Pietrasiewicz <andrzej.p@collabora.com>
->> ---
->>   drivers/gpu/drm/tilcdc/tilcdc_tfp410.c | 1 +
->>   1 file changed, 1 insertion(+)
->>
->> diff --git a/drivers/gpu/drm/tilcdc/tilcdc_tfp410.c b/drivers/gpu/drm/tilcdc/tilcdc_tfp410.c
->> index 62d014c20988..c373edb95666 100644
->> --- a/drivers/gpu/drm/tilcdc/tilcdc_tfp410.c
->> +++ b/drivers/gpu/drm/tilcdc/tilcdc_tfp410.c
->> @@ -219,6 +219,7 @@ static struct drm_connector *tfp410_connector_create(struct drm_device *dev,
->>   	tfp410_connector->mod = mod;
->>   
->>   	connector = &tfp410_connector->base;
->> +	connector->ddc = mod->i2c;
->>   
->>   	drm_connector_init(dev, connector, &tfp410_connector_funcs,
->>   			DRM_MODE_CONNECTOR_DVID);
+> The scm call takes physical addresses (which happens to be 1:1 with DMA
+> addresses for this driver).
 > 
-> When reading this code, it looks strange that we set connector->ddc
-> *before* the call to init the connector.
-> One could risk that drm_connector_init() used memset(..) to clear all
-> fields or so, and it would break this order.
+> This allocation started off (downstream) as a simple kmalloc(), but
+> while the scm call is being executed an access from Linux will cause a
+> security violation (that's not handled gracefully). The properties of
+> dma_alloc is closer, so that's where the code is today.
+> 
+> Optimally this should be something like alloc_pages() and some mechanism
+> for unmapping the pages during the call. But no one has come up with a
+> suitable patch for that.
+> 
+> 
+> But there's a patch from Stephen for this already (not doing a
+> typecast).  Apparently I missed merging this, so I'll do that.
+> 
+> https://lore.kernel.org/linux-arm-msm/20190517210923.202131-2-swboyd@chromium.org/
 
-I verified the code of drm_connector_init() and cannot find any memset()
-invocations there. What is your actual concern?
+Bjron,
 
-Andrzej
+I appreciate for checking this.  And also thanks all you guys for the
+comments here!
+
+Thanks,
