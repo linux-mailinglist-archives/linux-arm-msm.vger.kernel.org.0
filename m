@@ -2,139 +2,189 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 1EB6A71A3E
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 Jul 2019 16:23:55 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 8BF7071A9E
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 Jul 2019 16:42:53 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2388170AbfGWOXy (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 23 Jul 2019 10:23:54 -0400
-Received: from mail-lj1-f194.google.com ([209.85.208.194]:33442 "EHLO
-        mail-lj1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2388180AbfGWOXx (ORCPT
+        id S2390490AbfGWOmu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 23 Jul 2019 10:42:50 -0400
+Received: from mail-pl1-f196.google.com ([209.85.214.196]:35338 "EHLO
+        mail-pl1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2388060AbfGWOmt (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 23 Jul 2019 10:23:53 -0400
-Received: by mail-lj1-f194.google.com with SMTP id h10so41266560ljg.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 23 Jul 2019 07:23:52 -0700 (PDT)
+        Tue, 23 Jul 2019 10:42:49 -0400
+Received: by mail-pl1-f196.google.com with SMTP id w24so20706070plp.2
+        for <linux-arm-msm@vger.kernel.org>; Tue, 23 Jul 2019 07:42:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=kDpgs4kc8gBaUxp23KFk53vgDP4GMAmynScdrpg6lYE=;
-        b=CoY3Oay8ZaCT128Y2bWNSSbFb3uMpDJ2Bp+xjt/YohQLcrV1u1a9uTiTS8KLFEj/af
-         VmUOL2DVKqYo7RNf+Tj8dczI6Cc4YE/QvJ/SSsHETvkytka/uzESl88ZPHDTVrxoTNkP
-         sypRf5NseH5LR/CBenpH1ZFUI6f4zhX360l/ALdYVBsYRWm5EoXxYarbvdWJdbwKtuEU
-         g3UME1eyhgfz+3zpk3jAiTUxYWAvZ/eIcNACpR5LzZgHeePtDm6wu9UAGs9KPbF60yrN
-         HaAHXG49MBpfq8ewv/Gc0Hj32JQgNmbRyfHUUt7v1okUiHRxkRgpUsZ/OiV/XYIl0de8
-         7c/A==
+        d=chromium.org; s=google;
+        h=message-id:mime-version:content-transfer-encoding:in-reply-to
+         :references:subject:to:cc:from:user-agent:date;
+        bh=MivtH/AFd/UEBQTX1L8TkdX1tWBHqaY6Yrp0reG3yuY=;
+        b=F6O53VjEkHgJGSFWE/TyGmcDrTX0Wb2ZnWmoEgoElaJLQk0ljUEFxCdRC8tslzbYSO
+         OfVlVRNf1LgjAQ48ihB/FvdgfcuibxsMHLeZl2DqLHBiRRH/BmXEPvdXmeNHyorYgwQo
+         EvgECRgKQF92fVGNnSgLG06OLJ3lZh/arI5+8=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=kDpgs4kc8gBaUxp23KFk53vgDP4GMAmynScdrpg6lYE=;
-        b=YBjJaUzWq8nkqm/hPs1xnUJvXLIdZiVdvVqyvSUZaG4nQ3nLH2B/oE8TBsoZy8y1/o
-         Z18tngYlLu2q2ydPH3gnqWyRoiMFiEDb+Qo4Ys0EBu6AeLdYjvXj69mWmFfrhpTRJ1E5
-         VE7pb4W5XBEvOheQbJPB/8cgwcP/KejYZuG2ulZE9DM/1FQojIM1jW/S6nLsl8iYnJ2W
-         /xuHX5WwxfZkY8VDrxEu3zdZ23U2IiGBXR+nOZNxkrvj0Bn5Cz4g6rz9Yr7EHQqZcbAd
-         6+5sNFpyAUYbldtc1C0+K0ECGk6tzZqq1CGRz6XuODIfqwwSnhohgWXyXKhrqP0StFmq
-         Ot4A==
-X-Gm-Message-State: APjAAAVwd0isTcVlJKneQ7bCe/FgVdQ5l9r0S7yrGo9KVfh2Q7W4Y4+a
-        oGg/fwiUFMVfEwF1ZiQJDyyIkg==
-X-Google-Smtp-Source: APXvYqyrbG0lK7NZ3pbUKygUSGqDL/p43+50/wl/9Gh/mhpvEQsXgY3NW7YETGp4lGQ5U2uMOtrWrw==
-X-Received: by 2002:a2e:9b81:: with SMTP id z1mr40094137lji.101.1563891832070;
-        Tue, 23 Jul 2019 07:23:52 -0700 (PDT)
-Received: from localhost.localdomain ([212.45.67.2])
-        by smtp.googlemail.com with ESMTPSA id z17sm8048519ljc.37.2019.07.23.07.23.50
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Tue, 23 Jul 2019 07:23:51 -0700 (PDT)
-From:   Georgi Djakov <georgi.djakov@linaro.org>
-To:     robh+dt@kernel.org, bjorn.andersson@linaro.org, agross@kernel.org,
-        georgi.djakov@linaro.org
-Cc:     vkoul@kernel.org, evgreen@chromium.org, daidavid1@codeaurora.org,
-        linux-pm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org
-Subject: [PATCH v5 5/5] arm64: dts: qcs404: Add interconnect provider DT nodes
-Date:   Tue, 23 Jul 2019 17:23:39 +0300
-Message-Id: <20190723142339.27772-6-georgi.djakov@linaro.org>
-X-Mailer: git-send-email 2.22.0
-In-Reply-To: <20190723142339.27772-1-georgi.djakov@linaro.org>
-References: <20190723142339.27772-1-georgi.djakov@linaro.org>
+        h=x-gm-message-state:message-id:mime-version
+         :content-transfer-encoding:in-reply-to:references:subject:to:cc:from
+         :user-agent:date;
+        bh=MivtH/AFd/UEBQTX1L8TkdX1tWBHqaY6Yrp0reG3yuY=;
+        b=osD/+Q/I/tk1TOYBpglCm8B3ZvU3CWKpr7MhcruGvOdN41dp4xdy0mJ/C8VI4Mj56h
+         NSftQzMw+gGjzK+L177THPnAjQ3mouJfClsxAYJdfAncRa/+Ochzx7CpJgxjB803C6os
+         Zf27bip/aGVhJ6Oo00KDQ+4J+W0xHa/qvBbvED4qg2EKH2/bPNnptmwJyoK9FDFYFt2H
+         YEYkQSZoazjXOdkRWk6hHXVD+BU0x+utCnguHbgvdCVsIggR2atIDV1RKUA4x2HKCmh4
+         yTS8BlCMOgP1NtGxVnU50yyxUY6zLBXgJjHKUW1+/i6JL8TsDIhj09xy4Vj9H6Rg4Dhf
+         92wg==
+X-Gm-Message-State: APjAAAX2vJ7MkRQKj4I+EeH6j5E24JrKhMrlbFxSraEk1BwyDXO3UZb1
+        Or+zxNZ+G0H8t96fOIhVHwh2pA==
+X-Google-Smtp-Source: APXvYqwtTx+QcAkXyfMl6NVacF5zqtkUSMrP0EzvRLV+pzVxCuifqK7xZtp+fixLQIdo1o6i/27a2A==
+X-Received: by 2002:a17:902:8a8a:: with SMTP id p10mr82515691plo.88.1563892968559;
+        Tue, 23 Jul 2019 07:42:48 -0700 (PDT)
+Received: from chromium.org ([2620:15c:202:1:fa53:7765:582b:82b9])
+        by smtp.gmail.com with ESMTPSA id a6sm40156512pfa.162.2019.07.23.07.42.47
+        (version=TLS1_3 cipher=AEAD-AES256-GCM-SHA384 bits=256/256);
+        Tue, 23 Jul 2019 07:42:47 -0700 (PDT)
+Message-ID: <5d371ce7.1c69fb81.9650.8239@mx.google.com>
+Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <1563568344-1274-2-git-send-email-daidavid1@codeaurora.org>
+References: <1563568344-1274-1-git-send-email-daidavid1@codeaurora.org> <1563568344-1274-2-git-send-email-daidavid1@codeaurora.org>
+Subject: Re: [PATCH 1/2] dt-bindings: interconnect: Update Qualcomm SDM845 DT bindings
+To:     David Dai <daidavid1@codeaurora.org>, bjorn.andersson@linaro.org,
+        georgi.djakov@linaro.org, robh+dt@kernel.org
+Cc:     David Dai <daidavid1@codeaurora.org>, evgreen@google.com,
+        ilina@codeaurora.org, seansw@qti.qualcomm.com, elder@linaro.org,
+        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org
+From:   Stephen Boyd <swboyd@chromium.org>
+User-Agent: alot/0.8.1
+Date:   Tue, 23 Jul 2019 07:42:46 -0700
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add the DT nodes for the network-on-chip interconnect buses found
-on qcs404-based platforms.
+Quoting David Dai (2019-07-19 13:32:23)
+> Redefine the Network-on-Chip devices to more accurately describe
+> the interconnect topology on Qualcomm's SDM845 platform. Each
+> interconnect device can communicate with different instances of the
+> RPMh hardware which are described as RSCs(Resource State Coordinators).
+>=20
+> Signed-off-by: David Dai <daidavid1@codeaurora.org>
+> ---
+> diff --git a/Documentation/devicetree/bindings/interconnect/qcom,bcm-vote=
+r.txt b/Documentation/devicetree/bindings/interconnect/qcom,bcm-voter.txt
+> new file mode 100644
+> index 0000000..2cf7da2
+> --- /dev/null
+> +++ b/Documentation/devicetree/bindings/interconnect/qcom,bcm-voter.txt
+> @@ -0,0 +1,32 @@
+> +Qualcomm BCM-Voter interconnect driver binding
+> +-----------------------------------------------------------
+> +
+> +The Bus Clock Manager (BCM) is a dedicated hardware accelerator
+> +that manages shared system resources by aggregating requests
+> +from multiple Resource State Coordinators (RSC). Interconnect
+> +providers are able to vote for aggregated thresholds values from
+> +consumers by communicating through their respective RSCs.
+> +
+> +Required properties :
+> +- compatible : shall contain only one of the following:
+> +                       "qcom,sdm845-bcm-voter",
+> +
+> +Examples:
+> +
+> +apps_rsc: rsc@179c0000 {
 
-Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
-Signed-off-by: Georgi Djakov <georgi.djakov@linaro.org>
----
+But there isn't a reg property.
 
-v5:
-- Rebased to v5.3-rc1
+> +       label =3D "apps_rsc";
 
-v4:
-- Insert the NoC DT nodes after rng@ to keep the nodes sorted by address.
-- Pick Bjorn's r-b.
+Is label required?
 
-v3:
-- Update according to the new binding: add reg property and moved under the
-  "soc" node.
+> +       compatible =3D "qcom,rpmh-rsc";
+> +
+> +       apps_bcm_voter: bcm_voter {
+> +               compatible =3D "qcom,sdm845-bcm-voter";
+> +       };
+> +}
+> +
+> +disp_rsc: rsc@179d0000 {
+> +       label =3D "disp_rsc";
+> +       compatible =3D "qcom,rpmh-rsc";
+> +
+> +       disp_bcm_voter: bcm_voter {
+> +               compatible =3D "qcom,sdm845-bcm-voter";
+> +       };
+> +}
+> diff --git a/Documentation/devicetree/bindings/interconnect/qcom,sdm845.t=
+xt b/Documentation/devicetree/bindings/interconnect/qcom,sdm845.txt
+> index 5c4f1d9..27f9ed9 100644
+> --- a/Documentation/devicetree/bindings/interconnect/qcom,sdm845.txt
+> +++ b/Documentation/devicetree/bindings/interconnect/qcom,sdm845.txt
+> @@ -4,21 +4,43 @@ Qualcomm SDM845 Network-On-Chip interconnect driver bin=
+ding
+>  SDM845 interconnect providers support system bandwidth requirements thro=
+ugh
+>  RPMh hardware accelerators known as Bus Clock Manager (BCM). The provide=
+r is
+>  able to communicate with the BCM through the Resource State Coordinator =
+(RSC)
+> -associated with each execution environment. Provider nodes must reside w=
+ithin
+> -an RPMh device node pertaining to their RSC and each provider maps to a =
+single
+> -RPMh resource.
+> +associated with each execution environment. Provider nodes must point to=
+ at
+> +least one RPMh device child node pertaining to their RSC and each provid=
+er
+> +can map to multiple RPMh resources.
+> =20
+>  Required properties :
+>  - compatible : shall contain only one of the following:
+> -                       "qcom,sdm845-rsc-hlos"
+> +                       "qcom,sdm845-aggre1_noc",
+> +                       "qcom,sdm845-aggre2_noc",
+> +                       "qcom,sdm845-config_noc",
+> +                       "qcom,sdm845-dc_noc",
+> +                       "qcom,sdm845-gladiator_noc",
+> +                       "qcom,sdm845-mem_noc",
+> +                       "qcom,sdm845-mmss_noc",
+> +                       "qcom,sdm845-system_noc",
+>  - #interconnect-cells : should contain 1
+> +- reg : shall contain base register location and length
+> +- qcom,bcm-voter : shall contain phandles to bcm voters
+> =20
+>  Examples:
+> =20
+> -apps_rsc: rsc {
+> -       rsc_hlos: interconnect {
+> -               compatible =3D "qcom,sdm845-rsc-hlos";
+> -               #interconnect-cells =3D <1>;
+> -       };
+> +aggre1_noc: interconnect@16e0000 {
+> +       compatible =3D "qcom,sdm845-aggre1_noc";
+> +       reg =3D <0x16e0000 0xd080>;
+> +       interconnect-cells =3D <1>;
+> +       qcom,bcm-voter =3D <&apps_bcm_voter>;
+>  };
+> =20
+> +mmss_noc: interconnect@1740000 {
+> +       compatible =3D "qcom,sdm845-mmss_noc";
+> +       reg =3D <0x1740000 0x1c1000>;
+> +       interconnect-cells =3D <1>;
+> +       qcom,bcm-voter =3D <&apps_bcm_voter>, <&disp_bcm_voter>;
+> +};
+> +
+> +mem_noc: interconnect@1380000 {
+> +       compatible =3D "qcom,sdm845-mem_noc";
+> +       reg =3D <0 0x1380000 0 0x27200>;
+> +       #interconnect-cells =3D <1>;
+> +       qcom,bcm-voter =3D <&apps_bcm_voter>, <&disp_bcm_voter>;
+> +};
 
- arch/arm64/boot/dts/qcom/qcs404.dtsi | 28 ++++++++++++++++++++++++++++
- 1 file changed, 28 insertions(+)
+How does a consumer target a particular RSC? For example, how can
+display decide to use the disp_bcm_voter node from mem_noc here? Maybe
+you can add that consumer to the example?
 
-diff --git a/arch/arm64/boot/dts/qcom/qcs404.dtsi b/arch/arm64/boot/dts/qcom/qcs404.dtsi
-index 3d0789775009..8b9352347622 100644
---- a/arch/arm64/boot/dts/qcom/qcs404.dtsi
-+++ b/arch/arm64/boot/dts/qcom/qcs404.dtsi
-@@ -1,6 +1,7 @@
- // SPDX-License-Identifier: GPL-2.0
- // Copyright (c) 2018, Linaro Limited
- 
-+#include <dt-bindings/interconnect/qcom,qcs404.h>
- #include <dt-bindings/interrupt-controller/arm-gic.h>
- #include <dt-bindings/clock/qcom,gcc-qcs404.h>
- #include <dt-bindings/clock/qcom,turingcc-qcs404.h>
-@@ -273,6 +274,15 @@
- 			clock-names = "core";
- 		};
- 
-+		bimc: interconnect@400000 {
-+			reg = <0x00400000 0x80000>;
-+			compatible = "qcom,qcs404-bimc";
-+			#interconnect-cells = <1>;
-+			clock-names = "bus", "bus_a";
-+			clocks = <&rpmcc RPM_SMD_BIMC_CLK>,
-+				<&rpmcc RPM_SMD_BIMC_A_CLK>;
-+		};
-+
- 		tsens: thermal-sensor@4a9000 {
- 			compatible = "qcom,qcs404-tsens", "qcom,tsens-v1";
- 			reg = <0x004a9000 0x1000>, /* TM */
-@@ -283,6 +293,24 @@
- 			#thermal-sensor-cells = <1>;
- 		};
- 
-+		pcnoc: interconnect@500000 {
-+			reg = <0x00500000 0x15080>;
-+			compatible = "qcom,qcs404-pcnoc";
-+			#interconnect-cells = <1>;
-+			clock-names = "bus", "bus_a";
-+			clocks = <&rpmcc RPM_SMD_PNOC_CLK>,
-+				<&rpmcc RPM_SMD_PNOC_A_CLK>;
-+		};
-+
-+		snoc: interconnect@580000 {
-+			reg = <0x00580000 0x23080>;
-+			compatible = "qcom,qcs404-snoc";
-+			#interconnect-cells = <1>;
-+			clock-names = "bus", "bus_a";
-+			clocks = <&rpmcc RPM_SMD_SNOC_CLK>,
-+				<&rpmcc RPM_SMD_SNOC_A_CLK>;
-+		};
-+
- 		remoteproc_cdsp: remoteproc@b00000 {
- 			compatible = "qcom,qcs404-cdsp-pas";
- 			reg = <0x00b00000 0x4040>;
