@@ -2,138 +2,114 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 504EF7161B
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 Jul 2019 12:31:16 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C3E7671628
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 Jul 2019 12:35:59 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2387465AbfGWKbP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 23 Jul 2019 06:31:15 -0400
-Received: from ns.iliad.fr ([212.27.33.1]:45332 "EHLO ns.iliad.fr"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1730390AbfGWKbP (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 23 Jul 2019 06:31:15 -0400
-Received: from ns.iliad.fr (localhost [127.0.0.1])
-        by ns.iliad.fr (Postfix) with ESMTP id 3219E20532;
-        Tue, 23 Jul 2019 12:31:13 +0200 (CEST)
-Received: from [192.168.108.49] (freebox.vlq16.iliad.fr [213.36.7.13])
-        by ns.iliad.fr (Postfix) with ESMTP id 14A61202A3;
-        Tue, 23 Jul 2019 12:31:13 +0200 (CEST)
-Subject: Re: [PATCH] phy: qcom-qmp: Correct READY_STATUS poll break condition
-From:   Marc Gonzalez <marc.w.gonzalez@free.fr>
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Kishon Vijay Abraham I <kishon@ti.com>
-Cc:     MSM <linux-arm-msm@vger.kernel.org>,
-        LKML <linux-kernel@vger.kernel.org>,
-        Evan Green <evgreen@chromium.org>,
-        Vivek Gautam <vivek.gautam@codeaurora.org>,
-        Niklas Cassel <niklas.cassel@linaro.org>,
-        Stanimir Varbanov <svarbanov@mm-sol.com>
-References: <20190604232443.3417-1-bjorn.andersson@linaro.org>
- <619d2559-6d88-e795-76e0-3078236933ef@free.fr>
- <20190612172501.GY4814@minitux>
- <3570d880-2b76-88ae-8721-e75cf5acec4c@free.fr>
- <5b252fe6-9435-2aad-d0db-f6170a07b5e9@free.fr>
-Message-ID: <f52774d3-d1ad-9cc4-af23-feb10d9f4b9f@free.fr>
-Date:   Tue, 23 Jul 2019 12:31:12 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.8.0
+        id S2387938AbfGWKf6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 23 Jul 2019 06:35:58 -0400
+Received: from mail-pg1-f196.google.com ([209.85.215.196]:45561 "EHLO
+        mail-pg1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1732213AbfGWKf6 (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 23 Jul 2019 06:35:58 -0400
+Received: by mail-pg1-f196.google.com with SMTP id o13so19210427pgp.12;
+        Tue, 23 Jul 2019 03:35:58 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=e0k274Ite0iMERdUs3CaRT2A3qlgOURGFE1j4THtpIA=;
+        b=XGS1cEqOFmDtAzum9ByWu6rMRd+1Yg/yPTxw/WhFF4CQa6TxMxhXxrCZdzM7kYEdbv
+         aGlRkSqR2VJ1nUa8tNg1iFQv6BhA3MDSst/dTnoh5HXeHFSNLAZ8K23eLub4EOq5bmoY
+         /Y1/4uzKmGN0HPQAol1zo1Nfq4NaVqjozUNRCbaSxpklCZ/FezxYwn02PWn+qww5Ul65
+         6qcIv7bBP9Pg6GEhQnvyFoBkDNg8J+c12nkUGKwLNMWvebBXT7QD/skEogzH6VgrZ1Ee
+         XH5B9a4BhFnA7M2Nyzr7lYnsW/HqCmX6rBtlGuwb5rPgsNbCmZ2Il27Oapz0oUjSycQH
+         7MWQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=e0k274Ite0iMERdUs3CaRT2A3qlgOURGFE1j4THtpIA=;
+        b=poBTfxqfPeb1GbR0DbVeFU0N3z/YxLiG5U0oDPzehSHYgUdNlsuF32wmLxVfIAjACn
+         hEvrYPBuG9gfa3EfKXByhQV/OhoBkjtPe8k7lEqm5VNxh1nXUo8bpo/P9i70gYmxw+ib
+         L3qZv4IyLpntNMMNHtxo/l+c9SQrvTaaIFH0l9crRTgf7STzbfU8/0n/yigLq63qxclQ
+         qseREMJZmFZP/X7sR0z/PV61cHPnblxm9Loe6QRI2ZrZc7Ykg7677LfEuwknaskPHRHq
+         aDcLuMhY0tSJ2th2qnqV6NBeDogJ+7GVQCduFHCtnPADguhwZ4qn2MT8mgJmJLKT6EZL
+         EVJQ==
+X-Gm-Message-State: APjAAAXeVrMdp1nYb/+SKy2/Ii08Z78HDq9vk5ND2osZnWcyLmHxttIQ
+        4yG8F1t7NJU2hzPzm5qhB1E=
+X-Google-Smtp-Source: APXvYqwG3PzdUpTNEhKJKBKQ/nOL0xQw8O03OCR+9tEU4Ozf3dnrfvqxaziOQfWtEOcLagYEQL+z4w==
+X-Received: by 2002:a63:1765:: with SMTP id 37mr6921267pgx.447.1563878157756;
+        Tue, 23 Jul 2019 03:35:57 -0700 (PDT)
+Received: from localhost.localdomain ([122.163.0.39])
+        by smtp.gmail.com with ESMTPSA id h129sm40022315pfb.110.2019.07.23.03.35.53
+        (version=TLS1_3 cipher=AEAD-AES256-GCM-SHA384 bits=256/256);
+        Tue, 23 Jul 2019 03:35:57 -0700 (PDT)
+From:   Nishka Dasgupta <nishkadg.linux@gmail.com>
+To:     okaya@kernel.org, agross@kernel.org, vkoul@kernel.org,
+        dan.j.williams@intel.com, linux-arm-kernel@lists.infradead.org,
+        linux-arm-msm@vger.kernel.org, dmaengine@vger.kernel.org
+Cc:     Nishka Dasgupta <nishkadg.linux@gmail.com>
+Subject: [PATCH] dma: qcom: hidma_mgmt: Add of_node_put() before goto
+Date:   Tue, 23 Jul 2019 16:05:43 +0530
+Message-Id: <20190723103543.7888-1-nishkadg.linux@gmail.com>
+X-Mailer: git-send-email 2.19.1
 MIME-Version: 1.0
-In-Reply-To: <5b252fe6-9435-2aad-d0db-f6170a07b5e9@free.fr>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
-X-Virus-Scanned: ClamAV using ClamSMTP ; ns.iliad.fr ; Tue Jul 23 12:31:13 2019 +0200 (CEST)
+Content-Transfer-Encoding: 8bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 19/07/2019 17:50, Marc Gonzalez wrote:
+Each iteration of for_each_available_child_of_node puts the previous
+node, but in the case of a goto from the middle of the loop, there is
+no put, thus causing a memory leak. Add an of_node_put before the
+goto in 4 places.
+Issue found with Coccinelle.
 
-> On 13/06/2019 11:10, Marc Gonzalez wrote:
-> 
->> Here are my observations for a 8998 board:
->>
->> 1) If I apply only the readl_poll_timeout() fix (not the mask_pcs_ready fixup)
->> qcom_pcie_probe() fails with a timeout in phy_init.
->> => this is in line with your regression analysis.
->>
->> 2) Your patch also fixes a long-standing bug in UFS init whereby sending
->> lots of information to the console during phy init would lead to an
->> incorrectly diagnosed time-out.
->>
->> Good stuff!
->>
->> Reviewed-by: Marc Gonzalez <marc.w.gonzalez@free.fr>
->> Tested-by: Marc Gonzalez <marc.w.gonzalez@free.fr>
-> 
-> It looks like this patch fixed UFS, but broke PCIe and USB3 ^_^
-> 
-> qcom-qmp-phy 1c06000.phy: Registered Qcom-QMP phy
-> qcom-qmp-phy c010000.phy: Registered Qcom-QMP phy
-> qcom-qmp-phy 1da7000.phy: Registered Qcom-QMP phy
-> 
-> qcom-qmp-phy 1c06000.phy: BEFORE=000000a6 AFTER=000000a6
-> qcom-qmp-phy 1c06000.phy: phy initialization timed-out
-> phy phy-1c06000.phy.0: phy init failed --> -110
-> qcom-pcie: probe of 1c00000.pci failed with error -110
-> 
-> qcom-qmp-phy 1da7000.phy: BEFORE=00000040 AFTER=0000000d
-> 
-> qcom-qmp-phy c010000.phy: BEFORE=69696969 AFTER=b7b7b7b7
-> qcom-qmp-phy c010000.phy: phy initialization timed-out
-> phy phy-c010000.phy.1: phy init failed --> -110
-> dwc3 a800000.dwc3: failed to initialize core: -110
-> dwc3: probe of a800000.dwc3 failed with error -110
-> 
-> 
-> Downstream code for PCIe is:
-> 
-> static bool pcie_phy_is_ready(struct msm_pcie_dev_t *dev)
-> {
-> 	if (dev->phy_ver >= 0x20) {
-> 		if (readl_relaxed(dev->phy + PCIE_N_PCS_STATUS(dev->rc_idx, dev->common_phy)) &	BIT(6))
-> 			return false;
-> 		else
-> 			return true;
-> 	}
-> 
-> 	if (!(readl_relaxed(dev->phy + PCIE_COM_PCS_READY_STATUS) & 0x1))
-> 		return false;
-> 	else
-> 		return true;
-> }
-> 
-> AFAICT:
-> PCIe and USB3 QMP PHYs are ready when PHYSTATUS=BIT(6) goes to 0.
-> But UFS is ready when PCS_READY=BIT(0) goes to 1.
-> 
-> 
-> Can someone verify that USB3 is broken on 845 with 885bd765963b?
+Signed-off-by: Nishka Dasgupta <nishkadg.linux@gmail.com>
+---
+ drivers/dma/qcom/hidma_mgmt.c | 13 ++++++++++---
+ 1 file changed, 10 insertions(+), 3 deletions(-)
 
-Suggested fix:
-
-diff --git a/drivers/phy/qualcomm/phy-qcom-qmp.c b/drivers/phy/qualcomm/phy-qcom-qmp.c
-index 34ff6434da8f..11c1b02f0206 100644
---- a/drivers/phy/qualcomm/phy-qcom-qmp.c
-+++ b/drivers/phy/qualcomm/phy-qcom-qmp.c
-@@ -1447,6 +1447,11 @@ static int qcom_qmp_phy_com_exit(struct qcom_qmp *qmp)
- 	return 0;
- }
+diff --git a/drivers/dma/qcom/hidma_mgmt.c b/drivers/dma/qcom/hidma_mgmt.c
+index 3022d66e7a33..209adc6ceabe 100644
+--- a/drivers/dma/qcom/hidma_mgmt.c
++++ b/drivers/dma/qcom/hidma_mgmt.c
+@@ -362,16 +362,22 @@ static int __init hidma_mgmt_of_populate_channels(struct device_node *np)
+ 		struct platform_device *new_pdev;
  
-+static bool phy_is_ready(unsigned int val, unsigned int mask)
-+{
-+	return mask == PCS_READY ? val & mask : !(val & mask);
-+}
-+
- static int qcom_qmp_phy_enable(struct phy *phy)
- {
- 	struct qmp_phy *qphy = phy_get_drvdata(phy);
-@@ -1548,7 +1553,7 @@ static int qcom_qmp_phy_enable(struct phy *phy)
- 	status = pcs + cfg->regs[QPHY_PCS_READY_STATUS];
- 	mask = cfg->mask_pcs_ready;
+ 		ret = of_address_to_resource(child, 0, &res[0]);
+-		if (!ret)
++		if (!ret) {
++			of_node_put(child);
+ 			goto out;
++		}
  
--	ret = readl_poll_timeout(status, val, val & mask, 10,
-+	ret = readl_poll_timeout(status, val, phy_is_ready(val, mask), 10,
- 				 PHY_INIT_COMPLETE_TIMEOUT);
- 	if (ret) {
- 		dev_err(qmp->dev, "phy initialization timed-out\n");
+ 		ret = of_address_to_resource(child, 1, &res[1]);
+-		if (!ret)
++		if (!ret) {
++			of_node_put(child);
+ 			goto out;
++		}
+ 
+ 		ret = of_irq_to_resource(child, 0, &res[2]);
+-		if (ret <= 0)
++		if (ret <= 0) {
++			of_node_put(child);
+ 			goto out;
++		}
+ 
+ 		memset(&pdevinfo, 0, sizeof(pdevinfo));
+ 		pdevinfo.fwnode = &child->fwnode;
+@@ -386,6 +392,7 @@ static int __init hidma_mgmt_of_populate_channels(struct device_node *np)
+ 		new_pdev = platform_device_register_full(&pdevinfo);
+ 		if (IS_ERR(new_pdev)) {
+ 			ret = PTR_ERR(new_pdev);
++			of_node_put(child);
+ 			goto out;
+ 		}
+ 		of_node_get(child);
+-- 
+2.19.1
+
