@@ -2,91 +2,125 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id C490B71AD3
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 Jul 2019 16:51:12 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0701571B70
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 Jul 2019 17:19:52 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2388321AbfGWOvE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 23 Jul 2019 10:51:04 -0400
-Received: from mail-pl1-f195.google.com ([209.85.214.195]:33872 "EHLO
-        mail-pl1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1732532AbfGWOvD (ORCPT
+        id S1729772AbfGWPTu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 23 Jul 2019 11:19:50 -0400
+Received: from asavdk3.altibox.net ([109.247.116.14]:51539 "EHLO
+        asavdk3.altibox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728591AbfGWPTu (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 23 Jul 2019 10:51:03 -0400
-Received: by mail-pl1-f195.google.com with SMTP id i2so20728758plt.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 23 Jul 2019 07:51:03 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=message-id:mime-version:content-transfer-encoding:in-reply-to
-         :references:subject:to:cc:from:user-agent:date;
-        bh=wAI/J73/SuEViXJgIx3ykUez6skqEEMGxVLWdHqure4=;
-        b=mcwiGo0OGGnJmwu5VoILB9JjAAEwKiRmKy5Mmd7RXzj9gztUWFbEKtOc6GS2tAtuQB
-         o/1laoHwe7qm1trcOSkzADOtUNucB8RKLWKbNZQ8ELkEsyHrBkWU3ZHmQiuX1T4rSsuk
-         K8xYICMVYZY7/oyotpkOnAkngAxmFjO0cpMCw=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:mime-version
-         :content-transfer-encoding:in-reply-to:references:subject:to:cc:from
-         :user-agent:date;
-        bh=wAI/J73/SuEViXJgIx3ykUez6skqEEMGxVLWdHqure4=;
-        b=TyX6zcT+7dSbQDlADca9ExFo2Z8DBdzpjLhDPlIq1KfTrvRFHnuWs3OATmJ4FzbZ9G
-         zSSM+vMGLLVyerCY9s7ehtjfXG7tetQcdLIkQxlHsVwCG7NCQ4bLzc84Kmvf2beYX7Am
-         6LzvssdOAtsHO+DYGcjNanAIlL5dF7y6IUfriLqi5fb7wptkZV9UNcSJTMAbGw6yChn2
-         ChnyQKN6b++txEWLOmrpXPD+lDmkFI6u3Jp3jTQh2ZsA9XKUpOR9dDNbkcb3tfV0Lzbt
-         WqmSlaTnGC9kx7Rnb2CqNgeJJ7aBb14dXNAXYikIQjfJv9qsc7YXvSnoy9MEvQRSchpW
-         7l/g==
-X-Gm-Message-State: APjAAAXG6dwFqltu0R4oy3XPXLGT96A5GSUUkfnX2VlApLwnZ8Au+zD5
-        14q02WgIBX1TpfcE52gLnXueAg==
-X-Google-Smtp-Source: APXvYqxhQml7Fo7GvVBVokUNUbCU97SfpUUqIjvBFdu2bgd8A5/MQr4G8gO8K0I8YLE1r+Mz9DuBBA==
-X-Received: by 2002:a17:902:9349:: with SMTP id g9mr79624502plp.262.1563893463330;
-        Tue, 23 Jul 2019 07:51:03 -0700 (PDT)
-Received: from chromium.org ([2620:15c:202:1:fa53:7765:582b:82b9])
-        by smtp.gmail.com with ESMTPSA id b37sm71455423pjc.15.2019.07.23.07.51.02
-        (version=TLS1_3 cipher=AEAD-AES256-GCM-SHA384 bits=256/256);
-        Tue, 23 Jul 2019 07:51:02 -0700 (PDT)
-Message-ID: <5d371ed6.1c69fb81.1ea1c.47f1@mx.google.com>
-Content-Type: text/plain; charset="utf-8"
+        Tue, 23 Jul 2019 11:19:50 -0400
+Received: from ravnborg.org (unknown [158.248.194.18])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by asavdk3.altibox.net (Postfix) with ESMTPS id 54655200D5;
+        Tue, 23 Jul 2019 17:19:41 +0200 (CEST)
+Date:   Tue, 23 Jul 2019 17:19:39 +0200
+From:   Sam Ravnborg <sam@ravnborg.org>
+To:     Andrzej Pietrasiewicz <andrzej.p@collabora.com>
+Cc:     Neil Armstrong <narmstrong@baylibre.com>,
+        Maxime Ripard <maxime.ripard@bootlin.com>,
+        dri-devel@lists.freedesktop.org, linux-kernel@vger.kernel.org,
+        Matthias Brugger <matthias.bgg@gmail.com>,
+        Thierry Reding <thierry.reding@gmail.com>,
+        Laurent Pinchart <Laurent.pinchart@ideasonboard.com>,
+        Shawn Guo <shawnguo@kernel.org>, kernel@collabora.com,
+        linux-samsung-soc@vger.kernel.org,
+        linux-rockchip@lists.infradead.org, Sean Paul <sean@poorly.run>,
+        Krzysztof Kozlowski <krzk@kernel.org>,
+        Jonathan Hunter <jonathanh@nvidia.com>,
+        David Airlie <airlied@linux.ie>, Chen-Yu Tsai <wens@csie.org>,
+        Kukjin Kim <kgene@kernel.org>,
+        NXP Linux Team <linux-imx@nxp.com>,
+        Dave Airlie <airlied@redhat.com>,
+        Thomas Zimmermann <tzimmermann@suse.de>,
+        Jonas Karlman <jonas@kwiboo.se>, linux-arm-msm@vger.kernel.org,
+        intel-gfx@lists.freedesktop.org, Jyri Sarha <jsarha@ti.com>,
+        Alexios Zavras <alexios.zavras@intel.com>,
+        Mamta Shukla <mamtashukla555@gmail.com>,
+        linux-mediatek@lists.infradead.org,
+        Rodrigo Vivi <rodrigo.vivi@intel.com>,
+        linux-tegra@vger.kernel.org, Thomas Gleixner <tglx@linutronix.de>,
+        Vincent Abriou <vincent.abriou@st.com>,
+        linux-arm-kernel@lists.infradead.org,
+        Jernej Skrabec <jernej.skrabec@siol.net>,
+        amd-gfx@lists.freedesktop.org,
+        Tomi Valkeinen <tomi.valkeinen@ti.com>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Seung-Woo Kim <sw0312.kim@samsung.com>,
+        Douglas Anderson <dianders@chromium.org>,
+        Todor Tomov <todor.tomov@linaro.org>,
+        Kyungmin Park <kyungmin.park@samsung.com>,
+        Huang Rui <ray.huang@amd.com>,
+        Pengutronix Kernel Team <kernel@pengutronix.de>,
+        Alex Deucher <alexander.deucher@amd.com>,
+        freedreno@lists.freedesktop.org,
+        Christian =?iso-8859-1?Q?K=F6nig?= <christian.koenig@amd.com>,
+        Gerd Hoffmann <kraxel@redhat.com>
+Subject: Re: [PATCH v4 14/23] drm/tilcdc: Provide ddc symlink in connector
+ sysfs directory
+Message-ID: <20190723151939.GA13718@ravnborg.org>
+References: <cover.1562843413.git.andrzej.p@collabora.com>
+ <d1d415022c598fb7acd033f0f322dd67250adaa9.1562843413.git.andrzej.p@collabora.com>
+ <20190723090532.GA787@ravnborg.org>
+ <3ad60be5-49cf-4017-4b74-53a2d6272deb@collabora.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <20190722123422.4571-6-vkoul@kernel.org>
-References: <20190722123422.4571-1-vkoul@kernel.org> <20190722123422.4571-6-vkoul@kernel.org>
-Subject: Re: [PATCH 5/5] arm64: dts: qcom: sdm845-cheza: remove macro from unit name
-To:     Andy Gross <agross@kernel.org>, Vinod Koul <vkoul@kernel.org>
-Cc:     linux-arm-msm@vger.kernel.org,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Vinod Koul <vkoul@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Mark Rutland <mark.rutland@arm.com>,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-From:   Stephen Boyd <swboyd@chromium.org>
-User-Agent: alot/0.8.1
-Date:   Tue, 23 Jul 2019 07:51:02 -0700
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <3ad60be5-49cf-4017-4b74-53a2d6272deb@collabora.com>
+User-Agent: Mutt/1.10.1 (2018-07-13)
+X-CMAE-Score: 0
+X-CMAE-Analysis: v=2.3 cv=dqr19Wo4 c=1 sm=1 tr=0
+        a=UWs3HLbX/2nnQ3s7vZ42gw==:117 a=UWs3HLbX/2nnQ3s7vZ42gw==:17
+        a=jpOVt7BSZ2e4Z31A5e1TngXxSK0=:19 a=8nJEP1OIZ-IA:10 a=QX4gbG5DAAAA:8
+        a=6mu-9OIm9KcVJ4iDVDwA:9 a=wPNLvfGTeEIA:10 a=AbAUZ8qAyYyZVLSsDulk:22
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Vinod Koul (2019-07-22 05:34:22)
-> Unit name is supposed to be a number, using a macro with hex value is
-> not recommended, so add the value in unit name.
->=20
-> arch/arm64/boot/dts/qcom/sdm845-cheza.dtsi:966.16-969.4: Warning (unit_ad=
-dress_format): /soc@0/spmi@c440000/pmic@0/adc@3100/adc-chan@0x4d: unit name=
- should not have leading "0x"
-> arch/arm64/boot/dts/qcom/sdm845-cheza.dtsi:971.16-974.4: Warning (unit_ad=
-dress_format): /soc@0/spmi@c440000/pmic@0/adc@3100/adc-chan@0x4e: unit name=
- should not have leading "0x"
-> arch/arm64/boot/dts/qcom/sdm845-cheza.dtsi:976.16-979.4: Warning (unit_ad=
-dress_format): /soc@0/spmi@c440000/pmic@0/adc@3100/adc-chan@0x4f: unit name=
- should not have leading "0x"
-> arch/arm64/boot/dts/qcom/sdm845-cheza.dtsi:981.16-984.4: Warning (unit_ad=
-dress_format): /soc@0/spmi@c440000/pmic@0/adc@3100/adc-chan@0x50: unit name=
- should not have leading "0x"
-> arch/arm64/boot/dts/qcom/sdm845-cheza.dtsi:986.16-989.4: Warning (unit_ad=
-dress_format): /soc@0/spmi@c440000/pmic@0/adc@3100/adc-chan@0x51: unit name=
- should not have leading "0x"
->=20
-> Signed-off-by: Vinod Koul <vkoul@kernel.org>
-> ---
+Hi Andrej.
 
-Reviewed-by: Stephen Boyd <swboyd@chromium.org>
+On Tue, Jul 23, 2019 at 02:44:50PM +0200, Andrzej Pietrasiewicz wrote:
+> Hi Sam,
+> 
+> W dniu 23.07.2019 o 11:05, Sam Ravnborg pisze:
+> > Hi Andrzej
+> > 
+> > On Thu, Jul 11, 2019 at 01:26:41PM +0200, Andrzej Pietrasiewicz wrote:
+> > > Use the ddc pointer provided by the generic connector.
+> > > 
+> > > Signed-off-by: Andrzej Pietrasiewicz <andrzej.p@collabora.com>
+> > > ---
+> > >   drivers/gpu/drm/tilcdc/tilcdc_tfp410.c | 1 +
+> > >   1 file changed, 1 insertion(+)
+> > > 
+> > > diff --git a/drivers/gpu/drm/tilcdc/tilcdc_tfp410.c b/drivers/gpu/drm/tilcdc/tilcdc_tfp410.c
+> > > index 62d014c20988..c373edb95666 100644
+> > > --- a/drivers/gpu/drm/tilcdc/tilcdc_tfp410.c
+> > > +++ b/drivers/gpu/drm/tilcdc/tilcdc_tfp410.c
+> > > @@ -219,6 +219,7 @@ static struct drm_connector *tfp410_connector_create(struct drm_device *dev,
+> > >   	tfp410_connector->mod = mod;
+> > >   	connector = &tfp410_connector->base;
+> > > +	connector->ddc = mod->i2c;
+> > >   	drm_connector_init(dev, connector, &tfp410_connector_funcs,
+> > >   			DRM_MODE_CONNECTOR_DVID);
+> > 
+> > When reading this code, it looks strange that we set connector->ddc
+> > *before* the call to init the connector.
+> > One could risk that drm_connector_init() used memset(..) to clear all
+> > fields or so, and it would break this order.
+> 
+> I verified the code of drm_connector_init() and cannot find any memset()
+> invocations there. What is your actual concern?
+My concern is that drm_connector_init() maybe sometime in the future
+will init all fileds in drm_connector, so we loose any assingments
+done to drm_connector from *before* we called the init function.
 
+Moving the assignment to after drm_connector_init() would not
+let us depend on the actual implmentation of drm_connector_init().
+
+	Sam
