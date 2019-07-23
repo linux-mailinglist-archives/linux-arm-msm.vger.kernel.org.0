@@ -2,110 +2,128 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id AB5507192E
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 Jul 2019 15:28:30 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 7940E71A32
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 Jul 2019 16:23:47 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731442AbfGWN23 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 23 Jul 2019 09:28:29 -0400
-Received: from mail-pg1-f193.google.com ([209.85.215.193]:43178 "EHLO
-        mail-pg1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1731095AbfGWN23 (ORCPT
+        id S1728942AbfGWOXq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 23 Jul 2019 10:23:46 -0400
+Received: from mail-lj1-f193.google.com ([209.85.208.193]:37355 "EHLO
+        mail-lj1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727164AbfGWOXp (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 23 Jul 2019 09:28:29 -0400
-Received: by mail-pg1-f193.google.com with SMTP id f25so19430511pgv.10;
-        Tue, 23 Jul 2019 06:28:29 -0700 (PDT)
+        Tue, 23 Jul 2019 10:23:45 -0400
+Received: by mail-lj1-f193.google.com with SMTP id z28so41325249ljn.4
+        for <linux-arm-msm@vger.kernel.org>; Tue, 23 Jul 2019 07:23:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=chWP9LaVBb836yc/U3pqKBmIvWdwOkmxAAs2bRxtFvw=;
-        b=EPi3Dkd8v/VtsrHLzX7ap6XGP0FBARnBudXPyGak7HIGeeP0DQgP6QZo/or50iOxWk
-         09AytT6G0LogTTAUQbor/BUlMSMnqGu61cebV9+w6PdxzSFzlK+tp3YM0kzYX3g1e1jb
-         hEm/pPKQSC37mc2D1XXRyiLL0bOtsRym7zdxgypStpQDNns7vODvU00shptG9Ice8fO+
-         dden0FhCoJmuUx7zPLkQsf9uZWCEs7V51R3V51gLc13ATPBtoQ7gS1u9Aia52jX0VjeI
-         KXBMe7urT0Y4/phuJaqXKlQBiD5bdnVxdg/NMRnEe3h8QsXx/UUXLrEmC6jhNta8TZjX
-         064Q==
+        d=linaro.org; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=AfmBNaL5E4IPJmKdMV2SCuy4Cu3rlWh8uwGgLbEmbFM=;
+        b=W1Hsltn/PzpLrnoaWRqRp1OUKhzZJMMWUI8BCSasX/PgRZd1Qxfm2Und7B1l7R64no
+         H8LuA6SkYvaE7USu+iLDJK5unGUtYCMM16I904/sPrwW+5f3rEf2Nxb3JRpw+5Rzs9rh
+         mioF/VkNaWj5iXr3XHsGKGmGOjxBRP7fD/Y+TFx7LhNCgywpQWsDAtxHLzNzdWPzDcvo
+         G9J3ZHSwZ7Zs0cHB27WlKBQSGB8tlEAQyckUAFG33ZIXoYlhBzgfUEJCSPmlIjkDcTaa
+         qo59TIq9HhS33Ao4a+9u5FrgvotNM2gGQsN9Uwn2M8tIV1qBhT/BACmVH+HIbRzp4RjV
+         XuCA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=chWP9LaVBb836yc/U3pqKBmIvWdwOkmxAAs2bRxtFvw=;
-        b=BXIo8oaNtJTrkwVnONpR/H8yF+8dUi9bXTXUO6HIFBS7IP8HvNfAXLOmHZx68TS0qu
-         KxK0zYXzOLfBb+dWoeF87/1aBeUPLKNnEPx5CwQV+Vwg/KvVz7xYdtZkj+rk2gS13cCH
-         Sewp7G3KN9bkCgPDlSOqrFy3ZZDDVl72U3AAamHPcMxnDRjUSS0hnpkcfJBewavvNBRj
-         ZigkqpUk4yZfEVulx7EthOUWyO/27FLLlTjXyfvqjo6AtHwWSGho44uPasYWyqSEOVAU
-         ipS3tUXdg9FNXA7/dB9lIuLU+4pfS4WhA429u155sMBzqu64ovvxYC3CL0N8ACF9aw6P
-         zWhQ==
-X-Gm-Message-State: APjAAAVRXMJQ942+wmLQrT1xsIuCPoMGHOVoPLxVmF8jkx6ni8hRdzRh
-        Ju9xRAGQtoOGwOIgaTfKJ98=
-X-Google-Smtp-Source: APXvYqz3X/UAUv4paE8QYBDSGI/zMotmoIMk0BoKtNIzOWIkcDGtI1s1U3iatxn6YH3ZETfaRIRBow==
-X-Received: by 2002:a63:c84d:: with SMTP id l13mr71688713pgi.154.1563888508740;
-        Tue, 23 Jul 2019 06:28:28 -0700 (PDT)
-Received: from localhost ([123.213.206.190])
-        by smtp.gmail.com with ESMTPSA id h1sm53656426pfo.152.2019.07.23.06.28.27
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Tue, 23 Jul 2019 06:28:27 -0700 (PDT)
-Date:   Tue, 23 Jul 2019 22:28:25 +0900
-From:   Minwoo Im <minwoo.im.dev@gmail.com>
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     Christoph Hellwig <hch@lst.de>,
-        Marc Gonzalez <marc.w.gonzalez@free.fr>,
-        MSM <linux-arm-msm@vger.kernel.org>,
-        LKML <linux-kernel@vger.kernel.org>,
-        Andy Gross <agross@kernel.org>,
-        Stanimir Varbanov <svarbanov@mm-sol.com>,
-        Rob Clark <robdclark@gmail.com>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Minwoo Im <minwoo.im.dev@gmail.com>
-Subject: Re: [PATCH] firmware: qcom_scm: fix error for incompatible pointer
-Message-ID: <20190723132825.GA7148@minwoo-desktop>
-References: <20190719134303.7617-1-minwoo.im.dev@gmail.com>
- <7ea51e42-ab8a-e4e2-1833-651e2dabca3c@free.fr>
- <20190722093059.GA29538@lst.de>
- <20190722151234.GJ7234@tuxbook-pro>
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=AfmBNaL5E4IPJmKdMV2SCuy4Cu3rlWh8uwGgLbEmbFM=;
+        b=llYJTF7f7avBvvA5Olt+BcDpg2LBb1P8KYtMwGgiR1nWHa5JWH61w9V2KnGSJ8oYKn
+         7mphhh6k5YWrBcTKSWROKigZzuv+uwRDwqWJoaBp2Xz/Da7XUW8Cc7cqyymPTZsalVDc
+         Vf6lETbKXWecunMk8zVZh8JHHGUFjS02yakL21/0fPoZXJXY+HRThaE1YDPG/MoIJ3a7
+         dSvETmsiKRhexVyjSZewgOthqUHUBs6YKO36FHCHXBuyRiV/Lc9+pKoa2vvTYrGE55Sb
+         UXaBF71+52S/CVA0NXcSdQy09L3YEJSZbDudJmVTGyLPYcbznbSKx1qQQG1VbcHEW/Cr
+         qR8A==
+X-Gm-Message-State: APjAAAVPtOdmG3HDX4uyKEG4ADILv7cBQzUzpvesGSrqCdsNPlv6Lzqd
+        gw+/cy2mIdoqI846Vm+hgstIrw==
+X-Google-Smtp-Source: APXvYqyswV5/+ZqUIEC5Sb3W3vsjuQ3xufsmaRFCCm6KVRinDL/Bj8ZQzyK6revZwBx/kkSAwe84tQ==
+X-Received: by 2002:a2e:3211:: with SMTP id y17mr3422532ljy.86.1563891823902;
+        Tue, 23 Jul 2019 07:23:43 -0700 (PDT)
+Received: from localhost.localdomain ([212.45.67.2])
+        by smtp.googlemail.com with ESMTPSA id z17sm8048519ljc.37.2019.07.23.07.23.42
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Tue, 23 Jul 2019 07:23:43 -0700 (PDT)
+From:   Georgi Djakov <georgi.djakov@linaro.org>
+To:     robh+dt@kernel.org, bjorn.andersson@linaro.org, agross@kernel.org,
+        georgi.djakov@linaro.org
+Cc:     vkoul@kernel.org, evgreen@chromium.org, daidavid1@codeaurora.org,
+        linux-pm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org
+Subject: [PATCH v5 0/5] Add QCS404 interconnect provider driver
+Date:   Tue, 23 Jul 2019 17:23:34 +0300
+Message-Id: <20190723142339.27772-1-georgi.djakov@linaro.org>
+X-Mailer: git-send-email 2.22.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20190722151234.GJ7234@tuxbook-pro>
-User-Agent: Mutt/1.11.4 (2019-03-13)
+Content-Transfer-Encoding: 8bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-> > > > We just can cast phys_addr_t to dma_addr_t here.
-> > > 
-> > > IME, casting is rarely a proper solution.
-> > 
-> > *nod*
-> > 
-> > ptr_phys probably should be a dma_addr_t.  Unless this driver is so
-> > magic that it really wants a physical and not a dma address, in which
-> > case it needs to use alloc_pages instead of dma_alloc_coherent
-> > and then call page_to_phys on the returned page, and a very big comment
-> > explaining why it is so special.
-> 
-> The scm call takes physical addresses (which happens to be 1:1 with DMA
-> addresses for this driver).
-> 
-> This allocation started off (downstream) as a simple kmalloc(), but
-> while the scm call is being executed an access from Linux will cause a
-> security violation (that's not handled gracefully). The properties of
-> dma_alloc is closer, so that's where the code is today.
-> 
-> Optimally this should be something like alloc_pages() and some mechanism
-> for unmapping the pages during the call. But no one has come up with a
-> suitable patch for that.
-> 
-> 
-> But there's a patch from Stephen for this already (not doing a
-> typecast).  Apparently I missed merging this, so I'll do that.
-> 
-> https://lore.kernel.org/linux-arm-msm/20190517210923.202131-2-swboyd@chromium.org/
+Add drivers to support scaling of the on-chip interconnects on QCS404-based
+platforms. Also add the necessary device-tree nodes, so that the driver for
+each NoC can probe and register as interconnect-provider.
 
-Bjron,
+The plan is to get patches 2,5 through the Qcom/ARM tree and the rest
+through the interconnect tree.
 
-I appreciate for checking this.  And also thanks all you guys for the
-comments here!
+v5:
+- Make reg and clocks DT properties required. (Bjorn)
+- Remove _clk suffix from clock names. (Bjorn)
+- Use the more succinct return !!icc_smd_rpm; (Bjorn)
 
-Thanks,
+v4: https://lore.kernel.org/lkml/20190613151323.10850-1-georgi.djakov@linaro.org/
+- Move DT headers into the dt-bindings patch (Bjorn)
+- Pick Bjorn's r-b on some patches.
+- Return error if platform_device_register_data() fails (Bjorn)
+- Use platform_set_drvdata() only in the child device. (Bjorn)
+- Hide the smd-rpm proxy driver from config menu. (Bjorn)
+- Add remove() function to zero out the rpm handle. (Bjorn)
+- Move move the qcs404 driver patch later in the serie. (Bjorn)
+- Insert the DT nodes after rng to keep the list sorted by address. (Bjorn)
+
+v3: https://lore.kernel.org/lkml/20190611164157.24656-1-georgi.djakov@linaro.org/
+- Drop the patch introducing the qcom,qos DT property.
+- Add two new patches to create an interconnect proxy device. This device is
+  part of the RPM hardware and handles the communication of the bus bandwidth
+  requests.
+- Add a DT reg property and move the interconnect nodes under the "soc" node.
+
+v2: https://lore.kernel.org/lkml/20190415104357.5305-1-georgi.djakov@linaro.org/
+- Use the clk_bulk API. (Bjorn)
+- Move the port IDs into the provider file. (Bjorn)
+- Use ARRAY_SIZE in the macro to automagically count the num_links. (Bjorn)
+- Improve code readability. (Bjorn)
+- Add patch [4/4] introducing a qcom,qos DT property to represent the link to
+  the MMIO QoS registers HW block.
+
+v1: https://lore.kernel.org/lkml/20190405035446.31886-1-georgi.djakov@linaro.org/
+
+
+Bjorn Andersson (1):
+  interconnect: qcom: Add QCS404 interconnect provider driver
+
+Georgi Djakov (4):
+  dt-bindings: interconnect: Add Qualcomm QCS404 DT bindings
+  soc: qcom: smd-rpm: Create RPM interconnect proxy child device
+  interconnect: qcom: Add interconnect SMD over SMD driver
+  arm64: dts: qcs404: Add interconnect provider DT nodes
+
+ .../bindings/interconnect/qcom,qcs404.txt     |  45 ++
+ arch/arm64/boot/dts/qcom/qcs404.dtsi          |  28 +
+ drivers/interconnect/qcom/Kconfig             |  12 +
+ drivers/interconnect/qcom/Makefile            |   4 +
+ drivers/interconnect/qcom/qcs404.c            | 539 ++++++++++++++++++
+ drivers/interconnect/qcom/smd-rpm.c           |  77 +++
+ drivers/interconnect/qcom/smd-rpm.h           |  15 +
+ drivers/soc/qcom/smd-rpm.c                    |  17 +-
+ .../dt-bindings/interconnect/qcom,qcs404.h    |  88 +++
+ 9 files changed, 824 insertions(+), 1 deletion(-)
+ create mode 100644 Documentation/devicetree/bindings/interconnect/qcom,qcs404.txt
+ create mode 100644 drivers/interconnect/qcom/qcs404.c
+ create mode 100644 drivers/interconnect/qcom/smd-rpm.c
+ create mode 100644 drivers/interconnect/qcom/smd-rpm.h
+ create mode 100644 include/dt-bindings/interconnect/qcom,qcs404.h
+
