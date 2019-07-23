@@ -2,98 +2,129 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 6FC9D70EE3
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 Jul 2019 03:56:46 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 7B653710CC
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 Jul 2019 07:08:22 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732140AbfGWB4l (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 22 Jul 2019 21:56:41 -0400
-Received: from mail-pl1-f194.google.com ([209.85.214.194]:34412 "EHLO
-        mail-pl1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1732133AbfGWB4k (ORCPT
+        id S1732641AbfGWFIV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 23 Jul 2019 01:08:21 -0400
+Received: from mail-vs1-f68.google.com ([209.85.217.68]:44368 "EHLO
+        mail-vs1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1732169AbfGWFIV (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 22 Jul 2019 21:56:40 -0400
-Received: by mail-pl1-f194.google.com with SMTP id i2so19951595plt.1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 22 Jul 2019 18:56:40 -0700 (PDT)
+        Tue, 23 Jul 2019 01:08:21 -0400
+Received: by mail-vs1-f68.google.com with SMTP id v129so27967694vsb.11
+        for <linux-arm-msm@vger.kernel.org>; Mon, 22 Jul 2019 22:08:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=CzAyOVJiJ+crp0dyJDyW4Uoxcw0DAIBLgfBcpgWpRTE=;
-        b=LoYY1RAS2JNfm6BNv0oVp61iAaOaXZRwIMWDs+xz1wuORHIMPs5XMsgo95ZYK10qMV
-         Sk8m8TY1R2ZEqd17Nm1wVugMbXJkHIEEIPNvVfi+Mqxr/GdOGGVc2BqchZ5ie/vCOBX/
-         UZ1tOlpvGrLeUX+dNfUg6B9F2yTh3l78AwMin1IYI/NG1jC60eEFYPs3Mi95oggZZcbX
-         th9DY8cA3D4A8jbnTAdUPddIEaHBFJV5G+gW7dyTOw+rYf7ex45hyEbRBFGZaZKx6YCW
-         VNDP2zsaJJkyLJBw9HRjoLnkoIrkthWLHEx27PGfLqZI8JsgoxOZZMfKTyjVEt2ItovN
-         BmYg==
+        d=verdurent-com.20150623.gappssmtp.com; s=20150623;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=tDS4gSwn4vjiBJe81KYYzL7InQAaE1qq2PXrKhXqlTs=;
+        b=j2KDdcapzsm80aR134jUbGPOcIEjhGx/YtVlRLot6jVeXKbFVo2V6o2h1GGw8NGfQC
+         3A1QdC8IzxVAJqs2Ts+V5VbaKUmNDsxpnBgVGkb6yp792JEqQVZAk+Fiv6MVkaZUjCcd
+         MC/MWFWlp/PPKJs+hDTiDJdPKiIoE7/Avv5FZkpIhdH76Crk73OHLTGYm6G98STksvLL
+         DI1NuHdqP7pAPYkerHyXPKBDJzx5JxUdCtGyvDjjOuY5kbYc+uvmaP0/B9ea4m3cuD5j
+         XrPiAJRhJaLwmcM61oSGQoScFRtCqfLLOGa39hVcbEBed86bhpG1Ds/Lx+Ojewk/MIhm
+         C/Eg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=CzAyOVJiJ+crp0dyJDyW4Uoxcw0DAIBLgfBcpgWpRTE=;
-        b=TTp/WM7BowaY3E9EQlx8ccvbc70QBbYneSUVm4F0BZSaKpL4lHhOFB7L07rXNjW4r1
-         T6LeSGFFu3kKyOdFWuuFRHXvw6tCRcU8gnoUqdBJM/pTy974gsTsWVFzmPxya/biIVlb
-         32Li6S7WFjHFua0HDDoRIIVDxELGmC2HvdoViDoMMg0wffkAwH1apLxbQkWLmfbVtVRp
-         s7fBrFE7ERAW8nZjpvF1+JsEpNL6Gh83W0mhCKRZsyXSPFJgyTATuqeIQmcCyAOamKC+
-         c2qXCb+4NZpgmGkChw1FuvOrgjgkRYOYcm76Pn41IMagYOgFB+EahjbdfqjntjkH0lNu
-         FaYw==
-X-Gm-Message-State: APjAAAUQMVSVEuIIL+tCDYFW3onHBM9le6uLXYIvDqWrbIILpFlsNlZ6
-        TWWFERBEv/kDadxVJfR0t2wiKw==
-X-Google-Smtp-Source: APXvYqwr3DtyxnI94tRYYNP8pfrGZYXogprcPFn8oIrkLVKv0frSc1VdTB+BJi+vXTMqvBSZJHv/5w==
-X-Received: by 2002:a17:902:24e:: with SMTP id 72mr36026735plc.65.1563846999629;
-        Mon, 22 Jul 2019 18:56:39 -0700 (PDT)
-Received: from localhost ([122.172.28.117])
-        by smtp.gmail.com with ESMTPSA id o24sm77193811pfp.135.2019.07.22.18.56.38
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 22 Jul 2019 18:56:38 -0700 (PDT)
-Date:   Tue, 23 Jul 2019 07:26:35 +0530
-From:   Viresh Kumar <viresh.kumar@linaro.org>
-To:     Niklas Cassel <niklas.cassel@linaro.org>
-Cc:     Andy Gross <agross@kernel.org>, linux-arm-msm@vger.kernel.org,
-        jorge.ramirez-ortiz@linaro.org, sboyd@kernel.org,
-        vireshk@kernel.org, bjorn.andersson@linaro.org,
-        ulf.hansson@linaro.org, Rob Herring <robh+dt@kernel.org>,
-        Mark Rutland <mark.rutland@arm.com>,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 11/13] arm64: dts: qcom: qcs404: Add CPR and populate OPP
- table
-Message-ID: <20190723015635.rl5a2isjnjn23fzh@vireshk-i7>
-References: <20190705095726.21433-1-niklas.cassel@linaro.org>
- <20190705095726.21433-12-niklas.cassel@linaro.org>
- <20190710090303.tb5ue3wq6r7ofyev@vireshk-i7>
- <20190715132405.GA5040@centauri>
- <20190716103436.az5rdk6f3yoa3apz@vireshk-i7>
- <20190716105318.GA26592@centauri>
- <20190717044923.ccmebeewbinlslkm@vireshk-i7>
- <20190719154558.GA32518@centauri>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=tDS4gSwn4vjiBJe81KYYzL7InQAaE1qq2PXrKhXqlTs=;
+        b=PiGl9vl09MD96O55zWKwPmuwghPbaeht/yJ7E/g7vraZDNl4RjkLTsNfLOBKy4kHZJ
+         4WN8KDVbukHgALpk04osmGOli0o3VHjdlVEy3/hx5qMxLd+uHMRjGEBB6A3tzHAW3pAO
+         n90BELYndphzdQYwM7WjmndYI+JaFc+zTRQUqDg9S7wtPN2+NH5PyajoECeIvACmTDbb
+         ZaYBIcV+0c1QLSpYLyCRFGC6sZBW78DSIAnoUCz+5u2i5rT2Ni6OeYSSyTpmj1Yoi7/x
+         fcBskBq+DDb4qWujA5q8y95fNd8PviGqTOBI9jJpKWv7SRJzFXC7CVFxuwPVDP0itlJ9
+         MrNQ==
+X-Gm-Message-State: APjAAAWzGNkzAC7mLoDUSeoL0DiQtyfsuhkkDuTlni8IYqjeqSA2NkTI
+        y3nEmjWR/JJSpQDRj6ugNuwKfjMew9kozVTdsBg=
+X-Google-Smtp-Source: APXvYqxSMp8D+aU6wN4mzW36IwWXd8EVY96kOzI5ofuaEVtfyj5O46xSTrH7ZpBTy4a/02bd6633pdIqQcvPZfcuqxs=
+X-Received: by 2002:a67:2e0e:: with SMTP id u14mr46945969vsu.182.1563858500194;
+ Mon, 22 Jul 2019 22:08:20 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20190719154558.GA32518@centauri>
-User-Agent: NeoMutt/20180716-391-311a52
+References: <20190722123422.4571-1-vkoul@kernel.org> <20190722123422.4571-6-vkoul@kernel.org>
+In-Reply-To: <20190722123422.4571-6-vkoul@kernel.org>
+From:   Amit Kucheria <amit.kucheria@verdurent.com>
+Date:   Tue, 23 Jul 2019 10:38:09 +0530
+Message-ID: <CAHLCerPC0thO9gsaDAxc+XaexinrzG6JGJ8BhB4bFFuQ-P9Jxg@mail.gmail.com>
+Subject: Re: [PATCH 5/5] arm64: dts: qcom: sdm845-cheza: remove macro from
+ unit name
+To:     Vinod Koul <vkoul@kernel.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Mark Rutland <mark.rutland@arm.com>,
+        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
+        <devicetree@vger.kernel.org>, LKML <linux-kernel@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 19-07-19, 17:45, Niklas Cassel wrote:
-> Hello Viresh,
-> 
-> Could you please have a look at the last two patches here:
-> https://git.linaro.org/people/niklas.cassel/kernel.git/log/?h=cpr-opp-hz
+On Mon, Jul 22, 2019 at 6:06 PM Vinod Koul <vkoul@kernel.org> wrote:
+>
+> Unit name is supposed to be a number, using a macro with hex value is
 
-There is no sane way of providing review comments with a link to the
-git tree :)
+/s/name/address?
 
-I still had a look and I see that you don't search for max frequency
-but just any OPP that has required-opps set to the level u want. Also,
-can't there be multiple phandles in required-opps in your case ?
+> not recommended, so add the value in unit name.
+>
+> arch/arm64/boot/dts/qcom/sdm845-cheza.dtsi:966.16-969.4: Warning (unit_address_format): /soc@0/spmi@c440000/pmic@0/adc@3100/adc-chan@0x4d: unit name should not have leading "0x"
+> arch/arm64/boot/dts/qcom/sdm845-cheza.dtsi:971.16-974.4: Warning (unit_address_format): /soc@0/spmi@c440000/pmic@0/adc@3100/adc-chan@0x4e: unit name should not have leading "0x"
+> arch/arm64/boot/dts/qcom/sdm845-cheza.dtsi:976.16-979.4: Warning (unit_address_format): /soc@0/spmi@c440000/pmic@0/adc@3100/adc-chan@0x4f: unit name should not have leading "0x"
+> arch/arm64/boot/dts/qcom/sdm845-cheza.dtsi:981.16-984.4: Warning (unit_address_format): /soc@0/spmi@c440000/pmic@0/adc@3100/adc-chan@0x50: unit name should not have leading "0x"
+> arch/arm64/boot/dts/qcom/sdm845-cheza.dtsi:986.16-989.4: Warning (unit_address_format): /soc@0/spmi@c440000/pmic@0/adc@3100/adc-chan@0x51: unit name should not have leading "0x"
+>
+> Signed-off-by: Vinod Koul <vkoul@kernel.org>
+> ---
+>  arch/arm64/boot/dts/qcom/sdm845-cheza.dtsi | 10 +++++-----
+>  1 file changed, 5 insertions(+), 5 deletions(-)
+>
+> diff --git a/arch/arm64/boot/dts/qcom/sdm845-cheza.dtsi b/arch/arm64/boot/dts/qcom/sdm845-cheza.dtsi
+> index 1ebbd568dfd7..9b27b8346ba1 100644
+> --- a/arch/arm64/boot/dts/qcom/sdm845-cheza.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/sdm845-cheza.dtsi
+> @@ -963,27 +963,27 @@ ap_ts_i2c: &i2c14 {
+>  };
+>
+>  &pm8998_adc {
+> -       adc-chan@ADC5_AMUX_THM1_100K_PU {
+> +       adc-chan@4d {
+>                 reg = <ADC5_AMUX_THM1_100K_PU>;
 
-> If you like my proposal then I could send out the first patch (the one to
-> OPP core) as a real patch (with an improved commit message), and
-> incorporate the second patch into my CPR patch series when I send out a V2.
+I'm a little conflicted about this change. If we're replacing the
+address with actual values, perhaps we should do that same for the reg
+property to keep them in sync? Admittedly though, it is a bit easier
+to read the macro name and figure out its meaning.
 
-Send them both in your series only, otherwise the first one is useless
-anyway.
-
--- 
-viresh
+>                 label = "sdm_temp";
+>         };
+>
+> -       adc-chan@ADC5_AMUX_THM2_100K_PU {
+> +       adc-chan@4e {
+>                 reg = <ADC5_AMUX_THM2_100K_PU>;
+>                 label = "quiet_temp";
+>         };
+>
+> -       adc-chan@ADC5_AMUX_THM3_100K_PU {
+> +       adc-chan@4f {
+>                 reg = <ADC5_AMUX_THM3_100K_PU>;
+>                 label = "lte_temp_1";
+>         };
+>
+> -       adc-chan@ADC5_AMUX_THM4_100K_PU {
+> +       adc-chan@50 {
+>                 reg = <ADC5_AMUX_THM4_100K_PU>;
+>                 label = "lte_temp_2";
+>         };
+>
+> -       adc-chan@ADC5_AMUX_THM5_100K_PU {
+> +       adc-chan@51 {
+>                 reg = <ADC5_AMUX_THM5_100K_PU>;
+>                 label = "charger_temp";
+>         };
+> --
+> 2.20.1
+>
