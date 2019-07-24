@@ -2,68 +2,84 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 35EB87271F
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Jul 2019 07:03:15 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 2309D7272F
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Jul 2019 07:09:51 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725909AbfGXFDO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 24 Jul 2019 01:03:14 -0400
-Received: from alexa-out-tai-01.qualcomm.com ([103.229.16.226]:26661 "EHLO
-        alexa-out-tai-01.qualcomm.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1725883AbfGXFDO (ORCPT
+        id S1725909AbfGXFJu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 24 Jul 2019 01:09:50 -0400
+Received: from smtp.codeaurora.org ([198.145.29.96]:55360 "EHLO
+        smtp.codeaurora.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725861AbfGXFJu (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 24 Jul 2019 01:03:14 -0400
-Received: from ironmsg02-tai.qualcomm.com ([10.249.140.7])
-  by alexa-out-tai-01.qualcomm.com with ESMTP; 24 Jul 2019 13:03:12 +0800
-X-IronPort-AV: E=McAfee;i="6000,8403,9326"; a="35255352"
-Received: from akronite-sh-dev01.ap.qualcomm.com ([10.231.215.213])
-  by ironmsg02-tai.qualcomm.com with ESMTP; 24 Jul 2019 13:03:00 +0800
-Received: by akronite-sh-dev01.ap.qualcomm.com (Postfix, from userid 206661)
-        id 3E23C1F617; Wed, 24 Jul 2019 13:02:59 +0800 (CST)
-From:   xiaofeis <xiaofeis@codeaurora.org>
-To:     davem@davemloft.net
-Cc:     vkoul@kernel.org, netdev@vger.kernel.org, andrew@lunn.ch,
+        Wed, 24 Jul 2019 01:09:50 -0400
+Received: by smtp.codeaurora.org (Postfix, from userid 1000)
+        id 55F4F60D0C; Wed, 24 Jul 2019 05:09:49 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
+        s=default; t=1563944989;
+        bh=lLKO+gfsyxVLLXKWJzogBecneZk7iRc3LuTD2MbeGyc=;
+        h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
+        b=fjUsEq3Rr8zi4Ghhc0jyTpsUyKkz6WgzImRgeHBERTU+XpFOgUm3rN5rUFXNn/70l
+         KJTDh7Qq7VFv7qszGAsg5ZBI8QGL1i30yBBw2l82cz+ksamglnhagV0cbb/vRTgT/2
+         VwJ7QqL7POiImSPD/v8UOHnp3N7bb+qurxO2ZiLo=
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        pdx-caf-mail.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.7 required=2.0 tests=ALL_TRUSTED,BAYES_00,
+        DKIM_INVALID,DKIM_SIGNED autolearn=no autolearn_force=no version=3.4.0
+Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
+        by smtp.codeaurora.org (Postfix) with ESMTP id 9E1B960256;
+        Wed, 24 Jul 2019 05:09:42 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
+        s=default; t=1563944982;
+        bh=lLKO+gfsyxVLLXKWJzogBecneZk7iRc3LuTD2MbeGyc=;
+        h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
+        b=iv0fXWiyGC9fPCBBvvLInWED2Tdk2Xpa9aLdZfGnHZsfVkljntyMU5o9gp0E9n9Yl
+         VGcb2CC6B2O6lBWzQbpmUTy+s7a8MgygUz4dJ6vejVHmcppyFgV5HI0YOWIQfun45z
+         xyYD9+jXgr3cmvn22JxqEPaIDsKYqC3kwiDCQC4c=
+MIME-Version: 1.0
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
+Content-Transfer-Encoding: 7bit
+Date:   Wed, 24 Jul 2019 13:09:42 +0800
+From:   xiaofeis@codeaurora.org
+To:     Andrew Lunn <andrew@lunn.ch>
+Cc:     davem@davemloft.net, vkoul@kernel.org, netdev@vger.kernel.org,
         linux-arm-msm@vger.kernel.org, bjorn.andersson@linaro.org,
         vivien.didelot@gmail.com, f.fainelli@gmail.com,
-        niklas.cassel@linaro.org, xiazha@codeaurora.org,
-        xiaofeis <xiaofeis@codeaurora.org>
-Subject: [PATCH v2] net: dsa: qca8k: enable port flow control
-Date:   Wed, 24 Jul 2019 13:02:56 +0800
-Message-Id: <1563944576-62844-1-git-send-email-xiaofeis@codeaurora.org>
-X-Mailer: git-send-email 1.9.1
+        niklas.cassel@linaro.org, xiazha@codeaurora.org
+Subject: Re: [PATCH] qca8k: enable port flow control
+In-Reply-To: <20190719131306.GA24930@lunn.ch>
+References: <1563504791-43398-1-git-send-email-xiaofeis@codeaurora.org>
+ <20190719131306.GA24930@lunn.ch>
+Message-ID: <7613ffc99b6f9039a7ac56284b5a6329@codeaurora.org>
+X-Sender: xiaofeis@codeaurora.org
+User-Agent: Roundcube Webmail/1.2.5
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Set phy device advertising to enable MAC flow control.
+Hi Andrew
 
-Signed-off-by: Xiaofei Shen <xiaofeis@codeaurora.org>
----
- drivers/net/dsa/qca8k.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+Thanks for your comments. I have sent a new patch based on net-next 
+tree.
 
-diff --git a/drivers/net/dsa/qca8k.c b/drivers/net/dsa/qca8k.c
-index 232e8cc..c5ac426 100644
---- a/drivers/net/dsa/qca8k.c
-+++ b/drivers/net/dsa/qca8k.c
-@@ -2,7 +2,7 @@
- /*
-  * Copyright (C) 2009 Felix Fietkau <nbd@nbd.name>
-  * Copyright (C) 2011-2012 Gabor Juhos <juhosg@openwrt.org>
-- * Copyright (c) 2015, The Linux Foundation. All rights reserved.
-+ * Copyright (c) 2015, 2019, The Linux Foundation. All rights reserved.
-  * Copyright (c) 2016 John Crispin <john@phrozen.org>
-  */
- 
-@@ -935,6 +935,8 @@
- 	qca8k_port_set_status(priv, port, 1);
- 	priv->port_sts[port].enabled = 1;
- 
-+	phy->advertising |= ADVERTISED_Pause | ADVERTISED_Asym_Pause;
-+
- 	return 0;
- }
- 
--- 
-1.9.1
+Thanks
+Xiaofeis
 
+On 2019-07-19 21:13, Andrew Lunn wrote:
+> On Fri, Jul 19, 2019 at 10:53:11AM +0800, xiaofeis wrote:
+>> Set phy device advertising to enable MAC flow control.
+>> 
+>> Change-Id: Ibf0f554b072fc73136ec9f7ffb90c20b25a4faae
+>> Signed-off-by: Xiaofei Shen <xiaofeis@codeaurora.org>
+> 
+> Hi Xiaofei
+> 
+> What tree is this patch against? I don't think it is net-next. It
+> actually looks to be an old tree. Please rebase to David Millers
+> net-next. Patches to that tree are closed at the moment, due to the
+> merge window. You can post an RFC, or wait until it opens again.
+> 
+> Thanks
+> 	Andrew
