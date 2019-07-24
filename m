@@ -2,52 +2,53 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 2106172718
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Jul 2019 07:01:09 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E190F7271B
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Jul 2019 07:01:23 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725894AbfGXFBI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 24 Jul 2019 01:01:08 -0400
-Received: from mail-vs1-f66.google.com ([209.85.217.66]:45976 "EHLO
-        mail-vs1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725813AbfGXFBI (ORCPT
+        id S1726070AbfGXFBX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 24 Jul 2019 01:01:23 -0400
+Received: from mail-vs1-f68.google.com ([209.85.217.68]:42794 "EHLO
+        mail-vs1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725887AbfGXFBX (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 24 Jul 2019 01:01:08 -0400
-Received: by mail-vs1-f66.google.com with SMTP id h28so30504379vsl.12
-        for <linux-arm-msm@vger.kernel.org>; Tue, 23 Jul 2019 22:01:07 -0700 (PDT)
+        Wed, 24 Jul 2019 01:01:23 -0400
+Received: by mail-vs1-f68.google.com with SMTP id 190so30511923vsf.9
+        for <linux-arm-msm@vger.kernel.org>; Tue, 23 Jul 2019 22:01:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=verdurent-com.20150623.gappssmtp.com; s=20150623;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=MwZbVvyxm3PI+MouNfOXYHnz5VFLnB1AMhPNSWYl2+c=;
-        b=ct6X0qA08bQF6QWHQzeKtcjUKYrb7O7huAAWPkMX0eTJkPb6b7frcH1oeg0W7R09DB
-         w3F5THxqJlS+MU0uE0j6aaVKMWGWB4bJc1gBKZJlA1G4t90eUrVgseu8YQRsevSNNieF
-         lTUHbs/2Q/5i/J4Ip5lJgT467azUxXiYYUSiaxUFW+8oF2PSUe1pFktoNiQ7MbBq0M7u
-         b+cmxOWvxA/ZgG8Efyd8Xcd/UXF7dJAx/CL5IA8tFTyNkZt4nZnOqTqxs2GyCz7mT2xS
-         FMZBJ8t4WufNl47qbxbdbA9TMA51Bs5PYk0GmuHlJ3Ujht7UbGc7MA3Ylqz3uT9mAa4g
-         mSWA==
+        bh=L6bmVsqhCrWcP44dNz+ryOiefuDJUbPMuZZHROp2h8o=;
+        b=yeYLnMe6AHfk4GzU5rqIM1QMbCG15Q7n5ovV0MGRY/5YLxQw+pvxOqLscbpUs64eLn
+         qPc1t6Uth7uzIxN5EibV4b60nlofOD+3yha8qaF0nA/QfyPpJZ7QOVlH8QihTRRyed4j
+         Wu/ATEA06t7GeqFFZY8peXscvnC3xYUJ97VZR/nyRQRDUVzRFzzcJwqpZ4UobUoOpiiF
+         ZasxzIlC751HDXsSH9zBwTLX3u+JTG5oDxER7yeXgu69rNQ8yRqCli1Y2slpHEQdZ++q
+         2xG2gZNpiOeM/0aXwCHHrBX/VubD/Pst79FhLlbNoBRdcVkWrrg4bNxfbqb3IfvtbaOK
+         b5Kw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=MwZbVvyxm3PI+MouNfOXYHnz5VFLnB1AMhPNSWYl2+c=;
-        b=SDCRUix+II/MnmbbGVFQK615f5/FJwSUw0Ywh9ua+Ok5mgFUQyGdkPI8Hg7ZsWQlOA
-         RvOQuBkRIZru8VM0nY1j9ZxiNwXrzThI/KL4cWteQSe/msOEM4AacBS+OXpS5MtPfMjm
-         rGmeceEgvzKcafyjqyHsoF8/K1mht25HcVHFlQ6EmSiIWCm1FpbFOT16VRqdJOJKVoiT
-         FxCIQvSp2DJT6dChM59Ice1ZsQtmJfyJakYLwb7KibBxBlzb3TqXcZFp6BE8/TFgnK4M
-         9e5m7ihoIeb+z88/NGXhTG52k3oFj5YxIEdGes7XJdmJTfKcI3JfhbOehG5lO/18hAPl
-         A/Fg==
-X-Gm-Message-State: APjAAAUVPOggdPn44PUfaVPCUyKWH5Ts2zkcMZgItUMmccpS5Isj9YbT
-        M4cv3vWMMJaiA/rERkc5/P+SiWrccP+jkfpaFck=
-X-Google-Smtp-Source: APXvYqzDfgoeYz/99kNuC9UX09QAW/OkLD2aDZBnfw+xJRRF04yHjb4iM3P/YyScPY9DnWqV3/sPpIpefel/c99irMc=
-X-Received: by 2002:a67:f5c5:: with SMTP id t5mr21338731vso.27.1563944467386;
- Tue, 23 Jul 2019 22:01:07 -0700 (PDT)
+        bh=L6bmVsqhCrWcP44dNz+ryOiefuDJUbPMuZZHROp2h8o=;
+        b=KctmsoJWcZ0/hDu8Z+DeKtBZV20R0jHSa8gUsMdr/wXXx8o/4n/hURbt44fU5LVCTK
+         +at+3tIyH/UuYlfVROSYcmeSz6BP1zbUUGuECNTGfy7tm5hme1Rs/vFSs/KxDbAGi3jG
+         padeMEGb2zWCOJbUM17t4sIgcYaokYHZFT6qIylOYqNO7ZvhWggV31Itm3erkZUputmr
+         krlSDAgL6i1Co1LgIiLDDrBIUG7PM5tJVNCKSHUhDZ+c2+thCVxoe7LbbdmNmlF93ESJ
+         oJfz+1F0cdRtzyXP6ZFjYjp+HBCUc3iS4BbtKPo2c9JWnXP6Y44h1kVI52D0ww+WD8vx
+         6eeQ==
+X-Gm-Message-State: APjAAAWJzmouA19It9X/z8fCOUmo8tSMNiD9BTqBjqiGcYT3i5D6tUed
+        b5ffcwkXN3MXsv3+nsd13eN20D8X7wWQ6nleo/0=
+X-Google-Smtp-Source: APXvYqw3yyWPpdCbrOX1pwgsfoztuivUgg/sQFikQTctRLB/C9ty3TU+JpmHdrbtAnjAT5/MlnGoWezxaV8YAJhNPSc=
+X-Received: by 2002:a67:d990:: with SMTP id u16mr51197352vsj.95.1563944482317;
+ Tue, 23 Jul 2019 22:01:22 -0700 (PDT)
 MIME-Version: 1.0
-References: <20190724044906.12007-1-vkoul@kernel.org> <20190724044906.12007-2-vkoul@kernel.org>
-In-Reply-To: <20190724044906.12007-2-vkoul@kernel.org>
+References: <20190724044906.12007-1-vkoul@kernel.org> <20190724044906.12007-3-vkoul@kernel.org>
+In-Reply-To: <20190724044906.12007-3-vkoul@kernel.org>
 From:   Amit Kucheria <amit.kucheria@verdurent.com>
-Date:   Wed, 24 Jul 2019 10:30:56 +0530
-Message-ID: <CAHLCerOkm+QM+=PDYwWwzYNT_inMHtnnmcZRGdJy_p6ozvkgTg@mail.gmail.com>
-Subject: Re: [PATCH v2 1/5] arm64: dts: qcom: sdm845: Add unit name to soc node
+Date:   Wed, 24 Jul 2019 10:31:11 +0530
+Message-ID: <CAHLCerPQXQKrm4njTv3bTTKHFCpQC_TnJ98Jmnr0g+bD_Q3ycw@mail.gmail.com>
+Subject: Re: [PATCH v2 2/5] arm64: dts: qcom: sdm845: remove unnecessary
+ properties for dsi nodes
 To:     Vinod Koul <vkoul@kernel.org>
 Cc:     Andy Gross <agross@kernel.org>,
         linux-arm-msm <linux-arm-msm@vger.kernel.org>,
@@ -66,33 +67,45 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 On Wed, Jul 24, 2019 at 10:20 AM Vinod Koul <vkoul@kernel.org> wrote:
 >
-> We get a warning about missing unit name for soc node, so add it.
+> We get a warning about unnecessary properties of
 >
-> arch/arm64/boot/dts/qcom/sdm845.dtsi:623.11-2814.4: Warning (unit_address_vs_reg): /soc: node has a reg or ranges property, but no unit name
+> arch/arm64/boot/dts/qcom/sdm845.dtsi:2211.22-2257.6: Warning (avoid_unnecessary_addr_size): /soc/mdss@ae00000/dsi@ae94000: unnecessary #address-cells/#size-cells without "ranges" or child "reg" property
+> arch/arm64/boot/dts/qcom/sdm845.dtsi:2278.22-2324.6: Warning (avoid_unnecessary_addr_size): /soc/mdss@ae00000/dsi@ae96000: unnecessary #address-cells/#size-cells without "ranges" or child "reg" property
+>
+> So, remove these properties
 >
 > Signed-off-by: Vinod Koul <vkoul@kernel.org>
 > Reviewed-by: Stephen Boyd <swboyd@chromium.org>
 
-
 Reviewed-by: Amit Kucheria <amit.kucheria@linaro.org>
-
 > ---
->  arch/arm64/boot/dts/qcom/sdm845.dtsi | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
+>  arch/arm64/boot/dts/qcom/sdm845.dtsi | 6 ------
+>  1 file changed, 6 deletions(-)
 >
 > diff --git a/arch/arm64/boot/dts/qcom/sdm845.dtsi b/arch/arm64/boot/dts/qcom/sdm845.dtsi
-> index 601cfb078bd5..e81f4a6d08ce 100644
+> index e81f4a6d08ce..2985df032179 100644
 > --- a/arch/arm64/boot/dts/qcom/sdm845.dtsi
 > +++ b/arch/arm64/boot/dts/qcom/sdm845.dtsi
-> @@ -620,7 +620,7 @@
->                 method = "smc";
->         };
+> @@ -2234,9 +2234,6 @@
 >
-> -       soc: soc {
-> +       soc: soc@0 {
->                 #address-cells = <2>;
->                 #size-cells = <2>;
->                 ranges = <0 0 0 0 0x10 0>;
+>                                 status = "disabled";
+>
+> -                               #address-cells = <1>;
+> -                               #size-cells = <0>;
+> -
+>                                 ports {
+>                                         #address-cells = <1>;
+>                                         #size-cells = <0>;
+> @@ -2301,9 +2298,6 @@
+>
+>                                 status = "disabled";
+>
+> -                               #address-cells = <1>;
+> -                               #size-cells = <0>;
+> -
+>                                 ports {
+>                                         #address-cells = <1>;
+>                                         #size-cells = <0>;
 > --
 > 2.20.1
 >
