@@ -2,124 +2,101 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 973A0736CA
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Jul 2019 20:43:48 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4189473913
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Jul 2019 21:36:50 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728477AbfGXSnn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 24 Jul 2019 14:43:43 -0400
-Received: from mail-pf1-f196.google.com ([209.85.210.196]:38843 "EHLO
-        mail-pf1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726001AbfGXSnn (ORCPT
+        id S2389321AbfGXTgf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 24 Jul 2019 15:36:35 -0400
+Received: from smtp.codeaurora.org ([198.145.29.96]:36736 "EHLO
+        smtp.codeaurora.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2389113AbfGXTgf (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 24 Jul 2019 14:43:43 -0400
-Received: by mail-pf1-f196.google.com with SMTP id y15so21380209pfn.5
-        for <linux-arm-msm@vger.kernel.org>; Wed, 24 Jul 2019 11:43:42 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=qiU1TfBT/KK66R/TOLH5DkaauwA1Q2lRA1rBib8JZqo=;
-        b=Ek1BINi7A7AhMjbtrG2l3eWV3rDIsxSJ7uaNLpNZrH2IMmmO2Uekvun1GK8CJiTCnh
-         Me3Czt/+vvR8/SoH2HVlIjRTO9TQr7BXiZ50k3jrYhmh7kAcDk+icjL8VDghTfdY9Epc
-         WUdyNQ+SFJbCJtDFJeHM/eM/DKweUy7/JWgZ/MfBEKZynUUg4NOB2TqrI+jSWjeOb4qt
-         mxieuG0DTD3pcFUQV5GrEhwopopk4Io70FPuxsT8CbWMidQdjfk7iENHqYW8kfgtyZJk
-         o9LOgtEfvLEAYGK1thWzXEY7mxJiVcE+WSU7prQV09eZyRX8QNEuuMa2oIM/YaVFN79m
-         qQdQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=qiU1TfBT/KK66R/TOLH5DkaauwA1Q2lRA1rBib8JZqo=;
-        b=RrYYRDWoEPE+pxBb6hiuRKdS1O4rr8Y/J7ISilTD4rhweHqsq6HwqQwufQGa+9i+gS
-         1TBVoYiEU8Ql/6LkVEpzYH4s1LNyzGRIkKghhbYjEzISnhxKwRaR8QZW9UdztmeeCZzu
-         SVse+q20q5nATmfl5FubOaul53x9/IOfun3dI2ZyMJ7JgQTtCzBrpLraPLGNG3yfH/4j
-         ngbtEkB0voCEmfUQlVwafORswk2OnpaugpZFduSGDnr6lydATMp7n03gVBMasLNVTOR3
-         PXWN0krveI1DKY4Yj0MlLLexRI3JqQlx/V46eEQdXTz5RA9YYW1pQRGracmHJJVSQ9rM
-         iJHQ==
-X-Gm-Message-State: APjAAAV1X3dlEiB6G3bKnYj7ootltfrjeW9Zi2sToa84C7eAOldnlStD
-        Ctwpocudx7HmdjO1a6ekPsq9YA==
-X-Google-Smtp-Source: APXvYqwZ1wGRNPflbmAAPHX2GTDlZb9Q2mKbFReCTbmwBkJ7MwJlzjjPqV2xROXE1gpvPpzze7UpKw==
-X-Received: by 2002:a17:90a:20a2:: with SMTP id f31mr88160029pjg.90.1563993822260;
-        Wed, 24 Jul 2019 11:43:42 -0700 (PDT)
-Received: from tuxbook-pro (104-188-17-28.lightspeed.sndgca.sbcglobal.net. [104.188.17.28])
-        by smtp.gmail.com with ESMTPSA id p68sm58404643pfb.80.2019.07.24.11.43.41
-        (version=TLS1_3 cipher=AEAD-AES256-GCM-SHA384 bits=256/256);
-        Wed, 24 Jul 2019 11:43:41 -0700 (PDT)
-Date:   Wed, 24 Jul 2019 11:45:07 -0700
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Marc Gonzalez <marc.w.gonzalez@free.fr>
-Cc:     Jeffrey Hugo <jeffrey.l.hugo@gmail.com>,
-        Andy Gross <agross@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Mark Rutland <mark.rutland@arm.com>,
-        MSM <linux-arm-msm@vger.kernel.org>,
-        DT <devicetree@vger.kernel.org>,
-        LKML <linux-kernel@vger.kernel.org>
-Subject: Re: [PATCH] arm64: dts: qcom: msm8998: Node ordering, address
- cleanups
-Message-ID: <20190724184507.GN7234@tuxbook-pro>
-References: <20190722165823.21539-1-jeffrey.l.hugo@gmail.com>
- <2165bbd3-aa60-bec0-4ee7-dfb7dc1dd1ad@free.fr>
+        Wed, 24 Jul 2019 15:36:35 -0400
+Received: by smtp.codeaurora.org (Postfix, from userid 1000)
+        id BDEC76063F; Wed, 24 Jul 2019 19:36:33 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
+        s=default; t=1563996993;
+        bh=6rZFV4H+AtnrEFItZHF83yeAsV8YoILKdR1b4gFLTD0=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=oYm1pUYmMQEqee4K2snbkxIwLdZKMKnU2ZPM69OR5lDW8bIH6IWxr9WdInRQP7O6C
+         4vLRSH0pHNFexcI4nBZzmGds23jHKFQuAmVMsYZiTihczGihsZszaEMIrbcowJqY2b
+         wuLsVCY2Rsqf+tc+hrcB5J2vDnVK/0dsnRb9wuPo=
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        pdx-caf-mail.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.7 required=2.0 tests=ALL_TRUSTED,BAYES_00,
+        DKIM_INVALID,DKIM_SIGNED,SPF_NONE autolearn=no autolearn_force=no
+        version=3.4.0
+Received: from localhost (i-global254.qualcomm.com [199.106.103.254])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        (Authenticated sender: ilina@smtp.codeaurora.org)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 3921A605A0;
+        Wed, 24 Jul 2019 19:36:31 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
+        s=default; t=1563996991;
+        bh=6rZFV4H+AtnrEFItZHF83yeAsV8YoILKdR1b4gFLTD0=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=OmBT2s8++wGXxO4N8+Dyj8Hi+INE6p4Lu/FR8W5b5iZt0AoxuGShf0IA8G6tdjdJC
+         QRNS+TEllVKYDkuDDbyoZPZtulDxLwreq5FoKvQ7aDNKs7rQjkOrDKIoLNQAkPjbFI
+         cyS92Zs4FeRn3XJ2Tw5Y4IotnQVbkKBpK0fDKKRI=
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 3921A605A0
+Authentication-Results: pdx-caf-mail.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: pdx-caf-mail.web.codeaurora.org; spf=none smtp.mailfrom=ilina@codeaurora.org
+Date:   Wed, 24 Jul 2019 13:36:30 -0600
+From:   Lina Iyer <ilina@codeaurora.org>
+To:     Stephen Boyd <swboyd@chromium.org>
+Cc:     agross@kernel.org, bjorn.andersson@linaro.org,
+        linux-arm-msm@vger.kernel.org, linux-soc@vger.kernel.org,
+        rnayak@codeaurora.org, linux-kernel@vger.kernel.org,
+        linux-pm@vger.kernel.org, dianders@chromium.org,
+        mkshah@codeaurora.org, "Raju P.L.S.S.S.N" <rplsssn@codeaurora.org>
+Subject: Re: [PATCH V2 1/4] drivers: qcom: rpmh-rsc: simplify TCS locking
+Message-ID: <20190724193630.GD18620@codeaurora.org>
+References: <20190722215340.3071-1-ilina@codeaurora.org>
+ <5d375054.1c69fb81.7ce3f.3591@mx.google.com>
+ <20190723192159.GA18620@codeaurora.org>
+ <5d376bb3.1c69fb81.2bb4e.7771@mx.google.com>
+ <20190724145452.GC18620@codeaurora.org>
+ <5d38a430.1c69fb81.6e696.9e6f@mx.google.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=us-ascii; format=flowed
 Content-Disposition: inline
-In-Reply-To: <2165bbd3-aa60-bec0-4ee7-dfb7dc1dd1ad@free.fr>
-User-Agent: Mutt/1.11.4 (2019-03-13)
+In-Reply-To: <5d38a430.1c69fb81.6e696.9e6f@mx.google.com>
+User-Agent: Mutt/1.11.3 (2019-02-01)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed 24 Jul 04:16 PDT 2019, Marc Gonzalez wrote:
+On Wed, Jul 24 2019 at 12:32 -0600, Stephen Boyd wrote:
+>Quoting Lina Iyer (2019-07-24 07:54:52)
+>> On Tue, Jul 23 2019 at 14:19 -0600, Stephen Boyd wrote:
+>> >Quoting Lina Iyer (2019-07-23 12:21:59)
+>> >> On Tue, Jul 23 2019 at 12:22 -0600, Stephen Boyd wrote:
+>> >> >Can you keep irq saving and restoring in this patch and then remove that
+>> >> >in the next patch with reasoning? It probably isn't safe if the lock is
+>> >> >taken in interrupt context anyway.
+>> >> >
+>> >> Yes, the drv->lock should have been irqsave/irqrestore, but it hasn't
+>> >> been changed by this patch.
+>> >
+>> >It needs to be changed to maintain the irqsaving/restoring of the code.
+>> >
+>> May be I should club this with the following patch. Instead of adding
+>> irqsave and restore to drv->lock and then remvoing them again in the
+>> following patch.
+>>
+>
+>I suspect that gets us back to v1 of this patch series? I'd prefer you
+>just keep the save/restore of irqs in this patch and then remove them
+>later. Or if the order can be the other way, where we remove grabbing
+>the lock in irq context comes first and then consolidate the locks into
+>one it might work.
+>
+Patches 1 and 3 need not be bundled. We can keep them separate to help
+understand the change better.
+This patch order - #2, #1, #3, #4 would work.
 
-> On 22/07/2019 18:58, Jeffrey Hugo wrote:
-> 
-> > DT nodes should be ordered by address, then node name, and finally label.
-> > The msm8998 dtsi does not follow this, so clean it up by reordering the
-> > nodes.  While we are at it, extend the addresses to be fully 32-bits wide
-> > so that ordering is easy to determine when adding new nodes.  Also, two
-> > or so nodes had the wrong address value in their node name (did not match
-> > the reg property), so fix those up as well.
-> > 
-> > Hopefully going forward, things can be maintained so that a cleanup like
-> > this is not needed.
-> > 
-> > Signed-off-by: Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
-> > ---
-> >  arch/arm64/boot/dts/qcom/msm8998.dtsi | 254 +++++++++++++-------------
-> >  1 file changed, 127 insertions(+), 127 deletions(-)
-> 
-> LGTM.
-> 
-> Reviewed-by: Marc Gonzalez <marc.w.gonzalez@free.fr>
-> 
-> Rob, Mark: when there are multiple reg properties, why is the convention
-> to use the *first* address in the node's name, rather than the lowest
-> address?
-> 
+--Lina
 
-Per the ePAPR (section 2.2.1 Node Names of v1.1):
-
-"The unit-address must match the first address specified in the reg
-property of the node".
-
-Regards,
-Bjorn
-
-> e.g.
-> 
-> 		spmi_bus: spmi@800f000 {
-> 			compatible = "qcom,spmi-pmic-arb";
-> 			reg =	<0x0800f000 0x1000>,
-> 				<0x08400000 0x1000000>,
-> 				<0x09400000 0x1000000>,
-> 				<0x0a400000 0x220000>,
-> 				<0x0800a000 0x3000>;
-> 			reg-names = "core", "chnls", "obsrvr", "intr", "cnfg";
-> 
-> "spmi@800f000" instead of "spmi@800a000"
-> 
-> Especially, since the reg props could be in any order here, given the
-> lookup by name.
-> 
-> Regards.
