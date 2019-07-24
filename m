@@ -2,231 +2,129 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 96EA073221
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Jul 2019 16:48:36 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E21567323B
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Jul 2019 16:52:56 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726631AbfGXOsf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 24 Jul 2019 10:48:35 -0400
-Received: from mail-yb1-f196.google.com ([209.85.219.196]:44219 "EHLO
-        mail-yb1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726593AbfGXOsf (ORCPT
+        id S1726915AbfGXOwz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 24 Jul 2019 10:52:55 -0400
+Received: from smtp.codeaurora.org ([198.145.29.96]:57016 "EHLO
+        smtp.codeaurora.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726422AbfGXOwz (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 24 Jul 2019 10:48:35 -0400
-Received: by mail-yb1-f196.google.com with SMTP id a14so17387087ybm.11
-        for <linux-arm-msm@vger.kernel.org>; Wed, 24 Jul 2019 07:48:34 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=poorly.run; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to
-         :user-agent;
-        bh=qhdf5/yr50Yj7Pmj68Hdfzl1P/Fj+qOH9iwDubtAlfg=;
-        b=dich4zfIpPS8WwRwttyAn4BATCBA4c12+Fk4HD9bH0dPJSQBrN/xaxMd8LlSixr+N2
-         xcqvs9tlV5Z9+Zb7TF+zHJu9GiM8aD0lYaLeRjkchPSfr23A8nxDy5dP929q834eQghP
-         khije85hATAx45S6tNdQ5Qm8GpFZp/C1w0Y9v+sslGPOHzB2Y/5IugJp+VIRAcqyMIaW
-         R5TJ6jncrCLvSO4DCeeZYzuXpC6lONwycEavtSF/2ZDJR3UVaTviTbVcPOc68jXU7hlA
-         RoSswF8lcMPA5or96gHEdBeUugp9ogCiMceEZkdymEkY47N3Kr5ShiR3zN2UFeFRLiiz
-         Chug==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        bh=qhdf5/yr50Yj7Pmj68Hdfzl1P/Fj+qOH9iwDubtAlfg=;
-        b=WkoeEodRwR5Q1DpOJrs3vdEncpKZI9nFDIn1q1OL4zQr73UElm+ooY6FyPucimDsgx
-         Y+3Lq6HWwRKkrLMOgOUKFpSYLxRWCIJYpR1oAUEVxvegpcLAtTaMZ+BYTWTTB0V1NS5K
-         +VXy7TZ5Z+5fzhhTo4zblPdf7BSJWxxLkaFE+VKYEPlZhJ6JNp3GCDbOhgjd2fwgAADM
-         2PYGaMIRCvdDsUL/RXg9LrQbCqIiE7B0cx+MrcXyGkeSpWV/6uLrI4IH3PCDrxDV59w4
-         z9UvzwFH9A8dO4vqJjaPZfFKJeBn0K6ivpULB5yOf6O6waxeku75gucbYAX9Ot2nMOhI
-         jcyg==
-X-Gm-Message-State: APjAAAXlNptQbQL8A1muQwnPWy+x2fxs4f/7kOxNh1F494ZlngMZvxtm
-        EgW66f4dO7V/tCdiK4+ELWsMqg==
-X-Google-Smtp-Source: APXvYqyKeVi2ps681suJVyaftAVG/PQ2AIoCZohUMzBQb9QWInTxinRgqg6eynDrNzjy3nI5UYoiCA==
-X-Received: by 2002:a25:5f50:: with SMTP id h16mr20250429ybm.420.1563979714208;
-        Wed, 24 Jul 2019 07:48:34 -0700 (PDT)
-Received: from localhost ([2620:0:1013:11:89c6:2139:5435:371d])
-        by smtp.gmail.com with ESMTPSA id r20sm12122343ywe.41.2019.07.24.07.48.33
-        (version=TLS1_3 cipher=AEAD-AES256-GCM-SHA384 bits=256/256);
-        Wed, 24 Jul 2019 07:48:33 -0700 (PDT)
-Date:   Wed, 24 Jul 2019 10:48:33 -0400
-From:   Sean Paul <sean@poorly.run>
-To:     Jeykumar Sankaran <jsanka@codeaurora.org>
-Cc:     Sean Paul <sean@poorly.run>,
-        Ville =?iso-8859-1?Q?Syrj=E4l=E4?= 
-        <ville.syrjala@linux.intel.com>, freedreno@lists.freedesktop.org,
-        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        pdhaval@codeaurora.org, seanpaul@chromium.org,
-        Daniel Vetter <daniel.vetter@ffwll.ch>
-Subject: Re: [RFC] Expanding drm_mode_modeinfo flags
-Message-ID: <20190724144833.GM104440@art_vandelay>
-References: <1562870805-32314-1-git-send-email-jsanka@codeaurora.org>
- <20190716090712.GY15868@phenom.ffwll.local>
- <16fee2b42fa03d2cf104452223dcf5af@codeaurora.org>
- <20190719090553.GF15868@phenom.ffwll.local>
- <20190719135558.GC104440@art_vandelay>
- <20190719141528.GN5942@intel.com>
- <20190719142959.GD104440@art_vandelay>
- <afaf9da1143534422a277c2bbe8c84db@codeaurora.org>
+        Wed, 24 Jul 2019 10:52:55 -0400
+Received: by smtp.codeaurora.org (Postfix, from userid 1000)
+        id BEC4260256; Wed, 24 Jul 2019 14:52:53 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
+        s=default; t=1563979973;
+        bh=GLF+INpUZtE9vDJdCTqRAtCJy5OjjE16gdlqI1ORlT4=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=TdQ7z7+0lgIwRufSCZJ94H9BM6jN6fQ9sh+dDMMS+x8HG0IMGNd15ozl7BCaLj6hB
+         +KH9Uj1Fyzee8aIfT0vh3Qb+C8nyVSXMe0c0ffFCPSy1P9dewg4J0RyfcaQ6LGH0B0
+         Xqq/UrtOGxhXCOLdi/Pc3U8vY89Kgb5H3hVIvDrc=
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        pdx-caf-mail.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.7 required=2.0 tests=ALL_TRUSTED,BAYES_00,
+        DKIM_INVALID,DKIM_SIGNED,SPF_NONE autolearn=no autolearn_force=no
+        version=3.4.0
+Received: from localhost (i-global254.qualcomm.com [199.106.103.254])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        (Authenticated sender: ilina@smtp.codeaurora.org)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 840C160256;
+        Wed, 24 Jul 2019 14:52:52 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
+        s=default; t=1563979972;
+        bh=GLF+INpUZtE9vDJdCTqRAtCJy5OjjE16gdlqI1ORlT4=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=QND30vBzpIkaYYFjjvb2CT2OH40UymiL3J86jcesMc7H0XSMHVTiFYVSWQs2rev0K
+         yBpfVDzLjBwijs3EiVMX/Qpoy9IfZGOuNUw4JQ4QKelTd3SyskBCaWca/Z2/iEwFSX
+         D0YV6YBWte/uye5F+POPV0UZ/pxUV/7ROT8mnjYw=
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 840C160256
+Authentication-Results: pdx-caf-mail.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: pdx-caf-mail.web.codeaurora.org; spf=none smtp.mailfrom=ilina@codeaurora.org
+Date:   Wed, 24 Jul 2019 08:52:51 -0600
+From:   Lina Iyer <ilina@codeaurora.org>
+To:     Stephen Boyd <swboyd@chromium.org>
+Cc:     agross@kernel.org, bjorn.andersson@linaro.org,
+        linux-arm-msm@vger.kernel.org, linux-soc@vger.kernel.org,
+        rnayak@codeaurora.org, linux-kernel@vger.kernel.org,
+        linux-pm@vger.kernel.org, dianders@chromium.org,
+        mkshah@codeaurora.org
+Subject: Re: [PATCH V2 2/4] drivers: qcom: rpmh-rsc: avoid locking in the
+ interrupt handler
+Message-ID: <20190724145251.GB18620@codeaurora.org>
+References: <20190722215340.3071-1-ilina@codeaurora.org>
+ <20190722215340.3071-2-ilina@codeaurora.org>
+ <5d3769df.1c69fb81.55d03.aa33@mx.google.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
+Content-Type: text/plain; charset=us-ascii; format=flowed
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <afaf9da1143534422a277c2bbe8c84db@codeaurora.org>
-User-Agent: Mutt/1.10.1 (2018-07-13)
+In-Reply-To: <5d3769df.1c69fb81.55d03.aa33@mx.google.com>
+User-Agent: Mutt/1.11.3 (2019-02-01)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Jul 22, 2019 at 04:50:43PM -0700, Jeykumar Sankaran wrote:
-> On 2019-07-19 07:29, Sean Paul wrote:
-> > On Fri, Jul 19, 2019 at 05:15:28PM +0300, Ville Syrjälä wrote:
-> > > On Fri, Jul 19, 2019 at 09:55:58AM -0400, Sean Paul wrote:
-> > > > On Fri, Jul 19, 2019 at 11:05:53AM +0200, Daniel Vetter wrote:
-> > > > > On Thu, Jul 18, 2019 at 11:18:42AM -0700, Jeykumar Sankaran wrote:
-> > > > > > On 2019-07-16 02:07, Daniel Vetter wrote:
-> > > > > > > On Thu, Jul 11, 2019 at 11:46:44AM -0700, Jeykumar Sankaran wrote:
-> > 
-> > /snip
-> > 
-> > > > > > > >   drm: add mode flags in uapi for seamless mode switch
-> > > > > > >
-> > > > > > > I think the uapi is the trivial part here, the real deal is how
-> > > > > > > userspace
-> > > > > > > uses this. Can you pls post the patches for your compositor?
-> > > > > > >
-> > > > > > > Also note that we already allow userspace to tell the kernel whether
-> > > > > > > flickering is ok or not for a modeset. msm driver could use that to at
-> > > > > > > least tell userspace whether a modeset change is possible. So you can
-> > > > > > > already implement glitch-free modeset changes for at least video mode.
-> > > > > > > -Daniel
-> > > > > >
-> > > > > > I believe you are referring to the below tv property of the connector.
-> > > > > >
-> > > > > > /**
-> > > > > >  * @tv_flicker_reduction_property: Optional TV property to control the
-> > > > > >  * flicker reduction mode.
-> > > > > >  */
-> > > > > > struct drm_property *tv_flicker_reduction_property;
-> > > > >
-> > > > > Not even close :-)
-> > > > >
-> > > > > I mean the DRM_MODE_ATOMIC_ALLOW_MODESET flag for the atomic ioctl. This
-> > > > > is not a property of a mode, this is a property of a _transition_ between
-> > > > > configurations. Some transitions can be done flicker free, others can't.
-> > > >
-> > > > Agree that an atomic flag on a commit is the way to accomplish this. It's pretty
-> > > > similar to the psr transitions, where we want to reuse most of the atomic
-> > > > circuitry, but in a specialized way. We'd also have to be careful to only
-> > > > involve the drm objects which are seamless modeset aware (you could imagine
-> > > > a bridge chain where the bridges downstream of the first bridge don't care).
-> > > >
-> > > > >
-> > > > > There's then still the question of how to pick video vs command mode, but
-> > > > > imo better to start with implementing the transition behaviour correctly
-> > > > > first.
-> > > >
-> > > > Connector property? Possibly a terrible idea, but I wonder if we could [re]use
-> > > > the vrr properties for command mode. The docs state that the driver has the
-> > > > option of putting upper and lower bounds on the refresh rate.
-> > > 
-> > > Not really sure why this needs new props and whatnot. This is kinda
-> > > what
-> > > the i915 "fastset" stuff already does:
-> > > 1. userspace asks for something to be changed via atomic
-> > > 2. driver calculates whether a modeset is actually required
-> > > 3. atomic validates need_modeset() vs. DRM_MODE_ATOMIC_ALLOW_MODESET
-> > > 4. if (need_modeset) heavyweight_commit() else lightweight_commit()
-> > > 
-> > > Ie. why should userspace really care about anything except the
-> > > "flickers are OK" vs. "flickers not wanted" thing?
-> > 
-> > Agree, I don't think the seamless modeset (ie: changing resolution
-> > without
-> > flicker) needs a property. Just need to test the commit without
-> > ALLOW_MODESET
-> > and commit it if the test passes.
-> > 
-> 
-> Agreed that a TEST_ONLY commit without ALLOW_MODESET flag can be used to
-> check
-> whether the modeset can be done seamless. But since there are no error code
-> returns,
-> the client cannot distinguish the test_only commit failures from other
-> invalid config failures.
-> 
-> Also, note that when the client sees two 1080p modes (vid/cmd) and it is
-> interested only
-> to do *only* seamless switches, without any additional flag it cannot
-> distinguish between
-> these two 1080p modes. The client has to invoke two test_only commits with
-> these
-> modes to identify the seamless one. Is that a preferred approach?
+On Tue, Jul 23 2019 at 14:11 -0600, Stephen Boyd wrote:
+>Quoting Lina Iyer (2019-07-22 14:53:38)
+>> Avoid locking in the interrupt context to improve latency. Since we
+>> don't lock in the interrupt context, it is possible that we now could
+>> race with the DRV_CONTROL register that writes the enable register and
+>> cleared by the interrupt handler. For fire-n-forget requests, the
+>> interrupt may be raised as soon as the TCS is triggered and the IRQ
+>> handler may clear the enable bit before the DRV_CONTROL is read back.
+>>
+>> Use the non-sync variant when enabling the TCS register to avoid reading
+>> back a value that may been cleared because the interrupt handler ran
+>> immediately after triggering the TCS.
+>>
+>> Signed-off-by: Lina Iyer <ilina@codeaurora.org>
+>> ---
+>
+>I have to read this patch carefully. The commit text isn't convincing me
+>that it is actually safe to make this change. It mostly talks about the
+>performance improvements and how we need to fix __tcs_trigger(), which
+>is good, but I was hoping to be convinced that not grabbing the lock
+>here is safe.
+>
+>How do we ensure that drv->tcs_in_use is cleared before we call
+>tcs_write() and try to look for a free bit? Isn't it possible that we'll
+>get into a situation where the bitmap is all used up but the hardware
+>has just received an interrupt and is going to clear out a bit and then
+>an rpmh write fails with -EBUSY?
+>
+If we have a situation where there are no available free bits, we retry
+and that is part of the function. Since we have only 2 TCSes avaialble
+to write to the hardware and there could be multiple requests coming in,
+it is a very common situation. We try and acquire the drv->lock and if
+there are free TCS available and if available mark them busy and send
+our requests. If there are none available, we keep retrying.
 
-Hi Jey!
-Yeah, pretty much. Stepping back a bit though, why is the kernel exposing 2
-1080p modes in the first place? If you just expose one mode and then use a
-property to enter "low-latency operation" (or overloading vrr for cmd mode), you
-shouldn't need to do the mode switch, just flip the property and let the kernel
-figure out how to transition to video/cmd mode.
-
-> 
-> Intel's "fastset" calculates the need for modeset internally based on the
-> configuration and chooses the best commit path. But the requirement here
-> is to expose the information up-front since the use case cannot afford
-> to fall back to the normal modeset when it has requested for a seamless one.
-> 
-> > > 
-> > > Also what's the benefit of using video mode if your panel supportes
-> > > command mode? Can you turn off the memory in the panel and actually
-> > > save power that way? And if there is a benefit can't the driver just
-> > > automagically switch between the two based on how often things are
-> > > getting updated? That would match how eDP PSR already works.
-> > 
-> > I'm guessing video mode might have some latency benefits over command
-> > mode?
-> > 
-> > Sean
-> 
-> Yes. Pretty much those are reasons we need to switch to video mode. But
-> instead
-> of making the decision internal to the driver based on the frequency of
-> frame updates,
-> we have proprietary use cases where the client has to trigger the switch
-> explicitly.
-
-Unsolicited advice: if you find yourself typing "proprietary" while justifying
-an upstream proposal, reword your argument immediately :-)
-
-Now that I've filled my awful joke quota for the mail, I can move on. Generally
-speaking, it's better to you expand on why userspace needs this. There's a very
-good chance that if it makes sense for Qualcomm, it makes sense for others. If
-we have an open discussion about it, others might chime in with "me too" and
-that will help your case (and you might even hook someone into doing the work
-for you!). Alternatively, we might be able to solve the problem in a different
-way that makes everyone happy (or most everyone happy).
-
-There's 100% a case for allowing userspace to trigger a low-latency mode at the
-expense of power (we should have it disable the psr entry timer as well). Let's
-steer this conversation in the direction of "can we use something that already
-exists, or should we add something new?"
-
-Sean
-
-
-> So we are trying to find ways to represent the same resolution in both
-> video/cmd modes.
-> 
-> Thanks and Regards,
-> Jeykumar S.
-> 
-> > 
-> > > 
-> > > --
-> > > Ville Syrjälä
-> > > Intel
-> 
-> -- 
-> Jeykumar S
-
--- 
-Sean Paul, Software Engineer, Google / Chromium OS
+>>  drivers/soc/qcom/rpmh-rsc.c | 4 +---
+>>  1 file changed, 1 insertion(+), 3 deletions(-)
+>>
+>> diff --git a/drivers/soc/qcom/rpmh-rsc.c b/drivers/soc/qcom/rpmh-rsc.c
+>> index 5ede8d6de3ad..694ba881624e 100644
+>> --- a/drivers/soc/qcom/rpmh-rsc.c
+>> +++ b/drivers/soc/qcom/rpmh-rsc.c
+>> @@ -242,9 +242,7 @@ static irqreturn_t tcs_tx_done(int irq, void *p)
+>>                 write_tcs_reg(drv, RSC_DRV_CMD_ENABLE, i, 0);
+>>                 write_tcs_reg(drv, RSC_DRV_CMD_WAIT_FOR_CMPL, i, 0);
+>>                 write_tcs_reg(drv, RSC_DRV_IRQ_CLEAR, 0, BIT(i));
+>> -               spin_lock(&drv->lock);
+>>                 clear_bit(i, drv->tcs_in_use);
+>> -               spin_unlock(&drv->lock);
+>>                 if (req)
+>>                         rpmh_tx_done(req, err);
+>>         }
+>> @@ -304,7 +302,7 @@ static void __tcs_trigger(struct rsc_drv *drv, int tcs_id)
+>>         enable = TCS_AMC_MODE_ENABLE;
+>>         write_tcs_reg_sync(drv, RSC_DRV_CONTROL, tcs_id, enable);
+>>         enable |= TCS_AMC_MODE_TRIGGER;
+>> -       write_tcs_reg_sync(drv, RSC_DRV_CONTROL, tcs_id, enable);
+>> +       write_tcs_reg(drv, RSC_DRV_CONTROL, tcs_id, enable);
+>>  }
+>>
+>>  static int check_for_req_inflight(struct rsc_drv *drv, struct tcs_group *tcs,
