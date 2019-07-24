@@ -2,84 +2,136 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 92FA873146
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Jul 2019 16:11:44 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B889773172
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Jul 2019 16:18:19 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727238AbfGXOLn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 24 Jul 2019 10:11:43 -0400
-Received: from mail-pg1-f195.google.com ([209.85.215.195]:42638 "EHLO
-        mail-pg1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727209AbfGXOLn (ORCPT
+        id S1728216AbfGXOSS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 24 Jul 2019 10:18:18 -0400
+Received: from mail-pf1-f193.google.com ([209.85.210.193]:46544 "EHLO
+        mail-pf1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728183AbfGXOSS (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 24 Jul 2019 10:11:43 -0400
-Received: by mail-pg1-f195.google.com with SMTP id t132so21295150pgb.9
-        for <linux-arm-msm@vger.kernel.org>; Wed, 24 Jul 2019 07:11:43 -0700 (PDT)
+        Wed, 24 Jul 2019 10:18:18 -0400
+Received: by mail-pf1-f193.google.com with SMTP id c73so21027486pfb.13
+        for <linux-arm-msm@vger.kernel.org>; Wed, 24 Jul 2019 07:18:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=chromium.org; s=google;
         h=message-id:mime-version:content-transfer-encoding:in-reply-to
          :references:subject:to:cc:from:user-agent:date;
-        bh=yf08E+49qJAyoxiq4Pp3i3pHItoQTgkz38vEqql7VE0=;
-        b=dpWg9Xr6L0D7Z/Ku2YJ42eQE4yvd1e82KQHr2lLRD4ftXtEpX04IVbpT+HH9YHiRTf
-         gmMxS12NNdYsm8KVCb9Gb6fwt6N01iADdocH93+17UiKD01ObzlsdYaBock1ojwXxx2Q
-         uS1Q86VImSm1smN8OJMXJTvKKqz9V/NLqj9K8=
+        bh=i6ucO8M1kBwfk/WDeuCHxIoA+2DfAiPuMamyFSvxMIE=;
+        b=TND1gWT+zyPtTrknjApjowmDcsWxhTeFFGQQKuHPjwHM2p+eRGXgyM/jgeho5dZ5b/
+         bLE5zwWspO66n2PXUX4fU3WNEigbELc5ZOvRddO9zVh/AEf6mn610vnp/GjuLr8pjT3r
+         Tl8gh340iXQfZf7V6Z0eW5ED8IBh6e7w7hGeQ=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:mime-version
          :content-transfer-encoding:in-reply-to:references:subject:to:cc:from
          :user-agent:date;
-        bh=yf08E+49qJAyoxiq4Pp3i3pHItoQTgkz38vEqql7VE0=;
-        b=uE4T9mKUazZWCZN7gdHRQWmMD3NKW72Z7S1dWiTOMlXx3n+UXsvu6skmzyVm/4p4uV
-         MmadgVjPn0NEKWwURixWAS9jJwjV30EDAnZNRPygZ33qD4NxX9PEAE24v/5qTBebgdrJ
-         2UVbD4wcdzQmGsWIc2usUlMrBwNU0UadsbsTnvuwM7oPPjBQPmXvnL1vu4eSyrmrdDY2
-         8Fc0jVAWEtaVrdn0c7q58pSv6ViML9os1tmA6IfVkNHLCTRX3wABIUFNBmLFIWZ1lX7K
-         YgLZWDQTnds5fNI8Vbq1xlMmFPwc4Qg8jpCEBZezYrADjAqMFgoIwT/Gaac41GKMs3c0
-         ArkQ==
-X-Gm-Message-State: APjAAAXECQ6MvZdgQKnd6NnDgTk1JJuwsPUVYh2x9e92dEHG5yuRPzYi
-        eHFxnOEYQJKPzr4giQyhp37i5Gxc5So=
-X-Google-Smtp-Source: APXvYqzexkRd5KbJ9v+zC2RclMHc1mgtJ7nJ19cyNya96Y2QMzMnyKVcrwRGhsiI6ZW5BlT/SegIgw==
-X-Received: by 2002:a63:c64b:: with SMTP id x11mr81481881pgg.319.1563977502745;
-        Wed, 24 Jul 2019 07:11:42 -0700 (PDT)
+        bh=i6ucO8M1kBwfk/WDeuCHxIoA+2DfAiPuMamyFSvxMIE=;
+        b=I6Dwp8csdpsSdVrr/+KtbmJzsZg7QJHbvQX9Fu1CUTxgVyrgHe7EZDoRKarjIje3oc
+         3WKS7wxwPFVzBb+3aick0s57XoxXhu0e7kCH9nayEwGGiqE+2JLVWotnIcz3ZQ+0qxYZ
+         YEwmUs0UNhx+64OTSy0vws/T85MII+JdBPM19H7rsqXDI84b2AIWdjZDsuRUsLxND4Bz
+         oQgQ1V6VqYtJGjNjkPvz/ABGM9nIKdoMH0E7QXup1NUCfDWXoWKqA3OCHlVD+uIO0xvj
+         PvBNDA8Pvk+co9YRw7LiDw3Z8Okgw7eCQ3DTC9CRw4DS1It4J98Emj48ghRfz/+M7sRD
+         mbsQ==
+X-Gm-Message-State: APjAAAWkC8yQ9eVAoBjdSd3d/vxyzCw5GmCFbLOteoFzvFIEwfyIoK1j
+        P5aTwM1VhI3ylwewDaKhN/scyg==
+X-Google-Smtp-Source: APXvYqwA2DaROWqS6dAgzLQRMlZAOqpPRUpDwwbWaRi5dnx4FVbkt5kHlJYwChON/qwoRaxOY5ouTQ==
+X-Received: by 2002:a17:90a:d151:: with SMTP id t17mr87008292pjw.60.1563977898088;
+        Wed, 24 Jul 2019 07:18:18 -0700 (PDT)
 Received: from chromium.org ([2620:15c:202:1:fa53:7765:582b:82b9])
-        by smtp.gmail.com with ESMTPSA id l6sm46519081pga.72.2019.07.24.07.11.42
+        by smtp.gmail.com with ESMTPSA id j20sm44352358pfr.113.2019.07.24.07.18.17
         (version=TLS1_3 cipher=AEAD-AES256-GCM-SHA384 bits=256/256);
-        Wed, 24 Jul 2019 07:11:42 -0700 (PDT)
-Message-ID: <5d38671e.1c69fb81.1f6f4.a5a1@mx.google.com>
+        Wed, 24 Jul 2019 07:18:17 -0700 (PDT)
+Message-ID: <5d3868a9.1c69fb81.876aa.ac30@mx.google.com>
 Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <20190724044906.12007-5-vkoul@kernel.org>
-References: <20190724044906.12007-1-vkoul@kernel.org> <20190724044906.12007-5-vkoul@kernel.org>
-Subject: Re: [PATCH v2 4/5] arm64: dts: qcom: sdm845: remove macro from unit name
-To:     Andy Gross <agross@kernel.org>, Vinod Koul <vkoul@kernel.org>
-Cc:     linux-arm-msm@vger.kernel.org,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Vinod Koul <vkoul@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Mark Rutland <mark.rutland@arm.com>,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Amit Kucheria <amit.kucheria@verdurent.com>,
-        Marc Gonzalez <marc.w.gonzalez@free.fr>
+In-Reply-To: <8c181f08-559b-5d77-a617-65cfd3d5da55@codeaurora.org>
+References: <1563568344-1274-1-git-send-email-daidavid1@codeaurora.org> <1563568344-1274-2-git-send-email-daidavid1@codeaurora.org> <5d371ce7.1c69fb81.9650.8239@mx.google.com> <8c181f08-559b-5d77-a617-65cfd3d5da55@codeaurora.org>
+Subject: Re: [PATCH 1/2] dt-bindings: interconnect: Update Qualcomm SDM845 DT bindings
+To:     David Dai <daidavid1@codeaurora.org>, bjorn.andersson@linaro.org,
+        georgi.djakov@linaro.org, robh+dt@kernel.org
+Cc:     evgreen@google.com, ilina@codeaurora.org, seansw@qti.qualcomm.com,
+        elder@linaro.org, linux-kernel@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-pm@vger.kernel.org
 From:   Stephen Boyd <swboyd@chromium.org>
 User-Agent: alot/0.8.1
-Date:   Wed, 24 Jul 2019 07:11:41 -0700
+Date:   Wed, 24 Jul 2019 07:18:16 -0700
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Vinod Koul (2019-07-23 21:49:05)
-> Unit name is supposed to be a number, using a macro with hex value is
-> not recommended, so add the value in unit name.
->=20
-> arch/arm64/boot/dts/qcom/pm8998.dtsi:81.18-84.6: Warning (unit_address_fo=
-rmat): /soc/spmi@c440000/pmic@0/adc@3100/adc-chan@0x06: unit name should no=
-t have leading "0x"
-> arch/arm64/boot/dts/qcom/pm8998.dtsi:81.18-84.6: Warning (unit_address_fo=
-rmat): /soc/spmi@c440000/pmic@0/adc@3100/adc-chan@0x06: unit name should no=
-t have leading 0s
->=20
-> Signed-off-by: Vinod Koul <vkoul@kernel.org>
-> ---
+Quoting David Dai (2019-07-23 14:48:42)
+> On 7/23/2019 7:42 AM, Stephen Boyd wrote:
+> > Quoting David Dai (2019-07-19 13:32:23)
+> >> +- compatible : shall contain only one of the following:
+> >> +                       "qcom,sdm845-bcm-voter",
+> >> +
+> >> +Examples:
+> >> +
+> >> +apps_rsc: rsc@179c0000 {
+> > But there isn't a reg property.
+> I'll change this to the generic example with just apps_rsc: rsc {
+> >
+> >> +       label =3D "apps_rsc";
+> > Is label required?
 
-Reviewed-by: Stephen Boyd <swboyd@chromium.org>
+Any answer?
+
+> >
+> >> +       compatible =3D "qcom,rpmh-rsc";
+> >> +
+> >> +       apps_bcm_voter: bcm_voter {
+> >> +               compatible =3D "qcom,sdm845-bcm-voter";
+> >> +       };
+> >> +}
+> >> +
+> >> +disp_rsc: rsc@179d0000 {
+> >> +       label =3D "disp_rsc";
+> >> +       compatible =3D "qcom,rpmh-rsc";
+> >> +
+> >> +       disp_bcm_voter: bcm_voter {
+> >> +               compatible =3D "qcom,sdm845-bcm-voter";
+> >> +       };
+> >> +}
+> >> diff --git a/Documentation/devicetree/bindings/interconnect/qcom,sdm84=
+5.txt b/Documentation/devicetree/bindings/interconnect/qcom,sdm845.txt
+> >> index 5c4f1d9..27f9ed9 100644
+> >> --- a/Documentation/devicetree/bindings/interconnect/qcom,sdm845.txt
+> >> +++ b/Documentation/devicetree/bindings/interconnect/qcom,sdm845.txt
+[...]
+> >> +
+> >> +mem_noc: interconnect@1380000 {
+> >> +       compatible =3D "qcom,sdm845-mem_noc";
+> >> +       reg =3D <0 0x1380000 0 0x27200>;
+> >> +       #interconnect-cells =3D <1>;
+> >> +       qcom,bcm-voter =3D <&apps_bcm_voter>, <&disp_bcm_voter>;
+> >> +};
+> > How does a consumer target a particular RSC? For example, how can
+> > display decide to use the disp_bcm_voter node from mem_noc here? Maybe
+> > you can add that consumer to the example?
+>=20
+> I was thinking that the association between the bcm voters and the icc=20
+> nodes would be handled by the interconnect provider, and that there=20
+> would be a set of display specific icc nodes with their own unique IDs=20
+> that the consumers could reference. I will mention this as part of the=20
+> description and provide an example.
+>=20
+> Ex: interconnects =3D <&mmss_noc MASTER_MDP0_DISP &mem_noc SLAVE_EBI_DISP=
+>;
+>=20
+
+It looks backwards to me. Don't the consumers want to consume a
+particular RSC, i.e. apps or display RSC, so they can choose where to
+put the bcm vote and then those RSCs want to find MMIO registers for
+mmss_noc or mem_noc that they have to write to tune something else like
+QoS? If the MMIO space is the provider then I'm lost how it can
+differentiate between the RSCs that may be targetting the particular
+NoC.=20
+
+Maybe I've just completely missed something and this is all decided
+already. If so, sorry, I'm just trying to understand.
 
