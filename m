@@ -2,127 +2,90 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 0838272747
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Jul 2019 07:21:51 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id DBE9E72881
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Jul 2019 08:51:09 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726216AbfGXFVu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 24 Jul 2019 01:21:50 -0400
-Received: from mail-ua1-f67.google.com ([209.85.222.67]:33583 "EHLO
-        mail-ua1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725813AbfGXFVu (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 24 Jul 2019 01:21:50 -0400
-Received: by mail-ua1-f67.google.com with SMTP id g11so17961782uak.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 23 Jul 2019 22:21:49 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=verdurent-com.20150623.gappssmtp.com; s=20150623;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=Oi/OjsgOU/56zWqfJ08vj5GsGuTHtcSjKS7DehgEZ00=;
-        b=Ny/ccUmsgikYkzhJxwqhFM0rKqUpt+oemiMOdIlgorofwJaszzajLDUlrd3p94oiAt
-         cHMbiaokXpIHwJTdQURza4IV92tvAYWdb7Ul8EPdTh5rDmI1wbeS8dwuzmBHmt72JP1l
-         K7giyPr6ybXNVlnfO0+CRAs0g5ZieYtYQKrqQGthdoDQJ1hzRYcax91fYW2JL5I7gluf
-         nifWdnqbKT4vX7tcZ3CwOburD9zuBYjubfKgE/Fsxm7bpNaqpTxfzy3JEGFrSvw26cho
-         2H3OvtPUDmW+EaH53e7badSsivfa7GCl0hBmVQZFOmKhaGhgJXGrE3OtVYaHveOnF8qD
-         t3TQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=Oi/OjsgOU/56zWqfJ08vj5GsGuTHtcSjKS7DehgEZ00=;
-        b=Ko+F2vK6ezbWC7pA+0sqZTJM6ERaJdweIqJB3HPCU/yh9ZyF2ewmFuNYIMRorovckE
-         iPFQdPHluBThVgKH+gWHaWeGl3A4mZQXL7wOadT/+IkPxcniiJ5gD3QYU0CZttP1j49H
-         lr5Eq/ZHTU9NasSYqZsoVA0im9Ixool+GfrPZtUF6kH1rZVqXk9/cDI3wDzcsBQGRux5
-         VMhRxJYdksC90GV9fGx+ZmHs6EzOYTf+QFAwR3ylmtymRYBWHdrm8Zdyw+9Nli6xda3u
-         f/Vfml9gWDMZeEWW9S78z0EPWyFASATl5fqniDxOU1B6Z5Zt/b1XsDP0B7kMcm8HN/Wz
-         keCg==
-X-Gm-Message-State: APjAAAX31MvYpYQ5Hmg17pHr3MQnsQ5csRpI6Hw9tZaukN2Sa6AI3Q0D
-        lxrVzjSOyNe0dbI5UVbbUHWE2xD1uO/zHNFf3eM=
-X-Google-Smtp-Source: APXvYqx0WauV/PjdF1lUUuZXSYyiqRlLYG/T7Zia0hA1FLzkRtsJ0o5mtJz3PFpQjgZM43vU8do8IXGnuxnc8EduObw=
-X-Received: by 2002:ab0:30f5:: with SMTP id d21mr49123116uam.67.1563945709074;
- Tue, 23 Jul 2019 22:21:49 -0700 (PDT)
+        id S1725899AbfGXGvJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 24 Jul 2019 02:51:09 -0400
+Received: from foss.arm.com ([217.140.110.172]:35860 "EHLO foss.arm.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1725882AbfGXGvI (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 24 Jul 2019 02:51:08 -0400
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id E72CD28;
+        Tue, 23 Jul 2019 23:51:07 -0700 (PDT)
+Received: from why (unknown [172.31.20.19])
+        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 2C79E3F694;
+        Tue, 23 Jul 2019 23:53:10 -0700 (PDT)
+Date:   Wed, 24 Jul 2019 07:51:03 +0100
+From:   Marc Zyngier <marc.zyngier@arm.com>
+To:     pheragu@codeaurora.org
+Cc:     Linux Kernel <linux-kernel@vger.kernel.org>,
+        Linux-arm Msm <linux-arm-msm@vger.kernel.org>,
+        psodagud@codeaurora.org, Tsoni <tsoni@codeaurora.org>,
+        rananta@codeaurora.org, mnalajal@codeaurora.org
+Subject: Re: Warning seen when removing a module using irqdomain framework
+Message-ID: <20190724075103.00ae5924@why>
+In-Reply-To: <aa6a66a7671f12f19d0364755e76de0d@codeaurora.org>
+References: <aa6a66a7671f12f19d0364755e76de0d@codeaurora.org>
+Organization: ARM Ltd
+X-Mailer: Claws Mail 3.17.3 (GTK+ 2.24.32; x86_64-pc-linux-gnu)
 MIME-Version: 1.0
-References: <20190724044906.12007-1-vkoul@kernel.org> <20190724044906.12007-6-vkoul@kernel.org>
-In-Reply-To: <20190724044906.12007-6-vkoul@kernel.org>
-From:   Amit Kucheria <amit.kucheria@verdurent.com>
-Date:   Wed, 24 Jul 2019 10:51:38 +0530
-Message-ID: <CAHLCerNWnjSYEqDOEdSzULLvTHkMxVMiEL2BaCY9R4eDF_uBrg@mail.gmail.com>
-Subject: Re: [PATCH v2 5/5] arm64: dts: qcom: sdm845-cheza: remove macro from
- unit name
-To:     Vinod Koul <vkoul@kernel.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Mark Rutland <mark.rutland@arm.com>,
-        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
-        <devicetree@vger.kernel.org>, LKML <linux-kernel@vger.kernel.org>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Marc Gonzalez <marc.w.gonzalez@free.fr>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Jul 24, 2019 at 10:20 AM Vinod Koul <vkoul@kernel.org> wrote:
->
-> Unit address is supposed to be a number, using a macro with hex value is
-> not recommended, so add the value in unit name.
->
-> arch/arm64/boot/dts/qcom/sdm845-cheza.dtsi:966.16-969.4: Warning (unit_address_format): /soc@0/spmi@c440000/pmic@0/adc@3100/adc-chan@0x4d: unit name should not have leading "0x"
-> arch/arm64/boot/dts/qcom/sdm845-cheza.dtsi:971.16-974.4: Warning (unit_address_format): /soc@0/spmi@c440000/pmic@0/adc@3100/adc-chan@0x4e: unit name should not have leading "0x"
-> arch/arm64/boot/dts/qcom/sdm845-cheza.dtsi:976.16-979.4: Warning (unit_address_format): /soc@0/spmi@c440000/pmic@0/adc@3100/adc-chan@0x4f: unit name should not have leading "0x"
-> arch/arm64/boot/dts/qcom/sdm845-cheza.dtsi:981.16-984.4: Warning (unit_address_format): /soc@0/spmi@c440000/pmic@0/adc@3100/adc-chan@0x50: unit name should not have leading "0x"
-> arch/arm64/boot/dts/qcom/sdm845-cheza.dtsi:986.16-989.4: Warning (unit_address_format): /soc@0/spmi@c440000/pmic@0/adc@3100/adc-chan@0x51: unit name should not have leading "0x"
->
-> Signed-off-by: Vinod Koul <vkoul@kernel.org>
-> Reviewed-by: Stephen Boyd <swboyd@chromium.org>
+On Tue, 23 Jul 2019 14:52:34 -0700
+pheragu@codeaurora.org wrote:
 
-Reviewed-by: Amit Kucheria <amit.kucheria@linaro.org>
+Hi Prakruthi,
 
+> Hi,
+> 
+> I have been working on a interrupt controller driver that uses tree
+> based mapping for its domain (irq_domain_add_tree(..)).
+> If I understand correctly, the clients get a mapping when they call
+> platform_get_irq(..). However, after these clients are removed
+> (rmmod), when I try to remove the interrupt controller driver where
+> it calls irq_domain_remove(..), I hit this warning from
+> kernel/kernel/irq/irqdomain.c:: irq_domain_remove(..)
+> [WARN_ON(!radix_tree_empty(&domain->revmap_tree));]-
+> WARNING: CPU: 0 PID: 238 at /kernel/kernel/irq/irqdomain.c:246 irq_domain_remove+0x84/0x98
+> 
+> Also, I see that the requested IRQs by the clients are still present
+> (in /proc/interrupts) even after they had been removed. Hence, I just
+> wanted to know how to handle this warning. Should the client clean up
+> by calling irq_dispose_mapping(..) or is it the responsibility of the
+> interrupt controller driver to dispose the mappings one by one?
 
-> ---
->  arch/arm64/boot/dts/qcom/sdm845-cheza.dtsi | 10 +++++-----
->  1 file changed, 5 insertions(+), 5 deletions(-)
->
-> diff --git a/arch/arm64/boot/dts/qcom/sdm845-cheza.dtsi b/arch/arm64/boot/dts/qcom/sdm845-cheza.dtsi
-> index 1ebbd568dfd7..9b27b8346ba1 100644
-> --- a/arch/arm64/boot/dts/qcom/sdm845-cheza.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sdm845-cheza.dtsi
-> @@ -963,27 +963,27 @@ ap_ts_i2c: &i2c14 {
->  };
->
->  &pm8998_adc {
-> -       adc-chan@ADC5_AMUX_THM1_100K_PU {
-> +       adc-chan@4d {
->                 reg = <ADC5_AMUX_THM1_100K_PU>;
->                 label = "sdm_temp";
->         };
->
-> -       adc-chan@ADC5_AMUX_THM2_100K_PU {
-> +       adc-chan@4e {
->                 reg = <ADC5_AMUX_THM2_100K_PU>;
->                 label = "quiet_temp";
->         };
->
-> -       adc-chan@ADC5_AMUX_THM3_100K_PU {
-> +       adc-chan@4f {
->                 reg = <ADC5_AMUX_THM3_100K_PU>;
->                 label = "lte_temp_1";
->         };
->
-> -       adc-chan@ADC5_AMUX_THM4_100K_PU {
-> +       adc-chan@50 {
->                 reg = <ADC5_AMUX_THM4_100K_PU>;
->                 label = "lte_temp_2";
->         };
->
-> -       adc-chan@ADC5_AMUX_THM5_100K_PU {
-> +       adc-chan@51 {
->                 reg = <ADC5_AMUX_THM5_100K_PU>;
->                 label = "charger_temp";
->         };
-> --
-> 2.20.1
->
+In general, building interrupt controller drivers as a module is a
+pretty difficult thing to do in a safe manner. As you found out, this
+relies on the irq_domain being "emptied" before it can be freed. There
+are some other gotchas in the rest of the IRQ stack as well.
+
+Doing that is hard. One of the reasons is that the OF subsystem will
+happily allocate all the interrupts it can even if there is no driver
+having requested them (see of_platform_populate). This means that you
+cannot track whether a client driver is using one of the interrupt your
+irqchip is in charge of. You can apply some heuristics, but they are in
+general all wrong.
+
+Fixing the OF subsystem is possible, but will break a lot of platforms
+that will have to be identified and fixed one by one.  Another
+possibility would be to refcount irqdescs, and make sure the irqdomain
+directly holds pointers to them. Doable, but may create overhead.
+
+To sum it up, don't build your irqchip driver as a module if you can
+avoid it. If you can't, you'll have to be very careful about how the
+mapping is established (make sure it is not created by
+of_platform_populate), and use irq_dispose_mapping in the client
+drivers.
+
+Hope this helps,
+
+	M.
+-- 
+Without deviation from the norm, progress is not possible.
