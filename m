@@ -2,101 +2,140 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id B6F0C7403A
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Jul 2019 22:42:24 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C8F237420E
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Jul 2019 01:28:11 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727747AbfGXUmX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 24 Jul 2019 16:42:23 -0400
-Received: from smtp.codeaurora.org ([198.145.29.96]:56034 "EHLO
-        smtp.codeaurora.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726314AbfGXUmX (ORCPT
+        id S1727560AbfGXX2K (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 24 Jul 2019 19:28:10 -0400
+Received: from mail-io1-f67.google.com ([209.85.166.67]:46992 "EHLO
+        mail-io1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726343AbfGXX2K (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 24 Jul 2019 16:42:23 -0400
-Received: by smtp.codeaurora.org (Postfix, from userid 1000)
-        id 01D6F60314; Wed, 24 Jul 2019 20:42:21 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
-        s=default; t=1564000942;
-        bh=yE4b8DVH6UNu3QtVYOP2/QoCPJazwMi7Z4vS46emglg=;
-        h=Subject:To:Cc:References:From:Date:In-Reply-To:From;
-        b=P2IEkSSlKMVUy3LeWMufAbJitm5TNC0i6tCCpJnHtpgadAoJmo9sMWoJrDPVkYx1f
-         eQwki+EuAigzGH5WM/pauyFu0Ri57e9XQ6yEGtHs/X0fcBuPQePirqJ6XgWl9vTVFO
-         cgkvLkHcRfprCuq+l0ht8IzBTUHUAvBM1HlcKasM=
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        pdx-caf-mail.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.7 required=2.0 tests=ALL_TRUSTED,BAYES_00,
-        DKIM_INVALID,DKIM_SIGNED,SPF_NONE autolearn=no autolearn_force=no
-        version=3.4.0
-Received: from [10.46.162.237] (i-global254.qualcomm.com [199.106.103.254])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: daidavid1@smtp.codeaurora.org)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 4203360256;
-        Wed, 24 Jul 2019 20:42:20 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
-        s=default; t=1564000940;
-        bh=yE4b8DVH6UNu3QtVYOP2/QoCPJazwMi7Z4vS46emglg=;
-        h=Subject:To:Cc:References:From:Date:In-Reply-To:From;
-        b=GlwlEVE9LNssety46OVjURuumaCj9inIy8RTbpcCJmeyX7SXYxh/sctD1NqIGhqUo
-         4U1fHOENMOhGaeQqRsy3xv7Gz8O2U3AGH9ucG/W8Im+tLmkdTtLqvBY/gNLj7I8i0o
-         oO3XGSYAzij2M5m2apgGUSlhuYaD5DCz4mOAPMcg=
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 4203360256
-Authentication-Results: pdx-caf-mail.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: pdx-caf-mail.web.codeaurora.org; spf=none smtp.mailfrom=daidavid1@codeaurora.org
-Subject: Re: [PATCH 1/2] dt-bindings: interconnect: Update Qualcomm SDM845 DT
- bindings
-To:     Stephen Boyd <swboyd@chromium.org>, bjorn.andersson@linaro.org,
-        georgi.djakov@linaro.org, robh+dt@kernel.org
-Cc:     evgreen@google.com, ilina@codeaurora.org, seansw@qti.qualcomm.com,
-        elder@linaro.org, linux-kernel@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-pm@vger.kernel.org
-References: <1563568344-1274-1-git-send-email-daidavid1@codeaurora.org>
- <1563568344-1274-2-git-send-email-daidavid1@codeaurora.org>
- <5d371ce7.1c69fb81.9650.8239@mx.google.com>
- <8c181f08-559b-5d77-a617-65cfd3d5da55@codeaurora.org>
- <5d3868a9.1c69fb81.876aa.ac30@mx.google.com>
- <8efd5c48-5d3a-97e1-1dec-6a9cdc4c8ef6@codeaurora.org>
- <5d38a31d.1c69fb81.80992.0052@mx.google.com>
-From:   David Dai <daidavid1@codeaurora.org>
-Message-ID: <150445a8-a6be-aa46-026b-1ad254128037@codeaurora.org>
-Date:   Wed, 24 Jul 2019 13:42:19 -0700
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
- Thunderbird/60.8.0
+        Wed, 24 Jul 2019 19:28:10 -0400
+Received: by mail-io1-f67.google.com with SMTP id i10so93198069iol.13
+        for <linux-arm-msm@vger.kernel.org>; Wed, 24 Jul 2019 16:28:09 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=g4ABzFOQlTG/3OQcp5oSZYVxTY4a6VgvyY/WeWtEMFc=;
+        b=QCbvY8EZib/jrxmnLyPloobD7WJRQmMzJ7AXOwhOTWB9bsQacV0NcHpV6x/21LMgkj
+         SKZxLR07ohia9fQFOFISVg4RLZuPotp5Coy5IAA3CYjMvzGKXqa964OJO6aQykLl2Fav
+         e6tKW3wTiA2m+6abUrdRIutbhcwMpjxasjSAk=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=g4ABzFOQlTG/3OQcp5oSZYVxTY4a6VgvyY/WeWtEMFc=;
+        b=F3aE8IRNFNaoDSfLm7Zw4k5EjhMk+CEAr5MxUdTJjZmrq2JRi9T28ZvNxuQvFWxyfS
+         r/8vWYcErF8Cg490x2alOU80kV76oBOkgCKeg0bGXJn2XiM1f8ujBYbZSARqBuzIzvMx
+         yxd8d/UNy4WTKRMGPzCij1VCuK5K5tnbEXhuZn0tbqUSYeCir5LsBK6/5EQe8HzdagzB
+         zfS9Tb2R9LzVlPgungjCmZ+ZknkA65DTNdWHDJpngfuY6qgdlsiA4jucsL7sQNq8oZEP
+         hC64wCEB9p/0Eqd58O7A1c8CilKPDImjwRj4WU3NW+xbBHDZ2uBLZf+lBHtJI1JZjXUq
+         V9nA==
+X-Gm-Message-State: APjAAAXriNYynnew7EHO0cg837CBtyASazWyMbv1o1Uqu39uuV+TA2I1
+        L/PFN2jZI4QnKNIgAE99p4WHeLe6s9k=
+X-Google-Smtp-Source: APXvYqxdTUWDGcQnTh0d2Ub8GFYDA71d2QWqAz8nQgMeVneHCthnY2reoS/3qWlCBrUjtzt2M4kCOg==
+X-Received: by 2002:a05:6638:cf:: with SMTP id w15mr9682586jao.136.1564010889255;
+        Wed, 24 Jul 2019 16:28:09 -0700 (PDT)
+Received: from mail-io1-f54.google.com (mail-io1-f54.google.com. [209.85.166.54])
+        by smtp.gmail.com with ESMTPSA id x13sm35400992ioj.18.2019.07.24.16.28.08
+        for <linux-arm-msm@vger.kernel.org>
+        (version=TLS1_3 cipher=AEAD-AES128-GCM-SHA256 bits=128/128);
+        Wed, 24 Jul 2019 16:28:08 -0700 (PDT)
+Received: by mail-io1-f54.google.com with SMTP id g20so93242059ioc.12
+        for <linux-arm-msm@vger.kernel.org>; Wed, 24 Jul 2019 16:28:08 -0700 (PDT)
+X-Received: by 2002:a5e:8f08:: with SMTP id c8mr78822417iok.52.1564010888053;
+ Wed, 24 Jul 2019 16:28:08 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <5d38a31d.1c69fb81.80992.0052@mx.google.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Content-Language: en-US
+References: <20190722215340.3071-1-ilina@codeaurora.org> <20190722215340.3071-2-ilina@codeaurora.org>
+ <5d3769df.1c69fb81.55d03.aa33@mx.google.com> <20190724145251.GB18620@codeaurora.org>
+ <5d38b38e.1c69fb81.e8e5d.035b@mx.google.com> <20190724203610.GE18620@codeaurora.org>
+In-Reply-To: <20190724203610.GE18620@codeaurora.org>
+From:   Doug Anderson <dianders@chromium.org>
+Date:   Wed, 24 Jul 2019 16:27:52 -0700
+X-Gmail-Original-Message-ID: <CAD=FV=UYj55m99EcQXmkYhs257A46x8DaarE0DC-GRF_3dY3-Q@mail.gmail.com>
+Message-ID: <CAD=FV=UYj55m99EcQXmkYhs257A46x8DaarE0DC-GRF_3dY3-Q@mail.gmail.com>
+Subject: Re: [PATCH V2 2/4] drivers: qcom: rpmh-rsc: avoid locking in the
+ interrupt handler
+To:     Lina Iyer <ilina@codeaurora.org>
+Cc:     Stephen Boyd <swboyd@chromium.org>, Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        "open list:ARM/QUALCOMM SUPPORT" <linux-soc@vger.kernel.org>,
+        Rajendra Nayak <rnayak@codeaurora.org>,
+        LKML <linux-kernel@vger.kernel.org>,
+        Linux PM <linux-pm@vger.kernel.org>, mkshah@codeaurora.org
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+Hi,
 
-On 7/24/2019 11:27 AM, Stephen Boyd wrote:
-> Quoting David Dai (2019-07-24 10:22:57)
->> The way that I view this is that the consumers consume both bandwidth
->> and QoS from these physical NoC devices by getting some path between two
->> endpoints on these different NoCs and applying some constraints. The NoC
->> providers can accomplish that either by writing to MMIO spaces or by
->> talking to some remote processor/hardware to tune its clock speed. The
->> consumer doesn't interact with the RSCs directly, but can select a
->> different bcm voter based on the endpoints that are associated with a
->> particular bcm(apps or disp rsc). Each node(endpoints) will have its own
->> BCM designation and an unique bcm voter.
-> Ok. I get it now. The MMIO nodes will be interconnect providers and
-> they'll know what RSCs they can use by exposing the same RSC "resource"
-> multiple times for each RSC that can be targeted? This is what the
-> postfix is with _DISP on your examples? Presumably there's an _APPS
-> version of the same prefixed endpoint in case the consumer wants to use
-> the APPS RSC instead of the DISP one, or maybe there's just no postfix
-> in this case because APPS is the "default".
+On Wed, Jul 24, 2019 at 1:36 PM Lina Iyer <ilina@codeaurora.org> wrote:
+>
+> On Wed, Jul 24 2019 at 13:38 -0600, Stephen Boyd wrote:
+> >Quoting Lina Iyer (2019-07-24 07:52:51)
+> >> On Tue, Jul 23 2019 at 14:11 -0600, Stephen Boyd wrote:
+> >> >Quoting Lina Iyer (2019-07-22 14:53:38)
+> >> >> Avoid locking in the interrupt context to improve latency. Since we
+> >> >> don't lock in the interrupt context, it is possible that we now could
+> >> >> race with the DRV_CONTROL register that writes the enable register and
+> >> >> cleared by the interrupt handler. For fire-n-forget requests, the
+> >> >> interrupt may be raised as soon as the TCS is triggered and the IRQ
+> >> >> handler may clear the enable bit before the DRV_CONTROL is read back.
+> >> >>
+> >> >> Use the non-sync variant when enabling the TCS register to avoid reading
+> >> >> back a value that may been cleared because the interrupt handler ran
+> >> >> immediately after triggering the TCS.
+> >> >>
+> >> >> Signed-off-by: Lina Iyer <ilina@codeaurora.org>
+> >> >> ---
+> >> >
+> >> >I have to read this patch carefully. The commit text isn't convincing me
+> >> >that it is actually safe to make this change. It mostly talks about the
+> >> >performance improvements and how we need to fix __tcs_trigger(), which
+> >> >is good, but I was hoping to be convinced that not grabbing the lock
+> >> >here is safe.
+> >> >
+> >> >How do we ensure that drv->tcs_in_use is cleared before we call
+> >> >tcs_write() and try to look for a free bit? Isn't it possible that we'll
+> >> >get into a situation where the bitmap is all used up but the hardware
+> >> >has just received an interrupt and is going to clear out a bit and then
+> >> >an rpmh write fails with -EBUSY?
+> >> >
+> >> If we have a situation where there are no available free bits, we retry
+> >> and that is part of the function. Since we have only 2 TCSes avaialble
+> >> to write to the hardware and there could be multiple requests coming in,
+> >> it is a very common situation. We try and acquire the drv->lock and if
+> >> there are free TCS available and if available mark them busy and send
+> >> our requests. If there are none available, we keep retrying.
+> >>
+> >
+> >Ok. I wonder if we need some sort of barriers here too, like an
+> >smp_mb__after_atomic()? That way we can make sure that the write to
+> >clear the bit is seen by another CPU that could be spinning forever
+> >waiting for that bit to be cleared? Before this change the spinlock
+> >would be guaranteed to make these barriers for us, but now that doesn't
+> >seem to be the case. I really hope that this whole thing can be changed
+> >to be a mutex though, in which case we can use the bit_wait() API, etc.
+> >to put tasks to sleep while RPMh is processing things.
+> >
+> We have drivers that want to send requests in atomic contexts and
+> therefore mutex locks would not work.
 
-Right, the suffixes will denote the RSC association and will default to 
-APPS otherwise.
+Jumping in without reading all the context, but I saw this fly by and
+it seemed odd.  If I'm way off base then please ignore...
 
--- 
-The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
-a Linux Foundation Collaborative Project
+Can you give more details?  Why are these drivers in atomic contexts?
+If they are in atomic contexts because they are running in the context
+of an interrupt then your next patch in the series isn't so correct.
 
+Also: when people submit requests in atomic context are they always
+submitting an asynchronous request?  In that case we could
+(presumably) just use a spinlock to protect the queue of async
+requests and a mutex for everything else?
+
+-Doug
