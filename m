@@ -2,114 +2,124 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 20A6D72A70
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Jul 2019 10:51:11 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id AAA8E72C23
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Jul 2019 12:10:26 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726062AbfGXIvK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 24 Jul 2019 04:51:10 -0400
-Received: from bhuna.collabora.co.uk ([46.235.227.227]:56952 "EHLO
-        bhuna.collabora.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725870AbfGXIvK (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 24 Jul 2019 04:51:10 -0400
-Received: from [127.0.0.1] (localhost [127.0.0.1])
-        (Authenticated sender: andrzej.p)
-        with ESMTPSA id 7B36728C14E
-Subject: Re: [PATCH v4 14/23] drm/tilcdc: Provide ddc symlink in connector
- sysfs directory
-To:     Thomas Zimmermann <tzimmermann@suse.de>,
-        Sam Ravnborg <sam@ravnborg.org>
-Cc:     Neil Armstrong <narmstrong@baylibre.com>,
-        Maxime Ripard <maxime.ripard@bootlin.com>,
-        dri-devel@lists.freedesktop.org,
-        Douglas Anderson <dianders@chromium.org>,
-        linux-tegra@vger.kernel.org,
-        Thierry Reding <thierry.reding@gmail.com>,
-        Laurent Pinchart <Laurent.pinchart@ideasonboard.com>,
-        kernel@collabora.com, linux-samsung-soc@vger.kernel.org,
-        linux-rockchip@lists.infradead.org,
-        Vincent Abriou <vincent.abriou@st.com>,
-        Krzysztof Kozlowski <krzk@kernel.org>,
-        Jonathan Hunter <jonathanh@nvidia.com>,
-        David Airlie <airlied@linux.ie>, Chen-Yu Tsai <wens@csie.org>,
-        Kukjin Kim <kgene@kernel.org>,
-        NXP Linux Team <linux-imx@nxp.com>,
-        Dave Airlie <airlied@redhat.com>,
-        freedreno@lists.freedesktop.org,
-        Pengutronix Kernel Team <kernel@pengutronix.de>,
-        Jonas Karlman <jonas@kwiboo.se>, linux-arm-msm@vger.kernel.org,
-        intel-gfx@lists.freedesktop.org, Jyri Sarha <jsarha@ti.com>,
-        Alexios Zavras <alexios.zavras@intel.com>,
-        Mamta Shukla <mamtashukla555@gmail.com>,
-        linux-mediatek@lists.infradead.org,
-        Rodrigo Vivi <rodrigo.vivi@intel.com>,
-        Matthias Brugger <matthias.bgg@gmail.com>,
-        Thomas Gleixner <tglx@linutronix.de>,
-        Sean Paul <sean@poorly.run>,
+        id S1726115AbfGXKKZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 24 Jul 2019 06:10:25 -0400
+Received: from foss.arm.com ([217.140.110.172]:38340 "EHLO foss.arm.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726087AbfGXKKZ (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 24 Jul 2019 06:10:25 -0400
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 8B657337;
+        Wed, 24 Jul 2019 03:10:24 -0700 (PDT)
+Received: from [10.1.197.57] (e110467-lin.cambridge.arm.com [10.1.197.57])
+        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 862743F71F;
+        Wed, 24 Jul 2019 03:10:23 -0700 (PDT)
+Subject: Re: [PATCH] dma: qcom: hidma_mgmt: Add of_node_put() before goto
+To:     Nishka Dasgupta <nishkadg.linux@gmail.com>, okaya@kernel.org,
+        agross@kernel.org, vkoul@kernel.org, dan.j.williams@intel.com,
         linux-arm-kernel@lists.infradead.org,
-        Jernej Skrabec <jernej.skrabec@siol.net>,
-        amd-gfx@lists.freedesktop.org,
-        Tomi Valkeinen <tomi.valkeinen@ti.com>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Seung-Woo Kim <sw0312.kim@samsung.com>,
-        linux-kernel@vger.kernel.org, Todor Tomov <todor.tomov@linaro.org>,
-        Kyungmin Park <kyungmin.park@samsung.com>,
-        Huang Rui <ray.huang@amd.com>,
-        Alex Deucher <alexander.deucher@amd.com>,
-        Shawn Guo <shawnguo@kernel.org>,
-        =?UTF-8?Q?Christian_K=c3=b6nig?= <christian.koenig@amd.com>,
-        Gerd Hoffmann <kraxel@redhat.com>
-References: <cover.1562843413.git.andrzej.p@collabora.com>
- <d1d415022c598fb7acd033f0f322dd67250adaa9.1562843413.git.andrzej.p@collabora.com>
- <20190723090532.GA787@ravnborg.org>
- <3ad60be5-49cf-4017-4b74-53a2d6272deb@collabora.com>
- <acfd895d-ab59-0190-e25c-1827bd8d214b@suse.de>
-From:   Andrzej Pietrasiewicz <andrzej.p@collabora.com>
-Message-ID: <f051455a-3559-8f8e-cc76-1a6388b102b5@collabora.com>
-Date:   Wed, 24 Jul 2019 10:51:01 +0200
+        linux-arm-msm@vger.kernel.org, dmaengine@vger.kernel.org
+References: <20190723103543.7888-1-nishkadg.linux@gmail.com>
+ <b5b76ef6-c5f3-bab0-e981-cd47c7264959@arm.com>
+ <6ef666c3-a155-130d-24bc-8c04b3485d44@gmail.com>
+From:   Robin Murphy <robin.murphy@arm.com>
+Message-ID: <9d5a995d-74b6-742a-f5c2-ac9227f7cae0@arm.com>
+Date:   Wed, 24 Jul 2019 11:10:22 +0100
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.8.0
+ Thunderbird/60.6.1
 MIME-Version: 1.0
-In-Reply-To: <acfd895d-ab59-0190-e25c-1827bd8d214b@suse.de>
+In-Reply-To: <6ef666c3-a155-130d-24bc-8c04b3485d44@gmail.com>
 Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
+Content-Language: en-GB
 Content-Transfer-Encoding: 8bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Thomas,
+On 24/07/2019 09:05, Nishka Dasgupta wrote:
+> On 23/07/19 5:32 PM, Robin Murphy wrote:
+>> On 23/07/2019 11:35, Nishka Dasgupta wrote:
+>>> Each iteration of for_each_available_child_of_node puts the previous
+>>> node, but in the case of a goto from the middle of the loop, there is
+>>> no put, thus causing a memory leak. Add an of_node_put before the
+>>> goto in 4 places.
+>>
+>> Why not just add it once at the "out" label itself? (Consider the 
+>> conditions for the loop terminating naturally)
+> 
+> If the loop terminates naturally then, as far as I understand, child 
+> will be put by the loop itself; then an extra of_node_put() under the 
+> out label would put the child node even though it has already been put. 
+> If I'm understanding this correctly (and I might not be) is it okay to 
+> decrement refcount more times that it is incremented?
 
-W dniu 24.07.2019 o 10:01, Thomas Zimmermann pisze:
-> Hi
-> 
+Ah, but is it really the same thing being put both times? The loop 
+*iterator* will indeed drop its reference on the last valid child node, 
+but what's the actual termination condition, and thus the state 
+afterwards? ;)
 
+Robin.
 
+>> And if you're cleaning up the refcounting here anyway then I'd also 
+>> note that the reference held by the loop iterator makes the extra 
+>> get/put inside that loop entirely redundant. It's always worth taking 
+>> a look at the wider context rather than just blindly focusing on what 
+>> a given script picks up - it's fairly rare that a piece of code has 
+>> one obvious issue but is otherwise perfect.
 > 
-> I think this echoes my concern about the implicit order of operation. It
-> seems too easy to get this wrong. If you don't want to add an additional
-> interface for setting the ddc field, why not add a dedicated initializer
-> function that sets the ddc field? Something like this.
+> Thank  you for pointing this out; I've added it in v2.
 > 
-> int drm_connector_init_with_ddc(connector, funcs, ..., ddc)
-> {
-> 	ret = drm_connector_init(connector, funcs, ...);
-> 	if (ret)
-> 		return ret;
+> Thanking you,
+> Nishka
+>> Robin.
+>>
+>>> Issue found with Coccinelle.
+>>>
+>>> Signed-off-by: Nishka Dasgupta <nishkadg.linux@gmail.com>
+>>> ---
+>>>   drivers/dma/qcom/hidma_mgmt.c | 13 ++++++++++---
+>>>   1 file changed, 10 insertions(+), 3 deletions(-)
+>>>
+>>> diff --git a/drivers/dma/qcom/hidma_mgmt.c 
+>>> b/drivers/dma/qcom/hidma_mgmt.c
+>>> index 3022d66e7a33..209adc6ceabe 100644
+>>> --- a/drivers/dma/qcom/hidma_mgmt.c
+>>> +++ b/drivers/dma/qcom/hidma_mgmt.c
+>>> @@ -362,16 +362,22 @@ static int __init 
+>>> hidma_mgmt_of_populate_channels(struct device_node *np)
+>>>           struct platform_device *new_pdev;
+>>>           ret = of_address_to_resource(child, 0, &res[0]);
+>>> -        if (!ret)
+>>> +        if (!ret) {
+>>> +            of_node_put(child);
+>>>               goto out;
+>>> +        }
+>>>           ret = of_address_to_resource(child, 1, &res[1]);
+>>> -        if (!ret)
+>>> +        if (!ret) {
+>>> +            of_node_put(child);
+>>>               goto out;
+>>> +        }
+>>>           ret = of_irq_to_resource(child, 0, &res[2]);
+>>> -        if (ret <= 0)
+>>> +        if (ret <= 0) {
+>>> +            of_node_put(child);
+>>>               goto out;
+>>> +        }
+>>>           memset(&pdevinfo, 0, sizeof(pdevinfo));
+>>>           pdevinfo.fwnode = &child->fwnode;
+>>> @@ -386,6 +392,7 @@ static int __init 
+>>> hidma_mgmt_of_populate_channels(struct device_node *np)
+>>>           new_pdev = platform_device_register_full(&pdevinfo);
+>>>           if (IS_ERR(new_pdev)) {
+>>>               ret = PTR_ERR(new_pdev);
+>>> +            of_node_put(child);
+>>>               goto out;
+>>>           }
+>>>           of_node_get(child);
+>>>
 > 
-> 	if (!ddc)
-> 		return 0;
-> 
-> 	connector->ddc = ddc;
-> 	/* set up sysfs */
-> 
-> 	return 0;
-> }
-> 
-
-True. I will send a v5 soon.
-
-Thanks,
-
-Andrzej
