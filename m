@@ -2,201 +2,399 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id DE0DC732C2
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Jul 2019 17:31:04 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id CF254732E0
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Jul 2019 17:36:50 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728448AbfGXPbE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 24 Jul 2019 11:31:04 -0400
-Received: from mail-lf1-f65.google.com ([209.85.167.65]:42991 "EHLO
-        mail-lf1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727477AbfGXPbE (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 24 Jul 2019 11:31:04 -0400
-Received: by mail-lf1-f65.google.com with SMTP id s19so32272175lfb.9
-        for <linux-arm-msm@vger.kernel.org>; Wed, 24 Jul 2019 08:31:01 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=subject:to:cc:references:from:openpgp:autocrypt:message-id:date
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=w04TwcBlrwE0OA2QepWCIyollMUBH4W0M6LcA4jtxc4=;
-        b=AjM19knBV84Dn1ZuV7wNvmsmmirz1UY6xC79pbJYVejpy1o6FJZS/OOfMvWLILrYRI
-         KgCiUyz3E+DJLovwOe2ERKXIcw1Gf04vpzKyUS7E9m0aoUwRb8vVLufVFNZJl46ULvZG
-         T9wQyXEzEETSWc+CzxB4t1aV4BBiC2S2RUl9Ie5q2Q3rawXi+CAQj9USLYUsyGCjdDkc
-         4IrpjUX5adig8IFh5u2LmPQH/M+zWLJ6T2VFuF4bXaV1XJ4ZAQetoVjtQJgmKLesbJGJ
-         ql2ydeAfHrPkE7C3b51d3j8VAIlhrNQ1ymJAn1uh0WWgg9mXQXZyeG3w5mZvaDij0fIE
-         Un3g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:openpgp:autocrypt
-         :message-id:date:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=w04TwcBlrwE0OA2QepWCIyollMUBH4W0M6LcA4jtxc4=;
-        b=Kno2g27dVcSP7iAVr3I8i9NEcd6BbkQOMkzj8ux59VA2bym5SxVkeHcesUa9HeG0Gq
-         GodWjGLQWSI6ldaFppemvioMLXVLgYWN/0xXsVs+lIEcMej28jJ+t6mFt9cy1kbtqUJe
-         s38EJktH91+ts+PvON8zvQR7Ndgv70xX5gmmVle9BhrUN1XJTEjmCwGzsDO3p2HXPCGH
-         NRaZTBpBslAPNGaf3o6fUdNEYCm94/wHwHx6Cw7W1+4Q29EB+P/ge3LqUzVt3ZSXmLLG
-         hC9DPfb11biNTTVh+C29gC4a+dr20Xd9cDT66IHSWvmrjfvUjed34sazdiIyeeil5hRQ
-         hH0g==
-X-Gm-Message-State: APjAAAXtW7Sfon9/FXiw5NgZZNkOTrSjra+yZggOSLfQB1085nr+zaqs
-        1pNh019eKowbbaoCyrTYtbaxpA==
-X-Google-Smtp-Source: APXvYqwZaetBqiZkU3WyKGnWXjAjS11aiAKWTs8GvtiBVKZJwmURwRiQwY55D2YKhy42HTE67eo63g==
-X-Received: by 2002:a05:6512:1d2:: with SMTP id f18mr37896536lfp.173.1563982260973;
-        Wed, 24 Jul 2019 08:31:00 -0700 (PDT)
-Received: from [10.44.66.8] ([212.45.67.2])
-        by smtp.googlemail.com with ESMTPSA id q4sm9720175lje.99.2019.07.24.08.30.59
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 24 Jul 2019 08:31:00 -0700 (PDT)
-Subject: Re: [PATCH] qcom: Add BCM vote macro to TCS header
-To:     Jordan Crouse <jcrouse@codeaurora.org>,
-        freedreno@lists.freedesktop.org
-Cc:     ilina@codeaurora.org, bjorn.andersson@linaro.org,
-        linux-pm@vger.kernel.org,
-        "Raju P.L.S.S.S.N" <rplsssn@codeaurora.org>,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Andy Gross <agross@kernel.org>,
-        David Brown <david.brown@linaro.org>
-References: <1563378793-22023-1-git-send-email-jcrouse@codeaurora.org>
-From:   Georgi Djakov <georgi.djakov@linaro.org>
-Openpgp: preference=signencrypt
-Autocrypt: addr=georgi.djakov@linaro.org; prefer-encrypt=mutual; keydata=
- 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
- KEmKjLDvB0pePJkdTw==
-Message-ID: <31e9d2c6-edcd-11b8-4c4b-d51ed2d8f7b7@linaro.org>
-Date:   Wed, 24 Jul 2019 18:30:58 +0300
+        id S2387654AbfGXPgt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 24 Jul 2019 11:36:49 -0400
+Received: from mail.kernel.org ([198.145.29.99]:41634 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S2387650AbfGXPgt (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 24 Jul 2019 11:36:49 -0400
+Received: from localhost (unknown [171.76.105.95])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by mail.kernel.org (Postfix) with ESMTPSA id BB120206B8;
+        Wed, 24 Jul 2019 15:36:44 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=default; t=1563982607;
+        bh=MZb2cNvPcA5K9SW9yESKaG6eZC+fZ9IUKkJmqOZP3KU=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=daTLFaHPRutwy1XFkLQatUkTqj+yk0WUWpwfjr3DSR5rzTbgHe5ZSddxliA2PSirn
+         tloJD70/csoA6N7HJMDSgwv9IqvCG5oL+URHlHrZ75FLL/TELHGBY/XyEv5TusrHrN
+         rU3YoaQ7qH2Z9nHUfcWnnLzIpKsJl4aeftpm/N3k=
+Date:   Wed, 24 Jul 2019 21:05:33 +0530
+From:   Vinod Koul <vkoul@kernel.org>
+To:     Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
+Cc:     agross@kernel.org, bjorn.andersson@linaro.org, robh+dt@kernel.org,
+        mark.rutland@arm.com, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH] arm64: dts: qcom: msm8998: Node ordering, address
+ cleanups
+Message-ID: <20190724153533.GP12733@vkoul-mobl.Dlink>
+References: <20190722165823.21539-1-jeffrey.l.hugo@gmail.com>
 MIME-Version: 1.0
-In-Reply-To: <1563378793-22023-1-git-send-email-jcrouse@codeaurora.org>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20190722165823.21539-1-jeffrey.l.hugo@gmail.com>
+User-Agent: Mutt/1.11.3 (2019-02-01)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Jordan,
-
-On 7/17/19 18:53, Jordan Crouse wrote:
-> The A6XX family of Adreno GPUs use a microcontroller to control the
-> GPU clock independently. The microcontroller also has the capability
-> to vote for the bus but doesn't currently do so except for one initial
-> vote that is hard coded [1].
+On 22-07-19, 09:58, Jeffrey Hugo wrote:
+> DT nodes should be ordered by address, then node name, and finally label.
+> The msm8998 dtsi does not follow this, so clean it up by reordering the
+> nodes.  While we are at it, extend the addresses to be fully 32-bits wide
+> so that ordering is easy to determine when adding new nodes.  Also, two
+> or so nodes had the wrong address value in their node name (did not match
+> the reg property), so fix those up as well.
 > 
-> Currently there is no good way to construct a valid TCS command outside
-> of the inner workings of the QCOM interconnect driver which is something
-> that will need to be addressed for the next generation of GPU drivers.
-> 
-> To start the process, this change moves the TCS command macros from the
-> sdm845 interconnect driver into a soc specific header to make it available
-> for future efforts into this area.
+> Hopefully going forward, things can be maintained so that a cleanup like
+> this is not needed.
 
-I agree that we should move the TCS macros into tsc.h. There is also a similar
-macro in drivers/clk/qcom/clk-rpmh.c. Maybe we can replace both with a common one?
+lgtm, ideally I would have liked that we reg addresses fixed first and
+then sort the file (remember a patch should do one thing)
 
-Thanks,
-Georgi
+But then any cleanup is better to do :) so:
+
+Reviewed-by: Vinod Koul <vkoul@kernel.org>
 
 > 
-> [1] https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/drivers/gpu/drm/msm/adreno/a6xx_hfi.c#n219
-> 
-> Signed-off-by: Jordan Crouse <jcrouse@codeaurora.org>
+> Signed-off-by: Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
 > ---
+>  arch/arm64/boot/dts/qcom/msm8998.dtsi | 254 +++++++++++++-------------
+>  1 file changed, 127 insertions(+), 127 deletions(-)
 > 
->  drivers/interconnect/qcom/sdm845.c | 17 -----------------
->  include/soc/qcom/tcs.h             | 17 +++++++++++++++++
->  2 files changed, 17 insertions(+), 17 deletions(-)
-> 
-> diff --git a/drivers/interconnect/qcom/sdm845.c b/drivers/interconnect/qcom/sdm845.c
-> index 4915b78..79b6f01 100644
-> --- a/drivers/interconnect/qcom/sdm845.c
-> +++ b/drivers/interconnect/qcom/sdm845.c
-> @@ -20,23 +20,6 @@
->  #include <soc/qcom/rpmh.h>
->  #include <soc/qcom/tcs.h>
+> diff --git a/arch/arm64/boot/dts/qcom/msm8998.dtsi b/arch/arm64/boot/dts/qcom/msm8998.dtsi
+> index c13ed7aeb1e0..4b66a1c588f8 100644
+> --- a/arch/arm64/boot/dts/qcom/msm8998.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/msm8998.dtsi
+> @@ -787,14 +787,22 @@
+>  		ranges = <0 0 0 0xffffffff>;
+>  		compatible = "simple-bus";
 >  
-> -#define BCM_TCS_CMD_COMMIT_SHFT		30
-> -#define BCM_TCS_CMD_COMMIT_MASK		0x40000000
-> -#define BCM_TCS_CMD_VALID_SHFT		29
-> -#define BCM_TCS_CMD_VALID_MASK		0x20000000
-> -#define BCM_TCS_CMD_VOTE_X_SHFT		14
-> -#define BCM_TCS_CMD_VOTE_MASK		0x3fff
-> -#define BCM_TCS_CMD_VOTE_Y_SHFT		0
-> -#define BCM_TCS_CMD_VOTE_Y_MASK		0xfffc000
-> -
-> -#define BCM_TCS_CMD(commit, valid, vote_x, vote_y)		\
-> -	(((commit) << BCM_TCS_CMD_COMMIT_SHFT) |		\
-> -	((valid) << BCM_TCS_CMD_VALID_SHFT) |			\
-> -	((cpu_to_le32(vote_x) &					\
-> -	BCM_TCS_CMD_VOTE_MASK) << BCM_TCS_CMD_VOTE_X_SHFT) |	\
-> -	((cpu_to_le32(vote_y) &					\
-> -	BCM_TCS_CMD_VOTE_MASK) << BCM_TCS_CMD_VOTE_Y_SHFT))
-> -
->  #define to_qcom_provider(_provider) \
->  	container_of(_provider, struct qcom_icc_provider, provider)
+> -		rpm_msg_ram: memory@68000 {
+> +		gcc: clock-controller@100000 {
+> +			compatible = "qcom,gcc-msm8998";
+> +			#clock-cells = <1>;
+> +			#reset-cells = <1>;
+> +			#power-domain-cells = <1>;
+> +			reg = <0x00100000 0xb0000>;
+> +		};
+> +
+> +		rpm_msg_ram: memory@778000 {
+>  			compatible = "qcom,rpm-msg-ram";
+> -			reg = <0x778000 0x7000>;
+> +			reg = <0x00778000 0x7000>;
+>  		};
 >  
-> diff --git a/include/soc/qcom/tcs.h b/include/soc/qcom/tcs.h
-> index 262876a..6012a9e 100644
-> --- a/include/soc/qcom/tcs.h
-> +++ b/include/soc/qcom/tcs.h
-> @@ -53,4 +53,21 @@ struct tcs_request {
->  	struct tcs_cmd *cmds;
+>  		qfprom: qfprom@780000 {
+>  			compatible = "qcom,qfprom";
+> -			reg = <0x780000 0x621c>;
+> +			reg = <0x00780000 0x621c>;
+>  			#address-cells = <1>;
+>  			#size-cells = <1>;
+>  
+> @@ -804,47 +812,10 @@
+>  			};
+>  		};
+>  
+> -		gcc: clock-controller@100000 {
+> -			compatible = "qcom,gcc-msm8998";
+> -			#clock-cells = <1>;
+> -			#reset-cells = <1>;
+> -			#power-domain-cells = <1>;
+> -			reg = <0x100000 0xb0000>;
+> -		};
+> -
+> -		tlmm: pinctrl@3400000 {
+> -			compatible = "qcom,msm8998-pinctrl";
+> -			reg = <0x3400000 0xc00000>;
+> -			interrupts = <GIC_SPI 208 IRQ_TYPE_LEVEL_HIGH>;
+> -			gpio-controller;
+> -			#gpio-cells = <0x2>;
+> -			interrupt-controller;
+> -			#interrupt-cells = <0x2>;
+> -		};
+> -
+> -		spmi_bus: spmi@800f000 {
+> -			compatible = "qcom,spmi-pmic-arb";
+> -			reg =	<0x800f000 0x1000>,
+> -				<0x8400000 0x1000000>,
+> -				<0x9400000 0x1000000>,
+> -				<0xa400000 0x220000>,
+> -				<0x800a000 0x3000>;
+> -			reg-names = "core", "chnls", "obsrvr", "intr", "cnfg";
+> -			interrupt-names = "periph_irq";
+> -			interrupts = <GIC_SPI 326 IRQ_TYPE_LEVEL_HIGH>;
+> -			qcom,ee = <0>;
+> -			qcom,channel = <0>;
+> -			#address-cells = <2>;
+> -			#size-cells = <0>;
+> -			interrupt-controller;
+> -			#interrupt-cells = <4>;
+> -			cell-index = <0>;
+> -		};
+> -
+>  		tsens0: thermal@10ab000 {
+>  			compatible = "qcom,msm8998-tsens", "qcom,tsens-v2";
+> -			reg = <0x10ab000 0x1000>, /* TM */
+> -			      <0x10aa000 0x1000>; /* SROT */
+> +			reg = <0x010ab000 0x1000>, /* TM */
+> +			      <0x010aa000 0x1000>; /* SROT */
+>  
+>  			#qcom,sensors = <14>;
+>  			#thermal-sensor-cells = <1>;
+> @@ -852,8 +823,8 @@
+>  
+>  		tsens1: thermal@10ae000 {
+>  			compatible = "qcom,msm8998-tsens", "qcom,tsens-v2";
+> -			reg = <0x10ae000 0x1000>, /* TM */
+> -			      <0x10ad000 0x1000>; /* SROT */
+> +			reg = <0x010ae000 0x1000>, /* TM */
+> +			      <0x010ad000 0x1000>; /* SROT */
+>  
+>  			#qcom,sensors = <8>;
+>  			#thermal-sensor-cells = <1>;
+> @@ -943,16 +914,107 @@
+>  			};
+>  		};
+>  
+> +		ufshc: ufshc@1da4000 {
+> +			compatible = "qcom,msm8998-ufshc", "qcom,ufshc", "jedec,ufs-2.0";
+> +			reg = <0x01da4000 0x2500>;
+> +			interrupts = <GIC_SPI 265 IRQ_TYPE_LEVEL_HIGH>;
+> +			phys = <&ufsphy_lanes>;
+> +			phy-names = "ufsphy";
+> +			lanes-per-direction = <2>;
+> +			power-domains = <&gcc UFS_GDSC>;
+> +			#reset-cells = <1>;
+> +
+> +			clock-names =
+> +				"core_clk",
+> +				"bus_aggr_clk",
+> +				"iface_clk",
+> +				"core_clk_unipro",
+> +				"ref_clk",
+> +				"tx_lane0_sync_clk",
+> +				"rx_lane0_sync_clk",
+> +				"rx_lane1_sync_clk";
+> +			clocks =
+> +				<&gcc GCC_UFS_AXI_CLK>,
+> +				<&gcc GCC_AGGRE1_UFS_AXI_CLK>,
+> +				<&gcc GCC_UFS_AHB_CLK>,
+> +				<&gcc GCC_UFS_UNIPRO_CORE_CLK>,
+> +				<&rpmcc RPM_SMD_LN_BB_CLK1>,
+> +				<&gcc GCC_UFS_TX_SYMBOL_0_CLK>,
+> +				<&gcc GCC_UFS_RX_SYMBOL_0_CLK>,
+> +				<&gcc GCC_UFS_RX_SYMBOL_1_CLK>;
+> +			freq-table-hz =
+> +				<50000000 200000000>,
+> +				<0 0>,
+> +				<0 0>,
+> +				<37500000 150000000>,
+> +				<0 0>,
+> +				<0 0>,
+> +				<0 0>,
+> +				<0 0>;
+> +
+> +			resets = <&gcc GCC_UFS_BCR>;
+> +			reset-names = "rst";
+> +		};
+> +
+> +		ufsphy: phy@1da7000 {
+> +			compatible = "qcom,msm8998-qmp-ufs-phy";
+> +			reg = <0x01da7000 0x18c>;
+> +			#address-cells = <1>;
+> +			#size-cells = <1>;
+> +			ranges;
+> +
+> +			clock-names =
+> +				"ref",
+> +				"ref_aux";
+> +			clocks =
+> +				<&gcc GCC_UFS_CLKREF_CLK>,
+> +				<&gcc GCC_UFS_PHY_AUX_CLK>;
+> +
+> +			reset-names = "ufsphy";
+> +			resets = <&ufshc 0>;
+> +
+> +			ufsphy_lanes: lanes@1da7400 {
+> +				reg = <0x01da7400 0x128>,
+> +				      <0x01da7600 0x1fc>,
+> +				      <0x01da7c00 0x1dc>,
+> +				      <0x01da7800 0x128>,
+> +				      <0x01da7a00 0x1fc>;
+> +				#phy-cells = <0>;
+> +			};
+> +		};
+> +
+>  		tcsr_mutex_regs: syscon@1f40000 {
+>  			compatible = "syscon";
+> -			reg = <0x1f40000 0x20000>;
+> +			reg = <0x01f40000 0x20000>;
+>  		};
+>  
+> -		apcs_glb: mailbox@9820000 {
+> -			compatible = "qcom,msm8998-apcs-hmss-global";
+> -			reg = <0x17911000 0x1000>;
+> +		tlmm: pinctrl@3400000 {
+> +			compatible = "qcom,msm8998-pinctrl";
+> +			reg = <0x03400000 0xc00000>;
+> +			interrupts = <GIC_SPI 208 IRQ_TYPE_LEVEL_HIGH>;
+> +			gpio-controller;
+> +			#gpio-cells = <0x2>;
+> +			interrupt-controller;
+> +			#interrupt-cells = <0x2>;
+> +		};
+>  
+> -			#mbox-cells = <1>;
+> +		spmi_bus: spmi@800f000 {
+> +			compatible = "qcom,spmi-pmic-arb";
+> +			reg =	<0x0800f000 0x1000>,
+> +				<0x08400000 0x1000000>,
+> +				<0x09400000 0x1000000>,
+> +				<0x0a400000 0x220000>,
+> +				<0x0800a000 0x3000>;
+> +			reg-names = "core", "chnls", "obsrvr", "intr", "cnfg";
+> +			interrupt-names = "periph_irq";
+> +			interrupts = <GIC_SPI 326 IRQ_TYPE_LEVEL_HIGH>;
+> +			qcom,ee = <0>;
+> +			qcom,channel = <0>;
+> +			#address-cells = <2>;
+> +			#size-cells = <0>;
+> +			interrupt-controller;
+> +			#interrupt-cells = <4>;
+> +			cell-index = <0>;
+>  		};
+>  
+>  		usb3: usb@a8f8800 {
+> @@ -1044,7 +1106,7 @@
+>  
+>  		sdhc2: sdhci@c0a4900 {
+>  			compatible = "qcom,sdhci-msm-v4";
+> -			reg = <0xc0a4900 0x314>, <0xc0a4000 0x800>;
+> +			reg = <0x0c0a4900 0x314>, <0x0c0a4000 0x800>;
+>  			reg-names = "hc_mem", "core_mem";
+>  
+>  			interrupts = <GIC_SPI 125 IRQ_TYPE_LEVEL_HIGH>,
+> @@ -1149,6 +1211,16 @@
+>  			#size-cells = <0>;
+>  		};
+>  
+> +		blsp2_uart1: serial@c1b0000 {
+> +			compatible = "qcom,msm-uartdm-v1.4", "qcom,msm-uartdm";
+> +			reg = <0x0c1b0000 0x1000>;
+> +			interrupts = <GIC_SPI 114 IRQ_TYPE_LEVEL_HIGH>;
+> +			clocks = <&gcc GCC_BLSP2_UART2_APPS_CLK>,
+> +				 <&gcc GCC_BLSP2_AHB_CLK>;
+> +			clock-names = "core", "iface";
+> +			status = "disabled";
+> +		};
+> +
+>  		blsp2_i2c0: i2c@c1b5000 {
+>  			compatible = "qcom,i2c-qup-v2.2.1";
+>  			reg = <0x0c1b5000 0x600>;
+> @@ -1239,14 +1311,11 @@
+>  			#size-cells = <0>;
+>  		};
+>  
+> -		blsp2_uart1: serial@c1b0000 {
+> -			compatible = "qcom,msm-uartdm-v1.4", "qcom,msm-uartdm";
+> -			reg = <0xc1b0000 0x1000>;
+> -			interrupts = <GIC_SPI 114 IRQ_TYPE_LEVEL_HIGH>;
+> -			clocks = <&gcc GCC_BLSP2_UART2_APPS_CLK>,
+> -				 <&gcc GCC_BLSP2_AHB_CLK>;
+> -			clock-names = "core", "iface";
+> -			status = "disabled";
+> +		apcs_glb: mailbox@17911000 {
+> +			compatible = "qcom,msm8998-apcs-hmss-global";
+> +			reg = <0x17911000 0x1000>;
+> +
+> +			#mbox-cells = <1>;
+>  		};
+>  
+>  		timer@17920000 {
+> @@ -1320,75 +1389,6 @@
+>  			redistributor-stride = <0x0 0x20000>;
+>  			interrupts = <GIC_PPI 9 IRQ_TYPE_LEVEL_HIGH>;
+>  		};
+> -
+> -		ufshc: ufshc@1da4000 {
+> -			compatible = "qcom,msm8998-ufshc", "qcom,ufshc", "jedec,ufs-2.0";
+> -			reg = <0x01da4000 0x2500>;
+> -			interrupts = <GIC_SPI 265 IRQ_TYPE_LEVEL_HIGH>;
+> -			phys = <&ufsphy_lanes>;
+> -			phy-names = "ufsphy";
+> -			lanes-per-direction = <2>;
+> -			power-domains = <&gcc UFS_GDSC>;
+> -			#reset-cells = <1>;
+> -
+> -			clock-names =
+> -				"core_clk",
+> -				"bus_aggr_clk",
+> -				"iface_clk",
+> -				"core_clk_unipro",
+> -				"ref_clk",
+> -				"tx_lane0_sync_clk",
+> -				"rx_lane0_sync_clk",
+> -				"rx_lane1_sync_clk";
+> -			clocks =
+> -				<&gcc GCC_UFS_AXI_CLK>,
+> -				<&gcc GCC_AGGRE1_UFS_AXI_CLK>,
+> -				<&gcc GCC_UFS_AHB_CLK>,
+> -				<&gcc GCC_UFS_UNIPRO_CORE_CLK>,
+> -				<&rpmcc RPM_SMD_LN_BB_CLK1>,
+> -				<&gcc GCC_UFS_TX_SYMBOL_0_CLK>,
+> -				<&gcc GCC_UFS_RX_SYMBOL_0_CLK>,
+> -				<&gcc GCC_UFS_RX_SYMBOL_1_CLK>;
+> -			freq-table-hz =
+> -				<50000000 200000000>,
+> -				<0 0>,
+> -				<0 0>,
+> -				<37500000 150000000>,
+> -				<0 0>,
+> -				<0 0>,
+> -				<0 0>,
+> -				<0 0>;
+> -
+> -			resets = <&gcc GCC_UFS_BCR>;
+> -			reset-names = "rst";
+> -		};
+> -
+> -		ufsphy: phy@1da7000 {
+> -			compatible = "qcom,msm8998-qmp-ufs-phy";
+> -			reg = <0x01da7000 0x18c>;
+> -			#address-cells = <1>;
+> -			#size-cells = <1>;
+> -			ranges;
+> -
+> -			clock-names =
+> -				"ref",
+> -				"ref_aux";
+> -			clocks =
+> -				<&gcc GCC_UFS_CLKREF_CLK>,
+> -				<&gcc GCC_UFS_PHY_AUX_CLK>;
+> -
+> -			reset-names = "ufsphy";
+> -			resets = <&ufshc 0>;
+> -
+> -			ufsphy_lanes: lanes@1da7400 {
+> -				reg = <0x01da7400 0x128>,
+> -				      <0x01da7600 0x1fc>,
+> -				      <0x01da7c00 0x1dc>,
+> -				      <0x01da7800 0x128>,
+> -				      <0x01da7a00 0x1fc>;
+> -				#phy-cells = <0>;
+> -			};
+> -		};
+>  	};
 >  };
 >  
-> +#define BCM_TCS_CMD_COMMIT_SHFT		30
-> +#define BCM_TCS_CMD_COMMIT_MASK		0x40000000
-> +#define BCM_TCS_CMD_VALID_SHFT		29
-> +#define BCM_TCS_CMD_VALID_MASK		0x20000000
-> +#define BCM_TCS_CMD_VOTE_X_SHFT		14
-> +#define BCM_TCS_CMD_VOTE_MASK		0x3fff
-> +#define BCM_TCS_CMD_VOTE_Y_SHFT		0
-> +#define BCM_TCS_CMD_VOTE_Y_MASK		0xfffc000
-> +
-> +#define BCM_TCS_CMD(commit, valid, vote_x, vote_y)		\
-> +	(((commit) << BCM_TCS_CMD_COMMIT_SHFT) |		\
-> +	((valid) << BCM_TCS_CMD_VALID_SHFT) |			\
-> +	((cpu_to_le32(vote_x) &					\
-> +	BCM_TCS_CMD_VOTE_MASK) << BCM_TCS_CMD_VOTE_X_SHFT) |	\
-> +	((cpu_to_le32(vote_y) &					\
-> +	BCM_TCS_CMD_VOTE_MASK) << BCM_TCS_CMD_VOTE_Y_SHFT))
-> +
->  #endif /* __SOC_QCOM_TCS_H__ */
-> 
+> -- 
+> 2.17.1
+
+-- 
+~Vinod
