@@ -2,122 +2,70 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 436DE73FE7
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Jul 2019 22:36:37 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 906CB7401E
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Jul 2019 22:37:47 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2388148AbfGXUgP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 24 Jul 2019 16:36:15 -0400
-Received: from smtp.codeaurora.org ([198.145.29.96]:52914 "EHLO
-        smtp.codeaurora.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726632AbfGXUgO (ORCPT
+        id S2387765AbfGXUhk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 24 Jul 2019 16:37:40 -0400
+Received: from mail-io1-f65.google.com ([209.85.166.65]:42051 "EHLO
+        mail-io1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727624AbfGXUhj (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 24 Jul 2019 16:36:14 -0400
-Received: by smtp.codeaurora.org (Postfix, from userid 1000)
-        id 4F28560588; Wed, 24 Jul 2019 20:36:13 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
-        s=default; t=1564000573;
-        bh=LeXYBF4XZF+Eab2E7VFMqCpPAbcHZ5qGNQCkNioMI04=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=e+1uovH+DfPEa13HCBRKq6kYXCNe6BUY6BmVLWd3OKIn8uKQvdwzAsfQWJOsWBzQo
-         3pvyITvUwHHKKGVn2H9TVqF4fswgAvsjnPVfGJHJrwFaAxji7ZtNGamZ99JAUT88Z6
-         5jWTHlmS8r64iMczX1k0rRZfF/s0hfElDANZnM5c=
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        pdx-caf-mail.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.7 required=2.0 tests=ALL_TRUSTED,BAYES_00,
-        DKIM_INVALID,DKIM_SIGNED,SPF_NONE autolearn=no autolearn_force=no
-        version=3.4.0
-Received: from localhost (i-global254.qualcomm.com [199.106.103.254])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        (Authenticated sender: ilina@smtp.codeaurora.org)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 4B4F460392;
-        Wed, 24 Jul 2019 20:36:11 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
-        s=default; t=1564000572;
-        bh=LeXYBF4XZF+Eab2E7VFMqCpPAbcHZ5qGNQCkNioMI04=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=a7cYdd2xjX2abQ5f3LG+OcGurndQp/AjKXZLkjoyWEbhzmCKz5cGH9RYpwbVgNul3
-         DXzxFpU9IaTIG/TbQawoIbIfm78gJR8tDStF9ih2Mr3HYMPS5o2h5Yt5g6r/4sKjZM
-         ieya17n3ksapj9vhBRNQYj6TdCHqcfu4GSdYaPg0=
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 4B4F460392
-Authentication-Results: pdx-caf-mail.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: pdx-caf-mail.web.codeaurora.org; spf=none smtp.mailfrom=ilina@codeaurora.org
-Date:   Wed, 24 Jul 2019 14:36:10 -0600
-From:   Lina Iyer <ilina@codeaurora.org>
-To:     Stephen Boyd <swboyd@chromium.org>
-Cc:     agross@kernel.org, bjorn.andersson@linaro.org,
-        linux-arm-msm@vger.kernel.org, linux-soc@vger.kernel.org,
-        rnayak@codeaurora.org, linux-kernel@vger.kernel.org,
-        linux-pm@vger.kernel.org, dianders@chromium.org,
-        mkshah@codeaurora.org
-Subject: Re: [PATCH V2 2/4] drivers: qcom: rpmh-rsc: avoid locking in the
- interrupt handler
-Message-ID: <20190724203610.GE18620@codeaurora.org>
-References: <20190722215340.3071-1-ilina@codeaurora.org>
- <20190722215340.3071-2-ilina@codeaurora.org>
- <5d3769df.1c69fb81.55d03.aa33@mx.google.com>
- <20190724145251.GB18620@codeaurora.org>
- <5d38b38e.1c69fb81.e8e5d.035b@mx.google.com>
+        Wed, 24 Jul 2019 16:37:39 -0400
+Received: by mail-io1-f65.google.com with SMTP id e20so62067789iob.9;
+        Wed, 24 Jul 2019 13:37:38 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=d4NY+Zoiq+xj4BLlyojFL41fph5cwqpn3LM6JI8x6A0=;
+        b=kIAI2nru5rHtIBKOoUwz36Wk+tEKSwSVe9DMlLSMXwwZaGhOnYr0VWPI4U0HV8iLn9
+         aFPzJ1lo4oFrDoxX3V9uN8D2eKQMXhrO1oTxeSgp7Y7ozYUDZd8NEOntZHu7tZaFuaNu
+         aquZZuMTpytT86gGyfBqYwoP01/afCRYynpDkklt1odwbQEEvKFAe01ti1WTyjk6rDdM
+         T9eombebpG3S1kifWIHRI9hMkH9J02bBIb0QMsF0HYIb5XkXuVsVFvp4rjePn7lYJIle
+         K2gpG0xqW+I4I5KFfPp2dAu3IpJnKnsmFzhdgI2MZA7WQEftIn7rXvZLZ3sCaKjGiekt
+         s/lQ==
+X-Gm-Message-State: APjAAAWKbM0tX2vkswHdVA90VTrtX5XiZFa95Ko56RVnB5Llc6dFYijx
+        LvZE2XvO/lkqIC8pCRtK1Q==
+X-Google-Smtp-Source: APXvYqyhpV3f2IHu4wbrNhH0RD6PhImD4v+i3f6JW3doG56hhB/77vFnVZDx/SMcwhFIB1N+Acceew==
+X-Received: by 2002:a02:ad15:: with SMTP id s21mr89937576jan.47.1564000658461;
+        Wed, 24 Jul 2019 13:37:38 -0700 (PDT)
+Received: from localhost ([64.188.179.254])
+        by smtp.gmail.com with ESMTPSA id b8sm38662840ioj.16.2019.07.24.13.37.37
+        (version=TLS1_3 cipher=AEAD-AES256-GCM-SHA384 bits=256/256);
+        Wed, 24 Jul 2019 13:37:37 -0700 (PDT)
+Date:   Wed, 24 Jul 2019 14:37:37 -0600
+From:   Rob Herring <robh@kernel.org>
+To:     Gokul Sriram Palanisamy <gokulsri@codeaurora.org>
+Cc:     agross@kernel.org, david.brown@linaro.org, mark.rutland@arm.com,
+        mturquette@baylibre.com, sboyd@kernel.org,
+        jassisinghbrar@gmail.com, ohad@wizery.com,
+        bjorn.andersson@linaro.org, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-clk@vger.kernel.org, linux-remoteproc@vger.kernel.org,
+        sricharan@codeaurora.org
+Subject: Re: [PATCH 06/12] dt-bindings: clock: qcom: Add reset for WCSSAON
+Message-ID: <20190724203737.GA27783@bogus>
+References: <1562859668-14209-1-git-send-email-gokulsri@codeaurora.org>
+ <1562859668-14209-7-git-send-email-gokulsri@codeaurora.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii; format=flowed
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <5d38b38e.1c69fb81.e8e5d.035b@mx.google.com>
-User-Agent: Mutt/1.11.3 (2019-02-01)
+In-Reply-To: <1562859668-14209-7-git-send-email-gokulsri@codeaurora.org>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Jul 24 2019 at 13:38 -0600, Stephen Boyd wrote:
->Quoting Lina Iyer (2019-07-24 07:52:51)
->> On Tue, Jul 23 2019 at 14:11 -0600, Stephen Boyd wrote:
->> >Quoting Lina Iyer (2019-07-22 14:53:38)
->> >> Avoid locking in the interrupt context to improve latency. Since we
->> >> don't lock in the interrupt context, it is possible that we now could
->> >> race with the DRV_CONTROL register that writes the enable register and
->> >> cleared by the interrupt handler. For fire-n-forget requests, the
->> >> interrupt may be raised as soon as the TCS is triggered and the IRQ
->> >> handler may clear the enable bit before the DRV_CONTROL is read back.
->> >>
->> >> Use the non-sync variant when enabling the TCS register to avoid reading
->> >> back a value that may been cleared because the interrupt handler ran
->> >> immediately after triggering the TCS.
->> >>
->> >> Signed-off-by: Lina Iyer <ilina@codeaurora.org>
->> >> ---
->> >
->> >I have to read this patch carefully. The commit text isn't convincing me
->> >that it is actually safe to make this change. It mostly talks about the
->> >performance improvements and how we need to fix __tcs_trigger(), which
->> >is good, but I was hoping to be convinced that not grabbing the lock
->> >here is safe.
->> >
->> >How do we ensure that drv->tcs_in_use is cleared before we call
->> >tcs_write() and try to look for a free bit? Isn't it possible that we'll
->> >get into a situation where the bitmap is all used up but the hardware
->> >has just received an interrupt and is going to clear out a bit and then
->> >an rpmh write fails with -EBUSY?
->> >
->> If we have a situation where there are no available free bits, we retry
->> and that is part of the function. Since we have only 2 TCSes avaialble
->> to write to the hardware and there could be multiple requests coming in,
->> it is a very common situation. We try and acquire the drv->lock and if
->> there are free TCS available and if available mark them busy and send
->> our requests. If there are none available, we keep retrying.
->>
->
->Ok. I wonder if we need some sort of barriers here too, like an
->smp_mb__after_atomic()? That way we can make sure that the write to
->clear the bit is seen by another CPU that could be spinning forever
->waiting for that bit to be cleared? Before this change the spinlock
->would be guaranteed to make these barriers for us, but now that doesn't
->seem to be the case. I really hope that this whole thing can be changed
->to be a mutex though, in which case we can use the bit_wait() API, etc.
->to put tasks to sleep while RPMh is processing things.
->
-We have drivers that want to send requests in atomic contexts and
-therefore mutex locks would not work.
+On Thu, Jul 11, 2019 at 09:11:02PM +0530, Gokul Sriram Palanisamy wrote:
+> Add binding for WCSSAON reset required for Q6v5 reset on IPQ8074 SoC.
+> 
+> Signed-off-by: Gokul Sriram Palanisamy <gokulsri@codeaurora.org>
+> Signed-off-by: Sricharan R <sricharan@codeaurora.org>
+> Signed-off-by: Nikhil Prakash V <nprakash@codeaurora.org>
+> ---
+>  include/dt-bindings/clock/qcom,gcc-ipq8074.h | 1 +
+>  1 file changed, 1 insertion(+)
 
---Lina
-
+Acked-by: Rob Herring <robh@kernel.org>
