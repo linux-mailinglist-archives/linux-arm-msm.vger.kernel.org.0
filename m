@@ -2,87 +2,84 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 7758772D3E
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Jul 2019 13:16:58 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 92FA873146
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Jul 2019 16:11:44 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726681AbfGXLQx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 24 Jul 2019 07:16:53 -0400
-Received: from ns.iliad.fr ([212.27.33.1]:56064 "EHLO ns.iliad.fr"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726070AbfGXLQw (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 24 Jul 2019 07:16:52 -0400
-Received: from ns.iliad.fr (localhost [127.0.0.1])
-        by ns.iliad.fr (Postfix) with ESMTP id A083C20609;
-        Wed, 24 Jul 2019 13:16:50 +0200 (CEST)
-Received: from [192.168.108.49] (freebox.vlq16.iliad.fr [213.36.7.13])
-        by ns.iliad.fr (Postfix) with ESMTP id 88C652018B;
-        Wed, 24 Jul 2019 13:16:50 +0200 (CEST)
-Subject: Re: [PATCH] arm64: dts: qcom: msm8998: Node ordering, address
- cleanups
-To:     Jeffrey Hugo <jeffrey.l.hugo@gmail.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     Rob Herring <robh+dt@kernel.org>,
-        Mark Rutland <mark.rutland@arm.com>,
-        MSM <linux-arm-msm@vger.kernel.org>,
-        DT <devicetree@vger.kernel.org>,
-        LKML <linux-kernel@vger.kernel.org>
-References: <20190722165823.21539-1-jeffrey.l.hugo@gmail.com>
-From:   Marc Gonzalez <marc.w.gonzalez@free.fr>
-Message-ID: <2165bbd3-aa60-bec0-4ee7-dfb7dc1dd1ad@free.fr>
-Date:   Wed, 24 Jul 2019 13:16:50 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.8.0
+        id S1727238AbfGXOLn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 24 Jul 2019 10:11:43 -0400
+Received: from mail-pg1-f195.google.com ([209.85.215.195]:42638 "EHLO
+        mail-pg1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727209AbfGXOLn (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 24 Jul 2019 10:11:43 -0400
+Received: by mail-pg1-f195.google.com with SMTP id t132so21295150pgb.9
+        for <linux-arm-msm@vger.kernel.org>; Wed, 24 Jul 2019 07:11:43 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=message-id:mime-version:content-transfer-encoding:in-reply-to
+         :references:subject:to:cc:from:user-agent:date;
+        bh=yf08E+49qJAyoxiq4Pp3i3pHItoQTgkz38vEqql7VE0=;
+        b=dpWg9Xr6L0D7Z/Ku2YJ42eQE4yvd1e82KQHr2lLRD4ftXtEpX04IVbpT+HH9YHiRTf
+         gmMxS12NNdYsm8KVCb9Gb6fwt6N01iADdocH93+17UiKD01ObzlsdYaBock1ojwXxx2Q
+         uS1Q86VImSm1smN8OJMXJTvKKqz9V/NLqj9K8=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:message-id:mime-version
+         :content-transfer-encoding:in-reply-to:references:subject:to:cc:from
+         :user-agent:date;
+        bh=yf08E+49qJAyoxiq4Pp3i3pHItoQTgkz38vEqql7VE0=;
+        b=uE4T9mKUazZWCZN7gdHRQWmMD3NKW72Z7S1dWiTOMlXx3n+UXsvu6skmzyVm/4p4uV
+         MmadgVjPn0NEKWwURixWAS9jJwjV30EDAnZNRPygZ33qD4NxX9PEAE24v/5qTBebgdrJ
+         2UVbD4wcdzQmGsWIc2usUlMrBwNU0UadsbsTnvuwM7oPPjBQPmXvnL1vu4eSyrmrdDY2
+         8Fc0jVAWEtaVrdn0c7q58pSv6ViML9os1tmA6IfVkNHLCTRX3wABIUFNBmLFIWZ1lX7K
+         YgLZWDQTnds5fNI8Vbq1xlMmFPwc4Qg8jpCEBZezYrADjAqMFgoIwT/Gaac41GKMs3c0
+         ArkQ==
+X-Gm-Message-State: APjAAAXECQ6MvZdgQKnd6NnDgTk1JJuwsPUVYh2x9e92dEHG5yuRPzYi
+        eHFxnOEYQJKPzr4giQyhp37i5Gxc5So=
+X-Google-Smtp-Source: APXvYqzexkRd5KbJ9v+zC2RclMHc1mgtJ7nJ19cyNya96Y2QMzMnyKVcrwRGhsiI6ZW5BlT/SegIgw==
+X-Received: by 2002:a63:c64b:: with SMTP id x11mr81481881pgg.319.1563977502745;
+        Wed, 24 Jul 2019 07:11:42 -0700 (PDT)
+Received: from chromium.org ([2620:15c:202:1:fa53:7765:582b:82b9])
+        by smtp.gmail.com with ESMTPSA id l6sm46519081pga.72.2019.07.24.07.11.42
+        (version=TLS1_3 cipher=AEAD-AES256-GCM-SHA384 bits=256/256);
+        Wed, 24 Jul 2019 07:11:42 -0700 (PDT)
+Message-ID: <5d38671e.1c69fb81.1f6f4.a5a1@mx.google.com>
+Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
-In-Reply-To: <20190722165823.21539-1-jeffrey.l.hugo@gmail.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
-X-Virus-Scanned: ClamAV using ClamSMTP ; ns.iliad.fr ; Wed Jul 24 13:16:50 2019 +0200 (CEST)
+Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <20190724044906.12007-5-vkoul@kernel.org>
+References: <20190724044906.12007-1-vkoul@kernel.org> <20190724044906.12007-5-vkoul@kernel.org>
+Subject: Re: [PATCH v2 4/5] arm64: dts: qcom: sdm845: remove macro from unit name
+To:     Andy Gross <agross@kernel.org>, Vinod Koul <vkoul@kernel.org>
+Cc:     linux-arm-msm@vger.kernel.org,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Vinod Koul <vkoul@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Mark Rutland <mark.rutland@arm.com>,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Amit Kucheria <amit.kucheria@verdurent.com>,
+        Marc Gonzalez <marc.w.gonzalez@free.fr>
+From:   Stephen Boyd <swboyd@chromium.org>
+User-Agent: alot/0.8.1
+Date:   Wed, 24 Jul 2019 07:11:41 -0700
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 22/07/2019 18:58, Jeffrey Hugo wrote:
-
-> DT nodes should be ordered by address, then node name, and finally label.
-> The msm8998 dtsi does not follow this, so clean it up by reordering the
-> nodes.  While we are at it, extend the addresses to be fully 32-bits wide
-> so that ordering is easy to determine when adding new nodes.  Also, two
-> or so nodes had the wrong address value in their node name (did not match
-> the reg property), so fix those up as well.
-> 
-> Hopefully going forward, things can be maintained so that a cleanup like
-> this is not needed.
-> 
-> Signed-off-by: Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
+Quoting Vinod Koul (2019-07-23 21:49:05)
+> Unit name is supposed to be a number, using a macro with hex value is
+> not recommended, so add the value in unit name.
+>=20
+> arch/arm64/boot/dts/qcom/pm8998.dtsi:81.18-84.6: Warning (unit_address_fo=
+rmat): /soc/spmi@c440000/pmic@0/adc@3100/adc-chan@0x06: unit name should no=
+t have leading "0x"
+> arch/arm64/boot/dts/qcom/pm8998.dtsi:81.18-84.6: Warning (unit_address_fo=
+rmat): /soc/spmi@c440000/pmic@0/adc@3100/adc-chan@0x06: unit name should no=
+t have leading 0s
+>=20
+> Signed-off-by: Vinod Koul <vkoul@kernel.org>
 > ---
->  arch/arm64/boot/dts/qcom/msm8998.dtsi | 254 +++++++++++++-------------
->  1 file changed, 127 insertions(+), 127 deletions(-)
 
-LGTM.
+Reviewed-by: Stephen Boyd <swboyd@chromium.org>
 
-Reviewed-by: Marc Gonzalez <marc.w.gonzalez@free.fr>
-
-Rob, Mark: when there are multiple reg properties, why is the convention
-to use the *first* address in the node's name, rather than the lowest
-address?
-
-e.g.
-
-		spmi_bus: spmi@800f000 {
-			compatible = "qcom,spmi-pmic-arb";
-			reg =	<0x0800f000 0x1000>,
-				<0x08400000 0x1000000>,
-				<0x09400000 0x1000000>,
-				<0x0a400000 0x220000>,
-				<0x0800a000 0x3000>;
-			reg-names = "core", "chnls", "obsrvr", "intr", "cnfg";
-
-"spmi@800f000" instead of "spmi@800a000"
-
-Especially, since the reg props could be in any order here, given the
-lookup by name.
-
-Regards.
