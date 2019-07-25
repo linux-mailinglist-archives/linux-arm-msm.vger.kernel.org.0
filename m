@@ -2,281 +2,134 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 26F6975615
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Jul 2019 19:48:14 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 53ECE75637
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Jul 2019 19:51:06 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2403941AbfGYRsG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 25 Jul 2019 13:48:06 -0400
-Received: from mail-pf1-f194.google.com ([209.85.210.194]:32989 "EHLO
-        mail-pf1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2403927AbfGYRsD (ORCPT
+        id S1726444AbfGYRvF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 25 Jul 2019 13:51:05 -0400
+Received: from mail-ed1-f65.google.com ([209.85.208.65]:37791 "EHLO
+        mail-ed1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725808AbfGYRvF (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 25 Jul 2019 13:48:03 -0400
-Received: by mail-pf1-f194.google.com with SMTP id g2so23127078pfq.0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 25 Jul 2019 10:48:03 -0700 (PDT)
+        Thu, 25 Jul 2019 13:51:05 -0400
+Received: by mail-ed1-f65.google.com with SMTP id w13so51035148eds.4;
+        Thu, 25 Jul 2019 10:51:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=GovT0wzh5qxyqV9OneNnQImH0OsXKl2tN6pFF75ONIw=;
-        b=s/bw04vkMYnY+EKtQQO95I+PcZHokjnqpIQJmgnjVt0v3kddjrHkXiNVmJ49oyKvG7
-         3mVtuJBY+seXVwEwQOWcnPe8OKRqBcoduh3YytdhvYO5doi0ioq3ZhQMMmZl6OpEvcd1
-         LyGCE91q6aFZDepZVSpp4Sv6KqnXlvP9366iKr7WrqSAkZnkIo7EkKruobECtB9Bzlob
-         Lb7UGj25ZI2ojkvJtcFJASgDwM6cmgHdJt2QqgDBL+j9YG9mp2lqVL3nPjGpVWnlnCA/
-         BzqSwm7A6+9TfAk9Lu6j64hFiGrUYMk92Dj1Kz7Gwxvid1m57ct78IYzuvria/LNcO6w
-         /5yg==
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=rLx1WxxS2eiFupzGOfH7X3JpoyBVgunYKBsWNt5yLUw=;
+        b=bCgV0Y0KK+hZmQcR1Ije8gmw+VFkvFkFIk7n6PTSK4+JTJutIG+r8glT/WEdzuFC10
+         O3KQ4Siab33aiSEyEsyVYzHGz/nsrTIerU+zKakzfKJf4AMYChTdkwaNgn70ISdnNF3c
+         TLSUlrxjEMfU+AYpWgjfD92PU+aG7Wdh4ZlNR0UEV+INBwHfjkgCfyqB3c9aQxux/GIF
+         /JNsbzuvL4tYp+0BsS2aeaToEyI8t1OuTNiG9EtNGBpV3IviSxEx6Jkv2tedyJlpVIMf
+         bJc+oDf9i99jxX1rArWlfw4m4NL/MpETs01X74VX5XoLRBZE/jAVi7B0aYpWfHywarah
+         jvlA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=GovT0wzh5qxyqV9OneNnQImH0OsXKl2tN6pFF75ONIw=;
-        b=qPRWqzT3XPYM528OWInCIyb9fZZwxSgvqB7SYX/lkQtfwUV0isN26XwA1w6YjoVgd4
-         wNKkrl+gTKhZfWEBlfwlocAkc4rbhT537lwWiGuSe+FuXXQESSHpLv8TRck2Rcx2h4pj
-         sWTPfAZOGj0H5BAiKW1B7ySGwG7DzI1iH/rQPW+LVgEspSRbXZmnpq99PKKSQB2QpbGc
-         i2U0uPrW8euzT1pYTqakM4STtlHrti+oya2nSw/McxSDk3ND1PcEpTGIhd5M4rBHQPux
-         zeuk9YRFR7/QqhhBoL/sqQr5WXktF54dhFxSn5v6Sbm+3+uSC8BRkMxiWu/PMuvHllNi
-         QUAQ==
-X-Gm-Message-State: APjAAAX5fnXdBquG7Y6Am9sYgG/kke7kUEotkE5NWvh9N65j+WWf6JOn
-        vmn08gtLfYo7LE27Hjn7lvlvnQ==
-X-Google-Smtp-Source: APXvYqzPS2oBXex2AyU84xtOTnQkkSqQOJSpkxMxiuqCZBz7N5HtlPIK62mIcgu6+zmZeEvsY5Cqmw==
-X-Received: by 2002:a17:90b:28f:: with SMTP id az15mr92664666pjb.18.1564076883064;
-        Thu, 25 Jul 2019 10:48:03 -0700 (PDT)
-Received: from localhost.localdomain (104-188-17-28.lightspeed.sndgca.sbcglobal.net. [104.188.17.28])
-        by smtp.gmail.com with ESMTPSA id r2sm68103389pfl.67.2019.07.25.10.48.01
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 25 Jul 2019 10:48:02 -0700 (PDT)
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Kalle Valo <kvalo@codeaurora.org>,
-        Govind Singh <govinds@codeaurora.org>
-Cc:     "David S. Miller" <davem@davemloft.net>,
-        ath10k@lists.infradead.org, linux-wireless@vger.kernel.org,
-        netdev@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org
-Subject: [PATCH 3/3] ath10k: Use standard bulk clock API in snoc
-Date:   Thu, 25 Jul 2019 10:47:55 -0700
-Message-Id: <20190725174755.23432-4-bjorn.andersson@linaro.org>
-X-Mailer: git-send-email 2.18.0
-In-Reply-To: <20190725174755.23432-1-bjorn.andersson@linaro.org>
-References: <20190725174755.23432-1-bjorn.andersson@linaro.org>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=rLx1WxxS2eiFupzGOfH7X3JpoyBVgunYKBsWNt5yLUw=;
+        b=Ajq3ff3yw9QYdg5esNuProiKm/rPY+x9J0QPOndKs5gIt7kJHm2hI00F+oY9s/XD+t
+         99CSm2m6XU2hz6gGCu6LDlQL441Bg9/0hgtQujTN41HvgVx5oOczwI2IJTyRufpZBJ8f
+         Ht7AgcvKmSH5qR654tnI/dY0oCnkOxAuPVIhCiEruNcxE1AkNBX1I6pKzuVV9pTvwKHr
+         M7Js/KJ158V4CS7dfmuLrhXEBootoFRzbjmysjVE1gr5J5l7epc9GgSahTkJHexf82Pe
+         uiCOzeMnSNZWSG9m9hTRyeDKwacZ7kQF11HpivrkYEdMK9NUXWlHCgFhu/mK3LYR7Gkx
+         QXxA==
+X-Gm-Message-State: APjAAAVGjSKR3u8gDjkKHhZw8R/5nZDnsWaXWfuvgKetITDApQrpr73X
+        o0uzVbte2m7UiZvH6zBacB2mdPYMeGZfryphBGE=
+X-Google-Smtp-Source: APXvYqx0hq85a8gR6SvZiwDeUgHmw4HBnllzoppGUeegEPb0sAcSwB9g+0T/RlSOGs1+9qmJErJLRLdvNOJgJ7TKSlg=
+X-Received: by 2002:a17:906:f85:: with SMTP id q5mr70131087ejj.192.1564077063087;
+ Thu, 25 Jul 2019 10:51:03 -0700 (PDT)
+MIME-Version: 1.0
+References: <1564073588-27386-1-git-send-email-jcrouse@codeaurora.org>
+In-Reply-To: <1564073588-27386-1-git-send-email-jcrouse@codeaurora.org>
+From:   Rob Clark <robdclark@gmail.com>
+Date:   Thu, 25 Jul 2019 10:50:51 -0700
+Message-ID: <CAF6AEGus9DtNou8KHaVK=_-mgc5JYH=cVoiTABsm=jBkXo2v2w@mail.gmail.com>
+Subject: Re: [PATCH] drm/msm: Annotate intentional switch statement fall throughs
+To:     Jordan Crouse <jcrouse@codeaurora.org>
+Cc:     freedreno <freedreno@lists.freedesktop.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        David Airlie <airlied@linux.ie>, Sean Paul <sean@poorly.run>,
+        Kees Cook <keescook@chromium.org>,
+        Thomas Zimmermann <tzimmermann@suse.de>,
+        Sharat Masetty <smasetty@codeaurora.org>,
+        dri-devel <dri-devel@lists.freedesktop.org>,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        Douglas Anderson <dianders@chromium.org>,
+        Thomas Gleixner <tglx@linutronix.de>,
+        Jonathan Marek <jonathan@marek.ca>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Jeffrey Hugo <jeffrey.l.hugo@gmail.com>,
+        Mamta Shukla <mamtashukla555@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-No frequency is currently specified for the single clock defined in the
-snoc driver, so the clock wrappers reimplements the standard bulk API
-provided by the clock framework. Change to this.
+On Thu, Jul 25, 2019 at 9:53 AM Jordan Crouse <jcrouse@codeaurora.org> wrote:
+>
+> Explicitly mark intentional fall throughs in switch statements to keep
+> -Wimplicit-fallthrough from complaining.
+>
+> Signed-off-by: Jordan Crouse <jcrouse@codeaurora.org>
 
-The single clock defined is marked as optional so this version of the
-get API is used, but might need to be reconsidered in the future.
+Reviewed-by: Rob Clark <robdclark@gmail.com>
 
-Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
----
- drivers/net/wireless/ath/ath10k/snoc.c | 125 ++++---------------------
- drivers/net/wireless/ath/ath10k/snoc.h |  11 +--
- 2 files changed, 21 insertions(+), 115 deletions(-)
-
-diff --git a/drivers/net/wireless/ath/ath10k/snoc.c b/drivers/net/wireless/ath/ath10k/snoc.c
-index 1c9ff7e53e2f..80ce68c0f75e 100644
---- a/drivers/net/wireless/ath/ath10k/snoc.c
-+++ b/drivers/net/wireless/ath/ath10k/snoc.c
-@@ -43,8 +43,8 @@ static const char * const ath10k_regulators[] = {
- 	"vdd-3.3-ch0",
- };
- 
--static struct ath10k_clk_info clk_cfg[] = {
--	{NULL, "cxo_ref_clk_pin", 0, false},
-+static const char * const ath10k_clocks[] = {
-+	"cxo_ref_clk_pin",
- };
- 
- static void ath10k_snoc_htc_tx_cb(struct ath10k_ce_pipe *ce_state);
-@@ -1346,104 +1346,6 @@ static void ath10k_snoc_release_resource(struct ath10k *ar)
- 		ath10k_ce_free_pipe(ar, i);
- }
- 
--static int ath10k_get_clk_info(struct ath10k *ar, struct device *dev,
--			       struct ath10k_clk_info *clk_info)
--{
--	struct clk *handle;
--	int ret = 0;
--
--	handle = devm_clk_get(dev, clk_info->name);
--	if (IS_ERR(handle)) {
--		ret = PTR_ERR(handle);
--		if (clk_info->required) {
--			ath10k_err(ar, "snoc clock %s isn't available: %d\n",
--				   clk_info->name, ret);
--			return ret;
--		}
--		ath10k_dbg(ar, ATH10K_DBG_SNOC, "snoc ignoring clock %s: %d\n",
--			   clk_info->name,
--			   ret);
--		return 0;
--	}
--
--	ath10k_dbg(ar, ATH10K_DBG_SNOC, "snoc clock %s freq %u\n",
--		   clk_info->name, clk_info->freq);
--
--	clk_info->handle = handle;
--
--	return ret;
--}
--
--static int ath10k_snoc_clk_init(struct ath10k *ar)
--{
--	struct ath10k_snoc *ar_snoc = ath10k_snoc_priv(ar);
--	struct ath10k_clk_info *clk_info;
--	int ret = 0;
--	int i;
--
--	for (i = 0; i < ARRAY_SIZE(clk_cfg); i++) {
--		clk_info = &ar_snoc->clk[i];
--
--		if (!clk_info->handle)
--			continue;
--
--		ath10k_dbg(ar, ATH10K_DBG_SNOC, "snoc clock %s being enabled\n",
--			   clk_info->name);
--
--		if (clk_info->freq) {
--			ret = clk_set_rate(clk_info->handle, clk_info->freq);
--
--			if (ret) {
--				ath10k_err(ar, "failed to set clock %s freq %u\n",
--					   clk_info->name, clk_info->freq);
--				goto err_clock_config;
--			}
--		}
--
--		ret = clk_prepare_enable(clk_info->handle);
--		if (ret) {
--			ath10k_err(ar, "failed to enable clock %s\n",
--				   clk_info->name);
--			goto err_clock_config;
--		}
--	}
--
--	return 0;
--
--err_clock_config:
--	for (i = i - 1; i >= 0; i--) {
--		clk_info = &ar_snoc->clk[i];
--
--		if (!clk_info->handle)
--			continue;
--
--		clk_disable_unprepare(clk_info->handle);
--	}
--
--	return ret;
--}
--
--static int ath10k_snoc_clk_deinit(struct ath10k *ar)
--{
--	struct ath10k_snoc *ar_snoc = ath10k_snoc_priv(ar);
--	struct ath10k_clk_info *clk_info;
--	int i;
--
--	for (i = 0; i < ARRAY_SIZE(clk_cfg); i++) {
--		clk_info = &ar_snoc->clk[i];
--
--		if (!clk_info->handle)
--			continue;
--
--		ath10k_dbg(ar, ATH10K_DBG_SNOC, "snoc clock %s being disabled\n",
--			   clk_info->name);
--
--		clk_disable_unprepare(clk_info->handle);
--	}
--
--	return 0;
--}
--
- static int ath10k_hw_power_on(struct ath10k *ar)
- {
- 	struct ath10k_snoc *ar_snoc = ath10k_snoc_priv(ar);
-@@ -1455,7 +1357,7 @@ static int ath10k_hw_power_on(struct ath10k *ar)
- 	if (ret)
- 		return ret;
- 
--	ret = ath10k_snoc_clk_init(ar);
-+	ret = clk_bulk_prepare_enable(ar_snoc->num_clks, ar_snoc->clks);
- 	if (ret)
- 		goto vreg_off;
- 
-@@ -1472,7 +1374,7 @@ static int ath10k_hw_power_off(struct ath10k *ar)
- 
- 	ath10k_dbg(ar, ATH10K_DBG_SNOC, "soc power off\n");
- 
--	ath10k_snoc_clk_deinit(ar);
-+	clk_bulk_disable_unprepare(ar_snoc->num_clks, ar_snoc->clks);
- 
- 	return regulator_bulk_disable(ar_snoc->num_vregs, ar_snoc->vregs);
- }
-@@ -1560,13 +1462,22 @@ static int ath10k_snoc_probe(struct platform_device *pdev)
- 	if (ret < 0)
- 		goto err_free_irq;
- 
--	ar_snoc->clk = clk_cfg;
--	for (i = 0; i < ARRAY_SIZE(clk_cfg); i++) {
--		ret = ath10k_get_clk_info(ar, dev, &ar_snoc->clk[i]);
--		if (ret)
--			goto err_free_irq;
-+	ar_snoc->num_clks = ARRAY_SIZE(ath10k_clocks);
-+	ar_snoc->clks = devm_kcalloc(&pdev->dev, ar_snoc->num_clks,
-+				     sizeof(*ar_snoc->clks), GFP_KERNEL);
-+	if (!ar_snoc->clks) {
-+		ret = -ENOMEM;
-+		goto err_free_irq;
- 	}
- 
-+	for (i = 0; i < ar_snoc->num_clks; i++)
-+		ar_snoc->clks[i].id = ath10k_clocks[i];
-+
-+	ret = devm_clk_bulk_get_optional(&pdev->dev, ar_snoc->num_clks,
-+					 ar_snoc->clks);
-+	if (ret)
-+		goto err_free_irq;
-+
- 	ret = ath10k_hw_power_on(ar);
- 	if (ret) {
- 		ath10k_err(ar, "failed to power on device: %d\n", ret);
-diff --git a/drivers/net/wireless/ath/ath10k/snoc.h b/drivers/net/wireless/ath/ath10k/snoc.h
-index 3965ddf66d74..d2449a3b4a8f 100644
---- a/drivers/net/wireless/ath/ath10k/snoc.h
-+++ b/drivers/net/wireless/ath/ath10k/snoc.h
-@@ -42,13 +42,6 @@ struct ath10k_snoc_ce_irq {
- 	u32 irq_line;
- };
- 
--struct ath10k_clk_info {
--	struct clk *handle;
--	const char *name;
--	u32 freq;
--	bool required;
--};
--
- enum ath10k_snoc_flags {
- 	ATH10K_SNOC_FLAG_REGISTERED,
- 	ATH10K_SNOC_FLAG_UNREGISTERING,
-@@ -56,6 +49,7 @@ enum ath10k_snoc_flags {
- 	ATH10K_SNOC_FLAG_8BIT_HOST_CAP_QUIRK,
- };
- 
-+struct clk_bulk_data;
- struct regulator_bulk_data;
- 
- struct ath10k_snoc {
-@@ -71,7 +65,8 @@ struct ath10k_snoc {
- 	struct timer_list rx_post_retry;
- 	struct regulator_bulk_data *vregs;
- 	size_t num_vregs;
--	struct ath10k_clk_info *clk;
-+	struct clk_bulk_data *clks;
-+	size_t num_clks;
- 	struct ath10k_qmi *qmi;
- 	unsigned long flags;
- };
--- 
-2.18.0
-
+> ---
+>
+>  drivers/gpu/drm/msm/adreno/a5xx_gpu.c   | 2 ++
+>  drivers/gpu/drm/msm/adreno/a6xx_gpu.c   | 1 +
+>  drivers/gpu/drm/msm/adreno/adreno_gpu.c | 1 +
+>  3 files changed, 4 insertions(+)
+>
+> diff --git a/drivers/gpu/drm/msm/adreno/a5xx_gpu.c b/drivers/gpu/drm/msm/adreno/a5xx_gpu.c
+> index 1671db4..e9c55d1 100644
+> --- a/drivers/gpu/drm/msm/adreno/a5xx_gpu.c
+> +++ b/drivers/gpu/drm/msm/adreno/a5xx_gpu.c
+> @@ -59,6 +59,7 @@ static void a5xx_submit_in_rb(struct msm_gpu *gpu, struct msm_gem_submit *submit
+>                 case MSM_SUBMIT_CMD_CTX_RESTORE_BUF:
+>                         if (priv->lastctx == ctx)
+>                                 break;
+> +                       /* fall-thru */
+>                 case MSM_SUBMIT_CMD_BUF:
+>                         /* copy commands into RB: */
+>                         obj = submit->bos[submit->cmd[i].idx].obj;
+> @@ -149,6 +150,7 @@ static void a5xx_submit(struct msm_gpu *gpu, struct msm_gem_submit *submit,
+>                 case MSM_SUBMIT_CMD_CTX_RESTORE_BUF:
+>                         if (priv->lastctx == ctx)
+>                                 break;
+> +                       /* fall-thru */
+>                 case MSM_SUBMIT_CMD_BUF:
+>                         OUT_PKT7(ring, CP_INDIRECT_BUFFER_PFE, 3);
+>                         OUT_RING(ring, lower_32_bits(submit->cmd[i].iova));
+> diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
+> index be39cf0..dc8ec2c 100644
+> --- a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
+> +++ b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
+> @@ -115,6 +115,7 @@ static void a6xx_submit(struct msm_gpu *gpu, struct msm_gem_submit *submit,
+>                 case MSM_SUBMIT_CMD_CTX_RESTORE_BUF:
+>                         if (priv->lastctx == ctx)
+>                                 break;
+> +                       /* fall-thru */
+>                 case MSM_SUBMIT_CMD_BUF:
+>                         OUT_PKT7(ring, CP_INDIRECT_BUFFER_PFE, 3);
+>                         OUT_RING(ring, lower_32_bits(submit->cmd[i].iova));
+> diff --git a/drivers/gpu/drm/msm/adreno/adreno_gpu.c b/drivers/gpu/drm/msm/adreno/adreno_gpu.c
+> index 9acbbc0..048c8be 100644
+> --- a/drivers/gpu/drm/msm/adreno/adreno_gpu.c
+> +++ b/drivers/gpu/drm/msm/adreno/adreno_gpu.c
+> @@ -428,6 +428,7 @@ void adreno_submit(struct msm_gpu *gpu, struct msm_gem_submit *submit,
+>                         /* ignore if there has not been a ctx switch: */
+>                         if (priv->lastctx == ctx)
+>                                 break;
+> +                       /* fall-thru */
+>                 case MSM_SUBMIT_CMD_BUF:
+>                         OUT_PKT3(ring, adreno_is_a430(adreno_gpu) ?
+>                                 CP_INDIRECT_BUFFER_PFE : CP_INDIRECT_BUFFER_PFD, 2);
+> --
+> 2.7.4
+>
