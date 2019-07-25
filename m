@@ -2,89 +2,151 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 1B50C74C00
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Jul 2019 12:43:26 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 3258E74E46
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Jul 2019 14:40:39 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2391085AbfGYKnN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 25 Jul 2019 06:43:13 -0400
-Received: from mail-lf1-f68.google.com ([209.85.167.68]:35654 "EHLO
-        mail-lf1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2390928AbfGYKnM (ORCPT
+        id S2388359AbfGYMkh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 25 Jul 2019 08:40:37 -0400
+Received: from mail-wm1-f65.google.com ([209.85.128.65]:50517 "EHLO
+        mail-wm1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2388213AbfGYMkh (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 25 Jul 2019 06:43:12 -0400
-Received: by mail-lf1-f68.google.com with SMTP id p197so34147683lfa.2
-        for <linux-arm-msm@vger.kernel.org>; Thu, 25 Jul 2019 03:43:11 -0700 (PDT)
+        Thu, 25 Jul 2019 08:40:37 -0400
+Received: by mail-wm1-f65.google.com with SMTP id v15so44883081wml.0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 25 Jul 2019 05:40:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=XpjNV+NMvqH+LpxRr8zkgoFmR2noH7509JIlqZCM7Jo=;
-        b=LuEiCvOTvkInrAJWj0qXwyO7s1XERMW8pSHDK9VY8URGrgn87S6FUMVEr2HzEseoOu
-         zaDVbiiW9I23Fgh2QSHf1EZlrKDkmPx7Wq6kJDhk7VFAK1wcZIOVxD6ap20Fu/3yRdRx
-         /TWUX7b+bStIY8r7lf8sa1a0ZlHkmTSqACVxT8uWuzocM59uEODdNdLVaX6XRsII+FsG
-         m+IZuwTahGkX8H94lXNw5tuJTVviQyqconFH/rt08Asg49Y8RKcYpimAhkcIUM70Deb9
-         I0D+N6VMKBzMvzBkcjj9UVykkwPty3g7gzMTfs+i03HK4dOv4ND6qXSMzfG2oxGwnOZF
-         4Wzw==
+        h=from:to:cc:subject:date:message-id;
+        bh=gCwqBNqiH6Cazjbw2rLinwK1/I01nMLWsu9gwurgxHI=;
+        b=bD1mSnBXEW7qLuMEwtw52MukOBD8WVorM6KS53hbiejSUrciirPICdcv6qeuylS3xh
+         akC7ZG8s+RL1zqMGkDkyxq7l1xflqBPwxvu5sNQMNz92sMK2Tyochn8fzbe4NpQfY0sE
+         kXXwk6iu1XFwq3/BaVEseL4yLX/ZYsgmqKz6rPtB/P45Gv4z//UZFjUaA6rYJSeH1SWT
+         CqVL7RdiSsgsmnvvHZ9JyS1ypW/2iNbPkYve+5KZrSDCwuRoyK5nzE8/1F7mOGHKo9Yd
+         CQPPdqpR95J4XYppTdQp+nO+m7W1+DtaxraDM+IOfmaEN+uRwuPGbLg4rYuJLLK0Ci4u
+         IZMg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=XpjNV+NMvqH+LpxRr8zkgoFmR2noH7509JIlqZCM7Jo=;
-        b=cR9Z8tXjcB2JZWkasc3ODzKlpO10TRWG0YPR0/7iV4+VYtZotRTt/NgoORkj1lBE5d
-         lpKvk/TRqkutSSKR8PEzs3ti4dwzCcLTh7W1MAFd5s8cOM+L0EAq0YBJolJ4DSENWCko
-         4iJCZoeQNQR/bX3qfYFGIAudlq6BmE+r5JdGbbTyVP7oq5b/xtUvLZO6QTq9KyRFrY8S
-         vf8+qCzhF6350TP0Vgq5kP6ilW0u9l15elTLfPcJSYgF3DwBSDkBfcCqzTyqLnjfXsoB
-         LlR6wXtWN59L7Le3I+eyHG5BQ+2cb6od3hydx5jVARgU4rMaIS18mqfnU3oyZEMhkMij
-         xuag==
-X-Gm-Message-State: APjAAAWhe8h9ztlBtoVLgCCEPUFeaX/tS5ydhpYjX+lVVD8OQ1d9t/kR
-        O+S8Qs1BSRKkMmPoPN5t/7W8eQ==
-X-Google-Smtp-Source: APXvYqx5mS7anbigc+++QypZ2if88kYGJ0a5LKp93fOIM3Eqx9brqMfs5/1ZEsgOU46pHJraeSucHQ==
-X-Received: by 2002:ac2:4d02:: with SMTP id r2mr39615965lfi.138.1564051390847;
-        Thu, 25 Jul 2019 03:43:10 -0700 (PDT)
-Received: from localhost.localdomain (ua-83-226-44-230.bbcust.telenor.se. [83.226.44.230])
-        by smtp.gmail.com with ESMTPSA id 63sm9139580ljs.84.2019.07.25.03.43.09
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=gCwqBNqiH6Cazjbw2rLinwK1/I01nMLWsu9gwurgxHI=;
+        b=HssJXbB8xcTOr/BP6vEPWY6jhMmEybBaP/ruNJcbxEj82VwdHBnaNeBR7qut1AoHiP
+         dhTbaElIXG2SKYsIgB6vm9mu4cZC0SHhxFHW5Yo1Aj2E5M8+YVYKItKwDX4lGkCFnpZ2
+         /qNw6eITx2ZDFwMB+WMe6eW+Gr7KOg1j3FHh5UZalsw7/eb+UHXnxGx8kGp5+IroqA3a
+         qOPf12AsoY1OCzBmJEUI2yrhD2gYbfUZubbe/1GsC3wUerX8dNDuz3xBNWK8q0TrFjo9
+         ZSN0deamORTooqOl0cnhsqJJKc+CRZZbL//kckM9W8fUysyiyUqjJl3vxRQJ8qiykJB9
+         T4xA==
+X-Gm-Message-State: APjAAAW1q2x7R2DhoAewV/2T5lFQ86UARwTNUlP/YU/N6ehhd7kvEv0u
+        2mvkmUs3+fy+Mo/oubeJN069Ez/30348zA==
+X-Google-Smtp-Source: APXvYqwiaaONoJ1bhDvxILB7j4yN0qCUfeyGhpyyuPT6/Uwbtwrc8H53YL2Zn4cnrRfO8IpiwM7Ohg==
+X-Received: by 2002:a1c:238d:: with SMTP id j135mr29120617wmj.39.1564058435359;
+        Thu, 25 Jul 2019 05:40:35 -0700 (PDT)
+Received: from localhost.localdomain ([37.157.136.206])
+        by smtp.gmail.com with ESMTPSA id c4sm39260225wrt.86.2019.07.25.05.40.33
         (version=TLS1_3 cipher=AEAD-AES256-GCM-SHA384 bits=256/256);
-        Thu, 25 Jul 2019 03:43:10 -0700 (PDT)
-From:   Niklas Cassel <niklas.cassel@linaro.org>
-To:     linux-kernel@vger.kernel.org
-Cc:     linux-arm-msm@vger.kernel.org, jorge.ramirez-ortiz@linaro.org,
-        sboyd@kernel.org, vireshk@kernel.org, bjorn.andersson@linaro.org,
-        ulf.hansson@linaro.org, Niklas Cassel <niklas.cassel@linaro.org>,
-        Catalin Marinas <catalin.marinas@arm.com>,
-        Will Deacon <will@kernel.org>,
-        linux-arm-kernel@lists.infradead.org
-Subject: [PATCH v2 14/14] arm64: defconfig: enable CONFIG_ARM_QCOM_CPUFREQ_NVMEM
-Date:   Thu, 25 Jul 2019 12:41:42 +0200
-Message-Id: <20190725104144.22924-15-niklas.cassel@linaro.org>
-X-Mailer: git-send-email 2.21.0
-In-Reply-To: <20190725104144.22924-1-niklas.cassel@linaro.org>
-References: <20190725104144.22924-1-niklas.cassel@linaro.org>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+        Thu, 25 Jul 2019 05:40:34 -0700 (PDT)
+From:   Stanimir Varbanov <stanimir.varbanov@linaro.org>
+To:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Cc:     Andy Gross <agross@kernel.org>,
+        David Brown <david.brown@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Mark Rutland <mark.rutland@arm.com>,
+        Stanimir Varbanov <stanimir.varbanov@linaro.org>
+Subject: [PATCH] arm64: dts: qcom: msm8996: Add Venus video codec DT node
+Date:   Thu, 25 Jul 2019 15:39:49 +0300
+Message-Id: <20190725123949.31763-1-stanimir.varbanov@linaro.org>
+X-Mailer: git-send-email 2.17.1
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Enable CONFIG_ARM_QCOM_CPUFREQ_NVMEM.
+This adds Qualcomm Venus video codec DT node for the video
+codec hardware found in MSM8996 platforms.
 
-Signed-off-by: Niklas Cassel <niklas.cassel@linaro.org>
+Signed-off-by: Stanimir Varbanov <stanimir.varbanov@linaro.org>
 ---
- arch/arm64/configs/defconfig | 1 +
- 1 file changed, 1 insertion(+)
+ arch/arm64/boot/dts/qcom/msm8996.dtsi | 68 +++++++++++++++++++++++++++
+ 1 file changed, 68 insertions(+)
 
-diff --git a/arch/arm64/configs/defconfig b/arch/arm64/configs/defconfig
-index 3e7618818250..9b0cc49f5fe8 100644
---- a/arch/arm64/configs/defconfig
-+++ b/arch/arm64/configs/defconfig
-@@ -84,6 +84,7 @@ CONFIG_ACPI_CPPC_CPUFREQ=m
- CONFIG_ARM_ARMADA_37XX_CPUFREQ=y
- CONFIG_ARM_SCPI_CPUFREQ=y
- CONFIG_ARM_IMX_CPUFREQ_DT=m
-+CONFIG_ARM_QCOM_CPUFREQ_NVMEM=y
- CONFIG_ARM_RASPBERRYPI_CPUFREQ=m
- CONFIG_ARM_TEGRA186_CPUFREQ=y
- CONFIG_ARM_SCPI_PROTOCOL=y
+diff --git a/arch/arm64/boot/dts/qcom/msm8996.dtsi b/arch/arm64/boot/dts/qcom/msm8996.dtsi
+index 942465d8aeb7..ac6e4e430eec 100644
+--- a/arch/arm64/boot/dts/qcom/msm8996.dtsi
++++ b/arch/arm64/boot/dts/qcom/msm8996.dtsi
+@@ -1777,6 +1777,74 @@
+ 					      "ref_clk";
+ 			};
+ 		};
++
++		venus_smmu: arm,smmu-venus@d40000 {
++			compatible = "qcom,msm8996-smmu-v2", "qcom,smmu-v2";
++			reg = <0xd40000 0x20000>;
++			#global-interrupts = <1>;
++			interrupts = <GIC_SPI 286 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 335 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 336 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 337 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 338 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 339 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 340 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 341 IRQ_TYPE_LEVEL_HIGH>;
++			power-domains = <&mmcc MMAGIC_VIDEO_GDSC>;
++			clocks = <&mmcc SMMU_VIDEO_AHB_CLK>,
++				 <&mmcc SMMU_VIDEO_AXI_CLK>;
++			clock-names = "iface", "bus";
++			#iommu-cells = <1>;
++			status = "okay";
++		};
++
++		video-codec@c00000 {
++			compatible = "qcom,msm8996-venus";
++			reg = <0x00c00000 0xff000>;
++			interrupts = <GIC_SPI 287 IRQ_TYPE_LEVEL_HIGH>;
++			power-domains = <&mmcc VENUS_GDSC>;
++			clocks = <&mmcc VIDEO_CORE_CLK>,
++				 <&mmcc VIDEO_AHB_CLK>,
++				 <&mmcc VIDEO_AXI_CLK>,
++				 <&mmcc VIDEO_MAXI_CLK>;
++			clock-names = "core", "iface", "bus", "mbus";
++			iommus = <&venus_smmu 0x00>,
++				 <&venus_smmu 0x01>,
++				 <&venus_smmu 0x0a>,
++				 <&venus_smmu 0x07>,
++				 <&venus_smmu 0x0e>,
++				 <&venus_smmu 0x0f>,
++				 <&venus_smmu 0x08>,
++				 <&venus_smmu 0x09>,
++				 <&venus_smmu 0x0b>,
++				 <&venus_smmu 0x0c>,
++				 <&venus_smmu 0x0d>,
++				 <&venus_smmu 0x10>,
++				 <&venus_smmu 0x11>,
++				 <&venus_smmu 0x21>,
++				 <&venus_smmu 0x28>,
++				 <&venus_smmu 0x29>,
++				 <&venus_smmu 0x2b>,
++				 <&venus_smmu 0x2c>,
++				 <&venus_smmu 0x2d>,
++				 <&venus_smmu 0x31>;
++			memory-region = <&venus_region>;
++			status = "okay";
++
++			video-decoder {
++				compatible = "venus-decoder";
++				clocks = <&mmcc VIDEO_SUBCORE0_CLK>;
++				clock-names = "core";
++				power-domains = <&mmcc VENUS_CORE0_GDSC>;
++			};
++
++			video-encoder {
++				compatible = "venus-encoder";
++				clocks = <&mmcc VIDEO_SUBCORE1_CLK>;
++				clock-names = "core";
++				power-domains = <&mmcc VENUS_CORE1_GDSC>;
++			};
++		};
+ 	};
+ 
+ 	sound: sound {
 -- 
-2.21.0
+2.17.1
 
