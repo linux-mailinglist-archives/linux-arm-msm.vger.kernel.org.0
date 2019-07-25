@@ -2,196 +2,147 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 3BD7B7503A
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Jul 2019 15:54:00 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C20EF75265
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Jul 2019 17:18:57 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2403970AbfGYNxo (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 25 Jul 2019 09:53:44 -0400
-Received: from mail.kernel.org ([198.145.29.99]:51804 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S2403960AbfGYNxn (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 25 Jul 2019 09:53:43 -0400
-Received: from localhost.localdomain (unknown [106.200.241.217])
+        id S2388897AbfGYPS4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 25 Jul 2019 11:18:56 -0400
+Received: from smtp.codeaurora.org ([198.145.29.96]:46914 "EHLO
+        smtp.codeaurora.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2388736AbfGYPS4 (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 25 Jul 2019 11:18:56 -0400
+Received: by smtp.codeaurora.org (Postfix, from userid 1000)
+        id 3CE77607DE; Thu, 25 Jul 2019 15:18:55 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
+        s=default; t=1564067935;
+        bh=hnHhbe9q2IRKMtnzCZ2ig0RS/AUD9YxThPnuMNlk9D8=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=By2gD602wfGFKF5ttG1fS+NbvbHMmWaPI1sqfQ/NTN5FVQR8M0A/sRZFNOrqPSTgk
+         pcgvoVbrPbEJxxxPn0h+MrVXJaMWP32Zn7elvYxPJ724rVNtge4N+PO5m74WsUDiVE
+         wvxeLJkSmojIkK9x9VnIRVXAqbBrjFcRbhWsXGNY=
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        pdx-caf-mail.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.7 required=2.0 tests=ALL_TRUSTED,BAYES_00,
+        DKIM_INVALID,DKIM_SIGNED,SPF_NONE autolearn=no autolearn_force=no
+        version=3.4.0
+Received: from localhost (i-global254.qualcomm.com [199.106.103.254])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id CDCF022BF5;
-        Thu, 25 Jul 2019 13:53:39 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1564062822;
-        bh=1RyZBeqHQzJ5r1QzsyTUC7ywOmtNXt1CFBQWsPSBtig=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=2GRz6dDHX64Jbz2OXilCwqVKtespEE6XKRiJAJqeHVfcgZgZ0opeVOG/uwwUgVCKv
-         paIIiJyX6aghmR4lk/7/lLyz4JOv/vinY8Fr6Q74FGFyFXI/69r8qyGALfK3yrMuQc
-         IqaX88hRLAB7NYFxkL2vpVTfiQhM3iY29hZznLAA=
-From:   Vinod Koul <vkoul@kernel.org>
-To:     Andy Gross <agross@kernel.org>
-Cc:     linux-arm-msm@vger.kernel.org,
+        (Authenticated sender: ilina@smtp.codeaurora.org)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 15C5060312;
+        Thu, 25 Jul 2019 15:18:54 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
+        s=default; t=1564067934;
+        bh=hnHhbe9q2IRKMtnzCZ2ig0RS/AUD9YxThPnuMNlk9D8=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=YfAfVEyfyjHOH1K+e7WFQFs8oC4PxsyySdDgQxFsrZMPwEbKeSJAgETfScZ0dIa7V
+         K6ins/go/UOKVqrCBpwt5hzK3dFSPpUOf7+t9RtmiTjFmCJY1XMadJC0MV+9wTSDsz
+         A5vgV0iFLyRawDjGwXQhqn1HGJe0NeMNigtnIIsI=
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 15C5060312
+Authentication-Results: pdx-caf-mail.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: pdx-caf-mail.web.codeaurora.org; spf=none smtp.mailfrom=ilina@codeaurora.org
+Date:   Thu, 25 Jul 2019 09:18:51 -0600
+From:   Lina Iyer <ilina@codeaurora.org>
+To:     Doug Anderson <dianders@chromium.org>
+Cc:     Stephen Boyd <swboyd@chromium.org>, Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Vinod Koul <vkoul@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Mark Rutland <mark.rutland@arm.com>,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: [PATCH 3/3] arm64: dts: qcom: qcs404: remove unit name for thermal trip points
-Date:   Thu, 25 Jul 2019 19:21:50 +0530
-Message-Id: <20190725135150.9972-4-vkoul@kernel.org>
-X-Mailer: git-send-email 2.20.1
-In-Reply-To: <20190725135150.9972-1-vkoul@kernel.org>
-References: <20190725135150.9972-1-vkoul@kernel.org>
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        "open list:ARM/QUALCOMM SUPPORT" <linux-soc@vger.kernel.org>,
+        Rajendra Nayak <rnayak@codeaurora.org>,
+        LKML <linux-kernel@vger.kernel.org>,
+        Linux PM <linux-pm@vger.kernel.org>, mkshah@codeaurora.org
+Subject: Re: [PATCH V2 2/4] drivers: qcom: rpmh-rsc: avoid locking in the
+ interrupt handler
+Message-ID: <20190725151851.GG18620@codeaurora.org>
+References: <20190722215340.3071-1-ilina@codeaurora.org>
+ <20190722215340.3071-2-ilina@codeaurora.org>
+ <5d3769df.1c69fb81.55d03.aa33@mx.google.com>
+ <20190724145251.GB18620@codeaurora.org>
+ <5d38b38e.1c69fb81.e8e5d.035b@mx.google.com>
+ <20190724203610.GE18620@codeaurora.org>
+ <CAD=FV=UYj55m99EcQXmkYhs257A46x8DaarE0DC-GRF_3dY3-Q@mail.gmail.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii; format=flowed
+Content-Disposition: inline
+In-Reply-To: <CAD=FV=UYj55m99EcQXmkYhs257A46x8DaarE0DC-GRF_3dY3-Q@mail.gmail.com>
+User-Agent: Mutt/1.11.3 (2019-02-01)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The thermal trip points have unit name but no reg property, so we can
-remove them
+On Wed, Jul 24 2019 at 17:28 -0600, Doug Anderson wrote:
+>Hi,
+>
+>On Wed, Jul 24, 2019 at 1:36 PM Lina Iyer <ilina@codeaurora.org> wrote:
+>>
+>> On Wed, Jul 24 2019 at 13:38 -0600, Stephen Boyd wrote:
+>> >Quoting Lina Iyer (2019-07-24 07:52:51)
+>> >> On Tue, Jul 23 2019 at 14:11 -0600, Stephen Boyd wrote:
+>> >> >Quoting Lina Iyer (2019-07-22 14:53:38)
+>> >> >> Avoid locking in the interrupt context to improve latency. Since we
+>> >> >> don't lock in the interrupt context, it is possible that we now could
+>> >> >> race with the DRV_CONTROL register that writes the enable register and
+>> >> >> cleared by the interrupt handler. For fire-n-forget requests, the
+>> >> >> interrupt may be raised as soon as the TCS is triggered and the IRQ
+>> >> >> handler may clear the enable bit before the DRV_CONTROL is read back.
+>> >> >>
+>> >> >> Use the non-sync variant when enabling the TCS register to avoid reading
+>> >> >> back a value that may been cleared because the interrupt handler ran
+>> >> >> immediately after triggering the TCS.
+>> >> >>
+>> >> >> Signed-off-by: Lina Iyer <ilina@codeaurora.org>
+>> >> >> ---
+>> >> >
+>> >> >I have to read this patch carefully. The commit text isn't convincing me
+>> >> >that it is actually safe to make this change. It mostly talks about the
+>> >> >performance improvements and how we need to fix __tcs_trigger(), which
+>> >> >is good, but I was hoping to be convinced that not grabbing the lock
+>> >> >here is safe.
+>> >> >
+>> >> >How do we ensure that drv->tcs_in_use is cleared before we call
+>> >> >tcs_write() and try to look for a free bit? Isn't it possible that we'll
+>> >> >get into a situation where the bitmap is all used up but the hardware
+>> >> >has just received an interrupt and is going to clear out a bit and then
+>> >> >an rpmh write fails with -EBUSY?
+>> >> >
+>> >> If we have a situation where there are no available free bits, we retry
+>> >> and that is part of the function. Since we have only 2 TCSes avaialble
+>> >> to write to the hardware and there could be multiple requests coming in,
+>> >> it is a very common situation. We try and acquire the drv->lock and if
+>> >> there are free TCS available and if available mark them busy and send
+>> >> our requests. If there are none available, we keep retrying.
+>> >>
+>> >
+>> >Ok. I wonder if we need some sort of barriers here too, like an
+>> >smp_mb__after_atomic()? That way we can make sure that the write to
+>> >clear the bit is seen by another CPU that could be spinning forever
+>> >waiting for that bit to be cleared? Before this change the spinlock
+>> >would be guaranteed to make these barriers for us, but now that doesn't
+>> >seem to be the case. I really hope that this whole thing can be changed
+>> >to be a mutex though, in which case we can use the bit_wait() API, etc.
+>> >to put tasks to sleep while RPMh is processing things.
+>> >
+>> We have drivers that want to send requests in atomic contexts and
+>> therefore mutex locks would not work.
+>
+>Jumping in without reading all the context, but I saw this fly by and
+>it seemed odd.  If I'm way off base then please ignore...
+>
+>Can you give more details?  Why are these drivers in atomic contexts?
+>If they are in atomic contexts because they are running in the context
+>of an interrupt then your next patch in the series isn't so correct.
+>
+>Also: when people submit requests in atomic context are they always
+>submitting an asynchronous request?  In that case we could
+>(presumably) just use a spinlock to protect the queue of async
+>requests and a mutex for everything else?
+Yes, drivers only make async requests in interrupt contexts. They cannot
+use the sync variants. The async and sync variants are streamlined into
+the same code path. Hence the use of spinlocks instead of mutexes
+through the critical path.
 
-arch/arm64/boot/dts/qcom/qcs404.dtsi:1080.31-1084.7: Warning (unit_address_vs_reg): /thermal-zones/aoss-thermal/trips/trip-point@0: node has a unit name, but no reg property
-arch/arm64/boot/dts/qcom/qcs404.dtsi:1095.33-1099.7: Warning (unit_address_vs_reg): /thermal-zones/q6-hvx-thermal/trips/trip-point@0: node has a unit name, but no reg property
-arch/arm64/boot/dts/qcom/qcs404.dtsi:1110.32-1114.7: Warning (unit_address_vs_reg): /thermal-zones/lpass-thermal/trips/trip-point@0: node has a unit name, but no reg property
-arch/arm64/boot/dts/qcom/qcs404.dtsi:1125.31-1129.7: Warning (unit_address_vs_reg): /thermal-zones/wlan-thermal/trips/trip-point@0: node has a unit name, but no reg property
-arch/arm64/boot/dts/qcom/qcs404.dtsi:1140.34-1144.7: Warning (unit_address_vs_reg): /thermal-zones/cluster-thermal/trips/trip-point@0: node has a unit name, but no reg property
-arch/arm64/boot/dts/qcom/qcs404.dtsi:1145.34-1149.7: Warning (unit_address_vs_reg): /thermal-zones/cluster-thermal/trips/trip-point@1: node has a unit name, but no reg property
-arch/arm64/boot/dts/qcom/qcs404.dtsi:1174.31-1178.7: Warning (unit_address_vs_reg): /thermal-zones/cpu0-thermal/trips/trip-point@0: node has a unit name, but no reg property
-arch/arm64/boot/dts/qcom/qcs404.dtsi:1179.31-1183.7: Warning (unit_address_vs_reg): /thermal-zones/cpu0-thermal/trips/trip-point@1: node has a unit name, but no reg property
-arch/arm64/boot/dts/qcom/qcs404.dtsi:1208.31-1212.7: Warning (unit_address_vs_reg): /thermal-zones/cpu1-thermal/trips/trip-point@0: node has a unit name, but no reg property
-arch/arm64/boot/dts/qcom/qcs404.dtsi:1213.31-1217.7: Warning (unit_address_vs_reg): /thermal-zones/cpu1-thermal/trips/trip-point@1: node has a unit name, but no reg property
-arch/arm64/boot/dts/qcom/qcs404.dtsi:1242.31-1246.7: Warning (unit_address_vs_reg): /thermal-zones/cpu2-thermal/trips/trip-point@0: node has a unit name, but no reg property
-arch/arm64/boot/dts/qcom/qcs404.dtsi:1247.31-1251.7: Warning (unit_address_vs_reg): /thermal-zones/cpu2-thermal/trips/trip-point@1: node has a unit name, but no reg property
-arch/arm64/boot/dts/qcom/qcs404.dtsi:1276.31-1280.7: Warning (unit_address_vs_reg): /thermal-zones/cpu3-thermal/trips/trip-point@0: node has a unit name, but no reg property
-arch/arm64/boot/dts/qcom/qcs404.dtsi:1281.31-1285.7: Warning (unit_address_vs_reg): /thermal-zones/cpu3-thermal/trips/trip-point@1: node has a unit name, but no reg property
-arch/arm64/boot/dts/qcom/qcs404.dtsi:1310.30-1314.7: Warning (unit_address_vs_reg): /thermal-zones/gpu-thermal/trips/trip-point@0: node has a unit name, but no reg property
-
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
----
- arch/arm64/boot/dts/qcom/qcs404.dtsi | 30 ++++++++++++++--------------
- 1 file changed, 15 insertions(+), 15 deletions(-)
-
-diff --git a/arch/arm64/boot/dts/qcom/qcs404.dtsi b/arch/arm64/boot/dts/qcom/qcs404.dtsi
-index 3d0789775009..6d91dae5aee0 100644
---- a/arch/arm64/boot/dts/qcom/qcs404.dtsi
-+++ b/arch/arm64/boot/dts/qcom/qcs404.dtsi
-@@ -1077,7 +1077,7 @@
- 			thermal-sensors = <&tsens 0>;
- 
- 			trips {
--				aoss_alert0: trip-point@0 {
-+				aoss_alert0: trip-point0 {
- 					temperature = <105000>;
- 					hysteresis = <2000>;
- 					type = "hot";
-@@ -1092,7 +1092,7 @@
- 			thermal-sensors = <&tsens 1>;
- 
- 			trips {
--				q6_hvx_alert0: trip-point@0 {
-+				q6_hvx_alert0: trip-point0 {
- 					temperature = <105000>;
- 					hysteresis = <2000>;
- 					type = "hot";
-@@ -1107,7 +1107,7 @@
- 			thermal-sensors = <&tsens 2>;
- 
- 			trips {
--				lpass_alert0: trip-point@0 {
-+				lpass_alert0: trip-point0 {
- 					temperature = <105000>;
- 					hysteresis = <2000>;
- 					type = "hot";
-@@ -1122,7 +1122,7 @@
- 			thermal-sensors = <&tsens 3>;
- 
- 			trips {
--				wlan_alert0: trip-point@0 {
-+				wlan_alert0: trip-point0 {
- 					temperature = <105000>;
- 					hysteresis = <2000>;
- 					type = "hot";
-@@ -1137,12 +1137,12 @@
- 			thermal-sensors = <&tsens 4>;
- 
- 			trips {
--				cluster_alert0: trip-point@0 {
-+				cluster_alert0: trip-point0 {
- 					temperature = <95000>;
- 					hysteresis = <2000>;
- 					type = "hot";
- 				};
--				cluster_alert1: trip-point@1 {
-+				cluster_alert1: trip-point1 {
- 					temperature = <105000>;
- 					hysteresis = <2000>;
- 					type = "passive";
-@@ -1171,12 +1171,12 @@
- 			thermal-sensors = <&tsens 5>;
- 
- 			trips {
--				cpu0_alert0: trip-point@0 {
-+				cpu0_alert0: trip-point0 {
- 					temperature = <95000>;
- 					hysteresis = <2000>;
- 					type = "hot";
- 				};
--				cpu0_alert1: trip-point@1 {
-+				cpu0_alert1: trip-point1 {
- 					temperature = <105000>;
- 					hysteresis = <2000>;
- 					type = "passive";
-@@ -1205,12 +1205,12 @@
- 			thermal-sensors = <&tsens 6>;
- 
- 			trips {
--				cpu1_alert0: trip-point@0 {
-+				cpu1_alert0: trip-point0 {
- 					temperature = <95000>;
- 					hysteresis = <2000>;
- 					type = "hot";
- 				};
--				cpu1_alert1: trip-point@1 {
-+				cpu1_alert1: trip-point1 {
- 					temperature = <105000>;
- 					hysteresis = <2000>;
- 					type = "passive";
-@@ -1239,12 +1239,12 @@
- 			thermal-sensors = <&tsens 7>;
- 
- 			trips {
--				cpu2_alert0: trip-point@0 {
-+				cpu2_alert0: trip-point0 {
- 					temperature = <95000>;
- 					hysteresis = <2000>;
- 					type = "hot";
- 				};
--				cpu2_alert1: trip-point@1 {
-+				cpu2_alert1: trip-point1 {
- 					temperature = <105000>;
- 					hysteresis = <2000>;
- 					type = "passive";
-@@ -1273,12 +1273,12 @@
- 			thermal-sensors = <&tsens 8>;
- 
- 			trips {
--				cpu3_alert0: trip-point@0 {
-+				cpu3_alert0: trip-point0 {
- 					temperature = <95000>;
- 					hysteresis = <2000>;
- 					type = "hot";
- 				};
--				cpu3_alert1: trip-point@1 {
-+				cpu3_alert1: trip-point1 {
- 					temperature = <105000>;
- 					hysteresis = <2000>;
- 					type = "passive";
-@@ -1307,7 +1307,7 @@
- 			thermal-sensors = <&tsens 9>;
- 
- 			trips {
--				gpu_alert0: trip-point@0 {
-+				gpu_alert0: trip-point0 {
- 					temperature = <95000>;
- 					hysteresis = <2000>;
- 					type = "hot";
--- 
-2.20.1
+--Lina
 
