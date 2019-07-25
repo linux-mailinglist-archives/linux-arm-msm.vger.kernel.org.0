@@ -2,56 +2,56 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 717C274406
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Jul 2019 05:36:57 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id F296C74424
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Jul 2019 05:53:06 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2389721AbfGYDg4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 24 Jul 2019 23:36:56 -0400
-Received: from mail-pf1-f194.google.com ([209.85.210.194]:37170 "EHLO
-        mail-pf1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2389704AbfGYDg4 (ORCPT
+        id S1727466AbfGYDxG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 24 Jul 2019 23:53:06 -0400
+Received: from mail-pl1-f193.google.com ([209.85.214.193]:43453 "EHLO
+        mail-pl1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726238AbfGYDxG (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 24 Jul 2019 23:36:56 -0400
-Received: by mail-pf1-f194.google.com with SMTP id 19so21974728pfa.4
-        for <linux-arm-msm@vger.kernel.org>; Wed, 24 Jul 2019 20:36:56 -0700 (PDT)
+        Wed, 24 Jul 2019 23:53:06 -0400
+Received: by mail-pl1-f193.google.com with SMTP id 4so15844873pld.10
+        for <linux-arm-msm@vger.kernel.org>; Wed, 24 Jul 2019 20:53:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id;
         bh=y5mWEC7ogDY2PSdGXYMgqGEgddaBMGRrx0o4VSfwM/o=;
-        b=RcA73rrAO55/gHOoxqi1LmtF8yacHdzQxlT+GcVs1ZywSerBvoobvmtsYWDMQHbJg1
-         Skf0DzxVYolaM3PcWKODtiF2pShPT38EAc0cbTX/n/Xi/r3ChwvPW/RYHO4/I36MuuWJ
-         F7KJEG8l/9Sn+2txeQX6frkSvWrX/kRnqW9BdGJN0M0tRDW2CVW+KxcBzO8O69NIepCb
-         aRw4QlDfGH3z7kjFOuuNQaQVwAPyORRPJ+Pp49zt7qvIscVkTSapPOE9wL1jjXkuWSdI
-         Js48Fx9ID+B8NYSy90cPWyoUyJvkAeba+FhJZI1Zy0M3yL5/2IuINFVuYn3R56eSbtPx
-         YbfA==
+        b=YPWRGW5VmHNWo6GsrY3FzBl3NteVrMAlJZDe3aI5Qbe6y5GoO5iz1P+VoDpS114xir
+         lnJQbc5weUseSt46orAnRfhtgU/fGYHAaJncUp0dU254Ien57uasz/8B2c8/2K/U8r0/
+         SI6MS2x4qfFMTOZPT7DKM7mt3pqN0cBUoUDHoh/iM+ZC4NvBGXbCfcjt4Ksn8UYlfBB6
+         e2HareCP+ntG+5Swk2Js+HaoQIKrGB7BK1KzTohZT6t55ozmluarZfKGJc0HAiaYXvBp
+         EyZKEFpF0pr4jklKhXLmUMatasZm31V6OXaGTsCTUIv/F9V4mjXTBBTA+SUwlovdfdvU
+         3U1Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id;
         bh=y5mWEC7ogDY2PSdGXYMgqGEgddaBMGRrx0o4VSfwM/o=;
-        b=UqK69OQ3qIUAcM8R03V2pTiKQENtr6UKoIOK97i6gHyszVNWtNtvblCoAC4l8/JPRV
-         IQTdyRts9O866/EXu/RZd/+iG7cdrbLX7elfiEPT+azjL6KHXA/4bOP5zt8KuzqeL0Zn
-         nxyBAZ/iFyoOlXcjHgyAKtDK9rNnMlmxJlS80dprCkex1Jny4eXWM37o5PqX8+71G59R
-         WzoDJexB8Zmo4ynVyiwQvYtMB4sYC2eQE82ekt+wT8hhEJGbFtzHokUdcHGIgT0RVvf+
-         mA7Qs7jcRuqXtmSdOw/J4LuDicdwlEgqwEcfHJnNnj29CB1s+bAv0qn1a+dxSsdYej+B
-         8Biw==
-X-Gm-Message-State: APjAAAWVQHXnuO0amPxfIK6ML48Jf9jpUL3PRcKpUmnqug/WpyLEDaaI
-        h6WtMC+VsOJ2niaJ8+2Cjzk=
-X-Google-Smtp-Source: APXvYqwXGIrEshHJ/620ZjKabG/Vz5HjLWHyUhFB8umegovRT8FYTgXZAD3421HaW/F6oWwFLORuZQ==
-X-Received: by 2002:a63:520f:: with SMTP id g15mr80162152pgb.28.1564025816100;
-        Wed, 24 Jul 2019 20:36:56 -0700 (PDT)
+        b=elYrMHa9zW3DdVdvxqOecD0isMGpx5dx384gxcF5S8u5YwqTJm0P20kQTTAmzf6Jqi
+         4jP+fNckAT9Bo2UVmCQTuWha3SaspIAJqCw8oYob/lEnkBc/efsrsAUmAS636g/d0qe9
+         qA8peCGNOiZNgHKQ+uKzGzJwiyxrycawoH2FH54Srl3zxD71vniwgb5NnTo5CvP0OIEK
+         VgZQPwAynLwRLL0vaali4BLMDOgiE87Xtb/qPJYi2kchDRnjrEekt5nObiUzkx/YS8yd
+         pHuHJNhEgtJgx8dVs7cA26jQeOzC1NgCRR7kCGhhxLfF2DQ9YwSa+WsrWaMucAtELivJ
+         yRMg==
+X-Gm-Message-State: APjAAAWl1SSAVCnGkPxMKntS7/yd+A41zsiyhYjSEIWKYxZpSPD2q0ww
+        irMdt1zE/ks1CNuflAAmbso=
+X-Google-Smtp-Source: APXvYqx9hemuW6yfJrdLe/W9cnYSkxCvTtjqmGP/oGqHMbl2olfl8tXQReuCOEwOZAZOQSmHSy68kw==
+X-Received: by 2002:a17:902:296a:: with SMTP id g97mr87272714plb.115.1564026785497;
+        Wed, 24 Jul 2019 20:53:05 -0700 (PDT)
 Received: from huyue2.ccdomain.com ([218.189.10.173])
-        by smtp.gmail.com with ESMTPSA id a1sm2056528pgh.61.2019.07.24.20.36.52
+        by smtp.gmail.com with ESMTPSA id 11sm49035787pfw.33.2019.07.24.20.53.01
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 24 Jul 2019 20:36:55 -0700 (PDT)
+        Wed, 24 Jul 2019 20:53:04 -0700 (PDT)
 From:   Yue Hu <zbestahu@gmail.com>
 To:     airlied@linux.ie, daniel@ffwll.ch, robdclark@gmail.com,
         sean@poorly.run, robh@kernel.org, tomeu.vizoso@collabora.com
 Cc:     linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org, huyue2@yulong.com,
-        zhangwen@yulong.com
-Subject: [PATCH] drm: Switch to use DEVFREQ_GOV_SIMPLE_ONDEMAND constant
-Date:   Thu, 25 Jul 2019 11:36:15 +0800
-Message-Id: <20190725033615.11388-1-zbestahu@gmail.com>
+        freedreno@lists.freedesktop.org, cw00.choi@samsung.com,
+        myungjoo.ham@samsung.com, huyue2@yulong.com, zhangwen@yulong.com
+Subject: [PATCH RESEND] drm: Switch to use DEVFREQ_GOV_SIMPLE_ONDEMAND constant
+Date:   Thu, 25 Jul 2019 11:52:39 +0800
+Message-Id: <20190725035239.1192-1-zbestahu@gmail.com>
 X-Mailer: git-send-email 2.17.1.windows.2
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
