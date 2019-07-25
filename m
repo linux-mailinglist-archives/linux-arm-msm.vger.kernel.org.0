@@ -2,164 +2,134 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 1C76874428
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Jul 2019 05:56:15 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 67D1A74BC6
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Jul 2019 12:40:37 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2390181AbfGYD4N (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 24 Jul 2019 23:56:13 -0400
-Received: from mailout3.samsung.com ([203.254.224.33]:51085 "EHLO
-        mailout3.samsung.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2390180AbfGYD4N (ORCPT
+        id S2387608AbfGYKkg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 25 Jul 2019 06:40:36 -0400
+Received: from mail-lf1-f68.google.com ([209.85.167.68]:44771 "EHLO
+        mail-lf1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2387550AbfGYKkg (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 24 Jul 2019 23:56:13 -0400
-Received: from epcas1p3.samsung.com (unknown [182.195.41.47])
-        by mailout3.samsung.com (KnoxPortal) with ESMTP id 20190725035611epoutp03c833b3935024a795d1c91bf96ff54114~0ij5ljt2L1659516595epoutp03k
-        for <linux-arm-msm@vger.kernel.org>; Thu, 25 Jul 2019 03:56:11 +0000 (GMT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 mailout3.samsung.com 20190725035611epoutp03c833b3935024a795d1c91bf96ff54114~0ij5ljt2L1659516595epoutp03k
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=samsung.com;
-        s=mail20170921; t=1564026971;
-        bh=C716pIFwHZ+WjhDZMOaClxutDoCMBDIKk7zqcZGKoyU=;
-        h=Subject:To:Cc:From:Date:In-Reply-To:References:From;
-        b=IP17u1Od1O1MNo7Vg/MXwBG7R2nHiXWw7+aCi7jIvEEKDT0s7h5BOzphtHDb7+avb
-         CkzFaVSDia1glZKDlVe58HDuXYHQwmvPYw+3yaK98Rutf+XgtU6uNijJ4Fjzv30hHr
-         qW87nGzQ97nvOxVlrC9IJ0qKjxb0n40nP15YnztE=
-Received: from epsnrtp5.localdomain (unknown [182.195.42.166]) by
-        epcas1p4.samsung.com (KnoxPortal) with ESMTP id
-        20190725035610epcas1p4ff863f31e033356100127d9f617b61fa~0ij5I9bAC0134701347epcas1p4Q;
-        Thu, 25 Jul 2019 03:56:10 +0000 (GMT)
-Received: from epsmges1p4.samsung.com (unknown [182.195.40.157]) by
-        epsnrtp5.localdomain (Postfix) with ESMTP id 45vJKg4DmjzMqYkg; Thu, 25 Jul
-        2019 03:56:07 +0000 (GMT)
-Received: from epcas1p1.samsung.com ( [182.195.41.45]) by
-        epsmges1p4.samsung.com (Symantec Messaging Gateway) with SMTP id
-        71.8B.04160.058293D5; Thu, 25 Jul 2019 12:56:00 +0900 (KST)
-Received: from epsmtrp1.samsung.com (unknown [182.195.40.13]) by
-        epcas1p4.samsung.com (KnoxPortal) with ESMTPA id
-        20190725035600epcas1p4764e5582e760704ee036ca7648c8fca0~0ijvkdiZP2737927379epcas1p41;
-        Thu, 25 Jul 2019 03:56:00 +0000 (GMT)
-Received: from epsmgms1p2new.samsung.com (unknown [182.195.42.42]) by
-        epsmtrp1.samsung.com (KnoxPortal) with ESMTP id
-        20190725035600epsmtrp1494170a58a4c52ea398f8d4979bca408~0ijvjnu_O1439114391epsmtrp1Q;
-        Thu, 25 Jul 2019 03:56:00 +0000 (GMT)
-X-AuditID: b6c32a38-b33ff70000001040-8f-5d3928500a94
-Received: from epsmtip1.samsung.com ( [182.195.34.30]) by
-        epsmgms1p2new.samsung.com (Symantec Messaging Gateway) with SMTP id
-        E0.31.03638.058293D5; Thu, 25 Jul 2019 12:56:00 +0900 (KST)
-Received: from [10.113.221.102] (unknown [10.113.221.102]) by
-        epsmtip1.samsung.com (KnoxPortal) with ESMTPA id
-        20190725035600epsmtip1552edd7a99b30703bf8b3ccc8b9a374f~0ijvZUQ8S1446314463epsmtip1L;
-        Thu, 25 Jul 2019 03:56:00 +0000 (GMT)
-Subject: Re: [PATCH RESEND] drm: Switch to use DEVFREQ_GOV_SIMPLE_ONDEMAND
- constant
-To:     Yue Hu <zbestahu@gmail.com>, airlied@linux.ie, daniel@ffwll.ch,
-        robdclark@gmail.com, sean@poorly.run, robh@kernel.org,
-        tomeu.vizoso@collabora.com
-Cc:     linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org, myungjoo.ham@samsung.com,
-        huyue2@yulong.com, zhangwen@yulong.com
-From:   Chanwoo Choi <cw00.choi@samsung.com>
-Organization: Samsung Electronics
-Message-ID: <ecd5c975-615d-2cd0-5507-9ee89e0a228b@samsung.com>
-Date:   Thu, 25 Jul 2019 12:59:20 +0900
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
-        Thunderbird/60.8.0
+        Thu, 25 Jul 2019 06:40:36 -0400
+Received: by mail-lf1-f68.google.com with SMTP id r15so17179377lfm.11
+        for <linux-arm-msm@vger.kernel.org>; Thu, 25 Jul 2019 03:40:35 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=+UWD3xYaSGOyTzdv6esnqt7Upp+zoX6rMbyHIp+AOY4=;
+        b=LRA93SCm5QQuPJ6N6Qfi90MXp6KuO+w3c8jbPxdOZFNgztdWErMFHqN1EcFYyzYdQ0
+         sdGMNhKOvpnrS7wxjtdCQ9gS/PLfXOSadeZmRLRHME9HvGUcD322RyALyQz8Nfs9gTGG
+         03/kqLr99SEtkpPoneETS/y65I8m7nXrcLzBPWSDVZ3PCFaN4sz9qfW2AUUqHSHcA/+4
+         hFH4jiEmQ2Zr/KglfFp1AAzrXuYxAJc6TBJ2ZkdT+6gPezz77i6h2ywYNKzCIFySlgCD
+         bTGifd4WQ01KI/JL7q5k7o0MF941I1LgbPdR0NrwaULx/yiFm2IQ/rAX2FbHlcHo8jYk
+         a7uw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=+UWD3xYaSGOyTzdv6esnqt7Upp+zoX6rMbyHIp+AOY4=;
+        b=ZZAPsGtnohOcGJtFCxRHTk7GhwvbsUIYk1/um/w0lrQUe7h46SjtWYxHZMVwQZiVqD
+         YjOTIUNFc+WHj4adlE2v3YOmcfRcRKDf+cyD6iM/1W6Mir1WDCAWUuCWI03QA13V+iQw
+         Ff3v7wDjZolm9kCIXyosA7FiIUH84hbc09so0ZmfmjGlDvPKdtjKPFVzyE2nFENTmCqQ
+         b8I9sDoQroAJCt2klZ0JhNujp+etaRkEvUv9pc7cCoxpkt71+SWRlQLgQVqmITHeNwfw
+         zWLgVgzHhHmrgF6P3tPngYxfd7WIHln8eLd5hZ+qwvHsXBj5Q+/R0AK31wtZhw585ZPc
+         5OCQ==
+X-Gm-Message-State: APjAAAUOUx8V4NMl8tMPtauNnZ985McGj9JIRDy0dkHBq/d49gf2yFse
+        vNzOlXNbh+gkitP0wfJVQIiuyA==
+X-Google-Smtp-Source: APXvYqzGbt4oOeH84QtqSxX8UF4CG2N1aap1JmO0v04H5OhO70HwR0JJTLr+iTx4GIfqRX7wfRqMZQ==
+X-Received: by 2002:ac2:414d:: with SMTP id c13mr2229756lfi.47.1564051234400;
+        Thu, 25 Jul 2019 03:40:34 -0700 (PDT)
+Received: from centauri (ua-83-226-44-230.bbcust.telenor.se. [83.226.44.230])
+        by smtp.gmail.com with ESMTPSA id b17sm9057244ljf.34.2019.07.25.03.40.32
+        (version=TLS1_3 cipher=AEAD-AES256-GCM-SHA384 bits=256/256);
+        Thu, 25 Jul 2019 03:40:33 -0700 (PDT)
+Date:   Thu, 25 Jul 2019 12:40:31 +0200
+From:   Niklas Cassel <niklas.cassel@linaro.org>
+To:     Viresh Kumar <viresh.kumar@linaro.org>
+Cc:     Andy Gross <agross@kernel.org>, linux-arm-msm@vger.kernel.org,
+        jorge.ramirez-ortiz@linaro.org, sboyd@kernel.org,
+        vireshk@kernel.org, bjorn.andersson@linaro.org,
+        ulf.hansson@linaro.org, Rob Herring <robh+dt@kernel.org>,
+        Mark Rutland <mark.rutland@arm.com>,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 11/13] arm64: dts: qcom: qcs404: Add CPR and populate OPP
+ table
+Message-ID: <20190725104031.GA21998@centauri>
+References: <20190705095726.21433-1-niklas.cassel@linaro.org>
+ <20190705095726.21433-12-niklas.cassel@linaro.org>
+ <20190710090303.tb5ue3wq6r7ofyev@vireshk-i7>
+ <20190715132405.GA5040@centauri>
+ <20190716103436.az5rdk6f3yoa3apz@vireshk-i7>
+ <20190716105318.GA26592@centauri>
+ <20190717044923.ccmebeewbinlslkm@vireshk-i7>
+ <20190719154558.GA32518@centauri>
+ <20190723015635.rl5a2isjnjn23fzh@vireshk-i7>
 MIME-Version: 1.0
-In-Reply-To: <20190725035239.1192-1-zbestahu@gmail.com>
-Content-Language: en-US
-Content-Transfer-Encoding: 8bit
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFrrNJsWRmVeSWpSXmKPExsWy7bCmrm6AhmWswYp2XYvecyeZLP5vm8hs
-        ceXrezaLOc/PMlrsmX2X2WLi/rPsFrcbV7BZPF/4g9ni/54d7BZ3Jx9htOhbe4nNYu4pLosD
-        S16zOPB67Li7hNFj77cFLB47Z91l99i0qpPNY/u3B6we97uPM3kc33WL3aNvyypGj8+b5Dy2
-        rlnMHMAVlW2TkZqYklqkkJqXnJ+SmZduq+QdHO8cb2pmYKhraGlhrqSQl5ibaqvk4hOg65aZ
-        A3S8kkJZYk4pUCggsbhYSd/Opii/tCRVISO/uMRWKbUgJafAskCvODG3uDQvXS85P9fK0MDA
-        yBSoMCE7o2nCA+aCxfwV8/tvszUwvuTpYuTkkBAwkVj6YRN7FyMXh5DADkaJtbM72SCcT4wS
-        HW2TWSGcb4wSy9ubWGBa5p78ywyR2MsoceDjJ0aQhJDAe0aJr9uLQWxhgVCJ9/c/gBWJCMxk
-        lHh7+zuYwyywklFiatNkdpAqNgEtif0vbrCB2PwCihJXfzwGm8QrYCdxc+9/sBoWAVWJTdOn
-        MIHYogIREp8eHGaFqBGUODnzCdhJnALmEs86z4DNYRYQl7j1ZD4ThC0v0bx1NjPE2fvYJa7u
-        4e1i5ACyXSS2bzWDCAtLvDq+hR3ClpJ42d8GZVdLrDx5BBwWEgIdjBJb9l9ghUgYS+xfOpkJ
-        ZA6zgKbE+l36EGFFiZ2/5zJCrOWTePe1hxViFS8wGIUgSpQlLj+4ywRhS0osbu9km8CoNAvJ
-        M7OQPDALyQOzEJYtYGRZxSiWWlCcm55abFhgghzbmxjBCVvLYgfjnnM+hxgFOBiVeHg5kixi
-        hVgTy4orcw8xSnAwK4nwBjaYxQrxpiRWVqUW5ccXleakFh9iNAWG9URmKdHkfGA2ySuJNzQ1
-        MjY2tjAxNDM1NFQS5134A2iOQHpiSWp2ampBahFMHxMHp1QD44orHLxfv4czucWVvuZOqMw5
-        027hG8iyyF9z9mzNaQmfXqT1vDt31icpQr4l5ePl+fE3i041zIjpFFy9cX2ImNA613fda//H
-        vsoXVedx4PwQ/7GoI5zZMPje1XUP1D89S1v66YmroW7wz+Yv6fdUP84L5337Rzn2uwDz+6KK
-        tiCWznP+Va6TlViKMxINtZiLihMB98bZJ+4DAAA=
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFjrBIsWRmVeSWpSXmKPExsWy7bCSnG6AhmWswakP4ha9504yWfzfNpHZ
-        4srX92wWc56fZbTYM/sus8XE/WfZLW43rmCzeL7wB7PF/z072C3uTj7CaNG39hKbxdxTXBYH
-        lrxmceD12HF3CaPH3m8LWDx2zrrL7rFpVSebx/ZvD1g97ncfZ/I4vusWu0ffllWMHp83yXls
-        XbOYOYArissmJTUnsyy1SN8ugSujacID5oLF/BXz+2+zNTC+5Oli5OSQEDCRmHvyL3MXIxeH
-        kMBuRolb/8+wQSQkJaZdPAqU4ACyhSUOHy6GqHnLKPH22V52kBphgVCJ9/c/gDWLCMxklPhy
-        5xgbiMMssJJR4uuLnewQLV2MEj1nLjGBtLAJaEnsf3EDbAW/gKLE1R+PGUFsXgE7iZt7/4ON
-        ZRFQldg0fQpYvahAhMThHbOgagQlTs58wgJicwqYSzzrhDiVWUBd4s+8S8wQtrjErSfzmSBs
-        eYnmrbOZJzAKz0LSPgtJyywkLbOQtCxgZFnFKJlaUJybnltsWGCUl1quV5yYW1yal66XnJ+7
-        iREcv1paOxhPnIg/xCjAwajEw8uRZBErxJpYVlyZe4hRgoNZSYQ3sMEsVog3JbGyKrUoP76o
-        NCe1+BCjNAeLkjivfP6xSCGB9MSS1OzU1ILUIpgsEwenVAOjpUVrw+Zbpi7yS3hDb619Jikk
-        GH7MTGa7uEiu3aMPMy+ZyGRdF0xUZFtdE+ofsGDZ8eVF1+NOPO5R2hf8fbOpaoposfbNLBmO
-        b/Pv2IcdO2QqY1fqcNJOOsvR+1pVsnSZ20kuVcUdn9u8xJQcvsi0FKrabejtYPxsrBB0P02A
-        na3qpyJvjBJLcUaioRZzUXEiANJ3c1/bAgAA
-X-CMS-MailID: 20190725035600epcas1p4764e5582e760704ee036ca7648c8fca0
-X-Msg-Generator: CA
-Content-Type: text/plain; charset="utf-8"
-X-Sendblock-Type: SVC_REQ_APPROVE
-CMS-TYPE: 101P
-DLP-Filter: Pass
-X-CFilter-Loop: Reflected
-X-CMS-RootMailID: 20190725035308epcas3p3dbb085335947fc1675773baecbad012e
-References: <CGME20190725035308epcas3p3dbb085335947fc1675773baecbad012e@epcas3p3.samsung.com>
-        <20190725035239.1192-1-zbestahu@gmail.com>
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20190723015635.rl5a2isjnjn23fzh@vireshk-i7>
+User-Agent: Mutt/1.12.0 (2019-05-25)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 19. 7. 25. 오후 12:52, Yue Hu wrote:
-> From: Yue Hu <huyue2@yulong.com>
+On Tue, Jul 23, 2019 at 07:26:35AM +0530, Viresh Kumar wrote:
+> On 19-07-19, 17:45, Niklas Cassel wrote:
+> > Hello Viresh,
+> > 
+> > Could you please have a look at the last two patches here:
+> > https://git.linaro.org/people/niklas.cassel/kernel.git/log/?h=cpr-opp-hz
 > 
-> Since governor name is defined by DEVFREQ framework internally, use the
-> macro definition instead of using the name directly.
+> There is no sane way of providing review comments with a link to the
+> git tree :)
 > 
-> Signed-off-by: Yue Hu <huyue2@yulong.com>
-> ---
->  drivers/gpu/drm/msm/msm_gpu.c               | 3 ++-
->  drivers/gpu/drm/panfrost/panfrost_devfreq.c | 3 ++-
->  2 files changed, 4 insertions(+), 2 deletions(-)
-> 
-> diff --git a/drivers/gpu/drm/msm/msm_gpu.c b/drivers/gpu/drm/msm/msm_gpu.c
-> index 4edb874..f7308d6 100644
-> --- a/drivers/gpu/drm/msm/msm_gpu.c
-> +++ b/drivers/gpu/drm/msm/msm_gpu.c
-> @@ -95,7 +95,8 @@ static void msm_devfreq_init(struct msm_gpu *gpu)
->  	 */
->  
->  	gpu->devfreq.devfreq = devm_devfreq_add_device(&gpu->pdev->dev,
-> -			&msm_devfreq_profile, "simple_ondemand", NULL);
-> +			&msm_devfreq_profile, DEVFREQ_GOV_SIMPLE_ONDEMAND,
-> +			NULL);
->  
->  	if (IS_ERR(gpu->devfreq.devfreq)) {
->  		DRM_DEV_ERROR(&gpu->pdev->dev, "Couldn't initialize GPU devfreq\n");
-> diff --git a/drivers/gpu/drm/panfrost/panfrost_devfreq.c b/drivers/gpu/drm/panfrost/panfrost_devfreq.c
-> index db79853..a7c18bc 100644
-> --- a/drivers/gpu/drm/panfrost/panfrost_devfreq.c
-> +++ b/drivers/gpu/drm/panfrost/panfrost_devfreq.c
-> @@ -157,7 +157,8 @@ int panfrost_devfreq_init(struct panfrost_device *pfdev)
->  	dev_pm_opp_put(opp);
->  
->  	pfdev->devfreq.devfreq = devm_devfreq_add_device(&pfdev->pdev->dev,
-> -			&panfrost_devfreq_profile, "simple_ondemand", NULL);
-> +			&panfrost_devfreq_profile, DEVFREQ_GOV_SIMPLE_ONDEMAND,
-> +			NULL);
->  	if (IS_ERR(pfdev->devfreq.devfreq)) {
->  		DRM_DEV_ERROR(&pfdev->pdev->dev, "Couldn't initialize GPU devfreq\n");
->  		ret = PTR_ERR(pfdev->devfreq.devfreq);
-> 
+> I still had a look and I see that you don't search for max frequency
+> but just any OPP that has required-opps set to the level u want. Also,
+> can't there be multiple phandles in required-opps in your case ?
 
-The include/linux/devfreq.h defines the governor name.
-It looks good to me.
+For each OPP in the CPR OPP table, we need three things,
+opp-level, qcom,fuse-level and opp-hz.
+The first two can simply be parsed from the OPP node
+itself while iterating the CPR OPP table.
+The opp-hz has to be fetched from the CPU OPP table.
 
-Reviewed-by: Chanwoo Choi <cw00.choi@samsung.com>
+Several OPPs might have the same qcom,fuse-level value.
+However, they will have unique opp-level values and unique
+opp-hz values. Each opp-level has a matching opp-hz.
 
--- 
-Best Regards,
-Chanwoo Choi
-Samsung Electronics
+required-opps is basically a connection between a opp-hz
+(CPU OPP table) and and a opp-level (CPR OPP table).
+
+So there will be only one match. No need to search for
+max frequency.
+
+I think you are confusing this with something else.
+The CPR hardware has to be programmed with the highest
+frequency for each qcom,fuse-corner.
+This is done here:
+https://git.linaro.org/people/niklas.cassel/kernel.git/tree/drivers/power/avs/qcom-cpr.c?h=cpr-full#n1219
+by saving the highest frequency for each fuse level
+while iterating the OPP table.
+
+
+There can be only one phandle in the required-opps in my case,
+this is one of the reasons why I prefer implementing it in the
+CPR driver. If it were to be implemented in OPP core, it probably
+has to handle multiple phandles.
+
+> 
+> > If you like my proposal then I could send out the first patch (the one to
+> > OPP core) as a real patch (with an improved commit message), and
+> > incorporate the second patch into my CPR patch series when I send out a V2.
+> 
+> Send them both in your series only, otherwise the first one is useless
+> anyway.
+
+Ok, will do.
+
+
+Kind regards,
+Niklas
