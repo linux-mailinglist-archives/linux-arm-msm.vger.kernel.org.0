@@ -2,177 +2,121 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 203B4752F9
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Jul 2019 17:39:58 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 093307537E
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Jul 2019 18:03:59 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728768AbfGYPjy (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 25 Jul 2019 11:39:54 -0400
-Received: from mail-ua1-f66.google.com ([209.85.222.66]:42490 "EHLO
-        mail-ua1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727081AbfGYPjy (ORCPT
+        id S2388585AbfGYQD6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 25 Jul 2019 12:03:58 -0400
+Received: from smtp.codeaurora.org ([198.145.29.96]:44494 "EHLO
+        smtp.codeaurora.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2388481AbfGYQD5 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 25 Jul 2019 11:39:54 -0400
-Received: by mail-ua1-f66.google.com with SMTP id a97so19991406uaa.9
-        for <linux-arm-msm@vger.kernel.org>; Thu, 25 Jul 2019 08:39:53 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=zUSY0yNX7mjAe5hgCsuzMt6JoI+T3veQET0Qe3Sg7bs=;
-        b=nmCIp8hqFv2u364QTeF1hoE1hDHQBhUlMI7TLjTtUqlM+25nPEpVMXgqAJLBrL8W0E
-         KIj2AH3i+7XfPuNPCPGSvPkgR0tOh0YPzOZGrx8Hwrh+I0lAOo36NobtMFOnjg6kl3YJ
-         Qk+Lxh1O2J1WrPHMivAvH/rBYsTe2Iw+lYFPQ=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=zUSY0yNX7mjAe5hgCsuzMt6JoI+T3veQET0Qe3Sg7bs=;
-        b=ZxQSDf5oxUYeP7LC7D7IyI9G2IyWIpQTWLB2wPiYQ6Z4dOtFWBjLJ7DrR0QViUmAA1
-         3HPb6yKAIWRm0Sf//oDHCOZgcNmC1OKUT8dMS0Az0Xf6neGiVCVJWkoudcCAYsPLVNEg
-         /4ScA02zSxYQLkwxwN1cAkv2syUvc9YJUuq3pnMsDruZl2vJrA5is7PMpg9yN7RX608y
-         7O+EHJ9OVu4HkVGLT775LvXwWTQKDP8euLHSp+xwS5PXXAte+mXBp4Ry9um5zpeYJeFn
-         4KVZEOWoPaHazlnd9CWhZsUvHkmSPkfsVRu9/6/szwOiUabSmo50gOhkqb49Ua70Sjf3
-         y/rg==
-X-Gm-Message-State: APjAAAVLXka1nI2fzolDeLUftbz9K5s+M0HStGiYkbkDi6YRRpi6c0V8
-        1625Xz8UcqK4bN+EGPi2vuIF6nTo6zc=
-X-Google-Smtp-Source: APXvYqxl+SClCjVT57OoIYDP54zYmK/X3HAfMpuGzmpzEOMqx3OB6uZNjkLesuEz6+N5Ja7NsbYCCQ==
-X-Received: by 2002:ab0:2906:: with SMTP id v6mr39544860uap.96.1564069192281;
-        Thu, 25 Jul 2019 08:39:52 -0700 (PDT)
-Received: from mail-ua1-f48.google.com (mail-ua1-f48.google.com. [209.85.222.48])
-        by smtp.gmail.com with ESMTPSA id u19sm12756460uau.7.2019.07.25.08.39.51
-        for <linux-arm-msm@vger.kernel.org>
-        (version=TLS1_3 cipher=AEAD-AES128-GCM-SHA256 bits=128/128);
-        Thu, 25 Jul 2019 08:39:51 -0700 (PDT)
-Received: by mail-ua1-f48.google.com with SMTP id c4so20013062uad.1
-        for <linux-arm-msm@vger.kernel.org>; Thu, 25 Jul 2019 08:39:51 -0700 (PDT)
-X-Received: by 2002:ab0:1391:: with SMTP id m17mr52819855uae.90.1564069190798;
- Thu, 25 Jul 2019 08:39:50 -0700 (PDT)
+        Thu, 25 Jul 2019 12:03:57 -0400
+Received: by smtp.codeaurora.org (Postfix, from userid 1000)
+        id 71A6260ACE; Thu, 25 Jul 2019 16:03:52 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
+        s=default; t=1564070636;
+        bh=HDXaB/rW7q3NhbJzyZnv5ZmlVlcc/d4sB5nS46rp6rM=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=LzlsA72Sajdv3hJvLX1E57yeXPpZh/GAH4U5d6HG4/5yeoD0FHzDaCNa582dvHi5O
+         K963VEHnUm3rfQLHXayFUO+EwB9Wy5IDZ5wyc2qvDwX/M0eJm6DSol8L+7Egj6Blph
+         jwtD3aLs+OPWuow27T3TNh551Ue/7pT0F00LbXvg=
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        pdx-caf-mail.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.7 required=2.0 tests=ALL_TRUSTED,BAYES_00,
+        DKIM_INVALID,DKIM_SIGNED,SPF_NONE autolearn=no autolearn_force=no
+        version=3.4.0
+Received: from jcrouse1-lnx.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: jcrouse@smtp.codeaurora.org)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 0C1A06086B;
+        Thu, 25 Jul 2019 16:03:48 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
+        s=default; t=1564070631;
+        bh=HDXaB/rW7q3NhbJzyZnv5ZmlVlcc/d4sB5nS46rp6rM=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=itMOi4yCXHgJR6ppYN/+r7rGmGwbxzE0GMwSUEAtFQTikMUd+WnQSVO6Mwz6aKXA2
+         vehbfWwGUEhk84lCesWnxUfMKaJYEl0EjhOEgvD2XCPRBgLZ5IMK0VVLX5nDbSgdQp
+         T/oTscM52dvlKNK1ypD92V7XdKgyQT6UdiegBDH8=
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 0C1A06086B
+Authentication-Results: pdx-caf-mail.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: pdx-caf-mail.web.codeaurora.org; spf=none smtp.mailfrom=jcrouse@codeaurora.org
+Date:   Thu, 25 Jul 2019 10:03:47 -0600
+From:   Jordan Crouse <jcrouse@codeaurora.org>
+To:     Yue Hu <zbestahu@gmail.com>
+Cc:     airlied@linux.ie, daniel@ffwll.ch, robdclark@gmail.com,
+        sean@poorly.run, robh@kernel.org, tomeu.vizoso@collabora.com,
+        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org, cw00.choi@samsung.com,
+        myungjoo.ham@samsung.com, huyue2@yulong.com, zhangwen@yulong.com
+Subject: Re: [PATCH RESEND] drm: Switch to use DEVFREQ_GOV_SIMPLE_ONDEMAND
+ constant
+Message-ID: <20190725160346.GB25162@jcrouse1-lnx.qualcomm.com>
+Mail-Followup-To: Yue Hu <zbestahu@gmail.com>, airlied@linux.ie,
+        daniel@ffwll.ch, robdclark@gmail.com, sean@poorly.run,
+        robh@kernel.org, tomeu.vizoso@collabora.com,
+        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org, cw00.choi@samsung.com,
+        myungjoo.ham@samsung.com, huyue2@yulong.com, zhangwen@yulong.com
+References: <20190725035239.1192-1-zbestahu@gmail.com>
 MIME-Version: 1.0
-References: <20190722215340.3071-1-ilina@codeaurora.org> <20190722215340.3071-2-ilina@codeaurora.org>
- <5d3769df.1c69fb81.55d03.aa33@mx.google.com> <20190724145251.GB18620@codeaurora.org>
- <5d38b38e.1c69fb81.e8e5d.035b@mx.google.com> <20190724203610.GE18620@codeaurora.org>
- <CAD=FV=UYj55m99EcQXmkYhs257A46x8DaarE0DC-GRF_3dY3-Q@mail.gmail.com> <20190725151851.GG18620@codeaurora.org>
-In-Reply-To: <20190725151851.GG18620@codeaurora.org>
-From:   Doug Anderson <dianders@chromium.org>
-Date:   Thu, 25 Jul 2019 08:39:30 -0700
-X-Gmail-Original-Message-ID: <CAD=FV=X2ENqt5+vdUoRnLTRbedj_sFdQD3Me-yYEW0fDOdBCvg@mail.gmail.com>
-Message-ID: <CAD=FV=X2ENqt5+vdUoRnLTRbedj_sFdQD3Me-yYEW0fDOdBCvg@mail.gmail.com>
-Subject: Re: [PATCH V2 2/4] drivers: qcom: rpmh-rsc: avoid locking in the
- interrupt handler
-To:     Lina Iyer <ilina@codeaurora.org>
-Cc:     Stephen Boyd <swboyd@chromium.org>, Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        "open list:ARM/QUALCOMM SUPPORT" <linux-soc@vger.kernel.org>,
-        Rajendra Nayak <rnayak@codeaurora.org>,
-        LKML <linux-kernel@vger.kernel.org>,
-        Linux PM <linux-pm@vger.kernel.org>, mkshah@codeaurora.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20190725035239.1192-1-zbestahu@gmail.com>
+User-Agent: Mutt/1.5.24 (2015-08-30)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi,
+On Thu, Jul 25, 2019 at 11:52:39AM +0800, Yue Hu wrote:
+> From: Yue Hu <huyue2@yulong.com>
+> 
+> Since governor name is defined by DEVFREQ framework internally, use the
+> macro definition instead of using the name directly.
 
-On Thu, Jul 25, 2019 at 8:18 AM Lina Iyer <ilina@codeaurora.org> wrote:
->
-> On Wed, Jul 24 2019 at 17:28 -0600, Doug Anderson wrote:
-> >Hi,
-> >
-> >On Wed, Jul 24, 2019 at 1:36 PM Lina Iyer <ilina@codeaurora.org> wrote:
-> >>
-> >> On Wed, Jul 24 2019 at 13:38 -0600, Stephen Boyd wrote:
-> >> >Quoting Lina Iyer (2019-07-24 07:52:51)
-> >> >> On Tue, Jul 23 2019 at 14:11 -0600, Stephen Boyd wrote:
-> >> >> >Quoting Lina Iyer (2019-07-22 14:53:38)
-> >> >> >> Avoid locking in the interrupt context to improve latency. Since we
-> >> >> >> don't lock in the interrupt context, it is possible that we now could
-> >> >> >> race with the DRV_CONTROL register that writes the enable register and
-> >> >> >> cleared by the interrupt handler. For fire-n-forget requests, the
-> >> >> >> interrupt may be raised as soon as the TCS is triggered and the IRQ
-> >> >> >> handler may clear the enable bit before the DRV_CONTROL is read back.
-> >> >> >>
-> >> >> >> Use the non-sync variant when enabling the TCS register to avoid reading
-> >> >> >> back a value that may been cleared because the interrupt handler ran
-> >> >> >> immediately after triggering the TCS.
-> >> >> >>
-> >> >> >> Signed-off-by: Lina Iyer <ilina@codeaurora.org>
-> >> >> >> ---
-> >> >> >
-> >> >> >I have to read this patch carefully. The commit text isn't convincing me
-> >> >> >that it is actually safe to make this change. It mostly talks about the
-> >> >> >performance improvements and how we need to fix __tcs_trigger(), which
-> >> >> >is good, but I was hoping to be convinced that not grabbing the lock
-> >> >> >here is safe.
-> >> >> >
-> >> >> >How do we ensure that drv->tcs_in_use is cleared before we call
-> >> >> >tcs_write() and try to look for a free bit? Isn't it possible that we'll
-> >> >> >get into a situation where the bitmap is all used up but the hardware
-> >> >> >has just received an interrupt and is going to clear out a bit and then
-> >> >> >an rpmh write fails with -EBUSY?
-> >> >> >
-> >> >> If we have a situation where there are no available free bits, we retry
-> >> >> and that is part of the function. Since we have only 2 TCSes avaialble
-> >> >> to write to the hardware and there could be multiple requests coming in,
-> >> >> it is a very common situation. We try and acquire the drv->lock and if
-> >> >> there are free TCS available and if available mark them busy and send
-> >> >> our requests. If there are none available, we keep retrying.
-> >> >>
-> >> >
-> >> >Ok. I wonder if we need some sort of barriers here too, like an
-> >> >smp_mb__after_atomic()? That way we can make sure that the write to
-> >> >clear the bit is seen by another CPU that could be spinning forever
-> >> >waiting for that bit to be cleared? Before this change the spinlock
-> >> >would be guaranteed to make these barriers for us, but now that doesn't
-> >> >seem to be the case. I really hope that this whole thing can be changed
-> >> >to be a mutex though, in which case we can use the bit_wait() API, etc.
-> >> >to put tasks to sleep while RPMh is processing things.
-> >> >
-> >> We have drivers that want to send requests in atomic contexts and
-> >> therefore mutex locks would not work.
-> >
-> >Jumping in without reading all the context, but I saw this fly by and
-> >it seemed odd.  If I'm way off base then please ignore...
-> >
-> >Can you give more details?  Why are these drivers in atomic contexts?
-> >If they are in atomic contexts because they are running in the context
-> >of an interrupt then your next patch in the series isn't so correct.
-> >
-> >Also: when people submit requests in atomic context are they always
-> >submitting an asynchronous request?  In that case we could
-> >(presumably) just use a spinlock to protect the queue of async
-> >requests and a mutex for everything else?
-> Yes, drivers only make async requests in interrupt contexts.
+Acked-by: Jordan Crouse <jcrouse@codeaurora.org> for the msm part.
 
-So correct me if I'm off base, but you're saying that drivers make
-requests in interrupt contexts even after your whole series and that's
-why you're using spinlocks instead of mutexes.  ...but then in patch
-#3 in your series you say:
+> Signed-off-by: Yue Hu <huyue2@yulong.com>
+> ---
+>  drivers/gpu/drm/msm/msm_gpu.c               | 3 ++-
+>  drivers/gpu/drm/panfrost/panfrost_devfreq.c | 3 ++-
+>  2 files changed, 4 insertions(+), 2 deletions(-)
+> 
+> diff --git a/drivers/gpu/drm/msm/msm_gpu.c b/drivers/gpu/drm/msm/msm_gpu.c
+> index 4edb874..f7308d6 100644
+> --- a/drivers/gpu/drm/msm/msm_gpu.c
+> +++ b/drivers/gpu/drm/msm/msm_gpu.c
+> @@ -95,7 +95,8 @@ static void msm_devfreq_init(struct msm_gpu *gpu)
+>  	 */
+>  
+>  	gpu->devfreq.devfreq = devm_devfreq_add_device(&gpu->pdev->dev,
+> -			&msm_devfreq_profile, "simple_ondemand", NULL);
+> +			&msm_devfreq_profile, DEVFREQ_GOV_SIMPLE_ONDEMAND,
+> +			NULL);
+>  
+>  	if (IS_ERR(gpu->devfreq.devfreq)) {
+>  		DRM_DEV_ERROR(&gpu->pdev->dev, "Couldn't initialize GPU devfreq\n");
+> diff --git a/drivers/gpu/drm/panfrost/panfrost_devfreq.c b/drivers/gpu/drm/panfrost/panfrost_devfreq.c
+> index db79853..a7c18bc 100644
+> --- a/drivers/gpu/drm/panfrost/panfrost_devfreq.c
+> +++ b/drivers/gpu/drm/panfrost/panfrost_devfreq.c
+> @@ -157,7 +157,8 @@ int panfrost_devfreq_init(struct panfrost_device *pfdev)
+>  	dev_pm_opp_put(opp);
+>  
+>  	pfdev->devfreq.devfreq = devm_devfreq_add_device(&pfdev->pdev->dev,
+> -			&panfrost_devfreq_profile, "simple_ondemand", NULL);
+> +			&panfrost_devfreq_profile, DEVFREQ_GOV_SIMPLE_ONDEMAND,
+> +			NULL);
+>  	if (IS_ERR(pfdev->devfreq.devfreq)) {
+>  		DRM_DEV_ERROR(&pfdev->pdev->dev, "Couldn't initialize GPU devfreq\n");
+>  		ret = PTR_ERR(pfdev->devfreq.devfreq);
+> -- 
+> 1.9.1
+> 
 
-> Switch over from using _irqsave/_irqrestore variants since we no longer
-> race with a lock from the interrupt handler.
-
-Those seem like contradictions.  What happens if someone is holding
-the lock, then an interrupt fires, then the interrupt routine wants to
-do an async request.  Boom, right?
-
-
-> They cannot
-> use the sync variants. The async and sync variants are streamlined into
-> the same code path. Hence the use of spinlocks instead of mutexes
-> through the critical path.
-
-I will perhaps defer to Stephen who was the one thinking that a mutex
-would be a big win here.  ...but if a mutex truly is a big win then it
-doesn't seem like it'd be that hard to have a linked list (protected
-by a spinlock) and then some type of async worker that:
-
-1. Grab the spinlock, pops one element off the linked list, release the spinlock
-2. Grab the mutex, send the one element, release the mutex
-3. Go back to step #1.
-
-This will keep the spinlock held for as little time as possible.
-
-
--Doug
+-- 
+The Qualcomm Innovation Center, Inc. is a member of Code Aurora Forum,
+a Linux Foundation Collaborative Project
