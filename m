@@ -2,101 +2,144 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id E7D7376BAE
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 26 Jul 2019 16:31:26 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 74FAB771AF
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 26 Jul 2019 20:55:48 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727241AbfGZOb0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 26 Jul 2019 10:31:26 -0400
-Received: from mail-io1-f66.google.com ([209.85.166.66]:34182 "EHLO
-        mail-io1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726265AbfGZOb0 (ORCPT
+        id S2388052AbfGZSzr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 26 Jul 2019 14:55:47 -0400
+Received: from asavdk3.altibox.net ([109.247.116.14]:44222 "EHLO
+        asavdk3.altibox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2387743AbfGZSzr (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 26 Jul 2019 10:31:26 -0400
-Received: by mail-io1-f66.google.com with SMTP id k8so105244875iot.1;
-        Fri, 26 Jul 2019 07:31:25 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=rZ/UBeNiBanOLKs9K5WAA6k/h0iDCXstzGMvYChhbN8=;
-        b=Qkr83lkT49ARvGJVqpIAVKE+c3OskLUv7tZduSwYle/0YBDI1fhM3M35Dcm10CPOD6
-         oGBJhLWanlvfEu/PCaAedYdFu3iFX9GnV0PyK5Gcoz6j0Y5iEEBn3sYWFz5Hd+F2arb0
-         T2sokMAFO0/Sygfx4x/RYdUfRKTMg+sJlzbw2E0TxCmNd95v35OovB5jQws5FGWwQVKp
-         tGbHGXnypMThoSExSEfOyJyB0uds+q5lX9GPtaJeVTzfIjhGoFtp10AqYWIz/UUmowJr
-         MnV9vSAvagmcnnWHdHv8NZVXwoR9uoiCBznhNgb6GaRVLk+lD2nfRmPOfcHfvK9a+HV/
-         4NqA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=rZ/UBeNiBanOLKs9K5WAA6k/h0iDCXstzGMvYChhbN8=;
-        b=PoONsJBRJGh19vgP30/rfsPxo1wnj6wMzIxTW5s7UKHt3Tsd8/EP6tFZfsb5islFvO
-         VfboKd16KPUKdyPCJ7t6C9q9MbB7Mufx2kW/KzQHkaP6u5JcWjvk0R+QP9ydXnfk4VRs
-         IAhJ0buEYTTEB4rAxDowiM6MD3Z3i3y6r+r0jrMmmIvY/FH8BTnI5f0GqJoTei7CImkB
-         MWT+l+gdjlqr/G2pK0fnJBGezz1JyeOP84qo/zQ4jMxGXKlN6urdXgmG6/FZLMsPyhGY
-         fd76lPvCmUwY2CqVDTSPuLeij/J/MjQwufIOXhnFJNzcVWPkT34CfJejb6/9eZJUnwRo
-         VLVw==
-X-Gm-Message-State: APjAAAWWCW2C8d1/q7UCRetIifjAZ5tqdrQqGDTaJ6PmSwtnfLHjPCYO
-        WhMUgybSN/82qq6/ryJ/ktnHRZ1Q+S8fr6KX99Q=
-X-Google-Smtp-Source: APXvYqyoFusi9rRAzb8Sz4ryxauK7V4EPDxozJDRC9Dy92L8oHNobVWt0IqcIZkUd2t5E2rbe4hpr1GOx/+E7EEzITA=
-X-Received: by 2002:a6b:901:: with SMTP id t1mr13636701ioi.42.1564151485320;
- Fri, 26 Jul 2019 07:31:25 -0700 (PDT)
+        Fri, 26 Jul 2019 14:55:47 -0400
+Received: from ravnborg.org (unknown [158.248.194.18])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by asavdk3.altibox.net (Postfix) with ESMTPS id CB69020127;
+        Fri, 26 Jul 2019 20:55:39 +0200 (CEST)
+Date:   Fri, 26 Jul 2019 20:55:38 +0200
+From:   Sam Ravnborg <sam@ravnborg.org>
+To:     Andrzej Pietrasiewicz <andrzej.p@collabora.com>
+Cc:     Neil Armstrong <narmstrong@baylibre.com>,
+        David Airlie <airlied@linux.ie>,
+        Liviu Dudau <liviu.dudau@arm.com>,
+        dri-devel@lists.freedesktop.org,
+        Douglas Anderson <dianders@chromium.org>,
+        Thierry Reding <thierry.reding@gmail.com>,
+        Laurent Pinchart <Laurent.pinchart@ideasonboard.com>,
+        kernel@collabora.com, linux-samsung-soc@vger.kernel.org,
+        Jyri Sarha <jsarha@ti.com>,
+        Vincent Abriou <vincent.abriou@st.com>,
+        Krzysztof Kozlowski <krzk@kernel.org>,
+        Jonathan Hunter <jonathanh@nvidia.com>,
+        linux-rockchip@lists.infradead.org, Chen-Yu Tsai <wens@csie.org>,
+        Kukjin Kim <kgene@kernel.org>,
+        NXP Linux Team <linux-imx@nxp.com>,
+        Dave Airlie <airlied@redhat.com>,
+        intel-gfx@lists.freedesktop.org, freedreno@lists.freedesktop.org,
+        linux-tegra@vger.kernel.org, Jonas Karlman <jonas@kwiboo.se>,
+        linux-arm-msm@vger.kernel.org, Maxime Ripard <mripard@kernel.org>,
+        Mamta Shukla <mamtashukla555@gmail.com>,
+        linux-mediatek@lists.infradead.org,
+        Rodrigo Vivi <rodrigo.vivi@intel.com>,
+        Matthias Brugger <matthias.bgg@gmail.com>,
+        Thomas Gleixner <tglx@linutronix.de>,
+        Sean Paul <sean@poorly.run>,
+        Pengutronix Kernel Team <kernel@pengutronix.de>,
+        linux-arm-kernel@lists.infradead.org,
+        Jernej Skrabec <jernej.skrabec@siol.net>,
+        amd-gfx@lists.freedesktop.org,
+        Tomi Valkeinen <tomi.valkeinen@ti.com>,
+        Thomas Zimmermann <tzimmermann@suse.de>,
+        Seung-Woo Kim <sw0312.kim@samsung.com>,
+        linux-kernel@vger.kernel.org, Todor Tomov <todor.tomov@linaro.org>,
+        Kyungmin Park <kyungmin.park@samsung.com>,
+        Huang Rui <ray.huang@amd.com>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Alex Deucher <alexander.deucher@amd.com>,
+        Shawn Guo <shawnguo@kernel.org>,
+        Christian =?iso-8859-1?Q?K=F6nig?= <christian.koenig@amd.com>,
+        Gerd Hoffmann <kraxel@redhat.com>
+Subject: Review required [Was: Associate ddc adapters with connectors]
+Message-ID: <20190726185538.GD14981@ravnborg.org>
+References: <cover.1564161140.git.andrzej.p@collabora.com>
+ <20190726183520.GA22572@ravnborg.org>
 MIME-Version: 1.0
-References: <20190708165647.46224-1-jeffrey.l.hugo@gmail.com> <20190726123625.GA17037@ravnborg.org>
-In-Reply-To: <20190726123625.GA17037@ravnborg.org>
-From:   Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
-Date:   Fri, 26 Jul 2019 08:31:15 -0600
-Message-ID: <CAOCk7NqU7G-afjHwTnQxqrRFcH9=kqDJAUABPHuwRWsdm6xENQ@mail.gmail.com>
-Subject: Re: [PATCH v2 0/2] Add Sharp panel option for Lenovo Miix 630
-To:     Sam Ravnborg <sam@ravnborg.org>
-Cc:     Rob Herring <robh+dt@kernel.org>,
-        Mark Rutland <mark.rutland@arm.com>, thierry.reding@gmail.com,
-        Dave Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        "open list:DRM PANEL DRIVERS" <dri-devel@lists.freedesktop.org>,
-        DTML <devicetree@vger.kernel.org>,
-        MSM <linux-arm-msm@vger.kernel.org>,
-        lkml <linux-kernel@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20190726183520.GA22572@ravnborg.org>
+User-Agent: Mutt/1.10.1 (2018-07-13)
+X-CMAE-Score: 0
+X-CMAE-Analysis: v=2.3 cv=dqr19Wo4 c=1 sm=1 tr=0
+        a=UWs3HLbX/2nnQ3s7vZ42gw==:117 a=UWs3HLbX/2nnQ3s7vZ42gw==:17
+        a=jpOVt7BSZ2e4Z31A5e1TngXxSK0=:19 a=kj9zAlcOel0A:10 a=7gkXJVJtAAAA:8
+        a=e5mUnYsNAAAA:8 a=nTBMXhx45H-Va90dJ2EA:9 a=CjuIK1q_8ugA:10
+        a=E9Po1WZjFZOl8hwRPBS3:22 a=Vxmtnl_E_bksehYqCbjh:22
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, Jul 26, 2019 at 6:36 AM Sam Ravnborg <sam@ravnborg.org> wrote:
->
-> Hi Jeffrey.
->
-> On Mon, Jul 08, 2019 at 09:56:47AM -0700, Jeffrey Hugo wrote:
-> > The Lenovo Miix 630 laptop can be found with one of two panels - a BOE
-> > or Sharp option.  This likely provides options during manufacturing.
-> >
-> > These panels connect via eDP, however they sit behind a DSI to eDP
-> > bridge on the laptop, so they can easily be handled by the existing
-> > simple panel code.
-> >
-> > This series adds support for the Sharp option.
-> >
-> > v2:
-> > -removed no-hpd from dt example
-> > -added .bus_format and .bus_flags fields based on reviews
-> > -added .flags after Bjorn pointed me to something I missed
-> > -added Sam's reviewed-by tags
-> >
-> > Jeffrey Hugo (2):
-> >   dt-bindings: panel: Add Sharp LD-D5116Z01B
-> >   drm/panel: simple: Add support for Sharp LD-D5116Z01B panel
->
-> Thanks.
-> Both patches applied and pushed to drm-misc-next.
+Hi all.
 
-Excellent.  Thanks
+Andrzej have done a good job following up on feedback and this series is
+now ready.
 
-> Are you up to a little janitorial work?
-> Today the preferred format for bindings files are the new yaml format.
-> Could you update 'your' file, and maybe the other sharp files too?
+We need ack on the patches touching the individual drivers before we can
+proceed.
+Please check your drivers and get back.
 
-I confess I haven't yet familiarized myself with the yaml format yet,
-but I'll take a look and do an update once I understand the
-requirements.
+	Sam
+
+> Hi Andezej.
+> 
+> On Fri, Jul 26, 2019 at 07:22:54PM +0200, Andrzej Pietrasiewicz wrote:
+> > It is difficult for a user to know which of the i2c adapters is for which
+> > drm connector. This series addresses this problem.
+> > 
+> > The idea is to have a symbolic link in connector's sysfs directory, e.g.:
+> > 
+> > ls -l /sys/class/drm/card0-HDMI-A-1/ddc
+> > lrwxrwxrwx 1 root root 0 Jun 24 10:42 /sys/class/drm/card0-HDMI-A-1/ddc \
+> > 	-> ../../../../soc/13880000.i2c/i2c-2
+> > 
+> > The user then knows that their card0-HDMI-A-1 uses i2c-2 and can e.g. run
+> > ddcutil:
+> > 
+> > ddcutil -b 2 getvcp 0x10
+> > VCP code 0x10 (Brightness): current value =    90, max value =   100
+> > 
+> > The first patch in the series adds struct i2c_adapter pointer to struct
+> > drm_connector. If the field is used by a particular driver, then an
+> > appropriate symbolic link is created by the generic code, which is also added
+> > by this patch.
+> > 
+> > Patch 2 adds a new variant of drm_connector_init(), see the changelog
+> > below.
+> > 
+> > Patches 3..24 are examples of how to convert a driver to this new scheme.
+> > 
+> ...
+> > 
+> > v5..v6:
+> > 
+> > - improved subject line of patch 1
+> > - added kernel-doc for drm_connector_init_with_ddc()
+> > - improved kernel-doc for the ddc field of struct drm_connector
+> > - added Reviewed-by in patches 17 and 18
+> > - added Acked-by in patch 2
+> > - made the ownership of ddc i2c_adapter explicit in all patches,
+> > this made the affected patches much simpler
+> 
+> Looks good now.
+> Patch 1 and 2 are:
+> Reviewed-by: Sam Ravnborg <sam@ravnborg.org>
+> 
+> The remaining patches are:
+> Acked-by: Sam Ravnborg <sam@ravnborg.org>
+> 
+> 	Sam
+> _______________________________________________
+> dri-devel mailing list
+> dri-devel@lists.freedesktop.org
+> https://lists.freedesktop.org/mailman/listinfo/dri-devel
