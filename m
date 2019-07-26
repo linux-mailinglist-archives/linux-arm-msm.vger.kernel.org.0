@@ -2,103 +2,122 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 8B9CD761EF
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 26 Jul 2019 11:24:09 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5A50A761F3
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 26 Jul 2019 11:25:40 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725928AbfGZJYI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 26 Jul 2019 05:24:08 -0400
-Received: from smtp.codeaurora.org ([198.145.29.96]:59446 "EHLO
-        smtp.codeaurora.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726527AbfGZJYH (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 26 Jul 2019 05:24:07 -0400
-Received: by smtp.codeaurora.org (Postfix, from userid 1000)
-        id AADD96192C; Fri, 26 Jul 2019 09:24:03 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
-        s=default; t=1564133046;
-        bh=xP6UNwG/IosfwSrscp1xWFAuEJXHy9xTR/aAp7folSs=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=ZCDUTutg8M1tredKqRkdIzbOt929mA1Q1fKDTC17vfcaiMYKRB7TWeMilSYeoNwQ0
-         wH6Mju//HjkfopQV66WQRLYqmlgqIWNa7Dm0KGFdzyWQAiyDEtcUJwPzREgVrx6mdq
-         N8JwTqFFw11KhJmsqDtlKZl0E3Tdp+SCZoxa58t4=
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        pdx-caf-mail.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.7 required=2.0 tests=ALL_TRUSTED,BAYES_00,
-        DKIM_INVALID,DKIM_SIGNED,SPF_NONE autolearn=no autolearn_force=no
-        version=3.4.0
-Received: from govinds-linux.qualcomm.com (blr-c-bdr-fw-01_globalnat_allzones-outside.qualcomm.com [103.229.19.19])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: govinds@smtp.codeaurora.org)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 8643B61893;
-        Fri, 26 Jul 2019 09:23:59 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
-        s=default; t=1564133042;
-        bh=xP6UNwG/IosfwSrscp1xWFAuEJXHy9xTR/aAp7folSs=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=LFOAS/iyOTiRYrrMTsUqZ3Zg+Lpy8fFiWUuGM2uICoKb6HNcSnMuXofb1b60urBbs
-         KoIGlS/k7Wj+cAdY8aoui2PJGl0bp9OrrqjBKcVD7GSZA8jT/WnfED5KkrPBpau88G
-         1N5uhWAhiSSalDNgpnGv+XclN5evm8xEXwJspZY8=
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 8643B61893
-Authentication-Results: pdx-caf-mail.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: pdx-caf-mail.web.codeaurora.org; spf=none smtp.mailfrom=govinds@codeaurora.org
-From:   Govind Singh <govinds@codeaurora.org>
-To:     bjorn.andersson@linaro.org, linux-remoteproc@vger.kernel.org,
-        sboyd@kernel.org, linux-clk@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org
-Cc:     andy.gross@linaro.org, linux-soc@vger.kernel.org,
-        devicetree@vger.kernel.org, Govind Singh <govinds@codeaurora.org>
-Subject: [PATCH v5 7/7] remoteproc: qcom: wcss: explicitly request exclusive reset control
-Date:   Fri, 26 Jul 2019 14:53:32 +0530
-Message-Id: <20190726092332.25202-8-govinds@codeaurora.org>
-X-Mailer: git-send-email 2.21.0
-In-Reply-To: <20190726092332.25202-1-govinds@codeaurora.org>
-References: <20190726092332.25202-1-govinds@codeaurora.org>
+        id S1725953AbfGZJZj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 26 Jul 2019 05:25:39 -0400
+Received: from foss.arm.com ([217.140.110.172]:40132 "EHLO foss.arm.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1725903AbfGZJZj (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 26 Jul 2019 05:25:39 -0400
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id A0630344;
+        Fri, 26 Jul 2019 02:25:38 -0700 (PDT)
+Received: from [192.168.0.21] (unknown [172.31.20.19])
+        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 5B4C23F71A;
+        Fri, 26 Jul 2019 02:25:37 -0700 (PDT)
+Subject: Re: [Regression] Missing device nodes for ETR, ETF and STM after
+ CONFIG_UEVENT_HELPER=n
+To:     gregkh@linuxfoundation.org, saiprakash.ranjan@codeaurora.org
+Cc:     geert+renesas@glider.be, mathieu.poirier@linaro.org,
+        leo.yan@linaro.org, linux-arm-msm@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org
+References: <cfe09a46-462f-633a-37c2-52f8bfc0ffb2@codeaurora.org>
+ <20190726070429.GA15714@kroah.com>
+ <165028a7-ff12-dd28-cc4c-57a3961dbb40@codeaurora.org>
+ <20190726084127.GA28470@kroah.com>
+From:   Suzuki K Poulose <suzuki.poulose@arm.com>
+Message-ID: <f72f2fa1-7b1b-d7de-c9b4-cd574400d8e5@arm.com>
+Date:   Fri, 26 Jul 2019 10:28:41 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
+ Thunderbird/52.7.0
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+In-Reply-To: <20190726084127.GA28470@kroah.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Use request exclusive reset control for wcss reset controls.
 
-Signed-off-by: Govind Singh <govinds@codeaurora.org>
----
- drivers/remoteproc/qcom_q6v5_wcss.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/remoteproc/qcom_q6v5_wcss.c b/drivers/remoteproc/qcom_q6v5_wcss.c
-index c2e75f5b5737..a2671a19f2d0 100644
---- a/drivers/remoteproc/qcom_q6v5_wcss.c
-+++ b/drivers/remoteproc/qcom_q6v5_wcss.c
-@@ -781,21 +781,21 @@ static int q6v5_wcss_init_reset(struct q6v5_wcss *wcss,
- 	struct device *dev = wcss->dev;
- 
- 	if (desc->aon_reset_required) {
--		wcss->wcss_aon_reset = devm_reset_control_get(dev, "wcss_aon_reset");;
-+		wcss->wcss_aon_reset = devm_reset_control_get_exclusive(dev, "wcss_aon_reset");;
- 		if (IS_ERR(wcss->wcss_aon_reset)) {
- 			dev_err(wcss->dev, "fail to acquire wcss_aon_reset\n");
- 			return PTR_ERR(wcss->wcss_aon_reset);
- 		}
- 	}
- 
--	wcss->wcss_reset = devm_reset_control_get(dev, "wcss_reset");
-+	wcss->wcss_reset = devm_reset_control_get_exclusive(dev, "wcss_reset");
- 	if (IS_ERR(wcss->wcss_reset)) {
- 		dev_err(wcss->dev, "unable to acquire wcss_reset\n");
- 		return PTR_ERR(wcss->wcss_reset);
- 	}
- 
- 	if (desc->wcss_q6_reset_required) {
--		wcss->wcss_q6_reset = devm_reset_control_get(dev, "wcss_q6_reset");
-+		wcss->wcss_q6_reset = devm_reset_control_get_exclusive(dev, "wcss_q6_reset");
- 		if (IS_ERR(wcss->wcss_q6_reset)) {
- 			dev_err(wcss->dev, "unable to acquire wcss_q6_reset\n");
- 			return PTR_ERR(wcss->wcss_q6_reset);
--- 
-The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
-a Linux Foundation Collaborative Project
+On 07/26/2019 09:41 AM, Greg Kroah-Hartman wrote:
+> On Fri, Jul 26, 2019 at 01:50:27PM +0530, Sai Prakash Ranjan wrote:
+>> On 7/26/2019 12:34 PM, Greg Kroah-Hartman wrote:
+>>> On Fri, Jul 26, 2019 at 11:49:19AM +0530, Sai Prakash Ranjan wrote:
+>>>> Hi,
+>>>>
+>>>> When trying to test my coresight patches, I found that etr,etf and stm
+>>>> device nodes are missing from /dev.
+>>>
+>>> I have no idea what those device nodes are.
+>>>
+>>>> Bisection gives this as the bad commit.
+>>>>
+>>>> 1be01d4a57142ded23bdb9e0c8d9369e693b26cc is the first bad commit
+>>>> commit 1be01d4a57142ded23bdb9e0c8d9369e693b26cc
+>>>> Author: Geert Uytterhoeven <geert+renesas@glider.be>
+>>>> Date:   Thu Mar 14 12:13:50 2019 +0100
+>>>>
+>>>>       driver: base: Disable CONFIG_UEVENT_HELPER by default
+>>>>
+>>>>       Since commit 7934779a69f1184f ("Driver-Core: disable /sbin/hotplug by
+>>>>       default"), the help text for the /sbin/hotplug fork-bomb says
+>>>>       "This should not be used today [...] creates a high system load, or
+>>>>       [...] out-of-memory situations during bootup".  The rationale for this
+>>>>       was that no recent mainstream system used this anymore (in 2010!).
+>>>>
+>>>>       A few years later, the complete uevent helper support was made optional
+>>>>       in commit 86d56134f1b67d0c ("kobject: Make support for uevent_helper
+>>>>       optional.").  However, if was still left enabled by default, to support
+>>>>       ancient userland.
+>>>>
+>>>>       Time passed by, and nothing should use this anymore, so it can be
+>>>>       disabled by default.
+>>>>
+>>>>       Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
+>>>>       Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+>>>>
+>>>>    drivers/base/Kconfig | 1 -
+>>>>    1 file changed, 1 deletion(-)
+>>>>
+>>>>
+>>>> Any idea on this?
+>>>
+>>> That means that who ever created those device nodes is relying on udev
+>>> to do this, and is not doing the correct thing within the kernel and
+>>> using devtmpfs.
+>>>
+>>> Any pointers to where in the kernel those devices are trying to be
+>>> created?
+>>>
+>>
+>> Somewhere in drivers/hwtracing/coresight/* probably. I am not sure,
+>> Mathieu/Suzuki would be able to point you to the exact code.
+>>
+>> Also just to add on some more details, I am using *initramfs*
 
+> 
+> Are you using devtmpfs for your /dev/ mount?
+
+I think that should solve the issue ^^
+
+> 
+> If you enable this option, what does:
+> 	ls -l /dev/etr
+> 	ls -l /dev/etf
+> 	ls -l /dev/stm
+> result in?
+> 
+> What are these device nodes for?  Are they symlinks?  Real devices that
+> show up in /sys/dev/char/ as a real value?  Or something else?
+
+Greg, those are registered as miscellaneous devices to export the trace 
+collected (for etfs and etrs) in sysfs mode and for user-space access to
+allow STM tracing. So they are real devices.
+
+
+Suzuki
