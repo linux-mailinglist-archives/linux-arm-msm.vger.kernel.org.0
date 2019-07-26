@@ -2,190 +2,108 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 7949F75AAD
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 26 Jul 2019 00:20:16 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E488875EE7
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 26 Jul 2019 08:19:29 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727284AbfGYWTn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 25 Jul 2019 18:19:43 -0400
-Received: from mail-pf1-f194.google.com ([209.85.210.194]:44884 "EHLO
-        mail-pf1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727232AbfGYWTm (ORCPT
+        id S1725925AbfGZGT3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 26 Jul 2019 02:19:29 -0400
+Received: from smtp.codeaurora.org ([198.145.29.96]:56438 "EHLO
+        smtp.codeaurora.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725869AbfGZGT2 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 25 Jul 2019 18:19:42 -0400
-Received: by mail-pf1-f194.google.com with SMTP id t16so23404947pfe.11
-        for <linux-arm-msm@vger.kernel.org>; Thu, 25 Jul 2019 15:19:41 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :in-reply-to:references;
-        bh=iTUMfB0Wim/a1bz2uuCGtMiuUYFdGiUbnvdD+HL9w8A=;
-        b=OJdrO8NfixWF+IfHJd7NkzCiHvqJm5zt41U9YgoUEqvpVfGa6OPD1GxjM6vfwYvCrF
-         XYSXsJ2BqjSnZlEd3dP24brGNtsmKEXdi5Nlldeld2mew3YrYN33G2e7hfXoKGCF2wVl
-         yT4SZzUxicgQ2bVQs9424GpVZU74Wsl5BW9OpPS0GWn1BrtCJ1ksG3FkUDwlbun+GreU
-         u6jhls4NaCCGjj3KDEOk1/On71du2K/CwBGWrTt8c7lOGY9QgDN071p8gf8O4xw26SUg
-         0PjFtA+5GPm2ii9otFWj65Bv8DYXcWhidXV3hu5dhZW4hqb92MtcCBxjghS2gEvNdE+L
-         l2KQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:in-reply-to:references;
-        bh=iTUMfB0Wim/a1bz2uuCGtMiuUYFdGiUbnvdD+HL9w8A=;
-        b=ZAh+FgRrdpJtLA7U4EM+/T/r8otgMutLwHqI4TDkjtVux3pBAI/06K3XkKvEac8KYB
-         HTR2CeYsjtI4M7mQQk1VhZ6SDR6Dk9+mPTqeqQ4u4g2dNqMvrJOaOnxohSgl1r/J+zUG
-         9Jj+Mi65AGi6Sw7LfRZTqdYO2PclPm5z0uhkuwCM7iK4S5XQlM/qMfLpsa4lPI4uklxN
-         njPmEH1U9XWlAcvGvV0xusKxjuY7A9WONjr4LOt/Rv7rslcZ4dlxAA6FIHflMlMh2+Ki
-         1gaS/8WKzci64qsEk785OFSUHemKFH3TW22jmHUdEeI2K1vRGr6RB32kooI7w3whRgZe
-         9sPw==
-X-Gm-Message-State: APjAAAX4lmFUx26TUBX23OucvDZ25khYQ6Z0C1k+c0FSMzjv0ckfCEqM
-        xtCpbxPqJZvvIzmPrYlNGvnSvw==
-X-Google-Smtp-Source: APXvYqzF1V9+SxncxFYk5Y9e1ZK32fvYi3mBx4m9IH+3pz3WMFf5tycnnyww9qSOytMe3gAM46e5Mg==
-X-Received: by 2002:aa7:8817:: with SMTP id c23mr19090975pfo.146.1564093181321;
-        Thu, 25 Jul 2019 15:19:41 -0700 (PDT)
-Received: from localhost ([49.248.170.216])
-        by smtp.gmail.com with ESMTPSA id e10sm51975982pfi.173.2019.07.25.15.19.40
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Thu, 25 Jul 2019 15:19:40 -0700 (PDT)
-From:   Amit Kucheria <amit.kucheria@linaro.org>
-To:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        bjorn.andersson@linaro.org, edubezval@gmail.com,
-        andy.gross@linaro.org, Andy Gross <agross@kernel.org>,
-        Daniel Lezcano <daniel.lezcano@linaro.org>,
-        Mark Rutland <mark.rutland@arm.com>,
-        Rob Herring <robh+dt@kernel.org>,
-        Zhang Rui <rui.zhang@intel.com>
-Cc:     masneyb@onstation.org, devicetree@vger.kernel.org
-Subject: [PATCH 12/15] arm64: dts: msm8974: thermal: Add interrupt support
-Date:   Fri, 26 Jul 2019 03:48:47 +0530
-Message-Id: <ec8205566eb9c015ad51fbb88f0da7ca60b414fd.1564091601.git.amit.kucheria@linaro.org>
-X-Mailer: git-send-email 2.17.1
-In-Reply-To: <cover.1564091601.git.amit.kucheria@linaro.org>
-References: <cover.1564091601.git.amit.kucheria@linaro.org>
-In-Reply-To: <cover.1564091601.git.amit.kucheria@linaro.org>
-References: <cover.1564091601.git.amit.kucheria@linaro.org>
+        Fri, 26 Jul 2019 02:19:28 -0400
+Received: by smtp.codeaurora.org (Postfix, from userid 1000)
+        id F1AA360312; Fri, 26 Jul 2019 06:19:26 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
+        s=default; t=1564121967;
+        bh=tuIggQu6dJ8EB1vu2q34aTSvJWiTR8Y13JpxH0xY+wo=;
+        h=To:From:Subject:Date:From;
+        b=GLd+HRYDHP2wOvvCi3x5CMnCrbkekNVca/1Uy6EFC1nCpkic07IIESw3d6+OpkGiV
+         YrSi7hXbtLvf/pdv6MER8/MhmWn7PENFg7DOzs0AhGAZQAPavApYcPD6HV1+mJtrje
+         QKcfgbBUywp2EX35TCKd4CvSQLBHQcUE0qBqJx5k=
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        pdx-caf-mail.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.7 required=2.0 tests=ALL_TRUSTED,BAYES_00,
+        DKIM_INVALID,DKIM_SIGNED,SPF_NONE autolearn=no autolearn_force=no
+        version=3.4.0
+Received: from [10.79.136.27] (blr-bdr-fw-01_globalnat_allzones-outside.qualcomm.com [103.229.18.19])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: saiprakash.ranjan@smtp.codeaurora.org)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 8042660312;
+        Fri, 26 Jul 2019 06:19:22 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
+        s=default; t=1564121965;
+        bh=tuIggQu6dJ8EB1vu2q34aTSvJWiTR8Y13JpxH0xY+wo=;
+        h=To:From:Subject:Date:From;
+        b=X2x19VCLEvSnVju/55PiYdcmUN1JnwmeqJKkA/dPQldYNU0NOKs2iRXnVAiZBtuK8
+         Qu/tG1PUc1KjCA+tagInUh/4FeAmNhjQwGUEKQNYmeLxdcaNgGX7nZOG8ZPOrBXfcU
+         Rhl88eP28xhYgHGCrITkH09US2tE50OZOOipQn48=
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 8042660312
+Authentication-Results: pdx-caf-mail.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: pdx-caf-mail.web.codeaurora.org; spf=none smtp.mailfrom=saiprakash.ranjan@codeaurora.org
+To:     Geert Uytterhoeven <geert+renesas@glider.be>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Mathieu Poirier <mathieu.poirier@linaro.org>,
+        Suzuki K Poulose <suzuki.poulose@arm.com>,
+        Leo Yan <leo.yan@linaro.org>, linux-arm-msm@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org
+From:   Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
+Subject: [Regression] Missing device nodes for ETR, ETF and STM after
+ CONFIG_UEVENT_HELPER=n
+Message-ID: <cfe09a46-462f-633a-37c2-52f8bfc0ffb2@codeaurora.org>
+Date:   Fri, 26 Jul 2019 11:49:19 +0530
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
+ Thunderbird/60.8.0
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Register upper-lower interrupt for the tsens controller.
+Hi,
 
-Signed-off-by: Amit Kucheria <amit.kucheria@linaro.org>
----
-Cc: masneyb@onstation.org
+When trying to test my coresight patches, I found that etr,etf and stm 
+device nodes are missing from /dev.
 
- arch/arm/boot/dts/qcom-msm8974.dtsi | 36 +++++++++++++++--------------
- 1 file changed, 19 insertions(+), 17 deletions(-)
+Bisection gives this as the bad commit.
 
-diff --git a/arch/arm/boot/dts/qcom-msm8974.dtsi b/arch/arm/boot/dts/qcom-msm8974.dtsi
-index d32f639505f1..d10d47d20ab8 100644
---- a/arch/arm/boot/dts/qcom-msm8974.dtsi
-+++ b/arch/arm/boot/dts/qcom-msm8974.dtsi
-@@ -139,8 +139,8 @@
- 
- 	thermal-zones {
- 		cpu-thermal0 {
--			polling-delay-passive = <250>;
--			polling-delay = <1000>;
-+			polling-delay-passive = <0>;
-+			polling-delay = <0>;
- 
- 			thermal-sensors = <&tsens 5>;
- 
-@@ -159,8 +159,8 @@
- 		};
- 
- 		cpu-thermal1 {
--			polling-delay-passive = <250>;
--			polling-delay = <1000>;
-+			polling-delay-passive = <0>;
-+			polling-delay = <0>;
- 
- 			thermal-sensors = <&tsens 6>;
- 
-@@ -179,8 +179,8 @@
- 		};
- 
- 		cpu-thermal2 {
--			polling-delay-passive = <250>;
--			polling-delay = <1000>;
-+			polling-delay-passive = <0>;
-+			polling-delay = <0>;
- 
- 			thermal-sensors = <&tsens 7>;
- 
-@@ -199,8 +199,8 @@
- 		};
- 
- 		cpu-thermal3 {
--			polling-delay-passive = <250>;
--			polling-delay = <1000>;
-+			polling-delay-passive = <0>;
-+			polling-delay = <0>;
- 
- 			thermal-sensors = <&tsens 8>;
- 
-@@ -219,8 +219,8 @@
- 		};
- 
- 		q6-dsp-thermal {
--			polling-delay-passive = <250>;
--			polling-delay = <1000>;
-+			polling-delay-passive = <0>;
-+			polling-delay = <0>;
- 
- 			thermal-sensors = <&tsens 1>;
- 
-@@ -234,8 +234,8 @@
- 		};
- 
- 		modemtx-thermal {
--			polling-delay-passive = <250>;
--			polling-delay = <1000>;
-+			polling-delay-passive = <0>;
-+			polling-delay = <0>;
- 
- 			thermal-sensors = <&tsens 2>;
- 
-@@ -250,7 +250,7 @@
- 
- 		video-thermal {
- 			polling-delay-passive = <0>;
--			polling-delay = <1000>;
-+			polling-delay = <0>;
- 
- 			thermal-sensors = <&tsens 3>;
- 
-@@ -279,8 +279,8 @@
- 		};
- 
- 		gpu-thermal-top {
--			polling-delay-passive = <250>;
--			polling-delay = <1000>;
-+			polling-delay-passive = <0>;
-+			polling-delay = <0>;
- 
- 			thermal-sensors = <&tsens 9>;
- 
-@@ -294,8 +294,8 @@
- 		};
- 
- 		gpu-thermal-bottom {
--			polling-delay-passive = <250>;
--			polling-delay = <1000>;
-+			polling-delay-passive = <0>;
-+			polling-delay = <0>;
- 
- 			thermal-sensors = <&tsens 10>;
- 
-@@ -531,6 +531,8 @@
- 			nvmem-cells = <&tsens_calib>, <&tsens_backup>;
- 			nvmem-cell-names = "calib", "calib_backup";
- 			#qcom,sensors = <11>;
-+			interrupts = <GIC_SPI 184 IRQ_TYPE_LEVEL_HIGH>;
-+			interrupt-names = "tsens";
- 			#thermal-sensor-cells = <1>;
- 		};
- 
+1be01d4a57142ded23bdb9e0c8d9369e693b26cc is the first bad commit
+commit 1be01d4a57142ded23bdb9e0c8d9369e693b26cc
+Author: Geert Uytterhoeven <geert+renesas@glider.be>
+Date:   Thu Mar 14 12:13:50 2019 +0100
+
+     driver: base: Disable CONFIG_UEVENT_HELPER by default
+
+     Since commit 7934779a69f1184f ("Driver-Core: disable /sbin/hotplug by
+     default"), the help text for the /sbin/hotplug fork-bomb says
+     "This should not be used today [...] creates a high system load, or
+     [...] out-of-memory situations during bootup".  The rationale for this
+     was that no recent mainstream system used this anymore (in 2010!).
+
+     A few years later, the complete uevent helper support was made optional
+     in commit 86d56134f1b67d0c ("kobject: Make support for uevent_helper
+     optional.").  However, if was still left enabled by default, to support
+     ancient userland.
+
+     Time passed by, and nothing should use this anymore, so it can be
+     disabled by default.
+
+     Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
+     Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+
+  drivers/base/Kconfig | 1 -
+  1 file changed, 1 deletion(-)
+
+
+Any idea on this?
+
+-Sai
+
 -- 
-2.17.1
-
+QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
+of Code Aurora Forum, hosted by The Linux Foundation
