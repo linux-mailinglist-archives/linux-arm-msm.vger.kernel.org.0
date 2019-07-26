@@ -2,86 +2,99 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 3480F76049
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 26 Jul 2019 10:03:36 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 05F0F7604D
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 26 Jul 2019 10:04:23 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726435AbfGZIDf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 26 Jul 2019 04:03:35 -0400
-Received: from mail-pl1-f193.google.com ([209.85.214.193]:40545 "EHLO
-        mail-pl1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726431AbfGZIDf (ORCPT
+        id S1726279AbfGZIEV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 26 Jul 2019 04:04:21 -0400
+Received: from mail-pg1-f195.google.com ([209.85.215.195]:41541 "EHLO
+        mail-pg1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725928AbfGZIEV (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 26 Jul 2019 04:03:35 -0400
-Received: by mail-pl1-f193.google.com with SMTP id a93so24411317pla.7
-        for <linux-arm-msm@vger.kernel.org>; Fri, 26 Jul 2019 01:03:35 -0700 (PDT)
+        Fri, 26 Jul 2019 04:04:21 -0400
+Received: by mail-pg1-f195.google.com with SMTP id x15so14045908pgg.8
+        for <linux-arm-msm@vger.kernel.org>; Fri, 26 Jul 2019 01:04:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to:user-agent;
-        bh=V6zPBev9xQgiBqMyHVwiFqQKL5cx+sR2tLt2bKc/lVQ=;
-        b=HynS/ASw3Ys3ZyhOwYmGKzl1m1kwEE7nhm8gNvbojrDBb+rqjQ9hmTAP92o9YJlhz0
-         aj+aQeSIN6AmLljyuVNRQm9hKkmsP3BfsnY6Wg4fJ57DD5Nh5FLPsSydLc1zd1/vIgQo
-         ZoLDbBxJWLgD7RMdTjZPu0VwaQITz47QSC5Uv9xnyTa8hqqJ+GzW+WM7ommW+BeSRik+
-         H5hOMdwjoCoEFOI3NUWqYKYbzmFdcqlISmkJ1ff28H/CiE4DUUrxP9EEktKHnuutBIwf
-         r26wI9R4XxfMoyPcU29ZUU29FLjWh7Lw5LO+TDJIXbHjcdsQB/w8yS1yjatI9gyD0fdt
-         i8TQ==
+        bh=RvwPhyEIP2C1GmNkk4CaBRsJ7LL1kgFaxYotbYvMHPg=;
+        b=TYUJvMUexVnsX0m0MLXy24SyzzBqxoROwI7Uc7k8Jawjx30BNj/P3fgvOFd6mgF1ub
+         gMVRPVNnGlbMn9NCKeeCRsnJEAJyRti2+XO2Cidy1kRVFPi37z0pc6C6sl6nml6arwGc
+         Fe3IOu2AU/BEX1zbbAf3j+/uxFr2E2/wfJudYBKmpnOEyuAlRvQuWNkURmXId2PaGK3N
+         iOGNsLw9G/mWislf38UtZ7PUMUIOQwb13WIAANRonntJ5JaszUsHIqMcn7tijUGIWr4e
+         UQkx7dd5w0uacRGojJgwxU9+gJEApSPq6Xf8RPPY5kmnAtloZB6KcmHH+c7Iukhd46by
+         zpZQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=V6zPBev9xQgiBqMyHVwiFqQKL5cx+sR2tLt2bKc/lVQ=;
-        b=EByva/R4R/N/u3XVtca7KACiySxh9MWqWDvHiEx/hv0xOzTwJVaqP3jJa7Veay/Dcf
-         5lbXk8oI7cJosD/Sl7E/rFFIQ6jKox9LkphQiZuVzCFTKuw12Neoym1O4jeM3tgjyY7b
-         JtYiaAm/NpiypAF1XlGa+L44eV2PSoQyiKQQVsYXmHT+KBj8Qvm4TnTNfYk4VhuNaK9W
-         MpBnOg9yNMPQ2nDYRhAmBY5MsKCWs8XkQmlegRgrLulwSo8IOg2cGTi0Ar120YGXf9BZ
-         iarFkaLt12SOl0S9gdjh7WVVEkM0oNXk1+rIJ34obmMJqIzhsWw9rjudYGS1Jz49dx97
-         /uJw==
-X-Gm-Message-State: APjAAAW/8EQy7eYyrt3/tMdbP9hXXfd7mx5fQuVTq3OvRbfOKqT+3zBu
-        CQZVIi76grTQN8npDn/bm9fhlA==
-X-Google-Smtp-Source: APXvYqwYoNk6LUyHsrgO48OvfBPvyGjR8jqkVPjQWqjKXtuBa5adbQy6aRQy3AbSY5sRUgiAxHwLFw==
-X-Received: by 2002:a17:902:ff05:: with SMTP id f5mr92070283plj.116.1564128214872;
-        Fri, 26 Jul 2019 01:03:34 -0700 (PDT)
+        bh=RvwPhyEIP2C1GmNkk4CaBRsJ7LL1kgFaxYotbYvMHPg=;
+        b=hoa1hp1fRQhx6c3loJAtLAQoyiiG+RBVF3mYYREuzUgnP0k5KVDZaYks1m1JgkJFVU
+         oAob7InS/4fpD4C7FESsIItYc2fIh7Ig4cX2Pg0aphwZcx1Ck1g/bIS3DrA9xdaeU+w7
+         G04Q0wdDp3kXjGvjPFJ4ANlhGl6FoLuYJar3a/oGp7XpxuPQGqxbE0+oZ1lXi7pjGArd
+         ZV+7LBjD9lwcYKpTkrhpgyRwTwmQU+PZe2pUOLCphQT96xB6VR108QSufRUPxQCVfbNd
+         hBPIlY60iQ2jtd1FZBB7ZSFH0+gN5IGn6KWt/rKoVtTvP/JpD485EByNYWYMrHKzK/MK
+         Bs/w==
+X-Gm-Message-State: APjAAAX1hUaTs9AGxxUk0ChqpuDaLCm5DB96Rv1dBFnYj85yR6F5BEeg
+        eMFxskd1o0hyXO82DLiSRQODhA==
+X-Google-Smtp-Source: APXvYqxTsDwHnJcVzgc3D4+iVqCkMgf3qQEn4QWbmVPCdg1WXTAvCSSDgDPosNz3oyuEWm6Zp3gYRw==
+X-Received: by 2002:a63:d852:: with SMTP id k18mr18912708pgj.313.1564128260209;
+        Fri, 26 Jul 2019 01:04:20 -0700 (PDT)
 Received: from localhost ([122.172.28.117])
-        by smtp.gmail.com with ESMTPSA id q22sm47092154pgh.49.2019.07.26.01.03.33
+        by smtp.gmail.com with ESMTPSA id c12sm38958764pgb.83.2019.07.26.01.04.19
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 26 Jul 2019 01:03:33 -0700 (PDT)
-Date:   Fri, 26 Jul 2019 13:33:31 +0530
+        Fri, 26 Jul 2019 01:04:19 -0700 (PDT)
+Date:   Fri, 26 Jul 2019 13:34:17 +0530
 From:   Viresh Kumar <viresh.kumar@linaro.org>
 To:     Niklas Cassel <niklas.cassel@linaro.org>
 Cc:     Viresh Kumar <vireshk@kernel.org>, Nishanth Menon <nm@ti.com>,
         Stephen Boyd <sboyd@kernel.org>,
-        "Rafael J. Wysocki" <rjw@rjwysocki.net>,
+        Andy Gross <agross@kernel.org>, Ilia Lin <ilia.lin@kernel.org>,
         linux-arm-msm@vger.kernel.org, jorge.ramirez-ortiz@linaro.org,
         bjorn.andersson@linaro.org, ulf.hansson@linaro.org,
-        linux-pm@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v2 01/14] opp: Add dev_pm_opp_find_level_exact()
-Message-ID: <20190726080331.qzvi737nj4oflghz@vireshk-i7>
+        Sricharan R <sricharan@codeaurora.org>,
+        Rob Herring <robh@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Mark Rutland <mark.rutland@arm.com>, linux-pm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v2 02/14] dt-bindings: cpufreq: Re-organise kryo cpufreq
+ to use it for other nvmem based qcom socs
+Message-ID: <20190726080417.ohsgedbtyxbxfyj7@vireshk-i7>
 References: <20190725104144.22924-1-niklas.cassel@linaro.org>
- <20190725104144.22924-2-niklas.cassel@linaro.org>
+ <20190725104144.22924-3-niklas.cassel@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20190725104144.22924-2-niklas.cassel@linaro.org>
+In-Reply-To: <20190725104144.22924-3-niklas.cassel@linaro.org>
 User-Agent: NeoMutt/20180716-391-311a52
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+$subject of this and few more binding patches updated to:
+
+"dt-bindings: opp: XXX"
+
 On 25-07-19, 12:41, Niklas Cassel wrote:
-> When using performance states, there is usually not any opp-hz property
-> specified, so the dev_pm_opp_find_freq_exact() function cannot be used.
-
-Removed above two lines while applying.
-
-> Since the performance states in the OPP table are unique, implement a
-> dev_pm_opp_find_level_exact() in order to be able to fetch a specific OPP.
+> From: Sricharan R <sricharan@codeaurora.org>
 > 
+> The kryo cpufreq driver reads the nvmem cell and uses that data to
+> populate the opps. There are other qcom cpufreq socs like krait which
+> does similar thing. Except for the interpretation of the read data,
+> rest of the driver is same for both the cases. So pull the common things
+> out for reuse.
+> 
+> Signed-off-by: Sricharan R <sricharan@codeaurora.org>
+> [niklas.cassel@linaro.org: split dt-binding into a separate patch and
+> do not rename the compatible string.]
 > Signed-off-by: Niklas Cassel <niklas.cassel@linaro.org>
+> Reviewed-by: Ilia Lin <ilia.lin@kernel.org>
+> Reviewed-by: Rob Herring <robh@kernel.org>
 > ---
->  drivers/opp/core.c     | 48 ++++++++++++++++++++++++++++++++++++++++++
->  include/linux/pm_opp.h |  8 +++++++
->  2 files changed, 56 insertions(+)
+> Changes since V1:
+> -Picked up tags.
 
 -- 
 viresh
