@@ -2,144 +2,93 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 74FAB771AF
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 26 Jul 2019 20:55:48 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 612B777254
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 26 Jul 2019 21:43:05 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2388052AbfGZSzr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 26 Jul 2019 14:55:47 -0400
-Received: from asavdk3.altibox.net ([109.247.116.14]:44222 "EHLO
-        asavdk3.altibox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2387743AbfGZSzr (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 26 Jul 2019 14:55:47 -0400
-Received: from ravnborg.org (unknown [158.248.194.18])
+        id S2387512AbfGZTnD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 26 Jul 2019 15:43:03 -0400
+Received: from mail.kernel.org ([198.145.29.99]:54100 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726103AbfGZTnD (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 26 Jul 2019 15:43:03 -0400
+Received: from kernel.org (unknown [104.132.0.74])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by asavdk3.altibox.net (Postfix) with ESMTPS id CB69020127;
-        Fri, 26 Jul 2019 20:55:39 +0200 (CEST)
-Date:   Fri, 26 Jul 2019 20:55:38 +0200
-From:   Sam Ravnborg <sam@ravnborg.org>
-To:     Andrzej Pietrasiewicz <andrzej.p@collabora.com>
-Cc:     Neil Armstrong <narmstrong@baylibre.com>,
-        David Airlie <airlied@linux.ie>,
-        Liviu Dudau <liviu.dudau@arm.com>,
-        dri-devel@lists.freedesktop.org,
-        Douglas Anderson <dianders@chromium.org>,
-        Thierry Reding <thierry.reding@gmail.com>,
-        Laurent Pinchart <Laurent.pinchart@ideasonboard.com>,
-        kernel@collabora.com, linux-samsung-soc@vger.kernel.org,
-        Jyri Sarha <jsarha@ti.com>,
-        Vincent Abriou <vincent.abriou@st.com>,
-        Krzysztof Kozlowski <krzk@kernel.org>,
-        Jonathan Hunter <jonathanh@nvidia.com>,
-        linux-rockchip@lists.infradead.org, Chen-Yu Tsai <wens@csie.org>,
-        Kukjin Kim <kgene@kernel.org>,
-        NXP Linux Team <linux-imx@nxp.com>,
-        Dave Airlie <airlied@redhat.com>,
-        intel-gfx@lists.freedesktop.org, freedreno@lists.freedesktop.org,
-        linux-tegra@vger.kernel.org, Jonas Karlman <jonas@kwiboo.se>,
-        linux-arm-msm@vger.kernel.org, Maxime Ripard <mripard@kernel.org>,
-        Mamta Shukla <mamtashukla555@gmail.com>,
-        linux-mediatek@lists.infradead.org,
-        Rodrigo Vivi <rodrigo.vivi@intel.com>,
-        Matthias Brugger <matthias.bgg@gmail.com>,
-        Thomas Gleixner <tglx@linutronix.de>,
-        Sean Paul <sean@poorly.run>,
-        Pengutronix Kernel Team <kernel@pengutronix.de>,
-        linux-arm-kernel@lists.infradead.org,
-        Jernej Skrabec <jernej.skrabec@siol.net>,
-        amd-gfx@lists.freedesktop.org,
-        Tomi Valkeinen <tomi.valkeinen@ti.com>,
-        Thomas Zimmermann <tzimmermann@suse.de>,
-        Seung-Woo Kim <sw0312.kim@samsung.com>,
-        linux-kernel@vger.kernel.org, Todor Tomov <todor.tomov@linaro.org>,
-        Kyungmin Park <kyungmin.park@samsung.com>,
-        Huang Rui <ray.huang@amd.com>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Alex Deucher <alexander.deucher@amd.com>,
-        Shawn Guo <shawnguo@kernel.org>,
-        Christian =?iso-8859-1?Q?K=F6nig?= <christian.koenig@amd.com>,
-        Gerd Hoffmann <kraxel@redhat.com>
-Subject: Review required [Was: Associate ddc adapters with connectors]
-Message-ID: <20190726185538.GD14981@ravnborg.org>
-References: <cover.1564161140.git.andrzej.p@collabora.com>
- <20190726183520.GA22572@ravnborg.org>
+        by mail.kernel.org (Postfix) with ESMTPSA id 5BBD721852;
+        Fri, 26 Jul 2019 19:43:02 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=default; t=1564170182;
+        bh=WSe6hgYom4Go9akfrprlI9nUTR871US1WaIKYUH/sow=;
+        h=In-Reply-To:References:Subject:To:Cc:From:Date:From;
+        b=nzZwHK4D3oNdjds0kISs9ZgVT+QWwhZsCq39N6udr3OAsVlOAPV7GhtosO6MG1R3E
+         2IpX54CoD8/r35IlVGqwBJucyIltQTAlILLnA9hUo5p3D7b2o/+h9y4A6W2JVNnbqw
+         CpiLV6GCBGQKVy5lJYBV6e4SF24nEDVxzD3UTEaI=
+Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20190726183520.GA22572@ravnborg.org>
-User-Agent: Mutt/1.10.1 (2018-07-13)
-X-CMAE-Score: 0
-X-CMAE-Analysis: v=2.3 cv=dqr19Wo4 c=1 sm=1 tr=0
-        a=UWs3HLbX/2nnQ3s7vZ42gw==:117 a=UWs3HLbX/2nnQ3s7vZ42gw==:17
-        a=jpOVt7BSZ2e4Z31A5e1TngXxSK0=:19 a=kj9zAlcOel0A:10 a=7gkXJVJtAAAA:8
-        a=e5mUnYsNAAAA:8 a=nTBMXhx45H-Va90dJ2EA:9 a=CjuIK1q_8ugA:10
-        a=E9Po1WZjFZOl8hwRPBS3:22 a=Vxmtnl_E_bksehYqCbjh:22
+Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <20190726092332.25202-3-govinds@codeaurora.org>
+References: <20190726092332.25202-1-govinds@codeaurora.org> <20190726092332.25202-3-govinds@codeaurora.org>
+Subject: Re: [PATCH v5 2/7] dt-bindings: clock: qcom: Add QCOM Q6SSTOP clock controller bindings
+To:     Govind Singh <govinds@codeaurora.org>, bjorn.andersson@linaro.org,
+        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+        linux-remoteproc@vger.kernel.org
+Cc:     andy.gross@linaro.org, linux-soc@vger.kernel.org,
+        devicetree@vger.kernel.org, Govind Singh <govinds@codeaurora.org>
+From:   Stephen Boyd <sboyd@kernel.org>
+User-Agent: alot/0.8.1
+Date:   Fri, 26 Jul 2019 12:43:01 -0700
+Message-Id: <20190726194302.5BBD721852@mail.kernel.org>
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi all.
+Quoting Govind Singh (2019-07-26 02:23:27)
+> Add devicetree binding for the Q6SSTOP clock controller found in QCS404.
+>=20
+> Signed-off-by: Govind Singh <govinds@codeaurora.org>
 
-Andrzej have done a good job following up on feedback and this series is
-now ready.
+If this patch goes again, please convert to YAML.
 
-We need ack on the patches touching the individual drivers before we can
-proceed.
-Please check your drivers and get back.
+> ---
+>  .../bindings/clock/qcom,q6sstopcc.txt         | 26 +++++++++++++++++++
+>  1 file changed, 26 insertions(+)
+>  create mode 100755 Documentation/devicetree/bindings/clock/qcom,q6sstopc=
+c.txt
+>=20
+> diff --git a/Documentation/devicetree/bindings/clock/qcom,q6sstopcc.txt b=
+/Documentation/devicetree/bindings/clock/qcom,q6sstopcc.txt
+> new file mode 100755
+> index 000000000000..157bb52f9dc4
+> --- /dev/null
+> +++ b/Documentation/devicetree/bindings/clock/qcom,q6sstopcc.txt
+> @@ -0,0 +1,26 @@
+> +Qualcomm Q6SSTOP Clock Controller Binding
+> +-----------------------------------------------
+> +
+> +Required properties :
+> +- compatible           : shall contain "qcom,qcs404-q6sstopcc"
+> +- #clock-cells         : from common clock binding, shall contain 1
+> +- reg                  : shall contain base register address and size,
+> +                         in the order
+> +                       Index 0 maps to Q6SSTOP clocks register region
+> +                       Index 1 maps to Q6SSTOP_TCSR register region
+> +
+> +Optional properties :
+> +- reg-names    : register names of WCSS domain
+> +                "q6sstop_cc", "q6sstop_tcsr".
+> +
+> +Example:
+> +The below node has to be defined in the cases where the WCSS peripheral =
+loader
+> +would bring the subsystem out of reset.
+> +
+> +       q6sstopcc: clock-controller@7500000 {
+> +               compatible =3D "qcom,qcs404-q6sstopcc";
+> +               reg =3D <0x7500000 0x4e000>, <0x7550000 0x10000>;
+> +               reg-names =3D "q6sstop_cc", "q6sstop_tcsr";
+> +               clocks =3D <&gcc GCC_WCSS_Q6_AHB_CLK>;
 
-	Sam
+This isn't described in the binding. Are there clocks that go here?
+Please add them to the binding.
 
-> Hi Andezej.
-> 
-> On Fri, Jul 26, 2019 at 07:22:54PM +0200, Andrzej Pietrasiewicz wrote:
-> > It is difficult for a user to know which of the i2c adapters is for which
-> > drm connector. This series addresses this problem.
-> > 
-> > The idea is to have a symbolic link in connector's sysfs directory, e.g.:
-> > 
-> > ls -l /sys/class/drm/card0-HDMI-A-1/ddc
-> > lrwxrwxrwx 1 root root 0 Jun 24 10:42 /sys/class/drm/card0-HDMI-A-1/ddc \
-> > 	-> ../../../../soc/13880000.i2c/i2c-2
-> > 
-> > The user then knows that their card0-HDMI-A-1 uses i2c-2 and can e.g. run
-> > ddcutil:
-> > 
-> > ddcutil -b 2 getvcp 0x10
-> > VCP code 0x10 (Brightness): current value =    90, max value =   100
-> > 
-> > The first patch in the series adds struct i2c_adapter pointer to struct
-> > drm_connector. If the field is used by a particular driver, then an
-> > appropriate symbolic link is created by the generic code, which is also added
-> > by this patch.
-> > 
-> > Patch 2 adds a new variant of drm_connector_init(), see the changelog
-> > below.
-> > 
-> > Patches 3..24 are examples of how to convert a driver to this new scheme.
-> > 
-> ...
-> > 
-> > v5..v6:
-> > 
-> > - improved subject line of patch 1
-> > - added kernel-doc for drm_connector_init_with_ddc()
-> > - improved kernel-doc for the ddc field of struct drm_connector
-> > - added Reviewed-by in patches 17 and 18
-> > - added Acked-by in patch 2
-> > - made the ownership of ddc i2c_adapter explicit in all patches,
-> > this made the affected patches much simpler
-> 
-> Looks good now.
-> Patch 1 and 2 are:
-> Reviewed-by: Sam Ravnborg <sam@ravnborg.org>
-> 
-> The remaining patches are:
-> Acked-by: Sam Ravnborg <sam@ravnborg.org>
-> 
-> 	Sam
-> _______________________________________________
-> dri-devel mailing list
-> dri-devel@lists.freedesktop.org
-> https://lists.freedesktop.org/mailman/listinfo/dri-devel
