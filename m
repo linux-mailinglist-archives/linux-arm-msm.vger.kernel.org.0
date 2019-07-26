@@ -2,88 +2,101 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 476FC76ACC
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 26 Jul 2019 16:01:45 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E7D7376BAE
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 26 Jul 2019 16:31:26 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2387537AbfGZOAr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 26 Jul 2019 10:00:47 -0400
-Received: from mail.kernel.org ([198.145.29.99]:46040 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1727584AbfGZNkJ (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 26 Jul 2019 09:40:09 -0400
-Received: from sasha-vm.mshome.net (c-73-47-72-35.hsd1.nh.comcast.net [73.47.72.35])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 3B75722CBB;
-        Fri, 26 Jul 2019 13:40:07 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1564148408;
-        bh=GS0t9ejWfMJx8u+jiXzlJqATgam2UjS8xzz2i1Kfo70=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=Ck0FiNcQjy4xFqS5XBGVeVPQzPL4hLByZ/ZJabWU7lfYdMS1XLGrMXNXK0opmmP5v
-         jOI5N+qcFBKEc5t2KaBNUkIhwvEdiSi4lUlJJyC6gIEPAIrCnGDXRxK6VSU+D0bzot
-         ZzCVtYve4efxLwQKowFsAHhqSv/7qOTOTa7eAzAU=
-From:   Sasha Levin <sashal@kernel.org>
-To:     linux-kernel@vger.kernel.org, stable@vger.kernel.org
-Cc:     Andy Gross <agross@kernel.org>,
-        Niklas Cassel <niklas.cassel@linaro.org>,
-        Vinod Koul <vkoul@kernel.org>, Olof Johansson <olof@lixom.net>,
-        Sasha Levin <sashal@kernel.org>, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org
-Subject: [PATCH AUTOSEL 5.2 17/85] arm64: qcom: qcs404: Add reset-cells to GCC node
-Date:   Fri, 26 Jul 2019 09:38:27 -0400
-Message-Id: <20190726133936.11177-17-sashal@kernel.org>
-X-Mailer: git-send-email 2.20.1
-In-Reply-To: <20190726133936.11177-1-sashal@kernel.org>
-References: <20190726133936.11177-1-sashal@kernel.org>
+        id S1727241AbfGZOb0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 26 Jul 2019 10:31:26 -0400
+Received: from mail-io1-f66.google.com ([209.85.166.66]:34182 "EHLO
+        mail-io1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726265AbfGZOb0 (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 26 Jul 2019 10:31:26 -0400
+Received: by mail-io1-f66.google.com with SMTP id k8so105244875iot.1;
+        Fri, 26 Jul 2019 07:31:25 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=rZ/UBeNiBanOLKs9K5WAA6k/h0iDCXstzGMvYChhbN8=;
+        b=Qkr83lkT49ARvGJVqpIAVKE+c3OskLUv7tZduSwYle/0YBDI1fhM3M35Dcm10CPOD6
+         oGBJhLWanlvfEu/PCaAedYdFu3iFX9GnV0PyK5Gcoz6j0Y5iEEBn3sYWFz5Hd+F2arb0
+         T2sokMAFO0/Sygfx4x/RYdUfRKTMg+sJlzbw2E0TxCmNd95v35OovB5jQws5FGWwQVKp
+         tGbHGXnypMThoSExSEfOyJyB0uds+q5lX9GPtaJeVTzfIjhGoFtp10AqYWIz/UUmowJr
+         MnV9vSAvagmcnnWHdHv8NZVXwoR9uoiCBznhNgb6GaRVLk+lD2nfRmPOfcHfvK9a+HV/
+         4NqA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=rZ/UBeNiBanOLKs9K5WAA6k/h0iDCXstzGMvYChhbN8=;
+        b=PoONsJBRJGh19vgP30/rfsPxo1wnj6wMzIxTW5s7UKHt3Tsd8/EP6tFZfsb5islFvO
+         VfboKd16KPUKdyPCJ7t6C9q9MbB7Mufx2kW/KzQHkaP6u5JcWjvk0R+QP9ydXnfk4VRs
+         IAhJ0buEYTTEB4rAxDowiM6MD3Z3i3y6r+r0jrMmmIvY/FH8BTnI5f0GqJoTei7CImkB
+         MWT+l+gdjlqr/G2pK0fnJBGezz1JyeOP84qo/zQ4jMxGXKlN6urdXgmG6/FZLMsPyhGY
+         fd76lPvCmUwY2CqVDTSPuLeij/J/MjQwufIOXhnFJNzcVWPkT34CfJejb6/9eZJUnwRo
+         VLVw==
+X-Gm-Message-State: APjAAAWWCW2C8d1/q7UCRetIifjAZ5tqdrQqGDTaJ6PmSwtnfLHjPCYO
+        WhMUgybSN/82qq6/ryJ/ktnHRZ1Q+S8fr6KX99Q=
+X-Google-Smtp-Source: APXvYqyoFusi9rRAzb8Sz4ryxauK7V4EPDxozJDRC9Dy92L8oHNobVWt0IqcIZkUd2t5E2rbe4hpr1GOx/+E7EEzITA=
+X-Received: by 2002:a6b:901:: with SMTP id t1mr13636701ioi.42.1564151485320;
+ Fri, 26 Jul 2019 07:31:25 -0700 (PDT)
 MIME-Version: 1.0
-X-stable: review
-X-Patchwork-Hint: Ignore
-Content-Transfer-Encoding: 8bit
+References: <20190708165647.46224-1-jeffrey.l.hugo@gmail.com> <20190726123625.GA17037@ravnborg.org>
+In-Reply-To: <20190726123625.GA17037@ravnborg.org>
+From:   Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
+Date:   Fri, 26 Jul 2019 08:31:15 -0600
+Message-ID: <CAOCk7NqU7G-afjHwTnQxqrRFcH9=kqDJAUABPHuwRWsdm6xENQ@mail.gmail.com>
+Subject: Re: [PATCH v2 0/2] Add Sharp panel option for Lenovo Miix 630
+To:     Sam Ravnborg <sam@ravnborg.org>
+Cc:     Rob Herring <robh+dt@kernel.org>,
+        Mark Rutland <mark.rutland@arm.com>, thierry.reding@gmail.com,
+        Dave Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        "open list:DRM PANEL DRIVERS" <dri-devel@lists.freedesktop.org>,
+        DTML <devicetree@vger.kernel.org>,
+        MSM <linux-arm-msm@vger.kernel.org>,
+        lkml <linux-kernel@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Andy Gross <agross@kernel.org>
+On Fri, Jul 26, 2019 at 6:36 AM Sam Ravnborg <sam@ravnborg.org> wrote:
+>
+> Hi Jeffrey.
+>
+> On Mon, Jul 08, 2019 at 09:56:47AM -0700, Jeffrey Hugo wrote:
+> > The Lenovo Miix 630 laptop can be found with one of two panels - a BOE
+> > or Sharp option.  This likely provides options during manufacturing.
+> >
+> > These panels connect via eDP, however they sit behind a DSI to eDP
+> > bridge on the laptop, so they can easily be handled by the existing
+> > simple panel code.
+> >
+> > This series adds support for the Sharp option.
+> >
+> > v2:
+> > -removed no-hpd from dt example
+> > -added .bus_format and .bus_flags fields based on reviews
+> > -added .flags after Bjorn pointed me to something I missed
+> > -added Sam's reviewed-by tags
+> >
+> > Jeffrey Hugo (2):
+> >   dt-bindings: panel: Add Sharp LD-D5116Z01B
+> >   drm/panel: simple: Add support for Sharp LD-D5116Z01B panel
+>
+> Thanks.
+> Both patches applied and pushed to drm-misc-next.
 
-[ Upstream commit 0763d0c2273a3c72247d325c48fbac3d918d6b87 ]
+Excellent.  Thanks
 
-This patch adds a reset-cells property to the gcc controller on the QCS404.
-Without this in place, we get warnings like the following if nodes reference
-a gcc reset:
+> Are you up to a little janitorial work?
+> Today the preferred format for bindings files are the new yaml format.
+> Could you update 'your' file, and maybe the other sharp files too?
 
-arch/arm64/boot/dts/qcom/qcs404.dtsi:261.38-310.5: Warning (resets_property):
-/soc@0/remoteproc@b00000: Missing property '#reset-cells' in node
-/soc@0/clock-controller@1800000 or bad phandle (referred from resets[0])
-  also defined at arch/arm64/boot/dts/qcom/qcs404-evb.dtsi:82.18-84.3
-  DTC     arch/arm64/boot/dts/qcom/qcs404-evb-4000.dtb
-arch/arm64/boot/dts/qcom/qcs404.dtsi:261.38-310.5: Warning (resets_property):
-/soc@0/remoteproc@b00000: Missing property '#reset-cells' in node
-/soc@0/clock-controller@1800000 or bad phandle (referred from resets[0])
-  also defined at arch/arm64/boot/dts/qcom/qcs404-evb.dtsi:82.18-84.3
-
-Signed-off-by: Andy Gross <agross@kernel.org>
-Reviewed-by: Niklas Cassel <niklas.cassel@linaro.org>
-Reviewed-by: Vinod Koul <vkoul@kernel.org>
-Signed-off-by: Olof Johansson <olof@lixom.net>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
----
- arch/arm64/boot/dts/qcom/qcs404.dtsi | 1 +
- 1 file changed, 1 insertion(+)
-
-diff --git a/arch/arm64/boot/dts/qcom/qcs404.dtsi b/arch/arm64/boot/dts/qcom/qcs404.dtsi
-index ffedf9640af7..65a2cbeb28be 100644
---- a/arch/arm64/boot/dts/qcom/qcs404.dtsi
-+++ b/arch/arm64/boot/dts/qcom/qcs404.dtsi
-@@ -383,6 +383,7 @@
- 			compatible = "qcom,gcc-qcs404";
- 			reg = <0x01800000 0x80000>;
- 			#clock-cells = <1>;
-+			#reset-cells = <1>;
- 
- 			assigned-clocks = <&gcc GCC_APSS_AHB_CLK_SRC>;
- 			assigned-clock-rates = <19200000>;
--- 
-2.20.1
-
+I confess I haven't yet familiarized myself with the yaml format yet,
+but I'll take a look and do an update once I understand the
+requirements.
