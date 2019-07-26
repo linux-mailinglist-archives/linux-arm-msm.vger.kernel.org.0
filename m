@@ -2,97 +2,88 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 90E9C7690B
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 26 Jul 2019 15:49:07 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9395C76AC4
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 26 Jul 2019 16:01:41 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728028AbfGZNsv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 26 Jul 2019 09:48:51 -0400
-Received: from heliosphere.sirena.org.uk ([172.104.155.198]:57024 "EHLO
-        heliosphere.sirena.org.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727993AbfGZNsu (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 26 Jul 2019 09:48:50 -0400
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-        d=sirena.org.uk; s=20170815-heliosphere; h=In-Reply-To:Content-Type:
-        MIME-Version:References:Message-ID:Subject:Cc:To:From:Date:Sender:Reply-To:
-        Content-Transfer-Encoding:Content-ID:Content-Description:Resent-Date:
-        Resent-From:Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:List-Id:
-        List-Help:List-Unsubscribe:List-Subscribe:List-Post:List-Owner:List-Archive;
-         bh=htfhLWZo77GI35WrasDZvyZIUNtrtd28Pfw24aVqO8Y=; b=oyvoqopAJAEKIZxWMVJWh6bib
-        XdDilmXtqJcZJbrrevFZkky2ixNq0TZ3WuvR+OAS6S0m2FybWVn9XDYYg7HaqoDokpkiRsPcdgBz4
-        tpBazO6n0zmZGZpKY2Ukv/QDBnf00FOYzxLgWtFhXbvAyZlZFPSMdVOGf5UE9Okb+hFqM=;
-Received: from ypsilon.sirena.org.uk ([2001:470:1f1d:6b5::7])
-        by heliosphere.sirena.org.uk with esmtpsa (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256)
-        (Exim 4.92)
-        (envelope-from <broonie@sirena.org.uk>)
-        id 1hr0aS-00023k-Uf; Fri, 26 Jul 2019 13:48:45 +0000
-Received: by ypsilon.sirena.org.uk (Postfix, from userid 1000)
-        id DBD182742B63; Fri, 26 Jul 2019 14:48:43 +0100 (BST)
-Date:   Fri, 26 Jul 2019 14:48:43 +0100
-From:   Mark Brown <broonie@kernel.org>
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     kernel-build-reports@lists.linaro.org,
-        linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
-        linux-arm-msm@vger.kernel.org
-Subject: Re: next/master boot: 254 boots: 16 failed, 231 passed with 4
- offline, 1 untried/unknown, 2 conflicts (next-20190726)
-Message-ID: <20190726134843.GC55803@sirena.org.uk>
-References: <5d3aef79.1c69fb81.111b9.a701@mx.google.com>
+        id S1727402AbfGZNjp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 26 Jul 2019 09:39:45 -0400
+Received: from mail.kernel.org ([198.145.29.99]:45614 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1727391AbfGZNjo (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 26 Jul 2019 09:39:44 -0400
+Received: from sasha-vm.mshome.net (c-73-47-72-35.hsd1.nh.comcast.net [73.47.72.35])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        by mail.kernel.org (Postfix) with ESMTPSA id 7E56022BF5;
+        Fri, 26 Jul 2019 13:39:43 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=default; t=1564148384;
+        bh=Oyi0/Wy+f4G1n/pjU1LScDgWu7qW3oGB7u9NNM9cmZo=;
+        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+        b=de8JOL0gE2z2QJNegMCRdOpVgDA11spTU8wWeVhcRey19zj8p/1CkXYpt0XVhQAn8
+         RhHNk+1VqShCZv7V6O6zwK6WURJu9rg5KjWpL8MK5SHf31OGtRyaQ3t56tuotjvzvV
+         xTVPLgXmBAml7aOjI5PItC3ZI3vMR/36vh1KCDnI=
+From:   Sasha Levin <sashal@kernel.org>
+To:     linux-kernel@vger.kernel.org, stable@vger.kernel.org
+Cc:     Niklas Cassel <niklas.cassel@linaro.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Sasha Levin <sashal@kernel.org>, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org
+Subject: [PATCH AUTOSEL 5.2 07/85] arm64: dts: qcom: qcs404-evb: fix l3 min voltage
+Date:   Fri, 26 Jul 2019 09:38:17 -0400
+Message-Id: <20190726133936.11177-7-sashal@kernel.org>
+X-Mailer: git-send-email 2.20.1
+In-Reply-To: <20190726133936.11177-1-sashal@kernel.org>
+References: <20190726133936.11177-1-sashal@kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="gr/z0/N6AeWAPJVB"
-Content-Disposition: inline
-In-Reply-To: <5d3aef79.1c69fb81.111b9.a701@mx.google.com>
-X-Cookie: Think sideways!
-User-Agent: Mutt/1.10.1 (2018-07-13)
+X-stable: review
+X-Patchwork-Hint: Ignore
+Content-Transfer-Encoding: 8bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+From: Niklas Cassel <niklas.cassel@linaro.org>
 
---gr/z0/N6AeWAPJVB
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+[ Upstream commit 887b528c958f40b064d53edd0bfa9fea3a69eccd ]
 
-On Fri, Jul 26, 2019 at 05:18:01AM -0700, kernelci.org bot wrote:
+The current l3 min voltage level is not supported by
+the regulator (the voltage is not a multiple of the regulator step size),
+so a driver requesting this exact voltage would fail, see discussion in:
+https://patchwork.kernel.org/comment/22461199/
 
-The past few versions of -next failed to boot on apq8096-db820c:
+It was agreed upon to set a min voltage level that is a multiple of the
+regulator step size.
 
->     defconfig:
->         gcc-8:
->             apq8096-db820c: 1 failed lab
+There was actually a patch sent that did this:
+https://patchwork.kernel.org/patch/10819313/
 
-with an RCU stall towards the end of boot:
+However, the commit 331ab98f8c4a ("arm64: dts: qcom: qcs404:
+Fix voltages l3") that was applied is not identical to that patch.
 
-00:03:40.521336  [   18.487538] qcom_q6v5_pas adsp-pil: adsp-pil supply px not found, using dummy regulator
-00:04:01.523104  [   39.499613] rcu: INFO: rcu_preempt detected stalls on CPUs/tasks:
-00:04:01.533371  [   39.499657] rcu: 	2-...!: (0 ticks this GP) idle=9ca/1/0x4000000000000000 softirq=1450/1450 fqs=50
-00:04:01.537544  [   39.504689] 	(detected by 0, t=5252 jiffies, g=2425, q=619)
-00:04:01.541727  [   39.513539] Task dump for CPU 2:
-00:04:01.547929  [   39.519096] seq             R  running task        0   199    198 0x00000000
+Signed-off-by: Niklas Cassel <niklas.cassel@linaro.org>
+Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+Signed-off-by: Andy Gross <agross@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
+---
+ arch/arm64/boot/dts/qcom/qcs404-evb.dtsi | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-Full details and logs at:
+diff --git a/arch/arm64/boot/dts/qcom/qcs404-evb.dtsi b/arch/arm64/boot/dts/qcom/qcs404-evb.dtsi
+index 2c3127167e3c..d987d6741e40 100644
+--- a/arch/arm64/boot/dts/qcom/qcs404-evb.dtsi
++++ b/arch/arm64/boot/dts/qcom/qcs404-evb.dtsi
+@@ -118,7 +118,7 @@
+ 		};
+ 
+ 		vreg_l3_1p05: l3 {
+-			regulator-min-microvolt = <1050000>;
++			regulator-min-microvolt = <1048000>;
+ 			regulator-max-microvolt = <1160000>;
+ 		};
+ 
+-- 
+2.20.1
 
-	https://kernelci.org/boot/id/5d3aa7ea59b5142ba868890f/
-
-The last version that worked was from the 15th and there seem to be
-similar issues in mainline since -rc1.
-
---gr/z0/N6AeWAPJVB
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAl07BLsACgkQJNaLcl1U
-h9Cizgf+Me4RzqbuEHdvW+EQJup+d34Qw3wZ0/GAFQhI/JjOpNk7MyyppherGwDv
-WfQkX54QZ+szqipujtfsM7BOHn6WrY5yl7vWF5PNmBaKnq2COZkqIDMvP4tOLfPd
-Ni5U/6zJZu2WPGtV+W4stbGKfJJx/4M+LOl8+94bpr24aXrbt4LzoPHQlpBofkoe
-fO0qvOy6gwUXntL8TLMPz8WxXyCsfkE7oZ+9xfVpS2tBN2Qbzrf7AxB+dls80iB6
-DJUm4/2vxP9KdpwFCAA/gdBVgAdIqhlKwNyL63wral4HsM6jijAKAp61MV3dIUfG
-I+gyLOxXa6nCzfuq9L4uIxE1pVuwIA==
-=AiHc
------END PGP SIGNATURE-----
-
---gr/z0/N6AeWAPJVB--
