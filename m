@@ -2,25 +2,25 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 0C1D3761D8
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 26 Jul 2019 11:23:51 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id EBC23761DC
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 26 Jul 2019 11:23:59 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726393AbfGZJXr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 26 Jul 2019 05:23:47 -0400
-Received: from smtp.codeaurora.org ([198.145.29.96]:58096 "EHLO
+        id S1726554AbfGZJXv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 26 Jul 2019 05:23:51 -0400
+Received: from smtp.codeaurora.org ([198.145.29.96]:58268 "EHLO
         smtp.codeaurora.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726262AbfGZJXr (ORCPT
+        with ESMTP id S1726653AbfGZJXu (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 26 Jul 2019 05:23:47 -0400
+        Fri, 26 Jul 2019 05:23:50 -0400
 Received: by smtp.codeaurora.org (Postfix, from userid 1000)
-        id 1E0E660F3D; Fri, 26 Jul 2019 09:23:46 +0000 (UTC)
+        id 8139F60FEE; Fri, 26 Jul 2019 09:23:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
-        s=default; t=1564133026;
-        bh=WsI4ADTLK4wNAq3g+x+F6cxYoOuExQt8Fl+FZb0Qbts=;
+        s=default; t=1564133029;
+        bh=dWB85648G7zSBg/asoUnw/b4sm7cM/D8ctlHcoslwXY=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=PtFpLf97zSmg1iEeN2VRYp8PBhUhcI4q7ksXEWxun03qKN8NR07eOjvSu1OU62tbe
-         bRJkxThSwxZl7nHO57NnqAgRdaqLKuFTx7C1mrbvLWZX6p5BdKUrGRAGfM+snvsqWx
-         i1jhusocQyUZetqlCPVaCn728oISYLOKxySo+OP0=
+        b=ne2HIu2p+EF5ePPoiX4rNkj5juqs58qskvKwC+qxq0/wG6M2oroZeqdk733pG+3u4
+         fl6FrFStE4slWZx75EUXrvO+nUFJb2F0scE9eU7ig+zDyVjb+DOYhs9dJf4TMs+M7S
+         CrOfjHAymXJsrCzcQf2/f1AO+zNG5Wrx/JmNjjVc=
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
         pdx-caf-mail.web.codeaurora.org
 X-Spam-Level: 
@@ -31,16 +31,16 @@ Received: from govinds-linux.qualcomm.com (blr-c-bdr-fw-01_globalnat_allzones-ou
         (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
         (No client certificate requested)
         (Authenticated sender: govinds@smtp.codeaurora.org)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id D41CC6053D;
-        Fri, 26 Jul 2019 09:23:42 +0000 (UTC)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 1BA4960F3C;
+        Fri, 26 Jul 2019 09:23:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
-        s=default; t=1564133025;
-        bh=WsI4ADTLK4wNAq3g+x+F6cxYoOuExQt8Fl+FZb0Qbts=;
+        s=default; t=1564133028;
+        bh=dWB85648G7zSBg/asoUnw/b4sm7cM/D8ctlHcoslwXY=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=OvF23CSZK3cyNW/xl3tfK+fnVgE/7tql2JsyqFVc8tDYuRd0L1YlFFEqfikD3bGkT
-         dD/2D5tFds7yAGW/I76szTLJATQOVYYNxkWrUJX8mDx3DEWnHJBlY1zEuE4ezjAiE+
-         sTewFL/cxEU4Ki9r8XRYg3FQCiMhGPvWH/GRz4aQ=
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org D41CC6053D
+        b=ZjKegwzsrX1SiVobhMCfcTCkrZGd3XnWag7vtYcyi94e1QAhYcATrGy5HJboL/hHU
+         h6stHl88xXwGoqx2mUVFhYPs9vq3ME/m3W3iNrvgl0CP/VOj3bmQZWXZYHW4lHMoCP
+         fabHLqc/4DzlLFEsqRqco7Nh+FGOTcJWATLNoFn4=
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 1BA4960F3C
 Authentication-Results: pdx-caf-mail.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
 Authentication-Results: pdx-caf-mail.web.codeaurora.org; spf=none smtp.mailfrom=govinds@codeaurora.org
 From:   Govind Singh <govinds@codeaurora.org>
@@ -49,9 +49,9 @@ To:     bjorn.andersson@linaro.org, linux-remoteproc@vger.kernel.org,
         linux-arm-msm@vger.kernel.org
 Cc:     andy.gross@linaro.org, linux-soc@vger.kernel.org,
         devicetree@vger.kernel.org, Govind Singh <govinds@codeaurora.org>
-Subject: [PATCH v5 2/7] dt-bindings: clock: qcom: Add QCOM Q6SSTOP clock controller bindings
-Date:   Fri, 26 Jul 2019 14:53:27 +0530
-Message-Id: <20190726092332.25202-3-govinds@codeaurora.org>
+Subject: [PATCH v5 3/7] clk: qcom: define probe by index API as common API
+Date:   Fri, 26 Jul 2019 14:53:28 +0530
+Message-Id: <20190726092332.25202-4-govinds@codeaurora.org>
 X-Mailer: git-send-email 2.21.0
 In-Reply-To: <20190726092332.25202-1-govinds@codeaurora.org>
 References: <20190726092332.25202-1-govinds@codeaurora.org>
@@ -62,46 +62,104 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add devicetree binding for the Q6SSTOP clock controller found in QCS404.
+Extend the probe by index API in common code to be used
+by other qcom clock controller.
 
 Signed-off-by: Govind Singh <govinds@codeaurora.org>
 ---
- .../bindings/clock/qcom,q6sstopcc.txt         | 26 +++++++++++++++++++
- 1 file changed, 26 insertions(+)
- create mode 100755 Documentation/devicetree/bindings/clock/qcom,q6sstopcc.txt
+ drivers/clk/qcom/common.c         | 20 ++++++++++++++++++++
+ drivers/clk/qcom/common.h         |  2 ++
+ drivers/clk/qcom/lpasscc-sdm845.c | 23 ++---------------------
+ 3 files changed, 24 insertions(+), 21 deletions(-)
 
-diff --git a/Documentation/devicetree/bindings/clock/qcom,q6sstopcc.txt b/Documentation/devicetree/bindings/clock/qcom,q6sstopcc.txt
-new file mode 100755
-index 000000000000..157bb52f9dc4
---- /dev/null
-+++ b/Documentation/devicetree/bindings/clock/qcom,q6sstopcc.txt
-@@ -0,0 +1,26 @@
-+Qualcomm Q6SSTOP Clock Controller Binding
-+-----------------------------------------------
+diff --git a/drivers/clk/qcom/common.c b/drivers/clk/qcom/common.c
+index a6b2f86112d8..28ddc747d703 100644
+--- a/drivers/clk/qcom/common.c
++++ b/drivers/clk/qcom/common.c
+@@ -306,4 +306,24 @@ int qcom_cc_probe(struct platform_device *pdev, const struct qcom_cc_desc *desc)
+ }
+ EXPORT_SYMBOL_GPL(qcom_cc_probe);
+ 
++int qcom_cc_probe_by_index(struct platform_device *pdev, int index,
++			   const struct qcom_cc_desc *desc)
++{
++	struct regmap *regmap;
++	struct resource *res;
++	void __iomem *base;
 +
-+Required properties :
-+- compatible		: shall contain "qcom,qcs404-q6sstopcc"
-+- #clock-cells		: from common clock binding, shall contain 1
-+- reg			: shall contain base register address and size,
-+			  in the order
-+			Index 0 maps to Q6SSTOP clocks register region
-+			Index 1 maps to Q6SSTOP_TCSR register region
++	res = platform_get_resource(pdev, IORESOURCE_MEM, index);
++	base = devm_ioremap_resource(&pdev->dev, res);
++	if (IS_ERR(base))
++		return -ENOMEM;
 +
-+Optional properties :
-+- reg-names	: register names of WCSS domain
-+		 "q6sstop_cc", "q6sstop_tcsr".
++	regmap = devm_regmap_init_mmio(&pdev->dev, base, desc->config);
++	if (IS_ERR(regmap))
++		return PTR_ERR(regmap);
 +
-+Example:
-+The below node has to be defined in the cases where the WCSS peripheral loader
-+would bring the subsystem out of reset.
++	return qcom_cc_really_probe(pdev, desc, regmap);
++}
++EXPORT_SYMBOL_GPL(qcom_cc_probe_by_index);
 +
-+	q6sstopcc: clock-controller@7500000 {
-+		compatible = "qcom,qcs404-q6sstopcc";
-+		reg = <0x7500000 0x4e000>, <0x7550000 0x10000>;
-+		reg-names = "q6sstop_cc", "q6sstop_tcsr";
-+		clocks = <&gcc GCC_WCSS_Q6_AHB_CLK>;
-+		#clock-cells = <1>;
-+	};
+ MODULE_LICENSE("GPL v2");
+diff --git a/drivers/clk/qcom/common.h b/drivers/clk/qcom/common.h
+index 1e2a8bdac55a..bb39a7e106d8 100644
+--- a/drivers/clk/qcom/common.h
++++ b/drivers/clk/qcom/common.h
+@@ -61,5 +61,7 @@ extern int qcom_cc_really_probe(struct platform_device *pdev,
+ 				struct regmap *regmap);
+ extern int qcom_cc_probe(struct platform_device *pdev,
+ 			 const struct qcom_cc_desc *desc);
++extern int qcom_cc_probe_by_index(struct platform_device *pdev, int index,
++				  const struct qcom_cc_desc *desc);
+ 
+ #endif
+diff --git a/drivers/clk/qcom/lpasscc-sdm845.c b/drivers/clk/qcom/lpasscc-sdm845.c
+index e246b99dfbc6..56d3e9928892 100644
+--- a/drivers/clk/qcom/lpasscc-sdm845.c
++++ b/drivers/clk/qcom/lpasscc-sdm845.c
+@@ -112,25 +112,6 @@ static const struct qcom_cc_desc lpass_qdsp6ss_sdm845_desc = {
+ 	.num_clks = ARRAY_SIZE(lpass_qdsp6ss_sdm845_clocks),
+ };
+ 
+-static int lpass_clocks_sdm845_probe(struct platform_device *pdev, int index,
+-				     const struct qcom_cc_desc *desc)
+-{
+-	struct regmap *regmap;
+-	struct resource *res;
+-	void __iomem *base;
+-
+-	res = platform_get_resource(pdev, IORESOURCE_MEM, index);
+-	base = devm_ioremap_resource(&pdev->dev, res);
+-	if (IS_ERR(base))
+-		return PTR_ERR(base);
+-
+-	regmap = devm_regmap_init_mmio(&pdev->dev, base, desc->config);
+-	if (IS_ERR(regmap))
+-		return PTR_ERR(regmap);
+-
+-	return qcom_cc_really_probe(pdev, desc, regmap);
+-}
+-
+ static int lpass_cc_sdm845_probe(struct platform_device *pdev)
+ {
+ 	const struct qcom_cc_desc *desc;
+@@ -139,14 +120,14 @@ static int lpass_cc_sdm845_probe(struct platform_device *pdev)
+ 	lpass_regmap_config.name = "cc";
+ 	desc = &lpass_cc_sdm845_desc;
+ 
+-	ret = lpass_clocks_sdm845_probe(pdev, 0, desc);
++	ret = qcom_cc_probe_by_index(pdev, 0, desc);
+ 	if (ret)
+ 		return ret;
+ 
+ 	lpass_regmap_config.name = "qdsp6ss";
+ 	desc = &lpass_qdsp6ss_sdm845_desc;
+ 
+-	return lpass_clocks_sdm845_probe(pdev, 1, desc);
++	return qcom_cc_probe_by_index(pdev, 1, desc);
+ }
+ 
+ static const struct of_device_id lpass_cc_sdm845_match_table[] = {
 -- 
 The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
 a Linux Foundation Collaborative Project
