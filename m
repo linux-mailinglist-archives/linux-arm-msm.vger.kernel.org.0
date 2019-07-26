@@ -2,171 +2,107 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 9AA797636C
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 26 Jul 2019 12:24:25 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4B2C8763A3
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 26 Jul 2019 12:36:17 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726303AbfGZKYY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 26 Jul 2019 06:24:24 -0400
-Received: from smtp.codeaurora.org ([198.145.29.96]:33450 "EHLO
-        smtp.codeaurora.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726023AbfGZKYY (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 26 Jul 2019 06:24:24 -0400
-Received: by smtp.codeaurora.org (Postfix, from userid 1000)
-        id 216FA60214; Fri, 26 Jul 2019 10:24:23 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
-        s=default; t=1564136663;
-        bh=TzDJ/1a8Jv6h+ZazwSpLHZM38+ZTBA4zhoCVFYPruq8=;
-        h=Subject:To:Cc:References:From:Date:In-Reply-To:From;
-        b=D+Cvxw0TGr9ZqOempkbtCTjMfdsAdTC5Z/OaFpyMl1pfdmWGFBk+TScGTJTBLXdwu
-         JXxapYwKx3S0iDhVgDs0YSypkZKcrREI5xjESlncoCRNlZLktp09BK37FVN/WoYqMR
-         CmC7wVFF9y32BoD6urylpaqo3f0nmTgAZq1P3wog=
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        pdx-caf-mail.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.7 required=2.0 tests=ALL_TRUSTED,BAYES_00,
-        DKIM_INVALID,DKIM_SIGNED,SPF_NONE autolearn=no autolearn_force=no
-        version=3.4.0
-Received: from [10.79.136.27] (blr-bdr-fw-01_globalnat_allzones-outside.qualcomm.com [103.229.18.19])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        id S1726413AbfGZKgH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 26 Jul 2019 06:36:07 -0400
+Received: from onstation.org ([52.200.56.107]:52052 "EHLO onstation.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726203AbfGZKgH (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 26 Jul 2019 06:36:07 -0400
+Received: from localhost (c-98-239-145-235.hsd1.wv.comcast.net [98.239.145.235])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        (Authenticated sender: saiprakash.ranjan@smtp.codeaurora.org)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 3B4C560214;
-        Fri, 26 Jul 2019 10:24:19 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
-        s=default; t=1564136662;
-        bh=TzDJ/1a8Jv6h+ZazwSpLHZM38+ZTBA4zhoCVFYPruq8=;
-        h=Subject:To:Cc:References:From:Date:In-Reply-To:From;
-        b=fR7Q5d/Hf8709sAEvj7w9u03kxUR2pN8X8YSFl08pWDPc6Zwp058ngTb3jpjeLQpS
-         Gc/LUgxwhk9DbGiKShCv9q7tNmsxQp+DnILHK9zLlQE4tHLe001v0qYoobuIpx6jRE
-         ZP5Ltzw+QKoDopjZOGR9TCUYaajDm1aWgKBdLk0o=
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 3B4C560214
-Authentication-Results: pdx-caf-mail.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: pdx-caf-mail.web.codeaurora.org; spf=none smtp.mailfrom=saiprakash.ranjan@codeaurora.org
-Subject: Re: [Regression] Missing device nodes for ETR, ETF and STM after
- CONFIG_UEVENT_HELPER=n
-To:     Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc:     Geert Uytterhoeven <geert+renesas@glider.be>,
-        Mathieu Poirier <mathieu.poirier@linaro.org>,
-        Suzuki K Poulose <suzuki.poulose@arm.com>,
-        Leo Yan <leo.yan@linaro.org>, linux-arm-msm@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org
-References: <cfe09a46-462f-633a-37c2-52f8bfc0ffb2@codeaurora.org>
- <20190726070429.GA15714@kroah.com>
- <165028a7-ff12-dd28-cc4c-57a3961dbb40@codeaurora.org>
- <20190726084127.GA28470@kroah.com>
- <097942a1-6914-2542-450f-65a6147dc7aa@codeaurora.org>
- <6d48f996-6297-dc69-250b-790be6d2670c@codeaurora.org>
- <20190726101925.GA22476@kroah.com>
-From:   Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
-Message-ID: <2312327e-cfaa-67b0-c121-4af74e11eacf@codeaurora.org>
-Date:   Fri, 26 Jul 2019 15:54:18 +0530
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
- Thunderbird/60.8.0
+        (Authenticated sender: masneyb)
+        by onstation.org (Postfix) with ESMTPSA id 458643E911;
+        Fri, 26 Jul 2019 10:36:06 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=onstation.org;
+        s=default; t=1564137366;
+        bh=lKvd7xwHN2gTtBvSBeM80nkC5+jI2IdP2zf9IWcj8NI=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=DwJAR0l/PlTB8EKtJeyHiFIrEplJUNzBELIsGzBbyaeN0ET539lJkNE8ewsKzw7IO
+         bqIsQ4nMVsWps0/XoPEAe3PKLqr+5O24jkruC/66WXF+F9K9XuyHmcDJ14z7qAgMZH
+         YyiT7dtR45ZxeDvE0fBNU1pmyozMlJ4lgCdvGZBg=
+Date:   Fri, 26 Jul 2019 06:36:05 -0400
+From:   Brian Masney <masneyb@onstation.org>
+To:     Amit Kucheria <amit.kucheria@linaro.org>
+Cc:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        bjorn.andersson@linaro.org, edubezval@gmail.com,
+        andy.gross@linaro.org, Andy Gross <agross@kernel.org>,
+        Daniel Lezcano <daniel.lezcano@linaro.org>,
+        Mark Rutland <mark.rutland@arm.com>,
+        Rob Herring <robh+dt@kernel.org>,
+        Zhang Rui <rui.zhang@intel.com>, marc.w.gonzalez@free.fr,
+        devicetree@vger.kernel.org, linux-pm@vger.kernel.org
+Subject: Re: [PATCH 00/15] thermal: qcom: tsens: Add interrupt support
+Message-ID: <20190726103605.GB3327@onstation.org>
+References: <cover.1564091601.git.amit.kucheria@linaro.org>
 MIME-Version: 1.0
-In-Reply-To: <20190726101925.GA22476@kroah.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <cover.1564091601.git.amit.kucheria@linaro.org>
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 7/26/2019 3:49 PM, Greg Kroah-Hartman wrote:
-> On Fri, Jul 26, 2019 at 03:44:40PM +0530, Sai Prakash Ranjan wrote:
->> On 7/26/2019 3:14 PM, Sai Prakash Ranjan wrote:
->>> On 7/26/2019 2:11 PM, Greg Kroah-Hartman wrote:
->>>> On Fri, Jul 26, 2019 at 01:50:27PM +0530, Sai Prakash Ranjan wrote:
->>>>> On 7/26/2019 12:34 PM, Greg Kroah-Hartman wrote:
->>>>>> On Fri, Jul 26, 2019 at 11:49:19AM +0530, Sai Prakash Ranjan wrote:
->>>>>>> Hi,
->>>>>>>
->>>>>>> When trying to test my coresight patches, I found that etr,etf and stm
->>>>>>> device nodes are missing from /dev.
->>>>>>
->>>>>> I have no idea what those device nodes are.
->>>>>>
->>>>>>> Bisection gives this as the bad commit.
->>>>>>>
->>>>>>> 1be01d4a57142ded23bdb9e0c8d9369e693b26cc is the first bad commit
->>>>>>> commit 1be01d4a57142ded23bdb9e0c8d9369e693b26cc
->>>>>>> Author: Geert Uytterhoeven <geert+renesas@glider.be>
->>>>>>> Date:   Thu Mar 14 12:13:50 2019 +0100
->>>>>>>
->>>>>>>        driver: base: Disable CONFIG_UEVENT_HELPER by default
->>>>>>>
->>>>>>>        Since commit 7934779a69f1184f ("Driver-Core:
->>>>>>> disable /sbin/hotplug by
->>>>>>>        default"), the help text for the /sbin/hotplug fork-bomb says
->>>>>>>        "This should not be used today [...] creates a
->>>>>>> high system load, or
->>>>>>>        [...] out-of-memory situations during bootup".
->>>>>>> The rationale for this
->>>>>>>        was that no recent mainstream system used this
->>>>>>> anymore (in 2010!).
->>>>>>>
->>>>>>>        A few years later, the complete uevent helper
->>>>>>> support was made optional
->>>>>>>        in commit 86d56134f1b67d0c ("kobject: Make support
->>>>>>> for uevent_helper
->>>>>>>        optional.").  However, if was still left enabled
->>>>>>> by default, to support
->>>>>>>        ancient userland.
->>>>>>>
->>>>>>>        Time passed by, and nothing should use this
->>>>>>> anymore, so it can be
->>>>>>>        disabled by default.
->>>>>>>
->>>>>>>        Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
->>>>>>>        Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
->>>>>>>
->>>>>>>     drivers/base/Kconfig | 1 -
->>>>>>>     1 file changed, 1 deletion(-)
->>>>>>>
->>>>>>>
->>>>>>> Any idea on this?
->>>>>>
->>>>>> That means that who ever created those device nodes is relying on udev
->>>>>> to do this, and is not doing the correct thing within the kernel and
->>>>>> using devtmpfs.
->>>>>>
->>>>>> Any pointers to where in the kernel those devices are trying to be
->>>>>> created?
->>>>>>
->>>>>
->>>>> Somewhere in drivers/hwtracing/coresight/* probably. I am not sure,
->>>>> Mathieu/Suzuki would be able to point you to the exact code.
->>>>>
->>>>> Also just to add on some more details, I am using *initramfs*
->>>>
->>>> Are you using devtmpfs for your /dev/ mount?
->>>>
->>>
->>> I am not mounting devtmpfs. However
->>>
->>>    CONFIG_DEVTMPFS=y
->>>    CONFIG_DEVTMPFS_MOUNT=y
->>>
->>
->> Ok my initramfs is using mdev:
->>
->> */sbin/mdev -s*
->>
->> This somehow is not mounting etr, etf, stm devices when uevent-helper is
->> disabled. Anyways as Suzuki mentioned, using devtmpfs does fix the issue.
+Hi Amit,
+
+On Fri, Jul 26, 2019 at 03:48:35AM +0530, Amit Kucheria wrote:
+> Add interrupt support to TSENS. The first 6 patches are general fixes and
+> cleanups to the driver before interrupt support is introduced.
 > 
-> Last I looked (many years ago) mdev requires uevent-helper in order for
-> it to work.  I recommend that if you rely on mdev to keep that option
-> enabled, or to just use devtmpfs and udev :)
+> This series has been developed against qcs404 and sdm845 and then tested on
+> msm8916. Testing on msm8998 and msm8974 would be appreciated since I don't
+> have hardware handy. Further, I plan to test on msm8996 and also submit to
+> kernelci.
 > 
+> I'm sending this out for more review to get help with testing.
 
-Ok that explains, its not a hard requirement for me to use mdev. I just 
-happen to stumble upon this issue. Thanks for your time :)
+I can test this on msm8974 for you using a Nexus 5. Here's what I've
+done so far:
 
-Thanks,
-Sai
+The device tree nodes appear in sysfs:
 
--- 
-QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
-of Code Aurora Forum, hosted by The Linux Foundation
+/ # ls -1 /sys/class/thermal/
+cooling_device0
+cooling_device1
+thermal_zone0
+thermal_zone1
+thermal_zone2
+thermal_zone3
+thermal_zone4
+thermal_zone5
+thermal_zone6
+thermal_zone7
+thermal_zone8
+thermal_zone9
+
+The various temperatures were in the upper 40s and I threw some work at
+all four CPU cores to warm up the phone and watched the various
+temperatures rise:
+
+/ # for i in $(seq 0 9) ; do
+> TYPE=$(cat /sys/class/thermal/thermal_zone$i/type)
+> TEMP=$(cat /sys/class/thermal/thermal_zone$i/temp)
+> echo "$TYPE = $TEMP"
+> done
+cpu-thermal0 = 66000
+cpu-thermal1 = 66000
+cpu-thermal2 = 66000
+cpu-thermal3 = 66000
+q6-dsp-thermal = 60000
+modemtx-thermal = 57000
+video-thermal = 61000
+wlan-thermal = 65000
+gpu-thermal-top = 61000
+gpu-thermal-bottom = 59000
+
+To test the interrupt support, I lowered all of the temperature trips to
+51C but I'm not sure where to read that notification. I assume one of
+the cooling devices or a governor should be started? Sorry but I haven't
+done any work in the thermal subsystem yet and I'm short on time this
+morning to investigate right now.
+
+Brian
