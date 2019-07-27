@@ -2,93 +2,207 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 612B777254
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 26 Jul 2019 21:43:05 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D96D977771
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 27 Jul 2019 09:29:13 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2387512AbfGZTnD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 26 Jul 2019 15:43:03 -0400
-Received: from mail.kernel.org ([198.145.29.99]:54100 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726103AbfGZTnD (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 26 Jul 2019 15:43:03 -0400
-Received: from kernel.org (unknown [104.132.0.74])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 5BBD721852;
-        Fri, 26 Jul 2019 19:43:02 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1564170182;
-        bh=WSe6hgYom4Go9akfrprlI9nUTR871US1WaIKYUH/sow=;
-        h=In-Reply-To:References:Subject:To:Cc:From:Date:From;
-        b=nzZwHK4D3oNdjds0kISs9ZgVT+QWwhZsCq39N6udr3OAsVlOAPV7GhtosO6MG1R3E
-         2IpX54CoD8/r35IlVGqwBJucyIltQTAlILLnA9hUo5p3D7b2o/+h9y4A6W2JVNnbqw
-         CpiLV6GCBGQKVy5lJYBV6e4SF24nEDVxzD3UTEaI=
-Content-Type: text/plain; charset="utf-8"
+        id S1728264AbfG0H3H (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 27 Jul 2019 03:29:07 -0400
+Received: from mail-vs1-f67.google.com ([209.85.217.67]:36437 "EHLO
+        mail-vs1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728113AbfG0H3H (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Sat, 27 Jul 2019 03:29:07 -0400
+Received: by mail-vs1-f67.google.com with SMTP id y16so37572531vsc.3
+        for <linux-arm-msm@vger.kernel.org>; Sat, 27 Jul 2019 00:29:06 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=cxunsPUwif5aLQDZ7sw3iCnfCxZR3QXtrcqccdvRBUE=;
+        b=XQpiTYZ9xP8kfuOvYF5UuVjyCjzkKJXv8g3Uy277K6shi7janlZkKs6gC84q0Lqz+E
+         HS7YZrUlR8AzAU7yRr2GouwVT5cXzacTo754kna36L2MIaoC7rsGZiJxyC3Oj7iazlxG
+         AM1+JYop6aeIqnowiHLVPH2Bgin+wBEnqkCbhWDED/S7tTvVCxyI84P69AMqT7DkMVzp
+         ipMLorv6F3KFpPN1BADJ0HDasXB/xghZuoHfJLZtxa1DZTTUlMpwy4bXY2EKY3zGTO/n
+         MgYxyRWJhrIkvhZ43bE0F3kCNyaV6hoAUsGYy5myn2W/+FSwjwmj+lCPo+KnvPSZXn20
+         WCtQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=cxunsPUwif5aLQDZ7sw3iCnfCxZR3QXtrcqccdvRBUE=;
+        b=B4++/w+WQdKkqt+gLQY3HF7DywmCzrNq86LReDT926WPYrdY6otcLCcRD72MAtY5Uo
+         AYHYVywU2uae0k7Rpb6jRE3tTX1UNvG9DR51599gfnFAob1ZAYFqRtzqF5RQnVPQjmXm
+         Zfvlb9UJ773UwZ4LL3Y6zEAgQ8rT+kG8Ww0kSA0UuR9z8DLNb9qThiUYubafTYLuOwSq
+         pgIHnUUVVvvPQ9SQVrgQih9XLM/bEWsnLvvsDsE6vPXcecrBVYj1PRXM+9L1I18eDJ6D
+         k9+G0llzzYRkTQjsdUnnvc120003ENdN+dNqLSyTwQX7Q/hVaYW6zBMgsTxqhgw9W8Gd
+         jsHw==
+X-Gm-Message-State: APjAAAVKzieTRL6vcjue1uKdRCe+gtKiJmUM3e1CECMpZ9e5rYa9215Z
+        cJ5Gg7Er5gMJpY1icCYMyCpWECxrZ5pgHriFk+s=
+X-Google-Smtp-Source: APXvYqzdbu03FfN+kgOYOFmlr4ZU8NZUhg1MsgUeBs4XDwFDKzalIdoJAFmBlvxK+0Tj+7ypiipHMklNULU0iNN2MYk=
+X-Received: by 2002:a67:fb87:: with SMTP id n7mr32787176vsr.9.1564212545563;
+ Sat, 27 Jul 2019 00:29:05 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <20190726092332.25202-3-govinds@codeaurora.org>
-References: <20190726092332.25202-1-govinds@codeaurora.org> <20190726092332.25202-3-govinds@codeaurora.org>
-Subject: Re: [PATCH v5 2/7] dt-bindings: clock: qcom: Add QCOM Q6SSTOP clock controller bindings
-To:     Govind Singh <govinds@codeaurora.org>, bjorn.andersson@linaro.org,
-        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-        linux-remoteproc@vger.kernel.org
-Cc:     andy.gross@linaro.org, linux-soc@vger.kernel.org,
-        devicetree@vger.kernel.org, Govind Singh <govinds@codeaurora.org>
-From:   Stephen Boyd <sboyd@kernel.org>
-User-Agent: alot/0.8.1
-Date:   Fri, 26 Jul 2019 12:43:01 -0700
-Message-Id: <20190726194302.5BBD721852@mail.kernel.org>
+References: <cover.1564091601.git.amit.kucheria@linaro.org>
+ <20190726103605.GB3327@onstation.org> <CAHLCerOs3cMQrWrYk7F_bnxr_nxJ-nsRL8oOGALU63ySqmLaig@mail.gmail.com>
+ <20190726112954.GA3984@onstation.org>
+In-Reply-To: <20190726112954.GA3984@onstation.org>
+From:   Amit Kucheria <amit.kucheria@linaro.org>
+Date:   Sat, 27 Jul 2019 12:58:54 +0530
+Message-ID: <CAHLCerNay31+RNQvQZyxMMVyb1mLLfN5BoZbz-M+bMqbmbYwtA@mail.gmail.com>
+Subject: Re: [PATCH 00/15] thermal: qcom: tsens: Add interrupt support
+To:     Brian Masney <masneyb@onstation.org>
+Cc:     LKML <linux-kernel@vger.kernel.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Eduardo Valentin <edubezval@gmail.com>,
+        Andy Gross <andy.gross@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Daniel Lezcano <daniel.lezcano@linaro.org>,
+        Mark Rutland <mark.rutland@arm.com>,
+        Rob Herring <robh+dt@kernel.org>,
+        Zhang Rui <rui.zhang@intel.com>,
+        Marc Gonzalez <marc.w.gonzalez@free.fr>,
+        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
+        <devicetree@vger.kernel.org>,
+        Linux PM list <linux-pm@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Govind Singh (2019-07-26 02:23:27)
-> Add devicetree binding for the Q6SSTOP clock controller found in QCS404.
->=20
-> Signed-off-by: Govind Singh <govinds@codeaurora.org>
+On Fri, Jul 26, 2019 at 4:59 PM Brian Masney <masneyb@onstation.org> wrote:
+>
+> Hi Amit,
+>
+> On Fri, Jul 26, 2019 at 04:40:16PM +0530, Amit Kucheria wrote:
+> > > The device tree nodes appear in sysfs:
+> > >
+> > > / # ls -1 /sys/class/thermal/
+> > > cooling_device0
+> > > cooling_device1
+> > > thermal_zone0
+> > > thermal_zone1
+> > > thermal_zone2
+> > > thermal_zone3
+> > > thermal_zone4
+> > > thermal_zone5
+> > > thermal_zone6
+> > > thermal_zone7
+> > > thermal_zone8
+> > > thermal_zone9
+> >
+> > Looks good. What are the contents of the files inside the two
+> > cooling_device directories? The output of the following command would
+> > be nice:
+> >
+> > $ grep "" cooling_device?/*
+>
+> /sys/class/thermal # grep "" cooling_device?/*
+> cooling_device0/cur_state:100000
+> cooling_device0/max_state:2500000
+> cooling_device0/type:smbb-usbin
+> cooling_device1/cur_state:500000
+> cooling_device1/max_state:2500000
+> cooling_device1/type:smbb-dcin
+>
+> > > The various temperatures were in the upper 40s and I threw some work at
+> > > all four CPU cores to warm up the phone and watched the various
+> > > temperatures rise:
+> > >
+> > > / # for i in $(seq 0 9) ; do
+> > > > TYPE=$(cat /sys/class/thermal/thermal_zone$i/type)
+> > > > TEMP=$(cat /sys/class/thermal/thermal_zone$i/temp)
+> > > > echo "$TYPE = $TEMP"
+> > > > done
+> > > cpu-thermal0 = 66000
+> > > cpu-thermal1 = 66000
+> > > cpu-thermal2 = 66000
+> > > cpu-thermal3 = 66000
+> > > q6-dsp-thermal = 60000
+> > > modemtx-thermal = 57000
+> > > video-thermal = 61000
+> > > wlan-thermal = 65000
+> > > gpu-thermal-top = 61000
+> > > gpu-thermal-bottom = 59000
+> > >
+> > > To test the interrupt support, I lowered all of the temperature trips to
+> > > 51C but I'm not sure where to read that notification. I assume one of
+> > > the cooling devices or a governor should be started? Sorry but I haven't
+> > > done any work in the thermal subsystem yet and I'm short on time this
+> > > morning to investigate right now.
+> >
+> > For now, just checking if the tsens interrupt in /proc/interrupts
+> > fires should be fine. I have another patch to add some information to
+> > debugs that I'll send at some point.
+>
+> An interrupt fires as each thermal zone exceeds the trip temperature and
+> an interrupt fires again when it goes below that temperature.
+> Here's my new test script:
+>
+> for i in $(seq 0 9) ; do
+>         TYPE=$(cat /sys/class/thermal/thermal_zone$i/type)
+>         TEMP=$(cat /sys/class/thermal/thermal_zone$i/temp)
+>         TRIP=$(cat /sys/class/thermal/thermal_zone$i/trip_point_0_temp)
+>         echo "$TYPE = $TEMP. trip = $TRIP"
+> done
+>
+> # Warm the phone up
+>
+> /sys/class/thermal # /temp.sh
+> cpu-thermal0 = 57000. trip = 51000
+> cpu-thermal1 = 56000. trip = 51000
+> cpu-thermal2 = 57000. trip = 51000
+> cpu-thermal3 = 56000. trip = 51000
+> q6-dsp-thermal = 51000. trip = 51000
+> modemtx-thermal = 49000. trip = 51000
+> video-thermal = 53000. trip = 51000
+> wlan-thermal = 55000. trip = 51000
+> gpu-thermal-top = 53000. trip = 51000
+> gpu-thermal-bottom = 52000. trip = 51000
+>
+> /sys/class/thermal # grep tsens /proc/interrupts
+>  27:          8          0          0          0     GIC-0 216 Level     tsens
+>
+> # Let the phone cool off
+>
+> /sys/class/thermal # /temp.sh
+> cpu-thermal0 = 48000. trip = 51000
+> cpu-thermal1 = 48000. trip = 51000
+> cpu-thermal2 = 49000. trip = 51000
+> cpu-thermal3 = 48000. trip = 51000
+> q6-dsp-thermal = 47000. trip = 51000
+> modemtx-thermal = 45000. trip = 51000
+> video-thermal = 48000. trip = 51000
+> wlan-thermal = 48000. trip = 51000
+> gpu-thermal-top = 48000. trip = 51000
+> gpu-thermal-bottom = 47000. trip = 51000
+>
+> /sys/class/thermal # grep tsens /proc/interrupts
+>  27:         19          0          0          0     GIC-0 216 Level     tsens
 
-If this patch goes again, please convert to YAML.
+OK, seems reasonable. I'll finish up a debugfs patch that'll dump more
+state transition information to give more insight.
 
-> ---
->  .../bindings/clock/qcom,q6sstopcc.txt         | 26 +++++++++++++++++++
->  1 file changed, 26 insertions(+)
->  create mode 100755 Documentation/devicetree/bindings/clock/qcom,q6sstopc=
-c.txt
->=20
-> diff --git a/Documentation/devicetree/bindings/clock/qcom,q6sstopcc.txt b=
-/Documentation/devicetree/bindings/clock/qcom,q6sstopcc.txt
-> new file mode 100755
-> index 000000000000..157bb52f9dc4
-> --- /dev/null
-> +++ b/Documentation/devicetree/bindings/clock/qcom,q6sstopcc.txt
-> @@ -0,0 +1,26 @@
-> +Qualcomm Q6SSTOP Clock Controller Binding
-> +-----------------------------------------------
-> +
-> +Required properties :
-> +- compatible           : shall contain "qcom,qcs404-q6sstopcc"
-> +- #clock-cells         : from common clock binding, shall contain 1
-> +- reg                  : shall contain base register address and size,
-> +                         in the order
-> +                       Index 0 maps to Q6SSTOP clocks register region
-> +                       Index 1 maps to Q6SSTOP_TCSR register region
-> +
-> +Optional properties :
-> +- reg-names    : register names of WCSS domain
-> +                "q6sstop_cc", "q6sstop_tcsr".
-> +
-> +Example:
-> +The below node has to be defined in the cases where the WCSS peripheral =
-loader
-> +would bring the subsystem out of reset.
-> +
-> +       q6sstopcc: clock-controller@7500000 {
-> +               compatible =3D "qcom,qcs404-q6sstopcc";
-> +               reg =3D <0x7500000 0x4e000>, <0x7550000 0x10000>;
-> +               reg-names =3D "q6sstop_cc", "q6sstop_tcsr";
-> +               clocks =3D <&gcc GCC_WCSS_Q6_AHB_CLK>;
+> > How well does cpufreq work on 8974? I haven't looked at it yet but
+> > we'll need it for thermal throttling.
+>
+> I'm not sure how to tell if the frequency is dynamically changed during
+> runtime on arm. x86-64 shows this information in /proc/cpuinfo. Here's
+> the /proc/cpuinfo on the Nexus 5:
 
-This isn't described in the binding. Are there clocks that go here?
-Please add them to the binding.
+Nah. /proc/cpuinfo won't show what we need.
 
+Try the following:
+
+$ grep "" /sys/devices/system/cpu/cpufreq/policy?/*
+
+More specifically, the following files have the information you need.
+Run watch -n1 on them.
+
+$ grep "" /sys/devices/system/cpu/cpufreq/policy?/scaling_*_freq
+
+Thanks for your help.
+
+Regards,
+Amit
