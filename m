@@ -2,207 +2,89 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id D96D977771
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 27 Jul 2019 09:29:13 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 509A4777D6
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 27 Jul 2019 11:15:57 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728264AbfG0H3H (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 27 Jul 2019 03:29:07 -0400
-Received: from mail-vs1-f67.google.com ([209.85.217.67]:36437 "EHLO
-        mail-vs1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728113AbfG0H3H (ORCPT
+        id S2387442AbfG0JP4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 27 Jul 2019 05:15:56 -0400
+Received: from mail-pf1-f193.google.com ([209.85.210.193]:33109 "EHLO
+        mail-pf1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2387432AbfG0JP4 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 27 Jul 2019 03:29:07 -0400
-Received: by mail-vs1-f67.google.com with SMTP id y16so37572531vsc.3
-        for <linux-arm-msm@vger.kernel.org>; Sat, 27 Jul 2019 00:29:06 -0700 (PDT)
+        Sat, 27 Jul 2019 05:15:56 -0400
+Received: by mail-pf1-f193.google.com with SMTP id g2so25632820pfq.0;
+        Sat, 27 Jul 2019 02:15:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=cxunsPUwif5aLQDZ7sw3iCnfCxZR3QXtrcqccdvRBUE=;
-        b=XQpiTYZ9xP8kfuOvYF5UuVjyCjzkKJXv8g3Uy277K6shi7janlZkKs6gC84q0Lqz+E
-         HS7YZrUlR8AzAU7yRr2GouwVT5cXzacTo754kna36L2MIaoC7rsGZiJxyC3Oj7iazlxG
-         AM1+JYop6aeIqnowiHLVPH2Bgin+wBEnqkCbhWDED/S7tTvVCxyI84P69AMqT7DkMVzp
-         ipMLorv6F3KFpPN1BADJ0HDasXB/xghZuoHfJLZtxa1DZTTUlMpwy4bXY2EKY3zGTO/n
-         MgYxyRWJhrIkvhZ43bE0F3kCNyaV6hoAUsGYy5myn2W/+FSwjwmj+lCPo+KnvPSZXn20
-         WCtQ==
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id;
+        bh=Atx8xpuE0sl6vRA/wIvsHhfFZ2IVdmWCb/LsfxFrY/c=;
+        b=bZNxBjvyxvmG+0QaoLyJh1nCiE8XkjlejTpxJjKNJyk/oxDCnHM+GtMGKsZjKMZIay
+         kUv4THn/eVeeut224iqfTSoHcVIZSGdKBUwdINBQp6iutYD7UMoYADo7h7e3sTqRUxOw
+         48CGoakfAomxPG3M9yGinvKU+tJkoblwrLVC9FH8ooTWRPctTkCBBksWoOnIapU7UnW4
+         R7hv16sHQ026+CcuZSABz4KsX8N/dhIbZxn81BDvkkBgZYtSj4sXnm8hPn9jymtfdEzF
+         TZHS/aGfI9lDuGN5Sz+1RfQ9kWJlVRiuqpi7TVprf6bJRilwsrjyZVzST1cBkAsgaSiQ
+         s4fg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=cxunsPUwif5aLQDZ7sw3iCnfCxZR3QXtrcqccdvRBUE=;
-        b=B4++/w+WQdKkqt+gLQY3HF7DywmCzrNq86LReDT926WPYrdY6otcLCcRD72MAtY5Uo
-         AYHYVywU2uae0k7Rpb6jRE3tTX1UNvG9DR51599gfnFAob1ZAYFqRtzqF5RQnVPQjmXm
-         Zfvlb9UJ773UwZ4LL3Y6zEAgQ8rT+kG8Ww0kSA0UuR9z8DLNb9qThiUYubafTYLuOwSq
-         pgIHnUUVVvvPQ9SQVrgQih9XLM/bEWsnLvvsDsE6vPXcecrBVYj1PRXM+9L1I18eDJ6D
-         k9+G0llzzYRkTQjsdUnnvc120003ENdN+dNqLSyTwQX7Q/hVaYW6zBMgsTxqhgw9W8Gd
-         jsHw==
-X-Gm-Message-State: APjAAAVKzieTRL6vcjue1uKdRCe+gtKiJmUM3e1CECMpZ9e5rYa9215Z
-        cJ5Gg7Er5gMJpY1icCYMyCpWECxrZ5pgHriFk+s=
-X-Google-Smtp-Source: APXvYqzdbu03FfN+kgOYOFmlr4ZU8NZUhg1MsgUeBs4XDwFDKzalIdoJAFmBlvxK+0Tj+7ypiipHMklNULU0iNN2MYk=
-X-Received: by 2002:a67:fb87:: with SMTP id n7mr32787176vsr.9.1564212545563;
- Sat, 27 Jul 2019 00:29:05 -0700 (PDT)
-MIME-Version: 1.0
-References: <cover.1564091601.git.amit.kucheria@linaro.org>
- <20190726103605.GB3327@onstation.org> <CAHLCerOs3cMQrWrYk7F_bnxr_nxJ-nsRL8oOGALU63ySqmLaig@mail.gmail.com>
- <20190726112954.GA3984@onstation.org>
-In-Reply-To: <20190726112954.GA3984@onstation.org>
-From:   Amit Kucheria <amit.kucheria@linaro.org>
-Date:   Sat, 27 Jul 2019 12:58:54 +0530
-Message-ID: <CAHLCerNay31+RNQvQZyxMMVyb1mLLfN5BoZbz-M+bMqbmbYwtA@mail.gmail.com>
-Subject: Re: [PATCH 00/15] thermal: qcom: tsens: Add interrupt support
-To:     Brian Masney <masneyb@onstation.org>
-Cc:     LKML <linux-kernel@vger.kernel.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Eduardo Valentin <edubezval@gmail.com>,
-        Andy Gross <andy.gross@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Daniel Lezcano <daniel.lezcano@linaro.org>,
-        Mark Rutland <mark.rutland@arm.com>,
-        Rob Herring <robh+dt@kernel.org>,
-        Zhang Rui <rui.zhang@intel.com>,
-        Marc Gonzalez <marc.w.gonzalez@free.fr>,
-        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
-        <devicetree@vger.kernel.org>,
-        Linux PM list <linux-pm@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=Atx8xpuE0sl6vRA/wIvsHhfFZ2IVdmWCb/LsfxFrY/c=;
+        b=SOrnLqyfI8Jy10X0UWpuvmLDtBOjSI6+QsfpZDTr1TPGJqIENON0+XRfUhZgSHzoZN
+         sMuFC2zFxi5hdeAVPzGwhl/U0QtsnzmmDlnpMCuZOrIQz44biPliZMdyYmhR5dQFCvYt
+         5vJO16p4gp8lutxxZsAT5H7sOjXb6Aano3u6/gIk67ctohModGQi7WKUVWAPdessBkiQ
+         EXt9bpoPAHbAeb6Ww0Cj+lghz2Apbk7DZg4Knj+dhAOx/A6bS33/Gvs2Q0O+6Lyu9rEO
+         kE0IVM38sb4q/ERNxzX+1ja5qOrBVTxlvlrl6B19USyiXcDIYZ+p2W3381iWHBDotubG
+         qTDw==
+X-Gm-Message-State: APjAAAXS7fOpL9ReChszJ2AGXD5BHTtUqNZ5MR6haZrL1REXXsaHGGY4
+        sqGrjNZPBtFHdFIAQ4kie6E=
+X-Google-Smtp-Source: APXvYqxNLfJu4DrS4MHx5N/BZp2jBKE3m8mnG8F2gCqux/5fqVhIVgEwh6WJr9TN504eW7z8WPsEkA==
+X-Received: by 2002:a62:5214:: with SMTP id g20mr26674415pfb.187.1564218955306;
+        Sat, 27 Jul 2019 02:15:55 -0700 (PDT)
+Received: from oslab.tsinghua.edu.cn ([2402:f000:4:72:808::3ca])
+        by smtp.gmail.com with ESMTPSA id y12sm64088978pfn.187.2019.07.27.02.15.53
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Sat, 27 Jul 2019 02:15:54 -0700 (PDT)
+From:   Jia-Ju Bai <baijiaju1990@gmail.com>
+To:     stanimir.varbanov@linaro.org, agross@kernel.org, mchehab@kernel.org
+Cc:     linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, Jia-Ju Bai <baijiaju1990@gmail.com>
+Subject: [PATCH] media: qcom: venus: Fix a possible null-pointer dereference in vdec_g_fmt()
+Date:   Sat, 27 Jul 2019 17:15:47 +0800
+Message-Id: <20190727091547.11674-1-baijiaju1990@gmail.com>
+X-Mailer: git-send-email 2.17.0
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, Jul 26, 2019 at 4:59 PM Brian Masney <masneyb@onstation.org> wrote:
->
-> Hi Amit,
->
-> On Fri, Jul 26, 2019 at 04:40:16PM +0530, Amit Kucheria wrote:
-> > > The device tree nodes appear in sysfs:
-> > >
-> > > / # ls -1 /sys/class/thermal/
-> > > cooling_device0
-> > > cooling_device1
-> > > thermal_zone0
-> > > thermal_zone1
-> > > thermal_zone2
-> > > thermal_zone3
-> > > thermal_zone4
-> > > thermal_zone5
-> > > thermal_zone6
-> > > thermal_zone7
-> > > thermal_zone8
-> > > thermal_zone9
-> >
-> > Looks good. What are the contents of the files inside the two
-> > cooling_device directories? The output of the following command would
-> > be nice:
-> >
-> > $ grep "" cooling_device?/*
->
-> /sys/class/thermal # grep "" cooling_device?/*
-> cooling_device0/cur_state:100000
-> cooling_device0/max_state:2500000
-> cooling_device0/type:smbb-usbin
-> cooling_device1/cur_state:500000
-> cooling_device1/max_state:2500000
-> cooling_device1/type:smbb-dcin
->
-> > > The various temperatures were in the upper 40s and I threw some work at
-> > > all four CPU cores to warm up the phone and watched the various
-> > > temperatures rise:
-> > >
-> > > / # for i in $(seq 0 9) ; do
-> > > > TYPE=$(cat /sys/class/thermal/thermal_zone$i/type)
-> > > > TEMP=$(cat /sys/class/thermal/thermal_zone$i/temp)
-> > > > echo "$TYPE = $TEMP"
-> > > > done
-> > > cpu-thermal0 = 66000
-> > > cpu-thermal1 = 66000
-> > > cpu-thermal2 = 66000
-> > > cpu-thermal3 = 66000
-> > > q6-dsp-thermal = 60000
-> > > modemtx-thermal = 57000
-> > > video-thermal = 61000
-> > > wlan-thermal = 65000
-> > > gpu-thermal-top = 61000
-> > > gpu-thermal-bottom = 59000
-> > >
-> > > To test the interrupt support, I lowered all of the temperature trips to
-> > > 51C but I'm not sure where to read that notification. I assume one of
-> > > the cooling devices or a governor should be started? Sorry but I haven't
-> > > done any work in the thermal subsystem yet and I'm short on time this
-> > > morning to investigate right now.
-> >
-> > For now, just checking if the tsens interrupt in /proc/interrupts
-> > fires should be fine. I have another patch to add some information to
-> > debugs that I'll send at some point.
->
-> An interrupt fires as each thermal zone exceeds the trip temperature and
-> an interrupt fires again when it goes below that temperature.
-> Here's my new test script:
->
-> for i in $(seq 0 9) ; do
->         TYPE=$(cat /sys/class/thermal/thermal_zone$i/type)
->         TEMP=$(cat /sys/class/thermal/thermal_zone$i/temp)
->         TRIP=$(cat /sys/class/thermal/thermal_zone$i/trip_point_0_temp)
->         echo "$TYPE = $TEMP. trip = $TRIP"
-> done
->
-> # Warm the phone up
->
-> /sys/class/thermal # /temp.sh
-> cpu-thermal0 = 57000. trip = 51000
-> cpu-thermal1 = 56000. trip = 51000
-> cpu-thermal2 = 57000. trip = 51000
-> cpu-thermal3 = 56000. trip = 51000
-> q6-dsp-thermal = 51000. trip = 51000
-> modemtx-thermal = 49000. trip = 51000
-> video-thermal = 53000. trip = 51000
-> wlan-thermal = 55000. trip = 51000
-> gpu-thermal-top = 53000. trip = 51000
-> gpu-thermal-bottom = 52000. trip = 51000
->
-> /sys/class/thermal # grep tsens /proc/interrupts
->  27:          8          0          0          0     GIC-0 216 Level     tsens
->
-> # Let the phone cool off
->
-> /sys/class/thermal # /temp.sh
-> cpu-thermal0 = 48000. trip = 51000
-> cpu-thermal1 = 48000. trip = 51000
-> cpu-thermal2 = 49000. trip = 51000
-> cpu-thermal3 = 48000. trip = 51000
-> q6-dsp-thermal = 47000. trip = 51000
-> modemtx-thermal = 45000. trip = 51000
-> video-thermal = 48000. trip = 51000
-> wlan-thermal = 48000. trip = 51000
-> gpu-thermal-top = 48000. trip = 51000
-> gpu-thermal-bottom = 47000. trip = 51000
->
-> /sys/class/thermal # grep tsens /proc/interrupts
->  27:         19          0          0          0     GIC-0 216 Level     tsens
+In vdec_g_fmt(), fmt is firstly assigned NULL, and it could be never
+assigned before being used on line 223:
+    pixmp->pixelformat = fmt->pixfmt;
 
-OK, seems reasonable. I'll finish up a debugfs patch that'll dump more
-state transition information to give more insight.
+Thus, a possible null-pointer dereference may occur.
 
-> > How well does cpufreq work on 8974? I haven't looked at it yet but
-> > we'll need it for thermal throttling.
->
-> I'm not sure how to tell if the frequency is dynamically changed during
-> runtime on arm. x86-64 shows this information in /proc/cpuinfo. Here's
-> the /proc/cpuinfo on the Nexus 5:
+To fix this bug, fmt is checked before being used here.
 
-Nah. /proc/cpuinfo won't show what we need.
+This bug is found by a static analysis tool STCheck written by us.
 
-Try the following:
+Signed-off-by: Jia-Ju Bai <baijiaju1990@gmail.com>
+---
+ drivers/media/platform/qcom/venus/vdec.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-$ grep "" /sys/devices/system/cpu/cpufreq/policy?/*
+diff --git a/drivers/media/platform/qcom/venus/vdec.c b/drivers/media/platform/qcom/venus/vdec.c
+index e1f998656c07..12c31551f191 100644
+--- a/drivers/media/platform/qcom/venus/vdec.c
++++ b/drivers/media/platform/qcom/venus/vdec.c
+@@ -211,7 +211,8 @@ static int vdec_g_fmt(struct file *file, void *fh, struct v4l2_format *f)
+ 		inst->height = format.fmt.pix_mp.height;
+ 	}
+ 
+-	pixmp->pixelformat = fmt->pixfmt;
++	if (fmt)
++		pixmp->pixelformat = fmt->pixfmt;
+ 
+ 	if (f->type == V4L2_BUF_TYPE_VIDEO_CAPTURE_MPLANE) {
+ 		pixmp->width = inst->width;
+-- 
+2.17.0
 
-More specifically, the following files have the information you need.
-Run watch -n1 on them.
-
-$ grep "" /sys/devices/system/cpu/cpufreq/policy?/scaling_*_freq
-
-Thanks for your help.
-
-Regards,
-Amit
