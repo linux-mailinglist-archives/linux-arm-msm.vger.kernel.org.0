@@ -2,125 +2,85 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 15FBB78AAC
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Jul 2019 13:38:33 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5911278B43
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Jul 2019 14:06:49 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2387687AbfG2Lib (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 29 Jul 2019 07:38:31 -0400
-Received: from mail-lj1-f196.google.com ([209.85.208.196]:40193 "EHLO
-        mail-lj1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2387625AbfG2Lib (ORCPT
+        id S2387662AbfG2MGt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 29 Jul 2019 08:06:49 -0400
+Received: from smtp.codeaurora.org ([198.145.29.96]:36696 "EHLO
+        smtp.codeaurora.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2387637AbfG2MGs (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 29 Jul 2019 07:38:31 -0400
-Received: by mail-lj1-f196.google.com with SMTP id m8so24646369lji.7
-        for <linux-arm-msm@vger.kernel.org>; Mon, 29 Jul 2019 04:38:29 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=Xk5sDImFAW53ku5zPrNSNKzA4D6EyzpMXW4in0cztWM=;
-        b=UnnTckmqXi6dtRJI9TtME6/cOTOcSTuagOIEvn4oN/YeXXjr5tMv5ApU90sSRCjsqx
-         g5/P0yo7sMTWflAbYRhLb7bjzwJskohzcBQdkL82fHU/R1UKJrfOjyn0P1K0qqB9ECdk
-         8IwoGlQyAc80cZy4Z7FZIy9MWsJNwPxOswu/lfTO4iep56sONTC0VlTL6yUAprVJL/xh
-         TB5m9+Rh/larF/cef6tPOz8IzzsSuOvTkYMiBGqMWJzZQV3EGXlN3rz40NtxYVVjFNwI
-         QS42vLzUOOqg1gz/qivvEXjngOePSIfS7ac9GWJ7di18Vu299bueL05K5EQu2IPkeYaO
-         pAnA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=Xk5sDImFAW53ku5zPrNSNKzA4D6EyzpMXW4in0cztWM=;
-        b=khcpF5AjWNBj4T+gThPoO+uz+f2Q5/JnOE0qoXaZJ9kTmkJV7XRum7KJugsxC1wfW/
-         76CV2c8lYH/jHaZ7nmVybK89aszlLj8heNIStm52+kTTFaIvxvbcgc1frnbH7QKuNmdo
-         kk3Eu8LMpjt7ozvDNmzAarMYwUpB1qU+iruUpCbSrkz4+0XtDHwDpdQcTb6NBYkBuBcs
-         CxmgWtpNzdhirqvhFxDcgqg+5IwiSOE/QcPRPPg/x5knqEEYBV0czQZe87dKt/fwsRHt
-         Ve/vFoOYxpTD+Z8JPcVeiyH5oZn1fDB4BhfnQQGAek0A5cJq87WRefxu1fVsWJ2oVP8v
-         RZ9g==
-X-Gm-Message-State: APjAAAUv3MqiIEmcv3r70s8MU5UMIkcayS1ErP7g/ZX1KLY/8bgU+SMz
-        r/FJfwXSVbxUfLyxHau+/zcCOA==
-X-Google-Smtp-Source: APXvYqxNUBeruTZFEiy3HdGgth8M3XFHuGw1Wi0lvd8yms4gJBEi00iudCF1A+C/YpnaL5sgIlzSSw==
-X-Received: by 2002:a2e:9e81:: with SMTP id f1mr58208530ljk.29.1564400308785;
-        Mon, 29 Jul 2019 04:38:28 -0700 (PDT)
-Received: from [192.168.28.50] ([37.157.136.206])
-        by smtp.googlemail.com with ESMTPSA id v14sm12759730ljh.51.2019.07.29.04.38.27
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 29 Jul 2019 04:38:28 -0700 (PDT)
-Subject: Re: [PATCH v6 3/4] media: venus: Update to bitrate based clock
- scaling
-To:     Aniket Masule <amasule@codeaurora.org>, linux-media@vger.kernel.org
-Cc:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        vgarodia@codeaurora.org
-References: <1563786452-22188-1-git-send-email-amasule@codeaurora.org>
- <1563786452-22188-3-git-send-email-amasule@codeaurora.org>
-From:   Stanimir Varbanov <stanimir.varbanov@linaro.org>
-Message-ID: <cdfde490-8d02-c9a1-5fbd-9ae001692f55@linaro.org>
-Date:   Mon, 29 Jul 2019 14:38:25 +0300
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.7.2
+        Mon, 29 Jul 2019 08:06:48 -0400
+Received: by smtp.codeaurora.org (Postfix, from userid 1000)
+        id B7F3C60736; Mon, 29 Jul 2019 12:06:47 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
+        s=default; t=1564402007;
+        bh=bvEmJLLutQsxuJQPfWeI2M2lzgG7cHvWewxBuldtSuI=;
+        h=From:To:Cc:Subject:Date:From;
+        b=PvMHHqEZEL2gM4bFpn7FBbNeejQumuW3p16GiGQ7d6ZiRaxeoMyqrXa8I4aandisw
+         Me6uFwYemJoIyeddK9w9lPSvOUUbafyWfVT4djfTjMCU6I45iUt6K0cHyNROKpt4Kt
+         0VJ0tFUFeWaU4kJfY7/jc6zxX3cSYlU0Fi2573Oc=
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        pdx-caf-mail.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.7 required=2.0 tests=ALL_TRUSTED,BAYES_00,
+        DKIM_INVALID,DKIM_SIGNED,SPF_NONE autolearn=no autolearn_force=no
+        version=3.4.0
+Received: from blr-ubuntu-87.qualcomm.com (blr-bdr-fw-01_globalnat_allzones-outside.qualcomm.com [103.229.18.19])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: sibis@smtp.codeaurora.org)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 0D07660255;
+        Mon, 29 Jul 2019 12:06:43 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
+        s=default; t=1564402007;
+        bh=bvEmJLLutQsxuJQPfWeI2M2lzgG7cHvWewxBuldtSuI=;
+        h=From:To:Cc:Subject:Date:From;
+        b=PvMHHqEZEL2gM4bFpn7FBbNeejQumuW3p16GiGQ7d6ZiRaxeoMyqrXa8I4aandisw
+         Me6uFwYemJoIyeddK9w9lPSvOUUbafyWfVT4djfTjMCU6I45iUt6K0cHyNROKpt4Kt
+         0VJ0tFUFeWaU4kJfY7/jc6zxX3cSYlU0Fi2573Oc=
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 0D07660255
+Authentication-Results: pdx-caf-mail.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: pdx-caf-mail.web.codeaurora.org; spf=none smtp.mailfrom=sibis@codeaurora.org
+From:   Sibi Sankar <sibis@codeaurora.org>
+To:     bjorn.andersson@linaro.org, robh+dt@kernel.org, vkoul@kernel.org,
+        aneela@codeaurora.org
+Cc:     mark.rutland@arm.com, agross@kernel.org,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, jassisinghbrar@gmail.com,
+        clew@codeaurora.org, Sibi Sankar <sibis@codeaurora.org>
+Subject: [PATCH 0/6] Add support for Qualcomm SM8150 and SC7180 SoCs
+Date:   Mon, 29 Jul 2019 17:36:27 +0530
+Message-Id: <20190729120633.20451-1-sibis@codeaurora.org>
+X-Mailer: git-send-email 2.22.0
 MIME-Version: 1.0
-In-Reply-To: <1563786452-22188-3-git-send-email-amasule@codeaurora.org>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi,
+This patch series adds SCM, APSS shared mailbox and QMP AOSS PD/clock
+support on SM8150 and SC7180 SoCs.
 
-On 7/22/19 12:07 PM, Aniket Masule wrote:
-> Introduced clock scaling using bitrate, preavious
-> calculations consider only the cycles per mb.
-> Also, clock scaling is now triggered before every
-> buffer being queued to the device. This helps in
-> deciding precise clock cycles required.
-> 
-> Signed-off-by: Aniket Masule <amasule@codeaurora.org>
-> ---
->  drivers/media/platform/qcom/venus/helpers.c | 33 +++++++++++++++++++++++++----
->  1 file changed, 29 insertions(+), 4 deletions(-)
-> 
-> diff --git a/drivers/media/platform/qcom/venus/helpers.c b/drivers/media/platform/qcom/venus/helpers.c
-> index 2c976e4..edf403d 100644
-> --- a/drivers/media/platform/qcom/venus/helpers.c
-> +++ b/drivers/media/platform/qcom/venus/helpers.c
-> @@ -399,17 +399,26 @@ static int scale_clocks(struct venus_inst *inst)
->  	return ret;
->  }
->  
-> -static unsigned long calculate_vpp_freq(struct venus_inst *inst)
-> +static unsigned long calculate_inst_freq(struct venus_inst *inst,
-> +					 unsigned long filled_len)
->  {
-> -	unsigned long vpp_freq = 0;
-> +	unsigned long vpp_freq = 0, vsp_freq = 0;
-> +	u64 fps = inst->fps;
->  	u32 mbs_per_sec;
->  
->  	mbs_per_sec = load_per_instance(inst);
->  	vpp_freq = mbs_per_sec * inst->clk_data.codec_freq_data->vpp_freq;
->  	/* 21 / 20 is overhead factor */
->  	vpp_freq += vpp_freq / 20;
-> +	vsp_freq = mbs_per_sec * inst->clk_data.codec_freq_data->vsp_freq;
->  
-> -	return vpp_freq;
-> +	/* 10 / 7 is overhead factor */
-> +	if (inst->session_type == VIDC_SESSION_TYPE_ENC)
-> +		vsp_freq += (inst->controls.enc.bitrate * 10) / 7;
-> +	else
-> +		vsp_freq += ((fps * filled_len * 8) * 10) / 7;
+Sibi Sankar (6):
+  soc: qcom: smem: Update max processor count
+  dt-bindings: firmware: scm: Add SM8150 and SC7180 support
+  dt-bindings: mailbox: Add APSS shared for SM8150 and SC7180 SoCs
+  mailbox: qcom: Add support for Qualcomm SM8150 and SC7180 SoCs
+  dt-bindings: soc: qcom: aoss: Add SM8150 and SC7180 support
+  soc: qcom: aoss: Add AOSS QMP support
 
-load_per_instance() already taken into account fps, thus I think fps
-should be excluded from calculation.
-
-> +
-> +	return max(vpp_freq, vsp_freq);
->  }
->  
-
+ Documentation/devicetree/bindings/firmware/qcom,scm.txt      | 2 ++
+ .../devicetree/bindings/mailbox/qcom,apcs-kpss-global.txt    | 2 ++
+ Documentation/devicetree/bindings/soc/qcom/qcom,aoss-qmp.txt | 5 ++++-
+ drivers/mailbox/qcom-apcs-ipc-mailbox.c                      | 2 ++
+ drivers/soc/qcom/qcom_aoss.c                                 | 2 ++
+ drivers/soc/qcom/smem.c                                      | 2 +-
+ 6 files changed, 13 insertions(+), 2 deletions(-)
 
 -- 
-regards,
-Stan
+The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
+a Linux Foundation Collaborative Project
+
