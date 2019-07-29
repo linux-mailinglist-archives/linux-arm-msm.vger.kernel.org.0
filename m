@@ -2,102 +2,102 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 15192787F6
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Jul 2019 11:03:58 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id AC94D78801
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Jul 2019 11:07:37 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726496AbfG2JDx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 29 Jul 2019 05:03:53 -0400
-Received: from mail.z3ntu.xyz ([128.199.32.197]:42818 "EHLO mail.z3ntu.xyz"
+        id S1726984AbfG2JHg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 29 Jul 2019 05:07:36 -0400
+Received: from onstation.org ([52.200.56.107]:34966 "EHLO onstation.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726432AbfG2JDx (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 29 Jul 2019 05:03:53 -0400
-Received: by mail.z3ntu.xyz (Postfix, from userid 182)
-        id 41B36C71D7; Mon, 29 Jul 2019 09:03:51 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=z3ntu.xyz; s=z3ntu;
-        t=1564391031; bh=xgLWFrel2vRAhATJeiJzecL1LosFBCc/BEorby3QZeU=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References;
-        b=LcAO1pzQe2fKhwEGzegkdxoL5fOSi0VURHBDFIJ0Wa/WTp/GNLiYhn8Ddk2bYbk0j
-         MM7b/svR3BL10q9HgEFGwqY/iDFgpseuiCD5CrspTaJ25NCHFHjVHk680Ft3ncfE73
-         yPhg8TAXwJCmfvWWUO9H7atWDQvSlpjHniWBMAv4=
-X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on arch-vps
-X-Spam-Level: 
-X-Spam-Status: No, score=-1.2 required=5.0 tests=ALL_TRUSTED,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,URIBL_BLOCKED
-        autolearn=unavailable autolearn_force=no version=3.4.2
-Received: from g550jk.localnet (80-110-121-20.cgn.dynamic.surfer.at [80.110.121.20])
-        by mail.z3ntu.xyz (Postfix) with ESMTPSA id 0D874C6824;
-        Mon, 29 Jul 2019 09:03:48 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=z3ntu.xyz; s=z3ntu;
-        t=1564391028; bh=xgLWFrel2vRAhATJeiJzecL1LosFBCc/BEorby3QZeU=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References;
-        b=cESTXR5Qtp4Ioj0k8yWHeiG/zxwbjbsy9A+W3gf9k0NGuP7kDKe7I1yIHYWD/34Hj
-         4/43SsNJakRvP9OY/846854dgc3FbbbM2Rs1Spv+7Dv5QWxu4xsA8XPpA63yo4wFPm
-         pioSgDYF3ba5e4yLao+NFSp0ruFEHWUtgMPXblF8=
-From:   Luca Weiss <luca@z3ntu.xyz>
-To:     linux-kernel@vger.kernel.org
-Cc:     Amit Kucheria <amit.kucheria@linaro.org>,
-        linux-arm-msm@vger.kernel.org, bjorn.andersson@linaro.org,
-        edubezval@gmail.com, andy.gross@linaro.org,
+        id S1725917AbfG2JHg (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 29 Jul 2019 05:07:36 -0400
+Received: from localhost (c-98-239-145-235.hsd1.wv.comcast.net [98.239.145.235])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        (Authenticated sender: masneyb)
+        by onstation.org (Postfix) with ESMTPSA id 8B73C3E910;
+        Mon, 29 Jul 2019 09:07:35 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=onstation.org;
+        s=default; t=1564391255;
+        bh=V1mGH9ikCIK/K3J8F2Qd4/cjZZvLv966i1sALH+R43k=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=GGtx1ojSV4tAj6m8rDAyxqCchGky5/dS1e6/1+SZW/FWuiRrLmc+saF7OsAJTOsg5
+         NoupnDprFoloMMgioKnPspzrJUC5ArAJe5R6HvjmYbLsObp0UyHvnGsFm41qfqBef8
+         DuJJMWWQWuahZrwiLZvZjJAKRDs5HXMdoq3eKe2o=
+Date:   Mon, 29 Jul 2019 05:07:35 -0400
+From:   Brian Masney <masneyb@onstation.org>
+To:     Amit Kucheria <amit.kucheria@linaro.org>
+Cc:     LKML <linux-kernel@vger.kernel.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Eduardo Valentin <edubezval@gmail.com>,
+        Andy Gross <andy.gross@linaro.org>,
         Andy Gross <agross@kernel.org>,
         Daniel Lezcano <daniel.lezcano@linaro.org>,
         Mark Rutland <mark.rutland@arm.com>,
         Rob Herring <robh+dt@kernel.org>,
-        Zhang Rui <rui.zhang@intel.com>, masneyb@onstation.org,
-        devicetree@vger.kernel.org
-Subject: Re: [PATCH 12/15] arm64: dts: msm8974: thermal: Add interrupt support
-Date:   Mon, 29 Jul 2019 11:03:46 +0200
-Message-ID: <2812534.bLfc0ztHNv@g550jk>
-In-Reply-To: <ec8205566eb9c015ad51fbb88f0da7ca60b414fd.1564091601.git.amit.kucheria@linaro.org>
-References: <cover.1564091601.git.amit.kucheria@linaro.org> <ec8205566eb9c015ad51fbb88f0da7ca60b414fd.1564091601.git.amit.kucheria@linaro.org>
+        Zhang Rui <rui.zhang@intel.com>,
+        Marc Gonzalez <marc.w.gonzalez@free.fr>,
+        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
+        <devicetree@vger.kernel.org>,
+        Linux PM list <linux-pm@vger.kernel.org>
+Subject: Re: [PATCH 00/15] thermal: qcom: tsens: Add interrupt support
+Message-ID: <20190729090735.GA897@onstation.org>
+References: <cover.1564091601.git.amit.kucheria@linaro.org>
+ <20190726103605.GB3327@onstation.org>
+ <CAHLCerOs3cMQrWrYk7F_bnxr_nxJ-nsRL8oOGALU63ySqmLaig@mail.gmail.com>
+ <20190726112954.GA3984@onstation.org>
+ <CAHLCerNay31+RNQvQZyxMMVyb1mLLfN5BoZbz-M+bMqbmbYwtA@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: multipart/signed; boundary="nextPart47414754.PgozLFlKrf"; micalg="pgp-sha256"; protocol="application/pgp-signature"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CAHLCerNay31+RNQvQZyxMMVyb1mLLfN5BoZbz-M+bMqbmbYwtA@mail.gmail.com>
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
---nextPart47414754.PgozLFlKrf
-Content-Transfer-Encoding: 7Bit
-Content-Type: text/plain; charset="us-ascii"
-
-On Freitag, 26. Juli 2019 00:18:47 CEST Amit Kucheria wrote:
-> Register upper-lower interrupt for the tsens controller.
+On Sat, Jul 27, 2019 at 12:58:54PM +0530, Amit Kucheria wrote:
+> On Fri, Jul 26, 2019 at 4:59 PM Brian Masney <masneyb@onstation.org> wrote:
+> > On Fri, Jul 26, 2019 at 04:40:16PM +0530, Amit Kucheria wrote:
+> > > How well does cpufreq work on 8974? I haven't looked at it yet but
+> > > we'll need it for thermal throttling.
+> >
+> > I'm not sure how to tell if the frequency is dynamically changed during
+> > runtime on arm. x86-64 shows this information in /proc/cpuinfo. Here's
+> > the /proc/cpuinfo on the Nexus 5:
 > 
-> Signed-off-by: Amit Kucheria <amit.kucheria@linaro.org>
-> ---
-> Cc: masneyb@onstation.org
+> Nah. /proc/cpuinfo won't show what we need.
 > 
->  arch/arm/boot/dts/qcom-msm8974.dtsi | 36 +++++++++++++++--------------
->  1 file changed, 19 insertions(+), 17 deletions(-)
+> Try the following:
 > 
+> $ grep "" /sys/devices/system/cpu/cpufreq/policy?/*
+> 
+> More specifically, the following files have the information you need.
+> Run watch -n1 on them.
+> 
+> $ grep "" /sys/devices/system/cpu/cpufreq/policy?/scaling_*_freq
 
-Hi, the title of this patch should be "arm" and not "arm64".
+There's no cpufreq directory on msm8974:
 
-Luca
+    # ls -1 /sys/devices/system/cpu/
+    cpu0
+    cpu1
+    cpu2
+    cpu3
+    cpuidle
+    hotplug
+    isolated
+    kernel_max
+    modalias
+    offline
+    online
+    possible
+    power
+    present
+    smt
+    uevent
 
---nextPart47414754.PgozLFlKrf
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: This is a digitally signed message part.
-Content-Transfer-Encoding: 7Bit
+I'm using qcom_defconfig.
 
------BEGIN PGP SIGNATURE-----
-
-iQIzBAABCAAdFiEE66ocILd+OiPORlvAOY2pEqPLBhkFAl0+tnIACgkQOY2pEqPL
-Bhkyjg/8C4wIk+65w28F4Xcc3cdIuUZypP6UVkCguRZF6zUkrBdjETjJDUhXz0+a
-Oyb44HxdAgQ7E/UqfEozAvpB8z3H5sBFrP6dykqMu3CQtOzPfB1ILhbn7+V+VToF
-bmmuVcxEOnTCgoJb730JL06PvmUUMs/7W9gwAUjCVdp2DymS0OQJ3awSIxugE2GA
-itAxee+KyTq7ttQRK2n3efOlaCqAf3jll7jl7xDBwodJa0uJi2tUhD4b9ZhFpA37
-DCDsAY3wh/KJkf3uN3coZFTT3K635HZ0hP/7Kx9RK6TTXuCVJPyOXqRdw66rO74d
-8sHy/yrqgByCVZex9lMuTcPyQZq3usZnAEakCMM/MPGuVclhSQhtVF8Xt0Utw5+b
-FZlhg2gBflZHv2WLxNMdS/NyF28GN86e4uMJ7jusYxzVu+XBWeY8HGkqrxBdUFYn
-khInFKGamOPVSXQYrmNZX8LW/ZciyNyB6ZOrFOO0aiE5cVsYZEWcmiWqD58XXNzc
-RYupWAtn+ajc0U6mD51PAy2EvX2PFnyK4yxjXbeGT+0fZwQGWUQLFytF7ZBz9QPe
-dZ6jedXlUOfVP1pduqgMJ5Vl6zjz7gN1ZIJOpAqqKT2Ttgy/4fRGcRwaswPSAlhn
-0bxCZzt8QDr+gR9a5eMjr70Q5OGObzj8gPaxWFCjKpPcqHzRXAs=
-=Cmln
------END PGP SIGNATURE-----
-
---nextPart47414754.PgozLFlKrf--
-
-
-
+Brian
