@@ -2,90 +2,110 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 59441790F3
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Jul 2019 18:33:48 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id DA01A79157
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Jul 2019 18:46:24 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729097AbfG2Qd2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 29 Jul 2019 12:33:28 -0400
-Received: from mail-vk1-f196.google.com ([209.85.221.196]:39537 "EHLO
-        mail-vk1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729096AbfG2Qd0 (ORCPT
+        id S1727576AbfG2QqW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 29 Jul 2019 12:46:22 -0400
+Received: from smtp.codeaurora.org ([198.145.29.96]:40868 "EHLO
+        smtp.codeaurora.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727488AbfG2QqW (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 29 Jul 2019 12:33:26 -0400
-Received: by mail-vk1-f196.google.com with SMTP id o19so12141100vkb.6
-        for <linux-arm-msm@vger.kernel.org>; Mon, 29 Jul 2019 09:33:26 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=a/t4nyA1Q5Ire67bzt1cmZdzjlm5dY9UznxFZlUXgxs=;
-        b=cJ+QBiHtj4joLDdWo3ko8KyT7anFWu3nS4m2R2ggcQLExoCvgemhSOm4R3MGuuAS+R
-         UUhc3FfMLQFaMQgUK+4pz2vGHUcoT733fpPJWC4x4SfKh57m73DCBNz2hmcx9rBziXUg
-         edFE+J9YCSGbq4oUZUl4T7C5YbRj+6BQ+d2hMJVE07S1s642wHolqPQPivrxotpNlkus
-         9nDE/wQb2YGhOMUK6aHNATji2FQZfwxOlPW6lRM+E0eAE0vN9vED3F6wfKgQCXumybj+
-         ekk40r5L0I1F6AfGNmDiOJAI3mU/o4QQJQrdGoQkswdjtUNiQzqdTvk3PkHCozetl/C9
-         ka/A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=a/t4nyA1Q5Ire67bzt1cmZdzjlm5dY9UznxFZlUXgxs=;
-        b=VsKmV2ORabqbiqiE8PpJ+zWiL3MPoezKcBUZO1FFskGNp2VaWkz3mYatgDO8UwGc4W
-         L4HQA3HU3pktsuToIMuNbvywhN52Qvs5WRKCw5izewSMr5zeYEbDbWa6beWJfT+cRx6c
-         4iXz9/CEuBrRtUtVBN9HgejqqHXuaG2FiuNRGyJmBlhKgDNdXflHeFaB39+dWfj3wSu8
-         upC3pHpeiJLQOUQ0VeVd/3mJMS+eI1iIqwH7iAvVJLpuVINBMePREUTq/3cDn7ItOkI/
-         A0IFljicGVV0Ys6osh0ffvLO7nGn2gai3mtA0h/pon9GXagFw5fDYnYqHcchAl4IHMBR
-         IhJw==
-X-Gm-Message-State: APjAAAXZ2yUcWyYOb4Q3OjX5l4m2tXcst4Fe2KP7lvJw8/CHaONR7a/s
-        2v8Lg17K8CFewIHGRfzEU7OsRYzZoVw=
-X-Google-Smtp-Source: APXvYqxruim+XfgMG1TgZXYZ4llcXHm+qO2F5Xfw42zvdX1iAL6Pruu/xnt08WS99QNb5hXXF7Tcpg==
-X-Received: by 2002:a1f:b552:: with SMTP id e79mr26613652vkf.90.1564418005133;
-        Mon, 29 Jul 2019 09:33:25 -0700 (PDT)
-Received: from Thara-Work-Ubuntu.fios-router.home (pool-71-255-245-97.washdc.fios.verizon.net. [71.255.245.97])
-        by smtp.googlemail.com with ESMTPSA id o9sm39762738vkd.27.2019.07.29.09.33.23
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Mon, 29 Jul 2019 09:33:24 -0700 (PDT)
-From:   Thara Gopinath <thara.gopinath@linaro.org>
-To:     linux-arm-msm@vger.kernel.org, agross@kernel.org,
-        robh+dt@kernel.org, mark.rutland@arm.com
-Cc:     devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: [PATCH 2/2] arm64: dts: qcom: Extend AOSS QMP node
-Date:   Mon, 29 Jul 2019 12:33:21 -0400
-Message-Id: <1564418001-24940-3-git-send-email-thara.gopinath@linaro.org>
-X-Mailer: git-send-email 2.1.4
-In-Reply-To: <1564418001-24940-1-git-send-email-thara.gopinath@linaro.org>
-References: <1564418001-24940-1-git-send-email-thara.gopinath@linaro.org>
+        Mon, 29 Jul 2019 12:46:22 -0400
+Received: by smtp.codeaurora.org (Postfix, from userid 1000)
+        id 0B38560A42; Mon, 29 Jul 2019 16:46:19 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
+        s=default; t=1564418781;
+        bh=oEfTz25DMg3N/lplcYB6CKqNnvmYEuMZiG4+Z5D/Jbg=;
+        h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
+        b=JFYCrWKe6VxTbTEq1Ep+CSBeFqYI7brEg08NWsGq1ouacAERDYeXJMGHO1Nh8ll3Y
+         LWQhz3hXAknsXmQaGAsiSIYpymUqzES6cbXQu9sneuRWRl6vQy2MAejPlpvqshWVS+
+         gxZ071f0xNlAzVD6pr/k+JAhrIbg1lF7Jsw6ifTQ=
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        pdx-caf-mail.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.7 required=2.0 tests=ALL_TRUSTED,BAYES_00,
+        DKIM_INVALID,DKIM_SIGNED autolearn=no autolearn_force=no version=3.4.0
+Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
+        by smtp.codeaurora.org (Postfix) with ESMTP id F386C6037C;
+        Mon, 29 Jul 2019 16:46:16 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
+        s=default; t=1564418777;
+        bh=oEfTz25DMg3N/lplcYB6CKqNnvmYEuMZiG4+Z5D/Jbg=;
+        h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
+        b=BqLagmE8UVjFVdV8t7Wzzgv1RFDv2uY9OMKSFJIx05Xz7j2sJMUggph4bFA8pBLnm
+         sNDHd0RRcu5DIhPz10MAWVUb8HPuW/RpstE74l+zfUn+xp+fyknG8FUxe5Rq813s81
+         7QdtCZ4fzY0FiVszPcHOJo+ScpTEbWSDSsmoqEvk=
+MIME-Version: 1.0
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
+Content-Transfer-Encoding: 7bit
+Date:   Mon, 29 Jul 2019 22:16:16 +0530
+From:   Sibi Sankar <sibis@codeaurora.org>
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     robh+dt@kernel.org, vkoul@kernel.org, aneela@codeaurora.org,
+        mark.rutland@arm.com, agross@kernel.org,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, jassisinghbrar@gmail.com,
+        clew@codeaurora.org
+Subject: Re: [PATCH 0/6] Add support for Qualcomm SM8150 and SC7180 SoCs
+In-Reply-To: <20190729153826.GT7234@tuxbook-pro>
+References: <20190729120633.20451-1-sibis@codeaurora.org>
+ <20190729153826.GT7234@tuxbook-pro>
+Message-ID: <e7a6a873c47f96a1ca326a50f544d35a@codeaurora.org>
+X-Sender: sibis@codeaurora.org
+User-Agent: Roundcube Webmail/1.2.5
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-AOSS hosts resources that can be used to warm up the SoC.
-Add nodes for these resources.
+Hey Bjorn,
+Thanks for the review!
 
-Signed-off-by: Thara Gopinath <thara.gopinath@linaro.org>
----
- arch/arm64/boot/dts/qcom/sdm845.dtsi | 8 ++++++++
- 1 file changed, 8 insertions(+)
+On 2019-07-29 21:08, Bjorn Andersson wrote:
+> On Mon 29 Jul 05:06 PDT 2019, Sibi Sankar wrote:
+> 
+>> This patch series adds SCM, APSS shared mailbox and QMP AOSS PD/clock
+>> support on SM8150 and SC7180 SoCs.
+>> 
+> 
+> Thanks Sibi, this looks good.
+> 
+> Could you please update the last 5 patches to ensure/maintain sort 
+> order
+> of the lists they affect.
 
-diff --git a/arch/arm64/boot/dts/qcom/sdm845.dtsi b/arch/arm64/boot/dts/qcom/sdm845.dtsi
-index 4babff5..d0c0d4f 100644
---- a/arch/arm64/boot/dts/qcom/sdm845.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sdm845.dtsi
-@@ -2411,6 +2411,14 @@
- 
- 			#clock-cells = <0>;
- 			#power-domain-cells = <1>;
-+
-+			cx_cdev: cx {
-+				#cooling-cells = <2>;
-+			};
-+
-+			ebi_cdev: ebi {
-+				#cooling-cells = <2>;
-+			};
- 		};
- 
- 		spmi_bus: spmi@c440000 {
+yes I'll do that
+
+> 
+> Regards,
+> Bjorn
+> 
+>> Sibi Sankar (6):
+>>   soc: qcom: smem: Update max processor count
+>>   dt-bindings: firmware: scm: Add SM8150 and SC7180 support
+>>   dt-bindings: mailbox: Add APSS shared for SM8150 and SC7180 SoCs
+>>   mailbox: qcom: Add support for Qualcomm SM8150 and SC7180 SoCs
+>>   dt-bindings: soc: qcom: aoss: Add SM8150 and SC7180 support
+>>   soc: qcom: aoss: Add AOSS QMP support
+>> 
+>>  Documentation/devicetree/bindings/firmware/qcom,scm.txt      | 2 ++
+>>  .../devicetree/bindings/mailbox/qcom,apcs-kpss-global.txt    | 2 ++
+>>  Documentation/devicetree/bindings/soc/qcom/qcom,aoss-qmp.txt | 5 
+>> ++++-
+>>  drivers/mailbox/qcom-apcs-ipc-mailbox.c                      | 2 ++
+>>  drivers/soc/qcom/qcom_aoss.c                                 | 2 ++
+>>  drivers/soc/qcom/smem.c                                      | 2 +-
+>>  6 files changed, 13 insertions(+), 2 deletions(-)
+>> 
+>> --
+>> The Qualcomm Innovation Center, Inc. is a member of the Code Aurora 
+>> Forum,
+>> a Linux Foundation Collaborative Project
+>> 
+
 -- 
-2.1.4
-
+-- Sibi Sankar --
+Qualcomm Innovation Center, Inc. is a member of Code Aurora Forum,
+a Linux Foundation Collaborative Project.
