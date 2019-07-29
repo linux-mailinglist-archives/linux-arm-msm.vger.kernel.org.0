@@ -2,88 +2,64 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id BA0EE78B57
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Jul 2019 14:07:17 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C983778CB4
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Jul 2019 15:23:49 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728332AbfG2MHL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 29 Jul 2019 08:07:11 -0400
-Received: from smtp.codeaurora.org ([198.145.29.96]:37694 "EHLO
-        smtp.codeaurora.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728297AbfG2MHK (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 29 Jul 2019 08:07:10 -0400
-Received: by smtp.codeaurora.org (Postfix, from userid 1000)
-        id B999B60E73; Mon, 29 Jul 2019 12:07:09 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
-        s=default; t=1564402029;
-        bh=yESQEjxs/UF7jQlnePfCZrAc502Wc240TBy0w7/zWvM=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=Zo6gMqj8GgfRq7bbt0D+/wP0VNMXwt96yUCn8XVI95GPKBu8z72ecCP/f8UrT+cec
-         l+0MnTEotVc95VMKONY2yIAvYbl8RriqMnl1JzwadljnVuPOZOZfmZBEXeXdtUPZT6
-         AoNM1VBduFBGFchlksCCZ0mfYjAcCGJxXr34negs=
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        pdx-caf-mail.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.7 required=2.0 tests=ALL_TRUSTED,BAYES_00,
-        DKIM_INVALID,DKIM_SIGNED,SPF_NONE autolearn=no autolearn_force=no
-        version=3.4.0
-Received: from blr-ubuntu-87.qualcomm.com (blr-bdr-fw-01_globalnat_allzones-outside.qualcomm.com [103.229.18.19])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: sibis@smtp.codeaurora.org)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id C0742601B4;
-        Mon, 29 Jul 2019 12:07:05 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
-        s=default; t=1564402028;
-        bh=yESQEjxs/UF7jQlnePfCZrAc502Wc240TBy0w7/zWvM=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=XmTFD9kzbNNuOrY5vlf1SNHzGzUNb7kPogIxibjUnbdqt46SUw8pb68Dkqh3jqf+Y
-         YnHT3u5P60yyFCES/7Hv9TRfAuYBnzUV+tBJWz7nsMc3idVdv50iDYDPQ0lr7arW3Q
-         69PIsc6q6v7YuCPvZGhfY2etV3/jKbo+08Mgd4us=
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org C0742601B4
-Authentication-Results: pdx-caf-mail.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: pdx-caf-mail.web.codeaurora.org; spf=none smtp.mailfrom=sibis@codeaurora.org
-From:   Sibi Sankar <sibis@codeaurora.org>
-To:     bjorn.andersson@linaro.org, robh+dt@kernel.org, vkoul@kernel.org,
-        aneela@codeaurora.org
-Cc:     mark.rutland@arm.com, agross@kernel.org,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, jassisinghbrar@gmail.com,
-        clew@codeaurora.org, Sibi Sankar <sibis@codeaurora.org>
-Subject: [PATCH 6/6] soc: qcom: aoss: Add AOSS QMP support
-Date:   Mon, 29 Jul 2019 17:36:33 +0530
-Message-Id: <20190729120633.20451-7-sibis@codeaurora.org>
-X-Mailer: git-send-email 2.22.0
-In-Reply-To: <20190729120633.20451-1-sibis@codeaurora.org>
-References: <20190729120633.20451-1-sibis@codeaurora.org>
+        id S2387534AbfG2NXt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 29 Jul 2019 09:23:49 -0400
+Received: from vps0.lunn.ch ([185.16.172.187]:44680 "EHLO vps0.lunn.ch"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S2387413AbfG2NXs (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 29 Jul 2019 09:23:48 -0400
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=lunn.ch;
+        s=20171124; h=In-Reply-To:Content-Type:MIME-Version:References:Message-ID:
+        Subject:Cc:To:From:Date:Sender:Reply-To:Content-Transfer-Encoding:Content-ID:
+        Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
+        :Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
+        List-Post:List-Owner:List-Archive;
+        bh=D3LR4K9RcO0ZgvZvFrl/obFQV8X+GZZRErdcH+2Kzsc=; b=KsSgNuCsNLdvTJhexvN4zTqRmh
+        DFj2mlSeBwiaslzykUySvoZCGylDZ1rfhP2sTJcHOqqWPStQiwMGYD43NZ7f2peRJwd142RPM+6Y8
+        VKFq0v4k0qnptOi5wJV8mIvbgTGlv4myDzSmj+aRsWrkq0LIttWfxRY96FLFtLCTUB+A=;
+Received: from andrew by vps0.lunn.ch with local (Exim 4.89)
+        (envelope-from <andrew@lunn.ch>)
+        id 1hs5cs-0001CX-FY; Mon, 29 Jul 2019 15:23:42 +0200
+Date:   Mon, 29 Jul 2019 15:23:42 +0200
+From:   Andrew Lunn <andrew@lunn.ch>
+To:     xiaofeis@codeaurora.org
+Cc:     davem@davemloft.net, vkoul@kernel.org, netdev@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, bjorn.andersson@linaro.org,
+        vivien.didelot@gmail.com, f.fainelli@gmail.com,
+        niklas.cassel@linaro.org, xiazha@codeaurora.org
+Subject: Re: [PATCH v3] net: dsa: qca8k: enable port flow control
+Message-ID: <20190729132342.GA4110@lunn.ch>
+References: <1564275470-52666-1-git-send-email-xiaofeis@codeaurora.org>
+ <20190728223114.GD23125@lunn.ch>
+ <fa444b03b42a2cb72037bc73a62f1976@codeaurora.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <fa444b03b42a2cb72037bc73a62f1976@codeaurora.org>
+User-Agent: Mutt/1.5.23 (2014-03-12)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add AOSS QMP support for SM8150 and SC7180 SoCs.
+> But our qca8k HW can auto sync the pause status to MAC from phy with the
+> auto-negotiated result.
+> So no need to set in qca8k_adjust_link, since there is one setting in
+> qca8k_port_set_status: mask |= QCA8K_PORT_STATUS_LINK_AUTO;
 
-Signed-off-by: Sibi Sankar <sibis@codeaurora.org>
----
- drivers/soc/qcom/qcom_aoss.c | 2 ++
- 1 file changed, 2 insertions(+)
+How does the auto-sync actually work? Does the MAC make MDIO reads to
+the PHY? That is generally unsafe, since some PHYs support pages, and
+the PHY driver might be using a different page while the MAC tries to
+access the auto-neg results.
 
-diff --git a/drivers/soc/qcom/qcom_aoss.c b/drivers/soc/qcom/qcom_aoss.c
-index 5f885196f4d0f..e2f8c7c9a5a0a 100644
---- a/drivers/soc/qcom/qcom_aoss.c
-+++ b/drivers/soc/qcom/qcom_aoss.c
-@@ -462,6 +462,8 @@ static int qmp_remove(struct platform_device *pdev)
- 
- static const struct of_device_id qmp_dt_match[] = {
- 	{ .compatible = "qcom,sdm845-aoss-qmp", },
-+	{ .compatible = "qcom,sm8150-aoss-qmp", },
-+	{ .compatible = "qcom,sc7180-aoss-qmp", },
- 	{}
- };
- MODULE_DEVICE_TABLE(of, qmp_dt_match);
--- 
-The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
-a Linux Foundation Collaborative Project
+Do any of the ports support an external PHY? The auto-sync might not
+work in that condition as well. Different register layout, c45 not
+c22, etc.
 
+The safest option is to explicitly set the MAC flow configuration
+based on the values in phydev.
+
+      Andrew
