@@ -2,25 +2,25 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 8724C78B52
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Jul 2019 14:07:13 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id BA0EE78B57
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Jul 2019 14:07:17 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726627AbfG2MHI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 29 Jul 2019 08:07:08 -0400
-Received: from smtp.codeaurora.org ([198.145.29.96]:37504 "EHLO
+        id S1728332AbfG2MHL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 29 Jul 2019 08:07:11 -0400
+Received: from smtp.codeaurora.org ([198.145.29.96]:37694 "EHLO
         smtp.codeaurora.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728297AbfG2MHG (ORCPT
+        with ESMTP id S1728297AbfG2MHK (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 29 Jul 2019 08:07:06 -0400
+        Mon, 29 Jul 2019 08:07:10 -0400
 Received: by smtp.codeaurora.org (Postfix, from userid 1000)
-        id 92B6460592; Mon, 29 Jul 2019 12:07:05 +0000 (UTC)
+        id B999B60E73; Mon, 29 Jul 2019 12:07:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
-        s=default; t=1564402025;
-        bh=nUW84jmRBWi/aG2R9/BTe4pKSMgNQDGoEXC+WfguHOY=;
+        s=default; t=1564402029;
+        bh=yESQEjxs/UF7jQlnePfCZrAc502Wc240TBy0w7/zWvM=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=HWU+zowui49YEP1umTomloUHKGkNhNz/hX736gm8I9q/DWBXn5yv9gYCaeppzOs57
-         h0ypYPJvv2rGBm4Gs4ZgaiOc7kuVrUdnQNuSrGtffoRccuMn1qs0egFJOaiIXbhJZj
-         OnhH4WOiUz00fbn/y3ykB/suPJibfW8bjwQawbvc=
+        b=Zo6gMqj8GgfRq7bbt0D+/wP0VNMXwt96yUCn8XVI95GPKBu8z72ecCP/f8UrT+cec
+         l+0MnTEotVc95VMKONY2yIAvYbl8RriqMnl1JzwadljnVuPOZOZfmZBEXeXdtUPZT6
+         AoNM1VBduFBGFchlksCCZ0mfYjAcCGJxXr34negs=
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
         pdx-caf-mail.web.codeaurora.org
 X-Spam-Level: 
@@ -31,16 +31,16 @@ Received: from blr-ubuntu-87.qualcomm.com (blr-bdr-fw-01_globalnat_allzones-outs
         (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
         (No client certificate requested)
         (Authenticated sender: sibis@smtp.codeaurora.org)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 1F94D60E42;
-        Mon, 29 Jul 2019 12:07:01 +0000 (UTC)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id C0742601B4;
+        Mon, 29 Jul 2019 12:07:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
-        s=default; t=1564402025;
-        bh=nUW84jmRBWi/aG2R9/BTe4pKSMgNQDGoEXC+WfguHOY=;
+        s=default; t=1564402028;
+        bh=yESQEjxs/UF7jQlnePfCZrAc502Wc240TBy0w7/zWvM=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=HWU+zowui49YEP1umTomloUHKGkNhNz/hX736gm8I9q/DWBXn5yv9gYCaeppzOs57
-         h0ypYPJvv2rGBm4Gs4ZgaiOc7kuVrUdnQNuSrGtffoRccuMn1qs0egFJOaiIXbhJZj
-         OnhH4WOiUz00fbn/y3ykB/suPJibfW8bjwQawbvc=
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 1F94D60E42
+        b=XmTFD9kzbNNuOrY5vlf1SNHzGzUNb7kPogIxibjUnbdqt46SUw8pb68Dkqh3jqf+Y
+         YnHT3u5P60yyFCES/7Hv9TRfAuYBnzUV+tBJWz7nsMc3idVdv50iDYDPQ0lr7arW3Q
+         69PIsc6q6v7YuCPvZGhfY2etV3/jKbo+08Mgd4us=
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org C0742601B4
 Authentication-Results: pdx-caf-mail.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
 Authentication-Results: pdx-caf-mail.web.codeaurora.org; spf=none smtp.mailfrom=sibis@codeaurora.org
 From:   Sibi Sankar <sibis@codeaurora.org>
@@ -50,9 +50,9 @@ Cc:     mark.rutland@arm.com, agross@kernel.org,
         linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
         devicetree@vger.kernel.org, jassisinghbrar@gmail.com,
         clew@codeaurora.org, Sibi Sankar <sibis@codeaurora.org>
-Subject: [PATCH 5/6] dt-bindings: soc: qcom: aoss: Add SM8150 and SC7180 support
-Date:   Mon, 29 Jul 2019 17:36:32 +0530
-Message-Id: <20190729120633.20451-6-sibis@codeaurora.org>
+Subject: [PATCH 6/6] soc: qcom: aoss: Add AOSS QMP support
+Date:   Mon, 29 Jul 2019 17:36:33 +0530
+Message-Id: <20190729120633.20451-7-sibis@codeaurora.org>
 X-Mailer: git-send-email 2.22.0
 In-Reply-To: <20190729120633.20451-1-sibis@codeaurora.org>
 References: <20190729120633.20451-1-sibis@codeaurora.org>
@@ -63,29 +63,26 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add SM8150 and SC7180 AOSS QMP to the list of possible bindings.
+Add AOSS QMP support for SM8150 and SC7180 SoCs.
 
 Signed-off-by: Sibi Sankar <sibis@codeaurora.org>
 ---
- Documentation/devicetree/bindings/soc/qcom/qcom,aoss-qmp.txt | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ drivers/soc/qcom/qcom_aoss.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/Documentation/devicetree/bindings/soc/qcom/qcom,aoss-qmp.txt b/Documentation/devicetree/bindings/soc/qcom/qcom,aoss-qmp.txt
-index 954ffee0a9c45..91b972c1fee57 100644
---- a/Documentation/devicetree/bindings/soc/qcom/qcom,aoss-qmp.txt
-+++ b/Documentation/devicetree/bindings/soc/qcom/qcom,aoss-qmp.txt
-@@ -15,7 +15,10 @@ power-domains.
- - compatible:
- 	Usage: required
- 	Value type: <string>
--	Definition: must be "qcom,sdm845-aoss-qmp"
-+	Definition: must be one of:
-+		    "qcom,sdm845-aoss-qmp"
-+		    "qcom,sm8150-aoss-qmp"
-+		    "qcom,sc7180-aoss-qmp"
+diff --git a/drivers/soc/qcom/qcom_aoss.c b/drivers/soc/qcom/qcom_aoss.c
+index 5f885196f4d0f..e2f8c7c9a5a0a 100644
+--- a/drivers/soc/qcom/qcom_aoss.c
++++ b/drivers/soc/qcom/qcom_aoss.c
+@@ -462,6 +462,8 @@ static int qmp_remove(struct platform_device *pdev)
  
- - reg:
- 	Usage: required
+ static const struct of_device_id qmp_dt_match[] = {
+ 	{ .compatible = "qcom,sdm845-aoss-qmp", },
++	{ .compatible = "qcom,sm8150-aoss-qmp", },
++	{ .compatible = "qcom,sc7180-aoss-qmp", },
+ 	{}
+ };
+ MODULE_DEVICE_TABLE(of, qmp_dt_match);
 -- 
 The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
 a Linux Foundation Collaborative Project
