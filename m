@@ -2,56 +2,41 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 38FCE78868
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Jul 2019 11:29:58 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 97FB778878
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Jul 2019 11:33:07 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727938AbfG2J35 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 29 Jul 2019 05:29:57 -0400
-Received: from mail-qk1-f193.google.com ([209.85.222.193]:44843 "EHLO
-        mail-qk1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727935AbfG2J35 (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 29 Jul 2019 05:29:57 -0400
-Received: by mail-qk1-f193.google.com with SMTP id d79so43573970qke.11
-        for <linux-arm-msm@vger.kernel.org>; Mon, 29 Jul 2019 02:29:57 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=ni9Dwron1DAB/VosEOyb9bTzIzvLrdks0+fVcvOhKzw=;
-        b=gQMwxy1NEfJ4R4DdsragGEeQ1ePMx/vtNIQSPpA1XOQXbdPx507ukDsYGumSvXvKRW
-         CqYqNtmlpcLTzUVwVuy3FksrIh2MYpbrC3CMM3zWlPFhfBtGuI34/HrYWfBihkhCAxtb
-         744VcN0eb6rpIquLvouIHiSDU3rEmaB/o6wT1UJXTa4iDxydMmBmLMPZHmnpryD/9tAd
-         v82HBKIdVMepnufQ6aX9eJxw/+jNDFGRmDRQyrRb7b+x9ospaczHxwFnAIDAaQurc3ii
-         wpqE8opLmS1b6y2UsY4RVIoX0v4Oz7q0FUcSBdPzq7Qcfgr0/l7uZEfejMuSekXcOTJE
-         uh2A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=ni9Dwron1DAB/VosEOyb9bTzIzvLrdks0+fVcvOhKzw=;
-        b=jfSuNnLsFPgsYdjJNoGUx/HgkIcsR+9B6bxS7e/sOlDiXozvlOMQMkTIYrzGgJA9tx
-         ozq3AB8vLQ14CrcqMEZCS1PncnB5lWGbzNt3mbH3jHPBj9Myivz8JQic6DO99Mp9QHp9
-         PrHQ736bEgTjAHonZ8QyokeWnWvv2qq5v8Tez+Jx45CQ/cEVZyDmlifx6Yh0r/4XHSv8
-         ie2wEub4ESOstX/BD+Ed4Bfk4UxvqUWvoF03yB8/oBKOVLuDFAs5ynWygrL0+q9tmWc+
-         2aBJD8fkNbUa845HBUnFd1N3R9myVIJ2CVuoaSc3NYCi+/iAkCCwUbBby9JFhC3iFOfM
-         d7bg==
-X-Gm-Message-State: APjAAAUZeIkuG7EhpU72ydqSq5MCc04LVZLTK7N17BwVfmlivCD+ZFrj
-        /NciehsI3IdIL6WzSLmwEeRKPOxJW7Iri4fUhgwArg==
-X-Google-Smtp-Source: APXvYqzz2PDrlp9N2pc7W/QuOgqLqcGPA9kPz77ASGS4q7fTLpEkpvutYsOf5F4N2ND7QgCLSin3rOzyMs4xSnwLZ0M=
-X-Received: by 2002:a37:4e8f:: with SMTP id c137mr70800649qkb.127.1564392596646;
- Mon, 29 Jul 2019 02:29:56 -0700 (PDT)
-MIME-Version: 1.0
-References: <cover.1564091601.git.amit.kucheria@linaro.org>
- <ec8205566eb9c015ad51fbb88f0da7ca60b414fd.1564091601.git.amit.kucheria@linaro.org>
- <2812534.bLfc0ztHNv@g550jk>
-In-Reply-To: <2812534.bLfc0ztHNv@g550jk>
-From:   Amit Kucheria <amit.kucheria@linaro.org>
-Date:   Mon, 29 Jul 2019 14:59:45 +0530
-Message-ID: <CAP245DX1u6JNPaqU_=Dq9HFG=EriGJGD2r4yOa88BmdmSH69GQ@mail.gmail.com>
-Subject: Re: [PATCH 12/15] arm64: dts: msm8974: thermal: Add interrupt support
-To:     Luca Weiss <luca@z3ntu.xyz>
-Cc:     Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        id S1727845AbfG2JdB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 29 Jul 2019 05:33:01 -0400
+Received: from mail.z3ntu.xyz ([128.199.32.197]:43288 "EHLO mail.z3ntu.xyz"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1727500AbfG2JdB (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 29 Jul 2019 05:33:01 -0400
+Received: by mail.z3ntu.xyz (Postfix, from userid 182)
+        id 12B98C71AA; Mon, 29 Jul 2019 09:32:58 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=z3ntu.xyz; s=z3ntu;
+        t=1564392778; bh=HN+MbnexiLAyOK7zOuZGtlCRFx/AHgiy8HDEo75eHGs=;
+        h=From:To:Cc:Subject:Date:In-Reply-To:References;
+        b=CTDMp8e5BBkNLBABgUNlMn7Tfx5A14+WTPdGO2NZNCgpDr0Dwz4yUWIcBhTm5uqJz
+         Ha7+huWIML1t2ir8MiuGMm0q4L2Grg17KtzmvIBR7tTj4MftwXgcs/8mIncfcOdwzS
+         S9/ZaF26D6rIdkrdLQWZGiwSlXiASvqEcGxv8554=
+X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on arch-vps
+X-Spam-Level: 
+X-Spam-Status: No, score=-1.2 required=5.0 tests=ALL_TRUSTED,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,URIBL_BLOCKED
+        autolearn=unavailable autolearn_force=no version=3.4.2
+Received: from g550jk.localnet (80-110-121-20.cgn.dynamic.surfer.at [80.110.121.20])
+        by mail.z3ntu.xyz (Postfix) with ESMTPSA id 31A56C718B;
+        Mon, 29 Jul 2019 09:32:54 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=z3ntu.xyz; s=z3ntu;
+        t=1564392774; bh=HN+MbnexiLAyOK7zOuZGtlCRFx/AHgiy8HDEo75eHGs=;
+        h=From:To:Cc:Subject:Date:In-Reply-To:References;
+        b=SGt0ltx66MUUflBY5dI2vSOMoR+ux/nl3JmLfiLedlCIFimmgOq0/PrS5bybyu2wa
+         Ss+SqKbdnfwUIn7Bpjyt8MdJrgW4qLjm5FTc/1NhNxSb8pzYFk83c8R30DTd9JnHyQ
+         OoaXjRsN3WL6t86es7kXdvJdVEiVXHFoybvvk9eQ=
+From:   Luca Weiss <luca@z3ntu.xyz>
+To:     linux-kernel@vger.kernel.org
+Cc:     Brian Masney <masneyb@onstation.org>,
+        Amit Kucheria <amit.kucheria@linaro.org>,
         linux-arm-msm <linux-arm-msm@vger.kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
         Eduardo Valentin <edubezval@gmail.com>,
@@ -61,27 +46,103 @@ Cc:     Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
         Mark Rutland <mark.rutland@arm.com>,
         Rob Herring <robh+dt@kernel.org>,
         Zhang Rui <rui.zhang@intel.com>,
-        Brian Masney <masneyb@onstation.org>,
-        DTML <devicetree@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+        Marc Gonzalez <marc.w.gonzalez@free.fr>,
+        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
+        <devicetree@vger.kernel.org>,
+        Linux PM list <linux-pm@vger.kernel.org>
+Subject: Re: [PATCH 00/15] thermal: qcom: tsens: Add interrupt support
+Date:   Mon, 29 Jul 2019 11:32:52 +0200
+Message-ID: <2123341.TWUfUUIiFt@g550jk>
+In-Reply-To: <20190729090735.GA897@onstation.org>
+References: <cover.1564091601.git.amit.kucheria@linaro.org> <CAHLCerNay31+RNQvQZyxMMVyb1mLLfN5BoZbz-M+bMqbmbYwtA@mail.gmail.com> <20190729090735.GA897@onstation.org>
+MIME-Version: 1.0
+Content-Type: multipart/signed; boundary="nextPart2004695.fh42H4uLbJ"; micalg="pgp-sha256"; protocol="application/pgp-signature"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Jul 29, 2019 at 2:33 PM Luca Weiss <luca@z3ntu.xyz> wrote:
->
-> On Freitag, 26. Juli 2019 00:18:47 CEST Amit Kucheria wrote:
-> > Register upper-lower interrupt for the tsens controller.
-> >
-> > Signed-off-by: Amit Kucheria <amit.kucheria@linaro.org>
-> > ---
-> > Cc: masneyb@onstation.org
-> >
-> >  arch/arm/boot/dts/qcom-msm8974.dtsi | 36 +++++++++++++++--------------
-> >  1 file changed, 19 insertions(+), 17 deletions(-)
-> >
->
-> Hi, the title of this patch should be "arm" and not "arm64".
+--nextPart2004695.fh42H4uLbJ
+Content-Transfer-Encoding: 7Bit
+Content-Type: text/plain; charset="us-ascii"
 
-Good catch! Copy-paste error, will fix.
+On Montag, 29. Juli 2019 11:07:35 CEST Brian Masney wrote:
+> On Sat, Jul 27, 2019 at 12:58:54PM +0530, Amit Kucheria wrote:
+> > On Fri, Jul 26, 2019 at 4:59 PM Brian Masney <masneyb@onstation.org> wrote:
+> > > On Fri, Jul 26, 2019 at 04:40:16PM +0530, Amit Kucheria wrote:
+> > > > How well does cpufreq work on 8974? I haven't looked at it yet but
+> > > > we'll need it for thermal throttling.
+> > > 
+> > > I'm not sure how to tell if the frequency is dynamically changed during
+> > > runtime on arm. x86-64 shows this information in /proc/cpuinfo. Here's
+> > 
+> > > the /proc/cpuinfo on the Nexus 5:
+> > Nah. /proc/cpuinfo won't show what we need.
+> > 
+> > Try the following:
+> > 
+> > $ grep "" /sys/devices/system/cpu/cpufreq/policy?/*
+> > 
+> > More specifically, the following files have the information you need.
+> > Run watch -n1 on them.
+> > 
+> > $ grep "" /sys/devices/system/cpu/cpufreq/policy?/scaling_*_freq
+> 
+> There's no cpufreq directory on msm8974:
+> 
+>     # ls -1 /sys/devices/system/cpu/
+>     cpu0
+>     cpu1
+>     cpu2
+>     cpu3
+>     cpuidle
+>     hotplug
+>     isolated
+>     kernel_max
+>     modalias
+>     offline
+>     online
+>     possible
+>     power
+>     present
+>     smt
+>     uevent
+> 
+> I'm using qcom_defconfig.
+> 
+> Brian
+
+Hi Brian,
+cpufreq isn't supported on msm8974 yet.
+I have these patches [0] in my tree but I'm not sure they work correctly, but I haven't tested much with them. Feel free to try them on hammerhead.
+
+Luca
+
+[0] https://github.com/z3ntu/linux/compare/b0917f53ada0e929896a094b451219cd8091366e...6459ca6aff498c9d12acd35709b4903effc4c3f8
+
+--nextPart2004695.fh42H4uLbJ
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: This is a digitally signed message part.
+Content-Transfer-Encoding: 7Bit
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAABCAAdFiEE66ocILd+OiPORlvAOY2pEqPLBhkFAl0+vUQACgkQOY2pEqPL
+BhlwxQ/9FYvDo8UHyQXIQVJJGe70bpy3b2Ea/66omuwaw0BLmetJe2PvQq9IsiVD
+TV60M8z4yQdRLp2P3YKQWYg7z3dNRM2mVxX11KfrXdI9rM7xqF+VFwZ21qUY+fht
+canQPM1Ln11OJQaZ0fhrH1j9c6fbJ0DoQ3C4AG8CKxzRGIu8FPmWc6XObbxOhEYG
+pc3Dy6i0NvldNtgKrxiZ5e1YAjyqdpiKcsw5ZM4xdohcmNj7dLLC6BMebpxzzXRW
+NijyZsH9TJkjqLTGT7N7J7jQcEFhpgt0L+HrZOpcKncNpCAxVQDVWezI1AseFIuQ
+ZsYjG+QKay+JCfZ3AmwPPVpgm9I+yB3ywzYytb22nrsIX1WzKd2qv1Q7HhNYrJfv
+Nar7n7ecAi3cd7wxANrKTRn7FB3hcyIOmwXcoaeTxDRqtPqv6bbXiUGV5uaN2sd3
+IHK1XnipnttdfaOnlGW/9JFngiMN6mmlENPiTLL+TMlaCBphOhe302bpK6FWcHI+
+AQOXs/cDuYRfH16h/ArfrlnFl6L7Va6MQhKQxOFkhf/NorbJBYcA52E+bQelOChd
+Ud6cIOLCIZa64ohYrRZVB/Il8PyC8vl4o+buainb6YUC5yBKxVHzP3Gd2lHboh5T
+Gls7AeMsZNULixostOPRdA/KpwO72ePeqU2MtLi577P3qIu3uj4=
+=Ia3N
+-----END PGP SIGNATURE-----
+
+--nextPart2004695.fh42H4uLbJ--
+
+
+
