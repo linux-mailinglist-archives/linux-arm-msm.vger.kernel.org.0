@@ -2,155 +2,207 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id F407A7AFE8
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Jul 2019 19:29:59 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A97517B539
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Jul 2019 23:48:52 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729415AbfG3R3i (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 30 Jul 2019 13:29:38 -0400
-Received: from smtp.codeaurora.org ([198.145.29.96]:43442 "EHLO
-        smtp.codeaurora.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728935AbfG3R3i (ORCPT
+        id S2387434AbfG3Vsv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 30 Jul 2019 17:48:51 -0400
+Received: from mail-pg1-f194.google.com ([209.85.215.194]:34511 "EHLO
+        mail-pg1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725975AbfG3Vsv (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 30 Jul 2019 13:29:38 -0400
-Received: by smtp.codeaurora.org (Postfix, from userid 1000)
-        id 468726037C; Tue, 30 Jul 2019 17:29:37 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
-        s=default; t=1564507777;
-        bh=E7jANAXXkajQa6C5PUztGcfWtG5q4XzpnhfVwCjYX9E=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=dgl4wrJMPHWyja+Qb8FeMv3prWlJBX1WSvlSbxBO2TrB5kp8ROUSHAvd7yaaLyFZs
-         oe21hvwDdwUpgSDts/iPwTSmUGTTmK1fAsW9w1d110lJ6BQ5bI/tkTcpYEM67updlO
-         tFfEoB7YYp1Xr/Kdp5CzGsAHF9Nxagkdf4NHZxZY=
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        pdx-caf-mail.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.7 required=2.0 tests=ALL_TRUSTED,BAYES_00,
-        DKIM_INVALID,DKIM_SIGNED,SPF_NONE autolearn=no autolearn_force=no
-        version=3.4.0
-Received: from localhost (i-global254.qualcomm.com [199.106.103.254])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        (Authenticated sender: ilina@smtp.codeaurora.org)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 0678F602BC;
-        Tue, 30 Jul 2019 17:29:35 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
-        s=default; t=1564507776;
-        bh=E7jANAXXkajQa6C5PUztGcfWtG5q4XzpnhfVwCjYX9E=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=VpmDr2ipp6AByTDQOLnlZBeRmVtl3lmYmYIQjWu9DWjJNPQVo+roHb0j+5s/THjoh
-         8KaLpJ+xwwF88ubJqNBr5wHKsCiTRzu/N3cM8NkLLS9GdLc0ct0HwKURiLVgVvapXC
-         KuL4JJQ/mocvPY35hZeyzZ5CGgnaBZK2aqTFdJ0M=
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 0678F602BC
-Authentication-Results: pdx-caf-mail.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: pdx-caf-mail.web.codeaurora.org; spf=none smtp.mailfrom=ilina@codeaurora.org
-Date:   Tue, 30 Jul 2019 11:29:35 -0600
-From:   Lina Iyer <ilina@codeaurora.org>
-To:     Stephen Boyd <swboyd@chromium.org>
-Cc:     Doug Anderson <dianders@chromium.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        "open list:ARM/QUALCOMM SUPPORT" <linux-soc@vger.kernel.org>,
-        Rajendra Nayak <rnayak@codeaurora.org>,
-        LKML <linux-kernel@vger.kernel.org>,
-        Linux PM <linux-pm@vger.kernel.org>, mkshah@codeaurora.org
-Subject: Re: [PATCH V2 2/4] drivers: qcom: rpmh-rsc: avoid locking in the
- interrupt handler
-Message-ID: <20190730172935.GJ18620@codeaurora.org>
-References: <20190722215340.3071-2-ilina@codeaurora.org>
- <5d3769df.1c69fb81.55d03.aa33@mx.google.com>
- <20190724145251.GB18620@codeaurora.org>
- <5d38b38e.1c69fb81.e8e5d.035b@mx.google.com>
- <20190724203610.GE18620@codeaurora.org>
- <CAD=FV=UYj55m99EcQXmkYhs257A46x8DaarE0DC-GRF_3dY3-Q@mail.gmail.com>
- <20190725151851.GG18620@codeaurora.org>
- <CAD=FV=X2ENqt5+vdUoRnLTRbedj_sFdQD3Me-yYEW0fDOdBCvg@mail.gmail.com>
- <20190729190139.GH18620@codeaurora.org>
- <5d3f5d6d.1c69fb81.4c1e2.5be6@mx.google.com>
+        Tue, 30 Jul 2019 17:48:51 -0400
+Received: by mail-pg1-f194.google.com with SMTP id n9so24514196pgc.1;
+        Tue, 30 Jul 2019 14:48:51 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=ElPlp+VRpfvHqwOymsphqHnB2ea8iEK4QxZsWnz9kGM=;
+        b=ddkccz9dF/g2WpKWiXA9y5t9DwjI47nEvnGe+OmlHLimwzVNo/XEkXeZx+sXTwpZaS
+         8OFDOvduTWzvh8VHtc3R/vJXwlJgxBYjEdsqVt6BT/pFnx8+4xwfTtrbSmfUZc3R6gC/
+         iRIsmS61wBzt9diF8OtOKhW8QuZAKHPlGBiKqJV/f68YUzLTSX8ybXYWlG0legoWZdyR
+         LHPeU+199A6j16MbSpEUCEPqazyTroRJn3+0xoRz6bX4Wi4dS+9dnlqFT2pW9u6IrOmn
+         RyR8lKxIGYbmIwhMObn8wdYWVJ/DqFUj5KzhQhcMo+KvcZHEyeG7Qg4Q0izRewGv6yQo
+         1p3A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=ElPlp+VRpfvHqwOymsphqHnB2ea8iEK4QxZsWnz9kGM=;
+        b=Wom4FA1ZrHXV2oQxEpPkZQujk/VOF8V9CIYIg9o4IGqaPyQfqaudciq9UrCArHO+Tn
+         pqfQRYpOe3baV53s4SpsLlgZlMTAQI4E4FeUmS4P50999eTUxNHPvReZY7o12991idNg
+         BMVsYNu+8+L9bCvEPFcqeqV3IyhuQH4TklA5cW5Vvh46KgS4x3IE3wlTL0rdSFPLHCj7
+         hI5ZAHATBSacpHOzz0j7ucExyfcBbyvY+pY1RIVFTbAaO8EsgP/CuI9ds5yj5zZTuJpT
+         cnj81Yh0MNQjybfgNIilcwAt9Kd441aU5cqrbrYZE2YR1JZp7+EpKmop3yFPyvYCqpqk
+         7XhA==
+X-Gm-Message-State: APjAAAVS3Yt2XBZip/qfu90loMdhBW0ikRCwHDgfvN6Vjm3AGGgwkCHA
+        h8WrJ6SL0p87rTPph7mT4pc=
+X-Google-Smtp-Source: APXvYqx37O6WDVUjoOK86chq+3TypiJfoSPzXlU122ldm7wURtrmx4CX2Kp/O3dtRKVbPlRDSXEglA==
+X-Received: by 2002:a63:904:: with SMTP id 4mr38008433pgj.19.1564523330494;
+        Tue, 30 Jul 2019 14:48:50 -0700 (PDT)
+Received: from localhost ([100.118.89.196])
+        by smtp.gmail.com with ESMTPSA id l25sm81887158pff.143.2019.07.30.14.48.49
+        (version=TLS1_3 cipher=AEAD-AES256-GCM-SHA384 bits=256/256);
+        Tue, 30 Jul 2019 14:48:49 -0700 (PDT)
+From:   Rob Clark <robdclark@gmail.com>
+To:     dri-devel@lists.freedesktop.org
+Cc:     Rob Clark <robdclark@chromium.org>,
+        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>, linux-arm-msm@vger.kernel.org,
+        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org
+Subject: [PATCH] drm/msm: shake fist angrily at dma-mapping
+Date:   Tue, 30 Jul 2019 14:46:28 -0700
+Message-Id: <20190730214633.17820-1-robdclark@gmail.com>
+X-Mailer: git-send-email 2.21.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii; format=flowed
-Content-Disposition: inline
-In-Reply-To: <5d3f5d6d.1c69fb81.4c1e2.5be6@mx.google.com>
-User-Agent: Mutt/1.11.3 (2019-02-01)
+Content-Transfer-Encoding: 8bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Jul 29 2019 at 14:56 -0600, Stephen Boyd wrote:
->Quoting Lina Iyer (2019-07-29 12:01:39)
->> On Thu, Jul 25 2019 at 09:44 -0600, Doug Anderson wrote:
->> >On Thu, Jul 25, 2019 at 8:18 AM Lina Iyer <ilina@codeaurora.org> wrote:
->> >>
->> >> On Wed, Jul 24 2019 at 17:28 -0600, Doug Anderson wrote:
->> >> >
->> >> >Jumping in without reading all the context, but I saw this fly by and
->> >> >it seemed odd.  If I'm way off base then please ignore...
->> >> >
->> >> >Can you give more details?  Why are these drivers in atomic contexts?
->> >> >If they are in atomic contexts because they are running in the context
->> >> >of an interrupt then your next patch in the series isn't so correct.
->> >> >
->> >> >Also: when people submit requests in atomic context are they always
->> >> >submitting an asynchronous request?  In that case we could
->> >> >(presumably) just use a spinlock to protect the queue of async
->> >> >requests and a mutex for everything else?
->> >> Yes, drivers only make async requests in interrupt contexts.
->> >
->> >So correct me if I'm off base, but you're saying that drivers make
->> >requests in interrupt contexts even after your whole series and that's
->> >why you're using spinlocks instead of mutexes.  ...but then in patch
->> >#3 in your series you say:
->> >
->> >> Switch over from using _irqsave/_irqrestore variants since we no longer
->> >> race with a lock from the interrupt handler.
->> >
->> >Those seem like contradictions.  What happens if someone is holding
->> >the lock, then an interrupt fires, then the interrupt routine wants to
->> >do an async request.  Boom, right?
->> >
->> The interrupt routine is handled by the driver and only completes the
->> waiting object (for sync requests). No other requests can be made from
->> our interrupt handler.
->
->The question is more if an interrupt handler for some consumer driver
->can call into this code and make an async request. Is that possible? If
->so, the concern is that the driver's interrupt handler can run and try
->to grab the lock on a CPU that already holds the lock in a non-irq
->disabled context. This would lead to a deadlock while the CPU servicing
->the interrupt waits for the lock held by another task that's been
->interrupted.
->
-Hmm.. this patch will cause that issue, since we remove the irqsave
-aspects of the locking. Let me give that a thought.
->>
->> >> They cannot
->> >> use the sync variants. The async and sync variants are streamlined into
->> >> the same code path. Hence the use of spinlocks instead of mutexes
->> >> through the critical path.
->> >
->> >I will perhaps defer to Stephen who was the one thinking that a mutex
->> >would be a big win here.  ...but if a mutex truly is a big win then it
->> >doesn't seem like it'd be that hard to have a linked list (protected
->> >by a spinlock) and then some type of async worker that:
->> >
->> >1. Grab the spinlock, pops one element off the linked list, release the spinlock
->> >2. Grab the mutex, send the one element, release the mutex
->> This would be a problem when the request is made from an irq handler. We
->> want to keep things simple and quick.
->>
->
->Is the problem that you want to use RPMh code from deep within the idle
->thread? As part of some sort of CPU idle driver for qcom platforms? The
->way this discussion is going it sounds like nothing is standing in the
->way of a design that use a kthread to pump messages off a queue of
->messages that is protected by a spinlock. The kthread would be woken up
->by the sync or async write to continue to pump messages out until the
->queue is empty.
->
-While it is true that we want to use RPMH in cpuidle driver. Its just
-that we had threads and all in our downstream 845 and it complicated the
-whole setup a bit too much to our liking and did not help debug either.
-I would rather not get all that back in the driver.
+From: Rob Clark <robdclark@chromium.org>
 
---Lina
+So, using dma_sync_* for our cache needs works out w/ dma iommu ops, but
+it falls appart with dma direct ops.  The problem is that, depending on
+display generation, we can have either set of dma ops (mdp4 and dpu have
+iommu wired to mdss node, which maps to toplevel drm device, but mdp5
+has iommu wired up to the mdp sub-node within mdss).
+
+Fixes this splat on mdp5 devices:
+
+   Unable to handle kernel paging request at virtual address ffffffff80000000
+   Mem abort info:
+     ESR = 0x96000144
+     Exception class = DABT (current EL), IL = 32 bits
+     SET = 0, FnV = 0
+     EA = 0, S1PTW = 0
+   Data abort info:
+     ISV = 0, ISS = 0x00000144
+     CM = 1, WnR = 1
+   swapper pgtable: 4k pages, 48-bit VAs, pgdp=00000000810e4000
+   [ffffffff80000000] pgd=0000000000000000
+   Internal error: Oops: 96000144 [#1] SMP
+   Modules linked in: btqcomsmd btqca bluetooth cfg80211 ecdh_generic ecc rfkill libarc4 panel_simple msm wcnss_ctrl qrtr_smd drm_kms_helper venus_enc venus_dec videobuf2_dma_sg videobuf2_memops drm venus_core ipv6 qrtr qcom_wcnss_pil v4l2_mem2mem qcom_sysmon videobuf2_v4l2 qmi_helpers videobuf2_common crct10dif_ce mdt_loader qcom_common videodev qcom_glink_smem remoteproc bmc150_accel_i2c bmc150_magn_i2c bmc150_accel_core bmc150_magn snd_soc_lpass_apq8016 snd_soc_msm8916_analog mms114 mc nf_defrag_ipv6 snd_soc_lpass_cpu snd_soc_apq8016_sbc industrialio_triggered_buffer kfifo_buf snd_soc_lpass_platform snd_soc_msm8916_digital drm_panel_orientation_quirks
+   CPU: 2 PID: 33 Comm: kworker/2:1 Not tainted 5.3.0-rc2 #1
+   Hardware name: Samsung Galaxy A5U (EUR) (DT)
+   Workqueue: events deferred_probe_work_func
+   pstate: 80000005 (Nzcv daif -PAN -UAO)
+   pc : __clean_dcache_area_poc+0x20/0x38
+   lr : arch_sync_dma_for_device+0x28/0x30
+   sp : ffff0000115736a0
+   x29: ffff0000115736a0 x28: 0000000000000001
+   x27: ffff800074830800 x26: ffff000011478000
+   x25: 0000000000000000 x24: 0000000000000001
+   x23: ffff000011478a98 x22: ffff800009fd1c10
+   x21: 0000000000000001 x20: ffff800075ad0a00
+   x19: 0000000000000000 x18: ffff0000112b2000
+   x17: 0000000000000000 x16: 0000000000000000
+   x15: 00000000fffffff0 x14: ffff000011455d70
+   x13: 0000000000000000 x12: 0000000000000028
+   x11: 0000000000000001 x10: ffff00001106c000
+   x9 : ffff7e0001d6b380 x8 : 0000000000001000
+   x7 : ffff7e0001d6b380 x6 : ffff7e0001d6b382
+   x5 : 0000000000000000 x4 : 0000000000001000
+   x3 : 000000000000003f x2 : 0000000000000040
+   x1 : ffffffff80001000 x0 : ffffffff80000000
+   Call trace:
+    __clean_dcache_area_poc+0x20/0x38
+    dma_direct_sync_sg_for_device+0xb8/0xe8
+    get_pages+0x22c/0x250 [msm]
+    msm_gem_get_and_pin_iova+0xdc/0x168 [msm]
+    ...
+
+Fixes the combination of two patches:
+
+Fixes: 0036bc73ccbe ("drm/msm: stop abusing dma_map/unmap for cache")
+Fixes: 449fa54d6815 ("dma-direct: correct the physical addr in dma_direct_sync_sg_for_cpu/device")
+Signed-off-by: Rob Clark <robdclark@chromium.org>
+---
+I think it is time to revisit drm_cache support for arm64, but we need
+something for v5.3 to keep things working.
+
+armv7 support might be harder, but hopefully no one is changing dma-
+mapping implementation much on armv7 and we can just limp along with
+the current hack on 32b arm.
+
+ drivers/gpu/drm/msm/msm_gem.c | 47 +++++++++++++++++++++++++++++++----
+ 1 file changed, 42 insertions(+), 5 deletions(-)
+
+diff --git a/drivers/gpu/drm/msm/msm_gem.c b/drivers/gpu/drm/msm/msm_gem.c
+index c2114c748c2f..8cf6362e64bf 100644
+--- a/drivers/gpu/drm/msm/msm_gem.c
++++ b/drivers/gpu/drm/msm/msm_gem.c
+@@ -32,6 +32,46 @@ static bool use_pages(struct drm_gem_object *obj)
+ 	return !msm_obj->vram_node;
+ }
+ 
++/*
++ * Cache sync.. this is a bit over-complicated, to fit dma-mapping
++ * API.  Really GPU cache is out of scope here (handled on cmdstream)
++ * and all we need to do is invalidate newly allocated pages before
++ * mapping to CPU as uncached/writecombine.
++ *
++ * On top of this, we have the added headache, that depending on
++ * display generation, the display's iommu may be wired up to either
++ * the toplevel drm device (mdss), or to the mdp sub-node, meaning
++ * that here we either have dma-direct or iommu ops.
++ *
++ * Let this be a cautionary tail of abstraction gone wrong.
++ */
++
++static void sync_for_device(struct msm_gem_object *msm_obj)
++{
++	struct device *dev = msm_obj->base.dev->dev;
++
++	if (get_dma_ops(dev)) {
++		dma_sync_sg_for_device(dev, msm_obj->sgt->sgl,
++			msm_obj->sgt->nents, DMA_BIDIRECTIONAL);
++	} else {
++		dma_map_sg(dev, msm_obj->sgt->sgl,
++			msm_obj->sgt->nents, DMA_BIDIRECTIONAL);
++	}
++}
++
++static void sync_for_cpu(struct msm_gem_object *msm_obj)
++{
++	struct device *dev = msm_obj->base.dev->dev;
++
++	if (get_dma_ops(dev)) {
++		dma_sync_sg_for_cpu(dev, msm_obj->sgt->sgl,
++			msm_obj->sgt->nents, DMA_BIDIRECTIONAL);
++	} else {
++		dma_unmap_sg(dev, msm_obj->sgt->sgl,
++			msm_obj->sgt->nents, DMA_BIDIRECTIONAL);
++	}
++}
++
+ /* allocate pages from VRAM carveout, used when no IOMMU: */
+ static struct page **get_pages_vram(struct drm_gem_object *obj, int npages)
+ {
+@@ -97,8 +137,7 @@ static struct page **get_pages(struct drm_gem_object *obj)
+ 		 * because display controller, GPU, etc. are not coherent:
+ 		 */
+ 		if (msm_obj->flags & (MSM_BO_WC|MSM_BO_UNCACHED))
+-			dma_sync_sg_for_device(dev->dev, msm_obj->sgt->sgl,
+-					msm_obj->sgt->nents, DMA_BIDIRECTIONAL);
++			sync_for_device(msm_obj);
+ 	}
+ 
+ 	return msm_obj->pages;
+@@ -127,9 +166,7 @@ static void put_pages(struct drm_gem_object *obj)
+ 			 * GPU, etc. are not coherent:
+ 			 */
+ 			if (msm_obj->flags & (MSM_BO_WC|MSM_BO_UNCACHED))
+-				dma_sync_sg_for_cpu(obj->dev->dev, msm_obj->sgt->sgl,
+-					     msm_obj->sgt->nents,
+-					     DMA_BIDIRECTIONAL);
++				sync_for_cpu(msm_obj);
+ 
+ 			sg_free_table(msm_obj->sgt);
+ 			kfree(msm_obj->sgt);
+-- 
+2.21.0
+
