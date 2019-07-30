@@ -2,259 +2,85 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id CED347A8E1
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Jul 2019 14:43:28 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A635B7AC3C
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Jul 2019 17:25:00 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729348AbfG3Mn1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 30 Jul 2019 08:43:27 -0400
-Received: from mail-ua1-f65.google.com ([209.85.222.65]:42041 "EHLO
-        mail-ua1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728346AbfG3Mn1 (ORCPT
+        id S1730006AbfG3PY6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 30 Jul 2019 11:24:58 -0400
+Received: from mail-qk1-f193.google.com ([209.85.222.193]:40864 "EHLO
+        mail-qk1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1730013AbfG3PYq (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 30 Jul 2019 08:43:27 -0400
-Received: by mail-ua1-f65.google.com with SMTP id a97so25349274uaa.9
-        for <linux-arm-msm@vger.kernel.org>; Tue, 30 Jul 2019 05:43:26 -0700 (PDT)
+        Tue, 30 Jul 2019 11:24:46 -0400
+Received: by mail-qk1-f193.google.com with SMTP id s145so46896897qke.7
+        for <linux-arm-msm@vger.kernel.org>; Tue, 30 Jul 2019 08:24:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=n6wRViYyOWOjPxfwTwpd7ZKAphvKvndXByx/I3gmhgM=;
-        b=Bf7rirDHAeuqVazyBmmQahwZ8Kk6uXME/sJ4S1x/1vwaOJ5ZRediYxCNRUUkG6Er/o
-         F9QOhQ3wBNT/urZ8xA5XFC3A5TELezJp1B5kPYZLEOKp/J0Pd+yVDPXc6512voXDvZ62
-         zWam//JgjoR8OqxSsPzbh4G+5g4frmi+kw4Q0VLaV7a4irCQnNJzzeVdEKS+dwCOlA6Z
-         cteFrmYQKDUgVxgl5OTXPDUqh3dNLE1JHymbOckCfvNapPIIWwhhc7DxnFuLsi9/DK2C
-         1Kfh/uhzGKafIy23Nky85H2upPfV1vufp6Wmwjyctd4xnIvmL5YWfm46ViWb7VPMREw5
-         dndw==
+        h=from:to:cc:subject:date:message-id;
+        bh=WRQrRymvzeuce3KKDbksGCaiWLluhsSldgXmnzTmp8s=;
+        b=y4t+HM1gzG3E/sK8yoWFX8FDHUW4HdMLmLbt/cIJqBMgLDJ71onmHxZPXuKyUkHaxg
+         iriURYdjLTQwVa5uDNBPkJ2ZPyjb3ZWnQIqtpvcQgO4wRj0B/bmhvAWBObA32nhn1xFY
+         j5DnUpbNffMqYSsmKeyXaTdP0OBjCRh/xqwWe44VkcUy8YQExEbcxLYLW3MktSFoewjc
+         c+Pul3W9Hw/RRpOIMKf6Q+A05UVHAf2tc3EuxAyHrRI5WaToby0adDO665ppycGWkpcu
+         KCSdoRgWUd0qCiLlc5Dbcpgddpli/glSpFxlzM+SsjNviSfmJkqlpTEfpi4hgLBk+U6U
+         EeyQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=n6wRViYyOWOjPxfwTwpd7ZKAphvKvndXByx/I3gmhgM=;
-        b=SsA2T2c9rHXg4c9TyU4xPanYZmqR5/In7oRvWsojE4lpGMWyRRRZF4Ls+9TWGWHCEp
-         Ls1OzSllgJU/nUjELpg1Zjd6zw0FunuL3OqwAXOnfyha3Q8XylHJ9o8gOSlwpq0xrV0F
-         gXnzNCiT2yR1gVn/LXf+nMLDWBJ3NRoxYq+dKQYycLK281HKb60+B/UEXkMxDwTnCzjy
-         MaYRlB4LhhXXBqbAhAhRUon0qBjPFreXfBA+MhV6lkln46EKaw2yRf6uKnjGkYVVOZBh
-         6M8M7m88SpO7mqxcpqbhH1a6kVSpYOVyiLHTH7nrKQIAnZ2HUc85KyL+q7vY7YEmeZIi
-         sG4g==
-X-Gm-Message-State: APjAAAUhFUCSznlb5o2iBqgnKtSjYPJZEWW0lhyV5c3PjZFjNBT4bg74
-        HpkaX/M9yfiS0NDEoaQUITYAjGJmkdHZsCsT/qU=
-X-Google-Smtp-Source: APXvYqyznszebTEIVOvBWRKmByIxSG9KV/KSY8D57fHDAS9Mn8/y43rIykBZ+WOH5BYHgErrIAuv7mwSD+zOOvOz/jA=
-X-Received: by 2002:ab0:23ce:: with SMTP id c14mr4415317uan.77.1564490606044;
- Tue, 30 Jul 2019 05:43:26 -0700 (PDT)
-MIME-Version: 1.0
-References: <1564418001-24940-1-git-send-email-thara.gopinath@linaro.org> <1564418001-24940-2-git-send-email-thara.gopinath@linaro.org>
-In-Reply-To: <1564418001-24940-2-git-send-email-thara.gopinath@linaro.org>
-From:   Amit Kucheria <amit.kucheria@linaro.org>
-Date:   Tue, 30 Jul 2019 18:13:14 +0530
-Message-ID: <CAHLCerO_5CUmdfdyogc0GwKPtPU4xYLU-FqzB8a8y07mnipTuw@mail.gmail.com>
-Subject: Re: [PATCH 1/2] soc: qcom: Extend AOSS QMP driver to support
- resources that are used to wake up the SoC.
-To:     Thara Gopinath <thara.gopinath@linaro.org>
-Cc:     linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Andy Gross <agross@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Mark Rutland <mark.rutland@arm.com>,
-        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
-        <devicetree@vger.kernel.org>, LKML <linux-kernel@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=WRQrRymvzeuce3KKDbksGCaiWLluhsSldgXmnzTmp8s=;
+        b=FtKXHWdAt7mqm7get0mgm4L6J7r0jbdufqyFx8kSeIGRSb2WNODM/QzxDcRIUbDCID
+         R7btTyf7JvvZTGp3VyJsJm9TWdfC64CPxOozeAarDy6dKAQYncKwA01ZiTYVHiPKOv7z
+         QoJbJjW6MzkWZy1JUBeu3e4L6pBGy92+v4Vracp0OFdCic/niWZ1UlC+/eiGEW5gqigH
+         FlhPdAjpdFAkdXGICsQdxq/3k0T2eGEixpA6tJlBTftm0M0X5D6ONX80IJLFwzPmybUf
+         KxtgMAJt1FnmVNp5BrIc1+LNQr56rP22o4NUkHL7qfEU0M+m76FlNPn1VL9PRYYpvu83
+         bN5A==
+X-Gm-Message-State: APjAAAVPb2XFKy1Zh+Fs+2YAXvPE+opE+NFGA7t9d+8hCFj2DH6duXhj
+        MnXjLJXqFJ3my7h0NYqOTmi/ETG0TSw=
+X-Google-Smtp-Source: APXvYqyg4l1a/B04E8+LgeFlAnxW+Kg5rRx3jm0+QKFBC6Q4BagEPljVLBschqWhEsjHslipIZbtNg==
+X-Received: by 2002:a37:97c5:: with SMTP id z188mr81637690qkd.5.1564500285402;
+        Tue, 30 Jul 2019 08:24:45 -0700 (PDT)
+Received: from Thara-Work-Ubuntu.fios-router.home (pool-71-255-245-97.washdc.fios.verizon.net. [71.255.245.97])
+        by smtp.googlemail.com with ESMTPSA id r14sm27251082qkm.100.2019.07.30.08.24.44
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Tue, 30 Jul 2019 08:24:44 -0700 (PDT)
+From:   Thara Gopinath <thara.gopinath@linaro.org>
+To:     linux-arm-msm@vger.kernel.org, agross@kernel.org,
+        robh+dt@kernel.org, mark.rutland@arm.com,
+        bjorn.andersson@linaro.org, amit.kucheria@linaro.org,
+        vinod.koul@linaro.org
+Cc:     devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: [Patch v2 0/2] Add support for AOSS resources that are used to warm up the SoC
+Date:   Tue, 30 Jul 2019 11:24:41 -0400
+Message-Id: <1564500283-16038-1-git-send-email-thara.gopinath@linaro.org>
+X-Mailer: git-send-email 2.1.4
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Jul 29, 2019 at 10:03 PM Thara Gopinath
-<thara.gopinath@linaro.org> wrote:
->
-> The AOSS QMP driver is extended to communicate with the additional
-> resources. These resources are then registered as cooling devices
-> with the thermal framework.
->
-> Signed-off-by: Thara Gopinath <thara.gopinath@linaro.org>
-> ---
->  drivers/soc/qcom/qcom_aoss.c | 129 +++++++++++++++++++++++++++++++++++++++++++
->  1 file changed, 129 insertions(+)
->
-> diff --git a/drivers/soc/qcom/qcom_aoss.c b/drivers/soc/qcom/qcom_aoss.c
-> index 5f88519..010877e 100644
-> --- a/drivers/soc/qcom/qcom_aoss.c
-> +++ b/drivers/soc/qcom/qcom_aoss.c
-> @@ -10,6 +10,8 @@
->  #include <linux/module.h>
->  #include <linux/platform_device.h>
->  #include <linux/pm_domain.h>
-> +#include <linux/thermal.h>
-> +#include <linux/slab.h>
->
->  #define QMP_DESC_MAGIC                 0x0
->  #define QMP_DESC_VERSION               0x4
-> @@ -40,6 +42,16 @@
->  /* 64 bytes is enough to store the requests and provides padding to 4 bytes */
->  #define QMP_MSG_LEN                    64
->
-> +#define QMP_NUM_COOLING_RESOURCES      2
-> +
-> +static bool qmp_cdev_init_state = 1;
-> +
-> +struct qmp_cooling_device {
-> +       struct thermal_cooling_device *cdev;
-> +       struct qmp *qmp;
-> +       bool state;
-> +};
-> +
->  /**
->   * struct qmp - driver state for QMP implementation
->   * @msgram: iomem referencing the message RAM used for communication
-> @@ -69,6 +81,7 @@ struct qmp {
->
->         struct clk_hw qdss_clk;
->         struct genpd_onecell_data pd_data;
-> +       struct qmp_cooling_device *cooling_devs;
->  };
->
->  struct qmp_pd {
-> @@ -385,6 +398,117 @@ static void qmp_pd_remove(struct qmp *qmp)
->                 pm_genpd_remove(data->domains[i]);
->  }
->
-> +static int qmp_cdev_get_max_state(struct thermal_cooling_device *cdev,
-> +                                 unsigned long *state)
-> +{
-> +       *state = qmp_cdev_init_state;
-> +       return 0;
-> +}
-> +
-> +static int qmp_cdev_get_cur_state(struct thermal_cooling_device *cdev,
-> +                                 unsigned long *state)
-> +{
-> +       struct qmp_cooling_device *qmp_cdev = cdev->devdata;
-> +
-> +       *state = qmp_cdev->state;
-> +       return 0;
-> +}
-> +
-> +static int qmp_cdev_set_cur_state(struct thermal_cooling_device *cdev,
-> +                                 unsigned long state)
-> +{
-> +       struct qmp_cooling_device *qmp_cdev = cdev->devdata;
-> +       char buf[QMP_MSG_LEN] = {};
-> +       bool cdev_state;
-> +       int ret;
-> +
-> +       /* Normalize state */
-> +       cdev_state = !!state;
-> +
-> +       if (qmp_cdev->state == state)
-> +               return 0;
-> +
-> +       snprintf(buf, sizeof(buf),
-> +                "{class: volt_flr, event:zero_temp, res:%s, value:%s}",
-> +                       qmp_cdev->name,
+The Always On Sub System (AOSS) hosts certain resources
+that are used to warm up the soc if the temperature falls
+below certain threshold. These resources are
+added can be considered as thermal warming devices
+(opposite of thermal cooling devices).
 
-This won't compile, there is no member "name" in qmp_cooling_device.
+These resources are controlled via AOSS QMP protocol
+In kernel, these devices can be treated the same way as any other
+thermal cooling device and hence are registered with the thermal
+cooling framework.
 
-> +                       cdev_state ? "off" : "on");
-> +
-> +       ret = qmp_send(qmp_cdev->qmp, buf, sizeof(buf));
-> +
-> +       if (!ret)
-> +               qmp_cdev->state = cdev_state;
-> +
-> +       return ret;
-> +}
-> +
-> +static struct thermal_cooling_device_ops qmp_cooling_device_ops = {
-> +       .get_max_state = qmp_cdev_get_max_state,
-> +       .get_cur_state = qmp_cdev_get_cur_state,
-> +       .set_cur_state = qmp_cdev_set_cur_state,
-> +};
-> +
-> +static int qmp_cooling_device_add(struct qmp *qmp,
-> +                                 struct qmp_cooling_device *qmp_cdev,
-> +                                 struct device_node *node)
-> +{
-> +       char *cdev_name = (char *)node->name;
-> +
-> +       qmp_cdev->qmp = qmp;
-> +       qmp_cdev->state = qmp_cdev_init_state;
-> +       qmp_cdev->cdev = devm_thermal_of_cooling_device_register
-> +                               (qmp->dev, node,
-> +                               cdev_name,
-> +                               qmp_cdev, &qmp_cooling_device_ops);
-> +
-> +       if (IS_ERR(qmp_cdev->cdev))
-> +               dev_err(qmp->dev, "unable to register %s cooling device\n",
-> +                       cdev_name);
-> +
-> +       return PTR_ERR_OR_ZERO(qmp_cdev->cdev);
-> +}
-> +
-> +static int qmp_cooling_devices_register(struct qmp *qmp)
-> +{
-> +       struct device_node *np, *child;
-> +       int count = QMP_NUM_COOLING_RESOURCES;
-> +       int ret;
-> +
-> +       np = qmp->dev->of_node;
-> +
-> +       qmp->cooling_devs = devm_kcalloc(qmp->dev, count,
-> +                                        sizeof(*qmp->cooling_devs),
-> +                                        GFP_KERNEL);
-> +
-> +       if (!qmp->cooling_devs)
-> +               return -ENOMEM;
-> +
-> +       for_each_available_child_of_node(np, child) {
-> +               if (!of_find_property(child, "#cooling-cells", NULL))
-> +                       continue;
-> +               ret = qmp_cooling_device_add(qmp, &qmp->cooling_devs[count++],
-> +                                            child);
-> +               if (ret)
-> +                       goto uroll_cooling_devices;
+To use these resources as warming devices require further tweaks in
+the thermal framework which are out of scope of this patch series.
 
-unroll?
+Thara Gopinath (2):
+  soc: qcom: Extend AOSS QMP driver to support resources that are used
+    to wake up the SoC.
+  arm64: dts: qcom: Extend AOSS QMP node
 
-> +       }
-> +
-> +       return 0;
-> +
-> +uroll_cooling_devices:
-> +       while (--count >= 0)
-> +               thermal_cooling_device_unregister
-> +                       (qmp->cooling_devs[count].cdev);
-> +
-> +       return ret;
-> +}
-> +
-> +static void qmp_cooling_devices_remove(struct qmp *qmp)
-> +{
-> +       int i;
-> +
-> +       for (i = 0; i < QMP_NUM_COOLING_RESOURCES; i++)
-> +               thermal_cooling_device_unregister(qmp->cooling_devs[i].cdev);
-> +}
-> +
->  static int qmp_probe(struct platform_device *pdev)
->  {
->         struct resource *res;
-> @@ -433,6 +557,10 @@ static int qmp_probe(struct platform_device *pdev)
->         if (ret)
->                 goto err_remove_qdss_clk;
->
-> +       ret = qmp_cooling_devices_register(qmp);
-> +       if (ret)
-> +               dev_err(&pdev->dev, "failed to register aoss cooling devices\n");
-> +
->         platform_set_drvdata(pdev, qmp);
->
->         return 0;
-> @@ -453,6 +581,7 @@ static int qmp_remove(struct platform_device *pdev)
->
->         qmp_qdss_clk_remove(qmp);
->         qmp_pd_remove(qmp);
-> +       qmp_cooling_devices_remove(qmp);
->
->         qmp_close(qmp);
->         mbox_free_channel(qmp->mbox_chan);
-> --
-> 2.1.4
->
+ arch/arm64/boot/dts/qcom/sdm845.dtsi |   8 +++
+ drivers/soc/qcom/qcom_aoss.c         | 131 +++++++++++++++++++++++++++++++++++
+ 2 files changed, 139 insertions(+)
+
+-- 
+2.1.4
+
