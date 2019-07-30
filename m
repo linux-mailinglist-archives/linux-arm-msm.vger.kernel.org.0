@@ -2,92 +2,146 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id E00FE7AC8B
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Jul 2019 17:40:58 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id F16967ADDF
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Jul 2019 18:36:03 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730903AbfG3Pkj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 30 Jul 2019 11:40:39 -0400
-Received: from mail.kernel.org ([198.145.29.99]:57688 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1730217AbfG3Pkj (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 30 Jul 2019 11:40:39 -0400
-Received: from kernel.org (unknown [104.132.0.74])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 8BF53206B8;
-        Tue, 30 Jul 2019 15:40:38 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1564501238;
-        bh=Hzq0ia0CHKkeUj+wGU+RlxUjicn8yuNyVPFWEwlJse8=;
-        h=In-Reply-To:References:Cc:From:To:Subject:Date:From;
-        b=J+IemHzqC/q/0eG0EA+O0zIUFE1RGjuSlcqYUZ/KV4a7h0Bzke3gwq4H1PyH+5uEM
-         tV+g6r3oSYAM8Ehlj4tiSzY9JCl1O6MFVvXr4baS+V+HY6QKR9KD9qaCfws51eypmQ
-         4kKL6/O+NmS4yh3X1v2eZn4E4iUJOgRk3KMLE/y0=
-Content-Type: text/plain; charset="utf-8"
+        id S1727851AbfG3QfW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 30 Jul 2019 12:35:22 -0400
+Received: from mail-vk1-f193.google.com ([209.85.221.193]:43354 "EHLO
+        mail-vk1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726770AbfG3QfV (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 30 Jul 2019 12:35:21 -0400
+Received: by mail-vk1-f193.google.com with SMTP id b200so12893324vkf.10
+        for <linux-arm-msm@vger.kernel.org>; Tue, 30 Jul 2019 09:35:20 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=verdurent-com.20150623.gappssmtp.com; s=20150623;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=bd218zoMUJsn4aIQS2BNDS+uQZePQhIcqq2z5vcOhic=;
+        b=DbmAT97hG2aiN+XhQQTZB5GAaDDkGfUifEkCoJoVfvRfLFdTChp80EEGUEuP4IyxWq
+         Q/ySXZL+bKgz4ffKvibIoxHldoiPWbnpTa/r6tE4KxSgvZtu0gLHPDyEGBtSgWP0QcFT
+         hkGBj+Ls+hedLeqNzH1rnyadXMkhfGe4vLnzajogJ4YOOkASv0fErAMon/Z22+4LAQPK
+         i0YSUcsMX7a8F11PHu+wK4lc8t9+BSwbiE29SE9KVOB0t31NEQBRym30FJ2N3OPfqY2j
+         MN8E4ILhiu16fE9WVkVCnNEt+w6NmsDhYYO78AGunBVuRQ2lRf2aVLUImSTylou57g8E
+         UF1w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=bd218zoMUJsn4aIQS2BNDS+uQZePQhIcqq2z5vcOhic=;
+        b=LYTw1BYfR5L4bf8p32YET0uY7i3LgzY+lVJnPplYNVZmOf56mALT1hpRmQPe4FqdZ5
+         0sQ2VqgJ7qDNb+ozffXsybYVihE/qFxlaJ64o9emo0tP9E3Vi6feNK5p9enqBh36/p3u
+         HmCZN6rJg+MfDf/WsF/caMjes0v9HYYDrRk6TTqwehITHStHUbIvSsQy0RwFd3EZFNR5
+         AgRYCbNkS0zYgK7rvJGDnFLVNI9EeqpT8pqxVXmgKZshurJniijaL3FPTi2hTuDtyxM4
+         Oda5ic3RugEQClbHVCUJ2/8GLoq7dGG2DxhwusxXAkiLssKSgGbqDDeacFGPZ8J/lGW3
+         YQeQ==
+X-Gm-Message-State: APjAAAXjqWjnCshbVidOJj40K7HsCk50qwv+quSCyjdPhadBfspPFSa6
+        JufRFuN3nRJSVV0kZX/wrKDFgwwv/PaT5WdsV74=
+X-Google-Smtp-Source: APXvYqys0WpkMk5B9ROnp16nbLIVY7ZU3prgqc+nvtWnwOpbR9j0jCxIbSSadoW3uD0BTg4p7Q/DEd1I5uOt47w3sfA=
+X-Received: by 2002:a1f:1d58:: with SMTP id d85mr44781885vkd.13.1564504520182;
+ Tue, 30 Jul 2019 09:35:20 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <63d15392-f296-cd13-7821-61d59d568347@codeaurora.org>
-References: <1557339895-21952-1-git-send-email-tdas@codeaurora.org> <1557339895-21952-4-git-send-email-tdas@codeaurora.org> <155742286525.14659.18081373668341127486@swboyd.mtv.corp.google.com> <07bcd2df-a786-ea52-8566-70f484248952@codeaurora.org> <155751085370.14659.7749105088997177801@swboyd.mtv.corp.google.com> <f65811f8-42ea-6365-7822-db662eaea228@codeaurora.org> <20190715224441.F12122080A@mail.kernel.org> <243de3a4-292b-77c0-6232-0b38d124d183@codeaurora.org> <20190716232228.2B84F2173E@mail.kernel.org> <63d15392-f296-cd13-7821-61d59d568347@codeaurora.org>
-Cc:     Andy Gross <andy.gross@linaro.org>,
-        David Brown <david.brown@linaro.org>,
-        Rajendra Nayak <rnayak@codeaurora.org>,
-        linux-arm-msm@vger.kernel.org, linux-soc@vger.kernel.org,
-        linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org
-From:   Stephen Boyd <sboyd@kernel.org>
-To:     Michael Turquette <mturquette@baylibre.com>,
-        Taniya Das <tdas@codeaurora.org>
-Subject: Re: [PATCH v1 3/3] clk: qcom: rcg: update the DFS macro for RCG
-User-Agent: alot/0.8.1
-Date:   Tue, 30 Jul 2019 08:40:37 -0700
-Message-Id: <20190730154038.8BF53206B8@mail.kernel.org>
+References: <20190725135150.9972-1-vkoul@kernel.org> <20190725135150.9972-2-vkoul@kernel.org>
+In-Reply-To: <20190725135150.9972-2-vkoul@kernel.org>
+From:   Amit Kucheria <amit.kucheria@verdurent.com>
+Date:   Tue, 30 Jul 2019 22:05:09 +0530
+Message-ID: <CAHLCerNsAX4raauTjogOpwqAjEWfd+jpaZYsFnC10tcmvnD5cg@mail.gmail.com>
+Subject: Re: [PATCH 1/3] arm64: dts: qcom: pms405: add unit name adc nodes
+To:     Vinod Koul <vkoul@kernel.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Mark Rutland <mark.rutland@arm.com>,
+        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
+        <devicetree@vger.kernel.org>, LKML <linux-kernel@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Taniya Das (2019-07-30 03:51:07)
->=20
->=20
-> On 7/17/2019 4:52 AM, Stephen Boyd wrote:
-> > Quoting Taniya Das (2019-07-15 21:22:02)
-> >> Hello Stephen,
-> >>
-> >> Thanks for the review.
-> >>
-> >> On 7/16/2019 4:14 AM, Stephen Boyd wrote:
-> >>> Quoting Taniya Das (2019-05-12 20:44:46)
-> >>>> On 5/10/2019 11:24 PM, Stephen Boyd wrote:
-> >>>>> Why is the clk name changing to not have a _src after the "root" of=
- the
-> >>>>> clk name? As long as I can remember, RCGs have a "_src" postfix.
-> >>>>>
-> >>>>
-> >>>> Yes, the RCGs would have _src, so we do want the init data also to be
-> >>>> generated with _src postfix. So that we do not have to manually clea=
-n up
-> >>>> the generated code.
-> >>>>
-> >>>
-> >>> Please manually cleanup the generated code, or fix the code
-> >>> generator to do what you want.
-> >>>
-> >>
-> >> Fixing the code manually is not what we intend to do and it is time
-> >> consuming with too many DFS controlled clocks. This really helps us
-> >> align to internal code.
-> >>
-> >=20
-> > And you can't fix the code generator to drop the _src part of whatever
-> > is spit out for the DFS lines?
-> >=20
->=20
-> Sure, will drop this.
->=20
+On Thu, Jul 25, 2019 at 7:23 PM Vinod Koul <vkoul@kernel.org> wrote:
+>
+> The adc nodes have reg property but were missing the unit name, so add
+> that to fix these warnings:
+>
+> arch/arm64/boot/dts/qcom/pms405.dtsi:91.12-94.6: Warning (unit_address_vs_reg): /soc@0/spmi@200f000/pms405@0/adc@3100/ref_gnd: node has a reg or ranges property, but no unit name
+> arch/arm64/boot/dts/qcom/pms405.dtsi:96.14-99.6: Warning (unit_address_vs_reg): /soc@0/spmi@200f000/pms405@0/adc@3100/vref_1p25: node has a reg or ranges property, but no unit name
+> arch/arm64/boot/dts/qcom/pms405.dtsi:101.19-104.6: Warning (unit_address_vs_reg): /soc@0/spmi@200f000/pms405@0/adc@3100/vph_pwr: node has a reg or ranges property, but no unit name
+> arch/arm64/boot/dts/qcom/pms405.dtsi:106.13-109.6: Warning (unit_address_vs_reg): /soc@0/spmi@200f000/pms405@0/adc@3100/die_temp: node has a reg or ranges property, but no unit name
+> arch/arm64/boot/dts/qcom/pms405.dtsi:111.27-116.6: Warning (unit_address_vs_reg): /soc@0/spmi@200f000/pms405@0/adc@3100/thermistor1: node has a reg or ranges property, but no unit name
+> arch/arm64/boot/dts/qcom/pms405.dtsi:118.27-123.6: Warning (unit_address_vs_reg): /soc@0/spmi@200f000/pms405@0/adc@3100/thermistor3: node has a reg or ranges property, but no unit name
+> arch/arm64/boot/dts/qcom/pms405.dtsi:125.22-130.6: Warning (unit_address_vs_reg): /soc@0/spmi@200f000/pms405@0/adc@3100/xo_temp: node has a reg or ranges property, but no unit name
+>
+> Signed-off-by: Vinod Koul <vkoul@kernel.org>
+> ---
+>  arch/arm64/boot/dts/qcom/pms405.dtsi | 14 +++++++-------
+>  1 file changed, 7 insertions(+), 7 deletions(-)
+>
+> diff --git a/arch/arm64/boot/dts/qcom/pms405.dtsi b/arch/arm64/boot/dts/qcom/pms405.dtsi
+> index 14240fedd916..3c10cf04d26e 100644
+> --- a/arch/arm64/boot/dts/qcom/pms405.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/pms405.dtsi
+> @@ -88,41 +88,41 @@
+>                         #size-cells = <0>;
+>                         #io-channel-cells = <1>;
+>
+> -                       ref_gnd {
+> +                       ref_gnd@0 {
+>                                 reg = <ADC5_REF_GND>;
+>                                 qcom,pre-scaling = <1 1>;
+>                         };
+>
+> -                       vref_1p25 {
+> +                       vref_1p25@1 {
+>                                 reg = <ADC5_1P25VREF>;
+>                                 qcom,pre-scaling = <1 1>;
+>                         };
+>
+> -                       pon_1: vph_pwr {
+> +                       pon_1: vph_pwr@131 {
+>                                 reg = <ADC5_VPH_PWR>;
+>                                 qcom,pre-scaling = <1 3>;
+>                         };
+>
+> -                       die_temp {
+> +                       die_temp@6 {
+>                                 reg = <ADC5_DIE_TEMP>;
+>                                 qcom,pre-scaling = <1 1>;
+>                         };
+>
+> -                       pa_therm1: thermistor1 {
+> +                       pa_therm1: thermistor1@115 {
 
-Actually, I'm OK with this patch, but I'd like to see it in a larger
-series that introduces another clk driver using this macro. The reason I
-like it is that I can search for the same string name and find the clk
-that has DFS enabled on it, instead of finding the branch which doesn't
-have DFS. Sorry for the back and forth, I got confused about what was
-going on.
+s/115/77 ?
 
+>                                 reg = <ADC5_AMUX_THM1_100K_PU>;
+>                                 qcom,ratiometric;
+>                                 qcom,hw-settle-time = <200>;
+>                                 qcom,pre-scaling = <1 1>;
+>                         };
+>
+> -                       pa_therm3: thermistor3 {
+> +                       pa_therm3: thermistor3@117 {
+
+s/117/79 ?
+
+>                                 reg = <ADC5_AMUX_THM3_100K_PU>;
+>                                 qcom,ratiometric;
+>                                 qcom,hw-settle-time = <200>;
+>                                 qcom,pre-scaling = <1 1>;
+>                         };
+>
+> -                       xo_therm: xo_temp {
+> +                       xo_therm: xo_temp@114 {
+
+s/114/76 ?
+
+>                                 reg = <ADC5_XO_THERM_100K_PU>;
+>                                 qcom,ratiometric;
+>                                 qcom,hw-settle-time = <200>;
+> --
+> 2.20.1
+>
