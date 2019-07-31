@@ -2,49 +2,49 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 0B38C7CE66
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 31 Jul 2019 22:29:57 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 6FD207CE6A
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 31 Jul 2019 22:30:01 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730794AbfGaU3z (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 31 Jul 2019 16:29:55 -0400
-Received: from mail-wm1-f65.google.com ([209.85.128.65]:39002 "EHLO
-        mail-wm1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730740AbfGaU3y (ORCPT
+        id S1730809AbfGaU37 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 31 Jul 2019 16:29:59 -0400
+Received: from mail-wr1-f65.google.com ([209.85.221.65]:38671 "EHLO
+        mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1730797AbfGaU36 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 31 Jul 2019 16:29:54 -0400
-Received: by mail-wm1-f65.google.com with SMTP id u25so50647749wmc.4
-        for <linux-arm-msm@vger.kernel.org>; Wed, 31 Jul 2019 13:29:53 -0700 (PDT)
+        Wed, 31 Jul 2019 16:29:58 -0400
+Received: by mail-wr1-f65.google.com with SMTP id g17so71076649wrr.5
+        for <linux-arm-msm@vger.kernel.org>; Wed, 31 Jul 2019 13:29:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=L4Ts/ADGL+hlApCzzDUm7Jy+bE8lRcdVudPEahwDT9M=;
-        b=BSdFLXko4tVMBjHaKYaYHDL9izB4mIFPGUBL4Fa5eQSpNQs2dg4NaxpNg0s7IFH9sW
-         soR56XqbKMufRYSoRIyNxV5EijMg23s/ZfDpoGeNIRMSZK9hP3ImW8zG7Sh+vSfy18N9
-         bCGOAfBSwh9/3EXyTgv0Vt13l6xwNA4mI0fPBtXOaIG60kSxtuAxmHpyIu3js/+vHH8+
-         +ttjzR5Ci15+dszrOt7k5QPbmylx6risjovnrY9KlZleLOpnx09q4sniuDDwMN/BOyrO
-         7ndmtgG3t+ML01kw0Yccm+dKWzvXV4hbTNXe9inkVPX8T7vSUgTXHqnt212uI+DWSNPz
-         0BtQ==
+        bh=vLHpcezXZ0AucQ4kaXez+YbIiKuQyU24LjFhyj/OAXk=;
+        b=eQCRVeZXchD4s8hmdDQVCG2ogRRuvj7EZRHIJo8ykw1oW4wZjt5+SSYbjFeaaDGZrn
+         0xucuH8wa2pRXz8qrOuZd277mjyUL3L5ZPsNLTCKCbtjGyssAb8BsI6U8vYAbloKvvQq
+         BzPMZsouAsHmIoBCrcs8qJ+ORAVV59dnHr7FHlAmO+BlwJ9bU47J59hcapNE/S59FV/D
+         PM7skxmpOrJWnu8rn5hPnCsbol0kRPf0yNonBqqOUvKl8Z92HutL3oW4KrUxJDyoMWhE
+         7PJwcZRXOfMvIyFy8KqnbU2v9/W1kKg0FqfYYX3XUt+aWsEeSnSRKoWHDibpSE9niNy0
+         PnbQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=L4Ts/ADGL+hlApCzzDUm7Jy+bE8lRcdVudPEahwDT9M=;
-        b=gFEDOXsxiTFevheQOvtqy5fvz75j2z3Mwj2Tvt9w9DyKQyQcnqFFCdRP+Vv8WrsuaN
-         /qGFjIugMdDJyEh01JXmBRe/tRez2hsvMNCn547O3qsBuliZgzu/KYnHeH2QHYNTjGvN
-         whSXJrsjIlbQQ10hpIPtWnFmu//sllIQM4oh36XAE9q4JAsMn1bUTlDH28rJcUusljmF
-         gbc1dbFNEQhBxQ4lJ3N9rN1YjRhZQzuVlTzWBZ7LY10yKZ2r6j4yToYjqC23UmIUHv2N
-         nLVzRwN87Q5nK9QrRe5X3diddZzL7yAB00VLiCEwLdfafKPztpETL4+r12YNKKdrWhJv
-         LZPA==
-X-Gm-Message-State: APjAAAXyAfRQXM50i0cnAfATD845Y8uAG8LJ3iWUFtdSgS1kWlSg6NkU
-        TLIAVzOj9uw+qZmurtSIMrAWAA==
-X-Google-Smtp-Source: APXvYqxchPbC3pvyGV4L0/DUhLZFXfOrdyYu2d7K+NuJc5EcWOHR9bxr3IVmnhGW5j3Lcy9EhRXVPg==
-X-Received: by 2002:a7b:ce8a:: with SMTP id q10mr106546229wmj.109.1564604992885;
-        Wed, 31 Jul 2019 13:29:52 -0700 (PDT)
+        bh=vLHpcezXZ0AucQ4kaXez+YbIiKuQyU24LjFhyj/OAXk=;
+        b=obTKYGncdReZVyP3N3cnX9yciO7GUqZKiGqFBKsaw0hb51IpiKtusBwiNn2hCb7jDB
+         /c+IFpbfU9JxhMWCQwFp3Q/NOAbR5mbnD6aWrnAqWYAO7iQ3ZJK3SMOkkQU4wfder+V5
+         Gthokbfi/tNnF2KggOhJTHvHOsJmDDpw733qfeEYM4jj5V2hL9WiQLq/VHjz6jgAeOdu
+         NVKHKrQVauXu+4SPgik59Adrmbw6CkeRvxzQGe7PETdyEqG7zM4zG3e2UWfDfcbBd726
+         9yqJsvu0YaxI2zAR8uLYf7kcrqo3xxk5Q2WRI5KOxq7zzC8DFsb2QP+SMWKa0WIea14u
+         KQRg==
+X-Gm-Message-State: APjAAAW1Gx5V8ev/m3GqZdLiTIRGOa5hJd5fWJYqe/oadAjy3+BPesHi
+        elMi3RjonyW+PsX6y6GWXGRq1g==
+X-Google-Smtp-Source: APXvYqxVk5jRAEbzCMTnd8pf764yjjCzhBWZjHtBQ5AptGqXRtwGwFJmiylZu++Ijy4DW1dMhmdbjw==
+X-Received: by 2002:a05:6000:187:: with SMTP id p7mr12658657wrx.189.1564604996721;
+        Wed, 31 Jul 2019 13:29:56 -0700 (PDT)
 Received: from localhost.localdomain (19.red-176-86-136.dynamicip.rima-tde.net. [176.86.136.19])
-        by smtp.gmail.com with ESMTPSA id i18sm91905591wrp.91.2019.07.31.13.29.51
+        by smtp.gmail.com with ESMTPSA id i18sm91905591wrp.91.2019.07.31.13.29.54
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Wed, 31 Jul 2019 13:29:52 -0700 (PDT)
+        Wed, 31 Jul 2019 13:29:56 -0700 (PDT)
 From:   Jorge Ramirez-Ortiz <jorge.ramirez-ortiz@linaro.org>
 To:     jorge.ramirez-ortiz@linaro.org, bjorn.andersson@linaro.org,
         sboyd@kernel.org, david.brown@linaro.org, jassisinghbrar@gmail.com,
@@ -58,9 +58,9 @@ Cc:     vkoul@kernel.org, niklas.cassel@linaro.org,
         devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
         linux-arm-kernel@lists.infradead.org, linux-clk@vger.kernel.org,
         linux-arm-msm@vger.kernel.org, khasim.mohammed@linaro.org
-Subject: [PATCH v4 10/13] arm64: dts: qcom: qcs404: Add HFPLL node
-Date:   Wed, 31 Jul 2019 22:29:26 +0200
-Message-Id: <20190731202929.16443-11-jorge.ramirez-ortiz@linaro.org>
+Subject: [PATCH v4 12/13] arm64: dts: qcom: qcs404: Add DVFS support
+Date:   Wed, 31 Jul 2019 22:29:28 +0200
+Message-Id: <20190731202929.16443-13-jorge.ramirez-ortiz@linaro.org>
 X-Mailer: git-send-email 2.22.0
 In-Reply-To: <20190731202929.16443-1-jorge.ramirez-ortiz@linaro.org>
 References: <20190731202929.16443-1-jorge.ramirez-ortiz@linaro.org>
@@ -71,37 +71,98 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The high frequency pll functionality is required to enable CPU
-frequency scaling operation.
+Support dynamic voltage and frequency scaling on qcs404.
+
+CPUFreq will soon be superseeded by Core Power Reduction (CPR, a form
+of Adaptive Voltage Scaling found on some Qualcomm SoCs like the
+qcs404). 
+
+Due to the CPR upstreaming already being in progress - and some
+commits already merged -  the following commit will need to be
+reverted to enable CPUFreq support 
+
+   Author: Jorge Ramirez-Ortiz <jorge.ramirez-ortiz@linaro.org>
+   Date:   Thu Jul 25 12:41:36 2019 +0200
+       cpufreq: Add qcs404 to cpufreq-dt-platdev blacklist
 
 Co-developed-by: Niklas Cassel <niklas.cassel@linaro.org>
 Signed-off-by: Niklas Cassel <niklas.cassel@linaro.org>
 Signed-off-by: Jorge Ramirez-Ortiz <jorge.ramirez-ortiz@linaro.org>
 Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
 ---
- arch/arm64/boot/dts/qcom/qcs404.dtsi | 9 +++++++++
- 1 file changed, 9 insertions(+)
+ arch/arm64/boot/dts/qcom/qcs404.dtsi | 31 ++++++++++++++++++++++++++++
+ 1 file changed, 31 insertions(+)
 
 diff --git a/arch/arm64/boot/dts/qcom/qcs404.dtsi b/arch/arm64/boot/dts/qcom/qcs404.dtsi
-index 3d0789775009..3714099306b7 100644
+index 5b7d6258e9bf..8cce4a224de2 100644
 --- a/arch/arm64/boot/dts/qcom/qcs404.dtsi
 +++ b/arch/arm64/boot/dts/qcom/qcs404.dtsi
-@@ -859,6 +859,15 @@
- 			#mbox-cells = <1>;
+@@ -36,6 +36,10 @@
+ 			cpu-idle-states = <&CPU_SLEEP_0>;
+ 			next-level-cache = <&L2_0>;
+ 			#cooling-cells = <2>;
++			clocks = <&apcs_glb>;
++			operating-points-v2 = <&cpu_opp_table>;
++			cpu-supply = <&pms405_s3>;
++
  		};
  
-+		apcs_hfpll: clock-controller@b016000 {
-+			compatible = "qcom,hfpll";
-+			reg = <0x0b016000 0x30>;
-+			#clock-cells = <0>;
-+			clock-output-names = "apcs_hfpll";
-+			clocks = <&xo_board>;
-+			clock-names = "xo";
-+		};
+ 		CPU1: cpu@101 {
+@@ -46,6 +50,9 @@
+ 			cpu-idle-states = <&CPU_SLEEP_0>;
+ 			next-level-cache = <&L2_0>;
+ 			#cooling-cells = <2>;
++			clocks = <&apcs_glb>;
++			operating-points-v2 = <&cpu_opp_table>;
++			cpu-supply = <&pms405_s3>;
+ 		};
+ 
+ 		CPU2: cpu@102 {
+@@ -56,6 +63,9 @@
+ 			cpu-idle-states = <&CPU_SLEEP_0>;
+ 			next-level-cache = <&L2_0>;
+ 			#cooling-cells = <2>;
++			clocks = <&apcs_glb>;
++			operating-points-v2 = <&cpu_opp_table>;
++			cpu-supply = <&pms405_s3>;
+ 		};
+ 
+ 		CPU3: cpu@103 {
+@@ -66,6 +76,9 @@
+ 			cpu-idle-states = <&CPU_SLEEP_0>;
+ 			next-level-cache = <&L2_0>;
+ 			#cooling-cells = <2>;
++			clocks = <&apcs_glb>;
++			operating-points-v2 = <&cpu_opp_table>;
++			cpu-supply = <&pms405_s3>;
+ 		};
+ 
+ 		L2_0: l2-cache {
+@@ -88,6 +101,24 @@
+ 		};
+ 	};
+ 
++	cpu_opp_table: cpu-opp-table {
++		compatible = "operating-points-v2";
++		opp-shared;
 +
- 		timer@b120000 {
- 			#address-cells = <1>;
- 			#size-cells = <1>;
++		opp-1094400000 {
++			opp-hz = /bits/ 64 <1094400000>;
++			opp-microvolt = <1224000 1224000 1224000>;
++		};
++		opp-1248000000 {
++			opp-hz = /bits/ 64 <1248000000>;
++			opp-microvolt = <1288000 1288000 1288000>;
++		};
++		opp-1401600000 {
++			opp-hz = /bits/ 64 <1401600000>;
++			opp-microvolt = <1384000 1384000 1384000>;
++		};
++	};
++
+ 	firmware {
+ 		scm: scm {
+ 			compatible = "qcom,scm-qcs404", "qcom,scm";
 -- 
 2.22.0
 
