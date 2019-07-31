@@ -2,138 +2,195 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 50E407C46F
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 31 Jul 2019 16:11:09 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 7F42C7C4CB
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 31 Jul 2019 16:22:39 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729121AbfGaOLF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 31 Jul 2019 10:11:05 -0400
-Received: from mail-wm1-f66.google.com ([209.85.128.66]:50446 "EHLO
-        mail-wm1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729138AbfGaOLF (ORCPT
+        id S1726520AbfGaOWh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 31 Jul 2019 10:22:37 -0400
+Received: from mail-wr1-f54.google.com ([209.85.221.54]:40342 "EHLO
+        mail-wr1-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726762AbfGaOWh (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 31 Jul 2019 10:11:05 -0400
-Received: by mail-wm1-f66.google.com with SMTP id v15so61006312wml.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 31 Jul 2019 07:11:03 -0700 (PDT)
+        Wed, 31 Jul 2019 10:22:37 -0400
+Received: by mail-wr1-f54.google.com with SMTP id r1so69881225wrl.7
+        for <linux-arm-msm@vger.kernel.org>; Wed, 31 Jul 2019 07:22:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=DaSfQVSBloP6ituQwd3gN2sNQYfvnC2s71RqutisBq0=;
-        b=Pn45YGzOCoqVPj5ruMllJckodlhVBmgzWrH3x/e0USvGBmmg4/Ju4GVTO3/dRSpBTY
-         576PmDDVUKYSxfaA1m94qhQ8UbmUNa4NfL1mXsG4Cq5I/yz4KkQozkzA+tTJ5oyrS9a5
-         wahvQMETUJkBFk2+TS9+O3vcsd4sB1rUI5rgIBWJvS6kGoYyzNBRtoOh/brUuKjLVgqb
-         lJkOws6k7U0nPUeGV0XD+Cc9eDsiWdIXbue+NdiSajyLETAOv5J2/b38B0MNu0VMg1ss
-         pRO70fcoPMvX0eHH4aQKvcl9z9u4yPd3QOFBhz23Zxc8o6UX+WAxo7JKNb4ZvLBDrnWr
-         m9Nw==
+        d=baylibre-com.20150623.gappssmtp.com; s=20150623;
+        h=subject:to:cc:references:from:openpgp:autocrypt:organization
+         :message-id:date:user-agent:mime-version:in-reply-to
+         :content-language:content-transfer-encoding;
+        bh=DgMcA6v/fzoyZ+8GMbMaZ4k0twZj3qquTJmJP5k3IO8=;
+        b=l2hYYDt1ojhHhFewG4ODETJ0VwWUU/aoP1bXxKUHQQZLywJg6T1krxJdArKTDUzPRn
+         qU9cbkvBt2yh1SpuAKfIUVk77hFycwF9T9aX63MTRCPatlNDj6rE6rqYG08Y05mQ83V6
+         uUp1FaqYQmOn11+Uj30lmAdBEYfrOweqrbG3g/ezcvvUBIibjUqadseUFjgkClfwTo9L
+         3O4m0TwBb7NsDkhGn+Y/Q1qgOfEoQluGQz+GmbCFs7CEpupCaUEqey5d3jpjZtCW9O8b
+         Er9U9ll0vpNxo95Y8dCk3Le9VP5lofbAnCJbwe+iGTugwc96hoywJLUhBR0perWhXl9b
+         T08w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=DaSfQVSBloP6ituQwd3gN2sNQYfvnC2s71RqutisBq0=;
-        b=mVDOiz9VGMg7/kwTa4fQS//7U7vYOCeA75qHPrlpDcbed8ztpNJRlZaid9VaISgmeW
-         8o5Ae22gUE5Ej4NDDIWiwIKPN17vAyNCxlB8MRr6INJMDDmiIQfkGrBWsHy0iS9A5UWP
-         XwehH+Smgc0QG6tI6uKXK4D6orusTncx/RM566p/2d0h0yfOUU47MvPyMVic78FSAtMT
-         s9QIIXlaeh+O1TvOJtEL4f6QSLY4XZzMeHUBMZdgVz5fJTaR+gg0KQupos+F+xlOq/Se
-         7Iro5eXd5t6mmrY/LmjK9rqu87BzvK7SjNUkdt0yajMqjfXHYE6vRftOlkBAzntr8IGN
-         GtPA==
-X-Gm-Message-State: APjAAAXhRF+HN0OHmCijAICi2pkwWfhG4rPMb8/7oQDmgCDr/4eCgmm3
-        4BLzizSEGUK3AUZ+NX8KDhIANw==
-X-Google-Smtp-Source: APXvYqw/pUX7GShISMzCbUQtESxSOCGVNvngtydQFUT3NN7ACbQtiRIRf1AbgIrVwpXKDn1FZaNSkQ==
-X-Received: by 2002:a05:600c:34d:: with SMTP id u13mr85321496wmd.48.1564582262533;
-        Wed, 31 Jul 2019 07:11:02 -0700 (PDT)
-Received: from [192.168.1.6] (19.red-176-86-136.dynamicip.rima-tde.net. [176.86.136.19])
-        by smtp.gmail.com with ESMTPSA id a81sm71773684wmh.3.2019.07.31.07.11.00
+        h=x-gm-message-state:subject:to:cc:references:from:openpgp:autocrypt
+         :organization:message-id:date:user-agent:mime-version:in-reply-to
+         :content-language:content-transfer-encoding;
+        bh=DgMcA6v/fzoyZ+8GMbMaZ4k0twZj3qquTJmJP5k3IO8=;
+        b=tROU2J4WMCOre192AqbHaUpoUme30Lxhgya9Pz8eJFdGKdrQIw0y/8H0PmXQhRvaDf
+         c7Vev/lSD4wWzAHJRETMhAS2fq0+5SgNfaMjRSu/yWxwDb5oC+6ui/t4hi5TtUZUxpTC
+         e21Adud25wigjrr/swm/RIMFEuA3yYRt30QTCD9aZylcho6DVtS1PIDc+eSg7fprMhS3
+         Dztb2FHGo1uwDrYwRqSPuc7eI/RkL4XQd/lskiiEIwu3OhAKfWLZVnc7DC/4oM1gEzDp
+         2DVCHfBA6FXSMuOKfcnobXRIfmMx7UkZwvP5r71Gs5WQr4i03AwXJAcM9Fjpmc1sOoSE
+         yTCA==
+X-Gm-Message-State: APjAAAX8NCnam26+6gMG0YRiBxU2SLcAETO0NNfTjSiMO47JvHPx59+4
+        ts2mnzEyQfTOnZY40UigifVnTg==
+X-Google-Smtp-Source: APXvYqwSxDEav9/aVCpWxzYL7ljaCBlICL3RUZGxhvk2wEbRC7Iy9uxTFCR7vbDqYs9uXZoYUfDOLQ==
+X-Received: by 2002:adf:e541:: with SMTP id z1mr43294553wrm.48.1564582954231;
+        Wed, 31 Jul 2019 07:22:34 -0700 (PDT)
+Received: from [10.1.2.12] (lmontsouris-657-1-212-31.w90-63.abo.wanadoo.fr. [90.63.244.31])
+        by smtp.gmail.com with ESMTPSA id c7sm62001218wro.70.2019.07.31.07.22.30
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 31 Jul 2019 07:11:01 -0700 (PDT)
-Subject: Re: [PATCH v3 02/14] mbox: qcom: add APCS child device for QCS404
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     sboyd@kernel.org, david.brown@linaro.org, jassisinghbrar@gmail.com,
-        mark.rutland@arm.com, mturquette@baylibre.com, robh+dt@kernel.org,
-        will.deacon@arm.com, arnd@arndb.de, horms+renesas@verge.net.au,
-        heiko@sntech.de, sibis@codeaurora.org,
-        enric.balletbo@collabora.com, jagan@amarulasolutions.com,
-        olof@lixom.net, vkoul@kernel.org, niklas.cassel@linaro.org,
-        georgi.djakov@linaro.org, amit.kucheria@linaro.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org, linux-clk@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, khasim.mohammed@linaro.org
-References: <20190625164733.11091-1-jorge.ramirez-ortiz@linaro.org>
- <20190625164733.11091-3-jorge.ramirez-ortiz@linaro.org>
- <20190711144424.GD7234@tuxbook-pro>
-From:   Jorge Ramirez <jorge.ramirez-ortiz@linaro.org>
-Message-ID: <5111bc6e-4155-e99e-71b2-1aac3610b71e@linaro.org>
-Date:   Wed, 31 Jul 2019 16:10:59 +0200
+        Wed, 31 Jul 2019 07:22:33 -0700 (PDT)
+Subject: Re: Review required [Was: Associate ddc adapters with connectors]
+To:     Andrzej Pietrasiewicz <andrzej.p@collabora.com>,
+        Sam Ravnborg <sam@ravnborg.org>
+Cc:     David Airlie <airlied@linux.ie>, Liviu Dudau <liviu.dudau@arm.com>,
+        dri-devel@lists.freedesktop.org, linux-kernel@vger.kernel.org,
+        Matthias Brugger <matthias.bgg@gmail.com>,
+        Thierry Reding <thierry.reding@gmail.com>,
+        Laurent Pinchart <Laurent.pinchart@ideasonboard.com>,
+        Shawn Guo <shawnguo@kernel.org>, kernel@collabora.com,
+        linux-samsung-soc@vger.kernel.org, Sean Paul <sean@poorly.run>,
+        Krzysztof Kozlowski <krzk@kernel.org>,
+        Jonathan Hunter <jonathanh@nvidia.com>,
+        linux-rockchip@lists.infradead.org, Chen-Yu Tsai <wens@csie.org>,
+        Kukjin Kim <kgene@kernel.org>,
+        NXP Linux Team <linux-imx@nxp.com>,
+        Dave Airlie <airlied@redhat.com>,
+        Thomas Zimmermann <tzimmermann@suse.de>,
+        Jonas Karlman <jonas@kwiboo.se>, linux-arm-msm@vger.kernel.org,
+        intel-gfx@lists.freedesktop.org, Jyri Sarha <jsarha@ti.com>,
+        Mamta Shukla <mamtashukla555@gmail.com>,
+        linux-mediatek@lists.infradead.org,
+        Maxime Ripard <mripard@kernel.org>,
+        Rodrigo Vivi <rodrigo.vivi@intel.com>,
+        linux-tegra@vger.kernel.org, Thomas Gleixner <tglx@linutronix.de>,
+        Vincent Abriou <vincent.abriou@st.com>,
+        linux-arm-kernel@lists.infradead.org,
+        Jernej Skrabec <jernej.skrabec@siol.net>,
+        amd-gfx@lists.freedesktop.org,
+        Tomi Valkeinen <tomi.valkeinen@ti.com>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Seung-Woo Kim <sw0312.kim@samsung.com>,
+        Douglas Anderson <dianders@chromium.org>,
+        Todor Tomov <todor.tomov@linaro.org>,
+        Kyungmin Park <kyungmin.park@samsung.com>,
+        Huang Rui <ray.huang@amd.com>,
+        Pengutronix Kernel Team <kernel@pengutronix.de>,
+        Alex Deucher <alexander.deucher@amd.com>,
+        freedreno@lists.freedesktop.org,
+        =?UTF-8?Q?Christian_K=c3=b6nig?= <christian.koenig@amd.com>,
+        Gerd Hoffmann <kraxel@redhat.com>
+References: <cover.1564161140.git.andrzej.p@collabora.com>
+ <20190726183520.GA22572@ravnborg.org> <20190726185538.GD14981@ravnborg.org>
+ <6560f93c-a48f-2a8c-afeb-d5e8e200480d@baylibre.com>
+ <20190731104007.GA23138@ravnborg.org>
+ <959cf323-c6b9-895b-592c-81c52aacae6e@collabora.com>
+From:   Neil Armstrong <narmstrong@baylibre.com>
+Openpgp: preference=signencrypt
+Autocrypt: addr=narmstrong@baylibre.com; prefer-encrypt=mutual; keydata=
+ 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
+ ZaTUOEkgIor5losDrePdPgE=
+Organization: Baylibre
+Message-ID: <ce68a0df-1719-7b53-b0ed-89caa9afc4a0@baylibre.com>
+Date:   Wed, 31 Jul 2019 16:22:30 +0200
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.2.1
+ Thunderbird/60.8.0
 MIME-Version: 1.0
-In-Reply-To: <20190711144424.GD7234@tuxbook-pro>
+In-Reply-To: <959cf323-c6b9-895b-592c-81c52aacae6e@collabora.com>
 Content-Type: text/plain; charset=utf-8
 Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 7/11/19 16:44, Bjorn Andersson wrote:
-> On Tue 25 Jun 09:47 PDT 2019, Jorge Ramirez-Ortiz wrote:
-> 
->> There is clock controller functionality in the APCS hardware block of
->> qcs404 devices similar to msm8916.
+On 31/07/2019 15:10, Andrzej Pietrasiewicz wrote:
+> W dniu 31.07.2019 o 12:40, Sam Ravnborg pisze:
+>> Hi Neil.
 >>
->> Co-developed-by: Niklas Cassel <niklas.cassel@linaro.org>
->> Signed-off-by: Niklas Cassel <niklas.cassel@linaro.org>
->> Signed-off-by: Jorge Ramirez-Ortiz <jorge.ramirez-ortiz@linaro.org>
->> ---
->>  drivers/mailbox/qcom-apcs-ipc-mailbox.c | 18 ++++++++++--------
->>  1 file changed, 10 insertions(+), 8 deletions(-)
+>> On Wed, Jul 31, 2019 at 10:00:14AM +0200, Neil Armstrong wrote:
+>>> Hi Sam,
+>>>
+>>> On 26/07/2019 20:55, Sam Ravnborg wrote:
+>>>> Hi all.
+>>>>
+>>>> Andrzej have done a good job following up on feedback and this series is
+>>>> now ready.
+>>>>
+>>>> We need ack on the patches touching the individual drivers before we can
+>>>> proceed.
+>>>> Please check your drivers and get back.
+>>>
+>>> I can apply all core and maintainer-acked patches for now :
+>>> 1, 2, 7, 10, 11, 16, 17, 18, 19, 20, 21, 22, 23
+>>>
+>>> and Andrzej can resend not applied patches with Yours and Emil's Reviewed-by,
+>>> so we can wait a few more days to apply them.
 >>
->> diff --git a/drivers/mailbox/qcom-apcs-ipc-mailbox.c b/drivers/mailbox/qcom-apcs-ipc-mailbox.c
->> index 705e17a5479c..a05dc3aabac7 100644
->> --- a/drivers/mailbox/qcom-apcs-ipc-mailbox.c
->> +++ b/drivers/mailbox/qcom-apcs-ipc-mailbox.c
->> @@ -89,16 +89,18 @@ static int qcom_apcs_ipc_probe(struct platform_device *pdev)
->>  		return ret;
->>  	}
->>  
->> -	if (of_device_is_compatible(np, "qcom,msm8916-apcs-kpss-global")) {
->> -		apcs->clk = platform_device_register_data(&pdev->dev,
->> -							  "qcom-apcs-msm8916-clk",
->> -							  -1, NULL, 0);
->> -		if (IS_ERR(apcs->clk))
->> -			dev_err(&pdev->dev, "failed to register APCS clk\n");
->> -	}
->> -
->>  	platform_set_drvdata(pdev, apcs);
->>  
->> +	if (!of_device_is_compatible(np, "qcom,msm8916-apcs-kpss-global") &&
->> +	    !of_device_is_compatible(np, "qcom,qcs404-apcs-apps-global"))
+>> Sounds like a good plan.
+>> Thanks for thaking care of this.
 > 
-> If the remainder of the function was a long snippet I think this would
-> motivate the somewhat unusual early return. But I think it would be
-> cleaner to just add to the existing conditional.
+> When is it good time to resend patches 3, 4, 5, 6, 8, 9, 12, 13, 14, 15, 24 as a
+> new series?
 
-sure can do that. I dont agree (I wouldnt have bothered otherwise :))
-but will do
+I'll ping you when everything is applied, build-tested and pushed on drm-misc-next
+
+Neil
 
 > 
-> Regards,
-> Bjorn
-> 
->> +		return 0;
->> +
->> +	apcs->clk = platform_device_register_data(&pdev->dev,
->> +						  "qcom-apcs-msm8916-clk",
->> +						  -1, NULL, 0);
->> +	if (IS_ERR(apcs->clk))
->> +		dev_err(&pdev->dev, "failed to register APCS clk\n");
->> +
->>  	return 0;
->>  }
->>  
->> -- 
->> 2.21.0
->>
-> 
+> Andrzej
 
