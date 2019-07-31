@@ -2,106 +2,87 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 9FAED7BE80
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 31 Jul 2019 12:40:21 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 97E477C0B6
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 31 Jul 2019 14:07:14 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726800AbfGaKkU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 31 Jul 2019 06:40:20 -0400
-Received: from asavdk3.altibox.net ([109.247.116.14]:54500 "EHLO
-        asavdk3.altibox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726151AbfGaKkU (ORCPT
+        id S1727492AbfGaMHN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 31 Jul 2019 08:07:13 -0400
+Received: from smtp.codeaurora.org ([198.145.29.96]:35026 "EHLO
+        smtp.codeaurora.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726514AbfGaMHN (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 31 Jul 2019 06:40:20 -0400
-Received: from ravnborg.org (unknown [158.248.194.18])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        Wed, 31 Jul 2019 08:07:13 -0400
+Received: by smtp.codeaurora.org (Postfix, from userid 1000)
+        id 87FCF60256; Wed, 31 Jul 2019 12:07:12 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
+        s=default; t=1564574832;
+        bh=rVH9V3it4LEiKudkuZmS2VzM+fb6oDu0Rom01crhfjs=;
+        h=From:To:Cc:Subject:Date:From;
+        b=aHryC/htmsQ1cZvVBJU8qHnrHRif6DN/gPTC1mgzBh81Wwfq1p2qIrky35siO1h3G
+         s6OjR9ZTn5qY1Y67OpQbJ2OejeazLS5mUVp7p8lJHQTpoBDYhBWwQaqDJEgVxLdJaY
+         OG9juiLhStUgu6nHze9ve/5FyoOd8QNwkrJDInCU=
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        pdx-caf-mail.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.7 required=2.0 tests=ALL_TRUSTED,BAYES_00,
+        DKIM_INVALID,DKIM_SIGNED,SPF_NONE autolearn=no autolearn_force=no
+        version=3.4.0
+Received: from govinds-linux.qualcomm.com (blr-c-bdr-fw-01_globalnat_allzones-outside.qualcomm.com [103.229.19.19])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
         (No client certificate requested)
-        by asavdk3.altibox.net (Postfix) with ESMTPS id E4FE120020;
-        Wed, 31 Jul 2019 12:40:08 +0200 (CEST)
-Date:   Wed, 31 Jul 2019 12:40:07 +0200
-From:   Sam Ravnborg <sam@ravnborg.org>
-To:     Neil Armstrong <narmstrong@baylibre.com>
-Cc:     Andrzej Pietrasiewicz <andrzej.p@collabora.com>,
-        David Airlie <airlied@linux.ie>,
-        Liviu Dudau <liviu.dudau@arm.com>,
-        dri-devel@lists.freedesktop.org, linux-kernel@vger.kernel.org,
-        Matthias Brugger <matthias.bgg@gmail.com>,
-        Thierry Reding <thierry.reding@gmail.com>,
-        Laurent Pinchart <Laurent.pinchart@ideasonboard.com>,
-        Shawn Guo <shawnguo@kernel.org>, kernel@collabora.com,
-        linux-samsung-soc@vger.kernel.org, Sean Paul <sean@poorly.run>,
-        Krzysztof Kozlowski <krzk@kernel.org>,
-        Jonathan Hunter <jonathanh@nvidia.com>,
-        linux-rockchip@lists.infradead.org, Chen-Yu Tsai <wens@csie.org>,
-        Kukjin Kim <kgene@kernel.org>,
-        NXP Linux Team <linux-imx@nxp.com>,
-        Dave Airlie <airlied@redhat.com>,
-        Thomas Zimmermann <tzimmermann@suse.de>,
-        Jonas Karlman <jonas@kwiboo.se>, linux-arm-msm@vger.kernel.org,
-        intel-gfx@lists.freedesktop.org, Jyri Sarha <jsarha@ti.com>,
-        Mamta Shukla <mamtashukla555@gmail.com>,
-        linux-mediatek@lists.infradead.org,
-        Maxime Ripard <mripard@kernel.org>,
-        Rodrigo Vivi <rodrigo.vivi@intel.com>,
-        linux-tegra@vger.kernel.org, Thomas Gleixner <tglx@linutronix.de>,
-        Vincent Abriou <vincent.abriou@st.com>,
-        linux-arm-kernel@lists.infradead.org,
-        Jernej Skrabec <jernej.skrabec@siol.net>,
-        amd-gfx@lists.freedesktop.org,
-        Tomi Valkeinen <tomi.valkeinen@ti.com>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Seung-Woo Kim <sw0312.kim@samsung.com>,
-        Douglas Anderson <dianders@chromium.org>,
-        Todor Tomov <todor.tomov@linaro.org>,
-        Kyungmin Park <kyungmin.park@samsung.com>,
-        Huang Rui <ray.huang@amd.com>,
-        Pengutronix Kernel Team <kernel@pengutronix.de>,
-        Alex Deucher <alexander.deucher@amd.com>,
-        freedreno@lists.freedesktop.org,
-        Christian =?iso-8859-1?Q?K=F6nig?= <christian.koenig@amd.com>,
-        Gerd Hoffmann <kraxel@redhat.com>
-Subject: Re: Review required [Was: Associate ddc adapters with connectors]
-Message-ID: <20190731104007.GA23138@ravnborg.org>
-References: <cover.1564161140.git.andrzej.p@collabora.com>
- <20190726183520.GA22572@ravnborg.org>
- <20190726185538.GD14981@ravnborg.org>
- <6560f93c-a48f-2a8c-afeb-d5e8e200480d@baylibre.com>
+        (Authenticated sender: govinds@smtp.codeaurora.org)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 3C7276047C;
+        Wed, 31 Jul 2019 12:07:09 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
+        s=default; t=1564574832;
+        bh=rVH9V3it4LEiKudkuZmS2VzM+fb6oDu0Rom01crhfjs=;
+        h=From:To:Cc:Subject:Date:From;
+        b=aHryC/htmsQ1cZvVBJU8qHnrHRif6DN/gPTC1mgzBh81Wwfq1p2qIrky35siO1h3G
+         s6OjR9ZTn5qY1Y67OpQbJ2OejeazLS5mUVp7p8lJHQTpoBDYhBWwQaqDJEgVxLdJaY
+         OG9juiLhStUgu6nHze9ve/5FyoOd8QNwkrJDInCU=
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 3C7276047C
+Authentication-Results: pdx-caf-mail.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: pdx-caf-mail.web.codeaurora.org; spf=none smtp.mailfrom=govinds@codeaurora.org
+From:   Govind Singh <govinds@codeaurora.org>
+To:     bjorn.andersson@linaro.org, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, ath10k@lists.infradead.org
+Cc:     linux-wireless@vger.kernel.org,
+        Govind Singh <govinds@codeaurora.org>
+Subject: [PATCH v2] arm64: dts: qcom: qcs404: Add wifi rails in QCS404 dt node for proxy votes
+Date:   Wed, 31 Jul 2019 17:37:04 +0530
+Message-Id: <20190731120704.7039-1-govinds@codeaurora.org>
+X-Mailer: git-send-email 2.21.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <6560f93c-a48f-2a8c-afeb-d5e8e200480d@baylibre.com>
-User-Agent: Mutt/1.10.1 (2018-07-13)
-X-CMAE-Score: 0
-X-CMAE-Analysis: v=2.3 cv=dqr19Wo4 c=1 sm=1 tr=0
-        a=UWs3HLbX/2nnQ3s7vZ42gw==:117 a=UWs3HLbX/2nnQ3s7vZ42gw==:17
-        a=jpOVt7BSZ2e4Z31A5e1TngXxSK0=:19 a=kj9zAlcOel0A:10
-        a=MKLiDCnLOtWFweQeVuoA:9 a=CjuIK1q_8ugA:10
+Content-Transfer-Encoding: 8bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Neil.
+Add wifi regulators in qcs404 dt node for proxy vote. Proxy votes are
+required for handling driver recovery scenarios to prevent
+un-clocked register access during driver recovery.
 
-On Wed, Jul 31, 2019 at 10:00:14AM +0200, Neil Armstrong wrote:
-> Hi Sam,
-> 
-> On 26/07/2019 20:55, Sam Ravnborg wrote:
-> > Hi all.
-> > 
-> > Andrzej have done a good job following up on feedback and this series is
-> > now ready.
-> > 
-> > We need ack on the patches touching the individual drivers before we can
-> > proceed.
-> > Please check your drivers and get back.
-> 
-> I can apply all core and maintainer-acked patches for now :
-> 1, 2, 7, 10, 11, 16, 17, 18, 19, 20, 21, 22, 23
-> 
-> and Andrzej can resend not applied patches with Yours and Emil's Reviewed-by,
-> so we can wait a few more days to apply them.
+Signed-off-by: Govind Singh <govinds@codeaurora.org>
+---
+ arch/arm64/boot/dts/qcom/qcs404-evb.dtsi | 3 +++
+ 1 file changed, 3 insertions(+)
 
-Sounds like a good plan.
-Thanks for thaking care of this.
+diff --git a/arch/arm64/boot/dts/qcom/qcs404-evb.dtsi b/arch/arm64/boot/dts/qcom/qcs404-evb.dtsi
+index 11c0a7137823..2289b01ee9f0 100644
+--- a/arch/arm64/boot/dts/qcom/qcs404-evb.dtsi
++++ b/arch/arm64/boot/dts/qcom/qcs404-evb.dtsi
+@@ -270,6 +270,9 @@
+ 
+ &wifi {
+ 	status = "okay";
++	vdd-0.8-cx-mx-supply = <&vreg_l2_1p275>;
++	vdd-1.8-xo-supply = <&vreg_l5_1p8>;
++	vdd-1.3-rfa-supply = <&vreg_l1_1p3>;
+ };
+ 
+ /* PINCTRL - additions to nodes defined in qcs404.dtsi */
+-- 
+The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
+a Linux Foundation Collaborative Project
 
-	Sam
