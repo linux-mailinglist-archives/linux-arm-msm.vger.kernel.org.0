@@ -2,131 +2,96 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id D12757CBB3
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 31 Jul 2019 20:15:22 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 24B6E7CBF5
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 31 Jul 2019 20:27:25 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729166AbfGaSPL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 31 Jul 2019 14:15:11 -0400
-Received: from smtp.codeaurora.org ([198.145.29.96]:41902 "EHLO
+        id S1729339AbfGaS1Y (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 31 Jul 2019 14:27:24 -0400
+Received: from smtp.codeaurora.org ([198.145.29.96]:45116 "EHLO
         smtp.codeaurora.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729056AbfGaSPJ (ORCPT
+        with ESMTP id S1728214AbfGaS1Y (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 31 Jul 2019 14:15:09 -0400
+        Wed, 31 Jul 2019 14:27:24 -0400
 Received: by smtp.codeaurora.org (Postfix, from userid 1000)
-        id 6FEDB607B9; Wed, 31 Jul 2019 18:15:08 +0000 (UTC)
+        id 39152602F3; Wed, 31 Jul 2019 18:27:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
-        s=default; t=1564596908;
-        bh=Kcu2VjqlJnOdTtm7bdXRgQAWQq9XR+PWhiOTGZ6JV4A=;
-        h=Subject:To:Cc:References:From:Date:In-Reply-To:From;
-        b=mDwXTRgucPROPO3+eHB3oLPOjyUF4PDNR8W//+pgx9bjJIqHsXLT8+GS/DQzklHZo
-         pQT8Ya+5qVhR6gDSxUthwIdfTW7zphCYJu9EFnycVyf0YYrZ1bBNYtdqc6W9CbioWa
-         29zLQ4H74YxqVaVWvIdaIkY1I1BdWYc2aI4qSDko=
+        s=default; t=1564597643;
+        bh=VLcNGDYl+Y+JUsCo4hRNvN4Xh78l/JOQjd9Q+s4n1fw=;
+        h=From:To:Cc:Subject:Date:From;
+        b=Ti6cPWNmRzjSucl1+bvF4xospnSlUq6JYZejt5wVW/hLVrh1VRt778Lpysgf0Krj0
+         r4faGGCM18d8ktGJxAZxJG528H+n9rwdV4F1wpiDK6f/s+q516PxHgfOU6Sy2lS9ao
+         0n8nsGXokZ5V9Btvit2SwCabDE8cv0h5HdRSsKbY=
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
         pdx-caf-mail.web.codeaurora.org
 X-Spam-Level: 
 X-Spam-Status: No, score=-2.7 required=2.0 tests=ALL_TRUSTED,BAYES_00,
         DKIM_INVALID,DKIM_SIGNED,SPF_NONE autolearn=no autolearn_force=no
         version=3.4.0
-Received: from [10.79.162.111] (blr-bdr-fw-01_globalnat_allzones-outside.qualcomm.com [103.229.18.19])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from tdas-linux.qualcomm.com (blr-c-bdr-fw-01_globalnat_allzones-outside.qualcomm.com [103.229.19.19])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
         (No client certificate requested)
         (Authenticated sender: tdas@smtp.codeaurora.org)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id C69FF60735;
-        Wed, 31 Jul 2019 18:15:05 +0000 (UTC)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id A4992602BA;
+        Wed, 31 Jul 2019 18:27:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
-        s=default; t=1564596908;
-        bh=Kcu2VjqlJnOdTtm7bdXRgQAWQq9XR+PWhiOTGZ6JV4A=;
-        h=Subject:To:Cc:References:From:Date:In-Reply-To:From;
-        b=mDwXTRgucPROPO3+eHB3oLPOjyUF4PDNR8W//+pgx9bjJIqHsXLT8+GS/DQzklHZo
-         pQT8Ya+5qVhR6gDSxUthwIdfTW7zphCYJu9EFnycVyf0YYrZ1bBNYtdqc6W9CbioWa
-         29zLQ4H74YxqVaVWvIdaIkY1I1BdWYc2aI4qSDko=
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org C69FF60735
+        s=default; t=1564597642;
+        bh=VLcNGDYl+Y+JUsCo4hRNvN4Xh78l/JOQjd9Q+s4n1fw=;
+        h=From:To:Cc:Subject:Date:From;
+        b=Z/t9hm8nrFn6K6OZZkLEq2CcLoDYZM+1Hoyfz5DVrw6mcUXwabEyUgCxIw1FLorUu
+         lrX8vrWFfp80xmqeXHNc4NPOJd/bhxqSA4AHF0MiawcRqCvNEfUe+f97IN7GB06AoN
+         SLXZc/w59XDT1/5qZCFTSkzLmQ+JErx0HpMh3i78=
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org A4992602BA
 Authentication-Results: pdx-caf-mail.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
 Authentication-Results: pdx-caf-mail.web.codeaurora.org; spf=none smtp.mailfrom=tdas@codeaurora.org
-Subject: Re: [PATCH v2 2/2] clk: qcom : dispcc: Add support for display port
- clocks
+From:   Taniya Das <tdas@codeaurora.org>
 To:     Stephen Boyd <sboyd@kernel.org>,
-        Michael Turquette <mturquette@baylibre.com>
+        =?UTF-8?q?Michael=20Turquette=20=C2=A0?= <mturquette@baylibre.com>
 Cc:     David Brown <david.brown@linaro.org>,
         Rajendra Nayak <rnayak@codeaurora.org>,
         linux-arm-msm@vger.kernel.org, linux-soc@vger.kernel.org,
-        linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <1557894039-31835-1-git-send-email-tdas@codeaurora.org>
- <1557894039-31835-3-git-send-email-tdas@codeaurora.org>
- <20190715223758.BA46D2080A@mail.kernel.org>
-From:   Taniya Das <tdas@codeaurora.org>
-Message-ID: <0243ec02-6571-b57a-ecbf-04d4cc802ca4@codeaurora.org>
-Date:   Wed, 31 Jul 2019 23:45:03 +0530
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
- Thunderbird/60.8.0
+        linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Taniya Das <tdas@codeaurora.org>
+Subject: [PATCH v3 0/2] Add support for display port clocks and clock ops
+Date:   Wed, 31 Jul 2019 23:57:11 +0530
+Message-Id: <20190731182713.8123-1-tdas@codeaurora.org>
+X-Mailer: git-send-email 2.21.0
 MIME-Version: 1.0
-In-Reply-To: <20190715223758.BA46D2080A@mail.kernel.org>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Stephen,
+ [v3]
+   * Update KCONFIG select in alphabetical order.
+   * Remove pr_err in set rate.
+   * Fix/update code indentation and logic.
+   * removal of CLK_GET_RATE_NOCACHE completely from RCGs.
 
-Thanks for your comments.
+ [v2]
+   * Update KCONFIG to select RATIONAL
+   * Clean up redundant code from dp_set_rate/dp_set_rate_and_parent
+   * Update the disp_cc_mdss_dp_link_clk_src to use the byte2_ops instead
+     of defining the frequencies in KHz.
+   * Clean up CLK_GET_RATE_NOCACHE from various RCGs of DP.
 
-On 7/16/2019 4:07 AM, Stephen Boyd wrote:
-> Quoting Taniya Das (2019-05-14 21:20:39)
->> @@ -128,6 +144,82 @@ enum {
->>          },
->>   };
->>
->> +static const struct freq_tbl ftbl_disp_cc_mdss_dp_aux_clk_src[] = {
->> +       F(19200000, P_BI_TCXO, 1, 0, 0),
->> +       { }
->> +};
->> +
->> +static struct clk_rcg2 disp_cc_mdss_dp_aux_clk_src = {
->> +       .cmd_rcgr = 0x219c,
->> +       .mnd_width = 0,
->> +       .hid_width = 5,
->> +       .parent_map = disp_cc_parent_map_2,
->> +       .freq_tbl = ftbl_disp_cc_mdss_dp_aux_clk_src,
->> +       .clkr.hw.init = &(struct clk_init_data){
->> +               .name = "disp_cc_mdss_dp_aux_clk_src",
->> +               .parent_names = disp_cc_parent_names_2,
->> +               .num_parents = 2,
->> +               .flags = CLK_SET_RATE_PARENT,
->> +               .ops = &clk_rcg2_ops,
->> +       },
->> +};
->> +
->> +static struct clk_rcg2 disp_cc_mdss_dp_crypto_clk_src = {
->> +       .cmd_rcgr = 0x2154,
->> +       .mnd_width = 0,
->> +       .hid_width = 5,
->> +       .parent_map = disp_cc_parent_map_1,
->> +       .clkr.hw.init = &(struct clk_init_data){
->> +               .name = "disp_cc_mdss_dp_crypto_clk_src",
->> +               .parent_names = disp_cc_parent_names_1,
->> +               .num_parents = 4,
->> +               .flags = CLK_GET_RATE_NOCACHE,
-> 
-> Why do we need this flag on various clks here? I'd prefer this is
-> removed. If it can't be removed, we need to describe in a code comment
-> why this must be set.
-> 
-> If it's some sort of problem where the upstream PLL goes into bypass
-> across a reset, then we probably need to change the display code to
-> restore that rate across a reset by calling clk_set_rate() on the PLL
-> directly. And we might need to think about how to inform the framework
-> that this has happened, so that downstream clks can be notified of the
-> change in frequency.
-> 
+ [v1]
+   * New display port clock ops supported for display port clocks.
+   * Also add support for the display port related branches and RCGs.
 
-I had another discussion with the team and they are okay to remove these 
-flags, so would submit the next patch with the flag removed.
 
--- 
-QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
-of Code Aurora Forum, hosted by The Linux Foundation.
+Taniya Das (2):
+  clk: qcom: rcg2: Add support for display port clock ops
+  clk: qcom : dispcc: Add support for display port clocks
+
+ drivers/clk/qcom/Kconfig                      |   1 +
+ drivers/clk/qcom/clk-rcg.h                    |   1 +
+ drivers/clk/qcom/clk-rcg2.c                   |  77 +++++++
+ drivers/clk/qcom/dispcc-sdm845.c              | 214 +++++++++++++++++-
+ .../dt-bindings/clock/qcom,dispcc-sdm845.h    |  13 +-
+ 5 files changed, 304 insertions(+), 2 deletions(-)
 
 --
+Qualcomm INDIA, on behalf of Qualcomm Innovation Center, Inc.is a member
+of the Code Aurora Forum, hosted by the  Linux Foundation.
+
