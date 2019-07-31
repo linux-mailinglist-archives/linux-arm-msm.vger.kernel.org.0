@@ -2,218 +2,211 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 2DD8D7C6A5
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 31 Jul 2019 17:32:39 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 637207CBB0
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 31 Jul 2019 20:15:21 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726448AbfGaPci (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 31 Jul 2019 11:32:38 -0400
-Received: from mail-wm1-f41.google.com ([209.85.128.41]:34647 "EHLO
-        mail-wm1-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728165AbfGaPch (ORCPT
+        id S1729077AbfGaSPI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 31 Jul 2019 14:15:08 -0400
+Received: from smtp.codeaurora.org ([198.145.29.96]:41864 "EHLO
+        smtp.codeaurora.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729056AbfGaSPH (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 31 Jul 2019 11:32:37 -0400
-Received: by mail-wm1-f41.google.com with SMTP id w9so1557060wmd.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 31 Jul 2019 08:32:35 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=baylibre-com.20150623.gappssmtp.com; s=20150623;
-        h=subject:from:to:cc:references:openpgp:autocrypt:organization
-         :message-id:date:user-agent:mime-version:in-reply-to
-         :content-language:content-transfer-encoding;
-        bh=f/hNdz0qX9ihYQK8skLrxEItTeCBiCN+CMcmJWDZmZ8=;
-        b=aF22qCf2+80nfULt45GEqs6RMQa7hWf/lxvZC8YZQyD1qUazIqf48Mb4Da7QzAaQCI
-         Wts4VUoSHfVqp9yjTdbtGMLJavglnjyumhxEsIhFyAtts0kGh/6m9YtXjs/lryMsQFfH
-         8QSzz5KwKVOuFd8FSIY0R417Lvq5kDRr1QAVO+NYoKExLx9wXxqdRcJmovRjfPY2fW96
-         9R3LstiXLKMtZ60NZKY4Sy+JPNtZ6GpKp5BqLseM76Q4vDfdW4bdDWIL9kpVaBDMtbIX
-         ze5jBIrokDIh7PqkyKmSrRg5ZYC/H2bsZoKA2DQj57NLAiybqDpzIHHBNBIxmvqEHRQp
-         j0MA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:from:to:cc:references:openpgp:autocrypt
-         :organization:message-id:date:user-agent:mime-version:in-reply-to
-         :content-language:content-transfer-encoding;
-        bh=f/hNdz0qX9ihYQK8skLrxEItTeCBiCN+CMcmJWDZmZ8=;
-        b=Hkc/4YVhF4IKUtgjqTtMCM37/IXIKtXVTW60Qo6hVaGLdftY6t4zK1q/lYbyAMiVH8
-         Xz9zP74P2Z15bsb1WaU+6vQWDKneUXZ81bxUpOmiI9CnYW1fuJcUt1BDcGxEeV4bfuEY
-         vqjHeDv8gvJzbZuX/2LIvckMAb09lUcnU9rR5h9Av6Gma2r93dUXpzue8K3nJlBdWhis
-         0badSTQxL2V/XrTKqjPTKAhqiSIqeJZbHv2rXSZbKNuLG2c9/qkqbhjUKXlnr5Ipi5wJ
-         YhlB7WjK/2E/+RvPXmL4yLB6OyNVLHEueJWkDB+ikf5VR8dDGbwaQ4bYts0GfLZCHr5g
-         ceuw==
-X-Gm-Message-State: APjAAAXlhrFXbrTV4BKVMixUr0onqxeb9HrY3B45DjI0BnWqeUx9XZTx
-        IAz+kjN/c+JT5PFEJyozdVbKPw==
-X-Google-Smtp-Source: APXvYqxaviW4fEOrpmx/4Evy7yl+eOLL4PdevLrhHZKw3/QB5/lABaiB1v26yFpmsB6ArUS1wMPchg==
-X-Received: by 2002:a7b:ce8a:: with SMTP id q10mr105816482wmj.109.1564587154590;
-        Wed, 31 Jul 2019 08:32:34 -0700 (PDT)
-Received: from [10.1.2.12] (lmontsouris-657-1-212-31.w90-63.abo.wanadoo.fr. [90.63.244.31])
-        by smtp.gmail.com with ESMTPSA id r123sm61555981wme.7.2019.07.31.08.32.32
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 31 Jul 2019 08:32:33 -0700 (PDT)
-Subject: Re: Review required [Was: Associate ddc adapters with connectors]
-From:   Neil Armstrong <narmstrong@baylibre.com>
-To:     Andrzej Pietrasiewicz <andrzej.p@collabora.com>,
-        Sam Ravnborg <sam@ravnborg.org>
-Cc:     David Airlie <airlied@linux.ie>, Liviu Dudau <liviu.dudau@arm.com>,
-        dri-devel@lists.freedesktop.org, linux-kernel@vger.kernel.org,
-        Matthias Brugger <matthias.bgg@gmail.com>,
-        Thierry Reding <thierry.reding@gmail.com>,
-        Laurent Pinchart <Laurent.pinchart@ideasonboard.com>,
-        Shawn Guo <shawnguo@kernel.org>, kernel@collabora.com,
-        linux-samsung-soc@vger.kernel.org, Sean Paul <sean@poorly.run>,
-        Krzysztof Kozlowski <krzk@kernel.org>,
-        Jonathan Hunter <jonathanh@nvidia.com>,
-        linux-rockchip@lists.infradead.org, Chen-Yu Tsai <wens@csie.org>,
-        Kukjin Kim <kgene@kernel.org>,
-        NXP Linux Team <linux-imx@nxp.com>,
-        Dave Airlie <airlied@redhat.com>,
-        Thomas Zimmermann <tzimmermann@suse.de>,
-        Jonas Karlman <jonas@kwiboo.se>, linux-arm-msm@vger.kernel.org,
-        intel-gfx@lists.freedesktop.org, Jyri Sarha <jsarha@ti.com>,
-        Mamta Shukla <mamtashukla555@gmail.com>,
-        linux-mediatek@lists.infradead.org,
-        Maxime Ripard <mripard@kernel.org>,
-        Rodrigo Vivi <rodrigo.vivi@intel.com>,
-        linux-tegra@vger.kernel.org, Thomas Gleixner <tglx@linutronix.de>,
-        Vincent Abriou <vincent.abriou@st.com>,
-        linux-arm-kernel@lists.infradead.org,
-        Jernej Skrabec <jernej.skrabec@siol.net>,
-        amd-gfx@lists.freedesktop.org,
-        Tomi Valkeinen <tomi.valkeinen@ti.com>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Seung-Woo Kim <sw0312.kim@samsung.com>,
-        Douglas Anderson <dianders@chromium.org>,
-        Todor Tomov <todor.tomov@linaro.org>,
-        Kyungmin Park <kyungmin.park@samsung.com>,
-        Huang Rui <ray.huang@amd.com>,
-        Pengutronix Kernel Team <kernel@pengutronix.de>,
-        Alex Deucher <alexander.deucher@amd.com>,
-        freedreno@lists.freedesktop.org,
-        =?UTF-8?Q?Christian_K=c3=b6nig?= <christian.koenig@amd.com>,
-        Gerd Hoffmann <kraxel@redhat.com>
-References: <cover.1564161140.git.andrzej.p@collabora.com>
- <20190726183520.GA22572@ravnborg.org> <20190726185538.GD14981@ravnborg.org>
- <6560f93c-a48f-2a8c-afeb-d5e8e200480d@baylibre.com>
- <20190731104007.GA23138@ravnborg.org>
- <959cf323-c6b9-895b-592c-81c52aacae6e@collabora.com>
- <ce68a0df-1719-7b53-b0ed-89caa9afc4a0@baylibre.com>
-Openpgp: preference=signencrypt
-Autocrypt: addr=narmstrong@baylibre.com; prefer-encrypt=mutual; keydata=
- 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
- ZaTUOEkgIor5losDrePdPgE=
-Organization: Baylibre
-Message-ID: <65481afa-1104-4ee9-e53d-f2732a10d4b9@baylibre.com>
-Date:   Wed, 31 Jul 2019 17:32:32 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+        Wed, 31 Jul 2019 14:15:07 -0400
+Received: by smtp.codeaurora.org (Postfix, from userid 1000)
+        id E34DE6021C; Wed, 31 Jul 2019 18:15:05 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
+        s=default; t=1564596905;
+        bh=wPD8Jvb3E0+Q5f60Lu+t9iCbpuIdPyPu6BDAgfitmnE=;
+        h=Subject:To:Cc:References:From:Date:In-Reply-To:From;
+        b=iZN0sGcCib+Tib7h4Lv8pbN3m/8JYnsyl/SV1ggFmoKCYGNXZJdWfkF/xfWwAQou0
+         eW99NM/oU1419H5jEfpWzN93LTNHJ0PROg/cGGgwcV0VCG9KUuJYyFaRU/2LEzHqEV
+         U0vobtw0qo3ezO2uSrzxIHXu+scNSLYdvLToEEY8=
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        pdx-caf-mail.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.7 required=2.0 tests=ALL_TRUSTED,BAYES_00,
+        DKIM_INVALID,DKIM_SIGNED,SPF_NONE autolearn=no autolearn_force=no
+        version=3.4.0
+Received: from [10.79.162.111] (blr-bdr-fw-01_globalnat_allzones-outside.qualcomm.com [103.229.18.19])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: tdas@smtp.codeaurora.org)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id B0E8F6021C;
+        Wed, 31 Jul 2019 18:15:02 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
+        s=default; t=1564596905;
+        bh=wPD8Jvb3E0+Q5f60Lu+t9iCbpuIdPyPu6BDAgfitmnE=;
+        h=Subject:To:Cc:References:From:Date:In-Reply-To:From;
+        b=iZN0sGcCib+Tib7h4Lv8pbN3m/8JYnsyl/SV1ggFmoKCYGNXZJdWfkF/xfWwAQou0
+         eW99NM/oU1419H5jEfpWzN93LTNHJ0PROg/cGGgwcV0VCG9KUuJYyFaRU/2LEzHqEV
+         U0vobtw0qo3ezO2uSrzxIHXu+scNSLYdvLToEEY8=
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org B0E8F6021C
+Authentication-Results: pdx-caf-mail.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: pdx-caf-mail.web.codeaurora.org; spf=none smtp.mailfrom=tdas@codeaurora.org
+Subject: Re: [PATCH v2 1/2] clk: qcom: rcg2: Add support for display port
+ clock ops
+To:     Stephen Boyd <sboyd@kernel.org>,
+        Michael Turquette <mturquette@baylibre.com>
+Cc:     David Brown <david.brown@linaro.org>,
+        Rajendra Nayak <rnayak@codeaurora.org>,
+        linux-arm-msm@vger.kernel.org, linux-soc@vger.kernel.org,
+        linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <1557894039-31835-1-git-send-email-tdas@codeaurora.org>
+ <1557894039-31835-2-git-send-email-tdas@codeaurora.org>
+ <20190715224345.938B02080A@mail.kernel.org>
+From:   Taniya Das <tdas@codeaurora.org>
+Message-ID: <57d35673-10cd-0bc2-1c65-c777de3a000a@codeaurora.org>
+Date:   Wed, 31 Jul 2019 23:45:00 +0530
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
  Thunderbird/60.8.0
 MIME-Version: 1.0
-In-Reply-To: <ce68a0df-1719-7b53-b0ed-89caa9afc4a0@baylibre.com>
-Content-Type: text/plain; charset=utf-8
+In-Reply-To: <20190715224345.938B02080A@mail.kernel.org>
+Content-Type: text/plain; charset=utf-8; format=flowed
 Content-Language: en-US
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Andrzej,
+Hello Stephen,
 
-On 31/07/2019 16:22, Neil Armstrong wrote:
-> On 31/07/2019 15:10, Andrzej Pietrasiewicz wrote:
->> W dniu 31.07.2019 o 12:40, Sam Ravnborg pisze:
->>> Hi Neil.
->>>
->>> On Wed, Jul 31, 2019 at 10:00:14AM +0200, Neil Armstrong wrote:
->>>> Hi Sam,
->>>>
->>>> On 26/07/2019 20:55, Sam Ravnborg wrote:
->>>>> Hi all.
->>>>>
->>>>> Andrzej have done a good job following up on feedback and this series is
->>>>> now ready.
->>>>>
->>>>> We need ack on the patches touching the individual drivers before we can
->>>>> proceed.
->>>>> Please check your drivers and get back.
->>>>
->>>> I can apply all core and maintainer-acked patches for now :
->>>> 1, 2, 7, 10, 11, 16, 17, 18, 19, 20, 21, 22, 23
->>>>
->>>> and Andrzej can resend not applied patches with Yours and Emil's Reviewed-by,
->>>> so we can wait a few more days to apply them.
->>>
->>> Sounds like a good plan.
->>> Thanks for thaking care of this.
+Thanks for your review.
+
+On 7/16/2019 4:13 AM, Stephen Boyd wrote:
+> Quoting Taniya Das (2019-05-14 21:20:38)
+>> diff --git a/drivers/clk/qcom/Kconfig b/drivers/clk/qcom/Kconfig
+>> index 18bdf34..0de080f 100644
+>> --- a/drivers/clk/qcom/Kconfig
+>> +++ b/drivers/clk/qcom/Kconfig
+>> @@ -15,6 +15,7 @@ menuconfig COMMON_CLK_QCOM
+>>          depends on ARCH_QCOM || COMPILE_TEST
+>>          select REGMAP_MMIO
+>>          select RESET_CONTROLLER
+>> +       select RATIONAL
+> 
+> Make this an alphabetical list of selects please.
+> 
+
+Sure, would take care in the next patch.
+
 >>
->> When is it good time to resend patches 3, 4, 5, 6, 8, 9, 12, 13, 14, 15, 24 as a
->> new series?
-> 
-> I'll ping you when everything is applied, build-tested and pushed on drm-misc-next
-
-I pushed 1, 2, 7, 10, 11, 16, 17, 18, 19, 20, 21, 22, 23 :
-bed7a2182de6 drm/radeon: Provide ddc symlink in connector sysfs directory
-5b50fa2b35a4 drm/amdgpu: Provide ddc symlink in connector sysfs directory
-cfb444552926 drm/bridge: ti-tfp410: Provide ddc symlink in connector sysfs directory
-9ebc4d2140ad drm/bridge: dw-hdmi: Provide ddc symlink in connector sysfs directory
-a4f9087e85de drm/bridge: dumb-vga-dac: Provide ddc symlink in connector sysfs directory
-350fd554ee44 drm/ast: Provide ddc symlink in connector sysfs directory
-9572ae176a10 drm/mgag200: Provide ddc symlink in connector sysfs directory
-7058e76682d7 drm: sti: Provide ddc symlink in hdmi connector sysfs directory
-2ae7eb372ed4 drm/imx: imx-tve: Provide ddc symlink in connector's sysfs
-be0ec35940bc drm/imx: imx-ldb: Provide ddc symlink in connector's sysfs
-1e8f17855ff8 drm/sun4i: hdmi: Provide ddc symlink in sun4i hdmi connector sysfs directory
-100163df4203 drm: Add drm_connector_init() variant with ddc
-e1a29c6c5955 drm: Add ddc link in sysfs created by drm_connector
-
-Neil
-
-> 
-> Neil
-> 
+>>   if COMMON_CLK_QCOM
 >>
->> Andrzej
+>> diff --git a/drivers/clk/qcom/clk-rcg2.c b/drivers/clk/qcom/clk-rcg2.c
+>> index 8c02bff..98071c0 100644
+>> --- a/drivers/clk/qcom/clk-rcg2.c
+>> +++ b/drivers/clk/qcom/clk-rcg2.c
+>> @@ -1128,3 +1129,81 @@ int qcom_cc_register_rcg_dfs(struct regmap *regmap,
+>>          return 0;
+>>   }
+>>   EXPORT_SYMBOL_GPL(qcom_cc_register_rcg_dfs);
+>> +
+>> +static int clk_rcg2_dp_set_rate(struct clk_hw *hw, unsigned long rate,
+>> +                       unsigned long parent_rate)
+>> +{
+>> +       struct clk_rcg2 *rcg = to_clk_rcg2(hw);
+>> +       struct freq_tbl f = { 0 };
+>> +       u32 mask = BIT(rcg->hid_width) - 1;
+>> +       u32 hid_div, cfg;
+>> +       int i, num_parents = clk_hw_get_num_parents(hw);
+>> +       unsigned long num, den;
+>> +
+>> +       rational_best_approximation(parent_rate, rate,
+>> +                       GENMASK(rcg->mnd_width - 1, 0),
+>> +                       GENMASK(rcg->mnd_width - 1, 0), &den, &num);
+>> +
+>> +       if (!num || !den) {
+>> +               pr_err("Invalid MN values derived for requested rate %lu\n",
+> 
+> Does this ever happen? I worry that this printk could happen many times
+> if a driver gets into a bad state and starts selecting invalid
+> frequencies over and over again for each frame (every 16ms). Maybe just
+> return -EINVAL instead of printing anything.
 > 
 
+Would remove the pr_err.
+
+>> +                                                       rate);
+>> +               return -EINVAL;
+>> +       }
+>> +
+>> +       regmap_read(rcg->clkr.regmap, rcg->cmd_rcgr + CFG_REG, &cfg);
+>> +       hid_div = cfg;
+>> +       cfg &= CFG_SRC_SEL_MASK;
+>> +       cfg >>= CFG_SRC_SEL_SHIFT;
+>> +
+>> +       for (i = 0; i < num_parents; i++)
+>> +               if (cfg == rcg->parent_map[i].cfg) {
+>> +                       f.src = rcg->parent_map[i].src;
+>> +                       break;
+>> +       }
+> 
+> Weird indent for this brace. Please fix and put a brace on the for
+> statement too.
+> 
+
+My bad would fix in the next patch.
+
+>> +
+>> +       f.pre_div = hid_div;
+>> +       f.pre_div >>= CFG_SRC_DIV_SHIFT;
+>> +       f.pre_div &= mask;
+>> +
+>> +       if (num == den) {
+>> +               f.m = 0;
+>> +               f.n = 0;
+> 
+> Isn't this the default? So just have if (num != den) here.
+> 
+
+I would check for (num != den).
+
+>> +       } else {
+>> +               f.m = num;
+>> +               f.n = den;
+>> +       }
+>> +
+>> +       return clk_rcg2_configure(rcg, &f);
+>> +}
+>> +
+>> +static int clk_rcg2_dp_set_rate_and_parent(struct clk_hw *hw,
+>> +               unsigned long rate, unsigned long parent_rate, u8 index)
+>> +{
+>> +       return clk_rcg2_dp_set_rate(hw, rate, parent_rate);
+>> +}
+> 
+> Does this need to be implemented? The parent index isn't passed to
+> clk_rcg2_dp_set_rate() so I suspect the parent index doesn't matter?
+> Does the parent change?
+> 
+
+I guess it is required as the RCG SRC would be 0x0 by default.
+
+>> +
+>> +static int clk_rcg2_dp_determine_rate(struct clk_hw *hw,
+>> +                               struct clk_rate_request *req)
+>> +{
+>> +       struct clk_rate_request parent_req = *req;
+>> +       int ret;
+>> +
+>> +       ret = __clk_determine_rate(clk_hw_get_parent(hw), &parent_req);
+>> +       if (ret)
+>> +               return ret;
+>> +
+>> +       req->best_parent_rate = parent_req.rate;
+>> +
+>> +       return 0;
+>> +}
+> 
+> Do you need this op? It's just calling determine rate on the parent, so
+> we already do that if the proper flag is set. I'm confused about this
+> function.
+> 
+Would it be good to leave this function :).
+
+-- 
+QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
+of Code Aurora Forum, hosted by The Linux Foundation.
+
+--
