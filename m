@@ -2,54 +2,57 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 0A36A7E140
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  1 Aug 2019 19:42:20 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5BE437E20E
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  1 Aug 2019 20:15:25 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732128AbfHARmT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 1 Aug 2019 13:42:19 -0400
-Received: from mail-pf1-f196.google.com ([209.85.210.196]:44239 "EHLO
-        mail-pf1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1731573AbfHARmT (ORCPT
+        id S1732067AbfHASPY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 1 Aug 2019 14:15:24 -0400
+Received: from mail-pf1-f195.google.com ([209.85.210.195]:44912 "EHLO
+        mail-pf1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1731967AbfHASPY (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 1 Aug 2019 13:42:19 -0400
-Received: by mail-pf1-f196.google.com with SMTP id t16so34451668pfe.11;
-        Thu, 01 Aug 2019 10:42:18 -0700 (PDT)
+        Thu, 1 Aug 2019 14:15:24 -0400
+Received: by mail-pf1-f195.google.com with SMTP id t16so34501865pfe.11
+        for <linux-arm-msm@vger.kernel.org>; Thu, 01 Aug 2019 11:15:23 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=broadcom.com; s=google;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-transfer-encoding:content-language;
+        bh=A/2U3sBSUHvfzL5QT64+0anCBzLTLTL1IfUmHYOzv8M=;
+        b=Q2Yn9bpZT7MTiS2Fuhc1CBYlxs3phQsozr5LA/k6MqS/FzmEF5/uvtngkdC0Z2cf8S
+         i6Qt/32fnNBpI5AKyVyX9TftvzDm1tJ82Db4g7d60SPTRnS4bZNCEt5m0QZ2Zlbp0Iez
+         WL0wC61c9DxrPRDpQVe+/uAJ51y4acrhIbDlw=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        bh=c2hESp5P0VdXb1KGHmHBHOL26umzSRk5VuA6OOFxtVM=;
-        b=fUiMNYiNxQbaJUKktacnDTuosoG403NWOfF1HoQSSVDbV0vtoPNVsxlMGoS8c+Ka1x
-         FyJqtwGWRA6wAHk4Pux8DTGUsiZk/YwnZNFqPdPKWd/IbLDLog5rA6RyQ2cMw6mdqoMe
-         Jkd2dJ/KQz3ZAylI1np91LamwLuI2qAHck1QaWVpPvL0slIoSGXEgc3ta/61GpkU2oem
-         eEXgctyQnlhJThZ4qWaihUQqPR5uGdiOUtu1wnjcz1tThKZzGNPgIngtimOLylL8yI4a
-         4Fk2QKc3xr7IvlJdIqifNbMLOQLrQpP1rzu54TUJtkhEiZ4Gwu3L5es+bqO+vAGAanyW
-         HDLQ==
-X-Gm-Message-State: APjAAAUxA+sxzCdOhwJLUxGAJHWMJOIJj+vQWg86NXsbwB7+Ael/522i
-        M7W4kciQyukLBdJofRoAHfM=
-X-Google-Smtp-Source: APXvYqwvXu3G8nVpXIkNxWN9ELmjM1cWN+Tl1xKF06uVZBAUb2aBahH/zXWAt3NRyzyefm9aQ216BA==
-X-Received: by 2002:a62:e901:: with SMTP id j1mr55881964pfh.189.1564681338080;
-        Thu, 01 Aug 2019 10:42:18 -0700 (PDT)
-Received: from 42.do-not-panic.com (42.do-not-panic.com. [157.230.128.187])
-        by smtp.gmail.com with ESMTPSA id j6sm63680898pfa.141.2019.08.01.10.42.16
-        (version=TLS1_3 cipher=AEAD-AES256-GCM-SHA384 bits=256/256);
-        Thu, 01 Aug 2019 10:42:16 -0700 (PDT)
-Received: by 42.do-not-panic.com (Postfix, from userid 1000)
-        id 07BF440280; Thu,  1 Aug 2019 17:42:15 +0000 (UTC)
-Date:   Thu, 1 Aug 2019 17:42:15 +0000
-From:   Luis Chamberlain <mcgrof@kernel.org>
-To:     Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc:     Scott Branden <scott.branden@broadcom.com>,
-        David Brown <david.brown@linaro.org>,
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-transfer-encoding
+         :content-language;
+        bh=A/2U3sBSUHvfzL5QT64+0anCBzLTLTL1IfUmHYOzv8M=;
+        b=MA7b0sovbuc4AFoqPNbs8jhYNYcnGGSEZaa5i6FE2FVDyP1263qzGV+/SV9KVJ1KIl
+         qBD7ziluSh0u9RUt56OLwfDmdUtnNERTx0heJ2LXcxUqJrQGIi0jdlDOfA06UIdywo2z
+         TJ5Rn+kfmUcMkVTpG0p46ugDynR8piSRUafrNsEGxxqgX+qVfQLFPq1Xcn7jtXqWmEj4
+         78URTJUPt9ZHg7E0ELwlExdItaqXqkCdXS1LI34ZDiZKtVouHYOd1klqP00ZZuuNjzDa
+         SzTCQdKfZ68ouzR91qUix5GAle8B3nJy25QHFjupsYaufsNDvhiVuHp8L4tdDXvi9izW
+         fxYw==
+X-Gm-Message-State: APjAAAU1xMn25SDm/1LF0IbJvVV4vrMsSgF6U3KA8D9G9PJnQf8t7zdT
+        ZE+C9Mzlguw8QgT0XAH0mJrdbQ==
+X-Google-Smtp-Source: APXvYqy5YxYnI0i+UvSKVSvJD5W3X8Ct2hIIE5d7R1nII78ojNXg/Ndq9IbIMXECeg+nkbwLTBNsVQ==
+X-Received: by 2002:a17:90a:2562:: with SMTP id j89mr74708pje.123.1564683322929;
+        Thu, 01 Aug 2019 11:15:22 -0700 (PDT)
+Received: from [10.136.13.65] ([192.19.228.250])
+        by smtp.gmail.com with ESMTPSA id l26sm84023425pgb.90.2019.08.01.11.15.20
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Thu, 01 Aug 2019 11:15:21 -0700 (PDT)
+Subject: Re: [PATCH 2/3] firmware: add offset to request_firmware_into_buf
+To:     Luis Chamberlain <mcgrof@kernel.org>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc:     David Brown <david.brown@linaro.org>,
         Alexander Viro <viro@zeniv.linux.org.uk>,
         "Rafael J . Wysocki" <rafael@kernel.org>,
         linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
         linux-fsdevel@vger.kernel.org,
         BCM Kernel Feedback <bcm-kernel-feedback-list@broadcom.com>,
         Olof Johansson <olof@lixom.net>
-Subject: Re: [PATCH 2/3] firmware: add offset to request_firmware_into_buf
-Message-ID: <20190801174215.GB16384@42.do-not-panic.com>
 References: <20190523025113.4605-1-scott.branden@broadcom.com>
  <20190523025113.4605-3-scott.branden@broadcom.com>
  <20190523055233.GB22946@kroah.com>
@@ -59,74 +62,112 @@ References: <20190523025113.4605-1-scott.branden@broadcom.com>
  <20190524052258.GB28229@kroah.com>
  <2f67db0a-27c3-d13c-bbe0-0af5edd4f0da@broadcom.com>
  <20190801061801.GA4338@kroah.com>
+ <20190801174215.GB16384@42.do-not-panic.com>
+From:   Scott Branden <scott.branden@broadcom.com>
+Message-ID: <74be1aa7-0e10-51dc-bbbf-94bb5f4bf7c4@broadcom.com>
+Date:   Thu, 1 Aug 2019 11:15:19 -0700
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+ Thunderbird/60.8.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
+In-Reply-To: <20190801174215.GB16384@42.do-not-panic.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20190801061801.GA4338@kroah.com>
-User-Agent: Mutt/1.10.1 (2018-07-13)
+Content-Language: en-US
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Aug 01, 2019 at 08:18:01AM +0200, Greg Kroah-Hartman wrote:
-> On Wed, Jul 31, 2019 at 05:18:32PM -0700, Scott Branden wrote:
-> > Hi Greg,
-> > 
-> > I am now back from leave to continue this patch.� Comment below.
-> > 
-> > On 2019-05-23 10:22 p.m., Greg Kroah-Hartman wrote:
-> > > On Thu, May 23, 2019 at 10:01:38PM -0700, Scott Branden wrote:
-> > > > On 2019-05-23 9:54 a.m., Greg Kroah-Hartman wrote:
-> > > > > On Thu, May 23, 2019 at 09:36:02AM -0700, Scott Branden wrote:
-> > > > > > Hi Greg,
-> > > > > > 
-> > > > > > On 2019-05-22 10:52 p.m., Greg Kroah-Hartman wrote:
-> > > > > > > On Wed, May 22, 2019 at 07:51:12PM -0700, Scott Branden wrote:
-> > > > > > > > Add offset to request_firmware_into_buf to allow for portions
-> > > > > > > > of firmware file to be read into a buffer.  Necessary where firmware
-> > > > > > > > needs to be loaded in portions from file in memory constrained systems.
-> > > > > > > > 
-> > > > > > > > Signed-off-by: Scott Branden <scott.branden@broadcom.com>
-> > > > > > > > ---
-> > > > > > > >     drivers/base/firmware_loader/firmware.h |  5 +++
-> > > > > > > >     drivers/base/firmware_loader/main.c     | 49 +++++++++++++++++--------
-> > > > > > > >     include/linux/firmware.h                |  8 +++-
-> > > > > > > >     3 files changed, 45 insertions(+), 17 deletions(-)
-> > > > > > > No new firmware test for this new option?  How do we know it even works?
-> > > > > > I was unaware there are existing firmware tests.� Please let me know where
-> > > > > > these tests exists and I can add a test for this new option.
-> > > > > tools/testing/selftests/firmware/
-> > > > Unfortunately, there doesn't seem to be a test for the existing
-> > > > request_firmware_into_buf api.
-> > > Are you sure?  The test is for userspace functionality, there isn't
-> > > kernel unit tests here.  You need to verify that you didn't break
-> > > existing functionality as well as verify that your new functionality
-> > > works.
-> > 
-> > I managed to figure out how to build and run
-> > tools/testing/selftest/firmware/fw_run_tests.sh
-> > 
-> > and my changes don't break existing functionality.
+Hi Luis,
 
-I'm soon going to release something that is going to let you do this 
-faster and easier, let me know if you had troubles in trying to figure
-out how to not regress the kernel using this.
+On 2019-08-01 10:42 a.m., Luis Chamberlain wrote:
+> On Thu, Aug 01, 2019 at 08:18:01AM +0200, Greg Kroah-Hartman wrote:
+>> On Wed, Jul 31, 2019 at 05:18:32PM -0700, Scott Branden wrote:
+>>> Hi Greg,
+>>>
+>>> I am now back from leave to continue this patch.  Comment below.
+>>>
+>>> On 2019-05-23 10:22 p.m., Greg Kroah-Hartman wrote:
+>>>> On Thu, May 23, 2019 at 10:01:38PM -0700, Scott Branden wrote:
+>>>>> On 2019-05-23 9:54 a.m., Greg Kroah-Hartman wrote:
+>>>>>> On Thu, May 23, 2019 at 09:36:02AM -0700, Scott Branden wrote:
+>>>>>>> Hi Greg,
+>>>>>>>
+>>>>>>> On 2019-05-22 10:52 p.m., Greg Kroah-Hartman wrote:
+>>>>>>>> On Wed, May 22, 2019 at 07:51:12PM -0700, Scott Branden wrote:
+>>>>>>>>> Add offset to request_firmware_into_buf to allow for portions
+>>>>>>>>> of firmware file to be read into a buffer.  Necessary where firmware
+>>>>>>>>> needs to be loaded in portions from file in memory constrained systems.
+>>>>>>>>>
+>>>>>>>>> Signed-off-by: Scott Branden <scott.branden@broadcom.com>
+>>>>>>>>> ---
+>>>>>>>>>      drivers/base/firmware_loader/firmware.h |  5 +++
+>>>>>>>>>      drivers/base/firmware_loader/main.c     | 49 +++++++++++++++++--------
+>>>>>>>>>      include/linux/firmware.h                |  8 +++-
+>>>>>>>>>      3 files changed, 45 insertions(+), 17 deletions(-)
+>>>>>>>> No new firmware test for this new option?  How do we know it even works?
+>>>>>>> I was unaware there are existing firmware tests.  Please let me know where
+>>>>>>> these tests exists and I can add a test for this new option.
+>>>>>> tools/testing/selftests/firmware/
+>>>>> Unfortunately, there doesn't seem to be a test for the existing
+>>>>> request_firmware_into_buf api.
+>>>> Are you sure?  The test is for userspace functionality, there isn't
+>>>> kernel unit tests here.  You need to verify that you didn't break
+>>>> existing functionality as well as verify that your new functionality
+>>>> works.
+>>> I managed to figure out how to build and run
+>>> tools/testing/selftest/firmware/fw_run_tests.sh
+>>>
+>>> and my changes don't break existing functionality.
+> I'm soon going to release something that is going to let you do this
+> faster and easier, let me know if you had troubles in trying to figure
+> out how to not regress the kernel using this.
 
-> > But, I find no use of request_firmware_into_buf in lib/test_firmware.c
-> > (triggered by fw_run_tests.sh).
-> > 
-> > Is there another test for request_firmware_into_buf?
-> 
-> I have no idea, sorry.
+Yes, I had troubles in trying to figure it out.  The kernel build should
 
-The folks who implemented request_firmware_into_buf() didn't add a
-respective test, because, well, this API went upstream IMO without much
-ACKs / review, and even no damn users. Now we have a user so we're stuck
-with it.
+create an entire initrd with all the necessary components in it for 
+testing purposes.
 
-So new testing calls for it would be appreciated. If you have questions
-I am happy to help.
+And the firmware test will now take me some time to figure out how it 
+all works.
 
-  Luis
+Could you please explain what you are going to release soon?  I don't 
+want to waste
+
+my time getting something working if everything is going to change on me 
+right away?
+
+>
+>>> But, I find no use of request_firmware_into_buf in lib/test_firmware.c
+>>> (triggered by fw_run_tests.sh).
+>>>
+>>> Is there another test for request_firmware_into_buf?
+>> I have no idea, sorry.
+> The folks who implemented request_firmware_into_buf() didn't add a
+> respective test, because, well, this API went upstream IMO without much
+> ACKs / review, and even no damn users. Now we have a user so we're stuck
+> with it.
+
+The request_firmware_into_buf is a necessity for me as well
+
+(along with the need for a partial request of the file which I'm adding).
+
+>
+> So new testing calls for it would be appreciated. If you have questions
+> I am happy to help.
+
+If you're an expert on the firmware test and can quickly add a simple 
+test of request_firmware_into_buf
+
+it would be appreciated.  If not, I'm going to have to dig further into 
+this and send early versions of
+
+a test out which would be great for you to comment on.
+
+>
+>    Luis
+
+Thanks,
+
+Scott
+
