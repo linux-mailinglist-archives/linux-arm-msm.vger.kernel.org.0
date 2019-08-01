@@ -2,142 +2,115 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 831917DA67
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  1 Aug 2019 13:36:48 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 6B8847DB05
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  1 Aug 2019 14:12:09 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730652AbfHALgm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 1 Aug 2019 07:36:42 -0400
-Received: from mail-wr1-f68.google.com ([209.85.221.68]:39828 "EHLO
-        mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729316AbfHALgm (ORCPT
+        id S1728065AbfHAMMH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 1 Aug 2019 08:12:07 -0400
+Received: from smtp.codeaurora.org ([198.145.29.96]:37740 "EHLO
+        smtp.codeaurora.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728060AbfHAMMG (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 1 Aug 2019 07:36:42 -0400
-Received: by mail-wr1-f68.google.com with SMTP id x4so20053950wrt.6;
-        Thu, 01 Aug 2019 04:36:40 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=3PsNsi2Fg8DGSuD3bjQVO0TQEivknJu9Yr7/bdJYvzU=;
-        b=PzoRWKjZFlYUQVRFPQQqndWwjtGZ7pWJ/SY7iVkEwJ+ACvNO6s4lbo52eQHgQuYxbq
-         p5OO50Z2r8okuiaMaJZIXb5x71Lie1wQzT4UiuAxPqWtT+FirRXb9Rh1B7o0X3p/S6dL
-         xtz/UkPHL0WPpbeAi0pqtF4Pxv9+lixRD82FZB+2dobhjthoV71NWf2KlhOr/0uqC4q7
-         F2CNbQf+fpxP03YYC0GincfFTfJAeiGJ8jxPTFBEwtgq46VZb/S1aw/k3YmYTOlVpoGv
-         C/fCXze39+uOxJjVUyU9kNKBUYtpeYvLYK2VyGj7JXL2OFCR1kXMcdRnssdIU983SgVd
-         //mw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:date:from:to:cc:subject:message-id
-         :references:mime-version:content-disposition:in-reply-to:user-agent;
-        bh=3PsNsi2Fg8DGSuD3bjQVO0TQEivknJu9Yr7/bdJYvzU=;
-        b=kFIXF3l7najzWRrQ1ZpVFYFIJi+qBGLiBwOKMVmiYyioPHyoakNdUomSWBfuJpLUVf
-         wtKq0Cgk3nk1FKcdgAOtYHsji+b3SOEXjjm0ki7yKaWp39X3iystHGIRX0xPjv0+oNfL
-         pgOi4tuaD05TPvMMjBdJlbMWiORHtmCJ5O8f9bLn88NcH7MdrZIHpvBa1D190Yz1kq1z
-         yg/JHhx9nbljN4Xnufgcsb0C20XpFWOj2qZc49lCkuCfoDPsrPw7GoYelx3ycf6H3yW4
-         yFFpLFCgdRklo9utS+sBT8y08YWnYZeq4RuOdoB6tzWy3/Ru+FtBho1xhPZL8WRzQRWP
-         Ia2w==
-X-Gm-Message-State: APjAAAXkSbA7bs3xtw3UzVtHEk21hlWZVzt74D+MRhTYHV8RWJqKW0nv
-        IvJ4ZZGH9l08AYrlOZP9jHU=
-X-Google-Smtp-Source: APXvYqzNnWUHwlJCYtRjPnM4tG/VteAkGiqthP9PjwfNMneBVu+24Yc772w0iwNmvSeJgfNHe1iDpg==
-X-Received: by 2002:adf:f812:: with SMTP id s18mr3133864wrp.32.1564659400099;
-        Thu, 01 Aug 2019 04:36:40 -0700 (PDT)
-Received: from rric.localdomain (x4e365c6b.dyn.telefonica.de. [78.54.92.107])
-        by smtp.gmail.com with ESMTPSA id l25sm54583654wme.13.2019.08.01.04.36.38
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Thu, 01 Aug 2019 04:36:39 -0700 (PDT)
-Date:   Thu, 1 Aug 2019 13:35:49 +0200
-From:   Robert Richter <rric@kernel.org>
-To:     Hanna Hawa <hhhawa@amazon.com>
-Cc:     thor.thayer@linux.intel.com, bp@alien8.de, mchehab@kernel.org,
-        james.morse@arm.com, morbidrsa@gmail.com, ralf@linux-mips.org,
-        david.daney@cavium.com, andy.gross@linaro.org,
-        david.brown@linaro.org, ckadabi@codeaurora.org,
-        vnkgutta@codeaurora.org, jglauber@cavium.com,
-        khuong@os.amperecomputing.com, dwmw@amazon.co.uk, benh@amazon.com,
-        ronenk@amazon.com, talel@amazon.com, jonnyc@amazon.com,
-        hanochu@amazon.com, linux-edac@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-mips@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org
-Subject: Re: [RFC 1/1] edac: Add a counter parameter for
- edac_device_handle_ue/ce()
-Message-ID: <20190801113548.7leooh57gihixen5@rric.localdomain>
-References: <1563187987-5847-1-git-send-email-hhhawa@amazon.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <1563187987-5847-1-git-send-email-hhhawa@amazon.com>
-User-Agent: NeoMutt/20170113 (1.7.2)
+        Thu, 1 Aug 2019 08:12:06 -0400
+Received: by smtp.codeaurora.org (Postfix, from userid 1000)
+        id 0635B60E40; Thu,  1 Aug 2019 12:12:06 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
+        s=default; t=1564661526;
+        bh=/Uh0/D+m6kv8+YXdEyt+v1OkXzm8Qmlq1aKxE0Tu1jM=;
+        h=From:To:Cc:Subject:Date:From;
+        b=kJGfQtm2ju01E9JUxixAeNcBZaTChFZb0F+ZXb6OmSv6fSBYYCTyu6XhuPdtQfRd7
+         3TNe7iZwbY4in6sKzI0u9TPRks832x8Bo89M5yKucypNPZUerCknExileJUWzKFjKa
+         V/IDMn3jsiQ/CkM11/fzFLnVD4ETOAlKBtDhrLsM=
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        pdx-caf-mail.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.7 required=2.0 tests=ALL_TRUSTED,BAYES_00,
+        DKIM_INVALID,DKIM_SIGNED,SPF_NONE autolearn=no autolearn_force=no
+        version=3.4.0
+Received: from blr-ubuntu-41.ap.qualcomm.com (blr-bdr-fw-01_globalnat_allzones-outside.qualcomm.com [103.229.18.19])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: vivek.gautam@smtp.codeaurora.org)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 2AED860A97;
+        Thu,  1 Aug 2019 12:12:02 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
+        s=default; t=1564661525;
+        bh=/Uh0/D+m6kv8+YXdEyt+v1OkXzm8Qmlq1aKxE0Tu1jM=;
+        h=From:To:Cc:Subject:Date:From;
+        b=SaorWJN2VqM3pGx1QTKwRzujfhsCyHXwPgUokmyAfnGoUzf1mrXM+j8s+6TU+wcX+
+         qAqnFVma+W6I7wMzSzJOxwMCT5+Ttka8O3SzOzmxBwLIaBLxEIHCcpRc95IiPkhaXF
+         8FJIA+3M9y9KzfNrbGMNcqmVG1YZNi1pO/wsQgzE=
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 2AED860A97
+Authentication-Results: pdx-caf-mail.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: pdx-caf-mail.web.codeaurora.org; spf=none smtp.mailfrom=vivek.gautam@codeaurora.org
+From:   Vivek Gautam <vivek.gautam@codeaurora.org>
+To:     agross@kernel.org, gregkh@linuxfoundation.org,
+        linux-arm-msm@vger.kernel.org, linux-serial@vger.kernel.org
+Cc:     jslaby@suse.com, linux-kernel@vger.kernel.org,
+        bjorn.andersson@linaro.org,
+        Vivek Gautam <vivek.gautam@codeaurora.org>
+Subject: [PATCH 1/1] tty: serial: qcom_geni_serial: Update the oversampling rate
+Date:   Thu,  1 Aug 2019 17:41:53 +0530
+Message-Id: <20190801121153.10613-1-vivek.gautam@codeaurora.org>
+X-Mailer: git-send-email 2.16.1.72.g5be1f00a9a70
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 15.07.19 13:53:07, Hanna Hawa wrote:
-> Add a counter parameter in order to avoid losing errors count for edac
-> device, the error count reports the number of errors reported by an edac
-> device similar to the way MC_EDAC do.
-> 
-> Signed-off-by: Hanna Hawa <hhhawa@amazon.com>
-> ---
->  drivers/edac/altera_edac.c      | 20 ++++++++++++--------
->  drivers/edac/amd8111_edac.c     |  6 +++---
->  drivers/edac/cpc925_edac.c      |  4 ++--
->  drivers/edac/edac_device.c      | 18 ++++++++++--------
->  drivers/edac/edac_device.h      |  8 ++++++--
->  drivers/edac/highbank_l2_edac.c |  4 ++--
->  drivers/edac/mpc85xx_edac.c     |  4 ++--
->  drivers/edac/mv64x60_edac.c     |  4 ++--
->  drivers/edac/octeon_edac-l2c.c  | 20 ++++++++++----------
->  drivers/edac/octeon_edac-pc.c   |  6 +++---
->  drivers/edac/qcom_edac.c        |  8 ++++----
->  drivers/edac/thunderx_edac.c    | 10 +++++-----
->  drivers/edac/xgene_edac.c       | 26 +++++++++++++-------------
->  13 files changed, 74 insertions(+), 64 deletions(-)
+For QUP IP versions 2.5 and above the oversampling rate is halved
+from 32 to 16. Update this rate after reading hardware version
+register, so that the clock divider value is correctly set to
+achieve required baud rate.
 
-> diff --git a/drivers/edac/edac_device.h b/drivers/edac/edac_device.h
-> index 1aaba74..cf1a1da 100644
-> --- a/drivers/edac/edac_device.h
-> +++ b/drivers/edac/edac_device.h
-> @@ -290,23 +290,27 @@ extern struct edac_device_ctl_info *edac_device_del_device(struct device *dev);
->   *	perform a common output and handling of an 'edac_dev' UE event
->   *
->   * @edac_dev: pointer to struct &edac_device_ctl_info
-> + * @error_count: number of errors of the same type
->   * @inst_nr: number of the instance where the UE error happened
->   * @block_nr: number of the block where the UE error happened
->   * @msg: message to be printed
->   */
->  extern void edac_device_handle_ue(struct edac_device_ctl_info *edac_dev,
-> -				int inst_nr, int block_nr, const char *msg);
-> +				  u16 error_count, int inst_nr, int block_nr,
-> +				  const char *msg);
->  /**
->   * edac_device_handle_ce():
->   *	perform a common output and handling of an 'edac_dev' CE event
->   *
->   * @edac_dev: pointer to struct &edac_device_ctl_info
-> + * @error_count: number of errors of the same type
->   * @inst_nr: number of the instance where the CE error happened
->   * @block_nr: number of the block where the CE error happened
->   * @msg: message to be printed
->   */
->  extern void edac_device_handle_ce(struct edac_device_ctl_info *edac_dev,
+Signed-off-by: Vivek Gautam <vivek.gautam@codeaurora.org>
+---
+ drivers/tty/serial/qcom_geni_serial.c | 15 ++++++++++++---
+ 1 file changed, 12 insertions(+), 3 deletions(-)
 
-How about renaming this to __edac_device_handle_ce() and then have 2
-macros for:
+diff --git a/drivers/tty/serial/qcom_geni_serial.c b/drivers/tty/serial/qcom_geni_serial.c
+index 35e5f9c5d5be..318f811585cc 100644
+--- a/drivers/tty/serial/qcom_geni_serial.c
++++ b/drivers/tty/serial/qcom_geni_serial.c
+@@ -920,12 +920,13 @@ static unsigned long get_clk_cfg(unsigned long clk_freq)
+ 	return 0;
+ }
+ 
+-static unsigned long get_clk_div_rate(unsigned int baud, unsigned int *clk_div)
++static unsigned long get_clk_div_rate(unsigned int baud,
++			unsigned int sampling_rate, unsigned int *clk_div)
+ {
+ 	unsigned long ser_clk;
+ 	unsigned long desired_clk;
+ 
+-	desired_clk = baud * UART_OVERSAMPLING;
++	desired_clk = baud * sampling_rate;
+ 	ser_clk = get_clk_cfg(desired_clk);
+ 	if (!ser_clk) {
+ 		pr_err("%s: Can't find matching DFS entry for baud %d\n",
+@@ -951,12 +952,20 @@ static void qcom_geni_serial_set_termios(struct uart_port *uport,
+ 	u32 ser_clk_cfg;
+ 	struct qcom_geni_serial_port *port = to_dev_port(uport, uport);
+ 	unsigned long clk_rate;
++	u32 ver, sampling_rate;
+ 
+ 	qcom_geni_serial_stop_rx(uport);
+ 	/* baud rate */
+ 	baud = uart_get_baud_rate(uport, termios, old, 300, 4000000);
+ 	port->baud = baud;
+-	clk_rate = get_clk_div_rate(baud, &clk_div);
++
++	sampling_rate = UART_OVERSAMPLING;
++	/* Sampling rate is halved for IP versions >= 2.5 */
++	ver = geni_se_get_qup_hw_version(&port->se);
++	if (GENI_SE_VERSION_MAJOR(ver) >= 2 && GENI_SE_VERSION_MINOR(ver) >= 5)
++		sampling_rate /= 2;
++
++	clk_rate = get_clk_div_rate(baud, sampling_rate, &clk_div);
+ 	if (!clk_rate)
+ 		goto out_restart_rx;
+ 
+-- 
+QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
+of Code Aurora Forum, hosted by The Linux Foundation
 
- * edac_device_handle_ce() to keep old i/f.
-
- * edac_device_handle_ce_count(), with count parameter added.
-
-Same for uncorrectable errors.
-
-Code of other driver can be kept as it is then.
-
-Thanks,
-
--Robert
-
-> -				int inst_nr, int block_nr, const char *msg);
-> +				  u16 error_count, int inst_nr, int block_nr,
-> +				  const char *msg);
