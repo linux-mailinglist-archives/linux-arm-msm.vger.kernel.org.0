@@ -2,153 +2,118 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 4371A7DD9B
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  1 Aug 2019 16:17:10 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 6F98B7DDC8
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  1 Aug 2019 16:24:12 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731653AbfHAORJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 1 Aug 2019 10:17:09 -0400
-Received: from mail-wr1-f67.google.com ([209.85.221.67]:41121 "EHLO
-        mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729149AbfHAORI (ORCPT
+        id S1729577AbfHAOYM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 1 Aug 2019 10:24:12 -0400
+Received: from mail-yw1-f68.google.com ([209.85.161.68]:44023 "EHLO
+        mail-yw1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729155AbfHAOYL (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 1 Aug 2019 10:17:08 -0400
-Received: by mail-wr1-f67.google.com with SMTP id c2so70567718wrm.8;
-        Thu, 01 Aug 2019 07:17:06 -0700 (PDT)
+        Thu, 1 Aug 2019 10:24:11 -0400
+Received: by mail-yw1-f68.google.com with SMTP id n205so26176163ywb.10
+        for <linux-arm-msm@vger.kernel.org>; Thu, 01 Aug 2019 07:24:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=HKF3166gvz5+E0AYlc4TPktG4r3p+wz5j7C+OwZ5mY8=;
-        b=JtX6UHg+sGBahZBSiWFubFtOIUDyR0pQQs1DKZPQbdWIU4V764RqroT0+nHKYjhzvr
-         tJRIdef0yjoCUTdzzKNG7PPKK4dVP49PyZh64NaBJ6nnI5w+/J7LECdxUZQpzMX8oS9+
-         2j2o9/DnsG2zLMRGk9j/B/I74opfwsiGPyXRhNbggIeBhBDFK0q8sDiB5WblylkhfUIU
-         ncvymhGmOUckvmUSGSXpEP7qDvVAPxgRzDlzlYgS2ylaaCrqv+yM3AtiI8thYTiRmUGl
-         H+lwZGRH0lFqztBPdL1pk2bn5AtBPsIwd/Ot4+06av3Pt/BPsUiESbuAgbO3oUIh4B3x
-         /glQ==
+        d=poorly.run; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:content-transfer-encoding:in-reply-to
+         :user-agent;
+        bh=YASKrLlbJRP8fvLhH4iPtQLrp26GJFL1b4mQHAA3AZs=;
+        b=G3SrUa45PitiX3FLd4WSjcX0/D+PiaY3ftdOKTBVZWYrr05t6Z6UnYx8gHIv5sJto+
+         aCH/f0iQR7qVNrhpKy4gGNgVHUVddCtXJfJ6G5eiNLeQmyBFyS+UCxErnVxgHyVOoaeB
+         KeIOjIaizmbgQZPOcF/whbIjQ1fcRaRLiU33ofo953MELCgPiTphUff8t3Gd1M6ILcG3
+         EGx3NN3+gzUPFQzJXVyps1G8XxykDIhvujKRCZmlQdvJlIboje1DtreCzOsY5h/o7CaE
+         9JTHaJUUW/53+gdSWR3WTjlxCxO+u27XJ5mW2ayEn2CTXrJGaGE3GeicDecNjo6tfCZE
+         wfWQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:date:from:to:cc:subject:message-id
-         :references:mime-version:content-disposition:in-reply-to:user-agent;
-        bh=HKF3166gvz5+E0AYlc4TPktG4r3p+wz5j7C+OwZ5mY8=;
-        b=WRLqhMrqNIjpXdOaa/jCg7ZnaR7HngLeQraOP7FGdYnS2femuhvATJgkZ7GmTYJlw4
-         PbnGFI4R/yMoyrTI1I8IAiT64I+pp0DeSQw8MRpr4F+QfixKHWJyqcfSDcVkBYJYsyZT
-         NteME+c4zlN1x4SqOIAl1gQMPyaJ00sh0spkOMoIbOA2VSFwcKPBZUruCAQm+xooUrwr
-         XdJyrYoTQ6qmhMwAxEADn0QL+g+GaVGC/SS0EFnvzXFH22Ww/vdS68irMaaqS3KONwPy
-         Hjk4llgG/Q0GVdElDTlUlK5AfBdLgK2rA+d5eeHM4eI/Ie3FAS8NSod/6xm3PP9T/QtS
-         Fy5Q==
-X-Gm-Message-State: APjAAAX8X5HEIXp9vmTTS5xBsd0AU5R7zuVFVLnQM8MgzzlkZxBDEKFW
-        CLeDzRA6pK+5AAEeWYQ1mE0=
-X-Google-Smtp-Source: APXvYqwaVSh2wfqR7ZJl9zgO332rafYDXj6QzlZhom3wr8XM08rG9eVv6iOzeEuki1e+ISyRdsb1dQ==
-X-Received: by 2002:a5d:6190:: with SMTP id j16mr2175499wru.49.1564669025577;
-        Thu, 01 Aug 2019 07:17:05 -0700 (PDT)
-Received: from rric.localdomain (x4e365c6b.dyn.telefonica.de. [78.54.92.107])
-        by smtp.gmail.com with ESMTPSA id p6sm78875566wrq.97.2019.08.01.07.17.03
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Thu, 01 Aug 2019 07:17:04 -0700 (PDT)
-Date:   Thu, 1 Aug 2019 16:17:01 +0200
-From:   Robert Richter <rric@kernel.org>
-To:     "Hawa, Hanna" <hhhawa@amazon.com>
-Cc:     thor.thayer@linux.intel.com, bp@alien8.de, mchehab@kernel.org,
-        james.morse@arm.com, morbidrsa@gmail.com, ralf@linux-mips.org,
-        david.daney@cavium.com, andy.gross@linaro.org,
-        david.brown@linaro.org, ckadabi@codeaurora.org,
-        vnkgutta@codeaurora.org, jglauber@cavium.com,
-        khuong@os.amperecomputing.com, dwmw@amazon.co.uk, benh@amazon.com,
-        ronenk@amazon.com, talel@amazon.com, jonnyc@amazon.com,
-        hanochu@amazon.com, linux-edac@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-mips@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org
-Subject: Re: [RFC 1/1] edac: Add a counter parameter for
- edac_device_handle_ue/ce()
-Message-ID: <20190801141701.bmcken464mrqwhdg@rric.localdomain>
-References: <1563187987-5847-1-git-send-email-hhhawa@amazon.com>
- <20190801113548.7leooh57gihixen5@rric.localdomain>
- <7d6aac9e-20e5-3901-a423-d76ac917b251@amazon.com>
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        bh=YASKrLlbJRP8fvLhH4iPtQLrp26GJFL1b4mQHAA3AZs=;
+        b=extuoEwn8gC9sepb1TumJ5YNoZprH922TRL9k20MqkybsCegH5whUHHCdyx4aQTaX6
+         nTM/4RrqaVbsUZ5vUTY/8keGeIdLM7bZcMXxyO4bLwqnvhTG+LLEbWZZ+In3/YVmtfTy
+         SPklomoK/zG0FtVQlE4wT9ZIKas6vldUbPXpIgdcaJqvHy1W8c9XaLU8aG42R7uNYpuy
+         OSPDdUw4y6+nvteOSiqVrB+O5Q6rKzDM8Qg3oPdcAiTgN+Rcp+OfJ3PYFJsiWnIM7tzL
+         tqsEnnMq6krwGnkgipYiDNgcSEn2hqjWKMHX6IXLwN7mmxcy6vG34yNil1hPz3tugPol
+         7YWw==
+X-Gm-Message-State: APjAAAVFVsoilOBcVRzbTSwWrNoFS23CmQmt/WMLyNL0m2tWMtVIGRT5
+        F1EyzDzHBTqq1wFG8Q7TUgdNxg==
+X-Google-Smtp-Source: APXvYqwX5+pgDm5RwnFmpQ4KELkPqv3W0V2bu85OXQs2pia4gyCUw5jUZwHp2+qbU88Muf0rrb0reg==
+X-Received: by 2002:a81:2710:: with SMTP id n16mr74951691ywn.209.1564669451110;
+        Thu, 01 Aug 2019 07:24:11 -0700 (PDT)
+Received: from localhost ([2620:0:1013:11:89c6:2139:5435:371d])
+        by smtp.gmail.com with ESMTPSA id m124sm16302442ywc.51.2019.08.01.07.24.10
+        (version=TLS1_3 cipher=AEAD-AES256-GCM-SHA384 bits=256/256);
+        Thu, 01 Aug 2019 07:24:10 -0700 (PDT)
+Date:   Thu, 1 Aug 2019 10:24:10 -0400
+From:   Sean Paul <sean@poorly.run>
+To:     Anders Roxell <anders.roxell@linaro.org>
+Cc:     robdclark@gmail.com, sean@poorly.run, airlied@linux.ie,
+        daniel@ffwll.ch, linux-arm-msm@vger.kernel.org,
+        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
+        linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 1/3] drm: msm: a6xx: Mark expected switch fall-through
+Message-ID: <20190801142410.GU104440@art_vandelay>
+References: <20190726112746.19410-1-anders.roxell@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <7d6aac9e-20e5-3901-a423-d76ac917b251@amazon.com>
-User-Agent: NeoMutt/20170113 (1.7.2)
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20190726112746.19410-1-anders.roxell@linaro.org>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 01.08.19 15:29:03, Hawa, Hanna wrote:
-> On 8/1/2019 2:35 PM, Robert Richter wrote:
-> > On 15.07.19 13:53:07, Hanna Hawa wrote:
-> > > Add a counter parameter in order to avoid losing errors count for edac
-> > > device, the error count reports the number of errors reported by an edac
-> > > device similar to the way MC_EDAC do.
-> > > 
-> > > Signed-off-by: Hanna Hawa <hhhawa@amazon.com>
-> > > ---
-> > >   drivers/edac/altera_edac.c      | 20 ++++++++++++--------
-> > >   drivers/edac/amd8111_edac.c     |  6 +++---
-> > >   drivers/edac/cpc925_edac.c      |  4 ++--
-> > >   drivers/edac/edac_device.c      | 18 ++++++++++--------
-> > >   drivers/edac/edac_device.h      |  8 ++++++--
-> > >   drivers/edac/highbank_l2_edac.c |  4 ++--
-> > >   drivers/edac/mpc85xx_edac.c     |  4 ++--
-> > >   drivers/edac/mv64x60_edac.c     |  4 ++--
-> > >   drivers/edac/octeon_edac-l2c.c  | 20 ++++++++++----------
-> > >   drivers/edac/octeon_edac-pc.c   |  6 +++---
-> > >   drivers/edac/qcom_edac.c        |  8 ++++----
-> > >   drivers/edac/thunderx_edac.c    | 10 +++++-----
-> > >   drivers/edac/xgene_edac.c       | 26 +++++++++++++-------------
-> > >   13 files changed, 74 insertions(+), 64 deletions(-)
-> > 
-> > > diff --git a/drivers/edac/edac_device.h b/drivers/edac/edac_device.h
-> > > index 1aaba74..cf1a1da 100644
-> > > --- a/drivers/edac/edac_device.h
-> > > +++ b/drivers/edac/edac_device.h
-> > > @@ -290,23 +290,27 @@ extern struct edac_device_ctl_info *edac_device_del_device(struct device *dev);
-> > >    *	perform a common output and handling of an 'edac_dev' UE event
-> > >    *
-> > >    * @edac_dev: pointer to struct &edac_device_ctl_info
-> > > + * @error_count: number of errors of the same type
-> > >    * @inst_nr: number of the instance where the UE error happened
-> > >    * @block_nr: number of the block where the UE error happened
-> > >    * @msg: message to be printed
-> > >    */
-> > >   extern void edac_device_handle_ue(struct edac_device_ctl_info *edac_dev,
-> > > -				int inst_nr, int block_nr, const char *msg);
-> > > +				  u16 error_count, int inst_nr, int block_nr,
-> > > +				  const char *msg);
-> > >   /**
-> > >    * edac_device_handle_ce():
-> > >    *	perform a common output and handling of an 'edac_dev' CE event
-> > >    *
-> > >    * @edac_dev: pointer to struct &edac_device_ctl_info
-> > > + * @error_count: number of errors of the same type
-> > >    * @inst_nr: number of the instance where the CE error happened
-> > >    * @block_nr: number of the block where the CE error happened
-> > >    * @msg: message to be printed
-> > >    */
-> > >   extern void edac_device_handle_ce(struct edac_device_ctl_info *edac_dev,
-> > 
-> > How about renaming this to __edac_device_handle_ce() and then have 2
-> > macros for:
-> > 
-> >   * edac_device_handle_ce() to keep old i/f.
-> > 
-> >   * edac_device_handle_ce_count(), with count parameter added.
-> > 
-> > Same for uncorrectable errors.
-> > 
-> > Code of other driver can be kept as it is then.
+On Fri, Jul 26, 2019 at 01:27:46PM +0200, Anders Roxell wrote:
+> When fall-through warnings was enabled by default the following warning
+> was starting to show up:
 > 
-> Don't you think it'll be confused to have different APIs between EDAC_MC and
-> EDAC_DEVICE?
-> (in MC the count passed as part of edac_mc_handle_error())
+> ../drivers/gpu/drm/msm/adreno/a6xx_gpu.c: In function ‘a6xx_submit’:
+> ../drivers/gpu/drm/msm/adreno/a6xx_gpu.c:116:7: warning: this statement may fall
+>  through [-Wimplicit-fallthrough=]
+>     if (priv->lastctx == ctx)
+>        ^
+> ../drivers/gpu/drm/msm/adreno/a6xx_gpu.c:118:3: note: here
+>    case MSM_SUBMIT_CMD_BUF:
+>    ^~~~
+> 
+> Rework so that the compiler doesn't warn about fall-through.
+> 
+> Fixes: d93512ef0f0e ("Makefile: Globally enable fall-through warning")
+> Signed-off-by: Anders Roxell <anders.roxell@linaro.org>
 
-I don't think edac_mc_handle_error() with 11 function arguments is a
-good reference for somethin we want to adopt. For the majority of
-drivers you just introduce another useless argument with the following
-pattern:
+Hi Anders,
+Thank you for your patches. Jordan had previously sent the same fixes in
+"drm/msm: Annotate intentional switch statement fall throughs" one day earlier
+than yours, so I'll pick up that patch.
 
-	edac_device_handle_ce(edac_dev, 1, 0, 0, edac_dev_name);
+Thanks again!
 
-IMO, the api should be improved when touching it.
+Sean
 
--Robert
+> ---
+>  drivers/gpu/drm/msm/adreno/a6xx_gpu.c | 1 +
+>  1 file changed, 1 insertion(+)
+> 
+> diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
+> index be39cf01e51e..644a6ee53f05 100644
+> --- a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
+> +++ b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
+> @@ -115,6 +115,7 @@ static void a6xx_submit(struct msm_gpu *gpu, struct msm_gem_submit *submit,
+>  		case MSM_SUBMIT_CMD_CTX_RESTORE_BUF:
+>  			if (priv->lastctx == ctx)
+>  				break;
+> +			/* Fall through */
+>  		case MSM_SUBMIT_CMD_BUF:
+>  			OUT_PKT7(ring, CP_INDIRECT_BUFFER_PFE, 3);
+>  			OUT_RING(ring, lower_32_bits(submit->cmd[i].iova));
+> -- 
+> 2.20.1
+> 
+
+-- 
+Sean Paul, Software Engineer, Google / Chromium OS
