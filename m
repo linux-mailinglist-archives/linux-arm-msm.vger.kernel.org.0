@@ -2,282 +2,131 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id C7DD27DDFB
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  1 Aug 2019 16:36:17 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0A36A7E140
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  1 Aug 2019 19:42:20 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732099AbfHAOgQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 1 Aug 2019 10:36:16 -0400
-Received: from mail-pf1-f193.google.com ([209.85.210.193]:37813 "EHLO
-        mail-pf1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1732065AbfHAOgQ (ORCPT
+        id S1732128AbfHARmT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 1 Aug 2019 13:42:19 -0400
+Received: from mail-pf1-f196.google.com ([209.85.210.196]:44239 "EHLO
+        mail-pf1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1731573AbfHARmT (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 1 Aug 2019 10:36:16 -0400
-Received: by mail-pf1-f193.google.com with SMTP id 19so34186127pfa.4
-        for <linux-arm-msm@vger.kernel.org>; Thu, 01 Aug 2019 07:36:16 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=pibx78EWG8gcOu1hDUtRcgYysH58v/vtqrpOcAw6IUw=;
-        b=vCrRfxxSxKnmkxXdjlHz6jpu0VaVwAwF9gijiaar/VO4KY+Lah0TkNsuJsq2shBGib
-         gwZKKJuTlXJ4wdaeK7EfP1ow/n2uL9jDzVqlFFx6rIJwMmE/Sfy9UFN8zFhydTYIKKd7
-         7pvX/y6BZ7ypVMF865669HD1CxHK5c1slsH6hv0qr3ZX880fi93/y/ysz1tdXcCXbOEw
-         7bPCS/fncRYHjOlABYLMAo9D+qxxtZ9MUmWSvQROdGGMLb8+3ssQocExz0f2FvrZKVi9
-         cQ2cl9wwkXDpARY1xHuWDYk/0PCGBr3uc6a86WTuOSMa9+ka43irQCIFqDcpyClwvIJE
-         Cs7g==
+        Thu, 1 Aug 2019 13:42:19 -0400
+Received: by mail-pf1-f196.google.com with SMTP id t16so34451668pfe.11;
+        Thu, 01 Aug 2019 10:42:18 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=pibx78EWG8gcOu1hDUtRcgYysH58v/vtqrpOcAw6IUw=;
-        b=QHl4n/ZMDPlNpQF9fhP0Se0dSYHqq6jZkPk5wEyQFFXls/BRtq0O/hKy2n2RhUkLlo
-         Eumj7+a98/Jn7Aa3CDNqag0D57O2awggXkyyPEF2PPd7SpVAAQi7TrwhjsAXqB23z8RY
-         4DwjmBFUFjExaEYURSVDJqqg/dCdW1wC0mLmHc0hZYcZSMGqpH/GOnekhN6PVoeTRUdE
-         tqLlDbgYS+Gv6lrg1BxXGYfwZj0XcwFOtXdR8cCMVErGTIh2qi871T5IC0xzzGfwFibQ
-         12D+F+pXXJg7Wb7Tu514raex907EgtQtrpn5jbNx1CCyTfZ/wTNT+i3cTDS88f6EQCdD
-         BHuw==
-X-Gm-Message-State: APjAAAWu6PTzopPYf9olAkYneqCroTabQH/OTiB2tkDjmKhOTKxWsBBK
-        D4NBnwTkhb3YP90gWvfXGP5XQGf32I0=
-X-Google-Smtp-Source: APXvYqzQsHGjFMFrJt2isegmbNtDWJz61+n+L0FWCYTV7fTkYB0L9NzLnbs6kghQKO85K5VdRt884Q==
-X-Received: by 2002:a63:6686:: with SMTP id a128mr111329429pgc.361.1564670175416;
-        Thu, 01 Aug 2019 07:36:15 -0700 (PDT)
-Received: from tuxbook-pro (104-188-17-28.lightspeed.sndgca.sbcglobal.net. [104.188.17.28])
-        by smtp.gmail.com with ESMTPSA id f32sm4650500pgb.21.2019.08.01.07.36.14
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        bh=c2hESp5P0VdXb1KGHmHBHOL26umzSRk5VuA6OOFxtVM=;
+        b=fUiMNYiNxQbaJUKktacnDTuosoG403NWOfF1HoQSSVDbV0vtoPNVsxlMGoS8c+Ka1x
+         FyJqtwGWRA6wAHk4Pux8DTGUsiZk/YwnZNFqPdPKWd/IbLDLog5rA6RyQ2cMw6mdqoMe
+         Jkd2dJ/KQz3ZAylI1np91LamwLuI2qAHck1QaWVpPvL0slIoSGXEgc3ta/61GpkU2oem
+         eEXgctyQnlhJThZ4qWaihUQqPR5uGdiOUtu1wnjcz1tThKZzGNPgIngtimOLylL8yI4a
+         4Fk2QKc3xr7IvlJdIqifNbMLOQLrQpP1rzu54TUJtkhEiZ4Gwu3L5es+bqO+vAGAanyW
+         HDLQ==
+X-Gm-Message-State: APjAAAUxA+sxzCdOhwJLUxGAJHWMJOIJj+vQWg86NXsbwB7+Ael/522i
+        M7W4kciQyukLBdJofRoAHfM=
+X-Google-Smtp-Source: APXvYqwvXu3G8nVpXIkNxWN9ELmjM1cWN+Tl1xKF06uVZBAUb2aBahH/zXWAt3NRyzyefm9aQ216BA==
+X-Received: by 2002:a62:e901:: with SMTP id j1mr55881964pfh.189.1564681338080;
+        Thu, 01 Aug 2019 10:42:18 -0700 (PDT)
+Received: from 42.do-not-panic.com (42.do-not-panic.com. [157.230.128.187])
+        by smtp.gmail.com with ESMTPSA id j6sm63680898pfa.141.2019.08.01.10.42.16
         (version=TLS1_3 cipher=AEAD-AES256-GCM-SHA384 bits=256/256);
-        Thu, 01 Aug 2019 07:36:14 -0700 (PDT)
-Date:   Thu, 1 Aug 2019 07:37:45 -0700
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Rajendra Nayak <rnayak@codeaurora.org>
-Cc:     linus.walleij@linaro.org, linux-arm-msm@vger.kernel.org,
-        agross@kernel.org, robh+dt@kernel.org, linux-gpio@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Jitendra Sharma <shajit@codeaurora.org>,
-        Vivek Gautam <vivek.gautam@codeaurora.org>
-Subject: Re: [PATCH 1/2] dt-bindings: pinctrl: qcom: Add SC7180 pinctrl
- binding
-Message-ID: <20190801143745.GZ7234@tuxbook-pro>
-References: <20190801100717.23333-1-rnayak@codeaurora.org>
+        Thu, 01 Aug 2019 10:42:16 -0700 (PDT)
+Received: by 42.do-not-panic.com (Postfix, from userid 1000)
+        id 07BF440280; Thu,  1 Aug 2019 17:42:15 +0000 (UTC)
+Date:   Thu, 1 Aug 2019 17:42:15 +0000
+From:   Luis Chamberlain <mcgrof@kernel.org>
+To:     Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc:     Scott Branden <scott.branden@broadcom.com>,
+        David Brown <david.brown@linaro.org>,
+        Alexander Viro <viro@zeniv.linux.org.uk>,
+        "Rafael J . Wysocki" <rafael@kernel.org>,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-fsdevel@vger.kernel.org,
+        BCM Kernel Feedback <bcm-kernel-feedback-list@broadcom.com>,
+        Olof Johansson <olof@lixom.net>
+Subject: Re: [PATCH 2/3] firmware: add offset to request_firmware_into_buf
+Message-ID: <20190801174215.GB16384@42.do-not-panic.com>
+References: <20190523025113.4605-1-scott.branden@broadcom.com>
+ <20190523025113.4605-3-scott.branden@broadcom.com>
+ <20190523055233.GB22946@kroah.com>
+ <15c47e4d-e70d-26bb-9747-0ad0aa81597b@broadcom.com>
+ <20190523165424.GA21048@kroah.com>
+ <44282070-ddaf-3afb-9bdc-4751e3f197ac@broadcom.com>
+ <20190524052258.GB28229@kroah.com>
+ <2f67db0a-27c3-d13c-bbe0-0af5edd4f0da@broadcom.com>
+ <20190801061801.GA4338@kroah.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=iso-8859-1
 Content-Disposition: inline
-In-Reply-To: <20190801100717.23333-1-rnayak@codeaurora.org>
-User-Agent: Mutt/1.11.4 (2019-03-13)
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20190801061801.GA4338@kroah.com>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu 01 Aug 03:07 PDT 2019, Rajendra Nayak wrote:
+On Thu, Aug 01, 2019 at 08:18:01AM +0200, Greg Kroah-Hartman wrote:
+> On Wed, Jul 31, 2019 at 05:18:32PM -0700, Scott Branden wrote:
+> > Hi Greg,
+> > 
+> > I am now back from leave to continue this patch.  Comment below.
+> > 
+> > On 2019-05-23 10:22 p.m., Greg Kroah-Hartman wrote:
+> > > On Thu, May 23, 2019 at 10:01:38PM -0700, Scott Branden wrote:
+> > > > On 2019-05-23 9:54 a.m., Greg Kroah-Hartman wrote:
+> > > > > On Thu, May 23, 2019 at 09:36:02AM -0700, Scott Branden wrote:
+> > > > > > Hi Greg,
+> > > > > > 
+> > > > > > On 2019-05-22 10:52 p.m., Greg Kroah-Hartman wrote:
+> > > > > > > On Wed, May 22, 2019 at 07:51:12PM -0700, Scott Branden wrote:
+> > > > > > > > Add offset to request_firmware_into_buf to allow for portions
+> > > > > > > > of firmware file to be read into a buffer.  Necessary where firmware
+> > > > > > > > needs to be loaded in portions from file in memory constrained systems.
+> > > > > > > > 
+> > > > > > > > Signed-off-by: Scott Branden <scott.branden@broadcom.com>
+> > > > > > > > ---
+> > > > > > > >     drivers/base/firmware_loader/firmware.h |  5 +++
+> > > > > > > >     drivers/base/firmware_loader/main.c     | 49 +++++++++++++++++--------
+> > > > > > > >     include/linux/firmware.h                |  8 +++-
+> > > > > > > >     3 files changed, 45 insertions(+), 17 deletions(-)
+> > > > > > > No new firmware test for this new option?  How do we know it even works?
+> > > > > > I was unaware there are existing firmware tests.  Please let me know where
+> > > > > > these tests exists and I can add a test for this new option.
+> > > > > tools/testing/selftests/firmware/
+> > > > Unfortunately, there doesn't seem to be a test for the existing
+> > > > request_firmware_into_buf api.
+> > > Are you sure?  The test is for userspace functionality, there isn't
+> > > kernel unit tests here.  You need to verify that you didn't break
+> > > existing functionality as well as verify that your new functionality
+> > > works.
+> > 
+> > I managed to figure out how to build and run
+> > tools/testing/selftest/firmware/fw_run_tests.sh
+> > 
+> > and my changes don't break existing functionality.
 
-> From: Jitendra Sharma <shajit@codeaurora.org>
-> 
-> Add the binding for the TLMM pinctrl block found in the SC7180 platform
-> 
-> Signed-off-by: Jitendra Sharma <shajit@codeaurora.org>
-> Signed-off-by: Vivek Gautam <vivek.gautam@codeaurora.org>
-> [rnayak: Fix some copy-paste issues, sort and fix functions]
-> Signed-off-by: Rajendra Nayak <rnayak@codeaurora.org>
+I'm soon going to release something that is going to let you do this 
+faster and easier, let me know if you had troubles in trying to figure
+out how to not regress the kernel using this.
 
-Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+> > But, I find no use of request_firmware_into_buf in lib/test_firmware.c
+> > (triggered by fw_run_tests.sh).
+> > 
+> > Is there another test for request_firmware_into_buf?
+> 
+> I have no idea, sorry.
 
-> ---
->  .../bindings/pinctrl/qcom,sc7180-pinctrl.txt  | 186 ++++++++++++++++++
->  1 file changed, 186 insertions(+)
->  create mode 100644 Documentation/devicetree/bindings/pinctrl/qcom,sc7180-pinctrl.txt
-> 
-> diff --git a/Documentation/devicetree/bindings/pinctrl/qcom,sc7180-pinctrl.txt b/Documentation/devicetree/bindings/pinctrl/qcom,sc7180-pinctrl.txt
-> new file mode 100644
-> index 000000000000..948cd56cfab7
-> --- /dev/null
-> +++ b/Documentation/devicetree/bindings/pinctrl/qcom,sc7180-pinctrl.txt
-> @@ -0,0 +1,186 @@
-> +Qualcomm Technologies, Inc. SC7180 TLMM block
-> +
-> +This binding describes the Top Level Mode Multiplexer block found in the
-> +SC7180 platform.
-> +
-> +- compatible:
-> +	Usage: required
-> +	Value type: <string>
-> +	Definition: must be "qcom,sc7180-pinctrl"
-> +
-> +- reg:
-> +	Usage: required
-> +	Value type: <prop-encoded-array>
-> +	Definition: the base address and size of the north, south and west
-> +		    TLMM tiles
-> +
-> +- reg-names:
-> +	Usage: required
-> +	Value type: <prop-encoded-array>
-> +	Defintiion: names for the cells of reg, must contain "north", "south"
-> +		    and "west".
-> +
-> +- interrupts:
-> +	Usage: required
-> +	Value type: <prop-encoded-array>
-> +	Definition: should specify the TLMM summary IRQ.
-> +
-> +- interrupt-controller:
-> +	Usage: required
-> +	Value type: <none>
-> +	Definition: identifies this node as an interrupt controller
-> +
-> +- #interrupt-cells:
-> +	Usage: required
-> +	Value type: <u32>
-> +	Definition: must be 2. Specifying the pin number and flags, as defined
-> +		    in <dt-bindings/interrupt-controller/irq.h>
-> +
-> +- gpio-controller:
-> +	Usage: required
-> +	Value type: <none>
-> +	Definition: identifies this node as a gpio controller
-> +
-> +- #gpio-cells:
-> +	Usage: required
-> +	Value type: <u32>
-> +	Definition: must be 2. Specifying the pin number and flags, as defined
-> +		    in <dt-bindings/gpio/gpio.h>
-> +
-> +- gpio-ranges:
-> +	Usage: required
-> +	Value type: <prop-encoded-array>
-> +	Definition:  see ../gpio/gpio.txt
-> +
-> +- gpio-reserved-ranges:
-> +	Usage: optional
-> +	Value type: <prop-encoded-array>
-> +	Definition: see ../gpio/gpio.txt
-> +
-> +Please refer to ../gpio/gpio.txt and ../interrupt-controller/interrupts.txt for
-> +a general description of GPIO and interrupt bindings.
-> +
-> +Please refer to pinctrl-bindings.txt in this directory for details of the
-> +common pinctrl bindings used by client devices, including the meaning of the
-> +phrase "pin configuration node".
-> +
-> +The pin configuration nodes act as a container for an arbitrary number of
-> +subnodes. Each of these subnodes represents some desired configuration for a
-> +pin, a group, or a list of pins or groups. This configuration can include the
-> +mux function to select on those pin(s)/group(s), and various pin configuration
-> +parameters, such as pull-up, drive strength, etc.
-> +
-> +
-> +PIN CONFIGURATION NODES:
-> +
-> +The name of each subnode is not important; all subnodes should be enumerated
-> +and processed purely based on their content.
-> +
-> +Each subnode only affects those parameters that are explicitly listed. In
-> +other words, a subnode that lists a mux function but no pin configuration
-> +parameters implies no information about any pin configuration parameters.
-> +Similarly, a pin subnode that describes a pullup parameter implies no
-> +information about e.g. the mux function.
-> +
-> +
-> +The following generic properties as defined in pinctrl-bindings.txt are valid
-> +to specify in a pin configuration subnode:
-> +
-> +- pins:
-> +	Usage: required
-> +	Value type: <string-array>
-> +	Definition: List of gpio pins affected by the properties specified in
-> +		    this subnode.
-> +
-> +		    Valid pins are:
-> +		      gpio0-gpio118
-> +		        Supports mux, bias and drive-strength
-> +
-> +		      sdc1_clk, sdc1_cmd, sdc1_data sdc2_clk, sdc2_cmd,
-> +		      sdc2_data sdc1_rclk
-> +		        Supports bias and drive-strength
-> +
-> +		      ufs_reset
-> +			Supports bias and drive-strength
-> +
-> +- function:
-> +	Usage: required
-> +	Value type: <string>
-> +	Definition: Specify the alternative function to be configured for the
-> +		    specified pins. Functions are only valid for gpio pins.
-> +		    Valid values are:
-> +
-> +		    adsp_ext, agera_pll, aoss_cti, atest_char, atest_char0,
-> +		    atest_char1, atest_char2, atest_char3, atest_tsens,
-> +		    atest_tsens2, atest_usb1, atest_usb10, atest_usb11,
-> +		    atest_usb12, atest_usb13, atest_usb2, atest_usb20,
-> +		    atest_usb21, atest_usb22, atest_usb23, audio_ref,
-> +		    btfm_slimbus, cam_mclk, cci_async, cci_i2c, cci_timer0,
-> +		    cci_timer1, cci_timer2, cci_timer3, cci_timer4,
-> +		    cri_trng, dbg_out, ddr_bist, ddr_pxi0, ddr_pxi1,
-> +		    ddr_pxi2, ddr_pxi3, dp_hot, edp_lcd, gcc_gp1, gcc_gp2,
-> +		    gcc_gp3, gpio, gp_pdm0, gp_pdm1, gp_pdm2, gps_tx,
-> +		    jitter_bist, ldo_en, ldo_update, lpass_ext, mdp_vsync,
-> +		    mdp_vsync0, mdp_vsync1, mdp_vsync2, mdp_vsync3, mi2s_0,
-> +		    mi2s_1, mi2s_2, mss_lte, m_voc, pa_indicator, phase_flag,
-> +		    PLL_BIST, pll_bypassnl, pll_reset, prng_rosc, qdss,
-> +		    qdss_cti, qlink_enable, qlink_request, qspi_clk, qspi_cs,
-> +		    qspi_data, qup00, qup01, qup02, qup03, qup04, qup05,
-> +		    qup10, qup11, qup12, qup13, qup14, qup15, sdc1_tb,
-> +		    sdc2_tb, sd_write, sp_cmu, tgu_ch0, tgu_ch1, tgu_ch2,
-> +		    tgu_ch3, tsense_pwm1, tsense_pwm2, uim1, uim2, uim_batt,
-> +		    usb_phy, vfr_1, _V_GPIO, _V_PPS_IN, _V_PPS_OUT,
-> +		    vsense_trigger, wlan1_adc0, wlan1_adc1, wlan2_adc0,
-> +		    wlan2_adc1,
-> +
-> +- bias-disable:
-> +	Usage: optional
-> +	Value type: <none>
-> +	Definition: The specified pins should be configured as no pull.
-> +
-> +- bias-pull-down:
-> +	Usage: optional
-> +	Value type: <none>
-> +	Definition: The specified pins should be configured as pull down.
-> +
-> +- bias-pull-up:
-> +	Usage: optional
-> +	Value type: <none>
-> +	Definition: The specified pins should be configured as pull up.
-> +
-> +- output-high:
-> +	Usage: optional
-> +	Value type: <none>
-> +	Definition: The specified pins are configured in output mode, driven
-> +		    high.
-> +		    Not valid for sdc pins.
-> +
-> +- output-low:
-> +	Usage: optional
-> +	Value type: <none>
-> +	Definition: The specified pins are configured in output mode, driven
-> +		    low.
-> +		    Not valid for sdc pins.
-> +
-> +- drive-strength:
-> +	Usage: optional
-> +	Value type: <u32>
-> +	Definition: Selects the drive strength for the specified pins, in mA.
-> +		    Valid values are: 2, 4, 6, 8, 10, 12, 14 and 16
-> +
-> +Example:
-> +
-> +	tlmm: pinctrl@3000000 {
-> +		compatible = "qcom,sc7180-pinctrl";
-> +		reg = <0x3500000 0x300000>,
-> +		      <0x3900000 0x300000>,
-> +		      <0x3D00000 0x300000>;
-> +		reg-names = "west", "north", "south";
-> +		interrupts = <GIC_SPI 208 IRQ_TYPE_LEVEL_HIGH>;
-> +		gpio-controller;
-> +		#gpio-cells = <2>;
-> +		gpio-ranges = <&tlmm 0 0 119>;
-> +		gpio-reserved-ranges = <0 4>, <106 4>;
-> +		interrupt-controller;
-> +		#interrupt-cells = <2>;
-> +	};
-> -- 
-> QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
-> of Code Aurora Forum, hosted by The Linux Foundation
-> 
+The folks who implemented request_firmware_into_buf() didn't add a
+respective test, because, well, this API went upstream IMO without much
+ACKs / review, and even no damn users. Now we have a user so we're stuck
+with it.
+
+So new testing calls for it would be appreciated. If you have questions
+I am happy to help.
+
+  Luis
