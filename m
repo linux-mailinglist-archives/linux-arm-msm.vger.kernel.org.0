@@ -2,118 +2,93 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 6F98B7DDC8
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  1 Aug 2019 16:24:12 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 18CB77DDEE
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  1 Aug 2019 16:31:22 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729577AbfHAOYM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 1 Aug 2019 10:24:12 -0400
-Received: from mail-yw1-f68.google.com ([209.85.161.68]:44023 "EHLO
-        mail-yw1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729155AbfHAOYL (ORCPT
+        id S1731986AbfHAObQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 1 Aug 2019 10:31:16 -0400
+Received: from smtp-fw-9102.amazon.com ([207.171.184.29]:55541 "EHLO
+        smtp-fw-9102.amazon.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1731284AbfHAObP (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 1 Aug 2019 10:24:11 -0400
-Received: by mail-yw1-f68.google.com with SMTP id n205so26176163ywb.10
-        for <linux-arm-msm@vger.kernel.org>; Thu, 01 Aug 2019 07:24:11 -0700 (PDT)
+        Thu, 1 Aug 2019 10:31:15 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=poorly.run; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to
-         :user-agent;
-        bh=YASKrLlbJRP8fvLhH4iPtQLrp26GJFL1b4mQHAA3AZs=;
-        b=G3SrUa45PitiX3FLd4WSjcX0/D+PiaY3ftdOKTBVZWYrr05t6Z6UnYx8gHIv5sJto+
-         aCH/f0iQR7qVNrhpKy4gGNgVHUVddCtXJfJ6G5eiNLeQmyBFyS+UCxErnVxgHyVOoaeB
-         KeIOjIaizmbgQZPOcF/whbIjQ1fcRaRLiU33ofo953MELCgPiTphUff8t3Gd1M6ILcG3
-         EGx3NN3+gzUPFQzJXVyps1G8XxykDIhvujKRCZmlQdvJlIboje1DtreCzOsY5h/o7CaE
-         9JTHaJUUW/53+gdSWR3WTjlxCxO+u27XJ5mW2ayEn2CTXrJGaGE3GeicDecNjo6tfCZE
-         wfWQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        bh=YASKrLlbJRP8fvLhH4iPtQLrp26GJFL1b4mQHAA3AZs=;
-        b=extuoEwn8gC9sepb1TumJ5YNoZprH922TRL9k20MqkybsCegH5whUHHCdyx4aQTaX6
-         nTM/4RrqaVbsUZ5vUTY/8keGeIdLM7bZcMXxyO4bLwqnvhTG+LLEbWZZ+In3/YVmtfTy
-         SPklomoK/zG0FtVQlE4wT9ZIKas6vldUbPXpIgdcaJqvHy1W8c9XaLU8aG42R7uNYpuy
-         OSPDdUw4y6+nvteOSiqVrB+O5Q6rKzDM8Qg3oPdcAiTgN+Rcp+OfJ3PYFJsiWnIM7tzL
-         tqsEnnMq6krwGnkgipYiDNgcSEn2hqjWKMHX6IXLwN7mmxcy6vG34yNil1hPz3tugPol
-         7YWw==
-X-Gm-Message-State: APjAAAVFVsoilOBcVRzbTSwWrNoFS23CmQmt/WMLyNL0m2tWMtVIGRT5
-        F1EyzDzHBTqq1wFG8Q7TUgdNxg==
-X-Google-Smtp-Source: APXvYqwX5+pgDm5RwnFmpQ4KELkPqv3W0V2bu85OXQs2pia4gyCUw5jUZwHp2+qbU88Muf0rrb0reg==
-X-Received: by 2002:a81:2710:: with SMTP id n16mr74951691ywn.209.1564669451110;
-        Thu, 01 Aug 2019 07:24:11 -0700 (PDT)
-Received: from localhost ([2620:0:1013:11:89c6:2139:5435:371d])
-        by smtp.gmail.com with ESMTPSA id m124sm16302442ywc.51.2019.08.01.07.24.10
-        (version=TLS1_3 cipher=AEAD-AES256-GCM-SHA384 bits=256/256);
-        Thu, 01 Aug 2019 07:24:10 -0700 (PDT)
-Date:   Thu, 1 Aug 2019 10:24:10 -0400
-From:   Sean Paul <sean@poorly.run>
-To:     Anders Roxell <anders.roxell@linaro.org>
-Cc:     robdclark@gmail.com, sean@poorly.run, airlied@linux.ie,
-        daniel@ffwll.ch, linux-arm-msm@vger.kernel.org,
-        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
-        linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 1/3] drm: msm: a6xx: Mark expected switch fall-through
-Message-ID: <20190801142410.GU104440@art_vandelay>
-References: <20190726112746.19410-1-anders.roxell@linaro.org>
+  d=amazon.com; i=@amazon.com; q=dns/txt; s=amazon201209;
+  t=1564669873; x=1596205873;
+  h=subject:to:cc:references:from:message-id:date:
+   mime-version:in-reply-to:content-transfer-encoding;
+  bh=CYr97n4jQ+i8XoMJ1ptuHgHbqpfgmK1fn3mN/NxQ128=;
+  b=uvyTgNPUjMJ2SDB/3yzQcDNPpyeda2EGVu+gp2VrE8b0X+p60xC5w7YG
+   mS2kUCoSOxe9gDQNG5hZXlqOp4i3MQ6cuzR8OiFoCCrLg6Ptqm0AeKXDa
+   tIfHsNgIZ132ZQm3aCk0FP5iZEd3IR2IdGUown74YlVTSVnqYp/xZCuDl
+   g=;
+X-IronPort-AV: E=Sophos;i="5.64,334,1559520000"; 
+   d="scan'208";a="689971421"
+Received: from sea3-co-svc-lb6-vlan2.sea.amazon.com (HELO email-inbound-relay-2c-1968f9fa.us-west-2.amazon.com) ([10.47.22.34])
+  by smtp-border-fw-out-9102.sea19.amazon.com with ESMTP; 01 Aug 2019 14:31:07 +0000
+Received: from EX13MTAUWA001.ant.amazon.com (pdx4-ws-svc-p6-lb7-vlan3.pdx.amazon.com [10.170.41.166])
+        by email-inbound-relay-2c-1968f9fa.us-west-2.amazon.com (Postfix) with ESMTPS id 1C739A2077;
+        Thu,  1 Aug 2019 14:31:08 +0000 (UTC)
+Received: from EX13D21UWA002.ant.amazon.com (10.43.160.246) by
+ EX13MTAUWA001.ant.amazon.com (10.43.160.118) with Microsoft SMTP Server (TLS)
+ id 15.0.1367.3; Thu, 1 Aug 2019 14:31:07 +0000
+Received: from EX13MTAUWA001.ant.amazon.com (10.43.160.58) by
+ EX13D21UWA002.ant.amazon.com (10.43.160.246) with Microsoft SMTP Server (TLS)
+ id 15.0.1367.3; Thu, 1 Aug 2019 14:31:07 +0000
+Received: from [10.107.3.19] (10.107.3.19) by mail-relay.amazon.com
+ (10.43.160.118) with Microsoft SMTP Server (TLS) id 15.0.1367.3 via Frontend
+ Transport; Thu, 1 Aug 2019 14:31:01 +0000
+Subject: Re: [RFC 1/1] edac: Add a counter parameter for
+ edac_device_handle_ue/ce()
+To:     Robert Richter <rric@kernel.org>
+CC:     <thor.thayer@linux.intel.com>, <bp@alien8.de>,
+        <mchehab@kernel.org>, <james.morse@arm.com>, <morbidrsa@gmail.com>,
+        <ralf@linux-mips.org>, <david.daney@cavium.com>,
+        <andy.gross@linaro.org>, <david.brown@linaro.org>,
+        <ckadabi@codeaurora.org>, <vnkgutta@codeaurora.org>,
+        <jglauber@cavium.com>, <khuong@os.amperecomputing.com>,
+        <dwmw@amazon.co.uk>, <benh@amazon.com>, <ronenk@amazon.com>,
+        <talel@amazon.com>, <jonnyc@amazon.com>, <hanochu@amazon.com>,
+        <linux-edac@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <linux-mips@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>
+References: <1563187987-5847-1-git-send-email-hhhawa@amazon.com>
+ <20190801113548.7leooh57gihixen5@rric.localdomain>
+ <7d6aac9e-20e5-3901-a423-d76ac917b251@amazon.com>
+ <20190801141701.bmcken464mrqwhdg@rric.localdomain>
+From:   "Hawa, Hanna" <hhhawa@amazon.com>
+Message-ID: <045bb0dd-6a88-36ba-203f-d0dcb9ae5b62@amazon.com>
+Date:   Thu, 1 Aug 2019 17:30:59 +0300
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
+ Thunderbird/60.8.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20190726112746.19410-1-anders.roxell@linaro.org>
-User-Agent: Mutt/1.10.1 (2018-07-13)
+In-Reply-To: <20190801141701.bmcken464mrqwhdg@rric.localdomain>
+Content-Type: text/plain; charset="utf-8"; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, Jul 26, 2019 at 01:27:46PM +0200, Anders Roxell wrote:
-> When fall-through warnings was enabled by default the following warning
-> was starting to show up:
-> 
-> ../drivers/gpu/drm/msm/adreno/a6xx_gpu.c: In function ‘a6xx_submit’:
-> ../drivers/gpu/drm/msm/adreno/a6xx_gpu.c:116:7: warning: this statement may fall
->  through [-Wimplicit-fallthrough=]
->     if (priv->lastctx == ctx)
->        ^
-> ../drivers/gpu/drm/msm/adreno/a6xx_gpu.c:118:3: note: here
->    case MSM_SUBMIT_CMD_BUF:
->    ^~~~
-> 
-> Rework so that the compiler doesn't warn about fall-through.
-> 
-> Fixes: d93512ef0f0e ("Makefile: Globally enable fall-through warning")
-> Signed-off-by: Anders Roxell <anders.roxell@linaro.org>
 
-Hi Anders,
-Thank you for your patches. Jordan had previously sent the same fixes in
-"drm/msm: Annotate intentional switch statement fall throughs" one day earlier
-than yours, so I'll pick up that patch.
 
-Thanks again!
-
-Sean
-
-> ---
->  drivers/gpu/drm/msm/adreno/a6xx_gpu.c | 1 +
->  1 file changed, 1 insertion(+)
+On 8/1/2019 5:17 PM, Robert Richter wrote:
+>> Don't you think it'll be confused to have different APIs between EDAC_MC and
+>> EDAC_DEVICE?
+>> (in MC the count passed as part of edac_mc_handle_error())
+> I don't think edac_mc_handle_error() with 11 function arguments is a
+> good reference for somethin we want to adopt. For the majority of
+> drivers you just introduce another useless argument with the following
+> pattern:
 > 
-> diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
-> index be39cf01e51e..644a6ee53f05 100644
-> --- a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
-> +++ b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
-> @@ -115,6 +115,7 @@ static void a6xx_submit(struct msm_gpu *gpu, struct msm_gem_submit *submit,
->  		case MSM_SUBMIT_CMD_CTX_RESTORE_BUF:
->  			if (priv->lastctx == ctx)
->  				break;
-> +			/* Fall through */
->  		case MSM_SUBMIT_CMD_BUF:
->  			OUT_PKT7(ring, CP_INDIRECT_BUFFER_PFE, 3);
->  			OUT_RING(ring, lower_32_bits(submit->cmd[i].iova));
-> -- 
-> 2.20.1
+> 	edac_device_handle_ce(edac_dev, 1, 0, 0, edac_dev_name);
 > 
+> IMO, the api should be improved when touching it.
 
--- 
-Sean Paul, Software Engineer, Google / Chromium OS
+Got it, I'll update the patch as you suggested.
+
+Thanks,
+Hanna
+
+> 
+> -Robert
