@@ -2,172 +2,124 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 5BE437E20E
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  1 Aug 2019 20:15:25 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4913C7E3BD
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  1 Aug 2019 22:05:59 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732067AbfHASPY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 1 Aug 2019 14:15:24 -0400
-Received: from mail-pf1-f195.google.com ([209.85.210.195]:44912 "EHLO
-        mail-pf1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1731967AbfHASPY (ORCPT
+        id S2388766AbfHAUEn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 1 Aug 2019 16:04:43 -0400
+Received: from mail-yw1-f65.google.com ([209.85.161.65]:40479 "EHLO
+        mail-yw1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2388633AbfHAUEm (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 1 Aug 2019 14:15:24 -0400
-Received: by mail-pf1-f195.google.com with SMTP id t16so34501865pfe.11
-        for <linux-arm-msm@vger.kernel.org>; Thu, 01 Aug 2019 11:15:23 -0700 (PDT)
+        Thu, 1 Aug 2019 16:04:42 -0400
+Received: by mail-yw1-f65.google.com with SMTP id b143so26526776ywb.7
+        for <linux-arm-msm@vger.kernel.org>; Thu, 01 Aug 2019 13:04:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=broadcom.com; s=google;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-transfer-encoding:content-language;
-        bh=A/2U3sBSUHvfzL5QT64+0anCBzLTLTL1IfUmHYOzv8M=;
-        b=Q2Yn9bpZT7MTiS2Fuhc1CBYlxs3phQsozr5LA/k6MqS/FzmEF5/uvtngkdC0Z2cf8S
-         i6Qt/32fnNBpI5AKyVyX9TftvzDm1tJ82Db4g7d60SPTRnS4bZNCEt5m0QZ2Zlbp0Iez
-         WL0wC61c9DxrPRDpQVe+/uAJ51y4acrhIbDlw=
+        d=poorly.run; s=google;
+        h=date:from:to:cc:subject:message-id:mime-version:content-disposition
+         :user-agent;
+        bh=HgG8M2gXF9KLcX7K8q5a5DHQVUwoAlp7Ry7QAboue7Q=;
+        b=S27nJBcYP8KZdyj7v5tt00+H9moxOk4PwrokLphC6p0mUx4N+ajVfGl/cveao7Y77s
+         clOVRGP8ZSf+vV71CFiKV8qfjlYuBQbtSpYCzIc23T7+rEDPDzoR1HbymMSXWAqOi2kg
+         Byov6WCN2SfK16a0MAumYY4TTDkmy+JkclvBNf+PvvOGKdfu+E3faBCQlUPNd5lj8VZ+
+         HCAQ4Fc35UprZrWOaE5z+ycouL+1QlQo82/kkUqcapTt/+x09yVyMWCMuYX9x6rngthm
+         DtZ5q1rotS092Xy8Sm7mmrCAZfQrT4ugDOYboJGEz92JJ/6CbdRboAfQxjUJFHot3Kp2
+         Ejow==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-transfer-encoding
-         :content-language;
-        bh=A/2U3sBSUHvfzL5QT64+0anCBzLTLTL1IfUmHYOzv8M=;
-        b=MA7b0sovbuc4AFoqPNbs8jhYNYcnGGSEZaa5i6FE2FVDyP1263qzGV+/SV9KVJ1KIl
-         qBD7ziluSh0u9RUt56OLwfDmdUtnNERTx0heJ2LXcxUqJrQGIi0jdlDOfA06UIdywo2z
-         TJ5Rn+kfmUcMkVTpG0p46ugDynR8piSRUafrNsEGxxqgX+qVfQLFPq1Xcn7jtXqWmEj4
-         78URTJUPt9ZHg7E0ELwlExdItaqXqkCdXS1LI34ZDiZKtVouHYOd1klqP00ZZuuNjzDa
-         SzTCQdKfZ68ouzR91qUix5GAle8B3nJy25QHFjupsYaufsNDvhiVuHp8L4tdDXvi9izW
-         fxYw==
-X-Gm-Message-State: APjAAAU1xMn25SDm/1LF0IbJvVV4vrMsSgF6U3KA8D9G9PJnQf8t7zdT
-        ZE+C9Mzlguw8QgT0XAH0mJrdbQ==
-X-Google-Smtp-Source: APXvYqy5YxYnI0i+UvSKVSvJD5W3X8Ct2hIIE5d7R1nII78ojNXg/Ndq9IbIMXECeg+nkbwLTBNsVQ==
-X-Received: by 2002:a17:90a:2562:: with SMTP id j89mr74708pje.123.1564683322929;
-        Thu, 01 Aug 2019 11:15:22 -0700 (PDT)
-Received: from [10.136.13.65] ([192.19.228.250])
-        by smtp.gmail.com with ESMTPSA id l26sm84023425pgb.90.2019.08.01.11.15.20
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 01 Aug 2019 11:15:21 -0700 (PDT)
-Subject: Re: [PATCH 2/3] firmware: add offset to request_firmware_into_buf
-To:     Luis Chamberlain <mcgrof@kernel.org>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc:     David Brown <david.brown@linaro.org>,
-        Alexander Viro <viro@zeniv.linux.org.uk>,
-        "Rafael J . Wysocki" <rafael@kernel.org>,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-fsdevel@vger.kernel.org,
-        BCM Kernel Feedback <bcm-kernel-feedback-list@broadcom.com>,
-        Olof Johansson <olof@lixom.net>
-References: <20190523025113.4605-1-scott.branden@broadcom.com>
- <20190523025113.4605-3-scott.branden@broadcom.com>
- <20190523055233.GB22946@kroah.com>
- <15c47e4d-e70d-26bb-9747-0ad0aa81597b@broadcom.com>
- <20190523165424.GA21048@kroah.com>
- <44282070-ddaf-3afb-9bdc-4751e3f197ac@broadcom.com>
- <20190524052258.GB28229@kroah.com>
- <2f67db0a-27c3-d13c-bbe0-0af5edd4f0da@broadcom.com>
- <20190801061801.GA4338@kroah.com>
- <20190801174215.GB16384@42.do-not-panic.com>
-From:   Scott Branden <scott.branden@broadcom.com>
-Message-ID: <74be1aa7-0e10-51dc-bbbf-94bb5f4bf7c4@broadcom.com>
-Date:   Thu, 1 Aug 2019 11:15:19 -0700
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.8.0
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:mime-version
+         :content-disposition:user-agent;
+        bh=HgG8M2gXF9KLcX7K8q5a5DHQVUwoAlp7Ry7QAboue7Q=;
+        b=TpugD0+7pivJ5sgA4sJt+wxH6PIo4PKNTATL3IZLBnURBTenikk7YbJgfLBlMd73D1
+         S9RtCjv21v0Es3XY02AQXIGzgBDARlSbSeeGeZ0RtumpQ72m36vUmN7dJb+LHPnYL/U6
+         yJyWUY5Dbss0ToBttkagr9bWHZZ/rOLNr7nXqRdk6Fzq5u8QPbdrquJrypE//g8xr2DK
+         dYjbFRpPlhDaV3y+XtwBk84bOiMxwo10DbEru6yA4jmm7W2ERp2t//wIH+fzc0IgDyeW
+         tfCVKgM34ZgCtWdb3mgW6BA65pfQQzNZOvaZ12VAHrNok40NQ6I+7IauTUuHMOoyooSy
+         9B7w==
+X-Gm-Message-State: APjAAAVu9+n2XhfGBUK1BRYAMbPs9mHAwOzSA1TFT6XMdf/yIL2tBPgI
+        3QcQ7WKlItOQB9EiYpZj3HH+Ig==
+X-Google-Smtp-Source: APXvYqzh4KoHtTTGLwXgFp8IT2ooBjJjbH0lH6V2g+/Ez01h3SNyAfgXpwGQUNrvrIydxe/jWM9zZw==
+X-Received: by 2002:a81:6056:: with SMTP id u83mr75542899ywb.331.1564689881522;
+        Thu, 01 Aug 2019 13:04:41 -0700 (PDT)
+Received: from localhost ([2620:0:1013:11:89c6:2139:5435:371d])
+        by smtp.gmail.com with ESMTPSA id d69sm16353842ywa.29.2019.08.01.13.04.40
+        (version=TLS1_3 cipher=AEAD-AES256-GCM-SHA384 bits=256/256);
+        Thu, 01 Aug 2019 13:04:40 -0700 (PDT)
+Date:   Thu, 1 Aug 2019 16:04:39 -0400
+From:   Sean Paul <sean@poorly.run>
+To:     Dave Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel.vetter@ffwll.ch>
+Cc:     Rob Clark <robdclark@gmail.com>, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
+        Jeffrey Hugo <jeffrey.l.hugo@gmail.com>,
+        Jordan Crouse <jcrouse@codeaurora.org>,
+        Brian Masney <masneyb@onstation.org>,
+        Rob Clark <robdclark@chromium.org>
+Subject: [RESEND PULL] msm-fixes
+Message-ID: <20190801200439.GV104440@art_vandelay>
 MIME-Version: 1.0
-In-Reply-To: <20190801174215.GB16384@42.do-not-panic.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Content-Language: en-US
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Luis,
+Hi Team,
+Sorry I pulled the trigger a bit early on the last email. This one is the same
+tag, but cc's the appropriate lists/people.
 
-On 2019-08-01 10:42 a.m., Luis Chamberlain wrote:
-> On Thu, Aug 01, 2019 at 08:18:01AM +0200, Greg Kroah-Hartman wrote:
->> On Wed, Jul 31, 2019 at 05:18:32PM -0700, Scott Branden wrote:
->>> Hi Greg,
->>>
->>> I am now back from leave to continue this patch.  Comment below.
->>>
->>> On 2019-05-23 10:22 p.m., Greg Kroah-Hartman wrote:
->>>> On Thu, May 23, 2019 at 10:01:38PM -0700, Scott Branden wrote:
->>>>> On 2019-05-23 9:54 a.m., Greg Kroah-Hartman wrote:
->>>>>> On Thu, May 23, 2019 at 09:36:02AM -0700, Scott Branden wrote:
->>>>>>> Hi Greg,
->>>>>>>
->>>>>>> On 2019-05-22 10:52 p.m., Greg Kroah-Hartman wrote:
->>>>>>>> On Wed, May 22, 2019 at 07:51:12PM -0700, Scott Branden wrote:
->>>>>>>>> Add offset to request_firmware_into_buf to allow for portions
->>>>>>>>> of firmware file to be read into a buffer.  Necessary where firmware
->>>>>>>>> needs to be loaded in portions from file in memory constrained systems.
->>>>>>>>>
->>>>>>>>> Signed-off-by: Scott Branden <scott.branden@broadcom.com>
->>>>>>>>> ---
->>>>>>>>>      drivers/base/firmware_loader/firmware.h |  5 +++
->>>>>>>>>      drivers/base/firmware_loader/main.c     | 49 +++++++++++++++++--------
->>>>>>>>>      include/linux/firmware.h                |  8 +++-
->>>>>>>>>      3 files changed, 45 insertions(+), 17 deletions(-)
->>>>>>>> No new firmware test for this new option?  How do we know it even works?
->>>>>>> I was unaware there are existing firmware tests.  Please let me know where
->>>>>>> these tests exists and I can add a test for this new option.
->>>>>> tools/testing/selftests/firmware/
->>>>> Unfortunately, there doesn't seem to be a test for the existing
->>>>> request_firmware_into_buf api.
->>>> Are you sure?  The test is for userspace functionality, there isn't
->>>> kernel unit tests here.  You need to verify that you didn't break
->>>> existing functionality as well as verify that your new functionality
->>>> works.
->>> I managed to figure out how to build and run
->>> tools/testing/selftest/firmware/fw_run_tests.sh
->>>
->>> and my changes don't break existing functionality.
-> I'm soon going to release something that is going to let you do this
-> faster and easier, let me know if you had troubles in trying to figure
-> out how to not regress the kernel using this.
-
-Yes, I had troubles in trying to figure it out.  The kernel build should
-
-create an entire initrd with all the necessary components in it for 
-testing purposes.
-
-And the firmware test will now take me some time to figure out how it 
-all works.
-
-Could you please explain what you are going to release soon?  I don't 
-want to waste
-
-my time getting something working if everything is going to change on me 
-right away?
-
->
->>> But, I find no use of request_firmware_into_buf in lib/test_firmware.c
->>> (triggered by fw_run_tests.sh).
->>>
->>> Is there another test for request_firmware_into_buf?
->> I have no idea, sorry.
-> The folks who implemented request_firmware_into_buf() didn't add a
-> respective test, because, well, this API went upstream IMO without much
-> ACKs / review, and even no damn users. Now we have a user so we're stuck
-> with it.
-
-The request_firmware_into_buf is a necessity for me as well
-
-(along with the need for a partial request of the file which I'm adding).
-
->
-> So new testing calls for it would be appreciated. If you have questions
-> I am happy to help.
-
-If you're an expert on the firmware test and can quickly add a simple 
-test of request_firmware_into_buf
-
-it would be appreciated.  If not, I'm going to have to dig further into 
-this and send early versions of
-
-a test out which would be great for you to comment on.
-
->
->    Luis
+Since I handed drm-misc back to Maarten this week, I'll send msm fixes from the
+msm tree. Not too heavy, but fixes some important regressions in 5.3.
 
 Thanks,
 
-Scott
+Sean
 
+The following changes since commit 4d5308e7852741318e4d40fb8d43d9311b3984ae:
+
+  Merge tag 'drm-fixes-5.3-2019-07-24' of git://people.freedesktop.org/~agd5f/linux into drm-fixes (2019-07-26 14:10:26 +1000)
+
+are available in the Git repository at:
+
+  https://gitlab.freedesktop.org/drm/msm.git tags/msm-fixes-2019_08_01
+
+for you to fetch changes up to 9ca7ad6c7706edeae331c1632d0c63897418ebad:
+
+  drm: msm: Fix add_gpu_components (2019-08-01 12:52:21 -0400)
+
+----------------------------------------------------------------
+- Fix the dma_sync calls applied last week (Rob)
+- Fix mdp5 dsi command mode (Brian)
+- Squash fall through warnings (Jordan)
+- Don't add disabled gpu nodes to the of device list (Jeffrey)
+
+Cc: Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
+Cc: Jordan Crouse <jcrouse@codeaurora.org>
+Cc: Brian Masney <masneyb@onstation.org>
+Cc: Rob Clark <robdclark@chromium.org>
+
+----------------------------------------------------------------
+Brian Masney (1):
+      drm/msm: add support for per-CRTC max_vblank_count on mdp5
+
+Jeffrey Hugo (1):
+      drm: msm: Fix add_gpu_components
+
+Jordan Crouse (1):
+      drm/msm: Annotate intentional switch statement fall throughs
+
+Rob Clark (1):
+      drm/msm: Use the correct dma_sync calls in msm_gem
+
+ drivers/gpu/drm/msm/adreno/a5xx_gpu.c     |  2 ++
+ drivers/gpu/drm/msm/adreno/a6xx_gpu.c     |  1 +
+ drivers/gpu/drm/msm/adreno/adreno_gpu.c   |  1 +
+ drivers/gpu/drm/msm/disp/mdp5/mdp5_crtc.c | 16 ++++++++++-
+ drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c  |  2 +-
+ drivers/gpu/drm/msm/msm_drv.c             |  3 +-
+ drivers/gpu/drm/msm/msm_gem.c             | 47 +++++++++++++++++++++++++++----
+ 7 files changed, 64 insertions(+), 8 deletions(-)
+-- 
+Sean Paul, Software Engineer, Google / Chromium OS
