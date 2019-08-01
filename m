@@ -2,93 +2,87 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 18CB77DDEE
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  1 Aug 2019 16:31:22 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 930037DDF5
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  1 Aug 2019 16:35:08 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731986AbfHAObQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 1 Aug 2019 10:31:16 -0400
-Received: from smtp-fw-9102.amazon.com ([207.171.184.29]:55541 "EHLO
-        smtp-fw-9102.amazon.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1731284AbfHAObP (ORCPT
+        id S1732077AbfHAOfI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 1 Aug 2019 10:35:08 -0400
+Received: from mail-pg1-f195.google.com ([209.85.215.195]:45574 "EHLO
+        mail-pg1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1731974AbfHAOfH (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 1 Aug 2019 10:31:15 -0400
+        Thu, 1 Aug 2019 10:35:07 -0400
+Received: by mail-pg1-f195.google.com with SMTP id o13so34305263pgp.12
+        for <linux-arm-msm@vger.kernel.org>; Thu, 01 Aug 2019 07:35:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=amazon.com; i=@amazon.com; q=dns/txt; s=amazon201209;
-  t=1564669873; x=1596205873;
-  h=subject:to:cc:references:from:message-id:date:
-   mime-version:in-reply-to:content-transfer-encoding;
-  bh=CYr97n4jQ+i8XoMJ1ptuHgHbqpfgmK1fn3mN/NxQ128=;
-  b=uvyTgNPUjMJ2SDB/3yzQcDNPpyeda2EGVu+gp2VrE8b0X+p60xC5w7YG
-   mS2kUCoSOxe9gDQNG5hZXlqOp4i3MQ6cuzR8OiFoCCrLg6Ptqm0AeKXDa
-   tIfHsNgIZ132ZQm3aCk0FP5iZEd3IR2IdGUown74YlVTSVnqYp/xZCuDl
-   g=;
-X-IronPort-AV: E=Sophos;i="5.64,334,1559520000"; 
-   d="scan'208";a="689971421"
-Received: from sea3-co-svc-lb6-vlan2.sea.amazon.com (HELO email-inbound-relay-2c-1968f9fa.us-west-2.amazon.com) ([10.47.22.34])
-  by smtp-border-fw-out-9102.sea19.amazon.com with ESMTP; 01 Aug 2019 14:31:07 +0000
-Received: from EX13MTAUWA001.ant.amazon.com (pdx4-ws-svc-p6-lb7-vlan3.pdx.amazon.com [10.170.41.166])
-        by email-inbound-relay-2c-1968f9fa.us-west-2.amazon.com (Postfix) with ESMTPS id 1C739A2077;
-        Thu,  1 Aug 2019 14:31:08 +0000 (UTC)
-Received: from EX13D21UWA002.ant.amazon.com (10.43.160.246) by
- EX13MTAUWA001.ant.amazon.com (10.43.160.118) with Microsoft SMTP Server (TLS)
- id 15.0.1367.3; Thu, 1 Aug 2019 14:31:07 +0000
-Received: from EX13MTAUWA001.ant.amazon.com (10.43.160.58) by
- EX13D21UWA002.ant.amazon.com (10.43.160.246) with Microsoft SMTP Server (TLS)
- id 15.0.1367.3; Thu, 1 Aug 2019 14:31:07 +0000
-Received: from [10.107.3.19] (10.107.3.19) by mail-relay.amazon.com
- (10.43.160.118) with Microsoft SMTP Server (TLS) id 15.0.1367.3 via Frontend
- Transport; Thu, 1 Aug 2019 14:31:01 +0000
-Subject: Re: [RFC 1/1] edac: Add a counter parameter for
- edac_device_handle_ue/ce()
-To:     Robert Richter <rric@kernel.org>
-CC:     <thor.thayer@linux.intel.com>, <bp@alien8.de>,
-        <mchehab@kernel.org>, <james.morse@arm.com>, <morbidrsa@gmail.com>,
-        <ralf@linux-mips.org>, <david.daney@cavium.com>,
-        <andy.gross@linaro.org>, <david.brown@linaro.org>,
-        <ckadabi@codeaurora.org>, <vnkgutta@codeaurora.org>,
-        <jglauber@cavium.com>, <khuong@os.amperecomputing.com>,
-        <dwmw@amazon.co.uk>, <benh@amazon.com>, <ronenk@amazon.com>,
-        <talel@amazon.com>, <jonnyc@amazon.com>, <hanochu@amazon.com>,
-        <linux-edac@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <linux-mips@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>
-References: <1563187987-5847-1-git-send-email-hhhawa@amazon.com>
- <20190801113548.7leooh57gihixen5@rric.localdomain>
- <7d6aac9e-20e5-3901-a423-d76ac917b251@amazon.com>
- <20190801141701.bmcken464mrqwhdg@rric.localdomain>
-From:   "Hawa, Hanna" <hhhawa@amazon.com>
-Message-ID: <045bb0dd-6a88-36ba-203f-d0dcb9ae5b62@amazon.com>
-Date:   Thu, 1 Aug 2019 17:30:59 +0300
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
- Thunderbird/60.8.0
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=DBbtWFIFaoHfS1Xw8mVY2gGo1qmmgDJlGuvygEHXUSo=;
+        b=ukzC1YlMrKl2Zkd5ltLu7k38qHxpiayU5PA7l4B3HV4Ggt7CMpLcPXepfvfa4mCAx6
+         hsDWKt/DJD1zmpEooC/6Jfx9xzftaBHk92AXK9e4HivbgwDr73UwFaluSm6Gy1uAtI7H
+         FUjGfO93eEafY6Kw9UYJN+aib0XGSsR1s2jJn53hob72yPf3Sx7GqVrObZlPQrJITD17
+         ezgCxQoiSyqF/lwBINmAVySErBakC4cjvvZ4x4lBIHS02tRcPdUPLMhaWRXkbptlX99U
+         CJPnu53ZP5q+XqIhpb742rx3MqeaNAFfi0Jh1f1X7Hoc8kmv513sBhnSQ8lVXA4u0q4r
+         w8FQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=DBbtWFIFaoHfS1Xw8mVY2gGo1qmmgDJlGuvygEHXUSo=;
+        b=CO46xH5/krCc4obsU4ENy+yQsUZlRWyoxrK7fIzGjFSqDco5MPfmQeGzk3302+KAz4
+         CUbSJOeowSpdrjtpugP0V8HZ+snRWqSmTgc4FPiqD7So5GUW9gkEqCxmxxOcm9Qr9BI6
+         34+Ov6pf0smeSGZOR5wBFLV3FdJG2k9zHX0maDiCdlhvJc2JqmMCnKMZobtYfXMkR4PC
+         oZ0Ws58SuWyCunL+OFNTSOYBCNQUcUbGzRKLN8y7rBjqFY7c1PPFUnQ5C3w/kh0K6gbZ
+         6G9JkWUrDJvShZW6dNzvbflafyABrjhCkrVW5sY/l5IVA89s8xtmgmO+wdrX8qIhaDjT
+         8i+A==
+X-Gm-Message-State: APjAAAVp0eeNNsrY3xCwHmlz4VfwWrimWa1bJCmf0tJh5e7U/VqW5fFM
+        lzUt/UUPWMErBb6dxrTZcFVoHVrqBQU=
+X-Google-Smtp-Source: APXvYqwXjf/7RCgtzVuCUVWsIvbZmbJwE7lAnb0Yae4AD1ql1RRC/pTcWA7lSmMxEe40EKRwaGIa+A==
+X-Received: by 2002:a62:1b0c:: with SMTP id b12mr53059309pfb.17.1564670107026;
+        Thu, 01 Aug 2019 07:35:07 -0700 (PDT)
+Received: from tuxbook-pro (104-188-17-28.lightspeed.sndgca.sbcglobal.net. [104.188.17.28])
+        by smtp.gmail.com with ESMTPSA id o14sm5101778pjp.29.2019.08.01.07.35.05
+        (version=TLS1_3 cipher=AEAD-AES256-GCM-SHA384 bits=256/256);
+        Thu, 01 Aug 2019 07:35:06 -0700 (PDT)
+Date:   Thu, 1 Aug 2019 07:36:37 -0700
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     Rajendra Nayak <rnayak@codeaurora.org>
+Cc:     linus.walleij@linaro.org, linux-arm-msm@vger.kernel.org,
+        agross@kernel.org, robh+dt@kernel.org, linux-gpio@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Jitendra Sharma <shajit@codeaurora.org>,
+        Vivek Gautam <vivek.gautam@codeaurora.org>
+Subject: Re: [PATCH 2/2] pinctrl: qcom: Add SC7180 pinctrl driver
+Message-ID: <20190801143637.GY7234@tuxbook-pro>
+References: <20190801100717.23333-1-rnayak@codeaurora.org>
+ <20190801100717.23333-2-rnayak@codeaurora.org>
 MIME-Version: 1.0
-In-Reply-To: <20190801141701.bmcken464mrqwhdg@rric.localdomain>
-Content-Type: text/plain; charset="utf-8"; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20190801100717.23333-2-rnayak@codeaurora.org>
+User-Agent: Mutt/1.11.4 (2019-03-13)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On Thu 01 Aug 03:07 PDT 2019, Rajendra Nayak wrote:
 
+[..]
+> +static const struct msm_pingroup sc7180_groups[] = {
+> +	[0] = PINGROUP(0, SOUTH, qup01, cri_trng, _, phase_flag, _, _, _, _, _),
+> +	[1] = PINGROUP(1, SOUTH, qup01, cri_trng, _, phase_flag, _, _, _, _, _),
+> +	[2] = PINGROUP(2, SOUTH, qup01, cri_trng, _, phase_flag, _, _, _, _, _),
+> +	[3] = PINGROUP(3, SOUTH, qup01, sp_cmu, dbg_out, qdss_cti, _, _, _, _, _),
+> +	[4] = PINGROUP(4, NORTH, sdc1_tb, _, qdss_cti, _, _, _, _, _, _), [5] = PINGROUP(5, NORTH, sdc2_tb, _, _, _, _, _, _, _, _),
+> +	[6] = PINGROUP(6, NORTH, qup11, qup11, _, _, _, _, _, _, _), [7] = PINGROUP(7, NORTH, qup11, qup11, ddr_bist, _, _, _, _, _, _),
 
-On 8/1/2019 5:17 PM, Robert Richter wrote:
->> Don't you think it'll be confused to have different APIs between EDAC_MC and
->> EDAC_DEVICE?
->> (in MC the count passed as part of edac_mc_handle_error())
-> I don't think edac_mc_handle_error() with 11 function arguments is a
-> good reference for somethin we want to adopt. For the majority of
-> drivers you just introduce another useless argument with the following
-> pattern:
-> 
-> 	edac_device_handle_ce(edac_dev, 1, 0, 0, edac_dev_name);
-> 
-> IMO, the api should be improved when touching it.
+5 and 7 deserve to be on their own line :)
 
-Got it, I'll update the patch as you suggested.
+Apart from that:
 
-Thanks,
-Hanna
+Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
 
-> 
-> -Robert
+Regards,
+Bjorn
