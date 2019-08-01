@@ -2,141 +2,272 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id B0E907D8F8
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  1 Aug 2019 12:03:14 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E849D7D908
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  1 Aug 2019 12:08:32 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725790AbfHAKDN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 1 Aug 2019 06:03:13 -0400
-Received: from mail-qk1-f193.google.com ([209.85.222.193]:46590 "EHLO
-        mail-qk1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725283AbfHAKDM (ORCPT
+        id S1727455AbfHAKH5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 1 Aug 2019 06:07:57 -0400
+Received: from smtp.codeaurora.org ([198.145.29.96]:38172 "EHLO
+        smtp.codeaurora.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725379AbfHAKH4 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 1 Aug 2019 06:03:12 -0400
-Received: by mail-qk1-f193.google.com with SMTP id r4so51423733qkm.13
-        for <linux-arm-msm@vger.kernel.org>; Thu, 01 Aug 2019 03:03:12 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=ZZULYWPYrE8rlpihwiyMSrwBcvrGlh1a6lKdrHXU+DE=;
-        b=yaOQFN1cXAHFGR6HJF5zWpTxEZawdshDVdIzv7UMZws9hF7VpgPqBUkt+OaHTvxXua
-         i8w471kVP0keSgCewY3pHO4e9MnnuN5582Ni6sQON3RCW8mwvvYRnK9PCIZ4lyhAIHSY
-         ims66j0E3nj2zbLQfW27pPzGXqiU+Q015g3sI+A+fzxWiH9ZefE9396+QNd7qQnVlKgD
-         cN4EZUuAMUZwHpA0pMKtq7Fapj3lg/ajYHcOXKVNXlGWTHHtVY9HWVPWXf2uA8kMhJdd
-         JkL+iA1FebZH0NTGaP/5erTpubHa8aYSRifDKiJ+/eWfFtSZ5glqdAGM1R3UZ1IlZu//
-         z2SQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=ZZULYWPYrE8rlpihwiyMSrwBcvrGlh1a6lKdrHXU+DE=;
-        b=POTdR/70GOYEb31NsRuLS21UQb7r4df3zDej0V8fBCrCDessU8EpRmd3sxSWblpwAE
-         3gTiaYv1OoLYuai4n4ko2i5wxu9v1NbBPptJU5k1vBkaM+0y4uqBUgkE50EqqbrgSPzw
-         uZ8KZEN4ZvTAYzg+fINuhFjoJ6TPhwDrxvyBuqIywQ6lIh/6Mu4FE54nHXLnheec7p2s
-         aBQriwpoqI0HSDQUMbk15ra7WvGIl7mrv71cPzjm+H06h68vItM/pl5OcqOPWytEgeUg
-         Ul8FwHDDvrsP1zhEG6gem3SbypPZPaXD+GhTg9h4eJQ6MZtFef0pA8BKjs5GUnLekHU8
-         bQ0g==
-X-Gm-Message-State: APjAAAXjCCTDeBys8jUww00h2Sr+vgg7GsFPY/6b2hUuY26STIF5YVjb
-        xHwGRGuP9lKhxmwmyfiQU3QaDd/kby3WeLqDuVUO6A==
-X-Google-Smtp-Source: APXvYqyz75Bk81npKkd4YeyxzGOm77tl18qT7r4AADcTXVp+RE9M4XnBkdfTmfTW09SzYaBB6otcJQMnCCmj576+r7c=
-X-Received: by 2002:a37:4e8f:: with SMTP id c137mr82670521qkb.127.1564653791552;
- Thu, 01 Aug 2019 03:03:11 -0700 (PDT)
+        Thu, 1 Aug 2019 06:07:56 -0400
+Received: by smtp.codeaurora.org (Postfix, from userid 1000)
+        id 96E7960863; Thu,  1 Aug 2019 10:07:54 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
+        s=default; t=1564654074;
+        bh=MvQ/vlISmmItEMCNH7oCJDboTjPvkfI4c3GCQ+1LVws=;
+        h=From:To:Cc:Subject:Date:From;
+        b=fkzldWCiEJU15/NG4CHv26CbhhhWB9Yf2lEFIC41ba+w2zwnfh6klhXSuc4ZdIG1n
+         2LQl+zohiJHE0MWSS6NBLYNbm/o1tV59pG5CVziPZ8grNAJ5baZGOpoYPZGUm4YV9o
+         8vogXu1ISHNI7g584eT5+Jde9TQ7FjwYR9XvYIxI=
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        pdx-caf-mail.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.7 required=2.0 tests=ALL_TRUSTED,BAYES_00,
+        DKIM_INVALID,DKIM_SIGNED,SPF_NONE autolearn=no autolearn_force=no
+        version=3.4.0
+Received: from blr-ubuntu-173.qualcomm.com (blr-bdr-fw-01_globalnat_allzones-outside.qualcomm.com [103.229.18.19])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: rnayak@smtp.codeaurora.org)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 8F0316030B;
+        Thu,  1 Aug 2019 10:07:50 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
+        s=default; t=1564654073;
+        bh=MvQ/vlISmmItEMCNH7oCJDboTjPvkfI4c3GCQ+1LVws=;
+        h=From:To:Cc:Subject:Date:From;
+        b=UPfahHfQSPY35Sj5q41rlyT2vNGCoYfPpiELZX/sUhN1gLDP9OVgAi9ykhzFlXbeK
+         Y3C9CDE2Uhpm+wpQr+T9a3aocoWC/tiBte/Gh+CO3PYh7oTyG3p7xtpxkQk1w+vDaR
+         RX2dLDigm2sV6cGryQio58dkOhHmfNnPUcuuvaw8=
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 8F0316030B
+Authentication-Results: pdx-caf-mail.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: pdx-caf-mail.web.codeaurora.org; spf=none smtp.mailfrom=rnayak@codeaurora.org
+From:   Rajendra Nayak <rnayak@codeaurora.org>
+To:     linus.walleij@linaro.org, bjorn.andersson@linaro.org
+Cc:     linux-arm-msm@vger.kernel.org, agross@kernel.org,
+        robh+dt@kernel.org, linux-gpio@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Jitendra Sharma <shajit@codeaurora.org>,
+        Vivek Gautam <vivek.gautam@codeaurora.org>,
+        Rajendra Nayak <rnayak@codeaurora.org>
+Subject: [PATCH 1/2] dt-bindings: pinctrl: qcom: Add SC7180 pinctrl binding
+Date:   Thu,  1 Aug 2019 15:37:16 +0530
+Message-Id: <20190801100717.23333-1-rnayak@codeaurora.org>
+X-Mailer: git-send-email 2.22.0
 MIME-Version: 1.0
-References: <20190801095049.13855-1-vkoul@kernel.org> <20190801095049.13855-2-vkoul@kernel.org>
-In-Reply-To: <20190801095049.13855-2-vkoul@kernel.org>
-From:   Amit Kucheria <amit.kucheria@linaro.org>
-Date:   Thu, 1 Aug 2019 15:33:00 +0530
-Message-ID: <CAP245DX5thWe-+mTH-oNeNRa_LRNX=oLvtNhQ=vt7Ukb6wrF9Q@mail.gmail.com>
-Subject: Re: [PATCH v2 1/3] arm64: dts: qcom: pms405: add unit name adc nodes
-To:     Vinod Koul <vkoul@kernel.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Mark Rutland <mark.rutland@arm.com>,
-        DTML <devicetree@vger.kernel.org>,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Aug 1, 2019 at 3:22 PM Vinod Koul <vkoul@kernel.org> wrote:
->
-> The adc nodes have reg property but were missing the unit name, so add
-> that to fix these warnings:
->
-> arch/arm64/boot/dts/qcom/pms405.dtsi:91.12-94.6: Warning (unit_address_vs_reg): /soc@0/spmi@200f000/pms405@0/adc@3100/ref_gnd: node has a reg or ranges property, but no unit name
-> arch/arm64/boot/dts/qcom/pms405.dtsi:96.14-99.6: Warning (unit_address_vs_reg): /soc@0/spmi@200f000/pms405@0/adc@3100/vref_1p25: node has a reg or ranges property, but no unit name
-> arch/arm64/boot/dts/qcom/pms405.dtsi:101.19-104.6: Warning (unit_address_vs_reg): /soc@0/spmi@200f000/pms405@0/adc@3100/vph_pwr: node has a reg or ranges property, but no unit name
-> arch/arm64/boot/dts/qcom/pms405.dtsi:106.13-109.6: Warning (unit_address_vs_reg): /soc@0/spmi@200f000/pms405@0/adc@3100/die_temp: node has a reg or ranges property, but no unit name
-> arch/arm64/boot/dts/qcom/pms405.dtsi:111.27-116.6: Warning (unit_address_vs_reg): /soc@0/spmi@200f000/pms405@0/adc@3100/thermistor1: node has a reg or ranges property, but no unit name
-> arch/arm64/boot/dts/qcom/pms405.dtsi:118.27-123.6: Warning (unit_address_vs_reg): /soc@0/spmi@200f000/pms405@0/adc@3100/thermistor3: node has a reg or ranges property, but no unit name
-> arch/arm64/boot/dts/qcom/pms405.dtsi:125.22-130.6: Warning (unit_address_vs_reg): /soc@0/spmi@200f000/pms405@0/adc@3100/xo_temp: node has a reg or ranges property, but no unit name
->
-> Signed-off-by: Vinod Koul <vkoul@kernel.org>
+From: Jitendra Sharma <shajit@codeaurora.org>
 
-Reviewed-by: Amit Kucheria <amit.kucheria@linaro.org>
+Add the binding for the TLMM pinctrl block found in the SC7180 platform
 
+Signed-off-by: Jitendra Sharma <shajit@codeaurora.org>
+Signed-off-by: Vivek Gautam <vivek.gautam@codeaurora.org>
+[rnayak: Fix some copy-paste issues, sort and fix functions]
+Signed-off-by: Rajendra Nayak <rnayak@codeaurora.org>
+---
+ .../bindings/pinctrl/qcom,sc7180-pinctrl.txt  | 186 ++++++++++++++++++
+ 1 file changed, 186 insertions(+)
+ create mode 100644 Documentation/devicetree/bindings/pinctrl/qcom,sc7180-pinctrl.txt
 
-> ---
->  arch/arm64/boot/dts/qcom/pms405.dtsi | 14 +++++++-------
->  1 file changed, 7 insertions(+), 7 deletions(-)
->
-> diff --git a/arch/arm64/boot/dts/qcom/pms405.dtsi b/arch/arm64/boot/dts/qcom/pms405.dtsi
-> index 14240fedd916..a28386900a3b 100644
-> --- a/arch/arm64/boot/dts/qcom/pms405.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/pms405.dtsi
-> @@ -88,41 +88,41 @@
->                         #size-cells = <0>;
->                         #io-channel-cells = <1>;
->
-> -                       ref_gnd {
-> +                       ref_gnd@0 {
->                                 reg = <ADC5_REF_GND>;
->                                 qcom,pre-scaling = <1 1>;
->                         };
->
-> -                       vref_1p25 {
-> +                       vref_1p25@1 {
->                                 reg = <ADC5_1P25VREF>;
->                                 qcom,pre-scaling = <1 1>;
->                         };
->
-> -                       pon_1: vph_pwr {
-> +                       pon_1: vph_pwr@131 {
->                                 reg = <ADC5_VPH_PWR>;
->                                 qcom,pre-scaling = <1 3>;
->                         };
->
-> -                       die_temp {
-> +                       die_temp@6 {
->                                 reg = <ADC5_DIE_TEMP>;
->                                 qcom,pre-scaling = <1 1>;
->                         };
->
-> -                       pa_therm1: thermistor1 {
-> +                       pa_therm1: thermistor1@77 {
->                                 reg = <ADC5_AMUX_THM1_100K_PU>;
->                                 qcom,ratiometric;
->                                 qcom,hw-settle-time = <200>;
->                                 qcom,pre-scaling = <1 1>;
->                         };
->
-> -                       pa_therm3: thermistor3 {
-> +                       pa_therm3: thermistor3@79 {
->                                 reg = <ADC5_AMUX_THM3_100K_PU>;
->                                 qcom,ratiometric;
->                                 qcom,hw-settle-time = <200>;
->                                 qcom,pre-scaling = <1 1>;
->                         };
->
-> -                       xo_therm: xo_temp {
-> +                       xo_therm: xo_temp@76 {
->                                 reg = <ADC5_XO_THERM_100K_PU>;
->                                 qcom,ratiometric;
->                                 qcom,hw-settle-time = <200>;
-> --
-> 2.20.1
->
+diff --git a/Documentation/devicetree/bindings/pinctrl/qcom,sc7180-pinctrl.txt b/Documentation/devicetree/bindings/pinctrl/qcom,sc7180-pinctrl.txt
+new file mode 100644
+index 000000000000..948cd56cfab7
+--- /dev/null
++++ b/Documentation/devicetree/bindings/pinctrl/qcom,sc7180-pinctrl.txt
+@@ -0,0 +1,186 @@
++Qualcomm Technologies, Inc. SC7180 TLMM block
++
++This binding describes the Top Level Mode Multiplexer block found in the
++SC7180 platform.
++
++- compatible:
++	Usage: required
++	Value type: <string>
++	Definition: must be "qcom,sc7180-pinctrl"
++
++- reg:
++	Usage: required
++	Value type: <prop-encoded-array>
++	Definition: the base address and size of the north, south and west
++		    TLMM tiles
++
++- reg-names:
++	Usage: required
++	Value type: <prop-encoded-array>
++	Defintiion: names for the cells of reg, must contain "north", "south"
++		    and "west".
++
++- interrupts:
++	Usage: required
++	Value type: <prop-encoded-array>
++	Definition: should specify the TLMM summary IRQ.
++
++- interrupt-controller:
++	Usage: required
++	Value type: <none>
++	Definition: identifies this node as an interrupt controller
++
++- #interrupt-cells:
++	Usage: required
++	Value type: <u32>
++	Definition: must be 2. Specifying the pin number and flags, as defined
++		    in <dt-bindings/interrupt-controller/irq.h>
++
++- gpio-controller:
++	Usage: required
++	Value type: <none>
++	Definition: identifies this node as a gpio controller
++
++- #gpio-cells:
++	Usage: required
++	Value type: <u32>
++	Definition: must be 2. Specifying the pin number and flags, as defined
++		    in <dt-bindings/gpio/gpio.h>
++
++- gpio-ranges:
++	Usage: required
++	Value type: <prop-encoded-array>
++	Definition:  see ../gpio/gpio.txt
++
++- gpio-reserved-ranges:
++	Usage: optional
++	Value type: <prop-encoded-array>
++	Definition: see ../gpio/gpio.txt
++
++Please refer to ../gpio/gpio.txt and ../interrupt-controller/interrupts.txt for
++a general description of GPIO and interrupt bindings.
++
++Please refer to pinctrl-bindings.txt in this directory for details of the
++common pinctrl bindings used by client devices, including the meaning of the
++phrase "pin configuration node".
++
++The pin configuration nodes act as a container for an arbitrary number of
++subnodes. Each of these subnodes represents some desired configuration for a
++pin, a group, or a list of pins or groups. This configuration can include the
++mux function to select on those pin(s)/group(s), and various pin configuration
++parameters, such as pull-up, drive strength, etc.
++
++
++PIN CONFIGURATION NODES:
++
++The name of each subnode is not important; all subnodes should be enumerated
++and processed purely based on their content.
++
++Each subnode only affects those parameters that are explicitly listed. In
++other words, a subnode that lists a mux function but no pin configuration
++parameters implies no information about any pin configuration parameters.
++Similarly, a pin subnode that describes a pullup parameter implies no
++information about e.g. the mux function.
++
++
++The following generic properties as defined in pinctrl-bindings.txt are valid
++to specify in a pin configuration subnode:
++
++- pins:
++	Usage: required
++	Value type: <string-array>
++	Definition: List of gpio pins affected by the properties specified in
++		    this subnode.
++
++		    Valid pins are:
++		      gpio0-gpio118
++		        Supports mux, bias and drive-strength
++
++		      sdc1_clk, sdc1_cmd, sdc1_data sdc2_clk, sdc2_cmd,
++		      sdc2_data sdc1_rclk
++		        Supports bias and drive-strength
++
++		      ufs_reset
++			Supports bias and drive-strength
++
++- function:
++	Usage: required
++	Value type: <string>
++	Definition: Specify the alternative function to be configured for the
++		    specified pins. Functions are only valid for gpio pins.
++		    Valid values are:
++
++		    adsp_ext, agera_pll, aoss_cti, atest_char, atest_char0,
++		    atest_char1, atest_char2, atest_char3, atest_tsens,
++		    atest_tsens2, atest_usb1, atest_usb10, atest_usb11,
++		    atest_usb12, atest_usb13, atest_usb2, atest_usb20,
++		    atest_usb21, atest_usb22, atest_usb23, audio_ref,
++		    btfm_slimbus, cam_mclk, cci_async, cci_i2c, cci_timer0,
++		    cci_timer1, cci_timer2, cci_timer3, cci_timer4,
++		    cri_trng, dbg_out, ddr_bist, ddr_pxi0, ddr_pxi1,
++		    ddr_pxi2, ddr_pxi3, dp_hot, edp_lcd, gcc_gp1, gcc_gp2,
++		    gcc_gp3, gpio, gp_pdm0, gp_pdm1, gp_pdm2, gps_tx,
++		    jitter_bist, ldo_en, ldo_update, lpass_ext, mdp_vsync,
++		    mdp_vsync0, mdp_vsync1, mdp_vsync2, mdp_vsync3, mi2s_0,
++		    mi2s_1, mi2s_2, mss_lte, m_voc, pa_indicator, phase_flag,
++		    PLL_BIST, pll_bypassnl, pll_reset, prng_rosc, qdss,
++		    qdss_cti, qlink_enable, qlink_request, qspi_clk, qspi_cs,
++		    qspi_data, qup00, qup01, qup02, qup03, qup04, qup05,
++		    qup10, qup11, qup12, qup13, qup14, qup15, sdc1_tb,
++		    sdc2_tb, sd_write, sp_cmu, tgu_ch0, tgu_ch1, tgu_ch2,
++		    tgu_ch3, tsense_pwm1, tsense_pwm2, uim1, uim2, uim_batt,
++		    usb_phy, vfr_1, _V_GPIO, _V_PPS_IN, _V_PPS_OUT,
++		    vsense_trigger, wlan1_adc0, wlan1_adc1, wlan2_adc0,
++		    wlan2_adc1,
++
++- bias-disable:
++	Usage: optional
++	Value type: <none>
++	Definition: The specified pins should be configured as no pull.
++
++- bias-pull-down:
++	Usage: optional
++	Value type: <none>
++	Definition: The specified pins should be configured as pull down.
++
++- bias-pull-up:
++	Usage: optional
++	Value type: <none>
++	Definition: The specified pins should be configured as pull up.
++
++- output-high:
++	Usage: optional
++	Value type: <none>
++	Definition: The specified pins are configured in output mode, driven
++		    high.
++		    Not valid for sdc pins.
++
++- output-low:
++	Usage: optional
++	Value type: <none>
++	Definition: The specified pins are configured in output mode, driven
++		    low.
++		    Not valid for sdc pins.
++
++- drive-strength:
++	Usage: optional
++	Value type: <u32>
++	Definition: Selects the drive strength for the specified pins, in mA.
++		    Valid values are: 2, 4, 6, 8, 10, 12, 14 and 16
++
++Example:
++
++	tlmm: pinctrl@3000000 {
++		compatible = "qcom,sc7180-pinctrl";
++		reg = <0x3500000 0x300000>,
++		      <0x3900000 0x300000>,
++		      <0x3D00000 0x300000>;
++		reg-names = "west", "north", "south";
++		interrupts = <GIC_SPI 208 IRQ_TYPE_LEVEL_HIGH>;
++		gpio-controller;
++		#gpio-cells = <2>;
++		gpio-ranges = <&tlmm 0 0 119>;
++		gpio-reserved-ranges = <0 4>, <106 4>;
++		interrupt-controller;
++		#interrupt-cells = <2>;
++	};
+-- 
+QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
+of Code Aurora Forum, hosted by The Linux Foundation
+
