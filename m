@@ -2,27 +2,27 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id D9EE07F8A6
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  2 Aug 2019 15:22:28 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E247C7F97D
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  2 Aug 2019 15:29:55 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2393567AbfHBNVX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 2 Aug 2019 09:21:23 -0400
-Received: from mail.kernel.org ([198.145.29.99]:59854 "EHLO mail.kernel.org"
+        id S2394216AbfHBNYs (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 2 Aug 2019 09:24:48 -0400
+Received: from mail.kernel.org ([198.145.29.99]:35516 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S2393563AbfHBNVW (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 2 Aug 2019 09:21:22 -0400
+        id S2394238AbfHBNYs (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 2 Aug 2019 09:24:48 -0400
 Received: from sasha-vm.mshome.net (c-73-47-72-35.hsd1.nh.comcast.net [73.47.72.35])
         (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
         (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 8219E21841;
-        Fri,  2 Aug 2019 13:21:20 +0000 (UTC)
+        by mail.kernel.org (Postfix) with ESMTPSA id B9825217D4;
+        Fri,  2 Aug 2019 13:24:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1564752081;
-        bh=TZ7dI/ODz8ogsYuPTd0l2FqsIFC5E4zVICalUEyz9gg=;
+        s=default; t=1564752286;
+        bh=D8EbAL6Vy+2xZtIg25ogcasGNd415aUaaVMafaRTSOc=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=W0zxX8WyaeaK64a5sIoT23rlFpQCjPvvhtQEnggJ1dk+ycHIHcenr+azyDqwXSpnE
-         0OmT2YCzONrZ4jiO6qnynU4j+c6WixpAARjokrb8iUmRuzqdPv8LKWFKxCUMp0HiTa
-         Z7evb+ueag/MISOGbIZ8pKV5/nTPMhX+THPIwzu8=
+        b=RY6pD3wY6CUHJjo9X9/Tuf8eGZSVpV+WgOSaSAQkQaB7vDmr2Pr8dhgQaOzKUnAAs
+         jEJpA6ldXXJURFmEMZ5qeBQcOdek1l70Ma1jGqNgg2PFywykwYnoMFm9PV55imZmmF
+         6aB67fuf3mh9aS4MK1Jb1SYECJjTr4adDmyIXPQM=
 From:   Sasha Levin <sashal@kernel.org>
 To:     linux-kernel@vger.kernel.org, stable@vger.kernel.org
 Cc:     Rob Clark <robdclark@chromium.org>,
@@ -32,12 +32,12 @@ Cc:     Rob Clark <robdclark@chromium.org>,
         Sean Paul <seanpaul@chromium.org>,
         Sasha Levin <sashal@kernel.org>, linux-arm-msm@vger.kernel.org,
         dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org
-Subject: [PATCH AUTOSEL 5.2 42/76] drm/msm: stop abusing dma_map/unmap for cache
-Date:   Fri,  2 Aug 2019 09:19:16 -0400
-Message-Id: <20190802131951.11600-42-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 4.14 11/30] drm/msm: stop abusing dma_map/unmap for cache
+Date:   Fri,  2 Aug 2019 09:24:03 -0400
+Message-Id: <20190802132422.13963-11-sashal@kernel.org>
 X-Mailer: git-send-email 2.20.1
-In-Reply-To: <20190802131951.11600-1-sashal@kernel.org>
-References: <20190802131951.11600-1-sashal@kernel.org>
+In-Reply-To: <20190802132422.13963-1-sashal@kernel.org>
+References: <20190802132422.13963-1-sashal@kernel.org>
 MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
@@ -103,10 +103,10 @@ Signed-off-by: Sasha Levin <sashal@kernel.org>
  1 file changed, 2 insertions(+), 2 deletions(-)
 
 diff --git a/drivers/gpu/drm/msm/msm_gem.c b/drivers/gpu/drm/msm/msm_gem.c
-index 49a019939ccdc..a3b5fe1a13944 100644
+index f2df718af370d..3a91ccd92c473 100644
 --- a/drivers/gpu/drm/msm/msm_gem.c
 +++ b/drivers/gpu/drm/msm/msm_gem.c
-@@ -97,7 +97,7 @@ static struct page **get_pages(struct drm_gem_object *obj)
+@@ -108,7 +108,7 @@ static struct page **get_pages(struct drm_gem_object *obj)
  		 * because display controller, GPU, etc. are not coherent:
  		 */
  		if (msm_obj->flags & (MSM_BO_WC|MSM_BO_UNCACHED))
@@ -115,7 +115,7 @@ index 49a019939ccdc..a3b5fe1a13944 100644
  					msm_obj->sgt->nents, DMA_BIDIRECTIONAL);
  	}
  
-@@ -127,7 +127,7 @@ static void put_pages(struct drm_gem_object *obj)
+@@ -138,7 +138,7 @@ static void put_pages(struct drm_gem_object *obj)
  			 * GPU, etc. are not coherent:
  			 */
  			if (msm_obj->flags & (MSM_BO_WC|MSM_BO_UNCACHED))
