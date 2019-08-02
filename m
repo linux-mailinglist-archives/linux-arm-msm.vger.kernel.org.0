@@ -2,102 +2,273 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 756177EA57
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  2 Aug 2019 04:30:58 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 86B007EB0A
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  2 Aug 2019 06:15:20 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727006AbfHBCaj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 1 Aug 2019 22:30:39 -0400
-Received: from smtp.codeaurora.org ([198.145.29.96]:33094 "EHLO
+        id S1731043AbfHBEPT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 2 Aug 2019 00:15:19 -0400
+Received: from smtp.codeaurora.org ([198.145.29.96]:60100 "EHLO
         smtp.codeaurora.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726756AbfHBCaj (ORCPT
+        with ESMTP id S1729531AbfHBEPT (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 1 Aug 2019 22:30:39 -0400
+        Fri, 2 Aug 2019 00:15:19 -0400
 Received: by smtp.codeaurora.org (Postfix, from userid 1000)
-        id 176CF60CED; Fri,  2 Aug 2019 02:30:37 +0000 (UTC)
+        id F1E5060DB6; Fri,  2 Aug 2019 04:15:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
-        s=default; t=1564713038;
-        bh=OZ0F8RORaUhH2iVexwHKq9tgLEmJGbcN3e+e3jjLA1I=;
-        h=Subject:To:Cc:References:From:Date:In-Reply-To:From;
-        b=kiufhAOmCEiVcEp97nEuTYC2w1MGipbICKkEQIdgiLFyR1No3s7yUTkeDqvcr8/oO
-         aBYmxBtCq1UST+hKFViRiw9+jVavDYCRlPNaL/Bqv+6VVoO2Ml6qGAq7jhNZiSOTSh
-         T1gjWhQ7mhiw9k+AOGKZH9vzUVfRtNjDH9fgx2Sc=
+        s=default; t=1564719317;
+        bh=R6qY6VHdtZvVib56RaWwEaUzmY8sLeNrIaHNO1viqEE=;
+        h=From:To:Cc:Subject:Date:From;
+        b=IBug6s+1cEvyTTXygv78t6cS1kcR/08QtNFx2OangJtvz5Qan8DedtMtEtrI4ABkQ
+         w9fb6iKWKsp+yAIO4szoEYsCnN4zA3q9W/MMBfTEyiwKycMXZx/RHHCwJQOnU5Q3TC
+         bJZ+03KXgd75/kCFp6/FlTDLWZlyEGLgkgGWPmZc=
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
         pdx-caf-mail.web.codeaurora.org
 X-Spam-Level: 
 X-Spam-Status: No, score=-2.7 required=2.0 tests=ALL_TRUSTED,BAYES_00,
         DKIM_INVALID,DKIM_SIGNED,SPF_NONE autolearn=no autolearn_force=no
         version=3.4.0
-Received: from [10.79.43.141] (blr-bdr-fw-01_globalnat_allzones-outside.qualcomm.com [103.229.18.19])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from blr-ubuntu-173.qualcomm.com (blr-bdr-fw-01_globalnat_allzones-outside.qualcomm.com [103.229.18.19])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
         (No client certificate requested)
         (Authenticated sender: rnayak@smtp.codeaurora.org)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id A305461FE0;
-        Fri,  2 Aug 2019 02:30:33 +0000 (UTC)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id D071F60734;
+        Fri,  2 Aug 2019 04:15:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
-        s=default; t=1564713036;
-        bh=OZ0F8RORaUhH2iVexwHKq9tgLEmJGbcN3e+e3jjLA1I=;
-        h=Subject:To:Cc:References:From:Date:In-Reply-To:From;
-        b=Mdlrqe1U7jv3NXPMi3YJzB7dSTLfVwftvLyVTVU2F+eszwTmqpI8MOP4Mv4N/0rQh
-         5DIb/5GmekgB+l3I3kLsd9/enQbi/l1ndeRhPkd1uiiWz/0Cskl9MzoFnNx1ffyLfN
-         +nEZOA7rz1rtsy3yRUiObJMALYn50Qax/FRdS67Y=
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org A305461FE0
+        s=default; t=1564719315;
+        bh=R6qY6VHdtZvVib56RaWwEaUzmY8sLeNrIaHNO1viqEE=;
+        h=From:To:Cc:Subject:Date:From;
+        b=CYSJp6FK8LwbzVwixB4LC5LjWCmbZvmcHR27X3LGIhIcT/m/DQYmEWUIootX+GOCI
+         weSGlzV5R8U7+Kr2u+4fVDpsb6EH4ejvym+Cp/awSkiFP5u5bomEJhYzvW0yGkWNEF
+         Z05thaWH9H5E3BLEAPZMeKHVdwH5yowN42LPaFY8=
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org D071F60734
 Authentication-Results: pdx-caf-mail.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
 Authentication-Results: pdx-caf-mail.web.codeaurora.org; spf=none smtp.mailfrom=rnayak@codeaurora.org
-Subject: Re: [PATCH 2/2] pinctrl: qcom: Add SC7180 pinctrl driver
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     linus.walleij@linaro.org, linux-arm-msm@vger.kernel.org,
-        agross@kernel.org, robh+dt@kernel.org, linux-gpio@vger.kernel.org,
+From:   Rajendra Nayak <rnayak@codeaurora.org>
+To:     linus.walleij@linaro.org, bjorn.andersson@linaro.org
+Cc:     linux-arm-msm@vger.kernel.org, agross@kernel.org,
+        robh+dt@kernel.org, linux-gpio@vger.kernel.org,
         devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
         Jitendra Sharma <shajit@codeaurora.org>,
-        Vivek Gautam <vivek.gautam@codeaurora.org>
-References: <20190801100717.23333-1-rnayak@codeaurora.org>
- <20190801100717.23333-2-rnayak@codeaurora.org>
- <20190801143637.GY7234@tuxbook-pro>
-From:   Rajendra Nayak <rnayak@codeaurora.org>
-Message-ID: <2f530ba7-684b-156b-5fe3-3577d574a03d@codeaurora.org>
-Date:   Fri, 2 Aug 2019 08:00:31 +0530
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
- Thunderbird/60.8.0
+        Vivek Gautam <vivek.gautam@codeaurora.org>,
+        Rajendra Nayak <rnayak@codeaurora.org>
+Subject: [PATCH v2 1/2] dt-bindings: pinctrl: qcom: Add SC7180 pinctrl binding
+Date:   Fri,  2 Aug 2019 09:45:06 +0530
+Message-Id: <20190802041507.12365-1-rnayak@codeaurora.org>
+X-Mailer: git-send-email 2.22.0
 MIME-Version: 1.0
-In-Reply-To: <20190801143637.GY7234@tuxbook-pro>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+From: Jitendra Sharma <shajit@codeaurora.org>
 
+Add the binding for the TLMM pinctrl block found in the SC7180 platform
 
-On 8/1/2019 8:06 PM, Bjorn Andersson wrote:
-> On Thu 01 Aug 03:07 PDT 2019, Rajendra Nayak wrote:
-> 
-> [..]
->> +static const struct msm_pingroup sc7180_groups[] = {
->> +	[0] = PINGROUP(0, SOUTH, qup01, cri_trng, _, phase_flag, _, _, _, _, _),
->> +	[1] = PINGROUP(1, SOUTH, qup01, cri_trng, _, phase_flag, _, _, _, _, _),
->> +	[2] = PINGROUP(2, SOUTH, qup01, cri_trng, _, phase_flag, _, _, _, _, _),
->> +	[3] = PINGROUP(3, SOUTH, qup01, sp_cmu, dbg_out, qdss_cti, _, _, _, _, _),
->> +	[4] = PINGROUP(4, NORTH, sdc1_tb, _, qdss_cti, _, _, _, _, _, _), [5] = PINGROUP(5, NORTH, sdc2_tb, _, _, _, _, _, _, _, _),
->> +	[6] = PINGROUP(6, NORTH, qup11, qup11, _, _, _, _, _, _, _), [7] = PINGROUP(7, NORTH, qup11, qup11, ddr_bist, _, _, _, _, _, _),
-> 
-> 5 and 7 deserve to be on their own line :)
+Signed-off-by: Jitendra Sharma <shajit@codeaurora.org>
+Signed-off-by: Vivek Gautam <vivek.gautam@codeaurora.org>
+[rnayak: Fix some copy-paste issues, sort and fix functions]
+Signed-off-by: Rajendra Nayak <rnayak@codeaurora.org>
+Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+---
+ .../bindings/pinctrl/qcom,sc7180-pinctrl.txt  | 186 ++++++++++++++++++
+ 1 file changed, 186 insertions(+)
+ create mode 100644 Documentation/devicetree/bindings/pinctrl/qcom,sc7180-pinctrl.txt
 
-Oops, looks like some formatting mess, I'll fix and resend.
-
-> 
-> Apart from that:
-> 
-> Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
-
-thanks for the review.
-
-> 
-> Regards,
-> Bjorn
-> 
-
+diff --git a/Documentation/devicetree/bindings/pinctrl/qcom,sc7180-pinctrl.txt b/Documentation/devicetree/bindings/pinctrl/qcom,sc7180-pinctrl.txt
+new file mode 100644
+index 000000000000..948cd56cfab7
+--- /dev/null
++++ b/Documentation/devicetree/bindings/pinctrl/qcom,sc7180-pinctrl.txt
+@@ -0,0 +1,186 @@
++Qualcomm Technologies, Inc. SC7180 TLMM block
++
++This binding describes the Top Level Mode Multiplexer block found in the
++SC7180 platform.
++
++- compatible:
++	Usage: required
++	Value type: <string>
++	Definition: must be "qcom,sc7180-pinctrl"
++
++- reg:
++	Usage: required
++	Value type: <prop-encoded-array>
++	Definition: the base address and size of the north, south and west
++		    TLMM tiles
++
++- reg-names:
++	Usage: required
++	Value type: <prop-encoded-array>
++	Defintiion: names for the cells of reg, must contain "north", "south"
++		    and "west".
++
++- interrupts:
++	Usage: required
++	Value type: <prop-encoded-array>
++	Definition: should specify the TLMM summary IRQ.
++
++- interrupt-controller:
++	Usage: required
++	Value type: <none>
++	Definition: identifies this node as an interrupt controller
++
++- #interrupt-cells:
++	Usage: required
++	Value type: <u32>
++	Definition: must be 2. Specifying the pin number and flags, as defined
++		    in <dt-bindings/interrupt-controller/irq.h>
++
++- gpio-controller:
++	Usage: required
++	Value type: <none>
++	Definition: identifies this node as a gpio controller
++
++- #gpio-cells:
++	Usage: required
++	Value type: <u32>
++	Definition: must be 2. Specifying the pin number and flags, as defined
++		    in <dt-bindings/gpio/gpio.h>
++
++- gpio-ranges:
++	Usage: required
++	Value type: <prop-encoded-array>
++	Definition:  see ../gpio/gpio.txt
++
++- gpio-reserved-ranges:
++	Usage: optional
++	Value type: <prop-encoded-array>
++	Definition: see ../gpio/gpio.txt
++
++Please refer to ../gpio/gpio.txt and ../interrupt-controller/interrupts.txt for
++a general description of GPIO and interrupt bindings.
++
++Please refer to pinctrl-bindings.txt in this directory for details of the
++common pinctrl bindings used by client devices, including the meaning of the
++phrase "pin configuration node".
++
++The pin configuration nodes act as a container for an arbitrary number of
++subnodes. Each of these subnodes represents some desired configuration for a
++pin, a group, or a list of pins or groups. This configuration can include the
++mux function to select on those pin(s)/group(s), and various pin configuration
++parameters, such as pull-up, drive strength, etc.
++
++
++PIN CONFIGURATION NODES:
++
++The name of each subnode is not important; all subnodes should be enumerated
++and processed purely based on their content.
++
++Each subnode only affects those parameters that are explicitly listed. In
++other words, a subnode that lists a mux function but no pin configuration
++parameters implies no information about any pin configuration parameters.
++Similarly, a pin subnode that describes a pullup parameter implies no
++information about e.g. the mux function.
++
++
++The following generic properties as defined in pinctrl-bindings.txt are valid
++to specify in a pin configuration subnode:
++
++- pins:
++	Usage: required
++	Value type: <string-array>
++	Definition: List of gpio pins affected by the properties specified in
++		    this subnode.
++
++		    Valid pins are:
++		      gpio0-gpio118
++		        Supports mux, bias and drive-strength
++
++		      sdc1_clk, sdc1_cmd, sdc1_data sdc2_clk, sdc2_cmd,
++		      sdc2_data sdc1_rclk
++		        Supports bias and drive-strength
++
++		      ufs_reset
++			Supports bias and drive-strength
++
++- function:
++	Usage: required
++	Value type: <string>
++	Definition: Specify the alternative function to be configured for the
++		    specified pins. Functions are only valid for gpio pins.
++		    Valid values are:
++
++		    adsp_ext, agera_pll, aoss_cti, atest_char, atest_char0,
++		    atest_char1, atest_char2, atest_char3, atest_tsens,
++		    atest_tsens2, atest_usb1, atest_usb10, atest_usb11,
++		    atest_usb12, atest_usb13, atest_usb2, atest_usb20,
++		    atest_usb21, atest_usb22, atest_usb23, audio_ref,
++		    btfm_slimbus, cam_mclk, cci_async, cci_i2c, cci_timer0,
++		    cci_timer1, cci_timer2, cci_timer3, cci_timer4,
++		    cri_trng, dbg_out, ddr_bist, ddr_pxi0, ddr_pxi1,
++		    ddr_pxi2, ddr_pxi3, dp_hot, edp_lcd, gcc_gp1, gcc_gp2,
++		    gcc_gp3, gpio, gp_pdm0, gp_pdm1, gp_pdm2, gps_tx,
++		    jitter_bist, ldo_en, ldo_update, lpass_ext, mdp_vsync,
++		    mdp_vsync0, mdp_vsync1, mdp_vsync2, mdp_vsync3, mi2s_0,
++		    mi2s_1, mi2s_2, mss_lte, m_voc, pa_indicator, phase_flag,
++		    PLL_BIST, pll_bypassnl, pll_reset, prng_rosc, qdss,
++		    qdss_cti, qlink_enable, qlink_request, qspi_clk, qspi_cs,
++		    qspi_data, qup00, qup01, qup02, qup03, qup04, qup05,
++		    qup10, qup11, qup12, qup13, qup14, qup15, sdc1_tb,
++		    sdc2_tb, sd_write, sp_cmu, tgu_ch0, tgu_ch1, tgu_ch2,
++		    tgu_ch3, tsense_pwm1, tsense_pwm2, uim1, uim2, uim_batt,
++		    usb_phy, vfr_1, _V_GPIO, _V_PPS_IN, _V_PPS_OUT,
++		    vsense_trigger, wlan1_adc0, wlan1_adc1, wlan2_adc0,
++		    wlan2_adc1,
++
++- bias-disable:
++	Usage: optional
++	Value type: <none>
++	Definition: The specified pins should be configured as no pull.
++
++- bias-pull-down:
++	Usage: optional
++	Value type: <none>
++	Definition: The specified pins should be configured as pull down.
++
++- bias-pull-up:
++	Usage: optional
++	Value type: <none>
++	Definition: The specified pins should be configured as pull up.
++
++- output-high:
++	Usage: optional
++	Value type: <none>
++	Definition: The specified pins are configured in output mode, driven
++		    high.
++		    Not valid for sdc pins.
++
++- output-low:
++	Usage: optional
++	Value type: <none>
++	Definition: The specified pins are configured in output mode, driven
++		    low.
++		    Not valid for sdc pins.
++
++- drive-strength:
++	Usage: optional
++	Value type: <u32>
++	Definition: Selects the drive strength for the specified pins, in mA.
++		    Valid values are: 2, 4, 6, 8, 10, 12, 14 and 16
++
++Example:
++
++	tlmm: pinctrl@3000000 {
++		compatible = "qcom,sc7180-pinctrl";
++		reg = <0x3500000 0x300000>,
++		      <0x3900000 0x300000>,
++		      <0x3D00000 0x300000>;
++		reg-names = "west", "north", "south";
++		interrupts = <GIC_SPI 208 IRQ_TYPE_LEVEL_HIGH>;
++		gpio-controller;
++		#gpio-cells = <2>;
++		gpio-ranges = <&tlmm 0 0 119>;
++		gpio-reserved-ranges = <0 4>, <106 4>;
++		interrupt-controller;
++		#interrupt-cells = <2>;
++	};
 -- 
 QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
 of Code Aurora Forum, hosted by The Linux Foundation
+
