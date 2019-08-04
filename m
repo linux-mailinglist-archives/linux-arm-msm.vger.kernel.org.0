@@ -2,56 +2,56 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 95CCC80BA6
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  4 Aug 2019 18:22:14 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9EC9480BAD
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  4 Aug 2019 18:24:33 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726339AbfHDQWN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 4 Aug 2019 12:22:13 -0400
-Received: from mail-pg1-f194.google.com ([209.85.215.194]:45975 "EHLO
-        mail-pg1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726319AbfHDQWN (ORCPT
+        id S1726318AbfHDQYc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 4 Aug 2019 12:24:32 -0400
+Received: from mail-pg1-f193.google.com ([209.85.215.193]:41161 "EHLO
+        mail-pg1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726206AbfHDQYc (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 4 Aug 2019 12:22:13 -0400
-Received: by mail-pg1-f194.google.com with SMTP id o13so38405095pgp.12
-        for <linux-arm-msm@vger.kernel.org>; Sun, 04 Aug 2019 09:22:13 -0700 (PDT)
+        Sun, 4 Aug 2019 12:24:32 -0400
+Received: by mail-pg1-f193.google.com with SMTP id x15so28076356pgg.8;
+        Sun, 04 Aug 2019 09:24:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:mime-version
          :content-transfer-encoding;
-        bh=arPSyYtCIEpHJx7VmrbGRXbOahwhzCvFL/DbWnjIMcY=;
-        b=g4+Wq6fJW5FxjqATugBqVVOtB7OFxovBMMIvl/G8oQ0KCoryoaaI6vRw39t+ZrxJG2
-         8uDnWeUwiwSP0UDtprlH6C2I4m0vVumKqOHnJesmczsYn/QxQg0Tt5yNyX8ethqbBRG2
-         PiTiA1aDzFjb/XZ0WsOCrxM15xoP1Y8rfKf5wwjV7gdIGsKqTdz9gdZE5si+tbCfztf7
-         7TvYybqA3bzVY5wfwu+R9NFz+ZLOAYwKELoLqLBIgALKxf56hQPfAFLda1oM2E4yVwEl
-         XvcMXkNDW6EWKa3tHwaSygcxdtS8ITQ1bsCfV0McUtHVuIWK2MKpYE8NDLrJMbbeA5eD
-         hKIQ==
+        bh=cZeBnpYmONo0s7L5W0iy8cP0PQ+zZF6B8fmLCtt7ggo=;
+        b=lpp4MtdY7v54RF4SywPn9NqI/hW980Al2LmT0eCWdZWrbJ3wHmoU9kGwmbig/DtHnS
+         ucw8f/l7IMbzAAJJfStWwUxwqqLjQK8/bvucOuuEu4j2ecSbEuQ+mZ1Rl//DayYQsM1W
+         Rpxrdgvow4ksYxQG3J3OrF0uq8UobtzyHJAan/ouO8r2Y4plbuWkSCmXOC1lA1LVsZ7G
+         Btj2A07e4vvRQTla0BPWit8KAZYvHd9coPrycjKTCqDMkXcQIIctHNhjz3YrdBYygNP5
+         QM6S/eu1gZ+TKXxCq+pYHA4JQDplAFntvkm1HWsO9RpHgRzdjcTWIXuLafhKM0kyNlZg
+         Tczg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
          :content-transfer-encoding;
-        bh=arPSyYtCIEpHJx7VmrbGRXbOahwhzCvFL/DbWnjIMcY=;
-        b=NRMw7KIPH/B5AFSiSRkt9N4jsgifqyK8bTObCws+26pezUc0KL7keSZbzrSZU+j567
-         zvWzy1rj7zcY9Fax5xdai4AJfhucaRnB5xj1rw/entBUWQlqRwl85y0P6YUcyy+VEelE
-         KYu5Dd/SfFfWzhsIgCrNwWVPHz3m99zpML56nz9RD2pY59ZW/nyKovRrRl58FkTJb7NB
-         wkeOXcGFTvze2PYqdPW3HGpoNfXrLm0ZCKgA3GFvvVStRsMB/Ns93oKQ1XtGlcoScz5x
-         bMthwwGnIatpojAK+lIElkz5ftoQuzIUObyHK5JR9NebP+qCwVeiBlkSRk6aIzoZXa0g
-         OFPA==
-X-Gm-Message-State: APjAAAW8ggD86lPu3xUuFTaj3uPyW906CoTmTIM8ToDtu9w9ju8Inbkf
-        zxUhWsZUT4siCI+htGSihJg=
-X-Google-Smtp-Source: APXvYqxzvBqU8xnQh5WRKKhv/bzA0aEYwwWJ/cxXiV4V9lHG+RJeNCKonswn6UeqLwi/Up+h+fncJA==
-X-Received: by 2002:a17:90a:3086:: with SMTP id h6mr14541507pjb.14.1564935732996;
-        Sun, 04 Aug 2019 09:22:12 -0700 (PDT)
+        bh=cZeBnpYmONo0s7L5W0iy8cP0PQ+zZF6B8fmLCtt7ggo=;
+        b=WvfBzrZElJX6qbTQFdG9hh4dYtPzXkgsDpcpJK5F2XxDtN/sCX5OBFl3VZz5hb1w5X
+         WKJ4fJ+lYK56vQYv+dW98XOqYgz2Xr4DC6E5mwxihL0Qk0KJrz2VvQ7c023V5KOz2ZtI
+         Vkc9s5iqr0EpQUMe/vdgJEEmVi8OD8FzOxqWv2SGk4wxskUgmEWHuy9Y92M6CZAgVIn3
+         CWeBLe4HeKTKDZAzrojH4QkfZ52lIa2XNls2CqJoMCGavpBSuo7bF+w2Jo1Z0LvVzC2E
+         OnNcJVluc27edB8F1s6pYzShiU3B/qtg7Hj7hJCMbXKe2Iv4PG6Hv/W/1yZ353GpK2cm
+         DOkA==
+X-Gm-Message-State: APjAAAVmo4MgooCPNcPXKCAJJR2FHGeO0CKdD0TEVKi2btJ7Dz6NUbOX
+        HERc27X5+hyRh0ePXor52A5vs6c6cU4=
+X-Google-Smtp-Source: APXvYqyELApgtKkfgYPAPOEJjxO6X5pq5qokemjPgqGEY+umSMcei11+jC/aKYIICUOzQtG/Zuj3xA==
+X-Received: by 2002:aa7:9834:: with SMTP id q20mr70098022pfl.196.1564935871962;
+        Sun, 04 Aug 2019 09:24:31 -0700 (PDT)
 Received: from localhost.localdomain ([122.163.105.8])
-        by smtp.gmail.com with ESMTPSA id b3sm97978763pfp.65.2019.08.04.09.22.10
+        by smtp.gmail.com with ESMTPSA id v10sm80530006pfe.163.2019.08.04.09.24.29
         (version=TLS1_3 cipher=AEAD-AES256-GCM-SHA384 bits=256/256);
-        Sun, 04 Aug 2019 09:22:12 -0700 (PDT)
+        Sun, 04 Aug 2019 09:24:31 -0700 (PDT)
 From:   Nishka Dasgupta <nishkadg.linux@gmail.com>
-To:     agross@kernel.org, srinivas.kandagatla@linaro.org,
-        linux-arm-msm@vger.kernel.org, alsa-devel@alsa-project.org
+To:     agross@kernel.org, kishon@ti.com, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org
 Cc:     Nishka Dasgupta <nishkadg.linux@gmail.com>
-Subject: [PATCH] slimbus: qcom-ngd-ctrl: Add of_node_put() before return
-Date:   Sun,  4 Aug 2019 21:52:01 +0530
-Message-Id: <20190804162201.5838-1-nishkadg.linux@gmail.com>
+Subject: [PATCH] phy: qualcomm: phy-qcom-qmp: Add of_node_put() before return
+Date:   Sun,  4 Aug 2019 21:54:20 +0530
+Message-Id: <20190804162420.6005-1-nishkadg.linux@gmail.com>
 X-Mailer: git-send-email 2.19.1
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
@@ -68,30 +68,29 @@ Issue found with Coccinelle.
 
 Signed-off-by: Nishka Dasgupta <nishkadg.linux@gmail.com>
 ---
- drivers/slimbus/qcom-ngd-ctrl.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ drivers/phy/qualcomm/phy-qcom-qmp.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/slimbus/qcom-ngd-ctrl.c b/drivers/slimbus/qcom-ngd-ctrl.c
-index f3585777324c..29fbab55c3b3 100644
---- a/drivers/slimbus/qcom-ngd-ctrl.c
-+++ b/drivers/slimbus/qcom-ngd-ctrl.c
-@@ -1338,12 +1338,15 @@ static int of_qcom_slim_ngd_register(struct device *parent,
- 			continue;
- 
- 		ngd = kzalloc(sizeof(*ngd), GFP_KERNEL);
--		if (!ngd)
-+		if (!ngd) {
-+			of_node_put(node);
- 			return -ENOMEM;
-+		}
- 
- 		ngd->pdev = platform_device_alloc(QCOM_SLIM_NGD_DRV_NAME, id);
- 		if (!ngd->pdev) {
- 			kfree(ngd);
-+			of_node_put(node);
- 			return -ENOMEM;
+diff --git a/drivers/phy/qualcomm/phy-qcom-qmp.c b/drivers/phy/qualcomm/phy-qcom-qmp.c
+index 34ff6434da8f..2f0652efebf0 100644
+--- a/drivers/phy/qualcomm/phy-qcom-qmp.c
++++ b/drivers/phy/qualcomm/phy-qcom-qmp.c
+@@ -2094,6 +2094,7 @@ static int qcom_qmp_phy_probe(struct platform_device *pdev)
+ 			dev_err(dev, "failed to create lane%d phy, %d\n",
+ 				id, ret);
+ 			pm_runtime_disable(dev);
++			of_node_put(child);
+ 			return ret;
  		}
- 		ngd->id = id;
+ 
+@@ -2106,6 +2107,7 @@ static int qcom_qmp_phy_probe(struct platform_device *pdev)
+ 			dev_err(qmp->dev,
+ 				"failed to register pipe clock source\n");
+ 			pm_runtime_disable(dev);
++			of_node_put(child);
+ 			return ret;
+ 		}
+ 		id++;
 -- 
 2.19.1
 
