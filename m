@@ -2,83 +2,78 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 8026E814A8
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  5 Aug 2019 11:01:49 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 052998153C
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  5 Aug 2019 11:18:37 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727802AbfHEJBr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 5 Aug 2019 05:01:47 -0400
-Received: from mail-lj1-f193.google.com ([209.85.208.193]:42337 "EHLO
-        mail-lj1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726423AbfHEJBr (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 5 Aug 2019 05:01:47 -0400
-Received: by mail-lj1-f193.google.com with SMTP id t28so78626063lje.9
-        for <linux-arm-msm@vger.kernel.org>; Mon, 05 Aug 2019 02:01:46 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=ofL+84/X8WTQ87INym+beTDzeijUUSg8XFUdF2WJ2nY=;
-        b=HmmKYJ7mhl+/8zgV9AOWeEOrzP4ybrJE9LPi6oF9/4j1y1StKRkLvw3DtlIUUtQwuE
-         gCDxlJNM1DvxV89sqaeJ0toUIG+U4tE8sIKq5Dd/5U6w3hx5i8swa1xLCQYKyMNkXkcZ
-         339+gnXSRpxc91M+kGqwLni0gcEs37hlPMyfftjiD2YsRS/RwRFoAbuG14NcUAH2iUTh
-         K4CZxw1SQEirbsAbhXBwme1CPbreRdfMGuORnDUe83NO9lWk1irmvVb7FokaCIt3/yfo
-         HHQm7fIHSOd7JZpxApSeRGwiKwNDJCyobxFYtzlpWJkRw6LhOwJ0dYGu7VnO6m6DTvce
-         7Fow==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=ofL+84/X8WTQ87INym+beTDzeijUUSg8XFUdF2WJ2nY=;
-        b=U0VIvLYDEOcpAQNNtHuEvBDysis5AQkQj68brl9VyFhtOW0/5jqM7M2AmU13LxbrzH
-         bAj0+uV6OsMmaQTlK+zPmVwdayMRzEkrlFLxEbVC3XSnBlxM6ofihB6Mbc/faRls/Ubg
-         1SKTqYyoFIlFPbj6a7m7aDJpO29Vj3PrPu3KaTJdy3+5zVAu4PyzML2ebTyE4OXPl93z
-         dL6X6urkuInnwscmEFtNGczjcmBS6y4iYKpQi6EwRF/tN1vPzcDdohkwE2i9/WNkgF1l
-         IJ4LVlfETRAOhJ0h3qf5fE153C3jpQhFciFPdiibtkRZbpufoLGugdrMM2P+fxrMUTnc
-         yGtg==
-X-Gm-Message-State: APjAAAWcfXoN3a1GpBUG8RErRTn0uaYiBFTwrCVFPbQJLZHjvjCMa/ZV
-        EliBWQHThfDAK38dQgku1Er2OKiRJ/8cP9ofTNnJNg==
-X-Google-Smtp-Source: APXvYqyy6J/Oydbl1XgI8D9WR+GWwiKIDSANNwFAP8xjqs4qVcz/MsRWaN94GdaujXiAmgVlHAwCD5VXOfoYorScUgQ=
-X-Received: by 2002:a2e:2c14:: with SMTP id s20mr16260537ljs.54.1564995705613;
- Mon, 05 Aug 2019 02:01:45 -0700 (PDT)
+        id S1727917AbfHEJSb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 5 Aug 2019 05:18:31 -0400
+Received: from mail.kernel.org ([198.145.29.99]:33056 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726454AbfHEJSa (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 5 Aug 2019 05:18:30 -0400
+Received: from mail-lj1-f177.google.com (mail-lj1-f177.google.com [209.85.208.177])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        by mail.kernel.org (Postfix) with ESMTPSA id 0953E21852;
+        Mon,  5 Aug 2019 09:18:30 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=default; t=1564996710;
+        bh=3y/xyKQqQxOI/5O7S65myq1HgXxKlZai9ugc4r5PFAs=;
+        h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
+        b=ZVGEXyWfKHiNU9ykvQl6iP/vhiDaIIbECZVQoz2dbKXg0o9tNCy9OFZbp1ZbwMw5u
+         vtFxzrASGVSEXmSa62HUtsG05ILylao9uKfI2n+4eJuhzYlYWjorLeb1C2fe8A23w6
+         pGRPWmqT9BT+nmjsc6bnzwIbMDRuMZZZ05gPQ21o=
+Received: by mail-lj1-f177.google.com with SMTP id m8so45075826lji.7;
+        Mon, 05 Aug 2019 02:18:29 -0700 (PDT)
+X-Gm-Message-State: APjAAAVK+cI9wv6keK6YQrY4Oc3DNdk7kVDdURDfIhS26VMtI5qL25Mh
+        hylr8P2uIYTSiBr9ll0a1aozz1Z5/GWYgaebzUU=
+X-Google-Smtp-Source: APXvYqzggkPHLZ3va+adONzA3B+P4PCDn3noO8lcrGqBRgo8WuH7Fq5Bq7XwbmzdzXRtDWDsIpDJCC30bufng4pCbXM=
+X-Received: by 2002:a2e:124b:: with SMTP id t72mr78893429lje.143.1564996708108;
+ Mon, 05 Aug 2019 02:18:28 -0700 (PDT)
 MIME-Version: 1.0
-References: <20190629125933.679-1-linus.walleij@linaro.org> <CACRpkdZ-6qBxzTTY4=CV+-ZmnTRPmPNAWrHMb_cMXTYdaNeYQQ@mail.gmail.com>
-In-Reply-To: <CACRpkdZ-6qBxzTTY4=CV+-ZmnTRPmPNAWrHMb_cMXTYdaNeYQQ@mail.gmail.com>
-From:   Linus Walleij <linus.walleij@linaro.org>
-Date:   Mon, 5 Aug 2019 11:01:34 +0200
-Message-ID: <CACRpkdaf7ZOr-ci0VnYcS=cVpmHyvQrDS2PY_tE18ZfhLfmRGA@mail.gmail.com>
-Subject: Re: [PATCH 1/7] drm/msm/mdp4: Drop unused GPIO include
-To:     "open list:DRM PANEL DRIVERS" <dri-devel@lists.freedesktop.org>,
-        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
-        Maxime Ripard <maxime.ripard@bootlin.com>,
-        Sean Paul <sean@poorly.run>
-Cc:     Linux ARM <linux-arm-kernel@lists.infradead.org>,
-        Rob Clark <robdclark@gmail.com>,
-        MSM <linux-arm-msm@vger.kernel.org>,
-        freedreno <freedreno@lists.freedesktop.org>
+References: <20190802132809.8116-1-yuehaibing@huawei.com> <20190802132809.8116-4-yuehaibing@huawei.com>
+In-Reply-To: <20190802132809.8116-4-yuehaibing@huawei.com>
+From:   Krzysztof Kozlowski <krzk@kernel.org>
+Date:   Mon, 5 Aug 2019 11:18:17 +0200
+X-Gmail-Original-Message-ID: <CAJKOXPfvMLehLn+iNOGDEFvsWc93eShUx0=8fn9JWiBOc7wpFw@mail.gmail.com>
+Message-ID: <CAJKOXPfvMLehLn+iNOGDEFvsWc93eShUx0=8fn9JWiBOc7wpFw@mail.gmail.com>
+Subject: Re: [PATCH -next 03/12] crypto: exynos - use devm_platform_ioremap_resource()
+ to simplify code
+To:     YueHaibing <yuehaibing@huawei.com>
+Cc:     herbert@gondor.apana.org.au, lars.persson@axis.com,
+        jesper.nilsson@axis.com, davem@davemloft.net,
+        thomas.lendacky@amd.com, gary.hook@amd.com, kgene@kernel.org,
+        antoine.tenart@bootlin.com, matthias.bgg@gmail.com,
+        jamie@jamieiles.com, agross@kernel.org, heiko@sntech.de,
+        mcoquelin.stm32@gmail.com, alexandre.torgue@st.com,
+        clabbe.montjoie@gmail.com, mripard@kernel.org, wens@csie.org,
+        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
+        linux-crypto@vger.kernel.org, linux-arm-kernel@axis.com,
+        "linux-samsung-soc@vger.kernel.org" 
+        <linux-samsung-soc@vger.kernel.org>,
+        linux-arm-kernel@lists.infradead.org,
+        linux-mediatek@lists.infradead.org, linux-arm-msm@vger.kernel.org,
+        linux-rockchip@lists.infradead.org,
+        linux-stm32@st-md-mailman.stormreply.com
 Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Sun, Jul 28, 2019 at 12:02 PM Linus Walleij <linus.walleij@linaro.org> wrote:
-> On Sat, Jun 29, 2019 at 3:01 PM Linus Walleij <linus.walleij@linaro.org> wrote:
+On Fri, 2 Aug 2019 at 15:31, YueHaibing <yuehaibing@huawei.com> wrote:
 >
-> > This file is not using any symbols from <linux/gpio.h> so just
-> > drop this include.
-> >
-> > Cc: Rob Clark <robdclark@gmail.com>
-> > Cc: Sean Paul <sean@poorly.run>
-> > Cc: linux-arm-msm@vger.kernel.org
-> > Cc: freedreno@lists.freedesktop.org
-> > Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
+> Use devm_platform_ioremap_resource() to simplify the code a bit.
+> This is detected by coccinelle.
 >
-> Rob & friends: can this be merged to wherever you merge
-> the MSM DRM patches? If it is in drm-misc I can apply it
-> but I need some ACKs.
+> Reported-by: Hulk Robot <hulkci@huawei.com>
+> Signed-off-by: YueHaibing <yuehaibing@huawei.com>
+> ---
+>  drivers/crypto/exynos-rng.c | 4 +---
+>  1 file changed, 1 insertion(+), 3 deletions(-)
+>
 
-Ping on this!
+Reviewed-by: Krzysztof Kozlowski <krzk@kernel.org>
 
-Yours,
-Linus Walleij
+Best regards,
+Krzysztof
