@@ -2,128 +2,294 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id AF3FF818E5
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  5 Aug 2019 14:12:00 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E610681DEB
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  5 Aug 2019 15:50:42 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727259AbfHEMMA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 5 Aug 2019 08:12:00 -0400
-Received: from mout.web.de ([212.227.17.12]:57253 "EHLO mout.web.de"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1727349AbfHEMMA (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 5 Aug 2019 08:12:00 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
-        s=dbaedf251592; t=1565007107;
-        bh=DN9auCtedXhVjg71g+2ZUtne4mAwANQeTHFbI2JnUog=;
-        h=X-UI-Sender-Class:To:Cc:References:Subject:From:Date:In-Reply-To;
-        b=qTmcwj2PIJM30D5lMlE0iAel3Iuc3Gd0U+yHH/D0IbszIT7A8Ys6AMY5jHL9rQ0lS
-         at3YxMG0nUauUCsN35QJ76Dn0eA+jFW3B9Hy26mXqq20GmDz5BGyrYUx+9CWwfqvb3
-         qvg6xIJGI+FNaHwXG5Ah7iqfflf017W2z7baB1lg=
-X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
-Received: from [192.168.1.2] ([93.132.163.134]) by smtp.web.de (mrweb101
- [213.165.67.124]) with ESMTPSA (Nemesis) id 0LZvUH-1ibwLu0e8T-00lmys; Mon, 05
- Aug 2019 14:11:47 +0200
-To:     Nishka Dasgupta <nishkadg.linux@gmail.com>,
-        Andy Gross <agross@kernel.org>,
-        Kishon Vijay Abraham I <kishon@ti.com>,
-        Vivek Gautam <vivek.gautam@codeaurora.org>,
-        linux-arm-msm@vger.kernel.org
-Cc:     linux-kernel@vger.kernel.org, kernel-janitors@vger.kernel.org
-References: <20190804162420.6005-1-nishkadg.linux@gmail.com>
-Subject: Re: [PATCH] phy: qualcomm: phy-qcom-qmp: Add of_node_put() before
- return
-From:   Markus Elfring <Markus.Elfring@web.de>
+        id S1729623AbfHENue (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 5 Aug 2019 09:50:34 -0400
+Received: from mail-lf1-f65.google.com ([209.85.167.65]:43667 "EHLO
+        mail-lf1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729137AbfHENua (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 5 Aug 2019 09:50:30 -0400
+Received: by mail-lf1-f65.google.com with SMTP id c19so58035498lfm.10
+        for <linux-arm-msm@vger.kernel.org>; Mon, 05 Aug 2019 06:50:29 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=subject:to:cc:references:from:openpgp:autocrypt:message-id:date
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=fYH12E/eBAcLSbPSm2tC4aFkLbfuP20/Ln12raVv5aw=;
+        b=UaMX/oTg1HfKul52Lw2ggM+/iCQ5v+I+mEP4Esf0Rquy0Qu9oucxUjjHWLjLeKR9LV
+         H5j9ZBuSB2METhJgPCuX7js4bAK9v7lZn/M7xwYM9j5n/Q43pMg1fTlmh5vb4EPvc+8C
+         SyoCJCu/yjWFO/vCr54tYkYz9pxXmCR7ccv3Lg0MYkvD5RYNNBlbVT6IQH1lQTcMwkVk
+         86dghdRjgoRVOp9+ZGrRHeTLThxevyTqU+HpF6xf6DowBRZ23EJs/mS2OQMtpKUOlf7X
+         7lhH7IWh8ua2wc/28FREFTMIqBNeR9PqybMs4nGfaW9xFZ5hjoEE/pCiZS+Ya6RxFhh/
+         cvSA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:to:cc:references:from:openpgp:autocrypt
+         :message-id:date:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=fYH12E/eBAcLSbPSm2tC4aFkLbfuP20/Ln12raVv5aw=;
+        b=Syx4dpACHBe2pEmxcOhoAtAsxCscFtG2O36+8F1Kz/dHbZtq1A7Fec2V3SJLun6pzf
+         4M0bgRHjQ7aH05G6oQJZQJ+whJZcGGw7yaP+FmNAkCxZXFhtsnrTLASFQSwLn5kIaCx4
+         nLPwC+AD/Vlk6f5Xq3fiWg+VZ6RHVT+HNoPOylGcsqHTlT+hN4vaQtU7DOOxX+/gKsjC
+         W4lHkfj3mHT4Btufojb1klNw9K07fdn1HZix3dSoEcVzeb8scBk36kz24mZ6ChBnwLE4
+         TbcHNUOJRkJN73jBa937OSPeXpBtAv5LlM3csrzwE94oF9vJgNSpTx92q80+KTo6/pa0
+         8oTA==
+X-Gm-Message-State: APjAAAVOTrmWesw9LRp6jzmdBgYQ7XCSzp75kCs+Gchv3VjgwOmMCPwx
+        tW2D4IYlk2/yh2aieseZEKjRHZnvCnQ=
+X-Google-Smtp-Source: APXvYqy1KpTD7Ht1RPkHtURneemcaRsDHT9c8o/H9AM5O6ukRenfQof2NhdAeK0IIbD4S2UnuNl/WQ==
+X-Received: by 2002:a19:f00a:: with SMTP id p10mr35318539lfc.68.1565013027910;
+        Mon, 05 Aug 2019 06:50:27 -0700 (PDT)
+Received: from [10.44.66.8] ([212.45.67.2])
+        by smtp.googlemail.com with ESMTPSA id l25sm537185lfc.20.2019.08.05.06.50.26
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Mon, 05 Aug 2019 06:50:27 -0700 (PDT)
+Subject: Re: [PATCH v5 1/5] dt-bindings: interconnect: Add Qualcomm QCS404 DT
+ bindings
+To:     robh+dt@kernel.org, devicetree@vger.kernel.org
+Cc:     bjorn.andersson@linaro.org, agross@kernel.org, vkoul@kernel.org,
+        evgreen@chromium.org, daidavid1@codeaurora.org,
+        linux-pm@vger.kernel.org, linux-arm-msm@vger.kernel.org
+References: <20190723142339.27772-1-georgi.djakov@linaro.org>
+ <20190723142339.27772-2-georgi.djakov@linaro.org>
+From:   Georgi Djakov <georgi.djakov@linaro.org>
 Openpgp: preference=signencrypt
-Autocrypt: addr=Markus.Elfring@web.de; prefer-encrypt=mutual; keydata=
- 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 FEE=
-Message-ID: <239020d9-ff8a-237d-b52c-bf2423f9609b@web.de>
-Date:   Mon, 5 Aug 2019 14:11:45 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.8.0
+Autocrypt: addr=georgi.djakov@linaro.org; prefer-encrypt=mutual; keydata=
+ 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
+ KEmKjLDvB0pePJkdTw==
+Message-ID: <c4cb4320-52a1-ab26-4b0e-ae2b51312c27@linaro.org>
+Date:   Mon, 5 Aug 2019 16:50:23 +0300
 MIME-Version: 1.0
-In-Reply-To: <20190804162420.6005-1-nishkadg.linux@gmail.com>
+In-Reply-To: <20190723142339.27772-2-georgi.djakov@linaro.org>
 Content-Type: text/plain; charset=utf-8
 Content-Language: en-US
-X-Provags-ID: V03:K1:l5HrBNNs+hVlre9sLU5kguHduTygiitpXMFzs6LEZ9C3DkAZah2
- kJRGoW0XigxBxuNCKgezh7xeJ6RfJ+MS23m65UMa34OSua+1YoZtyKAuL7Q4HA27fSkIjNb
- 6Do0yfRxp5kt09ZFJE8/QNiCEGFqZCaNRHkAmcl/BCCIuYVTUU90HYa1d0odKW0yQIQTsD9
- 1aYnZH/QgqPwMl7req/qw==
-X-Spam-Flag: NO
-X-UI-Out-Filterresults: notjunk:1;V03:K0:+eqZ6FNivI0=:c8Be0f21BiZvDKF++97y/a
- qCPgkB5/bEnTqk9zRDk+klz6gR7TgVX8/2ucy99QbvMwfwgs39T2nTBBwzETbLiVfCTz8Y1pT
- 6oNLiLeOBkz+qnjRxIFswC2uJWVDl6E1fyw9bPero4Cs2Po8rYSa4EhLhyxFvI5fyyDW3XUJN
- PSHAIPyjAWM6hfUVhszhMDo7PzVbo9VzyLc+hLa15cUyPKvyRt9sSNksf/h/EQC0xwZAKTcGk
- 8sRFa/rdcUcwGRNLHNyaie3+gEvxESRAPqfhbD8xHV9GNMQ26TTrlx7hOZdS6kDJWGWw8wrsz
- wqJjWQeOu/1aj0PbDc3yrDeEuNpDdBdoB5HXPiir4cBcc069icYu2/S9FEAFlXDr++GTwtH/h
- Gek+7A7jqBtJJnva8nrrT63ngBwdc7Yupytyz8sYE9DRT2whaZUqo66QsCZJJsehUDUbc93+C
- bSk9lrvCHSYER5fxhJomUbM6itbEZ+Pcqkx/WQHpRfv7FWLtBm+C5GfWL7QwsbE2mIN7/nDkB
- +U1sRWNpRDHv5Xf19/9mwgsATGSA1qlq803JZmjIY9i+RPXsCjjIInM7i9lZfzRfCYetR4+fb
- NuG2Ok38oNF88+WjAgWFc68xJ5Q8bMXT+Dsdi3oTcjsCLjFdOAQeYyLwIgCo0bfrVBsWyxaOF
- NM9AgLIaZ7d7hBb42Q40qpuUq805PimonKn+JA43aqm0ildu/VLPzd5IsFboBqBZ7FPC/N28T
- 6NXIZwj2FSSeYT0KzYIiZ3B3Ni6nFLdeAvjBIKElxoAT4YqUZuik/UAvcms4pulyt0EpXnG3C
- Sh9hhmNmK+S9pkmQgEMATPvP/HB9UulNU4+dmmhj09+NgoH0HuBAz+INgRIRBTZjgBICxu1Hd
- ZF3gLvp58gAO6i2dQxQPr0N2rIYlL8Ff/goI3eThn3AREceKQKvZtFH1WrETeS0mQ1RS634k+
- kwTyK5Pjt7HD7c9oVxvGUtmwBu0KUxCJ90DpHoMagr/CI5zByIOqI932YzCne1hMXGyOiI7Ex
- mvpVZxDfzsL4gbZXyR9Yd6sryBfx5OjZo9+8fM1IGlP9QujwpNftT1X+yXojpDN/2PkucQonA
- HbEhM2oTf4HGwHMAGcIdh7erBgzW4zn9VQZ+eRGj5ipCzuCeqiW1sRh3aUAqiVjvWLSh7UujE
- 0MxZc=
+Content-Transfer-Encoding: 7bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-> +++ b/drivers/phy/qualcomm/phy-qcom-qmp.c
-> @@ -2094,6 +2094,7 @@ static int qcom_qmp_phy_probe(struct platform_device *pdev)
->  			dev_err(dev, "failed to create lane%d phy, %d\n",
->  				id, ret);
->  			pm_runtime_disable(dev);
-> +			of_node_put(child);
->  			return ret;
->  		}
+On 7/23/19 17:23, Georgi Djakov wrote:
+> The Qualcomm QCS404 platform has several buses that could be controlled
+> and tuned according to the bandwidth demand.
+> 
+> Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+> Signed-off-by: Georgi Djakov <georgi.djakov@linaro.org>
+> ---
 
-I suggest to move a bit of common exception handling code to the end of
-this function implementation.
-Would you like to add a jump target?
+Hi Rob,
 
-Regards,
-Markus
+Could you please help to review this patch?
+
+Thanks,
+Georgi
+
+> 
+> v5:
+> - Make reg and clocks DT properties required.
+> - Remove the _clk suffix from clock names.
+> 
+> v4:
+> - Add the DT header into this patch.
+> - Pick Bjorn's r-b.
+> 
+> v3:
+> - Add a reg property and move the interconnect nodes under the "soc" node.
+> 
+> v2:
+> - No changes.
+> 
+>  .../bindings/interconnect/qcom,qcs404.txt     | 45 ++++++++++
+>  .../dt-bindings/interconnect/qcom,qcs404.h    | 88 +++++++++++++++++++
+>  2 files changed, 133 insertions(+)
+>  create mode 100644 Documentation/devicetree/bindings/interconnect/qcom,qcs404.txt
+>  create mode 100644 include/dt-bindings/interconnect/qcom,qcs404.h
+> 
+> diff --git a/Documentation/devicetree/bindings/interconnect/qcom,qcs404.txt b/Documentation/devicetree/bindings/interconnect/qcom,qcs404.txt
+> new file mode 100644
+> index 000000000000..c07d89812b73
+> --- /dev/null
+> +++ b/Documentation/devicetree/bindings/interconnect/qcom,qcs404.txt
+> @@ -0,0 +1,45 @@
+> +Qualcomm QCS404 Network-On-Chip interconnect driver binding
+> +-----------------------------------------------------------
+> +
+> +Required properties :
+> +- compatible : shall contain only one of the following:
+> +			"qcom,qcs404-bimc"
+> +			"qcom,qcs404-pcnoc"
+> +			"qcom,qcs404-snoc"
+> +- #interconnect-cells : should contain 1
+> +
+> +reg : specifies the physical base address and size of registers
+> +clocks : list of phandles and specifiers to all interconnect bus clocks
+> +clock-names : clock names should include both "bus" and "bus_a"
+> +
+> +Example:
+> +
+> +soc {
+> +	...
+> +	bimc: interconnect@400000 {
+> +		reg = <0x00400000 0x80000>;
+> +		compatible = "qcom,qcs404-bimc";
+> +		#interconnect-cells = <1>;
+> +		clock-names = "bus", "bus_a";
+> +		clocks = <&rpmcc RPM_SMD_BIMC_CLK>,
+> +			<&rpmcc RPM_SMD_BIMC_A_CLK>;
+> +	};
+> +
+> +	pnoc: interconnect@500000 {
+> +		reg = <0x00500000 0x15080>;
+> +		compatible = "qcom,qcs404-pcnoc";
+> +		#interconnect-cells = <1>;
+> +		clock-names = "bus", "bus_a";
+> +		clocks = <&rpmcc RPM_SMD_PNOC_CLK>,
+> +			<&rpmcc RPM_SMD_PNOC_A_CLK>;
+> +	};
+> +
+> +	snoc: interconnect@580000 {
+> +		reg = <0x00580000 0x23080>;
+> +		compatible = "qcom,qcs404-snoc";
+> +		#interconnect-cells = <1>;
+> +		clock-names = "bus", "bus_a";
+> +		clocks = <&rpmcc RPM_SMD_SNOC_CLK>,
+> +			<&rpmcc RPM_SMD_SNOC_A_CLK>;
+> +	};
+> +};
+> diff --git a/include/dt-bindings/interconnect/qcom,qcs404.h b/include/dt-bindings/interconnect/qcom,qcs404.h
+> new file mode 100644
+> index 000000000000..960f6e39c5f2
+> --- /dev/null
+> +++ b/include/dt-bindings/interconnect/qcom,qcs404.h
+> @@ -0,0 +1,88 @@
+> +/* SPDX-License-Identifier: GPL-2.0 */
+> +/*
+> + * Qualcomm interconnect IDs
+> + *
+> + * Copyright (c) 2019, Linaro Ltd.
+> + * Author: Georgi Djakov <georgi.djakov@linaro.org>
+> + */
+> +
+> +#ifndef __DT_BINDINGS_INTERCONNECT_QCOM_QCS404_H
+> +#define __DT_BINDINGS_INTERCONNECT_QCOM_QCS404_H
+> +
+> +#define MASTER_AMPSS_M0			0
+> +#define MASTER_OXILI			1
+> +#define MASTER_MDP_PORT0		2
+> +#define MASTER_SNOC_BIMC_1		3
+> +#define MASTER_TCU_0			4
+> +#define SLAVE_EBI_CH0			5
+> +#define SLAVE_BIMC_SNOC			6
+> +
+> +#define MASTER_SPDM			0
+> +#define MASTER_BLSP_1			1
+> +#define MASTER_BLSP_2			2
+> +#define MASTER_XI_USB_HS1		3
+> +#define MASTER_CRYPT0			4
+> +#define MASTER_SDCC_1			5
+> +#define MASTER_SDCC_2			6
+> +#define MASTER_SNOC_PCNOC		7
+> +#define MASTER_QPIC			8
+> +#define PCNOC_INT_0			9
+> +#define PCNOC_INT_2			10
+> +#define PCNOC_INT_3			11
+> +#define PCNOC_S_0			12
+> +#define PCNOC_S_1			13
+> +#define PCNOC_S_2			14
+> +#define PCNOC_S_3			15
+> +#define PCNOC_S_4			16
+> +#define PCNOC_S_6			17
+> +#define PCNOC_S_7			18
+> +#define PCNOC_S_8			19
+> +#define PCNOC_S_9			20
+> +#define PCNOC_S_10			21
+> +#define PCNOC_S_11			22
+> +#define SLAVE_SPDM			23
+> +#define SLAVE_PDM			24
+> +#define SLAVE_PRNG			25
+> +#define SLAVE_TCSR			26
+> +#define SLAVE_SNOC_CFG			27
+> +#define SLAVE_MESSAGE_RAM		28
+> +#define SLAVE_DISP_SS_CFG		29
+> +#define SLAVE_GPU_CFG			30
+> +#define SLAVE_BLSP_1			31
+> +#define SLAVE_BLSP_2			32
+> +#define SLAVE_TLMM_NORTH		33
+> +#define SLAVE_PCIE			34
+> +#define SLAVE_ETHERNET			35
+> +#define SLAVE_TLMM_EAST			36
+> +#define SLAVE_TCU			37
+> +#define SLAVE_PMIC_ARB			38
+> +#define SLAVE_SDCC_1			39
+> +#define SLAVE_SDCC_2			40
+> +#define SLAVE_TLMM_SOUTH		41
+> +#define SLAVE_USB_HS			42
+> +#define SLAVE_USB3			43
+> +#define SLAVE_CRYPTO_0_CFG		44
+> +#define SLAVE_PCNOC_SNOC		45
+> +
+> +#define MASTER_QDSS_BAM			0
+> +#define MASTER_BIMC_SNOC		1
+> +#define MASTER_PCNOC_SNOC		2
+> +#define MASTER_QDSS_ETR			3
+> +#define MASTER_EMAC			4
+> +#define MASTER_PCIE			5
+> +#define MASTER_USB3			6
+> +#define QDSS_INT			7
+> +#define SNOC_INT_0			8
+> +#define SNOC_INT_1			9
+> +#define SNOC_INT_2			10
+> +#define SLAVE_KPSS_AHB			11
+> +#define SLAVE_WCSS			12
+> +#define SLAVE_SNOC_BIMC_1		13
+> +#define SLAVE_IMEM			14
+> +#define SLAVE_SNOC_PCNOC		15
+> +#define SLAVE_QDSS_STM			16
+> +#define SLAVE_CATS_0			17
+> +#define SLAVE_CATS_1			18
+> +#define SLAVE_LPASS			19
+> +
+> +#endif
+> 
