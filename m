@@ -2,97 +2,81 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 4E47881721
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  5 Aug 2019 12:34:13 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C0A7F81838
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  5 Aug 2019 13:34:27 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728086AbfHEKeH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 5 Aug 2019 06:34:07 -0400
-Received: from mail-lf1-f67.google.com ([209.85.167.67]:43618 "EHLO
-        mail-lf1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727328AbfHEKeG (ORCPT
+        id S1728043AbfHELe0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 5 Aug 2019 07:34:26 -0400
+Received: from mail-lj1-f194.google.com ([209.85.208.194]:33042 "EHLO
+        mail-lj1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727989AbfHELe0 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 5 Aug 2019 06:34:06 -0400
-Received: by mail-lf1-f67.google.com with SMTP id c19so57517494lfm.10
-        for <linux-arm-msm@vger.kernel.org>; Mon, 05 Aug 2019 03:34:05 -0700 (PDT)
+        Mon, 5 Aug 2019 07:34:26 -0400
+Received: by mail-lj1-f194.google.com with SMTP id h10so7543907ljg.0
+        for <linux-arm-msm@vger.kernel.org>; Mon, 05 Aug 2019 04:34:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=JGtqwITu2uNu0KF6vt+VLLqwcEMqaP+PiWiHY6OQtsY=;
-        b=YDCLR3lXJ7d0Z4YqSLxOVJjSXKF8PSiCsmyC82hOuP2j31RTZ71Jfi1KO2C3/XZXBd
-         KQNt15eK9ofwpKOSOcx7bYoa3rQTLBLpFstYZ/qLz2mxDZrlVUtJwXyJx+ItO33Ezynx
-         WpdvKBDW/WZ2hQx86yBCUsOt7jRWtlx8pjHekN91U+LLlUkyjW2j3KSb3DOog57r/11E
-         XuFvzq1mzUcEE82AT7fBdtAS9JUxMEwuM98z7XNaQVFOK9Bsbnh6zPdNnNnxEZrouQk4
-         Tn1osA5l/+HfcEaWZMruPnpCx0m/wXh03YNEis8QlPwSSxC6JG7TeVU/4VtJdH7iPLyl
-         W44A==
+         :cc;
+        bh=+gdt6jaSxfozMzDqzJt3/RN8BGk3uSUmYERQCMQQrEU=;
+        b=dPAg1QRXa/qBwYjTW2z4itUlMq9B3ieWItaKFvalHRO1TfCDSlJ91SuT8R2pSHyHAJ
+         1RvSa0wqG2s5zI2uw+rM+Vj7A3DF9EvYjl/WKqP3tjOAznfGjXCBjVw58oW3hyrxyi5m
+         NkZUeZBhJ4131f28RWRamzpCgzckZKnRQCE4L59kU48F8wn0pTVLgq0pYTLEr6ETplM2
+         gLVFiq1UPc4d+pL9jCwMk2COHXObYWW1To4exD6R6g7dfviWaEvjB8qynCLNB1qOK2vg
+         21x71nOSW+nKSByp0EpSeO8bQlnJYr1dY++yqo2bxMnhbx1VzucWS5aqdpuwn3fUlYQ6
+         Tmlg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=JGtqwITu2uNu0KF6vt+VLLqwcEMqaP+PiWiHY6OQtsY=;
-        b=rngVr3trYwKk5mNreODueF6of7eV2stNneWUqf+H7LBY3OUwav1fAnmhMkBMSCst+I
-         LPgBnSG5HYxzn8D02MIsj/v5rBkhwdtmYHiiPVuYO0fNRrMkbSG6ZzsGEKNGwB5iFMid
-         iQkPp12SEgA5hlumr5nK3yR9bpKP6a9KyAHyMuDehj2C7MdgWiqFcwD0zTMFr1qNRELS
-         vEU+CDUKbp28Vi858AF+XrDEnFT1Xo9PsmS2v+DQ6bOnmORnTYQ0KnvQBz/E3Gx08eli
-         64QyFxbOH8Vi8KDns4VRnc4h3l+0JRs0sTtWTyL6kR5qtG+f6kMlGSW6dXTbIRcRa9A1
-         ofyA==
-X-Gm-Message-State: APjAAAUOuFA5lxr80vA7evDU490biqg4aWMa+xVH3dOTbGE7UIbmGBd0
-        COlyfvrj0FAJv779IfGaSS2SqtuuUM1xT+i0dm7c91TP
-X-Google-Smtp-Source: APXvYqzH+R60ewO8XJ2gzoKiGmqUfBqtDJ2yUJTWbBfcdO++jKdzS/wcmFQSFHQC4vAyafrpnBTKHWgC43U+he1CuA8=
-X-Received: by 2002:a19:ed11:: with SMTP id y17mr1890223lfy.141.1565001244892;
- Mon, 05 Aug 2019 03:34:04 -0700 (PDT)
+         :message-id:subject:to:cc;
+        bh=+gdt6jaSxfozMzDqzJt3/RN8BGk3uSUmYERQCMQQrEU=;
+        b=kuEw392I2wTRQyY3V+BYucVRCYsOmUAAt6oawIVm0kctnyDasZ2YutiJvXahn1LLoR
+         I9PCs8hIFFwbVHroRL+U658kBFBju094/jAiSWT3P5lGDz0O+qIeyuIXoh4O7Uy/R3UT
+         YbZuXjudI4eCnI3mBRF2T+MsmvcqI2Hnd0zC5ZSAtFN72ql7ncht0YtN01+XnUWs4VLY
+         ws3EPfU1ucIUnnBK/JJIa9donmpsEO7fI1fdUbM4l3/uNdkkwWPecp6+DrdlwT9prSZ6
+         LzFHy4Q0aXQd32hD3uxf3ui5BcMhh2nFMHO3cPZa6N0WsbSnYgb4FRqjAE5HDf64DI8k
+         6BCA==
+X-Gm-Message-State: APjAAAXftxPtXP2+EI3wuOaFFu0Zs9fHeLVUsURND2qyD1t6nqoE0LWp
+        YhQbT55rO3aZN0z6Ke1CogVNMGR0tnYM3MVZpP+4BA==
+X-Google-Smtp-Source: APXvYqy4d5dyA1aBlM4kQVXGe/WqL/1bnttB2gPsTGhKzYzfk98c7+dk2rkdM6qZpTA/hFAdpbiCmKgQcjPdNls67OE=
+X-Received: by 2002:a2e:8195:: with SMTP id e21mr9878940ljg.62.1565004864085;
+ Mon, 05 Aug 2019 04:34:24 -0700 (PDT)
 MIME-Version: 1.0
-References: <20190726112816.19723-1-anders.roxell@linaro.org>
-In-Reply-To: <20190726112816.19723-1-anders.roxell@linaro.org>
+References: <20190801100717.23333-1-rnayak@codeaurora.org>
+In-Reply-To: <20190801100717.23333-1-rnayak@codeaurora.org>
 From:   Linus Walleij <linus.walleij@linaro.org>
-Date:   Mon, 5 Aug 2019 12:33:53 +0200
-Message-ID: <CACRpkdYyEi1Z9a2uz88Rks3QMYzV4W_cJ2FJ4pY1Hn6_qdAeeA@mail.gmail.com>
-Subject: Re: [PATCH 2/2] pinctrl: qcom: spmi-gpio: Mark expected switch fall-through
-To:     Anders Roxell <anders.roxell@linaro.org>
+Date:   Mon, 5 Aug 2019 13:34:12 +0200
+Message-ID: <CACRpkdYLb-WWSEL8yG3yy8Qq7bOKP9JjUGV51mY6=aEwrQAJvg@mail.gmail.com>
+Subject: Re: [PATCH 1/2] dt-bindings: pinctrl: qcom: Add SC7180 pinctrl binding
+To:     Rajendra Nayak <rnayak@codeaurora.org>
 Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        =?UTF-8?Q?Heiko_St=C3=BCbner?= <heiko@sntech.de>,
         MSM <linux-arm-msm@vger.kernel.org>,
+        Andy Gross <agross@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
         "open list:GPIO SUBSYSTEM" <linux-gpio@vger.kernel.org>,
-        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>
+        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
+        <devicetree@vger.kernel.org>,
+        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
+        Jitendra Sharma <shajit@codeaurora.org>,
+        Vivek Gautam <vivek.gautam@codeaurora.org>
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, Jul 26, 2019 at 1:28 PM Anders Roxell <anders.roxell@linaro.org> wr=
-ote:
+On Thu, Aug 1, 2019 at 12:07 PM Rajendra Nayak <rnayak@codeaurora.org> wrote:
 
-> When fall-through warnings was enabled by default the following warnings
-> was starting to show up:
+> From: Jitendra Sharma <shajit@codeaurora.org>
 >
-> ../drivers/pinctrl/qcom/pinctrl-spmi-gpio.c: In function =E2=80=98pmic_gp=
-io_populate=E2=80=99:
-> ../drivers/pinctrl/qcom/pinctrl-spmi-gpio.c:815:20: warning: this stateme=
-nt may fall
->  through [-Wimplicit-fallthrough=3D]
->    pad->have_buffer =3D true;
->    ~~~~~~~~~~~~~~~~~^~~~~~
-> ../drivers/pinctrl/qcom/pinctrl-spmi-gpio.c:816:2: note: here
->   case PMIC_GPIO_SUBTYPE_GPIOC_4CH:
->   ^~~~
-> ../drivers/pinctrl/qcom/pinctrl-spmi-gpio.c:820:20: warning: this stateme=
-nt may fall
->  through [-Wimplicit-fallthrough=3D]
->    pad->have_buffer =3D true;
->    ~~~~~~~~~~~~~~~~~^~~~~~
-> ../drivers/pinctrl/qcom/pinctrl-spmi-gpio.c:821:2: note: here
->   case PMIC_GPIO_SUBTYPE_GPIOC_8CH:
->   ^~~~
+> Add the binding for the TLMM pinctrl block found in the SC7180 platform
 >
-> Rework so that the compiler doesn't warn about fall-through.
->
-> Fixes: d93512ef0f0e ("Makefile: Globally enable fall-through warning")
-> Signed-off-by: Anders Roxell <anders.roxell@linaro.org>
+> Signed-off-by: Jitendra Sharma <shajit@codeaurora.org>
+> Signed-off-by: Vivek Gautam <vivek.gautam@codeaurora.org>
+> [rnayak: Fix some copy-paste issues, sort and fix functions]
+> Signed-off-by: Rajendra Nayak <rnayak@codeaurora.org>
 
-Patch applied.
+Patch applied with Bjorn's ACK.
 
 Yours,
 Linus Walleij
