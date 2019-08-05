@@ -2,103 +2,198 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 277F682496
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  5 Aug 2019 20:05:05 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 66B908261E
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  5 Aug 2019 22:33:59 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729566AbfHESFD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 5 Aug 2019 14:05:03 -0400
-Received: from mail-pf1-f196.google.com ([209.85.210.196]:44998 "EHLO
-        mail-pf1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729383AbfHESFD (ORCPT
+        id S1730515AbfHEUdw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 5 Aug 2019 16:33:52 -0400
+Received: from smtp.codeaurora.org ([198.145.29.96]:40344 "EHLO
+        smtp.codeaurora.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727802AbfHEUdw (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 5 Aug 2019 14:05:03 -0400
-Received: by mail-pf1-f196.google.com with SMTP id t16so40004635pfe.11
-        for <linux-arm-msm@vger.kernel.org>; Mon, 05 Aug 2019 11:05:03 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=ZSkdc0K+z32xxfAPnuWbM7lfH87BvTZ2fp0ZJPTc+Cw=;
-        b=cXmi7mI9gwJdyWlkxh4sZXDNnwqAOM396pNmF+W1i3XDqQTScm/cCqOx5XVa2iLejA
-         Okh9/6L40CfVbdqGr5Shz+jFD7Ag4pGdOQ5YZkQHcqPtoaotaiApMZfOYK3K3xpjM8y3
-         X6Ed5z/AL5ANJinBmBbc4ZVFVOwIdGw3rVliUR+sERk+XF4QoMsaevs2YWxvmew9VYWq
-         Z51shcbd7kkT6yVs5a0PR3kuVZrX6dYOWFQxYHglJWImyoqQ1pWdGm4f/BKeAB29XnvJ
-         sDNuequqjPbD5nlB8EN26VK5jKITS6IBWUfs5JnUXPcqfTFCav1mYpLcbnJVOAh5a2YH
-         Ztvw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=ZSkdc0K+z32xxfAPnuWbM7lfH87BvTZ2fp0ZJPTc+Cw=;
-        b=QAmlGBR7YO/tYvNPDRwr3Ru7V0TeCoqc6EUTj19F+5MQ2vTbetibqoa+kdLhzEFpas
-         DkmEdVHQRuldluhXtmrvhLLe3lMHczkfdwwYvKvCAxJCEYkh8osJPD7DQMjN1XvexvDM
-         2oxdxoSSM0h3uD2mRMdkKs1RGD+WiOaV9QLgSXWkLCF/SIUPW2/d8ctHzYFcd/Z6orK4
-         xtn5ULp780VUo28XJZAemxKdGY70nFT94mY+9c/arHy+c1wyigB+Hhq5W8DtlgXx+8b2
-         Fi1/x3A3TbhbrldWMSSRpl0HmEvE4Er+m0p3SMg/BNNkXfY4OJOZyBEQOPxyBgTpVU1a
-         TMsQ==
-X-Gm-Message-State: APjAAAX5GBbvjP0+/5pCwbwVktmMJ1KpdLu3SWU7nrfVjlvwarnDNCtl
-        reXtf0BlkcIT7gPOAtKjWu5Gaw==
-X-Google-Smtp-Source: APXvYqyqwv3DLgpNhtnK2vwj2OiJn5Vdw0hfYPmrR/vLdQkSLHUgx7cCtN15F4zNLbLljZ08yl4v8A==
-X-Received: by 2002:a63:6904:: with SMTP id e4mr76419969pgc.321.1565028302610;
-        Mon, 05 Aug 2019 11:05:02 -0700 (PDT)
-Received: from tuxbook-pro (104-188-17-28.lightspeed.sndgca.sbcglobal.net. [104.188.17.28])
-        by smtp.gmail.com with ESMTPSA id j20sm80470011pfr.113.2019.08.05.11.05.01
-        (version=TLS1_3 cipher=AEAD-AES256-GCM-SHA384 bits=256/256);
-        Mon, 05 Aug 2019 11:05:01 -0700 (PDT)
-Date:   Mon, 5 Aug 2019 11:06:33 -0700
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Govind Singh <govinds@codeaurora.org>
-Cc:     Kalle Valo <kvalo@codeaurora.org>,
-        "David S. Miller" <davem@davemloft.net>,
-        ath10k@lists.infradead.org, linux-wireless@vger.kernel.org,
-        netdev@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH 0/3] ath10k: Clean up regulator and clock handling
-Message-ID: <20190805180633.GB23928@tuxbook-pro>
-References: <20190725174755.23432-1-bjorn.andersson@linaro.org>
- <196fa4aa63fd5135aead736396fe3f8c@codeaurora.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <196fa4aa63fd5135aead736396fe3f8c@codeaurora.org>
-User-Agent: Mutt/1.12.1 (2019-06-15)
+        Mon, 5 Aug 2019 16:33:52 -0400
+Received: by smtp.codeaurora.org (Postfix, from userid 1000)
+        id 4652E608BA; Mon,  5 Aug 2019 20:33:51 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
+        s=default; t=1565037231;
+        bh=EQpwyTaZLqo/0FlVjz7BjVXvv2QX6kRf2rU72r3sSKo=;
+        h=From:To:Cc:Subject:Date:From;
+        b=YQLqCyavrSjZaLIy9k/4zyq0wafVpMa/YcHH0w5NKJ44Ytg8bDOY58kWvRrOl8fqp
+         76TcWcbF0zcOP7k8YXppQ3x78Rfmse0uOMIXRQVgrs5b8s49CEZotZriRtJAfl3Ckn
+         IEeCghUFOPMhOuG0cUDRlmVClqRw4+u8PrOGwQpQ=
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        pdx-caf-mail.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.7 required=2.0 tests=ALL_TRUSTED,BAYES_00,
+        DKIM_INVALID,DKIM_SIGNED,SPF_NONE autolearn=no autolearn_force=no
+        version=3.4.0
+Received: from jcrouse1-lnx.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: jcrouse@smtp.codeaurora.org)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 856C76076C;
+        Mon,  5 Aug 2019 20:33:49 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
+        s=default; t=1565037230;
+        bh=EQpwyTaZLqo/0FlVjz7BjVXvv2QX6kRf2rU72r3sSKo=;
+        h=From:To:Cc:Subject:Date:From;
+        b=fesrASc4hlP33n5ROrTySwgZhfsOqs1BLFm2PzqvpylY3nuXOIM4/cVG/D6UnQN4Q
+         5+HdPtaul0xWvoIuDcQcXG0Ma6VxWlLqosZAhW/w9rM7CpS/TGltdX2bMOdDefx3HU
+         Lkai0x8Fbcr+21VATj1hmVGppBmM1sxgFKIdmS+s=
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 856C76076C
+Authentication-Results: pdx-caf-mail.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: pdx-caf-mail.web.codeaurora.org; spf=none smtp.mailfrom=jcrouse@codeaurora.org
+From:   Jordan Crouse <jcrouse@codeaurora.org>
+To:     freedreno@lists.freedesktop.org
+Cc:     linux-arm-msm@vger.kernel.org,
+        Michael Turquette <mturquette@baylibre.com>,
+        linux-pm@vger.kernel.org, Stephen Boyd <sboyd@kernel.org>,
+        linux-kernel@vger.kernel.org, Andy Gross <agross@kernel.org>,
+        Georgi Djakov <georgi.djakov@linaro.org>,
+        linux-clk@vger.kernel.org
+Subject: [PATCH v2] drivers: qcom: Add BCM vote macro to header
+Date:   Mon,  5 Aug 2019 14:33:46 -0600
+Message-Id: <1565037226-1684-1-git-send-email-jcrouse@codeaurora.org>
+X-Mailer: git-send-email 2.7.4
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu 25 Jul 23:52 PDT 2019, Govind Singh wrote:
+The macro to generate a Bus Controller Manager (BCM) TCS command is used
+by the interconnect driver but might also be interesting to other
+drivers that need to construct TCS commands for sub processors so move
+it out of the sdm845 specific file and into the header.
 
-> On 2019-07-25 23:17, Bjorn Andersson wrote:
-> > The first patch in this series removes the regulator_set_voltage() of a
-> > fixed
-> > voltate, as fixed regulator constraints should be specified on a board
-> > level
-> > and on certain boards - such as the Lenovo Yoga C630 - the voltage
-> > specified
-> > for the 3.3V regulator is outside the given range.
-> > 
-> > The following two patches cleans up regulator and clock usage by using
-> > the bulk
-> > API provided by the two frameworks.
-> > 
-> > Bjorn Andersson (3):
-> >   ath10k: snoc: skip regulator operations
-> >   ath10k: Use standard regulator bulk API in snoc
-> >   ath10k: Use standard bulk clock API in snoc
-> > 
-> >  drivers/net/wireless/ath/ath10k/snoc.c | 324 ++++---------------------
-> >  drivers/net/wireless/ath/ath10k/snoc.h |  26 +-
-> >  2 files changed, 48 insertions(+), 302 deletions(-)
-> 
-> Tested on 845 MTP and QCS404 platform with normal sanity and driver recover
-> cases for proxy votes.
-> 
-> Tested-by: Govind Singh <govinds@codeaurora.org>
-> Reviewed-by: Govind Singh <govinds@codeaurora.org>
-> 
+Signed-off-by: Jordan Crouse <jcrouse@codeaurora.org>
+---
 
-Thanks Govind!
+Changes in v2:
+- Replace a similar BCS_TCS_CMD macro in clk-rpmh.c with the generic one
 
-Regards,
-Bjorn
+ drivers/clk/qcom/clk-rpmh.c        | 16 +++-------------
+ drivers/interconnect/qcom/sdm845.c | 19 +------------------
+ include/soc/qcom/tcs.h             | 21 ++++++++++++++++++++-
+ 3 files changed, 24 insertions(+), 32 deletions(-)
+
+diff --git a/drivers/clk/qcom/clk-rpmh.c b/drivers/clk/qcom/clk-rpmh.c
+index c3fd632..a32bfae 100644
+--- a/drivers/clk/qcom/clk-rpmh.c
++++ b/drivers/clk/qcom/clk-rpmh.c
+@@ -1,6 +1,6 @@
+ // SPDX-License-Identifier: GPL-2.0
+ /*
+- * Copyright (c) 2018, The Linux Foundation. All rights reserved.
++ * Copyright (c) 2018-2019, The Linux Foundation. All rights reserved.
+  */
+ 
+ #include <linux/clk-provider.h>
+@@ -12,23 +12,13 @@
+ #include <linux/platform_device.h>
+ #include <soc/qcom/cmd-db.h>
+ #include <soc/qcom/rpmh.h>
++#include <soc/qcom/tcs.h>
+ 
+ #include <dt-bindings/clock/qcom,rpmh.h>
+ 
+ #define CLK_RPMH_ARC_EN_OFFSET		0
+ #define CLK_RPMH_VRM_EN_OFFSET		4
+ 
+-#define BCM_TCS_CMD_COMMIT_MASK		0x40000000
+-#define BCM_TCS_CMD_VALID_SHIFT		29
+-#define BCM_TCS_CMD_VOTE_MASK		0x3fff
+-#define BCM_TCS_CMD_VOTE_SHIFT		0
+-
+-#define BCM_TCS_CMD(valid, vote)				\
+-	(BCM_TCS_CMD_COMMIT_MASK |				\
+-	((valid) << BCM_TCS_CMD_VALID_SHIFT) |			\
+-	((vote & BCM_TCS_CMD_VOTE_MASK)				\
+-	<< BCM_TCS_CMD_VOTE_SHIFT))
+-
+ /**
+  * struct bcm_db - Auxiliary data pertaining to each Bus Clock Manager(BCM)
+  * @unit: divisor used to convert Hz value to an RPMh msg
+@@ -269,7 +259,7 @@ static int clk_rpmh_bcm_send_cmd(struct clk_rpmh *c, bool enable)
+ 	}
+ 
+ 	cmd.addr = c->res_addr;
+-	cmd.data = BCM_TCS_CMD(enable, cmd_state);
++	cmd.data = BCM_TCS_CMD(1, enable, 0, cmd_state);
+ 
+ 	ret = rpmh_write_async(c->dev, RPMH_ACTIVE_ONLY_STATE, &cmd, 1);
+ 	if (ret) {
+diff --git a/drivers/interconnect/qcom/sdm845.c b/drivers/interconnect/qcom/sdm845.c
+index 4915b78..2181170 100644
+--- a/drivers/interconnect/qcom/sdm845.c
++++ b/drivers/interconnect/qcom/sdm845.c
+@@ -1,6 +1,6 @@
+ // SPDX-License-Identifier: GPL-2.0
+ /*
+- * Copyright (c) 2018, The Linux Foundation. All rights reserved.
++ * Copyright (c) 2018-2019, The Linux Foundation. All rights reserved.
+  *
+  */
+ 
+@@ -20,23 +20,6 @@
+ #include <soc/qcom/rpmh.h>
+ #include <soc/qcom/tcs.h>
+ 
+-#define BCM_TCS_CMD_COMMIT_SHFT		30
+-#define BCM_TCS_CMD_COMMIT_MASK		0x40000000
+-#define BCM_TCS_CMD_VALID_SHFT		29
+-#define BCM_TCS_CMD_VALID_MASK		0x20000000
+-#define BCM_TCS_CMD_VOTE_X_SHFT		14
+-#define BCM_TCS_CMD_VOTE_MASK		0x3fff
+-#define BCM_TCS_CMD_VOTE_Y_SHFT		0
+-#define BCM_TCS_CMD_VOTE_Y_MASK		0xfffc000
+-
+-#define BCM_TCS_CMD(commit, valid, vote_x, vote_y)		\
+-	(((commit) << BCM_TCS_CMD_COMMIT_SHFT) |		\
+-	((valid) << BCM_TCS_CMD_VALID_SHFT) |			\
+-	((cpu_to_le32(vote_x) &					\
+-	BCM_TCS_CMD_VOTE_MASK) << BCM_TCS_CMD_VOTE_X_SHFT) |	\
+-	((cpu_to_le32(vote_y) &					\
+-	BCM_TCS_CMD_VOTE_MASK) << BCM_TCS_CMD_VOTE_Y_SHFT))
+-
+ #define to_qcom_provider(_provider) \
+ 	container_of(_provider, struct qcom_icc_provider, provider)
+ 
+diff --git a/include/soc/qcom/tcs.h b/include/soc/qcom/tcs.h
+index 262876a..dbf3c88 100644
+--- a/include/soc/qcom/tcs.h
++++ b/include/soc/qcom/tcs.h
+@@ -1,6 +1,6 @@
+ /* SPDX-License-Identifier: GPL-2.0 */
+ /*
+- * Copyright (c) 2016-2018, The Linux Foundation. All rights reserved.
++ * Copyright (c) 2016-2019, The Linux Foundation. All rights reserved.
+  */
+ 
+ #ifndef __SOC_QCOM_TCS_H__
+@@ -53,4 +53,23 @@ struct tcs_request {
+ 	struct tcs_cmd *cmds;
+ };
+ 
++#define BCM_TCS_CMD_COMMIT_SHFT		30
++#define BCM_TCS_CMD_COMMIT_MASK		0x40000000
++#define BCM_TCS_CMD_VALID_SHFT		29
++#define BCM_TCS_CMD_VALID_MASK		0x20000000
++#define BCM_TCS_CMD_VOTE_X_SHFT		14
++#define BCM_TCS_CMD_VOTE_MASK		0x3fff
++#define BCM_TCS_CMD_VOTE_Y_SHFT		0
++#define BCM_TCS_CMD_VOTE_Y_MASK		0xfffc000
++
++/* Construct a Bus Clock Manager (BCM) specific TCS command */
++#define BCM_TCS_CMD(commit, valid, vote_x, vote_y)		\
++	(((commit) << BCM_TCS_CMD_COMMIT_SHFT) |		\
++	((valid) << BCM_TCS_CMD_VALID_SHFT) |			\
++	((cpu_to_le32(vote_x) &					\
++	BCM_TCS_CMD_VOTE_MASK) << BCM_TCS_CMD_VOTE_X_SHFT) |	\
++	((cpu_to_le32(vote_y) &					\
++	BCM_TCS_CMD_VOTE_MASK) << BCM_TCS_CMD_VOTE_Y_SHFT))
++
++
+ #endif /* __SOC_QCOM_TCS_H__ */
+-- 
+2.7.4
+
