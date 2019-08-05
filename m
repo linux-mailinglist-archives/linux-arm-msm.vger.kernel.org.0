@@ -2,142 +2,120 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 28F89827C8
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  6 Aug 2019 00:58:15 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 42FD38286C
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  6 Aug 2019 02:11:55 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730037AbfHEW6O (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 5 Aug 2019 18:58:14 -0400
-Received: from mail-pl1-f194.google.com ([209.85.214.194]:42277 "EHLO
-        mail-pl1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729999AbfHEW6O (ORCPT
+        id S1730907AbfHFALy (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 5 Aug 2019 20:11:54 -0400
+Received: from gateway21.websitewelcome.com ([192.185.45.147]:20236 "EHLO
+        gateway21.websitewelcome.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1728851AbfHFALw (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 5 Aug 2019 18:58:14 -0400
-Received: by mail-pl1-f194.google.com with SMTP id ay6so37068948plb.9
-        for <linux-arm-msm@vger.kernel.org>; Mon, 05 Aug 2019 15:58:13 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=33ODwh9+siw4jaJjkemMOwZowzifm/mJiOiBDrPOEqk=;
-        b=I/auqCVDp+17lR7htooMYvNhX4kcFZAvbtwZcuJNVHW4VI/O002Fuo0/x4qgu0Fuu7
-         ysIUHOOolI/96+Whm6FCbn+iv3bBzC1Fu1P8Rrp4DpcVAA7IDEgjxyjfw9J6rEv8zh6/
-         4mVG1MySvmzriEHxURZSljfnxHy9k+W/8snVBb5SpzcxqLFFvuj8QXSAJ0UV5vIWPTkx
-         vR32En/zf4U8QWE47GBteuRicLMLgLfN4axaki3LTEZE5DjI7AnJm/U5JLaGlT7uXxfv
-         UHxlTH4lag4q6U7bvJE/P2B6k3w1M5T4habqkXpQNgJvhnah9ueYjRX6rE3kRzsOs/K2
-         gRNg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=33ODwh9+siw4jaJjkemMOwZowzifm/mJiOiBDrPOEqk=;
-        b=ChoX2ugmMTX4ec/bkeP8P9odyikRRuCglut8ps2KofNnMmuHWnC6IzxUjM+4RoI6Cy
-         SYMl6+iACmY3iOufWAjQVLClj8pqmOQANUAQvAuVsYH1Pac1lmLbfXAjVChCdCnp5XgS
-         kXw++/m2zoPUA6M+nZUmfRF1dxEZ7r2+mplbJ5M2Muxz+WIq7roNnsRwq0SJ0nn7tEG6
-         LiVeDO1dVsPJvgqw3uSX3iqBp17uxUHQr7jt7e3Dg9Q2SPLgvQucYvQg/pYm5KNgDXCq
-         9QAcuo5/DS8qmOwg3qEAshEJQV4iwUX1pPhb9qLjeSk/Q5xZoS7t9b4W7ErPfAwHfjBd
-         a9Lw==
-X-Gm-Message-State: APjAAAUF/C5ACX0LJL25LXVEur1P1Cng+y5rfegO3yerTA2NWaJqEmXi
-        DshS9Vq9DMkDYj9LlT3pBpcK3w==
-X-Google-Smtp-Source: APXvYqwkpdyNbEUT8xGflpzlSaRR34itFkKnM6gi8ljfIOf0bfXFvRlUOC/L2g9jZxj5pIZHIZZEhA==
-X-Received: by 2002:a17:902:a40c:: with SMTP id p12mr161163plq.146.1565045893174;
-        Mon, 05 Aug 2019 15:58:13 -0700 (PDT)
-Received: from builder (104-188-17-28.lightspeed.sndgca.sbcglobal.net. [104.188.17.28])
-        by smtp.gmail.com with ESMTPSA id 185sm85788076pfd.125.2019.08.05.15.58.12
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Mon, 05 Aug 2019 15:58:12 -0700 (PDT)
-Date:   Mon, 5 Aug 2019 15:58:10 -0700
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Nishka Dasgupta <nishkadg.linux@gmail.com>
-Cc:     agross@kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] soc: qcom: smp2p: Add of_node_put() at goto
-Message-ID: <20190805225810.GC6470@builder>
-References: <20190804162502.6170-1-nishkadg.linux@gmail.com>
+        Mon, 5 Aug 2019 20:11:52 -0400
+X-Greylist: delayed 1340 seconds by postgrey-1.27 at vger.kernel.org; Mon, 05 Aug 2019 20:11:51 EDT
+Received: from cm16.websitewelcome.com (cm16.websitewelcome.com [100.42.49.19])
+        by gateway21.websitewelcome.com (Postfix) with ESMTP id 3FAC6400C865A
+        for <linux-arm-msm@vger.kernel.org>; Mon,  5 Aug 2019 18:49:30 -0500 (CDT)
+Received: from gator4166.hostgator.com ([108.167.133.22])
+        by cmsmtp with SMTP
+        id umjKhdP0I4FKpumjKhlpPJ; Mon, 05 Aug 2019 18:49:30 -0500
+X-Authority-Reason: nr=8
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+        d=embeddedor.com; s=default; h=Content-Type:MIME-Version:Message-ID:Subject:
+        Cc:To:From:Date:Sender:Reply-To:Content-Transfer-Encoding:Content-ID:
+        Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
+        :Resent-Message-ID:In-Reply-To:References:List-Id:List-Help:List-Unsubscribe:
+        List-Subscribe:List-Post:List-Owner:List-Archive;
+        bh=9li+YhxHo8+AujwqhsMZd9x+rcO10TXeZqodcMKx7qo=; b=wDvshsv1z+1fXiJZtY4PyLHNww
+        TX8STZuvfNMy65c16V2YqeJF4e8e/HsisSBSRMNAYeBJY66xYI/a5XrZfQP5O40mD+yeXeHv8mhGF
+        /W+BkPEqN7tqKgN4uGAsH1ddru52eG7RKMGdhbMA68N7j/W90G6NeAxsM+j0UroIzheN1fD8VsZFI
+        sA/k0BthKK/9Zm04QwPf2oMN8gM7gjlYuj/OllN0eoj7w5ZOZWXvKUz9mCf309++jkyGM+YRn46r6
+        5P/kqFvhARxma5FJxkO5SiwELWfYONvsDrQNS5FCEC9Xm8TJyI6CRkGjHeBRV/2krkJOt1cspawIF
+        VSuTx2Wg==;
+Received: from [187.192.11.120] (port=40464 helo=embeddedor)
+        by gator4166.hostgator.com with esmtpa (Exim 4.92)
+        (envelope-from <gustavo@embeddedor.com>)
+        id 1humjJ-000yz7-1L; Mon, 05 Aug 2019 18:49:29 -0500
+Date:   Mon, 5 Aug 2019 18:49:28 -0500
+From:   "Gustavo A. R. Silva" <gustavo@embeddedor.com>
+To:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>
+Cc:     linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org,
+        "Gustavo A. R. Silva" <gustavo@embeddedor.com>
+Subject: [PATCH] drm/msm: Use struct_size() helper
+Message-ID: <20190805234928.GA2785@embeddedor>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20190804162502.6170-1-nishkadg.linux@gmail.com>
-User-Agent: Mutt/1.10.0 (2018-05-17)
+User-Agent: Mutt/1.9.4 (2018-02-28)
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - gator4166.hostgator.com
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - embeddedor.com
+X-BWhitelist: no
+X-Source-IP: 187.192.11.120
+X-Source-L: No
+X-Exim-ID: 1humjJ-000yz7-1L
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
+X-Source-Sender: (embeddedor) [187.192.11.120]:40464
+X-Source-Auth: gustavo@embeddedor.com
+X-Email-Count: 5
+X-Source-Cap: Z3V6aWRpbmU7Z3V6aWRpbmU7Z2F0b3I0MTY2Lmhvc3RnYXRvci5jb20=
+X-Local-Domain: yes
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Sun 04 Aug 09:25 PDT 2019, Nishka Dasgupta wrote:
+One of the more common cases of allocation size calculations is finding
+the size of a structure that has a zero-sized array at the end, along
+with memory for some number of elements for that array. For example:
 
-> Each iteration of for_each_available_child_of_node puts the previous
-> node, but in the case of a goto from the middle of the loop, there is no
-> put, thus causing a memory leak. Hence make the gotos within the loop
-> first go to a new label where an of_node_put() puts the last used node,
-> before falling through to the original label.
-> Issue found with Coccinelle.
-> 
+struct msm_gem_submit {
+	...
+        struct {
+		...
+        } bos[0];
+};
 
-Good catch, thanks for the patch!
+Make use of the struct_size() helper instead of an open-coded version
+in order to avoid any potential type mistakes.
 
-> Signed-off-by: Nishka Dasgupta <nishkadg.linux@gmail.com>
-> ---
->  drivers/soc/qcom/smp2p.c | 10 ++++++----
->  1 file changed, 6 insertions(+), 4 deletions(-)
-> 
-> diff --git a/drivers/soc/qcom/smp2p.c b/drivers/soc/qcom/smp2p.c
-> index c7300d54e444..d223e914487d 100644
-> --- a/drivers/soc/qcom/smp2p.c
-> +++ b/drivers/soc/qcom/smp2p.c
-> @@ -501,7 +501,7 @@ static int qcom_smp2p_probe(struct platform_device *pdev)
->  		entry = devm_kzalloc(&pdev->dev, sizeof(*entry), GFP_KERNEL);
->  		if (!entry) {
->  			ret = -ENOMEM;
-> -			goto unwind_interfaces;
-> +			goto release_child;
->  		}
->  
->  		entry->smp2p = smp2p;
-> @@ -509,18 +509,18 @@ static int qcom_smp2p_probe(struct platform_device *pdev)
->  
->  		ret = of_property_read_string(node, "qcom,entry-name", &entry->name);
->  		if (ret < 0)
-> -			goto unwind_interfaces;
-> +			goto release_child;
->  
->  		if (of_property_read_bool(node, "interrupt-controller")) {
->  			ret = qcom_smp2p_inbound_entry(smp2p, entry, node);
->  			if (ret < 0)
-> -				goto unwind_interfaces;
-> +				goto release_child;
->  
->  			list_add(&entry->node, &smp2p->inbound);
->  		} else  {
->  			ret = qcom_smp2p_outbound_entry(smp2p, entry, node);
->  			if (ret < 0)
-> -				goto unwind_interfaces;
-> +				goto release_child;
->  
->  			list_add(&entry->node, &smp2p->outbound);
->  		}
-> @@ -541,6 +541,8 @@ static int qcom_smp2p_probe(struct platform_device *pdev)
->  
->  	return 0;
->  
-> +release_child:
-> +	of_node_put(node);
+So, replace the following form:
 
-Following the loop over the children we request the irq and if that
-falls we'll jump to unwind_interfaces. So while it would work fine to
-jump to release_child within the loop and then unwind_interfaces after
-the loop, it doesn't follow the idiomatic way of using the error path to
-"unroll" things that has been setup up until a particular point in the
-function.
+sizeof(*submit) + ((u64)nr_bos * sizeof(submit->bos[0]))
 
-So I would rather see that you of_node_put() in the loop and then jump
-to unwind_interfaces as is done today.
+with:
 
-Regards,
-Bjorn
+struct_size(submit, bos, nr_bos)
 
->  unwind_interfaces:
->  	list_for_each_entry(entry, &smp2p->inbound, node)
->  		irq_domain_remove(entry->domain);
-> -- 
-> 2.19.1
-> 
+This code was detected with the help of Coccinelle.
+
+Signed-off-by: Gustavo A. R. Silva <gustavo@embeddedor.com>
+---
+ drivers/gpu/drm/msm/msm_gem_submit.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/drivers/gpu/drm/msm/msm_gem_submit.c b/drivers/gpu/drm/msm/msm_gem_submit.c
+index 348f8c2be806..7c17c6154058 100644
+--- a/drivers/gpu/drm/msm/msm_gem_submit.c
++++ b/drivers/gpu/drm/msm/msm_gem_submit.c
+@@ -26,8 +26,8 @@ static struct msm_gem_submit *submit_create(struct drm_device *dev,
+ 		uint32_t nr_cmds)
+ {
+ 	struct msm_gem_submit *submit;
+-	uint64_t sz = sizeof(*submit) + ((u64)nr_bos * sizeof(submit->bos[0])) +
+-		((u64)nr_cmds * sizeof(submit->cmd[0]));
++	uint64_t sz = struct_size(submit, bos, nr_bos) +
++				  ((u64)nr_cmds * sizeof(submit->cmd[0]));
+ 
+ 	if (sz > SIZE_MAX)
+ 		return NULL;
+-- 
+2.22.0
+
