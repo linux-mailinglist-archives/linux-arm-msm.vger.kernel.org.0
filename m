@@ -2,68 +2,235 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 72CEA82894
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  6 Aug 2019 02:23:17 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 62FE8828CA
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  6 Aug 2019 02:43:08 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731146AbfHFAXQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 5 Aug 2019 20:23:16 -0400
-Received: from onstation.org ([52.200.56.107]:35920 "EHLO onstation.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1731154AbfHFAXA (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 5 Aug 2019 20:23:00 -0400
-Received: from localhost.localdomain (c-98-239-145-235.hsd1.wv.comcast.net [98.239.145.235])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits))
-        (No client certificate requested)
-        (Authenticated sender: masneyb)
-        by onstation.org (Postfix) with ESMTPSA id 839703E9AC;
-        Tue,  6 Aug 2019 00:22:59 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=onstation.org;
-        s=default; t=1565050979;
-        bh=gBeC38WgB3xWQLxVHl7uyELkZ+E+b+WfCATgX0olB60=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=ItEGiT10F0jY1COc8vBCK4WBjb2ClScpN83SS4EbvX+ujMeLvnHuK780kakIeZSPF
-         lvkebFt4y50XIIvIvDpco+aeFtkfIe3NiOzag9YIA4edu5yWiBgrP0hzh6DhVqgwuJ
-         fD3AicZ3aUAVpOjbqcX+ixWBik/vAvFDe8I0th4s=
-From:   Brian Masney <masneyb@onstation.org>
-To:     agross@kernel.org, robdclark@gmail.com, sean@poorly.run,
-        robh+dt@kernel.org, bjorn.andersson@linaro.org
-Cc:     airlied@linux.ie, daniel@ffwll.ch, mark.rutland@arm.com,
-        jonathan@marek.ca, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org, devicetree@vger.kernel.org,
-        jcrouse@codeaurora.org
-Subject: [PATCH v5 7/7] ARM: qcom_defconfig: add ocmem support
-Date:   Mon,  5 Aug 2019 20:22:29 -0400
-Message-Id: <20190806002229.8304-8-masneyb@onstation.org>
-X-Mailer: git-send-email 2.17.1
-In-Reply-To: <20190806002229.8304-1-masneyb@onstation.org>
-References: <20190806002229.8304-1-masneyb@onstation.org>
+        id S1731115AbfHFAnB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 5 Aug 2019 20:43:01 -0400
+Received: from mail-pf1-f195.google.com ([209.85.210.195]:41235 "EHLO
+        mail-pf1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1730097AbfHFAnB (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 5 Aug 2019 20:43:01 -0400
+Received: by mail-pf1-f195.google.com with SMTP id m30so40506281pff.8
+        for <linux-arm-msm@vger.kernel.org>; Mon, 05 Aug 2019 17:43:00 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=from:to:cc:subject:date:message-id;
+        bh=ueOERlEtYBgX0GLBCId/GHdBVP4Bxw4qttSqTD9yYIo=;
+        b=J6ADLRqwbznZafl9dA+zR/2eExHzMsBD6jFL0wDfzPnnQ9Kn9zyIvETW9D6pmsJk5O
+         eDfBAcq6htpwC1PVmviIBQLnqxBP+Xm7Ve6RCCtmmkAKAx6V4uqJ7aJTxgW2p8mefxsz
+         uJ2iB5ztDWE8rG4N8DXEkckrOwR5YeZiDbtOFPTBKJ/GYIewMyaeV0cgr0c6DQJBc11H
+         YPpirIiPuYTyJmW0GIZQERcg9NrnGIPcv32fuYfVXCJnkOaOO40Hq0IPjb4KJYZadKo2
+         4QPPvB2bv1r6bJGtbVpquIrYJHgTTwAUkso9Fj8W94yN3IM3LbOPhy5CPdH3KLTef74J
+         R1Vw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=ueOERlEtYBgX0GLBCId/GHdBVP4Bxw4qttSqTD9yYIo=;
+        b=qRPGf5Biqn05P+AdlFDHIBVOAcG6UgG0sr1yRQlyDFlIqCNw+mu/eV9h/FmPH6Y1cP
+         A8i+tRSCvt6dtfmFshT+VFiLDBSHbVztKOZem+rMuuuUMWR4vbw6/xEOx8IGlaee3lpX
+         sBazdVkTI+rKnOx0afVzTzBHA4Bdxm/MFqLQOAt0fE5lDRxbi4pTRqptTglxd4LFaBUh
+         lXRsSAbuMSgKde05A8R0ehjX/Il6EfDRZZP8DW/YMxVgc327ki6q3qbXp0fSIaTz3DlU
+         5hFoKR5Gv9a3xl90TomWEG+W6g/Bz138AxQoqSIkdAELn1zxQcVx/0fXxJMvPSfCQDRM
+         MomA==
+X-Gm-Message-State: APjAAAWmMThjBh594Iyizb223joIbcAs1eaVH1JiODcjoSyOBFcB0adc
+        uIzM8o+JaNXRDjgFXW9X2mvcfw==
+X-Google-Smtp-Source: APXvYqxal+OsTtvFj4HRmsoSYr/SwRw4CC3u6NOxtF7px8Njr/YvDoTKVjcN7oYFWsNucTfvjhg02Q==
+X-Received: by 2002:a65:5202:: with SMTP id o2mr497163pgp.29.1565052180144;
+        Mon, 05 Aug 2019 17:43:00 -0700 (PDT)
+Received: from localhost.localdomain (104-188-17-28.lightspeed.sndgca.sbcglobal.net. [104.188.17.28])
+        by smtp.gmail.com with ESMTPSA id h6sm81898821pfb.20.2019.08.05.17.42.58
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Mon, 05 Aug 2019 17:42:59 -0700 (PDT)
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     Kishon Vijay Abraham I <kishon@ti.com>,
+        Marc Gonzalez <marc.w.gonzalez@free.fr>
+Cc:     linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        stable@vger.kernel.org, Vivek Gautam <vivek.gautam@codeaurora.org>,
+        Evan Green <evgreen@chromium.org>,
+        Niklas Cassel <niklas.cassel@linaro.org>
+Subject: [PATCH] phy: qcom-qmp: Correct ready status, again
+Date:   Mon,  5 Aug 2019 17:42:56 -0700
+Message-Id: <20190806004256.20152-1-bjorn.andersson@linaro.org>
+X-Mailer: git-send-email 2.18.0
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add ocmem driver that's needed for some a3xx and a4xx based systems.
+Despite extensive testing of 885bd765963b ("phy: qcom-qmp: Correct
+READY_STATUS poll break condition") I failed to conclude that the
+PHYSTATUS bit of the PCS_STATUS register used in PCIe and USB3 falls as
+the PHY gets ready. Similar to the prior bug with UFS the code will
+generally get past the check before the transition and thereby
+"succeed".
 
-Signed-off-by: Brian Masney <masneyb@onstation.org>
+Correct the name of the register used PCIe and USB3 PHYs, replace
+mask_pcs_ready with a constant expression depending on the type of the
+PHY and check for the appropriate ready state.
+
+Cc: stable@vger.kernel.org
+Cc: Vivek Gautam <vivek.gautam@codeaurora.org>
+Cc: Evan Green <evgreen@chromium.org>
+Cc: Niklas Cassel <niklas.cassel@linaro.org>
+Reported-by: Marc Gonzalez <marc.w.gonzalez@free.fr>
+Fixes: 885bd765963b ("phy: qcom-qmp: Correct READY_STATUS poll break condition")
+Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
 ---
-This is a new patch that was introduced in v5.
+ drivers/phy/qualcomm/phy-qcom-qmp.c | 33 ++++++++++++++---------------
+ 1 file changed, 16 insertions(+), 17 deletions(-)
 
- arch/arm/configs/qcom_defconfig | 1 +
- 1 file changed, 1 insertion(+)
-
-diff --git a/arch/arm/configs/qcom_defconfig b/arch/arm/configs/qcom_defconfig
-index 34433bf5885d..595e1910ba78 100644
---- a/arch/arm/configs/qcom_defconfig
-+++ b/arch/arm/configs/qcom_defconfig
-@@ -225,6 +225,7 @@ CONFIG_QCOM_WCNSS_PIL=y
- CONFIG_RPMSG_CHAR=y
- CONFIG_RPMSG_QCOM_SMD=y
- CONFIG_QCOM_GSBI=y
-+CONFIG_QCOM_OCMEM=y
- CONFIG_QCOM_PM=y
- CONFIG_QCOM_SMEM=y
- CONFIG_QCOM_SMD_RPM=y
+diff --git a/drivers/phy/qualcomm/phy-qcom-qmp.c b/drivers/phy/qualcomm/phy-qcom-qmp.c
+index 34ff6434da8f..6bb49cc25c63 100644
+--- a/drivers/phy/qualcomm/phy-qcom-qmp.c
++++ b/drivers/phy/qualcomm/phy-qcom-qmp.c
+@@ -35,7 +35,7 @@
+ #define PLL_READY_GATE_EN			BIT(3)
+ /* QPHY_PCS_STATUS bit */
+ #define PHYSTATUS				BIT(6)
+-/* QPHY_COM_PCS_READY_STATUS bit */
++/* QPHY_PCS_READY_STATUS & QPHY_COM_PCS_READY_STATUS bit */
+ #define PCS_READY				BIT(0)
+ 
+ /* QPHY_V3_DP_COM_RESET_OVRD_CTRL register bits */
+@@ -115,6 +115,7 @@ enum qphy_reg_layout {
+ 	QPHY_SW_RESET,
+ 	QPHY_START_CTRL,
+ 	QPHY_PCS_READY_STATUS,
++	QPHY_PCS_STATUS,
+ 	QPHY_PCS_AUTONOMOUS_MODE_CTRL,
+ 	QPHY_PCS_LFPS_RXTERM_IRQ_CLEAR,
+ 	QPHY_PCS_LFPS_RXTERM_IRQ_STATUS,
+@@ -133,7 +134,7 @@ static const unsigned int pciephy_regs_layout[] = {
+ 	[QPHY_FLL_MAN_CODE]		= 0xd4,
+ 	[QPHY_SW_RESET]			= 0x00,
+ 	[QPHY_START_CTRL]		= 0x08,
+-	[QPHY_PCS_READY_STATUS]		= 0x174,
++	[QPHY_PCS_STATUS]		= 0x174,
+ };
+ 
+ static const unsigned int usb3phy_regs_layout[] = {
+@@ -144,7 +145,7 @@ static const unsigned int usb3phy_regs_layout[] = {
+ 	[QPHY_FLL_MAN_CODE]		= 0xd0,
+ 	[QPHY_SW_RESET]			= 0x00,
+ 	[QPHY_START_CTRL]		= 0x08,
+-	[QPHY_PCS_READY_STATUS]		= 0x17c,
++	[QPHY_PCS_STATUS]		= 0x17c,
+ 	[QPHY_PCS_AUTONOMOUS_MODE_CTRL]	= 0x0d4,
+ 	[QPHY_PCS_LFPS_RXTERM_IRQ_CLEAR]  = 0x0d8,
+ 	[QPHY_PCS_LFPS_RXTERM_IRQ_STATUS] = 0x178,
+@@ -153,7 +154,7 @@ static const unsigned int usb3phy_regs_layout[] = {
+ static const unsigned int qmp_v3_usb3phy_regs_layout[] = {
+ 	[QPHY_SW_RESET]			= 0x00,
+ 	[QPHY_START_CTRL]		= 0x08,
+-	[QPHY_PCS_READY_STATUS]		= 0x174,
++	[QPHY_PCS_STATUS]		= 0x174,
+ 	[QPHY_PCS_AUTONOMOUS_MODE_CTRL]	= 0x0d8,
+ 	[QPHY_PCS_LFPS_RXTERM_IRQ_CLEAR]  = 0x0dc,
+ 	[QPHY_PCS_LFPS_RXTERM_IRQ_STATUS] = 0x170,
+@@ -911,7 +912,6 @@ struct qmp_phy_cfg {
+ 
+ 	unsigned int start_ctrl;
+ 	unsigned int pwrdn_ctrl;
+-	unsigned int mask_pcs_ready;
+ 	unsigned int mask_com_pcs_ready;
+ 
+ 	/* true, if PHY has a separate PHY_COM control block */
+@@ -1074,7 +1074,6 @@ static const struct qmp_phy_cfg msm8996_pciephy_cfg = {
+ 
+ 	.start_ctrl		= PCS_START | PLL_READY_GATE_EN,
+ 	.pwrdn_ctrl		= SW_PWRDN | REFCLK_DRV_DSBL,
+-	.mask_pcs_ready		= PHYSTATUS,
+ 	.mask_com_pcs_ready	= PCS_READY,
+ 
+ 	.has_phy_com_ctrl	= true,
+@@ -1106,7 +1105,6 @@ static const struct qmp_phy_cfg msm8996_usb3phy_cfg = {
+ 
+ 	.start_ctrl		= SERDES_START | PCS_START,
+ 	.pwrdn_ctrl		= SW_PWRDN,
+-	.mask_pcs_ready		= PHYSTATUS,
+ };
+ 
+ /* list of resets */
+@@ -1136,7 +1134,6 @@ static const struct qmp_phy_cfg ipq8074_pciephy_cfg = {
+ 
+ 	.start_ctrl		= SERDES_START | PCS_START,
+ 	.pwrdn_ctrl		= SW_PWRDN | REFCLK_DRV_DSBL,
+-	.mask_pcs_ready		= PHYSTATUS,
+ 
+ 	.has_phy_com_ctrl	= false,
+ 	.has_lane_rst		= false,
+@@ -1167,7 +1164,6 @@ static const struct qmp_phy_cfg qmp_v3_usb3phy_cfg = {
+ 
+ 	.start_ctrl		= SERDES_START | PCS_START,
+ 	.pwrdn_ctrl		= SW_PWRDN,
+-	.mask_pcs_ready		= PHYSTATUS,
+ 
+ 	.has_pwrdn_delay	= true,
+ 	.pwrdn_delay_min	= POWER_DOWN_DELAY_US_MIN,
+@@ -1199,7 +1195,6 @@ static const struct qmp_phy_cfg qmp_v3_usb3_uniphy_cfg = {
+ 
+ 	.start_ctrl		= SERDES_START | PCS_START,
+ 	.pwrdn_ctrl		= SW_PWRDN,
+-	.mask_pcs_ready		= PHYSTATUS,
+ 
+ 	.has_pwrdn_delay	= true,
+ 	.pwrdn_delay_min	= POWER_DOWN_DELAY_US_MIN,
+@@ -1226,7 +1221,6 @@ static const struct qmp_phy_cfg sdm845_ufsphy_cfg = {
+ 
+ 	.start_ctrl		= SERDES_START,
+ 	.pwrdn_ctrl		= SW_PWRDN,
+-	.mask_pcs_ready		= PCS_READY,
+ 
+ 	.is_dual_lane_phy	= true,
+ 	.no_pcs_sw_reset	= true,
+@@ -1254,7 +1248,6 @@ static const struct qmp_phy_cfg msm8998_pciephy_cfg = {
+ 
+ 	.start_ctrl             = SERDES_START | PCS_START,
+ 	.pwrdn_ctrl		= SW_PWRDN | REFCLK_DRV_DSBL,
+-	.mask_pcs_ready		= PHYSTATUS,
+ };
+ 
+ static const struct qmp_phy_cfg msm8998_usb3phy_cfg = {
+@@ -1279,7 +1272,6 @@ static const struct qmp_phy_cfg msm8998_usb3phy_cfg = {
+ 
+ 	.start_ctrl             = SERDES_START | PCS_START,
+ 	.pwrdn_ctrl             = SW_PWRDN,
+-	.mask_pcs_ready         = PHYSTATUS,
+ 
+ 	.is_dual_lane_phy       = true,
+ };
+@@ -1457,7 +1449,7 @@ static int qcom_qmp_phy_enable(struct phy *phy)
+ 	void __iomem *pcs = qphy->pcs;
+ 	void __iomem *dp_com = qmp->dp_com;
+ 	void __iomem *status;
+-	unsigned int mask, val;
++	unsigned int mask, val, ready;
+ 	int ret;
+ 
+ 	dev_vdbg(qmp->dev, "Initializing QMP phy\n");
+@@ -1545,10 +1537,17 @@ static int qcom_qmp_phy_enable(struct phy *phy)
+ 	/* start SerDes and Phy-Coding-Sublayer */
+ 	qphy_setbits(pcs, cfg->regs[QPHY_START_CTRL], cfg->start_ctrl);
+ 
+-	status = pcs + cfg->regs[QPHY_PCS_READY_STATUS];
+-	mask = cfg->mask_pcs_ready;
++	if (cfg->type == PHY_TYPE_UFS) {
++		status = pcs + cfg->regs[QPHY_PCS_READY_STATUS];
++		mask = PCS_READY;
++		ready = PCS_READY;
++	} else {
++		status = pcs + cfg->regs[QPHY_PCS_STATUS];
++		mask = PHYSTATUS;
++		ready = 0;
++	}
+ 
+-	ret = readl_poll_timeout(status, val, val & mask, 10,
++	ret = readl_poll_timeout(status, val, (val & mask) == ready, 10,
+ 				 PHY_INIT_COMPLETE_TIMEOUT);
+ 	if (ret) {
+ 		dev_err(qmp->dev, "phy initialization timed-out\n");
 -- 
-2.21.0
+2.18.0
 
