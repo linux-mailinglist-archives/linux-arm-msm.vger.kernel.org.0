@@ -2,27 +2,27 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 20B4F83CA2
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  6 Aug 2019 23:44:14 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 48C9483C52
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  6 Aug 2019 23:42:32 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727899AbfHFVm6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 6 Aug 2019 17:42:58 -0400
-Received: from mail.kernel.org ([198.145.29.99]:52762 "EHLO mail.kernel.org"
+        id S1728889AbfHFVgQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 6 Aug 2019 17:36:16 -0400
+Received: from mail.kernel.org ([198.145.29.99]:54052 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1728040AbfHFVe6 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 6 Aug 2019 17:34:58 -0400
+        id S1727751AbfHFVgP (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 6 Aug 2019 17:36:15 -0400
 Received: from sasha-vm.mshome.net (c-73-47-72-35.hsd1.nh.comcast.net [73.47.72.35])
         (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
         (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 05E9C2089E;
-        Tue,  6 Aug 2019 21:34:56 +0000 (UTC)
+        by mail.kernel.org (Postfix) with ESMTPSA id 73FC6217D9;
+        Tue,  6 Aug 2019 21:36:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1565127297;
-        bh=NK3Gu0440IlcmUfslpeJUoyzrVonh+nts5KJQ4s0wiY=;
+        s=default; t=1565127374;
+        bh=oQTegqnBdN+8NH3rtxET6dr016Tg2c77I8dr7iWPRXE=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=xaesQYG/jCLbLYe8a4Sqc30N8fyxOlnqSHb3EM699B+4gB3E1KgTPdeGY04n5lS75
-         AVXu5FbqCTYj3E6fKHEBfhL/ZTfwfgSzhUwiwar+d2S9dzQIw+mmBSCrwIO0GzT2rz
-         SAeMEoIxd2NWHhK9+RTIirXyrjFqRqiYgyVUrzhg=
+        b=TKxJjBmK13HqeMzAoQ7X7gsGbxtGVWVqweH0NG437svRyXCXZPTH3n6n/QUyXAzUc
+         gVgf1CghNgFtOT4a5FFTDBGAPWxT4Xfg4M76i2ksm1/vp7eNT2iPFmbmyWEE4A3BlH
+         D0RvUg+DxIe5WNUT102Wa/jS/LgY68g2h6plDS5A=
 From:   Sasha Levin <sashal@kernel.org>
 To:     linux-kernel@vger.kernel.org, stable@vger.kernel.org
 Cc:     Jeffrey Hugo <jeffrey.l.hugo@gmail.com>,
@@ -30,12 +30,12 @@ Cc:     Jeffrey Hugo <jeffrey.l.hugo@gmail.com>,
         Sean Paul <seanpaul@chromium.org>,
         Sasha Levin <sashal@kernel.org>, linux-arm-msm@vger.kernel.org,
         dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org
-Subject: [PATCH AUTOSEL 5.2 49/59] drm: msm: Fix add_gpu_components
-Date:   Tue,  6 Aug 2019 17:33:09 -0400
-Message-Id: <20190806213319.19203-49-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 4.19 27/32] drm: msm: Fix add_gpu_components
+Date:   Tue,  6 Aug 2019 17:35:15 -0400
+Message-Id: <20190806213522.19859-27-sashal@kernel.org>
 X-Mailer: git-send-email 2.20.1
-In-Reply-To: <20190806213319.19203-1-sashal@kernel.org>
-References: <20190806213319.19203-1-sashal@kernel.org>
+In-Reply-To: <20190806213522.19859-1-sashal@kernel.org>
+References: <20190806213522.19859-1-sashal@kernel.org>
 MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
@@ -68,10 +68,10 @@ Signed-off-by: Sasha Levin <sashal@kernel.org>
  1 file changed, 2 insertions(+), 1 deletion(-)
 
 diff --git a/drivers/gpu/drm/msm/msm_drv.c b/drivers/gpu/drm/msm/msm_drv.c
-index 4a0fe8a25ad77..a56eef3cfee78 100644
+index ed9a3a1e50efb..dbfd2c006f740 100644
 --- a/drivers/gpu/drm/msm/msm_drv.c
 +++ b/drivers/gpu/drm/msm/msm_drv.c
-@@ -1267,7 +1267,8 @@ static int add_gpu_components(struct device *dev,
+@@ -1284,7 +1284,8 @@ static int add_gpu_components(struct device *dev,
  	if (!np)
  		return 0;
  
