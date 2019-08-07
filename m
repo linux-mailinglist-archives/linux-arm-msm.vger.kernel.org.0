@@ -2,53 +2,31 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id E9CCB84DC8
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 Aug 2019 15:43:35 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9D39E84E42
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 Aug 2019 16:08:33 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2388350AbfHGNnX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 7 Aug 2019 09:43:23 -0400
-Received: from mail-lj1-f194.google.com ([209.85.208.194]:33993 "EHLO
-        mail-lj1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2388340AbfHGNnX (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 7 Aug 2019 09:43:23 -0400
-Received: by mail-lj1-f194.google.com with SMTP id p17so85554187ljg.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 07 Aug 2019 06:43:22 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=r8oT/pdrsca84n0NDIaHHZv8cpN60+ThrBuUGxPzdw8=;
-        b=rvu8/uPmJgSAO6Z/nF0fcPombDyKnMpyB88/VeXgpVTZHVnWk1GTGobZcO5/NL+Kig
-         yV9h0klxh9dyCuJsIoZb3hVLYwIkNvizUQBO3RTrP2tQh/e4uYJsH418/ZjM73/7qVkE
-         GDNenF6pH21fAdY7GFPxnKZuecf/vJqYW3QJid/nyNPXu86l45IT8LvGNgBCvo+nigtJ
-         7G/moO8MDj8BS9SFpiOSZSdD7oY9RRSgJxMzvHgbRT8pJelbrUA4mQLIJ/Ycj8Zx6CLm
-         +A39bl37VsoIXnDtkZ3xaThzk/kRWTP4VvEpKjBfUfAdAPN3XmdONWxVl2aFFuD66S4d
-         HTeQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=r8oT/pdrsca84n0NDIaHHZv8cpN60+ThrBuUGxPzdw8=;
-        b=gQuXeI8fAiMEylBC+DPFAwRWZyZXglcfs/m8FzBIWROyU7x7Evq5WHcqKIMCqmn9ig
-         or3PHHuxSuFhGh+aU9to+B17zWLXA0T48Mf+Wbly+GRu4vUXneI1NNVOD4YZjx4Hgtf1
-         aE0rhdBEsuF9vfHuRy/9qxwBE4wI67dRVh4x01AQDuXNtYe+t6GbZEN4bT1RRUyywjzz
-         /cyUpgNniG1Aw6n/Uxpgbc5s5fzQaX+6Bxv2WvYggjwqj0wta0ZdSErA4W+r9e26dQww
-         9ARdj7Y8HkptGMYCGPDCaH+81WAp+BCjmuari7txMXz2BBybnMW9TizkvL0J5UQnJoWC
-         Ij3g==
-X-Gm-Message-State: APjAAAXyrEej0PZ4flzKN5Fj0bchmPhXzzzDkGahFewYJvvVdDRwRs6j
-        WjLdZnhJh11DInKGIVMX/FiBxH6mvFPrOVJhpwIBDQ==
-X-Google-Smtp-Source: APXvYqxdpDTdThy1Af2etX0PV/rvU+DMRMs34vh20dWSvUFCneI7AXu0RnDYU2y7Rvof6wyFG0y8HZM6tmzdS1ueRpo=
-X-Received: by 2002:a2e:781a:: with SMTP id t26mr4874644ljc.28.1565185401372;
- Wed, 07 Aug 2019 06:43:21 -0700 (PDT)
-MIME-Version: 1.0
-References: <20190708110138.24657-1-masneyb@onstation.org> <CACRpkdYQhyh1BW789OcxGTomMkC3e8hMr8sodbWz-z1=5s9fDw@mail.gmail.com>
-In-Reply-To: <CACRpkdYQhyh1BW789OcxGTomMkC3e8hMr8sodbWz-z1=5s9fDw@mail.gmail.com>
-From:   Linus Walleij <linus.walleij@linaro.org>
-Date:   Wed, 7 Aug 2019 15:43:10 +0200
-Message-ID: <CACRpkdZWSS8Mg5EUOpYDfY78s9cy0wTEZHovb3NmZgZsYoiSHg@mail.gmail.com>
-Subject: Re: [PATCH 0/4] gpio: hierarchical IRQ improvements
-To:     Brian Masney <masneyb@onstation.org>
+        id S2388086AbfHGOHq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 7 Aug 2019 10:07:46 -0400
+Received: from onstation.org ([52.200.56.107]:42714 "EHLO onstation.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726773AbfHGOHq (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 7 Aug 2019 10:07:46 -0400
+Received: from localhost (c-98-239-145-235.hsd1.wv.comcast.net [98.239.145.235])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        (Authenticated sender: masneyb)
+        by onstation.org (Postfix) with ESMTPSA id BA57E3E951;
+        Wed,  7 Aug 2019 14:07:44 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=onstation.org;
+        s=default; t=1565186865;
+        bh=6WKzOMIrRhn+HZ7Ye4fD0m71zD/5MBx+bsdK86Uuj2c=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=PJh2pZx1sesHz3Pw1IeyqA+GVWbYfJ/w8c7srPHO3nDhOIha6mDNXfDJs6HHIfAjM
+         CiXOvgEDhoMJYJEGRjJPE4brU1fDnmAqM60bKD9D20iVuIvBNLfFPQ3sn4nRUezk7d
+         wQ6YdoznMAubLi/7Re6c8szg+FIep7LAAvM4XQtw=
+Date:   Wed, 7 Aug 2019 10:07:44 -0400
+From:   Brian Masney <masneyb@onstation.org>
+To:     Linus Walleij <linus.walleij@linaro.org>
 Cc:     "open list:GPIO SUBSYSTEM" <linux-gpio@vger.kernel.org>,
         Bartosz Golaszewski <bgolaszewski@baylibre.com>,
         Thomas Gleixner <tglx@linutronix.de>,
@@ -64,15 +42,22 @@ Cc:     "open list:GPIO SUBSYSTEM" <linux-gpio@vger.kernel.org>,
         Andy Gross <agross@kernel.org>,
         MSM <linux-arm-msm@vger.kernel.org>,
         "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Subject: Re: [PATCH 0/4] gpio: hierarchical IRQ improvements
+Message-ID: <20190807140744.GA18224@onstation.org>
+References: <20190708110138.24657-1-masneyb@onstation.org>
+ <CACRpkdYQhyh1BW789OcxGTomMkC3e8hMr8sodbWz-z1=5s9fDw@mail.gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CACRpkdYQhyh1BW789OcxGTomMkC3e8hMr8sodbWz-z1=5s9fDw@mail.gmail.com>
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Aug 7, 2019 at 3:41 PM Linus Walleij <linus.walleij@linaro.org> wrote:
+On Wed, Aug 07, 2019 at 03:41:05PM +0200, Linus Walleij wrote:
 > On Mon, Jul 8, 2019 at 1:01 PM Brian Masney <masneyb@onstation.org> wrote:
->
+> 
 > > This builds on top of Linus Walleij's existing patches that adds
 > > hierarchical IRQ support to the GPIO core [1] so that Qualcomm's
 > > spmi-gpio and ssbi-gpio can be converted to use these new helpers.
@@ -89,12 +74,19 @@ On Wed, Aug 7, 2019 at 3:41 PM Linus Walleij <linus.walleij@linaro.org> wrote:
 > >   gpio: allow customizing hierarchical IRQ chips
 > >   gpio: use handler in gpio_irq_chip instead of handle_bad_irq
 > >   qcom: spmi-gpio: convert to hierarchical IRQ helpers in gpio core
->
+> 
 > I solved things like this:
->
+> 
 > - I kept patches 1 & 4 as-is
+> - I squashed patches 2 and 3 into the main patch with minor modifications.
+> - I added Co-developed-by: for your contributions
+> 
+> Now I need to address Masahiro's comments on top and let's see if the
+> result looks acceptable!
 
-Ooops had to squash patch 1 as well...
+> Ooops had to squash patch 1 as well...
 
-Yours,
-Linus Walleij
+All of this sounds good. I'll retest once you send out the updated
+series.
+
+Brian
