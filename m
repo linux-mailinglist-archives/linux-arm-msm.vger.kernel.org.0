@@ -2,91 +2,96 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 9D39E84E42
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 Aug 2019 16:08:33 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D957A85203
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 Aug 2019 19:24:34 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2388086AbfHGOHq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 7 Aug 2019 10:07:46 -0400
-Received: from onstation.org ([52.200.56.107]:42714 "EHLO onstation.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726773AbfHGOHq (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 7 Aug 2019 10:07:46 -0400
-Received: from localhost (c-98-239-145-235.hsd1.wv.comcast.net [98.239.145.235])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        id S2387888AbfHGRYe (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 7 Aug 2019 13:24:34 -0400
+Received: from smtp.codeaurora.org ([198.145.29.96]:33094 "EHLO
+        smtp.codeaurora.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727213AbfHGRYd (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 7 Aug 2019 13:24:33 -0400
+Received: by smtp.codeaurora.org (Postfix, from userid 1000)
+        id AE67A60F3B; Wed,  7 Aug 2019 17:24:32 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
+        s=default; t=1565198672;
+        bh=9K1MOxiCxYs/25EyWmBrmkD80zO1z57WgiTXJ3f3y6Y=;
+        h=From:To:Cc:Subject:Date:From;
+        b=OxCnwmzuQnMmlh3okgONlCz5nhylnjZ13rQgFQHfSjlepS/i8uCL6MM+bFrvIWvXn
+         SKLFfBy4Aws2Cy9BQpBrZbOeulOU4rFgFrqY5u4780x9d23NgBy/obA1FgV7QRr+/o
+         wsz3UYoCy8ZSgp02JhVCruRzZ/W1ZGn+V/08zcFA=
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        pdx-caf-mail.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.7 required=2.0 tests=ALL_TRUSTED,BAYES_00,
+        DKIM_INVALID,DKIM_SIGNED,SPF_NONE autolearn=no autolearn_force=no
+        version=3.4.0
+Received: from jcrouse1-lnx.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
         (No client certificate requested)
-        (Authenticated sender: masneyb)
-        by onstation.org (Postfix) with ESMTPSA id BA57E3E951;
-        Wed,  7 Aug 2019 14:07:44 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=onstation.org;
-        s=default; t=1565186865;
-        bh=6WKzOMIrRhn+HZ7Ye4fD0m71zD/5MBx+bsdK86Uuj2c=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=PJh2pZx1sesHz3Pw1IeyqA+GVWbYfJ/w8c7srPHO3nDhOIha6mDNXfDJs6HHIfAjM
-         CiXOvgEDhoMJYJEGRjJPE4brU1fDnmAqM60bKD9D20iVuIvBNLfFPQ3sn4nRUezk7d
-         wQ6YdoznMAubLi/7Re6c8szg+FIep7LAAvM4XQtw=
-Date:   Wed, 7 Aug 2019 10:07:44 -0400
-From:   Brian Masney <masneyb@onstation.org>
-To:     Linus Walleij <linus.walleij@linaro.org>
-Cc:     "open list:GPIO SUBSYSTEM" <linux-gpio@vger.kernel.org>,
-        Bartosz Golaszewski <bgolaszewski@baylibre.com>,
-        Thomas Gleixner <tglx@linutronix.de>,
-        Marc Zyngier <marc.zyngier@arm.com>,
-        Lina Iyer <ilina@codeaurora.org>,
-        Jon Hunter <jonathanh@nvidia.com>,
-        Sowjanya Komatineni <skomatineni@nvidia.com>,
-        Bitan Biswas <bbiswas@nvidia.com>, linux-tegra@vger.kernel.org,
-        David Daney <david.daney@cavium.com>,
-        Masahiro Yamada <yamada.masahiro@socionext.com>,
-        Thierry Reding <treding@nvidia.com>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        MSM <linux-arm-msm@vger.kernel.org>,
-        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>
-Subject: Re: [PATCH 0/4] gpio: hierarchical IRQ improvements
-Message-ID: <20190807140744.GA18224@onstation.org>
-References: <20190708110138.24657-1-masneyb@onstation.org>
- <CACRpkdYQhyh1BW789OcxGTomMkC3e8hMr8sodbWz-z1=5s9fDw@mail.gmail.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CACRpkdYQhyh1BW789OcxGTomMkC3e8hMr8sodbWz-z1=5s9fDw@mail.gmail.com>
+        (Authenticated sender: jcrouse@smtp.codeaurora.org)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 4A1E060ACF;
+        Wed,  7 Aug 2019 17:24:31 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
+        s=default; t=1565198672;
+        bh=9K1MOxiCxYs/25EyWmBrmkD80zO1z57WgiTXJ3f3y6Y=;
+        h=From:To:Cc:Subject:Date:From;
+        b=OxCnwmzuQnMmlh3okgONlCz5nhylnjZ13rQgFQHfSjlepS/i8uCL6MM+bFrvIWvXn
+         SKLFfBy4Aws2Cy9BQpBrZbOeulOU4rFgFrqY5u4780x9d23NgBy/obA1FgV7QRr+/o
+         wsz3UYoCy8ZSgp02JhVCruRzZ/W1ZGn+V/08zcFA=
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 4A1E060ACF
+Authentication-Results: pdx-caf-mail.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: pdx-caf-mail.web.codeaurora.org; spf=none smtp.mailfrom=jcrouse@codeaurora.org
+From:   Jordan Crouse <jcrouse@codeaurora.org>
+To:     freedreno@lists.freedesktop.org
+Cc:     linux-arm-msm@vger.kernel.org, Sean Paul <sean@poorly.run>,
+        linux-kernel@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        Rob Clark <robdclark@gmail.com>,
+        David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>
+Subject: [PATCH] drm/msm: Make DRM_MSM default to 'm'
+Date:   Wed,  7 Aug 2019 11:24:27 -0600
+Message-Id: <1565198667-4300-1-git-send-email-jcrouse@codeaurora.org>
+X-Mailer: git-send-email 2.7.4
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Aug 07, 2019 at 03:41:05PM +0200, Linus Walleij wrote:
-> On Mon, Jul 8, 2019 at 1:01 PM Brian Masney <masneyb@onstation.org> wrote:
-> 
-> > This builds on top of Linus Walleij's existing patches that adds
-> > hierarchical IRQ support to the GPIO core [1] so that Qualcomm's
-> > spmi-gpio and ssbi-gpio can be converted to use these new helpers.
-> >
-> > Linus: Feel free to squash these into your existing patches if you'd
-> > like to use any of this code. Just give me some kind of mention in the
-> > commit description.
-> >
-> > [1] https://lore.kernel.org/linux-gpio/20190624132531.6184-1-linus.walleij@linaro.org/
-> >
-> > Brian Masney (4):
-> >   gpio: introduce gpiochip_populate_parent_fwspec_{two,four}cell
-> >     functions
-> >   gpio: allow customizing hierarchical IRQ chips
-> >   gpio: use handler in gpio_irq_chip instead of handle_bad_irq
-> >   qcom: spmi-gpio: convert to hierarchical IRQ helpers in gpio core
-> 
-> I solved things like this:
-> 
-> - I kept patches 1 & 4 as-is
-> - I squashed patches 2 and 3 into the main patch with minor modifications.
-> - I added Co-developed-by: for your contributions
-> 
-> Now I need to address Masahiro's comments on top and let's see if the
-> result looks acceptable!
+Most use cases for DRM_MSM will prefer to build both DRM and MSM_DRM as
+modules but there are some cases where DRM might be built in for whatever
+reason and in those situations it is preferable to still keep MSM as a
+module by default and let the user decide if they _really_ want to build
+it in.
 
-> Ooops had to squash patch 1 as well...
+Additionally select QCOM_COMMAND_DB for ARCH_QCOM targets to make sure
+it doesn't get missed when we need it for a6xx tarets.
 
-All of this sounds good. I'll retest once you send out the updated
-series.
+Signed-off-by: Jordan Crouse <jcrouse@codeaurora.org>
+---
 
-Brian
+ drivers/gpu/drm/msm/Kconfig | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+
+diff --git a/drivers/gpu/drm/msm/Kconfig b/drivers/gpu/drm/msm/Kconfig
+index 9c37e4d..3b2334b 100644
+--- a/drivers/gpu/drm/msm/Kconfig
++++ b/drivers/gpu/drm/msm/Kconfig
+@@ -14,11 +14,12 @@ config DRM_MSM
+ 	select SHMEM
+ 	select TMPFS
+ 	select QCOM_SCM if ARCH_QCOM
++	select QCOM_COMMAND_DB if ARCH_QCOM
+ 	select WANT_DEV_COREDUMP
+ 	select SND_SOC_HDMI_CODEC if SND_SOC
+ 	select SYNC_FILE
+ 	select PM_OPP
+-	default y
++	default m
+ 	help
+ 	  DRM/KMS driver for MSM/snapdragon.
+ 
+-- 
+2.7.4
+
