@@ -2,141 +2,97 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 68B4784361
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 Aug 2019 06:25:54 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D31A8843D9
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 Aug 2019 07:39:47 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725834AbfHGEZx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 7 Aug 2019 00:25:53 -0400
-Received: from mail-ot1-f66.google.com ([209.85.210.66]:44671 "EHLO
-        mail-ot1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725809AbfHGEZx (ORCPT
+        id S1727011AbfHGFjr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 7 Aug 2019 01:39:47 -0400
+Received: from mail-pl1-f194.google.com ([209.85.214.194]:44363 "EHLO
+        mail-pl1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726159AbfHGFjr (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 7 Aug 2019 00:25:53 -0400
-Received: by mail-ot1-f66.google.com with SMTP id b7so48886027otl.11
-        for <linux-arm-msm@vger.kernel.org>; Tue, 06 Aug 2019 21:25:52 -0700 (PDT)
+        Wed, 7 Aug 2019 01:39:47 -0400
+Received: by mail-pl1-f194.google.com with SMTP id t14so38912616plr.11
+        for <linux-arm-msm@vger.kernel.org>; Tue, 06 Aug 2019 22:39:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=3ATctTDaGdbuSHTCGNV3yIygAvKI+PZ5Bx0qOvsrsdU=;
-        b=Pr1TFTBPQsPZQkpBl1gTXGD5ehedYAy5IgSiynzskrPnWdr4niMAIJVdzjNvrApE4r
-         FDSjtJCibdOlzOpQNWmdaIhwwiHAN9UkbuccdaCJxa2w4HVSoLB0X7putJWBQ4mziSpC
-         3/EHLm2TEeo4Ww++5N2jMzlt0GdyY86ZDUP2m5SSeqTTiIeUHaE7yGD4fNhJPwYiczEe
-         K9vDFUsmlQvuQP6kZY7H+E7TiWLayveSS1ece73bgYdl8HEu1O6B5pi+wybjZDOtRgi1
-         gxD3OKbAKL7L32rqu1b+yZOqR4ZYvwEd3dBvcmPEfDpf39eKu6wsYR1+4+huS8E+BjOK
-         4NXA==
+        h=from:to:cc:subject:date:message-id;
+        bh=lX8IG8R2jbuFCwsdoK0pzaeJEZdXalK6j85VMKRjgxQ=;
+        b=DYMVfjHzfJ1cOe7Y/fcx9vdQcjtJc27q/Ci2eXoM+zBh9/ckVpNefswtCR2HXum19W
+         we07s/fxc4GekXam4scFbX7zDa6Eq0pr3ZmE13K8dwBTbJD82iIKeAZWoewh/itwnwhH
+         JYgtywKiKqZsDVjpcTLEbET7gSV7aHQN1Afv1f+gw39lhnd7LvT1TkfKBAkuz69cqqzM
+         4yhBIxHWhBZNnxSDH5SxO0g2DRJG/SuDBJcH3VJJDyaiht1N59ESbQNpRJN5rYd0Vzl/
+         ThT5MYRw1nbBmsnusuxgYPuH1BimBxKiosTtg5LHlCIn5h90YAkQWuqaHLbvHbAY1LmF
+         966g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=3ATctTDaGdbuSHTCGNV3yIygAvKI+PZ5Bx0qOvsrsdU=;
-        b=TN2PhZEipmT2F8Qpd42LDKtYlkrShHHVHuOas91EChZRn7aLuoda2YL+gd8Lm49ap6
-         IHnxZSW709U6PMR6DCMYhmE14qDWXrD6YpvQ063oSbMQEfM4EnjTbpZMgV+J71eZpdaU
-         f8XCXGyU+pLDhUmHVl7OchbMCJisbhWUFCw25UitFlQNdhJiDcJuXKRMPam8d0a0V9xQ
-         22N+EHtPw0OQGwsqPB1xRaWtqP+LpDMFdpBP3CFIdJxE3OwFhEkqZZ2aCOBsP13Xqay2
-         EZZHFhUcLhEOhmb9+WI9rw+okbwsPlHUUS1PU+SVXGOQunDwl51mxp/lHQJ6Y+TFC5oq
-         bFFg==
-X-Gm-Message-State: APjAAAW9n2rRJsArXsv1VfSebz4JtBO2gUXNFOmHihYhbXIAC8HUq/K9
-        OT2VojksTbJ39tTcTBD7uT6XB07miiPI254rDdMisg==
-X-Google-Smtp-Source: APXvYqyd/Zu0XywNS/VeNaLFP0dsw9hCkyh6Xki5zJ7X68h0qtL57F5zTIUSNPDvsC+fAUE8xwVCmn/m7vN3YCNliKg=
-X-Received: by 2002:a05:6638:303:: with SMTP id w3mr7848813jap.103.1565151952221;
- Tue, 06 Aug 2019 21:25:52 -0700 (PDT)
-MIME-Version: 1.0
-References: <20190807100803.63007737@canb.auug.org.au> <20190807022356.8502-1-bjorn.andersson@linaro.org>
-In-Reply-To: <20190807022356.8502-1-bjorn.andersson@linaro.org>
-From:   Vaishali Thakkar <vaishali.thakkar@linaro.org>
-Date:   Wed, 7 Aug 2019 09:55:41 +0530
-Message-ID: <CANNG1HVRCfQPk4pP37SbEcR+_Upx7+N_SH95TYUxAhiB+jNLHg@mail.gmail.com>
-Subject: Re: [PATCH v2] soc: qcom: socinfo: Annotate switch cases with fall through
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Stephen Rothwell <sfr@canb.auug.org.au>,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Linux Next Mailing List <linux-next@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=lX8IG8R2jbuFCwsdoK0pzaeJEZdXalK6j85VMKRjgxQ=;
+        b=hQ+rqbJdgkyRXkDL/VHyh9kJDFFKFw5xJuu2kN2iEv2ot4yjItFLkgyQH0/pC9P5oz
+         GkPBJ0hnObsEqlAxlLpNpvc3UvXTZHyN7LgFpWNSAM8Hv9DjWrYtl5yP1q7kIZPKmfkw
+         HBnN1wynw42ZBxVZ8+22MJeBpDWYs+9+WPcOEhpgPoRgzvN7XKRFYgVGsSh5Rb5zV2yj
+         Kc+YrIk79iTTGbPQUaHsUgnHXzUvUj+RMcFLepDDqYfvylphaLW/SNzDdCCNgHZ/BsZY
+         ReAPN9q4bD/KuAd06VyA0wTMitCdmw/WaP5xUQdMC1dBIk52wwC1DA5e719oeXCLssWV
+         3MPQ==
+X-Gm-Message-State: APjAAAXK2+QbR5fht+Cl/sKquyH0zTqEDQkKmVzPnZGBdXWdvmnIsKbA
+        k5TtO8y4O2DblNKB2E3DOy6wpw==
+X-Google-Smtp-Source: APXvYqwldcGGBa3zhtoh7iC85dGC9Qe60kQsnnLZTi7wsiXGj3UJXTX+1tNyKDYw8gh85OLy7D/wDA==
+X-Received: by 2002:a62:6044:: with SMTP id u65mr7428811pfb.15.1565156386238;
+        Tue, 06 Aug 2019 22:39:46 -0700 (PDT)
+Received: from localhost.localdomain (104-188-17-28.lightspeed.sndgca.sbcglobal.net. [104.188.17.28])
+        by smtp.gmail.com with ESMTPSA id u7sm86070777pfm.96.2019.08.06.22.39.45
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Tue, 06 Aug 2019 22:39:45 -0700 (PDT)
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     Andy Gross <agross@kernel.org>, Ohad Ben-Cohen <ohad@wizery.com>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     Sibi Sankar <sibis@codeaurora.org>, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-remoteproc@vger.kernel.org
+Subject: [PATCH 0/9] remoteproc: qcom: post mortem debug support
+Date:   Tue,  6 Aug 2019 22:39:33 -0700
+Message-Id: <20190807053942.9836-1-bjorn.andersson@linaro.org>
+X-Mailer: git-send-email 2.18.0
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, 7 Aug 2019 at 07:54, Bjorn Andersson <bjorn.andersson@linaro.org> wrote:
->
-> Introduce fall through annotations in the switch statements of
-> socinfo_debugfs_init() to silence compiler warnings.
+The following series introduces two components that aids in post mortem
+debugging of Qualcomm systems. The first part is used to store information
+about loaded images in IMEM, for post mortem tools to know where the kernel
+loaded the remoteproc firmware. The second part invokes a stop operation on the
+remoteprocs during a kernel panic, in order to trigger them to flush caches
+etc.
 
-Oops, I missed this. Thanks for fixing it!
+Bjorn Andersson (9):
+  remoteproc: qcom: Introduce driver to store pil info in IMEM
+  remoteproc: qcom: mss: Update IMEM PIL info on load
+  remoteproc: qcom: pas: Update IMEM PIL info on load
+  remoteproc: qcom: wcnss: Update IMEM PIL info on load
+  arm64: dts: qcom: qcs404: Add IMEM and PIL info region
+  arm64: dts: qcom: sdm845: Add IMEM and PIL info region
+  remoteproc: Introduce "panic" callback in ops
+  remoteproc: qcom: q6v5: Add common panic handler
+  remoteproc: qcom: Introduce panic handler for PAS and ADSP
 
-> Fixes: 9c84c1e78634 ("soc: qcom: socinfo: Expose custom attributes")
-> Reported-by: Stephen Rothwell <sfr@canb.auug.org.au>
-> Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+ arch/arm64/boot/dts/qcom/qcs404.dtsi |  10 ++
+ arch/arm64/boot/dts/qcom/sdm845.dtsi |  10 ++
+ drivers/remoteproc/Kconfig           |   6 ++
+ drivers/remoteproc/Makefile          |   1 +
+ drivers/remoteproc/qcom_pil_info.c   | 139 +++++++++++++++++++++++++++
+ drivers/remoteproc/qcom_pil_info.h   |   6 ++
+ drivers/remoteproc/qcom_q6v5.c       |  19 ++++
+ drivers/remoteproc/qcom_q6v5.h       |   1 +
+ drivers/remoteproc/qcom_q6v5_adsp.c  |   8 ++
+ drivers/remoteproc/qcom_q6v5_mss.c   |   3 +
+ drivers/remoteproc/qcom_q6v5_pas.c   |  23 ++++-
+ drivers/remoteproc/qcom_wcnss.c      |  14 ++-
+ drivers/remoteproc/remoteproc_core.c |  16 +++
+ include/linux/remoteproc.h           |   3 +
+ 14 files changed, 253 insertions(+), 6 deletions(-)
+ create mode 100644 drivers/remoteproc/qcom_pil_info.c
+ create mode 100644 drivers/remoteproc/qcom_pil_info.h
 
-Acked-by: Vaishali Thakkar <vaishali.thakkar@linaro.org>
+-- 
+2.18.0
 
-> ---
->  drivers/soc/qcom/socinfo.c | 8 ++++++++
->  1 file changed, 8 insertions(+)
->
-> diff --git a/drivers/soc/qcom/socinfo.c b/drivers/soc/qcom/socinfo.c
-> index 855353bed19e..a39ea5061dc5 100644
-> --- a/drivers/soc/qcom/socinfo.c
-> +++ b/drivers/soc/qcom/socinfo.c
-> @@ -323,6 +323,7 @@ static void socinfo_debugfs_init(struct qcom_socinfo *qcom_socinfo,
->                 debugfs_create_x32("raw_device_number", 0400,
->                                    qcom_socinfo->dbg_root,
->                                    &qcom_socinfo->info.raw_device_num);
-> +               /* Fall through */
->         case SOCINFO_VERSION(0, 11):
->         case SOCINFO_VERSION(0, 10):
->         case SOCINFO_VERSION(0, 9):
-> @@ -330,10 +331,12 @@ static void socinfo_debugfs_init(struct qcom_socinfo *qcom_socinfo,
->
->                 debugfs_create_u32("foundry_id", 0400, qcom_socinfo->dbg_root,
->                                    &qcom_socinfo->info.foundry_id);
-> +               /* Fall through */
->         case SOCINFO_VERSION(0, 8):
->         case SOCINFO_VERSION(0, 7):
->                 DEBUGFS_ADD(info, pmic_model);
->                 DEBUGFS_ADD(info, pmic_die_rev);
-> +               /* Fall through */
->         case SOCINFO_VERSION(0, 6):
->                 qcom_socinfo->info.hw_plat_subtype =
->                         __le32_to_cpu(info->hw_plat_subtype);
-> @@ -341,6 +344,7 @@ static void socinfo_debugfs_init(struct qcom_socinfo *qcom_socinfo,
->                 debugfs_create_u32("hardware_platform_subtype", 0400,
->                                    qcom_socinfo->dbg_root,
->                                    &qcom_socinfo->info.hw_plat_subtype);
-> +               /* Fall through */
->         case SOCINFO_VERSION(0, 5):
->                 qcom_socinfo->info.accessory_chip =
->                         __le32_to_cpu(info->accessory_chip);
-> @@ -348,23 +352,27 @@ static void socinfo_debugfs_init(struct qcom_socinfo *qcom_socinfo,
->                 debugfs_create_u32("accessory_chip", 0400,
->                                    qcom_socinfo->dbg_root,
->                                    &qcom_socinfo->info.accessory_chip);
-> +               /* Fall through */
->         case SOCINFO_VERSION(0, 4):
->                 qcom_socinfo->info.plat_ver = __le32_to_cpu(info->plat_ver);
->
->                 debugfs_create_u32("platform_version", 0400,
->                                    qcom_socinfo->dbg_root,
->                                    &qcom_socinfo->info.plat_ver);
-> +               /* Fall through */
->         case SOCINFO_VERSION(0, 3):
->                 qcom_socinfo->info.hw_plat = __le32_to_cpu(info->hw_plat);
->
->                 debugfs_create_u32("hardware_platform", 0400,
->                                    qcom_socinfo->dbg_root,
->                                    &qcom_socinfo->info.hw_plat);
-> +               /* Fall through */
->         case SOCINFO_VERSION(0, 2):
->                 qcom_socinfo->info.raw_ver  = __le32_to_cpu(info->raw_ver);
->
->                 debugfs_create_u32("raw_version", 0400, qcom_socinfo->dbg_root,
->                                    &qcom_socinfo->info.raw_ver);
-> +               /* Fall through */
->         case SOCINFO_VERSION(0, 1):
->                 DEBUGFS_ADD(info, build_id);
->                 break;
-> --
-> 2.18.0
->
