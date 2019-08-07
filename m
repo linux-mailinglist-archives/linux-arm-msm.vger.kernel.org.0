@@ -2,125 +2,89 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 3B8CC843EE
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 Aug 2019 07:40:32 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E4F9284557
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 Aug 2019 09:10:17 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727253AbfHGFj6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 7 Aug 2019 01:39:58 -0400
-Received: from mail-pl1-f194.google.com ([209.85.214.194]:38549 "EHLO
-        mail-pl1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727280AbfHGFj5 (ORCPT
+        id S1727281AbfHGHKR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 7 Aug 2019 03:10:17 -0400
+Received: from smtp.codeaurora.org ([198.145.29.96]:47454 "EHLO
+        smtp.codeaurora.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727187AbfHGHKQ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 7 Aug 2019 01:39:57 -0400
-Received: by mail-pl1-f194.google.com with SMTP id m12so330003plt.5
-        for <linux-arm-msm@vger.kernel.org>; Tue, 06 Aug 2019 22:39:56 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=h/HptULj1ZkwXqtKtnx9KrZAoKYoT1D4MPjQTFSgnOE=;
-        b=VxaiY8HUkDhAJK5OgMj/acEOEgWXyEaHjVYNOdw1Hci6Y4sEt+drKbkvjpYDtH9KV0
-         3BEfBbpJCoFTh72TNpLRW8ZWifVynAXWjfY6sUAiMiqJKT9tLty9vJCR1YNJzFr/NIBW
-         UUM6JWhYW7Ehntlr86XA3il2jvwRb/3IMVJ97+UQihBCQTf/eOKHrxE2DL/Ol0AP3ews
-         35YHA/qZ+9AxgOiNzRKa4YvGB437AL0RuTDL/YjdfnLxKpGoyq0Id7izZ7NBHXxurj0v
-         Onjldxfpe6qOvoAQFjAcFFpic3OWRLTg35c3GXLxAufgxgfV1BNINACjeAjiflGAu6tD
-         ELFw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=h/HptULj1ZkwXqtKtnx9KrZAoKYoT1D4MPjQTFSgnOE=;
-        b=gVLqXL6Ft3j7uCfs1jjCh8l67lLOO3xQkehQoQWfohlezo3qVSYcRxF0INNxcnrVd6
-         Feg5x9BAdK93+gh01faTNPNrtWzH9behbLvz+eq/MT80GlMfxz9GtoJC2GYlAoiu+IVh
-         EuSp+GmBU9mJfEUVllcxXuKSPQGy3NRwkJ0QEuimIcJGquPrgzAYXjVGzVI9ysm19KiZ
-         fKbP6w92Ns4R2TbQxLuyglETiBeeW7KCGqnIdwpIsaqtnviVNL3oFLdknRGIKflw5EL6
-         O1MiGEPtBUVaZmxJ2RvLuWb0lp9uQQ1YEH/ShDGMtRBs9K4mm7w4qLHz+Ua0errgLC7I
-         n/uQ==
-X-Gm-Message-State: APjAAAWk9IMRHJPU250vXF8vYj4E0sr2OBeVlIYYnN6yFCBBoxgjWWzn
-        DMGMtmIwu8BGsVqGKSW+z5lXjBmubXs=
-X-Google-Smtp-Source: APXvYqwttlgTM1Ho7Jfwf4iaKjnCWr2MGVOw6C7n3fYbk8Bd7mv+IC8hWlxN2qTtA0SQh54WjIETKw==
-X-Received: by 2002:aa7:98da:: with SMTP id e26mr7570022pfm.34.1565156396240;
-        Tue, 06 Aug 2019 22:39:56 -0700 (PDT)
-Received: from localhost.localdomain (104-188-17-28.lightspeed.sndgca.sbcglobal.net. [104.188.17.28])
-        by smtp.gmail.com with ESMTPSA id u7sm86070777pfm.96.2019.08.06.22.39.55
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 06 Aug 2019 22:39:55 -0700 (PDT)
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Ohad Ben-Cohen <ohad@wizery.com>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     Andy Gross <agross@kernel.org>, Sibi Sankar <sibis@codeaurora.org>,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-remoteproc@vger.kernel.org
-Subject: [PATCH 9/9] remoteproc: qcom: Introduce panic handler for PAS and ADSP
-Date:   Tue,  6 Aug 2019 22:39:42 -0700
-Message-Id: <20190807053942.9836-10-bjorn.andersson@linaro.org>
-X-Mailer: git-send-email 2.18.0
-In-Reply-To: <20190807053942.9836-1-bjorn.andersson@linaro.org>
-References: <20190807053942.9836-1-bjorn.andersson@linaro.org>
+        Wed, 7 Aug 2019 03:10:16 -0400
+Received: by smtp.codeaurora.org (Postfix, from userid 1000)
+        id 189DD61157; Wed,  7 Aug 2019 07:10:15 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
+        s=default; t=1565161816;
+        bh=cVr/JDEa62vJGvnAPnwSuap9YiSLs6c861q04J+NSeU=;
+        h=From:To:Cc:Subject:Date:From;
+        b=aCEl/UwaeLjYhzoDKbsIhTibuiF0etV/+H++1q3vI7U4v6b1oOAI0mOXUuqk7sAu8
+         l5awCdlYRYc/7OrN3jylYYiJ3K3/KLsgezQQoj+qGzVO+JXjEkycZE3TAS7ns7JKpG
+         rlf2S4GIJH1ORQT+e4X2wvKHcDE2Z55groHVdMWA=
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        pdx-caf-mail.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.7 required=2.0 tests=ALL_TRUSTED,BAYES_00,
+        DKIM_INVALID,DKIM_SIGNED,SPF_NONE autolearn=no autolearn_force=no
+        version=3.4.0
+Received: from blr-ubuntu-87.qualcomm.com (blr-bdr-fw-01_globalnat_allzones-outside.qualcomm.com [103.229.18.19])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: sibis@smtp.codeaurora.org)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id D614960FE9;
+        Wed,  7 Aug 2019 07:10:09 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
+        s=default; t=1565161814;
+        bh=cVr/JDEa62vJGvnAPnwSuap9YiSLs6c861q04J+NSeU=;
+        h=From:To:Cc:Subject:Date:From;
+        b=gM2gfVcHN6IsHgcAk52gZBoFnep+SUESygzdwgLzzlAnh6aLL/TlJ/2RFQS0mMFuK
+         ze8p4fZn8TWVDxadnVNc55uxMZUJeJrcV9r1NtjCM8sWgaEeNHwJo7kjJhC2vIDDH2
+         HJVVvAaE0kK9yQ8CdTIyIp5L/NWRqOIU/gaso/wQ=
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org D614960FE9
+Authentication-Results: pdx-caf-mail.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: pdx-caf-mail.web.codeaurora.org; spf=none smtp.mailfrom=sibis@codeaurora.org
+From:   Sibi Sankar <sibis@codeaurora.org>
+To:     bjorn.andersson@linaro.org, robh+dt@kernel.org, vkoul@kernel.org,
+        aneela@codeaurora.org
+Cc:     mark.rutland@arm.com, agross@kernel.org,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, jassisinghbrar@gmail.com,
+        clew@codeaurora.org, Sibi Sankar <sibis@codeaurora.org>
+Subject: [PATCH v2 0/7] Add support for Qualcomm SM8150 and SC7180 SoCs
+Date:   Wed,  7 Aug 2019 12:39:50 +0530
+Message-Id: <20190807070957.30655-1-sibis@codeaurora.org>
+X-Mailer: git-send-email 2.22.0
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Make the PAS and ADSP/CDSP remoteproc drivers implement the panic
-handler that will invoke a stop to prepare the remoteprocs for post
-mortem debugging.
+This patch series adds SCM, APSS shared mailbox and QMP AOSS PD/clock
+support on SM8150 and SC7180 SoCs.
 
-Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
----
- drivers/remoteproc/qcom_q6v5_adsp.c | 8 ++++++++
- drivers/remoteproc/qcom_q6v5_pas.c  | 8 ++++++++
- 2 files changed, 16 insertions(+)
+v2:
+ * re-arrange the compatible lists in sort order
 
-diff --git a/drivers/remoteproc/qcom_q6v5_adsp.c b/drivers/remoteproc/qcom_q6v5_adsp.c
-index e953886b2eb7..3de1683903db 100644
---- a/drivers/remoteproc/qcom_q6v5_adsp.c
-+++ b/drivers/remoteproc/qcom_q6v5_adsp.c
-@@ -282,12 +282,20 @@ static void *adsp_da_to_va(struct rproc *rproc, u64 da, int len)
- 	return adsp->mem_region + offset;
- }
- 
-+static void adsp_panic(struct rproc *rproc)
-+{
-+	struct qcom_adsp *adsp = (struct qcom_adsp *)rproc->priv;
-+
-+	qcom_q6v5_panic(&adsp->q6v5);
-+}
-+
- static const struct rproc_ops adsp_ops = {
- 	.start = adsp_start,
- 	.stop = adsp_stop,
- 	.da_to_va = adsp_da_to_va,
- 	.parse_fw = qcom_register_dump_segments,
- 	.load = adsp_load,
-+	.panic = adsp_panic,
- };
- 
- static int adsp_init_clock(struct qcom_adsp *adsp, const char **clk_ids)
-diff --git a/drivers/remoteproc/qcom_q6v5_pas.c b/drivers/remoteproc/qcom_q6v5_pas.c
-index bfb622d36cb3..31ff09bcd3ee 100644
---- a/drivers/remoteproc/qcom_q6v5_pas.c
-+++ b/drivers/remoteproc/qcom_q6v5_pas.c
-@@ -179,12 +179,20 @@ static void *adsp_da_to_va(struct rproc *rproc, u64 da, int len)
- 	return adsp->mem_region + offset;
- }
- 
-+static void adsp_panic(struct rproc *rproc)
-+{
-+	struct qcom_adsp *adsp = (struct qcom_adsp *)rproc->priv;
-+
-+	qcom_q6v5_panic(&adsp->q6v5);
-+}
-+
- static const struct rproc_ops adsp_ops = {
- 	.start = adsp_start,
- 	.stop = adsp_stop,
- 	.da_to_va = adsp_da_to_va,
- 	.parse_fw = qcom_register_dump_segments,
- 	.load = adsp_load,
-+	.panic = adsp_panic,
- };
- 
- static int adsp_init_clock(struct qcom_adsp *adsp)
+Sibi Sankar (7):
+  soc: qcom: smem: Update max processor count
+  dt-bindings: firmware: scm: re-order compatible list
+  dt-bindings: firmware: scm: Add SM8150 and SC7180 support
+  dt-bindings: mailbox: Add APSS shared for SM8150 and SC7180 SoCs
+  mailbox: qcom: Add support for Qualcomm SM8150 and SC7180 SoCs
+  dt-bindings: soc: qcom: aoss: Add SM8150 and SC7180 support
+  soc: qcom: aoss: Add AOSS QMP support
+
+ Documentation/devicetree/bindings/firmware/qcom,scm.txt      | 4 +++-
+ .../devicetree/bindings/mailbox/qcom,apcs-kpss-global.txt    | 2 ++
+ Documentation/devicetree/bindings/soc/qcom/qcom,aoss-qmp.txt | 5 ++++-
+ drivers/mailbox/qcom-apcs-ipc-mailbox.c                      | 2 ++
+ drivers/soc/qcom/qcom_aoss.c                                 | 2 ++
+ drivers/soc/qcom/smem.c                                      | 2 +-
+ 6 files changed, 14 insertions(+), 3 deletions(-)
+
 -- 
-2.18.0
+The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
+a Linux Foundation Collaborative Project
 
