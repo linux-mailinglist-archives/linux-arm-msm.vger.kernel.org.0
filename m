@@ -2,57 +2,57 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 26DFD843E4
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 Aug 2019 07:40:28 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 7DA1F843E7
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 Aug 2019 07:40:29 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727107AbfHGFjw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 7 Aug 2019 01:39:52 -0400
-Received: from mail-pl1-f193.google.com ([209.85.214.193]:37735 "EHLO
-        mail-pl1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727174AbfHGFjv (ORCPT
+        id S1727182AbfHGFjx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 7 Aug 2019 01:39:53 -0400
+Received: from mail-pl1-f194.google.com ([209.85.214.194]:43384 "EHLO
+        mail-pl1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727179AbfHGFjw (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 7 Aug 2019 01:39:51 -0400
-Received: by mail-pl1-f193.google.com with SMTP id b3so38973046plr.4
-        for <linux-arm-msm@vger.kernel.org>; Tue, 06 Aug 2019 22:39:51 -0700 (PDT)
+        Wed, 7 Aug 2019 01:39:52 -0400
+Received: by mail-pl1-f194.google.com with SMTP id 4so31939678pld.10
+        for <linux-arm-msm@vger.kernel.org>; Tue, 06 Aug 2019 22:39:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=DHLSpNf1LsuJ1wDDF5wISNJL3XiKw5OPuws/j+9mEZ4=;
-        b=oKH3tIkLcOj5q28FdagPOcCl8w1CPiQNdCAVUaqi/AaD/hNMH2zdiCwbcoQ03uypze
-         IaOOoFZXCjw3UyiXTHidDRMzG62oDDK4nU4GhB07Yl/+8300sDfaDJ0vAmpHO2kMFpg5
-         Y9V0Vi+ARHOiGQqL0Q0GRpkLQNXFykRRKoD8H2lMZ29hPJrqx5VD/RGdyMhd2BP0YrKl
-         upPN/mSJxWgdE3Z2eoaHAelNrz8Gu8oiDPfrgCUHOc1Rwx2W/+++AD9nIae/fJKRMIM3
-         +kHiSMB4w/q3t45uQlUAzjnmg2/36p8PklnCYc4H68lwnZvqy4b8113aaezP2AjdwBIf
-         VHXQ==
+        bh=LuR1ky4R+W8DnJlClr7ItKCcIJSpq5BHTgJG+rP0wz4=;
+        b=BN1iYmX3VS7iNjW36GRLTazm6lrD0RRsFwt3TRZMMqbhiC7X6+9Uzi4RYwPKB60hQn
+         4nS2QQ4CVKBocbEcvJEM7OOGQcV7THez5IHf0FQiGx7UInJSEoH3dELsSjvHwx0Jg2JJ
+         eJgm6W9JJfX0M5zOEKyX3dQj5qdXRl6ruoNTm2zdwPcLNEq4xOoe7o3FKadQa8TJZRHv
+         dFFgTWSlwiRuxq20DKWLdBaPUkkHgfoyJrhSienE5+enZLqZzBFOdQGx/z7+54x9dfFP
+         llaWNYh0YsFjxuK9DISr6aso0211Ps+SesAbVPKLemIq78WkV4K1X++La0IY9sSuR84O
+         QkSA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=DHLSpNf1LsuJ1wDDF5wISNJL3XiKw5OPuws/j+9mEZ4=;
-        b=l6hoUAQ/MCm2M8cXOiv5Iugst06fmK06OdBZKD7vpKM2xG3jVxGvbd/GPia6l+yTTL
-         MnxsC+k1MQpXsvQmqEiNnsUMVXUj+AoTtVxHsrrLwcshQM2x/agT6lyzoT1ZIBedqCAh
-         LM0eAJXJCJ5dt4yq57G7karya+WD1EFolZS19LqATDt2pnBlC6sOi/8UR+h6ncLLefkg
-         gst91SXMjuoPOgai0BGoLqpUC1/EgDFuuxASZh85lfxiD6I6lz4HLnruSlypbPHrKhg0
-         SZvfr70YUlw/i7+hPa7ikVE0nROt82gAnWF9za6hK9tZHnl90yLcd+kyOHY8obzpbcIU
-         mXwg==
-X-Gm-Message-State: APjAAAWR2pEPXA3oX6829CDErcGRkoVDWCVcfvky/mPnvOaJBsUpCwfP
-        YkcohmXyIjdhgvZKgVjgksE8NEWwhuQ=
-X-Google-Smtp-Source: APXvYqwUd+/t1/18/8l+XVokh3+ItPFBiNlUa9UXozM+ztWtnzV2TZs3IM70LQjnOiY+jk9Oscpzqg==
-X-Received: by 2002:a63:4522:: with SMTP id s34mr6167748pga.362.1565156390665;
-        Tue, 06 Aug 2019 22:39:50 -0700 (PDT)
+        bh=LuR1ky4R+W8DnJlClr7ItKCcIJSpq5BHTgJG+rP0wz4=;
+        b=M9LuN9VFT+jj4/9JPWfxL/MuCdVgnlyZuBrESgMuXmpXhYLXaMwebPFX/15L+RVZze
+         vccGvIfTn3OI/pwHPZKE8N1/JBhUbEoenDl73JRH31yAdJK3lUgW/jbOhxJCVsayz/GL
+         Uq0aQULq5MQXb4IkqJSDW6kK16N5vQgDQVh3+W85e9XDVgcUpmjXAhL+sbbfesRqvE+s
+         lTkP0cXF5ToDesDOO0bYs2t84sRwQvzdBqvwOzwWOYNhU744di3GVmuN9tkSWBdbqGz1
+         qZlgnfTBMMSuSsZJ8t0xqlnvGZkQSqxUsSBbe0OVZUe2z47dgl2LomJRNVG1CEkaky6f
+         eE0g==
+X-Gm-Message-State: APjAAAWK4oho0yO04H7rvLKW0X1dJ6qXd0uXrqiE9/KolXF3L1Qyl5eh
+        XoRDSHisQ0is2R2M2angw5OiYS5jIDI=
+X-Google-Smtp-Source: APXvYqwteeE9q8f83hjRPGYATCdDy8cEXcbkYjbkT24pE6lGFv27jx/C08Js6EVAX5W6MsCH9hmiMA==
+X-Received: by 2002:a17:902:7612:: with SMTP id k18mr6498473pll.48.1565156391829;
+        Tue, 06 Aug 2019 22:39:51 -0700 (PDT)
 Received: from localhost.localdomain (104-188-17-28.lightspeed.sndgca.sbcglobal.net. [104.188.17.28])
-        by smtp.gmail.com with ESMTPSA id u7sm86070777pfm.96.2019.08.06.22.39.49
+        by smtp.gmail.com with ESMTPSA id u7sm86070777pfm.96.2019.08.06.22.39.50
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 06 Aug 2019 22:39:50 -0700 (PDT)
+        Tue, 06 Aug 2019 22:39:51 -0700 (PDT)
 From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Ohad Ben-Cohen <ohad@wizery.com>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     Andy Gross <agross@kernel.org>, Sibi Sankar <sibis@codeaurora.org>,
+To:     Andy Gross <agross@kernel.org>
+Cc:     Ohad Ben-Cohen <ohad@wizery.com>,
+        Sibi Sankar <sibis@codeaurora.org>,
         linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
         linux-remoteproc@vger.kernel.org
-Subject: [PATCH 4/9] remoteproc: qcom: wcnss: Update IMEM PIL info on load
-Date:   Tue,  6 Aug 2019 22:39:37 -0700
-Message-Id: <20190807053942.9836-5-bjorn.andersson@linaro.org>
+Subject: [PATCH 5/9] arm64: dts: qcom: qcs404: Add IMEM and PIL info region
+Date:   Tue,  6 Aug 2019 22:39:38 -0700
+Message-Id: <20190807053942.9836-6-bjorn.andersson@linaro.org>
 X-Mailer: git-send-email 2.18.0
 In-Reply-To: <20190807053942.9836-1-bjorn.andersson@linaro.org>
 References: <20190807053942.9836-1-bjorn.andersson@linaro.org>
@@ -61,60 +61,36 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Store the relocated base address and size in the PIL relocation info
-structure in IMEM.
+Add a simple-mfd representing IMEM on QCS404 and define the PIL
+relocation info region, so that post mortem tools will be able to locate
+the loaded remoteprocs.
 
 Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
 ---
- drivers/remoteproc/Kconfig      |  1 +
- drivers/remoteproc/qcom_wcnss.c | 14 +++++++++++---
- 2 files changed, 12 insertions(+), 3 deletions(-)
+ arch/arm64/boot/dts/qcom/qcs404.dtsi | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
-diff --git a/drivers/remoteproc/Kconfig b/drivers/remoteproc/Kconfig
-index 2aa0743fc05b..3f976ce3df3c 100644
---- a/drivers/remoteproc/Kconfig
-+++ b/drivers/remoteproc/Kconfig
-@@ -185,6 +185,7 @@ config QCOM_WCNSS_PIL
- 	depends on QCOM_SMEM
- 	depends on QCOM_SYSMON || QCOM_SYSMON=n
- 	select QCOM_MDT_LOADER
-+	select QCOM_PIL_INFO
- 	select QCOM_RPROC_COMMON
- 	select QCOM_SCM
- 	help
-diff --git a/drivers/remoteproc/qcom_wcnss.c b/drivers/remoteproc/qcom_wcnss.c
-index dc135754bb9c..9db9a3d25af4 100644
---- a/drivers/remoteproc/qcom_wcnss.c
-+++ b/drivers/remoteproc/qcom_wcnss.c
-@@ -27,6 +27,7 @@
+diff --git a/arch/arm64/boot/dts/qcom/qcs404.dtsi b/arch/arm64/boot/dts/qcom/qcs404.dtsi
+index 3d0789775009..1604a9697832 100644
+--- a/arch/arm64/boot/dts/qcom/qcs404.dtsi
++++ b/arch/arm64/boot/dts/qcom/qcs404.dtsi
+@@ -845,6 +845,16 @@
+ 			status = "disabled";
+ 		};
  
- #include "qcom_common.h"
- #include "remoteproc_internal.h"
-+#include "qcom_pil_info.h"
- #include "qcom_wcnss.h"
- 
- #define WCNSS_CRASH_REASON_SMEM		422
-@@ -145,10 +146,17 @@ void qcom_wcnss_assign_iris(struct qcom_wcnss *wcnss,
- static int wcnss_load(struct rproc *rproc, const struct firmware *fw)
- {
- 	struct qcom_wcnss *wcnss = (struct qcom_wcnss *)rproc->priv;
-+	int ret;
++		imem@8600000 {
++			compatible = "syscon", "simple-mfd";
++			reg = <0x08600000 0x1000>;
 +
-+	ret = qcom_mdt_load(wcnss->dev, fw, rproc->firmware, WCNSS_PAS_ID,
-+			    wcnss->mem_region, wcnss->mem_phys,
-+			    wcnss->mem_size, &wcnss->mem_reloc);
-+	if (ret)
-+		return ret;
++			pil-reloc {
++				compatible ="qcom,pil-reloc-info";
++				offset = <0x94c>;
++			};
++		};
 +
-+	qcom_pil_info_store("wcnss", wcnss->mem_reloc, wcnss->mem_size);
- 
--	return qcom_mdt_load(wcnss->dev, fw, rproc->firmware, WCNSS_PAS_ID,
--			     wcnss->mem_region, wcnss->mem_phys,
--			     wcnss->mem_size, &wcnss->mem_reloc);
-+	return 0;
- }
- 
- static void wcnss_indicate_nv_download(struct qcom_wcnss *wcnss)
+ 		intc: interrupt-controller@b000000 {
+ 			compatible = "qcom,msm-qgic2";
+ 			interrupt-controller;
 -- 
 2.18.0
 
