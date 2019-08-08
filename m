@@ -2,144 +2,74 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id C6508866D7
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  8 Aug 2019 18:20:08 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9B3988671B
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  8 Aug 2019 18:30:24 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732444AbfHHQUI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 8 Aug 2019 12:20:08 -0400
-Received: from mail-pf1-f194.google.com ([209.85.210.194]:43859 "EHLO
-        mail-pf1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1732239AbfHHQUH (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 8 Aug 2019 12:20:07 -0400
-Received: by mail-pf1-f194.google.com with SMTP id i189so44377714pfg.10
-        for <linux-arm-msm@vger.kernel.org>; Thu, 08 Aug 2019 09:20:07 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=message-id:mime-version:content-transfer-encoding:in-reply-to
-         :references:subject:from:cc:to:user-agent:date;
-        bh=rpT1/n0MtDKR55gc7Xe/1ERiGiwTe4vZMPU9Bfy10FI=;
-        b=Y7o7tDsMydMyUuzGRnboQKe/5DZGF0GAAcTEKQ3TnqBW9YBJW+NKiPXSdtZCCYObN8
-         AtJrE90vxGnVWdwPAxzaJhl9IPp4pUP4BUo49u+TH7K9mJ7N7xJ5Ne1r/mTSLgfDqOqe
-         KMeAzvYaE5+sipQTmnJqT9BRA14XUcjFtqt14=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:mime-version
-         :content-transfer-encoding:in-reply-to:references:subject:from:cc:to
-         :user-agent:date;
-        bh=rpT1/n0MtDKR55gc7Xe/1ERiGiwTe4vZMPU9Bfy10FI=;
-        b=nr1oV4R/9eI/xHSA6Y0BGHUkRdbYhC6k1TbsrOVTAeAQ+iOD8fQKVqUi3eWsPSjyVr
-         jHTl36QR2/VMvldcKgAAMIthduEjDBNQbQ24X8PnTLF0PFYyoFhqrA+tP6yDPqYVtekO
-         6JocOOm5l9N+zDwEJXDEE8JhI+3U8TOBn0tGPYIZi5wRFR3nToVadygAcTR5sFS5MzsI
-         8xENS4nrVotFVD975BKakiTDXyEFWQ7RwNO5kAk42NljPVZds0RiaPGuBWjQfSVbLG83
-         6TCj21CBkJrBjMH7RAf5jisNtqFDFwgzW8WbfDCTnAhpHq06pVY8C9Z1m1ARS0YuFscw
-         73rA==
-X-Gm-Message-State: APjAAAUcpl075xEPIpov90Xr4+os4Qqlpc5JvfFzA5o4f0u/Gfm122DG
-        yWRlfk2o2IffoxCG85ol5/Zucw==
-X-Google-Smtp-Source: APXvYqwrRIJFaN3/EOnl4mURCxYQeFmoB2bV4p9L6PhJ6mv+tvNN2NH1QgEbMDZXoHTTiaqtDYC/uQ==
-X-Received: by 2002:a17:90a:c58e:: with SMTP id l14mr4875532pjt.104.1565281206991;
-        Thu, 08 Aug 2019 09:20:06 -0700 (PDT)
-Received: from chromium.org ([2620:15c:202:1:fa53:7765:582b:82b9])
-        by smtp.gmail.com with ESMTPSA id j6sm3065998pjd.19.2019.08.08.09.20.06
-        (version=TLS1_3 cipher=AEAD-AES256-GCM-SHA384 bits=256/256);
-        Thu, 08 Aug 2019 09:20:06 -0700 (PDT)
-Message-ID: <5d4c4bb6.1c69fb81.db640.7518@mx.google.com>
-Content-Type: text/plain; charset="utf-8"
+        id S1733035AbfHHQaU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 8 Aug 2019 12:30:20 -0400
+Received: from mail.kernel.org ([198.145.29.99]:47582 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1731278AbfHHQaT (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 8 Aug 2019 12:30:19 -0400
+Received: from willie-the-truck (236.31.169.217.in-addr.arpa [217.169.31.236])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by mail.kernel.org (Postfix) with ESMTPSA id EEFD62173E;
+        Thu,  8 Aug 2019 16:30:16 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=default; t=1565281818;
+        bh=Y3uN9pTmCxlKNY3HVkEXKnwavVansgR7KsRQWoVVlDU=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=s33+JumSJA00EXmPFAAKKQs8NHVtwqO70GPV4+ZAHCxRXirXPa9Ci667SaWUM58qB
+         fWNjT3PmR2+LNeOfdGiZeCsqTHlKbypay+ukfl8+MEdgYLD7xS5EVftrIus8p96s6q
+         iqobkqw+4VjylAwQNwkUEZLBU+s8VQjSeiy+T8Tc=
+Date:   Thu, 8 Aug 2019 17:30:14 +0100
+From:   Will Deacon <will@kernel.org>
+To:     Vivek Gautam <vivek.gautam@codeaurora.org>
+Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
+        <devicetree@vger.kernel.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        Will Deacon <will.deacon@arm.com>,
+        open list <linux-kernel@vger.kernel.org>,
+        David Brown <david.brown@linaro.org>,
+        "list@263.net:IOMMU DRIVERS <iommu@lists.linux-foundation.org>, Joerg
+        Roedel <joro@8bytes.org>," <iommu@lists.linux-foundation.org>,
+        robh+dt <robh+dt@kernel.org>, Andy Gross <agross@kernel.org>,
+        Robin Murphy <robin.murphy@arm.com>
+Subject: Re: [PATCH v3 1/4] firmware: qcom_scm-64: Add atomic version of
+ qcom_scm_call
+Message-ID: <20190808163013.u5qbke54kj555oxn@willie-the-truck>
+References: <20190612071554.13573-1-vivek.gautam@codeaurora.org>
+ <20190612071554.13573-2-vivek.gautam@codeaurora.org>
+ <20190618175536.GI4270@fuggles.cambridge.arm.com>
+ <CAFp+6iEwN6jeEGNxKVU5_i5NxdEbuF2ZggegEJZ1Rq6F=H34jg@mail.gmail.com>
+ <20190805222755.GB2634@builder>
+ <CAFp+6iHhh9749dAV4YDeE_0w1nCiftecTBedW4Rf0aiaOJsN2A@mail.gmail.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <20190808061228.16573-2-mkshah@codeaurora.org>
-References: <20190808061228.16573-1-mkshah@codeaurora.org> <20190808061228.16573-2-mkshah@codeaurora.org>
-Subject: Re: [PATCH 1/2] dt-bindings: Introduce soc sleep stats bindings for Qualcomm SoCs
-From:   Stephen Boyd <swboyd@chromium.org>
-Cc:     linux-kernel@vger.kernel.org, linux-pm@vger.kernel.org,
-        bjorn.andersson@linaro.org, evgreen@chromium.org,
-        dianders@chromium.org, rnayak@codeaurora.org, ilina@codeaurora.org,
-        lsrao@codeaurora.org, mkshah@codeaurora.org,
-        devicetree@vger.kernel.org,
-        Mahesh Sivasubramanian <msivasub@codeaurora.org>
-To:     Maulik Shah <mkshah@codeaurora.org>, andy.gross@linaro.org,
-        david.brown@linaro.org, linux-arm-msm@vger.kernel.org
-User-Agent: alot/0.8.1
-Date:   Thu, 08 Aug 2019 09:20:04 -0700
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CAFp+6iHhh9749dAV4YDeE_0w1nCiftecTBedW4Rf0aiaOJsN2A@mail.gmail.com>
+User-Agent: NeoMutt/20170113 (1.7.2)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Maulik Shah (2019-08-07 23:12:27)
-> Add device binding documentation for Qualcomm Technology Inc's (QTI)
-> SoC sleep stats driver. The driver is used for displaying SoC sleep
-> statistic maintained by Always On Processor or Resource Power Manager.
->=20
-> Cc: devicetree@vger.kernel.org
-> Signed-off-by: Mahesh Sivasubramanian <msivasub@codeaurora.org>
-> Signed-off-by: Lina Iyer <ilina@codeaurora.org>
-> Signed-off-by: Maulik Shah <mkshah@codeaurora.org>
+On Thu, Aug 08, 2019 at 05:05:21PM +0530, Vivek Gautam wrote:
+> On Tue, Aug 6, 2019 at 3:58 AM Bjorn Andersson
+> <bjorn.andersson@linaro.org> wrote:
+> > Would you be able to respin this patch, so that we could unblock the
+> > introduction of the display nodes in the various device?
+> 
+> Will pointed [1] to the restructuring of arm-smmu to support
+> implementation specific details.
+> That hasn't been posted yet, and I haven't yet been able to work on that either.
+> I will be happy to respin this series with the comments addressed if
+> Will is okay to pull changes to unblock sdm845 devices. :)
+> 
+> [1] https://lore.kernel.org/patchwork/patch/1087457/
 
-Your SoB chain is odd. The author is Mahesh? Otherwise, use the
-Co-Developed-by tag.
+Just checked with Robin, and he's planning to post something tomorrow.
 
-> ---
->  .../bindings/soc/qcom/soc-sleep-stats.txt     | 36 +++++++++++++++++++
->  1 file changed, 36 insertions(+)
->  create mode 100644 Documentation/devicetree/bindings/soc/qcom/soc-sleep-=
-stats.txt
->=20
-> diff --git a/Documentation/devicetree/bindings/soc/qcom/soc-sleep-stats.t=
-xt b/Documentation/devicetree/bindings/soc/qcom/soc-sleep-stats.txt
-> new file mode 100644
-> index 000000000000..ee40687ded34
-> --- /dev/null
-> +++ b/Documentation/devicetree/bindings/soc/qcom/soc-sleep-stats.txt
-> @@ -0,0 +1,36 @@
-> +* SoC Sleep Stats
-> +
-> +Always On Processor/Resource Power Manager maintains statistics of the S=
-oC
-> +sleep modes involving lowering or powering down of the backbone rails - =
-Cx
-
-What is a 'backbone' rail?
-
-> +and Mx and the oscillator clock, XO.
-
-Drop the comma? XO is the oscillator clock.
-
-> +
-> +Statistics includes SoC sleep mode type, number of times low power mode =
-were
-> +entered, time of last entry, time of last exit and accumulated sleep dur=
-ation.
-> +SoC Sleep Stats driver provides sysfs interface to display this informat=
-ion.
-
-Can this document be YAML? Then it can be validated.
-
-> +
-> +PROPERTIES
-> +
-> +- compatible:
-> +       Usage: required
-> +       Value type: <string>
-> +       Definition: Should be "qcom,rpmh-sleep-stats" or "qcom,rpm-sleep-=
-stats".
-> +
-> +- reg:
-> +       Usage: required
-> +       Value type: <prop-encoded-array>
-> +       Definition: The base address on the Always On Processor or Resour=
-ce Power
-> +                   Manager from where the stats are read.
-> +
-> +EXAMPLE 1:
-> +
-> +       rpmh_sleep_stats: soc-sleep-stats@c3f0000 {
-> +               compatible =3D "qcom,rpmh-sleep-stats";
-> +               reg =3D <0 0xc3f0000 0 0x400>;
-
-Is this memory region in DDR? Or some specific IMEM location? I wonder
-if it would be better to just have a pointer from the RPM node to this
-memory region and then populate some stats if so.
-
-> +       };
-> +
+Will
