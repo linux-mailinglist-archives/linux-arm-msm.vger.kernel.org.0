@@ -2,87 +2,115 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 8503485A95
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  8 Aug 2019 08:23:13 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A31B385B64
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  8 Aug 2019 09:16:25 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731048AbfHHGWK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 8 Aug 2019 02:22:10 -0400
-Received: from smtp.codeaurora.org ([198.145.29.96]:52888 "EHLO
-        smtp.codeaurora.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1731005AbfHHGWK (ORCPT
+        id S1731162AbfHHHQY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 8 Aug 2019 03:16:24 -0400
+Received: from mail-pl1-f195.google.com ([209.85.214.195]:42694 "EHLO
+        mail-pl1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725817AbfHHHQY (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 8 Aug 2019 02:22:10 -0400
-Received: by smtp.codeaurora.org (Postfix, from userid 1000)
-        id 2E7F360F3F; Thu,  8 Aug 2019 06:22:07 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
-        s=default; t=1565245329;
-        bh=4pBxI6elRBFgUqs9QtZ2BrzwtFoiLq+EgNn9JyVFTdg=;
-        h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
-        b=QJv7j/CmM6K1w/P4+F6rMK1sLzfoURWG25MkCrrkP4wOU5xoX7T430bBkyPBTDLIM
-         b3Evq9eJo8DjIqk3E+FckdtqqIb9CObEtEgY9qAgzAaL2p9WmleY1ft0Qufm1UIF00
-         pjUR6VKFGqOGXMBg3vPvEe6y6xDe/AzrwaPVUIzU=
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        pdx-caf-mail.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.7 required=2.0 tests=ALL_TRUSTED,BAYES_00,
-        DKIM_INVALID,DKIM_SIGNED autolearn=no autolearn_force=no version=3.4.0
-Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
-        by smtp.codeaurora.org (Postfix) with ESMTP id 69D84607DE;
-        Thu,  8 Aug 2019 06:22:07 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
-        s=default; t=1565245327;
-        bh=4pBxI6elRBFgUqs9QtZ2BrzwtFoiLq+EgNn9JyVFTdg=;
-        h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
-        b=SKhD/1zEGNIFgmrHjqdBC07zFiB8beHvAz9UgzuUP7tbCYMEdpQ8H1AZjRX51EX80
-         VZrmgDXkHCVSWjIlulU1Nm5wAPS8UsnWkFq63tBoT9NebQT3jCCeWt3USf9JiwHj9z
-         gYY+XUHvf6bXpC+w108EPVYxiUEe/Fd0wMJLxFaI=
+        Thu, 8 Aug 2019 03:16:24 -0400
+Received: by mail-pl1-f195.google.com with SMTP id ay6so43188538plb.9;
+        Thu, 08 Aug 2019 00:16:24 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=Do5CFtVi9NCcTSKZkexhPtuQR5/W3q/75hgi7FAin40=;
+        b=qZt1LDH00qJJ9fE/ZsizY14Te+pYIXCNKV1YW6ghgPk/omgGaqm8JsiuLqo0sQdbhv
+         OumkjpNc7WibBEjFe9wBtFlngXA9kebZuztxaYe4DTmImanlv8QxETfIaCc1r3bwz+Jy
+         +Df6l6e+l/f0ThjK/DsxE01kCb6FdBPdpi3ZT5PVuII1k8zLysyBTD4LHenr7be1emKv
+         MbSR1mVoM/fMJV2nuAyaaoJWXIq+oVHIszHYiucuXeY7K3imA3155gqwBA6U79HHe3bt
+         Vr0A1cNCWlSBzqjS9yKvNTkY+DtjQdI0/7sVQ9crtDXPfNYPO4KtA1a96ikanMt3QALG
+         qmfA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=Do5CFtVi9NCcTSKZkexhPtuQR5/W3q/75hgi7FAin40=;
+        b=qTbbWNYdYGbFl4exhhy8TAK+x1V9QQYgkYVDuIlwIxhow8/DVBiw7skHHgy0ObYBzx
+         qvLVGFbzYfgfh/BUQ+W5M/ClJjq/oLWsEJLXnsIpadUOElwmhiimXHAr2yAYOpLvBz+K
+         JEnseDmfDUQmLXu94i21IJP9NGrbncLhYR88ypyRHYtEoqO8h6Fhu1bFzWieGaZKy9+0
+         wyYrWGz9f9M5PLFqpPR3ln1ZcENBIQUML77QaX7pH1Az/pFyHGiN6GYs0Yq+g1aIvHsK
+         aIqg35a0kpJfnWDouuLVuww6PvROfO7IqoJWkYvmpKSHXnP6t4+Gnk8HDF4BlOi8S6ZK
+         +lXQ==
+X-Gm-Message-State: APjAAAVPayIuKFFmlfgbijArT0cEBegzwJb4MgAMcmJkv5KlJdfWOxwe
+        /40cEoSnYYSL2NbiUi7GYKk=
+X-Google-Smtp-Source: APXvYqypHk5e0aTFkFJU05xQIEIvKal64ctjHqJ5MfnBXONJ25Al8crSv2pnbsUMzrSInxOMdKRf2w==
+X-Received: by 2002:a17:902:1004:: with SMTP id b4mr2353592pla.340.1565248584001;
+        Thu, 08 Aug 2019 00:16:24 -0700 (PDT)
+Received: from localhost.localdomain ([122.163.44.6])
+        by smtp.gmail.com with ESMTPSA id m4sm158947802pff.108.2019.08.08.00.16.21
+        (version=TLS1_3 cipher=AEAD-AES256-GCM-SHA384 bits=256/256);
+        Thu, 08 Aug 2019 00:16:23 -0700 (PDT)
+From:   Nishka Dasgupta <nishkadg.linux@gmail.com>
+To:     agross@kernel.org, kishon@ti.com, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Cc:     Nishka Dasgupta <nishkadg.linux@gmail.com>
+Subject: [PATCH] phy: qualcomm: phy-qcom-qmp: Add of_node_put() before return
+Date:   Thu,  8 Aug 2019 12:46:12 +0530
+Message-Id: <20190808071612.14071-1-nishkadg.linux@gmail.com>
+X-Mailer: git-send-email 2.19.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
-Content-Transfer-Encoding: 7bit
-Date:   Thu, 08 Aug 2019 14:22:07 +0800
-From:   Rocky Liao <rjliao@codeaurora.org>
-To:     Balakrishna Godavarthi <bgodavar@codeaurora.org>
-Cc:     marcel@holtmann.org, johan.hedberg@gmail.com, mka@chromium.org,
-        linux-bluetooth@vger.kernel.org, hemantg@codeaurora.org,
-        linux-arm-msm@vger.kernel.org, c_hbandi@codeaurora.org
-Subject: Re: [PATCH v1] Bluetooth: btqca: Reset download type to default
-In-Reply-To: <20190808060737.3506-1-bgodavar@codeaurora.org>
-References: <20190808060737.3506-1-bgodavar@codeaurora.org>
-Message-ID: <24fa28207ec5426487600736e91d199c@codeaurora.org>
-X-Sender: rjliao@codeaurora.org
-User-Agent: Roundcube Webmail/1.2.5
+Content-Transfer-Encoding: 8bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2019-08-08 14:07, Balakrishna Godavarthi wrote:
-> This patch will reset the download flag to default value
-> before retrieving the download mode type.
-> 
-> Signed-off-by: Balakrishna Godavarthi <bgodavar@codeaurora.org>
-> ---
->  drivers/bluetooth/btqca.c | 1 +
->  1 file changed, 1 insertion(+)
-> 
-> diff --git a/drivers/bluetooth/btqca.c b/drivers/bluetooth/btqca.c
-> index 2221935fac7e..9fb247c10855 100644
-> --- a/drivers/bluetooth/btqca.c
-> +++ b/drivers/bluetooth/btqca.c
-> @@ -140,6 +140,7 @@ static void qca_tlv_check_data(struct rome_config 
-> *config,
->  	BT_DBG("Length\t\t : %d bytes", length);
-> 
->  	config->dnld_mode = ROME_SKIP_EVT_NONE;
-> +	config->dnld_type = ROME_SKIP_EVT_NONE;
-> 
->  	switch (config->type) {
->  	case TLV_TYPE_PATCH:
+Each iteration of for_each_available_child_of_node() puts the previous
+node, but in the case of a return from the middle of the loop, there is
+no put, thus causing a memory leak. Hence create a new label,
+err_node_put, that puts the previous node (child) before returning the
+required value. Also include the statement pm_runtime_disable() under
+this label in order to avoid repetition among mid-loop return
+conditions. Edit the mid-loop return statements to instead go to this
+new label err_node_put.
+Issue found with Coccinelle.
 
+Signed-off-by: Nishka Dasgupta <nishkadg.linux@gmail.com>
+---
+ drivers/phy/qualcomm/phy-qcom-qmp.c | 11 +++++++----
+ 1 file changed, 7 insertions(+), 4 deletions(-)
+
+diff --git a/drivers/phy/qualcomm/phy-qcom-qmp.c b/drivers/phy/qualcomm/phy-qcom-qmp.c
+index 34ff6434da8f..e7b8283acce8 100644
+--- a/drivers/phy/qualcomm/phy-qcom-qmp.c
++++ b/drivers/phy/qualcomm/phy-qcom-qmp.c
+@@ -2093,8 +2093,7 @@ static int qcom_qmp_phy_probe(struct platform_device *pdev)
+ 		if (ret) {
+ 			dev_err(dev, "failed to create lane%d phy, %d\n",
+ 				id, ret);
+-			pm_runtime_disable(dev);
+-			return ret;
++			goto err_node_put;
+ 		}
+ 
+ 		/*
+@@ -2105,8 +2104,7 @@ static int qcom_qmp_phy_probe(struct platform_device *pdev)
+ 		if (ret) {
+ 			dev_err(qmp->dev,
+ 				"failed to register pipe clock source\n");
+-			pm_runtime_disable(dev);
+-			return ret;
++			goto err_node_put;
+ 		}
+ 		id++;
+ 	}
+@@ -2118,6 +2116,11 @@ static int qcom_qmp_phy_probe(struct platform_device *pdev)
+ 		pm_runtime_disable(dev);
+ 
+ 	return PTR_ERR_OR_ZERO(phy_provider);
++
++err_node_put:
++	pm_runtime_disable(dev);
++	of_node_put(child);
++	return ret;
+ }
+ 
+ static struct platform_driver qcom_qmp_phy_driver = {
 -- 
-The Qualcomm Innovation Center, Inc. is a member of the Code Aurora 
-Forum,
-a Linux Foundation Collaborative Project
+2.19.1
 
-Reviewed-by: Rocky Liao <rjliao@codeaurora.org>
