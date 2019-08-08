@@ -2,111 +2,106 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 18FCB85D8C
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  8 Aug 2019 10:57:23 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id AF8DF85DE7
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  8 Aug 2019 11:11:28 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731485AbfHHI5W (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 8 Aug 2019 04:57:22 -0400
-Received: from smtp.codeaurora.org ([198.145.29.96]:47802 "EHLO
-        smtp.codeaurora.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728289AbfHHI5V (ORCPT
+        id S1731278AbfHHJL1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 8 Aug 2019 05:11:27 -0400
+Received: from mail-qk1-f196.google.com ([209.85.222.196]:35189 "EHLO
+        mail-qk1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1730777AbfHHJL1 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 8 Aug 2019 04:57:21 -0400
-Received: by smtp.codeaurora.org (Postfix, from userid 1000)
-        id 008E860A00; Thu,  8 Aug 2019 08:57:19 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
-        s=default; t=1565254641;
-        bh=MNDBOpJkkIZGrJ7rizit8u8JPhs9ggs0CE8V7PeSvVc=;
-        h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
-        b=M26hVo5+QqlhM2+ZctHbdQQnaSSU8vnKo0UhWswne8CByRrvezAT6R1YXTtxadzml
-         zbr7XxcxO0NQGk8m+7YbBRUHoGsIYNXG2SvQbLy5V617UwQka/bS93IhSgCyHMHjI4
-         jf7U80OKrUxiBOJcFcwQY4ZNUrCa+AiRJmAekIGg=
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        pdx-caf-mail.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.7 required=2.0 tests=ALL_TRUSTED,BAYES_00,
-        DKIM_INVALID,DKIM_SIGNED autolearn=no autolearn_force=no version=3.4.0
-Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
-        by smtp.codeaurora.org (Postfix) with ESMTP id 2821A6074C;
-        Thu,  8 Aug 2019 08:57:19 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
-        s=default; t=1565254639;
-        bh=MNDBOpJkkIZGrJ7rizit8u8JPhs9ggs0CE8V7PeSvVc=;
-        h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
-        b=PkSfB0M61FomeNg8Vo2ItAXQAyaOnJ3apyU9tTDYzN89kTlfdDZ3OttTX/Cc458V+
-         vdNsDEGvOEViy2X44TdnZtpN6/XIQhPftiAfHhHEA+7XkMAkNmyp15SOFSkJ0egt0g
-         Kgit+4LGu9Xai2hTeAfI8TosD93e3HTCYyYyZ7N8=
+        Thu, 8 Aug 2019 05:11:27 -0400
+Received: by mail-qk1-f196.google.com with SMTP id r21so68255223qke.2
+        for <linux-arm-msm@vger.kernel.org>; Thu, 08 Aug 2019 02:11:27 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=Pv1q248coJhOyKZ7sznZtVOVWp+CTcYUhXBNfW3TJcA=;
+        b=ndVg0/EPPCgdUb1UGYKBWxFWJEe0kxIjaPWhX5NGPkRioKbWgU8Rv4/LK0iOE8I8C6
+         MJ1nJ8wM9E9MnqjyOHSThhBvJPU8HKVaJEPF68vXHaNYuVE6WacHheCRiqp6iFR3C999
+         xgk4rGnyz27tt6XoKUcN4A4Vk/j1XEcoyTImA=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=Pv1q248coJhOyKZ7sznZtVOVWp+CTcYUhXBNfW3TJcA=;
+        b=o8kqwhD/2dX/pkWBUk0d7TVQRyIPnNiCLaiS0pndkTUPT3m3dOfXNGAiqEKzP8Rapb
+         gaVt/HijD0x3y8+eJqQNvpmQOY6eH1jAvOmaFwcbe30cAGLOanq8y2rQM6v+z+74AjQ+
+         SvS9paO9rmse+9+8EbSZYs7Fixr/dXWY2dWXLFVCytP/mHc6mTSriADohiinbni7CWzg
+         hHdro0B0pPAGh5QMLmlH8DAlB1GCIgDd9N88R3hdd2rPxY6fHpc+ZYZwnxClWZx3yF+g
+         7fOS61tK9HwHqq+xQB9CloNGZw8tumCXMy9JCw7jfegNlIfZa5AwSXusZj+cFX8sO8JQ
+         D5Ag==
+X-Gm-Message-State: APjAAAVR23wLJGbeZMxc2vGuw2wS3rwyGWkbg9vEpfMBFesM5uo9u7Ft
+        6t1c7Ja11GRYXgUycrN5nSSpBJ9CWBM=
+X-Google-Smtp-Source: APXvYqzayUFN7XUWWe/+AB42qM/a8i+RV3vUOten/ZNv5nv5O+ozNSwqMsbKyzHeDTgj6eJ9n5LKoQ==
+X-Received: by 2002:a37:71c7:: with SMTP id m190mr12393668qkc.47.1565255486207;
+        Thu, 08 Aug 2019 02:11:26 -0700 (PDT)
+Received: from mail-qt1-f182.google.com (mail-qt1-f182.google.com. [209.85.160.182])
+        by smtp.gmail.com with ESMTPSA id n184sm38091688qkc.114.2019.08.08.02.11.25
+        for <linux-arm-msm@vger.kernel.org>
+        (version=TLS1_3 cipher=AEAD-AES128-GCM-SHA256 bits=128/128);
+        Thu, 08 Aug 2019 02:11:25 -0700 (PDT)
+Received: by mail-qt1-f182.google.com with SMTP id z4so91448507qtc.3
+        for <linux-arm-msm@vger.kernel.org>; Thu, 08 Aug 2019 02:11:25 -0700 (PDT)
+X-Received: by 2002:ac8:768b:: with SMTP id g11mr12528132qtr.182.1565255484485;
+ Thu, 08 Aug 2019 02:11:24 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
-Content-Transfer-Encoding: 7bit
-Date:   Thu, 08 Aug 2019 14:27:19 +0530
-From:   Balakrishna Godavarthi <bgodavar@codeaurora.org>
-To:     Claire Chang <tientzu@chromium.org>
-Cc:     Rocky Liao <rjliao@codeaurora.org>, marcel@holtmann.org,
-        johan.hedberg@gmail.com, Matthias Kaehlcke <mka@chromium.org>,
+References: <20190808085608.18010-1-bgodavar@codeaurora.org>
+In-Reply-To: <20190808085608.18010-1-bgodavar@codeaurora.org>
+From:   Claire Chang <tientzu@chromium.org>
+Date:   Thu, 8 Aug 2019 17:11:13 +0800
+X-Gmail-Original-Message-ID: <CALiNf2_ba1XEsHX1bgMrUtJih5DFTwFmWU+6mizN9DnDZx0FUw@mail.gmail.com>
+Message-ID: <CALiNf2_ba1XEsHX1bgMrUtJih5DFTwFmWU+6mizN9DnDZx0FUw@mail.gmail.com>
+Subject: Re: [PATCH v2] Bluetooth: btqca: Reset download type to default
+To:     Balakrishna Godavarthi <bgodavar@codeaurora.org>
+Cc:     marcel@holtmann.org, johan.hedberg@gmail.com,
+        Matthias Kaehlcke <mka@chromium.org>,
         linux-bluetooth@vger.kernel.org, hemantg@codeaurora.org,
-        linux-arm-msm@vger.kernel.org, c_hbandi@codeaurora.org
-Subject: Re: [PATCH v1] Bluetooth: btqca: Reset download type to default
-In-Reply-To: <CALiNf29bmSbjT4pmzGGG_WzmC6gaZS+vBeRQUiQuT85bm-iMsg@mail.gmail.com>
-References: <20190808060737.3506-1-bgodavar@codeaurora.org>
- <56fe734d517399c6509f6e9c45f9b096@codeaurora.org>
- <CALiNf29bmSbjT4pmzGGG_WzmC6gaZS+vBeRQUiQuT85bm-iMsg@mail.gmail.com>
-Message-ID: <ba4b17678fa7615735cd18c9eb13b2b8@codeaurora.org>
-X-Sender: bgodavar@codeaurora.org
-User-Agent: Roundcube Webmail/1.2.5
+        linux-arm-msm@vger.kernel.org, Rocky Liao <rjliao@codeaurora.org>,
+        c_hbandi@codeaurora.org
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi,
+Tested-by: Claire Chang <tientzu@chromium.org>
+Reviewed-by: Claire Chang <tientzu@chromium.org>
 
-On 2019-08-08 12:51, Claire Chang wrote:
-> Tested-by: Claire Chang <tientzu@chromium.org>
-> 
-> Hi,
-> 
-> Please add the Fixes: tag and I will add my Reviewed-by: tag.
-> 
-> Thanks,
-> Claire
-> 
-> On Thu, Aug 8, 2019 at 2:21 PM Rocky Liao <rjliao@codeaurora.org> 
-> wrote:
->> 
->> +Claire
->> 
->> On 2019-08-08 14:07, Balakrishna Godavarthi wrote:
->> > This patch will reset the download flag to default value
->> > before retrieving the download mode type.
->> >
->> > Signed-off-by: Balakrishna Godavarthi <bgodavar@codeaurora.org>
->> > ---
->> >  drivers/bluetooth/btqca.c | 1 +
->> >  1 file changed, 1 insertion(+)
->> >
->> > diff --git a/drivers/bluetooth/btqca.c b/drivers/bluetooth/btqca.c
->> > index 2221935fac7e..9fb247c10855 100644
->> > --- a/drivers/bluetooth/btqca.c
->> > +++ b/drivers/bluetooth/btqca.c
->> > @@ -140,6 +140,7 @@ static void qca_tlv_check_data(struct rome_config
->> > *config,
->> >       BT_DBG("Length\t\t : %d bytes", length);
->> >
->> >       config->dnld_mode = ROME_SKIP_EVT_NONE;
->> > +     config->dnld_type = ROME_SKIP_EVT_NONE;
->> >
->> >       switch (config->type) {
->> >       case TLV_TYPE_PATCH:
->> 
->> --
->> The Qualcomm Innovation Center, Inc. is a member of the Code Aurora
->> Forum,
->> a Linux Foundation Collaborative Project
+Thanks!
 
-uploaded new patch set.
 
--- 
-Regards
-Balakrishna.
+On Thu, Aug 8, 2019 at 4:56 PM Balakrishna Godavarthi
+<bgodavar@codeaurora.org> wrote:
+>
+> This patch will reset the download flag to default value
+> before retrieving the download mode type.
+>
+> Fixes: 32646db8cc28 ("Bluetooth: btqca: inject command complete event during fw download")
+> Signed-off-by: Balakrishna Godavarthi <bgodavar@codeaurora.org>
+> ---
+> v2:
+>   * add fix tag.
+>
+> ---
+>  drivers/bluetooth/btqca.c | 1 +
+>  1 file changed, 1 insertion(+)
+>
+> diff --git a/drivers/bluetooth/btqca.c b/drivers/bluetooth/btqca.c
+> index 2221935fac7e..9fb247c10855 100644
+> --- a/drivers/bluetooth/btqca.c
+> +++ b/drivers/bluetooth/btqca.c
+> @@ -140,6 +140,7 @@ static void qca_tlv_check_data(struct rome_config *config,
+>         BT_DBG("Length\t\t : %d bytes", length);
+>
+>         config->dnld_mode = ROME_SKIP_EVT_NONE;
+> +       config->dnld_type = ROME_SKIP_EVT_NONE;
+>
+>         switch (config->type) {
+>         case TLV_TYPE_PATCH:
+> --
+> The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
+> a Linux Foundation Collaborative Project
+>
