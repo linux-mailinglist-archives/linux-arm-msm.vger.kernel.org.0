@@ -2,443 +2,434 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 1D3B786827
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  8 Aug 2019 19:37:01 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D2217868EE
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  8 Aug 2019 20:40:32 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2404276AbfHHRhA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 8 Aug 2019 13:37:00 -0400
-Received: from smtp.codeaurora.org ([198.145.29.96]:35366 "EHLO
-        smtp.codeaurora.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2404079AbfHHRhA (ORCPT
+        id S2403975AbfHHSkV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 8 Aug 2019 14:40:21 -0400
+Received: from mail-pf1-f193.google.com ([209.85.210.193]:36453 "EHLO
+        mail-pf1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2390196AbfHHSkU (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 8 Aug 2019 13:37:00 -0400
-Received: by smtp.codeaurora.org (Postfix, from userid 1000)
-        id E3BE2604D4; Thu,  8 Aug 2019 17:36:57 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
-        s=default; t=1565285817;
-        bh=28QdtB8S/+9ROA5E3hFE2ASjoIfQzNyjf2nP+ZFSzG0=;
-        h=Subject:To:Cc:References:From:Date:In-Reply-To:From;
-        b=n2lyCESlEb7yiFr4xZg+/LY+xpXvvInhSl0JfR7xntC4F7eOzOdxM2Ov/MAdw9QdN
-         zoLwNl42btuJDXxUNpblRdupzvhL91synA+TgEsgn2Np24Z4P3p24y+NvQp+x3d0Zy
-         mhWfCNZcMYR8LC9m4IPm/BjtivsP6erB3yZLWH4c=
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        pdx-caf-mail.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.7 required=2.0 tests=ALL_TRUSTED,BAYES_00,
-        DKIM_INVALID,DKIM_SIGNED,SPF_NONE autolearn=no autolearn_force=no
-        version=3.4.0
-Received: from [10.79.43.230] (blr-bdr-fw-01_globalnat_allzones-outside.qualcomm.com [103.229.18.19])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: sibis@smtp.codeaurora.org)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 50BD3602BC;
-        Thu,  8 Aug 2019 17:36:53 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
-        s=default; t=1565285816;
-        bh=28QdtB8S/+9ROA5E3hFE2ASjoIfQzNyjf2nP+ZFSzG0=;
-        h=Subject:To:Cc:References:From:Date:In-Reply-To:From;
-        b=CHrAdfMxvYzmwA1Enuq3waRKmS1pePnJRXotbNqmzrSLVO0yeLj2oT/zpnA0v3B0C
-         hwISW7HXwEiOVKoEsqKgVjUtVAmJmp8+eX/+zAHhGz3c+nKLLvjXAseY0HRI6duGlb
-         3ekSNSOjT7DP2pcP5dIFl+sHGwhkE6o7RajtLX4A=
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 50BD3602BC
-Authentication-Results: pdx-caf-mail.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: pdx-caf-mail.web.codeaurora.org; spf=none smtp.mailfrom=sibis@codeaurora.org
-Subject: Re: [PATCH 2/2] interconnect: qcom: Add OSM L3 interconnect provider
- support
-To:     Saravana Kannan <saravanak@google.com>
-Cc:     Rob Herring <robh+dt@kernel.org>,
-        Georgi Djakov <georgi.djakov@linaro.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        agross@kernel.org, LKML <linux-kernel@vger.kernel.org>,
-        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
-        <devicetree@vger.kernel.org>, linux-arm-msm@vger.kernel.org,
-        Mark Rutland <mark.rutland@arm.com>,
-        Evan Green <evgreen@chromium.org>,
-        David Dai <daidavid1@codeaurora.org>
-References: <20190807112432.26521-1-sibis@codeaurora.org>
- <20190807112432.26521-3-sibis@codeaurora.org>
- <CAGETcx8JgigJpRgjXsG+xChLUPrASRO7BapkYaSrvvTdQKfEuQ@mail.gmail.com>
-From:   Sibi Sankar <sibis@codeaurora.org>
-Message-ID: <9ea6ab4c-6357-653b-f91c-9b649205f0ab@codeaurora.org>
-Date:   Thu, 8 Aug 2019 23:06:51 +0530
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.6.1
+        Thu, 8 Aug 2019 14:40:20 -0400
+Received: by mail-pf1-f193.google.com with SMTP id r7so44583801pfl.3
+        for <linux-arm-msm@vger.kernel.org>; Thu, 08 Aug 2019 11:40:19 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=message-id:mime-version:content-transfer-encoding:in-reply-to
+         :references:subject:from:cc:to:user-agent:date;
+        bh=7NN04FEl7bvWdIxYSdH6KV6rKdpmdwVRM9IjBo0UhHs=;
+        b=bq74X2mT6DcA6A0FY6YvwMrqIFPQNTQW56JpfiIVVvB0b/VUTBT1f6x0ODMTPTCd68
+         svuYBtypdWGQM7RNjun5TEWkuV3RGe6rlm5+xQTKebpD9NEVADlkL9Q+3Ap2JODVs5rA
+         S3WMpqXcuIqFz0DjgGOXKV8MmzxrlmLS61rxg=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:message-id:mime-version
+         :content-transfer-encoding:in-reply-to:references:subject:from:cc:to
+         :user-agent:date;
+        bh=7NN04FEl7bvWdIxYSdH6KV6rKdpmdwVRM9IjBo0UhHs=;
+        b=N9pSUBt2zoynAB0EClm+LlsAmdWXT1HkbeqWGx3o08MXbJJJZTxM08Bi7wZS3dLHBy
+         R9+KlhY15cvfuAr8xnugm8RzGEVHJPvFFOJx25HLpxnn14rRfehQKN1K4PPUh69tl/Zi
+         inX1ENUTW2DFvSizBULjQKNWN9dYW8SX5jLZclab4d1SO5iDRqIfgAWpB+jM+E20JMpS
+         ij62t8vImGva6gvH+mmY/1sq9UVKxfALpzTVb9yzoVECzTh64mGoa/Z10Em9IPUF6dql
+         FlAQLVav6oTO/yxmF+gMiikgO0y6rSEPAKGgAU6mVvQHHOm2gy9NBaNNJAG456IdVt0p
+         NXKQ==
+X-Gm-Message-State: APjAAAU8wkjZ0hPmHiEc8EZ56mjDfRrivHVnY4ZmAD049PNpcFrEj4Vh
+        eFliXtw2Kk996TEUjKYuPMMWQA==
+X-Google-Smtp-Source: APXvYqwIttXOQSLrliAc8oKmvGlPitcplGRoPMPqnF058BiKj9lgglcyKeIhBnaP9fPUFlHdSHUOnQ==
+X-Received: by 2002:a62:e806:: with SMTP id c6mr17182540pfi.158.1565289619342;
+        Thu, 08 Aug 2019 11:40:19 -0700 (PDT)
+Received: from chromium.org ([2620:15c:202:1:fa53:7765:582b:82b9])
+        by smtp.gmail.com with ESMTPSA id j20sm91226002pfr.113.2019.08.08.11.40.18
+        (version=TLS1_3 cipher=AEAD-AES256-GCM-SHA384 bits=256/256);
+        Thu, 08 Aug 2019 11:40:18 -0700 (PDT)
+Message-ID: <5d4c6c92.1c69fb81.876aa.90c6@mx.google.com>
+Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
-In-Reply-To: <CAGETcx8JgigJpRgjXsG+xChLUPrASRO7BapkYaSrvvTdQKfEuQ@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <20190808061228.16573-3-mkshah@codeaurora.org>
+References: <20190808061228.16573-1-mkshah@codeaurora.org> <20190808061228.16573-3-mkshah@codeaurora.org>
+Subject: Re: [PATCH 2/2] drivers: qcom: Add SoC sleep stats driver
+From:   Stephen Boyd <swboyd@chromium.org>
+Cc:     linux-kernel@vger.kernel.org, linux-pm@vger.kernel.org,
+        bjorn.andersson@linaro.org, evgreen@chromium.org,
+        dianders@chromium.org, rnayak@codeaurora.org, ilina@codeaurora.org,
+        lsrao@codeaurora.org, mkshah@codeaurora.org,
+        Mahesh Sivasubramanian <msivasub@codeaurora.org>,
+        Mark Rutland <mark.rutland@arm.com>,
+        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>
+To:     Maulik Shah <mkshah@codeaurora.org>, andy.gross@linaro.org,
+        david.brown@linaro.org, linux-arm-msm@vger.kernel.org
+User-Agent: alot/0.8.1
+Date:   Thu, 08 Aug 2019 11:40:17 -0700
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hey Saravana,
+Quoting Maulik Shah (2019-08-07 23:12:28)
+> Qualcomm Technologies Inc's (QTI) chipsets support SoC level
+> low power modes. Statistics for SoC sleep stats are produced
+> by remote processor.
+>=20
+> Lets's add a driver to read the shared memory exported by the
+> remote processor and export to sysfs.
+>=20
+> Signed-off-by: Mahesh Sivasubramanian <msivasub@codeaurora.org>
+> Signed-off-by: Lina Iyer <ilina@codeaurora.org>
+> Signed-off-by: Maulik Shah <mkshah@codeaurora.org>
 
-Thanks for the review!
+SoB chain is weird here too.
 
-On 8/8/19 2:51 AM, Saravana Kannan wrote:
-> On Wed, Aug 7, 2019 at 4:24 AM Sibi Sankar <sibis@codeaurora.org> wrote:
->>
->> On some Qualcomm SoCs, Operating State Manager (OSM) controls the
->> resources of scaling L3 caches. Add a driver to handle bandwidth
->> requests to OSM L3 from CPU/GPU.
->>
->> Signed-off-by: Sibi Sankar <sibis@codeaurora.org>
->> ---
->>   drivers/interconnect/qcom/Kconfig  |   7 +
->>   drivers/interconnect/qcom/Makefile |   2 +
->>   drivers/interconnect/qcom/osm-l3.c | 292 +++++++++++++++++++++++++++++
->>   3 files changed, 301 insertions(+)
->>   create mode 100644 drivers/interconnect/qcom/osm-l3.c
->>
->> diff --git a/drivers/interconnect/qcom/Kconfig b/drivers/interconnect/qcom/Kconfig
->> index d5e70ebc24108..f6c2a11a1a2c9 100644
->> --- a/drivers/interconnect/qcom/Kconfig
->> +++ b/drivers/interconnect/qcom/Kconfig
->> @@ -5,6 +5,13 @@ config INTERCONNECT_QCOM
->>          help
->>            Support for Qualcomm's Network-on-Chip interconnect hardware.
->>
->> +config INTERCONNECT_QCOM_OSM_L3
->> +       tristate "Qualcomm OSM L3 interconnect driver"
->> +       depends on INTERCONNECT_QCOM || COMPILE_TEST
->> +       help
->> +         Say y here to support the Operating State Manager (OSM) interconnect
->> +         driver which controls the scaling of L3 caches on Qualcomm SoCs.
->> +
->>   config INTERCONNECT_QCOM_SDM845
->>          tristate "Qualcomm SDM845 interconnect driver"
->>          depends on INTERCONNECT_QCOM
->> diff --git a/drivers/interconnect/qcom/Makefile b/drivers/interconnect/qcom/Makefile
->> index 1c1cea690f922..9078af5fed109 100644
->> --- a/drivers/interconnect/qcom/Makefile
->> +++ b/drivers/interconnect/qcom/Makefile
->> @@ -1,5 +1,7 @@
->>   # SPDX-License-Identifier: GPL-2.0
->>
->> +icc-osm-l3-objs                                := osm-l3.o
->>   qnoc-sdm845-objs                       := sdm845.o
->>
->> +obj-$(CONFIG_INTERCONNECT_QCOM_OSM_L3) += icc-osm-l3.o
->>   obj-$(CONFIG_INTERCONNECT_QCOM_SDM845) += qnoc-sdm845.o
->> diff --git a/drivers/interconnect/qcom/osm-l3.c b/drivers/interconnect/qcom/osm-l3.c
->> new file mode 100644
->> index 0000000000000..1e7dfce6f4f9b
->> --- /dev/null
->> +++ b/drivers/interconnect/qcom/osm-l3.c
->> @@ -0,0 +1,292 @@
->> +// SPDX-License-Identifier: GPL-2.0
->> +/*
->> + * Copyright (c) 2019, The Linux Foundation. All rights reserved.
->> + *
->> + */
->> +
->> +#include <dt-bindings/interconnect/qcom,osm-l3.h>
->> +#include <dt-bindings/interconnect/qcom,sdm845.h>
->> +#include <linux/bitfield.h>
->> +#include <linux/clk.h>
->> +#include <linux/interconnect-provider.h>
->> +#include <linux/io.h>
->> +#include <linux/kernel.h>
->> +#include <linux/module.h>
->> +#include <linux/of_device.h>
->> +#include <linux/of_platform.h>
->> +#include <linux/platform_device.h>
->> +
->> +#define LUT_MAX_ENTRIES                        40U
->> +#define LUT_SRC                                GENMASK(31, 30)
->> +#define LUT_L_VAL                      GENMASK(7, 0)
->> +#define LUT_ROW_SIZE                   32
->> +#define CLK_HW_DIV                     2
->> +
->> +/* Register offsets */
->> +#define REG_ENABLE                     0x0
->> +#define REG_FREQ_LUT                   0x110
->> +#define REG_PERF_STATE                 0x920
->> +
->> +#define OSM_L3_MAX_LINKS               1
->> +
->> +#define to_qcom_provider(_provider) \
->> +       container_of(_provider, struct qcom_icc_provider, provider)
->> +
->> +enum {
->> +       SDM845_MASTER_OSM_L3_APPS = SLAVE_TCU + 1,
->> +       SDM845_MASTER_OSM_L3_GPU,
->> +       SDM845_SLAVE_OSM_L3,
->> +};
->> +
->> +struct qcom_icc_provider {
->> +       void __iomem *base;
->> +       unsigned int max_state;
->> +       unsigned long lut_tables[LUT_MAX_ENTRIES];
->> +       struct icc_provider provider;
->> +};
->> +
->> +/**
->> + * struct qcom_icc_node - Qualcomm specific interconnect nodes
->> + * @name: the node name used in debugfs
->> + * @links: an array of nodes where we can go next while traversing
->> + * @id: a unique node identifier
->> + * @num_links: the total number of @links
->> + * @buswidth: width of the interconnect between a node and the bus
->> + */
->> +struct qcom_icc_node {
->> +       const char *name;
->> +       u16 links[OSM_L3_MAX_LINKS];
->> +       u16 id;
->> +       u16 num_links;
->> +       u16 buswidth;
->> +};
->> +
->> +struct qcom_icc_desc {
->> +       struct qcom_icc_node **nodes;
->> +       size_t num_nodes;
->> +};
->> +
->> +#define DEFINE_QNODE(_name, _id, _buswidth, ...)                       \
->> +               static struct qcom_icc_node _name = {                   \
->> +               .name = #_name,                                         \
->> +               .id = _id,                                              \
->> +               .buswidth = _buswidth,                                  \
->> +               .num_links = ARRAY_SIZE(((int[]){ __VA_ARGS__ })),      \
->> +               .links = { __VA_ARGS__ },                               \
->> +       }
->> +
->> +DEFINE_QNODE(osm_apps_l3, SDM845_MASTER_OSM_L3_APPS, 16, SDM845_SLAVE_OSM_L3);
->> +DEFINE_QNODE(osm_gpu_l3, SDM845_MASTER_OSM_L3_GPU, 16, SDM845_SLAVE_OSM_L3);
->> +DEFINE_QNODE(osm_l3, SDM845_SLAVE_OSM_L3, 16);
->> +
->> +static struct qcom_icc_node *sdm845_osm_l3_nodes[] = {
->> +       [MASTER_OSM_L3_APPS] = &osm_apps_l3,
->> +       [MASTER_OSM_L3_GPU] = &osm_gpu_l3,
->> +       [SLAVE_OSM_L3] = &osm_l3,
->> +};
->> +
->> +static struct qcom_icc_desc sdm845_osm_l3 = {
->> +       .nodes = sdm845_osm_l3_nodes,
->> +       .num_nodes = ARRAY_SIZE(sdm845_osm_l3_nodes),
->> +};
->> +
->> +static int qcom_icc_aggregate(struct icc_node *node, u32 avg_bw,
->> +                             u32 peak_bw, u32 *agg_avg, u32 *agg_peak)
->> +{
->> +       *agg_avg += avg_bw;
->> +       *agg_peak = max_t(u32, *agg_peak, peak_bw);
->> +
->> +       return 0;
->> +}
->> +
->> +static int qcom_icc_set(struct icc_node *src, struct icc_node *dst)
->> +{
->> +       struct icc_provider *provider;
->> +       struct qcom_icc_provider *qp;
->> +       struct qcom_icc_node *qn;
->> +       struct icc_node *n;
->> +       unsigned int index;
->> +       u32 agg_peak = 0;
->> +       u32 agg_avg = 0;
->> +       u64 rate;
->> +
->> +       qn = src->data;
->> +       provider = src->provider;
->> +       qp = to_qcom_provider(provider);
->> +
->> +       list_for_each_entry(n, &provider->nodes, node_list)
->> +               qcom_icc_aggregate(n, n->avg_bw, n->peak_bw,
->> +                                  &agg_avg, &agg_peak);
->> +
->> +       rate = max(agg_avg, agg_peak);
->> +       rate = icc_units_to_bps(rate);
->> +       do_div(rate, qn->buswidth);
->> +
->> +       for (index = 0; index < qp->max_state; index++) {
->> +               if (qp->lut_tables[index] >= rate)
->> +                       break;
->> +       }
->> +
->> +       writel_relaxed(index, qp->base + REG_PERF_STATE);
->> +
->> +       return 0;
->> +}
->> +
->> +static int qcom_osm_l3_probe(struct platform_device *pdev)
->> +{
->> +       u32 info, src, lval, i, prev_freq = 0, freq;
->> +       static unsigned long hw_rate, xo_rate;
->> +       const struct qcom_icc_desc *desc;
->> +       struct icc_onecell_data *data;
->> +       struct icc_provider *provider;
->> +       struct qcom_icc_node **qnodes;
->> +       struct qcom_icc_provider *qp;
->> +       struct icc_node *node;
->> +       size_t num_nodes;
->> +       struct clk *clk;
->> +       int ret;
->> +
->> +       clk = clk_get(&pdev->dev, "xo");
->> +       if (IS_ERR(clk))
->> +               return PTR_ERR(clk);
->> +
->> +       xo_rate = clk_get_rate(clk);
->> +       clk_put(clk);
->> +
->> +       clk = clk_get(&pdev->dev, "alternate");
->> +       if (IS_ERR(clk))
->> +               return PTR_ERR(clk);
->> +
->> +       hw_rate = clk_get_rate(clk) / CLK_HW_DIV;
->> +       clk_put(clk);
->> +
->> +       qp = devm_kzalloc(&pdev->dev, sizeof(*qp), GFP_KERNEL);
->> +       if (!qp)
->> +               return -ENOMEM;
->> +
->> +       qp->base = devm_platform_ioremap_resource(pdev, 0);
->> +       if (IS_ERR(qp->base))
->> +               return PTR_ERR(qp->base);
->> +
->> +       /* HW should be in enabled state to proceed */
->> +       if (!(readl_relaxed(qp->base + REG_ENABLE) & 0x1)) {
->> +               dev_err(&pdev->dev, "error hardware not enabled\n");
->> +               return -ENODEV;
->> +       }
->> +
->> +       for (i = 0; i < LUT_MAX_ENTRIES; i++) {
->> +               info = readl_relaxed(qp->base + REG_FREQ_LUT +
->> +                                    i * LUT_ROW_SIZE);
->> +               src = FIELD_GET(LUT_SRC, info);
->> +               lval = FIELD_GET(LUT_L_VAL, info);
->> +               if (src)
->> +                       freq = xo_rate * lval;
->> +               else
->> +                       freq = hw_rate;
->> +
->> +               /*
->> +                * Two of the same frequencies with the same core counts means
->> +                * end of table
->> +                */
->> +               if (i > 0 && prev_freq == freq)
->> +                       break;
->> +
->> +               qp->lut_tables[i] = freq;
->> +               prev_freq = freq;
->> +       }
->> +       qp->max_state = i;
->> +
->> +       desc = of_device_get_match_data(&pdev->dev);
->> +       if (!desc)
->> +               return -EINVAL;
->> +
->> +       qnodes = desc->nodes;
->> +       num_nodes = desc->num_nodes;
->> +
->> +       data = devm_kcalloc(&pdev->dev, num_nodes, sizeof(*node), GFP_KERNEL);
->> +       if (!data)
->> +               return -ENOMEM;
->> +
->> +       provider = &qp->provider;
->> +       provider->dev = &pdev->dev;
->> +       provider->set = qcom_icc_set;
->> +       provider->aggregate = qcom_icc_aggregate;
->> +       provider->xlate = of_icc_xlate_onecell;
->> +       INIT_LIST_HEAD(&provider->nodes);
->> +       provider->data = data;
->> +
->> +       ret = icc_provider_add(provider);
->> +       if (ret) {
->> +               dev_err(&pdev->dev, "error adding interconnect provider\n");
->> +               return ret;
->> +       }
->> +
->> +       for (i = 0; i < num_nodes; i++) {
->> +               size_t j;
->> +
->> +               node = icc_node_create(qnodes[i]->id);
->> +               if (IS_ERR(node)) {
->> +                       ret = PTR_ERR(node);
->> +                       goto err;
->> +               }
->> +
->> +               node->name = qnodes[i]->name;
->> +               node->data = qnodes[i];
->> +               icc_node_add(node, provider);
->> +
->> +               dev_dbg(&pdev->dev, "registered node %p %s %d\n", node,
->> +                       qnodes[i]->name, node->id);
->> +
->> +               /* populate links */
->> +               for (j = 0; j < qnodes[i]->num_links; j++)
->> +                       icc_link_create(node, qnodes[i]->links[j]);
->> +
->> +               data->nodes[i] = node;
->> +       }
->> +       data->num_nodes = num_nodes;
->> +
->> +       platform_set_drvdata(pdev, qp);
->> +
->> +       return ret;
->> +err:
->> +       list_for_each_entry(node, &provider->nodes, node_list) {
->> +               icc_node_del(node);
->> +               icc_node_destroy(node->id);
->> +       }
->> +
->> +       icc_provider_del(provider);
->> +       return ret;
->> +}
->> +
->> +static int qcom_osm_l3_remove(struct platform_device *pdev)
->> +{
->> +       struct qcom_icc_provider *qp = platform_get_drvdata(pdev);
->> +       struct icc_provider *provider = &qp->provider;
->> +       struct icc_node *n;
->> +
->> +       list_for_each_entry(n, &provider->nodes, node_list) {
->> +               icc_node_del(n);
->> +               icc_node_destroy(n->id);
->> +       }
->> +
->> +       return icc_provider_del(provider);
->> +}
->> +
->> +static const struct of_device_id osm_l3_of_match[] = {
->> +       { .compatible = "qcom,sdm845-osm-l3", .data = &sdm845_osm_l3 },
->> +       { },
->> +};
->> +MODULE_DEVICE_TABLE(of, osm_l3_of_match);
->> +
->> +static struct platform_driver osm_l3_driver = {
->> +       .probe = qcom_osm_l3_probe,
->> +       .remove = qcom_osm_l3_remove,
->> +       .driver = {
->> +               .name = "osm-l3",
->> +               .of_match_table = osm_l3_of_match,
->> +       },
->> +};
->> +module_platform_driver(osm_l3_driver);
->> +
->> +MODULE_DESCRIPTION("Qualcomm OSM L3 interconnect driver");
->> +MODULE_LICENSE("GPL v2");
-> 
-> Did a quick scan of the code and it's not clear how you connect the L3
-> interconnect provider to the rest of the interconnect. I don't see any
-> DT or code references to the rest of the interconnects in the system.
-> If GPU is making a bandwidth request all the way to L3, how do you
-> make sure the interconnects between GPU and L3 also scale up properly.
+> ---
+>  drivers/soc/qcom/Kconfig           |   9 ++
+>  drivers/soc/qcom/Makefile          |   1 +
+>  drivers/soc/qcom/soc_sleep_stats.c | 249 +++++++++++++++++++++++++++++
 
-For SDM845 OSM L3 provider the icc nodes endpoints are isolated from
-rsc icc node endpoints i.e GPU would need to vote on this path in
-addition to voting for DDR. On future SoCs if the need to scale
-interconnect between GPU rsc nodes along with the OSM l3 nodes arises,
-it can be trivially extended by linking the osm icc nodes with global
-icc node ids of the gpu rsc nodes.
+There should be a Documentation/ABI/ path in this diffstat above because
+you're adding sysfs attributes.
 
-> 
-> -Saravana
-> 
+There's some similar support in the ARM PSCI spec for extracting
+idle/suspend stats, see section 5.21 PSCI_STAT_RESIDENCY/COUNT. Maybe
+this code can align with that feature in PSCI? At the least, I hope we
+can come up with a generic sysfs ABI that can be used to describe CPU
+and system wide power states in a way that userspace can read and
+understand how long the device was in these different power states. I
+would guess that other architectures like x86 may also want to get
+involved in reporting this information in a standard way, so please loop
+in some x86 power folks too.
 
--- 
-Qualcomm Innovation Center, Inc.
-Qualcomm Innovation Center, Inc, is a member of Code Aurora Forum,
-a Linux Foundation Collaborative Project
+It would be neat if the PSCI feature could be used for this instead of
+having a custom SoC driver. Maybe that won't work though because this
+works for shipping firmware and/or because of the 'client_votes' thing
+which looks like special extra data describing the other subsystems? At
+least for some SoCs it may be all they need though, so keeping the PSCI
+call in mind would be good when developing the ABI and may be enough for
+userspace purposes. The client_votes part may be possible to layer on
+top of the PSCI calls anyway, and go into some other file so we can
+figure out which remoteproc is holding up suspend or idle states.
+
+>=20
+> diff --git a/drivers/soc/qcom/Kconfig b/drivers/soc/qcom/Kconfig
+> index 880cf0290962..7aac24430e99 100644
+> --- a/drivers/soc/qcom/Kconfig
+> +++ b/drivers/soc/qcom/Kconfig
+> @@ -163,6 +163,15 @@ config QCOM_SMSM
+>           Say yes here to support the Qualcomm Shared Memory State Machin=
+e.
+>           The state machine is represented by bits in shared memory.
+> =20
+> +config QCOM_SOC_SLEEP_STATS
+> +       tristate "Qualcomm Technologies Inc. (QTI) SoC sleep stats driver"
+> +       depends on ARCH_QCOM
+> +       help
+> +         Qualcomm Technologies Inc. (QTI) SoC sleep stats driver to read
+> +         the shared memory exported by the remote processor related to
+
+Shared memory sounds like DDR.
+
+> +         various SoC level low power modes statistics and export to sysfs
+> +         interface.
+> +
+>  config QCOM_WCNSS_CTRL
+>         tristate "Qualcomm WCNSS control driver"
+>         depends on ARCH_QCOM || COMPILE_TEST
+> diff --git a/drivers/soc/qcom/soc_sleep_stats.c b/drivers/soc/qcom/soc_sl=
+eep_stats.c
+> new file mode 100644
+> index 000000000000..5b95d68512ec
+> --- /dev/null
+> +++ b/drivers/soc/qcom/soc_sleep_stats.c
+> @@ -0,0 +1,249 @@
+> +// SPDX-License-Identifier: GPL-2.0-only
+> +
+> +/*
+> + * Copyright (c) 2011-2019, The Linux Foundation. All rights reserved.
+> + */
+> +
+> +#define pr_fmt(fmt) "%s: " fmt, __func__
+> +
+> +#include <linux/init.h>
+> +#include <linux/io.h>
+> +#include <linux/kernel.h>
+> +#include <linux/module.h>
+> +#include <linux/mutex.h>
+> +#include <linux/of.h>
+> +#include <linux/platform_device.h>
+> +#include <linux/slab.h>
+> +#include <linux/uaccess.h>
+
+Is this include used?
+
+> +
+> +#define ARCH_TIMER_FREQ        19200000
+
+Can't this come through clk APIs? Or is this the ARM architected timer
+freqeuency?
+
+> +
+> +struct stats_config {
+> +       u32 offset_addr;
+> +       u32 num_records;
+> +       bool appended_stats_avail;
+> +};
+> +
+> +struct soc_sleep_stats_data {
+> +       phys_addr_t stats_base;
+> +       resource_size_t stats_size;
+> +       const struct stats_config *config;
+> +       struct kobject *kobj;
+> +       struct kobj_attribute ka;
+> +       struct mutex lock;
+> +};
+> +
+> +struct entry {
+> +       __le32 stat_type;
+> +       __le32 count;
+> +       __le64 last_entered_at;
+> +       __le64 last_exited_at;
+> +       __le64 accumulated;
+> +};
+> +
+> +struct appended_entry {
+> +       __le32 client_votes;
+> +       __le32 reserved[3];
+> +};
+> +
+> +struct stats_entry {
+> +       struct entry entry;
+> +       struct appended_entry appended_entry;
+> +};
+> +
+> +static inline u64 get_time_in_sec(u64 counter)
+> +{
+> +       do_div(counter, ARCH_TIMER_FREQ);
+> +
+> +       return counter;
+> +}
+> +
+> +static inline ssize_t append_data_to_buf(char *buf, int length,
+> +                                        struct stats_entry *data)
+> +{
+> +       char stat_type[5] =3D {0};
+> +
+> +       memcpy(stat_type, &data->entry.stat_type, sizeof(u32));
+
+sizeof(u32) !=3D 5. Is this on purpose?
+
+> +
+> +       return scnprintf(buf, length,
+> +                        "%s\n"
+> +                        "\tCount                    :%u\n"
+> +                        "\tLast Entered At(sec)     :%llu\n"
+> +                        "\tLast Exited At(sec)      :%llu\n"
+> +                        "\tAccumulated Duration(sec):%llu\n"
+> +                        "\tClient Votes             :0x%x\n\n",
+> +                        stat_type, data->entry.count,
+> +                        data->entry.last_entered_at,
+> +                        data->entry.last_exited_at,
+> +                        data->entry.accumulated,
+> +                        data->appended_entry.client_votes);
+> +}
+> +
+> +static ssize_t stats_show(struct kobject *obj, struct kobj_attribute *at=
+tr,
+> +                         char *buf)
+> +{
+> +       void __iomem *reg;
+> +       int i;
+> +       uint32_t offset;
+> +       ssize_t length =3D 0, op_length;
+> +       struct stats_entry data;
+> +       struct entry *e =3D &data.entry;
+> +       struct appended_entry *ae =3D &data.appended_entry;
+> +       struct soc_sleep_stats_data *drv =3D container_of(attr,
+> +                                          struct soc_sleep_stats_data, k=
+a);
+> +
+> +       mutex_lock(&drv->lock);
+> +       reg =3D ioremap_nocache(drv->stats_base, drv->stats_size);
+> +       if (!reg) {
+> +               pr_err("io remap failed\n");
+
+This looks like a real bad idea to ioremap each time the stats are
+shown. Why not just map once in probe so we don't have to create a
+mapping and suffer the overhead involved in that?
+
+> +               mutex_unlock(&drv->lock);
+> +               return length;
+> +       }
+> +
+> +       for (i =3D 0; i < drv->config->num_records; i++) {
+> +               offset =3D offsetof(struct entry, stat_type);
+> +               e->stat_type =3D le32_to_cpu(readl_relaxed(reg + offset));
+> +
+> +               offset =3D offsetof(struct entry, count);
+> +               e->count =3D le32_to_cpu(readl_relaxed(reg + offset));
+> +
+> +               offset =3D offsetof(struct entry, last_entered_at);
+> +               e->last_entered_at =3D le64_to_cpu(readq_relaxed(reg + of=
+fset));
+> +
+> +               offset =3D offsetof(struct entry, last_exited_at);
+> +               e->last_exited_at =3D le64_to_cpu(readq_relaxed(reg + off=
+set));
+> +
+> +               offset =3D offsetof(struct entry, last_exited_at);
+> +               e->accumulated =3D le64_to_cpu(readq_relaxed(reg + offset=
+));
+> +
+> +               e->last_entered_at =3D get_time_in_sec(e->last_entered_at=
+);
+> +               e->last_exited_at =3D get_time_in_sec(e->last_exited_at);
+> +               e->accumulated =3D get_time_in_sec(e->accumulated);
+> +
+> +               reg +=3D sizeof(struct entry);
+> +
+> +               if (drv->config->appended_stats_avail) {
+> +                       offset =3D offsetof(struct appended_entry, client=
+_votes);
+> +                       ae->client_votes =3D le32_to_cpu(readl_relaxed(re=
+g +
+> +                                                                    offs=
+et));
+> +
+> +                       reg +=3D sizeof(struct appended_entry);
+> +               } else
+> +                       ae->client_votes =3D 0;
+
+Please add braces to the else statement when the if statement has
+braces.
+
+> +
+> +               op_length =3D append_data_to_buf(buf + length, PAGE_SIZE =
+- length,
+> +                                              &data);
+> +               if (op_length >=3D PAGE_SIZE - length)
+> +                       goto exit;
+> +
+> +               length +=3D op_length;
+> +       }
+> +exit:
+> +       iounmap(reg);
+> +       mutex_unlock(&drv->lock);
+> +       return length;
+> +}
+> +
+> +static int soc_sleep_stats_create_sysfs(struct platform_device *pdev,
+> +                                       struct soc_sleep_stats_data *drv)
+> +{
+> +       int ret =3D -ENOMEM;
+> +
+> +       drv->kobj =3D kobject_create_and_add("soc_sleep", power_kobj);
+> +       if (!drv->kobj)
+> +               goto fail;
+
+Just return -ENOMEM here. It is really weird to make kobjects directly
+like this. How is userspace expected to use this?
+
+> +
+> +       sysfs_attr_init(drv->ka.attr);
+> +       drv->ka.attr.mode =3D 0444;
+> +       drv->ka.attr.name =3D "stats";
+> +       drv->ka.show =3D stats_show;
+> +
+> +       ret =3D sysfs_create_file(drv->kobj, &drv->ka.attr);
+> +       if (ret)
+> +               goto fail;
+
+Just return sysfs_create_file()?
+
+> +
+> +       platform_set_drvdata(pdev, drv);
+
+Do this platform_set_drvdata in probe?
+
+> +fail:
+> +       return ret;
+> +}
+> +
+> +static const struct stats_config rpm_data =3D {
+> +       .offset_addr =3D 0x14,
+> +       .num_records =3D 2,
+> +       .appended_stats_avail =3D true,
+> +};
+> +
+> +static const struct stats_config rpmh_data =3D {
+> +       .offset_addr =3D 0x4,
+> +       .num_records =3D 3,
+> +       .appended_stats_avail =3D false,
+> +};
+> +
+> +static const struct of_device_id soc_sleep_stats_table[] =3D {
+> +       { .compatible =3D "qcom,rpm-sleep-stats", .data =3D &rpm_data},
+> +       { .compatible =3D "qcom,rpmh-sleep-stats", .data =3D &rpmh_data},
+> +       { },
+> +};
+> +
+> +static int soc_sleep_stats_probe(struct platform_device *pdev)
+> +{
+> +       const struct of_device_id *match;
+> +       struct soc_sleep_stats_data *drv;
+> +       struct resource *res;
+> +       void __iomem *offset_addr;
+> +       int ret;
+> +
+> +       drv =3D devm_kzalloc(&pdev->dev, sizeof(*drv), GFP_KERNEL);
+> +       if (!drv)
+> +               return -ENOMEM;
+> +
+> +       match =3D of_match_node(soc_sleep_stats_table, pdev->dev.of_node);
+> +       if (!match)
+> +               return -ENODEV;
+> +
+> +       drv->config =3D match->data;
+
+Is this of_device_get_match_data()?
+
+> +
+> +       res =3D platform_get_resource(pdev, IORESOURCE_MEM, 0);
+> +       if (!res)
+> +               return PTR_ERR(res);
+> +
+> +       offset_addr =3D ioremap_nocache(res->start + drv->config->offset_=
+addr,
+> +                                     sizeof(u32));
+
+Why not just devm_platform_ioremap_resource()?
+
+> +       if (IS_ERR(offset_addr))
+> +               return PTR_ERR(offset_addr);
+> +
+> +       drv->stats_base =3D res->start | readl_relaxed(offset_addr);
+> +       drv->stats_size =3D resource_size(res);
+> +       iounmap(offset_addr);
+> +       mutex_init(&drv->lock);
+
+Hopefully this lock isn't required?
+
+> +
+> +       ret =3D soc_sleep_stats_create_sysfs(pdev, drv);
+> +       if (ret)
+> +               pr_info("Failed to create sysfs interface\n");
+
+Not pr_err()? Or dev_err()?
+
+> +
+> +       return ret;
+> +}
+> +
+> +static int soc_sleep_stats_remove(struct platform_device *pdev)
+> +{
+> +       struct soc_sleep_stats_data *drv =3D platform_get_drvdata(pdev);
+> +
+> +       sysfs_remove_file(drv->kobj, &drv->ka.attr);
+> +       kobject_put(drv->kobj);
+> +       platform_set_drvdata(pdev, NULL);
+
+This last line isn't necessary. Please remove.
+
+> +
+> +       return 0;
+> +}
+> +
