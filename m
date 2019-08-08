@@ -2,68 +2,80 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 2479085690
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  8 Aug 2019 01:43:15 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 08FA685939
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  8 Aug 2019 06:29:28 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2388496AbfHGXmd (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 7 Aug 2019 19:42:33 -0400
-Received: from mail.kernel.org ([198.145.29.99]:48998 "EHLO mail.kernel.org"
+        id S1725806AbfHHE30 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 8 Aug 2019 00:29:26 -0400
+Received: from mail.kernel.org ([198.145.29.99]:42286 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S2387981AbfHGXmd (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 7 Aug 2019 19:42:33 -0400
+        id S1725446AbfHHE30 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 8 Aug 2019 00:29:26 -0400
 Received: from kernel.org (unknown [104.132.0.74])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 27AA720880;
-        Wed,  7 Aug 2019 23:42:32 +0000 (UTC)
+        by mail.kernel.org (Postfix) with ESMTPSA id 90F3721743;
+        Thu,  8 Aug 2019 04:29:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1565221352;
-        bh=AB0/GU2h6UDA8h5FXu3N6Lb3ksMEGrIp/OcfbfuwI5w=;
+        s=default; t=1565238565;
+        bh=jw29/PCGEXGB98PdYvc84pVMp7Xt/WJj5r1doUZhJ6Y=;
         h=In-Reply-To:References:From:Cc:To:Subject:Date:From;
-        b=g4jKpvg5O2bjHaVoG/3b91MBzydKjYsPJ2V0u9zxzG6GvKDjfXVeFp1uM+ImQHCyW
-         9SekbeHZnKbmLeUs0RGRBDVh1e0A5D8PCKq2ZbGyzc0O3hIPbBec02LHfya3GJcxIQ
-         wACvdtfptz19RL9raollDDdGq9xtTPTII5QVkuWw=
+        b=bFegZvpP8qxz8dBoDzgNPmOw9uOSpTeSqIKRuKePg0koKG4ypWc58gAEy7xYDkNrZ
+         vDRaTfBGrnGyuNpeGSvD7uFyE6ceoJXHbI6TVOcMalauATOnXSjwq7nL5YbREVYdVV
+         URYYZFb9oqBPdwcC167VYeJR6HKfW4o+Y2L6U5/w=
 Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <1565037226-1684-1-git-send-email-jcrouse@codeaurora.org>
-References: <1565037226-1684-1-git-send-email-jcrouse@codeaurora.org>
+In-Reply-To: <d8cf720c-b44f-f4ea-1c26-92ce34fd31e6@free.fr>
+References: <d654907d-a3a2-a00f-d6f5-3a34ae25ebcf@free.fr> <f96ab735-1001-5319-a314-b8079efd9046@linaro.org> <5d1ff6a7-7b3b-9bbf-f737-5347555a2076@free.fr> <CAP245DWbC8vY1pVuYnGvZ=7LVAAaqAm9TtccCktdxNWuuoxf5w@mail.gmail.com> <d8cf720c-b44f-f4ea-1c26-92ce34fd31e6@free.fr>
 From:   Stephen Boyd <sboyd@kernel.org>
-Cc:     linux-arm-msm@vger.kernel.org,
-        Michael Turquette <mturquette@baylibre.com>,
-        linux-pm@vger.kernel.org, linux-kernel@vger.kernel.org,
+Cc:     Amit Kucheria <amit.kucheria@linaro.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
         Andy Gross <agross@kernel.org>,
         Georgi Djakov <georgi.djakov@linaro.org>,
-        linux-clk@vger.kernel.org, Taniya Das <tdas@codeaurora.org>
-To:     Jordan Crouse <jcrouse@codeaurora.org>,
-        freedreno@lists.freedesktop.org
-Subject: Re: [PATCH v2] drivers: qcom: Add BCM vote macro to header
+        linux-clk <linux-clk@vger.kernel.org>,
+        MSM <linux-arm-msm@vger.kernel.org>
+To:     Marc Gonzalez <marc.w.gonzalez@free.fr>
+Subject: Re: [PATCH] clk: qcom: msm8916: Add 2 clk options in defconfig
 User-Agent: alot/0.8.1
-Date:   Wed, 07 Aug 2019 16:42:31 -0700
-Message-Id: <20190807234232.27AA720880@mail.kernel.org>
+Date:   Wed, 07 Aug 2019 21:29:24 -0700
+Message-Id: <20190808042925.90F3721743@mail.kernel.org>
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Jordan Crouse (2019-08-05 13:33:46)
-> The macro to generate a Bus Controller Manager (BCM) TCS command is used
-> by the interconnect driver but might also be interesting to other
-> drivers that need to construct TCS commands for sub processors so move
-> it out of the sdm845 specific file and into the header.
+Quoting Marc Gonzalez (2019-07-03 07:00:31)
+> On 24/06/2019 15:57, Amit Kucheria wrote:
 >=20
-> Signed-off-by: Jordan Crouse <jcrouse@codeaurora.org>
-> ---
+> > On Mon, Jun 24, 2019 at 6:56 PM Marc Gonzalez <marc.w.gonzalez@free.fr>=
+ wrote:
+> >>
+> >> QCOM_A53PLL and QCOM_CLK_APCS_MSM8916 used to be enabled by default
+> >> in drivers/clk/qcom/Kconfig. A recent patch changed that by dropping
+> >> the 'default ARCH_QCOM' directive.
+> >>
+> >> Add the two options explicitly in the arm64 defconfig, to avoid
+> >> functional regressions.
+> >>
+> >> Signed-off-by: Marc Gonzalez <marc.w.gonzalez@free.fr>
+> >=20
+> > Acked-by: Amit Kucheria <amit.kucheria@linaro.org>
+>=20
+> Stephen,
+>=20
+> Can you take the following two patches through the clk tree?
+>=20
+> [PATCH v2] clk: qcom: msm8916: Don't build by default
+> [PATCH] clk: qcom: msm8916: Add 2 clk options in defconfig
+>=20
 
-Acked-by: Stephen Boyd <sboyd@kernel.org>
+Did Andy pick up this defconfig change? The subject is misleading.
+defconfig changes should be something like
 
-Unless this is supposed to be applied by me?
+	arm64: defconfig: Add qcom clk options
 
-BTW, I wonder why we need an rpm clk driver much at all nowadays, except
-maybe for the XO clk state. The big user, from what I can tell, is the
-interconnect driver and we don't use any of the features of the clk
-framework besides the API to set a frequency. Maybe it would be better
-to just push push the bus frequency logic into interconnect code, then
-XO clk is the only thing we need to keep, and it can be a simple on/off
-thing.
+I don't think I need to pick up the defconfig change. It can go through
+Andy and arm-soc. So I'll just grab the first one and guess it won't
+break much on the way in.
 
