@@ -2,113 +2,175 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 7B98D8606D
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  8 Aug 2019 12:56:00 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 38730860E9
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  8 Aug 2019 13:35:55 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731782AbfHHKz7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 8 Aug 2019 06:55:59 -0400
-Received: from smtp.codeaurora.org ([198.145.29.96]:43634 "EHLO
+        id S1732249AbfHHLfh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 8 Aug 2019 07:35:37 -0400
+Received: from smtp.codeaurora.org ([198.145.29.96]:57542 "EHLO
         smtp.codeaurora.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726721AbfHHKz7 (ORCPT
+        with ESMTP id S1731955AbfHHLfh (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 8 Aug 2019 06:55:59 -0400
+        Thu, 8 Aug 2019 07:35:37 -0400
 Received: by smtp.codeaurora.org (Postfix, from userid 1000)
-        id A80BB60398; Thu,  8 Aug 2019 10:55:58 +0000 (UTC)
+        id A99A460452; Thu,  8 Aug 2019 11:35:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
-        s=default; t=1565261758;
-        bh=RyE30W0O6ROzUh+uCUrmfEWFlAw7l82uw+UovVXzR2w=;
-        h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
-        b=WhKYtRwpUVT+oFtBvsqBg2coJ+vg6GMlbCZsoEOEY/D4J5PJxVOWaXLROYeW+khbz
-         pFYRrRaWU0DZi1SkmCSeg/h4niwr//6RtlsoswOeTVUeGORTTPIRY18C0tKcxQMEVo
-         5ROk1VgodxqP0VzKkulN0Q5zxPil4Z5T8F0Lulus=
+        s=default; t=1565264135;
+        bh=sH6nUxZ8Y5dNhEx5LOsnBwv7hqu3JssLmT67GtkYFO8=;
+        h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
+        b=mqb7vvjzx+MKfzAMS8jEz1fTkI4H9bPpTOCk+imcRQkezG9Yp2E+E45/nhpmGZQei
+         pBirMUA6XrO/Ht5xpyR9XJ/KaYs42L/b1ivVHV1CgYRhHdhPeAC+V5PPpEvsbpjWwX
+         srYIPa2q0ySeKGkshNuudBF2AsrzdJ65bO0R/VZQ=
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
         pdx-caf-mail.web.codeaurora.org
 X-Spam-Level: 
 X-Spam-Status: No, score=-2.7 required=2.0 tests=ALL_TRUSTED,BAYES_00,
-        DKIM_INVALID,DKIM_SIGNED autolearn=no autolearn_force=no version=3.4.0
-Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
-        by smtp.codeaurora.org (Postfix) with ESMTP id F3F306037C;
-        Thu,  8 Aug 2019 10:55:57 +0000 (UTC)
+        DKIM_INVALID,DKIM_SIGNED,SPF_NONE autolearn=no autolearn_force=no
+        version=3.4.0
+Received: from mail-ed1-f52.google.com (mail-ed1-f52.google.com [209.85.208.52])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: vivek.gautam@smtp.codeaurora.org)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 4245860452;
+        Thu,  8 Aug 2019 11:35:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
-        s=default; t=1565261758;
-        bh=RyE30W0O6ROzUh+uCUrmfEWFlAw7l82uw+UovVXzR2w=;
-        h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
-        b=WhKYtRwpUVT+oFtBvsqBg2coJ+vg6GMlbCZsoEOEY/D4J5PJxVOWaXLROYeW+khbz
-         pFYRrRaWU0DZi1SkmCSeg/h4niwr//6RtlsoswOeTVUeGORTTPIRY18C0tKcxQMEVo
-         5ROk1VgodxqP0VzKkulN0Q5zxPil4Z5T8F0Lulus=
+        s=default; t=1565264134;
+        bh=sH6nUxZ8Y5dNhEx5LOsnBwv7hqu3JssLmT67GtkYFO8=;
+        h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
+        b=ZbrI0B4S6yZ9W8DkXTkRKrtxZxIGwqY+/MXPYB0o2rmzwggw0xkXrqFe8/EQqk3qx
+         CEiE0e7ulfOwRuC4cCZk5zRsj+IjxTMkazmUE1W++Hhtf2TrNtbW8Zj1X5IqmRAqkF
+         eR+XXmlBx8cVE9RFQgP2+XxaVevY5NI/aexva7a0=
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 4245860452
+Authentication-Results: pdx-caf-mail.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: pdx-caf-mail.web.codeaurora.org; spf=none smtp.mailfrom=vivek.gautam@codeaurora.org
+Received: by mail-ed1-f52.google.com with SMTP id h8so2240926edv.7;
+        Thu, 08 Aug 2019 04:35:34 -0700 (PDT)
+X-Gm-Message-State: APjAAAW0rTAydE88HFcRZLbHuomed2Ggdt2b3nNhv4mbikfrfxNigiiU
+        klWl1Gu5kYD/Tn6GArSHL6Y+w3a70MHu75A0ENk=
+X-Google-Smtp-Source: APXvYqzXmB+VRV0h6DczJ86/gi4VfVSVgaDq6lvQZ78xCiCfDaAmWfeWWRuyx/bhq49Zbz7Hw0FKWVka+rpz4IhZsdg=
+X-Received: by 2002:a17:906:7013:: with SMTP id n19mr12879575ejj.65.1565264132964;
+ Thu, 08 Aug 2019 04:35:32 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
-Content-Transfer-Encoding: 7bit
-Date:   Thu, 08 Aug 2019 16:25:57 +0530
-From:   Balakrishna Godavarthi <bgodavar@codeaurora.org>
-To:     Harish Bandi <c-hbandi@codeaurora.org>
-Cc:     marcel@holtmann.org, johan.hedberg@gmail.com, mka@chromium.org,
-        linux-kernel@vger.kernel.org, linux-bluetooth@vger.kernel.org,
-        hemantg@codeaurora.org, linux-arm-msm@vger.kernel.org,
-        anubhavg@codeaurora.org
-Subject: Re: [PATCH v1] Bluetooth: hci_qca: wait for Pre shutdown to command
- complete event before sending the Power off pulse
-In-Reply-To: <1565256353-4476-1-git-send-email-c-hbandi@codeaurora.org>
-References: <1565256353-4476-1-git-send-email-c-hbandi@codeaurora.org>
-Message-ID: <83f6833dd901e42e2f86d20ff0898526@codeaurora.org>
-X-Sender: bgodavar@codeaurora.org
-User-Agent: Roundcube Webmail/1.2.5
+References: <20190612071554.13573-1-vivek.gautam@codeaurora.org>
+ <20190612071554.13573-2-vivek.gautam@codeaurora.org> <20190618175536.GI4270@fuggles.cambridge.arm.com>
+ <CAFp+6iEwN6jeEGNxKVU5_i5NxdEbuF2ZggegEJZ1Rq6F=H34jg@mail.gmail.com> <20190805222755.GB2634@builder>
+In-Reply-To: <20190805222755.GB2634@builder>
+From:   Vivek Gautam <vivek.gautam@codeaurora.org>
+Date:   Thu, 8 Aug 2019 17:05:21 +0530
+X-Gmail-Original-Message-ID: <CAFp+6iHhh9749dAV4YDeE_0w1nCiftecTBedW4Rf0aiaOJsN2A@mail.gmail.com>
+Message-ID: <CAFp+6iHhh9749dAV4YDeE_0w1nCiftecTBedW4Rf0aiaOJsN2A@mail.gmail.com>
+Subject: Re: [PATCH v3 1/4] firmware: qcom_scm-64: Add atomic version of qcom_scm_call
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
+        <devicetree@vger.kernel.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        Will Deacon <will.deacon@arm.com>,
+        open list <linux-kernel@vger.kernel.org>,
+        David Brown <david.brown@linaro.org>,
+        "list@263.net:IOMMU DRIVERS <iommu@lists.linux-foundation.org>, Joerg
+        Roedel <joro@8bytes.org>," <iommu@lists.linux-foundation.org>,
+        "robh+dt" <robh+dt@kernel.org>, Andy Gross <agross@kernel.org>,
+        Robin Murphy <robin.murphy@arm.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Harish,
+On Tue, Aug 6, 2019 at 3:58 AM Bjorn Andersson
+<bjorn.andersson@linaro.org> wrote:
+>
+> On Wed 19 Jun 04:34 PDT 2019, Vivek Gautam wrote:
+>
+> > On Tue, Jun 18, 2019 at 11:25 PM Will Deacon <will.deacon@arm.com> wrote:
+> > >
+> > > On Wed, Jun 12, 2019 at 12:45:51PM +0530, Vivek Gautam wrote:
+> > > > There are scnenarios where drivers are required to make a
+> > > > scm call in atomic context, such as in one of the qcom's
+> > > > arm-smmu-500 errata [1].
+> > > >
+> > > > [1] ("https://source.codeaurora.org/quic/la/kernel/msm-4.9/commit/
+> > > >       drivers/iommu/arm-smmu.c?h=CogSystems-msm-49/
+> > > >       msm-4.9&id=da765c6c75266b38191b38ef086274943f353ea7")
+> > > >
+> > > > Signed-off-by: Vivek Gautam <vivek.gautam@codeaurora.org>
+> > > > Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+> > > > ---
+> > > >  drivers/firmware/qcom_scm-64.c | 136 ++++++++++++++++++++++++++++-------------
+> > > >  1 file changed, 92 insertions(+), 44 deletions(-)
+> > > >
+> > > > diff --git a/drivers/firmware/qcom_scm-64.c b/drivers/firmware/qcom_scm-64.c
+> > > > index 91d5ad7cf58b..b6dca32c5ac4 100644
+> > > > --- a/drivers/firmware/qcom_scm-64.c
+> > > > +++ b/drivers/firmware/qcom_scm-64.c
+> >
+> > [snip]
+> >
+> > > > +
+> > > > +static void qcom_scm_call_do(const struct qcom_scm_desc *desc,
+> > > > +                          struct arm_smccc_res *res, u32 fn_id,
+> > > > +                          u64 x5, bool atomic)
+> > > > +{
+> > >
+> > > Maybe pass in the call type (ARM_SMCCC_FAST_CALL vs ARM_SMCCC_STD_CALL)
+> > > instead of "bool atomic"? Would certainly make the callsites easier to
+> > > understand.
+> >
+> > Sure, will do that.
+> >
+> > >
+> > > > +     int retry_count = 0;
+> > > > +
+> > > > +     if (!atomic) {
+> > > > +             do {
+> > > > +                     mutex_lock(&qcom_scm_lock);
+> > > > +
+> > > > +                     __qcom_scm_call_do(desc, res, fn_id, x5,
+> > > > +                                        ARM_SMCCC_STD_CALL);
+> > > > +
+> > > > +                     mutex_unlock(&qcom_scm_lock);
+> > > > +
+> > > > +                     if (res->a0 == QCOM_SCM_V2_EBUSY) {
+> > > > +                             if (retry_count++ > QCOM_SCM_EBUSY_MAX_RETRY)
+> > > > +                                     break;
+> > > > +                             msleep(QCOM_SCM_EBUSY_WAIT_MS);
+> > > > +                     }
+> > > > +             }  while (res->a0 == QCOM_SCM_V2_EBUSY);
+> > > > +     } else {
+> > > > +             __qcom_scm_call_do(desc, res, fn_id, x5, ARM_SMCCC_FAST_CALL);
+> > > > +     }
+> > >
+> > > Is it safe to make concurrent FAST calls?
+> >
+> > I better add a spinlock here.
+> >
+>
+> Hi Vivek,
+>
+> Would you be able to respin this patch, so that we could unblock the
+> introduction of the display nodes in the various device?
 
-On 2019-08-08 14:55, Harish Bandi wrote:
-> When SoC receives pre shut down command, it share the same
-> with other COEX shared clients. So SoC needs a short
-> time after sending VS pre shutdown command before
-> turning off the regulators and sending the power off pulse.
-> 
-> Signed-off-by: Harish Bandi <c-hbandi@codeaurora.org>
-> ---
->  drivers/bluetooth/btqca.c   | 5 +++--
->  drivers/bluetooth/hci_qca.c | 2 ++
->  2 files changed, 5 insertions(+), 2 deletions(-)
-> 
-> diff --git a/drivers/bluetooth/btqca.c b/drivers/bluetooth/btqca.c
-> index 2221935..f20991e 100644
-> --- a/drivers/bluetooth/btqca.c
-> +++ b/drivers/bluetooth/btqca.c
-> @@ -106,8 +106,9 @@ int qca_send_pre_shutdown_cmd(struct hci_dev *hdev)
-> 
->  	bt_dev_dbg(hdev, "QCA pre shutdown cmd");
-> 
-> -	skb = __hci_cmd_sync(hdev, QCA_PRE_SHUTDOWN_CMD, 0,
-> -				NULL, HCI_INIT_TIMEOUT);
-> +	skb = __hci_cmd_sync_ev(hdev, QCA_PRE_SHUTDOWN_CMD, 0,
-> +				NULL, HCI_EV_CMD_COMPLETE, HCI_INIT_TIMEOUT);
+Will pointed [1] to the restructuring of arm-smmu to support
+implementation specific details.
+That hasn't been posted yet, and I haven't yet been able to work on that either.
+I will be happy to respin this series with the comments addressed if
+Will is okay to pull changes to unblock sdm845 devices. :)
 
-[Bala]: nit: can you also add reason in commit text for adding 
-HCI_EV_CMD_COMPLETE
+[1] https://lore.kernel.org/patchwork/patch/1087457/
 
-> +
->  	if (IS_ERR(skb)) {
->  		err = PTR_ERR(skb);
->  		bt_dev_err(hdev, "QCA preshutdown_cmd failed (%d)", err);
-> diff --git a/drivers/bluetooth/hci_qca.c b/drivers/bluetooth/hci_qca.c
-> index 16db6c0..566aa28 100644
-> --- a/drivers/bluetooth/hci_qca.c
-> +++ b/drivers/bluetooth/hci_qca.c
-> @@ -1386,6 +1386,8 @@ static int qca_power_off(struct hci_dev *hdev)
->  	/* Perform pre shutdown command */
->  	qca_send_pre_shutdown_cmd(hdev);
-> 
-> +	usleep_range(8000, 10000);
-> +
->  	qca_power_shutdown(hu);
->  	return 0;
->  }
+Thanks & Regards
+Vivek
 
-Reviewed-by: Balakrishna Godavarthi <bgodavar@codeaurora.org>
+>
+> Regards,
+> Bjorn
+> _______________________________________________
+> iommu mailing list
+> iommu@lists.linux-foundation.org
+> https://lists.linuxfoundation.org/mailman/listinfo/iommu
+
+
 
 -- 
-Regards
-Balakrishna.
+QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
+of Code Aurora Forum, hosted by The Linux Foundation
