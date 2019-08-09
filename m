@@ -2,57 +2,57 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 271D587118
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 Aug 2019 06:51:51 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id AD73187141
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 Aug 2019 07:12:09 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2405327AbfHIEvh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 9 Aug 2019 00:51:37 -0400
-Received: from smtp.codeaurora.org ([198.145.29.96]:40792 "EHLO
+        id S1727618AbfHIFMJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 9 Aug 2019 01:12:09 -0400
+Received: from smtp.codeaurora.org ([198.145.29.96]:46236 "EHLO
         smtp.codeaurora.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725989AbfHIEvh (ORCPT
+        with ESMTP id S1725890AbfHIFMJ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 9 Aug 2019 00:51:37 -0400
+        Fri, 9 Aug 2019 01:12:09 -0400
 Received: by smtp.codeaurora.org (Postfix, from userid 1000)
-        id C718561418; Fri,  9 Aug 2019 04:51:35 +0000 (UTC)
+        id 4D8406038E; Fri,  9 Aug 2019 05:12:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
-        s=default; t=1565326296;
-        bh=iw4lsWYTbQS4yhyC0rTNbF2CidP7RA8CNdq3sqREgIc=;
+        s=default; t=1565327528;
+        bh=rexmz3pyVOn5/KSBkcTQuSsZPE7mmiFOL2Gp+zjAOIs=;
         h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
-        b=aWqbSXqCBWTfkL7DL813WgFK4a+utOGpUzfftFgQjhxacQlndREE6BuWuQxh4Bmdn
-         kfL74d1zK8AkPlU2Fc8QkvrVH4qQpFWeWKpyVgEZ2l1hwVXzu1Qw7mPgU3Zl5cVKKm
-         BtJ7tV16NKyrAV0NAfpxmKQiIHR8hy2OR7I7D88A=
+        b=FRWBWBWX7v34ViuTbfhMV4Dljird4fIKRWMiwxxAIXwAPc+1q6YyOgF5xR4miO11P
+         a6STp0vykZYGFCJrkdFDZirOWHQeb2tlxoddLBKeofRi7J7SkUlyUVAyOI5pzGEuzD
+         qDiFj0RbXiqBliwkeSRhLNgqwZhe7DU+vWASmzMU=
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
         pdx-caf-mail.web.codeaurora.org
 X-Spam-Level: 
 X-Spam-Status: No, score=-2.7 required=2.0 tests=ALL_TRUSTED,BAYES_00,
         DKIM_INVALID,DKIM_SIGNED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
-        by smtp.codeaurora.org (Postfix) with ESMTP id 12B3760ACF;
-        Fri,  9 Aug 2019 04:51:35 +0000 (UTC)
+        by smtp.codeaurora.org (Postfix) with ESMTP id 6EA5060275;
+        Fri,  9 Aug 2019 05:12:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
-        s=default; t=1565326295;
-        bh=iw4lsWYTbQS4yhyC0rTNbF2CidP7RA8CNdq3sqREgIc=;
+        s=default; t=1565327527;
+        bh=rexmz3pyVOn5/KSBkcTQuSsZPE7mmiFOL2Gp+zjAOIs=;
         h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
-        b=DmKF8B8C7sNb8KHEDTPTrPYPY2im9cOTwMIHphvvKCZ8KvcvPq0pP5cdepjL5+bkX
-         1C6o39vccWw8Vj7AQX0b+kkD5TDHfsJqXBRvjC/RRDiMtJNUVsVbHtMjgnlojY5CPL
-         yJzYqvHYbMJVRGOL9o/ypERI2pZezBXEydqB42cY=
+        b=OP4p4ZlHnWEGpatJdHw8tFmmfgyfuXxAqGv+BaN7akT48anMK8hKO16B7R23+Mtcg
+         q2ATIVoh6RcWJmcWONGDwM6Uv5hbi04bO8/1gHUN3EsS98X9qlCfDueYi//BlZUZTp
+         GG5KJmG2zz5ZkHQ8iLoKqkDDJ8B2PcYn38PsAVQ8=
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII;
  format=flowed
 Content-Transfer-Encoding: 7bit
-Date:   Fri, 09 Aug 2019 10:21:35 +0530
+Date:   Fri, 09 Aug 2019 10:42:07 +0530
 From:   Harish Bandi <c-hbandi@codeaurora.org>
-To:     Balakrishna Godavarthi <bgodavar@codeaurora.org>
-Cc:     marcel@holtmann.org, johan.hedberg@gmail.com, mka@chromium.org,
+To:     Matthias Kaehlcke <mka@chromium.org>
+Cc:     marcel@holtmann.org, johan.hedberg@gmail.com,
         linux-kernel@vger.kernel.org, linux-bluetooth@vger.kernel.org,
         hemantg@codeaurora.org, linux-arm-msm@vger.kernel.org,
-        anubhavg@codeaurora.org
+        bgodavar@codeaurora.org, anubhavg@codeaurora.org
 Subject: Re: [PATCH v1] Bluetooth: hci_qca: wait for Pre shutdown to command
  complete event before sending the Power off pulse
-In-Reply-To: <83f6833dd901e42e2f86d20ff0898526@codeaurora.org>
+In-Reply-To: <20190808145909.GP250418@google.com>
 References: <1565256353-4476-1-git-send-email-c-hbandi@codeaurora.org>
- <83f6833dd901e42e2f86d20ff0898526@codeaurora.org>
-Message-ID: <69e95b7d65f5c58f94473dcbe116d0d2@codeaurora.org>
+ <20190808145909.GP250418@google.com>
+Message-ID: <63b81f8235932de0d46164385d972b63@codeaurora.org>
 X-Sender: c-hbandi@codeaurora.org
 User-Agent: Roundcube Webmail/1.2.5
 Sender: linux-arm-msm-owner@vger.kernel.org
@@ -60,12 +60,10 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Bala,
+Hi Matthias,
 
-On 2019-08-08 16:25, Balakrishna Godavarthi wrote:
-> Hi Harish,
-> 
-> On 2019-08-08 14:55, Harish Bandi wrote:
+On 2019-08-08 20:29, Matthias Kaehlcke wrote:
+> On Thu, Aug 08, 2019 at 02:55:53PM +0530, Harish Bandi wrote:
 >> When SoC receives pre shut down command, it share the same
 >> with other COEX shared clients. So SoC needs a short
 >> time after sending VS pre shutdown command before
@@ -90,13 +88,18 @@ On 2019-08-08 16:25, Balakrishna Godavarthi wrote:
 >> -				NULL, HCI_INIT_TIMEOUT);
 >> +	skb = __hci_cmd_sync_ev(hdev, QCA_PRE_SHUTDOWN_CMD, 0,
 >> +				NULL, HCI_EV_CMD_COMPLETE, HCI_INIT_TIMEOUT);
+>> +
 > 
-> [Bala]: nit: can you also add reason in commit text for adding
-> HCI_EV_CMD_COMPLETE
+> The commit message does not mention this change, it only talks about
+> adding a delay.
+
 [Harish] - I will add reason fo HCI_EV_CMD_COMPLETE in commit text and 
 post new patch.
+In commit text title I mentioned about command complete event, However I 
+will add more details
+about reason for command complete in commit text
+
 > 
->> +
 >>  	if (IS_ERR(skb)) {
 >>  		err = PTR_ERR(skb);
 >>  		bt_dev_err(hdev, "QCA preshutdown_cmd failed (%d)", err);
@@ -113,8 +116,3 @@ post new patch.
 >>  	qca_power_shutdown(hu);
 >>  	return 0;
 >>  }
-> 
-> Reviewed-by: Balakrishna Godavarthi <bgodavar@codeaurora.org>
-
-Thanks,
-Harish
