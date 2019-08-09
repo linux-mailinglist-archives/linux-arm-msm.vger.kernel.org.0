@@ -2,95 +2,95 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id A24E08722A
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 Aug 2019 08:21:07 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id AB01287333
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 Aug 2019 09:37:55 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2405339AbfHIGUr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 9 Aug 2019 02:20:47 -0400
-Received: from helcar.hmeau.com ([216.24.177.18]:37502 "EHLO fornost.hmeau.com"
+        id S2405582AbfHIHhy (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 9 Aug 2019 03:37:54 -0400
+Received: from mail.kernel.org ([198.145.29.99]:35744 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S2405415AbfHIGUr (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 9 Aug 2019 02:20:47 -0400
-Received: from gondolin.me.apana.org.au ([192.168.0.6] helo=gondolin.hengli.com.au)
-        by fornost.hmeau.com with esmtps (Exim 4.89 #2 (Debian))
-        id 1hvyG7-0007PS-Tu; Fri, 09 Aug 2019 16:20:16 +1000
-Received: from herbert by gondolin.hengli.com.au with local (Exim 4.80)
-        (envelope-from <herbert@gondor.apana.org.au>)
-        id 1hvyFz-0002sF-Ec; Fri, 09 Aug 2019 16:20:07 +1000
-Date:   Fri, 9 Aug 2019 16:20:07 +1000
-From:   Herbert Xu <herbert@gondor.apana.org.au>
-To:     YueHaibing <yuehaibing@huawei.com>
-Cc:     lars.persson@axis.com, jesper.nilsson@axis.com,
-        davem@davemloft.net, thomas.lendacky@amd.com, gary.hook@amd.com,
-        krzk@kernel.org, kgene@kernel.org, antoine.tenart@bootlin.com,
-        matthias.bgg@gmail.com, jamie@jamieiles.com, agross@kernel.org,
-        heiko@sntech.de, mcoquelin.stm32@gmail.com,
-        alexandre.torgue@st.com, clabbe.montjoie@gmail.com,
-        mripard@kernel.org, wens@csie.org, linux-kernel@vger.kernel.org,
-        linux-crypto@vger.kernel.org, linux-arm-kernel@axis.com,
-        linux-samsung-soc@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org,
-        linux-mediatek@lists.infradead.org, linux-arm-msm@vger.kernel.org,
-        linux-rockchip@lists.infradead.org,
-        linux-stm32@st-md-mailman.stormreply.com
-Subject: Re: [PATCH -next 00/12] crypto: use devm_platform_ioremap_resource()
- to simplify code
-Message-ID: <20190809062007.GP10392@gondor.apana.org.au>
-References: <20190802132809.8116-1-yuehaibing@huawei.com>
+        id S1725980AbfHIHhy (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 9 Aug 2019 03:37:54 -0400
+Received: from localhost.localdomain (unknown [122.167.65.92])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by mail.kernel.org (Postfix) with ESMTPSA id 3780B2171F;
+        Fri,  9 Aug 2019 07:37:50 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=default; t=1565336274;
+        bh=Wub1Zh9b0Ued8Nu9nACHA+ybTs6jaysV3XnW8dA4YcE=;
+        h=From:To:Cc:Subject:Date:From;
+        b=ocuwjTNk7pUIjC5736gkGIKpY0rf1OIL2FwHCE4UXCLKNpWmctZP9xCrt6lJZaty3
+         SBlB2aUUkhGsMmqJ3d2mvtYNTpsB4aqjdoh5nV6JS/hxZWSACsyCpzaamXh/VamDez
+         o+97aOd+qcKlDt8zJZUbpD/Vv/Cdx71bMqeWoO88=
+From:   Vinod Koul <vkoul@kernel.org>
+To:     Mark Brown <broonie@kernel.org>
+Cc:     linux-arm-msm@vger.kernel.org,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Vinod Koul <vkoul@kernel.org>, Andy Gross <agross@kernel.org>,
+        Liam Girdwood <lgirdwood@gmail.com>,
+        Rob Herring <robh+dt@kernel.org>,
+        Mark Rutland <mark.rutland@arm.com>,
+        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org
+Subject: [PATCH 1/4] regulator: dt-bindings: Sort the compatibles and nodes
+Date:   Fri,  9 Aug 2019 13:06:13 +0530
+Message-Id: <20190809073616.1235-1-vkoul@kernel.org>
+X-Mailer: git-send-email 2.20.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20190802132809.8116-1-yuehaibing@huawei.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+Content-Transfer-Encoding: 8bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, Aug 02, 2019 at 09:27:57PM +0800, YueHaibing wrote:
-> devm_platform_ioremap_resource() internally have platform_get_resource()
-> and devm_ioremap_resource() in it. So instead of calling them separately
-> use devm_platform_ioremap_resource() directly.
-> 
-> YueHaibing (12):
->   crypto: artpec6 - use devm_platform_ioremap_resource() to simplify
->     code
->   crypto: ccp - use devm_platform_ioremap_resource() to simplify code
->   crypto: exynos - use devm_platform_ioremap_resource() to simplify code
->   crypto: img-hash - use devm_platform_ioremap_resource() to simplify
->     code
->   crypto: inside-secure - use devm_platform_ioremap_resource() to
->     simplify code
->   crypto: mediatek - use devm_platform_ioremap_resource() to simplify
->     code
->   crypto: picoxcell - use devm_platform_ioremap_resource() to simplify
->     code
->   crypto: sunxi-ss - use devm_platform_ioremap_resource() to simplify
->     code
->   crypto: rockchip - use devm_platform_ioremap_resource() to simplify
->     code
->   crypto: stm32 - use devm_platform_ioremap_resource() to simplify code
->   crypto: qce - use devm_platform_ioremap_resource() to simplify code
->   crypto: qcom-rng - use devm_platform_ioremap_resource() to simplify
->     code
-> 
->  drivers/crypto/axis/artpec6_crypto.c    | 4 +---
->  drivers/crypto/ccp/sp-platform.c        | 4 +---
->  drivers/crypto/exynos-rng.c             | 4 +---
->  drivers/crypto/img-hash.c               | 4 +---
->  drivers/crypto/inside-secure/safexcel.c | 4 +---
->  drivers/crypto/mediatek/mtk-platform.c  | 3 +--
->  drivers/crypto/picoxcell_crypto.c       | 5 ++---
->  drivers/crypto/qce/core.c               | 4 +---
->  drivers/crypto/qcom-rng.c               | 4 +---
->  drivers/crypto/rockchip/rk3288_crypto.c | 4 +---
->  drivers/crypto/stm32/stm32-crc32.c      | 4 +---
->  drivers/crypto/stm32/stm32-cryp.c       | 4 +---
->  drivers/crypto/sunxi-ss/sun4i-ss-core.c | 4 +---
->  13 files changed, 14 insertions(+), 38 deletions(-)
+It helps to keep sorted order for compatibles and nodes, so sort them
 
-All applied.  Thanks.
+Suggested-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
+---
+ .../regulator/qcom,rpmh-regulator.txt         | 19 ++++++++++---------
+ 1 file changed, 10 insertions(+), 9 deletions(-)
+
+diff --git a/Documentation/devicetree/bindings/regulator/qcom,rpmh-regulator.txt b/Documentation/devicetree/bindings/regulator/qcom,rpmh-regulator.txt
+index 1a9cab50503a..bab9f71140b8 100644
+--- a/Documentation/devicetree/bindings/regulator/qcom,rpmh-regulator.txt
++++ b/Documentation/devicetree/bindings/regulator/qcom,rpmh-regulator.txt
+@@ -22,12 +22,12 @@ RPMh resource.
+ 
+ The names used for regulator nodes must match those supported by a given PMIC.
+ Supported regulator node names:
+-	PM8998:		smps1 - smps13, ldo1 - ldo28, lvs1 - lvs2
+-	PMI8998:	bob
+ 	PM8005:		smps1 - smps4
++	PM8009:		smps1 - smps2, ldo1 - ldo7
+ 	PM8150:		smps1 - smps10, ldo1 - ldo18
+ 	PM8150L:	smps1 - smps8, ldo1 - ldo11, bob, flash, rgb
+-	PM8009:		smps1 - smps2, ld01 - ldo7
++	PM8998:		smps1 - smps13, ldo1 - ldo28, lvs1 - lvs2
++	PMI8998:	bob
+ 
+ ========================
+ First Level Nodes - PMIC
+@@ -36,12 +36,13 @@ First Level Nodes - PMIC
+ - compatible
+ 	Usage:      required
+ 	Value type: <string>
+-	Definition: Must be one of: "qcom,pm8998-rpmh-regulators",
+-		    "qcom,pmi8998-rpmh-regulators" or
+-		    "qcom,pm8005-rpmh-regulators" or
+-		    "qcom,pm8150-rpmh-regulators" or
+-		    "qcom,pm8150l-rpmh-regulators" or
+-		    "qcom,pm8009-rpmh-regulators".
++	Definition: Must be one of below:
++		    "qcom,pm8005-rpmh-regulators"
++		    "qcom,pm8009-rpmh-regulators"
++		    "qcom,pm8150-rpmh-regulators"
++		    "qcom,pm8150l-rpmh-regulators"
++		    "qcom,pm8998-rpmh-regulators"
++		    "qcom,pmi8998-rpmh-regulators"
+ 
+ - qcom,pmic-id
+ 	Usage:      required
 -- 
-Email: Herbert Xu <herbert@gondor.apana.org.au>
-Home Page: http://gondor.apana.org.au/~herbert/
-PGP Key: http://gondor.apana.org.au/~herbert/pubkey.txt
+2.20.1
+
