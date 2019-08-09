@@ -2,301 +2,226 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 8870B87988
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 Aug 2019 14:13:43 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A458A87A21
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 Aug 2019 14:32:41 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2406740AbfHIMNg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 9 Aug 2019 08:13:36 -0400
-Received: from mail-lf1-f65.google.com ([209.85.167.65]:44352 "EHLO
-        mail-lf1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2406737AbfHIMNf (ORCPT
+        id S2406992AbfHIMcE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 9 Aug 2019 08:32:04 -0400
+Received: from heliosphere.sirena.org.uk ([172.104.155.198]:59274 "EHLO
+        heliosphere.sirena.org.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2406970AbfHIMcC (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 9 Aug 2019 08:13:35 -0400
-Received: by mail-lf1-f65.google.com with SMTP id v16so15495898lfg.11
-        for <linux-arm-msm@vger.kernel.org>; Fri, 09 Aug 2019 05:13:33 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=Nv77OQJ4wAginoyVflZ1aiIA0B/xXdKVZ4ai4MBEt/c=;
-        b=LgxYjcaR5YDWLbczNxlYJ+ENOQue2F1rKRf6UcnXKkf4cMmIZq4pU4re9Rux9DbPaB
-         fn76unZBnCbuKzUzw01bavZPktY7qjHLyTX6Pew0q54Pk8PZN92wx6OX/iyKu/DOl00L
-         MXSRNGh0aImXRL6ZKcma19q5FCK+S+DB5pQDvTyEcy7smyrWq4jxWDywgTc1gP8yhhfu
-         eXgCZ0LpWd0PxxmnMqS/llh76pspoRE8iXMlw9YD008bg6Y5NO3Dhm/ITfPfsdA9y20k
-         /bE5lM9d2ZXU+dV0wEiU7hVppoqgf+RpkpgtFxP8MOudphIUY1apDkCi0OHaRqkrolRF
-         tEvQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=Nv77OQJ4wAginoyVflZ1aiIA0B/xXdKVZ4ai4MBEt/c=;
-        b=Vff5QNOcEsfuKhNXneOVM3RlZFNw0mEhVBBxVwtDeQYCFkbGaDwLTW5w47MlzchEEG
-         poPe6t/I+NfrBchd7dUL0iAtmPYSMVbkxrO3qkO8N2oDUTx811ZQnNhSfeVlmcYqJ7LX
-         1+lVBbLsEtn5RVNG2z/ZAkvF6f6c97XXxSF7EzdTV/p8nLqZM6xNWxRIcc9RtIUHUg16
-         Cmj0gufa/RMDEfhlLB6P5krF7Kk83r/KVy4Cm/3bDUE4a2C0afGOb15RVZfDQ83PBAoj
-         xJ88fB8wp3MoogJM6BBXUuuLBg4tQGUKkJQHi7jlAG6+DODXUzDYsDb8mMH/FnSKipXi
-         Pitw==
-X-Gm-Message-State: APjAAAWdMBZKA+enR9mwEf4VLkxemDGLOkMC+GTPf9I6fr1tlXbWrgXm
-        qqB7n9X9LooKjq8gIgdYGFRTuA==
-X-Google-Smtp-Source: APXvYqxFUkwTLM0yLzNMJVzI2IUjEvXWAw83CsS+OyA4NffQkZuiECZmFZqLY33hbjy/3anmrtYFNA==
-X-Received: by 2002:a19:f819:: with SMTP id a25mr13239881lff.183.1565352812618;
-        Fri, 09 Aug 2019 05:13:32 -0700 (PDT)
-Received: from localhost.localdomain ([37.157.136.206])
-        by smtp.googlemail.com with ESMTPSA id f23sm1083425lfc.25.2019.08.09.05.13.31
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Fri, 09 Aug 2019 05:13:32 -0700 (PDT)
-From:   Georgi Djakov <georgi.djakov@linaro.org>
-To:     linux-pm@vger.kernel.org, evgreen@chromium.org
-Cc:     daidavid1@codeaurora.org, vincent.guittot@linaro.org,
-        bjorn.andersson@linaro.org, amit.kucheria@linaro.org,
-        dianders@chromium.org, seansw@qti.qualcomm.com,
-        linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
-        linux-arm-msm@vger.kernel.org, georgi.djakov@linaro.org
-Subject: [PATCH v3 3/3] interconnect: qcom: Add tagging and wake/sleep support for sdm845
-Date:   Fri,  9 Aug 2019 15:13:25 +0300
-Message-Id: <20190809121325.8138-4-georgi.djakov@linaro.org>
-X-Mailer: git-send-email 2.22.0
-In-Reply-To: <20190809121325.8138-1-georgi.djakov@linaro.org>
-References: <20190809121325.8138-1-georgi.djakov@linaro.org>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+        Fri, 9 Aug 2019 08:32:02 -0400
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+        d=sirena.org.uk; s=20170815-heliosphere; h=Date:Message-Id:In-Reply-To:
+        Subject:Cc:To:From:Sender:Reply-To:MIME-Version:Content-Type:
+        Content-Transfer-Encoding:Content-ID:Content-Description:Resent-Date:
+        Resent-From:Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:References:
+        List-Id:List-Help:List-Unsubscribe:List-Subscribe:List-Post:List-Owner:
+        List-Archive; bh=yjI9BHjJiM6QPyHI374iDRWW1Y55n+A5l+wSxkkmzSQ=; b=gjZ/ALnhSceO
+        kEv0GZ22UZvBLYLfFHjAXGCEDcYFlEmmBaoIPZUKCNspWuIuytzah7sZM1VFy2NE29ZwScteW3Xi0
+        DcfE7NBN1advJfNqn44Sj/s6QaasLpBxcuRa3B7qbpaQADBv4ckQFm9YIp7fMb+9qqtEM0GVs4jEH
+        XtbAw=;
+Received: from ypsilon.sirena.org.uk ([2001:470:1f1d:6b5::7])
+        by heliosphere.sirena.org.uk with esmtpsa (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256)
+        (Exim 4.92)
+        (envelope-from <broonie@sirena.co.uk>)
+        id 1hw43q-000623-F0; Fri, 09 Aug 2019 12:31:58 +0000
+Received: by ypsilon.sirena.org.uk (Postfix, from userid 1000)
+        id D16DD274303D; Fri,  9 Aug 2019 13:31:57 +0100 (BST)
+From:   Mark Brown <broonie@kernel.org>
+To:     Vinod Koul <vkoul@kernel.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        devicetree@vger.kernel.org, Liam Girdwood <lgirdwood@gmail.com>,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Mark Brown <broonie@kernel.org>,
+        Mark Rutland <mark.rutland@arm.com>,
+        Rob Herring <robh+dt@kernel.org>
+Subject: Applied "regulator: qcom-rpmh: Update PMIC modes for PMIC5" to the regulator tree
+In-Reply-To: <20190809073616.1235-4-vkoul@kernel.org>
+X-Patchwork-Hint: ignore
+Message-Id: <20190809123157.D16DD274303D@ypsilon.sirena.org.uk>
+Date:   Fri,  9 Aug 2019 13:31:57 +0100 (BST)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: David Dai <daidavid1@codeaurora.org>
+The patch
 
-Add support for wake and sleep commands by using a tag to indicate
-whether or not the aggregate and set requests fall into execution
-state specific bucket.
+   regulator: qcom-rpmh: Update PMIC modes for PMIC5
 
-Signed-off-by: David Dai <daidavid1@codeaurora.org>
-Signed-off-by: Georgi Djakov <georgi.djakov@linaro.org>
+has been applied to the regulator tree at
+
+   https://git.kernel.org/pub/scm/linux/kernel/git/broonie/regulator.git for-5.4
+
+All being well this means that it will be integrated into the linux-next
+tree (usually sometime in the next 24 hours) and sent to Linus during
+the next merge window (or sooner if it is a bug fix), however if
+problems are discovered then the patch may be dropped or reverted.  
+
+You may get further e-mails resulting from automated or manual testing
+and review of the tree, please engage with people reporting problems and
+send followup patches addressing any issues that are reported if needed.
+
+If any updates are required or you are submitting further changes they
+should be sent as incremental updates against current git, existing
+patches will not be replaced.
+
+Please add any relevant lists and maintainers to the CCs when replying
+to this mail.
+
+Thanks,
+Mark
+
+From 610f29e5cc0e8d5864dd049b0b3576d9437ae7b4 Mon Sep 17 00:00:00 2001
+From: Vinod Koul <vkoul@kernel.org>
+Date: Fri, 9 Aug 2019 13:06:16 +0530
+Subject: [PATCH] regulator: qcom-rpmh: Update PMIC modes for PMIC5
+
+Add the PMIC5 modes and use them pmic5 ldo and smps
+
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
+Link: https://lore.kernel.org/r/20190809073616.1235-4-vkoul@kernel.org
+Signed-off-by: Mark Brown <broonie@kernel.org>
 ---
- drivers/interconnect/qcom/sdm845.c | 134 ++++++++++++++++++++++-------
- 1 file changed, 103 insertions(+), 31 deletions(-)
+ drivers/regulator/qcom-rpmh-regulator.c | 52 +++++++++++++++++++++----
+ 1 file changed, 45 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/interconnect/qcom/sdm845.c b/drivers/interconnect/qcom/sdm845.c
-index fb526004c82e..b2047d1c6d84 100644
---- a/drivers/interconnect/qcom/sdm845.c
-+++ b/drivers/interconnect/qcom/sdm845.c
-@@ -66,6 +66,17 @@ struct bcm_db {
- #define SDM845_MAX_BCM_PER_NODE	2
- #define SDM845_MAX_VCD		10
+diff --git a/drivers/regulator/qcom-rpmh-regulator.c b/drivers/regulator/qcom-rpmh-regulator.c
+index 391ed844a251..db6c085da65e 100644
+--- a/drivers/regulator/qcom-rpmh-regulator.c
++++ b/drivers/regulator/qcom-rpmh-regulator.c
+@@ -50,6 +50,20 @@ enum rpmh_regulator_type {
+ #define PMIC4_BOB_MODE_AUTO			2
+ #define PMIC4_BOB_MODE_PWM			3
  
-+#define QCOM_ICC_BUCKET_AMC		0
-+#define QCOM_ICC_BUCKET_WAKE		1
-+#define QCOM_ICC_BUCKET_SLEEP		2
-+#define QCOM_ICC_NUM_BUCKETS		3
-+#define QCOM_ICC_TAG_AMC		BIT(QCOM_ICC_BUCKET_AMC)
-+#define QCOM_ICC_TAG_WAKE		BIT(QCOM_ICC_BUCKET_WAKE)
-+#define QCOM_ICC_TAG_SLEEP		BIT(QCOM_ICC_BUCKET_SLEEP)
-+#define QCOM_ICC_TAG_ACTIVE_ONLY	(QCOM_ICC_TAG_AMC | QCOM_ICC_TAG_WAKE)
-+#define QCOM_ICC_TAG_ALWAYS		(QCOM_ICC_TAG_AMC | QCOM_ICC_TAG_WAKE |\
-+					 QCOM_ICC_TAG_SLEEP)
++#define PMIC5_LDO_MODE_RETENTION		3
++#define PMIC5_LDO_MODE_LPM			4
++#define PMIC5_LDO_MODE_HPM			7
++
++#define PMIC5_SMPS_MODE_RETENTION		3
++#define PMIC5_SMPS_MODE_PFM			4
++#define PMIC5_SMPS_MODE_AUTO			6
++#define PMIC5_SMPS_MODE_PWM			7
++
++#define PMIC5_BOB_MODE_PASS			2
++#define PMIC5_BOB_MODE_PFM			4
++#define PMIC5_BOB_MODE_AUTO			6
++#define PMIC5_BOB_MODE_PWM			7
 +
  /**
-  * struct qcom_icc_node - Qualcomm specific interconnect nodes
-  * @name: the node name used in debugfs
-@@ -86,8 +97,8 @@ struct qcom_icc_node {
- 	u16 num_links;
- 	u16 channels;
- 	u16 buswidth;
--	u64 sum_avg;
--	u64 max_peak;
-+	u64 sum_avg[QCOM_ICC_NUM_BUCKETS];
-+	u64 max_peak[QCOM_ICC_NUM_BUCKETS];
- 	struct qcom_icc_bcm *bcms[SDM845_MAX_BCM_PER_NODE];
- 	size_t num_bcms;
+  * struct rpmh_vreg_hw_data - RPMh regulator hardware configurations
+  * @regulator_type:		RPMh accelerator type used to manage this
+@@ -488,6 +502,14 @@ static const int pmic_mode_map_pmic4_ldo[REGULATOR_MODE_STANDBY + 1] = {
+ 	[REGULATOR_MODE_FAST]    = -EINVAL,
  };
-@@ -112,8 +123,8 @@ struct qcom_icc_bcm {
- 	const char *name;
- 	u32 type;
- 	u32 addr;
--	u64 vote_x;
--	u64 vote_y;
-+	u64 vote_x[QCOM_ICC_NUM_BUCKETS];
-+	u64 vote_y[QCOM_ICC_NUM_BUCKETS];
- 	bool dirty;
- 	bool keepalive;
- 	struct bcm_db aux_data;
-@@ -555,7 +566,7 @@ inline void tcs_cmd_gen(struct tcs_cmd *cmd, u64 vote_x, u64 vote_y,
- 		cmd->wait = true;
- }
  
--static void tcs_list_gen(struct list_head *bcm_list,
-+static void tcs_list_gen(struct list_head *bcm_list, int bucket,
- 			 struct tcs_cmd tcs_list[SDM845_MAX_VCD],
- 			 int n[SDM845_MAX_VCD])
++static const int pmic_mode_map_pmic5_ldo[REGULATOR_MODE_STANDBY + 1] = {
++	[REGULATOR_MODE_INVALID] = -EINVAL,
++	[REGULATOR_MODE_STANDBY] = PMIC5_LDO_MODE_RETENTION,
++	[REGULATOR_MODE_IDLE]    = PMIC5_LDO_MODE_LPM,
++	[REGULATOR_MODE_NORMAL]  = PMIC5_LDO_MODE_HPM,
++	[REGULATOR_MODE_FAST]    = -EINVAL,
++};
++
+ static unsigned int rpmh_regulator_pmic4_ldo_of_map_mode(unsigned int rpmh_mode)
  {
-@@ -573,8 +584,8 @@ static void tcs_list_gen(struct list_head *bcm_list,
- 			commit = true;
- 			cur_vcd_size = 0;
- 		}
--		tcs_cmd_gen(&tcs_list[idx], bcm->vote_x, bcm->vote_y,
--			    bcm->addr, commit);
-+		tcs_cmd_gen(&tcs_list[idx], bcm->vote_x[bucket],
-+			    bcm->vote_y[bucket], bcm->addr, commit);
- 		idx++;
- 		n[batch]++;
- 		/*
-@@ -595,51 +606,76 @@ static void tcs_list_gen(struct list_head *bcm_list,
+ 	unsigned int mode;
+@@ -518,6 +540,14 @@ static const int pmic_mode_map_pmic4_smps[REGULATOR_MODE_STANDBY + 1] = {
+ 	[REGULATOR_MODE_FAST]    = PMIC4_SMPS_MODE_PWM,
+ };
  
- static void bcm_aggregate(struct qcom_icc_bcm *bcm)
++static const int pmic_mode_map_pmic5_smps[REGULATOR_MODE_STANDBY + 1] = {
++	[REGULATOR_MODE_INVALID] = -EINVAL,
++	[REGULATOR_MODE_STANDBY] = PMIC5_SMPS_MODE_RETENTION,
++	[REGULATOR_MODE_IDLE]    = PMIC5_SMPS_MODE_PFM,
++	[REGULATOR_MODE_NORMAL]  = PMIC5_SMPS_MODE_AUTO,
++	[REGULATOR_MODE_FAST]    = PMIC5_SMPS_MODE_PWM,
++};
++
+ static unsigned int
+ rpmh_regulator_pmic4_smps_of_map_mode(unsigned int rpmh_mode)
  {
--	size_t i;
--	u64 agg_avg = 0;
--	u64 agg_peak = 0;
-+	size_t i, bucket;
-+	u64 agg_avg[QCOM_ICC_NUM_BUCKETS] = {0};
-+	u64 agg_peak[QCOM_ICC_NUM_BUCKETS] = {0};
- 	u64 temp;
+@@ -552,6 +582,14 @@ static const int pmic_mode_map_pmic4_bob[REGULATOR_MODE_STANDBY + 1] = {
+ 	[REGULATOR_MODE_FAST]    = PMIC4_BOB_MODE_PWM,
+ };
  
--	for (i = 0; i < bcm->num_nodes; i++) {
--		temp = bcm->nodes[i]->sum_avg * bcm->aux_data.width;
--		do_div(temp, bcm->nodes[i]->buswidth * bcm->nodes[i]->channels);
--		agg_avg = max(agg_avg, temp);
-+	for (bucket = 0; bucket < QCOM_ICC_NUM_BUCKETS; bucket++) {
-+		for (i = 0; i < bcm->num_nodes; i++) {
-+			temp = bcm->nodes[i]->sum_avg[bucket] * bcm->aux_data.width;
-+			do_div(temp, bcm->nodes[i]->buswidth * bcm->nodes[i]->channels);
-+			agg_avg[bucket] = max(agg_avg[bucket], temp);
- 
--		temp = bcm->nodes[i]->max_peak * bcm->aux_data.width;
--		do_div(temp, bcm->nodes[i]->buswidth);
--		agg_peak = max(agg_peak, temp);
--	}
-+			temp = bcm->nodes[i]->max_peak[bucket] * bcm->aux_data.width;
-+			do_div(temp, bcm->nodes[i]->buswidth);
-+			agg_peak[bucket] = max(agg_peak[bucket], temp);
-+		}
- 
--	temp = agg_avg * 1000ULL;
--	do_div(temp, bcm->aux_data.unit);
--	bcm->vote_x = temp;
-+		temp = agg_avg[bucket] * 1000ULL;
-+		do_div(temp, bcm->aux_data.unit);
-+		bcm->vote_x[bucket] = temp;
- 
--	temp = agg_peak * 1000ULL;
--	do_div(temp, bcm->aux_data.unit);
--	bcm->vote_y = temp;
-+		temp = agg_peak[bucket] * 1000ULL;
-+		do_div(temp, bcm->aux_data.unit);
-+		bcm->vote_y[bucket] = temp;
-+	}
- 
--	if (bcm->keepalive && bcm->vote_x == 0 && bcm->vote_y == 0) {
--		bcm->vote_x = 1;
--		bcm->vote_y = 1;
-+	if (bcm->keepalive && bcm->vote_x[0] == 0 && bcm->vote_y[0] == 0) {
-+		bcm->vote_x[QCOM_ICC_BUCKET_AMC] = 1;
-+		bcm->vote_x[QCOM_ICC_BUCKET_WAKE] = 1;
-+		bcm->vote_y[QCOM_ICC_BUCKET_AMC] = 1;
-+		bcm->vote_y[QCOM_ICC_BUCKET_WAKE] = 1;
- 	}
- 
- 	bcm->dirty = false;
- }
- 
-+static void qcom_icc_pre_aggregate(struct icc_node *node)
-+{
-+	size_t i;
-+	struct qcom_icc_node *qn;
++static const int pmic_mode_map_pmic5_bob[REGULATOR_MODE_STANDBY + 1] = {
++	[REGULATOR_MODE_INVALID] = -EINVAL,
++	[REGULATOR_MODE_STANDBY] = -EINVAL,
++	[REGULATOR_MODE_IDLE]    = PMIC5_BOB_MODE_PFM,
++	[REGULATOR_MODE_NORMAL]  = PMIC5_BOB_MODE_AUTO,
++	[REGULATOR_MODE_FAST]    = PMIC5_BOB_MODE_PWM,
++};
 +
-+	qn = node->data;
-+
-+	for (i = 0; i < QCOM_ICC_NUM_BUCKETS; i++) {
-+		qn->sum_avg[i] = 0;
-+		qn->max_peak[i] = 0;
-+	}
-+}
-+
- static int qcom_icc_aggregate(struct icc_node *node, u32 tag, u32 avg_bw,
- 			      u32 peak_bw, u32 *agg_avg, u32 *agg_peak)
+ static unsigned int rpmh_regulator_pmic4_bob_of_map_mode(unsigned int rpmh_mode)
  {
- 	size_t i;
- 	struct qcom_icc_node *qn;
-+	unsigned long tag_word = (unsigned long)tag;
+ 	unsigned int mode;
+@@ -643,7 +681,7 @@ static const struct rpmh_vreg_hw_data pmic5_pldo = {
+ 	.voltage_range = REGULATOR_LINEAR_RANGE(1504000, 0, 255, 8000),
+ 	.n_voltages = 256,
+ 	.hpm_min_load_uA = 10000,
+-	.pmic_mode_map = pmic_mode_map_pmic4_ldo,
++	.pmic_mode_map = pmic_mode_map_pmic5_ldo,
+ 	.of_map_mode = rpmh_regulator_pmic4_ldo_of_map_mode,
+ };
  
- 	qn = node->data;
+@@ -653,7 +691,7 @@ static const struct rpmh_vreg_hw_data pmic5_pldo_lv = {
+ 	.voltage_range = REGULATOR_LINEAR_RANGE(1504000, 0, 62, 8000),
+ 	.n_voltages = 63,
+ 	.hpm_min_load_uA = 10000,
+-	.pmic_mode_map = pmic_mode_map_pmic4_ldo,
++	.pmic_mode_map = pmic_mode_map_pmic5_ldo,
+ 	.of_map_mode = rpmh_regulator_pmic4_ldo_of_map_mode,
+ };
  
-+	if (!tag)
-+		tag_word = QCOM_ICC_TAG_ALWAYS;
-+
-+	for (i = 0; i < QCOM_ICC_NUM_BUCKETS; i++) {
-+		if (test_bit(i, &tag_word)) {
-+			qn->sum_avg[i] += avg_bw;
-+			qn->max_peak[i] = max_t(u32, qn->max_peak[i], peak_bw);
-+		}
-+	}
-+
- 	*agg_avg += avg_bw;
- 	*agg_peak = max_t(u32, *agg_peak, peak_bw);
+@@ -663,7 +701,7 @@ static const struct rpmh_vreg_hw_data pmic5_nldo = {
+ 	.voltage_range = REGULATOR_LINEAR_RANGE(320000, 0, 123, 8000),
+ 	.n_voltages = 124,
+ 	.hpm_min_load_uA = 30000,
+-	.pmic_mode_map = pmic_mode_map_pmic4_ldo,
++	.pmic_mode_map = pmic_mode_map_pmic5_ldo,
+ 	.of_map_mode = rpmh_regulator_pmic4_ldo_of_map_mode,
+ };
  
--	qn->sum_avg = *agg_avg;
--	qn->max_peak = *agg_peak;
--
- 	for (i = 0; i < qn->num_bcms; i++)
- 		qn->bcms[i]->dirty = true;
+@@ -672,7 +710,7 @@ static const struct rpmh_vreg_hw_data pmic5_hfsmps510 = {
+ 	.ops = &rpmh_regulator_vrm_ops,
+ 	.voltage_range = REGULATOR_LINEAR_RANGE(320000, 0, 215, 8000),
+ 	.n_voltages = 216,
+-	.pmic_mode_map = pmic_mode_map_pmic4_smps,
++	.pmic_mode_map = pmic_mode_map_pmic5_smps,
+ 	.of_map_mode = rpmh_regulator_pmic4_smps_of_map_mode,
+ };
  
-@@ -675,7 +711,7 @@ static int qcom_icc_set(struct icc_node *src, struct icc_node *dst)
- 	 * Construct the command list based on a pre ordered list of BCMs
- 	 * based on VCD.
- 	 */
--	tcs_list_gen(&commit_list, cmds, commit_idx);
-+	tcs_list_gen(&commit_list, QCOM_ICC_BUCKET_AMC, cmds, commit_idx);
+@@ -681,7 +719,7 @@ static const struct rpmh_vreg_hw_data pmic5_ftsmps510 = {
+ 	.ops = &rpmh_regulator_vrm_ops,
+ 	.voltage_range = REGULATOR_LINEAR_RANGE(300000, 0, 263, 4000),
+ 	.n_voltages = 264,
+-	.pmic_mode_map = pmic_mode_map_pmic4_smps,
++	.pmic_mode_map = pmic_mode_map_pmic5_smps,
+ 	.of_map_mode = rpmh_regulator_pmic4_smps_of_map_mode,
+ };
  
- 	if (!commit_idx[0])
- 		return ret;
-@@ -693,6 +729,41 @@ static int qcom_icc_set(struct icc_node *src, struct icc_node *dst)
- 		return ret;
- 	}
+@@ -690,7 +728,7 @@ static const struct rpmh_vreg_hw_data pmic5_hfsmps515 = {
+ 	.ops = &rpmh_regulator_vrm_ops,
+ 	.voltage_range = REGULATOR_LINEAR_RANGE(2800000, 0, 4, 1600),
+ 	.n_voltages = 5,
+-	.pmic_mode_map = pmic_mode_map_pmic4_smps,
++	.pmic_mode_map = pmic_mode_map_pmic5_smps,
+ 	.of_map_mode = rpmh_regulator_pmic4_smps_of_map_mode,
+ };
  
-+	INIT_LIST_HEAD(&commit_list);
-+
-+	for (i = 0; i < qp->num_bcms; i++) {
-+		/*
-+		 * Only generate WAKE and SLEEP commands if a resource's
-+		 * requirements change as the execution environment transitions
-+		 * between different power states.
-+		 */
-+		if (qp->bcms[i]->vote_x[QCOM_ICC_BUCKET_WAKE] !=
-+		    qp->bcms[i]->vote_x[QCOM_ICC_BUCKET_SLEEP] ||
-+		    qp->bcms[i]->vote_y[QCOM_ICC_BUCKET_WAKE] !=
-+		    qp->bcms[i]->vote_y[QCOM_ICC_BUCKET_SLEEP]) {
-+			list_add_tail(&qp->bcms[i]->list, &commit_list);
-+		}
-+	}
-+
-+	if (list_empty(&commit_list))
-+		return ret;
-+
-+	tcs_list_gen(&commit_list, QCOM_ICC_BUCKET_WAKE, cmds, commit_idx);
-+
-+	ret = rpmh_write_batch(qp->dev, RPMH_WAKE_ONLY_STATE, cmds, commit_idx);
-+	if (ret) {
-+		pr_err("Error sending WAKE RPMH requests (%d)\n", ret);
-+		return ret;
-+	}
-+
-+	tcs_list_gen(&commit_list, QCOM_ICC_BUCKET_SLEEP, cmds, commit_idx);
-+
-+	ret = rpmh_write_batch(qp->dev, RPMH_SLEEP_STATE, cmds, commit_idx);
-+	if (ret) {
-+		pr_err("Error sending SLEEP RPMH requests (%d)\n", ret);
-+		return ret;
-+	}
-+
- 	return ret;
- }
+@@ -699,7 +737,7 @@ static const struct rpmh_vreg_hw_data pmic5_bob = {
+ 	.ops = &rpmh_regulator_vrm_bypass_ops,
+ 	.voltage_range = REGULATOR_LINEAR_RANGE(300000, 0, 135, 32000),
+ 	.n_voltages = 136,
+-	.pmic_mode_map = pmic_mode_map_pmic4_bob,
++	.pmic_mode_map = pmic_mode_map_pmic5_bob,
+ 	.of_map_mode = rpmh_regulator_pmic4_bob_of_map_mode,
+ };
  
-@@ -738,6 +809,7 @@ static int qnoc_probe(struct platform_device *pdev)
- 	provider = &qp->provider;
- 	provider->dev = &pdev->dev;
- 	provider->set = qcom_icc_set;
-+	provider->pre_aggregate = qcom_icc_pre_aggregate;
- 	provider->aggregate = qcom_icc_aggregate;
- 	provider->xlate = of_icc_xlate_onecell;
- 	INIT_LIST_HEAD(&provider->nodes);
+-- 
+2.20.1
+
