@@ -2,117 +2,95 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id AD73187141
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 Aug 2019 07:12:09 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A24E08722A
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 Aug 2019 08:21:07 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727618AbfHIFMJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 9 Aug 2019 01:12:09 -0400
-Received: from smtp.codeaurora.org ([198.145.29.96]:46236 "EHLO
-        smtp.codeaurora.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725890AbfHIFMJ (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 9 Aug 2019 01:12:09 -0400
-Received: by smtp.codeaurora.org (Postfix, from userid 1000)
-        id 4D8406038E; Fri,  9 Aug 2019 05:12:08 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
-        s=default; t=1565327528;
-        bh=rexmz3pyVOn5/KSBkcTQuSsZPE7mmiFOL2Gp+zjAOIs=;
-        h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
-        b=FRWBWBWX7v34ViuTbfhMV4Dljird4fIKRWMiwxxAIXwAPc+1q6YyOgF5xR4miO11P
-         a6STp0vykZYGFCJrkdFDZirOWHQeb2tlxoddLBKeofRi7J7SkUlyUVAyOI5pzGEuzD
-         qDiFj0RbXiqBliwkeSRhLNgqwZhe7DU+vWASmzMU=
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        pdx-caf-mail.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.7 required=2.0 tests=ALL_TRUSTED,BAYES_00,
-        DKIM_INVALID,DKIM_SIGNED autolearn=no autolearn_force=no version=3.4.0
-Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
-        by smtp.codeaurora.org (Postfix) with ESMTP id 6EA5060275;
-        Fri,  9 Aug 2019 05:12:07 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
-        s=default; t=1565327527;
-        bh=rexmz3pyVOn5/KSBkcTQuSsZPE7mmiFOL2Gp+zjAOIs=;
-        h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
-        b=OP4p4ZlHnWEGpatJdHw8tFmmfgyfuXxAqGv+BaN7akT48anMK8hKO16B7R23+Mtcg
-         q2ATIVoh6RcWJmcWONGDwM6Uv5hbi04bO8/1gHUN3EsS98X9qlCfDueYi//BlZUZTp
-         GG5KJmG2zz5ZkHQ8iLoKqkDDJ8B2PcYn38PsAVQ8=
+        id S2405339AbfHIGUr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 9 Aug 2019 02:20:47 -0400
+Received: from helcar.hmeau.com ([216.24.177.18]:37502 "EHLO fornost.hmeau.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S2405415AbfHIGUr (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 9 Aug 2019 02:20:47 -0400
+Received: from gondolin.me.apana.org.au ([192.168.0.6] helo=gondolin.hengli.com.au)
+        by fornost.hmeau.com with esmtps (Exim 4.89 #2 (Debian))
+        id 1hvyG7-0007PS-Tu; Fri, 09 Aug 2019 16:20:16 +1000
+Received: from herbert by gondolin.hengli.com.au with local (Exim 4.80)
+        (envelope-from <herbert@gondor.apana.org.au>)
+        id 1hvyFz-0002sF-Ec; Fri, 09 Aug 2019 16:20:07 +1000
+Date:   Fri, 9 Aug 2019 16:20:07 +1000
+From:   Herbert Xu <herbert@gondor.apana.org.au>
+To:     YueHaibing <yuehaibing@huawei.com>
+Cc:     lars.persson@axis.com, jesper.nilsson@axis.com,
+        davem@davemloft.net, thomas.lendacky@amd.com, gary.hook@amd.com,
+        krzk@kernel.org, kgene@kernel.org, antoine.tenart@bootlin.com,
+        matthias.bgg@gmail.com, jamie@jamieiles.com, agross@kernel.org,
+        heiko@sntech.de, mcoquelin.stm32@gmail.com,
+        alexandre.torgue@st.com, clabbe.montjoie@gmail.com,
+        mripard@kernel.org, wens@csie.org, linux-kernel@vger.kernel.org,
+        linux-crypto@vger.kernel.org, linux-arm-kernel@axis.com,
+        linux-samsung-soc@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org,
+        linux-mediatek@lists.infradead.org, linux-arm-msm@vger.kernel.org,
+        linux-rockchip@lists.infradead.org,
+        linux-stm32@st-md-mailman.stormreply.com
+Subject: Re: [PATCH -next 00/12] crypto: use devm_platform_ioremap_resource()
+ to simplify code
+Message-ID: <20190809062007.GP10392@gondor.apana.org.au>
+References: <20190802132809.8116-1-yuehaibing@huawei.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
-Content-Transfer-Encoding: 7bit
-Date:   Fri, 09 Aug 2019 10:42:07 +0530
-From:   Harish Bandi <c-hbandi@codeaurora.org>
-To:     Matthias Kaehlcke <mka@chromium.org>
-Cc:     marcel@holtmann.org, johan.hedberg@gmail.com,
-        linux-kernel@vger.kernel.org, linux-bluetooth@vger.kernel.org,
-        hemantg@codeaurora.org, linux-arm-msm@vger.kernel.org,
-        bgodavar@codeaurora.org, anubhavg@codeaurora.org
-Subject: Re: [PATCH v1] Bluetooth: hci_qca: wait for Pre shutdown to command
- complete event before sending the Power off pulse
-In-Reply-To: <20190808145909.GP250418@google.com>
-References: <1565256353-4476-1-git-send-email-c-hbandi@codeaurora.org>
- <20190808145909.GP250418@google.com>
-Message-ID: <63b81f8235932de0d46164385d972b63@codeaurora.org>
-X-Sender: c-hbandi@codeaurora.org
-User-Agent: Roundcube Webmail/1.2.5
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20190802132809.8116-1-yuehaibing@huawei.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Matthias,
-
-On 2019-08-08 20:29, Matthias Kaehlcke wrote:
-> On Thu, Aug 08, 2019 at 02:55:53PM +0530, Harish Bandi wrote:
->> When SoC receives pre shut down command, it share the same
->> with other COEX shared clients. So SoC needs a short
->> time after sending VS pre shutdown command before
->> turning off the regulators and sending the power off pulse.
->> 
->> Signed-off-by: Harish Bandi <c-hbandi@codeaurora.org>
->> ---
->>  drivers/bluetooth/btqca.c   | 5 +++--
->>  drivers/bluetooth/hci_qca.c | 2 ++
->>  2 files changed, 5 insertions(+), 2 deletions(-)
->> 
->> diff --git a/drivers/bluetooth/btqca.c b/drivers/bluetooth/btqca.c
->> index 2221935..f20991e 100644
->> --- a/drivers/bluetooth/btqca.c
->> +++ b/drivers/bluetooth/btqca.c
->> @@ -106,8 +106,9 @@ int qca_send_pre_shutdown_cmd(struct hci_dev 
->> *hdev)
->> 
->>  	bt_dev_dbg(hdev, "QCA pre shutdown cmd");
->> 
->> -	skb = __hci_cmd_sync(hdev, QCA_PRE_SHUTDOWN_CMD, 0,
->> -				NULL, HCI_INIT_TIMEOUT);
->> +	skb = __hci_cmd_sync_ev(hdev, QCA_PRE_SHUTDOWN_CMD, 0,
->> +				NULL, HCI_EV_CMD_COMPLETE, HCI_INIT_TIMEOUT);
->> +
+On Fri, Aug 02, 2019 at 09:27:57PM +0800, YueHaibing wrote:
+> devm_platform_ioremap_resource() internally have platform_get_resource()
+> and devm_ioremap_resource() in it. So instead of calling them separately
+> use devm_platform_ioremap_resource() directly.
 > 
-> The commit message does not mention this change, it only talks about
-> adding a delay.
-
-[Harish] - I will add reason fo HCI_EV_CMD_COMPLETE in commit text and 
-post new patch.
-In commit text title I mentioned about command complete event, However I 
-will add more details
-about reason for command complete in commit text
-
+> YueHaibing (12):
+>   crypto: artpec6 - use devm_platform_ioremap_resource() to simplify
+>     code
+>   crypto: ccp - use devm_platform_ioremap_resource() to simplify code
+>   crypto: exynos - use devm_platform_ioremap_resource() to simplify code
+>   crypto: img-hash - use devm_platform_ioremap_resource() to simplify
+>     code
+>   crypto: inside-secure - use devm_platform_ioremap_resource() to
+>     simplify code
+>   crypto: mediatek - use devm_platform_ioremap_resource() to simplify
+>     code
+>   crypto: picoxcell - use devm_platform_ioremap_resource() to simplify
+>     code
+>   crypto: sunxi-ss - use devm_platform_ioremap_resource() to simplify
+>     code
+>   crypto: rockchip - use devm_platform_ioremap_resource() to simplify
+>     code
+>   crypto: stm32 - use devm_platform_ioremap_resource() to simplify code
+>   crypto: qce - use devm_platform_ioremap_resource() to simplify code
+>   crypto: qcom-rng - use devm_platform_ioremap_resource() to simplify
+>     code
 > 
->>  	if (IS_ERR(skb)) {
->>  		err = PTR_ERR(skb);
->>  		bt_dev_err(hdev, "QCA preshutdown_cmd failed (%d)", err);
->> diff --git a/drivers/bluetooth/hci_qca.c b/drivers/bluetooth/hci_qca.c
->> index 16db6c0..566aa28 100644
->> --- a/drivers/bluetooth/hci_qca.c
->> +++ b/drivers/bluetooth/hci_qca.c
->> @@ -1386,6 +1386,8 @@ static int qca_power_off(struct hci_dev *hdev)
->>  	/* Perform pre shutdown command */
->>  	qca_send_pre_shutdown_cmd(hdev);
->> 
->> +	usleep_range(8000, 10000);
->> +
->>  	qca_power_shutdown(hu);
->>  	return 0;
->>  }
+>  drivers/crypto/axis/artpec6_crypto.c    | 4 +---
+>  drivers/crypto/ccp/sp-platform.c        | 4 +---
+>  drivers/crypto/exynos-rng.c             | 4 +---
+>  drivers/crypto/img-hash.c               | 4 +---
+>  drivers/crypto/inside-secure/safexcel.c | 4 +---
+>  drivers/crypto/mediatek/mtk-platform.c  | 3 +--
+>  drivers/crypto/picoxcell_crypto.c       | 5 ++---
+>  drivers/crypto/qce/core.c               | 4 +---
+>  drivers/crypto/qcom-rng.c               | 4 +---
+>  drivers/crypto/rockchip/rk3288_crypto.c | 4 +---
+>  drivers/crypto/stm32/stm32-crc32.c      | 4 +---
+>  drivers/crypto/stm32/stm32-cryp.c       | 4 +---
+>  drivers/crypto/sunxi-ss/sun4i-ss-core.c | 4 +---
+>  13 files changed, 14 insertions(+), 38 deletions(-)
+
+All applied.  Thanks.
+-- 
+Email: Herbert Xu <herbert@gondor.apana.org.au>
+Home Page: http://gondor.apana.org.au/~herbert/
+PGP Key: http://gondor.apana.org.au/~herbert/pubkey.txt
