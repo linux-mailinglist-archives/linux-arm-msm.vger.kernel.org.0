@@ -2,136 +2,127 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 40E5A87A27
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 Aug 2019 14:32:44 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 3AB55880AB
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 Aug 2019 19:00:07 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2406671AbfHIMcb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 9 Aug 2019 08:32:31 -0400
-Received: from heliosphere.sirena.org.uk ([172.104.155.198]:59314 "EHLO
-        heliosphere.sirena.org.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2406976AbfHIMcD (ORCPT
+        id S2436754AbfHIRAB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 9 Aug 2019 13:00:01 -0400
+Received: from mail-pl1-f196.google.com ([209.85.214.196]:36081 "EHLO
+        mail-pl1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2436739AbfHIRAB (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 9 Aug 2019 08:32:03 -0400
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-        d=sirena.org.uk; s=20170815-heliosphere; h=Date:Message-Id:In-Reply-To:
-        Subject:Cc:To:From:Sender:Reply-To:MIME-Version:Content-Type:
-        Content-Transfer-Encoding:Content-ID:Content-Description:Resent-Date:
-        Resent-From:Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:References:
-        List-Id:List-Help:List-Unsubscribe:List-Subscribe:List-Post:List-Owner:
-        List-Archive; bh=eoY+Th80rH30dC+RAHj1RWkzYop+aXe6pNj+PkTZ5uY=; b=i5KJ1sIngH9l
-        IAXMDf1x6MhEQvf10GAcXaXUuvHygOaKFRaHFo34uqzhqEDxWj3XUkSixX4OljFwCuQcVZYykykcK
-        6ZLV0T7WTujJS5gGOLUF7+nqrifCBAtewOVUjS9jj4fp7eek9qP7DIscxCZgflAZzjxp1jqo6OpwI
-        tFil0=;
-Received: from ypsilon.sirena.org.uk ([2001:470:1f1d:6b5::7])
-        by heliosphere.sirena.org.uk with esmtpsa (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256)
-        (Exim 4.92)
-        (envelope-from <broonie@sirena.co.uk>)
-        id 1hw43r-000628-8X; Fri, 09 Aug 2019 12:31:59 +0000
-Received: by ypsilon.sirena.org.uk (Postfix, from userid 1000)
-        id 55A8B27430B7; Fri,  9 Aug 2019 13:31:58 +0100 (BST)
-From:   Mark Brown <broonie@kernel.org>
+        Fri, 9 Aug 2019 13:00:01 -0400
+Received: by mail-pl1-f196.google.com with SMTP id k8so45210571plt.3
+        for <linux-arm-msm@vger.kernel.org>; Fri, 09 Aug 2019 10:00:00 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=HzTYQAsTwaeVmkPpyYA1+naQMbibccJuAVbeLptpfdo=;
+        b=jLURGumwZc6E/p0KiMVcYkNhD2BqzUR63Qb5/zAULhocRqcCYmkB3afGtGBPibGK8g
+         kE9JHSlMRB/Dv6m6pfftnIfCMzVc7OsepxQRXmXOeC9MqYcZB9lNEKVXGBrSiGHv4CWi
+         Mt2hQMxvMS8k5RAg5MRZDajoCjGOVCxONDVAyo7HssYFEUF6miW/Ph9ojHWuz4Wwnrwb
+         INWAX2BJIs8RhNAAqZbBG0BHV92QTFpkXtUFFNOlfm7rWNa5Mg7caNoonzIH7PYhKqx/
+         jAmstmGYBm9Q4d+XKNpjbylQCgtRL8fVbGjcCMT6b5m8wHwvqzhrjmXMddlQFa7+zlFy
+         dq7w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=HzTYQAsTwaeVmkPpyYA1+naQMbibccJuAVbeLptpfdo=;
+        b=Azz4R5Q7erBgGJvx09l5FHSmt80YO5qVnrWToTmWC5lqkJMdp3eGnka2YtU59aL8W/
+         3YiuHZPxIdzqAwVKKnW6olyEmPWv2fpvm9rFXCwPh5w1n1Fb21egLbymhp7/UYTXXebR
+         SGNHihwgPb64VXFpMxKY4IlN6BgDdBflWI+kKdvcWWCYUg+SK0NtB3DpY/iajOrshv5z
+         PIpjC3SX1a4T3aPf5Mpq5USRe8NvsxNvIOb91nJYDgay2RUSJAM9sFln7GbI1n/OWLng
+         vuidkBHIG921dU0YyQ1Iqv4YfpT+GfzD36vZfeJpbOE9xn/loYiGS0zGQ9iPUkERtxBr
+         s90w==
+X-Gm-Message-State: APjAAAU/ZfRhB7ZuYf96Tn0E0UdND3uPfs5HAn4la8fyk5YXIqbOSTB3
+        NZMjtbUtrZMCPoaveRmBOBFu/w==
+X-Google-Smtp-Source: APXvYqxIvh8RXaUTDHMAAPall519zovv23HzUG1DHQ2lDtsV6hbQ9nI3rJVwqZmuAYs+AgsL8D8x4Q==
+X-Received: by 2002:a17:902:a40c:: with SMTP id p12mr20027983plq.146.1565370000206;
+        Fri, 09 Aug 2019 10:00:00 -0700 (PDT)
+Received: from tuxbook-pro (104-188-17-28.lightspeed.sndgca.sbcglobal.net. [104.188.17.28])
+        by smtp.gmail.com with ESMTPSA id 185sm98899540pfd.125.2019.08.09.09.59.58
+        (version=TLS1_3 cipher=AEAD-AES256-GCM-SHA384 bits=256/256);
+        Fri, 09 Aug 2019 09:59:59 -0700 (PDT)
+Date:   Fri, 9 Aug 2019 10:01:34 -0700
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
 To:     Vinod Koul <vkoul@kernel.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        devicetree@vger.kernel.org, Liam Girdwood <lgirdwood@gmail.com>,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Mark Brown <broonie@kernel.org>,
+Cc:     Mark Brown <broonie@kernel.org>, linux-arm-msm@vger.kernel.org,
+        Andy Gross <agross@kernel.org>,
+        Liam Girdwood <lgirdwood@gmail.com>,
+        Rob Herring <robh+dt@kernel.org>,
         Mark Rutland <mark.rutland@arm.com>,
-        Rob Herring <robh+dt@kernel.org>
-Subject: Applied "regulator: qcom-rpmh: Sort the compatibles" to the regulator tree
-In-Reply-To: <20190809073616.1235-2-vkoul@kernel.org>
-X-Patchwork-Hint: ignore
-Message-Id: <20190809123158.55A8B27430B7@ypsilon.sirena.org.uk>
-Date:   Fri,  9 Aug 2019 13:31:58 +0100 (BST)
+        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org
+Subject: Re: [PATCH 1/4] regulator: dt-bindings: Sort the compatibles and
+ nodes
+Message-ID: <20190809170134.GM26807@tuxbook-pro>
+References: <20190809073616.1235-1-vkoul@kernel.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20190809073616.1235-1-vkoul@kernel.org>
+User-Agent: Mutt/1.12.1 (2019-06-15)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The patch
+On Fri 09 Aug 00:36 PDT 2019, Vinod Koul wrote:
 
-   regulator: qcom-rpmh: Sort the compatibles
+> It helps to keep sorted order for compatibles and nodes, so sort them
+> 
+> Suggested-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+> Signed-off-by: Vinod Koul <vkoul@kernel.org>
+> ---
+>  .../regulator/qcom,rpmh-regulator.txt         | 19 ++++++++++---------
+>  1 file changed, 10 insertions(+), 9 deletions(-)
+> 
+> diff --git a/Documentation/devicetree/bindings/regulator/qcom,rpmh-regulator.txt b/Documentation/devicetree/bindings/regulator/qcom,rpmh-regulator.txt
+> index 1a9cab50503a..bab9f71140b8 100644
+> --- a/Documentation/devicetree/bindings/regulator/qcom,rpmh-regulator.txt
+> +++ b/Documentation/devicetree/bindings/regulator/qcom,rpmh-regulator.txt
+> @@ -22,12 +22,12 @@ RPMh resource.
+>  
+>  The names used for regulator nodes must match those supported by a given PMIC.
+>  Supported regulator node names:
+> -	PM8998:		smps1 - smps13, ldo1 - ldo28, lvs1 - lvs2
+> -	PMI8998:	bob
+>  	PM8005:		smps1 - smps4
+> +	PM8009:		smps1 - smps2, ldo1 - ldo7
+>  	PM8150:		smps1 - smps10, ldo1 - ldo18
+>  	PM8150L:	smps1 - smps8, ldo1 - ldo11, bob, flash, rgb
+> -	PM8009:		smps1 - smps2, ld01 - ldo7
+> +	PM8998:		smps1 - smps13, ldo1 - ldo28, lvs1 - lvs2
+> +	PMI8998:	bob
+>  
+>  ========================
+>  First Level Nodes - PMIC
+> @@ -36,12 +36,13 @@ First Level Nodes - PMIC
+>  - compatible
+>  	Usage:      required
+>  	Value type: <string>
+> -	Definition: Must be one of: "qcom,pm8998-rpmh-regulators",
+> -		    "qcom,pmi8998-rpmh-regulators" or
+> -		    "qcom,pm8005-rpmh-regulators" or
+> -		    "qcom,pm8150-rpmh-regulators" or
+> -		    "qcom,pm8150l-rpmh-regulators" or
+> -		    "qcom,pm8009-rpmh-regulators".
+> +	Definition: Must be one of below:
+> +		    "qcom,pm8005-rpmh-regulators"
+> +		    "qcom,pm8009-rpmh-regulators"
+> +		    "qcom,pm8150-rpmh-regulators"
+> +		    "qcom,pm8150l-rpmh-regulators"
+> +		    "qcom,pm8998-rpmh-regulators"
+> +		    "qcom,pmi8998-rpmh-regulators"
 
-has been applied to the regulator tree at
+Thanks for dropping the "or" as well.
 
-   https://git.kernel.org/pub/scm/linux/kernel/git/broonie/regulator.git for-5.4
+Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
 
-All being well this means that it will be integrated into the linux-next
-tree (usually sometime in the next 24 hours) and sent to Linus during
-the next merge window (or sooner if it is a bug fix), however if
-problems are discovered then the patch may be dropped or reverted.  
-
-You may get further e-mails resulting from automated or manual testing
-and review of the tree, please engage with people reporting problems and
-send followup patches addressing any issues that are reported if needed.
-
-If any updates are required or you are submitting further changes they
-should be sent as incremental updates against current git, existing
-patches will not be replaced.
-
-Please add any relevant lists and maintainers to the CCs when replying
-to this mail.
-
-Thanks,
-Mark
-
-From 7172fb7f3abea4787ca01dda7297241c4b0f0af5 Mon Sep 17 00:00:00 2001
-From: Vinod Koul <vkoul@kernel.org>
-Date: Fri, 9 Aug 2019 13:06:14 +0530
-Subject: [PATCH] regulator: qcom-rpmh: Sort the compatibles
-
-It helps to keep sorted order for compatibles, so sort them
-
-Suggested-by: Bjorn Andersson <bjorn.andersson@linaro.org>
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
-Link: https://lore.kernel.org/r/20190809073616.1235-2-vkoul@kernel.org
-Signed-off-by: Mark Brown <broonie@kernel.org>
----
- drivers/regulator/qcom-rpmh-regulator.c | 20 ++++++++++----------
- 1 file changed, 10 insertions(+), 10 deletions(-)
-
-diff --git a/drivers/regulator/qcom-rpmh-regulator.c b/drivers/regulator/qcom-rpmh-regulator.c
-index 693ffec62f3e..0ef2716da3bd 100644
---- a/drivers/regulator/qcom-rpmh-regulator.c
-+++ b/drivers/regulator/qcom-rpmh-regulator.c
-@@ -878,18 +878,14 @@ static int rpmh_regulator_probe(struct platform_device *pdev)
- }
- 
- static const struct of_device_id rpmh_regulator_match_table[] = {
--	{
--		.compatible = "qcom,pm8998-rpmh-regulators",
--		.data = pm8998_vreg_data,
--	},
--	{
--		.compatible = "qcom,pmi8998-rpmh-regulators",
--		.data = pmi8998_vreg_data,
--	},
- 	{
- 		.compatible = "qcom,pm8005-rpmh-regulators",
- 		.data = pm8005_vreg_data,
- 	},
-+	{
-+		.compatible = "qcom,pm8009-rpmh-regulators",
-+		.data = pm8009_vreg_data,
-+	},
- 	{
- 		.compatible = "qcom,pm8150-rpmh-regulators",
- 		.data = pm8150_vreg_data,
-@@ -899,8 +895,12 @@ static const struct of_device_id rpmh_regulator_match_table[] = {
- 		.data = pm8150l_vreg_data,
- 	},
- 	{
--		.compatible = "qcom,pm8009-rpmh-regulators",
--		.data = pm8009_vreg_data,
-+		.compatible = "qcom,pm8998-rpmh-regulators",
-+		.data = pm8998_vreg_data,
-+	},
-+	{
-+		.compatible = "qcom,pmi8998-rpmh-regulators",
-+		.data = pmi8998_vreg_data,
- 	},
- 	{}
- };
--- 
-2.20.1
-
+>  
+>  - qcom,pmic-id
+>  	Usage:      required
+> -- 
+> 2.20.1
+> 
