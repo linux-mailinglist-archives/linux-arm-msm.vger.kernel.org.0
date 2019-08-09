@@ -2,33 +2,33 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 3B0F187A20
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 Aug 2019 14:32:41 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 40E5A87A27
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 Aug 2019 14:32:44 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2406979AbfHIMcD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 9 Aug 2019 08:32:03 -0400
-Received: from heliosphere.sirena.org.uk ([172.104.155.198]:59308 "EHLO
+        id S2406671AbfHIMcb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 9 Aug 2019 08:32:31 -0400
+Received: from heliosphere.sirena.org.uk ([172.104.155.198]:59314 "EHLO
         heliosphere.sirena.org.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2406971AbfHIMcC (ORCPT
+        with ESMTP id S2406976AbfHIMcD (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 9 Aug 2019 08:32:02 -0400
+        Fri, 9 Aug 2019 08:32:03 -0400
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
         d=sirena.org.uk; s=20170815-heliosphere; h=Date:Message-Id:In-Reply-To:
         Subject:Cc:To:From:Sender:Reply-To:MIME-Version:Content-Type:
         Content-Transfer-Encoding:Content-ID:Content-Description:Resent-Date:
         Resent-From:Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:References:
         List-Id:List-Help:List-Unsubscribe:List-Subscribe:List-Post:List-Owner:
-        List-Archive; bh=QPTgTx7/oyujeaBami2I9/Tt2Ih3UJiMx+SNjbbCZ90=; b=MowOicgBm/dw
-        ciEvOo7kwKFg3dfRyp0rc1DPjwJ8ZiqHkbW7NNZo2DQBaFry4KNjtD087BfwaA4a4mN8Y/z6rgMKW
-        YDanOtEX7TGaFkqKMhUj8SAiebcmzeXullphI0F/j7iEPfMkBIhVIlnCKtPaoNuxLNgqMhUyIkRwr
-        xIDlY=;
+        List-Archive; bh=eoY+Th80rH30dC+RAHj1RWkzYop+aXe6pNj+PkTZ5uY=; b=i5KJ1sIngH9l
+        IAXMDf1x6MhEQvf10GAcXaXUuvHygOaKFRaHFo34uqzhqEDxWj3XUkSixX4OljFwCuQcVZYykykcK
+        6ZLV0T7WTujJS5gGOLUF7+nqrifCBAtewOVUjS9jj4fp7eek9qP7DIscxCZgflAZzjxp1jqo6OpwI
+        tFil0=;
 Received: from ypsilon.sirena.org.uk ([2001:470:1f1d:6b5::7])
         by heliosphere.sirena.org.uk with esmtpsa (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256)
         (Exim 4.92)
         (envelope-from <broonie@sirena.co.uk>)
-        id 1hw43q-000625-Nf; Fri, 09 Aug 2019 12:31:58 +0000
+        id 1hw43r-000628-8X; Fri, 09 Aug 2019 12:31:59 +0000
 Received: by ypsilon.sirena.org.uk (Postfix, from userid 1000)
-        id 1A7A02743057; Fri,  9 Aug 2019 13:31:58 +0100 (BST)
+        id 55A8B27430B7; Fri,  9 Aug 2019 13:31:58 +0100 (BST)
 From:   Mark Brown <broonie@kernel.org>
 To:     Vinod Koul <vkoul@kernel.org>
 Cc:     Andy Gross <agross@kernel.org>,
@@ -38,10 +38,10 @@ Cc:     Andy Gross <agross@kernel.org>,
         Mark Brown <broonie@kernel.org>,
         Mark Rutland <mark.rutland@arm.com>,
         Rob Herring <robh+dt@kernel.org>
-Subject: Applied "regulator: qcom-rpmh: Fix pmic5_bob voltage count" to the regulator tree
-In-Reply-To: <20190809073616.1235-3-vkoul@kernel.org>
+Subject: Applied "regulator: qcom-rpmh: Sort the compatibles" to the regulator tree
+In-Reply-To: <20190809073616.1235-2-vkoul@kernel.org>
 X-Patchwork-Hint: ignore
-Message-Id: <20190809123158.1A7A02743057@ypsilon.sirena.org.uk>
+Message-Id: <20190809123158.55A8B27430B7@ypsilon.sirena.org.uk>
 Date:   Fri,  9 Aug 2019 13:31:58 +0100 (BST)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
@@ -50,7 +50,7 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 The patch
 
-   regulator: qcom-rpmh: Fix pmic5_bob voltage count
+   regulator: qcom-rpmh: Sort the compatibles
 
 has been applied to the regulator tree at
 
@@ -75,32 +75,62 @@ to this mail.
 Thanks,
 Mark
 
-From 553c452d6093d66e7617ed6c68cc93547d07075f Mon Sep 17 00:00:00 2001
+From 7172fb7f3abea4787ca01dda7297241c4b0f0af5 Mon Sep 17 00:00:00 2001
 From: Vinod Koul <vkoul@kernel.org>
-Date: Fri, 9 Aug 2019 13:06:15 +0530
-Subject: [PATCH] regulator: qcom-rpmh: Fix pmic5_bob voltage count
+Date: Fri, 9 Aug 2019 13:06:14 +0530
+Subject: [PATCH] regulator: qcom-rpmh: Sort the compatibles
 
-pmic5_bob voltages count is 136 [0,135] so update it
+It helps to keep sorted order for compatibles, so sort them
 
+Suggested-by: Bjorn Andersson <bjorn.andersson@linaro.org>
 Signed-off-by: Vinod Koul <vkoul@kernel.org>
-Link: https://lore.kernel.org/r/20190809073616.1235-3-vkoul@kernel.org
+Link: https://lore.kernel.org/r/20190809073616.1235-2-vkoul@kernel.org
 Signed-off-by: Mark Brown <broonie@kernel.org>
 ---
- drivers/regulator/qcom-rpmh-regulator.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/regulator/qcom-rpmh-regulator.c | 20 ++++++++++----------
+ 1 file changed, 10 insertions(+), 10 deletions(-)
 
 diff --git a/drivers/regulator/qcom-rpmh-regulator.c b/drivers/regulator/qcom-rpmh-regulator.c
-index 0ef2716da3bd..391ed844a251 100644
+index 693ffec62f3e..0ef2716da3bd 100644
 --- a/drivers/regulator/qcom-rpmh-regulator.c
 +++ b/drivers/regulator/qcom-rpmh-regulator.c
-@@ -698,7 +698,7 @@ static const struct rpmh_vreg_hw_data pmic5_bob = {
- 	.regulator_type = VRM,
- 	.ops = &rpmh_regulator_vrm_bypass_ops,
- 	.voltage_range = REGULATOR_LINEAR_RANGE(300000, 0, 135, 32000),
--	.n_voltages = 135,
-+	.n_voltages = 136,
- 	.pmic_mode_map = pmic_mode_map_pmic4_bob,
- 	.of_map_mode = rpmh_regulator_pmic4_bob_of_map_mode,
+@@ -878,18 +878,14 @@ static int rpmh_regulator_probe(struct platform_device *pdev)
+ }
+ 
+ static const struct of_device_id rpmh_regulator_match_table[] = {
+-	{
+-		.compatible = "qcom,pm8998-rpmh-regulators",
+-		.data = pm8998_vreg_data,
+-	},
+-	{
+-		.compatible = "qcom,pmi8998-rpmh-regulators",
+-		.data = pmi8998_vreg_data,
+-	},
+ 	{
+ 		.compatible = "qcom,pm8005-rpmh-regulators",
+ 		.data = pm8005_vreg_data,
+ 	},
++	{
++		.compatible = "qcom,pm8009-rpmh-regulators",
++		.data = pm8009_vreg_data,
++	},
+ 	{
+ 		.compatible = "qcom,pm8150-rpmh-regulators",
+ 		.data = pm8150_vreg_data,
+@@ -899,8 +895,12 @@ static const struct of_device_id rpmh_regulator_match_table[] = {
+ 		.data = pm8150l_vreg_data,
+ 	},
+ 	{
+-		.compatible = "qcom,pm8009-rpmh-regulators",
+-		.data = pm8009_vreg_data,
++		.compatible = "qcom,pm8998-rpmh-regulators",
++		.data = pm8998_vreg_data,
++	},
++	{
++		.compatible = "qcom,pmi8998-rpmh-regulators",
++		.data = pmi8998_vreg_data,
+ 	},
+ 	{}
  };
 -- 
 2.20.1
