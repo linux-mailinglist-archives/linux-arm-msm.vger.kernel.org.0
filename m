@@ -2,59 +2,60 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id EDF3588479
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 Aug 2019 23:17:58 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5544988481
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 Aug 2019 23:18:23 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728041AbfHIVR6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 9 Aug 2019 17:17:58 -0400
-Received: from mail-lf1-f66.google.com ([209.85.167.66]:40225 "EHLO
-        mail-lf1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726185AbfHIVR5 (ORCPT
+        id S1727007AbfHIVSV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 9 Aug 2019 17:18:21 -0400
+Received: from mail-lj1-f194.google.com ([209.85.208.194]:35234 "EHLO
+        mail-lj1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728118AbfHIVSU (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 9 Aug 2019 17:17:57 -0400
-Received: by mail-lf1-f66.google.com with SMTP id b17so70479984lff.7
-        for <linux-arm-msm@vger.kernel.org>; Fri, 09 Aug 2019 14:17:56 -0700 (PDT)
+        Fri, 9 Aug 2019 17:18:20 -0400
+Received: by mail-lj1-f194.google.com with SMTP id l14so3355899lje.2
+        for <linux-arm-msm@vger.kernel.org>; Fri, 09 Aug 2019 14:18:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=chromium.org; s=google;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=Y4vLpkUXGaCx5ksGKXq1B6fru5dxWZeG1Id+VcyLndE=;
-        b=G54KRPbppyCf6lOgHptflnWoJgyVEK93H+cXO/vp8LfwGrelRzgN5+IYoCLqXUrfYO
-         X/Z645f3sLIDye0s3bOMNqrnMltaBkTAyYjneZ6d8DcT9/YcwkbfnK/Nth/KaLZbh+2/
-         SYW0DZALxCSJQavegwiXuKNfFYGJX1d3/zt9k=
+        bh=7rznYohCzIvHrSGGawNsShs1u2jjUcR06gJVcpCbKyM=;
+        b=AbGwaqU26WXKooucDSmlKHCUsdXOFpSQB9Urtt8Qa10t5dZCaFkgl/0BMYvmrfj+qE
+         Suc+3mFOohecGHExbjo5rBIAcX2y1vZUIuuZLk+BWJ4nL/7DtC9mtlXfMJWyYSXv6aB5
+         0sYuEm6hbcCFLsTq2fCpjruLulQ4UzAGF7sR0=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=Y4vLpkUXGaCx5ksGKXq1B6fru5dxWZeG1Id+VcyLndE=;
-        b=TvGVap60H0QMLF96jBubmpGWULNZZqs2HV1JtOuNhhRB9vBw140ypdd5iHeEtrcjLn
-         nujkvI+b0uafQGWw0MmSEOGoq2089i+GeOh5S/mprW+NdBKYhRIbExujGUZIbGWayYWG
-         b3WFBV/yf5ch/9hFUZo7LPzJ4vGVudT2zCsRyb/wH3/M8HY9PejApeXwndinWAiBJyJg
-         DBhhxcBuElSR0qgYGqfjx3lc12shoxQmyPRRdg7GHXfSr/BXXTVJJ0I46yYCjhf6u6lv
-         YMBsODtoENqHBZnRT8MfJ75WfENJpaFaEsCUIIBZdmBjY02ey4JGR/rCDd0hWI4jKJkW
-         pIQQ==
-X-Gm-Message-State: APjAAAUzictZfERPny0xEmiYtpFGF2A2Vq1k5DfX8+M+eWoonF7axccI
-        ISh9y2XqBN/xr0CcvoeA1yucexB+J/U=
-X-Google-Smtp-Source: APXvYqxrOVk168BqzNNnSq4ywaQk0nSjyze9QKfV6AmGarRZV+FUGVvjThpIbVSIyHrYMM4yf2wY/g==
-X-Received: by 2002:ac2:4a6e:: with SMTP id q14mr13194115lfp.80.1565385475991;
-        Fri, 09 Aug 2019 14:17:55 -0700 (PDT)
-Received: from mail-lj1-f180.google.com (mail-lj1-f180.google.com. [209.85.208.180])
-        by smtp.gmail.com with ESMTPSA id d3sm17698487lfb.92.2019.08.09.14.17.55
+        bh=7rznYohCzIvHrSGGawNsShs1u2jjUcR06gJVcpCbKyM=;
+        b=FJDldrqliidyKAxzyUi1Poxdjqk1H/zEIAk36TOi4rQo8/QDpcZlfY93stQtgxQd7c
+         ONCl9BiVTOIpQ0pOtPcGmXFd2ZMAV6R3EXyURdccxAe8SP3T7ZCjocEHgsJ8ClGAW7vi
+         m+TLymnM37qfqDt21ZZ+sjGtXGg422mQ8DvrwtXxYlMGbHKinNBecmMeqeLvC6tYhq6q
+         a/5gbdXRCuaDy0iHBHI/Gl75L02EA582GidJrWAyZTf+oQO/6fRIYHZRKr+IeKuf0nR0
+         cTx1SPCbwyDuPPOeYSULDqScSQd1UaEJrl6A484iorPkjDikBj5Kl4/7wVlTt6Tlkc6s
+         4EKQ==
+X-Gm-Message-State: APjAAAU07Ulq2tMAOsZpJqUx5KIh+Z/IWye3ja0S/HEs0TKfGjncR9Q1
+        z9AZv1ul7HNpInYAIBleUVN9MWRWbEM=
+X-Google-Smtp-Source: APXvYqxMCWwVcxvhvO1jTTGtCZ9tqrplp80Xtbp8lDRlRvLATfQUE3QhLOeJlAfshjefUtSdgzLgXA==
+X-Received: by 2002:a2e:b1c1:: with SMTP id e1mr1954265lja.228.1565385496556;
+        Fri, 09 Aug 2019 14:18:16 -0700 (PDT)
+Received: from mail-lf1-f44.google.com (mail-lf1-f44.google.com. [209.85.167.44])
+        by smtp.gmail.com with ESMTPSA id r68sm17654538lff.52.2019.08.09.14.18.14
         for <linux-arm-msm@vger.kernel.org>
         (version=TLS1_3 cipher=AEAD-AES128-GCM-SHA256 bits=128/128);
-        Fri, 09 Aug 2019 14:17:55 -0700 (PDT)
-Received: by mail-lj1-f180.google.com with SMTP id y17so68742836ljk.10
-        for <linux-arm-msm@vger.kernel.org>; Fri, 09 Aug 2019 14:17:55 -0700 (PDT)
-X-Received: by 2002:a2e:93c8:: with SMTP id p8mr12301485ljh.6.1565385474677;
- Fri, 09 Aug 2019 14:17:54 -0700 (PDT)
+        Fri, 09 Aug 2019 14:18:15 -0700 (PDT)
+Received: by mail-lf1-f44.google.com with SMTP id v16so16605996lfg.11
+        for <linux-arm-msm@vger.kernel.org>; Fri, 09 Aug 2019 14:18:14 -0700 (PDT)
+X-Received: by 2002:ac2:5976:: with SMTP id h22mr13683199lfp.79.1565385494359;
+ Fri, 09 Aug 2019 14:18:14 -0700 (PDT)
 MIME-Version: 1.0
-References: <20190809121325.8138-1-georgi.djakov@linaro.org> <20190809121325.8138-3-georgi.djakov@linaro.org>
-In-Reply-To: <20190809121325.8138-3-georgi.djakov@linaro.org>
+References: <20190809121325.8138-1-georgi.djakov@linaro.org> <20190809121325.8138-4-georgi.djakov@linaro.org>
+In-Reply-To: <20190809121325.8138-4-georgi.djakov@linaro.org>
 From:   Evan Green <evgreen@chromium.org>
-Date:   Fri, 9 Aug 2019 14:17:18 -0700
-X-Gmail-Original-Message-ID: <CAE=gft5JD9QuH3cZpPX=4eJMjbyPi8nes1--6qcsKdb1sw_rNw@mail.gmail.com>
-Message-ID: <CAE=gft5JD9QuH3cZpPX=4eJMjbyPi8nes1--6qcsKdb1sw_rNw@mail.gmail.com>
-Subject: Re: [PATCH v3 2/3] interconnect: Add pre_aggregate() callback
+Date:   Fri, 9 Aug 2019 14:17:38 -0700
+X-Gmail-Original-Message-ID: <CAE=gft7HObn4Q-6P_pd1QbpWJG-yvs4C87qpiQm6BbmHzwZW5w@mail.gmail.com>
+Message-ID: <CAE=gft7HObn4Q-6P_pd1QbpWJG-yvs4C87qpiQm6BbmHzwZW5w@mail.gmail.com>
+Subject: Re: [PATCH v3 3/3] interconnect: qcom: Add tagging and wake/sleep
+ support for sdm845
 To:     Georgi Djakov <georgi.djakov@linaro.org>
 Cc:     linux-pm@vger.kernel.org, David Dai <daidavid1@codeaurora.org>,
         Vincent Guittot <vincent.guittot@linaro.org>,
@@ -72,14 +73,244 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 On Fri, Aug 9, 2019 at 5:13 AM Georgi Djakov <georgi.djakov@linaro.org> wrote:
 >
-> Introduce an optional callback in interconnect provider drivers. It can be
-> used for implementing actions, that need to be executed before the actual
-> aggregation of the bandwidth requests has started.
+> From: David Dai <daidavid1@codeaurora.org>
 >
-> The benefit of this for now is that it will significantly simplify the code
-> in provider drivers.
+> Add support for wake and sleep commands by using a tag to indicate
+> whether or not the aggregate and set requests fall into execution
+> state specific bucket.
 >
-> Suggested-by: Evan Green <evgreen@chromium.org>
+> Signed-off-by: David Dai <daidavid1@codeaurora.org>
 > Signed-off-by: Georgi Djakov <georgi.djakov@linaro.org>
+> ---
+>  drivers/interconnect/qcom/sdm845.c | 134 ++++++++++++++++++++++-------
+>  1 file changed, 103 insertions(+), 31 deletions(-)
+>
+> diff --git a/drivers/interconnect/qcom/sdm845.c b/drivers/interconnect/qcom/sdm845.c
+> index fb526004c82e..b2047d1c6d84 100644
+> --- a/drivers/interconnect/qcom/sdm845.c
+> +++ b/drivers/interconnect/qcom/sdm845.c
+> @@ -66,6 +66,17 @@ struct bcm_db {
+>  #define SDM845_MAX_BCM_PER_NODE        2
+>  #define SDM845_MAX_VCD         10
+>
+> +#define QCOM_ICC_BUCKET_AMC            0
+> +#define QCOM_ICC_BUCKET_WAKE           1
+> +#define QCOM_ICC_BUCKET_SLEEP          2
+> +#define QCOM_ICC_NUM_BUCKETS           3
+> +#define QCOM_ICC_TAG_AMC               BIT(QCOM_ICC_BUCKET_AMC)
+> +#define QCOM_ICC_TAG_WAKE              BIT(QCOM_ICC_BUCKET_WAKE)
+> +#define QCOM_ICC_TAG_SLEEP             BIT(QCOM_ICC_BUCKET_SLEEP)
+> +#define QCOM_ICC_TAG_ACTIVE_ONLY       (QCOM_ICC_TAG_AMC | QCOM_ICC_TAG_WAKE)
+> +#define QCOM_ICC_TAG_ALWAYS            (QCOM_ICC_TAG_AMC | QCOM_ICC_TAG_WAKE |\
+> +                                        QCOM_ICC_TAG_SLEEP)
+> +
+>  /**
+>   * struct qcom_icc_node - Qualcomm specific interconnect nodes
+>   * @name: the node name used in debugfs
+> @@ -86,8 +97,8 @@ struct qcom_icc_node {
+>         u16 num_links;
+>         u16 channels;
+>         u16 buswidth;
+> -       u64 sum_avg;
+> -       u64 max_peak;
+> +       u64 sum_avg[QCOM_ICC_NUM_BUCKETS];
+> +       u64 max_peak[QCOM_ICC_NUM_BUCKETS];
+>         struct qcom_icc_bcm *bcms[SDM845_MAX_BCM_PER_NODE];
+>         size_t num_bcms;
+>  };
+> @@ -112,8 +123,8 @@ struct qcom_icc_bcm {
+>         const char *name;
+>         u32 type;
+>         u32 addr;
+> -       u64 vote_x;
+> -       u64 vote_y;
+> +       u64 vote_x[QCOM_ICC_NUM_BUCKETS];
+> +       u64 vote_y[QCOM_ICC_NUM_BUCKETS];
+>         bool dirty;
+>         bool keepalive;
+>         struct bcm_db aux_data;
+> @@ -555,7 +566,7 @@ inline void tcs_cmd_gen(struct tcs_cmd *cmd, u64 vote_x, u64 vote_y,
+>                 cmd->wait = true;
+>  }
+>
+> -static void tcs_list_gen(struct list_head *bcm_list,
+> +static void tcs_list_gen(struct list_head *bcm_list, int bucket,
+>                          struct tcs_cmd tcs_list[SDM845_MAX_VCD],
+>                          int n[SDM845_MAX_VCD])
+>  {
+> @@ -573,8 +584,8 @@ static void tcs_list_gen(struct list_head *bcm_list,
+>                         commit = true;
+>                         cur_vcd_size = 0;
+>                 }
+> -               tcs_cmd_gen(&tcs_list[idx], bcm->vote_x, bcm->vote_y,
+> -                           bcm->addr, commit);
+> +               tcs_cmd_gen(&tcs_list[idx], bcm->vote_x[bucket],
+> +                           bcm->vote_y[bucket], bcm->addr, commit);
+>                 idx++;
+>                 n[batch]++;
+>                 /*
+> @@ -595,51 +606,76 @@ static void tcs_list_gen(struct list_head *bcm_list,
+>
+>  static void bcm_aggregate(struct qcom_icc_bcm *bcm)
+>  {
+> -       size_t i;
+> -       u64 agg_avg = 0;
+> -       u64 agg_peak = 0;
+> +       size_t i, bucket;
+> +       u64 agg_avg[QCOM_ICC_NUM_BUCKETS] = {0};
+> +       u64 agg_peak[QCOM_ICC_NUM_BUCKETS] = {0};
+>         u64 temp;
+>
+> -       for (i = 0; i < bcm->num_nodes; i++) {
+> -               temp = bcm->nodes[i]->sum_avg * bcm->aux_data.width;
+> -               do_div(temp, bcm->nodes[i]->buswidth * bcm->nodes[i]->channels);
+> -               agg_avg = max(agg_avg, temp);
+> +       for (bucket = 0; bucket < QCOM_ICC_NUM_BUCKETS; bucket++) {
+> +               for (i = 0; i < bcm->num_nodes; i++) {
+> +                       temp = bcm->nodes[i]->sum_avg[bucket] * bcm->aux_data.width;
+> +                       do_div(temp, bcm->nodes[i]->buswidth * bcm->nodes[i]->channels);
+> +                       agg_avg[bucket] = max(agg_avg[bucket], temp);
+>
+> -               temp = bcm->nodes[i]->max_peak * bcm->aux_data.width;
+> -               do_div(temp, bcm->nodes[i]->buswidth);
+> -               agg_peak = max(agg_peak, temp);
+> -       }
+> +                       temp = bcm->nodes[i]->max_peak[bucket] * bcm->aux_data.width;
+> +                       do_div(temp, bcm->nodes[i]->buswidth);
+> +                       agg_peak[bucket] = max(agg_peak[bucket], temp);
+> +               }
+>
+> -       temp = agg_avg * 1000ULL;
+> -       do_div(temp, bcm->aux_data.unit);
+> -       bcm->vote_x = temp;
+> +               temp = agg_avg[bucket] * 1000ULL;
+> +               do_div(temp, bcm->aux_data.unit);
+> +               bcm->vote_x[bucket] = temp;
+>
+> -       temp = agg_peak * 1000ULL;
+> -       do_div(temp, bcm->aux_data.unit);
+> -       bcm->vote_y = temp;
+> +               temp = agg_peak[bucket] * 1000ULL;
+> +               do_div(temp, bcm->aux_data.unit);
+> +               bcm->vote_y[bucket] = temp;
+> +       }
+>
+> -       if (bcm->keepalive && bcm->vote_x == 0 && bcm->vote_y == 0) {
+> -               bcm->vote_x = 1;
+> -               bcm->vote_y = 1;
+> +       if (bcm->keepalive && bcm->vote_x[0] == 0 && bcm->vote_y[0] == 0) {
 
-Reviewed-by: Evan Green <evgreen@chromium.org>
+Consider using QCOM_ICC_BUCKET_AMC instead of 0.
+
+> +               bcm->vote_x[QCOM_ICC_BUCKET_AMC] = 1;
+> +               bcm->vote_x[QCOM_ICC_BUCKET_WAKE] = 1;
+> +               bcm->vote_y[QCOM_ICC_BUCKET_AMC] = 1;
+> +               bcm->vote_y[QCOM_ICC_BUCKET_WAKE] = 1;
+>         }
+>
+>         bcm->dirty = false;
+>  }
+>
+> +static void qcom_icc_pre_aggregate(struct icc_node *node)
+> +{
+> +       size_t i;
+> +       struct qcom_icc_node *qn;
+> +
+> +       qn = node->data;
+> +
+> +       for (i = 0; i < QCOM_ICC_NUM_BUCKETS; i++) {
+> +               qn->sum_avg[i] = 0;
+> +               qn->max_peak[i] = 0;
+> +       }
+> +}
+> +
+>  static int qcom_icc_aggregate(struct icc_node *node, u32 tag, u32 avg_bw,
+>                               u32 peak_bw, u32 *agg_avg, u32 *agg_peak)
+>  {
+>         size_t i;
+>         struct qcom_icc_node *qn;
+> +       unsigned long tag_word = (unsigned long)tag;
+
+Is this local still needed? Can't we just use tag directly?
+
+>
+>         qn = node->data;
+>
+> +       if (!tag)
+> +               tag_word = QCOM_ICC_TAG_ALWAYS;
+> +
+> +       for (i = 0; i < QCOM_ICC_NUM_BUCKETS; i++) {
+> +               if (test_bit(i, &tag_word)) {
+> +                       qn->sum_avg[i] += avg_bw;
+> +                       qn->max_peak[i] = max_t(u32, qn->max_peak[i], peak_bw);
+> +               }
+> +       }
+> +
+>         *agg_avg += avg_bw;
+>         *agg_peak = max_t(u32, *agg_peak, peak_bw);
+>
+> -       qn->sum_avg = *agg_avg;
+> -       qn->max_peak = *agg_peak;
+> -
+>         for (i = 0; i < qn->num_bcms; i++)
+>                 qn->bcms[i]->dirty = true;
+>
+> @@ -675,7 +711,7 @@ static int qcom_icc_set(struct icc_node *src, struct icc_node *dst)
+>          * Construct the command list based on a pre ordered list of BCMs
+>          * based on VCD.
+>          */
+> -       tcs_list_gen(&commit_list, cmds, commit_idx);
+> +       tcs_list_gen(&commit_list, QCOM_ICC_BUCKET_AMC, cmds, commit_idx);
+>
+>         if (!commit_idx[0])
+>                 return ret;
+> @@ -693,6 +729,41 @@ static int qcom_icc_set(struct icc_node *src, struct icc_node *dst)
+>                 return ret;
+>         }
+>
+> +       INIT_LIST_HEAD(&commit_list);
+> +
+> +       for (i = 0; i < qp->num_bcms; i++) {
+> +               /*
+> +                * Only generate WAKE and SLEEP commands if a resource's
+> +                * requirements change as the execution environment transitions
+> +                * between different power states.
+> +                */
+> +               if (qp->bcms[i]->vote_x[QCOM_ICC_BUCKET_WAKE] !=
+> +                   qp->bcms[i]->vote_x[QCOM_ICC_BUCKET_SLEEP] ||
+> +                   qp->bcms[i]->vote_y[QCOM_ICC_BUCKET_WAKE] !=
+> +                   qp->bcms[i]->vote_y[QCOM_ICC_BUCKET_SLEEP]) {
+> +                       list_add_tail(&qp->bcms[i]->list, &commit_list);
+> +               }
+> +       }
+> +
+> +       if (list_empty(&commit_list))
+> +               return ret;
+> +
+> +       tcs_list_gen(&commit_list, QCOM_ICC_BUCKET_WAKE, cmds, commit_idx);
+> +
+> +       ret = rpmh_write_batch(qp->dev, RPMH_WAKE_ONLY_STATE, cmds, commit_idx);
+> +       if (ret) {
+> +               pr_err("Error sending WAKE RPMH requests (%d)\n", ret);
+> +               return ret;
+> +       }
+> +
+> +       tcs_list_gen(&commit_list, QCOM_ICC_BUCKET_SLEEP, cmds, commit_idx);
+> +
+> +       ret = rpmh_write_batch(qp->dev, RPMH_SLEEP_STATE, cmds, commit_idx);
+> +       if (ret) {
+> +               pr_err("Error sending SLEEP RPMH requests (%d)\n", ret);
+> +               return ret;
+> +       }
+> +
+>         return ret;
+>  }
+>
+> @@ -738,6 +809,7 @@ static int qnoc_probe(struct platform_device *pdev)
+>         provider = &qp->provider;
+>         provider->dev = &pdev->dev;
+>         provider->set = qcom_icc_set;
+> +       provider->pre_aggregate = qcom_icc_pre_aggregate;
+>         provider->aggregate = qcom_icc_aggregate;
+>         provider->xlate = of_icc_xlate_onecell;
+>         INIT_LIST_HEAD(&provider->nodes);
