@@ -2,144 +2,128 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id D6FEF89273
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 11 Aug 2019 18:08:40 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 7BDE889337
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 11 Aug 2019 21:00:25 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726527AbfHKQIj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 11 Aug 2019 12:08:39 -0400
-Received: from smtp.codeaurora.org ([198.145.29.96]:34134 "EHLO
-        smtp.codeaurora.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726014AbfHKQIj (ORCPT
+        id S1726053AbfHKTAX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 11 Aug 2019 15:00:23 -0400
+Received: from mail-pl1-f196.google.com ([209.85.214.196]:45520 "EHLO
+        mail-pl1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725900AbfHKTAX (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 11 Aug 2019 12:08:39 -0400
-Received: by smtp.codeaurora.org (Postfix, from userid 1000)
-        id 1EA9E60709; Sun, 11 Aug 2019 16:08:38 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
-        s=default; t=1565539718;
-        bh=q2Eye4K2ziKCFlT1foS+S6HSiy4LOooGYEQTduuBmiw=;
-        h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
-        b=NVnQZNVUOiK3K7aKCxetRqBpEoBkNBU05iW86thPa5J/aTc8I2/mi88U78JdckLbV
-         9EiUZ2juRkXB4OJMjH2Di2MajNay0ZFOUQ2qJOA3j05+Lo3cmdVvptj1iE1cbHsnLu
-         3Oxn2V4CFyAhZ4D8kt0SuP+FnKMRIaPc49YBLTkk=
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        pdx-caf-mail.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.7 required=2.0 tests=ALL_TRUSTED,BAYES_00,
-        DKIM_INVALID,DKIM_SIGNED,SPF_NONE autolearn=no autolearn_force=no
-        version=3.4.0
-Received: from mail-ed1-f47.google.com (mail-ed1-f47.google.com [209.85.208.47])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: vivek.gautam@smtp.codeaurora.org)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 1C0D36053B;
-        Sun, 11 Aug 2019 16:08:37 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
-        s=default; t=1565539717;
-        bh=q2Eye4K2ziKCFlT1foS+S6HSiy4LOooGYEQTduuBmiw=;
-        h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
-        b=hjMIY34Sv2YtANfBFfitDJXajAadIYCdQPemtCzJ9iq2adSonaPKN2fsL7dH+tIcc
-         9lYwvg7BEHZkh2nAAIDeB3081lx0jOOeYgTT3M0K7Nkeb+1LNi4flA4d/yMWXYYPjK
-         YhN/5/MnQwuWKPsyiOZCC7HkOZw7OnkEvV5HNjgA=
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 1C0D36053B
-Authentication-Results: pdx-caf-mail.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: pdx-caf-mail.web.codeaurora.org; spf=none smtp.mailfrom=vivek.gautam@codeaurora.org
-Received: by mail-ed1-f47.google.com with SMTP id m44so8038470edd.9;
-        Sun, 11 Aug 2019 09:08:36 -0700 (PDT)
-X-Gm-Message-State: APjAAAWjgAcZLXkEMxNjvoGvu/SmkZXegUcmsK5OgjlOPG8tt0nkxoHr
-        WGWju9EHhIUylbxVuHYOghBW8ilJA+Df78RHrrQ=
-X-Google-Smtp-Source: APXvYqyFFJCaGAq46SyTCzjuDhcbBv3wmxf8bN+ADhcvIt95E7RRnkwHNH6sBTe8oSgzL5kbHeNmbVUaK3aBr0qGTKk=
-X-Received: by 2002:a17:906:2544:: with SMTP id j4mr27620572ejb.221.1565539715693;
- Sun, 11 Aug 2019 09:08:35 -0700 (PDT)
-MIME-Version: 1.0
-References: <20190612071554.13573-1-vivek.gautam@codeaurora.org>
- <20190612071554.13573-5-vivek.gautam@codeaurora.org> <20190805222627.GA2634@builder>
-In-Reply-To: <20190805222627.GA2634@builder>
-From:   Vivek Gautam <vivek.gautam@codeaurora.org>
-Date:   Sun, 11 Aug 2019 21:38:24 +0530
-X-Gmail-Original-Message-ID: <CAFp+6iHGrXAJ2Y1ewxaePGYEcbnprjScUnGyR61qvOv03HVZhQ@mail.gmail.com>
-Message-ID: <CAFp+6iHGrXAJ2Y1ewxaePGYEcbnprjScUnGyR61qvOv03HVZhQ@mail.gmail.com>
-Subject: Re: [PATCH v3 4/4] arm64: dts/sdm845: Enable FW implemented safe
- sequence handler on MTP
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>
+        Sun, 11 Aug 2019 15:00:23 -0400
+Received: by mail-pl1-f196.google.com with SMTP id y8so4924604plr.12
+        for <linux-arm-msm@vger.kernel.org>; Sun, 11 Aug 2019 12:00:23 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=g4HRffWR5sTfOdPb8n2H2gBlNEK3O7QkgVCtkSjBUGc=;
+        b=NKH6a5rKubvrnRjIiAagMdwN7DNFvpDIxEUxLYf+kcaaRrXUD4LXVeEaPzEwnv51Qn
+         7QZtgmEqhK5E4pjO/rrk1i6VlM2ljoxMczTY2s0GmrCxGCEIRTRvwfm2eZyvt5gl2ail
+         i4BetvPir8rZaPCg6FdYaMlO7QhhsOWiFl05YooTM8FK+qi+aGZytl2RfGMDZccqWYcH
+         c7A1ri271xLpFxZkPBYu7DbHUIaK8beRCewn28rCUTsX9GjAB64fyF3nlcG1issWWlne
+         M1MeftR3HX7ZBV69FKtlbTP5HTcIxgTIQFwFvS9sWY9tl+c2q40uABiEoYtg7El1O0aC
+         FcCA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=g4HRffWR5sTfOdPb8n2H2gBlNEK3O7QkgVCtkSjBUGc=;
+        b=ifl0gHFvGEMpZddEIHETwxlrpo81KvyDaqhTwve+HjAogfm/U02aklBz7AtQQK8mOj
+         scIdxAbEk//2O0P4zeD5lexOSjA3DjLek1a7VM9jkcbzhHk1f4QACNc11Us+lY42ozNt
+         onbPUMsYOKVRpNYtalGer3ooLwFQd6iId4dPEioeYPmh4I99cYgooxSfVo8zJC57kym9
+         kiqe+Ivekc0hVirFMyzSGnJYoOEGgFoDoy0MPqv+R7dD1anZCVEPQ8ENDgZQnV/p+rpq
+         snTAPmrv4YHBbN1eMlj+TZ0tioxniyYfNfrBx36mV2kbCL2BSEdnlJsPM9r5EpQCDaXl
+         vC+Q==
+X-Gm-Message-State: APjAAAXyHf4BxCL3UWwClEQ+mu5Hyu4yrTANyvzFODnZo2IAqwJzZGD0
+        6mb4bCHm7meMFG2XzBaGCVy9nA==
+X-Google-Smtp-Source: APXvYqzc4Bn9ATOCQYg7LsJf9jLHX1jrV/wEcEKA0Dzyd51K6OZ8vz1CVcwhFwEFMJTVX7DrRrXbdA==
+X-Received: by 2002:a17:902:e4:: with SMTP id a91mr29498761pla.150.1565550022586;
+        Sun, 11 Aug 2019 12:00:22 -0700 (PDT)
+Received: from tuxbook-pro (104-188-17-28.lightspeed.sndgca.sbcglobal.net. [104.188.17.28])
+        by smtp.gmail.com with ESMTPSA id 5sm41932620pgh.93.2019.08.11.12.00.21
+        (version=TLS1_3 cipher=AEAD-AES256-GCM-SHA384 bits=256/256);
+        Sun, 11 Aug 2019 12:00:21 -0700 (PDT)
+Date:   Sun, 11 Aug 2019 12:01:59 -0700
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     Vivek Gautam <vivek.gautam@codeaurora.org>
 Cc:     "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
         <devicetree@vger.kernel.org>,
         linux-arm-msm <linux-arm-msm@vger.kernel.org>,
         Will Deacon <will.deacon@arm.com>,
         open list <linux-kernel@vger.kernel.org>,
-        "robh+dt" <robh+dt@kernel.org>,
+        robh+dt <robh+dt@kernel.org>,
         David Brown <david.brown@linaro.org>,
         "list@263.net:IOMMU DRIVERS <iommu@lists.linux-foundation.org>, Joerg
         Roedel <joro@8bytes.org>," <iommu@lists.linux-foundation.org>,
         Andy Gross <agross@kernel.org>,
         Robin Murphy <robin.murphy@arm.com>
-Content-Type: text/plain; charset="UTF-8"
+Subject: Re: [PATCH v3 4/4] arm64: dts/sdm845: Enable FW implemented safe
+ sequence handler on MTP
+Message-ID: <20190811190159.GQ26807@tuxbook-pro>
+References: <20190612071554.13573-1-vivek.gautam@codeaurora.org>
+ <20190612071554.13573-5-vivek.gautam@codeaurora.org>
+ <20190805222627.GA2634@builder>
+ <CAFp+6iHGrXAJ2Y1ewxaePGYEcbnprjScUnGyR61qvOv03HVZhQ@mail.gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CAFp+6iHGrXAJ2Y1ewxaePGYEcbnprjScUnGyR61qvOv03HVZhQ@mail.gmail.com>
+User-Agent: Mutt/1.12.1 (2019-06-15)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Aug 6, 2019 at 3:56 AM Bjorn Andersson
-<bjorn.andersson@linaro.org> wrote:
->
-> On Wed 12 Jun 00:15 PDT 2019, Vivek Gautam wrote:
->
-> > Indicate on MTP SDM845 that firmware implements handler to
-> > TLB invalidate erratum SCM call where SAFE sequence is toggled
-> > to achieve optimum performance on real-time clients, such as
-> > display and camera.
+On Sun 11 Aug 09:08 PDT 2019, Vivek Gautam wrote:
+
+> On Tue, Aug 6, 2019 at 3:56 AM Bjorn Andersson
+> <bjorn.andersson@linaro.org> wrote:
 > >
-> > Signed-off-by: Vivek Gautam <vivek.gautam@codeaurora.org>
-> > ---
-> >  arch/arm64/boot/dts/qcom/sdm845.dtsi | 1 +
-> >  1 file changed, 1 insertion(+)
+> > On Wed 12 Jun 00:15 PDT 2019, Vivek Gautam wrote:
 > >
-> > diff --git a/arch/arm64/boot/dts/qcom/sdm845.dtsi b/arch/arm64/boot/dts/qcom/sdm845.dtsi
-> > index 78ec373a2b18..6a73d9744a71 100644
-> > --- a/arch/arm64/boot/dts/qcom/sdm845.dtsi
-> > +++ b/arch/arm64/boot/dts/qcom/sdm845.dtsi
-> > @@ -2368,6 +2368,7 @@
-> >                       compatible = "qcom,sdm845-smmu-500", "arm,mmu-500";
-> >                       reg = <0 0x15000000 0 0x80000>;
-> >                       #iommu-cells = <2>;
-> > +                     qcom,smmu-500-fw-impl-safe-errata;
->
-> Looked back at this series and started to wonder if there there is a
-> case where this should not be set? I mean we're after all adding this to
-> the top 845 dtsi...
-
-My bad.
-This is not valid in case of cheza. Cheza firmware doesn't implement
-the safe errata handling hook.
-On cheza we just have the liberty of accessing the secure registers
-through scm calls - this is what
-we were doing in earlier patch series handling this errata.
-So, a property like this should go to mtp board's dts file.
-
-Thanks
-
-Vivek
-
->
-> How about making it the default in the driver and opt out of the errata
-> once there is a need?
->
-> Regards,
-> Bjorn
->
-> >                       #global-interrupts = <1>;
-> >                       interrupts = <GIC_SPI 65 IRQ_TYPE_LEVEL_HIGH>,
-> >                                    <GIC_SPI 96 IRQ_TYPE_LEVEL_HIGH>,
-> > --
-> > QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
-> > of Code Aurora Forum, hosted by The Linux Foundation
+> > > Indicate on MTP SDM845 that firmware implements handler to
+> > > TLB invalidate erratum SCM call where SAFE sequence is toggled
+> > > to achieve optimum performance on real-time clients, such as
+> > > display and camera.
+> > >
+> > > Signed-off-by: Vivek Gautam <vivek.gautam@codeaurora.org>
+> > > ---
+> > >  arch/arm64/boot/dts/qcom/sdm845.dtsi | 1 +
+> > >  1 file changed, 1 insertion(+)
+> > >
+> > > diff --git a/arch/arm64/boot/dts/qcom/sdm845.dtsi b/arch/arm64/boot/dts/qcom/sdm845.dtsi
+> > > index 78ec373a2b18..6a73d9744a71 100644
+> > > --- a/arch/arm64/boot/dts/qcom/sdm845.dtsi
+> > > +++ b/arch/arm64/boot/dts/qcom/sdm845.dtsi
+> > > @@ -2368,6 +2368,7 @@
+> > >                       compatible = "qcom,sdm845-smmu-500", "arm,mmu-500";
+> > >                       reg = <0 0x15000000 0 0x80000>;
+> > >                       #iommu-cells = <2>;
+> > > +                     qcom,smmu-500-fw-impl-safe-errata;
 > >
-> _______________________________________________
-> iommu mailing list
-> iommu@lists.linux-foundation.org
-> https://lists.linuxfoundation.org/mailman/listinfo/iommu
+> > Looked back at this series and started to wonder if there there is a
+> > case where this should not be set? I mean we're after all adding this to
+> > the top 845 dtsi...
+> 
+> My bad.
+> This is not valid in case of cheza. Cheza firmware doesn't implement
+> the safe errata handling hook.
+> On cheza we just have the liberty of accessing the secure registers
+> through scm calls - this is what
+> we were doing in earlier patch series handling this errata.
+> So, a property like this should go to mtp board's dts file.
+> 
+
+It would have been nice if the common case was just selected by default,
+but afaict no safe workaround is needed on Cheza? You mention here that
+it should (could?) use the scm write based approach instead, would an
+introduction of that come with another flag?
 
 
+PS. In it's current form it's correct that this should be moved to the
+device dts files - all but one of them...
 
---
-QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
-of Code Aurora Forum, hosted by The Linux Foundation
+Regards,
+Bjorn
