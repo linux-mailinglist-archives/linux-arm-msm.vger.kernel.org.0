@@ -2,128 +2,303 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 7BDE889337
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 11 Aug 2019 21:00:25 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id AA2D28A05A
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 12 Aug 2019 16:07:24 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726053AbfHKTAX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 11 Aug 2019 15:00:23 -0400
-Received: from mail-pl1-f196.google.com ([209.85.214.196]:45520 "EHLO
-        mail-pl1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725900AbfHKTAX (ORCPT
+        id S1726525AbfHLOHW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 12 Aug 2019 10:07:22 -0400
+Received: from mail-lj1-f195.google.com ([209.85.208.195]:37521 "EHLO
+        mail-lj1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726789AbfHLOHW (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 11 Aug 2019 15:00:23 -0400
-Received: by mail-pl1-f196.google.com with SMTP id y8so4924604plr.12
-        for <linux-arm-msm@vger.kernel.org>; Sun, 11 Aug 2019 12:00:23 -0700 (PDT)
+        Mon, 12 Aug 2019 10:07:22 -0400
+Received: by mail-lj1-f195.google.com with SMTP id z28so44199086ljn.4
+        for <linux-arm-msm@vger.kernel.org>; Mon, 12 Aug 2019 07:07:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=g4HRffWR5sTfOdPb8n2H2gBlNEK3O7QkgVCtkSjBUGc=;
-        b=NKH6a5rKubvrnRjIiAagMdwN7DNFvpDIxEUxLYf+kcaaRrXUD4LXVeEaPzEwnv51Qn
-         7QZtgmEqhK5E4pjO/rrk1i6VlM2ljoxMczTY2s0GmrCxGCEIRTRvwfm2eZyvt5gl2ail
-         i4BetvPir8rZaPCg6FdYaMlO7QhhsOWiFl05YooTM8FK+qi+aGZytl2RfGMDZccqWYcH
-         c7A1ri271xLpFxZkPBYu7DbHUIaK8beRCewn28rCUTsX9GjAB64fyF3nlcG1issWWlne
-         M1MeftR3HX7ZBV69FKtlbTP5HTcIxgTIQFwFvS9sWY9tl+c2q40uABiEoYtg7El1O0aC
-         FcCA==
+        h=subject:from:to:cc:references:openpgp:autocrypt:message-id:date
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=A59LGVEP6S58PG03Us3mEWpZumJu1goEWu0jXUauzI0=;
+        b=iMjU/r9m8m5TIlnmfHfWMqZie1kHIRZf/iwtUBaAd8TMMVgdDMl5IGEGG4sU6CRu5E
+         HlRq7r6NNGGDuUjpbusnXPKQ4++wSUHsXvnDQ72VPVStSqkfR5ARAqfRul5RNhqj/mbq
+         J4zkNZ+p4VIgNsfeWP1QQZBA4wovyoO8ES5Fmw7I2UTZWqILUDJN8dN9qOetZV0ob/50
+         N5zUqt3/YjDV2l7xPbft3XETNMfrx+3qq2sadDnHmXYjGRoyQ8//EDzWRyFVE5ItEjVX
+         VOCPBJFko8LtrQRpczOr4yEnetAT7XD1XxDSe0jg3kiT0YmhrNeDH0D8mXASfaUZ7yqv
+         sISg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=g4HRffWR5sTfOdPb8n2H2gBlNEK3O7QkgVCtkSjBUGc=;
-        b=ifl0gHFvGEMpZddEIHETwxlrpo81KvyDaqhTwve+HjAogfm/U02aklBz7AtQQK8mOj
-         scIdxAbEk//2O0P4zeD5lexOSjA3DjLek1a7VM9jkcbzhHk1f4QACNc11Us+lY42ozNt
-         onbPUMsYOKVRpNYtalGer3ooLwFQd6iId4dPEioeYPmh4I99cYgooxSfVo8zJC57kym9
-         kiqe+Ivekc0hVirFMyzSGnJYoOEGgFoDoy0MPqv+R7dD1anZCVEPQ8ENDgZQnV/p+rpq
-         snTAPmrv4YHBbN1eMlj+TZ0tioxniyYfNfrBx36mV2kbCL2BSEdnlJsPM9r5EpQCDaXl
-         vC+Q==
-X-Gm-Message-State: APjAAAXyHf4BxCL3UWwClEQ+mu5Hyu4yrTANyvzFODnZo2IAqwJzZGD0
-        6mb4bCHm7meMFG2XzBaGCVy9nA==
-X-Google-Smtp-Source: APXvYqzc4Bn9ATOCQYg7LsJf9jLHX1jrV/wEcEKA0Dzyd51K6OZ8vz1CVcwhFwEFMJTVX7DrRrXbdA==
-X-Received: by 2002:a17:902:e4:: with SMTP id a91mr29498761pla.150.1565550022586;
-        Sun, 11 Aug 2019 12:00:22 -0700 (PDT)
-Received: from tuxbook-pro (104-188-17-28.lightspeed.sndgca.sbcglobal.net. [104.188.17.28])
-        by smtp.gmail.com with ESMTPSA id 5sm41932620pgh.93.2019.08.11.12.00.21
-        (version=TLS1_3 cipher=AEAD-AES256-GCM-SHA384 bits=256/256);
-        Sun, 11 Aug 2019 12:00:21 -0700 (PDT)
-Date:   Sun, 11 Aug 2019 12:01:59 -0700
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Vivek Gautam <vivek.gautam@codeaurora.org>
-Cc:     "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
-        <devicetree@vger.kernel.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Will Deacon <will.deacon@arm.com>,
-        open list <linux-kernel@vger.kernel.org>,
-        robh+dt <robh+dt@kernel.org>,
-        David Brown <david.brown@linaro.org>,
-        "list@263.net:IOMMU DRIVERS <iommu@lists.linux-foundation.org>, Joerg
-        Roedel <joro@8bytes.org>," <iommu@lists.linux-foundation.org>,
-        Andy Gross <agross@kernel.org>,
-        Robin Murphy <robin.murphy@arm.com>
-Subject: Re: [PATCH v3 4/4] arm64: dts/sdm845: Enable FW implemented safe
- sequence handler on MTP
-Message-ID: <20190811190159.GQ26807@tuxbook-pro>
-References: <20190612071554.13573-1-vivek.gautam@codeaurora.org>
- <20190612071554.13573-5-vivek.gautam@codeaurora.org>
- <20190805222627.GA2634@builder>
- <CAFp+6iHGrXAJ2Y1ewxaePGYEcbnprjScUnGyR61qvOv03HVZhQ@mail.gmail.com>
+        h=x-gm-message-state:subject:from:to:cc:references:openpgp:autocrypt
+         :message-id:date:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=A59LGVEP6S58PG03Us3mEWpZumJu1goEWu0jXUauzI0=;
+        b=k3Rb3dpafDvWf0o5pCGg7KY+Tkt3FKvWDLKjdRYGztxqXKaU9sWXLjZYQeFtlwCdB8
+         I/3qI5/uFlP9gsWa/TTHabO8f//HDQtiOeRYSV6DZ6A0eKpDYWhgtG9mfBKznGgESyKz
+         CyrAf1N6xuWQMlHVEmpGRNiX1zHaS/sVbPpWwXyRiOnZq3UFP9s7WD0JJfnm0VZI2N9v
+         9oKNW3jDkQQX8dSw8XA5yIV3ArzJI+jgb05wNSCBFW5PJ/JA2XzPGhZ0Sg1l9cjMSz0C
+         u7M+p1LhkZougNrreoP76qJnCrpE3ZQXpiBuWNvkQHRn4qyousZZFj7ZFpxR9RTFjs4u
+         WXRQ==
+X-Gm-Message-State: APjAAAVNZhcmlSLOE780w+CXBpvSPsA0SvmoE/IRF02NT9OYBdZAg/AZ
+        IuVkb5yP8S7q/tf4S5p1aWl8jNJ5/og=
+X-Google-Smtp-Source: APXvYqwyAQDFXO/Y8xqSbwi9seUrp7a/WlITbGdPwUCwBIGloK5d9VBwZq/ugMDh/QgrtgvYnvSanA==
+X-Received: by 2002:a05:651c:282:: with SMTP id b2mr8038797ljo.208.1565618839594;
+        Mon, 12 Aug 2019 07:07:19 -0700 (PDT)
+Received: from [10.44.66.8] ([212.45.67.2])
+        by smtp.googlemail.com with ESMTPSA id k8sm20901421lja.24.2019.08.12.07.07.17
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Mon, 12 Aug 2019 07:07:18 -0700 (PDT)
+Subject: Re: [PATCH v5 1/5] dt-bindings: interconnect: Add Qualcomm QCS404 DT
+ bindings
+From:   Georgi Djakov <georgi.djakov@linaro.org>
+To:     robh+dt@kernel.org, devicetree@vger.kernel.org
+Cc:     bjorn.andersson@linaro.org, agross@kernel.org, vkoul@kernel.org,
+        evgreen@chromium.org, daidavid1@codeaurora.org,
+        linux-pm@vger.kernel.org, linux-arm-msm@vger.kernel.org
+References: <20190723142339.27772-1-georgi.djakov@linaro.org>
+ <20190723142339.27772-2-georgi.djakov@linaro.org>
+ <c4cb4320-52a1-ab26-4b0e-ae2b51312c27@linaro.org>
+Openpgp: preference=signencrypt
+Autocrypt: addr=georgi.djakov@linaro.org; prefer-encrypt=mutual; keydata=
+ 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
+ KEmKjLDvB0pePJkdTw==
+Message-ID: <8764496e-5869-45cf-da72-c640dbcaaea5@linaro.org>
+Date:   Mon, 12 Aug 2019 17:07:15 +0300
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAFp+6iHGrXAJ2Y1ewxaePGYEcbnprjScUnGyR61qvOv03HVZhQ@mail.gmail.com>
-User-Agent: Mutt/1.12.1 (2019-06-15)
+In-Reply-To: <c4cb4320-52a1-ab26-4b0e-ae2b51312c27@linaro.org>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Sun 11 Aug 09:08 PDT 2019, Vivek Gautam wrote:
-
-> On Tue, Aug 6, 2019 at 3:56 AM Bjorn Andersson
-> <bjorn.andersson@linaro.org> wrote:
-> >
-> > On Wed 12 Jun 00:15 PDT 2019, Vivek Gautam wrote:
-> >
-> > > Indicate on MTP SDM845 that firmware implements handler to
-> > > TLB invalidate erratum SCM call where SAFE sequence is toggled
-> > > to achieve optimum performance on real-time clients, such as
-> > > display and camera.
-> > >
-> > > Signed-off-by: Vivek Gautam <vivek.gautam@codeaurora.org>
-> > > ---
-> > >  arch/arm64/boot/dts/qcom/sdm845.dtsi | 1 +
-> > >  1 file changed, 1 insertion(+)
-> > >
-> > > diff --git a/arch/arm64/boot/dts/qcom/sdm845.dtsi b/arch/arm64/boot/dts/qcom/sdm845.dtsi
-> > > index 78ec373a2b18..6a73d9744a71 100644
-> > > --- a/arch/arm64/boot/dts/qcom/sdm845.dtsi
-> > > +++ b/arch/arm64/boot/dts/qcom/sdm845.dtsi
-> > > @@ -2368,6 +2368,7 @@
-> > >                       compatible = "qcom,sdm845-smmu-500", "arm,mmu-500";
-> > >                       reg = <0 0x15000000 0 0x80000>;
-> > >                       #iommu-cells = <2>;
-> > > +                     qcom,smmu-500-fw-impl-safe-errata;
-> >
-> > Looked back at this series and started to wonder if there there is a
-> > case where this should not be set? I mean we're after all adding this to
-> > the top 845 dtsi...
+On 8/5/19 16:50, Georgi Djakov wrote:
+> On 7/23/19 17:23, Georgi Djakov wrote:
+>> The Qualcomm QCS404 platform has several buses that could be controlled
+>> and tuned according to the bandwidth demand.
+>>
+>> Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+>> Signed-off-by: Georgi Djakov <georgi.djakov@linaro.org>
+>> ---
 > 
-> My bad.
-> This is not valid in case of cheza. Cheza firmware doesn't implement
-> the safe errata handling hook.
-> On cheza we just have the liberty of accessing the secure registers
-> through scm calls - this is what
-> we were doing in earlier patch series handling this errata.
-> So, a property like this should go to mtp board's dts file.
+> Hi Rob,
 > 
+> Could you please help to review this patch?
+> 
+> Thanks,
+> Georgi
 
-It would have been nice if the common case was just selected by default,
-but afaict no safe workaround is needed on Cheza? You mention here that
-it should (could?) use the scm write based approach instead, would an
-introduction of that come with another flag?
+Hey Rob,
 
+Did you get a chance to look at this?
 
-PS. In it's current form it's correct that this should be moved to the
-device dts files - all but one of them...
+Thanks,
+Georgi
 
-Regards,
-Bjorn
+> 
+>>
+>> v5:
+>> - Make reg and clocks DT properties required.
+>> - Remove the _clk suffix from clock names.
+>>
+>> v4:
+>> - Add the DT header into this patch.
+>> - Pick Bjorn's r-b.
+>>
+>> v3:
+>> - Add a reg property and move the interconnect nodes under the "soc" node.
+>>
+>> v2:
+>> - No changes.
+>>
+>>  .../bindings/interconnect/qcom,qcs404.txt     | 45 ++++++++++
+>>  .../dt-bindings/interconnect/qcom,qcs404.h    | 88 +++++++++++++++++++
+>>  2 files changed, 133 insertions(+)
+>>  create mode 100644 Documentation/devicetree/bindings/interconnect/qcom,qcs404.txt
+>>  create mode 100644 include/dt-bindings/interconnect/qcom,qcs404.h
+>>
+>> diff --git a/Documentation/devicetree/bindings/interconnect/qcom,qcs404.txt b/Documentation/devicetree/bindings/interconnect/qcom,qcs404.txt
+>> new file mode 100644
+>> index 000000000000..c07d89812b73
+>> --- /dev/null
+>> +++ b/Documentation/devicetree/bindings/interconnect/qcom,qcs404.txt
+>> @@ -0,0 +1,45 @@
+>> +Qualcomm QCS404 Network-On-Chip interconnect driver binding
+>> +-----------------------------------------------------------
+>> +
+>> +Required properties :
+>> +- compatible : shall contain only one of the following:
+>> +			"qcom,qcs404-bimc"
+>> +			"qcom,qcs404-pcnoc"
+>> +			"qcom,qcs404-snoc"
+>> +- #interconnect-cells : should contain 1
+>> +
+>> +reg : specifies the physical base address and size of registers
+>> +clocks : list of phandles and specifiers to all interconnect bus clocks
+>> +clock-names : clock names should include both "bus" and "bus_a"
+>> +
+>> +Example:
+>> +
+>> +soc {
+>> +	...
+>> +	bimc: interconnect@400000 {
+>> +		reg = <0x00400000 0x80000>;
+>> +		compatible = "qcom,qcs404-bimc";
+>> +		#interconnect-cells = <1>;
+>> +		clock-names = "bus", "bus_a";
+>> +		clocks = <&rpmcc RPM_SMD_BIMC_CLK>,
+>> +			<&rpmcc RPM_SMD_BIMC_A_CLK>;
+>> +	};
+>> +
+>> +	pnoc: interconnect@500000 {
+>> +		reg = <0x00500000 0x15080>;
+>> +		compatible = "qcom,qcs404-pcnoc";
+>> +		#interconnect-cells = <1>;
+>> +		clock-names = "bus", "bus_a";
+>> +		clocks = <&rpmcc RPM_SMD_PNOC_CLK>,
+>> +			<&rpmcc RPM_SMD_PNOC_A_CLK>;
+>> +	};
+>> +
+>> +	snoc: interconnect@580000 {
+>> +		reg = <0x00580000 0x23080>;
+>> +		compatible = "qcom,qcs404-snoc";
+>> +		#interconnect-cells = <1>;
+>> +		clock-names = "bus", "bus_a";
+>> +		clocks = <&rpmcc RPM_SMD_SNOC_CLK>,
+>> +			<&rpmcc RPM_SMD_SNOC_A_CLK>;
+>> +	};
+>> +};
+>> diff --git a/include/dt-bindings/interconnect/qcom,qcs404.h b/include/dt-bindings/interconnect/qcom,qcs404.h
+>> new file mode 100644
+>> index 000000000000..960f6e39c5f2
+>> --- /dev/null
+>> +++ b/include/dt-bindings/interconnect/qcom,qcs404.h
+>> @@ -0,0 +1,88 @@
+>> +/* SPDX-License-Identifier: GPL-2.0 */
+>> +/*
+>> + * Qualcomm interconnect IDs
+>> + *
+>> + * Copyright (c) 2019, Linaro Ltd.
+>> + * Author: Georgi Djakov <georgi.djakov@linaro.org>
+>> + */
+>> +
+>> +#ifndef __DT_BINDINGS_INTERCONNECT_QCOM_QCS404_H
+>> +#define __DT_BINDINGS_INTERCONNECT_QCOM_QCS404_H
+>> +
+>> +#define MASTER_AMPSS_M0			0
+>> +#define MASTER_OXILI			1
+>> +#define MASTER_MDP_PORT0		2
+>> +#define MASTER_SNOC_BIMC_1		3
+>> +#define MASTER_TCU_0			4
+>> +#define SLAVE_EBI_CH0			5
+>> +#define SLAVE_BIMC_SNOC			6
+>> +
+>> +#define MASTER_SPDM			0
+>> +#define MASTER_BLSP_1			1
+>> +#define MASTER_BLSP_2			2
+>> +#define MASTER_XI_USB_HS1		3
+>> +#define MASTER_CRYPT0			4
+>> +#define MASTER_SDCC_1			5
+>> +#define MASTER_SDCC_2			6
+>> +#define MASTER_SNOC_PCNOC		7
+>> +#define MASTER_QPIC			8
+>> +#define PCNOC_INT_0			9
+>> +#define PCNOC_INT_2			10
+>> +#define PCNOC_INT_3			11
+>> +#define PCNOC_S_0			12
+>> +#define PCNOC_S_1			13
+>> +#define PCNOC_S_2			14
+>> +#define PCNOC_S_3			15
+>> +#define PCNOC_S_4			16
+>> +#define PCNOC_S_6			17
+>> +#define PCNOC_S_7			18
+>> +#define PCNOC_S_8			19
+>> +#define PCNOC_S_9			20
+>> +#define PCNOC_S_10			21
+>> +#define PCNOC_S_11			22
+>> +#define SLAVE_SPDM			23
+>> +#define SLAVE_PDM			24
+>> +#define SLAVE_PRNG			25
+>> +#define SLAVE_TCSR			26
+>> +#define SLAVE_SNOC_CFG			27
+>> +#define SLAVE_MESSAGE_RAM		28
+>> +#define SLAVE_DISP_SS_CFG		29
+>> +#define SLAVE_GPU_CFG			30
+>> +#define SLAVE_BLSP_1			31
+>> +#define SLAVE_BLSP_2			32
+>> +#define SLAVE_TLMM_NORTH		33
+>> +#define SLAVE_PCIE			34
+>> +#define SLAVE_ETHERNET			35
+>> +#define SLAVE_TLMM_EAST			36
+>> +#define SLAVE_TCU			37
+>> +#define SLAVE_PMIC_ARB			38
+>> +#define SLAVE_SDCC_1			39
+>> +#define SLAVE_SDCC_2			40
+>> +#define SLAVE_TLMM_SOUTH		41
+>> +#define SLAVE_USB_HS			42
+>> +#define SLAVE_USB3			43
+>> +#define SLAVE_CRYPTO_0_CFG		44
+>> +#define SLAVE_PCNOC_SNOC		45
+>> +
+>> +#define MASTER_QDSS_BAM			0
+>> +#define MASTER_BIMC_SNOC		1
+>> +#define MASTER_PCNOC_SNOC		2
+>> +#define MASTER_QDSS_ETR			3
+>> +#define MASTER_EMAC			4
+>> +#define MASTER_PCIE			5
+>> +#define MASTER_USB3			6
+>> +#define QDSS_INT			7
+>> +#define SNOC_INT_0			8
+>> +#define SNOC_INT_1			9
+>> +#define SNOC_INT_2			10
+>> +#define SLAVE_KPSS_AHB			11
+>> +#define SLAVE_WCSS			12
+>> +#define SLAVE_SNOC_BIMC_1		13
+>> +#define SLAVE_IMEM			14
+>> +#define SLAVE_SNOC_PCNOC		15
+>> +#define SLAVE_QDSS_STM			16
+>> +#define SLAVE_CATS_0			17
+>> +#define SLAVE_CATS_1			18
+>> +#define SLAVE_LPASS			19
+>> +
+>> +#endif
