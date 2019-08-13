@@ -2,137 +2,108 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id E88DA8BBE4
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 Aug 2019 16:46:41 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 126A28BC18
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 Aug 2019 16:53:49 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729732AbfHMOqg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 13 Aug 2019 10:46:36 -0400
-Received: from smtp.codeaurora.org ([198.145.29.96]:50974 "EHLO
-        smtp.codeaurora.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729731AbfHMOqf (ORCPT
+        id S1729670AbfHMOxs (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 13 Aug 2019 10:53:48 -0400
+Received: from mail-lf1-f68.google.com ([209.85.167.68]:42315 "EHLO
+        mail-lf1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729495AbfHMOxs (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 13 Aug 2019 10:46:35 -0400
-Received: by smtp.codeaurora.org (Postfix, from userid 1000)
-        id A85E760D35; Tue, 13 Aug 2019 14:46:34 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
-        s=default; t=1565707594;
-        bh=2IoyEMqIXK1S5ig0MQsZwXaRBSkNTdyKo/J01X/b8o4=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=e8yB4kQplmaqGkC4+8We5ZhYHkxl3Buxb8spHCWAxkyN1YYWMCb/9bATg8zOHNckK
-         L6/BTxFGGB60QDD7v0Apnj+In6lNNJx+Q2edQqL+INNvTsQxjYJ+LjHMAQCiO7Xrxw
-         xFyFg2oxpPVulfLMxyCKNR2L7WPrRcd92DHW6zWg=
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        pdx-caf-mail.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.7 required=2.0 tests=ALL_TRUSTED,BAYES_00,
-        DKIM_INVALID,DKIM_SIGNED,SPF_NONE autolearn=no autolearn_force=no
-        version=3.4.0
-Received: from jcrouse1-lnx.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: jcrouse@smtp.codeaurora.org)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id DDA83608FF;
-        Tue, 13 Aug 2019 14:46:30 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
-        s=default; t=1565707593;
-        bh=2IoyEMqIXK1S5ig0MQsZwXaRBSkNTdyKo/J01X/b8o4=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=Oj2alQPlJikRq38cn+AQr57B198EMQJbTPoCBATnYp9x6QUiMvPZsxsKmGkDwQUtF
-         mDTQC/KCsFYs54Y0Q2ta2pkXSSBUXKKqIkx7Y+br313ufb0NQK5mSrdJyafiQKEsR8
-         OU3Fvsthkx8IrWwUQshL554z9DoIEIM5OWgBlqXQ=
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org DDA83608FF
-Authentication-Results: pdx-caf-mail.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: pdx-caf-mail.web.codeaurora.org; spf=none smtp.mailfrom=jcrouse@codeaurora.org
-From:   Jordan Crouse <jcrouse@codeaurora.org>
-To:     freedreno@lists.freedesktop.org
-Cc:     linux-arm-msm@vger.kernel.org,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Arnd Bergmann <arnd@arndb.de>,
-        Linus Walleij <linus.walleij@linaro.org>,
-        Marcin Juszkiewicz <marcin.juszkiewicz@linaro.org>,
-        Catalin Marinas <catalin.marinas@arm.com>,
-        Geert Uytterhoeven <geert+renesas@glider.be>,
-        Leonard Crestez <leonard.crestez@nxp.com>,
-        Enric Balletbo i Serra <enric.balletbo@collabora.com>,
-        Olof Johansson <olof@lixom.net>,
-        Dinh Nguyen <dinguyen@kernel.org>,
-        Miquel Raynal <miquel.raynal@bootlin.com>,
-        Krzysztof Kozlowski <krzk@kernel.org>,
-        linux-arm-kernel@lists.infradead.org,
-        Will Deacon <will@kernel.org>,
-        Jagan Teki <jagan@amarulasolutions.com>,
-        Fabrice Gasnier <fabrice.gasnier@st.com>,
-        Russell King <linux@armlinux.org.uk>,
-        Shawn Guo <shawnguo@kernel.org>,
-        Simon Horman <horms+renesas@verge.net.au>,
-        Marek Szyprowski <m.szyprowski@samsung.com>,
-        =?UTF-8?q?Yannick=20Fertr=C3=A9?= <yannick.fertre@st.com>,
-        Maxime Ripard <mripard@kernel.org>,
-        Alexandre Torgue <alexandre.torgue@st.com>,
-        linux-kernel@vger.kernel.org, Andy Gross <agross@kernel.org>,
-        Brian Masney <masneyb@onstation.org>,
-        Frank Rowand <frank.rowand@sony.com>,
-        Tony Lindgren <tony@atomide.com>,
-        Anson Huang <Anson.Huang@nxp.com>
-Subject: [PATCH v2 2/2] arm: Add DRM_MSM to defconfigs with ARCH_QCOM
-Date:   Tue, 13 Aug 2019 08:46:25 -0600
-Message-Id: <1565707585-5359-2-git-send-email-jcrouse@codeaurora.org>
-X-Mailer: git-send-email 2.7.4
-In-Reply-To: <1565707585-5359-1-git-send-email-jcrouse@codeaurora.org>
-References: <1565707585-5359-1-git-send-email-jcrouse@codeaurora.org>
+        Tue, 13 Aug 2019 10:53:48 -0400
+Received: by mail-lf1-f68.google.com with SMTP id s19so14288463lfb.9
+        for <linux-arm-msm@vger.kernel.org>; Tue, 13 Aug 2019 07:53:46 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=ebrdQpGbryAbE+PVSjTFqlvSSqkSS1ZgUmlnEvCria0=;
+        b=ePZ0JHbra+U1kuq1bS8PxUS1CRnF7QVaKlFGUIrgNjPDCu4+CCfrMg478Kb1CtUJH5
+         vwdSrpBbXu81gGSt/pIg2vEHaMMOkhg+qpcLnEPCeBtgzNkT5Sw77IW4fkugaERdtQ6k
+         gBW79xeVntMdVPqPn+LET9tGnch6A4FieJNKmotqtgIaWkiqCiktVaIjlgkJbLXo3Am1
+         UeuWkhbrgOeNuAdaSume6zhNLlQ5n3/wgIU52bR+GtcKp6Bi40tqRsggtqc1+JbrP/gn
+         O0bBpACubGme787uuCgKQbTv0V7zSZcmi1+d2rw/QseVTywbyZcdZFKF9mEVvWQK+zHU
+         eGoQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=ebrdQpGbryAbE+PVSjTFqlvSSqkSS1ZgUmlnEvCria0=;
+        b=uABvMLdV2VW9v1u7RLBo3OGCK+AdCUqFhjsdXYGdZ4EzIVp0jf2KklWFScniUG/B9i
+         ENwlbJCTglGfVaohW6uMduOhLf8cgkIPOtBu/Worp1ajf5Lgsxc3YMm1XqXrpq2snCmX
+         8YbLp7/FiEAokGELOjOIV6eg6IFj3O+9LctyQrnyO8TtASqcvPPohJ+a/x8+LvfsAAvY
+         V76y/eT/t9B88PJhw4P2iaPYaKQVsAJ4b22JZW/Gn5L8cDecIMDXNJZZRoTANrYslQXN
+         jv513St+Wd86qlDcbkAE4d5rVPUrR+/F4Z2ydv8beJN10hmYxB0JOdsC5siecdmHVEqj
+         j+pg==
+X-Gm-Message-State: APjAAAW81qCgdpOTW3wxng4ccE0xtAUyuAh51dgAoRnDObA7kprPok7x
+        E1xnamdPAKmceN1kjENEPSsevw==
+X-Google-Smtp-Source: APXvYqxGmBjxCMEseACgPnI5Cfymrnnc2nKAKmnZdzJtjplWsZFE5p5T7yf6fHNJ8shzOl5yl71onA==
+X-Received: by 2002:ac2:550c:: with SMTP id j12mr18293687lfk.171.1565708026123;
+        Tue, 13 Aug 2019 07:53:46 -0700 (PDT)
+Received: from localhost.localdomain ([212.45.67.2])
+        by smtp.googlemail.com with ESMTPSA id r68sm19628100lff.52.2019.08.13.07.53.44
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Tue, 13 Aug 2019 07:53:45 -0700 (PDT)
+From:   Georgi Djakov <georgi.djakov@linaro.org>
+To:     linux-pm@vger.kernel.org, evgreen@chromium.org
+Cc:     daidavid1@codeaurora.org, vincent.guittot@linaro.org,
+        bjorn.andersson@linaro.org, amit.kucheria@linaro.org,
+        dianders@chromium.org, seansw@qti.qualcomm.com,
+        linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+        linux-arm-msm@vger.kernel.org, georgi.djakov@linaro.org
+Subject: [PATCH v4 0/3] interconnect: Add path tagging support
+Date:   Tue, 13 Aug 2019 17:53:38 +0300
+Message-Id: <20190813145341.28530-1-georgi.djakov@linaro.org>
+X-Mailer: git-send-email 2.22.0
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Now that CONFIG_DRM_MSM is no longer default 'y' add it as a module to all
-ARCH_QCOM enabled defconfigs to restore the previous expected build
-behavior.
+SoCs that have multiple coexisting CPUs and DSPs, may have shared
+interconnect buses between them. In such cases, each CPU/DSP may have
+different bandwidth needs, depending on whether it is active or sleeping.
+This means that we have to keep different bandwidth configurations for
+the CPU (active/sleep). In such systems, usually there is a way to
+communicate and synchronize this information with some firmware or pass
+it to another processor responsible for monitoring and switching the
+interconnect configurations based on the state of each CPU/DSP.
 
-Signed-off-by: Jordan Crouse <jcrouse@codeaurora.org>
----
+The above problem can be solved by introducing the path tagging concept,
+that allows consumers to optionally attach a tag to each path they use.
+This tag is used to differentiate between the aggregated bandwidth values
+for each state. The tag is generic and how it's handled is up to the
+platform specific interconnect provider drivers.
 
- arch/arm/configs/multi_v7_defconfig | 1 +
- arch/arm/configs/qcom_defconfig     | 1 +
- arch/arm64/configs/defconfig        | 1 +
- 3 files changed, 3 insertions(+)
+v4:
+- Picked Reviewed-by tags (Thanks Evan!)
+- Addressed comments on patch 3.
 
-diff --git a/arch/arm/configs/multi_v7_defconfig b/arch/arm/configs/multi_v7_defconfig
-index b0a0568..12dfdab 100644
---- a/arch/arm/configs/multi_v7_defconfig
-+++ b/arch/arm/configs/multi_v7_defconfig
-@@ -635,6 +635,7 @@ CONFIG_DRM_ATMEL_HLCDC=m
- CONFIG_DRM_RCAR_DU=m
- CONFIG_DRM_RCAR_LVDS=y
- CONFIG_DRM_SUN4I=m
-+CONFIG_DRM_MSM=m
- CONFIG_DRM_FSL_DCU=m
- CONFIG_DRM_TEGRA=y
- CONFIG_DRM_STM=m
-diff --git a/arch/arm/configs/qcom_defconfig b/arch/arm/configs/qcom_defconfig
-index 34433bf..02f1e7b 100644
---- a/arch/arm/configs/qcom_defconfig
-+++ b/arch/arm/configs/qcom_defconfig
-@@ -147,6 +147,7 @@ CONFIG_REGULATOR_QCOM_SMD_RPM=y
- CONFIG_REGULATOR_QCOM_SPMI=y
- CONFIG_MEDIA_SUPPORT=y
- CONFIG_DRM=y
-+CONFIG_DRM_MSM=m
- CONFIG_DRM_PANEL_SIMPLE=y
- CONFIG_FB=y
- CONFIG_FRAMEBUFFER_CONSOLE=y
-diff --git a/arch/arm64/configs/defconfig b/arch/arm64/configs/defconfig
-index 1cd66cf..4fec7a9 100644
---- a/arch/arm64/configs/defconfig
-+++ b/arch/arm64/configs/defconfig
-@@ -531,6 +531,7 @@ CONFIG_DRM_RCAR_DU=m
- CONFIG_DRM_SUN4I=m
- CONFIG_DRM_SUN8I_DW_HDMI=m
- CONFIG_DRM_SUN8I_MIXER=m
-+CONFIG_DRM_MSM=m
- CONFIG_DRM_TEGRA=m
- CONFIG_DRM_PANEL_SIMPLE=m
- CONFIG_DRM_SII902X=m
--- 
-2.7.4
+v3: https://lore.kernel.org/lkml/20190809121325.8138-1-georgi.djakov@linaro.org/
+- New patch to add a pre_aggregate() callback.
+
+v2: https://lore.kernel.org/lkml/20190618091724.28232-1-georgi.djakov@linaro.org/
+- Store tag with the request. (Evan)
+- Reorganize the code to save bandwidth values into buckets and use the
+  tag as a bitfield. (Evan)
+- Clear the aggregated values after icc_set().
+
+v1: https://lore.kernel.org/lkml/20190208172152.1807-1-georgi.djakov@linaro.org/
+
+
+David Dai (1):
+  interconnect: qcom: Add tagging and wake/sleep support for sdm845
+
+Georgi Djakov (2):
+  interconnect: Add support for path tags
+  interconnect: Add pre_aggregate() callback
+
+ drivers/interconnect/core.c           |  27 ++++-
+ drivers/interconnect/qcom/sdm845.c    | 141 ++++++++++++++++++++------
+ include/linux/interconnect-provider.h |   7 +-
+ include/linux/interconnect.h          |   5 +
+ 4 files changed, 145 insertions(+), 35 deletions(-)
 
