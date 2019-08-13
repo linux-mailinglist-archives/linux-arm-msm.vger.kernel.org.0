@@ -2,84 +2,54 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 87A858BF60
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 Aug 2019 19:09:22 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E2EC48C099
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 Aug 2019 20:32:22 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726155AbfHMRJW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 13 Aug 2019 13:09:22 -0400
-Received: from mail-lf1-f67.google.com ([209.85.167.67]:44858 "EHLO
-        mail-lf1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726062AbfHMRJW (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 13 Aug 2019 13:09:22 -0400
-Received: by mail-lf1-f67.google.com with SMTP id v16so5562524lfg.11
-        for <linux-arm-msm@vger.kernel.org>; Tue, 13 Aug 2019 10:09:20 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=GVzAnVzEMjxkSBqu8V9mlBdGqDjrrYQzVhEjxzd+3hI=;
-        b=I4qWR+mzqRT7c1SEkHGhKmL6s1EYBMsgtyPriDKNziH+B4FMxlEGuvrJH5HcS4lcUd
-         oEuShorJ4j1kTmfzSPRIGn/stYQAr97GOiXpjAyAAXj4cxkN8Dy0uFFDrdXb/ecYQt9m
-         1yniZalDerzD5yTNTTGHitP5LFfOrIUdgwpGE=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=GVzAnVzEMjxkSBqu8V9mlBdGqDjrrYQzVhEjxzd+3hI=;
-        b=doHl6/EmobDqbNizL4jYqpc5v3UfmyRqxwUOEktW8Yxuu9NmeOB8a94UWXDj7KMi5Q
-         f5Ynme8/2xT1YXP8opeF4BoDd7mFAssknGNsqScYx7YjzmRtOpltdJ+jA3Rx86R6EA4M
-         F+qkVtSeIemVMFiLzrrPwL0pWjnB2qbI0k5NSojKoQgD6iuYk6+qVnGjwuz7UJjf1OTd
-         YxN7y8XSpZC0CugL0n4QbxpanbtI45XIOBR8qPoLASGouAbzmV4bjuon2S3W0xZwBYM6
-         YlBY1bhqWzsdzx97gchIsbzVPCyLz84bzW/kO5tG/Sx3fBHve7+3pxCLCZCKmXMxJUfi
-         ovJA==
-X-Gm-Message-State: APjAAAW0T2ESBxvjmso7+MN0h1pHly8Q+XdHOHR9cKkl1cBpQC7/t3Tv
-        v5oMrlgrSS4Nz7VncBxyYvvptoKiMC4=
-X-Google-Smtp-Source: APXvYqz9gHZSKAlX+0t7JzUqJD35BBuPJSxgD11OV7mQJQvQ2rIMKxTgRYP0I1t9Xd7jahz4G59cYg==
-X-Received: by 2002:a19:8093:: with SMTP id b141mr23788667lfd.137.1565716159455;
-        Tue, 13 Aug 2019 10:09:19 -0700 (PDT)
-Received: from mail-lf1-f50.google.com (mail-lf1-f50.google.com. [209.85.167.50])
-        by smtp.gmail.com with ESMTPSA id f18sm1032838ljj.60.2019.08.13.10.09.17
-        for <linux-arm-msm@vger.kernel.org>
-        (version=TLS1_3 cipher=AEAD-AES128-GCM-SHA256 bits=128/128);
-        Tue, 13 Aug 2019 10:09:17 -0700 (PDT)
-Received: by mail-lf1-f50.google.com with SMTP id c19so77299823lfm.10
-        for <linux-arm-msm@vger.kernel.org>; Tue, 13 Aug 2019 10:09:17 -0700 (PDT)
-X-Received: by 2002:a19:641a:: with SMTP id y26mr22803433lfb.29.1565716156648;
- Tue, 13 Aug 2019 10:09:16 -0700 (PDT)
+        id S1726135AbfHMScW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 13 Aug 2019 14:32:22 -0400
+Received: from mail.kernel.org ([198.145.29.99]:34704 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726066AbfHMScW (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 13 Aug 2019 14:32:22 -0400
+Received: from kernel.org (unknown [104.132.0.74])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by mail.kernel.org (Postfix) with ESMTPSA id DFF1A20665;
+        Tue, 13 Aug 2019 18:32:20 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=default; t=1565721141;
+        bh=W4OBBaZc9LcvHS9HatCqQdN4d7XWyG+yszN82yTksxY=;
+        h=In-Reply-To:References:Subject:From:Cc:To:Date:From;
+        b=FQD5LQN17V27tvKt9Kd2arov/3UM0ptRAl2A2Z34C4HEHRpE22jmS9ClrwNULFS7W
+         UAiGNZMu/7r9e2T2n9uMB2Yy7wl+niqvujxoLu/IF2+fmti0jpAFInSYZ6Y/y/PWNn
+         QLLVW/+6ig3Qs2M8e2GY6aFik9Vb6CBtgQlrxwl8=
+Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
-References: <20190813145341.28530-1-georgi.djakov@linaro.org> <20190813145341.28530-4-georgi.djakov@linaro.org>
-In-Reply-To: <20190813145341.28530-4-georgi.djakov@linaro.org>
-From:   Evan Green <evgreen@chromium.org>
-Date:   Tue, 13 Aug 2019 10:08:40 -0700
-X-Gmail-Original-Message-ID: <CAE=gft6ZpM6x21X+SxCbNDdNS5B51yYAFA0XBbViqLmr99n5SQ@mail.gmail.com>
-Message-ID: <CAE=gft6ZpM6x21X+SxCbNDdNS5B51yYAFA0XBbViqLmr99n5SQ@mail.gmail.com>
-Subject: Re: [PATCH v4 3/3] interconnect: qcom: Add tagging and wake/sleep
- support for sdm845
-To:     Georgi Djakov <georgi.djakov@linaro.org>
-Cc:     linux-pm@vger.kernel.org, David Dai <daidavid1@codeaurora.org>,
-        Vincent Guittot <vincent.guittot@linaro.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        amit.kucheria@linaro.org, Doug Anderson <dianders@chromium.org>,
-        Sean Sweeney <seansw@qti.qualcomm.com>,
-        LKML <linux-kernel@vger.kernel.org>,
-        linux-arm Mailing List <linux-arm-kernel@lists.infradead.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <20190813130946.16448-1-govinds@codeaurora.org>
+References: <20190813130946.16448-1-govinds@codeaurora.org>
+Subject: Re: [v2 0/2] Add Q6SSTOP clock controller for QCS404
+From:   Stephen Boyd <sboyd@kernel.org>
+Cc:     bjorn.andersson@linaro.org, linux-arm-msm@vger.kernel.org,
+        linux-clk@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-soc@vger.kernel.org, andy.gross@linaro.org,
+        linux-remoteproc@vger.kernel.org,
+        Govind Singh <govinds@codeaurora.org>
+To:     Govind Singh <govinds@codeaurora.org>
+User-Agent: alot/0.8.1
+Date:   Tue, 13 Aug 2019 11:32:20 -0700
+Message-Id: <20190813183220.DFF1A20665@mail.kernel.org>
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Aug 13, 2019 at 7:53 AM Georgi Djakov <georgi.djakov@linaro.org> wrote:
->
-> From: David Dai <daidavid1@codeaurora.org>
->
-> Add support for wake and sleep commands by using a tag to indicate
-> whether or not the aggregate and set requests fall into execution
-> state specific bucket.
->
-> Signed-off-by: David Dai <daidavid1@codeaurora.org>
-> Signed-off-by: Georgi Djakov <georgi.djakov@linaro.org>
+Quoting Govind Singh (2019-08-13 06:09:44)
+> Add support for the Q6SSTOP clock control used on qcs404
+> based devices. This would allow wcss remoteproc driver to
+> control the required WCSS Q6SSTOP clock/reset controls to
+> bring the subsystem out of reset and shutdown the WCSS Q6DSP.
 
-Reviewed-by: Evan Green <evgreen@chromium.org>
+What changed from v1? Please include a changelog so we know what
+happened.
+
