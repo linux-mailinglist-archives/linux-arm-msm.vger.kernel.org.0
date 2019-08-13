@@ -2,139 +2,94 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 144CC8BA9F
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 Aug 2019 15:43:16 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D7F578BBDE
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 Aug 2019 16:46:32 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729241AbfHMNnO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 13 Aug 2019 09:43:14 -0400
-Received: from mail.kernel.org ([198.145.29.99]:59676 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1728095AbfHMNnN (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 13 Aug 2019 09:43:13 -0400
-Received: from mail-qk1-f174.google.com (mail-qk1-f174.google.com [209.85.222.174])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        id S1729486AbfHMOqc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 13 Aug 2019 10:46:32 -0400
+Received: from smtp.codeaurora.org ([198.145.29.96]:50780 "EHLO
+        smtp.codeaurora.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729407AbfHMOqc (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 13 Aug 2019 10:46:32 -0400
+Received: by smtp.codeaurora.org (Postfix, from userid 1000)
+        id 60F1960735; Tue, 13 Aug 2019 14:46:31 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
+        s=default; t=1565707591;
+        bh=RX2ZuF7FyFcwrhLgH5WfnjLf77k36pqleRUFSlPzjAQ=;
+        h=From:To:Cc:Subject:Date:From;
+        b=Kq2sUkhYJde1OCI+XGoMCQ1KWgoN1wYhrwueI7SaGan6MrH35iNl+Zi+TqTzzPoId
+         M0qtLXdJUNZ1FWiKvZyh3vbDVjm2T8XKJggIBT0fnY1v4aQOu0R6cqBARRGIvS9fuv
+         hyT4rcepA3zOzuV4aCB98tN/PZtXwGeJJE1maVSE=
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        pdx-caf-mail.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.7 required=2.0 tests=ALL_TRUSTED,BAYES_00,
+        DKIM_INVALID,DKIM_SIGNED,SPF_NONE autolearn=no autolearn_force=no
+        version=3.4.0
+Received: from jcrouse1-lnx.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
         (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id A97772084D;
-        Tue, 13 Aug 2019 13:43:12 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1565703792;
-        bh=tGhuTi6i8q70RtL03QHsvQiJD0U0K5cLD/inwbsXYcc=;
-        h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
-        b=Uo4UavNgFwTPrkrDxoQzIeexZ8KSCrVWgqozcIOdUTQaQijufQfVB2ixWpk9DEuUn
-         5e+wszlhwGOhVXV0p24BfuRUhhiNDlVRvQSFGwV/lc5gcy+idDp3GcQyqgmUm/gpDl
-         I+N5Xl39XMXX1aqi9llnNWdLstFASs7Sp7tR3oY4=
-Received: by mail-qk1-f174.google.com with SMTP id 201so79581358qkm.9;
-        Tue, 13 Aug 2019 06:43:12 -0700 (PDT)
-X-Gm-Message-State: APjAAAVCS/PKneNXjBJi7w6Mep/wDhudVlIcFnPmBwsZlJ6rtMDzYl8Z
-        y3ofMYECfigLgBTkZmoan1hL2ixA742nKAEqaw==
-X-Google-Smtp-Source: APXvYqyoMvVBG6NtFWAydUGiqe0lkRWftJ5OUD3LW861TSIDeNewDqAnlP+AxGAUPwMd7qokDO1L8NO/lTHTDeP0EKY=
-X-Received: by 2002:a37:d8f:: with SMTP id 137mr27142458qkn.254.1565703791883;
- Tue, 13 Aug 2019 06:43:11 -0700 (PDT)
-MIME-Version: 1.0
-References: <20190813130946.16448-1-govinds@codeaurora.org> <20190813130946.16448-2-govinds@codeaurora.org>
-In-Reply-To: <20190813130946.16448-2-govinds@codeaurora.org>
-From:   Rob Herring <robh@kernel.org>
-Date:   Tue, 13 Aug 2019 07:43:00 -0600
-X-Gmail-Original-Message-ID: <CAL_JsqK-GK8arfRu6sqP9UjNrwc0=aUWXymMRF5fQhg+M2TNng@mail.gmail.com>
-Message-ID: <CAL_JsqK-GK8arfRu6sqP9UjNrwc0=aUWXymMRF5fQhg+M2TNng@mail.gmail.com>
-Subject: Re: [v2 1/2] dt-bindings: clock: qcom: Add QCOM Q6SSTOP clock
- controller bindings
-To:     Govind Singh <govinds@codeaurora.org>
-Cc:     Stephen Boyd <sboyd@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        linux-clk <linux-clk@vger.kernel.org>,
-        devicetree@vger.kernel.org,
-        "open list:ARM/QUALCOMM SUPPORT" <linux-soc@vger.kernel.org>,
-        Andy Gross <andy.gross@linaro.org>,
-        "open list:REMOTE PROCESSOR (REMOTEPROC) SUBSYSTEM" 
-        <linux-remoteproc@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+        (Authenticated sender: jcrouse@smtp.codeaurora.org)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id E6E0160735;
+        Tue, 13 Aug 2019 14:46:29 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
+        s=default; t=1565707590;
+        bh=RX2ZuF7FyFcwrhLgH5WfnjLf77k36pqleRUFSlPzjAQ=;
+        h=From:To:Cc:Subject:Date:From;
+        b=JVkr2CyLqGfAWWlP5g/MRzjweIo9GLa0Ux6gwF0J0OlH/8mterC9gwFPLWi3vS2J7
+         w30oaM1JVjd8fNub6OcR9ZIU1NyBhzkML+DqrB5Riiyr38Onp1fXLELcHWA2yCNILj
+         dhGGuKsLLxjH9Qi0h+hUfo5XN97XTPxiD93zLQ4g=
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org E6E0160735
+Authentication-Results: pdx-caf-mail.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: pdx-caf-mail.web.codeaurora.org; spf=none smtp.mailfrom=jcrouse@codeaurora.org
+From:   Jordan Crouse <jcrouse@codeaurora.org>
+To:     freedreno@lists.freedesktop.org
+Cc:     linux-arm-msm@vger.kernel.org, Sean Paul <sean@poorly.run>,
+        linux-kernel@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        Rob Clark <robdclark@gmail.com>,
+        David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>
+Subject: [PATCH v2 1/2] drm/msm: Remove Kconfig default
+Date:   Tue, 13 Aug 2019 08:46:24 -0600
+Message-Id: <1565707585-5359-1-git-send-email-jcrouse@codeaurora.org>
+X-Mailer: git-send-email 2.7.4
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Aug 13, 2019 at 7:10 AM Govind Singh <govinds@codeaurora.org> wrote:
->
-> Add devicetree binding for the Q6SSTOP clock controller found in QCS404.
+Remove the default for CONFIG_DRM_MSM and let the user select the driver
+manually as one does.
 
-You need to test this with 'make dt_binding_check' and fix the errors.
+Additionally select QCOM_COMMAND_DB for ARCH_QCOM targets to make sure
+it doesn't get missed when we need it for a6xx targets.
 
->
-> Signed-off-by: Govind Singh <govinds@codeaurora.org>
-> ---
->  .../bindings/clock/qcom,q6sstopcc.yaml        | 45 +++++++++++++++++++
->  1 file changed, 45 insertions(+)
->  create mode 100644 Documentation/devicetree/bindings/clock/qcom,q6sstopcc.yaml
->
-> diff --git a/Documentation/devicetree/bindings/clock/qcom,q6sstopcc.yaml b/Documentation/devicetree/bindings/clock/qcom,q6sstopcc.yaml
-> new file mode 100644
-> index 000000000000..861e9ba97ca3
-> --- /dev/null
-> +++ b/Documentation/devicetree/bindings/clock/qcom,q6sstopcc.yaml
-> @@ -0,0 +1,45 @@
-> +# SPDX-License-Identifier: BSD-2-Clause
+v2: Move from default 'm' to no default
 
-GPL-2.0-only OR BSD-2-Clause
+Signed-off-by: Jordan Crouse <jcrouse@codeaurora.org>
+---
 
-> +%YAML 1.2
-> +---
-> +$id: http://devicetree.org/schemas/interconnect/qcom,osm-l3.yaml#
+ drivers/gpu/drm/msm/Kconfig | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-needs updating
+diff --git a/drivers/gpu/drm/msm/Kconfig b/drivers/gpu/drm/msm/Kconfig
+index 9c37e4d..e9160ce 100644
+--- a/drivers/gpu/drm/msm/Kconfig
++++ b/drivers/gpu/drm/msm/Kconfig
+@@ -14,11 +14,11 @@ config DRM_MSM
+ 	select SHMEM
+ 	select TMPFS
+ 	select QCOM_SCM if ARCH_QCOM
++	select QCOM_COMMAND_DB if ARCH_QCOM
+ 	select WANT_DEV_COREDUMP
+ 	select SND_SOC_HDMI_CODEC if SND_SOC
+ 	select SYNC_FILE
+ 	select PM_OPP
+-	default y
+ 	help
+ 	  DRM/KMS driver for MSM/snapdragon.
+ 
+-- 
+2.7.4
 
-> +$schema: http://devicetree.org/meta-schemas/core.yaml#
-> +
-> +title: Q6SSTOP clock Controller
-> +
-> +maintainers:
-> +  - Govind Singh <govinds@codeaurora.org>
-> +
-> +description:
-> +   Q6SSTOP clock controller is used by WCSS remoteproc driver
-> +   to bring WDSP out of reset.
-> +
-> +properties:
-> +  compatible:
-> +    const: "qcom,qcs404-q6sstopcc"
-> +
-> +  reg:
-> +    maxItems: 2
-> +    description: Q6SSTOP clocks register region
-> +    description: Q6SSTOP_TCSR register region
-
-Not valid json-schema
-
-> +
-> +  clocks:
-> +    items:
-> +      - description: ahb clock for the q6sstopCC
-
-Single item just needs 'maxItems: 1'
-
-> +
-> +  '#clock-cells':
-> +    const: 1
-> +
-> +required:
-> +  - compatible
-> +  - reg
-> +  - clocks
-> +  - '#clock-cells'
-
-Should have an 'additionalProperties: false' here.
-
-> +
-> +examples:
-> +  - |
-> +    q6sstopcc: clock-controller@7500000 {
-> +      compatible = "qcom,qcs404-q6sstopcc";
-> +      reg = <0x07500000 0x4e000>, <0x07550000 0x10000>;
-> +      clocks = <&gcc GCC_WCSS_Q6_AHB_CLK>;
-> +      #clock-cells = <1>;
-> +    };
-> --
-> The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
-> a Linux Foundation Collaborative Project
->
