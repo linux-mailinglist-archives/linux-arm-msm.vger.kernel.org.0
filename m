@@ -2,105 +2,69 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id A61F78C101
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 Aug 2019 20:47:28 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C1CFF8C1D8
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 Aug 2019 22:10:07 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726186AbfHMSrW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 13 Aug 2019 14:47:22 -0400
-Received: from smtp.codeaurora.org ([198.145.29.96]:39188 "EHLO
-        smtp.codeaurora.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725923AbfHMSrW (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 13 Aug 2019 14:47:22 -0400
-Received: by smtp.codeaurora.org (Postfix, from userid 1000)
-        id 1C48C60A4E; Tue, 13 Aug 2019 18:47:21 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
-        s=default; t=1565722041;
-        bh=4vlQBHXZefdhk1fMpS9K60hc0yLOya2J7kL8k05ISsE=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=MzKvf3Bdi4lF9Vx/WDwVpzChgPmmDmNM7n9XD4ndxMS3tZ059aEv6ySa4+kR+OrzE
-         HNHphu71chDg5he16DcbDOtVAJK+L0j3dBYXgru4z3u6C8z2tEI+KOAU0cYKcFBXAH
-         kL6gHFGYnvZ+YvCWfkbGRdWNl624vTAvguWhac+Y=
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        pdx-caf-mail.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.7 required=2.0 tests=ALL_TRUSTED,BAYES_00,
-        DKIM_INVALID,DKIM_SIGNED,SPF_NONE autolearn=no autolearn_force=no
-        version=3.4.0
-Received: from jcrouse1-lnx.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        id S1726631AbfHMUKB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 13 Aug 2019 16:10:01 -0400
+Received: from mail.kernel.org ([198.145.29.99]:38246 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726007AbfHMUKB (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 13 Aug 2019 16:10:01 -0400
+Received: from kernel.org (unknown [104.132.0.74])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        (Authenticated sender: jcrouse@smtp.codeaurora.org)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 8773B605A2;
-        Tue, 13 Aug 2019 18:47:19 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
-        s=default; t=1565722040;
-        bh=4vlQBHXZefdhk1fMpS9K60hc0yLOya2J7kL8k05ISsE=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=kEw1XN3rhVtk1HvRWxOSp3f/VsT0koH4XYN1tvdk1wXd1LTOGh6wtXqQoohnlgqM2
-         Z14vc2EYUHFduUw/JlE0KKNQK/QVsWiRyBpzrUzpAenAVE15VT6q77Zoqjzkx3id0M
-         gPM9ohyoSWiM14roPi3Dx7z7EfQykuA02NczTqPw=
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 8773B605A2
-Authentication-Results: pdx-caf-mail.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: pdx-caf-mail.web.codeaurora.org; spf=none smtp.mailfrom=jcrouse@codeaurora.org
-Date:   Tue, 13 Aug 2019 12:47:17 -0600
-From:   Jordan Crouse <jcrouse@codeaurora.org>
-To:     Stephen Boyd <sboyd@kernel.org>
+        by mail.kernel.org (Postfix) with ESMTPSA id 6D5692067D;
+        Tue, 13 Aug 2019 20:10:00 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=default; t=1565727000;
+        bh=IiCD7IsT67JhzKzMH/tdAui5BDrSXtu3NUCLmNQc6n0=;
+        h=In-Reply-To:References:Subject:From:Cc:To:Date:From;
+        b=XXoWIRKlGSg9iDPpwqt+n7qPov9+Y81AxhP2IGS5o4ds4+Pf25nRy0LFC8t3z1klw
+         Xk+fVp92/JUXpkJShUwE+FrauPx8Ah4KPjQujcJPjhTERhCnnj5oePyrsVsgBbIi/O
+         OY6wc0S+N7ESGb6XRuu1kcS5gQF7Jl3V8D8lsqeY=
+Content-Type: text/plain; charset="utf-8"
+MIME-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <20190813184717.GA28465@jcrouse1-lnx.qualcomm.com>
+References: <1565037226-1684-1-git-send-email-jcrouse@codeaurora.org> <20190807234232.27AA720880@mail.kernel.org> <20190813184717.GA28465@jcrouse1-lnx.qualcomm.com>
+Subject: Re: [PATCH v2] drivers: qcom: Add BCM vote macro to header
+From:   Stephen Boyd <sboyd@kernel.org>
 Cc:     freedreno@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
         Michael Turquette <mturquette@baylibre.com>,
         linux-pm@vger.kernel.org, linux-kernel@vger.kernel.org,
         Andy Gross <agross@kernel.org>,
         Georgi Djakov <georgi.djakov@linaro.org>,
         linux-clk@vger.kernel.org, Taniya Das <tdas@codeaurora.org>
-Subject: Re: [PATCH v2] drivers: qcom: Add BCM vote macro to header
-Message-ID: <20190813184717.GA28465@jcrouse1-lnx.qualcomm.com>
-Mail-Followup-To: Stephen Boyd <sboyd@kernel.org>,
-        freedreno@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
-        Michael Turquette <mturquette@baylibre.com>,
-        linux-pm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Andy Gross <agross@kernel.org>,
-        Georgi Djakov <georgi.djakov@linaro.org>, linux-clk@vger.kernel.org,
-        Taniya Das <tdas@codeaurora.org>
-References: <1565037226-1684-1-git-send-email-jcrouse@codeaurora.org>
- <20190807234232.27AA720880@mail.kernel.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20190807234232.27AA720880@mail.kernel.org>
-User-Agent: Mutt/1.5.24 (2015-08-30)
+To:     Jordan Crouse <jcrouse@codeaurora.org>
+User-Agent: alot/0.8.1
+Date:   Tue, 13 Aug 2019 13:09:59 -0700
+Message-Id: <20190813201000.6D5692067D@mail.kernel.org>
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Aug 07, 2019 at 04:42:31PM -0700, Stephen Boyd wrote:
-> Quoting Jordan Crouse (2019-08-05 13:33:46)
-> > The macro to generate a Bus Controller Manager (BCM) TCS command is used
-> > by the interconnect driver but might also be interesting to other
-> > drivers that need to construct TCS commands for sub processors so move
-> > it out of the sdm845 specific file and into the header.
-> > 
-> > Signed-off-by: Jordan Crouse <jcrouse@codeaurora.org>
-> > ---
-> 
-> Acked-by: Stephen Boyd <sboyd@kernel.org>
-> 
-> Unless this is supposed to be applied by me?
+Quoting Jordan Crouse (2019-08-13 11:47:17)
+> On Wed, Aug 07, 2019 at 04:42:31PM -0700, Stephen Boyd wrote:
+> > Quoting Jordan Crouse (2019-08-05 13:33:46)
+> > > The macro to generate a Bus Controller Manager (BCM) TCS command is u=
+sed
+> > > by the interconnect driver but might also be interesting to other
+> > > drivers that need to construct TCS commands for sub processors so move
+> > > it out of the sdm845 specific file and into the header.
+> > >=20
+> > > Signed-off-by: Jordan Crouse <jcrouse@codeaurora.org>
+> > > ---
+> >=20
+> > Acked-by: Stephen Boyd <sboyd@kernel.org>
+> >=20
+> > Unless this is supposed to be applied by me?
+>=20
+> I figured this landed in Bjorn's domain, but you guys can fight it out if=
+ you
+> want.
+>=20
 
-I figured this landed in Bjorn's domain, but you guys can fight it out if you
-want.
+Ok. I'm happy to avoid the fight!
 
-Jordan
-
-> BTW, I wonder why we need an rpm clk driver much at all nowadays, except
-> maybe for the XO clk state. The big user, from what I can tell, is the
-> interconnect driver and we don't use any of the features of the clk
-> framework besides the API to set a frequency. Maybe it would be better
-> to just push push the bus frequency logic into interconnect code, then
-> XO clk is the only thing we need to keep, and it can be a simple on/off
-> thing.
-> 
-
--- 
-The Qualcomm Innovation Center, Inc. is a member of Code Aurora Forum,
-a Linux Foundation Collaborative Project
