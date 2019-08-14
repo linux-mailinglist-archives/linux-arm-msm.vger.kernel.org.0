@@ -2,65 +2,97 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 7F0768C5C3
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Aug 2019 04:03:17 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 3F5FD8C9D4
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Aug 2019 05:09:48 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726659AbfHNCDQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 13 Aug 2019 22:03:16 -0400
-Received: from mail.kernel.org ([198.145.29.99]:42198 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726373AbfHNCDQ (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 13 Aug 2019 22:03:16 -0400
-Received: from localhost (c-73-47-72-35.hsd1.nh.comcast.net [73.47.72.35])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id A913320844;
-        Wed, 14 Aug 2019 02:03:15 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1565748195;
-        bh=F8prTQ/k/b+W43RtabebnHqUglUVLPyMKRVC+/Nz7Vg=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=eavud9KM/G4Y+VFqXEPoGdZBJzeWlrvIthMYhHqb09rtfMoMACgIE31fqYVZF+vbf
-         bc8w4XdnfQrKLMRWccc7tpnYpyqh/EKlV+8SI/ebkLpmUcljB0jOKE5ayulPdnnfuH
-         iikw6fRZFnFVLg/jpOLTwgzIHEiolseBAdToHSxU=
-Date:   Tue, 13 Aug 2019 22:03:14 -0400
-From:   Sasha Levin <sashal@kernel.org>
-To:     Rob Clark <robdclark@chromium.org>
-Cc:     LKML <linux-kernel@vger.kernel.org>, stable@vger.kernel.org,
-        Stephen Boyd <sboyd@kernel.org>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Jordan Crouse <jcrouse@codeaurora.org>,
-        Sean Paul <seanpaul@chromium.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        dri-devel <dri-devel@lists.freedesktop.org>,
-        freedreno <freedreno@lists.freedesktop.org>
-Subject: Re: [PATCH AUTOSEL 5.2 42/76] drm/msm: stop abusing dma_map/unmap
- for cache
-Message-ID: <20190814020314.GG17747@sasha-vm>
-References: <20190802131951.11600-1-sashal@kernel.org>
- <20190802131951.11600-42-sashal@kernel.org>
- <CAJs_Fx4ddE-85uA3S+YLPat4uX8Mk9zRU2SFm2xmGgmAFWPEyg@mail.gmail.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii; format=flowed
-Content-Disposition: inline
-In-Reply-To: <CAJs_Fx4ddE-85uA3S+YLPat4uX8Mk9zRU2SFm2xmGgmAFWPEyg@mail.gmail.com>
-User-Agent: Mutt/1.10.1 (2018-07-13)
+        id S1727039AbfHNDJr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 13 Aug 2019 23:09:47 -0400
+Received: from mail-pg1-f195.google.com ([209.85.215.195]:34479 "EHLO
+        mail-pg1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726967AbfHNDJr (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 13 Aug 2019 23:09:47 -0400
+Received: by mail-pg1-f195.google.com with SMTP id n9so46098963pgc.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 13 Aug 2019 20:09:46 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=from:to:cc:subject:date:message-id;
+        bh=HT5agnFB9Ua1f+HiJVMbjVMLi62oFKHY9sExG5RcmRA=;
+        b=iolgrg+yXRNATYsbEOlu9D72Y6cuxWB1oF5q6TXekIkX8mRpEK69FdqiNFv7XLjA+t
+         FcGQ/WsyRg41D/BOnJQYjxSQgmko05AoDrQP8l7PRwVl3zym4hrqsRdFf/C5NJdKmsX7
+         GZ2P20Urso3DH3FtiPIJArW43M2VOidJwP1fvmpZusTymGcOa/i60G3smXH+F1/miznf
+         3QsZV4UthI9GdIyw26ruyfIBbZ0N/faj+B/5VeUhED07B+AhHEdLce+Nzuahj7O4xDG8
+         Ff1sKUAeEmJL2mQ+1/OMUBZSm4fHnJw2ydQ1XD5QzHBVi1DI4NPaFbhBCeCAO6AQvivo
+         v6HA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=HT5agnFB9Ua1f+HiJVMbjVMLi62oFKHY9sExG5RcmRA=;
+        b=aXuHty/96ykMU+J3rwAEoF+Jc/h9BSNBpqAIiQdd2wCmSPwSxY5T9oYn34vPCPqYuP
+         ISGBs+bR7Iay1vHdIu7z7r2LU5AyNjiiG5eJV6Il/biULqaHHA47Ym2B5MUxhFF7GkgH
+         4JzILNHe8TqeVn+a5PugpDJHacDeVfaoFsg065M9Lyl/uGeLNADzAYSp1mkHDQpO7bpt
+         +dYf9LSuO/ZS3tTd4L2AyDuG62lLWGyv8rWuQaJ6o2z4cVHwt85cFQ27m+jRB9DiNRB5
+         NeUPYYhIPqRcdeIaFl9Z1NhDCn5YQDNlfOvOmxT3ZDAuwCyZ+6zoQRvbeL1fZ+flC/mf
+         apNw==
+X-Gm-Message-State: APjAAAVHQt8SNVxWc+LHcBRIFXkhLqjW49UxpDX9/rKxr5zJV7IbGcwk
+        7a3it2XYbMYkSJk2fgvMMKuLMw==
+X-Google-Smtp-Source: APXvYqyF1tE3QKOyyK7LvQGdigD6LOt/gywd4f3eQFSrL0cCzGCl9LSpCTeL5FSziRSrw3Bo/+rhjw==
+X-Received: by 2002:a63:e948:: with SMTP id q8mr35922012pgj.93.1565752186336;
+        Tue, 13 Aug 2019 20:09:46 -0700 (PDT)
+Received: from localhost.localdomain (104-188-17-28.lightspeed.sndgca.sbcglobal.net. [104.188.17.28])
+        by smtp.gmail.com with ESMTPSA id u1sm106170929pgi.28.2019.08.13.20.09.44
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Tue, 13 Aug 2019 20:09:45 -0700 (PDT)
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     Andy Gross <agross@kernel.org>,
+        Niklas Cassel <niklas.cassel@linaro.org>
+Cc:     Rob Herring <robh+dt@kernel.org>,
+        Mark Rutland <mark.rutland@arm.com>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: [PATCH] arm64: dts: qcom: qcs404-evb: Mark WCSS clocks protected
+Date:   Tue, 13 Aug 2019 20:09:42 -0700
+Message-Id: <20190814030942.2638-1-bjorn.andersson@linaro.org>
+X-Mailer: git-send-email 2.18.0
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, Aug 02, 2019 at 05:14:35PM -0700, Rob Clark wrote:
->Hi Sasha,
->
->It's probably best *not* to backport this patch.. drm/msm abuses the
->DMA API in a way that it is not intended be used, to work around the
->lack of cache sync API exported to kernel modules on arm/arm64.  I
->couldn't really guarantee that this patch does the right thing on
->older versions of DMA API, so best to leave things as they were.
+'7d0c76bdf227 ("clk: qcom: Add WCSS gcc clock control for QCS404")'
+introduces two new clocks to gcc. These are not used before
+clk_disable_unused() and as such the clock framework tries to disable
+them.
 
-Now dropped, thank you.
+But on the EVB these registers are only accessible through TrustZone, so
+these clocks must be marked as "protected" to prevent the clock code
+from touching them.
 
---
-Thanks,
-Sasha
+Numerical values are used as the constants are not yet available in a
+common tree.
+
+Reported-by: Mark Brown <broonie@kernel.org>
+Reported-by: Niklas Cassel <niklas.cassel@linaro.org>
+Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+---
+ arch/arm64/boot/dts/qcom/qcs404-evb.dtsi | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
+
+diff --git a/arch/arm64/boot/dts/qcom/qcs404-evb.dtsi b/arch/arm64/boot/dts/qcom/qcs404-evb.dtsi
+index 2289b01ee9f0..501a7330dbc8 100644
+--- a/arch/arm64/boot/dts/qcom/qcs404-evb.dtsi
++++ b/arch/arm64/boot/dts/qcom/qcs404-evb.dtsi
+@@ -61,7 +61,9 @@
+ 	protected-clocks = <GCC_BIMC_CDSP_CLK>,
+ 			   <GCC_CDSP_CFG_AHB_CLK>,
+ 			   <GCC_CDSP_BIMC_CLK_SRC>,
+-			   <GCC_CDSP_TBU_CLK>;
++			   <GCC_CDSP_TBU_CLK>,
++			   <141>, /* GCC_WCSS_Q6_AHB_CLK */
++			   <142>; /* GCC_WCSS_Q6_AXIM_CLK */
+ };
+ 
+ &pms405_spmi_regulators {
+-- 
+2.18.0
+
