@@ -2,487 +2,287 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id BD8338D720
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Aug 2019 17:21:24 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 3592B8D89C
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Aug 2019 18:58:58 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726166AbfHNPVY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 14 Aug 2019 11:21:24 -0400
-Received: from smtp.codeaurora.org ([198.145.29.96]:43380 "EHLO
-        smtp.codeaurora.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725955AbfHNPVX (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 14 Aug 2019 11:21:23 -0400
-Received: by smtp.codeaurora.org (Postfix, from userid 1000)
-        id A99936083E; Wed, 14 Aug 2019 15:21:21 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
-        s=default; t=1565796081;
-        bh=VTckUJ4d43xDm2Es4eR+sUNKFhiK2msgTlmLL0cSNgU=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=Tr/yF3Ve+cpDGIGUTiLbDk+s3Nr8217yGVtqZwECUKAWYkdomu9S8T2CnRi5om+ZY
-         taRlS5/z5nIPEzIQxYrDSPZiaL6eJp3qTNxy6nWuP4oljN+jvihW6+Vwk9Q5ozCh+G
-         vXVRUha3xAve2rxg/XSV8pjl+intAsA4SRy6XSyk=
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        pdx-caf-mail.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.7 required=2.0 tests=ALL_TRUSTED,BAYES_00,
-        DKIM_INVALID,DKIM_SIGNED,SPF_NONE autolearn=no autolearn_force=no
-        version=3.4.0
-Received: from jcrouse1-lnx.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        id S1728300AbfHNQ65 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 14 Aug 2019 12:58:57 -0400
+Received: from mail.kernel.org ([198.145.29.99]:49796 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1727558AbfHNQ65 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 14 Aug 2019 12:58:57 -0400
+Received: from kernel.org (unknown [104.132.0.74])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        (Authenticated sender: jcrouse@smtp.codeaurora.org)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id A3C3D60740;
-        Wed, 14 Aug 2019 15:21:18 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
-        s=default; t=1565796079;
-        bh=VTckUJ4d43xDm2Es4eR+sUNKFhiK2msgTlmLL0cSNgU=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=ETW9RdsU/WKaelJg8mk5BMznq/fUxK0sQm6i7TydUK7lSVyyoH78vLyHBR3tRdv+k
-         zR2pN3yN40hna+115p3QphfLwFg5m1QXwanz9peKI6wpqxpvt3gHRVNbClXhBEmNqN
-         3Kl5qEZa5x2BuZaVEVRcGE8K8YArbRGu1cJeM3w4=
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org A3C3D60740
-Authentication-Results: pdx-caf-mail.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: pdx-caf-mail.web.codeaurora.org; spf=none smtp.mailfrom=jcrouse@codeaurora.org
-Date:   Wed, 14 Aug 2019 09:21:16 -0600
-From:   Jordan Crouse <jcrouse@codeaurora.org>
-To:     Sibi Sankar <sibis@codeaurora.org>
-Cc:     Saravana Kannan <saravanak@google.com>,
-        Rob Herring <robh+dt@kernel.org>,
-        Georgi Djakov <georgi.djakov@linaro.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        agross@kernel.org, LKML <linux-kernel@vger.kernel.org>,
-        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
-        <devicetree@vger.kernel.org>, linux-arm-msm@vger.kernel.org,
-        Mark Rutland <mark.rutland@arm.com>,
-        Evan Green <evgreen@chromium.org>,
-        David Dai <daidavid1@codeaurora.org>,
-        linux-kernel-owner@vger.kernel.org
-Subject: Re: [PATCH 2/2] interconnect: qcom: Add OSM L3 interconnect provider
- support
-Message-ID: <20190814152116.GB28465@jcrouse1-lnx.qualcomm.com>
-Mail-Followup-To: Sibi Sankar <sibis@codeaurora.org>,
-        Saravana Kannan <saravanak@google.com>,
-        Rob Herring <robh+dt@kernel.org>,
-        Georgi Djakov <georgi.djakov@linaro.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>, agross@kernel.org,
-        LKML <linux-kernel@vger.kernel.org>,
-        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" <devicetree@vger.kernel.org>,
-        linux-arm-msm@vger.kernel.org, Mark Rutland <mark.rutland@arm.com>,
-        Evan Green <evgreen@chromium.org>,
-        David Dai <daidavid1@codeaurora.org>,
-        linux-kernel-owner@vger.kernel.org
-References: <20190807112432.26521-1-sibis@codeaurora.org>
- <20190807112432.26521-3-sibis@codeaurora.org>
- <CAGETcx8JgigJpRgjXsG+xChLUPrASRO7BapkYaSrvvTdQKfEuQ@mail.gmail.com>
- <9ea6ab4c-6357-653b-f91c-9b649205f0ab@codeaurora.org>
- <CAGETcx-+h0MOfSsR2Kf3kE4+8rDhnjBr_fRH5U0URgJPDQCyzQ@mail.gmail.com>
- <fdd87f381f3d7d179ff07aedeeec1385@codeaurora.org>
+        by mail.kernel.org (Postfix) with ESMTPSA id 098FD2063F;
+        Wed, 14 Aug 2019 16:58:55 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=default; t=1565801935;
+        bh=14kpVeN5jWNC6nXkPCoNsGsW334g7m9vBYuBFQ8RO2I=;
+        h=In-Reply-To:References:Subject:From:Cc:To:Date:From;
+        b=eUYaSxcXPQBD2jPWEqORt3lTGGIh9QpwxIFCcuuN1cRYap2lFt3aoDTYVuPYspwuI
+         4KC6SA73+hPzfA6jr6S01yHwYwydB9FDaxrsAFAC7AMNxM9I2P2D0keZE+P30n00xW
+         aBrf9Cdjw2NKkgUe8s1xulcf0SAj4UwKLekvV7kc=
+Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <fdd87f381f3d7d179ff07aedeeec1385@codeaurora.org>
-User-Agent: Mutt/1.5.24 (2015-08-30)
+Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <20190814125012.8700-2-vkoul@kernel.org>
+References: <20190814125012.8700-1-vkoul@kernel.org> <20190814125012.8700-2-vkoul@kernel.org>
+Subject: Re: [PATCH 01/22] arm64: dts: qcom: sm8150: add base dts file
+From:   Stephen Boyd <sboyd@kernel.org>
+Cc:     linux-arm-msm@vger.kernel.org,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        sibis@codeaurora.org, Vinod Koul <vkoul@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Mark Rutland <mark.rutland@arm.com>,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+To:     Andy Gross <agross@kernel.org>, Vinod Koul <vkoul@kernel.org>
+User-Agent: alot/0.8.1
+Date:   Wed, 14 Aug 2019 09:58:54 -0700
+Message-Id: <20190814165855.098FD2063F@mail.kernel.org>
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Aug 14, 2019 at 05:00:49PM +0530, Sibi Sankar wrote:
-> On 2019-08-14 06:13, Saravana Kannan wrote:
-> >On Thu, Aug 8, 2019 at 10:37 AM Sibi Sankar <sibis@codeaurora.org> wrote:
-> >>
-> >>Hey Saravana,
-> >>
-> >>Thanks for the review!
-> >>
-> >>On 8/8/19 2:51 AM, Saravana Kannan wrote:
-> >>> On Wed, Aug 7, 2019 at 4:24 AM Sibi Sankar <sibis@codeaurora.org> wrote:
-> >>>>
-> >>>> On some Qualcomm SoCs, Operating State Manager (OSM) controls the
-> >>>> resources of scaling L3 caches. Add a driver to handle bandwidth
-> >>>> requests to OSM L3 from CPU/GPU.
-> >>>>
-> >>>> Signed-off-by: Sibi Sankar <sibis@codeaurora.org>
-> >>>> ---
-> >>>>   drivers/interconnect/qcom/Kconfig  |   7 +
-> >>>>   drivers/interconnect/qcom/Makefile |   2 +
-> >>>>   drivers/interconnect/qcom/osm-l3.c | 292 +++++++++++++++++++++++++++++
-> >>>>   3 files changed, 301 insertions(+)
-> >>>>   create mode 100644 drivers/interconnect/qcom/osm-l3.c
-> >>>>
-> >>>> diff --git a/drivers/interconnect/qcom/Kconfig b/drivers/interconnect/qcom/Kconfig
-> >>>> index d5e70ebc24108..f6c2a11a1a2c9 100644
-> >>>> --- a/drivers/interconnect/qcom/Kconfig
-> >>>> +++ b/drivers/interconnect/qcom/Kconfig
-> >>>> @@ -5,6 +5,13 @@ config INTERCONNECT_QCOM
-> >>>>          help
-> >>>>            Support for Qualcomm's Network-on-Chip interconnect hardware.
-> >>>>
-> >>>> +config INTERCONNECT_QCOM_OSM_L3
-> >>>> +       tristate "Qualcomm OSM L3 interconnect driver"
-> >>>> +       depends on INTERCONNECT_QCOM || COMPILE_TEST
-> >>>> +       help
-> >>>> +         Say y here to support the Operating State Manager (OSM) interconnect
-> >>>> +         driver which controls the scaling of L3 caches on Qualcomm SoCs.
-> >>>> +
-> >>>>   config INTERCONNECT_QCOM_SDM845
-> >>>>          tristate "Qualcomm SDM845 interconnect driver"
-> >>>>          depends on INTERCONNECT_QCOM
-> >>>> diff --git a/drivers/interconnect/qcom/Makefile b/drivers/interconnect/qcom/Makefile
-> >>>> index 1c1cea690f922..9078af5fed109 100644
-> >>>> --- a/drivers/interconnect/qcom/Makefile
-> >>>> +++ b/drivers/interconnect/qcom/Makefile
-> >>>> @@ -1,5 +1,7 @@
-> >>>>   # SPDX-License-Identifier: GPL-2.0
-> >>>>
-> >>>> +icc-osm-l3-objs                                := osm-l3.o
-> >>>>   qnoc-sdm845-objs                       := sdm845.o
-> >>>>
-> >>>> +obj-$(CONFIG_INTERCONNECT_QCOM_OSM_L3) += icc-osm-l3.o
-> >>>>   obj-$(CONFIG_INTERCONNECT_QCOM_SDM845) += qnoc-sdm845.o
-> >>>> diff --git a/drivers/interconnect/qcom/osm-l3.c b/drivers/interconnect/qcom/osm-l3.c
-> >>>> new file mode 100644
-> >>>> index 0000000000000..1e7dfce6f4f9b
-> >>>> --- /dev/null
-> >>>> +++ b/drivers/interconnect/qcom/osm-l3.c
-> >>>> @@ -0,0 +1,292 @@
-> >>>> +// SPDX-License-Identifier: GPL-2.0
-> >>>> +/*
-> >>>> + * Copyright (c) 2019, The Linux Foundation. All rights reserved.
-> >>>> + *
-> >>>> + */
-> >>>> +
-> >>>> +#include <dt-bindings/interconnect/qcom,osm-l3.h>
-> >>>> +#include <dt-bindings/interconnect/qcom,sdm845.h>
-> >>>> +#include <linux/bitfield.h>
-> >>>> +#include <linux/clk.h>
-> >>>> +#include <linux/interconnect-provider.h>
-> >>>> +#include <linux/io.h>
-> >>>> +#include <linux/kernel.h>
-> >>>> +#include <linux/module.h>
-> >>>> +#include <linux/of_device.h>
-> >>>> +#include <linux/of_platform.h>
-> >>>> +#include <linux/platform_device.h>
-> >>>> +
-> >>>> +#define LUT_MAX_ENTRIES                        40U
-> >>>> +#define LUT_SRC                                GENMASK(31, 30)
-> >>>> +#define LUT_L_VAL                      GENMASK(7, 0)
-> >>>> +#define LUT_ROW_SIZE                   32
-> >>>> +#define CLK_HW_DIV                     2
-> >>>> +
-> >>>> +/* Register offsets */
-> >>>> +#define REG_ENABLE                     0x0
-> >>>> +#define REG_FREQ_LUT                   0x110
-> >>>> +#define REG_PERF_STATE                 0x920
-> >>>> +
-> >>>> +#define OSM_L3_MAX_LINKS               1
-> >>>> +
-> >>>> +#define to_qcom_provider(_provider) \
-> >>>> +       container_of(_provider, struct qcom_icc_provider, provider)
-> >>>> +
-> >>>> +enum {
-> >>>> +       SDM845_MASTER_OSM_L3_APPS = SLAVE_TCU + 1,
-> >>>> +       SDM845_MASTER_OSM_L3_GPU,
-> >>>> +       SDM845_SLAVE_OSM_L3,
-> >>>> +};
-> >>>> +
-> >>>> +struct qcom_icc_provider {
-> >>>> +       void __iomem *base;
-> >>>> +       unsigned int max_state;
-> >>>> +       unsigned long lut_tables[LUT_MAX_ENTRIES];
-> >>>> +       struct icc_provider provider;
-> >>>> +};
-> >>>> +
-> >>>> +/**
-> >>>> + * struct qcom_icc_node - Qualcomm specific interconnect nodes
-> >>>> + * @name: the node name used in debugfs
-> >>>> + * @links: an array of nodes where we can go next while traversing
-> >>>> + * @id: a unique node identifier
-> >>>> + * @num_links: the total number of @links
-> >>>> + * @buswidth: width of the interconnect between a node and the bus
-> >>>> + */
-> >>>> +struct qcom_icc_node {
-> >>>> +       const char *name;
-> >>>> +       u16 links[OSM_L3_MAX_LINKS];
-> >>>> +       u16 id;
-> >>>> +       u16 num_links;
-> >>>> +       u16 buswidth;
-> >>>> +};
-> >>>> +
-> >>>> +struct qcom_icc_desc {
-> >>>> +       struct qcom_icc_node **nodes;
-> >>>> +       size_t num_nodes;
-> >>>> +};
-> >>>> +
-> >>>> +#define DEFINE_QNODE(_name, _id, _buswidth, ...)                       \
-> >>>> +               static struct qcom_icc_node _name = {                   \
-> >>>> +               .name = #_name,                                         \
-> >>>> +               .id = _id,                                              \
-> >>>> +               .buswidth = _buswidth,                                  \
-> >>>> +               .num_links = ARRAY_SIZE(((int[]){ __VA_ARGS__ })),      \
-> >>>> +               .links = { __VA_ARGS__ },                               \
-> >>>> +       }
-> >>>> +
-> >>>> +DEFINE_QNODE(osm_apps_l3, SDM845_MASTER_OSM_L3_APPS, 16, SDM845_SLAVE_OSM_L3);
-> >>>> +DEFINE_QNODE(osm_gpu_l3, SDM845_MASTER_OSM_L3_GPU, 16, SDM845_SLAVE_OSM_L3);
-> >>>> +DEFINE_QNODE(osm_l3, SDM845_SLAVE_OSM_L3, 16);
-> >>>> +
-> >>>> +static struct qcom_icc_node *sdm845_osm_l3_nodes[] = {
-> >>>> +       [MASTER_OSM_L3_APPS] = &osm_apps_l3,
-> >>>> +       [MASTER_OSM_L3_GPU] = &osm_gpu_l3,
-> >>>> +       [SLAVE_OSM_L3] = &osm_l3,
-> >>>> +};
-> >>>> +
-> >>>> +static struct qcom_icc_desc sdm845_osm_l3 = {
-> >>>> +       .nodes = sdm845_osm_l3_nodes,
-> >>>> +       .num_nodes = ARRAY_SIZE(sdm845_osm_l3_nodes),
-> >>>> +};
-> >>>> +
-> >>>> +static int qcom_icc_aggregate(struct icc_node *node, u32 avg_bw,
-> >>>> +                             u32 peak_bw, u32 *agg_avg, u32 *agg_peak)
-> >>>> +{
-> >>>> +       *agg_avg += avg_bw;
-> >>>> +       *agg_peak = max_t(u32, *agg_peak, peak_bw);
-> >>>> +
-> >>>> +       return 0;
-> >>>> +}
-> >>>> +
-> >>>> +static int qcom_icc_set(struct icc_node *src, struct icc_node *dst)
-> >>>> +{
-> >>>> +       struct icc_provider *provider;
-> >>>> +       struct qcom_icc_provider *qp;
-> >>>> +       struct qcom_icc_node *qn;
-> >>>> +       struct icc_node *n;
-> >>>> +       unsigned int index;
-> >>>> +       u32 agg_peak = 0;
-> >>>> +       u32 agg_avg = 0;
-> >>>> +       u64 rate;
-> >>>> +
-> >>>> +       qn = src->data;
-> >>>> +       provider = src->provider;
-> >>>> +       qp = to_qcom_provider(provider);
-> >>>> +
-> >>>> +       list_for_each_entry(n, &provider->nodes, node_list)
-> >>>> +               qcom_icc_aggregate(n, n->avg_bw, n->peak_bw,
-> >>>> +                                  &agg_avg, &agg_peak);
-> >>>> +
-> >>>> +       rate = max(agg_avg, agg_peak);
-> >>>> +       rate = icc_units_to_bps(rate);
-> >>>> +       do_div(rate, qn->buswidth);
-> >>>> +
-> >>>> +       for (index = 0; index < qp->max_state; index++) {
-> >>>> +               if (qp->lut_tables[index] >= rate)
-> >>>> +                       break;
-> >>>> +       }
-> >>>> +
-> >>>> +       writel_relaxed(index, qp->base + REG_PERF_STATE);
-> >>>> +
-> >>>> +       return 0;
-> >>>> +}
-> >>>> +
-> >>>> +static int qcom_osm_l3_probe(struct platform_device *pdev)
-> >>>> +{
-> >>>> +       u32 info, src, lval, i, prev_freq = 0, freq;
-> >>>> +       static unsigned long hw_rate, xo_rate;
-> >>>> +       const struct qcom_icc_desc *desc;
-> >>>> +       struct icc_onecell_data *data;
-> >>>> +       struct icc_provider *provider;
-> >>>> +       struct qcom_icc_node **qnodes;
-> >>>> +       struct qcom_icc_provider *qp;
-> >>>> +       struct icc_node *node;
-> >>>> +       size_t num_nodes;
-> >>>> +       struct clk *clk;
-> >>>> +       int ret;
-> >>>> +
-> >>>> +       clk = clk_get(&pdev->dev, "xo");
-> >>>> +       if (IS_ERR(clk))
-> >>>> +               return PTR_ERR(clk);
-> >>>> +
-> >>>> +       xo_rate = clk_get_rate(clk);
-> >>>> +       clk_put(clk);
-> >>>> +
-> >>>> +       clk = clk_get(&pdev->dev, "alternate");
-> >>>> +       if (IS_ERR(clk))
-> >>>> +               return PTR_ERR(clk);
-> >>>> +
-> >>>> +       hw_rate = clk_get_rate(clk) / CLK_HW_DIV;
-> >>>> +       clk_put(clk);
-> >>>> +
-> >>>> +       qp = devm_kzalloc(&pdev->dev, sizeof(*qp), GFP_KERNEL);
-> >>>> +       if (!qp)
-> >>>> +               return -ENOMEM;
-> >>>> +
-> >>>> +       qp->base = devm_platform_ioremap_resource(pdev, 0);
-> >>>> +       if (IS_ERR(qp->base))
-> >>>> +               return PTR_ERR(qp->base);
-> >>>> +
-> >>>> +       /* HW should be in enabled state to proceed */
-> >>>> +       if (!(readl_relaxed(qp->base + REG_ENABLE) & 0x1)) {
-> >>>> +               dev_err(&pdev->dev, "error hardware not enabled\n");
-> >>>> +               return -ENODEV;
-> >>>> +       }
-> >>>> +
-> >>>> +       for (i = 0; i < LUT_MAX_ENTRIES; i++) {
-> >>>> +               info = readl_relaxed(qp->base + REG_FREQ_LUT +
-> >>>> +                                    i * LUT_ROW_SIZE);
-> >>>> +               src = FIELD_GET(LUT_SRC, info);
-> >>>> +               lval = FIELD_GET(LUT_L_VAL, info);
-> >>>> +               if (src)
-> >>>> +                       freq = xo_rate * lval;
-> >>>> +               else
-> >>>> +                       freq = hw_rate;
-> >>>> +
-> >>>> +               /*
-> >>>> +                * Two of the same frequencies with the same core counts means
-> >>>> +                * end of table
-> >>>> +                */
-> >>>> +               if (i > 0 && prev_freq == freq)
-> >>>> +                       break;
-> >>>> +
-> >>>> +               qp->lut_tables[i] = freq;
-> >>>> +               prev_freq = freq;
-> >>>> +       }
-> >>>> +       qp->max_state = i;
-> >>>> +
-> >>>> +       desc = of_device_get_match_data(&pdev->dev);
-> >>>> +       if (!desc)
-> >>>> +               return -EINVAL;
-> >>>> +
-> >>>> +       qnodes = desc->nodes;
-> >>>> +       num_nodes = desc->num_nodes;
-> >>>> +
-> >>>> +       data = devm_kcalloc(&pdev->dev, num_nodes, sizeof(*node), GFP_KERNEL);
-> >>>> +       if (!data)
-> >>>> +               return -ENOMEM;
-> >>>> +
-> >>>> +       provider = &qp->provider;
-> >>>> +       provider->dev = &pdev->dev;
-> >>>> +       provider->set = qcom_icc_set;
-> >>>> +       provider->aggregate = qcom_icc_aggregate;
-> >>>> +       provider->xlate = of_icc_xlate_onecell;
-> >>>> +       INIT_LIST_HEAD(&provider->nodes);
-> >>>> +       provider->data = data;
-> >>>> +
-> >>>> +       ret = icc_provider_add(provider);
-> >>>> +       if (ret) {
-> >>>> +               dev_err(&pdev->dev, "error adding interconnect provider\n");
-> >>>> +               return ret;
-> >>>> +       }
-> >>>> +
-> >>>> +       for (i = 0; i < num_nodes; i++) {
-> >>>> +               size_t j;
-> >>>> +
-> >>>> +               node = icc_node_create(qnodes[i]->id);
-> >>>> +               if (IS_ERR(node)) {
-> >>>> +                       ret = PTR_ERR(node);
-> >>>> +                       goto err;
-> >>>> +               }
-> >>>> +
-> >>>> +               node->name = qnodes[i]->name;
-> >>>> +               node->data = qnodes[i];
-> >>>> +               icc_node_add(node, provider);
-> >>>> +
-> >>>> +               dev_dbg(&pdev->dev, "registered node %p %s %d\n", node,
-> >>>> +                       qnodes[i]->name, node->id);
-> >>>> +
-> >>>> +               /* populate links */
-> >>>> +               for (j = 0; j < qnodes[i]->num_links; j++)
-> >>>> +                       icc_link_create(node, qnodes[i]->links[j]);
-> >>>> +
-> >>>> +               data->nodes[i] = node;
-> >>>> +       }
-> >>>> +       data->num_nodes = num_nodes;
-> >>>> +
-> >>>> +       platform_set_drvdata(pdev, qp);
-> >>>> +
-> >>>> +       return ret;
-> >>>> +err:
-> >>>> +       list_for_each_entry(node, &provider->nodes, node_list) {
-> >>>> +               icc_node_del(node);
-> >>>> +               icc_node_destroy(node->id);
-> >>>> +       }
-> >>>> +
-> >>>> +       icc_provider_del(provider);
-> >>>> +       return ret;
-> >>>> +}
-> >>>> +
-> >>>> +static int qcom_osm_l3_remove(struct platform_device *pdev)
-> >>>> +{
-> >>>> +       struct qcom_icc_provider *qp = platform_get_drvdata(pdev);
-> >>>> +       struct icc_provider *provider = &qp->provider;
-> >>>> +       struct icc_node *n;
-> >>>> +
-> >>>> +       list_for_each_entry(n, &provider->nodes, node_list) {
-> >>>> +               icc_node_del(n);
-> >>>> +               icc_node_destroy(n->id);
-> >>>> +       }
-> >>>> +
-> >>>> +       return icc_provider_del(provider);
-> >>>> +}
-> >>>> +
-> >>>> +static const struct of_device_id osm_l3_of_match[] = {
-> >>>> +       { .compatible = "qcom,sdm845-osm-l3", .data = &sdm845_osm_l3 },
-> >>>> +       { },
-> >>>> +};
-> >>>> +MODULE_DEVICE_TABLE(of, osm_l3_of_match);
-> >>>> +
-> >>>> +static struct platform_driver osm_l3_driver = {
-> >>>> +       .probe = qcom_osm_l3_probe,
-> >>>> +       .remove = qcom_osm_l3_remove,
-> >>>> +       .driver = {
-> >>>> +               .name = "osm-l3",
-> >>>> +               .of_match_table = osm_l3_of_match,
-> >>>> +       },
-> >>>> +};
-> >>>> +module_platform_driver(osm_l3_driver);
-> >>>> +
-> >>>> +MODULE_DESCRIPTION("Qualcomm OSM L3 interconnect driver");
-> >>>> +MODULE_LICENSE("GPL v2");
-> >>>
-> >>> Did a quick scan of the code and it's not clear how you connect the L3
-> >>> interconnect provider to the rest of the interconnect. I don't see any
-> >>> DT or code references to the rest of the interconnects in the system.
-> >>> If GPU is making a bandwidth request all the way to L3, how do you
-> >>> make sure the interconnects between GPU and L3 also scale up properly.
-> >>
-> >>For SDM845 OSM L3 provider the icc nodes endpoints are isolated from
-> >>rsc icc node endpoints i.e GPU would need to vote on this path in
-> >>addition to voting for DDR. On future SoCs if the need to scale
-> >>interconnect between GPU rsc nodes along with the OSM l3 nodes arises,
-> >>it can be trivially extended by linking the osm icc nodes with global
-> >>icc node ids of the gpu rsc nodes.
-> >
-> >Sorry, I'm not sure we are talking about the same thing. To keep the
-> >discussion focused, let's completely ignore GPU's DDR needs for now.
-> >
-> >Talking about GPU <-> L3 traffic, unless the GPU is directly connected
-> >to the L3 with no additional interconnects in between (unlikely), this
-> >L3 provider need to connect the L3 icc node with the rest of the
-> >interconnect nodes. Otherwise, even if the L3 itself is provisioned to
-> >handle, say 10 GB/s, the interconnects connecting the GPU to L3 might
-> >be left at 1 GB/s.
-> >
-> >So, can we please connect this node to the rest of the interconnect
-> >nodes in SDM845?
-> 
-> Sure I'll double check if GPU has a l3
-> scaling requirement on SDM845 SoCs and
-> drop/link it to the rsc nodes appropriately.
+Quoting Vinod Koul (2019-08-14 05:49:51)
+> diff --git a/arch/arm64/boot/dts/qcom/sm8150.dtsi b/arch/arm64/boot/dts/q=
+com/sm8150.dtsi
+> new file mode 100644
+> index 000000000000..cd9fcadaeacb
+> --- /dev/null
+> +++ b/arch/arm64/boot/dts/qcom/sm8150.dtsi
+> @@ -0,0 +1,269 @@
+> +// SPDX-License-Identifier: BSD-3-Clause
+> +// Copyright (c) 2017-2019, The Linux Foundation. All rights reserved.
+> +// Copyright (c) 2019, Linaro Limited
+> +
+> +#include <dt-bindings/interrupt-controller/arm-gic.h>
+> +#include <dt-bindings/clock/qcom,gcc-sm8150.h>
+> +
+> +/ {
+> +       interrupt-parent =3D <&intc>;
+> +
+> +       #address-cells =3D <2>;
+> +       #size-cells =3D <2>;
+> +
+> +       chosen { };
+> +
+> +       clocks {
+> +               xo_board: xo-board {
+> +                       compatible =3D "fixed-clock";
+> +                       #clock-cells =3D <0>;
+> +                       clock-frequency =3D <19200000>;
 
-GPU doesn't use I/O coherency at the moment and I don't think we would need an
-independent connection if we did.
+Is it 19.2 or 38.4 MHz? It seems like lately there are dividers, but I
+guess it doesn't really matter in the end.
 
-Jordan
+> +                       clock-output-names =3D "xo_board";
+> +               };
+> +
+> +               sleep_clk: sleep-clk {
+> +                       compatible =3D "fixed-clock";
+> +                       #clock-cells =3D <0>;
+> +                       clock-frequency =3D <32764>;
+> +                       clock-output-names =3D "sleep_clk";
 
-> >
-> >Thanks,
-> >Saravana
-> 
-> -- 
-> -- Sibi Sankar --
-> Qualcomm Innovation Center, Inc. is a member of Code Aurora Forum,
-> a Linux Foundation Collaborative Project.
+Does it matter to have this property anymore? Presumably it's OK if the
+name is now sleep-clk instead of sleep_clk because the name doesn't
+matter to connect clk tree.
 
--- 
-The Qualcomm Innovation Center, Inc. is a member of Code Aurora Forum,
-a Linux Foundation Collaborative Project
+> +               };
+> +       };
+> +
+> +       cpus {
+> +               #address-cells =3D <2>;
+> +               #size-cells =3D <0>;
+> +
+> +               CPU0: cpu@0 {
+> +                       device_type =3D "cpu";
+> +                       compatible =3D "qcom,kryo485";
+> +                       reg =3D <0x0 0x0>;
+> +                       enable-method =3D "psci";
+> +                       next-level-cache =3D <&L2_0>;
+> +                       L2_0: l2-cache {
+> +                               compatible =3D "cache";
+> +                               next-level-cache =3D <&L3_0>;
+> +                               L3_0: l3-cache {
+> +                                     compatible =3D "cache";
+> +                               };
+> +                       };
+> +               };
+> +
+> +               CPU1: cpu@100 {
+> +                       device_type =3D "cpu";
+> +                       compatible =3D "qcom,kryo485";
+> +                       reg =3D <0x0 0x100>;
+> +                       enable-method =3D "psci";
+> +                       next-level-cache =3D <&L2_100>;
+> +                       L2_100: l2-cache {
+> +                               compatible =3D "cache";
+> +                               next-level-cache =3D <&L3_0>;
+> +                       };
+> +
+> +               };
+> +
+> +               CPU2: cpu@200 {
+> +                       device_type =3D "cpu";
+> +                       compatible =3D "qcom,kryo485";
+> +                       reg =3D <0x0 0x200>;
+> +                       enable-method =3D "psci";
+> +                       next-level-cache =3D <&L2_200>;
+> +                       L2_200: l2-cache {
+> +                               compatible =3D "cache";
+> +                               next-level-cache =3D <&L3_0>;
+> +                       };
+> +               };
+> +
+> +               CPU3: cpu@300 {
+> +                       device_type =3D "cpu";
+> +                       compatible =3D "qcom,kryo485";
+> +                       reg =3D <0x0 0x300>;
+> +                       enable-method =3D "psci";
+> +                       next-level-cache =3D <&L2_300>;
+> +                       L2_300: l2-cache {
+> +                               compatible =3D "cache";
+> +                               next-level-cache =3D <&L3_0>;
+> +                       };
+> +               };
+> +
+> +               CPU4: cpu@400 {
+> +                       device_type =3D "cpu";
+> +                       compatible =3D "qcom,kryo485";
+> +                       reg =3D <0x0 0x400>;
+> +                       enable-method =3D "psci";
+> +                       next-level-cache =3D <&L2_400>;
+> +                       L2_400: l2-cache {
+> +                               compatible =3D "cache";
+> +                               next-level-cache =3D <&L3_0>;
+> +                       };
+> +               };
+> +
+> +               CPU5: cpu@500 {
+> +                       device_type =3D "cpu";
+> +                       compatible =3D "qcom,kryo485";
+> +                       reg =3D <0x0 0x500>;
+> +                       enable-method =3D "psci";
+> +                       next-level-cache =3D <&L2_500>;
+> +                       L2_500: l2-cache {
+> +                               compatible =3D "cache";
+> +                               next-level-cache =3D <&L3_0>;
+> +                       };
+> +               };
+> +
+> +               CPU6: cpu@600 {
+> +                       device_type =3D "cpu";
+> +                       compatible =3D "qcom,kryo485";
+> +                       reg =3D <0x0 0x600>;
+> +                       enable-method =3D "psci";
+> +                       next-level-cache =3D <&L2_600>;
+> +                       L2_600: l2-cache {
+> +                               compatible =3D "cache";
+> +                               next-level-cache =3D <&L3_0>;
+> +                       };
+> +               };
+> +
+> +               CPU7: cpu@700 {
+> +                       device_type =3D "cpu";
+> +                       compatible =3D "qcom,kryo485";
+
+Is this compatible documented?
+
+> +                       reg =3D <0x0 0x700>;
+> +                       enable-method =3D "psci";
+> +                       next-level-cache =3D <&L2_700>;
+> +                       L2_700: l2-cache {
+> +                               compatible =3D "cache";
+> +                               next-level-cache =3D <&L3_0>;
+> +                       };
+> +               };
+> +       };
+> +
+> +       firmware {
+> +               scm: scm {
+> +                       compatible =3D "qcom,scm-sm8150", "qcom,scm";
+> +                       #reset-cells =3D <1>;
+> +               };
+> +       };
+> +
+> +       memory@80000000 {
+> +               device_type =3D "memory";
+> +               /* We expect the bootloader to fill in the size */
+> +               reg =3D <0 0x80000000 0 0>;
+> +       };
+> +
+> +       psci {
+> +               compatible =3D "arm,psci-1.0";
+> +               method =3D "smc";
+> +       };
+> +
+> +       soc: soc@0 {
+> +               #address-cells =3D <1>;
+> +               #size-cells =3D <1>;
+> +               ranges =3D <0 0 0 0xffffffff>;
+> +               compatible =3D "simple-bus";
+> +
+> +               gcc: clock-controller@100000 {
+> +                       compatible =3D "qcom,gcc-sm8150";
+> +                       reg =3D <0x00100000 0x1f0000>;
+> +                       #clock-cells =3D <1>;
+> +                       #reset-cells =3D <1>;
+> +                       #power-domain-cells =3D <1>;
+> +                       clock-names =3D "bi_tcxo", "sleep_clk";
+> +                       clocks =3D <&xo_board>, <&sleep_clk>;
+> +               };
+> +
+> +               qupv3_id_1: geniqup@ac0000 {
+> +                       compatible =3D "qcom,geni-se-qup";
+> +                       reg =3D <0x00ac0000 0x6000>;
+> +                       clock-names =3D "m-ahb", "s-ahb";
+> +                       clocks =3D <&gcc GCC_QUPV3_WRAP_1_M_AHB_CLK>,
+> +                                <&gcc GCC_QUPV3_WRAP_1_S_AHB_CLK>;
+> +                       #address-cells =3D <1>;
+> +                       #size-cells =3D <1>;
+> +                       ranges;
+> +                       status =3D "disabled";
+> +
+> +                       uart2: serial@a90000 {
+> +                               compatible =3D "qcom,geni-debug-uart";
+> +                               reg =3D <0x00a90000 0x4000>;
+> +                               clock-names =3D "se";
+> +                               clocks =3D <&gcc GCC_QUPV3_WRAP1_S4_CLK>;
+> +                               interrupts =3D <GIC_SPI 357 IRQ_TYPE_LEVE=
+L_HIGH>;
+> +                               status =3D "disabled";
+> +                       };
+> +               };
+> +
+> +               intc: interrupt-controller@17a00000 {
+> +                       compatible =3D "arm,gic-v3";
+> +                       interrupt-controller;
+> +                       #interrupt-cells =3D <3>;
+> +                       reg =3D <0x17a00000 0x10000>,     /* GICD */
+> +                             <0x17a60000 0x100000>;    /* GICR * 8 */
+> +                       interrupts =3D <GIC_PPI 9 IRQ_TYPE_LEVEL_HIGH>;
+
+Is there an its node? Probably the same as sdm845?
+
+> +               };
+> +
+> +               timer@17c20000 {
+> +                       #address-cells =3D <1>;
+> +                       #size-cells =3D <1>;
+> +                       ranges;
+> +                       compatible =3D "arm,armv7-timer-mem";
+> +                       reg =3D <0x17c20000 0x1000>;
+> +                       clock-frequency =3D <19200000>;
+
+This property shouldn't be necessary. Please remove.
+
+> +
+> +                       frame@17c21000{
+> +                               frame-number =3D <0>;
+> +                               interrupts =3D <GIC_SPI 8 IRQ_TYPE_LEVEL_=
+HIGH>,
+> +                                            <GIC_SPI 6 IRQ_TYPE_LEVEL_HI=
+GH>;
