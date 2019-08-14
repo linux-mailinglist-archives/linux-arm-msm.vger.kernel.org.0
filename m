@@ -2,131 +2,81 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 134FE8DC66
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Aug 2019 19:53:41 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D57408DC87
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Aug 2019 19:59:45 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728821AbfHNRxh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 14 Aug 2019 13:53:37 -0400
-Received: from mail-pf1-f196.google.com ([209.85.210.196]:33794 "EHLO
-        mail-pf1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726126AbfHNRxg (ORCPT
+        id S1728348AbfHNR7p (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 14 Aug 2019 13:59:45 -0400
+Received: from mail-pg1-f195.google.com ([209.85.215.195]:38297 "EHLO
+        mail-pg1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728128AbfHNR7o (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 14 Aug 2019 13:53:36 -0400
-Received: by mail-pf1-f196.google.com with SMTP id b24so3509355pfp.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 14 Aug 2019 10:53:36 -0700 (PDT)
+        Wed, 14 Aug 2019 13:59:44 -0400
+Received: by mail-pg1-f195.google.com with SMTP id e11so2898011pga.5
+        for <linux-arm-msm@vger.kernel.org>; Wed, 14 Aug 2019 10:59:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=ArUMi9WppD4KpmP84aiabPQB2r88tFmYQMOJibiN7ys=;
-        b=kliu/oC7PiMQOOfilpD5KvgHHyE8oa5C6lAExUySmM8Gmc2V94Xyf6Qt5G/mkSgZhR
-         QoFzTj+lZ1ObVgrqM+0gtiijudG06ZfyLJ5kJjYItLw4I+rL1Z79ZDaoftLaBRBFK8q+
-         dWMTHzKF6NZcIO435/wCcEWgyaQiCltRj0zs3ftm1/vnz2zC5tq7dAcQx9Hw8XcgDDEd
-         fNu/pV8Ggd3G0/AyPAzdGDlGMZH3ZdiSXvDAEJg7G2fql6hV4mG6GWE5XgalyO45XUnK
-         s5magF6WCYFUrHtyomNCckDGMWe6chR6VSez62+ZOPWVo/ocYLBw+fSbNqAIrOnqHVcm
-         XzCA==
+        d=chromium.org; s=google;
+        h=message-id:mime-version:content-transfer-encoding:in-reply-to
+         :references:subject:from:cc:to:user-agent:date;
+        bh=kF2rSGg7TWdsph3+jKGWM5Z90AAtcPpo25Mf5csWFrU=;
+        b=Zc/RhUNaKUH6TKfhRZWBo6OBqnN6wsyVNMAXjBgiNUtQxZoaGMZ+qifnZYFCHOtQNq
+         93B6SETP1TqUWc7SCQ5mY3c3gtiWJs3r/RoBFb0OerUawl9ihfJgTVV4pxnTZyN7Uy7w
+         41upxhquofjg2gVE6AG70o1y8XyTA+QyHCgLQ=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=ArUMi9WppD4KpmP84aiabPQB2r88tFmYQMOJibiN7ys=;
-        b=HWMIMhUh3Mk/MFKvtmCHeaRothLqRPlctAHvOVNDJJKJRFbHQFnIqzxhsi+/Y5+pIN
-         y3P6K8L0led5bArZj9X4InB2IO+kTerGHUtu+ydTjdq/6rGaPhi0AmMrShCGsZUIpfGy
-         egXsyEh7PK8UFsH7PBgNoUPiO6jBzjkIuAxYxjETyUyF8528tXFn1phjnjnw/xvgPRB7
-         4d5LqJjfj4UdPEqRazP6xDbvwv4j9grTG5QzT89WOJAKXiQ3xjhDlFmQwN7qfncGZ0IE
-         PL5Q+18AjlzLZ0FT3qav9yAfuIn7wZeQIt4H1LIQ7GP+kw1RUUwadsG8DXXfqVec4R4L
-         D7RA==
-X-Gm-Message-State: APjAAAWHuJFSlme6AO1hyQJbMQQqwg5jaonTJ7lh46FqKa+6QfJZfemH
-        KtdDobGG7Y9QIXrl3wHk14aeHA==
-X-Google-Smtp-Source: APXvYqzzMd/5cvFBLMtXfDsAG0LpYnyV+4JJdTWPaUZn9IwFFuOYCZZhd94jls34yHAIl6jxNlK44A==
-X-Received: by 2002:aa7:82da:: with SMTP id f26mr1210723pfn.82.1565805215646;
-        Wed, 14 Aug 2019 10:53:35 -0700 (PDT)
-Received: from minitux (104-188-17-28.lightspeed.sndgca.sbcglobal.net. [104.188.17.28])
-        by smtp.gmail.com with ESMTPSA id q8sm387240pjq.20.2019.08.14.10.53.34
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 14 Aug 2019 10:53:35 -0700 (PDT)
-Date:   Wed, 14 Aug 2019 10:53:32 -0700
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Vinod Koul <vkoul@kernel.org>
-Cc:     Andy Gross <agross@kernel.org>, linux-arm-msm@vger.kernel.org,
-        sibis@codeaurora.org, Rob Herring <robh+dt@kernel.org>,
-        Mark Rutland <mark.rutland@arm.com>,
-        Stephen Boyd <sboyd@kernel.org>, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 02/22] arm64: dts: qcom: sm8150-mtp: add base dts file
-Message-ID: <20190814175332.GG6167@minitux>
-References: <20190814125012.8700-1-vkoul@kernel.org>
- <20190814125012.8700-3-vkoul@kernel.org>
+        h=x-gm-message-state:message-id:mime-version
+         :content-transfer-encoding:in-reply-to:references:subject:from:cc:to
+         :user-agent:date;
+        bh=kF2rSGg7TWdsph3+jKGWM5Z90AAtcPpo25Mf5csWFrU=;
+        b=Mz3GkoNy/cfd6Or4ubKU48KXbOMH/UtWN7mDusJ6wE30+SZbrtW4K1eUkL+xVFLdW+
+         dg0FQwJIH6bOLNpdgQVbNfJtbzD0280LJ42XQtpvhU1CVhm1K9zNm/knLY/VxT7s80xo
+         MhTXEtD4uodzgXIfT70VAcHkVKXG0sDdE+5VS7Lxx2ThiZOttScBhJHIlUA3GFtOPZCk
+         enepvltUNl3+ygOmfXJeVKkfFIInt/N7F0aClLi6BWchtH1RwlXgi0x2tjx0p1i/Rkbd
+         vyDYVGHudpn3laDzE+iz976uCnQ1Tf3hl71DI8PClkx82Lsm4aHIaG2/3Eob2epFCK8a
+         9o2w==
+X-Gm-Message-State: APjAAAU3hdCZQ3bY7q175Or8jT/2oJt/uuVfdlTF/GT30G2bj46Ve6FW
+        /jSQl/606LIgWwxgTn6fRgSfiw==
+X-Google-Smtp-Source: APXvYqzlhFg/syHBm6u3NkrWSTkdwA/nnqbqnwh5uAmEwTa/NV7gwIbeSWeDmlMEvcDq5rUej/oTTg==
+X-Received: by 2002:a17:90a:7d09:: with SMTP id g9mr903391pjl.38.1565805584194;
+        Wed, 14 Aug 2019 10:59:44 -0700 (PDT)
+Received: from chromium.org ([2620:15c:202:1:fa53:7765:582b:82b9])
+        by smtp.gmail.com with ESMTPSA id f72sm486217pjg.10.2019.08.14.10.59.43
+        (version=TLS1_3 cipher=AEAD-AES256-GCM-SHA384 bits=256/256);
+        Wed, 14 Aug 2019 10:59:43 -0700 (PDT)
+Message-ID: <5d544c0f.1c69fb81.a78d3.1381@mx.google.com>
+Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20190814125012.8700-3-vkoul@kernel.org>
-User-Agent: Mutt/1.12.0 (2019-05-25)
+Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <20190813082442.25796-2-mkshah@codeaurora.org>
+References: <20190813082442.25796-1-mkshah@codeaurora.org> <20190813082442.25796-2-mkshah@codeaurora.org>
+Subject: Re: [PATCH 1/4] drivers: qcom: rpmh: fix macro to accept NULL argument
+From:   Stephen Boyd <swboyd@chromium.org>
+Cc:     linux-kernel@vger.kernel.org, linux-pm@vger.kernel.org,
+        bjorn.andersson@linaro.org, evgreen@chromium.org,
+        dianders@chromium.org, rnayak@codeaurora.org, ilina@codeaurora.org,
+        lsrao@codeaurora.org, ulf.hansson@linaro.org,
+        Maulik Shah <mkshah@codeaurora.org>
+To:     Maulik Shah <mkshah@codeaurora.org>, agross@kernel.org,
+        david.brown@linaro.org, linux-arm-msm@vger.kernel.org
+User-Agent: alot/0.8.1
+Date:   Wed, 14 Aug 2019 10:59:42 -0700
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed 14 Aug 05:49 PDT 2019, Vinod Koul wrote:
-
-> This add base DTS file for sm8150-mtp and enables
-> boot to console
-> 
-> Signed-off-by: Vinod Koul <vkoul@kernel.org>
-
-Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
-
+Quoting Maulik Shah (2019-08-13 01:24:39)
+> Device argument matches with dev variable declared in RPMH message.
+> Compiler reports error when the argument is NULL since the argument
+> matches the name of the property. Rename dev argument to device to
+> fix this.
+>=20
+> Signed-off-by: Maulik Shah <mkshah@codeaurora.org>
 > ---
->  arch/arm64/boot/dts/qcom/Makefile       |  1 +
->  arch/arm64/boot/dts/qcom/sm8150-mtp.dts | 28 +++++++++++++++++++++++++
->  2 files changed, 29 insertions(+)
->  create mode 100644 arch/arm64/boot/dts/qcom/sm8150-mtp.dts
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/Makefile b/arch/arm64/boot/dts/qcom/Makefile
-> index 0a7e5dfce6f7..1964dacaf19b 100644
-> --- a/arch/arm64/boot/dts/qcom/Makefile
-> +++ b/arch/arm64/boot/dts/qcom/Makefile
-> @@ -12,5 +12,6 @@ dtb-$(CONFIG_ARCH_QCOM)	+= sdm845-cheza-r2.dtb
->  dtb-$(CONFIG_ARCH_QCOM)	+= sdm845-cheza-r3.dtb
->  dtb-$(CONFIG_ARCH_QCOM)	+= sdm845-db845c.dtb
->  dtb-$(CONFIG_ARCH_QCOM)	+= sdm845-mtp.dtb
-> +dtb-$(CONFIG_ARCH_QCOM)	+= sm8150-mtp.dtb
->  dtb-$(CONFIG_ARCH_QCOM)	+= qcs404-evb-1000.dtb
->  dtb-$(CONFIG_ARCH_QCOM)	+= qcs404-evb-4000.dtb
-> diff --git a/arch/arm64/boot/dts/qcom/sm8150-mtp.dts b/arch/arm64/boot/dts/qcom/sm8150-mtp.dts
-> new file mode 100644
-> index 000000000000..df08ee50510d
-> --- /dev/null
-> +++ b/arch/arm64/boot/dts/qcom/sm8150-mtp.dts
-> @@ -0,0 +1,28 @@
-> +// SPDX-License-Identifier: BSD-3-Clause
-> +// Copyright (c) 2017-2019, The Linux Foundation. All rights reserved.
-> +// Copyright (c) 2019, Linaro Limited
-> +
-> +/dts-v1/;
-> +
-> +#include "sm8150.dtsi"
-> +
-> +/ {
-> +	model = "Qualcomm Technologies, Inc. SM8150 MTP";
-> +	compatible = "qcom,sm8150-mtp";
-> +
-> +	aliases {
-> +		serial0 = &uart2;
-> +	};
-> +
-> +	chosen {
-> +		stdout-path = "serial0:115200n8";
-> +	};
-> +};
-> +
-> +&qupv3_id_1 {
-> +	status = "okay";
-> +};
-> +
-> +&uart2 {
-> +	status = "okay";
-> +};
-> -- 
-> 2.20.1
-> 
+
+Maybe this should have a Fixes tag? And the subject could be something
+like "avoid shadowing local variables in macro"?
+
+Reviewed-by: Stephen Boyd <swboyd@chromium.org>
+
+
