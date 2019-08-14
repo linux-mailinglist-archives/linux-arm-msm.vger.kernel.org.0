@@ -2,42 +2,40 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 45F238D321
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Aug 2019 14:31:40 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E11898D342
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Aug 2019 14:36:46 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727461AbfHNMbf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 14 Aug 2019 08:31:35 -0400
-Received: from mail.kernel.org ([198.145.29.99]:53990 "EHLO mail.kernel.org"
+        id S1727890AbfHNMgp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 14 Aug 2019 08:36:45 -0400
+Received: from mail.kernel.org ([198.145.29.99]:56938 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1725800AbfHNMbe (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 14 Aug 2019 08:31:34 -0400
+        id S1727304AbfHNMgp (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 14 Aug 2019 08:36:45 -0400
 Received: from localhost.localdomain (unknown [171.76.115.97])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 670B7208C2;
-        Wed, 14 Aug 2019 12:31:30 +0000 (UTC)
+        by mail.kernel.org (Postfix) with ESMTPSA id C0E62214DA;
+        Wed, 14 Aug 2019 12:36:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1565785894;
-        bh=HuxukNahTWeA+LLtZCC/D3RZ3m6XjTpkYJTv3BTqbPU=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=ylmaSMbCmQUnrTWaVcPTJIqnL8Yiz6MX11hgeTRepB1ig5urgetDP9vBPBzYvMcQE
-         55upndk+ryGTQ0A/O198eX/V+quBsfcgFkIQAMD3ru3qcN6AWICS+viK8DUHbObsEu
-         kpen/3YA3gI5lzZcsIFlTAwE0TetoXCoMQ7YXpYE=
+        s=default; t=1565786204;
+        bh=wqo1QtxFMdDaXjf0zXYMAwyreNgWwXT2nHsHAmdfdl8=;
+        h=From:To:Cc:Subject:Date:From;
+        b=bkhWJafs6Zn9rGNJFbbm8hLHdnvq9+YJER6CCcdHZBjJ1Xfr/qoL2koTQivXjo/vG
+         CAcYQzavFz/bnEmIm3Zd3SSJ8c+IhVxvxC+gy2f4hqHJyOsKtGDMx/BaEvq+RItXuG
+         QwfHah1IhzHorpdFVeOQYMEAumNSQhslAqBlDdRU=
 From:   Vinod Koul <vkoul@kernel.org>
-To:     Stephen Boyd <sboyd@kernel.org>
+To:     Linus Walleij <linus.walleij@linaro.org>
 Cc:     linux-arm-msm@vger.kernel.org,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
         Vinod Koul <vkoul@kernel.org>, Andy Gross <agross@kernel.org>,
-        Michael Turquette <mturquette@baylibre.com>,
         Rob Herring <robh+dt@kernel.org>,
-        Mark Rutland <mark.rutland@arm.com>, linux-clk@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: [PATCH 2/2] clk: qcom: clk-rpmh: Add support for SM8150
-Date:   Wed, 14 Aug 2019 17:59:58 +0530
-Message-Id: <20190814122958.4981-2-vkoul@kernel.org>
+        Mark Rutland <mark.rutland@arm.com>,
+        linux-gpio@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: [PATCH 1/3] dt-bindings: pinctrl: qcom-pmic-gpio: Add pm8150 support
+Date:   Wed, 14 Aug 2019 18:05:10 +0530
+Message-Id: <20190814123512.6017-1-vkoul@kernel.org>
 X-Mailer: git-send-email 2.20.1
-In-Reply-To: <20190814122958.4981-1-vkoul@kernel.org>
-References: <20190814122958.4981-1-vkoul@kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Sender: linux-arm-msm-owner@vger.kernel.org
@@ -45,58 +43,49 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add support for rpmh clocks found in SM8150
+Add support for the PM8150 GPIO support to the Qualcomm PMIC GPIO
+binding.
 
 Signed-off-by: Vinod Koul <vkoul@kernel.org>
 ---
- drivers/clk/qcom/clk-rpmh.c | 27 +++++++++++++++++++++++++++
- 1 file changed, 27 insertions(+)
+ Documentation/devicetree/bindings/pinctrl/qcom,pmic-gpio.txt | 3 +++
+ drivers/pinctrl/qcom/pinctrl-spmi-gpio.c                     | 2 ++
+ 2 files changed, 5 insertions(+)
 
-diff --git a/drivers/clk/qcom/clk-rpmh.c b/drivers/clk/qcom/clk-rpmh.c
-index c3fd632af119..7fea263447c5 100644
---- a/drivers/clk/qcom/clk-rpmh.c
-+++ b/drivers/clk/qcom/clk-rpmh.c
-@@ -368,6 +368,32 @@ static const struct clk_rpmh_desc clk_rpmh_sdm845 = {
- 	.num_clks = ARRAY_SIZE(sdm845_rpmh_clocks),
+diff --git a/Documentation/devicetree/bindings/pinctrl/qcom,pmic-gpio.txt b/Documentation/devicetree/bindings/pinctrl/qcom,pmic-gpio.txt
+index 7f64a7e92c28..56553c06f129 100644
+--- a/Documentation/devicetree/bindings/pinctrl/qcom,pmic-gpio.txt
++++ b/Documentation/devicetree/bindings/pinctrl/qcom,pmic-gpio.txt
+@@ -21,6 +21,7 @@ PMIC's from Qualcomm.
+ 		    "qcom,pmi8994-gpio"
+ 		    "qcom,pmi8998-gpio"
+ 		    "qcom,pms405-gpio"
++		    "qcom,pm8150-gpio"
+ 
+ 		    And must contain either "qcom,spmi-gpio" or "qcom,ssbi-gpio"
+ 		    if the device is on an spmi bus or an ssbi bus respectively
+@@ -94,6 +95,8 @@ to specify in a pin configuration subnode:
+ 		    gpio1-gpio22 for pma8084
+ 		    gpio1-gpio10 for pmi8994
+ 		    gpio1-gpio12 for pms405 (holes on gpio1, gpio9 and gpio10)
++		    gpio1-gpio10 for pm8150 (holes on gpio2, gpio5, gpio7
++					     and gpio8)
+ 
+ - function:
+ 	Usage: required
+diff --git a/drivers/pinctrl/qcom/pinctrl-spmi-gpio.c b/drivers/pinctrl/qcom/pinctrl-spmi-gpio.c
+index f39da87ea185..5286ec060894 100644
+--- a/drivers/pinctrl/qcom/pinctrl-spmi-gpio.c
++++ b/drivers/pinctrl/qcom/pinctrl-spmi-gpio.c
+@@ -1155,6 +1155,8 @@ static const struct of_device_id pmic_gpio_of_match[] = {
+ 	{ .compatible = "qcom,pma8084-gpio", .data = (void *) 22 },
+ 	/* pms405 has 12 GPIOs with holes on 1, 9, and 10 */
+ 	{ .compatible = "qcom,pms405-gpio", .data = (void *) 12 },
++	/* pm8150 has 10 GPIOs with holes on 2, 5, 7 and 8 */
++	{ .compatible = "qcom,pm8150-gpio", .data = (void *) 10 },
+ 	{ },
  };
  
-+DEFINE_CLK_RPMH_ARC(sm8150, bi_tcxo, bi_tcxo_ao, "xo.lvl", 0x3, 2);
-+DEFINE_CLK_RPMH_VRM(sm8150, ln_bb_clk2, ln_bb_clk2_ao, "lnbclka2", 2);
-+DEFINE_CLK_RPMH_VRM(sm8150, ln_bb_clk3, ln_bb_clk3_ao, "lnbclka3", 2);
-+DEFINE_CLK_RPMH_VRM(sm8150, rf_clk1, rf_clk1_ao, "rfclka1", 1);
-+DEFINE_CLK_RPMH_VRM(sm8150, rf_clk2, rf_clk2_ao, "rfclka2", 1);
-+DEFINE_CLK_RPMH_VRM(sm8150, rf_clk3, rf_clk3_ao, "rfclka3", 1);
-+
-+static struct clk_hw *sm8150_rpmh_clocks[] = {
-+	[RPMH_CXO_CLK]		= &sm8150_bi_tcxo.hw,
-+	[RPMH_CXO_CLK_A]	= &sm8150_bi_tcxo_ao.hw,
-+	[RPMH_LN_BB_CLK2]	= &sm8150_ln_bb_clk2.hw,
-+	[RPMH_LN_BB_CLK2_A]	= &sm8150_ln_bb_clk2_ao.hw,
-+	[RPMH_LN_BB_CLK3]	= &sm8150_ln_bb_clk3.hw,
-+	[RPMH_LN_BB_CLK3_A]	= &sm8150_ln_bb_clk3_ao.hw,
-+	[RPMH_RF_CLK1]		= &sm8150_rf_clk1.hw,
-+	[RPMH_RF_CLK1_A]	= &sm8150_rf_clk1_ao.hw,
-+	[RPMH_RF_CLK2]		= &sm8150_rf_clk2.hw,
-+	[RPMH_RF_CLK2_A]	= &sm8150_rf_clk2_ao.hw,
-+	[RPMH_RF_CLK3]		= &sm8150_rf_clk3.hw,
-+	[RPMH_RF_CLK3_A]	= &sm8150_rf_clk3_ao.hw,
-+};
-+
-+static const struct clk_rpmh_desc clk_rpmh_sm8150 = {
-+	.clks = sm8150_rpmh_clocks,
-+	.num_clks = ARRAY_SIZE(sm8150_rpmh_clocks),
-+};
- static struct clk_hw *of_clk_rpmh_hw_get(struct of_phandle_args *clkspec,
- 					 void *data)
- {
-@@ -447,6 +473,7 @@ static int clk_rpmh_probe(struct platform_device *pdev)
- 
- static const struct of_device_id clk_rpmh_match_table[] = {
- 	{ .compatible = "qcom,sdm845-rpmh-clk", .data = &clk_rpmh_sdm845},
-+	{ .compatible = "qcom,sm8150-rpmh-clk", .data = &clk_rpmh_sm8150},
- 	{ }
- };
- MODULE_DEVICE_TABLE(of, clk_rpmh_match_table);
 -- 
 2.20.1
 
