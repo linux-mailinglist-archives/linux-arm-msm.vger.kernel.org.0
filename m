@@ -2,27 +2,27 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id AE8D18D3C2
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Aug 2019 14:53:27 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 58A5D8D3BD
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Aug 2019 14:53:25 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728301AbfHNMxH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 14 Aug 2019 08:53:07 -0400
-Received: from mail.kernel.org ([198.145.29.99]:36334 "EHLO mail.kernel.org"
+        id S1728322AbfHNMxJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 14 Aug 2019 08:53:09 -0400
+Received: from mail.kernel.org ([198.145.29.99]:36414 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1728292AbfHNMxE (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 14 Aug 2019 08:53:04 -0400
+        id S1728313AbfHNMxJ (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 14 Aug 2019 08:53:09 -0400
 Received: from localhost.localdomain (unknown [171.76.115.97])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 1A11B2083B;
-        Wed, 14 Aug 2019 12:53:00 +0000 (UTC)
+        by mail.kernel.org (Postfix) with ESMTPSA id F22AB21721;
+        Wed, 14 Aug 2019 12:53:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1565787184;
-        bh=/h3YqqWp1GHG2tFB04Jfi8yAYbuoQfxznrc6/QZfTZA=;
+        s=default; t=1565787188;
+        bh=gs8YwW4FIVXjeU76YzcChMtnH93LCEseIpUWycteCh0=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=SEAwZgLIU4Lj8Pzg3/OyeOHVZuaJMJPxR/sttBTVzoWxQsqrHs2PUEjfG84CZyTvA
-         XQWiO7ez2qhhHs3NcFMLo481iDvJxZZOBiZYx3WGGBQcYpi/KuWJJa/CPJPoIR1fUS
-         kpfq35JV8s2C+hj+TlOYI8RqwGBKhBYt7p2SF9MY=
+        b=RlsOWELGOULQK3kmo+9knvtqVjgvu4r/sYHN3jTQmh0nmRRWaUoQ8Xrr+g074nMrJ
+         9EcKCg1g0z+XouTFqAkDreqwzLHs4oLNEaO3IN3fHMQaNIjmTJWkhZ89G4qB9FJIY0
+         J16mQWO6XQ84N25yp0faKH2/2Lpf8wPvJUWUqJfw=
 From:   Vinod Koul <vkoul@kernel.org>
 To:     Andy Gross <agross@kernel.org>
 Cc:     linux-arm-msm@vger.kernel.org,
@@ -31,9 +31,9 @@ Cc:     linux-arm-msm@vger.kernel.org,
         Mark Rutland <mark.rutland@arm.com>,
         Stephen Boyd <sboyd@kernel.org>, devicetree@vger.kernel.org,
         linux-kernel@vger.kernel.org, Vinod Koul <vkoul@kernel.org>
-Subject: [PATCH 20/22] arm64: dts: qcom: sm8150: Add pmu node to SM8150 SoC
-Date:   Wed, 14 Aug 2019 18:20:10 +0530
-Message-Id: <20190814125012.8700-21-vkoul@kernel.org>
+Subject: [PATCH 21/22] arm64: dts: qcom: sm8150: Add SMEM nodes
+Date:   Wed, 14 Aug 2019 18:20:11 +0530
+Message-Id: <20190814125012.8700-22-vkoul@kernel.org>
 X-Mailer: git-send-email 2.20.1
 In-Reply-To: <20190814125012.8700-1-vkoul@kernel.org>
 References: <20190814125012.8700-1-vkoul@kernel.org>
@@ -46,30 +46,56 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 From: Sibi Sankar <sibis@codeaurora.org>
 
-Add the CPU PMU on SM8150 to get perf support for hardware events.
+Add the necessary dt nodes to support SMEM on SM8150 SoC.
 
 Signed-off-by: Sibi Sankar <sibis@codeaurora.org>
 Signed-off-by: Vinod Koul <vkoul@kernel.org>
 ---
- arch/arm64/boot/dts/qcom/sm8150.dtsi | 5 +++++
- 1 file changed, 5 insertions(+)
+ arch/arm64/boot/dts/qcom/sm8150.dtsi | 17 +++++++++++++++++
+ 1 file changed, 17 insertions(+)
 
 diff --git a/arch/arm64/boot/dts/qcom/sm8150.dtsi b/arch/arm64/boot/dts/qcom/sm8150.dtsi
-index 7111e1f092f4..19be87dc893f 100644
+index 19be87dc893f..5df3f335272a 100644
 --- a/arch/arm64/boot/dts/qcom/sm8150.dtsi
 +++ b/arch/arm64/boot/dts/qcom/sm8150.dtsi
-@@ -148,6 +148,11 @@
- 		reg = <0 0x80000000 0 0>;
+@@ -142,6 +142,12 @@
+ 		};
  	};
  
-+	pmu {
-+		compatible = "arm,armv8-pmuv3";
-+		interrupts = <GIC_PPI 5 IRQ_TYPE_LEVEL_HIGH>;
++	tcsr_mutex: hwlock {
++		compatible = "qcom,tcsr-mutex";
++		syscon = <&tcsr_mutex_regs 0 0x1000>;
++		#hwlock-cells = <1>;
 +	};
 +
- 	psci {
- 		compatible = "arm,psci-1.0";
- 		method = "smc";
+ 	memory@80000000 {
+ 		device_type = "memory";
+ 		/* We expect the bootloader to fill in the size */
+@@ -269,6 +275,12 @@
+ 		};
+ 	};
+ 
++	smem {
++		compatible = "qcom,smem";
++		memory-region = <&smem_mem>;
++		hwlocks = <&tcsr_mutex 3>;
++	};
++
+ 	soc: soc@0 {
+ 		#address-cells = <1>;
+ 		#size-cells = <1>;
+@@ -306,6 +318,11 @@
+ 			};
+ 		};
+ 
++		tcsr_mutex_regs: syscon@1f40000 {
++			compatible = "syscon";
++			reg = <0x01f40000 0x40000>;
++		};
++
+ 		tlmm: pinctrl@3100000 {
+ 			compatible = "qcom,sm8150-pinctrl";
+ 			reg = <0x03100000 0x300000>,
 -- 
 2.20.1
 
