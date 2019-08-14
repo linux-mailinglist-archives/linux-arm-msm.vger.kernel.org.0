@@ -2,145 +2,101 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id C10DC8E08F
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 Aug 2019 00:16:12 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D06018E12E
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 Aug 2019 01:17:35 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729076AbfHNWQF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 14 Aug 2019 18:16:05 -0400
-Received: from mail-pl1-f196.google.com ([209.85.214.196]:38167 "EHLO
-        mail-pl1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727937AbfHNWQF (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 14 Aug 2019 18:16:05 -0400
-Received: by mail-pl1-f196.google.com with SMTP id m12so232719plt.5;
-        Wed, 14 Aug 2019 15:16:05 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=aWZa5dI2NRu6gHtKDFpC6w867E//TeA8xW/o66+S8bg=;
-        b=qBzDnv5WoEcN49Ehx8P57UUIl8oz7j6r5pJKgnDJkq/9i9JcNFNlrzIJlKHWe0bVRt
-         4VBrMBdIbbnWB3gueEj7YeclzU2RJJXWdDrjarGuiAi3yGBXO6hOIc/73O+CR0EEZ18j
-         9qYE5DRvKuLxLJS5XTXrqrVimdgbiJ5oL4pT1EgYOIBf4Uk/wyznzvDd2xw7B37Kc0oC
-         s3TwkOyd7vs6FnLVXfUQjsu4evDIWT81CEpi2WiJ5eRKyJxqRsZkpbQ1qBC6iD8EQNBn
-         lmB30rOH8gpS3p5romApm2kcDjm6u1DOklnmxABYn6kLbJj0nD5JyU9qyX3Yfs7sDosV
-         x9xA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=aWZa5dI2NRu6gHtKDFpC6w867E//TeA8xW/o66+S8bg=;
-        b=fXxcvCBXrPlaKiTPqW0jGcv4iRB0Srt+0tDVeH6gr9iArIH1Ot3c31xzF9Z5S+a4DO
-         EBkXilMuphb3kWGsphoMk8ZbiajeMC4OP736lJjBqfcKkX87qiVt6TYK3Hn3OHVjkUgS
-         rhBoHQdjSikmAwXyrZxvbDDjaH2G1pS1p/g7WYWNSvF+PQwgrfFyVGM757WIIA7RU7Kj
-         yWZ1AxmseAgUItYJ7aIOQv2l+Mt7o8PPt/PTo3NKTtcf18pJwFRTWCT/lXUpwuHeoN48
-         Fz3GYAfYX+F2vARe/iwCNI+64JwDdtCv+aI+EVolkAJeQ/UWNhkSPtU2ywj5ADc3OeRH
-         eSsQ==
-X-Gm-Message-State: APjAAAXdHWWJsvDRpV4fsdctez8SAtqSSZ91ps4hSOLpkgfkc+XDivu4
-        RohKS2XBe5fjZhGzz/zAtrY=
-X-Google-Smtp-Source: APXvYqx4wiJg+kMGqoXbIWyLQISiWCqIYOJbh2AH50z72sXIlWDah+Rb8L65s8HhZIIA59tPKBJUVQ==
-X-Received: by 2002:a17:902:7b98:: with SMTP id w24mr1427925pll.163.1565820964515;
-        Wed, 14 Aug 2019 15:16:04 -0700 (PDT)
-Received: from localhost ([100.118.89.196])
-        by smtp.gmail.com with ESMTPSA id h195sm898264pfe.20.2019.08.14.15.16.03
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 14 Aug 2019 15:16:03 -0700 (PDT)
-From:   Rob Clark <robdclark@gmail.com>
-To:     dri-devel@lists.freedesktop.org
-Cc:     Christoph Hellwig <hch@lst.de>, Rob Clark <robdclark@chromium.org>,
-        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>, linux-arm-msm@vger.kernel.org,
-        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org
-Subject: [PATCH 5/6] drm/msm: stop abusing DMA API
-Date:   Wed, 14 Aug 2019 15:00:00 -0700
-Message-Id: <20190814220011.26934-6-robdclark@gmail.com>
-X-Mailer: git-send-email 2.21.0
-In-Reply-To: <20190814220011.26934-1-robdclark@gmail.com>
-References: <20190814220011.26934-1-robdclark@gmail.com>
+        id S1729560AbfHNXRf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 14 Aug 2019 19:17:35 -0400
+Received: from mail.kernel.org ([198.145.29.99]:44726 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726619AbfHNXRe (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 14 Aug 2019 19:17:34 -0400
+Received: from mail-qt1-f175.google.com (mail-qt1-f175.google.com [209.85.160.175])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        by mail.kernel.org (Postfix) with ESMTPSA id A71602064A;
+        Wed, 14 Aug 2019 23:17:33 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=default; t=1565824653;
+        bh=BUMuEhOekuNlkYRAPWto4vz/PFkEh8/udVJlZ/2FMfQ=;
+        h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
+        b=TNIYJcpc9E5yZe+W8EW8pzrIUrTZdlNLcsF70EIrX66vuqM3DG3dqjSBKrSBDGaxI
+         V7pPWBS738oN4A1MkWBpvgFAkES64o2s6b8Rp7egXwEAeaScGzIwOdypEh6dbGj4f0
+         2aZO3wLGktmvbG7M8X6+Ts+zQJP8QlZS4GeAM9v4=
+Received: by mail-qt1-f175.google.com with SMTP id i4so510981qtj.8;
+        Wed, 14 Aug 2019 16:17:33 -0700 (PDT)
+X-Gm-Message-State: APjAAAXOhMvR1BaKiANCXD+EcE8Eowy/anxAUop+0GXmEqJO2e3xj3JR
+        O+GGn9t4wp/8hVMLOHdHds79u4i4TxjpXih76w==
+X-Google-Smtp-Source: APXvYqyqANOhCBTSqCHZQm3woQMeO+/sPNecgEttTGuUZUASkIbB6R5eX3jJtqE3kNGHnL1T4gxQb4JLTzhQA8pU+ck=
+X-Received: by 2002:ac8:44c4:: with SMTP id b4mr1565641qto.224.1565824652855;
+ Wed, 14 Aug 2019 16:17:32 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <20190813130946.16448-1-govinds@codeaurora.org>
+ <20190813130946.16448-2-govinds@codeaurora.org> <CAL_JsqK-GK8arfRu6sqP9UjNrwc0=aUWXymMRF5fQhg+M2TNng@mail.gmail.com>
+ <20190814064126.GV26807@tuxbook-pro>
+In-Reply-To: <20190814064126.GV26807@tuxbook-pro>
+From:   Rob Herring <robh@kernel.org>
+Date:   Wed, 14 Aug 2019 17:17:21 -0600
+X-Gmail-Original-Message-ID: <CAL_JsqKaZJ1asHynSJg45nJf8Jtj7MmC_OsVtPjNzf8nat1jrg@mail.gmail.com>
+Message-ID: <CAL_JsqKaZJ1asHynSJg45nJf8Jtj7MmC_OsVtPjNzf8nat1jrg@mail.gmail.com>
+Subject: Re: [v2 1/2] dt-bindings: clock: qcom: Add QCOM Q6SSTOP clock
+ controller bindings
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     Govind Singh <govinds@codeaurora.org>,
+        Stephen Boyd <sboyd@kernel.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        linux-clk <linux-clk@vger.kernel.org>,
+        devicetree@vger.kernel.org,
+        "open list:ARM/QUALCOMM SUPPORT" <linux-soc@vger.kernel.org>,
+        Andy Gross <andy.gross@linaro.org>,
+        "open list:REMOTE PROCESSOR (REMOTEPROC) SUBSYSTEM" 
+        <linux-remoteproc@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Rob Clark <robdclark@chromium.org>
+On Wed, Aug 14, 2019 at 12:39 AM Bjorn Andersson
+<bjorn.andersson@linaro.org> wrote:
+>
+> On Tue 13 Aug 06:43 PDT 2019, Rob Herring wrote:
+>
+> > On Tue, Aug 13, 2019 at 7:10 AM Govind Singh <govinds@codeaurora.org> wrote:
+> > >
+> > > Add devicetree binding for the Q6SSTOP clock controller found in QCS404.
+> >
+> > You need to test this with 'make dt_binding_check' and fix the errors.
+> >
+> > >
+> > > Signed-off-by: Govind Singh <govinds@codeaurora.org>
+> > > ---
+> > >  .../bindings/clock/qcom,q6sstopcc.yaml        | 45 +++++++++++++++++++
+> > >  1 file changed, 45 insertions(+)
+> > >  create mode 100644 Documentation/devicetree/bindings/clock/qcom,q6sstopcc.yaml
+> > >
+> > > diff --git a/Documentation/devicetree/bindings/clock/qcom,q6sstopcc.yaml b/Documentation/devicetree/bindings/clock/qcom,q6sstopcc.yaml
+> > > new file mode 100644
+> > > index 000000000000..861e9ba97ca3
+> > > --- /dev/null
+> > > +++ b/Documentation/devicetree/bindings/clock/qcom,q6sstopcc.yaml
+> > > @@ -0,0 +1,45 @@
+> > > +# SPDX-License-Identifier: BSD-2-Clause
+> >
+> > GPL-2.0-only OR BSD-2-Clause
+> >
+>
+> Is this a requirement of the devicetree project?
 
-Use arch_sync_dma_for_{device,cpu}() rather than abusing the DMA API to
-indirectly get at the arch_sync_dma code.
+More like my preference.
 
-Signed-off-by: Rob Clark <robdclark@chromium.org>
----
- drivers/gpu/drm/msm/msm_gem.c | 37 +++++++++++------------------------
- 1 file changed, 11 insertions(+), 26 deletions(-)
+> Wouldn't the BSD
+> license alone be sufficient for the type of interoperability that we're
+> striving for?
 
-diff --git a/drivers/gpu/drm/msm/msm_gem.c b/drivers/gpu/drm/msm/msm_gem.c
-index 8cf6362e64bf..a2611e62df19 100644
---- a/drivers/gpu/drm/msm/msm_gem.c
-+++ b/drivers/gpu/drm/msm/msm_gem.c
-@@ -7,6 +7,7 @@
- #include <linux/spinlock.h>
- #include <linux/shmem_fs.h>
- #include <linux/dma-buf.h>
-+#include <linux/dma-noncoherent.h>
- #include <linux/pfn_t.h>
- 
- #include "msm_drv.h"
-@@ -32,43 +33,27 @@ static bool use_pages(struct drm_gem_object *obj)
- 	return !msm_obj->vram_node;
- }
- 
--/*
-- * Cache sync.. this is a bit over-complicated, to fit dma-mapping
-- * API.  Really GPU cache is out of scope here (handled on cmdstream)
-- * and all we need to do is invalidate newly allocated pages before
-- * mapping to CPU as uncached/writecombine.
-- *
-- * On top of this, we have the added headache, that depending on
-- * display generation, the display's iommu may be wired up to either
-- * the toplevel drm device (mdss), or to the mdp sub-node, meaning
-- * that here we either have dma-direct or iommu ops.
-- *
-- * Let this be a cautionary tail of abstraction gone wrong.
-- */
--
- static void sync_for_device(struct msm_gem_object *msm_obj)
- {
- 	struct device *dev = msm_obj->base.dev->dev;
-+	struct scatterlist *sg;
-+	int i;
- 
--	if (get_dma_ops(dev)) {
--		dma_sync_sg_for_device(dev, msm_obj->sgt->sgl,
--			msm_obj->sgt->nents, DMA_BIDIRECTIONAL);
--	} else {
--		dma_map_sg(dev, msm_obj->sgt->sgl,
--			msm_obj->sgt->nents, DMA_BIDIRECTIONAL);
-+	for_each_sg(msm_obj->sgt->sgl, sg, msm_obj->sgt->nents, i) {
-+		arch_sync_dma_for_device(dev, sg_phys(sg), sg->length,
-+				DMA_BIDIRECTIONAL);
- 	}
- }
- 
- static void sync_for_cpu(struct msm_gem_object *msm_obj)
- {
- 	struct device *dev = msm_obj->base.dev->dev;
-+	struct scatterlist *sg;
-+	int i;
- 
--	if (get_dma_ops(dev)) {
--		dma_sync_sg_for_cpu(dev, msm_obj->sgt->sgl,
--			msm_obj->sgt->nents, DMA_BIDIRECTIONAL);
--	} else {
--		dma_unmap_sg(dev, msm_obj->sgt->sgl,
--			msm_obj->sgt->nents, DMA_BIDIRECTIONAL);
-+	for_each_sg(msm_obj->sgt->sgl, sg, msm_obj->sgt->nents, i) {
-+		arch_sync_dma_for_cpu(dev, sg_phys(sg), sg->length,
-+				DMA_BIDIRECTIONAL);
- 	}
- }
- 
--- 
-2.21.0
+Yes. However, folks like to copy and paste and forget to pay attention
+to the license. So we'll end up with GPL licensed code copied into BSD
+licensed code. Dual license doesn't completely solve that, but helps
+somewhat IMO.
 
+Rob
