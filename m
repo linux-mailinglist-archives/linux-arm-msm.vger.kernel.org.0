@@ -2,52 +2,52 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 5F1238E608
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 Aug 2019 10:17:53 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4EF448E613
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 Aug 2019 10:18:20 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730390AbfHOIRw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 15 Aug 2019 04:17:52 -0400
-Received: from mail-lf1-f66.google.com ([209.85.167.66]:42812 "EHLO
-        mail-lf1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730389AbfHOIRw (ORCPT
+        id S1730869AbfHOISP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 15 Aug 2019 04:18:15 -0400
+Received: from mail-lj1-f194.google.com ([209.85.208.194]:38959 "EHLO
+        mail-lj1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1730042AbfHOISM (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 15 Aug 2019 04:17:52 -0400
-Received: by mail-lf1-f66.google.com with SMTP id s19so1103979lfb.9
-        for <linux-arm-msm@vger.kernel.org>; Thu, 15 Aug 2019 01:17:50 -0700 (PDT)
+        Thu, 15 Aug 2019 04:18:12 -0400
+Received: by mail-lj1-f194.google.com with SMTP id x4so1532170ljj.6
+        for <linux-arm-msm@vger.kernel.org>; Thu, 15 Aug 2019 01:18:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=Hw7jSAIgwN+rABLfqVTMGBvkTFu0H8DfDB1Vzehui0E=;
-        b=R/3iJHmXmu4t2d6jYnZwXJFu7xRlQdiL0AFbNMTP+brJ+S84E6ruCuGVEBHQti/gRa
-         38IeRutQH5E/LECRnqD33FqoSANwovOb/qZv0fv+uD6lZPVvKAIJnzwnLhqnbWNalp04
-         +b0bDrWP8WZJ3EuCIB2Oz/uoLFeRv+Ib/cLyqBIbO9EJiksmb7SWopg3EKVlK+X4FVYr
-         V/Y4E3ctoixt9AZibQ30MYyLa1t8aSkQ+pJ9Gg69+XCyeccigxKZ8/JNYwY3HhgxcJHz
-         ZMkoV9yd2MoGlIfF+OX7OcmShgcxNw2DqDwRPCskd1Mxe7jWF/6AKEJbgip4dylfABTj
-         QngA==
+        bh=W7xfr16BH5ZJjmVp0865t1tdCv0TJfQQ8MOvl0IA0RI=;
+        b=h/iE0ACwRL8YZpox9tiry6Y6F9AtQ6fulXq/U4nRshmUS5LIgMjgsMcGGCCmgSfY0J
+         nglNTBQxeLzOt23t5VWv3b16qAW7RU72nYgfDHIc6rn/87aL9AlP5VRxR1gOtdNN2rzJ
+         CE8Oaxl6PzFKEDehEhvT9xMnQ2BuRQKgGSacBPydzgzfPTcdrYIriDbFD0KYhisx/fYQ
+         TfxHkfwUUu+WzgWKIvWBuJerhIihKrkXphGv+H3J2ktph4Au4Vf7P8one0DBq1AYscNq
+         Ya5pxqW6o6aiYu+tmytDC5UQsm+gOAXmFAltlAlJRfVa6YAKIB8IWmHbMqFum5Xh0C62
+         Y8KQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=Hw7jSAIgwN+rABLfqVTMGBvkTFu0H8DfDB1Vzehui0E=;
-        b=tQHEC0LeNaPN4xcLu4bvtvXfdK1b3TDTTswWPVrELn9V0ltYw2xR7bSaQexrXoHYBU
-         kAzfReAJHxDf41rV9iKdnA+9NyslYVJAM2CGU4ailLvdu0nSCSJcMtZmc/WECTw/Ke9Y
-         NoQgTN7Q8+Fpyh0S6oIwq/WBnoqVLP7faCn/s6BWbrFTenzsbtVPwK/XGbxbWg6Iabcj
-         6rbSMUZrwZVnmKaELvjZ1//O3u0M+tEwMmwJ9Y0QTWOX2qBzZYLBteY9oMDgY6pvYLX2
-         KCn0jXTgEze4NBLM3Wd2cMBq4VaJicVX5qn1sULVDak1kcfQokSBjIVmtMIqa/JWkoFY
-         zQFQ==
-X-Gm-Message-State: APjAAAV70Sh6iF/2VsOvm7azF9pMX1dWERGyKdKKKUgiSTNsmjDZ/Vip
-        24B05kcLhrRuRrSLVTmK7Y0iA5X0dyR4aIPQhmu7xQ==
-X-Google-Smtp-Source: APXvYqxPxwQsBMfk/OX+yJdpAw36qGQSyoTJ+sTX7VpaAD6F51EWmcwNavIJr21um/O+pXUWt7FUxh9EGojVVK0Hj5o=
-X-Received: by 2002:a19:ed11:: with SMTP id y17mr1749758lfy.141.1565857070180;
- Thu, 15 Aug 2019 01:17:50 -0700 (PDT)
+        bh=W7xfr16BH5ZJjmVp0865t1tdCv0TJfQQ8MOvl0IA0RI=;
+        b=jqUdD3x/4e4cJnPyeuh8x++EEnoyIiWrElcX7niMMnKdXZq6SamwD1cn7vz9Pe8x2D
+         Hg8lSC+W+DqugYeIOODDbxJT5MyowUONvN+kitvgL3Krmo22L5QRbIYGEOA8dW1/p2mH
+         +qyY+75zkBvrXOuQrq/sO9FbcsCVTvGfoAsIIZY4qpCnrXa36NaqPlRfm8b4VerVDaUX
+         uVkG81MH1tMtzSr+Il3jFrC88fuq4wxZj84xhXt2Y8Iuu8nyVxgIOs5Yx6SLbYYU6rsm
+         s0ZomEagatJmYAE2UDxEb+2dHO55+RFutBgOO/wCvYm38QNI4jKuQJ1QHct1NMDuei8j
+         awvw==
+X-Gm-Message-State: APjAAAUD7MAofLfvNHsVUzCUb4VYgLhYObG/IBAwlN8Wa3h+JjZ8OGxL
+        cWuVFdFbtK7WQWrKwErAorNM+y48kdsxoKwFuPw6iA==
+X-Google-Smtp-Source: APXvYqwlNuGYnM4syJ7wAaplZofwwfNvfLAdOC0xu1V73tUg0jS10SDexNQ4wMU3AxJ+Dtlu9zFGYve/VAiy/marM2E=
+X-Received: by 2002:a05:651c:28c:: with SMTP id b12mr2044788ljo.69.1565857090860;
+ Thu, 15 Aug 2019 01:18:10 -0700 (PDT)
 MIME-Version: 1.0
-References: <20190815004854.19860-1-masneyb@onstation.org> <20190815004854.19860-2-masneyb@onstation.org>
-In-Reply-To: <20190815004854.19860-2-masneyb@onstation.org>
+References: <20190815004854.19860-1-masneyb@onstation.org> <20190815004854.19860-3-masneyb@onstation.org>
+In-Reply-To: <20190815004854.19860-3-masneyb@onstation.org>
 From:   Linus Walleij <linus.walleij@linaro.org>
-Date:   Thu, 15 Aug 2019 10:17:38 +0200
-Message-ID: <CACRpkdZxSPutW1QNkYQ-T8cVFQDbVBcVyQM00g_8_i8WiFEMDQ@mail.gmail.com>
-Subject: Re: [PATCH 01/11] dt-bindings: drm/bridge: analogix-anx78xx: add new variants
+Date:   Thu, 15 Aug 2019 10:17:59 +0200
+Message-ID: <CACRpkdaDHoJvoH93Amzv2gSDGbgAsF-iNLiEFA3Fuov3D4uh5Q@mail.gmail.com>
+Subject: Re: [PATCH 02/11] drm/bridge: analogix-anx78xx: add new variants
 To:     Brian Masney <masneyb@onstation.org>
 Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
         Rob Herring <robh+dt@kernel.org>,
@@ -77,8 +77,8 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 On Thu, Aug 15, 2019 at 2:49 AM Brian Masney <masneyb@onstation.org> wrote:
 
-> Add support for the analogix,anx7808, analogix,anx7812, and
-> analogix,anx7818 variants.
+> Add support for the 7808 variant. While we're here, the of match table
+> was missing support for the 7812 and 7818 variants, so add them as well.
 >
 > Signed-off-by: Brian Masney <masneyb@onstation.org>
 
