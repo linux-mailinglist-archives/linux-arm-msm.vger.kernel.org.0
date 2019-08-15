@@ -2,96 +2,94 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 346EE8F22A
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 Aug 2019 19:28:31 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id DC2D18F728
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 Aug 2019 00:44:20 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728979AbfHOR2a (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 15 Aug 2019 13:28:30 -0400
-Received: from mail-wr1-f65.google.com ([209.85.221.65]:41667 "EHLO
-        mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726203AbfHOR2a (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 15 Aug 2019 13:28:30 -0400
-Received: by mail-wr1-f65.google.com with SMTP id j16so2889933wrr.8
-        for <linux-arm-msm@vger.kernel.org>; Thu, 15 Aug 2019 10:28:29 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=x1/woNZ/miOCpOJJ/buaWg9h9ULhkPhshkiLxhg+uA0=;
-        b=dI8GDC0p6mZ2zrNjYq0TFSdLkTKn87QiMeoLecERxheD6+y6DxyD++Dk6e8pksNweI
-         S7pmGrL+YuZmav635pKHqjqNrGWVkuaY2qHMK+6yeU1gnMjUrB3VyoxgCRR/PpOEseS+
-         rKI/g9LSmiNX5bu+D5i25gvQtwKJXKkgDh+rLbmCzOZJLjZUaH7I3dypN1q4TzmtoxY5
-         S1T8iueMhDpL7lVISZht7GXfMqShEylkA02PAY+fQ+H6h6bwubNaYlcP+iI+ZMcSe19E
-         1YegFrBprDe58Z19j/xjjIIUJie4CughWK2ga08UfZtAuewETHctSgMCpbpxx+bdm696
-         B94g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=x1/woNZ/miOCpOJJ/buaWg9h9ULhkPhshkiLxhg+uA0=;
-        b=qY+mN1uG3qYPjice49cKiN9I4EEI/5sxIETZNx9XgW/6ZSkIjfITB1gyNG+KbZn2e8
-         tbjURWMigMpZVE2DaCX4Z5oCUv3lqofz5sCwm1MQn5Lt7fdPBM6bA6ja4pXUrulLSMlb
-         WwDKq/NcpDqyXYMmTgzpzmu3BgL8ts12GukMjXycsRG0FtRMwbhqdWm+4Hrm5ObiJwub
-         rwQxhZ6sIFu7bnkU7KirYVfhvoX8/Zw/DDnmT7w9NSAyilL9lcA+cVkpmo0bWVyRsrWH
-         PfP1dgRKzSHjGexf+9Ffh5Arzas7aXLVjVtla/F+PG//3UWg4GS8vIzKjLe2mJvO/XKV
-         mj+A==
-X-Gm-Message-State: APjAAAXzkBlBYoafwfbcwIcDCwls9lBPSkBMV3U6Enw47if8EILN4xq6
-        lYXzCkVSSeOPkA67xOBaAB4=
-X-Google-Smtp-Source: APXvYqwrDA5IUxE8hbJfIzhTyeEoaq/KzI6PO08Ya2frbY43qnik8XuJGraeD6E+m+KQFecpbWOehQ==
-X-Received: by 2002:adf:e6c5:: with SMTP id y5mr6419729wrm.2.1565890108352;
-        Thu, 15 Aug 2019 10:28:28 -0700 (PDT)
-Received: from localhost.localdomain (93-143-192-181.adsl.net.t-com.hr. [93.143.192.181])
-        by smtp.gmail.com with ESMTPSA id j10sm3077575wrd.26.2019.08.15.10.28.27
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 15 Aug 2019 10:28:27 -0700 (PDT)
-From:   Robert Marko <robimarko@gmail.com>
-To:     agross@kernel.org, robh+dt@kernel.org, mark.rutland@arm.com,
-        linux-arm-msm@vger.kernel.org
-Cc:     Robert Marko <robimarko@gmail.com>
-Subject: [PATCH] ARM: dts: qcom: ipq4019: Add SDHCI controller node
-Date:   Thu, 15 Aug 2019 19:28:23 +0200
-Message-Id: <20190815172823.12028-1-robimarko@gmail.com>
-X-Mailer: git-send-email 2.21.0
+        id S1733054AbfHOWoU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 15 Aug 2019 18:44:20 -0400
+Received: from onstation.org ([52.200.56.107]:49656 "EHLO onstation.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1731244AbfHOWoU (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 15 Aug 2019 18:44:20 -0400
+Received: from localhost (c-98-239-145-235.hsd1.wv.comcast.net [98.239.145.235])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        (Authenticated sender: masneyb)
+        by onstation.org (Postfix) with ESMTPSA id B4B0B3E998;
+        Thu, 15 Aug 2019 22:44:17 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=onstation.org;
+        s=default; t=1565909059;
+        bh=czM1Vfno+UFHpzvoNlZgvzbIsi/W/guZt8ysTusqBg8=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=Z707lNUjzuIsbtPXSccR8bANmWJFP6d0utJUK+yc8rOPnV4fltz0acMoPYc0Gth9O
+         9UmsjR4gMyWahWR+mUwz0JP9vIZHWTzezy6ZO8awAhHdaSSFZsP5nzvVceVqRxtZ6G
+         FF0g1ay6/KWQatmMJPp2UFMvfQyb5QJEn8UXok28=
+Date:   Thu, 15 Aug 2019 18:44:17 -0400
+From:   Brian Masney <masneyb@onstation.org>
+To:     Linus Walleij <linus.walleij@linaro.org>
+Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Andy Gross <agross@kernel.org>,
+        Andrzej Hajda <a.hajda@samsung.com>,
+        Neil Armstrong <narmstrong@baylibre.com>,
+        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        Dave Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Mark Rutland <mark.rutland@arm.com>,
+        Laurent Pinchart <Laurent.pinchart@ideasonboard.com>,
+        Jonas Karlman <jonas@kwiboo.se>,
+        Jernej Skrabec <jernej.skrabec@siol.net>,
+        Enric Balletbo i Serra <enric.balletbo@collabora.com>,
+        "open list:DRM PANEL DRIVERS" <dri-devel@lists.freedesktop.org>,
+        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
+        <devicetree@vger.kernel.org>,
+        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
+        MSM <linux-arm-msm@vger.kernel.org>,
+        Linux ARM <linux-arm-kernel@lists.infradead.org>,
+        freedreno <freedreno@lists.freedesktop.org>
+Subject: Re: [PATCH 09/11] ARM: dts: qcom: pm8941: add 5vs2 regulator node
+Message-ID: <20190815224417.GA32072@onstation.org>
+References: <20190815004854.19860-1-masneyb@onstation.org>
+ <20190815004854.19860-10-masneyb@onstation.org>
+ <CACRpkdYU-6LvFKRkj0yMMCmAnX0XtGe7rMwbXbhf2GCp77Ciyw@mail.gmail.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CACRpkdYU-6LvFKRkj0yMMCmAnX0XtGe7rMwbXbhf2GCp77Ciyw@mail.gmail.com>
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-IPQ4019 has a built in SD/eMMC controller which is supported by the
-SDHCI MSM driver, by the "qcom,sdhci-msm-v4" binding.
-So lets add the appropriate node for it.
+On Thu, Aug 15, 2019 at 10:34:17AM +0200, Linus Walleij wrote:
+> On Thu, Aug 15, 2019 at 2:49 AM Brian Masney <masneyb@onstation.org> wrote:
+> 
+> > pm8941 is missing the 5vs2 regulator node so let's add it since its
+> > needed to get the external display working. This regulator was already
+> > configured in the interrupts property on the parent node.
+> >
+> > Note that this regulator is referred to as mvs2 in the downstream MSM
+> > kernel sources.
+> 
+> When I looked at it it seemed like this convention is used for power
+> supplies that appear on both the main PMIC and the "extra (boot? basic?
+> low power?) PMIC that the main 80xx PMIC has mvs1 and the
+> other 89xx PMIC has mvs2.
 
-Signed-off-by: Robert Marko <robimarko@gmail.com>
----
- arch/arm/boot/dts/qcom-ipq4019.dtsi | 12 ++++++++++++
- 1 file changed, 12 insertions(+)
+According to the downstream MSM sources, the 5vs1 and 5vs2 rails are
+both on the second pm8941 PMIC:
 
-diff --git a/arch/arm/boot/dts/qcom-ipq4019.dtsi b/arch/arm/boot/dts/qcom-ipq4019.dtsi
-index 56f51599852d..8ef26da32ff4 100644
---- a/arch/arm/boot/dts/qcom-ipq4019.dtsi
-+++ b/arch/arm/boot/dts/qcom-ipq4019.dtsi
-@@ -206,6 +206,18 @@
- 			interrupts = <GIC_SPI 208 IRQ_TYPE_LEVEL_HIGH>;
- 		};
- 
-+		sdhci: sdhci@7824900 {
-+			compatible = "qcom,sdhci-msm-v4";
-+			reg = <0x7824900 0x11c>, <0x7824000 0x800>;
-+			interrupts = <GIC_SPI 123 IRQ_TYPE_LEVEL_HIGH>, <GIC_SPI 138 IRQ_TYPE_LEVEL_HIGH>;
-+			interrupt-names = "hc_irq", "pwr_irq";
-+			bus-width = <8>;
-+			clocks = <&gcc GCC_SDCC1_APPS_CLK>, <&gcc GCC_SDCC1_AHB_CLK>,
-+				 <&gcc GCC_DCD_XO_CLK>;
-+			clock-names = "core", "iface", "xo";
-+			status = "disabled";
-+		};
-+
- 		blsp_dma: dma@7884000 {
- 			compatible = "qcom,bam-v1.7.0";
- 			reg = <0x07884000 0x23000>;
--- 
-2.21.0
+https://github.com/AICP/kernel_lge_hammerhead/blob/n7.1/arch/arm/boot/dts/msm8974-regulator.dtsi#L18
 
+> I suppose it is named "mvs" on both PMICs and this is just a rail
+> name so as not to confuse the schematic?
+
+That sounds reasonable.
+
+> > Signed-off-by: Brian Masney <masneyb@onstation.org>
+> 
+> Reviewed-by: Linus Walleij <linus.walleij@linaro.org>
+
+Thank you!
+
+Brian
