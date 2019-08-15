@@ -2,101 +2,97 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id D06018E12E
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 Aug 2019 01:17:35 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 475CB8E1F2
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 Aug 2019 02:49:13 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729560AbfHNXRf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 14 Aug 2019 19:17:35 -0400
-Received: from mail.kernel.org ([198.145.29.99]:44726 "EHLO mail.kernel.org"
+        id S1726585AbfHOAtM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 14 Aug 2019 20:49:12 -0400
+Received: from onstation.org ([52.200.56.107]:44266 "EHLO onstation.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726619AbfHNXRe (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 14 Aug 2019 19:17:34 -0400
-Received: from mail-qt1-f175.google.com (mail-qt1-f175.google.com [209.85.160.175])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        id S1726221AbfHOAtM (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 14 Aug 2019 20:49:12 -0400
+Received: from localhost.localdomain (c-98-239-145-235.hsd1.wv.comcast.net [98.239.145.235])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits))
         (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id A71602064A;
-        Wed, 14 Aug 2019 23:17:33 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1565824653;
-        bh=BUMuEhOekuNlkYRAPWto4vz/PFkEh8/udVJlZ/2FMfQ=;
-        h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
-        b=TNIYJcpc9E5yZe+W8EW8pzrIUrTZdlNLcsF70EIrX66vuqM3DG3dqjSBKrSBDGaxI
-         V7pPWBS738oN4A1MkWBpvgFAkES64o2s6b8Rp7egXwEAeaScGzIwOdypEh6dbGj4f0
-         2aZO3wLGktmvbG7M8X6+Ts+zQJP8QlZS4GeAM9v4=
-Received: by mail-qt1-f175.google.com with SMTP id i4so510981qtj.8;
-        Wed, 14 Aug 2019 16:17:33 -0700 (PDT)
-X-Gm-Message-State: APjAAAXOhMvR1BaKiANCXD+EcE8Eowy/anxAUop+0GXmEqJO2e3xj3JR
-        O+GGn9t4wp/8hVMLOHdHds79u4i4TxjpXih76w==
-X-Google-Smtp-Source: APXvYqyqANOhCBTSqCHZQm3woQMeO+/sPNecgEttTGuUZUASkIbB6R5eX3jJtqE3kNGHnL1T4gxQb4JLTzhQA8pU+ck=
-X-Received: by 2002:ac8:44c4:: with SMTP id b4mr1565641qto.224.1565824652855;
- Wed, 14 Aug 2019 16:17:32 -0700 (PDT)
+        (Authenticated sender: masneyb)
+        by onstation.org (Postfix) with ESMTPSA id 351503E95F;
+        Thu, 15 Aug 2019 00:49:08 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=onstation.org;
+        s=default; t=1565830151;
+        bh=PCy1j7MQudvJstVSVlYc4cRcJStkAE4OqJRndsZJOI0=;
+        h=From:To:Cc:Subject:Date:From;
+        b=q+P4dvnY8kCbSHP6/cQeJNcM49HQS1+tGPc+xTcR+NwY72Dg4KvVyK6FG5xTEo6OD
+         Y0IU/xMhrkp5ILcJF73dQBeXzhK6vqkhotTJU3BhwoVHVXfT7SDH+vnJ/YUcDoyfct
+         XVblgW3CGsQv/S/J6MMGbtBm1olh/8loyiE9N9b0=
+From:   Brian Masney <masneyb@onstation.org>
+To:     bjorn.andersson@linaro.org, robh+dt@kernel.org, agross@kernel.org,
+        a.hajda@samsung.com, narmstrong@baylibre.com, robdclark@gmail.com,
+        sean@poorly.run
+Cc:     airlied@linux.ie, daniel@ffwll.ch, mark.rutland@arm.com,
+        Laurent.pinchart@ideasonboard.com, jonas@kwiboo.se,
+        jernej.skrabec@siol.net, linus.walleij@linaro.org,
+        enric.balletbo@collabora.com, dri-devel@lists.freedesktop.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org,
+        freedreno@lists.freedesktop.org
+Subject: [PATCH 00/11] ARM: dts: qcom: msm8974: add support for external display
+Date:   Wed, 14 Aug 2019 20:48:43 -0400
+Message-Id: <20190815004854.19860-1-masneyb@onstation.org>
+X-Mailer: git-send-email 2.21.0
 MIME-Version: 1.0
-References: <20190813130946.16448-1-govinds@codeaurora.org>
- <20190813130946.16448-2-govinds@codeaurora.org> <CAL_JsqK-GK8arfRu6sqP9UjNrwc0=aUWXymMRF5fQhg+M2TNng@mail.gmail.com>
- <20190814064126.GV26807@tuxbook-pro>
-In-Reply-To: <20190814064126.GV26807@tuxbook-pro>
-From:   Rob Herring <robh@kernel.org>
-Date:   Wed, 14 Aug 2019 17:17:21 -0600
-X-Gmail-Original-Message-ID: <CAL_JsqKaZJ1asHynSJg45nJf8Jtj7MmC_OsVtPjNzf8nat1jrg@mail.gmail.com>
-Message-ID: <CAL_JsqKaZJ1asHynSJg45nJf8Jtj7MmC_OsVtPjNzf8nat1jrg@mail.gmail.com>
-Subject: Re: [v2 1/2] dt-bindings: clock: qcom: Add QCOM Q6SSTOP clock
- controller bindings
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     Govind Singh <govinds@codeaurora.org>,
-        Stephen Boyd <sboyd@kernel.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        linux-clk <linux-clk@vger.kernel.org>,
-        devicetree@vger.kernel.org,
-        "open list:ARM/QUALCOMM SUPPORT" <linux-soc@vger.kernel.org>,
-        Andy Gross <andy.gross@linaro.org>,
-        "open list:REMOTE PROCESSOR (REMOTEPROC) SUBSYSTEM" 
-        <linux-remoteproc@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Aug 14, 2019 at 12:39 AM Bjorn Andersson
-<bjorn.andersson@linaro.org> wrote:
->
-> On Tue 13 Aug 06:43 PDT 2019, Rob Herring wrote:
->
-> > On Tue, Aug 13, 2019 at 7:10 AM Govind Singh <govinds@codeaurora.org> wrote:
-> > >
-> > > Add devicetree binding for the Q6SSTOP clock controller found in QCS404.
-> >
-> > You need to test this with 'make dt_binding_check' and fix the errors.
-> >
-> > >
-> > > Signed-off-by: Govind Singh <govinds@codeaurora.org>
-> > > ---
-> > >  .../bindings/clock/qcom,q6sstopcc.yaml        | 45 +++++++++++++++++++
-> > >  1 file changed, 45 insertions(+)
-> > >  create mode 100644 Documentation/devicetree/bindings/clock/qcom,q6sstopcc.yaml
-> > >
-> > > diff --git a/Documentation/devicetree/bindings/clock/qcom,q6sstopcc.yaml b/Documentation/devicetree/bindings/clock/qcom,q6sstopcc.yaml
-> > > new file mode 100644
-> > > index 000000000000..861e9ba97ca3
-> > > --- /dev/null
-> > > +++ b/Documentation/devicetree/bindings/clock/qcom,q6sstopcc.yaml
-> > > @@ -0,0 +1,45 @@
-> > > +# SPDX-License-Identifier: BSD-2-Clause
-> >
-> > GPL-2.0-only OR BSD-2-Clause
-> >
->
-> Is this a requirement of the devicetree project?
+This patch series begins to add support for the external display over
+HDMI that is supported on msm8974 SoCs. I'm testing this series on the
+Nexus 5, and I'm able to communicate with the HDMI bridge via the
+analogix-anx78xx driver, however the external display is not working
+yet.
 
-More like my preference.
+When I plug in the HDMI cable, the monitor detects that a device is
+hooked up, but nothing is shown on the external monitor. The hot plug
+detect GPIO (hpd-gpios) on the analogix-anx78xx bridge and MSM HDMI
+drivers do not change state when the slimport adapter or HDMI cable is
+plugged in or removed. I wonder if a regulator is not enabled somewhere?
+I have a comment in patch 10 regarding 'hpd-gdsc-supply' that may
+potentially be an issue.
 
-> Wouldn't the BSD
-> license alone be sufficient for the type of interoperability that we're
-> striving for?
+I'm still digging in on this, however I'd appreciate any feedback if
+anyone has time. Most of these patches are ready now, so I marked the
+ones that aren't ready with 'PATCH RFC'.
 
-Yes. However, folks like to copy and paste and forget to pay attention
-to the license. So we'll end up with GPL licensed code copied into BSD
-licensed code. Dual license doesn't completely solve that, but helps
-somewhat IMO.
+I'm using an Analogix Semiconductor SP6001 SlimPort Micro-USB to 4K HDMI
+Adapter to connect my phone to an external display via a standard HDMI
+cable. This works just fine with the downstream MSM kernel using
+Android.
 
-Rob
+Brian Masney (11):
+  dt-bindings: drm/bridge: analogix-anx78xx: add new variants
+  drm/bridge: analogix-anx78xx: add new variants
+  drm/bridge: analogix-anx78xx: silence -EPROBE_DEFER warnings
+  drm/bridge: analogix-anx78xx: convert to i2c_new_dummy_device
+  drm/bridge: analogix-anx78xx: correct value of TX_P0
+  drm/bridge: analogix-anx78xx: add support for avdd33 regulator
+  ARM: qcom_defconfig: add CONFIG_DRM_ANALOGIX_ANX78XX
+  drm/msm/hdmi: silence -EPROBE_DEFER warning
+  ARM: dts: qcom: pm8941: add 5vs2 regulator node
+  ARM: dts: qcom: msm8974: add HDMI nodes
+  ARM: dts: qcom: msm8974-hammerhead: add support for external display
+
+ .../bindings/display/bridge/anx7814.txt       |   6 +-
+ .../qcom-msm8974-lge-nexus5-hammerhead.dts    | 140 ++++++++++++++++++
+ arch/arm/boot/dts/qcom-msm8974.dtsi           |  80 ++++++++++
+ arch/arm/boot/dts/qcom-pm8941.dtsi            |  10 ++
+ arch/arm/configs/qcom_defconfig               |   1 +
+ drivers/gpu/drm/bridge/analogix-anx78xx.c     |  60 +++++++-
+ drivers/gpu/drm/bridge/analogix-anx78xx.h     |   2 +-
+ drivers/gpu/drm/msm/hdmi/hdmi_phy.c           |   8 +-
+ 8 files changed, 295 insertions(+), 12 deletions(-)
+
+-- 
+2.21.0
+
