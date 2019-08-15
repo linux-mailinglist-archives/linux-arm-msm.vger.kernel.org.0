@@ -2,106 +2,135 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 051AE8EBCF
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 Aug 2019 14:45:43 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9115D8EF60
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 Aug 2019 17:33:10 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730363AbfHOMpm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 15 Aug 2019 08:45:42 -0400
-Received: from mail-lj1-f196.google.com ([209.85.208.196]:38171 "EHLO
-        mail-lj1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730352AbfHOMpm (ORCPT
+        id S1730068AbfHOPdJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 15 Aug 2019 11:33:09 -0400
+Received: from smtp.codeaurora.org ([198.145.29.96]:35206 "EHLO
+        smtp.codeaurora.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1730049AbfHOPdJ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 15 Aug 2019 08:45:42 -0400
-Received: by mail-lj1-f196.google.com with SMTP id r9so2112858ljg.5
-        for <linux-arm-msm@vger.kernel.org>; Thu, 15 Aug 2019 05:45:41 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=tNtdmyVFFNYp8n31Oa87YwnukMTlsB7iDWsfjRK39R4=;
-        b=GA/F9BJw557px7gsgUF8TwW11POwwgTNmCreAMzDZU2CwJ8006JTnbL5lu57UNPySR
-         mNoB1AVz6pclJ8QzeSV7E5TQaMKF+346znOHXoDe7SG+ws42m/tpXOLLQFzPsXUWeibz
-         VQOcxlXRn377YpCHAGe2jtNwTQyladcq+yD6fWznIORIyr6xgTQ/f2LMQrmPTSnPt0kb
-         oEfI3L+5P2w2F590YYCXv12ms/34q5w04ytyLaxKRmn6oFbNgTdWAkEDMOHU6AbIGSFt
-         kdtM9KnJy+YTKthl8Rb6GZui7aWApWeb3FoPqu9YhmVknmGvRe/RD2EZDy0+tVz1FOC2
-         TN1Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=tNtdmyVFFNYp8n31Oa87YwnukMTlsB7iDWsfjRK39R4=;
-        b=sOs2ifREbZl/dlzJ29vJry+lX93JTBNsyv5AZpRRQKc+xs7joMWZy3zpYeIvLmmqsx
-         oSoWQD6u0XOKtUHb9TZaZbAFKc2aBxzK6C46MvXIt/LI0q9AcOEEZnXxN4JKvnKYLII7
-         Bk5wKUVfygplUXR+nF+nWjd/fQnft4Zyk9Uyetd1FV1neq1XKIoN/4laOEczm2kcX1b/
-         YXrLgZmDMNmXEmm7JPeQLlUUMzUzBbz1OpwBKveD80hnvd68eqO79etC5ERWYX8D6ibV
-         gO2BYYFUm2NAMscpcYcIH314xR668hhnnN9Ywvc6LBeG1ssCrsMYzjQJ2pMnDlzhrW8j
-         R/kA==
-X-Gm-Message-State: APjAAAWaP/hvn2SQkdcoPkZDTCUI+micD3M4KaTqtNuFh2P2hR6lhiDp
-        5vG4GIwWEIAEzFVyplPjGQyklbP+84E=
-X-Google-Smtp-Source: APXvYqyLhBVu8CnCpPf/Q2HyMXj3iNqMlFfEten8mXcAPtyNQ1Mj0Lx1aZ0bjrM/tChpk/s9sMfdpg==
-X-Received: by 2002:a2e:7818:: with SMTP id t24mr1084914ljc.210.1565873140325;
-        Thu, 15 Aug 2019 05:45:40 -0700 (PDT)
-Received: from centauri (ua-84-219-138-247.bbcust.telenor.se. [84.219.138.247])
-        by smtp.gmail.com with ESMTPSA id f6sm468298lja.16.2019.08.15.05.45.39
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 15 Aug 2019 05:45:39 -0700 (PDT)
-Date:   Thu, 15 Aug 2019 14:45:37 +0200
-From:   Niklas Cassel <niklas.cassel@linaro.org>
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     Andy Gross <agross@kernel.org>, Rob Herring <robh+dt@kernel.org>,
-        Mark Rutland <mark.rutland@arm.com>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] arm64: dts: qcom: qcs404-evb: Mark WCSS clocks protected
-Message-ID: <20190815124537.GA14491@centauri>
-References: <20190814030942.2638-1-bjorn.andersson@linaro.org>
+        Thu, 15 Aug 2019 11:33:09 -0400
+Received: by smtp.codeaurora.org (Postfix, from userid 1000)
+        id 1198660736; Thu, 15 Aug 2019 15:33:08 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
+        s=default; t=1565883188;
+        bh=uo5H+y/d8CeAGVlGgEqg/owuTjfwykTO28LcSJ+xr/4=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=i7Yfe8lkksQXtPilSJpmG+DZTo3/5PsbbvskTeYAjHXEL4LcUMrAsZABl47mqB+cZ
+         Uk/Wo6tJWK6WoPNxaHtykreYkd7TpL/7J5jsxvqAx1fHj+PAt0cIXmR5bkkR0Fls4j
+         /ApoqDqtGDwO07uhw/kj/j9okcX2Dpkx68NQ6HIU=
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        pdx-caf-mail.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.7 required=2.0 tests=ALL_TRUSTED,BAYES_00,
+        DKIM_INVALID,DKIM_SIGNED,SPF_NONE autolearn=no autolearn_force=no
+        version=3.4.0
+Received: from jcrouse1-lnx.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: jcrouse@smtp.codeaurora.org)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 09845602DB;
+        Thu, 15 Aug 2019 15:33:05 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
+        s=default; t=1565883186;
+        bh=uo5H+y/d8CeAGVlGgEqg/owuTjfwykTO28LcSJ+xr/4=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=RzWtWebSM6sga9d+OFbdNomQXt2erULsaPlh8pnTHBZtZyGoEFu/YQWnwWPs72tQk
+         qOKjG9KEdXR6TLhBuDZEmtumeRgnsWuqmbxssYDp3D8XHF0kWV1JwF/qKTDVRqvmsX
+         pE5VXpZ0oG+3PfHMM6LMzK8I5mAQKLk7o64a0K2M=
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 09845602DB
+Authentication-Results: pdx-caf-mail.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: pdx-caf-mail.web.codeaurora.org; spf=none smtp.mailfrom=jcrouse@codeaurora.org
+Date:   Thu, 15 Aug 2019 09:33:04 -0600
+From:   Jordan Crouse <jcrouse@codeaurora.org>
+To:     freedreno@lists.freedesktop.org
+Cc:     Rob Herring <robh@kernel.org>, Will Deacon <will@kernel.org>,
+        jean-philippe.brucker@arm.com, linux-arm-msm@vger.kernel.org,
+        Joerg Roedel <joro@8bytes.org>, linux-kernel@vger.kernel.org,
+        iommu@lists.linux-foundation.org,
+        Zhen Lei <thunder.leizhen@huawei.com>, robin.murphy@arm.com,
+        linux-arm-kernel@lists.infradead.org
+Subject: Re: [Freedreno] [PATCH v3 0/2] iommu/arm-smmu: Split pagetable
+ support
+Message-ID: <20190815153304.GD28465@jcrouse1-lnx.qualcomm.com>
+Mail-Followup-To: freedreno@lists.freedesktop.org,
+        Rob Herring <robh@kernel.org>, Will Deacon <will@kernel.org>,
+        jean-philippe.brucker@arm.com, linux-arm-msm@vger.kernel.org,
+        Joerg Roedel <joro@8bytes.org>, linux-kernel@vger.kernel.org,
+        iommu@lists.linux-foundation.org,
+        Zhen Lei <thunder.leizhen@huawei.com>, robin.murphy@arm.com,
+        linux-arm-kernel@lists.infradead.org
+References: <1565216500-28506-1-git-send-email-jcrouse@codeaurora.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20190814030942.2638-1-bjorn.andersson@linaro.org>
-User-Agent: Mutt/1.12.1 (2019-06-15)
+In-Reply-To: <1565216500-28506-1-git-send-email-jcrouse@codeaurora.org>
+User-Agent: Mutt/1.5.24 (2015-08-30)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Aug 13, 2019 at 08:09:42PM -0700, Bjorn Andersson wrote:
-> '7d0c76bdf227 ("clk: qcom: Add WCSS gcc clock control for QCS404")'
-> introduces two new clocks to gcc. These are not used before
-> clk_disable_unused() and as such the clock framework tries to disable
-> them.
+On Wed, Aug 07, 2019 at 04:21:38PM -0600, Jordan Crouse wrote:
+> (Sigh, resend. I freaked out my SMTP server)
 > 
-> But on the EVB these registers are only accessible through TrustZone, so
-> these clocks must be marked as "protected" to prevent the clock code
-> from touching them.
+> This is part of an ongoing evolution for enabling split pagetable support for
+> arm-smmu. Previous versions can be found [1].
 > 
-> Numerical values are used as the constants are not yet available in a
-> common tree.
+> In the discussion for v2 Robin pointed out that this is a very Adreno specific
+> use case and that is exactly true. Not only do we want to configure and use a
+> pagetable in the TTBR1 space, we also want to configure the TTBR0 region but
+> not allocate a pagetable for it or touch it until the GPU hardware does so. As
+> much as I want it to be a generic concept it really isn't.
 > 
-> Reported-by: Mark Brown <broonie@kernel.org>
-> Reported-by: Niklas Cassel <niklas.cassel@linaro.org>
-> Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
-> ---
->  arch/arm64/boot/dts/qcom/qcs404-evb.dtsi | 4 +++-
->  1 file changed, 3 insertions(+), 1 deletion(-)
+> This revision leans into that idea. Most of the same io-pgtable code is there
+> but now it is wrapped as an Adreno GPU specific format that is selected by the
+> compatible string in the arm-smmu device.
 > 
-> diff --git a/arch/arm64/boot/dts/qcom/qcs404-evb.dtsi b/arch/arm64/boot/dts/qcom/qcs404-evb.dtsi
-> index 2289b01ee9f0..501a7330dbc8 100644
-> --- a/arch/arm64/boot/dts/qcom/qcs404-evb.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/qcs404-evb.dtsi
-> @@ -61,7 +61,9 @@
->  	protected-clocks = <GCC_BIMC_CDSP_CLK>,
->  			   <GCC_CDSP_CFG_AHB_CLK>,
->  			   <GCC_CDSP_BIMC_CLK_SRC>,
-> -			   <GCC_CDSP_TBU_CLK>;
-> +			   <GCC_CDSP_TBU_CLK>,
-> +			   <141>, /* GCC_WCSS_Q6_AHB_CLK */
-> +			   <142>; /* GCC_WCSS_Q6_AXIM_CLK */
->  };
->  
->  &pms405_spmi_regulators {
-> -- 
-> 2.18.0
+> Additionally, per Robin's suggestion we are skipping creating a TTBR0 pagetable
+> to save on wasted memory.
 > 
+> This isn't as clean as I would like it to be but I think that this is a better
+> direction than trying to pretend that the generic format would work.
+> 
+> I'm tempting fate by posting this and then taking some time off, but I wanted
+> to try to kick off a conversation or at least get some flames so I can try to
+> refine this again next week. Please take a look and give some advice on the
+> direction.
 
-Reviewed-by: Niklas Cassel <niklas.cassel@linaro.org>
+Will, Robin -
+
+Modulo the impl changes from Robin, do you think that using a dedicated
+pagetable format is the right approach for supporting split pagetables for the
+Adreno GPU?
+
+If so, then is adding the changes to io-pgtable-arm.c possible for 5.4 and then
+add the implementation specific code on top of Robin's stack later or do you
+feel they should come as part of a package deal?
+
+Jordan
+
+> Jordan Crouse (2):
+>   iommu/io-pgtable-arm: Add support for ARM_ADRENO_GPU_LPAE io-pgtable
+>     format
+>   iommu/arm-smmu: Add support for Adreno GPU pagetable formats
+> 
+>  drivers/iommu/arm-smmu.c       |   8 +-
+>  drivers/iommu/io-pgtable-arm.c | 214 ++++++++++++++++++++++++++++++++++++++---
+>  drivers/iommu/io-pgtable.c     |   1 +
+>  include/linux/io-pgtable.h     |   2 +
+>  4 files changed, 209 insertions(+), 16 deletions(-)
+> 
+> -- 
+> 2.7.4
+> 
+> _______________________________________________
+> Freedreno mailing list
+> Freedreno@lists.freedesktop.org
+> https://lists.freedesktop.org/mailman/listinfo/freedreno
+
+-- 
+The Qualcomm Innovation Center, Inc. is a member of Code Aurora Forum,
+a Linux Foundation Collaborative Project
