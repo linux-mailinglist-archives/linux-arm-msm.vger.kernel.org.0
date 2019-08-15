@@ -2,103 +2,106 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 402BA8E9E5
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 Aug 2019 13:13:58 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 051AE8EBCF
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 Aug 2019 14:45:43 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730571AbfHOLN5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 15 Aug 2019 07:13:57 -0400
-Received: from mail-ot1-f68.google.com ([209.85.210.68]:37956 "EHLO
-        mail-ot1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730389AbfHOLN5 (ORCPT
+        id S1730363AbfHOMpm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 15 Aug 2019 08:45:42 -0400
+Received: from mail-lj1-f196.google.com ([209.85.208.196]:38171 "EHLO
+        mail-lj1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1730352AbfHOMpm (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 15 Aug 2019 07:13:57 -0400
-Received: by mail-ot1-f68.google.com with SMTP id r20so5046529ota.5
-        for <linux-arm-msm@vger.kernel.org>; Thu, 15 Aug 2019 04:13:56 -0700 (PDT)
+        Thu, 15 Aug 2019 08:45:42 -0400
+Received: by mail-lj1-f196.google.com with SMTP id r9so2112858ljg.5
+        for <linux-arm-msm@vger.kernel.org>; Thu, 15 Aug 2019 05:45:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=tcd-ie.20150623.gappssmtp.com; s=20150623;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=IuWtIDr90zkI+XfebKnko5l+I/4xHf39ovWKoeqGaCw=;
-        b=nNQ/UtAXFhxaaxM9xQ9O8IFhMDMFvXunujEOMrSPWYCvTGD+YxkdrSxxRuus/GVUBp
-         GQoOAQizlE7KESwvt/hZDxMbEejumbr3zlWb4gT62uRTJXHWvWtJR7eaSmt+P/Feob0G
-         3FUQTPCC4U1ru+VC9jVwEnwjC7mL9mTGXdSrv0YV/tjgkZ9zqojYrqsx+I/zHyMAQt8f
-         8tY1ausOgFce7Ab8S1UDh3376evaQbzs8AquCZCJWaLZvUFdMNaMr4YLxIusv5ITVmeU
-         i1/FqeHC8FIMWswYm99EVT/8f/U+y5anena34TtOtJsjHhUYQi17LOqEs6UTPxD4ON1T
-         NLOQ==
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=tNtdmyVFFNYp8n31Oa87YwnukMTlsB7iDWsfjRK39R4=;
+        b=GA/F9BJw557px7gsgUF8TwW11POwwgTNmCreAMzDZU2CwJ8006JTnbL5lu57UNPySR
+         mNoB1AVz6pclJ8QzeSV7E5TQaMKF+346znOHXoDe7SG+ws42m/tpXOLLQFzPsXUWeibz
+         VQOcxlXRn377YpCHAGe2jtNwTQyladcq+yD6fWznIORIyr6xgTQ/f2LMQrmPTSnPt0kb
+         oEfI3L+5P2w2F590YYCXv12ms/34q5w04ytyLaxKRmn6oFbNgTdWAkEDMOHU6AbIGSFt
+         kdtM9KnJy+YTKthl8Rb6GZui7aWApWeb3FoPqu9YhmVknmGvRe/RD2EZDy0+tVz1FOC2
+         TN1Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=IuWtIDr90zkI+XfebKnko5l+I/4xHf39ovWKoeqGaCw=;
-        b=FB5wUznqOukIyU8gsL/U6J7lTI+XfXJWWfc0SiD/YM3JGZzzvSj9HY4TyL/U5236MX
-         LRYehpwakHV5wu7KsnMfiHp9wAYuSGpGPWdV7XGRpB68cfdo9FoEt73BZcZtuHYDCBrX
-         yzMNjnaTkPLcZpGO6RcoNo9IB/aKtAoVX/K2aiLTntXzZjSBq1eUXKJQgK2VT6xdWYWb
-         0PPHm2fM9LAKdl4wLnGiZ9h9HJFPnQDy/E1sldq1sylhg//H2s10qNhS9IDEZ9PCPKQy
-         3eohDiIlReloeOh1t/pQx60ngETtJ3LITdR31ySdxrkdTFeJ1TJI+7brafjFMCxGwb9F
-         1ObQ==
-X-Gm-Message-State: APjAAAXz9JaZ/FJQQ4v4tkaocVD1BO4TQdtJH4IVsWdUyE7HVpahd6gP
-        kwmdirsj/L+ZEKPLT/A+UqPIOAelreRxONHKqohgQg==
-X-Google-Smtp-Source: APXvYqyLPDKvvPTRbvGbWfWW/U8q2MBMOdJm/HCo2dFUBkYNWHxXuaIDP3Rx+nIt9imUtzeQRmZpWsoqqA6dgyl5YCA=
-X-Received: by 2002:a5e:9314:: with SMTP id k20mr5014873iom.235.1565867636592;
- Thu, 15 Aug 2019 04:13:56 -0700 (PDT)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=tNtdmyVFFNYp8n31Oa87YwnukMTlsB7iDWsfjRK39R4=;
+        b=sOs2ifREbZl/dlzJ29vJry+lX93JTBNsyv5AZpRRQKc+xs7joMWZy3zpYeIvLmmqsx
+         oSoWQD6u0XOKtUHb9TZaZbAFKc2aBxzK6C46MvXIt/LI0q9AcOEEZnXxN4JKvnKYLII7
+         Bk5wKUVfygplUXR+nF+nWjd/fQnft4Zyk9Uyetd1FV1neq1XKIoN/4laOEczm2kcX1b/
+         YXrLgZmDMNmXEmm7JPeQLlUUMzUzBbz1OpwBKveD80hnvd68eqO79etC5ERWYX8D6ibV
+         gO2BYYFUm2NAMscpcYcIH314xR668hhnnN9Ywvc6LBeG1ssCrsMYzjQJ2pMnDlzhrW8j
+         R/kA==
+X-Gm-Message-State: APjAAAWaP/hvn2SQkdcoPkZDTCUI+micD3M4KaTqtNuFh2P2hR6lhiDp
+        5vG4GIwWEIAEzFVyplPjGQyklbP+84E=
+X-Google-Smtp-Source: APXvYqyLhBVu8CnCpPf/Q2HyMXj3iNqMlFfEten8mXcAPtyNQ1Mj0Lx1aZ0bjrM/tChpk/s9sMfdpg==
+X-Received: by 2002:a2e:7818:: with SMTP id t24mr1084914ljc.210.1565873140325;
+        Thu, 15 Aug 2019 05:45:40 -0700 (PDT)
+Received: from centauri (ua-84-219-138-247.bbcust.telenor.se. [84.219.138.247])
+        by smtp.gmail.com with ESMTPSA id f6sm468298lja.16.2019.08.15.05.45.39
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 15 Aug 2019 05:45:39 -0700 (PDT)
+Date:   Thu, 15 Aug 2019 14:45:37 +0200
+From:   Niklas Cassel <niklas.cassel@linaro.org>
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     Andy Gross <agross@kernel.org>, Rob Herring <robh+dt@kernel.org>,
+        Mark Rutland <mark.rutland@arm.com>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: Re: [PATCH] arm64: dts: qcom: qcs404-evb: Mark WCSS clocks protected
+Message-ID: <20190815124537.GA14491@centauri>
+References: <20190814030942.2638-1-bjorn.andersson@linaro.org>
 MIME-Version: 1.0
-References: <20190613223901.9523-1-murphyt7@tcd.ie> <20190624061945.GA4912@infradead.org>
- <20190810071952.GA25550@infradead.org> <CALQxJuvxBc3MH3_B_fZ3FvURHOM3F3dvvZ6x=GtALUAvyu7Qxw@mail.gmail.com>
- <20190813130711.GA30468@infradead.org>
-In-Reply-To: <20190813130711.GA30468@infradead.org>
-From:   Tom Murphy <murphyt7@tcd.ie>
-Date:   Thu, 15 Aug 2019 12:13:45 +0100
-Message-ID: <CALQxJusdvvnL-7WuCy9qobB6heG2oj7XS4Bs3Z1dMyLXSeZOzg@mail.gmail.com>
-Subject: Re: [PATCH v4 0/5] iommu/amd: Convert the AMD iommu driver to the
- dma-iommu api
-To:     Christoph Hellwig <hch@infradead.org>
-Cc:     Joerg Roedel <joro@8bytes.org>, Heiko Stuebner <heiko@sntech.de>,
-        Will Deacon <will.deacon@arm.com>,
-        virtualization@lists.linux-foundation.org,
-        David Brown <david.brown@linaro.org>,
-        Thierry Reding <thierry.reding@gmail.com>,
-        linux-s390@vger.kernel.org, linux-samsung-soc@vger.kernel.org,
-        Jean-Philippe Brucker <jean-philippe.brucker@arm.com>,
-        Krzysztof Kozlowski <krzk@kernel.org>,
-        Jonathan Hunter <jonathanh@nvidia.com>,
-        linux-rockchip@lists.infradead.org, Kukjin Kim <kgene@kernel.org>,
-        Matthias Brugger <matthias.bgg@gmail.com>,
-        Andy Gross <agross@kernel.org>,
-        Gerald Schaefer <gerald.schaefer@de.ibm.com>,
-        linux-arm-msm@vger.kernel.org, linux-mediatek@lists.infradead.org,
-        linux-tegra@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
-        David Woodhouse <dwmw2@infradead.org>,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-        iommu@lists.linux-foundation.org,
-        Robin Murphy <robin.murphy@arm.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20190814030942.2638-1-bjorn.andersson@linaro.org>
+User-Agent: Mutt/1.12.1 (2019-06-15)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Done, I just sent it there. I don't have any AMD hardware to test on
-while I'm traveling. However the rebase was very straightforward and
-the code was tested a month ago on the old linux-next.
+On Tue, Aug 13, 2019 at 08:09:42PM -0700, Bjorn Andersson wrote:
+> '7d0c76bdf227 ("clk: qcom: Add WCSS gcc clock control for QCS404")'
+> introduces two new clocks to gcc. These are not used before
+> clk_disable_unused() and as such the clock framework tries to disable
+> them.
+> 
+> But on the EVB these registers are only accessible through TrustZone, so
+> these clocks must be marked as "protected" to prevent the clock code
+> from touching them.
+> 
+> Numerical values are used as the constants are not yet available in a
+> common tree.
+> 
+> Reported-by: Mark Brown <broonie@kernel.org>
+> Reported-by: Niklas Cassel <niklas.cassel@linaro.org>
+> Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+> ---
+>  arch/arm64/boot/dts/qcom/qcs404-evb.dtsi | 4 +++-
+>  1 file changed, 3 insertions(+), 1 deletion(-)
+> 
+> diff --git a/arch/arm64/boot/dts/qcom/qcs404-evb.dtsi b/arch/arm64/boot/dts/qcom/qcs404-evb.dtsi
+> index 2289b01ee9f0..501a7330dbc8 100644
+> --- a/arch/arm64/boot/dts/qcom/qcs404-evb.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/qcs404-evb.dtsi
+> @@ -61,7 +61,9 @@
+>  	protected-clocks = <GCC_BIMC_CDSP_CLK>,
+>  			   <GCC_CDSP_CFG_AHB_CLK>,
+>  			   <GCC_CDSP_BIMC_CLK_SRC>,
+> -			   <GCC_CDSP_TBU_CLK>;
+> +			   <GCC_CDSP_TBU_CLK>,
+> +			   <141>, /* GCC_WCSS_Q6_AHB_CLK */
+> +			   <142>; /* GCC_WCSS_Q6_AXIM_CLK */
+>  };
+>  
+>  &pms405_spmi_regulators {
+> -- 
+> 2.18.0
+> 
 
-I only have the AMD conversion done. I will work on rebasing the intel
-one when I get a chance.
-
-On Tue, 13 Aug 2019 at 14:07, Christoph Hellwig <hch@infradead.org> wrote:
->
-> On Tue, Aug 13, 2019 at 08:09:26PM +0800, Tom Murphy wrote:
-> > Hi Christoph,
-> >
-> > I quit my job and am having a great time traveling South East Asia.
->
-> Enjoy!  I just returned from my vacation.
->
-> > I definitely don't want this work to go to waste and I hope to repost it
-> > later this week but I can't guarantee it.
-> >
-> > Let me know if you need this urgently.
->
-> It isn't in any strict sense urgent.  I just have various DMA API plans
-> that I'd rather just implement in dma-direct and dma-iommu rather than
-> also in two additional commonly used iommu drivers.  So on the one had
-> the sooner the better, on the other hand no real urgency.
+Reviewed-by: Niklas Cassel <niklas.cassel@linaro.org>
