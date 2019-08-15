@@ -2,49 +2,49 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id C6A128E9A6
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 Aug 2019 13:10:15 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 1F5B18E9B5
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 Aug 2019 13:10:48 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730930AbfHOLKO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 15 Aug 2019 07:10:14 -0400
-Received: from mail-pg1-f193.google.com ([209.85.215.193]:34304 "EHLO
-        mail-pg1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730856AbfHOLKO (ORCPT
+        id S1731051AbfHOLK0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 15 Aug 2019 07:10:26 -0400
+Received: from mail-pl1-f193.google.com ([209.85.214.193]:42172 "EHLO
+        mail-pl1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1731043AbfHOLKZ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 15 Aug 2019 07:10:14 -0400
-Received: by mail-pg1-f193.google.com with SMTP id n9so1182964pgc.1
-        for <linux-arm-msm@vger.kernel.org>; Thu, 15 Aug 2019 04:10:13 -0700 (PDT)
+        Thu, 15 Aug 2019 07:10:25 -0400
+Received: by mail-pl1-f193.google.com with SMTP id y1so961458plp.9
+        for <linux-arm-msm@vger.kernel.org>; Thu, 15 Aug 2019 04:10:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=tcd-ie.20150623.gappssmtp.com; s=20150623;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=pnCulqyNhSM91IKVD9IZn1zR67Z7c5BvAhoQmog/5ec=;
-        b=Q/yj0wdq+WilKs254iWd4ctGJJZQhMbIdIQejnyJ2yIZ2I3/VGazT/h5zdi6LD7eY8
-         FwgETf3lOfMHLLcqgq8CX6eWsXdSOnzVllHOw4eeaE0NXqiFmk8nmB4m4ILkf0DWUhGl
-         JMQh6MEqYX1Y/aId7O5b7KB1SCsX5COS7TIXwL/OLfWSbuLKcOFMiSy2pNH9NkkEkNBr
-         vOPWQr2P1jdI57kcED+j4RTWUTiYLR6O+vQhsK1J9F6eA8G9tukV7lXi54eGF07uXuiI
-         Xknh1VVTk7+o3JYaC+ItCXjA2eeC6ftIDB3zEkigJNAaCQqM79VsPpgrbJeTAytQ3YC4
-         1SFw==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=H8YsE1R3VKt11b2vPfO5I4rTXhEDtbvh4/hWRhbqtaM=;
+        b=AnsHS7DAOfX5goOT/7evKdCXr6zqdTp/mu4gAJneCWRt/pzazl5g48d/5ntrFMrNNH
+         B1/atoeIrOUdUUAbllqXfzF9mKNyr51bhxPeWSW+r32uhrGINmH4vzPLsNXL0Q780o9K
+         XBx8jtsyOtkAMHMB3YX2GiZDGWHmdw+iAzpeDKmLOkiAWjx1MSkRphfwLIcwTqmRI9Pi
+         5fo7jyW4eBFEcNY07LXxnDW9rcMST7iKX22YEIIJ6EZ+zeEAgLfeCQwzMFG6ItH1xQ+I
+         tVOY9pELjohMsN1MUUpj2sZ64VBC8ecPsaXdQtDg8KVNKfJSpeV7SahJHjCJF4TD7uKO
+         WldA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=pnCulqyNhSM91IKVD9IZn1zR67Z7c5BvAhoQmog/5ec=;
-        b=VdrCmAzesYexGkd1iL57I7BN7AxCU5QnMB7JlLGPsdWRteH1uNozLwTFp+QqKEaV6q
-         mEbPRlDi//yp6QWBkOa9g+4uLKUwYqpEHB/VbZgX9KOmk1wThXGFQHcNnbdQfX9/Z2vf
-         k+hyGkfnuq3y+NSX3OuhWwcBcrPiuOZhRlPsk5pihmKY4SbXJaQybcO9hAAt87Agtmo0
-         ROqzGMYd6TUKXlVoUmUsEHDBTIbd2dpDEI6DVCnNE6e5/pR2vShlqRZPMSU8odf+8OpQ
-         6Z+hpqQtwC+Wbz9/ZavcozwBrIcaJYp+Kex/Uu3avCPdkti4FjBkBmh6q0MtY/gH4Fnr
-         dMEQ==
-X-Gm-Message-State: APjAAAXh2IJyo83jI7PjZvpElB0HV1qUh5JRaRu2IMHDernJKU4PUqGo
-        ZvUUT5x8EGoWlrapyaUP7aWk1A==
-X-Google-Smtp-Source: APXvYqxZ8fgFC+B1aOZDDqSuQf6BabOCz/a02ujOJQDOq0sxZQrHZCdzZZ4gWxdnMFReUWQ6Q4YS3Q==
-X-Received: by 2002:a65:6458:: with SMTP id s24mr3060394pgv.158.1565867413007;
-        Thu, 15 Aug 2019 04:10:13 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=H8YsE1R3VKt11b2vPfO5I4rTXhEDtbvh4/hWRhbqtaM=;
+        b=CGG7JV2BY8eyg14LgdfmN3VRJCBbTnb1aq5h7w87lpt5psmBHgs9lGATGhxo/lSTMK
+         Rkh1opQKLUfOCLZ92D1BS68qgJ99Fd5iZm7yCX4TcNgD1fiR8yL82dqR9vEKdrpBREkT
+         5qBBGzKrbWOcC6wYqGsPfYH6/5HZ5SPbMp/rQRuJwfPMoq3KMjquBlG/Ue91ufyKU0Ah
+         tKd3bdSArR4ZNiMALu/R8EjSYY7bF9F09/iv/8yuhyltZNc+qYxTnHGWmlMQMRhUvm/H
+         uGdqfzFF/EkX2vtk4VkcwKzs5Jv2T6mgZJP+d2gztK5O3pEgnDY3BptK3GnC/vyV1rS9
+         cDVA==
+X-Gm-Message-State: APjAAAVrmvoLDiG1qulQiF3DCsdPYNyVVnWFsuBLeWZBkcHx/bS9kNFM
+        7arvHZTjLTwOqmmMCdJ7t5FbPg==
+X-Google-Smtp-Source: APXvYqxQmRTy6JR018gdfwbztNI2AL0CrwPSVdVGydFo6FztH+8DnZHDDGjukvyliCw9mNFUO6BPnA==
+X-Received: by 2002:a17:902:4383:: with SMTP id j3mr3725604pld.69.1565867425139;
+        Thu, 15 Aug 2019 04:10:25 -0700 (PDT)
 Received: from localhost.localdomain ([2404:e801:200e:19c4:6c3f:b548:3a9c:7867])
-        by smtp.googlemail.com with ESMTPSA id z13sm1042678pjn.32.2019.08.15.04.10.06
+        by smtp.googlemail.com with ESMTPSA id z13sm1042678pjn.32.2019.08.15.04.10.18
         (version=TLS1_3 cipher=AEAD-AES256-GCM-SHA384 bits=256/256);
-        Thu, 15 Aug 2019 04:10:12 -0700 (PDT)
+        Thu, 15 Aug 2019 04:10:24 -0700 (PDT)
 From:   Tom Murphy <murphyt7@tcd.ie>
 To:     iommu@lists.linux-foundation.org
 Cc:     Tom Murphy <murphyt7@tcd.ie>, Joerg Roedel <joro@8bytes.org>,
@@ -68,10 +68,12 @@ Cc:     Tom Murphy <murphyt7@tcd.ie>, Joerg Roedel <joro@8bytes.org>,
         linux-rockchip@lists.infradead.org, linux-s390@vger.kernel.org,
         linux-tegra@vger.kernel.org,
         virtualization@lists.linux-foundation.org
-Subject: [PATCH V5 0/5] iommu/amd: Convert the AMD iommu driver to the dma-iommu api
-Date:   Thu, 15 Aug 2019 12:09:38 +0100
-Message-Id: <20190815110944.3579-1-murphyt7@tcd.ie>
+Subject: [PATCH V5 1/5] iommu/amd: Remove unnecessary locking from AMD iommu driver
+Date:   Thu, 15 Aug 2019 12:09:39 +0100
+Message-Id: <20190815110944.3579-2-murphyt7@tcd.ie>
 X-Mailer: git-send-email 2.20.1
+In-Reply-To: <20190815110944.3579-1-murphyt7@tcd.ie>
+References: <20190815110944.3579-1-murphyt7@tcd.ie>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -80,56 +82,69 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Convert the AMD iommu driver to the dma-iommu api. Remove the iova
-handling and reserve region code from the AMD iommu driver.
+We can remove the mutex lock from amd_iommu_map and amd_iommu_unmap.
+iommu_map doesn’t lock while mapping and so no two calls should touch
+the same iova range. The AMD driver already handles the page table page
+allocations without locks so we can safely remove the locks.
 
-Change-log:
-V5:
--Rebase on top of linux-next
-V4:
--Rebase on top of linux-next
--Split the removing of the unnecessary locking in the amd iommu driver into a seperate patch
--refactor the "iommu/dma-iommu: Handle deferred devices" patch and address comments
-v3:
--rename dma_limit to dma_mask
--exit handle_deferred_device early if (!is_kdump_kernel())
--remove pointless calls to handle_deferred_device
-v2:
--Rebase on top of this series:
- http://git.infradead.org/users/hch/misc.git/shortlog/refs/heads/dma-iommu-ops.3
--Add a gfp_t parameter to the iommu_ops::map function.
--Made use of the reserve region code inside the dma-iommu api
+Signed-off-by: Tom Murphy <murphyt7@tcd.ie>
+---
+ drivers/iommu/amd_iommu.c       | 10 +---------
+ drivers/iommu/amd_iommu_types.h |  1 -
+ 2 files changed, 1 insertion(+), 10 deletions(-)
 
-Tom Murphy (5):
-  iommu/amd: Remove unnecessary locking from AMD iommu driver
-  iommu: Add gfp parameter to iommu_ops::map
-  iommu/dma-iommu: Handle deferred devices
-  iommu/dma-iommu: Use the dev->coherent_dma_mask
-  iommu/amd: Convert AMD iommu driver to the dma-iommu api
-
- drivers/iommu/Kconfig           |   1 +
- drivers/iommu/amd_iommu.c       | 690 ++++----------------------------
- drivers/iommu/amd_iommu_types.h |   1 -
- drivers/iommu/arm-smmu-v3.c     |   2 +-
- drivers/iommu/arm-smmu.c        |   2 +-
- drivers/iommu/dma-iommu.c       |  43 +-
- drivers/iommu/exynos-iommu.c    |   2 +-
- drivers/iommu/intel-iommu.c     |   2 +-
- drivers/iommu/iommu.c           |  43 +-
- drivers/iommu/ipmmu-vmsa.c      |   2 +-
- drivers/iommu/msm_iommu.c       |   2 +-
- drivers/iommu/mtk_iommu.c       |   2 +-
- drivers/iommu/mtk_iommu_v1.c    |   2 +-
- drivers/iommu/omap-iommu.c      |   2 +-
- drivers/iommu/qcom_iommu.c      |   2 +-
- drivers/iommu/rockchip-iommu.c  |   2 +-
- drivers/iommu/s390-iommu.c      |   2 +-
- drivers/iommu/tegra-gart.c      |   2 +-
- drivers/iommu/tegra-smmu.c      |   2 +-
- drivers/iommu/virtio-iommu.c    |   2 +-
- include/linux/iommu.h           |  21 +-
- 21 files changed, 178 insertions(+), 651 deletions(-)
-
+diff --git a/drivers/iommu/amd_iommu.c b/drivers/iommu/amd_iommu.c
+index 008da21a2592..1948be7ac8f8 100644
+--- a/drivers/iommu/amd_iommu.c
++++ b/drivers/iommu/amd_iommu.c
+@@ -2858,7 +2858,6 @@ static void protection_domain_free(struct protection_domain *domain)
+ static int protection_domain_init(struct protection_domain *domain)
+ {
+ 	spin_lock_init(&domain->lock);
+-	mutex_init(&domain->api_lock);
+ 	domain->id = domain_id_alloc();
+ 	if (!domain->id)
+ 		return -ENOMEM;
+@@ -3045,9 +3044,7 @@ static int amd_iommu_map(struct iommu_domain *dom, unsigned long iova,
+ 	if (iommu_prot & IOMMU_WRITE)
+ 		prot |= IOMMU_PROT_IW;
+ 
+-	mutex_lock(&domain->api_lock);
+ 	ret = iommu_map_page(domain, iova, paddr, page_size, prot, GFP_KERNEL);
+-	mutex_unlock(&domain->api_lock);
+ 
+ 	domain_flush_np_cache(domain, iova, page_size);
+ 
+@@ -3058,16 +3055,11 @@ static size_t amd_iommu_unmap(struct iommu_domain *dom, unsigned long iova,
+ 			   size_t page_size)
+ {
+ 	struct protection_domain *domain = to_pdomain(dom);
+-	size_t unmap_size;
+ 
+ 	if (domain->mode == PAGE_MODE_NONE)
+ 		return 0;
+ 
+-	mutex_lock(&domain->api_lock);
+-	unmap_size = iommu_unmap_page(domain, iova, page_size);
+-	mutex_unlock(&domain->api_lock);
+-
+-	return unmap_size;
++	return iommu_unmap_page(domain, iova, page_size);
+ }
+ 
+ static phys_addr_t amd_iommu_iova_to_phys(struct iommu_domain *dom,
+diff --git a/drivers/iommu/amd_iommu_types.h b/drivers/iommu/amd_iommu_types.h
+index 9ac229e92b07..b764e1a73dcf 100644
+--- a/drivers/iommu/amd_iommu_types.h
++++ b/drivers/iommu/amd_iommu_types.h
+@@ -468,7 +468,6 @@ struct protection_domain {
+ 	struct iommu_domain domain; /* generic domain handle used by
+ 				       iommu core code */
+ 	spinlock_t lock;	/* mostly used to lock the page table*/
+-	struct mutex api_lock;	/* protect page tables in the iommu-api path */
+ 	u16 id;			/* the domain id written to the device table */
+ 	int mode;		/* paging mode (0-6 levels) */
+ 	u64 *pt_root;		/* page table root pointer */
 -- 
 2.20.1
 
