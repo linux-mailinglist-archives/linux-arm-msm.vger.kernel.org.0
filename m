@@ -2,101 +2,90 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id B01808F73C
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 Aug 2019 00:51:23 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 3D9908F7E5
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 Aug 2019 02:10:16 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1733242AbfHOWvI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 15 Aug 2019 18:51:08 -0400
-Received: from onstation.org ([52.200.56.107]:49700 "EHLO onstation.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1730406AbfHOWvH (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 15 Aug 2019 18:51:07 -0400
-Received: from localhost (c-98-239-145-235.hsd1.wv.comcast.net [98.239.145.235])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        (Authenticated sender: masneyb)
-        by onstation.org (Postfix) with ESMTPSA id D89F23E998;
-        Thu, 15 Aug 2019 22:51:04 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=onstation.org;
-        s=default; t=1565909466;
-        bh=GlErRnlbnhtp3xOCD8QDuEBNzdpIzm/CEjl/t+YePi4=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=kbBRmB2Ag3E2vXFKqyIe3P3JBKnDCf2Gw4yfO4jcxecQTEdBlDWG3wDJ+vxPQ+XQN
-         a1BNwFsIm8w50ApVariWEfK20tN4ggz3LwN3Ya5I93TAxtpu1h1nThdsONxNN6uX7o
-         QkSapavjafeT34+PmnZN/YYXcO0hocqwBz5MLwfA=
-Date:   Thu, 15 Aug 2019 18:51:04 -0400
-From:   Brian Masney <masneyb@onstation.org>
-To:     Linus Walleij <linus.walleij@linaro.org>
-Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Andy Gross <agross@kernel.org>,
-        Andrzej Hajda <a.hajda@samsung.com>,
-        Neil Armstrong <narmstrong@baylibre.com>,
-        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        Dave Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Mark Rutland <mark.rutland@arm.com>,
-        Laurent Pinchart <Laurent.pinchart@ideasonboard.com>,
-        Jonas Karlman <jonas@kwiboo.se>,
-        Jernej Skrabec <jernej.skrabec@siol.net>,
-        Enric Balletbo i Serra <enric.balletbo@collabora.com>,
-        "open list:DRM PANEL DRIVERS" <dri-devel@lists.freedesktop.org>,
-        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
-        <devicetree@vger.kernel.org>,
-        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
-        MSM <linux-arm-msm@vger.kernel.org>,
-        Linux ARM <linux-arm-kernel@lists.infradead.org>,
-        freedreno <freedreno@lists.freedesktop.org>
-Subject: Re: [PATCH RFC 06/11] drm/bridge: analogix-anx78xx: add support for
- avdd33 regulator
-Message-ID: <20190815225104.GB32072@onstation.org>
-References: <20190815004854.19860-1-masneyb@onstation.org>
- <20190815004854.19860-7-masneyb@onstation.org>
- <CACRpkdYdQa+FVfpSjLi0SsBMDT4QC667z1P1dnapz7PXgRoB5Q@mail.gmail.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CACRpkdYdQa+FVfpSjLi0SsBMDT4QC667z1P1dnapz7PXgRoB5Q@mail.gmail.com>
+        id S1726046AbfHPAJy (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 15 Aug 2019 20:09:54 -0400
+Received: from mail-pl1-f193.google.com ([209.85.214.193]:42908 "EHLO
+        mail-pl1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726119AbfHPAJy (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 15 Aug 2019 20:09:54 -0400
+Received: by mail-pl1-f193.google.com with SMTP id y1so1683136plp.9
+        for <linux-arm-msm@vger.kernel.org>; Thu, 15 Aug 2019 17:09:53 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=broadcom.com; s=google;
+        h=from:to:cc:subject:date:message-id;
+        bh=Bmhf8PVD5dJtgK9AddO0xa1upUkZ6UmEqObX9gGUygw=;
+        b=g/cwtFRUJnie4vfNE+kfKj1lR1TiRyNEuVwdAY1iDM2oMDkvNQRPopBFt2AACv1B8z
+         983Gy7jmtLNUtCEhVXCX0aUFR0m7mYkc9iO4WydqOtvtn8OwfPTSoRaPcIBcLsbbjpTY
+         nzPx9Gqd7qjNWuN/dFaJhHqps9pmNKWOvWrxA=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=Bmhf8PVD5dJtgK9AddO0xa1upUkZ6UmEqObX9gGUygw=;
+        b=QAJ+3U1nXlZ+PAX7GVIJcW1RPFwO0g9y5rmdrJohAdWmh6RiS2PBo1ky2ohz5jgRb+
+         NxB9F/J6qDZujSKkzAaV7R47LxByEn9bU8XgAU6PLAA9aefuMuyy4zQW/hatKB/cz3tQ
+         BLODZE6EVOiQYelRh7w4+63MKq7peK7Sfqy2B0OHxqn2o7A3bildrWL6znkevPYfiZ4p
+         a1IAa/JGbX3dI1LuVlQ2Qak0+RphccI2lJaL/SMvgn29umDSr4nQvgWKivZazTL7C+mR
+         b8ykCaX9evA+RpNNKfk3vq+Fwe6H48Shjuhtz9dZpBeICOYliQqrocJHxJaTBIsaOKiM
+         fCAA==
+X-Gm-Message-State: APjAAAUM2jH6wWm8gvsT9I6DpHBl/KUhIIjXZUf28rdDiKuCN4X1hVkl
+        RoChfnShrUznXJ3ln6r8HWfJJQ==
+X-Google-Smtp-Source: APXvYqybBoOAvisp8F+JZ3q5jUty2R8V65DI77Sn3u4nQ2zi0kHjcTpl9h1Y3GptDlHG/aiHG0TmbA==
+X-Received: by 2002:a17:902:1101:: with SMTP id d1mr6747611pla.212.1565914193322;
+        Thu, 15 Aug 2019 17:09:53 -0700 (PDT)
+Received: from lbrmn-lnxub113.broadcom.net ([192.19.228.250])
+        by smtp.gmail.com with ESMTPSA id g2sm4056916pfi.26.2019.08.15.17.09.50
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 15 Aug 2019 17:09:52 -0700 (PDT)
+From:   Scott Branden <scott.branden@broadcom.com>
+To:     Luis Chamberlain <mcgrof@kernel.org>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Andy Gross <andy.gross@linaro.org>,
+        David Brown <david.brown@linaro.org>,
+        Alexander Viro <viro@zeniv.linux.org.uk>,
+        Shuah Khan <shuah@kernel.org>, bjorn.andersson@linaro.org
+Cc:     "Rafael J . Wysocki" <rafael@kernel.org>,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-fsdevel@vger.kernel.org,
+        BCM Kernel Feedback <bcm-kernel-feedback-list@broadcom.com>,
+        Olof Johansson <olof@lixom.net>,
+        Andrew Morton <akpm@linux-foundation.org>,
+        Dan Carpenter <dan.carpenter@oracle.com>,
+        Colin Ian King <colin.king@canonical.com>,
+        Kees Cook <keescook@chromium.org>,
+        Takashi Iwai <tiwai@suse.de>, linux-kselftest@vger.kernel.org,
+        Scott Branden <scott.branden@broadcom.com>
+Subject: [PATCH 0/3] firmware: selftest for request_firmware_into_buf
+Date:   Thu, 15 Aug 2019 17:09:42 -0700
+Message-Id: <20190816000945.29810-1-scott.branden@broadcom.com>
+X-Mailer: git-send-email 2.17.1
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Aug 15, 2019 at 10:22:45AM +0200, Linus Walleij wrote:
-> On Thu, Aug 15, 2019 at 2:49 AM Brian Masney <masneyb@onstation.org> wrote:
-> 
-> > Add support for the avdd33 regulator to the analogix-anx78xx driver.
-> > Note that the regulator is currently enabled during driver probe and
-> > disabled when the driver is removed. This is currently how the
-> > downstream MSM kernel sources do this.
-> >
-> > Let's not merge this upstream for the mean time until I get the external
-> > display fully working on the Nexus 5 and then I can submit proper
-> > support then that powers down this regulator in the power off function.
-> >
-> > Signed-off-by: Brian Masney <masneyb@onstation.org>
-> 
-> > +static void anx78xx_disable_regulator_action(void *_data)
-> > +{
-> > +       struct anx78xx_platform_data *pdata = _data;
-> > +
-> > +       regulator_disable(pdata->avdd33);
-> > +}
-> (...)
-> > +       err = devm_add_action(dev, anx78xx_disable_regulator_action,
-> > +                             pdata);
-> 
-> Clever idea. Good for initial support, probably later on it would
-> need to be reworked using runtime PM so it's not constantly
-> powered up.
+This patch series adds kernel selftest of request_firmware_into_buf.
+The API was added to the kernel previously untested.
 
-Yes, that's my plan. I suspect that I may have a regulator disabled
-somewhere so I was planning to leave this on all the time for the time
-being to match the downstream behavior until I get the hot plug detect
-GPIO working.
+Also included in this patch series is a fix for a race condition
+discovered while testing request_firmware_into_buf.  Mutex may
+not be correct final solution but demonstrates a fix to a race
+condition new test exposes.
 
-> Reviewed-by: Linus Walleij <linus.walleij@linaro.org>
+Scott Branden (3):
+  test_firmware: add support for request_firmware_into_buf
+  selftest: firmware: Add request_firmware_into_buf tests
+  firmware: add mutex fw_lock_fallback for race condition
 
-Thanks,
+ drivers/base/firmware_loader/main.c           | 15 +++++
+ lib/test_firmware.c                           | 50 +++++++++++++++-
+ .../selftests/firmware/fw_filesystem.sh       | 57 ++++++++++++++++++-
+ tools/testing/selftests/firmware/fw_lib.sh    | 11 ++++
+ 4 files changed, 129 insertions(+), 4 deletions(-)
 
-Brian
+-- 
+2.17.1
+
