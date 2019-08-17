@@ -2,171 +2,88 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 0EC1390AD1
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 17 Aug 2019 00:20:19 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 74F1490CA6
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 17 Aug 2019 06:01:57 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727777AbfHPWUS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 16 Aug 2019 18:20:18 -0400
-Received: from smtp.codeaurora.org ([198.145.29.96]:53120 "EHLO
-        smtp.codeaurora.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727669AbfHPWUR (ORCPT
+        id S1725840AbfHQEB4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 17 Aug 2019 00:01:56 -0400
+Received: from mail-pg1-f194.google.com ([209.85.215.194]:46032 "EHLO
+        mail-pg1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725784AbfHQEB4 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 16 Aug 2019 18:20:17 -0400
-Received: by smtp.codeaurora.org (Postfix, from userid 1000)
-        id 1B5D761C7D; Fri, 16 Aug 2019 22:20:16 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
-        s=default; t=1565994017;
-        bh=n8EyLk80l4W+PQGIi1Q/9kn0a7jx+4AwnWTuTaAVMK4=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=Uz7sqntm3VEanPdGhbwQdznZmZ0d5SClgpCIFtmHFE6nll+KBm/djqCc1QA7L6Y9q
-         vYJnUAT4BSgRfxf/XJsQj9eDhviHwrMy3U/y6luVga4vVYYbaAOV2Z6FnD1LO1rkyZ
-         7mr19DSCsp9Wje5BcJkEVxiE1CyuBuqWD8tdig7A=
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        pdx-caf-mail.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.7 required=2.0 tests=ALL_TRUSTED,BAYES_00,
-        DKIM_INVALID,DKIM_SIGNED,SPF_NONE autolearn=no autolearn_force=no
-        version=3.4.0
-Received: from jcrouse1-lnx.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: jcrouse@smtp.codeaurora.org)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 1E74E61C57;
-        Fri, 16 Aug 2019 22:20:02 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
-        s=default; t=1565994015;
-        bh=n8EyLk80l4W+PQGIi1Q/9kn0a7jx+4AwnWTuTaAVMK4=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=nQyICEvuEqN+v08C3V39NgQwlicZp33j+tvVaED8dFJW1jYBvHL9IdSAJdzjAFKUD
-         guqAP5T2rlcrk6uDtYpnrlNtY3watC+Aglbz61l/qEiHa4dI3w2lAEaYAu/w3vhgDf
-         ikp5fuUuQheXDde4YgaGgpAWKrzmMw77H5zP3pkI=
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 1E74E61C57
-Authentication-Results: pdx-caf-mail.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: pdx-caf-mail.web.codeaurora.org; spf=none smtp.mailfrom=jcrouse@codeaurora.org
-Date:   Fri, 16 Aug 2019 16:20:01 -0600
-From:   Jordan Crouse <jcrouse@codeaurora.org>
-To:     Robin Murphy <robin.murphy@arm.com>
-Cc:     Rob Clark <robdclark@gmail.com>,
-        freedreno <freedreno@lists.freedesktop.org>,
-        Rob Herring <robh@kernel.org>, Will Deacon <will@kernel.org>,
-        Jean-Philippe Brucker <jean-philippe.brucker@arm.com>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Joerg Roedel <joro@8bytes.org>,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-        "list@263.net:IOMMU DRIVERS" <iommu@lists.linux-foundation.org>,
-        Zhen Lei <thunder.leizhen@huawei.com>,
-        "moderated list:ARM/FREESCALE IMX / MXC ARM ARCHITECTURE" 
-        <linux-arm-kernel@lists.infradead.org>
-Subject: Re: [Freedreno] [PATCH v3 0/2] iommu/arm-smmu: Split pagetable
- support
-Message-ID: <20190816222000.GF28465@jcrouse1-lnx.qualcomm.com>
-Mail-Followup-To: Robin Murphy <robin.murphy@arm.com>,
-        Rob Clark <robdclark@gmail.com>,
-        freedreno <freedreno@lists.freedesktop.org>,
-        Rob Herring <robh@kernel.org>, Will Deacon <will@kernel.org>,
-        Jean-Philippe Brucker <jean-philippe.brucker@arm.com>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Joerg Roedel <joro@8bytes.org>,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-        "list@263.net:IOMMU DRIVERS" <iommu@lists.linux-foundation.org>,
-        Zhen Lei <thunder.leizhen@huawei.com>,
-        "moderated list:ARM/FREESCALE IMX / MXC ARM ARCHITECTURE" <linux-arm-kernel@lists.infradead.org>
-References: <1565216500-28506-1-git-send-email-jcrouse@codeaurora.org>
- <20190815153304.GD28465@jcrouse1-lnx.qualcomm.com>
- <ac248f33-2528-c1d4-17ed-17e92e6ed5ad@arm.com>
- <CAF6AEGujjF+MQFw45g799i+2QE4X=eRZdDSsD_F3y3mfbc6UPw@mail.gmail.com>
- <3ea2755f-6d4d-736d-bebd-455a7967e381@arm.com>
+        Sat, 17 Aug 2019 00:01:56 -0400
+Received: by mail-pg1-f194.google.com with SMTP id o13so3863329pgp.12
+        for <linux-arm-msm@vger.kernel.org>; Fri, 16 Aug 2019 21:01:56 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=message-id:mime-version:content-transfer-encoding:in-reply-to
+         :references:subject:from:cc:to:user-agent:date;
+        bh=41DUNyHfGDYGOFlacUiPuaR42aKSRfTphWQX5UDtD6o=;
+        b=ixPLfl74xidyeGDAyESYrtkRAaaOMaad+qjnu1XULZZimjYFtEn181iLZpP1ym0gTA
+         PyreXM8okqrfOAAnHjzFtE/FnJKkFAp8pd4+9ldH2Wlq/lH1I1IyQLfzS8xi6udjNbnC
+         tvTGPUZ1nfHWe6ixN8ihl34CXoXxiNO57br9U=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:message-id:mime-version
+         :content-transfer-encoding:in-reply-to:references:subject:from:cc:to
+         :user-agent:date;
+        bh=41DUNyHfGDYGOFlacUiPuaR42aKSRfTphWQX5UDtD6o=;
+        b=gFEN4L8ARp9VI3q3FFzzn+XyqUdkd0GWlKToMhUL6Z5InTjTHpsTqcRi8Rzqgele/G
+         DBclD1+ObVtW1h2NsQnv9Aegs6Czl8spsJxUrUlv5UEgsCua4hupCMAfeu8nvM70HFnq
+         pdsWXg7V+TUJhtOJxLohG36xpawLT0X41BDe1SdYTudkFlpLIKQbTOyjgJ7XBvTIKlCb
+         E0iF9hL9Nutqb4Uzc4txnpjmWKLQ3DkI1bcE4AznK3CIoNcOIf+I2oDEhKHc11jBt3Ii
+         7jl0s1sPbW7ROmLiXHQIwC5uzv6SJEWRe9SC13c6NA33AanmFKE00nzK9vSjWPZwQ1dX
+         7XmA==
+X-Gm-Message-State: APjAAAXZ8J52JMLP7qD9IDxB1ooYJ67wNQggBtDLQy+UliX387RU8EYt
+        TZ2cxzsCJlfGyykRxMl1rK+3YA==
+X-Google-Smtp-Source: APXvYqziDXUQ6baa9UVufZvuqukFBB8IgCHuhJBV0YUPgaMdR05hRMBSBQY/Mi09HZoEtziD5Ch3kA==
+X-Received: by 2002:a63:1046:: with SMTP id 6mr10700399pgq.111.1566014515650;
+        Fri, 16 Aug 2019 21:01:55 -0700 (PDT)
+Received: from chromium.org ([2620:15c:202:1:fa53:7765:582b:82b9])
+        by smtp.gmail.com with ESMTPSA id j15sm7429996pfr.146.2019.08.16.21.01.55
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 16 Aug 2019 21:01:55 -0700 (PDT)
+Message-ID: <5d577c33.1c69fb81.f966d.6963@mx.google.com>
+Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <3ea2755f-6d4d-736d-bebd-455a7967e381@arm.com>
-User-Agent: Mutt/1.5.24 (2015-08-30)
+Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <9dc86fa912d9b6e21857598ad81ff88564468e5d.1564091601.git.amit.kucheria@linaro.org>
+References: <cover.1564091601.git.amit.kucheria@linaro.org> <9dc86fa912d9b6e21857598ad81ff88564468e5d.1564091601.git.amit.kucheria@linaro.org>
+Subject: Re: [PATCH 01/15] drivers: thermal: tsens: Get rid of id field in tsens_sensor
+From:   Stephen Boyd <swboyd@chromium.org>
+Cc:     linux-pm@vger.kernel.org
+To:     Amit Kucheria <amit.kucheria@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Daniel Lezcano <daniel.lezcano@linaro.org>,
+        Mark Rutland <mark.rutland@arm.com>,
+        Rob Herring <robh+dt@kernel.org>,
+        Zhang Rui <rui.zhang@intel.com>, andy.gross@linaro.org,
+        bjorn.andersson@linaro.org, edubezval@gmail.com,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+User-Agent: alot/0.8.1
+Date:   Fri, 16 Aug 2019 21:01:54 -0700
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, Aug 16, 2019 at 08:43:53PM +0100, Robin Murphy wrote:
-> On 16/08/2019 19:12, Rob Clark wrote:
-> >On Fri, Aug 16, 2019 at 9:58 AM Robin Murphy <robin.murphy@arm.com> wrote:
-> >>
-> >>Hi Jordan,
-> >>
-> >>On 15/08/2019 16:33, Jordan Crouse wrote:
-> >>>On Wed, Aug 07, 2019 at 04:21:38PM -0600, Jordan Crouse wrote:
-> >>>>(Sigh, resend. I freaked out my SMTP server)
-> >>>>
-> >>>>This is part of an ongoing evolution for enabling split pagetable support for
-> >>>>arm-smmu. Previous versions can be found [1].
-> >>>>
-> >>>>In the discussion for v2 Robin pointed out that this is a very Adreno specific
-> >>>>use case and that is exactly true. Not only do we want to configure and use a
-> >>>>pagetable in the TTBR1 space, we also want to configure the TTBR0 region but
-> >>>>not allocate a pagetable for it or touch it until the GPU hardware does so. As
-> >>>>much as I want it to be a generic concept it really isn't.
-> >>>>
-> >>>>This revision leans into that idea. Most of the same io-pgtable code is there
-> >>>>but now it is wrapped as an Adreno GPU specific format that is selected by the
-> >>>>compatible string in the arm-smmu device.
-> >>>>
-> >>>>Additionally, per Robin's suggestion we are skipping creating a TTBR0 pagetable
-> >>>>to save on wasted memory.
-> >>>>
-> >>>>This isn't as clean as I would like it to be but I think that this is a better
-> >>>>direction than trying to pretend that the generic format would work.
-> >>>>
-> >>>>I'm tempting fate by posting this and then taking some time off, but I wanted
-> >>>>to try to kick off a conversation or at least get some flames so I can try to
-> >>>>refine this again next week. Please take a look and give some advice on the
-> >>>>direction.
-> >>>
-> >>>Will, Robin -
-> >>>
-> >>>Modulo the impl changes from Robin, do you think that using a dedicated
-> >>>pagetable format is the right approach for supporting split pagetables for the
-> >>>Adreno GPU?
-> >>
-> >>How many different Adreno drivers would benefit from sharing it?
-> >
-> >Hypothetically everything back to a3xx, so I *could* see usefulness of
-> >this in qcom_iommu (or maybe even msm-iommu).  OTOH maybe with
-> >"modularizing" arm-smmu we could re-combine qcom_iommu and arm-smmu.
-> 
-> Indeed, that's certainly something I'm planning to investigate as a future
-> refactoring step.
-> 
-> >And as a practical matter, I'm not sure if anyone will get around to
-> >backporting per-context pagetables as far back as a3xx.
-> >
-> >BR,
-> >-R
-> >
-> >>The more I come back to this, the more I'm convinced that io-pgtable
-> >>should focus on the heavy lifting of pagetable management - the code
-> >>that nobody wants to have to write at all, let alone more than once -
-> >>and any subtleties which aren't essential to that should be pushed back
-> >>into whichever callers actually care. Consider that already, literally
-> >>no caller actually uses an unmodified stage 1 TCR value as provided in
-> >>the io_pgtable_cfg.
-> >>
-> >>I feel it would be most productive to elaborate further in the form of
-> >>patches, so let me get right on that and try to bash something out
-> >>before I go home tonight...
-> 
-> ...and now there's a rough WIP branch here:
-> 
-> http://linux-arm.org/git?p=linux-rm.git;a=shortlog;h=refs/heads/iommu/pgtable
-> 
-> I'll finish testing and polishing those patches at some point next week,
-> probably, but hopefully they're sufficiently illustrative for the moment.
+Quoting Amit Kucheria (2019-07-25 15:18:36)
+> There are two fields - id and hw_id - to track what sensor an action was
+> to performed on. This was because the sensors connected to a TSENS IP
+> might not be contiguous i.e. 1, 2, 4, 5 with 3 being skipped.
+>=20
+> This causes confusion in the code which uses hw_id sometimes and id
+> other times (tsens_get_temp, tsens_get_trend).
+>=20
+> Switch to only using the hw_id field to track the physical ID of the
+> sensor. When we iterate through all the sensors connected to an IP
+> block, we use an index i to loop through the list of sensors, and then
+> return the actual hw_id that is registered on that index.
+>=20
+> Signed-off-by: Amit Kucheria <amit.kucheria@linaro.org>
+> ---
 
-This looks great so far. I can see where the TTBR1 stuff would fit in and I like
-it a lot. I'll try to have some patches ready when you are done polishing.
+Nice cleanup!
 
-Jordan
+Reviewed-by: Stephen Boyd <swboyd@chromium.org>
 
-> Robin.
-
--- 
-The Qualcomm Innovation Center, Inc. is a member of Code Aurora Forum,
-a Linux Foundation Collaborative Project
