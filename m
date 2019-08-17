@@ -2,87 +2,145 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id E4E1190F70
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 17 Aug 2019 10:25:53 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 7F980912AF
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 17 Aug 2019 21:25:54 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725925AbfHQIZx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 17 Aug 2019 04:25:53 -0400
-Received: from mout.gmx.net ([212.227.17.21]:41305 "EHLO mout.gmx.net"
+        id S1726087AbfHQTZv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 17 Aug 2019 15:25:51 -0400
+Received: from mail.kernel.org ([198.145.29.99]:47570 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1725911AbfHQIZw (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 17 Aug 2019 04:25:52 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1566030348;
-        bh=OclZl71JjJafvFBdBBkyM/N/A67EHRaXQtmowmWRoR0=;
-        h=X-UI-Sender-Class:From:To:Cc:Subject:Date;
-        b=Bvc6EmBKKrKWuniYz36rvH6eUnVKgBZTR/zcYSX4KPxT0np/aeDal0wBktGFWGpNo
-         ICreq0U+TqutxCFeUWBe1FzauoFT6GYx3inZlLYbm5msNzufD3alG2pvE7I/jOKRD8
-         juLqOUmsptoCrNUWMwaz8fmOAAlGziCTfnWqNcYM=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from localhost.localdomain ([82.19.195.159]) by mail.gmx.com
- (mrgmx102 [212.227.17.174]) with ESMTPSA (Nemesis) id
- 0MdXSC-1he3GR3XOW-00PPnf; Sat, 17 Aug 2019 10:25:47 +0200
-From:   Alex Dewar <alex.dewar@gmx.co.uk>
-To:     agross@kernel.org, linus.walleij@linaro.org,
-        bjorn.andersson@linaro.org
-Cc:     linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org,
-        linux-kernel@vger.kernel.org, Alex Dewar <alex.dewar@gmx.co.uk>
-Subject: [PATCH] pinctrl/qcom: Fix -Wimplicit-fallthrough
-Date:   Sat, 17 Aug 2019 09:25:20 +0100
-Message-Id: <20190817082520.7751-1-alex.dewar@gmx.co.uk>
-X-Mailer: git-send-email 2.22.1
+        id S1725929AbfHQTZu (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Sat, 17 Aug 2019 15:25:50 -0400
+Received: from mail-qk1-f178.google.com (mail-qk1-f178.google.com [209.85.222.178])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        by mail.kernel.org (Postfix) with ESMTPSA id DCC2121773;
+        Sat, 17 Aug 2019 19:25:49 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=default; t=1566069950;
+        bh=0NanKliApozmuL7V6nL8uKH5LTiliTZ9hOPreXVS068=;
+        h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
+        b=bgGST+iX4UmnS3RqbOu/FfRSnf0c7+mYCCB8xVHjEcod3//fj+6o2zG1MpR2/BmIF
+         wQgcm5O3WBckm7FwnV0gomnJn/VVVXFl/zHj2WWkecLSu901qGNgM7znj7t4gDjMEx
+         ihM+ds/w+EeZDUEPWQqQH/13p80Go2CjQigV0YE0=
+Received: by mail-qk1-f178.google.com with SMTP id m10so7619127qkk.1;
+        Sat, 17 Aug 2019 12:25:49 -0700 (PDT)
+X-Gm-Message-State: APjAAAVM193W5zvF+74UATNxRYAo8cYYAiTyj5bRv1WdvYwDLSC0/0ds
+        setRVhg6U1zJf36nx9uAgVI0xxyEx518GARHow==
+X-Google-Smtp-Source: APXvYqyv7XInpncxlHnUpAoRjR6KiBVMpFQYJtiz5LwyqLgNtnlZCWotwsrOV9MPpCCDbso+5ciSPlsOWp3IGl53e/A=
+X-Received: by 2002:a37:d8f:: with SMTP id 137mr13539239qkn.254.1566069949063;
+ Sat, 17 Aug 2019 12:25:49 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:o1x6eoesNv7qishmWoL2Ucl7VvxquR1rNH4cT1rnMGinQcSQYAk
- 5rgfbmstyPdXuvbiBDq5g4WOTW/3F3Ui3lSNOM3G/dl5ZzDUmuuDuOz3KjL4kjioPB8799c
- I7X6YQjwpyZruSElqRdmvnbEma3AAgXhx4Z9XgfnA/Zv7N++74mqvtcp+8L23qOHIiOqZXu
- Al+4YTz4HMrcm28AztV3A==
-X-Spam-Flag: NO
-X-UI-Out-Filterresults: notjunk:1;V03:K0:7QirXCb5saw=:vP35C/dAS/tqYsO+x7LYS8
- WAIus80ysGOcHS7LQ8PJ6NMdOs0fs3cOmOsqDT4c0l/fPJ/bX/HbDU0V88WNBb3YWKubqJALx
- cs0SlxJrORqA9Sy5QZINF0dLo1eA0LZt7izq73KfyJZh5EGQLctbBSUMEQI7yWwEf6Tsvl4vm
- sTPOjNidUpqYXe26+Zxy2Qlz8+DtyWHsJyye7Obv4B9g/bKHv9l6MOIaqAr0QVaHEigYMC6+5
- Z5g5qcetQ347yUBvbCL+1JZHllUMT1Fny6UE4cIGc95X4dbTdEpxrnGTqHwhD0WZtFsBNjT45
- YHWUmnL+AaD7968/SzRVdy/P1G3arTnDZs72Zmgh7sIElhbUE5dxyu1Ih6VKDoKvpFH89XFJf
- dnoxsd6EanmEtQLk1UT57Qv9Wl4KU9N5RomDg6Lv47ignZ9sv/AdvGJmE7GsxVeDrRGBwRNE5
- W34nrJqDuva4xAiiJaRUmvfy8xIFBfnIfDq78jEL7W9zRQky23yzIo7bLnLwwZXq9uAwQAt50
- DgXqEDGlTRXjQ7ItjMRcndNxqbbX53omig1qFviBuwUWC8ScQXl1B+zf0VD6nr0oKrGudoHgz
- osuvZkCz3nukks2hFzm+PRn5yHJPqF9y/4wbAd6oVQIvmtoA2g0QNammjqkXO+YJjlvIb9IU9
- tDnCy1IlpdmYU5/FLjEJ4gNpQpVr7RsKHhd7zP3MIcW0laTjxZFYhNB6hm1OO29qc7AS4OBx+
- xY/CsWhk1wA4rXARmV5LxLDpVYj9zaDt2gUbqSRuaa6NrD6doHv0DG05kQlDsbrm7nAI9OBaW
- ywitnWHB/60oZ0ckFUYMNUU5cUKKjxw2wIDEoQ+ATw7c21TR2WUfJ2FuZ2K5ffw5njBI0V0Xu
- XeeHcU16d6JgpLnYAAOV4Yacau8mJL2B/khjObm8ghuv5vHxNDNhK087oMp+p5SvstrjCJrvI
- J2vU/HDZx/zgNEIaoOisWbJ4LG4Q/8757EuNrcrZIZsJf7EGyl6sBtZ/jtbD9y+P93rxN9/pd
- HG9su4/1HIOl4bhqKUaoabTdy4brS1gEfoJ0jUZWGIggThFKHu+O3CS5PWhkt0Amt14B27Lxv
- ac4K5ojLTlTG9csHFA1meCMkpqIbsWNjRFoPmkyAhjJnLytY9qV7ssN2g==
+References: <cover.1564091601.git.amit.kucheria@linaro.org>
+ <72bce036fa8cba3db6e5ba82249837ee46e9c077.1564091601.git.amit.kucheria@linaro.org>
+ <20190816213648.GA10244@bogus> <CAP245DVUKRxvU3wWygOFtZuwbvCxfW=wUH=xArOKmYiRZf+EXA@mail.gmail.com>
+In-Reply-To: <CAP245DVUKRxvU3wWygOFtZuwbvCxfW=wUH=xArOKmYiRZf+EXA@mail.gmail.com>
+From:   Rob Herring <robh@kernel.org>
+Date:   Sat, 17 Aug 2019 14:25:36 -0500
+X-Gmail-Original-Message-ID: <CAL_Jsq+bymJXY-ffeuCc-15Vkmh88AsUAj5znBN+b-3YWP-Kqg@mail.gmail.com>
+Message-ID: <CAL_Jsq+bymJXY-ffeuCc-15Vkmh88AsUAj5znBN+b-3YWP-Kqg@mail.gmail.com>
+Subject: Re: [PATCH 07/15] dt: thermal: tsens: Document interrupt support in
+ tsens driver
+To:     Amit Kucheria <amit.kucheria@linaro.org>
+Cc:     Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Eduardo Valentin <edubezval@gmail.com>,
+        Andy Gross <andy.gross@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Daniel Lezcano <daniel.lezcano@linaro.org>,
+        Mark Rutland <mark.rutland@arm.com>,
+        Zhang Rui <rui.zhang@intel.com>,
+        Linux PM list <linux-pm@vger.kernel.org>,
+        DTML <devicetree@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-In pinctrl-spmi-gpio.c there is a switch case which is obviously
-intended to fall through to the next label. Add a comment to suppress
--Wimplicit-fallthrough warning.
+On Fri, Aug 16, 2019 at 5:02 PM Amit Kucheria <amit.kucheria@linaro.org> wrote:
+>
+> On Sat, Aug 17, 2019 at 3:06 AM Rob Herring <robh@kernel.org> wrote:
+> >
+> > On Fri, Jul 26, 2019 at 03:48:42AM +0530, Amit Kucheria wrote:
+> > > Define two new required properties to define interrupts and
+> > > interrupt-names for tsens.
+> > >
+> > > Signed-off-by: Amit Kucheria <amit.kucheria@linaro.org>
+> > > ---
+> > >  Documentation/devicetree/bindings/thermal/qcom-tsens.txt | 5 +++++
+> > >  1 file changed, 5 insertions(+)
+> > >
+> > > diff --git a/Documentation/devicetree/bindings/thermal/qcom-tsens.txt b/Documentation/devicetree/bindings/thermal/qcom-tsens.txt
+> > > index 673cc1831ee9..3d3dd5dc6d36 100644
+> > > --- a/Documentation/devicetree/bindings/thermal/qcom-tsens.txt
+> > > +++ b/Documentation/devicetree/bindings/thermal/qcom-tsens.txt
+> > > @@ -22,6 +22,8 @@ Required properties:
+> > >
+> > >  - #thermal-sensor-cells : Should be 1. See ./thermal.txt for a description.
+> > >  - #qcom,sensors: Number of sensors in tsens block
+> > > +- interrupts: Interrupts generated from Always-On subsystem (AOSS)
+> > > +- interrupt-names: The name of the interrupt e.g. "tsens0", "tsens1"
+> >
+> > How many interrupts? A name with just indices isn't too useful.
+>
+> Depending on the version of the tsens IP, there can be 1 (upper/lower
+> threshold), 2 (upper/lower + critical threshold) or 3 (upper/lower +
+> critical + zero degree) interrupts. This patch series only introduces
+> support for a single interrupt (upper/lower).
 
-Signed-off-by: Alex Dewar <alex.dewar@gmx.co.uk>
-=2D--
- drivers/pinctrl/qcom/pinctrl-spmi-gpio.c | 1 +
- 1 file changed, 1 insertion(+)
+I would expect a different compatible for each possibility.
 
-diff --git a/drivers/pinctrl/qcom/pinctrl-spmi-gpio.c b/drivers/pinctrl/qc=
-om/pinctrl-spmi-gpio.c
-index f39da87ea185..b035dd5e25b8 100644
-=2D-- a/drivers/pinctrl/qcom/pinctrl-spmi-gpio.c
-+++ b/drivers/pinctrl/qcom/pinctrl-spmi-gpio.c
-@@ -813,6 +813,7 @@ static int pmic_gpio_populate(struct pmic_gpio_state *=
-state,
- 	switch (subtype) {
- 	case PMIC_GPIO_SUBTYPE_GPIO_4CH:
- 		pad->have_buffer =3D true;
-+		/* FALLS THROUGH */
- 	case PMIC_GPIO_SUBTYPE_GPIOC_4CH:
- 		pad->num_sources =3D 4;
- 		break;
-=2D-
-2.22.1
+> I used the names tsens0, tsens1 to encapsulate the controller instance
+> since some SoCs have 1 controller, others have two. So we'll end up
+> with something like the following in DT:
 
+That's not really how *-names is supposed to work. The name is for
+identifying what is at each index. Or to put it another way, a driver
+should be able to use platform_get_irq_by_name(). So 'critical',
+'zero' and something for the first one.
+
+> tsens0: thermal-sensor@c263000 {
+>                         compatible = "qcom,sdm845-tsens", "qcom,tsens-v2";
+>                         reg = <0 0x0c263000 0 0x1ff>, /* TM */
+>                               <0 0x0c222000 0 0x1ff>; /* SROT */
+>                         #qcom,sensors = <13>;
+>                         interrupts = <GIC_SPI 506 IRQ_TYPE_LEVEL_HIGH>,
+>                                      <GIC_SPI 508 IRQ_TYPE_LEVEL_HIGH>;
+>                         interrupt-names = "tsens0", "tsens0-critical";
+>                         #thermal-sensor-cells = <1>;
+> };
+>
+> tsens1: thermal-sensor@c265000 {
+>                         compatible = "qcom,sdm845-tsens", "qcom,tsens-v2";
+>                         reg = <0 0x0c265000 0 0x1ff>, /* TM */
+>                               <0 0x0c223000 0 0x1ff>; /* SROT */
+>                         #qcom,sensors = <8>;
+>                         interrupts = <GIC_SPI 507 IRQ_TYPE_LEVEL_HIGH>,
+>                                      <GIC_SPI 509 IRQ_TYPE_LEVEL_HIGH>;
+>                         interrupt-names = "tsens1", "tsens1-critical";
+>                         #thermal-sensor-cells = <1>;
+> }
+>
+> Does that work?
+>
+> Regards,
+> Amit
+>
+> > >  - Refer to Documentation/devicetree/bindings/nvmem/nvmem.txt to know how to specify
+> > >  nvmem cells
+> > >
+> > > @@ -40,6 +42,9 @@ tsens0: thermal-sensor@c263000 {
+> > >               reg = <0xc263000 0x1ff>, /* TM */
+> > >                       <0xc222000 0x1ff>; /* SROT */
+> > >               #qcom,sensors = <13>;
+> > > +             interrupts = <GIC_SPI 506 IRQ_TYPE_LEVEL_HIGH>;
+> > > +             interrupt-names = "tsens0";
+> > > +
+> > >               #thermal-sensor-cells = <1>;
+> > >       };
+> > >
+> > > --
+> > > 2.17.1
+> > >
