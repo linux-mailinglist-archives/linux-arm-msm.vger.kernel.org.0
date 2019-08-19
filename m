@@ -2,79 +2,82 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id A00EB94C1E
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 19 Aug 2019 19:56:52 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C516F94C2C
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 19 Aug 2019 19:58:25 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727944AbfHSR43 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 19 Aug 2019 13:56:29 -0400
-Received: from mail.kernel.org ([198.145.29.99]:44792 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1727744AbfHSR43 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 19 Aug 2019 13:56:29 -0400
-Received: from kernel.org (unknown [104.132.0.74])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 6914A22CEB;
-        Mon, 19 Aug 2019 17:56:28 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1566237388;
-        bh=deVsaTjQnypxRs2qbJ2IINUn03R/PdcxaWt6Wb5Udf8=;
-        h=In-Reply-To:References:Subject:From:Cc:To:Date:From;
-        b=afLO4CenJg4a50JRRNcFfRvghNpLxJeV8HpLhcOG+zVt15Tlw4w508zBZYVfIMlGr
-         7YW1P5O9xpUdbkKep3iynAkGB4rayiGOGAyli0L2icwGeRa0tN8D0FsNUr75AwhmS6
-         mH5mpmBZHULXIoJu4yZ11QR5NGAFvyHtVKqCWys4=
+        id S1728140AbfHSR6X (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 19 Aug 2019 13:58:23 -0400
+Received: from mail-pg1-f196.google.com ([209.85.215.196]:46864 "EHLO
+        mail-pg1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727998AbfHSR6W (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 19 Aug 2019 13:58:22 -0400
+Received: by mail-pg1-f196.google.com with SMTP id m3so1626646pgv.13
+        for <linux-arm-msm@vger.kernel.org>; Mon, 19 Aug 2019 10:58:22 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=message-id:mime-version:content-transfer-encoding:in-reply-to
+         :references:subject:from:cc:to:user-agent:date;
+        bh=HoVmSkEe13oQswbHPUJHfU6oOJm3g2HoCRDfFS6v2nE=;
+        b=WRSqAnMYQuRmKa8OeeXjBJh7hCRuFuvWgw3KW8lNHU+42UKEiLm3GJsfYWFUWUKytk
+         YajmqMxJ6pqgduqWCTAMQtoStuBtKaMGVWmRpWGO6r7aZAk5ohA6+8OzL1TmME5HbInZ
+         Jne+raVcvh/vvA+rp+fFzaTSjISdN3IqM9Dsc=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:message-id:mime-version
+         :content-transfer-encoding:in-reply-to:references:subject:from:cc:to
+         :user-agent:date;
+        bh=HoVmSkEe13oQswbHPUJHfU6oOJm3g2HoCRDfFS6v2nE=;
+        b=scynLWcLC9zZdzTYNFIFcvxL38BOWOqasL3SKsQk0suaouWSZjPqwv2G1gm9H39j7i
+         Y+60pa/fE4RDBJ6UjY3n/6YeidTJr2++AOvZWUGLBAxVZWQh2HuCYfLOJ5591uKVwd/x
+         XE0DYuwAaRYvRboHsR5nU3n4RlgydrjAlhx5ztp7X+BuLeSMmJDge2x7EyAE9+Q0g95a
+         u5Sewv/TmyJ8tNW0etpTUceWRmj3f+Tn1cJAq0qpGkRMsmV6uy5l+OyawKSOrCUpstA0
+         nxFJ0M5FI2ciEiDbbAWDH1/Xzi4aqX3lFx54PVvW2ggXk504dGEoAeWrl9WogFyOlLm4
+         WtcQ==
+X-Gm-Message-State: APjAAAXF9zIL7Ey5bJOigTupQzy9jQzOIieMGjSKr6lsXcmy1PC7VioP
+        3tqtgMyik2mYaKUINwtRKkYE+NWTCiY01w==
+X-Google-Smtp-Source: APXvYqwjJi4PF0tOiJFK9Fzga9qOPXzicdB09KvGaSWb7z0d1TsMp2llrCLtwaNJ06hA69FTJDdx7A==
+X-Received: by 2002:a63:5a0a:: with SMTP id o10mr21379964pgb.282.1566237501974;
+        Mon, 19 Aug 2019 10:58:21 -0700 (PDT)
+Received: from chromium.org ([2620:15c:202:1:fa53:7765:582b:82b9])
+        by smtp.gmail.com with ESMTPSA id h70sm14930028pgc.36.2019.08.19.10.58.21
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 19 Aug 2019 10:58:21 -0700 (PDT)
+Message-ID: <5d5ae33d.1c69fb81.49902.678d@mx.google.com>
 Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <20190819174331.GN12733@vkoul-mobl.Dlink>
-References: <20190814125012.8700-1-vkoul@kernel.org> <20190814125012.8700-11-vkoul@kernel.org> <20190814170803.DEFCC214DA@mail.kernel.org> <20190819174331.GN12733@vkoul-mobl.Dlink>
-Subject: Re: [PATCH 10/22] arm64: dts: qcom: pm8150b: Add pon and adc nodes
-From:   Stephen Boyd <sboyd@kernel.org>
-Cc:     Andy Gross <agross@kernel.org>, linux-arm-msm@vger.kernel.org,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        sibis@codeaurora.org, Rob Herring <robh+dt@kernel.org>,
-        Mark Rutland <mark.rutland@arm.com>,
+In-Reply-To: <20190819101238.17335-1-niklas.cassel@linaro.org>
+References: <20190725104144.22924-10-niklas.cassel@linaro.org> <20190819101238.17335-1-niklas.cassel@linaro.org>
+Subject: Re: [PATCH v3 09/14] dt-bindings: opp: Add qcom-opp bindings with properties needed for CPR
+From:   Stephen Boyd <swboyd@chromium.org>
+Cc:     linux-arm-msm@vger.kernel.org, jorge.ramirez-ortiz@linaro.org,
+        bjorn.andersson@linaro.org, ulf.hansson@linaro.org,
+        Niklas Cassel <niklas.cassel@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Mark Rutland <mark.rutland@arm.com>, linux-pm@vger.kernel.org,
         devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-To:     Vinod Koul <vkoul@kernel.org>
+To:     Andy Gross <agross@kernel.org>,
+        Niklas Cassel <niklas.cassel@linaro.org>,
+        Nishanth Menon <nm@ti.com>, Viresh Kumar <vireshk@kernel.org>
 User-Agent: alot/0.8.1
-Date:   Mon, 19 Aug 2019 10:56:27 -0700
-Message-Id: <20190819175628.6914A22CEB@mail.kernel.org>
+Date:   Mon, 19 Aug 2019 10:58:20 -0700
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Vinod Koul (2019-08-19 10:43:31)
-> On 14-08-19, 10:08, Stephen Boyd wrote:
-> >=20
-> > >=20
-> > > diff --git a/arch/arm64/boot/dts/qcom/pm8150b.dtsi b/arch/arm64/boot/=
-dts/qcom/pm8150b.dtsi
-> > > index c0a678b0f159..846197bd65cd 100644
-> > > --- a/arch/arm64/boot/dts/qcom/pm8150b.dtsi
-> > > +++ b/arch/arm64/boot/dts/qcom/pm8150b.dtsi
-> > > @@ -2,6 +2,7 @@
-> > >  // Copyright (c) 2017-2019, The Linux Foundation. All rights reserve=
-d.
-> > >  // Copyright (c) 2019, Linaro Limited
-> > > =20
-> > > +#include <dt-bindings/iio/qcom,spmi-vadc.h>
-> > >  #include <dt-bindings/interrupt-controller/irq.h>
-> > >  #include <dt-bindings/spmi/spmi.h>
-> > > =20
-> > > @@ -11,6 +12,59 @@
-> > >                 reg =3D <0x2 SPMI_USID>;
-> > >                 #address-cells =3D <1>;
-> > >                 #size-cells =3D <0>;
-> > > +
-> > > +               pon@800 {
-> >=20
-> > Maybe pon node name should be 'key' or 'power-on'?
+Quoting Niklas Cassel (2019-08-19 03:12:38)
+> Add qcom-opp bindings with properties needed for Core Power Reduction
+> (CPR).
 >=20
-> pon stands for power on device. See Documentation/devicetree/bindings/pow=
-er/reset/qcom,pon.txt
+> CPR is included in a great variety of Qualcomm SoCs, e.g. msm8916 and
+> msm8996. CPR was first introduced in msm8974.
 >=20
+> Co-developed-by: Jorge Ramirez-Ortiz <jorge.ramirez-ortiz@linaro.org>
+> Signed-off-by: Jorge Ramirez-Ortiz <jorge.ramirez-ortiz@linaro.org>
+> Signed-off-by: Niklas Cassel <niklas.cassel@linaro.org>
+> ---
 
-Right. I was hoping for a more standard node name vs. an acronym that's
-SoC specific.
+Reviewed-by: Stephen Boyd <swboyd@chromium.org>
 
