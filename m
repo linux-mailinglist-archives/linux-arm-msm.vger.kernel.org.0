@@ -2,143 +2,87 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 8CAEC94CBC
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 19 Aug 2019 20:26:50 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9CA7C94CCB
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 19 Aug 2019 20:29:13 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728029AbfHSS0O (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 19 Aug 2019 14:26:14 -0400
-Received: from foss.arm.com ([217.140.110.172]:58514 "EHLO foss.arm.com"
+        id S1728290AbfHSS04 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 19 Aug 2019 14:26:56 -0400
+Received: from mail.kernel.org ([198.145.29.99]:52100 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1727970AbfHSS0O (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 19 Aug 2019 14:26:14 -0400
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 51A0D360;
-        Mon, 19 Aug 2019 11:26:13 -0700 (PDT)
-Received: from [10.1.197.57] (e110467-lin.cambridge.arm.com [10.1.197.57])
-        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 61F5E3F246;
-        Mon, 19 Aug 2019 11:26:09 -0700 (PDT)
-Subject: Re: [PATCH V5 3/5] iommu/dma-iommu: Handle deferred devices
-To:     Tom Murphy <murphyt7@tcd.ie>, iommu@lists.linux-foundation.org
-Cc:     Joerg Roedel <joro@8bytes.org>, Will Deacon <will@kernel.org>,
-        Marek Szyprowski <m.szyprowski@samsung.com>,
-        Kukjin Kim <kgene@kernel.org>,
-        Krzysztof Kozlowski <krzk@kernel.org>,
-        David Woodhouse <dwmw2@infradead.org>,
-        Andy Gross <agross@kernel.org>,
-        Matthias Brugger <matthias.bgg@gmail.com>,
-        Rob Clark <robdclark@gmail.com>,
-        Heiko Stuebner <heiko@sntech.de>,
-        Gerald Schaefer <gerald.schaefer@de.ibm.com>,
-        Thierry Reding <thierry.reding@gmail.com>,
-        Jonathan Hunter <jonathanh@nvidia.com>,
-        Jean-Philippe Brucker <jean-philippe@linaro.org>,
-        linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
-        linux-samsung-soc@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-mediatek@lists.infradead.org,
-        linux-rockchip@lists.infradead.org, linux-s390@vger.kernel.org,
-        linux-tegra@vger.kernel.org,
-        virtualization@lists.linux-foundation.org
-References: <20190815110944.3579-1-murphyt7@tcd.ie>
- <20190815110944.3579-4-murphyt7@tcd.ie>
-From:   Robin Murphy <robin.murphy@arm.com>
-Message-ID: <5a12defd-b68d-bd2d-da5a-16628a1f5b91@arm.com>
-Date:   Mon, 19 Aug 2019 19:26:08 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.6.1
+        id S1727970AbfHSS0z (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 19 Aug 2019 14:26:55 -0400
+Received: from kernel.org (unknown [104.132.0.74])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by mail.kernel.org (Postfix) with ESMTPSA id A950222CF6;
+        Mon, 19 Aug 2019 18:26:54 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=default; t=1566239214;
+        bh=Ivyitg0Ej4OT9+wlNtHSfddysy0Yzo6f+ai2y1gszXo=;
+        h=In-Reply-To:References:Subject:From:Cc:To:Date:From;
+        b=yKwuiNEaKXSYTOZwJLHBcizgkZa/S9//ofj0LoEwmolfjTUp76LpNj7X/Gw2u9OVT
+         lA2rQ2cnpzqET0Sj2IWzg0jTiYtu6cz3rBpDG/h5df4HVfJVWcUGMAydFgak4HldCg
+         yjvbx6h0fC4neMZWruWmN2spKfWn+0bAiGb0txB4=
+Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
-In-Reply-To: <20190815110944.3579-4-murphyt7@tcd.ie>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-GB
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <20190819165255.GA26807@tuxbook-pro>
+References: <1565037226-1684-1-git-send-email-jcrouse@codeaurora.org> <20190807234232.27AA720880@mail.kernel.org> <20190819165255.GA26807@tuxbook-pro>
+Subject: Re: [PATCH v2] drivers: qcom: Add BCM vote macro to header
+From:   Stephen Boyd <sboyd@kernel.org>
+Cc:     Jordan Crouse <jcrouse@codeaurora.org>,
+        freedreno@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
+        Michael Turquette <mturquette@baylibre.com>,
+        linux-pm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Andy Gross <agross@kernel.org>,
+        Georgi Djakov <georgi.djakov@linaro.org>,
+        linux-clk@vger.kernel.org, Taniya Das <tdas@codeaurora.org>
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>
+User-Agent: alot/0.8.1
+Date:   Mon, 19 Aug 2019 11:26:53 -0700
+Message-Id: <20190819182654.A950222CF6@mail.kernel.org>
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 15/08/2019 12:09, Tom Murphy wrote:
-> Handle devices which defer their attach to the iommu in the dma-iommu api
+Quoting Bjorn Andersson (2019-08-19 09:52:55)
+> On Wed 07 Aug 16:42 PDT 2019, Stephen Boyd wrote:
+>=20
+> > Quoting Jordan Crouse (2019-08-05 13:33:46)
+> > > The macro to generate a Bus Controller Manager (BCM) TCS command is u=
+sed
+> > > by the interconnect driver but might also be interesting to other
+> > > drivers that need to construct TCS commands for sub processors so move
+> > > it out of the sdm845 specific file and into the header.
+> > >=20
+> > > Signed-off-by: Jordan Crouse <jcrouse@codeaurora.org>
+> > > ---
+> >=20
+> > Acked-by: Stephen Boyd <sboyd@kernel.org>
+> >=20
+> > Unless this is supposed to be applied by me?
+> >=20
+> > BTW, I wonder why we need an rpm clk driver much at all nowadays, except
+> > maybe for the XO clk state. The big user, from what I can tell, is the
+> > interconnect driver and we don't use any of the features of the clk
+> > framework besides the API to set a frequency. Maybe it would be better
+> > to just push push the bus frequency logic into interconnect code, then
+> > XO clk is the only thing we need to keep, and it can be a simple on/off
+> > thing.
+> >=20
+>=20
+> There's been a number of cases where we'll need to enable the buffered
+> XOs, but perhaps these are handled by other subsystems these days(?)
+>=20
+> If so the one case that remains would be the operation of explicitly
+> holding CXO enabled during operations such as booting the remoteprocs.
+>=20
 
-Other than nitpicking the name (I'd lean towards something like 
-iommu_dma_deferred_attach),
+Yes I think the XO (and the buffers) is the only thing that we really
+seem to care about for the clk tree. Otherwise, the sole user is
+interconnect code and thus handling it in the rpmh clk driver doesn't
+really gain us anything. In fact, it just makes it worse because it ties
+the clk tree up with things that could take a while to process on the
+RPM side.
 
-Reviewed-by: Robin Murphy <robin.murphy@arm.com>
-
-> Signed-off-by: Tom Murphy <murphyt7@tcd.ie>
-> ---
->   drivers/iommu/dma-iommu.c | 27 ++++++++++++++++++++++++++-
->   1 file changed, 26 insertions(+), 1 deletion(-)
-> 
-> diff --git a/drivers/iommu/dma-iommu.c b/drivers/iommu/dma-iommu.c
-> index 2712fbc68b28..906b7fa14d3c 100644
-> --- a/drivers/iommu/dma-iommu.c
-> +++ b/drivers/iommu/dma-iommu.c
-> @@ -22,6 +22,7 @@
->   #include <linux/pci.h>
->   #include <linux/scatterlist.h>
->   #include <linux/vmalloc.h>
-> +#include <linux/crash_dump.h>
->   
->   struct iommu_dma_msi_page {
->   	struct list_head	list;
-> @@ -351,6 +352,21 @@ static int iommu_dma_init_domain(struct iommu_domain *domain, dma_addr_t base,
->   	return iova_reserve_iommu_regions(dev, domain);
->   }
->   
-> +static int handle_deferred_device(struct device *dev,
-> +	struct iommu_domain *domain)
-> +{
-> +	const struct iommu_ops *ops = domain->ops;
-> +
-> +	if (!is_kdump_kernel())
-> +		return 0;
-> +
-> +	if (unlikely(ops->is_attach_deferred &&
-> +		ops->is_attach_deferred(domain, dev)))
-> +		return iommu_attach_device(domain, dev);
-> +
-> +	return 0;
-> +}
-> +
->   /**
->    * dma_info_to_prot - Translate DMA API directions and attributes to IOMMU API
->    *                    page flags.
-> @@ -463,6 +479,9 @@ static dma_addr_t __iommu_dma_map(struct device *dev, phys_addr_t phys,
->   	size_t iova_off = iova_offset(iovad, phys);
->   	dma_addr_t iova;
->   
-> +	if (unlikely(handle_deferred_device(dev, domain)))
-> +		return DMA_MAPPING_ERROR;
-> +
->   	size = iova_align(iovad, size + iova_off);
->   
->   	iova = iommu_dma_alloc_iova(domain, size, dma_get_mask(dev), dev);
-> @@ -581,6 +600,9 @@ static void *iommu_dma_alloc_remap(struct device *dev, size_t size,
->   
->   	*dma_handle = DMA_MAPPING_ERROR;
->   
-> +	if (unlikely(handle_deferred_device(dev, domain)))
-> +		return NULL;
-> +
->   	min_size = alloc_sizes & -alloc_sizes;
->   	if (min_size < PAGE_SIZE) {
->   		min_size = PAGE_SIZE;
-> @@ -713,7 +735,7 @@ static dma_addr_t iommu_dma_map_page(struct device *dev, struct page *page,
->   	int prot = dma_info_to_prot(dir, coherent, attrs);
->   	dma_addr_t dma_handle;
->   
-> -	dma_handle =__iommu_dma_map(dev, phys, size, prot);
-> +	dma_handle = __iommu_dma_map(dev, phys, size, prot);
->   	if (!coherent && !(attrs & DMA_ATTR_SKIP_CPU_SYNC) &&
->   	    dma_handle != DMA_MAPPING_ERROR)
->   		arch_sync_dma_for_device(dev, phys, size, dir);
-> @@ -823,6 +845,9 @@ static int iommu_dma_map_sg(struct device *dev, struct scatterlist *sg,
->   	unsigned long mask = dma_get_seg_boundary(dev);
->   	int i;
->   
-> +	if (unlikely(handle_deferred_device(dev, domain)))
-> +		return 0;
-> +
->   	if (!(attrs & DMA_ATTR_SKIP_CPU_SYNC))
->   		iommu_dma_sync_sg_for_device(dev, sg, nents, dir);
->   
-> 
