@@ -2,80 +2,177 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 7651291D68
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 19 Aug 2019 08:58:33 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id CA8EE91D8F
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 19 Aug 2019 09:10:26 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726628AbfHSG5J (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 19 Aug 2019 02:57:09 -0400
-Received: from mail-pl1-f193.google.com ([209.85.214.193]:43825 "EHLO
-        mail-pl1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726627AbfHSG5I (ORCPT
+        id S1726295AbfHSHK0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 19 Aug 2019 03:10:26 -0400
+Received: from mail-vs1-f65.google.com ([209.85.217.65]:40580 "EHLO
+        mail-vs1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726132AbfHSHK0 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 19 Aug 2019 02:57:08 -0400
-Received: by mail-pl1-f193.google.com with SMTP id 4so500619pld.10
-        for <linux-arm-msm@vger.kernel.org>; Sun, 18 Aug 2019 23:57:08 -0700 (PDT)
+        Mon, 19 Aug 2019 03:10:26 -0400
+Received: by mail-vs1-f65.google.com with SMTP id i128so525854vsc.7
+        for <linux-arm-msm@vger.kernel.org>; Mon, 19 Aug 2019 00:10:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=7k//502CULWRlumB5LUfrkH+oVCgs4LxV1yBK5FQWw8=;
-        b=n8Pzfswhm9FPBsuTbYIHw3yt1vfkqvLayOSdP1/ZW5QfVYXmUG6Uf15GKoYaiwOzM/
-         83br5UBUAxGwaXZEhBEF8hvzVqchUhiLfoSEWCUICWSFL+tG7LOQyxisR3JCGkAAtz2f
-         9QbVzrNmosPVKq8kNz3DCin3Mebh1i7kdOYyUBR2vdkxgcKVFE86fAMG+nWNzzqVb0Gx
-         uHCCEPU948leGvaytsBRo495cS4T3QwuqgTgrXicF4xyR64gNWoumRAoTkT4xbO7sGpl
-         KGH9DBNL8U7ANBSyYIJV7f7IGoXaLjiNMLDKIoIPOOFCdKxQdx6zviuTXH5joz29eJND
-         wOlg==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=y8m3DvKUVQn6N1HW0gIQQ7gYIdKX67/oqlvKN4V7k4g=;
+        b=jvyr15lA21Gvj4GxmkpqfAs4cs8toEwumYAI5Ol1FCuRGLqSlPz7Mms3ar2WAZPXB7
+         VFrfZY71I0tDrKSd9mnQXL+xgzGvJv6pcWczggTeiMURjlba3lyn27n+rL/6lYdUf6FW
+         nV9CYw8nSY2nYfw4Ogx98BixH2z/KKzie18FdS9HrbR76GbI3qqWEvPP/2L8JXg30e0y
+         j9RqJQ7efJJPJSlKMZaP7CarkNDd/Pr837CAzo97JCNqNVseQFI/2pRrOqJq4UaowVQg
+         NFtn8HbfBJ3OPNBmWRC5Etm7p9qYAzeKvmuTc5IXfggdwzqvVppSootMavqklZnPfPYu
+         5cAQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=7k//502CULWRlumB5LUfrkH+oVCgs4LxV1yBK5FQWw8=;
-        b=XAhQBu0X5AHM3z5HM/W29FY+yxeXphshRocirtcT02rK82wPkC8ApYnGAD4wqv3uKB
-         2ROyfTzWnyRen/UnrgsDZ1cHqK1tjf0aQaWN3f1sVoCXzXe3cjjnVAYmjbmMMWGJip4x
-         FibxyPrM/IQ8kJFdzpivLSSc9HMR9bDNXw4R1nhjhPI1jN7beVtlkoRNwGI0dsdJfZpe
-         jfQoLlGVtGD/qetljjXibyIIkKJv5DVkAcDBPfejVpBS7gidY/5pwEZM6V3KnGIXSr8x
-         5tHSvstx2rj1skERPv4AcpTCqHb3K2eMQl7MWRBETrWfJXg6xrJGhqNj2GDf81CSYpFY
-         zrdw==
-X-Gm-Message-State: APjAAAWlrVaTCK5QhKCKkXUuGjQPPKgysUCtbE6AEhD+DbPOdQMHQVgz
-        idg5HOSEb2mmPWtd0Gvf4Sf2Fw==
-X-Google-Smtp-Source: APXvYqwtIiM2jQQRDwVLMDAvkIOLbhorGtgsQRqJtncX40+Y0g09W50Mmph5+k2/rKckttxro5j/tA==
-X-Received: by 2002:a17:902:ca:: with SMTP id a68mr20639505pla.204.1566197828124;
-        Sun, 18 Aug 2019 23:57:08 -0700 (PDT)
-Received: from localhost ([122.172.76.219])
-        by smtp.gmail.com with ESMTPSA id a23sm14891521pfo.80.2019.08.18.23.57.07
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sun, 18 Aug 2019 23:57:07 -0700 (PDT)
-Date:   Mon, 19 Aug 2019 12:27:05 +0530
-From:   Viresh Kumar <viresh.kumar@linaro.org>
-To:     Quentin Perret <quentin.perret@arm.com>
-Cc:     Douglas Raillard <douglas.raillard@arm.com>,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-pm@vger.kernel.org, rjw@rjwysocki.net, agross@kernel.org
-Subject: Re: [PATCH 1/2] cpufreq: drivers: Enable frequency invariance in
- qcom-cpufreq-hw
-Message-ID: <20190819065705.qhcb4ohtsekik3q2@vireshk-i7>
-References: <20190808131857.21082-1-douglas.raillard@arm.com>
- <20190808173230.53ddupihjlr6uvne@queper01-lin>
- <14762a81-a81d-d05f-b42a-495dacb28168@arm.com>
- <20190809103704.fatayhzso2b62fmx@queper01-lin>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=y8m3DvKUVQn6N1HW0gIQQ7gYIdKX67/oqlvKN4V7k4g=;
+        b=Hj8m0O+uA/tOtSXoaiIxDGMAkyHIbd8kDBMjZS4HiLMm2PDRy8gfCsnEoNe1qCvouq
+         iTpL5VkYOQeiArEsDYG2wQaF5iHqRh/Ger40I7bJAM9Ynx3vMswfJvdnPZ1/K7pyTD7v
+         ShI+VQWPjxDnBejF3FBKF4a/bRNSEccd18NcxXsiSTPWDbmH0OmH7RNqWFRBf0CUr1y4
+         aNRaCyHdGOUyuHdcxV/A0n71woTMEvXyC8Qco1Zrkj3UjbjQingx836P+TfxsH9sPzz7
+         A54w8KB7zgnKzm6OL98oZ3KxFJZRNtboPUBlm1Fv399SrAltCpw8VMJ1XZOc9MvoHqQx
+         q3QA==
+X-Gm-Message-State: APjAAAUOGj7FXV9ajGMXvsr8PxvFbUF3hV3/ao93fdMlo7NYTyWf0Ynf
+        w8vqThPpG0fAqZbkXL1KSOqz+P+vLeR8pSzCV981SQ==
+X-Google-Smtp-Source: APXvYqyo1QVfevP+pCL/x/t+F+qbPKOXd5mdJAlBG/8ol+QP2NTLeVb51tMsUI3hIwZTYTfKhFA/cIJmmmFhZ4bwWJk=
+X-Received: by 2002:a67:e181:: with SMTP id e1mr11761262vsl.159.1566198624539;
+ Mon, 19 Aug 2019 00:10:24 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20190809103704.fatayhzso2b62fmx@queper01-lin>
-User-Agent: NeoMutt/20180716-391-311a52
+References: <cover.1564091601.git.amit.kucheria@linaro.org>
+ <72bce036fa8cba3db6e5ba82249837ee46e9c077.1564091601.git.amit.kucheria@linaro.org>
+ <20190816213648.GA10244@bogus> <CAP245DVUKRxvU3wWygOFtZuwbvCxfW=wUH=xArOKmYiRZf+EXA@mail.gmail.com>
+ <CAL_Jsq+bymJXY-ffeuCc-15Vkmh88AsUAj5znBN+b-3YWP-Kqg@mail.gmail.com>
+In-Reply-To: <CAL_Jsq+bymJXY-ffeuCc-15Vkmh88AsUAj5znBN+b-3YWP-Kqg@mail.gmail.com>
+From:   Amit Kucheria <amit.kucheria@linaro.org>
+Date:   Mon, 19 Aug 2019 12:40:13 +0530
+Message-ID: <CAHLCerN6uOijzj4skWSRhNr+dSPZ6ysXV5AQjuY9tpa7ndbMUw@mail.gmail.com>
+Subject: Re: [PATCH 07/15] dt: thermal: tsens: Document interrupt support in
+ tsens driver
+To:     Rob Herring <robh@kernel.org>
+Cc:     Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Eduardo Valentin <edubezval@gmail.com>,
+        Andy Gross <andy.gross@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Daniel Lezcano <daniel.lezcano@linaro.org>,
+        Mark Rutland <mark.rutland@arm.com>,
+        Zhang Rui <rui.zhang@intel.com>,
+        Linux PM list <linux-pm@vger.kernel.org>,
+        DTML <devicetree@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 09-08-19, 11:37, Quentin Perret wrote:
-> Actually, one nit, the $subject should probably be formatted as:
-> 
->   cpufreq: qcom-hw: invoke frequency-invariance setter function
-> 
-> for consistency with other patches in this area.
+On Sun, Aug 18, 2019 at 12:55 AM Rob Herring <robh@kernel.org> wrote:
+>
+> On Fri, Aug 16, 2019 at 5:02 PM Amit Kucheria <amit.kucheria@linaro.org> wrote:
+> >
+> > On Sat, Aug 17, 2019 at 3:06 AM Rob Herring <robh@kernel.org> wrote:
+> > >
+> > > On Fri, Jul 26, 2019 at 03:48:42AM +0530, Amit Kucheria wrote:
+> > > > Define two new required properties to define interrupts and
+> > > > interrupt-names for tsens.
+> > > >
+> > > > Signed-off-by: Amit Kucheria <amit.kucheria@linaro.org>
+> > > > ---
+> > > >  Documentation/devicetree/bindings/thermal/qcom-tsens.txt | 5 +++++
+> > > >  1 file changed, 5 insertions(+)
+> > > >
+> > > > diff --git a/Documentation/devicetree/bindings/thermal/qcom-tsens.txt b/Documentation/devicetree/bindings/thermal/qcom-tsens.txt
+> > > > index 673cc1831ee9..3d3dd5dc6d36 100644
+> > > > --- a/Documentation/devicetree/bindings/thermal/qcom-tsens.txt
+> > > > +++ b/Documentation/devicetree/bindings/thermal/qcom-tsens.txt
+> > > > @@ -22,6 +22,8 @@ Required properties:
+> > > >
+> > > >  - #thermal-sensor-cells : Should be 1. See ./thermal.txt for a description.
+> > > >  - #qcom,sensors: Number of sensors in tsens block
+> > > > +- interrupts: Interrupts generated from Always-On subsystem (AOSS)
+> > > > +- interrupt-names: The name of the interrupt e.g. "tsens0", "tsens1"
+> > >
+> > > How many interrupts? A name with just indices isn't too useful.
+> >
+> > Depending on the version of the tsens IP, there can be 1 (upper/lower
+> > threshold), 2 (upper/lower + critical threshold) or 3 (upper/lower +
+> > critical + zero degree) interrupts. This patch series only introduces
+> > support for a single interrupt (upper/lower).
+>
+> I would expect a different compatible for each possibility.
 
-Applied with these changes. Thanks.
+We're currently using the 'qcom,tsens-v1' and 'qcom,tsens-v2'
+compatibles to broadly capture the feature (and register map)
+differences.
 
--- 
-viresh
+By defining the following, I should be able to check at runtime (using
+platform_get_irq_by_name() as suggested) if a particular interrupt
+type is available on the platform, no? So do we really require three
+different compatibles?
+
+    interrupt-names = "uplow", "crit", "cold"
+
+[1] Respin of older SoC with a newer version of IP
+
+> > I used the names tsens0, tsens1 to encapsulate the controller instance
+> > since some SoCs have 1 controller, others have two. So we'll end up
+> > with something like the following in DT:
+>
+> That's not really how *-names is supposed to work. The name is for
+> identifying what is at each index. Or to put it another way, a driver
+> should be able to use platform_get_irq_by_name(). So 'critical',
+> 'zero' and something for the first one.
+
+Fair point. I'll rework it to use "uplow", "crit" and "cold" or
+something to the effect.
+
+Is there another way I get the controller instance index in the name
+in /proc/interrupts?
+
+> > tsens0: thermal-sensor@c263000 {
+> >                         compatible = "qcom,sdm845-tsens", "qcom,tsens-v2";
+> >                         reg = <0 0x0c263000 0 0x1ff>, /* TM */
+> >                               <0 0x0c222000 0 0x1ff>; /* SROT */
+> >                         #qcom,sensors = <13>;
+> >                         interrupts = <GIC_SPI 506 IRQ_TYPE_LEVEL_HIGH>,
+> >                                      <GIC_SPI 508 IRQ_TYPE_LEVEL_HIGH>;
+> >                         interrupt-names = "tsens0", "tsens0-critical";
+> >                         #thermal-sensor-cells = <1>;
+> > };
+> >
+> > tsens1: thermal-sensor@c265000 {
+> >                         compatible = "qcom,sdm845-tsens", "qcom,tsens-v2";
+> >                         reg = <0 0x0c265000 0 0x1ff>, /* TM */
+> >                               <0 0x0c223000 0 0x1ff>; /* SROT */
+> >                         #qcom,sensors = <8>;
+> >                         interrupts = <GIC_SPI 507 IRQ_TYPE_LEVEL_HIGH>,
+> >                                      <GIC_SPI 509 IRQ_TYPE_LEVEL_HIGH>;
+> >                         interrupt-names = "tsens1", "tsens1-critical";
+> >                         #thermal-sensor-cells = <1>;
+> > }
+> >
+> > Does that work?
+> >
+> > Regards,
+> > Amit
+> >
+> > > >  - Refer to Documentation/devicetree/bindings/nvmem/nvmem.txt to know how to specify
+> > > >  nvmem cells
+> > > >
+> > > > @@ -40,6 +42,9 @@ tsens0: thermal-sensor@c263000 {
+> > > >               reg = <0xc263000 0x1ff>, /* TM */
+> > > >                       <0xc222000 0x1ff>; /* SROT */
+> > > >               #qcom,sensors = <13>;
+> > > > +             interrupts = <GIC_SPI 506 IRQ_TYPE_LEVEL_HIGH>;
+> > > > +             interrupt-names = "tsens0";
+> > > > +
+> > > >               #thermal-sensor-cells = <1>;
+> > > >       };
+> > > >
+> > > > --
+> > > > 2.17.1
+> > > >
