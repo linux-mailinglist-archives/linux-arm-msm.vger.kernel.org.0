@@ -2,89 +2,112 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 2151B91B7F
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 19 Aug 2019 05:34:05 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 8FA0991C0F
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 19 Aug 2019 06:33:30 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726491AbfHSDeE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 18 Aug 2019 23:34:04 -0400
-Received: from szxga07-in.huawei.com ([45.249.212.35]:47280 "EHLO huawei.com"
-        rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-        id S1726162AbfHSDeE (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 18 Aug 2019 23:34:04 -0400
-Received: from DGGEMS407-HUB.china.huawei.com (unknown [172.30.72.60])
-        by Forcepoint Email with ESMTP id 93D60F1F37B7C96B27CA;
-        Mon, 19 Aug 2019 11:33:59 +0800 (CST)
-Received: from localhost.localdomain.localdomain (10.175.113.25) by
- DGGEMS407-HUB.china.huawei.com (10.3.19.207) with Microsoft SMTP Server id
- 14.3.439.0; Mon, 19 Aug 2019 11:33:51 +0800
-From:   Mao Wenan <maowenan@huawei.com>
-To:     <agross@kernel.org>, <georgi.djakov@linaro.org>,
-        <linux-arm-msm@vger.kernel.org>, <linux-pm@vger.kernel.org>,
-        <sboyd@kernel.org>
-CC:     <linux-kernel@vger.kernel.org>, <kernel-janitors@vger.kernel.org>,
-        "Mao Wenan" <maowenan@huawei.com>
-Subject: [PATCH v2 linux-next] qcom: qcs404: move COMPILE_TEST to INTERCONNECT_QCOM
-Date:   Mon, 19 Aug 2019 11:37:47 +0800
-Message-ID: <20190819033747.38339-1-maowenan@huawei.com>
-X-Mailer: git-send-email 2.20.1
-In-Reply-To: <20190818010905.7AD602173B@mail.kernel.org>
-References: <20190818010905.7AD602173B@mail.kernel.org>
+        id S1725958AbfHSEd1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 19 Aug 2019 00:33:27 -0400
+Received: from mail-pf1-f194.google.com ([209.85.210.194]:36503 "EHLO
+        mail-pf1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725768AbfHSEd1 (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 19 Aug 2019 00:33:27 -0400
+Received: by mail-pf1-f194.google.com with SMTP id w2so404674pfi.3
+        for <linux-arm-msm@vger.kernel.org>; Sun, 18 Aug 2019 21:33:26 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=72ELnDTzM6YoNYA5xuMcBDOagLAJM+myxC5fFXnFV48=;
+        b=Z9vuTLauhILmFT4izzT0W9vrtgqP/Xr0XOa45NfzQa5oXQEh15wihhLl9XXLTBEyfS
+         PGuiI5f1/qyvjSDjE7/U3rMq8VEh/8Z3XlXNAPid/v+5T/L1dckkH4m68hOzakwYsmiS
+         DR4jU7yr8VWRNYqwux35MvR3ALybBBLxvrJ29v88gCnILUTZNjv07FH4zuXQZiOE4Bek
+         z3AjR4vwfq3poqp2dvl0cnpg6DLBxxeI+YURikqDXfQMxaIYf4C6aFRwebA4kkbqBXYg
+         K4S2rOTLfy9dpAB3cPRCdHq8mO5StS09+MNiM/OJkPQrgAKaNxuLijm3Cni0/J+X5E0K
+         mUrA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=72ELnDTzM6YoNYA5xuMcBDOagLAJM+myxC5fFXnFV48=;
+        b=qIR2JURh6BuvDX0fGfBBCJ7DSHbDnhnIn+Pw6GIvw+jaWpvW/aHABZkfv4awVU639l
+         bfGtdgEOmOIGpk6JOAAbb21J/syb4K0X73Q+EkiWUP5Mt4yJ/3liNMdBbU7NQnlRJYrt
+         XNzBDOagf+Xha9Yz0PVuRiu/cubwpbvr+dE63lCsfgo463HsXnPzqKQJf/oAL/bgEzFq
+         JE16zW5n4xX3lLS7RU104oQxG3H6OyrNHC3cFcVbzWOfPmoU3vP4DnovkXtPE49WLtOT
+         fLTejrC0eT6Fqlo5F0eSZU00uMS8L/Aa/niR0MsPpM5fTLWBKuQ5NR+SGiYXCyTzhQvQ
+         5qyg==
+X-Gm-Message-State: APjAAAVtgTh1XM8xUSNo/kefvNyf1E+FVPLgiNXlMTsoQtyVa1a0Fv87
+        xJiIt/NILfgCyiWfR2nuh5w1Cw==
+X-Google-Smtp-Source: APXvYqx0GITYVJU0+6/P8ffsNYIHIW1krQG1LL8IcUsIyyFWccg1orw3OU3X7LPPaX0vGUeYIUGxjA==
+X-Received: by 2002:a63:62c6:: with SMTP id w189mr18101877pgb.312.1566189206207;
+        Sun, 18 Aug 2019 21:33:26 -0700 (PDT)
+Received: from tuxbook-pro (104-188-17-28.lightspeed.sndgca.sbcglobal.net. [104.188.17.28])
+        by smtp.gmail.com with ESMTPSA id f14sm15192021pfn.53.2019.08.18.21.33.24
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 18 Aug 2019 21:33:25 -0700 (PDT)
+Date:   Sun, 18 Aug 2019 21:35:08 -0700
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     Mark Brown <broonie@kernel.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        kernel-build-reports@lists.linaro.org,
+        linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+        linux-arm-msm@vger.kernel.org
+Subject: Re: next/master boot: 254 boots: 16 failed, 231 passed with 4
+ offline, 1 untried/unknown, 2 conflicts (next-20190726)
+Message-ID: <20190819043508.GY26807@tuxbook-pro>
+References: <5d3aef79.1c69fb81.111b9.a701@mx.google.com>
+ <20190726134843.GC55803@sirena.org.uk>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 7BIT
-Content-Type:   text/plain; charset=US-ASCII
-X-Originating-IP: [10.175.113.25]
-X-CFilter-Loop: Reflected
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20190726134843.GC55803@sirena.org.uk>
+User-Agent: Mutt/1.12.1 (2019-06-15)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-There is one compilation error when CONFIG_INTERCONNECT_QCOM_QCS404=y and
-CONFIG_INTERCONNECT_QCOM_SMD_RPM=y, as well as CONFIG_COMPILE_TEST=y,
-but CONFIG_QCOM_SMD_RPM is not set, logs as below:
+On Fri 26 Jul 06:48 PDT 2019, Mark Brown wrote:
 
-drivers/interconnect/qcom/smd-rpm.o: In function `qcom_icc_rpm_smd_send':
-smd-rpm.c:(.text+0xe4): undefined reference to `qcom_rpm_smd_write'
-Makefile:1071: recipe for target 'vmlinux' failed
-make: *** [vmlinux] Error 1
+> On Fri, Jul 26, 2019 at 05:18:01AM -0700, kernelci.org bot wrote:
+> 
+> The past few versions of -next failed to boot on apq8096-db820c:
+> 
+> >     defconfig:
+> >         gcc-8:
+> >             apq8096-db820c: 1 failed lab
+> 
+> with an RCU stall towards the end of boot:
+> 
+> 00:03:40.521336  [   18.487538] qcom_q6v5_pas adsp-pil: adsp-pil supply px not found, using dummy regulator
+> 00:04:01.523104  [   39.499613] rcu: INFO: rcu_preempt detected stalls on CPUs/tasks:
+> 00:04:01.533371  [   39.499657] rcu: 	2-...!: (0 ticks this GP) idle=9ca/1/0x4000000000000000 softirq=1450/1450 fqs=50
+> 00:04:01.537544  [   39.504689] 	(detected by 0, t=5252 jiffies, g=2425, q=619)
+> 00:04:01.541727  [   39.513539] Task dump for CPU 2:
+> 00:04:01.547929  [   39.519096] seq             R  running task        0   199    198 0x00000000
+> 
+> Full details and logs at:
+> 
+> 	https://kernelci.org/boot/id/5d3aa7ea59b5142ba868890f/
+> 
+> The last version that worked was from the 15th and there seem to be
+> similar issues in mainline since -rc1.
 
-This is because
-INTERCONNECT_QCOM_QCS404 depends on QCOM_SMD_RPM || COMPILE_TEST.
-Here CONFIG_COMPILE_TEST=y, so CONFIG_INTERCONNECT_QCOM_SMD_RPM
-is selected. If CONFIG_QCOM_SMD_RPM is not set, then
-qcom_rpm_smd_write() is not defined, and compilation error happen.
-Fix this by moving COMPILE_TEST from CONFIG_INTERCONNECT_QCOM_QCS404 to
-CONFIG_INTERCONNECT_QCOM, qcom's interconnect drivers can be compiled on
-different platform.
+As you might have seen this problem has come and gone on the
+apq8096-db820c and I've finally managed to narrow it down a little bit.
 
-Fixes: 5e4e6c4d3ae0 ("interconnect: qcom: Add QCS404 interconnect provider driver")
-Signed-off-by: Mao Wenan <maowenan@huawei.com>
----
- v2: change subject of patch, and move COMPILE_TEST to INTERCONNECT_QCOM.
- drivers/interconnect/qcom/Kconfig | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+The problem first appears on next-20190701, with the introduction of
+CONFIG_RANDOMIZE_BASE in the defconfig, but after further efforts I've
+concluded that disabling kpti removes or hides the problem.
 
-diff --git a/drivers/interconnect/qcom/Kconfig b/drivers/interconnect/qcom/Kconfig
-index 339e8f1..7207248 100644
---- a/drivers/interconnect/qcom/Kconfig
-+++ b/drivers/interconnect/qcom/Kconfig
-@@ -1,14 +1,14 @@
- # SPDX-License-Identifier: GPL-2.0-only
- config INTERCONNECT_QCOM
- 	bool "Qualcomm Network-on-Chip interconnect drivers"
--	depends on ARCH_QCOM
-+	depends on ARCH_QCOM || COMPILE_TEST
- 	help
- 	  Support for Qualcomm's Network-on-Chip interconnect hardware.
- 
- config INTERCONNECT_QCOM_QCS404
- 	tristate "Qualcomm QCS404 interconnect driver"
- 	depends on INTERCONNECT_QCOM
--	depends on QCOM_SMD_RPM || COMPILE_TEST
-+	depends on QCOM_SMD_RPM
- 	select INTERCONNECT_QCOM_SMD_RPM
- 	help
- 	  This is a driver for the Qualcomm Network-on-Chip on qcs404-based
--- 
-2.7.4
+With kpti=no on the command line I've now successfully booted the db820c
+100+ times without problems (a clear improvement from the 75% failure
+rate with kpti=yes).
 
+
+Unfortunately I'm not yet certain why this is causing issues and I'm
+also seeing the same rcu stall on SDA845 under certain (erroneous?)
+conditions (where I don't expect them). 
+
+Regards,
+Bjorn
