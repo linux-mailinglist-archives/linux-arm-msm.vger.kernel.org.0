@@ -2,233 +2,97 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 0AF85949AF
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 19 Aug 2019 18:19:57 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 8A19494A7F
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 19 Aug 2019 18:39:12 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727353AbfHSQT4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 19 Aug 2019 12:19:56 -0400
-Received: from mail-pl1-f194.google.com ([209.85.214.194]:35800 "EHLO
-        mail-pl1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726949AbfHSQT4 (ORCPT
+        id S1727525AbfHSQiJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 19 Aug 2019 12:38:09 -0400
+Received: from smtp.codeaurora.org ([198.145.29.96]:48900 "EHLO
+        smtp.codeaurora.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726168AbfHSQiJ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 19 Aug 2019 12:19:56 -0400
-Received: by mail-pl1-f194.google.com with SMTP id gn20so1198626plb.2
-        for <linux-arm-msm@vger.kernel.org>; Mon, 19 Aug 2019 09:19:55 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=broadcom.com; s=google;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-transfer-encoding:content-language;
-        bh=IKQPktxfBXL0jaMh5fXrtktV3oFNbQQrLd0UoqhuRhc=;
-        b=DMMQAXvJwkyqlEk1Z2h6vxJfOKFQi1ug7u+ZCzbyrKi+g/PxG2u7ifgSTSxzvSFtTP
-         NJJMZIEShk0FdmE/MIxJo6xftNZtiYT8lUOEb6UB5ZW8t/hX6r7XTUGfwL2XWBBCgW5C
-         KhxIeYon6r88GtPZSxPpSVLKZ5sjyT76+UC2M=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-transfer-encoding
-         :content-language;
-        bh=IKQPktxfBXL0jaMh5fXrtktV3oFNbQQrLd0UoqhuRhc=;
-        b=hON4mOX4XJWAjEDVV7y495Rdjw15Ore9qWD0QVcR+SaekGlWKGJRambvqUl10NAgid
-         8DbtqvTYICPIYaDd5iyjQb4Wcco+eJA4lZdia+ZZEvBtnI+5L7ys4MwjPyRxd84Wci+o
-         16g5qy3s9wCI2UXp2UmXx2z9QbZaq6Zt7EM0CkpsRVbF4vk/SaGiY+amfdFIJjvmQ/w7
-         Mybf3IQiku/kmrffgn2XrPN7eEupeDvZYh3v9tm910PY8kzaf9J2TWVQkDr3PDJEIKP4
-         fQGDOZtZIU7pPoM3c1RLyPHnn1TCuPA1CBPHmJoNNyS8ui+pDMUs3MB85BV+vjhi/c+7
-         +YWw==
-X-Gm-Message-State: APjAAAXsRNh0YeLNcTrG4M1O03FjhvgVZ8WH7dI56Pvl9Y6kd7OElkYQ
-        7dqAN9HhnSco7ipg+HBeNDEnYQ==
-X-Google-Smtp-Source: APXvYqwggUe1ybtvS8MZcOslAorQNN7iDpcavR1/jeVJFyWXp1Q8jgD3DpZL12K988TGev7L7T6nYg==
-X-Received: by 2002:a17:902:b591:: with SMTP id a17mr23927025pls.189.1566231594942;
-        Mon, 19 Aug 2019 09:19:54 -0700 (PDT)
-Received: from [10.136.13.65] ([192.19.228.250])
-        by smtp.gmail.com with ESMTPSA id c22sm8016983pfi.82.2019.08.19.09.19.52
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 19 Aug 2019 09:19:54 -0700 (PDT)
-Subject: Re: [PATCH 3/3] firmware: add mutex fw_lock_fallback for race
- condition
-To:     Luis Chamberlain <mcgrof@kernel.org>
-Cc:     Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Andy Gross <andy.gross@linaro.org>,
-        David Brown <david.brown@linaro.org>,
-        Alexander Viro <viro@zeniv.linux.org.uk>,
-        Shuah Khan <shuah@kernel.org>, bjorn.andersson@linaro.org,
-        "Rafael J . Wysocki" <rafael@kernel.org>,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-fsdevel@vger.kernel.org,
-        BCM Kernel Feedback <bcm-kernel-feedback-list@broadcom.com>,
-        Olof Johansson <olof@lixom.net>,
-        Andrew Morton <akpm@linux-foundation.org>,
-        Dan Carpenter <dan.carpenter@oracle.com>,
-        Colin Ian King <colin.king@canonical.com>,
-        Kees Cook <keescook@chromium.org>,
-        Takashi Iwai <tiwai@suse.de>, linux-kselftest@vger.kernel.org
-References: <20190816000945.29810-1-scott.branden@broadcom.com>
- <20190816000945.29810-4-scott.branden@broadcom.com>
- <20190819053937.GR16384@42.do-not-panic.com>
-From:   Scott Branden <scott.branden@broadcom.com>
-Message-ID: <16823ee6-c52a-b3b5-caed-79c00772fa68@broadcom.com>
-Date:   Mon, 19 Aug 2019 09:19:51 -0700
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.8.0
+        Mon, 19 Aug 2019 12:38:09 -0400
+Received: by smtp.codeaurora.org (Postfix, from userid 1000)
+        id C46DC60265; Mon, 19 Aug 2019 16:38:08 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
+        s=default; t=1566232688;
+        bh=UMfZfA6yghk+4t5zaNzbuEq+Ypcrq2SNh7K2xh44ZEM=;
+        h=From:To:Cc:Subject:Date:From;
+        b=HosiR+drD9zHL2rUrUEgyq1MKVjFvm6hvZQbTw10ItYenKm/pnIzUEetpAiLfWSqP
+         AxgzO5PXtLahOJMPrdrnTrmjLZhX2POZqRhpnHfPTyzE5PXUoSU7wVmMnwZlvXUYZf
+         U1uqTht1rt/a7ykPm2Sth61WynjRcU7Mgk5EXUW8=
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        pdx-caf-mail.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.7 required=2.0 tests=ALL_TRUSTED,BAYES_00,
+        DKIM_INVALID,DKIM_SIGNED,SPF_NONE autolearn=no autolearn_force=no
+        version=3.4.0
+Received: from tdas-linux.qualcomm.com (blr-c-bdr-fw-01_globalnat_allzones-outside.qualcomm.com [103.229.19.19])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: tdas@smtp.codeaurora.org)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id DC96460112;
+        Mon, 19 Aug 2019 16:38:03 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
+        s=default; t=1566232687;
+        bh=UMfZfA6yghk+4t5zaNzbuEq+Ypcrq2SNh7K2xh44ZEM=;
+        h=From:To:Cc:Subject:Date:From;
+        b=X4/g8DMp8iFC90knWsQjEjT/hke9dmRRru/aSGg5aQQ1pp8BPzpUrmljXyFYNrgyw
+         gU2gif94WdcVLF7RsW8ditv8KOZoawgn8G2beh3wKlyN4g5lq+3CjCWHNCaqk1Tt34
+         oPoLoMdMNrrmATiuV8M9Xypq5xcDeC4oPp47EaiY=
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org DC96460112
+Authentication-Results: pdx-caf-mail.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: pdx-caf-mail.web.codeaurora.org; spf=none smtp.mailfrom=tdas@codeaurora.org
+From:   Taniya Das <tdas@codeaurora.org>
+To:     Stephen Boyd <sboyd@kernel.org>,
+        =?UTF-8?q?Michael=20Turquette=20=C2=A0?= <mturquette@baylibre.com>,
+        robh+dt@kernel.org
+Cc:     David Brown <david.brown@linaro.org>,
+        Rajendra Nayak <rnayak@codeaurora.org>,
+        linux-arm-msm@vger.kernel.org, linux-soc@vger.kernel.org,
+        linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org,
+        devicetree@vger.kernel.org, Taniya Das <tdas@codeaurora.org>
+Subject: [PATCH v2 0/3] Add Global Clock controller (GCC) driver for SC7180
+Date:   Mon, 19 Aug 2019 22:07:45 +0530
+Message-Id: <20190819163748.18318-1-tdas@codeaurora.org>
+X-Mailer: git-send-email 2.22.0
 MIME-Version: 1.0
-In-Reply-To: <20190819053937.GR16384@42.do-not-panic.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Content-Language: en-US
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Luis,
+[v2]
+ * Update the DFS macro for RCG to reflect the hw init similar to clock
+   name.
+ * Update the Documentation binding of GCC to YAML schemas.
+ * Add comments for CRITICAL clocks, remove PLL forward declarations and
+   unwanted comments/prints.
 
-Thanks for the review.
+[v1]
+  * Add driver support for Global Clock controller for SC7180 and also
+    update device tree bindings for the various clocks supported in the
+    clock controller.
 
-I did not think this patch would be the final solution either
+Taniya Das (3):
+  clk: qcom: rcg: update the DFS macro for RCG
+  dt-bindings: clk: qcom: Add YAML schemas for the GCC clock bindings
+  clk: qcom: Add Global Clock controller (GCC) driver for SC7180
 
-as indicated in the original cover letter and code comment.
+ .../devicetree/bindings/clock/qcom,gcc.yaml   |  141 +
+ drivers/clk/qcom/Kconfig                      |   10 +-
+ drivers/clk/qcom/Makefile                     |    1 +
+ drivers/clk/qcom/clk-rcg.h                    |    2 +-
+ drivers/clk/qcom/gcc-sc7180.c                 | 2497 +++++++++++++++++
+ drivers/clk/qcom/gcc-sdm845.c                 |   96 +-
+ include/dt-bindings/clock/qcom,gcc-sc7180.h   |  155 +
+ 7 files changed, 2852 insertions(+), 50 deletions(-)
+ create mode 100644 Documentation/devicetree/bindings/clock/qcom,gcc.yaml
+ create mode 100644 drivers/clk/qcom/gcc-sc7180.c
+ create mode 100644 include/dt-bindings/clock/qcom,gcc-sc7180.h
 
-Some comments inline.
+--
+Qualcomm INDIA, on behalf of Qualcomm Innovation Center, Inc.is a member
+of the Code Aurora Forum, hosted by the  Linux Foundation.
 
-On 2019-08-18 10:39 p.m., Luis Chamberlain wrote:
-
-> On Thu, Aug 15, 2019 at 05:09:45PM -0700, Scott Branden wrote:
->> A race condition exists between _request_firmware_prepare checking
->> if firmware is assigned and firmware_fallback_sysfs creating a sysfs
->> entry (kernel trace below).  To avoid such condition add a mutex
->> fw_lock_fallback to protect against such condition.
-> I am not buying this fix, and it seems sloppy. More below.
->
->> misc test_firmware: Falling back to sysfs fallback for: nope-test-firmware.bin
-> So the fallback kicks in with the file that is not there.
->
->> sysfs: cannot create duplicate filename '/devices/virtual/misc/test_firmware/nope-test-firmware.bin'
-> And we have a duplicate entry, for the *device* created to allow us to
-> create a file entry to allow us to copy the file. Your tests had a loop,
-> so there is actually a race between two entries being created while
-> one one failed.
->
->> CPU: 4 PID: 2059 Comm: test_firmware-3 Not tainted 5.3.0-rc4 #1
->> Hardware name: Dell Inc. OptiPlex 7010/0KRC95, BIOS A13 03/25/2013
->> Call Trace:
->>   dump_stack+0x67/0x90
->>   sysfs_warn_dup.cold+0x17/0x24
->>   sysfs_create_dir_ns+0xb3/0xd0
->>   kobject_add_internal+0xa6/0x2a0
->>   kobject_add+0x7e/0xb0
-> Note: kobject_add().
->
->>   ? _cond_resched+0x15/0x30
->>   device_add+0x121/0x670
->>   firmware_fallback_sysfs+0x15c/0x3c9
->>   _request_firmware+0x432/0x5a0
->>   ? devres_find+0x63/0xc0
->>   request_firmware_into_buf+0x63/0x80
->>   test_fw_run_batch_request+0x96/0xe0
->>   kthread+0xfb/0x130
->>   ? reset_store+0x30/0x30
->>   ? kthread_park+0x80/0x80
->>   ret_from_fork+0x3a/0x50
->> kobject_add_internal failed for nope-test-firmware.bin with -EEXIST, don't try to register things with the same name in the same directory.
-> So above it makes it even clearer, two kobjets with the same name.
->
->> Signed-off-by: Scott Branden <scott.branden@broadcom.com>
->> ---
->>   drivers/base/firmware_loader/main.c | 15 +++++++++++++++
->>   1 file changed, 15 insertions(+)
->>
->> diff --git a/drivers/base/firmware_loader/main.c b/drivers/base/firmware_loader/main.c
->> index bf44c79beae9..ce9896e3b782 100644
->> --- a/drivers/base/firmware_loader/main.c
->> +++ b/drivers/base/firmware_loader/main.c
->> @@ -88,6 +88,7 @@ static inline struct fw_priv *to_fw_priv(struct kref *ref)
->>   /* fw_lock could be moved to 'struct fw_sysfs' but since it is just
->>    * guarding for corner cases a global lock should be OK */
->>   DEFINE_MUTEX(fw_lock);
->> +DEFINE_MUTEX(fw_lock_fallback);
-> The reason I don't like this fix is that this mutex is named after ther
-> fallback interface... but...
->
->>   
->>   static struct firmware_cache fw_cache;
->>   
->> @@ -758,6 +759,17 @@ _request_firmware(const struct firmware **firmware_p, const char *name,
->>   	if (!firmware_p)
->>   		return -EINVAL;
->>   
->> +	/*
->> +	 * There is a race condition between _request_firmware_prepare checking
->> +	 * if firmware is assigned and firmware_fallback_sysfs creating sysfs
->> +	 * entries with duplicate names.
->> +	 * Yet, with this lock the firmware_test locks up with cache enabled
->> +	 * and no event used during firmware test.
->> +	 * This points to some very racy code I don't know how to entirely fix.
->> +	 */
->> +	if (opt_flags & FW_OPT_NOCACHE)
->> +		mutex_lock(&fw_lock_fallback);
-> Whoa.. What does no-cache have anything to do with the fallback interface
-> other than the fact we enable this feature for the fallback interface?
-> We don't need to penalize non-fallback users who *also* may want to
-> enable the no-cache feature.
->
-> So, the fix should be within the boundaries of the creation / deletion
-> of the kobject, not this nocache feature. Can you please re-evaluate
-> this code and look for a more compartamentalized solution to the
-> fallback code only?
-
-To be honest, I find the entire firmware code sloppy.  I don't think the 
-cache/no-cache feature is
-
-implemented or tested properly nor fallback to begin with.  I'm not 
-claiming this patch is the final
-
-solution and indicated such in the cover letter and the comment above.
-
-I hope there is someone more familiar with this code to comment further 
-and come up with a proper solution.
-
-
-I have found numerous issues and race conditions with the firmware code 
-(I simply added a test).
-
-1) Try loading the same valid firmware using no-cache once it has 
-already been loaded with cache.
-
-It won't work, which is why I had to use a different filename in the 
-test for request_firmware_into_buf.
-
-2) Try removing the "if (opt_flags & FW_OPT_NOCACHE)" in my patch and 
-always call the mutex.
-
-The firmware test will lock up during a "no uevent" test.  I am not 
-familiar with the code to
-
-know why such is true and what issue this exposes in the code.
-
-3) I have a driver that uses request_firmware_into_buf and have multiple 
-instances of the driver
-
-loading the same firmware in parallel.  Some of the data is not read 
-correctly in each instance.
-
-I haven't yet to reproduce this issue with the firmware test but 
-currently have a mutex around the entire
-
-call to request_firmware_into_buf in our driver.
-
-
-Perhaps it is better at this point to add a mutex in 
-request_firmware_into_buf to make is entirely safe?
-
-(Perhaps even with every request_firmware functions as none seems to be 
-tested properly.)
-
-Or, add a new function called safe_request_firmware_into_buf with such 
-mutex to protect the function.
-
-The current racey request_firmware functions could then be left alone 
-and those who want reliable
-
-firmware loading can use the safe calls?
-
->
->    Luis
