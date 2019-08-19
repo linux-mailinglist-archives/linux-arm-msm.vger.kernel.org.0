@@ -2,27 +2,27 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id AEA0291E29
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 19 Aug 2019 09:43:31 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 6DA8C91E2F
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 19 Aug 2019 09:43:34 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727149AbfHSHlz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 19 Aug 2019 03:41:55 -0400
-Received: from mail.kernel.org ([198.145.29.99]:60814 "EHLO mail.kernel.org"
+        id S1727194AbfHSHmI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 19 Aug 2019 03:42:08 -0400
+Received: from mail.kernel.org ([198.145.29.99]:32858 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726211AbfHSHlz (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 19 Aug 2019 03:41:55 -0400
+        id S1726863AbfHSHmI (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 19 Aug 2019 03:42:08 -0400
 Received: from localhost.localdomain (unknown [122.182.221.154])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 5A65520989;
-        Mon, 19 Aug 2019 07:41:41 +0000 (UTC)
+        by mail.kernel.org (Postfix) with ESMTPSA id AAF5B21852;
+        Mon, 19 Aug 2019 07:41:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1566200514;
-        bh=Qz8PhyWf0+VgB0haEtXhkGUqS2uIp+Tg4BMmWfb6Lc4=;
+        s=default; t=1566200527;
+        bh=CRQSHqFBMc6sLh9k3bOqJZWm1U3UdoXRaWCDRv5aItI=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=om0PAXLo9bcOZ51YHgZYNxMkClVhQWeXEUXBj/3cVgJOgZonFGdFqbo3ch5uByCXj
-         mdLwzOjNCuJvP43JyOygL1cIveofL2/DNI160KLTCwPoH3SOWi7LQ/UdV+k3MqjyG+
-         nFB/U9mqEV7XCJIrDqDjd+Irgc87TGvKTRKUcgS0=
+        b=Jq61l6DX+AdoLCvAiylNqIWRctgpHClySu9uOrQJnUM2NI+hhCSeyLTOiEQIMLZ7Y
+         Jk+ln5Rgth111ZVx7iYY/sAqgJUOHt6PZAkshRshCngOd8am/A3hT3r6uPfM0NRG4s
+         u0qHpJb/7wIbATbZ/1CEMSmGIEB2Hih+5JcF6Cjg=
 From:   Vinod Koul <vkoul@kernel.org>
 To:     Stephen Boyd <sboyd@kernel.org>
 Cc:     linux-arm-msm@vger.kernel.org,
@@ -32,9 +32,9 @@ Cc:     linux-arm-msm@vger.kernel.org,
         Rob Herring <robh+dt@kernel.org>,
         Mark Rutland <mark.rutland@arm.com>, linux-clk@vger.kernel.org,
         devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: [PATCH v2 2/4] clk: qcom: clk-rpmh: Convert to parent data scheme
-Date:   Mon, 19 Aug 2019 13:09:45 +0530
-Message-Id: <20190819073947.17258-3-vkoul@kernel.org>
+Subject: [PATCH v2 3/4] dt-bindings: clock: Document SM8150 rpmh-clock compatible
+Date:   Mon, 19 Aug 2019 13:09:46 +0530
+Message-Id: <20190819073947.17258-4-vkoul@kernel.org>
 X-Mailer: git-send-email 2.20.1
 In-Reply-To: <20190819073947.17258-1-vkoul@kernel.org>
 References: <20190819073947.17258-1-vkoul@kernel.org>
@@ -45,42 +45,29 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Convert the rpmh clock driver to use the new parent data scheme by
-specifying the parent data for board clock.
+Document the SM8150 rpmh-clock compatible for rpmh clock controller
+found on SM8150 platforms.
 
 Signed-off-by: Vinod Koul <vkoul@kernel.org>
 ---
- drivers/clk/qcom/clk-rpmh.c | 10 ++++++++--
- 1 file changed, 8 insertions(+), 2 deletions(-)
+ Documentation/devicetree/bindings/clock/qcom,rpmh-clk.txt | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/clk/qcom/clk-rpmh.c b/drivers/clk/qcom/clk-rpmh.c
-index c3fd632af119..16d689e5bb3c 100644
---- a/drivers/clk/qcom/clk-rpmh.c
-+++ b/drivers/clk/qcom/clk-rpmh.c
-@@ -95,7 +95,10 @@ static DEFINE_MUTEX(rpmh_clk_lock);
- 		.hw.init = &(struct clk_init_data){			\
- 			.ops = &clk_rpmh_ops,				\
- 			.name = #_name,					\
--			.parent_names = (const char *[]){ "xo_board" },	\
-+			.parent_data =  &(const struct clk_parent_data){ \
-+					.fw_name = "xo",		\
-+					.name = "xo",		\
-+			},						\
- 			.num_parents = 1,				\
- 		},							\
- 	};								\
-@@ -110,7 +113,10 @@ static DEFINE_MUTEX(rpmh_clk_lock);
- 		.hw.init = &(struct clk_init_data){			\
- 			.ops = &clk_rpmh_ops,				\
- 			.name = #_name_active,				\
--			.parent_names = (const char *[]){ "xo_board" },	\
-+			.parent_data =  &(const struct clk_parent_data){ \
-+					.fw_name = "xo",		\
-+					.name = "xo",		\
-+			},						\
- 			.num_parents = 1,				\
- 		},							\
- 	}
+diff --git a/Documentation/devicetree/bindings/clock/qcom,rpmh-clk.txt b/Documentation/devicetree/bindings/clock/qcom,rpmh-clk.txt
+index 8b97968f9c88..365bbde599b1 100644
+--- a/Documentation/devicetree/bindings/clock/qcom,rpmh-clk.txt
++++ b/Documentation/devicetree/bindings/clock/qcom,rpmh-clk.txt
+@@ -6,7 +6,9 @@ some Qualcomm Technologies Inc. SoCs. It accepts clock requests from
+ other hardware subsystems via RSC to control clocks.
+ 
+ Required properties :
+-- compatible : shall contain "qcom,sdm845-rpmh-clk"
++- compatible : must be one of:
++	       "qcom,sdm845-rpmh-clk"
++	       "qcom,sm8150-rpmh-clk"
+ 
+ - #clock-cells : must contain 1
+ - clocks: a list of phandles and clock-specifier pairs,
 -- 
 2.20.1
 
