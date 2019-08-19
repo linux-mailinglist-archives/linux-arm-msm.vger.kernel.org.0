@@ -2,100 +2,233 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 38D6F926B0
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 19 Aug 2019 16:27:50 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0AF85949AF
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 19 Aug 2019 18:19:57 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727146AbfHSO1q (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 19 Aug 2019 10:27:46 -0400
-Received: from mail-pg1-f196.google.com ([209.85.215.196]:43638 "EHLO
-        mail-pg1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726636AbfHSO1p (ORCPT
+        id S1727353AbfHSQT4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 19 Aug 2019 12:19:56 -0400
+Received: from mail-pl1-f194.google.com ([209.85.214.194]:35800 "EHLO
+        mail-pl1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726949AbfHSQT4 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 19 Aug 2019 10:27:45 -0400
-Received: by mail-pg1-f196.google.com with SMTP id k3so1318500pgb.10
-        for <linux-arm-msm@vger.kernel.org>; Mon, 19 Aug 2019 07:27:45 -0700 (PDT)
+        Mon, 19 Aug 2019 12:19:56 -0400
+Received: by mail-pl1-f194.google.com with SMTP id gn20so1198626plb.2
+        for <linux-arm-msm@vger.kernel.org>; Mon, 19 Aug 2019 09:19:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=message-id:mime-version:content-transfer-encoding:in-reply-to
-         :references:subject:from:cc:to:user-agent:date;
-        bh=g7SGcsmWT+FULooaq5UQl7DExj4a8uS1tyyXvhheNb8=;
-        b=F7B++fDfMJYrpdYGvbFTT3qQ489MSEHBL6T0G9stCqDBOS8VcRefaYC4S/enADXJNp
-         2F7T1EO3zH5+xq2vk+ia2joTDoly6PVLwI68tZno7FJxEBgHJER3kEIIiR5lkPiykppq
-         seC2Gy5QwSdoWPsA3rGIVtNnVLONWrUaIwFJ0=
+        d=broadcom.com; s=google;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-transfer-encoding:content-language;
+        bh=IKQPktxfBXL0jaMh5fXrtktV3oFNbQQrLd0UoqhuRhc=;
+        b=DMMQAXvJwkyqlEk1Z2h6vxJfOKFQi1ug7u+ZCzbyrKi+g/PxG2u7ifgSTSxzvSFtTP
+         NJJMZIEShk0FdmE/MIxJo6xftNZtiYT8lUOEb6UB5ZW8t/hX6r7XTUGfwL2XWBBCgW5C
+         KhxIeYon6r88GtPZSxPpSVLKZ5sjyT76+UC2M=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:mime-version
-         :content-transfer-encoding:in-reply-to:references:subject:from:cc:to
-         :user-agent:date;
-        bh=g7SGcsmWT+FULooaq5UQl7DExj4a8uS1tyyXvhheNb8=;
-        b=YYCeWXLyChClgqjh/d6CMb1jRRh62IQpdqju6yzFmVQ9hsTMoS+FTQgHSzIoe1ove5
-         cD2RC/qRJgn9VHDDdKU7mVOUlfJGR/lbedofhB7lfPliAz7KRYyR2+GEPGsIqVS1qqOw
-         +rX6Mneo/xxJtjH4HAd9WU4+GHwhHBvEenULIh3wRCdZqGQyWTLkdwl8FkmVuQ389AVY
-         zz7tMfL+am8lyZKnLix8vpnzdjRzRW//xtigYlfARQ79RVgNNj6eC8LWs9IuUsRlUFMl
-         egUkDGMvsuqbx3D2dBNGRGdykNhhK138UCa4u1aVtnrE7Duaivd3Xu7txSGXp3QNDGro
-         r0zg==
-X-Gm-Message-State: APjAAAU+7q8SgdvNq5GvzCNIrRLL4BtLaJk+HHrMjy/38ycdV9FxfzEF
-        6YDjAYPZZtTowZRqRtk8qLdutw==
-X-Google-Smtp-Source: APXvYqw+w369yIhKY3a4m/3WUecsHdqBhBu/b547AgohkSVK8taH7VQIUqPLOrrbPcsiO761Bn7rJw==
-X-Received: by 2002:a17:90a:650c:: with SMTP id i12mr20834840pjj.11.1566224865078;
-        Mon, 19 Aug 2019 07:27:45 -0700 (PDT)
-Received: from chromium.org ([2620:15c:202:1:fa53:7765:582b:82b9])
-        by smtp.gmail.com with ESMTPSA id ay7sm13400421pjb.4.2019.08.19.07.27.44
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 19 Aug 2019 07:27:44 -0700 (PDT)
-Message-ID: <5d5ab1e0.1c69fb81.d71db.1ca3@mx.google.com>
-Content-Type: text/plain; charset="utf-8"
-MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <CAHLCerMpWTVquyM3fYQxz-ZhDvnY276hfnZvZOmjV--cgm53UQ@mail.gmail.com>
-References: <cover.1564091601.git.amit.kucheria@linaro.org> <534b5017c2210ba8d541c206dace204d6617b4c9.1564091601.git.amit.kucheria@linaro.org> <5d577d77.1c69fb81.b6b07.83e6@mx.google.com> <CAHLCerMpWTVquyM3fYQxz-ZhDvnY276hfnZvZOmjV--cgm53UQ@mail.gmail.com>
-Subject: Re: [PATCH 04/15] drivers: thermal: tsens: Add debugfs support
-From:   Stephen Boyd <swboyd@chromium.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Daniel Lezcano <daniel.lezcano@linaro.org>,
-        Mark Rutland <mark.rutland@arm.com>,
-        Rob Herring <robh+dt@kernel.org>,
-        Zhang Rui <rui.zhang@intel.com>,
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-transfer-encoding
+         :content-language;
+        bh=IKQPktxfBXL0jaMh5fXrtktV3oFNbQQrLd0UoqhuRhc=;
+        b=hON4mOX4XJWAjEDVV7y495Rdjw15Ore9qWD0QVcR+SaekGlWKGJRambvqUl10NAgid
+         8DbtqvTYICPIYaDd5iyjQb4Wcco+eJA4lZdia+ZZEvBtnI+5L7ys4MwjPyRxd84Wci+o
+         16g5qy3s9wCI2UXp2UmXx2z9QbZaq6Zt7EM0CkpsRVbF4vk/SaGiY+amfdFIJjvmQ/w7
+         Mybf3IQiku/kmrffgn2XrPN7eEupeDvZYh3v9tm910PY8kzaf9J2TWVQkDr3PDJEIKP4
+         fQGDOZtZIU7pPoM3c1RLyPHnn1TCuPA1CBPHmJoNNyS8ui+pDMUs3MB85BV+vjhi/c+7
+         +YWw==
+X-Gm-Message-State: APjAAAXsRNh0YeLNcTrG4M1O03FjhvgVZ8WH7dI56Pvl9Y6kd7OElkYQ
+        7dqAN9HhnSco7ipg+HBeNDEnYQ==
+X-Google-Smtp-Source: APXvYqwggUe1ybtvS8MZcOslAorQNN7iDpcavR1/jeVJFyWXp1Q8jgD3DpZL12K988TGev7L7T6nYg==
+X-Received: by 2002:a17:902:b591:: with SMTP id a17mr23927025pls.189.1566231594942;
+        Mon, 19 Aug 2019 09:19:54 -0700 (PDT)
+Received: from [10.136.13.65] ([192.19.228.250])
+        by smtp.gmail.com with ESMTPSA id c22sm8016983pfi.82.2019.08.19.09.19.52
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Mon, 19 Aug 2019 09:19:54 -0700 (PDT)
+Subject: Re: [PATCH 3/3] firmware: add mutex fw_lock_fallback for race
+ condition
+To:     Luis Chamberlain <mcgrof@kernel.org>
+Cc:     Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
         Andy Gross <andy.gross@linaro.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Eduardo Valentin <edubezval@gmail.com>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        LKML <linux-kernel@vger.kernel.org>,
-        Linux PM list <linux-pm@vger.kernel.org>
-To:     Amit Kucheria <amit.kucheria@linaro.org>
-User-Agent: alot/0.8.1
-Date:   Mon, 19 Aug 2019 07:27:43 -0700
+        David Brown <david.brown@linaro.org>,
+        Alexander Viro <viro@zeniv.linux.org.uk>,
+        Shuah Khan <shuah@kernel.org>, bjorn.andersson@linaro.org,
+        "Rafael J . Wysocki" <rafael@kernel.org>,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-fsdevel@vger.kernel.org,
+        BCM Kernel Feedback <bcm-kernel-feedback-list@broadcom.com>,
+        Olof Johansson <olof@lixom.net>,
+        Andrew Morton <akpm@linux-foundation.org>,
+        Dan Carpenter <dan.carpenter@oracle.com>,
+        Colin Ian King <colin.king@canonical.com>,
+        Kees Cook <keescook@chromium.org>,
+        Takashi Iwai <tiwai@suse.de>, linux-kselftest@vger.kernel.org
+References: <20190816000945.29810-1-scott.branden@broadcom.com>
+ <20190816000945.29810-4-scott.branden@broadcom.com>
+ <20190819053937.GR16384@42.do-not-panic.com>
+From:   Scott Branden <scott.branden@broadcom.com>
+Message-ID: <16823ee6-c52a-b3b5-caed-79c00772fa68@broadcom.com>
+Date:   Mon, 19 Aug 2019 09:19:51 -0700
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+ Thunderbird/60.8.0
+MIME-Version: 1.0
+In-Reply-To: <20190819053937.GR16384@42.do-not-panic.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Content-Language: en-US
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Amit Kucheria (2019-08-19 00:58:23)
-> On Sat, Aug 17, 2019 at 9:37 AM Stephen Boyd <swboyd@chromium.org> wrote:
-> > > +
-> > > +static void tsens_debug_init(struct platform_device *pdev)
-> > > +{
-> > > +       struct tsens_priv *priv =3D platform_get_drvdata(pdev);
-> > > +       struct dentry *root, *file;
-> > > +
-> > > +       root =3D debugfs_lookup("tsens", NULL);
-> >
-> > Does this get created many times? Why doesn't tsens have a pointer to
-> > the root saved away somewhere globally?
-> >
->=20
-> I guess we could call the statement below to create the root dir and
-> save away the pointer. I was trying to avoid #ifdef CONFIG_DEBUG_FS in
-> init_common() and instead have all of it in a single function that
-> gets called once per instance of the tsens controller.
+Hi Luis,
 
-Or call this code many times and try to create the tsens node if
-!tsens_root exists where the variable is some global.
+Thanks for the review.
 
->=20
-> > > +       if (!root)
-> > > +               priv->debug_root =3D debugfs_create_dir("tsens", NULL=
-);
-> > > +       else
-> > > +               priv->debug_root =3D root;
-> > > +
+I did not think this patch would be the final solution either
+
+as indicated in the original cover letter and code comment.
+
+Some comments inline.
+
+On 2019-08-18 10:39 p.m., Luis Chamberlain wrote:
+
+> On Thu, Aug 15, 2019 at 05:09:45PM -0700, Scott Branden wrote:
+>> A race condition exists between _request_firmware_prepare checking
+>> if firmware is assigned and firmware_fallback_sysfs creating a sysfs
+>> entry (kernel trace below).  To avoid such condition add a mutex
+>> fw_lock_fallback to protect against such condition.
+> I am not buying this fix, and it seems sloppy. More below.
+>
+>> misc test_firmware: Falling back to sysfs fallback for: nope-test-firmware.bin
+> So the fallback kicks in with the file that is not there.
+>
+>> sysfs: cannot create duplicate filename '/devices/virtual/misc/test_firmware/nope-test-firmware.bin'
+> And we have a duplicate entry, for the *device* created to allow us to
+> create a file entry to allow us to copy the file. Your tests had a loop,
+> so there is actually a race between two entries being created while
+> one one failed.
+>
+>> CPU: 4 PID: 2059 Comm: test_firmware-3 Not tainted 5.3.0-rc4 #1
+>> Hardware name: Dell Inc. OptiPlex 7010/0KRC95, BIOS A13 03/25/2013
+>> Call Trace:
+>>   dump_stack+0x67/0x90
+>>   sysfs_warn_dup.cold+0x17/0x24
+>>   sysfs_create_dir_ns+0xb3/0xd0
+>>   kobject_add_internal+0xa6/0x2a0
+>>   kobject_add+0x7e/0xb0
+> Note: kobject_add().
+>
+>>   ? _cond_resched+0x15/0x30
+>>   device_add+0x121/0x670
+>>   firmware_fallback_sysfs+0x15c/0x3c9
+>>   _request_firmware+0x432/0x5a0
+>>   ? devres_find+0x63/0xc0
+>>   request_firmware_into_buf+0x63/0x80
+>>   test_fw_run_batch_request+0x96/0xe0
+>>   kthread+0xfb/0x130
+>>   ? reset_store+0x30/0x30
+>>   ? kthread_park+0x80/0x80
+>>   ret_from_fork+0x3a/0x50
+>> kobject_add_internal failed for nope-test-firmware.bin with -EEXIST, don't try to register things with the same name in the same directory.
+> So above it makes it even clearer, two kobjets with the same name.
+>
+>> Signed-off-by: Scott Branden <scott.branden@broadcom.com>
+>> ---
+>>   drivers/base/firmware_loader/main.c | 15 +++++++++++++++
+>>   1 file changed, 15 insertions(+)
+>>
+>> diff --git a/drivers/base/firmware_loader/main.c b/drivers/base/firmware_loader/main.c
+>> index bf44c79beae9..ce9896e3b782 100644
+>> --- a/drivers/base/firmware_loader/main.c
+>> +++ b/drivers/base/firmware_loader/main.c
+>> @@ -88,6 +88,7 @@ static inline struct fw_priv *to_fw_priv(struct kref *ref)
+>>   /* fw_lock could be moved to 'struct fw_sysfs' but since it is just
+>>    * guarding for corner cases a global lock should be OK */
+>>   DEFINE_MUTEX(fw_lock);
+>> +DEFINE_MUTEX(fw_lock_fallback);
+> The reason I don't like this fix is that this mutex is named after ther
+> fallback interface... but...
+>
+>>   
+>>   static struct firmware_cache fw_cache;
+>>   
+>> @@ -758,6 +759,17 @@ _request_firmware(const struct firmware **firmware_p, const char *name,
+>>   	if (!firmware_p)
+>>   		return -EINVAL;
+>>   
+>> +	/*
+>> +	 * There is a race condition between _request_firmware_prepare checking
+>> +	 * if firmware is assigned and firmware_fallback_sysfs creating sysfs
+>> +	 * entries with duplicate names.
+>> +	 * Yet, with this lock the firmware_test locks up with cache enabled
+>> +	 * and no event used during firmware test.
+>> +	 * This points to some very racy code I don't know how to entirely fix.
+>> +	 */
+>> +	if (opt_flags & FW_OPT_NOCACHE)
+>> +		mutex_lock(&fw_lock_fallback);
+> Whoa.. What does no-cache have anything to do with the fallback interface
+> other than the fact we enable this feature for the fallback interface?
+> We don't need to penalize non-fallback users who *also* may want to
+> enable the no-cache feature.
+>
+> So, the fix should be within the boundaries of the creation / deletion
+> of the kobject, not this nocache feature. Can you please re-evaluate
+> this code and look for a more compartamentalized solution to the
+> fallback code only?
+
+To be honest, I find the entire firmware code sloppy.  I don't think the 
+cache/no-cache feature is
+
+implemented or tested properly nor fallback to begin with.  I'm not 
+claiming this patch is the final
+
+solution and indicated such in the cover letter and the comment above.
+
+I hope there is someone more familiar with this code to comment further 
+and come up with a proper solution.
+
+
+I have found numerous issues and race conditions with the firmware code 
+(I simply added a test).
+
+1) Try loading the same valid firmware using no-cache once it has 
+already been loaded with cache.
+
+It won't work, which is why I had to use a different filename in the 
+test for request_firmware_into_buf.
+
+2) Try removing the "if (opt_flags & FW_OPT_NOCACHE)" in my patch and 
+always call the mutex.
+
+The firmware test will lock up during a "no uevent" test.  I am not 
+familiar with the code to
+
+know why such is true and what issue this exposes in the code.
+
+3) I have a driver that uses request_firmware_into_buf and have multiple 
+instances of the driver
+
+loading the same firmware in parallel.  Some of the data is not read 
+correctly in each instance.
+
+I haven't yet to reproduce this issue with the firmware test but 
+currently have a mutex around the entire
+
+call to request_firmware_into_buf in our driver.
+
+
+Perhaps it is better at this point to add a mutex in 
+request_firmware_into_buf to make is entirely safe?
+
+(Perhaps even with every request_firmware functions as none seems to be 
+tested properly.)
+
+Or, add a new function called safe_request_firmware_into_buf with such 
+mutex to protect the function.
+
+The current racey request_firmware functions could then be left alone 
+and those who want reliable
+
+firmware loading can use the safe calls?
+
+>
+>    Luis
