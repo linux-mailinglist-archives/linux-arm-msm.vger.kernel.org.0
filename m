@@ -2,317 +2,133 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 75BA792386
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 19 Aug 2019 14:33:27 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 821999244C
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 19 Aug 2019 15:08:14 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727353AbfHSMd0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 19 Aug 2019 08:33:26 -0400
-Received: from smtp.codeaurora.org ([198.145.29.96]:37810 "EHLO
-        smtp.codeaurora.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726594AbfHSMd0 (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 19 Aug 2019 08:33:26 -0400
-Received: by smtp.codeaurora.org (Postfix, from userid 1000)
-        id 0416A60AA8; Mon, 19 Aug 2019 12:33:24 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
-        s=default; t=1566218005;
-        bh=BJYX5TmTB6vQzhmIMo3UfHM6xAsoX6ySP/LxwI3ZXRw=;
-        h=Subject:To:Cc:References:From:Date:In-Reply-To:From;
-        b=JQemng7wO01TD9D8ASIkPb4k8yybYr8+hekUYdo/1Ym/Xhb5xrCgzpFiMoqAvUwF/
-         qgOByPm73snIQwM1EA4qO9t2LxBibwiiNHLX4Gbn3Z6g5KTvDZZqBJ7fAhBZs4auYo
-         C2YB4qCXn2XNW4HZ0TRwfVR2KJBOST4VM+WBfKOs=
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        pdx-caf-mail.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.7 required=2.0 tests=ALL_TRUSTED,BAYES_00,
-        DKIM_INVALID,DKIM_SIGNED,SPF_NONE autolearn=no autolearn_force=no
-        version=3.4.0
-Received: from [10.206.28.9] (blr-c-bdr-fw-01_globalnat_allzones-outside.qualcomm.com [103.229.19.19])
+        id S1727551AbfHSNIN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 19 Aug 2019 09:08:13 -0400
+Received: from mail.kernel.org ([198.145.29.99]:43500 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726987AbfHSNIN (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 19 Aug 2019 09:08:13 -0400
+Received: from mail-qt1-f172.google.com (mail-qt1-f172.google.com [209.85.160.172])
         (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
         (No client certificate requested)
-        (Authenticated sender: tdas@smtp.codeaurora.org)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id ABA4A602E0;
-        Mon, 19 Aug 2019 12:33:20 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
-        s=default; t=1566218003;
-        bh=BJYX5TmTB6vQzhmIMo3UfHM6xAsoX6ySP/LxwI3ZXRw=;
-        h=Subject:To:Cc:References:From:Date:In-Reply-To:From;
-        b=O2q5YP+NImos+yGrzYnimtDYA/BMOoyE56RSaJdbeOoEJYXQ5Rr5SweCV2rzElhH9
-         +6NLO5Ivi3X1vnNbo4yKE7Cm9GjBZmorp079bJFJKyEXOuVIX+RmmvcIxZRwD/JCrn
-         WbQ1+rqP6yzaks9BntJBv9DJGFR/FjdEZktGgJrc=
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org ABA4A602E0
-Authentication-Results: pdx-caf-mail.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: pdx-caf-mail.web.codeaurora.org; spf=none smtp.mailfrom=tdas@codeaurora.org
-Subject: Re: [PATCH v1 2/2] clk: qcom: Add Global Clock controller (GCC)
- driver for SC7180
-To:     Stephen Boyd <sboyd@kernel.org>,
-        Michael Turquette <mturquette@baylibre.com>
-Cc:     David Brown <david.brown@linaro.org>,
-        Rajendra Nayak <rnayak@codeaurora.org>,
-        linux-arm-msm@vger.kernel.org, linux-soc@vger.kernel.org,
-        linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org,
-        devicetree@vger.kernel.org, robh@kernel.org
-References: <20190807181301.15326-1-tdas@codeaurora.org>
- <20190807181301.15326-3-tdas@codeaurora.org>
- <20190807222424.17549214C6@mail.kernel.org>
-From:   Taniya Das <tdas@codeaurora.org>
-Message-ID: <a28b11cb-a12d-f717-0f27-5de6e2e28ed2@codeaurora.org>
-Date:   Mon, 19 Aug 2019 18:03:18 +0530
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
- Thunderbird/60.8.0
+        by mail.kernel.org (Postfix) with ESMTPSA id EE87A2086C;
+        Mon, 19 Aug 2019 13:08:11 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=default; t=1566220092;
+        bh=aNdhMw9pTzSNXMvd8zBhzKtZwip3u33guY+/cmKcJHk=;
+        h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
+        b=mFYl6u+9PFkdrzCmYHHk3N60eDG+2lCKry7kthtLwvp6wDP4XZwZ7EL6VWz+oaIrQ
+         vV2WniF+MyQVZrTrq+aGzW0N5UrsuZw40zv+UQ4t2boGeY/uBSdNXpUzpiBfUG1OI8
+         NLXVcH53908hxzvwH/eGLABI+eho3Z9gDBuQWDhs=
+Received: by mail-qt1-f172.google.com with SMTP id t12so1754952qtp.9;
+        Mon, 19 Aug 2019 06:08:11 -0700 (PDT)
+X-Gm-Message-State: APjAAAVA183c/pBfwfWim7eL7FzDxnt+3cRuInWOWEvQgFEz+4yYtpdP
+        r2IJ1RttIDZ4sINnCCPpx6KYVcfHnVpO/n6pGw==
+X-Google-Smtp-Source: APXvYqxC0s2t9OjgqaT8S7zFTuZn8jGd4550FmIgb/4UW3GjnAooZWmnHahEJ+Jt+Tz6djdh3cqhFFDW+2ThtYjwY00=
+X-Received: by 2002:a0c:eb92:: with SMTP id x18mr10632709qvo.39.1566220091056;
+ Mon, 19 Aug 2019 06:08:11 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <20190807222424.17549214C6@mail.kernel.org>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+References: <cover.1564091601.git.amit.kucheria@linaro.org>
+ <72bce036fa8cba3db6e5ba82249837ee46e9c077.1564091601.git.amit.kucheria@linaro.org>
+ <20190816213648.GA10244@bogus> <CAP245DVUKRxvU3wWygOFtZuwbvCxfW=wUH=xArOKmYiRZf+EXA@mail.gmail.com>
+ <CAL_Jsq+bymJXY-ffeuCc-15Vkmh88AsUAj5znBN+b-3YWP-Kqg@mail.gmail.com> <CAHLCerN6uOijzj4skWSRhNr+dSPZ6ysXV5AQjuY9tpa7ndbMUw@mail.gmail.com>
+In-Reply-To: <CAHLCerN6uOijzj4skWSRhNr+dSPZ6ysXV5AQjuY9tpa7ndbMUw@mail.gmail.com>
+From:   Rob Herring <robh@kernel.org>
+Date:   Mon, 19 Aug 2019 08:07:58 -0500
+X-Gmail-Original-Message-ID: <CAL_JsqL9LXH3qcCc_J-aL3CxO8xyOFEjmYgxPo_Fp+3GQ=tsew@mail.gmail.com>
+Message-ID: <CAL_JsqL9LXH3qcCc_J-aL3CxO8xyOFEjmYgxPo_Fp+3GQ=tsew@mail.gmail.com>
+Subject: Re: [PATCH 07/15] dt: thermal: tsens: Document interrupt support in
+ tsens driver
+To:     Amit Kucheria <amit.kucheria@linaro.org>
+Cc:     Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Eduardo Valentin <edubezval@gmail.com>,
+        Andy Gross <andy.gross@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Daniel Lezcano <daniel.lezcano@linaro.org>,
+        Mark Rutland <mark.rutland@arm.com>,
+        Zhang Rui <rui.zhang@intel.com>,
+        Linux PM list <linux-pm@vger.kernel.org>,
+        DTML <devicetree@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hello Stephen,
+On Mon, Aug 19, 2019 at 2:10 AM Amit Kucheria <amit.kucheria@linaro.org> wrote:
+>
+> On Sun, Aug 18, 2019 at 12:55 AM Rob Herring <robh@kernel.org> wrote:
+> >
+> > On Fri, Aug 16, 2019 at 5:02 PM Amit Kucheria <amit.kucheria@linaro.org> wrote:
+> > >
+> > > On Sat, Aug 17, 2019 at 3:06 AM Rob Herring <robh@kernel.org> wrote:
+> > > >
+> > > > On Fri, Jul 26, 2019 at 03:48:42AM +0530, Amit Kucheria wrote:
+> > > > > Define two new required properties to define interrupts and
+> > > > > interrupt-names for tsens.
+> > > > >
+> > > > > Signed-off-by: Amit Kucheria <amit.kucheria@linaro.org>
+> > > > > ---
+> > > > >  Documentation/devicetree/bindings/thermal/qcom-tsens.txt | 5 +++++
+> > > > >  1 file changed, 5 insertions(+)
+> > > > >
+> > > > > diff --git a/Documentation/devicetree/bindings/thermal/qcom-tsens.txt b/Documentation/devicetree/bindings/thermal/qcom-tsens.txt
+> > > > > index 673cc1831ee9..3d3dd5dc6d36 100644
+> > > > > --- a/Documentation/devicetree/bindings/thermal/qcom-tsens.txt
+> > > > > +++ b/Documentation/devicetree/bindings/thermal/qcom-tsens.txt
+> > > > > @@ -22,6 +22,8 @@ Required properties:
+> > > > >
+> > > > >  - #thermal-sensor-cells : Should be 1. See ./thermal.txt for a description.
+> > > > >  - #qcom,sensors: Number of sensors in tsens block
+> > > > > +- interrupts: Interrupts generated from Always-On subsystem (AOSS)
+> > > > > +- interrupt-names: The name of the interrupt e.g. "tsens0", "tsens1"
+> > > >
+> > > > How many interrupts? A name with just indices isn't too useful.
+> > >
+> > > Depending on the version of the tsens IP, there can be 1 (upper/lower
+> > > threshold), 2 (upper/lower + critical threshold) or 3 (upper/lower +
+> > > critical + zero degree) interrupts. This patch series only introduces
+> > > support for a single interrupt (upper/lower).
+> >
+> > I would expect a different compatible for each possibility.
+>
+> We're currently using the 'qcom,tsens-v1' and 'qcom,tsens-v2'
+> compatibles to broadly capture the feature (and register map)
+> differences.
+>
+> By defining the following, I should be able to check at runtime (using
+> platform_get_irq_by_name() as suggested) if a particular interrupt
+> type is available on the platform, no? So do we really require three
+> different compatibles?
 
-On 8/8/2019 3:54 AM, Stephen Boyd wrote:
-> Quoting Taniya Das (2019-08-07 11:13:01)
->> Add support for the global clock controller found on SC7180
->> based devices. This should allow most non-multimedia device
->> drivers to probe and control their clocks.
->>
->> Signed-off-by: Taniya Das <tdas@codeaurora.org>
-> 
-> Overall looks pretty good to me. Some minor nitpicks below.
-> 
->> diff --git a/drivers/clk/qcom/Kconfig b/drivers/clk/qcom/Kconfig
->> index e1ff83cc361e..9e634cf27464 100644
->> --- a/drivers/clk/qcom/Kconfig
->> +++ b/drivers/clk/qcom/Kconfig
->> @@ -323,4 +323,13 @@ config KRAITCC
->>            Support for the Krait CPU clocks on Qualcomm devices.
->>            Say Y if you want to support CPU frequency scaling.
->>
->> +config SC_GCC_7180
-> 
-> Can this be sorted alphabetically in this file? It's getting out of hand
-> when they all get added to the end.
-> 
+Yes and no. I would assume the SoC specific compatibles would meet
+this, but the driver can ignore that and just use
+platform_get_irq_by_name() or count the number of interrupts.
 
-Next patch would add them in sorted order.
+>     interrupt-names = "uplow", "crit", "cold"
+>
+> [1] Respin of older SoC with a newer version of IP
+>
+> > > I used the names tsens0, tsens1 to encapsulate the controller instance
+> > > since some SoCs have 1 controller, others have two. So we'll end up
+> > > with something like the following in DT:
+> >
+> > That's not really how *-names is supposed to work. The name is for
+> > identifying what is at each index. Or to put it another way, a driver
+> > should be able to use platform_get_irq_by_name(). So 'critical',
+> > 'zero' and something for the first one.
+>
+> Fair point. I'll rework it to use "uplow", "crit" and "cold" or
+> something to the effect.
+>
+> Is there another way I get the controller instance index in the name
+> in /proc/interrupts?
 
->> +       tristate "SC7180 Global Clock Controller"
->> +       select QCOM_GDSC
->> +       depends on COMMON_CLK_QCOM
->> +       help
->> +         Support for the global clock controller on SC7180 devices.
->> +         Say Y if you want to use peripheral devices such as UART, SPI,
->> +         I2C, USB, UFS, SDCC, etc.
->> +
->>   endif
->> diff --git a/drivers/clk/qcom/gcc-sc7180.c b/drivers/clk/qcom/gcc-sc7180.c
->> new file mode 100644
->> index 000000000000..004b76e69402
->> --- /dev/null
->> +++ b/drivers/clk/qcom/gcc-sc7180.c
->> @@ -0,0 +1,2496 @@
->> +// SPDX-License-Identifier: GPL-2.0
->> +/*
->> + * Copyright (c) 2019, The Linux Foundation. All rights reserved.
->> + */
->> +
->> +#include <linux/err.h>
->> +#include <linux/kernel.h>
->> +#include <linux/module.h>
->> +#include <linux/of.h>
->> +#include <linux/of_device.h>
->> +#include <linux/regmap.h>
->> +
->> +#include <dt-bindings/clock/qcom,gcc-sc7180.h>
->> +
->> +#include "clk-alpha-pll.h"
->> +#include "clk-branch.h"
->> +#include "clk-rcg.h"
->> +#include "clk-regmap.h"
->> +#include "common.h"
->> +#include "gdsc.h"
->> +#include "reset.h"
->> +
->> +#define GCC_MMSS_MISC          0x09ffc
->> +#define GCC_NPU_MISC           0x4d110
->> +#define GCC_GPU_MISC           0x71028
->> +
->> +enum {
->> +       P_BI_TCXO,
->> +       P_CORE_BI_PLL_TEST_SE,
->> +       P_GPLL0_OUT_EVEN,
->> +       P_GPLL0_OUT_MAIN,
->> +       P_GPLL1_OUT_MAIN,
->> +       P_GPLL4_OUT_MAIN,
->> +       P_GPLL6_OUT_MAIN,
->> +       P_GPLL7_OUT_MAIN,
->> +       P_SLEEP_CLK,
->> +};
->> +
->> +static struct clk_alpha_pll gpll0;
->> +static struct clk_alpha_pll gpll1;
->> +static struct clk_alpha_pll gpll4;
->> +static struct clk_alpha_pll gpll6;
->> +static struct clk_alpha_pll gpll7;
->> +static struct clk_alpha_pll_postdiv gpll0_out_even;
-> 
-> Can't we create these PLLs before the parent maps? I don't see why we
-> need to forward declare the structs.
-> 
+Not sure offhand. Add the dev_name() into the IRQ name perhaps.
 
-Would define the PLLs earlier.
-
->> +
->> +static const struct parent_map gcc_parent_map_0[] = {
->> +       { P_BI_TCXO, 0 },
->> +       { P_GPLL0_OUT_MAIN, 1 },
->> +       { P_GPLL0_OUT_EVEN, 6 },
->> +       { P_CORE_BI_PLL_TEST_SE, 7 },
->> +};
->> +
->> +static const struct clk_parent_data gcc_parent_data_0[] = {
->> +       { .fw_name = "bi_tcxo", .name = "bi_tcxo" },
->> +       { .hw = &gpll0.clkr.hw },
-> [...]
->> +static struct clk_branch gcc_camera_ahb_clk = {
->> +       .halt_reg = 0xb008,
->> +       .halt_check = BRANCH_HALT,
->> +       .hwcg_reg = 0xb008,
->> +       .hwcg_bit = 1,
->> +       .clkr = {
->> +               .enable_reg = 0xb008,
->> +               .enable_mask = BIT(0),
->> +               .hw.init = &(struct clk_init_data){
->> +                       .name = "gcc_camera_ahb_clk",
->> +                       .flags = CLK_IS_CRITICAL,
-> 
-> Please add a comment for CLK_IS_CRITICAL usage explaining why clks must
-> be kept on forever.
-> 
-
-Would add the comments for the CRITICAL clocks.
-
->> +                       .ops = &clk_branch2_ops,
->> +               },
->> +       },
->> +};
->> +
->> +static struct clk_branch gcc_camera_hf_axi_clk = {
->> +       .halt_reg = 0xb020,
->> +       .halt_check = BRANCH_HALT,
->> +       .clkr = {
->> +               .enable_reg = 0xb020,
->> +               .enable_mask = BIT(0),
->> +               .hw.init = &(struct clk_init_data){
-> [...]
->> +
->> +static const struct qcom_reset_map gcc_sc7180_resets[] = {
->> +       [GCC_QUSB2PHY_PRIM_BCR] = { 0x26000 },
->> +       [GCC_QUSB2PHY_SEC_BCR] = { 0x26004 },
->> +       [GCC_UFS_PHY_BCR] = { 0x77000 },
->> +       [GCC_USB30_PRIM_BCR] = { 0xf000 },
->> +       [GCC_USB3_PHY_PRIM_BCR] = { 0x50000 },
->> +       [GCC_USB3PHY_PHY_PRIM_BCR] = { 0x50004 },
->> +       [GCC_USB3_PHY_SEC_BCR] = { 0x5000c },
->> +       [GCC_USB3_DP_PHY_PRIM_BCR] = { 0x50008 },
->> +       [GCC_USB3PHY_PHY_SEC_BCR] = { 0x50010 },
->> +       [GCC_USB3_DP_PHY_SEC_BCR] = { 0x50014 },
->> +       [GCC_USB_PHY_CFG_AHB2PHY_BCR] = { 0x6a000 },
->> +};
->> +
->> +static struct clk_rcg_dfs_data gcc_dfs_clocks[] = {
->> +       DEFINE_RCG_DFS(gcc_qupv3_wrap0_s0_clk),
-> 
-> I was happy if you wanted to include the _src changing patch from
-> earlier. Can you throw it into this series?
-> 
-
-Next patch series I would include the patch.
-
->> +       DEFINE_RCG_DFS(gcc_qupv3_wrap0_s1_clk),
->> +       DEFINE_RCG_DFS(gcc_qupv3_wrap0_s2_clk),
->> +       DEFINE_RCG_DFS(gcc_qupv3_wrap0_s3_clk),
->> +       DEFINE_RCG_DFS(gcc_qupv3_wrap0_s4_clk),
->> +       DEFINE_RCG_DFS(gcc_qupv3_wrap0_s5_clk),
->> +       DEFINE_RCG_DFS(gcc_qupv3_wrap1_s0_clk),
->> +       DEFINE_RCG_DFS(gcc_qupv3_wrap1_s1_clk),
->> +       DEFINE_RCG_DFS(gcc_qupv3_wrap1_s2_clk),
->> +       DEFINE_RCG_DFS(gcc_qupv3_wrap1_s3_clk),
->> +       DEFINE_RCG_DFS(gcc_qupv3_wrap1_s4_clk),
->> +       DEFINE_RCG_DFS(gcc_qupv3_wrap1_s5_clk),
->> +};
->> +
->> +static const struct regmap_config gcc_sc7180_regmap_config = {
->> +       .reg_bits = 32,
->> +       .reg_stride = 4,
->> +       .val_bits = 32,
->> +       .max_register = 0x18208c,
->> +       .fast_io = true,
->> +};
->> +
->> +static const struct qcom_cc_desc gcc_sc7180_desc = {
->> +       .config = &gcc_sc7180_regmap_config,
->> +       .clk_hws = gcc_sc7180_hws,
->> +       .num_clk_hws = ARRAY_SIZE(gcc_sc7180_hws),
->> +       .clks = gcc_sc7180_clocks,
->> +       .num_clks = ARRAY_SIZE(gcc_sc7180_clocks),
->> +       .resets = gcc_sc7180_resets,
->> +       .num_resets = ARRAY_SIZE(gcc_sc7180_resets),
->> +       .gdscs = gcc_sc7180_gdscs,
->> +       .num_gdscs = ARRAY_SIZE(gcc_sc7180_gdscs),
->> +};
->> +
->> +static const struct of_device_id gcc_sc7180_match_table[] = {
->> +       { .compatible = "qcom,gcc-sc7180" },
->> +       { }
->> +};
->> +MODULE_DEVICE_TABLE(of, gcc_sc7180_match_table);
->> +
->> +static int gcc_sc7180_probe(struct platform_device *pdev)
->> +{
->> +       struct regmap *regmap;
->> +       int ret;
->> +
->> +       regmap = qcom_cc_map(pdev, &gcc_sc7180_desc);
->> +       if (IS_ERR(regmap)) {
->> +               pr_err("Failed to map the gcc registers\n");
-> 
-> I don't think we need this error message. Please remove it.
-> 
-
-Yes, would remove this.
-
-
->> +               return PTR_ERR(regmap);
->> +       }
->> +
->> +       /*
->> +        * Disable the GPLL0 active input to MM blocks, NPU
->> +        * and GPU via MISC registers.
->> +        */
->> +       regmap_update_bits(regmap, GCC_MMSS_MISC, 0x3, 0x3);
->> +       regmap_update_bits(regmap, GCC_NPU_MISC, 0x3, 0x3);
->> +       regmap_update_bits(regmap, GCC_GPU_MISC, 0x3, 0x3);
->> +
->> +       /* DFS clock registration */
-> 
-> This comment is pretty useless, please remove it.
-
-Done, would remove it.
-
-> 
->> +       ret = qcom_cc_register_rcg_dfs(regmap, gcc_dfs_clocks,
->> +                                       ARRAY_SIZE(gcc_dfs_clocks));
->> +       if (ret)
->> +               return ret;
->> +
->> +       return qcom_cc_really_probe(pdev, &gcc_sc7180_desc, regmap);
->> +}
-
--- 
-QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
-of Code Aurora Forum, hosted by The Linux Foundation.
-
---
+Rob
