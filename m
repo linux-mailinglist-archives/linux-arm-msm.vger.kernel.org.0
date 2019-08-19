@@ -2,81 +2,79 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 824F091D16
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 19 Aug 2019 08:31:15 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 30DE491D59
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 19 Aug 2019 08:55:02 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726132AbfHSG3o (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 19 Aug 2019 02:29:44 -0400
-Received: from mail.kernel.org ([198.145.29.99]:33106 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1725872AbfHSG3o (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 19 Aug 2019 02:29:44 -0400
-Received: from localhost (unknown [122.182.221.154])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 1351520851;
-        Mon, 19 Aug 2019 06:29:40 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1566196183;
-        bh=ZWpAO8QSDtl6+Jkb5PfpmEgOiBWyUwySwH5wx/nV7b0=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=Z2eZOcRAIUnvXsUrfpOrZPFzDOBpiYH569dKoyLea3syk6QKVRNI3PMD1NhDjhBFt
-         oBVmW3MPXJO0dCKVD1ZIJljxsWF060pNlQXvw9hHm0YY9pxOB5QuEfCssgG0cYw4K+
-         N9PUF9Jv/oMCDDF6AjTKuH1N0n6whphyHZeRFNzo=
-Date:   Mon, 19 Aug 2019 11:58:21 +0530
-From:   Vinod Koul <vkoul@kernel.org>
-To:     Stephen Boyd <sboyd@kernel.org>
-Cc:     linux-arm-msm@vger.kernel.org,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Rob Herring <robh+dt@kernel.org>,
-        Mark Rutland <mark.rutland@arm.com>, linux-clk@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 2/2] clk: qcom: clk-rpmh: Add support for SM8150
-Message-ID: <20190819062821.GF12733@vkoul-mobl.Dlink>
-References: <20190814122958.4981-1-vkoul@kernel.org>
- <20190814122958.4981-2-vkoul@kernel.org>
- <20190814171946.E9E8D20665@mail.kernel.org>
- <20190816042440.GY12733@vkoul-mobl.Dlink>
- <20190816165812.BC64B2077C@mail.kernel.org>
+        id S1725946AbfHSGyX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 19 Aug 2019 02:54:23 -0400
+Received: from mail-pg1-f194.google.com ([209.85.215.194]:35177 "EHLO
+        mail-pg1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726174AbfHSGyX (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 19 Aug 2019 02:54:23 -0400
+Received: by mail-pg1-f194.google.com with SMTP id n4so634748pgv.2
+        for <linux-arm-msm@vger.kernel.org>; Sun, 18 Aug 2019 23:54:22 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=sWJlQTSBEOMCh5nB5DH6siEGtKeSyl6ScBGH9ifHyOQ=;
+        b=b9uL31NcY/WwfuxOp5cPuq95N14dbd6KNGhcRQNo2BqseqQDuhhLTS571/TXal5NaB
+         xcOaeMCtVeOj/u8L7L+NZsxgVrdJ5eJYzHN8KJla1coSoyV8sf87/OTYZHrK9vbw3pbs
+         XcebGCvoaXgFduNAwQjASZC5BOB/HWQrCmXlJuK6aMRFtyGHTcypNsGLnmwjFq1v21I1
+         VbcM9t0s5cZdQrYwdZbwsuzdURpOYBs9cbs62dJVSete1KAD/KXv8nVB5LimiECaHoPb
+         LRbeaQRi/nZvRoVkJ/kEozuG4urdVr/ZKbI4UfeUmf22492iszcEfbytVCcWZaqdMFrs
+         Ng9g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=sWJlQTSBEOMCh5nB5DH6siEGtKeSyl6ScBGH9ifHyOQ=;
+        b=anp7Ch63oelwrUgQ9hOKHSwwGoJamiE1A3lqzCkyKtzbnXqr+f/txTlyhvC1VQTwm+
+         2eQZghzheYZ8dki0reKPQ12UyeAvpseuAmlOLZ9u5kBSYofpEobYTDkHvzfDbrNiVoIk
+         w764hfxjs8sdQT01T9rimqeIAyuOaCLJYShs+4SIOBco1b3Vd6//krnxTY0mQ5k/h+v/
+         v63/ZOpGkAok7KCIxSfQ/NzJTCZiddTno67XFrLn9RWt7xqt2MHH9k+uzRWJzOY9G2+f
+         aUHu5p3gExLMsYxLyjGkzT/lunb6rADubd6PocpWtvAYSP5xZTAuyxEXl7AZcsVN/qmR
+         kjMQ==
+X-Gm-Message-State: APjAAAXLBIOUho8O7ggPERYnMlmuO2FFXDBMI449jz/1zLrWDphBYsGO
+        XJ3yOO/MctInuj8eQSEh57UB3Q==
+X-Google-Smtp-Source: APXvYqyn6XNQMkA+NZOqYySmlT0/AvqE7dviESCrNc+0i71jmW58wFNIu2D2DzIxJxzZuwGu7xo6jg==
+X-Received: by 2002:a17:90a:358a:: with SMTP id r10mr19651582pjb.30.1566197662461;
+        Sun, 18 Aug 2019 23:54:22 -0700 (PDT)
+Received: from localhost ([122.172.76.219])
+        by smtp.gmail.com with ESMTPSA id m9sm14943320pfh.84.2019.08.18.23.54.21
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Sun, 18 Aug 2019 23:54:21 -0700 (PDT)
+Date:   Mon, 19 Aug 2019 12:24:20 +0530
+From:   Viresh Kumar <viresh.kumar@linaro.org>
+To:     Sibi Sankar <sibis@codeaurora.org>
+Cc:     tdas@codeaurora.org, linux-arm-msm@vger.kernel.org,
+        linux-pm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        vkoul@kernel.org, bjorn.andersson@linaro.org,
+        amit.kucheria@linaro.org, rjw@rjwysocki.net, agross@kernel.org
+Subject: Re: [PATCH] cpufreq: qcom-hw: Update logic to detect turbo frequency
+Message-ID: <20190819065420.3ch4cbfdsbbs67rz@vireshk-i7>
+References: <20190807114543.7187-1-sibis@codeaurora.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20190816165812.BC64B2077C@mail.kernel.org>
-User-Agent: Mutt/1.11.3 (2019-02-01)
+In-Reply-To: <20190807114543.7187-1-sibis@codeaurora.org>
+User-Agent: NeoMutt/20180716-391-311a52
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 16-08-19, 09:58, Stephen Boyd wrote:
-> Quoting Vinod Koul (2019-08-15 21:24:40)
-> > On 14-08-19, 10:19, Stephen Boyd wrote:
-> > > Quoting Vinod Koul (2019-08-14 05:29:58)
-> > > > Add support for rpmh clocks found in SM8150
-> > > > 
-> > > > Signed-off-by: Vinod Koul <vkoul@kernel.org>
-> > > > ---
-> > > 
-> > > Patch looks OK, but can you convert this driver to use the new parent
-> > > style and then update the binding to handle it? We can fix the other
-> > > platforms and dts files that use this driver in parallel, but sm8150
-> > > will be forward looking.
-> > 
-> > Yes but that would also impact sdm845 as it uses this driver, so I
-> > wanted to get this one done so that we have support for rpm clock and
-> > then do the conversion.
-> > 
-> > Would that be okay with you to get this in and then I convert this?
-> > 
+On 07-08-19, 17:15, Sibi Sankar wrote:
+> The core count read back from the each domain's look up table serves
+> as an indicator for the onset of the turbo frequency and not accurate
+> representation of number of cores in a paticular domain. Update turbo
+> detection logic accordingly to add support for SM8150 SoCs.
 > 
-> How does it impact sdm845? The new way of specifying parents supports
-> fallback to legacy string matching.
+> Signed-off-by: Sibi Sankar <sibis@codeaurora.org>
+> ---
 
-Yes it does, I have managed to convert this as well as sdm845 and test.
-I will send updates shortly
+Applied. Thanks.
 
-Thanks
 -- 
-~Vinod
+viresh
