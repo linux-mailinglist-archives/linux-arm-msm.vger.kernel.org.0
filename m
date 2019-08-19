@@ -2,42 +2,59 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 424FF91E33
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 19 Aug 2019 09:43:36 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 2CC5D91E5C
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 19 Aug 2019 09:56:11 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727212AbfHSHmX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 19 Aug 2019 03:42:23 -0400
-Received: from mail.kernel.org ([198.145.29.99]:33092 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1727086AbfHSHmX (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 19 Aug 2019 03:42:23 -0400
-Received: from localhost.localdomain (unknown [122.182.221.154])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 021B8204EC;
-        Mon, 19 Aug 2019 07:42:08 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1566200542;
-        bh=BnpTDjTXkIRhKur+oqKtSpkGbgUriCQN7WXMH8kAEXQ=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=pt2kNxkanpdLze9W5t6oOepISNEZcYnv+P+kevZRF3Hwjck/nPG630K0sVTtK8kZL
-         +r7lGZoCNYxeOVIk56DeRBw1qFtE8EVDKLivCeN2gNUDhiUdSJXOf3eyPyrl9KvhA1
-         1WSgUYbqwjNCT+yhWTQPKpggDVy5YzdMKKy+Ad8Y=
-From:   Vinod Koul <vkoul@kernel.org>
-To:     Stephen Boyd <sboyd@kernel.org>
-Cc:     linux-arm-msm@vger.kernel.org,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Vinod Koul <vkoul@kernel.org>, Andy Gross <agross@kernel.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Rob Herring <robh+dt@kernel.org>,
-        Mark Rutland <mark.rutland@arm.com>, linux-clk@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: [PATCH v2 4/4] clk: qcom: clk-rpmh: Add support for SM8150
-Date:   Mon, 19 Aug 2019 13:09:47 +0530
-Message-Id: <20190819073947.17258-5-vkoul@kernel.org>
-X-Mailer: git-send-email 2.20.1
-In-Reply-To: <20190819073947.17258-1-vkoul@kernel.org>
-References: <20190819073947.17258-1-vkoul@kernel.org>
+        id S1725958AbfHSH4K (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 19 Aug 2019 03:56:10 -0400
+Received: from mail-pg1-f196.google.com ([209.85.215.196]:45348 "EHLO
+        mail-pg1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725536AbfHSH4K (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 19 Aug 2019 03:56:10 -0400
+Received: by mail-pg1-f196.google.com with SMTP id o13so719522pgp.12;
+        Mon, 19 Aug 2019 00:56:09 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=CfD4pxcmsBOD0JzPOjdXmaU+TeQQm+86Lzg/ymH88+k=;
+        b=BArwRWm1ImVBI8S4DBJT/VvuVmBZnlj9RnPnF5Wi9GHZ0l3LeIfYbKTGMKYe2uEeG9
+         +o+4yfpSLOqP2BulTYzUtrt8ydxadNV+EUkxe3sif6Mnq6c/KThkgyrGo9alPuVw1P5W
+         amiZeXP9PY5q+sFaqz9wZF92NtZU2b4oQgTgc2XobhDrh3LROIo6zFvO+obysEWKMEPZ
+         0JyrT6chmjuCwlIt+Q+Kv5wp0UbJKcEMAQhPdIGx4L1Bqrf6JHxzw3q7T5cPh0COpI2I
+         MOJO8rsrhzzcbt3cYU7hFh3VC2osh5A0wKN0R67QGFF7YkU8FaKZOZPL/8zJsTWK/Wbc
+         7dkw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=CfD4pxcmsBOD0JzPOjdXmaU+TeQQm+86Lzg/ymH88+k=;
+        b=GJcUcrSwQaTSrl6F/XuXocYkvnF1WVjdCcAYop0LP6HLd+JsWvZgmStlmpTmaNnvli
+         MQSISyI7EUZhFUK3M4NAzm37vTlf4ShFHt0RdK01c9FBBpwtySyb0Jwu73cEtXmhhUe9
+         T1iqxji2JvDvo/oEmfmYkl8OP0q+9Vv/CIpHOQUQin8I2z3Yv+vN0jIU+gf8rrjuKr+I
+         8s1V2pBLdRA0OGnnN6n9hSnQDm8DkhMEH8pnzpAR2JDVT6sxvQAdVnC89k+R4Tzuhf6+
+         UOLRRIFw0Vz1zf0VodfNL5VkLg9ymGw4KcO5Hxp5XBVGiAsI3TIrk8LeoOCr7S+4t4bG
+         M51w==
+X-Gm-Message-State: APjAAAUCetI5/OBv5sH1ElZG3jdAy5Yi9z7BqK2KxiYKtS1iJnGFCu9C
+        znKpLEqWIlAZjuvppxsaeSk=
+X-Google-Smtp-Source: APXvYqwrzXMMw4vjlEp/kre9mkNnD1+WQhWHfjp7nEGi7/gdILYk21UrhrkUeenIx3QOJXF6ASVjRQ==
+X-Received: by 2002:a63:fa11:: with SMTP id y17mr18873142pgh.267.1566201369424;
+        Mon, 19 Aug 2019 00:56:09 -0700 (PDT)
+Received: from localhost.localdomain ([110.225.16.165])
+        by smtp.gmail.com with ESMTPSA id e13sm19148162pfl.130.2019.08.19.00.56.06
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 19 Aug 2019 00:56:09 -0700 (PDT)
+From:   Nishka Dasgupta <nishkadg.linux@gmail.com>
+To:     agross@kernel.org, alim.akhtar@samsung.com, avri.altman@wdc.com,
+        pedrom.sousa@synopsys.com, jejb@linux.ibm.com,
+        martin.peterson@oracle.com, linux-scsi@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org
+Cc:     Nishka Dasgupta <nishkadg.linux@gmail.com>
+Subject: [PATCH] scsi: ufs-qcom: Make structure ufs_hba_qcom_vops constant
+Date:   Mon, 19 Aug 2019 13:25:57 +0530
+Message-Id: <20190819075557.1547-1-nishkadg.linux@gmail.com>
+X-Mailer: git-send-email 2.19.1
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Sender: linux-arm-msm-owner@vger.kernel.org
@@ -45,58 +62,32 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add support for rpmh clocks found in SM8150
+Static structure ufs_hba_qcom_vops, of type ufs_hba_variant_ops, is used
+only once, when it is passed as the second argument to function
+ufshcd_pltfrm_init(). In the definition of ufshcd_pltfrm_init(), its
+second parameter (corresponding to ufs_hba_qcom_vops) is declared as
+constant. Hence declare ufs_hba_qcom_vops itself constant as well to
+protect it from unintended modification.
+Issue found with Coccinelle.
 
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
+Signed-off-by: Nishka Dasgupta <nishkadg.linux@gmail.com>
 ---
- drivers/clk/qcom/clk-rpmh.c | 27 +++++++++++++++++++++++++++
- 1 file changed, 27 insertions(+)
+ drivers/scsi/ufs/ufs-qcom.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/clk/qcom/clk-rpmh.c b/drivers/clk/qcom/clk-rpmh.c
-index 16d689e5bb3c..3b304a3fb5c9 100644
---- a/drivers/clk/qcom/clk-rpmh.c
-+++ b/drivers/clk/qcom/clk-rpmh.c
-@@ -374,6 +374,32 @@ static const struct clk_rpmh_desc clk_rpmh_sdm845 = {
- 	.num_clks = ARRAY_SIZE(sdm845_rpmh_clocks),
- };
- 
-+DEFINE_CLK_RPMH_ARC(sm8150, bi_tcxo, bi_tcxo_ao, "xo.lvl", 0x3, 2);
-+DEFINE_CLK_RPMH_VRM(sm8150, ln_bb_clk2, ln_bb_clk2_ao, "lnbclka2", 2);
-+DEFINE_CLK_RPMH_VRM(sm8150, ln_bb_clk3, ln_bb_clk3_ao, "lnbclka3", 2);
-+DEFINE_CLK_RPMH_VRM(sm8150, rf_clk1, rf_clk1_ao, "rfclka1", 1);
-+DEFINE_CLK_RPMH_VRM(sm8150, rf_clk2, rf_clk2_ao, "rfclka2", 1);
-+DEFINE_CLK_RPMH_VRM(sm8150, rf_clk3, rf_clk3_ao, "rfclka3", 1);
-+
-+static struct clk_hw *sm8150_rpmh_clocks[] = {
-+	[RPMH_CXO_CLK]		= &sm8150_bi_tcxo.hw,
-+	[RPMH_CXO_CLK_A]	= &sm8150_bi_tcxo_ao.hw,
-+	[RPMH_LN_BB_CLK2]	= &sm8150_ln_bb_clk2.hw,
-+	[RPMH_LN_BB_CLK2_A]	= &sm8150_ln_bb_clk2_ao.hw,
-+	[RPMH_LN_BB_CLK3]	= &sm8150_ln_bb_clk3.hw,
-+	[RPMH_LN_BB_CLK3_A]	= &sm8150_ln_bb_clk3_ao.hw,
-+	[RPMH_RF_CLK1]		= &sm8150_rf_clk1.hw,
-+	[RPMH_RF_CLK1_A]	= &sm8150_rf_clk1_ao.hw,
-+	[RPMH_RF_CLK2]		= &sm8150_rf_clk2.hw,
-+	[RPMH_RF_CLK2_A]	= &sm8150_rf_clk2_ao.hw,
-+	[RPMH_RF_CLK3]		= &sm8150_rf_clk3.hw,
-+	[RPMH_RF_CLK3_A]	= &sm8150_rf_clk3_ao.hw,
-+};
-+
-+static const struct clk_rpmh_desc clk_rpmh_sm8150 = {
-+	.clks = sm8150_rpmh_clocks,
-+	.num_clks = ARRAY_SIZE(sm8150_rpmh_clocks),
-+};
- static struct clk_hw *of_clk_rpmh_hw_get(struct of_phandle_args *clkspec,
- 					 void *data)
- {
-@@ -453,6 +479,7 @@ static int clk_rpmh_probe(struct platform_device *pdev)
- 
- static const struct of_device_id clk_rpmh_match_table[] = {
- 	{ .compatible = "qcom,sdm845-rpmh-clk", .data = &clk_rpmh_sdm845},
-+	{ .compatible = "qcom,sm8150-rpmh-clk", .data = &clk_rpmh_sm8150},
- 	{ }
- };
- MODULE_DEVICE_TABLE(of, clk_rpmh_match_table);
+diff --git a/drivers/scsi/ufs/ufs-qcom.c b/drivers/scsi/ufs/ufs-qcom.c
+index ee4b1da1e223..4473f339cbc0 100644
+--- a/drivers/scsi/ufs/ufs-qcom.c
++++ b/drivers/scsi/ufs/ufs-qcom.c
+@@ -1551,7 +1551,7 @@ static void ufs_qcom_dump_dbg_regs(struct ufs_hba *hba)
+  * The variant operations configure the necessary controller and PHY
+  * handshake during initialization.
+  */
+-static struct ufs_hba_variant_ops ufs_hba_qcom_vops = {
++static const struct ufs_hba_variant_ops ufs_hba_qcom_vops = {
+ 	.name                   = "qcom",
+ 	.init                   = ufs_qcom_init,
+ 	.exit                   = ufs_qcom_exit,
 -- 
-2.20.1
+2.19.1
 
