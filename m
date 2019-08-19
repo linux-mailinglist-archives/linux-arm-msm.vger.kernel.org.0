@@ -2,140 +2,139 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 93BF894F5C
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 19 Aug 2019 22:52:00 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 772D8950B3
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Aug 2019 00:23:44 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728245AbfHSUvl (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 19 Aug 2019 16:51:41 -0400
-Received: from mail-vs1-f66.google.com ([209.85.217.66]:38155 "EHLO
-        mail-vs1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727769AbfHSUvl (ORCPT
+        id S1728465AbfHSWWr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 19 Aug 2019 18:22:47 -0400
+Received: from mail-pf1-f195.google.com ([209.85.210.195]:44069 "EHLO
+        mail-pf1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728402AbfHSWWq (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 19 Aug 2019 16:51:41 -0400
-Received: by mail-vs1-f66.google.com with SMTP id 62so2095943vsl.5
-        for <linux-arm-msm@vger.kernel.org>; Mon, 19 Aug 2019 13:51:40 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=+KzCPfliyJhvJ1c0iMQplTZBNeAA1mxUAJd/xcjNV38=;
-        b=ZihfdZckUcDLIFJ3PBKZNuHrFkrg+kl8Q6esH4q1/HG09NGkQVfscJhS9miTcnmWs9
-         hceJ+fMwhxQGzS0Dy9BDD+njDCPCL+AijCDXvK7SmVsHl+YoMxmceVUYrKOcgGznl2yS
-         OZjTRZi60IVwsHNDqxCqC/BCb48qPqWzB6cOmQCpoS+nSoynsxYXKC1v67kB7oEOMjUx
-         d4qS6L6FJPzQsjexyx1rl4fX21XNUBdvlwjtv2AFsPKyatA11Da4oAkHVQD+iG7UVRBp
-         s7RFnzAncWiSWDYWZEWm/VOXRHf3po8HA7y0L2/spCPNggZ+yUTZKNoz3vCGQ9w0mM53
-         VYCg==
+        Mon, 19 Aug 2019 18:22:46 -0400
+Received: by mail-pf1-f195.google.com with SMTP id c81so2013210pfc.11;
+        Mon, 19 Aug 2019 15:22:46 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=+KzCPfliyJhvJ1c0iMQplTZBNeAA1mxUAJd/xcjNV38=;
-        b=L0WAXBXxm1mcQEY7BDhrQth0UKOM49aOp/zbooX15zBkZZDcxxJC0czScNSQdevMHO
-         COMTMHi4T82xDv7Xdxg22LW8k2rjndc4iAigd2aPD6m+FmG3Trn7GXIhBElhRHyo/6S4
-         4vLUaomRUT3uKLHQNC4E6PySrmLANteJRUcKxW9gqpFcUye71/8H9FfM9V9xwi1OX5u9
-         0IlsLCyFxiYgqtfKStWGg9ln7YGdlDbDrrwnGjGLIJ60f4uTseVIxbxn41Cr7xxrODIp
-         D7O/mVcKJDn0TlRXz2ByeTv5nOPoAckTAbyMudxHJZN4AUw4lsaw/Iwlwl6qka2cfL+N
-         gsiQ==
-X-Gm-Message-State: APjAAAVaVXhCI3GWSCfunkY5xHhB0DQW6c34QEPuTudI/ykIFiWMrsdP
-        7b0ppe6zvpDZ6oKZR6GRNOmTN1GOSy906mJCLU1/OQ==
-X-Google-Smtp-Source: APXvYqwMeMBbIPB8ft3bcughnTjtU/edJ5Dpzo878P9xKkEJ1gCCS8aAJV2Gg+izjIwwMP3lPY6yhB4o44HWe21dUZU=
-X-Received: by 2002:a67:df07:: with SMTP id s7mr11007757vsk.27.1566247899971;
- Mon, 19 Aug 2019 13:51:39 -0700 (PDT)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        bh=+1PDFzdbe/CicguML20QQINdH2qcnon9SYzPrR+XYSY=;
+        b=jswEv1TugrN5lZJDigkV7Pz3cZaWvPsORERCOw9gwJd8aed9bHPWu4w7N/SRdB0nyO
+         U9j/JHHulpCUvPCxItylYWOmQLQeBbc4qcIZyywLWRn4KJjk5t/gE+NjRh/UsLfSUUNn
+         taQ1reKg0YHFMheI1v00cf9AgRzN9NJtHHLkuZj2CMIZiktJtaMxxIgo4E0uGtgD/0x/
+         Dt9sgjeFZbVf7GfQbm6IjHILBfi7V8IygFAj8Sthvwq9OGBkZQ+97eJDFlwsN5yadxab
+         0Cl4S7nOBmDykF7qKOpjL9VRBqq5z0QiEvNzh3OrRZOzr+j60chooCPXyzGKhwlnwY7U
+         is9Q==
+X-Gm-Message-State: APjAAAUlA2amumVjV4SPh7xMDnvAkc9vL4o0jbQxgGDrR8LHPB7v5UPy
+        wVXFaOI1dwmb9dbd6Kd0Mo4=
+X-Google-Smtp-Source: APXvYqzbW3eKMqXrYkNHJkzxIWyPBhhjc7UT7MB7GUnkG+87ImwTQ6A+SwcjFkchT7xpyzPR8oA/Sw==
+X-Received: by 2002:a17:90a:cb89:: with SMTP id a9mr22871575pju.93.1566253365557;
+        Mon, 19 Aug 2019 15:22:45 -0700 (PDT)
+Received: from 42.do-not-panic.com (42.do-not-panic.com. [157.230.128.187])
+        by smtp.gmail.com with ESMTPSA id e13sm18775233pff.181.2019.08.19.15.22.43
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 19 Aug 2019 15:22:43 -0700 (PDT)
+Received: by 42.do-not-panic.com (Postfix, from userid 1000)
+        id 98891402D7; Mon, 19 Aug 2019 22:22:42 +0000 (UTC)
+Date:   Mon, 19 Aug 2019 22:22:42 +0000
+From:   Luis Chamberlain <mcgrof@kernel.org>
+To:     Scott Branden <scott.branden@broadcom.com>
+Cc:     Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        David Brown <david.brown@linaro.org>,
+        Alexander Viro <viro@zeniv.linux.org.uk>,
+        "Rafael J . Wysocki" <rafael@kernel.org>,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-fsdevel@vger.kernel.org,
+        BCM Kernel Feedback <bcm-kernel-feedback-list@broadcom.com>,
+        Olof Johansson <olof@lixom.net>
+Subject: Re: [PATCH 2/3] firmware: add offset to request_firmware_into_buf
+Message-ID: <20190819222242.GT16384@42.do-not-panic.com>
+References: <20190523025113.4605-3-scott.branden@broadcom.com>
+ <20190523055233.GB22946@kroah.com>
+ <15c47e4d-e70d-26bb-9747-0ad0aa81597b@broadcom.com>
+ <20190523165424.GA21048@kroah.com>
+ <44282070-ddaf-3afb-9bdc-4751e3f197ac@broadcom.com>
+ <20190524052258.GB28229@kroah.com>
+ <2f67db0a-27c3-d13c-bbe0-0af5edd4f0da@broadcom.com>
+ <20190801061801.GA4338@kroah.com>
+ <20190801174215.GB16384@42.do-not-panic.com>
+ <74be1aa7-0e10-51dc-bbbf-94bb5f4bf7c4@broadcom.com>
 MIME-Version: 1.0
-References: <cover.1564091601.git.amit.kucheria@linaro.org>
- <07de61a57cf2362169d3b128405d7305eb20785f.1564091601.git.amit.kucheria@linaro.org>
- <5d577f95.1c69fb81.6c07e.44da@mx.google.com>
-In-Reply-To: <5d577f95.1c69fb81.6c07e.44da@mx.google.com>
-From:   Amit Kucheria <amit.kucheria@linaro.org>
-Date:   Tue, 20 Aug 2019 02:21:28 +0530
-Message-ID: <CAHLCerN+xBTQapOeJRuX2=-Fo1GSVBhG-84memLHS4bG+SHyLw@mail.gmail.com>
-Subject: Re: [PATCH 14/15] drivers: thermal: tsens: Create function to return
- sign-extended temperature
-To:     Stephen Boyd <swboyd@chromium.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Daniel Lezcano <daniel.lezcano@linaro.org>,
-        Mark Rutland <mark.rutland@arm.com>,
-        Rob Herring <robh+dt@kernel.org>,
-        Zhang Rui <rui.zhang@intel.com>,
-        Andy Gross <andy.gross@linaro.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Eduardo Valentin <edubezval@gmail.com>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        LKML <linux-kernel@vger.kernel.org>,
-        Linux PM list <linux-pm@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <74be1aa7-0e10-51dc-bbbf-94bb5f4bf7c4@broadcom.com>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Sat, Aug 17, 2019 at 9:46 AM Stephen Boyd <swboyd@chromium.org> wrote:
->
-> Quoting Amit Kucheria (2019-07-25 15:18:49)
-> > diff --git a/drivers/thermal/qcom/tsens-common.c b/drivers/thermal/qcom/tsens-common.c
-> > index 7ab2e740a1da..13a875b99094 100644
-> > --- a/drivers/thermal/qcom/tsens-common.c
-> > +++ b/drivers/thermal/qcom/tsens-common.c
-> > @@ -84,13 +84,35 @@ static inline int code_to_degc(u32 adc_code, const struct tsens_sensor *s)
-> >         return degc;
-> >  }
-> >
-> > +/**
-> > + * tsens_hw_to_mC - Return properly sign extended temperature in mCelsius,
->
-> Can you make this proper kernel-doc? Describe the arguments and have a
-> "Return:" section.
+On Thu, Aug 01, 2019 at 11:15:19AM -0700, Scott Branden wrote:
+> Hi Luis,
+> 
+> On 2019-08-01 10:42 a.m., Luis Chamberlain wrote:
+> > On Thu, Aug 01, 2019 at 08:18:01AM +0200, Greg Kroah-Hartman wrote:
+> > > On Wed, Jul 31, 2019 at 05:18:32PM -0700, Scott Branden wrote:
+> > > > Hi Greg,
+> > > > 
+> > > > I am now back from leave to continue this patch.  Comment below.
+> > > > 
+> > > > On 2019-05-23 10:22 p.m., Greg Kroah-Hartman wrote:
+> > > > > On Thu, May 23, 2019 at 10:01:38PM -0700, Scott Branden wrote:
+> > > > > > On 2019-05-23 9:54 a.m., Greg Kroah-Hartman wrote:
+> > > > > > > On Thu, May 23, 2019 at 09:36:02AM -0700, Scott Branden wrote:
+> > > > > > > > Hi Greg,
+> > > > > > > > 
+> > > > > > > > On 2019-05-22 10:52 p.m., Greg Kroah-Hartman wrote:
+> > > > > > > > > On Wed, May 22, 2019 at 07:51:12PM -0700, Scott Branden wrote:
+> > > > > > > > > > Add offset to request_firmware_into_buf to allow for portions
+> > > > > > > > > > of firmware file to be read into a buffer.  Necessary where firmware
+> > > > > > > > > > needs to be loaded in portions from file in memory constrained systems.
+> > > > > > > > > > 
+> > > > > > > > > > Signed-off-by: Scott Branden <scott.branden@broadcom.com>
+> > > > > > > > > > ---
+> > > > > > > > > >      drivers/base/firmware_loader/firmware.h |  5 +++
+> > > > > > > > > >      drivers/base/firmware_loader/main.c     | 49 +++++++++++++++++--------
+> > > > > > > > > >      include/linux/firmware.h                |  8 +++-
+> > > > > > > > > >      3 files changed, 45 insertions(+), 17 deletions(-)
+> > > > > > > > > No new firmware test for this new option?  How do we know it even works?
+> > > > > > > > I was unaware there are existing firmware tests.  Please let me know where
+> > > > > > > > these tests exists and I can add a test for this new option.
+> > > > > > > tools/testing/selftests/firmware/
+> > > > > > Unfortunately, there doesn't seem to be a test for the existing
+> > > > > > request_firmware_into_buf api.
+> > > > > Are you sure?  The test is for userspace functionality, there isn't
+> > > > > kernel unit tests here.  You need to verify that you didn't break
+> > > > > existing functionality as well as verify that your new functionality
+> > > > > works.
+> > > > I managed to figure out how to build and run
+> > > > tools/testing/selftest/firmware/fw_run_tests.sh
+> > > > 
+> > > > and my changes don't break existing functionality.
+> > I'm soon going to release something that is going to let you do this
+> > faster and easier, let me know if you had troubles in trying to figure
+> > out how to not regress the kernel using this.
+> 
+> Yes, I had troubles in trying to figure it out.  The kernel build should
+> 
+> create an entire initrd with all the necessary components in it for testing
+> purposes.
+> 
+> And the firmware test will now take me some time to figure out how it all
+> works.
+> 
+> Could you please explain what you are going to release soon?  I don't want
+> to waste
 
-Will fix.
+Sorry for the delay but I promise that I tried hard to get this out ASAP.
 
-> > + * whether in ADC code or deciCelsius depending on IP version.
-> > + * This function handles the different widths of the signed integer across IPs.
-> > + */
-> > +static int tsens_hw_to_mC(char *str, struct tsens_sensor *s, int field, int temp)
-> > +{
-> > +       struct tsens_priv *priv = s->priv;
-> > +       u32 mask;
-> > +
-> > +       if (priv->feat->adc) {
-> > +               /* Convert temperature from ADC code to milliCelsius */
-> > +               return code_to_degc(temp, s) * 1000;
-> > +       } else {
->
-> Please deindent and drop the else because there's a return above.
+https://github.com/mcgrof/fw-kdevops
 
-Will fix.
+This now can be used to more easily let you start an environment to
+test the firmware API.
 
+Too late for you I gather, but perhaps others can take advantage.
 
-> > +               mask = GENMASK(priv->fields[field].msb,
-> > +                              priv->fields[field].lsb) >> priv->fields[field].lsb;
->
-> Why is the mask generated, shifted right, sent into fls(), and then
-> passed to sign_extend32? Shoudln't it be something like
->
->         sign_extend32(temp, priv->fields[field].msg - priv->fiels[field].lsb - 1)
-
-Yes, that should work and greatly simply the function. Will fix.
-
-> > +               dev_dbg(priv->dev, "%s: mask: %d\n", str, fls(mask));
-> > +               /* Convert temperature from deciCelsius to milliCelsius */
-> > +               return sign_extend32(temp, fls(mask) - 1) * 100;
-> > +       }
-> > +}
-> > +
-> > @@ -112,15 +134,7 @@ int get_temp_tsens_valid(struct tsens_sensor *s, int *temp)
-> >         if (ret)
-> >                 return ret;
-> >
-> > -       if (priv->feat->adc) {
-> > -               /* Convert temperature from ADC code to milliCelsius */
-> > -               *temp = code_to_degc(last_temp, s) * 1000;
-> > -       } else {
-> > -               mask = GENMASK(priv->fields[LAST_TEMP_0].msb,
-> > -                              priv->fields[LAST_TEMP_0].lsb);
-> > -               /* Convert temperature from deciCelsius to milliCelsius */
-> > -               *temp = sign_extend32(last_temp, fls(mask) - 1) * 100;
->
-> Oh the code is copied. Seems really complicated still.
->
-> > -       }
-> > +       *temp = tsens_hw_to_mC("get_temp", s, LAST_TEMP_0, last_temp);
+  Luis
