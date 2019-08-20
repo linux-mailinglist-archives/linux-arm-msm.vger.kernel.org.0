@@ -2,50 +2,50 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 0000695E6C
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Aug 2019 14:27:19 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 342CA95E70
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Aug 2019 14:27:56 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729807AbfHTM1G (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 20 Aug 2019 08:27:06 -0400
-Received: from mail-lj1-f196.google.com ([209.85.208.196]:41037 "EHLO
-        mail-lj1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728366AbfHTM1F (ORCPT
+        id S1729878AbfHTM1Y (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 20 Aug 2019 08:27:24 -0400
+Received: from mail-lf1-f65.google.com ([209.85.167.65]:33560 "EHLO
+        mail-lf1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729808AbfHTM1Y (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 20 Aug 2019 08:27:05 -0400
-Received: by mail-lj1-f196.google.com with SMTP id m24so4923411ljg.8
-        for <linux-arm-msm@vger.kernel.org>; Tue, 20 Aug 2019 05:27:04 -0700 (PDT)
+        Tue, 20 Aug 2019 08:27:24 -0400
+Received: by mail-lf1-f65.google.com with SMTP id x3so3985636lfc.0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 20 Aug 2019 05:27:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to:user-agent;
-        bh=4pudM/U28TkD+Cplhyadu/0Y1S2/AG2UmAoM0FO5E6U=;
-        b=O3fNM/Ywra6GUCEF2BtttmGzEkVcaa4PdkIsYB0GG+fy5bvRjvCQ2Xf9bIgB0EzMX2
-         3r0r4DZ98LQbR23LKwYA4eCVAzvYQ7q/GRtLqErvCpV2TXMmtm+K0WCtN1jPwIKXRA0t
-         skrtkc0U3YdpI0PBJtRW7+c06sAQdaknyg/kbexUPis7lMVRIJYSmQAoL0K4oRH3+xGh
-         9KCxlZUMgrhOcojwMOSGQkH74VomlVrmk4SRE1jxAn4VBWnFnxtwxmafJN7RtgQR9Q8/
-         r/MrUrWyfV5FBR4vruF9AugwLUDAmj8P2DsBAC2KOb9q1AMatfE0C7J+fnRO0KS0Td1S
-         5jfg==
+        bh=oFYWPiXBUOb/sC1wwY5JRuf2wUfPbobnczpKUw8Sc8c=;
+        b=mKEMcZakXnXb4taM7LMv1XX9ZM1CHwWaDc0ccK8YdIsvy1Uwq4p7l1z+b/9rb5pddm
+         AMHd268/LPeS5wR1NHQsSihJpHaxxpp8saF3F0gso5p7YTbTbPXacFpQj8UzO1FQCEDs
+         sOSYSR2Bsje7/AS4J4uDlXpqVRsOpfFJc2EuzLYv6yhiDEwwHtiGUfUEuYSguGjm/3XY
+         TqzhX4EQQZHoDnRNj7r6SE+RngO4qZX6NGNVLxTnYAItS4uP/Nzens7JTy91n4H5ctCj
+         OIchNHq8dWadZHGiFnSCM2Ocow5DVp2/xVnicEJtj5lB9PFhemPMJM4nA2jLGYDRCgjA
+         8s/g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=4pudM/U28TkD+Cplhyadu/0Y1S2/AG2UmAoM0FO5E6U=;
-        b=UxRxaArr4p3Lfou5A9pnRbFGi7juhXpmr4tIJ2UAW0oXsuzLuRoJBKeDxHd1T3Yoyl
-         bJc2iMWSkoWcaxzWsHqmnemVC57mzjiiF3fd+tdi00zfAKaGC8keydFviUrTNcRut2ya
-         q9xdUwg5i3QTRlfCvXH2788zp8uZJA2IICCfY1F7DQMnivvfcyMjxYC+jzT/5+yDNVw7
-         wJOVdzNDvM5/aONMr0SuvkA2NMKJYAdVdx/RvWXDLuZd+V+wPfU6ElFCpHG2jcoqpYwa
-         jJ0jcEYpH1qBPUYZt1vlhi8nGJ+Pl9JnK4+6UN94ECk+RZOgTiEyyfQgJt+1eaCwnlLU
-         GdUw==
-X-Gm-Message-State: APjAAAVXqlQlSveDxIBRTg0lsm0HRtFF3O3MEMWGOc4ElVeRwAIa486b
-        KRLQJHutV18NWd6PK/G2AqsXbg==
-X-Google-Smtp-Source: APXvYqyJhfb24JenwXZeH8VAc4TxIwOIRmF6Ii787zSit+Zy3cTcCa5gQDWZ+KvUVxZ9SqldBwkpAg==
-X-Received: by 2002:a2e:55db:: with SMTP id g88mr15568187lje.27.1566304023751;
-        Tue, 20 Aug 2019 05:27:03 -0700 (PDT)
+        bh=oFYWPiXBUOb/sC1wwY5JRuf2wUfPbobnczpKUw8Sc8c=;
+        b=ZjXZlw9DKLhoOUIAaLgsK7D/a/k/Wk7ZawAlS+ofvax9mRwS11EwicH1LkISdZX9O/
+         VKJLaQo6orFk3HwtTwY6rvWH2bcxQEUgycpfFTKMcWFR9arbTMS33pkjpdT/gizEybeM
+         7tFSAaZjjHIhxEloQWYzvQWq8EsVkl3jwCYCHMmnJAvwDKbIpXn48kdJ4ofkw/vo8AWF
+         C9opf8M2N/+tzKWvLUsUVdB1nMYTjzqH3O7Dd9QMTPfDL1+/b+vYxhhDbtab8L17Sn4O
+         oS74REkoIZBVgGbSZxpEvfwPPyABeKtaWYUwoQa4ZTBmIPYesh5WFDtDIw1Nuq4r5exZ
+         A73A==
+X-Gm-Message-State: APjAAAU6VHcqkNsdbGilWY2n2f4UAEUHMf0Wbs9TJ8LoXdEFylSOWOxf
+        NLKSgv27IP9g6oo6NG+jjWvSyw==
+X-Google-Smtp-Source: APXvYqyIlfGYkY/66ZjtQvi3ymjfHIpC4jiu+ueeKtlqnzmqYaKnCz1t6UNFl9RprdzP/XMzf+ZEMw==
+X-Received: by 2002:ac2:50c9:: with SMTP id h9mr9417673lfm.51.1566304041805;
+        Tue, 20 Aug 2019 05:27:21 -0700 (PDT)
 Received: from centauri (ua-84-219-138-247.bbcust.telenor.se. [84.219.138.247])
-        by smtp.gmail.com with ESMTPSA id i123sm3144627lfi.72.2019.08.20.05.27.02
+        by smtp.gmail.com with ESMTPSA id a15sm2838901lfl.44.2019.08.20.05.27.20
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 20 Aug 2019 05:27:03 -0700 (PDT)
-Date:   Tue, 20 Aug 2019 14:27:01 +0200
+        Tue, 20 Aug 2019 05:27:21 -0700 (PDT)
+Date:   Tue, 20 Aug 2019 14:27:19 +0200
 From:   Niklas Cassel <niklas.cassel@linaro.org>
 To:     Vinod Koul <vkoul@kernel.org>
 Cc:     Andy Gross <agross@kernel.org>, linux-arm-msm@vger.kernel.org,
@@ -55,69 +55,79 @@ Cc:     Andy Gross <agross@kernel.org>, linux-arm-msm@vger.kernel.org,
         Stephen Boyd <sboyd@kernel.org>,
         Sibi Sankar <sibis@codeaurora.org>, devicetree@vger.kernel.org,
         linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v2 3/8] arm64: dts: qcom: pm8150b: Add Base DTS file
-Message-ID: <20190820122701.GC31261@centauri>
+Subject: Re: [PATCH v2 2/8] arm64: dts: qcom: pm8150: Add Base DTS file
+Message-ID: <20190820122719.GD31261@centauri>
 References: <20190820064216.8629-1-vkoul@kernel.org>
- <20190820064216.8629-4-vkoul@kernel.org>
+ <20190820064216.8629-3-vkoul@kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20190820064216.8629-4-vkoul@kernel.org>
+In-Reply-To: <20190820064216.8629-3-vkoul@kernel.org>
 User-Agent: Mutt/1.12.1 (2019-06-15)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Aug 20, 2019 at 12:12:11PM +0530, Vinod Koul wrote:
-> PMIC pm8150b is a slave pmic and this adds base DTS file for pm8150b
-> with pon, adc, and gpio nodes
-
-All of your other commit messages refers to it as power-on
-instead of pon, be consistent.
-
+On Tue, Aug 20, 2019 at 12:12:10PM +0530, Vinod Koul wrote:
+> Add base DTS file for pm8150 along with GPIOs, power-on, rtc and vadc
+> nodes
 > 
 > Signed-off-by: Vinod Koul <vkoul@kernel.org>
 > ---
->  arch/arm64/boot/dts/qcom/pm8150b.dtsi | 84 +++++++++++++++++++++++++++
->  1 file changed, 84 insertions(+)
->  create mode 100644 arch/arm64/boot/dts/qcom/pm8150b.dtsi
+>  arch/arm64/boot/dts/qcom/pm8150.dtsi | 95 ++++++++++++++++++++++++++++
+>  1 file changed, 95 insertions(+)
+>  create mode 100644 arch/arm64/boot/dts/qcom/pm8150.dtsi
 > 
-> diff --git a/arch/arm64/boot/dts/qcom/pm8150b.dtsi b/arch/arm64/boot/dts/qcom/pm8150b.dtsi
+> diff --git a/arch/arm64/boot/dts/qcom/pm8150.dtsi b/arch/arm64/boot/dts/qcom/pm8150.dtsi
 > new file mode 100644
-> index 000000000000..dfb71fb8c90a
+> index 000000000000..4a678be46d37
 > --- /dev/null
-> +++ b/arch/arm64/boot/dts/qcom/pm8150b.dtsi
-> @@ -0,0 +1,84 @@
+> +++ b/arch/arm64/boot/dts/qcom/pm8150.dtsi
+> @@ -0,0 +1,95 @@
 > +// SPDX-License-Identifier: BSD-3-Clause
 > +// Copyright (c) 2017-2019, The Linux Foundation. All rights reserved.
 > +// Copyright (c) 2019, Linaro Limited
 > +
-> +#include <dt-bindings/iio/qcom,spmi-vadc.h>
+> +#include <dt-bindings/input/input.h>
 > +#include <dt-bindings/interrupt-controller/irq.h>
 > +#include <dt-bindings/spmi/spmi.h>
+> +#include <dt-bindings/iio/qcom,spmi-vadc.h>
 > +
 > +&spmi_bus {
-> +	pmic@2 {
-> +		compatible = "qcom,pm8150b", "qcom,spmi-pmic";
-> +		reg = <0x2 SPMI_USID>;
+> +	pm8150_0: pmic@0 {
+> +		compatible = "qcom,pm8150", "qcom,spmi-pmic";
+> +		reg = <0x0 SPMI_USID>;
 > +		#address-cells = <1>;
 > +		#size-cells = <0>;
 > +
-> +		power-on@800 {
+> +		pon: power-on@800 {
 > +			compatible = "qcom,pm8916-pon";
 > +			reg = <0x0800>;
+> +			pwrkey {
+> +				compatible = "qcom,pm8941-pwrkey";
+> +				interrupts = <0x0 0x8 0 IRQ_TYPE_EDGE_BOTH>;
+
+Here you use 0 for 3rd cell
+
+> +				debounce = <15625>;
+> +				bias-pull-up;
+> +				linux,code = <KEY_POWER>;
 > +
-> +			status = "disabled";
+> +				status = "disabled";
+> +			};
 > +		};
 > +
-> +		adc@3100 {
+> +		pm8150_adc: adc@3100 {
 > +			compatible = "qcom,spmi-adc5";
 > +			reg = <0x3100>;
 > +			#address-cells = <1>;
 > +			#size-cells = <0>;
 > +			#io-channel-cells = <1>;
-> +			interrupts = <0x2 0x31 0x0 IRQ_TYPE_EDGE_RISING>;
+> +			interrupts = <0x0 0x31 0x0 IRQ_TYPE_EDGE_RISING>;
+
+Here you use 0x0 for 3rd cell, be consistent.
+
 > +
 > +			status = "disabled";
 > +
@@ -138,37 +148,40 @@ instead of pon, be consistent.
 > +				qcom,pre-scaling = <1 1>;
 > +				label = "die_temp";
 > +			};
-> +
-> +			chg-temp@9 {
-> +				reg = <ADC5_CHG_TEMP>;
-> +				qcom,pre-scaling = <1 1>;
-> +				label = "chg_temp";
-> +			};
 > +		};
 > +
-> +		pm8150b_gpios: gpio@c000 {
-> +			compatible = "qcom,pm8150b-gpio";
+> +		rtc@6000 {
+> +			compatible = "qcom,pm8941-rtc";
+> +			reg = <0x6000>;
+> +			reg-names = "rtc", "alarm";
+> +			interrupts = <0x0 0x61 0x1 IRQ_TYPE_NONE>;
+> +
+> +			status = "disabled";
+> +		};
+> +
+> +		pm8150_gpios: gpio@c000 {
+> +			compatible = "qcom,pm8150-gpio";
 > +			reg = <0xc000>;
 > +			gpio-controller;
 > +			#gpio-cells = <2>;
-> +			interrupts = <0x2 0xc0 0 IRQ_TYPE_NONE>,
-> +				     <0x2 0xc1 0 IRQ_TYPE_NONE>,
-> +				     <0x2 0xc2 0 IRQ_TYPE_NONE>,
-> +				     <0x2 0xc3 0 IRQ_TYPE_NONE>,
-> +				     <0x2 0xc4 0 IRQ_TYPE_NONE>,
-> +				     <0x2 0xc5 0 IRQ_TYPE_NONE>,
-> +				     <0x2 0xc6 0 IRQ_TYPE_NONE>,
-> +				     <0x2 0xc7 0 IRQ_TYPE_NONE>,
-> +				     <0x2 0xc8 0 IRQ_TYPE_NONE>,
-> +				     <0x2 0xc9 0 IRQ_TYPE_NONE>,
-> +				     <0x2 0xca 0 IRQ_TYPE_NONE>,
-> +				     <0x2 0xcb 0 IRQ_TYPE_NONE>;
+> +			interrupts = <0 0xc0 0 IRQ_TYPE_NONE>,
+> +				     <0 0xc1 0 IRQ_TYPE_NONE>,
+> +				     <0 0xc2 0 IRQ_TYPE_NONE>,
+> +				     <0 0xc3 0 IRQ_TYPE_NONE>,
+> +				     <0 0xc4 0 IRQ_TYPE_NONE>,
+> +				     <0 0xc5 0 IRQ_TYPE_NONE>,
+> +				     <0 0xc6 0 IRQ_TYPE_NONE>,
+> +				     <0 0xc7 0 IRQ_TYPE_NONE>,
+> +				     <0 0xc8 0 IRQ_TYPE_NONE>,
+> +				     <0 0xc9 0 IRQ_TYPE_NONE>,
+> +				     <0 0xca 0 IRQ_TYPE_NONE>,
+> +				     <0 0xcb 0 IRQ_TYPE_NONE>;
 > +		};
 > +	};
 > +
-> +	pmic@3 {
-> +		compatible = "qcom,pm8150b", "qcom,spmi-pmic";
-> +		reg = <0x3 SPMI_USID>;
+> +	pmic@1 {
+> +		compatible = "qcom,pm8150", "qcom,spmi-pmic";
+> +		reg = <0x1 SPMI_USID>;
 > +		#address-cells = <1>;
 > +		#size-cells = <0>;
 > +	};
