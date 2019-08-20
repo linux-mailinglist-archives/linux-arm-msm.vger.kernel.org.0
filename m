@@ -2,84 +2,87 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 330AE955BB
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Aug 2019 05:50:01 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 76EED955DE
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Aug 2019 06:17:02 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729012AbfHTDru (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 19 Aug 2019 23:47:50 -0400
-Received: from mail.kernel.org ([198.145.29.99]:53952 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1728669AbfHTDru (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 19 Aug 2019 23:47:50 -0400
-Received: from localhost (unknown [106.201.62.126])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 96049206DD;
-        Tue, 20 Aug 2019 03:47:47 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1566272868;
-        bh=WdtdvtyJ5xCApfwgYXwgjnhfk0eANksRfCR816c5iuQ=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=mPlhU8n83WBacfgb0w/pYQnsU4ERkzlaXm0CseeOw4DGf2gydouYW4xtHp9Oycdvx
-         eahuYmaV7map/WK+0TEHWV7S+jyOYbhZ+y/RAkL/PY7nPIDZMyt9Jw7lD+FUv4BWtH
-         ljMfYtdpV2sJj0WdbWaw89+FQEP/nAaiSm/U+dkY=
-Date:   Tue, 20 Aug 2019 09:16:37 +0530
-From:   Vinod Koul <vkoul@kernel.org>
-To:     Stephen Boyd <sboyd@kernel.org>
-Cc:     Andy Gross <agross@kernel.org>, linux-arm-msm@vger.kernel.org,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        sibis@codeaurora.org, Rob Herring <robh+dt@kernel.org>,
-        Mark Rutland <mark.rutland@arm.com>,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 10/22] arm64: dts: qcom: pm8150b: Add pon and adc nodes
-Message-ID: <20190820034637.GO12733@vkoul-mobl.Dlink>
-References: <20190814125012.8700-1-vkoul@kernel.org>
- <20190814125012.8700-11-vkoul@kernel.org>
- <20190814170803.DEFCC214DA@mail.kernel.org>
- <20190819174331.GN12733@vkoul-mobl.Dlink>
- <20190819175628.6914A22CEB@mail.kernel.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20190819175628.6914A22CEB@mail.kernel.org>
-User-Agent: Mutt/1.11.3 (2019-02-01)
+        id S1729085AbfHTERB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 20 Aug 2019 00:17:01 -0400
+Received: from mail-pl1-f193.google.com ([209.85.214.193]:44324 "EHLO
+        mail-pl1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728248AbfHTERB (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 20 Aug 2019 00:17:01 -0400
+Received: by mail-pl1-f193.google.com with SMTP id t14so2037006plr.11
+        for <linux-arm-msm@vger.kernel.org>; Mon, 19 Aug 2019 21:17:01 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=from:to:cc:subject:date:message-id;
+        bh=KbKypMZEMo628Sx98GbFT2Lyxp3a3o8vbOSGro2hqs8=;
+        b=BbMcDsfdhYJbYQOF4+aYA+FByqe1YzCp/GVmlI4KBpJik0CSaiyOMnbGH8m3TiqELX
+         s4cEulkc1aWYVE0YqhE3Zgn8RO2mrIJ+vTMekI/vxsli4czBtUJA3lrnGfjK48ncRyBt
+         5eOTSVG8tSarLdTZM/Mgld7VoxpN0p+9jb10g+l8q2JiGwBzB32Sdx16m3FUCg1i3UK2
+         cUQRM6vLlhJbXk9WlqsISZah7xFjoLA1LLtMlpOCejDe85h3kOtM8xqxR//2Bh44v+3o
+         dB/g1IRRMS9DwDLj9NIF/NaKw+Y3XfLNEPXYCd8rLtmOlUsym/69sM9Iouv3xzrrND4S
+         WsVg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=KbKypMZEMo628Sx98GbFT2Lyxp3a3o8vbOSGro2hqs8=;
+        b=PWydVA7SG0jc/iZPQU4ZZKpHXB1u1QvW7dBL6kko+jzY3AomHxqvF4cA/3dX7loet8
+         m+S1kJLSXg99pmYeWn9eU6fSYgdydBAly/Md1bU+cUYlP8TTDbXSoB5CgCc+JUk+zUbP
+         ULlWuuMRJ3urk4KHZ+DSf2M8/rnzMhtSPOdTR0QgDt0sF6fB3UcGo7XaZC5DwUv6yHn+
+         Dyf0H8B5bxAiN4b5TeH7VfRFgaRGXzGzOgVv/FGTh0xZI3swhZ2IfRSj5oqb1vFrMOeg
+         KUZkXc8IXWVJ3DACfplUsM90DCXd0RGT2rR5nvmEPxTr/meT0XrXU/swzVzQPvCnOlV4
+         SMTw==
+X-Gm-Message-State: APjAAAVxZI4xAR+RPb/fohGsE6e10KDiTd9VszNbWdGWAkDOEyT220ao
+        QcqjC7jTZAklyqHKD0Tjpxo/Vw==
+X-Google-Smtp-Source: APXvYqzpynUE9tTdOCXExz9bKNqsRxtU0Zbjd9lhUYl/ghqc72gIr293dR2Ts5fcabGAmXXs5bn+Eg==
+X-Received: by 2002:a17:902:4401:: with SMTP id k1mr26180562pld.193.1566274620467;
+        Mon, 19 Aug 2019 21:17:00 -0700 (PDT)
+Received: from localhost.localdomain (104-188-17-28.lightspeed.sndgca.sbcglobal.net. [104.188.17.28])
+        by smtp.gmail.com with ESMTPSA id j6sm35010849pje.11.2019.08.19.21.16.59
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Mon, 19 Aug 2019 21:16:59 -0700 (PDT)
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     Ohad Ben-Cohen <ohad@wizery.com>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org,
+        linux-kernel@vger.kernel.org,
+        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+Subject: [PATCH] rpmsg: glink-smem: Name the edge based on parent remoteproc
+Date:   Mon, 19 Aug 2019 21:16:56 -0700
+Message-Id: <20190820041656.17197-1-bjorn.andersson@linaro.org>
+X-Mailer: git-send-email 2.18.0
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 19-08-19, 10:56, Stephen Boyd wrote:
-> Quoting Vinod Koul (2019-08-19 10:43:31)
-> > On 14-08-19, 10:08, Stephen Boyd wrote:
-> > > 
-> > > > 
-> > > > diff --git a/arch/arm64/boot/dts/qcom/pm8150b.dtsi b/arch/arm64/boot/dts/qcom/pm8150b.dtsi
-> > > > index c0a678b0f159..846197bd65cd 100644
-> > > > --- a/arch/arm64/boot/dts/qcom/pm8150b.dtsi
-> > > > +++ b/arch/arm64/boot/dts/qcom/pm8150b.dtsi
-> > > > @@ -2,6 +2,7 @@
-> > > >  // Copyright (c) 2017-2019, The Linux Foundation. All rights reserved.
-> > > >  // Copyright (c) 2019, Linaro Limited
-> > > >  
-> > > > +#include <dt-bindings/iio/qcom,spmi-vadc.h>
-> > > >  #include <dt-bindings/interrupt-controller/irq.h>
-> > > >  #include <dt-bindings/spmi/spmi.h>
-> > > >  
-> > > > @@ -11,6 +12,59 @@
-> > > >                 reg = <0x2 SPMI_USID>;
-> > > >                 #address-cells = <1>;
-> > > >                 #size-cells = <0>;
-> > > > +
-> > > > +               pon@800 {
-> > > 
-> > > Maybe pon node name should be 'key' or 'power-on'?
-> > 
-> > pon stands for power on device. See Documentation/devicetree/bindings/power/reset/qcom,pon.txt
-> 
-> Right. I was hoping for a more standard node name vs. an acronym that's
-> SoC specific.
+Naming the glink edge device on the parent of_node short name causes
+collisions when multiple remoteproc instances with only different unit
+address are described on the platform_bus in DeviceTree.
 
-Sure that sounds better to me, I will make it "power-on"
+Base the edge's name on the parent remoteproc's name instead, to ensure
+that it's unique.
 
+Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+---
+ drivers/rpmsg/qcom_glink_smem.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/drivers/rpmsg/qcom_glink_smem.c b/drivers/rpmsg/qcom_glink_smem.c
+index 64a5ce324c7f..4238383d8685 100644
+--- a/drivers/rpmsg/qcom_glink_smem.c
++++ b/drivers/rpmsg/qcom_glink_smem.c
+@@ -201,7 +201,7 @@ struct qcom_glink *qcom_glink_smem_register(struct device *parent,
+ 	dev->parent = parent;
+ 	dev->of_node = node;
+ 	dev->release = qcom_glink_smem_release;
+-	dev_set_name(dev, "%pOFn:%pOFn", node->parent, node);
++	dev_set_name(dev, "%s:%pOFn", dev_name(parent->parent), node);
+ 	ret = device_register(dev);
+ 	if (ret) {
+ 		pr_err("failed to register glink edge\n");
 -- 
-~Vinod
+2.18.0
+
