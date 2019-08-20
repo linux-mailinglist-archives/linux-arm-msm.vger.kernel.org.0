@@ -2,27 +2,27 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 9659596778
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Aug 2019 19:27:09 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D21579677E
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Aug 2019 19:27:11 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730607AbfHTRZg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 20 Aug 2019 13:25:36 -0400
-Received: from mail.kernel.org ([198.145.29.99]:48638 "EHLO mail.kernel.org"
+        id S1730632AbfHTRZk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 20 Aug 2019 13:25:40 -0400
+Received: from mail.kernel.org ([198.145.29.99]:48702 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1730473AbfHTRZg (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 20 Aug 2019 13:25:36 -0400
+        id S1730629AbfHTRZk (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 20 Aug 2019 13:25:40 -0400
 Received: from localhost.localdomain (unknown [106.201.62.126])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id D7E1D22DD3;
-        Tue, 20 Aug 2019 17:25:31 +0000 (UTC)
+        by mail.kernel.org (Postfix) with ESMTPSA id CA80C2064A;
+        Tue, 20 Aug 2019 17:25:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1566321935;
+        s=default; t=1566321939;
         bh=M+6+1x75KEPkx+lE9S3iYX+zdQsZ2R3sBYFxh6yUG3E=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=lYhOIV1KNg/fyfAzDtqXxhoYykS+kwW96NaGTBSwFzPgGOP0D6Wr40KR/VFGsoRe5
-         SXYz796YUR9F9MEQeE1NrQk+/NeZUhyBQUyR0sc1sQ43TozHB5qJqsKdrorgifIRyp
-         04NluO+PR025H6XGtErm1+B7xYJuUKU9+pGvKgKM=
+        b=YQRor0YIYP5xBWVAgTUreofT/cOEiu8hA+HPwcfrUX9Jkwat9+9sucecw0Q/4mqul
+         YCjtb5JMSttS54+aXKWuDgMEi2NBMOnFCsZ1HlrLHn4hNeS30gJ+vxMKAQGWNFWfLC
+         VphOaZcY2KHELiVc5JzTCAoreJIjRjc502SYDIuI=
 From:   Vinod Koul <vkoul@kernel.org>
 To:     Andy Gross <agross@kernel.org>
 Cc:     linux-arm-msm@vger.kernel.org,
@@ -33,9 +33,9 @@ Cc:     linux-arm-msm@vger.kernel.org,
         Stephen Boyd <sboyd@kernel.org>,
         Sibi Sankar <sibis@codeaurora.org>, devicetree@vger.kernel.org,
         linux-kernel@vger.kernel.org
-Subject: [PATCH v3 5/8] arm64: dts: qcom: sm8150-mtp: Add base dts file
-Date:   Tue, 20 Aug 2019 22:53:47 +0530
-Message-Id: <20190820172351.24145-6-vkoul@kernel.org>
+Subject: [PATCH v3 5/8] arm64: dts: qcom: sm8150-mtp: add base dts file
+Date:   Tue, 20 Aug 2019 22:53:48 +0530
+Message-Id: <20190820172351.24145-7-vkoul@kernel.org>
 X-Mailer: git-send-email 2.20.1
 In-Reply-To: <20190820172351.24145-1-vkoul@kernel.org>
 References: <20190820172351.24145-1-vkoul@kernel.org>
