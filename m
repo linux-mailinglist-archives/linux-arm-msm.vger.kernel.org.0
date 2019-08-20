@@ -2,50 +2,50 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 342CA95E70
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Aug 2019 14:27:56 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5D62895E77
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Aug 2019 14:27:59 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729878AbfHTM1Y (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 20 Aug 2019 08:27:24 -0400
-Received: from mail-lf1-f65.google.com ([209.85.167.65]:33560 "EHLO
-        mail-lf1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729808AbfHTM1Y (ORCPT
+        id S1729906AbfHTM1s (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 20 Aug 2019 08:27:48 -0400
+Received: from mail-lf1-f67.google.com ([209.85.167.67]:43849 "EHLO
+        mail-lf1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729261AbfHTM1r (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 20 Aug 2019 08:27:24 -0400
-Received: by mail-lf1-f65.google.com with SMTP id x3so3985636lfc.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 20 Aug 2019 05:27:22 -0700 (PDT)
+        Tue, 20 Aug 2019 08:27:47 -0400
+Received: by mail-lf1-f67.google.com with SMTP id c19so3961463lfm.10
+        for <linux-arm-msm@vger.kernel.org>; Tue, 20 Aug 2019 05:27:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to:user-agent;
-        bh=oFYWPiXBUOb/sC1wwY5JRuf2wUfPbobnczpKUw8Sc8c=;
-        b=mKEMcZakXnXb4taM7LMv1XX9ZM1CHwWaDc0ccK8YdIsvy1Uwq4p7l1z+b/9rb5pddm
-         AMHd268/LPeS5wR1NHQsSihJpHaxxpp8saF3F0gso5p7YTbTbPXacFpQj8UzO1FQCEDs
-         sOSYSR2Bsje7/AS4J4uDlXpqVRsOpfFJc2EuzLYv6yhiDEwwHtiGUfUEuYSguGjm/3XY
-         TqzhX4EQQZHoDnRNj7r6SE+RngO4qZX6NGNVLxTnYAItS4uP/Nzens7JTy91n4H5ctCj
-         OIchNHq8dWadZHGiFnSCM2Ocow5DVp2/xVnicEJtj5lB9PFhemPMJM4nA2jLGYDRCgjA
-         8s/g==
+        bh=0UoBeK84Ph50FDAbjQnTCZmHpBQx0sjrUI7uMEVUTY4=;
+        b=glgrzGvxADtJ7qsK4DYphaQtLT8qzOWx20CIJyvNqDvTYGuG3bv0UNpwbv3C6iP829
+         mRhv3zK4Mt90XSGS45gHJO7plU2cBxdADCqSUhipMzaq6o5dWzN9PuABw3nwKynLcFL6
+         sKC5WcDuury+aInycnbi0kSaaGbOvglIrZVeV6SI8OlDZxogyyCk+v00+SHf+kD4kt3f
+         2BbsHpsbJzbwHeX+QPuytzY/5GE0Rq4cDUmomgkNiwcahDaNz5iuM+VEi8QAKdbmI6DP
+         h3s0Hb3/DTDEKX6kyEjK+c9szPGBcHoTHkC7vJQXSBrx43mps89eAKcUjUxl2he9d7sz
+         I4Tw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=oFYWPiXBUOb/sC1wwY5JRuf2wUfPbobnczpKUw8Sc8c=;
-        b=ZjXZlw9DKLhoOUIAaLgsK7D/a/k/Wk7ZawAlS+ofvax9mRwS11EwicH1LkISdZX9O/
-         VKJLaQo6orFk3HwtTwY6rvWH2bcxQEUgycpfFTKMcWFR9arbTMS33pkjpdT/gizEybeM
-         7tFSAaZjjHIhxEloQWYzvQWq8EsVkl3jwCYCHMmnJAvwDKbIpXn48kdJ4ofkw/vo8AWF
-         C9opf8M2N/+tzKWvLUsUVdB1nMYTjzqH3O7Dd9QMTPfDL1+/b+vYxhhDbtab8L17Sn4O
-         oS74REkoIZBVgGbSZxpEvfwPPyABeKtaWYUwoQa4ZTBmIPYesh5WFDtDIw1Nuq4r5exZ
-         A73A==
-X-Gm-Message-State: APjAAAU6VHcqkNsdbGilWY2n2f4UAEUHMf0Wbs9TJ8LoXdEFylSOWOxf
-        NLKSgv27IP9g6oo6NG+jjWvSyw==
-X-Google-Smtp-Source: APXvYqyIlfGYkY/66ZjtQvi3ymjfHIpC4jiu+ueeKtlqnzmqYaKnCz1t6UNFl9RprdzP/XMzf+ZEMw==
-X-Received: by 2002:ac2:50c9:: with SMTP id h9mr9417673lfm.51.1566304041805;
-        Tue, 20 Aug 2019 05:27:21 -0700 (PDT)
+        bh=0UoBeK84Ph50FDAbjQnTCZmHpBQx0sjrUI7uMEVUTY4=;
+        b=BLn8/eyN6Hv6pEoohuXbt0soTJfKgsf8t2S/6AK6aiha5+Bc75Rj2xS22fJ7x+Sh57
+         k384XHDL+oB0+F4y6L65KgnF4RXDZIjzq/pTWeHLgy6YlCkvHrKXsDw4RuMJRqjtMI3c
+         9zyT/zrQrPef/2UOzQaKFKRF/ULCYwfrdsDuNZh1sTruxAOxM4Ys+f3cQ+nFpnj7R5hw
+         4oRmXXU6izkbmUzHKk+EfwgO/PBgLXrLk7p5A98OwU/oNsUgymZ22npCe7yb0TceAjQ4
+         l/jvBkhdeqPdM8GNyzFcevc0mhkmi+fet120IM21DYbGukfyMvsXXKv3xB9oF44qaW60
+         CN/w==
+X-Gm-Message-State: APjAAAUrvdhkPrVHbfmfaK13tfzjMNJUxSug/trAkO09uqPVD8jojJ7D
+        uXc86KxT/j4aOB907PFdi6OrHA==
+X-Google-Smtp-Source: APXvYqyyA15XelDnzRAQ+Dcu7DUeFGAXnVSRlQ4yUZDegDdP9DE2HhNPk2vL1nLu4BpJfgFBuomVIA==
+X-Received: by 2002:a19:a419:: with SMTP id q25mr15790232lfc.136.1566304064989;
+        Tue, 20 Aug 2019 05:27:44 -0700 (PDT)
 Received: from centauri (ua-84-219-138-247.bbcust.telenor.se. [84.219.138.247])
-        by smtp.gmail.com with ESMTPSA id a15sm2838901lfl.44.2019.08.20.05.27.20
+        by smtp.gmail.com with ESMTPSA id e26sm2853047lfc.68.2019.08.20.05.27.43
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 20 Aug 2019 05:27:21 -0700 (PDT)
-Date:   Tue, 20 Aug 2019 14:27:19 +0200
+        Tue, 20 Aug 2019 05:27:44 -0700 (PDT)
+Date:   Tue, 20 Aug 2019 14:27:42 +0200
 From:   Niklas Cassel <niklas.cassel@linaro.org>
 To:     Vinod Koul <vkoul@kernel.org>
 Cc:     Andy Gross <agross@kernel.org>, linux-arm-msm@vger.kernel.org,
@@ -55,135 +55,354 @@ Cc:     Andy Gross <agross@kernel.org>, linux-arm-msm@vger.kernel.org,
         Stephen Boyd <sboyd@kernel.org>,
         Sibi Sankar <sibis@codeaurora.org>, devicetree@vger.kernel.org,
         linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v2 2/8] arm64: dts: qcom: pm8150: Add Base DTS file
-Message-ID: <20190820122719.GD31261@centauri>
+Subject: Re: [PATCH v2 1/8] arm64: dts: qcom: sm8150: add base dts file
+Message-ID: <20190820122742.GE31261@centauri>
 References: <20190820064216.8629-1-vkoul@kernel.org>
- <20190820064216.8629-3-vkoul@kernel.org>
+ <20190820064216.8629-2-vkoul@kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20190820064216.8629-3-vkoul@kernel.org>
+In-Reply-To: <20190820064216.8629-2-vkoul@kernel.org>
 User-Agent: Mutt/1.12.1 (2019-06-15)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Aug 20, 2019 at 12:12:10PM +0530, Vinod Koul wrote:
-> Add base DTS file for pm8150 along with GPIOs, power-on, rtc and vadc
-> nodes
+On Tue, Aug 20, 2019 at 12:12:09PM +0530, Vinod Koul wrote:
+> This add base DTS file with cpu, psci, firmware, clock, tlmm and
+> spmi nodes which enables boot to console
 > 
 > Signed-off-by: Vinod Koul <vkoul@kernel.org>
 > ---
->  arch/arm64/boot/dts/qcom/pm8150.dtsi | 95 ++++++++++++++++++++++++++++
->  1 file changed, 95 insertions(+)
->  create mode 100644 arch/arm64/boot/dts/qcom/pm8150.dtsi
+>  arch/arm64/boot/dts/qcom/sm8150.dtsi | 305 +++++++++++++++++++++++++++
+>  1 file changed, 305 insertions(+)
+>  create mode 100644 arch/arm64/boot/dts/qcom/sm8150.dtsi
 > 
-> diff --git a/arch/arm64/boot/dts/qcom/pm8150.dtsi b/arch/arm64/boot/dts/qcom/pm8150.dtsi
+> diff --git a/arch/arm64/boot/dts/qcom/sm8150.dtsi b/arch/arm64/boot/dts/qcom/sm8150.dtsi
 > new file mode 100644
-> index 000000000000..4a678be46d37
+> index 000000000000..d9dc95f851b7
 > --- /dev/null
-> +++ b/arch/arm64/boot/dts/qcom/pm8150.dtsi
-> @@ -0,0 +1,95 @@
+> +++ b/arch/arm64/boot/dts/qcom/sm8150.dtsi
+> @@ -0,0 +1,305 @@
 > +// SPDX-License-Identifier: BSD-3-Clause
 > +// Copyright (c) 2017-2019, The Linux Foundation. All rights reserved.
 > +// Copyright (c) 2019, Linaro Limited
 > +
-> +#include <dt-bindings/input/input.h>
-> +#include <dt-bindings/interrupt-controller/irq.h>
-> +#include <dt-bindings/spmi/spmi.h>
-> +#include <dt-bindings/iio/qcom,spmi-vadc.h>
+> +#include <dt-bindings/interrupt-controller/arm-gic.h>
+> +#include <dt-bindings/soc/qcom,rpmh-rsc.h>
+> +#include <dt-bindings/clock/qcom,rpmh.h>
 > +
-> +&spmi_bus {
-> +	pm8150_0: pmic@0 {
-> +		compatible = "qcom,pm8150", "qcom,spmi-pmic";
-> +		reg = <0x0 SPMI_USID>;
-> +		#address-cells = <1>;
+> +/ {
+> +	interrupt-parent = <&intc>;
+> +
+> +	#address-cells = <2>;
+> +	#size-cells = <2>;
+> +
+> +	chosen { };
+
+What is the point of an empty node without a label?
+Perhaps I'm missing something.
+
+> +
+> +	clocks {
+> +		xo_board: xo-board {
+> +			compatible = "fixed-clock";
+> +			#clock-cells = <0>;
+> +			clock-frequency = <38400000>;
+> +			clock-output-names = "xo_board";
+> +		};
+> +
+> +		sleep_clk: sleep-clk {
+> +			compatible = "fixed-clock";
+> +			#clock-cells = <0>;
+> +			clock-frequency = <32764>;
+> +			clock-output-names = "sleep_clk";
+> +		};
+> +	};
+> +
+> +	cpus {
+> +		#address-cells = <2>;
 > +		#size-cells = <0>;
 > +
-> +		pon: power-on@800 {
-> +			compatible = "qcom,pm8916-pon";
-> +			reg = <0x0800>;
-> +			pwrkey {
-> +				compatible = "qcom,pm8941-pwrkey";
-> +				interrupts = <0x0 0x8 0 IRQ_TYPE_EDGE_BOTH>;
+> +		CPU0: cpu@0 {
+> +			device_type = "cpu";
+> +			compatible = "qcom,kryo485";
 
-Here you use 0 for 3rd cell
+I don't see this compatible in
+Documentation/devicetree/bindings/arm/cpus.yaml
 
-> +				debounce = <15625>;
-> +				bias-pull-up;
-> +				linux,code = <KEY_POWER>;
+> +			reg = <0x0 0x0>;
+> +			enable-method = "psci";
+> +			next-level-cache = <&L2_0>;
+> +			L2_0: l2-cache {
+> +				compatible = "cache";
+> +				next-level-cache = <&L3_0>;
+> +				L3_0: l3-cache {
+> +				      compatible = "cache";
+> +				};
+> +			};
+> +		};
 > +
+> +		CPU1: cpu@100 {
+> +			device_type = "cpu";
+> +			compatible = "qcom,kryo485";
+> +			reg = <0x0 0x100>;
+> +			enable-method = "psci";
+> +			next-level-cache = <&L2_100>;
+> +			L2_100: l2-cache {
+> +				compatible = "cache";
+> +				next-level-cache = <&L3_0>;
+> +			};
+> +
+> +		};
+> +
+> +		CPU2: cpu@200 {
+> +			device_type = "cpu";
+> +			compatible = "qcom,kryo485";
+> +			reg = <0x0 0x200>;
+> +			enable-method = "psci";
+> +			next-level-cache = <&L2_200>;
+> +			L2_200: l2-cache {
+> +				compatible = "cache";
+> +				next-level-cache = <&L3_0>;
+> +			};
+> +		};
+> +
+> +		CPU3: cpu@300 {
+> +			device_type = "cpu";
+> +			compatible = "qcom,kryo485";
+> +			reg = <0x0 0x300>;
+> +			enable-method = "psci";
+> +			next-level-cache = <&L2_300>;
+> +			L2_300: l2-cache {
+> +				compatible = "cache";
+> +				next-level-cache = <&L3_0>;
+> +			};
+> +		};
+> +
+> +		CPU4: cpu@400 {
+> +			device_type = "cpu";
+> +			compatible = "qcom,kryo485";
+> +			reg = <0x0 0x400>;
+> +			enable-method = "psci";
+> +			next-level-cache = <&L2_400>;
+> +			L2_400: l2-cache {
+> +				compatible = "cache";
+> +				next-level-cache = <&L3_0>;
+> +			};
+> +		};
+> +
+> +		CPU5: cpu@500 {
+> +			device_type = "cpu";
+> +			compatible = "qcom,kryo485";
+> +			reg = <0x0 0x500>;
+> +			enable-method = "psci";
+> +			next-level-cache = <&L2_500>;
+> +			L2_500: l2-cache {
+> +				compatible = "cache";
+> +				next-level-cache = <&L3_0>;
+> +			};
+> +		};
+> +
+> +		CPU6: cpu@600 {
+> +			device_type = "cpu";
+> +			compatible = "qcom,kryo485";
+> +			reg = <0x0 0x600>;
+> +			enable-method = "psci";
+> +			next-level-cache = <&L2_600>;
+> +			L2_600: l2-cache {
+> +				compatible = "cache";
+> +				next-level-cache = <&L3_0>;
+> +			};
+> +		};
+> +
+> +		CPU7: cpu@700 {
+> +			device_type = "cpu";
+> +			compatible = "qcom,kryo485";
+> +			reg = <0x0 0x700>;
+> +			enable-method = "psci";
+> +			next-level-cache = <&L2_700>;
+> +			L2_700: l2-cache {
+> +				compatible = "cache";
+> +				next-level-cache = <&L3_0>;
+> +			};
+> +		};
+> +	};
+
+I was expecting to see the cpu-map here, defining
+the core to cluster relationship.
+
+> +
+> +	firmware {
+> +		scm: scm {
+> +			compatible = "qcom,scm-sm8150", "qcom,scm";
+> +			#reset-cells = <1>;
+> +		};
+> +	};
+> +
+> +	memory@80000000 {
+> +		device_type = "memory";
+> +		/* We expect the bootloader to fill in the size */
+> +		reg = <0 0x80000000 0 0>;
+> +	};
+> +
+> +	psci {
+> +		compatible = "arm,psci-1.0";
+> +		method = "smc";
+> +	};
+> +
+> +	soc: soc@0 {
+> +		#address-cells = <1>;
+> +		#size-cells = <1>;
+> +		ranges = <0 0 0 0xffffffff>;
+> +		compatible = "simple-bus";
+> +
+> +		gcc: clock-controller@100000 {
+> +			compatible = "qcom,gcc-sm8150";
+> +			reg = <0x00100000 0x1f0000>;
+> +			#clock-cells = <1>;
+> +			#reset-cells = <1>;
+> +			#power-domain-cells = <1>;
+> +			clock-names = "bi_tcxo",
+> +				      "sleep_clk";
+> +			clocks = <&rpmhcc RPMH_CXO_CLK>,
+> +				 <&sleep_clk>;
+> +		};
+> +
+> +		qupv3_id_1: geniqup@ac0000 {
+> +			compatible = "qcom,geni-se-qup";
+> +			reg = <0x00ac0000 0x6000>;
+> +			clock-names = "m-ahb", "s-ahb";
+> +			clocks = <&gcc 123>,
+> +				 <&gcc 124>;
+
+Is there no defines for these?
+
+> +			#address-cells = <1>;
+> +			#size-cells = <1>;
+> +			ranges;
+> +			status = "disabled";
+> +
+> +			uart2: serial@a90000 {
+> +				compatible = "qcom,geni-debug-uart";
+> +				reg = <0x00a90000 0x4000>;
+> +				clock-names = "se";
+> +				clocks = <&gcc 105>;
+> +				interrupts = <GIC_SPI 357 IRQ_TYPE_LEVEL_HIGH>;
 > +				status = "disabled";
 > +			};
 > +		};
 > +
-> +		pm8150_adc: adc@3100 {
-> +			compatible = "qcom,spmi-adc5";
-> +			reg = <0x3100>;
-> +			#address-cells = <1>;
-> +			#size-cells = <0>;
-> +			#io-channel-cells = <1>;
-> +			interrupts = <0x0 0x31 0x0 IRQ_TYPE_EDGE_RISING>;
-
-Here you use 0x0 for 3rd cell, be consistent.
-
-> +
-> +			status = "disabled";
-> +
-> +			ref-gnd@0 {
-> +				reg = <ADC5_REF_GND>;
-> +				qcom,pre-scaling = <1 1>;
-> +				label = "ref_gnd";
-> +			};
-> +
-> +			vref-1p25@1 {
-> +				reg = <ADC5_1P25VREF>;
-> +				qcom,pre-scaling = <1 1>;
-> +				label = "vref_1p25";
-> +			};
-> +
-> +			die-temp@6 {
-> +				reg = <ADC5_DIE_TEMP>;
-> +				qcom,pre-scaling = <1 1>;
-> +				label = "die_temp";
-> +			};
-> +		};
-> +
-> +		rtc@6000 {
-> +			compatible = "qcom,pm8941-rtc";
-> +			reg = <0x6000>;
-> +			reg-names = "rtc", "alarm";
-> +			interrupts = <0x0 0x61 0x1 IRQ_TYPE_NONE>;
-> +
-> +			status = "disabled";
-> +		};
-> +
-> +		pm8150_gpios: gpio@c000 {
-> +			compatible = "qcom,pm8150-gpio";
-> +			reg = <0xc000>;
+> +		tlmm: pinctrl@3100000 {
+> +			compatible = "qcom,sm8150-pinctrl";
+> +			reg = <0x03100000 0x300000>,
+> +			      <0x03500000 0x300000>,
+> +			      <0x03900000 0x300000>,
+> +			      <0x03d00000 0x300000>;
+> +			reg-names = "west", "east", "north", "south";
+> +			interrupts = <GIC_SPI 208 IRQ_TYPE_LEVEL_HIGH>;
+> +			gpio-ranges = <&tlmm 0 0 175>;
 > +			gpio-controller;
 > +			#gpio-cells = <2>;
-> +			interrupts = <0 0xc0 0 IRQ_TYPE_NONE>,
-> +				     <0 0xc1 0 IRQ_TYPE_NONE>,
-> +				     <0 0xc2 0 IRQ_TYPE_NONE>,
-> +				     <0 0xc3 0 IRQ_TYPE_NONE>,
-> +				     <0 0xc4 0 IRQ_TYPE_NONE>,
-> +				     <0 0xc5 0 IRQ_TYPE_NONE>,
-> +				     <0 0xc6 0 IRQ_TYPE_NONE>,
-> +				     <0 0xc7 0 IRQ_TYPE_NONE>,
-> +				     <0 0xc8 0 IRQ_TYPE_NONE>,
-> +				     <0 0xc9 0 IRQ_TYPE_NONE>,
-> +				     <0 0xca 0 IRQ_TYPE_NONE>,
-> +				     <0 0xcb 0 IRQ_TYPE_NONE>;
+> +			interrupt-controller;
+> +			#interrupt-cells = <2>;
+> +		};
+> +
+> +		intc: interrupt-controller@17a00000 {
+> +			compatible = "arm,gic-v3";
+> +			interrupt-controller;
+> +			#interrupt-cells = <3>;
+> +			reg = <0x17a00000 0x10000>,	/* GICD */
+> +			      <0x17a60000 0x100000>;	/* GICR * 8 */
+> +			interrupts = <GIC_PPI 9 IRQ_TYPE_LEVEL_HIGH>;
+> +		};
+> +
+> +		timer@17c20000 {
+> +			#address-cells = <1>;
+> +			#size-cells = <1>;
+> +			ranges;
+> +			compatible = "arm,armv7-timer-mem";
+> +			reg = <0x17c20000 0x1000>;
+> +			clock-frequency = <19200000>;
+> +
+> +			frame@17c21000{
+> +				frame-number = <0>;
+> +				interrupts = <GIC_SPI 8 IRQ_TYPE_LEVEL_HIGH>,
+> +					     <GIC_SPI 6 IRQ_TYPE_LEVEL_HIGH>;
+> +				reg = <0x17c21000 0x1000>,
+> +				      <0x17c22000 0x1000>;
+> +			};
+> +
+> +			frame@17c23000 {
+> +				frame-number = <1>;
+> +				interrupts = <GIC_SPI 9 IRQ_TYPE_LEVEL_HIGH>;
+> +				reg = <0x17c23000 0x1000>;
+> +				status = "disabled";
+> +			};
+> +
+> +			frame@17c25000 {
+> +				frame-number = <2>;
+> +				interrupts = <GIC_SPI 10 IRQ_TYPE_LEVEL_HIGH>;
+> +				reg = <0x17c25000 0x1000>;
+> +				status = "disabled";
+> +			};
+> +
+> +			frame@17c27000 {
+> +				frame-number = <3>;
+> +				interrupts = <GIC_SPI 11 IRQ_TYPE_LEVEL_HIGH>;
+> +				reg = <0x17c26000 0x1000>;
+> +				status = "disabled";
+> +			};
+> +
+> +			frame@17c29000 {
+> +				frame-number = <4>;
+> +				interrupts = <GIC_SPI 12 IRQ_TYPE_LEVEL_HIGH>;
+> +				reg = <0x17c29000 0x1000>;
+> +				status = "disabled";
+> +			};
+> +
+> +			frame@17c2b000 {
+> +				frame-number = <5>;
+> +				interrupts = <GIC_SPI 13 IRQ_TYPE_LEVEL_HIGH>;
+> +				reg = <0x17c2b000 0x1000>;
+> +				status = "disabled";
+> +			};
+> +
+> +			frame@17c2d000 {
+> +				frame-number = <6>;
+> +				interrupts = <GIC_SPI 14 IRQ_TYPE_LEVEL_HIGH>;
+> +				reg = <0x17c2d000 0x1000>;
+> +				status = "disabled";
+> +			};
+> +		};
+> +
+> +		spmi_bus: spmi@c440000 {
+> +			compatible = "qcom,spmi-pmic-arb";
+> +			reg = <0x0c440000 0x0001100>,
+> +			      <0x0c600000 0x2000000>,
+> +			      <0x0e600000 0x0100000>,
+> +			      <0x0e700000 0x00a0000>,
+> +			      <0x0c40a000 0x0026000>;
+> +			reg-names = "core", "chnls", "obsrvr", "intr", "cnfg";
+> +			interrupt-names = "periph_irq";
+> +			interrupts = <GIC_SPI 481 IRQ_TYPE_LEVEL_HIGH>;
+> +			qcom,ee = <0>;
+> +			qcom,channel = <0>;
+> +			#address-cells = <2>;
+> +			#size-cells = <0>;
+> +			interrupt-controller;
+> +			#interrupt-cells = <4>;
+> +			cell-index = <0>;
 > +		};
 > +	};
 > +
-> +	pmic@1 {
-> +		compatible = "qcom,pm8150", "qcom,spmi-pmic";
-> +		reg = <0x1 SPMI_USID>;
-> +		#address-cells = <1>;
-> +		#size-cells = <0>;
+> +	timer {
+> +		compatible = "arm,armv8-timer";
+> +		interrupts = <GIC_PPI 1 IRQ_TYPE_LEVEL_LOW>,
+> +			     <GIC_PPI 2 IRQ_TYPE_LEVEL_LOW>,
+> +			     <GIC_PPI 3 IRQ_TYPE_LEVEL_LOW>,
+> +			     <GIC_PPI 0 IRQ_TYPE_LEVEL_LOW>;
 > +	};
 > +};
 > -- 
