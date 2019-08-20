@@ -2,25 +2,25 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 37A08968F8
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Aug 2019 21:07:33 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 1F66E968FA
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Aug 2019 21:07:34 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730673AbfHTTGo (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 20 Aug 2019 15:06:44 -0400
-Received: from smtp.codeaurora.org ([198.145.29.96]:45150 "EHLO
+        id S1730685AbfHTTGp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 20 Aug 2019 15:06:45 -0400
+Received: from smtp.codeaurora.org ([198.145.29.96]:45242 "EHLO
         smtp.codeaurora.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730657AbfHTTGn (ORCPT
+        with ESMTP id S1728185AbfHTTGo (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 20 Aug 2019 15:06:43 -0400
+        Tue, 20 Aug 2019 15:06:44 -0400
 Received: by smtp.codeaurora.org (Postfix, from userid 1000)
-        id DF4DE60F3C; Tue, 20 Aug 2019 19:06:42 +0000 (UTC)
+        id 6483761112; Tue, 20 Aug 2019 19:06:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
-        s=default; t=1566328002;
-        bh=zzjtL5wslsQS8yWsr2CKph8GttmF/LKM4t/Yy33PQbM=;
+        s=default; t=1566328003;
+        bh=yf4KbiMcwWuAOC3/YzyfVZGuYYAc192j4/wc6uDR1eE=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=JmGGSHOGPovm0LqZtDwvxCWxW+kXqIdyBZeTz8qZK9g7OlcX1ZUWJAhzeOIweqfkO
-         XlV2UzEXl5V6DDYEix+Z3dKV9mzm5uj3gkCfedr2nbksxAa/A7uCElMOPWiXDW0ExQ
-         SD7/BFxrRmppyV76P9SUo1xRdmVNyjYguVR4/qVw=
+        b=ENZeW8wEm2x/+0HwKwiCPLFSbU8UYDtgcMdvAYT8LQLf9Nt118c24rn2klDoRXXlu
+         47DC3JBGW6aiQdY/aQCJAsV0C3llohlVQVX9pRPoBADYDp7ZfvMK+1sS2TaHGFepZD
+         UGdvEzwCA0rZXG5dX+YD7bSEcSOiF6+kyAFlZepQ=
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
         pdx-caf-mail.web.codeaurora.org
 X-Spam-Level: 
@@ -31,28 +31,28 @@ Received: from jcrouse1-lnx.qualcomm.com (i-global254.qualcomm.com [199.106.103.
         (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
         (No client certificate requested)
         (Authenticated sender: jcrouse@smtp.codeaurora.org)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id C9FEB60E40;
-        Tue, 20 Aug 2019 19:06:40 +0000 (UTC)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id D662660F3B;
+        Tue, 20 Aug 2019 19:06:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
-        s=default; t=1566328001;
-        bh=zzjtL5wslsQS8yWsr2CKph8GttmF/LKM4t/Yy33PQbM=;
+        s=default; t=1566328002;
+        bh=yf4KbiMcwWuAOC3/YzyfVZGuYYAc192j4/wc6uDR1eE=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=Qg0TuwlYiNw6G05Dy5nOOSnh4PuCp/NgTjhzAREkbQU0ac+BrGd9PGFZygmo85kQe
-         C5rXdpyWGH4ojSU1ynbdTZOJweG81C5ZS5HeLIPtAFFh9Xb5U7dEGDwMv5646bE3CJ
-         bwi9cwYDHojU/JleqC8XYl2s89+adAx2Fa7YPbTA=
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org C9FEB60E40
+        b=V5eq3529o9GLKf4CR+s250JMtUhyKHm+uRJ+x+QqAeY38tMkk0gtU3WVq/VhgTNcx
+         WE+Opu/0m9nG63xUwRt9QhUJ3PCMQk6u+3Jd9imYe0S/7XMQGRWKbY60/ab9KW33Wr
+         QPPGaV3ihwUQGZ5rdTmc/TRU8+sVn3MYiI5qVD64=
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org D662660F3B
 Authentication-Results: pdx-caf-mail.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
 Authentication-Results: pdx-caf-mail.web.codeaurora.org; spf=none smtp.mailfrom=jcrouse@codeaurora.org
 From:   Jordan Crouse <jcrouse@codeaurora.org>
 To:     freedreno@lists.freedesktop.org
-Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+Cc:     linux-arm-msm@vger.kernel.org, Will Deacon <will@kernel.org>,
         linux-kernel@vger.kernel.org, iommu@lists.linux-foundation.org,
-        Rob Herring <robh+dt@kernel.org>,
-        Mark Rutland <mark.rutland@arm.com>,
-        Joerg Roedel <joro@8bytes.org>
-Subject: [PATCH 2/7] dt-bindings: arm-smmu: Add Adreno GPU variant
-Date:   Tue, 20 Aug 2019 13:06:27 -0600
-Message-Id: <1566327992-362-3-git-send-email-jcrouse@codeaurora.org>
+        Robin Murphy <robin.murphy@arm.com>,
+        Joerg Roedel <joro@8bytes.org>,
+        linux-arm-kernel@lists.infradead.org
+Subject: [PATCH 3/7] iommu/arm-smmu: Add a SMMU variant for the Adreno GPU
+Date:   Tue, 20 Aug 2019 13:06:28 -0600
+Message-Id: <1566327992-362-4-git-send-email-jcrouse@codeaurora.org>
 X-Mailer: git-send-email 2.7.4
 In-Reply-To: <1566327992-362-1-git-send-email-jcrouse@codeaurora.org>
 References: <1566327992-362-1-git-send-email-jcrouse@codeaurora.org>
@@ -61,40 +61,82 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add a compatible string to identify SMMUs that are attached
-to Adreno GPU devices that wish to support split pagetables.
+Add a SMMU model for the Adreno GPU and use it to enable split
+pagetable support if the conditions are right.
 
 Signed-off-by: Jordan Crouse <jcrouse@codeaurora.org>
 ---
 
- Documentation/devicetree/bindings/iommu/arm,smmu.txt | 7 +++++++
- 1 file changed, 7 insertions(+)
+ drivers/iommu/arm-smmu-impl.c | 15 +++++++++++++++
+ drivers/iommu/arm-smmu.c      |  2 ++
+ drivers/iommu/arm-smmu.h      |  1 +
+ 3 files changed, 18 insertions(+)
 
-diff --git a/Documentation/devicetree/bindings/iommu/arm,smmu.txt b/Documentation/devicetree/bindings/iommu/arm,smmu.txt
-index 3133f3b..3b07896 100644
---- a/Documentation/devicetree/bindings/iommu/arm,smmu.txt
-+++ b/Documentation/devicetree/bindings/iommu/arm,smmu.txt
-@@ -18,6 +18,7 @@ conditions.
-                         "arm,mmu-500"
-                         "cavium,smmu-v2"
-                         "qcom,smmu-v2"
-+			"qcom,adreno-smmu-v2"
+diff --git a/drivers/iommu/arm-smmu-impl.c b/drivers/iommu/arm-smmu-impl.c
+index 3f88cd0..5d197dd 100644
+--- a/drivers/iommu/arm-smmu-impl.c
++++ b/drivers/iommu/arm-smmu-impl.c
+@@ -147,6 +147,18 @@ static const struct arm_smmu_impl arm_mmu500_impl = {
+ 	.reset = arm_mmu500_reset,
+ };
  
-                   depending on the particular implementation and/or the
-                   version of the architecture implemented.
-@@ -31,6 +32,12 @@ conditions.
-                   as below, SoC-specific compatibles:
-                   "qcom,sdm845-smmu-500", "arm,mmu-500"
- 
-+		  "qcom,adreno-smmu-v2" is a special implementation for
-+		  SMMU devices attached to the Adreno GPU on Qcom devices.
-+		  If selected, this will enable split pagetable (TTBR1)
-+		  support. Only use this if the GPU target is capable of
-+		  supporting 64 bit addresses.
++static int qcom_adreno_init_context(struct arm_smmu_domain *smmu_domain)
++{
++	if (smmu_domain->stage == ARM_SMMU_DOMAIN_S1 &&
++		smmu_domain->cfg.fmt == ARM_SMMU_CTX_FMT_AARCH64)
++		smmu_domain->split_pagetables = true;
 +
- - reg           : Base address and size of the SMMU.
++	return 0;
++}
++
++static const struct arm_smmu_impl qcom_adreno_impl = {
++	.init_context = qcom_adreno_init_context,
++};
  
- - #global-interrupts : The number of global interrupts exposed by the
+ struct arm_smmu_device *arm_smmu_impl_init(struct arm_smmu_device *smmu)
+ {
+@@ -162,6 +174,9 @@ struct arm_smmu_device *arm_smmu_impl_init(struct arm_smmu_device *smmu)
+ 		break;
+ 	case CAVIUM_SMMUV2:
+ 		return cavium_smmu_impl_init(smmu);
++	case QCOM_ADRENO_SMMUV2:
++		smmu->impl = &qcom_adreno_impl;
++		break;
+ 	default:
+ 		break;
+ 	}
+diff --git a/drivers/iommu/arm-smmu.c b/drivers/iommu/arm-smmu.c
+index 39e81ef..3f41cf7 100644
+--- a/drivers/iommu/arm-smmu.c
++++ b/drivers/iommu/arm-smmu.c
+@@ -1858,6 +1858,7 @@ ARM_SMMU_MATCH_DATA(arm_mmu401, ARM_SMMU_V1_64K, GENERIC_SMMU);
+ ARM_SMMU_MATCH_DATA(arm_mmu500, ARM_SMMU_V2, ARM_MMU500);
+ ARM_SMMU_MATCH_DATA(cavium_smmuv2, ARM_SMMU_V2, CAVIUM_SMMUV2);
+ ARM_SMMU_MATCH_DATA(qcom_smmuv2, ARM_SMMU_V2, QCOM_SMMUV2);
++ARM_SMMU_MATCH_DATA(qcom_adreno_smmuv2, ARM_SMMU_V2, QCOM_ADRENO_SMMUV2);
+ 
+ static const struct of_device_id arm_smmu_of_match[] = {
+ 	{ .compatible = "arm,smmu-v1", .data = &smmu_generic_v1 },
+@@ -1867,6 +1868,7 @@ static const struct of_device_id arm_smmu_of_match[] = {
+ 	{ .compatible = "arm,mmu-500", .data = &arm_mmu500 },
+ 	{ .compatible = "cavium,smmu-v2", .data = &cavium_smmuv2 },
+ 	{ .compatible = "qcom,smmu-v2", .data = &qcom_smmuv2 },
++	{ .compatible = "qcom,adreno-smmu-v2", .data = &qcom_adreno_smmuv2 },
+ 	{ },
+ };
+ 
+diff --git a/drivers/iommu/arm-smmu.h b/drivers/iommu/arm-smmu.h
+index 91a4eb8..e5a2cc8 100644
+--- a/drivers/iommu/arm-smmu.h
++++ b/drivers/iommu/arm-smmu.h
+@@ -222,6 +222,7 @@ enum arm_smmu_implementation {
+ 	ARM_MMU500,
+ 	CAVIUM_SMMUV2,
+ 	QCOM_SMMUV2,
++	QCOM_ADRENO_SMMUV2,
+ };
+ 
+ struct arm_smmu_device {
 -- 
 2.7.4
 
