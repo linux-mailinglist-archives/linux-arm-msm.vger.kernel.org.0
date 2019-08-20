@@ -2,27 +2,27 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id D21579677E
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Aug 2019 19:27:11 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B909D96780
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Aug 2019 19:27:12 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730632AbfHTRZk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 20 Aug 2019 13:25:40 -0400
-Received: from mail.kernel.org ([198.145.29.99]:48702 "EHLO mail.kernel.org"
+        id S1730652AbfHTRZp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 20 Aug 2019 13:25:45 -0400
+Received: from mail.kernel.org ([198.145.29.99]:48778 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1730629AbfHTRZk (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 20 Aug 2019 13:25:40 -0400
+        id S1730562AbfHTRZo (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 20 Aug 2019 13:25:44 -0400
 Received: from localhost.localdomain (unknown [106.201.62.126])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id CA80C2064A;
-        Tue, 20 Aug 2019 17:25:35 +0000 (UTC)
+        by mail.kernel.org (Postfix) with ESMTPSA id C47FE22DD3;
+        Tue, 20 Aug 2019 17:25:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1566321939;
-        bh=M+6+1x75KEPkx+lE9S3iYX+zdQsZ2R3sBYFxh6yUG3E=;
+        s=default; t=1566321944;
+        bh=fVGwsJnJTm2imi6kxTcc2ByTO+0x8vOgQJiy0XtV+xY=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=YQRor0YIYP5xBWVAgTUreofT/cOEiu8hA+HPwcfrUX9Jkwat9+9sucecw0Q/4mqul
-         YCjtb5JMSttS54+aXKWuDgMEi2NBMOnFCsZ1HlrLHn4hNeS30gJ+vxMKAQGWNFWfLC
-         VphOaZcY2KHELiVc5JzTCAoreJIjRjc502SYDIuI=
+        b=OY/tMIT5l1gn8ObNTYv42OSWjAB5X/tBNRbrs/YU2Q9raBr2i6mH3LdvFTJODOGJj
+         wguf1k7E3GtGzp4EhiwvhWmwHGwvf/OFgtib71Ko4TV/ubSX8yf0BFELNRUeM4Mk06
+         BdfMsXwXLvuYFGAv8aUYWmWCBi5i2hCT7MV34APE=
 From:   Vinod Koul <vkoul@kernel.org>
 To:     Andy Gross <agross@kernel.org>
 Cc:     linux-arm-msm@vger.kernel.org,
@@ -33,9 +33,9 @@ Cc:     linux-arm-msm@vger.kernel.org,
         Stephen Boyd <sboyd@kernel.org>,
         Sibi Sankar <sibis@codeaurora.org>, devicetree@vger.kernel.org,
         linux-kernel@vger.kernel.org
-Subject: [PATCH v3 5/8] arm64: dts: qcom: sm8150-mtp: add base dts file
-Date:   Tue, 20 Aug 2019 22:53:48 +0530
-Message-Id: <20190820172351.24145-7-vkoul@kernel.org>
+Subject: [PATCH v3 6/8] arm64: dts: qcom: sm8150-mtp: Add regulators
+Date:   Tue, 20 Aug 2019 22:53:49 +0530
+Message-Id: <20190820172351.24145-8-vkoul@kernel.org>
 X-Mailer: git-send-email 2.20.1
 In-Reply-To: <20190820172351.24145-1-vkoul@kernel.org>
 References: <20190820172351.24145-1-vkoul@kernel.org>
@@ -46,85 +46,359 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-This add base DTS file for sm8150-mtp and enables boot to console, adds
-tlmm reserved range, resin node, volume down key and also includes pmic
-file.
+Add the regulators found in the mtp platform. This platform consists of
+pmic PM8150, PM8150L and PM8009.
 
 Signed-off-by: Vinod Koul <vkoul@kernel.org>
 ---
- arch/arm64/boot/dts/qcom/Makefile       |  1 +
- arch/arm64/boot/dts/qcom/sm8150-mtp.dts | 51 +++++++++++++++++++++++++
- 2 files changed, 52 insertions(+)
- create mode 100644 arch/arm64/boot/dts/qcom/sm8150-mtp.dts
+ arch/arm64/boot/dts/qcom/sm8150-mtp.dts | 327 ++++++++++++++++++++++++
+ 1 file changed, 327 insertions(+)
 
-diff --git a/arch/arm64/boot/dts/qcom/Makefile b/arch/arm64/boot/dts/qcom/Makefile
-index 0a7e5dfce6f7..1964dacaf19b 100644
---- a/arch/arm64/boot/dts/qcom/Makefile
-+++ b/arch/arm64/boot/dts/qcom/Makefile
-@@ -12,5 +12,6 @@ dtb-$(CONFIG_ARCH_QCOM)	+= sdm845-cheza-r2.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= sdm845-cheza-r3.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= sdm845-db845c.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= sdm845-mtp.dtb
-+dtb-$(CONFIG_ARCH_QCOM)	+= sm8150-mtp.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= qcs404-evb-1000.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= qcs404-evb-4000.dtb
 diff --git a/arch/arm64/boot/dts/qcom/sm8150-mtp.dts b/arch/arm64/boot/dts/qcom/sm8150-mtp.dts
-new file mode 100644
-index 000000000000..6f5777f530ae
---- /dev/null
+index 6f5777f530ae..340d57cc62bf 100644
+--- a/arch/arm64/boot/dts/qcom/sm8150-mtp.dts
 +++ b/arch/arm64/boot/dts/qcom/sm8150-mtp.dts
-@@ -0,0 +1,51 @@
-+// SPDX-License-Identifier: BSD-3-Clause
-+/*
-+ * Copyright (c) 2017-2019, The Linux Foundation. All rights reserved.
-+ * Copyright (c) 2019, Linaro Limited
-+ */
+@@ -6,6 +6,7 @@
+ 
+ /dts-v1/;
+ 
++#include <dt-bindings/regulator/qcom,rpmh-regulator.h>
+ #include "sm8150.dtsi"
+ #include "pm8150.dtsi"
+ #include "pm8150b.dtsi"
+@@ -22,6 +23,332 @@
+ 	chosen {
+ 		stdout-path = "serial0:115200n8";
+ 	};
 +
-+/dts-v1/;
-+
-+#include "sm8150.dtsi"
-+#include "pm8150.dtsi"
-+#include "pm8150b.dtsi"
-+#include "pm8150l.dtsi"
-+
-+/ {
-+	model = "Qualcomm Technologies, Inc. SM8150 MTP";
-+	compatible = "qcom,sm8150-mtp";
-+
-+	aliases {
-+		serial0 = &uart2;
++	vph_pwr: vph-pwr-regulator {
++		compatible = "regulator-fixed";
++		regulator-name = "vph_pwr";
++		regulator-min-microvolt = <3700000>;
++		regulator-max-microvolt = <3700000>;
 +	};
 +
-+	chosen {
-+		stdout-path = "serial0:115200n8";
-+	};
-+};
++	/*
++	 * Apparently RPMh does not provide support for PM8150 S4 because it
++	 * is always-on; model it as a fixed regulator.
++	 */
++	vreg_s4a_1p8: pm8150-s4 {
++		compatible = "regulator-fixed";
++		regulator-name = "vreg_s4a_1p8";
 +
-+&qupv3_id_1 {
-+	status = "okay";
-+};
++		regulator-min-microvolt = <1800000>;
++		regulator-max-microvolt = <1800000>;
 +
-+&pon {
-+	pwrkey {
-+		status = "okay";
-+	};
++		regulator-always-on;
++		regulator-boot-on;
 +
-+	resin {
-+		compatible = "qcom,pm8941-resin";
-+		interrupts = <0x0 0x8 0x1 IRQ_TYPE_EDGE_BOTH>;
-+		debounce = <15625>;
-+		bias-pull-up;
-+		linux,code = <KEY_VOLUMEDOWN>;
++		vin-supply = <&vph_pwr>;
 +	};
 +};
 +
-+&tlmm {
-+	gpio-reserved-ranges = <0 4>, <126 4>;
-+};
++&apps_rsc {
++	pm8150-rpmh-regulators {
++		compatible = "qcom,pm8150-rpmh-regulators";
++		qcom,pmic-id = "a";
 +
-+&uart2 {
-+	status = "okay";
-+};
++		vdd-s1-supply = <&vph_pwr>;
++		vdd-s2-supply = <&vph_pwr>;
++		vdd-s3-supply = <&vph_pwr>;
++		vdd-s4-supply = <&vph_pwr>;
++		vdd-s5-supply = <&vph_pwr>;
++		vdd-s6-supply = <&vph_pwr>;
++		vdd-s7-supply = <&vph_pwr>;
++		vdd-s8-supply = <&vph_pwr>;
++		vdd-s9-supply = <&vph_pwr>;
++		vdd-s10-supply = <&vph_pwr>;
++
++		vdd-l1-l8-l11-supply = <&vreg_s6a_0p9>;
++		vdd-l2-l10-supply = <&vreg_bob>;
++		vdd-l3-l4-l5-l18-supply = <&vreg_s6a_0p9>;
++		vdd-l6-l9-supply = <&vreg_s8c_1p3>;
++		vdd-l7-l12-l14-l15-supply = <&vreg_s5a_2p0>;
++		vdd-l13-l16-l17-supply = <&vreg_bob>;
++
++		vreg_s5a_2p0: smps5 {
++			regulator-min-microvolt = <1904000>;
++			regulator-max-microvolt = <2000000>;
++		};
++
++		vreg_s6a_0p9: smps6 {
++			regulator-min-microvolt = <920000>;
++			regulator-max-microvolt = <1128000>;
++		};
++
++		vdda_wcss_pll:
++		vreg_l1a_0p75: ldo1 {
++			regulator-min-microvolt = <752000>;
++			regulator-max-microvolt = <752000>;
++			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
++		};
++
++		vdd_pdphy:
++		vdda_usb_hs_3p1:
++		vreg_l2a_3p1: ldo2 {
++			regulator-min-microvolt = <3072000>;
++			regulator-max-microvolt = <3072000>;
++			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
++		};
++
++		vreg_l3a_0p8: ldo3 {
++			regulator-min-microvolt = <480000>;
++			regulator-max-microvolt = <932000>;
++			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
++		};
++
++		vdd_usb_hs_core:
++		vdda_csi_0_0p9:
++		vdda_csi_1_0p9:
++		vdda_csi_2_0p9:
++		vdda_csi_3_0p9:
++		vdda_dsi_0_0p9:
++		vdda_dsi_1_0p9:
++		vdda_dsi_0_pll_0p9:
++		vdda_dsi_1_pll_0p9:
++		vdda_pcie_1ln_core:
++		vdda_pcie_2ln_core:
++		vdda_pll_hv_cc_ebi01:
++		vdda_pll_hv_cc_ebi23:
++		vdda_qrefs_0p875_5:
++		vdda_sp_sensor:
++		vdda_ufs_2ln_core_1:
++		vdda_ufs_2ln_core_2:
++		vdda_usb_ss_dp_core_1:
++		vdda_usb_ss_dp_core_2:
++		vdda_qlink_lv:
++		vdda_qlink_lv_ck:
++		vreg_l5a_0p875: ldo5 {
++			regulator-min-microvolt = <880000>;
++			regulator-max-microvolt = <880000>;
++			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
++		};
++
++		vreg_l6a_1p2: ldo6 {
++			regulator-min-microvolt = <1200000>;
++			regulator-max-microvolt = <1200000>;
++			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
++		};
++
++		vreg_l7a_1p8: ldo7 {
++			regulator-min-microvolt = <1800000>;
++			regulator-max-microvolt = <1800000>;
++			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
++		};
++
++		vddpx_10:
++		vreg_l9a_1p2: ldo9 {
++			regulator-min-microvolt = <1200000>;
++			regulator-max-microvolt = <1200000>;
++			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
++		};
++
++
++		vreg_l10a_2p5: ldo10 {
++			regulator-min-microvolt = <2504000>;
++			regulator-max-microvolt = <2960000>;
++			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
++		};
++
++		vreg_l11a_0p8: ldo11 {
++			regulator-min-microvolt = <800000>;
++			regulator-max-microvolt = <800000>;
++			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
++		};
++
++		vdd_qfprom:
++		vdd_qfprom_sp:
++		vdda_apc_cs_1p8:
++		vdda_gfx_cs_1p8:
++		vdda_usb_hs_1p8:
++		vdda_qrefs_vref_1p8:
++		vddpx_10_a:
++		vreg_l12a_1p8: ldo12 {
++			regulator-min-microvolt = <1800000>;
++			regulator-max-microvolt = <1800000>;
++			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
++		};
++
++		vreg_l13a_2p7: ldo13 {
++			regulator-min-microvolt = <2704000>;
++			regulator-max-microvolt = <2704000>;
++			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
++		};
++
++		vreg_l14a_1p8: ldo14 {
++			regulator-min-microvolt = <1800000>;
++			regulator-max-microvolt = <1880000>;
++			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
++		};
++
++		vreg_l15a_1p7: ldo15 {
++			regulator-min-microvolt = <1704000>;
++			regulator-max-microvolt = <1704000>;
++			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
++		};
++
++		vreg_l16a_2p7: ldo16 {
++			regulator-min-microvolt = <2704000>;
++			regulator-max-microvolt = <2960000>;
++			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
++		};
++
++		vreg_l17a_3p0: ldo17 {
++			regulator-min-microvolt = <2856000>;
++			regulator-max-microvolt = <3008000>;
++			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
++		};
++	};
++
++	pm8150l-rpmh-regulators {
++		compatible = "qcom,pm8150l-rpmh-regulators";
++		qcom,pmic-id = "c";
++
++		vdd-s1-supply = <&vph_pwr>;
++		vdd-s2-supply = <&vph_pwr>;
++		vdd-s3-supply = <&vph_pwr>;
++		vdd-s4-supply = <&vph_pwr>;
++		vdd-s5-supply = <&vph_pwr>;
++		vdd-s6-supply = <&vph_pwr>;
++		vdd-s7-supply = <&vph_pwr>;
++		vdd-s8-supply = <&vph_pwr>;
++
++		vdd-l1-l8-supply = <&vreg_s4a_1p8>;
++		vdd-l2-l3-supply = <&vreg_s8c_1p3>;
++		vdd-l4-l5-l6-supply = <&vreg_bob>;
++		vdd-l7-l11-supply = <&vreg_bob>;
++		vdd-l9-l10-supply = <&vreg_bob>;
++
++		vdd-bob-supply = <&vph_pwr>;
++		vdd-flash-supply = <&vreg_bob>;
++		vdd-rgb-supply = <&vreg_bob>;
++
++		vreg_bob: bob {
++			regulator-min-microvolt = <3008000>;
++			regulator-max-microvolt = <4000000>;
++			regulator-initial-mode = <RPMH_REGULATOR_MODE_AUTO>;
++			regulator-allow-bypass;
++		};
++
++		vreg_s8c_1p3: smps8 {
++			regulator-min-microvolt = <1352000>;
++			regulator-max-microvolt = <1352000>;
++		};
++
++		vreg_l1c_1p8: ldo1 {
++			regulator-min-microvolt = <1800000>;
++			regulator-max-microvolt = <1800000>;
++			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
++		};
++
++		vdda_wcss_adcdac_1:
++		vdda_wcss_adcdac_22:
++		vreg_l2c_1p3: ldo2 {
++			regulator-min-microvolt = <1304000>;
++			regulator-max-microvolt = <1304000>;
++			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
++		};
++
++		vdda_hv_ebi0:
++		vdda_hv_ebi1:
++		vdda_hv_ebi2:
++		vdda_hv_ebi3:
++		vdda_hv_refgen0:
++		vdda_qlink_hv_ck:
++		vreg_l3c_1p2: ldo3 {
++			regulator-min-microvolt = <1200000>;
++			regulator-max-microvolt = <1200000>;
++			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
++		};
++
++		vddpx_5:
++		vreg_l4c_1p8: ldo4 {
++			regulator-min-microvolt = <1704000>;
++			regulator-max-microvolt = <2928000>;
++			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
++		};
++
++		vddpx_6:
++		vreg_l5c_1p8: ldo5 {
++			regulator-min-microvolt = <1704000>;
++			regulator-max-microvolt = <2928000>;
++			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
++		};
++
++		vddpx_2:
++		vreg_l6c_2p9: ldo6 {
++			regulator-min-microvolt = <1800000>;
++			regulator-max-microvolt = <2960000>;
++			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
++		};
++
++		vreg_l7c_3p0: ldo7 {
++			regulator-min-microvolt = <2856000>;
++			regulator-max-microvolt = <3104000>;
++			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
++		};
++
++		vreg_l8c_1p8: ldo8 {
++			regulator-min-microvolt = <1800000>;
++			regulator-max-microvolt = <1800000>;
++			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
++		};
++
++		vreg_l9c_2p9: ldo9 {
++			regulator-min-microvolt = <2704000>;
++			regulator-max-microvolt = <2960000>;
++			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
++		};
++
++
++		vreg_l10c_3p3: ldo10 {
++			regulator-min-microvolt = <3000000>;
++			regulator-max-microvolt = <3312000>;
++			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
++		};
++
++		vreg_l11c_3p3: ldo11 {
++			regulator-min-microvolt = <3000000>;
++			regulator-max-microvolt = <3312000>;
++			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
++		};
++	};
++
++	pm8009-rpmh-regulators {
++		compatible = "qcom,pm8009-rpmh-regulators";
++		qcom,pmic-id = "f";
++
++		vdd-s1-supply = <&vph_pwr>;
++		vdd-s2-supply = <&vreg_bob>;
++
++		vdd-l2-supply = <&vreg_s8c_1p3>;
++		vdd-l5-l6-supply = <&vreg_bob>;
++
++		vreg_l2f_1p2: ldo2 {
++			regulator-min-microvolt = <1200000>;
++			regulator-max-microvolt = <1200000>;
++			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
++		};
++
++		vreg_l5f_2p85: ldo5 {
++			regulator-min-microvolt = <2800000>;
++			regulator-max-microvolt = <2800000>;
++			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
++		};
++
++		vreg_l6f_2p85: ldo6 {
++			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
++			regulator-min-microvolt = <2856000>;
++			regulator-max-microvolt = <2856000>;
++		};
++	};
++
+ };
+ 
+ &qupv3_id_1 {
 -- 
 2.20.1
 
