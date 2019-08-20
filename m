@@ -2,85 +2,81 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id B2A0495761
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Aug 2019 08:38:18 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 23ECE95774
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Aug 2019 08:44:32 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728878AbfHTGiR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 20 Aug 2019 02:38:17 -0400
-Received: from mail.kernel.org ([198.145.29.99]:37470 "EHLO mail.kernel.org"
+        id S1729174AbfHTGoH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 20 Aug 2019 02:44:07 -0400
+Received: from mail.kernel.org ([198.145.29.99]:39636 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1728657AbfHTGiR (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 20 Aug 2019 02:38:17 -0400
-Received: from localhost (unknown [106.201.62.126])
+        id S1727006AbfHTGoG (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 20 Aug 2019 02:44:06 -0400
+Received: from localhost.localdomain (unknown [106.201.62.126])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 902902082F;
-        Tue, 20 Aug 2019 06:38:15 +0000 (UTC)
+        by mail.kernel.org (Postfix) with ESMTPSA id 5EFD42082F;
+        Tue, 20 Aug 2019 06:44:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1566283096;
-        bh=7q9OvmKTVE16A1f9USBI2Z4y48V2XyZPDX1+MlMRk6M=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=1uuGN0QXpbZuftFNkqSmlyRpy1QN4fDbb/tY8GuWZGItqV96iKiizxZss8B5HA+Vj
-         h0rUePlL9Qhse0BI/rnhB6+QV0nfhZSL3w9ZVT6xqj21rnC4hAqTrkSmO4YzSlIhdz
-         Lk3boualjQQi06Yk08e5cMYJgBc2fY+bSOKT5sQA=
-Date:   Tue, 20 Aug 2019 12:07:05 +0530
+        s=default; t=1566283445;
+        bh=Jd2ZX4IRBSlGCuFa51BCoCuCBXEaAFKnv7QFFL4FX8I=;
+        h=From:To:Cc:Subject:Date:From;
+        b=ft1oAu5WDUvfv7JjmfnxRggHcfadNIUAuw0yowy1m5npVAv+7f5OSfiw60tMSRDEV
+         nBmz5LXx0DGwECcK+fjFiS/EQeKXLq/IU0ikWIAxz5uFRqmJ9LZxLmbKIltjy3PCJz
+         3JqfIH/2iE1jngiAAxBwIUY8v/js53MfjvhrdCvc=
 From:   Vinod Koul <vkoul@kernel.org>
-To:     Sibi Sankar <sibis@codeaurora.org>
-Cc:     Stephen Boyd <sboyd@kernel.org>,
+To:     Andy Gross <agross@kernel.org>
+Cc:     linux-arm-msm@vger.kernel.org,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Andy Gross <agross@kernel.org>, linux-arm-msm@vger.kernel.org,
+        Vinod Koul <vkoul@kernel.org>,
         Rob Herring <robh+dt@kernel.org>,
         Mark Rutland <mark.rutland@arm.com>,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 22/22] arm64: dts: qcom: sm8150: Add APSS shared mailbox
-Message-ID: <20190820063705.GP12733@vkoul-mobl.Dlink>
-References: <20190814125012.8700-1-vkoul@kernel.org>
- <20190814125012.8700-23-vkoul@kernel.org>
- <20190814171743.C38C4206C1@mail.kernel.org>
- <20190819174107.GM12733@vkoul-mobl.Dlink>
- <179635ff3f55d5d121008d6193ea4120@codeaurora.org>
+        Stephen Boyd <sboyd@kernel.org>,
+        Sibi Sankar <sibis@codeaurora.org>, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: [PATCH v2 0/8] arm64: dts: qcom: sm8150: Add SM8150 DTS
+Date:   Tue, 20 Aug 2019 12:12:08 +0530
+Message-Id: <20190820064216.8629-1-vkoul@kernel.org>
+X-Mailer: git-send-email 2.20.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <179635ff3f55d5d121008d6193ea4120@codeaurora.org>
-User-Agent: Mutt/1.11.3 (2019-02-01)
+Content-Transfer-Encoding: 8bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 20-08-19, 11:50, Sibi Sankar wrote:
-> Hey Vinod,
-> 
-> There seems to be a mismatch
-> between the commit description
-> and the dt node (This is the
-> aoss qmp node not the APPS
-> shared node).
+This series adds DTS for SM8150, PMIC PM8150, PM8150B, PM8150L and
+the MTP for SM8150.
 
-Thanks for pointing, I have squashed this and other into single patch
-and updated the description
+Changes in v2:
+ - Squash patches
+ - Fix comments given by Stephen namely, lowercase for hext numbers,
+   making rpmhcc have xo_board as parent, rename pon controller to
+   power-on controller, make pmic nodes as disabled etc.
+ - removed the dependency on clk defines and use raw numbers
 
-> 
-> 
-> On 2019-08-19 23:11, Vinod Koul wrote:
-> > On 14-08-19, 10:17, Stephen Boyd wrote:
-> > > Quoting Vinod Koul (2019-08-14 05:50:12)
-> > > > @@ -338,6 +339,16 @@
-> > > >                         #interrupt-cells = <2>;
-> > > >                 };
-> > > >
-> > > > +               aoss_qmp: qmp@c300000 {
-> > > 
-> > > Node name of 'clock-controller', or 'power-controller'?
-> > 
-> > The orignal entry for sdm845 has no such statement, but yes it doesn
-> > makes sense. I am thinking power-controller.. Bjorn?
-> 
-> aoss_qmp registers both pd and
-> clock providers.
+Vinod Koul (8):
+  arm64: dts: qcom: sm8150: add base dts file
+  arm64: dts: qcom: pm8150: Add Base DTS file
+  arm64: dts: qcom: pm8150b: Add Base DTS file
+  arm64: dts: qcom: pm8150l: Add Base DTS file
+  arm64: dts: qcom: sm8150-mtp: add base dts file
+  arm64: dts: qcom: sm8150-mtp: Add regulators
+  arm64: dts: qcom: sm8150: Add reserved-memory regions
+  arm64: dts: qcom: sm8150: Add apps shared nodes
 
-Thats correct, I chatted with Bjorn and he recommended we use power-controller
+ arch/arm64/boot/dts/qcom/Makefile       |   1 +
+ arch/arm64/boot/dts/qcom/pm8150.dtsi    |  95 +++++
+ arch/arm64/boot/dts/qcom/pm8150b.dtsi   |  84 +++++
+ arch/arm64/boot/dts/qcom/pm8150l.dtsi   |  78 ++++
+ arch/arm64/boot/dts/qcom/sm8150-mtp.dts | 375 +++++++++++++++++++
+ arch/arm64/boot/dts/qcom/sm8150.dtsi    | 479 ++++++++++++++++++++++++
+ 6 files changed, 1112 insertions(+)
+ create mode 100644 arch/arm64/boot/dts/qcom/pm8150.dtsi
+ create mode 100644 arch/arm64/boot/dts/qcom/pm8150b.dtsi
+ create mode 100644 arch/arm64/boot/dts/qcom/pm8150l.dtsi
+ create mode 100644 arch/arm64/boot/dts/qcom/sm8150-mtp.dts
+ create mode 100644 arch/arm64/boot/dts/qcom/sm8150.dtsi
 
 -- 
-~Vinod
+2.20.1
+
