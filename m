@@ -2,399 +2,73 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id D693F96024
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Aug 2019 15:34:02 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 51CAA961F8
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Aug 2019 16:08:15 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729866AbfHTNeC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 20 Aug 2019 09:34:02 -0400
-Received: from mail-ed1-f68.google.com ([209.85.208.68]:40096 "EHLO
-        mail-ed1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728682AbfHTNeB (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 20 Aug 2019 09:34:01 -0400
-Received: by mail-ed1-f68.google.com with SMTP id h8so6354243edv.7
-        for <linux-arm-msm@vger.kernel.org>; Tue, 20 Aug 2019 06:33:59 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=verdurent-com.20150623.gappssmtp.com; s=20150623;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=X7I9XkKCkJzckWKRm8Ai5gNTXxx/8tWasqutjoNl4gM=;
-        b=ByHIVk8svnYLo5vzbdwRxydXQmh66vA7iG/ociwFlFTj7U3EeQl/ZBJzlKBDhpC01U
-         FYOgMf+WIP8I3N07Jt7de6SLERyRerjXwMDiajPrlo1b+uLJiCPkTnvJFRtXJtQ6aG8W
-         ErgwYwn5fidtHObrk2zr91hwuGtI3SZe9ugCH46RQYzgSorBGgA6tewEUFnmKqmBRv6F
-         nCuhhEEAQnEp0LewdNIqCTIRlQAUgFF/7CEYVtzLdp7/v7QRlsk4dXGBlCtTUsQ0jNws
-         Roy7qIy/vAQL9g5r3fWWiLDnxjIkdFgCEF56MA7aze5V5P8GFLM/TMEJG2/KO/o09hUD
-         0fFg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=X7I9XkKCkJzckWKRm8Ai5gNTXxx/8tWasqutjoNl4gM=;
-        b=X8Ptrlzd6U4z8crS+ciyYsNlCkyTJA1L0GeaUSeYjsr4gi/EuWoP/tPAzqhNkMIRJz
-         czwCuhogmlq5wdB1T/oaw3rNKUFfNWYhPhG4z8d7q+hcWINCM+iWJfEz+O8DdQyj5tB6
-         b0etzuZ6PkkmlCVIGm9IHM5UNKxpRv6avBlps3UDv+ZL1BSBbqUn4r1Qhotkl6qUvRMK
-         1yAhfkF/BwPbKRf1CV0eiBqCFhoMSyJV6GBsGm3xNldy3HIkWiPedy4nDvdwaTe+AqQq
-         buTuaCDLLqOFpxH425edblUq9pjMlE929FsCtqPI5JAgo8PJ8KfOVUZDO/A3F8Iys99Y
-         yr+A==
-X-Gm-Message-State: APjAAAXXhOlXVpM3jkzlGC0+OdbPescvB56Xp8TLeTSM64F2TpD2iEwd
-        z1B6irwBY8cSEs6FizOvMgbr1pJgZgN+3h4EXh3CBQ==
-X-Google-Smtp-Source: APXvYqyVrQdszz8nvsZqBhmZS/9Cpk5ZDmkRY9Xzmwh5TSTNqfWgJloNxmvFy3Vj8VJTzKic0nr7fPOW3C15n6Cq7dI=
-X-Received: by 2002:a17:906:6dc1:: with SMTP id j1mr2090631ejt.85.1566308039080;
- Tue, 20 Aug 2019 06:33:59 -0700 (PDT)
+        id S1729960AbfHTOH5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 20 Aug 2019 10:07:57 -0400
+Received: from ns.iliad.fr ([212.27.33.1]:55558 "EHLO ns.iliad.fr"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1729988AbfHTOH5 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 20 Aug 2019 10:07:57 -0400
+Received: from ns.iliad.fr (localhost [127.0.0.1])
+        by ns.iliad.fr (Postfix) with ESMTP id 29796205F8;
+        Tue, 20 Aug 2019 16:07:55 +0200 (CEST)
+Received: from [192.168.108.37] (freebox.vlq16.iliad.fr [213.36.7.13])
+        by ns.iliad.fr (Postfix) with ESMTP id 14B2620554;
+        Tue, 20 Aug 2019 16:07:55 +0200 (CEST)
+Subject: Re: [PATCH] phy: qcom-qmp: Correct ready status, again
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Kishon Vijay Abraham I <kishon@ti.com>
+Cc:     MSM <linux-arm-msm@vger.kernel.org>,
+        LKML <linux-kernel@vger.kernel.org>,
+        stable <stable@vger.kernel.org>,
+        Vivek Gautam <vivek.gautam@codeaurora.org>,
+        Evan Green <evgreen@chromium.org>,
+        Niklas Cassel <niklas.cassel@linaro.org>
+References: <20190806004256.20152-1-bjorn.andersson@linaro.org>
+From:   Marc Gonzalez <marc.w.gonzalez@free.fr>
+Message-ID: <d455b4b3-0ee6-5612-ead9-b0087e11b22e@free.fr>
+Date:   Tue, 20 Aug 2019 16:07:54 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+ Thunderbird/60.8.0
 MIME-Version: 1.0
-References: <20190820064216.8629-1-vkoul@kernel.org> <20190820064216.8629-2-vkoul@kernel.org>
-In-Reply-To: <20190820064216.8629-2-vkoul@kernel.org>
-From:   Amit Kucheria <amit.kucheria@verdurent.com>
-Date:   Tue, 20 Aug 2019 19:03:47 +0530
-Message-ID: <CAHLCerOBbaOuPf+WfsG8gKzAxs+9kTMbW7k4MAkmciwyWyeQww@mail.gmail.com>
-Subject: Re: [PATCH v2 1/8] arm64: dts: qcom: sm8150: add base dts file
-To:     Vinod Koul <vkoul@kernel.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Mark Rutland <mark.rutland@arm.com>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Sibi Sankar <sibis@codeaurora.org>,
-        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
-        <devicetree@vger.kernel.org>, LKML <linux-kernel@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+In-Reply-To: <20190806004256.20152-1-bjorn.andersson@linaro.org>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
+X-Virus-Scanned: ClamAV using ClamSMTP ; ns.iliad.fr ; Tue Aug 20 16:07:55 2019 +0200 (CEST)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Aug 20, 2019 at 12:14 PM Vinod Koul <vkoul@kernel.org> wrote:
->
-> This add base DTS file with cpu, psci, firmware, clock, tlmm and
-> spmi nodes which enables boot to console
->
-> Signed-off-by: Vinod Koul <vkoul@kernel.org>
+On 06/08/2019 02:42, Bjorn Andersson wrote:
+
+> Despite extensive testing of 885bd765963b ("phy: qcom-qmp: Correct
+> READY_STATUS poll break condition") I failed to conclude that the
+> PHYSTATUS bit of the PCS_STATUS register used in PCIe and USB3 falls as
+> the PHY gets ready. Similar to the prior bug with UFS the code will
+> generally get past the check before the transition and thereby
+> "succeed".
+> 
+> Correct the name of the register used PCIe and USB3 PHYs, replace
+> mask_pcs_ready with a constant expression depending on the type of the
+> PHY and check for the appropriate ready state.
+> 
+> Cc: stable@vger.kernel.org
+> Cc: Vivek Gautam <vivek.gautam@codeaurora.org>
+> Cc: Evan Green <evgreen@chromium.org>
+> Cc: Niklas Cassel <niklas.cassel@linaro.org>
+> Reported-by: Marc Gonzalez <marc.w.gonzalez@free.fr>
+> Fixes: 885bd765963b ("phy: qcom-qmp: Correct READY_STATUS poll break condition")
+> Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
 > ---
->  arch/arm64/boot/dts/qcom/sm8150.dtsi | 305 +++++++++++++++++++++++++++
->  1 file changed, 305 insertions(+)
->  create mode 100644 arch/arm64/boot/dts/qcom/sm8150.dtsi
->
-> diff --git a/arch/arm64/boot/dts/qcom/sm8150.dtsi b/arch/arm64/boot/dts/qcom/sm8150.dtsi
-> new file mode 100644
-> index 000000000000..d9dc95f851b7
-> --- /dev/null
-> +++ b/arch/arm64/boot/dts/qcom/sm8150.dtsi
-> @@ -0,0 +1,305 @@
-> +// SPDX-License-Identifier: BSD-3-Clause
+>  drivers/phy/qualcomm/phy-qcom-qmp.c | 33 ++++++++++++++---------------
+>  1 file changed, 16 insertions(+), 17 deletions(-)
 
-This is fine.
+FWIW, for msm8998:
 
-> +// Copyright (c) 2017-2019, The Linux Foundation. All rights reserved.
-> +// Copyright (c) 2019, Linaro Limited
+Tested-by: Marc Gonzalez <marc.w.gonzalez@free.fr>
 
-These two lines should be in /* */
-
-
-> +
-> +#include <dt-bindings/interrupt-controller/arm-gic.h>
-> +#include <dt-bindings/soc/qcom,rpmh-rsc.h>
-> +#include <dt-bindings/clock/qcom,rpmh.h>
-> +
-> +/ {
-> +       interrupt-parent = <&intc>;
-> +
-> +       #address-cells = <2>;
-> +       #size-cells = <2>;
-> +
-> +       chosen { };
-> +
-> +       clocks {
-> +               xo_board: xo-board {
-> +                       compatible = "fixed-clock";
-> +                       #clock-cells = <0>;
-> +                       clock-frequency = <38400000>;
-> +                       clock-output-names = "xo_board";
-> +               };
-> +
-> +               sleep_clk: sleep-clk {
-> +                       compatible = "fixed-clock";
-> +                       #clock-cells = <0>;
-> +                       clock-frequency = <32764>;
-> +                       clock-output-names = "sleep_clk";
-> +               };
-> +       };
-> +
-> +       cpus {
-> +               #address-cells = <2>;
-> +               #size-cells = <0>;
-> +
-> +               CPU0: cpu@0 {
-> +                       device_type = "cpu";
-> +                       compatible = "qcom,kryo485";
-> +                       reg = <0x0 0x0>;
-> +                       enable-method = "psci";
-> +                       next-level-cache = <&L2_0>;
-> +                       L2_0: l2-cache {
-> +                               compatible = "cache";
-> +                               next-level-cache = <&L3_0>;
-> +                               L3_0: l3-cache {
-> +                                     compatible = "cache";
-> +                               };
-> +                       };
-> +               };
-> +
-> +               CPU1: cpu@100 {
-> +                       device_type = "cpu";
-> +                       compatible = "qcom,kryo485";
-> +                       reg = <0x0 0x100>;
-> +                       enable-method = "psci";
-> +                       next-level-cache = <&L2_100>;
-> +                       L2_100: l2-cache {
-> +                               compatible = "cache";
-> +                               next-level-cache = <&L3_0>;
-> +                       };
-> +
-> +               };
-> +
-> +               CPU2: cpu@200 {
-> +                       device_type = "cpu";
-> +                       compatible = "qcom,kryo485";
-> +                       reg = <0x0 0x200>;
-> +                       enable-method = "psci";
-> +                       next-level-cache = <&L2_200>;
-> +                       L2_200: l2-cache {
-> +                               compatible = "cache";
-> +                               next-level-cache = <&L3_0>;
-> +                       };
-> +               };
-> +
-> +               CPU3: cpu@300 {
-> +                       device_type = "cpu";
-> +                       compatible = "qcom,kryo485";
-> +                       reg = <0x0 0x300>;
-> +                       enable-method = "psci";
-> +                       next-level-cache = <&L2_300>;
-> +                       L2_300: l2-cache {
-> +                               compatible = "cache";
-> +                               next-level-cache = <&L3_0>;
-> +                       };
-> +               };
-> +
-> +               CPU4: cpu@400 {
-> +                       device_type = "cpu";
-> +                       compatible = "qcom,kryo485";
-> +                       reg = <0x0 0x400>;
-> +                       enable-method = "psci";
-> +                       next-level-cache = <&L2_400>;
-> +                       L2_400: l2-cache {
-> +                               compatible = "cache";
-> +                               next-level-cache = <&L3_0>;
-> +                       };
-> +               };
-> +
-> +               CPU5: cpu@500 {
-> +                       device_type = "cpu";
-> +                       compatible = "qcom,kryo485";
-> +                       reg = <0x0 0x500>;
-> +                       enable-method = "psci";
-> +                       next-level-cache = <&L2_500>;
-> +                       L2_500: l2-cache {
-> +                               compatible = "cache";
-> +                               next-level-cache = <&L3_0>;
-> +                       };
-> +               };
-> +
-> +               CPU6: cpu@600 {
-> +                       device_type = "cpu";
-> +                       compatible = "qcom,kryo485";
-> +                       reg = <0x0 0x600>;
-> +                       enable-method = "psci";
-> +                       next-level-cache = <&L2_600>;
-> +                       L2_600: l2-cache {
-> +                               compatible = "cache";
-> +                               next-level-cache = <&L3_0>;
-> +                       };
-> +               };
-> +
-> +               CPU7: cpu@700 {
-> +                       device_type = "cpu";
-> +                       compatible = "qcom,kryo485";
-> +                       reg = <0x0 0x700>;
-> +                       enable-method = "psci";
-> +                       next-level-cache = <&L2_700>;
-> +                       L2_700: l2-cache {
-> +                               compatible = "cache";
-> +                               next-level-cache = <&L3_0>;
-> +                       };
-> +               };
-> +       };
-> +       firmware {
-> +               scm: scm {
-> +                       compatible = "qcom,scm-sm8150", "qcom,scm";
-> +                       #reset-cells = <1>;
-> +               };
-> +       };
-> +
-> +       memory@80000000 {
-> +               device_type = "memory";
-> +               /* We expect the bootloader to fill in the size */
-> +               reg = <0 0x80000000 0 0>;
-> +       };
-> +
-> +       psci {
-> +               compatible = "arm,psci-1.0";
-> +               method = "smc";
-> +       };
-> +
-> +       soc: soc@0 {
-> +               #address-cells = <1>;
-> +               #size-cells = <1>;
-> +               ranges = <0 0 0 0xffffffff>;
-> +               compatible = "simple-bus";
-> +
-> +               gcc: clock-controller@100000 {
-> +                       compatible = "qcom,gcc-sm8150";
-> +                       reg = <0x00100000 0x1f0000>;
-> +                       #clock-cells = <1>;
-> +                       #reset-cells = <1>;
-> +                       #power-domain-cells = <1>;
-> +                       clock-names = "bi_tcxo",
-> +                                     "sleep_clk";
-> +                       clocks = <&rpmhcc RPMH_CXO_CLK>,
-> +                                <&sleep_clk>;
-> +               };
-> +
-> +               qupv3_id_1: geniqup@ac0000 {
-> +                       compatible = "qcom,geni-se-qup";
-> +                       reg = <0x00ac0000 0x6000>;
-> +                       clock-names = "m-ahb", "s-ahb";
-> +                       clocks = <&gcc 123>,
-> +                                <&gcc 124>;
-> +                       #address-cells = <1>;
-> +                       #size-cells = <1>;
-> +                       ranges;
-> +                       status = "disabled";
-> +
-> +                       uart2: serial@a90000 {
-> +                               compatible = "qcom,geni-debug-uart";
-> +                               reg = <0x00a90000 0x4000>;
-> +                               clock-names = "se";
-> +                               clocks = <&gcc 105>;
-> +                               interrupts = <GIC_SPI 357 IRQ_TYPE_LEVEL_HIGH>;
-> +                               status = "disabled";
-> +                       };
-> +               };
-> +
-> +               tlmm: pinctrl@3100000 {
-> +                       compatible = "qcom,sm8150-pinctrl";
-> +                       reg = <0x03100000 0x300000>,
-> +                             <0x03500000 0x300000>,
-> +                             <0x03900000 0x300000>,
-> +                             <0x03d00000 0x300000>;
-> +                       reg-names = "west", "east", "north", "south";
-> +                       interrupts = <GIC_SPI 208 IRQ_TYPE_LEVEL_HIGH>;
-> +                       gpio-ranges = <&tlmm 0 0 175>;
-> +                       gpio-controller;
-> +                       #gpio-cells = <2>;
-> +                       interrupt-controller;
-> +                       #interrupt-cells = <2>;
-> +               };
-> +
-> +               intc: interrupt-controller@17a00000 {
-> +                       compatible = "arm,gic-v3";
-> +                       interrupt-controller;
-> +                       #interrupt-cells = <3>;
-> +                       reg = <0x17a00000 0x10000>,     /* GICD */
-> +                             <0x17a60000 0x100000>;    /* GICR * 8 */
-> +                       interrupts = <GIC_PPI 9 IRQ_TYPE_LEVEL_HIGH>;
-> +               };
-> +
-> +               timer@17c20000 {
-> +                       #address-cells = <1>;
-> +                       #size-cells = <1>;
-> +                       ranges;
-> +                       compatible = "arm,armv7-timer-mem";
-> +                       reg = <0x17c20000 0x1000>;
-> +                       clock-frequency = <19200000>;
-> +
-> +                       frame@17c21000{
-> +                               frame-number = <0>;
-> +                               interrupts = <GIC_SPI 8 IRQ_TYPE_LEVEL_HIGH>,
-> +                                            <GIC_SPI 6 IRQ_TYPE_LEVEL_HIGH>;
-> +                               reg = <0x17c21000 0x1000>,
-> +                                     <0x17c22000 0x1000>;
-> +                       };
-> +
-> +                       frame@17c23000 {
-> +                               frame-number = <1>;
-> +                               interrupts = <GIC_SPI 9 IRQ_TYPE_LEVEL_HIGH>;
-> +                               reg = <0x17c23000 0x1000>;
-> +                               status = "disabled";
-> +                       };
-> +
-> +                       frame@17c25000 {
-> +                               frame-number = <2>;
-> +                               interrupts = <GIC_SPI 10 IRQ_TYPE_LEVEL_HIGH>;
-> +                               reg = <0x17c25000 0x1000>;
-> +                               status = "disabled";
-> +                       };
-> +
-> +                       frame@17c27000 {
-> +                               frame-number = <3>;
-> +                               interrupts = <GIC_SPI 11 IRQ_TYPE_LEVEL_HIGH>;
-> +                               reg = <0x17c26000 0x1000>;
-> +                               status = "disabled";
-> +                       };
-> +
-> +                       frame@17c29000 {
-> +                               frame-number = <4>;
-> +                               interrupts = <GIC_SPI 12 IRQ_TYPE_LEVEL_HIGH>;
-> +                               reg = <0x17c29000 0x1000>;
-> +                               status = "disabled";
-> +                       };
-> +
-> +                       frame@17c2b000 {
-> +                               frame-number = <5>;
-> +                               interrupts = <GIC_SPI 13 IRQ_TYPE_LEVEL_HIGH>;
-> +                               reg = <0x17c2b000 0x1000>;
-> +                               status = "disabled";
-> +                       };
-> +
-> +                       frame@17c2d000 {
-> +                               frame-number = <6>;
-> +                               interrupts = <GIC_SPI 14 IRQ_TYPE_LEVEL_HIGH>;
-> +                               reg = <0x17c2d000 0x1000>;
-> +                               status = "disabled";
-> +                       };
-> +               };
-> +
-> +               spmi_bus: spmi@c440000 {
-> +                       compatible = "qcom,spmi-pmic-arb";
-> +                       reg = <0x0c440000 0x0001100>,
-> +                             <0x0c600000 0x2000000>,
-> +                             <0x0e600000 0x0100000>,
-> +                             <0x0e700000 0x00a0000>,
-> +                             <0x0c40a000 0x0026000>;
-> +                       reg-names = "core", "chnls", "obsrvr", "intr", "cnfg";
-> +                       interrupt-names = "periph_irq";
-> +                       interrupts = <GIC_SPI 481 IRQ_TYPE_LEVEL_HIGH>;
-> +                       qcom,ee = <0>;
-> +                       qcom,channel = <0>;
-> +                       #address-cells = <2>;
-> +                       #size-cells = <0>;
-> +                       interrupt-controller;
-> +                       #interrupt-cells = <4>;
-> +                       cell-index = <0>;
-> +               };
-> +       };
-> +
-> +       timer {
-> +               compatible = "arm,armv8-timer";
-> +               interrupts = <GIC_PPI 1 IRQ_TYPE_LEVEL_LOW>,
-> +                            <GIC_PPI 2 IRQ_TYPE_LEVEL_LOW>,
-> +                            <GIC_PPI 3 IRQ_TYPE_LEVEL_LOW>,
-> +                            <GIC_PPI 0 IRQ_TYPE_LEVEL_LOW>;
-
-Any particular reason why these are defined in this order - 1, 2, 3, 0?
-
-> +       };
-> +};
-> --
-> 2.20.1
->
+Regards.
