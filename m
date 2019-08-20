@@ -2,27 +2,27 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 9FB2D96782
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Aug 2019 19:27:13 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id DB55296787
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Aug 2019 19:27:15 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730629AbfHTRZt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 20 Aug 2019 13:25:49 -0400
-Received: from mail.kernel.org ([198.145.29.99]:48868 "EHLO mail.kernel.org"
+        id S1730686AbfHTRZx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 20 Aug 2019 13:25:53 -0400
+Received: from mail.kernel.org ([198.145.29.99]:48956 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1730562AbfHTRZt (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 20 Aug 2019 13:25:49 -0400
+        id S1730638AbfHTRZx (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 20 Aug 2019 13:25:53 -0400
 Received: from localhost.localdomain (unknown [106.201.62.126])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id C8DFD2064A;
-        Tue, 20 Aug 2019 17:25:44 +0000 (UTC)
+        by mail.kernel.org (Postfix) with ESMTPSA id BEC4E22DD6;
+        Tue, 20 Aug 2019 17:25:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1566321948;
-        bh=NGELU3uAWfki/hmypPHa/zrDqh5M1Gd0sSvxwh8KzEs=;
+        s=default; t=1566321952;
+        bh=SxyONdR/tM8eQiXxR1+O2jh66XLn8xoBHmSLNiEyJoU=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=HHckpBKTamm6V/LxwoIorZbiApReNaP46jxgW1MTAFYoboGSGSd2/FHF2O5SakOHw
-         W/bWjY3mnLbNd21Yd+d7lfMcboTUElmhoKzn1iEjSka9rXR6WHXOa+b+bDwaWgEbvR
-         orrgHcABfgGPBv/igTai7IgPpGjwRTg3D+CAzDOE=
+        b=UH+hRYuxA/8xHKRYzDhDM/7FW60RBTQIcUJ2AScBxRu22Ysq1iHx42YqT6mmVuWfK
+         UM9IQzU32ImfYlEjZcKLMKUFgjSm0TKf0PJS6uT54OtVZ23otlEunbao3py/G81fyu
+         sEQEpuzGjxrsVhQlV9FYZnhxCgHkSeT91AeHPO0w=
 From:   Vinod Koul <vkoul@kernel.org>
 To:     Andy Gross <agross@kernel.org>
 Cc:     linux-arm-msm@vger.kernel.org,
@@ -33,9 +33,9 @@ Cc:     linux-arm-msm@vger.kernel.org,
         Stephen Boyd <sboyd@kernel.org>,
         Sibi Sankar <sibis@codeaurora.org>, devicetree@vger.kernel.org,
         linux-kernel@vger.kernel.org
-Subject: [PATCH v3 7/8] arm64: dts: qcom: sm8150: Add reserved-memory regions
-Date:   Tue, 20 Aug 2019 22:53:50 +0530
-Message-Id: <20190820172351.24145-9-vkoul@kernel.org>
+Subject: [PATCH v3 8/8] arm64: dts: qcom: sm8150: Add apps shared nodes
+Date:   Tue, 20 Aug 2019 22:53:51 +0530
+Message-Id: <20190820172351.24145-10-vkoul@kernel.org>
 X-Mailer: git-send-email 2.20.1
 In-Reply-To: <20190820172351.24145-1-vkoul@kernel.org>
 References: <20190820172351.24145-1-vkoul@kernel.org>
@@ -46,135 +46,131 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add the reserved memory regions in SM8150
+Add hwlock, pmu, smem, tcsr_mutex_regs, apss_shared mailbox, apps_rsc
+including the rpmhcc child nodes to the SM8150 DTSI
 
+Co-developed-by: Sibi Sankar <sibis@codeaurora.org>
+Signed-off-by: Sibi Sankar <sibis@codeaurora.org>
 Signed-off-by: Vinod Koul <vkoul@kernel.org>
 ---
- arch/arm64/boot/dts/qcom/sm8150.dtsi | 111 +++++++++++++++++++++++++++
- 1 file changed, 111 insertions(+)
+ arch/arm64/boot/dts/qcom/sm8150.dtsi | 63 ++++++++++++++++++++++++++++
+ 1 file changed, 63 insertions(+)
 
 diff --git a/arch/arm64/boot/dts/qcom/sm8150.dtsi b/arch/arm64/boot/dts/qcom/sm8150.dtsi
-index ba5a9f6332c1..3bed04d60dea 100644
+index 3bed04d60dea..781905e9977a 100644
 --- a/arch/arm64/boot/dts/qcom/sm8150.dtsi
 +++ b/arch/arm64/boot/dts/qcom/sm8150.dtsi
-@@ -155,6 +155,117 @@
- 		method = "smc";
+@@ -144,12 +144,23 @@
+ 		};
  	};
  
-+	reserved-memory {
-+		#address-cells = <2>;
-+		#size-cells = <2>;
-+		ranges;
++	tcsr_mutex: hwlock {
++		compatible = "qcom,tcsr-mutex";
++		syscon = <&tcsr_mutex_regs 0 0x1000>;
++		#hwlock-cells = <1>;
++	};
 +
-+		hyp_mem: memory@85700000 {
-+			reg = <0x0 0x85700000 0x0 0x600000>;
-+			no-map;
-+		};
+ 	memory@80000000 {
+ 		device_type = "memory";
+ 		/* We expect the bootloader to fill in the size */
+ 		reg = <0x0 0x80000000 0x0 0x0>;
+ 	};
+ 
++	pmu {
++		compatible = "arm,armv8-pmuv3";
++		interrupts = <GIC_PPI 5 IRQ_TYPE_LEVEL_HIGH>;
++	};
 +
-+		xbl_mem: memory@85d00000 {
-+			reg = <0x0 0x85d00000 0x0 0x140000>;
-+			no-map;
-+		};
-+
-+		aop_mem: memory@85f00000 {
-+			reg = <0x0 0x85f00000 0x0 0x20000>;
-+			no-map;
-+		};
-+
-+		aop_cmd_db: memory@85f20000 {
-+			compatible = "qcom,cmd-db";
-+			reg = <0x0 0x85f20000 0x0 0x20000>;
-+			no-map;
-+		};
-+
-+		smem_mem: memory@86000000 {
-+			reg = <0x0 0x86000000 0x0 0x200000>;
-+			no-map;
-+		};
-+
-+		tz_mem: memory@86200000 {
-+			reg = <0x0 0x86200000 0x0 0x3900000>;
-+			no-map;
-+		};
-+
-+		rmtfs_mem: memory@89b00000 {
-+			compatible = "qcom,rmtfs-mem";
-+			reg = <0x0 0x89b00000 0x0 0x200000>;
-+			no-map;
-+
-+			qcom,client-id = <1>;
-+			qcom,vmid = <15>;
-+		};
-+
-+		camera_mem: memory@8b700000 {
-+			reg = <0x0 0x8b700000 0x0 0x500000>;
-+			no-map;
-+		};
-+
-+		wlan_mem: memory@8bc00000 {
-+			reg = <0x0 0x8bc00000 0x0 0x180000>;
-+			no-map;
-+		};
-+
-+		npu_mem: memory@8bd80000 {
-+			reg = <0x0 0x8bd80000 0x0 0x80000>;
-+			no-map;
-+		};
-+
-+		adsp_mem: memory@8be00000 {
-+			reg = <0x0 0x8be00000 0x0 0x1a00000>;
-+			no-map;
-+		};
-+
-+		mpss_mem: memory@8d800000 {
-+			reg = <0x0 0x8d800000 0x0 0x9600000>;
-+			no-map;
-+		};
-+
-+		venus_mem: memory@96e00000 {
-+			reg = <0x0 0x96e00000 0x0 0x500000>;
-+			no-map;
-+		};
-+
-+		slpi_mem: memory@97300000 {
-+			reg = <0x0 0x97300000 0x0 0x1400000>;
-+			no-map;
-+		};
-+
-+		ipa_fw_mem: memory@98700000 {
-+			reg = <0x0 0x98700000 0x0 0x10000>;
-+			no-map;
-+		};
-+
-+		ipa_gsi_mem: memory@98710000 {
-+			reg = <0x0 0x98710000 0x0 0x5000>;
-+			no-map;
-+		};
-+
-+		gpu_mem: memory@98715000 {
-+			reg = <0x0 0x98715000 0x0 0x2000>;
-+			no-map;
-+		};
-+
-+		spss_mem: memory@98800000 {
-+			reg = <0x0 0x98800000 0x0 0x100000>;
-+			no-map;
-+		};
-+
-+		cdsp_mem: memory@98900000 {
-+			reg = <0x0 0x98900000 0x0 0x1400000>;
-+			no-map;
-+		};
-+
-+		qseecom_mem: memory@9e400000 {
-+			reg = <0x0 0x9e400000 0x0 0x1400000>;
-+			no-map;
-+		};
+ 	psci {
+ 		compatible = "arm,psci-1.0";
+ 		method = "smc";
+@@ -266,6 +277,12 @@
+ 		};
+ 	};
+ 
++	smem {
++		compatible = "qcom,smem";
++		memory-region = <&smem_mem>;
++		hwlocks = <&tcsr_mutex 3>;
 +	};
 +
  	soc: soc@0 {
  		#address-cells = <1>;
  		#size-cells = <1>;
+@@ -305,6 +322,11 @@
+ 			};
+ 		};
+ 
++		tcsr_mutex_regs: syscon@1f40000 {
++			compatible = "syscon";
++			reg = <0x01f40000 0x40000>;
++		};
++
+ 		tlmm: pinctrl@3100000 {
+ 			compatible = "qcom,sm8150-pinctrl";
+ 			reg = <0x03100000 0x300000>,
+@@ -320,6 +342,16 @@
+ 			#interrupt-cells = <2>;
+ 		};
+ 
++		aoss_qmp: power-controller@c300000 {
++			compatible = "qcom,sm8150-aoss-qmp";
++			reg = <0x0c300000 0x100000>;
++			interrupts = <GIC_SPI 389 IRQ_TYPE_EDGE_RISING>;
++			mboxes = <&apss_shared 0>;
++
++			#clock-cells = <0>;
++			#power-domain-cells = <1>;
++		};
++
+ 		intc: interrupt-controller@17a00000 {
+ 			compatible = "arm,gic-v3";
+ 			interrupt-controller;
+@@ -329,6 +361,12 @@
+ 			interrupts = <GIC_PPI 9 IRQ_TYPE_LEVEL_HIGH>;
+ 		};
+ 
++		apss_shared: mailbox@17c00000 {
++			compatible = "qcom,sm8150-apss-shared";
++			reg = <0x17c00000 0x1000>;
++			#mbox-cells = <1>;
++		};
++
+ 		timer@17c20000 {
+ 			#address-cells = <1>;
+ 			#size-cells = <1>;
+@@ -388,6 +426,31 @@
+ 			};
+ 		};
+ 
++		apps_rsc: rsc@18200000 {
++			label = "apps_rsc";
++			compatible = "qcom,rpmh-rsc";
++			reg = <0x18200000 0x10000>,
++			      <0x18210000 0x10000>,
++			      <0x18220000 0x10000>;
++			reg-names = "drv-0", "drv-1", "drv-2";
++			interrupts = <GIC_SPI 3 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 4 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 5 IRQ_TYPE_LEVEL_HIGH>;
++			qcom,tcs-offset = <0xd00>;
++			qcom,drv-id = <2>;
++			qcom,tcs-config = <ACTIVE_TCS  2>,
++					  <SLEEP_TCS   1>,
++					  <WAKE_TCS    1>,
++					  <CONTROL_TCS 0>;
++
++			rpmhcc: clock-controller {
++				compatible = "qcom,sm8150-rpmh-clk";
++				#clock-cells = <1>;
++				clock-names = "xo";
++				clocks = <&xo_board>;
++			};
++		};
++
+ 		spmi_bus: spmi@c440000 {
+ 			compatible = "qcom,spmi-pmic-arb";
+ 			reg = <0x0c440000 0x0001100>,
 -- 
 2.20.1
 
