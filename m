@@ -2,198 +2,117 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 2547E97536
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 21 Aug 2019 10:43:47 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4D9DF975A6
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 21 Aug 2019 11:12:06 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727235AbfHUInq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 21 Aug 2019 04:43:46 -0400
-Received: from mail-vs1-f65.google.com ([209.85.217.65]:41234 "EHLO
-        mail-vs1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727176AbfHUInq (ORCPT
+        id S1726863AbfHUJHC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 21 Aug 2019 05:07:02 -0400
+Received: from mail-lj1-f194.google.com ([209.85.208.194]:44316 "EHLO
+        mail-lj1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726541AbfHUJHB (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 21 Aug 2019 04:43:46 -0400
-Received: by mail-vs1-f65.google.com with SMTP id m62so789137vsc.8
-        for <linux-arm-msm@vger.kernel.org>; Wed, 21 Aug 2019 01:43:45 -0700 (PDT)
+        Wed, 21 Aug 2019 05:07:01 -0400
+Received: by mail-lj1-f194.google.com with SMTP id e24so1397156ljg.11
+        for <linux-arm-msm@vger.kernel.org>; Wed, 21 Aug 2019 02:07:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=verdurent-com.20150623.gappssmtp.com; s=20150623;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=kP+GbHpu0Aj89vwz35AbZzP2cobDWWascw/bJeNfksc=;
-        b=Lh4aj0T+PWQBEczyDm05UPSLJJKXV3seJv3C/EoobCIwZcph8CLDORmSeAZxoUxnh6
-         +yUj5qxKHTba6/uxyd6nxBcDlQxaRcqG0NGzbaAHN94FLGOQNlTm4G3EmQChUeM9SOzf
-         +SfBf+ZQiV9S/oDKRUecpfjeODPLpWKn2YhcYzad6EHmFMLWjfhvt9GcnssDJwWT/Y10
-         gZX0n/ey5Om4W5t+APGeal26lmByZU3SaDFaPOfK03C7MIWPTz5SXB68TfeydA1eK1CC
-         PePhYUgxl3j77A7EITXtdn8qxMc1LL5QLgsD2rkPN8vX1zld0Ee2CSah31GlO2/BbiuY
-         ss4Q==
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=l1PSwAxURmvRpKju1nSZAkhT1kqhpgoMPnKulqMvgaU=;
+        b=ldPZ7n1YKnH6urIqEpjgNnB9Yz6A9hu7oUFsROK9+okfYJw31JxfVGrlYrO5EEIfCa
+         UohvmNFqTTgOLenwL/KxMl7/Zkm/+uZ0ss3xAZ1mzFZ5idRlcs8PF1Qr6pzRg3CD9q4+
+         l46lL0b/b1pbZ0jbxHflmKmNI0MMX0qMkfLrLMxBsk6M/7ofuixSCG/PFt7ypxfXC9nj
+         FkTGzf2aPo1ZSbBa4MmUkRTkRRMQJHl0kTiF2QbKQJcNlzvxx2EqKkjBzJwz6oWRJAOt
+         /yTUYrTgFGrn1tQ4+9dsq6A0UwFDdkHe97QTPZTdeyNhtrS4o+QWZqKZprCNEsOVodPd
+         5Deg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=kP+GbHpu0Aj89vwz35AbZzP2cobDWWascw/bJeNfksc=;
-        b=N4eZtdDrVBEEHrY3K1KqRbSj1eRMCRudEPKbMVaYltXFplHTVwoDQtWvwSpVjucLT8
-         AilRNXSw9D2KXzFfnDmFkZ2wkXh6dQuobr29xaUYwqisc6GoTTRaC4ClWCPtYcDYJelU
-         2PhazMRFpUYM1msq1jKgsFNMNdBjTfVDbg5dnBW0sLCFUJJQAoS0vc+emZY6TphcW/y4
-         RO0MMhhjDj2Z/XCgUByXPGxhyc4jU0ydUkD9IEnB5fpNxOOhRtOcvL9oC7l5BIr0yx/a
-         ey4lNzJIkvx1dHJ4GIthMTT+lZyFyjl/XotxHurQoa8M0Il6gRyshEZUpxE7byTUTZca
-         /1DA==
-X-Gm-Message-State: APjAAAUdQow84iqpHWJxJtdSiiI8O1TuYIO0Wl+43Bp3TC+0ZVkn6hZe
-        ia78ef/V2zyyqAtSF3McAjZHEjtty34zqeDUGrDSog==
-X-Google-Smtp-Source: APXvYqzNNaHAX5iQglmuHsAZsEax7+zy9/fs4WKi3UJrpit8a0TJ5DgVJszJr1tGcozcIIXQ3kOzAhvU402dJXEm7W4=
-X-Received: by 2002:a05:6102:7d5:: with SMTP id y21mr5652161vsg.9.1566377024876;
- Wed, 21 Aug 2019 01:43:44 -0700 (PDT)
-MIME-Version: 1.0
-References: <20190820172351.24145-1-vkoul@kernel.org> <20190820172351.24145-10-vkoul@kernel.org>
-In-Reply-To: <20190820172351.24145-10-vkoul@kernel.org>
-From:   Amit Kucheria <amit.kucheria@verdurent.com>
-Date:   Wed, 21 Aug 2019 14:13:33 +0530
-Message-ID: <CAHLCerOKd8Nr9hnKKMZawoUxopcUDfez=xMB34t7s0=2ZpnDVg@mail.gmail.com>
-Subject: Re: [PATCH v3 8/8] arm64: dts: qcom: sm8150: Add apps shared nodes
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=l1PSwAxURmvRpKju1nSZAkhT1kqhpgoMPnKulqMvgaU=;
+        b=HiM0LXCsUbRD1mQaIgn3o2vPcv8wuU9ULPQDp8l3glVBZ1vDIFG5f0E8PJco8uzKPT
+         XO1gwK8qoziGOdbutIo0bPeKnjSVUOoojrbojwo95rkIFdOU11Qt+STFTRtgEDlQ6pkH
+         yITBiopGQf+YC7Z1RuOkQ1kdTXvs4o9w4qpNAgUDARZvwvlJlQkHD9retX6V3bcotTxl
+         yabMi+3xruu60UU3yoXCv+r8J4XUEE9uYIcl7lI3x5gxikYwRIoA9mTJL+mcZ7zd2uIB
+         K2ntLr6B7eyIHDc36YpvN30O5owTVKCTIxRTvr0qJ/GVCP1EhBzEey21tiHp4qpRO2LH
+         XCDg==
+X-Gm-Message-State: APjAAAW4hmZP8x9gzSBWR6WL7RSUdfHpTpOq0bJr3r7IPV02VeaLEvvG
+        WrTONCeA/+aGiC2O88xnn21/GQ==
+X-Google-Smtp-Source: APXvYqzG9CVLKmNl0LbqKy5+pIULi7I5nAFbvEiaeMSL2RErmaHBoXceiFNSGmwFYhOr2oazUpYPEA==
+X-Received: by 2002:a2e:b00b:: with SMTP id y11mr18017045ljk.159.1566378419968;
+        Wed, 21 Aug 2019 02:06:59 -0700 (PDT)
+Received: from centauri (ua-84-219-138-247.bbcust.telenor.se. [84.219.138.247])
+        by smtp.gmail.com with ESMTPSA id 202sm3182448ljf.102.2019.08.21.02.06.58
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 21 Aug 2019 02:06:59 -0700 (PDT)
+Date:   Wed, 21 Aug 2019 11:06:57 +0200
+From:   Niklas Cassel <niklas.cassel@linaro.org>
 To:     Vinod Koul <vkoul@kernel.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+Cc:     Andy Gross <agross@kernel.org>, linux-arm-msm@vger.kernel.org,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
         Rob Herring <robh+dt@kernel.org>,
         Mark Rutland <mark.rutland@arm.com>,
         Stephen Boyd <sboyd@kernel.org>,
-        Sibi Sankar <sibis@codeaurora.org>,
-        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
-        <devicetree@vger.kernel.org>, LKML <linux-kernel@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+        Sibi Sankar <sibis@codeaurora.org>, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v3 0/8] arm64: dts: qcom: sm8150: Add SM8150 DTS
+Message-ID: <20190821090657.GA560@centauri>
+References: <20190820172351.24145-1-vkoul@kernel.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20190820172351.24145-1-vkoul@kernel.org>
+User-Agent: Mutt/1.12.1 (2019-06-15)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Aug 20, 2019 at 10:55 PM Vinod Koul <vkoul@kernel.org> wrote:
->
-> Add hwlock, pmu, smem, tcsr_mutex_regs, apss_shared mailbox, apps_rsc
-> including the rpmhcc child nodes to the SM8150 DTSI
->
-> Co-developed-by: Sibi Sankar <sibis@codeaurora.org>
-> Signed-off-by: Sibi Sankar <sibis@codeaurora.org>
-> Signed-off-by: Vinod Koul <vkoul@kernel.org>
-> ---
->  arch/arm64/boot/dts/qcom/sm8150.dtsi | 63 ++++++++++++++++++++++++++++
->  1 file changed, 63 insertions(+)
->
-> diff --git a/arch/arm64/boot/dts/qcom/sm8150.dtsi b/arch/arm64/boot/dts/qcom/sm8150.dtsi
-> index 3bed04d60dea..781905e9977a 100644
-> --- a/arch/arm64/boot/dts/qcom/sm8150.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sm8150.dtsi
-> @@ -144,12 +144,23 @@
->                 };
->         };
->
-> +       tcsr_mutex: hwlock {
-> +               compatible = "qcom,tcsr-mutex";
-> +               syscon = <&tcsr_mutex_regs 0 0x1000>;
-> +               #hwlock-cells = <1>;
-> +       };
-> +
->         memory@80000000 {
->                 device_type = "memory";
->                 /* We expect the bootloader to fill in the size */
->                 reg = <0x0 0x80000000 0x0 0x0>;
->         };
->
-> +       pmu {
-> +               compatible = "arm,armv8-pmuv3";
-> +               interrupts = <GIC_PPI 5 IRQ_TYPE_LEVEL_HIGH>;
-> +       };
-> +
->         psci {
->                 compatible = "arm,psci-1.0";
->                 method = "smc";
-> @@ -266,6 +277,12 @@
->                 };
->         };
->
-> +       smem {
-> +               compatible = "qcom,smem";
-> +               memory-region = <&smem_mem>;
-> +               hwlocks = <&tcsr_mutex 3>;
-> +       };
-> +
->         soc: soc@0 {
->                 #address-cells = <1>;
->                 #size-cells = <1>;
-> @@ -305,6 +322,11 @@
->                         };
->                 };
->
-> +               tcsr_mutex_regs: syscon@1f40000 {
-> +                       compatible = "syscon";
-> +                       reg = <0x01f40000 0x40000>;
-> +               };
-> +
->                 tlmm: pinctrl@3100000 {
->                         compatible = "qcom,sm8150-pinctrl";
->                         reg = <0x03100000 0x300000>,
-> @@ -320,6 +342,16 @@
->                         #interrupt-cells = <2>;
->                 };
->
-> +               aoss_qmp: power-controller@c300000 {
-> +                       compatible = "qcom,sm8150-aoss-qmp";
-> +                       reg = <0x0c300000 0x100000>;
-> +                       interrupts = <GIC_SPI 389 IRQ_TYPE_EDGE_RISING>;
-> +                       mboxes = <&apss_shared 0>;
-> +
-> +                       #clock-cells = <0>;
-> +                       #power-domain-cells = <1>;
-> +               };
-> +
->                 intc: interrupt-controller@17a00000 {
->                         compatible = "arm,gic-v3";
->                         interrupt-controller;
-> @@ -329,6 +361,12 @@
->                         interrupts = <GIC_PPI 9 IRQ_TYPE_LEVEL_HIGH>;
->                 };
->
-> +               apss_shared: mailbox@17c00000 {
-> +                       compatible = "qcom,sm8150-apss-shared";
-> +                       reg = <0x17c00000 0x1000>;
-> +                       #mbox-cells = <1>;
-> +               };
-> +
->                 timer@17c20000 {
->                         #address-cells = <1>;
->                         #size-cells = <1>;
-> @@ -388,6 +426,31 @@
->                         };
->                 };
->
-> +               apps_rsc: rsc@18200000 {
-> +                       label = "apps_rsc";
-> +                       compatible = "qcom,rpmh-rsc";
-> +                       reg = <0x18200000 0x10000>,
-> +                             <0x18210000 0x10000>,
-> +                             <0x18220000 0x10000>;
-> +                       reg-names = "drv-0", "drv-1", "drv-2";
-> +                       interrupts = <GIC_SPI 3 IRQ_TYPE_LEVEL_HIGH>,
-> +                                    <GIC_SPI 4 IRQ_TYPE_LEVEL_HIGH>,
-> +                                    <GIC_SPI 5 IRQ_TYPE_LEVEL_HIGH>;
-> +                       qcom,tcs-offset = <0xd00>;
-> +                       qcom,drv-id = <2>;
-> +                       qcom,tcs-config = <ACTIVE_TCS  2>,
-> +                                         <SLEEP_TCS   1>,
-> +                                         <WAKE_TCS    1>,
-> +                                         <CONTROL_TCS 0>;
-> +
-> +                       rpmhcc: clock-controller {
-> +                               compatible = "qcom,sm8150-rpmh-clk";
-> +                               #clock-cells = <1>;
-> +                               clock-names = "xo";
-> +                               clocks = <&xo_board>;
-> +                       };
-> +               };
-> +
->                 spmi_bus: spmi@c440000 {
-
-Sort by address here.
-
->                         compatible = "qcom,spmi-pmic-arb";
->                         reg = <0x0c440000 0x0001100>,
-> --
+On Tue, Aug 20, 2019 at 10:53:42PM +0530, Vinod Koul wrote:
+> This series adds DTS for SM8150, PMIC PM8150, PM8150B, PM8150L and
+> the MTP for SM8150.
+> 
+> Changes in v3:
+>  - Fix copyright comment style to Linux kernel style
+>  - Make property values all hex or decimal
+>  - Fix patch titles and logs and make them consistent
+>  - Fix line breaks
+> 
+> Changes in v2:
+>  - Squash patches
+>  - Fix comments given by Stephen namely, lowercase for hext numbers,
+>    making rpmhcc have xo_board as parent, rename pon controller to
+>    power-on controller, make pmic nodes as disabled etc.
+>  - removed the dependency on clk defines and use raw numbers
+> 
+> 
+> Vinod Koul (8):
+>   arm64: dts: qcom: sm8150: Add base dts file
+>   arm64: dts: qcom: pm8150: Add base dts file
+>   arm64: dts: qcom: pm8150b: Add base dts file
+>   arm64: dts: qcom: pm8150l: Add base dts file
+>   arm64: dts: qcom: sm8150-mtp: Add base dts file
+>   arm64: dts: qcom: sm8150-mtp: Add regulators
+>   arm64: dts: qcom: sm8150: Add reserved-memory regions
+>   arm64: dts: qcom: sm8150: Add apps shared nodes
+> 
+>  arch/arm64/boot/dts/qcom/Makefile       |   1 +
+>  arch/arm64/boot/dts/qcom/pm8150.dtsi    |  97 +++++
+>  arch/arm64/boot/dts/qcom/pm8150b.dtsi   |  86 +++++
+>  arch/arm64/boot/dts/qcom/pm8150l.dtsi   |  80 ++++
+>  arch/arm64/boot/dts/qcom/sm8150-mtp.dts | 378 +++++++++++++++++++
+>  arch/arm64/boot/dts/qcom/sm8150.dtsi    | 481 ++++++++++++++++++++++++
+>  6 files changed, 1123 insertions(+)
+>  create mode 100644 arch/arm64/boot/dts/qcom/pm8150.dtsi
+>  create mode 100644 arch/arm64/boot/dts/qcom/pm8150b.dtsi
+>  create mode 100644 arch/arm64/boot/dts/qcom/pm8150l.dtsi
+>  create mode 100644 arch/arm64/boot/dts/qcom/sm8150-mtp.dts
+>  create mode 100644 arch/arm64/boot/dts/qcom/sm8150.dtsi
+> 
+> -- 
 > 2.20.1
->
+> 
+
+Whole series is:
+
+Reviewed-by: Niklas Cassel <niklas.cassel@linaro.org>
