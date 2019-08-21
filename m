@@ -2,159 +2,154 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 6C689973F6
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 21 Aug 2019 09:53:30 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 87810974FE
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 21 Aug 2019 10:31:12 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726952AbfHUHx0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 21 Aug 2019 03:53:26 -0400
-Received: from mail-lf1-f65.google.com ([209.85.167.65]:42631 "EHLO
-        mail-lf1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726291AbfHUHxZ (ORCPT
+        id S1727443AbfHUI3L (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 21 Aug 2019 04:29:11 -0400
+Received: from mail-vs1-f66.google.com ([209.85.217.66]:46431 "EHLO
+        mail-vs1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727357AbfHUI3L (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 21 Aug 2019 03:53:25 -0400
-Received: by mail-lf1-f65.google.com with SMTP id s19so1070498lfb.9
-        for <linux-arm-msm@vger.kernel.org>; Wed, 21 Aug 2019 00:53:24 -0700 (PDT)
+        Wed, 21 Aug 2019 04:29:11 -0400
+Received: by mail-vs1-f66.google.com with SMTP id x20so579700vsx.13
+        for <linux-arm-msm@vger.kernel.org>; Wed, 21 Aug 2019 01:29:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=4WkbNxIuQHcMyi/6jdTaT2GJS3hfGOuis/4XMY+Hqv0=;
-        b=XJpPbfj8P9QJPx+MXLpw/Zpk11zobJZrO2DKY2mgHVIboqYEIp2ho60EdmJ3Y6AYhx
-         QSp2QIWv3+2jDYAwohs4rK6Vso5/KH0plNFbkiVQOUBT0vvmNKlwTtmxhBUeNyVviVPx
-         n0fZo6b8dEC6PfFj/iWpjszsR9aKv8/foAkPe46cmiTYeN3GdlFzCc3FTBNrpw6P2R76
-         OT8VBJsJZ11Equt8nnFkW29jpyKvGrmiU9lOd3X/v46bDxzBHa36K1mJnZ5TV0a6SHaW
-         cM/oolufmA0f6Y6h+Se5FCifYLechXV2U57q5/+CIRUGI5wzReLVnaH0QEGrl+dt23hj
-         sLAQ==
+        d=verdurent-com.20150623.gappssmtp.com; s=20150623;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=SUO9A4l3IfX0BlcDjJGE9UTcfydGN+ATiaQcy0Ok630=;
+        b=mtHid4fIRJBF1KgK1ORVUgVi130Qk5dhCtY9XJmivMq1x4zdyLroy2KcuhKSZAxYjI
+         9XVAtxvhY0CoxhsHQDsrDYOryjyTQbG8+XhUxjKTkbrSUdL2cINzJmCLozYSWdxd0eDE
+         4Ds2x98xlIPrmc+nJjHWT51Ajpsc96ud33Jp3Gc6THTBgFMDnaSAOUr1XoySaWNPqNXT
+         BmiLogl44KCvqzEw7zUR42Qbjra4jHITvvpMye81DKIoVrxomHxc2uXP3AT0dca5UpJd
+         MXPp+OtygXsRPPdWSOe1X54tjIOQHJ/cHA+AFL105vdC0KST9FywtcwIncegrJoDOzQ0
+         VZjQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=4WkbNxIuQHcMyi/6jdTaT2GJS3hfGOuis/4XMY+Hqv0=;
-        b=R9OtFnEsvLab3LHYaNQuQoSD8Ua7s8EZucUR0n2RFToS3PASu0Tq7lklCzvJgqJmW0
-         I0bQao64NigbB8Q3PD01hwVUUn05dbxdyIwyA/CQPbHk6i3QO6U5sIxHSMFeA1OT1X7N
-         oYKa7vuKstv69Re3vFFg2vRVNJkb8puy+aZea7ePREbATiHa05Bzcbgvy01rwyTKvMGD
-         Dpy6qzitDM+Uljbfd4Az56TWrgaKWgyiNcB5uFVHbMzdOkZzuB/R6XjFBkD30YE+6541
-         hZxcr05vzjBymrHmhFLkcgdOIK/P4IKe8OBNScRa+DRUWvveCN3fbdpSN6d82DeVEOQN
-         ph/Q==
-X-Gm-Message-State: APjAAAX/7VgjZe12vKnooZjJ7SrUubfsYBr833pFMPW2rQ5LNKAfaAe2
-        S8C2MIeP9QVvJ3HxhmYxDsfd5A==
-X-Google-Smtp-Source: APXvYqyhZXLsc3Atd+lyJOsKNYthp6F6CwMZKFd5dNFZ+MASXA4v3XjQhoGKDCwuBYhc8sOqNq42Ww==
-X-Received: by 2002:ac2:4ac4:: with SMTP id m4mr17369662lfp.172.1566374003532;
-        Wed, 21 Aug 2019 00:53:23 -0700 (PDT)
-Received: from [192.168.27.209] ([37.157.136.206])
-        by smtp.googlemail.com with ESMTPSA id p28sm3254972lfh.55.2019.08.21.00.53.22
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 21 Aug 2019 00:53:22 -0700 (PDT)
-Subject: Re: [PATCH 1/2] venus: use on-chip interconnect API
-To:     Georgi Djakov <georgi.djakov@linaro.org>,
-        linux-media@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org
-Cc:     Vikash Garodia <vgarodia@codeaurora.org>,
-        Andy Gross <agross@kernel.org>,
-        Aniket Masule <amasule@codeaurora.org>,
-        Linux PM list <linux-pm@vger.kernel.org>
-References: <20190814084701.25455-1-stanimir.varbanov@linaro.org>
- <20190814084701.25455-2-stanimir.varbanov@linaro.org>
- <cc85f55c-3d21-c3b2-6848-e48513263e39@linaro.org>
-From:   Stanimir Varbanov <stanimir.varbanov@linaro.org>
-Message-ID: <939ace85-e006-db6d-02d2-b55385fa5043@linaro.org>
-Date:   Wed, 21 Aug 2019 10:53:20 +0300
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.8.0
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=SUO9A4l3IfX0BlcDjJGE9UTcfydGN+ATiaQcy0Ok630=;
+        b=sbT0VCgghg/tENJxUVRRtRIHH7K/Slio6CkdqBC+QyMTB5ALLK/vWrslnBVMTxsrV+
+         VpVs0jH6n5fkd7/WlOe6nRYj/u0CKiNChGcLi+F1aOZkVdGfZ9jVR/bNfTLxH0mIzMoK
+         kmPyFEqw1qsMUcKbtc44Bngu3H87IRkhB64f1M7UT3sCsZuq2T7+lJLkbwFxFAX2HkMW
+         5/HLTD1D9AbbuQ5e0cV7KAg2e5DQq0GjyTPU0qsg2Jo3uU6bDbhH3VxwzTuxlc9Nk+hW
+         mBFaJK0euouFVP0i0orVVKTt0JykcBl34m6xaj92nZ1O1XLU9Nc7RguC1Q//S/CApcBt
+         cpIg==
+X-Gm-Message-State: APjAAAWaY+Du/9vuAtpeM8MHY+p66fjSD+VzhII8KaSKzVo2y6Nby0WI
+        8y8hCp8n3e1UzfjzOy0KAmvQ9ZrvhlQBcFaxA2ky+Q==
+X-Google-Smtp-Source: APXvYqzPlqc2KEsTtkq7U9A3ZJZcmf3UbjlldfSSa8wVqepcd4DoaZaQ2lc/Udlux9Sn+rpIu1TYvoN7MhVgwloZBFo=
+X-Received: by 2002:a67:2e0e:: with SMTP id u14mr20554451vsu.182.1566376150531;
+ Wed, 21 Aug 2019 01:29:10 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <cc85f55c-3d21-c3b2-6848-e48513263e39@linaro.org>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+References: <20190820172351.24145-1-vkoul@kernel.org> <20190820172351.24145-7-vkoul@kernel.org>
+In-Reply-To: <20190820172351.24145-7-vkoul@kernel.org>
+From:   Amit Kucheria <amit.kucheria@verdurent.com>
+Date:   Wed, 21 Aug 2019 13:58:58 +0530
+Message-ID: <CAHLCerP-VP=SguQz4nA2ZFMiKBsNajO9E-CqQivdQm-iviqToQ@mail.gmail.com>
+Subject: Re: [PATCH v3 5/8] arm64: dts: qcom: sm8150-mtp: add base dts file
+To:     Vinod Koul <vkoul@kernel.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Mark Rutland <mark.rutland@arm.com>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Sibi Sankar <sibis@codeaurora.org>,
+        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
+        <devicetree@vger.kernel.org>, LKML <linux-kernel@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Georgi,
+On Tue, Aug 20, 2019 at 10:55 PM Vinod Koul <vkoul@kernel.org> wrote:
+>
+> This add base DTS file for sm8150-mtp and enables boot to console, adds
+> tlmm reserved range, resin node, volume down key and also includes pmic
+> file.
 
-Thanks for the review!
+For some reason, your mailer sent out 2 patches 5/8. I was wondering
+why the patch 5 failed to apply, but it seems the two are identical.
+Lore seems to show the same.
 
-On 8/20/19 12:34 PM, Georgi Djakov wrote:
-> Hi Stan,
-> 
-> On 8/14/19 11:47, Stanimir Varbanov wrote:
->> This aims to add a requests for bandwidth scaling depending
->> on the resolution and framerate (macroblocks per second). The
->> exact value ff the requested bandwidth is get from a
-> 
-> s/ff/of/
-> 
->> pre-calculated tables for encoder and decoder.
->>
->> Signed-off-by: Stanimir Varbanov <stanimir.varbanov@linaro.org>
->> ---
->>  drivers/media/platform/qcom/venus/core.c    | 34 +++++++++++
->>  drivers/media/platform/qcom/venus/core.h    | 14 +++++
->>  drivers/media/platform/qcom/venus/helpers.c | 67 ++++++++++++++++++++-
->>  3 files changed, 114 insertions(+), 1 deletion(-)
-> 
-> It looks like venus can be built-in, so how about the case when venus is
-> built-in and the interconnect provider is a module? Maybe add a dependency in
-> Kconfig to depend on INTERCONNECT || !INTERCONNECT?
 
-yes, I forgot about that dependency.
-
-> 
->>
->> diff --git a/drivers/media/platform/qcom/venus/core.c b/drivers/media/platform/qcom/venus/core.c
->> index 0acc7576cc58..19cbe9d5d028 100644
->> --- a/drivers/media/platform/qcom/venus/core.c
->> +++ b/drivers/media/platform/qcom/venus/core.c
->> @@ -5,6 +5,7 @@
->>   */
->>  #include <linux/clk.h>
->>  #include <linux/init.h>
->> +#include <linux/interconnect.h>
->>  #include <linux/ioctl.h>
->>  #include <linux/list.h>
->>  #include <linux/module.h>
->> @@ -239,6 +240,14 @@ static int venus_probe(struct platform_device *pdev)
->>  	if (IS_ERR(core->base))
->>  		return PTR_ERR(core->base);
->>  
->> +	core->video_path = of_icc_get(dev, "video-mem");
->> +	if (IS_ERR(core->video_path))
->> +		return PTR_ERR(core->video_path);
->> +
->> +	core->cpucfg_path = of_icc_get(dev, "cpu-cfg");
->> +	if (IS_ERR(core->cpucfg_path))
->> +		return PTR_ERR(core->cpucfg_path);
->> +
->>  	core->irq = platform_get_irq(pdev, 0);
->>  	if (core->irq < 0)
->>  		return core->irq;
->> @@ -273,6 +282,10 @@ static int venus_probe(struct platform_device *pdev)
->>  	if (ret)
->>  		return ret;
->>  
->> +	ret = icc_set_bw(core->cpucfg_path, 0, kbps_to_icc(1000));
->> +	if (ret)
->> +		return ret;
->> +
->>  	ret = hfi_create(core, &venus_core_ops);
->>  	if (ret)
->>  		return ret;
->> @@ -355,6 +368,9 @@ static int venus_remove(struct platform_device *pdev)
->>  	pm_runtime_put_sync(dev);
->>  	pm_runtime_disable(dev);
->>  
->> +	icc_put(core->video_path);
->> +	icc_put(core->cpucfg_path);
->> +
-> 
-> Do you have any plans to scale the bandwidth on suspend/resume too?
-
-Yes, we definitely need that in suspend/resume, but I guess the plan
-should be add it once we implement pm_runtime autosuspend functionality
-in order to easily test that.
-
--- 
-regards,
-Stan
+> Signed-off-by: Vinod Koul <vkoul@kernel.org>
+> ---
+>  arch/arm64/boot/dts/qcom/Makefile       |  1 +
+>  arch/arm64/boot/dts/qcom/sm8150-mtp.dts | 51 +++++++++++++++++++++++++
+>  2 files changed, 52 insertions(+)
+>  create mode 100644 arch/arm64/boot/dts/qcom/sm8150-mtp.dts
+>
+> diff --git a/arch/arm64/boot/dts/qcom/Makefile b/arch/arm64/boot/dts/qcom/Makefile
+> index 0a7e5dfce6f7..1964dacaf19b 100644
+> --- a/arch/arm64/boot/dts/qcom/Makefile
+> +++ b/arch/arm64/boot/dts/qcom/Makefile
+> @@ -12,5 +12,6 @@ dtb-$(CONFIG_ARCH_QCOM)       += sdm845-cheza-r2.dtb
+>  dtb-$(CONFIG_ARCH_QCOM)        += sdm845-cheza-r3.dtb
+>  dtb-$(CONFIG_ARCH_QCOM)        += sdm845-db845c.dtb
+>  dtb-$(CONFIG_ARCH_QCOM)        += sdm845-mtp.dtb
+> +dtb-$(CONFIG_ARCH_QCOM)        += sm8150-mtp.dtb
+>  dtb-$(CONFIG_ARCH_QCOM)        += qcs404-evb-1000.dtb
+>  dtb-$(CONFIG_ARCH_QCOM)        += qcs404-evb-4000.dtb
+> diff --git a/arch/arm64/boot/dts/qcom/sm8150-mtp.dts b/arch/arm64/boot/dts/qcom/sm8150-mtp.dts
+> new file mode 100644
+> index 000000000000..6f5777f530ae
+> --- /dev/null
+> +++ b/arch/arm64/boot/dts/qcom/sm8150-mtp.dts
+> @@ -0,0 +1,51 @@
+> +// SPDX-License-Identifier: BSD-3-Clause
+> +/*
+> + * Copyright (c) 2017-2019, The Linux Foundation. All rights reserved.
+> + * Copyright (c) 2019, Linaro Limited
+> + */
+> +
+> +/dts-v1/;
+> +
+> +#include "sm8150.dtsi"
+> +#include "pm8150.dtsi"
+> +#include "pm8150b.dtsi"
+> +#include "pm8150l.dtsi"
+> +
+> +/ {
+> +       model = "Qualcomm Technologies, Inc. SM8150 MTP";
+> +       compatible = "qcom,sm8150-mtp";
+> +
+> +       aliases {
+> +               serial0 = &uart2;
+> +       };
+> +
+> +       chosen {
+> +               stdout-path = "serial0:115200n8";
+> +       };
+> +};
+> +
+> +&qupv3_id_1 {
+> +       status = "okay";
+> +};
+> +
+> +&pon {
+> +       pwrkey {
+> +               status = "okay";
+> +       };
+> +
+> +       resin {
+> +               compatible = "qcom,pm8941-resin";
+> +               interrupts = <0x0 0x8 0x1 IRQ_TYPE_EDGE_BOTH>;
+> +               debounce = <15625>;
+> +               bias-pull-up;
+> +               linux,code = <KEY_VOLUMEDOWN>;
+> +       };
+> +};
+> +
+> +&tlmm {
+> +       gpio-reserved-ranges = <0 4>, <126 4>;
+> +};
+> +
+> +&uart2 {
+> +       status = "okay";
+> +};
+> --
+> 2.20.1
+>
