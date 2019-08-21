@@ -2,177 +2,167 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id E8F619836A
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 21 Aug 2019 20:44:50 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 85A9F98347
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 21 Aug 2019 20:42:57 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729157AbfHUSom (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 21 Aug 2019 14:44:42 -0400
-Received: from mail.kernel.org ([198.145.29.99]:40384 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1727685AbfHUSom (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 21 Aug 2019 14:44:42 -0400
-Received: from localhost.localdomain (unknown [106.201.100.47])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id B47AC214DA;
-        Wed, 21 Aug 2019 18:44:36 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1566413080;
-        bh=hCktM8GcuwpJvQ7AURIkhebu2j7uMWcei5qNOl1nD58=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=yhwpjn0jk6Pcr/+9N51w3KcLyzaof8a7ATZBDH1Rx75plnIO2Mh6eqB2M0LDUBQCr
-         OLyk89pvJDmdJFdPHtJlYv1ZMwr/+Eab+tKThaonskRpTx0uWG/FmsOIJnFNn7KpGh
-         AtTzvDAfGxHydbLqZEYOTqywn+qrLw1DGkZc1qCE=
-From:   Vinod Koul <vkoul@kernel.org>
-To:     Andy Gross <agross@kernel.org>
-Cc:     linux-arm-msm@vger.kernel.org,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Vinod Koul <vkoul@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Mark Rutland <mark.rutland@arm.com>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Sibi Sankar <sibis@codeaurora.org>, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org,
-        Niklas Cassel <niklas.cassel@linaro.org>
-Subject: [PATCH v4 8/8] arm64: dts: qcom: sm8150: Add apps shared nodes
-Date:   Thu, 22 Aug 2019 00:12:39 +0530
-Message-Id: <20190821184239.12364-9-vkoul@kernel.org>
-X-Mailer: git-send-email 2.20.1
-In-Reply-To: <20190821184239.12364-1-vkoul@kernel.org>
-References: <20190821184239.12364-1-vkoul@kernel.org>
+        id S1728194AbfHUSm4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 21 Aug 2019 14:42:56 -0400
+Received: from smtp.codeaurora.org ([198.145.29.96]:54174 "EHLO
+        smtp.codeaurora.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727266AbfHUSm4 (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 21 Aug 2019 14:42:56 -0400
+Received: by smtp.codeaurora.org (Postfix, from userid 1000)
+        id 1186A608D4; Wed, 21 Aug 2019 18:42:53 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
+        s=default; t=1566412974;
+        bh=3usH6zGMgZfcdZibKCpV+j/4/h6fq0KXvbyLRIfF+co=;
+        h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
+        b=YKGnwDoUyenvSthxx76i5QvPWbLOU+HSzyuSKnExVA+mEBNJpY9C+7CznJNh/Y8sO
+         5+LB+KU7BlH7iRpFNy/3/NLiTtQOdkFfE3IqLJSKshD1EtQA/Kbz6XABoKK2t6plBc
+         boXdxktUz6imBdnhKQl5iTSCMRcL74H8VE5vUtVU=
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        pdx-caf-mail.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.7 required=2.0 tests=ALL_TRUSTED,BAYES_00,
+        DKIM_INVALID,DKIM_SIGNED autolearn=no autolearn_force=no version=3.4.0
+Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
+        by smtp.codeaurora.org (Postfix) with ESMTP id EF629604D4;
+        Wed, 21 Aug 2019 18:42:50 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
+        s=default; t=1566412971;
+        bh=3usH6zGMgZfcdZibKCpV+j/4/h6fq0KXvbyLRIfF+co=;
+        h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
+        b=idRT9qzGLFoSCKsv9stMXEWvr822bkf15z66JB7qNIJ4nrBUNTolbzzNI3tByRKXt
+         UH0vrvvdKwrQa2NJbHzPchYNzAWwmSB6w0gGshiuRDVsXw8/OtDJTACfMowB9MBBtZ
+         l54YPA35/OiSIYkHWgLzNP7xms8trgOEx3H3CwO4=
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
+Content-Transfer-Encoding: 7bit
+Date:   Wed, 21 Aug 2019 18:42:50 +0000
+From:   saiprakash.ranjan@codeaurora.org
+To:     Stephen Boyd <sboyd@kernel.org>
+Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, Rob Clark <robclark@gmail.com>,
+        Sean Paul <seanpaul@chromium.org>,
+        linux-arm-msm-owner@vger.kernel.org
+Subject: Re: [RFC] clk: Remove cached cores in parent map during unregister
+In-Reply-To: <20190821181009.00D6322D6D@mail.kernel.org>
+References: <20190723051446.20013-1-bjorn.andersson@linaro.org>
+ <20190729224652.17291206E0@mail.kernel.org>
+ <20190821181009.00D6322D6D@mail.kernel.org>
+Message-ID: <cda27c942f332d9da47fe8c4c5305207@codeaurora.org>
+X-Sender: saiprakash.ranjan@codeaurora.org
+User-Agent: Roundcube Webmail/1.2.5
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add hwlock, pmu, smem, tcsr_mutex_regs, apss_shared mailbox, apps_rsc
-including the rpmhcc child nodes to the SM8150 DTSI
+Hi Stephen,
 
-Co-developed-by: Sibi Sankar <sibis@codeaurora.org>
-Signed-off-by: Sibi Sankar <sibis@codeaurora.org>
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
-Reviewed-by: Niklas Cassel <niklas.cassel@linaro.org>
----
- arch/arm64/boot/dts/qcom/sm8150.dtsi | 63 ++++++++++++++++++++++++++++
- 1 file changed, 63 insertions(+)
+On 2019-08-21 18:10, Stephen Boyd wrote:
+> 
+> Here's an attempt at the simple approach. There's another problem where
+> the cached 'hw' member of the parent data is held around when we don't
+> know when the caller has destroyed it. Not much else we can do for that
+> though.
+> 
+> ---8<---
+> diff --git a/drivers/clk/clk.c b/drivers/clk/clk.c
+> index c0990703ce54..f42a803fb11a 100644
+> --- a/drivers/clk/clk.c
+> +++ b/drivers/clk/clk.c
+> @@ -3737,6 +3737,37 @@ static const struct clk_ops clk_nodrv_ops = {
+>  	.set_parent	= clk_nodrv_set_parent,
+>  };
+> 
+> +static void clk_core_evict_parent_cache_subtree(struct clk_core *root,
+> +						struct clk_core *target)
+> +{
+> +	int i;
+> +	struct clk_core *child;
+> +
+> +	if (!root)
+> +		return;
+> +
+> +	for (i = 0; i < root->num_parents; i++)
+> +		if (root->parents[i].core == target)
+> +			root->parents[i].core = NULL;
+> +
+> +	hlist_for_each_entry(child, &root->children, child_node)
+> +		clk_core_evict_parent_cache_subtree(child, target);
+> +}
+> +
+> +/* Remove this clk from all parent caches */
+> +static void clk_core_evict_parent_cache(struct clk_core *core)
+> +{
+> +	struct hlist_head **lists;
+> +	struct clk_core *root;
+> +
+> +	lockdep_assert_held(&prepare_lock);
+> +
+> +	for (lists = all_lists; *lists; lists++)
+> +		hlist_for_each_entry(root, *lists, child_node)
+> +			clk_core_evict_parent_cache_subtree(root, core);
+> +
+> +}
+> +
+>  /**
+>   * clk_unregister - unregister a currently registered clock
+>   * @clk: clock to unregister
+> @@ -3775,6 +3806,8 @@ void clk_unregister(struct clk *clk)
+>  			clk_core_set_parent_nolock(child, NULL);
+>  	}
+> 
+> +	clk_core_evict_parent_cache(clk->core);
+> +
+>  	hlist_del_init(&clk->core->child_node);
+> 
+>  	if (clk->core->prepare_count)
 
-diff --git a/arch/arm64/boot/dts/qcom/sm8150.dtsi b/arch/arm64/boot/dts/qcom/sm8150.dtsi
-index c739b4647db9..8f23fcadecb8 100644
---- a/arch/arm64/boot/dts/qcom/sm8150.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sm8150.dtsi
-@@ -144,12 +144,23 @@
- 		};
- 	};
- 
-+	tcsr_mutex: hwlock {
-+		compatible = "qcom,tcsr-mutex";
-+		syscon = <&tcsr_mutex_regs 0 0x1000>;
-+		#hwlock-cells = <1>;
-+	};
-+
- 	memory@80000000 {
- 		device_type = "memory";
- 		/* We expect the bootloader to fill in the size */
- 		reg = <0x0 0x80000000 0x0 0x0>;
- 	};
- 
-+	pmu {
-+		compatible = "arm,armv8-pmuv3";
-+		interrupts = <GIC_PPI 5 IRQ_TYPE_LEVEL_HIGH>;
-+	};
-+
- 	psci {
- 		compatible = "arm,psci-1.0";
- 		method = "smc";
-@@ -266,6 +277,12 @@
- 		};
- 	};
- 
-+	smem {
-+		compatible = "qcom,smem";
-+		memory-region = <&smem_mem>;
-+		hwlocks = <&tcsr_mutex 3>;
-+	};
-+
- 	soc: soc@0 {
- 		#address-cells = <2>;
- 		#size-cells = <2>;
-@@ -306,6 +323,11 @@
- 			};
- 		};
- 
-+		tcsr_mutex_regs: syscon@1f40000 {
-+			compatible = "syscon";
-+			reg = <0x0 0x01f40000 0x0 0x40000>;
-+		};
-+
- 		tlmm: pinctrl@3100000 {
- 			compatible = "qcom,sm8150-pinctrl";
- 			reg = <0x0 0x03100000 0x0 0x300000>,
-@@ -321,6 +343,16 @@
- 			#interrupt-cells = <2>;
- 		};
- 
-+		aoss_qmp: power-controller@c300000 {
-+			compatible = "qcom,sm8150-aoss-qmp";
-+			reg = <0x0 0x0c300000 0x0 0x100000>;
-+			interrupts = <GIC_SPI 389 IRQ_TYPE_EDGE_RISING>;
-+			mboxes = <&apss_shared 0>;
-+
-+			#clock-cells = <0>;
-+			#power-domain-cells = <1>;
-+		};
-+
- 		spmi_bus: spmi@c440000 {
- 			compatible = "qcom,spmi-pmic-arb";
- 			reg = <0x0 0x0c440000 0x0 0x0001100>,
-@@ -349,6 +381,12 @@
- 			interrupts = <GIC_PPI 9 IRQ_TYPE_LEVEL_HIGH>;
- 		};
- 
-+		apss_shared: mailbox@17c00000 {
-+			compatible = "qcom,sm8150-apss-shared";
-+			reg = <0x0 0x17c00000 0x0 0x1000>;
-+			#mbox-cells = <1>;
-+		};
-+
- 		timer@17c20000 {
- 			#address-cells = <2>;
- 			#size-cells = <2>;
-@@ -407,6 +445,31 @@
- 				status = "disabled";
- 			};
- 		};
-+
-+		apps_rsc: rsc@18200000 {
-+			label = "apps_rsc";
-+			compatible = "qcom,rpmh-rsc";
-+			reg = <0x0 0x18200000 0x0 0x10000>,
-+			      <0x0 0x18210000 0x0 0x10000>,
-+			      <0x0 0x18220000 0x0 0x10000>;
-+			reg-names = "drv-0", "drv-1", "drv-2";
-+			interrupts = <GIC_SPI 3 IRQ_TYPE_LEVEL_HIGH>,
-+				     <GIC_SPI 4 IRQ_TYPE_LEVEL_HIGH>,
-+				     <GIC_SPI 5 IRQ_TYPE_LEVEL_HIGH>;
-+			qcom,tcs-offset = <0xd00>;
-+			qcom,drv-id = <2>;
-+			qcom,tcs-config = <ACTIVE_TCS  2>,
-+					  <SLEEP_TCS   1>,
-+					  <WAKE_TCS    1>,
-+					  <CONTROL_TCS 0>;
-+
-+			rpmhcc: clock-controller {
-+				compatible = "qcom,sm8150-rpmh-clk";
-+				#clock-cells = <1>;
-+				clock-names = "xo";
-+				clocks = <&xo_board>;
-+			};
-+		};
- 	};
- 
- 	timer {
+
+Thanks for the patch. This fixes the dispcc issue which I was observing 
+with latest kernel on cheza.
+You can have the tested by when you post the actual patch.
+
+Tested-by: Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
+
+For reference, below is the error log:
+
+[    3.992243] msm ae00000.mdss: Adding to iommu group 1
+[    3.999877] msm ae00000.mdss: bound ae01000.mdp (ops 
+0xffffff8010a87b78)
+[    4.023597] msm ae00000.mdss: failed to bind ae94000.dsi (ops 
+0xffffff8010a8b360): -517
+[    4.031898] msm ae00000.mdss: master bind failed: -517
+[    5.297509] msm ae00000.mdss: bound ae01000.mdp (ops 
+0xffffff8010a87b78)
+[    5.320906] msm ae00000.mdss: failed to bind ae94000.dsi (ops 
+0xffffff8010a8b360): -517
+[    5.329261] msm ae00000.mdss: master bind failed: -517
+[    5.648667] msm ae00000.mdss: bound ae01000.mdp (ops 
+0xffffff8010a87b78)
+[    5.672005] clk_core_set_parent_nolock: clk dsi0_phy_pll_out_byteclk 
+can not be parent of clk disp_cc_mdss_byte0_clk_src p_index=-22 <--- 
+error
+[    5.699799] msm ae00000.mdss: failed to bind ae94000.dsi (ops 
+0xffffff8010a8b360): -22
+[    5.708086] msm ae00000.mdss: master bind failed: -22
+[    5.714052] msm: probe of ae00000.mdss failed with error -22
+
+[    6.033541] clk_core_set_parent_nolock: clk dsi0_phy_pll_out_dsiclk 
+can not be parent of clk disp_cc_mdss_pclk0_clk_src p_index=-22 <--- 
+error
+
+Thanks,
+Sai
+
 -- 
-2.20.1
+QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a 
+member
+of Code Aurora Forum, hosted by The Linux Foundation
 
