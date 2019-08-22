@@ -2,117 +2,139 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id C822998B7F
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 22 Aug 2019 08:41:40 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0957E9908E
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 22 Aug 2019 12:20:10 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728286AbfHVGjs (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 22 Aug 2019 02:39:48 -0400
-Received: from smtp.codeaurora.org ([198.145.29.96]:58338 "EHLO
-        smtp.codeaurora.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728104AbfHVGjs (ORCPT
+        id S1730159AbfHVKUI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 22 Aug 2019 06:20:08 -0400
+Received: from mail-lf1-f67.google.com ([209.85.167.67]:40370 "EHLO
+        mail-lf1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726190AbfHVKUH (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 22 Aug 2019 02:39:48 -0400
-Received: by smtp.codeaurora.org (Postfix, from userid 1000)
-        id 609F260A96; Thu, 22 Aug 2019 06:39:47 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
-        s=default; t=1566455987;
-        bh=OYUu5JAm1bl+zh0nxUjpxjn9+/5Y2P9wOVNGY8i1OE4=;
-        h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
-        b=UgvpH0uYAl5oiGGAz2FbZQwaZMN8KZY+t0IpZJrEzzRRcmRRcFp8jlNoycYpmx2AV
-         9cT5Tr1Q7+VOVdmK74k47Kgn48J2odr9QX4qg882VcdRf4iz1+fPVBm4gixLH7gFSA
-         ZlmLRlCRTeHVjwpaKoe/7rQpkyXsgCgWmzJR/Xc0=
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        pdx-caf-mail.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.7 required=2.0 tests=ALL_TRUSTED,BAYES_00,
-        DKIM_INVALID,DKIM_SIGNED autolearn=no autolearn_force=no version=3.4.0
-Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
-        by smtp.codeaurora.org (Postfix) with ESMTP id 9428D60A96;
-        Thu, 22 Aug 2019 06:39:46 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
-        s=default; t=1566455986;
-        bh=OYUu5JAm1bl+zh0nxUjpxjn9+/5Y2P9wOVNGY8i1OE4=;
-        h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
-        b=kn1rOIl4Bt7u5rWyAB4669HaA0Gj6GaFy57m/MEYEa7OLm68t1m8uv2jJH3PH2drw
-         sE8lXN0M4Va3QfADB+Cf3p5ck4cjjozMExO326EJ++qhypKGunRusNyEMDIc/8cPt/
-         391L6S5M8hMxHl/hGxSYi9jAamWzKyNsrA1KBR4M=
-MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
-Content-Transfer-Encoding: 7bit
-Date:   Thu, 22 Aug 2019 12:09:46 +0530
-From:   Sibi Sankar <sibis@codeaurora.org>
-To:     Philipp Zabel <p.zabel@pengutronix.de>
-Cc:     robh+dt@kernel.org, bjorn.andersson@linaro.org, agross@kernel.org,
-        mark.rutland@arm.com, linux-arm-msm@vger.kernel.org,
+        Thu, 22 Aug 2019 06:20:07 -0400
+Received: by mail-lf1-f67.google.com with SMTP id b17so4119087lff.7
+        for <linux-arm-msm@vger.kernel.org>; Thu, 22 Aug 2019 03:20:06 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=wPBDtmTZhqkyTNz0MqWgEkHLzILpQif3A3GQnsT/mi8=;
+        b=YH8DY7eZIuy+N5wDuMxNcN/eV2PnncZNHKtZnk/Ev1sfTVb93MNfhwZaV0fFw0K1oy
+         5MX0uxb4PmY6nuTDa10FjmDjGjT3uN3XzwSpUuR+Bz7QcnSW7P2TwVHVyhV6P9XaoQLz
+         QmmsJQkd8i5rMJhzNKloN8I5jU4CAd6fR5XIQ44MvktPPGMJsFyiP2GgX8XRFmIZ0Vx8
+         Gy1DEAD8AsgKAjBGXuU1rY84orP8m6xmRP+LMIWYo0sR/38ud+lwnarD79w/o67x6CAJ
+         HO7mQU8/fs+LC/1uOI6N+X8QhWUsL11BYLNFs1h2pbi2o8B1H9z3fYGdqs733UEZhQ9A
+         52oA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=wPBDtmTZhqkyTNz0MqWgEkHLzILpQif3A3GQnsT/mi8=;
+        b=T9tQgKCeAlCsa7rWlvTjqwpyHjx+7xx5mMBm68S1JRSpTVyNGFpEYfebuNfZECAC40
+         Xkte+ERw/+H8WQ5Y6CwGb1eK/fLmATfd7+vGNO/7IchwK7xSWv+LSVOqrwV42IB5hAyu
+         xNhJO8W+BPyVy5X43fQL4SAz1qXzIk1SY94Heqf65bN9JY/VHJlieeFPM63mLZvndfkD
+         mgZuFx7sEpElX9DhYR5y5W2njPoslmf63YALXyEjmcsyUlZbG38a2Y4rtIk2pjBWxtS+
+         oAsWRv6HxHBfF7Ws1TYfWF5q+kAfMy7tA9BLuSQyCLRKfheTfJovg/BZbKPmX1Y5DgBz
+         msvw==
+X-Gm-Message-State: APjAAAVLD4lL8AksnjrzfXpEx7MexPkGiBWcnzDYFkaOiBuAG6J63xTe
+        u4+zGGD7RTZIFUBJOqgGmgvtvg==
+X-Google-Smtp-Source: APXvYqxDQXf3LY5Ds0SPDRViU/Z88Dzf56IoZrVylWXa05DGSliVoBFyyrB3KfXrpeflaqNyf452jQ==
+X-Received: by 2002:a19:e04f:: with SMTP id g15mr21819606lfj.46.1566469205557;
+        Thu, 22 Aug 2019 03:20:05 -0700 (PDT)
+Received: from centauri (ua-84-219-138-247.bbcust.telenor.se. [84.219.138.247])
+        by smtp.gmail.com with ESMTPSA id k8sm3758979lja.24.2019.08.22.03.20.04
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 22 Aug 2019 03:20:04 -0700 (PDT)
+Date:   Thu, 22 Aug 2019 12:20:02 +0200
+From:   Niklas Cassel <niklas.cassel@linaro.org>
+To:     Stephen Boyd <swboyd@chromium.org>
+Cc:     Jorge Ramirez-Ortiz <jorge.ramirez-ortiz@linaro.org>,
+        linux-arm-msm@vger.kernel.org, vireshk@kernel.org,
+        bjorn.andersson@linaro.org, ulf.hansson@linaro.org,
+        Rob Herring <robh@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Mark Rutland <mark.rutland@arm.com>, linux-pm@vger.kernel.org,
         devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 1/4] dt-bindings: reset: aoss: Add AOSS reset binding for
- SC7180 SoCs
-In-Reply-To: <1566383523.4193.5.camel@pengutronix.de>
-References: <20190821095442.24495-1-sibis@codeaurora.org>
- <20190821095442.24495-2-sibis@codeaurora.org>
- <1566383523.4193.5.camel@pengutronix.de>
-Message-ID: <f6f36181660057325742318519e541ad@codeaurora.org>
-X-Sender: sibis@codeaurora.org
-User-Agent: Roundcube Webmail/1.2.5
+Subject: Re: [PATCH v2 10/14] dt-bindings: power: avs: Add support for CPR
+ (Core Power Reduction)
+Message-ID: <20190822102002.GA8494@centauri>
+References: <20190725104144.22924-1-niklas.cassel@linaro.org>
+ <20190725104144.22924-11-niklas.cassel@linaro.org>
+ <5d579b36.1c69fb81.85eba.ff51@mx.google.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <5d579b36.1c69fb81.85eba.ff51@mx.google.com>
+User-Agent: Mutt/1.12.1 (2019-06-15)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hey Philipp,
-Thanks for the review!
-
-On 2019-08-21 16:02, Philipp Zabel wrote:
-> On Wed, 2019-08-21 at 15:24 +0530, Sibi Sankar wrote:
->> Add SC7180 AOSS reset to the list of possible bindings.
->> 
->> Signed-off-by: Sibi Sankar <sibis@codeaurora.org>
->> ---
->>  Documentation/devicetree/bindings/reset/qcom,aoss-reset.txt | 3 ++-
->>  1 file changed, 2 insertions(+), 1 deletion(-)
->> 
->> diff --git 
->> a/Documentation/devicetree/bindings/reset/qcom,aoss-reset.txt 
->> b/Documentation/devicetree/bindings/reset/qcom,aoss-reset.txt
->> index 510c748656ec5..8f0bbdc6afd91 100644
->> --- a/Documentation/devicetree/bindings/reset/qcom,aoss-reset.txt
->> +++ b/Documentation/devicetree/bindings/reset/qcom,aoss-reset.txt
->> @@ -8,7 +8,8 @@ Required properties:
->>  - compatible:
->>  	Usage: required
->>  	Value type: <string>
->> -	Definition: must be:
->> +	Definition: must be one of:
->> +		    "qcom,sc7180-aoss-cc"
->>  		    "qcom,sdm845-aoss-cc"
->> 
->>  - reg:
+On Fri, Aug 16, 2019 at 11:14:13PM -0700, Stephen Boyd wrote:
+> Quoting Niklas Cassel (2019-07-25 03:41:38)
+> > +       cpr@b018000 {
+> > +               compatible = "qcom,qcs404-cpr", "qcom,cpr";
+> > +               reg = <0x0b018000 0x1000>;
+> > +               interrupts = <0 15 IRQ_TYPE_EDGE_RISING>;
+> > +               clocks = <&xo_board>;
+> > +               clock-names = "ref";
+> > +               vdd-apc-supply = <&pms405_s3>;
+> > +               #power-domain-cells = <0>;
+> > +               operating-points-v2 = <&cpr_opp_table>;
+> > +               acc-syscon = <&tcsr>;
+> > +
+> > +               nvmem-cells = <&cpr_efuse_quot_offset1>,
+> > +                       <&cpr_efuse_quot_offset2>,
+> > +                       <&cpr_efuse_quot_offset3>,
+> > +                       <&cpr_efuse_init_voltage1>,
+> > +                       <&cpr_efuse_init_voltage2>,
+> > +                       <&cpr_efuse_init_voltage3>,
+> > +                       <&cpr_efuse_quot1>,
+> > +                       <&cpr_efuse_quot2>,
+> > +                       <&cpr_efuse_quot3>,
+> > +                       <&cpr_efuse_ring1>,
+> > +                       <&cpr_efuse_ring2>,
+> > +                       <&cpr_efuse_ring3>,
+> > +                       <&cpr_efuse_revision>;
+> > +               nvmem-cell-names = "cpr_quotient_offset1",
+> > +                       "cpr_quotient_offset2",
+> > +                       "cpr_quotient_offset3",
+> > +                       "cpr_init_voltage1",
+> > +                       "cpr_init_voltage2",
+> > +                       "cpr_init_voltage3",
+> > +                       "cpr_quotient1",
+> > +                       "cpr_quotient2",
+> > +                       "cpr_quotient3",
+> > +                       "cpr_ring_osc1",
+> > +                       "cpr_ring_osc2",
+> > +                       "cpr_ring_osc3",
+> > +                       "cpr_fuse_revision";
+> > +
+> > +               qcom,cpr-timer-delay-us = <5000>;
+> > +               qcom,cpr-timer-cons-up = <0>;
+> > +               qcom,cpr-timer-cons-down = <2>;
+> > +               qcom,cpr-up-threshold = <1>;
+> > +               qcom,cpr-down-threshold = <3>;
+> > +               qcom,cpr-idle-clocks = <15>;
+> > +               qcom,cpr-gcnt-us = <1>;
+> > +               qcom,vdd-apc-step-up-limit = <1>;
+> > +               qcom,vdd-apc-step-down-limit = <1>;
 > 
-> Does sc7180 have exactly the same resets (mss, camss, venus, gpu,
-> dispss, wcss, and lpass) as sdm845? If so, it could be considered
-> compatible, and the driver changes wouldn't be needed at all:
-
-Yes they are identical both
-AOSS and PDC resets.
-
+> Are any of these qcom,* properties going to change for a particular SoC?
+> They look like SoC config data that should just go into the driver and
+> change based on the SoC compatible string.
 > 
-> -	Definition: must be:
-> +	Definition: must be one of:
-> +		    "qcom,sc7180-aoss-cc", "qcom,sdm845-aoss-cc"
-> 
-> 	    "qcom,sdm845-aoss-cc"
-> 
-> Is there a reason not to do this?
 
-I am fine with ^^, will change
-them in v2.
+Hello Stephen,
+thanks a lot for your reviews.
 
-> 
-> regards
-> Philipp
+I agree with you, will drop these properties from the dt-binding
+and the driver once I respin the series.
 
--- 
--- Sibi Sankar --
-Qualcomm Innovation Center, Inc. is a member of Code Aurora Forum,
-a Linux Foundation Collaborative Project.
+I'm hoping to get the cpufreq part of the patch series merged this
+merge window, so that the patch pile will decrease.
+
+
+Kind regards,
+Niklas
