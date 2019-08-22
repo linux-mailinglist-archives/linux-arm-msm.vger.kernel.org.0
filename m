@@ -2,326 +2,193 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 2CA4499704
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 22 Aug 2019 16:40:13 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id DB85A9974C
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 22 Aug 2019 16:48:50 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2389348AbfHVOhm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 22 Aug 2019 10:37:42 -0400
-Received: from onstation.org ([52.200.56.107]:46916 "EHLO onstation.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S2389320AbfHVOhf (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 22 Aug 2019 10:37:35 -0400
-Received: from ins7386.localdomain (unknown [207.110.43.92])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits))
-        (No client certificate requested)
-        (Authenticated sender: masneyb)
-        by onstation.org (Postfix) with ESMTPSA id 006033E8A5;
-        Thu, 22 Aug 2019 14:37:32 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=onstation.org;
-        s=default; t=1566484654;
-        bh=+R5wxFKjGBd6xlthipoXdjnc9HnWqBhJuerO5oNP6jA=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=UU9dHboeeDk+GCgIS7gSIB8uRmqO7LfUgLTYZjbKqZStCh2Hg1X/oiO1syof8CKZr
-         iKTLVzzuBEEUm9Je0Oe4hcQucfTKCVxbcfg05OHBRbr3YMkaQvsnWVvrIXVEb983gM
-         S2FrkX9/+VS5RE0wZC2Furf/R+cG6UhilT5Cixv0=
-From:   Brian Masney <masneyb@onstation.org>
-To:     agross@kernel.org, robdclark@gmail.com, sean@poorly.run,
-        robh+dt@kernel.org, bjorn.andersson@linaro.org
-Cc:     airlied@linux.ie, daniel@ffwll.ch, mark.rutland@arm.com,
-        jonathan@marek.ca, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org, devicetree@vger.kernel.org,
-        jcrouse@codeaurora.org
-Subject: [PATCH v6 6/7] drm/msm/gpu: add ocmem init/cleanup functions
-Date:   Thu, 22 Aug 2019 07:37:02 -0700
-Message-Id: <20190822143703.13030-7-masneyb@onstation.org>
-X-Mailer: git-send-email 2.21.0
-In-Reply-To: <20190822143703.13030-1-masneyb@onstation.org>
+        id S1731650AbfHVOsa (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 22 Aug 2019 10:48:30 -0400
+Received: from mail-pg1-f195.google.com ([209.85.215.195]:35859 "EHLO
+        mail-pg1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1731559AbfHVOs3 (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 22 Aug 2019 10:48:29 -0400
+Received: by mail-pg1-f195.google.com with SMTP id l21so3809366pgm.3
+        for <linux-arm-msm@vger.kernel.org>; Thu, 22 Aug 2019 07:48:29 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=E31Jc5nNGW6JtDz/k02T3W8n/cBkPDZl66UgVwKgjhA=;
+        b=s3o84YpM+R4a2pGAeRamIRqxiWEaXcN/hCMtMu/sVfFVNqSkZqmXblJvpMlIJ7yE0b
+         QlyRCjyn3csSkl0L7S2dpdqsbUBYMHzi7vou9+8AsenLq9UTQ+nbmu3MlK3T43G5xQZ6
+         WtCJw+RtVutoBfB/f2CyARt3ednz3VpQySULPFEkOManrAEDkbcQmj7JoHT9Fz4Jr6K9
+         ppM4PLJz1YrDotOJmd27uw0BN4wjnoWWtGRl3wQLrLJSb8loOsVhvQcNO39JtHaHpXTz
+         D0Te68kdNXZUpgzwpX1Vx5guYi8UlA1/5RY4P19IIb+qGIfsuHqd+l/ZxMvkkyeTLp8X
+         TWpw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=E31Jc5nNGW6JtDz/k02T3W8n/cBkPDZl66UgVwKgjhA=;
+        b=TB14piwcbi8Xj5owVDf1gmnpvBhgylTKBBRuHXIOLogRb9FQDXnPM44n42HyAgO5oT
+         jmijCjAqgbp6bvAjotteEHnkqG8hwmTwqSjQOfmJgRJE2F79mp8rbkXxGPPVQVqqlq7t
+         mwLhuNL1xumdSKDa8T/x7xhIvfVUFYGQFc0ej0nAB1B0LC4dWkprDe8nDW61G5UQV72p
+         FQAwvpqebwaJ1UlrS5iS8WHlqiF2bvGmhBT0P/Or4DbXuSzqUnDrA/aZ/e4yci0dTnD3
+         TbQCxHlBmlqnADSveztiep1TepMYfV6ZN42S13bWUuoPuXHZSEj/HOs2tjPIW0ubuP39
+         9s7Q==
+X-Gm-Message-State: APjAAAV2eDWk/OXSwA4r2yHBtKAEHSMPdX5okwuHzcKSxC9sTi1guMzF
+        dHLXX3DDE8+5zvQwgFmFzV++qQ==
+X-Google-Smtp-Source: APXvYqx8q3sv18VRmRxDYCuD2RRBmlTna3o11Hv5adGkG1Vu96QwL0EgtBrOHs4SaofLyEO90Hl/6w==
+X-Received: by 2002:a17:90a:1d0:: with SMTP id 16mr38515pjd.98.1566485308373;
+        Thu, 22 Aug 2019 07:48:28 -0700 (PDT)
+Received: from tuxbook-pro (104-188-17-28.lightspeed.sndgca.sbcglobal.net. [104.188.17.28])
+        by smtp.gmail.com with ESMTPSA id c199sm34370650pfb.28.2019.08.22.07.48.26
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 22 Aug 2019 07:48:27 -0700 (PDT)
+Date:   Thu, 22 Aug 2019 07:50:14 -0700
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     Brian Masney <masneyb@onstation.org>
+Cc:     agross@kernel.org, robdclark@gmail.com, sean@poorly.run,
+        robh+dt@kernel.org, airlied@linux.ie, daniel@ffwll.ch,
+        mark.rutland@arm.com, jonathan@marek.ca,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
+        devicetree@vger.kernel.org, jcrouse@codeaurora.org
+Subject: Re: [PATCH v6 4/7] firmware: qcom: scm: add support to restore
+ secure config to qcm_scm-32
+Message-ID: <20190822145014.GO26807@tuxbook-pro>
 References: <20190822143703.13030-1-masneyb@onstation.org>
+ <20190822143703.13030-5-masneyb@onstation.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20190822143703.13030-5-masneyb@onstation.org>
+User-Agent: Mutt/1.12.1 (2019-06-15)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The files a3xx_gpu.c and a4xx_gpu.c have ifdefs for the OCMEM support
-that was missing upstream. Add two new functions (adreno_gpu_ocmem_init
-and adreno_gpu_ocmem_cleanup) that removes some duplicated code.
+On Thu 22 Aug 07:37 PDT 2019, Brian Masney wrote:
 
-Signed-off-by: Brian Masney <masneyb@onstation.org>
----
-Changes since v5:
-- None
+> From: Rob Clark <robdclark@gmail.com>
+> 
+> Add support to restore the secure configuration for qcm_scm-32.c. This
+> is needed by the On Chip MEMory (OCMEM) that is present on some
+> Snapdragon devices.
+> 
+> Signed-off-by: Rob Clark <robdclark@gmail.com>
+> [masneyb@onstation.org: ported to latest kernel; set ctx_bank_num to
+>  spare parameter.]
+> Signed-off-by: Brian Masney <masneyb@onstation.org>
 
-Changes since v4:
-- None
+Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
 
-Changes since v3:
-- None
-
-Changes since v2:
-- Check for -ENODEV error of_get_ocmem()
-- remove fail_cleanup_ocmem label in a[34]xx_gpu_init
-
-Changes since v1:
-- remove CONFIG_QCOM_OCMEM #ifdefs
-- use unsigned long for memory addresses instead of uint32_t
-- add 'depends on QCOM_OCMEM || QCOM_OCMEM=n' to Kconfig
-
- drivers/gpu/drm/msm/Kconfig             |  1 +
- drivers/gpu/drm/msm/adreno/a3xx_gpu.c   | 28 +++++------------
- drivers/gpu/drm/msm/adreno/a3xx_gpu.h   |  3 +-
- drivers/gpu/drm/msm/adreno/a4xx_gpu.c   | 25 ++++------------
- drivers/gpu/drm/msm/adreno/a4xx_gpu.h   |  3 +-
- drivers/gpu/drm/msm/adreno/adreno_gpu.c | 40 +++++++++++++++++++++++++
- drivers/gpu/drm/msm/adreno/adreno_gpu.h | 10 +++++++
- 7 files changed, 66 insertions(+), 44 deletions(-)
-
-diff --git a/drivers/gpu/drm/msm/Kconfig b/drivers/gpu/drm/msm/Kconfig
-index 9c37e4de5896..b3d3b2172659 100644
---- a/drivers/gpu/drm/msm/Kconfig
-+++ b/drivers/gpu/drm/msm/Kconfig
-@@ -7,6 +7,7 @@ config DRM_MSM
- 	depends on OF && COMMON_CLK
- 	depends on MMU
- 	depends on INTERCONNECT || !INTERCONNECT
-+	depends on QCOM_OCMEM || QCOM_OCMEM=n
- 	select QCOM_MDT_LOADER if ARCH_QCOM
- 	select REGULATOR
- 	select DRM_KMS_HELPER
-diff --git a/drivers/gpu/drm/msm/adreno/a3xx_gpu.c b/drivers/gpu/drm/msm/adreno/a3xx_gpu.c
-index 5f7e98028eaf..7ad14937fcdf 100644
---- a/drivers/gpu/drm/msm/adreno/a3xx_gpu.c
-+++ b/drivers/gpu/drm/msm/adreno/a3xx_gpu.c
-@@ -6,10 +6,6 @@
-  * Copyright (c) 2014 The Linux Foundation. All rights reserved.
-  */
- 
--#ifdef CONFIG_MSM_OCMEM
--#  include <mach/ocmem.h>
--#endif
--
- #include "a3xx_gpu.h"
- 
- #define A3XX_INT0_MASK \
-@@ -195,9 +191,9 @@ static int a3xx_hw_init(struct msm_gpu *gpu)
- 		gpu_write(gpu, REG_A3XX_RBBM_GPR0_CTL, 0x00000000);
- 
- 	/* Set the OCMEM base address for A330, etc */
--	if (a3xx_gpu->ocmem_hdl) {
-+	if (a3xx_gpu->ocmem.hdl) {
- 		gpu_write(gpu, REG_A3XX_RB_GMEM_BASE_ADDR,
--			(unsigned int)(a3xx_gpu->ocmem_base >> 14));
-+			(unsigned int)(a3xx_gpu->ocmem.base >> 14));
- 	}
- 
- 	/* Turn on performance counters: */
-@@ -318,10 +314,7 @@ static void a3xx_destroy(struct msm_gpu *gpu)
- 
- 	adreno_gpu_cleanup(adreno_gpu);
- 
--#ifdef CONFIG_MSM_OCMEM
--	if (a3xx_gpu->ocmem_base)
--		ocmem_free(OCMEM_GRAPHICS, a3xx_gpu->ocmem_hdl);
--#endif
-+	adreno_gpu_ocmem_cleanup(&a3xx_gpu->ocmem);
- 
- 	kfree(a3xx_gpu);
- }
-@@ -494,17 +487,10 @@ struct msm_gpu *a3xx_gpu_init(struct drm_device *dev)
- 
- 	/* if needed, allocate gmem: */
- 	if (adreno_is_a330(adreno_gpu)) {
--#ifdef CONFIG_MSM_OCMEM
--		/* TODO this is different/missing upstream: */
--		struct ocmem_buf *ocmem_hdl =
--				ocmem_allocate(OCMEM_GRAPHICS, adreno_gpu->gmem);
--
--		a3xx_gpu->ocmem_hdl = ocmem_hdl;
--		a3xx_gpu->ocmem_base = ocmem_hdl->addr;
--		adreno_gpu->gmem = ocmem_hdl->len;
--		DBG("using %dK of OCMEM at 0x%08x", adreno_gpu->gmem / 1024,
--				a3xx_gpu->ocmem_base);
--#endif
-+		ret = adreno_gpu_ocmem_init(&adreno_gpu->base.pdev->dev,
-+					    adreno_gpu, &a3xx_gpu->ocmem);
-+		if (ret)
-+			goto fail;
- 	}
- 
- 	if (!gpu->aspace) {
-diff --git a/drivers/gpu/drm/msm/adreno/a3xx_gpu.h b/drivers/gpu/drm/msm/adreno/a3xx_gpu.h
-index 5dc33e5ea53b..c555fb13e0d7 100644
---- a/drivers/gpu/drm/msm/adreno/a3xx_gpu.h
-+++ b/drivers/gpu/drm/msm/adreno/a3xx_gpu.h
-@@ -19,8 +19,7 @@ struct a3xx_gpu {
- 	struct adreno_gpu base;
- 
- 	/* if OCMEM is used for GMEM: */
--	uint32_t ocmem_base;
--	void *ocmem_hdl;
-+	struct adreno_ocmem ocmem;
- };
- #define to_a3xx_gpu(x) container_of(x, struct a3xx_gpu, base)
- 
-diff --git a/drivers/gpu/drm/msm/adreno/a4xx_gpu.c b/drivers/gpu/drm/msm/adreno/a4xx_gpu.c
-index ab2b752566d8..b01388a9e89e 100644
---- a/drivers/gpu/drm/msm/adreno/a4xx_gpu.c
-+++ b/drivers/gpu/drm/msm/adreno/a4xx_gpu.c
-@@ -2,9 +2,6 @@
- /* Copyright (c) 2014 The Linux Foundation. All rights reserved.
-  */
- #include "a4xx_gpu.h"
--#ifdef CONFIG_MSM_OCMEM
--#  include <soc/qcom/ocmem.h>
--#endif
- 
- #define A4XX_INT0_MASK \
- 	(A4XX_INT0_RBBM_AHB_ERROR |        \
-@@ -188,7 +185,7 @@ static int a4xx_hw_init(struct msm_gpu *gpu)
- 			(1 << 30) | 0xFFFF);
- 
- 	gpu_write(gpu, REG_A4XX_RB_GMEM_BASE_ADDR,
--			(unsigned int)(a4xx_gpu->ocmem_base >> 14));
-+			(unsigned int)(a4xx_gpu->ocmem.base >> 14));
- 
- 	/* Turn on performance counters: */
- 	gpu_write(gpu, REG_A4XX_RBBM_PERFCTR_CTL, 0x01);
-@@ -318,10 +315,7 @@ static void a4xx_destroy(struct msm_gpu *gpu)
- 
- 	adreno_gpu_cleanup(adreno_gpu);
- 
--#ifdef CONFIG_MSM_OCMEM
--	if (a4xx_gpu->ocmem_base)
--		ocmem_free(OCMEM_GRAPHICS, a4xx_gpu->ocmem_hdl);
--#endif
-+	adreno_gpu_ocmem_cleanup(&a4xx_gpu->ocmem);
- 
- 	kfree(a4xx_gpu);
- }
-@@ -578,17 +572,10 @@ struct msm_gpu *a4xx_gpu_init(struct drm_device *dev)
- 
- 	/* if needed, allocate gmem: */
- 	if (adreno_is_a4xx(adreno_gpu)) {
--#ifdef CONFIG_MSM_OCMEM
--		/* TODO this is different/missing upstream: */
--		struct ocmem_buf *ocmem_hdl =
--				ocmem_allocate(OCMEM_GRAPHICS, adreno_gpu->gmem);
--
--		a4xx_gpu->ocmem_hdl = ocmem_hdl;
--		a4xx_gpu->ocmem_base = ocmem_hdl->addr;
--		adreno_gpu->gmem = ocmem_hdl->len;
--		DBG("using %dK of OCMEM at 0x%08x", adreno_gpu->gmem / 1024,
--				a4xx_gpu->ocmem_base);
--#endif
-+		ret = adreno_gpu_ocmem_init(dev->dev, adreno_gpu,
-+					    &a4xx_gpu->ocmem);
-+		if (ret)
-+			goto fail;
- 	}
- 
- 	if (!gpu->aspace) {
-diff --git a/drivers/gpu/drm/msm/adreno/a4xx_gpu.h b/drivers/gpu/drm/msm/adreno/a4xx_gpu.h
-index d506311ee240..a01448cba2ea 100644
---- a/drivers/gpu/drm/msm/adreno/a4xx_gpu.h
-+++ b/drivers/gpu/drm/msm/adreno/a4xx_gpu.h
-@@ -16,8 +16,7 @@ struct a4xx_gpu {
- 	struct adreno_gpu base;
- 
- 	/* if OCMEM is used for GMEM: */
--	uint32_t ocmem_base;
--	void *ocmem_hdl;
-+	struct adreno_ocmem ocmem;
- };
- #define to_a4xx_gpu(x) container_of(x, struct a4xx_gpu, base)
- 
-diff --git a/drivers/gpu/drm/msm/adreno/adreno_gpu.c b/drivers/gpu/drm/msm/adreno/adreno_gpu.c
-index 048c8be426f3..0783e4b5486a 100644
---- a/drivers/gpu/drm/msm/adreno/adreno_gpu.c
-+++ b/drivers/gpu/drm/msm/adreno/adreno_gpu.c
-@@ -14,6 +14,7 @@
- #include <linux/pm_opp.h>
- #include <linux/slab.h>
- #include <linux/soc/qcom/mdt_loader.h>
-+#include <soc/qcom/ocmem.h>
- #include "adreno_gpu.h"
- #include "msm_gem.h"
- #include "msm_mmu.h"
-@@ -893,6 +894,45 @@ static int adreno_get_pwrlevels(struct device *dev,
- 	return 0;
- }
- 
-+int adreno_gpu_ocmem_init(struct device *dev, struct adreno_gpu *adreno_gpu,
-+			  struct adreno_ocmem *adreno_ocmem)
-+{
-+	struct ocmem_buf *ocmem_hdl;
-+	struct ocmem *ocmem;
-+
-+	ocmem = of_get_ocmem(dev);
-+	if (IS_ERR(ocmem)) {
-+		if (PTR_ERR(ocmem) == -ENODEV) {
-+			/*
-+			 * Return success since either the ocmem property was
-+			 * not specified in device tree, or ocmem support is
-+			 * not compiled into the kernel.
-+			 */
-+			return 0;
-+		}
-+
-+		return PTR_ERR(ocmem);
-+	}
-+
-+	ocmem_hdl = ocmem_allocate(ocmem, OCMEM_GRAPHICS, adreno_gpu->gmem);
-+	if (IS_ERR(ocmem_hdl))
-+		return PTR_ERR(ocmem_hdl);
-+
-+	adreno_ocmem->ocmem = ocmem;
-+	adreno_ocmem->base = ocmem_hdl->addr;
-+	adreno_ocmem->hdl = ocmem_hdl;
-+	adreno_gpu->gmem = ocmem_hdl->len;
-+
-+	return 0;
-+}
-+
-+void adreno_gpu_ocmem_cleanup(struct adreno_ocmem *adreno_ocmem)
-+{
-+	if (adreno_ocmem && adreno_ocmem->base)
-+		ocmem_free(adreno_ocmem->ocmem, OCMEM_GRAPHICS,
-+			   adreno_ocmem->hdl);
-+}
-+
- int adreno_gpu_init(struct drm_device *drm, struct platform_device *pdev,
- 		struct adreno_gpu *adreno_gpu,
- 		const struct adreno_gpu_funcs *funcs, int nr_rings)
-diff --git a/drivers/gpu/drm/msm/adreno/adreno_gpu.h b/drivers/gpu/drm/msm/adreno/adreno_gpu.h
-index c7441fb8313e..d225a8a92e58 100644
---- a/drivers/gpu/drm/msm/adreno/adreno_gpu.h
-+++ b/drivers/gpu/drm/msm/adreno/adreno_gpu.h
-@@ -126,6 +126,12 @@ struct adreno_gpu {
- };
- #define to_adreno_gpu(x) container_of(x, struct adreno_gpu, base)
- 
-+struct adreno_ocmem {
-+	struct ocmem *ocmem;
-+	unsigned long base;
-+	void *hdl;
-+};
-+
- /* platform config data (ie. from DT, or pdata) */
- struct adreno_platform_config {
- 	struct adreno_rev rev;
-@@ -236,6 +242,10 @@ void adreno_dump(struct msm_gpu *gpu);
- void adreno_wait_ring(struct msm_ringbuffer *ring, uint32_t ndwords);
- struct msm_ringbuffer *adreno_active_ring(struct msm_gpu *gpu);
- 
-+int adreno_gpu_ocmem_init(struct device *dev, struct adreno_gpu *adreno_gpu,
-+			  struct adreno_ocmem *ocmem);
-+void adreno_gpu_ocmem_cleanup(struct adreno_ocmem *ocmem);
-+
- int adreno_gpu_init(struct drm_device *drm, struct platform_device *pdev,
- 		struct adreno_gpu *gpu, const struct adreno_gpu_funcs *funcs,
- 		int nr_rings);
--- 
-2.21.0
-
+> ---
+> Changes since v5:
+> - None
+> 
+> Changes since v4:
+> - None
+> 
+> Changes since v3:
+> - None
+> 
+> Changes since v2:
+> - None
+> 
+> Changes since v1:
+> - Use existing __qcom_scm_restore_sec_cfg() function stub in
+>   qcom_scm-32.c that was unimplemented
+> - Set the cfg.ctx_bank_num to the spare function parameter. It was
+>   previously set to the device_id.
+> 
+>  drivers/firmware/qcom_scm-32.c | 17 ++++++++++++++++-
+>  drivers/firmware/qcom_scm.c    | 13 +++++++++++++
+>  include/linux/qcom_scm.h       | 11 +++++++++++
+>  3 files changed, 40 insertions(+), 1 deletion(-)
+> 
+> diff --git a/drivers/firmware/qcom_scm-32.c b/drivers/firmware/qcom_scm-32.c
+> index 4c2514e5e249..5d90b7f5ab5a 100644
+> --- a/drivers/firmware/qcom_scm-32.c
+> +++ b/drivers/firmware/qcom_scm-32.c
+> @@ -617,7 +617,22 @@ int __qcom_scm_assign_mem(struct device *dev, phys_addr_t mem_region,
+>  int __qcom_scm_restore_sec_cfg(struct device *dev, u32 device_id,
+>  			       u32 spare)
+>  {
+> -	return -ENODEV;
+> +	struct msm_scm_sec_cfg {
+> +		__le32 id;
+> +		__le32 ctx_bank_num;
+> +	} cfg;
+> +	int ret, scm_ret = 0;
+> +
+> +	cfg.id = cpu_to_le32(device_id);
+> +	cfg.ctx_bank_num = cpu_to_le32(spare);
+> +
+> +	ret = qcom_scm_call(dev, QCOM_SCM_SVC_MP, QCOM_SCM_RESTORE_SEC_CFG,
+> +			    &cfg, sizeof(cfg), &scm_ret, sizeof(scm_ret));
+> +
+> +	if (ret || scm_ret)
+> +		return ret ? ret : -EINVAL;
+> +
+> +	return 0;
+>  }
+>  
+>  int __qcom_scm_iommu_secure_ptbl_size(struct device *dev, u32 spare,
+> diff --git a/drivers/firmware/qcom_scm.c b/drivers/firmware/qcom_scm.c
+> index 7e285ff3961d..27c1d98a34e6 100644
+> --- a/drivers/firmware/qcom_scm.c
+> +++ b/drivers/firmware/qcom_scm.c
+> @@ -367,6 +367,19 @@ static const struct reset_control_ops qcom_scm_pas_reset_ops = {
+>  	.deassert = qcom_scm_pas_reset_deassert,
+>  };
+>  
+> +/**
+> + * qcom_scm_restore_sec_cfg_available() - Check if secure environment
+> + * supports restore security config interface.
+> + *
+> + * Return true if restore-cfg interface is supported, false if not.
+> + */
+> +bool qcom_scm_restore_sec_cfg_available(void)
+> +{
+> +	return __qcom_scm_is_call_available(__scm->dev, QCOM_SCM_SVC_MP,
+> +					    QCOM_SCM_RESTORE_SEC_CFG);
+> +}
+> +EXPORT_SYMBOL(qcom_scm_restore_sec_cfg_available);
+> +
+>  int qcom_scm_restore_sec_cfg(u32 device_id, u32 spare)
+>  {
+>  	return __qcom_scm_restore_sec_cfg(__scm->dev, device_id, spare);
+> diff --git a/include/linux/qcom_scm.h b/include/linux/qcom_scm.h
+> index b49b734d662c..04382e1798e4 100644
+> --- a/include/linux/qcom_scm.h
+> +++ b/include/linux/qcom_scm.h
+> @@ -34,6 +34,16 @@ enum qcom_scm_ocmem_client {
+>  	QCOM_SCM_OCMEM_DEBUG_ID,
+>  };
+>  
+> +enum qcom_scm_sec_dev_id {
+> +	QCOM_SCM_MDSS_DEV_ID    = 1,
+> +	QCOM_SCM_OCMEM_DEV_ID   = 5,
+> +	QCOM_SCM_PCIE0_DEV_ID   = 11,
+> +	QCOM_SCM_PCIE1_DEV_ID   = 12,
+> +	QCOM_SCM_GFX_DEV_ID     = 18,
+> +	QCOM_SCM_UFS_DEV_ID     = 19,
+> +	QCOM_SCM_ICE_DEV_ID     = 20,
+> +};
+> +
+>  #define QCOM_SCM_VMID_HLOS       0x3
+>  #define QCOM_SCM_VMID_MSS_MSA    0xF
+>  #define QCOM_SCM_VMID_WLAN       0x18
+> @@ -70,6 +80,7 @@ extern int qcom_scm_assign_mem(phys_addr_t mem_addr, size_t mem_sz,
+>  extern void qcom_scm_cpu_power_down(u32 flags);
+>  extern u32 qcom_scm_get_version(void);
+>  extern int qcom_scm_set_remote_state(u32 state, u32 id);
+> +extern bool qcom_scm_restore_sec_cfg_available(void);
+>  extern int qcom_scm_restore_sec_cfg(u32 device_id, u32 spare);
+>  extern int qcom_scm_iommu_secure_ptbl_size(u32 spare, size_t *size);
+>  extern int qcom_scm_iommu_secure_ptbl_init(u64 addr, u32 size, u32 spare);
+> -- 
+> 2.21.0
+> 
