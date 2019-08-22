@@ -2,68 +2,91 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 59A9399A6A
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 22 Aug 2019 19:13:46 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9D39B99F0C
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 22 Aug 2019 20:40:48 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2387869AbfHVRNC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 22 Aug 2019 13:13:02 -0400
-Received: from mail.kernel.org ([198.145.29.99]:34372 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1731662AbfHVRNB (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 22 Aug 2019 13:13:01 -0400
-Received: from localhost.localdomain (unknown [171.61.89.145])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id A5F432089E;
-        Thu, 22 Aug 2019 17:12:57 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1566493980;
-        bh=YIshGsicoGE+zJT+JRFCI1Xd0g+0hNcRCeEzpxTP3jI=;
-        h=From:To:Cc:Subject:Date:From;
-        b=Ik9Xic0MuMKLq4IdBpDfoWf6KbhIOlgxccZ4r4BNw7OzC5hQKk/kiyXHUIseED3SB
-         t1/Rc9Y3EqOHgcPJPO2qfYJWdnebT/6Umm/JLO64Dq10y3SoQb6MeO++M5H47baAUv
-         xkKpEcjyUUbpsANZjBNT5xNGVrOvsLMGl7ckpmHU=
-From:   Vinod Koul <vkoul@kernel.org>
-To:     Andy Gross <agross@kernel.org>
-Cc:     linux-arm-msm@vger.kernel.org,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Vinod Koul <vkoul@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Mark Rutland <mark.rutland@arm.com>,
-        Stephen Boyd <sboyd@kernel.org>, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: [PATCH] arm64: dts: sdm845: Add parent clock for rpmhcc
-Date:   Thu, 22 Aug 2019 22:41:35 +0530
-Message-Id: <20190822171135.26488-1-vkoul@kernel.org>
-X-Mailer: git-send-email 2.20.1
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+        id S1731699AbfHVSkW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 22 Aug 2019 14:40:22 -0400
+Received: from mail-pl1-f196.google.com ([209.85.214.196]:44845 "EHLO
+        mail-pl1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1732618AbfHVSkW (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 22 Aug 2019 14:40:22 -0400
+Received: by mail-pl1-f196.google.com with SMTP id t14so3930662plr.11
+        for <linux-arm-msm@vger.kernel.org>; Thu, 22 Aug 2019 11:40:21 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=broadcom.com; s=google;
+        h=from:to:cc:subject:date:message-id;
+        bh=l3f7J9dLXFEkkPEpHoZfCHDBojT5vl2BXru+bCQWM9k=;
+        b=ex7I0HZM1XZ6nwcwJqKZFzWwvGvKmcP9p6rxpsVI/+xYBxClCbtueXcVx0JxcT5oID
+         JXpkwA/Bhug+LEiV8vtZANPVM3IxNyQ+W/6m3o6LQa+FPXzahsdNpQXLz2q9/iBg5cf9
+         Q81XzJ2UHw+Xu2lkdOP+AvS2qPMEACeupEn/k=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=l3f7J9dLXFEkkPEpHoZfCHDBojT5vl2BXru+bCQWM9k=;
+        b=n/IKy5LhK1ePNsaivco5LFfmPzob4XoRGGKYJtHrVATW5SULE6DI8HmbKC3iMK4S/m
+         wYWcPMM4G6wWj0QkvqZhngRUzzwk3AOnZqZ7h6eKg1qWmPgrZt07SL2WhobBitMtxdAG
+         sm+6VhP1NcAEqVn4r9hsLAYfGpacDOzzAZcHTmBnH4VAU5nyY48CTEme9pjuf81fUN6n
+         6lbiN0h3JbkXv07dGB7oLaRCXrvipM9d6bLJsVj+SVPG0ze3JCkjdxp/XOFHyx/gkN4q
+         EOf+S0l6LVxDdbEfslTNIsV9hDkWnCOS0hnGEMYddZcAoqwXI0QsNAz3qkrKfDgJVUzT
+         1zaA==
+X-Gm-Message-State: APjAAAXAwySaMzIG4nOR07AOvymCNV2SkqgQCZguo6NyDDgDpURRbXKO
+        WMvtgqCP6KnCQT3JeYnq+FuTow==
+X-Google-Smtp-Source: APXvYqxPQ9aH3jF39LKTjf20cbeWadPkB+uuUPl7/RjqxCo7ecZeQNFkTtcAcpXBrjBObejQFr9TmQ==
+X-Received: by 2002:a17:902:a8:: with SMTP id a37mr226321pla.316.1566499220955;
+        Thu, 22 Aug 2019 11:40:20 -0700 (PDT)
+Received: from lbrmn-lnxub113.broadcom.net ([192.19.228.250])
+        by smtp.gmail.com with ESMTPSA id z19sm51056pgv.35.2019.08.22.11.40.18
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 22 Aug 2019 11:40:20 -0700 (PDT)
+From:   Scott Branden <scott.branden@broadcom.com>
+To:     Luis Chamberlain <mcgrof@kernel.org>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        David Brown <david.brown@linaro.org>,
+        Alexander Viro <viro@zeniv.linux.org.uk>,
+        Shuah Khan <shuah@kernel.org>, bjorn.andersson@linaro.org
+Cc:     "Rafael J . Wysocki" <rafael@kernel.org>,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-fsdevel@vger.kernel.org,
+        BCM Kernel Feedback <bcm-kernel-feedback-list@broadcom.com>,
+        Olof Johansson <olof@lixom.net>,
+        Andrew Morton <akpm@linux-foundation.org>,
+        Dan Carpenter <dan.carpenter@oracle.com>,
+        Colin Ian King <colin.king@canonical.com>,
+        Kees Cook <keescook@chromium.org>,
+        Takashi Iwai <tiwai@suse.de>, linux-kselftest@vger.kernel.org,
+        Scott Branden <scott.branden@broadcom.com>
+Subject: [PATCH v2 0/2] firmware: selftest for request_firmware_into_buf
+Date:   Thu, 22 Aug 2019 11:40:03 -0700
+Message-Id: <20190822184005.901-1-scott.branden@broadcom.com>
+X-Mailer: git-send-email 2.17.1
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-RPM clock controller has parent as xo, so specify that in DT node for
-rpmhcc
+This patch series adds kernel selftest of request_firmware_into_buf.
+The API was added to the kernel previously untested.
 
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
----
- arch/arm64/boot/dts/qcom/sdm845.dtsi | 2 ++
- 1 file changed, 2 insertions(+)
+Changes from v1:
+- Dropped demonstration patch for a race condition discovered
+while testing request_firmare_into_buf.
+The new test exposes a kernel opps with the firmware fallback mechanism that may
+be fixed separate from these tests.
+- minor whitespace formatting in patch
+- added Ack's
+- added "s" in commit message (changed selftest: to selftests:)
 
-diff --git a/arch/arm64/boot/dts/qcom/sdm845.dtsi b/arch/arm64/boot/dts/qcom/sdm845.dtsi
-index 9be6acb0650e..8a19ed601470 100644
---- a/arch/arm64/boot/dts/qcom/sdm845.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sdm845.dtsi
-@@ -3028,6 +3028,8 @@
- 			rpmhcc: clock-controller {
- 				compatible = "qcom,sdm845-rpmh-clk";
- 				#clock-cells = <1>;
-+				clock-names = "xo-board";
-+				clocks = <&xo_board>;
- 			};
- 
- 			rpmhpd: power-controller {
+Scott Branden (2):
+  test_firmware: add support for request_firmware_into_buf
+  selftests: firmware: Add request_firmware_into_buf tests
+
+ lib/test_firmware.c                           | 50 +++++++++++++++-
+ .../selftests/firmware/fw_filesystem.sh       | 57 ++++++++++++++++++-
+ tools/testing/selftests/firmware/fw_lib.sh    | 11 ++++
+ 3 files changed, 114 insertions(+), 4 deletions(-)
+
 -- 
-2.20.1
+2.17.1
 
