@@ -2,44 +2,45 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 9D39B99F0C
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 22 Aug 2019 20:40:48 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 2B5BF99F03
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 22 Aug 2019 20:40:27 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731699AbfHVSkW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 22 Aug 2019 14:40:22 -0400
-Received: from mail-pl1-f196.google.com ([209.85.214.196]:44845 "EHLO
-        mail-pl1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1732618AbfHVSkW (ORCPT
+        id S2390945AbfHVSk0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 22 Aug 2019 14:40:26 -0400
+Received: from mail-pl1-f195.google.com ([209.85.214.195]:37195 "EHLO
+        mail-pl1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2390882AbfHVSkY (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 22 Aug 2019 14:40:22 -0400
-Received: by mail-pl1-f196.google.com with SMTP id t14so3930662plr.11
-        for <linux-arm-msm@vger.kernel.org>; Thu, 22 Aug 2019 11:40:21 -0700 (PDT)
+        Thu, 22 Aug 2019 14:40:24 -0400
+Received: by mail-pl1-f195.google.com with SMTP id bj8so3947273plb.4
+        for <linux-arm-msm@vger.kernel.org>; Thu, 22 Aug 2019 11:40:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=broadcom.com; s=google;
-        h=from:to:cc:subject:date:message-id;
-        bh=l3f7J9dLXFEkkPEpHoZfCHDBojT5vl2BXru+bCQWM9k=;
-        b=ex7I0HZM1XZ6nwcwJqKZFzWwvGvKmcP9p6rxpsVI/+xYBxClCbtueXcVx0JxcT5oID
-         JXpkwA/Bhug+LEiV8vtZANPVM3IxNyQ+W/6m3o6LQa+FPXzahsdNpQXLz2q9/iBg5cf9
-         Q81XzJ2UHw+Xu2lkdOP+AvS2qPMEACeupEn/k=
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=lYGkVfgdG8WRzMSOSXUmf210tXXkOroI8nnPLd8JCQ0=;
+        b=Csn2107hyha4ovBxdi2LyqceP7uLoem1wsnEA+3piaO8X19bZNx4C08VXdTuEm0SYo
+         uBQfFmHDxb82QakDPYJlN3IjPWjGcWRJRC2NDKhyKSDXDxBOAbJYsSEFhiEBUXZ0ac2h
+         n8i6fI5lMb+Qyk09wgnifo785dbIIoIgbXwJ0=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id;
-        bh=l3f7J9dLXFEkkPEpHoZfCHDBojT5vl2BXru+bCQWM9k=;
-        b=n/IKy5LhK1ePNsaivco5LFfmPzob4XoRGGKYJtHrVATW5SULE6DI8HmbKC3iMK4S/m
-         wYWcPMM4G6wWj0QkvqZhngRUzzwk3AOnZqZ7h6eKg1qWmPgrZt07SL2WhobBitMtxdAG
-         sm+6VhP1NcAEqVn4r9hsLAYfGpacDOzzAZcHTmBnH4VAU5nyY48CTEme9pjuf81fUN6n
-         6lbiN0h3JbkXv07dGB7oLaRCXrvipM9d6bLJsVj+SVPG0ze3JCkjdxp/XOFHyx/gkN4q
-         EOf+S0l6LVxDdbEfslTNIsV9hDkWnCOS0hnGEMYddZcAoqwXI0QsNAz3qkrKfDgJVUzT
-         1zaA==
-X-Gm-Message-State: APjAAAXAwySaMzIG4nOR07AOvymCNV2SkqgQCZguo6NyDDgDpURRbXKO
-        WMvtgqCP6KnCQT3JeYnq+FuTow==
-X-Google-Smtp-Source: APXvYqxPQ9aH3jF39LKTjf20cbeWadPkB+uuUPl7/RjqxCo7ecZeQNFkTtcAcpXBrjBObejQFr9TmQ==
-X-Received: by 2002:a17:902:a8:: with SMTP id a37mr226321pla.316.1566499220955;
-        Thu, 22 Aug 2019 11:40:20 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references;
+        bh=lYGkVfgdG8WRzMSOSXUmf210tXXkOroI8nnPLd8JCQ0=;
+        b=JNf6uWRTh6REbHHo8mLqJ7UyxB9wPLDjb5mrnf4E08Gt4gLqN4qaL9b/uJwSS0Nzv4
+         mMD7DhQqt8uuBZhHZE+Fluq4oJ2Zter4EtYRY0CKEDKhzLz8QyWG5xVyjBtgkOQDWcsv
+         zcKTL6y1nuiDEO+LWAnOfK/I77vgWYhpcwhgd3P7s/CCxPHqg1iGgsOgmOWh1G7ditGJ
+         qKgaSQY16ZLN7gTrqPNZ7kpMOR0BB6HstelfrwF/Sj+rIDqBGVNgUgc0fLbsK4kLts9i
+         YQ1RXp+wx/7TbT138DX1P/19C+WUkELNkg3qsJ9yrtL5ET6ESVP7Xh8xgZRpSXyDkuLc
+         TjPA==
+X-Gm-Message-State: APjAAAXFQG0ogLsTW961IP1FDm8XkP1ZzhaJoStBtvAz8uvqboTaWSrG
+        dqAdZbr/q7KzB18OVXDdRbUv7w==
+X-Google-Smtp-Source: APXvYqyWaujh3qVQxjy/+0B1mF00KjxVRj0dvRQ2YXKDUO/+piE/HhL5BpRlp+WbkIAfEd/oMhd7sg==
+X-Received: by 2002:a17:902:b593:: with SMTP id a19mr254399pls.110.1566499223688;
+        Thu, 22 Aug 2019 11:40:23 -0700 (PDT)
 Received: from lbrmn-lnxub113.broadcom.net ([192.19.228.250])
-        by smtp.gmail.com with ESMTPSA id z19sm51056pgv.35.2019.08.22.11.40.18
+        by smtp.gmail.com with ESMTPSA id z19sm51056pgv.35.2019.08.22.11.40.21
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 22 Aug 2019 11:40:20 -0700 (PDT)
+        Thu, 22 Aug 2019 11:40:23 -0700 (PDT)
 From:   Scott Branden <scott.branden@broadcom.com>
 To:     Luis Chamberlain <mcgrof@kernel.org>,
         Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -57,36 +58,153 @@ Cc:     "Rafael J . Wysocki" <rafael@kernel.org>,
         Kees Cook <keescook@chromium.org>,
         Takashi Iwai <tiwai@suse.de>, linux-kselftest@vger.kernel.org,
         Scott Branden <scott.branden@broadcom.com>
-Subject: [PATCH v2 0/2] firmware: selftest for request_firmware_into_buf
-Date:   Thu, 22 Aug 2019 11:40:03 -0700
-Message-Id: <20190822184005.901-1-scott.branden@broadcom.com>
+Subject: [PATCH v2 1/2] test_firmware: add support for request_firmware_into_buf
+Date:   Thu, 22 Aug 2019 11:40:04 -0700
+Message-Id: <20190822184005.901-2-scott.branden@broadcom.com>
 X-Mailer: git-send-email 2.17.1
+In-Reply-To: <20190822184005.901-1-scott.branden@broadcom.com>
+References: <20190822184005.901-1-scott.branden@broadcom.com>
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-This patch series adds kernel selftest of request_firmware_into_buf.
-The API was added to the kernel previously untested.
+Add test config into_buf to allow request_firmware_into_buf to be
+called instead of request_firmware/request_firmware_direct.  The number
+of parameters differ calling request_firmware_into_buf and support
+has not been added to test such api in test_firmware until now.
 
-Changes from v1:
-- Dropped demonstration patch for a race condition discovered
-while testing request_firmare_into_buf.
-The new test exposes a kernel opps with the firmware fallback mechanism that may
-be fixed separate from these tests.
-- minor whitespace formatting in patch
-- added Ack's
-- added "s" in commit message (changed selftest: to selftests:)
+Signed-off-by: Scott Branden <scott.branden@broadcom.com>
+Acked-by: Luis Chamberlain <mcgrof@kernel.org>
+Acked-by: Shuah Khan <skhan@linuxfoundation.org>
+---
+ lib/test_firmware.c | 50 +++++++++++++++++++++++++++++++++++++++++++--
+ 1 file changed, 48 insertions(+), 2 deletions(-)
 
-Scott Branden (2):
-  test_firmware: add support for request_firmware_into_buf
-  selftests: firmware: Add request_firmware_into_buf tests
-
- lib/test_firmware.c                           | 50 +++++++++++++++-
- .../selftests/firmware/fw_filesystem.sh       | 57 ++++++++++++++++++-
- tools/testing/selftests/firmware/fw_lib.sh    | 11 ++++
- 3 files changed, 114 insertions(+), 4 deletions(-)
-
+diff --git a/lib/test_firmware.c b/lib/test_firmware.c
+index 6ca97a63b3d6..251213c872b5 100644
+--- a/lib/test_firmware.c
++++ b/lib/test_firmware.c
+@@ -18,6 +18,7 @@
+ #include <linux/device.h>
+ #include <linux/fs.h>
+ #include <linux/miscdevice.h>
++#include <linux/sizes.h>
+ #include <linux/slab.h>
+ #include <linux/uaccess.h>
+ #include <linux/delay.h>
+@@ -26,6 +27,7 @@
+ 
+ #define TEST_FIRMWARE_NAME	"test-firmware.bin"
+ #define TEST_FIRMWARE_NUM_REQS	4
++#define TEST_FIRMWARE_BUF_SIZE	SZ_1K
+ 
+ static DEFINE_MUTEX(test_fw_mutex);
+ static const struct firmware *test_firmware;
+@@ -45,6 +47,8 @@ struct test_batched_req {
+  * test_config - represents configuration for the test for different triggers
+  *
+  * @name: the name of the firmware file to look for
++ * @into_buf: when the into_buf is used if this is true
++ *	request_firmware_into_buf() will be used instead.
+  * @sync_direct: when the sync trigger is used if this is true
+  *	request_firmware_direct() will be used instead.
+  * @send_uevent: whether or not to send a uevent for async requests
+@@ -83,6 +87,7 @@ struct test_batched_req {
+  */
+ struct test_config {
+ 	char *name;
++	bool into_buf;
+ 	bool sync_direct;
+ 	bool send_uevent;
+ 	u8 num_requests;
+@@ -176,6 +181,7 @@ static int __test_firmware_config_init(void)
+ 
+ 	test_fw_config->num_requests = TEST_FIRMWARE_NUM_REQS;
+ 	test_fw_config->send_uevent = true;
++	test_fw_config->into_buf = false;
+ 	test_fw_config->sync_direct = false;
+ 	test_fw_config->req_firmware = request_firmware;
+ 	test_fw_config->test_result = 0;
+@@ -244,6 +250,9 @@ static ssize_t config_show(struct device *dev,
+ 			test_fw_config->send_uevent ?
+ 			"FW_ACTION_HOTPLUG" :
+ 			"FW_ACTION_NOHOTPLUG");
++	len += scnprintf(buf+len, PAGE_SIZE - len,
++			"into_buf:\t\t%s\n",
++			test_fw_config->into_buf ? "true" : "false");
+ 	len += scnprintf(buf+len, PAGE_SIZE - len,
+ 			"sync_direct:\t\t%s\n",
+ 			test_fw_config->sync_direct ? "true" : "false");
+@@ -393,6 +402,23 @@ static ssize_t config_num_requests_show(struct device *dev,
+ }
+ static DEVICE_ATTR_RW(config_num_requests);
+ 
++static ssize_t config_into_buf_store(struct device *dev,
++				     struct device_attribute *attr,
++				     const char *buf, size_t count)
++{
++	return test_dev_config_update_bool(buf,
++					   count,
++					   &test_fw_config->into_buf);
++}
++
++static ssize_t config_into_buf_show(struct device *dev,
++				    struct device_attribute *attr,
++				    char *buf)
++{
++	return test_dev_config_show_bool(buf, test_fw_config->into_buf);
++}
++static DEVICE_ATTR_RW(config_into_buf);
++
+ static ssize_t config_sync_direct_store(struct device *dev,
+ 					struct device_attribute *attr,
+ 					const char *buf, size_t count)
+@@ -522,7 +548,7 @@ static ssize_t trigger_async_request_store(struct device *dev,
+ 		rc = count;
+ 	} else {
+ 		pr_err("failed to async load firmware\n");
+-		rc = -ENODEV;
++		rc = -ENOMEM;
+ 	}
+ 
+ out:
+@@ -585,7 +611,26 @@ static int test_fw_run_batch_request(void *data)
+ 		return -EINVAL;
+ 	}
+ 
+-	req->rc = test_fw_config->req_firmware(&req->fw, req->name, req->dev);
++	if (test_fw_config->into_buf) {
++		void *test_buf;
++
++		test_buf = kzalloc(TEST_FIRMWARE_BUF_SIZE, GFP_KERNEL);
++		if (!test_buf)
++			return -ENOSPC;
++
++		req->rc = request_firmware_into_buf(&req->fw,
++						    req->name,
++						    req->dev,
++						    test_buf,
++						    TEST_FIRMWARE_BUF_SIZE);
++		if (!req->fw)
++			kfree(test_buf);
++	} else {
++		req->rc = test_fw_config->req_firmware(&req->fw,
++						       req->name,
++						       req->dev);
++	}
++
+ 	if (req->rc) {
+ 		pr_info("#%u: batched sync load failed: %d\n",
+ 			req->idx, req->rc);
+@@ -849,6 +894,7 @@ static struct attribute *test_dev_attrs[] = {
+ 	TEST_FW_DEV_ATTR(config),
+ 	TEST_FW_DEV_ATTR(config_name),
+ 	TEST_FW_DEV_ATTR(config_num_requests),
++	TEST_FW_DEV_ATTR(config_into_buf),
+ 	TEST_FW_DEV_ATTR(config_sync_direct),
+ 	TEST_FW_DEV_ATTR(config_send_uevent),
+ 	TEST_FW_DEV_ATTR(config_read_fw_idx),
 -- 
 2.17.1
 
