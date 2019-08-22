@@ -2,96 +2,111 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 486E799200
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 22 Aug 2019 13:24:59 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9408599360
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 22 Aug 2019 14:27:06 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732448AbfHVLYf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 22 Aug 2019 07:24:35 -0400
-Received: from mo4-p02-ob.smtp.rzone.de ([85.215.255.80]:25632 "EHLO
-        mo4-p02-ob.smtp.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726844AbfHVLYf (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 22 Aug 2019 07:24:35 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; t=1566473070;
-        s=strato-dkim-0002; d=gerhold.net;
-        h=References:In-Reply-To:Message-Id:Date:Subject:Cc:To:From:
-        X-RZG-CLASS-ID:X-RZG-AUTH:From:Subject:Sender;
-        bh=3v63jXg6iYj8362Qhy6x26vt+3Fc0fDF0MVkWL5OL4g=;
-        b=TcyIZksGtER6unWg8jgm9gR0+i3FJlYc4OKCssCNfwlc1K0x7qdj55Ig0N67F4hOEL
-        3o9UsFxFwOe4Y52FCqvQJaprU4HQ5C5P4bF5yhBVXdipcS82+yR7FhtseNYZ2FBJ6mmO
-        Bkxm48skDvaLnv6kNumJbqTpydTliSjetqfBjA5pqo3IiYIpd+J1bS9J+BmfBsla9Gm7
-        oRmqWgz8B+h9vqVUPNZsD9Hste9c1yIUBKYr850gcDyqgBW5mDx6/oliojmI+VvhaW4g
-        fwz4Qa6oVrO8U7Oqx+dE4nH2+ftLpCmP9imlUoeGIyQhv6KVhpEJ7fWj3/zfT/s86xS/
-        FcxQ==
-X-RZG-AUTH: ":P3gBZUipdd93FF5ZZvYFPugejmSTVR2nRPhVORvLd4SsytBXQr4OGUPX+1RgWArOaRE="
-X-RZG-CLASS-ID: mo00
-Received: from localhost.localdomain
-        by smtp.strato.de (RZmta 44.26.1 DYNA|AUTH)
-        with ESMTPSA id g064fdv7MBOUeLn
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (curve secp521r1 with 521 ECDH bits, eq. 15360 bits RSA))
-        (Client did not present a certificate);
-        Thu, 22 Aug 2019 13:24:30 +0200 (CEST)
-From:   Stephan Gerhold <stephan@gerhold.net>
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     Rob Herring <robh+dt@kernel.org>,
-        Mark Rutland <mark.rutland@arm.com>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, Stephan Gerhold <stephan@gerhold.net>
-Subject: [PATCH 2/2] arm64: dts: msm8916-samsung-a5u: Override iris compatible
-Date:   Thu, 22 Aug 2019 13:23:39 +0200
-Message-Id: <20190822112339.121804-2-stephan@gerhold.net>
-X-Mailer: git-send-email 2.22.1
-In-Reply-To: <20190822112339.121804-1-stephan@gerhold.net>
-References: <20190822112339.121804-1-stephan@gerhold.net>
+        id S1729733AbfHVM05 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 22 Aug 2019 08:26:57 -0400
+Received: from mga04.intel.com ([192.55.52.120]:63270 "EHLO mga04.intel.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1729659AbfHVM05 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 22 Aug 2019 08:26:57 -0400
+X-Amp-Result: UNKNOWN
+X-Amp-Original-Verdict: FILE UNKNOWN
+X-Amp-File-Uploaded: False
+Received: from fmsmga001.fm.intel.com ([10.253.24.23])
+  by fmsmga104.fm.intel.com with ESMTP/TLS/DHE-RSA-AES256-GCM-SHA384; 22 Aug 2019 05:26:56 -0700
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="5.64,416,1559545200"; 
+   d="scan'208";a="196236911"
+Received: from stinkbox.fi.intel.com (HELO stinkbox) ([10.237.72.174])
+  by fmsmga001.fm.intel.com with SMTP; 22 Aug 2019 05:26:53 -0700
+Received: by stinkbox (sSMTP sendmail emulation); Thu, 22 Aug 2019 15:26:52 +0300
+Date:   Thu, 22 Aug 2019 15:26:52 +0300
+From:   Ville =?iso-8859-1?Q?Syrj=E4l=E4?= <ville.syrjala@linux.intel.com>
+To:     Rob Clark <robdclark@gmail.com>
+Cc:     dri-devel@lists.freedesktop.org,
+        Rob Clark <robdclark@chromium.org>,
+        freedreno@lists.freedesktop.org,
+        Fritz Koenig <frkoenig@google.com>,
+        David Airlie <airlied@linux.ie>, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, Bruce Wang <bzwang@chromium.org>,
+        Sean Paul <sean@poorly.run>
+Subject: Re: [PATCH] drm/msm/dpu: add rotation property
+Message-ID: <20190822122652.GM5942@intel.com>
+References: <20190822015756.30807-1-robdclark@gmail.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
+In-Reply-To: <20190822015756.30807-1-robdclark@gmail.com>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-msm8916.dtsi sets the iris compatible to "qcom,wcn3620".
-While WCN3620 seems to be used on most MSM8916 devices,
-MSM8916 can also be paired with another chip (e.g. for WiFi dual-band).
+On Wed, Aug 21, 2019 at 06:57:24PM -0700, Rob Clark wrote:
+> From: Rob Clark <robdclark@chromium.org>
+> 
+> Signed-off-by: Rob Clark <robdclark@chromium.org>
+> ---
+>  drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c | 20 ++++++++++++++++++++
+>  1 file changed, 20 insertions(+)
+> 
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
+> index 45bfac9e3af7..c5653771e8fa 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
+> @@ -1040,8 +1040,21 @@ static void dpu_plane_sspp_atomic_update(struct drm_plane *plane)
+>  				pstate->multirect_mode);
+>  
+>  	if (pdpu->pipe_hw->ops.setup_format) {
+> +		unsigned int rotation;
+> +
+>  		src_flags = 0x0;
+>  
+> +		rotation = drm_rotation_simplify(state->rotation,
+> +						 DRM_MODE_ROTATE_0 |
+> +						 DRM_MODE_REFLECT_X |
+> +						 DRM_MODE_REFLECT_Y);
+> +
+> +		if (rotation & DRM_MODE_REFLECT_X)
+> +			src_flags |= DPU_SSPP_FLIP_UD;
+> + 
+> +		if (rotation & DRM_MODE_REFLECT_Y)
+> +			src_flags |= DPU_SSPP_FLIP_LR;
+> +
 
-A5U uses WCN3660B instead, so the compatible needs to be overridden
-to apply the correct configuration.
+UD vs. LR (assuming those mean what I think they mean) seem the wrong
+way around here.
 
-However, simply using "qcom,wcn3660" would be incorrect,
-since WCN3660B requires a slightly different regulator configuration
-compared to WCN3660.
+>
+>  		/* update format */
+>  		pdpu->pipe_hw->ops.setup_format(pdpu->pipe_hw, fmt, src_flags,
+>  				pstate->multirect_index);
+> @@ -1522,6 +1535,13 @@ struct drm_plane *dpu_plane_init(struct drm_device *dev,
+>  	if (ret)
+>  		DPU_ERROR("failed to install zpos property, rc = %d\n", ret);
+>  
+> +	drm_plane_create_rotation_property(plane,
+> +			DRM_MODE_ROTATE_0,
+> +			DRM_MODE_ROTATE_0 |
+> +			DRM_MODE_ROTATE_180 |
+> +			DRM_MODE_REFLECT_X |
+> +			DRM_MODE_REFLECT_Y);
+> +
+>  	drm_plane_enable_fb_damage_clips(plane);
+>  
+>  	/* success! finalize initialization */
+> -- 
+> 2.21.0
+> 
+> _______________________________________________
+> dri-devel mailing list
+> dri-devel@lists.freedesktop.org
+> https://lists.freedesktop.org/mailman/listinfo/dri-devel
 
-Instead, it requires the same configuration as "qcom,wcn3680".
-Replace the compatible with "qcom,wcn3680" for A5U to make WCNSS
-work correctly.
-
-Signed-off-by: Stephan Gerhold <stephan@gerhold.net>
----
-I'm not quite sure if it would be better to define a new compatible
-for WCN3660B (e.g. "qcom,wcn3660b") since this isn't really a WCN3680.
-But in any case, it would use exactly the same configuration.
-
-The compatible seems to be only used for regulator + clock configuration,
-see https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/drivers/remoteproc/qcom_wcnss_iris.c#n57
-
- arch/arm64/boot/dts/qcom/msm8916-samsung-a5u-eur.dts | 6 ++++++
- 1 file changed, 6 insertions(+)
-
-diff --git a/arch/arm64/boot/dts/qcom/msm8916-samsung-a5u-eur.dts b/arch/arm64/boot/dts/qcom/msm8916-samsung-a5u-eur.dts
-index 1aa59da98495..6629a621139c 100644
---- a/arch/arm64/boot/dts/qcom/msm8916-samsung-a5u-eur.dts
-+++ b/arch/arm64/boot/dts/qcom/msm8916-samsung-a5u-eur.dts
-@@ -8,3 +8,9 @@
- 	model = "Samsung Galaxy A5U (EUR)";
- 	compatible = "samsung,a5u-eur", "qcom,msm8916";
- };
-+
-+&pronto {
-+	iris {
-+		compatible = "qcom,wcn3680";
-+	};
-+};
 -- 
-2.22.1
-
+Ville Syrjälä
+Intel
