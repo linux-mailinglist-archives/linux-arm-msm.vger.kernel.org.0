@@ -2,119 +2,156 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id C3FBE99881
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 22 Aug 2019 17:50:05 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id ABD6B998CB
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 22 Aug 2019 18:08:13 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725804AbfHVPs5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 22 Aug 2019 11:48:57 -0400
-Received: from mail-pg1-f193.google.com ([209.85.215.193]:46235 "EHLO
-        mail-pg1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726387AbfHVPs5 (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 22 Aug 2019 11:48:57 -0400
-Received: by mail-pg1-f193.google.com with SMTP id m3so3878306pgv.13;
-        Thu, 22 Aug 2019 08:48:56 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=2gibvD/PE/0k2/MgxLtnC9v6hycHeC3vvECK4dop/Xo=;
-        b=sF3NPfIhqt3Hzc9KufbzNsaUbbCQVjOI0o8UDhRvQtYR6/vH4PpZ/wkdh5TWxLkeKj
-         mYde/YuazOc7nnSd8AxHozSoOH7LNUG36AuVSRCxuqqR4vLq89D4Nx3G4d9wbbqMCKyv
-         sNqskZoKRu0j6XgfoLa/t2g9/VruzpdsSCZdPFcMUMdYtbVL5xgYtz5X1SrxIeajHRWC
-         kLnexInTNp9iOEi9RBQoksUAmmznkbgNBXhYWHm1bttktZ0CHdI2PQW/PQESCCDkniES
-         m8iyUQRftUUQF4+y63MkpSC4J65mZgfABsePvyUm0wMae9ctxYXnF8FEgm1kfGX4Dqp/
-         1UfA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=2gibvD/PE/0k2/MgxLtnC9v6hycHeC3vvECK4dop/Xo=;
-        b=KKcL7djQSNRXdS/QWIR4w2HSOmv1vX6x9NXoS2WlQGxWKZUiXs+xEP81ZbOQkAbxfO
-         dmkZ23JSPNVqO0fhBJJ81exblUSUp0mC/SUm+XjTgKhfXhlVgY2IOv2+fNvAYiClixqN
-         MZ0lYgyOWWN4oD3aY2BbMictXpjHMBIRaunvKb1sr9Lesf0bqMzCNjcxBEIJuDQUL9Jh
-         0rIWRtODGrhl9U99HFS/QnBKdkuKOCCm8Lh9jY0zyhH60Ee6/deTfGy9micyZoVJUqzF
-         lo0W1dT0TX6pd1NMuRgZbk3/+CsJvkS5v3+FouiYXUlRcT+hMneadnI/hDwpIh+bYXsG
-         xQmQ==
-X-Gm-Message-State: APjAAAXrvv9gX+lskIo+dqfHUHoR/9HY3kqivvHO1AJiVDgsn7tw8qxC
-        t4PWdNatvratXyCDL6SI2zE=
-X-Google-Smtp-Source: APXvYqxoI/708laf6gtdOu/5W9IHi68WsTOyfXTApi1AbF+GqRB6Sp57tyWIM4vuUW9q1QIysQIBrg==
-X-Received: by 2002:a63:e148:: with SMTP id h8mr3032468pgk.275.1566488936083;
-        Thu, 22 Aug 2019 08:48:56 -0700 (PDT)
-Received: from localhost ([100.118.89.196])
-        by smtp.gmail.com with ESMTPSA id ay7sm3717pjb.4.2019.08.22.08.48.55
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 22 Aug 2019 08:48:55 -0700 (PDT)
-From:   Rob Clark <robdclark@gmail.com>
-To:     dri-devel@lists.freedesktop.org
-Cc:     Rob Clark <robdclark@chromium.org>,
-        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        id S2389744AbfHVQHy (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 22 Aug 2019 12:07:54 -0400
+Received: from mail.kernel.org ([198.145.29.99]:37282 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1732004AbfHVQHy (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 22 Aug 2019 12:07:54 -0400
+Received: from mail-qt1-f180.google.com (mail-qt1-f180.google.com [209.85.160.180])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        by mail.kernel.org (Postfix) with ESMTPSA id CDA6423401;
+        Thu, 22 Aug 2019 16:07:52 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=default; t=1566490073;
+        bh=+vvqhUd+pkM/dp0wpCvzhG8McGJK25Nvoqw+tfejM2Y=;
+        h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
+        b=BesAFVzsDotV2IgMK8BrzUQ6H08d8AhjQZad8fkGpQAuLyaczM4gn9965kE5D/EIL
+         Z3ix5KFGpfNqdbELyObfDVup9RQvgevYv9BkzNTdP7BJ/a3gMQLisQjTAiYtvPxv5D
+         8OXLZNNts4YEbHYVSSaxqs+9aaAmipwa8ppION2s=
+Received: by mail-qt1-f180.google.com with SMTP id i4so8300782qtj.8;
+        Thu, 22 Aug 2019 09:07:52 -0700 (PDT)
+X-Gm-Message-State: APjAAAXTOYKQc0w3CuLl+u5GeJUngl2RaoNATfu11SnzKxhTongP9wYo
+        nD41torosYeY9K3nMNrKs9ComcYNWPx2chpUYw==
+X-Google-Smtp-Source: APXvYqwT5uHUpIO/FFW8324fUtKY3u7N/MLqH5qpfH1g+aJJ3tCwF2PURsFvaRVSyiDKPNxdOYjPgEZ062SLJ8UaQC8=
+X-Received: by 2002:a0c:eb92:: with SMTP id x18mr96839qvo.39.1566490071850;
+ Thu, 22 Aug 2019 09:07:51 -0700 (PDT)
+MIME-Version: 1.0
+References: <20190822143703.13030-1-masneyb@onstation.org> <20190822143703.13030-3-masneyb@onstation.org>
+In-Reply-To: <20190822143703.13030-3-masneyb@onstation.org>
+From:   Rob Herring <robh+dt@kernel.org>
+Date:   Thu, 22 Aug 2019 11:07:39 -0500
+X-Gmail-Original-Message-ID: <CAL_JsqLcrO9XH9_BgZYYfrFJUfXAnEK6ZkOUtAzv15Zug0QEpw@mail.gmail.com>
+Message-ID: <CAL_JsqLcrO9XH9_BgZYYfrFJUfXAnEK6ZkOUtAzv15Zug0QEpw@mail.gmail.com>
+Subject: Re: [PATCH v6 2/7] dt-bindings: display: msm: gmu: add optional ocmem property
+To:     Brian Masney <masneyb@onstation.org>
+Cc:     Andy Gross <agross@kernel.org>, Rob Clark <robdclark@gmail.com>,
+        Sean Paul <sean@poorly.run>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
         David Airlie <airlied@linux.ie>,
         Daniel Vetter <daniel@ffwll.ch>,
-        Jeykumar Sankaran <jsanka@codeaurora.org>,
-        Jordan Crouse <jcrouse@codeaurora.org>,
-        Bruce Wang <bzwang@chromium.org>,
-        Fritz Koenig <frkoenig@google.com>,
-        linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org,
-        linux-kernel@vger.kernel.org
-Subject: [PATCH v2] drm/msm/dpu: add rotation property
-Date:   Thu, 22 Aug 2019 08:46:21 -0700
-Message-Id: <20190822154644.11723-1-robdclark@gmail.com>
-X-Mailer: git-send-email 2.21.0
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+        Mark Rutland <mark.rutland@arm.com>,
+        Jonathan Marek <jonathan@marek.ca>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
+        dri-devel <dri-devel@lists.freedesktop.org>,
+        freedreno <freedreno@lists.freedesktop.org>,
+        devicetree@vger.kernel.org, Jordan Crouse <jcrouse@codeaurora.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Rob Clark <robdclark@chromium.org>
+On Thu, Aug 22, 2019 at 9:37 AM Brian Masney <masneyb@onstation.org> wrote:
+>
+> Some A3xx and A4xx Adreno GPUs do not have GMEM inside the GPU core and
+> must use the On Chip MEMory (OCMEM) in order to be functional. Add the
+> optional ocmem property to the Adreno Graphics Management Unit bindings.
+>
+> Signed-off-by: Brian Masney <masneyb@onstation.org>
+> ---
+> Changes since v5:
+> - rename ocmem property to sram to match what TI currently has.
+>
+> Changes since v4:
+> - None
+>
+> Changes since v3:
+> - correct link to qcom,ocmem.yaml
+>
+> Changes since v2:
+> - Add a3xx example with OCMEM
+>
+> Changes since v1:
+> - None
+>
+>  .../devicetree/bindings/display/msm/gmu.txt   | 50 +++++++++++++++++++
+>  1 file changed, 50 insertions(+)
+>
+> diff --git a/Documentation/devicetree/bindings/display/msm/gmu.txt b/Documentation/devicetree/bindings/display/msm/gmu.txt
+> index 90af5b0a56a9..2305a2aede5a 100644
+> --- a/Documentation/devicetree/bindings/display/msm/gmu.txt
+> +++ b/Documentation/devicetree/bindings/display/msm/gmu.txt
+> @@ -31,6 +31,10 @@ Required properties:
+>  - iommus: phandle to the adreno iommu
+>  - operating-points-v2: phandle to the OPP operating points
+>
+> +Optional properties:
+> +- sram: phandle to the On Chip Memory (OCMEM) that's present on some Snapdragon
+> +        SoCs. See Documentation/devicetree/bindings/sram/qcom,ocmem.yaml.
+> +
+>  Example:
+>
+>  / {
+> @@ -63,3 +67,49 @@ Example:
+>                 operating-points-v2 = <&gmu_opp_table>;
+>         };
+>  };
+> +
+> +a3xx example with OCMEM support:
+> +
+> +/ {
+> +       ...
+> +
+> +       gpu: adreno@fdb00000 {
+> +               compatible = "qcom,adreno-330.2",
+> +                            "qcom,adreno";
+> +               reg = <0xfdb00000 0x10000>;
+> +               reg-names = "kgsl_3d0_reg_memory";
+> +               interrupts = <GIC_SPI 33 IRQ_TYPE_LEVEL_HIGH>;
+> +               interrupt-names = "kgsl_3d0_irq";
+> +               clock-names = "core",
+> +                             "iface",
+> +                             "mem_iface";
+> +               clocks = <&mmcc OXILI_GFX3D_CLK>,
+> +                        <&mmcc OXILICX_AHB_CLK>,
+> +                        <&mmcc OXILICX_AXI_CLK>;
+> +               sram = <&ocmem>;
 
-Signed-off-by: Rob Clark <robdclark@chromium.org>
----
- drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c | 20 ++++++++++++++++++++
- 1 file changed, 20 insertions(+)
+Shouldn't this point to gmu-sram@0? You can always get the parent from
+the child which is a bit easier than the other way around.
 
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
-index 45bfac9e3af7..970194958257 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
-@@ -1040,8 +1040,21 @@ static void dpu_plane_sspp_atomic_update(struct drm_plane *plane)
- 				pstate->multirect_mode);
- 
- 	if (pdpu->pipe_hw->ops.setup_format) {
-+		unsigned int rotation;
-+
- 		src_flags = 0x0;
- 
-+		rotation = drm_rotation_simplify(state->rotation,
-+						 DRM_MODE_ROTATE_0 |
-+						 DRM_MODE_REFLECT_X |
-+						 DRM_MODE_REFLECT_Y);
-+
-+		if (rotation & DRM_MODE_REFLECT_X)
-+			src_flags |= DPU_SSPP_FLIP_LR;
-+
-+		if (rotation & DRM_MODE_REFLECT_Y)
-+			src_flags |= DPU_SSPP_FLIP_UD;
-+
- 		/* update format */
- 		pdpu->pipe_hw->ops.setup_format(pdpu->pipe_hw, fmt, src_flags,
- 				pstate->multirect_index);
-@@ -1522,6 +1535,13 @@ struct drm_plane *dpu_plane_init(struct drm_device *dev,
- 	if (ret)
- 		DPU_ERROR("failed to install zpos property, rc = %d\n", ret);
- 
-+	drm_plane_create_rotation_property(plane,
-+			DRM_MODE_ROTATE_0,
-+			DRM_MODE_ROTATE_0 |
-+			DRM_MODE_ROTATE_180 |
-+			DRM_MODE_REFLECT_X |
-+			DRM_MODE_REFLECT_Y);
-+
- 	drm_plane_enable_fb_damage_clips(plane);
- 
- 	/* success! finalize initialization */
--- 
-2.21.0
-
+> +               power-domains = <&mmcc OXILICX_GDSC>;
+> +               operating-points-v2 = <&gpu_opp_table>;
+> +               iommus = <&gpu_iommu 0>;
+> +       };
+> +
+> +       ocmem: ocmem@fdd00000 {
+> +               compatible = "qcom,msm8974-ocmem";
+> +
+> +               reg = <0xfdd00000 0x2000>,
+> +                     <0xfec00000 0x180000>;
+> +               reg-names = "ctrl",
+> +                            "mem";
+> +
+> +               clocks = <&rpmcc RPM_SMD_OCMEMGX_CLK>,
+> +                        <&mmcc OCMEMCX_OCMEMNOC_CLK>;
+> +               clock-names = "core",
+> +                             "iface";
+> +
+> +               #address-cells = <1>;
+> +               #size-cells = <1>;
+> +
+> +               gmu-sram@0 {
+> +                       reg = <0x0 0x100000>;
+> +               };
+> +       };
+> +};
+> --
+> 2.21.0
+>
