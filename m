@@ -2,78 +2,99 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 2D206995C9
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 22 Aug 2019 16:04:39 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 883E5996E6
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 22 Aug 2019 16:37:34 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730733AbfHVOCr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 22 Aug 2019 10:02:47 -0400
-Received: from mail.kernel.org ([198.145.29.99]:43312 "EHLO mail.kernel.org"
+        id S1731033AbfHVOh1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 22 Aug 2019 10:37:27 -0400
+Received: from onstation.org ([52.200.56.107]:46764 "EHLO onstation.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1732473AbfHVOCr (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 22 Aug 2019 10:02:47 -0400
-Received: from localhost (unknown [171.61.89.145])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        id S1729731AbfHVOh0 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 22 Aug 2019 10:37:26 -0400
+Received: from ins7386.localdomain (unknown [207.110.43.92])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits))
         (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 0751622CE3;
-        Thu, 22 Aug 2019 14:02:45 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1566482566;
-        bh=c65S8/JE0pz/X8+BdF45NzFA9QJJR53tkisF4bc26IE=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=HoyYLw2WErBxBAYXaQDRSmwu7UrvUDY82hIHaQpqYMl0aIUiFfLTwCDsnsB2CXUPz
-         Dwwskk3K2elpTMsl59Nz74QmQ5xwL8ZorMrs/aYam8dfZjjg6m01kPPueNc0x0H99k
-         JxeqKDrF6vCKpM/7D1LUE7rYaD2U8n/+tbag75LY=
-Date:   Thu, 22 Aug 2019 19:31:34 +0530
-From:   Vinod Koul <vkoul@kernel.org>
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     Stephen Boyd <sboyd@kernel.org>, linux-arm-msm@vger.kernel.org,
-        Andy Gross <agross@kernel.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Rob Herring <robh+dt@kernel.org>,
-        Mark Rutland <mark.rutland@arm.com>, linux-clk@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v2 4/4] clk: qcom: clk-rpmh: Add support for SM8150
-Message-ID: <20190822140134.GQ12733@vkoul-mobl.Dlink>
-References: <20190819073947.17258-1-vkoul@kernel.org>
- <20190819073947.17258-5-vkoul@kernel.org>
- <20190820050944.GL26807@tuxbook-pro>
+        (Authenticated sender: masneyb)
+        by onstation.org (Postfix) with ESMTPSA id 50C6F3E8A5;
+        Thu, 22 Aug 2019 14:37:24 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=onstation.org;
+        s=default; t=1566484646;
+        bh=t6TP/PN3jeU5M3ONQYp1VGGuOKetsTewE0YXyKvmcNg=;
+        h=From:To:Cc:Subject:Date:From;
+        b=rMJkgk0v/7E+UXNxanhygtbLA3/xPZcasXZyYflUk1Ew5ryK8QGcQsOTFqwhLB08r
+         fEHi2aWzztbdf36E9FYl3Sz6uVeuOkrY2fQi/xnkom8/1bw7rZ0GIGwp5uFESDnGO6
+         QJjKagQ3mCgBIC6vL4eCKPZcJoR07bN7vmjrdxrA=
+From:   Brian Masney <masneyb@onstation.org>
+To:     agross@kernel.org, robdclark@gmail.com, sean@poorly.run,
+        robh+dt@kernel.org, bjorn.andersson@linaro.org
+Cc:     airlied@linux.ie, daniel@ffwll.ch, mark.rutland@arm.com,
+        jonathan@marek.ca, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org, devicetree@vger.kernel.org,
+        jcrouse@codeaurora.org
+Subject: [PATCH v6 0/7] qcom: add OCMEM support
+Date:   Thu, 22 Aug 2019 07:36:56 -0700
+Message-Id: <20190822143703.13030-1-masneyb@onstation.org>
+X-Mailer: git-send-email 2.21.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20190820050944.GL26807@tuxbook-pro>
-User-Agent: Mutt/1.11.3 (2019-02-01)
+Content-Transfer-Encoding: 8bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 19-08-19, 22:09, Bjorn Andersson wrote:
-> On Mon 19 Aug 00:39 PDT 2019, Vinod Koul wrote:
-> > +static const struct clk_rpmh_desc clk_rpmh_sm8150 = {
-> > +	.clks = sm8150_rpmh_clocks,
-> > +	.num_clks = ARRAY_SIZE(sm8150_rpmh_clocks),
-> > +};
-> 
-> Maybe an empty line here?
+This patch series adds support for Qualcomm's On Chip MEMory (OCMEM)
+that is needed in order to support some a3xx and a4xx-based GPUs
+upstream. This is based on Rob Clark's patch series that he submitted
+in October 2015 and I am resubmitting updated patches with his
+permission. See the individual patches for the changelog.
 
-Sounds better
+This was tested with the GPU on a LG Nexus 5 (hammerhead) phone and
+this will work on other msm8974-based systems. For a summary of what
+currently works upstream on the Nexus 5, see my status page at
+https://masneyb.github.io/nexus-5-upstream/.
 
-> 
-> >  static struct clk_hw *of_clk_rpmh_hw_get(struct of_phandle_args *clkspec,
-> >  					 void *data)
-> >  {
-> > @@ -453,6 +479,7 @@ static int clk_rpmh_probe(struct platform_device *pdev)
-> >  
-> >  static const struct of_device_id clk_rpmh_match_table[] = {
-> >  	{ .compatible = "qcom,sdm845-rpmh-clk", .data = &clk_rpmh_sdm845},
-> > +	{ .compatible = "qcom,sm8150-rpmh-clk", .data = &clk_rpmh_sm8150},
-> >  	{ }
-> >  };
-> >  MODULE_DEVICE_TABLE(of, clk_rpmh_match_table);
-> 
-> Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+Changes since v5:
+- Rename ocmem device tree property to sram
 
-Thanks for the review, will send an update.
+See individual patches for changelogs for previous versions.
+
+Brian Masney (5):
+  dt-bindings: soc: qcom: add On Chip MEMory (OCMEM) bindings
+  dt-bindings: display: msm: gmu: add optional ocmem property
+  soc: qcom: add OCMEM driver
+  drm/msm/gpu: add ocmem init/cleanup functions
+  ARM: qcom_defconfig: add ocmem support
+
+Rob Clark (2):
+  firmware: qcom: scm: add OCMEM lock/unlock interface
+  firmware: qcom: scm: add support to restore secure config to
+    qcm_scm-32
+
+ .../devicetree/bindings/display/msm/gmu.txt   |  50 ++
+ .../devicetree/bindings/sram/qcom,ocmem.yaml  |  96 ++++
+ arch/arm/configs/qcom_defconfig               |   1 +
+ drivers/firmware/qcom_scm-32.c                |  52 ++-
+ drivers/firmware/qcom_scm-64.c                |  12 +
+ drivers/firmware/qcom_scm.c                   |  53 +++
+ drivers/firmware/qcom_scm.h                   |   9 +
+ drivers/gpu/drm/msm/Kconfig                   |   1 +
+ drivers/gpu/drm/msm/adreno/a3xx_gpu.c         |  28 +-
+ drivers/gpu/drm/msm/adreno/a3xx_gpu.h         |   3 +-
+ drivers/gpu/drm/msm/adreno/a4xx_gpu.c         |  25 +-
+ drivers/gpu/drm/msm/adreno/a4xx_gpu.h         |   3 +-
+ drivers/gpu/drm/msm/adreno/adreno_gpu.c       |  40 ++
+ drivers/gpu/drm/msm/adreno/adreno_gpu.h       |  10 +
+ drivers/soc/qcom/Kconfig                      |  10 +
+ drivers/soc/qcom/Makefile                     |   1 +
+ drivers/soc/qcom/ocmem.c                      | 433 ++++++++++++++++++
+ include/linux/qcom_scm.h                      |  26 ++
+ include/soc/qcom/ocmem.h                      |  62 +++
+ 19 files changed, 870 insertions(+), 45 deletions(-)
+ create mode 100644 Documentation/devicetree/bindings/sram/qcom,ocmem.yaml
+ create mode 100644 drivers/soc/qcom/ocmem.c
+ create mode 100644 include/soc/qcom/ocmem.h
 
 -- 
-~Vinod
+2.21.0
+
