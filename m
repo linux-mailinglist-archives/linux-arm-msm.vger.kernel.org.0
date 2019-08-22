@@ -2,73 +2,117 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 7E19D98B32
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 22 Aug 2019 08:05:27 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C822998B7F
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 22 Aug 2019 08:41:40 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729445AbfHVGFW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 22 Aug 2019 02:05:22 -0400
-Received: from mail.kernel.org ([198.145.29.99]:43352 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1728511AbfHVGFW (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 22 Aug 2019 02:05:22 -0400
-Received: from localhost.localdomain (unknown [171.61.89.145])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id DD502214DA;
-        Thu, 22 Aug 2019 06:05:18 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1566453921;
-        bh=+7nxHi8rv149QAhfc4+oEo5xk2MSe8WAq+/diXH6oVA=;
-        h=From:To:Cc:Subject:Date:From;
-        b=wTdSPrch+yuem99mnZj5Oqxh7nigC9f3WeadOFXpbaR1bpkujVjRilAIWTY3K+cpM
-         NVvmAvIQZb5BRKNxogQYhwzZNq4orTRwZpi0ILTL032u8BRCVx/etodAsno5JKrYpO
-         n0YM+jRdEMcBRj8koZ003uAztF6k1uTTiZn0CfBE=
-From:   Vinod Koul <vkoul@kernel.org>
-To:     Andy Gross <agross@kernel.org>
-Cc:     linux-arm-msm@vger.kernel.org,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Vinod Koul <vkoul@kernel.org>,
-        Mark Rutland <mark.rutland@arm.com>,
-        linux-kernel@vger.kernel.org
-Subject: [PATCH] arm64: defconfig: Enable SM8150 GCC and pinctrl driver
-Date:   Thu, 22 Aug 2019 11:33:47 +0530
-Message-Id: <20190822060347.15549-1-vkoul@kernel.org>
-X-Mailer: git-send-email 2.20.1
+        id S1728286AbfHVGjs (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 22 Aug 2019 02:39:48 -0400
+Received: from smtp.codeaurora.org ([198.145.29.96]:58338 "EHLO
+        smtp.codeaurora.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728104AbfHVGjs (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 22 Aug 2019 02:39:48 -0400
+Received: by smtp.codeaurora.org (Postfix, from userid 1000)
+        id 609F260A96; Thu, 22 Aug 2019 06:39:47 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
+        s=default; t=1566455987;
+        bh=OYUu5JAm1bl+zh0nxUjpxjn9+/5Y2P9wOVNGY8i1OE4=;
+        h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
+        b=UgvpH0uYAl5oiGGAz2FbZQwaZMN8KZY+t0IpZJrEzzRRcmRRcFp8jlNoycYpmx2AV
+         9cT5Tr1Q7+VOVdmK74k47Kgn48J2odr9QX4qg882VcdRf4iz1+fPVBm4gixLH7gFSA
+         ZlmLRlCRTeHVjwpaKoe/7rQpkyXsgCgWmzJR/Xc0=
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        pdx-caf-mail.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.7 required=2.0 tests=ALL_TRUSTED,BAYES_00,
+        DKIM_INVALID,DKIM_SIGNED autolearn=no autolearn_force=no version=3.4.0
+Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
+        by smtp.codeaurora.org (Postfix) with ESMTP id 9428D60A96;
+        Thu, 22 Aug 2019 06:39:46 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
+        s=default; t=1566455986;
+        bh=OYUu5JAm1bl+zh0nxUjpxjn9+/5Y2P9wOVNGY8i1OE4=;
+        h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
+        b=kn1rOIl4Bt7u5rWyAB4669HaA0Gj6GaFy57m/MEYEa7OLm68t1m8uv2jJH3PH2drw
+         sE8lXN0M4Va3QfADB+Cf3p5ck4cjjozMExO326EJ++qhypKGunRusNyEMDIc/8cPt/
+         391L6S5M8hMxHl/hGxSYi9jAamWzKyNsrA1KBR4M=
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
+Content-Transfer-Encoding: 7bit
+Date:   Thu, 22 Aug 2019 12:09:46 +0530
+From:   Sibi Sankar <sibis@codeaurora.org>
+To:     Philipp Zabel <p.zabel@pengutronix.de>
+Cc:     robh+dt@kernel.org, bjorn.andersson@linaro.org, agross@kernel.org,
+        mark.rutland@arm.com, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 1/4] dt-bindings: reset: aoss: Add AOSS reset binding for
+ SC7180 SoCs
+In-Reply-To: <1566383523.4193.5.camel@pengutronix.de>
+References: <20190821095442.24495-1-sibis@codeaurora.org>
+ <20190821095442.24495-2-sibis@codeaurora.org>
+ <1566383523.4193.5.camel@pengutronix.de>
+Message-ID: <f6f36181660057325742318519e541ad@codeaurora.org>
+X-Sender: sibis@codeaurora.org
+User-Agent: Roundcube Webmail/1.2.5
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Enable GCC config CONFIG_SM_GCC_8150 and pinctrl config
-CONFIG_PINCTRL_SM8150 to make it possible to boot the SM8150 MTP.
+Hey Philipp,
+Thanks for the review!
 
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
----
- arch/arm64/configs/defconfig | 2 ++
- 1 file changed, 2 insertions(+)
+On 2019-08-21 16:02, Philipp Zabel wrote:
+> On Wed, 2019-08-21 at 15:24 +0530, Sibi Sankar wrote:
+>> Add SC7180 AOSS reset to the list of possible bindings.
+>> 
+>> Signed-off-by: Sibi Sankar <sibis@codeaurora.org>
+>> ---
+>>  Documentation/devicetree/bindings/reset/qcom,aoss-reset.txt | 3 ++-
+>>  1 file changed, 2 insertions(+), 1 deletion(-)
+>> 
+>> diff --git 
+>> a/Documentation/devicetree/bindings/reset/qcom,aoss-reset.txt 
+>> b/Documentation/devicetree/bindings/reset/qcom,aoss-reset.txt
+>> index 510c748656ec5..8f0bbdc6afd91 100644
+>> --- a/Documentation/devicetree/bindings/reset/qcom,aoss-reset.txt
+>> +++ b/Documentation/devicetree/bindings/reset/qcom,aoss-reset.txt
+>> @@ -8,7 +8,8 @@ Required properties:
+>>  - compatible:
+>>  	Usage: required
+>>  	Value type: <string>
+>> -	Definition: must be:
+>> +	Definition: must be one of:
+>> +		    "qcom,sc7180-aoss-cc"
+>>  		    "qcom,sdm845-aoss-cc"
+>> 
+>>  - reg:
+> 
+> Does sc7180 have exactly the same resets (mss, camss, venus, gpu,
+> dispss, wcss, and lpass) as sdm845? If so, it could be considered
+> compatible, and the driver changes wouldn't be needed at all:
 
-diff --git a/arch/arm64/configs/defconfig b/arch/arm64/configs/defconfig
-index 0e58ef02880c..09be33cb4d76 100644
---- a/arch/arm64/configs/defconfig
-+++ b/arch/arm64/configs/defconfig
-@@ -403,6 +403,7 @@ CONFIG_PINCTRL_QCS404=y
- CONFIG_PINCTRL_QDF2XXX=y
- CONFIG_PINCTRL_QCOM_SPMI_PMIC=y
- CONFIG_PINCTRL_SDM845=y
-+CONFIG_PINCTRL_SM8150=y
- CONFIG_GPIO_DWAPB=y
- CONFIG_GPIO_MB86S7X=y
- CONFIG_GPIO_PL061=y
-@@ -690,6 +691,7 @@ CONFIG_MSM_MMCC_8996=y
- CONFIG_MSM_GCC_8998=y
- CONFIG_QCS_GCC_404=y
- CONFIG_SDM_GCC_845=y
-+CONFIG_SM_GCC_8150=y
- CONFIG_HWSPINLOCK=y
- CONFIG_HWSPINLOCK_QCOM=y
- CONFIG_ARM_MHU=y
+Yes they are identical both
+AOSS and PDC resets.
+
+> 
+> -	Definition: must be:
+> +	Definition: must be one of:
+> +		    "qcom,sc7180-aoss-cc", "qcom,sdm845-aoss-cc"
+> 
+> 	    "qcom,sdm845-aoss-cc"
+> 
+> Is there a reason not to do this?
+
+I am fine with ^^, will change
+them in v2.
+
+> 
+> regards
+> Philipp
+
 -- 
-2.20.1
-
+-- Sibi Sankar --
+Qualcomm Innovation Center, Inc. is a member of Code Aurora Forum,
+a Linux Foundation Collaborative Project.
