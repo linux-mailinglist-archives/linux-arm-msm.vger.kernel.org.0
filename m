@@ -2,121 +2,119 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 0C0DC9879B
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 22 Aug 2019 01:02:52 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 24A8998925
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 22 Aug 2019 03:58:05 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731314AbfHUXCv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 21 Aug 2019 19:02:51 -0400
-Received: from mail-pf1-f195.google.com ([209.85.210.195]:40423 "EHLO
-        mail-pf1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1731294AbfHUXCv (ORCPT
+        id S1728406AbfHVB6E (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 21 Aug 2019 21:58:04 -0400
+Received: from mail-pg1-f195.google.com ([209.85.215.195]:33755 "EHLO
+        mail-pg1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728190AbfHVB6E (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 21 Aug 2019 19:02:51 -0400
-Received: by mail-pf1-f195.google.com with SMTP id w16so2456100pfn.7
-        for <linux-arm-msm@vger.kernel.org>; Wed, 21 Aug 2019 16:02:51 -0700 (PDT)
+        Wed, 21 Aug 2019 21:58:04 -0400
+Received: by mail-pg1-f195.google.com with SMTP id n190so2504628pgn.0;
+        Wed, 21 Aug 2019 18:58:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=TmDOJvhPrJk/RAKywvPdX5bKVeeqGQtRvXF6G/yD7Ts=;
-        b=MryI/zTQcpw1Y7z90icizIK6FBIzgHejqlorJGJcBuRYuCoQgZfYwz2SHvI14xthV2
-         VGpADbJLiy9mh9zsJDWpjh39gVW8n7JdqtcVhowxOmr7akF1xhwC5PxJFMeJrxugq3PV
-         8qfD2zsEa7wOrXG0R4PyQWoFwKtiN55x8GLWBrK/kooZEJ9mx5pEj75VZyULtSNPfMeQ
-         XNjlA/MaESQuoz7S7VZN+l8AZPr2pu80HCZa4rTPHOlQLO93OyacnVz5IuLw/MdcHW23
-         bV2XyPnr8orjJbyHvVyEBNnqjtwMCo5SxkCuUXp09n0F7I0hO0UmsrCggXybhKou3Lx4
-         ASng==
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=iJBfS7HIIw1t/KK9zKQwHG83jtFIbrBblcy5i1M3+M4=;
+        b=V2DOhDxms/aCzjwvp+EYpdBZevSpf1y6RnvYOLQRPf/KEzBZd/2pHH44khpmdfZ3gh
+         mf30Vu05Jiw9tDj/EOOQX0MXXdOnfcZdpxaYuFPhB49/nNpB4s/3DbOeIRyZSMQBhjFn
+         MhQdCKtpsBT47+OrFBonrWDUJL/hl2C6UE61527E1kblHicXCdu000jV6KRKbfetQKD9
+         gyunEfAcRXsp17MoYkRLk9pOfzwS+p8arB2extymDS1OZSj5h0nkXW3ytbXtwpJhrmtJ
+         tvPjd6Bsv0AN/ooYJfYdnfXaPvo+igEOE5EOu6gFTymST2Ry6VrEYVLXD0JZwf/kp1L0
+         nXXQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=TmDOJvhPrJk/RAKywvPdX5bKVeeqGQtRvXF6G/yD7Ts=;
-        b=scJ7hp9Ud3KUl8hs0Tzwht7sC9sOg3V6N1qtR1ke6qivfm01sN4EUCtX3CPlnjXN53
-         y82aAc6PGxrg84DWrt3UPX2kcR0B4h94rB98Q8W51JuzJxMkAxaVuI1iluCajbDiEEmI
-         R4vz6hL+j8cg67Kedk/nni9iQ86v2V7kH0qUEmHe+aKpEKOGoyN5wAaxSYnvI7igRK+y
-         TwiQdtG/UdJgF+Jro36Ao4ULFjUhn/kvhXp+9hUL6EeYNB8mIs/mqMzS1GAJtsGkHAXq
-         P4oeN2bVkLmi8hOdU/oX9/SCpJm2hSO1z9q3jif+WFABqpvW0NgCvw/08nQdZ+5ffgjz
-         XMCw==
-X-Gm-Message-State: APjAAAW0/XvOr7Pciheig1H4LOIIiFk8AWZ5ZDdV4+460OS0KDXZobQ1
-        eK5n42iMJAYRZ+GZ91ZnfMvdDA==
-X-Google-Smtp-Source: APXvYqxI+UkypCWR85p3O8GUubkvI6VHaPvdHe/3j4/MwZxP7+qRgAA8AxavnktcihBGMVXybm8JGA==
-X-Received: by 2002:a62:7d93:: with SMTP id y141mr38186495pfc.164.1566428570694;
-        Wed, 21 Aug 2019 16:02:50 -0700 (PDT)
-Received: from tuxbook-pro (104-188-17-28.lightspeed.sndgca.sbcglobal.net. [104.188.17.28])
-        by smtp.gmail.com with ESMTPSA id d189sm31101011pfd.165.2019.08.21.16.02.49
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=iJBfS7HIIw1t/KK9zKQwHG83jtFIbrBblcy5i1M3+M4=;
+        b=uZsDnz3wnyNCytiUbxZxCxo2rfyJSgOZyiPQOky7BNX7sq41q+4dAtHcxykjFed98B
+         GbZ102ZUXT0aVzMiNSUB4VBKDBwZOvxZz3+TSk+3SaMcKeKACnY6+EFf4/vMKx1tRiw7
+         3NHgG+ClP/WciTzbHmbWWbOTBH51npO+AI68VxKXnHbkJlOPHKrO4yDX+9KBe7/uOOTC
+         KYODDqjEKHfmA5j6BHnh9Be83ZWp+a16cGWrZceGFrI35dpvLP1pdm2s5JHOESYjRq2r
+         cZZplXIAKW7GqRG59Oph1xFsNCRmAn3QhUIZJPOHgiiXUKfgpBhKzIih5GNrHnp7tdL6
+         xPdg==
+X-Gm-Message-State: APjAAAUuJnjPVTsiVVKKUYyKtYFm92LN9BDQB2+RqMb53FDkgb3wdsU3
+        pv9PefGyDB6E5IWTFKA44Gw=
+X-Google-Smtp-Source: APXvYqyvoZ7A9MJNRQaT97XhZXrPGJpTdMj8MJfIJaj36BJLJB03HwNxOQd5CVSOwVr34QPNZTjg1w==
+X-Received: by 2002:a63:5648:: with SMTP id g8mr31039969pgm.81.1566439083040;
+        Wed, 21 Aug 2019 18:58:03 -0700 (PDT)
+Received: from localhost ([2601:1c0:5200:e554::6bd7])
+        by smtp.gmail.com with ESMTPSA id 203sm36739709pfz.107.2019.08.21.18.58.01
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 21 Aug 2019 16:02:50 -0700 (PDT)
-Date:   Wed, 21 Aug 2019 16:04:37 -0700
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Vinod Koul <vkoul@kernel.org>
-Cc:     Andy Gross <agross@kernel.org>, linux-arm-msm@vger.kernel.org,
-        Rob Herring <robh+dt@kernel.org>,
-        Mark Rutland <mark.rutland@arm.com>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Sibi Sankar <sibis@codeaurora.org>, devicetree@vger.kernel.org,
+        Wed, 21 Aug 2019 18:58:02 -0700 (PDT)
+From:   Rob Clark <robdclark@gmail.com>
+To:     dri-devel@lists.freedesktop.org
+Cc:     Rob Clark <robdclark@chromium.org>,
+        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Jeykumar Sankaran <jsanka@codeaurora.org>,
+        Jordan Crouse <jcrouse@codeaurora.org>,
+        Bruce Wang <bzwang@chromium.org>,
+        Fritz Koenig <frkoenig@google.com>,
+        linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org,
         linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v4 0/8] arm64: dts: qcom: sm8150: Add SM8150 DTS
-Message-ID: <20190821230437.GC1892@tuxbook-pro>
-References: <20190821184239.12364-1-vkoul@kernel.org>
+Subject: [PATCH] drm/msm/dpu: add rotation property
+Date:   Wed, 21 Aug 2019 18:57:24 -0700
+Message-Id: <20190822015756.30807-1-robdclark@gmail.com>
+X-Mailer: git-send-email 2.21.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20190821184239.12364-1-vkoul@kernel.org>
-User-Agent: Mutt/1.12.1 (2019-06-15)
+Content-Transfer-Encoding: 8bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed 21 Aug 11:42 PDT 2019, Vinod Koul wrote:
+From: Rob Clark <robdclark@chromium.org>
 
-> This series adds DTS for SM8150, PMIC PM8150, PM8150B, PM8150L and
-> the MTP for SM8150.
-> 
+Signed-off-by: Rob Clark <robdclark@chromium.org>
+---
+ drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c | 20 ++++++++++++++++++++
+ 1 file changed, 20 insertions(+)
 
-Applied, with Amit's acks.
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
+index 45bfac9e3af7..c5653771e8fa 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
++++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
+@@ -1040,8 +1040,21 @@ static void dpu_plane_sspp_atomic_update(struct drm_plane *plane)
+ 				pstate->multirect_mode);
+ 
+ 	if (pdpu->pipe_hw->ops.setup_format) {
++		unsigned int rotation;
++
+ 		src_flags = 0x0;
+ 
++		rotation = drm_rotation_simplify(state->rotation,
++						 DRM_MODE_ROTATE_0 |
++						 DRM_MODE_REFLECT_X |
++						 DRM_MODE_REFLECT_Y);
++
++		if (rotation & DRM_MODE_REFLECT_X)
++			src_flags |= DPU_SSPP_FLIP_UD;
++
++		if (rotation & DRM_MODE_REFLECT_Y)
++			src_flags |= DPU_SSPP_FLIP_LR;
++
+ 		/* update format */
+ 		pdpu->pipe_hw->ops.setup_format(pdpu->pipe_hw, fmt, src_flags,
+ 				pstate->multirect_index);
+@@ -1522,6 +1535,13 @@ struct drm_plane *dpu_plane_init(struct drm_device *dev,
+ 	if (ret)
+ 		DPU_ERROR("failed to install zpos property, rc = %d\n", ret);
+ 
++	drm_plane_create_rotation_property(plane,
++			DRM_MODE_ROTATE_0,
++			DRM_MODE_ROTATE_0 |
++			DRM_MODE_ROTATE_180 |
++			DRM_MODE_REFLECT_X |
++			DRM_MODE_REFLECT_Y);
++
+ 	drm_plane_enable_fb_damage_clips(plane);
+ 
+ 	/* success! finalize initialization */
+-- 
+2.21.0
 
-> Changes in v4:
->  - Update the address and size cell to 2 and extend ranges and describe DMA
->    space
->  - Fix node location of spmi per sorted address
->  - Add Niklas's review tags
-> 
-> Changes in v3:
->  - Fix copyright comment style to Linux kernel style
->  - Make property values all hex or decimal
->  - Fix patch titles and logs and make them consistent
->  - Fix line breaks
-> 
-> Changes in v2:
->  - Squash patches
->  - Fix comments given by Stephen namely, lowercase for hex numbers,
->    making rpmhcc have xo_board as parent, rename pon controller to
->    power-on controller, make pmic nodes as disabled etc.
->  - removed the dependency on clk defines and use raw numbers
-> 
-> Vinod Koul (8):
->   arm64: dts: qcom: sm8150: Add base dts file
->   arm64: dts: qcom: pm8150: Add base dts file
->   arm64: dts: qcom: pm8150b: Add base dts file
->   arm64: dts: qcom: pm8150l: Add base dts file
->   arm64: dts: qcom: sm8150-mtp: Add base dts file
->   arm64: dts: qcom: sm8150-mtp: Add regulators
->   arm64: dts: qcom: sm8150: Add reserved-memory regions
->   arm64: dts: qcom: sm8150: Add apps shared nodes
-> 
->  arch/arm64/boot/dts/qcom/Makefile       |   1 +
->  arch/arm64/boot/dts/qcom/pm8150.dtsi    |  97 +++++
->  arch/arm64/boot/dts/qcom/pm8150b.dtsi   |  86 +++++
->  arch/arm64/boot/dts/qcom/pm8150l.dtsi   |  80 ++++
->  arch/arm64/boot/dts/qcom/sm8150-mtp.dts | 375 ++++++++++++++++++
->  arch/arm64/boot/dts/qcom/sm8150.dtsi    | 482 ++++++++++++++++++++++++
->  6 files changed, 1121 insertions(+)
->  create mode 100644 arch/arm64/boot/dts/qcom/pm8150.dtsi
->  create mode 100644 arch/arm64/boot/dts/qcom/pm8150b.dtsi
->  create mode 100644 arch/arm64/boot/dts/qcom/pm8150l.dtsi
->  create mode 100644 arch/arm64/boot/dts/qcom/sm8150-mtp.dts
->  create mode 100644 arch/arm64/boot/dts/qcom/sm8150.dtsi
-> 
-> -- 
-> 2.20.1
-> 
