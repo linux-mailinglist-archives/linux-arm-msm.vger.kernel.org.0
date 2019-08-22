@@ -2,119 +2,105 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 24A8998925
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 22 Aug 2019 03:58:05 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 267519898C
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 22 Aug 2019 04:41:47 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728406AbfHVB6E (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 21 Aug 2019 21:58:04 -0400
-Received: from mail-pg1-f195.google.com ([209.85.215.195]:33755 "EHLO
-        mail-pg1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728190AbfHVB6E (ORCPT
+        id S1730113AbfHVCk6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 21 Aug 2019 22:40:58 -0400
+Received: from mail-pg1-f196.google.com ([209.85.215.196]:40473 "EHLO
+        mail-pg1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728085AbfHVCk6 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 21 Aug 2019 21:58:04 -0400
-Received: by mail-pg1-f195.google.com with SMTP id n190so2504628pgn.0;
-        Wed, 21 Aug 2019 18:58:03 -0700 (PDT)
+        Wed, 21 Aug 2019 22:40:58 -0400
+Received: by mail-pg1-f196.google.com with SMTP id w10so2552103pgj.7
+        for <linux-arm-msm@vger.kernel.org>; Wed, 21 Aug 2019 19:40:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=iJBfS7HIIw1t/KK9zKQwHG83jtFIbrBblcy5i1M3+M4=;
-        b=V2DOhDxms/aCzjwvp+EYpdBZevSpf1y6RnvYOLQRPf/KEzBZd/2pHH44khpmdfZ3gh
-         mf30Vu05Jiw9tDj/EOOQX0MXXdOnfcZdpxaYuFPhB49/nNpB4s/3DbOeIRyZSMQBhjFn
-         MhQdCKtpsBT47+OrFBonrWDUJL/hl2C6UE61527E1kblHicXCdu000jV6KRKbfetQKD9
-         gyunEfAcRXsp17MoYkRLk9pOfzwS+p8arB2extymDS1OZSj5h0nkXW3ytbXtwpJhrmtJ
-         tvPjd6Bsv0AN/ooYJfYdnfXaPvo+igEOE5EOu6gFTymST2Ry6VrEYVLXD0JZwf/kp1L0
-         nXXQ==
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=43GEvCft8nMJFLB+nTdZDz3Ku9zd5Z0S8EKkYV/XwO8=;
+        b=nsTgn0i3Th/wy8FgI5cIWRJ4TK9B9ZcN5ZwBL5RTrHOzfv+tJ5DkHxxh2Y2MfFXTS6
+         9qSzMul1OGxVPEZRkFJwbvwTc2isJuuCndRh5LOSsLMPqA6kQwdWzVg/jHcjy7kBBAXc
+         520tVw6i9X1ejfuKZX32ui11PRTrfLx2VkluXpjUhOXjB8q3CRg+/0jrOUujInsBefNG
+         y4xntkRWLpSJxiV9wjTPLXCBwirDSzEK/FkyKj00buDKYJ9Y/imSyqsznneVMfeX9fa7
+         zmSlxGz2oQkaxvaGGE5u+ZLrZeYpcXjfQC+dlLxbNy+S7ABCQQMdjV+3qUILX/X9tOji
+         /+Qg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=iJBfS7HIIw1t/KK9zKQwHG83jtFIbrBblcy5i1M3+M4=;
-        b=uZsDnz3wnyNCytiUbxZxCxo2rfyJSgOZyiPQOky7BNX7sq41q+4dAtHcxykjFed98B
-         GbZ102ZUXT0aVzMiNSUB4VBKDBwZOvxZz3+TSk+3SaMcKeKACnY6+EFf4/vMKx1tRiw7
-         3NHgG+ClP/WciTzbHmbWWbOTBH51npO+AI68VxKXnHbkJlOPHKrO4yDX+9KBe7/uOOTC
-         KYODDqjEKHfmA5j6BHnh9Be83ZWp+a16cGWrZceGFrI35dpvLP1pdm2s5JHOESYjRq2r
-         cZZplXIAKW7GqRG59Oph1xFsNCRmAn3QhUIZJPOHgiiXUKfgpBhKzIih5GNrHnp7tdL6
-         xPdg==
-X-Gm-Message-State: APjAAAUuJnjPVTsiVVKKUYyKtYFm92LN9BDQB2+RqMb53FDkgb3wdsU3
-        pv9PefGyDB6E5IWTFKA44Gw=
-X-Google-Smtp-Source: APXvYqyvoZ7A9MJNRQaT97XhZXrPGJpTdMj8MJfIJaj36BJLJB03HwNxOQd5CVSOwVr34QPNZTjg1w==
-X-Received: by 2002:a63:5648:: with SMTP id g8mr31039969pgm.81.1566439083040;
-        Wed, 21 Aug 2019 18:58:03 -0700 (PDT)
-Received: from localhost ([2601:1c0:5200:e554::6bd7])
-        by smtp.gmail.com with ESMTPSA id 203sm36739709pfz.107.2019.08.21.18.58.01
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 21 Aug 2019 18:58:02 -0700 (PDT)
-From:   Rob Clark <robdclark@gmail.com>
-To:     dri-devel@lists.freedesktop.org
-Cc:     Rob Clark <robdclark@chromium.org>,
-        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Jeykumar Sankaran <jsanka@codeaurora.org>,
-        Jordan Crouse <jcrouse@codeaurora.org>,
-        Bruce Wang <bzwang@chromium.org>,
-        Fritz Koenig <frkoenig@google.com>,
-        linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org,
-        linux-kernel@vger.kernel.org
-Subject: [PATCH] drm/msm/dpu: add rotation property
-Date:   Wed, 21 Aug 2019 18:57:24 -0700
-Message-Id: <20190822015756.30807-1-robdclark@gmail.com>
-X-Mailer: git-send-email 2.21.0
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=43GEvCft8nMJFLB+nTdZDz3Ku9zd5Z0S8EKkYV/XwO8=;
+        b=XUmPvp06EL4WxkbpvLmn609Y2c7Jt7oHo2LkC2OayI6C4vQx7foIi+hq1+cFi0d3Xi
+         4CjS/vrz24cZUgPKxZTMVUbAwUY5SwPrpUGanBTEgVJfwGtk8qUeJez2lPWZlAtHe/ne
+         moUh7KvP2OeDewwO48IB3IchaUMOs/y9Xc6DjUXPQho3/Zvv5I3Q6ekl/sK9XUIZx5ZY
+         +YEDa5lBF1CMoOGT7uWF5aWZ/3SKq5kNiQrWFjgMIcCWISGA3gkN0eWp4dTwQ3ufONRf
+         tWZTWVGqUclUDsT7SS9VreoPGUM/zP07yCENf8HrvtXIny62q7IJCNDiVYoQM5QXCoPI
+         inuw==
+X-Gm-Message-State: APjAAAXZGPBQngedXf7sXldBR4C8+ynzQigTiX0ngLQsUeM7HCycCFCh
+        LTClCG3DIt2er8E+8z/7y7Fueg==
+X-Google-Smtp-Source: APXvYqzHtyT3YDd/cLPhVSy+7THC/RtNzvd5nFbExS+j6Yto5pGt1hjPPyeXgBC1QiP5G65qQlOQ/Q==
+X-Received: by 2002:a63:ab08:: with SMTP id p8mr404210pgf.340.1566441657106;
+        Wed, 21 Aug 2019 19:40:57 -0700 (PDT)
+Received: from localhost ([122.172.76.219])
+        by smtp.gmail.com with ESMTPSA id h42sm1186807pjb.24.2019.08.21.19.40.55
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Wed, 21 Aug 2019 19:40:56 -0700 (PDT)
+Date:   Thu, 22 Aug 2019 08:10:51 +0530
+From:   Viresh Kumar <viresh.kumar@linaro.org>
+To:     YueHaibing <yuehaibing@huawei.com>
+Cc:     agross@kernel.org, rjw@rjwysocki.net, sibis@codeaurora.org,
+        linux-kernel@vger.kernel.org, linux-pm@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org
+Subject: Re: [PATCH -next] cpufreq: qcom-hw: remove set but not used variable
+ 'prev_cc'
+Message-ID: <20190822024051.eubzzxh3b2ip2gzv@vireshk-i7>
+References: <20190821121445.72588-1-yuehaibing@huawei.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20190821121445.72588-1-yuehaibing@huawei.com>
+User-Agent: NeoMutt/20180716-391-311a52
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Rob Clark <robdclark@chromium.org>
+On 21-08-19, 20:14, YueHaibing wrote:
+> drivers/cpufreq/qcom-cpufreq-hw.c: In function qcom_cpufreq_hw_read_lut:
+> drivers/cpufreq/qcom-cpufreq-hw.c:89:38: warning:
+>  variable prev_cc set but not used [-Wunused-but-set-variable]
+> 
+> It is not used since commit 3003e75a5045 ("cpufreq:
+> qcom-hw: Update logic to detect turbo frequency")
+> 
+> Reported-by: Hulk Robot <hulkci@huawei.com>
+> Signed-off-by: YueHaibing <yuehaibing@huawei.com>
+> ---
+>  drivers/cpufreq/qcom-cpufreq-hw.c | 3 +--
+>  1 file changed, 1 insertion(+), 2 deletions(-)
+> 
+> diff --git a/drivers/cpufreq/qcom-cpufreq-hw.c b/drivers/cpufreq/qcom-cpufreq-hw.c
+> index 3eea197..a9ae2f8 100644
+> --- a/drivers/cpufreq/qcom-cpufreq-hw.c
+> +++ b/drivers/cpufreq/qcom-cpufreq-hw.c
+> @@ -86,7 +86,7 @@ static int qcom_cpufreq_hw_read_lut(struct device *cpu_dev,
+>  				    struct cpufreq_policy *policy,
+>  				    void __iomem *base)
+>  {
+> -	u32 data, src, lval, i, core_count, prev_cc = 0, prev_freq = 0, freq;
+> +	u32 data, src, lval, i, core_count, prev_freq = 0, freq;
+>  	u32 volt;
+>  	struct cpufreq_frequency_table	*table;
+>  
+> @@ -139,7 +139,6 @@ static int qcom_cpufreq_hw_read_lut(struct device *cpu_dev,
+>  			break;
+>  		}
+>  
+> -		prev_cc = core_count;
+>  		prev_freq = freq;
+>  	}
 
-Signed-off-by: Rob Clark <robdclark@chromium.org>
----
- drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c | 20 ++++++++++++++++++++
- 1 file changed, 20 insertions(+)
+@Sibi, you fine with this change ? I will merge it with the original patch then.
 
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
-index 45bfac9e3af7..c5653771e8fa 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
-@@ -1040,8 +1040,21 @@ static void dpu_plane_sspp_atomic_update(struct drm_plane *plane)
- 				pstate->multirect_mode);
- 
- 	if (pdpu->pipe_hw->ops.setup_format) {
-+		unsigned int rotation;
-+
- 		src_flags = 0x0;
- 
-+		rotation = drm_rotation_simplify(state->rotation,
-+						 DRM_MODE_ROTATE_0 |
-+						 DRM_MODE_REFLECT_X |
-+						 DRM_MODE_REFLECT_Y);
-+
-+		if (rotation & DRM_MODE_REFLECT_X)
-+			src_flags |= DPU_SSPP_FLIP_UD;
-+
-+		if (rotation & DRM_MODE_REFLECT_Y)
-+			src_flags |= DPU_SSPP_FLIP_LR;
-+
- 		/* update format */
- 		pdpu->pipe_hw->ops.setup_format(pdpu->pipe_hw, fmt, src_flags,
- 				pstate->multirect_index);
-@@ -1522,6 +1535,13 @@ struct drm_plane *dpu_plane_init(struct drm_device *dev,
- 	if (ret)
- 		DPU_ERROR("failed to install zpos property, rc = %d\n", ret);
- 
-+	drm_plane_create_rotation_property(plane,
-+			DRM_MODE_ROTATE_0,
-+			DRM_MODE_ROTATE_0 |
-+			DRM_MODE_ROTATE_180 |
-+			DRM_MODE_REFLECT_X |
-+			DRM_MODE_REFLECT_Y);
-+
- 	drm_plane_enable_fb_damage_clips(plane);
- 
- 	/* success! finalize initialization */
 -- 
-2.21.0
-
+viresh
