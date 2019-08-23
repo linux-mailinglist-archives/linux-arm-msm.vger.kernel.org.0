@@ -2,76 +2,100 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id D2BA09A980
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 Aug 2019 10:00:32 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 21D519AA10
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 Aug 2019 10:18:42 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2387394AbfHWIAc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 23 Aug 2019 04:00:32 -0400
-Received: from mail-lj1-f193.google.com ([209.85.208.193]:40711 "EHLO
-        mail-lj1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727874AbfHWIAc (ORCPT
+        id S2389680AbfHWISc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 23 Aug 2019 04:18:32 -0400
+Received: from smtp.codeaurora.org ([198.145.29.96]:42404 "EHLO
+        smtp.codeaurora.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2388631AbfHWISc (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 23 Aug 2019 04:00:32 -0400
-Received: by mail-lj1-f193.google.com with SMTP id e27so8001341ljb.7
-        for <linux-arm-msm@vger.kernel.org>; Fri, 23 Aug 2019 01:00:31 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=2MWurloFC424CUmSqLbHj0wb/3z06n1cb9tNRKzCOz0=;
-        b=sA3b4HdX77h7s/fsgrnjxNpZZL2Q2H0A0yDHqxZ97wKFl/4wY6a1hIV5EQoqmrzZ7r
-         f4Z8cqeST9COrJKBqhuaiYdi+KUCmgfbGSP1wKpdmxquge83gpeW3HfaT5SCIGS5uwVG
-         3veKuafvjamg3UGf5XlzSwsesSMNOTzddh4Ge5Tqp+I26zHMONWLgzNiAq0o81va1Jc1
-         emEV0eUjqLBewyOer5y+Dho936IyFhHQSxCZlZqIw1KZGcbRpXPMFujKyY+ryczpp+Yx
-         sISvmhOjokZhZ62yOeO8PFUTc2yZ4Hf2TWU69qgzlCyG7Oq+xQhaGlB5ijax6S+LsHQL
-         jClg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=2MWurloFC424CUmSqLbHj0wb/3z06n1cb9tNRKzCOz0=;
-        b=ewMmfeOQ0KfibK6uXnnHoPAeW5wJ15ctJ6i2tvz2IBVdJo9i1xS/+weVZwf2FhZvWC
-         GfObu7NxftIWUWypmMSi5BWGyvISK/vWxg/+AoBXea+qdru1Z6akW83FImxPAz9bJ3ML
-         V9uRp1Jtia9SVlXDDgv5j+zg3g5OScCt16OiP9NAA067lV3pGjy72Zcy4A+E9ieRm7MV
-         nJ08BBWOj5bapTtOVjKGZmfwBLEmqxugoJh1YTACY4JMOKIBAcZWEwFuSM7md6dZgZDr
-         sYezBLm6l5A8DKt1TOfaMkZCh1RE9ND99tSJIsMV5DWU6oBH9Q0/+qYCmTxCM4IH+7rr
-         81gg==
-X-Gm-Message-State: APjAAAUqIgRsTiHgA9OY3Sku1fZZP+/w9xkdluN/uqmCf5HIkcNz07+8
-        mbf6Q4XA2AT3hM8J8s2wbIizgzsCC2q9gCVDRYwxxQ==
-X-Google-Smtp-Source: APXvYqzLQ5ClEUlmAOPmQjblokk+7eUHmNQEQGStJEPG0CbEku6phix8tVMaf7PE4m+a0XscjlciF/e0C/PJmTAj7dk=
-X-Received: by 2002:a2e:781a:: with SMTP id t26mr2091021ljc.28.1566547230567;
- Fri, 23 Aug 2019 01:00:30 -0700 (PDT)
+        Fri, 23 Aug 2019 04:18:32 -0400
+Received: by smtp.codeaurora.org (Postfix, from userid 1000)
+        id 2C160608CC; Fri, 23 Aug 2019 08:18:29 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
+        s=default; t=1566548310;
+        bh=1GbHG78SpJmojCXUdDitKC6EvtNM7lX/s2bc+Panfa8=;
+        h=From:To:Cc:Subject:Date:From;
+        b=k4+9gztgTEKY8Slfd4OgSaJVM+hx9MLreb+6m5phqPyThV4A+Pa8L7LeeaTJlxDw2
+         7mWfBtrkYy/mHLDRlBnbYfaaAy391o5CaXBCQwDvs9E0RR61EKcHOZ6HrZN+47tqC+
+         WAaBn4S2jDvOvJrS7SYDn6ogIF5DcgmNqf1FejrI=
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        pdx-caf-mail.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.7 required=2.0 tests=ALL_TRUSTED,BAYES_00,
+        DKIM_INVALID,DKIM_SIGNED,SPF_NONE autolearn=no autolearn_force=no
+        version=3.4.0
+Received: from mkshah-linux.qualcomm.com (blr-c-bdr-fw-01_globalnat_allzones-outside.qualcomm.com [103.229.19.19])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: mkshah@smtp.codeaurora.org)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id CE6E0608CC;
+        Fri, 23 Aug 2019 08:18:23 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
+        s=default; t=1566548308;
+        bh=1GbHG78SpJmojCXUdDitKC6EvtNM7lX/s2bc+Panfa8=;
+        h=From:To:Cc:Subject:Date:From;
+        b=k9QzRQ+I81EFg07fzx9675Swl+AGsX7PXxXz/ZehUBf6rNy1cdaXSnI9D0yyBS91d
+         xgcnlqpSwRceKf1K+s+M4Z4x+4ZRpWRju1LaoOEymLYfDcZaAb39EJcnqJcaXqn+PZ
+         yA48ImCN+WgAUMEaq/mkofP66C4zn38+s+arRLpU=
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org CE6E0608CC
+Authentication-Results: pdx-caf-mail.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: pdx-caf-mail.web.codeaurora.org; spf=none smtp.mailfrom=mkshah@codeaurora.org
+From:   Maulik Shah <mkshah@codeaurora.org>
+To:     swboyd@chromium.org, agross@kernel.org, david.brown@linaro.org,
+        linux-arm-msm@vger.kernel.org
+Cc:     linux-kernel@vger.kernel.org, linux-pm@vger.kernel.org,
+        bjorn.andersson@linaro.org, evgreen@chromium.org,
+        dianders@chromium.org, rnayak@codeaurora.org, ilina@codeaurora.org,
+        lsrao@codeaurora.org, ulf.hansson@linaro.org,
+        Maulik Shah <mkshah@codeaurora.org>
+Subject: [PATCH v2 0/6] Add RSC power domain support
+Date:   Fri, 23 Aug 2019 13:46:57 +0530
+Message-Id: <20190823081703.17325-1-mkshah@codeaurora.org>
+X-Mailer: git-send-email 2.22.0
 MIME-Version: 1.0
-References: <20190814123512.6017-1-vkoul@kernel.org> <20190814123512.6017-3-vkoul@kernel.org>
-In-Reply-To: <20190814123512.6017-3-vkoul@kernel.org>
-From:   Linus Walleij <linus.walleij@linaro.org>
-Date:   Fri, 23 Aug 2019 10:00:19 +0200
-Message-ID: <CACRpkdbANSzMbO2dDGrfFK=KP_ZCkoaOA7xG4zirhzo7hHG_ag@mail.gmail.com>
-Subject: Re: [PATCH 3/3] dt-bindings: pinctrl: qcom-pmic-gpio: Add pm8150l support
-To:     Vinod Koul <vkoul@kernel.org>
-Cc:     MSM <linux-arm-msm@vger.kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Mark Rutland <mark.rutland@arm.com>,
-        "open list:GPIO SUBSYSTEM" <linux-gpio@vger.kernel.org>,
-        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
-        <devicetree@vger.kernel.org>,
-        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Aug 14, 2019 at 2:36 PM Vinod Koul <vkoul@kernel.org> wrote:
+Changes in v2:
+- Add Stephen's Reviewed-By to the first three patches
+- Addressed Stephen's comments on fourth patch
+- Include changes to connect rpmh domain to cpuidle and genpds
 
-> Add support for the PM8150l GPIO support to the Qualcomm PMIC GPIO
-> binding.
->
-> Signed-off-by: Vinod Koul <vkoul@kernel.org>
+Resource State Coordinator (RSC) is responsible for powering off/lowering
+the requirements from CPU subsystem for the associated hardware like buses,
+clocks, and regulators when all CPUs and cluster is powered down.
 
-Patch applied.
+RSC power domain uses last-man activities provided by genpd framework based on
+Ulf Hansoon's patch series[1], when the cluster of CPUs enter deepest idle
+states. As a part of domain poweroff, RSC can lower resource state requirements
+by flushing the cached sleep and wake state votes for resources.
 
-Yours,
-Linus Walleij
+Dependencies:
+
+[1] https://lkml.org/lkml/2019/5/13/839
+
+Maulik Shah (6):
+  drivers: qcom: rpmh: fix macro to accept NULL argument
+  drivers: qcom: rpmh: remove rpmh_flush export
+  dt-bindings: soc: qcom: Add RSC power domain specifier
+  drivers: qcom: rpmh-rsc: Add RSC power domain support
+  arm64: dts: Convert to the hierarchical CPU topology layout for sdm845
+  arm64: dts: Add rsc power domain for sdm845
+
+ .../devicetree/bindings/soc/qcom/rpmh-rsc.txt |   8 ++
+ arch/arm64/boot/dts/qcom/sdm845.dtsi          | 105 +++++++++++++-----
+ drivers/soc/qcom/rpmh-internal.h              |   3 +
+ drivers/soc/qcom/rpmh-rsc.c                   |  84 ++++++++++++++
+ drivers/soc/qcom/rpmh.c                       |  22 ++--
+ include/soc/qcom/rpmh.h                       |   5 -
+ 6 files changed, 185 insertions(+), 42 deletions(-)
+
+-- 
+QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum, hosted by The Linux Foundation.
+
