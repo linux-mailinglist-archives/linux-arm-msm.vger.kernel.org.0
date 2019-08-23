@@ -2,178 +2,71 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 103599AB7D
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 Aug 2019 11:40:02 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 2802A9AC65
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 Aug 2019 12:05:50 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732394AbfHWJil (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 23 Aug 2019 05:38:41 -0400
-Received: from mail-wm1-f66.google.com ([209.85.128.66]:35606 "EHLO
-        mail-wm1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1732168AbfHWJil (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 23 Aug 2019 05:38:41 -0400
-Received: by mail-wm1-f66.google.com with SMTP id l2so8464705wmg.0
-        for <linux-arm-msm@vger.kernel.org>; Fri, 23 Aug 2019 02:38:39 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=kSm+naO1TQ4hxm8sdmnltc6wBBt1pT3kTvijAemrFOg=;
-        b=CqaEWp9vXrcgx71U1LQb55TsRuPNoG8rmkrXQ8X5sHwFcnSxPwoCg9lXBaaH+0tw1k
-         CMM5rb4PA5nwWraz+RDI8T+eL8eVbVFoz6ZJW9jJ1fhrKZN5/WGWyqN3KC+QUX6gdLw4
-         5Faavj9nT61sdyvb/advtCjwLry7p0AWI7h2lKC1ikUL5qxJN5SelVmUoJObBqXaLYD+
-         0hST1EHHus44eznVF5mxXoXJedZTIfIYEznEfpzXRbax+8iBBHZCm6KgsZYGYcKjjTCr
-         uWH4Yv12Q/bOO3a7oVsdZNAdfKoU31sQ/u4jok0rFFoEdGIqejk6bmD495hdxFC9XnyV
-         nWzw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=kSm+naO1TQ4hxm8sdmnltc6wBBt1pT3kTvijAemrFOg=;
-        b=loUhkl+0CXfdbdg9BJi2K5rUsQ+FrBJGsJ4F1IERa9LlhvgO1/w7msmAyNZhDcVtHx
-         rwSg+2LkyNxlRuBMA7W8eIOKu7Olq9A+qxN+61AXbJTnI47BJNRwbDrv5O41+R/KoUEh
-         RI3zk9BLcgkK7OZACBGyFV3fBamxT0DzS3NEPNV4oJba61Cp0c6lmXkNvdhC3sBizBzt
-         MvjpEANs620VC45crqPZy5yCy+VBXtwhKOvniIcZxVEEJV5KTGO/oTOqO9NEP8Dbmj7E
-         tAs9v1G8DjwYm1TyIbVIRzZAYoIrmjufY5zjA8VprX9qQwezPSYazQYWO6d2hBhxv46R
-         jPXQ==
-X-Gm-Message-State: APjAAAXskYqsBQzOQHA2bIP4IpRUhpbKazIxtQroIUMj3MLfmoowC2qx
-        vojid1ckymvCt5wA7mvmNjX6lQ==
-X-Google-Smtp-Source: APXvYqymDWjlMLeQ5b0qVpVPvGSB5xjyytSxLX4F9srQBPXDtDIp8nuwsT3oqVKUnmUStQKJkvBckQ==
-X-Received: by 2002:a1c:721a:: with SMTP id n26mr3984740wmc.88.1566553118783;
-        Fri, 23 Aug 2019 02:38:38 -0700 (PDT)
-Received: from srini-hackbox.lan (cpc89974-aztw32-2-0-cust43.18-1.cable.virginm.net. [86.30.250.44])
-        by smtp.gmail.com with ESMTPSA id s64sm2860089wmf.16.2019.08.23.02.38.37
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 23 Aug 2019 02:38:37 -0700 (PDT)
-From:   Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-To:     amit.kucheria@linaro.org, linux-pm@vger.kernel.org,
-        edubezval@gmail.com
-Cc:     linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-Subject: [PATCH] drivers: thermal: qcom: tsens: Fix memory leak from qfprom read
-Date:   Fri, 23 Aug 2019 10:38:35 +0100
-Message-Id: <20190823093835.32655-1-srinivas.kandagatla@linaro.org>
-X-Mailer: git-send-email 2.21.0
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+        id S2391786AbfHWKFs (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 23 Aug 2019 06:05:48 -0400
+Received: from mx2.suse.de ([195.135.220.15]:45998 "EHLO mx1.suse.de"
+        rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+        id S1732134AbfHWKFs (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 23 Aug 2019 06:05:48 -0400
+X-Virus-Scanned: by amavisd-new at test-mx.suse.de
+Received: from relay2.suse.de (unknown [195.135.220.254])
+        by mx1.suse.de (Postfix) with ESMTP id 87A51B117;
+        Fri, 23 Aug 2019 10:05:46 +0000 (UTC)
+Date:   Fri, 23 Aug 2019 12:05:45 +0200
+Message-ID: <s5hef1crybq.wl-tiwai@suse.de>
+From:   Takashi Iwai <tiwai@suse.de>
+To:     Scott Branden <scott.branden@broadcom.com>
+Cc:     Luis Chamberlain <mcgrof@kernel.org>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        David Brown <david.brown@linaro.org>,
+        Alexander Viro <viro@zeniv.linux.org.uk>,
+        Shuah Khan <shuah@kernel.org>, bjorn.andersson@linaro.org,
+        Shuah Khan <skhan@linuxfoundation.org>,
+        Arnd Bergmann <arnd@arndb.de>,
+        "Rafael J . Wysocki" <rafael@kernel.org>,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-fsdevel@vger.kernel.org,
+        BCM Kernel Feedback <bcm-kernel-feedback-list@broadcom.com>,
+        Olof Johansson <olof@lixom.net>,
+        Andrew Morton <akpm@linux-foundation.org>,
+        Dan Carpenter <dan.carpenter@oracle.com>,
+        Colin Ian King <colin.king@canonical.com>,
+        Kees Cook <keescook@chromium.org>,
+        linux-kselftest@vger.kernel.org
+Subject: Re: [PATCH 2/7] firmware: add offset to request_firmware_into_buf
+In-Reply-To: <20190822192451.5983-3-scott.branden@broadcom.com>
+References: <20190822192451.5983-1-scott.branden@broadcom.com>
+        <20190822192451.5983-3-scott.branden@broadcom.com>
+User-Agent: Wanderlust/2.15.9 (Almost Unreal) SEMI/1.14.6 (Maruoka)
+ FLIM/1.14.9 (=?UTF-8?B?R29qxY0=?=) APEL/10.8 Emacs/25.3
+ (x86_64-suse-linux-gnu) MULE/6.0 (HANACHIRUSATO)
+MIME-Version: 1.0 (generated by SEMI 1.14.6 - "Maruoka")
+Content-Type: text/plain; charset=US-ASCII
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-memory returned as part of nvmem_read via qfprom_read should be
-freed by the consumer once done.
-Existing code is not doing it so fix it.
+On Thu, 22 Aug 2019 21:24:46 +0200,
+Scott Branden wrote:
+> 
+> Add offset to request_firmware_into_buf to allow for portions
+> of firmware file to be read into a buffer.  Necessary where firmware
+> needs to be loaded in portions from file in memory constrained systems.
 
-Below memory leak detected by kmemleak
-   [<ffffff80088b7658>] kmemleak_alloc+0x50/0x84
-    [<ffffff80081df120>] __kmalloc+0xe8/0x168
-    [<ffffff80086db350>] nvmem_cell_read+0x30/0x80
-    [<ffffff8008632790>] qfprom_read+0x4c/0x7c
-    [<ffffff80086335a4>] calibrate_v1+0x34/0x204
-    [<ffffff8008632518>] tsens_probe+0x164/0x258
-    [<ffffff80084e0a1c>] platform_drv_probe+0x80/0xa0
-    [<ffffff80084de4f4>] really_probe+0x208/0x248
-    [<ffffff80084de2c4>] driver_probe_device+0x98/0xc0
-    [<ffffff80084dec54>] __device_attach_driver+0x9c/0xac
-    [<ffffff80084dca74>] bus_for_each_drv+0x60/0x8c
-    [<ffffff80084de634>] __device_attach+0x8c/0x100
-    [<ffffff80084de6c8>] device_initial_probe+0x20/0x28
-    [<ffffff80084dcbb8>] bus_probe_device+0x34/0x7c
-    [<ffffff80084deb08>] deferred_probe_work_func+0x6c/0x98
-    [<ffffff80080c3da8>] process_one_work+0x160/0x2f8
+AFAIU, this won't work with the fallback user helper, right?
+Also it won't work for the compressed firmware files as-is.
 
-Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
----
- drivers/thermal/qcom/tsens-8960.c |  2 ++
- drivers/thermal/qcom/tsens-v0_1.c | 12 ++++++++++--
- drivers/thermal/qcom/tsens-v1.c   |  1 +
- drivers/thermal/qcom/tsens.h      |  1 +
- 4 files changed, 14 insertions(+), 2 deletions(-)
+So this new API usage is for the limited use cases, hence it needs
+such checks and returns error/warns if the condition isn't met.
 
-diff --git a/drivers/thermal/qcom/tsens-8960.c b/drivers/thermal/qcom/tsens-8960.c
-index 8d9b721dadb6..e46a4e3f25c4 100644
---- a/drivers/thermal/qcom/tsens-8960.c
-+++ b/drivers/thermal/qcom/tsens-8960.c
-@@ -229,6 +229,8 @@ static int calibrate_8960(struct tsens_priv *priv)
- 	for (i = 0; i < num_read; i++, s++)
- 		s->offset = data[i];
- 
-+	kfree(data);
-+
- 	return 0;
- }
- 
-diff --git a/drivers/thermal/qcom/tsens-v0_1.c b/drivers/thermal/qcom/tsens-v0_1.c
-index 6f26fadf4c27..055647bcee67 100644
---- a/drivers/thermal/qcom/tsens-v0_1.c
-+++ b/drivers/thermal/qcom/tsens-v0_1.c
-@@ -145,8 +145,10 @@ static int calibrate_8916(struct tsens_priv *priv)
- 		return PTR_ERR(qfprom_cdata);
- 
- 	qfprom_csel = (u32 *)qfprom_read(priv->dev, "calib_sel");
--	if (IS_ERR(qfprom_csel))
-+	if (IS_ERR(qfprom_csel)) {
-+		kfree(qfprom_cdata);
- 		return PTR_ERR(qfprom_csel);
-+	}
- 
- 	mode = (qfprom_csel[0] & MSM8916_CAL_SEL_MASK) >> MSM8916_CAL_SEL_SHIFT;
- 	dev_dbg(priv->dev, "calibration mode is %d\n", mode);
-@@ -181,6 +183,8 @@ static int calibrate_8916(struct tsens_priv *priv)
- 	}
- 
- 	compute_intercept_slope(priv, p1, p2, mode);
-+	kfree(qfprom_cdata);
-+	kfree(qfprom_csel);
- 
- 	return 0;
- }
-@@ -198,8 +202,10 @@ static int calibrate_8974(struct tsens_priv *priv)
- 		return PTR_ERR(calib);
- 
- 	bkp = (u32 *)qfprom_read(priv->dev, "calib_backup");
--	if (IS_ERR(bkp))
-+	if (IS_ERR(bkp)) {
-+		kfree(calib);
- 		return PTR_ERR(bkp);
-+	}
- 
- 	calib_redun_sel =  bkp[1] & BKP_REDUN_SEL;
- 	calib_redun_sel >>= BKP_REDUN_SHIFT;
-@@ -313,6 +319,8 @@ static int calibrate_8974(struct tsens_priv *priv)
- 	}
- 
- 	compute_intercept_slope(priv, p1, p2, mode);
-+	kfree(calib);
-+	kfree(bkp);
- 
- 	return 0;
- }
-diff --git a/drivers/thermal/qcom/tsens-v1.c b/drivers/thermal/qcom/tsens-v1.c
-index 10b595d4f619..870f502f2cb6 100644
---- a/drivers/thermal/qcom/tsens-v1.c
-+++ b/drivers/thermal/qcom/tsens-v1.c
-@@ -138,6 +138,7 @@ static int calibrate_v1(struct tsens_priv *priv)
- 	}
- 
- 	compute_intercept_slope(priv, p1, p2, mode);
-+	kfree(qfprom_cdata);
- 
- 	return 0;
- }
-diff --git a/drivers/thermal/qcom/tsens.h b/drivers/thermal/qcom/tsens.h
-index 2fd94997245b..b89083b61c38 100644
---- a/drivers/thermal/qcom/tsens.h
-+++ b/drivers/thermal/qcom/tsens.h
-@@ -17,6 +17,7 @@
- 
- #include <linux/thermal.h>
- #include <linux/regmap.h>
-+#include <linux/slab.h>
- 
- struct tsens_priv;
- 
--- 
-2.21.0
+IOW, this can't be a simple extension of request_firmware_into_buf()
+to pass a new flag.
 
+
+thanks,
+
+Takashi
