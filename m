@@ -2,105 +2,164 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id E28699AC7A
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 Aug 2019 12:07:20 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 000879AD2D
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 Aug 2019 12:31:48 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2392080AbfHWKHQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 23 Aug 2019 06:07:16 -0400
-Received: from mail-wm1-f68.google.com ([209.85.128.68]:51656 "EHLO
-        mail-wm1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2391899AbfHWKHD (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 23 Aug 2019 06:07:03 -0400
-Received: by mail-wm1-f68.google.com with SMTP id k1so8392473wmi.1
-        for <linux-arm-msm@vger.kernel.org>; Fri, 23 Aug 2019 03:07:02 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=txsHPtmH/4H2/WnX6EiFrXzeHkL+qrKcHt+2DoU5kzQ=;
-        b=zsLTQ6OcR9Dk0Qa39F2DDnmWFcluUGtQg+KpRb+bwLN1VIK3mhupCJbjkodp3dI4Fe
-         iqWh9+beI2fEZPtXQqBILn5x5It/sxsv7zun4Zt7NVFJsPhAfH/gGhkWLaF7nzV25Hc0
-         Y6hQwhCfGnfnrHTNZljsbuzWLq9L02poSqq/DJOxzCk4+RvvBqiV2Z/5YZzof/Ut4PgM
-         rSlB1fo+5JK7gqGVKFIa3UWXy2A+xNE3hLhLeLjzdhmTLmP4MXsdi7osPx/D/EFFnDwM
-         ztznERXTlzizlp25hDlJ4CRX4E7X4+QrQsYOYPrtn6xK68tfMik0P0I788C2hxA69/YK
-         MX0g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=txsHPtmH/4H2/WnX6EiFrXzeHkL+qrKcHt+2DoU5kzQ=;
-        b=GiV+ot+qhkvZtHhXskKlMqRoyO3MzNPZ+o9Y67kDytVOLfBYGi/CpCgBITQMf7TXW4
-         0OzvbBXAk8XfY0KUW55k7p+3fzMGp0IMmyOe+GJfrBVDrAfr30HLx3yhimDCd2Y7CnAL
-         uT2Qmav/7s8ZXI9bkG4+z42Y6FK/ApFjZCjddRLBI93ms0kbRQitDf89hhZMtDJY5YgY
-         29wsNoi0lPAdNfAoRBMKLUenRpbfF0U0BCyVSxF/komWrlqktp44YmyjkqrO9vv9fT/o
-         a68I3j2hm4uL5ZCyqa5ntrTRnWY56X5hTgH/Ik41H85ZZKUnndrKpsDvwLY/BP8R477u
-         b6ng==
-X-Gm-Message-State: APjAAAXSP4J8Ubi/+diW3DFPKX2yQ5XrAB24x1oNVsFx9ovLAL9zweTk
-        gf0LrK8jYZi+zT2lXqzOLhm2jA==
-X-Google-Smtp-Source: APXvYqwl1Fa7hd6dx3UhLaTaNR2R/23JKahB21Ecq5hVeBT4VSAziAuQCdksN46+5xAra8IOI9h+wA==
-X-Received: by 2002:a1c:a80a:: with SMTP id r10mr4148894wme.103.1566554821626;
-        Fri, 23 Aug 2019 03:07:01 -0700 (PDT)
-Received: from srini-hackbox.lan (cpc89974-aztw32-2-0-cust43.18-1.cable.virginm.net. [86.30.250.44])
-        by smtp.gmail.com with ESMTPSA id q124sm2058048wma.33.2019.08.23.03.07.00
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 23 Aug 2019 03:07:00 -0700 (PDT)
-From:   Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-To:     gregkh@linuxfoundation.org
-Cc:     arnd@arndb.de, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org,
-        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-        Mayank Chopra <mak.chopra@codeaurora.org>
-Subject: [PATCH 5/5] misc: fastrpc: free dma buf scatter list
-Date:   Fri, 23 Aug 2019 11:06:22 +0100
-Message-Id: <20190823100622.3892-6-srinivas.kandagatla@linaro.org>
-X-Mailer: git-send-email 2.21.0
-In-Reply-To: <20190823100622.3892-1-srinivas.kandagatla@linaro.org>
-References: <20190823100622.3892-1-srinivas.kandagatla@linaro.org>
-MIME-Version: 1.0
+        id S2404604AbfHWKbn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 23 Aug 2019 06:31:43 -0400
+Received: from mx2.suse.de ([195.135.220.15]:54406 "EHLO mx1.suse.de"
+        rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+        id S1733308AbfHWKbn (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 23 Aug 2019 06:31:43 -0400
+X-Virus-Scanned: by amavisd-new at test-mx.suse.de
+Received: from relay2.suse.de (unknown [195.135.220.254])
+        by mx1.suse.de (Postfix) with ESMTP id BDA51AD94;
+        Fri, 23 Aug 2019 10:31:40 +0000 (UTC)
+Date:   Fri, 23 Aug 2019 12:31:40 +0200
+Message-ID: <s5hd0gwrx4j.wl-tiwai@suse.de>
+From:   Takashi Iwai <tiwai@suse.de>
+To:     Luis Chamberlain <mcgrof@kernel.org>
+Cc:     Scott Branden <scott.branden@broadcom.com>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Andy Gross <andy.gross@linaro.org>,
+        David Brown <david.brown@linaro.org>,
+        Alexander Viro <viro@zeniv.linux.org.uk>,
+        Shuah Khan <shuah@kernel.org>, bjorn.andersson@linaro.org,
+        "Rafael J . Wysocki" <rafael@kernel.org>,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-fsdevel@vger.kernel.org,
+        BCM Kernel Feedback <bcm-kernel-feedback-list@broadcom.com>,
+        Olof Johansson <olof@lixom.net>,
+        Andrew Morton <akpm@linux-foundation.org>,
+        Dan Carpenter <dan.carpenter@oracle.com>,
+        Colin Ian King <colin.king@canonical.com>,
+        Kees Cook <keescook@chromium.org>,
+        linux-kselftest@vger.kernel.org
+Subject: Re: [PATCH 3/3] firmware: add mutex fw_lock_fallback for race condition
+In-Reply-To: <20190820012655.GU16384@42.do-not-panic.com>
+References: <20190816000945.29810-1-scott.branden@broadcom.com>
+        <20190816000945.29810-4-scott.branden@broadcom.com>
+        <20190819053937.GR16384@42.do-not-panic.com>
+        <16823ee6-c52a-b3b5-caed-79c00772fa68@broadcom.com>
+        <20190820012655.GU16384@42.do-not-panic.com>
+User-Agent: Wanderlust/2.15.9 (Almost Unreal) SEMI/1.14.6 (Maruoka)
+ FLIM/1.14.9 (=?UTF-8?B?R29qxY0=?=) APEL/10.8 Emacs/25.3
+ (x86_64-suse-linux-gnu) MULE/6.0 (HANACHIRUSATO)
+MIME-Version: 1.0 (generated by SEMI 1.14.6 - "Maruoka")
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-dma buf scatter list is never freed, free it!
+On Tue, 20 Aug 2019 03:26:55 +0200,
+Luis Chamberlain wrote:
+> 
+> On Mon, Aug 19, 2019 at 09:19:51AM -0700, Scott Branden wrote:
+> > To be honest, I find the entire firmware code sloppy.
+> 
+> And that is after years of cleanup on my part. Try going back to v4.1
+> for instance, check the code out then for an incredible horrific sight :)
+> 
+> > I don't think the cache/no-cache feature is
+> > implemented or tested properly nor fallback to begin with.
+> 
+> I'm in total agreement! I *know* there must be holes in that code, and I
+> acknowledge a few possible gotchas on the commit logs. For instance, I
+> acknowledged that the firmware cache had a secondary purpose which was
+> not well documented or understood through commit e44565f62a720
+> ("firmware: fix batched requests - wake all waiters"). The firmware
+> cache allows for batching requests and sharing the same original request
+> for multiple consecutive requests which *race against each other*.
+> That's when I started having my doubts about the architecture of the
+> firmware cache mechanism, it seemed too complex and perhaps overkill
+> and considered killing it.
+>
+> As I noted in that commit, the firmware cache is used for:
+>     
+> 1) Addressing races with file lookups during the suspend/resume cycle by
+> keeping firmware in memory during the suspend/resume cycle
 
-Orignally detected by kmemleak:
-  backtrace:
-    [<ffffff80088b7658>] kmemleak_alloc+0x50/0x84
-    [<ffffff8008373284>] sg_kmalloc+0x38/0x60
-    [<ffffff8008373144>] __sg_alloc_table+0x60/0x110
-    [<ffffff800837321c>] sg_alloc_table+0x28/0x58
-    [<ffffff800837336c>] __sg_alloc_table_from_pages+0xc0/0x1ac
-    [<ffffff800837346c>] sg_alloc_table_from_pages+0x14/0x1c
-    [<ffffff8008097a3c>] __iommu_get_sgtable+0x5c/0x8c
-    [<ffffff800850a1d0>] fastrpc_dma_buf_attach+0x84/0xf8
-    [<ffffff80085114bc>] dma_buf_attach+0x70/0xc8
-    [<ffffff8008509efc>] fastrpc_map_create+0xf8/0x1e8
-    [<ffffff80085086f4>] fastrpc_device_ioctl+0x508/0x900
-    [<ffffff80082428c8>] compat_SyS_ioctl+0x128/0x200
-    [<ffffff80080832c4>] el0_svc_naked+0x34/0x38
-    [<ffffffffffffffff>] 0xffffffffffffffff
+Right, this one is the significant need.  And currently the fw loader
+core takes a complicated approach as:
 
-Reported-by: Mayank Chopra <mak.chopra@codeaurora.org>
-Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
----
- drivers/misc/fastrpc.c | 1 +
- 1 file changed, 1 insertion(+)
+- Store firmware name string in devres for each firmware
+- Upon suspend, loop over all devices and associated firmware names,
+  create a list, then loop over the list for loading the firmware
+  files before sleeping.
+- Upon resume, release the firmware files that have been loaded at
+  suspend in a delayed manner.
 
-diff --git a/drivers/misc/fastrpc.c b/drivers/misc/fastrpc.c
-index eee2bb398947..47ae84afac2e 100644
---- a/drivers/misc/fastrpc.c
-+++ b/drivers/misc/fastrpc.c
-@@ -550,6 +550,7 @@ static void fastrpc_dma_buf_detatch(struct dma_buf *dmabuf,
- 	mutex_lock(&buffer->lock);
- 	list_del(&a->node);
- 	mutex_unlock(&buffer->lock);
-+	sg_free_table(&a->sgt);
- 	kfree(a);
- }
- 
--- 
-2.21.0
+So we have different level of lists there, which make the code quite
+hard to understand.
 
+The reason of the above approach is because we didn't know which
+device driver would need the firmware at resume, so basically we do
+cache for all devices.  Maybe it'd better to look for the exact
+drivers that require the firmware at resume, and handle only such
+ones instead of catch-all approach.
+
+OTOH, I find it's not bad to keep the loaded firmware file names per
+device and expose e.g. via sysfs.  Currently we have no way to look at
+which firmware files have been loaded afterwards; the only way to see
+it is enabling some debug option and read through kernel messages.
+(FWIW, I stumbled on this problem since I wanted to provide the split
+ kernel-firmware package on SUSE distro, and let the installer decide
+ which package to pick up.)
+
+> 2) Batched requests for the same file rely only on work from the first
+> file lookup, which keeps the firmware in memory until the last
+> release_firmware() is called
+
+IMO, this feature can be omitted if it makes things too complicated.
+I guess it were added because we handle the fw caching in anyway.
+There isn't a big need for this due to performance.  If the
+performance matters, such driver should re-use its own firmware by
+itself.
+
+(snip)
+> > 3) I have a driver that uses request_firmware_into_buf and have multiple
+> > instances of the driver
+> 
+> Cool, is the driver upstream?
+> 
+> > loading the same firmware in parallel.  Some of the data is not read
+> > correctly in each instance.
+> 
+> Makes perfect sense considering the lack of testing I noted.
+> 
+> > I haven't yet to reproduce this issue with the firmware test 
+> 
+> That's because of batched firmware request mechanism.
+> 
+> > but currently
+> > have a mutex around the entire
+> > call to request_firmware_into_buf in our driver.
+> 
+> I will take a look at this now.
+> 
+> > Perhaps it is better at this point to add a mutex in
+> > request_firmware_into_buf to make is entirely safe?
+> 
+> No, that is not sufficient, although it would also solve the
+> issue.
+
+The mutex for request_firmware_into_buf() doesn't sound like a good
+approach.  Basically the direct fw loading should work in parallel
+for the same firmware file.  We might have some bug wrt cache stuff,
+but it can be fixed properly.
+
+However, the fw loading in fallback mode can't run in parallel for
+the same file, per design -- no matter whether cached or not.
+So, if any, we'd need put a mutex around the fallback loader code.
+And, the mutex should be rather per device, not a global one.
+
+Or we may trick it by appending the second parallel caller into the
+same wait queue, but the code will be more complex, so I don't think
+worth for it.
+
+
+thanks,
+
+Takashi
