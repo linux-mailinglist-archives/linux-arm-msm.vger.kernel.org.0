@@ -2,100 +2,96 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id A44499A7D3
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 Aug 2019 08:52:19 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id ECEE59A8F1
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 Aug 2019 09:35:11 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2404399AbfHWGwS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 23 Aug 2019 02:52:18 -0400
-Received: from mail-lj1-f194.google.com ([209.85.208.194]:33170 "EHLO
-        mail-lj1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2404369AbfHWGwR (ORCPT
+        id S2390303AbfHWHe4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 23 Aug 2019 03:34:56 -0400
+Received: from mail-lf1-f68.google.com ([209.85.167.68]:46341 "EHLO
+        mail-lf1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2388420AbfHWHe4 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 23 Aug 2019 02:52:17 -0400
-Received: by mail-lj1-f194.google.com with SMTP id z17so7885906ljz.0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 22 Aug 2019 23:52:16 -0700 (PDT)
+        Fri, 23 Aug 2019 03:34:56 -0400
+Received: by mail-lf1-f68.google.com with SMTP id n19so6402956lfe.13
+        for <linux-arm-msm@vger.kernel.org>; Fri, 23 Aug 2019 00:34:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=G5vut+/7GfWn6npImvF9Rc3EcWl6Bwqxpc3Tm/7byaQ=;
-        b=MVIXR6k8i6ZWuPASEFHHR9F0nPCzK0eVjc8PYz7FptLy2OJujuacqW6lgWGhwQySFz
-         3QAySOWoE9nAwQwl1xLEODlrOsAyBMu2u04vibbBBVpvxgU2d/d9lFgSf123gf2E114D
-         /jPW1MjyPfCGwgmewUy7qWtuRuFl0ZdoBgJUXWuNSSUvkanykJHAMib9ZE1FHuoQnZgx
-         XzaapAMFiJGaBP/N7hmC43ow43jjVG9Li0erAVdh6tyQNjy9HmQDLOQfs/eqEiCTGeze
-         cBBi02p/e6U/e0HvajIHRSQG3k6yQHhDjihSPwrKZVq8gfHYtJswFQUJzcr833qCT5/D
-         N/8w==
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=aLw4CRSPJ3WKrmTX2TV02F/5DZkmqEb7ZJ94kU2yaI8=;
+        b=mphS1O4ssdOoGeOzJ5pPlICCD+JVCVu7mO1MYI2hIn4o48+vvTMUX6lt5XrggcYA32
+         3In3CIS0bcTGBJwH+b1sZUdhF/nQD37bGMatfAZpEdoazdQHOLooCOCJ1pWPa3JpUSFp
+         s/s1cqjf5sVKoYN7NiOpW2LyVU6l4EtZ5sdFNNiKvnc0dy8TNTNdKsG/aH+lB5k1Jsi1
+         sdntV9G3GRZAv74A3j7jm4q0qvTQN+sTzDNn8VmGxd9kJmr5KxouK+7IDh1pQSWaobo8
+         vYI0wikqg9vW9Iv6zET6CYfA6LUFuA3q6HYz41laNEhEJRUKglRPTb7n9qTylzzu8y4k
+         11bg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=G5vut+/7GfWn6npImvF9Rc3EcWl6Bwqxpc3Tm/7byaQ=;
-        b=EX9mQLqgFuSBF221n7QXBzcztiiisM5ZIJQ0C1Zx4GG5rIBDc1YQ4gpcd6AKHwwCKQ
-         +/u7Vqo0HzRLsE5OBSI0QLQZVWAP73pLpBcBA327poJMu9iea9+Ii0jqgrQF6Ja3B7Mg
-         hYYq8Udecb0GZyWOSx12T1JMaG+Cnop42umCY2kDHpq11aZzYFzbPHKQu5LFKiQCWpLz
-         No1IKfYM0UpUNxCFi/DG+AhySl1o6Sw/WT+a3jDjO24ohc3u9Ir5l9xM2BsRfpNTyYTM
-         xVf1KebcQIn6AWXLKCtFXzzLaJGBVP+etpiZhl97PgkdrKfHwsCHXn0rvxdlfYB9Y2dA
-         ca4w==
-X-Gm-Message-State: APjAAAWP9gM+aT0LdO+Tn4PIvPgyW+U5aXOwUGEfZE7RKFogNdUmfrgY
-        1wuoa3An8eW80Rc0j9Rg5gzr9BPxkOJDHOo1+0VpXHItbGg=
-X-Google-Smtp-Source: APXvYqyEKzwPdx0ZjJjocJJunKwmjsRZdIowtZKK6Batd8JU0Y56aba6StNeDVmOZui0Y27K+B6WJCN6um5Z3JBIC5I=
-X-Received: by 2002:a2e:80da:: with SMTP id r26mr1814316ljg.62.1566543135677;
- Thu, 22 Aug 2019 23:52:15 -0700 (PDT)
-MIME-Version: 1.0
-References: <1565707585-5359-1-git-send-email-jcrouse@codeaurora.org> <1565707585-5359-2-git-send-email-jcrouse@codeaurora.org>
-In-Reply-To: <1565707585-5359-2-git-send-email-jcrouse@codeaurora.org>
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=aLw4CRSPJ3WKrmTX2TV02F/5DZkmqEb7ZJ94kU2yaI8=;
+        b=YhaylM7kMIZvCeUDSk5szqC897LiI6AManADJ1XuT7RzD6/R5TdcXNOdNoJPhlVnXG
+         St/dcEIw6Ko8CL8/f4eMffgiS/WF0AJzLJiLGUlK4KPlcyo7fg2+15J81w+d/nbb5Vfg
+         M9poQ9+HunFu1xmN3pc76cYEko0NSqDQf+SKUKK8vSdQr/WMNIDA0DMxdxQQ3wbfgna8
+         m7385GHhEFl2Mio3L0XuWcPTT7g8BvHXYyDfy8rlkqGcOOvBOVI1DGaMBmJ4xM2MyXMk
+         hA4ijRslFvF14VdLbG7vmbWigoagxdWLGNsDYLZmQNYaRAMM8VOMm6VHpImo4VweEhfe
+         OK+Q==
+X-Gm-Message-State: APjAAAU1UTng328BJt/vcPNyDgutMI4bvK3wfOideGboOIt3tJEuF+B1
+        CEKgvZQ7ILGAUwJpZWmEtJdSzw==
+X-Google-Smtp-Source: APXvYqxxsyuYmqHanoZNUMD5o5aUUSlZcJr9+cGYQ4QpjraO5WVJnV9YZinq5/Pk3jeJh6ojZT+g4w==
+X-Received: by 2002:a19:5217:: with SMTP id m23mr1846635lfb.124.1566545694604;
+        Fri, 23 Aug 2019 00:34:54 -0700 (PDT)
+Received: from genomnajs.ideon.se ([85.235.10.227])
+        by smtp.gmail.com with ESMTPSA id n7sm483780ljh.2.2019.08.23.00.34.52
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 23 Aug 2019 00:34:53 -0700 (PDT)
 From:   Linus Walleij <linus.walleij@linaro.org>
-Date:   Fri, 23 Aug 2019 08:52:04 +0200
-Message-ID: <CACRpkdbtPo9dr7E2hZ4=fEWTXappWTaypKJyd9M2jz0tYu7HXw@mail.gmail.com>
-Subject: Re: [PATCH v2 2/2] arm: Add DRM_MSM to defconfigs with ARCH_QCOM
-To:     Jordan Crouse <jcrouse@codeaurora.org>,
-        Andy Gross <agross@kernel.org>
-Cc:     freedreno <freedreno@lists.freedesktop.org>,
-        MSM <linux-arm-msm@vger.kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Arnd Bergmann <arnd@arndb.de>,
-        Marcin Juszkiewicz <marcin.juszkiewicz@linaro.org>,
-        Catalin Marinas <catalin.marinas@arm.com>,
-        Geert Uytterhoeven <geert+renesas@glider.be>,
-        Leonard Crestez <leonard.crestez@nxp.com>,
-        Enric Balletbo i Serra <enric.balletbo@collabora.com>,
-        Olof Johansson <olof@lixom.net>,
-        Dinh Nguyen <dinguyen@kernel.org>,
-        Miquel Raynal <miquel.raynal@bootlin.com>,
-        Krzysztof Kozlowski <krzk@kernel.org>,
-        Linux ARM <linux-arm-kernel@lists.infradead.org>,
-        Will Deacon <will@kernel.org>,
-        Jagan Teki <jagan@amarulasolutions.com>,
-        Fabrice Gasnier <fabrice.gasnier@st.com>,
-        Russell King <linux@armlinux.org.uk>,
-        Shawn Guo <shawnguo@kernel.org>,
-        Simon Horman <horms+renesas@verge.net.au>,
-        Marek Szyprowski <m.szyprowski@samsung.com>,
-        =?UTF-8?Q?Yannick_Fertr=C3=A9?= <yannick.fertre@st.com>,
-        Maxime Ripard <mripard@kernel.org>,
-        Alexandre Torgue <alexandre.torgue@st.com>,
-        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
-        Brian Masney <masneyb@onstation.org>,
-        Frank Rowand <frank.rowand@sony.com>,
-        Tony Lindgren <tony@atomide.com>,
-        Anson Huang <Anson.Huang@nxp.com>
-Content-Type: text/plain; charset="UTF-8"
+To:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org
+Cc:     dri-devel@lists.freedesktop.org,
+        Linus Walleij <linus.walleij@linaro.org>,
+        Brian Masney <masneyb@onstation.org>
+Subject: [PATCH 1/6 v2] drm/msm/mdp4: Drop unused GPIO include
+Date:   Fri, 23 Aug 2019 09:34:43 +0200
+Message-Id: <20190823073448.8385-1-linus.walleij@linaro.org>
+X-Mailer: git-send-email 2.21.0
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Aug 13, 2019 at 4:46 PM Jordan Crouse <jcrouse@codeaurora.org> wrote:
+This file is not using any symbols from <linux/gpio.h> so just
+drop this include.
 
-> Now that CONFIG_DRM_MSM is no longer default 'y' add it as a module to all
-> ARCH_QCOM enabled defconfigs to restore the previous expected build
-> behavior.
->
-> Signed-off-by: Jordan Crouse <jcrouse@codeaurora.org>
+Cc: Rob Clark <robdclark@gmail.com>
+Cc: Sean Paul <sean@poorly.run>
+Cc: linux-arm-msm@vger.kernel.org
+Cc: freedreno@lists.freedesktop.org
+Reviewed-by: Brian Masney <masneyb@onstation.org>
+Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
+---
+ChangeLog v1->v2:
+- Rebased on v5.3-rc1
+- Collected review tag
+---
+ drivers/gpu/drm/msm/disp/mdp4/mdp4_lvds_connector.c | 2 --
+ 1 file changed, 2 deletions(-)
 
-Reviewed-by: Linus Walleij <linus.walleij@linaro.org>
+diff --git a/drivers/gpu/drm/msm/disp/mdp4/mdp4_lvds_connector.c b/drivers/gpu/drm/msm/disp/mdp4/mdp4_lvds_connector.c
+index ecef4f5b9f26..9262ed2dc8c3 100644
+--- a/drivers/gpu/drm/msm/disp/mdp4/mdp4_lvds_connector.c
++++ b/drivers/gpu/drm/msm/disp/mdp4/mdp4_lvds_connector.c
+@@ -5,8 +5,6 @@
+  * Author: Vinay Simha <vinaysimha@inforcecomputing.com>
+  */
+ 
+-#include <linux/gpio.h>
+-
+ #include "mdp4_kms.h"
+ 
+ struct mdp4_lvds_connector {
+-- 
+2.21.0
 
-I suppose Andy will pick this up?
-
-Yours,
-Linus Walleij
