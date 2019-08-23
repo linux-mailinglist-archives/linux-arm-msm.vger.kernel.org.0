@@ -2,174 +2,228 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 648209A3D0
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 Aug 2019 01:30:43 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9E1019A66D
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 Aug 2019 06:01:48 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726364AbfHVXam (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 22 Aug 2019 19:30:42 -0400
-Received: from mail-pf1-f193.google.com ([209.85.210.193]:39032 "EHLO
-        mail-pf1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726347AbfHVXal (ORCPT
+        id S1725959AbfHWEBr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 23 Aug 2019 00:01:47 -0400
+Received: from mail-pl1-f195.google.com ([209.85.214.195]:34335 "EHLO
+        mail-pl1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725951AbfHWEBr (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 22 Aug 2019 19:30:41 -0400
-Received: by mail-pf1-f193.google.com with SMTP id f17so5021604pfn.6
-        for <linux-arm-msm@vger.kernel.org>; Thu, 22 Aug 2019 16:30:41 -0700 (PDT)
+        Fri, 23 Aug 2019 00:01:47 -0400
+Received: by mail-pl1-f195.google.com with SMTP id d3so4793664plr.1;
+        Thu, 22 Aug 2019 21:01:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=broadcom.com; s=google;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-transfer-encoding:content-language;
-        bh=pipHIj2z8t6n6jqMVgjlsl2tSXUd+7sKmIuVqD9kPY4=;
-        b=hMnkoT5tbbKTZsnL0o1jbPhA9Rz8Qwpwy4McYBokvjjLVHvSW4wOMynuN5oMcP122a
-         7WuQfzvAX0353Q+FkxsoKOMI95qLc2yuaJ1UYcq6w9RXgM4ouNA07MzId4svJ02rAvrs
-         ZYfoOc+wEVTW6rnnvuG4FkOXzoQ9sH0pA1diY=
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=EQmZs4bhJ2tusrHJ4UkPwecm4Xg1wfPEyrYFz1dn5S4=;
+        b=sPEXTBIsaQKcLgyU4WEMUwBz/RSuyDYl4oSaO59GPlOIdYqfjnRtoK0h/hH0PME7Gk
+         sqEMAgczQjBHrQaF929uzwqNNZ2xydaC+7KC/h446tHCUIkj/V8TfOmYcQpMkZGJjnEt
+         l5GeD6YVDoJqxZQHpiLamyq4NTsHOcpQQMDTcagA0m+XZLAczsSCCeFtddF8WpeyNb1b
+         ZwIT4zRmIIZIeQpE1TOb9EHOFWLg9ZTC39YaRo0n0HbPN2GVV0PVWzabbfLx+QJLaTkL
+         1ew/8Jq0rvaQFbpmEAc9xNBhEeY0p9FLH/R5bSD48eqYOXsXfsRPMJ3RdaSgDGI6T37H
+         lgCA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-transfer-encoding
-         :content-language;
-        bh=pipHIj2z8t6n6jqMVgjlsl2tSXUd+7sKmIuVqD9kPY4=;
-        b=c43wTOI+egKZc4FBhnHfI2kAlZUYUGPVYlhcGTkn/sJWrmE0myjrGnNAEJ3vRv525R
-         Mfa7he9/ndUxSbFPmZMKpuO5aK4sX74xoT1UpShP3OZE82j2Tq1WCGVMvr/OoSU7Ifvs
-         xE0zkZ3jG97T4PIwnjHK7vwwq2YaJwLADvYyBYpQu7T4PGvWOlD9TnoZnlqMSRi6y72d
-         kkWmBm+iqpCt32lc1XVz0pO5G2x3F1sSUENQSjr1ilVo9OeJqEzVcoZdaYRsrpbB3jaC
-         eyGfgZIWgLLKsV25TBNURBxnBK8QLcN1Ew9KgH+fwdtWMfuCFynxDbP/I1MlOcLjMyrB
-         lImg==
-X-Gm-Message-State: APjAAAXdGSYqh9gk1L7CB5AWG0OL4M59Wqzm66fY6pwnn5NhJU1TPXGw
-        cMlboJ/Vn9Ruy5fsn144UyAGAw==
-X-Google-Smtp-Source: APXvYqzKrKT+k/MJjU1tTcW0RKdJpKgeuPCz/JwywMw0aLkN5Y6KHgx4CNyQzDQLoks+nrLfaVWIWQ==
-X-Received: by 2002:a17:90a:234f:: with SMTP id f73mr2274285pje.130.1566516640592;
-        Thu, 22 Aug 2019 16:30:40 -0700 (PDT)
-Received: from [10.136.13.65] ([192.19.228.250])
-        by smtp.gmail.com with ESMTPSA id c12sm526175pfc.22.2019.08.22.16.30.38
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 22 Aug 2019 16:30:40 -0700 (PDT)
-Subject: Re: [PATCH 2/7] firmware: add offset to request_firmware_into_buf
-To:     Luis Chamberlain <mcgrof@kernel.org>
-Cc:     Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        David Brown <david.brown@linaro.org>,
-        Alexander Viro <viro@zeniv.linux.org.uk>,
-        Shuah Khan <shuah@kernel.org>, bjorn.andersson@linaro.org,
-        Shuah Khan <skhan@linuxfoundation.org>,
-        Arnd Bergmann <arnd@arndb.de>,
-        "Rafael J . Wysocki" <rafael@kernel.org>,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-fsdevel@vger.kernel.org,
-        BCM Kernel Feedback <bcm-kernel-feedback-list@broadcom.com>,
-        Olof Johansson <olof@lixom.net>,
-        Andrew Morton <akpm@linux-foundation.org>,
-        Dan Carpenter <dan.carpenter@oracle.com>,
-        Colin Ian King <colin.king@canonical.com>,
-        Kees Cook <keescook@chromium.org>,
-        Takashi Iwai <tiwai@suse.de>, linux-kselftest@vger.kernel.org
-References: <20190822192451.5983-1-scott.branden@broadcom.com>
- <20190822192451.5983-3-scott.branden@broadcom.com>
- <20190822194712.GG16384@42.do-not-panic.com>
- <7ee02971-e177-af05-28e0-90575ebe12e0@broadcom.com>
- <20190822211220.GR16384@42.do-not-panic.com>
-From:   Scott Branden <scott.branden@broadcom.com>
-Message-ID: <009295ce-bdc5-61d8-b450-5fcdae041922@broadcom.com>
-Date:   Thu, 22 Aug 2019 16:30:37 -0700
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.8.0
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=EQmZs4bhJ2tusrHJ4UkPwecm4Xg1wfPEyrYFz1dn5S4=;
+        b=d3QF48+wXyCM78MSs03zrQX6a/PmNq/TKKqJPrpfyLoRZzE2lm4dXtrxby17KzzhMS
+         bLNkMz0l9707ZAWneY+lz5kTHLMXB/UEd0jess3Chf5YQFwG9gUHQ/EciQ4RxI9KmKXa
+         AD05N3hqI5nlHjofKKvVuIj4sJyMwSHScylv2LaUBIDR4XTWz2bzsjkrRXAAmjhDEJsN
+         7+MZ5QKqyxnFQG4eSyFIr7i1wC2r/dwwyKF0ros+lRLp9TVzp5eXTy16WbG/1JCZXsFu
+         JuNRAUy90Ku944FnhfzzpU5pfHJhpg82jj+yGPPeM8Xo0JQ6SLMVXIiYnucnPQ/I3mae
+         S0AA==
+X-Gm-Message-State: APjAAAUeQ58rPfYrjb4eYcKsw1xrwEj8gLyaTTOu1uZZUJE8WaVnedQn
+        le80Q9eGUbhSWHRlXZLkA7M=
+X-Google-Smtp-Source: APXvYqwMOBwXvwUojtN+YVxyNiMy6OhcAozyWm0kv1YbVbQgIW7Bjiei4TaZSxDordWkstYKsd6WSQ==
+X-Received: by 2002:a17:902:581:: with SMTP id f1mr2355479plf.246.1566532905917;
+        Thu, 22 Aug 2019 21:01:45 -0700 (PDT)
+Received: from localhost ([2601:1c0:5200:e554::6bd7])
+        by smtp.gmail.com with ESMTPSA id r1sm678945pgv.70.2019.08.22.21.01.44
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 22 Aug 2019 21:01:45 -0700 (PDT)
+From:   Rob Clark <robdclark@gmail.com>
+To:     dri-devel@lists.freedesktop.org
+Cc:     Rob Clark <robdclark@chromium.org>,
+        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Jeykumar Sankaran <jsanka@codeaurora.org>,
+        Abhinav Kumar <abhinavk@codeaurora.org>,
+        Jordan Crouse <jcrouse@codeaurora.org>,
+        Bruce Wang <bzwang@chromium.org>,
+        Sravanthi Kollukuduru <skolluku@codeaurora.org>,
+        Fritz Koenig <frkoenig@google.com>,
+        linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org,
+        linux-kernel@vger.kernel.org
+Subject: [PATCH 1/2] drm/msm/dpu: remove some impossible error checking
+Date:   Thu, 22 Aug 2019 21:00:10 -0700
+Message-Id: <20190823040103.22289-1-robdclark@gmail.com>
+X-Mailer: git-send-email 2.21.0
 MIME-Version: 1.0
-In-Reply-To: <20190822211220.GR16384@42.do-not-panic.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Content-Language: en-US
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Luis,
+From: Rob Clark <robdclark@chromium.org>
 
-On 2019-08-22 2:12 p.m., Luis Chamberlain wrote:
-> On Thu, Aug 22, 2019 at 01:07:41PM -0700, Scott Branden wrote:
->> On 2019-08-22 12:47 p.m., Luis Chamberlain wrote:
->>> This implies you having to change the other callers, and while currently
->>> our list of drivers is small,
->> Yes, the list is small, very small.
->>
->> There is a single driver making a call to the existing API.
->>
->> And, the maintainer of that driver wanted
->> to start utilizing my enhanced API instead of the current API.
-> You mean in the near term future? Your change makes it use the full file.
-> Just checking.
+I'm sure there is plenty more to remove.. this is just some of the ones
+I noticed.
 
-The change in the patch keeps the existing functionality in the
+Signed-off-by: Rob Clark <robdclark@chromium.org>
+---
+ drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c   | 19 -------------------
+ .../drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c  |  3 ---
+ .../drm/msm/disp/dpu1/dpu_encoder_phys_vid.c  |  5 -----
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c    |  3 ---
+ drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c       |  5 -----
+ drivers/gpu/drm/msm/disp/dpu1/dpu_vbif.c      | 10 ----------
+ 6 files changed, 45 deletions(-)
 
-qcom mdt_loader by reading the full file using the enhanced api.
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
+index 0e2f74163a16..ed677cf2e1af 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
++++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
+@@ -1428,12 +1428,6 @@ static void _dpu_encoder_trigger_flush(struct drm_encoder *drm_enc,
+ 	int pending_kickoff_cnt;
+ 	u32 ret = UINT_MAX;
+ 
+-	if (!drm_enc || !phys) {
+-		DPU_ERROR("invalid argument(s), drm_enc %d, phys_enc %d\n",
+-				drm_enc != 0, phys != 0);
+-		return;
+-	}
+-
+ 	if (!phys->hw_pp) {
+ 		DPU_ERROR("invalid pingpong hw\n");
+ 		return;
+@@ -1566,11 +1560,6 @@ static void _dpu_encoder_kickoff_phys(struct dpu_encoder_virt *dpu_enc,
+ 	uint32_t i, pending_flush;
+ 	unsigned long lock_flags;
+ 
+-	if (!dpu_enc) {
+-		DPU_ERROR("invalid encoder\n");
+-		return;
+-	}
+-
+ 	pending_flush = 0x0;
+ 
+ 	/* update pending counts and trigger kickoff ctl flush atomically */
+@@ -1798,10 +1787,6 @@ void dpu_encoder_prepare_for_kickoff(struct drm_encoder *drm_enc, bool async)
+ 	bool needs_hw_reset = false;
+ 	unsigned int i;
+ 
+-	if (!drm_enc) {
+-		DPU_ERROR("invalid args\n");
+-		return;
+-	}
+ 	dpu_enc = to_dpu_encoder_virt(drm_enc);
+ 
+ 	trace_dpu_enc_prepare_kickoff(DRMID(drm_enc));
+@@ -1837,10 +1822,6 @@ void dpu_encoder_kickoff(struct drm_encoder *drm_enc, bool async)
+ 	ktime_t wakeup_time;
+ 	unsigned int i;
+ 
+-	if (!drm_enc) {
+-		DPU_ERROR("invalid encoder\n");
+-		return;
+-	}
+ 	DPU_ATRACE_BEGIN("encoder_kickoff");
+ 	dpu_enc = to_dpu_encoder_virt(drm_enc);
+ 
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c
+index 1b3ab909f367..2923b63d95fe 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c
++++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c
+@@ -720,9 +720,6 @@ static int dpu_encoder_phys_cmd_wait_for_vblank(
+ static void dpu_encoder_phys_cmd_handle_post_kickoff(
+ 		struct dpu_encoder_phys *phys_enc)
+ {
+-	if (!phys_enc)
+-		return;
+-
+ 	/**
+ 	 * re-enable external TE, either for the first time after enabling
+ 	 * or if disabled for Autorefresh
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c
+index 5055a5eec869..737fe963a490 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c
++++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c
+@@ -612,11 +612,6 @@ static void dpu_encoder_phys_vid_handle_post_kickoff(
+ {
+ 	unsigned long lock_flags;
+ 
+-	if (!phys_enc) {
+-		DPU_ERROR("invalid encoder\n");
+-		return;
+-	}
+-
+ 	/*
+ 	 * Video mode must flush CTL before enabling timing engine
+ 	 * Video encoders need to turn on their interfaces now
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c
+index b2f7b0e886b5..179e8d52cadb 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c
++++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c
+@@ -102,9 +102,6 @@ static inline void dpu_hw_ctl_update_pending_flush(struct dpu_hw_ctl *ctx,
+ 
+ static u32 dpu_hw_ctl_get_pending_flush(struct dpu_hw_ctl *ctx)
+ {
+-	if (!ctx)
+-		return 0x0;
+-
+ 	return ctx->pending_flush_mask;
+ }
+ 
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
+index 681955eb286f..b8d264bd15df 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
++++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
+@@ -490,11 +490,6 @@ static int _dpu_kms_drm_obj_init(struct dpu_kms *dpu_kms)
+ 	int primary_planes_idx = 0, cursor_planes_idx = 0, i, ret;
+ 	int max_crtc_count;
+ 
+-	if (!dpu_kms || !dpu_kms->dev || !dpu_kms->dev->dev) {
+-		DPU_ERROR("invalid dpu_kms\n");
+-		return -EINVAL;
+-	}
+-
+ 	dev = dpu_kms->dev;
+ 	priv = dev->dev_private;
+ 	catalog = dpu_kms->catalog;
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_vbif.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_vbif.c
+index 8bc3aea7cd86..f98a882318d1 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/dpu_vbif.c
++++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_vbif.c
+@@ -264,11 +264,6 @@ void dpu_vbif_clear_errors(struct dpu_kms *dpu_kms)
+ 	struct dpu_hw_vbif *vbif;
+ 	u32 i, pnd, src;
+ 
+-	if (!dpu_kms) {
+-		DPU_ERROR("invalid argument\n");
+-		return;
+-	}
+-
+ 	for (i = 0; i < ARRAY_SIZE(dpu_kms->hw_vbif); i++) {
+ 		vbif = dpu_kms->hw_vbif[i];
+ 		if (vbif && vbif->ops.clear_errors) {
+@@ -286,11 +281,6 @@ void dpu_vbif_init_memtypes(struct dpu_kms *dpu_kms)
+ 	struct dpu_hw_vbif *vbif;
+ 	int i, j;
+ 
+-	if (!dpu_kms) {
+-		DPU_ERROR("invalid argument\n");
+-		return;
+-	}
+-
+ 	for (i = 0; i < ARRAY_SIZE(dpu_kms->hw_vbif); i++) {
+ 		vbif = dpu_kms->hw_vbif[i];
+ 		if (vbif && vbif->cap && vbif->ops.set_mem_type) {
+-- 
+2.21.0
 
-I don't know when Bjorn will switch to use the partial firmware load:
-
-https://lkml.org/lkml/2019/5/27/9
-
->
->> As such I think it is very reasonable to update the API right now.
-> I'd prefer to see it separate, and we fix the race *before* we introduce
-> the new functionality. I'll be poking at that shortly but I should note
-> that I leave on vacation this weekend and won't be back for a good while.
-> I already have an idea of how to approach this.
->
-> When the current user want to use the new API it can do so, and then we
-> just kill the older caller.
-
-We can kill the older api right now as my patch in qcom mdt_loader
-
-calls the new API which allows reading of full or partial files?
-
->
->>> following the history of the firmware API
->>> and the long history of debate of *how* we should evolve its API, its
->>> preferred we add yet another new caller for this functionality. So
->>> please add a new caller, and use EXPORT_SYMBOL_GPL().
->>>
->>> And while at it, pleaase use firmware_request_*() as the prefix, as we
->>> have want to use that as the instilled prefix. We have yet to complete
->>> the rename of the others older callers but its just a matter of time.
->>>
->>> So something like: firmware_request_into_buf_offset()
->> I would prefer to rename the API at this time given there is only a single
->> user.
->>
->> Otherwise I would need to duplicate quite a bit in the test code to support
->> testing the single user of the old api and then enhanced API.
->> Or, I can leave existing API in place and change the test case to
->> just test the enhanced API to keep things simpler in the test code?
-> If the new user is going to move to the API once available I will be
-> happy to then leave out testing for the older API. That would make
-> sense.
-
-I have switched the single user of the existing api to the new
-
-API in the patch already?  And both full and partial reads using
-
-the new API are tested with this patch series.  If you really insist
-
-on keeping the old API for a single user I can drop that change from the
-
-patch series and have the old request_firmware_api call simply
-
-be a wrapper calling the new API.
-
->
-> But if you do want to keep testing for the old API, and allow an easy
-> removal for it on the test driver, wouldn't a function pointer suffice
-> for which API call to use based on a boolean?
->
-> But yeah if we're going to abandon the old mechanism I'm happy to skip
-> its te
-
-We can skip right now then.  As enhanced API is a superset of old API.
-
-If you want the old API left in place I can just add the wrapper 
-described and
-
-only test the newly named function and thus indirectly test the old
-
-request_firmware_into_buf.
-
-> sting.
->
->    Luis
