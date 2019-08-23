@@ -2,86 +2,100 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id DFDF69A7CE
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 Aug 2019 08:51:34 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A44499A7D3
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 Aug 2019 08:52:19 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2387430AbfHWGve (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 23 Aug 2019 02:51:34 -0400
-Received: from smtp.codeaurora.org ([198.145.29.96]:48900 "EHLO
-        smtp.codeaurora.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1732321AbfHWGvd (ORCPT
+        id S2404399AbfHWGwS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 23 Aug 2019 02:52:18 -0400
+Received: from mail-lj1-f194.google.com ([209.85.208.194]:33170 "EHLO
+        mail-lj1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2404369AbfHWGwR (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 23 Aug 2019 02:51:33 -0400
-Received: by smtp.codeaurora.org (Postfix, from userid 1000)
-        id 5ABF960E57; Fri, 23 Aug 2019 06:51:33 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
-        s=default; t=1566543093;
-        bh=kv6YyZbAfmhHH6lQEwMxYC8DafkWAPVqggKZIIaBG4g=;
-        h=Subject:To:Cc:References:From:Date:In-Reply-To:From;
-        b=GQYgNsrDoRfA3PN/q1STftgH5y8ba6EdQ59XbiSSsb5/eX0mUbgnX6fGs2eiGfX9n
-         2PFg7M12Og+FM/Cgj1bESUfI74FARFqqf+sTlY5SZvJecf1nUoOXZ0bMXNDiJQfAwL
-         rM6ZpkcWlG0rC+kVhVGTmjnub2GDjdTijaSL/cLw=
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        pdx-caf-mail.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.7 required=2.0 tests=ALL_TRUSTED,BAYES_00,
-        DKIM_INVALID,DKIM_SIGNED,SPF_NONE autolearn=no autolearn_force=no
-        version=3.4.0
-Received: from [10.242.6.109] (blr-c-bdr-fw-01_globalnat_allzones-outside.qualcomm.com [103.229.19.19])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: mkshah@smtp.codeaurora.org)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 877C0605A5;
-        Fri, 23 Aug 2019 06:51:28 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
-        s=default; t=1566543092;
-        bh=kv6YyZbAfmhHH6lQEwMxYC8DafkWAPVqggKZIIaBG4g=;
-        h=Subject:To:Cc:References:From:Date:In-Reply-To:From;
-        b=NQR8OpyX+5dTGRSWj9jGppAWqlKEMya+KKsr5IypewBq8DCQ2cS0eCbMA8Qu7CsKe
-         /tcFDNwkqdg1rrt0xEP7yfrioU40YSNL9dqlG1lTOB5JXJOnMRN/i/b5uXksTwPPQI
-         jDHvuQe19pJqy9oBOr/TSip2+MR6ryV3+bdny4AY=
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 877C0605A5
-Authentication-Results: pdx-caf-mail.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: pdx-caf-mail.web.codeaurora.org; spf=none smtp.mailfrom=mkshah@codeaurora.org
-Subject: Re: [PATCH 0/4] Add RSC power domain support
-To:     Stephen Boyd <swboyd@chromium.org>, agross@kernel.org,
-        david.brown@linaro.org, linux-arm-msm@vger.kernel.org
-Cc:     linux-kernel@vger.kernel.org, linux-pm@vger.kernel.org,
-        bjorn.andersson@linaro.org, evgreen@chromium.org,
-        dianders@chromium.org, rnayak@codeaurora.org, ilina@codeaurora.org,
-        lsrao@codeaurora.org, ulf.hansson@linaro.org
-References: <20190813082442.25796-1-mkshah@codeaurora.org>
- <5d5450b2.1c69fb81.ec1c1.1cb2@mx.google.com>
-From:   Maulik Shah <mkshah@codeaurora.org>
-Message-ID: <def5e325-c797-b13e-1ea3-3664394a5896@codeaurora.org>
-Date:   Fri, 23 Aug 2019 12:21:26 +0530
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
- Thunderbird/60.8.0
+        Fri, 23 Aug 2019 02:52:17 -0400
+Received: by mail-lj1-f194.google.com with SMTP id z17so7885906ljz.0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 22 Aug 2019 23:52:16 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=G5vut+/7GfWn6npImvF9Rc3EcWl6Bwqxpc3Tm/7byaQ=;
+        b=MVIXR6k8i6ZWuPASEFHHR9F0nPCzK0eVjc8PYz7FptLy2OJujuacqW6lgWGhwQySFz
+         3QAySOWoE9nAwQwl1xLEODlrOsAyBMu2u04vibbBBVpvxgU2d/d9lFgSf123gf2E114D
+         /jPW1MjyPfCGwgmewUy7qWtuRuFl0ZdoBgJUXWuNSSUvkanykJHAMib9ZE1FHuoQnZgx
+         XzaapAMFiJGaBP/N7hmC43ow43jjVG9Li0erAVdh6tyQNjy9HmQDLOQfs/eqEiCTGeze
+         cBBi02p/e6U/e0HvajIHRSQG3k6yQHhDjihSPwrKZVq8gfHYtJswFQUJzcr833qCT5/D
+         N/8w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=G5vut+/7GfWn6npImvF9Rc3EcWl6Bwqxpc3Tm/7byaQ=;
+        b=EX9mQLqgFuSBF221n7QXBzcztiiisM5ZIJQ0C1Zx4GG5rIBDc1YQ4gpcd6AKHwwCKQ
+         +/u7Vqo0HzRLsE5OBSI0QLQZVWAP73pLpBcBA327poJMu9iea9+Ii0jqgrQF6Ja3B7Mg
+         hYYq8Udecb0GZyWOSx12T1JMaG+Cnop42umCY2kDHpq11aZzYFzbPHKQu5LFKiQCWpLz
+         No1IKfYM0UpUNxCFi/DG+AhySl1o6Sw/WT+a3jDjO24ohc3u9Ir5l9xM2BsRfpNTyYTM
+         xVf1KebcQIn6AWXLKCtFXzzLaJGBVP+etpiZhl97PgkdrKfHwsCHXn0rvxdlfYB9Y2dA
+         ca4w==
+X-Gm-Message-State: APjAAAWP9gM+aT0LdO+Tn4PIvPgyW+U5aXOwUGEfZE7RKFogNdUmfrgY
+        1wuoa3An8eW80Rc0j9Rg5gzr9BPxkOJDHOo1+0VpXHItbGg=
+X-Google-Smtp-Source: APXvYqyEKzwPdx0ZjJjocJJunKwmjsRZdIowtZKK6Batd8JU0Y56aba6StNeDVmOZui0Y27K+B6WJCN6um5Z3JBIC5I=
+X-Received: by 2002:a2e:80da:: with SMTP id r26mr1814316ljg.62.1566543135677;
+ Thu, 22 Aug 2019 23:52:15 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <5d5450b2.1c69fb81.ec1c1.1cb2@mx.google.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Content-Language: en-GB
+References: <1565707585-5359-1-git-send-email-jcrouse@codeaurora.org> <1565707585-5359-2-git-send-email-jcrouse@codeaurora.org>
+In-Reply-To: <1565707585-5359-2-git-send-email-jcrouse@codeaurora.org>
+From:   Linus Walleij <linus.walleij@linaro.org>
+Date:   Fri, 23 Aug 2019 08:52:04 +0200
+Message-ID: <CACRpkdbtPo9dr7E2hZ4=fEWTXappWTaypKJyd9M2jz0tYu7HXw@mail.gmail.com>
+Subject: Re: [PATCH v2 2/2] arm: Add DRM_MSM to defconfigs with ARCH_QCOM
+To:     Jordan Crouse <jcrouse@codeaurora.org>,
+        Andy Gross <agross@kernel.org>
+Cc:     freedreno <freedreno@lists.freedesktop.org>,
+        MSM <linux-arm-msm@vger.kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Arnd Bergmann <arnd@arndb.de>,
+        Marcin Juszkiewicz <marcin.juszkiewicz@linaro.org>,
+        Catalin Marinas <catalin.marinas@arm.com>,
+        Geert Uytterhoeven <geert+renesas@glider.be>,
+        Leonard Crestez <leonard.crestez@nxp.com>,
+        Enric Balletbo i Serra <enric.balletbo@collabora.com>,
+        Olof Johansson <olof@lixom.net>,
+        Dinh Nguyen <dinguyen@kernel.org>,
+        Miquel Raynal <miquel.raynal@bootlin.com>,
+        Krzysztof Kozlowski <krzk@kernel.org>,
+        Linux ARM <linux-arm-kernel@lists.infradead.org>,
+        Will Deacon <will@kernel.org>,
+        Jagan Teki <jagan@amarulasolutions.com>,
+        Fabrice Gasnier <fabrice.gasnier@st.com>,
+        Russell King <linux@armlinux.org.uk>,
+        Shawn Guo <shawnguo@kernel.org>,
+        Simon Horman <horms+renesas@verge.net.au>,
+        Marek Szyprowski <m.szyprowski@samsung.com>,
+        =?UTF-8?Q?Yannick_Fertr=C3=A9?= <yannick.fertre@st.com>,
+        Maxime Ripard <mripard@kernel.org>,
+        Alexandre Torgue <alexandre.torgue@st.com>,
+        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
+        Brian Masney <masneyb@onstation.org>,
+        Frank Rowand <frank.rowand@sony.com>,
+        Tony Lindgren <tony@atomide.com>,
+        Anson Huang <Anson.Huang@nxp.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On Tue, Aug 13, 2019 at 4:46 PM Jordan Crouse <jcrouse@codeaurora.org> wrote:
 
-On 8/14/2019 11:49 PM, Stephen Boyd wrote:
-> Quoting Maulik Shah (2019-08-13 01:24:38)
->> Resource State Coordinator (RSC) is responsible for powering off/lowering
->> the requirements from CPU subsystem for the associated hardware like buses,
->> clocks, and regulators when all CPUs and cluster is powered down.
->>
->> RSC power domain uses last-man activities provided by genpd framework based on
->> Ulf Hansoon's patch series[1], when the cluster of CPUs enter deepest idle
->> states. As a part of domain poweroff, RSC can lower resource state requirements
->> by flushing the cached sleep and wake state votes for resources.
-> This series looks like half the solution. Is there a full set of patches
-> that connects the RPMh power domain to cpuidle and genpds?
-Yes, i will include in next version.
+> Now that CONFIG_DRM_MSM is no longer default 'y' add it as a module to all
+> ARCH_QCOM enabled defconfigs to restore the previous expected build
+> behavior.
+>
+> Signed-off-by: Jordan Crouse <jcrouse@codeaurora.org>
 
--- 
-QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member of Code Aurora Forum, hosted by The Linux Foundation
+Reviewed-by: Linus Walleij <linus.walleij@linaro.org>
 
+I suppose Andy will pick this up?
+
+Yours,
+Linus Walleij
