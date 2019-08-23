@@ -2,183 +2,101 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 1B4AE9AE99
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 Aug 2019 14:01:29 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 3E6169AF09
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 Aug 2019 14:17:30 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731614AbfHWL7t (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 23 Aug 2019 07:59:49 -0400
-Received: from mail-qk1-f193.google.com ([209.85.222.193]:44045 "EHLO
-        mail-qk1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729797AbfHWL7t (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 23 Aug 2019 07:59:49 -0400
-Received: by mail-qk1-f193.google.com with SMTP id d79so7873057qke.11
-        for <linux-arm-msm@vger.kernel.org>; Fri, 23 Aug 2019 04:59:48 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=R/7z9akY64/3nYd1LmH/7prCtJSCPHvXXZJ3LUcNZ2M=;
-        b=XbdgalBjnT6mmlRqw9XcB9jlAIHOZn6Gnw5Pmfq2q7Zi7O2Ir6vsKjMd7HKsRo48c6
-         gwrEn8jk7Nuwwiq87RVyk2hSXMiWgHc11WN2eRiJO+XQuL3vD3lIBs71tto/V/LoJy+3
-         Drumf7PyN0wWYFSwVL1PxPmQ3J1JdV08hzKk0rh8XrIRtoOEvEwQ6kY9pLdqGLDgTh+g
-         /040z1SXt8h99Hpy4Fp1000AsUOOAHnJM4PvTuN+GxE2X4KhXolHXmq7GSvNf8SbCddY
-         Um3jsN3kQYtp3Kb/olv2XkF8iPxXPjpl0z0L4be8d5iOL+LvDHxf7CAZcPjwjbe1GBqR
-         2l5g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=R/7z9akY64/3nYd1LmH/7prCtJSCPHvXXZJ3LUcNZ2M=;
-        b=kbu95/lmo8Yt1yCTDHz4LLasyK0/lRBkbFhamuaW4zu1dAmmcHLGR94LG8SuOu4pSk
-         HHhqqjCJyQ1SktwNt8dYSMdQPrHRVifj3l960x+2xKIpT4FRkEshQIZAjamG5oVL4O40
-         Vw1WFDEoZhnGdF86H1ZIhLbHbmBcqTkQ/eWnEYz7SqkH0szITBN2oH0RhuVARep3MWE4
-         3r8r9bmg/E2G3RcFUtol/6ZMkSV4oT0ouPXblDOr5+UN73lsWmU8/o9pF4P8OZt2Qdtu
-         CU0Ak2hoCukJg+a7skvqN2Y2F6cQU2Ou43xJuvL97atf1rpAh3hZKJvRRdwrVmz7bxWY
-         hCvw==
-X-Gm-Message-State: APjAAAUPwI+PAYFdXY+3gtazZbe/uvbCSZhYtuLL5FBYwba41aBPdSv9
-        PHOI0TiZ6L9CTl/IkFc+9CP2104pYBU8jidKvAGbZQ==
-X-Google-Smtp-Source: APXvYqxnSMlBmki602wGLbsV0PSiWdOK/0Q5DRafxwp9BavPVXNT/gdZlRtfnKwj4ckAe6b/LglAx9q0RQmv1RkWgH8=
-X-Received: by 2002:a05:620a:5f7:: with SMTP id z23mr3611218qkg.106.1566561587907;
- Fri, 23 Aug 2019 04:59:47 -0700 (PDT)
+        id S2390079AbfHWMQv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 23 Aug 2019 08:16:51 -0400
+Received: from onstation.org ([52.200.56.107]:50720 "EHLO onstation.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S2387637AbfHWMQv (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 23 Aug 2019 08:16:51 -0400
+Received: from localhost.localdomain (wsip-184-191-162-253.sd.sd.cox.net [184.191.162.253])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits))
+        (No client certificate requested)
+        (Authenticated sender: masneyb)
+        by onstation.org (Postfix) with ESMTPSA id B5FEB3E83A;
+        Fri, 23 Aug 2019 12:16:48 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=onstation.org;
+        s=default; t=1566562610;
+        bh=eh6YeVR/aaRQNy0BfSesizLKEGUOODPOyckdT4m9Imk=;
+        h=From:To:Cc:Subject:Date:From;
+        b=j+jFpA5dm8HNQPPS6RDTSJGMa2v6pL8IZuN0d/WDqF0vpib3TTBvrwAd/SWd0ynsI
+         AZQSp3DLmHdo4EA5Wz6xya3DkGu31B5rttiRE4YhsOhRZualg9mChcRFkRrPkI+fdr
+         4Yu0F/g+nstdUJFxyEqzR/9w+M6tnc+9KJ2zRDzM=
+From:   Brian Masney <masneyb@onstation.org>
+To:     agross@kernel.org, robdclark@gmail.com, sean@poorly.run,
+        robh+dt@kernel.org, bjorn.andersson@linaro.org
+Cc:     airlied@linux.ie, daniel@ffwll.ch, mark.rutland@arm.com,
+        jonathan@marek.ca, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org, devicetree@vger.kernel.org,
+        jcrouse@codeaurora.org
+Subject: [PATCH v7 0/7] qcom: add OCMEM support
+Date:   Fri, 23 Aug 2019 05:16:30 -0700
+Message-Id: <20190823121637.5861-1-masneyb@onstation.org>
+X-Mailer: git-send-email 2.21.0
 MIME-Version: 1.0
-References: <20190823093835.32655-1-srinivas.kandagatla@linaro.org>
-In-Reply-To: <20190823093835.32655-1-srinivas.kandagatla@linaro.org>
-From:   Amit Kucheria <amit.kucheria@linaro.org>
-Date:   Fri, 23 Aug 2019 17:29:36 +0530
-Message-ID: <CAP245DVf9fZNVEaYS39_NZ133LbwuZ77i=2fHUs-u_r-5EK-3Q@mail.gmail.com>
-Subject: Re: [PATCH] drivers: thermal: qcom: tsens: Fix memory leak from
- qfprom read
-To:     Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-Cc:     Linux PM list <linux-pm@vger.kernel.org>,
-        Eduardo Valentin <edubezval@gmail.com>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, Aug 23, 2019 at 3:08 PM Srinivas Kandagatla
-<srinivas.kandagatla@linaro.org> wrote:
->
-> memory returned as part of nvmem_read via qfprom_read should be
-> freed by the consumer once done.
-> Existing code is not doing it so fix it.
->
-> Below memory leak detected by kmemleak
->    [<ffffff80088b7658>] kmemleak_alloc+0x50/0x84
->     [<ffffff80081df120>] __kmalloc+0xe8/0x168
->     [<ffffff80086db350>] nvmem_cell_read+0x30/0x80
->     [<ffffff8008632790>] qfprom_read+0x4c/0x7c
->     [<ffffff80086335a4>] calibrate_v1+0x34/0x204
->     [<ffffff8008632518>] tsens_probe+0x164/0x258
->     [<ffffff80084e0a1c>] platform_drv_probe+0x80/0xa0
->     [<ffffff80084de4f4>] really_probe+0x208/0x248
->     [<ffffff80084de2c4>] driver_probe_device+0x98/0xc0
->     [<ffffff80084dec54>] __device_attach_driver+0x9c/0xac
->     [<ffffff80084dca74>] bus_for_each_drv+0x60/0x8c
->     [<ffffff80084de634>] __device_attach+0x8c/0x100
->     [<ffffff80084de6c8>] device_initial_probe+0x20/0x28
->     [<ffffff80084dcbb8>] bus_probe_device+0x34/0x7c
->     [<ffffff80084deb08>] deferred_probe_work_func+0x6c/0x98
->     [<ffffff80080c3da8>] process_one_work+0x160/0x2f8
->
-> Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+This patch series adds support for Qualcomm's On Chip MEMory (OCMEM)
+that is needed in order to support some a3xx and a4xx-based GPUs
+upstream. This is based on Rob Clark's patch series that he submitted
+in October 2015 and I am resubmitting updated patches with his
+permission. See the individual patches for the changelog.
 
-Acked-by: Amit Kucheria <amit.kucheria@linaro.org>
+This was tested with the GPU on a LG Nexus 5 (hammerhead) phone and
+this will work on other msm8974-based systems. For a summary of what
+currently works upstream on the Nexus 5, see my status page at
+https://masneyb.github.io/nexus-5-upstream/.
 
-> ---
->  drivers/thermal/qcom/tsens-8960.c |  2 ++
->  drivers/thermal/qcom/tsens-v0_1.c | 12 ++++++++++--
->  drivers/thermal/qcom/tsens-v1.c   |  1 +
->  drivers/thermal/qcom/tsens.h      |  1 +
->  4 files changed, 14 insertions(+), 2 deletions(-)
->
-> diff --git a/drivers/thermal/qcom/tsens-8960.c b/drivers/thermal/qcom/tsens-8960.c
-> index 8d9b721dadb6..e46a4e3f25c4 100644
-> --- a/drivers/thermal/qcom/tsens-8960.c
-> +++ b/drivers/thermal/qcom/tsens-8960.c
-> @@ -229,6 +229,8 @@ static int calibrate_8960(struct tsens_priv *priv)
->         for (i = 0; i < num_read; i++, s++)
->                 s->offset = data[i];
->
-> +       kfree(data);
-> +
->         return 0;
->  }
->
-> diff --git a/drivers/thermal/qcom/tsens-v0_1.c b/drivers/thermal/qcom/tsens-v0_1.c
-> index 6f26fadf4c27..055647bcee67 100644
-> --- a/drivers/thermal/qcom/tsens-v0_1.c
-> +++ b/drivers/thermal/qcom/tsens-v0_1.c
-> @@ -145,8 +145,10 @@ static int calibrate_8916(struct tsens_priv *priv)
->                 return PTR_ERR(qfprom_cdata);
->
->         qfprom_csel = (u32 *)qfprom_read(priv->dev, "calib_sel");
-> -       if (IS_ERR(qfprom_csel))
-> +       if (IS_ERR(qfprom_csel)) {
-> +               kfree(qfprom_cdata);
->                 return PTR_ERR(qfprom_csel);
-> +       }
->
->         mode = (qfprom_csel[0] & MSM8916_CAL_SEL_MASK) >> MSM8916_CAL_SEL_SHIFT;
->         dev_dbg(priv->dev, "calibration mode is %d\n", mode);
-> @@ -181,6 +183,8 @@ static int calibrate_8916(struct tsens_priv *priv)
->         }
->
->         compute_intercept_slope(priv, p1, p2, mode);
-> +       kfree(qfprom_cdata);
-> +       kfree(qfprom_csel);
->
->         return 0;
->  }
-> @@ -198,8 +202,10 @@ static int calibrate_8974(struct tsens_priv *priv)
->                 return PTR_ERR(calib);
->
->         bkp = (u32 *)qfprom_read(priv->dev, "calib_backup");
-> -       if (IS_ERR(bkp))
-> +       if (IS_ERR(bkp)) {
-> +               kfree(calib);
->                 return PTR_ERR(bkp);
-> +       }
->
->         calib_redun_sel =  bkp[1] & BKP_REDUN_SEL;
->         calib_redun_sel >>= BKP_REDUN_SHIFT;
-> @@ -313,6 +319,8 @@ static int calibrate_8974(struct tsens_priv *priv)
->         }
->
->         compute_intercept_slope(priv, p1, p2, mode);
-> +       kfree(calib);
-> +       kfree(bkp);
->
->         return 0;
->  }
-> diff --git a/drivers/thermal/qcom/tsens-v1.c b/drivers/thermal/qcom/tsens-v1.c
-> index 10b595d4f619..870f502f2cb6 100644
-> --- a/drivers/thermal/qcom/tsens-v1.c
-> +++ b/drivers/thermal/qcom/tsens-v1.c
-> @@ -138,6 +138,7 @@ static int calibrate_v1(struct tsens_priv *priv)
->         }
->
->         compute_intercept_slope(priv, p1, p2, mode);
-> +       kfree(qfprom_cdata);
->
->         return 0;
->  }
-> diff --git a/drivers/thermal/qcom/tsens.h b/drivers/thermal/qcom/tsens.h
-> index 2fd94997245b..b89083b61c38 100644
-> --- a/drivers/thermal/qcom/tsens.h
-> +++ b/drivers/thermal/qcom/tsens.h
-> @@ -17,6 +17,7 @@
->
->  #include <linux/thermal.h>
->  #include <linux/regmap.h>
-> +#include <linux/slab.h>
->
->  struct tsens_priv;
->
-> --
-> 2.21.0
->
+Changes since v6:
+- link to gmu-sram child node in device tree
+- add ranges property to ocmem example in adreno GMU example (patch 2)
+  to match bindings in patch 1
+
+See individual patches for changelogs for previous versions.
+
+Brian Masney (5):
+  dt-bindings: soc: qcom: add On Chip MEMory (OCMEM) bindings
+  dt-bindings: display: msm: gmu: add optional ocmem property
+  soc: qcom: add OCMEM driver
+  drm/msm/gpu: add ocmem init/cleanup functions
+  ARM: qcom_defconfig: add ocmem support
+
+Rob Clark (2):
+  firmware: qcom: scm: add OCMEM lock/unlock interface
+  firmware: qcom: scm: add support to restore secure config to
+    qcm_scm-32
+
+ .../devicetree/bindings/display/msm/gmu.txt   |  51 +++
+ .../devicetree/bindings/sram/qcom,ocmem.yaml  |  96 ++++
+ arch/arm/configs/qcom_defconfig               |   1 +
+ drivers/firmware/qcom_scm-32.c                |  52 ++-
+ drivers/firmware/qcom_scm-64.c                |  12 +
+ drivers/firmware/qcom_scm.c                   |  53 +++
+ drivers/firmware/qcom_scm.h                   |   9 +
+ drivers/gpu/drm/msm/Kconfig                   |   1 +
+ drivers/gpu/drm/msm/adreno/a3xx_gpu.c         |  28 +-
+ drivers/gpu/drm/msm/adreno/a3xx_gpu.h         |   3 +-
+ drivers/gpu/drm/msm/adreno/a4xx_gpu.c         |  25 +-
+ drivers/gpu/drm/msm/adreno/a4xx_gpu.h         |   3 +-
+ drivers/gpu/drm/msm/adreno/adreno_gpu.c       |  40 ++
+ drivers/gpu/drm/msm/adreno/adreno_gpu.h       |  10 +
+ drivers/soc/qcom/Kconfig                      |  10 +
+ drivers/soc/qcom/Makefile                     |   1 +
+ drivers/soc/qcom/ocmem.c                      | 433 ++++++++++++++++++
+ include/linux/qcom_scm.h                      |  26 ++
+ include/soc/qcom/ocmem.h                      |  62 +++
+ 19 files changed, 871 insertions(+), 45 deletions(-)
+ create mode 100644 Documentation/devicetree/bindings/sram/qcom,ocmem.yaml
+ create mode 100644 drivers/soc/qcom/ocmem.c
+ create mode 100644 include/soc/qcom/ocmem.h
+
+-- 
+2.21.0
+
