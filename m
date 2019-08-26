@@ -2,103 +2,99 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id E002F9CF59
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 26 Aug 2019 14:16:54 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id DDC269D264
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 26 Aug 2019 17:13:23 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731780AbfHZMQr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 26 Aug 2019 08:16:47 -0400
-Received: from mail.kernel.org ([198.145.29.99]:38350 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1731774AbfHZMQq (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 26 Aug 2019 08:16:46 -0400
-Received: from localhost.localdomain (unknown [122.178.200.231])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 421282184D;
-        Mon, 26 Aug 2019 12:16:41 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1566821805;
-        bh=tXUqhiySfD6lPQAcB630z21XV3dVhvqoXjyurJHZJkc=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=W1UXCNaH526rfnt/Gnf1co3YeSkueiuxRQl7HqbnsZcc5wutcRJjFkv0tBX0SUfVJ
-         20qsRNy0ogWIc0TKIxHpEyUd0l8zJIemPwp/wu3H69xEpoHhbvysHS4+CWaXXZBPhg
-         fyYHXhAR/tXpnxw6sbXLzEOuEZ8GekDeTwnroTu0=
-From:   Vinod Koul <vkoul@kernel.org>
-To:     Stephen Boyd <sboyd@kernel.org>
-Cc:     linux-arm-msm@vger.kernel.org,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Vinod Koul <vkoul@kernel.org>, Andy Gross <agross@kernel.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Rob Herring <robh+dt@kernel.org>,
-        Mark Rutland <mark.rutland@arm.com>, linux-clk@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: [PATCH v4 4/4] clk: qcom: clk-rpmh: Add support for SM8150
-Date:   Mon, 26 Aug 2019 17:44:53 +0530
-Message-Id: <20190826121453.21732-5-vkoul@kernel.org>
-X-Mailer: git-send-email 2.20.1
-In-Reply-To: <20190826121453.21732-1-vkoul@kernel.org>
-References: <20190826121453.21732-1-vkoul@kernel.org>
+        id S1732910AbfHZPNX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 26 Aug 2019 11:13:23 -0400
+Received: from mail-pf1-f193.google.com ([209.85.210.193]:39034 "EHLO
+        mail-pf1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1731256AbfHZPNW (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 26 Aug 2019 11:13:22 -0400
+Received: by mail-pf1-f193.google.com with SMTP id y200so4307260pfb.6
+        for <linux-arm-msm@vger.kernel.org>; Mon, 26 Aug 2019 08:13:22 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=j5KxHjXq4wZrRuSjnTO35VtGsy0U6Zm7/urplqoNwEg=;
+        b=LrSYxPcMCE8kKbBcH0Y3Ky8LLQbhHQZMufx9PAeg0KliOgtT46O/2328VxjkC002s0
+         fMFUqT3o78VSV7bCvVraoOlBIzM+/qiB5YjjfsWZg/0MDQ9Tukt7OT68Ak+Hc14VlMvF
+         4WSz87/WMNlIAu77o+bBIo1Vi/Vgxb1pcjEbFcfy8MGu3LFJRUvTg7GiMMF2p/n5zXmm
+         3OVCDL2D5CAWZnrHVicbMxKodku8gEbDG632rr2+ASNo8rlylbBcCHYsOAmF8CmOjLML
+         qYi+Nuu1sU4Nybzy33ueiE7/rQK9yoJ6zRD6dYBZazM4SgLXJo9PqUTfJY8OYzOXJQyg
+         C+0w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=j5KxHjXq4wZrRuSjnTO35VtGsy0U6Zm7/urplqoNwEg=;
+        b=Ybj6yq/yOpMhGMvkaXHRt26FYOkosDLqiugYXWcs4KqYEshCrh5Fz9CBwRASO3yCAv
+         AwIl+xJK6tzgbZoqSGrmI0mpkUDmxv+RJHMvlN5fnbhlC7vJmOBaOIDb7bzEyqA3+Rlr
+         jVLa5QueHg47ScFNfeY7GjttOjNwgs4AyMwsB97KA+/XQUq1YAMlN3RYZaSoEUT5Qkud
+         ivclgrnR0wFh9lrF+47EEQcYbXOHgPYsEFbQOSFgi4+RPkk/2kkSiXsKX4v7/SDM6TDz
+         0ktTOaejE82/hZO7PY766Pa1j3R5ZnmEZR5MYxRXd2XTAS/MkJ7zKOqha/6IxMx0yIZP
+         5u7Q==
+X-Gm-Message-State: APjAAAW+laHk9MdbynP+H29ZMveuEwwhsWtE3B+fhPZAYwKosBC0zIHL
+        Sz4t3cG/rg5Tk1lJN9w1JMM1cQ==
+X-Google-Smtp-Source: APXvYqza9qWjK7AbgQw32FUjQQVrD1ZaaAa3XtLTCQmQ29i1QX33eiFCIhXgsXNEeD+tlhOh+piA+Q==
+X-Received: by 2002:a63:6c46:: with SMTP id h67mr17290709pgc.248.1566832401867;
+        Mon, 26 Aug 2019 08:13:21 -0700 (PDT)
+Received: from tuxbook-pro (104-188-17-28.lightspeed.sndgca.sbcglobal.net. [104.188.17.28])
+        by smtp.gmail.com with ESMTPSA id g8sm11351479pgk.1.2019.08.26.08.13.20
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 26 Aug 2019 08:13:21 -0700 (PDT)
+Date:   Mon, 26 Aug 2019 08:15:12 -0700
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     Kishon Vijay Abraham I <kishon@ti.com>
+Cc:     Sasha Levin <sashal@kernel.org>, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, stable@vger.kernel.org,
+        Vivek Gautam <vivek.gautam@codeaurora.org>,
+        Evan Green <evgreen@chromium.org>,
+        Niklas Cassel <niklas.cassel@linaro.org>
+Subject: Re: [PATCH] phy: qcom-qmp: Correct ready status, again
+Message-ID: <20190826151512.GX26807@tuxbook-pro>
+References: <20190806004256.20152-1-bjorn.andersson@linaro.org>
+ <20190806155040.0B54520C01@mail.kernel.org>
+ <57556d09-e2db-dc00-45a9-cbb57da02319@ti.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <57556d09-e2db-dc00-45a9-cbb57da02319@ti.com>
+User-Agent: Mutt/1.12.1 (2019-06-15)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add support for rpmh clocks found in SM8150
+On Tue 20 Aug 17:23 PDT 2019, Kishon Vijay Abraham I wrote:
 
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
-Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
----
- drivers/clk/qcom/clk-rpmh.c | 28 ++++++++++++++++++++++++++++
- 1 file changed, 28 insertions(+)
+> Hi Sasha,
+> 
+> On 06/08/19 9:20 PM, Sasha Levin wrote:
+> > Hi,
+> > 
+> > [This is an automated email]
+> > 
+> > This commit has been processed because it contains a "Fixes:" tag,
+> > fixing commit: 885bd765963b phy: qcom-qmp: Correct READY_STATUS poll break condition.
+> > 
+> > The bot has tested the following trees: v5.2.6.
+> > 
+> > v5.2.6: Failed to apply! Possible dependencies:
+> >     520602640419 ("phy: qcom-qmp: Raise qcom_qmp_phy_enable() polling delay")
+> > 
+> > 
+> > NOTE: The patch will not be queued to stable trees until it is upstream.
+> > 
+> > How should we proceed with this patch?
+> 
+> Merging of this patch got delayed. Bjorn, Is it okay if this patch gets merged
+> in the next merge window and backported to stable releases then?
+> 
 
-diff --git a/drivers/clk/qcom/clk-rpmh.c b/drivers/clk/qcom/clk-rpmh.c
-index 97aa092f5f40..082d0b72fe1e 100644
---- a/drivers/clk/qcom/clk-rpmh.c
-+++ b/drivers/clk/qcom/clk-rpmh.c
-@@ -374,6 +374,33 @@ static const struct clk_rpmh_desc clk_rpmh_sdm845 = {
- 	.num_clks = ARRAY_SIZE(sdm845_rpmh_clocks),
- };
- 
-+DEFINE_CLK_RPMH_ARC(sm8150, bi_tcxo, bi_tcxo_ao, "xo.lvl", 0x3, 2);
-+DEFINE_CLK_RPMH_VRM(sm8150, ln_bb_clk2, ln_bb_clk2_ao, "lnbclka2", 2);
-+DEFINE_CLK_RPMH_VRM(sm8150, ln_bb_clk3, ln_bb_clk3_ao, "lnbclka3", 2);
-+DEFINE_CLK_RPMH_VRM(sm8150, rf_clk1, rf_clk1_ao, "rfclka1", 1);
-+DEFINE_CLK_RPMH_VRM(sm8150, rf_clk2, rf_clk2_ao, "rfclka2", 1);
-+DEFINE_CLK_RPMH_VRM(sm8150, rf_clk3, rf_clk3_ao, "rfclka3", 1);
-+
-+static struct clk_hw *sm8150_rpmh_clocks[] = {
-+	[RPMH_CXO_CLK]		= &sm8150_bi_tcxo.hw,
-+	[RPMH_CXO_CLK_A]	= &sm8150_bi_tcxo_ao.hw,
-+	[RPMH_LN_BB_CLK2]	= &sm8150_ln_bb_clk2.hw,
-+	[RPMH_LN_BB_CLK2_A]	= &sm8150_ln_bb_clk2_ao.hw,
-+	[RPMH_LN_BB_CLK3]	= &sm8150_ln_bb_clk3.hw,
-+	[RPMH_LN_BB_CLK3_A]	= &sm8150_ln_bb_clk3_ao.hw,
-+	[RPMH_RF_CLK1]		= &sm8150_rf_clk1.hw,
-+	[RPMH_RF_CLK1_A]	= &sm8150_rf_clk1_ao.hw,
-+	[RPMH_RF_CLK2]		= &sm8150_rf_clk2.hw,
-+	[RPMH_RF_CLK2_A]	= &sm8150_rf_clk2_ao.hw,
-+	[RPMH_RF_CLK3]		= &sm8150_rf_clk3.hw,
-+	[RPMH_RF_CLK3_A]	= &sm8150_rf_clk3_ao.hw,
-+};
-+
-+static const struct clk_rpmh_desc clk_rpmh_sm8150 = {
-+	.clks = sm8150_rpmh_clocks,
-+	.num_clks = ARRAY_SIZE(sm8150_rpmh_clocks),
-+};
-+
- static struct clk_hw *of_clk_rpmh_hw_get(struct of_phandle_args *clkspec,
- 					 void *data)
- {
-@@ -453,6 +480,7 @@ static int clk_rpmh_probe(struct platform_device *pdev)
- 
- static const struct of_device_id clk_rpmh_match_table[] = {
- 	{ .compatible = "qcom,sdm845-rpmh-clk", .data = &clk_rpmh_sdm845},
-+	{ .compatible = "qcom,sm8150-rpmh-clk", .data = &clk_rpmh_sm8150},
- 	{ }
- };
- MODULE_DEVICE_TABLE(of, clk_rpmh_match_table);
--- 
-2.20.1
+That's fine, thanks for picking it up Kishon
 
+Regards,
+Bjorn
