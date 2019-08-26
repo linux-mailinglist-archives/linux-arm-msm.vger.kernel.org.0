@@ -2,99 +2,88 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id DDC269D264
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 26 Aug 2019 17:13:23 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 811B19D298
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 26 Aug 2019 17:21:02 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732910AbfHZPNX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 26 Aug 2019 11:13:23 -0400
-Received: from mail-pf1-f193.google.com ([209.85.210.193]:39034 "EHLO
-        mail-pf1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1731256AbfHZPNW (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 26 Aug 2019 11:13:22 -0400
-Received: by mail-pf1-f193.google.com with SMTP id y200so4307260pfb.6
-        for <linux-arm-msm@vger.kernel.org>; Mon, 26 Aug 2019 08:13:22 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=j5KxHjXq4wZrRuSjnTO35VtGsy0U6Zm7/urplqoNwEg=;
-        b=LrSYxPcMCE8kKbBcH0Y3Ky8LLQbhHQZMufx9PAeg0KliOgtT46O/2328VxjkC002s0
-         fMFUqT3o78VSV7bCvVraoOlBIzM+/qiB5YjjfsWZg/0MDQ9Tukt7OT68Ak+Hc14VlMvF
-         4WSz87/WMNlIAu77o+bBIo1Vi/Vgxb1pcjEbFcfy8MGu3LFJRUvTg7GiMMF2p/n5zXmm
-         3OVCDL2D5CAWZnrHVicbMxKodku8gEbDG632rr2+ASNo8rlylbBcCHYsOAmF8CmOjLML
-         qYi+Nuu1sU4Nybzy33ueiE7/rQK9yoJ6zRD6dYBZazM4SgLXJo9PqUTfJY8OYzOXJQyg
-         C+0w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=j5KxHjXq4wZrRuSjnTO35VtGsy0U6Zm7/urplqoNwEg=;
-        b=Ybj6yq/yOpMhGMvkaXHRt26FYOkosDLqiugYXWcs4KqYEshCrh5Fz9CBwRASO3yCAv
-         AwIl+xJK6tzgbZoqSGrmI0mpkUDmxv+RJHMvlN5fnbhlC7vJmOBaOIDb7bzEyqA3+Rlr
-         jVLa5QueHg47ScFNfeY7GjttOjNwgs4AyMwsB97KA+/XQUq1YAMlN3RYZaSoEUT5Qkud
-         ivclgrnR0wFh9lrF+47EEQcYbXOHgPYsEFbQOSFgi4+RPkk/2kkSiXsKX4v7/SDM6TDz
-         0ktTOaejE82/hZO7PY766Pa1j3R5ZnmEZR5MYxRXd2XTAS/MkJ7zKOqha/6IxMx0yIZP
-         5u7Q==
-X-Gm-Message-State: APjAAAW+laHk9MdbynP+H29ZMveuEwwhsWtE3B+fhPZAYwKosBC0zIHL
-        Sz4t3cG/rg5Tk1lJN9w1JMM1cQ==
-X-Google-Smtp-Source: APXvYqza9qWjK7AbgQw32FUjQQVrD1ZaaAa3XtLTCQmQ29i1QX33eiFCIhXgsXNEeD+tlhOh+piA+Q==
-X-Received: by 2002:a63:6c46:: with SMTP id h67mr17290709pgc.248.1566832401867;
-        Mon, 26 Aug 2019 08:13:21 -0700 (PDT)
-Received: from tuxbook-pro (104-188-17-28.lightspeed.sndgca.sbcglobal.net. [104.188.17.28])
-        by smtp.gmail.com with ESMTPSA id g8sm11351479pgk.1.2019.08.26.08.13.20
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 26 Aug 2019 08:13:21 -0700 (PDT)
-Date:   Mon, 26 Aug 2019 08:15:12 -0700
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Kishon Vijay Abraham I <kishon@ti.com>
-Cc:     Sasha Levin <sashal@kernel.org>, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org, stable@vger.kernel.org,
-        Vivek Gautam <vivek.gautam@codeaurora.org>,
-        Evan Green <evgreen@chromium.org>,
-        Niklas Cassel <niklas.cassel@linaro.org>
-Subject: Re: [PATCH] phy: qcom-qmp: Correct ready status, again
-Message-ID: <20190826151512.GX26807@tuxbook-pro>
-References: <20190806004256.20152-1-bjorn.andersson@linaro.org>
- <20190806155040.0B54520C01@mail.kernel.org>
- <57556d09-e2db-dc00-45a9-cbb57da02319@ti.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <57556d09-e2db-dc00-45a9-cbb57da02319@ti.com>
-User-Agent: Mutt/1.12.1 (2019-06-15)
+        id S1729623AbfHZPUz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 26 Aug 2019 11:20:55 -0400
+Received: from mx2.suse.de ([195.135.220.15]:45612 "EHLO mx1.suse.de"
+        rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+        id S1727850AbfHZPUy (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 26 Aug 2019 11:20:54 -0400
+X-Virus-Scanned: by amavisd-new at test-mx.suse.de
+Received: from relay2.suse.de (unknown [195.135.220.254])
+        by mx1.suse.de (Postfix) with ESMTP id DE107B635;
+        Mon, 26 Aug 2019 15:20:52 +0000 (UTC)
+Date:   Mon, 26 Aug 2019 17:20:52 +0200
+Message-ID: <s5hr258j6ln.wl-tiwai@suse.de>
+From:   Takashi Iwai <tiwai@suse.de>
+To:     Scott Branden <scott.branden@broadcom.com>
+Cc:     Luis Chamberlain <mcgrof@kernel.org>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        David Brown <david.brown@linaro.org>,
+        Alexander Viro <viro@zeniv.linux.org.uk>,
+        Shuah Khan <shuah@kernel.org>, bjorn.andersson@linaro.org,
+        Shuah Khan <skhan@linuxfoundation.org>,
+        Arnd Bergmann <arnd@arndb.de>,
+        "Rafael J . Wysocki" <rafael@kernel.org>,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-fsdevel@vger.kernel.org,
+        BCM Kernel Feedback <bcm-kernel-feedback-list@broadcom.com>,
+        Olof Johansson <olof@lixom.net>,
+        Andrew Morton <akpm@linux-foundation.org>,
+        Dan Carpenter <dan.carpenter@oracle.com>,
+        Colin Ian King <colin.king@canonical.com>,
+        Kees Cook <keescook@chromium.org>,
+        linux-kselftest@vger.kernel.org
+Subject: Re: [PATCH 2/7] firmware: add offset to request_firmware_into_buf
+In-Reply-To: <10461fcf-9eca-32b6-0f9d-23c63b3f3442@broadcom.com>
+References: <20190822192451.5983-1-scott.branden@broadcom.com>
+        <20190822192451.5983-3-scott.branden@broadcom.com>
+        <s5hef1crybq.wl-tiwai@suse.de>
+        <10461fcf-9eca-32b6-0f9d-23c63b3f3442@broadcom.com>
+User-Agent: Wanderlust/2.15.9 (Almost Unreal) SEMI/1.14.6 (Maruoka)
+ FLIM/1.14.9 (=?UTF-8?B?R29qxY0=?=) APEL/10.8 Emacs/25.3
+ (x86_64-suse-linux-gnu) MULE/6.0 (HANACHIRUSATO)
+MIME-Version: 1.0 (generated by SEMI 1.14.6 - "Maruoka")
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue 20 Aug 17:23 PDT 2019, Kishon Vijay Abraham I wrote:
-
-> Hi Sasha,
+On Fri, 23 Aug 2019 21:44:42 +0200,
+Scott Branden wrote:
 > 
-> On 06/08/19 9:20 PM, Sasha Levin wrote:
-> > Hi,
-> > 
-> > [This is an automated email]
-> > 
-> > This commit has been processed because it contains a "Fixes:" tag,
-> > fixing commit: 885bd765963b phy: qcom-qmp: Correct READY_STATUS poll break condition.
-> > 
-> > The bot has tested the following trees: v5.2.6.
-> > 
-> > v5.2.6: Failed to apply! Possible dependencies:
-> >     520602640419 ("phy: qcom-qmp: Raise qcom_qmp_phy_enable() polling delay")
-> > 
-> > 
-> > NOTE: The patch will not be queued to stable trees until it is upstream.
-> > 
-> > How should we proceed with this patch?
+> Hi Takashi,
 > 
-> Merging of this patch got delayed. Bjorn, Is it okay if this patch gets merged
-> in the next merge window and backported to stable releases then?
+> Thanks for review.  comments below.
 > 
+> On 2019-08-23 3:05 a.m., Takashi Iwai wrote:
+> > On Thu, 22 Aug 2019 21:24:46 +0200,
+> > Scott Branden wrote:
+> >> Add offset to request_firmware_into_buf to allow for portions
+> >> of firmware file to be read into a buffer.  Necessary where firmware
+> >> needs to be loaded in portions from file in memory constrained systems.
+> > AFAIU, this won't work with the fallback user helper, right?
+> Seems to work fine in the fw_run_tests.sh with fallbacks.
 
-That's fine, thanks for picking it up Kishon
+But how?  You patch doesn't change anything about the fallback loading
+mechanism.  Or, if the expected behavior is to load the whole content
+and then copy a part, what's the merit of this API?
 
-Regards,
-Bjorn
+> > Also it won't work for the compressed firmware files as-is.
+> Although unnecessary, seems to work fine in the fw_run_tests.sh with
+> "both" and "xzonly" options.
+
+This looks also suspicious.  Loading a part of the file from the
+middle and decompression won't work together, from obvious reasons.
+
+If the test passes, it means that the test itself is more likely
+incorrect, I'm afraid.
+
+
+thanks,
+
+Takashi
