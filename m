@@ -2,110 +2,55 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id DA0199D7D4
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 26 Aug 2019 22:55:58 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 3EA859D813
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 26 Aug 2019 23:21:57 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725806AbfHZUzy (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 26 Aug 2019 16:55:54 -0400
-Received: from mail-pl1-f193.google.com ([209.85.214.193]:34038 "EHLO
-        mail-pl1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726220AbfHZUzx (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 26 Aug 2019 16:55:53 -0400
-Received: by mail-pl1-f193.google.com with SMTP id d3so10636480plr.1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 26 Aug 2019 13:55:53 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=message-id:mime-version:content-transfer-encoding:in-reply-to
-         :references:cc:subject:to:from:user-agent:date;
-        bh=FghN6Mc40EPJyH60IJRS3NSuxjYJJ6oJa+6cfkHbcEQ=;
-        b=CG3B73JctUodMjIEjMsdzkgftz3Lk7Hw301lt+ChJplNaD4WWljA7Mf07AXYJSksH1
-         zK8iBXNS71J22cYdDCipqCOVcu10jmcRPqdcB4jWsfUDB3moMUaJLamzkZumWqO4cAbv
-         x9nBWiUT7BbCgCsl6xfUyRcRXV8tN/eRY/9eo=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:mime-version
-         :content-transfer-encoding:in-reply-to:references:cc:subject:to:from
-         :user-agent:date;
-        bh=FghN6Mc40EPJyH60IJRS3NSuxjYJJ6oJa+6cfkHbcEQ=;
-        b=Fkf9owS8RmSAIeYJWchQsWcsll/F8D7858JGF0Z//VDV8Uvds41zUXzEpnGRyoD/sw
-         ElGh1xmqHslf2iqtyalpgCebFhTg02pUyFz4egjkhsNX5KhO8aJ1mlV54TWM5x5oNC8S
-         VBqGmDvS/lkwRJEkbSpAmZW48/u5fCQCyUgTvYGTwttbo29jBLAxgpooH1YMolOEpO+T
-         3yFwkp/WieNX8XxL/ALSD1mZgGvePZcX7GPUaT7qyAqQPd6tp2jqiCmJM/Bilir7xTm8
-         eBG/WNYpuH2xt208QuRrpXxoILlIuE+p0blTbIXO2DRfmeNccZK3Bz1ypHkmeYlzwV/n
-         TOYg==
-X-Gm-Message-State: APjAAAUjdvLeahb5HrSwInYYyRZWPUzBMT9vuAx9UksI3RJhd5knvfmw
-        Y61k6ighSkLxLeImgy/OW8b2BQ==
-X-Google-Smtp-Source: APXvYqx9XXxGe4Jgq3CTT3CN1lc1lQpUBmkZwGA+hD5RxJH41Dh4HIrKDUhBYRQDSJhlhN27af5CzA==
-X-Received: by 2002:a17:902:a40d:: with SMTP id p13mr20580372plq.92.1566852953013;
-        Mon, 26 Aug 2019 13:55:53 -0700 (PDT)
-Received: from chromium.org ([2620:15c:202:1:fa53:7765:582b:82b9])
-        by smtp.gmail.com with ESMTPSA id v184sm11039530pgd.34.2019.08.26.13.55.52
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 26 Aug 2019 13:55:52 -0700 (PDT)
-Message-ID: <5d644758.1c69fb81.76a4f.cf59@mx.google.com>
+        id S1728020AbfHZVV4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 26 Aug 2019 17:21:56 -0400
+Received: from mail.kernel.org ([198.145.29.99]:37352 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1725983AbfHZVV4 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 26 Aug 2019 17:21:56 -0400
+Received: from kernel.org (unknown [104.132.0.74])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by mail.kernel.org (Postfix) with ESMTPSA id CBFB121872;
+        Mon, 26 Aug 2019 21:21:55 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=default; t=1566854515;
+        bh=XTaZfdbIeZNcLvQ156JobevCYoXaSVCoyFHLqn3N04Y=;
+        h=In-Reply-To:References:Cc:Subject:To:From:Date:From;
+        b=uLlj7bJ2EEeCA2zsd7EHX48BNHSkUZaintIiCFHXWbChN0Fud941ukhJHERlcRaPc
+         z79PSLxdlnADqJ3IOgCfmciJ6rESFheoMPjcYvqqI15aSx+cwG6J+1FtAegunbpuNH
+         Q/B9FzOlzyJcmhdEHIXwBCxg1AIp5fgPbaTU8+QU=
 Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <CAP245DV=pVF1oK2eFvK=iRng=Qxg=oDLWmHXBWtJH=VMxmmAvQ@mail.gmail.com>
-References: <cover.1564091601.git.amit.kucheria@linaro.org> <534b5017c2210ba8d541c206dace204d6617b4c9.1564091601.git.amit.kucheria@linaro.org> <5d577d77.1c69fb81.b6b07.83e6@mx.google.com> <CAHLCerMpWTVquyM3fYQxz-ZhDvnY276hfnZvZOmjV--cgm53UQ@mail.gmail.com> <5d5ab1e0.1c69fb81.d71db.1ca3@mx.google.com> <CAP245DV=pVF1oK2eFvK=iRng=Qxg=oDLWmHXBWtJH=VMxmmAvQ@mail.gmail.com>
-Cc:     Andy Gross <agross@kernel.org>,
-        Daniel Lezcano <daniel.lezcano@linaro.org>,
-        Mark Rutland <mark.rutland@arm.com>,
-        Rob Herring <robh+dt@kernel.org>,
-        Zhang Rui <rui.zhang@intel.com>,
-        Andy Gross <andy.gross@linaro.org>,
+In-Reply-To: <20190826174233.21213-1-vkoul@kernel.org>
+References: <20190826174233.21213-1-vkoul@kernel.org>
+Cc:     linux-arm-msm@vger.kernel.org,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Eduardo Valentin <edubezval@gmail.com>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        LKML <linux-kernel@vger.kernel.org>,
-        Linux PM list <linux-pm@vger.kernel.org>
-Subject: Re: [PATCH 04/15] drivers: thermal: tsens: Add debugfs support
-To:     Amit Kucheria <amit.kucheria@linaro.org>
-From:   Stephen Boyd <swboyd@chromium.org>
+        Vinod Koul <vkoul@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Mark Rutland <mark.rutland@arm.com>,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v2] arm64: dts: sdm845: Add parent clock for rpmhcc
+To:     Andy Gross <agross@kernel.org>, Vinod Koul <vkoul@kernel.org>
+From:   Stephen Boyd <sboyd@kernel.org>
 User-Agent: alot/0.8.1
-Date:   Mon, 26 Aug 2019 13:55:51 -0700
+Date:   Mon, 26 Aug 2019 14:21:54 -0700
+Message-Id: <20190826212155.CBFB121872@mail.kernel.org>
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Amit Kucheria (2019-08-21 05:55:39)
-> On Mon, Aug 19, 2019 at 7:57 PM Stephen Boyd <swboyd@chromium.org> wrote:
-> >
-> > Quoting Amit Kucheria (2019-08-19 00:58:23)
-> > > On Sat, Aug 17, 2019 at 9:37 AM Stephen Boyd <swboyd@chromium.org> wr=
-ote:
-> > > > > +
-> > > > > +static void tsens_debug_init(struct platform_device *pdev)
-> > > > > +{
-> > > > > +       struct tsens_priv *priv =3D platform_get_drvdata(pdev);
-> > > > > +       struct dentry *root, *file;
-> > > > > +
-> > > > > +       root =3D debugfs_lookup("tsens", NULL);
-> > > >
-> > > > Does this get created many times? Why doesn't tsens have a pointer =
-to
-> > > > the root saved away somewhere globally?
-> > > >
-> > >
-> > > I guess we could call the statement below to create the root dir and
-> > > save away the pointer. I was trying to avoid #ifdef CONFIG_DEBUG_FS in
-> > > init_common() and instead have all of it in a single function that
-> > > gets called once per instance of the tsens controller.
-> >
-> > Or call this code many times and try to create the tsens node if
-> > !tsens_root exists where the variable is some global.
+Quoting Vinod Koul (2019-08-26 10:42:33)
+> RPM clock controller has parent as xo, so specify that in DT node for
+> rpmhcc
 >=20
-> So I didn't quite understand this statement. The change you're
-> requesting is that the 'root' variable below should be a global?
->=20
-> tsens_probe() will get called twice on platforms with two instances of
-> the controller. So I will need to check some place if the 'tsens' root
-> dir already exists in debugfs, no? That is what I'm doing below.
->=20
+> Signed-off-by: Vinod Koul <vkoul@kernel.org>
+> ---
 
-Yeah. I was suggesting making a global instead of doing the lookup, but
-I guess the lookup is fine and avoids a global variable. It's all
-debugfs so it doesn't really matter. Sorry! Do whatever then.
+Reviewed-by: Stephen Boyd <sboyd@kernel.org>
 
