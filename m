@@ -2,144 +2,118 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id E47479DDA3
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Aug 2019 08:23:52 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id F10999E5CE
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Aug 2019 12:40:06 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726152AbfH0GXe (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 27 Aug 2019 02:23:34 -0400
-Received: from smtp.codeaurora.org ([198.145.29.96]:59696 "EHLO
-        smtp.codeaurora.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725825AbfH0GXd (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 27 Aug 2019 02:23:33 -0400
-Received: by smtp.codeaurora.org (Postfix, from userid 1000)
-        id B67A060F38; Tue, 27 Aug 2019 06:23:32 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
-        s=default; t=1566887012;
-        bh=DWiUZ0h0oKq+88OUYVKweLryQ+oqXke10jLm3RzR10s=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=d+hFDYAv4ew9GCxLPdp/AFrwCNQUN6HIaZCAciVhYLxPNXEZnHAcGUy/3U29hk4wG
-         56qXsrGEql38MXde5WS2z9rAX7PoAn875H495k2CrXbwQz4ryy8ze6ovuqEiHJgyz3
-         p+SIb9+iTdCzlw58kBRGRQm6NV7qGC+9bOZ6Cwco=
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        pdx-caf-mail.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.7 required=2.0 tests=ALL_TRUSTED,BAYES_00,
-        DKIM_INVALID,DKIM_SIGNED,SPF_NONE autolearn=no autolearn_force=no
-        version=3.4.0
-Received: from amasule-linux.qualcomm.com (blr-c-bdr-fw-01_globalnat_allzones-outside.qualcomm.com [103.229.19.19])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: amasule@codeaurora.org)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id AC54760E5A;
-        Tue, 27 Aug 2019 06:23:29 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
-        s=default; t=1566887012;
-        bh=DWiUZ0h0oKq+88OUYVKweLryQ+oqXke10jLm3RzR10s=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=d+hFDYAv4ew9GCxLPdp/AFrwCNQUN6HIaZCAciVhYLxPNXEZnHAcGUy/3U29hk4wG
-         56qXsrGEql38MXde5WS2z9rAX7PoAn875H495k2CrXbwQz4ryy8ze6ovuqEiHJgyz3
-         p+SIb9+iTdCzlw58kBRGRQm6NV7qGC+9bOZ6Cwco=
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org AC54760E5A
-Authentication-Results: pdx-caf-mail.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: pdx-caf-mail.web.codeaurora.org; spf=none smtp.mailfrom=amasule@codeaurora.org
-From:   Aniket Masule <amasule@codeaurora.org>
-To:     linux-media@vger.kernel.org, stanimir.varbanov@linaro.org
-Cc:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        vgarodia@codeaurora.org, Aniket Masule <amasule@codeaurora.org>
-Subject: [PATCH v7 3/3] media: venus: Update to bitrate based clock scaling
-Date:   Tue, 27 Aug 2019 11:53:06 +0530
-Message-Id: <1566886986-10329-4-git-send-email-amasule@codeaurora.org>
-X-Mailer: git-send-email 1.9.1
-In-Reply-To: <1566886986-10329-1-git-send-email-amasule@codeaurora.org>
-References: <1566886986-10329-1-git-send-email-amasule@codeaurora.org>
+        id S1725913AbfH0KkG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 27 Aug 2019 06:40:06 -0400
+Received: from mx2.suse.de ([195.135.220.15]:52496 "EHLO mx1.suse.de"
+        rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+        id S1725793AbfH0KkF (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 27 Aug 2019 06:40:05 -0400
+X-Virus-Scanned: by amavisd-new at test-mx.suse.de
+Received: from relay2.suse.de (unknown [195.135.220.254])
+        by mx1.suse.de (Postfix) with ESMTP id 32A1FAFD4;
+        Tue, 27 Aug 2019 10:40:03 +0000 (UTC)
+Date:   Tue, 27 Aug 2019 12:40:02 +0200
+Message-ID: <s5hwoeyj3i5.wl-tiwai@suse.de>
+From:   Takashi Iwai <tiwai@suse.de>
+To:     Scott Branden <scott.branden@broadcom.com>
+Cc:     Luis Chamberlain <mcgrof@kernel.org>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        David Brown <david.brown@linaro.org>,
+        Alexander Viro <viro@zeniv.linux.org.uk>,
+        Shuah Khan <shuah@kernel.org>, bjorn.andersson@linaro.org,
+        Shuah Khan <skhan@linuxfoundation.org>,
+        Arnd Bergmann <arnd@arndb.de>,
+        "Rafael J . Wysocki" <rafael@kernel.org>,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-fsdevel@vger.kernel.org,
+        BCM Kernel Feedback <bcm-kernel-feedback-list@broadcom.com>,
+        Olof Johansson <olof@lixom.net>,
+        Andrew Morton <akpm@linux-foundation.org>,
+        Dan Carpenter <dan.carpenter@oracle.com>,
+        Colin Ian King <colin.king@canonical.com>,
+        Kees Cook <keescook@chromium.org>,
+        linux-kselftest@vger.kernel.org
+Subject: Re: [PATCH 2/7] firmware: add offset to request_firmware_into_buf
+In-Reply-To: <b440f372-45be-c06c-94a1-44ae6b1e7eb8@broadcom.com>
+References: <20190822192451.5983-1-scott.branden@broadcom.com>
+        <20190822192451.5983-3-scott.branden@broadcom.com>
+        <s5hef1crybq.wl-tiwai@suse.de>
+        <10461fcf-9eca-32b6-0f9d-23c63b3f3442@broadcom.com>
+        <s5hr258j6ln.wl-tiwai@suse.de>
+        <93b8285a-e5eb-d4a4-545d-426bbbeb8008@broadcom.com>
+        <s5ho90byhnv.wl-tiwai@suse.de>
+        <b440f372-45be-c06c-94a1-44ae6b1e7eb8@broadcom.com>
+User-Agent: Wanderlust/2.15.9 (Almost Unreal) SEMI/1.14.6 (Maruoka)
+ FLIM/1.14.9 (=?UTF-8?B?R29qxY0=?=) APEL/10.8 Emacs/25.3
+ (x86_64-suse-linux-gnu) MULE/6.0 (HANACHIRUSATO)
+MIME-Version: 1.0 (generated by SEMI 1.14.6 - "Maruoka")
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Introduced clock scaling using bitrate, preavious
-calculations consider only the cycles per mb.
-Also, clock scaling is now triggered before every
-buffer being queued to the device. This helps in
-deciding precise clock cycles required.
+On Mon, 26 Aug 2019 19:24:22 +0200,
+Scott Branden wrote:
+> 
+> Hi Takashi,
+> 
+> On 2019-08-26 10:12 a.m., Takashi Iwai wrote:
+> > On Mon, 26 Aug 2019 17:41:40 +0200,
+> > Scott Branden wrote:
+> >> HI Takashi,
+> >>
+> >> On 2019-08-26 8:20 a.m., Takashi Iwai wrote:
+> >>> On Fri, 23 Aug 2019 21:44:42 +0200,
+> >>> Scott Branden wrote:
+> >>>> Hi Takashi,
+> >>>>
+> >>>> Thanks for review.  comments below.
+> >>>>
+> >>>> On 2019-08-23 3:05 a.m., Takashi Iwai wrote:
+> >>>>> On Thu, 22 Aug 2019 21:24:46 +0200,
+> >>>>> Scott Branden wrote:
+> >>>>>> Add offset to request_firmware_into_buf to allow for portions
+> >>>>>> of firmware file to be read into a buffer.  Necessary where firmware
+> >>>>>> needs to be loaded in portions from file in memory constrained systems.
+> >>>>> AFAIU, this won't work with the fallback user helper, right?
+> >>>> Seems to work fine in the fw_run_tests.sh with fallbacks.
+> >>> But how?  You patch doesn't change anything about the fallback loading
+> >>> mechanism.
+> >> Correct - I didn't change any of the underlying mechanisms,
+> >> so however request_firmware_into_buf worked before it still does.
+> >>>    Or, if the expected behavior is to load the whole content
+> >>> and then copy a part, what's the merit of this API?
+> >> The merit of the API is that the entire file is not copied into a buffer.
+> >> In my use case, the buffer is a memory region in PCIe space that isn't
+> >> even large enough for the whole file.  So the only way to get the file
+> >> is to read it
+> >> in portions.
+> > BTW: does the use case above mean that the firmware API directly
+> > writes onto the given PCI iomem region?  If so, I'm not sure whether
+> > it would work as expected on all architectures.  There must be a
+> > reason of the presence of iomem-related API like memcpy_toio()...
+> Yes, we access the PCI region directly in the driver and thus also
+> through request_firmware_into_buf.
 
-Signed-off-by: Aniket Masule <amasule@codeaurora.org>
----
- drivers/media/platform/qcom/venus/helpers.c | 33 ++++++++++++++++++++++++-----
- 1 file changed, 28 insertions(+), 5 deletions(-)
+Then you really need to access via the standard APIs for iomem.
+The normal memory copy would work only on some architectures like
+x86.
 
-diff --git a/drivers/media/platform/qcom/venus/helpers.c b/drivers/media/platform/qcom/venus/helpers.c
-index 4ed630b..8fee0ef 100644
---- a/drivers/media/platform/qcom/venus/helpers.c
-+++ b/drivers/media/platform/qcom/venus/helpers.c
-@@ -516,17 +516,26 @@ static int scale_clocks(struct venus_inst *inst)
- 	return 0;
- }
- 
--static unsigned long calculate_vpp_freq(struct venus_inst *inst)
-+static unsigned long calculate_inst_freq(struct venus_inst *inst,
-+					 unsigned long filled_len)
- {
--	unsigned long vpp_freq = 0;
-+	unsigned long vpp_freq = 0, vsp_freq = 0;
-+	u64 fps = inst->fps;
- 	u32 mbs_per_sec;
- 
--	mbs_per_sec = load_per_instance(inst);
-+	mbs_per_sec = load_per_instance(inst) / inst->fps;
- 	vpp_freq = mbs_per_sec * inst->clk_data.codec_freq_data->vpp_freq;
- 	/* 21 / 20 is overhead factor */
- 	vpp_freq += vpp_freq / 20;
-+	vsp_freq = mbs_per_sec * inst->clk_data.codec_freq_data->vsp_freq;
- 
--	return vpp_freq;
-+	/* 10 / 7 is overhead factor */
-+	if (inst->session_type == VIDC_SESSION_TYPE_ENC)
-+		vsp_freq += (inst->controls.enc.bitrate * 10) / 7;
-+	else
-+		vsp_freq += ((fps * filled_len * 8) * 10) / 7;
-+
-+	return max(vpp_freq, vsp_freq);
- }
- 
- static int scale_clocks_v4(struct venus_inst *inst)
-@@ -534,12 +543,24 @@ static int scale_clocks_v4(struct venus_inst *inst)
- 	struct venus_core *core = inst->core;
- 	const struct freq_tbl *table = core->res->freq_tbl;
- 	unsigned int num_rows = core->res->freq_tbl_size;
-+	struct v4l2_m2m_ctx *m2m_ctx = inst->m2m_ctx;
- 	struct device *dev = core->dev;
- 	unsigned int i;
- 	unsigned long freq = 0, freq_core1 = 0, freq_core2 = 0;
-+	unsigned long filled_len = 0;
-+	struct venus_buffer *buf, *n;
-+	struct vb2_buffer *vb;
- 	int ret;
- 
--	freq = calculate_vpp_freq(inst);
-+	v4l2_m2m_for_each_src_buf_safe(m2m_ctx, buf, n) {
-+		vb = &buf->vb.vb2_buf;
-+		filled_len = max(filled_len, vb2_get_plane_payload(vb, 0));
-+	}
-+
-+	if (inst->session_type == VIDC_SESSION_TYPE_DEC && !filled_len)
-+		return 0;
-+
-+	freq = calculate_inst_freq(inst, filled_len);
- 	inst->clk_data.freq = freq;
- 
- 	mutex_lock(&core->lock);
-@@ -701,6 +722,8 @@ void venus_helper_get_ts_metadata(struct venus_inst *inst, u64 timestamp_us,
- 
- 		if (inst->session_type == VIDC_SESSION_TYPE_DEC)
- 			put_ts_metadata(inst, vbuf);
-+
-+		venus_helper_load_scale_clocks(inst);
- 	} else if (type == V4L2_BUF_TYPE_VIDEO_CAPTURE_MPLANE) {
- 		if (inst->session_type == VIDC_SESSION_TYPE_ENC)
- 			fdata.buffer_type = HFI_BUFFER_OUTPUT;
--- 
-The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
-a Linux Foundation Collaborative Project
+> I will admit I am not familiar with every subtlety of PCI
+> accesses. Any comments to the Valkyrie driver in this patch series are
+> appreciated.
+> But not all drivers need to work on all architectures. I can add a
+> depends on x86 64bit architectures to the driver to limit it to such.
 
+But it's an individual board on PCIe, and should work no matter which
+architecture is?  Or is this really exclusive to x86?
+
+
+thanks,
+
+Takashi
