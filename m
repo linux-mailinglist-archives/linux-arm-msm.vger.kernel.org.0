@@ -2,71 +2,95 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id AED7B9F2AA
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Aug 2019 20:51:14 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 789C49F4C8
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Aug 2019 23:12:31 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730561AbfH0SvO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 27 Aug 2019 14:51:14 -0400
-Received: from mail-oi1-f195.google.com ([209.85.167.195]:39925 "EHLO
-        mail-oi1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730423AbfH0SvN (ORCPT
+        id S1726871AbfH0VMa (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 27 Aug 2019 17:12:30 -0400
+Received: from mail-pf1-f195.google.com ([209.85.210.195]:38885 "EHLO
+        mail-pf1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726735AbfH0VMa (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 27 Aug 2019 14:51:13 -0400
-Received: by mail-oi1-f195.google.com with SMTP id 16so68716oiq.6;
-        Tue, 27 Aug 2019 11:51:13 -0700 (PDT)
+        Tue, 27 Aug 2019 17:12:30 -0400
+Received: by mail-pf1-f195.google.com with SMTP id o70so205633pfg.5;
+        Tue, 27 Aug 2019 14:12:30 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=oL1GWqOgGJTUP/aWDisoRY9YUOhWjgpc42t3TLlasqI=;
+        b=s5+0+hI1teFiarwiw5+rK/Q/iNAOVIhSBKphVOHZ5QClySxbYLYH6WDerBGWk/7y9+
+         Q3e8fvkcjesT0E61joXjZV6HP+vEqoD+kAZ04wFh3Mz8OttC0ZdLTku7JRdiQA1nwcGQ
+         ljyLDNYjOAH63EswSRCB5l9XF0SJm+8adNZQxPnuhGhJxeGNLqbQfzmk/v7pUU7xltf+
+         rXqvPgOdvNqLByVfuGDVnJ9bSVIubEFZlGi8aQV9GOD4c0CrTpfMnmJSGFkM1w4v49d/
+         CXXJ5L9rUacb8cBTC3LSs3Ios857CIBM+c1bodtTEwoCl2awTuJG5amJ1nxNFTnHhto9
+         uNew==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=AF/vPj882HI7YsynVJ+eUKtXTDth7gEC3eMKqWT4ttU=;
-        b=X+xahYshHV/ansaf4x+dDez9PqKNAatS8zbmZofNYhbM3w68AN0nnKOzJ0qbJ/UOqN
-         p/VEgBZxKYH0FR007bX4FEhN6AwVBL+JtGiA/bRWDLFsP1yEPTrn0OVsAw6Ts57KqefX
-         HyVMrlxpxi5RE/23JYd2RCrSTUlFUfC2kryeEFo0bikpDqzLf81LwUfFThXfXsQFFvcX
-         LOlVjcBqKDCNZtFpdNCt1HuyqmJY3PYERVXkpZxCGaL9UZtQGNescp/OFogi1IeXhYfC
-         MolV0uGjAaoI+wXBcr99LNZR5v+nClJFOzPuKbDjy1ugx3XAnx4oSwxUdiejdvRkt+H+
-         oUvA==
-X-Gm-Message-State: APjAAAXZhwa8l+z3wTPSGSRYqLE89WH1TarsNn0Mshn1yRS2yERF4U1k
-        wnW7MOkPnapkXDgTcPkNfw==
-X-Google-Smtp-Source: APXvYqynGxcwWIqR2yCtDIquBPLt29G37dmdQJBwClIM6/HTbta6GJm5kdG06YLi3Q1jlob8CgoyDA==
-X-Received: by 2002:aca:cc81:: with SMTP id c123mr150734oig.30.1566931872553;
-        Tue, 27 Aug 2019 11:51:12 -0700 (PDT)
-Received: from localhost (24-155-109-49.dyn.grandenetworks.net. [24.155.109.49])
-        by smtp.gmail.com with ESMTPSA id p11sm63392oto.4.2019.08.27.11.51.11
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=oL1GWqOgGJTUP/aWDisoRY9YUOhWjgpc42t3TLlasqI=;
+        b=ibzGKRw2RCRjL3Qg8beCtrHGOFDeolyCLP8Rm6yrWYnTGgWupuUBLheYmGIAoCX1cU
+         CC4lP88RVmsPz3TCaBfe7uHVB3YTjj0XHsiaieJWn2eRIVZUV7OBKL3U4S7h+YRUFcJD
+         +MmL3B4CC9iiDZuOAdFRVWw1j0g3Aq+G2sAz1iF1xRHbDEHizQ3eb6MdwBEz+f2/RB1I
+         uNlZ6yytOYq9PC6WwwyFbPFRHe1wgrNp7iyNMTtp56EI183WnhgT82HP7VU0J0mfd1F4
+         7ULOIaxVJuePTOd4Ks1b4nWbkmhXsCKfmDIg7cd7WQef1124K9UamvthBeXSABUzfRfo
+         EtBQ==
+X-Gm-Message-State: APjAAAVdKJ4TcQFdw2lQuXS6og04c/fElP5VFliTQ0eqXFX8zRt5oHw5
+        YiBta8Jw30PNY08TV0C6dKs=
+X-Google-Smtp-Source: APXvYqxYD6any9nW+zK6K4XhJJ0N2mcL84DjNDyOLURw69g/TpNdeXKyvCThlPyAs/Q/GKoyeRZoCA==
+X-Received: by 2002:a65:4808:: with SMTP id h8mr436492pgs.22.1566940349493;
+        Tue, 27 Aug 2019 14:12:29 -0700 (PDT)
+Received: from localhost ([100.118.89.196])
+        by smtp.gmail.com with ESMTPSA id z14sm131424pjr.23.2019.08.27.14.12.28
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 27 Aug 2019 11:51:12 -0700 (PDT)
-Date:   Tue, 27 Aug 2019 13:51:11 -0500
-From:   Rob Herring <robh@kernel.org>
-To:     Vinod Koul <vkoul@kernel.org>
-Cc:     Stephen Boyd <sboyd@kernel.org>, linux-arm-msm@vger.kernel.org,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Vinod Koul <vkoul@kernel.org>, Andy Gross <agross@kernel.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Mark Rutland <mark.rutland@arm.com>, linux-clk@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v5 3/4] dt-bindings: clock: Document SM8150 rpmh-clock
- compatible
-Message-ID: <20190827185111.GA18812@bogus>
-References: <20190826173120.2971-1-vkoul@kernel.org>
- <20190826173120.2971-4-vkoul@kernel.org>
+        Tue, 27 Aug 2019 14:12:28 -0700 (PDT)
+From:   Rob Clark <robdclark@gmail.com>
+To:     dri-devel@lists.freedesktop.org
+Cc:     Rob Clark <robdclark@chromium.org>,
+        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Jeykumar Sankaran <jsanka@codeaurora.org>,
+        Abhinav Kumar <abhinavk@codeaurora.org>,
+        Thomas Gleixner <tglx@linutronix.de>,
+        Bruce Wang <bzwang@chromium.org>,
+        Jayant Shekhar <jshekhar@codeaurora.org>,
+        linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org,
+        linux-kernel@vger.kernel.org
+Subject: [PATCH] drm/msm/dpu: remove stray "\n"
+Date:   Tue, 27 Aug 2019 14:10:09 -0700
+Message-Id: <20190827211016.18070-1-robdclark@gmail.com>
+X-Mailer: git-send-email 2.21.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20190826173120.2971-4-vkoul@kernel.org>
-User-Agent: Mutt/1.10.1 (2018-07-13)
+Content-Transfer-Encoding: 8bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, 26 Aug 2019 23:01:19 +0530, Vinod Koul wrote:
-> Document the SM8150 rpmh-clock compatible for rpmh clock controller
-> found on SM8150 platforms.
-> 
-> Signed-off-by: Vinod Koul <vkoul@kernel.org>
-> Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
-> ---
->  Documentation/devicetree/bindings/clock/qcom,rpmh-clk.txt | 4 +++-
->  1 file changed, 3 insertions(+), 1 deletion(-)
-> 
+From: Rob Clark <robdclark@chromium.org>
 
-Reviewed-by: Rob Herring <robh@kernel.org>
+The extra line-break in traces was annoying me.
+
+Signed-off-by: Rob Clark <robdclark@chromium.org>
+---
+ drivers/gpu/drm/msm/disp/dpu1/dpu_trace.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_trace.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_trace.h
+index 765484437d11..eecfe9b3199e 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/dpu_trace.h
++++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_trace.h
+@@ -392,7 +392,7 @@ TRACE_EVENT(dpu_enc_rc,
+ 		__entry->rc_state = rc_state;
+ 		__assign_str(stage_str, stage);
+ 	),
+-	TP_printk("%s: id:%u, sw_event:%d, idle_pc_supported:%s, rc_state:%d\n",
++	TP_printk("%s: id:%u, sw_event:%d, idle_pc_supported:%s, rc_state:%d",
+ 		  __get_str(stage_str), __entry->drm_id, __entry->sw_event,
+ 		  __entry->idle_pc_supported ? "true" : "false",
+ 		  __entry->rc_state)
+-- 
+2.21.0
+
