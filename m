@@ -2,132 +2,115 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 461FA9E64D
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Aug 2019 13:02:06 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E415A9E773
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Aug 2019 14:14:29 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726125AbfH0LCF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 27 Aug 2019 07:02:05 -0400
-Received: from smtp.codeaurora.org ([198.145.29.96]:47916 "EHLO
-        smtp.codeaurora.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725912AbfH0LCF (ORCPT
+        id S1729401AbfH0MOW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 27 Aug 2019 08:14:22 -0400
+Received: from mail-pg1-f194.google.com ([209.85.215.194]:45634 "EHLO
+        mail-pg1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728694AbfH0MOW (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 27 Aug 2019 07:02:05 -0400
-Received: by smtp.codeaurora.org (Postfix, from userid 1000)
-        id 6F69861B92; Tue, 27 Aug 2019 11:01:51 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
-        s=default; t=1566903723;
-        bh=HBOH1XABa0OlbCN7UErs6f15J5xizk15eoDOXzYC0F8=;
-        h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
-        b=OX/7aKsoQCto2kTIG3zypyJrHO15lwl3VcsUWo0rBHKtRhZZXApS3wAS4wBXPyhTI
-         U/dQ+vSbA9oAMNeNUuR0c2BpZ47ozQCvhOerWoINdmTb8SEsNFbBInFgbGAX/rOEnu
-         qkIw26+HuKbr4r7+h0TABboK3Jqil9Y9cvsWbAU8=
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        pdx-caf-mail.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.7 required=2.0 tests=ALL_TRUSTED,BAYES_00,
-        DKIM_INVALID,DKIM_SIGNED,SPF_NONE autolearn=no autolearn_force=no
-        version=3.4.0
-Received: from mail-ed1-f41.google.com (mail-ed1-f41.google.com [209.85.208.41])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: vivek.gautam@smtp.codeaurora.org)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id F383661B73;
-        Tue, 27 Aug 2019 11:01:49 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
-        s=default; t=1566903710;
-        bh=HBOH1XABa0OlbCN7UErs6f15J5xizk15eoDOXzYC0F8=;
-        h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
-        b=k+vLdchK6dL8EXnEyeSf6RMcWDpNznu2Il7v1crfcK/9CSSJDjLYazhdD6M9DkGW4
-         CTCgO3arWsWij4gOke/uzmoD4YTWKZz5/N9RruEooiqmXDyCZ54C0rY2g6Ooe8ZRE4
-         wDszipVswMlsn1UzQ8l3u1raIxd50lB+9b9LkW4k=
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org F383661B73
-Authentication-Results: pdx-caf-mail.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: pdx-caf-mail.web.codeaurora.org; spf=none smtp.mailfrom=vivek.gautam@codeaurora.org
-Received: by mail-ed1-f41.google.com with SMTP id g24so3511451edu.3;
-        Tue, 27 Aug 2019 04:01:49 -0700 (PDT)
-X-Gm-Message-State: APjAAAV+OPL864JMdbfTft3NIVp0W6SQnNYF4QBd8uqvCTGnRIUbjeI1
-        8e5sp53eT8eSyPSA6VKksEU0h4mZ5/DkwNsvvvc=
-X-Google-Smtp-Source: APXvYqygiRM4MxL2WPdv7UpRhp6QYvBk0IZYLUl6NwzaXdl6K30D2aLg8Brqrm8t7RzK8+J/RN9F6TOprM9nBp0qNzI=
-X-Received: by 2002:a50:9ac3:: with SMTP id p61mr23675967edb.2.1566903708566;
- Tue, 27 Aug 2019 04:01:48 -0700 (PDT)
-MIME-Version: 1.0
-References: <20190718130238.11324-1-vivek.gautam@codeaurora.org> <CAFp+6iE7224G4k8XE6Oz1S82iMgSza-n_zMN-ppOUWnuz+hFLQ@mail.gmail.com>
-In-Reply-To: <CAFp+6iE7224G4k8XE6Oz1S82iMgSza-n_zMN-ppOUWnuz+hFLQ@mail.gmail.com>
-From:   Vivek Gautam <vivek.gautam@codeaurora.org>
-Date:   Tue, 27 Aug 2019 16:31:37 +0530
-X-Gmail-Original-Message-ID: <CAFp+6iE6zwrOUoCoOJO0mgYJGrWj+wUjXQ7RnxSPsV34ndYGbw@mail.gmail.com>
-Message-ID: <CAFp+6iE6zwrOUoCoOJO0mgYJGrWj+wUjXQ7RnxSPsV34ndYGbw@mail.gmail.com>
-Subject: Re: [PATCH v2 0/3] soc: qcom: llcc cleanups
-To:     Andy Gross <agross@kernel.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     Jordan Crouse <jcrouse@codeaurora.org>, rishabhb@codeaurora.org,
-        Evan Green <evgreen@chromium.org>,
-        open list <linux-kernel@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+        Tue, 27 Aug 2019 08:14:22 -0400
+Received: by mail-pg1-f194.google.com with SMTP id o13so12585838pgp.12
+        for <linux-arm-msm@vger.kernel.org>; Tue, 27 Aug 2019 05:14:21 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=from:to:cc:subject:date:message-id;
+        bh=4wcazYDkpL0duARs99jL9aMnOJv1Px99rhHjbxqeKAs=;
+        b=cIgfNMS9Y89X0ZTePhVRGhyzjprNxkg12d7CxOIay09vvWQ7pVobVStnxSO26gJvk1
+         S/MIaLSZTP/FjdrAvjSMT/AoNgVnfKrpnivkArmqpkkQHyNW8K60XuBDXLQCZBJO9Swd
+         9UApfN32eAlqF7F6IeEJeJ4e6X83cl82o7L93atoHWeyrSFIFn/3EWi+ZFAjHW2a93Xs
+         3TTRv0kz8QSOr/TKs9TEIl9KIZ4Y/2FS5HX+DVwbL96YoErvDA/9xS1QEu5jcFvDkMII
+         Ow2mykWpg05txO9FQ/potL4EJanVMLc9b9ACki9YjX0dqUHfitZM+n65CPiNfJ4KFqNt
+         VymA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=4wcazYDkpL0duARs99jL9aMnOJv1Px99rhHjbxqeKAs=;
+        b=Z5u/RLVkB2pIDvuz1UMGf/T9JpjR2veqYivMZ9udkYOv1k8xEjkph4OzfMPzpUEqBP
+         ibm+OCQ3mX1E9Z6hFp+mMofyY+LhIz6akJQoJMqsg8HGBrqdgsZkHnKz5jhqW4NkEbMr
+         bHTUy1r1+/m16JAbXOJKZftqcLXC/OLZ/Z9/jJ+LLn3Dg7sFjlwZ/bewgC0mLD/IbhB7
+         A/ECfUNYOBgm8bSmYFCHszzEJhA/AJkqv1Hp4gSesIMWQxVA9azz5UW7W6OJ4f1t6iT9
+         CvgM0VvVcnGjG1aa/Q4cnH7x4JcKDhXFiATGMYR7N6ow2vo0sKQeOJ/obeLIMx9ns4qM
+         6ABg==
+X-Gm-Message-State: APjAAAXR4DVTEKNxFj50F1s+c+dGJ9L2iRARHEYvUxmLoxilm0zQokyf
+        /3jqoes8xup1xMl/Fk0ZyWke+Euu7hsaWg==
+X-Google-Smtp-Source: APXvYqySuJMvr50yVLa9Q+m8dsjJ0euzRJ/Qgw6e9jts/v+QxNAsjYeS/M3MgQw692ynNmbMHDFf7Q==
+X-Received: by 2002:a17:90a:a00b:: with SMTP id q11mr2396118pjp.91.1566908061427;
+        Tue, 27 Aug 2019 05:14:21 -0700 (PDT)
+Received: from localhost ([49.248.54.193])
+        by smtp.gmail.com with ESMTPSA id d3sm3148595pjz.31.2019.08.27.05.14.20
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Tue, 27 Aug 2019 05:14:20 -0700 (PDT)
+From:   Amit Kucheria <amit.kucheria@linaro.org>
+To:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        bjorn.andersson@linaro.org, edubezval@gmail.com, agross@kernel.org,
+        sboyd@kernel.org, masneyb@onstation.org, marc.w.gonzalez@free.fr,
+        Daniel Lezcano <daniel.lezcano@linaro.org>,
+        Mark Rutland <mark.rutland@arm.com>,
+        Rob Herring <robh+dt@kernel.org>,
+        Zhang Rui <rui.zhang@intel.com>
+Cc:     devicetree@vger.kernel.org, linux-pm@vger.kernel.org
+Subject: [PATCH v2 00/15] thermal: qcom: tsens: Add interrupt support
+Date:   Tue, 27 Aug 2019 17:43:56 +0530
+Message-Id: <cover.1566907161.git.amit.kucheria@linaro.org>
+X-Mailer: git-send-email 2.17.1
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, Aug 2, 2019 at 11:43 AM Vivek Gautam
-<vivek.gautam@codeaurora.org> wrote:
->
-> On Thu, Jul 18, 2019 at 6:33 PM Vivek Gautam
-> <vivek.gautam@codeaurora.org> wrote:
-> >
-> > To better support future versions of llcc, consolidating the
-> > driver to llcc-qcom driver file, and taking care of the dependencies.
-> > v1 series is availale at:
-> > https://lore.kernel.org/patchwork/patch/1099573/
-> >
-> > Changes since v1:
-> > Addressing Bjorn's comments -
-> >  * Not using llcc-plat as the platform driver rather using a single
-> >    driver file now - llcc-qcom.
-> >  * Removed SCT_ENTRY macro.
-> >  * Moved few structure definitions from include/linux path to llcc-qcom
-> >    driver as they are not exposed to other subsystems.
->
-> Hi Bjorn,
->
-> How does this cleanup look now? Let me know if there are any
-> improvements to make here.
->
+Changes since v1:
+- Collected reviews and acks
+- Addressed Stephen's review comments (hopefully I got them all).
+- Completely removed critical interrupt infrastructure from this series.
+  Will post that separately.
+- Fixed a bug in sign-extension of temperature.
+- Fixed DT bindings to use the name of the interrupt e.g. "uplow" and use
+  platform_get_irq_byname().
 
-Hi Bjorn,
+Add interrupt support to TSENS. The first 6 patches are general fixes and
+cleanups to the driver before interrupt support is introduced.
 
-Are you planning to pull this series in the next merge window?
-There's a dt patch as well for llcc on sdm845 [1] that has been lying around.
+This series has been developed against qcs404 and sdm845 and then tested on
+msm8916 and msm8974 (Thanks Brian). Testing on msm8998 would be appreciated since I don't
+have hardware handy.
 
-Let me know if you have concerns with this series. I will be happy to
-incorporate the suggestions.
+Amit Kucheria (15):
+  drivers: thermal: tsens: Get rid of id field in tsens_sensor
+  drivers: thermal: tsens: Simplify code flow in tsens_probe
+  drivers: thermal: tsens: Add __func__ identifier to debug statements
+  drivers: thermal: tsens: Add debugfs support
+  arm: dts: msm8974: thermal: Add thermal zones for each sensor
+  arm64: dts: msm8916: thermal: Fixup HW ids for cpu sensors
+  dt: thermal: tsens: Document interrupt support in tsens driver
+  arm64: dts: sdm845: thermal: Add interrupt support
+  arm64: dts: msm8996: thermal: Add interrupt support
+  arm64: dts: msm8998: thermal: Add interrupt support
+  arm64: dts: qcs404: thermal: Add interrupt support
+  arm: dts: msm8974: thermal: Add interrupt support
+  arm64: dts: msm8916: thermal: Add interrupt support
+  drivers: thermal: tsens: Create function to return sign-extended
+    temperature
+  drivers: thermal: tsens: Add interrupt support
 
-[1] https://lore.kernel.org/patchwork/patch/1099318/
-
-Thanks & Regards
-Vivek
-
-> Best Regards
-> Vivek
-> >
-> > Vivek Gautam (3):
-> >   soc: qcom: llcc cleanup to get rid of sdm845 specific driver file
-> >   soc: qcom: Rename llcc-slice to llcc-qcom
-> >   soc: qcom: Make llcc-qcom a generic driver
-> >
-> >  drivers/soc/qcom/Kconfig                       |  14 +--
-> >  drivers/soc/qcom/Makefile                      |   3 +-
-> >  drivers/soc/qcom/{llcc-slice.c => llcc-qcom.c} | 155 +++++++++++++++++++++++--
-> >  drivers/soc/qcom/llcc-sdm845.c                 | 100 ----------------
-> >  include/linux/soc/qcom/llcc-qcom.h             | 104 -----------------
-> >  5 files changed, 152 insertions(+), 224 deletions(-)
-> >  rename drivers/soc/qcom/{llcc-slice.c => llcc-qcom.c} (64%)
-> >  delete mode 100644 drivers/soc/qcom/llcc-sdm845.c
-> >
-
-
+ .../bindings/thermal/qcom-tsens.txt           |   8 +
+ arch/arm/boot/dts/qcom-msm8974.dtsi           | 108 +++-
+ arch/arm64/boot/dts/qcom/msm8916.dtsi         |  26 +-
+ arch/arm64/boot/dts/qcom/msm8996.dtsi         |  60 +-
+ arch/arm64/boot/dts/qcom/msm8998.dtsi         |  82 +--
+ arch/arm64/boot/dts/qcom/qcs404.dtsi          |  42 +-
+ arch/arm64/boot/dts/qcom/sdm845.dtsi          |  88 +--
+ drivers/thermal/qcom/tsens-8960.c             |   4 +-
+ drivers/thermal/qcom/tsens-common.c           | 528 ++++++++++++++++--
+ drivers/thermal/qcom/tsens-v0_1.c             |  11 +
+ drivers/thermal/qcom/tsens-v1.c               |  29 +
+ drivers/thermal/qcom/tsens-v2.c               |  13 +
+ drivers/thermal/qcom/tsens.c                  |  59 +-
+ drivers/thermal/qcom/tsens.h                  | 288 ++++++++--
+ 14 files changed, 1089 insertions(+), 257 deletions(-)
 
 -- 
-QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
-of Code Aurora Forum, hosted by The Linux Foundation
+2.17.1
+
