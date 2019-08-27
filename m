@@ -2,114 +2,243 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 978FE9DCC2
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Aug 2019 06:47:23 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 778B19DCD1
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Aug 2019 06:51:11 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725879AbfH0ErW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 27 Aug 2019 00:47:22 -0400
-Received: from mail-pf1-f195.google.com ([209.85.210.195]:38405 "EHLO
-        mail-pf1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725874AbfH0ErV (ORCPT
+        id S1725795AbfH0EvK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 27 Aug 2019 00:51:10 -0400
+Received: from smtp.codeaurora.org ([198.145.29.96]:42574 "EHLO
+        smtp.codeaurora.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729009AbfH0EvK (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 27 Aug 2019 00:47:21 -0400
-Received: by mail-pf1-f195.google.com with SMTP id o70so13271786pfg.5
-        for <linux-arm-msm@vger.kernel.org>; Mon, 26 Aug 2019 21:47:21 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=ZggmcMPjgmDFSK8EEYOInY8FueVBR2R/tMdLkVfa1po=;
-        b=yFZSCiB0NW9TOMOMqdidHpwU9VtRg9aI8PKGUtwURiN/LSCSiAG8exF7F0huz7CfIL
-         QQrFiClqVQ3U2EjlN2hfiqEZ99GCerlGf1avMwsuZtsJP6VnG/Clqi+NBV7UAwu/KEbQ
-         rw6E6odIo0bhJnHBiNd9jASUNaNbxjat/1qiGjGgaydb8GNp8oMcgl2+EZYhgyiE0CsC
-         FX2DpA4XR5PCqXzyKQxRJcJEmVKFZgAiwfvzpWXtWVjmtkStQCz9jFTivfjatl41qYO3
-         6jTQpp7DHUdMzuU3hk2T9d7A3jxalfb8PjBrFy5mRbisSu3f5tXPGrpTx1bs9e5TBwai
-         SpiA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=ZggmcMPjgmDFSK8EEYOInY8FueVBR2R/tMdLkVfa1po=;
-        b=WbnEs9Ags1rgx1f1GigJQgeVVY0BE19LSL4mKeGsyR1cIEiXbFa//QcF14ypy7wBhT
-         htbwOTOJlVFg/j/o+uLm8PrwCPPbbrVPyUvKFtItW6WdaWow+HMBz3N07Ljpw8NV7St3
-         hrY9UMdAHRPOIM38A6MMPLHhosgxO1ODvW6HAOcy/ywhHzzyqHgL6tGbqY4wWZGNB5UD
-         qlRdy7nJzEpzPreUIae+8kpHU6qvyt3zpo6d/5Zuj5c1fSGZjP2zSHflSS8VZzNg54kR
-         RFumaKPUuCeKmd3aBj8xF7KzX6yRKKJ7GVebF/Xy/8zzJd12uQrmWH3GSDXAFOguL3Qi
-         svXA==
-X-Gm-Message-State: APjAAAXCVgLWC8WuRy9+4CaojnxR3ZMDtEJOZlP9nAcfoS9Hl3f96sZb
-        a0Z/hTrmEVTRyq53TAvot3+pwQ==
-X-Google-Smtp-Source: APXvYqyE8chtCs5y/WfhbpCulmRV//9zfesOLjWPH3tkAUvp8citEd3eNp1ZCu7OM1j6VaK7ZpbMrg==
-X-Received: by 2002:aa7:9516:: with SMTP id b22mr23967083pfp.106.1566881240912;
-        Mon, 26 Aug 2019 21:47:20 -0700 (PDT)
-Received: from tuxbook-pro (104-188-17-28.lightspeed.sndgca.sbcglobal.net. [104.188.17.28])
-        by smtp.gmail.com with ESMTPSA id v8sm11778661pgs.82.2019.08.26.21.47.18
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 26 Aug 2019 21:47:20 -0700 (PDT)
-Date:   Mon, 26 Aug 2019 21:49:09 -0700
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Linus Walleij <linus.walleij@linaro.org>
-Cc:     Jordan Crouse <jcrouse@codeaurora.org>,
-        Andy Gross <agross@kernel.org>,
-        freedreno <freedreno@lists.freedesktop.org>,
-        MSM <linux-arm-msm@vger.kernel.org>,
-        Arnd Bergmann <arnd@arndb.de>,
-        Marcin Juszkiewicz <marcin.juszkiewicz@linaro.org>,
-        Catalin Marinas <catalin.marinas@arm.com>,
-        Geert Uytterhoeven <geert+renesas@glider.be>,
-        Leonard Crestez <leonard.crestez@nxp.com>,
-        Enric Balletbo i Serra <enric.balletbo@collabora.com>,
-        Olof Johansson <olof@lixom.net>,
-        Dinh Nguyen <dinguyen@kernel.org>,
-        Miquel Raynal <miquel.raynal@bootlin.com>,
-        Krzysztof Kozlowski <krzk@kernel.org>,
-        Linux ARM <linux-arm-kernel@lists.infradead.org>,
-        Will Deacon <will@kernel.org>,
-        Jagan Teki <jagan@amarulasolutions.com>,
-        Fabrice Gasnier <fabrice.gasnier@st.com>,
-        Russell King <linux@armlinux.org.uk>,
-        Shawn Guo <shawnguo@kernel.org>,
-        Simon Horman <horms+renesas@verge.net.au>,
-        Marek Szyprowski <m.szyprowski@samsung.com>,
-        Yannick Fertr? <yannick.fertre@st.com>,
-        Maxime Ripard <mripard@kernel.org>,
-        Alexandre Torgue <alexandre.torgue@st.com>,
-        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
-        Brian Masney <masneyb@onstation.org>,
-        Frank Rowand <frank.rowand@sony.com>,
-        Tony Lindgren <tony@atomide.com>,
-        Anson Huang <Anson.Huang@nxp.com>
-Subject: Re: [PATCH v2 2/2] arm: Add DRM_MSM to defconfigs with ARCH_QCOM
-Message-ID: <20190827044909.GD1892@tuxbook-pro>
-References: <1565707585-5359-1-git-send-email-jcrouse@codeaurora.org>
- <1565707585-5359-2-git-send-email-jcrouse@codeaurora.org>
- <CACRpkdbtPo9dr7E2hZ4=fEWTXappWTaypKJyd9M2jz0tYu7HXw@mail.gmail.com>
+        Tue, 27 Aug 2019 00:51:10 -0400
+Received: by smtp.codeaurora.org (Postfix, from userid 1000)
+        id 0F68E60DA8; Tue, 27 Aug 2019 04:51:09 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
+        s=default; t=1566881469;
+        bh=SWGLO+cSduCx9dyc+sE8bjo8XDL/xO+Ce1LLOj8WhR8=;
+        h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
+        b=GPOFMgTUzUnAEM9eiwQCiRer/wA+ScAyd4ne1GvBHEAoC6QrKlS/sR1Gwc8Cq3WHe
+         CX5w7ZsdvFQ93I6HPq9U7a+ax6YjRZRtdpJyb2Ui5AntfKnelSJEs1f/4AZxtgjQ5b
+         wD3neOLPe6x51eRCZddIx+GzsepsPmkoYEAQpsZ0=
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        pdx-caf-mail.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.7 required=2.0 tests=ALL_TRUSTED,BAYES_00,
+        DKIM_INVALID,DKIM_SIGNED autolearn=no autolearn_force=no version=3.4.0
+Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
+        by smtp.codeaurora.org (Postfix) with ESMTP id 1718E60C5F;
+        Tue, 27 Aug 2019 04:51:08 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
+        s=default; t=1566881468;
+        bh=SWGLO+cSduCx9dyc+sE8bjo8XDL/xO+Ce1LLOj8WhR8=;
+        h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
+        b=Li2JbSyMtuBJUuObVttH52eWEyzxR1tyH1EAGLiebcw/nQ2FyU9SoX/USkmLymUXV
+         Jje2ITzEzy6F3cHWa1mXUoB9RN3Oyjd1XRKWGKLafNK35uIzgjlE3CuZM4fDBMKaEQ
+         twqjj18VIgG5+QWcreNGglYNqCrLJMBAMP6XtrMI=
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CACRpkdbtPo9dr7E2hZ4=fEWTXappWTaypKJyd9M2jz0tYu7HXw@mail.gmail.com>
-User-Agent: Mutt/1.12.1 (2019-06-15)
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
+Content-Transfer-Encoding: 7bit
+Date:   Tue, 27 Aug 2019 10:21:08 +0530
+From:   amasule@codeaurora.org
+To:     Stanimir Varbanov <stanimir.varbanov@linaro.org>
+Cc:     linux-media@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, vgarodia@codeaurora.org
+Subject: Re: [PATCH v6 2/4] media: venus: Update clock scaling
+In-Reply-To: <c02c070d-7f22-88ba-d254-18951c34ce5e@linaro.org>
+References: <1563786452-22188-1-git-send-email-amasule@codeaurora.org>
+ <1563786452-22188-2-git-send-email-amasule@codeaurora.org>
+ <c02c070d-7f22-88ba-d254-18951c34ce5e@linaro.org>
+Message-ID: <d2f19c425ae3cfedfaa9a7c9f5bb9e8f@codeaurora.org>
+X-Sender: amasule@codeaurora.org
+User-Agent: Roundcube Webmail/1.2.5
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu 22 Aug 23:52 PDT 2019, Linus Walleij wrote:
+Hi Stan,
 
-> On Tue, Aug 13, 2019 at 4:46 PM Jordan Crouse <jcrouse@codeaurora.org> wrote:
+On 2019-07-29 14:05, Stanimir Varbanov wrote:
+> Hi Aniket,
 > 
-> > Now that CONFIG_DRM_MSM is no longer default 'y' add it as a module to all
-> > ARCH_QCOM enabled defconfigs to restore the previous expected build
-> > behavior.
-> >
-> > Signed-off-by: Jordan Crouse <jcrouse@codeaurora.org>
+> On 7/22/19 12:07 PM, Aniket Masule wrote:
+>> Current clock scaling calculations are same for vpu4 and
+>> previous versions. For vpu4, Clock scaling calculations
+>> are updated with cycles/mb. This helps in getting precise
+>> clock required.
+>> 
+>> Signed-off-by: Aniket Masule <amasule@codeaurora.org>
+>> ---
+>>  drivers/media/platform/qcom/venus/helpers.c | 91 
+>> +++++++++++++++++++++++++++--
+>>  1 file changed, 87 insertions(+), 4 deletions(-)
+>> 
+>> diff --git a/drivers/media/platform/qcom/venus/helpers.c 
+>> b/drivers/media/platform/qcom/venus/helpers.c
+>> index 7492373..2c976e4 100644
+>> --- a/drivers/media/platform/qcom/venus/helpers.c
+>> +++ b/drivers/media/platform/qcom/venus/helpers.c
+>> @@ -348,8 +348,9 @@ static u32 load_per_type(struct venus_core *core, 
+>> u32 session_type)
+>>  	return mbs_per_sec;
+>>  }
+>> 
+>> -static int load_scale_clocks(struct venus_core *core)
+>> +static int scale_clocks(struct venus_inst *inst)
+>>  {
+>> +	struct venus_core *core = inst->core;
+>>  	const struct freq_tbl *table = core->res->freq_tbl;
+>>  	unsigned int num_rows = core->res->freq_tbl_size;
+>>  	unsigned long freq = table[0].freq;
+>> @@ -398,6 +399,89 @@ static int load_scale_clocks(struct venus_core 
+>> *core)
+>>  	return ret;
+>>  }
+>> 
+>> +static unsigned long calculate_vpp_freq(struct venus_inst *inst)
+>> +{
+>> +	unsigned long vpp_freq = 0;
+>> +	u32 mbs_per_sec;
+>> +
+>> +	mbs_per_sec = load_per_instance(inst);
+>> +	vpp_freq = mbs_per_sec * inst->clk_data.codec_freq_data->vpp_freq;
+>> +	/* 21 / 20 is overhead factor */
+>> +	vpp_freq += vpp_freq / 20;
+>> +
+>> +	return vpp_freq;
+>> +}
+>> +
+>> +static int scale_clocks_v4(struct venus_inst *inst)
+>> +{
+>> +	struct venus_core *core = inst->core;
+>> +	const struct freq_tbl *table = core->res->freq_tbl;
+>> +	unsigned int num_rows = core->res->freq_tbl_size;
+>> +	struct clk *clk = core->clks[0];
+>> +	struct device *dev = core->dev;
+>> +	unsigned int i;
+>> +	unsigned long freq = 0, freq_core1 = 0, freq_core2 = 0;
+>> +	int ret;
+>> +
+>> +	freq = calculate_vpp_freq(inst);
+>> +
+>> +	if (freq > table[0].freq)
+>> +		dev_warn(dev, "HW is overloaded, needed: %lu max: %lu\n",
+>> +			 freq, table[0].freq);
+>> +
 > 
-> Reviewed-by: Linus Walleij <linus.walleij@linaro.org>
+> ...
 > 
-> I suppose Andy will pick this up?
+>> +	for (i = 0; i < num_rows; i++) {
+>> +		if (freq > table[i].freq)
+>> +			break;
+>> +		freq = table[i].freq;
+>> +	}
 > 
-
-Not sure why, but this patch isn't in any of my mailboxes. So thanks for
-the reminder, I've picked it from patchworks for 5.4.
+> The above code snippet will select the biggest table[0].freq always.
+> Infact do we need to "normalize" the calculated freq to the table of
+> possible clock rates? I think tjat should be made after sum all needed
+> frequencies for all cores.
+> 
+Will correct this. Normalizing after sum of all needed frequencies
+would be more precise.
+>> +
+>> +	inst->clk_data.freq = freq;
+>> +
+>> +	mutex_lock(&core->lock);
+>> +	list_for_each_entry(inst, &core->instances, list) {
+>> +		if (inst->clk_data.core_id == VIDC_CORE_ID_1) {
+>> +			freq_core1 += inst->clk_data.freq;
+>> +		} else if (inst->clk_data.core_id == VIDC_CORE_ID_2) {
+>> +			freq_core2 += inst->clk_data.freq;
+>> +		} else if (inst->clk_data.core_id == VIDC_CORE_ID_3) {
+>> +			freq_core1 += inst->clk_data.freq;
+>> +			freq_core2 += inst->clk_data.freq;
+>> +		}
+>> +	}
+>> +	mutex_unlock(&core->lock);
+>> +
+>> +	freq = max(freq_core1, freq_core2);
+>> +
+>> +	ret = clk_set_rate(clk, freq);
+>> +	if (ret)
+>> +		goto err;
+>> +
+>> +	ret = clk_set_rate(core->core0_clk, freq);
+>> +	if (ret)
+>> +		goto err;
+>> +
+>> +	ret = clk_set_rate(core->core1_clk, freq);
+>> +	if (ret)
+>> +		goto err;
+> 
+> This is duplicated in both scale_clocks and scale_clocks_v4, and could
+> be a common function.
+> 
+I will move this to common function.
+>> +
+>> +	return 0;
+>> +
+>> +err:
+>> +	dev_err(dev, "failed to set clock rate %lu (%d)\n", freq, ret);
+>> +	return ret;
+>> +}
+>> +
+>> +static int load_scale_clocks(struct venus_inst *inst)
+>> +{
+>> +	if (IS_V4(inst->core))
+>> +		return scale_clocks_v4(inst);
+>> +
+>> +	if (inst->state == INST_START)
+>> +		return 0;
+> 
+> I'm still not sure about this check of the instance state.
+> 
+> If we look into load_per_instance() it already doing similar check :
+> 
+> !(inst->state >= INST_INIT && inst->state < INST_STOP)
+> 
+> 
+This check would just make sure instance state for scaling,
+not a mandatory check. I can remove the check.
+>> +
+>> +	return scale_clocks(inst);
+>> +}
+>> +
+>>  static void fill_buffer_desc(const struct venus_buffer *buf,
+>>  			     struct hfi_buffer_desc *bd, bool response)
+>>  {
+>> @@ -1053,7 +1137,7 @@ void venus_helper_vb2_stop_streaming(struct 
+>> vb2_queue *q)
+>> 
+>>  		venus_helper_free_dpb_bufs(inst);
+>> 
+>> -		load_scale_clocks(core);
+>> +		load_scale_clocks(inst);
+>>  		INIT_LIST_HEAD(&inst->registeredbufs);
+>>  	}
+>> 
+>> @@ -1070,7 +1154,6 @@ void venus_helper_vb2_stop_streaming(struct 
+>> vb2_queue *q)
+>> 
+>>  int venus_helper_vb2_start_streaming(struct venus_inst *inst)
+>>  {
+>> -	struct venus_core *core = inst->core;
+>>  	int ret;
+>> 
+>>  	ret = intbufs_alloc(inst);
+>> @@ -1081,7 +1164,7 @@ int venus_helper_vb2_start_streaming(struct 
+>> venus_inst *inst)
+>>  	if (ret)
+>>  		goto err_bufs_free;
+>> 
+>> -	load_scale_clocks(core);
+>> +	load_scale_clocks(inst);
+>> 
+>>  	ret = hfi_session_load_res(inst);
+>>  	if (ret)
+>> 
 
 Regards,
-Bjorn
+Aniket
