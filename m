@@ -2,72 +2,61 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id D08AA9F59D
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Aug 2019 23:53:58 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 046B39F5A0
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Aug 2019 23:54:59 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726339AbfH0Vwr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 27 Aug 2019 17:52:47 -0400
-Received: from mail-pf1-f194.google.com ([209.85.210.194]:34230 "EHLO
-        mail-pf1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726206AbfH0Vwr (ORCPT
+        id S1726030AbfH0Vy6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 27 Aug 2019 17:54:58 -0400
+Received: from mail-pf1-f195.google.com ([209.85.210.195]:45595 "EHLO
+        mail-pf1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725835AbfH0Vy6 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 27 Aug 2019 17:52:47 -0400
-Received: by mail-pf1-f194.google.com with SMTP id b24so272485pfp.1;
-        Tue, 27 Aug 2019 14:52:46 -0700 (PDT)
+        Tue, 27 Aug 2019 17:54:58 -0400
+Received: by mail-pf1-f195.google.com with SMTP id w26so242386pfq.12;
+        Tue, 27 Aug 2019 14:54:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=YZ5jY64LA3VVpldsAtC6t4RewIDWSYCr4VKBx5QYzFA=;
-        b=pxyV1AZlesoaT84Dpn/kdky/ke3PlUsf8PjvWy14OaXyzUVTDuWMx0uD10JzpD8iPV
-         GQDON83iBWUzw69fwM8RWRYAOswFeFScm/ejSoVjjKyEwKo6OAaS6YttbAsLgpCwEN7i
-         qP1HzVV+NGVjKK2nJY3j11XL3nX8B15mRSVK+ex7lBi3ajPrJgwRYTWL6MQvtSdnaIDm
-         7PTZB42o6roCn5GqCQ5vqzFUOO5PChZwIYu+3k1jEGP8LK9pNNlOnJVldDRvnZ9g3L7e
-         n9M4ayLBA4AJWkgGZyrob2O4x9AbO0q08rrwbCFhKsYci/ule/3BuUNlogASzr7rw8Xn
-         Xw4w==
+        bh=NzRYq2NSCkfwa5bIHqtlIzdWu66lzjTkJCH+uxJQSws=;
+        b=QSlfON4Q5QL+uaKCX2bJCzRihylGkZNssAwJC7vJZo61pKoDTl6m8DpK39TFHtXy/P
+         6ZqCzU00H4Dsh9Q/iLTzVLHwenhjUCqhDR3lF/3a1TodyDl3sav9eDjdEskPv8yw1OXR
+         ehd2SPKrjnKeqCOS746QoVpJ4n1xvqfX6aTY2IS8SutaIZ222eOBqD1d4MUAkcGVl2Uu
+         foA2CUOAV1hRxchJmpNygBujnSVWYHy6T1AweYXMPnNV3kBmOHNGgliwpLIXLi2pnFHE
+         Gnhmb1x+XzEfmELMqtBvsfvGgRtrvGRvKvNiGQOJCCJ6AYrSTQvYg7KIWFXG5POuQ9iV
+         jOmA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=YZ5jY64LA3VVpldsAtC6t4RewIDWSYCr4VKBx5QYzFA=;
-        b=n6q7OWQuxqBdmN4j20zkwa9sYbwYHhm+Y9K+BpCPHaQwNs9upuMKno140LPIe5HO50
-         xMmxC04X5PCs1Uqau02ViyEAqsn1nMGsB2T1luwKEIbOAcfsjtVYw4wF9Ot5Vj0xrzzy
-         T8+Ulwn5yXcALR//xbkKB4fKJvTWfoHtuUGIJ5QqzPl257FoDm0Gh2Ef9VK/TQ2fk293
-         fZbmCJg8wLppVr74EngHnecqrGdU8OGm2wuEnbSC06VPKRcnTzJLBX1mnMuQ1z0pmBlw
-         rHrmQI/b8xEjVVN5zRWUo7p/d/Lo590ejSl97bUpbUH5IKM0hjLQ2bsf9M6VCqQMI1yp
-         iJjw==
-X-Gm-Message-State: APjAAAWaopuT4r+W/1hNKfSRi0qC9FwfgQAnOZ7q9JUWfOlqTCtPVTQy
-        775i1RLsi+a0t7fl/ynd0V8=
-X-Google-Smtp-Source: APXvYqzyDYdoT1X0ILkAKCHQK71UCJdT8vDSFqddz1MKwchgCRYu9qmUZibg0GFRr7Z/7oPrNrhqZw==
-X-Received: by 2002:a65:41c6:: with SMTP id b6mr520027pgq.269.1566942766039;
-        Tue, 27 Aug 2019 14:52:46 -0700 (PDT)
+        bh=NzRYq2NSCkfwa5bIHqtlIzdWu66lzjTkJCH+uxJQSws=;
+        b=lBp55jHv7O5IDf4jdDSHzO/fuheREx/SaR+M3oNuf4L/UgXQvlrjxzYRv4s3FOwdYR
+         wvhEd9BBc+IDmANPJlQp4hAZc2jdo/CPl29ZHkvoPS3ZgrsA28sKFaFGDArxsa4n1+XM
+         rZLBUqueMMLS+r1+dPBQpqw5fsa9/qMEJ2Z5ascvG05gpem8hzjViUdfVAUjMRy13IvJ
+         mivE0JAg/UXkRrki8P6uTGVjA4vZ7VYAQ5D9BzeOi6pGdRz24HaupuBWGcNKeEi9pcpM
+         8Fa6jkn8sMUukn0Y7yJUa+wSi9bdjp8BbsBvlFjs7ZBTaQZRp5yUmi7gQ0GodSf4ugnH
+         2fuw==
+X-Gm-Message-State: APjAAAVLn9yT0+NZYLtXDk0I6huV0hxfGr7iDRT5la4tfbCfnCHziTSb
+        cfio1NDSV2kS2Capz/KSkio=
+X-Google-Smtp-Source: APXvYqyideMqvBIIPMSlJrHSfDS8R/fjsux/TnHTny2TQv6p9KQbdqSlmbH6f5+4jk6x2IlQR8VrHQ==
+X-Received: by 2002:a62:1a45:: with SMTP id a66mr817838pfa.142.1566942897116;
+        Tue, 27 Aug 2019 14:54:57 -0700 (PDT)
 Received: from localhost ([100.118.89.196])
-        by smtp.gmail.com with ESMTPSA id r6sm186578pjb.22.2019.08.27.14.52.45
+        by smtp.gmail.com with ESMTPSA id f26sm304420pfq.38.2019.08.27.14.54.56
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 27 Aug 2019 14:52:45 -0700 (PDT)
+        Tue, 27 Aug 2019 14:54:56 -0700 (PDT)
 From:   Rob Clark <robdclark@gmail.com>
 To:     dri-devel@lists.freedesktop.org
 Cc:     Rob Clark <robdclark@chromium.org>,
         Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
         David Airlie <airlied@linux.ie>,
         Daniel Vetter <daniel@ffwll.ch>,
-        Jeykumar Sankaran <jsanka@codeaurora.org>,
-        Jordan Crouse <jcrouse@codeaurora.org>,
-        Abhinav Kumar <abhinavk@codeaurora.org>,
-        Sravanthi Kollukuduru <skolluku@codeaurora.org>,
-        Bruce Wang <bzwang@chromium.org>,
-        Jonathan Marek <jonathan@marek.ca>,
-        Mamta Shukla <mamtashukla555@gmail.com>,
-        Enrico Weigelt <info@metux.net>,
-        Thomas Gleixner <tglx@linutronix.de>,
-        Georgi Djakov <georgi.djakov@linaro.org>,
-        Boris Brezillon <bbrezillon@kernel.org>,
         linux-arm-msm@vger.kernel.org (open list:DRM DRIVER FOR MSM ADRENO GPU),
         freedreno@lists.freedesktop.org (open list:DRM DRIVER FOR MSM ADRENO
         GPU), linux-kernel@vger.kernel.org (open list)
-Subject: [PATCH 7/9] drm/msm: split power control from prepare/complete_commit
-Date:   Tue, 27 Aug 2019 14:33:37 -0700
-Message-Id: <20190827213421.21917-8-robdclark@gmail.com>
+Subject: [PATCH 8/9] drm/msm: async commit support
+Date:   Tue, 27 Aug 2019 14:33:38 -0700
+Message-Id: <20190827213421.21917-9-robdclark@gmail.com>
 X-Mailer: git-send-email 2.21.0
 In-Reply-To: <20190827213421.21917-1-robdclark@gmail.com>
 References: <20190827213421.21917-1-robdclark@gmail.com>
@@ -80,218 +69,330 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 From: Rob Clark <robdclark@chromium.org>
 
-With atomic commit, ->prepare_commit() and ->complete_commit() may not
-be evenly balanced (although ->complete_commit() will complete each
-crtc that had been previously prepared).  So these will no longer be
-a good place to enable/disable clocks needed for hw access.
+Now that flush/wait/complete is decoupled from the "synchronous" part of
+atomic commit_tail(), add support to defer flush to a timer that expires
+shortly before vblank for async commits.  In this way, multiple atomic
+commits (for example, cursor updates) can be coalesced into a single
+flush at the end of the frame.
 
 Signed-off-by: Rob Clark <robdclark@chromium.org>
 ---
- drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c  | 17 ++++++++++++++---
- drivers/gpu/drm/msm/disp/mdp4/mdp4_kms.c | 19 ++++++++++++++-----
- drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c | 20 ++++++++++++++------
- drivers/gpu/drm/msm/msm_atomic.c         |  2 ++
- drivers/gpu/drm/msm/msm_kms.h            | 10 ++++++++++
- 5 files changed, 54 insertions(+), 14 deletions(-)
+ drivers/gpu/drm/msm/msm_atomic.c | 153 ++++++++++++++++++++++++++++++-
+ drivers/gpu/drm/msm/msm_drv.c    |   1 +
+ drivers/gpu/drm/msm/msm_drv.h    |   4 +
+ drivers/gpu/drm/msm/msm_kms.h    |  50 ++++++++++
+ 4 files changed, 207 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
-index efbf8fd343de..d54741f3ad9f 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
-@@ -248,6 +248,18 @@ static void dpu_kms_disable_vblank(struct msm_kms *kms, struct drm_crtc *crtc)
- 	dpu_crtc_vblank(crtc, false);
- }
- 
-+static void dpu_kms_enable_commit(struct msm_kms *kms)
-+{
-+	struct dpu_kms *dpu_kms = to_dpu_kms(kms);
-+	pm_runtime_get_sync(&dpu_kms->pdev->dev);
-+}
-+
-+static void dpu_kms_disable_commit(struct msm_kms *kms)
-+{
-+	struct dpu_kms *dpu_kms = to_dpu_kms(kms);
-+	pm_runtime_put_sync(&dpu_kms->pdev->dev);
-+}
-+
- static void dpu_kms_prepare_commit(struct msm_kms *kms,
- 		struct drm_atomic_state *state)
- {
-@@ -267,7 +279,6 @@ static void dpu_kms_prepare_commit(struct msm_kms *kms,
- 	if (!dev || !dev->dev_private)
- 		return;
- 	priv = dev->dev_private;
--	pm_runtime_get_sync(&dpu_kms->pdev->dev);
- 
- 	/* Call prepare_commit for all affected encoders */
- 	for_each_new_crtc_in_state(state, crtc, crtc_state, i) {
-@@ -335,8 +346,6 @@ static void dpu_kms_complete_commit(struct msm_kms *kms, unsigned crtc_mask)
- 	for_each_crtc_mask(dpu_kms->dev, crtc, crtc_mask)
- 		dpu_crtc_complete_commit(crtc);
- 
--	pm_runtime_put_sync(&dpu_kms->pdev->dev);
--
- 	DPU_ATRACE_END("kms_complete_commit");
- }
- 
-@@ -682,6 +691,8 @@ static const struct msm_kms_funcs kms_funcs = {
- 	.irq_preinstall  = dpu_irq_preinstall,
- 	.irq_uninstall   = dpu_irq_uninstall,
- 	.irq             = dpu_irq,
-+	.enable_commit   = dpu_kms_enable_commit,
-+	.disable_commit  = dpu_kms_disable_commit,
- 	.prepare_commit  = dpu_kms_prepare_commit,
- 	.flush_commit    = dpu_kms_flush_commit,
- 	.commit          = dpu_kms_commit,
-diff --git a/drivers/gpu/drm/msm/disp/mdp4/mdp4_kms.c b/drivers/gpu/drm/msm/disp/mdp4/mdp4_kms.c
-index 78ce2c8a9a38..500e5b08c11f 100644
---- a/drivers/gpu/drm/msm/disp/mdp4/mdp4_kms.c
-+++ b/drivers/gpu/drm/msm/disp/mdp4/mdp4_kms.c
-@@ -93,15 +93,24 @@ static int mdp4_hw_init(struct msm_kms *kms)
- 	return ret;
- }
- 
--static void mdp4_prepare_commit(struct msm_kms *kms, struct drm_atomic_state *state)
-+static void mdp4_enable_commit(struct msm_kms *kms)
-+{
-+	struct mdp4_kms *mdp4_kms = to_mdp4_kms(to_mdp_kms(kms));
-+	mdp4_enable(mdp4_kms);
-+}
-+
-+static void mdp4_disable_commit(struct msm_kms *kms)
- {
- 	struct mdp4_kms *mdp4_kms = to_mdp4_kms(to_mdp_kms(kms));
-+	mdp4_disable(mdp4_kms);
-+}
-+
-+static void mdp4_prepare_commit(struct msm_kms *kms, struct drm_atomic_state *state)
-+{
- 	int i;
- 	struct drm_crtc *crtc;
- 	struct drm_crtc_state *crtc_state;
- 
--	mdp4_enable(mdp4_kms);
--
- 	/* see 119ecb7fd */
- 	for_each_new_crtc_in_state(state, crtc, crtc_state, i)
- 		drm_crtc_vblank_get(crtc);
-@@ -129,8 +138,6 @@ static void mdp4_complete_commit(struct msm_kms *kms, unsigned crtc_mask)
- 	/* see 119ecb7fd */
- 	for_each_crtc_mask(mdp4_kms->dev, crtc, crtc_mask)
- 		drm_crtc_vblank_put(crtc);
--
--	mdp4_disable(mdp4_kms);
- }
- 
- static long mdp4_round_pixclk(struct msm_kms *kms, unsigned long rate,
-@@ -182,6 +189,8 @@ static const struct mdp_kms_funcs kms_funcs = {
- 		.irq             = mdp4_irq,
- 		.enable_vblank   = mdp4_enable_vblank,
- 		.disable_vblank  = mdp4_disable_vblank,
-+		.enable_commit   = mdp4_enable_commit,
-+		.disable_commit  = mdp4_disable_commit,
- 		.prepare_commit  = mdp4_prepare_commit,
- 		.flush_commit    = mdp4_flush_commit,
- 		.wait_flush      = mdp4_wait_flush,
-diff --git a/drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c b/drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c
-index eff1b000258e..ba67bde1dbef 100644
---- a/drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c
-+++ b/drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c
-@@ -140,16 +140,25 @@ static int mdp5_global_obj_init(struct mdp5_kms *mdp5_kms)
- 	return 0;
- }
- 
-+static void mdp5_enable_commit(struct msm_kms *kms)
-+{
-+	struct mdp5_kms *mdp5_kms = to_mdp5_kms(to_mdp_kms(kms));
-+	pm_runtime_get_sync(&mdp5_kms->pdev->dev);
-+}
-+
-+static void mdp5_disable_commit(struct msm_kms *kms)
-+{
-+	struct mdp5_kms *mdp5_kms = to_mdp5_kms(to_mdp_kms(kms));
-+	pm_runtime_put_sync(&mdp5_kms->pdev->dev);
-+}
-+
- static void mdp5_prepare_commit(struct msm_kms *kms, struct drm_atomic_state *state)
- {
- 	struct mdp5_kms *mdp5_kms = to_mdp5_kms(to_mdp_kms(kms));
--	struct device *dev = &mdp5_kms->pdev->dev;
- 	struct mdp5_global_state *global_state;
- 
- 	global_state = mdp5_get_existing_global_state(mdp5_kms);
- 
--	pm_runtime_get_sync(dev);
--
- 	if (mdp5_kms->smp)
- 		mdp5_smp_prepare_commit(mdp5_kms->smp, &global_state->smp);
- }
-@@ -171,15 +180,12 @@ static void mdp5_wait_flush(struct msm_kms *kms, unsigned crtc_mask)
- static void mdp5_complete_commit(struct msm_kms *kms, unsigned crtc_mask)
- {
- 	struct mdp5_kms *mdp5_kms = to_mdp5_kms(to_mdp_kms(kms));
--	struct device *dev = &mdp5_kms->pdev->dev;
- 	struct mdp5_global_state *global_state;
- 
- 	global_state = mdp5_get_existing_global_state(mdp5_kms);
- 
- 	if (mdp5_kms->smp)
- 		mdp5_smp_complete_commit(mdp5_kms->smp, &global_state->smp);
--
--	pm_runtime_put_sync(dev);
- }
- 
- static long mdp5_round_pixclk(struct msm_kms *kms, unsigned long rate,
-@@ -278,6 +284,8 @@ static const struct mdp_kms_funcs kms_funcs = {
- 		.enable_vblank   = mdp5_enable_vblank,
- 		.disable_vblank  = mdp5_disable_vblank,
- 		.flush_commit    = mdp5_flush_commit,
-+		.enable_commit   = mdp5_enable_commit,
-+		.disable_commit  = mdp5_disable_commit,
- 		.prepare_commit  = mdp5_prepare_commit,
- 		.wait_flush      = mdp5_wait_flush,
- 		.complete_commit = mdp5_complete_commit,
 diff --git a/drivers/gpu/drm/msm/msm_atomic.c b/drivers/gpu/drm/msm/msm_atomic.c
-index 27369b020bee..3d0424205349 100644
+index 3d0424205349..de767a19e193 100644
 --- a/drivers/gpu/drm/msm/msm_atomic.c
 +++ b/drivers/gpu/drm/msm/msm_atomic.c
-@@ -52,6 +52,7 @@ void msm_atomic_commit_tail(struct drm_atomic_state *state)
- 	struct msm_kms *kms = priv->kms;
- 	unsigned crtc_mask = get_crtc_mask(state);
+@@ -29,6 +29,94 @@ int msm_atomic_prepare_fb(struct drm_plane *plane,
+ 	return msm_framebuffer_prepare(new_state->fb, kms->aspace);
+ }
  
++static void msm_atomic_async_commit(struct msm_kms *kms, int crtc_idx)
++{
++	unsigned crtc_mask = BIT(crtc_idx);
++
++	mutex_lock(&kms->commit_lock);
++
++	if (!(kms->pending_crtc_mask & crtc_mask))
++		goto out;
++
++	kms->pending_crtc_mask &= ~crtc_mask;
++
 +	kms->funcs->enable_commit(kms);
++
++	/*
++	 * Flush hardware updates:
++	 */
++	DRM_DEBUG_ATOMIC("triggering async commit\n");
++	kms->funcs->flush_commit(kms, crtc_mask);
++
++	/*
++	 * Wait for flush to complete:
++	 */
++	kms->funcs->wait_flush(kms, crtc_mask);
++
++	kms->funcs->complete_commit(kms, crtc_mask);
++	kms->funcs->disable_commit(kms);
++
++out:
++	mutex_unlock(&kms->commit_lock);
++
++}
++
++static enum hrtimer_restart msm_atomic_pending_timer(struct hrtimer *t)
++{
++	struct msm_pending_timer *timer = container_of(t,
++			struct msm_pending_timer, timer);
++	struct msm_drm_private *priv = timer->kms->dev->dev_private;
++
++	queue_work(priv->wq, &timer->work);
++
++	return HRTIMER_NORESTART;
++}
++
++static void msm_atomic_pending_work(struct work_struct *work)
++{
++	struct msm_pending_timer *timer = container_of(work,
++			struct msm_pending_timer, work);
++
++	msm_atomic_async_commit(timer->kms, timer->crtc_idx);
++}
++
++void msm_atomic_init_pending_timer(struct msm_pending_timer *timer,
++		struct msm_kms *kms, int crtc_idx)
++{
++	timer->kms = kms;
++	timer->crtc_idx = crtc_idx;
++	hrtimer_init(&timer->timer, CLOCK_MONOTONIC, HRTIMER_MODE_ABS);
++	timer->timer.function = msm_atomic_pending_timer;
++	INIT_WORK(&timer->work, msm_atomic_pending_work);
++}
++
++static bool can_do_async(struct drm_atomic_state *state,
++		struct drm_crtc **async_crtc)
++{
++	struct drm_connector_state *connector_state;
++	struct drm_connector *connector;
++	struct drm_crtc_state *crtc_state;
++	struct drm_crtc *crtc;
++	int i, num_crtcs = 0;
++
++	if (!(state->legacy_cursor_update || state->async_update))
++		return false;
++
++	/* any connector change, means slow path: */
++	for_each_new_connector_in_state(state, connector, connector_state, i)
++		return false;
++
++	for_each_new_crtc_in_state(state, crtc, crtc_state, i) {
++		if (drm_atomic_crtc_needs_modeset(crtc_state))
++			return false;
++		if (++num_crtcs > 1)
++			return false;
++		*async_crtc = crtc;
++	}
++
++	return true;
++}
++
+ /* Get bitmask of crtcs that will need to be flushed.  The bitmask
+  * can be used with for_each_crtc_mask() iterator, to iterate
+  * effected crtcs without needing to preserve the atomic state.
+@@ -50,9 +138,25 @@ void msm_atomic_commit_tail(struct drm_atomic_state *state)
+ 	struct drm_device *dev = state->dev;
+ 	struct msm_drm_private *priv = dev->dev_private;
+ 	struct msm_kms *kms = priv->kms;
++	struct drm_crtc *async_crtc = NULL;
+ 	unsigned crtc_mask = get_crtc_mask(state);
++	bool async = kms->funcs->vsync_time &&
++			can_do_async(state, &async_crtc);
+ 
+ 	kms->funcs->enable_commit(kms);
++
++	/*
++	 * Ensure any previous (potentially async) commit has
++	 * completed:
++	 */
++	kms->funcs->wait_flush(kms, crtc_mask);
++
++	mutex_lock(&kms->commit_lock);
++
++	/*
++	 * Now that there is no in-progress flush is complete,
++	 * prepare the current update:
++	 */
  	kms->funcs->prepare_commit(kms, state);
  
  	/*
-@@ -72,6 +73,7 @@ void msm_atomic_commit_tail(struct drm_atomic_state *state)
+@@ -62,6 +166,49 @@ void msm_atomic_commit_tail(struct drm_atomic_state *state)
+ 	drm_atomic_helper_commit_planes(dev, state, 0);
+ 	drm_atomic_helper_commit_modeset_enables(dev, state);
  
++	if (async) {
++		struct msm_pending_timer *timer =
++			&kms->pending_timers[async_crtc->index];
++
++		/* async updates are limited to single-crtc updates: */
++		WARN_ON(crtc_mask != BIT(async_crtc->index));
++
++		/*
++		 * Start timer if we don't already have an update pending
++		 * on this crtc:
++		 */
++		if (!(kms->pending_crtc_mask & crtc_mask)) {
++			ktime_t vsync_time, wakeup_time;
++
++			kms->pending_crtc_mask |= crtc_mask;
++
++			vsync_time = kms->funcs->vsync_time(kms, async_crtc);
++			wakeup_time = ktime_sub(vsync_time, ms_to_ktime(1));
++
++			hrtimer_start(&timer->timer, wakeup_time,
++					HRTIMER_MODE_ABS);
++		}
++
++		kms->funcs->disable_commit(kms);
++		mutex_unlock(&kms->commit_lock);
++
++		/*
++		 * At this point, from drm core's perspective, we
++		 * are done with the atomic update, so we can just
++		 * go ahead and signal that it is done:
++		 */
++		drm_atomic_helper_commit_hw_done(state);
++		drm_atomic_helper_cleanup_planes(dev, state);
++
++		return;
++	}
++
++	/*
++	 * If there is any async flush pending on updated crtcs, fold
++	 * them into the current flush.
++	 */
++	kms->pending_crtc_mask &= ~crtc_mask;
++
+ 	/*
+ 	 * Flush hardware updates:
+ 	 */
+@@ -71,11 +218,15 @@ void msm_atomic_commit_tail(struct drm_atomic_state *state)
+ 	}
+ 	kms->funcs->flush_commit(kms, crtc_mask);
+ 
++	/*
++	 * Wait for flush to complete:
++	 */
  	kms->funcs->wait_flush(kms, crtc_mask);
++
  	kms->funcs->complete_commit(kms, crtc_mask);
-+	kms->funcs->disable_commit(kms);
+ 	kms->funcs->disable_commit(kms);
++	mutex_unlock(&kms->commit_lock);
  
  	drm_atomic_helper_commit_hw_done(state);
+-
+ 	drm_atomic_helper_cleanup_planes(dev, state);
+ }
+diff --git a/drivers/gpu/drm/msm/msm_drv.c b/drivers/gpu/drm/msm/msm_drv.c
+index 336a6d0a4cd3..65262a993440 100644
+--- a/drivers/gpu/drm/msm/msm_drv.c
++++ b/drivers/gpu/drm/msm/msm_drv.c
+@@ -532,6 +532,7 @@ static int msm_drm_init(struct device *dev, struct drm_driver *drv)
+ 	ddev->mode_config.normalize_zpos = true;
  
+ 	if (kms) {
++		kms->dev = ddev;
+ 		ret = kms->funcs->hw_init(kms);
+ 		if (ret) {
+ 			DRM_DEV_ERROR(dev, "kms hw init failed: %d\n", ret);
+diff --git a/drivers/gpu/drm/msm/msm_drv.h b/drivers/gpu/drm/msm/msm_drv.h
+index 79d480a7d97d..7d164d5c18b4 100644
+--- a/drivers/gpu/drm/msm/msm_drv.h
++++ b/drivers/gpu/drm/msm/msm_drv.h
+@@ -222,8 +222,12 @@ struct msm_format {
+ 	uint32_t pixel_format;
+ };
+ 
++struct msm_pending_timer;
++
+ int msm_atomic_prepare_fb(struct drm_plane *plane,
+ 			  struct drm_plane_state *new_state);
++void msm_atomic_init_pending_timer(struct msm_pending_timer *timer,
++		struct msm_kms *kms, int crtc_idx);
+ void msm_atomic_commit_tail(struct drm_atomic_state *state);
+ struct drm_atomic_state *msm_atomic_state_alloc(struct drm_device *dev);
+ void msm_atomic_state_clear(struct drm_atomic_state *state);
 diff --git a/drivers/gpu/drm/msm/msm_kms.h b/drivers/gpu/drm/msm/msm_kms.h
-index 55234f661382..f9847eb39143 100644
+index f9847eb39143..9a0236eb6487 100644
 --- a/drivers/gpu/drm/msm/msm_kms.h
 +++ b/drivers/gpu/drm/msm/msm_kms.h
-@@ -35,6 +35,16 @@ struct msm_kms_funcs {
+@@ -33,6 +33,20 @@ struct msm_kms_funcs {
+ 
+ 	/*
  	 * Atomic commit handling:
++	 *
++	 * Note that in the case of async commits, the funcs which take
++	 * a crtc_mask (ie. ->flush_commit(), and ->complete_commit())
++	 * might not be evenly balanced with ->prepare_commit(), however
++	 * each crtc that effected by a ->perpare_commit() (potentially
++	 * multiple times) will eventually (at end of vsync period) be
++	 * flushed and completed.
++	 *
++	 * This has some implications about tracking of cleanup state,
++	 * for example SMP blocks to release after commit completes.  Ie.
++	 * cleanup state should be also duplicated in the various
++	 * duplicate_state() methods, as the current cleanup state at
++	 * ->complete_commit() time may have accumulated cleanup work
++	 * from multiple commits.
  	 */
  
+ 	/**
+@@ -45,6 +59,14 @@ struct msm_kms_funcs {
+ 	void (*enable_commit)(struct msm_kms *kms);
+ 	void (*disable_commit)(struct msm_kms *kms);
+ 
 +	/**
-+	 * Enable/disable power/clks needed for hw access done in other
-+	 * commit related methods.
-+	 *
-+	 * If mdp4 is migrated to runpm, we could probably drop these
-+	 * and use runpm directly.
++	 * If the kms backend supports async commit, it should implement
++	 * this method to return the time of the next vsync.  This is
++	 * used to determine a time slightly before vsync, for the async
++	 * commit timer to run and complete an async commit.
 +	 */
-+	void (*enable_commit)(struct msm_kms *kms);
-+	void (*disable_commit)(struct msm_kms *kms);
++	ktime_t (*vsync_time)(struct msm_kms *kms, struct drm_crtc *crtc);
 +
  	/**
  	 * Prepare for atomic commit.  This is called after any previous
  	 * (async or otherwise) commit has completed.
+@@ -109,20 +131,48 @@ struct msm_kms_funcs {
+ #endif
+ };
+ 
++struct msm_kms;
++
++/*
++ * A per-crtc timer for pending async atomic flushes.  Scheduled to expire
++ * shortly before vblank to flush pending async updates.
++ */
++struct msm_pending_timer {
++	struct hrtimer timer;
++	struct work_struct work;
++	struct msm_kms *kms;
++	unsigned crtc_idx;
++};
++
+ struct msm_kms {
+ 	const struct msm_kms_funcs *funcs;
++	struct drm_device *dev;
+ 
+ 	/* irq number to be passed on to drm_irq_install */
+ 	int irq;
+ 
+ 	/* mapper-id used to request GEM buffer mapped for scanout: */
+ 	struct msm_gem_address_space *aspace;
++
++	/*
++	 * For async commit, where ->flush_commit() and later happens
++	 * from the crtc's pending_timer close to end of the frame:
++	 */
++	struct mutex commit_lock;
++	unsigned pending_crtc_mask;
++	struct msm_pending_timer pending_timers[MAX_CRTCS];
+ };
+ 
+ static inline void msm_kms_init(struct msm_kms *kms,
+ 		const struct msm_kms_funcs *funcs)
+ {
++	unsigned i;
++
++	mutex_init(&kms->commit_lock);
+ 	kms->funcs = funcs;
++
++	for (i = 0; i < ARRAY_SIZE(kms->pending_timers); i++)
++		msm_atomic_init_pending_timer(&kms->pending_timers[i], kms, i);
+ }
+ 
+ struct msm_kms *mdp4_kms_init(struct drm_device *dev);
 -- 
 2.21.0
 
