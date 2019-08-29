@@ -2,87 +2,129 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id B06BFA2622
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Aug 2019 20:36:31 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 54789A264E
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Aug 2019 20:44:26 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728102AbfH2Sga (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 29 Aug 2019 14:36:30 -0400
-Received: from mail-pg1-f196.google.com ([209.85.215.196]:42805 "EHLO
-        mail-pg1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727729AbfH2Sga (ORCPT
+        id S1728187AbfH2SoZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 29 Aug 2019 14:44:25 -0400
+Received: from smtp.codeaurora.org ([198.145.29.96]:55508 "EHLO
+        smtp.codeaurora.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727867AbfH2SoZ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 29 Aug 2019 14:36:30 -0400
-Received: by mail-pg1-f196.google.com with SMTP id p3so2026437pgb.9
-        for <linux-arm-msm@vger.kernel.org>; Thu, 29 Aug 2019 11:36:30 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id;
-        bh=KbKypMZEMo628Sx98GbFT2Lyxp3a3o8vbOSGro2hqs8=;
-        b=t3zQUyJMxStChnSzVBHngExmp8QsLonx59qyC0ffBqgubbjGeOyOFMOsHJf8uf6HkB
-         CojAknqMdbyB8D+o/RuZItXS57kNsGGjly1qq2ZpZ9joOvjLQ5RVfWeJcCMLtQBpw/zH
-         eepAT69hr+gc0hwxvBjbl90PN9iyk0QDzHp5MV7YLfKc5W0wOQ7zGHWbDhWf+GrfcdTh
-         wPK7Sxg25ZX5mWRup3BIgWX38rdvTV+rGjVQfpKopTCfmhGLIoh5TTogX8eiT9lPG+F4
-         t34bu1vWoK9BI1Ryd083tz1DsL+ZG6939oGqr1RuXw/GymWIu89dLRkNTx/6QIyGSRjj
-         NN8A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id;
-        bh=KbKypMZEMo628Sx98GbFT2Lyxp3a3o8vbOSGro2hqs8=;
-        b=lvNZQwbh1jF3qUMY+QS4VTHCby9z2lMVJQJrzgqVORu8LcomjN/t6uY+0w22DGsvF1
-         4MsercMXdgnPWvnG4bEwtMnasvGoA1chdi0CffBXDiYtaq9IlxSwFRd/JbD8Fw5se8Jk
-         cSTc/OdytiSzU6dygmtUT1bykEV37mQSOg0Z3E+rLDj2r6P+GZ3wF6Popqzfpy0No43f
-         eg27CRalLzPnc1Ur8XoShyXWrepP8Tsnk+MYhuriyfNWBsZMdtuCgAKUsrIeyR3Kb7Tb
-         5NUTh0zjNgigAixntqB/F3qK/Jtikie8/8Q2QJiQ9z39KR/8nKox18Ogp1o8lGIIhFmA
-         hGaw==
-X-Gm-Message-State: APjAAAWCJRSTBRFrgo6yj6NZ1muNkc9Ij3R7uK4cSm0qjx5oKsSUkj9r
-        eXhEtLHyY4nMJmeiFJaLYuo3fg==
-X-Google-Smtp-Source: APXvYqxpv+GziRN1zBpbr421YfeGoyK+5VQeDsDe4w/JmyFKe9EoDJcwIteI02M7WGql0t//MIrfew==
-X-Received: by 2002:a62:5c5:: with SMTP id 188mr13311302pff.227.1567103789574;
-        Thu, 29 Aug 2019 11:36:29 -0700 (PDT)
-Received: from localhost.localdomain (104-188-17-28.lightspeed.sndgca.sbcglobal.net. [104.188.17.28])
-        by smtp.gmail.com with ESMTPSA id ay7sm2840574pjb.4.2019.08.29.11.36.28
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 29 Aug 2019 11:36:28 -0700 (PDT)
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Ohad Ben-Cohen <ohad@wizery.com>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Srini Kandagatla <srinivas.kandagatla@linaro.org>
-Cc:     linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: [PATCH] rpmsg: glink-smem: Name the edge based on parent remoteproc
-Date:   Thu, 29 Aug 2019 11:36:25 -0700
-Message-Id: <20190829183625.32244-1-bjorn.andersson@linaro.org>
-X-Mailer: git-send-email 2.18.0
+        Thu, 29 Aug 2019 14:44:25 -0400
+Received: by smtp.codeaurora.org (Postfix, from userid 1000)
+        id 9E68E67F1D; Thu, 29 Aug 2019 18:12:14 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
+        s=default; t=1567104263;
+        bh=4IZPN+QzAX53PADdDIhJMcY3L6unBaIiNa8EHjxShrg=;
+        h=From:To:Cc:Subject:Date:From;
+        b=ExNN5XrvgXftrPT5i1I8TuVri+rbqNFRol6K90BPPF6G74hQve9EfwObAnC2bu9mU
+         jTVzZZga8nFLQgm6DopjUl0gCoaFRVSkuLf6YuqimtcURuwz3khkSGzqqV8VpUKzTD
+         IJ8BAx9en3G0KR12EODqFgSXH2C6hINF5GAc2B9U=
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        pdx-caf-mail.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.7 required=2.0 tests=ALL_TRUSTED,BAYES_00,
+        DKIM_INVALID,DKIM_SIGNED,SPF_NONE autolearn=no autolearn_force=no
+        version=3.4.0
+Received: from codeaurora.org (i-global254.qualcomm.com [199.106.103.254])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: ilina@smtp.codeaurora.org)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 5C521687F8;
+        Thu, 29 Aug 2019 18:12:10 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
+        s=default; t=1567102331;
+        bh=4IZPN+QzAX53PADdDIhJMcY3L6unBaIiNa8EHjxShrg=;
+        h=From:To:Cc:Subject:Date:From;
+        b=TE4CYLNyVQXTacu3/ucIyJNTdsPElPW7tiH3GjWyBWcGuuGAWSFyEDyf4SN0Fi17n
+         bLfM0eJLI3HCTHknVEN56SqY//nkd4MNp+FWFBr60riwX3va8LjfaQy1+IkpfTUCwe
+         ujtE17h//M1nJAvqLezlXzffuLoLv2lA6yJQMTi0=
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 5C521687F8
+Authentication-Results: pdx-caf-mail.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: pdx-caf-mail.web.codeaurora.org; spf=none smtp.mailfrom=ilina@codeaurora.org
+From:   Lina Iyer <ilina@codeaurora.org>
+To:     swboyd@chromium.org, evgreen@chromium.org, marc.zyngier@arm.com,
+        linus.walleij@linaro.org
+Cc:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        bjorn.andersson@linaro.org, mkshah@codeaurora.org,
+        linux-gpio@vger.kernel.org, rnayak@codeaurora.org,
+        Lina Iyer <ilina@codeaurora.org>
+Subject: [PATCH RFC 00/14] qcom: support wakeup capable GPIOs
+Date:   Thu, 29 Aug 2019 12:11:49 -0600
+Message-Id: <20190829181203.2660-1-ilina@codeaurora.org>
+X-Mailer: git-send-email 2.22.0
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Naming the glink edge device on the parent of_node short name causes
-collisions when multiple remoteproc instances with only different unit
-address are described on the platform_bus in DeviceTree.
+This series is another attempt on adding wakeup capable GPIOs for QCOM
+SoC. This patchset is based on Linus's support for hierarchical GPIOs
+merged into linux-next [1]. The essense of the idea remains the same as
+the previous submission [2]. GPIO irqchip TLMM is setup in hierarchy with
+the PDC as the wakeup-parent. PDC's interrupt parent is the GIC. GPIOs
+in QCOM SoC that are wakeup capable (when TLMM is powered off) are
+routed to the PDC as well and can be detected at the always-on interrupt
+controller (PDC). The idea is setup the irqchips in hierarchy and if the
+interrupt is handled at the PDC, then TLMM relinquishes control and
+configuration of the interrupt to the PDC.
 
-Base the edge's name on the parent remoteproc's name instead, to ensure
-that it's unique.
+There are few new additions in this submission. The first is the
+additional SPI configuration that needs to be done to setup the GPIO
+type in a register interface between the PDC and the GIC. This is needed
+only for GPIOs. This registers in some QCOM SoCs is access restricted
+and has to be written from the TZ. The DT bindings are also updated for
+this new requirement. The second change is that with the new
+hierarchical support in gpiolib, we could remove the .alloc and
+.translate functions from the pinctrl driver. But to distinguish the
+case where a wakeup interrupt controller needs the TLMM to configure the
+GPIO interrupts (in the case of MPM interrupt controller), irqdomain
+flags have been added. The third change is ensure the interrupt
+controllers' interrupt pending bits are cleared when the GPIO is enabled
+as an interrupt.
 
-Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
----
- drivers/rpmsg/qcom_glink_smem.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+Please consider reviewing these patches.
 
-diff --git a/drivers/rpmsg/qcom_glink_smem.c b/drivers/rpmsg/qcom_glink_smem.c
-index 64a5ce324c7f..4238383d8685 100644
---- a/drivers/rpmsg/qcom_glink_smem.c
-+++ b/drivers/rpmsg/qcom_glink_smem.c
-@@ -201,7 +201,7 @@ struct qcom_glink *qcom_glink_smem_register(struct device *parent,
- 	dev->parent = parent;
- 	dev->of_node = node;
- 	dev->release = qcom_glink_smem_release;
--	dev_set_name(dev, "%pOFn:%pOFn", node->parent, node);
-+	dev_set_name(dev, "%s:%pOFn", dev_name(parent->parent), node);
- 	ret = device_register(dev);
- 	if (ret) {
- 		pr_err("failed to register glink edge\n");
--- 
-2.18.0
+Thanks,
+Lina
+
+Lina Iyer (12):
+  irqdomain: add bus token DOMAIN_BUS_WAKEUP
+  drivers: irqchip: pdc: Do not toggle IRQ_ENABLE during mask/unmask
+  drivers: irqchip: add PDC irqdomain for wakeup capable GPIOs
+  of: irq: document properties for wakeup interrupt parent
+  dt-bindings/interrupt-controller: pdc: add SPI config register
+  drivers: irqchip: pdc: additionally set type in SPI config registers
+  drivers: pinctrl: msm: fix use of deprecated gpiolib APIs
+  drivers: pinctrl: msm: setup GPIO chip in hierarchy
+  drivers: pinctrl: sdm845: add PDC wakeup interrupt map for GPIOs
+  arm64: dts: qcom: add PDC interrupt controller for SDM845
+  arm64: dts: qcom: setup PDC as the wakeup parent for TLMM on SDM845
+  arm64: defconfig: enable PDC interrupt controller for Qualcomm SDM845
+
+Maulik Shah (2):
+  genirq: Introduce irq_chip_get/set_parent_state calls
+  drivers: irqchip: pdc: Add irqchip set/get state calls
+
+ .../interrupt-controller/interrupts.txt       |  13 +
+ .../interrupt-controller/qcom,pdc.txt         |   9 +-
+ arch/arm64/boot/dts/qcom/sdm845.dtsi          |  11 +
+ arch/arm64/configs/defconfig                  |   1 +
+ drivers/irqchip/qcom-pdc.c                    | 234 +++++++++++++++++-
+ drivers/pinctrl/qcom/pinctrl-msm.c            | 142 +++++++++--
+ drivers/pinctrl/qcom/pinctrl-msm.h            |  16 ++
+ drivers/pinctrl/qcom/pinctrl-sdm845.c         |  83 ++++++-
+ include/linux/irq.h                           |   6 +
+ include/linux/irqdomain.h                     |   1 +
+ include/linux/soc/qcom/irq.h                  |  34 +++
+ kernel/irq/chip.c                             |  44 ++++
+ 12 files changed, 566 insertions(+), 28 deletions(-)
+ create mode 100644 include/linux/soc/qcom/irq.h
+
+--
+The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
+a Linux Foundation Collaborative Project
 
