@@ -2,59 +2,58 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 24D86A14FA
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Aug 2019 11:30:04 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 2AF2AA14F5
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Aug 2019 11:29:53 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727040AbfH2J36 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 29 Aug 2019 05:29:58 -0400
-Received: from mail-wr1-f65.google.com ([209.85.221.65]:40375 "EHLO
-        mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727072AbfH2J3k (ORCPT
+        id S1727176AbfH2J3o (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 29 Aug 2019 05:29:44 -0400
+Received: from mail-wr1-f68.google.com ([209.85.221.68]:43806 "EHLO
+        mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727101AbfH2J3m (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 29 Aug 2019 05:29:40 -0400
-Received: by mail-wr1-f65.google.com with SMTP id c3so2670596wrd.7
-        for <linux-arm-msm@vger.kernel.org>; Thu, 29 Aug 2019 02:29:39 -0700 (PDT)
+        Thu, 29 Aug 2019 05:29:42 -0400
+Received: by mail-wr1-f68.google.com with SMTP id y8so2636382wrn.10
+        for <linux-arm-msm@vger.kernel.org>; Thu, 29 Aug 2019 02:29:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=7K2iZxOhWYqdpgu+ftGX/anH+28e+S9dJx0eG5WBrFs=;
-        b=oiVT9zLmf1h4t60P+I9CdvSij40tIxqhF78DG2hIgxWZ5HKvR0HrJISlbt6lpEsCG5
-         fC+esGCCHY34XbPFe1pyBtp+Tvn2h3uf4qdcm0cUCom7AxdwXYpYD/zDkq3x6lLo5YU5
-         5YXxHItF+lOOR2mqLSIeA7402VJFl250EKAhM9Wo4iuNf5Z54WKxqAEbuyQzQjAdEOx3
-         GEXbr6w6bfk6hOFmFZ9klwRBzqw9EIFHZyMVzW7O+COGimlsjq1L5u2mdXfkzu6/p85M
-         nadOZG8Dvj7AwH+BDwuyFr9TdmBsDlnc7Ct4okKhHKUiW+c2L4sq7Ks+SkPhHPN7asUz
-         fPqw==
+        bh=txsHPtmH/4H2/WnX6EiFrXzeHkL+qrKcHt+2DoU5kzQ=;
+        b=xRwJYrUXbrpjGAWB4+R5fH7G0mRDkrSB5nnGWG4+zYs587hY8Cesq2JqG0vUTu0shm
+         5pkphlWZMXlMveg2S4oPS4BdCQp2Mnchh4Ih0wV4GdImugyPNv/ZM0MA3she+V9WXGWU
+         BIretLX6+0BXSa3pOq9OZv9oxXVx8pLDf9VNglZBXBTOuIjqJQ63fAQnH8yB/WoV8lxJ
+         Q7aWiOA/e79K4dnGQJ0uBooFrp4oD2jiMo/YosYL+IqpZRMk9m18+GjoTP70snfB5NND
+         zZadvljCyol2fsr5UIoZl+vVT1xk+csmPx3MmyUoosgeuNBmiciKo4MlvIDgOc+ntJ54
+         g+HA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=7K2iZxOhWYqdpgu+ftGX/anH+28e+S9dJx0eG5WBrFs=;
-        b=p10hfDuUvPaz6y3e5nF8QcbX8Am9OifEOU5p2HjR23dVyvMfex4l6vfcv6Up9z80qd
-         FybWOWyoym4mN95cjhNZjvoUMO69Ku4qeDhL0JDe3MUnhhcBi9xIg84UHxg7cXV7JjUC
-         ELoR/OS4mZ9cCRX2tGXGVmqs5+8xF+lmxSHvcjLdjaWODvkwlMFI0K8Zh81q12nJrig0
-         S/wjKIcu8sXpom0aJDaA7AEZEFB33LEDLafmwD//qv7FkTJ6XpX0BrT7cxJu1H6+SF+y
-         bOUYpawtO9p8nA2SuhlnwX5MILhOzqGsDr+Bu+uz1xXJqVPXnSz/Jf5rC0WAF0cfv0zN
-         3Nyw==
-X-Gm-Message-State: APjAAAXKauw130BHXzu4kATIWUI1d7QjiQSTNR8b5raumPyJXZCb9YgI
-        ughjSVHP1oEGkX7k5cT9Md6+8g==
-X-Google-Smtp-Source: APXvYqznwpsrQltLkUtPFiJRDC7Xelm8Yr3Kqqj9ti4s9kus+fNVdkfvo7yIAh0QBXcij46RIIfw1A==
-X-Received: by 2002:adf:ecc3:: with SMTP id s3mr10359603wro.302.1567070978988;
-        Thu, 29 Aug 2019 02:29:38 -0700 (PDT)
+        bh=txsHPtmH/4H2/WnX6EiFrXzeHkL+qrKcHt+2DoU5kzQ=;
+        b=nPPqZjk22ZLKxHaOeCRE9/Fz36aLnwJEf7t8sz9ZHSf9v/8eXTsSWy/lMuCmav8PXL
+         WLpzr280XE5lnDaibh97AXnwqFd6GIbCCN57Daa1Kil9CV/t52fE9GuNASBdKTiA2UmE
+         11u8tXN809Y6aOTvRbBzN0FSQJrlzBupAxy0GQqC/0Vj158UZS5gO22umK5HSt7uloMM
+         oP6V3KsLrDtnGLrCPs6NjzvYI7WHBj0U39FrrEw+SyzudsgICcJyYBawdNyumhMgzacl
+         j8+I/9rSzri4H0fokB1mHqTbjqlaTU2niGTPgwEoiM1yU49IEagWIOBGoC28aKMYncg8
+         YVTQ==
+X-Gm-Message-State: APjAAAWtwLJIjStyKNwV/f0ODzafsRyvQigQUaLIkPJcMNe3fTi/9+1r
+        tOBZHbwMd4EiuZvIdYuLN+zW2w==
+X-Google-Smtp-Source: APXvYqwa7mal8tlwEcN4Id08ifjWX6FoVuVJXnw0+CZOqbxdmTAIG4v5DwpyXEOi1YCHISMEsJCWnw==
+X-Received: by 2002:adf:a55d:: with SMTP id j29mr9662074wrb.275.1567070980206;
+        Thu, 29 Aug 2019 02:29:40 -0700 (PDT)
 Received: from srini-hackbox.lan (cpc89974-aztw32-2-0-cust43.18-1.cable.virginm.net. [86.30.250.44])
-        by smtp.gmail.com with ESMTPSA id f197sm3609512wme.22.2019.08.29.02.29.37
+        by smtp.gmail.com with ESMTPSA id f197sm3609512wme.22.2019.08.29.02.29.39
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 29 Aug 2019 02:29:38 -0700 (PDT)
+        Thu, 29 Aug 2019 02:29:39 -0700 (PDT)
 From:   Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
 To:     gregkh@linuxfoundation.org
 Cc:     arnd@arndb.de, linux-arm-msm@vger.kernel.org,
         linux-kernel@vger.kernel.org,
         Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-        Mayank Chopra <mak.chopra@codeaurora.org>,
-        Jorge Ramirez-Ortiz <jorge.ramirez-ortiz@linaro.org>
-Subject: [PATCH v2 4/5] misc: fastrpc: fix double refcounting on dmabuf
-Date:   Thu, 29 Aug 2019 10:29:25 +0100
-Message-Id: <20190829092926.12037-5-srinivas.kandagatla@linaro.org>
+        Mayank Chopra <mak.chopra@codeaurora.org>
+Subject: [PATCH v2 5/5] misc: fastrpc: free dma buf scatter list
+Date:   Thu, 29 Aug 2019 10:29:26 +0100
+Message-Id: <20190829092926.12037-6-srinivas.kandagatla@linaro.org>
 X-Mailer: git-send-email 2.21.0
 In-Reply-To: <20190829092926.12037-1-srinivas.kandagatla@linaro.org>
 References: <20190829092926.12037-1-srinivas.kandagatla@linaro.org>
@@ -65,74 +64,43 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-dma buf refcount has to be done by the driver which is going to use the fd.
-This driver already does refcount on the dmabuf fd if its actively using it
-but also does an additional refcounting via extra ioctl.
-This additional refcount can lead to memory leak in cases where the
-applications fail to call the ioctl to decrement the refcount.
+dma buf scatter list is never freed, free it!
 
-So remove this extra refcount in the ioctl
-
-More info of dma buf usage at drivers/dma-buf/dma-buf.c
+Orignally detected by kmemleak:
+  backtrace:
+    [<ffffff80088b7658>] kmemleak_alloc+0x50/0x84
+    [<ffffff8008373284>] sg_kmalloc+0x38/0x60
+    [<ffffff8008373144>] __sg_alloc_table+0x60/0x110
+    [<ffffff800837321c>] sg_alloc_table+0x28/0x58
+    [<ffffff800837336c>] __sg_alloc_table_from_pages+0xc0/0x1ac
+    [<ffffff800837346c>] sg_alloc_table_from_pages+0x14/0x1c
+    [<ffffff8008097a3c>] __iommu_get_sgtable+0x5c/0x8c
+    [<ffffff800850a1d0>] fastrpc_dma_buf_attach+0x84/0xf8
+    [<ffffff80085114bc>] dma_buf_attach+0x70/0xc8
+    [<ffffff8008509efc>] fastrpc_map_create+0xf8/0x1e8
+    [<ffffff80085086f4>] fastrpc_device_ioctl+0x508/0x900
+    [<ffffff80082428c8>] compat_SyS_ioctl+0x128/0x200
+    [<ffffff80080832c4>] el0_svc_naked+0x34/0x38
+    [<ffffffffffffffff>] 0xffffffffffffffff
 
 Reported-by: Mayank Chopra <mak.chopra@codeaurora.org>
-Reported-by: Jorge Ramirez-Ortiz <jorge.ramirez-ortiz@linaro.org>
-Tested-by: Jorge Ramirez-Ortiz <jorge.ramirez-ortiz@linaro.org>
 Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
 ---
- drivers/misc/fastrpc.c | 25 -------------------------
- 1 file changed, 25 deletions(-)
+ drivers/misc/fastrpc.c | 1 +
+ 1 file changed, 1 insertion(+)
 
 diff --git a/drivers/misc/fastrpc.c b/drivers/misc/fastrpc.c
-index 38829fa74f28..eee2bb398947 100644
+index eee2bb398947..47ae84afac2e 100644
 --- a/drivers/misc/fastrpc.c
 +++ b/drivers/misc/fastrpc.c
-@@ -1198,26 +1198,6 @@ static int fastrpc_device_open(struct inode *inode, struct file *filp)
- 	return 0;
+@@ -550,6 +550,7 @@ static void fastrpc_dma_buf_detatch(struct dma_buf *dmabuf,
+ 	mutex_lock(&buffer->lock);
+ 	list_del(&a->node);
+ 	mutex_unlock(&buffer->lock);
++	sg_free_table(&a->sgt);
+ 	kfree(a);
  }
  
--static int fastrpc_dmabuf_free(struct fastrpc_user *fl, char __user *argp)
--{
--	struct dma_buf *buf;
--	int info;
--
--	if (copy_from_user(&info, argp, sizeof(info)))
--		return -EFAULT;
--
--	buf = dma_buf_get(info);
--	if (IS_ERR_OR_NULL(buf))
--		return -EINVAL;
--	/*
--	 * one for the last get and other for the ALLOC_DMA_BUFF ioctl
--	 */
--	dma_buf_put(buf);
--	dma_buf_put(buf);
--
--	return 0;
--}
--
- static int fastrpc_dmabuf_alloc(struct fastrpc_user *fl, char __user *argp)
- {
- 	struct fastrpc_alloc_dma_buf bp;
-@@ -1253,8 +1233,6 @@ static int fastrpc_dmabuf_alloc(struct fastrpc_user *fl, char __user *argp)
- 		return -EFAULT;
- 	}
- 
--	get_dma_buf(buf->dmabuf);
--
- 	return 0;
- }
- 
-@@ -1322,9 +1300,6 @@ static long fastrpc_device_ioctl(struct file *file, unsigned int cmd,
- 	case FASTRPC_IOCTL_INIT_CREATE:
- 		err = fastrpc_init_create_process(fl, argp);
- 		break;
--	case FASTRPC_IOCTL_FREE_DMA_BUFF:
--		err = fastrpc_dmabuf_free(fl, argp);
--		break;
- 	case FASTRPC_IOCTL_ALLOC_DMA_BUFF:
- 		err = fastrpc_dmabuf_alloc(fl, argp);
- 		break;
 -- 
 2.21.0
 
