@@ -2,68 +2,50 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 0845BA214E
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Aug 2019 18:50:55 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9A8D8A2156
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Aug 2019 18:51:04 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727270AbfH2Quy (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 29 Aug 2019 12:50:54 -0400
-Received: from mail-wm1-f67.google.com ([209.85.128.67]:38855 "EHLO
-        mail-wm1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726973AbfH2Qux (ORCPT
+        id S1727388AbfH2QvD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 29 Aug 2019 12:51:03 -0400
+Received: from mail-wr1-f67.google.com ([209.85.221.67]:41225 "EHLO
+        mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726973AbfH2QvD (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 29 Aug 2019 12:50:53 -0400
-Received: by mail-wm1-f67.google.com with SMTP id o184so4553699wme.3;
-        Thu, 29 Aug 2019 09:50:51 -0700 (PDT)
+        Thu, 29 Aug 2019 12:51:03 -0400
+Received: by mail-wr1-f67.google.com with SMTP id j16so4142344wrr.8;
+        Thu, 29 Aug 2019 09:51:01 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=EAPNXwtNcvomkAv43HK7BcSQSi3ID9bH+hr63tWVdSI=;
-        b=B5HGm8Y0d+BC3TOmZ23uuf+WqGqYOV7ombVlzG70cKlsV5JRtEvvNhzfPX4mECWFhx
-         u5j/9cXAx5IqdKYxp7N//EOr02YdCxMO9TImOTBYGSfNXGWuDvoj6pJX11SgB//Tt5im
-         yYal4ni8RQu92gT5EGlqUSz2C0ZgmGFTTf+a6stQq6hqSBqIOsB4/FaV7WQu1kPe6C3X
-         +xLocX36sKRkLLs3x2PB2D+myD7iamK/wRKiMKBKp2+VCm7/qCDUbUDyTARThORMu67E
-         QuOMPvFXZtlfAMMmQxgNFbLz16ewEqahiYYT8vzew1IHcjJ1Y165M5UTbENb5n3dJ24k
-         kxqA==
-X-Gm-Message-State: APjAAAX+kGHw6qYwNcIPCIAbgM17lyiHVPh/qD8mC15U8cFFX3Ij61QJ
-        D4+f5ZSeYUoFEP3fmz575wgwXYvwuHo=
-X-Google-Smtp-Source: APXvYqyG8Uv9qqAEzfuwRYVShx38vJV1pUSPq3W7ZBAlPx5+N1oEiU4zijmswr1WDwZJj2S7mhEW8w==
-X-Received: by 2002:a1c:f704:: with SMTP id v4mr361727wmh.90.1567097450438;
-        Thu, 29 Aug 2019 09:50:50 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=00lufN6/yFhKzY8yCZ1Zaqb6ynWRRTw3i9KZWm+zVP8=;
+        b=E2qga6MNpOWB1suPx/dJQ2joS9HN2DV3ByjIAFh9U0ImDr24pUDSqrbMMNQCFfKnik
+         +fS5wijei9QlCpT06019cOW+3Fjkt2Pwvip+15ddu0hLucrwh4hyxPlijH40EItvAzW5
+         b16+f+8FrskE9C0zg0gI/XY9q/pfuu1m7Z6cIxfyiP+NlYzFEYeO/LGkaGVsYN9TL9E9
+         E3FNtEbpF41RmS3/CXqYNreE7K3/zG6Q3iwmRTVzo5nxOToZZk+VmLg64aOYDnVNcadu
+         2R48oNKIC5gYb7QtUM5/Q4rNanulJ6S45EfThH2I7/TuoOdI6CVO8Qhk23Min7u96CBG
+         RM9A==
+X-Gm-Message-State: APjAAAUHv+QlYO1jizub1iZZ2WxstWh01vB+JENmVX5ZnE4GsqMmq6DA
+        seLc3PAYc+qjipyvATGHRySejp75
+X-Google-Smtp-Source: APXvYqyPKtvs3/y+/g1peheuDwssaBYOP5BrKJo6vn3H4ALHasc8rVAIQIAnrElN3DD1/7ZpOTFEnQ==
+X-Received: by 2002:a5d:6a45:: with SMTP id t5mr10701889wrw.228.1567097460777;
+        Thu, 29 Aug 2019 09:51:00 -0700 (PDT)
 Received: from green.intra.ispras.ru (bran.ispras.ru. [83.149.199.196])
-        by smtp.googlemail.com with ESMTPSA id o14sm8340770wrg.64.2019.08.29.09.50.47
+        by smtp.googlemail.com with ESMTPSA id o14sm8340770wrg.64.2019.08.29.09.50.59
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 29 Aug 2019 09:50:49 -0700 (PDT)
+        Thu, 29 Aug 2019 09:51:00 -0700 (PDT)
 From:   Denis Efremov <efremov@linux.com>
 To:     linux-kernel@vger.kernel.org
-Cc:     Denis Efremov <efremov@linux.com>,
-        Alexander Viro <viro@zeniv.linux.org.uk>,
-        Anton Altaparmakov <anton@tuxera.com>,
-        Boris Ostrovsky <boris.ostrovsky@oracle.com>,
-        Boris Pismenny <borisp@mellanox.com>,
-        "Darrick J. Wong" <darrick.wong@oracle.com>,
-        "David S. Miller" <davem@davemloft.net>,
-        Dennis Dalessandro <dennis.dalessandro@intel.com>,
-        Dmitry Torokhov <dmitry.torokhov@gmail.com>,
-        Inaky Perez-Gonzalez <inaky.perez-gonzalez@intel.com>,
-        Juergen Gross <jgross@suse.com>,
-        Leon Romanovsky <leon@kernel.org>,
-        Mike Marciniszyn <mike.marciniszyn@intel.com>,
-        =?UTF-8?q?Pali=20Roh=C3=A1r?= <pali.rohar@gmail.com>,
-        Rob Clark <robdclark@gmail.com>,
-        Saeed Mahameed <saeedm@mellanox.com>,
-        Sean Paul <sean@poorly.run>, linux-arm-msm@vger.kernel.org,
-        linux-fsdevel@vger.kernel.org, linux-input@vger.kernel.org,
-        linux-ntfs-dev@lists.sourceforge.net, linux-rdma@vger.kernel.org,
-        linux-wimax@intel.com, linux-xfs@vger.kernel.org,
-        xen-devel@lists.xenproject.org, netdev@vger.kernel.org,
-        dri-devel@lists.freedesktop.org, Joe Perches <joe@perches.com>,
+Cc:     Denis Efremov <efremov@linux.com>, Rob Clark <robdclark@gmail.com>,
+        Sean Paul <sean@poorly.run>, Joe Perches <joe@perches.com>,
         Andrew Morton <akpm@linux-foundation.org>,
-        Andy Whitcroft <apw@canonical.com>
-Subject: [PATCH v3 01/11] checkpatch: check for nested (un)?likely() calls
-Date:   Thu, 29 Aug 2019 19:50:15 +0300
-Message-Id: <20190829165025.15750-1-efremov@linux.com>
+        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org
+Subject: [PATCH v3 02/11] drm/msm: remove unlikely() from WARN_ON() conditions
+Date:   Thu, 29 Aug 2019 19:50:16 +0300
+Message-Id: <20190829165025.15750-2-efremov@linux.com>
 X-Mailer: git-send-email 2.21.0
+In-Reply-To: <20190829165025.15750-1-efremov@linux.com>
+References: <20190829165025.15750-1-efremov@linux.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Sender: linux-arm-msm-owner@vger.kernel.org
@@ -71,38 +53,56 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-IS_ERR(), IS_ERR_OR_NULL(), IS_ERR_VALUE() and WARN*() already contain
-unlikely() optimization internally. Thus, there is no point in calling
-these functions and defines under likely()/unlikely().
-
-This check is based on the coccinelle rule developed by Enrico Weigelt
-https://lore.kernel.org/lkml/1559767582-11081-1-git-send-email-info@metux.net/
+"unlikely(WARN_ON(x))" is excessive. WARN_ON() already uses unlikely()
+internally.
 
 Signed-off-by: Denis Efremov <efremov@linux.com>
+Cc: Rob Clark <robdclark@gmail.com>
+Cc: Sean Paul <sean@poorly.run>
 Cc: Joe Perches <joe@perches.com>
 Cc: Andrew Morton <akpm@linux-foundation.org>
-Cc: Andy Whitcroft <apw@canonical.com>
+Cc: linux-arm-msm@vger.kernel.org
+Cc: dri-devel@lists.freedesktop.org
 ---
- scripts/checkpatch.pl | 6 ++++++
- 1 file changed, 6 insertions(+)
+ drivers/gpu/drm/msm/disp/mdp5/mdp5_ctl.c | 4 ++--
+ drivers/gpu/drm/msm/disp/mdp_format.c    | 2 +-
+ 2 files changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/scripts/checkpatch.pl b/scripts/checkpatch.pl
-index 93a7edfe0f05..56969ce06df4 100755
---- a/scripts/checkpatch.pl
-+++ b/scripts/checkpatch.pl
-@@ -6480,6 +6480,12 @@ sub process {
- 			     "Using $1 should generally have parentheses around the comparison\n" . $herecurr);
- 		}
+diff --git a/drivers/gpu/drm/msm/disp/mdp5/mdp5_ctl.c b/drivers/gpu/drm/msm/disp/mdp5/mdp5_ctl.c
+index 4804cf40de14..030279d7b64b 100644
+--- a/drivers/gpu/drm/msm/disp/mdp5/mdp5_ctl.c
++++ b/drivers/gpu/drm/msm/disp/mdp5/mdp5_ctl.c
+@@ -253,7 +253,7 @@ int mdp5_ctl_set_cursor(struct mdp5_ctl *ctl, struct mdp5_pipeline *pipeline,
+ 	u32 blend_cfg;
+ 	struct mdp5_hw_mixer *mixer = pipeline->mixer;
  
-+# nested likely/unlikely calls
-+		if ($line =~ /\b(?:(?:un)?likely)\s*\(\s*!?\s*(IS_ERR(?:_OR_NULL|_VALUE)?|WARN)/) {
-+			WARN("LIKELY_MISUSE",
-+			     "nested (un)?likely() calls, $1 already uses unlikely() internally\n" . $herecurr);
-+		}
-+
- # whine mightly about in_atomic
- 		if ($line =~ /\bin_atomic\s*\(/) {
- 			if ($realfile =~ m@^drivers/@) {
+-	if (unlikely(WARN_ON(!mixer))) {
++	if (WARN_ON(!mixer)) {
+ 		DRM_DEV_ERROR(ctl_mgr->dev->dev, "CTL %d cannot find LM",
+ 			ctl->id);
+ 		return -EINVAL;
+@@ -695,7 +695,7 @@ struct mdp5_ctl_manager *mdp5_ctlm_init(struct drm_device *dev,
+ 		goto fail;
+ 	}
+ 
+-	if (unlikely(WARN_ON(ctl_cfg->count > MAX_CTL))) {
++	if (WARN_ON(ctl_cfg->count > MAX_CTL)) {
+ 		DRM_DEV_ERROR(dev->dev, "Increase static pool size to at least %d\n",
+ 				ctl_cfg->count);
+ 		ret = -ENOSPC;
+diff --git a/drivers/gpu/drm/msm/disp/mdp_format.c b/drivers/gpu/drm/msm/disp/mdp_format.c
+index 8afb0f9c04bb..5495d8b3f5b9 100644
+--- a/drivers/gpu/drm/msm/disp/mdp_format.c
++++ b/drivers/gpu/drm/msm/disp/mdp_format.c
+@@ -174,7 +174,7 @@ const struct msm_format *mdp_get_format(struct msm_kms *kms, uint32_t format,
+ 
+ struct csc_cfg *mdp_get_default_csc_cfg(enum csc_type type)
+ {
+-	if (unlikely(WARN_ON(type >= CSC_MAX)))
++	if (WARN_ON(type >= CSC_MAX))
+ 		return NULL;
+ 
+ 	return &csc_convert[type];
 -- 
 2.21.0
 
