@@ -2,89 +2,115 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 7F790A25EC
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Aug 2019 20:33:47 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 00356A262F
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Aug 2019 20:38:36 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729341AbfH2SdT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 29 Aug 2019 14:33:19 -0400
-Received: from smtp.codeaurora.org ([198.145.29.96]:54764 "EHLO
-        smtp.codeaurora.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728460AbfH2SdT (ORCPT
+        id S1727763AbfH2Sig (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 29 Aug 2019 14:38:36 -0400
+Received: from gateway22.websitewelcome.com ([192.185.46.229]:23465 "EHLO
+        gateway22.websitewelcome.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1727726AbfH2Sif (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 29 Aug 2019 14:33:19 -0400
-Received: by smtp.codeaurora.org (Postfix, from userid 1000)
-        id 54E1C675E8; Thu, 29 Aug 2019 18:12:37 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
-        s=default; t=1567103598;
-        bh=VsK0OWT4NrTuulRjb3e+y0lwEFWmdZz0LJdwLaeX5m8=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=ejFquLtQhxvoaLkFyTBOPDf2aHwbiabfhzMxIJjCa2QUGTBw5V+NNzhT7+B88xXNh
-         WvhAGcx3o5AV9JD3WNw+8GTA0559qRsi40sNmQBIpRcmxKMtei221TSU8lcdMi9MJj
-         r/5SBVZ+jpi9mHSe4RRAYBVc6YD/XcvFpQmOooTw=
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        pdx-caf-mail.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.7 required=2.0 tests=ALL_TRUSTED,BAYES_00,
-        DKIM_INVALID,DKIM_SIGNED,SPF_NONE autolearn=no autolearn_force=no
-        version=3.4.0
-Received: from codeaurora.org (i-global254.qualcomm.com [199.106.103.254])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: ilina@smtp.codeaurora.org)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 2B1CB686B7;
-        Thu, 29 Aug 2019 18:12:35 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
-        s=default; t=1567102356;
-        bh=VsK0OWT4NrTuulRjb3e+y0lwEFWmdZz0LJdwLaeX5m8=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=COkHEyYbgqarmuN0Zt5gpdNFOQq5sGO5AUQwqSo5TY2zr8p3RUVC70IVq4yMSFlon
-         YHiXCVcgVsgmxi92xn0RnpqPoEu9Mkg30jL5LnKGnZXSEVcZeB/dpaqRSbqI7j0s6u
-         D1Ga0+ftGLMnRmszB4PaH1PY55ZRZ8xU3laV9aN0=
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 2B1CB686B7
-Authentication-Results: pdx-caf-mail.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: pdx-caf-mail.web.codeaurora.org; spf=none smtp.mailfrom=ilina@codeaurora.org
-From:   Lina Iyer <ilina@codeaurora.org>
-To:     swboyd@chromium.org, evgreen@chromium.org, marc.zyngier@arm.com,
-        linus.walleij@linaro.org
-Cc:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        bjorn.andersson@linaro.org, mkshah@codeaurora.org,
-        linux-gpio@vger.kernel.org, rnayak@codeaurora.org,
-        Lina Iyer <ilina@codeaurora.org>
-Subject: [PATCH RFC 14/14] arm64: defconfig: enable PDC interrupt controller for Qualcomm SDM845
-Date:   Thu, 29 Aug 2019 12:12:03 -0600
-Message-Id: <20190829181203.2660-15-ilina@codeaurora.org>
-X-Mailer: git-send-email 2.22.0
-In-Reply-To: <20190829181203.2660-1-ilina@codeaurora.org>
-References: <20190829181203.2660-1-ilina@codeaurora.org>
+        Thu, 29 Aug 2019 14:38:35 -0400
+X-Greylist: delayed 1270 seconds by postgrey-1.27 at vger.kernel.org; Thu, 29 Aug 2019 14:38:35 EDT
+Received: from cm13.websitewelcome.com (cm13.websitewelcome.com [100.42.49.6])
+        by gateway22.websitewelcome.com (Postfix) with ESMTP id A3A39BA24
+        for <linux-arm-msm@vger.kernel.org>; Thu, 29 Aug 2019 13:17:24 -0500 (CDT)
+Received: from gator4166.hostgator.com ([108.167.133.22])
+        by cmsmtp with SMTP
+        id 3Oz6iP5eR3Qi03Oz6i4C8P; Thu, 29 Aug 2019 13:17:24 -0500
+X-Authority-Reason: nr=8
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+        d=embeddedor.com; s=default; h=Content-Type:MIME-Version:Message-ID:Subject:
+        Cc:To:From:Date:Sender:Reply-To:Content-Transfer-Encoding:Content-ID:
+        Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
+        :Resent-Message-ID:In-Reply-To:References:List-Id:List-Help:List-Unsubscribe:
+        List-Subscribe:List-Post:List-Owner:List-Archive;
+        bh=4R26aKYoB1gosSniDsCUeeu1fuM8QS65KD+ZkxX9Q0w=; b=HuIvn3lcsdwyR/f1i9X91ECcI9
+        31/RWsd7s3uQhgTA14Tk2hOiISCr68MOB/sPnDVZBFRVk7ZhdbPnUmNPQBn/RX1MwzfMMvuvXmwXY
+        LOyhitd3yDVcuPpPJgkW5TNZYUXcae/dAV453ICHa+Shpl74zx1QyPkWjiQNWwjw+hfgqzJEKNolc
+        CXQXym+S1+JHMlQDeG/HYmDt8TkndLmUo74cjz7aEhy8jjwxIK9/ARBqtSypvv8GQcAOBhG7cw2VP
+        tULZXU4OoaiYeovDoqTQJPv2hrXszkJvL+GN038uotf/P0FbaJzLxOo75iYb0W7D55TjlTSWDjIqC
+        iqQX6mBg==;
+Received: from [189.152.216.116] (port=42850 helo=embeddedor)
+        by gator4166.hostgator.com with esmtpa (Exim 4.92)
+        (envelope-from <gustavo@embeddedor.com>)
+        id 1i3Oz5-001MoD-I0; Thu, 29 Aug 2019 13:17:23 -0500
+Date:   Thu, 29 Aug 2019 13:17:21 -0500
+From:   "Gustavo A. R. Silva" <gustavo@embeddedor.com>
+To:     Andy Gross <agross@kernel.org>, Ohad Ben-Cohen <ohad@wizery.com>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org,
+        linux-kernel@vger.kernel.org,
+        "Gustavo A. R. Silva" <gustavo@embeddedor.com>
+Subject: [PATCH] rpmsg: glink: Use struct_size() helper
+Message-ID: <20190829181721.GA22554@embeddedor>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+User-Agent: Mutt/1.9.4 (2018-02-28)
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - gator4166.hostgator.com
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - embeddedor.com
+X-BWhitelist: no
+X-Source-IP: 189.152.216.116
+X-Source-L: No
+X-Exim-ID: 1i3Oz5-001MoD-I0
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
+X-Source-Sender: (embeddedor) [189.152.216.116]:42850
+X-Source-Auth: gustavo@embeddedor.com
+X-Email-Count: 4
+X-Source-Cap: Z3V6aWRpbmU7Z3V6aWRpbmU7Z2F0b3I0MTY2Lmhvc3RnYXRvci5jb20=
+X-Local-Domain: yes
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Enable PDC interrupt controller for SDM845 devices. The interrupt
-controller can detect wakeup capable interrupts when the SoC is in a low
-power state.
+One of the more common cases of allocation size calculations is finding
+the size of a structure that has a zero-sized array at the end, along
+with memory for some number of elements for that array. For example:
 
-Signed-off-by: Lina Iyer <ilina@codeaurora.org>
+struct {
+	...
+	struct intent_pair intents[];
+} __packed * msg;
+
+Make use of the struct_size() helper instead of an open-coded version
+in order to avoid any potential type mistakes.
+
+So, replace the following form:
+
+sizeof(*msg) + sizeof(struct intent_pair) * count
+
+with:
+
+struct_size(msg, intents, count)
+
+This code was detected with the help of Coccinelle.
+
+Signed-off-by: Gustavo A. R. Silva <gustavo@embeddedor.com>
 ---
- arch/arm64/configs/defconfig | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/rpmsg/qcom_glink_native.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/arm64/configs/defconfig b/arch/arm64/configs/defconfig
-index 0e58ef02880c..310b6048054a 100644
---- a/arch/arm64/configs/defconfig
-+++ b/arch/arm64/configs/defconfig
-@@ -729,6 +729,7 @@ CONFIG_ARCH_R8A77970=y
- CONFIG_ARCH_R8A77980=y
- CONFIG_ARCH_R8A77990=y
- CONFIG_ARCH_R8A77995=y
-+CONFIG_QCOM_PDC=y
- CONFIG_ROCKCHIP_PM_DOMAINS=y
- CONFIG_ARCH_TEGRA_132_SOC=y
- CONFIG_ARCH_TEGRA_210_SOC=y
+diff --git a/drivers/rpmsg/qcom_glink_native.c b/drivers/rpmsg/qcom_glink_native.c
+index f46c787733e8..621f1afd4d6b 100644
+--- a/drivers/rpmsg/qcom_glink_native.c
++++ b/drivers/rpmsg/qcom_glink_native.c
+@@ -892,7 +892,7 @@ static void qcom_glink_handle_intent(struct qcom_glink *glink,
+ 		struct intent_pair intents[];
+ 	} __packed * msg;
+ 
+-	const size_t msglen = sizeof(*msg) + sizeof(struct intent_pair) * count;
++	const size_t msglen = struct_size(msg, intents, count);
+ 	int ret;
+ 	int i;
+ 	unsigned long flags;
 -- 
-The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
-a Linux Foundation Collaborative Project
+2.23.0
 
