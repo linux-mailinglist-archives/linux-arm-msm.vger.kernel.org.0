@@ -2,102 +2,98 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id AB4BBA1406
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Aug 2019 10:48:40 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0E213A14FC
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Aug 2019 11:30:05 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726254AbfH2Isk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 29 Aug 2019 04:48:40 -0400
-Received: from mail-qt1-f195.google.com ([209.85.160.195]:35135 "EHLO
-        mail-qt1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726232AbfH2Isj (ORCPT
+        id S1726518AbfH2J3g (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 29 Aug 2019 05:29:36 -0400
+Received: from mail-wm1-f65.google.com ([209.85.128.65]:37178 "EHLO
+        mail-wm1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725807AbfH2J3g (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 29 Aug 2019 04:48:39 -0400
-Received: by mail-qt1-f195.google.com with SMTP id u34so2818391qte.2
-        for <linux-arm-msm@vger.kernel.org>; Thu, 29 Aug 2019 01:48:39 -0700 (PDT)
+        Thu, 29 Aug 2019 05:29:36 -0400
+Received: by mail-wm1-f65.google.com with SMTP id d16so3057055wme.2
+        for <linux-arm-msm@vger.kernel.org>; Thu, 29 Aug 2019 02:29:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=9zMYasvwvJSOlUawu9XgM9g2TZzoppz6gZllm9KotKE=;
-        b=SHZ9YgeyfCMnhqlOYfjPzfUSq1BNrP1DU/i9TUQBQF5OxqXyYXFbD3KXCwEOnPeA9c
-         71IF+x2HqEnqDJjtx3sQ8JNZRIoc4n0DkM6tPqcjTXAclxoj2axWpdPIm/GILFF5sqvV
-         I1Rtjsp1Aau4Ox+y/Z3P8ANJk7ugFKmHEbk+DWR25g0QLrrX7MhO99/okNsqLhcX7sZe
-         Zv3aMcHI9NL6UYsDsPPhRH637K0OTyfvpMkDLPysG4poicXhoDUeLGQgZYLpuiBCFhQ0
-         JSQefxcGPF33JB1eO3tomQetKOKEC4cwOdg7Xx6IrIidmf4qk5MZqWfG2ws4KkNrECVC
-         dqdA==
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=qWSruavJBjctqtbTw7cZ481dDATOlMFYVx3PLqKt1xM=;
+        b=WX2rpIUPb76YhLAsOh6Kt3XYL/PWARYUEhArNTNRjb53eIPadhFEr1MwpKWwJ4mMIv
+         ej7YAxPccq60NUii+YcUtFQUL0q45Kjxou2ZO0Ezj15ePj2dcTEDE25E9cvoUOmbqf73
+         pBGYD5E2sKnNUALnt6Umtf3dfNIwz1+uptbrwAMBr5uP7flQgd1Wvlfjvfo5muWx0lPq
+         kpvOVH03EARECgwsFEHCwO0gF+n88utpGrLyB62CtRS8vJ4QUfFYKjuFM+kRHvRok1D8
+         LsAAP3VYMqGDZm8A+yDl04VKbPprXkqpInGtXSGfsg//EPF68WA7fx+qFKlM5Nw99F2d
+         rUQw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=9zMYasvwvJSOlUawu9XgM9g2TZzoppz6gZllm9KotKE=;
-        b=aasFbbC6tnulhuf3zipH2ZqZWg2kMnAYMqgiU4jFDUqqDGbr6iTI9qlQdNP4mD2NQ3
-         VGVN1kTpOrkSg4ipr+va9ZYJPHNU/LQzA5uYGq+oUFz83yTBRfMRCGx0A/ulHKhq89kI
-         mZAfbyGuYBcAmvQQOVBnbx2LcEJtTcztDmxa0jB6Nr2vQzuxBsRT1B0MtKrO/7+WZHeL
-         X0kAIo2+Y6tyDZHvZyhpcG1CQzY/phE9eIem27EM10Pc0niLD0C2z99ayIE2ND2KOj3T
-         6335BPjhOEpUUKR7ufM3Uw8fHGZYYvU9HQ8Ke51gzwOSdRpC0ANVyO9dr/QaCkuIW/98
-         mpOQ==
-X-Gm-Message-State: APjAAAVrcmx574Wa2d+SApd5o5SH6eAsypa6oE3QSr0spSJmptfsRuxR
-        7/rBObublWxc4tDVe9cAI6nY2+F+L+gSRPRxGQ2J2w==
-X-Google-Smtp-Source: APXvYqzjzN2EG+az7+HCU8fERqdhPqrzGKY2WH86fhF6ux/sDMROPXd1/G1j4VoryLHc4mDvNkJkhfATh7/XtrFc9S0=
-X-Received: by 2002:aed:3287:: with SMTP id z7mr3594931qtd.264.1567068518675;
- Thu, 29 Aug 2019 01:48:38 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=qWSruavJBjctqtbTw7cZ481dDATOlMFYVx3PLqKt1xM=;
+        b=VTmRj69XMZtrxpvnXM5CgPpL0ThwxAQhgj92yzepGTzoXp9uMy3ChKfLUFNdULtb6m
+         TGOzMDMHXt4AzJo0ZzfDzfHXZhgo2AdjI+EvwT2ssc1KnLt7LZdEM/inBvWC7ZwcL5Yz
+         wIBwaDk0blqdb/jTSVO1Yg122ExMRE9ewdAFJqZiLRXW7FuEA6gRP5Pkj2BhUREdur7h
+         Lz6W20OntNkEkcoBEqDit83E7wdy2GGJqFFlqA37sMNVnSChQSyOG0JzBNG1EI6toUPt
+         7kzPFoKJvfTf3DCvH37xy+3hk+7IuKOWrl5E+SybdtWn+XCC4PEymWXbhczFXZHaKaRB
+         OeKw==
+X-Gm-Message-State: APjAAAWOoDQ8WBxGW49+eNAU8Le6aHyEk+wp26dj7CY2Td8nWG1n+Fis
+        BRfc2li2BUoxy4Eu0x6rDarvnQ==
+X-Google-Smtp-Source: APXvYqzbuDdv93j0VoasfKOm4yenxKf2GCYq781Qe7sARneINrHtWSK8QRj3bqYgMvKJNlk82yWeiw==
+X-Received: by 2002:a7b:c952:: with SMTP id i18mr10832609wml.44.1567070974469;
+        Thu, 29 Aug 2019 02:29:34 -0700 (PDT)
+Received: from srini-hackbox.lan (cpc89974-aztw32-2-0-cust43.18-1.cable.virginm.net. [86.30.250.44])
+        by smtp.gmail.com with ESMTPSA id f197sm3609512wme.22.2019.08.29.02.29.33
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 29 Aug 2019 02:29:33 -0700 (PDT)
+From:   Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+To:     gregkh@linuxfoundation.org
+Cc:     arnd@arndb.de, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org,
+        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+Subject: [PATCH v2 0/5] misc: fastrpc: few fixes
+Date:   Thu, 29 Aug 2019 10:29:21 +0100
+Message-Id: <20190829092926.12037-1-srinivas.kandagatla@linaro.org>
+X-Mailer: git-send-email 2.21.0
 MIME-Version: 1.0
-References: <cover.1566907161.git.amit.kucheria@linaro.org>
- <66ac3d3707d6296ef85bf1fa321f7f1ee0c02131.1566907161.git.amit.kucheria@linaro.org>
- <5d65cbe9.1c69fb81.1ceb.2374@mx.google.com>
-In-Reply-To: <5d65cbe9.1c69fb81.1ceb.2374@mx.google.com>
-From:   Amit Kucheria <amit.kucheria@linaro.org>
-Date:   Thu, 29 Aug 2019 14:18:27 +0530
-Message-ID: <CAP245DWWKsZBHnvSqC40XOH48kGd-hykd+fr-UZfWTmvuG2KaA@mail.gmail.com>
-Subject: Re: [PATCH v2 07/15] dt: thermal: tsens: Document interrupt support
- in tsens driver
-To:     Stephen Boyd <swboyd@chromium.org>
-Cc:     Daniel Lezcano <daniel.lezcano@linaro.org>,
-        Mark Rutland <mark.rutland@arm.com>,
-        Rob Herring <robh+dt@kernel.org>,
-        Zhang Rui <rui.zhang@intel.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Eduardo Valentin <edubezval@gmail.com>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-        Marc Gonzalez <marc.w.gonzalez@free.fr>,
-        Brian Masney <masneyb@onstation.org>,
-        Linux PM list <linux-pm@vger.kernel.org>,
-        DTML <devicetree@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Aug 28, 2019 at 6:03 AM Stephen Boyd <swboyd@chromium.org> wrote:
->
-> Quoting Amit Kucheria (2019-08-27 05:14:03)
-> > Define two new required properties to define interrupts and
-> > interrupt-names for tsens.
-> >
-> > Signed-off-by: Amit Kucheria <amit.kucheria@linaro.org>
-> > ---
-> >  Documentation/devicetree/bindings/thermal/qcom-tsens.txt | 8 ++++++++
-> >  1 file changed, 8 insertions(+)
-> >
-> > diff --git a/Documentation/devicetree/bindings/thermal/qcom-tsens.txt b/Documentation/devicetree/bindings/thermal/qcom-tsens.txt
-> > index 673cc1831ee9d..686bede72f846 100644
-> > --- a/Documentation/devicetree/bindings/thermal/qcom-tsens.txt
-> > +++ b/Documentation/devicetree/bindings/thermal/qcom-tsens.txt
-> > @@ -22,6 +22,8 @@ Required properties:
-> >
-> >  - #thermal-sensor-cells : Should be 1. See ./thermal.txt for a description.
-> >  - #qcom,sensors: Number of sensors in tsens block
-> > +- interrupts: Interrupts generated from Always-On subsystem (AOSS)
->
-> Is it always one? interrupt-names makes it sound like it.
->
-> > +- interrupt-names: Must be one of the following: "uplow", "critical"
+Hi Greg,
 
-Will fix to "one or more of the following"
+More testing on fastprc revealed few memory leaks in driver
+and few corner cases.
+These patches are the fixes for those cases.
+One patch from Jorge is to remove unsed definition.
 
-> >  - Refer to Documentation/devicetree/bindings/nvmem/nvmem.txt to know how to specify
-> >  nvmem cells
-> >
+co-authorship issue on
+"misc: fastrpc: fix double refcounting on dmabuf"
+patch has been resolved offline and decided to not
+change anything.
+
+Thanks,
+srini
+
+Changes since v1:
+ - Updated change log to remove TEST tag.
+ - no code changes.
+
+Bjorn Andersson (2):
+  misc: fastrpc: Reference count channel context
+  misc: fastrpc: Don't reference rpmsg_device after remove
+
+Jorge Ramirez-Ortiz (1):
+  misc: fastrpc: remove unused definition
+
+Srinivas Kandagatla (2):
+  misc: fastrpc: fix double refcounting on dmabuf
+  misc: fastrpc: free dma buf scatter list
+
+ drivers/misc/fastrpc.c | 74 ++++++++++++++++++++++++------------------
+ 1 file changed, 43 insertions(+), 31 deletions(-)
+
+-- 
+2.21.0
+
