@@ -2,105 +2,108 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 6A9E2A1CB0
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Aug 2019 16:28:58 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id ABAD0A1DE3
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Aug 2019 16:53:32 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727161AbfH2O25 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 29 Aug 2019 10:28:57 -0400
-Received: from mail-vs1-f66.google.com ([209.85.217.66]:38613 "EHLO
-        mail-vs1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726852AbfH2O25 (ORCPT
+        id S1728856AbfH2OxF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 29 Aug 2019 10:53:05 -0400
+Received: from mail-pl1-f195.google.com ([209.85.214.195]:37379 "EHLO
+        mail-pl1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728851AbfH2OxF (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 29 Aug 2019 10:28:57 -0400
-Received: by mail-vs1-f66.google.com with SMTP id 62so2536373vsl.5
-        for <linux-arm-msm@vger.kernel.org>; Thu, 29 Aug 2019 07:28:56 -0700 (PDT)
+        Thu, 29 Aug 2019 10:53:05 -0400
+Received: by mail-pl1-f195.google.com with SMTP id bj8so1694992plb.4
+        for <linux-arm-msm@vger.kernel.org>; Thu, 29 Aug 2019 07:53:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=mIpyQ3wOb9bWqvkX0Kpr4MtQFBTIPyZmoRnHAHX/iC4=;
-        b=lHE8RghiwfW1Za7MXZfEj+tcRA5+wrEWmVF5Keow8qTDcQOlGf4062XfDSUn6uEXDh
-         lZNKY9YudWj2VwmIGrrk0z96f7MCwqTmToJ0qUx7s9qo5fMEKYT63v3iilBq/ykKVI0k
-         4uQGf2L0Qu4GxqfenZnbk3+E1Hyft/0qcstmSQbMSOP0hSUEeCdV4ho5986Zq2vC8vFd
-         /3xTmD1TXSCXRTRhGGM9PJzXP4mIJTDL8Uz9uL0aFnR4Pv2X7S+q6R+YjGzN16IA04xd
-         G/zNaTE1nZDJiQiJwhAZUOdxXwX36xfy+KGbSTMV406iQO+PaEU3HTP2Bd2sUPzNjmH9
-         9DGg==
+        d=chromium.org; s=google;
+        h=message-id:mime-version:content-transfer-encoding:in-reply-to
+         :references:cc:subject:to:from:user-agent:date;
+        bh=IVt1U8oT+FQK7aUwrMR2Tp9XbQQNNH4JQiQH6Rt7qf4=;
+        b=cP79UUZk928DGL+GxphxoDqthoR4vlD+VEpiHJe8dJnI74dSK5hHZDn/8xoNtlwaLH
+         IkL9g+CPoO3ERIm4twApQ3fSHH+/cFNlISlAnPCINnupwLmEXMmKVkw35ldVMfLUUOXK
+         yToPL4+v5EmLSwhPC+E3qcL0teiSDB+eD/bXw=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=mIpyQ3wOb9bWqvkX0Kpr4MtQFBTIPyZmoRnHAHX/iC4=;
-        b=YpIgmaIyTDD/pTj9RYZcp1ysII/xFq0Mx2i6KJXKZ12A/SCGAPrZhGdtqpTqCaGhrf
-         1GfpF6gAv1U9PQ2xCQHWH1qEu9AEDYf55XT3qlFq5lVUifc+y36E6nqEkBquiFhwfAne
-         PjVLWcGUEQBukWRnJUXljS+HXCgQ+EEf2383Cjoj7s7OdTQcjpX8ErePkLN6MCS63jE6
-         F7JGosx+JnA5/iCY6VjKfZHS8kjB63KwoaNx0xY2KRzPVZk3c8cri1cIsci5JyUmAHzT
-         c8FQzYHkYEUdESNLUPx40CH4Kfbi7GLw2NjEV/WGookFBp3NGoLLtL+5USzExlSWEa14
-         eSTQ==
-X-Gm-Message-State: APjAAAUHYb0cj1MJ4TSev8vzZETDvW+Z5PIX7ZMd2KBVIEc2z0lWzAmR
-        VAFF6pEAGmBzynz01791Fmhbr+dY1NmMGkZ1j9yG4A==
-X-Google-Smtp-Source: APXvYqzYJ6oqRwamIEDLJ3VtjU+XaOg77kkXW1O2XB+w4FxGCSBbCRCZltm1LjnvJjPK+WsK0l7De0RJSAqYnMnKyvI=
-X-Received: by 2002:a67:b009:: with SMTP id z9mr5725405vse.27.1567088936391;
- Thu, 29 Aug 2019 07:28:56 -0700 (PDT)
+        h=x-gm-message-state:message-id:mime-version
+         :content-transfer-encoding:in-reply-to:references:cc:subject:to:from
+         :user-agent:date;
+        bh=IVt1U8oT+FQK7aUwrMR2Tp9XbQQNNH4JQiQH6Rt7qf4=;
+        b=j9YXXAYqxkVYaIZmv48x+3eBMDCvxMBvX4sPOzBMaW+QtS8WOVGSMoGM63iqo2jXFd
+         PfrIVinDBMuwFCQnwIwBRwSigRIscNkcSy8jvs/AwN6M8SX4V3IKBNWaSM23G88BsYW6
+         U+BAg04LMQXXhIpzA8wU+4Chn359+3wJoB7R8U/bAUtniueJnbELSuVmmZy0sRwrkSsC
+         SQN2GnBevg/16OpcJUpS5EE5GQlKDFSqUHK8NEV1VGGyqYulV5Zqcda2u3ZBA6b48Vkh
+         LA1M9K29wWXW/QFocG8+iBTGlW4WHeRZtXRIecXm066u5REZOxCztQtWiGyZItd4fGNk
+         LWhg==
+X-Gm-Message-State: APjAAAUhra61bbSTjhaylPiurQPqnsL3HOkFbb4qlGYsOVUXkqKwDikV
+        HhNELDJ2V/7bNjs0nlIEzO1SaA==
+X-Google-Smtp-Source: APXvYqxCLdj3EhSbQwuRFHN9HLXmn0KH0bqkF8GZwr3xBMF5lOEAwyd/+Ll4gbD0AERbHDMcrTdDfg==
+X-Received: by 2002:a17:902:f217:: with SMTP id gn23mr10280979plb.21.1567090384357;
+        Thu, 29 Aug 2019 07:53:04 -0700 (PDT)
+Received: from chromium.org ([2620:15c:202:1:fa53:7765:582b:82b9])
+        by smtp.gmail.com with ESMTPSA id ev3sm16476457pjb.3.2019.08.29.07.53.03
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 29 Aug 2019 07:53:03 -0700 (PDT)
+Message-ID: <5d67e6cf.1c69fb81.5aec9.3b71@mx.google.com>
+Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
-References: <cover.1566907161.git.amit.kucheria@linaro.org>
- <93fa782bde9c66845993ff883532b3f1f02d99e4.1566907161.git.amit.kucheria@linaro.org>
- <20190829140459.szauzhennltrwvg4@holly.lan>
-In-Reply-To: <20190829140459.szauzhennltrwvg4@holly.lan>
-From:   Amit Kucheria <amit.kucheria@linaro.org>
-Date:   Thu, 29 Aug 2019 19:58:45 +0530
-Message-ID: <CAHLCerNuycWTLmCvdffM0=GdG7UZ7zNoj0Jb0CeLTULzVmfSJw@mail.gmail.com>
-Subject: Re: [PATCH v2 03/15] drivers: thermal: tsens: Add __func__ identifier
- to debug statements
-To:     Daniel Thompson <daniel.thompson@linaro.org>
-Cc:     LKML <linux-kernel@vger.kernel.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Eduardo Valentin <edubezval@gmail.com>,
-        Andy Gross <agross@kernel.org>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Brian Masney <masneyb@onstation.org>,
-        Marc Gonzalez <marc.w.gonzalez@free.fr>,
-        Daniel Lezcano <daniel.lezcano@linaro.org>,
+Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <CAP245DWWKsZBHnvSqC40XOH48kGd-hykd+fr-UZfWTmvuG2KaA@mail.gmail.com>
+References: <cover.1566907161.git.amit.kucheria@linaro.org> <66ac3d3707d6296ef85bf1fa321f7f1ee0c02131.1566907161.git.amit.kucheria@linaro.org> <5d65cbe9.1c69fb81.1ceb.2374@mx.google.com> <CAP245DWWKsZBHnvSqC40XOH48kGd-hykd+fr-UZfWTmvuG2KaA@mail.gmail.com>
+Cc:     Daniel Lezcano <daniel.lezcano@linaro.org>,
         Mark Rutland <mark.rutland@arm.com>,
         Rob Herring <robh+dt@kernel.org>,
         Zhang Rui <rui.zhang@intel.com>,
-        Linux PM list <linux-pm@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Eduardo Valentin <edubezval@gmail.com>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        Marc Gonzalez <marc.w.gonzalez@free.fr>,
+        Brian Masney <masneyb@onstation.org>,
+        Linux PM list <linux-pm@vger.kernel.org>,
+        DTML <devicetree@vger.kernel.org>
+Subject: Re: [PATCH v2 07/15] dt: thermal: tsens: Document interrupt support in tsens driver
+To:     Amit Kucheria <amit.kucheria@linaro.org>
+From:   Stephen Boyd <swboyd@chromium.org>
+User-Agent: alot/0.8.1
+Date:   Thu, 29 Aug 2019 07:53:02 -0700
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Aug 29, 2019 at 7:35 PM Daniel Thompson
-<daniel.thompson@linaro.org> wrote:
->
-> On Tue, Aug 27, 2019 at 05:43:59PM +0530, Amit Kucheria wrote:
-> > Printing the function name when enabling debugging makes logs easier to
-> > read.
+Quoting Amit Kucheria (2019-08-29 01:48:27)
+> On Wed, Aug 28, 2019 at 6:03 AM Stephen Boyd <swboyd@chromium.org> wrote:
 > >
-> > Signed-off-by: Amit Kucheria <amit.kucheria@linaro.org>
-> > Reviewed-by: Stephen Boyd <swboyd@chromium.org>
-> > Reviewed-by: Daniel Lezcano <daniel.lezcano@linaro.org>
->
-> This should need to be manually added at each call site; it is already
-> built into the logging system (the f flag for dynamic debug)?
+> > Quoting Amit Kucheria (2019-08-27 05:14:03)
+> > > Define two new required properties to define interrupts and
+> > > interrupt-names for tsens.
+> > >
+> > > Signed-off-by: Amit Kucheria <amit.kucheria@linaro.org>
+> > > ---
+> > >  Documentation/devicetree/bindings/thermal/qcom-tsens.txt | 8 ++++++++
+> > >  1 file changed, 8 insertions(+)
+> > >
+> > > diff --git a/Documentation/devicetree/bindings/thermal/qcom-tsens.txt=
+ b/Documentation/devicetree/bindings/thermal/qcom-tsens.txt
+> > > index 673cc1831ee9d..686bede72f846 100644
+> > > --- a/Documentation/devicetree/bindings/thermal/qcom-tsens.txt
+> > > +++ b/Documentation/devicetree/bindings/thermal/qcom-tsens.txt
+> > > @@ -22,6 +22,8 @@ Required properties:
+> > >
+> > >  - #thermal-sensor-cells : Should be 1. See ./thermal.txt for a descr=
+iption.
+> > >  - #qcom,sensors: Number of sensors in tsens block
+> > > +- interrupts: Interrupts generated from Always-On subsystem (AOSS)
+> >
+> > Is it always one? interrupt-names makes it sound like it.
+> >
+> > > +- interrupt-names: Must be one of the following: "uplow", "critical"
+>=20
+> Will fix to "one or more of the following"
+>=20
 
-I assume you meant "shouldn't".
+Can we get a known quantity of interrupts for a particular compatible
+string instead? Let's be as specific as possible. The index matters too,
+so please list them in the order that is desired.
 
-I haven't yet integrated dynamic debug into my daily workflow.
-
-Last time I looked at it, it was a bit bothersome to use because I
-needed to lookup exact line numbers to trigger useful information. And
-those line numbers constantly keep changing as I work on the driver,
-so it was a bit painful to script. Not to mention the syntax to frob
-the correct files in debugfs to enable this functionality.
-
-As opposed to this, adding the following to the makefile is so easy. :-)
-
-CFLAGS_tsens-common.o          := -DDEBUG
-
-Perhaps I am using it all wrong? How would I go about using dynamic
-debug instead of this patch?
-
-Regards,
-Amit
