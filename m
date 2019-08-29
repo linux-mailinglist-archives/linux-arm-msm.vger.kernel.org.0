@@ -2,133 +2,125 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id EEC98A22C4
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Aug 2019 19:51:06 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D443DA245E
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Aug 2019 20:22:58 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727682AbfH2RvG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 29 Aug 2019 13:51:06 -0400
-Received: from smtp.codeaurora.org ([198.145.29.96]:45958 "EHLO
+        id S1729669AbfH2SWs (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 29 Aug 2019 14:22:48 -0400
+Received: from smtp.codeaurora.org ([198.145.29.96]:53514 "EHLO
         smtp.codeaurora.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727686AbfH2RvG (ORCPT
+        with ESMTP id S1728700AbfH2SWq (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 29 Aug 2019 13:51:06 -0400
+        Thu, 29 Aug 2019 14:22:46 -0400
 Received: by smtp.codeaurora.org (Postfix, from userid 1000)
-        id F1A5F7D4D2; Thu, 29 Aug 2019 08:54:44 +0000 (UTC)
+        id 328F267898; Thu, 29 Aug 2019 18:12:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
-        s=default; t=1567068885;
-        bh=lpXLc5F4QsaDKK2TTF0zihfLK87qJP12kwB4PiEb95k=;
-        h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
-        b=OxBfcrrzfeTUahg9ajJ34hg9KgU9FYJ97KAAKkNHR4nJOzETQFF5+n74FpQw9c5wL
-         yvwt7H4q9PKnWZiJNI98yspOBFS7m0oIov6H6pO/BbAjH+MzsviOWfC2vXdhdqdXTs
-         Ag8XKnjzHhKQnO1jsECxX0XDOC+PPzXCE5IcNhAI=
+        s=default; t=1567102965;
+        bh=FeFaJUoDeHdLOh2OaUz0TWmkbjPXVH4svhWA764YwBA=;
+        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+        b=VtycVrSAdkukL9EXA/Nj5URdtARJbT4f2tnn+5EZUFMr7WSmXL+rlzSDC7/jZnW6q
+         PmWt/aQspvB6mKZzr31y7ErivhOdwkR7I56EWnlrgWsnZsomBoI5zd1EM3HFSzJTHu
+         f0PgxHacny5Q09voOOsLnIBMP3UelpPagJ5nT1FU=
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
         pdx-caf-mail.web.codeaurora.org
 X-Spam-Level: 
 X-Spam-Status: No, score=-2.7 required=2.0 tests=ALL_TRUSTED,BAYES_00,
-        DKIM_INVALID,DKIM_SIGNED autolearn=no autolearn_force=no version=3.4.0
-Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
-        by smtp.codeaurora.org (Postfix) with ESMTP id DEAA97D4D2;
-        Thu, 29 Aug 2019 02:38:06 +0000 (UTC)
+        DKIM_INVALID,DKIM_SIGNED,SPF_NONE autolearn=no autolearn_force=no
+        version=3.4.0
+Received: from codeaurora.org (i-global254.qualcomm.com [199.106.103.254])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: ilina@smtp.codeaurora.org)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 74C0C6883B;
+        Thu, 29 Aug 2019 18:12:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
-        s=default; t=1567046287;
-        bh=lpXLc5F4QsaDKK2TTF0zihfLK87qJP12kwB4PiEb95k=;
-        h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
-        b=caw7HlmutRgzF374ASAP6arTI7VM0E3MK6sozq/G9a/6B/evXKgsOWHfaSLCZQlPJ
-         WXjfjUmB9fZRjkH2ngP+bg3Z2gW6/BSDEdjiRUL9l1TclfsXMeBshmyxAc7filcbzD
-         NLnTfCUhuZ8uovGECvtm4gvHzdJq3zF84eJKL/a8=
+        s=default; t=1567102334;
+        bh=FeFaJUoDeHdLOh2OaUz0TWmkbjPXVH4svhWA764YwBA=;
+        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+        b=RPMpETOqN+zUgVJ54I7e6zv9LkccOW3ztM6OOrzzC/Te80+y/+TfMkno7u2x1u+eW
+         9yszoW44Ac6fym1pyMb3Kih+1Q9m07v+wgxqjqTMOrnmOAUN37/L63zmhihJPgyE1g
+         WgnM+oaXtWXMPeroZXKYlb2UcWn2urpwfCUkBwQA=
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 74C0C6883B
+Authentication-Results: pdx-caf-mail.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: pdx-caf-mail.web.codeaurora.org; spf=none smtp.mailfrom=ilina@codeaurora.org
+From:   Lina Iyer <ilina@codeaurora.org>
+To:     swboyd@chromium.org, evgreen@chromium.org, marc.zyngier@arm.com,
+        linus.walleij@linaro.org
+Cc:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        bjorn.andersson@linaro.org, mkshah@codeaurora.org,
+        linux-gpio@vger.kernel.org, rnayak@codeaurora.org,
+        Lina Iyer <ilina@codeaurora.org>
+Subject: [PATCH RFC 02/14] drivers: irqchip: pdc: Do not toggle IRQ_ENABLE during mask/unmask
+Date:   Thu, 29 Aug 2019 12:11:51 -0600
+Message-Id: <20190829181203.2660-3-ilina@codeaurora.org>
+X-Mailer: git-send-email 2.22.0
+In-Reply-To: <20190829181203.2660-1-ilina@codeaurora.org>
+References: <20190829181203.2660-1-ilina@codeaurora.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
-Content-Transfer-Encoding: 7bit
-Date:   Thu, 29 Aug 2019 08:08:06 +0530
-From:   Sibi Sankar <sibis@codeaurora.org>
-To:     Philipp Zabel <p.zabel@pengutronix.de>
-Cc:     robh+dt@kernel.org, bjorn.andersson@linaro.org, agross@kernel.org,
-        mark.rutland@arm.com, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-kernel-owner@vger.kernel.org
-Subject: Re: [RESEND PATCH v2 1/2] dt-bindings: reset: aoss: Add AOSS reset
- binding for SC7180 SoCs
-In-Reply-To: <1566808568.3842.2.camel@pengutronix.de>
-References: <20190824152411.21757-1-sibis@codeaurora.org>
- <20190824152411.21757-2-sibis@codeaurora.org>
- <1566808568.3842.2.camel@pengutronix.de>
-Message-ID: <4a71d26db054be636e57c4d031b0d3ec@codeaurora.org>
-X-Sender: sibis@codeaurora.org
-User-Agent: Roundcube Webmail/1.2.5
+Content-Transfer-Encoding: 8bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hey Philipp,
-Thanks for the review!
+When an interrupt is to be serviced, the convention is to mask the
+interrupt at the chip and unmask after servicing the interrupt. Enabling
+and disabling the interrupt at the PDC irqchip causes an interrupt storm
+due to the way dual edge interrupts are handled in hardware.
 
-On 2019-08-26 14:06, Philipp Zabel wrote:
-> On Sat, 2019-08-24 at 20:54 +0530, Sibi Sankar wrote:
->> Add SC7180 AOSS reset to the list of possible bindings.
->> 
->> Signed-off-by: Sibi Sankar <sibis@codeaurora.org>
->> ---
->>  Documentation/devicetree/bindings/reset/qcom,aoss-reset.txt | 4 ++--
->>  1 file changed, 2 insertions(+), 2 deletions(-)
->> 
->> diff --git 
->> a/Documentation/devicetree/bindings/reset/qcom,aoss-reset.txt 
->> b/Documentation/devicetree/bindings/reset/qcom,aoss-reset.txt
->> index 510c748656ec5..3eb6a22ced4bc 100644
->> --- a/Documentation/devicetree/bindings/reset/qcom,aoss-reset.txt
->> +++ b/Documentation/devicetree/bindings/reset/qcom,aoss-reset.txt
->> @@ -8,8 +8,8 @@ Required properties:
->>  - compatible:
->>  	Usage: required
->>  	Value type: <string>
->> -	Definition: must be:
->> -		    "qcom,sdm845-aoss-cc"
->> +	Definition: must be one of:
->> +		"qcom,sc7180-aoss-cc", "qcom,sdm845-aoss-cc"
-> 
-> Should this emphasize that the common sdm845 compatible always has to 
-> be
-> included?
-> 
-> +	Definition: must be:
-> +		"qcom,sdm845-aoss-cc" for SDM845 or
+Skip configuring the PDC when the IRQ is masked and unmasked, instead
+use the irq_enable/irq_disable callbacks to toggle the IRQ_ENABLE
+register at the PDC. The PDC's IRQ_ENABLE register is only used during
+the monitoring mode when the system is asleep and is not needed for
+active mode detection.
 
-can we drop the "or" since
-we would need to keep adding
-it in the future.
+Signed-off-by: Lina Iyer <ilina@codeaurora.org>
+---
+ drivers/irqchip/qcom-pdc.c | 16 ++++++++++++++--
+ 1 file changed, 14 insertions(+), 2 deletions(-)
 
-> +		"qcom,sc7180-aoss-cc", "qcom,sdm845-aoss-cc" for SC7180
-
-I prefer ^^ approach for the
-reasons stated below.
-
-> 
-> or like the qcom,kpss-gcc bindings:
-> 
-> +	Definition: should be one of the following. The generic
-> compatible
-> +		"qcom,sdm845-aoss-cc" should also be
-> included.
-> +		"qcom,sc7180-aoss-cc", "qcom,sdm845-aoss-cc"
-> +
-
-It is extremely unlikely that
-future SoCs would maintain same
-number of reset lines/offsets
-due to the constant flux in
-remote processors being added
-to the SoCs. So a generic
-compatible might not make sense
-here.
-
-> 	"qcom,sdm845-aoss-cc"
-> 
-> regards
-> Philipp
-
+diff --git a/drivers/irqchip/qcom-pdc.c b/drivers/irqchip/qcom-pdc.c
+index faa7d61b9d6c..338fae604af5 100644
+--- a/drivers/irqchip/qcom-pdc.c
++++ b/drivers/irqchip/qcom-pdc.c
+@@ -63,15 +63,25 @@ static void pdc_enable_intr(struct irq_data *d, bool on)
+ 	raw_spin_unlock(&pdc_lock);
+ }
+ 
+-static void qcom_pdc_gic_mask(struct irq_data *d)
++static void qcom_pdc_gic_disable(struct irq_data *d)
+ {
+ 	pdc_enable_intr(d, false);
++	irq_chip_disable_parent(d);
++}
++
++static void qcom_pdc_gic_enable(struct irq_data *d)
++{
++	pdc_enable_intr(d, true);
++	irq_chip_enable_parent(d);
++}
++
++static void qcom_pdc_gic_mask(struct irq_data *d)
++{
+ 	irq_chip_mask_parent(d);
+ }
+ 
+ static void qcom_pdc_gic_unmask(struct irq_data *d)
+ {
+-	pdc_enable_intr(d, true);
+ 	irq_chip_unmask_parent(d);
+ }
+ 
+@@ -148,6 +158,8 @@ static struct irq_chip qcom_pdc_gic_chip = {
+ 	.irq_eoi		= irq_chip_eoi_parent,
+ 	.irq_mask		= qcom_pdc_gic_mask,
+ 	.irq_unmask		= qcom_pdc_gic_unmask,
++	.irq_disable		= qcom_pdc_gic_disable,
++	.irq_enable		= qcom_pdc_gic_enable,
+ 	.irq_retrigger		= irq_chip_retrigger_hierarchy,
+ 	.irq_set_type		= qcom_pdc_gic_set_type,
+ 	.flags			= IRQCHIP_MASK_ON_SUSPEND |
 -- 
--- Sibi Sankar --
-Qualcomm Innovation Center, Inc. is a member of Code Aurora Forum,
-a Linux Foundation Collaborative Project.
+The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
+a Linux Foundation Collaborative Project
+
