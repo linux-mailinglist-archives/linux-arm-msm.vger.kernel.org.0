@@ -2,125 +2,107 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 205A7A3B36
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 30 Aug 2019 18:02:24 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 073D7A3C41
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 30 Aug 2019 18:41:01 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728093AbfH3QCB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 30 Aug 2019 12:02:01 -0400
-Received: from mail-pl1-f170.google.com ([209.85.214.170]:32871 "EHLO
-        mail-pl1-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727820AbfH3QCB (ORCPT
+        id S1728057AbfH3Qkh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 30 Aug 2019 12:40:37 -0400
+Received: from mail-vs1-f66.google.com ([209.85.217.66]:33641 "EHLO
+        mail-vs1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728213AbfH3Qkh (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 30 Aug 2019 12:02:01 -0400
-Received: by mail-pl1-f170.google.com with SMTP id go14so3559793plb.0
-        for <linux-arm-msm@vger.kernel.org>; Fri, 30 Aug 2019 09:02:01 -0700 (PDT)
+        Fri, 30 Aug 2019 12:40:37 -0400
+Received: by mail-vs1-f66.google.com with SMTP id m18so5179678vsr.0
+        for <linux-arm-msm@vger.kernel.org>; Fri, 30 Aug 2019 09:40:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=message-id:mime-version:content-transfer-encoding:in-reply-to
-         :references:cc:subject:to:from:user-agent:date;
-        bh=Ll00P0HvLyh9ff4mGqhoY7oNmqZV/WIp9ZbBt7WSZuQ=;
-        b=DVNT4sGrKS8uBzpUvPlrwNcWOB48ID/E33wWVXKNaf5Rn1vgh5+t2kQyuqrFOdqw8j
-         2YmAmtzGl93QBYkr5aUtVLO4FEmveVBcPhwSjMHjKvnQY3WFEPGdEkGAlL/QNiRxAde0
-         9vR6xABOTJ0qzHXur+j0+MpQAv4Et4E71ZHUg=
+        d=linaro.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=FFEm8wnPyI70hvEmm2P3x6q7Jm7rJLu+QxiBEYWlIyU=;
+        b=Az1Gi5TnAI4hFvybyYWbK+kY5uHpzIYo+o2d4fFMkAR8JxEWt1+SHjs8JUveORST6i
+         Gd64ynQza92S8iVFSgaTo8l3iE4CvAdDU2coF4oOsqwwJfBiYQJKYwbUX8LujJTsiWTN
+         wi/cOSOreMTOdb7b3mAoHJSXPGD6fzpyWxLIT329lNx6TGkuBvPre2rtLkRs/tnbRsd1
+         +yM5KS/siWcWBOs/K2sslc+UzXBGW+Zc0vw3iaR0/r09ZilQiD9lJiKOkOw3ErAyZMNg
+         K/AIETEuQOm1nWHlRnf0RDYI2pN+ijMN3IZ8pd95grX2lJr0DFw7Bg6DqEyWjwEnWykb
+         pryQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:mime-version
-         :content-transfer-encoding:in-reply-to:references:cc:subject:to:from
-         :user-agent:date;
-        bh=Ll00P0HvLyh9ff4mGqhoY7oNmqZV/WIp9ZbBt7WSZuQ=;
-        b=dPCjQhXGeTGGqfHoqrAcjZqY9LAwZI7/oq3tdxwM/0mTyH9DsfHGApcPYIquz+zKOJ
-         cJZd+MUxJh4AKEvr6nSUrcVTQenICPepFd/wu9RujQCt3ku5dG6N9S5vmTnF/JmBLOn9
-         8RPTlikbmhlCbXtz6WS7vHHDOpZ/q9S26zo8B938SeK1qbQUeWd6GhjaS7Z1zeG6Dkjf
-         va5apKN3gjZx1nBDKVM0Wl6BmqHjwtR1VEhl5T2i2VM9KaaHp+zLGNm7Oqg0YcpLEatB
-         rb1FFvM7uUl4luxOAvij82K1/atDuhdxxUhssYOdPYB+uL+Oy/vgbYkxLbygzdUFvkDS
-         8nOw==
-X-Gm-Message-State: APjAAAVdoEnd9N5dmF+DfKBN0dFhTQBmQbgzhHfjo5mtf2m14OeqGBDv
-        mDDEv/xzR5HI6s+El8qvzUcb5g==
-X-Google-Smtp-Source: APXvYqxBQB8qqHi4xILIYQH7twNKrk/p0gZaksrJaQi2G+n2F2uAcIBYTnbtvlcNY1uzFyMjBAQ7Rg==
-X-Received: by 2002:a17:902:223:: with SMTP id 32mr16796973plc.220.1567180920622;
-        Fri, 30 Aug 2019 09:02:00 -0700 (PDT)
-Received: from chromium.org ([2620:15c:202:1:fa53:7765:582b:82b9])
-        by smtp.gmail.com with ESMTPSA id t70sm5846917pjb.2.2019.08.30.09.01.59
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 30 Aug 2019 09:02:00 -0700 (PDT)
-Message-ID: <5d694878.1c69fb81.5f13b.ec4f@mx.google.com>
-Content-Type: text/plain; charset="utf-8"
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=FFEm8wnPyI70hvEmm2P3x6q7Jm7rJLu+QxiBEYWlIyU=;
+        b=UP0iU9GChyzRsudYW5t1zkhpjJVSUdPMwYp0fOeJCgIp1b5R2qMxMnybL/wdcHAdQZ
+         2r8yvLHPUva9KboAp7WsIGOQzf6sKUJkkoZjzOxGrvvWSnKyxY5UK2niIec2qHVEERto
+         LzcnExjjMO4MqxoIZ62sHWmLRIsOl9h54mjRP4GSXn2QuUe1EMs/ndkDQ5tc+tostnDp
+         O317lYMDdRnlqtNPVcBsZ8uJAkhvsGK4sMFdlV0wIjNykeiBqeitEXo5pOd8QkgQNqnc
+         lUi/U3odm0B9CChfAFdtZR+OmZSKHb+UZdiKcQM3NXBlBlebY3YFhJVbLVhTiVAACdS3
+         P90w==
+X-Gm-Message-State: APjAAAXWQNnF1pZjcNomStXZ6vtIfYsOaXKFiMCF11RN8SWQishmUcbe
+        Pgv0Let6IJgs9hvTkqoe06dU3K2EkgzdneBYlqA3uQ==
+X-Google-Smtp-Source: APXvYqxSX6rgglBoPn04e5TToAhGtd/FXdxa1G/PbV8Cm/B9SvCHsyiX8a3uGPV5I0xaid3Rv899mDqEZOJRM5dDNMs=
+X-Received: by 2002:a67:b445:: with SMTP id c5mr4384433vsm.182.1567183236380;
+ Fri, 30 Aug 2019 09:40:36 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <6dc0957d-5806-7643-4454-966015865d38@linaro.org>
-References: <20190207111734.24171-1-jorge.ramirez-ortiz@linaro.org> <20190207111734.24171-4-jorge.ramirez-ortiz@linaro.org> <20190223165218.GB572@tuxbook-pro> <6dc0957d-5806-7643-4454-966015865d38@linaro.org>
-Cc:     robh@kernel.org, andy.gross@linaro.org, shawn.guo@linaro.org,
-        gregkh@linuxfoundation.org, mark.rutland@arm.com, kishon@ti.com,
-        jackp@codeaurora.org, devicetree@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-usb@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
-        khasim.mohammed@linaro.org
-Subject: Re: [PATCH v4 3/4] dt-bindings: Add Qualcomm USB SuperSpeed PHY bindings
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Jorge Ramirez <jorge.ramirez-ortiz@linaro.org>
-From:   Stephen Boyd <swboyd@chromium.org>
-User-Agent: alot/0.8.1
-Date:   Fri, 30 Aug 2019 09:01:59 -0700
+References: <cover.1566907161.git.amit.kucheria@linaro.org>
+ <66ac3d3707d6296ef85bf1fa321f7f1ee0c02131.1566907161.git.amit.kucheria@linaro.org>
+ <5d65cbe9.1c69fb81.1ceb.2374@mx.google.com> <CAP245DWWKsZBHnvSqC40XOH48kGd-hykd+fr-UZfWTmvuG2KaA@mail.gmail.com>
+ <5d67e6cf.1c69fb81.5aec9.3b71@mx.google.com> <CAP245DVjgnwGn5rUgbYrkBOi3vtyShz0Qbx_opx80xiOV7uXeA@mail.gmail.com>
+ <CAHLCerMmBmS-59eywxkUJ+5-zSccx8Twx2=NELgBgShYhM7TOw@mail.gmail.com> <5d6946fa.1c69fb81.44ab7.8d72@mx.google.com>
+In-Reply-To: <5d6946fa.1c69fb81.44ab7.8d72@mx.google.com>
+From:   Amit Kucheria <amit.kucheria@linaro.org>
+Date:   Fri, 30 Aug 2019 22:10:24 +0530
+Message-ID: <CAHLCerNJpOEevZBvN6s4FiaD5C=1C4xNRHYjVNM=0HpGCuf9RQ@mail.gmail.com>
+Subject: Re: [PATCH v2 07/15] dt: thermal: tsens: Document interrupt support
+ in tsens driver
+To:     Stephen Boyd <swboyd@chromium.org>
+Cc:     Daniel Lezcano <daniel.lezcano@linaro.org>,
+        Mark Rutland <mark.rutland@arm.com>,
+        Rob Herring <robh+dt@kernel.org>,
+        Zhang Rui <rui.zhang@intel.com>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Eduardo Valentin <edubezval@gmail.com>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        Marc Gonzalez <marc.w.gonzalez@free.fr>,
+        Brian Masney <masneyb@onstation.org>,
+        Linux PM list <linux-pm@vger.kernel.org>,
+        DTML <devicetree@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Jorge Ramirez (2019-08-29 00:03:48)
-> On 2/23/19 17:52, Bjorn Andersson wrote:
-> > On Thu 07 Feb 03:17 PST 2019, Jorge Ramirez-Ortiz wrote:
-> >> +
-> >> +Required child nodes:
-> >> +
-> >> +- usb connector node as defined in bindings/connector/usb-connector.t=
-xt
-> >> +  containing the property vbus-supply.
-> >> +
-> >> +Example:
-> >> +
-> >> +usb3_phy: usb3-phy@78000 {
-> >> +    compatible =3D "qcom,snps-usb-ssphy";
-> >> +    reg =3D <0x78000 0x400>;
-> >> +    #phy-cells =3D <0>;
-> >> +    clocks =3D <&rpmcc RPM_SMD_LN_BB_CLK>,
-> >> +             <&gcc GCC_USB_HS_PHY_CFG_AHB_CLK>,
-> >> +             <&gcc GCC_USB3_PHY_PIPE_CLK>;
-> >> +    clock-names =3D "ref", "phy", "pipe";
-> >> +    resets =3D <&gcc GCC_USB3_PHY_BCR>,
-> >> +             <&gcc GCC_USB3PHY_PHY_BCR>;
-> >> +    reset-names =3D "com", "phy";
-> >> +    vdd-supply =3D <&vreg_l3_1p05>;
-> >> +    vdda1p8-supply =3D <&vreg_l5_1p8>;
-> >> +    usb3_c_connector: usb3-c-connector {
+On Fri, Aug 30, 2019 at 9:25 PM Stephen Boyd <swboyd@chromium.org> wrote:
+>
+> Quoting Amit Kucheria (2019-08-30 04:32:54)
+> > On Thu, Aug 29, 2019 at 10:04 PM Amit Kucheria <amit.kucheria@linaro.org> wrote:
+> > >
+> > > On Thu, Aug 29, 2019 at 8:23 PM Stephen Boyd <swboyd@chromium.org> wrote:
+> > > >
+> > > > Can we get a known quantity of interrupts for a particular compatible
+> > > > string instead? Let's be as specific as possible. The index matters too,
+> > > > so please list them in the order that is desired.
+> > >
+> > > I *think* we can predict what platforms have uplow and critical
+> > > interrupts based on IP version currently[1]. For newer interrupt
+> > > types, we might need more fine-grained platform compatibles.
+> > >
+> > > [1] Caveat: this is based only on the list of platforms I've currently
+> > > looked at, there might be something internally that breaks these
+> > > rules.
+> >
+> > What do you think if we changed the wording to something like the following,
+> >
+> > - interrupt-names: Must be one of the following depending on IP version:
+> >    For compatibles qcom,msm8916-tsens, qcom,msm8974-tsens,
+> > qcom,qcs404-tsens, qcom,tsens-v1, use
+> >               interrupt-names = "uplow";
+> >    For compatibles qcom,msm8996-tsens, qcom,msm8998-tsens,
+> > qcom,sdm845-tsens, qcom,tsens-v2, use
+> >               interrupt-names = "uplow", "critical";
+>
+> Ok. I would still prefer YAML/JSON schema for this binding so that it's
+> much more explicit about numbers and the order of interrupts, etc.
 
-Node name should be 'connector', not usb3-c-connector.
-
-> >=20
-> > The USB-C connector is attached both to the HS and SS PHYs, so I think
-> > you should represent this external to this node and use of_graph to
-> > query it.
->=20
-> but AFAICS we wont be able to retrieve the vbux-supply from an external
-> node (that interface does not exist).
->=20
-> rob, do you have a suggestion?
-
-Shouldn't the vbus supply be in the phy? Or is this a situation where
-the phy itself doesn't have the vbus supply going to it because the PMIC
-gets in the way and handles the vbus for the connector by having the SoC
-communicate with the PMIC about when to turn the vbus on and off, etc?
-
->=20
-> >=20
-> > So the connector should look similar to example 2 in
-> > connector/usb-connector.txt.
-> >=20
-> > Regards,
-> > Bjorn
-> >=20
-> >> +            compatible =3D "usb-c-connector";
-> >> +            label =3D "USB-C";
-> >> +            type =3D "micro";
-> >> +            vbus-supply =3D <&usb3_vbus_reg>;
-> >> +    };
-> >> +};
+OK, I'll look around for some examples.
