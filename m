@@ -2,319 +2,107 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 67706A3999
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 30 Aug 2019 16:50:54 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id AAEB4A3B16
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 30 Aug 2019 17:55:57 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727780AbfH3Our (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 30 Aug 2019 10:50:47 -0400
-Received: from foss.arm.com ([217.140.110.172]:33436 "EHLO foss.arm.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1727135AbfH3Our (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 30 Aug 2019 10:50:47 -0400
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id DFB08344;
-        Fri, 30 Aug 2019 07:50:45 -0700 (PDT)
-Received: from [10.1.197.61] (usa-sjc-imap-foss1.foss.arm.com [10.121.207.14])
-        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 876243F703;
-        Fri, 30 Aug 2019 07:50:44 -0700 (PDT)
-Subject: Re: [PATCH RFC 03/14] drivers: irqchip: add PDC irqdomain for wakeup
- capable GPIOs
-To:     Lina Iyer <ilina@codeaurora.org>, swboyd@chromium.org,
-        evgreen@chromium.org, linus.walleij@linaro.org
-Cc:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        bjorn.andersson@linaro.org, mkshah@codeaurora.org,
-        linux-gpio@vger.kernel.org, rnayak@codeaurora.org
-References: <20190829181203.2660-1-ilina@codeaurora.org>
- <20190829181203.2660-4-ilina@codeaurora.org>
-From:   Marc Zyngier <maz@kernel.org>
-Organization: Approximate
-Message-ID: <d2a45d45-3071-ab8d-060b-92a2812a8d42@kernel.org>
-Date:   Fri, 30 Aug 2019 15:50:42 +0100
-User-Agent: Mozilla/5.0 (X11; Linux aarch64; rv:60.0) Gecko/20100101
- Thunderbird/60.8.0
+        id S1728093AbfH3Pzk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 30 Aug 2019 11:55:40 -0400
+Received: from mail-pg1-f195.google.com ([209.85.215.195]:34603 "EHLO
+        mail-pg1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728117AbfH3Pzj (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 30 Aug 2019 11:55:39 -0400
+Received: by mail-pg1-f195.google.com with SMTP id n9so3768583pgc.1
+        for <linux-arm-msm@vger.kernel.org>; Fri, 30 Aug 2019 08:55:39 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=message-id:mime-version:content-transfer-encoding:in-reply-to
+         :references:cc:subject:to:from:user-agent:date;
+        bh=k6Dxd85KwIwNu5WFF2tT64CAPd/DYpSO5fdfBDFg7GU=;
+        b=S5qbrM5gPf2x9uK/Eo2lo06mXjTKn3hbUNHcIY4qU8ukD4NW2tD4jeCK/EstX4U53W
+         c4cRGnGohdYxife6HVJSiZnuwSqg//QxDuQwiE7K+7MVm+6pZBo3GhLHOFh+dW4FdXwd
+         OKmfZHI2k8iQm0UDRn+WdD8cVazF6sCYFsOQU=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:message-id:mime-version
+         :content-transfer-encoding:in-reply-to:references:cc:subject:to:from
+         :user-agent:date;
+        bh=k6Dxd85KwIwNu5WFF2tT64CAPd/DYpSO5fdfBDFg7GU=;
+        b=AkAtK1mO/wcfZxdQxbFtehRSbmPgqlI7kzwNX+EE1gKGj0H9xs9iC5n4hy5GeKonoE
+         zB8rFlOBjDZb5CzX9/VWAW9gOZeLddCLM1CDos6uVs7Clbin6swNhLNJCMgS3f76Q+Vq
+         c1oBiQPmBHcfZsR1ALfU2uAq1GCAlLSOLiaYGp6SfkdLWa5hvr4QKLCgJBHOO9rqKFKJ
+         DQAfzVSnAP9YE6C5f+i/HRyENGK99NnzZai9tenJ6XwqTHqRiWZRctkQRWOGoN59usKh
+         Bd3xFvBPMT6JU4Mtsu3RRGvWx68Sgmb6W/f54v/DOm7rVOg6lCnCQkYTwrsyfWEWZfgm
+         s7KQ==
+X-Gm-Message-State: APjAAAUHFoN0VFWJC9ZiljQ36oAhypGkHPx0ZzCftJ0QV85XCB9LMktw
+        E32Rv4+78kk9bXWF0+VBClYYuw==
+X-Google-Smtp-Source: APXvYqybFyMqAGX/6/N4aQQxP1BFIP6ngtzqj/mFI8XAkZsmjEEuuQAleFFpnwf7OgBsHK6zhEs8Iw==
+X-Received: by 2002:a62:3681:: with SMTP id d123mr18860617pfa.147.1567180538822;
+        Fri, 30 Aug 2019 08:55:38 -0700 (PDT)
+Received: from chromium.org ([2620:15c:202:1:fa53:7765:582b:82b9])
+        by smtp.gmail.com with ESMTPSA id k5sm10653817pfg.167.2019.08.30.08.55.38
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 30 Aug 2019 08:55:38 -0700 (PDT)
+Message-ID: <5d6946fa.1c69fb81.44ab7.8d72@mx.google.com>
+Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
-In-Reply-To: <20190829181203.2660-4-ilina@codeaurora.org>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <CAHLCerMmBmS-59eywxkUJ+5-zSccx8Twx2=NELgBgShYhM7TOw@mail.gmail.com>
+References: <cover.1566907161.git.amit.kucheria@linaro.org> <66ac3d3707d6296ef85bf1fa321f7f1ee0c02131.1566907161.git.amit.kucheria@linaro.org> <5d65cbe9.1c69fb81.1ceb.2374@mx.google.com> <CAP245DWWKsZBHnvSqC40XOH48kGd-hykd+fr-UZfWTmvuG2KaA@mail.gmail.com> <5d67e6cf.1c69fb81.5aec9.3b71@mx.google.com> <CAP245DVjgnwGn5rUgbYrkBOi3vtyShz0Qbx_opx80xiOV7uXeA@mail.gmail.com> <CAHLCerMmBmS-59eywxkUJ+5-zSccx8Twx2=NELgBgShYhM7TOw@mail.gmail.com>
+Cc:     Daniel Lezcano <daniel.lezcano@linaro.org>,
+        Mark Rutland <mark.rutland@arm.com>,
+        Rob Herring <robh+dt@kernel.org>,
+        Zhang Rui <rui.zhang@intel.com>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Eduardo Valentin <edubezval@gmail.com>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        Marc Gonzalez <marc.w.gonzalez@free.fr>,
+        Brian Masney <masneyb@onstation.org>,
+        Linux PM list <linux-pm@vger.kernel.org>,
+        DTML <devicetree@vger.kernel.org>
+Subject: Re: [PATCH v2 07/15] dt: thermal: tsens: Document interrupt support in tsens driver
+To:     Amit Kucheria <amit.kucheria@linaro.org>
+From:   Stephen Boyd <swboyd@chromium.org>
+User-Agent: alot/0.8.1
+Date:   Fri, 30 Aug 2019 08:55:37 -0700
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-[Please use my kernel.org address in the future. The days of this
-arm.com address are numbered...]
+Quoting Amit Kucheria (2019-08-30 04:32:54)
+> On Thu, Aug 29, 2019 at 10:04 PM Amit Kucheria <amit.kucheria@linaro.org>=
+ wrote:
+> >
+> > On Thu, Aug 29, 2019 at 8:23 PM Stephen Boyd <swboyd@chromium.org> wrot=
+e:
+> > >
+> > > Can we get a known quantity of interrupts for a particular compatible
+> > > string instead? Let's be as specific as possible. The index matters t=
+oo,
+> > > so please list them in the order that is desired.
+> >
+> > I *think* we can predict what platforms have uplow and critical
+> > interrupts based on IP version currently[1]. For newer interrupt
+> > types, we might need more fine-grained platform compatibles.
+> >
+> > [1] Caveat: this is based only on the list of platforms I've currently
+> > looked at, there might be something internally that breaks these
+> > rules.
+>=20
+> What do you think if we changed the wording to something like the followi=
+ng,
+>=20
+> - interrupt-names: Must be one of the following depending on IP version:
+>    For compatibles qcom,msm8916-tsens, qcom,msm8974-tsens,
+> qcom,qcs404-tsens, qcom,tsens-v1, use
+>               interrupt-names =3D "uplow";
+>    For compatibles qcom,msm8996-tsens, qcom,msm8998-tsens,
+> qcom,sdm845-tsens, qcom,tsens-v2, use
+>               interrupt-names =3D "uplow", "critical";
 
-On 29/08/2019 19:11, Lina Iyer wrote:
-> Introduce a new domain for wakeup capable GPIOs. The domain can be
-> requested using the bus token DOMAIN_BUS_WAKEUP. In the following
-> patches, we will specify PDC as the wakeup-parent for the TLMM GPIO
-> irqchip. Requesting a wakeup GPIO will setup the GPIO and the
-> corresponding PDC interrupt as its parent.
-> 
-> Co-developed-by: Stephen Boyd <swboyd@chromium.org>
-> Signed-off-by: Lina Iyer <ilina@codeaurora.org>
-> ---
->  drivers/irqchip/qcom-pdc.c   | 104 ++++++++++++++++++++++++++++++++---
->  include/linux/soc/qcom/irq.h |  34 ++++++++++++
->  2 files changed, 129 insertions(+), 9 deletions(-)
->  create mode 100644 include/linux/soc/qcom/irq.h
-> 
-> diff --git a/drivers/irqchip/qcom-pdc.c b/drivers/irqchip/qcom-pdc.c
-> index 338fae604af5..ad1faf634bcf 100644
-> --- a/drivers/irqchip/qcom-pdc.c
-> +++ b/drivers/irqchip/qcom-pdc.c
-> @@ -13,12 +13,13 @@
->  #include <linux/of.h>
->  #include <linux/of_address.h>
->  #include <linux/of_device.h>
-> +#include <linux/soc/qcom/irq.h>
->  #include <linux/spinlock.h>
-> -#include <linux/platform_device.h>
->  #include <linux/slab.h>
->  #include <linux/types.h>
->  
->  #define PDC_MAX_IRQS		126
-> +#define PDC_MAX_GPIO_IRQS	256
->  
->  #define CLEAR_INTR(reg, intr)	(reg & ~(1 << intr))
->  #define ENABLE_INTR(reg, intr)	(reg | (1 << intr))
-> @@ -26,6 +27,8 @@
->  #define IRQ_ENABLE_BANK		0x10
->  #define IRQ_i_CFG		0x110
->  
-> +#define PDC_NO_PARENT_IRQ	~0UL
-> +
->  struct pdc_pin_region {
->  	u32 pin_base;
->  	u32 parent_base;
-> @@ -65,23 +68,35 @@ static void pdc_enable_intr(struct irq_data *d, bool on)
->  
->  static void qcom_pdc_gic_disable(struct irq_data *d)
->  {
-> +	if (d->hwirq == GPIO_NO_WAKE_IRQ)
-> +		return;
-> +
->  	pdc_enable_intr(d, false);
->  	irq_chip_disable_parent(d);
->  }
->  
->  static void qcom_pdc_gic_enable(struct irq_data *d)
->  {
-> +	if (d->hwirq == GPIO_NO_WAKE_IRQ)
-> +		return;
-> +
->  	pdc_enable_intr(d, true);
->  	irq_chip_enable_parent(d);
->  }
->  
->  static void qcom_pdc_gic_mask(struct irq_data *d)
->  {
-> +	if (d->hwirq == GPIO_NO_WAKE_IRQ)
-> +		return;
-> +
->  	irq_chip_mask_parent(d);
->  }
->  
->  static void qcom_pdc_gic_unmask(struct irq_data *d)
->  {
-> +	if (d->hwirq == GPIO_NO_WAKE_IRQ)
-> +		return;
-> +
->  	irq_chip_unmask_parent(d);
->  }
->  
-> @@ -124,6 +139,9 @@ static int qcom_pdc_gic_set_type(struct irq_data *d, unsigned int type)
->  	int pin_out = d->hwirq;
->  	enum pdc_irq_config_bits pdc_type;
->  
-> +	if (pin_out == GPIO_NO_WAKE_IRQ)
-> +		return 0;
-> +
->  	switch (type) {
->  	case IRQ_TYPE_EDGE_RISING:
->  		pdc_type = PDC_EDGE_RISING;
-> @@ -181,8 +199,7 @@ static irq_hw_number_t get_parent_hwirq(int pin)
->  			return (region->parent_base + pin - region->pin_base);
->  	}
->  
-> -	WARN_ON(1);
-> -	return ~0UL;
-> +	return PDC_NO_PARENT_IRQ;
->  }
->  
->  static int qcom_pdc_translate(struct irq_domain *d, struct irq_fwspec *fwspec,
-> @@ -211,17 +228,17 @@ static int qcom_pdc_alloc(struct irq_domain *domain, unsigned int virq,
->  
->  	ret = qcom_pdc_translate(domain, fwspec, &hwirq, &type);
->  	if (ret)
-> -		return -EINVAL;
-> -
-> -	parent_hwirq = get_parent_hwirq(hwirq);
-> -	if (parent_hwirq == ~0UL)
-> -		return -EINVAL;
-> +		return ret;
->  
->  	ret  = irq_domain_set_hwirq_and_chip(domain, virq, hwirq,
->  					     &qcom_pdc_gic_chip, NULL);
->  	if (ret)
->  		return ret;
->  
-> +	parent_hwirq = get_parent_hwirq(hwirq);
-> +	if (parent_hwirq == PDC_NO_PARENT_IRQ)
-> +		return 0;
-> +
->  	if (type & IRQ_TYPE_EDGE_BOTH)
->  		type = IRQ_TYPE_EDGE_RISING;
->  
-> @@ -244,6 +261,60 @@ static const struct irq_domain_ops qcom_pdc_ops = {
->  	.free		= irq_domain_free_irqs_common,
->  };
->  
-> +static int qcom_pdc_gpio_alloc(struct irq_domain *domain, unsigned int virq,
-> +			       unsigned int nr_irqs, void *data)
-> +{
-> +	struct irq_fwspec *fwspec = data;
-> +	struct irq_fwspec parent_fwspec;
-> +	irq_hw_number_t hwirq, parent_hwirq;
-> +	unsigned int type;
-> +	int ret;
-> +
-> +	ret = qcom_pdc_translate(domain, fwspec, &hwirq, &type);
-> +	if (ret)
-> +		return ret;
-> +
-> +	ret = irq_domain_set_hwirq_and_chip(domain, virq, hwirq,
-> +					    &qcom_pdc_gic_chip, NULL);
-> +	if (ret)
-> +		return ret;
-> +
-> +	if (hwirq == GPIO_NO_WAKE_IRQ)
-> +		return 0;
-> +
-> +	parent_hwirq = get_parent_hwirq(hwirq);
-> +	if (parent_hwirq == PDC_NO_PARENT_IRQ)
-> +		return 0;
-> +
-> +	if (type & IRQ_TYPE_EDGE_BOTH)
-> +		type = IRQ_TYPE_EDGE_RISING;
-> +
-> +	if (type & IRQ_TYPE_LEVEL_MASK)
-> +		type = IRQ_TYPE_LEVEL_HIGH;
-> +
-> +	parent_fwspec.fwnode      = domain->parent->fwnode;
-> +	parent_fwspec.param_count = 3;
-> +	parent_fwspec.param[0]    = 0;
-> +	parent_fwspec.param[1]    = parent_hwirq;
-> +	parent_fwspec.param[2]    = type;
-> +
-> +	return irq_domain_alloc_irqs_parent(domain, virq, nr_irqs,
-> +					    &parent_fwspec);
-> +}
-> +
-> +static int qcom_pdc_gpio_domain_select(struct irq_domain *d,
-> +				       struct irq_fwspec *fwspec,
-> +				       enum irq_domain_bus_token bus_token)
-> +{
-> +	return (bus_token == DOMAIN_BUS_WAKEUP);
-> +}
-> +
-> +static const struct irq_domain_ops qcom_pdc_gpio_ops = {
-> +	.select		= qcom_pdc_gpio_domain_select,
-> +	.alloc		= qcom_pdc_gpio_alloc,
-> +	.free		= irq_domain_free_irqs_common,
-> +};
-> +
->  static int pdc_setup_pin_mapping(struct device_node *np)
->  {
->  	int ret, n;
-> @@ -282,7 +353,7 @@ static int pdc_setup_pin_mapping(struct device_node *np)
->  
->  static int qcom_pdc_init(struct device_node *node, struct device_node *parent)
->  {
-> -	struct irq_domain *parent_domain, *pdc_domain;
-> +	struct irq_domain *parent_domain, *pdc_domain, *pdc_gpio_domain;
->  	int ret;
->  
->  	pdc_base = of_iomap(node, 0);
-> @@ -313,8 +384,23 @@ static int qcom_pdc_init(struct device_node *node, struct device_node *parent)
->  		goto fail;
->  	}
->  
-> +	pdc_gpio_domain = irq_domain_create_hierarchy(parent_domain,
-> +						      IRQ_DOMAIN_FLAG_QCOM_PDC_WAKEUP,
-> +						      PDC_MAX_GPIO_IRQS,
-> +						      of_fwnode_handle(node),
-> +						      &qcom_pdc_gpio_ops, NULL);
-> +	if (!pdc_gpio_domain) {
-> +		pr_err("%pOF: GIC domain add failed for GPIO domain\n", node);
-> +		ret = -ENOMEM;
-> +		goto remove;
-> +	}
-> +
-> +	irq_domain_update_bus_token(pdc_gpio_domain, DOMAIN_BUS_WAKEUP);
-> +
->  	return 0;
->  
-> +remove:
-> +	irq_domain_remove(pdc_domain);
->  fail:
->  	kfree(pdc_region);
->  	iounmap(pdc_base);
-> diff --git a/include/linux/soc/qcom/irq.h b/include/linux/soc/qcom/irq.h
-> new file mode 100644
-> index 000000000000..73239917dc38
-> --- /dev/null
-> +++ b/include/linux/soc/qcom/irq.h
-> @@ -0,0 +1,34 @@
-> +/* SPDX-License-Identifier: GPL-2.0-only */
-> +
-> +#ifndef __QCOM_IRQ_H
-> +#define __QCOM_IRQ_H
-> +
-> +#include <linux/irqdomain.h>
-> +
-> +#define GPIO_NO_WAKE_IRQ	~0U
-> +
-> +/**
-> + * QCOM specific IRQ domain flags that distinguishes the handling of wakeup
-> + * capable interrupts by different interrupt controllers.
-> + *
-> + * IRQ_DOMAIN_FLAG_QCOM_PDC_WAKEUP: Line must be masked at TLMM and the
-> + *                                  interrupt configuration is done at PDC
-> + * IRQ_DOMAIN_FLAG_QCOM_MPM_WAKEUP: Interrupt configuration is handled at TLMM
-> + */
-> +#define IRQ_DOMAIN_FLAG_QCOM_PDC_WAKEUP		(1 << 17)
-> +#define IRQ_DOMAIN_FLAG_QCOM_MPM_WAKEUP		(1 << 18)
+Ok. I would still prefer YAML/JSON schema for this binding so that it's
+much more explicit about numbers and the order of interrupts, etc.
 
-Any reason why you're starting at bit 17? The available range in from
-bit 16... But overall, it would be better if you expressed it as:
-
-#define IRQ_DOMAIN_FLAG_QCOM_PDC_WAKEUP	(IRQ_DOMAIN_FLAG_NONCORE << 0)
-#define IRQ_DOMAIN_FLAG_QCOM_MPM_WAKEUP (IRQ_DOMAIN_FLAG_NONCORE << 1)
-
-> +
-> +/**
-> + * irq_domain_qcom_handle_wakeup: Return if the domain handles interrupt
-> + *                                configuration
-> + * @parent: irq domain
-> + *
-> + * This QCOM specific irq domain call returns if the interrupt controller
-> + * requires the interrupt be masked at the child interrupt controller.
-> + */
-> +static inline bool irq_domain_qcom_handle_wakeup(struct irq_domain *parent)
-> +{
-> +	return (parent->flags & IRQ_DOMAIN_FLAG_QCOM_PDC_WAKEUP);
-> +}
-> +
-> +#endif
-> 
-
-But most of this file isn't used by this patch, so maybe it should be
-moved somewhere else...
-
-Thanks,
-
-	M.
--- 
-Jazz is not dead, it just smells funny...
