@@ -2,107 +2,134 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 073D7A3C41
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 30 Aug 2019 18:41:01 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 837A2A3C53
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 30 Aug 2019 18:43:32 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728057AbfH3Qkh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 30 Aug 2019 12:40:37 -0400
-Received: from mail-vs1-f66.google.com ([209.85.217.66]:33641 "EHLO
-        mail-vs1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728213AbfH3Qkh (ORCPT
+        id S1728293AbfH3Qn1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 30 Aug 2019 12:43:27 -0400
+Received: from mail-pf1-f196.google.com ([209.85.210.196]:38899 "EHLO
+        mail-pf1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728129AbfH3Qn1 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 30 Aug 2019 12:40:37 -0400
-Received: by mail-vs1-f66.google.com with SMTP id m18so5179678vsr.0
-        for <linux-arm-msm@vger.kernel.org>; Fri, 30 Aug 2019 09:40:37 -0700 (PDT)
+        Fri, 30 Aug 2019 12:43:27 -0400
+Received: by mail-pf1-f196.google.com with SMTP id o70so4988202pfg.5
+        for <linux-arm-msm@vger.kernel.org>; Fri, 30 Aug 2019 09:43:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=FFEm8wnPyI70hvEmm2P3x6q7Jm7rJLu+QxiBEYWlIyU=;
-        b=Az1Gi5TnAI4hFvybyYWbK+kY5uHpzIYo+o2d4fFMkAR8JxEWt1+SHjs8JUveORST6i
-         Gd64ynQza92S8iVFSgaTo8l3iE4CvAdDU2coF4oOsqwwJfBiYQJKYwbUX8LujJTsiWTN
-         wi/cOSOreMTOdb7b3mAoHJSXPGD6fzpyWxLIT329lNx6TGkuBvPre2rtLkRs/tnbRsd1
-         +yM5KS/siWcWBOs/K2sslc+UzXBGW+Zc0vw3iaR0/r09ZilQiD9lJiKOkOw3ErAyZMNg
-         K/AIETEuQOm1nWHlRnf0RDYI2pN+ijMN3IZ8pd95grX2lJr0DFw7Bg6DqEyWjwEnWykb
-         pryQ==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=q5gzUFH+LLr1GeRh8d61wQ5ZxK6DUtBvBFz6N7zeYQ8=;
+        b=nJl4ZiCxYAu6twY2dIZpt6JBzmYgk4PbodtyM2DHZYiWFm3VZFwCvg9Zw15krklbGj
+         eaWHPK+cFBBCGA0j/4A0Yfzho/8xw6VmQkabo5OzbrYcK6qaR5aXh3iUDQWfcbGoSu4Z
+         poGclGdOBZhYYd8+6uSeM3dZ20P5jKdpWSYWZDeWh0gjHX+CjnUJf5w/keLKJbxMc+Db
+         kBHpAtM1aMNqaSEcg0LPKmRILXrjtbQDjXBBGQeb07g4YwZYcaIKzfRZ4xBW+3ZkhVds
+         zzBzYUC+cW02dZjQEYEUijUVJcsCfQkm2xhgu3ItpChGSLeorMLGu1WORzMS/Er5okqr
+         2pyQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=FFEm8wnPyI70hvEmm2P3x6q7Jm7rJLu+QxiBEYWlIyU=;
-        b=UP0iU9GChyzRsudYW5t1zkhpjJVSUdPMwYp0fOeJCgIp1b5R2qMxMnybL/wdcHAdQZ
-         2r8yvLHPUva9KboAp7WsIGOQzf6sKUJkkoZjzOxGrvvWSnKyxY5UK2niIec2qHVEERto
-         LzcnExjjMO4MqxoIZ62sHWmLRIsOl9h54mjRP4GSXn2QuUe1EMs/ndkDQ5tc+tostnDp
-         O317lYMDdRnlqtNPVcBsZ8uJAkhvsGK4sMFdlV0wIjNykeiBqeitEXo5pOd8QkgQNqnc
-         lUi/U3odm0B9CChfAFdtZR+OmZSKHb+UZdiKcQM3NXBlBlebY3YFhJVbLVhTiVAACdS3
-         P90w==
-X-Gm-Message-State: APjAAAXWQNnF1pZjcNomStXZ6vtIfYsOaXKFiMCF11RN8SWQishmUcbe
-        Pgv0Let6IJgs9hvTkqoe06dU3K2EkgzdneBYlqA3uQ==
-X-Google-Smtp-Source: APXvYqxSX6rgglBoPn04e5TToAhGtd/FXdxa1G/PbV8Cm/B9SvCHsyiX8a3uGPV5I0xaid3Rv899mDqEZOJRM5dDNMs=
-X-Received: by 2002:a67:b445:: with SMTP id c5mr4384433vsm.182.1567183236380;
- Fri, 30 Aug 2019 09:40:36 -0700 (PDT)
-MIME-Version: 1.0
-References: <cover.1566907161.git.amit.kucheria@linaro.org>
- <66ac3d3707d6296ef85bf1fa321f7f1ee0c02131.1566907161.git.amit.kucheria@linaro.org>
- <5d65cbe9.1c69fb81.1ceb.2374@mx.google.com> <CAP245DWWKsZBHnvSqC40XOH48kGd-hykd+fr-UZfWTmvuG2KaA@mail.gmail.com>
- <5d67e6cf.1c69fb81.5aec9.3b71@mx.google.com> <CAP245DVjgnwGn5rUgbYrkBOi3vtyShz0Qbx_opx80xiOV7uXeA@mail.gmail.com>
- <CAHLCerMmBmS-59eywxkUJ+5-zSccx8Twx2=NELgBgShYhM7TOw@mail.gmail.com> <5d6946fa.1c69fb81.44ab7.8d72@mx.google.com>
-In-Reply-To: <5d6946fa.1c69fb81.44ab7.8d72@mx.google.com>
-From:   Amit Kucheria <amit.kucheria@linaro.org>
-Date:   Fri, 30 Aug 2019 22:10:24 +0530
-Message-ID: <CAHLCerNJpOEevZBvN6s4FiaD5C=1C4xNRHYjVNM=0HpGCuf9RQ@mail.gmail.com>
-Subject: Re: [PATCH v2 07/15] dt: thermal: tsens: Document interrupt support
- in tsens driver
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=q5gzUFH+LLr1GeRh8d61wQ5ZxK6DUtBvBFz6N7zeYQ8=;
+        b=Tf8CgQDXAMkUDJqj5BG46COensAQ3IKOMEkPtaoweggeBBeWuS4r0/0uKDBp8aiaI6
+         p6emXFy6dzbOs9xIsyCMuONgUuZJAbodGySFK/d3iPmj+S145L0PF2Xo8FUO67x0CwGk
+         E5EbNcry9ftFiLJhpW/KD4e8mcXCXmTLjPuKAgSShqKFpYbxss+F78Btw1VzrSuhMcvX
+         qzymVTUTDU0EHuagZ2OJfEcJSdtRv6eI7fqB6+kki3CN0PVKai+3gIRD3F5HN6CAC4iv
+         BtxsMlWXG9iexOs9cofvUxUQxAEZLBP2VnKlzrYTSkjaJ6vhI1fhuDCXALRFty98Dp7p
+         O0pg==
+X-Gm-Message-State: APjAAAXSwsOx3jQoKTdG0eUjTtFrOKcxWFWo02EJQWaHSt61EYecwN74
+        VMlHKF/H8OZf1RHGVE1KI+DA/g==
+X-Google-Smtp-Source: APXvYqyWTZbyunakxQlyU8+azoFn/fVvPZoIev3hecPMzx3XNAaoIo+T2UrpOj7TfS4xJn93lMOOzQ==
+X-Received: by 2002:a63:188:: with SMTP id 130mr13572573pgb.231.1567183406399;
+        Fri, 30 Aug 2019 09:43:26 -0700 (PDT)
+Received: from tuxbook-pro (104-188-17-28.lightspeed.sndgca.sbcglobal.net. [104.188.17.28])
+        by smtp.gmail.com with ESMTPSA id c9sm8573589pfb.43.2019.08.30.09.43.24
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 30 Aug 2019 09:43:25 -0700 (PDT)
+Date:   Fri, 30 Aug 2019 09:45:20 -0700
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
 To:     Stephen Boyd <swboyd@chromium.org>
-Cc:     Daniel Lezcano <daniel.lezcano@linaro.org>,
-        Mark Rutland <mark.rutland@arm.com>,
-        Rob Herring <robh+dt@kernel.org>,
-        Zhang Rui <rui.zhang@intel.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Eduardo Valentin <edubezval@gmail.com>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-        Marc Gonzalez <marc.w.gonzalez@free.fr>,
-        Brian Masney <masneyb@onstation.org>,
-        Linux PM list <linux-pm@vger.kernel.org>,
-        DTML <devicetree@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Cc:     Jorge Ramirez <jorge.ramirez-ortiz@linaro.org>, robh@kernel.org,
+        andy.gross@linaro.org, shawn.guo@linaro.org,
+        gregkh@linuxfoundation.org, mark.rutland@arm.com, kishon@ti.com,
+        jackp@codeaurora.org, devicetree@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-usb@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+        khasim.mohammed@linaro.org
+Subject: Re: [PATCH v4 3/4] dt-bindings: Add Qualcomm USB SuperSpeed PHY
+ bindings
+Message-ID: <20190830164520.GK26807@tuxbook-pro>
+References: <20190207111734.24171-1-jorge.ramirez-ortiz@linaro.org>
+ <20190207111734.24171-4-jorge.ramirez-ortiz@linaro.org>
+ <20190223165218.GB572@tuxbook-pro>
+ <6dc0957d-5806-7643-4454-966015865d38@linaro.org>
+ <5d694878.1c69fb81.5f13b.ec4f@mx.google.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <5d694878.1c69fb81.5f13b.ec4f@mx.google.com>
+User-Agent: Mutt/1.12.1 (2019-06-15)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, Aug 30, 2019 at 9:25 PM Stephen Boyd <swboyd@chromium.org> wrote:
->
-> Quoting Amit Kucheria (2019-08-30 04:32:54)
-> > On Thu, Aug 29, 2019 at 10:04 PM Amit Kucheria <amit.kucheria@linaro.org> wrote:
-> > >
-> > > On Thu, Aug 29, 2019 at 8:23 PM Stephen Boyd <swboyd@chromium.org> wrote:
-> > > >
-> > > > Can we get a known quantity of interrupts for a particular compatible
-> > > > string instead? Let's be as specific as possible. The index matters too,
-> > > > so please list them in the order that is desired.
-> > >
-> > > I *think* we can predict what platforms have uplow and critical
-> > > interrupts based on IP version currently[1]. For newer interrupt
-> > > types, we might need more fine-grained platform compatibles.
-> > >
-> > > [1] Caveat: this is based only on the list of platforms I've currently
-> > > looked at, there might be something internally that breaks these
-> > > rules.
-> >
-> > What do you think if we changed the wording to something like the following,
-> >
-> > - interrupt-names: Must be one of the following depending on IP version:
-> >    For compatibles qcom,msm8916-tsens, qcom,msm8974-tsens,
-> > qcom,qcs404-tsens, qcom,tsens-v1, use
-> >               interrupt-names = "uplow";
-> >    For compatibles qcom,msm8996-tsens, qcom,msm8998-tsens,
-> > qcom,sdm845-tsens, qcom,tsens-v2, use
-> >               interrupt-names = "uplow", "critical";
->
-> Ok. I would still prefer YAML/JSON schema for this binding so that it's
-> much more explicit about numbers and the order of interrupts, etc.
+On Fri 30 Aug 09:01 PDT 2019, Stephen Boyd wrote:
 
-OK, I'll look around for some examples.
+> Quoting Jorge Ramirez (2019-08-29 00:03:48)
+> > On 2/23/19 17:52, Bjorn Andersson wrote:
+> > > On Thu 07 Feb 03:17 PST 2019, Jorge Ramirez-Ortiz wrote:
+> > >> +
+> > >> +Required child nodes:
+> > >> +
+> > >> +- usb connector node as defined in bindings/connector/usb-connector.txt
+> > >> +  containing the property vbus-supply.
+> > >> +
+> > >> +Example:
+> > >> +
+> > >> +usb3_phy: usb3-phy@78000 {
+> > >> +    compatible = "qcom,snps-usb-ssphy";
+> > >> +    reg = <0x78000 0x400>;
+> > >> +    #phy-cells = <0>;
+> > >> +    clocks = <&rpmcc RPM_SMD_LN_BB_CLK>,
+> > >> +             <&gcc GCC_USB_HS_PHY_CFG_AHB_CLK>,
+> > >> +             <&gcc GCC_USB3_PHY_PIPE_CLK>;
+> > >> +    clock-names = "ref", "phy", "pipe";
+> > >> +    resets = <&gcc GCC_USB3_PHY_BCR>,
+> > >> +             <&gcc GCC_USB3PHY_PHY_BCR>;
+> > >> +    reset-names = "com", "phy";
+> > >> +    vdd-supply = <&vreg_l3_1p05>;
+> > >> +    vdda1p8-supply = <&vreg_l5_1p8>;
+> > >> +    usb3_c_connector: usb3-c-connector {
+> 
+> Node name should be 'connector', not usb3-c-connector.
+> 
+
+It probably has to be usb-c-connector, because we have a
+micro-usb-connector on the same board.
+
+> > > 
+> > > The USB-C connector is attached both to the HS and SS PHYs, so I think
+> > > you should represent this external to this node and use of_graph to
+> > > query it.
+> > 
+> > but AFAICS we wont be able to retrieve the vbux-supply from an external
+> > node (that interface does not exist).
+> > 
+> > rob, do you have a suggestion?
+> 
+> Shouldn't the vbus supply be in the phy? Or is this a situation where
+> the phy itself doesn't have the vbus supply going to it because the PMIC
+> gets in the way and handles the vbus for the connector by having the SoC
+> communicate with the PMIC about when to turn the vbus on and off, etc?
+> 
+
+That's correct, the VBUS comes out of the PMIC and goes directly to the
+connector.
+
+The additional complicating factor here is that the connector is wired
+to a USB2 phy as well, so we need to wire up detection and vbus control
+to both of them - but I think this will be fine, if we can only figure
+out a sane way of getting hold of the vbus-supply.
+
+Regards,
+Bjorn
