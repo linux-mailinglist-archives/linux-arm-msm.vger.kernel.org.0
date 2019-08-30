@@ -2,129 +2,129 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id A2889A2DF8
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 30 Aug 2019 06:03:32 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 23248A2EB7
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 30 Aug 2019 07:02:32 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726144AbfH3EDb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 30 Aug 2019 00:03:31 -0400
-Received: from gateway22.websitewelcome.com ([192.185.46.229]:12859 "EHLO
-        gateway22.websitewelcome.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1725838AbfH3EDb (ORCPT
+        id S1725891AbfH3FCQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 30 Aug 2019 01:02:16 -0400
+Received: from smtp.codeaurora.org ([198.145.29.96]:49362 "EHLO
+        smtp.codeaurora.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725902AbfH3FCQ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 30 Aug 2019 00:03:31 -0400
-Received: from cm16.websitewelcome.com (cm16.websitewelcome.com [100.42.49.19])
-        by gateway22.websitewelcome.com (Postfix) with ESMTP id 19C9A7F0A
-        for <linux-arm-msm@vger.kernel.org>; Thu, 29 Aug 2019 23:03:30 -0500 (CDT)
-Received: from gator4166.hostgator.com ([108.167.133.22])
-        by cmsmtp with SMTP
-        id 3Y8IiI3nn4FKp3Y8IiM3JU; Thu, 29 Aug 2019 23:03:30 -0500
-X-Authority-Reason: nr=8
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-        d=embeddedor.com; s=default; h=Content-Type:MIME-Version:Message-ID:Subject:
-        Cc:To:From:Date:Sender:Reply-To:Content-Transfer-Encoding:Content-ID:
-        Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
-        :Resent-Message-ID:In-Reply-To:References:List-Id:List-Help:List-Unsubscribe:
-        List-Subscribe:List-Post:List-Owner:List-Archive;
-        bh=zz/0wpgN2ENh4FQXIHSRXfkBLUkCd7zskZL3on01EzE=; b=oQs0gzkJRMLi3VddvYsTgCuCS2
-        Zy0BSVb2v7chIF0n9k5a8APzIDvlfVkgmuxK85a6V5yOo4cvNNvw4sQ9mDVD3ODts8EPYTgWg64kq
-        NUaWGu0+9nvpU16wqnYE79GWGWmyAw/bwMh1ah2OIripkNO/tYtKzrSqeZ3eAYCLtIdAZPN0NJX75
-        okpqlC+fUwKLL4ouyLhKhshhNyqsyqDv/sXMC/+ZFVfxXzlQaLQiaFOOU7brW1GhZmL2D6cskj7iq
-        3X7yDXdgPiwx8OF+6Wn/Pv+M6e7KtUmlYr1jkuhT9VbiYAR8xGyVn6OELg47IbTzK3652Fnb85JsA
-        uVHdlg8A==;
-Received: from [189.152.216.116] (port=55676 helo=embeddedor)
-        by gator4166.hostgator.com with esmtpa (Exim 4.92)
-        (envelope-from <gustavo@embeddedor.com>)
-        id 1i3Y8G-002GKz-VA; Thu, 29 Aug 2019 23:03:29 -0500
-Date:   Thu, 29 Aug 2019 23:03:27 -0500
-From:   "Gustavo A. R. Silva" <gustavo@embeddedor.com>
-To:     Rob Clark <robdclark@gmail.com>, Andy Gross <agross@kernel.org>,
-        Joerg Roedel <joro@8bytes.org>
-Cc:     iommu@lists.linux-foundation.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org,
-        "Gustavo A. R. Silva" <gustavo@embeddedor.com>
-Subject: [PATCH] iommu/qcom_iommu: Use struct_size() helper
-Message-ID: <20190830040327.GA6483@embeddedor>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-User-Agent: Mutt/1.9.4 (2018-02-28)
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - gator4166.hostgator.com
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - embeddedor.com
-X-BWhitelist: no
-X-Source-IP: 189.152.216.116
-X-Source-L: No
-X-Exim-ID: 1i3Y8G-002GKz-VA
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
-X-Source-Sender: (embeddedor) [189.152.216.116]:55676
-X-Source-Auth: gustavo@embeddedor.com
-X-Email-Count: 5
-X-Source-Cap: Z3V6aWRpbmU7Z3V6aWRpbmU7Z2F0b3I0MTY2Lmhvc3RnYXRvci5jb20=
-X-Local-Domain: yes
+        Fri, 30 Aug 2019 01:02:16 -0400
+Received: by smtp.codeaurora.org (Postfix, from userid 1000)
+        id 7AB7961B14; Fri, 30 Aug 2019 05:02:14 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
+        s=default; t=1567141334;
+        bh=fe+1CIFsLrsFmj7GnadvoGOHiiGzQrdsXLHYlpV+vnM=;
+        h=From:To:Cc:Subject:Date:From;
+        b=DF35DWi/vcIha8ZdCxzYGat7OgmKEDoWJ9P16AGIJunFqUn8gDuZY6RzkK1YBvQXc
+         OyzXUZlhXMt3ZkhRluU+RMIKQvCCnZL3QzcSJHghAiMqdzjXYjAdvWUm4jaKC9hywP
+         oxorZWI2p1t24zo3fb3J5k5M4pIcb3UjLU0ViFPg=
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        pdx-caf-mail.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.7 required=2.0 tests=ALL_TRUSTED,BAYES_00,
+        DKIM_INVALID,DKIM_SIGNED,SPF_NONE autolearn=no autolearn_force=no
+        version=3.4.0
+Received: from c-hbandi-linux.qualcomm.com (blr-c-bdr-fw-01_globalnat_allzones-outside.qualcomm.com [103.229.19.19])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: c-hbandi@codeaurora.org)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 65CF3602FC;
+        Fri, 30 Aug 2019 05:02:09 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
+        s=default; t=1567141333;
+        bh=fe+1CIFsLrsFmj7GnadvoGOHiiGzQrdsXLHYlpV+vnM=;
+        h=From:To:Cc:Subject:Date:From;
+        b=cq6tFOjrdTDeySUCvbiv+pnJOqt1EA0f/z2kgaQPmN973eij2IW0UMUzos6pQ8aIZ
+         Dyj0sVSZ34RKvan+TEX75lLPeQqCeD70ezOD2PTF1BL6S9FMfmm0jI6fKZdlVzQeAV
+         zuAmz7WnqM0Xb9GteUde4UCbbtVEvZTEGsV+AQoE=
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 65CF3602FC
+Authentication-Results: pdx-caf-mail.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: pdx-caf-mail.web.codeaurora.org; spf=none smtp.mailfrom=c-hbandi@codeaurora.org
+From:   Harish Bandi <c-hbandi@codeaurora.org>
+To:     marcel@holtmann.org, johan.hedberg@gmail.com
+Cc:     mka@chromium.org, linux-kernel@vger.kernel.org,
+        linux-bluetooth@vger.kernel.org, hemantg@codeaurora.org,
+        linux-arm-msm@vger.kernel.org, bgodavar@codeaurora.org,
+        anubhavg@codeaurora.org, Harish Bandi <c-hbandi@codeaurora.org>
+Subject: [PATCH v2] Bluetooth: hci_qca: wait for Pre shutdown complete event before sending the Power off pulse
+Date:   Fri, 30 Aug 2019 10:31:44 +0530
+Message-Id: <1567141304-24600-1-git-send-email-c-hbandi@codeaurora.org>
+X-Mailer: git-send-email 1.9.1
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-One of the more common cases of allocation size calculations is finding
-the size of a structure that has a zero-sized array at the end, along
-with memory for some number of elements for that array. For example:
+When SoC receives pre shut down command, it share the same
+with other COEX shared clients. So SoC needs a short time
+after sending VS pre shutdown command before turning off
+the regulators and sending the power off pulse. Along with
+short delay, needs to wait for command complete event for
+Pre shutdown VS command
 
-struct qcom_iommu_dev {
-	...
-        struct qcom_iommu_ctx   *ctxs[0];   /* indexed by asid-1 */
-};
-
-Make use of the struct_size() helper instead of an open-coded version
-in order to avoid any potential type mistakes.
-
-So, replace the following form:
-
-sizeof(*qcom_iommu) + (max_asid * sizeof(qcom_iommu->ctxs[0]))
-
-with:
-
-struct_size(qcom_iommu, ctxs, max_asid)
-
-Also, notice that, in this case, variable sz is not necessary,
-hence it is removed.
-
-This code was detected with the help of Coccinelle.
-
-Signed-off-by: Gustavo A. R. Silva <gustavo@embeddedor.com>
+Signed-off-by: Harish Bandi <c-hbandi@codeaurora.org>
+Reviewed-by: Balakrishna Godavarthi <bgodavar@codeaurora.org>
 ---
- drivers/iommu/qcom_iommu.c | 7 +++----
- 1 file changed, 3 insertions(+), 4 deletions(-)
+Changes in V2:
+- Modified commit text.
+---
+ drivers/bluetooth/btqca.c   | 22 ++++++++++++++++++++++
+ drivers/bluetooth/hci_qca.c |  5 +++++
+ 2 files changed, 27 insertions(+)
 
-diff --git a/drivers/iommu/qcom_iommu.c b/drivers/iommu/qcom_iommu.c
-index 3608f58f1ea8..c18168fd7fe7 100644
---- a/drivers/iommu/qcom_iommu.c
-+++ b/drivers/iommu/qcom_iommu.c
-@@ -801,7 +801,7 @@ static int qcom_iommu_device_probe(struct platform_device *pdev)
- 	struct qcom_iommu_dev *qcom_iommu;
- 	struct device *dev = &pdev->dev;
- 	struct resource *res;
--	int ret, sz, max_asid = 0;
-+	int ret, max_asid = 0;
+diff --git a/drivers/bluetooth/btqca.c b/drivers/bluetooth/btqca.c
+index 8b33128..d48dc9e 100644
+--- a/drivers/bluetooth/btqca.c
++++ b/drivers/bluetooth/btqca.c
+@@ -99,6 +99,28 @@ static int qca_send_reset(struct hci_dev *hdev)
+ 	return 0;
+ }
  
- 	/* find the max asid (which is 1:1 to ctx bank idx), so we know how
- 	 * many child ctx devices we have:
-@@ -809,9 +809,8 @@ static int qcom_iommu_device_probe(struct platform_device *pdev)
- 	for_each_child_of_node(dev->of_node, child)
- 		max_asid = max(max_asid, get_asid(child));
++int qca_send_pre_shutdown_cmd(struct hci_dev *hdev)
++{
++	struct sk_buff *skb;
++	int err;
++
++	bt_dev_dbg(hdev, "QCA pre shutdown cmd");
++
++	skb = __hci_cmd_sync_ev(hdev, QCA_PRE_SHUTDOWN_CMD, 0,
++				NULL, HCI_EV_CMD_COMPLETE, HCI_INIT_TIMEOUT);
++
++	if (IS_ERR(skb)) {
++		err = PTR_ERR(skb);
++		bt_dev_err(hdev, "QCA preshutdown_cmd failed (%d)", err);
++		return err;
++	}
++
++	kfree_skb(skb);
++
++	return 0;
++}
++EXPORT_SYMBOL_GPL(qca_send_pre_shutdown_cmd);
++
+ static void qca_tlv_check_data(struct rome_config *config,
+ 				const struct firmware *fw)
+ {
+diff --git a/drivers/bluetooth/hci_qca.c b/drivers/bluetooth/hci_qca.c
+index ab4c18e..43df13c 100644
+--- a/drivers/bluetooth/hci_qca.c
++++ b/drivers/bluetooth/hci_qca.c
+@@ -1367,6 +1367,11 @@ static int qca_power_off(struct hci_dev *hdev)
+ {
+ 	struct hci_uart *hu = hci_get_drvdata(hdev);
  
--	sz = sizeof(*qcom_iommu) + (max_asid * sizeof(qcom_iommu->ctxs[0]));
--
--	qcom_iommu = devm_kzalloc(dev, sz, GFP_KERNEL);
-+	qcom_iommu = devm_kzalloc(dev, struct_size(qcom_iommu, ctxs, max_asid),
-+				  GFP_KERNEL);
- 	if (!qcom_iommu)
- 		return -ENOMEM;
- 	qcom_iommu->num_ctxs = max_asid;
++	/* Perform pre shutdown command */
++	qca_send_pre_shutdown_cmd(hdev);
++
++	usleep_range(8000, 10000);
++
+ 	qca_power_shutdown(hu);
+ 	return 0;
+ }
 -- 
-2.23.0
+The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
+a Linux Foundation Collaborative Project
 
