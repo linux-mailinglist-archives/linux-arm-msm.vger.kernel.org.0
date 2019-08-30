@@ -2,56 +2,56 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 185B3A2F48
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 30 Aug 2019 07:59:26 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0E033A2F55
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 30 Aug 2019 08:02:31 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727754AbfH3F7Z (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 30 Aug 2019 01:59:25 -0400
-Received: from mail-pl1-f194.google.com ([209.85.214.194]:42983 "EHLO
-        mail-pl1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727054AbfH3F7Z (ORCPT
+        id S1727681AbfH3GC3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 30 Aug 2019 02:02:29 -0400
+Received: from mail-pf1-f196.google.com ([209.85.210.196]:41524 "EHLO
+        mail-pf1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727054AbfH3GC3 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 30 Aug 2019 01:59:25 -0400
-Received: by mail-pl1-f194.google.com with SMTP id y1so2816849plp.9
-        for <linux-arm-msm@vger.kernel.org>; Thu, 29 Aug 2019 22:59:24 -0700 (PDT)
+        Fri, 30 Aug 2019 02:02:29 -0400
+Received: by mail-pf1-f196.google.com with SMTP id 196so3887557pfz.8
+        for <linux-arm-msm@vger.kernel.org>; Thu, 29 Aug 2019 23:02:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=chromium.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=jO4YbwPpshjRXrRtdnKsiPqTv62oLFxDp0znvn0r310=;
-        b=e20AqBFDFVWkdR1wusdTgK85hn6qx5BsyLzD414yFsUs9eiUB9AqiR+gl6bTCgHTyi
-         BWDhKMlPm3tA3v3lypx5ITJemWtWG8uA/PsQkkOVqfJ1d7tf/ik2kEF0qleHn6Kx4QCS
-         a1b8fbQjdnMZ350be0Xwa556y3e6xm+/GVdqw=
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=zVR5WK7jw8bBtk+96qcPeVzLLFLq4erxKa+SEg0zTgE=;
+        b=ZDd2GrcbYhVH1waqmTlIUW+64lcxxjrJYr5RLlBqyCDbUzFHLa3ziiTmSoyUr2P4Jp
+         SUyAEu56MzN3geRGuEAbrAqJbbpFqLQgwOYvAvZX3Y1Oue0U+lBnApEXEoeMmRMPK39f
+         L8hDKYfGEd6SPKa4Ulf7yX6koEXwtJktVedMk=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=jO4YbwPpshjRXrRtdnKsiPqTv62oLFxDp0znvn0r310=;
-        b=ngk5l6sy6yAOZTE+olodNZBHjyTtbi0KVeFe8bCZw5885wlnFoVu2JfgnUYs0T+7rU
-         4fH9QdBasCL8D/9BM3VlBpWvouQgrpHLfqlsxu/9fnTAUCxYE7yXlbl2kPKr+XT2TdqP
-         T8CDMmng7JlUx5eFnc8wnrkbJlgBiOpF+k/HZWlaqNrqV56wHZnKL/DQG1rp7CxY75DX
-         +DJ71MWEJGRSakB33WHgYkOJicp4EZPjkPkUUogNDwOWKh1btaam+Xaoc0qdpCXWenbB
-         VTtFARnKXmrXu+OemZ74Sh0IhHxzO9Zrlh1zS3Z2AY7B+S1XrsWAQHYN2Bl2eY3uoXxy
-         W91g==
-X-Gm-Message-State: APjAAAU5JQVpHgW3mQcHQbB/1IszdGHDw8p5v0dgZxzt7f8K8JjfIPzH
-        W0QeObQcoT+A2UkPAb4uprK/sA==
-X-Google-Smtp-Source: APXvYqyVfXrG+2FXh1BpVdkZ2V7aBPjGLfrpcGp9iQT1h+vPA7EpNL2HvQr32RUUEQugXGtvCp6O0A==
-X-Received: by 2002:a17:902:8204:: with SMTP id x4mr13864866pln.37.1567144764304;
-        Thu, 29 Aug 2019 22:59:24 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=zVR5WK7jw8bBtk+96qcPeVzLLFLq4erxKa+SEg0zTgE=;
+        b=GQQ751dl+P1kGbmAwAdm3xJdoCAc0cWfcWnW9a9OSDZtyYZRKMUkW4kqyxIOnZsr0Q
+         kYdPJ79GS37p7Gygo4+la9zHdPl/5HBRGAZDVW6xcxOkcHNvkvcgRQUiDyVO5bfFvAUs
+         CRJER/rF7fy15fZEa9DU4BzLQFWHTrmfKkYYIMnbSEBjV7CRKq/8/S4lHlQwafEwIIcw
+         PfdrTa+TeePDVHNC8PwCLL68zH5ZAZAVjvtN7MwcfTEknhEnuVfGI+MiLuch0Qhgchsn
+         QE27O+1rG1wFO4dksbGemegu1eJfiKllpAwFJ0jRbxU6qxn4q651NquArW8+r10IKZJ3
+         P5YQ==
+X-Gm-Message-State: APjAAAVcEloZsRz92u7ATGxY/G+CYiiPD/PMPzG3/igTwfrmO7H6Ps4C
+        9LMMQmox8vpm+KmpAn1GXvCDng==
+X-Google-Smtp-Source: APXvYqwJSUMil0yYhGisN0J5w16EOL8/CV6qq5568mVBJX4s6BMWhVxxdAzWH+XRG6JYrfPhcSV5oQ==
+X-Received: by 2002:a63:1e06:: with SMTP id e6mr11408856pge.185.1567144948737;
+        Thu, 29 Aug 2019 23:02:28 -0700 (PDT)
 Received: from smtp.gmail.com ([2620:15c:202:1:fa53:7765:582b:82b9])
-        by smtp.gmail.com with ESMTPSA id x11sm9467280pfj.83.2019.08.29.22.59.23
+        by smtp.gmail.com with ESMTPSA id x10sm3449865pjo.4.2019.08.29.23.02.27
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 29 Aug 2019 22:59:23 -0700 (PDT)
+        Thu, 29 Aug 2019 23:02:28 -0700 (PDT)
 From:   Stephen Boyd <swboyd@chromium.org>
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org
-Subject: [PATCH] arm64: dts: qcom: sdm845: Use UFS reset gpio instead of pinctrl
-Date:   Thu, 29 Aug 2019 22:59:23 -0700
-Message-Id: <20190830055923.11893-1-swboyd@chromium.org>
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-gpio@vger.kernel.org,
+        Linus Walleij <linus.walleij@linaro.org>,
+        Andy Gross <agross@kernel.org>
+Subject: [PATCH] pinctrl: qcom: sdm845: Fix UFS_RESET pin
+Date:   Thu, 29 Aug 2019 23:02:27 -0700
+Message-Id: <20190830060227.12792-1-swboyd@chromium.org>
 X-Mailer: git-send-email 2.23.0.187.g17f5b7556c-goog
-In-Reply-To: <20190828191756.24312-1-bjorn.andersson@linaro.org>
-References: <20190828191756.24312-1-bjorn.andersson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Sender: linux-arm-msm-owner@vger.kernel.org
@@ -59,89 +59,35 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-We use a pinctrl "workaround" to toggle the UFS reset line. Now that UFS
-controller can issue the reset, just specify the line as a GPIO and let
-it be reset that way.
+The UFS_RESET pin is the magical pin #150 now, not 153 per the
+sdm845_groups array declared in this file. Fix the order of pins so that
+UFS_RESET is 150 and the SDC pins follow after.
 
+Fixes: 53a5372ce326 ("pinctrl: qcom: sdm845: Expose ufs_reset as gpio")
 Signed-off-by: Stephen Boyd <swboyd@chromium.org>
 ---
- arch/arm64/boot/dts/qcom/sdm845-cheza.dtsi | 51 +---------------------
- 1 file changed, 2 insertions(+), 49 deletions(-)
+ drivers/pinctrl/qcom/pinctrl-sdm845.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/sdm845-cheza.dtsi b/arch/arm64/boot/dts/qcom/sdm845-cheza.dtsi
-index 1ebbd568dfd7..611ae48437f1 100644
---- a/arch/arm64/boot/dts/qcom/sdm845-cheza.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sdm845-cheza.dtsi
-@@ -701,9 +701,8 @@ ap_ts_i2c: &i2c14 {
+diff --git a/drivers/pinctrl/qcom/pinctrl-sdm845.c b/drivers/pinctrl/qcom/pinctrl-sdm845.c
+index 39f498c09906..ce495970459d 100644
+--- a/drivers/pinctrl/qcom/pinctrl-sdm845.c
++++ b/drivers/pinctrl/qcom/pinctrl-sdm845.c
+@@ -262,10 +262,10 @@ static const struct pinctrl_pin_desc sdm845_pins[] = {
+ 	PINCTRL_PIN(147, "GPIO_147"),
+ 	PINCTRL_PIN(148, "GPIO_148"),
+ 	PINCTRL_PIN(149, "GPIO_149"),
+-	PINCTRL_PIN(150, "SDC2_CLK"),
+-	PINCTRL_PIN(151, "SDC2_CMD"),
+-	PINCTRL_PIN(152, "SDC2_DATA"),
+-	PINCTRL_PIN(153, "UFS_RESET"),
++	PINCTRL_PIN(150, "UFS_RESET"),
++	PINCTRL_PIN(151, "SDC2_CLK"),
++	PINCTRL_PIN(152, "SDC2_CMD"),
++	PINCTRL_PIN(153, "SDC2_DATA"),
+ };
  
- &ufs_mem_hc {
- 	status = "okay";
--	pinctrl-names = "init", "default";
--	pinctrl-0 = <&ufs_dev_reset_assert>;
--	pinctrl-1 = <&ufs_dev_reset_deassert>;
-+
-+	reset-gpios = <&tlmm 150 GPIO_ACTIVE_LOW>;
- 
- 	vcc-supply = <&src_pp2950_l20a>;
- 	vcc-max-microamp = <600000>;
-@@ -1258,52 +1257,6 @@ ap_ts_i2c: &i2c14 {
- 		};
- 	};
- 
--	ufs_dev_reset_assert: ufs_dev_reset_assert {
--		config {
--			pins = "ufs_reset";
--			bias-pull-down;		/* default: pull down */
--			/*
--			 * UFS_RESET driver strengths are having
--			 * different values/steps compared to typical
--			 * GPIO drive strengths.
--			 *
--			 * Following table clarifies:
--			 *
--			 * HDRV value | UFS_RESET | Typical GPIO
--			 *   (dec)    |   (mA)    |    (mA)
--			 *     0      |   0.8     |    2
--			 *     1      |   1.55    |    4
--			 *     2      |   2.35    |    6
--			 *     3      |   3.1     |    8
--			 *     4      |   3.9     |    10
--			 *     5      |   4.65    |    12
--			 *     6      |   5.4     |    14
--			 *     7      |   6.15    |    16
--			 *
--			 * POR value for UFS_RESET HDRV is 3 which means
--			 * 3.1mA and we want to use that. Hence just
--			 * specify 8mA to "drive-strength" binding and
--			 * that should result into writing 3 to HDRV
--			 * field.
--			 */
--			drive-strength = <8>;	/* default: 3.1 mA */
--			output-low; /* active low reset */
--		};
--	};
--
--	ufs_dev_reset_deassert: ufs_dev_reset_deassert {
--		config {
--			pins = "ufs_reset";
--			bias-pull-down;		/* default: pull down */
--			/*
--			 * default: 3.1 mA
--			 * check comments under ufs_dev_reset_assert
--			 */
--			drive-strength = <8>;
--			output-high; /* active low reset */
--		};
--	};
--
- 	ap_suspend_l_assert: ap_suspend_l_assert {
- 		config {
- 			pins = "gpio126";
-
-base-commit: a55aa89aab90fae7c815b0551b07be37db359d76
-prerequisite-patch-id: 2f2797d174d16a953446039125978c024c34d497
-prerequisite-patch-id: 4020423c7331cee87d7679d325c66bafb56a6b69
-prerequisite-patch-id: 46f8bd1aa2aee384021beefc9b6ed7315690f96f
+ #define DECLARE_MSM_GPIO_PINS(pin) \
 -- 
 Sent by a computer through tubes
 
