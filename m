@@ -2,129 +2,479 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 23248A2EB7
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 30 Aug 2019 07:02:32 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E79D0A2ED9
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 30 Aug 2019 07:23:50 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725891AbfH3FCQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 30 Aug 2019 01:02:16 -0400
-Received: from smtp.codeaurora.org ([198.145.29.96]:49362 "EHLO
-        smtp.codeaurora.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725902AbfH3FCQ (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 30 Aug 2019 01:02:16 -0400
-Received: by smtp.codeaurora.org (Postfix, from userid 1000)
-        id 7AB7961B14; Fri, 30 Aug 2019 05:02:14 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
-        s=default; t=1567141334;
-        bh=fe+1CIFsLrsFmj7GnadvoGOHiiGzQrdsXLHYlpV+vnM=;
-        h=From:To:Cc:Subject:Date:From;
-        b=DF35DWi/vcIha8ZdCxzYGat7OgmKEDoWJ9P16AGIJunFqUn8gDuZY6RzkK1YBvQXc
-         OyzXUZlhXMt3ZkhRluU+RMIKQvCCnZL3QzcSJHghAiMqdzjXYjAdvWUm4jaKC9hywP
-         oxorZWI2p1t24zo3fb3J5k5M4pIcb3UjLU0ViFPg=
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        pdx-caf-mail.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.7 required=2.0 tests=ALL_TRUSTED,BAYES_00,
-        DKIM_INVALID,DKIM_SIGNED,SPF_NONE autolearn=no autolearn_force=no
-        version=3.4.0
-Received: from c-hbandi-linux.qualcomm.com (blr-c-bdr-fw-01_globalnat_allzones-outside.qualcomm.com [103.229.19.19])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
+        id S1727639AbfH3FXu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 30 Aug 2019 01:23:50 -0400
+Received: from mail.kernel.org ([198.145.29.99]:35226 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726015AbfH3FXt (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 30 Aug 2019 01:23:49 -0400
+Received: from kernel.org (unknown [104.132.0.74])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        (Authenticated sender: c-hbandi@codeaurora.org)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 65CF3602FC;
-        Fri, 30 Aug 2019 05:02:09 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
-        s=default; t=1567141333;
-        bh=fe+1CIFsLrsFmj7GnadvoGOHiiGzQrdsXLHYlpV+vnM=;
-        h=From:To:Cc:Subject:Date:From;
-        b=cq6tFOjrdTDeySUCvbiv+pnJOqt1EA0f/z2kgaQPmN973eij2IW0UMUzos6pQ8aIZ
-         Dyj0sVSZ34RKvan+TEX75lLPeQqCeD70ezOD2PTF1BL6S9FMfmm0jI6fKZdlVzQeAV
-         zuAmz7WnqM0Xb9GteUde4UCbbtVEvZTEGsV+AQoE=
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 65CF3602FC
-Authentication-Results: pdx-caf-mail.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: pdx-caf-mail.web.codeaurora.org; spf=none smtp.mailfrom=c-hbandi@codeaurora.org
-From:   Harish Bandi <c-hbandi@codeaurora.org>
-To:     marcel@holtmann.org, johan.hedberg@gmail.com
-Cc:     mka@chromium.org, linux-kernel@vger.kernel.org,
-        linux-bluetooth@vger.kernel.org, hemantg@codeaurora.org,
-        linux-arm-msm@vger.kernel.org, bgodavar@codeaurora.org,
-        anubhavg@codeaurora.org, Harish Bandi <c-hbandi@codeaurora.org>
-Subject: [PATCH v2] Bluetooth: hci_qca: wait for Pre shutdown complete event before sending the Power off pulse
-Date:   Fri, 30 Aug 2019 10:31:44 +0530
-Message-Id: <1567141304-24600-1-git-send-email-c-hbandi@codeaurora.org>
-X-Mailer: git-send-email 1.9.1
+        by mail.kernel.org (Postfix) with ESMTPSA id 8032F2073F;
+        Fri, 30 Aug 2019 05:23:47 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=default; t=1567142627;
+        bh=RBrbhKASCqObgzuGM1/8VbCqDXFL88kBbebOGmf2Vwg=;
+        h=In-Reply-To:References:Cc:Subject:To:From:Date:From;
+        b=h3hR1HH+1zoGIUMxpS5H705YLd8zt0t5Y+s6JWKb49VuZ6khR+kv8OvcZCmbsr9yd
+         k9LIhb+hnZJE0L345yjASGGhqkrBg2fOTdVzH/NLpOxF2G8PWVE3FG6+mDnSQC4/7f
+         rkAa3DA2/M3hjNZPEXdEZW453+TNH4haQnDLOeIo=
+Content-Type: text/plain; charset="utf-8"
+MIME-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <20190829200532.13545-2-prsriva@linux.microsoft.com>
+References: <20190829200532.13545-1-prsriva@linux.microsoft.com> <20190829200532.13545-2-prsriva@linux.microsoft.com>
+Cc:     jmorris@namei.org, zohar@linux.ibm.com, bauerman@linux.ibm.com
+Subject: Re: [RFC][PATCH 1/1] Carry ima measurement log for arm64 via kexec_file_load
+To:     Prakhar Srivastava <prsriva@linux.microsoft.com>,
+        linux-arm-msm@vger.kernel.org, linux-integrity@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+From:   Stephen Boyd <sboyd@kernel.org>
+User-Agent: alot/0.8.1
+Date:   Thu, 29 Aug 2019 22:23:46 -0700
+Message-Id: <20190830052347.8032F2073F@mail.kernel.org>
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-When SoC receives pre shut down command, it share the same
-with other COEX shared clients. So SoC needs a short time
-after sending VS pre shutdown command before turning off
-the regulators and sending the power off pulse. Along with
-short delay, needs to wait for command complete event for
-Pre shutdown VS command
+Why is linux-arm-msm list CCed on this topic?
 
-Signed-off-by: Harish Bandi <c-hbandi@codeaurora.org>
-Reviewed-by: Balakrishna Godavarthi <bgodavar@codeaurora.org>
----
-Changes in V2:
-- Modified commit text.
----
- drivers/bluetooth/btqca.c   | 22 ++++++++++++++++++++++
- drivers/bluetooth/hci_qca.c |  5 +++++
- 2 files changed, 27 insertions(+)
+Quoting Prakhar Srivastava (2019-08-29 13:05:32)
+> Carry ima measurement log for arm64 via kexec_file_load.
+> add support to kexec_file_load to pass the ima measurement log
 
-diff --git a/drivers/bluetooth/btqca.c b/drivers/bluetooth/btqca.c
-index 8b33128..d48dc9e 100644
---- a/drivers/bluetooth/btqca.c
-+++ b/drivers/bluetooth/btqca.c
-@@ -99,6 +99,28 @@ static int qca_send_reset(struct hci_dev *hdev)
- 	return 0;
- }
- 
-+int qca_send_pre_shutdown_cmd(struct hci_dev *hdev)
-+{
-+	struct sk_buff *skb;
-+	int err;
-+
-+	bt_dev_dbg(hdev, "QCA pre shutdown cmd");
-+
-+	skb = __hci_cmd_sync_ev(hdev, QCA_PRE_SHUTDOWN_CMD, 0,
-+				NULL, HCI_EV_CMD_COMPLETE, HCI_INIT_TIMEOUT);
-+
-+	if (IS_ERR(skb)) {
-+		err = PTR_ERR(skb);
-+		bt_dev_err(hdev, "QCA preshutdown_cmd failed (%d)", err);
-+		return err;
-+	}
-+
-+	kfree_skb(skb);
-+
-+	return 0;
-+}
-+EXPORT_SYMBOL_GPL(qca_send_pre_shutdown_cmd);
-+
- static void qca_tlv_check_data(struct rome_config *config,
- 				const struct firmware *fw)
- {
-diff --git a/drivers/bluetooth/hci_qca.c b/drivers/bluetooth/hci_qca.c
-index ab4c18e..43df13c 100644
---- a/drivers/bluetooth/hci_qca.c
-+++ b/drivers/bluetooth/hci_qca.c
-@@ -1367,6 +1367,11 @@ static int qca_power_off(struct hci_dev *hdev)
- {
- 	struct hci_uart *hu = hci_get_drvdata(hdev);
- 
-+	/* Perform pre shutdown command */
-+	qca_send_pre_shutdown_cmd(hdev);
-+
-+	usleep_range(8000, 10000);
-+
- 	qca_power_shutdown(hu);
- 	return 0;
- }
--- 
-The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
-a Linux Foundation Collaborative Project
+These first two sentences look sort of odd for a commit text.
+
+>=20
+> This patch adds entry for the ima measurement log in the
+
+Don't use 'this patch' in commit text. It's in the wrong voice.
+
+> dtb which is then used in the kexec'ed session to fetch the
+> segment and then load the ima measurement log.
+>=20
+> Signed-off-by: Prakhar Srivastava <prsriva@linux.microsoft.com>
+> diff --git a/arch/arm64/Kconfig b/arch/arm64/Kconfig
+> index 3adcec05b1f6..9e1b831e7baa 100644
+> --- a/arch/arm64/Kconfig
+> +++ b/arch/arm64/Kconfig
+> @@ -964,6 +964,13 @@ config KEXEC_FILE
+>           for kernel and initramfs as opposed to list of segments as
+>           accepted by previous system call.
+> =20
+> +config HAVE_IMA_KEXEC
+> +       bool "enable arch specific ima buffer pass"
+> +       depends on KEXEC_FILE
+> +       help
+> +               This adds support to carry ima log to the next kernel in =
+case
+
+Should ima be all caps here?
+
+> +               of kexec_file_load
+
+Add a full-stop?
+
+> +
+>  config KEXEC_VERIFY_SIG
+>         bool "Verify kernel signature during kexec_file_load() syscall"
+>         depends on KEXEC_FILE
+> diff --git a/arch/arm64/include/asm/ima.h b/arch/arm64/include/asm/ima.h
+> new file mode 100644
+> index 000000000000..2c504281028d
+> --- /dev/null
+> +++ b/arch/arm64/include/asm/ima.h
+> @@ -0,0 +1,31 @@
+> +/* SPDX-License-Identifier: GPL-2.0 */
+> +#ifndef _ASM_ARM64_IMA_H
+> +#define _ASM_ARM64_IMA_H
+> +
+> +#define FDT_PROP_KEXEC_BUFFER  "linux,ima-kexec-buffer"
+
+Is this documented somewhere in the DT bindings?
+
+> +
+> +struct kimage;
+> +
+> +int ima_get_kexec_buffer(void **addr, size_t *size);
+> +int ima_free_kexec_buffer(void);
+> +
+> +#ifdef CONFIG_IMA
+> +void remove_ima_buffer(void *fdt, int chosen_node);
+> +#else
+> +static inline void remove_ima_buffer(void *fdt, int chosen_node) {}
+> +#endif
+> +
+> +#ifdef CONFIG_IMA_KEXEC
+> +int arch_ima_add_kexec_buffer(struct kimage *image, unsigned long load_a=
+ddr,
+> +                             size_t size);
+> +
+> +int setup_ima_buffer(const struct kimage *image, void *fdt, int chosen_n=
+ode);
+> +#else
+> +static inline int setup_ima_buffer(const struct kimage *image, void *fdt,
+> +                                  int chosen_node)
+> +{
+> +       remove_ima_buffer(fdt, chosen_node);
+> +       return 0;
+> +}
+> +#endif /* CONFIG_IMA_KEXEC */
+> +#endif /* _ASM_ARM64_IMA_H */
+> diff --git a/arch/arm64/include/asm/kexec.h b/arch/arm64/include/asm/kexe=
+c.h
+> index 12a561a54128..ca1f9ad5c4d4 100644
+> --- a/arch/arm64/include/asm/kexec.h
+> +++ b/arch/arm64/include/asm/kexec.h
+> @@ -96,6 +96,8 @@ static inline void crash_post_resume(void) {}
+>  struct kimage_arch {
+>         void *dtb;
+>         unsigned long dtb_mem;
+> +       phys_addr_t ima_buffer_addr;
+> +       size_t ima_buffer_size;
+
+Should this be in an ifdef?
+
+>  };
+> =20
+>  extern const struct kexec_file_ops kexec_image_ops;
+> @@ -107,6 +109,8 @@ extern int load_other_segments(struct kimage *image,
+>                 unsigned long kernel_load_addr, unsigned long kernel_size,
+>                 char *initrd, unsigned long initrd_len,
+>                 char *cmdline);
+> +extern int delete_fdt_mem_rsv(void *fdt, unsigned long start,
+> +               unsigned long size);
+>  #endif
+> =20
+>  #endif /* __ASSEMBLY__ */
+> diff --git a/arch/arm64/kernel/ima_kexec.c b/arch/arm64/kernel/ima_kexec.c
+> new file mode 100644
+> index 000000000000..5ae0d776ec42
+> --- /dev/null
+> +++ b/arch/arm64/kernel/ima_kexec.c
+> @@ -0,0 +1,219 @@
+> +/*
+> + * Copyright (C) 2016 IBM Corporation
+> + *
+> + * Authors:
+> + * Thiago Jung Bauermann <bauerman@linux.vnet.ibm.com>
+> + *
+> + * This program is free software; you can redistribute it and/or modify
+> + * it under the terms of the GNU General Public License as published by
+> + * the Free Software Foundation; either version 2 of the License, or
+> + * (at your option) any later version.
+
+Please use a SPDX tag instead of this boiler plate.
+
+> + */
+> +
+> +#include <linux/slab.h>
+> +#include <linux/kexec.h>
+> +#include <linux/of.h>
+> +#include <linux/memblock.h>
+> +#include <linux/libfdt.h>
+> +#include <asm/kexec.h>
+> +#include <asm/ima.h>
+> +
+> +static int get_addr_size_cells(int *addr_cells, int *size_cells)
+> +{
+> +       struct device_node *root;
+> +
+> +       root =3D of_find_node_by_path("/");
+> +       if (!root)
+> +               return -EINVAL;
+> +
+> +       *addr_cells =3D of_n_addr_cells(root);
+> +       *size_cells =3D of_n_size_cells(root);
+> +
+> +       of_node_put(root);
+> +
+> +       return 0;
+> +}
+> +
+> +static int do_get_kexec_buffer(const void *prop, int len, unsigned long =
+*addr,
+> +                              size_t *size)
+> +{
+> +
+> +       int ret, addr_cells, size_cells;
+> +
+> +       ret =3D get_addr_size_cells(&addr_cells, &size_cells);
+> +       if (ret)
+> +               return ret;
+> +
+> +       if (len < 4 * (addr_cells + size_cells))
+> +               return -ENOENT;
+> +
+> +       *addr =3D of_read_number(prop, addr_cells);
+> +       *size =3D of_read_number(prop + 4 * addr_cells, size_cells);
+> +
+> +       return 0;
+> +}
+> +
+> +/**
+> + * ima_get_kexec_buffer - get IMA buffer from the previous kernel
+> + * @addr:      On successful return, set to point to the buffer contents.
+> + * @size:      On successful return, set to the buffer size.
+> + *
+> + * Return: 0 on success, negative errno on error.
+> + */
+> +int ima_get_kexec_buffer(void **addr, size_t *size)
+> +{
+> +       int ret, len;
+> +       unsigned long tmp_addr;
+> +       size_t tmp_size;
+> +       const void *prop;
+> +
+> +       prop =3D of_get_property(of_chosen, FDT_PROP_KEXEC_BUFFER, &len);
+> +       if (!prop)
+> +               return -ENOENT;
+> +
+> +       ret =3D do_get_kexec_buffer(prop, len, &tmp_addr, &tmp_size);
+> +       if (ret)
+> +               return ret;
+> +
+> +       *addr =3D __va(tmp_addr);
+> +       *size =3D tmp_size;
+> +       return 0;
+> +}
+> +
+> +/**
+> + * ima_free_kexec_buffer - free memory used by the IMA buffer
+> + */
+> +int ima_free_kexec_buffer(void)
+> +{
+> +       int ret;
+> +       unsigned long addr;
+> +       size_t size;
+> +       struct property *prop;
+> +
+> +       prop =3D of_find_property(of_chosen, FDT_PROP_KEXEC_BUFFER, NULL);
+> +       if (!prop)
+> +               return -ENOENT;
+> +
+> +       ret =3D do_get_kexec_buffer(prop->value, prop->length, &addr, &si=
+ze);
+> +       if (ret)
+> +               return ret;
+> +
+> +       ret =3D of_remove_property(of_chosen, prop);
+> +       if (ret)
+> +               return ret;
+> +
+> +       return memblock_free(addr, size);
+> +}
+> +
+> +#ifdef CONFIG_IMA
+> +/**
+> + * remove_ima_buffer - remove the IMA buffer property and reservation fr=
+om @fdt
+> + *
+> + * The IMA measurement buffer is of no use to a subsequent kernel, so we=
+ always
+> + * remove it from the device tree.
+> + */
+> +void remove_ima_buffer(void *fdt, int chosen_node)
+> +{
+> +       int ret, len;
+> +       unsigned long addr;
+> +       size_t size;
+> +       const void *prop;
+> +
+> +       prop =3D fdt_getprop(fdt, chosen_node, FDT_PROP_KEXEC_BUFFER, &le=
+n);
+> +       if (!prop)
+> +               return;
+> +
+> +       ret =3D do_get_kexec_buffer(prop, len, &addr, &size);
+> +       fdt_delprop(fdt, chosen_node, FDT_PROP_KEXEC_BUFFER);
+> +       if (ret)
+> +               return;
+> +
+> +       ret =3D delete_fdt_mem_rsv(fdt, addr, size);
+> +       if (!ret)
+> +               pr_debug("Removed old IMA buffer reservation.\n");
+> +}
+> +#endif /* CONFIG_IMA */
+> +
+> +#ifdef CONFIG_IMA_KEXEC
+> +/**
+> + * arch_ima_add_kexec_buffer - do arch-specific steps to add the IMA buf=
+fer
+> + *
+> + * Architectures should use this function to pass on the IMA buffer
+> + * information to the next kernel.
+> + *
+> + * Return: 0 on success, negative errno on error.
+> + */
+> +int arch_ima_add_kexec_buffer(struct kimage *image, unsigned long load_a=
+ddr,
+> +                             size_t size)
+> +{
+> +       image->arch.ima_buffer_addr =3D load_addr;
+> +       image->arch.ima_buffer_size =3D size;
+> +       return 0;
+> +}
+> +
+> +static int write_number(void *p, u64 value, int cells)
+
+Maybe this should be an of_write_number() API exposed by the DT parsing
+code?
+
+> +{
+> +       if (cells =3D=3D 1) {
+> +               u32 tmp;
+> +
+> +               if (value > U32_MAX)
+> +                       return -EINVAL;
+> +
+> +               tmp =3D cpu_to_be32(value);
+> +               memcpy(p, &tmp, sizeof(tmp));
+> +       } else if (cells =3D=3D 2) {
+> +               u64 tmp;
+> +
+> +               tmp =3D cpu_to_be64(value);
+> +               memcpy(p, &tmp, sizeof(tmp));
+> +       } else
+> +               return -EINVAL;
+
+Put braces around this else please.
+
+> +       return 0;
+> +}
+> +
+> +/**
+> + * setup_ima_buffer - add IMA buffer information to the fdt
+> + * @image:             kexec image being loaded.
+> + * @dtb:               Flattened device tree for the next kernel.
+> + * @chosen_node:       Offset to the chosen node.
+
+Why capitalize Flattened and Offset?
+
+> + *
+> + * Return: 0 on success, or negative errno on error.
+> + */
+> +int setup_ima_buffer(const struct kimage *image, void *dtb, int chosen_n=
+ode)
+> +{
+> +       int ret, addr_cells, size_cells, entry_size;
+> +       u8 value[16];
+> +
+> +       remove_ima_buffer(dtb, chosen_node);
+> +
+> +       ret =3D get_addr_size_cells(&addr_cells, &size_cells);
+> +       if (ret)
+> +               return ret;
+> +
+> +       entry_size =3D 4 * (addr_cells + size_cells);
+> +
+> +       if (entry_size > sizeof(value))
+> +               return -EINVAL;
+> +
+> +       ret =3D write_number(value, image->arch.ima_buffer_addr, addr_cel=
+ls);
+> +       if (ret)
+> +               return ret;
+> +
+> +       ret =3D write_number(value + 4 * addr_cells, image->arch.ima_buff=
+er_size,
+> +                       size_cells);
+> +       if (ret)
+> +               return ret;
+> +
+> +       ret =3D fdt_setprop(dtb, chosen_node, FDT_PROP_KEXEC_BUFFER, valu=
+e,
+> +                         entry_size);
+> +       if (ret < 0)
+> +               return -EINVAL;
+> +
+> +       ret =3D fdt_add_mem_rsv(dtb, image->segment[0].mem,
+> +                             image->segment[0].memsz);
+> +       if (ret)
+> +               return -EINVAL;
+> +
+> +       return 0;
+> +}
+> +#endif /* CONFIG_IMA_KEXEC */
+> diff --git a/arch/arm64/kernel/machine_kexec_file.c b/arch/arm64/kernel/m=
+achine_kexec_file.c
+> index 58871333737a..c05ad6b74b62 100644
+> --- a/arch/arm64/kernel/machine_kexec_file.c
+> +++ b/arch/arm64/kernel/machine_kexec_file.c
+> @@ -21,6 +21,7 @@
+>  #include <linux/types.h>
+>  #include <linux/vmalloc.h>
+>  #include <asm/byteorder.h>
+> +#include <asm/ima.h>
+> =20
+>  /* relevant device tree properties */
+>  #define FDT_PROP_INITRD_START  "linux,initrd-start"
+> @@ -85,6 +86,11 @@ static int setup_dtb(struct kimage *image,
+>                         goto out;
+>         }
+> =20
+> +       /* add ima_buffer */
+> +       ret =3D setup_ima_buffer(image, dtb, off);
+> +       if (ret)
+> +               goto out;
+> +
+>         /* add kaslr-seed */
+>         ret =3D fdt_delprop(dtb, off, FDT_PROP_KASLR_SEED);
+>         if  (ret =3D=3D -FDT_ERR_NOTFOUND)
+> @@ -114,6 +120,39 @@ static int setup_dtb(struct kimage *image,
+>   */
+>  #define DTB_EXTRA_SPACE 0x1000
+> =20
+> +
+> +/**
+> + * delete_fdt_mem_rsv - delete memory reservation with given address and=
+ size
+> + *
+
+Can you document the arguments too?
+
+> + * Return: 0 on success, or negative errno on error.
+> + */
+> +int delete_fdt_mem_rsv(void *fdt, unsigned long start, unsigned long siz=
+e)
+> +{
+> +       int i, ret, num_rsvs =3D fdt_num_mem_rsv(fdt);
+> +
+> +       for (i =3D 0; i < num_rsvs; i++) {
+> +               uint64_t rsv_start, rsv_size;
+> +
+> +               ret =3D fdt_get_mem_rsv(fdt, i, &rsv_start, &rsv_size);
+> +               if (ret) {
+> +                       pr_err("Malformed device tree.\n");
+
+Please drop the full-stop on this printk.
+
+> +                       return -EINVAL;
+> +               }
+> +
+> +               if (rsv_start =3D=3D start && rsv_size =3D=3D size) {
+> +                       ret =3D fdt_del_mem_rsv(fdt, i);
+> +                       if (ret) {
+> +                               pr_err("Error deleting device tree reserv=
+ation.\n");
+
+Same comment.
+
+> +                               return -EINVAL;
+> +                       }
+> +
+> +                       return 0;
+> +               }
+> +       }
+> +
+> +       return -ENOENT;
+> +}
+
+A lot of this code looks DT generic. Can it be moved out of the arch
+layer to drivers/of/?
 
