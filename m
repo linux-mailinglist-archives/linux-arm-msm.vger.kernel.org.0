@@ -2,27 +2,42 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 229DBA4393
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 31 Aug 2019 11:16:25 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C004DA452B
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 31 Aug 2019 17:54:25 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726143AbfHaJQY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 31 Aug 2019 05:16:24 -0400
-Received: from mout.web.de ([212.227.15.3]:54289 "EHLO mout.web.de"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726062AbfHaJQY (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 31 Aug 2019 05:16:24 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
-        s=dbaedf251592; t=1567242926;
-        bh=W42yxbYmQCv9tl6YPZs0YFC5fDpZrDuUEO40d5+J5IY=;
-        h=X-UI-Sender-Class:To:Cc:References:Subject:From:Date:In-Reply-To;
-        b=Rb418DWmi/RVbd8sECvNY7M6am3zzXtvu6Z8MKvDEcaqy80J5NzEeIsZquRc+o3+K
-         RcMPUbulCWil2CYSmPwWqfOWbsvJq8lYGIRKuYobskoTbIVH51G/a5nLZzGK7B0dUo
-         Ub/VAcIMteSPNk9yZ43wLPYl/AxtOIz+Ty7w1ZYE=
-X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
-Received: from [192.168.1.2] ([93.132.129.60]) by smtp.web.de (mrweb001
- [213.165.67.108]) with ESMTPSA (Nemesis) id 0MXHt7-1hjODj0cab-00WIUk; Sat, 31
- Aug 2019 11:15:26 +0200
-To:     Denis Efremov <efremov@linux.com>, Joe Perches <joe@perches.com>
+        id S1728205AbfHaPyR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 31 Aug 2019 11:54:17 -0400
+Received: from mail-ed1-f65.google.com ([209.85.208.65]:43877 "EHLO
+        mail-ed1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726354AbfHaPyR (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Sat, 31 Aug 2019 11:54:17 -0400
+Received: by mail-ed1-f65.google.com with SMTP id w9so1119664edx.10;
+        Sat, 31 Aug 2019 08:54:15 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=AKTao77VaiaPvCbgcc+WiGV1j5w0joNictAVXbGzljc=;
+        b=R4ajDoerMmlECDnQkX99vdNxtcR7cn6zLBKaPiFd6KZCnw06bAe2VDoJ4ArsCyWk8P
+         ZiK8Hbj5v+VF8dctBSwc37WbM8TW8+jThDbNmkiugCVGo3CmL+l8w86zBCAAb5FR60dv
+         VCUMZAudSxbMEMK/JquwOlQE/j7S2pRAcIYJ45HoQcc0E2HiHKnIUKgqmr9O8gg8lR3x
+         ZtVLcXoKlZ1dRPzDopAYXdOb7hi/FOBA+5cMo0Jej3+ZgpMQQV3PMwlfKCyKIG4eLgte
+         VD5WDiaMoCrWLwh8kCl8JGBifF0zOkAZ8crgWekjX0pWD1qDYnKj6v0+1tjW2fBHc3Ud
+         31QQ==
+X-Gm-Message-State: APjAAAVv2B3RSpB1gxtnN1XWEGmKpnQvo63WK5qoxTkrWaxACy3R59Cm
+        5rc35+qpVErn8HRiim3fTKA=
+X-Google-Smtp-Source: APXvYqyUxiSvMtW/KeHJ5cA0AWsETqOjW7ApTaHBEHBAazWa/5cJ0LHfDHET8v0+ffDbuRqUR6oAiw==
+X-Received: by 2002:a05:6402:154e:: with SMTP id p14mr21582628edx.101.1567266854794;
+        Sat, 31 Aug 2019 08:54:14 -0700 (PDT)
+Received: from [10.68.32.192] (broadband-188-32-48-208.ip.moscow.rt.ru. [188.32.48.208])
+        by smtp.gmail.com with ESMTPSA id i19sm1234644ejf.7.2019.08.31.08.54.12
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sat, 31 Aug 2019 08:54:14 -0700 (PDT)
+Subject: Re: [PATCH v3 01/11] checkpatch: check for nested (un)?likely() calls
+To:     Markus Elfring <Markus.Elfring@web.de>,
+        Joe Perches <joe@perches.com>
 Cc:     Andrew Morton <akpm@linux-foundation.org>,
         Anton Altaparmakov <anton@tuxera.com>,
         Andy Whitcroft <apw@canonical.com>,
@@ -49,53 +64,40 @@ Cc:     Andrew Morton <akpm@linux-foundation.org>,
         Alexander Viro <viro@zeniv.linux.org.uk>,
         xen-devel@lists.xenproject.org, Enrico Weigelt <lkml@metux.net>
 References: <20190829165025.15750-1-efremov@linux.com>
-Subject: Re: [PATCH v3 01/11] checkpatch: check for nested (un)?likely() calls
-From:   Markus Elfring <Markus.Elfring@web.de>
-Message-ID: <0d9345ed-f16a-de0b-6125-1f663765eb46@web.de>
-Date:   Sat, 31 Aug 2019 11:15:20 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.0
+ <0d9345ed-f16a-de0b-6125-1f663765eb46@web.de>
+From:   Denis Efremov <efremov@linux.com>
+Message-ID: <689c8baf-2298-f086-3461-5cd1cdd191c6@linux.com>
+Date:   Sat, 31 Aug 2019 18:54:12 +0300
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+ Thunderbird/60.8.0
 MIME-Version: 1.0
-In-Reply-To: <20190829165025.15750-1-efremov@linux.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
+In-Reply-To: <0d9345ed-f16a-de0b-6125-1f663765eb46@web.de>
+Content-Type: text/plain; charset=utf-8
 Content-Language: en-US
-Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:qKSdXHHLYLKjlRCvxxm0CG4/ObWxvY7GHVNBMu8mxxGycRrayx8
- 4PbzO2dvqjNnF+AFg4bA1W4zmeQSpNZ7vt9DbPnL5lk34WKJYWD9NUPM0PlrCLMjYkm1F6U
- BXfMva6PP5qxs+6jegtT9nR1r+jzSjNeTTC2AqMHglXEtSWbQLq9Fa4eMsUVMGo2eepnDXr
- VwnOxGgwPijQTQTX/f+uw==
-X-Spam-Flag: NO
-X-UI-Out-Filterresults: notjunk:1;V03:K0:nkNVUAuCw5k=:pAP5U5L7C1x2boPp1IRXmn
- D13IzlXT/kI0Odb0OEskHBv1fRCMj7J727enJOB+vAgZd2n6ZXAAaWlSqHLVcohKzncPx6QpO
- Jkkz3w/W/rmQNzfpoIhIUW3Uccf/fl14QBw5X5i4PyFGDK9jzI0Phtg8JML9FgdHalKCIpNWP
- o213QJNReSqJUzIClMxbcGq2voyTmxMmGEwBIXqC58OGwigFy7zuu2Fy5ondTj8F6i3gbb38h
- c6JrfIYpAxvFnO9nRMcO25oqflwZdAfHvFzJ2iu+3r8XsTgWukdxyVbMiL8ftz50QxC2DJqzq
- Ayqcpn0a9Y7cTytKg/qxVHdxdOIF48+PWbHaSEgzP4SLLOPElveDdWhJEc0vM5xdTU1Dqb7hM
- NcCaA0zHOKUIDqcYJ6jN44G6CZgVS/MFofCq8QcCo4GFiBNWMHS4cmZtOpUQJMXQuRbrwvm5s
- QLUFHQhzpAX2K0Aj8VIVILu1mHvF1oeAJg0lG6KqkOeZEm+Unicxfz9HErsixNGFodYh0D3/K
- Pus4ocado7zBlJoZThrgPZ8TvIHn8mX0WI7LW+JhXvD1rFkJmT4VMVuezkSvp3NJ9GaBnkiEN
- 2DsKyjBxY/6mcp9cg5MLZTh0zU4f7ZpgvIRT7mBBrJ5TGKKmZLH7U/Z5qQmwJz28iIVaVlH4p
- wK8w2niZej5noXMTOemcJJnIR+evko7BhWXbZHiUAALjl38emkz357bvLjEkVGm7h8qIAQyjv
- 9Ffe8YuiaY+tWayyEFK6qfYIHwGdEZNrYmIuX9tupSwJCJ8bCFsx9n7SNCZvSRm61MjQsWB76
- icYRtytGOYmCsolycXG6KEM734RMbdaPv2pCjSKPk80uNsPY10n0pxzKUpdSnG1O5lboelK/K
- +pQTb7oUbCkyxCvKMOBAo+HHvPT1QQcSGkQreepWbCChdY7O5TxdjvwnEYYPBYSyBIKA4j2t6
- gmzI4FQ5Tbv5lKlap9HBlQSeD5ynZnaeINJfHFu/XpQei9uMkeptC8IYqtcno5/KHj4gVLoN6
- dvIF455p6LB73n4l5ci1UNJB4L7BiFhMmqFWnfszzCVLZrOOA94053rwKZECu2B8PgnRB8RwQ
- RHR8X1QZRRFkw/YnadMqgavlvTg6QJ2wAh3pxzJ+iXjpxC1IgfnMhR3w1p3UqTC4whz3ngKbv
- qqUbKY+8ilN57KkwviQJZULRks7t3CtGMgptQJeouQnu6rZg==
+Content-Transfer-Encoding: 8bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-> +# nested likely/unlikely calls
-> +		if ($line =3D~ /\b(?:(?:un)?likely)\s*\(\s*!?\s*(IS_ERR(?:_OR_NULL|_V=
-ALUE)?|WARN)/) {
-> +			WARN("LIKELY_MISUSE",
 
-How do you think about to use the specification =E2=80=9C(?:IS_ERR(?:_(?:O=
-R_NULL|VALUE))?|WARN)=E2=80=9D
-in this regular expression?
+
+On 31.08.2019 12:15, Markus Elfring wrote:
+>> +# nested likely/unlikely calls
+>> +        if ($line =~ /\b(?:(?:un)?likely)\s*\(\s*!?\s*(IS_ERR(?:_OR_NULL|_VALUE)?|WARN)/) {
+>> +            WARN("LIKELY_MISUSE",
+> 
+> How do you think about to use the specification “(?:IS_ERR(?:_(?:OR_NULL|VALUE))?|WARN)”
+> in this regular expression?
+
+Hmm, 
+(?:   <- Catch group is required here, since it is used in diagnostic message,
+         see $1
+   IS_ERR
+   (?:_ <- Another atomic group just to show that '_' is a common prefix?
+           I'm not sure about this. Usually, Perl interpreter is very good at optimizing such things.
+           You could see this optimization if you run perl with -Mre=debug.
+     (?:OR_NULL|VALUE))?|WARN)
 
 Regards,
-Markus
+Denis
