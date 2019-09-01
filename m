@@ -2,91 +2,64 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 9A4E2A4C49
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  1 Sep 2019 23:30:54 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 53A93A4C55
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  1 Sep 2019 23:40:48 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728891AbfIAVax (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 1 Sep 2019 17:30:53 -0400
-Received: from onstation.org ([52.200.56.107]:48100 "EHLO onstation.org"
+        id S1728879AbfIAVkr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 1 Sep 2019 17:40:47 -0400
+Received: from onstation.org ([52.200.56.107]:48144 "EHLO onstation.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1728773AbfIAVax (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 1 Sep 2019 17:30:53 -0400
-Received: from localhost.localdomain (c-98-239-145-235.hsd1.wv.comcast.net [98.239.145.235])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits))
+        id S1728739AbfIAVkr (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Sun, 1 Sep 2019 17:40:47 -0400
+Received: from localhost (c-98-239-145-235.hsd1.wv.comcast.net [98.239.145.235])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
         (Authenticated sender: masneyb)
-        by onstation.org (Postfix) with ESMTPSA id 78BEA3E993;
-        Sun,  1 Sep 2019 21:30:52 +0000 (UTC)
+        by onstation.org (Postfix) with ESMTPSA id 00BAB3E993;
+        Sun,  1 Sep 2019 21:40:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=onstation.org;
-        s=default; t=1567373452;
-        bh=Zamozm0CnNg3m9y2HsnLTS1dXVZIfN56PD4UedvYoz0=;
-        h=From:To:Cc:Subject:Date:From;
-        b=MY7eT/Sw7QTSp8Ub9ouPBLRLKMK4EDxpfb/wOds4fJogOnuNENG7xFfcDOYkKOeoX
-         35sXYnZQ0dfCxCd3AiY2uF3vYi3epuB+4rdIJqAc4WlZwHBPeUt0ZZ++XFU7ieAmZq
-         BnbsFScUwPYY7LCk4V/ydR90ErsDmUSrJ0H5IicE=
+        s=default; t=1567374046;
+        bh=yFlCHaBNAh10QurQOZiU1mvxCHhFWTKUbESMNHsI3oM=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=XMa2krbQak5fj5lyPbJuEKxTSFxIEGMzFR6NbZINT4gbbsTd2Qq1G2J1kUB++owJO
+         Sb4idiBvJ08LgumuEeD+bA0zz9/R9n+pypLtqswcMqM0IjMa9MEnRiNI57ldFSPFsC
+         4X0cl5mvKy9evzvJ7T1i/DrrnPW6f5aiCI50bxNo=
+Date:   Sun, 1 Sep 2019 17:40:45 -0400
 From:   Brian Masney <masneyb@onstation.org>
-To:     robdclark@gmail.com, agross@kernel.org, bjorn.andersson@linaro.org
-Cc:     linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        kbuild test robot <lkp@intel.com>
-Subject: [PATCH] soc: qcom: ocmem: add missing includes
-Date:   Sun,  1 Sep 2019 17:30:37 -0400
-Message-Id: <20190901213037.25889-1-masneyb@onstation.org>
-X-Mailer: git-send-email 2.21.0
+To:     robdclark@gmail.com, sean@poorly.run, bjorn.andersson@linaro.org
+Cc:     agross@kernel.org, robh+dt@kernel.org, airlied@linux.ie,
+        daniel@ffwll.ch, mark.rutland@arm.com, jonathan@marek.ca,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
+        devicetree@vger.kernel.org, jcrouse@codeaurora.org
+Subject: Re: [PATCH v7 0/7] qcom: add OCMEM support
+Message-ID: <20190901214045.GA14321@onstation.org>
+References: <20190823121637.5861-1-masneyb@onstation.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20190823121637.5861-1-masneyb@onstation.org>
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The kbuild bot reported the following compiler errors when compiling on
-MIPS with CONFIG_QCOM_OCMEM disabled:
+Hi Rob C / Sean P,
 
-  In file included from <command-line>:0:0:
-  >> include/soc/qcom/ocmem.h:43:49: warning: 'struct device' declared
-     inside parameter list will not be visible outside of this
-     definition or declaration
-      static inline struct ocmem *of_get_ocmem(struct device *dev)
-                                                      ^~~~~~
-     include/soc/qcom/ocmem.h: In function 'of_get_ocmem':
-  >> include/soc/qcom/ocmem.h:45:9: error: implicit declaration of
-     function 'ERR_PTR' [-Werror=implicit-function-declaration]
-       return ERR_PTR(-ENODEV);
-              ^~~~~~~
-  >> include/soc/qcom/ocmem.h:45:18: error: 'ENODEV' undeclared (first
-     use in this function)
-       return ERR_PTR(-ENODEV);
+On Fri, Aug 23, 2019 at 05:16:30AM -0700, Brian Masney wrote:
+> This patch series adds support for Qualcomm's On Chip MEMory (OCMEM)
+> that is needed in order to support some a3xx and a4xx-based GPUs
+> upstream. This is based on Rob Clark's patch series that he submitted
+> in October 2015 and I am resubmitting updated patches with his
+> permission. See the individual patches for the changelog.
 
-Add the proper includes to fix the compiler errors.
+I talked to Bjorn in person at the Embedded Linux Conference over a
+week ago about this series. He thinks that this series should go through
+your tree. I assume it's too late for the upcoming merge window, which
+is fine. I just want to make sure that this series gets picked up for
+the following merge window.
 
-Signed-off-by: Brian Masney <masneyb@onstation.org>
-Reported-by: kbuild test robot <lkp@intel.com>
----
-My OCMEM series [1] hasn't landed upstream yet so let me know if you
-want me to squash this into the existing patch set. I made this a
-separate patch so that the Reported-by could be included. The kbuild
-report is at [2].
+I just sent out a fix for a compiler error on MIPS as a separate patch:
+https://lore.kernel.org/lkml/20190901213037.25889-1-masneyb@onstation.org/
 
-[1] https://lore.kernel.org/lkml/20190823121637.5861-1-masneyb@onstation.org/
-[2] https://lists.01.org/pipermail/kbuild-all/2019-August/063530.html
-
- include/soc/qcom/ocmem.h | 3 +++
- 1 file changed, 3 insertions(+)
-
-diff --git a/include/soc/qcom/ocmem.h b/include/soc/qcom/ocmem.h
-index a0ae336ba78b..02a8bc2677b1 100644
---- a/include/soc/qcom/ocmem.h
-+++ b/include/soc/qcom/ocmem.h
-@@ -9,6 +9,9 @@
-  * Copyright (C) 2015 Red Hat. Author: Rob Clark <robdclark@gmail.com>
-  */
- 
-+#include <linux/device.h>
-+#include <linux/err.h>
-+
- #ifndef __OCMEM_H__
- #define __OCMEM_H__
- 
--- 
-2.21.0
-
+Brian
