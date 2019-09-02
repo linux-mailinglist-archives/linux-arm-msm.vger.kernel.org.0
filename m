@@ -2,64 +2,64 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 5FC97A5A49
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  2 Sep 2019 17:14:43 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0997AA5D6E
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  2 Sep 2019 23:19:40 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729707AbfIBPOm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 2 Sep 2019 11:14:42 -0400
-Received: from metis.ext.pengutronix.de ([85.220.165.71]:36907 "EHLO
-        metis.ext.pengutronix.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726449AbfIBPOm (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 2 Sep 2019 11:14:42 -0400
-Received: from lupine.hi.pengutronix.de ([2001:67c:670:100:3ad5:47ff:feaf:1a17] helo=lupine)
-        by metis.ext.pengutronix.de with esmtp (Exim 4.92)
-        (envelope-from <p.zabel@pengutronix.de>)
-        id 1i4o2O-0004um-Kc; Mon, 02 Sep 2019 17:14:36 +0200
-Message-ID: <1567437274.3666.9.camel@pengutronix.de>
-Subject: Re: [PATCH v3 2/2] dt-bindings: reset: pdc: Convert PDC Global
- bindings to yaml
-From:   Philipp Zabel <p.zabel@pengutronix.de>
-To:     Rob Herring <robh@kernel.org>, Sibi Sankar <sibis@codeaurora.org>
-Cc:     robh+dt@kernel.org, bjorn.andersson@linaro.org, agross@kernel.org,
-        mark.rutland@arm.com, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        sboyd@kernel.org
-Date:   Mon, 02 Sep 2019 17:14:34 +0200
-In-Reply-To: <20190902150138.GA29400@bogus>
-References: <20190901174407.30756-1-sibis@codeaurora.org>
-         <20190901174407.30756-3-sibis@codeaurora.org>
-         <20190902150138.GA29400@bogus>
-Content-Type: text/plain; charset="UTF-8"
-X-Mailer: Evolution 3.22.6-1+deb9u2 
-Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
-X-SA-Exim-Connect-IP: 2001:67c:670:100:3ad5:47ff:feaf:1a17
-X-SA-Exim-Mail-From: p.zabel@pengutronix.de
-X-SA-Exim-Scanned: No (on metis.ext.pengutronix.de); SAEximRunCond expanded to false
-X-PTX-Original-Recipient: linux-arm-msm@vger.kernel.org
+        id S1727384AbfIBVTj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 2 Sep 2019 17:19:39 -0400
+Received: from onstation.org ([52.200.56.107]:51240 "EHLO onstation.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726860AbfIBVTi (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 2 Sep 2019 17:19:38 -0400
+Received: from localhost.localdomain (c-98-239-145-235.hsd1.wv.comcast.net [98.239.145.235])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits))
+        (No client certificate requested)
+        (Authenticated sender: masneyb)
+        by onstation.org (Postfix) with ESMTPSA id 08CEF3E993;
+        Mon,  2 Sep 2019 21:19:37 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=onstation.org;
+        s=default; t=1567459178;
+        bh=bIb25bI6AK5yndv+YyL9u3f0a+M90BALHovQZTHTWBc=;
+        h=From:To:Cc:Subject:Date:From;
+        b=XXemhwxfXwCS+j40ANEYmNnWWJ8Dkcnad071I5isqDWZIWhEfCtQ2EmdK6XRkjC31
+         AGRZGVpfp/8/wXjB8HkRnnuky2hIUN68dybjIWrb7TpzPQkXZWm/egR+bWs5HhAW7k
+         oJK2IqPu2wHgtwCpgq2V/UPg5Xonm9dbnPVKPq3s=
+From:   Brian Masney <masneyb@onstation.org>
+To:     georgi.djakov@linaro.org, bjorn.andersson@linaro.org
+Cc:     linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: [PATCH RFC 0/2] interconnect: qcom: add msm8974 driver
+Date:   Mon,  2 Sep 2019 17:19:23 -0400
+Message-Id: <20190902211925.27169-1-masneyb@onstation.org>
+X-Mailer: git-send-email 2.21.0
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, 2019-09-02 at 16:01 +0100, Rob Herring wrote:
-> On Sun,  1 Sep 2019 23:14:07 +0530, Sibi Sankar wrote:
-> > Convert PDC Global bindings to yaml and add SC7180 PDC global to the list
-> > of possible bindings.
-> > 
-> > Signed-off-by: Sibi Sankar <sibis@codeaurora.org>
-> > ---
-> >  .../bindings/reset/qcom,pdc-global.txt        | 52 -------------------
-> >  .../bindings/reset/qcom,pdc-global.yaml       | 47 +++++++++++++++++
-> >  2 files changed, 47 insertions(+), 52 deletions(-)
-> >  delete mode 100644 Documentation/devicetree/bindings/reset/qcom,pdc-global.txt
-> >  create mode 100644 Documentation/devicetree/bindings/reset/qcom,pdc-global.yaml
-> > 
-> 
-> Reviewed-by: Rob Herring <robh@kernel.org>
+Here's a patch series that adds interconnect support for the Qualcomm
+MSM8974, which is needed so that the GPU can be supported upstream. I'm
+having an issue with getting this to work fully and included a detailed
+write up in patch 2 with what I'm seeing. I think I am close to
+getting this working fully and would appreciate any feedback on this
+series.
 
-Thank you, both applied to reset/next.
+Brian Masney (2):
+  dt-bindings: interconnect: qcom: add msm8974 bindings
+  interconnect: qcom: add msm8974 driver
 
-regards
-Philipp
+ .../bindings/interconnect/qcom,msm8974.yaml   | 163 ++++
+ drivers/interconnect/qcom/Kconfig             |   9 +
+ drivers/interconnect/qcom/Makefile            |   2 +
+ drivers/interconnect/qcom/msm8974.c           | 793 ++++++++++++++++++
+ .../dt-bindings/interconnect/qcom,msm8974.h   | 146 ++++
+ 5 files changed, 1113 insertions(+)
+ create mode 100644 Documentation/devicetree/bindings/interconnect/qcom,msm8974.yaml
+ create mode 100644 drivers/interconnect/qcom/msm8974.c
+ create mode 100644 include/dt-bindings/interconnect/qcom,msm8974.h
+
+-- 
+2.21.0
+
