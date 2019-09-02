@@ -2,39 +2,39 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 1AAF2A59F8
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  2 Sep 2019 17:00:00 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id CA48AA5A07
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  2 Sep 2019 17:03:03 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730559AbfIBO77 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 2 Sep 2019 10:59:59 -0400
-Received: from mail-wm1-f68.google.com ([209.85.128.68]:50564 "EHLO
-        mail-wm1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726447AbfIBO77 (ORCPT
+        id S1731525AbfIBPBl (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 2 Sep 2019 11:01:41 -0400
+Received: from mail-wr1-f66.google.com ([209.85.221.66]:41239 "EHLO
+        mail-wr1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1730234AbfIBPBl (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 2 Sep 2019 10:59:59 -0400
-Received: by mail-wm1-f68.google.com with SMTP id c10so3024035wmc.0;
-        Mon, 02 Sep 2019 07:59:57 -0700 (PDT)
+        Mon, 2 Sep 2019 11:01:41 -0400
+Received: by mail-wr1-f66.google.com with SMTP id j16so14338872wrr.8;
+        Mon, 02 Sep 2019 08:01:39 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=PveZWoSRg0Xj/8f3NgdMzEIMdyiWS2QP4VpEM/S33uM=;
-        b=NwFMCVMTwMRdMd67UD1SptubFtezmt620SNu5sOH71UqXs8mHkL3kR5o2ihbp9kpMl
-         FZL4wM+u8kBV6ZgQmAtTViU5uyE/r4SXeNOHcDxCHMCa+7iPIOgk1BdsJ5rqAlaAdW+E
-         dFQ5CCHuV6+xtv+fv84UHp8H6yz69lgFyggcfgXjO+ed+DLcKMpJ3JV95K/MtHDojOZ+
-         cTVqE3TVqow3afUUC6tBLOMFifZ9pBWBGVlZyxmS1Z1rXmmCOEbHeXjdhki3hAnvKtbd
-         SmoPSYtUvzrqDrrMLt2/lsX72IqCVSxH0yJa4xkfQXAbm94C2Iyebea6ZDNY61EwTAIr
-         mP9A==
-X-Gm-Message-State: APjAAAWGQHgdiQusz4lNGty4YCzy9odj9COLUPN1mOcllGraBCAQ6s7u
-        Qj9s1vnpr5aGlQJ7kOiu+w==
-X-Google-Smtp-Source: APXvYqzLMm9WsEO6fsNR/ncTXTXoXpnyrftH4TyDW+mSprCv/cJKvWN/o8bsNiuCBuDlvEb5kvNmXA==
-X-Received: by 2002:a7b:c752:: with SMTP id w18mr4816777wmk.63.1567436396991;
-        Mon, 02 Sep 2019 07:59:56 -0700 (PDT)
+        bh=a3oWhnhg13aJExvjQfF8EoIHkTAHlX+PBj9hz38tCtY=;
+        b=tPGVA8Ay0dShBlRnxkrSWejchr1FHf6gU7v0KWRctsaEPR8xHk/o9xz0n/1QoSMLLy
+         CxVF3X2C7J63T32m22pRF9b/Kn3meFk0TvnpDEZBdTbebNThrEYO03Fala1IfCuXTpRs
+         ztLwvwxTFcNKb1y0WrHBsLPc82e48WgHk9hAOkLEawQKjR8qsLxZbI1ewOsy3v8xoWCe
+         HwtcFAsueXB6ZNEYFnANVnVTvBQWPpRHZnt1XPL8gIuZiyQDXJlqcnGVB0OQqZ/Kixqz
+         Gil/YY1FfASwcpVyh+n0smKcXa9PjruFMzK5PCo9EnTi6cXgCiKXHj1kDhVtn6LDNQXM
+         7q/w==
+X-Gm-Message-State: APjAAAWCw6qsK9Hxt2Nd/PiHK3sn4FZPKlns6SYrm8Eoza2IGzoMIeIo
+        3V99ALPyQHPPia6ZE0OPFkhNfoLneQ==
+X-Google-Smtp-Source: APXvYqyHCLpuFYf/DuF5rPmKMo1G2lITnST9aS3nNHF5oBnRZQWtnRxqV3jH0WevnpRW3xJO1d3/zg==
+X-Received: by 2002:adf:cd02:: with SMTP id w2mr18589959wrm.327.1567436499227;
+        Mon, 02 Sep 2019 08:01:39 -0700 (PDT)
 Received: from localhost ([212.187.182.166])
-        by smtp.gmail.com with ESMTPSA id z21sm3189944wmf.30.2019.09.02.07.59.55
+        by smtp.gmail.com with ESMTPSA id c1sm11768541wmk.20.2019.09.02.08.01.38
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 02 Sep 2019 07:59:56 -0700 (PDT)
-Date:   Mon, 2 Sep 2019 15:59:55 +0100
+        Mon, 02 Sep 2019 08:01:38 -0700 (PDT)
+Date:   Mon, 2 Sep 2019 16:01:38 +0100
 From:   Rob Herring <robh@kernel.org>
 To:     Sibi Sankar <sibis@codeaurora.org>
 Cc:     p.zabel@pengutronix.de, robh+dt@kernel.org,
@@ -42,32 +42,32 @@ Cc:     p.zabel@pengutronix.de, robh+dt@kernel.org,
         mark.rutland@arm.com, linux-arm-msm@vger.kernel.org,
         devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
         sboyd@kernel.org, Sibi Sankar <sibis@codeaurora.org>
-Subject: Re: [PATCH v3 1/2] dt-bindings: reset: aoss: Convert AOSS reset
+Subject: Re: [PATCH v3 2/2] dt-bindings: reset: pdc: Convert PDC Global
  bindings to yaml
-Message-ID: <20190902145955.GA26470@bogus>
+Message-ID: <20190902150138.GA29400@bogus>
 References: <20190901174407.30756-1-sibis@codeaurora.org>
- <20190901174407.30756-2-sibis@codeaurora.org>
+ <20190901174407.30756-3-sibis@codeaurora.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20190901174407.30756-2-sibis@codeaurora.org>
+In-Reply-To: <20190901174407.30756-3-sibis@codeaurora.org>
 User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Sun,  1 Sep 2019 23:14:06 +0530, Sibi Sankar wrote:
-> Convert AOSS reset bindings to yaml and add SC7180 AOSS reset to the list
+On Sun,  1 Sep 2019 23:14:07 +0530, Sibi Sankar wrote:
+> Convert PDC Global bindings to yaml and add SC7180 PDC global to the list
 > of possible bindings.
 > 
 > Signed-off-by: Sibi Sankar <sibis@codeaurora.org>
 > ---
->  .../bindings/reset/qcom,aoss-reset.txt        | 52 -------------------
->  .../bindings/reset/qcom,aoss-reset.yaml       | 47 +++++++++++++++++
+>  .../bindings/reset/qcom,pdc-global.txt        | 52 -------------------
+>  .../bindings/reset/qcom,pdc-global.yaml       | 47 +++++++++++++++++
 >  2 files changed, 47 insertions(+), 52 deletions(-)
->  delete mode 100644 Documentation/devicetree/bindings/reset/qcom,aoss-reset.txt
->  create mode 100644 Documentation/devicetree/bindings/reset/qcom,aoss-reset.yaml
+>  delete mode 100644 Documentation/devicetree/bindings/reset/qcom,pdc-global.txt
+>  create mode 100644 Documentation/devicetree/bindings/reset/qcom,pdc-global.yaml
 > 
 
 Reviewed-by: Rob Herring <robh@kernel.org>
