@@ -2,112 +2,134 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 05539A5100
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  2 Sep 2019 10:13:29 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C244AA5177
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  2 Sep 2019 10:21:25 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729797AbfIBIMJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 2 Sep 2019 04:12:09 -0400
-Received: from mail-wr1-f52.google.com ([209.85.221.52]:38347 "EHLO
-        mail-wr1-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729782AbfIBIMI (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 2 Sep 2019 04:12:08 -0400
-Received: by mail-wr1-f52.google.com with SMTP id l11so4173054wrx.5
-        for <linux-arm-msm@vger.kernel.org>; Mon, 02 Sep 2019 01:12:07 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to
-         :user-agent;
-        bh=+mMBfGfyBXwVzvFVVfcxlJch8FPILgIOjN0mMOx57to=;
-        b=H7zUbmDNXTLW3eCoCc7zvbS6pobtO0IYx8M00dTL91TOrBJAxIZGE809izxBaeL+mm
-         N6GD4bG5Wb9PmZoabAqTdoG0UkXlNDb3FPiRjZ6RW6PEPMZi5vdjl3kEnv4WOzu3KIon
-         1WhdOB4PnnWUDZzRiYUAY9X6L6OpOt7NCiI/00yuT3vq3kY7alMlGTEe3wggc8kQ7flz
-         DNWnyI5pZBGtGt50e8Ce2bVMNrRRvpNW4UC7XgY2VLbzYT5XPj2aR4F8JMEFDcadVuzW
-         5KL9Ch1ayCFK1x5GNp2TYuL21Ke1PgNHgiH6r7SNq107rj7B5mwxIPTAhZ36bTgrZ8ch
-         bldw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        bh=+mMBfGfyBXwVzvFVVfcxlJch8FPILgIOjN0mMOx57to=;
-        b=MHcxil8XvFsFiLnouT3tVQbkVYGTaERNrn3voLpN2MPhli8JV7RJV+XribZUABit/Q
-         +td6AO+8pZHQgkFDSCACjnVBs1VSx9nF3ZRz5njldlbUVixb54m8yRQPq/tK9EcOxBtL
-         siGse6xuKrvMNFuJHiHskHSTPk8MwQx3+qnUlUyyFDeO9PeNb/AQQREyMuSXecGePheN
-         mveUnuAdyTxnmN1tBhHNvLNUUmNoqDqFRxRbD/QKWVvR7VfGhOqPdKKIaekU8hkBjndk
-         BJfHZk9RW1iof8+wK55W2KXy1VzuE1Ql6WvDT34MX0LrULqgaUNzTe52xdbCAv94X/vX
-         AMHg==
-X-Gm-Message-State: APjAAAUFx9QA+cuhkycxjGGm68VjJH7wNUjh1i3Y5k6zBFH7+Iek1oW8
-        bTd5FkeYR3eQOpOfs8BjeOS8mA==
-X-Google-Smtp-Source: APXvYqywQPyDv6ILjrXdAZAqwfPFaMqdQX4RwwrHVYMZBXzIEVOOyD8h5ALQ0yiiYgcwLnlRdAAGoA==
-X-Received: by 2002:a5d:4fc4:: with SMTP id h4mr35018846wrw.64.1567411926634;
-        Mon, 02 Sep 2019 01:12:06 -0700 (PDT)
-Received: from dell ([95.147.198.93])
-        by smtp.gmail.com with ESMTPSA id n12sm19000149wmc.24.2019.09.02.01.12.05
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Mon, 02 Sep 2019 01:12:06 -0700 (PDT)
-Date:   Mon, 2 Sep 2019 09:12:04 +0100
-From:   Lee Jones <lee.jones@linaro.org>
-To:     "russianneuromancer@ya.ru" <russianneuromancer@ya.ru>
-Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Marc Gonzalez <marc.w.gonzalez@free.fr>,
-        SCSI <linux-scsi@vger.kernel.org>,
-        MSM <linux-arm-msm@vger.kernel.org>,
-        Avri Altman <avri.altman@wdc.com>,
-        Alim Akhtar <alim.akhtar@samsung.com>,
-        Ard Biesheuvel <ard.biesheuvel@linaro.org>,
-        Evan Green <evgreen@chromium.org>,
-        Douglas Anderson <dianders@chromium.org>,
-        Vivek Gautam <vivek.gautam@codeaurora.org>,
-        Stanley Chu <stanley.chu@mediatek.com>
-Subject: Re: ufshcd_abort: Device abort task at tag 7
-Message-ID: <20190902081204.GO4804@dell>
-References: <9f3ed253-5f6b-1893-531d-085f881956dd@free.fr>
- <20190828192031.GN6167@minitux>
- <9257741567170980@myt1-1e65ebab2412.qloud-c.yandex.net>
+        id S1729751AbfIBIVG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 2 Sep 2019 04:21:06 -0400
+Received: from foss.arm.com ([217.140.110.172]:50152 "EHLO foss.arm.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1729408AbfIBIVF (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 2 Sep 2019 04:21:05 -0400
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id A799028;
+        Mon,  2 Sep 2019 01:21:04 -0700 (PDT)
+Received: from [10.1.197.61] (usa-sjc-imap-foss1.foss.arm.com [10.121.207.14])
+        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 3032B3F71A;
+        Mon,  2 Sep 2019 01:21:03 -0700 (PDT)
+Subject: Re: [PATCH RFC 03/14] drivers: irqchip: add PDC irqdomain for wakeup
+ capable GPIOs
+To:     Lina Iyer <ilina@codeaurora.org>
+Cc:     swboyd@chromium.org, evgreen@chromium.org,
+        linus.walleij@linaro.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, bjorn.andersson@linaro.org,
+        mkshah@codeaurora.org, linux-gpio@vger.kernel.org,
+        rnayak@codeaurora.org
+References: <20190829181203.2660-1-ilina@codeaurora.org>
+ <20190829181203.2660-4-ilina@codeaurora.org>
+ <d2a45d45-3071-ab8d-060b-92a2812a8d42@kernel.org>
+ <20190830155853.GA5224@codeaurora.org>
+From:   Marc Zyngier <maz@kernel.org>
+Organization: Approximate
+Message-ID: <11d14b08-27ae-d25a-6056-55c1cfbd89b1@kernel.org>
+Date:   Mon, 2 Sep 2019 09:21:02 +0100
+User-Agent: Mozilla/5.0 (X11; Linux aarch64; rv:60.0) Gecko/20100101
+ Thunderbird/60.8.0
 MIME-Version: 1.0
+In-Reply-To: <20190830155853.GA5224@codeaurora.org>
 Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <9257741567170980@myt1-1e65ebab2412.qloud-c.yandex.net>
-User-Agent: Mutt/1.9.4 (2018-02-28)
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, 30 Aug 2019, russianneuromancer@ya.ru wrote:
+On 30/08/2019 16:58, Lina Iyer wrote:
+> On Fri, Aug 30 2019 at 08:50 -0600, Marc Zyngier wrote:
+>> [Please use my kernel.org address in the future. The days of this
+>> arm.com address are numbered...]
+>>
+> Sure, will update and repost.
+> 
+>> On 29/08/2019 19:11, Lina Iyer wrote:
+>>> Introduce a new domain for wakeup capable GPIOs. The domain can be
+>>> requested using the bus token DOMAIN_BUS_WAKEUP. In the following
+>>> patches, we will specify PDC as the wakeup-parent for the TLMM GPIO
+>>> irqchip. Requesting a wakeup GPIO will setup the GPIO and the
+>>> corresponding PDC interrupt as its parent.
+>>>
+>>> Co-developed-by: Stephen Boyd <swboyd@chromium.org>
+>>> Signed-off-by: Lina Iyer <ilina@codeaurora.org>
+>>> ---
+>>>  drivers/irqchip/qcom-pdc.c   | 104 ++++++++++++++++++++++++++++++++---
+>>>  include/linux/soc/qcom/irq.h |  34 ++++++++++++
+>>>  2 files changed, 129 insertions(+), 9 deletions(-)
+>>>  create mode 100644 include/linux/soc/qcom/irq.h
+>>>
 
-> Hello!
-> 
-> 
-> > I don't remember the exact splats seen, but I would suggest that this is
-> > retested after applying the following series:
-> >
-> > https://lore.kernel.org/linux-arm-msm/20190828191756.24312-1-bjorn.andersson@linaro.org/T/#u
-> 
-> Turns out this patches is already applied to kernel running on this device, but one line in dts was missing: 
-> 
-> https://github.com/aarch64-laptops/linux/pull/2
-> 
-> With this line issue is no longer reproducible with DT boot. Thank you!
-> 
-> As I understand it's planned to eventually boot this devices via ACPI. 
-> 
-> @Lee Jones, is my understanding correct?
+[...]
 
-No, not exactly.  We can boot these devices using ACPI, but with
-limited functionality (when compared with booting using DT).  There
-are too many black-boxes when booting with ACPI - something that can
-only be resolved with Qualcomm's help.
+>>> diff --git a/include/linux/soc/qcom/irq.h b/include/linux/soc/qcom/irq.h
+>>> new file mode 100644
+>>> index 000000000000..73239917dc38
+>>> --- /dev/null
+>>> +++ b/include/linux/soc/qcom/irq.h
+>>> @@ -0,0 +1,34 @@
+>>> +/* SPDX-License-Identifier: GPL-2.0-only */
+>>> +
+>>> +#ifndef __QCOM_IRQ_H
+>>> +#define __QCOM_IRQ_H
+>>> +
+>>> +#include <linux/irqdomain.h>
+>>> +
+>>> +#define GPIO_NO_WAKE_IRQ	~0U
+>>> +
+>>> +/**
+>>> + * QCOM specific IRQ domain flags that distinguishes the handling of wakeup
+>>> + * capable interrupts by different interrupt controllers.
+>>> + *
+>>> + * IRQ_DOMAIN_FLAG_QCOM_PDC_WAKEUP: Line must be masked at TLMM and the
+>>> + *                                  interrupt configuration is done at PDC
+>>> + * IRQ_DOMAIN_FLAG_QCOM_MPM_WAKEUP: Interrupt configuration is handled at TLMM
+>>> + */
+>>> +#define IRQ_DOMAIN_FLAG_QCOM_PDC_WAKEUP		(1 << 17)
+>>> +#define IRQ_DOMAIN_FLAG_QCOM_MPM_WAKEUP		(1 << 18)
+>>
+>> Any reason why you're starting at bit 17? The available range in from
+>> bit 16... But overall, it would be better if you expressed it as:
+>>
+>> #define IRQ_DOMAIN_FLAG_QCOM_PDC_WAKEUP	(IRQ_DOMAIN_FLAG_NONCORE << 0)
+>> #define IRQ_DOMAIN_FLAG_QCOM_MPM_WAKEUP (IRQ_DOMAIN_FLAG_NONCORE << 1)
+>>
+> Okay.
+> 
+>>> +
+>>> +/**
+>>> + * irq_domain_qcom_handle_wakeup: Return if the domain handles interrupt
+>>> + *                                configuration
+>>> + * @parent: irq domain
+>>> + *
+>>> + * This QCOM specific irq domain call returns if the interrupt controller
+>>> + * requires the interrupt be masked at the child interrupt controller.
+>>> + */
+>>> +static inline bool irq_domain_qcom_handle_wakeup(struct irq_domain *parent)
+>>> +{
+>>> +	return (parent->flags & IRQ_DOMAIN_FLAG_QCOM_PDC_WAKEUP);
+>>> +}
+>>> +
+>>> +#endif
+>>>
+>>
+>> But most of this file isn't used by this patch, so maybe it should be
+>> moved somewhere else...
+>>
+> Apart from creating the domain, this is not used here, but a separate
+> patch seemed excessive. Let me know if you have any suggestions.
 
-Booting with ACPI helps us to use generic Linux distribution
-installers, but it is expected for users to switch to DT once the OS
-is installed.
+My personal preference would be to move it into the patch that actually
+makes use of this.
 
+	M.
 -- 
-Lee Jones [李琼斯]
-Linaro Services Technical Lead
-Linaro.org │ Open source software for ARM SoCs
-Follow Linaro: Facebook | Twitter | Blog
+Jazz is not dead, it just smells funny...
