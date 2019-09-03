@@ -2,37 +2,36 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 7FFEEA6FD1
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  3 Sep 2019 18:35:29 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 77EA9A6F6E
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  3 Sep 2019 18:34:44 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730106AbfICQfV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 3 Sep 2019 12:35:21 -0400
-Received: from mail.kernel.org ([198.145.29.99]:49266 "EHLO mail.kernel.org"
+        id S1730570AbfICQ2J (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 3 Sep 2019 12:28:09 -0400
+Received: from mail.kernel.org ([198.145.29.99]:49854 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1730949AbfICQ1s (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 3 Sep 2019 12:27:48 -0400
+        id S1730121AbfICQ2I (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 3 Sep 2019 12:28:08 -0400
 Received: from sasha-vm.mshome.net (c-73-47-72-35.hsd1.nh.comcast.net [73.47.72.35])
         (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
         (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 3D09B23789;
-        Tue,  3 Sep 2019 16:27:47 +0000 (UTC)
+        by mail.kernel.org (Postfix) with ESMTPSA id 7CCF4238CD;
+        Tue,  3 Sep 2019 16:28:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1567528068;
-        bh=j6ahewoxJK4BYyuBALFxGPGvZ7IjzlhY2rPpaa/CAvE=;
+        s=default; t=1567528088;
+        bh=8lYLVzRxYiXjNKdmJtOuaItGlqRbscReWol9uRFhF5M=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=Ijo06llXVgpPjhyFtepr0bFmv5Ueu9zbKL/7BJkSwe2OHpOnP0jYVu7Y8dtRWSN9u
-         XG57Lytv6OsaVlgrcn9OrJzjgpw8zSpdiTZokyNMkZb4WwLi7tvedIFzmbG9RiwDDy
-         xpy5iVA4e+u/4aI0KF9u07s8Qx0zB/TXLLUCH4tY=
+        b=vap8iFvG+V9ak3/VEc3LgkC1gqdTEkR88M77SYsN/Mso9n5CmKFU1Q5PHrG1vn6wG
+         NHmqgrypCNCweHCQoM+5hwNJhLioh2C/VMpkQV9ByUTFt1RSoENaJxooMWJR8F0dTf
+         45Cidd5KGezIGp5YBw0MvvRrmkMTMdTsdwRwoWLA=
 From:   Sasha Levin <sashal@kernel.org>
 To:     linux-kernel@vger.kernel.org, stable@vger.kernel.org
-Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
-        Stanimir Varbanov <svarbanov@mm-sol.com>,
+Cc:     Mathias Kresin <dev@kresin.me>, John Crispin <john@phrozen.org>,
+        Andy Gross <andy.gross@linaro.org>,
         Sasha Levin <sashal@kernel.org>, linux-arm-msm@vger.kernel.org,
-        linux-pci@vger.kernel.org
-Subject: [PATCH AUTOSEL 4.19 082/167] PCI: qcom: Don't deassert reset GPIO during probe
-Date:   Tue,  3 Sep 2019 12:23:54 -0400
-Message-Id: <20190903162519.7136-82-sashal@kernel.org>
+        devicetree@vger.kernel.org
+Subject: [PATCH AUTOSEL 4.19 098/167] ARM: dts: qcom: ipq4019: fix PCI range
+Date:   Tue,  3 Sep 2019 12:24:10 -0400
+Message-Id: <20190903162519.7136-98-sashal@kernel.org>
 X-Mailer: git-send-email 2.20.1
 In-Reply-To: <20190903162519.7136-1-sashal@kernel.org>
 References: <20190903162519.7136-1-sashal@kernel.org>
@@ -45,47 +44,33 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Bjorn Andersson <bjorn.andersson@linaro.org>
+From: Mathias Kresin <dev@kresin.me>
 
-[ Upstream commit 02b485e31d98265189b91f3e69c43df2ed50610c ]
+[ Upstream commit da89f500cb55fb3f19c4b399b46d8add0abbd4d6 ]
 
-Acquiring the reset GPIO low means that reset is being deasserted, this
-is followed almost immediately with qcom_pcie_host_init() asserting it,
-initializing it and then finally deasserting it again, for the link to
-come up.
+The PCI range is invalid and PCI attached devices doen't work.
 
-Some PCIe devices requires a minimum time between the initial deassert
-and subsequent reset cycles. In a platform that boots with the reset
-GPIO asserted this requirement is being violated by this deassert/assert
-pulse.
-
-Acquire the reset GPIO high to prevent this situation by matching the
-state to the subsequent asserted state.
-
-Fixes: 82a823833f4e ("PCI: qcom: Add Qualcomm PCIe controller driver")
-Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
-[lorenzo.pieralisi@arm.com: updated commit log]
-Signed-off-by: Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>
-Acked-by: Stanimir Varbanov <svarbanov@mm-sol.com>
-Cc: stable@vger.kernel.org
+Signed-off-by: Mathias Kresin <dev@kresin.me>
+Signed-off-by: John Crispin <john@phrozen.org>
+Signed-off-by: Andy Gross <andy.gross@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pci/controller/dwc/pcie-qcom.c | 2 +-
+ arch/arm/boot/dts/qcom-ipq4019.dtsi | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/pci/controller/dwc/pcie-qcom.c b/drivers/pci/controller/dwc/pcie-qcom.c
-index 79f06c76ae071..e292801fff7fd 100644
---- a/drivers/pci/controller/dwc/pcie-qcom.c
-+++ b/drivers/pci/controller/dwc/pcie-qcom.c
-@@ -1230,7 +1230,7 @@ static int qcom_pcie_probe(struct platform_device *pdev)
+diff --git a/arch/arm/boot/dts/qcom-ipq4019.dtsi b/arch/arm/boot/dts/qcom-ipq4019.dtsi
+index 78db67337ed4a..2c3168d95a2d5 100644
+--- a/arch/arm/boot/dts/qcom-ipq4019.dtsi
++++ b/arch/arm/boot/dts/qcom-ipq4019.dtsi
+@@ -387,7 +387,7 @@
+ 			#size-cells = <2>;
  
- 	pcie->ops = of_device_get_match_data(dev);
+ 			ranges = <0x81000000 0 0x40200000 0x40200000 0 0x00100000
+-				  0x82000000 0 0x48000000 0x48000000 0 0x10000000>;
++				  0x82000000 0 0x40300000 0x40300000 0 0x400000>;
  
--	pcie->reset = devm_gpiod_get_optional(dev, "perst", GPIOD_OUT_LOW);
-+	pcie->reset = devm_gpiod_get_optional(dev, "perst", GPIOD_OUT_HIGH);
- 	if (IS_ERR(pcie->reset)) {
- 		ret = PTR_ERR(pcie->reset);
- 		goto err_pm_runtime_put;
+ 			interrupts = <GIC_SPI 141 IRQ_TYPE_EDGE_RISING>;
+ 			interrupt-names = "msi";
 -- 
 2.20.1
 
