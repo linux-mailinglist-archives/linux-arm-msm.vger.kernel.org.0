@@ -2,97 +2,105 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 08B87A6A67
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  3 Sep 2019 15:50:59 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 6BB1AA6CDE
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  3 Sep 2019 17:25:55 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729169AbfICNu6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 3 Sep 2019 09:50:58 -0400
-Received: from mail-wr1-f67.google.com ([209.85.221.67]:37081 "EHLO
-        mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729357AbfICNu6 (ORCPT
+        id S1728992AbfICPZy (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 3 Sep 2019 11:25:54 -0400
+Received: from forward501o.mail.yandex.net ([37.140.190.203]:44410 "EHLO
+        forward501o.mail.yandex.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1728679AbfICPZy (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 3 Sep 2019 09:50:58 -0400
-Received: by mail-wr1-f67.google.com with SMTP id z11so17588659wrt.4
-        for <linux-arm-msm@vger.kernel.org>; Tue, 03 Sep 2019 06:50:56 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id;
-        bh=aOyM32hMSWR1qRMtRvlicJ7f1Z5Z1CPh11gGjkkMTtY=;
-        b=SEnDskUHk7MKEpfjF3e0404Vx6RbV3Us34tpICArdFY5gu+Ad0LCkJkr+CWV8p0R7D
-         0P9jX11NcJR/cppXMJNg4DK7nZ4wLb6hHDDRE5vjvkM60LHU4/vAUwvFhKtPrHwDZ2ed
-         MSUFYAAPsEguqTREsrN9QgP2MicHw3nwD4o0WSQ9aRwsqQbzSqEACxn4LH5D+Vp78CVk
-         zGVrqCc8E494TwnqdASdi1A/hNkXjwD2RO4iTxLPHlIZqeX4ExGXV9jYgJPO74QRp3dQ
-         cpqFJjn1ShGo0tkINNFZOWHirhB8CwhLCdXMAd2igfWtPSS/kpS4LJwQGOzp98a8ZqJS
-         bO/Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id;
-        bh=aOyM32hMSWR1qRMtRvlicJ7f1Z5Z1CPh11gGjkkMTtY=;
-        b=fLraBbiYtZDdeUGTmbdBp61mJtvoXOofmZRJWJ/pAviF4X1XCTHFeJpwFlm0v8NSIl
-         NifTaSCLXs4D1FZr6UQ9IKorNaXEdBxop+nIojZAN22AQntZBPsBY4tSLFOeqjhBxMAq
-         vPoKU5aqI1htlWZS2mm8AVMuf6qnBfVw1FcXUjo1snSouNIiLtEWWTm8V2Lpgjfljtz0
-         E1kRr17HAgWQ4lTWz/mAtc0GwkxOIyJHfci5zNldu8Y4EPMWCQ4QZUh2vL9AEm563Mxv
-         acoY4/p9zmpyMYxn0lCXJ006aFp+2cFSvpiRCCeGotQ+05jZl7GCIKCRZqXOnEQj/iOq
-         oCsA==
-X-Gm-Message-State: APjAAAXneZs8YN+Gr8tQ3EdNkAQBRmiGaAqc8ERfriHC7g1yqhTnd6iw
-        SkSl9L2MgkNgiGzuAewadbuShw==
-X-Google-Smtp-Source: APXvYqwcNl225P8oK2CwZViBuGxf6CcNTfssQRviSxt65FF0BMbjIKf7EyVLOO4EJX1BTSuZUsMZLg==
-X-Received: by 2002:adf:9e09:: with SMTP id u9mr43453065wre.169.1567518656051;
-        Tue, 03 Sep 2019 06:50:56 -0700 (PDT)
-Received: from localhost.localdomain ([95.147.198.93])
-        by smtp.gmail.com with ESMTPSA id a17sm20710665wmm.47.2019.09.03.06.50.55
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 03 Sep 2019 06:50:55 -0700 (PDT)
-From:   Lee Jones <lee.jones@linaro.org>
-To:     agross@kernel.org
-Cc:     linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, bjorn.andersson@linaro.org,
-        Lee Jones <lee.jones@linaro.org>
-Subject: [PATCH 1/1] soc: qcom: geni: Provide parameter error checking
-Date:   Tue,  3 Sep 2019 14:50:52 +0100
-Message-Id: <20190903135052.13827-1-lee.jones@linaro.org>
-X-Mailer: git-send-email 2.17.1
+        Tue, 3 Sep 2019 11:25:54 -0400
+X-Greylist: delayed 481 seconds by postgrey-1.27 at vger.kernel.org; Tue, 03 Sep 2019 11:25:52 EDT
+Received: from mxback21o.mail.yandex.net (mxback21o.mail.yandex.net [IPv6:2a02:6b8:0:1a2d::72])
+        by forward501o.mail.yandex.net (Yandex) with ESMTP id E67701E802DE;
+        Tue,  3 Sep 2019 18:17:49 +0300 (MSK)
+Received: from localhost (localhost [::1])
+        by mxback21o.mail.yandex.net (nwsmtp/Yandex) with ESMTP id sP12zh0Lk0-Hmxe1Ksp;
+        Tue, 03 Sep 2019 18:17:49 +0300
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ya.ru; s=mail; t=1567523869;
+        bh=xd4oAwVzKayMlSWnqNDk876qieyfNhXMXztAwmcI5rw=;
+        h=Message-Id:Cc:Subject:In-Reply-To:Date:References:To:From;
+        b=TXhRP4xCfsWC/CRn1QpUIpsQLX9nYEHR+PkqJVfI+pXWBS2vIGDG1N5hwI22wxqf+
+         t8qgkX6Ce64FP1OaxV2PfhxACtYfleYMwg/hEUhSfQXO27mXn24uWlI3E5FcxJMN8E
+         uGzVAHHE+AgCTisAXQZHmXXSMhHnGiyDmG86Kr8U=
+Authentication-Results: mxback21o.mail.yandex.net; dkim=pass header.i=@ya.ru
+Received: by sas2-b4ed770db137.qloud-c.yandex.net with HTTP;
+        Tue, 03 Sep 2019 18:17:48 +0300
+From:   "russianneuromancer@ya.ru" <russianneuromancer@ya.ru>
+Envelope-From: russianneuromancer@yandex.ru
+To:     Lee Jones <lee.jones@linaro.org>
+Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Marc Gonzalez <marc.w.gonzalez@free.fr>,
+        SCSI <linux-scsi@vger.kernel.org>,
+        MSM <linux-arm-msm@vger.kernel.org>,
+        Avri Altman <avri.altman@wdc.com>,
+        Alim Akhtar <alim.akhtar@samsung.com>,
+        Ard Biesheuvel <ard.biesheuvel@linaro.org>,
+        Evan Green <evgreen@chromium.org>,
+        Douglas Anderson <dianders@chromium.org>,
+        Vivek Gautam <vivek.gautam@codeaurora.org>,
+        Stanley Chu <stanley.chu@mediatek.com>
+In-Reply-To: <20190902081204.GO4804@dell>
+References: <9f3ed253-5f6b-1893-531d-085f881956dd@free.fr>
+         <20190828192031.GN6167@minitux>
+         <9257741567170980@myt1-1e65ebab2412.qloud-c.yandex.net> <20190902081204.GO4804@dell>
+Subject: Re: ufshcd_abort: Device abort task at tag 7
+MIME-Version: 1.0
+X-Mailer: Yamail [ http://yandex.ru ] 5.0
+Date:   Tue, 03 Sep 2019 23:17:48 +0800
+Message-Id: <25410681567523868@sas2-b4ed770db137.qloud-c.yandex.net>
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=utf-8
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-When booting with ACPI, the Geni Serial Engine is not set as the I2C/SPI
-parent and thus, the wrapper (parent device) is unassigned.  This causes
-the kernel to crash with a null dereference error.
+Hello!
 
-Fixes: 8bc529b25354 ("soc: qcom: geni: Add support for ACPI")
-Signed-off-by: Lee Jones <lee.jones@linaro.org>
----
-Since we are already at -rc7 this patch should be processed ASAP - thank you.
+> Booting with ACPI helps us to use generic Linux distribution
+> installers, but it is expected for users to switch to DT once the OS
+> is installed.
 
-drivers/soc/qcom/qcom-geni-se.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+Thank you for clarification!
 
-diff --git a/drivers/soc/qcom/qcom-geni-se.c b/drivers/soc/qcom/qcom-geni-se.c
-index d5cf953b4337..7d622ea1274e 100644
---- a/drivers/soc/qcom/qcom-geni-se.c
-+++ b/drivers/soc/qcom/qcom-geni-se.c
-@@ -630,6 +630,9 @@ int geni_se_tx_dma_prep(struct geni_se *se, void *buf, size_t len,
- 	struct geni_wrapper *wrapper = se->wrapper;
- 	u32 val;
- 
-+	if (!wrapper)
-+		return -EINVAL;
-+
- 	*iova = dma_map_single(wrapper->dev, buf, len, DMA_TO_DEVICE);
- 	if (dma_mapping_error(wrapper->dev, *iova))
- 		return -EIO;
-@@ -663,6 +666,9 @@ int geni_se_rx_dma_prep(struct geni_se *se, void *buf, size_t len,
- 	struct geni_wrapper *wrapper = se->wrapper;
- 	u32 val;
- 
-+	if (!wrapper)
-+		return -EINVAL;
-+
- 	*iova = dma_map_single(wrapper->dev, buf, len, DMA_FROM_DEVICE);
- 	if (dma_mapping_error(wrapper->dev, *iova))
- 		return -EIO;
--- 
-2.17.1
+Should I close my bugreport when Bjorn's "Qualcomm UFS device reset support" series will hit upstream, or I should wait for additional fix that applicable for ACPI boot as well?  
 
+I don't know if this boot delay is Ok for generic installer image, and it's not up to me to decide this, which is why I ask.
+
+02.09.2019, 16:12, "Lee Jones" <lee.jones@linaro.org>:
+> On Fri, 30 Aug 2019, russianneuromancer@ya.ru wrote:
+>
+>>  Hello!
+>>
+>>  > I don't remember the exact splats seen, but I would suggest that this is
+>>  > retested after applying the following series:
+>>  >
+>>  > https://lore.kernel.org/linux-arm-msm/20190828191756.24312-1-bjorn.andersson@linaro.org/T/#u
+>>
+>>  Turns out this patches is already applied to kernel running on this device, but one line in dts was missing:
+>>
+>>  https://github.com/aarch64-laptops/linux/pull/2
+>>
+>>  With this line issue is no longer reproducible with DT boot. Thank you!
+>>
+>>  As I understand it's planned to eventually boot this devices via ACPI.
+>>
+>>  @Lee Jones, is my understanding correct?
+>
+> No, not exactly. We can boot these devices using ACPI, but with
+> limited functionality (when compared with booting using DT). There
+> are too many black-boxes when booting with ACPI - something that can
+> only be resolved with Qualcomm's help.
+>
+> Booting with ACPI helps us to use generic Linux distribution
+> installers, but it is expected for users to switch to DT once the OS
+> is installed.
+>
+> --
+> Lee Jones [李琼斯]
+> Linaro Services Technical Lead
+> Linaro.org │ Open source software for ARM SoCs
+> Follow Linaro: Facebook | Twitter | Blog
