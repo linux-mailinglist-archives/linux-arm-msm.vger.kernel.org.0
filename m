@@ -2,298 +2,353 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 8B23EA75B9
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  3 Sep 2019 22:54:08 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D8D77A75BD
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  3 Sep 2019 22:54:59 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727118AbfICUxd (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 3 Sep 2019 16:53:33 -0400
-Received: from mail-yb1-f196.google.com ([209.85.219.196]:38560 "EHLO
+        id S1727001AbfICUy7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 3 Sep 2019 16:54:59 -0400
+Received: from mail-yb1-f196.google.com ([209.85.219.196]:45770 "EHLO
         mail-yb1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726853AbfICUxd (ORCPT
+        with ESMTP id S1726976AbfICUy6 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 3 Sep 2019 16:53:33 -0400
-Received: by mail-yb1-f196.google.com with SMTP id o18so2667378ybp.5
-        for <linux-arm-msm@vger.kernel.org>; Tue, 03 Sep 2019 13:53:32 -0700 (PDT)
+        Tue, 3 Sep 2019 16:54:58 -0400
+Received: by mail-yb1-f196.google.com with SMTP id u32so6447959ybi.12
+        for <linux-arm-msm@vger.kernel.org>; Tue, 03 Sep 2019 13:54:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=poorly.run; s=google;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to:user-agent;
-        bh=DVCAlPVbkFVUUY0m3QHNEjd44dKZmdmbFtu5A1aFNa0=;
-        b=ZPoPyHbqPgyxvbln8u0nj1GIq7LuOwPrpqH4wcbc4vjYZOglYF5QvJhPJoRpZzQzrQ
-         EKDic6KRJVphi9Z2FpmFC0qQnwt9abqY8IuAB273Lr/hetuiPak4jKqfxdTYLraLqaIM
-         hGSCFhgvIKM6ttXCsUX8pWgoWY1JsSR69Fwt3CzvLkEkH7cr8R8UzBBYAZBDJcG1N4ME
-         fEi/y2cMUDREvjYfXFFwyNv53GWYIVek9hhn/G1enuwqBJZFF4RlW0KDBLATU8VSPM3U
-         A0X/qQce/9zbitu3uO4PIPkPj9ZNAaIO7ILoJe3x0pbQvP2A2zSF4gaDDTLJZInylzuZ
-         BRng==
+        bh=4/Cfewt0pLyQh7lWltSphkxLah1C/x9kO5VArxPKuys=;
+        b=eBK49+bx/culM6xuAHOvmDYVCNCGH94aLJ4OnUm65R88og+FKRJzn30BV6cNdTlim9
+         85tjwlzcVf9lK9sJdppF19XiwtCnnMUPeWL8K01LnSEz4nREquz8o/sbQJXLDqEXxxQO
+         MwgpNdm+UuXK+ePqi1camR42cEn9Um6L4ebfVKQNBSujU2itT1QBxJbH+ImmGKHwykJC
+         5sG1QioFiegJQjmr+GZdTad/3YZadcY0gvXreIkraJQbk4Sh/mjHYYiZyLCHXMwrvqI7
+         gNxswxe2trVjuyPdTdmwhxOFB+fkQL/02593sq3Ua+gGaruBfYOUMqKxLvJP+eX3mjEc
+         3FwA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=DVCAlPVbkFVUUY0m3QHNEjd44dKZmdmbFtu5A1aFNa0=;
-        b=YiJDVA6dHaH/jjEdcr30S1D4ZP4+R3JdKdc7cmDx2OZGqhsjUTaf7WP4BIlmHlBCH2
-         7XBllrohhZfMFSKp6UztT+V6FxqkGoY1KVGy8lasLDRb8Ge6YfP79upzuyf5+qAIyZ4M
-         Gv1RkFbG4HB+BnVBBzdxVGY3XfJo2JxyIZY8pR6pOvGmWGEvODa9Coe6Az8QEMbkNpnE
-         BUVk4Yplg9OlDI6AZPLHwW1U3GvZWHqgtx+IJORhZMo0FhVtSoospK3aErbKNQHGJNhC
-         96esFM4DN6c2HVdteXvqpEwnYdaTy+sTJlMAdv2ZN3HYG2OPQad/DeN5BUNU2/hAC2dD
-         +K+Q==
-X-Gm-Message-State: APjAAAU7Ocqju5ILGr7Bpj1XmN647QBVAQ6+PH0JrTUIKkuhrIdTfnNk
-        vXIsNrfgoELeIx8zhUv0tuROTA==
-X-Google-Smtp-Source: APXvYqwwF8e17CbF2QARWpYcAXUXzdFfVy3IASKyxBY/LkAREyoEGmNH2lNFSEDNGqlBtD2Mazs/Uw==
-X-Received: by 2002:a25:c708:: with SMTP id w8mr12139170ybe.358.1567544011931;
-        Tue, 03 Sep 2019 13:53:31 -0700 (PDT)
+        bh=4/Cfewt0pLyQh7lWltSphkxLah1C/x9kO5VArxPKuys=;
+        b=bUgSRzJE1HIq10bAIylY0gMGffUfgE7VSgZ5kNKmsuivsMEXbgijmSweRvLu4nss4T
+         FzXeU6p8fueN+Sha3itqM7qcYcQKH/OekgLXrBiR6/Q4AVJ+RckLPEkZN5fiUZ0hvMJP
+         HmA7GTiKwXCx7V4A/pE44GTyxfNkSUkFKHdTZpUn6gy1Ociy24bcvOntS1O8XAxYvzB0
+         /3eDIuYdiF+Qy1QCiEdo0eDEmPob7TabjNcJurxM21oIjJD9LEjZRGjLxVzMvBI8hMh8
+         1sKzG+MS65eXZ98CyHOCGDJ9Yasghy719Sz9byfgoCDkr8bsKi13RG2xolBBboc5Tlvs
+         Nx5w==
+X-Gm-Message-State: APjAAAW7YIUMQfqaLIWAKrFc5gHYmPyUN/Ss99eZRVUNbW6WjpgMfv31
+        Nmd/miDm+3bE1eWQj2o0azT6KA==
+X-Google-Smtp-Source: APXvYqzJbum5Ic9rfk/ivIXRdszIjRN4tJfnxZ7KPXjR2zR8nhD3mthSxemy+21G0MhiehLcBSOm1w==
+X-Received: by 2002:a5b:949:: with SMTP id x9mr25303608ybq.419.1567544097784;
+        Tue, 03 Sep 2019 13:54:57 -0700 (PDT)
 Received: from localhost ([2620:0:1013:11:89c6:2139:5435:371d])
-        by smtp.gmail.com with ESMTPSA id i62sm1390955ywi.102.2019.09.03.13.53.31
+        by smtp.gmail.com with ESMTPSA id u196sm3459062ywu.72.2019.09.03.13.54.57
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 03 Sep 2019 13:53:31 -0700 (PDT)
-Date:   Tue, 3 Sep 2019 16:53:31 -0400
+        Tue, 03 Sep 2019 13:54:57 -0700 (PDT)
+Date:   Tue, 3 Sep 2019 16:54:57 -0400
 From:   Sean Paul <sean@poorly.run>
 To:     Rob Clark <robdclark@gmail.com>
 Cc:     dri-devel@lists.freedesktop.org,
         Rob Clark <robdclark@chromium.org>,
         Sean Paul <sean@poorly.run>, David Airlie <airlied@linux.ie>,
         Daniel Vetter <daniel@ffwll.ch>,
-        Jeykumar Sankaran <jsanka@codeaurora.org>,
-        Bruce Wang <bzwang@chromium.org>,
-        Jordan Crouse <jcrouse@codeaurora.org>,
-        Sravanthi Kollukuduru <skolluku@codeaurora.org>,
-        Abhinav Kumar <abhinavk@codeaurora.org>,
-        Enrico Weigelt <info@metux.net>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Thomas Gleixner <tglx@linutronix.de>,
+        open list <linux-kernel@vger.kernel.org>,
         "open list:DRM DRIVER FOR MSM ADRENO GPU" 
         <linux-arm-msm@vger.kernel.org>,
         "open list:DRM DRIVER FOR MSM ADRENO GPU" 
-        <freedreno@lists.freedesktop.org>,
-        open list <linux-kernel@vger.kernel.org>
-Subject: Re: [PATCH 09/10] drm/msm/dpu: async commit support
-Message-ID: <20190903205331.GN218215@art_vandelay>
+        <freedreno@lists.freedesktop.org>
+Subject: Re: [PATCH 10/10] drm/msm: add atomic traces
+Message-ID: <20190903205457.GO218215@art_vandelay>
 References: <20190829164601.11615-1-robdclark@gmail.com>
- <20190829164601.11615-10-robdclark@gmail.com>
+ <20190829164601.11615-11-robdclark@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20190829164601.11615-10-robdclark@gmail.com>
+In-Reply-To: <20190829164601.11615-11-robdclark@gmail.com>
 User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Aug 29, 2019 at 09:45:17AM -0700, Rob Clark wrote:
+On Thu, Aug 29, 2019 at 09:45:18AM -0700, Rob Clark wrote:
 > From: Rob Clark <robdclark@chromium.org>
 > 
-> In addition, moving to kms->flush_commit() lets us drop the only user
-> of kms->commit().
+> This was useful for debugging fps drops.  I suspect it will be useful
+> again.
 > 
 > Signed-off-by: Rob Clark <robdclark@chromium.org>
 
+I'm a simple man, I see tracepoints patches and R-b tracepoints patches :)
+
 Reviewed-by: Sean Paul <sean@poorly.run>
 
+
 > ---
->  drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c    | 13 ------
->  drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c |  7 ++--
->  drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.h |  5 +++
->  drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c     | 46 +++++++++++----------
->  drivers/gpu/drm/msm/msm_atomic.c            |  5 +--
->  drivers/gpu/drm/msm/msm_kms.h               |  3 --
->  6 files changed, 34 insertions(+), 45 deletions(-)
+>  drivers/gpu/drm/msm/Makefile                 |   1 +
+>  drivers/gpu/drm/msm/msm_atomic.c             |  24 +++-
+>  drivers/gpu/drm/msm/msm_atomic_trace.h       | 110 +++++++++++++++++++
+>  drivers/gpu/drm/msm/msm_atomic_tracepoints.c |   3 +
+>  drivers/gpu/drm/msm/msm_gpu_trace.h          |   2 +-
+>  5 files changed, 136 insertions(+), 4 deletions(-)
+>  create mode 100644 drivers/gpu/drm/msm/msm_atomic_trace.h
+>  create mode 100644 drivers/gpu/drm/msm/msm_atomic_tracepoints.c
 > 
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
-> index 31debd31ab8c..f38a7d27a1c0 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
-> @@ -606,7 +606,6 @@ void dpu_crtc_commit_kickoff(struct drm_crtc *crtc)
->  	struct dpu_crtc *dpu_crtc = to_dpu_crtc(crtc);
->  	struct dpu_kms *dpu_kms = _dpu_crtc_get_kms(crtc);
->  	struct dpu_crtc_state *cstate = to_dpu_crtc_state(crtc->state);
-> -	int ret;
->  
->  	/*
->  	 * If no mixers has been allocated in dpu_crtc_atomic_check(),
-> @@ -626,17 +625,6 @@ void dpu_crtc_commit_kickoff(struct drm_crtc *crtc)
->  				  crtc->state->encoder_mask)
->  		dpu_encoder_prepare_for_kickoff(encoder);
->  
-> -	/* wait for previous frame_event_done completion */
-> -	DPU_ATRACE_BEGIN("wait_for_frame_done_event");
-> -	ret = _dpu_crtc_wait_for_frame_done(crtc);
-> -	DPU_ATRACE_END("wait_for_frame_done_event");
-> -	if (ret) {
-> -		DPU_ERROR("crtc%d wait for frame done failed;frame_pending%d\n",
-> -				crtc->base.id,
-> -				atomic_read(&dpu_crtc->frame_pending));
-> -		goto end;
-> -	}
-> -
->  	if (atomic_inc_return(&dpu_crtc->frame_pending) == 1) {
->  		/* acquire bandwidth and other resources */
->  		DPU_DEBUG("crtc%d first commit\n", crtc->base.id);
-> @@ -650,7 +638,6 @@ void dpu_crtc_commit_kickoff(struct drm_crtc *crtc)
->  	drm_for_each_encoder_mask(encoder, crtc->dev, crtc->state->encoder_mask)
->  		dpu_encoder_kickoff(encoder);
->  
-> -end:
->  	reinit_completion(&dpu_crtc->frame_done_comp);
->  	DPU_ATRACE_END("crtc_commit");
->  }
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
-> index ac2d534bf59e..3a69b93d8fb6 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
-> @@ -1678,8 +1678,7 @@ static u32 _dpu_encoder_calculate_linetime(struct dpu_encoder_virt *dpu_enc,
->  	return line_time;
->  }
->  
-> -static int _dpu_encoder_wakeup_time(struct drm_encoder *drm_enc,
-> -		ktime_t *wakeup_time)
-> +int dpu_encoder_vsync_time(struct drm_encoder *drm_enc, ktime_t *wakeup_time)
->  {
->  	struct drm_display_mode *mode;
->  	struct dpu_encoder_virt *dpu_enc;
-> @@ -1766,7 +1765,7 @@ static void dpu_encoder_vsync_event_work_handler(struct kthread_work *work)
->  		return;
->  	}
->  
-> -	if (_dpu_encoder_wakeup_time(&dpu_enc->base, &wakeup_time))
-> +	if (dpu_encoder_vsync_time(&dpu_enc->base, &wakeup_time))
->  		return;
->  
->  	trace_dpu_enc_vsync_event_work(DRMID(&dpu_enc->base), wakeup_time);
-> @@ -1840,7 +1839,7 @@ void dpu_encoder_kickoff(struct drm_encoder *drm_enc)
->  	}
->  
->  	if (dpu_enc->disp_info.intf_type == DRM_MODE_ENCODER_DSI &&
-> -			!_dpu_encoder_wakeup_time(drm_enc, &wakeup_time)) {
-> +			!dpu_encoder_vsync_time(drm_enc, &wakeup_time)) {
->  		trace_dpu_enc_early_kickoff(DRMID(drm_enc),
->  					    ktime_to_ms(wakeup_time));
->  		mod_timer(&dpu_enc->vsync_event_timer,
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.h
-> index 8465b37adf3b..b4913465e602 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.h
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.h
-> @@ -85,6 +85,11 @@ void dpu_encoder_trigger_kickoff_pending(struct drm_encoder *encoder);
->   */
->  void dpu_encoder_kickoff(struct drm_encoder *encoder);
->  
-> +/**
-> + * dpu_encoder_wakeup_time - get the time of the next vsync
-> + */
-> +int dpu_encoder_vsync_time(struct drm_encoder *drm_enc, ktime_t *wakeup_time);
-> +
->  /**
->   * dpu_encoder_wait_for_event - Waits for encoder events
->   * @encoder:	encoder pointer
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
-> index d54741f3ad9f..af41af1731c2 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
-> @@ -260,6 +260,20 @@ static void dpu_kms_disable_commit(struct msm_kms *kms)
->  	pm_runtime_put_sync(&dpu_kms->pdev->dev);
->  }
->  
-> +static ktime_t dpu_kms_vsync_time(struct msm_kms *kms, struct drm_crtc *crtc)
-> +{
-> +	struct drm_encoder *encoder;
-> +
-> +	drm_for_each_encoder_mask(encoder, crtc->dev, crtc->state->encoder_mask) {
-> +		ktime_t vsync_time;
-> +
-> +		if (dpu_encoder_vsync_time(encoder, &vsync_time) == 0)
-> +			return vsync_time;
-> +	}
-> +
-> +	return ktime_get();
-> +}
-> +
->  static void dpu_kms_prepare_commit(struct msm_kms *kms,
->  		struct drm_atomic_state *state)
->  {
-> @@ -291,7 +305,16 @@ static void dpu_kms_prepare_commit(struct msm_kms *kms,
->  
->  static void dpu_kms_flush_commit(struct msm_kms *kms, unsigned crtc_mask)
->  {
-> -	/* TODO */
-> +	struct dpu_kms *dpu_kms = to_dpu_kms(kms);
-> +	struct drm_crtc *crtc;
-> +
-> +	for_each_crtc_mask(dpu_kms->dev, crtc, crtc_mask) {
-> +		if (!crtc->state->active)
-> +			continue;
-> +
-> +		trace_dpu_kms_commit(DRMID(crtc));
-> +		dpu_crtc_commit_kickoff(crtc);
-> +	}
->  }
->  
->  /*
-> @@ -314,25 +337,6 @@ void dpu_kms_encoder_enable(struct drm_encoder *encoder)
->  			continue;
->  
->  		trace_dpu_kms_enc_enable(DRMID(crtc));
-> -		dpu_crtc_commit_kickoff(crtc);
-> -	}
-> -}
-> -
-> -static void dpu_kms_commit(struct msm_kms *kms, struct drm_atomic_state *state)
-> -{
-> -	struct drm_crtc *crtc;
-> -	struct drm_crtc_state *crtc_state;
-> -	int i;
-> -
-> -	for_each_new_crtc_in_state(state, crtc, crtc_state, i) {
-> -		/* If modeset is required, kickoff is run in encoder_enable */
-> -		if (drm_atomic_crtc_needs_modeset(crtc_state))
-> -			continue;
-> -
-> -		if (crtc->state->active) {
-> -			trace_dpu_kms_commit(DRMID(crtc));
-> -			dpu_crtc_commit_kickoff(crtc);
-> -		}
->  	}
->  }
->  
-> @@ -693,9 +697,9 @@ static const struct msm_kms_funcs kms_funcs = {
->  	.irq             = dpu_irq,
->  	.enable_commit   = dpu_kms_enable_commit,
->  	.disable_commit  = dpu_kms_disable_commit,
-> +	.vsync_time      = dpu_kms_vsync_time,
->  	.prepare_commit  = dpu_kms_prepare_commit,
->  	.flush_commit    = dpu_kms_flush_commit,
-> -	.commit          = dpu_kms_commit,
->  	.wait_flush      = dpu_kms_wait_flush,
->  	.complete_commit = dpu_kms_complete_commit,
->  	.enable_vblank   = dpu_kms_enable_vblank,
+> diff --git a/drivers/gpu/drm/msm/Makefile b/drivers/gpu/drm/msm/Makefile
+> index 7a05cbf2f820..1579cf0d828f 100644
+> --- a/drivers/gpu/drm/msm/Makefile
+> +++ b/drivers/gpu/drm/msm/Makefile
+> @@ -75,6 +75,7 @@ msm-y := \
+>  	disp/dpu1/dpu_rm.o \
+>  	disp/dpu1/dpu_vbif.o \
+>  	msm_atomic.o \
+> +	msm_atomic_tracepoints.o \
+>  	msm_debugfs.o \
+>  	msm_drv.o \
+>  	msm_fb.o \
 > diff --git a/drivers/gpu/drm/msm/msm_atomic.c b/drivers/gpu/drm/msm/msm_atomic.c
-> index 8f8f74337cb4..80536538967b 100644
+> index 80536538967b..fb247aa1081e 100644
 > --- a/drivers/gpu/drm/msm/msm_atomic.c
 > +++ b/drivers/gpu/drm/msm/msm_atomic.c
-> @@ -213,10 +213,7 @@ void msm_atomic_commit_tail(struct drm_atomic_state *state)
+> @@ -6,6 +6,7 @@
+>  
+>  #include <drm/drm_atomic_uapi.h>
+>  
+> +#include "msm_atomic_trace.h"
+>  #include "msm_drv.h"
+>  #include "msm_gem.h"
+>  #include "msm_kms.h"
+> @@ -33,11 +34,13 @@ static void msm_atomic_async_commit(struct msm_kms *kms, int crtc_idx)
+>  {
+>  	unsigned crtc_mask = BIT(crtc_idx);
+>  
+> +	trace_msm_atomic_async_commit_start(crtc_mask);
+> +
+>  	mutex_lock(&kms->commit_lock);
+>  
+>  	if (!(kms->pending_crtc_mask & crtc_mask)) {
+>  		mutex_unlock(&kms->commit_lock);
+> -		return;
+> +		goto out;
+>  	}
+>  
+>  	kms->pending_crtc_mask &= ~crtc_mask;
+> @@ -47,19 +50,24 @@ static void msm_atomic_async_commit(struct msm_kms *kms, int crtc_idx)
 >  	/*
 >  	 * Flush hardware updates:
 >  	 */
-> -	if (kms->funcs->commit) {
-> -		DRM_DEBUG_ATOMIC("triggering commit\n");
-> -		kms->funcs->commit(kms, state);
-> -	}
-> +	DRM_DEBUG_ATOMIC("triggering commit\n");
+> -	DRM_DEBUG_ATOMIC("triggering async commit\n");
+> +	trace_msm_atomic_flush_commit(crtc_mask);
 >  	kms->funcs->flush_commit(kms, crtc_mask);
 >  	mutex_unlock(&kms->commit_lock);
 >  
-> diff --git a/drivers/gpu/drm/msm/msm_kms.h b/drivers/gpu/drm/msm/msm_kms.h
-> index 5eafc9686d29..32ff2e070ea2 100644
-> --- a/drivers/gpu/drm/msm/msm_kms.h
-> +++ b/drivers/gpu/drm/msm/msm_kms.h
-> @@ -80,9 +80,6 @@ struct msm_kms_funcs {
+>  	/*
+>  	 * Wait for flush to complete:
 >  	 */
->  	void (*flush_commit)(struct msm_kms *kms, unsigned crtc_mask);
+> +	trace_msm_atomic_wait_flush_start(crtc_mask);
+>  	kms->funcs->wait_flush(kms, crtc_mask);
+> +	trace_msm_atomic_wait_flush_finish(crtc_mask);
 >  
-> -	/* TODO remove ->commit(), use ->flush_commit() instead: */
-> -	void (*commit)(struct msm_kms *kms, struct drm_atomic_state *state);
-> -
->  	/**
->  	 * Wait for any in-progress flush to complete on the specified
->  	 * crtcs.  This should not block if there is no in-progress
+>  	mutex_lock(&kms->commit_lock);
+>  	kms->funcs->complete_commit(kms, crtc_mask);
+>  	mutex_unlock(&kms->commit_lock);
+>  	kms->funcs->disable_commit(kms);
+> +
+> +out:
+> +	trace_msm_atomic_async_commit_finish(crtc_mask);
+>  }
+>  
+>  static enum hrtimer_restart msm_atomic_pending_timer(struct hrtimer *t)
+> @@ -144,13 +152,17 @@ void msm_atomic_commit_tail(struct drm_atomic_state *state)
+>  	bool async = kms->funcs->vsync_time &&
+>  			can_do_async(state, &async_crtc);
+>  
+> +	trace_msm_atomic_commit_tail_start(async, crtc_mask);
+> +
+>  	kms->funcs->enable_commit(kms);
+>  
+>  	/*
+>  	 * Ensure any previous (potentially async) commit has
+>  	 * completed:
+>  	 */
+> +	trace_msm_atomic_wait_flush_start(crtc_mask);
+>  	kms->funcs->wait_flush(kms, crtc_mask);
+> +	trace_msm_atomic_wait_flush_finish(crtc_mask);
+>  
+>  	mutex_lock(&kms->commit_lock);
+>  
+> @@ -201,6 +213,8 @@ void msm_atomic_commit_tail(struct drm_atomic_state *state)
+>  		drm_atomic_helper_commit_hw_done(state);
+>  		drm_atomic_helper_cleanup_planes(dev, state);
+>  
+> +		trace_msm_atomic_commit_tail_finish(async, crtc_mask);
+> +
+>  		return;
+>  	}
+>  
+> @@ -213,14 +227,16 @@ void msm_atomic_commit_tail(struct drm_atomic_state *state)
+>  	/*
+>  	 * Flush hardware updates:
+>  	 */
+> -	DRM_DEBUG_ATOMIC("triggering commit\n");
+> +	trace_msm_atomic_flush_commit(crtc_mask);
+>  	kms->funcs->flush_commit(kms, crtc_mask);
+>  	mutex_unlock(&kms->commit_lock);
+>  
+>  	/*
+>  	 * Wait for flush to complete:
+>  	 */
+> +	trace_msm_atomic_wait_flush_start(crtc_mask);
+>  	kms->funcs->wait_flush(kms, crtc_mask);
+> +	trace_msm_atomic_wait_flush_finish(crtc_mask);
+>  
+>  	mutex_lock(&kms->commit_lock);
+>  	kms->funcs->complete_commit(kms, crtc_mask);
+> @@ -229,4 +245,6 @@ void msm_atomic_commit_tail(struct drm_atomic_state *state)
+>  
+>  	drm_atomic_helper_commit_hw_done(state);
+>  	drm_atomic_helper_cleanup_planes(dev, state);
+> +
+> +	trace_msm_atomic_commit_tail_finish(async, crtc_mask);
+>  }
+> diff --git a/drivers/gpu/drm/msm/msm_atomic_trace.h b/drivers/gpu/drm/msm/msm_atomic_trace.h
+> new file mode 100644
+> index 000000000000..b4ca0ed3b4a3
+> --- /dev/null
+> +++ b/drivers/gpu/drm/msm/msm_atomic_trace.h
+> @@ -0,0 +1,110 @@
+> +/* SPDX-License-Identifier: GPL-2.0 */
+> +#if !defined(_MSM_GPU_TRACE_H_) || defined(TRACE_HEADER_MULTI_READ)
+> +#define _MSM_GPU_TRACE_H_
+> +
+> +#include <linux/tracepoint.h>
+> +
+> +#undef TRACE_SYSTEM
+> +#define TRACE_SYSTEM drm_msm_atomic
+> +#define TRACE_INCLUDE_FILE msm_atomic_trace
+> +
+> +TRACE_EVENT(msm_atomic_commit_tail_start,
+> +	    TP_PROTO(bool async, unsigned crtc_mask),
+> +	    TP_ARGS(async, crtc_mask),
+> +	    TP_STRUCT__entry(
+> +		    __field(bool, async)
+> +		    __field(u32, crtc_mask)
+> +		    ),
+> +	    TP_fast_assign(
+> +		    __entry->async = async;
+> +		    __entry->crtc_mask = crtc_mask;
+> +		    ),
+> +	    TP_printk("async=%d crtc_mask=%x",
+> +		    __entry->async, __entry->crtc_mask)
+> +);
+> +
+> +TRACE_EVENT(msm_atomic_commit_tail_finish,
+> +	    TP_PROTO(bool async, unsigned crtc_mask),
+> +	    TP_ARGS(async, crtc_mask),
+> +	    TP_STRUCT__entry(
+> +		    __field(bool, async)
+> +		    __field(u32, crtc_mask)
+> +		    ),
+> +	    TP_fast_assign(
+> +		    __entry->async = async;
+> +		    __entry->crtc_mask = crtc_mask;
+> +		    ),
+> +	    TP_printk("async=%d crtc_mask=%x",
+> +		    __entry->async, __entry->crtc_mask)
+> +);
+> +
+> +TRACE_EVENT(msm_atomic_async_commit_start,
+> +	    TP_PROTO(unsigned crtc_mask),
+> +	    TP_ARGS(crtc_mask),
+> +	    TP_STRUCT__entry(
+> +		    __field(u32, crtc_mask)
+> +		    ),
+> +	    TP_fast_assign(
+> +		    __entry->crtc_mask = crtc_mask;
+> +		    ),
+> +	    TP_printk("crtc_mask=%x",
+> +		    __entry->crtc_mask)
+> +);
+> +
+> +TRACE_EVENT(msm_atomic_async_commit_finish,
+> +	    TP_PROTO(unsigned crtc_mask),
+> +	    TP_ARGS(crtc_mask),
+> +	    TP_STRUCT__entry(
+> +		    __field(u32, crtc_mask)
+> +		    ),
+> +	    TP_fast_assign(
+> +		    __entry->crtc_mask = crtc_mask;
+> +		    ),
+> +	    TP_printk("crtc_mask=%x",
+> +		    __entry->crtc_mask)
+> +);
+> +
+> +TRACE_EVENT(msm_atomic_wait_flush_start,
+> +	    TP_PROTO(unsigned crtc_mask),
+> +	    TP_ARGS(crtc_mask),
+> +	    TP_STRUCT__entry(
+> +		    __field(u32, crtc_mask)
+> +		    ),
+> +	    TP_fast_assign(
+> +		    __entry->crtc_mask = crtc_mask;
+> +		    ),
+> +	    TP_printk("crtc_mask=%x",
+> +		    __entry->crtc_mask)
+> +);
+> +
+> +TRACE_EVENT(msm_atomic_wait_flush_finish,
+> +	    TP_PROTO(unsigned crtc_mask),
+> +	    TP_ARGS(crtc_mask),
+> +	    TP_STRUCT__entry(
+> +		    __field(u32, crtc_mask)
+> +		    ),
+> +	    TP_fast_assign(
+> +		    __entry->crtc_mask = crtc_mask;
+> +		    ),
+> +	    TP_printk("crtc_mask=%x",
+> +		    __entry->crtc_mask)
+> +);
+> +
+> +TRACE_EVENT(msm_atomic_flush_commit,
+> +	    TP_PROTO(unsigned crtc_mask),
+> +	    TP_ARGS(crtc_mask),
+> +	    TP_STRUCT__entry(
+> +		    __field(u32, crtc_mask)
+> +		    ),
+> +	    TP_fast_assign(
+> +		    __entry->crtc_mask = crtc_mask;
+> +		    ),
+> +	    TP_printk("crtc_mask=%x",
+> +		    __entry->crtc_mask)
+> +);
+> +
+> +#endif
+> +
+> +#undef TRACE_INCLUDE_PATH
+> +#define TRACE_INCLUDE_PATH ../../drivers/gpu/drm/msm
+> +#include <trace/define_trace.h>
+> diff --git a/drivers/gpu/drm/msm/msm_atomic_tracepoints.c b/drivers/gpu/drm/msm/msm_atomic_tracepoints.c
+> new file mode 100644
+> index 000000000000..011dc881f391
+> --- /dev/null
+> +++ b/drivers/gpu/drm/msm/msm_atomic_tracepoints.c
+> @@ -0,0 +1,3 @@
+> +// SPDX-License-Identifier: GPL-2.0
+> +#define CREATE_TRACE_POINTS
+> +#include "msm_atomic_trace.h"
+> diff --git a/drivers/gpu/drm/msm/msm_gpu_trace.h b/drivers/gpu/drm/msm/msm_gpu_trace.h
+> index 1155118a27a1..122b84789238 100644
+> --- a/drivers/gpu/drm/msm/msm_gpu_trace.h
+> +++ b/drivers/gpu/drm/msm/msm_gpu_trace.h
+> @@ -5,7 +5,7 @@
+>  #include <linux/tracepoint.h>
+>  
+>  #undef TRACE_SYSTEM
+> -#define TRACE_SYSTEM drm_msm
+> +#define TRACE_SYSTEM drm_msm_gpu
+>  #define TRACE_INCLUDE_FILE msm_gpu_trace
+>  
+>  TRACE_EVENT(msm_gpu_submit,
 > -- 
 > 2.21.0
 > 
