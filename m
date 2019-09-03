@@ -2,98 +2,254 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id AAAF6A773A
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Sep 2019 00:47:07 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 43C57A7748
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Sep 2019 00:51:05 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726451AbfICWrG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 3 Sep 2019 18:47:06 -0400
-Received: from mail-pg1-f195.google.com ([209.85.215.195]:38516 "EHLO
-        mail-pg1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725977AbfICWrG (ORCPT
+        id S1727043AbfICWvE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 3 Sep 2019 18:51:04 -0400
+Received: from mail-pl1-f196.google.com ([209.85.214.196]:42272 "EHLO
+        mail-pl1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726770AbfICWvE (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 3 Sep 2019 18:47:06 -0400
-Received: by mail-pg1-f195.google.com with SMTP id d10so5467785pgo.5
-        for <linux-arm-msm@vger.kernel.org>; Tue, 03 Sep 2019 15:47:06 -0700 (PDT)
+        Tue, 3 Sep 2019 18:51:04 -0400
+Received: by mail-pl1-f196.google.com with SMTP id y1so8571645plp.9
+        for <linux-arm-msm@vger.kernel.org>; Tue, 03 Sep 2019 15:51:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=chromium.org; s=google;
         h=message-id:mime-version:content-transfer-encoding:in-reply-to
          :references:cc:subject:to:from:user-agent:date;
-        bh=hoDQ2otvh4YzrazXkMiS2cracj6ZVD3U75QlqFUCiSs=;
-        b=lrzb33d5V9vzzhO82c5zXyKH4TqmgJW2X7aw4qMa7JO7/n4grzGNYlPbFDGM5JBZbC
-         twNeBapGoiWv0TSEuroy5RaHLuLtTBkNBdo8VqsOeDaio4lo4/Tij9Pwy7OayQzfNqyD
-         wm59VGKZTWH8uMoFTHamGpJfQ0K6J3rjK6o5s=
+        bh=9trNFzcMJPxSkbrSQIMdwqf4HgHwbgy97ByQX0gMK0E=;
+        b=kVB2bGKrY+RjYxQMQPdpAu0cBQ0jsHUK6i1aB7e3YQSxT4wq4O9JOzSfKusm0rgZAc
+         ymgZ3oXqU9FE6mJbG77HAhONRCRLgi4iO217Ph5ut58Y/T95sayXsjxTs8ZvsCHkIO8b
+         JekHkmTtj0nhnaZI9IXjo3pTiggUG59ghAlM0=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:mime-version
          :content-transfer-encoding:in-reply-to:references:cc:subject:to:from
          :user-agent:date;
-        bh=hoDQ2otvh4YzrazXkMiS2cracj6ZVD3U75QlqFUCiSs=;
-        b=dnfPTXmy2M7IsDqekdTZ9Rd4+RpOOzXKWfhYeocP0AV1ABITAvJZan/J84AyFZnR1z
-         SU8VDt7el9N0OvEkaFXEFLiR+qGcxmQfeAc5cKpZ0C4d7iSkBQeXURS4WunSYf4jBOzn
-         rwRmiBcQoAGM8JUXTVGGsozs+Y+aSJyT6hxV8F9F7YAtvMnWBA/HPC+loRX4vXY2Alsw
-         GCUwi7S5CHx+teCIzTOiKtnPxehbhGOHhwzlrF42gfSZg6+Lls43Tpu95pb7KtTYxXeJ
-         BnY+ADXAlIF840A42yjJN+fR9J+i0eXmK6Nolv4XeLiOPSs6Bgk6GAaymGVHoF9zr8ul
-         v+Ag==
-X-Gm-Message-State: APjAAAXTKr7dbmpvNRY8MqC1HPqLVTAbfAQ4E+ioHmRAeJulTF9qj3L/
-        Ef6pHxbKtH1W0SVEcd+J1BK+7w==
-X-Google-Smtp-Source: APXvYqzWeCl7biAHHpauQRTYTdxKfJz4B7BxzgfR3nLDWhc1dYlvSW9t0r7ElVhEYX177Zn6WDT38g==
-X-Received: by 2002:a63:8f55:: with SMTP id r21mr32188253pgn.318.1567550825858;
-        Tue, 03 Sep 2019 15:47:05 -0700 (PDT)
+        bh=9trNFzcMJPxSkbrSQIMdwqf4HgHwbgy97ByQX0gMK0E=;
+        b=nl/ln2fTaKLlF8fU0fdOvv2GMAc4LVdGPJ7g8IgdCYEknKpOxja7Gy7XifF9UjGTL7
+         pmWVzok4eXgU88vWycb4km03jJaTcynjooW395b0HlPEgNA5AU6SLpPJtfPijBwhfbEj
+         WPFE3B+VU4a+CMcWhosWUNs2iS3hTa6MSss80/ZOthzZHJPMcKXSs/Qa3oFHphXfR5dW
+         95j3+XJHxZer7M1YYRUMavF0Z9C1Fi3g/yrt79hKu0z3ExQT6W+VuV4BnoffHBtXtokQ
+         GNj0QjcRVaNqVAsTV3A1U+aS7oZ1G9H1mBsTp7TtgN4ISm+K8UgzIrRDtsAGPQ6mppEw
+         uWug==
+X-Gm-Message-State: APjAAAWt67oUMT5cr5L2jdCPwkfR60Z6GauXZCv7JbAq7UTau+T8QL3B
+        dcMUVp67FbKW4jJByVSx/pPyLzv2IaBjjA==
+X-Google-Smtp-Source: APXvYqyqfTTW9r2z0CkUJ2ZJK1rN6wWkA/LBN/Q0DZBNDJVvFxkFkA6qVLLpORsqAkXypCXruhmEAQ==
+X-Received: by 2002:a17:902:780c:: with SMTP id p12mr22955161pll.290.1567551063379;
+        Tue, 03 Sep 2019 15:51:03 -0700 (PDT)
 Received: from chromium.org ([2620:15c:202:1:fa53:7765:582b:82b9])
-        by smtp.gmail.com with ESMTPSA id u69sm23055074pgu.77.2019.09.03.15.47.04
+        by smtp.gmail.com with ESMTPSA id bt1sm588583pjb.17.2019.09.03.15.51.02
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 03 Sep 2019 15:47:05 -0700 (PDT)
-Message-ID: <5d6eed69.1c69fb81.b7ca5.7345@mx.google.com>
+        Tue, 03 Sep 2019 15:51:02 -0700 (PDT)
+Message-ID: <5d6eee56.1c69fb81.e2ebe.2352@mx.google.com>
 Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <93435591-152a-46fd-4768-78f5e7af77ed@codeaurora.org>
-References: <20190830195142.103564-1-swboyd@chromium.org> <CAD=FV=Vr5o-b86588qe--bVZ5YjKVB3gzaoYa6YcqCd9smkxVg@mail.gmail.com> <93435591-152a-46fd-4768-78f5e7af77ed@codeaurora.org>
-Cc:     Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>,
-        LKML <linux-kernel@vger.kernel.org>,
-        linux-clk <linux-clk@vger.kernel.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>
-Subject: Re: [PATCH] clk: qcom: gcc-sdm845: Use floor ops for sdcc clks
-To:     Doug Anderson <dianders@chromium.org>,
-        Taniya Das <tdas@codeaurora.org>
+In-Reply-To: <20190829181203.2660-4-ilina@codeaurora.org>
+References: <20190829181203.2660-1-ilina@codeaurora.org> <20190829181203.2660-4-ilina@codeaurora.org>
+Cc:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        bjorn.andersson@linaro.org, mkshah@codeaurora.org,
+        linux-gpio@vger.kernel.org, rnayak@codeaurora.org,
+        Lina Iyer <ilina@codeaurora.org>
+Subject: Re: [PATCH RFC 03/14] drivers: irqchip: add PDC irqdomain for wakeup capable GPIOs
+To:     Lina Iyer <ilina@codeaurora.org>, evgreen@chromium.org,
+        linus.walleij@linaro.org, marc.zyngier@arm.com
 From:   Stephen Boyd <swboyd@chromium.org>
 User-Agent: alot/0.8.1
-Date:   Tue, 03 Sep 2019 15:47:04 -0700
+Date:   Tue, 03 Sep 2019 15:51:01 -0700
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Taniya Das (2019-09-03 08:52:12)
-> Hi,
+Quoting Lina Iyer (2019-08-29 11:11:52)
+> Introduce a new domain for wakeup capable GPIOs. The domain can be
+> requested using the bus token DOMAIN_BUS_WAKEUP. In the following
+> patches, we will specify PDC as the wakeup-parent for the TLMM GPIO
+> irqchip. Requesting a wakeup GPIO will setup the GPIO and the
+> corresponding PDC interrupt as its parent.
 >=20
-> On 8/31/2019 3:04 AM, Doug Anderson wrote:
-> > Hi,
-> >=20
-> > On Fri, Aug 30, 2019 at 12:51 PM Stephen Boyd <swboyd@chromium.org> wro=
-te:
-> >>
-> >> Some MMC cards fail to enumerate properly when inserted into an MMC sl=
-ot
-> >> on sdm845 devices. This is because the clk ops for qcom clks round the
-> >> frequency up to the nearest rate instead of down to the nearest rate.
-> >> For example, the MMC driver requests a frequency of 52MHz from
-> >> clk_set_rate() but the qcom implementation for these clks rounds 52MHz
-> >> up to the next supported frequency of 100MHz. The MMC driver could be
-> >> modified to request clk rate ranges but for now we can fix this in the
-> >> clk driver by changing the rounding policy for this clk to be round do=
-wn
-> >> instead of round up.
-> >=20
-> > Since all the MMC rates are expressed as "maximum" clock rates doing
-> > it like you are doing it now seems sane.
-> >=20
-> >=20
->=20
-> Looks like we need to update/track it for all SDCC clocks for all targets.
->=20
+> Co-developed-by: Stephen Boyd <swboyd@chromium.org>
 
-Yeah. It would be great if you can send the patches. Otherwise I'll
-throw it on my todo list named 'forever'.
+Per the Documentation about Co-developed-by this should have my=20
 
+Signed-off-by: Stephen Boyd <swboyd@chromium.org>
+
+here. Please add it for the next version.
+
+> Signed-off-by: Lina Iyer <ilina@codeaurora.org>
+> ---
+>  drivers/irqchip/qcom-pdc.c   | 104 ++++++++++++++++++++++++++++++++---
+>  include/linux/soc/qcom/irq.h |  34 ++++++++++++
+>  2 files changed, 129 insertions(+), 9 deletions(-)
+>  create mode 100644 include/linux/soc/qcom/irq.h
+>=20
+> diff --git a/drivers/irqchip/qcom-pdc.c b/drivers/irqchip/qcom-pdc.c
+> index 338fae604af5..ad1faf634bcf 100644
+> --- a/drivers/irqchip/qcom-pdc.c
+> +++ b/drivers/irqchip/qcom-pdc.c
+> @@ -244,6 +261,60 @@ static const struct irq_domain_ops qcom_pdc_ops =3D {
+>         .free           =3D irq_domain_free_irqs_common,
+>  };
+> =20
+> +static int qcom_pdc_gpio_alloc(struct irq_domain *domain, unsigned int v=
+irq,
+> +                              unsigned int nr_irqs, void *data)
+> +{
+> +       struct irq_fwspec *fwspec =3D data;
+> +       struct irq_fwspec parent_fwspec;
+> +       irq_hw_number_t hwirq, parent_hwirq;
+> +       unsigned int type;
+> +       int ret;
+> +
+> +       ret =3D qcom_pdc_translate(domain, fwspec, &hwirq, &type);
+> +       if (ret)
+> +               return ret;
+> +
+> +       ret =3D irq_domain_set_hwirq_and_chip(domain, virq, hwirq,
+> +                                           &qcom_pdc_gic_chip, NULL);
+> +       if (ret)
+> +               return ret;
+> +
+> +       if (hwirq =3D=3D GPIO_NO_WAKE_IRQ)
+> +               return 0;
+> +
+> +       parent_hwirq =3D get_parent_hwirq(hwirq);
+> +       if (parent_hwirq =3D=3D PDC_NO_PARENT_IRQ)
+> +               return 0;
+> +
+> +       if (type & IRQ_TYPE_EDGE_BOTH)
+> +               type =3D IRQ_TYPE_EDGE_RISING;
+> +
+> +       if (type & IRQ_TYPE_LEVEL_MASK)
+> +               type =3D IRQ_TYPE_LEVEL_HIGH;
+> +
+> +       parent_fwspec.fwnode      =3D domain->parent->fwnode;
+> +       parent_fwspec.param_count =3D 3;
+> +       parent_fwspec.param[0]    =3D 0;
+> +       parent_fwspec.param[1]    =3D parent_hwirq;
+> +       parent_fwspec.param[2]    =3D type;
+> +
+> +       return irq_domain_alloc_irqs_parent(domain, virq, nr_irqs,
+> +                                           &parent_fwspec);
+> +}
+> +
+> +static int qcom_pdc_gpio_domain_select(struct irq_domain *d,
+> +                                      struct irq_fwspec *fwspec,
+> +                                      enum irq_domain_bus_token bus_toke=
+n)
+> +{
+> +       return (bus_token =3D=3D DOMAIN_BUS_WAKEUP);
+
+Drop the parenthesis please.
+
+> +}
+> +
+> +static const struct irq_domain_ops qcom_pdc_gpio_ops =3D {
+> +       .select         =3D qcom_pdc_gpio_domain_select,
+> +       .alloc          =3D qcom_pdc_gpio_alloc,
+> +       .free           =3D irq_domain_free_irqs_common,
+> +};
+> +
+>  static int pdc_setup_pin_mapping(struct device_node *np)
+>  {
+>         int ret, n;
+> @@ -282,7 +353,7 @@ static int pdc_setup_pin_mapping(struct device_node *=
+np)
+> =20
+>  static int qcom_pdc_init(struct device_node *node, struct device_node *p=
+arent)
+>  {
+> -       struct irq_domain *parent_domain, *pdc_domain;
+> +       struct irq_domain *parent_domain, *pdc_domain, *pdc_gpio_domain;
+>         int ret;
+> =20
+>         pdc_base =3D of_iomap(node, 0);
+> @@ -313,8 +384,23 @@ static int qcom_pdc_init(struct device_node *node, s=
+truct device_node *parent)
+>                 goto fail;
+>         }
+> =20
+> +       pdc_gpio_domain =3D irq_domain_create_hierarchy(parent_domain,
+> +                                                     IRQ_DOMAIN_FLAG_QCO=
+M_PDC_WAKEUP,
+> +                                                     PDC_MAX_GPIO_IRQS,
+> +                                                     of_fwnode_handle(no=
+de),
+> +                                                     &qcom_pdc_gpio_ops,=
+ NULL);
+> +       if (!pdc_gpio_domain) {
+> +               pr_err("%pOF: GIC domain add failed for GPIO domain\n", n=
+ode);
+
+s/GIC/PDC/?
+
+> +               ret =3D -ENOMEM;
+> +               goto remove;
+> +       }
+> +
+> +       irq_domain_update_bus_token(pdc_gpio_domain, DOMAIN_BUS_WAKEUP);
+> +
+>         return 0;
+> =20
+> +remove:
+> +       irq_domain_remove(pdc_domain);
+>  fail:
+>         kfree(pdc_region);
+>         iounmap(pdc_base);
+> diff --git a/include/linux/soc/qcom/irq.h b/include/linux/soc/qcom/irq.h
+> new file mode 100644
+> index 000000000000..73239917dc38
+> --- /dev/null
+> +++ b/include/linux/soc/qcom/irq.h
+> @@ -0,0 +1,34 @@
+> +/* SPDX-License-Identifier: GPL-2.0-only */
+> +
+> +#ifndef __QCOM_IRQ_H
+> +#define __QCOM_IRQ_H
+> +
+> +#include <linux/irqdomain.h>
+
+Just forward declare struct irq_domain instead?
+
+> +
+> +#define GPIO_NO_WAKE_IRQ       ~0U
+> +
+> +/**
+> + * QCOM specific IRQ domain flags that distinguishes the handling of wak=
+eup
+> + * capable interrupts by different interrupt controllers.
+> + *
+> + * IRQ_DOMAIN_FLAG_QCOM_PDC_WAKEUP: Line must be masked at TLMM and the
+> + *                                  interrupt configuration is done at P=
+DC
+> + * IRQ_DOMAIN_FLAG_QCOM_MPM_WAKEUP: Interrupt configuration is handled a=
+t TLMM
+> + */
+> +#define IRQ_DOMAIN_FLAG_QCOM_PDC_WAKEUP                (1 << 17)
+> +#define IRQ_DOMAIN_FLAG_QCOM_MPM_WAKEUP                (1 << 18)
+
+Why do these numbers start at 17?
+
+> +
+> +/**
+> + * irq_domain_qcom_handle_wakeup: Return if the domain handles interrupt
+> + *                                configuration
+> + * @parent: irq domain
+> + *
+> + * This QCOM specific irq domain call returns if the interrupt controller
+> + * requires the interrupt be masked at the child interrupt controller.
+> + */
+> +static inline bool irq_domain_qcom_handle_wakeup(struct irq_domain *pare=
+nt)
+> +{
+> +       return (parent->flags & IRQ_DOMAIN_FLAG_QCOM_PDC_WAKEUP);
+> +}
+> +
+> +#endif
+> --=20
+> The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
+> a Linux Foundation Collaborative Project
+>=20
