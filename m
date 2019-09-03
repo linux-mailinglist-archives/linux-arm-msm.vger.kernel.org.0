@@ -2,356 +2,146 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id D8D77A75BD
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  3 Sep 2019 22:54:59 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D4097A7673
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  3 Sep 2019 23:45:12 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727001AbfICUy7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 3 Sep 2019 16:54:59 -0400
-Received: from mail-yb1-f196.google.com ([209.85.219.196]:45770 "EHLO
-        mail-yb1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726976AbfICUy6 (ORCPT
+        id S1726375AbfICVpL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 3 Sep 2019 17:45:11 -0400
+Received: from mail-pg1-f195.google.com ([209.85.215.195]:43404 "EHLO
+        mail-pg1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726394AbfICVpL (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 3 Sep 2019 16:54:58 -0400
-Received: by mail-yb1-f196.google.com with SMTP id u32so6447959ybi.12
-        for <linux-arm-msm@vger.kernel.org>; Tue, 03 Sep 2019 13:54:58 -0700 (PDT)
+        Tue, 3 Sep 2019 17:45:11 -0400
+Received: by mail-pg1-f195.google.com with SMTP id u72so5760740pgb.10
+        for <linux-arm-msm@vger.kernel.org>; Tue, 03 Sep 2019 14:45:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=poorly.run; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=4/Cfewt0pLyQh7lWltSphkxLah1C/x9kO5VArxPKuys=;
-        b=eBK49+bx/culM6xuAHOvmDYVCNCGH94aLJ4OnUm65R88og+FKRJzn30BV6cNdTlim9
-         85tjwlzcVf9lK9sJdppF19XiwtCnnMUPeWL8K01LnSEz4nREquz8o/sbQJXLDqEXxxQO
-         MwgpNdm+UuXK+ePqi1camR42cEn9Um6L4ebfVKQNBSujU2itT1QBxJbH+ImmGKHwykJC
-         5sG1QioFiegJQjmr+GZdTad/3YZadcY0gvXreIkraJQbk4Sh/mjHYYiZyLCHXMwrvqI7
-         gNxswxe2trVjuyPdTdmwhxOFB+fkQL/02593sq3Ua+gGaruBfYOUMqKxLvJP+eX3mjEc
-         3FwA==
+        d=chromium.org; s=google;
+        h=message-id:mime-version:content-transfer-encoding:in-reply-to
+         :references:cc:subject:to:from:user-agent:date;
+        bh=DC974GZJGhexkCFBOM5qEmYf6z0HgA/VnDsSvsVF7D0=;
+        b=HiSF87MFMlybKjWPbamDnFr8jF4yrV8wWRl/q7vTLdCayEIsdov0M2UgoQlf3JX4H1
+         gBBiyAdAu8IAEwYR1bevmCl7HFTR9sajVfhMDgAXak5uU/WC9Pk+G7i996fVdJTigDwR
+         CK8z8PVAiAURMoDDeyttp6CxAFcufTD9LoaXE=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=4/Cfewt0pLyQh7lWltSphkxLah1C/x9kO5VArxPKuys=;
-        b=bUgSRzJE1HIq10bAIylY0gMGffUfgE7VSgZ5kNKmsuivsMEXbgijmSweRvLu4nss4T
-         FzXeU6p8fueN+Sha3itqM7qcYcQKH/OekgLXrBiR6/Q4AVJ+RckLPEkZN5fiUZ0hvMJP
-         HmA7GTiKwXCx7V4A/pE44GTyxfNkSUkFKHdTZpUn6gy1Ociy24bcvOntS1O8XAxYvzB0
-         /3eDIuYdiF+Qy1QCiEdo0eDEmPob7TabjNcJurxM21oIjJD9LEjZRGjLxVzMvBI8hMh8
-         1sKzG+MS65eXZ98CyHOCGDJ9Yasghy719Sz9byfgoCDkr8bsKi13RG2xolBBboc5Tlvs
-         Nx5w==
-X-Gm-Message-State: APjAAAW7YIUMQfqaLIWAKrFc5gHYmPyUN/Ss99eZRVUNbW6WjpgMfv31
-        Nmd/miDm+3bE1eWQj2o0azT6KA==
-X-Google-Smtp-Source: APXvYqzJbum5Ic9rfk/ivIXRdszIjRN4tJfnxZ7KPXjR2zR8nhD3mthSxemy+21G0MhiehLcBSOm1w==
-X-Received: by 2002:a5b:949:: with SMTP id x9mr25303608ybq.419.1567544097784;
-        Tue, 03 Sep 2019 13:54:57 -0700 (PDT)
-Received: from localhost ([2620:0:1013:11:89c6:2139:5435:371d])
-        by smtp.gmail.com with ESMTPSA id u196sm3459062ywu.72.2019.09.03.13.54.57
+        h=x-gm-message-state:message-id:mime-version
+         :content-transfer-encoding:in-reply-to:references:cc:subject:to:from
+         :user-agent:date;
+        bh=DC974GZJGhexkCFBOM5qEmYf6z0HgA/VnDsSvsVF7D0=;
+        b=AYFeBETvyR9iYxMW6MFNftCEfTwz78TQgHN++m7j2K3EGee90W4Aj6Tzq9yOPfBqLL
+         Tbtyh35gzPiIISwzhhX4LoNb3GG22IG4WjQQkOeNw5lZdn5rjESyX8dBBnXfwy6Avsct
+         U/w5IoAmC33IN6kbLIK0rfgSxqutD0ubgaadQNxNcp197uMSbf+VKS7+2AAcshBOOEfK
+         GP4fZdPH81aR+vBVzSedDpnrzEUsg0a6FbYOn65X4bXcuJ9y1TJOlSakU95WHKTVFi6H
+         CZK6kyUpPOGBORMMLhFBP80/eSACBVCnMnC8yjvyLAgwvAozBY0CWJgWeddD6PQPt99G
+         M8Qw==
+X-Gm-Message-State: APjAAAVLscfiqEZB9CA8uMDsTZ8goH2vpTHHBJDFiYvxes16dgi8GF9R
+        ZiDMsFz4KUSIO+aD9dqJ6USi3w==
+X-Google-Smtp-Source: APXvYqyyXLc2Kx3iRoFjN/Pmqbfyp7/k/scbD3QixYgco+j3rtBA2rDoAT/CxZaV2vtfjY0BzldgGg==
+X-Received: by 2002:a65:6454:: with SMTP id s20mr32157131pgv.15.1567547110418;
+        Tue, 03 Sep 2019 14:45:10 -0700 (PDT)
+Received: from chromium.org ([2620:15c:202:1:fa53:7765:582b:82b9])
+        by smtp.gmail.com with ESMTPSA id ck8sm498898pjb.25.2019.09.03.14.45.09
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 03 Sep 2019 13:54:57 -0700 (PDT)
-Date:   Tue, 3 Sep 2019 16:54:57 -0400
-From:   Sean Paul <sean@poorly.run>
-To:     Rob Clark <robdclark@gmail.com>
-Cc:     dri-devel@lists.freedesktop.org,
-        Rob Clark <robdclark@chromium.org>,
-        Sean Paul <sean@poorly.run>, David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        open list <linux-kernel@vger.kernel.org>,
-        "open list:DRM DRIVER FOR MSM ADRENO GPU" 
-        <linux-arm-msm@vger.kernel.org>,
-        "open list:DRM DRIVER FOR MSM ADRENO GPU" 
-        <freedreno@lists.freedesktop.org>
-Subject: Re: [PATCH 10/10] drm/msm: add atomic traces
-Message-ID: <20190903205457.GO218215@art_vandelay>
-References: <20190829164601.11615-1-robdclark@gmail.com>
- <20190829164601.11615-11-robdclark@gmail.com>
+        Tue, 03 Sep 2019 14:45:09 -0700 (PDT)
+Message-ID: <5d6edee5.1c69fb81.a3896.1d05@mx.google.com>
+Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20190829164601.11615-11-robdclark@gmail.com>
-User-Agent: Mutt/1.10.1 (2018-07-13)
+Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <20190903173924.GB9754@jackp-linux.qualcomm.com>
+References: <20190207111734.24171-1-jorge.ramirez-ortiz@linaro.org> <20190207111734.24171-4-jorge.ramirez-ortiz@linaro.org> <20190223165218.GB572@tuxbook-pro> <6dc0957d-5806-7643-4454-966015865d38@linaro.org> <5d694878.1c69fb81.5f13b.ec4f@mx.google.com> <20190830164520.GK26807@tuxbook-pro> <5d696ad2.1c69fb81.977ea.39e5@mx.google.com> <f3584f38-dabc-7e7a-d1cb-84c80ed26215@linaro.org> <20190903173924.GB9754@jackp-linux.qualcomm.com>
+Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>, robh@kernel.org,
+        andy.gross@linaro.org, shawn.guo@linaro.org,
+        gregkh@linuxfoundation.org, mark.rutland@arm.com, kishon@ti.com,
+        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-usb@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org, khasim.mohammed@linaro.org
+Subject: Re: [PATCH v4 3/4] dt-bindings: Add Qualcomm USB SuperSpeed PHY bindings
+To:     Jack Pham <jackp@codeaurora.org>,
+        Jorge Ramirez <jorge.ramirez-ortiz@linaro.org>
+From:   Stephen Boyd <swboyd@chromium.org>
+User-Agent: alot/0.8.1
+Date:   Tue, 03 Sep 2019 14:45:08 -0700
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Aug 29, 2019 at 09:45:18AM -0700, Rob Clark wrote:
-> From: Rob Clark <robdclark@chromium.org>
-> 
-> This was useful for debugging fps drops.  I suspect it will be useful
-> again.
-> 
-> Signed-off-by: Rob Clark <robdclark@chromium.org>
+Quoting Jack Pham (2019-09-03 10:39:24)
+> On Mon, Sep 02, 2019 at 08:23:04AM +0200, Jorge Ramirez wrote:
+> > On 8/30/19 20:28, Stephen Boyd wrote:
+> > > Quoting Bjorn Andersson (2019-08-30 09:45:20)
+> > >> On Fri 30 Aug 09:01 PDT 2019, Stephen Boyd wrote:
+> > >>
+> > >>>>>
+> > >>>>> The USB-C connector is attached both to the HS and SS PHYs, so I =
+think
+> > >>>>> you should represent this external to this node and use of_graph =
+to
+> > >>>>> query it.
+> > >>>>
+> > >>>> but AFAICS we wont be able to retrieve the vbux-supply from an ext=
+ernal
+> > >>>> node (that interface does not exist).
+> > >>>>
+> > >>>> rob, do you have a suggestion?
+> > >>>
+> > >>> Shouldn't the vbus supply be in the phy? Or is this a situation whe=
+re
+> > >>> the phy itself doesn't have the vbus supply going to it because the=
+ PMIC
+> > >>> gets in the way and handles the vbus for the connector by having th=
+e SoC
+> > >>> communicate with the PMIC about when to turn the vbus on and off, e=
+tc?
+> > >>>
+> > >>
+> > >> That's correct, the VBUS comes out of the PMIC and goes directly to =
+the
+> > >> connector.
+> > >>
+> > >> The additional complicating factor here is that the connector is wir=
+ed
+> > >> to a USB2 phy as well, so we need to wire up detection and vbus cont=
+rol
+> > >> to both of them - but I think this will be fine, if we can only figu=
+re
+> > >> out a sane way of getting hold of the vbus-supply.
+> > >>
+> > >=20
+> > > Does it really matter to describe this situation though? Maybe it's
+> > > simpler to throw the vbus supply into the phy and control it from the
+> > > phy driver, even if it never really goes there. Or put it into the
+> > > toplevel usb controller?
+> > >=20
+> > that would work for me - the connector definition seemed a better way to
+> > explain the connectivity but since we cant retrieve the supply from the
+> > external node is not of much functional use.
+> >=20
+> > but please let me know how to proceed. shall I add the supply back to
+> > the phy?
 
-I'm a simple man, I see tracepoints patches and R-b tracepoints patches :)
+So does the vbus actually go to the phy? I thought it never went there
+and the power for the phy was different (and possibly lower in voltage).
 
-Reviewed-by: Sean Paul <sean@poorly.run>
+>=20
+> Putting it in the toplevel usb node makes sense to me, since that's
+> usually the driver that knows when it's switching into host mode and
+> needs to turn on VBUS. The dwc3-qcom driver & bindings currently don't=20
+> do this but there's precedent in a couple of the other dwc3 "glues"--see
+> Documentation/devicetree/bindings/usb/{amlogic\,dwc3,omap-usb}.txt
+>=20
+> One exception is if the PMIC is also USB-PD capable and can do power
+> role swap, in which case the VBUS control needs to be done by the TCPM,
+> so that'd be a case where having vbus-supply in the connector node might
+> make more sense.
+>=20
 
+The other way is to implement the code to get the vbus supply out of a
+connector. Then any driver can do the work if it knows it needs to and
+we don't have to care that the vbus isn't going somewhere. I suppose
+that would need an of_regulator_get() sort of API that can get the
+regulator out of there? Or to make the connector into a struct device
+that can get the regulator out per some generic connector driver and
+then pass it through to the USB controller when it asks for it. Maybe
+try to prototype that out?
 
-> ---
->  drivers/gpu/drm/msm/Makefile                 |   1 +
->  drivers/gpu/drm/msm/msm_atomic.c             |  24 +++-
->  drivers/gpu/drm/msm/msm_atomic_trace.h       | 110 +++++++++++++++++++
->  drivers/gpu/drm/msm/msm_atomic_tracepoints.c |   3 +
->  drivers/gpu/drm/msm/msm_gpu_trace.h          |   2 +-
->  5 files changed, 136 insertions(+), 4 deletions(-)
->  create mode 100644 drivers/gpu/drm/msm/msm_atomic_trace.h
->  create mode 100644 drivers/gpu/drm/msm/msm_atomic_tracepoints.c
-> 
-> diff --git a/drivers/gpu/drm/msm/Makefile b/drivers/gpu/drm/msm/Makefile
-> index 7a05cbf2f820..1579cf0d828f 100644
-> --- a/drivers/gpu/drm/msm/Makefile
-> +++ b/drivers/gpu/drm/msm/Makefile
-> @@ -75,6 +75,7 @@ msm-y := \
->  	disp/dpu1/dpu_rm.o \
->  	disp/dpu1/dpu_vbif.o \
->  	msm_atomic.o \
-> +	msm_atomic_tracepoints.o \
->  	msm_debugfs.o \
->  	msm_drv.o \
->  	msm_fb.o \
-> diff --git a/drivers/gpu/drm/msm/msm_atomic.c b/drivers/gpu/drm/msm/msm_atomic.c
-> index 80536538967b..fb247aa1081e 100644
-> --- a/drivers/gpu/drm/msm/msm_atomic.c
-> +++ b/drivers/gpu/drm/msm/msm_atomic.c
-> @@ -6,6 +6,7 @@
->  
->  #include <drm/drm_atomic_uapi.h>
->  
-> +#include "msm_atomic_trace.h"
->  #include "msm_drv.h"
->  #include "msm_gem.h"
->  #include "msm_kms.h"
-> @@ -33,11 +34,13 @@ static void msm_atomic_async_commit(struct msm_kms *kms, int crtc_idx)
->  {
->  	unsigned crtc_mask = BIT(crtc_idx);
->  
-> +	trace_msm_atomic_async_commit_start(crtc_mask);
-> +
->  	mutex_lock(&kms->commit_lock);
->  
->  	if (!(kms->pending_crtc_mask & crtc_mask)) {
->  		mutex_unlock(&kms->commit_lock);
-> -		return;
-> +		goto out;
->  	}
->  
->  	kms->pending_crtc_mask &= ~crtc_mask;
-> @@ -47,19 +50,24 @@ static void msm_atomic_async_commit(struct msm_kms *kms, int crtc_idx)
->  	/*
->  	 * Flush hardware updates:
->  	 */
-> -	DRM_DEBUG_ATOMIC("triggering async commit\n");
-> +	trace_msm_atomic_flush_commit(crtc_mask);
->  	kms->funcs->flush_commit(kms, crtc_mask);
->  	mutex_unlock(&kms->commit_lock);
->  
->  	/*
->  	 * Wait for flush to complete:
->  	 */
-> +	trace_msm_atomic_wait_flush_start(crtc_mask);
->  	kms->funcs->wait_flush(kms, crtc_mask);
-> +	trace_msm_atomic_wait_flush_finish(crtc_mask);
->  
->  	mutex_lock(&kms->commit_lock);
->  	kms->funcs->complete_commit(kms, crtc_mask);
->  	mutex_unlock(&kms->commit_lock);
->  	kms->funcs->disable_commit(kms);
-> +
-> +out:
-> +	trace_msm_atomic_async_commit_finish(crtc_mask);
->  }
->  
->  static enum hrtimer_restart msm_atomic_pending_timer(struct hrtimer *t)
-> @@ -144,13 +152,17 @@ void msm_atomic_commit_tail(struct drm_atomic_state *state)
->  	bool async = kms->funcs->vsync_time &&
->  			can_do_async(state, &async_crtc);
->  
-> +	trace_msm_atomic_commit_tail_start(async, crtc_mask);
-> +
->  	kms->funcs->enable_commit(kms);
->  
->  	/*
->  	 * Ensure any previous (potentially async) commit has
->  	 * completed:
->  	 */
-> +	trace_msm_atomic_wait_flush_start(crtc_mask);
->  	kms->funcs->wait_flush(kms, crtc_mask);
-> +	trace_msm_atomic_wait_flush_finish(crtc_mask);
->  
->  	mutex_lock(&kms->commit_lock);
->  
-> @@ -201,6 +213,8 @@ void msm_atomic_commit_tail(struct drm_atomic_state *state)
->  		drm_atomic_helper_commit_hw_done(state);
->  		drm_atomic_helper_cleanup_planes(dev, state);
->  
-> +		trace_msm_atomic_commit_tail_finish(async, crtc_mask);
-> +
->  		return;
->  	}
->  
-> @@ -213,14 +227,16 @@ void msm_atomic_commit_tail(struct drm_atomic_state *state)
->  	/*
->  	 * Flush hardware updates:
->  	 */
-> -	DRM_DEBUG_ATOMIC("triggering commit\n");
-> +	trace_msm_atomic_flush_commit(crtc_mask);
->  	kms->funcs->flush_commit(kms, crtc_mask);
->  	mutex_unlock(&kms->commit_lock);
->  
->  	/*
->  	 * Wait for flush to complete:
->  	 */
-> +	trace_msm_atomic_wait_flush_start(crtc_mask);
->  	kms->funcs->wait_flush(kms, crtc_mask);
-> +	trace_msm_atomic_wait_flush_finish(crtc_mask);
->  
->  	mutex_lock(&kms->commit_lock);
->  	kms->funcs->complete_commit(kms, crtc_mask);
-> @@ -229,4 +245,6 @@ void msm_atomic_commit_tail(struct drm_atomic_state *state)
->  
->  	drm_atomic_helper_commit_hw_done(state);
->  	drm_atomic_helper_cleanup_planes(dev, state);
-> +
-> +	trace_msm_atomic_commit_tail_finish(async, crtc_mask);
->  }
-> diff --git a/drivers/gpu/drm/msm/msm_atomic_trace.h b/drivers/gpu/drm/msm/msm_atomic_trace.h
-> new file mode 100644
-> index 000000000000..b4ca0ed3b4a3
-> --- /dev/null
-> +++ b/drivers/gpu/drm/msm/msm_atomic_trace.h
-> @@ -0,0 +1,110 @@
-> +/* SPDX-License-Identifier: GPL-2.0 */
-> +#if !defined(_MSM_GPU_TRACE_H_) || defined(TRACE_HEADER_MULTI_READ)
-> +#define _MSM_GPU_TRACE_H_
-> +
-> +#include <linux/tracepoint.h>
-> +
-> +#undef TRACE_SYSTEM
-> +#define TRACE_SYSTEM drm_msm_atomic
-> +#define TRACE_INCLUDE_FILE msm_atomic_trace
-> +
-> +TRACE_EVENT(msm_atomic_commit_tail_start,
-> +	    TP_PROTO(bool async, unsigned crtc_mask),
-> +	    TP_ARGS(async, crtc_mask),
-> +	    TP_STRUCT__entry(
-> +		    __field(bool, async)
-> +		    __field(u32, crtc_mask)
-> +		    ),
-> +	    TP_fast_assign(
-> +		    __entry->async = async;
-> +		    __entry->crtc_mask = crtc_mask;
-> +		    ),
-> +	    TP_printk("async=%d crtc_mask=%x",
-> +		    __entry->async, __entry->crtc_mask)
-> +);
-> +
-> +TRACE_EVENT(msm_atomic_commit_tail_finish,
-> +	    TP_PROTO(bool async, unsigned crtc_mask),
-> +	    TP_ARGS(async, crtc_mask),
-> +	    TP_STRUCT__entry(
-> +		    __field(bool, async)
-> +		    __field(u32, crtc_mask)
-> +		    ),
-> +	    TP_fast_assign(
-> +		    __entry->async = async;
-> +		    __entry->crtc_mask = crtc_mask;
-> +		    ),
-> +	    TP_printk("async=%d crtc_mask=%x",
-> +		    __entry->async, __entry->crtc_mask)
-> +);
-> +
-> +TRACE_EVENT(msm_atomic_async_commit_start,
-> +	    TP_PROTO(unsigned crtc_mask),
-> +	    TP_ARGS(crtc_mask),
-> +	    TP_STRUCT__entry(
-> +		    __field(u32, crtc_mask)
-> +		    ),
-> +	    TP_fast_assign(
-> +		    __entry->crtc_mask = crtc_mask;
-> +		    ),
-> +	    TP_printk("crtc_mask=%x",
-> +		    __entry->crtc_mask)
-> +);
-> +
-> +TRACE_EVENT(msm_atomic_async_commit_finish,
-> +	    TP_PROTO(unsigned crtc_mask),
-> +	    TP_ARGS(crtc_mask),
-> +	    TP_STRUCT__entry(
-> +		    __field(u32, crtc_mask)
-> +		    ),
-> +	    TP_fast_assign(
-> +		    __entry->crtc_mask = crtc_mask;
-> +		    ),
-> +	    TP_printk("crtc_mask=%x",
-> +		    __entry->crtc_mask)
-> +);
-> +
-> +TRACE_EVENT(msm_atomic_wait_flush_start,
-> +	    TP_PROTO(unsigned crtc_mask),
-> +	    TP_ARGS(crtc_mask),
-> +	    TP_STRUCT__entry(
-> +		    __field(u32, crtc_mask)
-> +		    ),
-> +	    TP_fast_assign(
-> +		    __entry->crtc_mask = crtc_mask;
-> +		    ),
-> +	    TP_printk("crtc_mask=%x",
-> +		    __entry->crtc_mask)
-> +);
-> +
-> +TRACE_EVENT(msm_atomic_wait_flush_finish,
-> +	    TP_PROTO(unsigned crtc_mask),
-> +	    TP_ARGS(crtc_mask),
-> +	    TP_STRUCT__entry(
-> +		    __field(u32, crtc_mask)
-> +		    ),
-> +	    TP_fast_assign(
-> +		    __entry->crtc_mask = crtc_mask;
-> +		    ),
-> +	    TP_printk("crtc_mask=%x",
-> +		    __entry->crtc_mask)
-> +);
-> +
-> +TRACE_EVENT(msm_atomic_flush_commit,
-> +	    TP_PROTO(unsigned crtc_mask),
-> +	    TP_ARGS(crtc_mask),
-> +	    TP_STRUCT__entry(
-> +		    __field(u32, crtc_mask)
-> +		    ),
-> +	    TP_fast_assign(
-> +		    __entry->crtc_mask = crtc_mask;
-> +		    ),
-> +	    TP_printk("crtc_mask=%x",
-> +		    __entry->crtc_mask)
-> +);
-> +
-> +#endif
-> +
-> +#undef TRACE_INCLUDE_PATH
-> +#define TRACE_INCLUDE_PATH ../../drivers/gpu/drm/msm
-> +#include <trace/define_trace.h>
-> diff --git a/drivers/gpu/drm/msm/msm_atomic_tracepoints.c b/drivers/gpu/drm/msm/msm_atomic_tracepoints.c
-> new file mode 100644
-> index 000000000000..011dc881f391
-> --- /dev/null
-> +++ b/drivers/gpu/drm/msm/msm_atomic_tracepoints.c
-> @@ -0,0 +1,3 @@
-> +// SPDX-License-Identifier: GPL-2.0
-> +#define CREATE_TRACE_POINTS
-> +#include "msm_atomic_trace.h"
-> diff --git a/drivers/gpu/drm/msm/msm_gpu_trace.h b/drivers/gpu/drm/msm/msm_gpu_trace.h
-> index 1155118a27a1..122b84789238 100644
-> --- a/drivers/gpu/drm/msm/msm_gpu_trace.h
-> +++ b/drivers/gpu/drm/msm/msm_gpu_trace.h
-> @@ -5,7 +5,7 @@
->  #include <linux/tracepoint.h>
->  
->  #undef TRACE_SYSTEM
-> -#define TRACE_SYSTEM drm_msm
-> +#define TRACE_SYSTEM drm_msm_gpu
->  #define TRACE_INCLUDE_FILE msm_gpu_trace
->  
->  TRACE_EVENT(msm_gpu_submit,
-> -- 
-> 2.21.0
-> 
-
--- 
-Sean Paul, Software Engineer, Google / Chromium OS
