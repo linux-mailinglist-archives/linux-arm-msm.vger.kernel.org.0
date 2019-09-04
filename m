@@ -2,193 +2,544 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id C2A57A821F
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Sep 2019 14:22:59 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 29D30A8232
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Sep 2019 14:23:08 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729594AbfIDMJW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 4 Sep 2019 08:09:22 -0400
-Received: from mail-lf1-f66.google.com ([209.85.167.66]:41296 "EHLO
-        mail-lf1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726010AbfIDMJW (ORCPT
+        id S1729741AbfIDMQQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 4 Sep 2019 08:16:16 -0400
+Received: from mail-wr1-f68.google.com ([209.85.221.68]:35887 "EHLO
+        mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726589AbfIDMQP (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 4 Sep 2019 08:09:22 -0400
-Received: by mail-lf1-f66.google.com with SMTP id j4so15699512lfh.8
-        for <linux-arm-msm@vger.kernel.org>; Wed, 04 Sep 2019 05:09:19 -0700 (PDT)
+        Wed, 4 Sep 2019 08:16:15 -0400
+Received: by mail-wr1-f68.google.com with SMTP id y19so21019084wrd.3
+        for <linux-arm-msm@vger.kernel.org>; Wed, 04 Sep 2019 05:16:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=doB3wsxjOp6uT3YrrNxOTfitazKhj8wgqHAtGptnct4=;
-        b=xAdSn81xiJqPVFoSoB+a6IvhxMKVXSG6v3soGNIcorfiAR1FL+gm8DunphUrVYwKnq
-         NDnVg9AUvRXp+CssYVFfnyd1EL2deuovOTeWb+Oh+IASiqwxDEZP2ouQpyD4JXanKWFa
-         fJjc6cjEI4C+1G/p5rM5ldFqRDWTxBiZ9OO5cpbZ6ZM/wB1ucXvbEKGGDxIIF2A+k6ON
-         1HmhOJXikyAj+5nEV/VVSYsgtPqzItaRHCqJVqiUbF1tGQvwFTrqLRQhWz7QCMyMwqHW
-         KcEi19vg/OO9gfxiwV6VTSTfbnzpgExMxHchPi9/2QUToEBsF3ZcceR2dPiSyW3Cl7zj
-         VA3A==
+        h=from:to:cc:subject:date:message-id;
+        bh=j1L0vi/lTdzTHLv3g6fvZdqTeNGWnLIBcndjiDlAU44=;
+        b=VUfQBeit45g9TkGvYQMDIr5oYm5WI/G0Qjg/ez47yiw9303rywbhEdbs3quImuMs3Y
+         ig4H9RZbiez/KTpqZ84UNAZDqTcHMmU1sPxMfikF2If9PA4ijGv3GCE4cXMybzqeyl0L
+         OWG3N7J+T5drmdJF+Oq4iwfWSvjJNk08lDnCvpIlImdweRAa3bQRUgCZfxjUli7b0OZL
+         At3rz2nEpN1RBKRnSML+Ld01SCzFwFpSu+UzgAKicEHqDQWXASGbL8yBy6NV9zs0VG6W
+         TRGld+sdGNdvF+iZUa3qotlaBmt6B98v8vUmFMHsN/5+BPg/iNKJtlA0p7mA5cs3YcBY
+         Jrkw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=doB3wsxjOp6uT3YrrNxOTfitazKhj8wgqHAtGptnct4=;
-        b=bMIMx1bu9I9jA/1deCjFb35T8WbxiPeDbayxVqzsZYyygCW9TDSgP44q3AzpD+ie85
-         k7S28pze27fQNF5I90SA+skk1whwdq1Sc1BtfReLwUx1rAOpqrZxeNYH8ab0iv89ujPd
-         vs1Zfetd1UQXWYtjqQHZwbmGhfllFBUkBO2COKREaVlnNMHIVqoMvS+T4e54HIWPnRB4
-         gd3P9+xSKdoWq27wL7PgUTzoQsD59FcB6Lhda/jZReJNMkhl7zVuN7EletYcqrATcc6/
-         +/GrE/9XP7YU3GFFImp3ylHERzIYHazj/Wy9ZfAoyurWM9hfJ+rwkh9GYOAvJmkZ9tEK
-         niJQ==
-X-Gm-Message-State: APjAAAVRVOfe24RZEmPggTAffiaPF1smhfsn4C6+0xPSCA/pMYVJh7KI
-        aZRe2nw8jCzeJIZIWVH1WS9aeDAE+Jjkq/DBV5HOlw==
-X-Google-Smtp-Source: APXvYqxj1y4zq4ck09AsQ+TWr6rOWz6MgpqBt4AAFfE5gmysG0rc8SoTkjCp6uuha2P1t/EVGp8MOr1viSB5gkUKrmQ=
-X-Received: by 2002:a19:f204:: with SMTP id q4mr9970743lfh.29.1567598959120;
- Wed, 04 Sep 2019 05:09:19 -0700 (PDT)
-MIME-Version: 1.0
-References: <20190904112653.22452-1-festevam@gmail.com>
-In-Reply-To: <20190904112653.22452-1-festevam@gmail.com>
-From:   Nicolas Dechesne <nicolas.dechesne@linaro.org>
-Date:   Wed, 4 Sep 2019 14:09:07 +0200
-Message-ID: <CAP71Wjy3yR4vx-0e4E=EOAeKNaCp0KLyZaYyzRfRk0XefOBJFA@mail.gmail.com>
-Subject: Re: [PATCH] qcom: Add firmware files for Adreno A200
-To:     Fabio Estevam <festevam@gmail.com>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     Josh Boyer <jwboyer@kernel.org>,
-        Jordan Crouse <jcrouse@codeaurora.org>, robdclark@chromium.org,
-        Linux Firmware <linux-firmware@kernel.org>, jonathan@marek.ca,
-        cphealy@gmail.com, freedreno <freedreno@lists.freedesktop.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=j1L0vi/lTdzTHLv3g6fvZdqTeNGWnLIBcndjiDlAU44=;
+        b=AJ8diHTFcG3q1PQ8NladuWC5HmqzVBI3R/YGUawymh6ra1KkI5iGylLL+mI+lZWY79
+         MWT6Alk4rTIF7blBkqBEYxkASr/NiKkHhYynkYDamQvhB79lHlvBYd9mltDD20S7cdl4
+         L05zl6GrMW8cy1TYBzIUy8JdgPp5k3/jfUDUI6RBvYBhaoJ1c9vWSU5cKDvaT0A58Sfp
+         y6jApxVrBwwNFWgYus+yCqsYMp8Gj85xbOYG8AqMHZKQ/fEVCP//JI8QLpCCUe3hPQUX
+         tVud1E1t1phXGffB+U6vZK/isQRsxVw8iP6BhjwBRRSfWs4s4D+q0glFYhTWxiE5hbJD
+         Y20Q==
+X-Gm-Message-State: APjAAAUyq7811i5ifLs10m6Vz/0Wqfl4Q8YsnmM8apgzZE9n0C3rXnEe
+        s/jHetFwxRyYbkDxA8e23x0W1w==
+X-Google-Smtp-Source: APXvYqwlajL+ng1PxbbjKKB7QQeI/rI3QTcpoDDhlkpd4CH9T+rzRWP4+uIVNhZ6vCnAuLFQNzH85Q==
+X-Received: by 2002:adf:f404:: with SMTP id g4mr46701655wro.290.1567599371852;
+        Wed, 04 Sep 2019 05:16:11 -0700 (PDT)
+Received: from localhost.localdomain ([95.147.198.36])
+        by smtp.gmail.com with ESMTPSA id y186sm4741534wmb.41.2019.09.04.05.16.10
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 04 Sep 2019 05:16:11 -0700 (PDT)
+From:   Lee Jones <lee.jones@linaro.org>
+To:     agross@kernel.org, robh+dt@kernel.org, mark.rutland@arm.com,
+        bjorn.andersson@linaro.org
+Cc:     linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        Lee Jones <lee.jones@linaro.org>
+Subject: [PATCH v3 1/1] arm64: dts: qcom: Add Lenovo Yoga C630
+Date:   Wed,  4 Sep 2019 13:16:06 +0100
+Message-Id: <20190904121606.17474-1-lee.jones@linaro.org>
+X-Mailer: git-send-email 2.17.1
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-hi Fabio,
+From: Bjorn Andersson <bjorn.andersson@linaro.org>
 
-On Wed, Sep 4, 2019 at 1:27 PM Fabio Estevam <festevam@gmail.com> wrote:
->
-> Add firmware files for Adreno A200.
->
-> These firmware files are needed for running the adreno kernel
-> driver on i.MX51 and i.MX53 SoCs.
->
-> Signed-off-by: Fabio Estevam <festevam@gmail.com>
-> ---
->  WHENCE             |   2 ++
->  qcom/yamato_pfp.fw | Bin 0 -> 1156 bytes
->  qcom/yamato_pm4.fw | Bin 0 -> 9220 bytes
->  3 files changed, 2 insertions(+)
->  create mode 100644 qcom/yamato_pfp.fw
->  create mode 100644 qcom/yamato_pm4.fw
->
-> diff --git a/WHENCE b/WHENCE
-> index a8ec628..5e46d33 100644
-> --- a/WHENCE
-> +++ b/WHENCE
-> @@ -4418,6 +4418,8 @@ File: qcom/a530_zap.b00
->  File: qcom/a530_zap.b01
->  File: qcom/a530_zap.b02
->  File: qcom/a530_zap.mdt
-> +File: qcom/yamato_pfp.fw
-> +File: qcom/yamato_pm4.fw
+The Lenovo Yoga C630 is built on the SDM850 from Qualcomm, but this seem
+to be similar enough to the SDM845 that we can reuse the sdm845.dtsi.
 
-Where did you get these files from in the first place? On which
-devices do you expect these firmware files to work? We were recently
-discussing how to structure /lib/firmware/qcom more carefully. And the
-general consensus that we reached with Rob C. and Bjorn is that if a
-firmware is expected to work on a specific device (maybe it is signed)
-it should be placed in /lib/firmware/qcom/<device> and if it's
-unsigned and can be used on several devices based on the same SoC (dev
-boards, ..) then it should be /lib/firmware/qcom/<SOC>.
+Supported by this patch is: keyboard, battery monitoring, UFS storage,
+USB host and Bluetooth.
 
->
->  Licence: Redistributable. See LICENSE.qcom and qcom/NOTICE.txt for details
+Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+Signed-off-by: Lee Jones <lee.jones@linaro.org>
+---
+ arch/arm64/boot/dts/qcom/Makefile             |   1 +
+ .../boot/dts/qcom/sdm850-lenovo-yoga-c630.dts | 449 ++++++++++++++++++
+ 2 files changed, 450 insertions(+)
+ create mode 100644 arch/arm64/boot/dts/qcom/sdm850-lenovo-yoga-c630.dts
 
-Are they really distributed under these license terms? That's a
-specific license that we came up with with Qualcomm a couple of years
-ago based on their Dragonboard offers.
+diff --git a/arch/arm64/boot/dts/qcom/Makefile b/arch/arm64/boot/dts/qcom/Makefile
+index 0a7e5dfce6f7..670c6c65f9e9 100644
+--- a/arch/arm64/boot/dts/qcom/Makefile
++++ b/arch/arm64/boot/dts/qcom/Makefile
+@@ -12,5 +12,6 @@ dtb-$(CONFIG_ARCH_QCOM)	+= sdm845-cheza-r2.dtb
+ dtb-$(CONFIG_ARCH_QCOM)	+= sdm845-cheza-r3.dtb
+ dtb-$(CONFIG_ARCH_QCOM)	+= sdm845-db845c.dtb
+ dtb-$(CONFIG_ARCH_QCOM)	+= sdm845-mtp.dtb
++dtb-$(CONFIG_ARCH_QCOM)	+= sdm850-lenovo-yoga-c630.dtb
+ dtb-$(CONFIG_ARCH_QCOM)	+= qcs404-evb-1000.dtb
+ dtb-$(CONFIG_ARCH_QCOM)	+= qcs404-evb-4000.dtb
+diff --git a/arch/arm64/boot/dts/qcom/sdm850-lenovo-yoga-c630.dts b/arch/arm64/boot/dts/qcom/sdm850-lenovo-yoga-c630.dts
+new file mode 100644
+index 000000000000..e49a339ad2df
+--- /dev/null
++++ b/arch/arm64/boot/dts/qcom/sdm850-lenovo-yoga-c630.dts
+@@ -0,0 +1,449 @@
++// SPDX-License-Identifier: GPL-2.0
++/*
++ * Lenovo Yoga C630
++ *
++ * Copyright (c) 2019, Linaro Ltd.
++ */
++
++/dts-v1/;
++
++#include <dt-bindings/regulator/qcom,rpmh-regulator.h>
++#include "sdm845.dtsi"
++#include "pm8998.dtsi"
++
++/ {
++	model = "Lenovo Yoga C630";
++	compatible = "lenovo,yoga-c630", "qcom,sdm845";
++
++	aliases {
++		hsuart0 = &uart6;
++	};
++};
++
++&apps_rsc {
++	pm8998-rpmh-regulators {
++		compatible = "qcom,pm8998-rpmh-regulators";
++		qcom,pmic-id = "a";
++
++		vdd-l2-l8-l17-supply = <&vreg_s3a_1p35>;
++		vdd-l7-l12-l14-l15-supply = <&vreg_s5a_2p04>;
++
++		vreg_s2a_1p125: smps2 {
++		};
++
++		vreg_s3a_1p35: smps3 {
++			regulator-min-microvolt = <1352000>;
++			regulator-max-microvolt = <1352000>;
++			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
++		};
++
++		vreg_s4a_1p8: smps4 {
++			regulator-min-microvolt = <1800000>;
++			regulator-max-microvolt = <1800000>;
++			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
++		};
++
++		vreg_s5a_2p04: smps5 {
++			regulator-min-microvolt = <2040000>;
++			regulator-max-microvolt = <2040000>;
++			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
++		};
++
++		vreg_s7a_1p025: smps7 {
++		};
++
++		vdd_qusb_hs0:
++		vdda_hp_pcie_core:
++		vdda_mipi_csi0_0p9:
++		vdda_mipi_csi1_0p9:
++		vdda_mipi_csi2_0p9:
++		vdda_mipi_dsi0_pll:
++		vdda_mipi_dsi1_pll:
++		vdda_qlink_lv:
++		vdda_qlink_lv_ck:
++		vdda_qrefs_0p875:
++		vdda_pcie_core:
++		vdda_pll_cc_ebi01:
++		vdda_pll_cc_ebi23:
++		vdda_sp_sensor:
++		vdda_ufs1_core:
++		vdda_ufs2_core:
++		vdda_usb1_ss_core:
++		vdda_usb2_ss_core:
++		vreg_l1a_0p875: ldo1 {
++			regulator-min-microvolt = <880000>;
++			regulator-max-microvolt = <880000>;
++			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
++		};
++
++		vddpx_10:
++		vreg_l2a_1p2: ldo2 {
++			regulator-min-microvolt = <1200000>;
++			regulator-max-microvolt = <1200000>;
++			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
++			regulator-always-on;
++		};
++
++		vreg_l3a_1p0: ldo3 {
++		};
++
++		vdd_wcss_cx:
++		vdd_wcss_mx:
++		vdda_wcss_pll:
++		vreg_l5a_0p8: ldo5 {
++			regulator-min-microvolt = <800000>;
++			regulator-max-microvolt = <800000>;
++			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
++		};
++
++		vddpx_13:
++		vreg_l6a_1p8: ldo6 {
++			regulator-min-microvolt = <1800000>;
++			regulator-max-microvolt = <1800000>;
++			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
++		};
++
++		vreg_l7a_1p8: ldo7 {
++			regulator-min-microvolt = <1800000>;
++			regulator-max-microvolt = <1800000>;
++			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
++		};
++
++		vreg_l8a_1p2: ldo8 {
++		};
++
++		vreg_l9a_1p8: ldo9 {
++		};
++
++		vreg_l10a_1p8: ldo10 {
++		};
++
++		vreg_l11a_1p0: ldo11 {
++		};
++
++		vdd_qfprom:
++		vdd_qfprom_sp:
++		vdda_apc1_cs_1p8:
++		vdda_gfx_cs_1p8:
++		vdda_qrefs_1p8:
++		vdda_qusb_hs0_1p8:
++		vddpx_11:
++		vreg_l12a_1p8: ldo12 {
++			regulator-min-microvolt = <1800000>;
++			regulator-max-microvolt = <1800000>;
++			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
++		};
++
++		vddpx_2:
++		vreg_l13a_2p95: ldo13 {
++		};
++
++		vreg_l14a_1p88: ldo14 {
++			regulator-min-microvolt = <1880000>;
++			regulator-max-microvolt = <1880000>;
++			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
++		};
++
++		vreg_l15a_1p8: ldo15 {
++		};
++
++		vreg_l16a_2p7: ldo16 {
++		};
++
++		vreg_l17a_1p3: ldo17 {
++			regulator-min-microvolt = <1304000>;
++			regulator-max-microvolt = <1304000>;
++			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
++		};
++
++		vreg_l18a_2p7: ldo18 {
++		};
++
++		vreg_l19a_3p0: ldo19 {
++			regulator-min-microvolt = <3100000>;
++			regulator-max-microvolt = <3108000>;
++			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
++		};
++
++		vreg_l20a_2p95: ldo20 {
++			regulator-min-microvolt = <2960000>;
++			regulator-max-microvolt = <2960000>;
++			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
++		};
++
++		vreg_l21a_2p95: ldo21 {
++		};
++
++		vreg_l22a_2p85: ldo22 {
++		};
++
++		vreg_l23a_3p3: ldo23 {
++		};
++
++		vdda_qusb_hs0_3p1:
++		vreg_l24a_3p075: ldo24 {
++			regulator-min-microvolt = <3075000>;
++			regulator-max-microvolt = <3083000>;
++			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
++		};
++
++		vreg_l25a_3p3: ldo25 {
++			regulator-min-microvolt = <3104000>;
++			regulator-max-microvolt = <3112000>;
++			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
++		};
++
++		vdda_hp_pcie_1p2:
++		vdda_hv_ebi0:
++		vdda_hv_ebi1:
++		vdda_hv_ebi2:
++		vdda_hv_ebi3:
++		vdda_mipi_csi_1p25:
++		vdda_mipi_dsi0_1p2:
++		vdda_mipi_dsi1_1p2:
++		vdda_pcie_1p2:
++		vdda_ufs1_1p2:
++		vdda_ufs2_1p2:
++		vdda_usb1_ss_1p2:
++		vdda_usb2_ss_1p2:
++		vreg_l26a_1p2: ldo26 {
++			regulator-min-microvolt = <1200000>;
++			regulator-max-microvolt = <1208000>;
++			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
++		};
++
++		vreg_l28a_3p0: ldo28 {
++		};
++
++		vreg_lvs1a_1p8: lvs1 {
++		};
++
++		vreg_lvs2a_1p8: lvs2 {
++		};
++	};
++};
++
++&apps_smmu {
++	/* TODO: Figure out how to survive booting with this enabled */
++	status = "disabled";
++};
++
++&gcc {
++	protected-clocks = <GCC_QSPI_CORE_CLK>,
++			   <GCC_QSPI_CORE_CLK_SRC>,
++			   <GCC_QSPI_CNOC_PERIPH_AHB_CLK>;
++};
++
++&i2c1 {
++	status = "okay";
++	clock-frequency = <400000>;
++	qcom,geni-se-fifo;
++};
++
++&i2c3 {
++	status = "okay";
++	clock-frequency = <400000>;
++	qcom,geni-se-fifo;
++
++	hid@15 {
++		compatible = "hid-over-i2c";
++		reg = <0x15>;
++		hid-descr-addr = <0x1>;
++
++		interrupts-extended = <&tlmm 37 IRQ_TYPE_EDGE_RISING>;
++	};
++
++	hid@2c {
++		compatible = "hid-over-i2c";
++		reg = <0x2c>;
++		hid-descr-addr = <0x20>;
++
++		interrupts-extended = <&tlmm 37 IRQ_TYPE_EDGE_RISING>;
++
++		pinctrl-names = "default";
++		pinctrl-0 = <&i2c2_hid_active>;
++	};
++};
++
++&i2c5 {
++	status = "okay";
++	clock-frequency = <400000>;
++	qcom,geni-se-fifo;
++
++	hid@10 {
++		compatible = "hid-over-i2c";
++		reg = <0x10>;
++		hid-descr-addr = <0x1>;
++
++		interrupts-extended = <&tlmm 125 IRQ_TYPE_EDGE_FALLING>;
++
++		pinctrl-names = "default";
++		pinctrl-0 = <&i2c6_hid_active>;
++	};
++};
++
++&i2c11 {
++	status = "okay";
++	clock-frequency = <400000>;
++	qcom,geni-se-fifo;
++
++	hid@5c {
++		compatible = "hid-over-i2c";
++		reg = <0x5c>;
++		hid-descr-addr = <0x1>;
++
++		interrupts-extended = <&tlmm 92 IRQ_TYPE_LEVEL_LOW>;
++
++		pinctrl-names = "default";
++		pinctrl-0 = <&i2c12_hid_active>;
++	};
++};
++
++&qup_i2c12_default {
++	drive-strength = <2>;
++	bias-disable;
++};
++
++&qup_uart6_default {
++	pinmux {
++		 pins = "gpio45", "gpio46", "gpio47", "gpio48";
++		 function = "qup6";
++	};
++
++	cts {
++		pins = "gpio45";
++		bias-pull-down;
++	};
++
++	rts-tx {
++		pins = "gpio46", "gpio47";
++		drive-strength = <2>;
++		bias-disable;
++	};
++
++	rx {
++		pins = "gpio48";
++		bias-pull-up;
++	};
++};
++
++&qupv3_id_0 {
++	status = "okay";
++};
++
++&qupv3_id_1 {
++	status = "okay";
++};
++
++&tlmm {
++	gpio-reserved-ranges = <0 4>, <81 4>;
++
++	i2c2_hid_active: i2c2-hid-active {
++		pins = <37>;
++		function = "gpio";
++
++		input-enable;
++		bias-pull-up;
++		drive-strength = <2>;
++	};
++
++	i2c6_hid_active: i2c6-hid-active {
++		pins = <125>;
++		function = "gpio";
++
++		input-enable;
++		bias-pull-up;
++		drive-strength = <2>;
++	};
++
++	i2c12_hid_active: i2c12-hid-active {
++		pins = <92>;
++		function = "gpio";
++
++		input-enable;
++		bias-pull-up;
++		drive-strength = <2>;
++	};
++};
++
++&uart6 {
++	status = "okay";
++
++	bluetooth {
++		compatible = "qcom,wcn3990-bt";
++
++		vddio-supply = <&vreg_s4a_1p8>;
++		vddxo-supply = <&vreg_l7a_1p8>;
++		vddrf-supply = <&vreg_l17a_1p3>;
++		vddch0-supply = <&vreg_l25a_3p3>;
++		max-speed = <3200000>;
++	};
++};
++
++&ufs_mem_hc {
++	status = "okay";
++
++	vcc-supply = <&vreg_l20a_2p95>;
++	vcc-max-microamp = <600000>;
++};
++
++&ufs_mem_phy {
++	status = "okay";
++
++	vdda-phy-supply = <&vdda_ufs1_core>;
++	vdda-pll-supply = <&vdda_ufs1_1p2>;
++};
++
++&usb_1 {
++	status = "okay";
++};
++
++&usb_1_dwc3 {
++	dr_mode = "host";
++};
++
++&usb_1_hsphy {
++	status = "okay";
++
++	vdd-supply = <&vdda_usb1_ss_core>;
++	vdda-pll-supply = <&vdda_qusb_hs0_1p8>;
++	vdda-phy-dpdm-supply = <&vdda_qusb_hs0_3p1>;
++
++	qcom,imp-res-offset-value = <8>;
++	qcom,hstx-trim-value = <QUSB2_V2_HSTX_TRIM_21_6_MA>;
++	qcom,preemphasis-level = <QUSB2_V2_PREEMPHASIS_5_PERCENT>;
++	qcom,preemphasis-width = <QUSB2_V2_PREEMPHASIS_WIDTH_HALF_BIT>;
++};
++
++&usb_1_qmpphy {
++	status = "okay";
++
++	vdda-phy-supply = <&vdda_usb1_ss_1p2>;
++	vdda-pll-supply = <&vdda_usb1_ss_core>;
++};
++
++&usb_2 {
++	status = "okay";
++};
++
++&usb_2_dwc3 {
++	dr_mode = "host";
++};
++
++&usb_2_hsphy {
++	status = "okay";
++
++	vdd-supply = <&vdda_usb2_ss_core>;
++	vdda-pll-supply = <&vdda_qusb_hs0_1p8>;
++	vdda-phy-dpdm-supply = <&vdda_qusb_hs0_3p1>;
++
++	qcom,imp-res-offset-value = <8>;
++	qcom,hstx-trim-value = <QUSB2_V2_HSTX_TRIM_22_8_MA>;
++};
++
++&usb_2_qmpphy {
++	status = "okay";
++
++	vdda-phy-supply = <&vdda_usb2_ss_1p2>;
++	vdda-pll-supply = <&vdda_usb2_ss_core>;
++};
+-- 
+2.17.1
 
->
-> diff --git a/qcom/yamato_pfp.fw b/qcom/yamato_pfp.fw
-> new file mode 100644
-> index 0000000000000000000000000000000000000000..61a576eb997ce2ee0d32b135adc5d8c789d8e118
-> GIT binary patch
-> literal 1156
-> zcmaKr%WG3X7{!10-ZY7A3K1$6=_76G1N!h4AK=1^>7q~<E%;a!K{qZG{{WkEu`Vig
-> znc9aU-RVwT2qFk+Q_@myY|Wy$6#N(5N<A}4Y7An+@Xef=?>pywGZ*xWlo-D@qsc1s
-> zPiBZtq;Lo<?)jnc0FONz87grhu?2;tYGjUXtrI+jc!`*Bk|n%g5tAFK<$08Cey`T`
-> zvx)jy!_iTK&JzB^96f&7=Jy2U|K?k+gt(ON1sa9FwHhv?DgHb|R9rnZ-6s0-6jM&z
-> z<oUHc%}p<2ua40-x6P;G0z=6yT7xAz^XG{8D<toSI0F%~&MtQ~T=}{_nNy9j>b=By
-> z8`b=UTDGpZL%olqwSLyuMi<gPtom*~LmSJCbZV|Tu6+Mc?V^V9)FoZr!s@x6yK8%C
-> z_Iu;H3)M*(Z_;Vjwjatfch;}iOVyu=r@M4c9_##P#7|+_;(b9#$`3g#E&H)G(&EW#
-> zxHmG)zn>;t$l(^GuMl!ic#FAX%}uRm#-DUZ1hd+EFuQ1Z%pKHqw^N~=sumk-JviU7
-> z&1%0qeGi$+F4LlD>Nu(BfzF~^Ik@AK4f|)~+w9LSVPYeflWINSJtW>%jmAE-X`N`o
-> z($Z#o#}~_Q`saDO4AgL=$zW+=$D6RMuoF#~Id3&ZPDx9}ei!DQJAO!1<Cne}H@=}a
-> zw84=e&!8{|-Sa>8&3oD$%MmN&SySBjIZa%1lT+oXSj=m{xNPnN27?{z{g3~>S}*2o
-> z+!Sjl6<_79MgKjLeBh|wK|hyBla<>kPV$Ih9y6j|j?+bkAujSpCsw$^Yp(K*QPvsb
-> aBNKdPk}Yn^%`G{<%{x^na)+4oG>_jjN)4X?
->
-> literal 0
-> HcmV?d00001
->
-> diff --git a/qcom/yamato_pm4.fw b/qcom/yamato_pm4.fw
-> new file mode 100644
-> index 0000000000000000000000000000000000000000..b45ea20ba5773ef6da25e21abd29914ea9162c07
-> GIT binary patch
-> literal 9220
-> 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
->
-> literal 0
-> HcmV?d00001
->
-> --
-> 2.17.1
->
