@@ -2,74 +2,57 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 5B660A8471
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Sep 2019 15:49:52 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A6A5CA84B0
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Sep 2019 15:50:21 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730317AbfIDNYR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 4 Sep 2019 09:24:17 -0400
-Received: from mail-lj1-f195.google.com ([209.85.208.195]:39745 "EHLO
-        mail-lj1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730193AbfIDNYR (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 4 Sep 2019 09:24:17 -0400
-Received: by mail-lj1-f195.google.com with SMTP id j16so13439685ljg.6
-        for <linux-arm-msm@vger.kernel.org>; Wed, 04 Sep 2019 06:24:16 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=aqQvklk8YIAFUL9lGcPHiWhtS58FRSlGQcASUQ543l0=;
-        b=hrEGXFTiVfl2ayVHe7GhvPWCx/hZhnMQWOnrOquNFJzjQmJEAPbAd5llGrzK8r003L
-         ZHW6aH+hIi7aRiRaNelBhwHX/njZzNdJfvYi3+LZB0T1gGwhv4BhpwH/bLi29wt6MP11
-         xb1M02zcK4APML8vL+s5X9sgo+cQYF9XGkCEnq9/9CoJO8E7PGaojjQSJqMAkaRdmIT1
-         EPaw2wPwkID896IbPq0h/CwUoukxwFp3QUcR7IkHrKaQUn+FaUceBw6gh3sDBf7fiGTq
-         bdVqrMPr3nP0UHqmJEKPBA+6F/TBN80bvWhMqJh5fIDnatPnJnFni4NbEm8GCWrHkyWb
-         ie7Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=aqQvklk8YIAFUL9lGcPHiWhtS58FRSlGQcASUQ543l0=;
-        b=YmKErIUWqbSRwpuyTCOJQtWvhxAXA4OHGGOgdaGFC+lJSFiaXbKif66WQEUXf7oObq
-         0DJ9zuZCBxkJX9Z3chBUlr66SWTtQi5MotAvaCaAFQO+nO46LFDhapmmCGYOtcCEuFXs
-         kmjPVl9mRi3/oVWKLUEhHmIRjId+l9+u7qFCoJyfeRT/OqQys74bAr5ClrS2zWyZmkex
-         7+FlOY4zDjabj4rDjttixy2wrKq4YYIUYepnXL4fc/FW27dtvSbhigPyaBIQ/0XMY7PD
-         QPTusc7Ml88cIpHWxScsdMaBkxItHzp4WoPnHsI2db/TfxHqmTcera3XkcvlqiR9aY9k
-         esZw==
-X-Gm-Message-State: APjAAAWZ5j6YrXacBMDPVk97HcbrvuBPE2WP7eW10yZjHlA1y7xz6QnV
-        SRf/jM36HRhwTLLjDAgvrvb3rAS7CApK+zmjmtpckw==
-X-Google-Smtp-Source: APXvYqzzpq0zy/ApTjeKi5jzJDmNcldnYjTPQZRuBnxHCQ1EP/fKYVGvmjJY5Dfa1R8vvE78iBx8GyZjNk6U6GqI/V4=
-X-Received: by 2002:a2e:b174:: with SMTP id a20mr23389649ljm.108.1567603455383;
- Wed, 04 Sep 2019 06:24:15 -0700 (PDT)
+        id S1729963AbfIDNpx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 4 Sep 2019 09:45:53 -0400
+Received: from mail.kernel.org ([198.145.29.99]:34156 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726943AbfIDNpx (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 4 Sep 2019 09:45:53 -0400
+Received: from localhost (unknown [122.182.201.156])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by mail.kernel.org (Postfix) with ESMTPSA id 57E2C2339D;
+        Wed,  4 Sep 2019 13:45:51 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=default; t=1567604752;
+        bh=1r1n2dV7qz+ood1UyoTT8pXwvwuaPc1xvE+m2kLuLm0=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=VJYUK7AKwKFFeNR5HQDRyVndRcn8WMpiJR5kF6ik6JJAcWm9HB3GkpYTQXBaMbbF/
+         Wu5PgJ4QV3X5JTut4mkTGegMkJfnQF1RUYgkK14KDV6C3MnJmWazRLkbuUmr33Iq4y
+         s/mWFtltbkEnLlN9DASG1CbnXPt03S2nLPMlN0Eo=
+Date:   Wed, 4 Sep 2019 19:14:38 +0530
+From:   Vinod Koul <vkoul@kernel.org>
+To:     Lee Jones <lee.jones@linaro.org>
+Cc:     agross@kernel.org, robh+dt@kernel.org, mark.rutland@arm.com,
+        bjorn.andersson@linaro.org, linux-arm-kernel@lists.infradead.org,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org
+Subject: Re: [PATCH v3 1/1] arm64: dts: qcom: Add Lenovo Yoga C630
+Message-ID: <20190904134438.GZ2672@vkoul-mobl>
+References: <20190904121606.17474-1-lee.jones@linaro.org>
 MIME-Version: 1.0
-References: <20190830060227.12792-1-swboyd@chromium.org>
-In-Reply-To: <20190830060227.12792-1-swboyd@chromium.org>
-From:   Linus Walleij <linus.walleij@linaro.org>
-Date:   Wed, 4 Sep 2019 15:24:03 +0200
-Message-ID: <CACRpkdZZ5WX5hMYwv9D4ED+ChD44RG2FEHU0Hi83v8znu1i4dw@mail.gmail.com>
-Subject: Re: [PATCH] pinctrl: qcom: sdm845: Fix UFS_RESET pin
-To:     Stephen Boyd <swboyd@chromium.org>
-Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
-        MSM <linux-arm-msm@vger.kernel.org>,
-        "open list:GPIO SUBSYSTEM" <linux-gpio@vger.kernel.org>,
-        Andy Gross <agross@kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20190904121606.17474-1-lee.jones@linaro.org>
+User-Agent: Mutt/1.12.0 (2019-05-25)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, Aug 30, 2019 at 8:02 AM Stephen Boyd <swboyd@chromium.org> wrote:
+On 04-09-19, 13:16, Lee Jones wrote:
+> From: Bjorn Andersson <bjorn.andersson@linaro.org>
+> 
+> The Lenovo Yoga C630 is built on the SDM850 from Qualcomm, but this seem
+> to be similar enough to the SDM845 that we can reuse the sdm845.dtsi.
+> 
+> Supported by this patch is: keyboard, battery monitoring, UFS storage,
+> USB host and Bluetooth.
 
-> The UFS_RESET pin is the magical pin #150 now, not 153 per the
-> sdm845_groups array declared in this file. Fix the order of pins so that
-> UFS_RESET is 150 and the SDC pins follow after.
->
-> Fixes: 53a5372ce326 ("pinctrl: qcom: sdm845: Expose ufs_reset as gpio")
-> Signed-off-by: Stephen Boyd <swboyd@chromium.org>
+Reviewed-by: Vinod Koul <vkoul@kernel.org>
 
-Patch applied with Bjorn's ACK.
-
-Yours,
-Linus Walleij
+-- 
+~Vinod
