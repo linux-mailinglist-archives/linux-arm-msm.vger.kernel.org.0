@@ -2,125 +2,154 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 11DA9A94C5
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Sep 2019 23:15:57 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B60F0A950C
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Sep 2019 23:23:50 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729626AbfIDVP4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 4 Sep 2019 17:15:56 -0400
-Received: from mail-wm1-f68.google.com ([209.85.128.68]:51260 "EHLO
-        mail-wm1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726495AbfIDVP4 (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 4 Sep 2019 17:15:56 -0400
-Received: by mail-wm1-f68.google.com with SMTP id k1so316214wmi.1;
-        Wed, 04 Sep 2019 14:15:54 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=Dxs4Xmn14Ti3jSgpkVxzxzwg3rZgGyhdBRyDXWQ1X6k=;
-        b=LjvjwT5oZwcFzZGrEpF0CjtQsd3HtOKG/33/xQR71ZQPwHOoTe774LhAF84EkQS4m0
-         tpC8rlsKBJKRELBRH//hru/A6+MI1oS4uxB+0Hzl2NvpWLL5ff8rfnw60mjY+8NRbUVW
-         wyMUQS3Yfy6EQn4YQFaa6iV3NK2cxGYd2V61dkWUdMcKy/gb2HdmcLrzoZxqYhb8DZ15
-         fKnEm2OcVI6vpGIqE6aEcB/WVQ5Jr+uEM7jiDaDzVdZGzEXLevuBBsqFV1Dq6jMElZ5u
-         JRrQsjHB0ps1F874d62Mf14JCYIvL5LMH1TGRmgouegKZdEW5AU6YlmVyC/lgVpsjCuK
-         JyBw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:date:message-id
-         :mime-version:content-transfer-encoding;
-        bh=Dxs4Xmn14Ti3jSgpkVxzxzwg3rZgGyhdBRyDXWQ1X6k=;
-        b=DTKSdofL4mm7d/fZhY85NjWPULtSJytQO3azdN5kWQVasJMjQhAADBq12ptrZE7vmA
-         qk99RW/o0yAPWhoQ31MKAQ1m05hRIkcYphfB8B7zuhUhR9JeXNvM/rEYZ9srrrRGnoPM
-         djd7vAuMdKQ4DF/ig0jPH8yea7bSC//qk2uAsBWzL2Np33e/QaBrTB+2XWSsiPPBsoFx
-         XdxlhyglCFdceQ/l5sz+WKGny7R4qMiiPDS0/EelkgGwyB2a7L6LHDdKVdpx4jwgDwYX
-         cZfuJNMs4C6wf+P2ERgIOC0c6mA6wSHOGdrlJR1x1LMjJSJAGKGb6oEPCmkhSWalCOLN
-         4B/A==
-X-Gm-Message-State: APjAAAVg0htJzi2Qdia8xreBDTQiH94IiQ2v1ThpMJ2TyRrYIlUj3K0N
-        zQZLggSH/Tc6CQMB9Cfkrec=
-X-Google-Smtp-Source: APXvYqzrb9vggbAwpQr2Dks5C0st9n10mD88uNXH+VICsMg+OfF85dbySpily4o4x8blq3AEb63FBA==
-X-Received: by 2002:a05:600c:214:: with SMTP id 20mr234250wmi.112.1567631754197;
-        Wed, 04 Sep 2019 14:15:54 -0700 (PDT)
-Received: from localhost.localdomain (ip5b4096c3.dynamic.kabel-deutschland.de. [91.64.150.195])
-        by smtp.gmail.com with ESMTPSA id u83sm5822743wme.0.2019.09.04.14.15.52
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 04 Sep 2019 14:15:53 -0700 (PDT)
-From:   Krzysztof Wilczynski <kw@linux.com>
-To:     Rob Clark <robdclark@gmail.com>
-Cc:     Sean Paul <sean@poorly.run>, David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Alexios Zavras <alexios.zavras@intel.com>,
-        Thomas Gleixner <tglx@linutronix.de>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Allison Randal <allison@lohutok.net>,
-        Jeffrey Hugo <jeffrey.l.hugo@gmail.com>,
-        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org
-Subject: [PATCH] drm/msm/dsi: Move static keyword to the front of declarations
-Date:   Wed,  4 Sep 2019 23:15:51 +0200
-Message-Id: <20190904211551.10381-1-kw@linux.com>
-X-Mailer: git-send-email 2.23.0
+        id S1730876AbfIDVXm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 4 Sep 2019 17:23:42 -0400
+Received: from sauhun.de ([88.99.104.3]:46340 "EHLO pokefinder.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1730863AbfIDVXk (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 4 Sep 2019 17:23:40 -0400
+Received: from localhost (p54B337F1.dip0.t-ipconnect.de [84.179.55.241])
+        by pokefinder.org (Postfix) with ESMTPSA id 285352C08C3;
+        Wed,  4 Sep 2019 23:23:38 +0200 (CEST)
+Date:   Wed, 4 Sep 2019 23:23:37 +0200
+From:   Wolfram Sang <wsa@the-dreams.de>
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     Lee Jones <lee.jones@linaro.org>, alokc@codeaurora.org,
+        agross@kernel.org, robh+dt@kernel.org, mark.rutland@arm.com,
+        linux-i2c@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+        linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 1/2] i2c: qcom-geni: Provide an option to select FIFO
+ processing
+Message-ID: <20190904212337.GF23608@ninjato>
+References: <20190904113613.14997-1-lee.jones@linaro.org>
+ <20190904203548.GC580@tuxbook-pro>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="kbCYTQG2MZjuOjyn"
+Content-Disposition: inline
+In-Reply-To: <20190904203548.GC580@tuxbook-pro>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Move the static keyword to the front of declarations
-of msm_dsi_v2_host_ops, msm_dsi_6g_host_ops and
-msm_dsi_6g_v2_host_ops, and resolve the following
-compiler warnings that can be seen when building
-with warnings enabled (W=1):
 
-drivers/gpu/drm/msm/dsi/dsi_cfg.c:150:1: warning:
-  ‘static’ is not at beginning of declaration [-Wold-style-declaration]
+--kbCYTQG2MZjuOjyn
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-drivers/gpu/drm/msm/dsi/dsi_cfg.c:161:1: warning:
-  ‘static’ is not at beginning of declaration [-Wold-style-declaration]
+On Wed, Sep 04, 2019 at 01:35:48PM -0700, Bjorn Andersson wrote:
+> On Wed 04 Sep 04:36 PDT 2019, Lee Jones wrote:
+>=20
+> The subject implies that we select FIFO mode instead of DMA, but that's
+> not really true, because with DMA enabled we still fall back to FIFO for
+> messages below 32 bytes.=20
+>=20
+> So what this does it to disable DMA, which neither the subject or the DT
+> property describes.
+>=20
+> Also missing is a description of why this is needed.
 
-drivers/gpu/drm/msm/dsi/dsi_cfg.c:172:1: warning:
-  ‘static’ is not at beginning of declaration [-Wold-style-declaration]
+Yes.
 
-Signed-off-by: Krzysztof Wilczynski <kw@linux.com>
----
-Related: https://lore.kernel.org/r/20190827233017.GK9987@google.com
+I am willing to help to get this resolved soonish. However, I have
+issues with the approach.
 
- drivers/gpu/drm/msm/dsi/dsi_cfg.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+It looks like a workaround to me. It would be interesting to hear which
+I2C client breaks with DMA and if it's driver can't be fixed somehow
+instead. But even if we agree on a workaround short term, adding a
+binding for this workaround seems like a no-go to me. We have to live
+with this binding forever. Sidenote: I could think of a generic
+'disable-dma' which could be reused everywhere but we probably won't get
+that upstream that late in the cycle.
 
-diff --git a/drivers/gpu/drm/msm/dsi/dsi_cfg.c b/drivers/gpu/drm/msm/dsi/dsi_cfg.c
-index b7b7c1a9164a..e74dc8cc904b 100644
---- a/drivers/gpu/drm/msm/dsi/dsi_cfg.c
-+++ b/drivers/gpu/drm/msm/dsi/dsi_cfg.c
-@@ -147,7 +147,7 @@ static const struct msm_dsi_config sdm845_dsi_cfg = {
- 	.num_dsi = 2,
- };
- 
--const static struct msm_dsi_host_cfg_ops msm_dsi_v2_host_ops = {
-+static const struct msm_dsi_host_cfg_ops msm_dsi_v2_host_ops = {
- 	.link_clk_enable = dsi_link_clk_enable_v2,
- 	.link_clk_disable = dsi_link_clk_disable_v2,
- 	.clk_init_ver = dsi_clk_init_v2,
-@@ -158,7 +158,7 @@ const static struct msm_dsi_host_cfg_ops msm_dsi_v2_host_ops = {
- 	.calc_clk_rate = dsi_calc_clk_rate_v2,
- };
- 
--const static struct msm_dsi_host_cfg_ops msm_dsi_6g_host_ops = {
-+static const struct msm_dsi_host_cfg_ops msm_dsi_6g_host_ops = {
- 	.link_clk_enable = dsi_link_clk_enable_6g,
- 	.link_clk_disable = dsi_link_clk_disable_6g,
- 	.clk_init_ver = NULL,
-@@ -169,7 +169,7 @@ const static struct msm_dsi_host_cfg_ops msm_dsi_6g_host_ops = {
- 	.calc_clk_rate = dsi_calc_clk_rate_6g,
- };
- 
--const static struct msm_dsi_host_cfg_ops msm_dsi_6g_v2_host_ops = {
-+static const struct msm_dsi_host_cfg_ops msm_dsi_6g_v2_host_ops = {
- 	.link_clk_enable = dsi_link_clk_enable_6g,
- 	.link_clk_disable = dsi_link_clk_disable_6g,
- 	.clk_init_ver = dsi_clk_init_6g_v2,
--- 
-2.22.1
+Is there no other way to disable DMA which is local to this driver so we
+can easily revert the workaround later?
 
+>=20
+> Regards,
+> Bjorn
+>=20
+> > Signed-off-by: Lee Jones <lee.jones@linaro.org>
+> > ---
+> >  drivers/i2c/busses/i2c-qcom-geni.c | 14 ++++++++++----
+> >  1 file changed, 10 insertions(+), 4 deletions(-)
+> >=20
+> > diff --git a/drivers/i2c/busses/i2c-qcom-geni.c b/drivers/i2c/busses/i2=
+c-qcom-geni.c
+> > index a89bfce5388e..dfdbce067827 100644
+> > --- a/drivers/i2c/busses/i2c-qcom-geni.c
+> > +++ b/drivers/i2c/busses/i2c-qcom-geni.c
+> > @@ -353,13 +353,16 @@ static void geni_i2c_tx_fsm_rst(struct geni_i2c_d=
+ev *gi2c)
+> >  static int geni_i2c_rx_one_msg(struct geni_i2c_dev *gi2c, struct i2c_m=
+sg *msg,
+> >  				u32 m_param)
+> >  {
+> > +	struct device_node *np =3D gi2c->se.dev->of_node;
+> >  	dma_addr_t rx_dma;
+> >  	unsigned long time_left;
+> > -	void *dma_buf;
+> > +	void *dma_buf =3D NULL;
+> >  	struct geni_se *se =3D &gi2c->se;
+> >  	size_t len =3D msg->len;
+> > =20
+> > -	dma_buf =3D i2c_get_dma_safe_msg_buf(msg, 32);
+> > +	if (!of_property_read_bool(np, "qcom,geni-se-fifo"))
+> > +		dma_buf =3D i2c_get_dma_safe_msg_buf(msg, 32);
+> > +
+> >  	if (dma_buf)
+> >  		geni_se_select_mode(se, GENI_SE_DMA);
+> >  	else
+> > @@ -392,13 +395,16 @@ static int geni_i2c_rx_one_msg(struct geni_i2c_de=
+v *gi2c, struct i2c_msg *msg,
+> >  static int geni_i2c_tx_one_msg(struct geni_i2c_dev *gi2c, struct i2c_m=
+sg *msg,
+> >  				u32 m_param)
+> >  {
+> > +	struct device_node *np =3D gi2c->se.dev->of_node;
+> >  	dma_addr_t tx_dma;
+> >  	unsigned long time_left;
+> > -	void *dma_buf;
+> > +	void *dma_buf =3D NULL;
+> >  	struct geni_se *se =3D &gi2c->se;
+> >  	size_t len =3D msg->len;
+> > =20
+> > -	dma_buf =3D i2c_get_dma_safe_msg_buf(msg, 32);
+> > +	if (!of_property_read_bool(np, "qcom,geni-se-fifo"))
+> > +		dma_buf =3D i2c_get_dma_safe_msg_buf(msg, 32);
+> > +
+> >  	if (dma_buf)
+> >  		geni_se_select_mode(se, GENI_SE_DMA);
+> >  	else
+> > --=20
+> > 2.17.1
+> >=20
+
+--kbCYTQG2MZjuOjyn
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAABCgAdFiEEOZGx6rniZ1Gk92RdFA3kzBSgKbYFAl1wK1kACgkQFA3kzBSg
+KbYdkBAAgFs9RXf2jczJ4+RRvtmpQ2kMs/T+w039wUaHrptyk1cujtkKBxIzzaQ5
+PuTTxkEAxUQdfp8NX2fpjFDU9OJZPMwtXJ6kDLDINm/o35+dVZeJ/d2OealTBHwn
+v3yDd7w6vR/ilOUW395nT0RF5ngxXMKOr9Mcy1qUPygIf7WJmhSUqL8Ps0jLai2F
+xgV3dSHPAXjtciwzNwV7uhsSGEQl19COjYxG/CeQqRQrWy31i/3Pr71xYiTEre0K
+mgg0O23T7h0TZvoXFYrWb62XqpM/kk2z5YCgYx2d3Zy9mVMCBVhoZkAnlzZ8aigb
+nvPaO6y25m6kFeI4NlgMxqQH7IhCqCHWGx5Y2fdGFOqCt/2nTYwBmzaQvRozrXoa
+q6oL30dW5dewd8sTN9RMH0C43TXApsPOOUFieARIIcszOZPJBRWuvAx69UEMEYdw
+/U9Q5uknA9K72KMoNfQwRmK1SlQur5sZ0obxir8hvbDdg3+11oek+2h90fom2ZZy
+Jdcg9i51an87RBRHe6YIXwOVstFWuq0GwOvB8gTT0m9v8TcnoFALWNrYlGaCmt1a
+HvBw24Ds4n25HfcM4OCPnsxDJ1LN9/kAaupXUGwUbo6X1XVKRPQG1OzrYxhehQW8
+N4v1tQBpjvVEN5DK5+hfU8zJozEAu8kqOVBWQJ4s12GvFYy18/0=
+=Qcw2
+-----END PGP SIGNATURE-----
+
+--kbCYTQG2MZjuOjyn--
