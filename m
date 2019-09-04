@@ -2,129 +2,88 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 7C3E0A8C86
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Sep 2019 21:30:05 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id EAC25A8D6A
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Sep 2019 21:31:50 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732550AbfIDQOT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 4 Sep 2019 12:14:19 -0400
-Received: from heliosphere.sirena.org.uk ([172.104.155.198]:52014 "EHLO
-        heliosphere.sirena.org.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1732481AbfIDQOS (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 4 Sep 2019 12:14:18 -0400
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-        d=sirena.org.uk; s=20170815-heliosphere; h=In-Reply-To:Content-Type:
-        MIME-Version:References:Message-ID:Subject:Cc:To:From:Date:Sender:Reply-To:
-        Content-Transfer-Encoding:Content-ID:Content-Description:Resent-Date:
-        Resent-From:Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:List-Id:
-        List-Help:List-Unsubscribe:List-Subscribe:List-Post:List-Owner:List-Archive;
-         bh=1EyANVYB8OYlB3yXu3/GSCY+3MXUWjqGnAuH+zG2V+8=; b=oeJSTcdIDcOk3Y6i6oSHYnqaK
-        mbpR6uQLQflGkucJXLK1X+2eg2NvuIzkQ2cgHhhXiK+gq+r57luFLU1d+pYjzappehwqj8iyH2FRH
-        3UVBQP5H5gwc2TmttChlxUCjhqE0xghi0XAtJFdsAa7iqj1fNovs+5a+x0opvYVUoIEAo=;
-Received: from cpc102320-sgyl38-2-0-cust46.18-2.cable.virginm.net ([82.37.168.47] helo=ypsilon.sirena.org.uk)
-        by heliosphere.sirena.org.uk with esmtpsa (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256)
-        (Exim 4.92)
-        (envelope-from <broonie@sirena.co.uk>)
-        id 1i5Xun-0006R9-Ad; Wed, 04 Sep 2019 16:13:49 +0000
-Received: by ypsilon.sirena.org.uk (Postfix, from userid 1000)
-        id 67FED2742B45; Wed,  4 Sep 2019 17:13:48 +0100 (BST)
-Date:   Wed, 4 Sep 2019 17:13:48 +0100
-From:   Mark Brown <broonie@kernel.org>
-To:     Krzysztof Kozlowski <krzk@kernel.org>
-Cc:     YueHaibing <yuehaibing@huawei.com>, f.fainelli@gmail.com,
-        rjui@broadcom.com, sbranden@broadcom.com, eric@anholt.net,
-        wahrenst@gmx.net, shc_work@mail.ru, agross@kernel.org,
-        khilman@baylibre.com, matthias.bgg@gmail.com, shawnguo@kernel.org,
-        s.hauer@pengutronix.de, kernel@pengutronix.de, festevam@gmail.com,
-        linux-imx@nxp.com, avifishman70@gmail.com, tmaimon77@gmail.com,
-        tali.perry1@gmail.com, venture@google.com, yuenn@google.com,
-        benjaminfair@google.com, kgene@kernel.org,
-        Andi Shyti <andi@etezian.org>, palmer@sifive.com,
-        paul.walmsley@sifive.com, baohua@kernel.org, mripard@kernel.org,
-        wens@csie.org, ldewangan@nvidia.com, thierry.reding@gmail.com,
-        jonathanh@nvidia.com, yamada.masahiro@socionext.com,
-        michal.simek@xilinx.com, bcm-kernel-feedback-list@broadcom.com,
-        linux-spi@vger.kernel.org,
-        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
-        linux-rpi-kernel@lists.infradead.org,
-        linux-arm-kernel@lists.infradead.org,
-        linux-arm-msm@vger.kernel.org, linux-amlogic@lists.infradead.org,
-        linux-mediatek@lists.infradead.org, openbmc@lists.ozlabs.org,
-        "linux-samsung-soc@vger.kernel.org" 
-        <linux-samsung-soc@vger.kernel.org>,
-        linux-riscv@lists.infradead.org, linux-tegra@vger.kernel.org
-Subject: Re: [PATCH -next 25/36] spi: s3c24xx: use
- devm_platform_ioremap_resource() to simplify code
-Message-ID: <20190904161348.GE4348@sirena.co.uk>
-References: <20190904135918.25352-1-yuehaibing@huawei.com>
- <20190904135918.25352-26-yuehaibing@huawei.com>
- <CAJKOXPdq4as1Oe3U+9znkvP0RA=sxUoiWVBCSbzf_wq_um2t=w@mail.gmail.com>
- <20190904143928.GB4348@sirena.co.uk>
- <CAJKOXPeRtbAvmR-=8Qa8ukGXt-cCj3ud_7y1Z4LgRpX3YCeumg@mail.gmail.com>
+        id S1732400AbfIDQwz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 4 Sep 2019 12:52:55 -0400
+Received: from foss.arm.com ([217.140.110.172]:58866 "EHLO foss.arm.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1731599AbfIDQwz (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 4 Sep 2019 12:52:55 -0400
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 8D0A7337;
+        Wed,  4 Sep 2019 09:52:54 -0700 (PDT)
+Received: from bogus (e107155-lin.cambridge.arm.com [10.1.196.42])
+        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 370E33F67D;
+        Wed,  4 Sep 2019 09:52:53 -0700 (PDT)
+Date:   Wed, 4 Sep 2019 17:52:47 +0100
+From:   Sudeep Holla <sudeep.holla@arm.com>
+To:     Lee Jones <lee.jones@linaro.org>
+Cc:     agross@kernel.org, robh+dt@kernel.org, mark.rutland@arm.com,
+        bjorn.andersson@linaro.org, linux-arm-kernel@lists.infradead.org,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, Sudeep Holla <sudeep.holla@arm.com>
+Subject: Re: [PATCH v3 1/1] arm64: dts: qcom: Add Lenovo Yoga C630
+Message-ID: <20190904165246.GA25356@bogus>
+References: <20190904121606.17474-1-lee.jones@linaro.org>
+ <20190904141257.GB6144@bogus>
+ <20190904161247.GP26880@dell>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="N1GIdlSm9i+YlY4t"
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <CAJKOXPeRtbAvmR-=8Qa8ukGXt-cCj3ud_7y1Z4LgRpX3YCeumg@mail.gmail.com>
-X-Cookie: Help fight continental drift.
-User-Agent: Mutt/1.10.1 (2018-07-13)
+In-Reply-To: <20190904161247.GP26880@dell>
+User-Agent: Mutt/1.9.4 (2018-02-28)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On Wed, Sep 04, 2019 at 05:12:47PM +0100, Lee Jones wrote:
+> On Wed, 04 Sep 2019, Sudeep Holla wrote:
+>
+> > On Wed, Sep 04, 2019 at 01:16:06PM +0100, Lee Jones wrote:
+> > > From: Bjorn Andersson <bjorn.andersson@linaro.org>
+> > >
+> > > The Lenovo Yoga C630 is built on the SDM850 from Qualcomm, but this seem
+> > > to be similar enough to the SDM845 that we can reuse the sdm845.dtsi.
+> > >
+> > > Supported by this patch is: keyboard, battery monitoring, UFS storage,
+> > > USB host and Bluetooth.
+> > >
+> >
+> > Just curious to know if the idea of booting using ACPI is completely
+> > dropped as it's extremely difficult(because the firmware is so hacked
+> > up and may violate spec, just my opinion) for whatever reasons.
+>
+> Once [0] is applied, we can boot Mainline using ACPI.
+>
 
---N1GIdlSm9i+YlY4t
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+Good to know.
 
-On Wed, Sep 04, 2019 at 05:09:45PM +0200, Krzysztof Kozlowski wrote:
-> On Wed, 4 Sep 2019 at 16:39, Mark Brown <broonie@kernel.org> wrote:
+> > We just made ACPI table version checking more lenient for this platform
+> > and would be good to know if we continue to run ACPI on that or will
+> > abandon and just use DT.
+>
+> Which patch are you referring to?  If you mean the ACPI v5.0 vs v5.1
+> patch authored by Ard, then yes I know, I instigated it's existence
+> due to these devices.
+>
 
-> > I think it's reasonable, it's giving credit to the automated system
-> > they've got running coccinelle (which they do mention in their commit
-> > logs).  It doesn't really hurt anyone and lets people see their system
-> > is finding stuff.
+Yes exactly that one.
 
-> Running internally coccinelle is already credited with commit author.
-> The credits are coming with "From:" field.
+> DT will *always* be more enabled than ACPI, so it's advised that you
+> use DT for anything useful.  ACPI booting is ideal for things like
+> installing distros however, since they do not tend to provide DTBs in
+> their installers.
+>
 
-I guess if other people look at the same CI and send patches as well
-then there's some use tying them all together.
+OK, as along as it gets tested/used in some form, that's fine. I do agree
+that DT will be more useful on that platform as it was derived from mobile
+based SoC SDM845 rather than solely designed for Laptops and with more
+alignment with ACPI spec. The way whole power/clock management is done
+with ACPI on this pulls me towards DT ;)
 
-> Otherwise for commits I send I could use:
->   From: krzk
->   ...
->   Reported-by: www.krzk.eu
->   Signed-off-by: krzk
-> To me it is ridiculous.
-
-Sure, on the other hand it doesn't really cost anyone anything if you do
-that.
-
-> Different thing is that Reported-by is for fixing bugs or issues.
-> There is no bug here. There is no problem solved except making the
-> code smaller. That's not what is Reported-by for.
-
-That is true, this one isn't fixing any bug but then the line does get a
-bit fuzzy all round with things like warnings and coccinelle output -
-even just having the warning pop up is noise for people looking at the
-output even if there's no concrete problem.  Again I don't see it as
-something that's worth getting worked up over.
-
---N1GIdlSm9i+YlY4t
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAl1v4rsACgkQJNaLcl1U
-h9ADfQf/V7pUFkik9p4ok45W4iQXJ+1Wee9ghMi2ut+nuRzX8NRSwWYnFgK3w119
-nf1YXfJsWCcs9af+DjcSoEyJWq/wegSyF/egvEd36QdqtaJJbMs/J5Kl+TEcglDA
-uRJW6F/zevMcwamDE2I6UqdQjTIa2R8QG2S9yaw36Hd2b0k38lLq2Z1knHnQNbX7
-6mFEqyt+sTaFjsBtlkgeUiTkMp36WsnTY7oRzGr/RKAd9ByHDmQKtPTuJl4eQTx6
-zzkUK0PzNpBPqNyILAt7MYr01EyZfO3gjxnRNIH8yKl+80mkhiV2Td6DJehCuNqE
-F30QD0NUhsOuqyDT26hqXFcIWtym6A==
-=GPj9
------END PGP SIGNATURE-----
-
---N1GIdlSm9i+YlY4t--
+--
+Regards,
+Sudeep
