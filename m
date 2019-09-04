@@ -2,126 +2,105 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 5734CA7936
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Sep 2019 05:19:34 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 054D3A7992
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Sep 2019 06:10:53 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727709AbfIDDT3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 3 Sep 2019 23:19:29 -0400
-Received: from mail-pg1-f196.google.com ([209.85.215.196]:34053 "EHLO
+        id S1726045AbfIDEKq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 4 Sep 2019 00:10:46 -0400
+Received: from mail-pg1-f196.google.com ([209.85.215.196]:42428 "EHLO
         mail-pg1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727692AbfIDDT0 (ORCPT
+        with ESMTP id S1725832AbfIDEKq (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 3 Sep 2019 23:19:26 -0400
-Received: by mail-pg1-f196.google.com with SMTP id n9so10409393pgc.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 03 Sep 2019 20:19:26 -0700 (PDT)
+        Wed, 4 Sep 2019 00:10:46 -0400
+Received: by mail-pg1-f196.google.com with SMTP id p3so10453232pgb.9
+        for <linux-arm-msm@vger.kernel.org>; Tue, 03 Sep 2019 21:10:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to:user-agent;
-        bh=02+eBEQJWm6NHimkROpVhmoHyIo4/pLc4YR1Y2rVwOA=;
-        b=CztmP3VrmOz2/mU3Ni+FHnjEZCeJ2OyXfo8+ajDcZ79r5MxkWd3rA4/inLzPD+RhqT
-         G65tPOsl5mK/jUAMnnKUdXSuWwlD0EwrbbcevxYgEMrozddxtZpG38f2rD/pBHqu7oXj
-         c4SIl4FK3haHY+7szeZAjmoG5DCsVHlOwdGVnBAAYn85mmhN35dlKeUKlU0V0uY2+4Gy
-         sz80PAgfCcGbm83OjFv88AIjBatvvSx2zv+3Wzo62LaTgEwZKc9aDH+PM+luetMoRCpZ
-         qMeyqHf2BuUAkkFuqNrWDU2PpD0b/cvL4gy5vXGj5BnyTLSLC7A6gWk8AevGxappaTEB
-         vA9A==
+        bh=dcYAzYNxQfFqfgdx0zCpj/KDgBQyEbUaQn4XvdZRh0o=;
+        b=FS+bxCoUQzMvxNRSiuwbjLMktNYmoSyiiTcfCGtEnw7oz/RaknS05DuDykC403577e
+         aynw2TKjaDfAEI23jPVLOhc/3G/rkAz7G2O2HHg72LBDavjfVPwQra/xf+dEjHoI8kOg
+         IuWAw1rPOjzVw796xT4ci53dIXgxwE4RflDxmwDNlGVJJP4z73z7kX1HxNZgPVd/y3uf
+         ZiaFmvt6+NBqLMfUefRGhd3q/L9SptsrKfBO5fc/AT324K1GAYNVE2yOMjEDtVE6hqD9
+         YT8wZYLepIB8cl/py+xsQeevHiNdcHFOnB8+icy62A7ytTqLZZZp90F2cuiuOY7NGrmD
+         E8TQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=02+eBEQJWm6NHimkROpVhmoHyIo4/pLc4YR1Y2rVwOA=;
-        b=tDzbOpUZqFrL5mbIB5lUWgJ6FLSs3im7Y3YPQ3kd+mdgTWwoOiD6dgiUKMtCl2DRPs
-         /mjxQ1YjGW5/WswGF9TgxW9jOKNTzWGRBfDxCbbWM9kzI4M/7E9h02SVN/eosvaNvULg
-         jaxfYVVaAuJhA7KLOmvX1ibkgd2zdNy+r3N+fAU+cjeA4CCoUP5xNYj5F6MrCF39JqzI
-         Q6Iw4Tt+Bae1mef0nPVqYTdH5y5XX3W2gDqme0asibQoHCVpWrZDT+O1kF0MtC2bckPb
-         Zz3PZF8FG3jps+b4+W6chSuOLTQqQW+8DCVWZ79b69VZl8j+MX7o/WcJdWH0jdseZhBu
-         ti+Q==
-X-Gm-Message-State: APjAAAWDg8BonG5PvtUjRJBiCAzLyhkUaoMTrEZRGduDn1kEsADnsriw
-        G3mzCO1k4Gw00tRBoApKy4uGEg==
-X-Google-Smtp-Source: APXvYqxYWfllLFvx+G/2hfqNwK0phBdw0yYAbUV1JDKDDrpF5Cmiadx1YRaxQl3l2TCyAI6O/wjG9Q==
-X-Received: by 2002:aa7:84d2:: with SMTP id x18mr5859554pfn.250.1567567165787;
-        Tue, 03 Sep 2019 20:19:25 -0700 (PDT)
+        bh=dcYAzYNxQfFqfgdx0zCpj/KDgBQyEbUaQn4XvdZRh0o=;
+        b=cDyFWKfnpQByQQW2/gIke6ISEve++qtz+bTSVwZameOADGXS+qgdXhJo51O5PeH1Y3
+         x3WweFPtNcHo/D9WECYxeA7SMcuuOSiEARY9ScV/CewolcdBYdjRxbo2Xae+spimrbem
+         qeCVknTBNbSM4mxdJjl5lAG7vPly0S6kImReg0CkRRmQNPcu9ZeCLk2DWPYcb84GWtkE
+         goyCRCpgqawK6jJfPBS7sg4ik234g3Pu3MwuggX0Sn/uZQVf16pm7uIFvI/6v1l98g2n
+         PkStX0MQtu0AntKxXBVSXGbiH6IzRJ7/K90lQ6r6YIYqScW1DDYa+8kGA2KRdFm2sdVy
+         T2Rw==
+X-Gm-Message-State: APjAAAWbf5eopRHpl7styjjNoyS0Rj1ODyP1z2lh0TP19GFAvStQhIDJ
+        DbDYOiQdRKqR9QDHA+lRakBAfg==
+X-Google-Smtp-Source: APXvYqwXBC7IUWS8hioJj3UhbdiVmNX4j6uLKBpFtP+lG8xcx7bnu+iFYAnbEW6qGLSWRKczEYAZHQ==
+X-Received: by 2002:aa7:851a:: with SMTP id v26mr43247304pfn.238.1567570245048;
+        Tue, 03 Sep 2019 21:10:45 -0700 (PDT)
 Received: from tuxbook-pro (104-188-17-28.lightspeed.sndgca.sbcglobal.net. [104.188.17.28])
-        by smtp.gmail.com with ESMTPSA id 185sm21836340pfd.125.2019.09.03.20.19.24
+        by smtp.gmail.com with ESMTPSA id v12sm17321805pgr.86.2019.09.03.21.10.43
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 03 Sep 2019 20:19:25 -0700 (PDT)
-Date:   Tue, 3 Sep 2019 20:19:22 -0700
+        Tue, 03 Sep 2019 21:10:44 -0700 (PDT)
+Date:   Tue, 3 Sep 2019 21:10:42 -0700
 From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Lee Jones <lee.jones@linaro.org>
-Cc:     agross@kernel.org, linux-arm-kernel@lists.infradead.org,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH 1/1] soc: qcom: geni: Provide parameter error checking
-Message-ID: <20190904031922.GC574@tuxbook-pro>
-References: <20190903135052.13827-1-lee.jones@linaro.org>
+To:     Stephen Boyd <swboyd@chromium.org>
+Cc:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-gpio@vger.kernel.org,
+        Linus Walleij <linus.walleij@linaro.org>,
+        Andy Gross <agross@kernel.org>
+Subject: Re: [PATCH] pinctrl: qcom: sdm845: Fix UFS_RESET pin
+Message-ID: <20190904041042.GA3081@tuxbook-pro>
+References: <20190830060227.12792-1-swboyd@chromium.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20190903135052.13827-1-lee.jones@linaro.org>
+In-Reply-To: <20190830060227.12792-1-swboyd@chromium.org>
 User-Agent: Mutt/1.12.1 (2019-06-15)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue 03 Sep 06:50 PDT 2019, Lee Jones wrote:
+On Thu 29 Aug 23:02 PDT 2019, Stephen Boyd wrote:
 
-> When booting with ACPI, the Geni Serial Engine is not set as the I2C/SPI
-> parent and thus, the wrapper (parent device) is unassigned.  This causes
-> the kernel to crash with a null dereference error.
+> The UFS_RESET pin is the magical pin #150 now, not 153 per the
+> sdm845_groups array declared in this file. Fix the order of pins so that
+> UFS_RESET is 150 and the SDC pins follow after.
 > 
 
-Now I see what you did in 8bc529b25354; i.e. stubbed all the other calls
-between the SE and wrapper.
+Woops, thanks
 
-Do you think it would be possible to resolve the _DEP link to QGP[01]
-somehow? For the clocks workarounds this could be resolved by us
-representing that relationship using device_link and just rely on
-pm_runtime to propagate the clock state.
+Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
 
-For the DMA operation, iiuc it's the wrapper that implements the DMA
-engine involved, but I'm guessing the main reason for mapping buffers on
-the wrapper is so that it ends up being associated with the iommu
-context of the wrapper.
-
-Are the SMMU contexts at all represented in the ACPI world and if so do
-you know how the wrapper vs SEs are bound to contexts? Can we map on
-se->dev when wrapper is NULL (or perhaps always?)?
-
-Regards,
-Bjorn
-
-> Fixes: 8bc529b25354 ("soc: qcom: geni: Add support for ACPI")
-> Signed-off-by: Lee Jones <lee.jones@linaro.org>
+> Fixes: 53a5372ce326 ("pinctrl: qcom: sdm845: Expose ufs_reset as gpio")
+> Signed-off-by: Stephen Boyd <swboyd@chromium.org>
 > ---
-> Since we are already at -rc7 this patch should be processed ASAP - thank you.
+>  drivers/pinctrl/qcom/pinctrl-sdm845.c | 8 ++++----
+>  1 file changed, 4 insertions(+), 4 deletions(-)
 > 
-> drivers/soc/qcom/qcom-geni-se.c | 6 ++++++
->  1 file changed, 6 insertions(+)
-> 
-> diff --git a/drivers/soc/qcom/qcom-geni-se.c b/drivers/soc/qcom/qcom-geni-se.c
-> index d5cf953b4337..7d622ea1274e 100644
-> --- a/drivers/soc/qcom/qcom-geni-se.c
-> +++ b/drivers/soc/qcom/qcom-geni-se.c
-> @@ -630,6 +630,9 @@ int geni_se_tx_dma_prep(struct geni_se *se, void *buf, size_t len,
->  	struct geni_wrapper *wrapper = se->wrapper;
->  	u32 val;
+> diff --git a/drivers/pinctrl/qcom/pinctrl-sdm845.c b/drivers/pinctrl/qcom/pinctrl-sdm845.c
+> index 39f498c09906..ce495970459d 100644
+> --- a/drivers/pinctrl/qcom/pinctrl-sdm845.c
+> +++ b/drivers/pinctrl/qcom/pinctrl-sdm845.c
+> @@ -262,10 +262,10 @@ static const struct pinctrl_pin_desc sdm845_pins[] = {
+>  	PINCTRL_PIN(147, "GPIO_147"),
+>  	PINCTRL_PIN(148, "GPIO_148"),
+>  	PINCTRL_PIN(149, "GPIO_149"),
+> -	PINCTRL_PIN(150, "SDC2_CLK"),
+> -	PINCTRL_PIN(151, "SDC2_CMD"),
+> -	PINCTRL_PIN(152, "SDC2_DATA"),
+> -	PINCTRL_PIN(153, "UFS_RESET"),
+> +	PINCTRL_PIN(150, "UFS_RESET"),
+> +	PINCTRL_PIN(151, "SDC2_CLK"),
+> +	PINCTRL_PIN(152, "SDC2_CMD"),
+> +	PINCTRL_PIN(153, "SDC2_DATA"),
+>  };
 >  
-> +	if (!wrapper)
-> +		return -EINVAL;
-> +
->  	*iova = dma_map_single(wrapper->dev, buf, len, DMA_TO_DEVICE);
->  	if (dma_mapping_error(wrapper->dev, *iova))
->  		return -EIO;
-> @@ -663,6 +666,9 @@ int geni_se_rx_dma_prep(struct geni_se *se, void *buf, size_t len,
->  	struct geni_wrapper *wrapper = se->wrapper;
->  	u32 val;
->  
-> +	if (!wrapper)
-> +		return -EINVAL;
-> +
->  	*iova = dma_map_single(wrapper->dev, buf, len, DMA_FROM_DEVICE);
->  	if (dma_mapping_error(wrapper->dev, *iova))
->  		return -EIO;
+>  #define DECLARE_MSM_GPIO_PINS(pin) \
 > -- 
-> 2.17.1
+> Sent by a computer through tubes
 > 
