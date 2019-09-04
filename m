@@ -2,101 +2,65 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 06DEAA894B
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Sep 2019 21:23:47 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5BD56A894E
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Sep 2019 21:23:48 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731240AbfIDPKA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 4 Sep 2019 11:10:00 -0400
-Received: from mail.kernel.org ([198.145.29.99]:45850 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1730173AbfIDPJ7 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 4 Sep 2019 11:09:59 -0400
-Received: from mail-lf1-f51.google.com (mail-lf1-f51.google.com [209.85.167.51])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id A1A5E2342D;
-        Wed,  4 Sep 2019 15:09:58 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1567609799;
-        bh=NqqPlIXhQO92I7kvb7x3or16fY9V13TR0NCZAUTlJWQ=;
-        h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
-        b=Pv3zIIc/sUvIamdwv4iXpRUltzR4Lt/8nO72lfiLWHJEJD/J84GmVfW9ZUGl4n7xw
-         +SCVrmabCw4FJk9IIE26iwahrygp6t0Z9woX00HVqiGqOaKLp3ORKSVFfUDzFM+Q90
-         figeioc8KZ6vY17KwwDm3Fw1WY+tfbFHaBV2wi5U=
-Received: by mail-lf1-f51.google.com with SMTP id u29so16213613lfk.7;
-        Wed, 04 Sep 2019 08:09:58 -0700 (PDT)
-X-Gm-Message-State: APjAAAWTeqrx9oN8jMXoFVY1OmyFdVtDLbe2zcYmmBIQFmRyydjEOosw
-        S7f3QrEHa1put9aTQf15NnTXAR1jxRq4+G68WDU=
-X-Google-Smtp-Source: APXvYqyPSaOFdTAZs9Jlj3fYyUPiQ+i5JR3LIfqaMYnX+qGBlZPtuYUs9/i9kuI0c87VBPXwtFxNFox7lL+fRxUp36w=
-X-Received: by 2002:a05:6512:25b:: with SMTP id b27mr12719024lfo.60.1567609796654;
- Wed, 04 Sep 2019 08:09:56 -0700 (PDT)
+        id S1730516AbfIDPKD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 4 Sep 2019 11:10:03 -0400
+Received: from mail-qk1-f193.google.com ([209.85.222.193]:38563 "EHLO
+        mail-qk1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1730173AbfIDPKC (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 4 Sep 2019 11:10:02 -0400
+Received: by mail-qk1-f193.google.com with SMTP id x5so5796025qkh.5
+        for <linux-arm-msm@vger.kernel.org>; Wed, 04 Sep 2019 08:10:02 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=jQ37U1P5cGyfzKjPymXuFm8nIXURCK34LUc9c2XKlYo=;
+        b=Y8KAyGoDLiUDOD72N9vl+2ezXcrZc1yv5fKZhVAnZl1x67pVgOn6KDIWyWihRkotGO
+         mbmv455N+OnJ6k5AvFqRY/xb9hB27du9HwtvqCPhlPlNPMkHvWGOLfWchIKyKegxvImm
+         9TAktQdo3duI5UZOpvW5TtKzAIQq7XMszpPhDnzPJxsAGYl6YM/FL2S1NUnxdjsojVi/
+         8svvuQbH2eAbzK3n+uKo2QjUGjxz+kWB+2ysWtuN2bW2nlvhIqcz8xpNSQF3y/qMgVcP
+         512uTNRYIp7FS9Oc7DwOAZeZf23/8xLjYye6TB0kXMGumHG5yG7psOUzZh7OrQtC4Zxy
+         pSMw==
+X-Gm-Message-State: APjAAAU+cvYcVkIk2yisBuaUFVsNX55V7rFG2Y2JqW9bd1zJ1J2EZCHx
+        1dMi9DWy2az3a8jEunmd9eQw0zCyUcc3ql3IuEFJXw==
+X-Google-Smtp-Source: APXvYqwVxsJtmwK8v0tdFXjRDq+bPa0/JL+uIX7Nr/y5QkNc41fZGRKTFOXi1DoZJPrmMwbHbJzDzDrMbXMrvhx1UTY=
+X-Received: by 2002:a37:4b0d:: with SMTP id y13mr39289518qka.3.1567609802118;
+ Wed, 04 Sep 2019 08:10:02 -0700 (PDT)
 MIME-Version: 1.0
-References: <20190904135918.25352-1-yuehaibing@huawei.com> <20190904135918.25352-26-yuehaibing@huawei.com>
- <CAJKOXPdq4as1Oe3U+9znkvP0RA=sxUoiWVBCSbzf_wq_um2t=w@mail.gmail.com> <20190904143928.GB4348@sirena.co.uk>
-In-Reply-To: <20190904143928.GB4348@sirena.co.uk>
-From:   Krzysztof Kozlowski <krzk@kernel.org>
-Date:   Wed, 4 Sep 2019 17:09:45 +0200
-X-Gmail-Original-Message-ID: <CAJKOXPeRtbAvmR-=8Qa8ukGXt-cCj3ud_7y1Z4LgRpX3YCeumg@mail.gmail.com>
-Message-ID: <CAJKOXPeRtbAvmR-=8Qa8ukGXt-cCj3ud_7y1Z4LgRpX3YCeumg@mail.gmail.com>
-Subject: Re: [PATCH -next 25/36] spi: s3c24xx: use devm_platform_ioremap_resource()
- to simplify code
-To:     Mark Brown <broonie@kernel.org>
-Cc:     YueHaibing <yuehaibing@huawei.com>, f.fainelli@gmail.com,
-        rjui@broadcom.com, sbranden@broadcom.com, eric@anholt.net,
-        wahrenst@gmx.net, shc_work@mail.ru, agross@kernel.org,
-        khilman@baylibre.com, matthias.bgg@gmail.com, shawnguo@kernel.org,
-        s.hauer@pengutronix.de, kernel@pengutronix.de, festevam@gmail.com,
-        linux-imx@nxp.com, avifishman70@gmail.com, tmaimon77@gmail.com,
-        tali.perry1@gmail.com, venture@google.com, yuenn@google.com,
-        benjaminfair@google.com, kgene@kernel.org,
-        Andi Shyti <andi@etezian.org>, palmer@sifive.com,
-        paul.walmsley@sifive.com, baohua@kernel.org, mripard@kernel.org,
-        wens@csie.org, ldewangan@nvidia.com, thierry.reding@gmail.com,
-        jonathanh@nvidia.com, yamada.masahiro@socionext.com,
-        michal.simek@xilinx.com, bcm-kernel-feedback-list@broadcom.com,
-        linux-spi@vger.kernel.org,
-        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
-        linux-rpi-kernel@lists.infradead.org,
-        linux-arm-kernel@lists.infradead.org,
-        linux-arm-msm@vger.kernel.org, linux-amlogic@lists.infradead.org,
-        linux-mediatek@lists.infradead.org, openbmc@lists.ozlabs.org,
-        "linux-samsung-soc@vger.kernel.org" 
-        <linux-samsung-soc@vger.kernel.org>,
-        linux-riscv@lists.infradead.org, linux-tegra@vger.kernel.org
+References: <1567317285-8555-1-git-send-email-agross@kernel.org> <1567317285-8555-4-git-send-email-agross@kernel.org>
+In-Reply-To: <1567317285-8555-4-git-send-email-agross@kernel.org>
+From:   Arnd Bergmann <arnd@arndb.de>
+Date:   Wed, 4 Sep 2019 17:09:46 +0200
+Message-ID: <CAK8P3a295gmeD9ebhW5cyAXmiLo5drsdO=4wuRaZ18U1gLCFMg@mail.gmail.com>
+Subject: Re: [GIT PULL] Qualcomm Driver updates for 5.4
+To:     Andy Gross <agross@kernel.org>
+Cc:     arm-soc <arm@kernel.org>, linux-arm-msm@vger.kernel.org,
+        Linux ARM <linux-arm-kernel@lists.infradead.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Olof Johansson <olof@lixom.net>,
+        Kevin Hilman <khilman@baylibre.com>
 Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, 4 Sep 2019 at 16:39, Mark Brown <broonie@kernel.org> wrote:
->
-> On Wed, Sep 04, 2019 at 04:28:29PM +0200, Krzysztof Kozlowski wrote:
-> > On Wed, 4 Sep 2019 at 16:00, YueHaibing <yuehaibing@huawei.com> wrote:
->
-> > > Reported-by: Hulk Robot <hulkci@huawei.com>
->
-> > This tag does not look real... First of all where is the report?
-> > Second, it was reported by coccinelle.
-> > Reported-by should be use to give real credits.
->
-> I think it's reasonable, it's giving credit to the automated system
-> they've got running coccinelle (which they do mention in their commit
-> logs).  It doesn't really hurt anyone and lets people see their system
-> is finding stuff.
+On Sun, Sep 1, 2019 at 7:54 AM Andy Gross <agross@kernel.org> wrote:
 
-Running internally coccinelle is already credited with commit author.
-The credits are coming with "From:" field.
-Otherwise for commits I send I could use:
-  From: krzk
-  ...
-  Reported-by: www.krzk.eu
-  Signed-off-by: krzk
-To me it is ridiculous.
+> Qualcomm ARM Based Driver Updates for v5.4
+>
+> * Add AOSS QMP support
+> * Various fixups for Qualcomm SCM
+> * Add socinfo driver
+> * Add SoC serial number attribute and associated APIs
+> * Add SM8150 and SC7180 support in Qualcomm SCM
+> * Fixup max processor count in SMEM
+>
 
-Different thing is that Reported-by is for fixing bugs or issues.
-There is no bug here. There is no problem solved except making the
-code smaller. That's not what is Reported-by for.
+Pulled into arm/drivers, thanks!
 
-Best regards,
-Krzysztof
+       Arnd
