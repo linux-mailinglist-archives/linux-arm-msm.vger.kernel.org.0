@@ -2,161 +2,179 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 74894A7D19
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Sep 2019 09:54:12 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C2A34A7E36
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Sep 2019 10:46:00 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727787AbfIDHyH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 4 Sep 2019 03:54:07 -0400
-Received: from smtp.codeaurora.org ([198.145.29.96]:57088 "EHLO
-        smtp.codeaurora.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728526AbfIDHyG (ORCPT
+        id S1729122AbfIDIp7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 4 Sep 2019 04:45:59 -0400
+Received: from mail-wm1-f65.google.com ([209.85.128.65]:55241 "EHLO
+        mail-wm1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727873AbfIDIp7 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 4 Sep 2019 03:54:06 -0400
-Received: by smtp.codeaurora.org (Postfix, from userid 1000)
-        id 1EF366013C; Wed,  4 Sep 2019 07:54:06 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
-        s=default; t=1567583646;
-        bh=ZfLR1YEu1X4rVSuz+01cnPj1qh9JDAVads5Zz46yCig=;
-        h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
-        b=YjCi67RRtgDJe8H4UIOaoB9SGUBhvwToiUrifxdUZN8EpnpZznXJbezdYocsHfU3V
-         YqOl8/QrBTWJjRwjpAczhLBP3gsBA/McnAptixvz0yL8GkfrEIVXTHLlrYieCgLge7
-         FwG5grEIjXhVx3GWNNvSzdntRhP/uSyCIY4HF09g=
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        pdx-caf-mail.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.7 required=2.0 tests=ALL_TRUSTED,BAYES_00,
-        DKIM_INVALID,DKIM_SIGNED,SPF_NONE autolearn=no autolearn_force=no
-        version=3.4.0
-Received: from mail-ed1-f50.google.com (mail-ed1-f50.google.com [209.85.208.50])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: vivek.gautam@smtp.codeaurora.org)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 3A29A6085C;
-        Wed,  4 Sep 2019 07:54:05 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
-        s=default; t=1567583645;
-        bh=ZfLR1YEu1X4rVSuz+01cnPj1qh9JDAVads5Zz46yCig=;
-        h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
-        b=PSn84YQkYRqzlbB6ARnPmvWPVF+kGw+uNfoaoE/PAvF29VRrd+lMdJYWoF2PpVpgT
-         tvxEXlrBxGQtRwn9lqw2XiJgIqgZplK0ZvEwU/MTk4b9nbhqBOatbrVcnptx+KvJay
-         kUfziTeNgHrNTMa/U7mKX+EGmYgm4Ptf7nparABc=
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 3A29A6085C
-Authentication-Results: pdx-caf-mail.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: pdx-caf-mail.web.codeaurora.org; spf=none smtp.mailfrom=vivek.gautam@codeaurora.org
-Received: by mail-ed1-f50.google.com with SMTP id r12so21514460edo.5;
-        Wed, 04 Sep 2019 00:54:05 -0700 (PDT)
-X-Gm-Message-State: APjAAAVRig2ab+MKoA6P+OGQkZGiULmXqsW4OkLSwKZzyPP65uZvVmeI
-        iXed13YFzhNDgdAS1KhyCLlFpIibVI0R0ib/NrU=
-X-Google-Smtp-Source: APXvYqxl16lDYkKjVb/zuHMs0WdKDQs5m8eyKUOOqaqa4GkxbpgQ8vAEd4fbQhpLi3sa3E/4pr2Gjy23NyDUzjn4Sig=
-X-Received: by 2002:aa7:ca42:: with SMTP id j2mr26782407edt.197.1567583643945;
- Wed, 04 Sep 2019 00:54:03 -0700 (PDT)
-MIME-Version: 1.0
-References: <20190718130238.11324-1-vivek.gautam@codeaurora.org>
- <CAFp+6iE7224G4k8XE6Oz1S82iMgSza-n_zMN-ppOUWnuz+hFLQ@mail.gmail.com>
- <CAFp+6iE6zwrOUoCoOJO0mgYJGrWj+wUjXQ7RnxSPsV34ndYGbw@mail.gmail.com> <20190904044252.GD3081@tuxbook-pro>
-In-Reply-To: <20190904044252.GD3081@tuxbook-pro>
-From:   Vivek Gautam <vivek.gautam@codeaurora.org>
-Date:   Wed, 4 Sep 2019 13:23:52 +0530
-X-Gmail-Original-Message-ID: <CAFp+6iGTG6mBerAHSQesJyHO=yn2QHKR1TWuQQDduaPWusqPvg@mail.gmail.com>
-Message-ID: <CAFp+6iGTG6mBerAHSQesJyHO=yn2QHKR1TWuQQDduaPWusqPvg@mail.gmail.com>
-Subject: Re: [PATCH v2 0/3] soc: qcom: llcc cleanups
+        Wed, 4 Sep 2019 04:45:59 -0400
+Received: by mail-wm1-f65.google.com with SMTP id k2so2309746wmj.4
+        for <linux-arm-msm@vger.kernel.org>; Wed, 04 Sep 2019 01:45:57 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:content-transfer-encoding:in-reply-to
+         :user-agent;
+        bh=UjxPLpoRTJDahkA20/YcDxWDLvHQIg0O7GSl3PV0lsA=;
+        b=WcrfGicsOynEl7OkjgRdiLsuOPydRuyRn+4n1s6rO21+LFfWOpl0FghRZJI1Ef98WI
+         cWd+g0HUb99J67J8QlASd1rE76yYeW9uBqbfIqS/d3FU89IAUFCJFCgAYjnxLrzGsvsH
+         f/Fsj9E7guyAxHJIwOr7DNZAjKYtYGUdNWefvJVfSLG2fhs799yW7lxXp9UV/xfuQRmR
+         +rpqBrqUxrCI9YPJu0Hi1uVMU4Js15p7OB2AKSdxSZN368zykUol1jt3VtUiXOrXjBct
+         JuMo+E1yCHy6g0vZ+b1nDxb0b5JO+BnFpwgeeisQJtIyuYm7GmY0AzHU5irTfagIpLmu
+         +oAA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        bh=UjxPLpoRTJDahkA20/YcDxWDLvHQIg0O7GSl3PV0lsA=;
+        b=PB3ewID6BjiUqcmWLk+ADNxEbPk+/itPeqOXdjV78JyU2f9HEDUhQu9LQpDwTpetfw
+         pGnBi1HdwugCC0bnEHJG00YBo3NKgQ5sAZRMmqGGackroMihEHheYbfm9zOZ9NNzSZ9k
+         BSMHgW3EyktKopmcGjKonmtkjERVMjeFnh3Ka8527ghiJnM/spn9enLlMpLDX16H2SHh
+         FeltUZAZ7J9Ryjj0uJFBQjpkYSmRTELXKr3tGZEwobqlkZTomo9Nmrb8OpVx0VFg396a
+         50OCGblBn6yNe2Ed5iNDNOlbQ2gAGawUBKWFNn1MlhAaRXgqa71xZZ0Jmzem1QyJ1+9M
+         dxxQ==
+X-Gm-Message-State: APjAAAXRCr79BkYRpWBv260dKWcsSHz7BhZ49u1AZVdJ0lXD4GWVuJsl
+        prlhT1o7f2ffpQaKHELxu+c5jg==
+X-Google-Smtp-Source: APXvYqzgk+6NoC5ihZJP9WaAtvy/AF4VregIt4YQm3V0VC3hTz2SNpcE7xwKl4SyuMFlT5hJt8A/TA==
+X-Received: by 2002:a1c:1aca:: with SMTP id a193mr3556661wma.120.1567586756696;
+        Wed, 04 Sep 2019 01:45:56 -0700 (PDT)
+Received: from dell ([95.147.198.36])
+        by smtp.gmail.com with ESMTPSA id c132sm3367486wme.27.2019.09.04.01.45.55
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Wed, 04 Sep 2019 01:45:56 -0700 (PDT)
+Date:   Wed, 4 Sep 2019 09:45:54 +0100
+From:   Lee Jones <lee.jones@linaro.org>
 To:     Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Jordan Crouse <jcrouse@codeaurora.org>,
-        rishabhb@codeaurora.org, Evan Green <evgreen@chromium.org>,
-        open list <linux-kernel@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Cc:     agross@kernel.org, linux-arm-kernel@lists.infradead.org,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org
+Subject: Re: [PATCH 1/1] soc: qcom: geni: Provide parameter error checking
+Message-ID: <20190904084554.GF26880@dell>
+References: <20190903135052.13827-1-lee.jones@linaro.org>
+ <20190904031922.GC574@tuxbook-pro>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20190904031922.GC574@tuxbook-pro>
+User-Agent: Mutt/1.9.4 (2018-02-28)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Sep 4, 2019 at 10:13 AM Bjorn Andersson
-<bjorn.andersson@linaro.org> wrote:
->
-> On Tue 27 Aug 04:01 PDT 2019, Vivek Gautam wrote:
->
-> > On Fri, Aug 2, 2019 at 11:43 AM Vivek Gautam
-> > <vivek.gautam@codeaurora.org> wrote:
-> > >
-> > > On Thu, Jul 18, 2019 at 6:33 PM Vivek Gautam
-> > > <vivek.gautam@codeaurora.org> wrote:
-> > > >
-> > > > To better support future versions of llcc, consolidating the
-> > > > driver to llcc-qcom driver file, and taking care of the dependencies.
-> > > > v1 series is availale at:
-> > > > https://lore.kernel.org/patchwork/patch/1099573/
-> > > >
-> > > > Changes since v1:
-> > > > Addressing Bjorn's comments -
-> > > >  * Not using llcc-plat as the platform driver rather using a single
-> > > >    driver file now - llcc-qcom.
-> > > >  * Removed SCT_ENTRY macro.
-> > > >  * Moved few structure definitions from include/linux path to llcc-qcom
-> > > >    driver as they are not exposed to other subsystems.
-> > >
-> > > Hi Bjorn,
-> > >
-> > > How does this cleanup look now? Let me know if there are any
-> > > improvements to make here.
-> > >
-> >
-> > Hi Bjorn,
-> >
-> > Are you planning to pull this series in the next merge window?
-> > There's a dt patch as well for llcc on sdm845 [1] that has been lying around.
-> >
-> > Let me know if you have concerns with this series. I will be happy to
-> > incorporate the suggestions.
-> >
->
-> No concerns, this is exactly what we discussed before. Sorry for missing
-> it. I've picked the patches now.
->
-> > [1] https://lore.kernel.org/patchwork/patch/1099318/
-> >
->
-> This is part of the v5.4 pull request.
+On Tue, 03 Sep 2019, Bjorn Andersson wrote:
 
-Thanks a lot Bjorn.
+> On Tue 03 Sep 06:50 PDT 2019, Lee Jones wrote:
+> 
+> > When booting with ACPI, the Geni Serial Engine is not set as the I2C/SPI
+> > parent and thus, the wrapper (parent device) is unassigned.  This causes
+> > the kernel to crash with a null dereference error.
+> > 
+> 
+> Now I see what you did in 8bc529b25354; i.e. stubbed all the other calls
+> between the SE and wrapper.
+> 
+> Do you think it would be possible to resolve the _DEP link to QGP[01]
+> somehow?
 
-Best regards
-Vivek
+I looked at QGP{0,1}, but did not see it represented in the current
+Device Tree implementation and thus failed to identify it.  Do you
+know what it is?  Does it have a driver in Linux already?
 
->
-> Thanks,
-> Bjorn
->
-> > Thanks & Regards
-> > Vivek
-> >
-> > > Best Regards
-> > > Vivek
-> > > >
-> > > > Vivek Gautam (3):
-> > > >   soc: qcom: llcc cleanup to get rid of sdm845 specific driver file
-> > > >   soc: qcom: Rename llcc-slice to llcc-qcom
-> > > >   soc: qcom: Make llcc-qcom a generic driver
-> > > >
-> > > >  drivers/soc/qcom/Kconfig                       |  14 +--
-> > > >  drivers/soc/qcom/Makefile                      |   3 +-
-> > > >  drivers/soc/qcom/{llcc-slice.c => llcc-qcom.c} | 155 +++++++++++++++++++++++--
-> > > >  drivers/soc/qcom/llcc-sdm845.c                 | 100 ----------------
-> > > >  include/linux/soc/qcom/llcc-qcom.h             | 104 -----------------
-> > > >  5 files changed, 152 insertions(+), 224 deletions(-)
-> > > >  rename drivers/soc/qcom/{llcc-slice.c => llcc-qcom.c} (64%)
-> > > >  delete mode 100644 drivers/soc/qcom/llcc-sdm845.c
-> > > >
-> >
-> >
-> >
-> > --
-> > QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
-> > of Code Aurora Forum, hosted by The Linux Foundation
+> For the clocks workarounds this could be resolved by us
+> representing that relationship using device_link and just rely on
+> pm_runtime to propagate the clock state.
 
+That is not allowed when booting ACPI.  The Clock/Regulator frameworks
+are not to be used in this use-case, hence why all of the calls to
+these frameworks are "stubbed out".  If we wanted to properly
+implement power management, we would have to create a driver/subsystem
+similar to the "Windows-compatible System Power Management Controller"
+(PEP).  Without documentation for the PEP, this would be an impossible
+task.  A request for the aforementioned documentation has been put in
+to Lenovo/Qualcomm.  Hopefully something appears soon.
 
+> For the DMA operation, iiuc it's the wrapper that implements the DMA
+> engine involved, but I'm guessing the main reason for mapping buffers on
+> the wrapper is so that it ends up being associated with the iommu
+> context of the wrapper.
+
+Judging by the code alone, the wrapper doesn't sound like it does much
+at all.  It seems to only have a single (version) register (at least
+that is the only register that's used).  The only registers it
+reads/writes are those of the calling device, whether that be I2C, SPI
+or UART.
+
+Device Tree represents the wrapper's relationship with the I2C (and
+SPI/UART) Serial Engine (SE) devices as parent-child ones, with the
+wrapper being the parent and SE the child.  Whether this is a true
+representation of the hardware or just a tactic used for convenience
+is not clear, but the same representation does not exist in ACPI.
+
+In the current Linux implementation, the buffer belongs to the SE
+(obtained by the child (e.g. I2C) SE by fetching the parent's
+(wrapper's) device data using the standard platform helpers) but the
+register-set used to control the DMA transactions belong to the SE
+devices.
+
+> Are the SMMU contexts at all represented in the ACPI world and if so do
+> you know how the wrapper vs SEs are bound to contexts? Can we map on
+> se->dev when wrapper is NULL (or perhaps always?)?
+
+Yes, the SMMU devices are represented in ACPI (MMU0) and (MMU1).  They
+share the same register addresses as the SMMU devices located in
+arch/arm64/boot/dts/qcom/sdm845.dtsi.
+
+With this simple parameter checking patch, the SE falls back to using
+FIFO mode to transmit data and continues to work flawlessly.  IMHO
+this should be applied in the first instance, as it fixes a real (null
+dereference) bug which currently resides in the Mainline kernel.
+
+Moving forward we can try to come up with a suitable plan to implement
+DMA in the ACPI use-case - but again, this is feature adding work
+which should be carried out against -next, where as this patch needs
+to go in via the current -rcs ASAP.
+
+> > Fixes: 8bc529b25354 ("soc: qcom: geni: Add support for ACPI")
+> > Signed-off-by: Lee Jones <lee.jones@linaro.org>
+> > ---
+> > Since we are already at -rc7 this patch should be processed ASAP - thank you.
+> > 
+> > drivers/soc/qcom/qcom-geni-se.c | 6 ++++++
+> >  1 file changed, 6 insertions(+)
+> > 
+> > diff --git a/drivers/soc/qcom/qcom-geni-se.c b/drivers/soc/qcom/qcom-geni-se.c
+> > index d5cf953b4337..7d622ea1274e 100644
+> > --- a/drivers/soc/qcom/qcom-geni-se.c
+> > +++ b/drivers/soc/qcom/qcom-geni-se.c
+> > @@ -630,6 +630,9 @@ int geni_se_tx_dma_prep(struct geni_se *se, void *buf, size_t len,
+> >  	struct geni_wrapper *wrapper = se->wrapper;
+> >  	u32 val;
+> >  
+> > +	if (!wrapper)
+> > +		return -EINVAL;
+> > +
+> >  	*iova = dma_map_single(wrapper->dev, buf, len, DMA_TO_DEVICE);
+> >  	if (dma_mapping_error(wrapper->dev, *iova))
+> >  		return -EIO;
+> > @@ -663,6 +666,9 @@ int geni_se_rx_dma_prep(struct geni_se *se, void *buf, size_t len,
+> >  	struct geni_wrapper *wrapper = se->wrapper;
+> >  	u32 val;
+> >  
+> > +	if (!wrapper)
+> > +		return -EINVAL;
+> > +
+> >  	*iova = dma_map_single(wrapper->dev, buf, len, DMA_FROM_DEVICE);
+> >  	if (dma_mapping_error(wrapper->dev, *iova))
+> >  		return -EIO;
 
 -- 
-QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
-of Code Aurora Forum, hosted by The Linux Foundation
+Lee Jones [李琼斯]
+Linaro Services Technical Lead
+Linaro.org │ Open source software for ARM SoCs
+Follow Linaro: Facebook | Twitter | Blog
