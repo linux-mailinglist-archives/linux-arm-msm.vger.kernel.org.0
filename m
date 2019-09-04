@@ -2,127 +2,142 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id C5317A79E3
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Sep 2019 06:34:34 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 59760A7A20
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Sep 2019 06:42:58 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727374AbfIDEed (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 4 Sep 2019 00:34:33 -0400
-Received: from smtp.codeaurora.org ([198.145.29.96]:55088 "EHLO
-        smtp.codeaurora.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725840AbfIDEed (ORCPT
+        id S1725966AbfIDEm5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 4 Sep 2019 00:42:57 -0400
+Received: from mail-pf1-f193.google.com ([209.85.210.193]:32974 "EHLO
+        mail-pf1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725947AbfIDEm5 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 4 Sep 2019 00:34:33 -0400
-Received: by smtp.codeaurora.org (Postfix, from userid 1000)
-        id 59917602EF; Wed,  4 Sep 2019 04:34:32 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
-        s=default; t=1567571672;
-        bh=yD7jddCeDQh/QLkdALenruhc6/Bis0ve+odm+lJNIpc=;
-        h=From:To:Cc:Subject:Date:From;
-        b=I6pw9B5rr26zjf9F8xAcaV9hOA1N438qnSW6RXBSDF2vqmEqZw6tmqy0QALhuYHLj
-         O4sKsaEvGajDPBfDMWc81zdA/1YxO6y9C5kEysZ/G0IzEUwEeKL1n6jdPgeBmX0Aa0
-         32/OFYNYF8FAzDR2ENGUW9Z5zNiiPZEYXTs4f4o4=
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        pdx-caf-mail.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.7 required=2.0 tests=ALL_TRUSTED,BAYES_00,
-        DKIM_INVALID,DKIM_SIGNED,SPF_NONE autolearn=no autolearn_force=no
-        version=3.4.0
-Received: from c-hbandi-linux.qualcomm.com (blr-c-bdr-fw-01_globalnat_allzones-outside.qualcomm.com [103.229.19.19])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: c-hbandi@codeaurora.org)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 2DFCE607EB;
-        Wed,  4 Sep 2019 04:34:27 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
-        s=default; t=1567571671;
-        bh=yD7jddCeDQh/QLkdALenruhc6/Bis0ve+odm+lJNIpc=;
-        h=From:To:Cc:Subject:Date:From;
-        b=I2aSP4zUWyN5R+xWOmkIdddBX4q7VtpEp8StdzSVkyn8Yfe5BwBwf5HJVdRvViP94
-         +CnP44E9ZXvhH27gigVLcaGDTUaymlzH7W18sgqlXUtYuBc7hgKOTvFPpKAQtHRYR0
-         AA1zPgMsHJGmJ8rT14/Cy9JLfidd+zH6RuXDb2wA=
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 2DFCE607EB
-Authentication-Results: pdx-caf-mail.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: pdx-caf-mail.web.codeaurora.org; spf=none smtp.mailfrom=c-hbandi@codeaurora.org
-From:   Harish Bandi <c-hbandi@codeaurora.org>
-To:     marcel@holtmann.org, johan.hedberg@gmail.com
-Cc:     mka@chromium.org, linux-kernel@vger.kernel.org,
-        linux-bluetooth@vger.kernel.org, hemantg@codeaurora.org,
-        linux-arm-msm@vger.kernel.org, bgodavar@codeaurora.org,
-        anubhavg@codeaurora.org, Harish Bandi <c-hbandi@codeaurora.org>
-Subject: [PATCH v1] bluetooth: hci_qca: disable irqs when spinlock is acquired
-Date:   Wed,  4 Sep 2019 10:04:16 +0530
-Message-Id: <1567571656-32403-1-git-send-email-c-hbandi@codeaurora.org>
-X-Mailer: git-send-email 1.9.1
+        Wed, 4 Sep 2019 00:42:57 -0400
+Received: by mail-pf1-f193.google.com with SMTP id q10so7353733pfl.0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 03 Sep 2019 21:42:57 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=nJ8WdF3ild99tEEbygL0ot0ojOVW2zZpc22ATe0+scs=;
+        b=oO0EEfo+NTHRhTnLZ2TXj73Y+Y5GdZgVkd6bW6YHmvfBv8r3Vx4i2UgUcS17mbwY9J
+         oiQ2cOHPkHUOZbZu1UR+HKXgF/URLa1Kt0cImQCG2YscIuUATWWZ6NiqsBNv2/Pu3cSB
+         qHg6Qep7XO5gvsL6CSL5ewPwE6tLxb7yCFKDbCa2pHzBrSZtZvaNtbPW4RFQzMbFTrzq
+         llWvO8keys/KHsAzcu3Gf9YREwRGulM7IcvFcZDXJvGAQpXUXH2/TMhjxhbxZSpSYk6U
+         sawXDddaVKICrTuFOM9IBeh4CD+qH8xqd5W6yRTt80Lv0UYtKOBD9AbWH9ETAl7Gs7p1
+         AhBg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=nJ8WdF3ild99tEEbygL0ot0ojOVW2zZpc22ATe0+scs=;
+        b=rF7MKAzA0CcOlQJuH7cVTjUdmmVZt1xjVZZa6CkIOf/XKk8gIJ4xCBh7ojvMCaDiDc
+         HYYHcuxsG9uJ0qEYvfRMXNlv8KHKLHfJJI2kufCvyVOFUC34jB+cynJB3VNngoyRpVZM
+         /hTOPxQuEQ+TRsXaXzgEvrYBqT2LrqHbAmL4whZ0i8LTrhLuv1qbbxrNIDFIb7cnM2pS
+         ELjiDGtrgFmcyWvGUFnUB1ffTYkiPB8SQzgHJK+u8TfV+CVzu1ryB8AxNu01zCMNYFEB
+         etMbrB0LiO/f9lx1P+MWQvyBYDDTw4oT7v4qdbTaiFKZEEuLca/OvN49O1tJUCwCd3qR
+         C9FQ==
+X-Gm-Message-State: APjAAAXGKeoyAZsyPhRUJ4UM4bHH5qV7e8flA+RKLLaa6k36yvRggMF7
+        p9AfT2m0kdV+0iB02M81Abja+Q==
+X-Google-Smtp-Source: APXvYqwlDQvDhrlYU+PPzl7Wz1eVzTvoMLivDLt4Y8P3QfWIcjArp1vqAtQHDmvzExwjprOpgNHWsA==
+X-Received: by 2002:a17:90a:2182:: with SMTP id q2mr3124104pjc.56.1567572177000;
+        Tue, 03 Sep 2019 21:42:57 -0700 (PDT)
+Received: from tuxbook-pro (104-188-17-28.lightspeed.sndgca.sbcglobal.net. [104.188.17.28])
+        by smtp.gmail.com with ESMTPSA id q8sm1136479pjd.28.2019.09.03.21.42.55
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 03 Sep 2019 21:42:56 -0700 (PDT)
+Date:   Tue, 3 Sep 2019 21:42:52 -0700
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     Vivek Gautam <vivek.gautam@codeaurora.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        Jordan Crouse <jcrouse@codeaurora.org>,
+        rishabhb@codeaurora.org, Evan Green <evgreen@chromium.org>,
+        open list <linux-kernel@vger.kernel.org>
+Subject: Re: [PATCH v2 0/3] soc: qcom: llcc cleanups
+Message-ID: <20190904044252.GD3081@tuxbook-pro>
+References: <20190718130238.11324-1-vivek.gautam@codeaurora.org>
+ <CAFp+6iE7224G4k8XE6Oz1S82iMgSza-n_zMN-ppOUWnuz+hFLQ@mail.gmail.com>
+ <CAFp+6iE6zwrOUoCoOJO0mgYJGrWj+wUjXQ7RnxSPsV34ndYGbw@mail.gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CAFp+6iE6zwrOUoCoOJO0mgYJGrWj+wUjXQ7RnxSPsV34ndYGbw@mail.gmail.com>
+User-Agent: Mutt/1.12.1 (2019-06-15)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Looks like Deadlock is observed in hci_qca while performing
-stress and stability tests. Since same lock is getting
-acquired from qca_wq_awake_rx and hci_ibs_tx_idle_timeout
-seeing spinlock recursion, irqs should be disable while
-acquiring the spinlock always.
+On Tue 27 Aug 04:01 PDT 2019, Vivek Gautam wrote:
 
-Signed-off-by: Harish Bandi <c-hbandi@codeaurora.org>
----
- drivers/bluetooth/hci_qca.c | 10 ++++++----
- 1 file changed, 6 insertions(+), 4 deletions(-)
+> On Fri, Aug 2, 2019 at 11:43 AM Vivek Gautam
+> <vivek.gautam@codeaurora.org> wrote:
+> >
+> > On Thu, Jul 18, 2019 at 6:33 PM Vivek Gautam
+> > <vivek.gautam@codeaurora.org> wrote:
+> > >
+> > > To better support future versions of llcc, consolidating the
+> > > driver to llcc-qcom driver file, and taking care of the dependencies.
+> > > v1 series is availale at:
+> > > https://lore.kernel.org/patchwork/patch/1099573/
+> > >
+> > > Changes since v1:
+> > > Addressing Bjorn's comments -
+> > >  * Not using llcc-plat as the platform driver rather using a single
+> > >    driver file now - llcc-qcom.
+> > >  * Removed SCT_ENTRY macro.
+> > >  * Moved few structure definitions from include/linux path to llcc-qcom
+> > >    driver as they are not exposed to other subsystems.
+> >
+> > Hi Bjorn,
+> >
+> > How does this cleanup look now? Let me know if there are any
+> > improvements to make here.
+> >
+> 
+> Hi Bjorn,
+> 
+> Are you planning to pull this series in the next merge window?
+> There's a dt patch as well for llcc on sdm845 [1] that has been lying around.
+> 
+> Let me know if you have concerns with this series. I will be happy to
+> incorporate the suggestions.
+> 
 
-diff --git a/drivers/bluetooth/hci_qca.c b/drivers/bluetooth/hci_qca.c
-index d33828f..e3164c2 100644
---- a/drivers/bluetooth/hci_qca.c
-+++ b/drivers/bluetooth/hci_qca.c
-@@ -309,13 +309,14 @@ static void qca_wq_awake_device(struct work_struct *work)
- 					    ws_awake_device);
- 	struct hci_uart *hu = qca->hu;
- 	unsigned long retrans_delay;
-+	unsigned long flags;
- 
- 	BT_DBG("hu %p wq awake device", hu);
- 
- 	/* Vote for serial clock */
- 	serial_clock_vote(HCI_IBS_TX_VOTE_CLOCK_ON, hu);
- 
--	spin_lock(&qca->hci_ibs_lock);
-+	spin_lock_irqsave(&qca->hci_ibs_lock, flags);
- 
- 	/* Send wake indication to device */
- 	if (send_hci_ibs_cmd(HCI_IBS_WAKE_IND, hu) < 0)
-@@ -327,7 +328,7 @@ static void qca_wq_awake_device(struct work_struct *work)
- 	retrans_delay = msecs_to_jiffies(qca->wake_retrans);
- 	mod_timer(&qca->wake_retrans_timer, jiffies + retrans_delay);
- 
--	spin_unlock(&qca->hci_ibs_lock);
-+	spin_unlock_irqrestore(&qca->hci_ibs_lock, flags);
- 
- 	/* Actually send the packets */
- 	hci_uart_tx_wakeup(hu);
-@@ -338,12 +339,13 @@ static void qca_wq_awake_rx(struct work_struct *work)
- 	struct qca_data *qca = container_of(work, struct qca_data,
- 					    ws_awake_rx);
- 	struct hci_uart *hu = qca->hu;
-+	unsigned long flags;
- 
- 	BT_DBG("hu %p wq awake rx", hu);
- 
- 	serial_clock_vote(HCI_IBS_RX_VOTE_CLOCK_ON, hu);
- 
--	spin_lock(&qca->hci_ibs_lock);
-+	spin_lock_irqsave(&qca->hci_ibs_lock, flags);
- 	qca->rx_ibs_state = HCI_IBS_RX_AWAKE;
- 
- 	/* Always acknowledge device wake up,
-@@ -354,7 +356,7 @@ static void qca_wq_awake_rx(struct work_struct *work)
- 
- 	qca->ibs_sent_wacks++;
- 
--	spin_unlock(&qca->hci_ibs_lock);
-+	spin_unlock_irqrestore(&qca->hci_ibs_lock, flags);
- 
- 	/* Actually send the packets */
- 	hci_uart_tx_wakeup(hu);
--- 
-The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
-a Linux Foundation Collaborative Project
+No concerns, this is exactly what we discussed before. Sorry for missing
+it. I've picked the patches now.
 
+> [1] https://lore.kernel.org/patchwork/patch/1099318/
+> 
+
+This is part of the v5.4 pull request.
+
+Thanks,
+Bjorn
+
+> Thanks & Regards
+> Vivek
+> 
+> > Best Regards
+> > Vivek
+> > >
+> > > Vivek Gautam (3):
+> > >   soc: qcom: llcc cleanup to get rid of sdm845 specific driver file
+> > >   soc: qcom: Rename llcc-slice to llcc-qcom
+> > >   soc: qcom: Make llcc-qcom a generic driver
+> > >
+> > >  drivers/soc/qcom/Kconfig                       |  14 +--
+> > >  drivers/soc/qcom/Makefile                      |   3 +-
+> > >  drivers/soc/qcom/{llcc-slice.c => llcc-qcom.c} | 155 +++++++++++++++++++++++--
+> > >  drivers/soc/qcom/llcc-sdm845.c                 | 100 ----------------
+> > >  include/linux/soc/qcom/llcc-qcom.h             | 104 -----------------
+> > >  5 files changed, 152 insertions(+), 224 deletions(-)
+> > >  rename drivers/soc/qcom/{llcc-slice.c => llcc-qcom.c} (64%)
+> > >  delete mode 100644 drivers/soc/qcom/llcc-sdm845.c
+> > >
+> 
+> 
+> 
+> -- 
+> QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
+> of Code Aurora Forum, hosted by The Linux Foundation
