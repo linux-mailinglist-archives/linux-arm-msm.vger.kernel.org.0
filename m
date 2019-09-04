@@ -2,222 +2,127 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 3B7C6A92BB
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Sep 2019 22:01:39 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 835F0A93AF
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Sep 2019 22:27:03 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728238AbfIDUBi (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 4 Sep 2019 16:01:38 -0400
-Received: from mail-wr1-f66.google.com ([209.85.221.66]:41808 "EHLO
-        mail-wr1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729503AbfIDUBf (ORCPT
+        id S1730219AbfIDU1A (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 4 Sep 2019 16:27:00 -0400
+Received: from mail-pg1-f195.google.com ([209.85.215.195]:39498 "EHLO
+        mail-pg1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726495AbfIDU1A (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 4 Sep 2019 16:01:35 -0400
-Received: by mail-wr1-f66.google.com with SMTP id j16so99593wrr.8
-        for <linux-arm-msm@vger.kernel.org>; Wed, 04 Sep 2019 13:01:33 -0700 (PDT)
+        Wed, 4 Sep 2019 16:27:00 -0400
+Received: by mail-pg1-f195.google.com with SMTP id u17so44486pgi.6
+        for <linux-arm-msm@vger.kernel.org>; Wed, 04 Sep 2019 13:26:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to
-         :user-agent;
-        bh=JCNSU8zuFffQH3IN2sAAGv7QBbOUi5d4/dyTjM3iQBA=;
-        b=y7zjrTqYbdm4vAstK7azobzgWjVzIZ5ldkjh4BmXeP0B1mWYubxD1LnX4QmG2eQcJj
-         pB6MjLlbYhk27CRdHfU453vbsVLi6ZpusmXG7SgfxVyZTow36qm6V032keVH3Bx+qQqx
-         BbWWBkiipVzl1S8DKRU7Akt92DtSbFcTElgSTg1Kps6+9nlFxY4W0/CDyPOtVEKs3utO
-         zSft3HDnM1YVJX17Kjl/ONhABuVOLF28eKpu7TvShjaAPbDYNWSSVnnk2iTZq9IZgZUy
-         NeJdx+y932RsNDO9EqlwICezMVuVguJUDD8NM4GIMDY6pPoIP9w37ibntJY+bnR5ah3d
-         /nXg==
+         :content-disposition:in-reply-to:user-agent;
+        bh=gHXopKFHzfE49twF88UvtmDlbMN38YDZW1AoH7082oE=;
+        b=DLUsWH99wenvPEpVvVSfF1d0qo3YVU2SKaU3twQDF4nwTd/7vJuMNynkyGX3R6VOse
+         SqIGJx0ao5UDaFQ6u8d4ybCAMVVZ2n0wH3v0tY2XkqWJGQeZ88YWs+8sexlyUHS9n4yx
+         t5FdYBhkD3lP1E7k+nc75Ex0NDzJZOplSjl6q9N9j9vQw/7jadVr9gXaNx7ff4cGoRf1
+         icrBkr3XgeQVMoU3SIm+i96fdWRSHRwOrGxip2CjAELbyoAm1wZM+E7YMSpkZ8PYwNoe
+         loRuEBKLEPVRn2BBWmx7mSyTi0uwGCrbIU91woKz9C8RpojEkGNN01LdP+ieI/H1QVxW
+         RpBQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        bh=JCNSU8zuFffQH3IN2sAAGv7QBbOUi5d4/dyTjM3iQBA=;
-        b=aw0TTfZjty/3/v3dzLDxWUANxP12skHzaw+SP86NK7MltP7cgBynpAoB8dFwsDbfT/
-         Qku2Ad4POEl0khD/eCIUAIqnyEoJ6POHjyCUfJtPPaTgJVXKYuJbOAYZ/7c2IdX7UmZk
-         u31e/gwFgWhx5MQB9KVJXhyoP7ekUwvbV7PC8iHDBlq2D1LmC5G2Sq6H6hpEQozcFHeG
-         MWJUKyZ7CLtut+Z3Ozw05jtleBrk2LwIG/al+1G/A1Lx9j/g87wliUNRV9VJy1S2iwNq
-         6CVTTl/psbcFRooHPkC1LHVqOP8S5qSZeBtblSQrlDCFfIUr3g0dP9Q6BdTb2c0l5aYH
-         eUAQ==
-X-Gm-Message-State: APjAAAX7X8V8RvFX3rohmVDka88Z8bEPXEaM5Dm3pO17UcvbXVc78MGE
-        18fdKKVvS5IwlD9JaLHHddeDhA==
-X-Google-Smtp-Source: APXvYqyN0dIJyvcBXKxN2V3Fdd9bsbiNhCY2jKRDrvFe/zrl6Y4+0fkbjyiKaEh1bx5ZqmtSI5VP+w==
-X-Received: by 2002:adf:e947:: with SMTP id m7mr36164812wrn.178.1567627292475;
-        Wed, 04 Sep 2019 13:01:32 -0700 (PDT)
-Received: from dell ([95.147.198.36])
-        by smtp.gmail.com with ESMTPSA id b184sm50211wmg.47.2019.09.04.13.01.31
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 04 Sep 2019 13:01:31 -0700 (PDT)
-Date:   Wed, 4 Sep 2019 21:01:30 +0100
-From:   Lee Jones <lee.jones@linaro.org>
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=gHXopKFHzfE49twF88UvtmDlbMN38YDZW1AoH7082oE=;
+        b=dpVarycLli92wSox0m9Y0DDV9GnCOUnoARsgq+rhw9noyp39pt21ujp9LzPfKtAIns
+         z+KXj97HsPtlSIAkhedf4JghuIMqkSrNaQY3eLvxg8kSZa5OwqO6GIq0HyzMl/dFmoVE
+         OhZak28aSBwN/xxhdIFr3zbhHAx4o8ER90qLLgz1Mzxvccunn26qEwTyaTT23uIqVFSr
+         Wy5TuQgotiAkrhm79yNUsHskez5fVXcZ8RtBv0qD0jdPBBxsCwRzx2s8SYULUR0d+bxT
+         zuWVJ+qSRKh7q6XPecsnH1waXbnCKuNqTYjfVixgZGOnbXpzQxRSLqOmxo942ERFdiHO
+         ooMA==
+X-Gm-Message-State: APjAAAX7h0ESZMBdBhq2Ewb2QFVX/wDhIrveA6meYh95WvUV3OzfdIH0
+        ewhKk2UfbjWVJbUigEw6hAcE4w==
+X-Google-Smtp-Source: APXvYqxFPUmP/jYPMT2DzWP/8rdwbetVerpvv8p9rtrq4YREH6sU5CzRKastQRxLomV0nVAQjILaYw==
+X-Received: by 2002:a62:1955:: with SMTP id 82mr32346422pfz.256.1567628819360;
+        Wed, 04 Sep 2019 13:26:59 -0700 (PDT)
+Received: from tuxbook-pro (104-188-17-28.lightspeed.sndgca.sbcglobal.net. [104.188.17.28])
+        by smtp.gmail.com with ESMTPSA id y194sm660594pfg.186.2019.09.04.13.26.58
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 04 Sep 2019 13:26:58 -0700 (PDT)
+Date:   Wed, 4 Sep 2019 13:26:56 -0700
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     Lee Jones <lee.jones@linaro.org>
 Cc:     agross@kernel.org, linux-arm-kernel@lists.infradead.org,
         linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org
 Subject: Re: [PATCH 1/1] soc: qcom: geni: Provide parameter error checking
-Message-ID: <20190904200130.GT26880@dell>
+Message-ID: <20190904202656.GB580@tuxbook-pro>
 References: <20190903135052.13827-1-lee.jones@linaro.org>
  <20190904031922.GC574@tuxbook-pro>
  <20190904084554.GF26880@dell>
  <20190904182732.GE574@tuxbook-pro>
+ <20190904200130.GT26880@dell>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20190904182732.GE574@tuxbook-pro>
-User-Agent: Mutt/1.9.4 (2018-02-28)
+In-Reply-To: <20190904200130.GT26880@dell>
+User-Agent: Mutt/1.12.1 (2019-06-15)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, 04 Sep 2019, Bjorn Andersson wrote:
+On Wed 04 Sep 13:01 PDT 2019, Lee Jones wrote:
 
-> On Wed 04 Sep 01:45 PDT 2019, Lee Jones wrote:
+> On Wed, 04 Sep 2019, Bjorn Andersson wrote:
 > 
-> > On Tue, 03 Sep 2019, Bjorn Andersson wrote:
+> > On Wed 04 Sep 01:45 PDT 2019, Lee Jones wrote:
 > > 
-> > > On Tue 03 Sep 06:50 PDT 2019, Lee Jones wrote:
+> > > On Tue, 03 Sep 2019, Bjorn Andersson wrote:
 > > > 
-> > > > When booting with ACPI, the Geni Serial Engine is not set as the I2C/SPI
-> > > > parent and thus, the wrapper (parent device) is unassigned.  This causes
-> > > > the kernel to crash with a null dereference error.
-> > > > 
+> > > > On Tue 03 Sep 06:50 PDT 2019, Lee Jones wrote:
+[..]
+> > > With this simple parameter checking patch, the SE falls back to using
+> > > FIFO mode to transmit data and continues to work flawlessly.  IMHO
+> > > this should be applied in the first instance, as it fixes a real (null
+> > > dereference) bug which currently resides in the Mainline kernel.
 > > > 
-> > > Now I see what you did in 8bc529b25354; i.e. stubbed all the other calls
-> > > between the SE and wrapper.
-> > > 
-> > > Do you think it would be possible to resolve the _DEP link to QGP[01]
-> > > somehow?
 > > 
-> > I looked at QGP{0,1}, but did not see it represented in the current
-> > Device Tree implementation and thus failed to identify it.  Do you
-> > know what it is?  Does it have a driver in Linux already?
+> > Per the current driver design the wrapper device is the parent of the
+> > SE, I should have seen that 8bc529b25354 was the beginning of a game of
+> > whac-a-mole circumventing this design. Sorry for not spotting this
+> > earlier.
 > 
-> QGP0 is the same hardware block as &qupv3_id_0, but apparently both are
-> only representing a smaller part - and different ones.
+> Right, but that doesn't mean that the current driver design is
+> correct.  ACPI, which is in theory a description of the hardware
+> doesn't seem to think so.  It looks more like we do this in Linux as a
+> convenience function to link the devices.  Instead this 'parent' seems
+> to be represented as a very small register space at the end of the SE
+> banks.
 > 
-> But conceptually both represents the wrapper...
 
-... which doesn't actually do anything in the Linux implementation.
+There's a larger register window containing one block of common
+registers followed by register blocks for each serial engine.
 
-It only has one register. :)
+I don't know if we will need more of the common registers in the future,
+but for now you at least have the requirement that in order to operate
+the SEs you need to clock the wrapper. So the current DT model
+represents the hardware and the power/clocking topology.
 
-> > > For the clocks workarounds this could be resolved by us
-> > > representing that relationship using device_link and just rely on
-> > > pm_runtime to propagate the clock state.
-> > 
-> > That is not allowed when booting ACPI.  The Clock/Regulator frameworks
-> > are not to be used in this use-case, hence why all of the calls to
-> > these frameworks are "stubbed out".  If we wanted to properly
-> > implement power management, we would have to create a driver/subsystem
-> > similar to the "Windows-compatible System Power Management Controller"
-> > (PEP).  Without documentation for the PEP, this would be an impossible
-> > task.  A request for the aforementioned documentation has been put in
-> > to Lenovo/Qualcomm.  Hopefully something appears soon.
-> > 
+The fact that you managed to boot the system with just ignoring all
+clocks is a surprise to me.
+
+> > But if this is the one whack left to get the thing to boot then I think
+> > we should merge it.
 > 
-> I see, so the PEP states needs to be parsed and associated with each
-> device and we would use pm_runtime to toggle between the states and
-> device_links to ensure that _DEP nodes are powered in appropriate order.
+> Amazing, thank you!
 > 
-> That seems reasonable and straight forward and the reliance on
-> pm_runtime will make the DT case cleaner as well.
-
-Essentially yes.  The issue is translating the ACPI tables into
-actions to be taken by the Linux Power Management APIs.  Again, we've
-requested documentation.  Now, we wait ...
-
-> > > For the DMA operation, iiuc it's the wrapper that implements the DMA
-> > > engine involved, but I'm guessing the main reason for mapping buffers on
-> > > the wrapper is so that it ends up being associated with the iommu
-> > > context of the wrapper.
-> > 
-> > Judging by the code alone, the wrapper doesn't sound like it does much
-> > at all.  It seems to only have a single (version) register (at least
-> > that is the only register that's used).  The only registers it
-> > reads/writes are those of the calling device, whether that be I2C, SPI
-> > or UART.
-> > 
-> > Device Tree represents the wrapper's relationship with the I2C (and
-> > SPI/UART) Serial Engine (SE) devices as parent-child ones, with the
-> > wrapper being the parent and SE the child.  Whether this is a true
-> > representation of the hardware or just a tactic used for convenience
-> > is not clear, but the same representation does not exist in ACPI.
-> > 
-> > In the current Linux implementation, the buffer belongs to the SE
-> > (obtained by the child (e.g. I2C) SE by fetching the parent's
-> > (wrapper's) device data using the standard platform helpers) but the
-> > register-set used to control the DMA transactions belong to the SE
-> > devices.
-> > 
+> Do you know how we go about getting this merged?  We only potentially
+> have 0.5 weeks (1.5 weeks if there is an -rc8 [doubtful]), so we need
+> to move fast.  Would you be prepared to send it to Linus for -fixes?
+> I'd do it myself, but this is a little out of my remit.
 > 
-> Yeah, I saw this as well. If all the SEs where the wrappers iommu domain
-> things should work fine by mapping it on the se->dev, regardless of the
-> device's being linked together.
 
-This is my assumption too.
+The "offending" commit was picked up mid June and no one noticed that it
+doesn't work until this week?
 
-> The remaining relationship to the wrapper would then be reduced to the
-> read of the version to check for 1.0 or 1.1 hardware in the SPI driver,
-> which can be replaced by the assumption that we're on 1.1.
+Let's slap a Cc: stable@ on it and get it into v5.4-rc1 and it will show
+up in v5.3.1.
 
-Also correct.  You would be left with a huge duplication of code
-across each of the SEs however.
-
-> > > Are the SMMU contexts at all represented in the ACPI world and if so do
-> > > you know how the wrapper vs SEs are bound to contexts? Can we map on
-> > > se->dev when wrapper is NULL (or perhaps always?)?
-> > 
-> > Yes, the SMMU devices are represented in ACPI (MMU0) and (MMU1).  They
-> > share the same register addresses as the SMMU devices located in
-> > arch/arm64/boot/dts/qcom/sdm845.dtsi.
-> 
-> Right but this only describes the IOMMU devices, I don't see any
-> information about how individual client devices relates to the various
-> IOMMU contexts.
-
-I see some _DEPs which detail the MMU{0,1}, but that's about it.
-
-> > With this simple parameter checking patch, the SE falls back to using
-> > FIFO mode to transmit data and continues to work flawlessly.  IMHO
-> > this should be applied in the first instance, as it fixes a real (null
-> > dereference) bug which currently resides in the Mainline kernel.
-> > 
-> 
-> Per the current driver design the wrapper device is the parent of the
-> SE, I should have seen that 8bc529b25354 was the beginning of a game of
-> whac-a-mole circumventing this design. Sorry for not spotting this
-> earlier.
-
-Right, but that doesn't mean that the current driver design is
-correct.  ACPI, which is in theory a description of the hardware
-doesn't seem to think so.  It looks more like we do this in Linux as a
-convenience function to link the devices.  Instead this 'parent' seems
-to be represented as a very small register space at the end of the SE
-banks.
-
-> But if this is the one whack left to get the thing to boot then I think
-> we should merge it.
-
-Amazing, thank you!
-
-Do you know how we go about getting this merged?  We only potentially
-have 0.5 weeks (1.5 weeks if there is an -rc8 [doubtful]), so we need
-to move fast.  Would you be prepared to send it to Linus for -fixes?
-I'd do it myself, but this is a little out of my remit.
-
-Nothing heard from Andy for a very long time.
-
-> > Moving forward we can try to come up with a suitable plan to implement
-> > DMA in the ACPI use-case - but again, this is feature adding work
-> > which should be carried out against -next, where as this patch needs
-> > to go in via the current -rcs ASAP.
-> 
-> Sounds good.
-
-Great.
-
--- 
-Lee Jones [李琼斯]
-Linaro Services Technical Lead
-Linaro.org │ Open source software for ARM SoCs
-Follow Linaro: Facebook | Twitter | Blog
+Regards,
+Bjorn
