@@ -2,117 +2,103 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id E4AD8A8196
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Sep 2019 13:59:04 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0EDC9A81A6
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Sep 2019 13:59:12 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726240AbfIDLxp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 4 Sep 2019 07:53:45 -0400
-Received: from mail.kernel.org ([198.145.29.99]:35260 "EHLO mail.kernel.org"
+        id S1729897AbfIDL5T (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 4 Sep 2019 07:57:19 -0400
+Received: from mail.kernel.org ([198.145.29.99]:38442 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1725829AbfIDLxp (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 4 Sep 2019 07:53:45 -0400
+        id S1729834AbfIDL5T (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 4 Sep 2019 07:57:19 -0400
 Received: from localhost (unknown [122.182.201.156])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 2C20722CF5;
-        Wed,  4 Sep 2019 11:53:42 +0000 (UTC)
+        by mail.kernel.org (Postfix) with ESMTPSA id 645FE22CF5;
+        Wed,  4 Sep 2019 11:57:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1567598024;
-        bh=6yE3IUv7qBSVFJ6+Mf00UxE1PnKsLJ0VJifYwWdQq1Y=;
+        s=default; t=1567598238;
+        bh=+NE03vk26gxXt4brBoR8Ly4u6W2a1FR4Kab3VIiTjZA=;
         h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=bINwaOQTuFOWx7V12YuIGe2FCJ+xjHqhhW3BE3LSzwuFSEyTJsQ1SW8/5NIU8zUQy
-         DpAM0NqtkKvoWpvFGBSP9qhjJlOM834TBGmJpNbdMCItmQx0hKRfmQN5iU9krCQYkh
-         rSM7PF0SdS00ITRfSqCIRGCPqVzc+Dc7JDvuXR9I=
-Date:   Wed, 4 Sep 2019 17:22:34 +0530
+        b=afyuI5uzMEDH6a4KE6v9ld04B/V44tuOtu0HDeP2s00PF2PgdW4svvMA0PpojB91x
+         4AXefCNj5lzT9UaF+iF1IHuVdFhhIqVZxC8HH/SKPvqleIGzM4td2zoVemL9aa2d2r
+         DoiZ5w4GmcZneXcnQ3uFLqupuL525W6wc7r/epFA=
+Date:   Wed, 4 Sep 2019 17:26:09 +0530
 From:   Vinod Koul <vkoul@kernel.org>
 To:     Lee Jones <lee.jones@linaro.org>
-Cc:     agross@kernel.org, robh+dt@kernel.org, mark.rutland@arm.com,
-        bjorn.andersson@linaro.org, linux-arm-kernel@lists.infradead.org,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org
-Subject: Re: [PATCH v2 1/1] arm64: dts: qcom: Add Lenovo Yoga C630
-Message-ID: <20190904115234.GV2672@vkoul-mobl>
-References: <20190904113917.15223-1-lee.jones@linaro.org>
+Cc:     alokc@codeaurora.org, agross@kernel.org, robh+dt@kernel.org,
+        mark.rutland@arm.com, bjorn.andersson@linaro.org,
+        linux-i2c@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+        linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 1/2] i2c: qcom-geni: Provide an option to select FIFO
+ processing
+Message-ID: <20190904115609.GW2672@vkoul-mobl>
+References: <20190904113613.14997-1-lee.jones@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20190904113917.15223-1-lee.jones@linaro.org>
+In-Reply-To: <20190904113613.14997-1-lee.jones@linaro.org>
 User-Agent: Mutt/1.12.0 (2019-05-25)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 04-09-19, 12:39, Lee Jones wrote:
-> --- a/arch/arm64/boot/dts/qcom/Makefile
-> +++ b/arch/arm64/boot/dts/qcom/Makefile
-> @@ -12,5 +12,6 @@ dtb-$(CONFIG_ARCH_QCOM)	+= sdm845-cheza-r2.dtb
->  dtb-$(CONFIG_ARCH_QCOM)	+= sdm845-cheza-r3.dtb
->  dtb-$(CONFIG_ARCH_QCOM)	+= sdm845-db845c.dtb
->  dtb-$(CONFIG_ARCH_QCOM)	+= sdm845-mtp.dtb
-> +dtb-$(CONFIG_ARCH_QCOM)	+= sdm850-lenovo-yoga-c630.dtb
+On 04-09-19, 12:36, Lee Jones wrote:
+> Signed-off-by: Lee Jones <lee.jones@linaro.org>
+> ---
+>  drivers/i2c/busses/i2c-qcom-geni.c | 14 ++++++++++----
+>  1 file changed, 10 insertions(+), 4 deletions(-)
+> 
+> diff --git a/drivers/i2c/busses/i2c-qcom-geni.c b/drivers/i2c/busses/i2c-qcom-geni.c
+> index a89bfce5388e..dfdbce067827 100644
+> --- a/drivers/i2c/busses/i2c-qcom-geni.c
+> +++ b/drivers/i2c/busses/i2c-qcom-geni.c
+> @@ -353,13 +353,16 @@ static void geni_i2c_tx_fsm_rst(struct geni_i2c_dev *gi2c)
+>  static int geni_i2c_rx_one_msg(struct geni_i2c_dev *gi2c, struct i2c_msg *msg,
+>  				u32 m_param)
+>  {
+> +	struct device_node *np = gi2c->se.dev->of_node;
+>  	dma_addr_t rx_dma;
+>  	unsigned long time_left;
+> -	void *dma_buf;
+> +	void *dma_buf = NULL;
+>  	struct geni_se *se = &gi2c->se;
+>  	size_t len = msg->len;
+>  
+> -	dma_buf = i2c_get_dma_safe_msg_buf(msg, 32);
+> +	if (!of_property_read_bool(np, "qcom,geni-se-fifo"))
 
-Can we keep this sorted, so before mtp.
+Where is this property documented, I dont see anything in linux-next for
+today
 
->  dtb-$(CONFIG_ARCH_QCOM)	+= qcs404-evb-1000.dtb
->  dtb-$(CONFIG_ARCH_QCOM)	+= qcs404-evb-4000.dtb
-> diff --git a/arch/arm64/boot/dts/qcom/sdm850-lenovo-yoga-c630.dts b/arch/arm64/boot/dts/qcom/sdm850-lenovo-yoga-c630.dts
-> new file mode 100644
-> index 000000000000..ad160c718b33
-> --- /dev/null
-> +++ b/arch/arm64/boot/dts/qcom/sdm850-lenovo-yoga-c630.dts
-> @@ -0,0 +1,454 @@
-> +// SPDX-License-Identifier: GPL-2.0
-
-Are we going to make this dual? or BSD..
-
-> +&apps_rsc {
-> +	pm8998-rpmh-regulators {
-> +		compatible = "qcom,pm8998-rpmh-regulators";
-> +		qcom,pmic-id = "a";
+> +		dma_buf = i2c_get_dma_safe_msg_buf(msg, 32);
 > +
-> +		vdd-l2-l8-l17-supply = <&vreg_s3a_1p35>;
-> +		vdd-l7-l12-l14-l15-supply = <&vreg_s5a_2p04>;
+>  	if (dma_buf)
+>  		geni_se_select_mode(se, GENI_SE_DMA);
+>  	else
+> @@ -392,13 +395,16 @@ static int geni_i2c_rx_one_msg(struct geni_i2c_dev *gi2c, struct i2c_msg *msg,
+>  static int geni_i2c_tx_one_msg(struct geni_i2c_dev *gi2c, struct i2c_msg *msg,
+>  				u32 m_param)
+>  {
+> +	struct device_node *np = gi2c->se.dev->of_node;
+>  	dma_addr_t tx_dma;
+>  	unsigned long time_left;
+> -	void *dma_buf;
+> +	void *dma_buf = NULL;
+>  	struct geni_se *se = &gi2c->se;
+>  	size_t len = msg->len;
+>  
+> -	dma_buf = i2c_get_dma_safe_msg_buf(msg, 32);
+> +	if (!of_property_read_bool(np, "qcom,geni-se-fifo"))
+> +		dma_buf = i2c_get_dma_safe_msg_buf(msg, 32);
 > +
-> +		vreg_s2a_1p125: smps2 {
-> +		};
-> +
-> +		vreg_s3a_1p35: smps3 {
-> +			regulator-min-microvolt = <1352000>;
-> +			regulator-max-microvolt = <1352000>;
-> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-> +		};
-> +
-> +		vreg_s4a_1p8: smps4 {
-> +			regulator-min-microvolt = <1800000>;
-> +			regulator-max-microvolt = <1800000>;
-> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-> +		};
-> +
-> +		vreg_s5a_2p04: smps5 {
-> +			regulator-min-microvolt = <2040000>;
-> +			regulator-max-microvolt = <2040000>;
-> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-> +		};
-> +
-> +		vreg_s7a_1p025: smps7 {
-
-Any reason why we dont specify the mode and min/max voltage for this
-and few others below..?
-
-> +&i2c1 {
-> +	status = "okay";
-> +	clock-frequency = <400000>;
-> +	qcom,geni-se-fifo;
-> +
-> +	battery@70 {
-> +		compatible = "some,battery";
-
-some,battery ..?
-
-> +&qup_i2c12_default {
-
-Please move the qup nodes up so that nodes are sorted alphabetically
+>  	if (dma_buf)
+>  		geni_se_select_mode(se, GENI_SE_DMA);
+>  	else
+> -- 
+> 2.17.1
 
 -- 
 ~Vinod
