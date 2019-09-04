@@ -2,90 +2,57 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 2A656A8830
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Sep 2019 21:21:37 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A1BEDA8866
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Sep 2019 21:22:01 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731148AbfIDOB1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 4 Sep 2019 10:01:27 -0400
-Received: from szxga05-in.huawei.com ([45.249.212.191]:6208 "EHLO huawei.com"
-        rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-        id S1731134AbfIDOB0 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 4 Sep 2019 10:01:26 -0400
-Received: from DGGEMS403-HUB.china.huawei.com (unknown [172.30.72.60])
-        by Forcepoint Email with ESMTP id 5117822534306BAD951C;
-        Wed,  4 Sep 2019 22:01:24 +0800 (CST)
-Received: from localhost (10.133.213.239) by DGGEMS403-HUB.china.huawei.com
- (10.3.19.203) with Microsoft SMTP Server id 14.3.439.0; Wed, 4 Sep 2019
- 22:01:14 +0800
-From:   YueHaibing <yuehaibing@huawei.com>
-To:     <broonie@kernel.org>, <f.fainelli@gmail.com>, <rjui@broadcom.com>,
-        <sbranden@broadcom.com>, <eric@anholt.net>, <wahrenst@gmx.net>,
-        <shc_work@mail.ru>, <agross@kernel.org>, <khilman@baylibre.com>,
-        <matthias.bgg@gmail.com>, <shawnguo@kernel.org>,
-        <s.hauer@pengutronix.de>, <kernel@pengutronix.de>,
-        <festevam@gmail.com>, <linux-imx@nxp.com>,
-        <avifishman70@gmail.com>, <tmaimon77@gmail.com>,
-        <tali.perry1@gmail.com>, <venture@google.com>, <yuenn@google.com>,
-        <benjaminfair@google.com>, <kgene@kernel.org>, <krzk@kernel.org>,
-        <andi@etezian.org>, <palmer@sifive.com>,
-        <paul.walmsley@sifive.com>, <baohua@kernel.org>,
-        <mripard@kernel.org>, <wens@csie.org>, <ldewangan@nvidia.com>,
-        <thierry.reding@gmail.com>, <jonathanh@nvidia.com>,
-        <yamada.masahiro@socionext.com>, <michal.simek@xilinx.com>
-CC:     <bcm-kernel-feedback-list@broadcom.com>,
-        <linux-spi@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <linux-rpi-kernel@lists.infradead.org>,
-        <linux-arm-kernel@lists.infradead.org>,
-        <linux-arm-msm@vger.kernel.org>,
-        <linux-amlogic@lists.infradead.org>,
-        <linux-mediatek@lists.infradead.org>, <openbmc@lists.ozlabs.org>,
-        <linux-samsung-soc@vger.kernel.org>,
-        <linux-riscv@lists.infradead.org>, <linux-tegra@vger.kernel.org>,
-        YueHaibing <yuehaibing@huawei.com>
-Subject: [PATCH -next 36/36] spi: fsl-spi: use devm_platform_ioremap_resource() to simplify code
-Date:   Wed, 4 Sep 2019 21:59:18 +0800
-Message-ID: <20190904135918.25352-37-yuehaibing@huawei.com>
-X-Mailer: git-send-email 2.10.2.windows.1
-In-Reply-To: <20190904135918.25352-1-yuehaibing@huawei.com>
-References: <20190904135918.25352-1-yuehaibing@huawei.com>
-MIME-Version: 1.0
-Content-Type: text/plain
-X-Originating-IP: [10.133.213.239]
-X-CFilter-Loop: Reflected
+        id S1730511AbfIDOG4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 4 Sep 2019 10:06:56 -0400
+Received: from coyote.holtmann.net ([212.227.132.17]:34727 "EHLO
+        mail.holtmann.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727156AbfIDOG4 (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 4 Sep 2019 10:06:56 -0400
+Received: from marcel-macbook.fritz.box (p4FEFC197.dip0.t-ipconnect.de [79.239.193.151])
+        by mail.holtmann.org (Postfix) with ESMTPSA id E3037CEC82;
+        Wed,  4 Sep 2019 16:15:41 +0200 (CEST)
+Content-Type: text/plain;
+        charset=us-ascii
+Mime-Version: 1.0 (Mac OS X Mail 12.4 \(3445.104.11\))
+Subject: Re: [PATCH v1] bluetooth: hci_qca: disable irqs when spinlock is
+ acquired
+From:   Marcel Holtmann <marcel@holtmann.org>
+In-Reply-To: <1567571656-32403-1-git-send-email-c-hbandi@codeaurora.org>
+Date:   Wed, 4 Sep 2019 16:06:53 +0200
+Cc:     Johan Hedberg <johan.hedberg@gmail.com>, mka@chromium.org,
+        linux-kernel@vger.kernel.org, linux-bluetooth@vger.kernel.org,
+        hemantg@codeaurora.org, linux-arm-msm@vger.kernel.org,
+        bgodavar@codeaurora.org, anubhavg@codeaurora.org
+Content-Transfer-Encoding: 7bit
+Message-Id: <6F34A9CD-7C8F-4E5D-9A22-9F05CC2CF9BC@holtmann.org>
+References: <1567571656-32403-1-git-send-email-c-hbandi@codeaurora.org>
+To:     Harish Bandi <c-hbandi@codeaurora.org>
+X-Mailer: Apple Mail (2.3445.104.11)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Use devm_platform_ioremap_resource() to simplify the code a bit.
-This is detected by coccinelle.
+Hi Harish,
 
-Reported-by: Hulk Robot <hulkci@huawei.com>
-Signed-off-by: YueHaibing <yuehaibing@huawei.com>
----
- drivers/spi/spi-fsl-cpm.c | 6 ++----
- 1 file changed, 2 insertions(+), 4 deletions(-)
+> Looks like Deadlock is observed in hci_qca while performing
+> stress and stability tests. Since same lock is getting
+> acquired from qca_wq_awake_rx and hci_ibs_tx_idle_timeout
+> seeing spinlock recursion, irqs should be disable while
+> acquiring the spinlock always.
+> 
+> Signed-off-by: Harish Bandi <c-hbandi@codeaurora.org>
+> ---
+> drivers/bluetooth/hci_qca.c | 10 ++++++----
+> 1 file changed, 6 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/spi/spi-fsl-cpm.c b/drivers/spi/spi-fsl-cpm.c
-index e967ac5..858f054 100644
---- a/drivers/spi/spi-fsl-cpm.c
-+++ b/drivers/spi/spi-fsl-cpm.c
-@@ -305,12 +305,10 @@ int fsl_spi_cpm_init(struct mpc8xxx_spi *mspi)
- 	}
- 
- 	if (mspi->flags & SPI_CPM1) {
--		struct resource *res;
- 		void *pram;
- 
--		res = platform_get_resource(to_platform_device(dev),
--					    IORESOURCE_MEM, 1);
--		pram = devm_ioremap_resource(dev, res);
-+		pram = devm_platform_ioremap_resource(to_platform_device(dev),
-+						      1);
- 		if (IS_ERR(pram))
- 			mspi->pram = NULL;
- 		else
--- 
-2.7.4
+patch has been applied to bluetooth-stable tree.
 
+Regards
+
+Marcel
 
