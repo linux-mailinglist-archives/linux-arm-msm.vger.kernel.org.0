@@ -2,105 +2,126 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 054D3A7992
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Sep 2019 06:10:53 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 84C09A7996
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Sep 2019 06:13:51 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726045AbfIDEKq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 4 Sep 2019 00:10:46 -0400
-Received: from mail-pg1-f196.google.com ([209.85.215.196]:42428 "EHLO
-        mail-pg1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725832AbfIDEKq (ORCPT
+        id S1725975AbfIDENu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 4 Sep 2019 00:13:50 -0400
+Received: from mail-pf1-f193.google.com ([209.85.210.193]:34144 "EHLO
+        mail-pf1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725877AbfIDENu (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 4 Sep 2019 00:10:46 -0400
-Received: by mail-pg1-f196.google.com with SMTP id p3so10453232pgb.9
-        for <linux-arm-msm@vger.kernel.org>; Tue, 03 Sep 2019 21:10:45 -0700 (PDT)
+        Wed, 4 Sep 2019 00:13:50 -0400
+Received: by mail-pf1-f193.google.com with SMTP id r12so202490pfh.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 03 Sep 2019 21:13:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to:user-agent;
-        bh=dcYAzYNxQfFqfgdx0zCpj/KDgBQyEbUaQn4XvdZRh0o=;
-        b=FS+bxCoUQzMvxNRSiuwbjLMktNYmoSyiiTcfCGtEnw7oz/RaknS05DuDykC403577e
-         aynw2TKjaDfAEI23jPVLOhc/3G/rkAz7G2O2HHg72LBDavjfVPwQra/xf+dEjHoI8kOg
-         IuWAw1rPOjzVw796xT4ci53dIXgxwE4RflDxmwDNlGVJJP4z73z7kX1HxNZgPVd/y3uf
-         ZiaFmvt6+NBqLMfUefRGhd3q/L9SptsrKfBO5fc/AT324K1GAYNVE2yOMjEDtVE6hqD9
-         YT8wZYLepIB8cl/py+xsQeevHiNdcHFOnB8+icy62A7ytTqLZZZp90F2cuiuOY7NGrmD
-         E8TQ==
+        bh=TKDcz9GEkq0+jTlX4XnG4MmP4DXsoB8ism0APIW6WXQ=;
+        b=yWOqH74lTdL0xzn4KduFkFnfeuA6TxebZ/0lcsCSU6TfvfB33BHb5+UZKjrmx2xZfV
+         z0mXE7FbdS+QTb/+X7UZTIi+dJTTpvNrStE+qGpoEIEUf/dEB3ISiDvaUraBduJnXLyN
+         b09D5OMsvfI/eJIeAJE+aKgcVJnQMRsHiwQglRNZBi28wdsnRUzCmNPN7QaKe9KLl5cI
+         fUTHUJIi9n/VgDgtEEk5ESV1R0hBDldBsD0vrE+C+7o5ET0/PLDGcVMfVC1qTcMtQE/+
+         efYWZIJUuS+hD9bIcAdP1/FiLg0O635PzhAKlf8wDH/sgN7065DKKRjDMr1+1WBdv7XZ
+         ORvw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=dcYAzYNxQfFqfgdx0zCpj/KDgBQyEbUaQn4XvdZRh0o=;
-        b=cDyFWKfnpQByQQW2/gIke6ISEve++qtz+bTSVwZameOADGXS+qgdXhJo51O5PeH1Y3
-         x3WweFPtNcHo/D9WECYxeA7SMcuuOSiEARY9ScV/CewolcdBYdjRxbo2Xae+spimrbem
-         qeCVknTBNbSM4mxdJjl5lAG7vPly0S6kImReg0CkRRmQNPcu9ZeCLk2DWPYcb84GWtkE
-         goyCRCpgqawK6jJfPBS7sg4ik234g3Pu3MwuggX0Sn/uZQVf16pm7uIFvI/6v1l98g2n
-         PkStX0MQtu0AntKxXBVSXGbiH6IzRJ7/K90lQ6r6YIYqScW1DDYa+8kGA2KRdFm2sdVy
-         T2Rw==
-X-Gm-Message-State: APjAAAWbf5eopRHpl7styjjNoyS0Rj1ODyP1z2lh0TP19GFAvStQhIDJ
-        DbDYOiQdRKqR9QDHA+lRakBAfg==
-X-Google-Smtp-Source: APXvYqwXBC7IUWS8hioJj3UhbdiVmNX4j6uLKBpFtP+lG8xcx7bnu+iFYAnbEW6qGLSWRKczEYAZHQ==
-X-Received: by 2002:aa7:851a:: with SMTP id v26mr43247304pfn.238.1567570245048;
-        Tue, 03 Sep 2019 21:10:45 -0700 (PDT)
+        bh=TKDcz9GEkq0+jTlX4XnG4MmP4DXsoB8ism0APIW6WXQ=;
+        b=D/QXA9cULzWZwR8BgU7nd9fj3NA/W2o8eqEtlumRZtn3Z3psdjSuGobFuwlUVA2c2W
+         BVMdCHPU66F5Y4U6wSElorg3fyMQY152IF9A1MPu79X53j5bXNPy9CWJM8D4FbH35n8g
+         mTscSq60kivCG34InjgLwx381rN2e7CY8alUTViWo+woocW2X9rk0GOfIxliODSTV42U
+         lik4YSsrN8okIhP+D4h/DKvYwULQcIminIRx2x2bxLsu4bYTi8JkArarHXkDpLyVVbd7
+         /PUiU7uwP19x1LZ3nr5/+sptOLNFd/SNX70W1ASCL/pZtOfqdr2waqIVAL7SJafqMqD5
+         lMQg==
+X-Gm-Message-State: APjAAAX9V6M3mziPdheinMGfR8ZfIYWg+4ZSIgGtLXJazvmpfkXUN2Fj
+        CS9bURM6lRyZviuPhQ2Vq89CmQ==
+X-Google-Smtp-Source: APXvYqxsqJ3hNQRFq3ixeUtG46LHLPaeaxAQsBMx89pzwZF3ApMq4oZQvbEinaPSdK7PfwqTN14bVQ==
+X-Received: by 2002:a63:550e:: with SMTP id j14mr29867505pgb.302.1567570429722;
+        Tue, 03 Sep 2019 21:13:49 -0700 (PDT)
 Received: from tuxbook-pro (104-188-17-28.lightspeed.sndgca.sbcglobal.net. [104.188.17.28])
-        by smtp.gmail.com with ESMTPSA id v12sm17321805pgr.86.2019.09.03.21.10.43
+        by smtp.gmail.com with ESMTPSA id b126sm21458534pfb.110.2019.09.03.21.13.48
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 03 Sep 2019 21:10:44 -0700 (PDT)
-Date:   Tue, 3 Sep 2019 21:10:42 -0700
+        Tue, 03 Sep 2019 21:13:49 -0700 (PDT)
+Date:   Tue, 3 Sep 2019 21:13:46 -0700
 From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Stephen Boyd <swboyd@chromium.org>
-Cc:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-gpio@vger.kernel.org,
-        Linus Walleij <linus.walleij@linaro.org>,
-        Andy Gross <agross@kernel.org>
-Subject: Re: [PATCH] pinctrl: qcom: sdm845: Fix UFS_RESET pin
-Message-ID: <20190904041042.GA3081@tuxbook-pro>
-References: <20190830060227.12792-1-swboyd@chromium.org>
+To:     Denis Efremov <efremov@linux.com>
+Cc:     linux-kernel@vger.kernel.org, Rob Clark <robdclark@gmail.com>,
+        Sean Paul <sean@poorly.run>, Joe Perches <joe@perches.com>,
+        Andrew Morton <akpm@linux-foundation.org>,
+        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org
+Subject: Re: [PATCH v3 02/11] drm/msm: remove unlikely() from WARN_ON()
+ conditions
+Message-ID: <20190904041346.GB3081@tuxbook-pro>
+References: <20190829165025.15750-1-efremov@linux.com>
+ <20190829165025.15750-2-efremov@linux.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20190830060227.12792-1-swboyd@chromium.org>
+In-Reply-To: <20190829165025.15750-2-efremov@linux.com>
 User-Agent: Mutt/1.12.1 (2019-06-15)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu 29 Aug 23:02 PDT 2019, Stephen Boyd wrote:
+On Thu 29 Aug 09:50 PDT 2019, Denis Efremov wrote:
 
-> The UFS_RESET pin is the magical pin #150 now, not 153 per the
-> sdm845_groups array declared in this file. Fix the order of pins so that
-> UFS_RESET is 150 and the SDC pins follow after.
+> "unlikely(WARN_ON(x))" is excessive. WARN_ON() already uses unlikely()
+> internally.
 > 
-
-Woops, thanks
+> Signed-off-by: Denis Efremov <efremov@linux.com>
+> Cc: Rob Clark <robdclark@gmail.com>
+> Cc: Sean Paul <sean@poorly.run>
+> Cc: Joe Perches <joe@perches.com>
+> Cc: Andrew Morton <akpm@linux-foundation.org>
+> Cc: linux-arm-msm@vger.kernel.org
+> Cc: dri-devel@lists.freedesktop.org
 
 Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
 
-> Fixes: 53a5372ce326 ("pinctrl: qcom: sdm845: Expose ufs_reset as gpio")
-> Signed-off-by: Stephen Boyd <swboyd@chromium.org>
 > ---
->  drivers/pinctrl/qcom/pinctrl-sdm845.c | 8 ++++----
->  1 file changed, 4 insertions(+), 4 deletions(-)
+>  drivers/gpu/drm/msm/disp/mdp5/mdp5_ctl.c | 4 ++--
+>  drivers/gpu/drm/msm/disp/mdp_format.c    | 2 +-
+>  2 files changed, 3 insertions(+), 3 deletions(-)
 > 
-> diff --git a/drivers/pinctrl/qcom/pinctrl-sdm845.c b/drivers/pinctrl/qcom/pinctrl-sdm845.c
-> index 39f498c09906..ce495970459d 100644
-> --- a/drivers/pinctrl/qcom/pinctrl-sdm845.c
-> +++ b/drivers/pinctrl/qcom/pinctrl-sdm845.c
-> @@ -262,10 +262,10 @@ static const struct pinctrl_pin_desc sdm845_pins[] = {
->  	PINCTRL_PIN(147, "GPIO_147"),
->  	PINCTRL_PIN(148, "GPIO_148"),
->  	PINCTRL_PIN(149, "GPIO_149"),
-> -	PINCTRL_PIN(150, "SDC2_CLK"),
-> -	PINCTRL_PIN(151, "SDC2_CMD"),
-> -	PINCTRL_PIN(152, "SDC2_DATA"),
-> -	PINCTRL_PIN(153, "UFS_RESET"),
-> +	PINCTRL_PIN(150, "UFS_RESET"),
-> +	PINCTRL_PIN(151, "SDC2_CLK"),
-> +	PINCTRL_PIN(152, "SDC2_CMD"),
-> +	PINCTRL_PIN(153, "SDC2_DATA"),
->  };
+> diff --git a/drivers/gpu/drm/msm/disp/mdp5/mdp5_ctl.c b/drivers/gpu/drm/msm/disp/mdp5/mdp5_ctl.c
+> index 4804cf40de14..030279d7b64b 100644
+> --- a/drivers/gpu/drm/msm/disp/mdp5/mdp5_ctl.c
+> +++ b/drivers/gpu/drm/msm/disp/mdp5/mdp5_ctl.c
+> @@ -253,7 +253,7 @@ int mdp5_ctl_set_cursor(struct mdp5_ctl *ctl, struct mdp5_pipeline *pipeline,
+>  	u32 blend_cfg;
+>  	struct mdp5_hw_mixer *mixer = pipeline->mixer;
 >  
->  #define DECLARE_MSM_GPIO_PINS(pin) \
+> -	if (unlikely(WARN_ON(!mixer))) {
+> +	if (WARN_ON(!mixer)) {
+>  		DRM_DEV_ERROR(ctl_mgr->dev->dev, "CTL %d cannot find LM",
+>  			ctl->id);
+>  		return -EINVAL;
+> @@ -695,7 +695,7 @@ struct mdp5_ctl_manager *mdp5_ctlm_init(struct drm_device *dev,
+>  		goto fail;
+>  	}
+>  
+> -	if (unlikely(WARN_ON(ctl_cfg->count > MAX_CTL))) {
+> +	if (WARN_ON(ctl_cfg->count > MAX_CTL)) {
+>  		DRM_DEV_ERROR(dev->dev, "Increase static pool size to at least %d\n",
+>  				ctl_cfg->count);
+>  		ret = -ENOSPC;
+> diff --git a/drivers/gpu/drm/msm/disp/mdp_format.c b/drivers/gpu/drm/msm/disp/mdp_format.c
+> index 8afb0f9c04bb..5495d8b3f5b9 100644
+> --- a/drivers/gpu/drm/msm/disp/mdp_format.c
+> +++ b/drivers/gpu/drm/msm/disp/mdp_format.c
+> @@ -174,7 +174,7 @@ const struct msm_format *mdp_get_format(struct msm_kms *kms, uint32_t format,
+>  
+>  struct csc_cfg *mdp_get_default_csc_cfg(enum csc_type type)
+>  {
+> -	if (unlikely(WARN_ON(type >= CSC_MAX)))
+> +	if (WARN_ON(type >= CSC_MAX))
+>  		return NULL;
+>  
+>  	return &csc_convert[type];
 > -- 
-> Sent by a computer through tubes
+> 2.21.0
 > 
