@@ -2,36 +2,38 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 11038A8309
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Sep 2019 14:51:58 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A51D7A8326
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Sep 2019 14:52:10 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730330AbfIDMfF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 4 Sep 2019 08:35:05 -0400
-Received: from szxga07-in.huawei.com ([45.249.212.35]:32800 "EHLO huawei.com"
-        rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-        id S1729996AbfIDMfF (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 4 Sep 2019 08:35:05 -0400
-Received: from DGGEMS413-HUB.china.huawei.com (unknown [172.30.72.59])
-        by Forcepoint Email with ESMTP id C8C813E6C863CC25DDB0;
-        Wed,  4 Sep 2019 20:35:03 +0800 (CST)
-Received: from localhost (10.133.213.239) by DGGEMS413-HUB.china.huawei.com
- (10.3.19.213) with Microsoft SMTP Server id 14.3.439.0; Wed, 4 Sep 2019
- 20:34:56 +0800
-From:   YueHaibing <yuehaibing@huawei.com>
-To:     <miquel.raynal@bootlin.com>, <rui.zhang@intel.com>,
-        <edubezval@gmail.com>, <daniel.lezcano@linaro.org>,
-        <amit.kucheria@verdurent.com>, <eric@anholt.net>,
-        <wahrenst@gmx.net>, <f.fainelli@gmail.com>, <rjui@broadcom.com>,
-        <sbranden@broadcom.com>, <mmayer@broadcom.com>,
-        <computersforpeace@gmail.com>, <gregory.0xf0@gmail.com>,
-        <matthias.bgg@gmail.com>, <agross@kernel.org>, <heiko@sntech.de>,
+        id S1730009AbfIDMnm convert rfc822-to-8bit (ORCPT
+        <rfc822;lists+linux-arm-msm@lfdr.de>); Wed, 4 Sep 2019 08:43:42 -0400
+Received: from relay7-d.mail.gandi.net ([217.70.183.200]:41681 "EHLO
+        relay7-d.mail.gandi.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726528AbfIDMnl (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 4 Sep 2019 08:43:41 -0400
+X-Originating-IP: 86.250.200.211
+Received: from xps13 (lfbn-1-17395-211.w86-250.abo.wanadoo.fr [86.250.200.211])
+        (Authenticated sender: miquel.raynal@bootlin.com)
+        by relay7-d.mail.gandi.net (Postfix) with ESMTPSA id 1B4DA2000E;
+        Wed,  4 Sep 2019 12:43:33 +0000 (UTC)
+Date:   Wed, 4 Sep 2019 14:43:32 +0200
+From:   Miquel Raynal <miquel.raynal@bootlin.com>
+To:     YueHaibing <yuehaibing@huawei.com>
+Cc:     <rui.zhang@intel.com>, <edubezval@gmail.com>,
+        <daniel.lezcano@linaro.org>, <amit.kucheria@verdurent.com>,
+        <eric@anholt.net>, <wahrenst@gmx.net>, <f.fainelli@gmail.com>,
+        <rjui@broadcom.com>, <sbranden@broadcom.com>,
+        <mmayer@broadcom.com>, <computersforpeace@gmail.com>,
+        <gregory.0xf0@gmail.com>, <matthias.bgg@gmail.com>,
+        <agross@kernel.org>, <heiko@sntech.de>,
         <mcoquelin.stm32@gmail.com>, <alexandre.torgue@st.com>,
         <marc.w.gonzalez@free.fr>, <mans@mansr.com>, <talel@amazon.com>,
         <jun.nie@linaro.org>, <shawnguo@kernel.org>,
-        <phil@raspberrypi.org>, <yuehaibing@huawei.com>,
-        <gregkh@linuxfoundation.org>, <david.hernandezsanchez@st.com>,
-        <horms+renesas@verge.net.au>, <wsa+renesas@sang-engineering.com>
-CC:     <bcm-kernel-feedback-list@broadcom.com>,
+        <phil@raspberrypi.org>, <gregkh@linuxfoundation.org>,
+        <david.hernandezsanchez@st.com>, <horms+renesas@verge.net.au>,
+        <wsa+renesas@sang-engineering.com>,
+        <bcm-kernel-feedback-list@broadcom.com>,
         <linux-pm@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
         <linux-rpi-kernel@lists.infradead.org>,
         <linux-arm-kernel@lists.infradead.org>,
@@ -39,47 +41,56 @@ CC:     <bcm-kernel-feedback-list@broadcom.com>,
         <linux-arm-msm@vger.kernel.org>,
         <linux-rockchip@lists.infradead.org>,
         <linux-stm32@st-md-mailman.stormreply.com>
-Subject: [PATCH -next 15/15] thermal: rcar: use devm_platform_ioremap_resource() to simplify code
-Date:   Wed, 4 Sep 2019 20:29:39 +0800
-Message-ID: <20190904122939.23780-16-yuehaibing@huawei.com>
-X-Mailer: git-send-email 2.10.2.windows.1
-In-Reply-To: <20190904122939.23780-1-yuehaibing@huawei.com>
+Subject: Re: [PATCH -next 01/15] thermal: armada: use
+ devm_platform_ioremap_resource() to simplify code
+Message-ID: <20190904144332.46ab190f@xps13>
+In-Reply-To: <20190904122939.23780-2-yuehaibing@huawei.com>
 References: <20190904122939.23780-1-yuehaibing@huawei.com>
+        <20190904122939.23780-2-yuehaibing@huawei.com>
+Organization: Bootlin
+X-Mailer: Claws Mail 3.17.3 (GTK+ 2.24.32; x86_64-pc-linux-gnu)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Originating-IP: [10.133.213.239]
-X-CFilter-Loop: Reflected
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8BIT
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Use devm_platform_ioremap_resource() to simplify the code a bit.
-This is detected by coccinelle.
+Hi Yue,
 
-Reported-by: Hulk Robot <hulkci@huawei.com>
-Signed-off-by: YueHaibing <yuehaibing@huawei.com>
----
- drivers/thermal/rcar_thermal.c | 5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
+YueHaibing <yuehaibing@huawei.com> wrote on Wed, 4 Sep 2019 20:29:25
++0800:
 
-diff --git a/drivers/thermal/rcar_thermal.c b/drivers/thermal/rcar_thermal.c
-index d0873de..d7f6aab 100644
---- a/drivers/thermal/rcar_thermal.c
-+++ b/drivers/thermal/rcar_thermal.c
-@@ -523,9 +523,8 @@ static int rcar_thermal_probe(struct platform_device *pdev)
- 			 * Then, driver uses common registers
- 			 * rcar_has_irq_support() will be enabled
- 			 */
--			res = platform_get_resource(pdev, IORESOURCE_MEM,
--						    mres++);
--			common->base = devm_ioremap_resource(dev, res);
-+			common->base = devm_platform_ioremap_resource(pdev,
-+								      mres++);
- 			if (IS_ERR(common->base))
- 				return PTR_ERR(common->base);
- 
--- 
-2.7.4
+> Use devm_platform_ioremap_resource() to simplify the code a bit.
+> This is detected by coccinelle.
+> 
+> Reported-by: Hulk Robot <hulkci@huawei.com>
+> Signed-off-by: YueHaibing <yuehaibing@huawei.com>
+> ---
+>  drivers/thermal/armada_thermal.c | 4 +---
+>  1 file changed, 1 insertion(+), 3 deletions(-)
+> 
+> diff --git a/drivers/thermal/armada_thermal.c b/drivers/thermal/armada_thermal.c
+> index 709a22f..70fe9c6 100644
+> --- a/drivers/thermal/armada_thermal.c
+> +++ b/drivers/thermal/armada_thermal.c
+> @@ -708,12 +708,10 @@ static int armada_thermal_probe_legacy(struct platform_device *pdev,
+>  				       struct armada_thermal_priv *priv)
+>  {
+>  	struct armada_thermal_data *data = priv->data;
+> -	struct resource *res;
+>  	void __iomem *base;
+>  
+>  	/* First memory region points towards the status register */
+> -	res = platform_get_resource(pdev, IORESOURCE_MEM, 0);
+> -	base = devm_ioremap_resource(&pdev->dev, res);
+> +	base = devm_platform_ioremap_resource(pdev, 0);
+>  	if (IS_ERR(base))
+>  		return PTR_ERR(base);
+>  
 
+Reviewed-by: Miquel Raynal <miquel.raynal@bootlin.com>
 
+Thanks,
+Miquèl
