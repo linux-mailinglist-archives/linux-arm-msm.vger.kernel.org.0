@@ -2,155 +2,124 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 99F85A93EE
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Sep 2019 22:43:06 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 8CFB9A93FA
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Sep 2019 22:44:42 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730417AbfIDUnG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 4 Sep 2019 16:43:06 -0400
-Received: from mail-pg1-f194.google.com ([209.85.215.194]:47087 "EHLO
-        mail-pg1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727562AbfIDUnF (ORCPT
+        id S1727544AbfIDUoj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 4 Sep 2019 16:44:39 -0400
+Received: from mail-pl1-f193.google.com ([209.85.214.193]:41448 "EHLO
+        mail-pl1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727900AbfIDUoi (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 4 Sep 2019 16:43:05 -0400
-Received: by mail-pg1-f194.google.com with SMTP id m3so46677pgv.13
-        for <linux-arm-msm@vger.kernel.org>; Wed, 04 Sep 2019 13:43:05 -0700 (PDT)
+        Wed, 4 Sep 2019 16:44:38 -0400
+Received: by mail-pl1-f193.google.com with SMTP id m9so88585pls.8
+        for <linux-arm-msm@vger.kernel.org>; Wed, 04 Sep 2019 13:44:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to:user-agent;
-        bh=/wsxDOtmnb9U/NekdAlLR4oeHJRU38Z5gPTM6QnO4F4=;
-        b=r4bC4okD7CNuq9BuMebOgwrGDybFlvfFhLFBIwlpf42JHRLdahnasXWiz4T5LA99LU
-         2szH87RezwOyOLL9EKUyVa4cjjqAl3XmySbxKqHUVyRPiF3VPP8pbC2fnxjPwEpjPo3z
-         mAP1Bb7s4IzTsQWgfoTAoq0LYVSYizde92oVBaCmSzJ/uMC5MhTyNcm36CPMUESC8SQh
-         CzxQP/cXwFySn9hLysmCRG0wT+4dXwIXoMn6W+H7H0LSiR1YdbUd9xG+wNjXxxzzkJNu
-         2m9P0Mfc6Hxbf08Gg13Ikkma+OvDXYSEQGdrXHpyG26aWe0JoK/8eZGHmzMpZPSKgDQU
-         vy1w==
+        bh=vZGgKk8jeW8NM2wT+HTq6+KHx26Kcf2Hd/HdxeR6J0c=;
+        b=TzzsMJ3gWG917Iis4NdDhBIHth4GqtK3/sv+X2gQXSJdeB0qEqMFs9o843HMPvOYUn
+         vxtcCBUDaWeRrnOi1h22RIfgxWB3iIQod31jZJoOVeGfutT9zeffgawMOBlMyWm9nSwy
+         YYRmz4yz3DSBRuxsOrQNDlVkq2BDtx9qG5bw/7teX4Y2Jiv+jUIX5DTvPqMzRVOzI9X5
+         4aJ+GjJekgkZ7uptwZX/lTBColHi+7J8HLkvOOdJeAxLEmtHbAncsA81jTFaDEk/tFKN
+         czMqG3CwBQQXU35NXerVTyXs4EAwGQjCKS5/StfvvxlCQdQ0G6qjrLlu6glTZVxMY3++
+         m0oA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=/wsxDOtmnb9U/NekdAlLR4oeHJRU38Z5gPTM6QnO4F4=;
-        b=EGyDK0DkQX8cHTyj20Ca/2vaSHMNYaLgBm/fK0K28/8M9tgxL3dyM2q2vi6Nv+efnJ
-         b0syAN8aoIG/+ZqM7mHCwkAyw8hKM6N6zOigUzmq3zkVT9yEL1ZMWExIJi7VDnEHO64J
-         hMVibUz8il0piLoNnAOPpiMb04HgD0sV9Q+BtH5o8mxIivxu21XsHn6/hPt2+6N4YpHN
-         xJ3lcunTmMmpL7AKtUFSwNt1rvzNvwUiakOMqyws79+587WSFR+Wlfyr2/A1ldtVlMTM
-         rc3kum2RS4N+piqddlIeXfLbgNPTjdODtAhsOWQLxywuYhSRkQ57D25myFSTezsosC0j
-         kIGw==
-X-Gm-Message-State: APjAAAX2QQEe3LzRqO3WzvchkauT3F8DE8Pr56tIb3UnitB84ayfBHga
-        foZQaG6k0uC92QJuCq2O13dtyg==
-X-Google-Smtp-Source: APXvYqz1x8IyyymHXIXgIk+a+BK4sSercU90VrV9KeSyLBl4ibAmtDI9sBm/qrTJHr7/y8s0AMFyaA==
-X-Received: by 2002:a17:90a:fc89:: with SMTP id ci9mr168674pjb.48.1567629785147;
-        Wed, 04 Sep 2019 13:43:05 -0700 (PDT)
+        bh=vZGgKk8jeW8NM2wT+HTq6+KHx26Kcf2Hd/HdxeR6J0c=;
+        b=WbuTM+d/L9qo+25eWi1/DhLi1KNf5PrdAvDme3sjKZwHlTWnUD7hR/of/zspoHdSAw
+         mdc3R6SKs9b6VDRJFYvitCeeI7KD+IKlO3NJYO6sfpC7LlwlfVaOs0enPn1icICzlsa7
+         QGGwWkRXn97Ei8vWHXnNmDZbEM9wW5eoy+EsXXke6+tKGRWR7LMBa1pvVrp4637wAUnB
+         7hl+/8+5k1q/qkWWSAltRG2tTwgkUJWsqpU3juP/Ifb65T7OugXMR491dzFAsJIJX/qK
+         3fsHWZMH+BI4SFBUI4IryZJpOLC5yK+NJrRfNh17mfCn2ENk8Zx54Gd/d1vzjWSLUS53
+         a0tw==
+X-Gm-Message-State: APjAAAW37WsFlrHIWl9p02rezd4AnGL5G3yfAG6k6rPitzYflUyJa8tC
+        XNMIuz+g/Mr1STx9nZYhl27atQ==
+X-Google-Smtp-Source: APXvYqx4qZrRLrrr0VmXx5Jsx7rH4OjMuKZvmx+AszzG5hedxbJVd30/b6Bg8l9gTJn3rOqOMRdQqA==
+X-Received: by 2002:a17:902:7b82:: with SMTP id w2mr41037414pll.250.1567629878103;
+        Wed, 04 Sep 2019 13:44:38 -0700 (PDT)
 Received: from tuxbook-pro (104-188-17-28.lightspeed.sndgca.sbcglobal.net. [104.188.17.28])
-        by smtp.gmail.com with ESMTPSA id b3sm29860352pfp.65.2019.09.04.13.43.03
+        by smtp.gmail.com with ESMTPSA id r187sm19257078pfc.105.2019.09.04.13.44.35
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 04 Sep 2019 13:43:04 -0700 (PDT)
-Date:   Wed, 4 Sep 2019 13:43:02 -0700
+        Wed, 04 Sep 2019 13:44:37 -0700 (PDT)
+Date:   Wed, 4 Sep 2019 13:44:33 -0700
 From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Vinod Koul <vkoul@kernel.org>
-Cc:     Lee Jones <lee.jones@linaro.org>, agross@kernel.org,
-        robh+dt@kernel.org, mark.rutland@arm.com,
-        linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org
-Subject: Re: [PATCH v2 1/1] arm64: dts: qcom: Add Lenovo Yoga C630
-Message-ID: <20190904204302.GD580@tuxbook-pro>
-References: <20190904113917.15223-1-lee.jones@linaro.org>
- <20190904115234.GV2672@vkoul-mobl>
+To:     YueHaibing <yuehaibing@huawei.com>
+Cc:     broonie@kernel.org, f.fainelli@gmail.com, rjui@broadcom.com,
+        sbranden@broadcom.com, eric@anholt.net, wahrenst@gmx.net,
+        shc_work@mail.ru, agross@kernel.org, khilman@baylibre.com,
+        matthias.bgg@gmail.com, shawnguo@kernel.org,
+        s.hauer@pengutronix.de, kernel@pengutronix.de, festevam@gmail.com,
+        linux-imx@nxp.com, avifishman70@gmail.com, tmaimon77@gmail.com,
+        tali.perry1@gmail.com, venture@google.com, yuenn@google.com,
+        benjaminfair@google.com, kgene@kernel.org, krzk@kernel.org,
+        andi@etezian.org, palmer@sifive.com, paul.walmsley@sifive.com,
+        baohua@kernel.org, mripard@kernel.org, wens@csie.org,
+        ldewangan@nvidia.com, thierry.reding@gmail.com,
+        jonathanh@nvidia.com, yamada.masahiro@socionext.com,
+        michal.simek@xilinx.com, bcm-kernel-feedback-list@broadcom.com,
+        linux-spi@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-rpi-kernel@lists.infradead.org,
+        linux-arm-kernel@lists.infradead.org,
+        linux-arm-msm@vger.kernel.org, linux-amlogic@lists.infradead.org,
+        linux-mediatek@lists.infradead.org, openbmc@lists.ozlabs.org,
+        linux-samsung-soc@vger.kernel.org, linux-riscv@lists.infradead.org,
+        linux-tegra@vger.kernel.org
+Subject: Re: [PATCH -next 13/36] spi: spi-geni-qcom: use
+ devm_platform_ioremap_resource() to simplify code
+Message-ID: <20190904204433.GE580@tuxbook-pro>
+References: <20190904135918.25352-1-yuehaibing@huawei.com>
+ <20190904135918.25352-14-yuehaibing@huawei.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20190904115234.GV2672@vkoul-mobl>
+In-Reply-To: <20190904135918.25352-14-yuehaibing@huawei.com>
 User-Agent: Mutt/1.12.1 (2019-06-15)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed 04 Sep 04:52 PDT 2019, Vinod Koul wrote:
+On Wed 04 Sep 06:58 PDT 2019, YueHaibing wrote:
 
-> On 04-09-19, 12:39, Lee Jones wrote:
-> > --- a/arch/arm64/boot/dts/qcom/Makefile
-> > +++ b/arch/arm64/boot/dts/qcom/Makefile
-> > @@ -12,5 +12,6 @@ dtb-$(CONFIG_ARCH_QCOM)	+= sdm845-cheza-r2.dtb
-> >  dtb-$(CONFIG_ARCH_QCOM)	+= sdm845-cheza-r3.dtb
-> >  dtb-$(CONFIG_ARCH_QCOM)	+= sdm845-db845c.dtb
-> >  dtb-$(CONFIG_ARCH_QCOM)	+= sdm845-mtp.dtb
-> > +dtb-$(CONFIG_ARCH_QCOM)	+= sdm850-lenovo-yoga-c630.dtb
-> 
-> Can we keep this sorted, so before mtp.
-> 
-> >  dtb-$(CONFIG_ARCH_QCOM)	+= qcs404-evb-1000.dtb
-> >  dtb-$(CONFIG_ARCH_QCOM)	+= qcs404-evb-4000.dtb
-> > diff --git a/arch/arm64/boot/dts/qcom/sdm850-lenovo-yoga-c630.dts b/arch/arm64/boot/dts/qcom/sdm850-lenovo-yoga-c630.dts
-> > new file mode 100644
-> > index 000000000000..ad160c718b33
-> > --- /dev/null
-> > +++ b/arch/arm64/boot/dts/qcom/sdm850-lenovo-yoga-c630.dts
-> > @@ -0,0 +1,454 @@
-> > +// SPDX-License-Identifier: GPL-2.0
-> 
-> Are we going to make this dual? or BSD..
+> Use devm_platform_ioremap_resource() to simplify the code a bit.
+> This is detected by coccinelle.
 > 
 
-Sounds good, Rob wants dual license so lets flag it as such.
+Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
 
-> > +&apps_rsc {
-> > +	pm8998-rpmh-regulators {
-> > +		compatible = "qcom,pm8998-rpmh-regulators";
-> > +		qcom,pmic-id = "a";
-> > +
-> > +		vdd-l2-l8-l17-supply = <&vreg_s3a_1p35>;
-> > +		vdd-l7-l12-l14-l15-supply = <&vreg_s5a_2p04>;
-> > +
-> > +		vreg_s2a_1p125: smps2 {
-> > +		};
-> > +
-> > +		vreg_s3a_1p35: smps3 {
-> > +			regulator-min-microvolt = <1352000>;
-> > +			regulator-max-microvolt = <1352000>;
-> > +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-> > +		};
-> > +
-> > +		vreg_s4a_1p8: smps4 {
-> > +			regulator-min-microvolt = <1800000>;
-> > +			regulator-max-microvolt = <1800000>;
-> > +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-> > +		};
-> > +
-> > +		vreg_s5a_2p04: smps5 {
-> > +			regulator-min-microvolt = <2040000>;
-> > +			regulator-max-microvolt = <2040000>;
-> > +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-> > +		};
-> > +
-> > +		vreg_s7a_1p025: smps7 {
+> Reported-by: Hulk Robot <hulkci@huawei.com>
+> Signed-off-by: YueHaibing <yuehaibing@huawei.com>
+> ---
+>  drivers/spi/spi-geni-qcom.c | 4 +---
+>  1 file changed, 1 insertion(+), 3 deletions(-)
 > 
-> Any reason why we dont specify the mode and min/max voltage for this
-> and few others below..?
-> 
-
-Iirc these values are not known from the tables provided by the
-firmware. Label names are just "borrowed" from the MTP, so we can't
-derive anything from there either.
-
-I intended to review and clean this up before it was posted...
-
-Regards,
-Bjorn
-
-> > +&i2c1 {
-> > +	status = "okay";
-> > +	clock-frequency = <400000>;
-> > +	qcom,geni-se-fifo;
-> > +
-> > +	battery@70 {
-> > +		compatible = "some,battery";
-> 
-> some,battery ..?
-> 
-> > +&qup_i2c12_default {
-> 
-> Please move the qup nodes up so that nodes are sorted alphabetically
-> 
+> diff --git a/drivers/spi/spi-geni-qcom.c b/drivers/spi/spi-geni-qcom.c
+> index 242b6c8..6f3d64a 100644
+> --- a/drivers/spi/spi-geni-qcom.c
+> +++ b/drivers/spi/spi-geni-qcom.c
+> @@ -534,7 +534,6 @@ static int spi_geni_probe(struct platform_device *pdev)
+>  	int ret, irq;
+>  	struct spi_master *spi;
+>  	struct spi_geni_master *mas;
+> -	struct resource *res;
+>  	void __iomem *base;
+>  	struct clk *clk;
+>  
+> @@ -542,8 +541,7 @@ static int spi_geni_probe(struct platform_device *pdev)
+>  	if (irq < 0)
+>  		return irq;
+>  
+> -	res = platform_get_resource(pdev, IORESOURCE_MEM, 0);
+> -	base = devm_ioremap_resource(&pdev->dev, res);
+> +	base = devm_platform_ioremap_resource(pdev, 0);
+>  	if (IS_ERR(base))
+>  		return PTR_ERR(base);
+>  
 > -- 
-> ~Vinod
+> 2.7.4
+> 
+> 
