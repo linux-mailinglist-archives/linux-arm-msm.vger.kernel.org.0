@@ -2,57 +2,59 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id A1BEDA8866
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Sep 2019 21:22:01 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 79E82A888B
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Sep 2019 21:22:18 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730511AbfIDOG4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 4 Sep 2019 10:06:56 -0400
-Received: from coyote.holtmann.net ([212.227.132.17]:34727 "EHLO
-        mail.holtmann.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727156AbfIDOG4 (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 4 Sep 2019 10:06:56 -0400
-Received: from marcel-macbook.fritz.box (p4FEFC197.dip0.t-ipconnect.de [79.239.193.151])
-        by mail.holtmann.org (Postfix) with ESMTPSA id E3037CEC82;
-        Wed,  4 Sep 2019 16:15:41 +0200 (CEST)
-Content-Type: text/plain;
-        charset=us-ascii
-Mime-Version: 1.0 (Mac OS X Mail 12.4 \(3445.104.11\))
-Subject: Re: [PATCH v1] bluetooth: hci_qca: disable irqs when spinlock is
- acquired
-From:   Marcel Holtmann <marcel@holtmann.org>
-In-Reply-To: <1567571656-32403-1-git-send-email-c-hbandi@codeaurora.org>
-Date:   Wed, 4 Sep 2019 16:06:53 +0200
-Cc:     Johan Hedberg <johan.hedberg@gmail.com>, mka@chromium.org,
-        linux-kernel@vger.kernel.org, linux-bluetooth@vger.kernel.org,
-        hemantg@codeaurora.org, linux-arm-msm@vger.kernel.org,
-        bgodavar@codeaurora.org, anubhavg@codeaurora.org
-Content-Transfer-Encoding: 7bit
-Message-Id: <6F34A9CD-7C8F-4E5D-9A22-9F05CC2CF9BC@holtmann.org>
-References: <1567571656-32403-1-git-send-email-c-hbandi@codeaurora.org>
-To:     Harish Bandi <c-hbandi@codeaurora.org>
-X-Mailer: Apple Mail (2.3445.104.11)
+        id S1730250AbfIDONC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 4 Sep 2019 10:13:02 -0400
+Received: from foss.arm.com ([217.140.110.172]:56038 "EHLO foss.arm.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1730078AbfIDONC (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 4 Sep 2019 10:13:02 -0400
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 64A5928;
+        Wed,  4 Sep 2019 07:13:01 -0700 (PDT)
+Received: from bogus (e107155-lin.cambridge.arm.com [10.1.196.42])
+        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 0FE5A3F59C;
+        Wed,  4 Sep 2019 07:12:59 -0700 (PDT)
+Date:   Wed, 4 Sep 2019 15:12:57 +0100
+From:   Sudeep Holla <sudeep.holla@arm.com>
+To:     Lee Jones <lee.jones@linaro.org>
+Cc:     agross@kernel.org, robh+dt@kernel.org, mark.rutland@arm.com,
+        bjorn.andersson@linaro.org, linux-arm-kernel@lists.infradead.org,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, Sudeep Holla <sudeep.holla@arm.com>
+Subject: Re: [PATCH v3 1/1] arm64: dts: qcom: Add Lenovo Yoga C630
+Message-ID: <20190904141257.GB6144@bogus>
+References: <20190904121606.17474-1-lee.jones@linaro.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20190904121606.17474-1-lee.jones@linaro.org>
+User-Agent: Mutt/1.9.4 (2018-02-28)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Harish,
+On Wed, Sep 04, 2019 at 01:16:06PM +0100, Lee Jones wrote:
+> From: Bjorn Andersson <bjorn.andersson@linaro.org>
+>
+> The Lenovo Yoga C630 is built on the SDM850 from Qualcomm, but this seem
+> to be similar enough to the SDM845 that we can reuse the sdm845.dtsi.
+>
+> Supported by this patch is: keyboard, battery monitoring, UFS storage,
+> USB host and Bluetooth.
+>
 
-> Looks like Deadlock is observed in hci_qca while performing
-> stress and stability tests. Since same lock is getting
-> acquired from qca_wq_awake_rx and hci_ibs_tx_idle_timeout
-> seeing spinlock recursion, irqs should be disable while
-> acquiring the spinlock always.
-> 
-> Signed-off-by: Harish Bandi <c-hbandi@codeaurora.org>
-> ---
-> drivers/bluetooth/hci_qca.c | 10 ++++++----
-> 1 file changed, 6 insertions(+), 4 deletions(-)
+Just curious to know if the idea of booting using ACPI is completely
+dropped as it's extremely difficult(because the firmware is so hacked
+up and may violate spec, just my opinion) for whatever reasons.
 
-patch has been applied to bluetooth-stable tree.
+We just made ACPI table version checking more lenient for this platform
+and would be good to know if we continue to run ACPI on that or will
+abandon and just use DT.
 
-Regards
-
-Marcel
-
+--
+Regards,
+Sudeep
