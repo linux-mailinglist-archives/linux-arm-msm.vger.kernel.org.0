@@ -2,161 +2,127 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id F3877A79A0
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Sep 2019 06:22:08 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C5317A79E3
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Sep 2019 06:34:34 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725966AbfIDEWI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 4 Sep 2019 00:22:08 -0400
-Received: from mail-pf1-f196.google.com ([209.85.210.196]:39568 "EHLO
-        mail-pf1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725877AbfIDEWH (ORCPT
+        id S1727374AbfIDEed (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 4 Sep 2019 00:34:33 -0400
+Received: from smtp.codeaurora.org ([198.145.29.96]:55088 "EHLO
+        smtp.codeaurora.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725840AbfIDEed (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 4 Sep 2019 00:22:07 -0400
-Received: by mail-pf1-f196.google.com with SMTP id s12so5382532pfe.6
-        for <linux-arm-msm@vger.kernel.org>; Tue, 03 Sep 2019 21:22:07 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=mp9OFto0GZk4OjRyXFJjH2s7yGAsAoKG/MS1RCQlOQQ=;
-        b=WTaHHGrvlniplupbKSJNlsKOyzptXQwVRIDf/qjEm017VJXU41Gqqe7UGNTMvw+xr1
-         X/Exx7zSW6qtWV0hqB/b1rm6eB8sFQZF3IEyfn4muy2wof4P7S9FI4Ih2W+phAM/mB6v
-         MH0YehfS5rswTZLZ5xuvJWwKp3LhQyQci8S6k0ayZhWecsjSeTTGyImkQ8hKFty96iAv
-         XqIF2NlBPKrvRq4n2tvwHudYolOwY3909VFrEpPhf4MO0gDSYIbyABo1OrcRUEisCNY+
-         Y04TNkzvmezmQ08TLjm54UkOF6PngEAWlWs/gFJAjfXrpUS/OKhkbgDaibCdA7illKDe
-         0s0w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=mp9OFto0GZk4OjRyXFJjH2s7yGAsAoKG/MS1RCQlOQQ=;
-        b=pbGK2efUS625T7RsuqK67AKqsVGb/8s5BlVgLoOOGEmR6m3dHWu8EqTCdSzKVphRAa
-         W2lq7zZZ5R8VAEiVdcn/q0R10Gfiz74h39eBmE0kwnWhIXEMkuFIB5UhFzzSYt47N/l9
-         ZSouUGkYfIWOYiu39V6Daya5Nsmv/tvliJqz1mfDFy/5GkwOQsEnKXPoM1il2sWTrdME
-         5WIx6MpGJGesktGqu2vv3taIvqpYRUAZJcBpK/jlqqG0P43v9BUBkY6nnnUxEBnCesEN
-         dJHYQHEgwFbt0XSqTyjK7ehB27t+snbWT0lU8Vulkt8iWnppzSOnrBJGaAH/ZRHrgw2s
-         Cl9A==
-X-Gm-Message-State: APjAAAUBpwSmMtpMGvyeP7dAGGMBIgwfaUjT9zO6lSg/+pg6VKENk7vV
-        0OPoVE/HIAUaB8jjUYcVc1fbvA==
-X-Google-Smtp-Source: APXvYqy5gQpkWB1S0s/wrl3Q+cVrKMEMuWNE1UjfGFaNKX5PQ/qnJ8QVZhQCfwLSEncF+vh+M6lJhA==
-X-Received: by 2002:aa7:8a98:: with SMTP id a24mr40799576pfc.101.1567570927082;
-        Tue, 03 Sep 2019 21:22:07 -0700 (PDT)
-Received: from tuxbook-pro (104-188-17-28.lightspeed.sndgca.sbcglobal.net. [104.188.17.28])
-        by smtp.gmail.com with ESMTPSA id j7sm10505053pfi.96.2019.09.03.21.22.05
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 03 Sep 2019 21:22:06 -0700 (PDT)
-Date:   Tue, 3 Sep 2019 21:22:03 -0700
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Georgi Djakov <georgi.djakov@linaro.org>
-Cc:     Stanimir Varbanov <stanimir.varbanov@linaro.org>,
-        linux-media@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        Vikash Garodia <vgarodia@codeaurora.org>,
-        Andy Gross <agross@kernel.org>,
-        Aniket Masule <amasule@codeaurora.org>,
-        Linux PM list <linux-pm@vger.kernel.org>
-Subject: Re: [PATCH 1/2] venus: use on-chip interconnect API
-Message-ID: <20190904042203.GC3081@tuxbook-pro>
-References: <20190814084701.25455-1-stanimir.varbanov@linaro.org>
- <20190814084701.25455-2-stanimir.varbanov@linaro.org>
- <cc85f55c-3d21-c3b2-6848-e48513263e39@linaro.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <cc85f55c-3d21-c3b2-6848-e48513263e39@linaro.org>
-User-Agent: Mutt/1.12.1 (2019-06-15)
+        Wed, 4 Sep 2019 00:34:33 -0400
+Received: by smtp.codeaurora.org (Postfix, from userid 1000)
+        id 59917602EF; Wed,  4 Sep 2019 04:34:32 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
+        s=default; t=1567571672;
+        bh=yD7jddCeDQh/QLkdALenruhc6/Bis0ve+odm+lJNIpc=;
+        h=From:To:Cc:Subject:Date:From;
+        b=I6pw9B5rr26zjf9F8xAcaV9hOA1N438qnSW6RXBSDF2vqmEqZw6tmqy0QALhuYHLj
+         O4sKsaEvGajDPBfDMWc81zdA/1YxO6y9C5kEysZ/G0IzEUwEeKL1n6jdPgeBmX0Aa0
+         32/OFYNYF8FAzDR2ENGUW9Z5zNiiPZEYXTs4f4o4=
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        pdx-caf-mail.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.7 required=2.0 tests=ALL_TRUSTED,BAYES_00,
+        DKIM_INVALID,DKIM_SIGNED,SPF_NONE autolearn=no autolearn_force=no
+        version=3.4.0
+Received: from c-hbandi-linux.qualcomm.com (blr-c-bdr-fw-01_globalnat_allzones-outside.qualcomm.com [103.229.19.19])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: c-hbandi@codeaurora.org)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 2DFCE607EB;
+        Wed,  4 Sep 2019 04:34:27 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
+        s=default; t=1567571671;
+        bh=yD7jddCeDQh/QLkdALenruhc6/Bis0ve+odm+lJNIpc=;
+        h=From:To:Cc:Subject:Date:From;
+        b=I2aSP4zUWyN5R+xWOmkIdddBX4q7VtpEp8StdzSVkyn8Yfe5BwBwf5HJVdRvViP94
+         +CnP44E9ZXvhH27gigVLcaGDTUaymlzH7W18sgqlXUtYuBc7hgKOTvFPpKAQtHRYR0
+         AA1zPgMsHJGmJ8rT14/Cy9JLfidd+zH6RuXDb2wA=
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 2DFCE607EB
+Authentication-Results: pdx-caf-mail.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: pdx-caf-mail.web.codeaurora.org; spf=none smtp.mailfrom=c-hbandi@codeaurora.org
+From:   Harish Bandi <c-hbandi@codeaurora.org>
+To:     marcel@holtmann.org, johan.hedberg@gmail.com
+Cc:     mka@chromium.org, linux-kernel@vger.kernel.org,
+        linux-bluetooth@vger.kernel.org, hemantg@codeaurora.org,
+        linux-arm-msm@vger.kernel.org, bgodavar@codeaurora.org,
+        anubhavg@codeaurora.org, Harish Bandi <c-hbandi@codeaurora.org>
+Subject: [PATCH v1] bluetooth: hci_qca: disable irqs when spinlock is acquired
+Date:   Wed,  4 Sep 2019 10:04:16 +0530
+Message-Id: <1567571656-32403-1-git-send-email-c-hbandi@codeaurora.org>
+X-Mailer: git-send-email 1.9.1
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue 20 Aug 02:34 PDT 2019, Georgi Djakov wrote:
+Looks like Deadlock is observed in hci_qca while performing
+stress and stability tests. Since same lock is getting
+acquired from qca_wq_awake_rx and hci_ibs_tx_idle_timeout
+seeing spinlock recursion, irqs should be disable while
+acquiring the spinlock always.
 
-> Hi Stan,
-> 
-> On 8/14/19 11:47, Stanimir Varbanov wrote:
-> > This aims to add a requests for bandwidth scaling depending
-> > on the resolution and framerate (macroblocks per second). The
-> > exact value ff the requested bandwidth is get from a
-> 
-> s/ff/of/
-> 
-> > pre-calculated tables for encoder and decoder.
-> > 
-> > Signed-off-by: Stanimir Varbanov <stanimir.varbanov@linaro.org>
-> > ---
-> >  drivers/media/platform/qcom/venus/core.c    | 34 +++++++++++
-> >  drivers/media/platform/qcom/venus/core.h    | 14 +++++
-> >  drivers/media/platform/qcom/venus/helpers.c | 67 ++++++++++++++++++++-
-> >  3 files changed, 114 insertions(+), 1 deletion(-)
-> 
-> It looks like venus can be built-in, so how about the case when venus is
-> built-in and the interconnect provider is a module? Maybe add a dependency in
-> Kconfig to depend on INTERCONNECT || !INTERCONNECT?
-> 
+Signed-off-by: Harish Bandi <c-hbandi@codeaurora.org>
+---
+ drivers/bluetooth/hci_qca.c | 10 ++++++----
+ 1 file changed, 6 insertions(+), 4 deletions(-)
 
-I've been struggling down this road for remoteproc et al for a long
-time, I strongly suggest that you make the INTERCONNECT config bool, to
-ensure that we don't see this problem for every client.
+diff --git a/drivers/bluetooth/hci_qca.c b/drivers/bluetooth/hci_qca.c
+index d33828f..e3164c2 100644
+--- a/drivers/bluetooth/hci_qca.c
++++ b/drivers/bluetooth/hci_qca.c
+@@ -309,13 +309,14 @@ static void qca_wq_awake_device(struct work_struct *work)
+ 					    ws_awake_device);
+ 	struct hci_uart *hu = qca->hu;
+ 	unsigned long retrans_delay;
++	unsigned long flags;
+ 
+ 	BT_DBG("hu %p wq awake device", hu);
+ 
+ 	/* Vote for serial clock */
+ 	serial_clock_vote(HCI_IBS_TX_VOTE_CLOCK_ON, hu);
+ 
+-	spin_lock(&qca->hci_ibs_lock);
++	spin_lock_irqsave(&qca->hci_ibs_lock, flags);
+ 
+ 	/* Send wake indication to device */
+ 	if (send_hci_ibs_cmd(HCI_IBS_WAKE_IND, hu) < 0)
+@@ -327,7 +328,7 @@ static void qca_wq_awake_device(struct work_struct *work)
+ 	retrans_delay = msecs_to_jiffies(qca->wake_retrans);
+ 	mod_timer(&qca->wake_retrans_timer, jiffies + retrans_delay);
+ 
+-	spin_unlock(&qca->hci_ibs_lock);
++	spin_unlock_irqrestore(&qca->hci_ibs_lock, flags);
+ 
+ 	/* Actually send the packets */
+ 	hci_uart_tx_wakeup(hu);
+@@ -338,12 +339,13 @@ static void qca_wq_awake_rx(struct work_struct *work)
+ 	struct qca_data *qca = container_of(work, struct qca_data,
+ 					    ws_awake_rx);
+ 	struct hci_uart *hu = qca->hu;
++	unsigned long flags;
+ 
+ 	BT_DBG("hu %p wq awake rx", hu);
+ 
+ 	serial_clock_vote(HCI_IBS_RX_VOTE_CLOCK_ON, hu);
+ 
+-	spin_lock(&qca->hci_ibs_lock);
++	spin_lock_irqsave(&qca->hci_ibs_lock, flags);
+ 	qca->rx_ibs_state = HCI_IBS_RX_AWAKE;
+ 
+ 	/* Always acknowledge device wake up,
+@@ -354,7 +356,7 @@ static void qca_wq_awake_rx(struct work_struct *work)
+ 
+ 	qca->ibs_sent_wacks++;
+ 
+-	spin_unlock(&qca->hci_ibs_lock);
++	spin_unlock_irqrestore(&qca->hci_ibs_lock, flags);
+ 
+ 	/* Actually send the packets */
+ 	hci_uart_tx_wakeup(hu);
+-- 
+The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
+a Linux Foundation Collaborative Project
 
-The interconnect framework should hide the fact that the provider is
-module.
-
-
-But with this in place is there actually a dependency? Won't the include
-file provide stubs in the case of !INTERCONNECT?
-
-Regards,
-Bjorn
-
-> > 
-> > diff --git a/drivers/media/platform/qcom/venus/core.c b/drivers/media/platform/qcom/venus/core.c
-> > index 0acc7576cc58..19cbe9d5d028 100644
-> > --- a/drivers/media/platform/qcom/venus/core.c
-> > +++ b/drivers/media/platform/qcom/venus/core.c
-> > @@ -5,6 +5,7 @@
-> >   */
-> >  #include <linux/clk.h>
-> >  #include <linux/init.h>
-> > +#include <linux/interconnect.h>
-> >  #include <linux/ioctl.h>
-> >  #include <linux/list.h>
-> >  #include <linux/module.h>
-> > @@ -239,6 +240,14 @@ static int venus_probe(struct platform_device *pdev)
-> >  	if (IS_ERR(core->base))
-> >  		return PTR_ERR(core->base);
-> >  
-> > +	core->video_path = of_icc_get(dev, "video-mem");
-> > +	if (IS_ERR(core->video_path))
-> > +		return PTR_ERR(core->video_path);
-> > +
-> > +	core->cpucfg_path = of_icc_get(dev, "cpu-cfg");
-> > +	if (IS_ERR(core->cpucfg_path))
-> > +		return PTR_ERR(core->cpucfg_path);
-> > +
-> >  	core->irq = platform_get_irq(pdev, 0);
-> >  	if (core->irq < 0)
-> >  		return core->irq;
-> > @@ -273,6 +282,10 @@ static int venus_probe(struct platform_device *pdev)
-> >  	if (ret)
-> >  		return ret;
-> >  
-> > +	ret = icc_set_bw(core->cpucfg_path, 0, kbps_to_icc(1000));
-> > +	if (ret)
-> > +		return ret;
-> > +
-> >  	ret = hfi_create(core, &venus_core_ops);
-> >  	if (ret)
-> >  		return ret;
-> > @@ -355,6 +368,9 @@ static int venus_remove(struct platform_device *pdev)
-> >  	pm_runtime_put_sync(dev);
-> >  	pm_runtime_disable(dev);
-> >  
-> > +	icc_put(core->video_path);
-> > +	icc_put(core->cpucfg_path);
-> > +
-> 
-> Do you have any plans to scale the bandwidth on suspend/resume too?
-> 
-> Thanks,
-> Georgi
