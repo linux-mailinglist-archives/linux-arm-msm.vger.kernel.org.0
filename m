@@ -2,122 +2,91 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id A5594A8D98
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Sep 2019 21:32:11 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id BCE97A8DA7
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Sep 2019 21:32:18 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731478AbfIDRTs (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 4 Sep 2019 13:19:48 -0400
-Received: from mail-pf1-f194.google.com ([209.85.210.194]:40786 "EHLO
-        mail-pf1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1731466AbfIDRTs (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 4 Sep 2019 13:19:48 -0400
-Received: by mail-pf1-f194.google.com with SMTP id x127so967771pfb.7;
-        Wed, 04 Sep 2019 10:19:48 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=09xouYfGtM7P/+Szurweb+Wo4prOf3fUjEfXXhSPvME=;
-        b=bxDni1+RWIcCrmcmzKZQBT7cquE1szM+Rm10Syh+xw44EBp11UXsk0Zc5eo59dnbyr
-         Ox9VL0O3wgC9uBUAlNkC9RBa/Sjk753Igi3sCtiB4BKPQv8Mg1v0IZktFKSbMVg1scyA
-         FAZUOYfe11oasXe+cMmbFHMxcerzZvp0R65AVCvE8DtaZitzI+9Zpoi2hJSFsjP3+JhO
-         BXV9F+Qwa0ha9xmxnIPvSBF9Dxovp7Jrrc7V7JRWUe9xIY8+I5j9VnQw8EYBJLpVlWxn
-         hU83BGp2e75k5uOvyQ1/nbcDPdpqx5tGktn9Usl7STni53tGJYSGs3knulQDQ+l57PPo
-         zofg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=09xouYfGtM7P/+Szurweb+Wo4prOf3fUjEfXXhSPvME=;
-        b=QbFEJMiH74czil1seJ5411+jyKScOCwV+kdrfZl4G/CNkslwrXxDg1Hkkc7hLsjChP
-         H9UOzjmZX+Xs2XqwL/QDghazm13TE1sqjc1To4npDxvSzJIRaSQ97PgWM3rrex8OFv7E
-         ypj/ndfMm97adf3MEJ0snKX67gJGC+LS3wJ2aXTWLAaIBW+S2Jc8LZqRjZqgPSeij7uN
-         z1tW7RnI2midcydySO4H0v9QotF8wh2qhvTIiJLdj2gDAZ9aSpLno8DqsdnWuGmyEKGO
-         PoS49dMu9iXce2Sx9ukSz4Lr/ipfh0BEco62l29SBH99+YtwvD9qC7xUcrfWLT5v9lfk
-         A+Rw==
-X-Gm-Message-State: APjAAAWHeFQRPA5mjiSTGUK2fSro2q5qlxvDM3je3Vn52vAHFSne5Ugt
-        QpFhWn2tIhPpvcxTC3nHJI4=
-X-Google-Smtp-Source: APXvYqzYc/xI1nMtMO8Q1TmWhNupziMCqcsew+YiGdEK3/Q/34lirq+6VDV81HR7x7yQFYWo9F0bUw==
-X-Received: by 2002:aa7:96c1:: with SMTP id h1mr9951490pfq.111.1567617587533;
-        Wed, 04 Sep 2019 10:19:47 -0700 (PDT)
-Received: from localhost ([100.118.89.196])
-        by smtp.gmail.com with ESMTPSA id z23sm1407891pfn.45.2019.09.04.10.19.46
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 04 Sep 2019 10:19:46 -0700 (PDT)
-From:   Rob Clark <robdclark@gmail.com>
-To:     dri-devel@lists.freedesktop.org
-Cc:     Rob Clark <robdclark@chromium.org>,
-        Fabio Estevam <festevam@gmail.com>,
-        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        linux-arm-msm@vger.kernel.org (open list:DRM DRIVER FOR MSM ADRENO GPU),
-        freedreno@lists.freedesktop.org (open list:DRM DRIVER FOR MSM ADRENO
-        GPU), linux-kernel@vger.kernel.org (open list)
-Subject: [PATCH] drm/msm: Use the correct dma_sync calls harder
-Date:   Wed,  4 Sep 2019 10:17:23 -0700
-Message-Id: <20190904171723.2956-1-robdclark@gmail.com>
-X-Mailer: git-send-email 2.21.0
+        id S1731570AbfIDRZR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 4 Sep 2019 13:25:17 -0400
+Received: from sauhun.de ([88.99.104.3]:44264 "EHLO pokefinder.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726589AbfIDRZR (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 4 Sep 2019 13:25:17 -0400
+Received: from localhost (p54B337F1.dip0.t-ipconnect.de [84.179.55.241])
+        by pokefinder.org (Postfix) with ESMTPSA id E42F02C08C3;
+        Wed,  4 Sep 2019 19:25:14 +0200 (CEST)
+Date:   Wed, 4 Sep 2019 19:25:14 +0200
+From:   Wolfram Sang <wsa@the-dreams.de>
+To:     YueHaibing <yuehaibing@huawei.com>
+Cc:     miquel.raynal@bootlin.com, rui.zhang@intel.com,
+        edubezval@gmail.com, daniel.lezcano@linaro.org,
+        amit.kucheria@verdurent.com, eric@anholt.net, wahrenst@gmx.net,
+        f.fainelli@gmail.com, rjui@broadcom.com, sbranden@broadcom.com,
+        mmayer@broadcom.com, computersforpeace@gmail.com,
+        gregory.0xf0@gmail.com, matthias.bgg@gmail.com, agross@kernel.org,
+        heiko@sntech.de, mcoquelin.stm32@gmail.com,
+        alexandre.torgue@st.com, marc.w.gonzalez@free.fr, mans@mansr.com,
+        talel@amazon.com, jun.nie@linaro.org, shawnguo@kernel.org,
+        phil@raspberrypi.org, gregkh@linuxfoundation.org,
+        david.hernandezsanchez@st.com, horms+renesas@verge.net.au,
+        wsa+renesas@sang-engineering.com,
+        bcm-kernel-feedback-list@broadcom.com, linux-pm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-rpi-kernel@lists.infradead.org,
+        linux-arm-kernel@lists.infradead.org,
+        linux-mediatek@lists.infradead.org, linux-arm-msm@vger.kernel.org,
+        linux-rockchip@lists.infradead.org,
+        linux-stm32@st-md-mailman.stormreply.com
+Subject: Re: [PATCH -next 15/15] thermal: rcar: use
+ devm_platform_ioremap_resource() to simplify code
+Message-ID: <20190904172514.GA2602@kunai>
+References: <20190904122939.23780-1-yuehaibing@huawei.com>
+ <20190904122939.23780-16-yuehaibing@huawei.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="AhhlLboLdkugWU4S"
+Content-Disposition: inline
+In-Reply-To: <20190904122939.23780-16-yuehaibing@huawei.com>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Rob Clark <robdclark@chromium.org>
 
-Looks like the dma_sync calls don't do what we want on armv7 either.
-Fixes:
+--AhhlLboLdkugWU4S
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-  Unable to handle kernel paging request at virtual address 50001000
-  pgd = (ptrval)
-  [50001000] *pgd=00000000
-  Internal error: Oops: 805 [#1] SMP ARM
-  Modules linked in:
-  CPU: 0 PID: 1 Comm: swapper/0 Not tainted 5.3.0-rc6-00271-g9f159ae07f07 #4
-  Hardware name: Freescale i.MX53 (Device Tree Support)
-  PC is at v7_dma_clean_range+0x20/0x38
-  LR is at __dma_page_cpu_to_dev+0x28/0x90
-  pc : [<c011c76c>]    lr : [<c01181c4>]    psr: 20000013
-  sp : d80b5a88  ip : de96c000  fp : d840ce6c
-  r10: 00000000  r9 : 00000001  r8 : d843e010
-  r7 : 00000000  r6 : 00008000  r5 : ddb6c000  r4 : 00000000
-  r3 : 0000003f  r2 : 00000040  r1 : 50008000  r0 : 50001000
-  Flags: nzCv  IRQs on  FIQs on  Mode SVC_32  ISA ARM  Segment none
-  Control: 10c5387d  Table: 70004019  DAC: 00000051
-  Process swapper/0 (pid: 1, stack limit = 0x(ptrval))
+On Wed, Sep 04, 2019 at 08:29:39PM +0800, YueHaibing wrote:
+> Use devm_platform_ioremap_resource() to simplify the code a bit.
+> This is detected by coccinelle.
+>=20
+> Reported-by: Hulk Robot <hulkci@huawei.com>
+> Signed-off-by: YueHaibing <yuehaibing@huawei.com>
 
-Signed-off-by: Rob Clark <robdclark@chromium.org>
-Fixes: 3de433c5b38a ("drm/msm: Use the correct dma_sync calls in msm_gem")
-Tested-by: Fabio Estevam <festevam@gmail.com>
----
- drivers/gpu/drm/msm/msm_gem.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+I think for such straightforward (and manifold) conversions, one patch
+per subsystem is better than one patch per driver. But this is not my
+subsystem, so I'll leave it to the thermal maintainers.
 
-diff --git a/drivers/gpu/drm/msm/msm_gem.c b/drivers/gpu/drm/msm/msm_gem.c
-index 7263f4373f07..5a6a79fbc9d6 100644
---- a/drivers/gpu/drm/msm/msm_gem.c
-+++ b/drivers/gpu/drm/msm/msm_gem.c
-@@ -52,7 +52,7 @@ static void sync_for_device(struct msm_gem_object *msm_obj)
- {
- 	struct device *dev = msm_obj->base.dev->dev;
- 
--	if (get_dma_ops(dev)) {
-+	if (get_dma_ops(dev) && IS_ENABLED(CONFIG_ARM64)) {
- 		dma_sync_sg_for_device(dev, msm_obj->sgt->sgl,
- 			msm_obj->sgt->nents, DMA_BIDIRECTIONAL);
- 	} else {
-@@ -65,7 +65,7 @@ static void sync_for_cpu(struct msm_gem_object *msm_obj)
- {
- 	struct device *dev = msm_obj->base.dev->dev;
- 
--	if (get_dma_ops(dev)) {
-+	if (get_dma_ops(dev) && IS_ENABLED(CONFIG_ARM64)) {
- 		dma_sync_sg_for_cpu(dev, msm_obj->sgt->sgl,
- 			msm_obj->sgt->nents, DMA_BIDIRECTIONAL);
- 	} else {
--- 
-2.21.0
 
+--AhhlLboLdkugWU4S
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAABCgAdFiEEOZGx6rniZ1Gk92RdFA3kzBSgKbYFAl1v83EACgkQFA3kzBSg
+KbZOUg/+Jw+mcZ79x8rHt2nPfBEtW1lYrickXXODhze40rPG/rARNtQxdyBIRKOj
+cl3g5q/PL2U0k4nrUuD3osCpUNceFye3A7o5eE81j8hSOBvwADNtAIPaIXenudHD
+P8krbODpUIy3ifIf24cUnCMr6teo0CduolmrCpDlmd1LWJmRpbdY+sejDVi8qAzs
+xJDN67R6O8lEDJSS0o63xXu4+ZSizqcfVQqlWdkTxc3wqHhdUXFLeCWH5Ow1RsbP
+ArXyH7xGG9xQxkiKavZSxYciob3PqcvRdfDv4dNRgNpJFir+mxbJVpQ2IyKr/hyn
+jYzzcz9sd02cXsxAOURY1OS7AhPUiRl5XZIhWR+0VRXwJhBTkpHh/Ro4RRgzMHCC
+UnRZgonQvO50HpmC3IHKPjq2rvKYYAYF2kr+rTjAiXsT2ZgECU5nQRypkMPy3CX2
+YdP9JnaDd7OpDw3+tvPRmbEpAkjcXK5QQp4vHnqaTrnaqyxbMVA6uRt68uSbNHIY
+gkTny6PNBTAr/0scsb7xo481yPA0MOCeShSAj6Dvk0pagXrfE4AgWf1vLPbUieUZ
+PrZ+0B6jIYMKswq8FVvwSvn+Jrk/RFvFOLFpiuCnWZx0kDz8BDVrkQrwz5NsNm7D
+NNOQUh/6TBD6/1TLapgeH4dtXhje3qlv8OzuEYhnkwS4UX3HvAI=
+=XQ0z
+-----END PGP SIGNATURE-----
+
+--AhhlLboLdkugWU4S--
