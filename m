@@ -2,130 +2,122 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id D5219A8D80
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Sep 2019 21:32:00 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A5594A8D98
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Sep 2019 21:32:11 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732616AbfIDRHG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 4 Sep 2019 13:07:06 -0400
-Received: from mail-wm1-f68.google.com ([209.85.128.68]:52909 "EHLO
-        mail-wm1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1732613AbfIDRHF (ORCPT
+        id S1731478AbfIDRTs (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 4 Sep 2019 13:19:48 -0400
+Received: from mail-pf1-f194.google.com ([209.85.210.194]:40786 "EHLO
+        mail-pf1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1731466AbfIDRTs (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 4 Sep 2019 13:07:05 -0400
-Received: by mail-wm1-f68.google.com with SMTP id t17so4129093wmi.2
-        for <linux-arm-msm@vger.kernel.org>; Wed, 04 Sep 2019 10:07:04 -0700 (PDT)
+        Wed, 4 Sep 2019 13:19:48 -0400
+Received: by mail-pf1-f194.google.com with SMTP id x127so967771pfb.7;
+        Wed, 04 Sep 2019 10:19:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to
-         :user-agent;
-        bh=OmbrMDzjBpiOxmAtJ5tpbDIpWnFC6mZzSWfiYEEna1k=;
-        b=DT59i1R1IVCqVqjH/Pzz6nG1z04AT2jwcDTq/Hjuv5d79AwcEZu8Bm9ozefrl/gopQ
-         SCFql3VM6ygPT0Y8fJZ5na+4iFOeAal7ie6ABTtEjeoRbpfTEh1arj3246ow5U+lHc7b
-         U9FudxoN5QN7fNtoIOLXlqUaGJo3FvuTZ7WEcvVvliP5sA15eGmWBOxL5JbmJtk4L3KA
-         hcgbAB8GV9LSqUj+z5G8iL0gThz8xJutMlKEE1aQj89RsleDV35ljWat1/g30Syt9567
-         FEoJDA5Kdg6L72aGtyGGagxhsnvP/eusL1TnlQd78QrMGhYVNH33Ad7GQvoiqrj2+MXk
-         svig==
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=09xouYfGtM7P/+Szurweb+Wo4prOf3fUjEfXXhSPvME=;
+        b=bxDni1+RWIcCrmcmzKZQBT7cquE1szM+Rm10Syh+xw44EBp11UXsk0Zc5eo59dnbyr
+         Ox9VL0O3wgC9uBUAlNkC9RBa/Sjk753Igi3sCtiB4BKPQv8Mg1v0IZktFKSbMVg1scyA
+         FAZUOYfe11oasXe+cMmbFHMxcerzZvp0R65AVCvE8DtaZitzI+9Zpoi2hJSFsjP3+JhO
+         BXV9F+Qwa0ha9xmxnIPvSBF9Dxovp7Jrrc7V7JRWUe9xIY8+I5j9VnQw8EYBJLpVlWxn
+         hU83BGp2e75k5uOvyQ1/nbcDPdpqx5tGktn9Usl7STni53tGJYSGs3knulQDQ+l57PPo
+         zofg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        bh=OmbrMDzjBpiOxmAtJ5tpbDIpWnFC6mZzSWfiYEEna1k=;
-        b=c3oPzEhHyFWJspQLMyUSpfo8iWbs2DMG+0YDcOxaENoyJTK+qrxVMiDPpkb9wMjh/C
-         tcW3lYKw6vOaQnevS15aNKP5bFl6zXxUSEYE7Npc0Vizb4F81kxhpd+KZBhyuzbMeQxe
-         ddq7qZ2+3lywfPOcVCJKh1KleqxXH/Pp7z7CP+TLyPs1nMxvjqkxC0R3eiMBy+cESBqb
-         uUM+X1TJ5bMVND6qUcfxJ42qOaw3RIVX9LeVzWSHOAKfcEj5NCD9HFdHxCcGhrQ2ZIr7
-         HPThK+pst4CqYiioweWW+RDkOsQwCTZzApKwUOj+bqPAMyYq3Py5wV0maEaYtDyZnb9k
-         nwuw==
-X-Gm-Message-State: APjAAAX6xNK0aMvGA7VCEY9Jx8fi9WcNW6caRUQywHDFwZEzDWr2hRUn
-        Dswn5J9xwLkw5I1mcbqMY6oUl7+L8gk=
-X-Google-Smtp-Source: APXvYqw1tqP/h/YX6foxFEa/SPKEduE11Gj2PCn45FoInpy6jTOi7mrXrxeQ+Jh3ASfHe5VUL9HNFg==
-X-Received: by 2002:a7b:ca4b:: with SMTP id m11mr5138400wml.144.1567616823581;
-        Wed, 04 Sep 2019 10:07:03 -0700 (PDT)
-Received: from dell ([95.147.198.36])
-        by smtp.gmail.com with ESMTPSA id j18sm17633627wrr.20.2019.09.04.10.07.02
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 04 Sep 2019 10:07:02 -0700 (PDT)
-Date:   Wed, 4 Sep 2019 18:07:01 +0100
-From:   Lee Jones <lee.jones@linaro.org>
-To:     Sudeep Holla <sudeep.holla@arm.com>
-Cc:     agross@kernel.org, robh+dt@kernel.org, mark.rutland@arm.com,
-        bjorn.andersson@linaro.org, linux-arm-kernel@lists.infradead.org,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org
-Subject: Re: [PATCH v3 1/1] arm64: dts: qcom: Add Lenovo Yoga C630
-Message-ID: <20190904170701.GR26880@dell>
-References: <20190904121606.17474-1-lee.jones@linaro.org>
- <20190904141257.GB6144@bogus>
- <20190904161247.GP26880@dell>
- <20190904165246.GA25356@bogus>
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=09xouYfGtM7P/+Szurweb+Wo4prOf3fUjEfXXhSPvME=;
+        b=QbFEJMiH74czil1seJ5411+jyKScOCwV+kdrfZl4G/CNkslwrXxDg1Hkkc7hLsjChP
+         H9UOzjmZX+Xs2XqwL/QDghazm13TE1sqjc1To4npDxvSzJIRaSQ97PgWM3rrex8OFv7E
+         ypj/ndfMm97adf3MEJ0snKX67gJGC+LS3wJ2aXTWLAaIBW+S2Jc8LZqRjZqgPSeij7uN
+         z1tW7RnI2midcydySO4H0v9QotF8wh2qhvTIiJLdj2gDAZ9aSpLno8DqsdnWuGmyEKGO
+         PoS49dMu9iXce2Sx9ukSz4Lr/ipfh0BEco62l29SBH99+YtwvD9qC7xUcrfWLT5v9lfk
+         A+Rw==
+X-Gm-Message-State: APjAAAWHeFQRPA5mjiSTGUK2fSro2q5qlxvDM3je3Vn52vAHFSne5Ugt
+        QpFhWn2tIhPpvcxTC3nHJI4=
+X-Google-Smtp-Source: APXvYqzYc/xI1nMtMO8Q1TmWhNupziMCqcsew+YiGdEK3/Q/34lirq+6VDV81HR7x7yQFYWo9F0bUw==
+X-Received: by 2002:aa7:96c1:: with SMTP id h1mr9951490pfq.111.1567617587533;
+        Wed, 04 Sep 2019 10:19:47 -0700 (PDT)
+Received: from localhost ([100.118.89.196])
+        by smtp.gmail.com with ESMTPSA id z23sm1407891pfn.45.2019.09.04.10.19.46
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 04 Sep 2019 10:19:46 -0700 (PDT)
+From:   Rob Clark <robdclark@gmail.com>
+To:     dri-devel@lists.freedesktop.org
+Cc:     Rob Clark <robdclark@chromium.org>,
+        Fabio Estevam <festevam@gmail.com>,
+        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        linux-arm-msm@vger.kernel.org (open list:DRM DRIVER FOR MSM ADRENO GPU),
+        freedreno@lists.freedesktop.org (open list:DRM DRIVER FOR MSM ADRENO
+        GPU), linux-kernel@vger.kernel.org (open list)
+Subject: [PATCH] drm/msm: Use the correct dma_sync calls harder
+Date:   Wed,  4 Sep 2019 10:17:23 -0700
+Message-Id: <20190904171723.2956-1-robdclark@gmail.com>
+X-Mailer: git-send-email 2.21.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20190904165246.GA25356@bogus>
-User-Agent: Mutt/1.9.4 (2018-02-28)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, 04 Sep 2019, Sudeep Holla wrote:
+From: Rob Clark <robdclark@chromium.org>
 
-> On Wed, Sep 04, 2019 at 05:12:47PM +0100, Lee Jones wrote:
-> > On Wed, 04 Sep 2019, Sudeep Holla wrote:
-> >
-> > > On Wed, Sep 04, 2019 at 01:16:06PM +0100, Lee Jones wrote:
-> > > > From: Bjorn Andersson <bjorn.andersson@linaro.org>
-> > > >
-> > > > The Lenovo Yoga C630 is built on the SDM850 from Qualcomm, but this seem
-> > > > to be similar enough to the SDM845 that we can reuse the sdm845.dtsi.
-> > > >
-> > > > Supported by this patch is: keyboard, battery monitoring, UFS storage,
-> > > > USB host and Bluetooth.
-> > > >
-> > >
-> > > Just curious to know if the idea of booting using ACPI is completely
-> > > dropped as it's extremely difficult(because the firmware is so hacked
-> > > up and may violate spec, just my opinion) for whatever reasons.
-> >
-> > Once [0] is applied, we can boot Mainline using ACPI.
-> >
-> 
-> Good to know.
-> 
-> > > We just made ACPI table version checking more lenient for this platform
-> > > and would be good to know if we continue to run ACPI on that or will
-> > > abandon and just use DT.
-> >
-> > Which patch are you referring to?  If you mean the ACPI v5.0 vs v5.1
-> > patch authored by Ard, then yes I know, I instigated it's existence
-> > due to these devices.
-> >
-> 
-> Yes exactly that one.
-> 
-> > DT will *always* be more enabled than ACPI, so it's advised that you
-> > use DT for anything useful.  ACPI booting is ideal for things like
-> > installing distros however, since they do not tend to provide DTBs in
-> > their installers.
-> 
-> OK, as along as it gets tested/used in some form, that's fine. I do agree
-> that DT will be more useful on that platform as it was derived from mobile
-> based SoC SDM845 rather than solely designed for Laptops and with more
-> alignment with ACPI spec. The way whole power/clock management is done
-> with ACPI on this pulls me towards DT ;)
+Looks like the dma_sync calls don't do what we want on armv7 either.
+Fixes:
 
-Exactly.  For Power Management on ACPI, we need to re-implement the
-"Windows-compatible System Power Management Controller" (PEP), which
-considering there isn't any documentation and/or source, would be a
-mammoth challenge, if at all possible.
+  Unable to handle kernel paging request at virtual address 50001000
+  pgd = (ptrval)
+  [50001000] *pgd=00000000
+  Internal error: Oops: 805 [#1] SMP ARM
+  Modules linked in:
+  CPU: 0 PID: 1 Comm: swapper/0 Not tainted 5.3.0-rc6-00271-g9f159ae07f07 #4
+  Hardware name: Freescale i.MX53 (Device Tree Support)
+  PC is at v7_dma_clean_range+0x20/0x38
+  LR is at __dma_page_cpu_to_dev+0x28/0x90
+  pc : [<c011c76c>]    lr : [<c01181c4>]    psr: 20000013
+  sp : d80b5a88  ip : de96c000  fp : d840ce6c
+  r10: 00000000  r9 : 00000001  r8 : d843e010
+  r7 : 00000000  r6 : 00008000  r5 : ddb6c000  r4 : 00000000
+  r3 : 0000003f  r2 : 00000040  r1 : 50008000  r0 : 50001000
+  Flags: nzCv  IRQs on  FIQs on  Mode SVC_32  ISA ARM  Segment none
+  Control: 10c5387d  Table: 70004019  DAC: 00000051
+  Process swapper/0 (pid: 1, stack limit = 0x(ptrval))
 
-Feel free to provide your {Ack,Review)ed-by for this patch. :)
+Signed-off-by: Rob Clark <robdclark@chromium.org>
+Fixes: 3de433c5b38a ("drm/msm: Use the correct dma_sync calls in msm_gem")
+Tested-by: Fabio Estevam <festevam@gmail.com>
+---
+ drivers/gpu/drm/msm/msm_gem.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
+diff --git a/drivers/gpu/drm/msm/msm_gem.c b/drivers/gpu/drm/msm/msm_gem.c
+index 7263f4373f07..5a6a79fbc9d6 100644
+--- a/drivers/gpu/drm/msm/msm_gem.c
++++ b/drivers/gpu/drm/msm/msm_gem.c
+@@ -52,7 +52,7 @@ static void sync_for_device(struct msm_gem_object *msm_obj)
+ {
+ 	struct device *dev = msm_obj->base.dev->dev;
+ 
+-	if (get_dma_ops(dev)) {
++	if (get_dma_ops(dev) && IS_ENABLED(CONFIG_ARM64)) {
+ 		dma_sync_sg_for_device(dev, msm_obj->sgt->sgl,
+ 			msm_obj->sgt->nents, DMA_BIDIRECTIONAL);
+ 	} else {
+@@ -65,7 +65,7 @@ static void sync_for_cpu(struct msm_gem_object *msm_obj)
+ {
+ 	struct device *dev = msm_obj->base.dev->dev;
+ 
+-	if (get_dma_ops(dev)) {
++	if (get_dma_ops(dev) && IS_ENABLED(CONFIG_ARM64)) {
+ 		dma_sync_sg_for_cpu(dev, msm_obj->sgt->sgl,
+ 			msm_obj->sgt->nents, DMA_BIDIRECTIONAL);
+ 	} else {
 -- 
-Lee Jones [李琼斯]
-Linaro Services Technical Lead
-Linaro.org │ Open source software for ARM SoCs
-Follow Linaro: Facebook | Twitter | Blog
+2.21.0
+
