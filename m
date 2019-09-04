@@ -2,98 +2,57 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 74B84A8042
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Sep 2019 12:20:45 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id AC349A80EA
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Sep 2019 13:11:16 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727387AbfIDKUo (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 4 Sep 2019 06:20:44 -0400
-Received: from onstation.org ([52.200.56.107]:60992 "EHLO onstation.org"
+        id S1726240AbfIDLKL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 4 Sep 2019 07:10:11 -0400
+Received: from ns.iliad.fr ([212.27.33.1]:58342 "EHLO ns.iliad.fr"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1727447AbfIDKUo (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 4 Sep 2019 06:20:44 -0400
-Received: from localhost (c-98-239-145-235.hsd1.wv.comcast.net [98.239.145.235])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        (Authenticated sender: masneyb)
-        by onstation.org (Postfix) with ESMTPSA id 480EE3E941;
-        Wed,  4 Sep 2019 10:20:43 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=onstation.org;
-        s=default; t=1567592443;
-        bh=Sfwij6Ng9IHqC2d6RyNy275EE/PaAvekn8zkt+QGOsk=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=Dayeu+VwkGnpXYrJrLtmeDrxRJuYBbCtODSXinIHhl3Zssi/lPiDeRPYrUhxrDK1j
-         4tXWMfepOT6UWy17g9VAzjmlTEPOj47Th+iEX7MDgiXOjrTZPGS7O+XeYW2vvN7QSa
-         vr+tuGmZndKFK5xGfpxAnQw2IpPlSFug1I2RBmG4=
-Date:   Wed, 4 Sep 2019 06:20:42 -0400
-From:   Brian Masney <masneyb@onstation.org>
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     georgi.djakov@linaro.org, linux-arm-msm@vger.kernel.org,
-        linux-pm@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH RFC 1/2] dt-bindings: interconnect: qcom: add msm8974
- bindings
-Message-ID: <20190904102042.GA14484@onstation.org>
+        id S1725966AbfIDLKK (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 4 Sep 2019 07:10:10 -0400
+Received: from ns.iliad.fr (localhost [127.0.0.1])
+        by ns.iliad.fr (Postfix) with ESMTP id C990020C7E;
+        Wed,  4 Sep 2019 13:10:08 +0200 (CEST)
+Received: from [192.168.108.37] (freebox.vlq16.iliad.fr [213.36.7.13])
+        by ns.iliad.fr (Postfix) with ESMTP id AE9C920103;
+        Wed,  4 Sep 2019 13:10:08 +0200 (CEST)
+Subject: Re: [PATCH RFC 2/2] interconnect: qcom: add msm8974 driver
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Brian Masney <masneyb@onstation.org>
+Cc:     Georgi Djakov <georgi.djakov@linaro.org>,
+        MSM <linux-arm-msm@vger.kernel.org>,
+        LKML <linux-kernel@vger.kernel.org>
 References: <20190902211925.27169-1-masneyb@onstation.org>
- <20190902211925.27169-2-masneyb@onstation.org>
- <20190904050103.GE3081@tuxbook-pro>
+ <20190902211925.27169-3-masneyb@onstation.org>
+ <20190904053952.GF3081@tuxbook-pro>
+From:   Marc Gonzalez <marc.w.gonzalez@free.fr>
+Message-ID: <8f1a25aa-6dc6-b94a-fc58-e944bdfae939@free.fr>
+Date:   Wed, 4 Sep 2019 13:10:08 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+ Thunderbird/60.8.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20190904050103.GE3081@tuxbook-pro>
+In-Reply-To: <20190904053952.GF3081@tuxbook-pro>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
+X-Virus-Scanned: ClamAV using ClamSMTP ; ns.iliad.fr ; Wed Sep  4 13:10:08 2019 +0200 (CEST)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Sep 03, 2019 at 10:01:03PM -0700, Bjorn Andersson wrote:
+On 04/09/2019 07:39, Bjorn Andersson wrote:
+
 > On Mon 02 Sep 14:19 PDT 2019, Brian Masney wrote:
-> > +      mmssnoc: interconnect@fc478000 {
-> > +              reg = <0xfc478000 0x4000>;
-> > +              compatible = "qcom,msm8974-mmssnoc";
-> > +              #interconnect-cells = <1>;
-> > +              clock-names = "bus", "bus_a";
-> > +              clocks = <&rpmcc RPM_SMD_MMSSNOC_AHB_CLK>,
-> > +                       <&rpmcc RPM_SMD_MMSSNOC_AHB_A_CLK>;
 > 
-> Isn't MMSS_S0_AXI_CLK the bus clock of the mmssnoc (which somehow seems
-> to depend on mmssnoc_ahb_clk)?
-
-I'll give that a try. Do you know which clock I should use for bus_a
-here? On the mmcc, I see the following mmss clocks available:
-
-MMSS_AHB_CLK_SRC
-MMSS_AXI_CLK_SRC
-MMSS_RBCPR_CLK_SRC
-MMSS_MISC_AHB_CLK
-MMSS_MMSSNOC_AHB_CLK
-MMSS_MMSSNOC_BTO_AHB_CLK
-MMSS_MMSSNOC_AXI_CLK
-MMSS_S0_AXI_CLK
-
-I'm also unsure of what's going on at the hardware level that the second
-clock (bus_a) is needed.
-
-> > +      mdss: mdss@fd900000 {
+>> +DEFINE_QNODE(mas_ampss_m0, MSM8974_BIMC_MAS_AMPSS_M0, 8, 0, -1);
+>> +DEFINE_QNODE(mas_ampss_m1, MSM8974_BIMC_MAS_AMPSS_M1, 8, 0, -1);
+>> +DEFINE_QNODE(mas_mss_proc, MSM8974_BIMC_MAS_MSS_PROC, 8, 1, -1);
+>> +DEFINE_QNODE(bimc_to_mnoc, MSM8974_BIMC_TO_MNOC, 8, 2, -1,
+>> +	     MSM8974_BIMC_SLV_EBI_CH0);
 > 
-> I think you can omit the client, as this adheres to the standard binding
-> for interconnect clients. And you don't need to have an example that
-> covers all compatibles either...
+> None of these looks excessive, so please ignore the 80-char rule to
+> improve readability.
 
-OK, I'll drop some of these.
-
-> > diff --git a/include/dt-bindings/interconnect/qcom,msm8974.h b/include/dt-bindings/interconnect/qcom,msm8974.h
-> > new file mode 100644
-> > index 000000000000..58acf7196410
-> > --- /dev/null
-> > +++ b/include/dt-bindings/interconnect/qcom,msm8974.h
-> > @@ -0,0 +1,146 @@
-> > +/* SPDX-License-Identifier: GPL-2.0 */
-> 
-> Would you mind dual licensing this part as well?
-
-Sure, that was an oversight on my part.
-
-> Apart from that, I think this binding looks good.
-
-Thanks,
-
-Brian
+Indeed!
