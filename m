@@ -2,94 +2,277 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 95FA0AAB50
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 Sep 2019 20:42:00 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 78B77AAB5C
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 Sep 2019 20:46:18 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732133AbfIESl7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 5 Sep 2019 14:41:59 -0400
-Received: from mout.gmx.net ([212.227.15.18]:33667 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1732033AbfIESl7 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 5 Sep 2019 14:41:59 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1567708872;
-        bh=M1UGnPJJ+2VuEq33S0TdraaobxmDCqcrUAEKeQ8qQUs=;
-        h=X-UI-Sender-Class:Subject:To:Cc:References:From:Date:In-Reply-To;
-        b=ZUbcaI0T/PtTrufTRwK68S574RNG0IIdnpXj1FAIZ5Hk2GJ9INr7/CPWoXQf98mlD
-         xqb1bKKYrkuiba88qXFMUIdcc0HdiT3JpXBB3hoJKof64v9bk714UXkxmhiRfaSz0T
-         7fTJq/e15prco2OCp2oJY6DJpfk8h7K9eVpIydPk=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [192.168.1.162] ([37.4.249.90]) by mail.gmx.com (mrgmx002
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0M9Jss-1i125G274g-00CkFc; Thu, 05
- Sep 2019 20:41:12 +0200
-Subject: Re: [PATCH -next 02/15] thermal: bcm2835: use
- devm_platform_ioremap_resource() to simplify code
-To:     YueHaibing <yuehaibing@huawei.com>, miquel.raynal@bootlin.com,
-        rui.zhang@intel.com, edubezval@gmail.com,
-        daniel.lezcano@linaro.org, amit.kucheria@verdurent.com,
-        eric@anholt.net, f.fainelli@gmail.com, rjui@broadcom.com,
-        sbranden@broadcom.com, mmayer@broadcom.com,
-        computersforpeace@gmail.com, gregory.0xf0@gmail.com,
-        matthias.bgg@gmail.com, agross@kernel.org, heiko@sntech.de,
-        mcoquelin.stm32@gmail.com, alexandre.torgue@st.com,
-        marc.w.gonzalez@free.fr, mans@mansr.com, talel@amazon.com,
-        jun.nie@linaro.org, shawnguo@kernel.org, phil@raspberrypi.org,
-        gregkh@linuxfoundation.org, david.hernandezsanchez@st.com,
-        horms+renesas@verge.net.au, wsa+renesas@sang-engineering.com
-Cc:     bcm-kernel-feedback-list@broadcom.com, linux-pm@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-rpi-kernel@lists.infradead.org,
-        linux-arm-kernel@lists.infradead.org,
-        linux-mediatek@lists.infradead.org, linux-arm-msm@vger.kernel.org,
-        linux-rockchip@lists.infradead.org,
-        linux-stm32@st-md-mailman.stormreply.com
-References: <20190904122939.23780-1-yuehaibing@huawei.com>
- <20190904122939.23780-3-yuehaibing@huawei.com>
-From:   Stefan Wahren <wahrenst@gmx.net>
-Message-ID: <ba19c083-3c86-eaeb-c071-ea96c2e0dd6e@gmx.net>
-Date:   Thu, 5 Sep 2019 20:41:08 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.8.0
+        id S2390463AbfIESqR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 5 Sep 2019 14:46:17 -0400
+Received: from mail-pl1-f193.google.com ([209.85.214.193]:45157 "EHLO
+        mail-pl1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728258AbfIESqR (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 5 Sep 2019 14:46:17 -0400
+Received: by mail-pl1-f193.google.com with SMTP id x3so1702473plr.12;
+        Thu, 05 Sep 2019 11:46:17 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=sender:date:from:to:cc:subject:message-id:mime-version
+         :content-disposition:user-agent;
+        bh=siHAGnev+oRtiAEuv8gvwTdohhZkRI0o8v2bCUzHI20=;
+        b=e2FjTi/fx4FMylM53V9cXNMpMuvTBSe8SxhX7sjPf+qY0sbxiru++/CYSxkfEVJQrq
+         ykDkshMXsVlwt3OJ2SOXvLXvR2cf63jAJ6Pa5wSwewBMElrDuxvzrSbV4io/+z5CRLvS
+         3v1DF/ml/Ws9pcMgi2RYgUKenqdIKtQO2eClGPYh8fymSFVBcc4aNoAuEm7XAtXB8sk1
+         RNSIVitW6LMB9HwjjySxuaBlkLEIOi2ffDK/DVggActLLbDWBVJpnu20qP1GE4Z4rrhT
+         Sa3XXrdoAkI4q8oynEesVCfbclvtVBZQskc/kZZS9y7HjpkS1ZvLDEfK7g4gYSdpUdic
+         dQSg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:sender:date:from:to:cc:subject:message-id
+         :mime-version:content-disposition:user-agent;
+        bh=siHAGnev+oRtiAEuv8gvwTdohhZkRI0o8v2bCUzHI20=;
+        b=XXRlDoqPc6S57DI5kGKXvRsJpmudCzKljGBQ+LYH7smVKsx+c79/7JYz8Wj0tGToKg
+         a2zz/iT31ZPrijHE0Nr4lnl6lDgbV0WW2yC3jWroCYdJ/vsYqgvxKWxXGxUzKrj+z9gA
+         Stupdn57eef48X+t7+pxWxgmD7KbvwxnBXBBDJsyV0NG4DtBoz6XjKw3mNhzzNECOo+w
+         g1fPbx271AjlajUc3TWrvFD9BqPC02YQm5C84W+uXL2Esmk/AC1/6vsGlzdlrxhLGsd+
+         HpPMYSElZYHP2B432tNbdCFKoIgZQ76/WpHPryHaDk6/STMC5eo0xLoEjF6VzqcLL+2l
+         k/8Q==
+X-Gm-Message-State: APjAAAU5X5Hb7PB8qOSJ+FFJ/oFb66g2gsoLgS6VqGiVvb2/SipqNPjY
+        oc5gI9P+d/PqidjsHOmCTmI=
+X-Google-Smtp-Source: APXvYqxlL0sh+nZKHN93mQwfTX1Xt8QyS1b0ABdGenndC+xrS8QZwgHiKT1l+HDUTDom6sM0kLlsfA==
+X-Received: by 2002:a17:902:e48d:: with SMTP id cj13mr4989009plb.177.1567709176693;
+        Thu, 05 Sep 2019 11:46:16 -0700 (PDT)
+Received: from localhost ([2600:1700:e321:62f0:329c:23ff:fee3:9d7c])
+        by smtp.gmail.com with ESMTPSA id z12sm3420995pfg.21.2019.09.05.11.46.15
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Thu, 05 Sep 2019 11:46:15 -0700 (PDT)
+Date:   Thu, 5 Sep 2019 11:46:14 -0700
+From:   Guenter Roeck <linux@roeck-us.net>
+To:     Jorge Ramirez-Ortiz <jorge.ramirez-ortiz@linaro.org>
+Cc:     agross@kernel.org, wim@linux-watchdog.org,
+        bjorn.andersson@linaro.org, linux-arm-msm@vger.kernel.org,
+        linux-watchdog@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v2] watchdog: qcom: support pre-timeout when the bark irq
+ is available
+Message-ID: <20190905184614.GA28923@roeck-us.net>
 MIME-Version: 1.0
-In-Reply-To: <20190904122939.23780-3-yuehaibing@huawei.com>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7bit
-Content-Language: en-US
-X-Provags-ID: V03:K1:WOmrGoYt2aZLE0c0r9K+/VJMXUNzvW/kX7vmvJXlWPXzYW5NR9J
- luyrP+5HUxX+Ik46iIlejCplMa2am5XS0NfLLQ7ZhlXmasy18+i/OA5VoR5aEu1/yVdmVn8
- AN3N1d8lbnA4HPsgXXRyGpNFweFZlAReZpmXxwXL0XGXKC31gFW9I6jO2SraUQgZg8eu25p
- foqc0kdcwKEMp61BV4kvQ==
-X-Spam-Flag: NO
-X-UI-Out-Filterresults: notjunk:1;V03:K0:nkW495xtuv4=:tTHYYykyc8MeFH8VYXAtPV
- 1oz89eAs6J4EKmXGB8jywzeB9Rr+HNFXREs3+bl+7MUrhT6Tb5vvEZikpkfN7YcTYBM8A3ZVH
- n4yQa0u0tAnwQxNBcgEVMVosn+/mze41K8we0bObWZxZnDx2pz3YHKwLh/kXBAuFm7+0Rk0Vz
- yZS/73BjtleldpUL66iGqoS9Kj+dBB99d7VSTXyev99g2bS5AtTKgTzYAA9qHIzpXlHp1Snis
- PEOX6R6c/BcoM0LLyefpTFEzY1NY3QGc+6StuImf16b+OmrPPtW8D//puDVdc/ayO1z9cDfeJ
- 2PL2gEH1o2MNxNBYTWlBwD8J1tB2j4dcJRftBAnkaqQ85Gnn8YFcAPxPDuXAvIsqLzV5G839e
- t3N7LgD6zsHeAv9bVTecZjXBHpH+dyf2hYb76M23xIsMwiP5LM3kDJiED61MjNEaWcX8zsGfm
- RP9/VZQ1volYqm1DX5jdkWLrIHvMus+bGRoZLYL2Q9xS0OD/7faZ7Od2MonlHbOd/NL+MJ3aS
- 5RkRJ+DxwonIs2MCGlaOei4aS36r81FmO4qEESDkxqF7tpHww+f3zGTyKOB3NihhKihqYzL13
- pQeW9GaJIbB8jiwxFakYjSp6Ti/3DZcmc/zXgV5bm4FDgyFgUYqnvUq3AK21ur7WXKI5fAqot
- Xp+FknRGP5lTeyZZ8CsTu46mC2ZzJe50IK5pF1sJhsgLnol8Y4rFGBC1lImxkwgaRFmMvOeRg
- 6p+CY4LmFMoUcXfgsv0n8F2h8jtRus6M6jswi9Gt6eu6xOMsMZF1AaYL1Pa6igzbvRrJfwzU3
- yvScYds6ExX42p5vtUeswaXEf/dgE7K2xM8NN1px/JV4fBBYzPPjOzmp/BbOs9ZB0h6Kavpz2
- XAzYn0SJ3Kktzm96QDIc1dqXs9MM/Zh8VYzo8Lc1dT2USxJ6AR+QdDrz6sYDuqhA5BvZrwKSy
- 1Hki0CKIATnfugQVT9araYuKn4Cva/enmNtmVQepcuvmixrpK5w/zayiST5ToOI9RpIl/vvB1
- S2oeaSoQM7cpO2Yea2NVgSizipQACekJixPec4JSuy+Yu0VZ9pg7o8EHw76mY2MG+r4CsH0qs
- B+wYJGsCbNNnemavOVy5pwJLAavhQyNzEzkaNeSVbJ8Radnx6JSvwpUHT0j6Z9CbiyqktJXjm
- WAkFtcjYEqCIzTorRGlhm1s0kDMdvWQ48irGv4jdgqqjV0BOUzFd1PFWfxdVIEj2oCItAhZRO
- +wNSe5aKqpNdFgJlAHm64qfczlAf/2dRkGgFKifPkw02mAE78ADOPFEIwwUDxgy7aWF9pxBsk
- BkFDWVHIRO1pQHw1LJYrmWliprIUaSrvL2WGAhCqiZ5p3ie7wRrL1uTXOP5q1jDcd60a/ptQS
- HvdmAdVPs6xsOBeK0uTBLtNTJ7JT6bTKcckdOw/FyjzI0O9H1+fEAqb8MkMB1wRxp5QtVQcZe
- nWoFCFDA87OryLqTPF6kHOtM6PdhH/EI8=
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+User-Agent: Mutt/1.5.24 (2015-08-30)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Am 04.09.19 um 14:29 schrieb YueHaibing:
-> Use devm_platform_ioremap_resource() to simplify the code a bit.
-> This is detected by coccinelle.
->
-> Reported-by: Hulk Robot <hulkci@huawei.com>
-> Signed-off-by: YueHaibing <yuehaibing@huawei.com>
-Acked-by: Stefan Wahren <wahrenst@gmx.net>
+On Thu, Sep 05, 2019 at 08:12:57PM +0200, Jorge Ramirez-Ortiz wrote:
+> Use the bark interrupt as the pre-timeout notifier whenever this
+> interrupt is available.
+> 
+> By default, the pretimeout notification shall occur one second earlier
+> than the timeout.
+> 
+> Signed-off-by: Jorge Ramirez-Ortiz <jorge.ramirez-ortiz@linaro.org>
+> ---
+>  drivers/watchdog/qcom-wdt.c | 63 ++++++++++++++++++++++++++++++++++---
+>  1 file changed, 58 insertions(+), 5 deletions(-)
+> 
+> diff --git a/drivers/watchdog/qcom-wdt.c b/drivers/watchdog/qcom-wdt.c
+> index 7be7f87be28f..2dd36914aa82 100644
+> --- a/drivers/watchdog/qcom-wdt.c
+> +++ b/drivers/watchdog/qcom-wdt.c
+> @@ -10,6 +10,8 @@
+>  #include <linux/platform_device.h>
+>  #include <linux/watchdog.h>
+>  #include <linux/of_device.h>
+> +#include <linux/interrupt.h>
+> +#include <linux/watchdog.h>
+
+Why include linux/watchdog.h twice ?
+
+>  
+>  enum wdt_reg {
+>  	WDT_RST,
+> @@ -41,6 +43,7 @@ struct qcom_wdt {
+>  	unsigned long		rate;
+>  	void __iomem		*base;
+>  	const u32		*layout;
+> +	const struct device	*dev;
+
+I fail to see what this is used for.
+
+>  };
+>  
+>  static void __iomem *wdt_addr(struct qcom_wdt *wdt, enum wdt_reg reg)
+> @@ -54,15 +57,37 @@ struct qcom_wdt *to_qcom_wdt(struct watchdog_device *wdd)
+>  	return container_of(wdd, struct qcom_wdt, wdd);
+>  }
+>  
+> +static inline int qcom_wdt_enable(struct qcom_wdt *wdt)
+> +{
+> +	/* enable the bark interrupt */
+> +	if (wdt->wdd.info->options & WDIOF_PRETIMEOUT)
+
+This needs to check if pretimeout has been enabled
+(wdt.pretimeout != 0), not if pretimeout functionality is
+supported.
+
+> +		return 3;
+
+I would suggest to use defines for the bits.
+
+> +
+> +	return 1;
+> +}
+> +
+> +static irqreturn_t qcom_wdt_irq(int irq, void *cookie)
+> +{
+> +	struct watchdog_device *wdd = (struct watchdog_device *) cookie;
+
+Extra space before 'cookie'.
+
+> +
+> +	watchdog_notify_pretimeout(wdd);
+> +
+> +	return IRQ_HANDLED;
+> +}
+> +
+>  static int qcom_wdt_start(struct watchdog_device *wdd)
+>  {
+>  	struct qcom_wdt *wdt = to_qcom_wdt(wdd);
+> +	unsigned int bark = wdd->pretimeout;
+> +
+> +	if (!(wdd->info->options & WDIOF_PRETIMEOUT))
+> +		bark = wdd->timeout;
+
+This is not the deciding factor. The deciding factor
+is wdd->pretimeout == 0. Also, per API, pretimeout is
+the time difference to 'timeout', not an absolute time.
+
+>  
+>  	writel(0, wdt_addr(wdt, WDT_EN));
+>  	writel(1, wdt_addr(wdt, WDT_RST));
+> -	writel(wdd->timeout * wdt->rate, wdt_addr(wdt, WDT_BARK_TIME));
+> +	writel(bark * wdt->rate, wdt_addr(wdt, WDT_BARK_TIME));
+>  	writel(wdd->timeout * wdt->rate, wdt_addr(wdt, WDT_BITE_TIME));
+> -	writel(1, wdt_addr(wdt, WDT_EN));
+> +	writel(qcom_wdt_enable(wdt), wdt_addr(wdt, WDT_EN));
+>  	return 0;
+>  }
+>  
+> @@ -86,9 +111,18 @@ static int qcom_wdt_set_timeout(struct watchdog_device *wdd,
+>  				unsigned int timeout)
+>  {
+>  	wdd->timeout = timeout;
+> +
+>  	return qcom_wdt_start(wdd);
+
+Side note: This is wrong. Setting the timeout should not unconditionally
+start the watchdog. This should be something like
+
+	if (watchdog_active(wdd))
+		qcom_wdt_start(wdd);
+	return 0;
+
+>  }
+>  
+> +static int qcom_wdt_set_pretimeout(struct watchdog_device *wdd,
+> +				   unsigned int timeout)
+> +{
+> +	wdd->pretimeout = timeout;
+> +
+> +	return 0;
+> +}
+> +
+
+Per API:
+
+"A value of 0 disables pretimeout notification."
+
+Also, qcom_wdt_start() has to be called if the watchdog is running.
+
+>  static int qcom_wdt_restart(struct watchdog_device *wdd, unsigned long action,
+>  			    void *data)
+>  {
+> @@ -105,7 +139,7 @@ static int qcom_wdt_restart(struct watchdog_device *wdd, unsigned long action,
+>  	writel(1, wdt_addr(wdt, WDT_RST));
+>  	writel(timeout, wdt_addr(wdt, WDT_BARK_TIME));
+>  	writel(timeout, wdt_addr(wdt, WDT_BITE_TIME));
+> -	writel(1, wdt_addr(wdt, WDT_EN));
+> +	writel(qcom_wdt_enable(wdt), wdt_addr(wdt, WDT_EN));
+>  
+>  	/*
+>  	 * Actually make sure the above sequence hits hardware before sleeping.
+> @@ -121,11 +155,12 @@ static const struct watchdog_ops qcom_wdt_ops = {
+>  	.stop		= qcom_wdt_stop,
+>  	.ping		= qcom_wdt_ping,
+>  	.set_timeout	= qcom_wdt_set_timeout,
+> +	.set_pretimeout	= qcom_wdt_set_pretimeout,
+>  	.restart        = qcom_wdt_restart,
+>  	.owner		= THIS_MODULE,
+>  };
+>  
+> -static const struct watchdog_info qcom_wdt_info = {
+> +static struct watchdog_info qcom_wdt_info = {
+>  	.options	= WDIOF_KEEPALIVEPING
+>  			| WDIOF_MAGICCLOSE
+>  			| WDIOF_SETTIMEOUT
+> @@ -146,7 +181,7 @@ static int qcom_wdt_probe(struct platform_device *pdev)
+>  	struct device_node *np = dev->of_node;
+>  	const u32 *regs;
+>  	u32 percpu_offset;
+> -	int ret;
+> +	int irq, ret;
+>  
+>  	regs = of_device_get_match_data(dev);
+>  	if (!regs) {
+> @@ -210,6 +245,7 @@ static int qcom_wdt_probe(struct platform_device *pdev)
+>  	wdt->wdd.max_timeout = 0x10000000U / wdt->rate;
+>  	wdt->wdd.parent = dev;
+>  	wdt->layout = regs;
+> +	wdt->dev = &pdev->dev;
+>  
+>  	if (readl(wdt_addr(wdt, WDT_STS)) & 1)
+>  		wdt->wdd.bootstatus = WDIOF_CARDRESET;
+> @@ -222,6 +258,23 @@ static int qcom_wdt_probe(struct platform_device *pdev)
+>  	wdt->wdd.timeout = min(wdt->wdd.max_timeout, 30U);
+>  	watchdog_init_timeout(&wdt->wdd, 0, dev);
+>  
+> +	irq = platform_get_irq(pdev, 0);
+> +	if (irq >= 0) {
+> +		/* enable the pre-timeout notification */
+> +		qcom_wdt_info.options |= WDIOF_PRETIMEOUT;
+> +
+> +		ret = devm_request_irq(&pdev->dev, irq, qcom_wdt_irq,
+
+Any reason for using &pdev->dev instead of dev ?
+
+> +				       IRQF_TRIGGER_RISING, "wdog_bark",
+> +				       &wdt->wdd);
+> +		if (ret) {
+> +			dev_err(&pdev->dev, "failed to request irq\n");
+
+Same here. Also, at least nominally, platform_get_irq() 
+can return -EPROBE_DEFER. The error message seems undesirable
+in that situation.
+
+> +			return ret;
+> +		}
+> +	}
+> +
+> +	if (qcom_wdt_info.options & WDIOF_PRETIMEOUT)
+> +		wdt->wdd.pretimeout = wdt->wdd.timeout - 1;
+
+Per API:
+
+"The timeout value is not an absolute time, but the number of
+  seconds before the actual timeout would happen"
+
+Also, why set this here with an extra if and not above where
+WDIOF_PRETIMEOUT is set ?
+
+> +
+>  	ret = devm_watchdog_register_device(dev, &wdt->wdd);
+>  	if (ret)
+>  		return ret;
+> -- 
+> 2.23.0
+> 
