@@ -2,127 +2,99 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 1C205AA5F0
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 Sep 2019 16:33:51 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 06A3DAA5F8
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 Sep 2019 16:34:28 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728666AbfIEOdt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 5 Sep 2019 10:33:49 -0400
-Received: from mail-wm1-f68.google.com ([209.85.128.68]:55308 "EHLO
-        mail-wm1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1731749AbfIEOdt (ORCPT
+        id S1732134AbfIEOe1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 5 Sep 2019 10:34:27 -0400
+Received: from mail-wm1-f65.google.com ([209.85.128.65]:35101 "EHLO
+        mail-wm1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1731769AbfIEOe1 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 5 Sep 2019 10:33:49 -0400
-Received: by mail-wm1-f68.google.com with SMTP id g207so3077036wmg.5
-        for <linux-arm-msm@vger.kernel.org>; Thu, 05 Sep 2019 07:33:48 -0700 (PDT)
+        Thu, 5 Sep 2019 10:34:27 -0400
+Received: by mail-wm1-f65.google.com with SMTP id n10so3368770wmj.0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 05 Sep 2019 07:34:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:content-transfer-encoding:in-reply-to
          :user-agent;
-        bh=0kWQEXS+ph2//LVOCjdO1AE5KiNrMj2peKb0h4PZi2w=;
-        b=eVNvXseNmZf9gF4JlJ38WkzGzId7Rgu2QI1agmcAC1WMAo7DFc//p/dikQDyNObe7r
-         AD0Ku0o6aLqrepbZpEAP2tSTLtWl/cgDYFite3oeWkDBX1MWEz6JD3Bo5EZzlOb//cC/
-         oo6URQjKmK3aiAWe3FzpNayt/Pm8uA1LlzSCrZwG+i+bDiM2VeSEpmzgRwTQat16IGiM
-         rE2aFL/djYliujAxKw3d52rugP9PFqCcMEgmVWI155TCYO1kJN9e5hNpAOzyCAkbkbA8
-         nc9dapTBKNIcSn61NIPiDtC069BrkdmGKaN2wJKTmurBTjyuML5MelDUoIvhd9iONLbQ
-         qwlw==
+        bh=DyTw9eXVQm1IWrN4WvbcEFv8xvh92gzUp05Bd1JROcs=;
+        b=ko7ppxFDEAiwEELcyPLL5C3zPAEAP/lMXO+uEQEqEAh/yKcsyqip8+coBqZyqHjIFA
+         M/2KxCRWGsALtstWQHuhxG6OQ3n9laBE/K9F04K5QJsO6nsOrYGdDP89FSVEPuNc1psY
+         alB+gYnUEsvkUM7/zE7NQQW5cPDjZC/G9qM9ZKAG8o/wrFHFu8Gnnaydw1BjmoJfJS/9
+         gxCgfejK0r/KxwyHjLNRb4jS3IbGmc45eY+YSQqAiy05rtyZoX7zwYaNx7Phu26maV88
+         J2oUrNbH9eKAU8a5SX1eDBj5LyQDjPmkrYu6XHAF8ojfHZxzwRwVDEPhEJhthkDOyRol
+         kTCw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:content-transfer-encoding
          :in-reply-to:user-agent;
-        bh=0kWQEXS+ph2//LVOCjdO1AE5KiNrMj2peKb0h4PZi2w=;
-        b=LCr7MsJbq4UGBOxL5cw5oFCSwlYwpgmIj89Ub+8ROtMJ+8sdiQRNb6iGrGcXk6manF
-         2Ejt2QMAvw37wWdbNARbUZUInuEPip9V+vhkoGHWKzAGMnkD94XKhOVknxvM+FqMS2t/
-         52OBbW+oUNZkRM7+TJg9hKiouL68Vw9PzKyiPaODlU1Q2ZSn0ZoXuuJBIF2GXsCRnLCE
-         Oh9NQbm0c4CsPxTknnPhH9uMP2wu+4MwplXG8M870EoaVFMxd8OpXDB/kLCRatOyqwTP
-         Vz01v8hf9EZ1FuuR73gPsN3c6cgs5wkL54SqiPEPHS+PWP2rQanum1EQxvZMU/TH8fLp
-         EHig==
-X-Gm-Message-State: APjAAAV9b+CRFiKZaZvBFjdlXTJoO6oQj5wiPsQdqHW3jafMX0kE8H9w
-        kB6vH/I2Xyjb6cj1t5Jf7rTgag==
-X-Google-Smtp-Source: APXvYqxndoj+n5/jORTCTc0U+rjE4qY/hlpTto8yxEG1p+EkbUjD5WDA36ObaUU4QIXj7MlbI/xljA==
-X-Received: by 2002:a1c:9a4a:: with SMTP id c71mr3044824wme.99.1567694027358;
-        Thu, 05 Sep 2019 07:33:47 -0700 (PDT)
+        bh=DyTw9eXVQm1IWrN4WvbcEFv8xvh92gzUp05Bd1JROcs=;
+        b=mt7Fk0app/z3H+VQKYaSj17eKgI4FHfpv55DWawWaMbDrOf5X9FSGk1Q48tvbEzaLL
+         NVm77/KoXs7Hg1IYTji4SHEIv2MsM+4QTwPncCDkCqkJpgY0Wl+hSVwzTXVTmUNA/zGw
+         BxVg1kCnXEopXdnrOorEDkNEEnLiRy5uKzG0Y1zkr+CQSfSG3vsyYnqJXVqgxyUlzbTj
+         JI/rMuthLVC47vR/OwHoIXqmryEwPRDIFOARGx1Ls0QG8/sPq3Iz7zCyY5cpmjrr8qGf
+         adj5ik8Ez/7iSd8n+KCxgI1Pz4r60hKyFv3M4nsZ2c2AgOk+6s/052gnRHJ0UEX6DPa6
+         F0Hw==
+X-Gm-Message-State: APjAAAUSEX4YPA5PeNBTLvzi+1+w1Sl52d8ydZl11FNHdQF3hl3jf82z
+        hHCvfbdyuSGqxKYBINuBNCMvrg==
+X-Google-Smtp-Source: APXvYqypIINRLr/tdc6ZE4OP7FqGeS1CGF1Dknw14T3cDFuJ3wEbHIo7XY5x44yBErUXQfIEAM9puA==
+X-Received: by 2002:a1c:cbcc:: with SMTP id b195mr3552405wmg.80.1567694065295;
+        Thu, 05 Sep 2019 07:34:25 -0700 (PDT)
 Received: from dell ([95.147.198.36])
-        by smtp.gmail.com with ESMTPSA id b26sm2817469wmj.14.2019.09.05.07.33.46
+        by smtp.gmail.com with ESMTPSA id l1sm3058017wrb.1.2019.09.05.07.34.24
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Thu, 05 Sep 2019 07:33:46 -0700 (PDT)
-Date:   Thu, 5 Sep 2019 15:33:45 +0100
+        Thu, 05 Sep 2019 07:34:24 -0700 (PDT)
+Date:   Thu, 5 Sep 2019 15:34:23 +0100
 From:   Lee Jones <lee.jones@linaro.org>
-To:     Peter Rosin <peda@axentia.se>
-Cc:     Wolfram Sang <wsa@the-dreams.de>,
-        "alokc@codeaurora.org" <alokc@codeaurora.org>,
-        "agross@kernel.org" <agross@kernel.org>,
-        "robh+dt@kernel.org" <robh+dt@kernel.org>,
-        "mark.rutland@arm.com" <mark.rutland@arm.com>,
-        "bjorn.andersson@linaro.org" <bjorn.andersson@linaro.org>,
-        "vkoul@kernel.org" <vkoul@kernel.org>,
-        "linux-arm-kernel@lists.infradead.org" 
-        <linux-arm-kernel@lists.infradead.org>,
-        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
-        "linux-i2c@vger.kernel.org" <linux-i2c@vger.kernel.org>,
-        "linux-arm-msm@vger.kernel.org" <linux-arm-msm@vger.kernel.org>,
-        "devicetree@vger.kernel.org" <devicetree@vger.kernel.org>
-Subject: Re: [PATCH v3 1/1] i2c: qcom-geni: Provide an option to disable DMA
+To:     Wolfram Sang <wsa@the-dreams.de>
+Cc:     alokc@codeaurora.org, agross@kernel.org, robh+dt@kernel.org,
+        mark.rutland@arm.com, bjorn.andersson@linaro.org,
+        linux-i2c@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, vkoul@kernel.org,
+        linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 2/2] i2c: qcom-geni: Provide an option to disable DMA
  processing
-Message-ID: <20190905143345.GF26880@dell>
-References: <20190905102247.27583-1-lee.jones@linaro.org>
- <20190905134941.GG1157@kunai>
- <3458ed2a-ae49-b46b-3e89-ce039a2749b4@axentia.se>
+Message-ID: <20190905143423.GG26880@dell>
+References: <20190905075213.13260-1-lee.jones@linaro.org>
+ <20190905075213.13260-2-lee.jones@linaro.org>
+ <20190905091800.GD1157@kunai>
+ <20190905092816.GD26880@dell>
+ <20190905134338.GF1157@kunai>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <3458ed2a-ae49-b46b-3e89-ce039a2749b4@axentia.se>
+In-Reply-To: <20190905134338.GF1157@kunai>
 User-Agent: Mutt/1.9.4 (2018-02-28)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, 05 Sep 2019, Peter Rosin wrote:
+On Thu, 05 Sep 2019, Wolfram Sang wrote:
 
-> On 2019-09-05 15:49, Wolfram Sang wrote:
-> > Hi Lee,
+> On Thu, Sep 05, 2019 at 10:28:16AM +0100, Lee Jones wrote:
+> > On Thu, 05 Sep 2019, Wolfram Sang wrote:
 > > 
-> > I understand you are in a hurry, but please double check before
-> > sending...
+> > > 
+> > > > Fixes: 8bc529b25354 ("soc: qcom: geni: Add support for ACPI")
+> > > 
+> > > Are you sure? From visual inspection, I don't see a correlation between
+> > > this commit and the fix here.
+> > 
+> > This patch should have been part of the commit, or at the very least,
+> > part of the set, alluded to above.  Unfortunately, I was carrying
+> > Bjorn's hack which simply returned early from geni_se_rx_dma_prep()
+> > with an error, so it masked the issue.
 > 
-> Linus indicated that an rc8 is coming up, which should provide an extra week.
-> https://lwn.net/Articles/798152/
+> I still don't see why this basic ACPI enabling code (not touching DMA
+> but only clocks and pinctrl) causes and additional handling for DMA. Am
+> I overlooking something obvious?
 
-That is good news.
-
-> > On Thu, Sep 05, 2019 at 11:22:47AM +0100, Lee Jones wrote:
-> >> We have a production-level laptop (Lenovo Yoga C630) which is exhibiting
-> >> a rather horrific bug.  When I2C HID devices are being scanned for at
-> >> boot-time the QCom Geni based I2C (Serial Engine) attempts to use DMA.
-> >> When it does, the laptop reboots and the user never sees the OS.
-> >>
-> >> The beautiful thing about this approach is that, *if* the Geni SE DMA
-> >> ever starts working, we can remove the C code and any old properties
-> >> left in older DTs just become NOOP.  Older kernels with newer DTs (less
-> >> of a priority) *still* will not work - but they do not work now anyway.
-> > 
-> > ... becasue this paragraph doesn't fit anymore. Needs to be reworded.
-
-Yes, you're right.  I noticed almost the moment I pressed send. :(
-
-> >> Fixes: 8bc529b25354 ("soc: qcom: geni: Add support for ACPI")
-> > 
-> > As said in the other thread, I don't get it, but this is not a show
-> > stopper for me.
-
-Ah wait.  Yes, this is applied against the wrong patch.
-
-Please ignore.
-
-> WAG: because ACPI made some driver load at all, and when it
-> did it something started happening which crashed some machines.
-
-I'm not sure I understand this sentence.
-
-... resending now.
+Please ignore, I'm discussing with another patch in mind.
 
 -- 
 Lee Jones [李琼斯]
