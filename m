@@ -2,183 +2,188 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id A1BD6A9B4C
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 Sep 2019 09:11:15 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 2CCE2A9B8E
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 Sep 2019 09:19:03 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731730AbfIEHLJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 5 Sep 2019 03:11:09 -0400
-Received: from mail-wr1-f66.google.com ([209.85.221.66]:41404 "EHLO
-        mail-wr1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1731190AbfIEHLJ (ORCPT
+        id S1731864AbfIEHTC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 5 Sep 2019 03:19:02 -0400
+Received: from mail-wm1-f65.google.com ([209.85.128.65]:52253 "EHLO
+        mail-wm1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1731858AbfIEHTC (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 5 Sep 2019 03:11:09 -0400
-Received: by mail-wr1-f66.google.com with SMTP id h7so329593wrw.8
-        for <linux-arm-msm@vger.kernel.org>; Thu, 05 Sep 2019 00:11:07 -0700 (PDT)
+        Thu, 5 Sep 2019 03:19:02 -0400
+Received: by mail-wm1-f65.google.com with SMTP id t17so1407771wmi.2
+        for <linux-arm-msm@vger.kernel.org>; Thu, 05 Sep 2019 00:18:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to
-         :user-agent;
-        bh=DFvvnaHLzFEzaTnNYzUt4Q2hQTFq/NK+O6UpsbmEMb0=;
-        b=By8LGyThV3tQ7KpjUQafQj2mWoVF3UaQyPDD/AsSXb+5tk4zZFZVekW3CeEG2npb2B
-         Jmy5Qb0Gklgk/axCGfbNZJSWL5JklgbojPM3DCPn25IMckFHtdSMHFMkMKwn7/d9ZmWv
-         NLlXUPiedZKGcQzpUT6V3EIMJJci8gkcWnpcauUrUpDTBdDfs6O8etqFgheEto1vISaT
-         rTOEicKYLY89K5mHry30Y6vbjFHGz2jb/uZ/4t9ZzErtlzLlh8SbtbMZiSpSdYxh5rsz
-         Kv529cVvW8zneJb4OdeHcTYd38NSZx322XL6q16Xz2Oj3s9WMBkYdcj0JhBNbdVGNIE9
-         JkqQ==
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=RISrkcVh8Fqvuvvt7yP9o+S9VLGHZzFUmgTqhMvQtG4=;
+        b=w7Zmcb2XHj5Ual1LSZm+t0kJNSCVahdatsM8lQ8zM5/0XphUQGigOEZRdvZliz5F7j
+         dTOzp1F2X1FK+JJ8JkIDl6QVq2bfU7DCzXQszMmKfo7XBWdMk4nmgxs4gMRkxLdF5r2j
+         VbRnn9mzydneTR+bIb6Px14j6S4wj6+m1JsP8Vn655oOOERrxdJKjkeSzRLlSfrQlH/Y
+         OlHS0j8ol1x3MVPU8IRwkf3nBWfWajGfxubTqgnUgkK25Lcr0aim/Sgtox3Z4X29O1ii
+         RpppqP6TLKmH1q+INQmghSvW23w8gQQixjJ8ULuOFaTTQEWt7VCPeWNuquvj7ezWjCu7
+         RyQQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        bh=DFvvnaHLzFEzaTnNYzUt4Q2hQTFq/NK+O6UpsbmEMb0=;
-        b=iFoNCzd++wt3rd7ocAVY7k5j/uDojPAUh/crxbfxqShMFJ5THrBkyJw1rmv85pwO1j
-         5xocO8UOZsIAnxh6vJ8Jqb+B0DIVEVJxq0+GQe9avVfatmTbT9Y2m7rBYqn1n7mb/ADP
-         S4VwzvhGXFHPt6Alt22hGEXM/ip9tafp67J9bAbdQbGNRBNe8Gmim0QqWPnuEva6sTbm
-         ZeRMPBh51CaY2QRSWPj+juFwRpsL99hdKIEFKx2ntFpamKVbjAepJc0SBhbuRT5NIQ/6
-         HQSf9m4q1XFu2eoUoP+wU0SDX4CYdVVbjVQmNyts57sszg/ummBrObLUkuFY4y9VptoY
-         c0pA==
-X-Gm-Message-State: APjAAAU4zYa9X/RNqF0ykma/OjjHg0lpTPN91QudoFHC7thMqeTDW+/Z
-        ml/AtGkPfhrEPanrkbLtHo7k7w==
-X-Google-Smtp-Source: APXvYqwmUfGIDO2UDqtQ8Ewygc0VpleSUBO6Yhj2gmAs7eRwG0RusGrqdiNi/OFtceHOm46lPN3l5g==
-X-Received: by 2002:a5d:528a:: with SMTP id c10mr1153426wrv.111.1567667466248;
-        Thu, 05 Sep 2019 00:11:06 -0700 (PDT)
-Received: from dell ([95.147.198.36])
-        by smtp.gmail.com with ESMTPSA id m18sm1455462wrg.97.2019.09.05.00.11.05
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Thu, 05 Sep 2019 00:11:05 -0700 (PDT)
-Date:   Thu, 5 Sep 2019 08:11:03 +0100
-From:   Lee Jones <lee.jones@linaro.org>
-To:     Wolfram Sang <wsa@the-dreams.de>
-Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>, alokc@codeaurora.org,
-        agross@kernel.org, robh+dt@kernel.org, mark.rutland@arm.com,
-        linux-i2c@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
-        linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 1/2] i2c: qcom-geni: Provide an option to select FIFO
- processing
-Message-ID: <20190905071103.GX26880@dell>
-References: <20190904113613.14997-1-lee.jones@linaro.org>
- <20190904203548.GC580@tuxbook-pro>
- <20190904212337.GF23608@ninjato>
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=RISrkcVh8Fqvuvvt7yP9o+S9VLGHZzFUmgTqhMvQtG4=;
+        b=jDYDDh5aVQN6NOO98u72NxhSesCvyL4zCcVwuaAABGiM+F5fz56QsK6gOhjOXKzaI5
+         Snx9z4eF6NSO67vqbfzKO0hWqna8IjBkygC32N+3TsxTdCo6xBIr6waE9uZdyXSgrc7X
+         NJjFaVoW0s4Sey8VEogSy5FcubptjsL7wASe4nf4FP3Zdze8poCZYejVW2DazM1eZaRk
+         myW3NjtUXAuQs1xz2Co1szZygIm3EKV1bryhpNW3UvvBRDbHnxlIHGiTPo4tqZTYE614
+         tAuslHt8zMlo/g2gp3VCXjPXRgnX4DCwicBY4HakVHi7kzcy3OCPhFfpf2eVU2h/jouz
+         GR7A==
+X-Gm-Message-State: APjAAAXGwoVTrEuIooSGCWGWwYJsFQak1+qCU55UPrYB30XBM+cKaxxA
+        s9uF5zSUulwScmqr20iG63kqpw==
+X-Google-Smtp-Source: APXvYqwb3qPb+oOBBzHjG4sQtkXniSl2iyH54hj1GZDHlTP9lhKhJx6lcOSlYOQbGhBanmLEg10BaA==
+X-Received: by 2002:a7b:cf25:: with SMTP id m5mr1591920wmg.25.1567667939170;
+        Thu, 05 Sep 2019 00:18:59 -0700 (PDT)
+Received: from [192.168.1.6] (124.red-83-36-179.dynamicip.rima-tde.net. [83.36.179.124])
+        by smtp.gmail.com with ESMTPSA id b194sm1755057wmg.46.2019.09.05.00.18.57
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Thu, 05 Sep 2019 00:18:58 -0700 (PDT)
+Subject: Re: [PATCH v4 3/4] dt-bindings: Add Qualcomm USB SuperSpeed PHY
+ bindings
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Stephen Boyd <swboyd@chromium.org>
+Cc:     Jack Pham <jackp@codeaurora.org>, robh@kernel.org,
+        andy.gross@linaro.org, shawn.guo@linaro.org,
+        gregkh@linuxfoundation.org, mark.rutland@arm.com, kishon@ti.com,
+        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-usb@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org, khasim.mohammed@linaro.org
+References: <20190207111734.24171-1-jorge.ramirez-ortiz@linaro.org>
+ <20190207111734.24171-4-jorge.ramirez-ortiz@linaro.org>
+ <20190223165218.GB572@tuxbook-pro>
+ <6dc0957d-5806-7643-4454-966015865d38@linaro.org>
+ <5d694878.1c69fb81.5f13b.ec4f@mx.google.com>
+ <20190830164520.GK26807@tuxbook-pro>
+ <5d696ad2.1c69fb81.977ea.39e5@mx.google.com>
+ <f3584f38-dabc-7e7a-d1cb-84c80ed26215@linaro.org>
+ <20190903173924.GB9754@jackp-linux.qualcomm.com>
+ <5d6edee5.1c69fb81.a3896.1d05@mx.google.com>
+ <20190903233410.GQ26807@tuxbook-pro>
+From:   Jorge Ramirez <jorge.ramirez-ortiz@linaro.org>
+Message-ID: <c9481b7d-4805-25c6-f40f-9cbfc40afc93@linaro.org>
+Date:   Thu, 5 Sep 2019 09:18:57 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+ Thunderbird/60.8.0
 MIME-Version: 1.0
+In-Reply-To: <20190903233410.GQ26807@tuxbook-pro>
 Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20190904212337.GF23608@ninjato>
-User-Agent: Mutt/1.9.4 (2018-02-28)
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, 04 Sep 2019, Wolfram Sang wrote:
-
-> On Wed, Sep 04, 2019 at 01:35:48PM -0700, Bjorn Andersson wrote:
-> > On Wed 04 Sep 04:36 PDT 2019, Lee Jones wrote:
-> > 
-> > The subject implies that we select FIFO mode instead of DMA, but that's
-> > not really true, because with DMA enabled we still fall back to FIFO for
-> > messages below 32 bytes. 
-
-Do you mean, we fall back to DMA?
-
-> > So what this does it to disable DMA, which neither the subject or the DT
-> > property describes.
-> > 
-> > Also missing is a description of why this is needed.
+On 9/4/19 01:34, Bjorn Andersson wrote:
+> On Tue 03 Sep 14:45 PDT 2019, Stephen Boyd wrote:
 > 
-> Yes.
+>> Quoting Jack Pham (2019-09-03 10:39:24)
+>>> On Mon, Sep 02, 2019 at 08:23:04AM +0200, Jorge Ramirez wrote:
+>>>> On 8/30/19 20:28, Stephen Boyd wrote:
+>>>>> Quoting Bjorn Andersson (2019-08-30 09:45:20)
+>>>>>> On Fri 30 Aug 09:01 PDT 2019, Stephen Boyd wrote:
+>>>>>>
+>>>>>>>>>
+>>>>>>>>> The USB-C connector is attached both to the HS and SS PHYs, so I think
+>>>>>>>>> you should represent this external to this node and use of_graph to
+>>>>>>>>> query it.
+>>>>>>>>
+>>>>>>>> but AFAICS we wont be able to retrieve the vbux-supply from an external
+>>>>>>>> node (that interface does not exist).
+>>>>>>>>
+>>>>>>>> rob, do you have a suggestion?
+>>>>>>>
+>>>>>>> Shouldn't the vbus supply be in the phy? Or is this a situation where
+>>>>>>> the phy itself doesn't have the vbus supply going to it because the PMIC
+>>>>>>> gets in the way and handles the vbus for the connector by having the SoC
+>>>>>>> communicate with the PMIC about when to turn the vbus on and off, etc?
+>>>>>>>
+>>>>>>
+>>>>>> That's correct, the VBUS comes out of the PMIC and goes directly to the
+>>>>>> connector.
+>>>>>>
+>>>>>> The additional complicating factor here is that the connector is wired
+>>>>>> to a USB2 phy as well, so we need to wire up detection and vbus control
+>>>>>> to both of them - but I think this will be fine, if we can only figure
+>>>>>> out a sane way of getting hold of the vbus-supply.
+>>>>>>
+>>>>>
+>>>>> Does it really matter to describe this situation though? Maybe it's
+>>>>> simpler to throw the vbus supply into the phy and control it from the
+>>>>> phy driver, even if it never really goes there. Or put it into the
+>>>>> toplevel usb controller?
+>>>>>
+>>>> that would work for me - the connector definition seemed a better way to
+>>>> explain the connectivity but since we cant retrieve the supply from the
+>>>> external node is not of much functional use.
+>>>>
+>>>> but please let me know how to proceed. shall I add the supply back to
+>>>> the phy?
+>>
+>> So does the vbus actually go to the phy? I thought it never went there
+>> and the power for the phy was different (and possibly lower in voltage).
+>>
 > 
-> I am willing to help to get this resolved soonish. However, I have
-> issues with the approach.
+> No, the PHYs use different - lower voltage - supplies to operate. VBUS
+> is coming from a 5V supply straight to the connector and plug-detect
+> logic (which is passive in this design).
 > 
-> It looks like a workaround to me. It would be interesting to hear which
-> I2C client breaks with DMA and if it's driver can't be fixed somehow
-> instead. But even if we agree on a workaround short term, adding a
-> binding for this workaround seems like a no-go to me. We have to live
-> with this binding forever. Sidenote: I could think of a generic
-> 'disable-dma' which could be reused everywhere but we probably won't get
-> that upstream that late in the cycle.
+>>>
+>>> Putting it in the toplevel usb node makes sense to me, since that's
+>>> usually the driver that knows when it's switching into host mode and
+>>> needs to turn on VBUS. The dwc3-qcom driver & bindings currently don't 
+>>> do this but there's precedent in a couple of the other dwc3 "glues"--see
+>>> Documentation/devicetree/bindings/usb/{amlogic\,dwc3,omap-usb}.txt
+>>>
+>>> One exception is if the PMIC is also USB-PD capable and can do power
+>>> role swap, in which case the VBUS control needs to be done by the TCPM,
+>>> so that'd be a case where having vbus-supply in the connector node might
+>>> make more sense.
+>>>
+>>
+>> The other way is to implement the code to get the vbus supply out of a
+>> connector. Then any driver can do the work if it knows it needs to and
+>> we don't have to care that the vbus isn't going somewhere. I suppose
+>> that would need an of_regulator_get() sort of API that can get the
+>> regulator out of there? Or to make the connector into a struct device
+>> that can get the regulator out per some generic connector driver and
+>> then pass it through to the USB controller when it asks for it. Maybe
+>> try to prototype that out?
+>>
 > 
-> Is there no other way to disable DMA which is local to this driver so we
-> can easily revert the workaround later?
+> The examples given in the DT bindings describes the connector as a child
+> of a PMIC, with of_graph somehow tying it to the various inputs. But in
+> these examples vbus is handled by implicitly inside the MFD, where
+> extcon is informed about the plug event they toggle vbus as well.
+> 
+> In our case we have a extcon-usb-gpio to detect mode, which per Jorge's
+> proposal will trickle down to the PHY and become a regulator calls on
+> either some external regulator or more typically one of the chargers in
+> the system.
+> 
+> 
+> So if we come up with a struct device for the connector and some API for
+> toggling the vbus we're going to have to fairly abstract entities
+> representing pretty much the same thing - and in a design with a mux we
+> would have a different setup.
 
-This is the most local low-impact solution (nomenclature aside).
+I am a bit unclear - not sure if we have gone full circle on this
+subject. what is then the direction to get this merged?
 
-The beautiful thing about this approach is that, *if* the Geni SE DMA
-ever starts working, we can remove the C code and any old properties
-left in older DTs just become NOOP.  Older kernels with newer DTs
-(less of a priority) *still* won't work, but they don't work now
-anyway.
+I did have look last week and the level of effort to support regulators
+on external nodes is not neglectable meaning that I might not have the
+time to deliver that feature (perhaps someone else wishes to take over?)
 
-NB: QCom have also made it pretty clear that DTBs *must* match their
-kernel version.  I know this is controversial amongst DT purists, but
-it's still how QCom operate.
+> 
+> Regards,
+> Bjorn
+> 
 
-The offending line can be found at [0].  There is no obvious bug to
-fix and this code obviously works well on some of the hardware
-platforms using it.  But on our platform (Lenovo Yoga C630 - QCom
-SMD850) that final command, which initiates the DMA transaction, ends
-up rebooting the machine.
-
-With regards to the nomenclature, my original suggestion was
-'qcom,geni-se-no-dma'.  Would that better suit your request?
-
-[0] https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/drivers/soc/qcom/qcom-geni-se.c#n644
-
-> > > Signed-off-by: Lee Jones <lee.jones@linaro.org>
-> > > ---
-> > >  drivers/i2c/busses/i2c-qcom-geni.c | 14 ++++++++++----
-> > >  1 file changed, 10 insertions(+), 4 deletions(-)
-> > > 
-> > > diff --git a/drivers/i2c/busses/i2c-qcom-geni.c b/drivers/i2c/busses/i2c-qcom-geni.c
-> > > index a89bfce5388e..dfdbce067827 100644
-> > > --- a/drivers/i2c/busses/i2c-qcom-geni.c
-> > > +++ b/drivers/i2c/busses/i2c-qcom-geni.c
-> > > @@ -353,13 +353,16 @@ static void geni_i2c_tx_fsm_rst(struct geni_i2c_dev *gi2c)
-> > >  static int geni_i2c_rx_one_msg(struct geni_i2c_dev *gi2c, struct i2c_msg *msg,
-> > >  				u32 m_param)
-> > >  {
-> > > +	struct device_node *np = gi2c->se.dev->of_node;
-> > >  	dma_addr_t rx_dma;
-> > >  	unsigned long time_left;
-> > > -	void *dma_buf;
-> > > +	void *dma_buf = NULL;
-> > >  	struct geni_se *se = &gi2c->se;
-> > >  	size_t len = msg->len;
-> > >  
-> > > -	dma_buf = i2c_get_dma_safe_msg_buf(msg, 32);
-> > > +	if (!of_property_read_bool(np, "qcom,geni-se-fifo"))
-> > > +		dma_buf = i2c_get_dma_safe_msg_buf(msg, 32);
-> > > +
-> > >  	if (dma_buf)
-> > >  		geni_se_select_mode(se, GENI_SE_DMA);
-> > >  	else
-> > > @@ -392,13 +395,16 @@ static int geni_i2c_rx_one_msg(struct geni_i2c_dev *gi2c, struct i2c_msg *msg,
-> > >  static int geni_i2c_tx_one_msg(struct geni_i2c_dev *gi2c, struct i2c_msg *msg,
-> > >  				u32 m_param)
-> > >  {
-> > > +	struct device_node *np = gi2c->se.dev->of_node;
-> > >  	dma_addr_t tx_dma;
-> > >  	unsigned long time_left;
-> > > -	void *dma_buf;
-> > > +	void *dma_buf = NULL;
-> > >  	struct geni_se *se = &gi2c->se;
-> > >  	size_t len = msg->len;
-> > >  
-> > > -	dma_buf = i2c_get_dma_safe_msg_buf(msg, 32);
-> > > +	if (!of_property_read_bool(np, "qcom,geni-se-fifo"))
-> > > +		dma_buf = i2c_get_dma_safe_msg_buf(msg, 32);
-> > > +
-> > >  	if (dma_buf)
-> > >  		geni_se_select_mode(se, GENI_SE_DMA);
-> > >  	else
-
-
-
--- 
-Lee Jones [李琼斯]
-Linaro Services Technical Lead
-Linaro.org │ Open source software for ARM SoCs
-Follow Linaro: Facebook | Twitter | Blog
