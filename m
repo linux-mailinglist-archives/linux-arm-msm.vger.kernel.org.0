@@ -2,148 +2,102 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 78F25A9CCB
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 Sep 2019 10:18:59 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A7B57A9CEB
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 Sep 2019 10:26:03 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730412AbfIEISy (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 5 Sep 2019 04:18:54 -0400
-Received: from ns.iliad.fr ([212.27.33.1]:46870 "EHLO ns.iliad.fr"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726175AbfIEISy (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 5 Sep 2019 04:18:54 -0400
-Received: from ns.iliad.fr (localhost [127.0.0.1])
-        by ns.iliad.fr (Postfix) with ESMTP id B035F20FE8;
-        Thu,  5 Sep 2019 10:18:52 +0200 (CEST)
-Received: from [192.168.108.37] (freebox.vlq16.iliad.fr [213.36.7.13])
-        by ns.iliad.fr (Postfix) with ESMTP id 9EEC520E0C;
-        Thu,  5 Sep 2019 10:18:52 +0200 (CEST)
-Subject: Re: [PATCH 2/2] i2c: qcom-geni: Provide an option to disable DMA
- processing
-To:     Lee Jones <lee.jones@linaro.org>
-References: <20190905075213.13260-1-lee.jones@linaro.org>
- <20190905075213.13260-2-lee.jones@linaro.org>
-Cc:     I2C <linux-i2c@vger.kernel.org>,
-        MSM <linux-arm-msm@vger.kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Vinod Koul <vkoul@kernel.org>
-From:   Marc Gonzalez <marc.w.gonzalez@free.fr>
-Message-ID: <e2c46fef-332f-ef91-2121-bff33f6f7646@free.fr>
-Date:   Thu, 5 Sep 2019 10:18:52 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.8.0
-MIME-Version: 1.0
-In-Reply-To: <20190905075213.13260-2-lee.jones@linaro.org>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
-X-Virus-Scanned: ClamAV using ClamSMTP ; ns.iliad.fr ; Thu Sep  5 10:18:52 2019 +0200 (CEST)
+        id S1732493AbfIEI0C (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 5 Sep 2019 04:26:02 -0400
+Received: from mail-wr1-f65.google.com ([209.85.221.65]:34447 "EHLO
+        mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1732454AbfIEI0C (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 5 Sep 2019 04:26:02 -0400
+Received: by mail-wr1-f65.google.com with SMTP id s18so1649456wrn.1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 05 Sep 2019 01:26:00 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=from:to:cc:subject:date:message-id;
+        bh=0SGxKzloC1sYoifm3y16biO6W+84MTKzulfWNDZIOv0=;
+        b=JtEU3isNL7tcsgWJfDETBw410yLKfnQUAezfYGPe+bkIod/xnIaEu2T3jcqiNm93kk
+         c099+BNZcXW8lNfpNu4j2o3a0h7z5Zk+CnH+T3UfNNgcKwR7FG6TCKzWg7f7h5YmmqlM
+         xVeCWcGOSo0Zc3rByshg/dksK8+xE6/CGJLPPz+dxi4uAOTWzzrJEXDKf2AL1a43X6zF
+         A7Z9JWkCE23NMb3Me5AH8Gc2LD57eZsSX9B5Fd7Q0Q/EPeH2xqr0kLz6ZnV29gr7Mkbi
+         eAsX4kMg4t43ld9DtOe0UsezPWxCDc6HSIdqOvBIQsO+DCP/5WMbNPmtqcvIBwphQcV1
+         ujGg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=0SGxKzloC1sYoifm3y16biO6W+84MTKzulfWNDZIOv0=;
+        b=ueIpEu5tPwGkCjIYFi6bMfQi7t8OJ2lqbdR5gceGK4aa+5373Yr57Z05ZScPjwWGW2
+         kkvD67lGFkMWKqyABNGqlwuGDnZDEDH/+BzZct7nntuqoIixiKHcHEo42xv10FkM9NBj
+         4IFUDJC/0RRAq3Ym/2m8IxVUJ2rOWYbCTElwHTFPYxoTcdUpjcKv1rAevhSmFqJwgWnI
+         x/7XyJdTgdHzikzIfMEKW0+X4d2Shj+x0hWupLHcymkYLXOOh421zux0bT7cMNHsoeSw
+         HfDqBCBGatssGsu+B3gicTgLwcx8AHumxE6K/RjqwW9RMFNJmGvFySZwv9626o6iqQ8J
+         bc9A==
+X-Gm-Message-State: APjAAAU7F1VCOt40vnRLe0dPhhWdneHrt9d02okD1Q6bZgTy74JkIYf9
+        FuwK1E35xy9+/XmiY7RfBhRpDg==
+X-Google-Smtp-Source: APXvYqyneYOfiTi5Ojy9R1/QQz07t4M61xgAm4mkWxAllP1dMOip2pu953cyhGMT71BimoquZaCjfg==
+X-Received: by 2002:a5d:6504:: with SMTP id x4mr1489361wru.227.1567671958823;
+        Thu, 05 Sep 2019 01:25:58 -0700 (PDT)
+Received: from localhost.localdomain ([95.147.198.36])
+        by smtp.gmail.com with ESMTPSA id a13sm3592687wrf.73.2019.09.05.01.25.58
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 05 Sep 2019 01:25:58 -0700 (PDT)
+From:   Lee Jones <lee.jones@linaro.org>
+To:     agross@kernel.org, bjorn.andersson@linaro.org, swboyd@chromium.org
+Cc:     linux-arm-msm@vger.kernel.org, Lee Jones <lee.jones@linaro.org>
+Subject: [RESEND 1/1] soc: qcom: geni: Provide parameter error checking
+Date:   Thu,  5 Sep 2019 09:25:55 +0100
+Message-Id: <20190905082555.15020-1-lee.jones@linaro.org>
+X-Mailer: git-send-email 2.17.1
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-[ Trimming recipients list for idle chat ]
+When booting with ACPI, the Geni Serial Engine is not set as the I2C/SPI
+parent and thus, the wrapper (parent device) is unassigned.  This causes
+the kernel to crash with a null dereference error.
 
-On 05/09/2019 09:52, Lee Jones wrote:
+Fixes: 8bc529b25354 ("soc: qcom: geni: Add support for ACPI")
+Acked-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+Reviewed-by: Stephen Boyd <sboyd@kernel.org>
+Signed-off-by: Lee Jones <lee.jones@linaro.org>
+---
+ * Collecting Acks
 
-> We have a production-level laptop (Lenovo Yoga C630) which is exhibiting
-> a rather horrific bug.  When I2C HID devices are being scanned for at
-> boot-time the QCom Geni based I2C (Serial Engine) attempts to use DMA.
-> When it does, the laptop reboots and the user never sees the OS.
-> 
-> The beautiful thing about this approach is that, *if* the Geni SE DMA
-> ever starts working, we can remove the C code and any old properties
-> left in older DTs just become NOOP.  Older kernels with newer DTs (less
-> of a priority) *still* will not work - but they do not work now anyway.
-> 
-> Fixes: 8bc529b25354 ("soc: qcom: geni: Add support for ACPI")
-> Signed-off-by: Lee Jones <lee.jones@linaro.org>
-> Reviewed-by: Vinod Koul <vkoul@kernel.org>
-> ---
->  drivers/i2c/busses/i2c-qcom-geni.c | 14 ++++++++++----
->  1 file changed, 10 insertions(+), 4 deletions(-)
-> 
-> diff --git a/drivers/i2c/busses/i2c-qcom-geni.c b/drivers/i2c/busses/i2c-qcom-geni.c
-> index a89bfce5388e..8822dea82980 100644
-> --- a/drivers/i2c/busses/i2c-qcom-geni.c
-> +++ b/drivers/i2c/busses/i2c-qcom-geni.c
-> @@ -353,13 +353,16 @@ static void geni_i2c_tx_fsm_rst(struct geni_i2c_dev *gi2c)
->  static int geni_i2c_rx_one_msg(struct geni_i2c_dev *gi2c, struct i2c_msg *msg,
->  				u32 m_param)
->  {
-> +	struct device_node *np = gi2c->se.dev->of_node;
->  	dma_addr_t rx_dma;
->  	unsigned long time_left;
-> -	void *dma_buf;
-> +	void *dma_buf = NULL;
->  	struct geni_se *se = &gi2c->se;
->  	size_t len = msg->len;
->  
-> -	dma_buf = i2c_get_dma_safe_msg_buf(msg, 32);
-> +	if (!of_property_read_bool(np, "qcom,geni-se-no-dma"))
-> +		dma_buf = i2c_get_dma_safe_msg_buf(msg, 32);
-> +
->  	if (dma_buf)
->  		geni_se_select_mode(se, GENI_SE_DMA);
->  	else
-> @@ -392,13 +395,16 @@ static int geni_i2c_rx_one_msg(struct geni_i2c_dev *gi2c, struct i2c_msg *msg,
->  static int geni_i2c_tx_one_msg(struct geni_i2c_dev *gi2c, struct i2c_msg *msg,
->  				u32 m_param)
->  {
-> +	struct device_node *np = gi2c->se.dev->of_node;
->  	dma_addr_t tx_dma;
->  	unsigned long time_left;
-> -	void *dma_buf;
-> +	void *dma_buf = NULL;
->  	struct geni_se *se = &gi2c->se;
->  	size_t len = msg->len;
->  
-> -	dma_buf = i2c_get_dma_safe_msg_buf(msg, 32);
-> +	if (!of_property_read_bool(np, "qcom,geni-se-no-dma"))
-> +		dma_buf = i2c_get_dma_safe_msg_buf(msg, 32);
-> +
->  	if (dma_buf)
->  		geni_se_select_mode(se, GENI_SE_DMA);
->  	else
-> 
+NB: If someone could send this to Linus for -rc7, it would make v5.3 work
+    when booting with ACPI, meaning the newly released distros, due out
+    in October will be bootable.  I'd be happy to send it myself with a
+    nod from someone prominant (QCom, Andy, Bjorn, etc).
 
-Would it make sense to factorize the DT lookup within a helper?
-(For example; not compile-tested; not sure it's worth it)
+drivers/soc/qcom/qcom-geni-se.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/drivers/i2c/busses/i2c-qcom-geni.c b/drivers/i2c/busses/i2c-qcom-geni.c
-index a89bfce5388e..1489181f60fe 100644
---- a/drivers/i2c/busses/i2c-qcom-geni.c
-+++ b/drivers/i2c/busses/i2c-qcom-geni.c
-@@ -350,6 +350,14 @@ static void geni_i2c_tx_fsm_rst(struct geni_i2c_dev *gi2c)
- 		dev_err(gi2c->se.dev, "Timeout resetting TX_FSM\n");
- }
+diff --git a/drivers/soc/qcom/qcom-geni-se.c b/drivers/soc/qcom/qcom-geni-se.c
+index d5cf953b4337..7d622ea1274e 100644
+--- a/drivers/soc/qcom/qcom-geni-se.c
++++ b/drivers/soc/qcom/qcom-geni-se.c
+@@ -630,6 +630,9 @@ int geni_se_tx_dma_prep(struct geni_se *se, void *buf, size_t len,
+ 	struct geni_wrapper *wrapper = se->wrapper;
+ 	u32 val;
  
-+static void *get_dma_buf(struct geni_se *se, struct i2c_msg *msg)
-+{
-+	if (of_property_read_bool(se->dev->of_node, "qcom,geni-se-no-dma"))
-+		return NULL;
++	if (!wrapper)
++		return -EINVAL;
 +
-+	return i2c_get_dma_safe_msg_buf(msg, 32);
-+}
+ 	*iova = dma_map_single(wrapper->dev, buf, len, DMA_TO_DEVICE);
+ 	if (dma_mapping_error(wrapper->dev, *iova))
+ 		return -EIO;
+@@ -663,6 +666,9 @@ int geni_se_rx_dma_prep(struct geni_se *se, void *buf, size_t len,
+ 	struct geni_wrapper *wrapper = se->wrapper;
+ 	u32 val;
+ 
++	if (!wrapper)
++		return -EINVAL;
 +
- static int geni_i2c_rx_one_msg(struct geni_i2c_dev *gi2c, struct i2c_msg *msg,
- 				u32 m_param)
- {
-@@ -359,7 +367,7 @@ static int geni_i2c_rx_one_msg(struct geni_i2c_dev *gi2c, struct i2c_msg *msg,
- 	struct geni_se *se = &gi2c->se;
- 	size_t len = msg->len;
- 
--	dma_buf = i2c_get_dma_safe_msg_buf(msg, 32);
-+	dma_buf = get_dma_buf(se, msg);
- 	if (dma_buf)
- 		geni_se_select_mode(se, GENI_SE_DMA);
- 	else
-@@ -398,7 +406,7 @@ static int geni_i2c_tx_one_msg(struct geni_i2c_dev *gi2c, struct i2c_msg *msg,
- 	struct geni_se *se = &gi2c->se;
- 	size_t len = msg->len;
- 
--	dma_buf = i2c_get_dma_safe_msg_buf(msg, 32);
-+	dma_buf = get_dma_buf(se, msg);
- 	if (dma_buf)
- 		geni_se_select_mode(se, GENI_SE_DMA);
- 	else
+ 	*iova = dma_map_single(wrapper->dev, buf, len, DMA_FROM_DEVICE);
+ 	if (dma_mapping_error(wrapper->dev, *iova))
+ 		return -EIO;
+-- 
+2.17.1
+
