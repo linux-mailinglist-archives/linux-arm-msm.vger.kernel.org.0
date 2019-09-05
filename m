@@ -2,81 +2,183 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 53259A9AF4
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 Sep 2019 08:56:21 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A1BD6A9B4C
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 Sep 2019 09:11:15 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731211AbfIEG4U (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 5 Sep 2019 02:56:20 -0400
-Received: from mail-pl1-f182.google.com ([209.85.214.182]:34341 "EHLO
-        mail-pl1-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730678AbfIEG4U (ORCPT
+        id S1731730AbfIEHLJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 5 Sep 2019 03:11:09 -0400
+Received: from mail-wr1-f66.google.com ([209.85.221.66]:41404 "EHLO
+        mail-wr1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1731190AbfIEHLJ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 5 Sep 2019 02:56:20 -0400
-Received: by mail-pl1-f182.google.com with SMTP id d3so844418plr.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 04 Sep 2019 23:56:19 -0700 (PDT)
+        Thu, 5 Sep 2019 03:11:09 -0400
+Received: by mail-wr1-f66.google.com with SMTP id h7so329593wrw.8
+        for <linux-arm-msm@vger.kernel.org>; Thu, 05 Sep 2019 00:11:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=message-id:mime-version:content-transfer-encoding:in-reply-to
-         :references:cc:subject:to:from:user-agent:date;
-        bh=kD97/EVwUs7hGEhtRI5cM+0lTbQL7Vks32M4YRn4nes=;
-        b=f2rMlOI6tTwlUpDkj66CovnKcTx6AuUUeHc9hOI4VWUSXRKLIxz27UOd5KOENqMiQ7
-         dybXYDbJwAIufmq7n1UxvQm/WEPpxLLjaALsxCUkxrnO5W7hamAYRggydmoIH7VoWr3J
-         VB93qsszzkcRQ3gnS/rpS3YzCzK8JnFEqgGEo=
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:content-transfer-encoding:in-reply-to
+         :user-agent;
+        bh=DFvvnaHLzFEzaTnNYzUt4Q2hQTFq/NK+O6UpsbmEMb0=;
+        b=By8LGyThV3tQ7KpjUQafQj2mWoVF3UaQyPDD/AsSXb+5tk4zZFZVekW3CeEG2npb2B
+         Jmy5Qb0Gklgk/axCGfbNZJSWL5JklgbojPM3DCPn25IMckFHtdSMHFMkMKwn7/d9ZmWv
+         NLlXUPiedZKGcQzpUT6V3EIMJJci8gkcWnpcauUrUpDTBdDfs6O8etqFgheEto1vISaT
+         rTOEicKYLY89K5mHry30Y6vbjFHGz2jb/uZ/4t9ZzErtlzLlh8SbtbMZiSpSdYxh5rsz
+         Kv529cVvW8zneJb4OdeHcTYd38NSZx322XL6q16Xz2Oj3s9WMBkYdcj0JhBNbdVGNIE9
+         JkqQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:mime-version
-         :content-transfer-encoding:in-reply-to:references:cc:subject:to:from
-         :user-agent:date;
-        bh=kD97/EVwUs7hGEhtRI5cM+0lTbQL7Vks32M4YRn4nes=;
-        b=ueefhbRKfzDLntHiag0qkjM4dXhcMYEpcBQgPU+tilgAuwbWFn7Eeeq8PKbL1xIZ/3
-         2eYunomS9j8PebGAVoEfyUDO9WJs5HIefZnyNpFfzU3D2dEpd3I4rFs+5A/mwX/Y9uuE
-         vV2qkSOU3LIjmE+33Cuo6xpjdcziShC4ejQRfov7R6X2WR3M0BvusJg01upDSkEWQGuc
-         27f4ohkA/94el0f7/9+AfU0RUA8I8Xm9yvUsithRUWZdUB27NyOY8GcQaWiOGWUU6rC7
-         sjwGrTH8PtMqrg64PDPSJWorvnb7yZPpyzDEs0q+kSR9F+a8MTKp8/oYaN/qgQEQVFbm
-         x7CQ==
-X-Gm-Message-State: APjAAAWwovZRb1NfdO1x9I26kD+Whli+grCn65gQNEvWgkAmMezHmyZE
-        JfZ0crLJmVzOSX5zMZPfyElA0g==
-X-Google-Smtp-Source: APXvYqzKn1EYDsMpOUWI7sFFZU4cXOjhZbtxWRrgczbEbqf4U+wCl33fGmcpyZGHJD9ZjijclNyYsw==
-X-Received: by 2002:a17:902:820a:: with SMTP id x10mr1817462pln.216.1567666579544;
-        Wed, 04 Sep 2019 23:56:19 -0700 (PDT)
-Received: from chromium.org ([2620:15c:202:1:fa53:7765:582b:82b9])
-        by smtp.gmail.com with ESMTPSA id n9sm1030819pjq.30.2019.09.04.23.56.18
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 04 Sep 2019 23:56:19 -0700 (PDT)
-Message-ID: <5d70b193.1c69fb81.f9ce7.3447@mx.google.com>
-Content-Type: text/plain; charset="utf-8"
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        bh=DFvvnaHLzFEzaTnNYzUt4Q2hQTFq/NK+O6UpsbmEMb0=;
+        b=iFoNCzd++wt3rd7ocAVY7k5j/uDojPAUh/crxbfxqShMFJ5THrBkyJw1rmv85pwO1j
+         5xocO8UOZsIAnxh6vJ8Jqb+B0DIVEVJxq0+GQe9avVfatmTbT9Y2m7rBYqn1n7mb/ADP
+         S4VwzvhGXFHPt6Alt22hGEXM/ip9tafp67J9bAbdQbGNRBNe8Gmim0QqWPnuEva6sTbm
+         ZeRMPBh51CaY2QRSWPj+juFwRpsL99hdKIEFKx2ntFpamKVbjAepJc0SBhbuRT5NIQ/6
+         HQSf9m4q1XFu2eoUoP+wU0SDX4CYdVVbjVQmNyts57sszg/ummBrObLUkuFY4y9VptoY
+         c0pA==
+X-Gm-Message-State: APjAAAU4zYa9X/RNqF0ykma/OjjHg0lpTPN91QudoFHC7thMqeTDW+/Z
+        ml/AtGkPfhrEPanrkbLtHo7k7w==
+X-Google-Smtp-Source: APXvYqwmUfGIDO2UDqtQ8Ewygc0VpleSUBO6Yhj2gmAs7eRwG0RusGrqdiNi/OFtceHOm46lPN3l5g==
+X-Received: by 2002:a5d:528a:: with SMTP id c10mr1153426wrv.111.1567667466248;
+        Thu, 05 Sep 2019 00:11:06 -0700 (PDT)
+Received: from dell ([95.147.198.36])
+        by smtp.gmail.com with ESMTPSA id m18sm1455462wrg.97.2019.09.05.00.11.05
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Thu, 05 Sep 2019 00:11:05 -0700 (PDT)
+Date:   Thu, 5 Sep 2019 08:11:03 +0100
+From:   Lee Jones <lee.jones@linaro.org>
+To:     Wolfram Sang <wsa@the-dreams.de>
+Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>, alokc@codeaurora.org,
+        agross@kernel.org, robh+dt@kernel.org, mark.rutland@arm.com,
+        linux-i2c@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+        linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 1/2] i2c: qcom-geni: Provide an option to select FIFO
+ processing
+Message-ID: <20190905071103.GX26880@dell>
+References: <20190904113613.14997-1-lee.jones@linaro.org>
+ <20190904203548.GC580@tuxbook-pro>
+ <20190904212337.GF23608@ninjato>
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <20190905064253.GU26880@dell>
-References: <20190903135052.13827-1-lee.jones@linaro.org> <20190904031922.GC574@tuxbook-pro> <20190904084554.GF26880@dell> <20190904182732.GE574@tuxbook-pro> <5d704c9f.1c69fb81.a1686.0eb3@mx.google.com> <20190905064253.GU26880@dell>
-Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>, agross@kernel.org,
-        linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH 1/1] soc: qcom: geni: Provide parameter error checking
-To:     Lee Jones <lee.jones@linaro.org>
-From:   Stephen Boyd <swboyd@chromium.org>
-User-Agent: alot/0.8.1
-Date:   Wed, 04 Sep 2019 23:56:17 -0700
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20190904212337.GF23608@ninjato>
+User-Agent: Mutt/1.9.4 (2018-02-28)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Lee Jones (2019-09-04 23:42:53)
-> > > But if this is the one whack left to get the thing to boot then I thi=
-nk
-> > > we should merge it.
-> >=20
-> > Agreed.
->=20
-> Thanks Stephen.
->=20
-> Unless you guys scream loudly, I'm going to convert these to Acks.
->=20
-> If you scream softly, I can convert the to Reviewed-bys.
->=20
+On Wed, 04 Sep 2019, Wolfram Sang wrote:
 
-<in a soft scream>
+> On Wed, Sep 04, 2019 at 01:35:48PM -0700, Bjorn Andersson wrote:
+> > On Wed 04 Sep 04:36 PDT 2019, Lee Jones wrote:
+> > 
+> > The subject implies that we select FIFO mode instead of DMA, but that's
+> > not really true, because with DMA enabled we still fall back to FIFO for
+> > messages below 32 bytes. 
 
-Reviewed-by: Stephen Boyd <swboyd@chromium.org>
+Do you mean, we fall back to DMA?
 
+> > So what this does it to disable DMA, which neither the subject or the DT
+> > property describes.
+> > 
+> > Also missing is a description of why this is needed.
+> 
+> Yes.
+> 
+> I am willing to help to get this resolved soonish. However, I have
+> issues with the approach.
+> 
+> It looks like a workaround to me. It would be interesting to hear which
+> I2C client breaks with DMA and if it's driver can't be fixed somehow
+> instead. But even if we agree on a workaround short term, adding a
+> binding for this workaround seems like a no-go to me. We have to live
+> with this binding forever. Sidenote: I could think of a generic
+> 'disable-dma' which could be reused everywhere but we probably won't get
+> that upstream that late in the cycle.
+> 
+> Is there no other way to disable DMA which is local to this driver so we
+> can easily revert the workaround later?
+
+This is the most local low-impact solution (nomenclature aside).
+
+The beautiful thing about this approach is that, *if* the Geni SE DMA
+ever starts working, we can remove the C code and any old properties
+left in older DTs just become NOOP.  Older kernels with newer DTs
+(less of a priority) *still* won't work, but they don't work now
+anyway.
+
+NB: QCom have also made it pretty clear that DTBs *must* match their
+kernel version.  I know this is controversial amongst DT purists, but
+it's still how QCom operate.
+
+The offending line can be found at [0].  There is no obvious bug to
+fix and this code obviously works well on some of the hardware
+platforms using it.  But on our platform (Lenovo Yoga C630 - QCom
+SMD850) that final command, which initiates the DMA transaction, ends
+up rebooting the machine.
+
+With regards to the nomenclature, my original suggestion was
+'qcom,geni-se-no-dma'.  Would that better suit your request?
+
+[0] https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/drivers/soc/qcom/qcom-geni-se.c#n644
+
+> > > Signed-off-by: Lee Jones <lee.jones@linaro.org>
+> > > ---
+> > >  drivers/i2c/busses/i2c-qcom-geni.c | 14 ++++++++++----
+> > >  1 file changed, 10 insertions(+), 4 deletions(-)
+> > > 
+> > > diff --git a/drivers/i2c/busses/i2c-qcom-geni.c b/drivers/i2c/busses/i2c-qcom-geni.c
+> > > index a89bfce5388e..dfdbce067827 100644
+> > > --- a/drivers/i2c/busses/i2c-qcom-geni.c
+> > > +++ b/drivers/i2c/busses/i2c-qcom-geni.c
+> > > @@ -353,13 +353,16 @@ static void geni_i2c_tx_fsm_rst(struct geni_i2c_dev *gi2c)
+> > >  static int geni_i2c_rx_one_msg(struct geni_i2c_dev *gi2c, struct i2c_msg *msg,
+> > >  				u32 m_param)
+> > >  {
+> > > +	struct device_node *np = gi2c->se.dev->of_node;
+> > >  	dma_addr_t rx_dma;
+> > >  	unsigned long time_left;
+> > > -	void *dma_buf;
+> > > +	void *dma_buf = NULL;
+> > >  	struct geni_se *se = &gi2c->se;
+> > >  	size_t len = msg->len;
+> > >  
+> > > -	dma_buf = i2c_get_dma_safe_msg_buf(msg, 32);
+> > > +	if (!of_property_read_bool(np, "qcom,geni-se-fifo"))
+> > > +		dma_buf = i2c_get_dma_safe_msg_buf(msg, 32);
+> > > +
+> > >  	if (dma_buf)
+> > >  		geni_se_select_mode(se, GENI_SE_DMA);
+> > >  	else
+> > > @@ -392,13 +395,16 @@ static int geni_i2c_rx_one_msg(struct geni_i2c_dev *gi2c, struct i2c_msg *msg,
+> > >  static int geni_i2c_tx_one_msg(struct geni_i2c_dev *gi2c, struct i2c_msg *msg,
+> > >  				u32 m_param)
+> > >  {
+> > > +	struct device_node *np = gi2c->se.dev->of_node;
+> > >  	dma_addr_t tx_dma;
+> > >  	unsigned long time_left;
+> > > -	void *dma_buf;
+> > > +	void *dma_buf = NULL;
+> > >  	struct geni_se *se = &gi2c->se;
+> > >  	size_t len = msg->len;
+> > >  
+> > > -	dma_buf = i2c_get_dma_safe_msg_buf(msg, 32);
+> > > +	if (!of_property_read_bool(np, "qcom,geni-se-fifo"))
+> > > +		dma_buf = i2c_get_dma_safe_msg_buf(msg, 32);
+> > > +
+> > >  	if (dma_buf)
+> > >  		geni_se_select_mode(se, GENI_SE_DMA);
+> > >  	else
+
+
+
+-- 
+Lee Jones [李琼斯]
+Linaro Services Technical Lead
+Linaro.org │ Open source software for ARM SoCs
+Follow Linaro: Facebook | Twitter | Blog
