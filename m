@@ -2,68 +2,88 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 50FCBA9A76
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 Sep 2019 08:18:31 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D84E8A9AC8
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 Sep 2019 08:42:58 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730778AbfIEGSa (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 5 Sep 2019 02:18:30 -0400
-Received: from bombadil.infradead.org ([198.137.202.133]:33172 "EHLO
-        bombadil.infradead.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725921AbfIEGS3 (ORCPT
+        id S1729941AbfIEGm6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 5 Sep 2019 02:42:58 -0400
+Received: from mail-wr1-f67.google.com ([209.85.221.67]:36872 "EHLO
+        mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725921AbfIEGm6 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 5 Sep 2019 02:18:29 -0400
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-        d=infradead.org; s=bombadil.20170209; h=In-Reply-To:Content-Type:MIME-Version
-        :References:Message-ID:Subject:Cc:To:From:Date:Sender:Reply-To:
-        Content-Transfer-Encoding:Content-ID:Content-Description:Resent-Date:
-        Resent-From:Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:List-Id:
-        List-Help:List-Unsubscribe:List-Subscribe:List-Post:List-Owner:List-Archive;
-         bh=fTcSpA3ZHXId80EpTLogSujsoZ0WrK6Tdlrkg5U4n3U=; b=CoryMkzNMX3aDlJ+m7fw27+Y5
-        k6b2VLOXAy5PZZ2GtUk7b2Gg7Z+a62WBshvp2BBEqZkvIfsJQUOhgXRJTP2cSkkiV6UMawUgMAnnM
-        BPLyvE/okmSa6W3JyrHnd206HGUFLFCYGyDbkef1/pqS6w6FaTPpzQPIgX7h+a7yf6MIqFQviJlbh
-        O9sVQPNQ3kcpV6SSsFzZkzpahtly3RGBfCYsEwP3r7TlEl9q4+GYVY/KG/YPUjMI8iHQ3Ml2GypGJ
-        JtO9RtgEejTvKcuVSYanopJTNDvcYwgteHDAFFzgUHLNtasHSA48ajt+6LHbTDqmS8+IseRBdsc3B
-        jdCV6Qw4Q==;
-Received: from hch by bombadil.infradead.org with local (Exim 4.92 #3 (Red Hat Linux))
-        id 1i5l67-0000MK-7v; Thu, 05 Sep 2019 06:18:23 +0000
-Date:   Wed, 4 Sep 2019 23:18:23 -0700
-From:   Christoph Hellwig <hch@infradead.org>
-To:     Tom Murphy <murphyt7@tcd.ie>
-Cc:     iommu@lists.linux-foundation.org, Heiko Stuebner <heiko@sntech.de>,
-        virtualization@lists.linux-foundation.org,
-        linux-tegra@vger.kernel.org,
-        Thierry Reding <thierry.reding@gmail.com>,
-        Will Deacon <will@kernel.org>,
-        Jean-Philippe Brucker <jean-philippe@linaro.org>,
-        linux-samsung-soc@vger.kernel.org,
-        Krzysztof Kozlowski <krzk@kernel.org>,
-        Jonathan Hunter <jonathanh@nvidia.com>,
-        linux-rockchip@lists.infradead.org, Andy Gross <agross@kernel.org>,
-        Gerald Schaefer <gerald.schaefer@de.ibm.com>,
-        linux-s390@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-mediatek@lists.infradead.org,
-        Matthias Brugger <matthias.bgg@gmail.com>,
-        linux-arm-kernel@lists.infradead.org,
-        David Woodhouse <dwmw2@infradead.org>,
-        linux-kernel@vger.kernel.org, Kukjin Kim <kgene@kernel.org>,
-        Robin Murphy <robin.murphy@arm.com>
-Subject: Re: [PATCH V5 0/5] iommu/amd: Convert the AMD iommu driver to the
- dma-iommu api
-Message-ID: <20190905061823.GA813@infradead.org>
-References: <20190815110944.3579-1-murphyt7@tcd.ie>
+        Thu, 5 Sep 2019 02:42:58 -0400
+Received: by mail-wr1-f67.google.com with SMTP id i1so665391wro.4
+        for <linux-arm-msm@vger.kernel.org>; Wed, 04 Sep 2019 23:42:56 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:content-transfer-encoding:in-reply-to
+         :user-agent;
+        bh=4FxT3sbg905x6neVVBFFY3spRc8+0YKGMTWU5uG6+h0=;
+        b=wxlWx/qSbcPpE76utweI7A0cLy9DrjtSsoAqtfV6WPGO6arQeRwLYRCoyb13wSdY2Z
+         655GB7phDY6TttcqOOFiP6ROfNmtwlxb0lskXM2I1LkhloZIEInNRhxotvbK4b/ogytV
+         u/vcFc8JayRCtriCHPY3JfzCi3kAu7dCHIdpWcCi0NjBCfRdOiZ7AHIpZIdwvB6oUub7
+         EipZ/dIakAO1jrc1+WsNumzS94ASiMIhnOLSohIQZd48G5lW93647zNwunwCnRJDPfF0
+         dYJ4FK9cLboExNBjwJ4pYgppi671aLGIs6fh59Hu2j0H9RR/dllE7KO3vjx2D2dssxEe
+         yrJw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        bh=4FxT3sbg905x6neVVBFFY3spRc8+0YKGMTWU5uG6+h0=;
+        b=jPvlQPhZDOPZfoM5GHPRtID9AygL7USslPmnivQL7N4rCQPBMU3/5IQjrgDCybOu6J
+         LfxNEm7rHnlgqQKOsFlzmbLqdGeVS4mQzKy7FtE0uoP0/h6lnvkMGDmKLd2x3jf5HliT
+         ZQpSz+oOg+4wS/nQ+e8Zo5MCwnc1zojneGIPJl5TwzSfFgo0rZDtq7W5cOon1DZqy6er
+         XB+vkyd0i0Wpnz/7nildjjBH4LUazV0Z3YvXmBItSVa3BbAz9g+6a9o2pJ7oHzEG8t2w
+         yZSWBOJllOImrBSDq6D8Qzso1P8+vR4z33ffYSeUCXAn4z0jez0JKv9QsnKwHIhY4Gtp
+         +uGA==
+X-Gm-Message-State: APjAAAWOPV/Nk97eOPyy7rd7YKWI6fk/z/SC97BTun/lvuwlcmXTZxBy
+        z53Z84WCpU8/kNRtW2+LwkIfcw==
+X-Google-Smtp-Source: APXvYqwvRbcTUQl24Kcx5vN7rlGOqv2utPQevH7gWXz+Y2nMcnBafBkxzETNfut6xVZQ0Q8Pr4WMgA==
+X-Received: by 2002:adf:e881:: with SMTP id d1mr1133373wrm.301.1567665775928;
+        Wed, 04 Sep 2019 23:42:55 -0700 (PDT)
+Received: from dell ([95.147.198.36])
+        by smtp.gmail.com with ESMTPSA id f66sm2329533wmg.2.2019.09.04.23.42.54
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Wed, 04 Sep 2019 23:42:54 -0700 (PDT)
+Date:   Thu, 5 Sep 2019 07:42:53 +0100
+From:   Lee Jones <lee.jones@linaro.org>
+To:     Stephen Boyd <swboyd@chromium.org>
+Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>, agross@kernel.org,
+        linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org
+Subject: Re: [PATCH 1/1] soc: qcom: geni: Provide parameter error checking
+Message-ID: <20190905064253.GU26880@dell>
+References: <20190903135052.13827-1-lee.jones@linaro.org>
+ <20190904031922.GC574@tuxbook-pro>
+ <20190904084554.GF26880@dell>
+ <20190904182732.GE574@tuxbook-pro>
+ <5d704c9f.1c69fb81.a1686.0eb3@mx.google.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20190815110944.3579-1-murphyt7@tcd.ie>
-User-Agent: Mutt/1.11.4 (2019-03-13)
-X-SRS-Rewrite: SMTP reverse-path rewritten from <hch@infradead.org> by bombadil.infradead.org. See http://www.infradead.org/rpr.html
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <5d704c9f.1c69fb81.a1686.0eb3@mx.google.com>
+User-Agent: Mutt/1.9.4 (2018-02-28)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Dave, Joerg, Robin:
+> > But if this is the one whack left to get the thing to boot then I think
+> > we should merge it.
+> 
+> Agreed.
 
-is there any chance we could at least pick up patches 2 and 4 ASAP
-as they are clearly fixes for current deficits, even without the
-amd conversion?
+Thanks Stephen.
+
+Unless you guys scream loudly, I'm going to convert these to Acks.
+
+If you scream softly, I can convert the to Reviewed-bys.
+
+-- 
+Lee Jones [李琼斯]
+Linaro Services Technical Lead
+Linaro.org │ Open source software for ARM SoCs
+Follow Linaro: Facebook | Twitter | Blog
