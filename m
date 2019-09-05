@@ -2,97 +2,108 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 277A1AA41C
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 Sep 2019 15:17:10 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 11D3CAA4AC
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 Sep 2019 15:38:05 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2388424AbfIENPB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 5 Sep 2019 09:15:01 -0400
-Received: from mail-lf1-f67.google.com ([209.85.167.67]:43256 "EHLO
-        mail-lf1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1733010AbfIENPA (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 5 Sep 2019 09:15:00 -0400
-Received: by mail-lf1-f67.google.com with SMTP id q27so1970351lfo.10
-        for <linux-arm-msm@vger.kernel.org>; Thu, 05 Sep 2019 06:14:59 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=X6liaIL8n/K+qZNHyRxBvsG3aE56VnalzfSINEJsXSQ=;
-        b=b+63NMLiO6uu9ngd3jzIr8Dsw188HJm9sNb07rlJMnX80r7/h5LUN3/Lpbh3bxpJ9z
-         xYJqjXXgagt+VDuvA3yKvH7qp7A2+W1iv5h1mRb24Jb2adl7EuLWgyNX1JPnrepTNa9Q
-         goCuPYhfmvTDmiz0qWuVckEjqgfqRDoltmXHgdBIf8vad80BD+OtqWFql1CSBxLD7jDL
-         PWs9E6CwQdu80zJAOHSJX+PJNszKu0Zwaywda1OI5fC9bc/t0il8d+aa4SI03VA65BG0
-         pqsIykPn5ko3cJwLwAXbf0ErZ98Dsu+DqnGqOb8fcfaBo5zLC2Uk4FyM9xYDgLnBUVyl
-         HiPg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=X6liaIL8n/K+qZNHyRxBvsG3aE56VnalzfSINEJsXSQ=;
-        b=PvBLG8wFXGTGt/Ld3hqyW++Vw/lzzNPdv8YfnoL+ZwYprqZ6vLVvZzkHTgVEkaKema
-         BEXptx4VHLvoZhjh8C5twnlhQQW4KqU4qx+v8ODCxGx2xD2tbqp28UDoYwheS1hu20L1
-         NjErso5UW4b2P0NVTlsjNkxhuItn4Akqfl4eKeexDKhV7gZqzIl5xvHAva6OFGZuyK/N
-         H46ynaXFUTYpkyPmiplR5czcAxwfsMnWRead9NIxEL/jLVeff8dAIhr+/gMCj5WZxvyF
-         KkZTR18TDQ5XuCxJDbiTamHEQ2hrqoSFv12D5QguIMoJ71pUCWQzG112l0Xs9R83rsdT
-         0oPA==
-X-Gm-Message-State: APjAAAU6TDmTa08PLfwmUSCfIy+dOdBCba7bdJPiDFy1sRbwyFLQVG4i
-        USE0ceenzccclFrojEM0ffdELA==
-X-Google-Smtp-Source: APXvYqzbCMnjO//eiTEa0kZuQw26H3btOjLN9fQPzx/MdOvkhMnN7oM0V3sFQZMv6aa2tmtB3chimQ==
-X-Received: by 2002:a19:4912:: with SMTP id w18mr2283793lfa.93.1567689298714;
-        Thu, 05 Sep 2019 06:14:58 -0700 (PDT)
-Received: from centauri (ua-84-219-138-247.bbcust.telenor.se. [84.219.138.247])
-        by smtp.gmail.com with ESMTPSA id b25sm486140lfa.90.2019.09.05.06.14.57
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 05 Sep 2019 06:14:58 -0700 (PDT)
-Date:   Thu, 5 Sep 2019 15:14:56 +0200
-From:   Niklas Cassel <niklas.cassel@linaro.org>
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     Ohad Ben-Cohen <ohad@wizery.com>, linux-arm-msm@vger.kernel.org,
-        linux-remoteproc@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-Subject: Re: [PATCH] rpmsg: glink-smem: Name the edge based on parent
- remoteproc
-Message-ID: <20190905131456.GA26674@centauri>
-References: <20190820041656.17197-1-bjorn.andersson@linaro.org>
+        id S1730070AbfIENhr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 5 Sep 2019 09:37:47 -0400
+Received: from sauhun.de ([88.99.104.3]:57244 "EHLO pokefinder.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1727143AbfIENhq (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 5 Sep 2019 09:37:46 -0400
+Received: from localhost (p54B335F6.dip0.t-ipconnect.de [84.179.53.246])
+        by pokefinder.org (Postfix) with ESMTPSA id 31A312C00C0;
+        Thu,  5 Sep 2019 15:37:44 +0200 (CEST)
+Date:   Thu, 5 Sep 2019 15:37:43 +0200
+From:   Wolfram Sang <wsa@the-dreams.de>
+To:     Lee Jones <lee.jones@linaro.org>
+Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>, alokc@codeaurora.org,
+        agross@kernel.org, robh+dt@kernel.org, mark.rutland@arm.com,
+        linux-i2c@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+        linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 1/2] i2c: qcom-geni: Provide an option to select FIFO
+ processing
+Message-ID: <20190905133743.GE1157@kunai>
+References: <20190904113613.14997-1-lee.jones@linaro.org>
+ <20190904203548.GC580@tuxbook-pro>
+ <20190904212337.GF23608@ninjato>
+ <20190905071103.GX26880@dell>
+ <20190905091617.GC1157@kunai>
+ <20190905093444.GE26880@dell>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="gMR3gsNFwZpnI/Ts"
 Content-Disposition: inline
-In-Reply-To: <20190820041656.17197-1-bjorn.andersson@linaro.org>
-User-Agent: Mutt/1.12.1 (2019-06-15)
+In-Reply-To: <20190905093444.GE26880@dell>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Aug 19, 2019 at 09:16:56PM -0700, Bjorn Andersson wrote:
-> Naming the glink edge device on the parent of_node short name causes
-> collisions when multiple remoteproc instances with only different unit
-> address are described on the platform_bus in DeviceTree.
-> 
-> Base the edge's name on the parent remoteproc's name instead, to ensure
-> that it's unique.
-> 
-> Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
-> ---
->  drivers/rpmsg/qcom_glink_smem.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
-> 
-> diff --git a/drivers/rpmsg/qcom_glink_smem.c b/drivers/rpmsg/qcom_glink_smem.c
-> index 64a5ce324c7f..4238383d8685 100644
-> --- a/drivers/rpmsg/qcom_glink_smem.c
-> +++ b/drivers/rpmsg/qcom_glink_smem.c
-> @@ -201,7 +201,7 @@ struct qcom_glink *qcom_glink_smem_register(struct device *parent,
->  	dev->parent = parent;
->  	dev->of_node = node;
->  	dev->release = qcom_glink_smem_release;
-> -	dev_set_name(dev, "%pOFn:%pOFn", node->parent, node);
-> +	dev_set_name(dev, "%s:%pOFn", dev_name(parent->parent), node);
->  	ret = device_register(dev);
->  	if (ret) {
->  		pr_err("failed to register glink edge\n");
-> -- 
-> 2.18.0
-> 
 
-Reviewed-by: Niklas Cassel <niklas.cassel@linaro.org>
+--gMR3gsNFwZpnI/Ts
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
+
+
+> > So, are there investigations running why this reboot happens?
+>=20
+> Yes, but they have been running for months, literally.
+
+I see. This is good to know. Just so I also know where we are with this.
+
+> > Which is a clear disadvantage of that solution. It won't fix older
+> > kernels. My suggestion above should fix them, too.
+>=20
+> Not sure how this is possible.  Unless you mean LTS?
+
+Why not? Using of_machine_is_compatible() makes the patch 100% self
+contained (no extra binding needed). It will work wherever the machine
+description fits.
+
+> > Unless we know why the reboot happens on your platform, I'd be careful
+> > with saying "work obviously well" on other platforms.
+>=20
+> Someone must have tested it?  Surely ... ;)
+
+It seems to work mostly, I won't deny that. But we don't know if the
+buggy situation can be triggered on these platforms as well by something
+else later. We just don't know.
+
+> > My suggestion:
+> >=20
+> > For 5.3, use of_machine_is_compatible() and we backport that. For later,
+> > try to find out the root cause and fix it. If that can't be done, try to
+> > set up a generic "disable-dma" property and use it.
+> >=20
+> > What do you think about that?
+>=20
+> Sounds okay to me.  Let me code that up.
+
+Glad you like it.
+
+
+--gMR3gsNFwZpnI/Ts
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAABCgAdFiEEOZGx6rniZ1Gk92RdFA3kzBSgKbYFAl1xD6MACgkQFA3kzBSg
+KbbjbRAAoIoQeZCMH5wLWkFBosilnEpvLFsBKQ9e1UoyHCK9wZiPoKduvpoo2g4R
+RLSwko3R49cuGKCMy3e7WeX+bOekY7xaP4M79/b/jOp7JBm3rhbKj2NjHNl7hz2b
+GRgIR9rCK7LbzfT47jf2p8rYGXTa2e4285Z6LqLwncf3E2ZGIntEE7Trc9hZbn2c
+MI+dMDgRvUUotGXQ0H5+XVRLjpPLi2p4MJhSE1wQpsAl1q2vD3sOdnG1ewpj2akI
+O3H+tupA5EU3MEMeWLN2LLhTAllw5uopqX74r4TCwfFl8QYOYZ/7Z4UfTsKLiY9q
+I/VbXn8NmghJTbnFogH8Ne6fm/omHZDPzO44bznJeDKtfAc2P+LKQOjAXpA0Iaof
+Qv6zBX7P6eILRJtxr6IeYbrmvaV85wyVeAf2Kxucxo5BIq5HwulcjX3Qxu6GGal8
+9zhmaOu8RmL9DYHWXr5IaG8+Lx88ftTspUHD4AiYxDbMWkRTbrENV7m6lLWtDTgZ
+VQ5hDBtx7HZEFb9I/ToOTBkL8zwiHRCKvAhtRNfMTBHixl5q5Hy68RI77Jywp3+G
+ku1M7uMksLAgH7u8UGxWtxkimxcEcYGAvXwaffbqfQnswOSPD7l3iL6k9uv5hYC8
+ZKwMfYXGXIcWI6l7qWcFkoTpIVsb3Sflshc1I7iHAGJov017tSI=
+=0if5
+-----END PGP SIGNATURE-----
+
+--gMR3gsNFwZpnI/Ts--
