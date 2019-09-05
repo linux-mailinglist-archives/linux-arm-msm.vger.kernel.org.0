@@ -2,277 +2,112 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 78B77AAB5C
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 Sep 2019 20:46:18 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A2248AABE8
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 Sep 2019 21:24:19 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2390463AbfIESqR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 5 Sep 2019 14:46:17 -0400
-Received: from mail-pl1-f193.google.com ([209.85.214.193]:45157 "EHLO
-        mail-pl1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728258AbfIESqR (ORCPT
+        id S1727540AbfIETYS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 5 Sep 2019 15:24:18 -0400
+Received: from mail-wr1-f49.google.com ([209.85.221.49]:36821 "EHLO
+        mail-wr1-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726008AbfIETYS (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 5 Sep 2019 14:46:17 -0400
-Received: by mail-pl1-f193.google.com with SMTP id x3so1702473plr.12;
-        Thu, 05 Sep 2019 11:46:17 -0700 (PDT)
+        Thu, 5 Sep 2019 15:24:18 -0400
+Received: by mail-wr1-f49.google.com with SMTP id y19so4081592wrd.3
+        for <linux-arm-msm@vger.kernel.org>; Thu, 05 Sep 2019 12:24:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:date:from:to:cc:subject:message-id:mime-version
-         :content-disposition:user-agent;
-        bh=siHAGnev+oRtiAEuv8gvwTdohhZkRI0o8v2bCUzHI20=;
-        b=e2FjTi/fx4FMylM53V9cXNMpMuvTBSe8SxhX7sjPf+qY0sbxiru++/CYSxkfEVJQrq
-         ykDkshMXsVlwt3OJ2SOXvLXvR2cf63jAJ6Pa5wSwewBMElrDuxvzrSbV4io/+z5CRLvS
-         3v1DF/ml/Ws9pcMgi2RYgUKenqdIKtQO2eClGPYh8fymSFVBcc4aNoAuEm7XAtXB8sk1
-         RNSIVitW6LMB9HwjjySxuaBlkLEIOi2ffDK/DVggActLLbDWBVJpnu20qP1GE4Z4rrhT
-         Sa3XXrdoAkI4q8oynEesVCfbclvtVBZQskc/kZZS9y7HjpkS1ZvLDEfK7g4gYSdpUdic
-         dQSg==
+        d=linaro.org; s=google;
+        h=from:to:cc:subject:date:message-id;
+        bh=19vbMBbLeKgWt8VsEseKuJu+9+rmeS/Lh0ZhXOFWQYc=;
+        b=j/6kUy9psCaV+YLvz8j0kAZ3/WrmOU3xyh5rDOj0TwK0TnwjLtaLil9Q+C9KpFvvVG
+         h4R8p4cZFB0U4b/PAfc9Xt4p4xJNkAIpTzL4QRjM+nkXdDcYyiwUGkr9BRJnJmO0lyZB
+         zmylqwjRd1oOrTQ1tPvwqUV3OUR5u6WA+rDyhn+A516vskkns0bEICMG787HdDEwjigd
+         +3SR4L9u7swSDpNhqxtfPsn9UFP36sehUfgx32xUcjUhX3ls4RtX+6HCZU+rkeQuILt5
+         0qlmqliIuKXWkQe+ii/gtrK+ulFQ7lEl76YfDJyqXVo4Z357rIhVFAz+mooVn5qpscmU
+         E+xA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:date:from:to:cc:subject:message-id
-         :mime-version:content-disposition:user-agent;
-        bh=siHAGnev+oRtiAEuv8gvwTdohhZkRI0o8v2bCUzHI20=;
-        b=XXRlDoqPc6S57DI5kGKXvRsJpmudCzKljGBQ+LYH7smVKsx+c79/7JYz8Wj0tGToKg
-         a2zz/iT31ZPrijHE0Nr4lnl6lDgbV0WW2yC3jWroCYdJ/vsYqgvxKWxXGxUzKrj+z9gA
-         Stupdn57eef48X+t7+pxWxgmD7KbvwxnBXBBDJsyV0NG4DtBoz6XjKw3mNhzzNECOo+w
-         g1fPbx271AjlajUc3TWrvFD9BqPC02YQm5C84W+uXL2Esmk/AC1/6vsGlzdlrxhLGsd+
-         HpPMYSElZYHP2B432tNbdCFKoIgZQ76/WpHPryHaDk6/STMC5eo0xLoEjF6VzqcLL+2l
-         k/8Q==
-X-Gm-Message-State: APjAAAU5X5Hb7PB8qOSJ+FFJ/oFb66g2gsoLgS6VqGiVvb2/SipqNPjY
-        oc5gI9P+d/PqidjsHOmCTmI=
-X-Google-Smtp-Source: APXvYqxlL0sh+nZKHN93mQwfTX1Xt8QyS1b0ABdGenndC+xrS8QZwgHiKT1l+HDUTDom6sM0kLlsfA==
-X-Received: by 2002:a17:902:e48d:: with SMTP id cj13mr4989009plb.177.1567709176693;
-        Thu, 05 Sep 2019 11:46:16 -0700 (PDT)
-Received: from localhost ([2600:1700:e321:62f0:329c:23ff:fee3:9d7c])
-        by smtp.gmail.com with ESMTPSA id z12sm3420995pfg.21.2019.09.05.11.46.15
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 05 Sep 2019 11:46:15 -0700 (PDT)
-Date:   Thu, 5 Sep 2019 11:46:14 -0700
-From:   Guenter Roeck <linux@roeck-us.net>
-To:     Jorge Ramirez-Ortiz <jorge.ramirez-ortiz@linaro.org>
-Cc:     agross@kernel.org, wim@linux-watchdog.org,
-        bjorn.andersson@linaro.org, linux-arm-msm@vger.kernel.org,
-        linux-watchdog@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v2] watchdog: qcom: support pre-timeout when the bark irq
- is available
-Message-ID: <20190905184614.GA28923@roeck-us.net>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-User-Agent: Mutt/1.5.24 (2015-08-30)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=19vbMBbLeKgWt8VsEseKuJu+9+rmeS/Lh0ZhXOFWQYc=;
+        b=QjFuCunKeBkoabY9fIsWTo3krapsS69k52eNtOIeLBaCd7M1lvCmItn41DcbJ5ykqT
+         RQ0rnlNq35x9QvKNumPai3fMZp9AWt3KpJpxbpEokltyLbkGUqRWaeYTrOtuV9P9nRmT
+         Yj72UBVzYj4d/G+FGq8EBesWjRyEFC51+RekvPlbRZ/h1fVW7/XAy5cO1ywnHrtNe8pQ
+         7gYQJ3Xh1Y09qkiO0i8iru5PSMTK3U+vPSLWVdFOeqMh+Beins6I9mbKf+UX+xa8ECK3
+         mEFjYxY57YVx+SpaKrmBwEmu9YXLgXqEif1OH1FHFiKZVQ4ABPp19D4+5JOXEV1tCwUS
+         B6Qw==
+X-Gm-Message-State: APjAAAUM7yEkrkGZ+mbleFtCMQGsXfLQSXt2Bd+K6leuP2oAs8Vj1j9k
+        4bsoJvF042q/z9+6bnLlGShjoA==
+X-Google-Smtp-Source: APXvYqyThx0kWliMdrjc7dedZ/+AhabFi7TIc04exnxhWAEkAOh7foRP8Cz8ZjjhxGJCvUyUPA4lFg==
+X-Received: by 2002:adf:ea0c:: with SMTP id q12mr4172788wrm.172.1567711455933;
+        Thu, 05 Sep 2019 12:24:15 -0700 (PDT)
+Received: from localhost.localdomain ([95.147.198.36])
+        by smtp.gmail.com with ESMTPSA id q24sm7942378wmc.3.2019.09.05.12.24.14
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 05 Sep 2019 12:24:14 -0700 (PDT)
+From:   Lee Jones <lee.jones@linaro.org>
+To:     alokc@codeaurora.org, agross@kernel.org, robh+dt@kernel.org,
+        mark.rutland@arm.com, bjorn.andersson@linaro.org, vkoul@kernel.org,
+        wsa@the-dreams.de
+Cc:     linux-i2c@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, Lee Jones <lee.jones@linaro.org>
+Subject: [RESEND v3 1/1] i2c: qcom-geni: Disable DMA processing on the Lenovo Yoga C630
+Date:   Thu,  5 Sep 2019 20:24:12 +0100
+Message-Id: <20190905192412.23116-1-lee.jones@linaro.org>
+X-Mailer: git-send-email 2.17.1
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Sep 05, 2019 at 08:12:57PM +0200, Jorge Ramirez-Ortiz wrote:
-> Use the bark interrupt as the pre-timeout notifier whenever this
-> interrupt is available.
-> 
-> By default, the pretimeout notification shall occur one second earlier
-> than the timeout.
-> 
-> Signed-off-by: Jorge Ramirez-Ortiz <jorge.ramirez-ortiz@linaro.org>
-> ---
->  drivers/watchdog/qcom-wdt.c | 63 ++++++++++++++++++++++++++++++++++---
->  1 file changed, 58 insertions(+), 5 deletions(-)
-> 
-> diff --git a/drivers/watchdog/qcom-wdt.c b/drivers/watchdog/qcom-wdt.c
-> index 7be7f87be28f..2dd36914aa82 100644
-> --- a/drivers/watchdog/qcom-wdt.c
-> +++ b/drivers/watchdog/qcom-wdt.c
-> @@ -10,6 +10,8 @@
->  #include <linux/platform_device.h>
->  #include <linux/watchdog.h>
->  #include <linux/of_device.h>
-> +#include <linux/interrupt.h>
-> +#include <linux/watchdog.h>
+We have a production-level laptop (Lenovo Yoga C630) which is exhibiting
+a rather horrific bug.  When I2C HID devices are being scanned for at
+boot-time the QCom Geni based I2C (Serial Engine) attempts to use DMA.
+When it does, the laptop reboots and the user never sees the OS.
 
-Why include linux/watchdog.h twice ?
+Attempts are being made to debug the reason for the spontaneous reboot.
+No luck so far, hence the requirement for this hot-fix.  This workaround
+will be removed once we have a viable fix.
 
->  
->  enum wdt_reg {
->  	WDT_RST,
-> @@ -41,6 +43,7 @@ struct qcom_wdt {
->  	unsigned long		rate;
->  	void __iomem		*base;
->  	const u32		*layout;
-> +	const struct device	*dev;
+Signed-off-by: Lee Jones <lee.jones@linaro.org>
+---
+ drivers/i2c/busses/i2c-qcom-geni.c | 12 ++++++++----
+ 1 file changed, 8 insertions(+), 4 deletions(-)
 
-I fail to see what this is used for.
+diff --git a/drivers/i2c/busses/i2c-qcom-geni.c b/drivers/i2c/busses/i2c-qcom-geni.c
+index a89bfce5388e..17abf60c94ae 100644
+--- a/drivers/i2c/busses/i2c-qcom-geni.c
++++ b/drivers/i2c/busses/i2c-qcom-geni.c
+@@ -355,11 +355,13 @@ static int geni_i2c_rx_one_msg(struct geni_i2c_dev *gi2c, struct i2c_msg *msg,
+ {
+ 	dma_addr_t rx_dma;
+ 	unsigned long time_left;
+-	void *dma_buf;
++	void *dma_buf = NULL;
+ 	struct geni_se *se = &gi2c->se;
+ 	size_t len = msg->len;
+ 
+-	dma_buf = i2c_get_dma_safe_msg_buf(msg, 32);
++	if (!of_machine_is_compatible("lenovo,yoga-c630"))
++		dma_buf = i2c_get_dma_safe_msg_buf(msg, 32);
++
+ 	if (dma_buf)
+ 		geni_se_select_mode(se, GENI_SE_DMA);
+ 	else
+@@ -394,11 +396,13 @@ static int geni_i2c_tx_one_msg(struct geni_i2c_dev *gi2c, struct i2c_msg *msg,
+ {
+ 	dma_addr_t tx_dma;
+ 	unsigned long time_left;
+-	void *dma_buf;
++	void *dma_buf = NULL;
+ 	struct geni_se *se = &gi2c->se;
+ 	size_t len = msg->len;
+ 
+-	dma_buf = i2c_get_dma_safe_msg_buf(msg, 32);
++	if (!of_machine_is_compatible("lenovo,yoga-c630"))
++		dma_buf = i2c_get_dma_safe_msg_buf(msg, 32);
++
+ 	if (dma_buf)
+ 		geni_se_select_mode(se, GENI_SE_DMA);
+ 	else
+-- 
+2.17.1
 
->  };
->  
->  static void __iomem *wdt_addr(struct qcom_wdt *wdt, enum wdt_reg reg)
-> @@ -54,15 +57,37 @@ struct qcom_wdt *to_qcom_wdt(struct watchdog_device *wdd)
->  	return container_of(wdd, struct qcom_wdt, wdd);
->  }
->  
-> +static inline int qcom_wdt_enable(struct qcom_wdt *wdt)
-> +{
-> +	/* enable the bark interrupt */
-> +	if (wdt->wdd.info->options & WDIOF_PRETIMEOUT)
-
-This needs to check if pretimeout has been enabled
-(wdt.pretimeout != 0), not if pretimeout functionality is
-supported.
-
-> +		return 3;
-
-I would suggest to use defines for the bits.
-
-> +
-> +	return 1;
-> +}
-> +
-> +static irqreturn_t qcom_wdt_irq(int irq, void *cookie)
-> +{
-> +	struct watchdog_device *wdd = (struct watchdog_device *) cookie;
-
-Extra space before 'cookie'.
-
-> +
-> +	watchdog_notify_pretimeout(wdd);
-> +
-> +	return IRQ_HANDLED;
-> +}
-> +
->  static int qcom_wdt_start(struct watchdog_device *wdd)
->  {
->  	struct qcom_wdt *wdt = to_qcom_wdt(wdd);
-> +	unsigned int bark = wdd->pretimeout;
-> +
-> +	if (!(wdd->info->options & WDIOF_PRETIMEOUT))
-> +		bark = wdd->timeout;
-
-This is not the deciding factor. The deciding factor
-is wdd->pretimeout == 0. Also, per API, pretimeout is
-the time difference to 'timeout', not an absolute time.
-
->  
->  	writel(0, wdt_addr(wdt, WDT_EN));
->  	writel(1, wdt_addr(wdt, WDT_RST));
-> -	writel(wdd->timeout * wdt->rate, wdt_addr(wdt, WDT_BARK_TIME));
-> +	writel(bark * wdt->rate, wdt_addr(wdt, WDT_BARK_TIME));
->  	writel(wdd->timeout * wdt->rate, wdt_addr(wdt, WDT_BITE_TIME));
-> -	writel(1, wdt_addr(wdt, WDT_EN));
-> +	writel(qcom_wdt_enable(wdt), wdt_addr(wdt, WDT_EN));
->  	return 0;
->  }
->  
-> @@ -86,9 +111,18 @@ static int qcom_wdt_set_timeout(struct watchdog_device *wdd,
->  				unsigned int timeout)
->  {
->  	wdd->timeout = timeout;
-> +
->  	return qcom_wdt_start(wdd);
-
-Side note: This is wrong. Setting the timeout should not unconditionally
-start the watchdog. This should be something like
-
-	if (watchdog_active(wdd))
-		qcom_wdt_start(wdd);
-	return 0;
-
->  }
->  
-> +static int qcom_wdt_set_pretimeout(struct watchdog_device *wdd,
-> +				   unsigned int timeout)
-> +{
-> +	wdd->pretimeout = timeout;
-> +
-> +	return 0;
-> +}
-> +
-
-Per API:
-
-"A value of 0 disables pretimeout notification."
-
-Also, qcom_wdt_start() has to be called if the watchdog is running.
-
->  static int qcom_wdt_restart(struct watchdog_device *wdd, unsigned long action,
->  			    void *data)
->  {
-> @@ -105,7 +139,7 @@ static int qcom_wdt_restart(struct watchdog_device *wdd, unsigned long action,
->  	writel(1, wdt_addr(wdt, WDT_RST));
->  	writel(timeout, wdt_addr(wdt, WDT_BARK_TIME));
->  	writel(timeout, wdt_addr(wdt, WDT_BITE_TIME));
-> -	writel(1, wdt_addr(wdt, WDT_EN));
-> +	writel(qcom_wdt_enable(wdt), wdt_addr(wdt, WDT_EN));
->  
->  	/*
->  	 * Actually make sure the above sequence hits hardware before sleeping.
-> @@ -121,11 +155,12 @@ static const struct watchdog_ops qcom_wdt_ops = {
->  	.stop		= qcom_wdt_stop,
->  	.ping		= qcom_wdt_ping,
->  	.set_timeout	= qcom_wdt_set_timeout,
-> +	.set_pretimeout	= qcom_wdt_set_pretimeout,
->  	.restart        = qcom_wdt_restart,
->  	.owner		= THIS_MODULE,
->  };
->  
-> -static const struct watchdog_info qcom_wdt_info = {
-> +static struct watchdog_info qcom_wdt_info = {
->  	.options	= WDIOF_KEEPALIVEPING
->  			| WDIOF_MAGICCLOSE
->  			| WDIOF_SETTIMEOUT
-> @@ -146,7 +181,7 @@ static int qcom_wdt_probe(struct platform_device *pdev)
->  	struct device_node *np = dev->of_node;
->  	const u32 *regs;
->  	u32 percpu_offset;
-> -	int ret;
-> +	int irq, ret;
->  
->  	regs = of_device_get_match_data(dev);
->  	if (!regs) {
-> @@ -210,6 +245,7 @@ static int qcom_wdt_probe(struct platform_device *pdev)
->  	wdt->wdd.max_timeout = 0x10000000U / wdt->rate;
->  	wdt->wdd.parent = dev;
->  	wdt->layout = regs;
-> +	wdt->dev = &pdev->dev;
->  
->  	if (readl(wdt_addr(wdt, WDT_STS)) & 1)
->  		wdt->wdd.bootstatus = WDIOF_CARDRESET;
-> @@ -222,6 +258,23 @@ static int qcom_wdt_probe(struct platform_device *pdev)
->  	wdt->wdd.timeout = min(wdt->wdd.max_timeout, 30U);
->  	watchdog_init_timeout(&wdt->wdd, 0, dev);
->  
-> +	irq = platform_get_irq(pdev, 0);
-> +	if (irq >= 0) {
-> +		/* enable the pre-timeout notification */
-> +		qcom_wdt_info.options |= WDIOF_PRETIMEOUT;
-> +
-> +		ret = devm_request_irq(&pdev->dev, irq, qcom_wdt_irq,
-
-Any reason for using &pdev->dev instead of dev ?
-
-> +				       IRQF_TRIGGER_RISING, "wdog_bark",
-> +				       &wdt->wdd);
-> +		if (ret) {
-> +			dev_err(&pdev->dev, "failed to request irq\n");
-
-Same here. Also, at least nominally, platform_get_irq() 
-can return -EPROBE_DEFER. The error message seems undesirable
-in that situation.
-
-> +			return ret;
-> +		}
-> +	}
-> +
-> +	if (qcom_wdt_info.options & WDIOF_PRETIMEOUT)
-> +		wdt->wdd.pretimeout = wdt->wdd.timeout - 1;
-
-Per API:
-
-"The timeout value is not an absolute time, but the number of
-  seconds before the actual timeout would happen"
-
-Also, why set this here with an extra if and not above where
-WDIOF_PRETIMEOUT is set ?
-
-> +
->  	ret = devm_watchdog_register_device(dev, &wdt->wdd);
->  	if (ret)
->  		return ret;
-> -- 
-> 2.23.0
-> 
