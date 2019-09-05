@@ -2,89 +2,91 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 66341AAB4C
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 Sep 2019 20:40:28 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 95FA0AAB50
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 Sep 2019 20:42:00 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2388225AbfIESkY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 5 Sep 2019 14:40:24 -0400
-Received: from mout.gmx.net ([212.227.15.19]:48411 "EHLO mout.gmx.net"
+        id S1732133AbfIESl7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 5 Sep 2019 14:41:59 -0400
+Received: from mout.gmx.net ([212.227.15.18]:33667 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1732133AbfIESkY (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 5 Sep 2019 14:40:24 -0400
+        id S1732033AbfIESl7 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 5 Sep 2019 14:41:59 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1567708792;
-        bh=bhJITHNaDSNk82tHbXwjAU2m4OSwrTVq9Dh6XgoEVgM=;
+        s=badeba3b8450; t=1567708872;
+        bh=M1UGnPJJ+2VuEq33S0TdraaobxmDCqcrUAEKeQ8qQUs=;
         h=X-UI-Sender-Class:Subject:To:Cc:References:From:Date:In-Reply-To;
-        b=l5gka5lTwefMebb8U4HzIol6vblHmV57FMzes8yN8THNc2vXcQcJZM5dhzYH/tQK4
-         Rm3QwWOLfBaeoh2LLT7euoAQqboVIkauh19AbkTP6fIUnF2EtRFEnmRjZxtUUyjeWW
-         qjS0cTFWD7MMMZtMvn1Fe9ouR8oBJi5t0xopZDuk=
+        b=ZUbcaI0T/PtTrufTRwK68S574RNG0IIdnpXj1FAIZ5Hk2GJ9INr7/CPWoXQf98mlD
+         xqb1bKKYrkuiba88qXFMUIdcc0HdiT3JpXBB3hoJKof64v9bk714UXkxmhiRfaSz0T
+         7fTJq/e15prco2OCp2oJY6DJpfk8h7K9eVpIydPk=
 X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [192.168.1.162] ([37.4.249.90]) by mail.gmx.com (mrgmx001
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0MMCFR-1i4Ygs4Bw5-00859O; Thu, 05
- Sep 2019 20:39:52 +0200
-Subject: Re: [PATCH -next 06/36] spi: bcm2835: use
+Received: from [192.168.1.162] ([37.4.249.90]) by mail.gmx.com (mrgmx002
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0M9Jss-1i125G274g-00CkFc; Thu, 05
+ Sep 2019 20:41:12 +0200
+Subject: Re: [PATCH -next 02/15] thermal: bcm2835: use
  devm_platform_ioremap_resource() to simplify code
-To:     YueHaibing <yuehaibing@huawei.com>, broonie@kernel.org,
-        f.fainelli@gmail.com, rjui@broadcom.com, sbranden@broadcom.com,
-        eric@anholt.net, shc_work@mail.ru, agross@kernel.org,
-        khilman@baylibre.com, matthias.bgg@gmail.com, shawnguo@kernel.org,
-        s.hauer@pengutronix.de, kernel@pengutronix.de, festevam@gmail.com,
-        linux-imx@nxp.com, avifishman70@gmail.com, tmaimon77@gmail.com,
-        tali.perry1@gmail.com, venture@google.com, yuenn@google.com,
-        benjaminfair@google.com, kgene@kernel.org, krzk@kernel.org,
-        andi@etezian.org, palmer@sifive.com, paul.walmsley@sifive.com,
-        baohua@kernel.org, mripard@kernel.org, wens@csie.org,
-        ldewangan@nvidia.com, thierry.reding@gmail.com,
-        jonathanh@nvidia.com, yamada.masahiro@socionext.com,
-        michal.simek@xilinx.com
-Cc:     bcm-kernel-feedback-list@broadcom.com, linux-spi@vger.kernel.org,
+To:     YueHaibing <yuehaibing@huawei.com>, miquel.raynal@bootlin.com,
+        rui.zhang@intel.com, edubezval@gmail.com,
+        daniel.lezcano@linaro.org, amit.kucheria@verdurent.com,
+        eric@anholt.net, f.fainelli@gmail.com, rjui@broadcom.com,
+        sbranden@broadcom.com, mmayer@broadcom.com,
+        computersforpeace@gmail.com, gregory.0xf0@gmail.com,
+        matthias.bgg@gmail.com, agross@kernel.org, heiko@sntech.de,
+        mcoquelin.stm32@gmail.com, alexandre.torgue@st.com,
+        marc.w.gonzalez@free.fr, mans@mansr.com, talel@amazon.com,
+        jun.nie@linaro.org, shawnguo@kernel.org, phil@raspberrypi.org,
+        gregkh@linuxfoundation.org, david.hernandezsanchez@st.com,
+        horms+renesas@verge.net.au, wsa+renesas@sang-engineering.com
+Cc:     bcm-kernel-feedback-list@broadcom.com, linux-pm@vger.kernel.org,
         linux-kernel@vger.kernel.org, linux-rpi-kernel@lists.infradead.org,
         linux-arm-kernel@lists.infradead.org,
-        linux-arm-msm@vger.kernel.org, linux-amlogic@lists.infradead.org,
-        linux-mediatek@lists.infradead.org, openbmc@lists.ozlabs.org,
-        linux-samsung-soc@vger.kernel.org, linux-riscv@lists.infradead.org,
-        linux-tegra@vger.kernel.org
-References: <20190904135918.25352-1-yuehaibing@huawei.com>
- <20190904135918.25352-7-yuehaibing@huawei.com>
+        linux-mediatek@lists.infradead.org, linux-arm-msm@vger.kernel.org,
+        linux-rockchip@lists.infradead.org,
+        linux-stm32@st-md-mailman.stormreply.com
+References: <20190904122939.23780-1-yuehaibing@huawei.com>
+ <20190904122939.23780-3-yuehaibing@huawei.com>
 From:   Stefan Wahren <wahrenst@gmx.net>
-Message-ID: <c9c6a9ca-5725-513f-2ef3-734ecf0878b8@gmx.net>
-Date:   Thu, 5 Sep 2019 20:39:45 +0200
+Message-ID: <ba19c083-3c86-eaeb-c071-ea96c2e0dd6e@gmx.net>
+Date:   Thu, 5 Sep 2019 20:41:08 +0200
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
  Thunderbird/60.8.0
 MIME-Version: 1.0
-In-Reply-To: <20190904135918.25352-7-yuehaibing@huawei.com>
+In-Reply-To: <20190904122939.23780-3-yuehaibing@huawei.com>
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: 7bit
 Content-Language: en-US
-X-Provags-ID: V03:K1:PJZW3p24Sgs9pPgM0nquSd55ClUOxvx8h/ANFNBZrD5MaK8bvKD
- dHfxSFK5ClXmMrJSUR8lOZtZfJA56JgmfFkwVv7amqZJ26WGT9rJFbEFaH/uolq/SSk3/Ik
- CaU2qBvQ+UiBNHCAXrwBe+mgP4L5nXoKh99c43NCmIKAYgIHM3GmDJzctwbGc8axkanZrqb
- kItlAw0DrA85Zrq1bckLw==
+X-Provags-ID: V03:K1:WOmrGoYt2aZLE0c0r9K+/VJMXUNzvW/kX7vmvJXlWPXzYW5NR9J
+ luyrP+5HUxX+Ik46iIlejCplMa2am5XS0NfLLQ7ZhlXmasy18+i/OA5VoR5aEu1/yVdmVn8
+ AN3N1d8lbnA4HPsgXXRyGpNFweFZlAReZpmXxwXL0XGXKC31gFW9I6jO2SraUQgZg8eu25p
+ foqc0kdcwKEMp61BV4kvQ==
 X-Spam-Flag: NO
-X-UI-Out-Filterresults: notjunk:1;V03:K0:anpvg5mTIZw=:5SNYFyWX4G6ecfNsrbwtlx
- /TNEmn+IvOxzbLdzuF8xREYo/Mb0quJpFUk4fLZIaDZRc/+F/YFcML45laZ3kAnjx4pBNoRjO
- FaTTfRdwtSx5/5J9nYb0tB67pARyFpiLNRZHPeVLgFdUlMdrfx0AViG2lcR1WyrQu8EmG0w66
- FupD6Vsv3CPNx5UyEqdvrM3FS14URpj0UbKkRqhhmqSsGNa/m8W9Eot0yghivFIPbC/W+4n4o
- jaTEuayyGrRuIkPrylx/NzddppI6WbP3xHMIYbF4TaVS3IkR+abQ7z50D/5xVjLSQDpKFa57B
- ckqCfAhpYRsoKkvJVpw/+ipQjDIAF41qmM6g4CRaGbxWun3LwiZB90S2AOGePNA4ppJ7aK6Og
- 93MNpeQDqmJC4jF40SzBiV5bGYKY9t+sQ2mJ9B24d0iAjzEDa/g0K89frdKWOack+tm82B6gc
- ltMtrA0QSll5wIayinj6TBLy4S3mmBODD3LFeA67qATaC6MCSj69O4LuMtMpKbtfgth06HEMu
- YJ0FQhW4KW/0YU98OTNbUKqXrcY6VxuTAlHxN5kzpG2kcl73oo3uuVp/pW874PR2mqKpBYkAF
- o17lCCG8Hmrgnk+CY4zH2ZucP3GbNBJ3NPZXroU2mZYq+cy/1ZtQEuBRWNr5TfodKF+u15XKj
- cu+WWfsEaKkKsoLiS2dJnJ8c+Lwnn9jECz1wsbWKv4phl7tgWxwFlgPe/pNTVpZ++TjJKuCsg
- T+AEnJ5C7cuUvMW8Uy1C1xK5ZCiOQe9jMAtPKAZu237ChXgkj8wrwlFue2DSDeXfP9j+jtLTA
- 0NhL8w0Uq3LMDQW6S8dUioyZ5pjNAaSxp88yWp0qceEyktCtxOL2hmy30iJPAB8V3qJyGe/Hs
- TDQiNNZqGcJ/LQ1EfJTKbn1KwFAg40weTKSTQFAHoG6T1sCUfd5POPN71s+ZYacM5pSDbzqBF
- deyy1C9MIYl0iKHg8Ajzk5Mhyl3sTIi4XtSYvss9RewaUBcYedvXA0rnnK1fxdjZrVzQAFLD4
- LAuNFdEbCzupNWUGMAeZYtJV1B6BhPD7j6jNYoXOerQckMjA6Ke57e0yNkddTN3RCspo2hPyl
- tvCoWGf7hkWKnybbkWmAhueCK2DCj42Dm/1l5jozBLE3rORYfNVAq64ralDwip1IBHAaf3bqR
- seRgj/4/fnfu787yaeEO9o1oR+2J5hYn41YKsgVXMUjRfztTZ70iv+mH+1iD3m/vETnZk=
+X-UI-Out-Filterresults: notjunk:1;V03:K0:nkW495xtuv4=:tTHYYykyc8MeFH8VYXAtPV
+ 1oz89eAs6J4EKmXGB8jywzeB9Rr+HNFXREs3+bl+7MUrhT6Tb5vvEZikpkfN7YcTYBM8A3ZVH
+ n4yQa0u0tAnwQxNBcgEVMVosn+/mze41K8we0bObWZxZnDx2pz3YHKwLh/kXBAuFm7+0Rk0Vz
+ yZS/73BjtleldpUL66iGqoS9Kj+dBB99d7VSTXyev99g2bS5AtTKgTzYAA9qHIzpXlHp1Snis
+ PEOX6R6c/BcoM0LLyefpTFEzY1NY3QGc+6StuImf16b+OmrPPtW8D//puDVdc/ayO1z9cDfeJ
+ 2PL2gEH1o2MNxNBYTWlBwD8J1tB2j4dcJRftBAnkaqQ85Gnn8YFcAPxPDuXAvIsqLzV5G839e
+ t3N7LgD6zsHeAv9bVTecZjXBHpH+dyf2hYb76M23xIsMwiP5LM3kDJiED61MjNEaWcX8zsGfm
+ RP9/VZQ1volYqm1DX5jdkWLrIHvMus+bGRoZLYL2Q9xS0OD/7faZ7Od2MonlHbOd/NL+MJ3aS
+ 5RkRJ+DxwonIs2MCGlaOei4aS36r81FmO4qEESDkxqF7tpHww+f3zGTyKOB3NihhKihqYzL13
+ pQeW9GaJIbB8jiwxFakYjSp6Ti/3DZcmc/zXgV5bm4FDgyFgUYqnvUq3AK21ur7WXKI5fAqot
+ Xp+FknRGP5lTeyZZ8CsTu46mC2ZzJe50IK5pF1sJhsgLnol8Y4rFGBC1lImxkwgaRFmMvOeRg
+ 6p+CY4LmFMoUcXfgsv0n8F2h8jtRus6M6jswi9Gt6eu6xOMsMZF1AaYL1Pa6igzbvRrJfwzU3
+ yvScYds6ExX42p5vtUeswaXEf/dgE7K2xM8NN1px/JV4fBBYzPPjOzmp/BbOs9ZB0h6Kavpz2
+ XAzYn0SJ3Kktzm96QDIc1dqXs9MM/Zh8VYzo8Lc1dT2USxJ6AR+QdDrz6sYDuqhA5BvZrwKSy
+ 1Hki0CKIATnfugQVT9araYuKn4Cva/enmNtmVQepcuvmixrpK5w/zayiST5ToOI9RpIl/vvB1
+ S2oeaSoQM7cpO2Yea2NVgSizipQACekJixPec4JSuy+Yu0VZ9pg7o8EHw76mY2MG+r4CsH0qs
+ B+wYJGsCbNNnemavOVy5pwJLAavhQyNzEzkaNeSVbJ8Radnx6JSvwpUHT0j6Z9CbiyqktJXjm
+ WAkFtcjYEqCIzTorRGlhm1s0kDMdvWQ48irGv4jdgqqjV0BOUzFd1PFWfxdVIEj2oCItAhZRO
+ +wNSe5aKqpNdFgJlAHm64qfczlAf/2dRkGgFKifPkw02mAE78ADOPFEIwwUDxgy7aWF9pxBsk
+ BkFDWVHIRO1pQHw1LJYrmWliprIUaSrvL2WGAhCqiZ5p3ie7wRrL1uTXOP5q1jDcd60a/ptQS
+ HvdmAdVPs6xsOBeK0uTBLtNTJ7JT6bTKcckdOw/FyjzI0O9H1+fEAqb8MkMB1wRxp5QtVQcZe
+ nWoFCFDA87OryLqTPF6kHOtM6PdhH/EI8=
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Am 04.09.19 um 15:58 schrieb YueHaibing:
+Am 04.09.19 um 14:29 schrieb YueHaibing:
 > Use devm_platform_ioremap_resource() to simplify the code a bit.
 > This is detected by coccinelle.
 >
