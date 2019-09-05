@@ -2,70 +2,72 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 5A7F2A9E5D
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 Sep 2019 11:28:39 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id F3614A9E74
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 Sep 2019 11:34:49 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731679AbfIEJ2V (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 5 Sep 2019 05:28:21 -0400
-Received: from mail-wr1-f66.google.com ([209.85.221.66]:33844 "EHLO
+        id S2387468AbfIEJet (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 5 Sep 2019 05:34:49 -0400
+Received: from mail-wr1-f66.google.com ([209.85.221.66]:36753 "EHLO
         mail-wr1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730485AbfIEJ2U (ORCPT
+        with ESMTP id S1732503AbfIEJet (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 5 Sep 2019 05:28:20 -0400
-Received: by mail-wr1-f66.google.com with SMTP id s18so1892121wrn.1
-        for <linux-arm-msm@vger.kernel.org>; Thu, 05 Sep 2019 02:28:18 -0700 (PDT)
+        Thu, 5 Sep 2019 05:34:49 -0400
+Received: by mail-wr1-f66.google.com with SMTP id y19so1907757wrd.3
+        for <linux-arm-msm@vger.kernel.org>; Thu, 05 Sep 2019 02:34:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:content-transfer-encoding:in-reply-to
          :user-agent;
-        bh=ZSFUJO3Cl5xfTH0Oz2n3wB3n0rI8IaAXjOBMneGW988=;
-        b=pfkV95Bv0UZfPijf04Lw+S5gWyPrZBf6nMW16xOvbNgBkOqbuTXKqhjFYAv9E+FprC
-         642QNfMlNoxFq2F0pUWRVLDLWtQL7aLFtrD6IJKWfeyGn3AkKPJwPOFVJ8qunlmtFhMp
-         GKKYEIOvFTsJKHXCODaxCEyFcLgMBLlDjFYCqomKC9NKxAyn9Q72U1ovQrgfqEmTUG8o
-         cYVriYNXSKLlGpnAn4pKQiheoN5zetXQ5lk4piehoTmcslfppIi5ZIQJdodEIIMRMZTE
-         uvjWfyt0nD1xjB3h3EBMWIFAJvJyWlLFfsoGRS4tTUQzwhypCN4lrWEl8Ms7o4ipyBNB
-         Yn4g==
+        bh=pXNJ5zxAZdffoIhjgeNEzW79E8dcv18vdpXa7euQmqw=;
+        b=sIWDPSa762NqP0jAqYvtDgXKYGJDvi3INGD/xgBdvJFSKvCGi0oicG9EtoYeblRFIH
+         VbYG3uNcqdBzCiaVs5YAHpMFhVsfpQ5Y7jzBuGrP5uP5ndrIhK8RvE5YB+TqjCT/Pqee
+         o2FnNt245G4HhUbLeNVwmiC0gfkWavIs1JKKYUG+hVq/G+eqJczbl1u7eBjWvPiOsGRE
+         qTD0JVm4lLDxG79xIOJhVLLVOvDQPs+hAH++0sIRB2xNadNOmlTg9VP8ih5lUr1YUUTP
+         OP4YiTMiqAe4xI/yI2VK1PRF7lq9AyltPtunxBiWSqv06+MVn60oLAw8qnWkclrJnzWI
+         rbqA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:content-transfer-encoding
          :in-reply-to:user-agent;
-        bh=ZSFUJO3Cl5xfTH0Oz2n3wB3n0rI8IaAXjOBMneGW988=;
-        b=I3TlYpea6rtjb+BuHREUz22ksxvUzVfN7WZrhpUzP+Kl1eYAsmoYSvIe6I/lA6EoNY
-         +l99TyCt0p36U/G9qn4lrnb9NrW9r83r5zVKFXhHYES090yM7CkH6lymyzwfc93xcX6a
-         fuz6Vy4Tvt70cAW24gNf+BCKrvdK1YDXYJsWxhZ2Tj7Zklk7zM1Y19y+7fum+Jory3Dz
-         9RoA63V5liHXCc1dJR4G1/A+xUy8Ci2Ke6z4Vknu7ElAHdjUWzOmjV7Au+cwU3pijvSb
-         AY5DcD1ddEDo4F1ABjE2HX9O/b0zTQK4CJYDRQX27REjvpLonUm8ENyhdxZsJCzKrJYD
-         s/QA==
-X-Gm-Message-State: APjAAAVoxd2RlwqMQ/+pwj5pFV2kBeE8i0ZatRBuoxiAoVqanefwzFDZ
-        /ckyrXPqpDLgXZmVXQ54lbFaiA==
-X-Google-Smtp-Source: APXvYqzXqv86R+TXN5EBeFSzsw4TbvqcdMpFUJoJuOdwhoetcsejRn2RxvT5UuPS+bGgwEyO0gPGzw==
-X-Received: by 2002:adf:e7cc:: with SMTP id e12mr1706018wrn.299.1567675698218;
-        Thu, 05 Sep 2019 02:28:18 -0700 (PDT)
+        bh=pXNJ5zxAZdffoIhjgeNEzW79E8dcv18vdpXa7euQmqw=;
+        b=rMJvd4w7u5Lhi2Sr1p5aWOeGTsGQKg3UuHEjxMNMAIjUCOlTeN6nz6AMw1rzPxAoqp
+         wOIeFZb4PLvp7QHWp+5oFDvHUAhqfRn2dqm7Cte9hU2oLu9m5sVxEqL5KMudpgis+rCJ
+         vT61ln5oIU9NxDbSbkbB4pYs5D+4LTLIF+iV0CN2XQCEDPzZoEM3IG9LXZpcxdKysIor
+         7iZIzogEETEB0GuJIwi3hGrAXGGdFNzo3JypZMOqOhD825dpcK3MzdJ258zEvOwbkwEo
+         ANCVfYLXbXby02/MnTTdzd5p7bs87rs792OG0Cx8TNu3ut8G5NbyQB9tmgXZ5mp+OS87
+         rK0w==
+X-Gm-Message-State: APjAAAWOcm3JmOXUQ0WX4NX6aPLmirhI0BHFGeI1rI8n57HRP6Qzcy0O
+        oPcOluHcEgz5dGtHbaczvBxfqg==
+X-Google-Smtp-Source: APXvYqz+PlZ2++c+1pdnHHC8kczGTCTfRXI8OA/X49x2MsnB2O2SZaoocQz3z6r0C4XzJrFHZuK99g==
+X-Received: by 2002:a5d:4247:: with SMTP id s7mr1786602wrr.110.1567676086829;
+        Thu, 05 Sep 2019 02:34:46 -0700 (PDT)
 Received: from dell ([95.147.198.36])
-        by smtp.gmail.com with ESMTPSA id t7sm1796620wrr.37.2019.09.05.02.28.17
+        by smtp.gmail.com with ESMTPSA id o9sm2221110wrh.46.2019.09.05.02.34.45
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Thu, 05 Sep 2019 02:28:17 -0700 (PDT)
-Date:   Thu, 5 Sep 2019 10:28:16 +0100
+        Thu, 05 Sep 2019 02:34:46 -0700 (PDT)
+Date:   Thu, 5 Sep 2019 10:34:44 +0100
 From:   Lee Jones <lee.jones@linaro.org>
 To:     Wolfram Sang <wsa@the-dreams.de>
-Cc:     alokc@codeaurora.org, agross@kernel.org, robh+dt@kernel.org,
-        mark.rutland@arm.com, bjorn.andersson@linaro.org,
+Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>, alokc@codeaurora.org,
+        agross@kernel.org, robh+dt@kernel.org, mark.rutland@arm.com,
         linux-i2c@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, vkoul@kernel.org,
-        linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 2/2] i2c: qcom-geni: Provide an option to disable DMA
+        devicetree@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+        linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 1/2] i2c: qcom-geni: Provide an option to select FIFO
  processing
-Message-ID: <20190905092816.GD26880@dell>
-References: <20190905075213.13260-1-lee.jones@linaro.org>
- <20190905075213.13260-2-lee.jones@linaro.org>
- <20190905091800.GD1157@kunai>
+Message-ID: <20190905093444.GE26880@dell>
+References: <20190904113613.14997-1-lee.jones@linaro.org>
+ <20190904203548.GC580@tuxbook-pro>
+ <20190904212337.GF23608@ninjato>
+ <20190905071103.GX26880@dell>
+ <20190905091617.GC1157@kunai>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20190905091800.GD1157@kunai>
+In-Reply-To: <20190905091617.GC1157@kunai>
 User-Agent: Mutt/1.9.4 (2018-02-28)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
@@ -73,68 +75,71 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 On Thu, 05 Sep 2019, Wolfram Sang wrote:
-
+> > > It looks like a workaround to me. It would be interesting to hear which
+> > > I2C client breaks with DMA and if it's driver can't be fixed somehow
+> > > instead. But even if we agree on a workaround short term, adding a
 > 
-> > Fixes: 8bc529b25354 ("soc: qcom: geni: Add support for ACPI")
-> 
-> Are you sure? From visual inspection, I don't see a correlation between
-> this commit and the fix here.
+> So, are there investigations running why this reboot happens?
 
-This patch should have been part of the commit, or at the very least,
-part of the set, alluded to above.  Unfortunately, I was carrying
-Bjorn's hack which simply returned early from geni_se_rx_dma_prep()
-with an error, so it masked the issue.
+Yes, but they have been running for months, literally.
 
-> > Signed-off-by: Lee Jones <lee.jones@linaro.org>
-> > Reviewed-by: Vinod Koul <vkoul@kernel.org>
-> > ---
-> >  drivers/i2c/busses/i2c-qcom-geni.c | 14 ++++++++++----
-> >  1 file changed, 10 insertions(+), 4 deletions(-)
+Unfortunately, since these are production level platforms, all of the
+usual low-level debugging avenues (JTAG) have been closed off.  Also,
+only a very small number of people have access to documentation, but
+even those who are in possession are stumped.
+
+Andy Gross did have one idea as to what might be happening, but it
+turned out to be a red herring.
+
+> > > Is there no other way to disable DMA which is local to this driver so we
+> > > can easily revert the workaround later?
 > > 
-> > diff --git a/drivers/i2c/busses/i2c-qcom-geni.c b/drivers/i2c/busses/i2c-qcom-geni.c
-> > index a89bfce5388e..8822dea82980 100644
-> > --- a/drivers/i2c/busses/i2c-qcom-geni.c
-> > +++ b/drivers/i2c/busses/i2c-qcom-geni.c
-> > @@ -353,13 +353,16 @@ static void geni_i2c_tx_fsm_rst(struct geni_i2c_dev *gi2c)
-> >  static int geni_i2c_rx_one_msg(struct geni_i2c_dev *gi2c, struct i2c_msg *msg,
-> >  				u32 m_param)
-> >  {
-> > +	struct device_node *np = gi2c->se.dev->of_node;
-> >  	dma_addr_t rx_dma;
-> >  	unsigned long time_left;
-> > -	void *dma_buf;
-> > +	void *dma_buf = NULL;
-> >  	struct geni_se *se = &gi2c->se;
-> >  	size_t len = msg->len;
-> >  
-> > -	dma_buf = i2c_get_dma_safe_msg_buf(msg, 32);
-> > +	if (!of_property_read_bool(np, "qcom,geni-se-no-dma"))
-> > +		dma_buf = i2c_get_dma_safe_msg_buf(msg, 32);
-> > +
-> >  	if (dma_buf)
-> >  		geni_se_select_mode(se, GENI_SE_DMA);
-> >  	else
-> > @@ -392,13 +395,16 @@ static int geni_i2c_rx_one_msg(struct geni_i2c_dev *gi2c, struct i2c_msg *msg,
-> >  static int geni_i2c_tx_one_msg(struct geni_i2c_dev *gi2c, struct i2c_msg *msg,
-> >  				u32 m_param)
-> >  {
-> > +	struct device_node *np = gi2c->se.dev->of_node;
-> >  	dma_addr_t tx_dma;
-> >  	unsigned long time_left;
-> > -	void *dma_buf;
-> > +	void *dma_buf = NULL;
-> >  	struct geni_se *se = &gi2c->se;
-> >  	size_t len = msg->len;
-> >  
-> > -	dma_buf = i2c_get_dma_safe_msg_buf(msg, 32);
-> > +	if (!of_property_read_bool(np, "qcom,geni-se-no-dma"))
-> > +		dma_buf = i2c_get_dma_safe_msg_buf(msg, 32);
-> > +
-> >  	if (dma_buf)
-> >  		geni_se_select_mode(se, GENI_SE_DMA);
-> >  	else
+> > This is the most local low-impact solution (nomenclature aside).
+> 
+> I disagree. You could use of_machine_is_compatible() and disable DMA for
+> that machine. Less impact because we save the workaround binding.
 
+That could also work.
 
+> > The beautiful thing about this approach is that, *if* the Geni SE DMA
+> 
+> I'd say 'advantage' instead of 'beautiful' ;)
+
+Okay, "the advantage thing about ..." ;)
+
+> > ever starts working, we can remove the C code and any old properties
+> > left in older DTs just become NOOP.  Older kernels with newer DTs
+> > (less of a priority) *still* won't work, but they don't work now
+> > anyway.
+> 
+> Which is a clear disadvantage of that solution. It won't fix older
+> kernels. My suggestion above should fix them, too.
+
+Not sure how this is possible.  Unless you mean LTS?
+
+> > The offending line can be found at [0].  There is no obvious bug to
+> > fix and this code obviously works well on some of the hardware
+> > platforms using it.  But on our platform (Lenovo Yoga C630 - QCom
+> > SMD850) that final command, which initiates the DMA transaction, ends
+> > up rebooting the machine.
+> 
+> Unless we know why the reboot happens on your platform, I'd be careful
+> with saying "work obviously well" on other platforms.
+
+Someone must have tested it?  Surely ... ;)
+
+> > With regards to the nomenclature, my original suggestion was
+> > 'qcom,geni-se-no-dma'.  Would that better suit your request?
+> 
+> My suggestion:
+> 
+> For 5.3, use of_machine_is_compatible() and we backport that. For later,
+> try to find out the root cause and fix it. If that can't be done, try to
+> set up a generic "disable-dma" property and use it.
+> 
+> What do you think about that?
+
+Sounds okay to me.  Let me code that up.
 
 -- 
 Lee Jones [李琼斯]
