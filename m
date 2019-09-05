@@ -2,93 +2,92 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 23613AA5BB
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 Sep 2019 16:26:52 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 51601AA5C5
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 Sep 2019 16:27:27 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2388050AbfIEO0v (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 5 Sep 2019 10:26:51 -0400
-Received: from mail-io1-f66.google.com ([209.85.166.66]:46654 "EHLO
-        mail-io1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729053AbfIEO0v (ORCPT
+        id S2388943AbfIEO10 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 5 Sep 2019 10:27:26 -0400
+Received: from mx08-00178001.pphosted.com ([91.207.212.93]:33200 "EHLO
+        mx07-00178001.pphosted.com" rhost-flags-OK-OK-OK-FAIL)
+        by vger.kernel.org with ESMTP id S1726067AbfIEO10 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 5 Sep 2019 10:26:51 -0400
-Received: by mail-io1-f66.google.com with SMTP id x4so5207494iog.13;
-        Thu, 05 Sep 2019 07:26:50 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=q+357KwvNyY+wJyemee0wqrc8e6AXwO2zGyzu6liuT8=;
-        b=ZXx8UvfzqCNfutH7x8/UBhR2N6yi7+q+BF5eMZ7i4fCdz+eFMVy8WHsWZd7lqNobgf
-         XTIycr3EdIGl9yBCPLJ0LwDWslY0X+If2OQsEtJoaiMvj2X+6YZu+MTSJ0V1FaBfyPpj
-         WRXMzgSyz7wEy+lmnIQ8rqI0iUA83IIuWcbiH4vS8UswSEoC193CIRh1MSAC6M8AtfLA
-         g8vcBRgcJo3bYwOVzQUVdrS4XbFNSVR9Xsx9c+rY9vWTqckksvpXfY0weCozatthiA8W
-         czq3Y2w0xn116mC7d6f3oanKz9IFytA57NarXn1B3DD7sZYnj+SNslOmW4KUI4KbKh7F
-         cVjw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=q+357KwvNyY+wJyemee0wqrc8e6AXwO2zGyzu6liuT8=;
-        b=sxT24Ctf+O3+VqIHdJLwTIE+0AO02cxzNX1/BmNJh03kq9DlffDZCuySg1YZaJ9g2U
-         Ejy6XYPdMSXpI5jJlKjP5x74eYcOHUmAeXO0UT7Nzri/e/Hpz4M3yMynVdAtejCxBuO/
-         QqIrtWEtktQT2ujTqIMFrQj0i0XL0BnA7JuLrshWiWZ8aXEsdvUOYM1rf8+KnkYV55oJ
-         SW8v+NZ74EsQGwHNY3Wp1MF0Jh5G2369mrnp09tjcW5X8InlWQK1+YX79bD8J1dN8sIe
-         c74FnguwCEFzK8ERARkuAcowEm5vVYii8lzvs9LU9kmj6vzWfYvVR5yTSzGM9I+cKyCP
-         Bs6A==
-X-Gm-Message-State: APjAAAXK7Fhojg9QarscsV7BFWIzl7nx9eyWTOYS1sMqwIMb5hgMuOQ5
-        XDJounVTxV3EaCpzGSmtvw1mevODvGu6wv//IAc=
-X-Google-Smtp-Source: APXvYqy4Vhcn6NpXRW6OYhDvJUR0iWbZKP2tTqahRcLHyyWlL2k9Yc37MptJ06YkHBxEtkO4k2uf396d5KZGjx1lJ58=
-X-Received: by 2002:a05:6638:8e:: with SMTP id v14mr4293784jao.72.1567693610586;
- Thu, 05 Sep 2019 07:26:50 -0700 (PDT)
+        Thu, 5 Sep 2019 10:27:26 -0400
+Received: from pps.filterd (m0046661.ppops.net [127.0.0.1])
+        by mx08-00178001.pphosted.com (8.16.0.42/8.16.0.42) with SMTP id x85EQvpe009110;
+        Thu, 5 Sep 2019 16:27:20 +0200
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=st.com; h=from : to : cc : subject
+ : date : message-id : mime-version : content-type; s=STMicroelectronics;
+ bh=uoKwd2sKUokpzjvmIx+s4ndk3AuSqJH8fupkyFjbnKM=;
+ b=V55pi+yFFLXvjUuC3KlOinawRLoOUuAvvh4mgsISkUH25s2Oc8bGwW8hfRH+DQvtNGRQ
+ 1eE+4AKpTjriXTyldLhijgZSfeo9O7yrUEG4aE4Pr/AAvvQuq0D+3tZNvFLLB4qdv/tT
+ fUGCia+nlDM+V/A/ZLnyfwuby+A/WYGeFBPMmr/jhD+Q+F4rNNj6RVueKnmF2c8GnRNO
+ /N9w/N3iks3MIO5lmntfZkLH4KowK/pmMEU+z38oA7GZUkW/MkBwLGPM1DNvdQSXZJqT
+ oLkqIL2PexAH57unA0jxgZbAPqJIRrNy7h9ICqY+vzKxoOCZiVe5pAOaLvdq5IGmjgBk Pw== 
+Received: from beta.dmz-ap.st.com (beta.dmz-ap.st.com [138.198.100.35])
+        by mx08-00178001.pphosted.com with ESMTP id 2uqfsj8h7k-1
+        (version=TLSv1 cipher=ECDHE-RSA-AES256-SHA bits=256 verify=NOT);
+        Thu, 05 Sep 2019 16:27:20 +0200
+Received: from euls16034.sgp.st.com (euls16034.sgp.st.com [10.75.44.20])
+        by beta.dmz-ap.st.com (STMicroelectronics) with ESMTP id 245C94B;
+        Thu,  5 Sep 2019 14:27:17 +0000 (GMT)
+Received: from Webmail-eu.st.com (Safex1hubcas24.st.com [10.75.90.94])
+        by euls16034.sgp.st.com (STMicroelectronics) with ESMTP id 7DE242D6C48;
+        Thu,  5 Sep 2019 16:27:16 +0200 (CEST)
+Received: from SAFEX1HUBCAS21.st.com (10.75.90.45) by Safex1hubcas24.st.com
+ (10.75.90.94) with Microsoft SMTP Server (TLS) id 14.3.439.0; Thu, 5 Sep 2019
+ 16:27:16 +0200
+Received: from localhost (10.48.0.131) by Webmail-ga.st.com (10.75.90.48) with
+ Microsoft SMTP Server (TLS) id 14.3.439.0; Thu, 5 Sep 2019 16:27:13 +0200
+From:   Arnaud Pouliquen <arnaud.pouliquen@st.com>
+To:     Ohad Ben-Cohen <ohad@wizery.com>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        <linux-kernel@vger.kernel.org>, <linux-remoteproc@vger.kernel.org>,
+        <linux-arm-msm@vger.kernel.org>
+CC:     <arnaud.pouliquen@st.com>, Suman Anna <s-anna@ti.com>,
+        Fabien DESSENNE <fabien.dessenne@st.com>,
+        <linux-stm32@st-md-mailman.stormreply.com>
+Subject: [PATCH 0/3] Add API to get rpmsg message max length
+Date:   Thu, 5 Sep 2019 16:27:07 +0200
+Message-ID: <1567693630-27544-1-git-send-email-arnaud.pouliquen@st.com>
+X-Mailer: git-send-email 2.7.4
 MIME-Version: 1.0
-References: <20190904211551.10381-1-kw@linux.com>
-In-Reply-To: <20190904211551.10381-1-kw@linux.com>
-From:   Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
-Date:   Thu, 5 Sep 2019 08:26:39 -0600
-Message-ID: <CAOCk7Npab7Ffi1fKQ8p9s6_XbrGJaG6tTa7W2dXNqn+rrP2Onw@mail.gmail.com>
-Subject: Re: [PATCH] drm/msm/dsi: Move static keyword to the front of declarations
-To:     Krzysztof Wilczynski <kw@linux.com>
-Cc:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Alexios Zavras <alexios.zavras@intel.com>,
-        Thomas Gleixner <tglx@linutronix.de>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Allison Randal <allison@lohutok.net>,
-        MSM <linux-arm-msm@vger.kernel.org>,
-        "open list:DRM PANEL DRIVERS" <dri-devel@lists.freedesktop.org>,
-        freedreno <freedreno@lists.freedesktop.org>,
-        lkml <linux-kernel@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
+X-Originating-IP: [10.48.0.131]
+X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:6.0.70,1.0.8
+ definitions=2019-09-05_04:2019-09-04,2019-09-05 signatures=0
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Sep 4, 2019 at 3:15 PM Krzysztof Wilczynski <kw@linux.com> wrote:
->
-> Move the static keyword to the front of declarations
-> of msm_dsi_v2_host_ops, msm_dsi_6g_host_ops and
-> msm_dsi_6g_v2_host_ops, and resolve the following
-> compiler warnings that can be seen when building
-> with warnings enabled (W=3D1):
->
-> drivers/gpu/drm/msm/dsi/dsi_cfg.c:150:1: warning:
->   =E2=80=98static=E2=80=99 is not at beginning of declaration [-Wold-styl=
-e-declaration]
->
-> drivers/gpu/drm/msm/dsi/dsi_cfg.c:161:1: warning:
->   =E2=80=98static=E2=80=99 is not at beginning of declaration [-Wold-styl=
-e-declaration]
->
-> drivers/gpu/drm/msm/dsi/dsi_cfg.c:172:1: warning:
->   =E2=80=98static=E2=80=99 is not at beginning of declaration [-Wold-styl=
-e-declaration]
->
-> Signed-off-by: Krzysztof Wilczynski <kw@linux.com>
+As introduction on the get_mtu api can impacts some rpmsg drivers,
+i propose to discuss it separately.
+The "rpmsg: core: add API to get message length" patch is extracted from
+https://lkml.org/lkml/2019/9/4/556
+In addition 2 patches implement the API for impacted rpmsg drivers.
+The rpmsg tty client driver will be resent in a second step.
 
-Seems fine to me.
+In this patchset the get_mpu is considered mandatory. The main reason is
+that the rpmsg clients do not have access to the mtu information that is
+platform dependent.
 
-Reviewed-by: Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
+Notice that the GLINK and and SMD drivers have to be validated on target,
+I don't have device to validate by myself...
+Only a compilation check has been executed.
+
+Arnaud Pouliquen (3):
+  rpmsg: core: add API to get message length
+  rpmsg: glink: implement get_mtu ops
+  rpmsg: smd: implement get_mtu ops
+
+ drivers/rpmsg/qcom_glink_native.c | 24 ++++++++++++++++++++++++
+ drivers/rpmsg/qcom_smd.c          |  8 ++++++++
+ drivers/rpmsg/rpmsg_core.c        | 21 +++++++++++++++++++++
+ drivers/rpmsg/rpmsg_internal.h    |  2 ++
+ drivers/rpmsg/virtio_rpmsg_bus.c  | 10 ++++++++++
+ include/linux/rpmsg.h             | 10 ++++++++++
+ 6 files changed, 75 insertions(+)
+
+-- 
+2.7.4
+
