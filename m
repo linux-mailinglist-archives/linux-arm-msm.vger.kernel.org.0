@@ -2,50 +2,50 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id E2A94AA103
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 Sep 2019 13:13:59 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 277A1AA41C
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 Sep 2019 15:17:10 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732130AbfIELN6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 5 Sep 2019 07:13:58 -0400
-Received: from mail-lj1-f196.google.com ([209.85.208.196]:42569 "EHLO
-        mail-lj1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1731124AbfIELN6 (ORCPT
+        id S2388424AbfIENPB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 5 Sep 2019 09:15:01 -0400
+Received: from mail-lf1-f67.google.com ([209.85.167.67]:43256 "EHLO
+        mail-lf1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1733010AbfIENPA (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 5 Sep 2019 07:13:58 -0400
-Received: by mail-lj1-f196.google.com with SMTP id y23so2009828lje.9
-        for <linux-arm-msm@vger.kernel.org>; Thu, 05 Sep 2019 04:13:57 -0700 (PDT)
+        Thu, 5 Sep 2019 09:15:00 -0400
+Received: by mail-lf1-f67.google.com with SMTP id q27so1970351lfo.10
+        for <linux-arm-msm@vger.kernel.org>; Thu, 05 Sep 2019 06:14:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to:user-agent;
-        bh=hVb3OF8Z1yUcAp1EC0wGieEJY1VYhAGYv9dxmBhAdNQ=;
-        b=CMd3yrldzyge7k1rGSlqrfxb2zyzXCZwifzGp2sdva/Ug31rtuPMdg/1TiF5qOiVuL
-         PA01RD4IEPI00S+jUUCtOPABJ1+BBQeQAbNm5pFqEv9b57m4v/RIiB+DAsniDmQNBiZI
-         ezvZ4uJu8v+gvFA2/nQYV0T6uTETR7SknY13uZq7IOFbqBNzlb+XSH/ZAQLDP7NEOozI
-         LfM5E3yXJTmpz7scocKK4yBK6Ekk7R/DJzUUqBlwQKPeyStYzvudfR2t7H7M8iaPW53K
-         SbTtOB0rH2F44WrKIzvL0t5JPZo2VOKaoT7sLKZpb7FNJ6tkqmI6JfnRPsXU3ON9XheT
-         XRgw==
+        bh=X6liaIL8n/K+qZNHyRxBvsG3aE56VnalzfSINEJsXSQ=;
+        b=b+63NMLiO6uu9ngd3jzIr8Dsw188HJm9sNb07rlJMnX80r7/h5LUN3/Lpbh3bxpJ9z
+         xYJqjXXgagt+VDuvA3yKvH7qp7A2+W1iv5h1mRb24Jb2adl7EuLWgyNX1JPnrepTNa9Q
+         goCuPYhfmvTDmiz0qWuVckEjqgfqRDoltmXHgdBIf8vad80BD+OtqWFql1CSBxLD7jDL
+         PWs9E6CwQdu80zJAOHSJX+PJNszKu0Zwaywda1OI5fC9bc/t0il8d+aa4SI03VA65BG0
+         pqsIykPn5ko3cJwLwAXbf0ErZ98Dsu+DqnGqOb8fcfaBo5zLC2Uk4FyM9xYDgLnBUVyl
+         HiPg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=hVb3OF8Z1yUcAp1EC0wGieEJY1VYhAGYv9dxmBhAdNQ=;
-        b=idGbBZObAuhD29/qkK9pc/7C9DMBbRvgKmFSgI8TS6BoRii4eRI6LkSUSLLZ8GJNH2
-         CEfNHC2NvRYsLI4uBtF7QLkGidFF9EfVElvNchSTd4E8DDXcK4ybhpfHpoOYLGhhSrCM
-         iKWq55OXO7oHJpoLZ4ad2/o/Ik3FO7bKhhPm6G/SvR+l2TqbXtxLFILHadyIUYqz5kry
-         G1PqGaqnI9tpIlGrClejjO0eFi2y4+4HXC+yha6J1YM6E5psTvwuE1+uE2/Vgn/OuChu
-         m63Mu4/pSu5ZjSM1vw0FxLLuGvjJ8/4F/8aF4hvOWQuZxb2bD9/gXRJk0kWWYFHnIYZU
-         rCjg==
-X-Gm-Message-State: APjAAAXOY3jEXwsV5HP3osTgE7GUzfJtjLrEysF2XHm/ogNcf06xEHHD
-        VwbD50z5JjNvxXXzE0mkUGYQag==
-X-Google-Smtp-Source: APXvYqzhi25MQJx4FepzPT+vyEF5/SUZT0BCOG1lmKkN8q2WaXy7ytL75H31vK5Qawvs8R3VY1Qz0A==
-X-Received: by 2002:a2e:90c6:: with SMTP id o6mr1700683ljg.144.1567682036461;
-        Thu, 05 Sep 2019 04:13:56 -0700 (PDT)
+        bh=X6liaIL8n/K+qZNHyRxBvsG3aE56VnalzfSINEJsXSQ=;
+        b=PvBLG8wFXGTGt/Ld3hqyW++Vw/lzzNPdv8YfnoL+ZwYprqZ6vLVvZzkHTgVEkaKema
+         BEXptx4VHLvoZhjh8C5twnlhQQW4KqU4qx+v8ODCxGx2xD2tbqp28UDoYwheS1hu20L1
+         NjErso5UW4b2P0NVTlsjNkxhuItn4Akqfl4eKeexDKhV7gZqzIl5xvHAva6OFGZuyK/N
+         H46ynaXFUTYpkyPmiplR5czcAxwfsMnWRead9NIxEL/jLVeff8dAIhr+/gMCj5WZxvyF
+         KkZTR18TDQ5XuCxJDbiTamHEQ2hrqoSFv12D5QguIMoJ71pUCWQzG112l0Xs9R83rsdT
+         0oPA==
+X-Gm-Message-State: APjAAAU6TDmTa08PLfwmUSCfIy+dOdBCba7bdJPiDFy1sRbwyFLQVG4i
+        USE0ceenzccclFrojEM0ffdELA==
+X-Google-Smtp-Source: APXvYqzbCMnjO//eiTEa0kZuQw26H3btOjLN9fQPzx/MdOvkhMnN7oM0V3sFQZMv6aa2tmtB3chimQ==
+X-Received: by 2002:a19:4912:: with SMTP id w18mr2283793lfa.93.1567689298714;
+        Thu, 05 Sep 2019 06:14:58 -0700 (PDT)
 Received: from centauri (ua-84-219-138-247.bbcust.telenor.se. [84.219.138.247])
-        by smtp.gmail.com with ESMTPSA id m18sm379548lfb.73.2019.09.05.04.13.55
+        by smtp.gmail.com with ESMTPSA id b25sm486140lfa.90.2019.09.05.06.14.57
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 05 Sep 2019 04:13:55 -0700 (PDT)
-Date:   Thu, 5 Sep 2019 13:13:53 +0200
+        Thu, 05 Sep 2019 06:14:58 -0700 (PDT)
+Date:   Thu, 5 Sep 2019 15:14:56 +0200
 From:   Niklas Cassel <niklas.cassel@linaro.org>
 To:     Bjorn Andersson <bjorn.andersson@linaro.org>
 Cc:     Ohad Ben-Cohen <ohad@wizery.com>, linux-arm-msm@vger.kernel.org,
@@ -53,7 +53,7 @@ Cc:     Ohad Ben-Cohen <ohad@wizery.com>, linux-arm-msm@vger.kernel.org,
         Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
 Subject: Re: [PATCH] rpmsg: glink-smem: Name the edge based on parent
  remoteproc
-Message-ID: <20190905111353.GA1936@centauri>
+Message-ID: <20190905131456.GA26674@centauri>
 References: <20190820041656.17197-1-bjorn.andersson@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
@@ -95,12 +95,4 @@ On Mon, Aug 19, 2019 at 09:16:56PM -0700, Bjorn Andersson wrote:
 > 2.18.0
 > 
 
-This was sent 19 of August, then again (unchanged) on 29 of August.
-
-Yet it is still not in linux-next.
-It fixes a real issue on qcs404, so please merge :)
-
-
-Kind regards,
-Niklas
-
+Reviewed-by: Niklas Cassel <niklas.cassel@linaro.org>
