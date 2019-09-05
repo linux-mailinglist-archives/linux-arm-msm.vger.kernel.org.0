@@ -2,196 +2,284 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 71E7CA9D20
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 Sep 2019 10:36:42 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id DEE44A9DBB
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 Sep 2019 11:05:11 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731424AbfIEIgl (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 5 Sep 2019 04:36:41 -0400
-Received: from mail-wm1-f65.google.com ([209.85.128.65]:36957 "EHLO
-        mail-wm1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1731518AbfIEIgk (ORCPT
+        id S1731476AbfIEJFL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 5 Sep 2019 05:05:11 -0400
+Received: from smtp.codeaurora.org ([198.145.29.96]:55926 "EHLO
+        smtp.codeaurora.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726137AbfIEJFL (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 5 Sep 2019 04:36:40 -0400
-Received: by mail-wm1-f65.google.com with SMTP id r195so1839377wme.2
-        for <linux-arm-msm@vger.kernel.org>; Thu, 05 Sep 2019 01:36:38 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to
-         :user-agent;
-        bh=kz03pu/vulBcGc4xjgSPYxTdYhp135hrTkAn/4s6ZQY=;
-        b=Vk3N3CkEwhaRiEFUImMcFlKSt4wqVrmfzzwhqRWJPop+lwcVaMkRSrEHFqaRpcqB4S
-         xF1Opncn2nKYoRFhccI53vF9Eq9XwpHTxNUO4NaNdwFO4Tg3qeDIBCKHn5asnavKqcF1
-         weGGer2MhDCyMNJg6P1hNKlH0xJ1v8494DHsE/e72aVT6dnW7lNkRllNkGLmAvKseCXV
-         s1xkisHm90F8G+MyXdLx3JKfTLdMdrt/TieNHD8UQVxsgwhgoIRjdF3AUGVpVzEkVhJj
-         M4woqWbP6xHzPAFJCXtEnug77xV1FBgO4TU/sPzimQGc+N7py/qoe+HS/AintJ/l2kao
-         1grg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        bh=kz03pu/vulBcGc4xjgSPYxTdYhp135hrTkAn/4s6ZQY=;
-        b=fb9JTjTfVZvI1iha0ErK36W9g/cFyngr4L5SGNSoKNu6hoLJqa3mv8g5Ysxob7wSbv
-         mdSHL3oODBAOgX5E5etdZwypnOPkVcaMjbNm/W69o2YZfyyiSR2E7ZgOiNwXmj8sZlq9
-         OatfKpnKpZ1ClXTqjqX3JT78T+ha+8UFkA1DqbS1VbEcnL1u8woJlSWIYvcDOaqBJyrH
-         +YD8TOluOl3YiYILqbUxDfRH6P1+wQ1SAFqToVVDJhmhvJHt3O5gckoVonlAkCTBQQvc
-         HNrlOVFo1j5kYjKsy+5RyZTdBebTqxIhZ8edfTzMm3pa5ZAYI7rur5SYyFQ8J3WVBUMU
-         /IQg==
-X-Gm-Message-State: APjAAAVISQb8eQt5QMWxJ0WbOfzXZdwjisd0JshxZYsvMyVED8dqviNU
-        vNB0iiFQ2BKXOnNA/J1QZTlF0A==
-X-Google-Smtp-Source: APXvYqyqW9836HkNCOzQi6ip1OwbzIUgsXFrI4PSNQAiesTlToMimAWUZRhYP04i4UWLK7ZjP9v6Aw==
-X-Received: by 2002:a1c:a90b:: with SMTP id s11mr2077588wme.92.1567672597825;
-        Thu, 05 Sep 2019 01:36:37 -0700 (PDT)
-Received: from dell ([95.147.198.36])
-        by smtp.gmail.com with ESMTPSA id h125sm2479702wmf.31.2019.09.05.01.36.37
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Thu, 05 Sep 2019 01:36:37 -0700 (PDT)
-Date:   Thu, 5 Sep 2019 09:36:35 +0100
-From:   Lee Jones <lee.jones@linaro.org>
-To:     Marc Gonzalez <marc.w.gonzalez@free.fr>
-Cc:     I2C <linux-i2c@vger.kernel.org>,
-        MSM <linux-arm-msm@vger.kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Vinod Koul <vkoul@kernel.org>
-Subject: Re: [PATCH 2/2] i2c: qcom-geni: Provide an option to disable DMA
- processing
-Message-ID: <20190905083635.GB26880@dell>
-References: <20190905075213.13260-1-lee.jones@linaro.org>
- <20190905075213.13260-2-lee.jones@linaro.org>
- <e2c46fef-332f-ef91-2121-bff33f6f7646@free.fr>
+        Thu, 5 Sep 2019 05:05:11 -0400
+Received: by smtp.codeaurora.org (Postfix, from userid 1000)
+        id 421206115B; Thu,  5 Sep 2019 09:05:10 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
+        s=default; t=1567674310;
+        bh=kurhh/6InAL4dYm8QfJ+nWAbksUUnGWz4Zs93nPkqvw=;
+        h=From:To:Cc:Subject:Date:From;
+        b=MYYIhq3mhSUiRC5d3ZLrtcYbkjTAIrFTwk8Umfd/HIFhhIxvT6BX+mx2sFWLhLkTI
+         gP3LhKULbmc4pKd5gHx5gjMFkLXOYi3bStuuCXoyzZ3A7PWnJfDkuLZC7IgDw8sM23
+         ZQRD818tyG8LsD77HFJv9uYBkbpNJXEZy1Odfg7E=
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        pdx-caf-mail.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.7 required=2.0 tests=ALL_TRUSTED,BAYES_00,
+        DKIM_INVALID,DKIM_SIGNED,SPF_NONE autolearn=no autolearn_force=no
+        version=3.4.0
+Received: from mkshah-linux.qualcomm.com (blr-c-bdr-fw-01_globalnat_allzones-outside.qualcomm.com [103.229.19.19])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: mkshah@smtp.codeaurora.org)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 8DED56030B;
+        Thu,  5 Sep 2019 09:05:04 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
+        s=default; t=1567674308;
+        bh=kurhh/6InAL4dYm8QfJ+nWAbksUUnGWz4Zs93nPkqvw=;
+        h=From:To:Cc:Subject:Date:From;
+        b=k3ZXzWLwr2gkEFpXtnNDJeNfZkFQprEtMrM9wHciL/RUgfw8JdSaoNmQVMJ5CP0kx
+         hhN2NeH2qv0eUdvujUID4JFEwTWpwN1Qn5Ptfbo0myeiBQYWB4K3TDTChBnw95Wkiy
+         2wEIaFYEyp39fX+bOSV2QcNhpvm1iotKth2TOkMU=
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 8DED56030B
+Authentication-Results: pdx-caf-mail.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: pdx-caf-mail.web.codeaurora.org; spf=none smtp.mailfrom=mkshah@codeaurora.org
+From:   Maulik Shah <mkshah@codeaurora.org>
+To:     swboyd@chromium.org, agross@kernel.org, david.brown@linaro.org,
+        linux-arm-msm@vger.kernel.org
+Cc:     linux-kernel@vger.kernel.org, linux-pm@vger.kernel.org,
+        bjorn.andersson@linaro.org, evgreen@chromium.org,
+        dianders@chromium.org, rnayak@codeaurora.org, ilina@codeaurora.org,
+        lsrao@codeaurora.org, Maulik Shah <mkshah@codeaurora.org>
+Subject: [PATCH] soc: qcom: Introduce subsystem sleep stats driver
+Date:   Thu,  5 Sep 2019 14:34:24 +0530
+Message-Id: <20190905090424.5591-1-mkshah@codeaurora.org>
+X-Mailer: git-send-email 2.22.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <e2c46fef-332f-ef91-2121-bff33f6f7646@free.fr>
-User-Agent: Mutt/1.9.4 (2018-02-28)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, 05 Sep 2019, Marc Gonzalez wrote:
+Multiple subsystems like modem, spss, adsp, cdsp present on
+Qualcomm Technologies Inc's (QTI) SoCs maintains low power mode
+statistics in shared memory (SMEM). Lets add a driver to read
+and display this information using sysfs.
 
-> [ Trimming recipients list for idle chat ]
-> 
-> On 05/09/2019 09:52, Lee Jones wrote:
-> 
-> > We have a production-level laptop (Lenovo Yoga C630) which is exhibiting
-> > a rather horrific bug.  When I2C HID devices are being scanned for at
-> > boot-time the QCom Geni based I2C (Serial Engine) attempts to use DMA.
-> > When it does, the laptop reboots and the user never sees the OS.
-> > 
-> > The beautiful thing about this approach is that, *if* the Geni SE DMA
-> > ever starts working, we can remove the C code and any old properties
-> > left in older DTs just become NOOP.  Older kernels with newer DTs (less
-> > of a priority) *still* will not work - but they do not work now anyway.
-> > 
-> > Fixes: 8bc529b25354 ("soc: qcom: geni: Add support for ACPI")
-> > Signed-off-by: Lee Jones <lee.jones@linaro.org>
-> > Reviewed-by: Vinod Koul <vkoul@kernel.org>
-> > ---
-> >  drivers/i2c/busses/i2c-qcom-geni.c | 14 ++++++++++----
-> >  1 file changed, 10 insertions(+), 4 deletions(-)
-> > 
-> > diff --git a/drivers/i2c/busses/i2c-qcom-geni.c b/drivers/i2c/busses/i2c-qcom-geni.c
-> > index a89bfce5388e..8822dea82980 100644
-> > --- a/drivers/i2c/busses/i2c-qcom-geni.c
-> > +++ b/drivers/i2c/busses/i2c-qcom-geni.c
-> > @@ -353,13 +353,16 @@ static void geni_i2c_tx_fsm_rst(struct geni_i2c_dev *gi2c)
-> >  static int geni_i2c_rx_one_msg(struct geni_i2c_dev *gi2c, struct i2c_msg *msg,
-> >  				u32 m_param)
-> >  {
-> > +	struct device_node *np = gi2c->se.dev->of_node;
-> >  	dma_addr_t rx_dma;
-> >  	unsigned long time_left;
-> > -	void *dma_buf;
-> > +	void *dma_buf = NULL;
-> >  	struct geni_se *se = &gi2c->se;
-> >  	size_t len = msg->len;
-> >  
-> > -	dma_buf = i2c_get_dma_safe_msg_buf(msg, 32);
-> > +	if (!of_property_read_bool(np, "qcom,geni-se-no-dma"))
-> > +		dma_buf = i2c_get_dma_safe_msg_buf(msg, 32);
-> > +
-> >  	if (dma_buf)
-> >  		geni_se_select_mode(se, GENI_SE_DMA);
-> >  	else
-> > @@ -392,13 +395,16 @@ static int geni_i2c_rx_one_msg(struct geni_i2c_dev *gi2c, struct i2c_msg *msg,
-> >  static int geni_i2c_tx_one_msg(struct geni_i2c_dev *gi2c, struct i2c_msg *msg,
-> >  				u32 m_param)
-> >  {
-> > +	struct device_node *np = gi2c->se.dev->of_node;
-> >  	dma_addr_t tx_dma;
-> >  	unsigned long time_left;
-> > -	void *dma_buf;
-> > +	void *dma_buf = NULL;
-> >  	struct geni_se *se = &gi2c->se;
-> >  	size_t len = msg->len;
-> >  
-> > -	dma_buf = i2c_get_dma_safe_msg_buf(msg, 32);
-> > +	if (!of_property_read_bool(np, "qcom,geni-se-no-dma"))
-> > +		dma_buf = i2c_get_dma_safe_msg_buf(msg, 32);
-> > +
-> >  	if (dma_buf)
-> >  		geni_se_select_mode(se, GENI_SE_DMA);
-> >  	else
-> > 
-> 
-> Would it make sense to factorize the DT lookup within a helper?
-> (For example; not compile-tested; not sure it's worth it)
+Signed-off-by: Maulik Shah <mkshah@codeaurora.org>
+---
+ Documentation/ABI/testing/sysfs-power    |  10 ++
+ drivers/soc/qcom/Kconfig                 |   9 ++
+ drivers/soc/qcom/Makefile                |   1 +
+ drivers/soc/qcom/subsystem_sleep_stats.c | 146 +++++++++++++++++++++++
+ 4 files changed, 166 insertions(+)
+ create mode 100644 drivers/soc/qcom/subsystem_sleep_stats.c
 
-Possibly, but the semantics end up the same.
-
-If you think it's cleaner, perhaps submit your version a fix-up to the
-original (this one).  Seeing as we're already carrying Reviewed-bys
-and time is very limited to have this fixed.
-
-I would also like to see the helper in your version prefixed, so it
-would be:
-
-  geni_i2c_get_dma_buf()
-
-> diff --git a/drivers/i2c/busses/i2c-qcom-geni.c b/drivers/i2c/busses/i2c-qcom-geni.c
-> index a89bfce5388e..1489181f60fe 100644
-> --- a/drivers/i2c/busses/i2c-qcom-geni.c
-> +++ b/drivers/i2c/busses/i2c-qcom-geni.c
-> @@ -350,6 +350,14 @@ static void geni_i2c_tx_fsm_rst(struct geni_i2c_dev *gi2c)
->  		dev_err(gi2c->se.dev, "Timeout resetting TX_FSM\n");
->  }
->  
-> +static void *get_dma_buf(struct geni_se *se, struct i2c_msg *msg)
-> +{
-> +	if (of_property_read_bool(se->dev->of_node, "qcom,geni-se-no-dma"))
-> +		return NULL;
-> +
-> +	return i2c_get_dma_safe_msg_buf(msg, 32);
-> +}
-> +
->  static int geni_i2c_rx_one_msg(struct geni_i2c_dev *gi2c, struct i2c_msg *msg,
->  				u32 m_param)
->  {
-> @@ -359,7 +367,7 @@ static int geni_i2c_rx_one_msg(struct geni_i2c_dev *gi2c, struct i2c_msg *msg,
->  	struct geni_se *se = &gi2c->se;
->  	size_t len = msg->len;
->  
-> -	dma_buf = i2c_get_dma_safe_msg_buf(msg, 32);
-> +	dma_buf = get_dma_buf(se, msg);
->  	if (dma_buf)
->  		geni_se_select_mode(se, GENI_SE_DMA);
->  	else
-> @@ -398,7 +406,7 @@ static int geni_i2c_tx_one_msg(struct geni_i2c_dev *gi2c, struct i2c_msg *msg,
->  	struct geni_se *se = &gi2c->se;
->  	size_t len = msg->len;
->  
-> -	dma_buf = i2c_get_dma_safe_msg_buf(msg, 32);
-> +	dma_buf = get_dma_buf(se, msg);
->  	if (dma_buf)
->  		geni_se_select_mode(se, GENI_SE_DMA);
->  	else
-
+diff --git a/Documentation/ABI/testing/sysfs-power b/Documentation/ABI/testing/sysfs-power
+index 18b7dc929234..1f8bb201246a 100644
+--- a/Documentation/ABI/testing/sysfs-power
++++ b/Documentation/ABI/testing/sysfs-power
+@@ -288,6 +288,16 @@ Description:
+ 		writing a "0" (default) to it disables them.  Reads from
+ 		this file return the current value.
+ 
++What:		/sys/power/subsystem_sleep/stats
++Date:		December 2017
++Contact:	Maulik Shah <mkshah@codeaurora.org>
++Description:
++		The /sys/power/subsystem_sleep/stats file prints the subsystem
++		sleep information on Qualcomm Technologies, Inc. (QTI) SoCs.
++
++		Reading from this file will display subsystem level low power
++		mode statistics.
++
+ What:		/sys/power/resume_offset
+ Date:		April 2018
+ Contact:	Mario Limonciello <mario.limonciello@dell.com>
+diff --git a/drivers/soc/qcom/Kconfig b/drivers/soc/qcom/Kconfig
+index 880cf0290962..da53a96c6cce 100644
+--- a/drivers/soc/qcom/Kconfig
++++ b/drivers/soc/qcom/Kconfig
+@@ -163,6 +163,15 @@ config QCOM_SMSM
+ 	  Say yes here to support the Qualcomm Shared Memory State Machine.
+ 	  The state machine is represented by bits in shared memory.
+ 
++config QCOM_SS_SLEEP_STATS
++	tristate "Qualcomm Technologies Inc. Subsystem Sleep Stats driver"
++	depends on QCOM_SMEM
++	help
++	  Say y here to enable support for the Qualcomm Technologies Inc (QTI)
++	  SS sleep stats driver to read the sleep stats of various subsystems
++	  from SMEM. The stats are exported to sysfs. The driver also maintains
++	  application processor sleep stats.
++
+ config QCOM_WCNSS_CTRL
+ 	tristate "Qualcomm WCNSS control driver"
+ 	depends on ARCH_QCOM || COMPILE_TEST
+diff --git a/drivers/soc/qcom/Makefile b/drivers/soc/qcom/Makefile
+index ffe519b0cb66..657e9494fc51 100644
+--- a/drivers/soc/qcom/Makefile
++++ b/drivers/soc/qcom/Makefile
+@@ -17,6 +17,7 @@ obj-$(CONFIG_QCOM_SMEM) +=	smem.o
+ obj-$(CONFIG_QCOM_SMEM_STATE) += smem_state.o
+ obj-$(CONFIG_QCOM_SMP2P)	+= smp2p.o
+ obj-$(CONFIG_QCOM_SMSM)	+= smsm.o
++qcom_rpmh-y	+= subsystem_sleep_stats.o
+ obj-$(CONFIG_QCOM_WCNSS_CTRL) += wcnss_ctrl.o
+ obj-$(CONFIG_QCOM_APR) += apr.o
+ obj-$(CONFIG_QCOM_LLCC) += llcc-slice.o
+diff --git a/drivers/soc/qcom/subsystem_sleep_stats.c b/drivers/soc/qcom/subsystem_sleep_stats.c
+new file mode 100644
+index 000000000000..5379714b6ba4
+--- /dev/null
++++ b/drivers/soc/qcom/subsystem_sleep_stats.c
+@@ -0,0 +1,146 @@
++// SPDX-License-Identifier: GPL-2.0-only
++
++/*
++ * Copyright (c) 2017-2019, The Linux Foundation. All rights reserved.
++ */
++
++#define pr_fmt(fmt) "%s: " fmt, KBUILD_MODNAME
++
++#include <linux/errno.h>
++#include <linux/module.h>
++#include <linux/slab.h>
++#include <linux/types.h>
++
++#include <linux/soc/qcom/smem.h>
++
++enum subsystem_item_id {
++	MODEM = 605,
++	ADSP,
++	CDSP,
++	SLPI,
++	GPU,
++	DISPLAY,
++};
++
++enum subsystem_pid {
++	PID_APSS = 0,
++	PID_MODEM = 1,
++	PID_ADSP = 2,
++	PID_SLPI = 3,
++	PID_CDSP = 5,
++	PID_GPU = PID_APSS,
++	PID_DISPLAY = PID_APSS,
++};
++
++struct subsystem_data {
++	char *name;
++	enum subsystem_item_id item_id;
++	enum subsystem_pid pid;
++};
++
++static const struct subsystem_data subsystems[] = {
++	{"MODEM", MODEM, PID_MODEM},
++	{"ADSP", ADSP, PID_ADSP},
++	{"CDSP", CDSP, PID_CDSP},
++	{"SLPI", SLPI, PID_SLPI},
++	{"GPU", GPU, PID_GPU},
++	{"DISPLAY", DISPLAY, PID_DISPLAY},
++};
++
++struct subsystem_stats {
++	uint32_t version_id;
++	uint32_t count;
++	uint64_t last_entered;
++	uint64_t last_exited;
++	uint64_t accumulated_duration;
++};
++
++struct subsystem_stats_prv_data {
++	struct kobj_attribute ka;
++	struct kobject *kobj;
++};
++
++static struct subsystem_stats_prv_data *prvdata;
++
++static inline ssize_t subsystem_stats_print(char *prvbuf, ssize_t length,
++					    struct subsystem_stats *record,
++					    const char *name)
++{
++	return scnprintf(prvbuf, length, "%s\n\tVersion:0x%x\n"
++			"\tSleep Count:0x%x\n"
++			"\tSleep Last Entered At:0x%llx\n"
++			"\tSleep Last Exited At:0x%llx\n"
++			"\tSleep Accumulated Duration:0x%llx\n\n",
++			name, record->version_id, record->count,
++			record->last_entered, record->last_exited,
++			record->accumulated_duration);
++}
++
++static ssize_t subsystem_stats_show(struct kobject *kobj,
++				    struct kobj_attribute *attr, char *buf)
++{
++	ssize_t length = 0;
++	int i = 0;
++	size_t size = 0;
++	struct subsystem_stats *record = NULL;
++
++	/* Read SMEM data written by other subsystems */
++	for (i = 0; i < ARRAY_SIZE(subsystems); i++) {
++		record = (struct subsystem_stats *) qcom_smem_get(
++			  subsystems[i].pid, subsystems[i].item_id, &size);
++
++		if (!IS_ERR_OR_NULL(record) && (PAGE_SIZE - length > 0))
++			length += subsystem_stats_print(buf + length,
++							PAGE_SIZE - length,
++							record,
++							subsystems[i].name);
++	}
++
++	return length;
++}
++
++static int __init subsystem_sleep_stats_init(void)
++{
++	struct kobject *ss_stats_kobj;
++	int ret;
++
++	prvdata = kmalloc(sizeof(*prvdata), GFP_KERNEL);
++	if (!prvdata)
++		return -ENOMEM;
++
++	ss_stats_kobj = kobject_create_and_add("subsystem_sleep",
++					       power_kobj);
++	if (!ss_stats_kobj)
++		return -ENOMEM;
++
++	prvdata->kobj = ss_stats_kobj;
++
++	sysfs_attr_init(&prvdata->ka.attr);
++	prvdata->ka.attr.mode = 0444;
++	prvdata->ka.attr.name = "stats";
++	prvdata->ka.show = subsystem_stats_show;
++	prvdata->ka.store = NULL;
++
++	ret = sysfs_create_file(prvdata->kobj, &prvdata->ka.attr);
++	if (ret) {
++		pr_err("sysfs_create_file failed\n");
++		kobject_put(prvdata->kobj);
++		kfree(prvdata);
++		return ret;
++	}
++
++	return ret;
++}
++
++static void __exit subsystem_sleep_stats_exit(void)
++{
++	sysfs_remove_file(prvdata->kobj, &prvdata->ka.attr);
++	kobject_put(prvdata->kobj);
++	kfree(prvdata);
++}
++
++module_init(subsystem_sleep_stats_init);
++module_exit(subsystem_sleep_stats_exit);
++
++MODULE_LICENSE("GPL v2");
++MODULE_DESCRIPTION("Qualcomm Technologies, Inc subsystem sleep stats driver");
 -- 
-Lee Jones [李琼斯]
-Linaro Services Technical Lead
-Linaro.org │ Open source software for ARM SoCs
-Follow Linaro: Facebook | Twitter | Blog
+QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum, hosted by The Linux Foundation.
+
