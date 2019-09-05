@@ -2,88 +2,78 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id D84E8A9AC8
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 Sep 2019 08:42:58 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 81E40A9AEF
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 Sep 2019 08:53:38 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729941AbfIEGm6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 5 Sep 2019 02:42:58 -0400
-Received: from mail-wr1-f67.google.com ([209.85.221.67]:36872 "EHLO
-        mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725921AbfIEGm6 (ORCPT
+        id S1727160AbfIEGxh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 5 Sep 2019 02:53:37 -0400
+Received: from mail-pg1-f196.google.com ([209.85.215.196]:40672 "EHLO
+        mail-pg1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726162AbfIEGxh (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 5 Sep 2019 02:42:58 -0400
-Received: by mail-wr1-f67.google.com with SMTP id i1so665391wro.4
-        for <linux-arm-msm@vger.kernel.org>; Wed, 04 Sep 2019 23:42:56 -0700 (PDT)
+        Thu, 5 Sep 2019 02:53:37 -0400
+Received: by mail-pg1-f196.google.com with SMTP id w10so853121pgj.7
+        for <linux-arm-msm@vger.kernel.org>; Wed, 04 Sep 2019 23:53:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to
-         :user-agent;
-        bh=4FxT3sbg905x6neVVBFFY3spRc8+0YKGMTWU5uG6+h0=;
-        b=wxlWx/qSbcPpE76utweI7A0cLy9DrjtSsoAqtfV6WPGO6arQeRwLYRCoyb13wSdY2Z
-         655GB7phDY6TttcqOOFiP6ROfNmtwlxb0lskXM2I1LkhloZIEInNRhxotvbK4b/ogytV
-         u/vcFc8JayRCtriCHPY3JfzCi3kAu7dCHIdpWcCi0NjBCfRdOiZ7AHIpZIdwvB6oUub7
-         EipZ/dIakAO1jrc1+WsNumzS94ASiMIhnOLSohIQZd48G5lW93647zNwunwCnRJDPfF0
-         dYJ4FK9cLboExNBjwJ4pYgppi671aLGIs6fh59Hu2j0H9RR/dllE7KO3vjx2D2dssxEe
-         yrJw==
+        d=chromium.org; s=google;
+        h=message-id:mime-version:content-transfer-encoding:in-reply-to
+         :references:cc:subject:to:from:user-agent:date;
+        bh=X6bK3rfbzFX8967fDBi6v6AmnIt9qDTHKSROdx1Ey68=;
+        b=TMOXcAZIxeJNHBrueuJKwf8rRmgsDchSIH08Y8UYbPEz8/ML1fe//YAgKorZGuVkQt
+         +qg5tcl4ej3ySxjgGRvHzBszSWI3B8fTOPg6An0WVOwYX1yLkB5tXFC1ASCSCrsLfNvB
+         BCGbTcmoeOcIO7DH/TWi+MXOPrCLE1R49vndg=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        bh=4FxT3sbg905x6neVVBFFY3spRc8+0YKGMTWU5uG6+h0=;
-        b=jPvlQPhZDOPZfoM5GHPRtID9AygL7USslPmnivQL7N4rCQPBMU3/5IQjrgDCybOu6J
-         LfxNEm7rHnlgqQKOsFlzmbLqdGeVS4mQzKy7FtE0uoP0/h6lnvkMGDmKLd2x3jf5HliT
-         ZQpSz+oOg+4wS/nQ+e8Zo5MCwnc1zojneGIPJl5TwzSfFgo0rZDtq7W5cOon1DZqy6er
-         XB+vkyd0i0Wpnz/7nildjjBH4LUazV0Z3YvXmBItSVa3BbAz9g+6a9o2pJ7oHzEG8t2w
-         yZSWBOJllOImrBSDq6D8Qzso1P8+vR4z33ffYSeUCXAn4z0jez0JKv9QsnKwHIhY4Gtp
-         +uGA==
-X-Gm-Message-State: APjAAAWOPV/Nk97eOPyy7rd7YKWI6fk/z/SC97BTun/lvuwlcmXTZxBy
-        z53Z84WCpU8/kNRtW2+LwkIfcw==
-X-Google-Smtp-Source: APXvYqwvRbcTUQl24Kcx5vN7rlGOqv2utPQevH7gWXz+Y2nMcnBafBkxzETNfut6xVZQ0Q8Pr4WMgA==
-X-Received: by 2002:adf:e881:: with SMTP id d1mr1133373wrm.301.1567665775928;
-        Wed, 04 Sep 2019 23:42:55 -0700 (PDT)
-Received: from dell ([95.147.198.36])
-        by smtp.gmail.com with ESMTPSA id f66sm2329533wmg.2.2019.09.04.23.42.54
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 04 Sep 2019 23:42:54 -0700 (PDT)
-Date:   Thu, 5 Sep 2019 07:42:53 +0100
-From:   Lee Jones <lee.jones@linaro.org>
-To:     Stephen Boyd <swboyd@chromium.org>
-Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>, agross@kernel.org,
-        linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH 1/1] soc: qcom: geni: Provide parameter error checking
-Message-ID: <20190905064253.GU26880@dell>
-References: <20190903135052.13827-1-lee.jones@linaro.org>
- <20190904031922.GC574@tuxbook-pro>
- <20190904084554.GF26880@dell>
- <20190904182732.GE574@tuxbook-pro>
- <5d704c9f.1c69fb81.a1686.0eb3@mx.google.com>
+        h=x-gm-message-state:message-id:mime-version
+         :content-transfer-encoding:in-reply-to:references:cc:subject:to:from
+         :user-agent:date;
+        bh=X6bK3rfbzFX8967fDBi6v6AmnIt9qDTHKSROdx1Ey68=;
+        b=QKIBfPGdotMXeqInkUX91LM+O1LgmyKrkKzjfSJtcNjvddGWOvKkc+77aCEaCJTr1K
+         xpCKpZeBU3nqAv4ZpmhHskyqN+ljnN6B+c4LKOwGXoeHvy8oSC0ZLqeTj42ggJmVK+ZD
+         sw+CZFl/MxvHhiiryPrJd7Km8v2x8JKH6rmdVUEOnuhPTkJ87DVEPxZxiZTKG0Lk3eLQ
+         PODRlI50oZBlHLi/U2Mu5aDTggPc94+L7q1kFOmSOHLsbQnfLG783cg/8RjwPozdQnxx
+         dqR+42xcdfvXVX9H1nItyAPKTk74ZcYYD6u2pDd3+ZhkWmZpVOigyhy74/lukdrEkbm4
+         NJkw==
+X-Gm-Message-State: APjAAAWMu/oTCqWOHBFNKqpkJIhiCBfjip9SoDda8MeyzNhuf55Coufv
+        7RCsQUGKRS5QlF8rnD/bZIys0m1QqWzr3Q==
+X-Google-Smtp-Source: APXvYqzTMrxxPrIHi7PSBcBRZ/WFPRHu9P1fN0ROt0DOaHqZK/np3NsB3NYUIyyL3/gMBfrIsrD/wA==
+X-Received: by 2002:a62:1d8a:: with SMTP id d132mr1938054pfd.187.1567666416741;
+        Wed, 04 Sep 2019 23:53:36 -0700 (PDT)
+Received: from chromium.org ([2620:15c:202:1:fa53:7765:582b:82b9])
+        by smtp.gmail.com with ESMTPSA id c15sm1254784pfi.172.2019.09.04.23.53.36
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 04 Sep 2019 23:53:36 -0700 (PDT)
+Message-ID: <5d70b0f0.1c69fb81.f862a.40e4@mx.google.com>
+Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <5d704c9f.1c69fb81.a1686.0eb3@mx.google.com>
-User-Agent: Mutt/1.9.4 (2018-02-28)
+Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <20190718130238.11324-3-vivek.gautam@codeaurora.org>
+References: <20190718130238.11324-1-vivek.gautam@codeaurora.org> <20190718130238.11324-3-vivek.gautam@codeaurora.org>
+Cc:     bjorn.andersson@linaro.org, jcrouse@codeaurora.org,
+        rishabhb@codeaurora.org, evgreen@chromium.org,
+        linux-kernel@vger.kernel.org,
+        Vivek Gautam <vivek.gautam@codeaurora.org>
+Subject: Re: [PATCH 2/3] soc: qcom: Rename llcc-slice to llcc-qcom
+To:     Vivek Gautam <vivek.gautam@codeaurora.org>, agross@kernel.org,
+        linux-arm-msm@vger.kernel.org
+From:   Stephen Boyd <swboyd@chromium.org>
+User-Agent: alot/0.8.1
+Date:   Wed, 04 Sep 2019 23:53:35 -0700
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-> > But if this is the one whack left to get the thing to boot then I think
-> > we should merge it.
-> 
-> Agreed.
+Quoting Vivek Gautam (2019-07-18 06:02:37)
+> The cleaning up was done without changing the driver file name
+> to ensure a cleaner bisect. Change the file name now to facilitate
+> making the driver generic in subsequent patch.
+>=20
+> Signed-off-by: Vivek Gautam <vivek.gautam@codeaurora.org>
+> ---
+>  drivers/soc/qcom/Makefile                      | 2 +-
+>  drivers/soc/qcom/{llcc-slice.c =3D> llcc-qcom.c} | 0
 
-Thanks Stephen.
+qcom/llcc-qcom.c seems sort of redundant. Would have been nice to have
+it named llcc.c but I guess the ship has sailed. <sad face>
 
-Unless you guys scream loudly, I'm going to convert these to Acks.
-
-If you scream softly, I can convert the to Reviewed-bys.
-
--- 
-Lee Jones [李琼斯]
-Linaro Services Technical Lead
-Linaro.org │ Open source software for ARM SoCs
-Follow Linaro: Facebook | Twitter | Blog
