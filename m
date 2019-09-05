@@ -2,131 +2,68 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 83F4BA9A67
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 Sep 2019 08:15:44 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 50FCBA9A76
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 Sep 2019 08:18:31 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730826AbfIEGPn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 5 Sep 2019 02:15:43 -0400
-Received: from mail-vk1-f194.google.com ([209.85.221.194]:44047 "EHLO
-        mail-vk1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730820AbfIEGPn (ORCPT
+        id S1730778AbfIEGSa (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 5 Sep 2019 02:18:30 -0400
+Received: from bombadil.infradead.org ([198.137.202.133]:33172 "EHLO
+        bombadil.infradead.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725921AbfIEGS3 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 5 Sep 2019 02:15:43 -0400
-Received: by mail-vk1-f194.google.com with SMTP id 82so214873vkf.11
-        for <linux-arm-msm@vger.kernel.org>; Wed, 04 Sep 2019 23:15:43 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=Lxv2YjVDy5w6AQ+Z95Jd1OHt1865rQWbHzl1H0ckHb4=;
-        b=IurRXFpodLHrXjhNeDu0PBjJR6aKmlNT/dzeEONMU1V5mjYfCIsKTQIXkLXspZuRLT
-         SO2IeUW73ig0y4hTpIc1LeJScYwe/7jF3x1ItS7fkoJd9YSTWsUH2sI/3COuK4II6o/r
-         +Kj20DSoITETteLabp2V7jA4ju9DbWda2nuGTSuEzhZ1KGohbqZEVKqkpRJCAhcLSXD9
-         kEdWKNMJEgbkZzacsvDJtyDbgG7jhbcfx/K1U5vEhgoviC+KwrwJF0gUE3d7mSshVMHg
-         A0LYcz1miwyWZt1OUA9B7KkZFPklzUWf8pMOs0ddGs8nwCkutop0K9qwCxD0ooyRsoi+
-         ohUg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=Lxv2YjVDy5w6AQ+Z95Jd1OHt1865rQWbHzl1H0ckHb4=;
-        b=igExjy6SFKWt/HU7IQS3n2+ubbm7ZjWFRiUZGq/v72kkZdMQLbEur/e2QVxO8goskc
-         6udyByxyt+A694BuiSANWCTsk2TyLLW1YaDB/CEYahuz8qbhe1FBC7DhVklTFiYJErMX
-         gfTlc/97oGeS2D2OHmVFVY6ie6VeUj11X7WcV2UVNO7WG06O18ppHEmwTCXsTzdu1kDR
-         hjkvfpJjVueunGvz6+u3UDz8uK0gNenPWqEu4DhJKVyd2lg/HZpUF5Ecyyn0pNkq1ZNG
-         OItdWJdLjwOpGNPTqrdGJ3kiruY0xPPkUunfWpKRQoUCqLfRz+cDlmui2NvyJ0jY9Jck
-         LxLw==
-X-Gm-Message-State: APjAAAVK1DzJyypIlXkSenTIVZBZfmQLbULUETxRbcDeT/tvjeIVfZib
-        FeQ03YMs2lUkMOeqmmT2lxyYi6CtVLi/emCVDp0c4w==
-X-Google-Smtp-Source: APXvYqwVi7szQ+w3nsCf0zPQZyYdR4HeVO1GXvtz/sWMMhtS2v2QWLsWh3Ip3Jb3oWwBQ9pfzHwoVyT/iOmN8ovRJtE=
-X-Received: by 2002:a1f:4981:: with SMTP id w123mr690507vka.13.1567664142296;
- Wed, 04 Sep 2019 23:15:42 -0700 (PDT)
-MIME-Version: 1.0
-References: <20190904122939.23780-1-yuehaibing@huawei.com> <20190904122939.23780-9-yuehaibing@huawei.com>
-In-Reply-To: <20190904122939.23780-9-yuehaibing@huawei.com>
-From:   Amit Kucheria <amit.kucheria@linaro.org>
-Date:   Thu, 5 Sep 2019 11:45:30 +0530
-Message-ID: <CAHLCerOVuNEAkCggBoDU4NgbzhTVxpdJXeTXVrTs5tp7ZVtSMg@mail.gmail.com>
-Subject: Re: [PATCH -next 08/15] thermal: tsens: use devm_platform_ioremap_resource()
- to simplify code
-To:     YueHaibing <yuehaibing@huawei.com>
-Cc:     miquel.raynal@bootlin.com, Zhang Rui <rui.zhang@intel.com>,
-        Eduardo Valentin <edubezval@gmail.com>,
-        Daniel Lezcano <daniel.lezcano@linaro.org>,
-        Eric Anholt <eric@anholt.net>, wahrenst@gmx.net,
-        f.fainelli@gmail.com, rjui@broadcom.com, sbranden@broadcom.com,
-        Markus Mayer <mmayer@broadcom.com>,
-        computersforpeace@gmail.com, gregory.0xf0@gmail.com,
-        Matthias Brugger <matthias.bgg@gmail.com>,
-        Andy Gross <agross@kernel.org>,
-        Heiko Stuebner <heiko@sntech.de>, mcoquelin.stm32@gmail.com,
-        alexandre.torgue@st.com, Marc Gonzalez <marc.w.gonzalez@free.fr>,
-        mans@mansr.com, talel@amazon.com, Jun Nie <jun.nie@linaro.org>,
-        Shawn Guo <shawnguo@kernel.org>, phil@raspberrypi.org,
-        gregkh@linuxfoundation.org, david.hernandezsanchez@st.com,
-        horms+renesas@verge.net.au, wsa+renesas@sang-engineering.com,
-        bcm-kernel-feedback-list@broadcom.com,
-        Linux PM list <linux-pm@vger.kernel.org>,
-        LKML <linux-kernel@vger.kernel.org>,
-        linux-rpi-kernel@lists.infradead.org,
-        lakml <linux-arm-kernel@lists.infradead.org>,
+        Thu, 5 Sep 2019 02:18:29 -0400
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+        d=infradead.org; s=bombadil.20170209; h=In-Reply-To:Content-Type:MIME-Version
+        :References:Message-ID:Subject:Cc:To:From:Date:Sender:Reply-To:
+        Content-Transfer-Encoding:Content-ID:Content-Description:Resent-Date:
+        Resent-From:Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:List-Id:
+        List-Help:List-Unsubscribe:List-Subscribe:List-Post:List-Owner:List-Archive;
+         bh=fTcSpA3ZHXId80EpTLogSujsoZ0WrK6Tdlrkg5U4n3U=; b=CoryMkzNMX3aDlJ+m7fw27+Y5
+        k6b2VLOXAy5PZZ2GtUk7b2Gg7Z+a62WBshvp2BBEqZkvIfsJQUOhgXRJTP2cSkkiV6UMawUgMAnnM
+        BPLyvE/okmSa6W3JyrHnd206HGUFLFCYGyDbkef1/pqS6w6FaTPpzQPIgX7h+a7yf6MIqFQviJlbh
+        O9sVQPNQ3kcpV6SSsFzZkzpahtly3RGBfCYsEwP3r7TlEl9q4+GYVY/KG/YPUjMI8iHQ3Ml2GypGJ
+        JtO9RtgEejTvKcuVSYanopJTNDvcYwgteHDAFFzgUHLNtasHSA48ajt+6LHbTDqmS8+IseRBdsc3B
+        jdCV6Qw4Q==;
+Received: from hch by bombadil.infradead.org with local (Exim 4.92 #3 (Red Hat Linux))
+        id 1i5l67-0000MK-7v; Thu, 05 Sep 2019 06:18:23 +0000
+Date:   Wed, 4 Sep 2019 23:18:23 -0700
+From:   Christoph Hellwig <hch@infradead.org>
+To:     Tom Murphy <murphyt7@tcd.ie>
+Cc:     iommu@lists.linux-foundation.org, Heiko Stuebner <heiko@sntech.de>,
+        virtualization@lists.linux-foundation.org,
+        linux-tegra@vger.kernel.org,
+        Thierry Reding <thierry.reding@gmail.com>,
+        Will Deacon <will@kernel.org>,
+        Jean-Philippe Brucker <jean-philippe@linaro.org>,
+        linux-samsung-soc@vger.kernel.org,
+        Krzysztof Kozlowski <krzk@kernel.org>,
+        Jonathan Hunter <jonathanh@nvidia.com>,
+        linux-rockchip@lists.infradead.org, Andy Gross <agross@kernel.org>,
+        Gerald Schaefer <gerald.schaefer@de.ibm.com>,
+        linux-s390@vger.kernel.org, linux-arm-msm@vger.kernel.org,
         linux-mediatek@lists.infradead.org,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        linux-rockchip@lists.infradead.org,
-        linux-stm32@st-md-mailman.stormreply.com
-Content-Type: text/plain; charset="UTF-8"
+        Matthias Brugger <matthias.bgg@gmail.com>,
+        linux-arm-kernel@lists.infradead.org,
+        David Woodhouse <dwmw2@infradead.org>,
+        linux-kernel@vger.kernel.org, Kukjin Kim <kgene@kernel.org>,
+        Robin Murphy <robin.murphy@arm.com>
+Subject: Re: [PATCH V5 0/5] iommu/amd: Convert the AMD iommu driver to the
+ dma-iommu api
+Message-ID: <20190905061823.GA813@infradead.org>
+References: <20190815110944.3579-1-murphyt7@tcd.ie>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20190815110944.3579-1-murphyt7@tcd.ie>
+User-Agent: Mutt/1.11.4 (2019-03-13)
+X-SRS-Rewrite: SMTP reverse-path rewritten from <hch@infradead.org> by bombadil.infradead.org. See http://www.infradead.org/rpr.html
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Sep 4, 2019 at 6:05 PM YueHaibing <yuehaibing@huawei.com> wrote:
->
-> Use devm_platform_ioremap_resource() to simplify the code a bit.
-> This is detected by coccinelle.
->
-> Reported-by: Hulk Robot <hulkci@huawei.com>
-> Signed-off-by: YueHaibing <yuehaibing@huawei.com>
+Dave, Joerg, Robin:
 
-Acked-by: Amit Kucheria <amit.kucheria@linaro.org>
-
-> ---
->  drivers/thermal/qcom/tsens-common.c | 7 ++-----
->  1 file changed, 2 insertions(+), 5 deletions(-)
->
-> diff --git a/drivers/thermal/qcom/tsens-common.c b/drivers/thermal/qcom/tsens-common.c
-> index 528df88..43ce4fb 100644
-> --- a/drivers/thermal/qcom/tsens-common.c
-> +++ b/drivers/thermal/qcom/tsens-common.c
-> @@ -155,7 +155,6 @@ int __init init_common(struct tsens_priv *priv)
->  {
->         void __iomem *tm_base, *srot_base;
->         struct device *dev = priv->dev;
-> -       struct resource *res;
->         u32 enabled;
->         int ret, i, j;
->         struct platform_device *op = of_find_device_by_node(priv->dev->of_node);
-> @@ -166,8 +165,7 @@ int __init init_common(struct tsens_priv *priv)
->         if (op->num_resources > 1) {
->                 /* DT with separate SROT and TM address space */
->                 priv->tm_offset = 0;
-> -               res = platform_get_resource(op, IORESOURCE_MEM, 1);
-> -               srot_base = devm_ioremap_resource(&op->dev, res);
-> +               srot_base = devm_platform_ioremap_resource(op, 1);
->                 if (IS_ERR(srot_base)) {
->                         ret = PTR_ERR(srot_base);
->                         goto err_put_device;
-> @@ -184,8 +182,7 @@ int __init init_common(struct tsens_priv *priv)
->                 priv->tm_offset = 0x1000;
->         }
->
-> -       res = platform_get_resource(op, IORESOURCE_MEM, 0);
-> -       tm_base = devm_ioremap_resource(&op->dev, res);
-> +       tm_base = devm_platform_ioremap_resource(op, 0);
->         if (IS_ERR(tm_base)) {
->                 ret = PTR_ERR(tm_base);
->                 goto err_put_device;
-> --
-> 2.7.4
->
->
+is there any chance we could at least pick up patches 2 and 4 ASAP
+as they are clearly fixes for current deficits, even without the
+amd conversion?
