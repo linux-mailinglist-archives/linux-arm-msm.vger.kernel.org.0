@@ -2,40 +2,38 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 11D3CAA4AC
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 Sep 2019 15:38:05 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B8425AA4E6
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 Sep 2019 15:43:47 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730070AbfIENhr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 5 Sep 2019 09:37:47 -0400
-Received: from sauhun.de ([88.99.104.3]:57244 "EHLO pokefinder.org"
+        id S1730921AbfIENnl (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 5 Sep 2019 09:43:41 -0400
+Received: from sauhun.de ([88.99.104.3]:57322 "EHLO pokefinder.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1727143AbfIENhq (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 5 Sep 2019 09:37:46 -0400
+        id S1725975AbfIENnl (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 5 Sep 2019 09:43:41 -0400
 Received: from localhost (p54B335F6.dip0.t-ipconnect.de [84.179.53.246])
-        by pokefinder.org (Postfix) with ESMTPSA id 31A312C00C0;
-        Thu,  5 Sep 2019 15:37:44 +0200 (CEST)
-Date:   Thu, 5 Sep 2019 15:37:43 +0200
+        by pokefinder.org (Postfix) with ESMTPSA id 881712C00C0;
+        Thu,  5 Sep 2019 15:43:38 +0200 (CEST)
+Date:   Thu, 5 Sep 2019 15:43:38 +0200
 From:   Wolfram Sang <wsa@the-dreams.de>
 To:     Lee Jones <lee.jones@linaro.org>
-Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>, alokc@codeaurora.org,
-        agross@kernel.org, robh+dt@kernel.org, mark.rutland@arm.com,
+Cc:     alokc@codeaurora.org, agross@kernel.org, robh+dt@kernel.org,
+        mark.rutland@arm.com, bjorn.andersson@linaro.org,
         linux-i2c@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
-        linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 1/2] i2c: qcom-geni: Provide an option to select FIFO
+        devicetree@vger.kernel.org, vkoul@kernel.org,
+        linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 2/2] i2c: qcom-geni: Provide an option to disable DMA
  processing
-Message-ID: <20190905133743.GE1157@kunai>
-References: <20190904113613.14997-1-lee.jones@linaro.org>
- <20190904203548.GC580@tuxbook-pro>
- <20190904212337.GF23608@ninjato>
- <20190905071103.GX26880@dell>
- <20190905091617.GC1157@kunai>
- <20190905093444.GE26880@dell>
+Message-ID: <20190905134338.GF1157@kunai>
+References: <20190905075213.13260-1-lee.jones@linaro.org>
+ <20190905075213.13260-2-lee.jones@linaro.org>
+ <20190905091800.GD1157@kunai>
+ <20190905092816.GD26880@dell>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="gMR3gsNFwZpnI/Ts"
+        protocol="application/pgp-signature"; boundary="jkO+KyKz7TfD21mV"
 Content-Disposition: inline
-In-Reply-To: <20190905093444.GE26880@dell>
+In-Reply-To: <20190905092816.GD26880@dell>
 User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
@@ -43,67 +41,48 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
---gMR3gsNFwZpnI/Ts
+--jkO+KyKz7TfD21mV
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-
-> > So, are there investigations running why this reboot happens?
+On Thu, Sep 05, 2019 at 10:28:16AM +0100, Lee Jones wrote:
+> On Thu, 05 Sep 2019, Wolfram Sang wrote:
 >=20
-> Yes, but they have been running for months, literally.
-
-I see. This is good to know. Just so I also know where we are with this.
-
-> > Which is a clear disadvantage of that solution. It won't fix older
-> > kernels. My suggestion above should fix them, too.
->=20
-> Not sure how this is possible.  Unless you mean LTS?
-
-Why not? Using of_machine_is_compatible() makes the patch 100% self
-contained (no extra binding needed). It will work wherever the machine
-description fits.
-
-> > Unless we know why the reboot happens on your platform, I'd be careful
-> > with saying "work obviously well" on other platforms.
->=20
-> Someone must have tested it?  Surely ... ;)
-
-It seems to work mostly, I won't deny that. But we don't know if the
-buggy situation can be triggered on these platforms as well by something
-else later. We just don't know.
-
-> > My suggestion:
 > >=20
-> > For 5.3, use of_machine_is_compatible() and we backport that. For later,
-> > try to find out the root cause and fix it. If that can't be done, try to
-> > set up a generic "disable-dma" property and use it.
+> > > Fixes: 8bc529b25354 ("soc: qcom: geni: Add support for ACPI")
 > >=20
-> > What do you think about that?
+> > Are you sure? From visual inspection, I don't see a correlation between
+> > this commit and the fix here.
 >=20
-> Sounds okay to me.  Let me code that up.
+> This patch should have been part of the commit, or at the very least,
+> part of the set, alluded to above.  Unfortunately, I was carrying
+> Bjorn's hack which simply returned early from geni_se_rx_dma_prep()
+> with an error, so it masked the issue.
 
-Glad you like it.
+I still don't see why this basic ACPI enabling code (not touching DMA
+but only clocks and pinctrl) causes and additional handling for DMA. Am
+I overlooking something obvious?
 
 
---gMR3gsNFwZpnI/Ts
+--jkO+KyKz7TfD21mV
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEOZGx6rniZ1Gk92RdFA3kzBSgKbYFAl1xD6MACgkQFA3kzBSg
-KbbjbRAAoIoQeZCMH5wLWkFBosilnEpvLFsBKQ9e1UoyHCK9wZiPoKduvpoo2g4R
-RLSwko3R49cuGKCMy3e7WeX+bOekY7xaP4M79/b/jOp7JBm3rhbKj2NjHNl7hz2b
-GRgIR9rCK7LbzfT47jf2p8rYGXTa2e4285Z6LqLwncf3E2ZGIntEE7Trc9hZbn2c
-MI+dMDgRvUUotGXQ0H5+XVRLjpPLi2p4MJhSE1wQpsAl1q2vD3sOdnG1ewpj2akI
-O3H+tupA5EU3MEMeWLN2LLhTAllw5uopqX74r4TCwfFl8QYOYZ/7Z4UfTsKLiY9q
-I/VbXn8NmghJTbnFogH8Ne6fm/omHZDPzO44bznJeDKtfAc2P+LKQOjAXpA0Iaof
-Qv6zBX7P6eILRJtxr6IeYbrmvaV85wyVeAf2Kxucxo5BIq5HwulcjX3Qxu6GGal8
-9zhmaOu8RmL9DYHWXr5IaG8+Lx88ftTspUHD4AiYxDbMWkRTbrENV7m6lLWtDTgZ
-VQ5hDBtx7HZEFb9I/ToOTBkL8zwiHRCKvAhtRNfMTBHixl5q5Hy68RI77Jywp3+G
-ku1M7uMksLAgH7u8UGxWtxkimxcEcYGAvXwaffbqfQnswOSPD7l3iL6k9uv5hYC8
-ZKwMfYXGXIcWI6l7qWcFkoTpIVsb3Sflshc1I7iHAGJov017tSI=
-=0if5
+iQIzBAABCgAdFiEEOZGx6rniZ1Gk92RdFA3kzBSgKbYFAl1xEQoACgkQFA3kzBSg
+KbaP5RAAtJRsAeX9DwqHu6OlUfWtnxeVIUmEceiWZ/k1Ad04csZDAuSKX/zEIIUH
+STPHQiXh5QrNJSnU5Wwxu3GmIqY5xO71X2fHKQn+z9hyi6AKrNdxMnTKz9Sq/vlV
+sl7qnk8IwyFEVlx6jFF10jw0ca50yv8IT4ErQAC+gUgAeF85T8tlxx66S3943qKe
+8Tz9J2dazk4Okf3NZHEm7h/V6WnmxDulwocq+gkm28jfBiusxexwoxiBy83eAYe5
+MbCbGD5eYesY24ZE4iJy/lCVspwe0Bgzj+DuBz0x+nwKf59vhQkjx0bV3UuaFH1/
+8VgnDGl4ocIdi9kJYRpHmVaKnrr9CcvWssm7YwmTzg7L2Zq2rwRcr+hi4sM+02Qn
+9Ki81OVixSgU2b8e+sbhQSh74JIAr6fiVFBBOluaT1SAkYclAzZbMETeCuDHowDB
+Sm2tjXkspsahkMM/+Um+X8rQ3xcULWYAckxwlpJPgdVXBOqOHH4fWQfuCvjo+W/p
+45UiRjFQQJzDAzzvjQT6cywv+nVxO3so5i3LH2QxdU+teccqtgjkbVJny9G1VdUc
+e8JBMtake7qqFdgImuTCOhbqu+9ACQmeKpYVVNSepxX25JMoxr9iDZy1i0W5+pQe
+N5vhQJRs0+i0X1IMG6jSuvmffuJJNIF6hI4rmRkg9//l5eHVlAo=
+=Fazi
 -----END PGP SIGNATURE-----
 
---gMR3gsNFwZpnI/Ts--
+--jkO+KyKz7TfD21mV--
