@@ -2,247 +2,241 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 20189ABBED
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 Sep 2019 17:12:51 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 27C93ABC76
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 Sep 2019 17:28:12 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730926AbfIFPMu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 6 Sep 2019 11:12:50 -0400
-Received: from mail-pf1-f194.google.com ([209.85.210.194]:45043 "EHLO
-        mail-pf1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730204AbfIFPMu (ORCPT
+        id S2403861AbfIFP2F (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 6 Sep 2019 11:28:05 -0400
+Received: from mail-lj1-f196.google.com ([209.85.208.196]:36666 "EHLO
+        mail-lj1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1732456AbfIFP2F (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 6 Sep 2019 11:12:50 -0400
-Received: by mail-pf1-f194.google.com with SMTP id q21so4673326pfn.11
-        for <linux-arm-msm@vger.kernel.org>; Fri, 06 Sep 2019 08:12:49 -0700 (PDT)
+        Fri, 6 Sep 2019 11:28:05 -0400
+Received: by mail-lj1-f196.google.com with SMTP id l20so6402334ljj.3
+        for <linux-arm-msm@vger.kernel.org>; Fri, 06 Sep 2019 08:28:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=message-id:mime-version:content-transfer-encoding:in-reply-to
-         :references:to:from:cc:subject:user-agent:date;
-        bh=Xb6VwDjoplmWmuetAQCvzqk0SmPHJLjBpgM4hHIYCII=;
-        b=ZHOv+RZQ3aLmqgmsd5zyET7umQYE10jQO9DyLmBi7gmXaBD/zsKVo+gYs46PZcAdJX
-         TM3rMdk2kGkm9oV51CI9U1unCD6cNDTNdjaApnOAqojhXZp71CwST9cw1aBWzIZauQxK
-         RpsP1NITVP9z8h6SB0dNNBxLbHKkMZvZr94+s=
+        d=linaro.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=hbMU3iw6suD9Pa8NpBysxN0nHVf+3AA+w6KB+ur557E=;
+        b=Jg4D3B8sAIRTKTDuClimaMSkTIkAwZCVhKloS7socUuIkOP35trTMY7w0oBbCU1o1s
+         8tikyGGNa73XbIifm59+RdFYWI57KfYKmlgKfp0BuKOmz/6R/wjepHrsMrwCHb6G92K3
+         gLYnulkj3G2BYqh2AjSfmZFfoFdZZNZPTHGQJgW5R8ONpBsg4sa0X1cxR8I0q9rGPmOq
+         xvzy2myvQeIzPgWhm2I5S4Gl33PUfrLXL1/rS7ip6RMr06Z/Gdzz2zuWtH0ITbGAl+Ai
+         RY/h5t80C9mrqxOQsRRHQ9SeS/lOBGjh7qYAM6gZq59geaXHCKZR8nwFglbF3nOGGfjf
+         QXwQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:mime-version
-         :content-transfer-encoding:in-reply-to:references:to:from:cc:subject
-         :user-agent:date;
-        bh=Xb6VwDjoplmWmuetAQCvzqk0SmPHJLjBpgM4hHIYCII=;
-        b=EVlCK1dD1UWgVQdrqubAfyjRQR0wta2yzAMrfj+5wY7K+FJNfdWenYRLE1W6C7K9wB
-         4/v5aYpKGETRbnZqqCl5ijhixVzwVPEyeQXL0WSeDrTRiW5LiDPAJwVw5GuP4WzICj9Y
-         Ii4rS7FiviyNfpuKawCuz53xgmOIcEd2oXJBP+X57oG5UGj0m5oTUyr7I0u7Mcm26PeV
-         1SQG1qOvkM95nlzOmlb8q2SzY0baKzhfZqMm2XWMg0G9twlxbwFg0AiFakPdn6qlZzkn
-         qSIVUlEbF4HN4kr9H2mVUHjQWh+Bo5Lidy0oBr7Wnfp7szVLztyTRAN4a5w68pC4EB0c
-         CIEg==
-X-Gm-Message-State: APjAAAX9MVJRqQYrr+73dsTk2g+rjl2CeNHLSSycfGboQvuJnPRFUG1W
-        PadiJAgFEXJ614YylU/rpDOAEQ==
-X-Google-Smtp-Source: APXvYqx5APO82PFexcy027FfVJXJBg/BMStPKFD+PoK1ECUmgX6ZblpH7mM8DpzNko7+Kif7xTbz/Q==
-X-Received: by 2002:a63:a302:: with SMTP id s2mr8404939pge.125.1567782768983;
-        Fri, 06 Sep 2019 08:12:48 -0700 (PDT)
-Received: from chromium.org ([2620:15c:202:1:fa53:7765:582b:82b9])
-        by smtp.gmail.com with ESMTPSA id u5sm5336849pfl.25.2019.09.06.08.12.48
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 06 Sep 2019 08:12:48 -0700 (PDT)
-Message-ID: <5d727770.1c69fb81.c9062.ce60@mx.google.com>
-Content-Type: text/plain; charset="utf-8"
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=hbMU3iw6suD9Pa8NpBysxN0nHVf+3AA+w6KB+ur557E=;
+        b=SZK8Xi7JeKekP5ioSt0Q6JTZy55kitY6AIG9GATper3q3P1j1pO1WshjUBedMyjRrB
+         kXzGOse9uGJJ9PK3FMvlxequRdqbxzi2f2737IScsw+cnQ6iP1/JifxQII2loRy5u/r/
+         RXwjrRiRCnP6TeYdK13VN9CjEXnmqlA/+uRbnDzFgNqNeT7gdTWEeH3m549GBjMA8NmT
+         NIIj9fiEirgWOCuxW7jEFsyk22HmlCvIs6DWDcF5M2y6gXaC+MCdlqA6UYxrqvAM06iS
+         acEA+a8qd1vRjFS6BNy3xT++L1wRd/2iliii3gIlbyHgF46ILPtMq1tN/94zlqh7IhFM
+         PRnw==
+X-Gm-Message-State: APjAAAXY3mfUjpHfS0ka5ZfS0PR0XcLKb+VW7UEG4a3acmn+XSoF1geL
+        q9e1tnp/gyf9EZRx9zYCg6PggcvrLxCiXqwITqtVoQ==
+X-Google-Smtp-Source: APXvYqygjznMFLLV5koxljvc/AmTD8IFpb6iCmQITWmi4irLDjdK/YEee+qEQJhA2ycRyRZGL0es0Dh1lUNECYau62k=
+X-Received: by 2002:a2e:1b02:: with SMTP id b2mr6089604ljb.211.1567783681216;
+ Fri, 06 Sep 2019 08:28:01 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <20190823063248.13295-2-vivek.gautam@codeaurora.org>
-References: <20190823063248.13295-1-vivek.gautam@codeaurora.org> <20190823063248.13295-2-vivek.gautam@codeaurora.org>
-To:     Vivek Gautam <vivek.gautam@codeaurora.org>, agross@kernel.org,
-        iommu@lists.linux-foundation.org, joro@8bytes.org,
-        robin.murphy@arm.com, will.deacon@arm.com
-From:   Stephen Boyd <swboyd@chromium.org>
-Cc:     bjorn.andersson@linaro.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org,
-        Vivek Gautam <vivek.gautam@codeaurora.org>
-Subject: Re: [PATCH v4 1/3] firmware: qcom_scm-64: Add atomic version of qcom_scm_call
-User-Agent: alot/0.8.1
-Date:   Fri, 06 Sep 2019 08:12:47 -0700
+References: <20190904112653.22452-1-festevam@gmail.com> <CAP71Wjy3yR4vx-0e4E=EOAeKNaCp0KLyZaYyzRfRk0XefOBJFA@mail.gmail.com>
+ <CA+5PVA73J6xCUx3CM=Nv15aXeSQLtcMc7M+PCDri--oYbWdTQA@mail.gmail.com> <CAFXsbZokkQXh03Ci2oy63OhAHXuLXDZWec5N=n7u5QUM55piSw@mail.gmail.com>
+In-Reply-To: <CAFXsbZokkQXh03Ci2oy63OhAHXuLXDZWec5N=n7u5QUM55piSw@mail.gmail.com>
+From:   Nicolas Dechesne <nicolas.dechesne@linaro.org>
+Date:   Fri, 6 Sep 2019 17:27:49 +0200
+Message-ID: <CAP71WjzwjCBP=U4bJ4qnNmy9hhPFnzvYYg=6OobjhW_LH1N1-A@mail.gmail.com>
+Subject: Re: [PATCH] qcom: Add firmware files for Adreno A200
+To:     Chris Healy <cphealy@gmail.com>
+Cc:     Josh Boyer <jwboyer@kernel.org>,
+        Fabio Estevam <festevam@gmail.com>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Jordan Crouse <jcrouse@codeaurora.org>, robdclark@chromium.org,
+        Linux Firmware <linux-firmware@kernel.org>,
+        Jonathan Marek <jonathan@marek.ca>,
+        freedreno <freedreno@lists.freedesktop.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Vivek Gautam (2019-08-22 23:32:46)
-> There are scnenarios where drivers are required to make a
-> scm call in atomic context, such as in one of the qcom's
-> arm-smmu-500 errata [1].
->=20
-> [1] ("https://source.codeaurora.org/quic/la/kernel/msm-4.9/
->       tree/drivers/iommu/arm-smmu.c?h=3Dmsm-4.9#n4842")
->=20
-> Signed-off-by: Vivek Gautam <vivek.gautam@codeaurora.org>
-> Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
-> ---
->  drivers/firmware/qcom_scm-64.c | 136 ++++++++++++++++++++++++++++-------=
-------
->  1 file changed, 92 insertions(+), 44 deletions(-)
->=20
-> diff --git a/drivers/firmware/qcom_scm-64.c b/drivers/firmware/qcom_scm-6=
-4.c
-> index 91d5ad7cf58b..b6dca32c5ac4 100644
-> --- a/drivers/firmware/qcom_scm-64.c
-> +++ b/drivers/firmware/qcom_scm-64.c
-> @@ -62,32 +62,71 @@ static DEFINE_MUTEX(qcom_scm_lock);
->  #define FIRST_EXT_ARG_IDX 3
->  #define N_REGISTER_ARGS (MAX_QCOM_SCM_ARGS - N_EXT_QCOM_SCM_ARGS + 1)
-> =20
-> -/**
-> - * qcom_scm_call() - Invoke a syscall in the secure world
-> - * @dev:       device
-> - * @svc_id:    service identifier
-> - * @cmd_id:    command identifier
-> - * @desc:      Descriptor structure containing arguments and return valu=
-es
-> - *
-> - * Sends a command to the SCM and waits for the command to finish proces=
-sing.
-> - * This should *only* be called in pre-emptible context.
-> -*/
-> -static int qcom_scm_call(struct device *dev, u32 svc_id, u32 cmd_id,
-> -                        const struct qcom_scm_desc *desc,
-> -                        struct arm_smccc_res *res)
-> +static void __qcom_scm_call_do(const struct qcom_scm_desc *desc,
-> +                              struct arm_smccc_res *res, u32 fn_id,
-> +                              u64 x5, u32 type)
-> +{
-> +       u64 cmd;
-> +       struct arm_smccc_quirk quirk =3D {.id =3D ARM_SMCCC_QUIRK_QCOM_A6=
-};
+On Fri, Sep 6, 2019 at 5:09 PM Chris Healy <cphealy@gmail.com> wrote:
+>
+> Hi All,
+>
+> I'll start by saying that I'm no expert on this subject!  My
+> understanding with this Adreno 2xx firmware though is that these two
+> firmware files are generally equivalent to what was distributed
+> previously in an include file in the following two files for the NXP
+> i.MX51 and i.MX53 which utilize the Adreno 200:
+>
+> https://source.codeaurora.org/external/imx/linux-imx/tree/drivers/mxc/amd-gpu/common/pm4_microcode.inl?h=imx_2.6.35_1.1.0_caf&id=61ade304d0eddc3f44fb2ee0b2b7ccf3ffcf85d5
+> https://source.codeaurora.org/external/imx/linux-imx/tree/drivers/mxc/amd-gpu/common/pfp_microcode_nrt.inl?h=imx_2.6.35_1.1.0_caf&id=61ade304d0eddc3f44fb2ee0b2b7ccf3ffcf85d5
+>
+> I'm not suggesting we don't get someone from qcom to provide a
+> Signed-off-by.  I'm only pointing out that it looks like this firmware
+> was previously made available and that it did have a license that
+> perhaps we can continue to use for this firmware that's also for the
+> Adreno 200?
 
-Nitpick: Put spaces around braces please.
+I was not saying the firmware can't be distributed, I was just
+pointing out that most likely using LICENSE.qcom was wrong. I was
+involved when we created LICENSE.qcom and submitted it first, and I
+know that the i.MX firmware can't be distributed with these license
+terms. If the firmware have been released previously , especially on
+codeaurora.org then they are definitely good candidates for
+linux-firmware, but the license and WHENCE need to be adjusted
+accordingly.
 
-> +
-> +       cmd =3D ARM_SMCCC_CALL_VAL(type, qcom_smccc_convention,
-> +                                ARM_SMCCC_OWNER_SIP, fn_id);
-> +
-> +       quirk.state.a6 =3D 0;
-> +
-> +       do {
-> +               arm_smccc_smc_quirk(cmd, desc->arginfo, desc->args[0],
-> +                                   desc->args[1], desc->args[2], x5,
-> +                                   quirk.state.a6, 0, res, &quirk);
-> +
-> +               if (res->a0 =3D=3D QCOM_SCM_INTERRUPTED)
-> +                       cmd =3D res->a0;
-> +
-> +       } while (res->a0 =3D=3D QCOM_SCM_INTERRUPTED);
-> +}
-> +
-> +static void qcom_scm_call_do(const struct qcom_scm_desc *desc,
-> +                            struct arm_smccc_res *res, u32 fn_id,
-> +                            u64 x5, bool atomic)
-> +{
-> +       int retry_count =3D 0;
-> +
-> +       if (!atomic) {
-> +               do {
-> +                       mutex_lock(&qcom_scm_lock);
-> +
-> +                       __qcom_scm_call_do(desc, res, fn_id, x5,
-> +                                          ARM_SMCCC_STD_CALL);
-> +
-> +                       mutex_unlock(&qcom_scm_lock);
-> +
-> +                       if (res->a0 =3D=3D QCOM_SCM_V2_EBUSY) {
-> +                               if (retry_count++ > QCOM_SCM_EBUSY_MAX_RE=
-TRY)
-> +                                       break;
-> +                               msleep(QCOM_SCM_EBUSY_WAIT_MS);
-> +                       }
-> +               }  while (res->a0 =3D=3D QCOM_SCM_V2_EBUSY);
-> +       } else {
-> +               __qcom_scm_call_do(desc, res, fn_id, x5, ARM_SMCCC_FAST_C=
-ALL);
-> +       }
-
-To save on some indentation maybe you could write it like:
-
-	if (atomic) {
-		__qcom_scm_call_do(..)
-		return;
-	}
-
-	do {
-		mutex_lock(..)
-		...
-	} while (..);
-
-> +}
-> +
-> +static int ___qcom_scm_call(struct device *dev, u32 svc_id, u32 cmd_id,
-> +                           const struct qcom_scm_desc *desc,
-> +                           struct arm_smccc_res *res, bool atomic)
->  {
->         int arglen =3D desc->arginfo & 0xf;
-> -       int retry_count =3D 0, i;
-> +       int i;
->         u32 fn_id =3D QCOM_SCM_FNID(svc_id, cmd_id);
-> -       u64 cmd, x5 =3D desc->args[FIRST_EXT_ARG_IDX];
-> +       u64 x5 =3D desc->args[FIRST_EXT_ARG_IDX];
->         dma_addr_t args_phys =3D 0;
->         void *args_virt =3D NULL;
->         size_t alloc_len;
-> -       struct arm_smccc_quirk quirk =3D {.id =3D ARM_SMCCC_QUIRK_QCOM_A6=
-};
-> +       gfp_t flag =3D atomic ? GFP_ATOMIC : GFP_KERNEL;
-> =20
->         if (unlikely(arglen > N_REGISTER_ARGS)) {
->                 alloc_len =3D N_EXT_QCOM_SCM_ARGS * sizeof(u64);
-> -               args_virt =3D kzalloc(PAGE_ALIGN(alloc_len), GFP_KERNEL);
-> +               args_virt =3D kzalloc(PAGE_ALIGN(alloc_len), flag);
-> =20
->                 if (!args_virt)
->                         return -ENOMEM;
-> @@ -156,6 +169,41 @@ static int qcom_scm_call(struct device *dev, u32 svc=
-_id, u32 cmd_id,
->         return 0;
->  }
-> =20
-> +/**
-> + * qcom_scm_call() - Invoke a syscall in the secure world
-> + * @dev:       device
-> + * @svc_id:    service identifier
-> + * @cmd_id:    command identifier
-> + * @desc:      Descriptor structure containing arguments and return valu=
-es
-> + *
-> + * Sends a command to the SCM and waits for the command to finish proces=
-sing.
-> + * This should *only* be called in pre-emptible context.
-
-Add a might_sleep() then?
-
-> + */
-> +static int qcom_scm_call(struct device *dev, u32 svc_id, u32 cmd_id,
-> +                        const struct qcom_scm_desc *desc,
-> +                        struct arm_smccc_res *res)
-> +{
-> +       return ___qcom_scm_call(dev, svc_id, cmd_id, desc, res, false);
-> +}
-> +
-> +/**
-> + * qcom_scm_call_atomic() - atomic variation of qcom_scm_call()
-> + * @dev:       device
-> + * @svc_id:    service identifier
-> + * @cmd_id:    command identifier
-> + * @desc:      Descriptor structure containing arguments and return valu=
-es
-> + * @res:       Structure containing results from SMC/HVC call
-> + *
-> + * Sends a command to the SCM and waits for the command to finish proces=
-sing.
-> + * This should be called in atomic context only.
-=20
-Maybe add a cant_sleep()?
-
-> + */
-> +static int qcom_scm_call_atomic(struct device *dev, u32 svc_id, u32 cmd_=
-id,
-> +                               const struct qcom_scm_desc *desc,
-> +                               struct arm_smccc_res *res)
-> +{
-> +       return ___qcom_scm_call(dev, svc_id, cmd_id, desc, res, true);
-> +}
-> +
+>
+> Regards,
+>
+> Chris
+>
+> On Wed, Sep 4, 2019 at 8:35 AM Josh Boyer <jwboyer@kernel.org> wrote:
+> >
+> > On Wed, Sep 4, 2019 at 8:09 AM Nicolas Dechesne
+> > <nicolas.dechesne@linaro.org> wrote:
+> > >
+> > > hi Fabio,
+> > >
+> > > On Wed, Sep 4, 2019 at 1:27 PM Fabio Estevam <festevam@gmail.com> wrote:
+> > > >
+> > > > Add firmware files for Adreno A200.
+> > > >
+> > > > These firmware files are needed for running the adreno kernel
+> > > > driver on i.MX51 and i.MX53 SoCs.
+> > > >
+> > > > Signed-off-by: Fabio Estevam <festevam@gmail.com>
+> > > > ---
+> > > >  WHENCE             |   2 ++
+> > > >  qcom/yamato_pfp.fw | Bin 0 -> 1156 bytes
+> > > >  qcom/yamato_pm4.fw | Bin 0 -> 9220 bytes
+> > > >  3 files changed, 2 insertions(+)
+> > > >  create mode 100644 qcom/yamato_pfp.fw
+> > > >  create mode 100644 qcom/yamato_pm4.fw
+> > > >
+> > > > diff --git a/WHENCE b/WHENCE
+> > > > index a8ec628..5e46d33 100644
+> > > > --- a/WHENCE
+> > > > +++ b/WHENCE
+> > > > @@ -4418,6 +4418,8 @@ File: qcom/a530_zap.b00
+> > > >  File: qcom/a530_zap.b01
+> > > >  File: qcom/a530_zap.b02
+> > > >  File: qcom/a530_zap.mdt
+> > > > +File: qcom/yamato_pfp.fw
+> > > > +File: qcom/yamato_pm4.fw
+> > >
+> > > Where did you get these files from in the first place? On which
+> > > devices do you expect these firmware files to work? We were recently
+> > > discussing how to structure /lib/firmware/qcom more carefully. And the
+> > > general consensus that we reached with Rob C. and Bjorn is that if a
+> > > firmware is expected to work on a specific device (maybe it is signed)
+> > > it should be placed in /lib/firmware/qcom/<device> and if it's
+> > > unsigned and can be used on several devices based on the same SoC (dev
+> > > boards, ..) then it should be /lib/firmware/qcom/<SOC>.
+> > >
+> > > >
+> > > >  Licence: Redistributable. See LICENSE.qcom and qcom/NOTICE.txt for details
+> > >
+> > > Are they really distributed under these license terms? That's a
+> > > specific license that we came up with with Qualcomm a couple of years
+> > > ago based on their Dragonboard offers.
+> >
+> > So everyone understands, I'm not pulling this for now.  If there are
+> > questions on provenance of the firmware and the license it's under,
+> > that's a big red flag for me.  Ideally we'd see someone from qcom add
+> > a Signed-off-by or otherwise acknowledge these are meant to be
+> > redistributable.
+> >
+> > josh
+> >
+> > > > diff --git a/qcom/yamato_pfp.fw b/qcom/yamato_pfp.fw
+> > > > new file mode 100644
+> > > > index 0000000000000000000000000000000000000000..61a576eb997ce2ee0d32b135adc5d8c789d8e118
+> > > > GIT binary patch
+> > > > literal 1156
+> > > > zcmaKr%WG3X7{!10-ZY7A3K1$6=_76G1N!h4AK=1^>7q~<E%;a!K{qZG{{WkEu`Vig
+> > > > znc9aU-RVwT2qFk+Q_@myY|Wy$6#N(5N<A}4Y7An+@Xef=?>pywGZ*xWlo-D@qsc1s
+> > > > zPiBZtq;Lo<?)jnc0FONz87grhu?2;tYGjUXtrI+jc!`*Bk|n%g5tAFK<$08Cey`T`
+> > > > zvx)jy!_iTK&JzB^96f&7=Jy2U|K?k+gt(ON1sa9FwHhv?DgHb|R9rnZ-6s0-6jM&z
+> > > > z<oUHc%}p<2ua40-x6P;G0z=6yT7xAz^XG{8D<toSI0F%~&MtQ~T=}{_nNy9j>b=By
+> > > > z8`b=UTDGpZL%olqwSLyuMi<gPtom*~LmSJCbZV|Tu6+Mc?V^V9)FoZr!s@x6yK8%C
+> > > > z_Iu;H3)M*(Z_;Vjwjatfch;}iOVyu=r@M4c9_##P#7|+_;(b9#$`3g#E&H)G(&EW#
+> > > > zxHmG)zn>;t$l(^GuMl!ic#FAX%}uRm#-DUZ1hd+EFuQ1Z%pKHqw^N~=sumk-JviU7
+> > > > z&1%0qeGi$+F4LlD>Nu(BfzF~^Ik@AK4f|)~+w9LSVPYeflWINSJtW>%jmAE-X`N`o
+> > > > z($Z#o#}~_Q`saDO4AgL=$zW+=$D6RMuoF#~Id3&ZPDx9}ei!DQJAO!1<Cne}H@=}a
+> > > > zw84=e&!8{|-Sa>8&3oD$%MmN&SySBjIZa%1lT+oXSj=m{xNPnN27?{z{g3~>S}*2o
+> > > > z+!Sjl6<_79MgKjLeBh|wK|hyBla<>kPV$Ih9y6j|j?+bkAujSpCsw$^Yp(K*QPvsb
+> > > > aBNKdPk}Yn^%`G{<%{x^na)+4oG>_jjN)4X?
+> > > >
+> > > > literal 0
+> > > > HcmV?d00001
+> > > >
+> > > > diff --git a/qcom/yamato_pm4.fw b/qcom/yamato_pm4.fw
+> > > > new file mode 100644
+> > > > index 0000000000000000000000000000000000000000..b45ea20ba5773ef6da25e21abd29914ea9162c07
+> > > > GIT binary patch
+> > > > literal 9220
+> > > > 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
+> > > >
+> > > > literal 0
+> > > > HcmV?d00001
+> > > >
+> > > > --
+> > > > 2.17.1
+> > > >
