@@ -2,84 +2,79 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id D8342AAFE5
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 Sep 2019 02:39:54 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B241EAB17A
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 Sep 2019 06:19:37 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2391581AbfIFAjy (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 5 Sep 2019 20:39:54 -0400
-Received: from mail-pf1-f194.google.com ([209.85.210.194]:42018 "EHLO
-        mail-pf1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2390825AbfIFAjy (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 5 Sep 2019 20:39:54 -0400
-Received: by mail-pf1-f194.google.com with SMTP id w22so3073116pfi.9
-        for <linux-arm-msm@vger.kernel.org>; Thu, 05 Sep 2019 17:39:53 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=message-id:mime-version:content-transfer-encoding:in-reply-to
-         :references:to:from:cc:subject:user-agent:date;
-        bh=UgLwGOLd9Qaofpb/EMRahwjwW4TzGd9hkLOFeY5MZAY=;
-        b=VKalJm2EThnQ27lsNLgCNQVCIu2xu0aPd0QmMEODnmLKOaOclAraltTAFz5qlLmPsz
-         OrIA51ux0pzJWcRc2yp/pmbwTzvDB4HOW92Frt21D4wp9mkgTWh2fR9CTKbeHFvVcS50
-         49B6sW1p1h3yjjezZwnpLETheL6yUorgutylc=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:mime-version
-         :content-transfer-encoding:in-reply-to:references:to:from:cc:subject
-         :user-agent:date;
-        bh=UgLwGOLd9Qaofpb/EMRahwjwW4TzGd9hkLOFeY5MZAY=;
-        b=PlMjduT/mqT7JgrAFmPgFGl23t7MgzeyQzmDdB66VLNyrYDsHUaW6S8yuJri71Qk3j
-         gr11fMF9di4Q6eXDAXokAVd/a8dGjUbgk7C+99awhYe/4+0NrNh7XDjy4ABK5M8GMwyi
-         V93496D6Ye6iNHYOuGeddcneVIjrY2xcbdQjsij77ua2q7f7nD/+F5eUlD/KBqnDSaQb
-         60pnnZQI/Ad/SLqgvrzA1+vBTRPTp7lTaRA1o3zXpzdoLghMmklnQTBaR/orbUB56KlP
-         1wxKuub8dCzfbl4NKI+SU3WOANxLyUX91yW6Reif7EUMskVwD0Vzx/Blu9KwvUSTLOdj
-         iSYA==
-X-Gm-Message-State: APjAAAVHjthklkvjdIQ5ZYrA99DliH0vZjFj8nn5wgXSCUauGmgCXnIl
-        GogGmBAEArHIe9ce4vCPRlqckA==
-X-Google-Smtp-Source: APXvYqzsUIedg/kFHh7n2df4VYVSimGTOumXrGupH6BrHebKIF4HmZ8VC2KdVr+TA3cvwdNwNGA7AQ==
-X-Received: by 2002:a62:d45a:: with SMTP id u26mr4972214pfl.137.1567730393567;
-        Thu, 05 Sep 2019 17:39:53 -0700 (PDT)
-Received: from chromium.org ([2620:15c:202:1:fa53:7765:582b:82b9])
-        by smtp.gmail.com with ESMTPSA id 127sm7907733pfy.56.2019.09.05.17.39.52
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 05 Sep 2019 17:39:53 -0700 (PDT)
-Message-ID: <5d71aad9.1c69fb81.f469e.262f@mx.google.com>
-Content-Type: text/plain; charset="utf-8"
+        id S1726149AbfIFETg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 6 Sep 2019 00:19:36 -0400
+Received: from mail.kernel.org ([198.145.29.99]:48600 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1725958AbfIFETg (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 6 Sep 2019 00:19:36 -0400
+Received: from localhost (unknown [223.226.32.145])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by mail.kernel.org (Postfix) with ESMTPSA id 6A473206CD;
+        Fri,  6 Sep 2019 04:19:34 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=default; t=1567743575;
+        bh=9wEomr15DqQQFhjsBZXapKuHKKB45PBaOQHhXs8HHp8=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=m1WiMGmptBN2cyjUduyaacqO6M/p/cHX8x1ZtV+FkmhG8+yMNjTy7XbuRmojKpBgk
+         20yF9UStj0DwHs/HL/OH2iagYGmh6iq4YooP9WYcTwHo1DJSDF/bZt4qj1KAmX6LeO
+         028BuJAfK6mS5lGVPXXuUXSjNEjn/RYCMby7ACxA=
+Date:   Fri, 6 Sep 2019 09:48:27 +0530
+From:   Vinod Koul <vkoul@kernel.org>
+To:     Stephen Boyd <swboyd@chromium.org>
+Cc:     Kishon Vijay Abraham I <kishon@ti.com>,
+        linux-arm-msm@vger.kernel.org,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Mark Rutland <mark.rutland@arm.com>,
+        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org
+Subject: Re: [PATCH 3/3] phy: qcom-qmp: Add SM8150 QMP UFS PHY support
+Message-ID: <20190906041827.GD2672@vkoul-mobl>
+References: <20190904100835.6099-1-vkoul@kernel.org>
+ <20190904100835.6099-4-vkoul@kernel.org>
+ <5d70475a.1c69fb81.650ed.0ad0@mx.google.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <20190829181203.2660-3-ilina@codeaurora.org>
-References: <20190829181203.2660-1-ilina@codeaurora.org> <20190829181203.2660-3-ilina@codeaurora.org>
-To:     Lina Iyer <ilina@codeaurora.org>, evgreen@chromium.org,
-        linus.walleij@linaro.org, marc.zyngier@arm.com
-From:   Stephen Boyd <swboyd@chromium.org>
-Cc:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        bjorn.andersson@linaro.org, mkshah@codeaurora.org,
-        linux-gpio@vger.kernel.org, rnayak@codeaurora.org,
-        Lina Iyer <ilina@codeaurora.org>
-Subject: Re: [PATCH RFC 02/14] drivers: irqchip: pdc: Do not toggle IRQ_ENABLE during mask/unmask
-User-Agent: alot/0.8.1
-Date:   Thu, 05 Sep 2019 17:39:52 -0700
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <5d70475a.1c69fb81.650ed.0ad0@mx.google.com>
+User-Agent: Mutt/1.12.0 (2019-05-25)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Lina Iyer (2019-08-29 11:11:51)
-> When an interrupt is to be serviced, the convention is to mask the
-> interrupt at the chip and unmask after servicing the interrupt. Enabling
-> and disabling the interrupt at the PDC irqchip causes an interrupt storm
-> due to the way dual edge interrupts are handled in hardware.
->=20
-> Skip configuring the PDC when the IRQ is masked and unmasked, instead
-> use the irq_enable/irq_disable callbacks to toggle the IRQ_ENABLE
-> register at the PDC. The PDC's IRQ_ENABLE register is only used during
-> the monitoring mode when the system is asleep and is not needed for
-> active mode detection.
+On 04-09-19, 16:23, Stephen Boyd wrote:
+> Quoting Vinod Koul (2019-09-04 03:08:35)
+> > @@ -878,6 +883,93 @@ static const struct qmp_phy_init_tbl msm8998_usb3_pcs_tbl[] = {
+> >         QMP_PHY_INIT_CFG(QPHY_V3_PCS_RXEQTRAINING_RUN_TIME, 0x13),
+> >  };
+> >  
+> > +static const struct qmp_phy_init_tbl sm8150_ufsphy_serdes_tbl[] = {
+> > +       QMP_PHY_INIT_CFG(QPHY_POWER_DOWN_CONTROL, 0x01),
+> > +       QMP_PHY_INIT_CFG(QSERDES_COM_V4_SYSCLK_EN_SEL, 0xD9),
+> 
+> Can you use lowercase hex?
 
-I think this is saying that we want to always let the line be sent
-through the PDC to the parent irqchip, in this case GIC, so that we
-don't get an interrupt storm for dual edge interrupts? Why does dual
-edge interrupts cause a problem?
+Sure will update
 
->=20
-> Signed-off-by: Lina Iyer <ilina@codeaurora.org>
+> > +       QMP_PHY_INIT_CFG(QSERDES_COM_V4_HSCLK_SEL, 0x11),
+> > +       QMP_PHY_INIT_CFG(QSERDES_COM_V4_HSCLK_HS_SWITCH_SEL, 0x00),
+> > +       QMP_PHY_INIT_CFG(QSERDES_COM_V4_LOCK_CMP_EN, 0x01),
+> > +       QMP_PHY_INIT_CFG(QSERDES_COM_V4_VCO_TUNE_MAP, 0x02),
+> > +       QMP_PHY_INIT_CFG(QSERDES_COM_V4_PLL_IVCO, 0x0F),
+> > +       QMP_PHY_INIT_CFG(QSERDES_COM_V4_VCO_TUNE_INITVAL2, 0x00),
+> > +       QMP_PHY_INIT_CFG(QSERDES_COM_V4_BIN_VCOCAL_HSCLK_SEL, 0x11),
+> > +       QMP_PHY_INIT_CFG(QSERDES_COM_V4_DEC_START_MODE0, 0x82),
+> > +       QMP_PHY_INIT_CFG(QSERDES_COM_V4_CP_CTRL_MODE0, 0x06),
+> 
+> Gotta love the pile of numbers and register writes...
+
+:D
+
+-- 
+~Vinod
