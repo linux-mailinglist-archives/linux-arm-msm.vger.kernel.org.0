@@ -2,68 +2,76 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 2619CAC22F
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 Sep 2019 23:48:50 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 7CFCFAC237
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 Sep 2019 23:51:05 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2404510AbfIFVst (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 6 Sep 2019 17:48:49 -0400
-Received: from mail-pf1-f193.google.com ([209.85.210.193]:36472 "EHLO
-        mail-pf1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2404402AbfIFVss (ORCPT
+        id S2404586AbfIFVvE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 6 Sep 2019 17:51:04 -0400
+Received: from mail-pg1-f196.google.com ([209.85.215.196]:42159 "EHLO
+        mail-pg1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2404236AbfIFVvE (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 6 Sep 2019 17:48:48 -0400
-Received: by mail-pf1-f193.google.com with SMTP id y22so5465259pfr.3;
-        Fri, 06 Sep 2019 14:48:48 -0700 (PDT)
+        Fri, 6 Sep 2019 17:51:04 -0400
+Received: by mail-pg1-f196.google.com with SMTP id p3so4244987pgb.9;
+        Fri, 06 Sep 2019 14:51:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=PmbeXR16EILkjisUuUV6rfWxt0BghSuM480d7BBoObE=;
-        b=l9KS64BP1B0VVFLP3cG+Fu9U3dUbCksmelSZOoyogDcNDZW7sjsm328l7B9JP6x26f
-         DZaO/ojDzSUVS4Il84HxoyaRZCseDaFTbt0s08wXIhLhOunAvz314/stiuohiLGFMmpE
-         o3ol62LvFBaKO08hIXHcKu89nLOnrucM/f4gr9kbmXTL/db0eQb2NfDz1gsUIVqf14t0
-         QS0EoD8cKG4EdIQwYJ9KgSsGFyxXBCE3mbcRtamjbEN+ffrHwSzbUJ5ryEqWsTz7LGFr
-         PJrVc19D7lpchjdUYFkmeYBA9fAiwKYdQ49Fv5Gw7pcbMrSl95PcHvVJdZOvz2bGBBlT
-         Gx5w==
+        bh=eDpX53pV2w3525Sfc++y574jdtjcTxKRU6k4wrPYJJE=;
+        b=R7tJANYP9RC8vMxjaiQJQysGREeC4SukBKwQay9FF+AMJE+MvsYVBFrsati6KaggWM
+         VWkpRA7WPb67hbvt9c4rmHWNClvfUZwODODfoY+fH9crahdylzEddDD/2NidH2MKqLAp
+         Iapm/hiz0A2mDeZEclyVm+SdU1bJGoc8FP6NklRbcl5IksRx0lwTVYI5cealjOhS7XYM
+         gitoGxs4V3Z1Ekpym5seReRqr8Hs7DrGi6GbW553Hr4d3wKFAx1oTU7V3ez1y5WfY1gc
+         2nf2SwaiX5AwY5cE+npxZbJaQLMTapIZxsY6RSypeBRKrquK9OECMgG8670DMSeZaHyp
+         Vsrw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=PmbeXR16EILkjisUuUV6rfWxt0BghSuM480d7BBoObE=;
-        b=XoAG6P2yCvHQxTQwpe4FYkcVt2PvxpDxRFidG7rt0sxALFogQVfRFCbhJh0VPr0j7D
-         ukQ4fJMvguSOtMVZ3SIisTaUiP4h7WFSps0FfKCZOg6N4OzlLWoR0Dnc8EjqzshjQkq5
-         RhOpnVZxch4U+ZwkF79+3+vweX7BNWxq9AT0Fd9VzHh/25HAGPdC65L/DK0w1w6ifQgr
-         4vcTE1SCCnrKpoqe8wVXitX1uGe5dsU1v4ioVIIohrdm7bCiz1HMv2Nj3LQxUkv8wj0A
-         qtPdgycp4ZBD+JOOEGnLsSLoExc4o4ueyc1wjY9AZMRJn6tRCA+4xrHHwn2OIyOEggCD
-         knFQ==
-X-Gm-Message-State: APjAAAXSqUzevw/p6s5Jgi45bkyxmMCqSnX0JLUH9fucSmtmHyC/rADJ
-        ERDHgRO8VlQtflD6gHp8o2k=
-X-Google-Smtp-Source: APXvYqxQCd7WFr1bk2mCpZ+S1Nv/UOSK0AKJu6DLOAfsUfGckUthB3lN7nqi/NUB8YzjJgdlC0+ugA==
-X-Received: by 2002:a63:4823:: with SMTP id v35mr9858403pga.138.1567806528190;
-        Fri, 06 Sep 2019 14:48:48 -0700 (PDT)
+        bh=eDpX53pV2w3525Sfc++y574jdtjcTxKRU6k4wrPYJJE=;
+        b=sZ9nmtGoUKt/aa0fefSOhnURt5p7IOqXJsH1cmcprbc9kTIeD/HXaa7MLC2/z4RHC/
+         2RQIcFXMbvd06KMJI1Esdf22VC5lFe6UsriE2iCLnKAjs2ApTd+zyD/SwsH6Y9OeGztr
+         oDDK1z8KerqH5BGcUpLriGXc+yRjQovk+KTEuc7ys+Y5PlebfjFqEDukciwi/t0XL8V3
+         4WUvXyvdqjwE/LLFpbu3cVWOhLR+3ALF6Gu9/0ZWVWyi04/lq4Fu/s2CgOVRyyTpBVUH
+         BckYg8xBp6V0UrB4at3YgM2jiH5L88FIYN0Ex0L98RbMsdAj4ada6+9nzPTJxJhhapRs
+         OfbQ==
+X-Gm-Message-State: APjAAAWTJ7moDPoouKPlFasFpUKN893OA7B/kq2Won1ZV3Uy+Q3h+ciB
+        egcvBOx5X7gtDR2JACIjFaE=
+X-Google-Smtp-Source: APXvYqxxmn9ULbrQFMLJEtMySO7JBNQkpSXC7k9Y2QPcQyK5SFcavLc7RGYi6hNSQ6p9Iz352cwvcQ==
+X-Received: by 2002:a63:484d:: with SMTP id x13mr9803253pgk.122.1567806663646;
+        Fri, 06 Sep 2019 14:51:03 -0700 (PDT)
 Received: from localhost ([100.118.89.196])
-        by smtp.gmail.com with ESMTPSA id j9sm6894230pfi.128.2019.09.06.14.48.47
+        by smtp.gmail.com with ESMTPSA id g14sm6823936pfo.133.2019.09.06.14.51.02
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 06 Sep 2019 14:48:47 -0700 (PDT)
+        Fri, 06 Sep 2019 14:51:03 -0700 (PDT)
 From:   Rob Clark <robdclark@gmail.com>
 To:     iommu@lists.linux-foundation.org
 Cc:     dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
         Robin Murphy <robin.murphy@arm.com>,
         Joerg Roedel <joro@8bytes.org>, Will Deacon <will@kernel.org>,
         Rob Clark <robdclark@chromium.org>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        "Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
-        Andrew Morton <akpm@linux-foundation.org>,
-        Suzuki K Poulose <suzuki.poulose@arm.com>,
-        Rasmus Villemoes <linux@rasmusvillemoes.dk>,
-        Heikki Krogerus <heikki.krogerus@linux.intel.com>,
-        Bartosz Golaszewski <brgl@bgdev.pl>,
-        Sudeep Holla <sudeep.holla@arm.com>,
-        Joe Perches <joe@perches.com>, Arnd Bergmann <arnd@arndb.de>,
-        linux-kernel@vger.kernel.org (open list)
-Subject: [PATCH v2 1/2] iommu: add support for drivers that manage iommu explicitly
-Date:   Fri,  6 Sep 2019 14:44:01 -0700
-Message-Id: <20190906214409.26677-2-robdclark@gmail.com>
+        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Jordan Crouse <jcrouse@codeaurora.org>,
+        Jonathan Marek <jonathan@marek.ca>,
+        Thomas Gleixner <tglx@linutronix.de>,
+        Allison Randal <allison@lohutok.net>,
+        Mamta Shukla <mamtashukla555@gmail.com>,
+        Jeffrey Hugo <jeffrey.l.hugo@gmail.com>,
+        Jeykumar Sankaran <jsanka@codeaurora.org>,
+        Abhinav Kumar <abhinavk@codeaurora.org>,
+        Sravanthi Kollukuduru <skolluku@codeaurora.org>,
+        Bruce Wang <bzwang@chromium.org>,
+        Boris Brezillon <bbrezillon@kernel.org>,
+        Georgi Djakov <georgi.djakov@linaro.org>,
+        Enrico Weigelt <info@metux.net>,
+        freedreno@lists.freedesktop.org (open list:DRM DRIVER FOR MSM ADRENO
+        GPU), linux-kernel@vger.kernel.org (open list)
+Subject: [PATCH v2 2/2] drm/msm: mark devices where iommu is managed by driver
+Date:   Fri,  6 Sep 2019 14:44:02 -0700
+Message-Id: <20190906214409.26677-3-robdclark@gmail.com>
 X-Mailer: git-send-email 2.21.0
 In-Reply-To: <20190906214409.26677-1-robdclark@gmail.com>
 References: <20190906214409.26677-1-robdclark@gmail.com>
@@ -76,57 +84,62 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 From: Rob Clark <robdclark@chromium.org>
 
-Avoid attaching any non-driver managed domain if the driver indicates
-that it manages the iommu directly.
-
 Signed-off-by: Rob Clark <robdclark@chromium.org>
 ---
- drivers/iommu/iommu.c    | 2 +-
- drivers/iommu/of_iommu.c | 3 +++
- include/linux/device.h   | 3 ++-
- 3 files changed, 6 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/msm/adreno/adreno_device.c | 1 +
+ drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c    | 1 +
+ drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c   | 1 +
+ drivers/gpu/drm/msm/msm_drv.c              | 1 +
+ 4 files changed, 4 insertions(+)
 
-diff --git a/drivers/iommu/iommu.c b/drivers/iommu/iommu.c
-index 0c674d80c37f..2ac5e8d48cae 100644
---- a/drivers/iommu/iommu.c
-+++ b/drivers/iommu/iommu.c
-@@ -674,7 +674,7 @@ int iommu_group_add_device(struct iommu_group *group, struct device *dev)
+diff --git a/drivers/gpu/drm/msm/adreno/adreno_device.c b/drivers/gpu/drm/msm/adreno/adreno_device.c
+index 7f750a9510a5..19f2bd2d6cb4 100644
+--- a/drivers/gpu/drm/msm/adreno/adreno_device.c
++++ b/drivers/gpu/drm/msm/adreno/adreno_device.c
+@@ -452,6 +452,7 @@ static struct platform_driver adreno_driver = {
+ 		.name = "adreno",
+ 		.of_match_table = dt_match,
+ 		.pm = &adreno_pm_ops,
++		.driver_manages_iommu = true,
+ 	},
+ };
  
- 	mutex_lock(&group->mutex);
- 	list_add_tail(&device->list, &group->devices);
--	if (group->domain)
-+	if (group->domain && !(dev->driver && dev->driver->driver_manages_iommu))
- 		ret = __iommu_attach_device(group->domain, dev);
- 	mutex_unlock(&group->mutex);
- 	if (ret)
-diff --git a/drivers/iommu/of_iommu.c b/drivers/iommu/of_iommu.c
-index 614a93aa5305..62b47e384a77 100644
---- a/drivers/iommu/of_iommu.c
-+++ b/drivers/iommu/of_iommu.c
-@@ -221,6 +221,9 @@ const struct iommu_ops *of_iommu_configure(struct device *dev,
- 	} else if (err < 0) {
- 		dev_dbg(dev, "Adding to IOMMU failed: %d\n", err);
- 		ops = NULL;
-+	} else if (dev->driver && dev->driver->driver_manages_iommu) {
-+		dev_dbg(dev, "Driver manages IOMMU\n");
-+		ops = NULL;
- 	}
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
+index 5751815a26d7..dec8cc6b64dc 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
++++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
+@@ -1094,6 +1094,7 @@ static struct platform_driver dpu_driver = {
+ 		.name = "msm_dpu",
+ 		.of_match_table = dpu_dt_match,
+ 		.pm = &dpu_pm_ops,
++		.driver_manages_iommu = true,
+ 	},
+ };
  
- 	return ops;
-diff --git a/include/linux/device.h b/include/linux/device.h
-index 1aa341b2a0db..b77a11b8d9bb 100644
---- a/include/linux/device.h
-+++ b/include/linux/device.h
-@@ -284,7 +284,8 @@ struct device_driver {
- 	struct module		*owner;
- 	const char		*mod_name;	/* used for built-in modules */
+diff --git a/drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c b/drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c
+index d93de3a569b4..eff1b000258e 100644
+--- a/drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c
++++ b/drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c
+@@ -1134,6 +1134,7 @@ static struct platform_driver mdp5_driver = {
+ 		.name = "msm_mdp",
+ 		.of_match_table = mdp5_dt_match,
+ 		.pm = &mdp5_pm_ops,
++		.driver_manages_iommu = true,
+ 	},
+ };
  
--	bool suppress_bind_attrs;	/* disables bind/unbind via sysfs */
-+	bool suppress_bind_attrs:1;	/* disables bind/unbind via sysfs */
-+	bool driver_manages_iommu:1;	/* driver manages IOMMU explicitly */
- 	enum probe_type probe_type;
+diff --git a/drivers/gpu/drm/msm/msm_drv.c b/drivers/gpu/drm/msm/msm_drv.c
+index 3a4fd20a33e8..336a6d0a4cd3 100644
+--- a/drivers/gpu/drm/msm/msm_drv.c
++++ b/drivers/gpu/drm/msm/msm_drv.c
+@@ -1388,6 +1388,7 @@ static struct platform_driver msm_platform_driver = {
+ 		.name   = "msm",
+ 		.of_match_table = dt_match,
+ 		.pm     = &msm_pm_ops,
++		.driver_manages_iommu = true,
+ 	},
+ };
  
- 	const struct of_device_id	*of_match_table;
 -- 
 2.21.0
 
