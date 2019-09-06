@@ -2,54 +2,21 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id E5619AB38C
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 Sep 2019 09:56:05 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 3F87AAB5BD
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 Sep 2019 12:24:00 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2388258AbfIFH4F (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 6 Sep 2019 03:56:05 -0400
-Received: from mail-wm1-f66.google.com ([209.85.128.66]:35497 "EHLO
-        mail-wm1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726323AbfIFH4E (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 6 Sep 2019 03:56:04 -0400
-Received: by mail-wm1-f66.google.com with SMTP id n10so5921351wmj.0
-        for <linux-arm-msm@vger.kernel.org>; Fri, 06 Sep 2019 00:56:03 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to
-         :user-agent;
-        bh=GBSrVEv3FkA0u4Qz9b1PZ+GS0dImegg5i95tX5f08MA=;
-        b=oKBgcUVIqRGIe6MsD6iEyRnhdfCSvJ62wOyc+MP5ddCrBgohfCdwPFagkkWDicHj4i
-         Ud1G+VeKhR8y6Wq/5LRbbg2/UUznVsmWshevk1+H7eoRnHHXfcqpNuqJ9NlDsZLjTdRb
-         gdn8P5OBAq8oQST2/ZymJi+xyaaL26S2nJKPkP8GiJyCPY7eiKoFDj+HR9913Zpb42wx
-         iS2b0BXmSL6HfdHw09F9bft8QpipihTBWssdptwgy170jL/kdJgNHtOVlYROX1cesSEm
-         SJBMrHrloiEBix4LSie54M48PIolVSvt0gbRSlXfc/iB91xpJsq9ucBwlg5oNZNOYNfm
-         N2gg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        bh=GBSrVEv3FkA0u4Qz9b1PZ+GS0dImegg5i95tX5f08MA=;
-        b=RSO/vw37d9NB1cIW8HZIBwCDOfhsJyh54snihtSI1Ab5/x02EmiM7YmNIBkff+m7Ue
-         Cn+Q1MCFs5LghXml09U7p8zTkuFSD5mCXJYPe9V0jIY0VaUSU1+kcNW4TIF8HqH7Wu/k
-         OfaSbjodQScSvPxpOOSUp83G8Vq60hzTjRxqpSZJSp4sf73rWJ5/BCOkdRV9Eg8crApM
-         VU8JGD/JL/BjwO7vrxcMDnor3iEcpMgCTKFLPeJUeXdnFeAOZbLLNVdafS97NdB8OPZO
-         9EWzbxUxYOfkvqKRpxRuxfOTo8Jr8Kwh/OS3VrBNYs4u+veq4ij6sz7rU6xaVQcMtW7P
-         nlYg==
-X-Gm-Message-State: APjAAAUtUfbQVP2xOyABCpd79qH6jnXOnwpmXDUm5o47sYCHnut++bIW
-        /wprhEBXqs49H9//fkPqs/AnYQ==
-X-Google-Smtp-Source: APXvYqzOqdeiqIcPjAkHBg783CUd8gkiIobQAXdzTjznanYqW8tv8J/XJ85sWC0yGMWk8V6mwHuXRg==
-X-Received: by 2002:a7b:cd05:: with SMTP id f5mr5949466wmj.12.1567756562847;
-        Fri, 06 Sep 2019 00:56:02 -0700 (PDT)
-Received: from dell ([95.147.198.36])
-        by smtp.gmail.com with ESMTPSA id y186sm6636374wmd.26.2019.09.06.00.56.01
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Fri, 06 Sep 2019 00:56:01 -0700 (PDT)
-Date:   Fri, 6 Sep 2019 08:56:00 +0100
-From:   Lee Jones <lee.jones@linaro.org>
-To:     Wolfram Sang <wsa@the-dreams.de>
+        id S1732187AbfIFKX6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 6 Sep 2019 06:23:58 -0400
+Received: from sauhun.de ([88.99.104.3]:40886 "EHLO pokefinder.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1728485AbfIFKX6 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 6 Sep 2019 06:23:58 -0400
+Received: from localhost (p54B3379C.dip0.t-ipconnect.de [84.179.55.156])
+        by pokefinder.org (Postfix) with ESMTPSA id 320352C0091;
+        Fri,  6 Sep 2019 12:23:56 +0200 (CEST)
+Date:   Fri, 6 Sep 2019 12:23:55 +0200
+From:   Wolfram Sang <wsa@the-dreams.de>
+To:     Lee Jones <lee.jones@linaro.org>
 Cc:     Stephen Boyd <swboyd@chromium.org>, agross@kernel.org,
         alokc@codeaurora.org, bjorn.andersson@linaro.org,
         mark.rutland@arm.com, robh+dt@kernel.org, vkoul@kernel.org,
@@ -57,40 +24,70 @@ Cc:     Stephen Boyd <swboyd@chromium.org>, agross@kernel.org,
         devicetree@vger.kernel.org
 Subject: Re: [RESEND v3 1/1] i2c: qcom-geni: Disable DMA processing on the
  Lenovo Yoga C630
-Message-ID: <20190906075600.GL26880@dell>
+Message-ID: <20190906102355.GA3146@kunai>
 References: <20190905192412.23116-1-lee.jones@linaro.org>
  <5d71ef95.1c69fb81.6d090.085d@mx.google.com>
  <20190906061448.GJ26880@dell>
  <20190906065018.GA1019@kunai>
+ <20190906075600.GL26880@dell>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="OgqxwSJOaUobr8KG"
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20190906065018.GA1019@kunai>
-User-Agent: Mutt/1.9.4 (2018-02-28)
+In-Reply-To: <20190906075600.GL26880@dell>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, 06 Sep 2019, Wolfram Sang wrote:
-> > > This compatible isn't in the 5.3 rc series nor is it in linux-next yet.
-> > > Is this "hot-fix" for the next merge window? Or is this compatible
-> > > string being generated by firmware somewhere and thus isn't part of the
-> > > kernel?
-> > 
-> > It's on the list and will be in all of the distro v5.3 release kernels.
-> > 
-> > https://lkml.org/lkml/2019/9/5/695
-> 
-> And why don't the distro kernels simply pick up this patch, too?
 
-I could send it to them and find out.  They are on kernel-freeze now,
-on the lead-up to the release date (next month), but I think they're
-still taking bug fixes.
+--OgqxwSJOaUobr8KG
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
--- 
-Lee Jones [李琼斯]
-Linaro Services Technical Lead
-Linaro.org │ Open source software for ARM SoCs
-Follow Linaro: Facebook | Twitter | Blog
+On Fri, Sep 06, 2019 at 08:56:00AM +0100, Lee Jones wrote:
+> On Fri, 06 Sep 2019, Wolfram Sang wrote:
+> > > > This compatible isn't in the 5.3 rc series nor is it in linux-next =
+yet.
+> > > > Is this "hot-fix" for the next merge window? Or is this compatible
+> > > > string being generated by firmware somewhere and thus isn't part of=
+ the
+> > > > kernel?
+> > >=20
+> > > It's on the list and will be in all of the distro v5.3 release kernel=
+s.
+> > >=20
+> > > https://lkml.org/lkml/2019/9/5/695
+> >=20
+> > And why don't the distro kernels simply pick up this patch, too?
+>=20
+> I could send it to them and find out.  They are on kernel-freeze now,
+> on the lead-up to the release date (next month), but I think they're
+> still taking bug fixes.
+
+Please do.
+
+
+--OgqxwSJOaUobr8KG
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAABCgAdFiEEOZGx6rniZ1Gk92RdFA3kzBSgKbYFAl1yM7cACgkQFA3kzBSg
+KbbOpA/+JmzFz9QSrewrsJhcmou/pr1nKrYpIQKY/T/MceuejGCMo86CEMGZXAG+
+n3um8sjtDtaMb8NRCj7gddzhV3hfIjkExzVSeDDj3o9xGRjv5R5fdWXUgR/hoSnp
+i/jpFfs+wKMgMeJ8M0STEVgWAPMTVBkXoOyWoMpnnRIVKS601A4E+o8yGu9zwkmY
+26DVVF49lK8g0eNUssGvrwZeVHkzzdkboW9Z0sZ1E5MW2q24U92dp99h9Yqi8oyq
+H41PujJxR6ZOjbX3fP4jXkmQbuksyfO2P41cagfQkfmFVYGeMRkEbXnhItO9AvTo
+VThqoUrItedREsVzambW1c9Cd1aH5iXq9GWERN+JWL+SV8GU9RYgvBXHkwS0XquM
+gw4RR5AcoCP6uWbbU6e/lY/ACxHFKWq1IkMtMi1MyvOyzsLMq9Vn40kq5HVucOfm
+BjM1Yin+ZissDg+3y7l4W1Kmlyyqi/7RQnN77pffADhRp0EycyFza188wtEAaEHp
+juX/dBzoskWTjRw4K8xnzy109tzuxIre5RHyF845fv1694blyo2v2nBfMzUv/UUx
+s5AqwIlnmrfZOm6+RKFqnAxmWEvYMDG34aGRmI93NamBbHkNe4ZfaHTX5FXgkrGh
+daX/c6XL6BMYt5I6otQIW/GP98tYf0nqZrC9dit/gGFfIcq4i1M=
+=l7c3
+-----END PGP SIGNATURE-----
+
+--OgqxwSJOaUobr8KG--
