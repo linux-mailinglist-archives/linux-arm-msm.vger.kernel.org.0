@@ -2,85 +2,71 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 8F834AC222
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 Sep 2019 23:46:35 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 2619CAC22F
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 Sep 2019 23:48:50 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2404506AbfIFVqe (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 6 Sep 2019 17:46:34 -0400
-Received: from mail-pf1-f195.google.com ([209.85.210.195]:33306 "EHLO
-        mail-pf1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2404449AbfIFVqe (ORCPT
+        id S2404510AbfIFVst (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 6 Sep 2019 17:48:49 -0400
+Received: from mail-pf1-f193.google.com ([209.85.210.193]:36472 "EHLO
+        mail-pf1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2404402AbfIFVss (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 6 Sep 2019 17:46:34 -0400
-Received: by mail-pf1-f195.google.com with SMTP id q10so5461471pfl.0;
-        Fri, 06 Sep 2019 14:46:34 -0700 (PDT)
+        Fri, 6 Sep 2019 17:48:48 -0400
+Received: by mail-pf1-f193.google.com with SMTP id y22so5465259pfr.3;
+        Fri, 06 Sep 2019 14:48:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=X+UKEokhysiEjhebMkmydc3Xut+rkxm/820z0jqk+pw=;
-        b=bB+2a2042/w5fLDKgGxSCU63OZJdemRj5lstmeKzyz2kKsymPU9qKVPAWAO5XqEpoX
-         NQjWZboO1Xqc9cYWPK+zS0a3/dsBVhTx70hSi7CyLwAMb2LXE/egWyxML/yi+G4vilyP
-         nAL/lrr66lcMxFh/V1lf0zajAvVc9b7txxr2NelsFwTbWER/5mfQ/zuuL5HzZO9fMRnn
-         jGNd8gO46slJn5TOTEht06yzy1gkw82s82dF+024ICCWEH7H3wPEZO1EkRhjI8sD8ae+
-         z38HpfgWvwwlmJc+rBx98Ea9ZmRte4k86rNSkO4ohCvZ0gLKR42divMBeZ74wTyoYj5y
-         FgEw==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=PmbeXR16EILkjisUuUV6rfWxt0BghSuM480d7BBoObE=;
+        b=l9KS64BP1B0VVFLP3cG+Fu9U3dUbCksmelSZOoyogDcNDZW7sjsm328l7B9JP6x26f
+         DZaO/ojDzSUVS4Il84HxoyaRZCseDaFTbt0s08wXIhLhOunAvz314/stiuohiLGFMmpE
+         o3ol62LvFBaKO08hIXHcKu89nLOnrucM/f4gr9kbmXTL/db0eQb2NfDz1gsUIVqf14t0
+         QS0EoD8cKG4EdIQwYJ9KgSsGFyxXBCE3mbcRtamjbEN+ffrHwSzbUJ5ryEqWsTz7LGFr
+         PJrVc19D7lpchjdUYFkmeYBA9fAiwKYdQ49Fv5Gw7pcbMrSl95PcHvVJdZOvz2bGBBlT
+         Gx5w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=X+UKEokhysiEjhebMkmydc3Xut+rkxm/820z0jqk+pw=;
-        b=AHA8r+6AbmFa2DzEeypau87n7a7n4e77z2Bc1a3vMeBt8e7jNwS69pVfo1re/oWxyD
-         DgD2e6tEQZpvusi1GxoPwzCyiYsIGJ9Adu/lrOCvTbpTLHfTzccW99utz5NywPvo24Q4
-         GyF3jMByn7gJY5kWT0J4zYTNg+1xreLDuQ1RJXuH3Hz65GKjEMfr+xAgOnb7vYVyBfZ6
-         JlrMqBppAwsR+KAWdh3ukFzWHTn+22esIgtXiHxcWpvM6Rb7PJWRAcVpoj7BlReRY8Ij
-         tsKFhJoyhjmTGjT9K9FtzWAyPJfc4aSsz1SHP/3ecQpSKz8RdpvdJBRHNyyKdOXwnkHu
-         3xFw==
-X-Gm-Message-State: APjAAAXxu4sYR5GrbDIGAKDfl6rjK7gGOC7I63zh387eyr/tlxPIvsYN
-        FPJkDJxQeUROkyT4a4XIsCI=
-X-Google-Smtp-Source: APXvYqxAQm+A/TufbfRwRtbAOXBB+uXmA4OqTTf7BWWv93xs12KzKxBrIOgomoXlI9U4Nb+Q86U1eg==
-X-Received: by 2002:a17:90a:bf0a:: with SMTP id c10mr11992578pjs.78.1567806393371;
-        Fri, 06 Sep 2019 14:46:33 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=PmbeXR16EILkjisUuUV6rfWxt0BghSuM480d7BBoObE=;
+        b=XoAG6P2yCvHQxTQwpe4FYkcVt2PvxpDxRFidG7rt0sxALFogQVfRFCbhJh0VPr0j7D
+         ukQ4fJMvguSOtMVZ3SIisTaUiP4h7WFSps0FfKCZOg6N4OzlLWoR0Dnc8EjqzshjQkq5
+         RhOpnVZxch4U+ZwkF79+3+vweX7BNWxq9AT0Fd9VzHh/25HAGPdC65L/DK0w1w6ifQgr
+         4vcTE1SCCnrKpoqe8wVXitX1uGe5dsU1v4ioVIIohrdm7bCiz1HMv2Nj3LQxUkv8wj0A
+         qtPdgycp4ZBD+JOOEGnLsSLoExc4o4ueyc1wjY9AZMRJn6tRCA+4xrHHwn2OIyOEggCD
+         knFQ==
+X-Gm-Message-State: APjAAAXSqUzevw/p6s5Jgi45bkyxmMCqSnX0JLUH9fucSmtmHyC/rADJ
+        ERDHgRO8VlQtflD6gHp8o2k=
+X-Google-Smtp-Source: APXvYqxQCd7WFr1bk2mCpZ+S1Nv/UOSK0AKJu6DLOAfsUfGckUthB3lN7nqi/NUB8YzjJgdlC0+ugA==
+X-Received: by 2002:a63:4823:: with SMTP id v35mr9858403pga.138.1567806528190;
+        Fri, 06 Sep 2019 14:48:48 -0700 (PDT)
 Received: from localhost ([100.118.89.196])
-        by smtp.gmail.com with ESMTPSA id 74sm13108243pfy.78.2019.09.06.14.46.32
+        by smtp.gmail.com with ESMTPSA id j9sm6894230pfi.128.2019.09.06.14.48.47
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 06 Sep 2019 14:46:32 -0700 (PDT)
+        Fri, 06 Sep 2019 14:48:47 -0700 (PDT)
 From:   Rob Clark <robdclark@gmail.com>
 To:     iommu@lists.linux-foundation.org
 Cc:     dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
         Robin Murphy <robin.murphy@arm.com>,
         Joerg Roedel <joro@8bytes.org>, Will Deacon <will@kernel.org>,
         Rob Clark <robdclark@chromium.org>,
-        Abhinav Kumar <abhinavk@codeaurora.org>,
-        Alexios Zavras <alexios.zavras@intel.com>,
-        Allison Randal <allison@lohutok.net>,
-        Andrew Morton <akpm@linux-foundation.org>,
-        Arnd Bergmann <arnd@arndb.de>,
-        Bartosz Golaszewski <brgl@bgdev.pl>,
-        Boris Brezillon <bbrezillon@kernel.org>,
-        Bruce Wang <bzwang@chromium.org>,
-        freedreno@lists.freedesktop.org (open list:DRM DRIVER FOR MSM ADRENO
-        GPU), Georgi Djakov <georgi.djakov@linaro.org>,
         Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Heikki Krogerus <heikki.krogerus@linux.intel.com>,
-        Jeffrey Hugo <jeffrey.l.hugo@gmail.com>,
-        Jeykumar Sankaran <jsanka@codeaurora.org>,
-        Joe Perches <joe@perches.com>, Joerg Roedel <jroedel@suse.de>,
-        Jonathan Marek <jonathan@marek.ca>,
-        Jordan Crouse <jcrouse@codeaurora.org>,
-        linux-kernel@vger.kernel.org (open list),
-        Mamta Shukla <mamtashukla555@gmail.com>,
         "Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
-        Rasmus Villemoes <linux@rasmusvillemoes.dk>,
-        Sean Paul <seanpaul@chromium.org>,
-        Sravanthi Kollukuduru <skolluku@codeaurora.org>,
-        Sudeep Holla <sudeep.holla@arm.com>,
+        Andrew Morton <akpm@linux-foundation.org>,
         Suzuki K Poulose <suzuki.poulose@arm.com>,
-        Thomas Gleixner <tglx@linutronix.de>
-Subject: [PATCH v3 0/2] iommu: handle drivers that manage iommu directly
-Date:   Fri,  6 Sep 2019 14:44:00 -0700
-Message-Id: <20190906214409.26677-1-robdclark@gmail.com>
+        Rasmus Villemoes <linux@rasmusvillemoes.dk>,
+        Heikki Krogerus <heikki.krogerus@linux.intel.com>,
+        Bartosz Golaszewski <brgl@bgdev.pl>,
+        Sudeep Holla <sudeep.holla@arm.com>,
+        Joe Perches <joe@perches.com>, Arnd Bergmann <arnd@arndb.de>,
+        linux-kernel@vger.kernel.org (open list)
+Subject: [PATCH v2 1/2] iommu: add support for drivers that manage iommu explicitly
+Date:   Fri,  6 Sep 2019 14:44:01 -0700
+Message-Id: <20190906214409.26677-2-robdclark@gmail.com>
 X-Mailer: git-send-email 2.21.0
+In-Reply-To: <20190906214409.26677-1-robdclark@gmail.com>
+References: <20190906214409.26677-1-robdclark@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Sender: linux-arm-msm-owner@vger.kernel.org
@@ -90,52 +76,57 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 From: Rob Clark <robdclark@chromium.org>
 
-One of the challenges we have to enable the aarch64 laptops upstream
-is dealing with the fact that the bootloader enables the display and
-takes the corresponding SMMU context-bank out of BYPASS.  Unfortunately,
-currently, the IOMMU framework attaches a DMA (or potentially an
-IDENTITY) domain before the driver is probed and has a chance to
-intervene and shutdown scanout.  Which makes things go horribly wrong.
+Avoid attaching any non-driver managed domain if the driver indicates
+that it manages the iommu directly.
 
-But in this case, drm/msm is already directly managing it's IOMMUs
-directly, the DMA API attached iommu_domain simply gets in the way.
-This series adds a way that a driver can indicate to drivers/iommu
-that it does not wish to have an DMA managed iommu_domain attached.
-This way, drm/msm can shut down scanout cleanly before attaching it's
-own iommu_domain.
+Signed-off-by: Rob Clark <robdclark@chromium.org>
+---
+ drivers/iommu/iommu.c    | 2 +-
+ drivers/iommu/of_iommu.c | 3 +++
+ include/linux/device.h   | 3 ++-
+ 3 files changed, 6 insertions(+), 2 deletions(-)
 
-NOTE that to get things working with arm-smmu on the aarch64 laptops,
-you also need a patchset[1] from Bjorn Andersson to inherit SMMU config
-at boot, when it is already enabled.
-
-[1] https://www.spinics.net/lists/arm-kernel/msg732246.html
-
-NOTE that in discussion of previous revisions, RMRR came up.  This is
-not really a replacement for RMRR (nor does RMRR really provide any
-more information than we already get from EFI GOP, or DT in the
-simplefb case).  I also don't see how RMRR could help w/ SMMU handover
-of CB/SMR config (Bjorn's patchset[1]) without defining new tables.
-
-This perhaps doesn't solve the more general case of bootloader enabled
-display for drivers that actually want to use DMA API managed IOMMU.
-But it does also happen to avoid a related problem with GPU, caused by
-the DMA domain claiming the context bank that the GPU firmware expects
-to use.  And it avoids spurious TLB invalidation coming from the unused
-DMA domain.  So IMHO this is a useful and necessary change.
-
-Rob Clark (2):
-  iommu: add support for drivers that manage iommu explicitly
-  drm/msm: mark devices where iommu is managed by driver
-
- drivers/gpu/drm/msm/adreno/adreno_device.c | 1 +
- drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c    | 1 +
- drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c   | 1 +
- drivers/gpu/drm/msm/msm_drv.c              | 1 +
- drivers/iommu/iommu.c                      | 2 +-
- drivers/iommu/of_iommu.c                   | 3 +++
- include/linux/device.h                     | 3 ++-
- 7 files changed, 10 insertions(+), 2 deletions(-)
-
+diff --git a/drivers/iommu/iommu.c b/drivers/iommu/iommu.c
+index 0c674d80c37f..2ac5e8d48cae 100644
+--- a/drivers/iommu/iommu.c
++++ b/drivers/iommu/iommu.c
+@@ -674,7 +674,7 @@ int iommu_group_add_device(struct iommu_group *group, struct device *dev)
+ 
+ 	mutex_lock(&group->mutex);
+ 	list_add_tail(&device->list, &group->devices);
+-	if (group->domain)
++	if (group->domain && !(dev->driver && dev->driver->driver_manages_iommu))
+ 		ret = __iommu_attach_device(group->domain, dev);
+ 	mutex_unlock(&group->mutex);
+ 	if (ret)
+diff --git a/drivers/iommu/of_iommu.c b/drivers/iommu/of_iommu.c
+index 614a93aa5305..62b47e384a77 100644
+--- a/drivers/iommu/of_iommu.c
++++ b/drivers/iommu/of_iommu.c
+@@ -221,6 +221,9 @@ const struct iommu_ops *of_iommu_configure(struct device *dev,
+ 	} else if (err < 0) {
+ 		dev_dbg(dev, "Adding to IOMMU failed: %d\n", err);
+ 		ops = NULL;
++	} else if (dev->driver && dev->driver->driver_manages_iommu) {
++		dev_dbg(dev, "Driver manages IOMMU\n");
++		ops = NULL;
+ 	}
+ 
+ 	return ops;
+diff --git a/include/linux/device.h b/include/linux/device.h
+index 1aa341b2a0db..b77a11b8d9bb 100644
+--- a/include/linux/device.h
++++ b/include/linux/device.h
+@@ -284,7 +284,8 @@ struct device_driver {
+ 	struct module		*owner;
+ 	const char		*mod_name;	/* used for built-in modules */
+ 
+-	bool suppress_bind_attrs;	/* disables bind/unbind via sysfs */
++	bool suppress_bind_attrs:1;	/* disables bind/unbind via sysfs */
++	bool driver_manages_iommu:1;	/* driver manages IOMMU explicitly */
+ 	enum probe_type probe_type;
+ 
+ 	const struct of_device_id	*of_match_table;
 -- 
 2.21.0
 
