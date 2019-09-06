@@ -2,241 +2,202 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 27C93ABC76
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 Sep 2019 17:28:12 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 02644ABD49
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 Sep 2019 18:05:45 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2403861AbfIFP2F (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 6 Sep 2019 11:28:05 -0400
-Received: from mail-lj1-f196.google.com ([209.85.208.196]:36666 "EHLO
-        mail-lj1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1732456AbfIFP2F (ORCPT
+        id S2392354AbfIFQFo (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 6 Sep 2019 12:05:44 -0400
+Received: from mail-ed1-f65.google.com ([209.85.208.65]:38860 "EHLO
+        mail-ed1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2392208AbfIFQFn (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 6 Sep 2019 11:28:05 -0400
-Received: by mail-lj1-f196.google.com with SMTP id l20so6402334ljj.3
-        for <linux-arm-msm@vger.kernel.org>; Fri, 06 Sep 2019 08:28:02 -0700 (PDT)
+        Fri, 6 Sep 2019 12:05:43 -0400
+Received: by mail-ed1-f65.google.com with SMTP id a23so4524234edv.5
+        for <linux-arm-msm@vger.kernel.org>; Fri, 06 Sep 2019 09:05:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=hbMU3iw6suD9Pa8NpBysxN0nHVf+3AA+w6KB+ur557E=;
-        b=Jg4D3B8sAIRTKTDuClimaMSkTIkAwZCVhKloS7socUuIkOP35trTMY7w0oBbCU1o1s
-         8tikyGGNa73XbIifm59+RdFYWI57KfYKmlgKfp0BuKOmz/6R/wjepHrsMrwCHb6G92K3
-         gLYnulkj3G2BYqh2AjSfmZFfoFdZZNZPTHGQJgW5R8ONpBsg4sa0X1cxR8I0q9rGPmOq
-         xvzy2myvQeIzPgWhm2I5S4Gl33PUfrLXL1/rS7ip6RMr06Z/Gdzz2zuWtH0ITbGAl+Ai
-         RY/h5t80C9mrqxOQsRRHQ9SeS/lOBGjh7qYAM6gZq59geaXHCKZR8nwFglbF3nOGGfjf
-         QXwQ==
+        d=gmail.com; s=20161025;
+        h=mime-version:from:date:message-id:subject:to:cc;
+        bh=3vCEjzoT0b4CQZZzmkGyCOjlftc+50f5fZFjKinpnxY=;
+        b=srAu5p3tLulLELKCyfei3EGd/3vZEZS5BXFSjItqQOUSSfg0D7AieNQAs/GTTwDPN3
+         FelTPVxVPooI24xR90zXkAblBNAz1CFf+0Gxvpd098NhRBBB/yQ53BJp1bp5r4zBBD1S
+         a/dxtJ5WjBPXPP36Hl1OGdMt69u0dDgzqAb7W1f6Kx1R5ppHBGneuXYBtS1oCD+kujRd
+         GfEvsHZSIiBrE3N1F7LwqU27FMzkuHZaED866MvIq8APIWLclUzL5T8h22EmvCktMnlH
+         ISwUaS10jXyrLiEGZZZNH/lVK3hD1Q23pJiAKrVS6fo4M1DHwLxpPu5eTV+mHhYxLbDn
+         yPgw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=hbMU3iw6suD9Pa8NpBysxN0nHVf+3AA+w6KB+ur557E=;
-        b=SZK8Xi7JeKekP5ioSt0Q6JTZy55kitY6AIG9GATper3q3P1j1pO1WshjUBedMyjRrB
-         kXzGOse9uGJJ9PK3FMvlxequRdqbxzi2f2737IScsw+cnQ6iP1/JifxQII2loRy5u/r/
-         RXwjrRiRCnP6TeYdK13VN9CjEXnmqlA/+uRbnDzFgNqNeT7gdTWEeH3m549GBjMA8NmT
-         NIIj9fiEirgWOCuxW7jEFsyk22HmlCvIs6DWDcF5M2y6gXaC+MCdlqA6UYxrqvAM06iS
-         acEA+a8qd1vRjFS6BNy3xT++L1wRd/2iliii3gIlbyHgF46ILPtMq1tN/94zlqh7IhFM
-         PRnw==
-X-Gm-Message-State: APjAAAXY3mfUjpHfS0ka5ZfS0PR0XcLKb+VW7UEG4a3acmn+XSoF1geL
-        q9e1tnp/gyf9EZRx9zYCg6PggcvrLxCiXqwITqtVoQ==
-X-Google-Smtp-Source: APXvYqygjznMFLLV5koxljvc/AmTD8IFpb6iCmQITWmi4irLDjdK/YEee+qEQJhA2ycRyRZGL0es0Dh1lUNECYau62k=
-X-Received: by 2002:a2e:1b02:: with SMTP id b2mr6089604ljb.211.1567783681216;
- Fri, 06 Sep 2019 08:28:01 -0700 (PDT)
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to:cc;
+        bh=3vCEjzoT0b4CQZZzmkGyCOjlftc+50f5fZFjKinpnxY=;
+        b=StZZ0ct9VyGRXXIRks2leqxKReAjpJCrd7NONWj/0QKnlKoB3MNOjwmmbxltdoKXat
+         Yg18iWq786ddIH58W/oSjDIRIvA73PI/sUsY9BCUvuRLrgYX9LWKDRpGu5Te9OBYnCFV
+         Tqnsi7GHxQoluDD3jtCfamF9lFW39RYXP5MeZ9eBdZiNQubBWrXq3uGASyyYmCAoev8l
+         kHRNI7Zh0Gn7nme9iuT7zBegnE9rozmq2ZBkbuR4nJ9+SqA+9ajgLo+DexeQjVuowrCO
+         Z9wRgn1ZlAfARE1/mDbrljt78aAwd34tj3krMAFZDKPtiEkeN9MH1bJDn1dl6WQUIKLU
+         OPWg==
+X-Gm-Message-State: APjAAAUc/CmdJV+Az52ypNAGwGxrYMST7H2E6xGPFYrFfTpE47JVXhOi
+        ifjMAm3pIC5g4th7DCTI7oJqedDix/cxzD7xK/0=
+X-Google-Smtp-Source: APXvYqyv8pa5auo/O641DU5NxMNixzDdeYSQ319Nf4T9M8ymAsJ+bJfh/vXVtLV8rghNyjdUQ4dx2ePon6GIFMXbJaM=
+X-Received: by 2002:a05:6402:17ba:: with SMTP id j26mr10396365edy.272.1567785941509;
+ Fri, 06 Sep 2019 09:05:41 -0700 (PDT)
 MIME-Version: 1.0
-References: <20190904112653.22452-1-festevam@gmail.com> <CAP71Wjy3yR4vx-0e4E=EOAeKNaCp0KLyZaYyzRfRk0XefOBJFA@mail.gmail.com>
- <CA+5PVA73J6xCUx3CM=Nv15aXeSQLtcMc7M+PCDri--oYbWdTQA@mail.gmail.com> <CAFXsbZokkQXh03Ci2oy63OhAHXuLXDZWec5N=n7u5QUM55piSw@mail.gmail.com>
-In-Reply-To: <CAFXsbZokkQXh03Ci2oy63OhAHXuLXDZWec5N=n7u5QUM55piSw@mail.gmail.com>
-From:   Nicolas Dechesne <nicolas.dechesne@linaro.org>
-Date:   Fri, 6 Sep 2019 17:27:49 +0200
-Message-ID: <CAP71WjzwjCBP=U4bJ4qnNmy9hhPFnzvYYg=6OobjhW_LH1N1-A@mail.gmail.com>
-Subject: Re: [PATCH] qcom: Add firmware files for Adreno A200
-To:     Chris Healy <cphealy@gmail.com>
-Cc:     Josh Boyer <jwboyer@kernel.org>,
-        Fabio Estevam <festevam@gmail.com>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Jordan Crouse <jcrouse@codeaurora.org>, robdclark@chromium.org,
-        Linux Firmware <linux-firmware@kernel.org>,
-        Jonathan Marek <jonathan@marek.ca>,
+From:   Rob Clark <robdclark@gmail.com>
+Date:   Fri, 6 Sep 2019 09:05:30 -0700
+Message-ID: <CAF6AEGuKVayu9bCuVe1RhzS6N6sHTrv4SVAh=qyCrmubX24Xag@mail.gmail.com>
+Subject: [pull] drm/msm: msm-next for 5.4
+To:     Dave Airlie <airlied@gmail.com>
+Cc:     dri-devel <dri-devel@lists.freedesktop.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
         freedreno <freedreno@lists.freedesktop.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>
+        Sean Paul <sean@poorly.run>,
+        Jordan Crouse <jcrouse@codeaurora.org>
 Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, Sep 6, 2019 at 5:09 PM Chris Healy <cphealy@gmail.com> wrote:
->
-> Hi All,
->
-> I'll start by saying that I'm no expert on this subject!  My
-> understanding with this Adreno 2xx firmware though is that these two
-> firmware files are generally equivalent to what was distributed
-> previously in an include file in the following two files for the NXP
-> i.MX51 and i.MX53 which utilize the Adreno 200:
->
-> https://source.codeaurora.org/external/imx/linux-imx/tree/drivers/mxc/amd-gpu/common/pm4_microcode.inl?h=imx_2.6.35_1.1.0_caf&id=61ade304d0eddc3f44fb2ee0b2b7ccf3ffcf85d5
-> https://source.codeaurora.org/external/imx/linux-imx/tree/drivers/mxc/amd-gpu/common/pfp_microcode_nrt.inl?h=imx_2.6.35_1.1.0_caf&id=61ade304d0eddc3f44fb2ee0b2b7ccf3ffcf85d5
->
-> I'm not suggesting we don't get someone from qcom to provide a
-> Signed-off-by.  I'm only pointing out that it looks like this firmware
-> was previously made available and that it did have a license that
-> perhaps we can continue to use for this firmware that's also for the
-> Adreno 200?
+Hi Dave,
 
-I was not saying the firmware can't be distributed, I was just
-pointing out that most likely using LICENSE.qcom was wrong. I was
-involved when we created LICENSE.qcom and submitted it first, and I
-know that the i.MX firmware can't be distributed with these license
-terms. If the firmware have been released previously , especially on
-codeaurora.org then they are definitely good candidates for
-linux-firmware, but the license and WHENCE need to be adjusted
-accordingly.
+This time around:
 
->
-> Regards,
->
-> Chris
->
-> On Wed, Sep 4, 2019 at 8:35 AM Josh Boyer <jwboyer@kernel.org> wrote:
-> >
-> > On Wed, Sep 4, 2019 at 8:09 AM Nicolas Dechesne
-> > <nicolas.dechesne@linaro.org> wrote:
-> > >
-> > > hi Fabio,
-> > >
-> > > On Wed, Sep 4, 2019 at 1:27 PM Fabio Estevam <festevam@gmail.com> wrote:
-> > > >
-> > > > Add firmware files for Adreno A200.
-> > > >
-> > > > These firmware files are needed for running the adreno kernel
-> > > > driver on i.MX51 and i.MX53 SoCs.
-> > > >
-> > > > Signed-off-by: Fabio Estevam <festevam@gmail.com>
-> > > > ---
-> > > >  WHENCE             |   2 ++
-> > > >  qcom/yamato_pfp.fw | Bin 0 -> 1156 bytes
-> > > >  qcom/yamato_pm4.fw | Bin 0 -> 9220 bytes
-> > > >  3 files changed, 2 insertions(+)
-> > > >  create mode 100644 qcom/yamato_pfp.fw
-> > > >  create mode 100644 qcom/yamato_pm4.fw
-> > > >
-> > > > diff --git a/WHENCE b/WHENCE
-> > > > index a8ec628..5e46d33 100644
-> > > > --- a/WHENCE
-> > > > +++ b/WHENCE
-> > > > @@ -4418,6 +4418,8 @@ File: qcom/a530_zap.b00
-> > > >  File: qcom/a530_zap.b01
-> > > >  File: qcom/a530_zap.b02
-> > > >  File: qcom/a530_zap.mdt
-> > > > +File: qcom/yamato_pfp.fw
-> > > > +File: qcom/yamato_pm4.fw
-> > >
-> > > Where did you get these files from in the first place? On which
-> > > devices do you expect these firmware files to work? We were recently
-> > > discussing how to structure /lib/firmware/qcom more carefully. And the
-> > > general consensus that we reached with Rob C. and Bjorn is that if a
-> > > firmware is expected to work on a specific device (maybe it is signed)
-> > > it should be placed in /lib/firmware/qcom/<device> and if it's
-> > > unsigned and can be used on several devices based on the same SoC (dev
-> > > boards, ..) then it should be /lib/firmware/qcom/<SOC>.
-> > >
-> > > >
-> > > >  Licence: Redistributable. See LICENSE.qcom and qcom/NOTICE.txt for details
-> > >
-> > > Are they really distributed under these license terms? That's a
-> > > specific license that we came up with with Qualcomm a couple of years
-> > > ago based on their Dragonboard offers.
-> >
-> > So everyone understands, I'm not pulling this for now.  If there are
-> > questions on provenance of the firmware and the license it's under,
-> > that's a big red flag for me.  Ideally we'd see someone from qcom add
-> > a Signed-off-by or otherwise acknowledge these are meant to be
-> > redistributable.
-> >
-> > josh
-> >
-> > > > diff --git a/qcom/yamato_pfp.fw b/qcom/yamato_pfp.fw
-> > > > new file mode 100644
-> > > > index 0000000000000000000000000000000000000000..61a576eb997ce2ee0d32b135adc5d8c789d8e118
-> > > > GIT binary patch
-> > > > literal 1156
-> > > > zcmaKr%WG3X7{!10-ZY7A3K1$6=_76G1N!h4AK=1^>7q~<E%;a!K{qZG{{WkEu`Vig
-> > > > znc9aU-RVwT2qFk+Q_@myY|Wy$6#N(5N<A}4Y7An+@Xef=?>pywGZ*xWlo-D@qsc1s
-> > > > zPiBZtq;Lo<?)jnc0FONz87grhu?2;tYGjUXtrI+jc!`*Bk|n%g5tAFK<$08Cey`T`
-> > > > zvx)jy!_iTK&JzB^96f&7=Jy2U|K?k+gt(ON1sa9FwHhv?DgHb|R9rnZ-6s0-6jM&z
-> > > > z<oUHc%}p<2ua40-x6P;G0z=6yT7xAz^XG{8D<toSI0F%~&MtQ~T=}{_nNy9j>b=By
-> > > > z8`b=UTDGpZL%olqwSLyuMi<gPtom*~LmSJCbZV|Tu6+Mc?V^V9)FoZr!s@x6yK8%C
-> > > > z_Iu;H3)M*(Z_;Vjwjatfch;}iOVyu=r@M4c9_##P#7|+_;(b9#$`3g#E&H)G(&EW#
-> > > > zxHmG)zn>;t$l(^GuMl!ic#FAX%}uRm#-DUZ1hd+EFuQ1Z%pKHqw^N~=sumk-JviU7
-> > > > z&1%0qeGi$+F4LlD>Nu(BfzF~^Ik@AK4f|)~+w9LSVPYeflWINSJtW>%jmAE-X`N`o
-> > > > z($Z#o#}~_Q`saDO4AgL=$zW+=$D6RMuoF#~Id3&ZPDx9}ei!DQJAO!1<Cne}H@=}a
-> > > > zw84=e&!8{|-Sa>8&3oD$%MmN&SySBjIZa%1lT+oXSj=m{xNPnN27?{z{g3~>S}*2o
-> > > > z+!Sjl6<_79MgKjLeBh|wK|hyBla<>kPV$Ih9y6j|j?+bkAujSpCsw$^Yp(K*QPvsb
-> > > > aBNKdPk}Yn^%`G{<%{x^na)+4oG>_jjN)4X?
-> > > >
-> > > > literal 0
-> > > > HcmV?d00001
-> > > >
-> > > > diff --git a/qcom/yamato_pm4.fw b/qcom/yamato_pm4.fw
-> > > > new file mode 100644
-> > > > index 0000000000000000000000000000000000000000..b45ea20ba5773ef6da25e21abd29914ea9162c07
-> > > > GIT binary patch
-> > > > literal 9220
-> > > > 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
-> > > >
-> > > > literal 0
-> > > > HcmV?d00001
-> > > >
-> > > > --
-> > > > 2.17.1
-> > > >
+ + move msm8998 (snapdragon 835) display support
+ + dpu fixes/cleanup
+ + better async commit support for cursor updates
+   (for dpu for now, I'll add mdp5 and possibly
+   mdp4 once the movers deliver boxes full of my
+   older hardware, so for v5.5)
+
+The following changes since commit c7eb7c12fddcba0bfb53e006baa9a7a10f26c5f0:
+
+  Merge tag 'exynos-drm-next-for-v5.4' of
+git://git.kernel.org/pub/scm/linux/kernel/git/daeinki/drm-exynos into
+drm-next (2019-09-03 16:06:26 +1000)
+
+are available in the Git repository at:
+
+  https://gitlab.freedesktop.org/drm/msm.git drm-msm-next-2019-09-06
+
+for you to fetch changes up to 9f614197c744002f9968e82c649fdf7fe778e1e7:
+
+  drm/msm: Use the correct dma_sync calls harder (2019-09-04 10:05:05 -0700)
+
+----------------------------------------------------------------
+Brian Masney (1):
+      drm/msm/phy/dsi_phy: silence -EPROBE_DEFER warnings
+
+Denis Efremov (1):
+      drm/msm: remove unlikely() from WARN_ON() conditions
+
+Gustavo A. R. Silva (1):
+      drm/msm: Use struct_size() helper
+
+Jeffrey Hugo (3):
+      drm/msm: Transition console to msm framebuffer
+      drm/msm/mdp5: Add msm8998 support
+      drm/msm/mdp5: Find correct node for creating gem address space
+
+Jordan Crouse (2):
+      drm/msm: Use generic bulk clock function
+      drm/msm: Remove Kconfig default
+
+Linus Walleij (4):
+      drm/msm/mdp4: Drop unused GPIO include
+      drm/msm/dsi: Drop unused GPIO includes
+      drm/msm/dpu: Drop unused GPIO code
+      drm/msm/hdmi: Convert to use GPIO descriptors
+
+Rob Clark (18):
+      drm/msm/dpu: remove dpu_mdss:hwversion
+      drm/msm/a6xx: add missing MODULE_FIRMWARE()
+      drm/msm/dpu: fix "frame done" timeouts
+      drm/msm/dpu: remove stray "\n"
+      drm/msm/dpu: add rotation property
+      drm/msm/dpu: remove some impossible error checking
+      drm/msm/dpu: remove unused arg
+      drm/msm/dpu: unwind async commit handling
+      drm/msm/dpu: add real wait_for_commit_done()
+      drm/msm/dpu: handle_frame_done() from vblank irq
+      drm/msm: add kms->wait_flush()
+      drm/msm: convert kms->complete_commit() to crtc_mask
+      drm/msm: add kms->flush_commit()
+      drm/msm: split power control from prepare/complete_commit
+      drm/msm: async commit support
+      drm/msm/dpu: async commit support
+      drm/msm: add atomic traces
+      drm/msm: Use the correct dma_sync calls harder
+
+Sam Ravnborg (1):
+      drm/msm: drop use of drmP.h
+
+Sean Paul (1):
+      drm/msm/dsi: Fix return value check for clk_get_parent
+
+ drivers/gpu/drm/msm/Kconfig                        |   2 +-
+ drivers/gpu/drm/msm/Makefile                       |   1 +
+ drivers/gpu/drm/msm/adreno/a5xx_debugfs.c          |   4 +-
+ drivers/gpu/drm/msm/adreno/a6xx_gmu.c              |   2 +-
+ drivers/gpu/drm/msm/adreno/adreno_device.c         |   1 +
+ drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.c      |  16 +-
+ drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c           |  95 ++++-----
+ drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.h           |   7 +-
+ drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c        |  75 ++-----
+ drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.h        |  11 +-
+ .../gpu/drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c   |   3 -
+ .../gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c   |  44 ++--
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h     |   1 -
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c         |   3 -
+ drivers/gpu/drm/msm/disp/dpu1/dpu_io_util.c        |   1 +
+ drivers/gpu/drm/msm/disp/dpu1/dpu_io_util.h        |   9 -
+ drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c            | 112 +++++-----
+ drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h            |  10 +
+ drivers/gpu/drm/msm/disp/dpu1/dpu_mdss.c           |   9 +-
+ drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c          |  23 +-
+ drivers/gpu/drm/msm/disp/dpu1/dpu_trace.h          |   2 +-
+ drivers/gpu/drm/msm/disp/dpu1/dpu_vbif.c           |  11 +-
+ drivers/gpu/drm/msm/disp/mdp4/mdp4_crtc.c          |   1 +
+ drivers/gpu/drm/msm/disp/mdp4/mdp4_irq.c           |   1 +
+ drivers/gpu/drm/msm/disp/mdp4/mdp4_kms.c           |  51 +++--
+ drivers/gpu/drm/msm/disp/mdp4/mdp4_lcdc_encoder.c  |   2 +
+ .../gpu/drm/msm/disp/mdp4/mdp4_lvds_connector.c    |   2 -
+ drivers/gpu/drm/msm/disp/mdp4/mdp4_plane.c         |   2 +
+ drivers/gpu/drm/msm/disp/mdp5/mdp5_cfg.c           | 132 +++++++++++-
+ drivers/gpu/drm/msm/disp/mdp5/mdp5_crtc.c          |   3 +
+ drivers/gpu/drm/msm/disp/mdp5/mdp5_ctl.c           |   4 +-
+ drivers/gpu/drm/msm/disp/mdp5/mdp5_irq.c           |   1 +
+ drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c           |  60 ++++--
+ drivers/gpu/drm/msm/disp/mdp5/mdp5_plane.c         |   2 +
+ drivers/gpu/drm/msm/disp/mdp5/mdp5_smp.c           |   1 +
+ drivers/gpu/drm/msm/disp/mdp_format.c              |   2 +-
+ drivers/gpu/drm/msm/dsi/dsi_host.c                 |  18 +-
+ drivers/gpu/drm/msm/dsi/phy/dsi_phy.c              |  12 +-
+ drivers/gpu/drm/msm/dsi/phy/dsi_phy_14nm.c         |   2 +
+ drivers/gpu/drm/msm/dsi/phy/dsi_phy_28nm_8960.c    |   2 +
+ drivers/gpu/drm/msm/dsi/pll/dsi_pll.h              |   2 +-
+ drivers/gpu/drm/msm/hdmi/hdmi.c                    |  66 +++---
+ drivers/gpu/drm/msm/hdmi/hdmi.h                    |   4 +-
+ drivers/gpu/drm/msm/hdmi/hdmi_bridge.c             |   2 +
+ drivers/gpu/drm/msm/hdmi/hdmi_connector.c          |  43 ++--
+ drivers/gpu/drm/msm/hdmi/hdmi_phy_8996.c           |   1 +
+ drivers/gpu/drm/msm/hdmi/hdmi_phy_8x60.c           |   2 +
+ drivers/gpu/drm/msm/hdmi/hdmi_pll_8960.c           |   2 +
+ drivers/gpu/drm/msm/msm_atomic.c                   | 232 ++++++++++++++++++---
+ drivers/gpu/drm/msm/msm_atomic_trace.h             | 110 ++++++++++
+ drivers/gpu/drm/msm/msm_atomic_tracepoints.c       |   3 +
+ drivers/gpu/drm/msm/msm_debugfs.c                  |   5 +
+ drivers/gpu/drm/msm/msm_drv.c                      |  51 +----
+ drivers/gpu/drm/msm/msm_drv.h                      |   6 +-
+ drivers/gpu/drm/msm/msm_fb.c                       |   2 +
+ drivers/gpu/drm/msm/msm_fbdev.c                    |   4 +
+ drivers/gpu/drm/msm/msm_gem.c                      |   6 +-
+ drivers/gpu/drm/msm/msm_gem_prime.c                |   6 +-
+ drivers/gpu/drm/msm/msm_gem_submit.c               |   8 +-
+ drivers/gpu/drm/msm/msm_gpu.c                      |   2 +-
+ drivers/gpu/drm/msm/msm_gpu_trace.h                |   2 +-
+ drivers/gpu/drm/msm/msm_gpummu.c                   |   2 +
+ drivers/gpu/drm/msm/msm_kms.h                      | 108 +++++++++-
+ drivers/gpu/drm/msm/msm_perf.c                     |   3 +
+ drivers/gpu/drm/msm/msm_rd.c                       |   7 +-
+ drivers/gpu/drm/msm/msm_submitqueue.c              |   2 +
+ 66 files changed, 970 insertions(+), 451 deletions(-)
+ create mode 100644 drivers/gpu/drm/msm/msm_atomic_trace.h
+ create mode 100644 drivers/gpu/drm/msm/msm_atomic_tracepoints.c
