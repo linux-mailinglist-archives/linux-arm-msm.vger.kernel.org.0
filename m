@@ -2,585 +2,296 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id BAF65AB86C
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 Sep 2019 14:52:18 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B61EFAB8B4
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 Sep 2019 15:00:02 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2404794AbfIFMwB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 6 Sep 2019 08:52:01 -0400
-Received: from smtp.codeaurora.org ([198.145.29.96]:51194 "EHLO
-        smtp.codeaurora.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2392097AbfIFMwA (ORCPT
+        id S2392749AbfIFM7m (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 6 Sep 2019 08:59:42 -0400
+Received: from mail-pf1-f194.google.com ([209.85.210.194]:39751 "EHLO
+        mail-pf1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2389339AbfIFM7k (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 6 Sep 2019 08:52:00 -0400
-Received: by smtp.codeaurora.org (Postfix, from userid 1000)
-        id EDD07611BE; Fri,  6 Sep 2019 12:51:56 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
-        s=default; t=1567774316;
-        bh=QlV9IIqZD30lxc7FF1drBur+WGBYYXqrYbpYqgFNsrc=;
-        h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
-        b=agmj4dZJtRiJIOV4X5Afjc1zOT3KNO88uQYcy4SmZcIA4VgFiHFLmbm57axIN+CXH
-         iAuRlHXz6JiyA5rEQMmZAJelIwl0nywK0PGwpCHbNfVkPvqq4g2mGzTDVQFt0jFdlt
-         ULPvbRZUXufZNH0pm/gmHVQhnU24CmMwscnxJz9U=
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        pdx-caf-mail.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.7 required=2.0 tests=ALL_TRUSTED,BAYES_00,
-        DKIM_INVALID,DKIM_SIGNED autolearn=no autolearn_force=no version=3.4.0
-Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
-        by smtp.codeaurora.org (Postfix) with ESMTP id B179D607F4;
-        Fri,  6 Sep 2019 12:51:54 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
-        s=default; t=1567774314;
-        bh=QlV9IIqZD30lxc7FF1drBur+WGBYYXqrYbpYqgFNsrc=;
-        h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
-        b=BlSXdLlxIfbYhd25OpJ/HcaxR/atEGUJ+5YRFjr6MsF+VpUAgmYOLQuO7FNdGzx6f
-         1Qhl1nv16/Xm4qgrr67Xw0nPt7pqHC9cScOj/CO4KE3JOyN1mHpwUzuI2zatq1W9Rg
-         4r0up51VrS5tRCa60Vz8o10dAl7zh0XYPDkM4XbE=
+        Fri, 6 Sep 2019 08:59:40 -0400
+Received: by mail-pf1-f194.google.com with SMTP id s12so4427582pfe.6;
+        Fri, 06 Sep 2019 05:59:40 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=sender:date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=A6ci3xjnNB/pGN8cbhPU+nYoJ+P8/SM6iHz9JGmMhLQ=;
+        b=V5SzLKgFsltvmd5anLvBtP33fsPzAZ1RnTsXrkQUJ8xgm/gWKYjpkAK7SsKJmHPdVL
+         ppmY36+37nzlIaf7Fdgtleu4/fj1inMixYs7ANRRgMFw2oAkWh1nqITEMxkL7Tn6hWys
+         rYx79awKu90ZQAsn+q28XQFawjjUO26q6qG7p81ngAxCGs20iq3IMkFnDef3vK84P/Jk
+         QKDy0ad0Q/zvlE40w80DSE474ZUWkEFSDknPhaYiusHyLgVNwMAts3ocg/6GT3YEYC5t
+         jS9okUbxWL/14+XWgaKHAoNIPBSPcMqGSU/xBi/alSFkIzqFeiw/8Y83U4bzFX/fU58s
+         sjGg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:sender:date:from:to:cc:subject:message-id
+         :references:mime-version:content-disposition:in-reply-to:user-agent;
+        bh=A6ci3xjnNB/pGN8cbhPU+nYoJ+P8/SM6iHz9JGmMhLQ=;
+        b=jbRJ8kFKjNYsH3EHvkX0mumLRrBjbAlk1qmavQOfpl4sEaCl9XEkeTEiIuhJuZ4AiH
+         7eElNyx/EsiKIgDwl2RSYZP2+Nv6BmBUmeCOM4vl67NOBj1AO77ZQA0Ubly9sBkhj2N0
+         6M08m+AS+0QwewO7Y7AJB2Jc2V8GtBU+wI3P5aAem2hEzat+ZfT37Zn8UdShyx5sqeTe
+         1UXQqnXK2kdAKR/fz2lBGkVI/MWGpJ0ju+QKthwYovyRXwrdL4Lm1lVwT+i9UOo062Qf
+         TB/JpGwTjQhjiwvf2TPKJFyg3BwLpq8HMA7OWWu0q6QEz75pOECX6D+VEYDU0x0mT38i
+         WrTQ==
+X-Gm-Message-State: APjAAAXvCcUkhVAgXG+dEYkS/amGfM20qxQWLKzPGqYEN0Luso6laqil
+        81UULKTsVCwWrcGSgQ1Ryh4=
+X-Google-Smtp-Source: APXvYqx10Xl/kmRsIAR2VNFb7DNI7jSZHSSWym00PkOxVWo5IB35I3FbuHpR1z/s8P0mXMagKg9n0w==
+X-Received: by 2002:a65:6401:: with SMTP id a1mr7833679pgv.42.1567774780016;
+        Fri, 06 Sep 2019 05:59:40 -0700 (PDT)
+Received: from localhost ([2600:1700:e321:62f0:329c:23ff:fee3:9d7c])
+        by smtp.gmail.com with ESMTPSA id x2sm5724996pfa.89.2019.09.06.05.59.37
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Fri, 06 Sep 2019 05:59:38 -0700 (PDT)
+Date:   Fri, 6 Sep 2019 05:59:37 -0700
+From:   Guenter Roeck <linux@roeck-us.net>
+To:     Jorge Ramirez <jorge.ramirez-ortiz@linaro.org>
+Cc:     agross@kernel.org, wim@linux-watchdog.org,
+        bjorn.andersson@linaro.org, linux-arm-msm@vger.kernel.org,
+        linux-watchdog@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v4] watchdog: qcom: support pre-timeout when the bark irq
+ is available
+Message-ID: <20190906125937.GA7255@roeck-us.net>
+References: <20190905210035.9985-1-jorge.ramirez-ortiz@linaro.org>
+ <20190905211913.GA31094@roeck-us.net>
+ <68ca07e6-efa2-d5bd-111b-faaa86808192@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
-Content-Transfer-Encoding: 7bit
-Date:   Fri, 06 Sep 2019 18:21:54 +0530
-From:   ppvk@codeaurora.org
-To:     adrian.hunter@intel.com, ulf.hansson@linaro.org,
-        robh+dt@kernel.org, georgi.djakov@linaro.org
-Cc:     asutoshd@codeaurora.org, vbadigan@codeaurora.org,
-        stummala@codeaurora.org, sayalil@codeaurora.org,
-        rampraka@codeaurora.org, linux-mmc@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org,
-        Subhash Jadavani <subhashj@codeaurora.org>,
-        Andy Gross <agross@kernel.org>
-Subject: Re: [RFC 1/2] mmc: sdhci-msm: Add support for bus bandwidth voting
-In-Reply-To: <1567774037-2344-2-git-send-email-ppvk@codeaurora.org>
-References: <1567774037-2344-1-git-send-email-ppvk@codeaurora.org>
- <1567774037-2344-2-git-send-email-ppvk@codeaurora.org>
-Message-ID: <ae24703de33d4049c451dd4a331f7a5f@codeaurora.org>
-X-Sender: ppvk@codeaurora.org
-User-Agent: Roundcube Webmail/1.2.5
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <68ca07e6-efa2-d5bd-111b-faaa86808192@linaro.org>
+User-Agent: Mutt/1.5.24 (2015-08-30)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-+Georgi Djakov
+On Thu, Sep 05, 2019 at 11:34:03PM +0200, Jorge Ramirez wrote:
+> On 9/5/19 23:19, Guenter Roeck wrote:
+> > On Thu, Sep 05, 2019 at 11:00:35PM +0200, Jorge Ramirez-Ortiz wrote:
+> >> Use the bark interrupt as the pre-timeout notifier whenever this
+> >> interrupt is available.
+> >>
+> >> By default, the pretimeout notification shall occur one second earlier
+> >> than the timeout.
+> >>
+> >> Signed-off-by: Jorge Ramirez-Ortiz <jorge.ramirez-ortiz@linaro.org>
+> >> ---
+> >>  v4:
+> >>      address Guenter Roeck comments as follows:
+> >>        remove unnecessary include and private variable
+> >>        provide macro for WDT EN register values
+> >>        use pretimeout as per its API intent
+> >>        handle EPROBE_DEFER on get_irq
+> >>      also:
+> >>        handle the irq registration as done in pm8916_wdt.c
+> >>  v3:
+> >>     remove unnecesary variable added to private.
+> >>
+> >>  v2:
+> >>     register the pre-timeout notifier instead.
+> >>
+> >>  v1:
+> >>  drivers/watchdog/qcom-wdt.c | 64 ++++++++++++++++++++++++++++++++++---
+> >>  1 file changed, 59 insertions(+), 5 deletions(-)
+> >>
+> >> diff --git a/drivers/watchdog/qcom-wdt.c b/drivers/watchdog/qcom-wdt.c
+> >> index 7be7f87be28f..0f1d29eeb81d 100644
+> >> --- a/drivers/watchdog/qcom-wdt.c
+> >> +++ b/drivers/watchdog/qcom-wdt.c
+> >> @@ -10,6 +10,7 @@
+> >>  #include <linux/platform_device.h>
+> >>  #include <linux/watchdog.h>
+> >>  #include <linux/of_device.h>
+> >> +#include <linux/interrupt.h>
+> >>  
+> >>  enum wdt_reg {
+> >>  	WDT_RST,
+> >> @@ -19,6 +20,9 @@ enum wdt_reg {
+> >>  	WDT_BITE_TIME,
+> >>  };
+> >>  
+> >> +#define QCOM_WDT_ENABLE		BIT(0)
+> >> +#define QCOM_WDT_ENABLE_IRQ	BIT(1)
+> >> +
+> > 
+> > Using BIT() requires "#include <linux/bits.h>".
+> 
+> do you want it explicitly in the file even if it builds?
+> 
 
-On 2019-09-06 18:17, Pradeep P V K wrote:
-> Vote for the MSM bus bandwidth required by SDHC driver
-> based on the clock frequency and bus width of the card.
-> Otherwise,the system clocks may run at minimum clock speed
-> and thus affecting the performance.
+May I kindly suggest to read Documentation/process/submit-checklist.rst ?
+
+> > 
+> >>  static const u32 reg_offset_data_apcs_tmr[] = {
+> >>  	[WDT_RST] = 0x38,
+> >>  	[WDT_EN] = 0x40,
+> >> @@ -54,15 +58,38 @@ struct qcom_wdt *to_qcom_wdt(struct watchdog_device *wdd)
+> >>  	return container_of(wdd, struct qcom_wdt, wdd);
+> >>  }
+> >>  
+> >> +static inline int qcom_get_enable(struct watchdog_device *wdd)
+> >> +{
+> >> +	int enable = QCOM_WDT_ENABLE;
+> >> +
+> >> +	if (wdd->info->options & WDIOF_PRETIMEOUT)
+> >> +		enable |= QCOM_WDT_ENABLE_IRQ;
+> >> +
+> > 
+> > Again, the condition needs to be that pretimeout != 0,
+> > not that it is supported.
 > 
-> This change is based on Georgi Djakov [RFC]
-> (https://lkml.org/lkml/2018/10/11/499)
+> no I dont think so. doing that would propagate a possible error in some
+> pretimeout setup code which would end up enabling an interrupt when it
+> shouldnt. so I dont think that doing that would be correct.
 > 
-> Signed-off-by: Sahitya Tummala <stummala@codeaurora.org>
-> Signed-off-by: Subhash Jadavani <subhashj@codeaurora.org>
-> Signed-off-by: Veerabhadrarao Badiganti <vbadigan@codeaurora.org>
-> Signed-off-by: Pradeep P V K <ppvk@codeaurora.org>
-> ---
->  drivers/mmc/host/sdhci-msm.c | 393 
-> ++++++++++++++++++++++++++++++++++++++++++-
->  1 file changed, 390 insertions(+), 3 deletions(-)
+If the pretimeout setup code is buggy, it needs to be fixed.
+
+> The interrupt should only be enabled if WDIOF_PRETIMEOUT is configured
+> (independently of the pretimeout value); as a matter of fact, if
+> pretimeout is 0, the interrupt will trigger at the same time than bark
+> (which is what the original code used to do).
 > 
-> diff --git a/drivers/mmc/host/sdhci-msm.c 
-> b/drivers/mmc/host/sdhci-msm.c
-> index b75c82d..71515ca 100644
-> --- a/drivers/mmc/host/sdhci-msm.c
-> +++ b/drivers/mmc/host/sdhci-msm.c
-> @@ -11,6 +11,7 @@
->  #include <linux/mmc/mmc.h>
->  #include <linux/pm_runtime.h>
->  #include <linux/slab.h>
-> +#include <linux/interconnect.h>
->  #include <linux/iopoll.h>
->  #include <linux/regulator/consumer.h>
+The original code did not set bit 1 of the WDT_EN register,
+and it did not set the bark time.
+
+> so I'd rather keep this condition unless you strongly oppose to it.
 > 
-> @@ -122,6 +123,9 @@
->  #define msm_host_writel(msm_host, val, host, offset) \
->  	msm_host->var_ops->msm_writel_relaxed(val, host, offset)
+
+Please feel free to petition  to Wim.
+
+> > 
+> >> +	return enable;
+> >> +}
+> >> +
+> >> +static irqreturn_t qcom_wdt_isr(int irq, void *arg)
+> >> +{
+> >> +	struct watchdog_device *wdd = arg;
+> >> +
+> >> +	watchdog_notify_pretimeout(wdd);
+> >> +
+> >> +	return IRQ_HANDLED;
+> >> +}
+> >> +
+> >>  static int qcom_wdt_start(struct watchdog_device *wdd)
+> >>  {
+> >>  	struct qcom_wdt *wdt = to_qcom_wdt(wdd);
+> >> +	unsigned int bark = wdd->timeout;
+> >> +
+> >> +	if (wdd->pretimeout)
+> >> +		bark = bark - wdd->pretimeout;
+> > 
+> > The if() just adds code and doesn't otherwise do any good.
 > 
-> +#define SDHC_DDR "sdhc-ddr"
-> +#define CPU_SDHC "cpu-sdhc"
-> +
->  struct sdhci_msm_offset {
->  	u32 core_hc_mode;
->  	u32 core_mci_data_cnt;
-> @@ -228,6 +232,31 @@ struct sdhci_msm_variant_info {
->  	const struct sdhci_msm_offset *offset;
->  };
+> yeah, was just for clarity and it is surely removed by the compiler. but
+> sure will remove
 > 
-> +struct msm_bus_vectors {
-> +	uint64_t ab;
-> +	uint64_t ib;
-> +};
-> +
-> +struct msm_bus_path {
-> +	unsigned int num_paths;
-> +	struct msm_bus_vectors *vec;
-> +};
-> +
-> +struct sdhci_msm_bus_vote_data {
-> +	const char *name;
-> +	unsigned int num_usecase;
-> +	struct msm_bus_path *usecase;
-> +
-> +	unsigned int *bw_vecs;
-> +	unsigned int bw_vecs_size;
-> +
-> +	struct icc_path *sdhc_ddr;
-> +	struct icc_path *cpu_sdhc;
-> +
-> +	uint32_t curr_vote;
-> +
-> +};
-> +
->  struct sdhci_msm_host {
->  	struct platform_device *pdev;
->  	void __iomem *core_mem;	/* MSM SDCC mapped address */
-> @@ -253,8 +282,13 @@ struct sdhci_msm_host {
->  	const struct sdhci_msm_offset *offset;
->  	bool use_cdr;
->  	u32 transfer_mode;
-> +	bool skip_bus_bw_voting;
-> +	struct sdhci_msm_bus_vote_data *bus_vote_data;
-> +	struct delayed_work bus_vote_work;
->  };
+> > 
+> >>  
+> >>  	writel(0, wdt_addr(wdt, WDT_EN));
+> >>  	writel(1, wdt_addr(wdt, WDT_RST));
+> >> -	writel(wdd->timeout * wdt->rate, wdt_addr(wdt, WDT_BARK_TIME));
+> >> +	writel(bark * wdt->rate, wdt_addr(wdt, WDT_BARK_TIME));
+> >>  	writel(wdd->timeout * wdt->rate, wdt_addr(wdt, WDT_BITE_TIME));
+> >> -	writel(1, wdt_addr(wdt, WDT_EN));
+> >> +	writel(qcom_get_enable(wdd), wdt_addr(wdt, WDT_EN));
+> >>  	return 0;
+> >>  }
+> >>  
+> >> @@ -89,6 +116,13 @@ static int qcom_wdt_set_timeout(struct watchdog_device *wdd,
+> >>  	return qcom_wdt_start(wdd);
+> >>  }
+> >>  
+> >> +static int qcom_wdt_set_pretimeout(struct watchdog_device *wdd,
+> >> +				   unsigned int timeout)
+> >> +{
+> >> +	wdd->pretimeout = timeout;
+> >> +	return qcom_wdt_start(wdd);
+> >> +}
+> >> +
+> >>  static int qcom_wdt_restart(struct watchdog_device *wdd, unsigned long action,
+> >>  			    void *data)
+> >>  {
+> >> @@ -105,7 +139,7 @@ static int qcom_wdt_restart(struct watchdog_device *wdd, unsigned long action,
+> >>  	writel(1, wdt_addr(wdt, WDT_RST));
+> >>  	writel(timeout, wdt_addr(wdt, WDT_BARK_TIME));
+> >>  	writel(timeout, wdt_addr(wdt, WDT_BITE_TIME));
+> >> -	writel(1, wdt_addr(wdt, WDT_EN));
+> >> +	writel(qcom_get_enable(wdd), wdt_addr(wdt, WDT_EN));
+> >>  
+> >>  	/*
+> >>  	 * Actually make sure the above sequence hits hardware before sleeping.
+> >> @@ -121,6 +155,7 @@ static const struct watchdog_ops qcom_wdt_ops = {
+> >>  	.stop		= qcom_wdt_stop,
+> >>  	.ping		= qcom_wdt_ping,
+> >>  	.set_timeout	= qcom_wdt_set_timeout,
+> >> +	.set_pretimeout	= qcom_wdt_set_pretimeout,
+> >>  	.restart        = qcom_wdt_restart,
+> >>  	.owner		= THIS_MODULE,
+> >>  };
+> >> @@ -133,6 +168,15 @@ static const struct watchdog_info qcom_wdt_info = {
+> >>  	.identity	= KBUILD_MODNAME,
+> >>  };
+> >>  
+> >> +static const struct watchdog_info qcom_wdt_pt_info = {
+> >> +	.options	= WDIOF_KEEPALIVEPING
+> >> +			| WDIOF_MAGICCLOSE
+> >> +			| WDIOF_SETTIMEOUT
+> >> +			| WDIOF_PRETIMEOUT
+> >> +			| WDIOF_CARDRESET,
+> >> +	.identity	= KBUILD_MODNAME,
+> >> +};
+> >> +
+> >>  static void qcom_clk_disable_unprepare(void *data)
+> >>  {
+> >>  	clk_disable_unprepare(data);
+> >> @@ -146,7 +190,7 @@ static int qcom_wdt_probe(struct platform_device *pdev)
+> >>  	struct device_node *np = dev->of_node;
+> >>  	const u32 *regs;
+> >>  	u32 percpu_offset;
+> >> -	int ret;
+> >> +	int irq, ret;
+> >>  
+> >>  	regs = of_device_get_match_data(dev);
+> >>  	if (!regs) {
+> >> @@ -204,7 +248,17 @@ static int qcom_wdt_probe(struct platform_device *pdev)
+> >>  		return -EINVAL;
+> >>  	}
+> >>  
+> >> -	wdt->wdd.info = &qcom_wdt_info;
+> >> +	irq = platform_get_irq(pdev, 0);
+> >> +	if (irq > 0) {
+> >> +		if (devm_request_irq(dev, irq, qcom_wdt_isr,
+> >> +				     IRQF_TRIGGER_RISING, "wdt_bark",
+> >> +				     &wdt->wdd))
+> >> +			irq = 0;
+> >> +	} else if (irq == -EPROBE_DEFER)
+> >> +		return -EPROBE_DEFER;
+> >> +
+> >> +	wdt->wdd.info = irq > 0 ? &qcom_wdt_pt_info : &qcom_wdt_info;
+> >> +	wdt->wdd.pretimeout = irq > 0 ? 1 : 0;
+> > 
+> > Why repeat the conditional ? It seems to me that something like
+> > 
+> > 	wdt->wdd.info = &qcom_wdt_info;
+> > 	...
+> > 	if (irq > 0) {
+> > 		wdt->wdd.info = &qcom_wdt_pt_info;
+> > 		wdt->wdd.pretimeout = 1;
+> > 		...
+> > 	}
+> > 
+> > would be much easier and avoid the repeated conditionals.
 > 
-> +static void sdhci_msm_bus_voting(struct sdhci_host *host, u32 enable);
-> +
->  static const struct sdhci_msm_offset *sdhci_priv_msm_offset(struct
-> sdhci_host *host)
->  {
->  	struct sdhci_pltfm_host *pltfm_host = sdhci_priv(host);
-> @@ -1557,6 +1591,8 @@ static void sdhci_msm_set_clock(struct
-> sdhci_host *host, unsigned int clock)
+> I agree. will change.
 > 
->  	msm_set_clock_rate_for_bus_mode(host, clock);
->  out:
-> +	if (!msm_host->skip_bus_bw_voting)
-> +		sdhci_msm_bus_voting(host, !!clock);
->  	__sdhci_msm_set_clock(host, clock);
->  }
+> > 
+> >>  	wdt->wdd.ops = &qcom_wdt_ops;
+> >>  	wdt->wdd.min_timeout = 1;
+> >>  	wdt->wdd.max_timeout = 0x10000000U / wdt->rate;
+> >> -- 
+> >> 2.23.0
+> >>
+> > 
 > 
-> @@ -1678,6 +1714,341 @@ static void
-> sdhci_msm_set_regulator_caps(struct sdhci_msm_host *msm_host)
->  	pr_debug("%s: supported caps: 0x%08x\n", mmc_hostname(mmc), caps);
->  }
-> 
-> +static int sdhci_msm_dt_get_array(struct device *dev, const char 
-> *prop_name,
-> +				 u32 **bw_vecs, int *len, u32 size)
-> +{
-> +	int ret = 0;
-> +	struct device_node *np = dev->of_node;
-> +	size_t sz;
-> +	u32 *arr = NULL;
-> +
-> +	if (!of_get_property(np, prop_name, len)) {
-> +		ret = -EINVAL;
-> +		goto out;
-> +	}
-> +	sz = *len = *len / sizeof(*arr);
-> +	if (sz <= 0 || (size > 0 && (sz > size))) {
-> +		dev_err(dev, "%s invalid size\n", prop_name);
-> +		ret = -EINVAL;
-> +		goto out;
-> +	}
-> +
-> +	arr = devm_kzalloc(dev, sz * sizeof(*arr), GFP_KERNEL);
-> +	if (!arr) {
-> +		ret = -ENOMEM;
-> +		goto out;
-> +	}
-> +
-> +	ret = of_property_read_u32_array(np, prop_name, arr, sz);
-> +	if (ret < 0) {
-> +		dev_err(dev, "%s failed reading array %d\n", prop_name, ret);
-> +		goto out;
-> +	}
-> +	*bw_vecs = arr;
-> +out:
-> +	if (ret)
-> +		*len = 0;
-> +	return ret;
-> +}
-> +
-> +/* Returns required bandwidth in Bytes per Sec */
-> +static unsigned long sdhci_get_bw_required(struct sdhci_host *host,
-> +					struct mmc_ios *ios)
-> +{
-> +	unsigned long bw;
-> +	struct sdhci_pltfm_host *pltfm_host = sdhci_priv(host);
-> +	struct sdhci_msm_host *msm_host = sdhci_pltfm_priv(pltfm_host);
-> +
-> +	bw = msm_host->clk_rate;
-> +
-> +	if (ios->bus_width == MMC_BUS_WIDTH_4)
-> +		bw /= 2;
-> +	else if (ios->bus_width == MMC_BUS_WIDTH_1)
-> +		bw /= 8;
-> +
-> +	return bw;
-> +}
-> +
-> +static int sdhci_msm_bus_get_vote_for_bw(struct sdhci_msm_host *host,
-> +					   unsigned int bw)
-> +{
-> +	struct sdhci_msm_bus_vote_data *bvd = host->bus_vote_data;
-> +
-> +	unsigned int *table = bvd->bw_vecs;
-> +	unsigned int size = bvd->bw_vecs_size;
-> +	int i;
-> +
-> +	for (i = 0; i < size; i++) {
-> +		if (bw <= table[i])
-> +			break;
-> +	}
-> +
-> +	if (i && (i == size))
-> +		i--;
-> +
-> +	return i;
-> +}
-> +
-> +/*
-> + * This function must be called with host lock acquired.
-> + * Caller of this function should also ensure that msm bus client
-> + * handle is not null.
-> + */
-> +static inline int sdhci_msm_bus_set_vote(struct sdhci_msm_host 
-> *msm_host,
-> +					     int vote,
-> +					     unsigned long *flags)
-> +{
-> +	struct sdhci_host *host =  platform_get_drvdata(msm_host->pdev);
-> +	struct sdhci_msm_bus_vote_data *bvd = msm_host->bus_vote_data;
-> +	struct msm_bus_path *usecase = bvd->usecase;
-> +	struct msm_bus_vectors *vec = usecase[vote].vec;
-> +	int ddr_rc = 0, cpu_rc = 0;
-> +
-> +	if (vote != bvd->curr_vote) {
-> +		spin_unlock_irqrestore(&host->lock, *flags);
-> +		pr_debug("%s: vote:%d sdhc_ddr ab:%llu ib:%llu cpu_sdhc ab:%llu 
-> ib:%llu\n",
-> +				mmc_hostname(host->mmc), vote, vec[0].ab,
-> +				vec[0].ib, vec[1].ab, vec[1].ib);
-> +		ddr_rc = icc_set_bw(bvd->sdhc_ddr, vec[0].ab, vec[0].ib);
-> +		cpu_rc = icc_set_bw(bvd->cpu_sdhc, vec[1].ab, vec[1].ib);
-> +		spin_lock_irqsave(&host->lock, *flags);
-> +		if (ddr_rc || cpu_rc) {
-> +			pr_err("%s: icc_set() failed\n",
-> +				mmc_hostname(host->mmc));
-> +			goto out;
-> +		}
-> +		bvd->curr_vote = vote;
-> +	}
-> +out:
-> +	return cpu_rc;
-> +}
-> +
-> +/*
-> + * Internal work. Work to set 0 bandwidth for msm bus.
-> + */
-> +static void sdhci_msm_bus_work(struct work_struct *work)
-> +{
-> +	struct sdhci_msm_host *msm_host;
-> +	struct sdhci_host *host;
-> +	unsigned long flags;
-> +
-> +	msm_host = container_of(work, struct sdhci_msm_host,
-> +				bus_vote_work.work);
-> +	host =  platform_get_drvdata(msm_host->pdev);
-> +
-> +	/* Check handle and return */
-> +	if (!msm_host->bus_vote_data->sdhc_ddr ||
-> +			!msm_host->bus_vote_data->cpu_sdhc)
-> +		return;
-> +	spin_lock_irqsave(&host->lock, flags);
-> +	/* don't vote for 0 bandwidth if any request is in progress */
-> +	if (!host->mmc->ongoing_mrq)
-> +		sdhci_msm_bus_set_vote(msm_host, 0, &flags);
-> +	else
-> +		pr_warn("Transfer in progress.Skipping bus voting to 0\n");
-> +	spin_unlock_irqrestore(&host->lock, flags);
-> +}
-> +
-> +/*
-> + * This function cancels any scheduled delayed work and sets the bus
-> + * vote based on bw (bandwidth) argument.
-> + */
-> +static void sdhci_msm_bus_cancel_work_and_set_vote(struct sdhci_host 
-> *host,
-> +						unsigned int bw)
-> +{
-> +	int vote;
-> +	unsigned long flags;
-> +	struct sdhci_pltfm_host *pltfm_host = sdhci_priv(host);
-> +	struct sdhci_msm_host *msm_host = sdhci_pltfm_priv(pltfm_host);
-> +
-> +	cancel_delayed_work_sync(&msm_host->bus_vote_work);
-> +	spin_lock_irqsave(&host->lock, flags);
-> +	vote = sdhci_msm_bus_get_vote_for_bw(msm_host, bw);
-> +	sdhci_msm_bus_set_vote(msm_host, vote, &flags);
-> +	spin_unlock_irqrestore(&host->lock, flags);
-> +}
-> +
-> +
-> +#define MSM_MMC_BUS_VOTING_DELAY	200 /* msecs */
-> +#define VOTE_ZERO  0
-> +
-> +/* This function queues a work which will set the bandwidth requiement 
-> to 0 */
-> +static void sdhci_msm_bus_queue_work(struct sdhci_host *host)
-> +{
-> +	unsigned long flags;
-> +	struct sdhci_pltfm_host *pltfm_host = sdhci_priv(host);
-> +	struct sdhci_msm_host *msm_host = sdhci_pltfm_priv(pltfm_host);
-> +
-> +	spin_lock_irqsave(&host->lock, flags);
-> +	if (msm_host->bus_vote_data->curr_vote != VOTE_ZERO)
-> +		queue_delayed_work(system_wq,
-> +				   &msm_host->bus_vote_work,
-> +				   msecs_to_jiffies(MSM_MMC_BUS_VOTING_DELAY));
-> +	spin_unlock_irqrestore(&host->lock, flags);
-> +}
-> +
-> +static struct sdhci_msm_bus_vote_data
-> *sdhci_msm_get_bus_vote_data(struct device
-> +				       *dev, struct sdhci_msm_host *host)
-> +
-> +{
-> +	struct platform_device *pdev = to_platform_device(dev);
-> +	struct device_node *of_node = dev->of_node;
-> +	struct sdhci_msm_bus_vote_data *bvd = NULL;
-> +	struct msm_bus_path *usecase = NULL;
-> +	int ret = 0, i = 0, j, k, num_paths, len;
-> +	const uint32_t *vec_arr = NULL;
-> +	bool mem_err = false;
-> +
-> +	if (!pdev) {
-> +		dev_err(dev, "Null platform device!\n");
-> +		return NULL;
-> +	}
-> +
-> +	bvd = devm_kzalloc(dev, sizeof(struct sdhci_msm_bus_vote_data),
-> +				GFP_KERNEL);
-> +	if (!bvd) {
-> +		ret = -ENOMEM;
-> +		dev_err(dev, "No sufficient memory!\n");
-> +		return bvd;
-> +	}
-> +	ret = sdhci_msm_dt_get_array(dev, "qcom,bus-bw-vectors-bps",
-> +				&bvd->bw_vecs, &bvd->bw_vecs_size, 0);
-> +	if (ret) {
-> +		dev_info(dev, "No dt property of bus bw. voting defined!\n");
-> +		dev_info(dev, "Skipping Bus BW voting now!!\n");
-> +		host->skip_bus_bw_voting = true;
-> +		if (ret != -EINVAL && ret != -ENOMEM)
-> +			goto free;
-> +		goto err;
-> +	}
-> +
-> +	ret = of_property_read_string(of_node, "qcom,msm-bus,name", 
-> &bvd->name);
-> +	if (ret) {
-> +		dev_err(dev, "Error: (%d) Bus name missing!\n", ret);
-> +		goto err;
-> +	}
-> +
-> +	ret = of_property_read_u32(of_node, "qcom,msm-bus,num-cases",
-> +		&bvd->num_usecase);
-> +	if (ret) {
-> +		dev_err(dev, "Error: num-usecases not found\n");
-> +		goto err;
-> +	}
-> +
-> +	usecase = devm_kzalloc(dev, (sizeof(struct msm_bus_path) *
-> +				   bvd->num_usecase), GFP_KERNEL);
-> +	if (!usecase)
-> +		goto err;
-> +
-> +	ret = of_property_read_u32(of_node, "qcom,msm-bus,num-paths",
-> +				   &num_paths);
-> +	if (ret) {
-> +		dev_err(dev, "Error: num_paths not found\n");
-> +		goto out;
-> +	}
-> +
-> +	vec_arr = of_get_property(of_node, "qcom,msm-bus,vectors-KBps", 
-> &len);
-> +	if (vec_arr == NULL) {
-> +		dev_err(dev, "Error: Vector array not found\n");
-> +		goto out;
-> +	}
-> +
-> +	for (i = 0; i < bvd->num_usecase; i++) {
-> +		usecase[i].num_paths = num_paths;
-> +		usecase[i].vec = devm_kzalloc(dev, num_paths *
-> +					      sizeof(struct msm_bus_vectors),
-> +					      GFP_KERNEL);
-> +		if (!usecase[i].vec) {
-> +			mem_err = true;
-> +			dev_err(dev, "Error: Failed to alloc mem for vectors\n");
-> +			goto out;
-> +		}
-> +		for (j = 0; j < num_paths; j++) {
-> +			int idx = ((i * num_paths) + j) * 2;
-> +
-> +			usecase[i].vec[j].ab = (uint64_t)
-> +				be32_to_cpu(vec_arr[idx]);
-> +			usecase[i].vec[j].ib = (uint64_t)
-> +				be32_to_cpu(vec_arr[idx + 1]);
-> +		}
-> +	}
-> +
-> +	bvd->usecase = usecase;
-> +	return bvd;
-> +out:
-> +	if (mem_err) {
-> +		for (k = i - 1; k >= 0; k--)
-> +			devm_kfree(dev, usecase[k].vec);
-> +	}
-> +	devm_kfree(dev, usecase);
-> +free:
-> +	devm_kfree(dev, bvd->bw_vecs);
-> +err:
-> +	devm_kfree(dev, bvd);
-> +	bvd = NULL;
-> +	return bvd;
-> +}
-> +
-> +static int sdhci_msm_bus_register(struct sdhci_msm_host *host,
-> +				struct platform_device *pdev)
-> +{
-> +	struct sdhci_msm_bus_vote_data *bsd;
-> +	struct device *dev = &pdev->dev;
-> +
-> +	bsd = sdhci_msm_get_bus_vote_data(dev, host);
-> +	if (!bsd) {
-> +		dev_err(&pdev->dev, "Failed: getting bus_scale data\n");
-> +		return PTR_ERR(bsd);
-> +	}
-> +	host->bus_vote_data = bsd;
-> +
-> +	bsd->sdhc_ddr = of_icc_get(&pdev->dev, SDHC_DDR);
-> +	if (IS_ERR(bsd->sdhc_ddr)) {
-> +		dev_err(&pdev->dev, "Error: (%ld) failed getting %s path\n",
-> +			PTR_ERR(bsd->sdhc_ddr), SDHC_DDR);
-> +		return PTR_ERR(bsd->sdhc_ddr);
-> +	}
-> +
-> +	bsd->cpu_sdhc = of_icc_get(&pdev->dev, CPU_SDHC);
-> +	if (IS_ERR(bsd->cpu_sdhc)) {
-> +		dev_err(&pdev->dev, "Error: (%ld) failed getting %s path\n",
-> +			PTR_ERR(bsd->cpu_sdhc), CPU_SDHC);
-> +		return PTR_ERR(bsd->cpu_sdhc);
-> +	}
-> +
-> +	INIT_DELAYED_WORK(&host->bus_vote_work, sdhci_msm_bus_work);
-> +
-> +	return 0;
-> +}
-> +
-> +static void sdhci_msm_bus_unregister(struct device *dev,
-> +				struct sdhci_msm_host *host)
-> +{
-> +	struct sdhci_msm_bus_vote_data *bsd = host->bus_vote_data;
-> +	int i;
-> +
-> +	icc_put(bsd->sdhc_ddr);
-> +	icc_put(bsd->cpu_sdhc);
-> +
-> +	for (i = 0; i < bsd->num_usecase; i++)
-> +		devm_kfree(dev, bsd->usecase[i].vec);
-> +	devm_kfree(dev, bsd->usecase);
-> +	devm_kfree(dev, bsd->bw_vecs);
-> +	devm_kfree(dev, bsd);
-> +}
-> +
-> +static void sdhci_msm_bus_voting(struct sdhci_host *host, u32 enable)
-> +{
-> +	struct mmc_ios *ios = &host->mmc->ios;
-> +	unsigned int bw;
-> +
-> +	bw = sdhci_get_bw_required(host, ios);
-> +	if (enable)
-> +		sdhci_msm_bus_cancel_work_and_set_vote(host, bw);
-> +	else
-> +		sdhci_msm_bus_queue_work(host);
-> +}
-> +
->  static const struct sdhci_msm_variant_ops mci_var_ops = {
->  	.msm_readl_relaxed = sdhci_msm_mci_variant_readl_relaxed,
->  	.msm_writel_relaxed = sdhci_msm_mci_variant_writel_relaxed,
-> @@ -1839,6 +2210,13 @@ static int sdhci_msm_probe(struct 
-> platform_device *pdev)
->  		dev_warn(&pdev->dev, "TCXO clk not present (%d)\n", ret);
->  	}
-> 
-> +	ret = sdhci_msm_bus_register(msm_host, pdev);
-> +	if (ret && !msm_host->skip_bus_bw_voting)
-> +		goto clk_disable;
-> +
-> +	if (!msm_host->skip_bus_bw_voting)
-> +		sdhci_msm_bus_voting(host, 1);
-> +
->  	if (!msm_host->mci_removed) {
->  		core_memres = platform_get_resource(pdev, IORESOURCE_MEM, 1);
->  		msm_host->core_mem = devm_ioremap_resource(&pdev->dev,
-> @@ -1846,7 +2224,7 @@ static int sdhci_msm_probe(struct platform_device 
-> *pdev)
-> 
->  		if (IS_ERR(msm_host->core_mem)) {
->  			ret = PTR_ERR(msm_host->core_mem);
-> -			goto clk_disable;
-> +			goto bus_unregister;
->  		}
->  	}
-> 
-> @@ -1918,7 +2296,7 @@ static int sdhci_msm_probe(struct platform_device 
-> *pdev)
->  	msm_host->pwr_irq = platform_get_irq_byname(pdev, "pwr_irq");
->  	if (msm_host->pwr_irq < 0) {
->  		ret = msm_host->pwr_irq;
-> -		goto clk_disable;
-> +		goto bus_unregister;
->  	}
-> 
->  	sdhci_msm_init_pwr_irq_wait(msm_host);
-> @@ -1931,7 +2309,7 @@ static int sdhci_msm_probe(struct platform_device 
-> *pdev)
->  					dev_name(&pdev->dev), host);
->  	if (ret) {
->  		dev_err(&pdev->dev, "Request IRQ failed (%d)\n", ret);
-> -		goto clk_disable;
-> +		goto bus_unregister;
->  	}
-> 
->  	pm_runtime_get_noresume(&pdev->dev);
-> @@ -1956,6 +2334,11 @@ static int sdhci_msm_probe(struct 
-> platform_device *pdev)
->  	pm_runtime_disable(&pdev->dev);
->  	pm_runtime_set_suspended(&pdev->dev);
->  	pm_runtime_put_noidle(&pdev->dev);
-> +bus_unregister:
-> +	if (!msm_host->skip_bus_bw_voting) {
-> +		sdhci_msm_bus_cancel_work_and_set_vote(host, 0);
-> +		sdhci_msm_bus_unregister(&pdev->dev, msm_host);
-> +	}
->  clk_disable:
->  	clk_bulk_disable_unprepare(ARRAY_SIZE(msm_host->bulk_clks),
->  				   msm_host->bulk_clks);
-> @@ -1985,6 +2368,10 @@ static int sdhci_msm_remove(struct 
-> platform_device *pdev)
->  				   msm_host->bulk_clks);
->  	if (!IS_ERR(msm_host->bus_clk))
->  		clk_disable_unprepare(msm_host->bus_clk);
-> +	if (!msm_host->skip_bus_bw_voting) {
-> +		sdhci_msm_bus_cancel_work_and_set_vote(host, 0);
-> +		sdhci_msm_bus_unregister(&pdev->dev, msm_host);
-> +	}
->  	sdhci_pltfm_free(pdev);
->  	return 0;
->  }
