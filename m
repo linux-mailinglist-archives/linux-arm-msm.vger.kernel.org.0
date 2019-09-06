@@ -2,125 +2,212 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 36A8EAB244
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 Sep 2019 08:14:54 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5DAE7AB288
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 Sep 2019 08:32:27 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2390686AbfIFGOx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 6 Sep 2019 02:14:53 -0400
-Received: from mail-wm1-f46.google.com ([209.85.128.46]:39829 "EHLO
-        mail-wm1-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2390581AbfIFGOx (ORCPT
+        id S2388744AbfIFGc0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 6 Sep 2019 02:32:26 -0400
+Received: from smtp.codeaurora.org ([198.145.29.96]:58300 "EHLO
+        smtp.codeaurora.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1732131AbfIFGc0 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 6 Sep 2019 02:14:53 -0400
-Received: by mail-wm1-f46.google.com with SMTP id q12so5603070wmj.4
-        for <linux-arm-msm@vger.kernel.org>; Thu, 05 Sep 2019 23:14:51 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to
-         :user-agent;
-        bh=4VW5EActjzSTk7AYag6d/MGY6ejEC/or1qENLxgPsyo=;
-        b=dbGyOsmTmsCCCGJqsQ9PHpGnPjtiP1wYVM9ZmJTwOpSipipviNJwWI5jSOjcyjtKlb
-         +vd0ttjwEgGlnO+bshgFaXBNtdbM3oZ5jdWemCeAXmcVaYbcw7Ak3hjl3BM6LNE/04HS
-         RTadtn3VoULTi2KksjJzX07o5DmBvjHD0ko5zWB/aNK22Gk09zu3a9etVLxULrGWzY6a
-         BcIG16PLsjS8FpBGFMrUdWkrYEpoJLnBlr/oKNGglZCmlknyjPgIjOcIbq4uZ6DoILSh
-         EXcffEDqjaoAphVDx2omAkCfBtu83rNGEnaUn+kN3/4Ks/6JElBOYBQiuy1UAN3SSgVV
-         QYqg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        bh=4VW5EActjzSTk7AYag6d/MGY6ejEC/or1qENLxgPsyo=;
-        b=TDHxPTAVLp4R2Ntu4fSG4DBIugmwTJuyArjkGlZSoAKO+FBrhJINRNPQPJkznfoy6+
-         Vc7PQ9Y/P+FaUwWMiA39QvgloyHFnIVNr2GKWMnNZagRgjC/WIJrDqCNQpOz87bhywJc
-         9an1iuNuBeX4amrcf69tFSWmy0/r3LSBL/tAKg8OHK6M6Ho3FHJHBb/+RyFGm9bO8gtk
-         +wUV1y/Vwi7ECO6BohCZPxqIInWB9oqpnZCkQhayG1jCjTIwDOVZx2KIiRs7rAR2Q4ZL
-         jiBJ9iJ234PP+9KHtaUD5468tOk5TNV0Fnu2+cy8NHP+F/0SaG1vO5T6engWklN3vEAV
-         zvzA==
-X-Gm-Message-State: APjAAAXN7xnLPeuY4Xn4m4HYHToMhbqsW5gmpuxUVMlqBDLFJolw+UKx
-        Cw41cOIuLK/3oTBiOJlqibsOKw==
-X-Google-Smtp-Source: APXvYqxsDA0NAwr7Py5LVAnyB4jY1o506l6wGEbznUrXFWtr/7djvZYfv7kP9rEOlBaVYGI3sA6blA==
-X-Received: by 2002:a05:600c:2181:: with SMTP id e1mr5748634wme.117.1567750490764;
-        Thu, 05 Sep 2019 23:14:50 -0700 (PDT)
-Received: from dell ([95.147.198.36])
-        by smtp.gmail.com with ESMTPSA id c10sm955648wrf.58.2019.09.05.23.14.49
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Thu, 05 Sep 2019 23:14:49 -0700 (PDT)
-Date:   Fri, 6 Sep 2019 07:14:48 +0100
-From:   Lee Jones <lee.jones@linaro.org>
-To:     Stephen Boyd <swboyd@chromium.org>
-Cc:     agross@kernel.org, alokc@codeaurora.org,
-        bjorn.andersson@linaro.org, mark.rutland@arm.com,
-        robh+dt@kernel.org, vkoul@kernel.org, wsa@the-dreams.de,
-        linux-i2c@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org
-Subject: Re: [RESEND v3 1/1] i2c: qcom-geni: Disable DMA processing on the
- Lenovo Yoga C630
-Message-ID: <20190906061448.GJ26880@dell>
-References: <20190905192412.23116-1-lee.jones@linaro.org>
- <5d71ef95.1c69fb81.6d090.085d@mx.google.com>
+        Fri, 6 Sep 2019 02:32:26 -0400
+Received: by smtp.codeaurora.org (Postfix, from userid 1000)
+        id B11EC60863; Fri,  6 Sep 2019 06:32:24 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
+        s=default; t=1567751544;
+        bh=5IXWL13z0uCkCyyzyvjNDyApKQDm84iOFMXdY5wj5TU=;
+        h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
+        b=J1FNAPpwWiwIuRFAOOaK+pKm7+gBb9GpefDZM2EZwXh8pGpde5fNUyLZIuASW906r
+         XbeIM2eOf+bAoFyIf7Mx5pkTQb5welcJXozRCdOqQ2qsnQVxJSR9Ud5D5N8o8b7SoM
+         lLtfGp2w3oCB8a5DLLJQPDf6YFEElXtDEvHnL9+M=
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        pdx-caf-mail.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.7 required=2.0 tests=ALL_TRUSTED,BAYES_00,
+        DKIM_INVALID,DKIM_SIGNED,SPF_NONE autolearn=no autolearn_force=no
+        version=3.4.0
+Received: from mail-ed1-f41.google.com (mail-ed1-f41.google.com [209.85.208.41])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: vivek.gautam@smtp.codeaurora.org)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id BC907611FB;
+        Fri,  6 Sep 2019 06:32:22 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
+        s=default; t=1567751543;
+        bh=5IXWL13z0uCkCyyzyvjNDyApKQDm84iOFMXdY5wj5TU=;
+        h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
+        b=TLthiHUilgoeHCIFJsQWdQt6JC0ONZ4qmdkREojmUvC0O35NrobYsN9Wap0KORN80
+         kxeN7TuPEzX/6y0rygOsV01It8c02tbTF4rAJfCS6Hq/q7y3bJdZXHlq/2gkaeO4uH
+         E50k2l8gARzUl7ajwNYZa+aiqdLMGu/Q4KWG5ptc=
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org BC907611FB
+Authentication-Results: pdx-caf-mail.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: pdx-caf-mail.web.codeaurora.org; spf=none smtp.mailfrom=vivek.gautam@codeaurora.org
+Received: by mail-ed1-f41.google.com with SMTP id v38so5266731edm.7;
+        Thu, 05 Sep 2019 23:32:22 -0700 (PDT)
+X-Gm-Message-State: APjAAAUa5OYORJKmSWKHaK6cIsX2Sd3oyHdL+6McUb/5VinCPZqVgRek
+        lab3HjLVaHVvthj8NVPcP3Twz8LMJ/lmty6sXrs=
+X-Google-Smtp-Source: APXvYqwU+hPH/XbLx216IUjOvcURat+MDJLla19fyLxpNuL7iBDeofqIDCk3Hji3Toa0pQw92b5brzKXTj7t9HHhEbY=
+X-Received: by 2002:a50:ce53:: with SMTP id k19mr7907098edj.2.1567751541265;
+ Thu, 05 Sep 2019 23:32:21 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <5d71ef95.1c69fb81.6d090.085d@mx.google.com>
-User-Agent: Mutt/1.9.4 (2018-02-28)
+References: <20190823063248.13295-1-vivek.gautam@codeaurora.org> <20190823063248.13295-4-vivek.gautam@codeaurora.org>
+In-Reply-To: <20190823063248.13295-4-vivek.gautam@codeaurora.org>
+From:   Vivek Gautam <vivek.gautam@codeaurora.org>
+Date:   Fri, 6 Sep 2019 12:02:10 +0530
+X-Gmail-Original-Message-ID: <CAFp+6iE05p-UM=pJ-JwbmTb98sAN5B9c980Qv6ZBX89T8Jeofw@mail.gmail.com>
+Message-ID: <CAFp+6iE05p-UM=pJ-JwbmTb98sAN5B9c980Qv6ZBX89T8Jeofw@mail.gmail.com>
+Subject: Re: [PATCH v4 3/3] iommu: arm-smmu-impl: Add sdm845 implementation hook
+To:     "list@263.net:IOMMU DRIVERS <iommu@lists.linux-foundation.org>, Joerg
+        Roedel <joro@8bytes.org>," <joro@8bytes.org>,
+        Andy Gross <agross@kernel.org>,
+        Will Deacon <will.deacon@arm.com>,
+        Robin Murphy <robin.murphy@arm.com>,
+        "list@263.net:IOMMU DRIVERS <iommu@lists.linux-foundation.org>, Joerg
+        Roedel <joro@8bytes.org>," <iommu@lists.linux-foundation.org>
+Cc:     linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        open list <linux-kernel@vger.kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, 05 Sep 2019, Stephen Boyd wrote:
+On Fri, Aug 23, 2019 at 12:03 PM Vivek Gautam
+<vivek.gautam@codeaurora.org> wrote:
+>
+> Add reset hook for sdm845 based platforms to turn off
+> the wait-for-safe sequence.
+>
+> Understanding how wait-for-safe logic affects USB and UFS performance
+> on MTP845 and DB845 boards:
+>
+> Qcom's implementation of arm,mmu-500 adds a WAIT-FOR-SAFE logic
+> to address under-performance issues in real-time clients, such as
+> Display, and Camera.
+> On receiving an invalidation requests, the SMMU forwards SAFE request
+> to these clients and waits for SAFE ack signal from real-time clients.
+> The SAFE signal from such clients is used to qualify the start of
+> invalidation.
+> This logic is controlled by chicken bits, one for each - MDP (display),
+> IFE0, and IFE1 (camera), that can be accessed only from secure software
+> on sdm845.
+>
+> This configuration, however, degrades the performance of non-real time
+> clients, such as USB, and UFS etc. This happens because, with wait-for-safe
+> logic enabled the hardware tries to throttle non-real time clients while
+> waiting for SAFE ack signals from real-time clients.
+>
+> On mtp845 and db845 devices, with wait-for-safe logic enabled by the
+> bootloaders we see degraded performance of USB and UFS when kernel
+> enables the smmu stage-1 translations for these clients.
+> Turn off this wait-for-safe logic from the kernel gets us back the perf
+> of USB and UFS devices until we re-visit this when we start seeing perf
+> issues on display/camera on upstream supported SDM845 platforms.
+> The bootloaders on these boards implement secure monitor callbacks to
+> handle a specific command - QCOM_SCM_SVC_SMMU_PROGRAM with which the
+> logic can be toggled.
+>
+> There are other boards such as cheza whose bootloaders don't enable this
+> logic. Such boards don't implement callbacks to handle the specific SCM
+> call so disabling this logic for such boards will be a no-op.
+>
+> This change is inspired by the downstream change from Patrick Daly
+> to address performance issues with display and camera by handling
+> this wait-for-safe within separte io-pagetable ops to do TLB
+> maintenance. So a big thanks to him for the change and for all the
+> offline discussions.
+>
+> Without this change the UFS reads are pretty slow:
+> $ time dd if=/dev/sda of=/dev/zero bs=1048576 count=10 conv=sync
+> 10+0 records in
+> 10+0 records out
+> 10485760 bytes (10.0MB) copied, 22.394903 seconds, 457.2KB/s
+> real    0m 22.39s
+> user    0m 0.00s
+> sys     0m 0.01s
+>
+> With this change they are back to rock!
+> $ time dd if=/dev/sda of=/dev/zero bs=1048576 count=300 conv=sync
+> 300+0 records in
+> 300+0 records out
+> 314572800 bytes (300.0MB) copied, 1.030541 seconds, 291.1MB/s
+> real    0m 1.03s
+> user    0m 0.00s
+> sys     0m 0.54s
+>
+> Signed-off-by: Vivek Gautam <vivek.gautam@codeaurora.org>
+> ---
+>  drivers/iommu/arm-smmu-impl.c | 27 ++++++++++++++++++++++++++-
+>  1 file changed, 26 insertions(+), 1 deletion(-)
+>
+> diff --git a/drivers/iommu/arm-smmu-impl.c b/drivers/iommu/arm-smmu-impl.c
+> index 3f88cd078dd5..0aef87c41f9c 100644
+> --- a/drivers/iommu/arm-smmu-impl.c
+> +++ b/drivers/iommu/arm-smmu-impl.c
+> @@ -6,6 +6,7 @@
+>
+>  #include <linux/bitfield.h>
+>  #include <linux/of.h>
+> +#include <linux/qcom_scm.h>
+>
+>  #include "arm-smmu.h"
+>
+> @@ -102,7 +103,6 @@ static struct arm_smmu_device *cavium_smmu_impl_init(struct arm_smmu_device *smm
+>         return &cs->smmu;
+>  }
+>
+> -
+>  #define ARM_MMU500_ACTLR_CPRE          (1 << 1)
+>
+>  #define ARM_MMU500_ACR_CACHE_LOCK      (1 << 26)
+> @@ -147,6 +147,28 @@ static const struct arm_smmu_impl arm_mmu500_impl = {
+>         .reset = arm_mmu500_reset,
+>  };
+>
+> +static int qcom_sdm845_smmu500_reset(struct arm_smmu_device *smmu)
+> +{
+> +       int ret;
+> +
+> +       arm_mmu500_reset(smmu);
+> +
+> +       /*
+> +        * To address performance degradation in non-real time clients,
+> +        * such as USB and UFS, turn off wait-for-safe on sdm845 based boards,
+> +        * such as MTP and db845, whose firmwares implement secure monitor
+> +        * call handlers to turn on/off the wait-for-safe logic.
+> +        */
+> +       ret = qcom_scm_qsmmu500_wait_safe_toggle(0);
+> +       if (ret)
+> +               dev_warn(smmu->dev, "Failed to turn off SAFE logic\n");
+> +
+> +       return 0;
+> +}
+> +
+> +const struct arm_smmu_impl qcom_sdm845_smmu500_impl = {
+> +       .reset = qcom_sdm845_smmu500_reset,
+> +};
+>
+>  struct arm_smmu_device *arm_smmu_impl_init(struct arm_smmu_device *smmu)
+>  {
+> @@ -170,5 +192,8 @@ struct arm_smmu_device *arm_smmu_impl_init(struct arm_smmu_device *smmu)
+>                                   "calxeda,smmu-secure-config-access"))
+>                 smmu->impl = &calxeda_impl;
+>
+> +       if (of_device_is_compatible(smmu->dev->of_node, "qcom,sdm845-smmu-500"))
+> +               smmu->impl = &qcom_sdm845_smmu500_impl;
+> +
+>         return smmu;
+>  }
 
-> Quoting Lee Jones (2019-09-05 12:24:12)
-> > We have a production-level laptop (Lenovo Yoga C630) which is exhibiting
-> > a rather horrific bug.  When I2C HID devices are being scanned for at
-> > boot-time the QCom Geni based I2C (Serial Engine) attempts to use DMA.
-> > When it does, the laptop reboots and the user never sees the OS.
-> > 
-> > Attempts are being made to debug the reason for the spontaneous reboot.
-> > No luck so far, hence the requirement for this hot-fix.  This workaround
-> > will be removed once we have a viable fix.
-> > 
-> > Signed-off-by: Lee Jones <lee.jones@linaro.org>
-> > ---
-> >  drivers/i2c/busses/i2c-qcom-geni.c | 12 ++++++++----
-> >  1 file changed, 8 insertions(+), 4 deletions(-)
-> > 
-> > diff --git a/drivers/i2c/busses/i2c-qcom-geni.c b/drivers/i2c/busses/i2c-qcom-geni.c
-> > index a89bfce5388e..17abf60c94ae 100644
-> > --- a/drivers/i2c/busses/i2c-qcom-geni.c
-> > +++ b/drivers/i2c/busses/i2c-qcom-geni.c
-> > @@ -355,11 +355,13 @@ static int geni_i2c_rx_one_msg(struct geni_i2c_dev *gi2c, struct i2c_msg *msg,
-> >  {
-> >         dma_addr_t rx_dma;
-> >         unsigned long time_left;
-> > -       void *dma_buf;
-> > +       void *dma_buf = NULL;
-> >         struct geni_se *se = &gi2c->se;
-> >         size_t len = msg->len;
-> >  
-> > -       dma_buf = i2c_get_dma_safe_msg_buf(msg, 32);
-> > +       if (!of_machine_is_compatible("lenovo,yoga-c630"))
-> 
-> This compatible isn't in the 5.3 rc series nor is it in linux-next yet.
-> Is this "hot-fix" for the next merge window? Or is this compatible
-> string being generated by firmware somewhere and thus isn't part of the
-> kernel?
+Hi Robin,
 
-It's on the list and will be in all of the distro v5.3 release kernels.
+How does this change look now? Let me know if there are any concerns.
+I will be happy to incorporate them.
 
-https://lkml.org/lkml/2019/9/5/695
-
-> > +               dma_buf = i2c_get_dma_safe_msg_buf(msg, 32);
-> > +
-> >         if (dma_buf)
-> >                 geni_se_select_mode(se, GENI_SE_DMA);
-> >         else
-
+Thanks & Regards
+Vivek
 -- 
-Lee Jones [李琼斯]
-Linaro Services Technical Lead
-Linaro.org │ Open source software for ARM SoCs
-Follow Linaro: Facebook | Twitter | Blog
+QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
+of Code Aurora Forum, hosted by The Linux Foundation
