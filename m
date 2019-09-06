@@ -2,77 +2,98 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 9CC7DABF73
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 Sep 2019 20:31:45 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id F322CAC036
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 Sep 2019 21:09:01 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2404702AbfIFSbm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 6 Sep 2019 14:31:42 -0400
-Received: from sauhun.de ([88.99.104.3]:47106 "EHLO pokefinder.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1730881AbfIFSbm (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 6 Sep 2019 14:31:42 -0400
-Received: from localhost (p54B3379C.dip0.t-ipconnect.de [84.179.55.156])
-        by pokefinder.org (Postfix) with ESMTPSA id D68DF2C0091;
-        Fri,  6 Sep 2019 20:31:39 +0200 (CEST)
-Date:   Fri, 6 Sep 2019 20:31:39 +0200
-From:   Wolfram Sang <wsa@the-dreams.de>
-To:     Lee Jones <lee.jones@linaro.org>
-Cc:     Stephen Boyd <swboyd@chromium.org>, agross@kernel.org,
-        alokc@codeaurora.org, bjorn.andersson@linaro.org,
-        mark.rutland@arm.com, robh+dt@kernel.org, vkoul@kernel.org,
-        linux-i2c@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org
-Subject: Re: [RESEND v3 1/1] i2c: qcom-geni: Disable DMA processing on the
- Lenovo Yoga C630
-Message-ID: <20190906183139.GB19123@kunai>
-References: <20190905192412.23116-1-lee.jones@linaro.org>
- <5d71ef95.1c69fb81.6d090.085d@mx.google.com>
- <20190906061448.GJ26880@dell>
- <20190906065018.GA1019@kunai>
- <20190906075600.GL26880@dell>
- <20190906102355.GA3146@kunai>
- <20190906105445.GO26880@dell>
+        id S2392836AbfIFTJA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 6 Sep 2019 15:09:00 -0400
+Received: from mail-pg1-f195.google.com ([209.85.215.195]:46214 "EHLO
+        mail-pg1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728988AbfIFTJA (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 6 Sep 2019 15:09:00 -0400
+Received: by mail-pg1-f195.google.com with SMTP id m3so3975358pgv.13;
+        Fri, 06 Sep 2019 12:09:00 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=sender:date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=XLAbwCH4CH2GPFxKGgW5hLIRwoX3YXe2UqDB5BrzGc8=;
+        b=O1Bg4eLxG6/wuX3whfk5t9vBOWq+jOJUhnqvb4NJJ4u365XRQmyTZU4+bRt/cVTNb3
+         jH2z1BQggaQ7GAs8nugMF/9AQgBtNMq5PzwoFfA+I+k6B9FpehLFyWIPKUawYe5WyqvA
+         J9A4HiK0+ggNfm/s3kkJhvuLIrlR3y6FeTJW3y6mKMlSGDxp6+SSYIQKu9o5XQh5je26
+         GybmCfFHyroZ2kMmpFAq0sPZr0MdHrThiwD6TiYwOQJnhKGO8N+6K6y1EFgDFKcTHl/F
+         apw1AFb2WW2n5ZR7YVxZwlyeyr4jbTNBm+HA70PvIXhULcNNguVTbiosMKEuxQs0M8Cz
+         FJAw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:sender:date:from:to:cc:subject:message-id
+         :references:mime-version:content-disposition:in-reply-to:user-agent;
+        bh=XLAbwCH4CH2GPFxKGgW5hLIRwoX3YXe2UqDB5BrzGc8=;
+        b=ec5A5Gwr4l1XxYbPrw2cB3QMD4tCrH0ci+3ablXZPc+aNDY/f22/W/W+1lkJtw9fAK
+         Om0RsQrUy5xEKJ5Dob4+HT+3koACMLCngz4MppDcpvRThgAnE0YG67fEQJXjC4s3iElI
+         0Vu+RHSeBfQE3Vxvw7wOGL8bMsWrydXvyymarWXiXpHZ6jIm/53iwDmR2VMzFotCFhqA
+         uj6hp2ezNCyaZdQN7kLmqUN/N1GvEbiNivso8PlcF3+gO7eYzxyxKq2EPQDBiqhlwQa6
+         XiA02UPMBnZ9KTIuNlStv6VziccAOMQyAdN84/6oHPvld63y/ebkd43/q4nEC64AOi/2
+         8Bxg==
+X-Gm-Message-State: APjAAAUyOx2nZcaFcAyigyL+N6++7J444qY3F2z+pUTGE0sQhjOY9QB0
+        GFOIOOi/DtJvftXfRuelO7Y=
+X-Google-Smtp-Source: APXvYqySTVMyJzabuC59muoSsicSohGrAyg4Q1bPraBrGFkoGXyOSqY2WbHvyV5wJPt9XRnQFRhv6Q==
+X-Received: by 2002:a62:780c:: with SMTP id t12mr12188159pfc.211.1567796939763;
+        Fri, 06 Sep 2019 12:08:59 -0700 (PDT)
+Received: from localhost ([2600:1700:e321:62f0:329c:23ff:fee3:9d7c])
+        by smtp.gmail.com with ESMTPSA id j9sm6666122pfi.128.2019.09.06.12.08.58
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Fri, 06 Sep 2019 12:08:58 -0700 (PDT)
+Date:   Fri, 6 Sep 2019 12:08:57 -0700
+From:   Guenter Roeck <linux@roeck-us.net>
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     Jorge Ramirez-Ortiz <jorge.ramirez-ortiz@linaro.org>,
+        agross@kernel.org, wim@linux-watchdog.org,
+        linux-arm-msm@vger.kernel.org, linux-watchdog@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v4] watchdog: qcom: support pre-timeout when the bark irq
+ is available
+Message-ID: <20190906190857.GA14545@roeck-us.net>
+References: <20190905210035.9985-1-jorge.ramirez-ortiz@linaro.org>
+ <20190906174009.GC11938@tuxbook-pro>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="ftEhullJWpWg/VHq"
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20190906105445.GO26880@dell>
-User-Agent: Mutt/1.10.1 (2018-07-13)
+In-Reply-To: <20190906174009.GC11938@tuxbook-pro>
+User-Agent: Mutt/1.5.24 (2015-08-30)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On Fri, Sep 06, 2019 at 10:40:09AM -0700, Bjorn Andersson wrote:
+> On Thu 05 Sep 14:00 PDT 2019, Jorge Ramirez-Ortiz wrote:
+> > diff --git a/drivers/watchdog/qcom-wdt.c b/drivers/watchdog/qcom-wdt.c
+> [..]
+> > +static inline int qcom_get_enable(struct watchdog_device *wdd)
+> > +{
+> > +	int enable = QCOM_WDT_ENABLE;
+> > +
+> > +	if (wdd->info->options & WDIOF_PRETIMEOUT)
+> > +		enable |= QCOM_WDT_ENABLE_IRQ;
+> 
+> Looking at downstream they conditionally write 3 to WDT_EN during
+> initialization, but during suspend/resume they just set it to back to 1.
+> 
+Looks like a bug to me.
 
---ftEhullJWpWg/VHq
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+Either case, per API, pretimeout is enabled with the value of pretimeout,
+not with interrupt information from DT. I am not inclined to accept the
+above condition for enabling it.
 
+> So I don't think you should touch BIT(1) (which name doesn't match
+> downstream or the register documentation)
+> 
 
-> Does this mean you plan to have this merged for v5.4?
+You mean touching bit 1 is wrong to start with, and it is not a bit used
+to enable the interrupt (and thus pretimeout) ?
 
-Only if the machine DTS is expected to land in 5.4. But Stephen said it
-is not in liunx-next yet?
+Guess I'll need to dig out the manual myself.
 
-
---ftEhullJWpWg/VHq
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAABCgAdFiEEOZGx6rniZ1Gk92RdFA3kzBSgKbYFAl1ypgsACgkQFA3kzBSg
-KbYCEQ//bNKUnXoHDN1BlZHVkF2nPozmMWYN7sE0jaWENzmPcEzBRn4ra1QyARPs
-xnnkcaJjK4Doc0RUSkiEmyyZB6Ifbs6GNn5V9RwW0AwyLkYavAKkDHj3nujgyY0H
-i9yuFo2u32XI6BQY6ZFtyWyJPFYnSomA9vxDVS96mc+5hmFR7nXdBxASCobWTEIB
-NDdQXBf3YQ7BPTW5Lce9UIGvUDjqqlQTlmfsQShkUqOpgFsYmjnbTa4xP9y4X/yZ
-U/LbtpPBlUayr/3Jcjt0sOKPyEjbtQhriox/G1iIcN+zgfppHMNDYuJBcMVdJxY+
-o/R5F4/BoLG95htnnBJs1Hk9nZJBy+drd8sdg2UAQ8DJFOC9an1FA6LVfYHrssZl
-VepEC4UM4n3GnhU1ArYPvnVlqR8aFRwXt8RUywMqjSH6jmASQzaxnM0FzXmNl0Gs
-Ydp4cAVjbZ0JHf9ghQTrKMunolyhX6LwFMM9Jse4j5l+Z4uvwDqfmjxE8kIeyMjO
-7TIs/qMTbxWP6HZMzuOhMfGzUhpikOthAIfP1Cl4TBCYydRkXkQ69h9ksMKCwEzJ
-k2joHx3eGKk/6ioYigI23wcm1Z19iYYK6dAlYgYzQ7fQrSvfiMVLFX6xTOXOR3xP
-vmMN2F+Iwo/BULDxSmxgA13gH1QKV0EHE+bPW8LcVnShDT7Y2Yg=
-=euYY
------END PGP SIGNATURE-----
-
---ftEhullJWpWg/VHq--
+Guenter
