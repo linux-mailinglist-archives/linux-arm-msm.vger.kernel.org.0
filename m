@@ -2,106 +2,64 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 00ED4AB66B
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 Sep 2019 12:54:53 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C1C80AB872
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 Sep 2019 14:54:11 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2391389AbfIFKyt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 6 Sep 2019 06:54:49 -0400
-Received: from mail-wr1-f65.google.com ([209.85.221.65]:44009 "EHLO
-        mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2391388AbfIFKyt (ORCPT
+        id S2392165AbfIFMyD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 6 Sep 2019 08:54:03 -0400
+Received: from alexa-out-blr-02.qualcomm.com ([103.229.18.198]:32287 "EHLO
+        alexa-out-blr.qualcomm.com" rhost-flags-OK-OK-OK-FAIL)
+        by vger.kernel.org with ESMTP id S1732774AbfIFMyC (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 6 Sep 2019 06:54:49 -0400
-Received: by mail-wr1-f65.google.com with SMTP id q17so1347929wrx.10
-        for <linux-arm-msm@vger.kernel.org>; Fri, 06 Sep 2019 03:54:48 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to
-         :user-agent;
-        bh=rET0iaiiuCDKjoQBx43XIsBD5MxIh4jXYYHw1kxz16U=;
-        b=uCExWhLWEQIF1yDJTjsDcdxJkJrKiEzQCAHSpMf564Io00a2Ec8+QhrJDXyjvuq2W6
-         01cYYGmMt8kn9mRNcXKddYJiqaT/BJi7ZKiWGGVHageWf3L5V1By5PTgfdOj/ZKbPR80
-         FIMIrXYM4HApJW8EoBRw8KxJobOHN4rieikuP5j2ZJIHSuYCkgdZo8GBPhiqfcjfwVnW
-         mnZSbaPpA4wRPvU3orZXbiapeTkLrTWVXN48ESa4MuKtlg6DqWGcCieIDha/jR0bmCcr
-         ZzaimmShZJr01SOe/ScuiGfxsfnoUzUqMfZYXZ7mBZrD/DOsBgAgy0n3Ds6BWecXjxg7
-         FHLQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        bh=rET0iaiiuCDKjoQBx43XIsBD5MxIh4jXYYHw1kxz16U=;
-        b=P7yWZzYCtzZ8qCZk+l4eyoGRp8TW3bgHyJ99twevw0pqRG36n/AdvpDJ9okSoxqoOT
-         8p0SAIxK4EgsVwgnhR9+BxQ2L/q3gCZRZe5Cc36euekmgIr4qcC9lXwsO14PP+tVIob3
-         +c9pdsRhNKGPlpfx1Vq3F0UqJmBavx9Aak58b7xMp0WfmoS+cyJ3R6rGrjnkwy76wQYx
-         D8fwRNhom6HO9uHQ7JE0kdVOKCoXOUY8J3QkmoIoMA6x6BjbMbypMjPFgCuzcTnlxXso
-         jhE0VcHEOY5xunG2Pj1b3oWloOHTk890T24kZhBBk0RntdXWsjgNsN3nLCKzjeNWNWw4
-         YLHw==
-X-Gm-Message-State: APjAAAXr/UPOGiH8eYkHyaGu4VkURiLt+y/fCsNsY6ihyGDMTPK2sOLH
-        U1UYb2olCXJBrvGhdg0UA1aM4r5/Zak=
-X-Google-Smtp-Source: APXvYqyLPZ5O/UcCSTZ62ObBfvcGeMFb1YL7I6ZwwZnW/Zxpf5t0wWMYBFO8ZZVeNF60uHezHfoBQA==
-X-Received: by 2002:a05:6000:2:: with SMTP id h2mr5865424wrx.309.1567767287888;
-        Fri, 06 Sep 2019 03:54:47 -0700 (PDT)
-Received: from dell ([95.147.198.36])
-        by smtp.gmail.com with ESMTPSA id s26sm9141058wrs.63.2019.09.06.03.54.47
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Fri, 06 Sep 2019 03:54:47 -0700 (PDT)
-Date:   Fri, 6 Sep 2019 11:54:45 +0100
-From:   Lee Jones <lee.jones@linaro.org>
-To:     Wolfram Sang <wsa@the-dreams.de>
-Cc:     Stephen Boyd <swboyd@chromium.org>, agross@kernel.org,
-        alokc@codeaurora.org, bjorn.andersson@linaro.org,
-        mark.rutland@arm.com, robh+dt@kernel.org, vkoul@kernel.org,
-        linux-i2c@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org
-Subject: Re: [RESEND v3 1/1] i2c: qcom-geni: Disable DMA processing on the
- Lenovo Yoga C630
-Message-ID: <20190906105445.GO26880@dell>
-References: <20190905192412.23116-1-lee.jones@linaro.org>
- <5d71ef95.1c69fb81.6d090.085d@mx.google.com>
- <20190906061448.GJ26880@dell>
- <20190906065018.GA1019@kunai>
- <20190906075600.GL26880@dell>
- <20190906102355.GA3146@kunai>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20190906102355.GA3146@kunai>
-User-Agent: Mutt/1.9.4 (2018-02-28)
+        Fri, 6 Sep 2019 08:54:02 -0400
+X-Greylist: delayed 368 seconds by postgrey-1.27 at vger.kernel.org; Fri, 06 Sep 2019 08:54:00 EDT
+Received: from ironmsg02-blr.qualcomm.com ([10.86.208.131])
+  by alexa-out-blr.qualcomm.com with ESMTP/TLS/AES256-SHA; 06 Sep 2019 18:17:50 +0530
+Received: from c-ppvk-linux.qualcomm.com ([10.206.24.34])
+  by ironmsg02-blr.qualcomm.com with ESMTP; 06 Sep 2019 18:17:28 +0530
+Received: by c-ppvk-linux.qualcomm.com (Postfix, from userid 2304101)
+        id C1811473A; Fri,  6 Sep 2019 18:17:27 +0530 (IST)
+From:   Pradeep P V K <ppvk@codeaurora.org>
+To:     adrian.hunter@intel.com, ulf.hansson@linaro.org, robh+dt@kernel.org
+Cc:     asutoshd@codeaurora.org, vbadigan@codeaurora.org,
+        stummala@codeaurora.org, sayalil@codeaurora.org,
+        rampraka@codeaurora.org, linux-mmc@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, Pradeep P V K <ppvk@codeaurora.org>
+Subject: [RFC 0/2] Add Support for SDHC bus bandwidth voting
+Date:   Fri,  6 Sep 2019 18:17:15 +0530
+Message-Id: <1567774037-2344-1-git-send-email-ppvk@codeaurora.org>
+X-Mailer: git-send-email 1.9.1
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, 06 Sep 2019, Wolfram Sang wrote:
+Vote for the MSM bus bandwidth required by SDHC driver
+based on the clock speed and bus width of the card. Otherwise,
+the system clocks may run at minimum clock speed and
+thus affecting the performance.
 
-> On Fri, Sep 06, 2019 at 08:56:00AM +0100, Lee Jones wrote:
-> > On Fri, 06 Sep 2019, Wolfram Sang wrote:
-> > > > > This compatible isn't in the 5.3 rc series nor is it in linux-next yet.
-> > > > > Is this "hot-fix" for the next merge window? Or is this compatible
-> > > > > string being generated by firmware somewhere and thus isn't part of the
-> > > > > kernel?
-> > > > 
-> > > > It's on the list and will be in all of the distro v5.3 release kernels.
-> > > > 
-> > > > https://lkml.org/lkml/2019/9/5/695
-> > > 
-> > > And why don't the distro kernels simply pick up this patch, too?
-> > 
-> > I could send it to them and find out.  They are on kernel-freeze now,
-> > on the lead-up to the release date (next month), but I think they're
-> > still taking bug fixes.
-> 
-> Please do.
+Adapt to the new ICB framework for bus bandwidth voting.
 
-Submitted.
+This requires the source/destination port ids.
+Also this requires a tuple of values.
 
-Does this mean you plan to have this merged for v5.4?
+The tuple is for two different paths - from SDHC master
+to BIMC slave. The other is from CPU master to SDHC slave.
+This tuple consists of the average and peak bandwidth.
+
+This change is based on Georgi Djakov [RFC]
+(https://lkml.org/lkml/2018/10/11/499)
+
+Pradeep P V K (2):
+  mmc: sdhci-msm: Add support for bus bandwidth voting
+  dt-bindings: mmc: sdhci-msm: Add Bus BW vote supported strings
+
+ .../devicetree/bindings/mmc/sdhci-msm.txt          |  32 ++
+ drivers/mmc/host/sdhci-msm.c                       | 393 ++++++++++++++++++++-
+ 2 files changed, 422 insertions(+), 3 deletions(-)
 
 -- 
-Lee Jones [李琼斯]
-Linaro Services Technical Lead
-Linaro.org │ Open source software for ARM SoCs
-Follow Linaro: Facebook | Twitter | Blog
+1.9.1
+
