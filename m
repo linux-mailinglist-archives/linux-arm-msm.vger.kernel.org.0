@@ -2,85 +2,94 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 29ED5AC898
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  7 Sep 2019 19:56:49 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D1D44AC939
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  7 Sep 2019 22:37:49 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2387633AbfIGR4r (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 7 Sep 2019 13:56:47 -0400
-Received: from mail-ed1-f68.google.com ([209.85.208.68]:35046 "EHLO
-        mail-ed1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725945AbfIGR4r (ORCPT
+        id S1727012AbfIGUhn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 7 Sep 2019 16:37:43 -0400
+Received: from userp2120.oracle.com ([156.151.31.85]:52896 "EHLO
+        userp2120.oracle.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727309AbfIGUhn (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 7 Sep 2019 13:56:47 -0400
-Received: by mail-ed1-f68.google.com with SMTP id t50so9517153edd.2;
-        Sat, 07 Sep 2019 10:56:46 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=zalOqhrzZjyM0szPnIsJnTUBwf5okfg7WLnC8WBo7yI=;
-        b=mUjnKe4VamKX9mZq66OYWYkL9RJlpPEx7iEctLbc6KAIeyBLzVRgN+x6esdVIDRsC6
-         r/m92aVEMepxVMadoPx0qmFWEekAr1cy/jKT25zsnrS7sfXlO5ashty8sN7KS8zZgR5f
-         EqKYRY1g0XEmi8QdnbcdGzjmmw/1zmT4gdKk7QSSrLD55G/yt8pKucS93K5MiUH7HM5i
-         T+kB7MtLgAQq+IOEUQ913dfRBCA05knU3yELhCsjurkbm97RGAVyjhv/B8bTtMjzkqmg
-         rPBLzIJCz4hxsk88GwWB4PrIBtBiuFncYSfY3lmNoPLfZPuUartFUPN6TqS0Dy86UdUe
-         H12Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=zalOqhrzZjyM0szPnIsJnTUBwf5okfg7WLnC8WBo7yI=;
-        b=QZO527l1+UShwZ+7x7NN/6blZFbE6n5OT5bs+MNB75FvtRt6XdBNhNGWuRL+0b5vQ0
-         1YgBbqjl6rfesmaXF7Dl8X1fsRpt+hV0FOAyfHpkjrs/GKsrhGskhtsqoMicH7k9vPFF
-         EKv/lXlDTXJ7WVxpRqAydwg5wo5qaHAVKp6tODYtjN4EmHvZ9iJTWDLZVkVI3FJ1UnMs
-         XVUtJVaOfpjyb1WI4byq+kVHNkkHpkJRk0W7XDiC3v9bCHx0ZmwpCiQBMdgSVqVTLZaY
-         Xz+vuK6yCgtNGidS1alibdi1xhua2Ovo9d7puBiADjy7sSbYhd41ncmGhn12LnDAn2wj
-         ygHw==
-X-Gm-Message-State: APjAAAV/stdvTj3GvVdnoTsrOPvarERRkumFkmK9eK2nvDZgauZdDjIV
-        raDdexgi6RG7nA2Ucf1Tbu3wbpOI+IsBJf6OXE8=
-X-Google-Smtp-Source: APXvYqwp5ohaeMF8qrS3a8WlCgEazpTw0TY9tn1AkEqK60bHKJw5lI2Jw6EVMrnBBxhYRvz5Caev7csiqO8tq3OmNLc=
-X-Received: by 2002:a17:906:d7b5:: with SMTP id pk21mr12541296ejb.174.1567879005378;
- Sat, 07 Sep 2019 10:56:45 -0700 (PDT)
-MIME-Version: 1.0
-References: <20190905192412.23116-1-lee.jones@linaro.org> <5d71ef95.1c69fb81.6d090.085d@mx.google.com>
- <20190906061448.GJ26880@dell> <20190906065018.GA1019@kunai>
- <20190906075600.GL26880@dell> <20190906102355.GA3146@kunai>
- <20190906105445.GO26880@dell> <20190906183139.GB19123@kunai>
-In-Reply-To: <20190906183139.GB19123@kunai>
-From:   Rob Clark <robdclark@gmail.com>
-Date:   Sat, 7 Sep 2019 10:56:34 -0700
-Message-ID: <CAF6AEGsHOaR1dRf8xGH5sRa38=S+Y3NvNiAJ9DpMkddWoLBw8g@mail.gmail.com>
-Subject: Re: [RESEND v3 1/1] i2c: qcom-geni: Disable DMA processing on the
- Lenovo Yoga C630
-To:     Wolfram Sang <wsa@the-dreams.de>
-Cc:     Lee Jones <lee.jones@linaro.org>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Andy Gross <agross@kernel.org>, alokc@codeaurora.org,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Sat, 7 Sep 2019 16:37:43 -0400
+Received: from pps.filterd (userp2120.oracle.com [127.0.0.1])
+        by userp2120.oracle.com (8.16.0.27/8.16.0.27) with SMTP id x87KZchF144523;
+        Sat, 7 Sep 2019 20:37:28 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=to : cc : subject :
+ from : references : date : in-reply-to : message-id : mime-version :
+ content-type; s=corp-2019-08-05;
+ bh=YjoYw3aQzOWr1pqzH2/6HQy6mfi6IVme6e+omNqyU9o=;
+ b=AncImTwiwXWZjexz9fR5bTtFlcO7TtfBrY88sPYHoQr9g5MrUMUrbB8E6fCFVU4dMXGa
+ ViSD/TLp2DGr6QGRKnY/ff/gpI1so8Use74WTo6fTXlMoG0gqqlgZtd6DdzNVy6nceYh
+ VtpZr5SAefZTGsKOmRT5nTLmtfyJHvmlPZ3o/hhvK2Rb3vqs1+8TFISeq0c8jALN7vEZ
+ /Puxw7egmyjeHvgXAbohxrjwaNLA4uTPw5cvMZcl0njqcThzXk1GhDhdHUQ6vG73hlsl
+ aBtqKKCneqH3yE93V7bgvDqGXdYlSsnTksx6J5H4zA5Blo9GEfsitVMK6jDLmsIYdqQ4 ow== 
+Received: from userp3020.oracle.com (userp3020.oracle.com [156.151.31.79])
+        by userp2120.oracle.com with ESMTP id 2uvkp3r07n-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+        Sat, 07 Sep 2019 20:37:27 +0000
+Received: from pps.filterd (userp3020.oracle.com [127.0.0.1])
+        by userp3020.oracle.com (8.16.0.27/8.16.0.27) with SMTP id x87KXdk0136776;
+        Sat, 7 Sep 2019 20:37:27 GMT
+Received: from userv0122.oracle.com (userv0122.oracle.com [156.151.31.75])
+        by userp3020.oracle.com with ESMTP id 2uv3wjmjra-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+        Sat, 07 Sep 2019 20:37:27 +0000
+Received: from abhmp0007.oracle.com (abhmp0007.oracle.com [141.146.116.13])
+        by userv0122.oracle.com (8.14.4/8.14.4) with ESMTP id x87KbPb9011835;
+        Sat, 7 Sep 2019 20:37:25 GMT
+Received: from ca-mkp.ca.oracle.com (/10.159.214.123)
+        by default (Oracle Beehive Gateway v4.0)
+        with ESMTP ; Sat, 07 Sep 2019 13:37:24 -0700
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     Rob Herring <robh+dt@kernel.org>,
         Mark Rutland <mark.rutland@arm.com>,
-        Rob Herring <robh+dt@kernel.org>, vkoul@kernel.org,
-        linux-i2c@vger.kernel.org,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
-        <devicetree@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+        Andy Gross <agross@kernel.org>,
+        Alim Akhtar <alim.akhtar@samsung.com>,
+        Avri Altman <avri.altman@wdc.com>,
+        Pedro Sousa <pedrom.sousa@synopsys.com>,
+        "James E.J. Bottomley" <jejb@linux.ibm.com>,
+        "Martin K. Petersen" <martin.petersen@oracle.com>,
+        Bean Huo <beanhuo@micron.com>, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-scsi@vger.kernel.org,
+        Linus Walleij <linus.walleij@linaro.org>
+Subject: Re: [PATCH v4 0/3] Qualcomm UFS device reset support
+From:   "Martin K. Petersen" <martin.petersen@oracle.com>
+Organization: Oracle Corporation
+References: <20190828191756.24312-1-bjorn.andersson@linaro.org>
+Date:   Sat, 07 Sep 2019 16:37:21 -0400
+In-Reply-To: <20190828191756.24312-1-bjorn.andersson@linaro.org> (Bjorn
+        Andersson's message of "Wed, 28 Aug 2019 12:17:53 -0700")
+Message-ID: <yq1d0gbkflq.fsf@oracle.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1.92 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain
+X-Proofpoint-Virus-Version: vendor=nai engine=6000 definitions=9373 signatures=668685
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 suspectscore=0 malwarescore=0
+ phishscore=0 bulkscore=0 spamscore=0 mlxscore=0 mlxlogscore=872
+ adultscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.0.1-1906280000 definitions=main-1909070224
+X-Proofpoint-Virus-Version: vendor=nai engine=6000 definitions=9373 signatures=668685
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 priorityscore=1501 malwarescore=0
+ suspectscore=0 phishscore=0 bulkscore=0 spamscore=0 clxscore=1011
+ lowpriorityscore=0 mlxscore=0 impostorscore=0 mlxlogscore=934 adultscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.0.1-1906280000
+ definitions=main-1909070224
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Sat, Sep 7, 2019 at 9:17 AM Wolfram Sang <wsa@the-dreams.de> wrote:
->
->
-> > Does this mean you plan to have this merged for v5.4?
->
-> Only if the machine DTS is expected to land in 5.4. But Stephen said it
-> is not in liunx-next yet?
->
 
-It appears to be in arm-soc for-next:
+Bjorn,
 
-https://git.kernel.org/pub/scm/linux/kernel/git/arm/arm-soc.git/log/?h=for-next
+> This series adds a new ufs vops to allow platform specific methods for
+> resetting an attached UFS device, then implements this for the
+> Qualcomm driver.  This reset seems to be necessary for the majority of
+> Dragonboard845c devices.
 
-BR,
--R
+Applied to 5.4/scsi-queue, thanks!
+
+-- 
+Martin K. Petersen	Oracle Linux Engineering
