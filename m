@@ -2,94 +2,88 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id D1D44AC939
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  7 Sep 2019 22:37:49 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 6E5DFACA16
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  8 Sep 2019 01:58:43 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727012AbfIGUhn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 7 Sep 2019 16:37:43 -0400
-Received: from userp2120.oracle.com ([156.151.31.85]:52896 "EHLO
-        userp2120.oracle.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727309AbfIGUhn (ORCPT
+        id S2391899AbfIGX6m (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 7 Sep 2019 19:58:42 -0400
+Received: from 16.mo5.mail-out.ovh.net ([87.98.174.144]:35904 "EHLO
+        16.mo5.mail-out.ovh.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726168AbfIGX6m (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 7 Sep 2019 16:37:43 -0400
-Received: from pps.filterd (userp2120.oracle.com [127.0.0.1])
-        by userp2120.oracle.com (8.16.0.27/8.16.0.27) with SMTP id x87KZchF144523;
-        Sat, 7 Sep 2019 20:37:28 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=to : cc : subject :
- from : references : date : in-reply-to : message-id : mime-version :
- content-type; s=corp-2019-08-05;
- bh=YjoYw3aQzOWr1pqzH2/6HQy6mfi6IVme6e+omNqyU9o=;
- b=AncImTwiwXWZjexz9fR5bTtFlcO7TtfBrY88sPYHoQr9g5MrUMUrbB8E6fCFVU4dMXGa
- ViSD/TLp2DGr6QGRKnY/ff/gpI1so8Use74WTo6fTXlMoG0gqqlgZtd6DdzNVy6nceYh
- VtpZr5SAefZTGsKOmRT5nTLmtfyJHvmlPZ3o/hhvK2Rb3vqs1+8TFISeq0c8jALN7vEZ
- /Puxw7egmyjeHvgXAbohxrjwaNLA4uTPw5cvMZcl0njqcThzXk1GhDhdHUQ6vG73hlsl
- aBtqKKCneqH3yE93V7bgvDqGXdYlSsnTksx6J5H4zA5Blo9GEfsitVMK6jDLmsIYdqQ4 ow== 
-Received: from userp3020.oracle.com (userp3020.oracle.com [156.151.31.79])
-        by userp2120.oracle.com with ESMTP id 2uvkp3r07n-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
-        Sat, 07 Sep 2019 20:37:27 +0000
-Received: from pps.filterd (userp3020.oracle.com [127.0.0.1])
-        by userp3020.oracle.com (8.16.0.27/8.16.0.27) with SMTP id x87KXdk0136776;
-        Sat, 7 Sep 2019 20:37:27 GMT
-Received: from userv0122.oracle.com (userv0122.oracle.com [156.151.31.75])
-        by userp3020.oracle.com with ESMTP id 2uv3wjmjra-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
-        Sat, 07 Sep 2019 20:37:27 +0000
-Received: from abhmp0007.oracle.com (abhmp0007.oracle.com [141.146.116.13])
-        by userv0122.oracle.com (8.14.4/8.14.4) with ESMTP id x87KbPb9011835;
-        Sat, 7 Sep 2019 20:37:25 GMT
-Received: from ca-mkp.ca.oracle.com (/10.159.214.123)
-        by default (Oracle Beehive Gateway v4.0)
-        with ESMTP ; Sat, 07 Sep 2019 13:37:24 -0700
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     Rob Herring <robh+dt@kernel.org>,
-        Mark Rutland <mark.rutland@arm.com>,
-        Andy Gross <agross@kernel.org>,
-        Alim Akhtar <alim.akhtar@samsung.com>,
-        Avri Altman <avri.altman@wdc.com>,
-        Pedro Sousa <pedrom.sousa@synopsys.com>,
-        "James E.J. Bottomley" <jejb@linux.ibm.com>,
-        "Martin K. Petersen" <martin.petersen@oracle.com>,
-        Bean Huo <beanhuo@micron.com>, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-scsi@vger.kernel.org,
-        Linus Walleij <linus.walleij@linaro.org>
-Subject: Re: [PATCH v4 0/3] Qualcomm UFS device reset support
-From:   "Martin K. Petersen" <martin.petersen@oracle.com>
-Organization: Oracle Corporation
-References: <20190828191756.24312-1-bjorn.andersson@linaro.org>
-Date:   Sat, 07 Sep 2019 16:37:21 -0400
-In-Reply-To: <20190828191756.24312-1-bjorn.andersson@linaro.org> (Bjorn
-        Andersson's message of "Wed, 28 Aug 2019 12:17:53 -0700")
-Message-ID: <yq1d0gbkflq.fsf@oracle.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1.92 (gnu/linux)
+        Sat, 7 Sep 2019 19:58:42 -0400
+X-Greylist: delayed 600 seconds by postgrey-1.27 at vger.kernel.org; Sat, 07 Sep 2019 19:58:41 EDT
+Received: from player728.ha.ovh.net (unknown [10.108.35.122])
+        by mo5.mail-out.ovh.net (Postfix) with ESMTP id 58C6724AC94
+        for <linux-arm-msm@vger.kernel.org>; Sun,  8 Sep 2019 01:39:05 +0200 (CEST)
+Received: from etezian.org (81-175-223-118.bb.dnainternet.fi [81.175.223.118])
+        (Authenticated sender: andi@etezian.org)
+        by player728.ha.ovh.net (Postfix) with ESMTPSA id 4B47C979D591;
+        Sat,  7 Sep 2019 23:38:10 +0000 (UTC)
+Date:   Sun, 8 Sep 2019 02:38:10 +0300
+From:   Andi Shyti <andi@etezian.org>
+To:     Yuehaibing <yuehaibing@huawei.com>
+Cc:     Krzysztof Kozlowski <krzk@kernel.org>, broonie@kernel.org,
+        f.fainelli@gmail.com, rjui@broadcom.com, sbranden@broadcom.com,
+        eric@anholt.net, wahrenst@gmx.net, shc_work@mail.ru,
+        agross@kernel.org, khilman@baylibre.com, matthias.bgg@gmail.com,
+        shawnguo@kernel.org, s.hauer@pengutronix.de, kernel@pengutronix.de,
+        festevam@gmail.com, linux-imx@nxp.com, avifishman70@gmail.com,
+        tmaimon77@gmail.com, tali.perry1@gmail.com, venture@google.com,
+        yuenn@google.com, benjaminfair@google.com, kgene@kernel.org,
+        Andi Shyti <andi@etezian.org>, palmer@sifive.com,
+        paul.walmsley@sifive.com, baohua@kernel.org, mripard@kernel.org,
+        wens@csie.org, ldewangan@nvidia.com, thierry.reding@gmail.com,
+        jonathanh@nvidia.com, yamada.masahiro@socionext.com,
+        michal.simek@xilinx.com, bcm-kernel-feedback-list@broadcom.com,
+        linux-spi@vger.kernel.org,
+        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
+        linux-rpi-kernel@lists.infradead.org,
+        linux-arm-kernel@lists.infradead.org,
+        linux-arm-msm@vger.kernel.org, linux-amlogic@lists.infradead.org,
+        linux-mediatek@lists.infradead.org, openbmc@lists.ozlabs.org,
+        "linux-samsung-soc@vger.kernel.org" 
+        <linux-samsung-soc@vger.kernel.org>,
+        linux-riscv@lists.infradead.org, linux-tegra@vger.kernel.org
+Subject: Re: [PATCH -next 25/36] spi: s3c24xx: use
+ devm_platform_ioremap_resource() to simplify code
+Message-ID: <20190907233810.GA15768@jack.zhora.eu>
+References: <20190904135918.25352-1-yuehaibing@huawei.com>
+ <20190904135918.25352-26-yuehaibing@huawei.com>
+ <CAJKOXPdq4as1Oe3U+9znkvP0RA=sxUoiWVBCSbzf_wq_um2t=w@mail.gmail.com>
+ <3595bac1-e426-b4f9-4e24-01e104fdfe5d@huawei.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Proofpoint-Virus-Version: vendor=nai engine=6000 definitions=9373 signatures=668685
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 suspectscore=0 malwarescore=0
- phishscore=0 bulkscore=0 spamscore=0 mlxscore=0 mlxlogscore=872
- adultscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.0.1-1906280000 definitions=main-1909070224
-X-Proofpoint-Virus-Version: vendor=nai engine=6000 definitions=9373 signatures=668685
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 priorityscore=1501 malwarescore=0
- suspectscore=0 phishscore=0 bulkscore=0 spamscore=0 clxscore=1011
- lowpriorityscore=0 mlxscore=0 impostorscore=0 mlxlogscore=934 adultscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.0.1-1906280000
- definitions=main-1909070224
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <3595bac1-e426-b4f9-4e24-01e104fdfe5d@huawei.com>
+User-Agent: Mutt/1.10.1 (2018-07-13)
+X-Ovh-Tracer-Id: 4582412622624637493
+X-VR-SPAMSTATE: OK
+X-VR-SPAMSCORE: -100
+X-VR-SPAMCAUSE: gggruggvucftvghtrhhoucdtuddrgeduvddrudekvddgvdduucetufdoteggodetrfdotffvucfrrhhofhhilhgvmecuqfggjfdpvefjgfevmfevgfenuceurghilhhouhhtmecuhedttdenucesvcftvggtihhpihgvnhhtshculddquddttddm
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+Hi Yuehaibing,
 
-Bjorn,
+> >> Use devm_platform_ioremap_resource() to simplify the code a bit.
+> >> This is detected by coccinelle.
+> >>
+> >> Reported-by: Hulk Robot <hulkci@huawei.com>
+> > 
+> > This tag does not look real... First of all where is the report?
+> 
+> It is our internal CI robot, which is unavailable to external temporarily.
 
-> This series adds a new ufs vops to allow platform specific methods for
-> resetting an attached UFS device, then implements this for the
-> Qualcomm driver.  This reset seems to be necessary for the majority of
-> Dragonboard845c devices.
+Hulk Robot is not a person and not accountable for his report.
+If it is your internal CI, please write a sentence stating that
+the fix has been made using Huawei internal tools.
 
-Applied to 5.4/scsi-queue, thanks!
+Credit must be given to tools as well, but not accounts that will
+never answer an e-mail.
 
--- 
-Martin K. Petersen	Oracle Linux Engineering
+Otherwise, the patch would look fine.
+
+Andi
