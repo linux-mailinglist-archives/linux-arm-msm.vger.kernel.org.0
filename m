@@ -2,121 +2,85 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 1E9D0AC87A
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  7 Sep 2019 19:50:24 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 29ED5AC898
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  7 Sep 2019 19:56:49 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2389508AbfIGRuX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 7 Sep 2019 13:50:23 -0400
-Received: from mail-pf1-f195.google.com ([209.85.210.195]:42787 "EHLO
-        mail-pf1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2389229AbfIGRuX (ORCPT
+        id S2387633AbfIGR4r (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 7 Sep 2019 13:56:47 -0400
+Received: from mail-ed1-f68.google.com ([209.85.208.68]:35046 "EHLO
+        mail-ed1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725945AbfIGR4r (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 7 Sep 2019 13:50:23 -0400
-Received: by mail-pf1-f195.google.com with SMTP id w22so6596638pfi.9;
-        Sat, 07 Sep 2019 10:50:22 -0700 (PDT)
+        Sat, 7 Sep 2019 13:56:47 -0400
+Received: by mail-ed1-f68.google.com with SMTP id t50so9517153edd.2;
+        Sat, 07 Sep 2019 10:56:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=wK8kJ2udIf0g3BsyoIaHFt8dADR/WXvxfITihNsDeFg=;
-        b=Gwsp7VRn4r5cDdw7eygkYZ/sszfgRBn/LNffK8rKLuU3OXDMBJBQUafVm/8/Ym6kxl
-         K6awj9C0Ux8gpf0vABsHPwAIKvMSSj1HLTzzX71l0KzyvaROHC2yWEmvxZUqIwm2nmrV
-         lmAcCTAPwuKZNItjsz1tvAaLHs33eilTvmINw0ZqMFmLGcHNMeEFjmq9aeDH8XSCV7Je
-         T+U7wuABMQprBiDBJ/RIg7QDfuYLkWl0B7++OvQOJnlTCNrryYx3AgCOz1cGCJhWOuVk
-         XyZoKGE/8NngV3NN1lmVf04Gjw36Ts1U5JbkQX6QXEPMa5FYJCQ1regZqneDUa94+wOD
-         YkPg==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=zalOqhrzZjyM0szPnIsJnTUBwf5okfg7WLnC8WBo7yI=;
+        b=mUjnKe4VamKX9mZq66OYWYkL9RJlpPEx7iEctLbc6KAIeyBLzVRgN+x6esdVIDRsC6
+         r/m92aVEMepxVMadoPx0qmFWEekAr1cy/jKT25zsnrS7sfXlO5ashty8sN7KS8zZgR5f
+         EqKYRY1g0XEmi8QdnbcdGzjmmw/1zmT4gdKk7QSSrLD55G/yt8pKucS93K5MiUH7HM5i
+         T+kB7MtLgAQq+IOEUQ913dfRBCA05knU3yELhCsjurkbm97RGAVyjhv/B8bTtMjzkqmg
+         rPBLzIJCz4hxsk88GwWB4PrIBtBiuFncYSfY3lmNoPLfZPuUartFUPN6TqS0Dy86UdUe
+         H12Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=wK8kJ2udIf0g3BsyoIaHFt8dADR/WXvxfITihNsDeFg=;
-        b=HYNn3an0qeFew7Jr+XWBsgd/0Yv3Sfa1Jbi7aRGhgwVM/pZlfjToeUwg1+2BrVH0Gs
-         aRhHhgBg8nnlAExKvDAdRv4pONYe/x5qJajGPvRZfcdg2++MRXI2qyn5INCvr5CIw6Bh
-         KrCz3YAbOMZxm6H2BiItegllOd4O2T/gutysZ82cp6h0re/q0wbj5tkDDlbEQBgg8Ca1
-         4tQcd+NyGiCt9PUCLOMC/jxbSkkMHmguJebHvD4Jr7L9okICFHEd5GuYcPoSVi600R5G
-         QznwpRoHdKR5f46BLln2ZmTOvbNxhJRsRjPdnonbYEybKBG0VTu+lXak0jJMQ9F/Iil3
-         M3zQ==
-X-Gm-Message-State: APjAAAXzcrXoLLbi0tsSa1x4iFKYN7nXfoGBpI6MDbqvTEpNy3o8NAZO
-        2jrqlakA3Bf2bWMfWElZ3rk=
-X-Google-Smtp-Source: APXvYqzafbPVLonS9mDnmRUFSlGT5UrLrAnZgt7eKA+ZXKBawYn/MhQ8WUF6BIH88qCUmZL2MEVRGA==
-X-Received: by 2002:a65:6795:: with SMTP id e21mr13501884pgr.428.1567878622201;
-        Sat, 07 Sep 2019 10:50:22 -0700 (PDT)
-Received: from localhost ([2601:1c0:5200:e554::8610])
-        by smtp.gmail.com with ESMTPSA id 11sm8401943pgo.43.2019.09.07.10.50.21
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 07 Sep 2019 10:50:21 -0700 (PDT)
-From:   Rob Clark <robdclark@gmail.com>
-To:     iommu@lists.linux-foundation.org
-Cc:     linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org,
-        Rob Clark <robdclark@chromium.org>,
-        Will Deacon <will@kernel.org>,
-        Robin Murphy <robin.murphy@arm.com>,
-        Joerg Roedel <joro@8bytes.org>,
-        linux-arm-kernel@lists.infradead.org (moderated list:ARM SMMU DRIVERS),
-        linux-kernel@vger.kernel.org (open list)
-Subject: [PATCH] iommu/arm-smmu: fix "hang" when games exit
-Date:   Sat,  7 Sep 2019 10:50:13 -0700
-Message-Id: <20190907175013.24246-1-robdclark@gmail.com>
-X-Mailer: git-send-email 2.21.0
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=zalOqhrzZjyM0szPnIsJnTUBwf5okfg7WLnC8WBo7yI=;
+        b=QZO527l1+UShwZ+7x7NN/6blZFbE6n5OT5bs+MNB75FvtRt6XdBNhNGWuRL+0b5vQ0
+         1YgBbqjl6rfesmaXF7Dl8X1fsRpt+hV0FOAyfHpkjrs/GKsrhGskhtsqoMicH7k9vPFF
+         EKv/lXlDTXJ7WVxpRqAydwg5wo5qaHAVKp6tODYtjN4EmHvZ9iJTWDLZVkVI3FJ1UnMs
+         XVUtJVaOfpjyb1WI4byq+kVHNkkHpkJRk0W7XDiC3v9bCHx0ZmwpCiQBMdgSVqVTLZaY
+         Xz+vuK6yCgtNGidS1alibdi1xhua2Ovo9d7puBiADjy7sSbYhd41ncmGhn12LnDAn2wj
+         ygHw==
+X-Gm-Message-State: APjAAAV/stdvTj3GvVdnoTsrOPvarERRkumFkmK9eK2nvDZgauZdDjIV
+        raDdexgi6RG7nA2Ucf1Tbu3wbpOI+IsBJf6OXE8=
+X-Google-Smtp-Source: APXvYqwp5ohaeMF8qrS3a8WlCgEazpTw0TY9tn1AkEqK60bHKJw5lI2Jw6EVMrnBBxhYRvz5Caev7csiqO8tq3OmNLc=
+X-Received: by 2002:a17:906:d7b5:: with SMTP id pk21mr12541296ejb.174.1567879005378;
+ Sat, 07 Sep 2019 10:56:45 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <20190905192412.23116-1-lee.jones@linaro.org> <5d71ef95.1c69fb81.6d090.085d@mx.google.com>
+ <20190906061448.GJ26880@dell> <20190906065018.GA1019@kunai>
+ <20190906075600.GL26880@dell> <20190906102355.GA3146@kunai>
+ <20190906105445.GO26880@dell> <20190906183139.GB19123@kunai>
+In-Reply-To: <20190906183139.GB19123@kunai>
+From:   Rob Clark <robdclark@gmail.com>
+Date:   Sat, 7 Sep 2019 10:56:34 -0700
+Message-ID: <CAF6AEGsHOaR1dRf8xGH5sRa38=S+Y3NvNiAJ9DpMkddWoLBw8g@mail.gmail.com>
+Subject: Re: [RESEND v3 1/1] i2c: qcom-geni: Disable DMA processing on the
+ Lenovo Yoga C630
+To:     Wolfram Sang <wsa@the-dreams.de>
+Cc:     Lee Jones <lee.jones@linaro.org>,
+        Stephen Boyd <swboyd@chromium.org>,
+        Andy Gross <agross@kernel.org>, alokc@codeaurora.org,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Mark Rutland <mark.rutland@arm.com>,
+        Rob Herring <robh+dt@kernel.org>, vkoul@kernel.org,
+        linux-i2c@vger.kernel.org,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
+        <devicetree@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Rob Clark <robdclark@chromium.org>
+On Sat, Sep 7, 2019 at 9:17 AM Wolfram Sang <wsa@the-dreams.de> wrote:
+>
+>
+> > Does this mean you plan to have this merged for v5.4?
+>
+> Only if the machine DTS is expected to land in 5.4. But Stephen said it
+> is not in liunx-next yet?
+>
 
-When games, browser, or anything using a lot of GPU buffers exits, there
-can be many hundreds or thousands of buffers to unmap and free.  If the
-GPU is otherwise suspended, this can cause arm-smmu to resume/suspend
-for each buffer, resulting 5-10 seconds worth of reprogramming the
-context bank (arm_smmu_write_context_bank()/arm_smmu_write_s2cr()/etc).
-To the user it would appear that the system is locked up.
+It appears to be in arm-soc for-next:
 
-A simple solution is to use pm_runtime_put_autosuspend() instead, so we
-don't immediately suspend the SMMU device.
+https://git.kernel.org/pub/scm/linux/kernel/git/arm/arm-soc.git/log/?h=for-next
 
-Signed-off-by: Rob Clark <robdclark@chromium.org>
----
-Note: I've tied the autosuspend enable/delay to the consumer device,
-based on the reasoning that if the consumer device benefits from using
-an autosuspend delay, then it's corresponding SMMU probably does too.
-Maybe that is overkill and we should just unconditionally enable
-autosuspend.
-
- drivers/iommu/arm-smmu.c | 11 ++++++++++-
- 1 file changed, 10 insertions(+), 1 deletion(-)
-
-diff --git a/drivers/iommu/arm-smmu.c b/drivers/iommu/arm-smmu.c
-index c2733b447d9c..73a0dd53c8a3 100644
---- a/drivers/iommu/arm-smmu.c
-+++ b/drivers/iommu/arm-smmu.c
-@@ -289,7 +289,7 @@ static inline int arm_smmu_rpm_get(struct arm_smmu_device *smmu)
- static inline void arm_smmu_rpm_put(struct arm_smmu_device *smmu)
- {
- 	if (pm_runtime_enabled(smmu->dev))
--		pm_runtime_put(smmu->dev);
-+		pm_runtime_put_autosuspend(smmu->dev);
- }
- 
- static struct arm_smmu_domain *to_smmu_domain(struct iommu_domain *dom)
-@@ -1445,6 +1445,15 @@ static int arm_smmu_attach_dev(struct iommu_domain *domain, struct device *dev)
- 	/* Looks ok, so add the device to the domain */
- 	ret = arm_smmu_domain_add_master(smmu_domain, fwspec);
- 
-+#ifdef CONFIG_PM
-+	/* TODO maybe device_link_add() should do this for us? */
-+	if (dev->power.use_autosuspend) {
-+		pm_runtime_set_autosuspend_delay(smmu->dev,
-+			dev->power.autosuspend_delay);
-+		pm_runtime_use_autosuspend(smmu->dev);
-+	}
-+#endif
-+
- rpm_put:
- 	arm_smmu_rpm_put(smmu);
- 	return ret;
--- 
-2.21.0
-
+BR,
+-R
