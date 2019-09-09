@@ -2,108 +2,94 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 82667AD7D8
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  9 Sep 2019 13:26:28 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9B813AD7E0
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  9 Sep 2019 13:26:55 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730361AbfIIL01 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 9 Sep 2019 07:26:27 -0400
-Received: from smtp.codeaurora.org ([198.145.29.96]:53360 "EHLO
-        smtp.codeaurora.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730089AbfIIL01 (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 9 Sep 2019 07:26:27 -0400
-Received: by smtp.codeaurora.org (Postfix, from userid 1000)
-        id 5538960271; Mon,  9 Sep 2019 11:26:26 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
-        s=default; t=1568028386;
-        bh=aGObAo7JXSTQg8/hilz+tj4Iff/k/ApkzjZWhbD7P/g=;
-        h=Subject:To:Cc:References:From:Date:In-Reply-To:From;
-        b=XyUjZ3fNsE/mmmtbuTZKRcv7p/Y2x2fkEhvFPT/aS1QcHAyBxpROhm81EBQAzQLuN
-         H40EroCwKI0abRFSSVXTfR7GLFJOQ3foeEBduV29LXXTgL3oZibIlUx11sc7kgZ18n
-         xz9GUi8/5+WpsRFY2YsVRTXAxrZEKgNPoX+YYwHQ=
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        pdx-caf-mail.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.7 required=2.0 tests=ALL_TRUSTED,BAYES_00,
-        DKIM_INVALID,DKIM_SIGNED,SPF_NONE autolearn=no autolearn_force=no
-        version=3.4.0
-Received: from [10.206.13.37] (blr-c-bdr-fw-01_globalnat_allzones-outside.qualcomm.com [103.229.19.19])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        id S2404081AbfIIL0s (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 9 Sep 2019 07:26:48 -0400
+Received: from mail.kernel.org ([198.145.29.99]:35832 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S2404056AbfIIL0p (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 9 Sep 2019 07:26:45 -0400
+Received: from kernel.org (unknown [104.132.0.74])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        (Authenticated sender: mkshah@smtp.codeaurora.org)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 8AAD460769;
-        Mon,  9 Sep 2019 11:26:22 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
-        s=default; t=1568028385;
-        bh=aGObAo7JXSTQg8/hilz+tj4Iff/k/ApkzjZWhbD7P/g=;
-        h=Subject:To:Cc:References:From:Date:In-Reply-To:From;
-        b=o513epvpzF7DiEHZqA1NpKsUgt9QsWcjI8pWXX/qrBy/S7duZOa9HrZtCqmiAl30q
-         JJ8vhWsKxVnZTA8gtn6vrZ2L/CZrLk+IFOnLm4S5LKBJXkBkyRnY44dw8plOV4FNu5
-         JMr0MgGOem9wTCCO7/FICypwuLACjjmpHIgQ6+Ig=
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 8AAD460769
-Authentication-Results: pdx-caf-mail.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: pdx-caf-mail.web.codeaurora.org; spf=none smtp.mailfrom=mkshah@codeaurora.org
-Subject: Re: [PATCH RFC 12/14] arm64: dts: qcom: add PDC interrupt controller
- for SDM845
-To:     Lina Iyer <ilina@codeaurora.org>, swboyd@chromium.org,
-        evgreen@chromium.org, marc.zyngier@arm.com,
-        linus.walleij@linaro.org
-Cc:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        bjorn.andersson@linaro.org, linux-gpio@vger.kernel.org,
-        rnayak@codeaurora.org
-References: <20190829181203.2660-1-ilina@codeaurora.org>
- <20190829181203.2660-13-ilina@codeaurora.org>
-From:   Maulik Shah <mkshah@codeaurora.org>
-Message-ID: <1e311bff-752a-4226-ab75-be5e87ffcc62@codeaurora.org>
-Date:   Mon, 9 Sep 2019 16:56:19 +0530
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
- Thunderbird/60.9.0
+        by mail.kernel.org (Postfix) with ESMTPSA id 4F45221920;
+        Mon,  9 Sep 2019 11:26:44 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=default; t=1568028404;
+        bh=CzvWQDxQFxAcoWDb+NO6txjLfQDdjFSb8XYgqiljobM=;
+        h=In-Reply-To:References:Cc:To:From:Subject:Date:From;
+        b=kvzX7qLSplsgsgUWn4yyHhNROmcTc5k6WN1dv59DBIULtGwy2meVArtgl0m/8lmRr
+         TyR3gK+kLnZ8DnlXrsEjbphw6VwVxegB8AYDEqKP2D93g6JX68ePhkopSBkD9megyO
+         Na5BZLtRvJAGUjH1BrymBbixAZM6azhebrFKr3/w=
+Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
-In-Reply-To: <20190829181203.2660-13-ilina@codeaurora.org>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Content-Language: en-GB
+Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <20190826062127.GH2672@vkoul-mobl>
+References: <20190822170140.7615-1-vkoul@kernel.org> <20190822170140.7615-3-vkoul@kernel.org> <20190824063115.GW26807@tuxbook-pro> <20190826062127.GH2672@vkoul-mobl>
+Cc:     linux-arm-msm@vger.kernel.org, Andy Gross <agross@kernel.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Rob Herring <robh+dt@kernel.org>,
+        Mark Rutland <mark.rutland@arm.com>, linux-clk@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Vinod Koul <vkoul@kernel.org>
+From:   Stephen Boyd <sboyd@kernel.org>
+Subject: Re: [PATCH v3 2/4] clk: qcom: clk-rpmh: Convert to parent data scheme
+User-Agent: alot/0.8.1
+Date:   Mon, 09 Sep 2019 04:26:43 -0700
+Message-Id: <20190909112644.4F45221920@mail.kernel.org>
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+Quoting Vinod Koul (2019-08-25 23:21:27)
+> On 23-08-19, 23:31, Bjorn Andersson wrote:
+> > On Thu 22 Aug 10:01 PDT 2019, Vinod Koul wrote:
+> >=20
+> > > Convert the rpmh clock driver to use the new parent data scheme by
+> > > specifying the parent data for board clock.
+> > >=20
+> > > Signed-off-by: Vinod Koul <vkoul@kernel.org>
+> > > ---
+> > >  drivers/clk/qcom/clk-rpmh.c | 10 ++++++++--
+> > >  1 file changed, 8 insertions(+), 2 deletions(-)
+> > >=20
+> > > diff --git a/drivers/clk/qcom/clk-rpmh.c b/drivers/clk/qcom/clk-rpmh.c
+> > > index c3fd632af119..0bced7326a20 100644
+> > > --- a/drivers/clk/qcom/clk-rpmh.c
+> > > +++ b/drivers/clk/qcom/clk-rpmh.c
+> > > @@ -95,7 +95,10 @@ static DEFINE_MUTEX(rpmh_clk_lock);
+> > >             .hw.init =3D &(struct clk_init_data){                    =
+ \
+> > >                     .ops =3D &clk_rpmh_ops,                          =
+ \
+> > >                     .name =3D #_name,                                =
+ \
+> > > -                   .parent_names =3D (const char *[]){ "xo_board" },=
+ \
+> > > +                   .parent_data =3D  &(const struct clk_parent_data)=
+{ \
+> > > +                                   .fw_name =3D "xo_board",         =
+ \
+> > > +                                   .name =3D "xo_board",            =
+ \
+> >=20
+> > Iiuc .name here refers to the global clock namespace and .fw_name refers
+> > to the device_node local name space. As such I really prefer this to be:
+> >=20
+> >   .fw_name =3D "xo",
+> >   .name =3D "xo_board",
+> >=20
+> > This ensures the backwards compatibility (when using global lookup),
+> > without complicating the node-local naming.
+>=20
+> Sure, while thinking more on this, should we finalize the name as xo or
+> cxo, I see latter being also used at few places. It would be great to
+> get a name and stick to it for longer time :)
+> --=20
 
-On 8/29/2019 11:42 PM, Lina Iyer wrote:
-> Add PDC interrupt controller device bindings for SDM845.
->
-> Signed-off-by: Lina Iyer <ilina@codeaurora.org>
-> ---
->   arch/arm64/boot/dts/qcom/sdm845.dtsi | 10 ++++++++++
->   1 file changed, 10 insertions(+)
->
-> diff --git a/arch/arm64/boot/dts/qcom/sdm845.dtsi b/arch/arm64/boot/dts/qcom/sdm845.dtsi
-> index be0022e09465..ffe28b3e41d8 100644
-> --- a/arch/arm64/boot/dts/qcom/sdm845.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sdm845.dtsi
-> @@ -2375,6 +2375,16 @@
->   			#power-domain-cells = <1>;
->   		};
->   
-> +		pdc_intc: interrupt-controller@b220000 {
-> +			compatible = "qcom,sdm845-pdc";
-> +			reg = <0 0x0b220000 0 0x30000>, <0x179900f0 0x60>;
-
-second register also needs to be in below format
-
-<0 0x179900f0 0 0x60>
-
-> +			qcom,pdc-ranges = <0 480 94>, <94 609 15>, <115 630 7>;
-> +			#interrupt-cells = <2>;
-> +			interrupt-parent = <&intc>;
-> +			interrupt-controller;
-> +			qcom,scm-spi-cfg;
-> +		};
-> +
->   		pdc_reset: reset-controller@b2e0000 {
->   			compatible = "qcom,sdm845-pdc-global";
->   			reg = <0 0x0b2e0000 0 0x20000>;
-
--- 
-QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member of Code Aurora Forum, hosted by The Linux Foundation
+I would name it 'cxo' because that's the pin name on this platform.
 
