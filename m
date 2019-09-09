@@ -2,124 +2,176 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 96B67AD134
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  9 Sep 2019 01:31:29 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A6910AD416
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  9 Sep 2019 09:44:52 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731309AbfIHXb0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 8 Sep 2019 19:31:26 -0400
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1]:8080 "EHLO
-        mx0a-001b2d01.pphosted.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1731290AbfIHXb0 (ORCPT
+        id S1726026AbfIIHov (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 9 Sep 2019 03:44:51 -0400
+Received: from smtp.codeaurora.org ([198.145.29.96]:34116 "EHLO
+        smtp.codeaurora.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725875AbfIIHov (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 8 Sep 2019 19:31:26 -0400
-Received: from pps.filterd (m0098396.ppops.net [127.0.0.1])
-        by mx0a-001b2d01.pphosted.com (8.16.0.27/8.16.0.27) with SMTP id x88NRavk095491
-        for <linux-arm-msm@vger.kernel.org>; Sun, 8 Sep 2019 19:31:25 -0400
-Received: from e06smtp01.uk.ibm.com (e06smtp01.uk.ibm.com [195.75.94.97])
-        by mx0a-001b2d01.pphosted.com with ESMTP id 2uw3xwsp2v-1
-        (version=TLSv1.2 cipher=AES256-GCM-SHA384 bits=256 verify=NOT)
-        for <linux-arm-msm@vger.kernel.org>; Sun, 08 Sep 2019 19:31:24 -0400
-Received: from localhost
-        by e06smtp01.uk.ibm.com with IBM ESMTP SMTP Gateway: Authorized Use Only! Violators will be prosecuted
-        for <linux-arm-msm@vger.kernel.org> from <zohar@linux.ibm.com>;
-        Mon, 9 Sep 2019 00:31:22 +0100
-Received: from b06avi18878370.portsmouth.uk.ibm.com (9.149.26.194)
-        by e06smtp01.uk.ibm.com (192.168.101.131) with IBM ESMTP SMTP Gateway: Authorized Use Only! Violators will be prosecuted;
-        (version=TLSv1/SSLv3 cipher=AES256-GCM-SHA384 bits=256/256)
-        Mon, 9 Sep 2019 00:31:19 +0100
-Received: from d06av26.portsmouth.uk.ibm.com (d06av26.portsmouth.uk.ibm.com [9.149.105.62])
-        by b06avi18878370.portsmouth.uk.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id x88NVIGt45547968
-        (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
-        Sun, 8 Sep 2019 23:31:18 GMT
-Received: from d06av26.portsmouth.uk.ibm.com (unknown [127.0.0.1])
-        by IMSVA (Postfix) with ESMTP id 58576AE04D;
-        Sun,  8 Sep 2019 23:31:18 +0000 (GMT)
-Received: from d06av26.portsmouth.uk.ibm.com (unknown [127.0.0.1])
-        by IMSVA (Postfix) with ESMTP id 78A1CAE053;
-        Sun,  8 Sep 2019 23:31:17 +0000 (GMT)
-Received: from localhost.localdomain (unknown [9.85.159.93])
-        by d06av26.portsmouth.uk.ibm.com (Postfix) with ESMTP;
-        Sun,  8 Sep 2019 23:31:17 +0000 (GMT)
-Subject: Re: [RFC][PATCH 1/1] Carry ima measurement log for arm64 via
- kexec_file_load
-From:   Mimi Zohar <zohar@linux.ibm.com>
-To:     prsriva <prsriva@linux.microsoft.com>,
-        Thiago Jung Bauermann <bauerman@linux.ibm.com>
-Cc:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-integrity@vger.kernel.org, jmorris@namei.org
-Date:   Sun, 08 Sep 2019 19:31:16 -0400
-In-Reply-To: <0c7453d4-620d-2d98-3fda-f902b18da535@linux.microsoft.com>
-References: <20190829200532.13545-1-prsriva@linux.microsoft.com>
-         <20190829200532.13545-2-prsriva@linux.microsoft.com>
-         <87r252kxc8.fsf@morokweng.localdomain>
-         <0c7453d4-620d-2d98-3fda-f902b18da535@linux.microsoft.com>
-Content-Type: text/plain; charset="UTF-8"
-X-Mailer: Evolution 3.20.5 (3.20.5-1.fc24) 
-Mime-Version: 1.0
+        Mon, 9 Sep 2019 03:44:51 -0400
+Received: by smtp.codeaurora.org (Postfix, from userid 1000)
+        id 5F2E86119D; Mon,  9 Sep 2019 07:44:49 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
+        s=default; t=1568015089;
+        bh=DT6Puv+VaCuHYQ8jgGXzuP0lzjcwptMaBuGRqDBanlI=;
+        h=From:To:Cc:Subject:Date:From;
+        b=CjcCoHAsTOYltQu35Wu16H6kSJTltEG7Y6W89VDceG1k43niJL7FGz8wtKA2Xjwbi
+         YLUGo0dVaCoqWQ/MuR0cMjmGwH1eEGOFg3ZHd708JvNmZNvoSChNcYa6rw4Gfkc2hd
+         q70qdUKRLL78ZU8P7GUZASi9MyRyeGRir/U+g4fM=
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        pdx-caf-mail.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.7 required=2.0 tests=ALL_TRUSTED,BAYES_00,
+        DKIM_INVALID,DKIM_SIGNED,SPF_NONE autolearn=no autolearn_force=no
+        version=3.4.0
+Received: from tdas-linux.qualcomm.com (blr-c-bdr-fw-01_globalnat_allzones-outside.qualcomm.com [103.229.19.19])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: tdas@smtp.codeaurora.org)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id B1D9C6115A;
+        Mon,  9 Sep 2019 07:44:44 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
+        s=default; t=1568015088;
+        bh=DT6Puv+VaCuHYQ8jgGXzuP0lzjcwptMaBuGRqDBanlI=;
+        h=From:To:Cc:Subject:Date:From;
+        b=lJbIYUVwHyj4uh+5N4zw4Y51vFTNK1QK8jzJaOoHDru8k4RsHetuBM74ZsZvpJllI
+         YWWaU8ftl8o9dkuMTHSzRAfGjh2GhL3Ob2Mv3C69y4FLXXqVKY7v6WG+1BNYxgTwqY
+         HGKzk+AoLLBJiFR86dOO91Ww4aC8lgQ8Nzqbm6B4=
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org B1D9C6115A
+Authentication-Results: pdx-caf-mail.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: pdx-caf-mail.web.codeaurora.org; spf=none smtp.mailfrom=tdas@codeaurora.org
+From:   Taniya Das <tdas@codeaurora.org>
+To:     Stephen Boyd <sboyd@kernel.org>,
+        =?UTF-8?q?Michael=20Turquette=20=C2=A0?= <mturquette@baylibre.com>
+Cc:     David Brown <david.brown@linaro.org>,
+        Rajendra Nayak <rnayak@codeaurora.org>,
+        linux-arm-msm@vger.kernel.org, linux-soc@vger.kernel.org,
+        linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org,
+        vkoul@kernel.org, Taniya Das <tdas@codeaurora.org>
+Subject: [PATCH] clk: qcom: gcc: Use floor ops for SDCC clocks
+Date:   Mon,  9 Sep 2019 13:14:10 +0530
+Message-Id: <20190909074410.18977-1-tdas@codeaurora.org>
+X-Mailer: git-send-email 2.22.0
+MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-x-cbid: 19090823-4275-0000-0000-00000362F7CD
-X-IBM-AV-DETECTION: SAVI=unused REMOTE=unused XFE=unused
-x-cbparentid: 19090823-4276-0000-0000-000038754646
-Message-Id: <1567985476.4614.224.camel@linux.ibm.com>
-X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:,, definitions=2019-09-08_15:,,
- signatures=0
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
- malwarescore=0 suspectscore=0 phishscore=0 bulkscore=0 spamscore=0
- clxscore=1011 lowpriorityscore=0 mlxscore=0 impostorscore=0
- mlxlogscore=999 adultscore=0 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.0.1-1906280000 definitions=main-1909080260
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Prakhar,
+Update global clock controller SDCC2/4 clocks to use the floor rcg ops,
+so as to use the rounded down clock rates for these clocks.
 
-On Fri, 2019-09-06 at 16:56 -0700, prsriva wrote:
-> On 8/30/19 5:11 PM, Thiago Jung Bauermann wrote:
-> > Hello Prakhar,
-> >
-> > Answering this part from the cover letter:
-> >
-> >> The code is in most part same as powerpc, i want to get feedback as to
-> >> how/correct way to refactor the code so that cross architecture
-> >> partial helpers can be put in a common place.
-> 
-> I started refactoring code to bring helpers under drivers/of, but
-> 
-> i soon reliazed the current implementation can be changed a bit
-> 
-> so that some of the additional functions can be sourced from
-> 
-> existing fdt_*/of_* functions since the fdt_ima was seeming to be
-> 
-> an overkill. I have done so in the V1 patch and also addressed
-> 
-> comments you have.
-> 
-> Hopefully its(v1) is a cleaner approach.
-> 
-> - Thanks for the review, and guidance.
+Signed-off-by: Taniya Das <tdas@codeaurora.org>
+---
+ drivers/clk/qcom/gcc-ipq8074.c | 2 +-
+ drivers/clk/qcom/gcc-msm8998.c | 4 ++--
+ drivers/clk/qcom/gcc-qcs404.c  | 2 +-
+ drivers/clk/qcom/gcc-sdm660.c  | 2 +-
+ drivers/clk/qcom/gcc-sdm845.c  | 2 +-
+ drivers/clk/qcom/gcc-sm8150.c  | 4 ++--
+ 6 files changed, 8 insertions(+), 8 deletions(-)
 
-"Carrying over the ima log during kexec_file_load" was originally
-posted on 5/10 and 5/31 without a cover letter. On 8/29 it was
-reposted as an RFC with a cover letter.  The cover letter was v1, but
-the patch itself was not.  In the future, please use the "git format-
-patch "-subject-prefix" option to add the version number to both the
-cover letter and the patches.
+diff --git a/drivers/clk/qcom/gcc-ipq8074.c b/drivers/clk/qcom/gcc-ipq8074.c
+index 39ade58b4ada..e01f5f591d1e 100644
+--- a/drivers/clk/qcom/gcc-ipq8074.c
++++ b/drivers/clk/qcom/gcc-ipq8074.c
+@@ -1108,7 +1108,7 @@ static struct clk_rcg2 sdcc2_apps_clk_src = {
+ 		.name = "sdcc2_apps_clk_src",
+ 		.parent_names = gcc_xo_gpll0_gpll2_gpll0_out_main_div2,
+ 		.num_parents = 4,
+-		.ops = &clk_rcg2_ops,
++		.ops = &clk_rcg2_floor_ops,
+ 	},
+ };
 
-The comments you received were based on the 8/29 version.  I haven't
-seen anything after that. 
+diff --git a/drivers/clk/qcom/gcc-msm8998.c b/drivers/clk/qcom/gcc-msm8998.c
+index 033688264c7b..091acd59c1d6 100644
+--- a/drivers/clk/qcom/gcc-msm8998.c
++++ b/drivers/clk/qcom/gcc-msm8998.c
+@@ -1042,7 +1042,7 @@ static struct clk_rcg2 sdcc2_apps_clk_src = {
+ 		.name = "sdcc2_apps_clk_src",
+ 		.parent_names = gcc_parent_names_4,
+ 		.num_parents = 4,
+-		.ops = &clk_rcg2_ops,
++		.ops = &clk_rcg2_floor_ops,
+ 	},
+ };
 
-Mimi
+@@ -1066,7 +1066,7 @@ static struct clk_rcg2 sdcc4_apps_clk_src = {
+ 		.name = "sdcc4_apps_clk_src",
+ 		.parent_names = gcc_parent_names_1,
+ 		.num_parents = 3,
+-		.ops = &clk_rcg2_ops,
++		.ops = &clk_rcg2_floor_ops,
+ 	},
+ };
 
+diff --git a/drivers/clk/qcom/gcc-qcs404.c b/drivers/clk/qcom/gcc-qcs404.c
+index e12c04c09a6a..582c1e2cd420 100644
+--- a/drivers/clk/qcom/gcc-qcs404.c
++++ b/drivers/clk/qcom/gcc-qcs404.c
+@@ -1103,7 +1103,7 @@ static struct clk_rcg2 sdcc2_apps_clk_src = {
+ 		.name = "sdcc2_apps_clk_src",
+ 		.parent_names = gcc_parent_names_14,
+ 		.num_parents = 4,
+-		.ops = &clk_rcg2_ops,
++		.ops = &clk_rcg2_floor_ops,
+ 	},
+ };
 
-> > That's a great idea. If it could go to drivers/of/ as Stephen Boyd
-> > mentioned in the other email that would be great.
-> >
-> > More comments below.
-> > -Addressed those in the v1 patch
-> > Prakhar Srivastava <prsriva@linux.microsoft.com> writes:
-> >
+diff --git a/drivers/clk/qcom/gcc-sdm660.c b/drivers/clk/qcom/gcc-sdm660.c
+index 8827db23066f..bf5730832ef3 100644
+--- a/drivers/clk/qcom/gcc-sdm660.c
++++ b/drivers/clk/qcom/gcc-sdm660.c
+@@ -787,7 +787,7 @@ static struct clk_rcg2 sdcc2_apps_clk_src = {
+ 		.name = "sdcc2_apps_clk_src",
+ 		.parent_names = gcc_parent_names_xo_gpll0_gpll0_early_div_gpll4,
+ 		.num_parents = 4,
+-		.ops = &clk_rcg2_ops,
++		.ops = &clk_rcg2_floor_ops,
+ 	},
+ };
+
+diff --git a/drivers/clk/qcom/gcc-sdm845.c b/drivers/clk/qcom/gcc-sdm845.c
+index 7131dcf9b060..131160ace79c 100644
+--- a/drivers/clk/qcom/gcc-sdm845.c
++++ b/drivers/clk/qcom/gcc-sdm845.c
+@@ -709,7 +709,7 @@ static struct clk_rcg2 gcc_sdcc4_apps_clk_src = {
+ 		.name = "gcc_sdcc4_apps_clk_src",
+ 		.parent_names = gcc_parent_names_0,
+ 		.num_parents = 4,
+-		.ops = &clk_rcg2_ops,
++		.ops = &clk_rcg2_floor_ops,
+ 	},
+ };
+
+diff --git a/drivers/clk/qcom/gcc-sm8150.c b/drivers/clk/qcom/gcc-sm8150.c
+index 12ca2d14797f..20877214acff 100644
+--- a/drivers/clk/qcom/gcc-sm8150.c
++++ b/drivers/clk/qcom/gcc-sm8150.c
+@@ -803,7 +803,7 @@ static struct clk_rcg2 gcc_sdcc2_apps_clk_src = {
+ 		.parent_data = gcc_parents_6,
+ 		.num_parents = 5,
+ 		.flags = CLK_SET_RATE_PARENT,
+-		.ops = &clk_rcg2_ops,
++		.ops = &clk_rcg2_floor_ops,
+ 	},
+ };
+
+@@ -828,7 +828,7 @@ static struct clk_rcg2 gcc_sdcc4_apps_clk_src = {
+ 		.parent_data = gcc_parents_3,
+ 		.num_parents = 3,
+ 		.flags = CLK_SET_RATE_PARENT,
+-		.ops = &clk_rcg2_ops,
++		.ops = &clk_rcg2_floor_ops,
+ 	},
+ };
+
+--
+Qualcomm INDIA, on behalf of Qualcomm Innovation Center, Inc.is a member
+of the Code Aurora Forum, hosted by the  Linux Foundation.
 
