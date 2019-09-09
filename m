@@ -2,73 +2,91 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id D5736AD4AD
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  9 Sep 2019 10:19:38 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C45BFAD529
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  9 Sep 2019 10:54:36 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727248AbfIIITi (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 9 Sep 2019 04:19:38 -0400
-Received: from mail.kernel.org ([198.145.29.99]:55476 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726928AbfIIITh (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 9 Sep 2019 04:19:37 -0400
-Received: from kernel.org (unknown [104.132.0.74])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 13E0920678;
-        Mon,  9 Sep 2019 08:19:37 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1568017177;
-        bh=Mpvur8qXCAfHMVIkSt2wICPWYL86B+HBB+4HLiCewek=;
-        h=In-Reply-To:References:Cc:To:From:Subject:Date:From;
-        b=KpzuiJlGsoWanuGSVCqfCjO3vIipkZZTvOENlVFQ8n6E3JGXLj5TJWkfCDUAYUM92
-         2zL4QfzE0r5wgjooSyLdsv+c/LWYuV3cdtH/cuztjA5jcEIO1OsKX9RDpUDj1NdTJt
-         8l2o+L3MHEJ9wpQravNQDag118dTctlOt7Y/z+0M=
-Content-Type: text/plain; charset="utf-8"
+        id S1727778AbfIIIyg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 9 Sep 2019 04:54:36 -0400
+Received: from mail-wm1-f68.google.com ([209.85.128.68]:38106 "EHLO
+        mail-wm1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726663AbfIIIyf (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 9 Sep 2019 04:54:35 -0400
+Received: by mail-wm1-f68.google.com with SMTP id o184so13622880wme.3
+        for <linux-arm-msm@vger.kernel.org>; Mon, 09 Sep 2019 01:54:34 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=93tDfN83mQsd0DPVLc0brfVYsJhwPv42JzLgK6vCzz4=;
+        b=elru8+rTyxJnAkRhSgpCtGKhvAzkZlMgML1O+PjWOVzMhVAwGdF9mdMl17yIKWinbF
+         Pyy6PK6nwfQV5XGO52F6rddjfLoTuo42XyaL8+vXtJxbuvOKtoETYTCgowHJU7dGBtaZ
+         yDFVoVhq0NiwV8DC3DNqEKBbhS0xYPVmxfqacrxJcuOC+lqP1wI4v4jR3kpLPvkeNfgJ
+         MMpU8LbFzSZ8+v+24aIyPlKotBw+kF87nnHbIrvLu9gISBhkJsGqrFJnZvT1DRHajBkP
+         wPRdWm4WWfuVQYLL6SxMeATk/Z2Y1tisSr9TtcTvz8TOBWamw9eYO9oMfOZS3fCyKtdt
+         pUnw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=93tDfN83mQsd0DPVLc0brfVYsJhwPv42JzLgK6vCzz4=;
+        b=LxQJlPwjORM0YrnJqsOrMZvpfVwFvWRyIbkYbdy405szyDUAdIH6OrEj4IuM1b19Rx
+         HJyiZUlQM7KMagRYpW2v7goCiJrMJBQUTIJ2B0rJQpCB3FfWmBwIB+vXCI2nLKZOf5DO
+         BervBL8XOQ/5YOf5yvcRr2FpZ40+XYHW9wzQeUCfLMlV/dTZLaeW9j2MjsJwApadw5DX
+         H2JN84Np3IiXaqOBqX7LndIHyFGjqMdn/pHWT9X3dS0DwlgOSX32Hhn87Y4L+SEVS+UH
+         v7yW6+mLjlPgfa72ncI0ZPt0vxBHOAubTqR421jjhvtMgudNqeWuYJ0KUQllNM0noUyj
+         53eg==
+X-Gm-Message-State: APjAAAVh5FcH3z1buqjpek65NH/ENO9QdAYUYmWGBp8wHmS5Gybb2gYs
+        WEN3j3mxV0iE9flPCcvP6/B/jw==
+X-Google-Smtp-Source: APXvYqwNLAGFJD/5uFgLmvZMGl1fB1pcIoE/EBBaGXx9m7Z80mi6LrNWXEAXrgLH7W7MUpCzjsy0oA==
+X-Received: by 2002:a1c:98c9:: with SMTP id a192mr18219335wme.29.1568019274219;
+        Mon, 09 Sep 2019 01:54:34 -0700 (PDT)
+Received: from localhost.localdomain (69.red-83-35-113.dynamicip.rima-tde.net. [83.35.113.69])
+        by smtp.gmail.com with ESMTPSA id r17sm13265220wrt.68.2019.09.09.01.54.32
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Mon, 09 Sep 2019 01:54:33 -0700 (PDT)
+From:   Jorge Ramirez-Ortiz <jorge.ramirez-ortiz@linaro.org>
+To:     jorge.ramirez-ortiz@linaro.org, agross@kernel.org,
+        mturquette@baylibre.com, sboyd@kernel.org,
+        bjorn.andersson@linaro.org
+Cc:     linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: [PATCH v2] clk: qcom: fix QCS404 TuringCC regmap
+Date:   Mon,  9 Sep 2019 10:54:30 +0200
+Message-Id: <20190909085430.8700-1-jorge.ramirez-ortiz@linaro.org>
+X-Mailer: git-send-email 2.23.0
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <20190906232346.8435-1-jorge.ramirez-ortiz@linaro.org>
-References: <20190906232346.8435-1-jorge.ramirez-ortiz@linaro.org>
-Cc:     bjorn.andersson@linaro.org, linux-arm-msm@vger.kernel.org,
-        linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org
-To:     agross@kernel.org, jorge.ramirez-ortiz@linaro.org,
-        mturquette@baylibre.com
-From:   Stephen Boyd <sboyd@kernel.org>
-Subject: Re: [PATCH] clk: qcom: fix QCS404 TuringCC regmap
-User-Agent: alot/0.8.1
-Date:   Mon, 09 Sep 2019 01:19:36 -0700
-Message-Id: <20190909081937.13E0920678@mail.kernel.org>
+Content-Transfer-Encoding: 8bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Jorge Ramirez-Ortiz (2019-09-06 16:23:46)
-> The max register is 0x23004 as per the manual (the current
-> max_register that this commit is fixing is actually out of bounds).
->=20
-> Signed-off-by: Jorge Ramirez-Ortiz <jorge.ramirez-ortiz@linaro.org>
-> ---
+The max register is 0x23004 as per the manual (the current
+max_register that this commit is fixing is actually out of bounds).
 
-Fixes tag?
+Fixes: 892df0191b29 ("clk: qcom: Add QCS404 TuringCC")
+Signed-off-by: Jorge Ramirez-Ortiz <jorge.ramirez-ortiz@linaro.org>
+---
 
->  drivers/clk/qcom/turingcc-qcs404.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
->=20
-> diff --git a/drivers/clk/qcom/turingcc-qcs404.c b/drivers/clk/qcom/turing=
-cc-qcs404.c
-> index aa859e6ec9bd..4cfbbf5bf4d9 100644
-> --- a/drivers/clk/qcom/turingcc-qcs404.c
-> +++ b/drivers/clk/qcom/turingcc-qcs404.c
-> @@ -96,7 +96,7 @@ static const struct regmap_config turingcc_regmap_confi=
-g =3D {
->         .reg_bits       =3D 32,
->         .reg_stride     =3D 4,
->         .val_bits       =3D 32,
-> -       .max_register   =3D 0x30000,
-> +       .max_register   =3D 0x23004,
->         .fast_io        =3D true,
->  };
-> =20
-> --=20
-> 2.23.0
->=20
+ v2: add Fixes tag
+ 
+ drivers/clk/qcom/turingcc-qcs404.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/drivers/clk/qcom/turingcc-qcs404.c b/drivers/clk/qcom/turingcc-qcs404.c
+index aa859e6ec9bd..4cfbbf5bf4d9 100644
+--- a/drivers/clk/qcom/turingcc-qcs404.c
++++ b/drivers/clk/qcom/turingcc-qcs404.c
+@@ -96,7 +96,7 @@ static const struct regmap_config turingcc_regmap_config = {
+ 	.reg_bits	= 32,
+ 	.reg_stride	= 4,
+ 	.val_bits	= 32,
+-	.max_register	= 0x30000,
++	.max_register	= 0x23004,
+ 	.fast_io	= true,
+ };
+ 
+-- 
+2.23.0
+
