@@ -2,193 +2,129 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 1FD8CAF028
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Sep 2019 19:11:04 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 8D7AAAF036
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Sep 2019 19:14:40 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2391832AbfIJRLD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 10 Sep 2019 13:11:03 -0400
-Received: from mail-ed1-f68.google.com ([209.85.208.68]:41595 "EHLO
-        mail-ed1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1731510AbfIJRLD (ORCPT
+        id S2394239AbfIJROj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 10 Sep 2019 13:14:39 -0400
+Received: from mail-qt1-f193.google.com ([209.85.160.193]:44858 "EHLO
+        mail-qt1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2394236AbfIJROj (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 10 Sep 2019 13:11:03 -0400
-Received: by mail-ed1-f68.google.com with SMTP id z9so17815475edq.8;
-        Tue, 10 Sep 2019 10:11:01 -0700 (PDT)
+        Tue, 10 Sep 2019 13:14:39 -0400
+Received: by mail-qt1-f193.google.com with SMTP id u40so21632749qth.11
+        for <linux-arm-msm@vger.kernel.org>; Tue, 10 Sep 2019 10:14:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=iuWQbHX+PMmNOYmd/8pxmVPIKdIed7YlISeGMgRidgc=;
-        b=nGVn97TTZhK0PPPfJL9dl6WBhPT2YLeqSt3p+U7yVwjN5WBJDYwgKSOc1NbPrCdimp
-         +jFNz7Grhyg+FrsoHamdre2gg4lQ1KAh8/MamoeZAraCi06wUTgRTi8DknjKoLQ76fke
-         6WP/46MkYH+188U0fEj/iwGNh+L+E8hcVZ3A7e0ROH7WowUWLEICs/dkWSVdQJ8MsTOZ
-         g9tjXofI2V9D49kezB8GYV1VdthPv7Yd6dZO94FeMzDOsp1HyILdtrJIhI9/dl9Mp4QP
-         vl1VA0XHL8OZtRUblScbQfNTHWOkd+9bzr6/O5+MlhfATeHSX9LxnWbvp71P6++vzL0Z
-         vTaw==
+        d=linaro.org; s=google;
+        h=from:to:cc:subject:date:message-id;
+        bh=HbUIStHt9W/VIVERFYwcoKZrgnGZv23yOnmmJWnfWUc=;
+        b=FjmYkULyMuJcFn7OokF8bYWgJVx6OD7aYCYCSC4Dqpj2ITrv4r5yGTCwjVijbaDYUu
+         We/YcdS0ku60UXpQrNszmQVVnDD79Ay70tiYuCT3+S4VSUQV3DmyKfeifQHF4HU8S03J
+         GD0OaCoNlipM/xrnjeL1Cqxx490vIOr1y3FICsO/9bPIeazxhgb8bRjQOD1SPoNBX2Yc
+         WvY8JpScsb04OvYCiw0AxSgJLN0hPOOVYQuykM1XIBmppbJUdl7xKJs0QlqX2n+pK2xP
+         S1ec721gVt9+qSGz+RiuI42Jjz41w8LxB+2VxEVYOVhytvSgi+CywF8UpAjALOYAZae2
+         GDMw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=iuWQbHX+PMmNOYmd/8pxmVPIKdIed7YlISeGMgRidgc=;
-        b=BnmzDw2oOrx6w4+kGPJN0Z/WovMeZkG08xTVcw0RRKPeAXyzbSYhsw1wt+kCNhQV4q
-         yeby7Ol2Ik7xxwNSNVJjMgfBnsALnwu0zAuA1cPigujC1xPeiwoc9VAWxXM6bvJ5jlTb
-         9JxgStNPoE+T28hYqdGIsCEcSc21iRDCXtKPmck+ffPya5jxPyMfz7JTXje4fElnuVnc
-         QQkn2nyAhfZI8aVSR69nVYaT1EZz6V1mIuwiqfJ0bmOauMXH8dlHmnUyA3NU1/Er9Sa7
-         KlWZuUVUTXsvUMJ4ORmyNXqytGARvk1wuhUJ/z19xshTwaGGvQ0P4CGn+PhSjDHqm4Yp
-         eacg==
-X-Gm-Message-State: APjAAAVPkFBzh7nLhWQD6sA9aV9B4YGy2y9Qzemo9II365HGDVvcxIOz
-        nJbMd82j1ZHbvTzjpWOmyADaGd+cUoDsRgtClnM=
-X-Google-Smtp-Source: APXvYqxiIVIycVxvEEUmiCW5coXzW8/2YE/GZpopAwpb2E0GVaAmfqW3+sFpN7JvdeaqLP5yP2YwvFPlBP2u18+UK6I=
-X-Received: by 2002:a17:906:3293:: with SMTP id 19mr25728734ejw.265.1568135460497;
- Tue, 10 Sep 2019 10:11:00 -0700 (PDT)
-MIME-Version: 1.0
-References: <20190906214409.26677-1-robdclark@gmail.com> <c43de10f-7768-592c-0fd8-6fb64b3fd43e@arm.com>
-In-Reply-To: <c43de10f-7768-592c-0fd8-6fb64b3fd43e@arm.com>
-From:   Rob Clark <robdclark@gmail.com>
-Date:   Tue, 10 Sep 2019 10:10:49 -0700
-Message-ID: <CAF6AEGv5WtwOuUE-+koL3SxuoXxcT5n=EooD7G_4YRh34HFTwQ@mail.gmail.com>
-Subject: Re: [PATCH v3 0/2] iommu: handle drivers that manage iommu directly
-To:     Robin Murphy <robin.murphy@arm.com>
-Cc:     "list@263.net:IOMMU DRIVERS <iommu@lists.linux-foundation.org>, Joerg
-        Roedel <joro@8bytes.org>," <iommu@lists.linux-foundation.org>,
-        dri-devel <dri-devel@lists.freedesktop.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Joerg Roedel <joro@8bytes.org>, Will Deacon <will@kernel.org>,
-        Rob Clark <robdclark@chromium.org>,
-        Abhinav Kumar <abhinavk@codeaurora.org>,
-        Alexios Zavras <alexios.zavras@intel.com>,
-        Allison Randal <allison@lohutok.net>,
-        Andrew Morton <akpm@linux-foundation.org>,
-        Arnd Bergmann <arnd@arndb.de>,
-        Bartosz Golaszewski <brgl@bgdev.pl>,
-        Boris Brezillon <bbrezillon@kernel.org>,
-        Bruce Wang <bzwang@chromium.org>,
-        "open list:DRM DRIVER FOR MSM ADRENO GPU" 
-        <freedreno@lists.freedesktop.org>,
-        Georgi Djakov <georgi.djakov@linaro.org>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Heikki Krogerus <heikki.krogerus@linux.intel.com>,
-        Jeffrey Hugo <jeffrey.l.hugo@gmail.com>,
-        Jeykumar Sankaran <jsanka@codeaurora.org>,
-        Joe Perches <joe@perches.com>, Joerg Roedel <jroedel@suse.de>,
-        Jonathan Marek <jonathan@marek.ca>,
-        Jordan Crouse <jcrouse@codeaurora.org>,
-        open list <linux-kernel@vger.kernel.org>,
-        Mamta Shukla <mamtashukla555@gmail.com>,
-        "Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
-        Rasmus Villemoes <linux@rasmusvillemoes.dk>,
-        Sean Paul <seanpaul@chromium.org>,
-        Sravanthi Kollukuduru <skolluku@codeaurora.org>,
-        Sudeep Holla <sudeep.holla@arm.com>,
-        Suzuki K Poulose <suzuki.poulose@arm.com>,
-        Thomas Gleixner <tglx@linutronix.de>
-Content-Type: text/plain; charset="UTF-8"
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=HbUIStHt9W/VIVERFYwcoKZrgnGZv23yOnmmJWnfWUc=;
+        b=dWmCg1Co5QzZ4vE+JuZWh4b/qSEX4hPVDJ/0PNA0PONS/mHLIwgpyG9T+DOQhBVHMN
+         GitEuGVowsE+Z5+LqicYEFnSRPHOobFpkVL84wBP+h9nb3E85Qxo1jdvnOMZnUtMa4fb
+         j22L6D81U7JSEPVtDfbF3HlM559BIzapqIgPndXaAHjz06Zzd36t5VhLkqZnGo5i1VF+
+         am3jYiG3e00vPJAaHpVrK0aqfaN1tBigy/x7IgoakiMdz5uMOjLtp3jZFxCRDC2R9hpk
+         0XOqvWoN9Z6a1LYLncYTOxNRNKh1x1VnbVcW7aacR0uNI8gfL0lKX0HkxmXDFLVA1Hys
+         SrXw==
+X-Gm-Message-State: APjAAAXXXz5/WyLTJdal61ICT0G8JFpKDHCyEy+uAtqfBc+6ymk6xQAj
+        5Ix71Oaj7gpHAkWMhSn7RqoHpA==
+X-Google-Smtp-Source: APXvYqygj73ABNv7vOyOOorsAJk5oGGfIsSa/ouC8yqhBl2cKmgH+hBRVUAQ4JHsBlgT4pb76Bt4fg==
+X-Received: by 2002:ac8:647:: with SMTP id e7mr9928642qth.78.1568135678393;
+        Tue, 10 Sep 2019 10:14:38 -0700 (PDT)
+Received: from Thara-Work-Ubuntu.fios-router.home (pool-71-255-246-27.washdc.fios.verizon.net. [71.255.246.27])
+        by smtp.googlemail.com with ESMTPSA id g45sm3400713qtc.9.2019.09.10.10.14.37
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Tue, 10 Sep 2019 10:14:37 -0700 (PDT)
+From:   Thara Gopinath <thara.gopinath@linaro.org>
+To:     edubezval@gmail.com, rui.zhang@intel.com, ulf.hansson@linaro.org,
+        daniel.lezcano@linaro.org, bjorn.andersson@linaro.org,
+        robh+dt@kernel.org, agross@kernel.org
+Cc:     amit.kucheria@verdurent.com, mark.rutland@arm.com,
+        rjw@rjwysocki.net, linux-pm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: [PATCH v2 0/5] Introduce Power domain based warming device driver
+Date:   Tue, 10 Sep 2019 13:14:31 -0400
+Message-Id: <1568135676-9328-1-git-send-email-thara.gopinath@linaro.org>
+X-Mailer: git-send-email 2.1.4
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Sep 10, 2019 at 9:34 AM Robin Murphy <robin.murphy@arm.com> wrote:
->
-> On 06/09/2019 22:44, Rob Clark wrote:
-> > From: Rob Clark <robdclark@chromium.org>
-> >
-> > One of the challenges we have to enable the aarch64 laptops upstream
-> > is dealing with the fact that the bootloader enables the display and
-> > takes the corresponding SMMU context-bank out of BYPASS.  Unfortunately,
-> > currently, the IOMMU framework attaches a DMA (or potentially an
-> > IDENTITY) domain before the driver is probed and has a chance to
-> > intervene and shutdown scanout.  Which makes things go horribly wrong.
->
-> Nope, things already went horribly wrong in arm_smmu_device_reset() -
-> sure, sometimes for some configurations it might *seem* like they didn't
-> and that you can fudge the context bank state at arm's length from core
-> code later, but the truth is that impl->cfg_probe is your last chance to
-> guarantee that any necessary SMMU state is preserved.
+Certain resources modeled as a generic power domain in linux kernel 
+can be used to warm up the SoC (mx power domain on sdm845)
+if the temperature falls below certain threshold. These power domains
+can be considered as thermal warming devices.
+(opposite of thermal cooling devices).
 
-cfg_probe is where Bjorn's patch is preserving the SMMU state.  So I
-think that should ensure device_reset() preserves the configuration..
-or at least if something is missing, that seems fixable.
+In kernel, these warming devices can be modeled as a 
+thermal cooling device. In fact, since linux kernel today has
+no instance of a resource modeled as a power domain acting as a
+thermal warming device, a generic power domain based thermal warming device
+driver that can be used pan-Socs is the approach taken in this
+patch series. Since thermal warming devices can be thought of as the
+mirror opposite of thermal cooling devices, this patch series re-uses
+thermal cooling device framework. To use these power domains as warming
+devices require further tweaks in the thermal framework which are out of
+scope of this patch series.
 
-> The remainder of the problem involves reworking default domain
-> allocation such that we can converge on what iommu_request_dm_for_dev()
-> currently does but without the momentary attachment to a translation
-> domain to cause hiccups. That's starting here:
->
-> https://lore.kernel.org/linux-iommu/cover.1566353521.git.sai.praneeth.prakhya@intel.com/
+The first patch in this series extends the genpd framework to export out
+the performance states of a power domain so that when a power
+domain is modeled as a cooling device, the number of possible states and
+current state of the cooling device can be retrieved from the genpd
+framework.
 
-I suppose if the stream-match state and bootloader chosen context bank
-is preserved, then keeping it direct-mapped would avoid things
-starting to fault before display driver is probed.  That plus some
-solution for GPU default domain would narrow the scope of what I need
-to just avoiding getting iommu dma_ops installed.
+The second patch implements the newly added genpd callback for Qualcomm
+RPMH power domain driver which hosts the mx power domain.
 
-> > But in this case, drm/msm is already directly managing it's IOMMUs
-> > directly, the DMA API attached iommu_domain simply gets in the way.
-> > This series adds a way that a driver can indicate to drivers/iommu
-> > that it does not wish to have an DMA managed iommu_domain attached.
-> > This way, drm/msm can shut down scanout cleanly before attaching it's
-> > own iommu_domain.
-> >
-> > NOTE that to get things working with arm-smmu on the aarch64 laptops,
-> > you also need a patchset[1] from Bjorn Andersson to inherit SMMU config
-> > at boot, when it is already enabled.
-> >
-> > [1] https://www.spinics.net/lists/arm-kernel/msg732246.html
-> >
-> > NOTE that in discussion of previous revisions, RMRR came up.  This is
-> > not really a replacement for RMRR (nor does RMRR really provide any
-> > more information than we already get from EFI GOP, or DT in the
-> > simplefb case).  I also don't see how RMRR could help w/ SMMU handover
-> > of CB/SMR config (Bjorn's patchset[1]) without defining new tables.
->
-> The point of RMRR-like-things is that they identify not just the memory
-> region but also the specific device accessing them, which means the
-> IOMMU driver knows up-front which IDs etc. it must be careful not to
-> disrupt. Obviously for SMMU that *would* be some new table (designed to
-> encompass everything relevant) since literal RMRRs are specifically an
-> Intel VT-d thing.
+The third patch describes the dt binding required for a generic
+power domain based warming device
 
-Perhaps I'm not looking in the right place, but the extent of what I
-could find about RMRR tables was:
+The fourth patch introduces the generic power domain warming device driver
 
-https://github.com/tianocore/edk2/blob/master/MdePkg/Include/IndustryStandard/DmaRemappingReportingTable.h#L122
+The fifth patch introduces the DT entreis for sdm845 to register mx power
+domain as a thermal warming device
 
-I couldn't really see how that specifies the device.  But entirely
-possible that I'm not seeing the whole picture.
+v1->v2:
+	- Rename the patch series from
+	"qcom: Model RPMH power domains as thermal cooling devices" to
+	"Introduce Power domain based thermal warming devices" as it is
+	more appropriate.
+	- Introduce a new patch(patch 3) describing the dt-bindings for generic power
+	domain warming device.
+	- Patch specific changes mentioned in respective patches.
 
-I am a bit curious about how windows handles this, since they must
-have the same problem on these laptops.
+Thara Gopinath (5):
+  PM/Domains: Add support for retrieving genpd performance states
+    information
+  soc: qcom: rpmhpd: Introduce function to retrieve power domain
+    performance state count
+  dt-bindings: thermal: Add generic power domain warming device binding
+  thermal: Add generic power domain warming device driver.
+  arm64: dts: qcom: Add node for RPMH power domain warming device on
+    sdm845.
 
-> > This perhaps doesn't solve the more general case of bootloader enabled
-> > display for drivers that actually want to use DMA API managed IOMMU.
-> > But it does also happen to avoid a related problem with GPU, caused by
-> > the DMA domain claiming the context bank that the GPU firmware expects
-> > to use.
->
-> Careful bringing that up again, or I really will rework the context bank
-> allocator to avoid this default domain problem entirely... ;)
+ .../bindings/thermal/pwr-domain-warming.txt        |  32 ++++
+ arch/arm64/boot/dts/qcom/sdm845.dtsi               |   7 +
+ drivers/base/power/domain.c                        |  37 +++++
+ drivers/soc/qcom/rpmhpd.c                          |   9 ++
+ drivers/thermal/Kconfig                            |  11 ++
+ drivers/thermal/Makefile                           |   2 +
+ drivers/thermal/pwr_domain_warming.c               | 174 +++++++++++++++++++++
+ include/linux/pm_domain.h                          |  13 ++
+ 8 files changed, 285 insertions(+)
+ create mode 100644 Documentation/devicetree/bindings/thermal/pwr-domain-warming.txt
+ create mode 100644 drivers/thermal/pwr_domain_warming.c
 
-That doesn't seem like a bad outcome ;-)
+-- 
+2.1.4
 
-BR,
--R
-
-> Robin.
->
-> >  And it avoids spurious TLB invalidation coming from the unused
-> > DMA domain.  So IMHO this is a useful and necessary change.
-> >
-> > Rob Clark (2):
-> >    iommu: add support for drivers that manage iommu explicitly
-> >    drm/msm: mark devices where iommu is managed by driver
-> >
-> >   drivers/gpu/drm/msm/adreno/adreno_device.c | 1 +
-> >   drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c    | 1 +
-> >   drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c   | 1 +
-> >   drivers/gpu/drm/msm/msm_drv.c              | 1 +
-> >   drivers/iommu/iommu.c                      | 2 +-
-> >   drivers/iommu/of_iommu.c                   | 3 +++
-> >   include/linux/device.h                     | 3 ++-
-> >   7 files changed, 10 insertions(+), 2 deletions(-)
-> >
