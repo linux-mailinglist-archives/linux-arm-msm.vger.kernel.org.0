@@ -2,88 +2,193 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id DDA1FAEFF5
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Sep 2019 18:52:06 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 1FD8CAF028
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Sep 2019 19:11:04 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2436687AbfIJQwG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 10 Sep 2019 12:52:06 -0400
-Received: from foss.arm.com ([217.140.110.172]:38308 "EHLO foss.arm.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S2436473AbfIJQwF (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 10 Sep 2019 12:52:05 -0400
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id F13301000;
-        Tue, 10 Sep 2019 09:52:04 -0700 (PDT)
-Received: from [10.1.197.57] (e110467-lin.cambridge.arm.com [10.1.197.57])
-        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id B2D733F71F;
-        Tue, 10 Sep 2019 09:52:00 -0700 (PDT)
-Subject: Re: [PATCH v2 1/2] iommu: add support for drivers that manage iommu
- explicitly
-To:     Rob Clark <robdclark@gmail.com>, Joerg Roedel <joro@8bytes.org>
-Cc:     "list@263.net:IOMMU DRIVERS" <iommu@lists.linux-foundation.org>,
-        Joerg Roedel <joro@8bytes.org>,
-        iommu@lists.linux-foundation.org,
+        id S2391832AbfIJRLD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 10 Sep 2019 13:11:03 -0400
+Received: from mail-ed1-f68.google.com ([209.85.208.68]:41595 "EHLO
+        mail-ed1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1731510AbfIJRLD (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 10 Sep 2019 13:11:03 -0400
+Received: by mail-ed1-f68.google.com with SMTP id z9so17815475edq.8;
+        Tue, 10 Sep 2019 10:11:01 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=iuWQbHX+PMmNOYmd/8pxmVPIKdIed7YlISeGMgRidgc=;
+        b=nGVn97TTZhK0PPPfJL9dl6WBhPT2YLeqSt3p+U7yVwjN5WBJDYwgKSOc1NbPrCdimp
+         +jFNz7Grhyg+FrsoHamdre2gg4lQ1KAh8/MamoeZAraCi06wUTgRTi8DknjKoLQ76fke
+         6WP/46MkYH+188U0fEj/iwGNh+L+E8hcVZ3A7e0ROH7WowUWLEICs/dkWSVdQJ8MsTOZ
+         g9tjXofI2V9D49kezB8GYV1VdthPv7Yd6dZO94FeMzDOsp1HyILdtrJIhI9/dl9Mp4QP
+         vl1VA0XHL8OZtRUblScbQfNTHWOkd+9bzr6/O5+MlhfATeHSX9LxnWbvp71P6++vzL0Z
+         vTaw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=iuWQbHX+PMmNOYmd/8pxmVPIKdIed7YlISeGMgRidgc=;
+        b=BnmzDw2oOrx6w4+kGPJN0Z/WovMeZkG08xTVcw0RRKPeAXyzbSYhsw1wt+kCNhQV4q
+         yeby7Ol2Ik7xxwNSNVJjMgfBnsALnwu0zAuA1cPigujC1xPeiwoc9VAWxXM6bvJ5jlTb
+         9JxgStNPoE+T28hYqdGIsCEcSc21iRDCXtKPmck+ffPya5jxPyMfz7JTXje4fElnuVnc
+         QQkn2nyAhfZI8aVSR69nVYaT1EZz6V1mIuwiqfJ0bmOauMXH8dlHmnUyA3NU1/Er9Sa7
+         KlWZuUVUTXsvUMJ4ORmyNXqytGARvk1wuhUJ/z19xshTwaGGvQ0P4CGn+PhSjDHqm4Yp
+         eacg==
+X-Gm-Message-State: APjAAAVPkFBzh7nLhWQD6sA9aV9B4YGy2y9Qzemo9II365HGDVvcxIOz
+        nJbMd82j1ZHbvTzjpWOmyADaGd+cUoDsRgtClnM=
+X-Google-Smtp-Source: APXvYqxiIVIycVxvEEUmiCW5coXzW8/2YE/GZpopAwpb2E0GVaAmfqW3+sFpN7JvdeaqLP5yP2YwvFPlBP2u18+UK6I=
+X-Received: by 2002:a17:906:3293:: with SMTP id 19mr25728734ejw.265.1568135460497;
+ Tue, 10 Sep 2019 10:11:00 -0700 (PDT)
+MIME-Version: 1.0
+References: <20190906214409.26677-1-robdclark@gmail.com> <c43de10f-7768-592c-0fd8-6fb64b3fd43e@arm.com>
+In-Reply-To: <c43de10f-7768-592c-0fd8-6fb64b3fd43e@arm.com>
+From:   Rob Clark <robdclark@gmail.com>
+Date:   Tue, 10 Sep 2019 10:10:49 -0700
+Message-ID: <CAF6AEGv5WtwOuUE-+koL3SxuoXxcT5n=EooD7G_4YRh34HFTwQ@mail.gmail.com>
+Subject: Re: [PATCH v3 0/2] iommu: handle drivers that manage iommu directly
+To:     Robin Murphy <robin.murphy@arm.com>
+Cc:     "list@263.net:IOMMU DRIVERS <iommu@lists.linux-foundation.org>, Joerg
+        Roedel <joro@8bytes.org>," <iommu@lists.linux-foundation.org>,
         dri-devel <dri-devel@lists.freedesktop.org>,
         linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Will Deacon <will@kernel.org>,
+        Joerg Roedel <joro@8bytes.org>, Will Deacon <will@kernel.org>,
         Rob Clark <robdclark@chromium.org>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        "Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+        Abhinav Kumar <abhinavk@codeaurora.org>,
+        Alexios Zavras <alexios.zavras@intel.com>,
+        Allison Randal <allison@lohutok.net>,
         Andrew Morton <akpm@linux-foundation.org>,
-        Suzuki K Poulose <suzuki.poulose@arm.com>,
-        Rasmus Villemoes <linux@rasmusvillemoes.dk>,
-        Heikki Krogerus <heikki.krogerus@linux.intel.com>,
+        Arnd Bergmann <arnd@arndb.de>,
         Bartosz Golaszewski <brgl@bgdev.pl>,
+        Boris Brezillon <bbrezillon@kernel.org>,
+        Bruce Wang <bzwang@chromium.org>,
+        "open list:DRM DRIVER FOR MSM ADRENO GPU" 
+        <freedreno@lists.freedesktop.org>,
+        Georgi Djakov <georgi.djakov@linaro.org>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Heikki Krogerus <heikki.krogerus@linux.intel.com>,
+        Jeffrey Hugo <jeffrey.l.hugo@gmail.com>,
+        Jeykumar Sankaran <jsanka@codeaurora.org>,
+        Joe Perches <joe@perches.com>, Joerg Roedel <jroedel@suse.de>,
+        Jonathan Marek <jonathan@marek.ca>,
+        Jordan Crouse <jcrouse@codeaurora.org>,
+        open list <linux-kernel@vger.kernel.org>,
+        Mamta Shukla <mamtashukla555@gmail.com>,
+        "Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+        Rasmus Villemoes <linux@rasmusvillemoes.dk>,
+        Sean Paul <seanpaul@chromium.org>,
+        Sravanthi Kollukuduru <skolluku@codeaurora.org>,
         Sudeep Holla <sudeep.holla@arm.com>,
-        Joe Perches <joe@perches.com>, Arnd Bergmann <arnd@arndb.de>,
-        open list <linux-kernel@vger.kernel.org>
-References: <20190906214409.26677-1-robdclark@gmail.com>
- <20190906214409.26677-2-robdclark@gmail.com>
- <20190910081415.GB3247@8bytes.org>
- <CAF6AEGsFmuO5M_RWm-RjDT_F_1Z=MLYmNqRXqFNDR7aUoPaMdg@mail.gmail.com>
-From:   Robin Murphy <robin.murphy@arm.com>
-Message-ID: <4b5b59bb-39a4-0757-e2bb-0961cfc7e4c1@arm.com>
-Date:   Tue, 10 Sep 2019 17:51:57 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.6.1
-MIME-Version: 1.0
-In-Reply-To: <CAF6AEGsFmuO5M_RWm-RjDT_F_1Z=MLYmNqRXqFNDR7aUoPaMdg@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-GB
-Content-Transfer-Encoding: 7bit
+        Suzuki K Poulose <suzuki.poulose@arm.com>,
+        Thomas Gleixner <tglx@linutronix.de>
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 10/09/2019 16:34, Rob Clark wrote:
-> On Tue, Sep 10, 2019 at 1:14 AM Joerg Roedel <joro@8bytes.org> wrote:
->>
->> On Fri, Sep 06, 2019 at 02:44:01PM -0700, Rob Clark wrote:
->>> @@ -674,7 +674,7 @@ int iommu_group_add_device(struct iommu_group *group, struct device *dev)
->>>
->>>        mutex_lock(&group->mutex);
->>>        list_add_tail(&device->list, &group->devices);
->>> -     if (group->domain)
->>> +     if (group->domain && !(dev->driver && dev->driver->driver_manages_iommu))
->>
->> Hmm, this code usually runs at enumeration time when no driver is
->> attached to the device. Actually it would be pretty dangerous when this
->> code runs while a driver is attached to the device. How does that change
->> make things work for you?
->>
-> 
-> I was seeing this get called via the path driver_probe_device() ->
-> platform_dma_configure() -> of_dma_configure() -> of_iommu_configure()
-> -> iommu_probe_device() -> ...
-> 
-> The only cases I was seeing where dev->driver is NULL where a few
-> places that drivers call of_dma_configure() on their own sub-devices.
-> But maybe there are some other paths that I did not notice?
+On Tue, Sep 10, 2019 at 9:34 AM Robin Murphy <robin.murphy@arm.com> wrote:
+>
+> On 06/09/2019 22:44, Rob Clark wrote:
+> > From: Rob Clark <robdclark@chromium.org>
+> >
+> > One of the challenges we have to enable the aarch64 laptops upstream
+> > is dealing with the fact that the bootloader enables the display and
+> > takes the corresponding SMMU context-bank out of BYPASS.  Unfortunately,
+> > currently, the IOMMU framework attaches a DMA (or potentially an
+> > IDENTITY) domain before the driver is probed and has a chance to
+> > intervene and shutdown scanout.  Which makes things go horribly wrong.
+>
+> Nope, things already went horribly wrong in arm_smmu_device_reset() -
+> sure, sometimes for some configurations it might *seem* like they didn't
+> and that you can fudge the context bank state at arm's length from core
+> code later, but the truth is that impl->cfg_probe is your last chance to
+> guarantee that any necessary SMMU state is preserved.
 
-For the of_iommu flow, it very much depends on your DT layout and driver 
-probe order as to whether you catch the "proper" call from 
-iommu_bus_notifier()/iommu_bus_init() or the late "replay" from 
-of_iommu_configure(). I wouldn't make any assumptions of consistency.
+cfg_probe is where Bjorn's patch is preserving the SMMU state.  So I
+think that should ensure device_reset() preserves the configuration..
+or at least if something is missing, that seems fixable.
 
-Robin.
+> The remainder of the problem involves reworking default domain
+> allocation such that we can converge on what iommu_request_dm_for_dev()
+> currently does but without the momentary attachment to a translation
+> domain to cause hiccups. That's starting here:
+>
+> https://lore.kernel.org/linux-iommu/cover.1566353521.git.sai.praneeth.prakhya@intel.com/
+
+I suppose if the stream-match state and bootloader chosen context bank
+is preserved, then keeping it direct-mapped would avoid things
+starting to fault before display driver is probed.  That plus some
+solution for GPU default domain would narrow the scope of what I need
+to just avoiding getting iommu dma_ops installed.
+
+> > But in this case, drm/msm is already directly managing it's IOMMUs
+> > directly, the DMA API attached iommu_domain simply gets in the way.
+> > This series adds a way that a driver can indicate to drivers/iommu
+> > that it does not wish to have an DMA managed iommu_domain attached.
+> > This way, drm/msm can shut down scanout cleanly before attaching it's
+> > own iommu_domain.
+> >
+> > NOTE that to get things working with arm-smmu on the aarch64 laptops,
+> > you also need a patchset[1] from Bjorn Andersson to inherit SMMU config
+> > at boot, when it is already enabled.
+> >
+> > [1] https://www.spinics.net/lists/arm-kernel/msg732246.html
+> >
+> > NOTE that in discussion of previous revisions, RMRR came up.  This is
+> > not really a replacement for RMRR (nor does RMRR really provide any
+> > more information than we already get from EFI GOP, or DT in the
+> > simplefb case).  I also don't see how RMRR could help w/ SMMU handover
+> > of CB/SMR config (Bjorn's patchset[1]) without defining new tables.
+>
+> The point of RMRR-like-things is that they identify not just the memory
+> region but also the specific device accessing them, which means the
+> IOMMU driver knows up-front which IDs etc. it must be careful not to
+> disrupt. Obviously for SMMU that *would* be some new table (designed to
+> encompass everything relevant) since literal RMRRs are specifically an
+> Intel VT-d thing.
+
+Perhaps I'm not looking in the right place, but the extent of what I
+could find about RMRR tables was:
+
+https://github.com/tianocore/edk2/blob/master/MdePkg/Include/IndustryStandard/DmaRemappingReportingTable.h#L122
+
+I couldn't really see how that specifies the device.  But entirely
+possible that I'm not seeing the whole picture.
+
+I am a bit curious about how windows handles this, since they must
+have the same problem on these laptops.
+
+> > This perhaps doesn't solve the more general case of bootloader enabled
+> > display for drivers that actually want to use DMA API managed IOMMU.
+> > But it does also happen to avoid a related problem with GPU, caused by
+> > the DMA domain claiming the context bank that the GPU firmware expects
+> > to use.
+>
+> Careful bringing that up again, or I really will rework the context bank
+> allocator to avoid this default domain problem entirely... ;)
+
+That doesn't seem like a bad outcome ;-)
+
+BR,
+-R
+
+> Robin.
+>
+> >  And it avoids spurious TLB invalidation coming from the unused
+> > DMA domain.  So IMHO this is a useful and necessary change.
+> >
+> > Rob Clark (2):
+> >    iommu: add support for drivers that manage iommu explicitly
+> >    drm/msm: mark devices where iommu is managed by driver
+> >
+> >   drivers/gpu/drm/msm/adreno/adreno_device.c | 1 +
+> >   drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c    | 1 +
+> >   drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c   | 1 +
+> >   drivers/gpu/drm/msm/msm_drv.c              | 1 +
+> >   drivers/iommu/iommu.c                      | 2 +-
+> >   drivers/iommu/of_iommu.c                   | 3 +++
+> >   include/linux/device.h                     | 3 ++-
+> >   7 files changed, 10 insertions(+), 2 deletions(-)
+> >
