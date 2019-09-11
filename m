@@ -2,49 +2,49 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id E2530AF6AF
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Sep 2019 09:24:48 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A4A74AF6CC
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Sep 2019 09:25:02 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727165AbfIKHRJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 11 Sep 2019 03:17:09 -0400
-Received: from mail-pg1-f195.google.com ([209.85.215.195]:39751 "EHLO
-        mail-pg1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727135AbfIKHRI (ORCPT
+        id S1727319AbfIKHRq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 11 Sep 2019 03:17:46 -0400
+Received: from mail-pg1-f193.google.com ([209.85.215.193]:46956 "EHLO
+        mail-pg1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727169AbfIKHRK (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 11 Sep 2019 03:17:08 -0400
-Received: by mail-pg1-f195.google.com with SMTP id u17so11054434pgi.6
-        for <linux-arm-msm@vger.kernel.org>; Wed, 11 Sep 2019 00:17:07 -0700 (PDT)
+        Wed, 11 Sep 2019 03:17:10 -0400
+Received: by mail-pg1-f193.google.com with SMTP id m3so11027733pgv.13
+        for <linux-arm-msm@vger.kernel.org>; Wed, 11 Sep 2019 00:17:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :in-reply-to:references;
-        bh=5U8Xn1q8Z74Mq83nqRSGd/n/boLzuvzoaz5vn7lXR3A=;
-        b=VALWmmTyhWFVGeo1L9W3RX6Rm0TiRbc0V4xIZFeyqY+h1FBE5fd1JcnpYUWlJzsXPy
-         GN6TM8X8BnGUIpjQhpomFsNOfeOrSO+vhhGGK9KtVwEUx6yKOzjWjD3UgBn+1YCKr7WE
-         kuGeXfn54h7EueUtXLRx+XKGYM69e2euYIMd7VDXVwWHJfOCsuR9F30ClsQhIYse2p7H
-         F9BZR0wG2gQ5S4Jb54DX9bih+M7w/wLlX6jhu4mCjLE8Fd1xlCHR/PTKwB32vG+aBXPq
-         UToJQmzMy+4wFO6nvrN62tqAPlTZf8o7sNStlrAuQqxCoiDVrI4rXCw6Q0CXS1hrj49K
-         Cz4g==
+        bh=lIlDkOFMtaJ7NzGQY3181qnj2S+zXBje3XXKns63Nkk=;
+        b=UAAtoaengNlBOMQoyOKBlIE00deTToweXY5/YcG0mfMNKfwPpkulBuduHuOsfhCZzC
+         6Hf6M84byWt8x6cIUHT9ECcCfLrjcv3k1TPDAgVrOtlivFq/Tx7PvEmC6mxgGw+2Om5u
+         Uc6XrnGR271u5bApaQLWn398fedVex4YIkFqpA8moReQvUtMxZ9N21EyjdFF6W9RssuU
+         vWed0m4TQIRE6d/2te7b6RG/xvY9zjHT6a+7cNT2gZpD/fAzgqU+LppNlGaW2/qKs9rU
+         UQbL/0Jv5ehnpRh7JJuz4+VT0y9c/nLr8bZHiYE8+sw8LixcQuutJOZmEUGdbuluffeB
+         RGmA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:in-reply-to:references;
-        bh=5U8Xn1q8Z74Mq83nqRSGd/n/boLzuvzoaz5vn7lXR3A=;
-        b=jgmLwT6fiP2ZvPosp1k4kNlC4uEneaZ1BKxMolhTuTc/K9JkCwLjiLVLlsfwhaTlmv
-         69IfRy9ON7JCUHDWkTrhZX4Vt2hEHs11WMa+VStyPMnaa+WSZchb9vfHhvcd1w+KdXnM
-         qe3Hwk5i7eeO597QWVF5zuH2w05YfDxkygIKzj7m/imv6M5O30AFerGmuWt9/AfIobEP
-         Haowf4qRMeBDzkPTL7MaT8uRrxUj5GqQaMMc8mR1mmqi4Qi3UG84vVl1V+u42TBauSYM
-         kQJCesLhzY/mU5g0dKd+I2jhNZv7H8nLKRNJwvZ5ydAzis90JN0XKt9QRChaVXpGX0G1
-         5eaQ==
-X-Gm-Message-State: APjAAAUack4vJXL+qOTAVr6oJiVeu1t3p5Juq9SwmU+hhI4dKtdEpsc7
-        /8UM5iob2/tVtwbWuK+v24H/yA==
-X-Google-Smtp-Source: APXvYqw2fi/8fgU0kP0Ycov1r/33yfX/bpDUdq44uwHmXgtOV2HSxSXe1cB61Q+fbXSVYS9mz6lgvQ==
-X-Received: by 2002:a65:5cca:: with SMTP id b10mr32444613pgt.365.1568186226553;
-        Wed, 11 Sep 2019 00:17:06 -0700 (PDT)
+        bh=lIlDkOFMtaJ7NzGQY3181qnj2S+zXBje3XXKns63Nkk=;
+        b=oCFcvBcKu1K+fUUKU8KLc8yzR2SUqNyaQANfPnvP9nHyjeTKDiHUV8ce6wxQVS94jY
+         XVCFchbKYimHG82l/PlDQeeTtk1/7MP3BrxXV6sfHdQ65Jed7ShRumtvY9VqtMShtnSa
+         A+GAnuvtLnNAeS0WtIcJ/Iy5YhX5uWg5PKVLlLcEa/isyC5L/nyBBrA6ihCGgA73FFzr
+         RtFOdeEwVndzvsJM0BPehZ/w/rw2j9NjMpmXxCep/BpkqPpFDodtr6gKKH892wnYDxim
+         T4A4N5OPU5VjAxwzLiQsqLMoCVYbMFla4sJ4U1rXwKunA5foHGHxOkb+3t+HCeIMaVTi
+         jWnQ==
+X-Gm-Message-State: APjAAAWEU7v0z74wlnMxVaauRaJ9iFBjIVAMNCfkmY4pEeDSOqhx9od3
+        KHNcKxd2KNJrEkHflMiMhzh1yXm71XgQ/w==
+X-Google-Smtp-Source: APXvYqzSSbwzA5/5M5Uyn4jNrWKal+BZFyS0mWOsTnmm0UXKGpD1Y0W7PoJJWXn/Jh2mtQ0kkOmBRQ==
+X-Received: by 2002:aa7:980c:: with SMTP id e12mr39037859pfl.79.1568186230152;
+        Wed, 11 Sep 2019 00:17:10 -0700 (PDT)
 Received: from localhost ([49.248.201.118])
-        by smtp.gmail.com with ESMTPSA id f188sm25569788pfa.170.2019.09.11.00.17.05
+        by smtp.gmail.com with ESMTPSA id u4sm18343585pfh.55.2019.09.11.00.17.09
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 11 Sep 2019 00:17:05 -0700 (PDT)
+        Wed, 11 Sep 2019 00:17:09 -0700 (PDT)
 From:   Amit Kucheria <amit.kucheria@linaro.org>
 To:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
         bjorn.andersson@linaro.org, edubezval@gmail.com, agross@kernel.org,
@@ -53,10 +53,10 @@ To:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
         Mark Rutland <mark.rutland@arm.com>,
         Rob Herring <robh+dt@kernel.org>,
         Zhang Rui <rui.zhang@intel.com>
-Cc:     linux-pm@vger.kernel.org, devicetree@vger.kernel.org
-Subject: [PATCH v3 07/15] dt-bindings: thermal: tsens: Convert over to a yaml schema
-Date:   Wed, 11 Sep 2019 12:46:24 +0530
-Message-Id: <933f033298cbd7726a6c0b4b3b6cc7adc81784ba.1568185732.git.amit.kucheria@linaro.org>
+Cc:     devicetree@vger.kernel.org
+Subject: [PATCH v3 08/15] arm64: dts: sdm845: thermal: Add interrupt support
+Date:   Wed, 11 Sep 2019 12:46:25 +0530
+Message-Id: <56e10197d9fc5d31a9446c944de97f3dbe032883.1568185732.git.amit.kucheria@linaro.org>
 X-Mailer: git-send-email 2.17.1
 In-Reply-To: <cover.1568185732.git.amit.kucheria@linaro.org>
 References: <cover.1568185732.git.amit.kucheria@linaro.org>
@@ -67,272 +67,267 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Document interrupt support in the tsens driver by converting over to a
-YAML schema.
+Register upper-lower interrupts for each of the two tsens controllers.
 
-Suggested-by: Stephen Boyd <swboyd@chromium.org>
 Signed-off-by: Amit Kucheria <amit.kucheria@linaro.org>
+Reviewed-by: Stephen Boyd <swboyd@chromium.org>
 ---
- .../bindings/thermal/qcom-tsens.txt           |  55 ------
- .../bindings/thermal/qcom-tsens.yaml          | 174 ++++++++++++++++++
- MAINTAINERS                                   |   1 +
- 3 files changed, 175 insertions(+), 55 deletions(-)
- delete mode 100644 Documentation/devicetree/bindings/thermal/qcom-tsens.txt
- create mode 100644 Documentation/devicetree/bindings/thermal/qcom-tsens.yaml
+ arch/arm64/boot/dts/qcom/sdm845.dtsi | 88 +++++++++++++++-------------
+ 1 file changed, 46 insertions(+), 42 deletions(-)
 
-diff --git a/Documentation/devicetree/bindings/thermal/qcom-tsens.txt b/Documentation/devicetree/bindings/thermal/qcom-tsens.txt
-deleted file mode 100644
-index 673cc1831ee9..000000000000
---- a/Documentation/devicetree/bindings/thermal/qcom-tsens.txt
-+++ /dev/null
-@@ -1,55 +0,0 @@
--* QCOM SoC Temperature Sensor (TSENS)
--
--Required properties:
--- compatible:
--  Must be one of the following:
--    - "qcom,msm8916-tsens" (MSM8916)
--    - "qcom,msm8974-tsens" (MSM8974)
--    - "qcom,msm8996-tsens" (MSM8996)
--    - "qcom,qcs404-tsens", "qcom,tsens-v1" (QCS404)
--    - "qcom,msm8998-tsens", "qcom,tsens-v2" (MSM8998)
--    - "qcom,sdm845-tsens", "qcom,tsens-v2" (SDM845)
--  The generic "qcom,tsens-v2" property must be used as a fallback for any SoC
--  with version 2 of the TSENS IP. MSM8996 is the only exception because the
--  generic property did not exist when support was added.
--  Similarly, the generic "qcom,tsens-v1" property must be used as a fallback for
--  any SoC with version 1 of the TSENS IP.
--
--- reg: Address range of the thermal registers.
--  New platforms containing v2.x.y of the TSENS IP must specify the SROT and TM
--  register spaces separately, with order being TM before SROT.
--  See Example 2, below.
--
--- #thermal-sensor-cells : Should be 1. See ./thermal.txt for a description.
--- #qcom,sensors: Number of sensors in tsens block
--- Refer to Documentation/devicetree/bindings/nvmem/nvmem.txt to know how to specify
--nvmem cells
--
--Example 1 (legacy support before a fallback tsens-v2 property was introduced):
--tsens: thermal-sensor@900000 {
--		compatible = "qcom,msm8916-tsens";
--		reg = <0x4a8000 0x2000>;
--		nvmem-cells = <&tsens_caldata>, <&tsens_calsel>;
--		nvmem-cell-names = "caldata", "calsel";
--		#thermal-sensor-cells = <1>;
--	};
--
--Example 2 (for any platform containing v2 of the TSENS IP):
--tsens0: thermal-sensor@c263000 {
--		compatible = "qcom,sdm845-tsens", "qcom,tsens-v2";
--		reg = <0xc263000 0x1ff>, /* TM */
--			<0xc222000 0x1ff>; /* SROT */
--		#qcom,sensors = <13>;
--		#thermal-sensor-cells = <1>;
--	};
--
--Example 3 (for any platform containing v1 of the TSENS IP):
--tsens: thermal-sensor@4a9000 {
--		compatible = "qcom,qcs404-tsens", "qcom,tsens-v1";
--		reg = <0x004a9000 0x1000>, /* TM */
--		      <0x004a8000 0x1000>; /* SROT */
--		nvmem-cells = <&tsens_caldata>;
--		nvmem-cell-names = "calib";
--		#qcom,sensors = <10>;
--		#thermal-sensor-cells = <1>;
--	};
-diff --git a/Documentation/devicetree/bindings/thermal/qcom-tsens.yaml b/Documentation/devicetree/bindings/thermal/qcom-tsens.yaml
-new file mode 100644
-index 000000000000..6784766fe58f
---- /dev/null
-+++ b/Documentation/devicetree/bindings/thermal/qcom-tsens.yaml
-@@ -0,0 +1,174 @@
-+# SPDX-License-Identifier: (GPL-2.0 OR MIT)
-+# Copyright 2019 Linaro Ltd.
-+%YAML 1.2
-+---
-+$id: http://devicetree.org/schemas/thermal/qcom-tsens.yaml#
-+$schema: http://devicetree.org/meta-schemas/core.yaml#
-+
-+title: QCOM SoC Temperature Sensor (TSENS)
-+
-+maintainers:
-+  - Amit Kucheria <amit.kucheria@linaro.org>
-+
-+description: |
-+  QCOM SoCs have TSENS IP to allow temperature measurement. There are currently
-+  three distinct major versions of the IP that is supported by a single driver.
-+  The IP versions are named v0.1, v1 and v2 in the driver, where v0.1 captures
-+  everything before v1 when there was no versioning information.
-+
-+properties:
-+  compatible:
-+    oneOf:
-+      - description: v0.1 of TSENS
-+        items:
-+          - enum:
-+              - qcom,msm8916-tsens
-+              - qcom,msm8974-tsens
-+          - const: qcom,tsens-v0_1
-+
-+      - description: v1 of TSENS
-+        items:
-+          - enum:
-+              - qcom,qcs404-tsens
-+          - const: qcom,tsens-v1
-+
-+      - description: v2 of TSENS
-+        items:
-+          - enum:
-+              - qcom,msm8996-tsens
-+              - qcom,msm8998-tsens
-+              - qcom,sdm845-tsens
-+          - const: qcom,tsens-v2
-+
-+  reg:
-+    maxItems: 2
-+    items:
-+      - description: TM registers
-+      - description: SROT registers
-+
-+  nvmem-cells:
-+    minItems: 1
-+    maxItems: 2
-+    description:
-+      Reference to an nvmem node for the calibration data
-+
-+  nvmem-cells-names:
-+    items:
-+      - enum:
-+        - caldata
-+        - calsel
-+
-+  "#qcom,sensors":
-+    allOf:
-+      - $ref: /schemas/types.yaml#/definitions/uint32
-+      - minimum: 1
-+      - maximum: 16
-+    description:
-+      Number of sensors enabled on this platform
-+
-+  "#thermal-sensor-cells":
-+    const: 1
-+    description:
-+      Number of cells required to uniquely identify the thermal sensors. Since
-+      we have multiple sensors this is set to 1
-+
-+allOf:
-+  - if:
-+      properties:
-+        compatible:
-+          contains:
-+            enum:
-+              - qcom,msm8916-tsens
-+              - qcom,msm8974-tsens
-+              - qcom,qcs404-tsens
-+              - qcom,tsens-v0_1
-+              - qcom,tsens-v1
-+    then:
-+      properties:
-+        interrupts:
-+          minItems: 1
-+          maxItems: 1
-+          items:
-+            - description: Combined interrupt if upper or lower threshold crossed
-+        interrupt-names:
-+          minItems: 1
-+          maxItems: 1
-+          items:
-+            - const: uplow
-+
-+    else:
-+      properties:
-+        interrupts:
-+          minItems: 2
-+          maxItems: 2
-+          items:
-+            - description: Combined interrupt if upper or lower threshold crossed
-+            - description: Interrupt if critical threshold crossed
-+        interrupt-names:
-+          minItems: 2
-+          maxItems: 2
-+          items:
-+            - const: uplow
-+            - const: critical
-+
-+required:
-+  - compatible
-+  - reg
-+  - "#qcom,sensors"
-+  - interrupts
-+  - interrupt-names
-+  - "#thermal-sensor-cells"
-+
-+examples:
-+  - |
-+    #include <dt-bindings/interrupt-controller/arm-gic.h>
-+    // Example 1 (legacy: for pre v1 IP):
-+    tsens1: thermal-sensor@900000 {
-+           compatible = "qcom,msm8916-tsens", "qcom,tsens-v0_1";
-+           reg = <0x4a9000 0x1000>, /* TM */
-+                 <0x4a8000 0x1000>; /* SROT */
-+
-+           nvmem-cells = <&tsens_caldata>, <&tsens_calsel>;
-+           nvmem-cell-names = "caldata", "calsel";
-+
-+           interrupts = <GIC_SPI 184 IRQ_TYPE_LEVEL_HIGH>;
-+           interrupt-names = "uplow";
-+
-+           #qcom,sensors = <5>;
-+           #thermal-sensor-cells = <1>;
-+    };
-+
-+  - |
-+    #include <dt-bindings/interrupt-controller/arm-gic.h>
-+    // Example 2 (for any platform containing v1 of the TSENS IP):
-+    tsens2: thermal-sensor@4a9000 {
-+          compatible = "qcom,qcs404-tsens", "qcom,tsens-v1";
-+          reg = <0x004a9000 0x1000>, /* TM */
-+                <0x004a8000 0x1000>; /* SROT */
-+
-+          nvmem-cells = <&tsens_caldata>;
-+          nvmem-cell-names = "calib";
-+
-+          interrupts = <GIC_SPI 506 IRQ_TYPE_LEVEL_HIGH>;
-+          interrupt-names = "uplow";
-+
-+          #qcom,sensors = <10>;
-+          #thermal-sensor-cells = <1>;
-+    };
-+
-+  - |
-+    #include <dt-bindings/interrupt-controller/arm-gic.h>
-+    // Example 3 (for any platform containing v2 of the TSENS IP):
-+    tsens3: thermal-sensor@c263000 {
-+           compatible = "qcom,sdm845-tsens", "qcom,tsens-v2";
-+           reg = <0xc263000 0x1ff>,
-+                 <0xc222000 0x1ff>;
-+
-+           interrupts = <GIC_SPI 506 IRQ_TYPE_LEVEL_HIGH>,
-+                        <GIC_SPI 508 IRQ_TYPE_LEVEL_HIGH>;
-+           interrupt-names = "uplow", "critical";
-+
-+           #qcom,sensors = <13>;
-+           #thermal-sensor-cells = <1>;
-+    };
-+...
-diff --git a/MAINTAINERS b/MAINTAINERS
-index e7a47b5210fd..ff757a4a060c 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -13360,6 +13360,7 @@ L:	linux-pm@vger.kernel.org
- L:	linux-arm-msm@vger.kernel.org
- S:	Maintained
- F:	drivers/thermal/qcom/
-+F:	Documentation/devicetree/bindings/thermal/qcom-tsens.yaml
+diff --git a/arch/arm64/boot/dts/qcom/sdm845.dtsi b/arch/arm64/boot/dts/qcom/sdm845.dtsi
+index 4babff5f19b5..fdd74c39b744 100644
+--- a/arch/arm64/boot/dts/qcom/sdm845.dtsi
++++ b/arch/arm64/boot/dts/qcom/sdm845.dtsi
+@@ -2386,6 +2386,8 @@
+ 			reg = <0 0x0c263000 0 0x1ff>, /* TM */
+ 			      <0 0x0c222000 0 0x1ff>; /* SROT */
+ 			#qcom,sensors = <13>;
++			interrupts = <GIC_SPI 506 IRQ_TYPE_LEVEL_HIGH>;
++			interrupt-names = "uplow";
+ 			#thermal-sensor-cells = <1>;
+ 		};
  
- QUALCOMM VENUS VIDEO ACCELERATOR DRIVER
- M:	Stanimir Varbanov <stanimir.varbanov@linaro.org>
+@@ -2394,6 +2396,8 @@
+ 			reg = <0 0x0c265000 0 0x1ff>, /* TM */
+ 			      <0 0x0c223000 0 0x1ff>; /* SROT */
+ 			#qcom,sensors = <8>;
++			interrupts = <GIC_SPI 507 IRQ_TYPE_LEVEL_HIGH>;
++			interrupt-names = "uplow";
+ 			#thermal-sensor-cells = <1>;
+ 		};
+ 
+@@ -2712,8 +2716,8 @@
+ 
+ 	thermal-zones {
+ 		cpu0-thermal {
+-			polling-delay-passive = <250>;
+-			polling-delay = <1000>;
++			polling-delay-passive = <0>;
++			polling-delay = <0>;
+ 
+ 			thermal-sensors = <&tsens0 1>;
+ 
+@@ -2756,8 +2760,8 @@
+ 		};
+ 
+ 		cpu1-thermal {
+-			polling-delay-passive = <250>;
+-			polling-delay = <1000>;
++			polling-delay-passive = <0>;
++			polling-delay = <0>;
+ 
+ 			thermal-sensors = <&tsens0 2>;
+ 
+@@ -2800,8 +2804,8 @@
+ 		};
+ 
+ 		cpu2-thermal {
+-			polling-delay-passive = <250>;
+-			polling-delay = <1000>;
++			polling-delay-passive = <0>;
++			polling-delay = <0>;
+ 
+ 			thermal-sensors = <&tsens0 3>;
+ 
+@@ -2844,8 +2848,8 @@
+ 		};
+ 
+ 		cpu3-thermal {
+-			polling-delay-passive = <250>;
+-			polling-delay = <1000>;
++			polling-delay-passive = <0>;
++			polling-delay = <0>;
+ 
+ 			thermal-sensors = <&tsens0 4>;
+ 
+@@ -2888,8 +2892,8 @@
+ 		};
+ 
+ 		cpu4-thermal {
+-			polling-delay-passive = <250>;
+-			polling-delay = <1000>;
++			polling-delay-passive = <0>;
++			polling-delay = <0>;
+ 
+ 			thermal-sensors = <&tsens0 7>;
+ 
+@@ -2932,8 +2936,8 @@
+ 		};
+ 
+ 		cpu5-thermal {
+-			polling-delay-passive = <250>;
+-			polling-delay = <1000>;
++			polling-delay-passive = <0>;
++			polling-delay = <0>;
+ 
+ 			thermal-sensors = <&tsens0 8>;
+ 
+@@ -2976,8 +2980,8 @@
+ 		};
+ 
+ 		cpu6-thermal {
+-			polling-delay-passive = <250>;
+-			polling-delay = <1000>;
++			polling-delay-passive = <0>;
++			polling-delay = <0>;
+ 
+ 			thermal-sensors = <&tsens0 9>;
+ 
+@@ -3020,8 +3024,8 @@
+ 		};
+ 
+ 		cpu7-thermal {
+-			polling-delay-passive = <250>;
+-			polling-delay = <1000>;
++			polling-delay-passive = <0>;
++			polling-delay = <0>;
+ 
+ 			thermal-sensors = <&tsens0 10>;
+ 
+@@ -3064,8 +3068,8 @@
+ 		};
+ 
+ 		aoss0-thermal {
+-			polling-delay-passive = <250>;
+-			polling-delay = <1000>;
++			polling-delay-passive = <0>;
++			polling-delay = <0>;
+ 
+ 			thermal-sensors = <&tsens0 0>;
+ 
+@@ -3079,8 +3083,8 @@
+ 		};
+ 
+ 		cluster0-thermal {
+-			polling-delay-passive = <250>;
+-			polling-delay = <1000>;
++			polling-delay-passive = <0>;
++			polling-delay = <0>;
+ 
+ 			thermal-sensors = <&tsens0 5>;
+ 
+@@ -3099,8 +3103,8 @@
+ 		};
+ 
+ 		cluster1-thermal {
+-			polling-delay-passive = <250>;
+-			polling-delay = <1000>;
++			polling-delay-passive = <0>;
++			polling-delay = <0>;
+ 
+ 			thermal-sensors = <&tsens0 6>;
+ 
+@@ -3119,8 +3123,8 @@
+ 		};
+ 
+ 		gpu-thermal-top {
+-			polling-delay-passive = <250>;
+-			polling-delay = <1000>;
++			polling-delay-passive = <0>;
++			polling-delay = <0>;
+ 
+ 			thermal-sensors = <&tsens0 11>;
+ 
+@@ -3134,8 +3138,8 @@
+ 		};
+ 
+ 		gpu-thermal-bottom {
+-			polling-delay-passive = <250>;
+-			polling-delay = <1000>;
++			polling-delay-passive = <0>;
++			polling-delay = <0>;
+ 
+ 			thermal-sensors = <&tsens0 12>;
+ 
+@@ -3149,8 +3153,8 @@
+ 		};
+ 
+ 		aoss1-thermal {
+-			polling-delay-passive = <250>;
+-			polling-delay = <1000>;
++			polling-delay-passive = <0>;
++			polling-delay = <0>;
+ 
+ 			thermal-sensors = <&tsens1 0>;
+ 
+@@ -3164,8 +3168,8 @@
+ 		};
+ 
+ 		q6-modem-thermal {
+-			polling-delay-passive = <250>;
+-			polling-delay = <1000>;
++			polling-delay-passive = <0>;
++			polling-delay = <0>;
+ 
+ 			thermal-sensors = <&tsens1 1>;
+ 
+@@ -3179,8 +3183,8 @@
+ 		};
+ 
+ 		mem-thermal {
+-			polling-delay-passive = <250>;
+-			polling-delay = <1000>;
++			polling-delay-passive = <0>;
++			polling-delay = <0>;
+ 
+ 			thermal-sensors = <&tsens1 2>;
+ 
+@@ -3194,8 +3198,8 @@
+ 		};
+ 
+ 		wlan-thermal {
+-			polling-delay-passive = <250>;
+-			polling-delay = <1000>;
++			polling-delay-passive = <0>;
++			polling-delay = <0>;
+ 
+ 			thermal-sensors = <&tsens1 3>;
+ 
+@@ -3209,8 +3213,8 @@
+ 		};
+ 
+ 		q6-hvx-thermal {
+-			polling-delay-passive = <250>;
+-			polling-delay = <1000>;
++			polling-delay-passive = <0>;
++			polling-delay = <0>;
+ 
+ 			thermal-sensors = <&tsens1 4>;
+ 
+@@ -3224,8 +3228,8 @@
+ 		};
+ 
+ 		camera-thermal {
+-			polling-delay-passive = <250>;
+-			polling-delay = <1000>;
++			polling-delay-passive = <0>;
++			polling-delay = <0>;
+ 
+ 			thermal-sensors = <&tsens1 5>;
+ 
+@@ -3239,8 +3243,8 @@
+ 		};
+ 
+ 		video-thermal {
+-			polling-delay-passive = <250>;
+-			polling-delay = <1000>;
++			polling-delay-passive = <0>;
++			polling-delay = <0>;
+ 
+ 			thermal-sensors = <&tsens1 6>;
+ 
+@@ -3254,8 +3258,8 @@
+ 		};
+ 
+ 		modem-thermal {
+-			polling-delay-passive = <250>;
+-			polling-delay = <1000>;
++			polling-delay-passive = <0>;
++			polling-delay = <0>;
+ 
+ 			thermal-sensors = <&tsens1 7>;
+ 
 -- 
 2.17.1
 
