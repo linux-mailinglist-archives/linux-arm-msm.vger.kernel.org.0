@@ -2,138 +2,99 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 9974EAF8E9
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Sep 2019 11:29:54 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 584D1AF9B5
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Sep 2019 11:59:31 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726842AbfIKJ3w (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 11 Sep 2019 05:29:52 -0400
-Received: from mail-lf1-f65.google.com ([209.85.167.65]:43097 "EHLO
-        mail-lf1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725616AbfIKJ3w (ORCPT
+        id S1726928AbfIKJ7a (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 11 Sep 2019 05:59:30 -0400
+Received: from mail-lj1-f196.google.com ([209.85.208.196]:45528 "EHLO
+        mail-lj1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727591AbfIKJ7a (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 11 Sep 2019 05:29:52 -0400
-Received: by mail-lf1-f65.google.com with SMTP id u3so752636lfl.10
-        for <linux-arm-msm@vger.kernel.org>; Wed, 11 Sep 2019 02:29:50 -0700 (PDT)
+        Wed, 11 Sep 2019 05:59:30 -0400
+Received: by mail-lj1-f196.google.com with SMTP id q64so8845086ljb.12
+        for <linux-arm-msm@vger.kernel.org>; Wed, 11 Sep 2019 02:59:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=+HbSvL2e9LJRsc7qJLTrafgy8tjNTtDuD0nsrSg6bW0=;
-        b=WRCXJamj6BAkjVsd6Yl4pJ5BTL6NFCdkx/fYdIZJA73nOceXxx7/8f5q1hxwG5FbIP
-         yOM19cHCiykRjhVO3ezQ8A01cYJCsrLY6UhnbT1789/2bVLaasNJIAOzXYDaRArsK2I9
-         2RUOwBGHnLbtr4GjwCQJ70Wh2ft3UvAirXl7LXBpbxHoM1zWr1wtn8jonIJfNvqOD0xL
-         AU7/8VzR9X8zR0xo0IcXLQbHOhk4RwtYtnIbAsgUl3bvB9ZZe+3+csGmQuSEtnB4mLY/
-         B6VIoGiVhK3ZDvLcGefco0tQxboTn8seumveae3K8UbaBRsR1TDjM6mi8Klc7aBPzW0S
-         Hb/Q==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=9HXuMTVfcpW37UjviTlGUeNHddiNVnJw+Pnhmp5IW9U=;
+        b=vqdRVbY3xkC8To+y63JXG0n3y8xeMP0cnqAh5gPos11TPx2MJ5YjNkuJkgPa80BtcF
+         4JiZ4Xx8a7uw9Sz5tkqQGh+2m6Nz9+2vV/eI5yr843rVuAxXNoQohYhlWMnodprm0bcL
+         5mCehv9pHsqGcrw1VDwaO9mzO4mDNVRhL+666OGE2jOYg6gdJaWopbdX5Zbcj0ZBra6T
+         dYYWFHT4Y+ZSRGrLD3fdTJOXp6uxQ8LDzR17KwG3hJmcJvFECjC256VuIiJ6Y9q8XhrX
+         afoPOGfqqiuy++3LDu/tUkWFuC7huA2fPV5Qkxe4M7wov2clbWPSOuYDVhLY+7mTrAXE
+         hB3w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=+HbSvL2e9LJRsc7qJLTrafgy8tjNTtDuD0nsrSg6bW0=;
-        b=qoDsodBHkfHM0Pgljm2haUO6eWyjgJuo5G602qtC8d6q4B3v6DW4jo8Nyzmiu4TuqE
-         YhRt0IvJ/12Qfpf7IP4kvEwm0V6+OEF/kZxUNfLT6Qu45IKYjongB8yj0NxL045GUbl1
-         5LckDaBbxoA8dAoElI/saPqEMBlX3o/nXpTDE1U3aH65k6itopuGUH7g2AK1+WNWvQj2
-         LptRIz1i1lA47EBy39+i087Z/bQ9vU2wx8UCa7Pt+6V5F+NutRwPqHKm4O7KpOXutCmV
-         2y7OJo7Z1yGASeTeWF9hl4DNfzVC5aTkoZcHcPQIM6VLFB9xomXgWEmmYzL/8N6Gg1AK
-         3Qeg==
-X-Gm-Message-State: APjAAAXYs7j/WDpb0zHZhKC5XC5R6R0Uxs3sOVY3Cy96XCc127ZSmCIE
-        Pj5MJu66V6HQnEeLaAc6p3/hgg==
-X-Google-Smtp-Source: APXvYqxVXa9bHq4a8OoOH/3V2nRX6Q3DjJTCbYCPKCL2dFqSEpPGXTa6ytRSwkx7CmhxQasSqJdaVg==
-X-Received: by 2002:ac2:50c5:: with SMTP id h5mr4769111lfm.105.1568194189299;
-        Wed, 11 Sep 2019 02:29:49 -0700 (PDT)
-Received: from [192.168.27.209] ([37.157.136.206])
-        by smtp.googlemail.com with ESMTPSA id i17sm4458821ljd.2.2019.09.11.02.29.48
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 11 Sep 2019 02:29:48 -0700 (PDT)
-Subject: Re: [PATCH] media: venus: core: Fix msm8996 frequency table
-To:     Loic Poulain <loic.poulain@linaro.org>, agross@kernel.org
-Cc:     linux-arm-msm@vger.kernel.org, linux-media@vger.kernel.org
-References: <1567591618-22467-1-git-send-email-loic.poulain@linaro.org>
-From:   Stanimir Varbanov <stanimir.varbanov@linaro.org>
-Message-ID: <92275cdb-870e-8cfe-0b7d-1b35f1a2ff5a@linaro.org>
-Date:   Wed, 11 Sep 2019 12:29:46 +0300
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.8.0
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=9HXuMTVfcpW37UjviTlGUeNHddiNVnJw+Pnhmp5IW9U=;
+        b=MFjOkvCNllSAP/3ELYN9aL2wbd2MD/j3F3nnIR7wMNXx5zy/Few/viRw+qzw1qnc/h
+         eY1T3ZxV15A+D2DYN/CyjyvFXX1A106T1ePWbWcWWaVD1jFxYLEv4pG9YdBd9e9gYVnA
+         ECcKhwh3rq6B7D37GJO1XeVDVrTRByHl6U23qsNO7ZlrTrtRizKHqiMamPqk6df9untE
+         GXwOZ3Llfeamwe1FsUCfKIE2Iwv6UEfBHl+tuMtxHhuZI2M+v2H+kRe1IX4b8FoasvEW
+         MrJVxMuQL3QQWQCqod2b6s3ZqR0vPozEFCrdoXUjo3u1DgoMulZDhZClSUvClabOK2hd
+         ozzA==
+X-Gm-Message-State: APjAAAWGA5QOBovrp0VqcyYqR4k/HQKK02xIs4GsnyqNahAjD6M06pox
+        QSUJiYrYSmlUPBDg3M9nMZ6Q5WSzfdX8UrBnipV+Uw==
+X-Google-Smtp-Source: APXvYqxT1aoNXvUwL/ESu+QKh3xMgy/YTSB/t3k/OGav9Yicg3DARxKZrCRl4SpCBRaX/EF9sONVO8FgCZf9RKQtZBU=
+X-Received: by 2002:a2e:7d15:: with SMTP id y21mr15616211ljc.28.1568195968059;
+ Wed, 11 Sep 2019 02:59:28 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <1567591618-22467-1-git-send-email-loic.poulain@linaro.org>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+References: <20190829181203.2660-1-ilina@codeaurora.org> <20190829181203.2660-6-ilina@codeaurora.org>
+In-Reply-To: <20190829181203.2660-6-ilina@codeaurora.org>
+From:   Linus Walleij <linus.walleij@linaro.org>
+Date:   Wed, 11 Sep 2019 10:59:16 +0100
+Message-ID: <CACRpkdaReFzjb_hcDbQwqMX+whzscLpeZpJPHKqOo+9tANzemA@mail.gmail.com>
+Subject: Re: [PATCH RFC 05/14] dt-bindings/interrupt-controller: pdc: add SPI
+ config register
+To:     Lina Iyer <ilina@codeaurora.org>
+Cc:     Stephen Boyd <swboyd@chromium.org>,
+        Evan Green <evgreen@chromium.org>,
+        Marc Zyngier <marc.zyngier@arm.com>,
+        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
+        MSM <linux-arm-msm@vger.kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        mkshah@codeaurora.org,
+        "open list:GPIO SUBSYSTEM" <linux-gpio@vger.kernel.org>,
+        Rajendra Nayak <rnayak@codeaurora.org>,
+        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
+        <devicetree@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Loic,
+On Thu, Aug 29, 2019 at 8:47 PM Lina Iyer <ilina@codeaurora.org> wrote:
 
-Thanks for the patch!
+> +- qcom,scm-spi-cfg:
+> +       Usage: optional
+> +       Value type: <bool>
+> +       Definition: Specifies if the SPI configuration registers have to be
+> +                   written from the firmware.
+> +
+>  Example:
+>
+>         pdc: interrupt-controller@b220000 {
+>                 compatible = "qcom,sdm845-pdc";
+> -               reg = <0xb220000 0x30000>;
+> +               reg = <0xb220000 0x30000>, <0x179900f0 0x60>;
+>                 qcom,pdc-ranges = <0 512 94>, <94 641 15>, <115 662 7>;
+>                 #interrupt-cells = <2>;
+>                 interrupt-parent = <&intc>;
+>                 interrupt-controller;
+> +               qcom,scm-spi-cfg;
 
-On 9/4/19 1:06 PM, Loic Poulain wrote:
-> In downstream driver, there are two frequency tables defined,
-> one for the encoder and one for the decoder:
-> 
-> /* Encoders /
-> <972000 490000000 0x55555555>, / 4k UHD @ 30 /
-> <489600 320000000 0x55555555>, / 1080p @ 60 /
-> <244800 150000000 0x55555555>, / 1080p @ 30 /
-> <108000 75000000 0x55555555>, / 720p @ 30 */
-> 
-> /* Decoders /
-> <1944000 490000000 0xffffffff>, / 4k UHD @ 60 /
-> < 972000 320000000 0xffffffff>, / 4k UHD @ 30 /
-> < 489600 150000000 0xffffffff>, / 1080p @ 60 /
-> < 244800 75000000 0xffffffff>; / 1080p @ 30 */
-> 
-> It shows that encoder always needs a higher clock than decoder.
-> 
-> In current venus driver, the unified frequency table is aligned
-> with the downstream decoder table which causes performance issues
-> in decoding scenarios. Fix that by aligning frequency table on
+You can probably drop this bool if you just give names to the registers.
 
-s/decoding scenarios/encoding scenarios
+Like
+reg = <0xb220000 0x30000>, <0x179900f0 0x60>;
+reg-names = "gic", "pdc";
 
-> worst case (encoding).
+Then jus check explicitly for a "pdc" register and in that case
+initialize the PDC.
 
-Did you checked the exact rate from clk_summary? Checking the frequency
-table for subcore0|1 from mmcc-msm8996.c clock driver shows that the
-tables are slightly different for higher rates.
-
-Otherwise, I'd take the patch but it would be better to align the
-frequency tables to avoid confusions.
-
-On the other side we can split freq table to encode and decode tables,
-but I'm still not sure is it possible to have:
-subcore0_freq != subcore1_freq.
-
-> 
-> Signed-off-by: Loic Poulain <loic.poulain@linaro.org>
-> ---
->  drivers/media/platform/qcom/venus/core.c | 9 +++++----
->  1 file changed, 5 insertions(+), 4 deletions(-)
-> 
-> diff --git a/drivers/media/platform/qcom/venus/core.c b/drivers/media/platform/qcom/venus/core.c
-> index 0acc757..1e80689 100644
-> --- a/drivers/media/platform/qcom/venus/core.c
-> +++ b/drivers/media/platform/qcom/venus/core.c
-> @@ -427,10 +427,11 @@ static const struct venus_resources msm8916_res = {
->  };
->  
->  static const struct freq_tbl msm8996_freq_table[] = {
-> -	{ 1944000, 490000000 },	/* 4k UHD @ 60 */
-> -	{  972000, 320000000 },	/* 4k UHD @ 30 */
-> -	{  489600, 150000000 },	/* 1080p @ 60 */
-> -	{  244800,  75000000 },	/* 1080p @ 30 */
-> +	{ 1944000, 490000000 },	/* 4k UHD @ 60 (decode only) */
-> +	{  972000, 490000000 },	/* 4k UHD @ 30 */
-> +	{  489600, 320000000 },	/* 1080p @ 60 */
-> +	{  244800, 150000000 },	/* 1080p @ 30 */
-> +	{  108000,  75000000 },	/* 720p @ 30 */
->  };
->  
->  static const struct reg_val msm8996_reg_preset[] = {
-> 
-
--- 
-regards,
-Stan
+Yours,
+Linus Walleij
