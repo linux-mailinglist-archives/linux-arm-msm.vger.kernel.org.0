@@ -2,123 +2,113 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 7AE94AFF7E
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Sep 2019 17:04:09 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 414EFAFFD0
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Sep 2019 17:19:59 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726149AbfIKPEH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 11 Sep 2019 11:04:07 -0400
-Received: from mail-lf1-f66.google.com ([209.85.167.66]:43367 "EHLO
-        mail-lf1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728054AbfIKPEH (ORCPT
+        id S1728385AbfIKPTx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 11 Sep 2019 11:19:53 -0400
+Received: from smtp.codeaurora.org ([198.145.29.96]:35104 "EHLO
+        smtp.codeaurora.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726510AbfIKPTx (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 11 Sep 2019 11:04:07 -0400
-Received: by mail-lf1-f66.google.com with SMTP id u3so1613672lfl.10
-        for <linux-arm-msm@vger.kernel.org>; Wed, 11 Sep 2019 08:04:04 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=R3hjZvaM+DqfBI7ToXGlkxrMEzECE/guKaOqtkVBGo4=;
-        b=J5D1A4EXLYqMBtdzZQP5PE8Tx++pQmjNIvUpXvcFy4zUcbUiqLFysU+NL8hRL5JiiH
-         bGgROAtQ8NF1wkbFuEX5KCKPJkJiIF1ZrYx17bwrHrLAdx6MUof8FGYajaTIpaTb2Ca5
-         nZIHLMmX2g6oMkJoaXteyJBZBPcBHKX9GgfW+yILBEBtc3dPn9gwQCiA4Pc5DpLq9GI+
-         Nks/aMNaV+U9T8EO1wXQ1PosVzZ5TUn83wRJs1l2qtEyU7ioytOiwgLI/GH5RhKmyOTb
-         Kdj8xoG816jbENGNNT2lsajE0CWUA7RUum1pFkAJYjv0gEhcEtdOyhkjp+Jsi9RUlZ4a
-         V6mQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=R3hjZvaM+DqfBI7ToXGlkxrMEzECE/guKaOqtkVBGo4=;
-        b=MdUUSb/TxMAKNmx/TjT91xD1pNlY/a6vuXdCbkZ33453L63XctuRYjd0bqAnTRrNkd
-         JlNmi0ji6RxxeID6jROw1D1DXeNNyxrSk011kpxh6WHZWLhnyFF/nwzL+zGnbXExsa1x
-         +TwIgNBeF4km7g8IkZ0CKaPgFZPxfzb4IPiUgtCDI8BuhIr8IAGMee10fvDZzb8KMc6S
-         sZXsZTbV7rtGzIWnWO+XIYWtmhZemo8ociC7aSA9tywaZ1TXvmDdtgwE9ZfUXr64IcGm
-         QpKq/iGXX6251HiCxa4prmDhGk35ycrH0mxw28pu2h4qGnWb+Qoj2C61CmLFR3PkCIYk
-         09Wg==
-X-Gm-Message-State: APjAAAVUHvxLEhAekREujHSoy04YzPgxkkj+u36PPT6hCM3AtG7hMa5s
-        n4MiWFmkoHVDWwG3m5ko72BG5g==
-X-Google-Smtp-Source: APXvYqz/tyfE3E/fhKItB9u7dGei2g52UKSn2Nq+SQm+EUjVXvz0TDPTzP2ODGViZBPRuv5FTprvbw==
-X-Received: by 2002:a19:14f:: with SMTP id 76mr23833015lfb.92.1568214242888;
-        Wed, 11 Sep 2019 08:04:02 -0700 (PDT)
-Received: from [192.168.27.209] ([37.157.136.206])
-        by smtp.googlemail.com with ESMTPSA id 81sm4953655lje.70.2019.09.11.08.04.01
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 11 Sep 2019 08:04:01 -0700 (PDT)
-Subject: Re: [PATCH] media: venus: core: Fix msm8996 frequency table
-To:     Loic Poulain <loic.poulain@linaro.org>
-Cc:     agross@kernel.org, linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        linux-media@vger.kernel.org
-References: <1567591618-22467-1-git-send-email-loic.poulain@linaro.org>
- <92275cdb-870e-8cfe-0b7d-1b35f1a2ff5a@linaro.org>
- <CAMZdPi82ZCJK1QOXHo7hq9iCOq5vzuJF1shq=4ut+zRJ5FfmMw@mail.gmail.com>
-From:   Stanimir Varbanov <stanimir.varbanov@linaro.org>
-Message-ID: <689fba99-a631-8e7e-8d75-d84390f45122@linaro.org>
-Date:   Wed, 11 Sep 2019 18:03:59 +0300
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.8.0
+        Wed, 11 Sep 2019 11:19:53 -0400
+Received: by smtp.codeaurora.org (Postfix, from userid 1000)
+        id 41E16611FD; Wed, 11 Sep 2019 15:19:51 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
+        s=default; t=1568215192;
+        bh=BxzymE4Du8iospVx8lQ4+Kl7Ik1hqE+DIRt/RDx1/Rc=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=N9C6sFzmyVoxXSQ2a5Bh6l2EhIogpS9MZ17s4ubhaJUSetY/ZjqyJuUFZIXJpIQic
+         ys1Kek/nFox28fW0nbyJ6Dc5VHe8cvChmP9bi+IIzSm+PPEKj0NO4GL6ZBnHIHkNp0
+         R3WAiZOKxZ5rV78caB7izlphscnuQUzNhQ8ZDIlY=
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        pdx-caf-mail.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.7 required=2.0 tests=ALL_TRUSTED,BAYES_00,
+        DKIM_INVALID,DKIM_SIGNED,SPF_NONE autolearn=no autolearn_force=no
+        version=3.4.0
+Received: from localhost (i-global254.qualcomm.com [199.106.103.254])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: ilina@smtp.codeaurora.org)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 77F4161197;
+        Wed, 11 Sep 2019 15:19:49 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
+        s=default; t=1568215190;
+        bh=BxzymE4Du8iospVx8lQ4+Kl7Ik1hqE+DIRt/RDx1/Rc=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=DCCUrRDdd9ILFg7hBJRAudHEHOuY9bUsakEeYLhzirL7B39j3iGakjSuxQhBDatnG
+         zBVDxQ5LTW1znyRCWQdh9SdrcKRAaUvnGtxdv/D1MKA4s6KANF7nK2kMAueCRa2kLA
+         MwJjILN3Hm2jZ+Vc3Qtiycg6069SKKTHWbGEo3c0=
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 77F4161197
+Authentication-Results: pdx-caf-mail.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: pdx-caf-mail.web.codeaurora.org; spf=none smtp.mailfrom=ilina@codeaurora.org
+Date:   Wed, 11 Sep 2019 09:19:48 -0600
+From:   Lina Iyer <ilina@codeaurora.org>
+To:     Linus Walleij <linus.walleij@linaro.org>
+Cc:     Stephen Boyd <swboyd@chromium.org>,
+        Evan Green <evgreen@chromium.org>,
+        Marc Zyngier <marc.zyngier@arm.com>,
+        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
+        MSM <linux-arm-msm@vger.kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        mkshah@codeaurora.org,
+        "open list:GPIO SUBSYSTEM" <linux-gpio@vger.kernel.org>,
+        Rajendra Nayak <rnayak@codeaurora.org>,
+        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
+        <devicetree@vger.kernel.org>
+Subject: Re: [PATCH RFC 05/14] dt-bindings/interrupt-controller: pdc: add SPI
+ config register
+Message-ID: <20190911151847.GA30053@codeaurora.org>
+References: <20190829181203.2660-1-ilina@codeaurora.org>
+ <20190829181203.2660-6-ilina@codeaurora.org>
+ <CACRpkdaReFzjb_hcDbQwqMX+whzscLpeZpJPHKqOo+9tANzemA@mail.gmail.com>
 MIME-Version: 1.0
-In-Reply-To: <CAMZdPi82ZCJK1QOXHo7hq9iCOq5vzuJF1shq=4ut+zRJ5FfmMw@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii; format=flowed
+Content-Disposition: inline
+In-Reply-To: <CACRpkdaReFzjb_hcDbQwqMX+whzscLpeZpJPHKqOo+9tANzemA@mail.gmail.com>
+User-Agent: Mutt/1.5.24 (2015-08-30)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On Wed, Sep 11 2019 at 04:05 -0600, Linus Walleij wrote:
+>On Thu, Aug 29, 2019 at 8:47 PM Lina Iyer <ilina@codeaurora.org> wrote:
+>
+>> +- qcom,scm-spi-cfg:
+>> +       Usage: optional
+>> +       Value type: <bool>
+>> +       Definition: Specifies if the SPI configuration registers have to be
+>> +                   written from the firmware.
+>> +
+>>  Example:
+>>
+>>         pdc: interrupt-controller@b220000 {
+>>                 compatible = "qcom,sdm845-pdc";
+>> -               reg = <0xb220000 0x30000>;
+>> +               reg = <0xb220000 0x30000>, <0x179900f0 0x60>;
+>>                 qcom,pdc-ranges = <0 512 94>, <94 641 15>, <115 662 7>;
+>>                 #interrupt-cells = <2>;
+>>                 interrupt-parent = <&intc>;
+>>                 interrupt-controller;
+>> +               qcom,scm-spi-cfg;
+>
+>You can probably drop this bool if you just give names to the registers.
+>
+>Like
+>reg = <0xb220000 0x30000>, <0x179900f0 0x60>;
+>reg-names = "gic", "pdc";
+>
+>Then jus check explicitly for a "pdc" register and in that case
+>initialize the PDC.
+>
+Well the address remains the same. The bool defines how to access that
+register address - from linux or from the firmware using SCM calls. But
+I get your point, I could have different register namess - pdc-linux or
+pdc-scm and request by name. I can then use that to determine the mode
+for accessing the register.
 
-On 9/11/19 5:40 PM, Loic Poulain wrote:
-> On Wed, 11 Sep 2019 at 11:29, Stanimir Varbanov <
-> stanimir.varbanov@linaro.org> wrote:
-> 
->> Hi Loic,
->>
->> Thanks for the patch!
->>
->> On 9/4/19 1:06 PM, Loic Poulain wrote:
->>> In downstream driver, there are two frequency tables defined,
->>> one for the encoder and one for the decoder:
->>>
->>> /* Encoders /
->>> <972000 490000000 0x55555555>, / 4k UHD @ 30 /
->>> <489600 320000000 0x55555555>, / 1080p @ 60 /
->>> <244800 150000000 0x55555555>, / 1080p @ 30 /
->>> <108000 75000000 0x55555555>, / 720p @ 30 */
->>>
->>> /* Decoders /
->>> <1944000 490000000 0xffffffff>, / 4k UHD @ 60 /
->>> < 972000 320000000 0xffffffff>, / 4k UHD @ 30 /
->>> < 489600 150000000 0xffffffff>, / 1080p @ 60 /
->>> < 244800 75000000 0xffffffff>; / 1080p @ 30 */
->>>
->>> It shows that encoder always needs a higher clock than decoder.
->>>
->>> In current venus driver, the unified frequency table is aligned
->>> with the downstream decoder table which causes performance issues
->>> in decoding scenarios. Fix that by aligning frequency table on
->>
->> s/decoding scenarios/encoding scenarios
->>
->>> worst case (encoding).
->>
->> Did you checked the exact rate from clk_summary? Checking the frequency
->> table for subcore0|1 from mmcc-msm8996.c clock driver shows that the
->> tables are slightly different for higher rates.
->>
->> Otherwise, I'd take the patch but it would be better to align the
->> frequency tables to avoid confusions.
->>
-> 
-> Thanks, yes I'm going to send a V2 with aligned freqs, note however that
-> with my setup (DB820C), debugfs reported clk rates seem to be a bit
-> misaligned.
-> I get either 75000000, 150000000, 326666666 or 490000000... regardless
-> frequency table.
+Thanks,
+Lina
 
-What kernel version is that?
-
--- 
-regards,
-Stan
