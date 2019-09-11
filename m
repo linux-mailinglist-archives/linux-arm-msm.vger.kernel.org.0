@@ -2,156 +2,61 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 5BD56AF6F3
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Sep 2019 09:34:39 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9974EAF8E9
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Sep 2019 11:29:54 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726838AbfIKHef (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 11 Sep 2019 03:34:35 -0400
-Received: from mail-wm1-f67.google.com ([209.85.128.67]:52178 "EHLO
-        mail-wm1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726696AbfIKHee (ORCPT
+        id S1726842AbfIKJ3w (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 11 Sep 2019 05:29:52 -0400
+Received: from mail-lf1-f65.google.com ([209.85.167.65]:43097 "EHLO
+        mail-lf1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725616AbfIKJ3w (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 11 Sep 2019 03:34:34 -0400
-Received: by mail-wm1-f67.google.com with SMTP id 7so2162908wme.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 11 Sep 2019 00:34:32 -0700 (PDT)
+        Wed, 11 Sep 2019 05:29:52 -0400
+Received: by mail-lf1-f65.google.com with SMTP id u3so752636lfl.10
+        for <linux-arm-msm@vger.kernel.org>; Wed, 11 Sep 2019 02:29:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=baylibre-com.20150623.gappssmtp.com; s=20150623;
-        h=subject:to:cc:references:from:openpgp:autocrypt:organization
-         :message-id:date:user-agent:mime-version:in-reply-to
-         :content-language:content-transfer-encoding;
-        bh=ntQnlZ165aoTq9A7WDI2toA4HdgPISzpICPAyGRYlc4=;
-        b=DMMbzJxxUXHFi6Z63lgJ1y7Sb/XAkiZLWF0D1+uoabJCHSepnQp4es4L6JW2eVagzh
-         72rCnxWkdINIZffgA6FJDDv1cZsc+xCJ96gjFDGsnFT/hoLUjJPTrbgYaJd7PokhtWnH
-         OTfaJl12/d5r/1ERItxyTyhsgX31+DwTKVVyoNiRpdAo1kVz31c2aiTgxAUBVDnpjMAV
-         DjtgPgaTKqzDjK8Ac7atghJQxxGqy9uZA+Mg+e9bu/zTWhUlugNecrmiCFU/k80GDkh6
-         fuT2Iwj60ftMrfIVjjBd2usNbSjEkk428eJwTjzYtZ3c+FGD6oRv2oFmwmg93VzpK1Sh
-         ca5g==
+        d=linaro.org; s=google;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=+HbSvL2e9LJRsc7qJLTrafgy8tjNTtDuD0nsrSg6bW0=;
+        b=WRCXJamj6BAkjVsd6Yl4pJ5BTL6NFCdkx/fYdIZJA73nOceXxx7/8f5q1hxwG5FbIP
+         yOM19cHCiykRjhVO3ezQ8A01cYJCsrLY6UhnbT1789/2bVLaasNJIAOzXYDaRArsK2I9
+         2RUOwBGHnLbtr4GjwCQJ70Wh2ft3UvAirXl7LXBpbxHoM1zWr1wtn8jonIJfNvqOD0xL
+         AU7/8VzR9X8zR0xo0IcXLQbHOhk4RwtYtnIbAsgUl3bvB9ZZe+3+csGmQuSEtnB4mLY/
+         B6VIoGiVhK3ZDvLcGefco0tQxboTn8seumveae3K8UbaBRsR1TDjM6mi8Klc7aBPzW0S
+         Hb/Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:openpgp:autocrypt
-         :organization:message-id:date:user-agent:mime-version:in-reply-to
-         :content-language:content-transfer-encoding;
-        bh=ntQnlZ165aoTq9A7WDI2toA4HdgPISzpICPAyGRYlc4=;
-        b=J3k7+miA0csbJvVJr57T1BSvBhvQexAmCIW1mY9q1zKicnv6qhcxgByg5rOj3CmfjB
-         UxYZbt9vfPOFkqkG5hwoFfXla0SmlHwOMrOSXi6aF+0tWc3ah3NJNBoJRain3xB/ERmI
-         6yT3FhboXqe6tkbO9Zz6iKKEGavc1T7BxCQuwxU/vaokUibiZTQRadc++6fB/GCTWw7r
-         DO9iVvELTB8mWENauHSHiFZhW7awOpvjI4JIUSu2lftd87ogr3OsuOkP8KD8zKCyvtS7
-         OltdiRhtup6e0nQOf7LValVN/slWAeR1sxcdYEdfxkNsfzfpUk0sj7ntT4VL4jLL4ESX
-         Uh/Q==
-X-Gm-Message-State: APjAAAVvkMtf6iW5+GUhcACsM7AUrqWxtVPAFxcn9cdHi1qRTgcDqeGl
-        O+8Zw4WJAL0j4vvT8RYUqxwL9Q==
-X-Google-Smtp-Source: APXvYqxxDvRVKQaWLplVyw8RxLikPJkEefVhJ7vX1GPMo2oDLkeZWy4Fj5QkFLqrwRhYintC8OnwBA==
-X-Received: by 2002:a1c:ca02:: with SMTP id a2mr2835861wmg.127.1568187271380;
-        Wed, 11 Sep 2019 00:34:31 -0700 (PDT)
-Received: from [192.168.1.62] (176-150-251-154.abo.bbox.fr. [176.150.251.154])
-        by smtp.gmail.com with ESMTPSA id d193sm3518079wmd.0.2019.09.11.00.34.27
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=+HbSvL2e9LJRsc7qJLTrafgy8tjNTtDuD0nsrSg6bW0=;
+        b=qoDsodBHkfHM0Pgljm2haUO6eWyjgJuo5G602qtC8d6q4B3v6DW4jo8Nyzmiu4TuqE
+         YhRt0IvJ/12Qfpf7IP4kvEwm0V6+OEF/kZxUNfLT6Qu45IKYjongB8yj0NxL045GUbl1
+         5LckDaBbxoA8dAoElI/saPqEMBlX3o/nXpTDE1U3aH65k6itopuGUH7g2AK1+WNWvQj2
+         LptRIz1i1lA47EBy39+i087Z/bQ9vU2wx8UCa7Pt+6V5F+NutRwPqHKm4O7KpOXutCmV
+         2y7OJo7Z1yGASeTeWF9hl4DNfzVC5aTkoZcHcPQIM6VLFB9xomXgWEmmYzL/8N6Gg1AK
+         3Qeg==
+X-Gm-Message-State: APjAAAXYs7j/WDpb0zHZhKC5XC5R6R0Uxs3sOVY3Cy96XCc127ZSmCIE
+        Pj5MJu66V6HQnEeLaAc6p3/hgg==
+X-Google-Smtp-Source: APXvYqxVXa9bHq4a8OoOH/3V2nRX6Q3DjJTCbYCPKCL2dFqSEpPGXTa6ytRSwkx7CmhxQasSqJdaVg==
+X-Received: by 2002:ac2:50c5:: with SMTP id h5mr4769111lfm.105.1568194189299;
+        Wed, 11 Sep 2019 02:29:49 -0700 (PDT)
+Received: from [192.168.27.209] ([37.157.136.206])
+        by smtp.googlemail.com with ESMTPSA id i17sm4458821ljd.2.2019.09.11.02.29.48
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 11 Sep 2019 00:34:30 -0700 (PDT)
-Subject: Re: [PATCH 4/7] dt-bindings: chosen: Add clocksource and clockevent
- selection
-To:     Claudiu Beznea <claudiu.beznea@microchip.com>,
-        daniel.lezcano@linaro.org, robh+dt@kernel.org,
-        mark.rutland@arm.com, linux@armlinux.org.uk, nsekhar@ti.com,
-        bgolaszewski@baylibre.com, monstr@monstr.eu, john@phrozen.org,
-        ralf@linux-mips.org, paul.burton@mips.com, jhogan@kernel.org,
-        lftan@altera.com, tglx@linutronix.de, vgupta@synopsys.com,
-        marc.zyngier@arm.com, patrice.chotard@st.com,
-        mcoquelin.stm32@gmail.com, alexandre.torgue@st.com,
-        eric@anholt.net, wahrenst@gmx.net, f.fainelli@gmail.com,
-        rjui@broadcom.com, sbranden@broadcom.com,
-        bcm-kernel-feedback-list@broadcom.com, linus.walleij@linaro.org,
-        shc_work@mail.ru, kgene@kernel.org, krzk@kernel.org,
-        ysato@users.sourceforge.jp, liviu.dudau@arm.com,
-        sudeep.holla@arm.com, lorenzo.pieralisi@arm.com,
-        shawnguo@kernel.org, s.hauer@pengutronix.de, kernel@pengutronix.de,
-        festevam@gmail.com, linux-imx@nxp.com, baohua@kernel.org,
-        nicolas.ferre@microchip.com, alexandre.belloni@bootlin.com,
-        ludovic.desroches@microchip.com, baruch@tkos.co.il,
-        u.kleine-koenig@pengutronix.de, guoren@kernel.org,
-        kaloz@openwrt.org, khalasa@piap.pl, ssantosh@kernel.org,
-        vz@mleia.com, slemieux.tyco@gmail.com, khilman@baylibre.com,
-        avifishman70@gmail.com, tmaimon77@gmail.com, tali.perry1@gmail.com,
-        venture@google.com, yuenn@google.com, benjaminfair@google.com,
-        afaerber@suse.de, manivannan.sadhasivam@linaro.org,
-        agross@kernel.org, palmer@sifive.com, aou@eecs.berkeley.edu,
-        heiko@sntech.de, orsonzhai@gmail.com, baolin.wang@linaro.org,
-        zhang.lyra@gmail.com, maxime.ripard@bootlin.com, wens@csie.org,
-        thierry.reding@gmail.com, jonathanh@nvidia.com,
-        linux@prisktech.co.nz, john.stultz@linaro.org, sboyd@kernel.org,
-        matthias.bgg@gmail.com
-Cc:     devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org, linux-mips@vger.kernel.org,
-        nios2-dev@lists.rocketboards.org,
-        linux-snps-arc@lists.infradead.org,
-        linux-stm32@st-md-mailman.stormreply.com,
-        linux-rpi-kernel@lists.infradead.org,
-        linux-samsung-soc@vger.kernel.org,
-        uclinux-h8-devel@lists.sourceforge.jp,
-        linux-amlogic@lists.infradead.org, openbmc@lists.ozlabs.org,
-        linux-oxnas@groups.io, linux-arm-msm@vger.kernel.org,
-        linux-unisoc@lists.infradead.org, linux-riscv@lists.infradead.org,
-        linux-rockchip@lists.infradead.org, linux-tegra@vger.kernel.org,
-        linux-mediatek@lists.infradead.org
-References: <1568123236-767-1-git-send-email-claudiu.beznea@microchip.com>
- <1568123236-767-5-git-send-email-claudiu.beznea@microchip.com>
-From:   Neil Armstrong <narmstrong@baylibre.com>
-Openpgp: preference=signencrypt
-Autocrypt: addr=narmstrong@baylibre.com; prefer-encrypt=mutual; keydata=
- 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
- ZaTUOEkgIor5losDrePdPgE=
-Organization: Baylibre
-Message-ID: <81da473f-54d7-2a00-61ec-9351cdfcaaf3@baylibre.com>
-Date:   Wed, 11 Sep 2019 09:34:27 +0200
+        Wed, 11 Sep 2019 02:29:48 -0700 (PDT)
+Subject: Re: [PATCH] media: venus: core: Fix msm8996 frequency table
+To:     Loic Poulain <loic.poulain@linaro.org>, agross@kernel.org
+Cc:     linux-arm-msm@vger.kernel.org, linux-media@vger.kernel.org
+References: <1567591618-22467-1-git-send-email-loic.poulain@linaro.org>
+From:   Stanimir Varbanov <stanimir.varbanov@linaro.org>
+Message-ID: <92275cdb-870e-8cfe-0b7d-1b35f1a2ff5a@linaro.org>
+Date:   Wed, 11 Sep 2019 12:29:46 +0300
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
  Thunderbird/60.8.0
 MIME-Version: 1.0
-In-Reply-To: <1568123236-767-5-git-send-email-claudiu.beznea@microchip.com>
+In-Reply-To: <1567591618-22467-1-git-send-email-loic.poulain@linaro.org>
 Content-Type: text/plain; charset=utf-8
 Content-Language: en-US
 Content-Transfer-Encoding: 7bit
@@ -160,67 +65,75 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi,
+Hi Loic,
 
-On 10/09/2019 15:47, Claudiu Beznea wrote:
-> From: Alexandre Belloni <alexandre.belloni@bootlin.com>
+Thanks for the patch!
+
+On 9/4/19 1:06 PM, Loic Poulain wrote:
+> In downstream driver, there are two frequency tables defined,
+> one for the encoder and one for the decoder:
 > 
-> Some timer drivers may behave either as clocksource or clockevent
-> or both. Until now, in case of platforms with multiple hardware
-> resources of the same type, the drivers were chosing the first
-> registered hardware resource as clocksource/clockevent and the
-> next one as clockevent/clocksource. Other were using different
-> compatibles (one for each functionality, although its about the
-> same hardware). Add DT bindings to be able to choose the
-> functionality of a timer.
+> /* Encoders /
+> <972000 490000000 0x55555555>, / 4k UHD @ 30 /
+> <489600 320000000 0x55555555>, / 1080p @ 60 /
+> <244800 150000000 0x55555555>, / 1080p @ 30 /
+> <108000 75000000 0x55555555>, / 720p @ 30 */
 > 
-> Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
-> Signed-off-by: Claudiu Beznea <claudiu.beznea@microchip.com>
+> /* Decoders /
+> <1944000 490000000 0xffffffff>, / 4k UHD @ 60 /
+> < 972000 320000000 0xffffffff>, / 4k UHD @ 30 /
+> < 489600 150000000 0xffffffff>, / 1080p @ 60 /
+> < 244800 75000000 0xffffffff>; / 1080p @ 30 */
+> 
+> It shows that encoder always needs a higher clock than decoder.
+> 
+> In current venus driver, the unified frequency table is aligned
+> with the downstream decoder table which causes performance issues
+> in decoding scenarios. Fix that by aligning frequency table on
+
+s/decoding scenarios/encoding scenarios
+
+> worst case (encoding).
+
+Did you checked the exact rate from clk_summary? Checking the frequency
+table for subcore0|1 from mmcc-msm8996.c clock driver shows that the
+tables are slightly different for higher rates.
+
+Otherwise, I'd take the patch but it would be better to align the
+frequency tables to avoid confusions.
+
+On the other side we can split freq table to encode and decode tables,
+but I'm still not sure is it possible to have:
+subcore0_freq != subcore1_freq.
+
+> 
+> Signed-off-by: Loic Poulain <loic.poulain@linaro.org>
 > ---
->  Documentation/devicetree/bindings/chosen.txt | 20 ++++++++++++++++++++
->  1 file changed, 20 insertions(+)
+>  drivers/media/platform/qcom/venus/core.c | 9 +++++----
+>  1 file changed, 5 insertions(+), 4 deletions(-)
 > 
-> diff --git a/Documentation/devicetree/bindings/chosen.txt b/Documentation/devicetree/bindings/chosen.txt
-> index 45e79172a646..aad3034cdbdf 100644
-> --- a/Documentation/devicetree/bindings/chosen.txt
-> +++ b/Documentation/devicetree/bindings/chosen.txt
-> @@ -135,3 +135,23 @@ e.g.
->  		linux,initrd-end = <0x82800000>;
->  	};
+> diff --git a/drivers/media/platform/qcom/venus/core.c b/drivers/media/platform/qcom/venus/core.c
+> index 0acc757..1e80689 100644
+> --- a/drivers/media/platform/qcom/venus/core.c
+> +++ b/drivers/media/platform/qcom/venus/core.c
+> @@ -427,10 +427,11 @@ static const struct venus_resources msm8916_res = {
 >  };
-> +
-> +linux,clocksource and linux,clockevent
-> +--------------------------------------
-> +
-> +Those nodes have a timer property. This property is a phandle to the timer to be
-> +chosen as the clocksource or clockevent. This is only useful when the platform
-> +has multiple identical timers and it is not possible to let linux make the
-> +correct choice.
-> +
-> +/ {
-> +	chosen {
-> +		linux,clocksource {
-> +			timer = <&timer0>;
-> +		};
-> +
-> +		linux,clockevent {
-> +			timer = <&timer1>;
-> +		};
-> +	};
-> +};
+>  
+>  static const struct freq_tbl msm8996_freq_table[] = {
+> -	{ 1944000, 490000000 },	/* 4k UHD @ 60 */
+> -	{  972000, 320000000 },	/* 4k UHD @ 30 */
+> -	{  489600, 150000000 },	/* 1080p @ 60 */
+> -	{  244800,  75000000 },	/* 1080p @ 30 */
+> +	{ 1944000, 490000000 },	/* 4k UHD @ 60 (decode only) */
+> +	{  972000, 490000000 },	/* 4k UHD @ 30 */
+> +	{  489600, 320000000 },	/* 1080p @ 60 */
+> +	{  244800, 150000000 },	/* 1080p @ 30 */
+> +	{  108000,  75000000 },	/* 720p @ 30 */
+>  };
+>  
+>  static const struct reg_val msm8996_reg_preset[] = {
 > 
 
-Why not in aliases ?
-
-aliases {
-    clocksource0 = &timer0;
-    clockevent0 = &timer1;
-};
-
-since we can have multiple of each, we should not limit ourselves to 1 clkevent
-and 1 clksource.
-
-In the aliases case, each driver would expose both capabilities, and the core would select
-what to enable.
-
-Neil
+-- 
+regards,
+Stan
