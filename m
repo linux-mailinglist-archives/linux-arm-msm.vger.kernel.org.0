@@ -2,49 +2,49 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 926D9AF6A1
+	by mail.lfdr.de (Postfix) with ESMTP id 24D59AF6A0
 	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Sep 2019 09:24:42 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727014AbfIKHQt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        id S1726988AbfIKHQt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
         Wed, 11 Sep 2019 03:16:49 -0400
-Received: from mail-pl1-f195.google.com ([209.85.214.195]:33979 "EHLO
-        mail-pl1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725924AbfIKHQp (ORCPT
+Received: from mail-pg1-f195.google.com ([209.85.215.195]:44826 "EHLO
+        mail-pg1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726838AbfIKHQs (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 11 Sep 2019 03:16:45 -0400
-Received: by mail-pl1-f195.google.com with SMTP id d3so9802681plr.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 11 Sep 2019 00:16:44 -0700 (PDT)
+        Wed, 11 Sep 2019 03:16:48 -0400
+Received: by mail-pg1-f195.google.com with SMTP id i18so11038989pgl.11
+        for <linux-arm-msm@vger.kernel.org>; Wed, 11 Sep 2019 00:16:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :in-reply-to:references;
-        bh=TYv2LRSteD77Ft4oMs2p5uadS2z0S5817oCjy76gUik=;
-        b=kj1j7ZaZnPMmsnHMvLk21yvm6k06hUpqx9YhvZYRoF6tMhQMm0Xwl9/12rAOGIgwzx
-         eq7LSwvZ4sQ+28fB0GlNOPcQAO3YX3dYBDIaViLNagUmizZpuQ6Di0kx8+8BVsqL+s7N
-         00GftV/JgicBTz/hUdyP5F676NgJcH3W8ipSdvX2WpWvjRALyUOXSdeLmH9foo3KszN1
-         V7uKmYfr2nV4eXhYXRSet6ddkiSS7qTTz5/723Vn5/wQReRwyM+Wc3qtErxADzeRSngj
-         dkNSJqcMxS4eZxtOMzpLdkxgr/+uinY1c9PS8tL188zltSAY6AZAfsP25ffuY1jclE76
-         xH5w==
+        bh=BcKGfqptsJMIyqg8m+kdv7mwKKvvYfua8/fbCWYYrS8=;
+        b=o7pSB/lBJepCsIAK9wwEl+41gBqxhzj1JE5Xk93Xw+PiLLGCJiaRXIgX89oRURyZnw
+         l3RtJSgM55DVzGJjWn4+MDNVoP63T55tIwc6Q5UURuq4/Y3FFS5V23mHe1sVX1K7hWed
+         oQ2vD5nDD4cKYHQMqs1ShVZ7s1ZcieLRdx12COreB9e9vazjIAfQH0qkMOxgbAvMis7H
+         /3XEpCvRHuhZx7j6J3FmzwjCMwDqLMzZd/sIa4LxZhl+TIQWHZbDva4KqVoad2s5xT7S
+         x0eDDX5jO85RYBiiXqBTADEBhZwbO15EZfMLKNsiNqF+bExaugY7uXjyl2+5UEzDL894
+         EKzw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:in-reply-to:references;
-        bh=TYv2LRSteD77Ft4oMs2p5uadS2z0S5817oCjy76gUik=;
-        b=NDDgTGtGPym+ng1H3qz5tHXxuRmspI9V+EIhPuAFlEZLLU2L2wJw/RXm2Gdz09XWff
-         wLp/Ubs6DfWfbI+WwNzaRnVjpXfQYHr4z8N1OkUEvk8DIUC/R25GOyMaWQdSC70ZQZnX
-         3JzWiNCWGyrQWGE4HNyvlh2KqX2/e668Ut2SzKKGMIYZ3BbiMitAFHOVa9n9ke61ngHW
-         lmrkDHVmmNqFk4BZx07VOFhfAowlE1qNpPdOqW02NBbJN6JSkDfUTl7LnYHxKmceOX3W
-         LEt8D6KMG1ud+I+o9qKWnDAbxF+8EdPPWfYDvAWvfoeDIvQxzpOMOt+b69Uuw+xrSxaV
-         TXrQ==
-X-Gm-Message-State: APjAAAWO+k6W0U9J3Bt01pom7J+cCJ6z5koi72tku4ZYH01j83CYa95K
-        5DlsOdr/iDQmQALyuvuXsu3pxw==
-X-Google-Smtp-Source: APXvYqwDIOaoMNJNhvXvuMg1I6NPjV1O9Ca5PavDvcVjWcDclFW7kYnXevJL9GMaxBohAe2mY0Xhlw==
-X-Received: by 2002:a17:902:8506:: with SMTP id bj6mr36138092plb.79.1568186204168;
-        Wed, 11 Sep 2019 00:16:44 -0700 (PDT)
+        bh=BcKGfqptsJMIyqg8m+kdv7mwKKvvYfua8/fbCWYYrS8=;
+        b=TXg0U8v03XE8QmoCLBKWdvxZjUmSEoABJ4QSv8Eh+7nmMPMl+h3nwBd1cary/I4uvf
+         WKw4Vw1bfCkP7E7lthz/DiSQ6n5t/Hjxs7HL0QxEMTd8nuS46dvi/YBLpiDWDvZDPf0s
+         LP/58QADXMtj1nERhjCGwd85EHS1oV7GXsONHOATt+Im7nYCcHbDk9NQI5dsc+aKD+b0
+         sWrkeOLM2UP1KFecpiOLFUhtGvpHosKkjSLv2r3KAPj9uXAcqgCSUygm9vwFSRCfokvA
+         EO7HXqGc6HVkvhQGkCteq8UMmKv5CoP19ufQ2pojUMJnxUDFSPdbHWKq22RwaohAm5de
+         P7bA==
+X-Gm-Message-State: APjAAAXHwoes879nRDM8ZUwVAkp7aeyGLISrucaZ0TddR0AnRhDzD1aE
+        M9xSXWR40ujzJzTNhbCRWob5pQ==
+X-Google-Smtp-Source: APXvYqzuDX6VHtcQh0PUvMrGvJDnEXpgaLZvpgIkZ3I0Se0OK+dS/HGC/5ZNZQgJPkc+n6GUjwf73w==
+X-Received: by 2002:a62:e508:: with SMTP id n8mr20353567pff.199.1568186207721;
+        Wed, 11 Sep 2019 00:16:47 -0700 (PDT)
 Received: from localhost ([49.248.201.118])
-        by smtp.gmail.com with ESMTPSA id j2sm20842070pfe.130.2019.09.11.00.16.43
+        by smtp.gmail.com with ESMTPSA id 20sm24094678pfh.72.2019.09.11.00.16.46
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 11 Sep 2019 00:16:43 -0700 (PDT)
+        Wed, 11 Sep 2019 00:16:47 -0700 (PDT)
 From:   Amit Kucheria <amit.kucheria@linaro.org>
 To:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
         bjorn.andersson@linaro.org, edubezval@gmail.com, agross@kernel.org,
@@ -54,9 +54,9 @@ To:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
         Rob Herring <robh+dt@kernel.org>,
         Zhang Rui <rui.zhang@intel.com>
 Cc:     linux-pm@vger.kernel.org
-Subject: [PATCH v3 01/15] drivers: thermal: tsens: Get rid of id field in tsens_sensor
-Date:   Wed, 11 Sep 2019 12:46:18 +0530
-Message-Id: <0ada60b1b216346e3e9e2429af8c2b7c9901c938.1568185732.git.amit.kucheria@linaro.org>
+Subject: [PATCH v3 02/15] drivers: thermal: tsens: Simplify code flow in tsens_probe
+Date:   Wed, 11 Sep 2019 12:46:19 +0530
+Message-Id: <dc5468cdf64e5acccd37fa9b5e849f423874764a.1568185732.git.amit.kucheria@linaro.org>
 X-Mailer: git-send-email 2.17.1
 In-Reply-To: <cover.1568185732.git.amit.kucheria@linaro.org>
 References: <cover.1568185732.git.amit.kucheria@linaro.org>
@@ -67,169 +67,42 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-There are two fields - id and hw_id - to track what sensor an action was
-to performed on. This was because the sensors connected to a TSENS IP
-might not be contiguous i.e. 1, 2, 4, 5 with 3 being skipped.
-
-This causes confusion in the code which uses hw_id sometimes and id
-other times (tsens_get_temp, tsens_get_trend).
-
-Switch to only using the hw_id field to track the physical ID of the
-sensor. When we iterate through all the sensors connected to an IP
-block, we use an index i to loop through the list of sensors, and then
-return the actual hw_id that is registered on that index.
+Move platform_set_drvdata up to avoid an extra 'if (ret)' check after
+the call to tsens_register.
 
 Signed-off-by: Amit Kucheria <amit.kucheria@linaro.org>
 Reviewed-by: Stephen Boyd <swboyd@chromium.org>
 Reviewed-by: Daniel Lezcano <daniel.lezcano@linaro.org>
 ---
- drivers/thermal/qcom/tsens-8960.c   |  4 ++--
- drivers/thermal/qcom/tsens-common.c | 16 +++++++++-------
- drivers/thermal/qcom/tsens.c        | 11 +++++------
- drivers/thermal/qcom/tsens.h        | 10 ++++------
- 4 files changed, 20 insertions(+), 21 deletions(-)
+ drivers/thermal/qcom/tsens.c | 8 +++-----
+ 1 file changed, 3 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/thermal/qcom/tsens-8960.c b/drivers/thermal/qcom/tsens-8960.c
-index 8d9b721dadb6..3e1436fda1eb 100644
---- a/drivers/thermal/qcom/tsens-8960.c
-+++ b/drivers/thermal/qcom/tsens-8960.c
-@@ -243,11 +243,11 @@ static inline int code_to_mdegC(u32 adc_code, const struct tsens_sensor *s)
- 	return adc_code * slope + offset;
- }
- 
--static int get_temp_8960(struct tsens_priv *priv, int id, int *temp)
-+static int get_temp_8960(struct tsens_sensor *s, int *temp)
- {
- 	int ret;
- 	u32 code, trdy;
--	const struct tsens_sensor *s = &priv->sensor[id];
-+	struct tsens_priv *priv = s->priv;
- 	unsigned long timeout;
- 
- 	timeout = jiffies + usecs_to_jiffies(TIMEOUT_US);
-diff --git a/drivers/thermal/qcom/tsens-common.c b/drivers/thermal/qcom/tsens-common.c
-index 528df8801254..c037bdf92c66 100644
---- a/drivers/thermal/qcom/tsens-common.c
-+++ b/drivers/thermal/qcom/tsens-common.c
-@@ -83,11 +83,12 @@ static inline int code_to_degc(u32 adc_code, const struct tsens_sensor *s)
- 	return degc;
- }
- 
--int get_temp_tsens_valid(struct tsens_priv *priv, int i, int *temp)
-+int get_temp_tsens_valid(struct tsens_sensor *s, int *temp)
- {
--	struct tsens_sensor *s = &priv->sensor[i];
--	u32 temp_idx = LAST_TEMP_0 + s->hw_id;
--	u32 valid_idx = VALID_0 + s->hw_id;
-+	struct tsens_priv *priv = s->priv;
-+	int hw_id = s->hw_id;
-+	u32 temp_idx = LAST_TEMP_0 + hw_id;
-+	u32 valid_idx = VALID_0 + hw_id;
- 	u32 last_temp = 0, valid, mask;
- 	int ret;
- 
-@@ -123,12 +124,13 @@ int get_temp_tsens_valid(struct tsens_priv *priv, int i, int *temp)
- 	return 0;
- }
- 
--int get_temp_common(struct tsens_priv *priv, int i, int *temp)
-+int get_temp_common(struct tsens_sensor *s, int *temp)
- {
--	struct tsens_sensor *s = &priv->sensor[i];
-+	struct tsens_priv *priv = s->priv;
-+	int hw_id = s->hw_id;
- 	int last_temp = 0, ret;
- 
--	ret = regmap_field_read(priv->rf[LAST_TEMP_0 + s->hw_id], &last_temp);
-+	ret = regmap_field_read(priv->rf[LAST_TEMP_0 + hw_id], &last_temp);
- 	if (ret)
- 		return ret;
- 
 diff --git a/drivers/thermal/qcom/tsens.c b/drivers/thermal/qcom/tsens.c
-index 0627d8615c30..6ed687a6e53c 100644
+index 6ed687a6e53c..542a7f8c3d96 100644
 --- a/drivers/thermal/qcom/tsens.c
 +++ b/drivers/thermal/qcom/tsens.c
-@@ -14,19 +14,19 @@
+@@ -149,6 +149,8 @@ static int tsens_probe(struct platform_device *pdev)
+ 	priv->feat = data->feat;
+ 	priv->fields = data->fields;
  
- static int tsens_get_temp(void *data, int *temp)
- {
--	const struct tsens_sensor *s = data;
-+	struct tsens_sensor *s = data;
- 	struct tsens_priv *priv = s->priv;
++	platform_set_drvdata(pdev, priv);
++
+ 	if (!priv->ops || !priv->ops->init || !priv->ops->get_temp)
+ 		return -EINVAL;
  
--	return priv->ops->get_temp(priv, s->id, temp);
-+	return priv->ops->get_temp(s, temp);
+@@ -167,11 +169,7 @@ static int tsens_probe(struct platform_device *pdev)
+ 		}
+ 	}
+ 
+-	ret = tsens_register(priv);
+-
+-	platform_set_drvdata(pdev, priv);
+-
+-	return ret;
++	return tsens_register(priv);
  }
  
- static int tsens_get_trend(void *data, int trip, enum thermal_trend *trend)
- {
--	const struct tsens_sensor *s = data;
-+	struct tsens_sensor *s = data;
- 	struct tsens_priv *priv = s->priv;
- 
- 	if (priv->ops->get_trend)
--		return priv->ops->get_trend(priv, s->id, trend);
-+		return priv->ops->get_trend(s, trend);
- 
- 	return -ENOTSUPP;
- }
-@@ -86,8 +86,7 @@ static int tsens_register(struct tsens_priv *priv)
- 
- 	for (i = 0;  i < priv->num_sensors; i++) {
- 		priv->sensor[i].priv = priv;
--		priv->sensor[i].id = i;
--		tzd = devm_thermal_zone_of_sensor_register(priv->dev, i,
-+		tzd = devm_thermal_zone_of_sensor_register(priv->dev, priv->sensor[i].hw_id,
- 							   &priv->sensor[i],
- 							   &tsens_of_ops);
- 		if (IS_ERR(tzd))
-diff --git a/drivers/thermal/qcom/tsens.h b/drivers/thermal/qcom/tsens.h
-index 2fd94997245b..d022e726d074 100644
---- a/drivers/thermal/qcom/tsens.h
-+++ b/drivers/thermal/qcom/tsens.h
-@@ -31,7 +31,6 @@ enum tsens_ver {
-  * @priv: tsens device instance that this sensor is connected to
-  * @tzd: pointer to the thermal zone that this sensor is in
-  * @offset: offset of temperature adjustment curve
-- * @id: Sensor ID
-  * @hw_id: HW ID can be used in case of platform-specific IDs
-  * @slope: slope of temperature adjustment curve
-  * @status: 8960-specific variable to track 8960 and 8660 status register offset
-@@ -40,7 +39,6 @@ struct tsens_sensor {
- 	struct tsens_priv		*priv;
- 	struct thermal_zone_device	*tzd;
- 	int				offset;
--	unsigned int			id;
- 	unsigned int			hw_id;
- 	int				slope;
- 	u32				status;
-@@ -61,13 +59,13 @@ struct tsens_ops {
- 	/* mandatory callbacks */
- 	int (*init)(struct tsens_priv *priv);
- 	int (*calibrate)(struct tsens_priv *priv);
--	int (*get_temp)(struct tsens_priv *priv, int i, int *temp);
-+	int (*get_temp)(struct tsens_sensor *s, int *temp);
- 	/* optional callbacks */
- 	int (*enable)(struct tsens_priv *priv, int i);
- 	void (*disable)(struct tsens_priv *priv);
- 	int (*suspend)(struct tsens_priv *priv);
- 	int (*resume)(struct tsens_priv *priv);
--	int (*get_trend)(struct tsens_priv *priv, int i, enum thermal_trend *trend);
-+	int (*get_trend)(struct tsens_sensor *s, enum thermal_trend *trend);
- };
- 
- #define REG_FIELD_FOR_EACH_SENSOR11(_name, _offset, _startbit, _stopbit) \
-@@ -313,8 +311,8 @@ struct tsens_priv {
- char *qfprom_read(struct device *dev, const char *cname);
- void compute_intercept_slope(struct tsens_priv *priv, u32 *pt1, u32 *pt2, u32 mode);
- int init_common(struct tsens_priv *priv);
--int get_temp_tsens_valid(struct tsens_priv *priv, int i, int *temp);
--int get_temp_common(struct tsens_priv *priv, int i, int *temp);
-+int get_temp_tsens_valid(struct tsens_sensor *s, int *temp);
-+int get_temp_common(struct tsens_sensor *s, int *temp);
- 
- /* TSENS target */
- extern const struct tsens_plat_data data_8960;
+ static int tsens_remove(struct platform_device *pdev)
 -- 
 2.17.1
 
