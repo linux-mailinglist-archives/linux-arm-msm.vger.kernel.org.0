@@ -2,49 +2,49 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id E7350AF6A4
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Sep 2019 09:24:43 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 517BCAF6A7
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Sep 2019 09:24:45 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727039AbfIKHQw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 11 Sep 2019 03:16:52 -0400
-Received: from mail-pl1-f196.google.com ([209.85.214.196]:40823 "EHLO
-        mail-pl1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726928AbfIKHQw (ORCPT
+        id S1727090AbfIKHQ5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 11 Sep 2019 03:16:57 -0400
+Received: from mail-pf1-f195.google.com ([209.85.210.195]:34845 "EHLO
+        mail-pf1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727072AbfIKHQ4 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 11 Sep 2019 03:16:52 -0400
-Received: by mail-pl1-f196.google.com with SMTP id y10so9754980pll.7
-        for <linux-arm-msm@vger.kernel.org>; Wed, 11 Sep 2019 00:16:52 -0700 (PDT)
+        Wed, 11 Sep 2019 03:16:56 -0400
+Received: by mail-pf1-f195.google.com with SMTP id 205so13098177pfw.2
+        for <linux-arm-msm@vger.kernel.org>; Wed, 11 Sep 2019 00:16:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :in-reply-to:references;
-        bh=4RhmNFrAjG8zCFd7O6KRoEzlzkP2xNrQ5XZHUG6WYMo=;
-        b=hfjY3QENwOjtr0x1P9FLoxQ8HbWVvFtCTxs4dBSSCRszuxmG6vDUnB2snJ2wLMwaiy
-         PxWA9K/x4lGty5FbGIw3uvXc0zFpQXNjZTAjjroE1ORwjN456I+yq/koVopZfVNXYMV9
-         GsPpNlQa3w92QLUg0IsVmNglJeczEIwAPjpIIJW+Qq/m41zd8tlIRetY4oxp2Duzhr+v
-         83QKhXI5MGAevWXXUE+nNqBOUbqTzzw54fjbAm+bXGv78Enxem3zqEizWqaid5Tq1alq
-         AJhuUssClO1jk+CYY2EUuMGVxe0U9K3u2LUUn3sXVYhoi1HF1iNz5GpA7jqmkxfZDn92
-         CgTQ==
+        bh=GhiEdPc2a74wJTsECxjn5PPZJWIyvNu4x7DC2dya90E=;
+        b=N/QIyJ/WXEc1iBsfLQyDROFokBA6ARR4Qc3H3HUYWh4CPutDhlY5CdY1MATbWcCoBI
+         z1OQd6EHlkNXk8z91+4Tl47+ldJGfygsNw+WRfyhHMHJqN5o7/E2R0DzNfwx9LFJajlV
+         8cNxQhL/3T3uRmlp3I6KANueL28n559AdDpmZpqBUX0eZAteMpSNE1vVyEU6cac0IFYk
+         L3BykqM6+TG0fOeywQGF2LKnBN5ElipkOXa+n2DlPYK4dx8YwiGT2HJA5xhWsur7vDNm
+         0jI/tmTrmkzGQDcuoLNFGWkoC69neUQmq8ESPn+J8UlNFhC7icLWfCo6q3GX4NLLMW42
+         GKTA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:in-reply-to:references;
-        bh=4RhmNFrAjG8zCFd7O6KRoEzlzkP2xNrQ5XZHUG6WYMo=;
-        b=f7oLkcR3WG6xL/a0rFWZQ8yxAGU6NSzmGH7GAOf0raweYdw3OWQy9P5CGsvHsT+kvb
-         NLcJWFtxk0DNYVK4ZEJ/gR6qFuZEoS2QiCcDlZJq/GP5U9ui3TnFnx8Hbr5AF1C8rcM4
-         obttTHi6GWfyvXbA6qjD6HIp2I5SIYhTwwH9bfz8cpQEaurDhvJ1LP9y+IVwp8n5rC/b
-         LIEElgu4j/YVOxiUSzLcOv3zj8gIznQvpn2ZnRfO5I4rcDsdxGMbJWs8/6PyhUmauoMW
-         WxTfEGLy9HfjBM1GdNZdmyZ1Ujjw4ty4P2jIUhSYFmpEyBl9dM+AOBt7Gj0K7Za9pVnn
-         u/9A==
-X-Gm-Message-State: APjAAAX7LBYUfRoJf/yXpmWOczolGdiCu3QrpDRg6WJvfaMvsRV6Ft+y
-        HctNoP9QPXwATu6cleEQgqPCKw==
-X-Google-Smtp-Source: APXvYqybmviC1oYYajMImnhkYdigS9W28peNqIUfx8Ad4LGRKoYQxfF2Mt5JhZAEecFB9ZEkpcxPXA==
-X-Received: by 2002:a17:902:8f97:: with SMTP id z23mr19935097plo.299.1568186211616;
-        Wed, 11 Sep 2019 00:16:51 -0700 (PDT)
+        bh=GhiEdPc2a74wJTsECxjn5PPZJWIyvNu4x7DC2dya90E=;
+        b=iMWJkL+IxBkyyHasm46j0S/nGTZzK9lSIhFJ4cZWJJw8qMIZWjlX2wVD4ixwIN4JUq
+         TtpK1LLwQD5RenykSTQ3fWbK2rai+hX7hnKA4L20NLKdzmxCk5FAmG43XgUKAhv+sSaT
+         h7Yu1ylvWc45fHBbPcNiZS8LY5OCd53q5KeRxu7eVEMvtcy2YjfpU8RXh2r6LnmLnldW
+         y1jCkwHIhugvPOdpmLQbibN+M2VRgXquT+Xnb0knnNSaRf1RPe1HlCogsOO5Hz8uso8x
+         UQfiHG6y5jUuzSX8A51WXNFWebgK6wehFR8kP4cI1H1dWwrTb1ujXsTA59PPDbhSJ46m
+         scxA==
+X-Gm-Message-State: APjAAAUT3M03HRaYedXv3s+bc2SYotpj6NFaPqYb8lqLjy809l6+gjC8
+        ij09GkI01jAsAenViRBKwNEHuA==
+X-Google-Smtp-Source: APXvYqzmElc6AZWkySxBKmHm+uH6EABxraF16tBIqb3DLp21Ppmt5/9fxqX9oTLJ1n2MReDCbvRHOQ==
+X-Received: by 2002:a17:90a:c597:: with SMTP id l23mr3970989pjt.62.1568186215426;
+        Wed, 11 Sep 2019 00:16:55 -0700 (PDT)
 Received: from localhost ([49.248.201.118])
-        by smtp.gmail.com with ESMTPSA id a1sm19631901pgd.74.2019.09.11.00.16.50
+        by smtp.gmail.com with ESMTPSA id d20sm28426227pfq.88.2019.09.11.00.16.54
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 11 Sep 2019 00:16:50 -0700 (PDT)
+        Wed, 11 Sep 2019 00:16:54 -0700 (PDT)
 From:   Amit Kucheria <amit.kucheria@linaro.org>
 To:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
         bjorn.andersson@linaro.org, edubezval@gmail.com, agross@kernel.org,
@@ -54,9 +54,9 @@ To:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
         Rob Herring <robh+dt@kernel.org>,
         Zhang Rui <rui.zhang@intel.com>
 Cc:     linux-pm@vger.kernel.org
-Subject: [PATCH v3 03/15] drivers: thermal: tsens: Add __func__ identifier to debug statements
-Date:   Wed, 11 Sep 2019 12:46:20 +0530
-Message-Id: <ae5aee22a3688d04819d5a12576da8d8a25e52b5.1568185732.git.amit.kucheria@linaro.org>
+Subject: [PATCH v3 04/15] drivers: thermal: tsens: Add debugfs support
+Date:   Wed, 11 Sep 2019 12:46:21 +0530
+Message-Id: <d12179abdd46bc0bed52584667346876967f700f.1568185732.git.amit.kucheria@linaro.org>
 X-Mailer: git-send-email 2.17.1
 In-Reply-To: <cover.1568185732.git.amit.kucheria@linaro.org>
 References: <cover.1568185732.git.amit.kucheria@linaro.org>
@@ -67,81 +67,197 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Printing the function name when enabling debugging makes logs easier to
-read.
+Dump some basic version info and sensor details into debugfs. Example
+from qcs404 below:
+
+--(/sys/kernel/debug) $ ls tsens/
+4a9000.thermal-sensor  version
+--(/sys/kernel/debug) $ cat tsens/version
+1.4.0
+--(/sys/kernel/debug) $ cat tsens/4a9000.thermal-sensor/sensors
+max: 11
+num: 10
+
+      id    slope   offset
+------------------------
+       0     3200   404000
+       1     3200   404000
+       2     3200   404000
+       3     3200   404000
+       4     3200   404000
+       5     3200   404000
+       6     3200   404000
+       7     3200   404000
+       8     3200   404000
+       9     3200   404000
 
 Signed-off-by: Amit Kucheria <amit.kucheria@linaro.org>
 Reviewed-by: Stephen Boyd <swboyd@chromium.org>
-Reviewed-by: Daniel Lezcano <daniel.lezcano@linaro.org>
 ---
- drivers/thermal/qcom/tsens-common.c | 8 ++++----
- drivers/thermal/qcom/tsens.c        | 6 +++---
- 2 files changed, 7 insertions(+), 7 deletions(-)
+ drivers/thermal/qcom/tsens-common.c | 83 +++++++++++++++++++++++++++++
+ drivers/thermal/qcom/tsens.c        |  2 +
+ drivers/thermal/qcom/tsens.h        |  6 +++
+ 3 files changed, 91 insertions(+)
 
 diff --git a/drivers/thermal/qcom/tsens-common.c b/drivers/thermal/qcom/tsens-common.c
-index c037bdf92c66..7437bfe196e5 100644
+index 7437bfe196e5..ea2c46cc6a66 100644
 --- a/drivers/thermal/qcom/tsens-common.c
 +++ b/drivers/thermal/qcom/tsens-common.c
-@@ -42,8 +42,8 @@ void compute_intercept_slope(struct tsens_priv *priv, u32 *p1,
+@@ -3,6 +3,7 @@
+  * Copyright (c) 2015, The Linux Foundation. All rights reserved.
+  */
  
- 	for (i = 0; i < priv->num_sensors; i++) {
- 		dev_dbg(priv->dev,
--			"sensor%d - data_point1:%#x data_point2:%#x\n",
--			i, p1[i], p2[i]);
-+			"%s: sensor%d - data_point1:%#x data_point2:%#x\n",
-+			__func__, i, p1[i], p2[i]);
- 
- 		priv->sensor[i].slope = SLOPE_DEFAULT;
- 		if (mode == TWO_PT_CALIB) {
-@@ -60,7 +60,7 @@ void compute_intercept_slope(struct tsens_priv *priv, u32 *p1,
- 		priv->sensor[i].offset = (p1[i] * SLOPE_FACTOR) -
- 				(CAL_DEGC_PT1 *
- 				priv->sensor[i].slope);
--		dev_dbg(priv->dev, "offset:%d\n", priv->sensor[i].offset);
-+		dev_dbg(priv->dev, "%s: offset:%d\n", __func__, priv->sensor[i].offset);
- 	}
++#include <linux/debugfs.h>
+ #include <linux/err.h>
+ #include <linux/io.h>
+ #include <linux/nvmem-consumer.h>
+@@ -139,6 +140,77 @@ int get_temp_common(struct tsens_sensor *s, int *temp)
+ 	return 0;
  }
  
-@@ -209,7 +209,7 @@ int __init init_common(struct tsens_priv *priv)
- 	if (ret)
++#ifdef CONFIG_DEBUG_FS
++static int dbg_sensors_show(struct seq_file *s, void *data)
++{
++	struct platform_device *pdev = s->private;
++	struct tsens_priv *priv = platform_get_drvdata(pdev);
++	int i;
++
++	seq_printf(s, "max: %2d\nnum: %2d\n\n",
++		   priv->feat->max_sensors, priv->num_sensors);
++
++	seq_puts(s, "      id    slope   offset\n--------------------------\n");
++	for (i = 0;  i < priv->num_sensors; i++) {
++		seq_printf(s, "%8d %8d %8d\n", priv->sensor[i].hw_id,
++			   priv->sensor[i].slope, priv->sensor[i].offset);
++	}
++
++	return 0;
++}
++
++static int dbg_version_show(struct seq_file *s, void *data)
++{
++	struct platform_device *pdev = s->private;
++	struct tsens_priv *priv = platform_get_drvdata(pdev);
++	u32 maj_ver, min_ver, step_ver;
++	int ret;
++
++	if (tsens_ver(priv) > VER_0_1) {
++		ret = regmap_field_read(priv->rf[VER_MAJOR], &maj_ver);
++		if (ret)
++			return ret;
++		ret = regmap_field_read(priv->rf[VER_MINOR], &min_ver);
++		if (ret)
++			return ret;
++		ret = regmap_field_read(priv->rf[VER_STEP], &step_ver);
++		if (ret)
++			return ret;
++		seq_printf(s, "%d.%d.%d\n", maj_ver, min_ver, step_ver);
++	} else {
++		seq_puts(s, "0.1.0\n");
++	}
++
++	return 0;
++}
++
++DEFINE_SHOW_ATTRIBUTE(dbg_version);
++DEFINE_SHOW_ATTRIBUTE(dbg_sensors);
++
++static void tsens_debug_init(struct platform_device *pdev)
++{
++	struct tsens_priv *priv = platform_get_drvdata(pdev);
++	struct dentry *root, *file;
++
++	root = debugfs_lookup("tsens", NULL);
++	if (!root)
++		priv->debug_root = debugfs_create_dir("tsens", NULL);
++	else
++		priv->debug_root = root;
++
++	file = debugfs_lookup("version", priv->debug_root);
++	if (!file)
++		debugfs_create_file("version", 0444, priv->debug_root,
++				    pdev, &dbg_version_fops);
++
++	/* A directory for each instance of the TSENS IP */
++	priv->debug = debugfs_create_dir(dev_name(&pdev->dev), priv->debug_root);
++	debugfs_create_file("sensors", 0444, priv->debug, pdev, &dbg_sensors_fops);
++}
++#else
++static inline void tsens_debug_init(struct platform_device *pdev) {}
++#endif
++
+ static const struct regmap_config tsens_config = {
+ 	.name		= "tm",
+ 	.reg_bits	= 32,
+@@ -199,6 +271,15 @@ int __init init_common(struct tsens_priv *priv)
  		goto err_put_device;
- 	if (!enabled) {
--		dev_err(dev, "tsens device is not enabled\n");
-+		dev_err(dev, "%s: device not enabled\n", __func__);
- 		ret = -ENODEV;
- 		goto err_put_device;
- 	}
-diff --git a/drivers/thermal/qcom/tsens.c b/drivers/thermal/qcom/tsens.c
-index 542a7f8c3d96..06c6bbd69a1a 100644
---- a/drivers/thermal/qcom/tsens.c
-+++ b/drivers/thermal/qcom/tsens.c
-@@ -127,7 +127,7 @@ static int tsens_probe(struct platform_device *pdev)
- 		of_property_read_u32(np, "#qcom,sensors", &num_sensors);
- 
- 	if (num_sensors <= 0) {
--		dev_err(dev, "invalid number of sensors\n");
-+		dev_err(dev, "%s: invalid number of sensors\n", __func__);
- 		return -EINVAL;
  	}
  
-@@ -156,7 +156,7 @@ static int tsens_probe(struct platform_device *pdev)
- 
- 	ret = priv->ops->init(priv);
- 	if (ret < 0) {
--		dev_err(dev, "tsens init failed\n");
-+		dev_err(dev, "%s: init failed\n", __func__);
- 		return ret;
- 	}
- 
-@@ -164,7 +164,7 @@ static int tsens_probe(struct platform_device *pdev)
- 		ret = priv->ops->calibrate(priv);
- 		if (ret < 0) {
- 			if (ret != -EPROBE_DEFER)
--				dev_err(dev, "tsens calibration failed\n");
-+				dev_err(dev, "%s: calibration failed\n", __func__);
- 			return ret;
++	if (tsens_ver(priv) > VER_0_1) {
++		for (i = VER_MAJOR; i <= VER_STEP; i++) {
++			priv->rf[i] = devm_regmap_field_alloc(dev, priv->srot_map,
++							      priv->fields[i]);
++			if (IS_ERR(priv->rf[i]))
++				return PTR_ERR(priv->rf[i]);
++		}
++	}
++
+ 	priv->rf[TSENS_EN] = devm_regmap_field_alloc(dev, priv->srot_map,
+ 						     priv->fields[TSENS_EN]);
+ 	if (IS_ERR(priv->rf[TSENS_EN])) {
+@@ -238,6 +319,8 @@ int __init init_common(struct tsens_priv *priv)
  		}
  	}
+ 
++	tsens_debug_init(op);
++
+ 	return 0;
+ 
+ err_put_device:
+diff --git a/drivers/thermal/qcom/tsens.c b/drivers/thermal/qcom/tsens.c
+index 06c6bbd69a1a..772aa76b50e1 100644
+--- a/drivers/thermal/qcom/tsens.c
++++ b/drivers/thermal/qcom/tsens.c
+@@ -3,6 +3,7 @@
+  * Copyright (c) 2015, The Linux Foundation. All rights reserved.
+  */
+ 
++#include <linux/debugfs.h>
+ #include <linux/err.h>
+ #include <linux/module.h>
+ #include <linux/of.h>
+@@ -176,6 +177,7 @@ static int tsens_remove(struct platform_device *pdev)
+ {
+ 	struct tsens_priv *priv = platform_get_drvdata(pdev);
+ 
++	debugfs_remove_recursive(priv->debug_root);
+ 	if (priv->ops->disable)
+ 		priv->ops->disable(priv);
+ 
+diff --git a/drivers/thermal/qcom/tsens.h b/drivers/thermal/qcom/tsens.h
+index d022e726d074..e1d6af71b2b9 100644
+--- a/drivers/thermal/qcom/tsens.h
++++ b/drivers/thermal/qcom/tsens.h
+@@ -292,6 +292,8 @@ struct tsens_context {
+  * @feat: features of the IP
+  * @fields: bitfield locations
+  * @ops: pointer to list of callbacks supported by this device
++ * @debug_root: pointer to debugfs dentry for all tsens
++ * @debug: pointer to debugfs dentry for tsens controller
+  * @sensor: list of sensors attached to this device
+  */
+ struct tsens_priv {
+@@ -305,6 +307,10 @@ struct tsens_priv {
+ 	const struct tsens_features	*feat;
+ 	const struct reg_field		*fields;
+ 	const struct tsens_ops		*ops;
++
++	struct dentry			*debug_root;
++	struct dentry			*debug;
++
+ 	struct tsens_sensor		sensor[0];
+ };
+ 
 -- 
 2.17.1
 
