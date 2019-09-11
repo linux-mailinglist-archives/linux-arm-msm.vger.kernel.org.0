@@ -2,89 +2,96 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id DEDEBB0136
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Sep 2019 18:19:04 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C75BBB0594
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Sep 2019 00:32:41 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729045AbfIKQQx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 11 Sep 2019 12:16:53 -0400
-Received: from smtp.codeaurora.org ([198.145.29.96]:37970 "EHLO
-        smtp.codeaurora.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729149AbfIKQQt (ORCPT
+        id S1728482AbfIKWck (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 11 Sep 2019 18:32:40 -0400
+Received: from mail-pf1-f195.google.com ([209.85.210.195]:38749 "EHLO
+        mail-pf1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727664AbfIKWck (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 11 Sep 2019 12:16:49 -0400
-Received: by smtp.codeaurora.org (Postfix, from userid 1000)
-        id 2900760C72; Wed, 11 Sep 2019 16:16:47 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
-        s=default; t=1568218608;
-        bh=tn8EIOlw52p10Je+it7oNkaaHTfUPXTl86tPFg9hjf4=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=ojylFW7dnyYRTd/m6Je9Pflrh3J/HiQswu7GR89Oy0hd9ICzLsjlBLdHrXU4Oc1vH
-         crQ+JZ9X+/YAM94thTMlbDpLjAOhF5IpNLuwRAg/MpzSqrB2eeY6GyxvfVnK0P4Jsk
-         LJB6id1yKoAMBNZzhE8QeudvPbXBHEL7hjq63mrk=
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        pdx-caf-mail.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.7 required=2.0 tests=ALL_TRUSTED,BAYES_00,
-        DKIM_INVALID,DKIM_SIGNED,SPF_NONE autolearn=no autolearn_force=no
-        version=3.4.0
-Received: from localhost (i-global254.qualcomm.com [199.106.103.254])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: ilina@smtp.codeaurora.org)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 099F8607CA;
-        Wed, 11 Sep 2019 16:16:46 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
-        s=default; t=1568218607;
-        bh=tn8EIOlw52p10Je+it7oNkaaHTfUPXTl86tPFg9hjf4=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=kuou501Yo7RboC4JSk3MoJZMFT5F2MdaLY69J+9td8eHy5AUlddXETD4NaMngglZH
-         hGYp7phS6po6tVrVSqrTxerKL4tgX3IDdo+23t2Cdebt09QAw975vUKh+d2RHu3/wB
-         OGka20x77a2XvwIyS8hSV65fbtCyUEF+8rSy+J1s=
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 099F8607CA
-Authentication-Results: pdx-caf-mail.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: pdx-caf-mail.web.codeaurora.org; spf=none smtp.mailfrom=ilina@codeaurora.org
-Date:   Wed, 11 Sep 2019 10:16:46 -0600
-From:   Lina Iyer <ilina@codeaurora.org>
-To:     Linus Walleij <linus.walleij@linaro.org>
-Cc:     Stephen Boyd <swboyd@chromium.org>,
-        Evan Green <evgreen@chromium.org>,
-        Marc Zyngier <marc.zyngier@arm.com>,
-        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
-        MSM <linux-arm-msm@vger.kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        mkshah@codeaurora.org,
-        "open list:GPIO SUBSYSTEM" <linux-gpio@vger.kernel.org>,
-        Rajendra Nayak <rnayak@codeaurora.org>
-Subject: Re: [PATCH RFC 09/14] drivers: pinctrl: msm: fix use of deprecated
- gpiolib APIs
-Message-ID: <20190911161646.GC30053@codeaurora.org>
-References: <20190829181203.2660-1-ilina@codeaurora.org>
- <20190829181203.2660-10-ilina@codeaurora.org>
- <CACRpkdbhNY8N=LMG6wwYw9bAnL4HmAqj8WMpsLsqvh8PvaQ52A@mail.gmail.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii; format=flowed
-Content-Disposition: inline
-In-Reply-To: <CACRpkdbhNY8N=LMG6wwYw9bAnL4HmAqj8WMpsLsqvh8PvaQ52A@mail.gmail.com>
-User-Agent: Mutt/1.5.24 (2015-08-30)
+        Wed, 11 Sep 2019 18:32:40 -0400
+Received: by mail-pf1-f195.google.com with SMTP id h195so14610534pfe.5
+        for <linux-arm-msm@vger.kernel.org>; Wed, 11 Sep 2019 15:32:40 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=from:to:cc:subject:date:message-id;
+        bh=/bQw1cLtYl3A/83AJDVmJyoX1dKxkgmG5lvK3TLTKfU=;
+        b=rfyz/8Y6c+xb9OzI5IP+lQyuY/4jk4SjFzwznzoKviS07fYRPcefDwgbO0/tpZoK6I
+         Hr6j5zaXTQm8DKWwX7b+psY4sqYKmp13roe4mQ41hWiTxdOBxuQszZcYhn5O5lVNsdHD
+         mF14GkPo2gMFttOdBFO17sLlkUOL48NDIiRooX1wnmYufhbTOE61Z2aSp+0ADr6Txoui
+         ZGGcY16dhu3nAQyOPZCkPyQJXOH6YhZMnIXnCXNKx7aG7Rm051hRhPvIIdZb5HMfS2KC
+         H2ZnpCSgPwFnSm8UwL9hpjvS83u8sgKB2JeVQOqBy3Br5fWywUXmmKmfK9iVuLw22wdI
+         b+0A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=/bQw1cLtYl3A/83AJDVmJyoX1dKxkgmG5lvK3TLTKfU=;
+        b=MjquBqkStHUZcBNH+/Zhqrqh7YNx70l1tUC7XwF6l3bINzy1xkfHZnLxCa2KAZb+XW
+         WPa2lTCVcbTaJRVgM+P2dUb+9Lo9Sb5DJIo2uGtj32a0v5dIct3ff32wJfx9K6E28O6g
+         zndiEk07f5jI0Ygsb1Pgqdm1j1ekQc2ECL1iMbodFGDYcVbGZmOBlEesncpb9GxNp75W
+         P2LFmbMQ0wcJDxpbiBjW2LCdhZ7TY89P9Pd9v9jCkqert1fetpaSvKCbRbb8tbck0TOw
+         yg5CHs8+rwPkAddMcVcpHxvXPI+Xobwpfpc+vKlfoTVgvhFEJjMpicF1S7GRmjh1XQj7
+         hOlA==
+X-Gm-Message-State: APjAAAU1k24UJKtRy+R0wS9Z9nIWOSsmci3C8e5K15Wq+sEYup3gVqJM
+        XXWjiOaWW7mhs0ds31YSnvk2Gw==
+X-Google-Smtp-Source: APXvYqzUEXKAsnlMNfnDwvV9kBcQAdBfFiGL46JnjJS/6c6L7kK23lwN0m3iztut8dHj03BGHhCU4A==
+X-Received: by 2002:a17:90b:308:: with SMTP id ay8mr8100469pjb.7.1568241159900;
+        Wed, 11 Sep 2019 15:32:39 -0700 (PDT)
+Received: from localhost ([49.248.179.160])
+        by smtp.gmail.com with ESMTPSA id 20sm27074002pfh.72.2019.09.11.15.32.38
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Wed, 11 Sep 2019 15:32:39 -0700 (PDT)
+From:   Amit Kucheria <amit.kucheria@linaro.org>
+To:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        bjorn.andersson@linaro.org, edubezval@gmail.com, agross@kernel.org,
+        tdas@codeaurora.org, swboyd@chromium.org, ilina@codeaurora.org,
+        "Rafael J. Wysocki" <rjw@rjwysocki.net>,
+        Daniel Lezcano <daniel.lezcano@linaro.org>,
+        Viresh Kumar <viresh.kumar@linaro.org>,
+        Zhang Rui <rui.zhang@intel.com>
+Cc:     linux-clk@vger.kernel.org, linux-pm@vger.kernel.org
+Subject: [PATCH 0/5] Initialise thermal framework earlier during boot
+Date:   Thu, 12 Sep 2019 04:02:29 +0530
+Message-Id: <cover.1568240476.git.amit.kucheria@linaro.org>
+X-Mailer: git-send-email 2.17.1
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Sep 11 2019 at 04:19 -0600, Linus Walleij wrote:
->On Thu, Aug 29, 2019 at 7:35 PM Lina Iyer <ilina@codeaurora.org> wrote:
->
->> Replace gpiochip_irqchip_add() and gpiochip_set_chained_irqchip() calls
->> by populating the gpio_irq_chip data structures instead.
->>
->> Signed-off-by: Lina Iyer <ilina@codeaurora.org>
->
->This is mostly fixed upstream I think, but:
->
->> +       chip->irq.fwnode = pctrl->dev->fwnode;
->
->This fwnode assignment is missing though.
->
->Sorry for the constant churn and required rebasing...
->
-Not a problem. Will rebase.
+Device boot needs to be as fast as possible while keeping under the thermal
+envelope. Now that thermal framework is built-in to the kernel, we can
+initialize it earlier to enable thermal mitigation during boot.
+
+We also need the cpufreq HW drivers to be initialised earlier to act as the
+cooling devices. This series only converts over the qcom-hw driver to
+initialize earlier but can be extended to other platforms as well.
+
+
+Amit Kucheria (4):
+  cpufreq: Initialise the governors in core_initcall
+  cpufreq: Initialize cpufreq-dt driver earlier
+  clk: qcom: Initialise clock drivers earlier
+  cpufreq: qcom-hw: Move driver initialisation earlier
+
+Lina Iyer (1):
+  thermal: Initialize thermal subsystem earlier
+
+ drivers/clk/qcom/clk-rpmh.c            |  2 +-
+ drivers/clk/qcom/gcc-qcs404.c          |  2 +-
+ drivers/clk/qcom/gcc-sdm845.c          |  2 +-
+ drivers/cpufreq/cpufreq-dt-platdev.c   |  2 +-
+ drivers/cpufreq/cpufreq_conservative.c |  2 +-
+ drivers/cpufreq/cpufreq_ondemand.c     |  2 +-
+ drivers/cpufreq/cpufreq_performance.c  |  2 +-
+ drivers/cpufreq/cpufreq_powersave.c    |  2 +-
+ drivers/cpufreq/cpufreq_userspace.c    |  2 +-
+ drivers/cpufreq/qcom-cpufreq-hw.c      |  2 +-
+ drivers/thermal/thermal_core.c         | 41 +++++++++++++++-----------
+ 11 files changed, 34 insertions(+), 27 deletions(-)
+
+-- 
+2.17.1
+
