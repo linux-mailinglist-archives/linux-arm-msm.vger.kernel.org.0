@@ -2,49 +2,49 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 7FB4EAF6B0
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Sep 2019 09:24:49 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 8DD47AF6AC
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Sep 2019 09:24:47 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727135AbfIKHRJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 11 Sep 2019 03:17:09 -0400
-Received: from mail-pf1-f194.google.com ([209.85.210.194]:40085 "EHLO
-        mail-pf1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727075AbfIKHRA (ORCPT
+        id S1727137AbfIKHRE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 11 Sep 2019 03:17:04 -0400
+Received: from mail-pg1-f196.google.com ([209.85.215.196]:33809 "EHLO
+        mail-pg1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727109AbfIKHRD (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 11 Sep 2019 03:17:00 -0400
-Received: by mail-pf1-f194.google.com with SMTP id x127so13082322pfb.7
-        for <linux-arm-msm@vger.kernel.org>; Wed, 11 Sep 2019 00:16:59 -0700 (PDT)
+        Wed, 11 Sep 2019 03:17:03 -0400
+Received: by mail-pg1-f196.google.com with SMTP id n9so11080863pgc.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 11 Sep 2019 00:17:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :in-reply-to:references;
-        bh=GSstL9++8v2jfjaKtHregZZ+QyubdM5bUACzzsQ3BDU=;
-        b=dznj/+/40631Px0rjuDfWd+FuadRLuIPffDB1RmRlk/sVj3JSox3UllSeah4dGtzEv
-         MrKGjQFd9uWG2PKoYzrDKQai7Ph1MdD/HhywKAPhxGgDHJrbkH9eeLehemSnaaXaloXe
-         7RmBWJEEnZm8nHbEou0x+xn59zG6RN5yasO6eY0BhoZnYFOj2NussqJD91NXhpq3BTpN
-         zBu9WzR09y8TeYQPX0DyaaFfWiayAMw9E9TUgXOSmktBHIh6WeJXPV+s8BEmd5jm8TsC
-         vfUtDGN1eHJHfpY83Gwkg8sJpYUt3Jcwp7NqCY2LiNPrecB8OmZceznN5HHA9VmbK6zl
-         KQ+g==
+        bh=3aqllZnhirWen18NJ9rLavBCP+/YOWA9zZa8CCtZyTg=;
+        b=L3wGd7LB0bierPG9sbQdy13pJdxcVz2jCSo3BbxJYYWTs+0POADWJOxwUle/17TUzo
+         nqLzYwD7X/sDwdnvK0tGeWCUrP5jVynB9yFyIiRf+/k46QIGkYxJmLeiedtivkGraazl
+         i3nqMnWRkTPMiDBcLXyLkP+HbwVzO+u2wLRHtnzRxLKNkO5MHbk/k2q9v118eDi/ikPt
+         zHlHdbNtsXVBE0hkfKlWJsAG5RlNxGxH72czlbwKJBqh0gVWQDsB+dVFrNhRiVqgmu0c
+         +Z1d9pdiyZA+uVLxRAKVFrGN1NJohaQMQlasvruHAqtTBXLiFWOBJKSD6X+8gUiKo/NS
+         ZBnQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:in-reply-to:references;
-        bh=GSstL9++8v2jfjaKtHregZZ+QyubdM5bUACzzsQ3BDU=;
-        b=RAK6fgj/6m/ztyt8t/p1oTs8XbHWNo6PzhLSQHqjkyM0Lb5U1BhgZHL6udt6A+YrUf
-         uwQAbki7Zh/AX/A9w19xEreC8Mw0e8ePJFHNpOlgH7HGza97pIOkePKRvklWAlQznJRG
-         o0i1V6QE7kb2yt6Z7FW5aFXoGNTHiiq9lj6B0duAkX59eulGM+d3agC8QVyYHl668UUV
-         XcpDBw2Hzxewsc2VKEuLwHBAGiEDIb5nBc529EWvT3DrKuur1/EvYxzF2nDVtbAzUiO6
-         cXeP2wR32KojhTqWR4AqS0NiS+u6Jut3C7lOfDMWvTiP8aOM8Nyg3iUi9s7gYzyBE6hy
-         Tm7Q==
-X-Gm-Message-State: APjAAAWnhIRvxckeD9sXSY9lckcl0lmOL+9gW3IvowSk/vV2TWx53Yg9
-        qZxs5GiK2zCj5Wz+JRcZDX4nIAuJlnUMkA==
-X-Google-Smtp-Source: APXvYqyBrTR47t5vEkoimOeaBMEP/h7oOpWROGybcY2jc9IuaVZguwKVWTqibPEhPlDRaaxsCCo6rA==
-X-Received: by 2002:a65:644d:: with SMTP id s13mr562937pgv.47.1568186218838;
-        Wed, 11 Sep 2019 00:16:58 -0700 (PDT)
+        bh=3aqllZnhirWen18NJ9rLavBCP+/YOWA9zZa8CCtZyTg=;
+        b=JozUkQINKN5SidRAmdIjB6GZYdEqXEB4SBhRFW/VZR5tcCsTRQ+11GR7mktPi8mX7H
+         IHKI+SM46MEz184Dt2CaxY370H8pAfzuZ6OVciZSyswAQw7hpSEqAjZ9AyTUDwViseoW
+         KhBFVRLNxNExJaJqPpF0ZKdPr0F8xylEoOCLcJOHRKAddUUeBnrsFKbAgN2/AUOutRUq
+         XlAzZqUXyh9+sEwqA1qym/F5va/+T8j5nApHtoirNBmRn/hLCW1nt+Xpc5VXCm+0IXAY
+         2QlYgGnP1INgWprGHmmwE21Z3jce7+4AImo/Wj4E4GXK6ySh4QsQV2N9yQ8Mlp674y1i
+         aOVg==
+X-Gm-Message-State: APjAAAUrmxqM205wH1o4YhgpATVcN9k9p1RvVg6GiT6vFJxN/QYbzGAp
+        xaN98FlAy8rliyO/lhs3kGwL/g==
+X-Google-Smtp-Source: APXvYqwLGTmWnztX3+l4zBFHblSob682uzYu6tFIpr+t1m6e9BiXASPtmZln57+ZOh2b7p1jNtkysg==
+X-Received: by 2002:a62:15c7:: with SMTP id 190mr39946864pfv.107.1568186222731;
+        Wed, 11 Sep 2019 00:17:02 -0700 (PDT)
 Received: from localhost ([49.248.201.118])
-        by smtp.gmail.com with ESMTPSA id h11sm17719876pgv.5.2019.09.11.00.16.57
+        by smtp.gmail.com with ESMTPSA id b10sm152893pjo.1.2019.09.11.00.17.01
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 11 Sep 2019 00:16:58 -0700 (PDT)
+        Wed, 11 Sep 2019 00:17:02 -0700 (PDT)
 From:   Amit Kucheria <amit.kucheria@linaro.org>
 To:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
         bjorn.andersson@linaro.org, edubezval@gmail.com, agross@kernel.org,
@@ -54,9 +54,9 @@ To:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
         Rob Herring <robh+dt@kernel.org>,
         Zhang Rui <rui.zhang@intel.com>
 Cc:     devicetree@vger.kernel.org
-Subject: [PATCH v3 05/15] arm: dts: msm8974: thermal: Add thermal zones for each sensor
-Date:   Wed, 11 Sep 2019 12:46:22 +0530
-Message-Id: <6c3835cd92325b3f4ebc3885d9009b58d0cdf6b0.1568185732.git.amit.kucheria@linaro.org>
+Subject: [PATCH v3 06/15] arm64: dts: msm8916: thermal: Fixup HW ids for cpu sensors
+Date:   Wed, 11 Sep 2019 12:46:23 +0530
+Message-Id: <47305ec06a4b76a79aa073e4c0202a27a853a700.1568185732.git.amit.kucheria@linaro.org>
 X-Mailer: git-send-email 2.17.1
 In-Reply-To: <cover.1568185732.git.amit.kucheria@linaro.org>
 References: <cover.1568185732.git.amit.kucheria@linaro.org>
@@ -67,117 +67,39 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-msm8974 has 11 sensors connected to a single TSENS IP. Define a thermal
-zone for each of those sensors to expose the temperature of each zone.
+msm8916 uses sensors 0, 1, 2, 4 and 5. Sensor 3 is NOT used. Fixup the
+device tree so that the correct sensor ID is used and as a result we can
+actually check the temperature for the cpu2_3 sensor.
 
 Signed-off-by: Amit Kucheria <amit.kucheria@linaro.org>
-Tested-by: Brian Masney <masneyb@onstation.org>
+Reviewed-by: Daniel Lezcano <daniel.lezcano@linaro.org>
 Reviewed-by: Stephen Boyd <swboyd@chromium.org>
 ---
- arch/arm/boot/dts/qcom-msm8974.dtsi | 90 +++++++++++++++++++++++++++++
- 1 file changed, 90 insertions(+)
+ arch/arm64/boot/dts/qcom/msm8916.dtsi | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/arch/arm/boot/dts/qcom-msm8974.dtsi b/arch/arm/boot/dts/qcom-msm8974.dtsi
-index 369e58f64145..d32f639505f1 100644
---- a/arch/arm/boot/dts/qcom-msm8974.dtsi
-+++ b/arch/arm/boot/dts/qcom-msm8974.dtsi
-@@ -217,6 +217,96 @@
- 				};
- 			};
- 		};
-+
-+		q6-dsp-thermal {
-+			polling-delay-passive = <250>;
-+			polling-delay = <1000>;
-+
-+			thermal-sensors = <&tsens 1>;
-+
-+			trips {
-+				q6_dsp_alert0: trip-point0 {
-+					temperature = <90000>;
-+					hysteresis = <2000>;
-+					type = "hot";
-+				};
-+			};
-+		};
-+
-+		modemtx-thermal {
-+			polling-delay-passive = <250>;
-+			polling-delay = <1000>;
-+
-+			thermal-sensors = <&tsens 2>;
-+
-+			trips {
-+				modemtx_alert0: trip-point0 {
-+					temperature = <90000>;
-+					hysteresis = <2000>;
-+					type = "hot";
-+				};
-+			};
-+		};
-+
-+		video-thermal {
-+			polling-delay-passive = <0>;
-+			polling-delay = <1000>;
-+
-+			thermal-sensors = <&tsens 3>;
-+
-+			trips {
-+				video_alert0: trip-point0 {
-+					temperature = <95000>;
-+					hysteresis = <2000>;
-+					type = "hot";
-+				};
-+			};
-+		};
-+
-+		wlan-thermal {
-+			polling-delay-passive = <0>;
-+			polling-delay = <0>;
-+
-+			thermal-sensors = <&tsens 4>;
-+
-+			trips {
-+				wlan_alert0: trip-point0 {
-+					temperature = <105000>;
-+					hysteresis = <2000>;
-+					type = "hot";
-+				};
-+			};
-+		};
-+
-+		gpu-thermal-top {
-+			polling-delay-passive = <250>;
-+			polling-delay = <1000>;
-+
-+			thermal-sensors = <&tsens 9>;
-+
-+			trips {
-+				gpu1_alert0: trip-point0 {
-+					temperature = <90000>;
-+					hysteresis = <2000>;
-+					type = "hot";
-+				};
-+			};
-+		};
-+
-+		gpu-thermal-bottom {
-+			polling-delay-passive = <250>;
-+			polling-delay = <1000>;
-+
-+			thermal-sensors = <&tsens 10>;
-+
-+			trips {
-+				gpu2_alert0: trip-point0 {
-+					temperature = <90000>;
-+					hysteresis = <2000>;
-+					type = "hot";
-+				};
-+			};
-+		};
- 	};
+diff --git a/arch/arm64/boot/dts/qcom/msm8916.dtsi b/arch/arm64/boot/dts/qcom/msm8916.dtsi
+index 5ea9fb8f2f87..8686e101905c 100644
+--- a/arch/arm64/boot/dts/qcom/msm8916.dtsi
++++ b/arch/arm64/boot/dts/qcom/msm8916.dtsi
+@@ -179,7 +179,7 @@
+ 			polling-delay-passive = <250>;
+ 			polling-delay = <1000>;
  
- 	cpu-pmu {
+-			thermal-sensors = <&tsens 4>;
++			thermal-sensors = <&tsens 5>;
+ 
+ 			trips {
+ 				cpu0_1_alert0: trip-point@0 {
+@@ -209,7 +209,7 @@
+ 			polling-delay-passive = <250>;
+ 			polling-delay = <1000>;
+ 
+-			thermal-sensors = <&tsens 3>;
++			thermal-sensors = <&tsens 4>;
+ 
+ 			trips {
+ 				cpu2_3_alert0: trip-point@0 {
 -- 
 2.17.1
 
