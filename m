@@ -2,100 +2,126 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 25504AF533
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Sep 2019 06:55:10 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 62A8BAF688
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Sep 2019 09:16:43 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726736AbfIKEzJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 11 Sep 2019 00:55:09 -0400
-Received: from smtp.codeaurora.org ([198.145.29.96]:41548 "EHLO
-        smtp.codeaurora.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726058AbfIKEzJ (ORCPT
+        id S1726018AbfIKHQl (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 11 Sep 2019 03:16:41 -0400
+Received: from mail-pg1-f194.google.com ([209.85.215.194]:45933 "EHLO
+        mail-pg1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725379AbfIKHQl (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 11 Sep 2019 00:55:09 -0400
-Received: by smtp.codeaurora.org (Postfix, from userid 1000)
-        id 75AE160A43; Wed, 11 Sep 2019 04:55:07 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
-        s=default; t=1568177708;
-        bh=oMY5Tj+8xqlrsEI1mYLnZKn0gg+CRwrKPBMhq/IUAS4=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=KA4kqy72J+ImBJ5TDxBYXQ0/yrwgtp9eRcdDtmzWI2XI5It5Z/R8frN3fM5gC+tiJ
-         qI0VmQ7bvzQmDVInMaR1HbudenbPqJMXaUK+pvwVNyAylprNLjwa/T2DC3hSNRVhSI
-         HkXGPQ3m+VXSq4gORhfJuaNzlZmAhe4+2OfmMu/g=
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        pdx-caf-mail.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.7 required=2.0 tests=ALL_TRUSTED,BAYES_00,
-        DKIM_INVALID,DKIM_SIGNED,SPF_NONE autolearn=no autolearn_force=no
-        version=3.4.0
-Received: from cchiluve-linux.qualcomm.com (blr-c-bdr-fw-01_globalnat_allzones-outside.qualcomm.com [103.229.19.19])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: cchiluve@smtp.codeaurora.org)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 2A1F8611DC;
-        Wed, 11 Sep 2019 04:55:03 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
-        s=default; t=1568177706;
-        bh=oMY5Tj+8xqlrsEI1mYLnZKn0gg+CRwrKPBMhq/IUAS4=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=ABYatkaE+4ezK5n1VvbEF5PrRST9DqvqnG1HMBktxDmgxD7pxhKPpjgVphfCkPwia
-         3QYM2VYivVFOk9OXxJjKlWmHy6CXPL3B/dAJcgRWkrwkQp1/MX6MT1pJJvBqv/41sJ
-         2DMxeDHPR8oGZlyuzpTsH8DysHRoRRzbRLpbJN50=
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 2A1F8611DC
-Authentication-Results: pdx-caf-mail.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: pdx-caf-mail.web.codeaurora.org; spf=none smtp.mailfrom=cchiluve@codeaurora.org
-From:   Chandana Kishori Chiluveru <cchiluve@codeaurora.org>
-To:     balbi@kernel.org, agross@kernel.org, david.brown@linaro.org
-Cc:     linux-usb@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        Chandana Kishori Chiluveru <cchiluve@codeaurora.org>
-Subject: [PATCH 3/3] arm64: dts: sdm845: Add interconnect properties for USB
-Date:   Wed, 11 Sep 2019 10:24:35 +0530
-Message-Id: <1568177675-18764-4-git-send-email-cchiluve@codeaurora.org>
-X-Mailer: git-send-email 1.9.1
-In-Reply-To: <1568177675-18764-1-git-send-email-cchiluve@codeaurora.org>
-References: <1568177675-18764-1-git-send-email-cchiluve@codeaurora.org>
+        Wed, 11 Sep 2019 03:16:41 -0400
+Received: by mail-pg1-f194.google.com with SMTP id 4so11037455pgm.12
+        for <linux-arm-msm@vger.kernel.org>; Wed, 11 Sep 2019 00:16:41 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=from:to:cc:subject:date:message-id;
+        bh=qUxVco5+9ktkoNCi0Mi64R9yup9qLyKawGp7kQ7ed2w=;
+        b=HFGSzct6wcdfRhoSXr4x1ifFQAt+kMTqekWwXS6k2NfgZj9w5KBMQZYa/T2W7mmK28
+         yLrVs/h+VFNkNcx6TtF4LZmHNRuniUy4MX6M0sSCq13mL8WWNlbuBDv3kvKJTm97XvV0
+         zCbE9oQDQfUoC7ezO3TgjdW+MOcv4QsdbIbEjb2ziUMCJDgg9zQmZJ5ImnisNzk9sSVY
+         WiLZAwnvmjbeXimxHb6q7s+bKsDO+MhGyR/TW7A61HtD2qTGgNdQCtndZXgk1MxfZGbJ
+         UFNxJfeRZdgmvBZ00BnmAVgYpKjjHa2rNtCMYmeEWSv1KWKpm59y8cCRwFyoJY0FtnKi
+         Vx7Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=qUxVco5+9ktkoNCi0Mi64R9yup9qLyKawGp7kQ7ed2w=;
+        b=AnYbew7Uo/ZvO/BFMmDoIgy5RrkgLziHKApm9hKIiiEaL2d6eN8qP9LfgHj9VbTY7p
+         WqFb6/srkkevwCpLK6T40nIwMaXC97vi5yaVULj6Ch98uiGeMZ4i/tXrn3cwtZCUYRtf
+         QaBPNNbxH3KYUmvLMtjemiutp8v/W3es8I6xizz5byuTC1xe7i7YVLuC9adSUwqAZDak
+         CNbbk9cMSwQ1v66C13gyeSOdcRSnJyswyyfVRckLwJsRv+AH7jpzDNJ0fv4RQKARx2Yh
+         tuT0qWamKydgKLE9duR/5nLi3Vf/0Ti55BEYXN550NMK5f3g04l+m8QSyJ+71x6XHLBk
+         I5fQ==
+X-Gm-Message-State: APjAAAWZOV3IwXMPYTy/yI0nOowptVbtPXZ4qrX9X1RGvAZd97fCcHES
+        /HULLccZ6sdWwSZwUSKqU5qvwQ==
+X-Google-Smtp-Source: APXvYqwIwlbCdDcjnWBcmrrRCBki67IYc6HmBfZIKB+VpmUNhcS8cnxox+j8Ctb9q2YUlHKloGPOFw==
+X-Received: by 2002:a17:90a:8509:: with SMTP id l9mr3834867pjn.10.1568186200477;
+        Wed, 11 Sep 2019 00:16:40 -0700 (PDT)
+Received: from localhost ([49.248.201.118])
+        by smtp.gmail.com with ESMTPSA id c2sm21933784pfd.66.2019.09.11.00.16.39
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Wed, 11 Sep 2019 00:16:39 -0700 (PDT)
+From:   Amit Kucheria <amit.kucheria@linaro.org>
+To:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        bjorn.andersson@linaro.org, edubezval@gmail.com, agross@kernel.org,
+        masneyb@onstation.org, swboyd@chromium.org,
+        Daniel Lezcano <daniel.lezcano@linaro.org>,
+        Mark Rutland <mark.rutland@arm.com>,
+        Rob Herring <robh+dt@kernel.org>,
+        Zhang Rui <rui.zhang@intel.com>
+Cc:     devicetree@vger.kernel.org, linux-pm@vger.kernel.org
+Subject: [PATCH v3 00/15] thermal: qcom: tsens: Add interrupt support
+Date:   Wed, 11 Sep 2019 12:46:17 +0530
+Message-Id: <cover.1568185732.git.amit.kucheria@linaro.org>
+X-Mailer: git-send-email 2.17.1
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Populate USB DT node with interconnect properties.
+Changes since v2:
+- Addressed Stephen's review comment
+- Moved the dt-bindings to yaml (This throws up some new warnings in various QCOM
+devicetrees. I'll send out a separate series to fix them up)
+- Collected reviews and acks
+- Added the dt-bindings to MAINTAINERS
 
-Signed-off-by: Chandana Kishori Chiluveru <cchiluve@codeaurora.org>
----
- arch/arm64/boot/dts/qcom/sdm845.dtsi | 12 ++++++++++++
- 1 file changed, 12 insertions(+)
+Changes since v1:
+- Collected reviews and acks
+- Addressed Stephen's review comments (hopefully I got them all).
+- Completely removed critical interrupt infrastructure from this series.
+  Will post that separately.
+- Fixed a bug in sign-extension of temperature.
+- Fixed DT bindings to use the name of the interrupt e.g. "uplow" and use
+  platform_get_irq_byname().
 
-diff --git a/arch/arm64/boot/dts/qcom/sdm845.dtsi b/arch/arm64/boot/dts/qcom/sdm845.dtsi
-index fcb9330..1c41922 100644
---- a/arch/arm64/boot/dts/qcom/sdm845.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sdm845.dtsi
-@@ -1837,6 +1837,12 @@
- 
- 			resets = <&gcc GCC_USB30_PRIM_BCR>;
- 
-+			interconnects = <&rsc_hlos MASTER_USB3_0
-+						&rsc_hlos SLAVE_EBI1>,
-+					<&rsc_hlos MASTER_APPSS_PROC
-+						&rsc_hlos SLAVE_USB3_0>;
-+			interconnect-names = "usb-ddr", "apps-usb";
-+
- 			usb_1_dwc3: dwc3@a600000 {
- 				compatible = "snps,dwc3";
- 				reg = <0 0x0a600000 0 0xcd00>;
-@@ -1881,6 +1887,12 @@
- 
- 			resets = <&gcc GCC_USB30_SEC_BCR>;
- 
-+			interconnects = <&rsc_hlos MASTER_USB3_1
-+						&rsc_hlos SLAVE_EBI1>,
-+					<&rsc_hlos MASTER_APPSS_PROC
-+						&rsc_hlos SLAVE_USB3_1>;
-+			interconnect-names = "usb-ddr", "apps-usb";
-+
- 			usb_2_dwc3: dwc3@a800000 {
- 				compatible = "snps,dwc3";
- 				reg = <0 0x0a800000 0 0xcd00>;
+Add interrupt support to TSENS. The first 6 patches are general fixes and
+cleanups to the driver before interrupt support is introduced.
+
+This series has been developed against qcs404 and sdm845 and then tested on
+msm8916 and msm8974 (Thanks Brian). Testing on msm8998 would be appreciated since I don't
+have hardware handy.
+
+Amit Kucheria (15):
+  drivers: thermal: tsens: Get rid of id field in tsens_sensor
+  drivers: thermal: tsens: Simplify code flow in tsens_probe
+  drivers: thermal: tsens: Add __func__ identifier to debug statements
+  drivers: thermal: tsens: Add debugfs support
+  arm: dts: msm8974: thermal: Add thermal zones for each sensor
+  arm64: dts: msm8916: thermal: Fixup HW ids for cpu sensors
+  dt-bindings: thermal: tsens: Convert over to a yaml schema
+  arm64: dts: sdm845: thermal: Add interrupt support
+  arm64: dts: msm8996: thermal: Add interrupt support
+  arm64: dts: msm8998: thermal: Add interrupt support
+  arm64: dts: qcs404: thermal: Add interrupt support
+  arm: dts: msm8974: thermal: Add interrupt support
+  arm64: dts: msm8916: thermal: Add interrupt support
+  drivers: thermal: tsens: Create function to return sign-extended
+    temperature
+  drivers: thermal: tsens: Add interrupt support
+
+ .../bindings/thermal/qcom-tsens.txt           |  55 --
+ .../bindings/thermal/qcom-tsens.yaml          | 174 ++++++
+ MAINTAINERS                                   |   1 +
+ arch/arm/boot/dts/qcom-msm8974.dtsi           | 108 +++-
+ arch/arm64/boot/dts/qcom/msm8916.dtsi         |  26 +-
+ arch/arm64/boot/dts/qcom/msm8996.dtsi         |  60 +-
+ arch/arm64/boot/dts/qcom/msm8998.dtsi         |  82 +--
+ arch/arm64/boot/dts/qcom/qcs404.dtsi          |  42 +-
+ arch/arm64/boot/dts/qcom/sdm845.dtsi          |  88 +--
+ drivers/thermal/qcom/tsens-8960.c             |   4 +-
+ drivers/thermal/qcom/tsens-common.c           | 529 ++++++++++++++++--
+ drivers/thermal/qcom/tsens-v0_1.c             |  11 +
+ drivers/thermal/qcom/tsens-v1.c               |  29 +
+ drivers/thermal/qcom/tsens-v2.c               |  13 +
+ drivers/thermal/qcom/tsens.c                  |  58 +-
+ drivers/thermal/qcom/tsens.h                  | 286 ++++++++--
+ 16 files changed, 1254 insertions(+), 312 deletions(-)
+ delete mode 100644 Documentation/devicetree/bindings/thermal/qcom-tsens.txt
+ create mode 100644 Documentation/devicetree/bindings/thermal/qcom-tsens.yaml
+
 -- 
-Qualcomm India Private Limited, on behalf of Qualcomm Innovation Center, Inc.,
-is a member of Code Aurora Forum, a Linux Foundation Collaborative Project.
+2.17.1
 
