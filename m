@@ -2,154 +2,95 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 28457B10DA
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Sep 2019 16:16:08 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 55A3DB114B
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Sep 2019 16:41:39 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732480AbfILOPu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 12 Sep 2019 10:15:50 -0400
-Received: from mail-wm1-f65.google.com ([209.85.128.65]:53263 "EHLO
-        mail-wm1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1732573AbfILOPt (ORCPT
+        id S1732702AbfILOli (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 12 Sep 2019 10:41:38 -0400
+Received: from mail-pf1-f196.google.com ([209.85.210.196]:42132 "EHLO
+        mail-pf1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1732512AbfILOli (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 12 Sep 2019 10:15:49 -0400
-Received: by mail-wm1-f65.google.com with SMTP id q18so238789wmq.3
-        for <linux-arm-msm@vger.kernel.org>; Thu, 12 Sep 2019 07:15:46 -0700 (PDT)
+        Thu, 12 Sep 2019 10:41:38 -0400
+Received: by mail-pf1-f196.google.com with SMTP id w22so16146219pfi.9
+        for <linux-arm-msm@vger.kernel.org>; Thu, 12 Sep 2019 07:41:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=U94LXB0H1SLchTUsgjMZwjp3h0cafdMB0BynvaN+clQ=;
-        b=c2LsHJ3tBEwEu++rxVvsn78g0L8UGdn7yiC4/N4WA91klnp22ccVAB1m6chQL/Onzq
-         RhHrr9XFtyyqbHwCu1B1W+g94jvzJjkTfeDlIRm1O27WepyHaoth/Gs16hJe+L0Z9pbo
-         njNWTGxQCTm1gyfrIhwhNHhqw+frkZfE4FpyYuoXtKj2XdpxVE/NV4Y4VvX/AakWvjys
-         v8tipJcte9cSWKsE9GIJCbTR/X74OPRpl09XBDpkPW9vo/zKKDTtXStOUMoe4g4o6n9k
-         xZxx0QvX8cFKWC00/Y1UN+WXaYKiXKNDC7V+qx0/JFXxnzziXfJBQM+gb9Y2DGDnJ1r+
-         tTMw==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=r10XxYo64h7WhrgLMhjzdHqV1PkZ/x1I9tqJZeKTMc4=;
+        b=Mwj32CQaEx1C6jSYjkvSBFB9XLBwRzlQNF4YPTVHp/4BLY45eXByAwlwqQeUVzEl4e
+         xIDDW/JwGQvwGUONObe9X1YPZlxxNi3e5MGidT4kWtbuxGYF+F1vKflxYaeJ2fSUGI+d
+         S6Ak3qU4hF1Ah3k9lQAC1JwQgyXRUFLPGmUU/GoLmUZfGAovKhRELGPQkDxuVuvJMRtl
+         D7rU4n1yjuXXaJxUCL0fkKrPF+aV6IanCL+h76GlY7BcK5RiPHJMrEb6YCPPF9U/eFqZ
+         X6ww+U0H0hn85vYUOmwR9Mqh/k3GiFdBkgDe/lCGvnSmn/1WKifFLr66NEy0Vm4An0+w
+         hrhw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=U94LXB0H1SLchTUsgjMZwjp3h0cafdMB0BynvaN+clQ=;
-        b=jliZoZkrqA+CrACLCIjrum0eyVa1UNIKtffgKgNNEuIQF7bPm9rQSZc/DCquME3Awb
-         Ag7karLpv+dqTcHAOV4WNzX8Ch00Yu/4Rp9kbpIPjS4fnfxZa4kOrQyL44+DdA1yBaED
-         AyTqrmBChg3PbsII430wpH4/eTQPCQudN0i3OUXe5fAgl7u6U8Rej3FGN5DvkO/PfzW3
-         DMn+jM+CiL51nkhhmryV0cX7JKTtdw/EuKh3EM62DvkQghmfsqHmPLEO9RWP3yoP9LiG
-         qtr4L+yhBEvj9+ye8N029dqVIAbb2Zp2olr5Qi0fyoQal+9rtWUBmn3ftOXsoTUZRirs
-         noeA==
-X-Gm-Message-State: APjAAAUutaELpU6F2J0aA5bsA3ZfdmxnWkva+a0zF6caz7KZ+8WebvD5
-        BsAwQjctmjCJAmylqRpg3lFVGw==
-X-Google-Smtp-Source: APXvYqy70e0LTKSHReHGBTwSYaCcOtPua5H4LToUok6GoIgFi9Fwo1Yl8Gyg5lX985HrVLB3xIj4Bw==
-X-Received: by 2002:a1c:7a14:: with SMTP id v20mr197811wmc.75.1568297745884;
-        Thu, 12 Sep 2019 07:15:45 -0700 (PDT)
-Received: from localhost.localdomain (69.red-83-35-113.dynamicip.rima-tde.net. [83.35.113.69])
-        by smtp.gmail.com with ESMTPSA id p23sm137599wma.18.2019.09.12.07.15.44
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Thu, 12 Sep 2019 07:15:45 -0700 (PDT)
-From:   Jorge Ramirez-Ortiz <jorge.ramirez-ortiz@linaro.org>
-To:     jorge.ramirez-ortiz@linaro.org, sboyd@kernel.org,
-        agross@kernel.org, mturquette@baylibre.com,
-        bjorn.andersson@linaro.org
-Cc:     niklas.cassel@linaro.org, linux-arm-msm@vger.kernel.org,
-        linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: [PATCH v2 5/5] clk: qcom: apcs-msm8916: get parent clock names from DT
-Date:   Thu, 12 Sep 2019 16:15:34 +0200
-Message-Id: <20190912141534.28870-6-jorge.ramirez-ortiz@linaro.org>
-X-Mailer: git-send-email 2.23.0
-In-Reply-To: <20190912141534.28870-1-jorge.ramirez-ortiz@linaro.org>
-References: <20190912141534.28870-1-jorge.ramirez-ortiz@linaro.org>
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=r10XxYo64h7WhrgLMhjzdHqV1PkZ/x1I9tqJZeKTMc4=;
+        b=qakWFCJon9YLbxyZiNHrt6BeeF+1eB4FMNC64zuDWIRnPj1iGC3/FKXzCx5UNiPXVT
+         LcuE8z2DUGg4b1w+JZGzFUlK02dYuKewOJer7FFVRRQYiQFByrI/hqVgl4SAVrLWvgm5
+         K127BRD2Akpg4RFNvyHm5Bp6x5dHedPMT5aLdSdUWEWlFfW+7hTQTlTDDRcwIQQBzWuf
+         szHXEF3EqaHZCTBwfhp/QJKcF7C4Hx0n5t6Hp4gYtf+34obIcjQuz+7onTNLz3H45rFq
+         6DIdQ9RHd607EQjJCpQUObRf3u9b4TyPKNGexQZAPuFCil4FRkmKkYSBm7DGFiABWRVF
+         a2Ig==
+X-Gm-Message-State: APjAAAWEh6OOWaItKZpR8MdHnIHHKEQE5TPqqXT6fikzTPEyF8SBtUiW
+        3ZrwpGvnZqTlas+fzUug/LWi8A==
+X-Google-Smtp-Source: APXvYqwequlIpbX+PrCQEr/G2Xun6w8GjZ/REjd2nI410kBksQEDDgQ9WIHogZAWQxThN3ALcVXt7Q==
+X-Received: by 2002:a17:90a:b63:: with SMTP id 90mr440396pjq.96.1568299297139;
+        Thu, 12 Sep 2019 07:41:37 -0700 (PDT)
+Received: from tuxbook-pro (104-188-17-28.lightspeed.sndgca.sbcglobal.net. [104.188.17.28])
+        by smtp.gmail.com with ESMTPSA id w26sm27201591pfi.140.2019.09.12.07.41.36
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 12 Sep 2019 07:41:36 -0700 (PDT)
+Date:   Thu, 12 Sep 2019 07:41:34 -0700
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+Cc:     andy.gross@linaro.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: Re: [PATCH] soc: qcom: socinfo: add sdm845 and sda845 soc ids
+Message-ID: <20190912144134.GA7468@tuxbook-pro>
+References: <20190912091056.5385-1-srinivas.kandagatla@linaro.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20190912091056.5385-1-srinivas.kandagatla@linaro.org>
+User-Agent: Mutt/1.12.1 (2019-06-15)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Allow accessing the parent clock names required for the driver
-operation by using the device tree node.
+On Thu 12 Sep 02:10 PDT 2019, Srinivas Kandagatla wrote:
 
-This permits extending the driver to other platforms without having to
-modify its source code.
+> This patch adds missing soc ids for sdm845 and sda845
+> 
+> Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+> ---
+>  drivers/soc/qcom/socinfo.c | 2 ++
+>  1 file changed, 2 insertions(+)
+> 
+> diff --git a/drivers/soc/qcom/socinfo.c b/drivers/soc/qcom/socinfo.c
+> index 855353bed19e..8dc86a74559b 100644
+> --- a/drivers/soc/qcom/socinfo.c
+> +++ b/drivers/soc/qcom/socinfo.c
+> @@ -198,6 +198,8 @@ static const struct soc_id soc_id[] = {
+>  	{ 310, "MSM8996AU" },
+>  	{ 311, "APQ8096AU" },
+>  	{ 312, "APQ8096SG" },
+> +	{ 321, "SDM845"},
+> +	{ 341, "SDA845"},
+>  };
 
-For backwards compatibility leave previous values as default.
+Added a space before the '}' and picked this up.
 
-Co-developed-by: Niklas Cassel <niklas.cassel@linaro.org>
-Signed-off-by: Niklas Cassel <niklas.cassel@linaro.org>
-Signed-off-by: Jorge Ramirez-Ortiz <jorge.ramirez-ortiz@linaro.org>
-Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
----
- drivers/clk/qcom/apcs-msm8916.c | 15 ++++++++++++---
- 1 file changed, 12 insertions(+), 3 deletions(-)
+Thanks,
+Bjorn
 
-diff --git a/drivers/clk/qcom/apcs-msm8916.c b/drivers/clk/qcom/apcs-msm8916.c
-index a6c89a310b18..099b028dbc20 100644
---- a/drivers/clk/qcom/apcs-msm8916.c
-+++ b/drivers/clk/qcom/apcs-msm8916.c
-@@ -19,7 +19,7 @@
- 
- static const u32 gpll0_a53cc_map[] = { 4, 5 };
- 
--static const char * const gpll0_a53cc[] = {
-+static const char *gpll0_a53cc[] = {
- 	"gpll0_vote",
- 	"a53pll",
- };
-@@ -50,6 +50,7 @@ static int qcom_apcs_msm8916_clk_probe(struct platform_device *pdev)
- 	struct regmap *regmap;
- 	struct clk_init_data init = { };
- 	int ret = -ENODEV;
-+	const char *parents[2];
- 
- 	regmap = dev_get_regmap(parent, NULL);
- 	if (!regmap) {
-@@ -61,6 +62,9 @@ static int qcom_apcs_msm8916_clk_probe(struct platform_device *pdev)
- 	if (!a53cc)
- 		return -ENOMEM;
- 
-+	if (of_clk_parent_fill(parent->of_node, parents, 2) == 2)
-+		memcpy(gpll0_a53cc, parents, sizeof(parents));
-+
- 	init.name = "a53mux";
- 	init.parent_names = gpll0_a53cc;
- 	init.num_parents = ARRAY_SIZE(gpll0_a53cc);
-@@ -76,10 +80,11 @@ static int qcom_apcs_msm8916_clk_probe(struct platform_device *pdev)
- 	a53cc->src_shift = 8;
- 	a53cc->parent_map = gpll0_a53cc_map;
- 
--	a53cc->pclk = devm_clk_get(parent, NULL);
-+	a53cc->pclk = of_clk_get(parent->of_node, 0);
- 	if (IS_ERR(a53cc->pclk)) {
- 		ret = PTR_ERR(a53cc->pclk);
--		dev_err(dev, "failed to get clk: %d\n", ret);
-+		if (ret != -EPROBE_DEFER)
-+			dev_err(dev, "failed to get clk: %d\n", ret);
- 		return ret;
- 	}
- 
-@@ -87,6 +92,7 @@ static int qcom_apcs_msm8916_clk_probe(struct platform_device *pdev)
- 	ret = clk_notifier_register(a53cc->pclk, &a53cc->clk_nb);
- 	if (ret) {
- 		dev_err(dev, "failed to register clock notifier: %d\n", ret);
-+		clk_put(a53cc->pclk);
- 		return ret;
- 	}
- 
-@@ -109,6 +115,8 @@ static int qcom_apcs_msm8916_clk_probe(struct platform_device *pdev)
- 
- err:
- 	clk_notifier_unregister(a53cc->pclk, &a53cc->clk_nb);
-+	clk_put(a53cc->pclk);
-+
- 	return ret;
- }
- 
-@@ -117,6 +125,7 @@ static int qcom_apcs_msm8916_clk_remove(struct platform_device *pdev)
- 	struct clk_regmap_mux_div *a53cc = platform_get_drvdata(pdev);
- 
- 	clk_notifier_unregister(a53cc->pclk, &a53cc->clk_nb);
-+	clk_put(a53cc->pclk);
- 
- 	return 0;
- }
--- 
-2.23.0
-
+>  
+>  static const char *socinfo_machine(struct device *dev, unsigned int id)
+> -- 
+> 2.21.0
+> 
