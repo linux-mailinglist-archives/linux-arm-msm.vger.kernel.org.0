@@ -2,139 +2,87 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 03E20B0A3F
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Sep 2019 10:25:48 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 453DFB0A53
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Sep 2019 10:30:14 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730190AbfILIZ2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 12 Sep 2019 04:25:28 -0400
-Received: from mail-wm1-f68.google.com ([209.85.128.68]:35030 "EHLO
-        mail-wm1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730212AbfILIZ2 (ORCPT
+        id S1730292AbfILIaI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 12 Sep 2019 04:30:08 -0400
+Received: from mail-wm1-f67.google.com ([209.85.128.67]:52715 "EHLO
+        mail-wm1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1730166AbfILIaI (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 12 Sep 2019 04:25:28 -0400
-Received: by mail-wm1-f68.google.com with SMTP id n10so6512173wmj.0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 12 Sep 2019 01:25:25 -0700 (PDT)
+        Thu, 12 Sep 2019 04:30:08 -0400
+Received: by mail-wm1-f67.google.com with SMTP id x2so1105456wmj.2
+        for <linux-arm-msm@vger.kernel.org>; Thu, 12 Sep 2019 01:30:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=from:to:cc:subject:date:message-id;
-        bh=wZB3at2xoK86kPRYZnaC63gPvO1d3NIdf7sjzirM09s=;
-        b=ljelFNaR9UoDkgsJB0H0wYRS2AQxUR2OnQtr1VOYGke48iNktsvLz4IDoSayp5WYbO
-         83CoEhOmlvD7kkvthgF9yUDvua3NQcYtaJSaJCU9AkAEQQoJ+cOxLJUgsFO/kekAI000
-         ZMuz/FHSVqqv8uKZdqD8lAEE85BG1qCoHTPuac8FJdLnZ1nX6Up+/nrSApjvBoUs6X83
-         7RXvJ+8TzlJnUwZmkUAFfUVmjyIVM7IhVeFVRwjNjJZOqzK1AqL/SWRmrbxwofZbx/SD
-         0tHFXylxTN8NRhIqgz5q38aumbsvouhY93+UBRQ0MHh0UFofynBOtwCGO7f/uUp+c0JW
-         jdrg==
+        bh=cqzuGZoym9FEk7gYB3476i+uOhYWCF5S/jPvzlZG8fg=;
+        b=PO1eVqH06sZ0c21pOCfkvDiG+rH4UUPr0QVMoyijSFhI1rEs+Saiik5zH6V2qzitv+
+         tPYO4FPOEOgQbEP9WRebZysmk7OYoWtRCU+VEDZBWd4UHQvuMy4SKHgD/ppIV/JFhlF4
+         8jfDnZkV/EG6VAtslQEP+NxPQdbZhNZFrpLvzzH2Mv71wpC6YMAgszzeFzI49F89VCwE
+         6RtA5CTCyZBDL7e6qWt8MsKC+siGpXgKhNwXRqYmUtw2tL107DB0SzZZAuhmbi5aEhxA
+         IRbevC4URQe6Wr9FE7JgfYrPrkdZb4zdyMuAV+MjlSHb9gD+DWAevK4TCU2shrITKDhq
+         KEXA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id;
-        bh=wZB3at2xoK86kPRYZnaC63gPvO1d3NIdf7sjzirM09s=;
-        b=lrzcmDrS1PvmZYbCAK1hbkg5EDu/enPH7KEOe1yFny9cq0lMdU2oKDldc3RzDCNjtl
-         gH0LK7DdNsPXtamx3vXw3MlnBpVSARp/PbVSn5HVvw6b5YGBDbxK2zbMME82BPgvXEhn
-         pL0opTf8kjy8ULafRdRKtj8UDuFrwpzScLpg8j1/3yaoWF564kPeUtsXoLZhIxTSWv+p
-         d9ZVQdRpwH6EnD0eRzMsoQOx5LMyhe2cGkP6NJ8a1U8rzXmeKsmk2NJS4zr66MR0rBUS
-         V4FE+TC1LCe5UL/ARxQfcyvq2nRLvHUcdCygBR5TcU+1cWMMujsaqRpfr6Fi240XYC1J
-         eJ0A==
-X-Gm-Message-State: APjAAAW6uCS3PKdmJNSaye92b2UbFYzRwhJacn+bJ8kIkhQuuDJgN7cV
-        mjV39s1Bto8yr6IWziKSD7wn/Q==
-X-Google-Smtp-Source: APXvYqz1MbR8Zo5FU9i48ud7sY2+CoubwIQYGXjqRt6G/3bsuVumjdVf+CLq3wJO7qPtLeJtM3bR6Q==
-X-Received: by 2002:a7b:cb53:: with SMTP id v19mr7856682wmj.0.1568276724993;
-        Thu, 12 Sep 2019 01:25:24 -0700 (PDT)
+        bh=cqzuGZoym9FEk7gYB3476i+uOhYWCF5S/jPvzlZG8fg=;
+        b=PoYh1AlwQgZcWFe00WV2T2CVbtxznF2Xr2mdIrTpxOeZvcGKklI77sSUcNa754glqO
+         QnSyovvs9CnYOHoLU7m3p5I0zD7zx3gdU5Aaaxc16TSO9bMmG09NMZgp02VLJ2PYTrVI
+         YNLRTjzeFCrNDM52RHmHh9UvuSnszoZuJDHYGzmZRwUY/hGHfKrEEBuUph4teCBqR3rl
+         j+u8olRgg00WzgN4fwA1aLFyuQImkV1ua95jtXztHN0SVvzA+x9Xmrm4tnQWKRuseiDr
+         09azd8LcXbCtqWiPcGSZMdxfVAKc62UpH0GkBtKUSIl0eUwVNuFmz3kaAupsUINuPRBI
+         3siQ==
+X-Gm-Message-State: APjAAAVDXE2Bv0/G3cvAdNUGESL+4Y1v4U/CQMRAIeAZTxD+Vi234qNK
+        AgygI0jRTVnZekJYFGnofBvB/UpMHg8=
+X-Google-Smtp-Source: APXvYqwYiDdzKRqCJnoPo2p9S9CPrEEXB20zsEsHTgOhYMXdxJZ2Nw47zX2yALtzjs2dQc1lvu1iWw==
+X-Received: by 2002:a05:600c:1106:: with SMTP id b6mr6048249wma.127.1568277006590;
+        Thu, 12 Sep 2019 01:30:06 -0700 (PDT)
 Received: from mms-0440.qualcomm.mm-sol.com ([37.157.136.206])
-        by smtp.gmail.com with ESMTPSA id z189sm8537859wmc.25.2019.09.12.01.25.23
+        by smtp.gmail.com with ESMTPSA id 189sm7100877wmz.19.2019.09.12.01.30.05
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 12 Sep 2019 01:25:24 -0700 (PDT)
+        Thu, 12 Sep 2019 01:30:05 -0700 (PDT)
 From:   Stanimir Varbanov <stanimir.varbanov@linaro.org>
 To:     linux-media@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org
-Cc:     Nicolas Dufresne <nicolas@ndufresne.ca>,
-        Stanimir Varbanov <stanimir.varbanov@linaro.org>,
-        Loic Poulain <loic.poulain@linaro.org>
-Subject: [PATCH v3] venus: enc: fix enum_frameintervals
-Date:   Thu, 12 Sep 2019 11:25:10 +0300
-Message-Id: <20190912082510.31399-1-stanimir.varbanov@linaro.org>
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org
+Cc:     Vikash Garodia <vgarodia@codeaurora.org>,
+        Andy Gross <agross@kernel.org>,
+        Georgi Djakov <georgi.djakov@linaro.org>,
+        Stanimir Varbanov <stanimir.varbanov@linaro.org>
+Subject: [PATCH v2 0/2] Venus interconnect support for sdm845
+Date:   Thu, 12 Sep 2019 11:29:46 +0300
+Message-Id: <20190912082948.22836-1-stanimir.varbanov@linaro.org>
 X-Mailer: git-send-email 2.17.1
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-This fixes an issue when setting the encoder framerate because of
-missing precision. Now the frameinterval type is changed to
-TYPE_CONTINUOUS and step = 1. Also the math is changed when
-framerate property is called - the firmware side expects the
-framerate in Q16 values.
+Hello,
 
-Signed-off-by: Loic Poulain <loic.poulain@linaro.org>
-Signed-off-by: Stanimir Varbanov <stanimir.varbanov@linaro.org>
----
- drivers/media/platform/qcom/venus/venc.c | 23 ++++++++++++++++-------
- 1 file changed, 16 insertions(+), 7 deletions(-)
+Here are two patches which adds interconnect bandwidth requests
+depending on the resolution (macroblocks) in order to lower
+bandwidth pressure on the interconnect and memory.
 
-diff --git a/drivers/media/platform/qcom/venus/venc.c b/drivers/media/platform/qcom/venus/venc.c
-index 1b7fb2d5887c..bf2dd9287c32 100644
---- a/drivers/media/platform/qcom/venus/venc.c
-+++ b/drivers/media/platform/qcom/venus/venc.c
-@@ -22,6 +22,7 @@
- #include "venc.h"
- 
- #define NUM_B_FRAMES_MAX	4
-+#define FRAMERATE_FACTOR	(1 << 16)
- 
- /*
-  * Three resons to keep MPLANE formats (despite that the number of planes
-@@ -576,7 +577,7 @@ static int venc_enum_frameintervals(struct file *file, void *fh,
- 	struct venus_inst *inst = to_inst(file);
- 	const struct venus_format *fmt;
- 
--	fival->type = V4L2_FRMIVAL_TYPE_STEPWISE;
-+	fival->type = V4L2_FRMIVAL_TYPE_CONTINUOUS;
- 
- 	fmt = find_format(inst, fival->pixel_format,
- 			  V4L2_BUF_TYPE_VIDEO_CAPTURE_MPLANE);
-@@ -599,12 +600,12 @@ static int venc_enum_frameintervals(struct file *file, void *fh,
- 	    fival->height < frame_height_min(inst))
- 		return -EINVAL;
- 
--	fival->stepwise.min.numerator = 1;
--	fival->stepwise.min.denominator = frate_max(inst);
--	fival->stepwise.max.numerator = 1;
--	fival->stepwise.max.denominator = frate_min(inst);
-+	fival->stepwise.min.numerator = FRAMERATE_FACTOR;
-+	fival->stepwise.min.denominator = frate_max(inst) * FRAMERATE_FACTOR;
-+	fival->stepwise.max.numerator = FRAMERATE_FACTOR;
-+	fival->stepwise.max.denominator = frate_min(inst) * FRAMERATE_FACTOR;
- 	fival->stepwise.step.numerator = 1;
--	fival->stepwise.step.denominator = frate_max(inst);
-+	fival->stepwise.step.denominator = 1;
- 
- 	return 0;
- }
-@@ -649,6 +650,7 @@ static int venc_set_properties(struct venus_inst *inst)
- 	struct hfi_quantization quant;
- 	struct hfi_quantization_range quant_range;
- 	u32 ptype, rate_control, bitrate, profile = 0, level = 0;
-+	u64 framerate;
- 	int ret;
- 
- 	ret = venus_helper_set_work_mode(inst, VIDC_WORK_MODE_2);
-@@ -659,9 +661,16 @@ static int venc_set_properties(struct venus_inst *inst)
- 	if (ret)
- 		return ret;
- 
-+	framerate = inst->timeperframe.denominator * FRAMERATE_FACTOR;
-+	/* next line is to round up */
-+	framerate += inst->timeperframe.numerator - 1;
-+	do_div(framerate, inst->timeperframe.numerator);
-+
- 	ptype = HFI_PROPERTY_CONFIG_FRAME_RATE;
- 	frate.buffer_type = HFI_BUFFER_OUTPUT;
--	frate.framerate = inst->fps * (1 << 16);
-+	frate.framerate = framerate;
-+	if (frate.framerate > frate_max(inst) * FRAMERATE_FACTOR)
-+		frate.framerate = frate_max(inst) * FRAMERATE_FACTOR;
- 
- 	ret = hfi_session_set_property(inst, ptype, &frate);
- 	if (ret)
+Changes since v1:
+ - correct typo in the 1/2 patch description
+ - add a dependency to INTERCONNECT
+
+regards,
+Stan
+
+Stanimir Varbanov (2):
+  venus: use on-chip interconnect API
+  arm64: dts: sdm845: Add interconnect properties for Venus
+
+ arch/arm64/boot/dts/qcom/sdm845.dtsi        |  3 +
+ drivers/media/platform/Kconfig              |  1 +
+ drivers/media/platform/qcom/venus/core.c    | 34 +++++++++++
+ drivers/media/platform/qcom/venus/core.h    | 14 +++++
+ drivers/media/platform/qcom/venus/helpers.c | 67 ++++++++++++++++++++-
+ 5 files changed, 118 insertions(+), 1 deletion(-)
+
 -- 
 2.17.1
 
