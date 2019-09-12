@@ -2,135 +2,90 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id EC124B0F38
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Sep 2019 14:56:19 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 3DCD2B10E1
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Sep 2019 16:16:11 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731839AbfILM4O (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 12 Sep 2019 08:56:14 -0400
-Received: from mail-wr1-f66.google.com ([209.85.221.66]:33261 "EHLO
-        mail-wr1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1731772AbfILM4N (ORCPT
+        id S1732403AbfILOPn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 12 Sep 2019 10:15:43 -0400
+Received: from mail-wr1-f68.google.com ([209.85.221.68]:45281 "EHLO
+        mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1732455AbfILOPn (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 12 Sep 2019 08:56:13 -0400
-Received: by mail-wr1-f66.google.com with SMTP id u16so28374020wrr.0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 12 Sep 2019 05:56:11 -0700 (PDT)
+        Thu, 12 Sep 2019 10:15:43 -0400
+Received: by mail-wr1-f68.google.com with SMTP id l16so28572539wrv.12
+        for <linux-arm-msm@vger.kernel.org>; Thu, 12 Sep 2019 07:15:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=subject:to:cc:references:from:openpgp:autocrypt:message-id:date
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=LIiygEvzutjtW1si6WKIgeNvg7MT4ajN4iVo80ldc1Q=;
-        b=j0a8kymMb2fHobAfK33p+ACzNNo6EG5ulWX2OU1LGrrjG3bOvoCUXt2qN+Tpgj08Mx
-         GatBIOyy9GraevzMeayZkHEe4v8ct/NFDC2MumTzT4/AKvKVirQYiPw/LlicxdJ0o5V0
-         xBQ1a3KipMJTnZF0GFaetvGjamkaJru/BpcOij3qOmXIO9S7RpTMCJ2Z6F/glMfR+RRQ
-         KMNP8Oh4v2kmUVd4wgPw2i9nRZU3ffdPJbgYhosY8QjrJc6ptSrjJUSQxC5uOIfb1er6
-         NEB3V5OWb1JNBMf6eMUiBLGhKOEaAVxsEXk0gFZ/VOFk1wR09rfu0DOPZOesFa6p9Ioa
-         BBYg==
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=PBfT3mxgX+rD0lAyvtzYZMZFZtcbsSUwaCSVY0jK/V8=;
+        b=SZNIb9+Gj9o3ah2gIfkl6oIdgZYqAZVtp23KLGveHqrOnNJzkhqhla52cvSzsRHd7j
+         ZtzRW28j/osny8ID4m9lctcdlPwbylWBbyjXDK5Ax7Qsi9NNRG0vyfN6T4RTALd8OP6d
+         8FGozzt1l5j/c4WaDBYTA1+A5JCDbweZ+4oj6ZW/Pnyxku9ZBHInY/JjD4k5DegrGeFo
+         zJVH6eaeMsKR+3i8rIADhF6Ehl8yvLw89idDpLJiwTqbPKTTfvGOIGe9F6G4UMW9TX10
+         jRraENoy2m9ExdecOsU/jSIn225lO+R2zapaUHPLRf7Wrywk83zv26DktFnHWccbI+lC
+         IsrQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:openpgp:autocrypt
-         :message-id:date:mime-version:in-reply-to:content-language
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
          :content-transfer-encoding;
-        bh=LIiygEvzutjtW1si6WKIgeNvg7MT4ajN4iVo80ldc1Q=;
-        b=Z/8bSSP53sM23guYOuCXnUSVkGXJZltSeFzlTK/Uhb7Q3eS3nVGPI8IpFbFEgngu7k
-         WJB+F/mNI+7+BQ0V8ECtl4Msz2NDOd2JErKprElgEnHZ2gbTB+0il+HgFtRnOdOXSUmr
-         /H+RDwBoGwCNbqKpkZn1Gj4pneycsivb6rG2Pv2mWEv3+NS2k36eqBl9blHwqGTDMqgi
-         9x+8oDjkDgma46vRmQmCWy4+7k3nDpDrXjOYI7Au/2zEwjpdzBqGOxUXTYA9I49YyHKW
-         2Jlncz+5FrRSvpt01mQwiKwlhV6Fr86qLQZeMwswSzyDth18LlEV+Lvd/1VYvD8lIQiq
-         4PvA==
-X-Gm-Message-State: APjAAAU6O3QB9FiviwpjXA/ipjENHNTy1DNTf5tRGyz/R8vZeboc7qyi
-        cFjnKt6RziEmIihxiIgzgviDyw==
-X-Google-Smtp-Source: APXvYqziy1sdunIFpOFHmyt6HFWzb5kxEZ14YKp1WYNvq/GQE/xYTLGtNI7rvxqrSsx6692zmK8YJg==
-X-Received: by 2002:a5d:574c:: with SMTP id q12mr35229204wrw.69.1568292970350;
-        Thu, 12 Sep 2019 05:56:10 -0700 (PDT)
-Received: from [10.44.66.8] ([212.45.67.2])
-        by smtp.googlemail.com with ESMTPSA id r16sm28738115wrc.81.2019.09.12.05.56.09
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 12 Sep 2019 05:56:09 -0700 (PDT)
-Subject: Re: [RFC 1/2] mmc: sdhci-msm: Add support for bus bandwidth voting
-To:     Pradeep P V K <ppvk@codeaurora.org>, adrian.hunter@intel.com,
-        ulf.hansson@linaro.org, robh+dt@kernel.org
-Cc:     asutoshd@codeaurora.org, vbadigan@codeaurora.org,
-        stummala@codeaurora.org, sayalil@codeaurora.org,
-        rampraka@codeaurora.org, linux-mmc@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org,
-        Subhash Jadavani <subhashj@codeaurora.org>,
-        Andy Gross <agross@kernel.org>
-References: <1567774037-2344-1-git-send-email-ppvk@codeaurora.org>
- <1567774037-2344-2-git-send-email-ppvk@codeaurora.org>
-From:   Georgi Djakov <georgi.djakov@linaro.org>
-Openpgp: preference=signencrypt
-Autocrypt: addr=georgi.djakov@linaro.org; prefer-encrypt=mutual; keydata=
- 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
- KEmKjLDvB0pePJkdTw==
-Message-ID: <616c7a8c-a1cf-2043-4ea4-f452ee90f083@linaro.org>
-Date:   Thu, 12 Sep 2019 15:56:08 +0300
+        bh=PBfT3mxgX+rD0lAyvtzYZMZFZtcbsSUwaCSVY0jK/V8=;
+        b=P9nKLgyPb5UxP6Z0qRCQyGJ7bqx9fYd8WuJs79Dl6dMbfxv85ap0qOFWAJbYgNScUR
+         pv1EBszumaHSqlexE0KQ/zQJVCvbKztZe4GKwzjO+FUrczSfJnsjZ1stfOGPlxBg5cl9
+         gBB+/emxDEwG7aEs+73MiZTgBxBOEzrDUG72/PGHW5HwsP5r8ow5sy2oiQo1QDBvKFO+
+         bb8DTCWeqzo8LliP+XMbsxhawwYfpRRk0oQl/Gt9PIsJ1hVLq0Y21JyeFI0zFcdDkQJu
+         bV9Dcv5zM3i36H/OGGN9HcslXZGYa8AGPcb8jbDn4H2qKUgcsv7oBy506AHQi/H7+p4W
+         unmQ==
+X-Gm-Message-State: APjAAAU131sMIY5zO8JHoUPDxB4//+UtloKd4OxBL2j3dhNH8lcYOnLG
+        RxKi2kiwa8l63CjI+u5U8vnTtQ==
+X-Google-Smtp-Source: APXvYqwmScopqV21yxQR5oM3O6jHJFfw901TYP57XVjX/n1COgdd1lAJ8vCwY/XQG2an4RNcpVQruw==
+X-Received: by 2002:a5d:4649:: with SMTP id j9mr34265501wrs.193.1568297740484;
+        Thu, 12 Sep 2019 07:15:40 -0700 (PDT)
+Received: from localhost.localdomain (69.red-83-35-113.dynamicip.rima-tde.net. [83.35.113.69])
+        by smtp.gmail.com with ESMTPSA id p23sm137599wma.18.2019.09.12.07.15.39
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Thu, 12 Sep 2019 07:15:39 -0700 (PDT)
+From:   Jorge Ramirez-Ortiz <jorge.ramirez-ortiz@linaro.org>
+To:     jorge.ramirez-ortiz@linaro.org, sboyd@kernel.org,
+        agross@kernel.org, mturquette@baylibre.com,
+        bjorn.andersson@linaro.org
+Cc:     niklas.cassel@linaro.org, linux-arm-msm@vger.kernel.org,
+        linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: [PATCH v2 0/5] Clock changes to support cpufreq on QCS404 
+Date:   Thu, 12 Sep 2019 16:15:29 +0200
+Message-Id: <20190912141534.28870-1-jorge.ramirez-ortiz@linaro.org>
+X-Mailer: git-send-email 2.23.0
 MIME-Version: 1.0
-In-Reply-To: <1567774037-2344-2-git-send-email-ppvk@codeaurora.org>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Pradeep,
+The following clock changes are required to enable cpufreq support on
+the QCS404
 
-Thanks for the patch!
+v2: sboyd review of v1
+    -------------------
+    missing cover letter
+    reorder the patchset
+    use clk_parent data to speficy the parent clock
+    dong ignore the clock position abi
 
-On 9/6/19 15:47, Pradeep P V K wrote:
-> Vote for the MSM bus bandwidth required by SDHC driver
-> based on the clock frequency and bus width of the card.
-> Otherwise,the system clocks may run at minimum clock speed
-> and thus affecting the performance.
-> 
-> This change is based on Georgi Djakov [RFC]
-> (https://lkml.org/lkml/2018/10/11/499)
+Jorge Ramirez-Ortiz (5):
+  clk: qcom: gcc: limit GPLL0_AO_OUT operating frequency
+  clk: qcom: hfpll: register as clock provider
+  clk: qcom: hfpll: CLK_IGNORE_UNUSED
+  clk: qcom: hfpll: use clk_parent_data to specify the parent
+  clk: qcom: apcs-msm8916: get parent clock names from DT
 
-I am just wondering whether do we really need to predefine the bandwidth values
-in DT? Can't we use the computations from the above patch or is there any
-problem with that approach?
+ drivers/clk/qcom/apcs-msm8916.c  | 15 ++++++++++++---
+ drivers/clk/qcom/clk-alpha-pll.c |  8 ++++++++
+ drivers/clk/qcom/clk-alpha-pll.h |  1 +
+ drivers/clk/qcom/gcc-qcs404.c    |  2 +-
+ drivers/clk/qcom/hfpll.c         | 21 +++++++++++++++++++--
+ 5 files changed, 41 insertions(+), 6 deletions(-)
 
-Thanks,
-Georgi
+-- 
+2.23.0
+
