@@ -2,109 +2,72 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id B4A16B2647
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Sep 2019 21:53:48 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 2403DB2782
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Sep 2019 23:50:32 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729701AbfIMTxa (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 13 Sep 2019 15:53:30 -0400
-Received: from smtp.codeaurora.org ([198.145.29.96]:55468 "EHLO
-        smtp.codeaurora.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729670AbfIMTx3 (ORCPT
+        id S1731407AbfIMVs6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 13 Sep 2019 17:48:58 -0400
+Received: from mail-ot1-f67.google.com ([209.85.210.67]:33172 "EHLO
+        mail-ot1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1731274AbfIMVs6 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 13 Sep 2019 15:53:29 -0400
-Received: by smtp.codeaurora.org (Postfix, from userid 1000)
-        id 4009160770; Fri, 13 Sep 2019 19:53:28 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
-        s=default; t=1568404408;
-        bh=PBhczAxgGjJzcJPYs5T3OHtqWkVJvof+zdxMM1IFvbg=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=AmU0IYHzJcYptiF+l+/vTuBGnNyRRUPfS+N5FbkaaGQiA5HOpa5Sh1qbNNWlmWInH
-         QHEPBfQ9LaWRgMD1VNt4CEvVr5v6UN4ultrJvjswYEPdTerOumbK78jHVziDdWJ475
-         yQKjjp7MrvVFZxN7+xbhhlA/6SpK0/+HZf5EOt6k=
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        pdx-caf-mail.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.7 required=2.0 tests=ALL_TRUSTED,BAYES_00,
-        DKIM_INVALID,DKIM_SIGNED,SPF_NONE autolearn=no autolearn_force=no
-        version=3.4.0
-Received: from localhost (i-global254.qualcomm.com [199.106.103.254])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: ilina@smtp.codeaurora.org)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 4539460770;
-        Fri, 13 Sep 2019 19:53:27 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
-        s=default; t=1568404407;
-        bh=PBhczAxgGjJzcJPYs5T3OHtqWkVJvof+zdxMM1IFvbg=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=SFuM9u936AWPbXLPJKuCFFyLQ7WsQYwG/6SiF23ViGYBu7kM6Iua3Sn2xtRkl9kU0
-         yyr0s3Ezs+KQ8zjr/8DACAdCwGfMo4RMvKoMixuyN4RWSV0nDIZ3FV9sOGaFlv0Gy9
-         mLJlSeEKrwJ1LFuiOZsOu+mYdYQ1r9/kb/dM7Q6w=
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 4539460770
-Authentication-Results: pdx-caf-mail.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: pdx-caf-mail.web.codeaurora.org; spf=none smtp.mailfrom=ilina@codeaurora.org
-Date:   Fri, 13 Sep 2019 13:53:26 -0600
-From:   Lina Iyer <ilina@codeaurora.org>
-To:     Stephen Boyd <swboyd@chromium.org>
-Cc:     Rob Herring <robh@kernel.org>, evgreen@chromium.org,
-        linus.walleij@linaro.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, bjorn.andersson@linaro.org,
-        mkshah@codeaurora.org, linux-gpio@vger.kernel.org,
-        rnayak@codeaurora.org, devicetree@vger.kernel.org, maz@kernel.org
-Subject: Re: [PATCH RFC 05/14] dt-bindings/interrupt-controller: pdc: add SPI
- config register
-Message-ID: <20190913195326.GA3293@codeaurora.org>
-References: <20190829181203.2660-1-ilina@codeaurora.org>
- <20190829181203.2660-6-ilina@codeaurora.org>
- <5d6d1b72.1c69fb81.ee88.efcf@mx.google.com>
- <102c9268-c4ce-6133-3b0a-67c2fcba1e7a@arm.com>
- <20190903170722.GA31716@codeaurora.org>
- <5d71a247.1c69fb81.2146f.7ed2@mx.google.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii; format=flowed
-Content-Disposition: inline
-In-Reply-To: <5d71a247.1c69fb81.2146f.7ed2@mx.google.com>
-User-Agent: Mutt/1.5.24 (2015-08-30)
+        Fri, 13 Sep 2019 17:48:58 -0400
+Received: by mail-ot1-f67.google.com with SMTP id g25so29544331otl.0;
+        Fri, 13 Sep 2019 14:48:57 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:message-id:date:from:subject:references
+         :in-reply-to:cc:to;
+        bh=F5i3pST068XlEsFhofNRZcjySyRikQYQGvU4JMBRh/0=;
+        b=svSp+CpDn8T9ZeyawnQU7v+12egNyalUNEAWwMY0X5ArtH6yH5b5g9uxhAaoPV2sZR
+         HEgZMokvqmNjyJCdVekiT9ZGplGLbC1vyntAWCYUj2sdZJ3meEZA1LexfA88tj1bzy6X
+         qUQFksjR1mObNTtFtM1CWZS5caEb9OCMXUZcklfkKjnVTjFUi85NS53hJaHlN5UCWqUE
+         2BeZVSEVrTH9QJ+MxtqveCsa45opSEskkKWfP5R1+GIzNWdxKngA6l5PUJImG3anCQlT
+         duK/gklUZBqMmZi5/4zCpC61AHrwBn9Gqsl2bEez04+jjQFDH9ab7HXoCoAuP8YG/u0m
+         fUYQ==
+X-Gm-Message-State: APjAAAWOnnArA36CkfcoFO5ohjw4IgAweefYp9xWTn++zmgWGgXgy+p2
+        sr+onItbBX7tUiRYgD/40Q==
+X-Google-Smtp-Source: APXvYqzO/3Tphrwno2FqrPOfHIJwNFYOOudaWVHIj8NqaSgUaGGotTeyPmHQQmk+/bGFHefXZK8pYA==
+X-Received: by 2002:a9d:4786:: with SMTP id b6mr946022otf.112.1568411337306;
+        Fri, 13 Sep 2019 14:48:57 -0700 (PDT)
+Received: from localhost (24-155-109-49.dyn.grandenetworks.net. [24.155.109.49])
+        by smtp.gmail.com with ESMTPSA id j20sm1274447oie.55.2019.09.13.14.48.56
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 13 Sep 2019 14:48:56 -0700 (PDT)
+Message-ID: <5d7c0ec8.1c69fb81.e5ca8.949d@mx.google.com>
+Date:   Fri, 13 Sep 2019 16:48:56 -0500
+From:   Rob Herring <robh@kernel.org>
+Subject: Re: [PATCH V2 06/12] dt-bindings: clock: qcom: Add reset for WCSSAON
+References: <1568375771-22933-1-git-send-email-gokulsri@codeaurora.org> <1568375771-22933-7-git-send-email-gokulsri@codeaurora.org>
+In-Reply-To: <1568375771-22933-7-git-send-email-gokulsri@codeaurora.org>
+Cc:     gokulsri@codeaurora.org, sboyd@kernel.org, agross@kernel.org,
+        bjorn.andersson@linaro.org, david.brown@linaro.org,
+        devicetree@vger.kernel.org, jassisinghbrar@gmail.com,
+        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-remoteproc@vger.kernel.org,
+        mark.rutland@arm.com, mturquette@baylibre.com, ohad@wizery.com,
+        robh+dt@kernel.org, sricharan@codeaurora.org,
+        nprakash@codeaurora.org
+To:     Gokul Sriram Palanisamy <gokulsri@codeaurora.org>
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Sorry, I couldn't get to this earlier.
+On Fri, 13 Sep 2019 17:26:05 +0530, Gokul Sriram Palanisamy wrote:
+> Add binding for WCSSAON reset required for Q6v5 reset on IPQ8074 SoC.
+> 
+> Signed-off-by: Gokul Sriram Palanisamy <gokulsri@codeaurora.org>
+> Signed-off-by: Sricharan R <sricharan@codeaurora.org>
+> Signed-off-by: Nikhil Prakash V <nprakash@codeaurora.org>
+> ---
+>  include/dt-bindings/clock/qcom,gcc-ipq8074.h | 1 +
+>  1 file changed, 1 insertion(+)
+> 
 
-On Thu, Sep 05 2019 at 18:03 -0600, Stephen Boyd wrote:
->Quoting Lina Iyer (2019-09-03 10:07:22)
->> On Mon, Sep 02 2019 at 07:58 -0600, Marc Zyngier wrote:
->> >On 02/09/2019 14:38, Rob Herring wrote:
->> >> On Thu, Aug 29, 2019 at 12:11:54PM -0600, Lina Iyer wrote:
->> These are not GIC registers but located on the PDC interface to the GIC.
->> They may or may not be secure access controlled, depending on the SoC.
->>
->
->It looks like it falls under this "mailbox" device which is really the
->catch all bucket for bits with no home besides they're related to the
->apps CPUs/subsystem.
->
-Thanks for pointing to this.
->	apss_shared: mailbox@17990000 {
->		compatible = "qcom,sdm845-apss-shared";
->		reg = <0 0x17990000 0 0x1000>;
-But this doesn't seem correct. The registers in this page are all not
-mailbox door bell registers. We should restrict the space allocated to
-the mbox to 0xC or something, definitely, not the whole page. They all
-cannot be treated as a mailbox registers.
->		#mbox-cells = <1>;
->	};
->
->Can you point to this node with a phandle and then parse the reg
->property out of it to use in the scm readl/writel APIs? Maybe it can be
->a two cell property with <&apps_shared 0xf0> to indicate the offset to
->the registers to read/write? In non-secure mode presumably we need to
->also write these registers? Good news is that there's a regmap for this
->driver already, so maybe that can be acquired from the pdc driver.
->
-The register space collection seems to be mix of different types of
-application processor registers that should probably not be grouped up
-under one subsystem. A single regmap doesn't seem correct either.
+Please add Acked-by/Reviewed-by tags when posting new versions. However,
+there's no need to repost patches *only* to add the tags. The upstream
+maintainer will do that for acks received on the version they apply.
 
--- Lina
+If a tag was not added on purpose, please state why and what changed.
+
