@@ -2,91 +2,112 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id C5B99B234E
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Sep 2019 17:26:19 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 063C2B23E2
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Sep 2019 18:13:51 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2391346AbfIMPZs (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 13 Sep 2019 11:25:48 -0400
-Received: from mail-wr1-f67.google.com ([209.85.221.67]:46308 "EHLO
-        mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2403855AbfIMPZp (ORCPT
+        id S1730611AbfIMQNu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 13 Sep 2019 12:13:50 -0400
+Received: from mail-pf1-f193.google.com ([209.85.210.193]:40750 "EHLO
+        mail-pf1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1730609AbfIMQNt (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 13 Sep 2019 11:25:45 -0400
-Received: by mail-wr1-f67.google.com with SMTP id o18so1290490wrv.13
-        for <linux-arm-msm@vger.kernel.org>; Fri, 13 Sep 2019 08:25:42 -0700 (PDT)
+        Fri, 13 Sep 2019 12:13:49 -0400
+Received: by mail-pf1-f193.google.com with SMTP id x127so18365600pfb.7
+        for <linux-arm-msm@vger.kernel.org>; Fri, 13 Sep 2019 09:13:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=YR/vHc0/aYOgQ7htuSAKCOpYZUSwbX4XADi3ha+KA8Q=;
-        b=Leu/DrQJjKKYfvqHogFl3YpcT43VdEBKD/+N9xaZ5aX1MwS8dy5gsahY0TJNorpYbj
-         RCM87o79r3lSZplmrXS7UrRD6815d9/SoKwUkCjFRlnYWOrDccnYMBMOP/LZQ2sCY/Sd
-         XVdH/57tU+/Oh19meKnLhqO3VPgF/2Ob1PKAPKmvhbIbkr6gplGq24WEvwL7ekeu7bYh
-         c1H3omILP/rlmpUkgQkyAarA4r4hlL+byuhBCLJ3Us5c4oY2LnWwh05rO3TQDL5yA4za
-         p/jZNguN1Tr1Z09DdtxeI3uGrpp5XCyGPCGiajOWr+3JV9Jj7tcMTH9jSaTQo1yIrybV
-         W5+g==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=jAupNqyyc/z6Ou3QEiGyvPGV4p/HHkcLNmIbS16XZ48=;
+        b=YOhRrP610r2OT+dYPZmA28h12Ce+GFpEohCI1QCqwdmpKzJQnt14AcqKXjlg4P4rjP
+         3KoF5+/69OtqEJ/12tgfPL2HWciCx8V8C90OHXde4c1KiAB8pkUW13cIJo7mQvTvDiEf
+         H+rNlC5X4uJWfBnvBpoHZd3FEXNkaR9T0LsE04PTXjBUW16JaHPRDfgL2Gqjo/qgBD6f
+         x3cq+WA7VwvzNOc5LmW0pX0JCzwyQdL6YqMQMc7TPqx9oiSrFk18Au+ue2LTxPEtIlSO
+         Z3FQWoIsZhk6lKtzOhHPO4jcU+ul3MWPSuirq/0koG2oiIAXn8t7U+b4rvJQ87G1phK+
+         7EqQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=YR/vHc0/aYOgQ7htuSAKCOpYZUSwbX4XADi3ha+KA8Q=;
-        b=IIm2P/NdssoW1GZJu6RcEs/EvGwl9vA8kcF3ZDPI21mYlNK2EHaZ7pJQWPrsG7WWzT
-         eN9q/UR8fMSQZTe6st1PuDY/8WMFK+i4EXSBn1Uy4+NEoVMfIa8iol3rc6jC01WnJbfN
-         vyNOsIQtFn1jjhSLnHZ4UtdHgtUJaqhPhuYWQrr+Sp5grRNunT6S3239m2aSIJBH4/co
-         KIYC7tPS59Dqu4VGsCSuNr6eeMwoa+pd5+vNd16ECSxA/uVcnyJ8DcsA6lymG8s8GeRm
-         WmDSMTHeslEz34F0sB/nq9e1ysPAfBpEqwv5fEEOCgw1tJSAp3L5Yn3kX0cJNkul8Qrt
-         N9yg==
-X-Gm-Message-State: APjAAAXVjHaVZ1Qg1O+bPiSekek6BhrhrqZW52d8QhwaSiRcehM6UnCg
-        BoY+7Ti7Y10Ekh6BCDfWB4GGEQ==
-X-Google-Smtp-Source: APXvYqx5KIGVhI6Q2FBF3QcxBYLhi5+KVQWIxV06imlRDiMLqZKuoCLmV2QR4gmgFC/+mTzjSt9zxg==
-X-Received: by 2002:adf:bb0a:: with SMTP id r10mr28521700wrg.13.1568388342113;
-        Fri, 13 Sep 2019 08:25:42 -0700 (PDT)
-Received: from localhost.localdomain (69.red-83-35-113.dynamicip.rima-tde.net. [83.35.113.69])
-        by smtp.gmail.com with ESMTPSA id d9sm48717728wrc.44.2019.09.13.08.25.41
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Fri, 13 Sep 2019 08:25:41 -0700 (PDT)
-From:   Jorge Ramirez-Ortiz <jorge.ramirez-ortiz@linaro.org>
-To:     jorge.ramirez-ortiz@linaro.org, gregkh@linuxfoundation.org,
-        arnd@arndb.de, srinivas.kandagatla@linaro.org
-Cc:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org
-Subject: [PATCH 5/5] misc: fastrpc: revert max init file size back to 2MB
-Date:   Fri, 13 Sep 2019 17:25:32 +0200
-Message-Id: <20190913152532.24484-6-jorge.ramirez-ortiz@linaro.org>
-X-Mailer: git-send-email 2.23.0
-In-Reply-To: <20190913152532.24484-1-jorge.ramirez-ortiz@linaro.org>
-References: <20190913152532.24484-1-jorge.ramirez-ortiz@linaro.org>
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=jAupNqyyc/z6Ou3QEiGyvPGV4p/HHkcLNmIbS16XZ48=;
+        b=CBBtvhFQu9rSsv5u0SNo0mYRBaC2PV5e4Up45DT4gtG14Szm/q7ezoAbVno+tQimQM
+         f4urrlT+Jc98Xo0fb4xvPWnvzILh/mvz89IZWklrJBFHwRLM56MMJH3EyEinqSVm6yjJ
+         3G3UISaopeMOU9H4nzigmhqFGbhV97PbNULhuQLRdD5r/ztCfUR7cyVwSxOZGbqzkH9F
+         y7XK7GMtut5M3ZymDU4yWpA4V5I+wt+/QlpS0SWJeP9XonQScY+MlWG6pS43FfF1onD7
+         nOUxyqbBjW2LfsJPNJpBx4NYWxDHPWTqAkDrv3YGoqcF4ZwAEWIBuEIzG6w4eX8mhCP9
+         Cacg==
+X-Gm-Message-State: APjAAAXvCYp7JU5GEqcrB8gPqjb3xg1qMCKLLbmXyrk6eMuRBDgpyGhy
+        wjaEZgYIKgDKvugQ+CNYGQmlVA==
+X-Google-Smtp-Source: APXvYqy8WJqbEp5Mme/EdrroxU+nLTxdO6eyhgl5X1B50zCun7w0ARHrR5xAzJjBGnxYzpft+Gourw==
+X-Received: by 2002:a17:90a:6586:: with SMTP id k6mr6151408pjj.20.1568391229012;
+        Fri, 13 Sep 2019 09:13:49 -0700 (PDT)
+Received: from tuxbook-pro (104-188-17-28.lightspeed.sndgca.sbcglobal.net. [104.188.17.28])
+        by smtp.gmail.com with ESMTPSA id g8sm23036322pgk.1.2019.09.13.09.13.47
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 13 Sep 2019 09:13:48 -0700 (PDT)
+Date:   Fri, 13 Sep 2019 09:13:45 -0700
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     Wolfram Sang <wsa@the-dreams.de>, Arnd Bergmann <arnd@arndb.de>
+Cc:     Rob Clark <robdclark@gmail.com>, Lee Jones <lee.jones@linaro.org>,
+        Stephen Boyd <swboyd@chromium.org>,
+        Andy Gross <agross@kernel.org>, alokc@codeaurora.org,
+        Mark Rutland <mark.rutland@arm.com>,
+        Rob Herring <robh+dt@kernel.org>, vkoul@kernel.org,
+        linux-i2c@vger.kernel.org,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
+        <devicetree@vger.kernel.org>
+Subject: Re: [RESEND v3 1/1] i2c: qcom-geni: Disable DMA processing on the
+ Lenovo Yoga C630
+Message-ID: <20190913161345.GB8466@tuxbook-pro>
+References: <20190905192412.23116-1-lee.jones@linaro.org>
+ <5d71ef95.1c69fb81.6d090.085d@mx.google.com>
+ <20190906061448.GJ26880@dell>
+ <20190906065018.GA1019@kunai>
+ <20190906075600.GL26880@dell>
+ <20190906102355.GA3146@kunai>
+ <20190906105445.GO26880@dell>
+ <20190906183139.GB19123@kunai>
+ <CAF6AEGsHOaR1dRf8xGH5sRa38=S+Y3NvNiAJ9DpMkddWoLBw8g@mail.gmail.com>
+ <20190913142821.GD1022@kunai>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20190913142821.GD1022@kunai>
+User-Agent: Mutt/1.12.1 (2019-06-15)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-With the integration of the mmap/unmap functionality, it is no longer
-necessary to allow large memory allocations upfront since they can be
-handled during runtime.
+On Fri 13 Sep 07:28 PDT 2019, Wolfram Sang wrote:
 
-Tested on QCS404 with CDSP Neural Processing test suite.
+> On Sat, Sep 07, 2019 at 10:56:34AM -0700, Rob Clark wrote:
+> > On Sat, Sep 7, 2019 at 9:17 AM Wolfram Sang <wsa@the-dreams.de> wrote:
+> > >
+> > >
+> > > > Does this mean you plan to have this merged for v5.4?
+> > >
+> > > Only if the machine DTS is expected to land in 5.4. But Stephen said it
+> > > is not in liunx-next yet?
+> > >
+> > 
+> > It appears to be in arm-soc for-next:
+> > 
+> > https://git.kernel.org/pub/scm/linux/kernel/git/arm/arm-soc.git/log/?h=for-next
+> 
+> Still not in linux-next. Please ping me or resend this patch once it
+> hits linux-next.
+> 
 
-Signed-off-by: Jorge Ramirez-Ortiz <jorge.ramirez-ortiz@linaro.org>
-Reviewed-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
----
- drivers/misc/fastrpc.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+It seems linux-next is now pulling from the soc.git, rather than
+arm-soc.git, but Arnd is still pushing patches to arm-soc.git.
 
-diff --git a/drivers/misc/fastrpc.c b/drivers/misc/fastrpc.c
-index 40b48db032b5..ee6de5d9993d 100644
---- a/drivers/misc/fastrpc.c
-+++ b/drivers/misc/fastrpc.c
-@@ -32,7 +32,7 @@
- #define FASTRPC_CTX_MAX (256)
- #define FASTRPC_INIT_HANDLE	1
- #define FASTRPC_CTXID_MASK (0xFF0)
--#define INIT_FILELEN_MAX (64 * 1024 * 1024)
-+#define INIT_FILELEN_MAX (2 * 1024 * 1024)
- #define INIT_MEMLEN_MAX  (8 * 1024 * 1024)
- #define FASTRPC_DEVICE_NAME	"fastrpc"
- #define ADSP_MMAP_ADD_PAGES 0x1000
--- 
-2.23.0
+Arnd says that the patch will be in v5.4 and I merged Arnd's tree and
+gave it a spin here and this patch makes it boot. So please merge this
+patch for v5.4 as well.
 
+Tested-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+
+Thanks,
+Bjorn
