@@ -2,135 +2,118 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id B7092B2224
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Sep 2019 16:39:04 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 6FE45B226F
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Sep 2019 16:44:54 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730658AbfIMOgO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 13 Sep 2019 10:36:14 -0400
-Received: from mail-oi1-f196.google.com ([209.85.167.196]:46162 "EHLO
-        mail-oi1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730648AbfIMOgN (ORCPT
+        id S2387950AbfIMOow (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 13 Sep 2019 10:44:52 -0400
+Received: from smtp.codeaurora.org ([198.145.29.96]:59956 "EHLO
+        smtp.codeaurora.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729911AbfIMOow (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 13 Sep 2019 10:36:13 -0400
-Received: by mail-oi1-f196.google.com with SMTP id v16so2774568oiv.13;
-        Fri, 13 Sep 2019 07:36:13 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:date:from:to:cc:subject:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=Z79bT51s8X9t468gxQ2+1ZKqbdd8xzju/Fxq/NSNMTo=;
-        b=Jm+J5GkgwMCuUZ1KSyzH9i7NijIXZIl3spYFI92qz9iRF2aAUuBCmp9XCLZEEv+g/3
-         islda/JF+qAqnsOkpf//OLV2KrKKx6FzIiIKgI8uDRsF9UU/OdqDxPJ+wxumx17bbkuP
-         r5EjQQGuIANZE1Z0wRr6AoLZ6Oeoytz1Z2bmvxZ/P8UHFYDS4uLAzTHiNfelxvg0tT7n
-         PnKITcZBlqrN7zVp3Pac5x8heJQnsrGaacRcE3teqB9GcXSjGCAaPReIhspsRFIevp9m
-         wr+ypXHC4huVsPpyCrlvrEgyOUnb8Z8qUUZj0o5Z4syhJ5JQjF7QWONCQBbrDLVgP5pQ
-         btRg==
-X-Gm-Message-State: APjAAAXQd14hnP1olhry1Qk8tEjwDTqKxNenFsIKhwVntaHEWzgUHqNH
-        A1v4oW/4pccExM7c2sK1AQ==
-X-Google-Smtp-Source: APXvYqys48uCX3cKqHL275Upcx6Znn3+mIOh8UgFx1fG2pm+46Ii25BVGfwriubeNdu+E5Hy4OkcZA==
-X-Received: by 2002:aca:2402:: with SMTP id n2mr3696427oic.32.1568385373025;
-        Fri, 13 Sep 2019 07:36:13 -0700 (PDT)
-Received: from localhost (24-155-109-49.dyn.grandenetworks.net. [24.155.109.49])
-        by smtp.gmail.com with ESMTPSA id v6sm913643oie.4.2019.09.13.07.36.12
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 13 Sep 2019 07:36:12 -0700 (PDT)
-Message-ID: <5d7ba95c.1c69fb81.edf8e.6556@mx.google.com>
-Date:   Fri, 13 Sep 2019 15:36:11 +0100
-From:   Rob Herring <robh@kernel.org>
-To:     Pradeep P V K <ppvk@codeaurora.org>
-Cc:     adrian.hunter@intel.com, ulf.hansson@linaro.org,
-        asutoshd@codeaurora.org, vbadigan@codeaurora.org,
-        stummala@codeaurora.org, sayalil@codeaurora.org,
-        rampraka@codeaurora.org, linux-mmc@vger.kernel.org,
+        Fri, 13 Sep 2019 10:44:52 -0400
+Received: by smtp.codeaurora.org (Postfix, from userid 1000)
+        id 2DE4A6133A; Fri, 13 Sep 2019 14:44:50 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
+        s=default; t=1568385891;
+        bh=6Sd2dpM9HRfzA5DVteOBc7URO2Jumcbqg21Ygsai7AI=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=j391YvrWswsDCumcZGnjL/lCSbKAolYn/m0WClXGjil62VBsEwPR1e7q9HhIv57CS
+         DorROLMtEn7hfajc/9E/BtANly54sJNKe90lM5jOqJUEf91IOaSEGyRX2h3TkYIP4V
+         GQT7I+eTCHgGPgbXKsB2niWVRT6FdWSuwlyk/zAc=
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        pdx-caf-mail.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.7 required=2.0 tests=ALL_TRUSTED,BAYES_00,
+        DKIM_INVALID,DKIM_SIGNED,SPF_NONE autolearn=no autolearn_force=no
+        version=3.4.0
+Received: from jcrouse1-lnx.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: jcrouse@smtp.codeaurora.org)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id E506A614DC;
+        Fri, 13 Sep 2019 14:44:46 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
+        s=default; t=1568385887;
+        bh=6Sd2dpM9HRfzA5DVteOBc7URO2Jumcbqg21Ygsai7AI=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=LPFidS2TnVseHQyypdlOaG9GMQBwBr5Z2BeRpxtAVnRdfdTBb6jhAH/egQaqNvRIZ
+         HecTdMjWjY0B7RL+zzEEtM2p3b5i5GTh+FQy10oKkahFLdhc4DMghMSfDb2AbwUwxA
+         AKJ1bWN2P/Fk0FCq9ECNgJaeVoX1/Ej9KdoBf2e8=
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org E506A614DC
+Authentication-Results: pdx-caf-mail.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: pdx-caf-mail.web.codeaurora.org; spf=none smtp.mailfrom=jcrouse@codeaurora.org
+Date:   Fri, 13 Sep 2019 08:44:45 -0600
+From:   Jordan Crouse <jcrouse@codeaurora.org>
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     Michael Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>, linux-clk@vger.kernel.org,
         linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, Mark Rutland <mark.rutland@arm.com>
-Subject: Re: [RFC 2/2] dt-bindings: mmc: sdhci-msm: Add Bus BW vote supported
- strings
-References: <1567774037-2344-1-git-send-email-ppvk@codeaurora.org>
- <1567774037-2344-3-git-send-email-ppvk@codeaurora.org>
+        Dong Aisheng <aisheng.dong@nxp.com>
+Subject: Re: [PATCH] clk: Make clk_bulk_get_all() return a valid "id"
+Message-ID: <20190913144444.GA25762@jcrouse1-lnx.qualcomm.com>
+Mail-Followup-To: Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>, linux-clk@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        Dong Aisheng <aisheng.dong@nxp.com>
+References: <20190913024029.2640-1-bjorn.andersson@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <1567774037-2344-3-git-send-email-ppvk@codeaurora.org>
-X-Mutt-References: <1567774037-2344-3-git-send-email-ppvk@codeaurora.org>
+In-Reply-To: <20190913024029.2640-1-bjorn.andersson@linaro.org>
+User-Agent: Mutt/1.5.24 (2015-08-30)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, Sep 06, 2019 at 06:17:17PM +0530, Pradeep P V K wrote:
-> Add Bus bandwidth voting supported strings for qcom-sdhci controller.
-
-What is bus bandwidth voting?
-
+On Thu, Sep 12, 2019 at 07:40:29PM -0700, Bjorn Andersson wrote:
+> The adreno driver expects the "id" field of the returned clk_bulk_data
+> to be filled in with strings from the clock-names property.
 > 
-> Signed-off-by: Pradeep P V K <ppvk@codeaurora.org>
+> But due to the use of kmalloc_array() in of_clk_bulk_get_all() it
+> receives a list of bogus pointers instead.
+> 
+> Zero-initialize the "id" field and attempt to populate with strings from
+> the clock-names property to resolve both these issues.
+
+This looks great to me.  Thanks for fixing that so quickly.
+
+Reviewed-by: Jordan Crouse <jcrouse@codeaurora.org>
+
+> Fixes: 616e45df7c4a ("clk: add new APIs to operate on all available clocks")
+> Fixes: 8e3e791d20d2 ("drm/msm: Use generic bulk clock function")
+> Cc: Dong Aisheng <aisheng.dong@nxp.com>
+> Cc: Jordan Crouse <jcrouse@codeaurora.org>
+> Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
 > ---
->  .../devicetree/bindings/mmc/sdhci-msm.txt          | 32 ++++++++++++++++++++++
->  1 file changed, 32 insertions(+)
+>  drivers/clk/clk-bulk.c | 5 ++++-
+>  1 file changed, 4 insertions(+), 1 deletion(-)
 > 
-> diff --git a/Documentation/devicetree/bindings/mmc/sdhci-msm.txt b/Documentation/devicetree/bindings/mmc/sdhci-msm.txt
-> index da4edb1..8255d92 100644
-> --- a/Documentation/devicetree/bindings/mmc/sdhci-msm.txt
-> +++ b/Documentation/devicetree/bindings/mmc/sdhci-msm.txt
-> @@ -39,6 +39,25 @@ Required properties:
->  	"cal"	- reference clock for RCLK delay calibration (optional)
->  	"sleep"	- sleep clock for RCLK delay calibration (optional)
+> diff --git a/drivers/clk/clk-bulk.c b/drivers/clk/clk-bulk.c
+> index 524bf9a53098..e9e16425c739 100644
+> --- a/drivers/clk/clk-bulk.c
+> +++ b/drivers/clk/clk-bulk.c
+> @@ -18,10 +18,13 @@ static int __must_check of_clk_bulk_get(struct device_node *np, int num_clks,
+>  	int ret;
+>  	int i;
 >  
-> +Optional Properties:
-> +* Following bus parameters are required for bus bw voting:
-> +- interconnects: Pairs of phandles and interconnect provider specifier
-> +		 to denote the edge source and destination ports of
-> +		 the interconnect path. Please refer to
-> +		 Documentation/devicetree/bindings/interconnect/
-> +		 for more details.
-> +- interconnect-names: List of interconnect path name strings sorted in the same
-> +		order as the interconnects property. Consumers drivers will use
-> +		interconnect-names to match interconnect paths with interconnect
-> +		specifiers. Please refer to Documentation/devicetree/bindings/
-> +		interconnect/ for more details.
-
-How many? What are the strings?
-
-> +- qcom,msm-bus,name: string describing the bus path
-> +- qcom,msm-bus,num-cases: number of configurations in which sdhc can operate in
-> +- qcom,msm-bus,num-paths: number of paths to vote for
-> +- qcom,msm-bus,vectors-KBps: Takes a tuple <ib ab>, <ib ab> (2 tuples for 2
-
-ib and ab are what? Didn't we just add interconnect bindings for 
-expressing bandwidth?
-
-> +				num-paths) The number of these entries *must*
-> +				be same as num-cases.
-
-Are all these properties SDHCI specific or can we expect to get these 
-for *all* the QCom blocks?
-
-> +
->  Example:
+> -	for (i = 0; i < num_clks; i++)
+> +	for (i = 0; i < num_clks; i++) {
+> +		clks[i].id = NULL;
+>  		clks[i].clk = NULL;
+> +	}
 >  
->  	sdhc_1: sdhci@f9824900 {
-> @@ -56,6 +75,19 @@ Example:
->  
->  		clocks = <&gcc GCC_SDCC1_APPS_CLK>, <&gcc GCC_SDCC1_AHB_CLK>;
->  		clock-names = "core", "iface";
-> +		interconnects = <&qnoc 50 &qnoc 512>,
-> +				<&qnoc 1 &qnoc 544>;
-> +		interconnect-names = "sdhc-ddr","cpu-sdhc";
-> +		qcom,msm-bus,name = "sdhc1";
-> +		qcom,msm-bus,num-cases = <3>;
-> +		qcom,msm-bus,num-paths = <2>;
-> +		qcom,msm-bus,vectors-KBps =
-> +		/* No Vote */
-> +		<0 0>, <0 0>,
-> +		/* 50 MB/s */
-> +		<130718 200000>, <133320 133320>,
-> +		/* 200 MB/s */
-> +		<1338562 4096000>, <1338562 4096000>;
->  	};
->  
->  	sdhc_2: sdhci@f98a4900 {
+>  	for (i = 0; i < num_clks; i++) {
+> +		of_property_read_string_index(np, "clock-names", i, &clks[i].id);
+>  		clks[i].clk = of_clk_get(np, i);
+>  		if (IS_ERR(clks[i].clk)) {
+>  			ret = PTR_ERR(clks[i].clk);
 > -- 
-> 1.9.1
+> 2.18.0
 > 
 
+-- 
+The Qualcomm Innovation Center, Inc. is a member of Code Aurora Forum,
+a Linux Foundation Collaborative Project
