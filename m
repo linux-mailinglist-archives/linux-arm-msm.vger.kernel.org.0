@@ -2,86 +2,69 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id BD061B27C5
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 14 Sep 2019 00:03:37 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 3FDD9B27D4
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 14 Sep 2019 00:03:44 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2403838AbfIMV74 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 13 Sep 2019 17:59:56 -0400
-Received: from smtp.codeaurora.org ([198.145.29.96]:60224 "EHLO
-        smtp.codeaurora.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2403810AbfIMV74 (ORCPT
+        id S2403931AbfIMWBl (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 13 Sep 2019 18:01:41 -0400
+Received: from mail-oi1-f194.google.com ([209.85.167.194]:43726 "EHLO
+        mail-oi1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2389815AbfIMWBl (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 13 Sep 2019 17:59:56 -0400
-Received: by smtp.codeaurora.org (Postfix, from userid 1000)
-        id BE9CA6155F; Fri, 13 Sep 2019 21:59:55 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
-        s=default; t=1568411995;
-        bh=tOdi53r950iLkmXvUmN+jY4TQ4fKdBRyPIEbVWZA66g=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=UccG/WMB14CHYrEFDl2xKWb/M5Kt2jvEGig9LOlLDM8Wgz0+OAC9YwiVkBpPAIdu4
-         KGIwohSERVyQZ8ZVLVRMRnkPEbDnU1Zi0T2mjf+cVRuC2MnlV8AL3jnXIRrW69fkeE
-         /4srxSznk1lr9z9BbR1EX4vtZTLu+ecbT0XO4sQI=
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        pdx-caf-mail.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.7 required=2.0 tests=ALL_TRUSTED,BAYES_00,
-        DKIM_INVALID,DKIM_SIGNED,SPF_NONE autolearn=no autolearn_force=no
-        version=3.4.0
-Received: from codeaurora.org (i-global254.qualcomm.com [199.106.103.254])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: ilina@smtp.codeaurora.org)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 91A586155F;
-        Fri, 13 Sep 2019 21:59:54 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
-        s=default; t=1568411995;
-        bh=tOdi53r950iLkmXvUmN+jY4TQ4fKdBRyPIEbVWZA66g=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=UccG/WMB14CHYrEFDl2xKWb/M5Kt2jvEGig9LOlLDM8Wgz0+OAC9YwiVkBpPAIdu4
-         KGIwohSERVyQZ8ZVLVRMRnkPEbDnU1Zi0T2mjf+cVRuC2MnlV8AL3jnXIRrW69fkeE
-         /4srxSznk1lr9z9BbR1EX4vtZTLu+ecbT0XO4sQI=
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 91A586155F
-Authentication-Results: pdx-caf-mail.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: pdx-caf-mail.web.codeaurora.org; spf=none smtp.mailfrom=ilina@codeaurora.org
-From:   Lina Iyer <ilina@codeaurora.org>
-To:     swboyd@chromium.org, evgreen@chromium.org, maz@kernel.org,
-        linus.walleij@linaro.org
-Cc:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        bjorn.andersson@linaro.org, mkshah@codeaurora.org,
-        linux-gpio@vger.kernel.org, Lina Iyer <ilina@codeaurora.org>
-Subject: [PATCH RFC v2 14/14] arm64: defconfig: enable PDC interrupt controller for Qualcomm SDM845
-Date:   Fri, 13 Sep 2019 15:59:22 -0600
-Message-Id: <1568411962-1022-15-git-send-email-ilina@codeaurora.org>
-X-Mailer: git-send-email 2.7.4
-In-Reply-To: <1568411962-1022-1-git-send-email-ilina@codeaurora.org>
-References: <1568411962-1022-1-git-send-email-ilina@codeaurora.org>
+        Fri, 13 Sep 2019 18:01:41 -0400
+Received: by mail-oi1-f194.google.com with SMTP id t84so3884624oih.10;
+        Fri, 13 Sep 2019 15:01:40 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=NhX4q4VvHbxL/YFwtYgsj7GHy+7WGzMk/sM+hDn3XjY=;
+        b=e0MMXgN3HjOjicjL8rm5PX7wMyau6lGtrmqX+QRoBElImog6eDpDaKlWKl1+R/Ml50
+         NjDqLoZvH/V7pvZJqEYOxIRx5Zr2/45gLsr2EzOANw6gcI8XUoDFEaq7VTUFHCaMNRXY
+         HFYdI3USEak15CEIgDuCwezyLyG0mjZ6oovXFP+p4n1GiUZxx1bdhkwSYCZpPWW2MOjL
+         5pdew7IqfF1rKW0T2hu4tncR0kbcKatObIGgyD4n9zYfKu+kaXEk0M7JTaLWUUNwxtiV
+         LRW29mc5wJYwVWcAKI51qtBg15ZAZOw7QfvjPmN7Q0xTmii/2TmYSTDIZbGusnsK3oIv
+         vzyg==
+X-Gm-Message-State: APjAAAWOVl8jCzVRR3rfavegNf/gfbS24Xy4157TStngu8JtOeyQKuWy
+        N2EKZSBmJUjqrcDQYrKuTQ==
+X-Google-Smtp-Source: APXvYqyMN6cGhqQElJmPF0IJsDj8JgHPGW102AuveDAChh2mS8gBIHVvwPO4qeAYrkFmDMbX3MGMWg==
+X-Received: by 2002:aca:3ed7:: with SMTP id l206mr5582343oia.25.1568412100159;
+        Fri, 13 Sep 2019 15:01:40 -0700 (PDT)
+Received: from localhost (24-155-109-49.dyn.grandenetworks.net. [24.155.109.49])
+        by smtp.gmail.com with ESMTPSA id n23sm620772oie.24.2019.09.13.15.01.39
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 13 Sep 2019 15:01:39 -0700 (PDT)
+Date:   Fri, 13 Sep 2019 17:01:38 -0500
+From:   Rob Herring <robh@kernel.org>
+To:     Colin King <colin.king@canonical.com>
+Cc:     Andy Gross <agross@kernel.org>,
+        Mark Rutland <mark.rutland@arm.com>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        kernel-janitors@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH] bus: qcom: fix spelling mistake "ambigous" -> "ambiguous"
+Message-ID: <20190913220138.GA17592@bogus>
+References: <20190911153947.10203-1-colin.king@canonical.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20190911153947.10203-1-colin.king@canonical.com>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Enable PDC interrupt controller for SDM845 devices. The interrupt
-controller can detect wakeup capable interrupts when the SoC is in a low
-power state.
+On Wed, 11 Sep 2019 16:39:47 +0100, Colin King wrote:
+> From: Colin Ian King <colin.king@canonical.com>
+> 
+> There is a spelling mistake on the documentation. Fix it.
+> 
+> Signed-off-by: Colin Ian King <colin.king@canonical.com>
+> ---
+>  Documentation/devicetree/bindings/bus/qcom,ebi2.txt | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+> 
 
-Signed-off-by: Lina Iyer <ilina@codeaurora.org>
----
- arch/arm64/configs/defconfig | 1 +
- 1 file changed, 1 insertion(+)
+Applied, thanks.
 
-diff --git a/arch/arm64/configs/defconfig b/arch/arm64/configs/defconfig
-index 0e58ef0..310b604 100644
---- a/arch/arm64/configs/defconfig
-+++ b/arch/arm64/configs/defconfig
-@@ -729,6 +729,7 @@ CONFIG_ARCH_R8A77970=y
- CONFIG_ARCH_R8A77980=y
- CONFIG_ARCH_R8A77990=y
- CONFIG_ARCH_R8A77995=y
-+CONFIG_QCOM_PDC=y
- CONFIG_ROCKCHIP_PM_DOMAINS=y
- CONFIG_ARCH_TEGRA_132_SOC=y
- CONFIG_ARCH_TEGRA_210_SOC=y
--- 
-The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
-a Linux Foundation Collaborative Project
-
+Rob
