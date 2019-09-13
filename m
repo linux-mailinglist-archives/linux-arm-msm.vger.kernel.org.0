@@ -2,96 +2,109 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 078BDB23F4
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Sep 2019 18:17:52 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B4A16B2647
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Sep 2019 21:53:48 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730642AbfIMQRv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 13 Sep 2019 12:17:51 -0400
-Received: from sauhun.de ([88.99.104.3]:37026 "EHLO pokefinder.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1730605AbfIMQRv (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 13 Sep 2019 12:17:51 -0400
-Received: from localhost (234.77.63.94.rev.vodafone.pt [94.63.77.234])
-        by pokefinder.org (Postfix) with ESMTPSA id 110E32C3115;
-        Fri, 13 Sep 2019 18:17:49 +0200 (CEST)
-Date:   Fri, 13 Sep 2019 17:17:48 +0100
-From:   Wolfram Sang <wsa@the-dreams.de>
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     Arnd Bergmann <arnd@arndb.de>, Rob Clark <robdclark@gmail.com>,
-        Lee Jones <lee.jones@linaro.org>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Andy Gross <agross@kernel.org>, alokc@codeaurora.org,
-        Mark Rutland <mark.rutland@arm.com>,
-        Rob Herring <robh+dt@kernel.org>, vkoul@kernel.org,
-        linux-i2c@vger.kernel.org,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
-        <devicetree@vger.kernel.org>
-Subject: Re: [RESEND v3 1/1] i2c: qcom-geni: Disable DMA processing on the
- Lenovo Yoga C630
-Message-ID: <20190913161748.GF1022@kunai>
-References: <5d71ef95.1c69fb81.6d090.085d@mx.google.com>
- <20190906061448.GJ26880@dell>
- <20190906065018.GA1019@kunai>
- <20190906075600.GL26880@dell>
- <20190906102355.GA3146@kunai>
- <20190906105445.GO26880@dell>
- <20190906183139.GB19123@kunai>
- <CAF6AEGsHOaR1dRf8xGH5sRa38=S+Y3NvNiAJ9DpMkddWoLBw8g@mail.gmail.com>
- <20190913142821.GD1022@kunai>
- <20190913161345.GB8466@tuxbook-pro>
+        id S1729701AbfIMTxa (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 13 Sep 2019 15:53:30 -0400
+Received: from smtp.codeaurora.org ([198.145.29.96]:55468 "EHLO
+        smtp.codeaurora.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729670AbfIMTx3 (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 13 Sep 2019 15:53:29 -0400
+Received: by smtp.codeaurora.org (Postfix, from userid 1000)
+        id 4009160770; Fri, 13 Sep 2019 19:53:28 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
+        s=default; t=1568404408;
+        bh=PBhczAxgGjJzcJPYs5T3OHtqWkVJvof+zdxMM1IFvbg=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=AmU0IYHzJcYptiF+l+/vTuBGnNyRRUPfS+N5FbkaaGQiA5HOpa5Sh1qbNNWlmWInH
+         QHEPBfQ9LaWRgMD1VNt4CEvVr5v6UN4ultrJvjswYEPdTerOumbK78jHVziDdWJ475
+         yQKjjp7MrvVFZxN7+xbhhlA/6SpK0/+HZf5EOt6k=
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        pdx-caf-mail.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.7 required=2.0 tests=ALL_TRUSTED,BAYES_00,
+        DKIM_INVALID,DKIM_SIGNED,SPF_NONE autolearn=no autolearn_force=no
+        version=3.4.0
+Received: from localhost (i-global254.qualcomm.com [199.106.103.254])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: ilina@smtp.codeaurora.org)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 4539460770;
+        Fri, 13 Sep 2019 19:53:27 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
+        s=default; t=1568404407;
+        bh=PBhczAxgGjJzcJPYs5T3OHtqWkVJvof+zdxMM1IFvbg=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=SFuM9u936AWPbXLPJKuCFFyLQ7WsQYwG/6SiF23ViGYBu7kM6Iua3Sn2xtRkl9kU0
+         yyr0s3Ezs+KQ8zjr/8DACAdCwGfMo4RMvKoMixuyN4RWSV0nDIZ3FV9sOGaFlv0Gy9
+         mLJlSeEKrwJ1LFuiOZsOu+mYdYQ1r9/kb/dM7Q6w=
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 4539460770
+Authentication-Results: pdx-caf-mail.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: pdx-caf-mail.web.codeaurora.org; spf=none smtp.mailfrom=ilina@codeaurora.org
+Date:   Fri, 13 Sep 2019 13:53:26 -0600
+From:   Lina Iyer <ilina@codeaurora.org>
+To:     Stephen Boyd <swboyd@chromium.org>
+Cc:     Rob Herring <robh@kernel.org>, evgreen@chromium.org,
+        linus.walleij@linaro.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, bjorn.andersson@linaro.org,
+        mkshah@codeaurora.org, linux-gpio@vger.kernel.org,
+        rnayak@codeaurora.org, devicetree@vger.kernel.org, maz@kernel.org
+Subject: Re: [PATCH RFC 05/14] dt-bindings/interrupt-controller: pdc: add SPI
+ config register
+Message-ID: <20190913195326.GA3293@codeaurora.org>
+References: <20190829181203.2660-1-ilina@codeaurora.org>
+ <20190829181203.2660-6-ilina@codeaurora.org>
+ <5d6d1b72.1c69fb81.ee88.efcf@mx.google.com>
+ <102c9268-c4ce-6133-3b0a-67c2fcba1e7a@arm.com>
+ <20190903170722.GA31716@codeaurora.org>
+ <5d71a247.1c69fb81.2146f.7ed2@mx.google.com>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="sDKAb4OeUBrWWL6P"
+Content-Type: text/plain; charset=us-ascii; format=flowed
 Content-Disposition: inline
-In-Reply-To: <20190913161345.GB8466@tuxbook-pro>
-User-Agent: Mutt/1.10.1 (2018-07-13)
+In-Reply-To: <5d71a247.1c69fb81.2146f.7ed2@mx.google.com>
+User-Agent: Mutt/1.5.24 (2015-08-30)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+Sorry, I couldn't get to this earlier.
 
---sDKAb4OeUBrWWL6P
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+On Thu, Sep 05 2019 at 18:03 -0600, Stephen Boyd wrote:
+>Quoting Lina Iyer (2019-09-03 10:07:22)
+>> On Mon, Sep 02 2019 at 07:58 -0600, Marc Zyngier wrote:
+>> >On 02/09/2019 14:38, Rob Herring wrote:
+>> >> On Thu, Aug 29, 2019 at 12:11:54PM -0600, Lina Iyer wrote:
+>> These are not GIC registers but located on the PDC interface to the GIC.
+>> They may or may not be secure access controlled, depending on the SoC.
+>>
+>
+>It looks like it falls under this "mailbox" device which is really the
+>catch all bucket for bits with no home besides they're related to the
+>apps CPUs/subsystem.
+>
+Thanks for pointing to this.
+>	apss_shared: mailbox@17990000 {
+>		compatible = "qcom,sdm845-apss-shared";
+>		reg = <0 0x17990000 0 0x1000>;
+But this doesn't seem correct. The registers in this page are all not
+mailbox door bell registers. We should restrict the space allocated to
+the mbox to 0xC or something, definitely, not the whole page. They all
+cannot be treated as a mailbox registers.
+>		#mbox-cells = <1>;
+>	};
+>
+>Can you point to this node with a phandle and then parse the reg
+>property out of it to use in the scm readl/writel APIs? Maybe it can be
+>a two cell property with <&apps_shared 0xf0> to indicate the offset to
+>the registers to read/write? In non-secure mode presumably we need to
+>also write these registers? Good news is that there's a regmap for this
+>driver already, so maybe that can be acquired from the pdc driver.
+>
+The register space collection seems to be mix of different types of
+application processor registers that should probably not be grouped up
+under one subsystem. A single regmap doesn't seem correct either.
 
-
-> It seems linux-next is now pulling from the soc.git, rather than
-> arm-soc.git, but Arnd is still pushing patches to arm-soc.git.
-
-Can you ask them to fix this?
-
-> Arnd says that the patch will be in v5.4 and I merged Arnd's tree and
-> gave it a spin here and this patch makes it boot. So please merge this
-> patch for v5.4 as well.
-
-No worries, this is clearly a bugfix. So it will easily go in with the
-same release as the DTS file.
-
-> Tested-by: Bjorn Andersson <bjorn.andersson@linaro.org>
-
-Thanks!
-
-
---sDKAb4OeUBrWWL6P
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAABCgAdFiEEOZGx6rniZ1Gk92RdFA3kzBSgKbYFAl17wSwACgkQFA3kzBSg
-Kbal/w//aXNof3lkVpfTmIhhGgkjv8YayEMRqV7utAriywrHmijJe0W6x14U0Cnu
-qVa787uJ9IWZIXiw/oEAWJCZ35wJsmieSsFbjLSv1X879bUck4Ns+A2WPQuelpXe
-pc5NbHkB2wrN+oVWcTaNWozRp+RbNBjoMDX4rzE9p6crx3kIQ4notA5DyDICfzih
-jG7zhNRXln3Y7RShZm4zzQk1fN3L9v/2B028aS/97EdjZspCSdWdirzGOCfSSGLx
-bnYou6JkrIYW0+77NnjXo/NFvo2nG2m4X88AlzA2443YKm/qYbfyviMluTnSq/de
-Mqj+G4aOC3sT7Go0wpX3EumT4NXmYKXPl2UsHKwqFZ2Bp1MQUE8RIh8KffRMXhUd
-mpYn/naRlU1DdiBj0VnRPPjSeW3NPp18TqQ8Q5taM+AvCX1X0/HBzWH8Kl22kkye
-ZlNq1ypePu5l9dr0SS9cBfVCYYZc6EpFeWNHvcfIY7v3F/L6ce8EOAXSaiwE5bnP
-FMQPyr8hrLrAnAiVP2h9QYN61n01LwRWQOWywyo1pHd6Z56ogae7bkgT4xBi+HI2
-nxP8d4OKPoHhXeHoiqA/86+j1BY8Yriqsg/lFlH3UteEFxj+8VHNi0JyzqW34EBE
-6MUipiry/etmVPg0T1dACsYYNYYTLx56HcQ0rX4cPDp+c+pvMtE=
-=jq+N
------END PGP SIGNATURE-----
-
---sDKAb4OeUBrWWL6P--
+-- Lina
