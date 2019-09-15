@@ -2,263 +2,149 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 57BA0B2F06
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 15 Sep 2019 09:30:41 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A9E51B2FE5
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 15 Sep 2019 14:35:25 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725951AbfIOHaj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 15 Sep 2019 03:30:39 -0400
-Received: from mail-pl1-f196.google.com ([209.85.214.196]:42870 "EHLO
-        mail-pl1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725497AbfIOHaj (ORCPT
+        id S1726931AbfIOMfZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 15 Sep 2019 08:35:25 -0400
+Received: from smtp.codeaurora.org ([198.145.29.96]:47070 "EHLO
+        smtp.codeaurora.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726246AbfIOMfY (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 15 Sep 2019 03:30:39 -0400
-Received: by mail-pl1-f196.google.com with SMTP id e5so4078941pls.9;
-        Sun, 15 Sep 2019 00:30:39 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=dMeTUZXRAUHh0+qJ13H8cie73F/u28qD7x83pAfJ/9Q=;
-        b=p23CT3gRcvap2xtcYSdgl1DJX7+YD+Tc3MWZ5tZ69jtgHNh3opMLs4hhDeohqTQ8lT
-         LMQWcvKLaNOVZY0kZU+RQIPGRJF/ifS1NIFJ7PUaLTmUPVERkqIzX2T9yOQ9Is65TwT7
-         Ccz+mvMBo/km8JEOnM++YPtHzltCjorO3l3tk+0BU2QL+rRuWkn9v8/ZRjdIRF1tGcx4
-         OONKF9e06k8/KBjzjmaX2Oh2EJsAjAHr5zOK3PfHQfWYpnUeaZ4jOf3Kk7V/EPAmf/Dl
-         +T3xioo6um5zvmTbImxMYoMC8gPzEAAQlehSsKGfacysFWpV6c1nyKEeyB5Gy4GMBLp8
-         TIjQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=dMeTUZXRAUHh0+qJ13H8cie73F/u28qD7x83pAfJ/9Q=;
-        b=sgyXfJKoWBcHi48RcRJgENPGiUtbbZETy4mXcRKTugiMwQ/41i90+HatghwVmeeeKr
-         ehFXxgfk8py1Pvhc/SKMC+463Pv3JPe6hspexNticB0OTj9hPSuvpcwU+hFwQpkzUqcY
-         IUvqsBEoAFRmtnHdZBWfMO1vv6rPxg+OV6IbrtczFx/02UfZZWgjvLTff8fG5F1Vwfry
-         QVYp1JHdCzgS2r094DUAzBOQcvTjmiftfge5ibs8qbjyLU1ZqfDNpmbksOcXNNhoErry
-         8YiSQ6Vf1xW4HH0kdmbTQ1WxPABKAs9ZzGNFksr6T45mhYce36/tb8n/d14RBeF5DTsE
-         W2Xw==
-X-Gm-Message-State: APjAAAUwh/NG5+MA7n9uWjPoqHgNdNSk9rRRFE2L5oWI01cvGEj3g9Ab
-        f25+1EyZ1YxshQVI0J7QxBo=
-X-Google-Smtp-Source: APXvYqzdSFdn/APC8Kl3rfSziRAIhmZhHdVJdjZRPZa5vfYcn6CxiIhCmbCNhMIdxW/OH/TLwQlvrg==
-X-Received: by 2002:a17:902:9681:: with SMTP id n1mr5657126plp.89.1568532638710;
-        Sun, 15 Sep 2019 00:30:38 -0700 (PDT)
-Received: from satendra-MM061.ib-wrb304n.setup.in ([103.82.150.111])
-        by smtp.gmail.com with ESMTPSA id y12sm195702pfe.165.2019.09.15.00.30.34
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 15 Sep 2019 00:30:38 -0700 (PDT)
-From:   Satendra Singh Thakur <sst2005@gmail.com>
-Cc:     satendrasingh.thakur@hcl.com,
-        Satendra Singh Thakur <sst2005@gmail.com>,
-        Andy Gross <agross@kernel.org>,
-        Dan Williams <dan.j.williams@intel.com>,
-        Vinod Koul <vkoul@kernel.org>, linux-arm-msm@vger.kernel.org,
-        dmaengine@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: [PATCH 4/9] probe/dma/qcom-bam: removed redundant code from qcom bam dma controller's probe function
-Date:   Sun, 15 Sep 2019 13:00:20 +0530
-Message-Id: <20190915073021.23738-1-sst2005@gmail.com>
-X-Mailer: git-send-email 2.17.1
-In-Reply-To: <20190915072644.23329-1-sst2005@gmail.com>
-References: <20190915072644.23329-1-sst2005@gmail.com>
-To:     unlisted-recipients:; (no To-header on input)
+        Sun, 15 Sep 2019 08:35:24 -0400
+Received: by smtp.codeaurora.org (Postfix, from userid 1000)
+        id 7CD9960A50; Sun, 15 Sep 2019 12:35:23 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
+        s=default; t=1568550923;
+        bh=/dm/RBN7YVpLJXBPoMfGddvjbqU4V8BUtqoTROtEb0c=;
+        h=From:To:Cc:Subject:Date:From;
+        b=FcRrG3wkuMGchyzt/pdAUtxyGXoOxeVNK0GEHEA99x/lf063H5h5wb541ZTU7Fo1V
+         6JZO2qUqdzN1K+D/70exL2uaac/oUUBBFmj97oR4JaH+yQkhN7BmLkf3jMrvwc8iCy
+         aW8MKQUM2nPbEQwDt5Rrd2AxZMnH43dV9QrtdNr8=
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        pdx-caf-mail.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.7 required=2.0 tests=ALL_TRUSTED,BAYES_00,
+        DKIM_INVALID,DKIM_SIGNED,SPF_NONE autolearn=no autolearn_force=no
+        version=3.4.0
+Received: from blr-ubuntu-253.qualcomm.com (blr-bdr-fw-01_globalnat_allzones-outside.qualcomm.com [103.229.18.19])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: saiprakash.ranjan@codeaurora.org)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 3741F602F8;
+        Sun, 15 Sep 2019 12:35:17 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
+        s=default; t=1568550922;
+        bh=/dm/RBN7YVpLJXBPoMfGddvjbqU4V8BUtqoTROtEb0c=;
+        h=From:To:Cc:Subject:Date:From;
+        b=VAAFCeApn0WXGp/4/FApM+fay7CmxjJ8Q5cVy4UQYLkwVG18Nan+eW+t9wGPhGlVK
+         YNx4nA0ZbSS7p0TzzYprq1uHHTPmA0hP7Vu/NBOwGaUqodFsdSvUUhfJ+so2xW4AhM
+         SqxqbzWXdP+PdD9hT8YMxZ31B8j8Hy8Dsx9+admg=
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 3741F602F8
+Authentication-Results: pdx-caf-mail.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: pdx-caf-mail.web.codeaurora.org; spf=none smtp.mailfrom=saiprakash.ranjan@codeaurora.org
+From:   Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
+To:     Will Deacon <will@kernel.org>, Robin Murphy <robin.murphy@arm.com>,
+        Joerg Roedel <joro@8bytes.org>,
+        iommu@lists.linux-foundation.org, Andy Gross <agross@kernel.org>,
+        Stephen Boyd <swboyd@chromium.org>,
+        Vivek Gautam <vivek.gautam@codeaurora.org>,
+        Rajendra Nayak <rnayak@codeaurora.org>
+Cc:     bjorn.andersson@linaro.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org,
+        Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
+Subject: [PATCHv5 0/3] QCOM smmu-500 wait-for-safe handling for sdm845 
+Date:   Sun, 15 Sep 2019 18:05:00 +0530
+Message-Id: <cover.1568549745.git.saiprakash.ranjan@codeaurora.org>
+X-Mailer: git-send-email 2.22.0
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-1. In order to remove duplicate code, following functions:
-platform_get_resource
-devm_kzalloc
-devm_ioremap_resource
-devm_clk_get
-platform_get_irq
-clk_prepare_enable
-are replaced with a macro devm_platform_probe_helper_clk.
+Previous version of the patches are at [1]:
 
-2. Renamed variables regs and bamclk so that helper macro can
-be applied.
+QCOM's implementation of smmu-500 on sdm845 adds a hardware logic called
+wait-for-safe. This logic helps in meeting the invalidation requirements
+from 'real-time clients', such as display and camera. This wait-for-safe
+logic ensures that the invalidations happen after getting an ack from these
+devices.
+In this patch-series we are disabling this wait-for-safe logic from the
+arm-smmu driver's probe as with this enabled the hardware tries to
+throttle invalidations from 'non-real-time clients', such as USB and UFS.
 
-3. This patch depends on the file include/linux/probe-helper.h
-which is pushed in previous patch [01/09].
+For detailed information please refer to patch [3/4] in this series.
+I have included the device tree patch too in this series for someone who
+would like to test out this. Here's a branch [2] that gets display on MTP
+SDM845 device.
 
-Signed-off-by: Satendra Singh Thakur <satendrasingh.thakur@hcl.com>
-Signed-off-by: Satendra Singh Thakur <sst2005@gmail.com>
----
- drivers/dma/qcom/bam_dma.c | 71 ++++++++++++++++----------------------
- 1 file changed, 29 insertions(+), 42 deletions(-)
+This patch series is inspired from downstream work to handle under-performance
+issues on real-time clients on sdm845. In downstream we add separate page table
+ops to handle TLB maintenance and toggle wait-for-safe in tlb_sync call so that
+achieve required performance for display and camera [3, 4].
 
-diff --git a/drivers/dma/qcom/bam_dma.c b/drivers/dma/qcom/bam_dma.c
-index 8e90a405939d..06c136ca8e40 100644
---- a/drivers/dma/qcom/bam_dma.c
-+++ b/drivers/dma/qcom/bam_dma.c
-@@ -41,6 +41,7 @@
- #include <linux/clk.h>
- #include <linux/dmaengine.h>
- #include <linux/pm_runtime.h>
-+#include <linux/probe-helper.h>
- 
- #include "../dmaengine.h"
- #include "../virt-dma.h"
-@@ -378,7 +379,7 @@ static inline struct bam_chan *to_bam_chan(struct dma_chan *common)
- }
- 
- struct bam_device {
--	void __iomem *regs;
-+	void __iomem *base;
- 	struct device *dev;
- 	struct dma_device common;
- 	struct device_dma_parameters dma_parms;
-@@ -392,7 +393,7 @@ struct bam_device {
- 
- 	const struct reg_offset_data *layout;
- 
--	struct clk *bamclk;
-+	struct clk *clk;
- 	int irq;
- 
- 	/* dma start transaction tasklet */
-@@ -410,7 +411,7 @@ static inline void __iomem *bam_addr(struct bam_device *bdev, u32 pipe,
- {
- 	const struct reg_offset_data r = bdev->layout[reg];
- 
--	return bdev->regs + r.base_offset +
-+	return bdev->base + r.base_offset +
- 		r.pipe_mult * pipe +
- 		r.evnt_mult * pipe +
- 		r.ee_mult * bdev->ee;
-@@ -1209,41 +1210,41 @@ static int bam_dma_probe(struct platform_device *pdev)
- {
- 	struct bam_device *bdev;
- 	const struct of_device_id *match;
--	struct resource *iores;
- 	int ret, i;
--
--	bdev = devm_kzalloc(&pdev->dev, sizeof(*bdev), GFP_KERNEL);
--	if (!bdev)
--		return -ENOMEM;
-+	/*
-+	 * This macro internally combines following functions:
-+	 * devm_kzalloc, platform_get_resource, devm_ioremap_resource,
-+	 * devm_clk_get, platform_get_irq, clk_prepare_enable
-+	 */
-+	ret = devm_platform_probe_helper_clk(pdev, bdev, "bam_clk");
-+	bdev->controlled_remotely = of_property_read_bool(pdev->dev.of_node,
-+						"qcom,controlled-remotely");
-+	if (ret < 0) {
-+		if (IS_ERR(bdev->clk)) {
-+			if (!bdev->controlled_remotely)
-+				return ret;
-+			bdev->clk = NULL;
-+		} else
-+			return ret;
-+	}
- 
- 	bdev->dev = &pdev->dev;
- 
- 	match = of_match_node(bam_of_match, pdev->dev.of_node);
- 	if (!match) {
- 		dev_err(&pdev->dev, "Unsupported BAM module\n");
--		return -ENODEV;
-+		ret = -ENODEV;
-+		goto err_disable_clk;
- 	}
- 
- 	bdev->layout = match->data;
- 
--	iores = platform_get_resource(pdev, IORESOURCE_MEM, 0);
--	bdev->regs = devm_ioremap_resource(&pdev->dev, iores);
--	if (IS_ERR(bdev->regs))
--		return PTR_ERR(bdev->regs);
--
--	bdev->irq = platform_get_irq(pdev, 0);
--	if (bdev->irq < 0)
--		return bdev->irq;
--
- 	ret = of_property_read_u32(pdev->dev.of_node, "qcom,ee", &bdev->ee);
- 	if (ret) {
- 		dev_err(bdev->dev, "Execution environment unspecified\n");
--		return ret;
-+		goto err_disable_clk;
- 	}
- 
--	bdev->controlled_remotely = of_property_read_bool(pdev->dev.of_node,
--						"qcom,controlled-remotely");
--
- 	if (bdev->controlled_remotely) {
- 		ret = of_property_read_u32(pdev->dev.of_node, "num-channels",
- 					   &bdev->num_channels);
-@@ -1256,20 +1257,6 @@ static int bam_dma_probe(struct platform_device *pdev)
- 			dev_err(bdev->dev, "num-ees unspecified in dt\n");
- 	}
- 
--	bdev->bamclk = devm_clk_get(bdev->dev, "bam_clk");
--	if (IS_ERR(bdev->bamclk)) {
--		if (!bdev->controlled_remotely)
--			return PTR_ERR(bdev->bamclk);
--
--		bdev->bamclk = NULL;
--	}
--
--	ret = clk_prepare_enable(bdev->bamclk);
--	if (ret) {
--		dev_err(bdev->dev, "failed to prepare/enable clock\n");
--		return ret;
--	}
--
- 	ret = bam_init(bdev);
- 	if (ret)
- 		goto err_disable_clk;
-@@ -1359,7 +1346,7 @@ static int bam_dma_probe(struct platform_device *pdev)
- err_tasklet_kill:
- 	tasklet_kill(&bdev->task);
- err_disable_clk:
--	clk_disable_unprepare(bdev->bamclk);
-+	clk_disable_unprepare(bdev->clk);
- 
- 	return ret;
- }
-@@ -1393,7 +1380,7 @@ static int bam_dma_remove(struct platform_device *pdev)
- 
- 	tasklet_kill(&bdev->task);
- 
--	clk_disable_unprepare(bdev->bamclk);
-+	clk_disable_unprepare(bdev->clk);
- 
- 	return 0;
- }
-@@ -1402,7 +1389,7 @@ static int __maybe_unused bam_dma_runtime_suspend(struct device *dev)
- {
- 	struct bam_device *bdev = dev_get_drvdata(dev);
- 
--	clk_disable(bdev->bamclk);
-+	clk_disable(bdev->clk);
- 
- 	return 0;
- }
-@@ -1412,7 +1399,7 @@ static int __maybe_unused bam_dma_runtime_resume(struct device *dev)
- 	struct bam_device *bdev = dev_get_drvdata(dev);
- 	int ret;
- 
--	ret = clk_enable(bdev->bamclk);
-+	ret = clk_enable(bdev->clk);
- 	if (ret < 0) {
- 		dev_err(dev, "clk_enable failed: %d\n", ret);
- 		return ret;
-@@ -1428,7 +1415,7 @@ static int __maybe_unused bam_dma_suspend(struct device *dev)
- 	if (!bdev->controlled_remotely)
- 		pm_runtime_force_suspend(dev);
- 
--	clk_unprepare(bdev->bamclk);
-+	clk_unprepare(bdev->clk);
- 
- 	return 0;
- }
-@@ -1438,7 +1425,7 @@ static int __maybe_unused bam_dma_resume(struct device *dev)
- 	struct bam_device *bdev = dev_get_drvdata(dev);
- 	int ret;
- 
--	ret = clk_prepare(bdev->bamclk);
-+	ret = clk_prepare(bdev->clk);
- 	if (ret)
- 		return ret;
- 
+Changes since v4:
+ * Addressed Stephen's comments.
+ * Moved QCOM specific implementation to arm-smmu-qcom.c as per Robin's suggestion.
+
+Changes since v3:
+ * Based on arm-smmu implementation cleanup series [5] by Robin Murphy which is
+   already merged in Will's tree [6].
+ * Implemented the sdm845 specific reset hook which does arm_smmu_device_reset()
+   followed by making SCM call to disable the wait-for-safe logic.
+ * Removed depedency for SCM call on any dt flag. We invariably try to disable
+   the wait-for-safe logic on sdm845. The platforms such as mtp845, and db845
+   that implement handlers for this particular SCM call should be able disable
+   wait-for-safe logic.
+   Other platforms such as cheza don't enable the wait-for-safe logic at all
+   from their bootloaders. So there's no need to disable the same.
+ * No change in SCM call patches 1 & 2.
+
+Changes since v2:
+ * Dropped the patch to add atomic io_read/write scm API.
+ * Removed support for any separate page table ops to handle wait-for-safe.
+   Currently just disabling this wait-for-safe logic from arm_smmu_device_probe()
+   to achieve performance on USB/UFS on sdm845.
+ * Added a device tree patch to add smmu option for fw-implemented support
+   for SCM call to take care of SAFE toggling.
+
+Changes since v1:
+ * Addressed Will and Robin's comments:
+    - Dropped the patch[4] that forked out __arm_smmu_tlb_inv_range_nosync(),
+      and __arm_smmu_tlb_sync().
+    - Cleaned up the errata patch further to use downstream polling mechanism
+      for tlb sync.
+ * No change in SCM call patches - patches 1 to 3.
+
+[1] https://patchwork.kernel.org/cover/11110643/
+[2] https://github.com/vivekgautam1/linux/tree/v5.2-rc4/sdm845-display-working
+[3] https://source.codeaurora.org/quic/la/kernel/msm-4.9/commit/drivers/iommu/arm-smmu.c?h=CogSystems-msm-49/msm-4.9&id=da765c6c75266b38191b38ef086274943f353ea7
+[4] https://source.codeaurora.org/quic/la/kernel/msm-4.9/commit/drivers/iommu/arm-smmu.c?h=CogSystems-msm-49/msm-4.9&id=8696005aaaf745de68f57793c1a534a34345c30a
+[5] https://patchwork.kernel.org/patch/11096265/
+[6] https://git.kernel.org/pub/scm/linux/kernel/git/will/linux.git/
+
+Vivek Gautam (3):
+  firmware: qcom_scm-64: Add atomic version of qcom_scm_call
+  firmware/qcom_scm: Add scm call to handle smmu errata
+  iommu: arm-smmu-impl: Add sdm845 implementation hook
+
+ drivers/firmware/qcom_scm-32.c |   5 ++
+ drivers/firmware/qcom_scm-64.c | 152 +++++++++++++++++++++++----------
+ drivers/firmware/qcom_scm.c    |   6 ++
+ drivers/firmware/qcom_scm.h    |   5 ++
+ drivers/iommu/Makefile         |   2 +-
+ drivers/iommu/arm-smmu-impl.c  |   7 +-
+ drivers/iommu/arm-smmu-qcom.c  |  32 +++++++
+ drivers/iommu/arm-smmu-qcom.h  |  11 +++
+ drivers/iommu/arm-smmu.h       |   2 +
+ include/linux/qcom_scm.h       |   2 +
+ 10 files changed, 177 insertions(+), 47 deletions(-)
+ create mode 100644 drivers/iommu/arm-smmu-qcom.c
+ create mode 100644 drivers/iommu/arm-smmu-qcom.h
+
 -- 
-2.17.1
+QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
+of Code Aurora Forum, hosted by The Linux Foundation
 
