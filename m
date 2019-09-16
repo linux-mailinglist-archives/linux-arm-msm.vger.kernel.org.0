@@ -2,100 +2,97 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id E849EB40C3
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 16 Sep 2019 21:03:11 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A43ACB4141
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 16 Sep 2019 21:43:16 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727954AbfIPTDK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 16 Sep 2019 15:03:10 -0400
-Received: from mail-pl1-f195.google.com ([209.85.214.195]:36400 "EHLO
-        mail-pl1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725912AbfIPTDK (ORCPT
+        id S1728105AbfIPTnP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 16 Sep 2019 15:43:15 -0400
+Received: from mail-pf1-f195.google.com ([209.85.210.195]:40882 "EHLO
+        mail-pf1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727577AbfIPTnP (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 16 Sep 2019 15:03:10 -0400
-Received: by mail-pl1-f195.google.com with SMTP id f19so318409plr.3;
-        Mon, 16 Sep 2019 12:03:08 -0700 (PDT)
+        Mon, 16 Sep 2019 15:43:15 -0400
+Received: by mail-pf1-f195.google.com with SMTP id x127so537272pfb.7
+        for <linux-arm-msm@vger.kernel.org>; Mon, 16 Sep 2019 12:43:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:mime-version:content-disposition
-         :user-agent;
-        bh=O593HMHr1X+t/3lCKgBpvy9WSO86CaTojEYHPvt/fEk=;
-        b=usgnhg07TRgsfaVdzt3E55MQ+J8ZG8EqLxQ4kckSs3uxRwVIVE0MRZ533n0fklbPf4
-         pckxTev4WnlQh+hY4cmeCUHKr7qz80TmkeQj56c4uHzcw+K7/PvOLSd0fpsO1P2quZZ7
-         OmbXUaaFu2SgIUmRpbVqHa5mNQsesQ8/0mL7yJ1MQItSEBUdtjzyUp0XNxtp5Bz2h77Q
-         tNisNAoSaCBIofjqKWWBTbvJcb2nIGW949Xz+ucy3So40fB7+XBC807UIY+SH87oXgMl
-         s/0ACbxVSc+LdAmFLaZxEij9evKOYVEeoukeCev3fjnh5ZrYnnacuiZ1C8qkck1ZhTuY
-         7eKw==
+        d=chromium.org; s=google;
+        h=message-id:mime-version:content-transfer-encoding:in-reply-to
+         :references:cc:to:from:subject:user-agent:date;
+        bh=WLp+GPttGVxHZ4bc1E597l7UcWrj5/s8colAd/Zrf1E=;
+        b=HGBAC2LzEi2bY7Z5K1cpZPh8ExkzEXavrfUP/mkdESNHmIDONxGqHmbtiXYrdIS+dt
+         GZX7uhRA3ZPgYGD2tzXp2i/JLavp1eAt+gwRUkef0S2ToGnZEXw7ID0TeV0i1C6LiYdO
+         DUjHMhgwnt3lWZcw7w2FJs7Yl/+tGsBPcK6Nk=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:mime-version
-         :content-disposition:user-agent;
-        bh=O593HMHr1X+t/3lCKgBpvy9WSO86CaTojEYHPvt/fEk=;
-        b=eWwXvMHDEs1CaGKegezZiSG1c2H5BroiHiICUmCzojtCOt6r3JEnQS8EUh/KQC1B2p
-         LUgQz3hGTGTdGOD+vnbCxdAKPKgdSXkVNn2BtJZuGSVIMiyI6jrE5cAfJC+RMKj/7oOd
-         FoZhGlhwqRp1T58JMPM7Zmkn56jS3PAmvi2zsNx7MtMPI8P//NbGAP//t/Ug+wfkwXvS
-         ylFLMpq1E2WVbzQvCCk4ysxP9p0WQ5oYJzyANVg4syV75P16e59B1JnET1EeohZ2WSwQ
-         nY+0Y1A4r8NGzBfFy9JZ50SpFoBDJOICL3dE/LGMmzRxZXUViz814U9OYrkwiB9+gTji
-         t3bw==
-X-Gm-Message-State: APjAAAXoV6mwd8MkpU522p/pivO49HlmnkwgznNoBuIhIaWDnPw63tiw
-        Vq9jJQKMFY9mfQiwYYyzgHxvEnD7
-X-Google-Smtp-Source: APXvYqxuxI6u8zDVKZJbWfmjYLJJp9vLcVvaYS8HA2y5ASTUm3CVUjEZTsJMbtW3HHZqto0l/lLIAA==
-X-Received: by 2002:a17:902:9001:: with SMTP id a1mr1400116plp.148.1568660588129;
-        Mon, 16 Sep 2019 12:03:08 -0700 (PDT)
-Received: from SD ([2405:204:828a:aaec:8514:49dd:92d4:793d])
-        by smtp.gmail.com with ESMTPSA id i6sm67954035pfq.20.2019.09.16.12.03.04
+        h=x-gm-message-state:message-id:mime-version
+         :content-transfer-encoding:in-reply-to:references:cc:to:from:subject
+         :user-agent:date;
+        bh=WLp+GPttGVxHZ4bc1E597l7UcWrj5/s8colAd/Zrf1E=;
+        b=gDy34o+3jddBvxeaVlCxfSxCurgPGwI4dYHpuwsN1aiQvNyupxdEG+ViM+NIMYXlot
+         l3qTA5Mn+C78T8pASjLT1jpRS+PS0fv/AJupEW/pWx6GEe5uKPXLlyosfgZlQNFkUXhh
+         JOtGySz+QGgCgyygmZvkGvQnl7o/ng3DLAsjG/kH96746ntFk3w31+p4Yi6OOIXa7xQn
+         jtFl6QPcq7jVSX07xmA2dgPbR29sCcgAyOdxt1MWwHLX4iORIu+rUhsxuhHwFLKigcpT
+         s7V+Z79DMi5foroc6cG8QGB6Ct8GvoWm33QJqdBXJrepfa0axwF23yf0B/IH6Esx8KZ7
+         ircg==
+X-Gm-Message-State: APjAAAW0QwZ4zT5K6TMx2CujXOOpI0uaOUk/IS0B27uy5FxTrYSANNjX
+        S3Vryp9qDMASrkdg5Lfj7Yz8bT94YIc=
+X-Google-Smtp-Source: APXvYqztr3q/MYD/JI7oKNOvIkdW3WzYP90VrrLrD5c3imzhZHsZTjDfElpIe6ZmcRnXlO+zX1iUZQ==
+X-Received: by 2002:a62:8c97:: with SMTP id m145mr9801pfd.241.1568662994612;
+        Mon, 16 Sep 2019 12:43:14 -0700 (PDT)
+Received: from chromium.org ([2620:15c:202:1:fa53:7765:582b:82b9])
+        by smtp.gmail.com with ESMTPSA id em21sm372496pjb.31.2019.09.16.12.43.13
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 16 Sep 2019 12:03:07 -0700 (PDT)
-Date:   Tue, 17 Sep 2019 00:32:54 +0530
-From:   Saiyam Doshi <saiyamdoshi.in@gmail.com>
-To:     agross@kernel.org
-Cc:     linux-arm-msm@vger.kernel.org, linux-i2c@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: [PATCH 3/3] i2c: qup: Use devm_platform_ioremap_resource helper
-Message-ID: <20190916190254.GA14207@SD>
+        Mon, 16 Sep 2019 12:43:13 -0700 (PDT)
+Message-ID: <5d7fe5d1.1c69fb81.eca3b.1121@mx.google.com>
+Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-User-Agent: Mutt/1.10.1 (2018-07-13)
+Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <20190912091019.5334-1-srinivas.kandagatla@linaro.org>
+References: <20190912091019.5334-1-srinivas.kandagatla@linaro.org>
+Cc:     linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+To:     Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+        andy.gross@linaro.org, bjorn.andersson@linaro.org
+From:   Stephen Boyd <swboyd@chromium.org>
+Subject: Re: [PATCH] soc: qcom: socinfo: add missing soc_id sysfs entry
+User-Agent: alot/0.8.1
+Date:   Mon, 16 Sep 2019 12:43:11 -0700
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Use devm_platform_ioremap_resource helper which wraps
-platform_get_resource() and devm_ioremap_resource() together.
+Quoting Srinivas Kandagatla (2019-09-12 02:10:19)
+> looks like SoC ID is not exported to sysfs for some reason.
+> This patch adds it!
+>=20
+> This is mostly used by userspace libraries like SNPE.
 
-The semantic patch that makes this report is available
-in scripts/coccinelle/api/devm_platform_ioremap_resource.cocci.
+What is SNPE?
 
-Found using - http://coccinelle.lip6.fr/
+>=20
+> Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+> ---
+>  drivers/soc/qcom/socinfo.c | 2 ++
+>  1 file changed, 2 insertions(+)
 
-Signed-off-by: Saiyam Doshi <saiyamdoshi.in@gmail.com>
----
- drivers/i2c/busses/i2c-qup.c | 4 +---
- 1 file changed, 1 insertion(+), 3 deletions(-)
+Hmm I wasn't aware this driver was merged.
 
-diff --git a/drivers/i2c/busses/i2c-qup.c b/drivers/i2c/busses/i2c-qup.c
-index 23c4893512b2..2d21168f81a0 100644
---- a/drivers/i2c/busses/i2c-qup.c
-+++ b/drivers/i2c/busses/i2c-qup.c
-@@ -1663,7 +1663,6 @@ static int qup_i2c_probe(struct platform_device *pdev)
- 	static const int blk_sizes[] = {4, 16, 32};
- 	struct qup_i2c_dev *qup;
- 	unsigned long one_bit_t;
--	struct resource *res;
- 	u32 io_mode, hw_ver, size;
- 	int ret, fs_div, hs_div;
- 	u32 src_clk_freq = DEFAULT_SRC_CLK;
-@@ -1760,8 +1759,7 @@ static int qup_i2c_probe(struct platform_device *pdev)
- 		return -EINVAL;
- 	}
-
--	res = platform_get_resource(pdev, IORESOURCE_MEM, 0);
--	qup->base = devm_ioremap_resource(qup->dev, res);
-+	qup->base = devm_platform_ioremap_resource(pdev, 0);
- 	if (IS_ERR(qup->base))
- 		return PTR_ERR(qup->base);
-
---
-2.20.1
-
+>=20
+> diff --git a/drivers/soc/qcom/socinfo.c b/drivers/soc/qcom/socinfo.c
+> index 8dc86a74559b..876a3f6612a3 100644
+> --- a/drivers/soc/qcom/socinfo.c
+> +++ b/drivers/soc/qcom/socinfo.c
+> @@ -422,6 +422,8 @@ static int qcom_socinfo_probe(struct platform_device =
+*pdev)
+>         qs->attr.family =3D "Snapdragon";
+>         qs->attr.machine =3D socinfo_machine(&pdev->dev,
+>                                            le32_to_cpu(info->id));
+> +       qs->attr.soc_id =3D devm_kasprintf(&pdev->dev, GFP_KERNEL, "%u",
+> +                                        le32_to_cpu(info->id));
+>         qs->attr.revision =3D devm_kasprintf(&pdev->dev, GFP_KERNEL, "%u.=
+%u",
+>                                            SOCINFO_MAJOR(le32_to_cpu(info=
+->ver)),
+>                                            SOCINFO_MINOR(le32_to_cpu(info=
+->ver)));
