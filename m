@@ -2,136 +2,78 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id DA81AB3964
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 16 Sep 2019 13:33:24 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D2A3DB3995
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 16 Sep 2019 13:41:20 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731060AbfIPLdF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 16 Sep 2019 07:33:05 -0400
-Received: from bhuna.collabora.co.uk ([46.235.227.227]:55692 "EHLO
-        bhuna.collabora.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1731539AbfIPLdE (ORCPT
+        id S1731485AbfIPLlU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 16 Sep 2019 07:41:20 -0400
+Received: from smtp.codeaurora.org ([198.145.29.96]:48298 "EHLO
+        smtp.codeaurora.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725912AbfIPLlT (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 16 Sep 2019 07:33:04 -0400
-Received: from [127.0.0.1] (localhost [127.0.0.1])
-        (Authenticated sender: eballetbo)
-        with ESMTPSA id D44D228D45B
-Subject: Re: [PATCH 05/11] drm/bridge: analogix-anx78xx: correct value of
- TX_P0
-To:     Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
-        Brian Masney <masneyb@onstation.org>
-Cc:     Andrzej Hajda <a.hajda@samsung.com>, bjorn.andersson@linaro.org,
-        robh+dt@kernel.org, agross@kernel.org, narmstrong@baylibre.com,
-        robdclark@gmail.com, sean@poorly.run, airlied@linux.ie,
-        daniel@ffwll.ch, mark.rutland@arm.com, jonas@kwiboo.se,
-        jernej.skrabec@siol.net, linus.walleij@linaro.org,
-        dri-devel@lists.freedesktop.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org,
-        freedreno@lists.freedesktop.org
-References: <20190815004854.19860-1-masneyb@onstation.org>
- <CGME20190815004918epcas3p135042bc52c7e3c8b1aca7624d121af97@epcas3p1.samsung.com>
- <20190815004854.19860-6-masneyb@onstation.org>
- <dc10dd84-72e2-553e-669b-271b77b4a21a@samsung.com>
- <20190916103614.GA1644@onstation.org>
- <20190916104907.GB4734@pendragon.ideasonboard.com>
-From:   Enric Balletbo i Serra <enric.balletbo@collabora.com>
-Message-ID: <3ec4f0bc-f3c5-aebf-8213-bc4f80915902@collabora.com>
-Date:   Mon, 16 Sep 2019 13:32:58 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.9.0
-MIME-Version: 1.0
-In-Reply-To: <20190916104907.GB4734@pendragon.ideasonboard.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-GB
-Content-Transfer-Encoding: 8bit
+        Mon, 16 Sep 2019 07:41:19 -0400
+Received: by smtp.codeaurora.org (Postfix, from userid 1000)
+        id 904D46119F; Mon, 16 Sep 2019 11:41:18 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
+        s=default; t=1568634078;
+        bh=2PJhMQSA3xklJdMu+Ik6oPsLb1zpvS8xrkWgejzklR0=;
+        h=From:To:Cc:Subject:Date:From;
+        b=hvcrs6ts1KbuWsXG0cCbfNXGvFLMWx0DDjSx80JpL1Y7LOkNE1/MWfOBqFivD6u8z
+         FgPYyBPaaf30/4iQ2O0e+wxzyr/SR1c+70TeITzttLI+vBIxPhDhoMgD3V+/AknDut
+         XX/IuxbuF1+w5t9i2I+G4bZUd9mH6fR9t+vQTZGk=
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        pdx-caf-mail.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.7 required=2.0 tests=ALL_TRUSTED,BAYES_00,
+        DKIM_INVALID,DKIM_SIGNED,SPF_NONE autolearn=no autolearn_force=no
+        version=3.4.0
+Received: from cchiluve-linux.qualcomm.com (blr-c-bdr-fw-01_globalnat_allzones-outside.qualcomm.com [103.229.19.19])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: cchiluve@smtp.codeaurora.org)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 0B98361231;
+        Mon, 16 Sep 2019 11:41:14 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
+        s=default; t=1568634077;
+        bh=2PJhMQSA3xklJdMu+Ik6oPsLb1zpvS8xrkWgejzklR0=;
+        h=From:To:Cc:Subject:Date:From;
+        b=aGuVDYCOcXvtnqEUMnb4ZGWBd1rW2RyQL9nKB320EAFsH9o0nViQdcIrySJ4vvHy9
+         wNWHrNYfXihAKG4X/UlJoPkMMO0umN37aRTchCwD4BjhebHIitfwPSAXKHE0N1Iep1
+         HC997ZR6xZ/TlpzMiydn3dpQ70hEXaX6EbCiEm1Q=
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 0B98361231
+Authentication-Results: pdx-caf-mail.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: pdx-caf-mail.web.codeaurora.org; spf=none smtp.mailfrom=cchiluve@codeaurora.org
+From:   Chandana Kishori Chiluveru <cchiluve@codeaurora.org>
+To:     balbi@kernel.org, agross@kernel.org, david.brown@linaro.org
+Cc:     linux-usb@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        Chandana Kishori Chiluveru <cchiluve@codeaurora.org>
+Subject: [PATCH V2 0/3] ADD interconnect support for USB
+Date:   Mon, 16 Sep 2019 17:10:58 +0530
+Message-Id: <1568634061-14455-1-git-send-email-cchiluve@codeaurora.org>
+X-Mailer: git-send-email 1.9.1
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi,
+This path series aims to add interconnect support in
+dwc3-qcom driver on SDM845 SoCs.
 
-On 16/9/19 12:49, Laurent Pinchart wrote:
-> Hi Brian,
-> 
-> On Mon, Sep 16, 2019 at 06:36:14AM -0400, Brian Masney wrote:
->> On Mon, Sep 16, 2019 at 12:02:09PM +0200, Andrzej Hajda wrote:
->>> On 15.08.2019 02:48, Brian Masney wrote:
->>>> When attempting to configure this driver on a Nexus 5 phone (msm8974),
->>>> setting up the dummy i2c bus for TX_P0 would fail due to an -EBUSY
->>>> error. The downstream MSM kernel sources [1] shows that the proper value
->>>> for TX_P0 is 0x78, not 0x70, so correct the value to allow device
->>>> probing to succeed.
->>>>
->>>> [1] https://github.com/AICP/kernel_lge_hammerhead/blob/n7.1/drivers/video/slimport/slimport_tx_reg.h
->>>>
->>>> Signed-off-by: Brian Masney <masneyb@onstation.org>
->>>> ---
->>>>  drivers/gpu/drm/bridge/analogix-anx78xx.h | 2 +-
->>>>  1 file changed, 1 insertion(+), 1 deletion(-)
->>>>
->>>> diff --git a/drivers/gpu/drm/bridge/analogix-anx78xx.h b/drivers/gpu/drm/bridge/analogix-anx78xx.h
->>>> index 25e063bcecbc..bc511fc605c9 100644
->>>> --- a/drivers/gpu/drm/bridge/analogix-anx78xx.h
->>>> +++ b/drivers/gpu/drm/bridge/analogix-anx78xx.h
->>>> @@ -6,7 +6,7 @@
->>>>  #ifndef __ANX78xx_H
->>>>  #define __ANX78xx_H
->>>>  
->>>> -#define TX_P0				0x70
->>>> +#define TX_P0				0x78
->>>
->>>
->>> This bothers me little. There are no upstream users, grepping android
->>> sources suggests that both values can be used [1][2]  (grep for "#define
->>> TX_P0"), moreover there is code suggesting both values can be valid [3].
->>>
->>> Could you verify datasheet which i2c slave addresses are valid for this
->>> chip, if both I guess this patch should be reworked.
->>>
->>>
->>> [1]:
->>> https://android.googlesource.com/kernel/msm/+/android-msm-flo-3.4-jb-mr2/drivers/misc/slimport_anx7808/slimport_tx_reg.h
->>>
->>> [2]:
->>> https://github.com/AndroidGX/SimpleGX-MM-6.0_H815_20d/blob/master/drivers/video/slimport/anx7812/slimport7812_tx_reg.h
->>>
->>> [3]:
->>> https://github.com/commaai/android_kernel_leeco_msm8996/blob/master/drivers/video/msm/mdss/dp/slimport_custom_declare.h#L73
->>
->> This address is 0x78 on my Nexus 5. Given [3] above it looks like we
->> need to support both addresses. What do you think about moving these
->> addresses into device tree?
-> 
-> Assuming that the device supports different addresses (I can't validate
-> that as I don't have access to the datasheet), and different addresses
-> need to be used on different systems, then the address to be used needs
-> to be provided by the firmware (DT in this case). Two options are
-> possible, either specifying the address explicitly in the device's DT
-> node, or specifying free addresses (in the form of a white list or black
-> list) and allocating an address from that pool. The latter has been
-> discussed in a BoF at the Linux Plumbers Conference last week,
-> https://linuxplumbersconf.org/event/4/contributions/542/.
-> 
->> The downstream and upstream kernel sources divide these addresses by two
->> to get the i2c address. Here's the code in upstream:
->>
->> https://elixir.bootlin.com/linux/latest/source/drivers/gpu/drm/bridge/analogix-anx78xx.c#L1353
->> https://elixir.bootlin.com/linux/latest/source/drivers/gpu/drm/bridge/analogix-anx78xx.c#L41
->>
->> I'm not sure why the actual i2c address isn't used in this code.
-> 
+Changes since V1:
+  > Comments by Georgi Djakov on "[PATCH 2/3]" addressed
+  > [PATCH 1/3] and [PATCH 3/3] remains unchanged
 
-The ANX7802/12/14/16 has a slave I2C bus that provides the interface to access
-or control the chip from the AP. The I2C slave addresses used to control the
-ANX7802/12/14/16 are 70h, 72h, 7Ah, 7Eh and 80h. Every address allows you to
-access to different registers of the chip and AFAICS is not configurable.
+Chandana Kishori Chiluveru (3):
+  dt-bindings: Introduce interconnect bindings for usb
+  usb: dwc3: qcom: Add interconnect support in dwc3 driver
+  arm64: dts: sdm845: Add interconnect properties for USB
 
-I don't think these addresses should be configured via DT but for the driver itself.
+ .../devicetree/bindings/usb/qcom,dwc3.txt          |  13 ++
+ arch/arm64/boot/dts/qcom/sdm845.dtsi               |  12 ++
+ drivers/usb/dwc3/dwc3-qcom.c                       | 145 ++++++++++++++++++++-
+ 3 files changed, 168 insertions(+), 2 deletions(-)
 
-My wild guess is that the ANX7808 has different addresses, but I don't have the
-datasheet of this version.
-
-Best regards,
- Enric
+-- 
+Qualcomm India Private Limited, on behalf of Qualcomm Innovation Center, Inc.,
+is a member of Code Aurora Forum, a Linux Foundation Collaborative Project.
 
