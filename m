@@ -2,91 +2,154 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id EB38EB36C5
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 16 Sep 2019 11:01:53 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 674AAB376C
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 16 Sep 2019 11:46:27 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731547AbfIPJBx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 16 Sep 2019 05:01:53 -0400
-Received: from onstation.org ([52.200.56.107]:40528 "EHLO onstation.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1729814AbfIPJBw (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 16 Sep 2019 05:01:52 -0400
-Received: from localhost (c-98-239-145-235.hsd1.wv.comcast.net [98.239.145.235])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        (Authenticated sender: masneyb)
-        by onstation.org (Postfix) with ESMTPSA id 9B6193E8F9;
-        Mon, 16 Sep 2019 09:01:50 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=onstation.org;
-        s=default; t=1568624511;
-        bh=u3nzc9gqP8MUC4JhGKxS32T+hxVY4syKzPf8LbbTamQ=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=aOBRGkMlz/PhmAyVxvgfThua6X09O9qLt8s9Z4+G/dU8zpnBGCcD6NpbPyO3rS0Qw
-         /GzuKCU0+FITC5ilWRJR5bvkSsGr0+bVtYVhSl/2Boz+5tl0ZiyVzEOgwWP1hg2fOz
-         E5dvSFXBtHXZtL88w+C57HA9DPyvfZwZz6KJQBQA=
-Date:   Mon, 16 Sep 2019 05:01:50 -0400
-From:   Brian Masney <masneyb@onstation.org>
-To:     Andrzej Hajda <a.hajda@samsung.com>
-Cc:     bjorn.andersson@linaro.org, robh+dt@kernel.org, agross@kernel.org,
-        narmstrong@baylibre.com, robdclark@gmail.com, sean@poorly.run,
-        airlied@linux.ie, daniel@ffwll.ch, mark.rutland@arm.com,
-        Laurent.pinchart@ideasonboard.com, jonas@kwiboo.se,
-        jernej.skrabec@siol.net, linus.walleij@linaro.org,
-        enric.balletbo@collabora.com, dri-devel@lists.freedesktop.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org,
-        freedreno@lists.freedesktop.org
-Subject: Re: [PATCH 00/11] ARM: dts: qcom: msm8974: add support for external
- display
-Message-ID: <20190916090150.GA349@onstation.org>
-References: <CGME20190815004916epcas3p4d8a62e215eff5e227721d3449e6bfbd3@epcas3p4.samsung.com>
- <20190815004854.19860-1-masneyb@onstation.org>
- <2da29e80-73fb-8620-532e-0b5f54b00841@samsung.com>
+        id S1728237AbfIPJq0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 16 Sep 2019 05:46:26 -0400
+Received: from smtp.codeaurora.org ([198.145.29.96]:50986 "EHLO
+        smtp.codeaurora.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729615AbfIPJq0 (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 16 Sep 2019 05:46:26 -0400
+Received: by smtp.codeaurora.org (Postfix, from userid 1000)
+        id B5A2B61214; Mon, 16 Sep 2019 09:46:23 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
+        s=default; t=1568627185;
+        bh=ml5rnkJTMHmPAf4IGrPXykOFxktm7Cfyo+9yeKBWpwo=;
+        h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
+        b=LdS0fsqBFhuJaY3Oq2v0QUY/Ab8EC/yJ+/hWwy1nG3VKjRFzp721DIW53xkNkzNEi
+         oxb5+2DigygmFang4ThnXW4Inp4IcE9YebR1WOdmcvfgDVLrNQCUZXuQ7cJ3LMQ+T9
+         kS0JXrIy+AiTupW2rAegmw+sRQcaC9fNRfNMwbsk=
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        pdx-caf-mail.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.7 required=2.0 tests=ALL_TRUSTED,BAYES_00,
+        DKIM_INVALID,DKIM_SIGNED autolearn=no autolearn_force=no version=3.4.0
+Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
+        by smtp.codeaurora.org (Postfix) with ESMTP id 5706A61214;
+        Mon, 16 Sep 2019 09:46:21 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
+        s=default; t=1568627181;
+        bh=ml5rnkJTMHmPAf4IGrPXykOFxktm7Cfyo+9yeKBWpwo=;
+        h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
+        b=duPxUEPSEzsjcd7nUgQV8fgJSXBkiT6J8pqvO54GDG/emEJ+jVACz8NLsJMWGlR9+
+         y+ADWRpCf3SPpOFfmxcpB7CASL6Ke+6SfUrKjmSubwc6x7ResMTm/M4kh4iqYKhVQZ
+         UiMCWrafX6sUll0VyrqcEmuFM4EN8/SB6egdgZwM=
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <2da29e80-73fb-8620-532e-0b5f54b00841@samsung.com>
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
+Content-Transfer-Encoding: 7bit
+Date:   Mon, 16 Sep 2019 15:16:21 +0530
+From:   Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
+To:     Robin Murphy <robin.murphy@arm.com>
+Cc:     Vivek Gautam <vivek.gautam@codeaurora.org>, joro@8bytes.org,
+        agross@kernel.org, will.deacon@arm.com,
+        iommu@lists.linux-foundation.org, bjorn.andersson@linaro.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm-owner@vger.kernel.org
+Subject: Re: [PATCH v4 3/3] iommu: arm-smmu-impl: Add sdm845 implementation
+ hook
+In-Reply-To: <9fb7d18c-e292-cbc9-aa6d-d85465ea249e@arm.com>
+References: <20190823063248.13295-1-vivek.gautam@codeaurora.org>
+ <20190823063248.13295-4-vivek.gautam@codeaurora.org>
+ <9fb7d18c-e292-cbc9-aa6d-d85465ea249e@arm.com>
+Message-ID: <f234e891bc16a1869ba8a929e52a49f7@codeaurora.org>
+X-Sender: saiprakash.ranjan@codeaurora.org
+User-Agent: Roundcube Webmail/1.2.5
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Andrzej,
+Hi Robin,
 
-On Mon, Sep 16, 2019 at 10:13:58AM +0200, Andrzej Hajda wrote:
-> Hi Brian,
+On 2019-09-10 18:56, Robin Murphy wrote:
+> On 23/08/2019 07:32, Vivek Gautam wrote:
+>> Add reset hook for sdm845 based platforms to turn off
+>> the wait-for-safe sequence.
+>> 
+>> Understanding how wait-for-safe logic affects USB and UFS performance
+>> on MTP845 and DB845 boards:
+>> 
+>> Qcom's implementation of arm,mmu-500 adds a WAIT-FOR-SAFE logic
+>> to address under-performance issues in real-time clients, such as
+>> Display, and Camera.
+>> On receiving an invalidation requests, the SMMU forwards SAFE request
+>> to these clients and waits for SAFE ack signal from real-time clients.
+>> The SAFE signal from such clients is used to qualify the start of
+>> invalidation.
+>> This logic is controlled by chicken bits, one for each - MDP 
+>> (display),
+>> IFE0, and IFE1 (camera), that can be accessed only from secure 
+>> software
+>> on sdm845.
+>> 
+>> This configuration, however, degrades the performance of non-real time
+>> clients, such as USB, and UFS etc. This happens because, with 
+>> wait-for-safe
+>> logic enabled the hardware tries to throttle non-real time clients 
+>> while
+>> waiting for SAFE ack signals from real-time clients.
+>> 
+>> On mtp845 and db845 devices, with wait-for-safe logic enabled by the
+>> bootloaders we see degraded performance of USB and UFS when kernel
+>> enables the smmu stage-1 translations for these clients.
+>> Turn off this wait-for-safe logic from the kernel gets us back the 
+>> perf
+>> of USB and UFS devices until we re-visit this when we start seeing 
+>> perf
+>> issues on display/camera on upstream supported SDM845 platforms.
+>> The bootloaders on these boards implement secure monitor callbacks to
+>> handle a specific command - QCOM_SCM_SVC_SMMU_PROGRAM with which the
+>> logic can be toggled.
+>> 
+>> There are other boards such as cheza whose bootloaders don't enable 
+>> this
+>> logic. Such boards don't implement callbacks to handle the specific 
+>> SCM
+>> call so disabling this logic for such boards will be a no-op.
+>> 
+>> This change is inspired by the downstream change from Patrick Daly
+>> to address performance issues with display and camera by handling
+>> this wait-for-safe within separte io-pagetable ops to do TLB
+>> maintenance. So a big thanks to him for the change and for all the
+>> offline discussions.
+>> 
+>> Without this change the UFS reads are pretty slow:
+>> $ time dd if=/dev/sda of=/dev/zero bs=1048576 count=10 conv=sync
+>> 10+0 records in
+>> 10+0 records out
+>> 10485760 bytes (10.0MB) copied, 22.394903 seconds, 457.2KB/s
+>> real    0m 22.39s
+>> user    0m 0.00s
+>> sys     0m 0.01s
+>> 
+>> With this change they are back to rock!
+>> $ time dd if=/dev/sda of=/dev/zero bs=1048576 count=300 conv=sync
+>> 300+0 records in
+>> 300+0 records out
+>> 314572800 bytes (300.0MB) copied, 1.030541 seconds, 291.1MB/s
+>> real    0m 1.03s
+>> user    0m 0.00s
+>> sys     0m 0.54s
+>> 
+>> Signed-off-by: Vivek Gautam <vivek.gautam@codeaurora.org>
+>> ---
+>>   drivers/iommu/arm-smmu-impl.c | 27 ++++++++++++++++++++++++++-
 > 
-> On 15.08.2019 02:48, Brian Masney wrote:
-> > This patch series begins to add support for the external display over
-> > HDMI that is supported on msm8974 SoCs. I'm testing this series on the
-> > Nexus 5, and I'm able to communicate with the HDMI bridge via the
-> > analogix-anx78xx driver, however the external display is not working
-> > yet.
-> >
-> > When I plug in the HDMI cable, the monitor detects that a device is
-> > hooked up, but nothing is shown on the external monitor. The hot plug
-> > detect GPIO (hpd-gpios) on the analogix-anx78xx bridge and MSM HDMI
-> > drivers do not change state when the slimport adapter or HDMI cable is
-> > plugged in or removed. I wonder if a regulator is not enabled somewhere?
-> > I have a comment in patch 10 regarding 'hpd-gdsc-supply' that may
-> > potentially be an issue.
-> >
-> > I'm still digging in on this, however I'd appreciate any feedback if
-> > anyone has time. Most of these patches are ready now, so I marked the
-> > ones that aren't ready with 'PATCH RFC'.
-> >
-> > I'm using an Analogix Semiconductor SP6001 SlimPort Micro-USB to 4K HDMI
-> > Adapter to connect my phone to an external display via a standard HDMI
-> > cable. This works just fine with the downstream MSM kernel using
-> > Android.
+> I'd be inclined to introduce the inevitable arm-smmu-qcom.c from the
+> start, and save worrying about moving this out later. Other than that,
+> though, the general self-contained shape of it all is every bit as
+> beautiful as I'd hoped :D
 > 
-> 
-> This patchset risks to be forgotten. To avoid it, at least partially, I
-> can merge patches 1-5, is it OK for you?
 
-That would be great if you could do that.
+Have posted v5 with your suggestion.
 
 Thanks,
+Sai
 
-Brian
+-- 
+QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a 
+member
+of Code Aurora Forum, hosted by The Linux Foundation
