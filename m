@@ -2,245 +2,118 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 832C5B442F
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Sep 2019 00:44:47 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id CD7D8B444E
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Sep 2019 00:56:11 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727598AbfIPWoq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 16 Sep 2019 18:44:46 -0400
-Received: from foss.arm.com ([217.140.110.172]:49214 "EHLO foss.arm.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726968AbfIPWoq (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 16 Sep 2019 18:44:46 -0400
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 63BDC337;
-        Mon, 16 Sep 2019 15:44:45 -0700 (PDT)
-Received: from [192.168.1.124] (unknown [172.31.20.19])
-        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 908EF3F67D;
-        Mon, 16 Sep 2019 15:44:43 -0700 (PDT)
-Subject: Re: [PATCHv5 3/3] iommu: arm-smmu-impl: Add sdm845 implementation
- hook
-To:     Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>,
-        Will Deacon <will@kernel.org>, Joerg Roedel <joro@8bytes.org>,
-        iommu@lists.linux-foundation.org, Andy Gross <agross@kernel.org>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Vivek Gautam <vivek.gautam@codeaurora.org>,
-        Rajendra Nayak <rnayak@codeaurora.org>
-Cc:     bjorn.andersson@linaro.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-References: <cover.1568549745.git.saiprakash.ranjan@codeaurora.org>
- <4ccbaf1f81c2bb2e7846da591fd542ab33f45586.1568549746.git.saiprakash.ranjan@codeaurora.org>
-From:   Robin Murphy <robin.murphy@arm.com>
-Message-ID: <e9918121-71bb-703f-a696-b0e357e5eeff@arm.com>
-Date:   Mon, 16 Sep 2019 23:44:32 +0100
-User-Agent: Mozilla/5.0 (Windows NT 10.0; rv:60.0) Gecko/20100101
- Thunderbird/60.9.0
+        id S2388025AbfIPW4L (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 16 Sep 2019 18:56:11 -0400
+Received: from mail-pl1-f196.google.com ([209.85.214.196]:38477 "EHLO
+        mail-pl1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727971AbfIPW4L (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 16 Sep 2019 18:56:11 -0400
+Received: by mail-pl1-f196.google.com with SMTP id w10so566955plq.5
+        for <linux-arm-msm@vger.kernel.org>; Mon, 16 Sep 2019 15:56:10 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=u9U0NhfEbSzfNz2L/ZQn95duwdZF6KZ4lfx8fSmuha0=;
+        b=NCA8Klj4av5tbA8D3ZetmtXimpMr5XYJNZvRKJv57IgJtpe+tv/r2HucvRP9LzfQjO
+         pHVmn8VrzdqVVHOYn3JL8WTcuk+ZCXXNmW4QtL3MPFi6lNrRGlTvM6dfb58LCIa3kCNb
+         k8k8WOLA6cxionUR4VdGuNf1TX5ttdTs9PEBU=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=u9U0NhfEbSzfNz2L/ZQn95duwdZF6KZ4lfx8fSmuha0=;
+        b=p0s+N1wJK/zgEbF/8L8jKwfYzP1DEmypiDPux6fNTKY89+MH9WcQELRgATCHHQx1AJ
+         ElOspLAMdk6CP205rAm+Lp07KU990o7rMl3dE1gsuvu5SRps3ZYJs4dnlGb0EugIetA5
+         jsJIImZ89LsmA1FanAk1MgvCGTs3A0ZNYIMtxVhS4YyTd7Co5YHgvdsCv73HveLjFMiX
+         LMTujYvfcxpH/jGSKsMWiDmF6TRwP1fjZUyHCVWDZphoxuIGqYi2r9f11llDh827aQU1
+         QaVEauTdw8bGcI0QovE2hbBRQKgMHjVzapkLmvICNThl3tI8ImMvJ/EHlT07YVhqMKwM
+         2Vhw==
+X-Gm-Message-State: APjAAAUGgC5GF2rITOFWtbzUFEJYj8LU3eBArIwhc1JGGdx76n6QYayo
+        y8NilU6Q6xqWnHo76EtlV7Z5ks7utrs=
+X-Google-Smtp-Source: APXvYqwayKK9Iuyyov+NmVfGJ7dVLJdhErF/+zcZt3Ry1ibyTi88v0HuPEDLkwFsVqAQXDkhm30daA==
+X-Received: by 2002:a17:902:bd8c:: with SMTP id q12mr474569pls.339.1568674570418;
+        Mon, 16 Sep 2019 15:56:10 -0700 (PDT)
+Received: from localhost ([2620:15c:202:1:75a:3f6e:21d:9374])
+        by smtp.gmail.com with ESMTPSA id c127sm158945pfb.5.2019.09.16.15.56.09
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 16 Sep 2019 15:56:09 -0700 (PDT)
+Date:   Mon, 16 Sep 2019 15:56:08 -0700
+From:   Matthias Kaehlcke <mka@chromium.org>
+To:     Chandana Kishori Chiluveru <cchiluve@codeaurora.org>
+Cc:     balbi@kernel.org, agross@kernel.org, david.brown@linaro.org,
+        linux-usb@vger.kernel.org, linux-arm-msm@vger.kernel.org
+Subject: Re: [PATCH V2 3/3] arm64: dts: sdm845: Add interconnect properties
+ for USB
+Message-ID: <20190916225608.GH133864@google.com>
+References: <1568634061-14455-1-git-send-email-cchiluve@codeaurora.org>
+ <1568634061-14455-4-git-send-email-cchiluve@codeaurora.org>
 MIME-Version: 1.0
-In-Reply-To: <4ccbaf1f81c2bb2e7846da591fd542ab33f45586.1568549746.git.saiprakash.ranjan@codeaurora.org>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-GB
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <1568634061-14455-4-git-send-email-cchiluve@codeaurora.org>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2019-09-15 1:35 pm, Sai Prakash Ranjan wrote:
-> From: Vivek Gautam <vivek.gautam@codeaurora.org>
-> 
-> Add reset hook for sdm845 based platforms to turn off
-> the wait-for-safe sequence.
-> 
-> Understanding how wait-for-safe logic affects USB and UFS performance
-> on MTP845 and DB845 boards:
-> 
-> Qcom's implementation of arm,mmu-500 adds a WAIT-FOR-SAFE logic
-> to address under-performance issues in real-time clients, such as
-> Display, and Camera.
-> On receiving an invalidation requests, the SMMU forwards SAFE request
-> to these clients and waits for SAFE ack signal from real-time clients.
-> The SAFE signal from such clients is used to qualify the start of
-> invalidation.
-> This logic is controlled by chicken bits, one for each - MDP (display),
-> IFE0, and IFE1 (camera), that can be accessed only from secure software
-> on sdm845.
-> 
-> This configuration, however, degrades the performance of non-real time
-> clients, such as USB, and UFS etc. This happens because, with wait-for-safe
-> logic enabled the hardware tries to throttle non-real time clients while
-> waiting for SAFE ack signals from real-time clients.
-> 
-> On mtp845 and db845 devices, with wait-for-safe logic enabled by the
-> bootloaders we see degraded performance of USB and UFS when kernel
-> enables the smmu stage-1 translations for these clients.
-> Turn off this wait-for-safe logic from the kernel gets us back the perf
-> of USB and UFS devices until we re-visit this when we start seeing perf
-> issues on display/camera on upstream supported SDM845 platforms.
-> The bootloaders on these boards implement secure monitor callbacks to
-> handle a specific command - QCOM_SCM_SVC_SMMU_PROGRAM with which the
-> logic can be toggled.
-> 
-> There are other boards such as cheza whose bootloaders don't enable this
-> logic. Such boards don't implement callbacks to handle the specific SCM
-> call so disabling this logic for such boards will be a no-op.
-> 
-> This change is inspired by the downstream change from Patrick Daly
-> to address performance issues with display and camera by handling
-> this wait-for-safe within separte io-pagetable ops to do TLB
-> maintenance. So a big thanks to him for the change and for all the
-> offline discussions.
-> 
-> Without this change the UFS reads are pretty slow:
-> $ time dd if=/dev/sda of=/dev/zero bs=1048576 count=10 conv=sync
-> 10+0 records in
-> 10+0 records out
-> 10485760 bytes (10.0MB) copied, 22.394903 seconds, 457.2KB/s
-> real    0m 22.39s
-> user    0m 0.00s
-> sys     0m 0.01s
-> 
-> With this change they are back to rock!
-> $ time dd if=/dev/sda of=/dev/zero bs=1048576 count=300 conv=sync
-> 300+0 records in
-> 300+0 records out
-> 314572800 bytes (300.0MB) copied, 1.030541 seconds, 291.1MB/s
-> real    0m 1.03s
-> user    0m 0.00s
-> sys     0m 0.54s
-> 
-> Signed-off-by: Vivek Gautam <vivek.gautam@codeaurora.org>
-> Signed-off-by: Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
+Hi Chandana.
+
+On Mon, Sep 16, 2019 at 05:11:01PM +0530, Chandana Kishori Chiluveru wrote:
+> Populate USB DT node with interconnect properties.
+
+nit: nodes
+
+> Signed-off-by: Chandana Kishori Chiluveru <cchiluve@codeaurora.org>
 > ---
->   drivers/iommu/Makefile        |  2 +-
->   drivers/iommu/arm-smmu-impl.c |  7 +++++--
->   drivers/iommu/arm-smmu-qcom.c | 32 ++++++++++++++++++++++++++++++++
->   drivers/iommu/arm-smmu-qcom.h | 11 +++++++++++
->   drivers/iommu/arm-smmu.h      |  2 ++
->   5 files changed, 51 insertions(+), 3 deletions(-)
->   create mode 100644 drivers/iommu/arm-smmu-qcom.c
->   create mode 100644 drivers/iommu/arm-smmu-qcom.h
+>  arch/arm64/boot/dts/qcom/sdm845.dtsi | 12 ++++++++++++
+>  1 file changed, 12 insertions(+)
 > 
-> diff --git a/drivers/iommu/Makefile b/drivers/iommu/Makefile
-> index 7caad48b4bc2..7d66e00a6924 100644
-> --- a/drivers/iommu/Makefile
-> +++ b/drivers/iommu/Makefile
-> @@ -13,7 +13,7 @@ obj-$(CONFIG_MSM_IOMMU) += msm_iommu.o
->   obj-$(CONFIG_AMD_IOMMU) += amd_iommu.o amd_iommu_init.o amd_iommu_quirks.o
->   obj-$(CONFIG_AMD_IOMMU_DEBUGFS) += amd_iommu_debugfs.o
->   obj-$(CONFIG_AMD_IOMMU_V2) += amd_iommu_v2.o
-> -obj-$(CONFIG_ARM_SMMU) += arm-smmu.o arm-smmu-impl.o
-> +obj-$(CONFIG_ARM_SMMU) += arm-smmu.o arm-smmu-impl.o arm-smmu-qcom.o
->   obj-$(CONFIG_ARM_SMMU_V3) += arm-smmu-v3.o
->   obj-$(CONFIG_DMAR_TABLE) += dmar.o
->   obj-$(CONFIG_INTEL_IOMMU) += intel-iommu.o intel-pasid.o
-> diff --git a/drivers/iommu/arm-smmu-impl.c b/drivers/iommu/arm-smmu-impl.c
-> index 5c87a38620c4..ad835018f0e2 100644
-> --- a/drivers/iommu/arm-smmu-impl.c
-> +++ b/drivers/iommu/arm-smmu-impl.c
-> @@ -8,7 +8,7 @@
->   #include <linux/of.h>
->   
->   #include "arm-smmu.h"
-> -
-> +#include "arm-smmu-qcom.h"
->   
->   static int arm_smmu_gr0_ns(int offset)
->   {
-> @@ -109,7 +109,7 @@ static struct arm_smmu_device *cavium_smmu_impl_init(struct arm_smmu_device *smm
->   #define ARM_MMU500_ACR_S2CRB_TLBEN	(1 << 10)
->   #define ARM_MMU500_ACR_SMTNMB_TLBEN	(1 << 8)
->   
-> -static int arm_mmu500_reset(struct arm_smmu_device *smmu)
-> +int arm_mmu500_reset(struct arm_smmu_device *smmu)
->   {
->   	u32 reg, major;
->   	int i;
-> @@ -170,5 +170,8 @@ struct arm_smmu_device *arm_smmu_impl_init(struct arm_smmu_device *smmu)
->   				  "calxeda,smmu-secure-config-access"))
->   		smmu->impl = &calxeda_impl;
->   
-> +	if (of_device_is_compatible(smmu->dev->of_node, "qcom,sdm845-smmu-500"))
-> +		smmu->impl = &qcom_sdm845_smmu500_impl;
-> +
->   	return smmu;
->   }
-> diff --git a/drivers/iommu/arm-smmu-qcom.c b/drivers/iommu/arm-smmu-qcom.c
-> new file mode 100644
-> index 000000000000..10e9a5bbae06
-> --- /dev/null
-> +++ b/drivers/iommu/arm-smmu-qcom.c
-> @@ -0,0 +1,32 @@
-> +// SPDX-License-Identifier: GPL-2.0-only
-> +/*
-> + * Copyright (c) 2019, The Linux Foundation. All rights reserved.
-> + */
-> +
-> +#include <linux/qcom_scm.h>
-> +
-> +#include "arm-smmu.h"
-> +#include "arm-smmu-qcom.h"
-> +
-> +static int qcom_sdm845_smmu500_reset(struct arm_smmu_device *smmu)
-> +{
-> +	int ret;
-> +
-> +	arm_mmu500_reset(smmu);
-> +
-> +	/*
-> +	 * To address performance degradation in non-real time clients,
-> +	 * such as USB and UFS, turn off wait-for-safe on sdm845 based boards,
-> +	 * such as MTP and db845, whose firmwares implement secure monitor
-> +	 * call handlers to turn on/off the wait-for-safe logic.
-> +	 */
-> +	ret = qcom_scm_qsmmu500_wait_safe_toggle(0);
-> +	if (ret)
-> +		dev_warn(smmu->dev, "Failed to turn off SAFE logic\n");
-> +
-> +	return ret;
-> +}
-> +
-> +const struct arm_smmu_impl qcom_sdm845_smmu500_impl = {
-> +	.reset = qcom_sdm845_smmu500_reset,
-> +};
-> diff --git a/drivers/iommu/arm-smmu-qcom.h b/drivers/iommu/arm-smmu-qcom.h
-> new file mode 100644
-> index 000000000000..915f8ea2b616
-> --- /dev/null
-> +++ b/drivers/iommu/arm-smmu-qcom.h
-> @@ -0,0 +1,11 @@
-> +/* SPDX-License-Identifier: GPL-2.0-only */
-> +/*
-> + * Copyright (c) 2019, The Linux Foundation. All rights reserved.
-> + */
-> +
-> +#ifndef _ARM_SMMU_QCOM_H
-> +#define _ARM_SMMU_QCOM_H
-> +
-> +extern const struct arm_smmu_impl qcom_sdm845_smmu500_impl;
+> diff --git a/arch/arm64/boot/dts/qcom/sdm845.dtsi b/arch/arm64/boot/dts/qcom/sdm845.dtsi
+> index fcb9330..1c41922 100644
+> --- a/arch/arm64/boot/dts/qcom/sdm845.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/sdm845.dtsi
+> @@ -1837,6 +1837,12 @@
+>  
+>  			resets = <&gcc GCC_USB30_PRIM_BCR>;
+>  
+> +			interconnects = <&rsc_hlos MASTER_USB3_0
+> +						&rsc_hlos SLAVE_EBI1>,
 
-I don't foresee this header being particularly beneficial - I'd rather 
-just have a single qcom_smmu_impl_init() entrypoint declared in 
-arm-smmu.h as per the Nvidia implementation[1], so you can then keep all 
-the other details private. With that change,
+nit: align second line after '<' for better readability (like
+'interrupts' or 'clocks' properties):
 
-Reviewed-by: Robin Murphy <robin.murphy@arm.com>
+			interconnects = <&rsc_hlos MASTER_USB3_0
+					 &rsc_hlos SLAVE_EBI1>,
 
-Thanks,
-Robin.
+same for the other entries.
 
-[1] 
-https://lore.kernel.org/linux-arm-kernel/1567481528-31163-3-git-send-email-vdumpa@nvidia.com/
-
+> +					<&rsc_hlos MASTER_APPSS_PROC
+> +						&rsc_hlos SLAVE_USB3_0>;
+> +			interconnect-names = "usb-ddr", "apps-usb";
 > +
-> +#endif /* _ARM_SMMU_QCOM_H */
-> diff --git a/drivers/iommu/arm-smmu.h b/drivers/iommu/arm-smmu.h
-> index b19b6cae9b5e..f74fa3bb149d 100644
-> --- a/drivers/iommu/arm-smmu.h
-> +++ b/drivers/iommu/arm-smmu.h
-> @@ -399,4 +399,6 @@ static inline void arm_smmu_writeq(struct arm_smmu_device *smmu, int page,
->   
->   struct arm_smmu_device *arm_smmu_impl_init(struct arm_smmu_device *smmu);
->   
-> +int arm_mmu500_reset(struct arm_smmu_device *smmu);
+>  			usb_1_dwc3: dwc3@a600000 {
+>  				compatible = "snps,dwc3";
+>  				reg = <0 0x0a600000 0 0xcd00>;
+> @@ -1881,6 +1887,12 @@
+>  
+>  			resets = <&gcc GCC_USB30_SEC_BCR>;
+>  
+> +			interconnects = <&rsc_hlos MASTER_USB3_1
+> +						&rsc_hlos SLAVE_EBI1>,
+> +					<&rsc_hlos MASTER_APPSS_PROC
+> +						&rsc_hlos SLAVE_USB3_1>;
+> +			interconnect-names = "usb-ddr", "apps-usb";
 > +
->   #endif /* _ARM_SMMU_H */
-> 
+>  			usb_2_dwc3: dwc3@a800000 {
+>  				compatible = "snps,dwc3";
+>  				reg = <0 0x0a800000 0 0xcd00>;
+
+Besides the nits:
+
+Reviewed-by: Matthias Kaehlcke <mka@chromium.org>
