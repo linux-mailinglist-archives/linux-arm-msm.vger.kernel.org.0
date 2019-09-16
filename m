@@ -2,100 +2,89 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 99121B399D
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 16 Sep 2019 13:42:05 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 8B23BB39BA
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 16 Sep 2019 13:49:46 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732099AbfIPLmF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 16 Sep 2019 07:42:05 -0400
-Received: from smtp.codeaurora.org ([198.145.29.96]:49174 "EHLO
+        id S1727897AbfIPLta (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 16 Sep 2019 07:49:30 -0400
+Received: from smtp.codeaurora.org ([198.145.29.96]:54640 "EHLO
         smtp.codeaurora.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725912AbfIPLmF (ORCPT
+        with ESMTP id S1730110AbfIPLta (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 16 Sep 2019 07:42:05 -0400
+        Mon, 16 Sep 2019 07:49:30 -0400
 Received: by smtp.codeaurora.org (Postfix, from userid 1000)
-        id E2AE361424; Mon, 16 Sep 2019 11:42:03 +0000 (UTC)
+        id 51C5D607F1; Mon, 16 Sep 2019 11:49:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
-        s=default; t=1568634123;
-        bh=oMY5Tj+8xqlrsEI1mYLnZKn0gg+CRwrKPBMhq/IUAS4=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=RTDDNZlyFhNoFDqEK1pi0qtfDoAj30NNklvUzjqKqqDEfQLOne/biVO+BJnxPCP6j
-         X/yVTDhtXyPyl5yHiqlguk/AHzxd75SmQA/+FC/dPLQyGESJLVVaiUn5ggOzbJRCaU
-         4/qbc2Ec7QRYpbN1upTTMQrAz2ko4po2Vphuq6qI=
+        s=default; t=1568634569;
+        bh=362FvmbOrDpv/n8GWlP8x1OdK6qMzvVMHzmjiK5OHYA=;
+        h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
+        b=EQFRiXK5Xh3oXD1JJ3Cjvr1XqC8YszkWJFYfACreReQNRUo19Z5Ep2YTSrcl/4Eqh
+         JVhB7sNWt2PjgVfyGgjwo5QqZyibhqzWFRWcay4AC5J+8HITnmZG6h+FNXA6kXGfZu
+         kvE/rywlj+2aU7rKF9ygLI8w8CoWysFWPkn0saRY=
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
         pdx-caf-mail.web.codeaurora.org
 X-Spam-Level: 
 X-Spam-Status: No, score=-2.7 required=2.0 tests=ALL_TRUSTED,BAYES_00,
-        DKIM_INVALID,DKIM_SIGNED,SPF_NONE autolearn=no autolearn_force=no
-        version=3.4.0
-Received: from cchiluve-linux.qualcomm.com (blr-c-bdr-fw-01_globalnat_allzones-outside.qualcomm.com [103.229.19.19])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: cchiluve@smtp.codeaurora.org)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 393B6614DB;
-        Mon, 16 Sep 2019 11:41:58 +0000 (UTC)
+        DKIM_INVALID,DKIM_SIGNED autolearn=no autolearn_force=no version=3.4.0
+Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
+        by smtp.codeaurora.org (Postfix) with ESMTP id D165D6119F;
+        Mon, 16 Sep 2019 11:49:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
-        s=default; t=1568634121;
-        bh=oMY5Tj+8xqlrsEI1mYLnZKn0gg+CRwrKPBMhq/IUAS4=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=g5KlYSchzZYZ6DJ9K7czIAEvQL8s8dHO3KHRIJuLpIbRVC07zbCiEqD4sIXhLJY5X
-         psitE0QfAA8acmv9GuqInq/wAXgbgBkKLWe0/xObMrU7rhlcpt3ysy3BGpMt7T80BL
-         zsf46cAGAvSH/3y7TMP0ae9TTSNnDTZ22hCwr2fc=
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 393B6614DB
-Authentication-Results: pdx-caf-mail.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: pdx-caf-mail.web.codeaurora.org; spf=none smtp.mailfrom=cchiluve@codeaurora.org
-From:   Chandana Kishori Chiluveru <cchiluve@codeaurora.org>
-To:     balbi@kernel.org, agross@kernel.org, david.brown@linaro.org
-Cc:     linux-usb@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        Chandana Kishori Chiluveru <cchiluve@codeaurora.org>
-Subject: [PATCH V2 3/3] arm64: dts: sdm845: Add interconnect properties for USB
-Date:   Mon, 16 Sep 2019 17:11:01 +0530
-Message-Id: <1568634061-14455-4-git-send-email-cchiluve@codeaurora.org>
-X-Mailer: git-send-email 1.9.1
-In-Reply-To: <1568634061-14455-1-git-send-email-cchiluve@codeaurora.org>
-References: <1568634061-14455-1-git-send-email-cchiluve@codeaurora.org>
+        s=default; t=1568634568;
+        bh=362FvmbOrDpv/n8GWlP8x1OdK6qMzvVMHzmjiK5OHYA=;
+        h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
+        b=jj93yY6D5y/BCAmhPK7eYpz/yHoqMKRWU4ybsfs1zNwY/3duo7DD9lxcHCo62J/vs
+         8cHHI6WIinIhxeyNJjsn2ErUYwemOF1fmYKF4b8PcQ909z/8EtTu3FwUqOx34HLWcO
+         Jf6NFDlsN/ElFQNEpO0NXfvgZhpmqqAvkNTB8EjM=
+MIME-Version: 1.0
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
+Content-Transfer-Encoding: 7bit
+Date:   Mon, 16 Sep 2019 17:19:28 +0530
+From:   gokulsri@codeaurora.org
+To:     Rob Herring <robh@kernel.org>
+Cc:     sboyd@kernel.org, agross@kernel.org, bjorn.andersson@linaro.org,
+        david.brown@linaro.org, devicetree@vger.kernel.org,
+        jassisinghbrar@gmail.com, linux-arm-msm@vger.kernel.org,
+        linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-remoteproc@vger.kernel.org, mark.rutland@arm.com,
+        mturquette@baylibre.com, ohad@wizery.com, robh+dt@kernel.org,
+        sricharan@codeaurora.org, nprakash@codeaurora.org
+Subject: Re: [PATCH V2 06/12] dt-bindings: clock: qcom: Add reset for WCSSAON
+In-Reply-To: <5d7c0ec8.1c69fb81.e5ca8.949d@mx.google.com>
+References: <1568375771-22933-1-git-send-email-gokulsri@codeaurora.org>
+ <1568375771-22933-7-git-send-email-gokulsri@codeaurora.org>
+ <5d7c0ec8.1c69fb81.e5ca8.949d@mx.google.com>
+Message-ID: <2648db96dbddadfce7c915a4877930ab@codeaurora.org>
+X-Sender: gokulsri@codeaurora.org
+User-Agent: Roundcube Webmail/1.2.5
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Populate USB DT node with interconnect properties.
+Hi Rob,
 
-Signed-off-by: Chandana Kishori Chiluveru <cchiluve@codeaurora.org>
----
- arch/arm64/boot/dts/qcom/sdm845.dtsi | 12 ++++++++++++
- 1 file changed, 12 insertions(+)
+On 2019-09-14 03:18, Rob Herring wrote:
+> On Fri, 13 Sep 2019 17:26:05 +0530, Gokul Sriram Palanisamy wrote:
+>> Add binding for WCSSAON reset required for Q6v5 reset on IPQ8074 SoC.
+>> 
+>> Signed-off-by: Gokul Sriram Palanisamy <gokulsri@codeaurora.org>
+>> Signed-off-by: Sricharan R <sricharan@codeaurora.org>
+>> Signed-off-by: Nikhil Prakash V <nprakash@codeaurora.org>
+>> ---
+>>  include/dt-bindings/clock/qcom,gcc-ipq8074.h | 1 +
+>>  1 file changed, 1 insertion(+)
+>> 
+> 
+> Please add Acked-by/Reviewed-by tags when posting new versions. 
+> However,
+> there's no need to repost patches *only* to add the tags. The upstream
+> maintainer will do that for acks received on the version they apply.
+> 
+> If a tag was not added on purpose, please state why and what changed.
 
-diff --git a/arch/arm64/boot/dts/qcom/sdm845.dtsi b/arch/arm64/boot/dts/qcom/sdm845.dtsi
-index fcb9330..1c41922 100644
---- a/arch/arm64/boot/dts/qcom/sdm845.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sdm845.dtsi
-@@ -1837,6 +1837,12 @@
- 
- 			resets = <&gcc GCC_USB30_PRIM_BCR>;
- 
-+			interconnects = <&rsc_hlos MASTER_USB3_0
-+						&rsc_hlos SLAVE_EBI1>,
-+					<&rsc_hlos MASTER_APPSS_PROC
-+						&rsc_hlos SLAVE_USB3_0>;
-+			interconnect-names = "usb-ddr", "apps-usb";
-+
- 			usb_1_dwc3: dwc3@a600000 {
- 				compatible = "snps,dwc3";
- 				reg = <0 0x0a600000 0 0xcd00>;
-@@ -1881,6 +1887,12 @@
- 
- 			resets = <&gcc GCC_USB30_SEC_BCR>;
- 
-+			interconnects = <&rsc_hlos MASTER_USB3_1
-+						&rsc_hlos SLAVE_EBI1>,
-+					<&rsc_hlos MASTER_APPSS_PROC
-+						&rsc_hlos SLAVE_USB3_1>;
-+			interconnect-names = "usb-ddr", "apps-usb";
-+
- 			usb_2_dwc3: dwc3@a800000 {
- 				compatible = "snps,dwc3";
- 				reg = <0 0x0a800000 0 0xcd00>;
--- 
-Qualcomm India Private Limited, on behalf of Qualcomm Innovation Center, Inc.,
-is a member of Code Aurora Forum, a Linux Foundation Collaborative Project.
+  Sorry, missed it. Will add it.
 
+Regards,
+  Gokul
