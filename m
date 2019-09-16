@@ -2,375 +2,245 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id E493EB43EF
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Sep 2019 00:24:51 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 832C5B442F
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Sep 2019 00:44:47 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1733183AbfIPWYv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 16 Sep 2019 18:24:51 -0400
-Received: from mail-pl1-f194.google.com ([209.85.214.194]:42114 "EHLO
-        mail-pl1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728897AbfIPWYu (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 16 Sep 2019 18:24:50 -0400
-Received: by mail-pl1-f194.google.com with SMTP id e5so519191pls.9
-        for <linux-arm-msm@vger.kernel.org>; Mon, 16 Sep 2019 15:24:50 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=g4mdnlTpKH063Bwavs1TQT240NfRxaGQCeG+1abAo/k=;
-        b=HfLX+S/C7Qmtr8+a8flAM790J/TUzoYPiNsrdb5f8W8+8Jh88g3cYfjbyDBuj7Ae6X
-         XjcvuxYb5M/sS9bP9CjJjz+Sfzi4KhD+28+xaABJQckAl0s9FM8vl1OACXnwPKgOHTSU
-         OciazszRG2oiFIzztDFymIhBH+ow7TOvGRHDQ=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=g4mdnlTpKH063Bwavs1TQT240NfRxaGQCeG+1abAo/k=;
-        b=ry56HeJRVYxd2YGmhp8JHvtmO6a91IGaT+EW3wQL0+cdnAeRqig62dhyKkNBbul+8m
-         HpV/VVYpGUlUSFOOFeXMdN7Bn1GqMWBNi7OuOratKsRF43VrAs1TjUaGKL/8q84wMNdw
-         sqtr7en1dLF4oJzDaS+TgZP1FbWwgmp6mk4wBM6suHf28nc62gQCqybwDCdD9e1FM48i
-         u4qdPz7e5TkYiZ3HdAr5kOCTpzfoFr6bOHbCTAXCTGvgEhW9iy4NlhyzkGe7t3eXhpaQ
-         IiF2sS91I/8zpeJrUouJ6cV6eT0mvxpRxnIMxZY7OEHPB2EvRcxfLnPx8IOg0GN/lSxB
-         5/jw==
-X-Gm-Message-State: APjAAAXWKZxEPjCk4Vp9xgPKMThVmWY5an3o2NGTIUgk1SNgYna25CWC
-        c1v4U9kD2oZp/QGhFDVbQYkwW7Vbu0E=
-X-Google-Smtp-Source: APXvYqy3/B4zxmhDJKtgIMXua93/1OX7igMmvi/Iu5W4myyw/lJH+zMjZHmPUe0detJr9u04S3rROQ==
-X-Received: by 2002:a17:902:6b47:: with SMTP id g7mr437482plt.198.1568672689866;
-        Mon, 16 Sep 2019 15:24:49 -0700 (PDT)
-Received: from localhost ([2620:15c:202:1:75a:3f6e:21d:9374])
-        by smtp.gmail.com with ESMTPSA id z10sm172820pjr.15.2019.09.16.15.24.49
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 16 Sep 2019 15:24:49 -0700 (PDT)
-Date:   Mon, 16 Sep 2019 15:24:46 -0700
-From:   Matthias Kaehlcke <mka@chromium.org>
-To:     Chandana Kishori Chiluveru <cchiluve@codeaurora.org>
-Cc:     balbi@kernel.org, agross@kernel.org, david.brown@linaro.org,
-        linux-usb@vger.kernel.org, linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH V2 2/3] usb: dwc3: qcom: Add interconnect support in dwc3
- driver
-Message-ID: <20190916222446.GG133864@google.com>
-References: <1568634061-14455-1-git-send-email-cchiluve@codeaurora.org>
- <1568634061-14455-3-git-send-email-cchiluve@codeaurora.org>
+        id S1727598AbfIPWoq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 16 Sep 2019 18:44:46 -0400
+Received: from foss.arm.com ([217.140.110.172]:49214 "EHLO foss.arm.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726968AbfIPWoq (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 16 Sep 2019 18:44:46 -0400
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 63BDC337;
+        Mon, 16 Sep 2019 15:44:45 -0700 (PDT)
+Received: from [192.168.1.124] (unknown [172.31.20.19])
+        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 908EF3F67D;
+        Mon, 16 Sep 2019 15:44:43 -0700 (PDT)
+Subject: Re: [PATCHv5 3/3] iommu: arm-smmu-impl: Add sdm845 implementation
+ hook
+To:     Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>,
+        Will Deacon <will@kernel.org>, Joerg Roedel <joro@8bytes.org>,
+        iommu@lists.linux-foundation.org, Andy Gross <agross@kernel.org>,
+        Stephen Boyd <swboyd@chromium.org>,
+        Vivek Gautam <vivek.gautam@codeaurora.org>,
+        Rajendra Nayak <rnayak@codeaurora.org>
+Cc:     bjorn.andersson@linaro.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+References: <cover.1568549745.git.saiprakash.ranjan@codeaurora.org>
+ <4ccbaf1f81c2bb2e7846da591fd542ab33f45586.1568549746.git.saiprakash.ranjan@codeaurora.org>
+From:   Robin Murphy <robin.murphy@arm.com>
+Message-ID: <e9918121-71bb-703f-a696-b0e357e5eeff@arm.com>
+Date:   Mon, 16 Sep 2019 23:44:32 +0100
+User-Agent: Mozilla/5.0 (Windows NT 10.0; rv:60.0) Gecko/20100101
+ Thunderbird/60.9.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <1568634061-14455-3-git-send-email-cchiluve@codeaurora.org>
-User-Agent: Mutt/1.10.1 (2018-07-13)
+In-Reply-To: <4ccbaf1f81c2bb2e7846da591fd542ab33f45586.1568549746.git.saiprakash.ranjan@codeaurora.org>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-GB
+Content-Transfer-Encoding: 7bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Chandana,
-
-On Mon, Sep 16, 2019 at 05:11:00PM +0530, Chandana Kishori Chiluveru wrote:
-> Add interconnect support in dwc3-qcom driver to vote for bus
-> bandwidth.
+On 2019-09-15 1:35 pm, Sai Prakash Ranjan wrote:
+> From: Vivek Gautam <vivek.gautam@codeaurora.org>
 > 
-> This requires for two different paths - from USB master to
-> DDR slave. The other is from APPS master to USB slave.
+> Add reset hook for sdm845 based platforms to turn off
+> the wait-for-safe sequence.
 > 
-> Signed-off-by: Chandana Kishori Chiluveru <cchiluve@codeaurora.org>
+> Understanding how wait-for-safe logic affects USB and UFS performance
+> on MTP845 and DB845 boards:
+> 
+> Qcom's implementation of arm,mmu-500 adds a WAIT-FOR-SAFE logic
+> to address under-performance issues in real-time clients, such as
+> Display, and Camera.
+> On receiving an invalidation requests, the SMMU forwards SAFE request
+> to these clients and waits for SAFE ack signal from real-time clients.
+> The SAFE signal from such clients is used to qualify the start of
+> invalidation.
+> This logic is controlled by chicken bits, one for each - MDP (display),
+> IFE0, and IFE1 (camera), that can be accessed only from secure software
+> on sdm845.
+> 
+> This configuration, however, degrades the performance of non-real time
+> clients, such as USB, and UFS etc. This happens because, with wait-for-safe
+> logic enabled the hardware tries to throttle non-real time clients while
+> waiting for SAFE ack signals from real-time clients.
+> 
+> On mtp845 and db845 devices, with wait-for-safe logic enabled by the
+> bootloaders we see degraded performance of USB and UFS when kernel
+> enables the smmu stage-1 translations for these clients.
+> Turn off this wait-for-safe logic from the kernel gets us back the perf
+> of USB and UFS devices until we re-visit this when we start seeing perf
+> issues on display/camera on upstream supported SDM845 platforms.
+> The bootloaders on these boards implement secure monitor callbacks to
+> handle a specific command - QCOM_SCM_SVC_SMMU_PROGRAM with which the
+> logic can be toggled.
+> 
+> There are other boards such as cheza whose bootloaders don't enable this
+> logic. Such boards don't implement callbacks to handle the specific SCM
+> call so disabling this logic for such boards will be a no-op.
+> 
+> This change is inspired by the downstream change from Patrick Daly
+> to address performance issues with display and camera by handling
+> this wait-for-safe within separte io-pagetable ops to do TLB
+> maintenance. So a big thanks to him for the change and for all the
+> offline discussions.
+> 
+> Without this change the UFS reads are pretty slow:
+> $ time dd if=/dev/sda of=/dev/zero bs=1048576 count=10 conv=sync
+> 10+0 records in
+> 10+0 records out
+> 10485760 bytes (10.0MB) copied, 22.394903 seconds, 457.2KB/s
+> real    0m 22.39s
+> user    0m 0.00s
+> sys     0m 0.01s
+> 
+> With this change they are back to rock!
+> $ time dd if=/dev/sda of=/dev/zero bs=1048576 count=300 conv=sync
+> 300+0 records in
+> 300+0 records out
+> 314572800 bytes (300.0MB) copied, 1.030541 seconds, 291.1MB/s
+> real    0m 1.03s
+> user    0m 0.00s
+> sys     0m 0.54s
+> 
+> Signed-off-by: Vivek Gautam <vivek.gautam@codeaurora.org>
+> Signed-off-by: Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
 > ---
->  drivers/usb/dwc3/dwc3-qcom.c | 145 ++++++++++++++++++++++++++++++++++++++++++-
->  1 file changed, 143 insertions(+), 2 deletions(-)
+>   drivers/iommu/Makefile        |  2 +-
+>   drivers/iommu/arm-smmu-impl.c |  7 +++++--
+>   drivers/iommu/arm-smmu-qcom.c | 32 ++++++++++++++++++++++++++++++++
+>   drivers/iommu/arm-smmu-qcom.h | 11 +++++++++++
+>   drivers/iommu/arm-smmu.h      |  2 ++
+>   5 files changed, 51 insertions(+), 3 deletions(-)
+>   create mode 100644 drivers/iommu/arm-smmu-qcom.c
+>   create mode 100644 drivers/iommu/arm-smmu-qcom.h
 > 
-> diff --git a/drivers/usb/dwc3/dwc3-qcom.c b/drivers/usb/dwc3/dwc3-qcom.c
-> index 184df4d..4f6c9736 100644
-> --- a/drivers/usb/dwc3/dwc3-qcom.c
-> +++ b/drivers/usb/dwc3/dwc3-qcom.c
-> @@ -14,6 +14,7 @@
->  #include <linux/extcon.h>
->  #include <linux/of_platform.h>
->  #include <linux/platform_device.h>
-> +#include <linux/interconnect.h>
-
-please use alphabetical order, i.e. this should be after 'linux/extcon.h'.
-
->  #include <linux/phy/phy.h>
->  #include <linux/usb/of.h>
->  #include <linux/reset.h>
-> @@ -59,8 +60,13 @@ struct dwc3_qcom {
->  	enum usb_dr_mode	mode;
->  	bool			is_suspended;
->  	bool			pm_suspended;
-> +	struct icc_path		*usb_ddr_icc_path;
-> +	struct icc_path		*apps_usb_icc_path;
->  };
->  
-> +static int usb_interconnect_enable(struct dwc3_qcom *qcom);
-> +static int usb_interconnect_disable(struct dwc3_qcom *qcom);
+> diff --git a/drivers/iommu/Makefile b/drivers/iommu/Makefile
+> index 7caad48b4bc2..7d66e00a6924 100644
+> --- a/drivers/iommu/Makefile
+> +++ b/drivers/iommu/Makefile
+> @@ -13,7 +13,7 @@ obj-$(CONFIG_MSM_IOMMU) += msm_iommu.o
+>   obj-$(CONFIG_AMD_IOMMU) += amd_iommu.o amd_iommu_init.o amd_iommu_quirks.o
+>   obj-$(CONFIG_AMD_IOMMU_DEBUGFS) += amd_iommu_debugfs.o
+>   obj-$(CONFIG_AMD_IOMMU_V2) += amd_iommu_v2.o
+> -obj-$(CONFIG_ARM_SMMU) += arm-smmu.o arm-smmu-impl.o
+> +obj-$(CONFIG_ARM_SMMU) += arm-smmu.o arm-smmu-impl.o arm-smmu-qcom.o
+>   obj-$(CONFIG_ARM_SMMU_V3) += arm-smmu-v3.o
+>   obj-$(CONFIG_DMAR_TABLE) += dmar.o
+>   obj-$(CONFIG_INTEL_IOMMU) += intel-iommu.o intel-pasid.o
+> diff --git a/drivers/iommu/arm-smmu-impl.c b/drivers/iommu/arm-smmu-impl.c
+> index 5c87a38620c4..ad835018f0e2 100644
+> --- a/drivers/iommu/arm-smmu-impl.c
+> +++ b/drivers/iommu/arm-smmu-impl.c
+> @@ -8,7 +8,7 @@
+>   #include <linux/of.h>
+>   
+>   #include "arm-smmu.h"
+> -
+> +#include "arm-smmu-qcom.h"
+>   
+>   static int arm_smmu_gr0_ns(int offset)
+>   {
+> @@ -109,7 +109,7 @@ static struct arm_smmu_device *cavium_smmu_impl_init(struct arm_smmu_device *smm
+>   #define ARM_MMU500_ACR_S2CRB_TLBEN	(1 << 10)
+>   #define ARM_MMU500_ACR_SMTNMB_TLBEN	(1 << 8)
+>   
+> -static int arm_mmu500_reset(struct arm_smmu_device *smmu)
+> +int arm_mmu500_reset(struct arm_smmu_device *smmu)
+>   {
+>   	u32 reg, major;
+>   	int i;
+> @@ -170,5 +170,8 @@ struct arm_smmu_device *arm_smmu_impl_init(struct arm_smmu_device *smmu)
+>   				  "calxeda,smmu-secure-config-access"))
+>   		smmu->impl = &calxeda_impl;
+>   
+> +	if (of_device_is_compatible(smmu->dev->of_node, "qcom,sdm845-smmu-500"))
+> +		smmu->impl = &qcom_sdm845_smmu500_impl;
 > +
->  static inline void dwc3_qcom_setbits(void __iomem *base, u32 offset, u32 val)
->  {
->  	u32 reg;
-> @@ -222,7 +228,7 @@ static void dwc3_qcom_enable_interrupts(struct dwc3_qcom *qcom)
->  static int dwc3_qcom_suspend(struct dwc3_qcom *qcom)
->  {
->  	u32 val;
-> -	int i;
-> +	int i, ret;
->  
->  	if (qcom->is_suspended)
->  		return 0;
-> @@ -234,6 +240,11 @@ static int dwc3_qcom_suspend(struct dwc3_qcom *qcom)
->  	for (i = qcom->num_clocks - 1; i >= 0; i--)
->  		clk_disable_unprepare(qcom->clks[i]);
->  
-> +	/* Remove bus voting */
-
-IMO the comment doesn't add much, especially since there is a log in
-case of failure.
-
-> +	ret = usb_interconnect_disable(qcom);
-> +	if (ret)
-> +		dev_err(qcom->dev, "bus bw voting failed %d\n", ret);
-
-This should probably be a warning, since the function continues with
-normal execution.
-
-nit: the function is called usb_interconnect_disable(), but the
-message says "bus bw voting failed". The function name encapsulates
-what the function does, but the message talks about implementation
-details. To be consistent either the function should have something
-about 'voting' in it's name, or the message should be "failed to
-disable interconnect" or similar.
-
-> +
->  	qcom->is_suspended = true;
->  	dwc3_qcom_enable_interrupts(qcom);
->  
-> @@ -259,6 +270,11 @@ static int dwc3_qcom_resume(struct dwc3_qcom *qcom)
->  		}
->  	}
->  
-> +	/* Add bus voting */
-> +	ret = usb_interconnect_enable(qcom);
-> +	if (ret)
-> +		dev_err(qcom->dev, "bus bw voting failed %d\n", ret);
-> +
-
-same comments as for suspend()
-
->  	/* Clear existing events from PHY related to L2 in/out */
->  	dwc3_qcom_setbits(qcom->qscratch_base, PWR_EVNT_IRQ_STAT_REG,
->  			  PWR_EVNT_LPM_IN_L2_MASK | PWR_EVNT_LPM_OUT_L2_MASK);
-> @@ -268,6 +284,117 @@ static int dwc3_qcom_resume(struct dwc3_qcom *qcom)
->  	return 0;
->  }
->  
-> +/* Interconnect path bandwidths in MBps */
-> +#define USB_MEMORY_AVG_HS_BW MBps_to_icc(240)
-> +#define USB_MEMORY_PEAK_HS_BW MBps_to_icc(700)
-> +#define USB_MEMORY_AVG_SS_BW  MBps_to_icc(1000)
-> +#define USB_MEMORY_PEAK_SS_BW MBps_to_icc(2500)
-> +#define APPS_USB_AVG_BW 0
-> +#define APPS_USB_PEAK_BW MBps_to_icc(40)
-> +
-> +/**
-> + * usb_interconnect_init() -
-
-A function named 'usb_*' is typically associated to be a USB core
-function. I would suggest to use the 'dwc3_qcom_' prefix like all
-other functions in this file. Applicable to all new functions.
-
-> Request to get interconnect path handle
-
-nit: handles
-
-Get rid of "Request to"?
-
-> + * @qcom:			Pointer to the concerned usb core.
-> + *
+>   	return smmu;
+>   }
+> diff --git a/drivers/iommu/arm-smmu-qcom.c b/drivers/iommu/arm-smmu-qcom.c
+> new file mode 100644
+> index 000000000000..10e9a5bbae06
+> --- /dev/null
+> +++ b/drivers/iommu/arm-smmu-qcom.c
+> @@ -0,0 +1,32 @@
+> +// SPDX-License-Identifier: GPL-2.0-only
+> +/*
+> + * Copyright (c) 2019, The Linux Foundation. All rights reserved.
 > + */
-> +static int usb_interconnect_init(struct dwc3_qcom *qcom)
+> +
+> +#include <linux/qcom_scm.h>
+> +
+> +#include "arm-smmu.h"
+> +#include "arm-smmu-qcom.h"
+> +
+> +static int qcom_sdm845_smmu500_reset(struct arm_smmu_device *smmu)
 > +{
-> +	struct device *dev = qcom->dev;
-> +
-> +	qcom->usb_ddr_icc_path = of_icc_get(dev, "usb-ddr");
-> +	if (IS_ERR(qcom->usb_ddr_icc_path)) {
-> +		dev_err(dev, "Error: (%ld) failed getting %s path\n",
-> +			PTR_ERR(qcom->usb_ddr_icc_path), "usb-ddr");
-
-Why not put 'usb-ddr' in the format string, instead of using '%s'?
-
-> +		return PTR_ERR(qcom->usb_ddr_icc_path);
-> +	}
-> +
-> +	qcom->apps_usb_icc_path = of_icc_get(dev, "apps-usb");
-> +	if (IS_ERR(qcom->apps_usb_icc_path)) {
-> +		dev_err(dev, "Error: (%ld) failed getting %s path\n",
-> +				PTR_ERR(qcom->apps_usb_icc_path), "apps-usb");
-
-same comment as above.
-
-     	     	icc_put(qcom->usb_ddr_icc_path);
-
-> +		return PTR_ERR(qcom->usb_ddr_icc_path);
-
-should be 'qcom->apps_usb_icc_path'
-
-> +	}
-> +
-> +	return 0;
-> +}
-> +
-> +/**
-> + * geni_interconnect_exit() -
-
-wrong prefix
-
-> Request to release interconnect path handle
-
-nit: handles
-
-Get rid of "Request to"?
-
-> + * @qcom:			Pointer to the concerned usb core.
-> + *
-> + * This function is used to release interconnect path handle.
-> + */
-> +static void usb_interconnect_exit(struct dwc3_qcom *qcom)
-> +{
-> +	icc_put(qcom->usb_ddr_icc_path);
-> +	icc_put(qcom->apps_usb_icc_path);
-> +}
-> +
-> +/* Currently we only use bandwidth level, so just "enable" interconnects */
-> +static int usb_interconnect_enable(struct dwc3_qcom *qcom)
-> +{
-> +	struct dwc3 *dwc;
 > +	int ret;
 > +
-> +	dwc = platform_get_drvdata(qcom->dwc3);
-> +	if (!dwc) {
-> +		dev_err(qcom->dev, "Failed to get dwc3 device\n");
-> +		return -EPROBE_DEFER;
-> +	}
-
-This should never happen, drvdata is set in _probe(). If it happens
--EPROBE_DEFER doesn't seem to be an appropriate error code. I suggest
-to remove the condition entirely.
-
+> +	arm_mmu500_reset(smmu);
 > +
-> +	if (dwc->maximum_speed == USB_SPEED_SUPER) {
-> +		ret = icc_set_bw(qcom->usb_ddr_icc_path,
-> +			USB_MEMORY_AVG_SS_BW, USB_MEMORY_PEAK_SS_BW);
-> +		if (ret)
-> +			return ret;
-> +	} else {
-> +		ret = icc_set_bw(qcom->usb_ddr_icc_path,
-> +			USB_MEMORY_AVG_HS_BW, USB_MEMORY_PEAK_HS_BW);
-> +		if (ret)
-> +			return ret;
-> +	}
-> +
-> +	ret = icc_set_bw(qcom->apps_usb_icc_path,
-> +		APPS_USB_AVG_BW, APPS_USB_PEAK_BW);
+> +	/*
+> +	 * To address performance degradation in non-real time clients,
+> +	 * such as USB and UFS, turn off wait-for-safe on sdm845 based boards,
+> +	 * such as MTP and db845, whose firmwares implement secure monitor
+> +	 * call handlers to turn on/off the wait-for-safe logic.
+> +	 */
+> +	ret = qcom_scm_qsmmu500_wait_safe_toggle(0);
 > +	if (ret)
-> +		goto err_disable_mem_path;
-> +
-> +	return 0;
-> +
-> +err_disable_mem_path:
-> +	icc_set_bw(qcom->usb_ddr_icc_path, 0, 0);
+> +		dev_warn(smmu->dev, "Failed to turn off SAFE logic\n");
 > +
 > +	return ret;
 > +}
 > +
-> +/* To disable an interconnect, we just set its bandwidth to 0 */
-> +static int usb_interconnect_disable(struct dwc3_qcom *qcom)
-> +{
-> +	struct dwc3 *dwc = platform_get_drvdata(qcom->dwc3);
-> +	int ret;
+> +const struct arm_smmu_impl qcom_sdm845_smmu500_impl = {
+> +	.reset = qcom_sdm845_smmu500_reset,
+> +};
+> diff --git a/drivers/iommu/arm-smmu-qcom.h b/drivers/iommu/arm-smmu-qcom.h
+> new file mode 100644
+> index 000000000000..915f8ea2b616
+> --- /dev/null
+> +++ b/drivers/iommu/arm-smmu-qcom.h
+> @@ -0,0 +1,11 @@
+> +/* SPDX-License-Identifier: GPL-2.0-only */
+> +/*
+> + * Copyright (c) 2019, The Linux Foundation. All rights reserved.
+> + */
 > +
-> +	ret = icc_set_bw(qcom->usb_ddr_icc_path, 0, 0);
-> +	if (ret)
-> +		return ret;
+> +#ifndef _ARM_SMMU_QCOM_H
+> +#define _ARM_SMMU_QCOM_H
 > +
-> +	ret = icc_set_bw(qcom->apps_usb_icc_path, 0, 0);
-> +	if (ret)
-> +		goto err_reenable_memory_path;
+> +extern const struct arm_smmu_impl qcom_sdm845_smmu500_impl;
+
+I don't foresee this header being particularly beneficial - I'd rather 
+just have a single qcom_smmu_impl_init() entrypoint declared in 
+arm-smmu.h as per the Nvidia implementation[1], so you can then keep all 
+the other details private. With that change,
+
+Reviewed-by: Robin Murphy <robin.murphy@arm.com>
+
+Thanks,
+Robin.
+
+[1] 
+https://lore.kernel.org/linux-arm-kernel/1567481528-31163-3-git-send-email-vdumpa@nvidia.com/
+
 > +
-> +	return 0;
+> +#endif /* _ARM_SMMU_QCOM_H */
+> diff --git a/drivers/iommu/arm-smmu.h b/drivers/iommu/arm-smmu.h
+> index b19b6cae9b5e..f74fa3bb149d 100644
+> --- a/drivers/iommu/arm-smmu.h
+> +++ b/drivers/iommu/arm-smmu.h
+> @@ -399,4 +399,6 @@ static inline void arm_smmu_writeq(struct arm_smmu_device *smmu, int page,
+>   
+>   struct arm_smmu_device *arm_smmu_impl_init(struct arm_smmu_device *smmu);
+>   
+> +int arm_mmu500_reset(struct arm_smmu_device *smmu);
 > +
-> +	/* Re-enable things in the event of an error */
-> +err_reenable_memory_path:
-> +	if (dwc->maximum_speed == USB_SPEED_SUPER)
-> +		icc_set_bw(qcom->usb_ddr_icc_path,
-> +			USB_MEMORY_AVG_SS_BW, USB_MEMORY_PEAK_SS_BW);
-> +	else
-> +		icc_set_bw(qcom->usb_ddr_icc_path,
-> +			USB_MEMORY_AVG_HS_BW, USB_MEMORY_PEAK_HS_BW);
-> +
-> +	return ret;
-> +}
-> +
->  static irqreturn_t qcom_dwc3_resume_irq(int irq, void *data)
->  {
->  	struct dwc3_qcom *qcom = data;
-> @@ -494,6 +621,17 @@ static int dwc3_qcom_probe(struct platform_device *pdev)
->  		goto depopulate;
->  	}
->  
-> +	ret = usb_interconnect_init(qcom);
-> +	if (ret) {
-> +		dev_err(dev, "failed to get interconnect handle ret:%d\n", ret);
-
-similar to my comment above, the function name adds an abstraction,
-but the comment talks about implementation details. I'd suggest
-something like 'failed to init interconnect'.
-
-> +		goto depopulate;
-> +	}
-> +	ret = usb_interconnect_enable(qcom);
-> +	if (ret) {
-> +		dev_err(qcom->dev, "bus bw voting failed %d\n", ret);
-
-same comment as for 'dwc3_qcom_suspend' above.
-
-I think the _interconnect_enable() call should be part of
-_interconnect_init(). I was earlier considering to suggest to
-change the name of _interconnect_init() to something else, since
-it doesn't really do any interconnect initialization, but didn't have
-a good suggestion for an alternative name. Moving the _enable() call
-into _init() would make _init() and actual init routine, besides
-removing clutter from _probe().
-
-> +		goto interconnect_exit;
-> +	}
-> +
->  	qcom->mode = usb_get_dr_mode(&qcom->dwc3->dev);
->  
->  	/* enable vbus override for device mode */
-> @@ -503,7 +641,7 @@ static int dwc3_qcom_probe(struct platform_device *pdev)
->  	/* register extcon to override sw_vbus on Vbus change later */
->  	ret = dwc3_qcom_register_extcon(qcom);
->  	if (ret)
-> -		goto depopulate;
-> +		goto interconnect_exit;
->  
->  	device_init_wakeup(&pdev->dev, 1);
->  	qcom->is_suspended = false;
-> @@ -513,6 +651,8 @@ static int dwc3_qcom_probe(struct platform_device *pdev)
->  
->  	return 0;
->  
-> +interconnect_exit:
-> +	usb_interconnect_exit(qcom);
->  depopulate:
->  	of_platform_depopulate(&pdev->dev);
->  clk_disable:
-> @@ -540,6 +680,7 @@ static int dwc3_qcom_remove(struct platform_device *pdev)
->  	}
->  	qcom->num_clocks = 0;
->  
-> +	usb_interconnect_exit(qcom);
->  	reset_control_assert(qcom->resets);
->  
->  	pm_runtime_allow(dev);
-
-Cheers
-
-Matthias
+>   #endif /* _ARM_SMMU_H */
+> 
