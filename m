@@ -2,255 +2,175 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 733B4B2FEE
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 15 Sep 2019 14:35:50 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 01628B363C
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 16 Sep 2019 10:14:06 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728707AbfIOMft (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 15 Sep 2019 08:35:49 -0400
-Received: from smtp.codeaurora.org ([198.145.29.96]:47586 "EHLO
-        smtp.codeaurora.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728050AbfIOMft (ORCPT
+        id S1730799AbfIPIOF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 16 Sep 2019 04:14:05 -0400
+Received: from mailout2.w1.samsung.com ([210.118.77.12]:56657 "EHLO
+        mailout2.w1.samsung.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726075AbfIPIOE (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 15 Sep 2019 08:35:49 -0400
-Received: by smtp.codeaurora.org (Postfix, from userid 1000)
-        id EEAB860A60; Sun, 15 Sep 2019 12:35:47 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
-        s=default; t=1568550947;
-        bh=IsBSEjjIANA8MtWsNeTTbCEPgfYaHQqk7OkfGUFVEBk=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=Keg7S5znp1h/7yRyBCMTUskaNyiU0aYQGMmLH9MfcBByQzwx0EouW2OqQKIZ+Bbkj
-         VO0ThwHXncTA/8HAb5hD/uGLbivoswizM6oX+2CCjwS0Rg/6A4Oa7f1D4pXHvYIgwT
-         b8e8svpSH0USRGKWv/XhBrGZmR+4p4jN9A7OMUEU=
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        pdx-caf-mail.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.7 required=2.0 tests=ALL_TRUSTED,BAYES_00,
-        DKIM_INVALID,DKIM_SIGNED,SPF_NONE autolearn=no autolearn_force=no
-        version=3.4.0
-Received: from blr-ubuntu-253.qualcomm.com (blr-bdr-fw-01_globalnat_allzones-outside.qualcomm.com [103.229.18.19])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: saiprakash.ranjan@codeaurora.org)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 05F0160863;
-        Sun, 15 Sep 2019 12:35:41 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
-        s=default; t=1568550945;
-        bh=IsBSEjjIANA8MtWsNeTTbCEPgfYaHQqk7OkfGUFVEBk=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=TmOF/AfYRAzWqN054FOJjjfh/Nz88xDCYMU1XRpdIQLm1srdNPEuU0T5hRBJoN7ac
-         0DwMgut1ouQ8NYMuXvYUFyu8xuIB7zYSMq1piJjPlEEjsvmde4SJlsH7hZQZ29zQHx
-         qANG2lHkBGMPJSAJ3krX5xdsOpAyEIx5DUtZh2ls=
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 05F0160863
-Authentication-Results: pdx-caf-mail.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: pdx-caf-mail.web.codeaurora.org; spf=none smtp.mailfrom=saiprakash.ranjan@codeaurora.org
-From:   Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
-To:     Will Deacon <will@kernel.org>, Robin Murphy <robin.murphy@arm.com>,
-        Joerg Roedel <joro@8bytes.org>,
-        iommu@lists.linux-foundation.org, Andy Gross <agross@kernel.org>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Vivek Gautam <vivek.gautam@codeaurora.org>,
-        Rajendra Nayak <rnayak@codeaurora.org>
-Cc:     bjorn.andersson@linaro.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org,
-        Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
-Subject: [PATCHv5 3/3] iommu: arm-smmu-impl: Add sdm845 implementation hook
-Date:   Sun, 15 Sep 2019 18:05:03 +0530
-Message-Id: <4ccbaf1f81c2bb2e7846da591fd542ab33f45586.1568549746.git.saiprakash.ranjan@codeaurora.org>
-X-Mailer: git-send-email 2.22.0
-In-Reply-To: <cover.1568549745.git.saiprakash.ranjan@codeaurora.org>
-References: <cover.1568549745.git.saiprakash.ranjan@codeaurora.org>
+        Mon, 16 Sep 2019 04:14:04 -0400
+Received: from eucas1p2.samsung.com (unknown [182.198.249.207])
+        by mailout2.w1.samsung.com (KnoxPortal) with ESMTP id 20190916081403euoutp02b4de8c5393f1a69801c49a77fc954b39~E3RLSO0mB1153711537euoutp02z
+        for <linux-arm-msm@vger.kernel.org>; Mon, 16 Sep 2019 08:14:03 +0000 (GMT)
+DKIM-Filter: OpenDKIM Filter v2.11.0 mailout2.w1.samsung.com 20190916081403euoutp02b4de8c5393f1a69801c49a77fc954b39~E3RLSO0mB1153711537euoutp02z
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=samsung.com;
+        s=mail20170921; t=1568621643;
+        bh=owkzwat6GBg23nSFlj4wgYY6tYKk4F6M9w00IZ1dGEI=;
+        h=Subject:To:Cc:From:Date:In-Reply-To:References:From;
+        b=aYIQcNCD2Sr9Zal4mPJA+OV+X8qaWNZC2+74CCeATsi0Xj24VYDowfVft8gVYtVMa
+         8+44abgKVja4xBokfQjgWKKxnRoiVIgYuCuxnUJaap/zAFgSDE7fRn5IgT6EXcHSk9
+         rgkcE5Cg+tQfN8NxrfdzWGABsnRw+Cv8l38gPrxQ=
+Received: from eusmges1new.samsung.com (unknown [203.254.199.242]) by
+        eucas1p1.samsung.com (KnoxPortal) with ESMTP id
+        20190916081401eucas1p13fe025e6e0b8694f4756a952364ffb81~E3RKLodI91353413534eucas1p1S;
+        Mon, 16 Sep 2019 08:14:01 +0000 (GMT)
+Received: from eucas1p1.samsung.com ( [182.198.249.206]) by
+        eusmges1new.samsung.com (EUCPMTA) with SMTP id 01.CB.04469.9444F7D5; Mon, 16
+        Sep 2019 09:14:01 +0100 (BST)
+Received: from eusmtrp2.samsung.com (unknown [182.198.249.139]) by
+        eucas1p2.samsung.com (KnoxPortal) with ESMTPA id
+        20190916081401eucas1p2df3fb141562109b5ab03c9b2a202c8d4~E3RJXoxzS2893928939eucas1p2c;
+        Mon, 16 Sep 2019 08:14:01 +0000 (GMT)
+Received: from eusmgms2.samsung.com (unknown [182.198.249.180]) by
+        eusmtrp2.samsung.com (KnoxPortal) with ESMTP id
+        20190916081400eusmtrp29ea4a2bdc243f57c295eeadc475586db~E3RJJM2Nu2860128601eusmtrp2l;
+        Mon, 16 Sep 2019 08:14:00 +0000 (GMT)
+X-AuditID: cbfec7f2-994db9c000001175-c0-5d7f4449f450
+Received: from eusmtip2.samsung.com ( [203.254.199.222]) by
+        eusmgms2.samsung.com (EUCPMTA) with SMTP id 36.A5.04117.8444F7D5; Mon, 16
+        Sep 2019 09:14:00 +0100 (BST)
+Received: from [106.120.51.74] (unknown [106.120.51.74]) by
+        eusmtip2.samsung.com (KnoxPortal) with ESMTPA id
+        20190916081359eusmtip23f382bca99376ac62914202d4bdb2951~E3RITpPYF3138731387eusmtip28;
+        Mon, 16 Sep 2019 08:13:59 +0000 (GMT)
+Subject: Re: [PATCH 00/11] ARM: dts: qcom: msm8974: add support for external
+ display
+To:     Brian Masney <masneyb@onstation.org>, bjorn.andersson@linaro.org,
+        robh+dt@kernel.org, agross@kernel.org, narmstrong@baylibre.com,
+        robdclark@gmail.com, sean@poorly.run
+Cc:     airlied@linux.ie, daniel@ffwll.ch, mark.rutland@arm.com,
+        Laurent.pinchart@ideasonboard.com, jonas@kwiboo.se,
+        jernej.skrabec@siol.net, linus.walleij@linaro.org,
+        enric.balletbo@collabora.com, dri-devel@lists.freedesktop.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org,
+        freedreno@lists.freedesktop.org
+From:   Andrzej Hajda <a.hajda@samsung.com>
+Message-ID: <2da29e80-73fb-8620-532e-0b5f54b00841@samsung.com>
+Date:   Mon, 16 Sep 2019 10:13:58 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+        Thunderbird/60.8.0
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+In-Reply-To: <20190815004854.19860-1-masneyb@onstation.org>
+Content-Transfer-Encoding: 7bit
+Content-Language: en-US
+X-Brightmail-Tracker: H4sIAAAAAAAAA02SfUzMcRzH+97vsbj27ar1WYy5sNg8jT++hjxvP8xmbJ5a4+in0uPupzwk
+        tXEkKyKa6+Y8XEOrtKNTYeXEOdZNURKtto48lBYuGhW/+zH99/58Pq/39/t5f/flKY2FDeXj
+        kvaI+iRdgpb1o22PBl0zVq3IjJp9yTiFuLp+0iTX5VSRp7WfaTJiy6eIud7FkBeePpaUvrYj
+        YupuQKT5+weKOHuaaXI838KRgl9XVcTa1cKQ/NoGjjyvMbGk+GWjipws+sQQe14k6b70gyKG
+        e/UcaT9Tj5YEC6UXSpHQ12rghKp2CxLuDVykhWpjOycUZZ9nBGvJcVZ4fKpJJbxpucsKtwc6
+        GaHjhEMl3LRkCsWtgYKjpo0T6nLP0MJX64R1eKvfwmgxIS5N1M+K2O4Xm1fhZlKcQfsenWvj
+        stAFnIN8ecDz4KGnR5WD/HgNvoagqvk6oxTfEPwwljEypcFfEdi71uYg3uuoaExRmKsIzJ/P
+        skrRi6D82RMkGwLxRnA/v8/JOgiXI6gfXi1DFD5BQZ0t1ztg8TQYuvmKlbUaR0CP4bLXTOMp
+        0DR0xcsE483wpfMBozAB4DzvpmXtixfA0FCRl6fwRLjda6IUHQJtbrM3D+D3PPS5LZwSdAWY
+        X75iFB0IHx23/vbHw0i1bJB1JnRcO0Ip5mwElRXVlDJYAA8cjYycn/qz9Y2aWUp7KRgGTyPl
+        WfyhtTdA2cEfTtsKKaWthuyjGoWeBB0NlX8PDIHiZx72FNIaRyUzjkpjHJXG+P/ei4guQSFi
+        qpQYI0pzksS9MyVdopSaFDNzZ3KiFf35u0+HHV+qkKdphx1hHmnHqrMMh6I0jC5N2p9oR8BT
+        2iD1puz0KI06Wrf/gKhP3qZPTRAlOxrH09oQdbpPZ6QGx+j2iPGimCLq/01VvG9oFqpdvjlv
+        wsCdRd29JeaIwUVTY9veTV5csGFVxkhAwzFnRHS6KWz5Q+0yn+LD/S09/p7KMQ7X1Plvu8M7
+        d7mCCsMPxm8LD7UjU3/a99kZhrj7dW+Z6uSw9bu3hJWvtvmY5pXVfRqOjDcHr5UaC82Xr/dn
+        vPdd887K/iwon1u2cpNjZXualpZidXOmU3pJ9xuinIgKtwMAAA==
+X-Brightmail-Tracker: H4sIAAAAAAAAA02Sa0hTYRjHeXfO2Tlaq7ep+GJ0YRBh0Wxe2muZGPThFboIYuWNWnbQyjnb
+        2SwLyi8D3XK57IJTvJQWmqRoFzVFXaM1TSEtS8tuji7ouhBZmaucFvjtx/P8fw888OcoaQsT
+        xB3M0vHaLFWmTOxL9/52vFhHtp5KXf9mOAT3j/2icWG/U4R7Oz/S+M8tC4Ur7P0MfvTtkxjX
+        P7MBXPauD+DH3z9Q2DnxmMYFlmoWn5u+KsJNY0MMtnT2sXiwrUyMa548FOEzpeMMtpmT8buq
+        HxQ2dNhZPFpsBzEBpL68HpBPTw0saRmtBqRjspImrdZRlpTmlzCkqa5ATO4XDYjI86F2Mbk9
+        +YohL00OEWmuPkVqnvoRR9sIS7oKi2nytWl5HEySR2k1eh2/MkMj6DbLkhU4VK6IxPLQ8Ei5
+        IkyZujE0QhYSHXWAzzyYw2tDovfJM8yNLibb6X/s3oURNg+UQyPgOATDUePDbCPw4aSwBqAP
+        b9VeRjAQ3alwU3Psh6aHjGIj8J3JjAM06S5hvQs/uAu5BrtZ78IfXgfoxRfzbIqCJgqZ+i+x
+        c4oZoPPmAuBVxDAYeZqHxV6WwGg0Ybg0O6fhKjTguTx7NgDuQXdbrGAuswQ5S1y0l33gJuTx
+        lM7OKbgaTZcPUHO8At12l/3jQDTiqhAVAal1nm6dp1jnKdZ5SiWg64A/rxfU6WohVC6o1II+
+        K12eplE3gZnW3Lr380YLMH6MtwHIAdlCSZ7hZKqUUeUIuWobQBwl85fszj+RKpUcUOUe57Wa
+        vVp9Ji/YQMTMcxYqKCBNM9PBLN1eRYRCiSMVyjBl2AYsC5Tkw+4UKUxX6fjDPJ/Na/97Is4n
+        KA90LWIWxJyxm9uv9SkvVjm44kOdSTLJ2JEHPSjxXJppW0Pn0rOXk7fcTKnpiSWJXQufVy0w
+        J+bufBAXq++tLR1wR+1PKDttWNYu+lwk9Zn6tj1h6n1crLt6MdOw6ErP8Nqco3c94fEXqnT6
+        1tqGqEclzovasdzC7/bXMQ6Xel3w1A4ZLWSoFGsoraD6C6VaZdtLAwAA
+X-CMS-MailID: 20190916081401eucas1p2df3fb141562109b5ab03c9b2a202c8d4
+X-Msg-Generator: CA
+Content-Type: text/plain; charset="utf-8"
+X-RootMTR: 20190815004916epcas3p4d8a62e215eff5e227721d3449e6bfbd3
+X-EPHeader: CA
+CMS-TYPE: 201P
+X-CMS-RootMailID: 20190815004916epcas3p4d8a62e215eff5e227721d3449e6bfbd3
+References: <CGME20190815004916epcas3p4d8a62e215eff5e227721d3449e6bfbd3@epcas3p4.samsung.com>
+        <20190815004854.19860-1-masneyb@onstation.org>
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Vivek Gautam <vivek.gautam@codeaurora.org>
+Hi Brian,
 
-Add reset hook for sdm845 based platforms to turn off
-the wait-for-safe sequence.
+On 15.08.2019 02:48, Brian Masney wrote:
+> This patch series begins to add support for the external display over
+> HDMI that is supported on msm8974 SoCs. I'm testing this series on the
+> Nexus 5, and I'm able to communicate with the HDMI bridge via the
+> analogix-anx78xx driver, however the external display is not working
+> yet.
+>
+> When I plug in the HDMI cable, the monitor detects that a device is
+> hooked up, but nothing is shown on the external monitor. The hot plug
+> detect GPIO (hpd-gpios) on the analogix-anx78xx bridge and MSM HDMI
+> drivers do not change state when the slimport adapter or HDMI cable is
+> plugged in or removed. I wonder if a regulator is not enabled somewhere?
+> I have a comment in patch 10 regarding 'hpd-gdsc-supply' that may
+> potentially be an issue.
+>
+> I'm still digging in on this, however I'd appreciate any feedback if
+> anyone has time. Most of these patches are ready now, so I marked the
+> ones that aren't ready with 'PATCH RFC'.
+>
+> I'm using an Analogix Semiconductor SP6001 SlimPort Micro-USB to 4K HDMI
+> Adapter to connect my phone to an external display via a standard HDMI
+> cable. This works just fine with the downstream MSM kernel using
+> Android.
 
-Understanding how wait-for-safe logic affects USB and UFS performance
-on MTP845 and DB845 boards:
 
-Qcom's implementation of arm,mmu-500 adds a WAIT-FOR-SAFE logic
-to address under-performance issues in real-time clients, such as
-Display, and Camera.
-On receiving an invalidation requests, the SMMU forwards SAFE request
-to these clients and waits for SAFE ack signal from real-time clients.
-The SAFE signal from such clients is used to qualify the start of
-invalidation.
-This logic is controlled by chicken bits, one for each - MDP (display),
-IFE0, and IFE1 (camera), that can be accessed only from secure software
-on sdm845.
+This patchset risks to be forgotten. To avoid it, at least partially, I
+can merge patches 1-5, is it OK for you?
 
-This configuration, however, degrades the performance of non-real time
-clients, such as USB, and UFS etc. This happens because, with wait-for-safe
-logic enabled the hardware tries to throttle non-real time clients while
-waiting for SAFE ack signals from real-time clients.
 
-On mtp845 and db845 devices, with wait-for-safe logic enabled by the
-bootloaders we see degraded performance of USB and UFS when kernel
-enables the smmu stage-1 translations for these clients.
-Turn off this wait-for-safe logic from the kernel gets us back the perf
-of USB and UFS devices until we re-visit this when we start seeing perf
-issues on display/camera on upstream supported SDM845 platforms.
-The bootloaders on these boards implement secure monitor callbacks to
-handle a specific command - QCOM_SCM_SVC_SMMU_PROGRAM with which the
-logic can be toggled.
+Regards
 
-There are other boards such as cheza whose bootloaders don't enable this
-logic. Such boards don't implement callbacks to handle the specific SCM
-call so disabling this logic for such boards will be a no-op.
+Andrzej
 
-This change is inspired by the downstream change from Patrick Daly
-to address performance issues with display and camera by handling
-this wait-for-safe within separte io-pagetable ops to do TLB
-maintenance. So a big thanks to him for the change and for all the
-offline discussions.
 
-Without this change the UFS reads are pretty slow:
-$ time dd if=/dev/sda of=/dev/zero bs=1048576 count=10 conv=sync
-10+0 records in
-10+0 records out
-10485760 bytes (10.0MB) copied, 22.394903 seconds, 457.2KB/s
-real    0m 22.39s
-user    0m 0.00s
-sys     0m 0.01s
-
-With this change they are back to rock!
-$ time dd if=/dev/sda of=/dev/zero bs=1048576 count=300 conv=sync
-300+0 records in
-300+0 records out
-314572800 bytes (300.0MB) copied, 1.030541 seconds, 291.1MB/s
-real    0m 1.03s
-user    0m 0.00s
-sys     0m 0.54s
-
-Signed-off-by: Vivek Gautam <vivek.gautam@codeaurora.org>
-Signed-off-by: Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
----
- drivers/iommu/Makefile        |  2 +-
- drivers/iommu/arm-smmu-impl.c |  7 +++++--
- drivers/iommu/arm-smmu-qcom.c | 32 ++++++++++++++++++++++++++++++++
- drivers/iommu/arm-smmu-qcom.h | 11 +++++++++++
- drivers/iommu/arm-smmu.h      |  2 ++
- 5 files changed, 51 insertions(+), 3 deletions(-)
- create mode 100644 drivers/iommu/arm-smmu-qcom.c
- create mode 100644 drivers/iommu/arm-smmu-qcom.h
-
-diff --git a/drivers/iommu/Makefile b/drivers/iommu/Makefile
-index 7caad48b4bc2..7d66e00a6924 100644
---- a/drivers/iommu/Makefile
-+++ b/drivers/iommu/Makefile
-@@ -13,7 +13,7 @@ obj-$(CONFIG_MSM_IOMMU) += msm_iommu.o
- obj-$(CONFIG_AMD_IOMMU) += amd_iommu.o amd_iommu_init.o amd_iommu_quirks.o
- obj-$(CONFIG_AMD_IOMMU_DEBUGFS) += amd_iommu_debugfs.o
- obj-$(CONFIG_AMD_IOMMU_V2) += amd_iommu_v2.o
--obj-$(CONFIG_ARM_SMMU) += arm-smmu.o arm-smmu-impl.o
-+obj-$(CONFIG_ARM_SMMU) += arm-smmu.o arm-smmu-impl.o arm-smmu-qcom.o
- obj-$(CONFIG_ARM_SMMU_V3) += arm-smmu-v3.o
- obj-$(CONFIG_DMAR_TABLE) += dmar.o
- obj-$(CONFIG_INTEL_IOMMU) += intel-iommu.o intel-pasid.o
-diff --git a/drivers/iommu/arm-smmu-impl.c b/drivers/iommu/arm-smmu-impl.c
-index 5c87a38620c4..ad835018f0e2 100644
---- a/drivers/iommu/arm-smmu-impl.c
-+++ b/drivers/iommu/arm-smmu-impl.c
-@@ -8,7 +8,7 @@
- #include <linux/of.h>
- 
- #include "arm-smmu.h"
--
-+#include "arm-smmu-qcom.h"
- 
- static int arm_smmu_gr0_ns(int offset)
- {
-@@ -109,7 +109,7 @@ static struct arm_smmu_device *cavium_smmu_impl_init(struct arm_smmu_device *smm
- #define ARM_MMU500_ACR_S2CRB_TLBEN	(1 << 10)
- #define ARM_MMU500_ACR_SMTNMB_TLBEN	(1 << 8)
- 
--static int arm_mmu500_reset(struct arm_smmu_device *smmu)
-+int arm_mmu500_reset(struct arm_smmu_device *smmu)
- {
- 	u32 reg, major;
- 	int i;
-@@ -170,5 +170,8 @@ struct arm_smmu_device *arm_smmu_impl_init(struct arm_smmu_device *smmu)
- 				  "calxeda,smmu-secure-config-access"))
- 		smmu->impl = &calxeda_impl;
- 
-+	if (of_device_is_compatible(smmu->dev->of_node, "qcom,sdm845-smmu-500"))
-+		smmu->impl = &qcom_sdm845_smmu500_impl;
-+
- 	return smmu;
- }
-diff --git a/drivers/iommu/arm-smmu-qcom.c b/drivers/iommu/arm-smmu-qcom.c
-new file mode 100644
-index 000000000000..10e9a5bbae06
---- /dev/null
-+++ b/drivers/iommu/arm-smmu-qcom.c
-@@ -0,0 +1,32 @@
-+// SPDX-License-Identifier: GPL-2.0-only
-+/*
-+ * Copyright (c) 2019, The Linux Foundation. All rights reserved.
-+ */
-+
-+#include <linux/qcom_scm.h>
-+
-+#include "arm-smmu.h"
-+#include "arm-smmu-qcom.h"
-+
-+static int qcom_sdm845_smmu500_reset(struct arm_smmu_device *smmu)
-+{
-+	int ret;
-+
-+	arm_mmu500_reset(smmu);
-+
-+	/*
-+	 * To address performance degradation in non-real time clients,
-+	 * such as USB and UFS, turn off wait-for-safe on sdm845 based boards,
-+	 * such as MTP and db845, whose firmwares implement secure monitor
-+	 * call handlers to turn on/off the wait-for-safe logic.
-+	 */
-+	ret = qcom_scm_qsmmu500_wait_safe_toggle(0);
-+	if (ret)
-+		dev_warn(smmu->dev, "Failed to turn off SAFE logic\n");
-+
-+	return ret;
-+}
-+
-+const struct arm_smmu_impl qcom_sdm845_smmu500_impl = {
-+	.reset = qcom_sdm845_smmu500_reset,
-+};
-diff --git a/drivers/iommu/arm-smmu-qcom.h b/drivers/iommu/arm-smmu-qcom.h
-new file mode 100644
-index 000000000000..915f8ea2b616
---- /dev/null
-+++ b/drivers/iommu/arm-smmu-qcom.h
-@@ -0,0 +1,11 @@
-+/* SPDX-License-Identifier: GPL-2.0-only */
-+/*
-+ * Copyright (c) 2019, The Linux Foundation. All rights reserved.
-+ */
-+
-+#ifndef _ARM_SMMU_QCOM_H
-+#define _ARM_SMMU_QCOM_H
-+
-+extern const struct arm_smmu_impl qcom_sdm845_smmu500_impl;
-+
-+#endif /* _ARM_SMMU_QCOM_H */
-diff --git a/drivers/iommu/arm-smmu.h b/drivers/iommu/arm-smmu.h
-index b19b6cae9b5e..f74fa3bb149d 100644
---- a/drivers/iommu/arm-smmu.h
-+++ b/drivers/iommu/arm-smmu.h
-@@ -399,4 +399,6 @@ static inline void arm_smmu_writeq(struct arm_smmu_device *smmu, int page,
- 
- struct arm_smmu_device *arm_smmu_impl_init(struct arm_smmu_device *smmu);
- 
-+int arm_mmu500_reset(struct arm_smmu_device *smmu);
-+
- #endif /* _ARM_SMMU_H */
--- 
-QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
-of Code Aurora Forum, hosted by The Linux Foundation
+>
+> Brian Masney (11):
+>   dt-bindings: drm/bridge: analogix-anx78xx: add new variants
+>   drm/bridge: analogix-anx78xx: add new variants
+>   drm/bridge: analogix-anx78xx: silence -EPROBE_DEFER warnings
+>   drm/bridge: analogix-anx78xx: convert to i2c_new_dummy_device
+>   drm/bridge: analogix-anx78xx: correct value of TX_P0
+>   drm/bridge: analogix-anx78xx: add support for avdd33 regulator
+>   ARM: qcom_defconfig: add CONFIG_DRM_ANALOGIX_ANX78XX
+>   drm/msm/hdmi: silence -EPROBE_DEFER warning
+>   ARM: dts: qcom: pm8941: add 5vs2 regulator node
+>   ARM: dts: qcom: msm8974: add HDMI nodes
+>   ARM: dts: qcom: msm8974-hammerhead: add support for external display
+>
+>  .../bindings/display/bridge/anx7814.txt       |   6 +-
+>  .../qcom-msm8974-lge-nexus5-hammerhead.dts    | 140 ++++++++++++++++++
+>  arch/arm/boot/dts/qcom-msm8974.dtsi           |  80 ++++++++++
+>  arch/arm/boot/dts/qcom-pm8941.dtsi            |  10 ++
+>  arch/arm/configs/qcom_defconfig               |   1 +
+>  drivers/gpu/drm/bridge/analogix-anx78xx.c     |  60 +++++++-
+>  drivers/gpu/drm/bridge/analogix-anx78xx.h     |   2 +-
+>  drivers/gpu/drm/msm/hdmi/hdmi_phy.c           |   8 +-
+>  8 files changed, 295 insertions(+), 12 deletions(-)
+>
 
