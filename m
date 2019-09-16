@@ -2,97 +2,77 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id A43ACB4141
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 16 Sep 2019 21:43:16 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C9A2DB4167
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 16 Sep 2019 21:54:13 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728105AbfIPTnP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 16 Sep 2019 15:43:15 -0400
-Received: from mail-pf1-f195.google.com ([209.85.210.195]:40882 "EHLO
-        mail-pf1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727577AbfIPTnP (ORCPT
+        id S1727949AbfIPTyL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 16 Sep 2019 15:54:11 -0400
+Received: from mail-pf1-f193.google.com ([209.85.210.193]:46717 "EHLO
+        mail-pf1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727884AbfIPTyL (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 16 Sep 2019 15:43:15 -0400
-Received: by mail-pf1-f195.google.com with SMTP id x127so537272pfb.7
-        for <linux-arm-msm@vger.kernel.org>; Mon, 16 Sep 2019 12:43:15 -0700 (PDT)
+        Mon, 16 Sep 2019 15:54:11 -0400
+Received: by mail-pf1-f193.google.com with SMTP id q5so535015pfg.13
+        for <linux-arm-msm@vger.kernel.org>; Mon, 16 Sep 2019 12:54:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=chromium.org; s=google;
         h=message-id:mime-version:content-transfer-encoding:in-reply-to
          :references:cc:to:from:subject:user-agent:date;
-        bh=WLp+GPttGVxHZ4bc1E597l7UcWrj5/s8colAd/Zrf1E=;
-        b=HGBAC2LzEi2bY7Z5K1cpZPh8ExkzEXavrfUP/mkdESNHmIDONxGqHmbtiXYrdIS+dt
-         GZX7uhRA3ZPgYGD2tzXp2i/JLavp1eAt+gwRUkef0S2ToGnZEXw7ID0TeV0i1C6LiYdO
-         DUjHMhgwnt3lWZcw7w2FJs7Yl/+tGsBPcK6Nk=
+        bh=lrC/Mm8MKJYbyIapp2rG+4YTQFTYoqtqhsULa6M5KsQ=;
+        b=mX2Xn+XJuSrIQX/3vRMQ3W21bf2fHZusW/23HHt9zZ96LdU0+hJ7E4PByjU+dH7zYD
+         ulY6b4QpLuANuBtNDdJHkGuUh/5d49Sin3OsQ1upuF6MRYF2Zc8V4Ke3MKCoka1L3h63
+         GKWf2RWu0iLRZoehcVgZgRmd/GlKHEpPnpYEE=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:mime-version
          :content-transfer-encoding:in-reply-to:references:cc:to:from:subject
          :user-agent:date;
-        bh=WLp+GPttGVxHZ4bc1E597l7UcWrj5/s8colAd/Zrf1E=;
-        b=gDy34o+3jddBvxeaVlCxfSxCurgPGwI4dYHpuwsN1aiQvNyupxdEG+ViM+NIMYXlot
-         l3qTA5Mn+C78T8pASjLT1jpRS+PS0fv/AJupEW/pWx6GEe5uKPXLlyosfgZlQNFkUXhh
-         JOtGySz+QGgCgyygmZvkGvQnl7o/ng3DLAsjG/kH96746ntFk3w31+p4Yi6OOIXa7xQn
-         jtFl6QPcq7jVSX07xmA2dgPbR29sCcgAyOdxt1MWwHLX4iORIu+rUhsxuhHwFLKigcpT
-         s7V+Z79DMi5foroc6cG8QGB6Ct8GvoWm33QJqdBXJrepfa0axwF23yf0B/IH6Esx8KZ7
-         ircg==
-X-Gm-Message-State: APjAAAW0QwZ4zT5K6TMx2CujXOOpI0uaOUk/IS0B27uy5FxTrYSANNjX
-        S3Vryp9qDMASrkdg5Lfj7Yz8bT94YIc=
-X-Google-Smtp-Source: APXvYqztr3q/MYD/JI7oKNOvIkdW3WzYP90VrrLrD5c3imzhZHsZTjDfElpIe6ZmcRnXlO+zX1iUZQ==
-X-Received: by 2002:a62:8c97:: with SMTP id m145mr9801pfd.241.1568662994612;
-        Mon, 16 Sep 2019 12:43:14 -0700 (PDT)
+        bh=lrC/Mm8MKJYbyIapp2rG+4YTQFTYoqtqhsULa6M5KsQ=;
+        b=GGbGSbT5zz62HRz1O3UkDmyhBz75C5J9XkHuaxVrS47UTrpewaNVheT/h2+WnJU60W
+         iaiwBzywECHRUPXfA5sPN+FHspPeOKiqUEGZiRVukieCJ6A4a8v0GYfQoyKczybWn4bo
+         +AMSRYz78dU5hAdCufvbJeXjzzy2q/90E0WYB0TqNMQV/I7abhpvu/jI5pe41EYpwcF2
+         +mK/0+sL6a23TAOn39zpyXvLr9ZLCNjP0Xzl8snoFMVjxLKvuuixSzKa5YDX2KeT4Jvq
+         opvjSsEpl9bpGFF8Zkwf0aU9zastUpTk7BRZxjaM7DZCt4RbC5DvtGt+6IfI6vLcsJP6
+         Z6IQ==
+X-Gm-Message-State: APjAAAVI4f8tEKYIJMz3qo9sjbuvmXQMh2qdsiHN8GeYxFd3fKTneyI8
+        XrLhtqIif5jU6p5qDlY7nS9/xQ==
+X-Google-Smtp-Source: APXvYqxUk+ttSr+TjZgdfGoX+v3Z9CTe/np15NOWgn4t9uKNcWkEJTPtjJik+Fqf9hb0pS4No35+ug==
+X-Received: by 2002:a62:1658:: with SMTP id 85mr56563pfw.195.1568663650915;
+        Mon, 16 Sep 2019 12:54:10 -0700 (PDT)
 Received: from chromium.org ([2620:15c:202:1:fa53:7765:582b:82b9])
-        by smtp.gmail.com with ESMTPSA id em21sm372496pjb.31.2019.09.16.12.43.13
+        by smtp.gmail.com with ESMTPSA id x9sm29605116pgp.75.2019.09.16.12.54.10
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 16 Sep 2019 12:43:13 -0700 (PDT)
-Message-ID: <5d7fe5d1.1c69fb81.eca3b.1121@mx.google.com>
+        Mon, 16 Sep 2019 12:54:10 -0700 (PDT)
+Message-ID: <5d7fe862.1c69fb81.8e5e3.2325@mx.google.com>
 Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <20190912091019.5334-1-srinivas.kandagatla@linaro.org>
-References: <20190912091019.5334-1-srinivas.kandagatla@linaro.org>
-Cc:     linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-To:     Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-        andy.gross@linaro.org, bjorn.andersson@linaro.org
+In-Reply-To: <c88947d18c65a692a8f314e4ad996d9d2a997997.1568240476.git.amit.kucheria@linaro.org>
+References: <cover.1568240476.git.amit.kucheria@linaro.org> <c88947d18c65a692a8f314e4ad996d9d2a997997.1568240476.git.amit.kucheria@linaro.org>
+Cc:     linux-clk@vger.kernel.org
+To:     "Rafael J. Wysocki" <rjw@rjwysocki.net>,
+        Amit Kucheria <amit.kucheria@linaro.org>,
+        Daniel Lezcano <daniel.lezcano@linaro.org>,
+        Viresh Kumar <viresh.kumar@linaro.org>,
+        Zhang Rui <rui.zhang@intel.com>, agross@kernel.org,
+        bjorn.andersson@linaro.org, edubezval@gmail.com,
+        ilina@codeaurora.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, tdas@codeaurora.org
 From:   Stephen Boyd <swboyd@chromium.org>
-Subject: Re: [PATCH] soc: qcom: socinfo: add missing soc_id sysfs entry
+Subject: Re: [PATCH 4/5] clk: qcom: Initialise clock drivers earlier
 User-Agent: alot/0.8.1
-Date:   Mon, 16 Sep 2019 12:43:11 -0700
+Date:   Mon, 16 Sep 2019 12:54:09 -0700
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Srinivas Kandagatla (2019-09-12 02:10:19)
-> looks like SoC ID is not exported to sysfs for some reason.
-> This patch adds it!
+Quoting Amit Kucheria (2019-09-11 15:32:33)
+> Initialise the clock drivers on sdm845 and qcs404 in core_initcall so we
+> can have earlier access to cpufreq during booting.
 >=20
-> This is mostly used by userspace libraries like SNPE.
-
-What is SNPE?
-
->=20
-> Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+> Signed-off-by: Amit Kucheria <amit.kucheria@linaro.org>
 > ---
->  drivers/soc/qcom/socinfo.c | 2 ++
->  1 file changed, 2 insertions(+)
 
-Hmm I wasn't aware this driver was merged.
+Did you want this patch to go through clk tree?
 
->=20
-> diff --git a/drivers/soc/qcom/socinfo.c b/drivers/soc/qcom/socinfo.c
-> index 8dc86a74559b..876a3f6612a3 100644
-> --- a/drivers/soc/qcom/socinfo.c
-> +++ b/drivers/soc/qcom/socinfo.c
-> @@ -422,6 +422,8 @@ static int qcom_socinfo_probe(struct platform_device =
-*pdev)
->         qs->attr.family =3D "Snapdragon";
->         qs->attr.machine =3D socinfo_machine(&pdev->dev,
->                                            le32_to_cpu(info->id));
-> +       qs->attr.soc_id =3D devm_kasprintf(&pdev->dev, GFP_KERNEL, "%u",
-> +                                        le32_to_cpu(info->id));
->         qs->attr.revision =3D devm_kasprintf(&pdev->dev, GFP_KERNEL, "%u.=
-%u",
->                                            SOCINFO_MAJOR(le32_to_cpu(info=
-->ver)),
->                                            SOCINFO_MINOR(le32_to_cpu(info=
-->ver)));
