@@ -2,309 +2,103 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id D4BAAB4A2E
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Sep 2019 11:17:58 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9CCBAB4A35
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Sep 2019 11:18:58 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726895AbfIQJRz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 17 Sep 2019 05:17:55 -0400
-Received: from mail.kernel.org ([198.145.29.99]:40908 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726250AbfIQJRz (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 17 Sep 2019 05:17:55 -0400
-Received: from localhost.localdomain (unknown [122.167.81.185])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 7062D21852;
-        Tue, 17 Sep 2019 09:17:50 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1568711873;
-        bh=TzeDHdXpfNzA1DH1fYaV3kmEGYt6Kzvz35Bh/08YUVI=;
-        h=From:To:Cc:Subject:Date:From;
-        b=sxlXPTBSiDnmx2EAe59lE88FhzbgSz61F3hvX32m2utBlGOcyFOHTzGgfpuP9S+CR
-         yHTCdL0rrF0QJwbJgI+JF6MzfN7eHHjwRzjKksQbSYmJz26fbI2BHG/uwlY9AwkaW6
-         vOtgTj5OHG79e+0G964FKdeUgR6hCd70Ei41QGQQ=
-From:   Vinod Koul <vkoul@kernel.org>
-To:     Stephen Boyd <sboyd@kernel.org>
-Cc:     linux-arm-msm@vger.kernel.org,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Vinod Koul <vkoul@kernel.org>, Andy Gross <agross@kernel.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: [PATCH] clk: qcom: gcc: Add missing clocks in SM8150
-Date:   Tue, 17 Sep 2019 14:46:23 +0530
-Message-Id: <20190917091623.3453-1-vkoul@kernel.org>
-X-Mailer: git-send-email 2.20.1
+        id S1727011AbfIQJS6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 17 Sep 2019 05:18:58 -0400
+Received: from mail-qk1-f193.google.com ([209.85.222.193]:44580 "EHLO
+        mail-qk1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727009AbfIQJS5 (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 17 Sep 2019 05:18:57 -0400
+Received: by mail-qk1-f193.google.com with SMTP id i78so3122954qke.11
+        for <linux-arm-msm@vger.kernel.org>; Tue, 17 Sep 2019 02:18:57 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=Qk1/kEMCc7hdtCl5vveWWjPTyqEJHdmDX9cEtBBSrMo=;
+        b=oNed/+kkOpBqzgWZvc8m2HoCUsR870bim/7U6M6ciIxMGGmQnC551uF2G+T6HjZMHn
+         +tnBXLKaFDx//RH0OvknlYwyJjua5GUILPW76AwekbFW4gPNNHQWqlAH4s5xrNqkwCoB
+         Wey4KwVBY8lZ0wjk/+/+9RyqneCmbw0VT5aIgRFL0GxyzK0CT8F88x3UA3dPNxET1fu/
+         OSZ7kE5axDPfK8IoDCxOgCJNiFdLhCO3p2wFfyEzUsfMeqmW1FsD2p9l9ZGWs/5739Nw
+         OeoXkpjTP/5rN2yaGgIRa81J7wB6isbp9Y8NRB3FNE8afvWkC7TCs+fnOzWO8YMOXpU5
+         cn+Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=Qk1/kEMCc7hdtCl5vveWWjPTyqEJHdmDX9cEtBBSrMo=;
+        b=dBGvumwZrhpGOMMCOCq1vdxC8tQia43rhpvkSpg1m0+P3dfNA9ffhDvZGNtGp0iRkA
+         eROa4rF0Fsvsj57g6tSQmZCgHU1izXIuWAlqN02WmYScFKpxP+j/0dLqSrqZ0KoYy8Ci
+         zQF2hb5iBv/OUnN68hdMuijSg+MBdqZjYm9fX25OAnsDhjMWXOmf9p0oiNSTXiq5FyMq
+         fklkH8emR5I+nlg/zLECdoeFVnh5uGpLFf1jBDssvENtZDfrKaoKeW5M2WqDT+Pop/3d
+         6euOqH9Z4R+IjLzQcH6C2Hw/sD2+KpQfQU+x9cYWiVLdso+crwbh54K9xb557TcjlaRk
+         kOKg==
+X-Gm-Message-State: APjAAAWTK7epFNJgLajnkdpLw3GVnp4dLqXbSp0AXAqGoRJ96YGBsWl2
+        kKp3JJwAeZWcWMwcHvcseR3K8zM7CMhHBdjQ+IMq5g==
+X-Google-Smtp-Source: APXvYqwsTYtRd0bAtTCshwktiNew7SgVScj0W0wJ6hvvFn22AcBW3g9dZ5tlXLrT4/NrL+dTsEI2JmRuYRQSgRLij8o=
+X-Received: by 2002:a37:6d2:: with SMTP id 201mr2596626qkg.106.1568711936825;
+ Tue, 17 Sep 2019 02:18:56 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <cover.1568240476.git.amit.kucheria@linaro.org>
+ <97b6f861e6e6a2ac7b50efb7211f3c8e7fe872b0.1568240476.git.amit.kucheria@linaro.org>
+ <6920d231-73cf-d83d-2cc7-f29e5f73192c@linaro.org>
+In-Reply-To: <6920d231-73cf-d83d-2cc7-f29e5f73192c@linaro.org>
+From:   Amit Kucheria <amit.kucheria@linaro.org>
+Date:   Tue, 17 Sep 2019 14:48:45 +0530
+Message-ID: <CAP245DVOX_x0e-CAzzG2cdpBeMdk=J7Tbgx4hpLXEavQwjRRAg@mail.gmail.com>
+Subject: Re: [PATCH 1/5] thermal: Initialize thermal subsystem earlier
+To:     Daniel Lezcano <daniel.lezcano@linaro.org>
+Cc:     Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Eduardo Valentin <edubezval@gmail.com>,
+        Andy Gross <agross@kernel.org>,
+        Taniya Das <tdas@codeaurora.org>,
+        Stephen Boyd <swboyd@chromium.org>,
+        Lina Iyer <ilina@codeaurora.org>,
+        "Rafael J. Wysocki" <rjw@rjwysocki.net>,
+        Viresh Kumar <viresh.kumar@linaro.org>,
+        Zhang Rui <rui.zhang@intel.com>,
+        Linux PM list <linux-pm@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The initial upstreaming of SM8150 GCC driver missed few clock so add
-them up now.
+On Tue, Sep 17, 2019 at 1:30 AM Daniel Lezcano
+<daniel.lezcano@linaro.org> wrote:
+>
+> On 12/09/2019 00:32, Amit Kucheria wrote:
+> > From: Lina Iyer <ilina@codeaurora.org>
+> >
+> > Now that the thermal framework is built-in, in order to facilitate
+> > thermal mitigation as early as possible in the boot cycle, move the
+> > thermal framework initialization to core_initcall.
+> >
+> > However, netlink initialization happens only as part of subsys_initcall.
+> > At this time in the boot process, the userspace is not available yet. So
+> > initialize the netlink events later in fs_initcall.
+>
+> Why not kill directly the netlink part, no one is using it in the kernel?
 
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
----
- drivers/clk/qcom/gcc-sm8150.c | 172 ++++++++++++++++++++++++++++++++++
- 1 file changed, 172 insertions(+)
+That's a good point. I wasn't sure if anybody was using it, but I can
+remove it completely since no driver seems to be using the
+thermal_generate_netlink_event() api.
 
-diff --git a/drivers/clk/qcom/gcc-sm8150.c b/drivers/clk/qcom/gcc-sm8150.c
-index 12ca2d14797f..13d4d14a5744 100644
---- a/drivers/clk/qcom/gcc-sm8150.c
-+++ b/drivers/clk/qcom/gcc-sm8150.c
-@@ -1616,6 +1616,38 @@ static struct clk_branch gcc_gpu_cfg_ahb_clk = {
- 	},
- };
- 
-+static struct clk_branch gcc_gpu_gpll0_clk_src = {
-+	.halt_check = BRANCH_HALT_SKIP,
-+	.clkr = {
-+		.enable_reg = 0x52004,
-+		.enable_mask = BIT(15),
-+		.hw.init = &(struct clk_init_data){
-+			.name = "gcc_gpu_gpll0_clk_src",
-+			.parent_hws = (const struct clk_hw *[]){
-+				&gpll0.clkr.hw },
-+			.num_parents = 1,
-+			.flags = CLK_SET_RATE_PARENT,
-+			.ops = &clk_branch2_ops,
-+		},
-+	},
-+};
-+
-+static struct clk_branch gcc_gpu_gpll0_div_clk_src = {
-+	.halt_check = BRANCH_HALT_SKIP,
-+	.clkr = {
-+		.enable_reg = 0x52004,
-+		.enable_mask = BIT(16),
-+		.hw.init = &(struct clk_init_data){
-+			.name = "gcc_gpu_gpll0_div_clk_src",
-+			.parent_hws = (const struct clk_hw *[]){
-+				&gcc_gpu_gpll0_clk_src.clkr.hw },
-+			.num_parents = 1,
-+			.flags = CLK_SET_RATE_PARENT,
-+			.ops = &clk_branch2_ops,
-+		},
-+	},
-+};
-+
- static struct clk_branch gcc_gpu_iref_clk = {
- 	.halt_reg = 0x8c010,
- 	.halt_check = BRANCH_HALT,
-@@ -1698,6 +1730,38 @@ static struct clk_branch gcc_npu_cfg_ahb_clk = {
- 	},
- };
- 
-+static struct clk_branch gcc_npu_gpll0_clk_src = {
-+	.halt_check = BRANCH_HALT_SKIP,
-+	.clkr = {
-+		.enable_reg = 0x52004,
-+		.enable_mask = BIT(18),
-+		.hw.init = &(struct clk_init_data){
-+			.name = "gcc_npu_gpll0_clk_src",
-+			.parent_hws = (const struct clk_hw *[]){
-+				&gpll0.clkr.hw },
-+			.num_parents = 1,
-+			.flags = CLK_SET_RATE_PARENT,
-+			.ops = &clk_branch2_ops,
-+		},
-+	},
-+};
-+
-+static struct clk_branch gcc_npu_gpll0_div_clk_src = {
-+	.halt_check = BRANCH_HALT_SKIP,
-+	.clkr = {
-+		.enable_reg = 0x52004,
-+		.enable_mask = BIT(19),
-+		.hw.init = &(struct clk_init_data){
-+			.name = "gcc_npu_gpll0_div_clk_src",
-+			.parent_hws = (const struct clk_hw *[]){
-+				&gcc_npu_gpll0_clk_src.clkr.hw },
-+			.num_parents = 1,
-+			.flags = CLK_SET_RATE_PARENT,
-+			.ops = &clk_branch2_ops,
-+		},
-+	},
-+};
-+
- static struct clk_branch gcc_npu_trig_clk = {
- 	.halt_reg = 0x4d00c,
- 	.halt_check = BRANCH_VOTED,
-@@ -2812,6 +2876,42 @@ static struct clk_branch gcc_ufs_card_phy_aux_hw_ctl_clk = {
- 	},
- };
- 
-+static struct clk_branch gcc_ufs_card_rx_symbol_0_clk = {
-+	.halt_check = BRANCH_HALT_SKIP,
-+	.clkr = {
-+		.enable_reg = 0x7501c,
-+		.enable_mask = BIT(0),
-+		.hw.init = &(struct clk_init_data){
-+			.name = "gcc_ufs_card_rx_symbol_0_clk",
-+			.ops = &clk_branch2_ops,
-+		},
-+	},
-+};
-+
-+static struct clk_branch gcc_ufs_card_rx_symbol_1_clk = {
-+	.halt_check = BRANCH_HALT_SKIP,
-+	.clkr = {
-+		.enable_reg = 0x750ac,
-+		.enable_mask = BIT(0),
-+		.hw.init = &(struct clk_init_data){
-+			.name = "gcc_ufs_card_rx_symbol_1_clk",
-+			.ops = &clk_branch2_ops,
-+		},
-+	},
-+};
-+
-+static struct clk_branch gcc_ufs_card_tx_symbol_0_clk = {
-+	.halt_check = BRANCH_HALT_SKIP,
-+	.clkr = {
-+		.enable_reg = 0x75018,
-+		.enable_mask = BIT(0),
-+		.hw.init = &(struct clk_init_data){
-+			.name = "gcc_ufs_card_tx_symbol_0_clk",
-+			.ops = &clk_branch2_ops,
-+		},
-+	},
-+};
-+
- static struct clk_branch gcc_ufs_card_unipro_core_clk = {
- 	.halt_reg = 0x75058,
- 	.halt_check = BRANCH_HALT,
-@@ -2992,6 +3092,42 @@ static struct clk_branch gcc_ufs_phy_phy_aux_hw_ctl_clk = {
- 	},
- };
- 
-+static struct clk_branch gcc_ufs_phy_rx_symbol_0_clk = {
-+	.halt_check = BRANCH_HALT_SKIP,
-+	.clkr = {
-+		.enable_reg = 0x7701c,
-+		.enable_mask = BIT(0),
-+		.hw.init = &(struct clk_init_data){
-+			.name = "gcc_ufs_phy_rx_symbol_0_clk",
-+			.ops = &clk_branch2_ops,
-+		},
-+	},
-+};
-+
-+static struct clk_branch gcc_ufs_phy_rx_symbol_1_clk = {
-+	.halt_check = BRANCH_HALT_SKIP,
-+	.clkr = {
-+		.enable_reg = 0x770ac,
-+		.enable_mask = BIT(0),
-+		.hw.init = &(struct clk_init_data){
-+			.name = "gcc_ufs_phy_rx_symbol_1_clk",
-+			.ops = &clk_branch2_ops,
-+		},
-+	},
-+};
-+
-+static struct clk_branch gcc_ufs_phy_tx_symbol_0_clk = {
-+	.halt_check = BRANCH_HALT_SKIP,
-+	.clkr = {
-+		.enable_reg = 0x77018,
-+		.enable_mask = BIT(0),
-+		.hw.init = &(struct clk_init_data){
-+			.name = "gcc_ufs_phy_tx_symbol_0_clk",
-+			.ops = &clk_branch2_ops,
-+		},
-+	},
-+};
-+
- static struct clk_branch gcc_ufs_phy_unipro_core_clk = {
- 	.halt_reg = 0x77058,
- 	.halt_check = BRANCH_HALT,
-@@ -3171,6 +3307,18 @@ static struct clk_branch gcc_usb3_prim_phy_com_aux_clk = {
- 	},
- };
- 
-+static struct clk_branch gcc_usb3_prim_phy_pipe_clk = {
-+	.halt_check = BRANCH_HALT_SKIP,
-+	.clkr = {
-+		.enable_reg = 0xf058,
-+		.enable_mask = BIT(0),
-+		.hw.init = &(struct clk_init_data){
-+			.name = "gcc_usb3_prim_phy_pipe_clk",
-+			.ops = &clk_branch2_ops,
-+		},
-+	},
-+};
-+
- static struct clk_branch gcc_usb3_sec_clkref_clk = {
- 	.halt_reg = 0x8c028,
- 	.halt_check = BRANCH_HALT,
-@@ -3201,6 +3349,18 @@ static struct clk_branch gcc_usb3_sec_phy_aux_clk = {
- 	},
- };
- 
-+static struct clk_branch gcc_usb3_sec_phy_pipe_clk = {
-+	.halt_check = BRANCH_HALT_SKIP,
-+	.clkr = {
-+		.enable_reg = 0x10058,
-+		.enable_mask = BIT(0),
-+		.hw.init = &(struct clk_init_data){
-+			.name = "gcc_usb3_sec_phy_pipe_clk",
-+			.ops = &clk_branch2_ops,
-+		},
-+	},
-+};
-+
- static struct clk_branch gcc_usb3_sec_phy_com_aux_clk = {
- 	.halt_reg = 0x10054,
- 	.halt_check = BRANCH_HALT,
-@@ -3332,12 +3492,16 @@ static struct clk_regmap *gcc_sm8150_clocks[] = {
- 	[GCC_GP3_CLK] = &gcc_gp3_clk.clkr,
- 	[GCC_GP3_CLK_SRC] = &gcc_gp3_clk_src.clkr,
- 	[GCC_GPU_CFG_AHB_CLK] = &gcc_gpu_cfg_ahb_clk.clkr,
-+	[GCC_GPU_GPLL0_CLK_SRC] = &gcc_gpu_gpll0_clk_src.clkr,
-+	[GCC_GPU_GPLL0_DIV_CLK_SRC] = &gcc_gpu_gpll0_div_clk_src.clkr,
- 	[GCC_GPU_IREF_CLK] = &gcc_gpu_iref_clk.clkr,
- 	[GCC_GPU_MEMNOC_GFX_CLK] = &gcc_gpu_memnoc_gfx_clk.clkr,
- 	[GCC_GPU_SNOC_DVM_GFX_CLK] = &gcc_gpu_snoc_dvm_gfx_clk.clkr,
- 	[GCC_NPU_AT_CLK] = &gcc_npu_at_clk.clkr,
- 	[GCC_NPU_AXI_CLK] = &gcc_npu_axi_clk.clkr,
- 	[GCC_NPU_CFG_AHB_CLK] = &gcc_npu_cfg_ahb_clk.clkr,
-+	[GCC_NPU_GPLL0_CLK_SRC] = &gcc_npu_gpll0_clk_src.clkr,
-+	[GCC_NPU_GPLL0_DIV_CLK_SRC] = &gcc_npu_gpll0_div_clk_src.clkr,
- 	[GCC_NPU_TRIG_CLK] = &gcc_npu_trig_clk.clkr,
- 	[GCC_PCIE0_PHY_REFGEN_CLK] = &gcc_pcie0_phy_refgen_clk.clkr,
- 	[GCC_PCIE1_PHY_REFGEN_CLK] = &gcc_pcie1_phy_refgen_clk.clkr,
-@@ -3442,6 +3606,9 @@ static struct clk_regmap *gcc_sm8150_clocks[] = {
- 	[GCC_UFS_CARD_PHY_AUX_CLK_SRC] = &gcc_ufs_card_phy_aux_clk_src.clkr,
- 	[GCC_UFS_CARD_PHY_AUX_HW_CTL_CLK] =
- 		&gcc_ufs_card_phy_aux_hw_ctl_clk.clkr,
-+	[GCC_UFS_CARD_RX_SYMBOL_0_CLK] = &gcc_ufs_card_rx_symbol_0_clk.clkr,
-+	[GCC_UFS_CARD_RX_SYMBOL_1_CLK] = &gcc_ufs_card_rx_symbol_1_clk.clkr,
-+	[GCC_UFS_CARD_TX_SYMBOL_0_CLK] = &gcc_ufs_card_tx_symbol_0_clk.clkr,
- 	[GCC_UFS_CARD_UNIPRO_CORE_CLK] = &gcc_ufs_card_unipro_core_clk.clkr,
- 	[GCC_UFS_CARD_UNIPRO_CORE_CLK_SRC] =
- 		&gcc_ufs_card_unipro_core_clk_src.clkr,
-@@ -3459,6 +3626,9 @@ static struct clk_regmap *gcc_sm8150_clocks[] = {
- 	[GCC_UFS_PHY_PHY_AUX_CLK] = &gcc_ufs_phy_phy_aux_clk.clkr,
- 	[GCC_UFS_PHY_PHY_AUX_CLK_SRC] = &gcc_ufs_phy_phy_aux_clk_src.clkr,
- 	[GCC_UFS_PHY_PHY_AUX_HW_CTL_CLK] = &gcc_ufs_phy_phy_aux_hw_ctl_clk.clkr,
-+	[GCC_UFS_PHY_RX_SYMBOL_0_CLK] = &gcc_ufs_phy_rx_symbol_0_clk.clkr,
-+	[GCC_UFS_PHY_RX_SYMBOL_1_CLK] = &gcc_ufs_phy_rx_symbol_1_clk.clkr,
-+	[GCC_UFS_PHY_TX_SYMBOL_0_CLK] = &gcc_ufs_phy_tx_symbol_0_clk.clkr,
- 	[GCC_UFS_PHY_UNIPRO_CORE_CLK] = &gcc_ufs_phy_unipro_core_clk.clkr,
- 	[GCC_UFS_PHY_UNIPRO_CORE_CLK_SRC] =
- 		&gcc_ufs_phy_unipro_core_clk_src.clkr,
-@@ -3480,10 +3650,12 @@ static struct clk_regmap *gcc_sm8150_clocks[] = {
- 	[GCC_USB3_PRIM_PHY_AUX_CLK] = &gcc_usb3_prim_phy_aux_clk.clkr,
- 	[GCC_USB3_PRIM_PHY_AUX_CLK_SRC] = &gcc_usb3_prim_phy_aux_clk_src.clkr,
- 	[GCC_USB3_PRIM_PHY_COM_AUX_CLK] = &gcc_usb3_prim_phy_com_aux_clk.clkr,
-+	[GCC_USB3_PRIM_PHY_PIPE_CLK] = &gcc_usb3_prim_phy_pipe_clk.clkr,
- 	[GCC_USB3_SEC_CLKREF_CLK] = &gcc_usb3_sec_clkref_clk.clkr,
- 	[GCC_USB3_SEC_PHY_AUX_CLK] = &gcc_usb3_sec_phy_aux_clk.clkr,
- 	[GCC_USB3_SEC_PHY_AUX_CLK_SRC] = &gcc_usb3_sec_phy_aux_clk_src.clkr,
- 	[GCC_USB3_SEC_PHY_COM_AUX_CLK] = &gcc_usb3_sec_phy_com_aux_clk.clkr,
-+	[GCC_USB3_SEC_PHY_PIPE_CLK] = &gcc_usb3_sec_phy_pipe_clk.clkr,
- 	[GCC_VIDEO_AHB_CLK] = &gcc_video_ahb_clk.clkr,
- 	[GCC_VIDEO_AXI0_CLK] = &gcc_video_axi0_clk.clkr,
- 	[GCC_VIDEO_AXI1_CLK] = &gcc_video_axi1_clk.clkr,
--- 
-2.20.1
+Regards,
+Amit
 
+$ git grep thermal_generate_netlink_event
+Documentation/thermal/sysfs-api.rst:just need to call
+thermal_generate_netlink_event() with two arguments viz
+drivers/thermal/thermal_core.c:int
+thermal_generate_netlink_event(struct thermal_zone_device *tz,
+drivers/thermal/thermal_core.c:EXPORT_SYMBOL_GPL(thermal_generate_netlink_event);
+include/linux/thermal.h:extern int
+thermal_generate_netlink_event(struct thermal_zone_device *tz,
+include/linux/thermal.h:static inline int
+thermal_generate_netlink_event(struct thermal_zone_device *tz,
