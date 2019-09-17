@@ -2,100 +2,104 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id ECEEBB571B
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Sep 2019 22:42:50 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id ACABBB57BE
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Sep 2019 23:48:52 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729897AbfIQUms (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 17 Sep 2019 16:42:48 -0400
-Received: from mail-pg1-f196.google.com ([209.85.215.196]:36782 "EHLO
-        mail-pg1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729797AbfIQUmq (ORCPT
+        id S1726185AbfIQVsv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 17 Sep 2019 17:48:51 -0400
+Received: from smtp.codeaurora.org ([198.145.29.96]:35270 "EHLO
+        smtp.codeaurora.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726125AbfIQVsv (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 17 Sep 2019 16:42:46 -0400
-Received: by mail-pg1-f196.google.com with SMTP id m29so2623008pgc.3
-        for <linux-arm-msm@vger.kernel.org>; Tue, 17 Sep 2019 13:42:46 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=YFdHh2t2oGEv2BeyA21GE0G/WyCi2XemObkdcdHKmyU=;
-        b=WR7W/y/Vd3KVexCUb7hWKcXKdGo9sUyUYVu2m0c5AY8jg79ByRv3GU7hHtb9LbDWYB
-         mZw5PChdZK7E/Dh+ouP8eUL030tx59XaE0u6AYcloT9aT1UpB8uiEb0gpUb9/mrtBw2y
-         xASL8xfI9EMEr5x2EGq6/2aIOlrsPqBG7vmspnrVu6CYSlOr8SFjDbeKr/iVCCAS/L6U
-         x/mza+bV99BHofVppiVRCy1wRLZG4JfkSSsRW2PBO9nil6mRs65aZ7RVwcUd7G0YWR/M
-         WiwVBjcZZlk1zcITfQ60FVLP2fh0SZayUZR983vRsdU5j75DidPYRsV9JVkDbHh5WJC6
-         WiYg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=YFdHh2t2oGEv2BeyA21GE0G/WyCi2XemObkdcdHKmyU=;
-        b=DW0ZF4iztJoeZjNL9MjBSgWd/uc0Oy4kGsbyVnuw12tqBBTecQwklQQg//tegtV6Wc
-         OqESSRtXBUH8RJ1S5XpkAnYAY5jeNPvqhUjltYrw+DbTK76/eNTojTRt0EBHnTlJvu6v
-         4T6/M6MxSAAdPO209oEoVKXKgIuVZ+P4J9wJBAKjkwgxBKq+UPla61u7NkXuOgZf/M44
-         Mcl0En/xCoT7btspbhdv1cu1Xyhk/TI3fNcEU9Y/HLCMRW9G6yKW+I/K4bfi4fsj7E+T
-         BIJaAL9J3hRcpWqRIrP0b79NHHOHFHj6yjIBmrXfFvVlMC9cfDGGORiR/Q1uWddjhZ37
-         l5CQ==
-X-Gm-Message-State: APjAAAXzl4jqENHJxqEw/D9j39yJQTcvEL6JXDj7uZfl2/feUSAywsxr
-        GbbI/TeGJKNKpMFs5bZVlP65xg==
-X-Google-Smtp-Source: APXvYqwiZx8dQNbqg0BmyaATr5iobMO3ZNDI3QuNtw/DOBStKSp3I8AmEvwYrUDxTWiIFPZukQRJgg==
-X-Received: by 2002:a63:ca06:: with SMTP id n6mr673892pgi.17.1568752965572;
-        Tue, 17 Sep 2019 13:42:45 -0700 (PDT)
-Received: from minitux (104-188-17-28.lightspeed.sndgca.sbcglobal.net. [104.188.17.28])
-        by smtp.gmail.com with ESMTPSA id e192sm5960215pfh.83.2019.09.17.13.42.44
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 17 Sep 2019 13:42:44 -0700 (PDT)
-Date:   Tue, 17 Sep 2019 13:42:42 -0700
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Stephen Boyd <sboyd@kernel.org>
-Cc:     Michael Turquette <mturquette@baylibre.com>,
-        linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, Dong Aisheng <aisheng.dong@nxp.com>,
-        Jordan Crouse <jcrouse@codeaurora.org>
-Subject: Re: [PATCH] clk: Make clk_bulk_get_all() return a valid "id"
-Message-ID: <20190917204242.GB6167@minitux>
-References: <20190913024029.2640-1-bjorn.andersson@linaro.org>
- <20190917203347.04BE32054F@mail.kernel.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20190917203347.04BE32054F@mail.kernel.org>
-User-Agent: Mutt/1.12.0 (2019-05-25)
+        Tue, 17 Sep 2019 17:48:51 -0400
+Received: by smtp.codeaurora.org (Postfix, from userid 1000)
+        id 3DA1361213; Tue, 17 Sep 2019 21:48:51 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
+        s=default; t=1568756931;
+        bh=X3NzP2/OYfzCgk/ZWQD94QYMs+1Ua5L9ueXra2kQULY=;
+        h=From:To:Cc:Subject:Date:From;
+        b=khpfHqSaFrHXavw8/J+fb+ITv0RESQd6ED4bU3KDprajNO7Oj1vnw/wD9hIOr5zxi
+         64r+VrjPpvX1FPA5JIxcJocHDc0OrKqshyM0jgK9mKpy3RuVFXUiLVPrKuUHWzAUDt
+         ts0jjHHZDcK89yTOAYpr8Mh9F0ZC9vTkEPGpOJEg=
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        pdx-caf-mail.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.7 required=2.0 tests=ALL_TRUSTED,BAYES_00,
+        DKIM_INVALID,DKIM_SIGNED,SPF_NONE autolearn=no autolearn_force=no
+        version=3.4.0
+Received: from jcrouse1-lnx.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: jcrouse@smtp.codeaurora.org)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 3B8E3602F2;
+        Tue, 17 Sep 2019 21:48:50 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
+        s=default; t=1568756930;
+        bh=X3NzP2/OYfzCgk/ZWQD94QYMs+1Ua5L9ueXra2kQULY=;
+        h=From:To:Cc:Subject:Date:From;
+        b=kHu0LIZD5zPhs2oNSz7DbpAMoX25nskyMUXcyYDKnfzR+1LL5ck9jd5bdIro7EJnx
+         oDVP/ORHzdU87q3Dru7c7rcka2raGkjEN9x7Z6KCjnSVir/RzKJzePPt/N5Xttp5M5
+         FC6CXQhSm0fYkCw3mnq3gvLqnot1AtVKy1B0y1TY=
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 3B8E3602F2
+Authentication-Results: pdx-caf-mail.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: pdx-caf-mail.web.codeaurora.org; spf=none smtp.mailfrom=jcrouse@codeaurora.org
+From:   Jordan Crouse <jcrouse@codeaurora.org>
+To:     freedreno@lists.freedesktop.org
+Cc:     linux-arm-msm@vger.kernel.org, linux-fsdevel@vger.kernel.org,
+        Matthew Wilcox <willy@infradead.org>,
+        linux-kernel@vger.kernel.org
+Subject: [PATCH] idr: Prevent unintended underflow for the idr index
+Date:   Tue, 17 Sep 2019 15:48:42 -0600
+Message-Id: <1568756922-2829-1-git-send-email-jcrouse@codeaurora.org>
+X-Mailer: git-send-email 2.7.4
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue 17 Sep 13:33 PDT 2019, Stephen Boyd wrote:
+It is possible for unaware callers of several idr functions to accidentally
+underflow the index by specifying a id that is less than the idr base.
 
-> Quoting Bjorn Andersson (2019-09-12 19:40:29)
-> > The adreno driver expects the "id" field of the returned clk_bulk_data
-> > to be filled in with strings from the clock-names property.
-> > 
-> > But due to the use of kmalloc_array() in of_clk_bulk_get_all() it
-> > receives a list of bogus pointers instead.
-> > 
-> > Zero-initialize the "id" field and attempt to populate with strings from
-> > the clock-names property to resolve both these issues.
-> > 
-> > Fixes: 616e45df7c4a ("clk: add new APIs to operate on all available clocks")
-> > Fixes: 8e3e791d20d2 ("drm/msm: Use generic bulk clock function")
-> > Cc: Dong Aisheng <aisheng.dong@nxp.com>
-> > Cc: Jordan Crouse <jcrouse@codeaurora.org>
-> > Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
-> > ---
-> 
-> Applied to clk-next
-> 
+Signed-off-by: Jordan Crouse <jcrouse@codeaurora.org>
+---
 
-Thanks
+ lib/idr.c | 9 +++++++++
+ 1 file changed, 9 insertions(+)
 
-> And now I see that this whole thing needs to be inlined to the one call
-> site and should use the struct device instead of calling of_clk_get()...
-> I'll have to fix it later.
-> 
+diff --git a/lib/idr.c b/lib/idr.c
+index 66a3748..d9e180c 100644
+--- a/lib/idr.c
++++ b/lib/idr.c
+@@ -151,6 +151,9 @@ EXPORT_SYMBOL(idr_alloc_cyclic);
+  */
+ void *idr_remove(struct idr *idr, unsigned long id)
+ {
++	if (id < idr->idr_base)
++		return NULL;
++
+ 	return radix_tree_delete_item(&idr->idr_rt, id - idr->idr_base, NULL);
+ }
+ EXPORT_SYMBOL_GPL(idr_remove);
+@@ -171,6 +174,9 @@ EXPORT_SYMBOL_GPL(idr_remove);
+  */
+ void *idr_find(const struct idr *idr, unsigned long id)
+ {
++	if (id < idr->idr_base)
++		return NULL;
++
+ 	return radix_tree_lookup(&idr->idr_rt, id - idr->idr_base);
+ }
+ EXPORT_SYMBOL_GPL(idr_find);
+@@ -302,6 +308,9 @@ void *idr_replace(struct idr *idr, void *ptr, unsigned long id)
+ 	void __rcu **slot = NULL;
+ 	void *entry;
+ 
++	if (id < idr->idr_base)
++		return ERR_PTR(-ENOENT);
++
+ 	id -= idr->idr_base;
+ 
+ 	entry = __radix_tree_lookup(&idr->idr_rt, id, &node, &slot);
+-- 
+2.7.4
 
-I concluded the same, sorry for not mentioning it.
-
-Regards,
-Bjorn
