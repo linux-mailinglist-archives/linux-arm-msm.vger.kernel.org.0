@@ -2,57 +2,78 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id DF8C5B52BE
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Sep 2019 18:16:45 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D08DBB52D2
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Sep 2019 18:21:08 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726524AbfIQQQV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 17 Sep 2019 12:16:21 -0400
-Received: from mail.kernel.org ([198.145.29.99]:51208 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1725825AbfIQQQV (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 17 Sep 2019 12:16:21 -0400
-Received: from kernel.org (unknown [104.132.0.74])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 9FB9520665;
-        Tue, 17 Sep 2019 16:16:20 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1568736980;
-        bh=CZ/KM/gXmljIiH0z+X3RrvgbxAfWQDwGFAhaAoajiiU=;
-        h=In-Reply-To:References:To:From:Subject:Date:From;
-        b=DPdwuC9Kn1JjoD0UWmRDfWnpXFl/6YDXpvWsyFrG/UCS3S6gJPaDj8+UjcaNedkr5
-         dZWKMmnW3WNfUg59IssfHTx87QiHMuTpqxDkq2v+8+IGWeWd6KPSg2Six2zg3Immil
-         glkwMtr2S8Tj8wLvnnhwtQ2nfOsZk8+MrG1R1Kzc=
-Content-Type: text/plain; charset="utf-8"
+        id S1726271AbfIQQVI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 17 Sep 2019 12:21:08 -0400
+Received: from mail-pg1-f172.google.com ([209.85.215.172]:41097 "EHLO
+        mail-pg1-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726059AbfIQQVH (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 17 Sep 2019 12:21:07 -0400
+Received: by mail-pg1-f172.google.com with SMTP id x15so2278132pgg.8;
+        Tue, 17 Sep 2019 09:21:07 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:content-transfer-encoding:in-reply-to
+         :user-agent;
+        bh=NCOl4aNg2JXCgak1io+lJcKczvWl3tjttSd25dm7D0A=;
+        b=oOlgfWqQ4IYViSiWiefP0ouH7rCalamb6bQFiuOqq2EoB//enTmMmqKRxDSExIiHBX
+         hcn1YAyBATeZwp9lphdEHPV8i7V4vaIUrpELr123xp/X+WH69MLb5e33mJ2vopa7RudS
+         6uaxotpV9J3nBtUouEt3thGlsIQVburEk8avlTJGq7vKgl21+TJbf0IkAVOsjh2nucWQ
+         zO7IHsTnSRzBIHwv/ab48p24oeeM6KFjfTxtwpJQ8AzkfcugeSOhOUkXTGfwXzhxbrd2
+         TJec+DwJFAHhRcgakT+kX+BgdBjH+5m/9Kt4opLdRJQEzJtjl7cS8FKJ6D6QvgYQS979
+         IjVw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        bh=NCOl4aNg2JXCgak1io+lJcKczvWl3tjttSd25dm7D0A=;
+        b=uWD2+7Ui5EEiVaX5cWjqKdxS64GJwQkXVbkTuie5BKcrmN1kn0QSe3jdA2yPSv1pl3
+         DQtz3V+pH/z5IEGhYVvT1Q7I7NseMLuoNd3Aw2hwjItmK9nnepx4zKLvKfXxON+Bk4xH
+         RbeIZ/2rU7ZAdLvzz7E5VbtuMP1VOpIUBPwFs4zMI96YyQS6ZF8I/8iL7vjFth6zmbao
+         xnkTD3Ms9AUpeLYWwXZn13uxP4G/7+28bVFRUaHzw4J1tId3yc23VMGdML/OrY5LjBXv
+         X4KXA2VNfkVlmieOQgRcYcd2pSyEFGQ1UEg70I6Fd5v0nCCiy4f1cumkdVpFDpBlS7KZ
+         HV0g==
+X-Gm-Message-State: APjAAAWt6GrkfQZGn9MoQntDF9hun2CQthO3QGhenPvGC56/WN+hxVnC
+        1xTES5/ioVJtNH0esTKwPVc=
+X-Google-Smtp-Source: APXvYqz+Yigq2Mnhew0hEmbFGlslf4RIt+lyh8bqnqLC6d8CpbsVFRHiPV3am+SGiWapkUTwxKHLhg==
+X-Received: by 2002:a17:90a:7782:: with SMTP id v2mr5582891pjk.3.1568737266388;
+        Tue, 17 Sep 2019 09:21:06 -0700 (PDT)
+Received: from SD ([106.222.12.103])
+        by smtp.gmail.com with ESMTPSA id l7sm7975529pga.92.2019.09.17.09.21.02
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 17 Sep 2019 09:21:05 -0700 (PDT)
+Date:   Tue, 17 Sep 2019 21:50:46 +0530
+From:   Saiyam Doshi <saiyamdoshi.in@gmail.com>
+To:     Markus Elfring <Markus.Elfring@web.de>
+Cc:     Andy Gross <agross@kernel.org>, linux-arm-msm@vger.kernel.org,
+        linux-i2c@vger.kernel.org, linux-kernel@vger.kernel.org,
+        kernel-janitors@vger.kernel.org
+Subject: Re: [1/3] i2c: qup: remove explicit conversion to boolean
+Message-ID: <20190917162046.GA5388@SD>
+References: <20190916185738.GA14035@SD>
+ <b5f63a71-6f6f-eea5-2283-6b5df22b267a@web.de>
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <1568375771-22933-8-git-send-email-gokulsri@codeaurora.org>
-References: <1568375771-22933-1-git-send-email-gokulsri@codeaurora.org> <1568375771-22933-8-git-send-email-gokulsri@codeaurora.org>
-To:     agross@kernel.org, bjorn.andersson@linaro.org,
-        david.brown@linaro.org, devicetree@vger.kernel.org,
-        gokulsri@codeaurora.org, jassisinghbrar@gmail.com,
-        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-remoteproc@vger.kernel.org,
-        mark.rutland@arm.com, mturquette@baylibre.com,
-        nprakash@codeaurora.org, ohad@wizery.com, robh+dt@kernel.org,
-        sricharan@codeaurora.org
-From:   Stephen Boyd <sboyd@kernel.org>
-Subject: Re: [PATCH V2 07/12] clk: qcom: Add WCSSAON reset
-User-Agent: alot/0.8.1
-Date:   Tue, 17 Sep 2019 09:16:19 -0700
-Message-Id: <20190917161620.9FB9520665@mail.kernel.org>
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <b5f63a71-6f6f-eea5-2283-6b5df22b267a@web.de>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Gokul Sriram Palanisamy (2019-09-13 04:56:06)
-> Add WCSSAON reset required for Q6v5 on IPQ8074 SoC.
->=20
-> Signed-off-by: Gokul Sriram Palanisamy <gokulsri@codeaurora.org>
-> Signed-off-by: Sricharan R <sricharan@codeaurora.org>
-> Signed-off-by: Nikhil Prakash V <nprakash@codeaurora.org>
-> ---
+On Tue, Sep 17, 2019 at 05:07:29PM +0200, Markus Elfring wrote:
+> > Found using - Coccinelle (http://coccinelle.lip6.fr)
+> 
+> Can a tag like “Generated by: scripts/coccinelle/misc/boolconv.cocci”
+> be more helpful for this change description?
 
-Acked-by: Stephen Boyd <sboyd@kernel.org>
+Yes, will do.
 
+-Saiyam
