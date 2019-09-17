@@ -2,77 +2,95 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 43346B53EC
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Sep 2019 19:20:40 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 3A504B53FD
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Sep 2019 19:22:00 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730906AbfIQRU0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 17 Sep 2019 13:20:26 -0400
-Received: from mail.kernel.org ([198.145.29.99]:35634 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726744AbfIQRU0 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 17 Sep 2019 13:20:26 -0400
-Received: from willie-the-truck (236.31.169.217.in-addr.arpa [217.169.31.236])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id C131A2053B;
-        Tue, 17 Sep 2019 17:20:23 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1568740825;
-        bh=LwKNamw9E4oxB1xQosrZOWdgQe92VETqR14nO7/u3js=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=rJlZcMxRdss/C5nXphHfwkC11ZGWaIGXj83MelUvHMUq8I5gSd3pOW0iqwlgLnYdo
-         Pgfz4aYr9Vr2E/C3Kyr89FbWapiRPt+LjPYLADOrXfUF9UNAeOhYsNWikqPBTHHu5L
-         OYwtmN9LUz73DR3FfZJOVIZucfs12gYrcDTf4euM=
-Date:   Tue, 17 Sep 2019 18:20:20 +0100
-From:   Will Deacon <will@kernel.org>
-To:     Jordan Crouse <jcrouse@codeaurora.org>
-Cc:     freedreno@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org, iommu@lists.linux-foundation.org,
-        Robin Murphy <robin.murphy@arm.com>,
-        Joerg Roedel <joro@8bytes.org>,
-        linux-arm-kernel@lists.infradead.org
-Subject: Re: [PATCH 5/7] iommu/arm-smmu: Support DOMAIN_ATTR_SPLIT_TABLES
-Message-ID: <20190917172020.hpv5qqdpihvqkehp@willie-the-truck>
-References: <1566327992-362-1-git-send-email-jcrouse@codeaurora.org>
- <1566327992-362-6-git-send-email-jcrouse@codeaurora.org>
+        id S1730892AbfIQRVd (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 17 Sep 2019 13:21:33 -0400
+Received: from mail-pg1-f196.google.com ([209.85.215.196]:42800 "EHLO
+        mail-pg1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727112AbfIQRVd (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 17 Sep 2019 13:21:33 -0400
+Received: by mail-pg1-f196.google.com with SMTP id z12so2357099pgp.9;
+        Tue, 17 Sep 2019 10:21:33 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:mime-version:content-disposition
+         :user-agent;
+        bh=XP3nl6czy0Go84+GXhP6xekWe3lUeVW+0ACtxPkNsuU=;
+        b=ra2F+YVLYvZr1nAkWH0/Wv1eCDF8R5O0xDtT3wLIHtB0NEovuDhYBLvmw5yKAr9dFc
+         H5aPYrv2116jWoh7+mTpiVamxPdlD11YiaW1LQwPuMtNRAnt23CKa0S5ZyEoRY05Ul3L
+         TZRWwjueLtoPq4vykQs18KjMAt8WeKE/9eJbguHdHJ8ORG1E7YVcPNEqjoqYJrsotMdp
+         onjHvr14tX/TQQ2MRQ6U/YmynXB9Grm8p2cOec86NFrnwEdi4vQ7l5gHoZBhuuB/ssHE
+         zJPYHx8/CRc7vLYaA++VFnSxbiCOJ2DEjjrJ/lL8WJK3ESj3vl2NYBXrO6fu9lFY0O+i
+         HVGQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:mime-version
+         :content-disposition:user-agent;
+        bh=XP3nl6czy0Go84+GXhP6xekWe3lUeVW+0ACtxPkNsuU=;
+        b=qXfLsX4142OhASzxaor7Z+dURuHKsHgwkkKvqQkQwHaKAh3N3jI+AufAs2xOgfAo2x
+         tgVrDv9Mzif5dxOyxvdIelGyuSkJy5ihtwN7699Sus76q/fxxAznHh2IB9l4kWJ8Vv3E
+         BTlxA8F5wMAIFf2AUNuU+nmFcvmy8OA4eIClUM2b1SCBsdLEZiNgYF/4fwxt/yVGLaTW
+         Xakb/rk2lFoZBbjcMQmKBjxN8GoHrJB73JN8dacU8tX3EO0oxjadHZngUKmc9W172p4P
+         GwkMdwmY64fDuQRfe2e17uvHbEVH1boV3ERLuv1fK21dAtXZYwskDSQn28mRsR62hCob
+         kTPQ==
+X-Gm-Message-State: APjAAAVL21qIe9dMrf7viGnrpyFqBZNIyMBRmwq54Z6zGbOzLY+h14LQ
+        ZphiB8y4xiiv2JotE0xX4UI=
+X-Google-Smtp-Source: APXvYqy9+ZSC73Ve3Dqf5eomIyJYUjt2b9pP6rdhOaaLMMGlu5/7bJTtbLOpJVlM1c73KZW6WZxyJg==
+X-Received: by 2002:a62:7d8c:: with SMTP id y134mr5459148pfc.257.1568740892878;
+        Tue, 17 Sep 2019 10:21:32 -0700 (PDT)
+Received: from SD ([106.222.12.103])
+        by smtp.gmail.com with ESMTPSA id g1sm2714459pgg.27.2019.09.17.10.21.29
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 17 Sep 2019 10:21:31 -0700 (PDT)
+Date:   Tue, 17 Sep 2019 22:51:20 +0530
+From:   Saiyam Doshi <saiyamdoshi.in@gmail.com>
+To:     agross@kernel.org
+Cc:     linux-arm-msm@vger.kernel.org, linux-i2c@vger.kernel.org,
+        linux-kernel@vger.kernel.org, markus.elfring@web.de
+Subject: [PATCH v2 2/3] i2c: qup: Remove dev_err() log after
+ platform_get_irq*() failure
+Message-ID: <20190917172120.GA11581@SD>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <1566327992-362-6-git-send-email-jcrouse@codeaurora.org>
-User-Agent: NeoMutt/20170113 (1.7.2)
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Aug 20, 2019 at 01:06:30PM -0600, Jordan Crouse wrote:
-> Support the DOMAIN_ATTR_SPLIT_TABLES attribute to let the leaf driver
-> know if split pagetables are enabled for the domain.
-> 
-> Signed-off-by: Jordan Crouse <jcrouse@codeaurora.org>
-> ---
-> 
->  drivers/iommu/arm-smmu.c | 3 +++
->  1 file changed, 3 insertions(+)
-> 
-> diff --git a/drivers/iommu/arm-smmu.c b/drivers/iommu/arm-smmu.c
-> index 3f41cf7..6a512ff 100644
-> --- a/drivers/iommu/arm-smmu.c
-> +++ b/drivers/iommu/arm-smmu.c
-> @@ -1442,6 +1442,9 @@ static int arm_smmu_domain_get_attr(struct iommu_domain *domain,
->  		case DOMAIN_ATTR_NESTING:
->  			*(int *)data = (smmu_domain->stage == ARM_SMMU_DOMAIN_NESTED);
->  			return 0;
-> +		case DOMAIN_ATTR_SPLIT_TABLES:
-> +			*(int *)data = !!(smmu_domain->split_pagetables);
-> +			return 0;
+The debug message after platform_get_irq() failure is redundant
+because platform_get_irq() already prints an error. Thus remove it.
 
-Hmm. Could you move the setting of this attribute into
-arm_smmu_domain_set_attr() and reject it if the ias != 48 in there? That way
-the user of the domain can request this feature, rather than us enforcing it
-based on the compatible string.
+Generated by: scripts/coccinelle/api/platform_get_irq.cocci
 
-I'd also prefer to call it DOMAIN_ATTR_USE_TTBR1 instead, since it's pretty
-ARM specific at this point.
+Signed-off-by: Saiyam Doshi <saiyamdoshi.in@gmail.com>
+---
+Changes in v2:
+Updated changelog and removed unnecessary braces after if condition.
 
-Will
+ drivers/i2c/busses/i2c-qup.c | 4 +---
+ 1 file changed, 1 insertion(+), 3 deletions(-)
+
+diff --git a/drivers/i2c/busses/i2c-qup.c b/drivers/i2c/busses/i2c-qup.c
+index 5519c19bfd9c..ed09a59066b2 100644
+--- a/drivers/i2c/busses/i2c-qup.c
++++ b/drivers/i2c/busses/i2c-qup.c
+@@ -1766,10 +1766,8 @@ static int qup_i2c_probe(struct platform_device *pdev)
+ 		return PTR_ERR(qup->base);
+
+ 	qup->irq = platform_get_irq(pdev, 0);
+-	if (qup->irq < 0) {
+-		dev_err(qup->dev, "No IRQ defined\n");
++	if (qup->irq < 0)
+ 		return qup->irq;
+-	}
+
+ 	if (has_acpi_companion(qup->dev)) {
+ 		ret = device_property_read_u32(qup->dev,
+--
+2.20.1
+
