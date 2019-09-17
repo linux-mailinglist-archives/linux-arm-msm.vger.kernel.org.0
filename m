@@ -2,63 +2,62 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 72602B4E5D
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Sep 2019 14:47:31 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id DF39BB4E61
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Sep 2019 14:48:08 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728217AbfIQMr2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 17 Sep 2019 08:47:28 -0400
-Received: from mail-wr1-f66.google.com ([209.85.221.66]:45698 "EHLO
-        mail-wr1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728090AbfIQMr1 (ORCPT
+        id S1727478AbfIQMsI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 17 Sep 2019 08:48:08 -0400
+Received: from mail-wr1-f68.google.com ([209.85.221.68]:46795 "EHLO
+        mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727782AbfIQMsI (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 17 Sep 2019 08:47:27 -0400
-Received: by mail-wr1-f66.google.com with SMTP id r5so2961180wrm.12
-        for <linux-arm-msm@vger.kernel.org>; Tue, 17 Sep 2019 05:47:25 -0700 (PDT)
+        Tue, 17 Sep 2019 08:48:08 -0400
+Received: by mail-wr1-f68.google.com with SMTP id o18so2967591wrv.13
+        for <linux-arm-msm@vger.kernel.org>; Tue, 17 Sep 2019 05:48:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=subject:to:cc:references:from:openpgp:autocrypt:message-id:date
          :user-agent:mime-version:in-reply-to:content-language
          :content-transfer-encoding;
-        bh=MDOQM/tpi1Ry3JjZKAOYrYm3dlLQ0VMLRb7G7NjhmtE=;
-        b=MrmTC/Dy8xxx9fTlhGF8YdIUEFYnNYvnsYbxc4bMvJjpjRcsemrRoOH3uhxelihW20
-         gonhqs9pz2RPlt0+SJdKLCbuYiRr3Ylz9K0wuyQf0ZuVWfAeE/aITFNgJCsm5onIcGMG
-         R4DIqIqgAUoI66Ao3aADcqsZr4H8ErslwmCG2sMj3MwfrEWrjlTg9BjCedYxfIzLQJBd
-         y9zVByb6aRqUYxOlPuOh7AaI2fP/qeyzUUiaGyNjC1yYyUgvBea/VNOXA8D2VIDe90Lj
-         8qDdqFWIAwJvjWv8XqP4UgXJ0VewLoYyvYXrDdw82kevHxkdkacOlRO08B0MSu8AShsF
-         b4cw==
+        bh=YpTRSH4M1wyZaHTouSeNdLh2wZyon7I7Nq2nA8cDy3I=;
+        b=mdiBZdXqewCpA78CX1LrKF8ezHgf9Ktz9VhQiJ0RU9U4xaVNb8xyh5/YNApaBbeZ/C
+         TPS5hNyJWsgHuFwcvJIYzVPEy6mzKAfb4BTgyayKFQ5lYLKcqvEarv1Krn/AEHcZGCQx
+         Xuu57qMsIpxG1olNds7mlnY2+UWm/y4dlr0cS6YGp2hqMys0s2fgpqBF2+hpPCc+7co+
+         RTUm+wpGF36rdv/37DDDiyTQXeSFjn8wmEdIE7GT37LSsi5YjO70eFUQ4C8TKe2vXvUH
+         U9tCFWqhAttYD25wIqjpiC7TXz6ahUl0ttpLefo1wXCUVMAUwjfLG4aTfGvlZxnOllw+
+         HoBw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:subject:to:cc:references:from:openpgp:autocrypt
          :message-id:date:user-agent:mime-version:in-reply-to
          :content-language:content-transfer-encoding;
-        bh=MDOQM/tpi1Ry3JjZKAOYrYm3dlLQ0VMLRb7G7NjhmtE=;
-        b=CA0YE/v2QIh2BVX00p2L1bN1AtoSwsLFNgVzNoi9hwhm15BXP6O58pa6w1kvt22wGU
-         aEGW2AQim/mT8jxocDDIHewvO0DYaDRcVkoBBOdm6ktB12agHMaDqQiDSaOa3MmD2pu7
-         VAqaY2XlIe15E5jqZvAaheqko5V65swBOX2UrrpAiUIeir16s2G1paarEn8F+9Pr1k2o
-         LAGTgMGbn4fp3hGwcQ3N2mXOBntmi29tKGBZdc9REvTgrxJBcTgNIZrq4nhHjN4jsM4D
-         UxkGnvGkSjLXYGFtHgCk5FhH6RcPb+BT4rVoR7iZRyA5EtR2ZnB7iEjNkCJE610EbQhh
-         YJng==
-X-Gm-Message-State: APjAAAV3joNCWex6VXHopv0KjHdQL3NJQf3dU8TX8ZTwxR/iZ3qhZi/d
-        DFMM51o+3yUVLrbM6++YZyztjw==
-X-Google-Smtp-Source: APXvYqz0GKPaFAWUy3n9gNkJMzrPUuiN6/k83uygdJo1RlO0RSg0OF817+J58QQG4SJ2D7cExhHWpQ==
-X-Received: by 2002:adf:e292:: with SMTP id v18mr2710535wri.232.1568724444517;
-        Tue, 17 Sep 2019 05:47:24 -0700 (PDT)
+        bh=YpTRSH4M1wyZaHTouSeNdLh2wZyon7I7Nq2nA8cDy3I=;
+        b=dfy5ng7Wxrkr44+sdTxv6dt3W11kSOb/XJAOVvmhi2mJsvfMpm8cd2n8qClNgqprdB
+         pMjPCuYCTBpSHmcE80woqNTff1hM2pR66bhBNjNW6qBmvUcD0lvn1Ftr4UrhPwY0wkHv
+         schIPyNNcZUF7OPzCQXU6lmnvuSR3IV5fRQegDYJmiVFLm67dkMN9Wc/ez4VLFRH/ZZM
+         FesVDilWKvBi3OBnkJg79W/KySS5gLmYL9CjWkZJ+tBFFjEjo82x2lt+5FkOI/a/t3fa
+         MWhnZKbf/+glZ6Jw//reQja1LyC/MpHYp0DjBq9xCk6b9zX/P7YVbQe0cXEYFz0uPIvf
+         FwPg==
+X-Gm-Message-State: APjAAAUrdMJ/yFQeKUGHofqIk7ZgDAXe2mhMFlqQllewdkzk7otyzTlh
+        l7AbEMkrpbRsLa1ScajiPVHm+Q==
+X-Google-Smtp-Source: APXvYqwFyVakxadcC53jE+hdWQSaTodIqy1oaz0QJP0Ufs+YqZDkgrDOPdXquMUHLRfTXv3FBoDcdw==
+X-Received: by 2002:adf:a415:: with SMTP id d21mr3182967wra.94.1568724485322;
+        Tue, 17 Sep 2019 05:48:05 -0700 (PDT)
 Received: from ?IPv6:2a01:e34:ed2f:f020:58da:8830:e8b1:f180? ([2a01:e34:ed2f:f020:58da:8830:e8b1:f180])
-        by smtp.googlemail.com with ESMTPSA id a10sm2680205wrm.52.2019.09.17.05.47.23
+        by smtp.googlemail.com with ESMTPSA id b184sm3640913wmg.47.2019.09.17.05.48.04
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 17 Sep 2019 05:47:23 -0700 (PDT)
+        Tue, 17 Sep 2019 05:48:04 -0700 (PDT)
 Subject: Re: [PATCH 5/5] cpufreq: qcom-hw: Move driver initialisation earlier
-To:     Sudeep Holla <sudeep.holla@arm.com>,
-        Amit Kucheria <amit.kucheria@linaro.org>
-Cc:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+To:     Amit Kucheria <amit.kucheria@linaro.org>,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
         bjorn.andersson@linaro.org, edubezval@gmail.com, agross@kernel.org,
         tdas@codeaurora.org, swboyd@chromium.org, ilina@codeaurora.org,
         "Rafael J. Wysocki" <rjw@rjwysocki.net>,
         Viresh Kumar <viresh.kumar@linaro.org>,
-        Zhang Rui <rui.zhang@intel.com>, linux-pm@vger.kernel.org
+        Zhang Rui <rui.zhang@intel.com>
+Cc:     linux-pm@vger.kernel.org
 References: <cover.1568240476.git.amit.kucheria@linaro.org>
  <b731b713d8738239c26361ece7f5cadea035b353.1568240476.git.amit.kucheria@linaro.org>
- <20190917093412.GA24757@bogus>
 From:   Daniel Lezcano <daniel.lezcano@linaro.org>
 Openpgp: preference=signencrypt
 Autocrypt: addr=daniel.lezcano@linaro.org; prefer-encrypt=mutual; keydata=
@@ -121,12 +120,12 @@ Autocrypt: addr=daniel.lezcano@linaro.org; prefer-encrypt=mutual; keydata=
  adkDXtr4MeL8BaB7Ij2oyRVjXUwhFQNKi5Z5Rve0a3zvGkkqw8Mz20BOksjSWjAF6g9byukl
  CUVjC03PdMSufNLK06x5hPc/c4tFR4J9cLrV+XxdCX7r0zGos9SzTPGNuIk1LK++S3EJhLFj
  4eoWtNhMWc1uiTf9ENza0ntqH9XBWEQ6IA1gubCniGG+Xg==
-Message-ID: <58e60ca4-9615-bbdf-5fe7-2a0e1d7f48d8@linaro.org>
-Date:   Tue, 17 Sep 2019 14:47:22 +0200
+Message-ID: <a13f2204-d9b1-3680-e770-69833f1136f3@linaro.org>
+Date:   Tue, 17 Sep 2019 14:48:03 +0200
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
  Thunderbird/60.8.0
 MIME-Version: 1.0
-In-Reply-To: <20190917093412.GA24757@bogus>
+In-Reply-To: <b731b713d8738239c26361ece7f5cadea035b353.1568240476.git.amit.kucheria@linaro.org>
 Content-Type: text/plain; charset=utf-8
 Content-Language: en-US
 Content-Transfer-Encoding: 8bit
@@ -135,61 +134,33 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-
-Hi Sudeep,
-
-On 17/09/2019 11:34, Sudeep Holla wrote:
-> On Thu, Sep 12, 2019 at 04:02:34AM +0530, Amit Kucheria wrote:
->> Allow qcom-hw driver to initialise right after the cpufreq and thermal
->> subsystems are initialised in core_initcall so we get earlier access to
->> thermal mitigation.
->>
->> Signed-off-by: Amit Kucheria <amit.kucheria@linaro.org>
->> ---
->>  drivers/cpufreq/qcom-cpufreq-hw.c | 2 +-
->>  1 file changed, 1 insertion(+), 1 deletion(-)
->>
->> diff --git a/drivers/cpufreq/qcom-cpufreq-hw.c b/drivers/cpufreq/qcom-cpufreq-hw.c
->> index 4b0b50403901..04676cc82ba6 100644
->> --- a/drivers/cpufreq/qcom-cpufreq-hw.c
->> +++ b/drivers/cpufreq/qcom-cpufreq-hw.c
->> @@ -327,7 +327,7 @@ static int __init qcom_cpufreq_hw_init(void)
->>  {
->>  	return platform_driver_register(&qcom_cpufreq_hw_driver);
->>  }
->> -device_initcall(qcom_cpufreq_hw_init);
->> +postcore_initcall(qcom_cpufreq_hw_init);
+On 12/09/2019 00:32, Amit Kucheria wrote:
+> Allow qcom-hw driver to initialise right after the cpufreq and thermal
+> subsystems are initialised in core_initcall so we get earlier access to
+> thermal mitigation.
 > 
-> I am fine with core framework initcall pushed to earlier initcall levels
-> if required, but for individual/platform specific drivers I am not so
-> happy to see that.
+> Signed-off-by: Amit Kucheria <amit.kucheria@linaro.org>
+
+Acked-by: Daniel Lezcano <daniel.lezcano@linaro.org>
+
+> ---
+>  drivers/cpufreq/qcom-cpufreq-hw.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
 > 
-> This goes against the grand plan of single common kernel strategy by
-> Android moving all drivers as modules. We might decide to make this
-> a module. 
-
-module = mounted file system = very late initialization
-
-Is that the plan? Force every driver to load too late?
-
-There are core drivers which must be loaded as soon as possible. If the
-qcom driver is one of them, then what is the problem?
-
-"The grand plan" will have to solve this first before doing the module
-move.
-
-> Also there are few cpufreq drivers that are modules. Will
-> they have issues ? If not, why do we need this change at all.
-
-Because some boards don't have thermal issues with the cpufreq drivers
-as module, other boards have.
-
-> Needing
-> thermal mitigation during boot this earlier is still too much of
-> expectation, I would rather boot slowly than relying on this feature.
-
-And what if we want to boot faster? The boot time is one of a key point
-of benchmark.
+> diff --git a/drivers/cpufreq/qcom-cpufreq-hw.c b/drivers/cpufreq/qcom-cpufreq-hw.c
+> index 4b0b50403901..04676cc82ba6 100644
+> --- a/drivers/cpufreq/qcom-cpufreq-hw.c
+> +++ b/drivers/cpufreq/qcom-cpufreq-hw.c
+> @@ -327,7 +327,7 @@ static int __init qcom_cpufreq_hw_init(void)
+>  {
+>  	return platform_driver_register(&qcom_cpufreq_hw_driver);
+>  }
+> -device_initcall(qcom_cpufreq_hw_init);
+> +postcore_initcall(qcom_cpufreq_hw_init);
+>  
+>  static void __exit qcom_cpufreq_hw_exit(void)
+>  {
+> 
 
 
 -- 
