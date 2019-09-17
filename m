@@ -2,287 +2,249 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 34D85B55EC
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Sep 2019 21:06:23 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0C5C7B565E
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Sep 2019 21:45:05 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729856AbfIQTGW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 17 Sep 2019 15:06:22 -0400
-Received: from mail-oi1-f193.google.com ([209.85.167.193]:35333 "EHLO
-        mail-oi1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729854AbfIQTGW (ORCPT
+        id S1726505AbfIQTpE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 17 Sep 2019 15:45:04 -0400
+Received: from mail-pg1-f193.google.com ([209.85.215.193]:45255 "EHLO
+        mail-pg1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726353AbfIQTpE (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 17 Sep 2019 15:06:22 -0400
-Received: by mail-oi1-f193.google.com with SMTP id x3so2384757oig.2;
-        Tue, 17 Sep 2019 12:06:21 -0700 (PDT)
+        Tue, 17 Sep 2019 15:45:04 -0400
+Received: by mail-pg1-f193.google.com with SMTP id 4so2519702pgm.12
+        for <linux-arm-msm@vger.kernel.org>; Tue, 17 Sep 2019 12:45:03 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=Tgg2KV4/EfN+uMmiVDhI108boK8SBjqK7o3+PbMCrCI=;
+        b=Gax5dwcaedmEQcUPRLs3NtZVA81kF/AfrQ45bLDX1BwPZ21Ler+XLbfh4zFY9jr6k7
+         nSMFXqsSY3Eu/Ff9B3tIad+HkZbIxfIFxcrpCD2/1sAjrg/JK/JM0SnvVHv7a9yJTEwT
+         XeRLeOd0sl+4ky4EPSysETsBbBLoeTIRzGiuk=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=1eCFNKmdR9qknMbLVpP77gHix0l96bg6/0uGAd5V+bU=;
-        b=PPqrhn+ff0k5tKE1uZsy7GOJkJ6HEK8klIuBcAyMtuPFuhLCwmIL309GTzLxBI0RGy
-         MFT3btZDoRBpZ+gmHrgLBCR+5Yk5QxjCoPx6VwLH1H5+COfSduHbFb7yD7Gih21JNxqr
-         jYodToHMPZTyUpjOe2bxmPns4omSMIg4Mg0b0/nRQfU9NHWsbBaF5J8gz2wnWbHJwnyo
-         1ikGr0E6OVhpb8p7ba8x/FAdVL5IQwTilxxUh431IrxprpCdsmyj2ZEaGARjDYMLqiX+
-         00esFciBvQtZFzh7UqWJMS5291sjo/ovk8Wgt1kneDQ6W/uW/YLi6zbKZqsNhKAml8Al
-         YNTg==
-X-Gm-Message-State: APjAAAXN4TifmvlAofX6H+qdufkNtUs9eUnSMtGH0D9w8xe7lhABW5HD
-        ZdHnx1JC45ezsO4YFKxRtA==
-X-Google-Smtp-Source: APXvYqztXee9rjqqCwZzhzyN5Fd/D7ApgUPjJu+F+1STc7M7IAqn+O4HcJozmULd50ih0Nq2qcKYug==
-X-Received: by 2002:aca:4705:: with SMTP id u5mr4826363oia.161.1568747180886;
-        Tue, 17 Sep 2019 12:06:20 -0700 (PDT)
-Received: from localhost (24-155-109-49.dyn.grandenetworks.net. [24.155.109.49])
-        by smtp.gmail.com with ESMTPSA id v12sm971600oiv.58.2019.09.17.12.06.19
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 17 Sep 2019 12:06:20 -0700 (PDT)
-Date:   Tue, 17 Sep 2019 14:06:19 -0500
-From:   Rob Herring <robh@kernel.org>
-To:     Amit Kucheria <amit.kucheria@linaro.org>
-Cc:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        bjorn.andersson@linaro.org, edubezval@gmail.com, agross@kernel.org,
-        masneyb@onstation.org, swboyd@chromium.org,
-        Daniel Lezcano <daniel.lezcano@linaro.org>,
-        Mark Rutland <mark.rutland@arm.com>,
-        Zhang Rui <rui.zhang@intel.com>, linux-pm@vger.kernel.org,
-        devicetree@vger.kernel.org
-Subject: Re: [PATCH v3 07/15] dt-bindings: thermal: tsens: Convert over to a
- yaml schema
-Message-ID: <20190917190619.GA9311@bogus>
-References: <cover.1568185732.git.amit.kucheria@linaro.org>
- <933f033298cbd7726a6c0b4b3b6cc7adc81784ba.1568185732.git.amit.kucheria@linaro.org>
+        bh=Tgg2KV4/EfN+uMmiVDhI108boK8SBjqK7o3+PbMCrCI=;
+        b=AIKw+HfmGrHDV40PidA5DIOojkZRgiYnwSXlD4D+eWwpmk+c3yJ78xpyqMXB7izDpS
+         V+n/w0+4zaJCo+/DESuElx2A+h9fYV1/QOJXuVtKubULvNiSAYOjXcmTRTBElNA0BmQm
+         lccwmjHqY3kUVffKVaglKTvyQjLrEuOwsya15d3HazgBBs3d5GK0WZGUUYZ8GP/CIRXf
+         zKvLYdvkPnUPXZ9qg2fzNEaAxL6IBZzw9jl1ib8N/uBaYAmG8031JGrREnyFHjWaJHu+
+         BVS2jsXNvD5xStBJ+xjEeqYLBKW5BqgYLMzV54dduK90c8BiYxV3/IP95AV4TOdnc4Lo
+         Sdmg==
+X-Gm-Message-State: APjAAAVWnlloXdhUP6+KGB1owcxYXe04KbytWMJHe8ik4rcNEKGGy3Yl
+        KlgLx78UY9zMC5zFf7IbnbVBIQ==
+X-Google-Smtp-Source: APXvYqwrZzEmLy6eO6PsNKzFBDcGp2OXEi0+GJ13UPfgamTyrLgYSPrOjFB9fJ4t+9h46xvAnPZClA==
+X-Received: by 2002:a65:5309:: with SMTP id m9mr510537pgq.266.1568749503244;
+        Tue, 17 Sep 2019 12:45:03 -0700 (PDT)
+Received: from localhost ([2620:15c:202:1:75a:3f6e:21d:9374])
+        by smtp.gmail.com with ESMTPSA id 31sm3435103pgr.55.2019.09.17.12.45.01
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 17 Sep 2019 12:45:01 -0700 (PDT)
+Date:   Tue, 17 Sep 2019 12:44:59 -0700
+From:   Matthias Kaehlcke <mka@chromium.org>
+To:     Chandana Kishori Chiluveru <cchiluve@codeaurora.org>
+Cc:     balbi@kernel.org, agross@kernel.org, david.brown@linaro.org,
+        linux-usb@vger.kernel.org, linux-arm-msm@vger.kernel.org
+Subject: Re: [PATCH V3 2/3] usb: dwc3: qcom: Add interconnect support in dwc3
+ driver
+Message-ID: <20190917194459.GK133864@google.com>
+References: <1568718649-20124-1-git-send-email-cchiluve@codeaurora.org>
+ <1568718649-20124-3-git-send-email-cchiluve@codeaurora.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <933f033298cbd7726a6c0b4b3b6cc7adc81784ba.1568185732.git.amit.kucheria@linaro.org>
+In-Reply-To: <1568718649-20124-3-git-send-email-cchiluve@codeaurora.org>
 User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Sep 11, 2019 at 12:46:24PM +0530, Amit Kucheria wrote:
-> Document interrupt support in the tsens driver by converting over to a
-> YAML schema.
+On Tue, Sep 17, 2019 at 04:40:48PM +0530, Chandana Kishori Chiluveru wrote:
+> Add interconnect support in dwc3-qcom driver to vote for bus
+> bandwidth.
 > 
-> Suggested-by: Stephen Boyd <swboyd@chromium.org>
-> Signed-off-by: Amit Kucheria <amit.kucheria@linaro.org>
+> This requires for two different paths - from USB master to
+> DDR slave. The other is from APPS master to USB slave.
+> 
+> Signed-off-by: Chandana Kishori Chiluveru <cchiluve@codeaurora.org>
 > ---
->  .../bindings/thermal/qcom-tsens.txt           |  55 ------
->  .../bindings/thermal/qcom-tsens.yaml          | 174 ++++++++++++++++++
->  MAINTAINERS                                   |   1 +
->  3 files changed, 175 insertions(+), 55 deletions(-)
->  delete mode 100644 Documentation/devicetree/bindings/thermal/qcom-tsens.txt
->  create mode 100644 Documentation/devicetree/bindings/thermal/qcom-tsens.yaml
-
-
-> diff --git a/Documentation/devicetree/bindings/thermal/qcom-tsens.yaml b/Documentation/devicetree/bindings/thermal/qcom-tsens.yaml
-> new file mode 100644
-> index 000000000000..6784766fe58f
-> --- /dev/null
-> +++ b/Documentation/devicetree/bindings/thermal/qcom-tsens.yaml
-> @@ -0,0 +1,174 @@
-> +# SPDX-License-Identifier: (GPL-2.0 OR MIT)
-> +# Copyright 2019 Linaro Ltd.
-> +%YAML 1.2
-> +---
-> +$id: http://devicetree.org/schemas/thermal/qcom-tsens.yaml#
-> +$schema: http://devicetree.org/meta-schemas/core.yaml#
-> +
-> +title: QCOM SoC Temperature Sensor (TSENS)
-> +
-> +maintainers:
-> +  - Amit Kucheria <amit.kucheria@linaro.org>
-> +
-> +description: |
-> +  QCOM SoCs have TSENS IP to allow temperature measurement. There are currently
-> +  three distinct major versions of the IP that is supported by a single driver.
-> +  The IP versions are named v0.1, v1 and v2 in the driver, where v0.1 captures
-> +  everything before v1 when there was no versioning information.
-> +
-> +properties:
-> +  compatible:
-> +    oneOf:
-> +      - description: v0.1 of TSENS
-> +        items:
-> +          - enum:
-> +              - qcom,msm8916-tsens
-> +              - qcom,msm8974-tsens
-> +          - const: qcom,tsens-v0_1
-> +
-> +      - description: v1 of TSENS
-> +        items:
-> +          - enum:
-> +              - qcom,qcs404-tsens
-> +          - const: qcom,tsens-v1
-> +
-> +      - description: v2 of TSENS
-> +        items:
-> +          - enum:
-> +              - qcom,msm8996-tsens
-> +              - qcom,msm8998-tsens
-> +              - qcom,sdm845-tsens
-> +          - const: qcom,tsens-v2
-> +
-> +  reg:
-> +    maxItems: 2
-> +    items:
-> +      - description: TM registers
-> +      - description: SROT registers
-> +
-> +  nvmem-cells:
-> +    minItems: 1
-> +    maxItems: 2
-> +    description:
-> +      Reference to an nvmem node for the calibration data
-> +
-> +  nvmem-cells-names:
-
-This is going to require 2 items, so you need an explicit minItems and 
-maxItems.
-
-> +    items:
-> +      - enum:
-> +        - caldata
-> +        - calsel
-> +
-> +  "#qcom,sensors":
-> +    allOf:
-> +      - $ref: /schemas/types.yaml#/definitions/uint32
-> +      - minimum: 1
-> +      - maximum: 16
-> +    description:
-> +      Number of sensors enabled on this platform
-> +
-> +  "#thermal-sensor-cells":
-> +    const: 1
-> +    description:
-> +      Number of cells required to uniquely identify the thermal sensors. Since
-> +      we have multiple sensors this is set to 1
-> +
-> +allOf:
-> +  - if:
-> +      properties:
-> +        compatible:
-> +          contains:
-> +            enum:
-> +              - qcom,msm8916-tsens
-> +              - qcom,msm8974-tsens
-> +              - qcom,qcs404-tsens
-> +              - qcom,tsens-v0_1
-> +              - qcom,tsens-v1
-> +    then:
-> +      properties:
-> +        interrupts:
-
-> +          minItems: 1
-> +          maxItems: 1
-
-These can be implicit.
-
-> +          items:
-> +            - description: Combined interrupt if upper or lower threshold crossed
-> +        interrupt-names:
-> +          minItems: 1
-> +          maxItems: 1
-
-ditto.
-
-> +          items:
-> +            - const: uplow
-> +
-> +    else:
-> +      properties:
-> +        interrupts:
-> +          minItems: 2
-> +          maxItems: 2
-
-ditto.
-
-> +          items:
-> +            - description: Combined interrupt if upper or lower threshold crossed
-> +            - description: Interrupt if critical threshold crossed
-> +        interrupt-names:
-> +          minItems: 2
-> +          maxItems: 2
-
-ditto.
-
-> +          items:
-> +            - const: uplow
-> +            - const: critical
-> +
-> +required:
-> +  - compatible
-> +  - reg
-> +  - "#qcom,sensors"
-> +  - interrupts
-> +  - interrupt-names
-> +  - "#thermal-sensor-cells"
-> +
-> +examples:
-> +  - |
-> +    #include <dt-bindings/interrupt-controller/arm-gic.h>
-> +    // Example 1 (legacy: for pre v1 IP):
-> +    tsens1: thermal-sensor@900000 {
-> +           compatible = "qcom,msm8916-tsens", "qcom,tsens-v0_1";
-> +           reg = <0x4a9000 0x1000>, /* TM */
-> +                 <0x4a8000 0x1000>; /* SROT */
-> +
-> +           nvmem-cells = <&tsens_caldata>, <&tsens_calsel>;
-> +           nvmem-cell-names = "caldata", "calsel";
-> +
-> +           interrupts = <GIC_SPI 184 IRQ_TYPE_LEVEL_HIGH>;
-> +           interrupt-names = "uplow";
-> +
-> +           #qcom,sensors = <5>;
-> +           #thermal-sensor-cells = <1>;
-> +    };
-> +
-> +  - |
-> +    #include <dt-bindings/interrupt-controller/arm-gic.h>
-> +    // Example 2 (for any platform containing v1 of the TSENS IP):
-> +    tsens2: thermal-sensor@4a9000 {
-> +          compatible = "qcom,qcs404-tsens", "qcom,tsens-v1";
-> +          reg = <0x004a9000 0x1000>, /* TM */
-> +                <0x004a8000 0x1000>; /* SROT */
-> +
-> +          nvmem-cells = <&tsens_caldata>;
-> +          nvmem-cell-names = "calib";
-> +
-> +          interrupts = <GIC_SPI 506 IRQ_TYPE_LEVEL_HIGH>;
-> +          interrupt-names = "uplow";
-> +
-> +          #qcom,sensors = <10>;
-> +          #thermal-sensor-cells = <1>;
-> +    };
-> +
-> +  - |
-> +    #include <dt-bindings/interrupt-controller/arm-gic.h>
-> +    // Example 3 (for any platform containing v2 of the TSENS IP):
-> +    tsens3: thermal-sensor@c263000 {
-> +           compatible = "qcom,sdm845-tsens", "qcom,tsens-v2";
-> +           reg = <0xc263000 0x1ff>,
-> +                 <0xc222000 0x1ff>;
-> +
-> +           interrupts = <GIC_SPI 506 IRQ_TYPE_LEVEL_HIGH>,
-> +                        <GIC_SPI 508 IRQ_TYPE_LEVEL_HIGH>;
-> +           interrupt-names = "uplow", "critical";
-> +
-> +           #qcom,sensors = <13>;
-> +           #thermal-sensor-cells = <1>;
-> +    };
-> +...
-> diff --git a/MAINTAINERS b/MAINTAINERS
-> index e7a47b5210fd..ff757a4a060c 100644
-> --- a/MAINTAINERS
-> +++ b/MAINTAINERS
-> @@ -13360,6 +13360,7 @@ L:	linux-pm@vger.kernel.org
->  L:	linux-arm-msm@vger.kernel.org
->  S:	Maintained
->  F:	drivers/thermal/qcom/
-> +F:	Documentation/devicetree/bindings/thermal/qcom-tsens.yaml
->  
->  QUALCOMM VENUS VIDEO ACCELERATOR DRIVER
->  M:	Stanimir Varbanov <stanimir.varbanov@linaro.org>
-> -- 
-> 2.17.1
+>  drivers/usb/dwc3/dwc3-qcom.c | 145 ++++++++++++++++++++++++++++++++++++++++++-
+>  1 file changed, 143 insertions(+), 2 deletions(-)
 > 
+> diff --git a/drivers/usb/dwc3/dwc3-qcom.c b/drivers/usb/dwc3/dwc3-qcom.c
+> index 184df4d..2a2f5af 100644
+> --- a/drivers/usb/dwc3/dwc3-qcom.c
+> +++ b/drivers/usb/dwc3/dwc3-qcom.c
+>
+> ...
+>
+> +/**
+> + * dwc3_qcom_interconnect_init() - Get interconnect path handles
+
+nit: "Initialize the interconnect" or similar?
+
+> + * @qcom:			Pointer to the concerned usb core.
+> + *
+> + */
+> +static int dwc3_qcom_interconnect_init(struct dwc3_qcom *qcom)
+> +{
+> +	struct device *dev = qcom->dev;
+> +	int ret;
+> +
+> +	qcom->usb_ddr_icc_path = of_icc_get(dev, "usb-ddr");
+> +	if (IS_ERR(qcom->usb_ddr_icc_path)) {
+> +		dev_err(dev, "Error: (%ld) failed getting usb-ddr path\n",
+> +			PTR_ERR(qcom->usb_ddr_icc_path));
+> +		return PTR_ERR(qcom->usb_ddr_icc_path);
+> +	}
+> +
+> +	qcom->apps_usb_icc_path = of_icc_get(dev, "apps-usb");
+> +	if (IS_ERR(qcom->apps_usb_icc_path)) {
+> +		dev_err(dev, "Error: (%ld) failed getting apps-usb path\n",
+> +				PTR_ERR(qcom->apps_usb_icc_path));
+> +		return PTR_ERR(qcom->apps_usb_icc_path);
+> +	}
+> +
+> +	ret = dwc3_qcom_interconnect_enable(qcom);
+> +	if (ret) {
+> +		dev_err(dev, "failed to enable interconnect %d\n", ret);
+
+nit: 'interconnect: %d', otherwise the message could be read as
+'failed to enable interconnect number N'.
+
+> +		return ret;
+> +	}
+> +
+> +	return 0;
+> +}
+> +
+> +/**
+> + * dwc3_qcom_interconnect_exit() - Release interconnect path handles
+> + * @qcom:			Pointer to the concerned usb core.
+> + *
+> + * This function is used to release interconnect path handle.
+> + */
+> +static void dwc3_qcom_interconnect_exit(struct dwc3_qcom *qcom)
+> +{
+> +	icc_put(qcom->usb_ddr_icc_path);
+> +	icc_put(qcom->apps_usb_icc_path);
+> +}
+> +
+> +/* Currently we only use bandwidth level, so just "enable" interconnects */
+> +static int dwc3_qcom_interconnect_enable(struct dwc3_qcom *qcom)
+> +{
+> +	struct dwc3 *dwc;
+> +	int ret;
+> +
+> +	dwc = platform_get_drvdata(qcom->dwc3);
+> +	if (!dwc) {
+> +		dev_err(qcom->dev, "Failed to get dwc3 device\n");
+> +		return -EPROBE_DEFER;
+> +	}
+
+I understand the need for the/some check (see
+https://patchwork.kernel.org/patch/11146903/#22885491 and my reply),
+but I'm not convinced it should be done here. The function can be
+called from other contexts than _probe(), so returning -EPROBE_DEFER
+seems wrong, although I understand that you want _probe() to return
+this value.
+
+I would suggest to do this (or another) check early in
+_probe(). Returning -EPROBE_DEFER from that context makes sense, and
+it should be the only time the check is actually needed.
+
+As commented on v2 I don't particularly like the idea of using a half
+initialized struct (dwc3), even more when what is initialized or not
+varies at runtime (since dwc3_probe() and qwc3_qcom_probe() appear to
+run in parallel). IIUC device_is_bound() returns true when a device is
+fully initialized (i.e. it's _probe() completed), I'd suggest to
+evaluate to use it instead of checking the drvdata. In this case the
+drvdata check should be ok, but in general these kind of races don't
+seem a good idea, maybe tomorrow someone wants to access another
+struct member, which isn't always initialized.
+
+Others: please correct me if using half-initialized structs is
+routine in kernel drivers or device_is_bound() is the wrong tool.
+
+> +
+> +	if (dwc->maximum_speed == USB_SPEED_SUPER) {
+> +		ret = icc_set_bw(qcom->usb_ddr_icc_path,
+> +			USB_MEMORY_AVG_SS_BW, USB_MEMORY_PEAK_SS_BW);
+> +		if (ret)
+> +			return ret;
+> +	} else {
+> +		ret = icc_set_bw(qcom->usb_ddr_icc_path,
+> +			USB_MEMORY_AVG_HS_BW, USB_MEMORY_PEAK_HS_BW);
+> +		if (ret)
+> +			return ret;
+> +	}
+> +
+> +	ret = icc_set_bw(qcom->apps_usb_icc_path,
+> +		APPS_USB_AVG_BW, APPS_USB_PEAK_BW);
+> +	if (ret)
+> +		goto err_disable_mem_path;
+> +
+> +	return 0;
+> +
+> +err_disable_mem_path:
+> +	icc_set_bw(qcom->usb_ddr_icc_path, 0, 0);
+> +
+> +	return ret;
+> +}
+> +
+> +/* To disable an interconnect, we just set its bandwidth to 0 */
+> +static int dwc3_qcom_interconnect_disable(struct dwc3_qcom *qcom)
+> +{
+> +	struct dwc3 *dwc = platform_get_drvdata(qcom->dwc3);
+> +	int ret;
+> +
+> +	ret = icc_set_bw(qcom->usb_ddr_icc_path, 0, 0);
+> +	if (ret)
+> +		return ret;
+> +
+> +	ret = icc_set_bw(qcom->apps_usb_icc_path, 0, 0);
+> +	if (ret)
+> +		goto err_reenable_memory_path;
+> +
+> +	return 0;
+> +
+> +	/* Re-enable things in the event of an error */
+> +err_reenable_memory_path:
+> +	if (dwc->maximum_speed == USB_SPEED_SUPER)
+> +		icc_set_bw(qcom->usb_ddr_icc_path,
+> +			USB_MEMORY_AVG_SS_BW, USB_MEMORY_PEAK_SS_BW);
+> +	else
+> +		icc_set_bw(qcom->usb_ddr_icc_path,
+> +			USB_MEMORY_AVG_HS_BW, USB_MEMORY_PEAK_HS_BW);
+
+This is essentially the same as in _interconnect_enable(). You could
+consider a helper function (inline?) for 'enabling' the memory path,
+which would make things more compact and also allow to get rid of the
+goto:
+
+if (ret)
+	qcom_dwc3_interconnect_enable_mempath(qcom);
+
+return ret;
+
+> +
+> +	return ret;
+> +}
+> +
+>  static irqreturn_t qcom_dwc3_resume_irq(int irq, void *data)
+>  {
+>  	struct dwc3_qcom *qcom = data;
+> @@ -494,6 +626,12 @@ static int dwc3_qcom_probe(struct platform_device *pdev)
+>  		goto depopulate;
+>  	}
+>  
+> +	ret = dwc3_qcom_interconnect_init(qcom);
+> +	if (ret) {
+> +		dev_err(dev, "failed to init interconnect handles %d\n", ret);
+
+nit: remove 'handles' (and add ':' before the error code), it's an
+implementation detail, and now _icc_init() also calls _icc_enable(),
+hence it's not only the handles.
