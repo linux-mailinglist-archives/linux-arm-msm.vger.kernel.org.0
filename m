@@ -2,90 +2,117 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 673B0B4FDA
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Sep 2019 16:04:47 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B3B9CB5043
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Sep 2019 16:23:23 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726586AbfIQOEq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 17 Sep 2019 10:04:46 -0400
-Received: from smtp.codeaurora.org ([198.145.29.96]:46396 "EHLO
-        smtp.codeaurora.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726467AbfIQOEq (ORCPT
+        id S1727136AbfIQOXW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 17 Sep 2019 10:23:22 -0400
+Received: from 3.mo68.mail-out.ovh.net ([46.105.58.60]:42077 "EHLO
+        3.mo68.mail-out.ovh.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725922AbfIQOXW (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 17 Sep 2019 10:04:46 -0400
-Received: by smtp.codeaurora.org (Postfix, from userid 1000)
-        id 702E36021C; Tue, 17 Sep 2019 14:04:45 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
-        s=default; t=1568729085;
-        bh=rAaMYvqbeLheWv8CIxiDyX/e12oeMdBVoUmnUwywv5Q=;
-        h=Subject:From:In-Reply-To:References:To:Cc:Date:From;
-        b=nV2umR6R289up963IQf51z4elD/8hSfUfS7xrdnSVc8eic0ZFzWYNRHiHiC1zVyno
-         i9iXTtZEOsP45lU5RnXEhyhq5pMNIIW/uxBtWWNvzoqsomYIkZVxX6d1Fvfa8bqOaR
-         LHBMs0BVnAgGxRARt6Vdh4c53Jwxm30DPn/hdccc=
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        pdx-caf-mail.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-0.8 required=2.0 tests=ALL_TRUSTED,BAYES_00,
-        DKIM_INVALID,DKIM_SIGNED,MISSING_DATE,MISSING_MID,SPF_NONE autolearn=no
-        autolearn_force=no version=3.4.0
-Received: from potku.adurom.net (88-114-240-156.elisa-laajakaista.fi [88.114.240.156])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        (Authenticated sender: kvalo@smtp.codeaurora.org)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 24BF36016D;
-        Tue, 17 Sep 2019 14:04:42 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
-        s=default; t=1568729084;
-        bh=rAaMYvqbeLheWv8CIxiDyX/e12oeMdBVoUmnUwywv5Q=;
-        h=Subject:From:In-Reply-To:References:To:Cc:From;
-        b=HXDHo5T2HJtx2ogcRKuCOwqk+wlVKzcov6Qhn/RIBADhCetuRZIt2f8kOYCBGWsFy
-         FhKPiZcsSsRMJTti+2r6vWZYRkLOGYHiK03XQvksaTVvclmN2vxtjTncFjF2jCoj71
-         qYCeRk2Wcljgm7Pyx2QtZq1kBDDoZJRAsbD8ckvI=
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 24BF36016D
-Authentication-Results: pdx-caf-mail.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: pdx-caf-mail.web.codeaurora.org; spf=none smtp.mailfrom=kvalo@codeaurora.org
-Content-Type: text/plain; charset="utf-8"
+        Tue, 17 Sep 2019 10:23:22 -0400
+X-Greylist: delayed 3593 seconds by postgrey-1.27 at vger.kernel.org; Tue, 17 Sep 2019 10:23:21 EDT
+Received: from player699.ha.ovh.net (unknown [10.108.57.16])
+        by mo68.mail-out.ovh.net (Postfix) with ESMTP id BEA12143BFA
+        for <linux-arm-msm@vger.kernel.org>; Tue, 17 Sep 2019 15:05:42 +0200 (CEST)
+Received: from qperret.net (115.ip-51-255-42.eu [51.255.42.115])
+        (Authenticated sender: qperret@qperret.net)
+        by player699.ha.ovh.net (Postfix) with ESMTPSA id 73C3D9E63A6C;
+        Tue, 17 Sep 2019 13:05:27 +0000 (UTC)
+Date:   Tue, 17 Sep 2019 15:05:22 +0200
+From:   Quentin Perret <qperret@qperret.net>
+To:     Daniel Lezcano <daniel.lezcano@linaro.org>
+Cc:     Sudeep Holla <sudeep.holla@arm.com>,
+        Amit Kucheria <amit.kucheria@linaro.org>,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        bjorn.andersson@linaro.org, edubezval@gmail.com, agross@kernel.org,
+        tdas@codeaurora.org, swboyd@chromium.org, ilina@codeaurora.org,
+        "Rafael J. Wysocki" <rjw@rjwysocki.net>,
+        Viresh Kumar <viresh.kumar@linaro.org>,
+        Zhang Rui <rui.zhang@intel.com>, linux-pm@vger.kernel.org
+Subject: Re: [PATCH 5/5] cpufreq: qcom-hw: Move driver initialisation earlier
+Message-ID: <20190917130522.GA31601@qperret.net>
+References: <cover.1568240476.git.amit.kucheria@linaro.org>
+ <b731b713d8738239c26361ece7f5cadea035b353.1568240476.git.amit.kucheria@linaro.org>
+ <20190917093412.GA24757@bogus>
+ <58e60ca4-9615-bbdf-5fe7-2a0e1d7f48d8@linaro.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 7bit
-Subject: Re: [PATCH 1/3] ath10k: snoc: skip regulator operations
-From:   Kalle Valo <kvalo@codeaurora.org>
-In-Reply-To: <20190725174755.23432-2-bjorn.andersson@linaro.org>
-References: <20190725174755.23432-2-bjorn.andersson@linaro.org>
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     Govind Singh <govinds@codeaurora.org>,
-        "David S. Miller" <davem@davemloft.net>,
-        ath10k@lists.infradead.org, linux-wireless@vger.kernel.org,
-        netdev@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org
-User-Agent: pwcli/0.0.0-git (https://github.com/kvalo/pwcli/) Python/2.7.12
-Message-Id: <20190917140445.702E36021C@smtp.codeaurora.org>
-Date:   Tue, 17 Sep 2019 14:04:45 +0000 (UTC)
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <58e60ca4-9615-bbdf-5fe7-2a0e1d7f48d8@linaro.org>
+User-Agent: Mutt/1.9.4 (2018-02-28)
+X-Ovh-Tracer-Id: 15719251551264529282
+X-VR-SPAMSTATE: OK
+X-VR-SPAMSCORE: -100
+X-VR-SPAMCAUSE: gggruggvucftvghtrhhoucdtuddrgedufedrudeigdeffecutefuodetggdotefrodftvfcurfhrohhfihhlvgemucfqggfjpdevjffgvefmvefgnecuuegrihhlohhuthemucehtddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmd
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Bjorn Andersson <bjorn.andersson@linaro.org> wrote:
+Hi Daniel
 
-> The regulator operations is trying to set a voltage to a fixed value, by
-> giving some wiggle room. But some board designs specifies regulator
-> voltages outside this limited range. One such example is the Lenovo Yoga
-> C630, with vdd-3.3-ch0 in particular specified at 3.1V.
+On Tuesday 17 Sep 2019 at 14:47:22 (+0200), Daniel Lezcano wrote:
 > 
-> But consumers with fixed voltage requirements should just rely on the
-> board configuration to provide the power at the required level, so this
-> code should be removed.
+> Hi Sudeep,
 > 
-> Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
-> Signed-off-by: Kalle Valo <kvalo@codeaurora.org>
+> On 17/09/2019 11:34, Sudeep Holla wrote:
+> > On Thu, Sep 12, 2019 at 04:02:34AM +0530, Amit Kucheria wrote:
+> >> Allow qcom-hw driver to initialise right after the cpufreq and thermal
+> >> subsystems are initialised in core_initcall so we get earlier access to
+> >> thermal mitigation.
+> >>
+> >> Signed-off-by: Amit Kucheria <amit.kucheria@linaro.org>
+> >> ---
+> >>  drivers/cpufreq/qcom-cpufreq-hw.c | 2 +-
+> >>  1 file changed, 1 insertion(+), 1 deletion(-)
+> >>
+> >> diff --git a/drivers/cpufreq/qcom-cpufreq-hw.c b/drivers/cpufreq/qcom-cpufreq-hw.c
+> >> index 4b0b50403901..04676cc82ba6 100644
+> >> --- a/drivers/cpufreq/qcom-cpufreq-hw.c
+> >> +++ b/drivers/cpufreq/qcom-cpufreq-hw.c
+> >> @@ -327,7 +327,7 @@ static int __init qcom_cpufreq_hw_init(void)
+> >>  {
+> >>  	return platform_driver_register(&qcom_cpufreq_hw_driver);
+> >>  }
+> >> -device_initcall(qcom_cpufreq_hw_init);
+> >> +postcore_initcall(qcom_cpufreq_hw_init);
+> > 
+> > I am fine with core framework initcall pushed to earlier initcall levels
+> > if required, but for individual/platform specific drivers I am not so
+> > happy to see that.
+> > 
+> > This goes against the grand plan of single common kernel strategy by
+> > Android moving all drivers as modules. We might decide to make this
+> > a module. 
+> 
+> module = mounted file system = very late initialization
+> 
+> Is that the plan? Force every driver to load too late?
+> 
+> There are core drivers which must be loaded as soon as possible. If the
+> qcom driver is one of them, then what is the problem?
+> 
+> "The grand plan" will have to solve this first before doing the module
+> move.
+> 
+> > Also there are few cpufreq drivers that are modules. Will
+> > they have issues ? If not, why do we need this change at all.
+> 
+> Because some boards don't have thermal issues with the cpufreq drivers
+> as module, other boards have.
+> 
+> > Needing
+> > thermal mitigation during boot this earlier is still too much of
+> > expectation, I would rather boot slowly than relying on this feature.
+> 
+> And what if we want to boot faster? The boot time is one of a key point
+> of benchmark.
 
-3 patches applied to ath-next branch of ath.git, thanks.
+Could you share test results for this ? It'd be nice to see what if
+the gains in boot time outweight the additional pain for android folks
+...
 
-b003e7f1974e ath10k: snoc: skip regulator operations
-c56c7f24d7f8 ath10k: Use standard regulator bulk API in snoc
-f93bcf0ce6a1 ath10k: Use standard bulk clock API in snoc
-
--- 
-https://patchwork.kernel.org/patch/11059507/
-
-https://wireless.wiki.kernel.org/en/developers/documentation/submittingpatches
-
+Thanks,
+Quentin
