@@ -2,81 +2,105 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 7EBDDB4911
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Sep 2019 10:18:25 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 6AF65B49F0
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Sep 2019 10:54:04 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730143AbfIQISO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 17 Sep 2019 04:18:14 -0400
-Received: from mail-pf1-f194.google.com ([209.85.210.194]:33097 "EHLO
-        mail-pf1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1732005AbfIQISO (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 17 Sep 2019 04:18:14 -0400
-Received: by mail-pf1-f194.google.com with SMTP id q10so1716699pfl.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 17 Sep 2019 01:18:13 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=ccksZ0DIr5YuOlmKQ56MKQuO6sfHn4/cYWLl1y6ZJss=;
-        b=Os/OjkFdbkxbCMGYZNy/HnlfvRLdNhVDvO3OQ3Tjqp9ysoWyo0oM4s2SSDCAzouHsz
-         gkjFk4cddTJ2rUMcXLsrmoS14Xcns241t9TBp2xl4Ltya+LciRWtEQ58XqrCB+viuEx7
-         Xghm6/lG8f6ZFz2ZU4/8yigRh6Xo6AZmD5tcBL7R/PVjNIiv+hOwCPRttq4vURDrB2U9
-         vVogGNoMgz30xlAJB7P7ThuBYG3OVdHfPB9AqNgQHkt62TSyfWxjkstqzWvMH0v+KetM
-         TDXnzs7rLDW60zjQDKVvTA0qCV9uV+ENswqS425WgupE4mmBCfMyiGcnJRNzzZkvqwea
-         1Xaw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=ccksZ0DIr5YuOlmKQ56MKQuO6sfHn4/cYWLl1y6ZJss=;
-        b=UvHwaaciSuAb7dCFF2P6vJzymK2LwUuD3K6dk0l0OeT0ZcUYCqUE9HAlre5FnGeHCI
-         iF9pJtH00+j1stngaWtV7BsiPiLRJFcDE9yT9BAeqpK/jYJpcW3fdZKMwrWXOAM+FjHh
-         6x0uwmJIiwSyMsLad0u/2d9UEybAQcq2rHEeJN2VWc6/lFOtezITCPPV0uF5NgH+RYoy
-         jD8lgpltXxw9PJKfDJH437jBSueh9YwX3ELhqtpI9kkFjp4+J9LcATbU2dhJpvB8ZwCe
-         rTl7ac5yh8pGHvs0PyhI2ef4ECJOaxUAnY3dGEba7hJCMO6zzQ31fytNwfFRhiv3dy77
-         iO5w==
-X-Gm-Message-State: APjAAAXBTtWz+HnyZs186tDNcNyx12RwW2kL+JqR4HXOcPzWU7BmgFX0
-        +6KxvEloSBIFct8NKkGdbSdp1vzztOI=
-X-Google-Smtp-Source: APXvYqwpy0WS+QkLpZKa7+H9dnq/Maul15NnA8yNy5WichOtA6IyRwXpsp5wW9igskBRzYgp3hRJ5g==
-X-Received: by 2002:a62:1955:: with SMTP id 82mr2836635pfz.256.1568708292663;
-        Tue, 17 Sep 2019 01:18:12 -0700 (PDT)
-Received: from localhost ([122.172.73.172])
-        by smtp.gmail.com with ESMTPSA id v44sm4392124pgn.17.2019.09.17.01.18.11
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Tue, 17 Sep 2019 01:18:12 -0700 (PDT)
-Date:   Tue, 17 Sep 2019 09:18:05 +0100
-From:   Viresh Kumar <viresh.kumar@linaro.org>
-To:     Amit Kucheria <amit.kucheria@linaro.org>
-Cc:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        bjorn.andersson@linaro.org, edubezval@gmail.com, agross@kernel.org,
-        tdas@codeaurora.org, swboyd@chromium.org, ilina@codeaurora.org,
-        "Rafael J. Wysocki" <rjw@rjwysocki.net>,
-        Daniel Lezcano <daniel.lezcano@linaro.org>,
-        Zhang Rui <rui.zhang@intel.com>, linux-pm@vger.kernel.org
-Subject: Re: [PATCH 3/5] cpufreq: Initialize cpufreq-dt driver earlier
-Message-ID: <20190917081805.kmhu6zcdo6akbqe3@vireshk-mac-ubuntu>
-References: <cover.1568240476.git.amit.kucheria@linaro.org>
- <23d3ed7edc8b859da8e7640f77cf3028ad5804f3.1568240476.git.amit.kucheria@linaro.org>
+        id S1726646AbfIQIxW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 17 Sep 2019 04:53:22 -0400
+Received: from onstation.org ([52.200.56.107]:44042 "EHLO onstation.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726081AbfIQIxE (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 17 Sep 2019 04:53:04 -0400
+Received: from localhost (c-98-239-145-235.hsd1.wv.comcast.net [98.239.145.235])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        (Authenticated sender: masneyb)
+        by onstation.org (Postfix) with ESMTPSA id DA1BE3E8F9;
+        Tue, 17 Sep 2019 08:53:02 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=onstation.org;
+        s=default; t=1568710383;
+        bh=2HMavock2J7luitQTyCe5GChLkLSOfRJQfHJjeQ+TKQ=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=oK3yDNb/VYtWl61yqH5ibXTJy7RISyU5MYHHrFqXVvJ9GeKmY32L/AYCZN1PpldmZ
+         hJzg9r9AD1G1HfkzPouGbNdn9IbFtIZetWWiz1MEQdVT46CdsrEReVoBxjQTBva4Q/
+         dNmG8ID0rju4bR9Lg4Ht6undDVCSJogtMryD4oFI=
+Date:   Tue, 17 Sep 2019 04:53:02 -0400
+From:   Brian Masney <masneyb@onstation.org>
+To:     kbuild test robot <lkp@intel.com>
+Cc:     kbuild-all@01.org, linus.walleij@linaro.org, agross@kernel.org,
+        bjorn.andersson@linaro.org, linux-arm-msm@vger.kernel.org,
+        linux-gpio@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH] qcom: ssbi-gpio: convert to hierarchical IRQ helpers in
+ gpio core
+Message-ID: <20190917085302.GA8661@onstation.org>
+References: <20190914111010.24384-1-masneyb@onstation.org>
+ <201909161958.U9H97q1E%lkp@intel.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <23d3ed7edc8b859da8e7640f77cf3028ad5804f3.1568240476.git.amit.kucheria@linaro.org>
-User-Agent: NeoMutt/20170609 (1.8.3)
+In-Reply-To: <201909161958.U9H97q1E%lkp@intel.com>
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 12-09-19, 04:02, Amit Kucheria wrote:
-> This allows HW drivers that depend on cpufreq-dt to initialise earlier.
+On Mon, Sep 16, 2019 at 07:31:33PM +0800, kbuild test robot wrote:
+> Hi Brian,
 > 
-> Signed-off-by: Amit Kucheria <amit.kucheria@linaro.org>
-> ---
->  drivers/cpufreq/cpufreq-dt-platdev.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
+> Thank you for the patch! Yet something to improve:
+> 
+> [auto build test ERROR on linus/master]
+> [cannot apply to v5.3 next-20190915]
+> [if your patch is applied to the wrong git tree, please drop us a note to help improve the system]
+> 
+> url:    https://github.com/0day-ci/linux/commits/Brian-Masney/qcom-ssbi-gpio-convert-to-hierarchical-IRQ-helpers-in-gpio-core/20190916-134112
+> config: arm-allmodconfig (attached as .config)
+> compiler: arm-linux-gnueabi-gcc (GCC) 7.4.0
+> reproduce:
+>         wget https://raw.githubusercontent.com/intel/lkp-tests/master/sbin/make.cross -O ~/bin/make.cross
+>         chmod +x ~/bin/make.cross
+>         # save the attached .config to linux build tree
+>         GCC_VERSION=7.4.0 make.cross ARCH=arm 
+> 
+> If you fix the issue, kindly add following tag
+> Reported-by: kbuild test robot <lkp@intel.com>
+> 
+> All errors (new ones prefixed by >>):
+> 
+>    drivers/pinctrl/qcom/pinctrl-ssbi-gpio.c: In function 'pm8xxx_gpio_probe':
+> >> drivers/pinctrl/qcom/pinctrl-ssbi-gpio.c:794:6: error: 'struct gpio_irq_chip' has no member named 'fwnode'
+>      girq->fwnode = of_node_to_fwnode(pctrl->dev->of_node);
+>          ^~
+> >> drivers/pinctrl/qcom/pinctrl-ssbi-gpio.c:795:8: error: 'struct gpio_irq_chip' has no member named 'parent_domain'; did you mean 'parent_handler'?
+>      girq->parent_domain = parent_domain;
+>            ^~~~~~~~~~~~~
+>            parent_handler
+> >> drivers/pinctrl/qcom/pinctrl-ssbi-gpio.c:796:6: error: 'struct gpio_irq_chip' has no member named 'child_to_parent_hwirq'
+>      girq->child_to_parent_hwirq = pm8xxx_child_to_parent_hwirq;
+>          ^~
+> >> drivers/pinctrl/qcom/pinctrl-ssbi-gpio.c:797:6: error: 'struct gpio_irq_chip' has no member named 'populate_parent_fwspec'
+>      girq->populate_parent_fwspec = gpiochip_populate_parent_fwspec_fourcell;
+>          ^~
+> >> drivers/pinctrl/qcom/pinctrl-ssbi-gpio.c:797:33: error: 'gpiochip_populate_parent_fwspec_fourcell' undeclared (first use in this function); did you mean 'gpiochip_line_is_open_source'?
+>      girq->populate_parent_fwspec = gpiochip_populate_parent_fwspec_fourcell;
+>                                     ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+>                                     gpiochip_line_is_open_source
+>    drivers/pinctrl/qcom/pinctrl-ssbi-gpio.c:797:33: note: each undeclared identifier is reported only once for each function it appears in
+> >> drivers/pinctrl/qcom/pinctrl-ssbi-gpio.c:798:6: error: 'struct gpio_irq_chip' has no member named 'child_offset_to_irq'
+>      girq->child_offset_to_irq = pm8xxx_child_offset_to_irq;
+>          ^~
+> >> drivers/pinctrl/qcom/pinctrl-ssbi-gpio.c:799:8: error: 'struct gpio_irq_chip' has no member named 'child_irq_domain_ops'; did you mean 'domain_ops'?
+>      girq->child_irq_domain_ops.translate = pm8xxx_domain_translate;
+>            ^~~~~~~~~~~~~~~~~~~~
+>            domain_ops
 
-Acked-by: Viresh Kumar <viresh.kumar@linaro.org>
+This patch applies fine and builds cleanly on linux-next-20190916 and
+linux-next-20190915 as well. The patch this depends on landed upstream
+yesterday:
+https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=fdd61a013a24f2699aec1a446f0168682b6f9ec4
 
--- 
-viresh
+The compiler errors shown above came from kernel 5.3, which is missing
+the dependent patch from above:
+https://github.com/0day-ci/linux/commits/Brian-Masney/qcom-ssbi-gpio-convert-to-hierarchical-IRQ-helpers-in-gpio-core/20190916-134112
+
+Brian
