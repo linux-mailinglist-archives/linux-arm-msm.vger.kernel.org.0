@@ -2,110 +2,85 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 86900B55A9
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Sep 2019 20:51:20 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 3A9D6B55B5
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Sep 2019 20:55:44 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729659AbfIQSvS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 17 Sep 2019 14:51:18 -0400
-Received: from mail-pl1-f195.google.com ([209.85.214.195]:36733 "EHLO
-        mail-pl1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726335AbfIQSvS (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 17 Sep 2019 14:51:18 -0400
-Received: by mail-pl1-f195.google.com with SMTP id f19so1913424plr.3
-        for <linux-arm-msm@vger.kernel.org>; Tue, 17 Sep 2019 11:51:17 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=eUL3CofObSvtROvpchYQhoATJQhwSk2E5xxOcu56n6w=;
-        b=PgRbwawkQd6LmSRskqO7m760QviTkXlgObSFz6CAACWi/lOTqYkqayC36yfARrHAAp
-         uhFAx39ebPmvQCQYKTV9rW0ZULAmd4MV4UWA69kzWaKww1Kw72O3aaL3kagH7GjGpwsq
-         22kL0hVuaHH/4+d7E6hvz6Y/AlcF3tjd1d83I=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=eUL3CofObSvtROvpchYQhoATJQhwSk2E5xxOcu56n6w=;
-        b=NfKt9I/XMvZ+l5MTnxcnAhGyWhdhJvVoy6FeiWJwGhNaMLa3FVtYkGcg6TUkBDpEjX
-         Vp9iv7guQJwoI9PujW/tA4wB9sET+XZChzHwkVF9N02CmNW4t9Go2SHciV5ijJwE/BfM
-         FeK2WRDrOmKBs7j57sw1rwoWo/vKHxg1ghndziBYwtQ+ta4WKmU/k5bFFFUXXS714TvG
-         jibJeDaP7HUv2kOGovXS1lxABHeaXVuQAip4K4WNDTR3tlWmVrovDZ5QrT16fa8XjvUD
-         v22GhE1l46kbbrjOfM5f/KwTqetFSOFFBCPrCj4PgA1MzHGmhMwV+QXmMlNicV0sgWV3
-         zIXg==
-X-Gm-Message-State: APjAAAXGyM6XQ6LP0Cnc7Y9KNAdOsceAoasOWmMfpDgseWU4Qs0bu0pi
-        MlRqINiD0NznofgoD8Axkw9G3g==
-X-Google-Smtp-Source: APXvYqxP3wJP0JnkZvGN1bLYAMx//+LYQw9lbbuqTBfWIfZwqS+8S2S/rz8gWsFyMDZSkDm71eCYXw==
-X-Received: by 2002:a17:902:9889:: with SMTP id s9mr110407plp.140.1568746277416;
-        Tue, 17 Sep 2019 11:51:17 -0700 (PDT)
-Received: from localhost ([2620:15c:202:1:75a:3f6e:21d:9374])
-        by smtp.gmail.com with ESMTPSA id bb15sm2849267pjb.2.2019.09.17.11.51.16
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 17 Sep 2019 11:51:16 -0700 (PDT)
-Date:   Tue, 17 Sep 2019 11:51:15 -0700
-From:   Matthias Kaehlcke <mka@chromium.org>
-To:     Chandana Kishori Chiluveru <cchiluve@codeaurora.org>
-Cc:     balbi@kernel.org, agross@kernel.org, david.brown@linaro.org,
-        linux-usb@vger.kernel.org, linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH V3 1/3] dt-bindings: Introduce interconnect properties
- for Qualcomm DWC3 driver
-Message-ID: <20190917185115.GJ133864@google.com>
-References: <1568718649-20124-1-git-send-email-cchiluve@codeaurora.org>
- <1568718649-20124-2-git-send-email-cchiluve@codeaurora.org>
+        id S1726794AbfIQSzn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 17 Sep 2019 14:55:43 -0400
+Received: from mail.kernel.org ([198.145.29.99]:37130 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726169AbfIQSzn (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 17 Sep 2019 14:55:43 -0400
+Received: from kernel.org (unknown [104.132.0.74])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by mail.kernel.org (Postfix) with ESMTPSA id 29EB5214AF;
+        Tue, 17 Sep 2019 18:55:42 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=default; t=1568746542;
+        bh=GES6jY4SrgchwiFDLmCd0LxgVWZjnEk+gbEGOc928XQ=;
+        h=In-Reply-To:References:Cc:To:From:Subject:Date:From;
+        b=k9LwQx38N2BdNc66+3x/viHSY2juEQIkGNDwqC7RC5qWXwJi29ZVStsSdAb4mMl/s
+         QwXwITGlVNF3gB3KQrxck1nkk79fvRSbAffQgGL0DxcRj6yvF6E3eUh8Ik6KDGZqrp
+         keQixx7YXQIb8U8MUxG+ZkXC3m274H2HeGOHSe6E=
+Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <1568718649-20124-2-git-send-email-cchiluve@codeaurora.org>
-User-Agent: Mutt/1.10.1 (2018-07-13)
+Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <1566327992-362-4-git-send-email-jcrouse@codeaurora.org>
+References: <1566327992-362-1-git-send-email-jcrouse@codeaurora.org> <1566327992-362-4-git-send-email-jcrouse@codeaurora.org>
+Cc:     linux-arm-msm@vger.kernel.org, Will Deacon <will@kernel.org>,
+        linux-kernel@vger.kernel.org, iommu@lists.linux-foundation.org,
+        Robin Murphy <robin.murphy@arm.com>,
+        Joerg Roedel <joro@8bytes.org>,
+        linux-arm-kernel@lists.infradead.org
+To:     Jordan Crouse <jcrouse@codeaurora.org>,
+        freedreno@lists.freedesktop.org
+From:   Stephen Boyd <sboyd@kernel.org>
+Subject: Re: [PATCH 3/7] iommu/arm-smmu: Add a SMMU variant for the Adreno GPU
+User-Agent: alot/0.8.1
+Date:   Tue, 17 Sep 2019 11:55:41 -0700
+Message-Id: <20190917185542.29EB5214AF@mail.kernel.org>
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Sep 17, 2019 at 04:40:47PM +0530, Chandana Kishori Chiluveru wrote:
-> Add documentation for the interconnects and interconnect-names
-> properties for USB as detailed by bindings/interconnect/interconnect.txt.
-> 
-> Signed-off-by: Chandana Kishori Chiluveru <cchiluve@codeaurora.org>
-> ---
->  Documentation/devicetree/bindings/usb/qcom,dwc3.txt | 13 +++++++++++++
->  1 file changed, 13 insertions(+)
-> 
-> diff --git a/Documentation/devicetree/bindings/usb/qcom,dwc3.txt b/Documentation/devicetree/bindings/usb/qcom,dwc3.txt
-> index cb695aa..428565b 100644
-> --- a/Documentation/devicetree/bindings/usb/qcom,dwc3.txt
-> +++ b/Documentation/devicetree/bindings/usb/qcom,dwc3.txt
-> @@ -33,6 +33,16 @@ Optional clocks:
->  
->  Optional properties:
->  - resets:		Phandle to reset control that resets core and wrapper.
-> +- interconnects:	Pairs of phandles and interconnect provider specifiers
-> +			to denote the edge source and destination ports of
-> +			the interconnect path. Please refer to
-> +			Documentation/devicetree/bindings/interconnect/
-> +			for more details.
-> +- interconnect-names:	List of interconnect path name strings sorted in the same
-> +			order as the interconnects property. Consumers drivers will use
+Quoting Jordan Crouse (2019-08-20 12:06:28)
+> diff --git a/drivers/iommu/arm-smmu.c b/drivers/iommu/arm-smmu.c
+> index 39e81ef..3f41cf7 100644
+> --- a/drivers/iommu/arm-smmu.c
+> +++ b/drivers/iommu/arm-smmu.c
+> @@ -1858,6 +1858,7 @@ ARM_SMMU_MATCH_DATA(arm_mmu401, ARM_SMMU_V1_64K, GE=
+NERIC_SMMU);
+>  ARM_SMMU_MATCH_DATA(arm_mmu500, ARM_SMMU_V2, ARM_MMU500);
+>  ARM_SMMU_MATCH_DATA(cavium_smmuv2, ARM_SMMU_V2, CAVIUM_SMMUV2);
+>  ARM_SMMU_MATCH_DATA(qcom_smmuv2, ARM_SMMU_V2, QCOM_SMMUV2);
+> +ARM_SMMU_MATCH_DATA(qcom_adreno_smmuv2, ARM_SMMU_V2, QCOM_ADRENO_SMMUV2);
+> =20
+>  static const struct of_device_id arm_smmu_of_match[] =3D {
+>         { .compatible =3D "arm,smmu-v1", .data =3D &smmu_generic_v1 },
+> @@ -1867,6 +1868,7 @@ static const struct of_device_id arm_smmu_of_match[=
+] =3D {
+>         { .compatible =3D "arm,mmu-500", .data =3D &arm_mmu500 },
+>         { .compatible =3D "cavium,smmu-v2", .data =3D &cavium_smmuv2 },
+>         { .compatible =3D "qcom,smmu-v2", .data =3D &qcom_smmuv2 },
+> +       { .compatible =3D "qcom,adreno-smmu-v2", .data =3D &qcom_adreno_s=
+mmuv2 },
 
-nit: Consumer
+Can this be sorted on compat?
 
-no need to re-spin the series just for this.
+>         { },
+>  };
+> =20
+> diff --git a/drivers/iommu/arm-smmu.h b/drivers/iommu/arm-smmu.h
+> index 91a4eb8..e5a2cc8 100644
+> --- a/drivers/iommu/arm-smmu.h
+> +++ b/drivers/iommu/arm-smmu.h
+> @@ -222,6 +222,7 @@ enum arm_smmu_implementation {
+>         ARM_MMU500,
+>         CAVIUM_SMMUV2,
+>         QCOM_SMMUV2,
+> +       QCOM_ADRENO_SMMUV2,
 
-> +			interconnect-names to match interconnect paths with interconnect
-> +			specifiers. Please refer to Documentation/devicetree/bindings/
-> +			interconnect/ for more details.
->  - interrupts:		specifies interrupts from controller wrapper used
->  			to wakeup from low power/susepnd state.	Must contain
->  			one or more entry for interrupt-names property
-> @@ -74,6 +84,9 @@ Example device nodes:
->  			#size-cells = <1>;
->  			ranges;
->  
-> +			interconnects = <&qnoc MASTER_USB3_0 &qnoc SLAVE_EBI1>,
-> +					<&qnoc MASTER_APPSS_PROC &qnoc SLAVE_USB3_0>;
-> +			interconnect-names = "usb-ddr", "apps-usb";
->  			interrupts = <0 131 0>, <0 486 0>, <0 488 0>, <0 489 0>;
->  			interrupt-names = "hs_phy_irq", "ss_phy_irq",
->  				  "dm_hs_phy_irq", "dp_hs_phy_irq";
+Can this be sorted alphabetically?
 
-Reviewed-by: Matthias Kaehlcke <mka@chromium.org>
