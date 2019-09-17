@@ -2,104 +2,114 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id ACABBB57BE
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Sep 2019 23:48:52 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 6FF7EB57C4
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Sep 2019 23:50:24 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726185AbfIQVsv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 17 Sep 2019 17:48:51 -0400
-Received: from smtp.codeaurora.org ([198.145.29.96]:35270 "EHLO
+        id S1726664AbfIQVuX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 17 Sep 2019 17:50:23 -0400
+Received: from smtp.codeaurora.org ([198.145.29.96]:35526 "EHLO
         smtp.codeaurora.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726125AbfIQVsv (ORCPT
+        with ESMTP id S1725866AbfIQVuX (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 17 Sep 2019 17:48:51 -0400
+        Tue, 17 Sep 2019 17:50:23 -0400
 Received: by smtp.codeaurora.org (Postfix, from userid 1000)
-        id 3DA1361213; Tue, 17 Sep 2019 21:48:51 +0000 (UTC)
+        id 4BFB160767; Tue, 17 Sep 2019 21:50:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
-        s=default; t=1568756931;
-        bh=X3NzP2/OYfzCgk/ZWQD94QYMs+1Ua5L9ueXra2kQULY=;
-        h=From:To:Cc:Subject:Date:From;
-        b=khpfHqSaFrHXavw8/J+fb+ITv0RESQd6ED4bU3KDprajNO7Oj1vnw/wD9hIOr5zxi
-         64r+VrjPpvX1FPA5JIxcJocHDc0OrKqshyM0jgK9mKpy3RuVFXUiLVPrKuUHWzAUDt
-         ts0jjHHZDcK89yTOAYpr8Mh9F0ZC9vTkEPGpOJEg=
+        s=default; t=1568757022;
+        bh=+bL3Z3Y6Hl+C8MixFa02sCzsCPEv0bSGIE8FlarpAD8=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=LucnLAvs8c/a4VPdqBtIeaYQh0PZTAR2nm7XpcSuPUokuG86a76YQclF3twIDmrSp
+         vC79sFw8HFGl4AyO/ceqwgeGYfrnyTu6fRK8t5AxtYLDQrnRjzlxxdtjnxnPbsQv7E
+         HLeRVzSMDDs9TZocDCx+Ii9gW13Pn22eaLupuDAk=
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
         pdx-caf-mail.web.codeaurora.org
 X-Spam-Level: 
 X-Spam-Status: No, score=-2.7 required=2.0 tests=ALL_TRUSTED,BAYES_00,
         DKIM_INVALID,DKIM_SIGNED,SPF_NONE autolearn=no autolearn_force=no
         version=3.4.0
-Received: from jcrouse1-lnx.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
+Received: from localhost (i-global254.qualcomm.com [199.106.103.254])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
         (No client certificate requested)
-        (Authenticated sender: jcrouse@smtp.codeaurora.org)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 3B8E3602F2;
-        Tue, 17 Sep 2019 21:48:50 +0000 (UTC)
+        (Authenticated sender: ilina@smtp.codeaurora.org)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 5F12960767;
+        Tue, 17 Sep 2019 21:50:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
-        s=default; t=1568756930;
-        bh=X3NzP2/OYfzCgk/ZWQD94QYMs+1Ua5L9ueXra2kQULY=;
-        h=From:To:Cc:Subject:Date:From;
-        b=kHu0LIZD5zPhs2oNSz7DbpAMoX25nskyMUXcyYDKnfzR+1LL5ck9jd5bdIro7EJnx
-         oDVP/ORHzdU87q3Dru7c7rcka2raGkjEN9x7Z6KCjnSVir/RzKJzePPt/N5Xttp5M5
-         FC6CXQhSm0fYkCw3mnq3gvLqnot1AtVKy1B0y1TY=
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 3B8E3602F2
+        s=default; t=1568757021;
+        bh=+bL3Z3Y6Hl+C8MixFa02sCzsCPEv0bSGIE8FlarpAD8=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=e9PVkqaCJJO0YMqwe3jsNEicNdxouQtoYWnqdXy3te9d5yDe/6oHUZUQ2C5sAfk6C
+         M3mYJ/Kkle2a7MZbfKh3TbRsFO6qSOtTH/108NZ3Kww17HmyM1bJPNmC6LJcbmX/ZU
+         RHPYsUM0UGBdYuom3CfytQRGQlYZ2t2W19Tv6jyc=
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 5F12960767
 Authentication-Results: pdx-caf-mail.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: pdx-caf-mail.web.codeaurora.org; spf=none smtp.mailfrom=jcrouse@codeaurora.org
-From:   Jordan Crouse <jcrouse@codeaurora.org>
-To:     freedreno@lists.freedesktop.org
-Cc:     linux-arm-msm@vger.kernel.org, linux-fsdevel@vger.kernel.org,
-        Matthew Wilcox <willy@infradead.org>,
-        linux-kernel@vger.kernel.org
-Subject: [PATCH] idr: Prevent unintended underflow for the idr index
-Date:   Tue, 17 Sep 2019 15:48:42 -0600
-Message-Id: <1568756922-2829-1-git-send-email-jcrouse@codeaurora.org>
-X-Mailer: git-send-email 2.7.4
+Authentication-Results: pdx-caf-mail.web.codeaurora.org; spf=none smtp.mailfrom=ilina@codeaurora.org
+Date:   Tue, 17 Sep 2019 15:50:20 -0600
+From:   Lina Iyer <ilina@codeaurora.org>
+To:     Stephen Boyd <swboyd@chromium.org>
+Cc:     Rob Herring <robh@kernel.org>, evgreen@chromium.org,
+        linus.walleij@linaro.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, bjorn.andersson@linaro.org,
+        mkshah@codeaurora.org, linux-gpio@vger.kernel.org,
+        rnayak@codeaurora.org, devicetree@vger.kernel.org, maz@kernel.org,
+        sibis@codeaurora.org
+Subject: Re: [PATCH RFC 05/14] dt-bindings/interrupt-controller: pdc: add SPI
+ config register
+Message-ID: <20190917215020.GA15853@codeaurora.org>
+References: <20190829181203.2660-1-ilina@codeaurora.org>
+ <20190829181203.2660-6-ilina@codeaurora.org>
+ <5d6d1b72.1c69fb81.ee88.efcf@mx.google.com>
+ <102c9268-c4ce-6133-3b0a-67c2fcba1e7a@arm.com>
+ <20190903170722.GA31716@codeaurora.org>
+ <5d71a247.1c69fb81.2146f.7ed2@mx.google.com>
+ <20190913195326.GA3293@codeaurora.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii; format=flowed
+Content-Disposition: inline
+In-Reply-To: <20190913195326.GA3293@codeaurora.org>
+User-Agent: Mutt/1.5.24 (2015-08-30)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-It is possible for unaware callers of several idr functions to accidentally
-underflow the index by specifying a id that is less than the idr base.
+Adding Sibi
 
-Signed-off-by: Jordan Crouse <jcrouse@codeaurora.org>
----
-
- lib/idr.c | 9 +++++++++
- 1 file changed, 9 insertions(+)
-
-diff --git a/lib/idr.c b/lib/idr.c
-index 66a3748..d9e180c 100644
---- a/lib/idr.c
-+++ b/lib/idr.c
-@@ -151,6 +151,9 @@ EXPORT_SYMBOL(idr_alloc_cyclic);
-  */
- void *idr_remove(struct idr *idr, unsigned long id)
- {
-+	if (id < idr->idr_base)
-+		return NULL;
-+
- 	return radix_tree_delete_item(&idr->idr_rt, id - idr->idr_base, NULL);
- }
- EXPORT_SYMBOL_GPL(idr_remove);
-@@ -171,6 +174,9 @@ EXPORT_SYMBOL_GPL(idr_remove);
-  */
- void *idr_find(const struct idr *idr, unsigned long id)
- {
-+	if (id < idr->idr_base)
-+		return NULL;
-+
- 	return radix_tree_lookup(&idr->idr_rt, id - idr->idr_base);
- }
- EXPORT_SYMBOL_GPL(idr_find);
-@@ -302,6 +308,9 @@ void *idr_replace(struct idr *idr, void *ptr, unsigned long id)
- 	void __rcu **slot = NULL;
- 	void *entry;
- 
-+	if (id < idr->idr_base)
-+		return ERR_PTR(-ENOENT);
-+
- 	id -= idr->idr_base;
- 
- 	entry = __radix_tree_lookup(&idr->idr_rt, id, &node, &slot);
--- 
-2.7.4
-
+On Fri, Sep 13 2019 at 13:53 -0600, Lina Iyer wrote:
+>Sorry, I couldn't get to this earlier.
+>
+>On Thu, Sep 05 2019 at 18:03 -0600, Stephen Boyd wrote:
+>>Quoting Lina Iyer (2019-09-03 10:07:22)
+>>>On Mon, Sep 02 2019 at 07:58 -0600, Marc Zyngier wrote:
+>>>>On 02/09/2019 14:38, Rob Herring wrote:
+>>>>> On Thu, Aug 29, 2019 at 12:11:54PM -0600, Lina Iyer wrote:
+>>>These are not GIC registers but located on the PDC interface to the GIC.
+>>>They may or may not be secure access controlled, depending on the SoC.
+>>>
+>>
+>>It looks like it falls under this "mailbox" device which is really the
+>>catch all bucket for bits with no home besides they're related to the
+>>apps CPUs/subsystem.
+>>
+>Thanks for pointing to this.
+>>	apss_shared: mailbox@17990000 {
+>>		compatible = "qcom,sdm845-apss-shared";
+>>		reg = <0 0x17990000 0 0x1000>;
+>But this doesn't seem correct. The registers in this page are all not
+>mailbox door bell registers. We should restrict the space allocated to
+>the mbox to 0xC or something, definitely, not the whole page. They all
+>cannot be treated as a mailbox registers.
+>>		#mbox-cells = <1>;
+>>	};
+>>
+>>Can you point to this node with a phandle and then parse the reg
+>>property out of it to use in the scm readl/writel APIs? Maybe it can be
+>>a two cell property with <&apps_shared 0xf0> to indicate the offset to
+>>the registers to read/write? In non-secure mode presumably we need to
+>>also write these registers? Good news is that there's a regmap for this
+>>driver already, so maybe that can be acquired from the pdc driver.
+>>
+>The register space collection seems to be mix of different types of
+>application processor registers that should probably not be grouped up
+>under one subsystem. A single regmap doesn't seem correct either.
+>
+>-- Lina
