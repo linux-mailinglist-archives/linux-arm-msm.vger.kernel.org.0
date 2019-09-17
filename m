@@ -2,322 +2,126 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 0A64EB54C6
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Sep 2019 19:59:17 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 51528B54EC
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Sep 2019 20:11:03 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726017AbfIQR7A (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 17 Sep 2019 13:59:00 -0400
-Received: from mail-pl1-f196.google.com ([209.85.214.196]:35073 "EHLO
-        mail-pl1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727672AbfIQR7A (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 17 Sep 2019 13:59:00 -0400
-Received: by mail-pl1-f196.google.com with SMTP id s17so1864000plp.2
-        for <linux-arm-msm@vger.kernel.org>; Tue, 17 Sep 2019 10:58:59 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=0PcvX7ZTcQgsbgDEZrE+h18TKfKfoGtnmdkofDb9Kyk=;
-        b=GOFSb/baTTMhMqQZbzEp2eaT5zPoyd05eAxkep5YoVxUlSBoYwcuJ1VIRrcZWUADPx
-         Le7NjRB4BxAnJZg2b3bXdSUUQ0pBNBQVyEq4AT1DH91zHpW2Jwich/sb/SwoosfNi5ac
-         wu7rzljl5Fa8i9aYGYPkgIQcr6eMhyv1kfla4=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=0PcvX7ZTcQgsbgDEZrE+h18TKfKfoGtnmdkofDb9Kyk=;
-        b=lldmIJGwHyvLOK/6P7bBczAnTu1p/agRLkxikYwZfINBXM/NuHXbq3p/eX03B6BIRp
-         vM6uhoW99Lp2/Nj2qX5JNdyaWgv718FY7H10mYATgX1GfhxsmHyTxCljTTsSNOczBR8B
-         VDRe4Y++xS790P9n0NdKlcMsW7H9OqFvnUNGmJUNcvUKl/Wk8nXJCgBI7dmRv5v3A9MM
-         dCJBKlTv5vzbYrIDunhpbkOBZWeALFitzwU7INtw4jRZapZqe2Ai/wza1WVJTrBwTU97
-         +P5AyjN6LtoZAwp3DRmv+doemGDfXDSHXFTBK7USFFuTjqYeBaeNSAOoSQIkasG3/QGt
-         I5uA==
-X-Gm-Message-State: APjAAAVxhDi1nNcVSA6TS0VLRUYmSLdVuFHu4ncGzXLDDTa4/3nKYa4N
-        EetpK2UUTO2M1gx+YeljO71TRvreAgM=
-X-Google-Smtp-Source: APXvYqwJ22LdhJ9CnYNWuplY1l++rDxgq8ZDIv0hR66Ibqq1dxO2/XMgct50oaeWvbrR/9LIEyG2OA==
-X-Received: by 2002:a17:902:7c14:: with SMTP id x20mr4926547pll.289.1568743139264;
-        Tue, 17 Sep 2019 10:58:59 -0700 (PDT)
-Received: from localhost ([2620:15c:202:1:75a:3f6e:21d:9374])
-        by smtp.gmail.com with ESMTPSA id i22sm3534305pfa.70.2019.09.17.10.58.58
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 17 Sep 2019 10:58:58 -0700 (PDT)
-Date:   Tue, 17 Sep 2019 10:58:55 -0700
-From:   Matthias Kaehlcke <mka@chromium.org>
-To:     cchiluve@codeaurora.org
-Cc:     balbi@kernel.org, agross@kernel.org, david.brown@linaro.org,
-        linux-usb@vger.kernel.org, linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH V2 2/3] usb: dwc3: qcom: Add interconnect support in dwc3
- driver
-Message-ID: <20190917175855.GI133864@google.com>
-References: <1568634061-14455-1-git-send-email-cchiluve@codeaurora.org>
- <1568634061-14455-3-git-send-email-cchiluve@codeaurora.org>
- <20190916222446.GG133864@google.com>
- <7762a32f08a297e47a45dc9840b62d02@codeaurora.org>
+        id S1727505AbfIQSLC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 17 Sep 2019 14:11:02 -0400
+Received: from mout.web.de ([212.227.17.11]:54461 "EHLO mout.web.de"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726883AbfIQSLC (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 17 Sep 2019 14:11:02 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
+        s=dbaedf251592; t=1568743856;
+        bh=d9TW36q57TtUhaDqRDnDUDN9MbferJkF9Berl7AxpXQ=;
+        h=X-UI-Sender-Class:Subject:To:Cc:References:From:Date:In-Reply-To;
+        b=YdzhHD7/jnILKo49qeykDgMoU2hGjeGFbAn3W1kg1IrA2L0xkmp1JZuCSBZnd+Y4L
+         srTBhhaZOVU6erJnaucEe6yRLciYFqw4/CfPCUixM+ZWrrYZssY3bT689VwFmvy8r9
+         baPq9xXw4AkFp+mPR4orQwTcdLsUNn0T0CI+jhbc=
+X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
+Received: from [192.168.1.2] ([2.244.93.51]) by smtp.web.de (mrweb101
+ [213.165.67.124]) with ESMTPSA (Nemesis) id 0LoHTx-1hhZpO3qrB-00gJla; Tue, 17
+ Sep 2019 20:10:56 +0200
+Subject: Re: [v2 0/3] Fix issues reported by Coccinelle
+To:     Saiyam Doshi <saiyamdoshi.in@gmail.com>,
+        Andy Gross <agross@kernel.org>
+Cc:     linux-arm-msm@vger.kernel.org, linux-i2c@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+References: <20190917172758.GA11926@SD>
+From:   Markus Elfring <Markus.Elfring@web.de>
+Autocrypt: addr=Markus.Elfring@web.de; prefer-encrypt=mutual; keydata=
+ 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 FEE=
+Message-ID: <76e99512-8818-cec2-9e77-799e4c8481ab@web.de>
+Date:   Tue, 17 Sep 2019 20:10:45 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.1.0
 MIME-Version: 1.0
+In-Reply-To: <20190917172758.GA11926@SD>
 Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <7762a32f08a297e47a45dc9840b62d02@codeaurora.org>
-User-Agent: Mutt/1.10.1 (2018-07-13)
+Content-Language: en-US
+Content-Transfer-Encoding: quoted-printable
+X-Provags-ID: V03:K1:8iF/rVcBhpF/5hzQPOepRHdnbxTMksQyZZQoForHX9BV+XO2NxY
+ LY8yc9PY3SdWmWCT7esS6jB+iiX23BPp5WUgz+Te4BfafnhU1LiG0XFFYGHFeoEqcu07c4f
+ kpCBWtNn0Qt6AGqt/n7qHJYLBfCkmPP13OLbuNJ+kEXRdrayAeL/2ZNSAqMWExXji6hg1Dz
+ vULKXRqjHvzRMy4uZMCTg==
+X-Spam-Flag: NO
+X-UI-Out-Filterresults: notjunk:1;V03:K0:nBQyYiLcrTY=:dKrENFSDBqcF+q6heRPfZe
+ vIb7OX7MZu/XaJL0yhSRXmDFl02SU3zuT4woki/+FCKV3BaeoyCX5gogRf3DLGpVM6DWazt3P
+ nJhxbSHg4cb6B1DQTkV0dSNOu52akRXO6dM+2GJvkQrSyeztQzOSMpTUxHHhXuPl+J4oEVGf6
+ 9+EdY/+s6CNf59xrF3Ws9rw1qvMsizSVVr9uZlikcBpP7hFVSkYk4ipTLpRcc9kfAK8aEjdx2
+ RL0gxhEf1iR5BM5RQrDcZZsIXstvfiPhgFH9megn7J20gAG4C8RpSYnE5sKtHdIbWrp4afqiS
+ nH5am3PoF1da3k/MOqldJYUg865yDEIXSP74fcue2YVX8j3yyRX7xrZikGYS+NCBFwa5BmWES
+ CaZKfWj5uIrKrC21ffdQjX3sQS2wpoR/O7QKJ09Wj37IGs5Uba5fb43QqEFD1ylYEDBGQ1vWN
+ YfECCRNE+q9Bi+uQbnzXEi+0wI7WGwsVPgSWNyrTyQLsL/SBZLL65HugTN9l7ZckCMK58M+gL
+ 35uRtjBDZCR+BTpf8hpy0B1RdJwibFBpRAm3lMjEtt3CHoqt0ASHuUP5TTLoclpJg9xxLSUnh
+ UcWRhWGVouawg62E/CGxqirA5oCFJdsQw0o977y21BUgwEbK3somXMWO4TNDrCREtiNAxbKsf
+ GYgSoaKk8YCb4mWh05CuyjUL9WGfUKVVCakG5vR8Rx/NYrMQIsHBUp4NXBJvP25skPGeYhglJ
+ ZzZGnl9Xc6UgouKz+pf6J0Svxlpf/Sw0EiYc98Bjesg+GB97a70BFI4scYlNsWL2WRBRtd/Am
+ 1GVj7JBF6E9kQNsgzn2ZMNezzU04QO6YxUjEghirt7PyW1bvRqnVbzc9dyUXUcqLp5248+jVG
+ z/3tEXv9lVp97+NhW9PAsnq3eWkGMiOhDVUWVdxcROzAV0JA61gdIrfYYf/5htx4jk5T27S/N
+ 5ZjZGhoG4O0CQqlofcLnIq7Cif78mEtlvomhFSKLTv7lqlnK0DSUysdjePy46PlQkNxdxsHL5
+ L5+4prOA/ZNaAwmZt9brRYC8FfFZN8fPCeNJM/FE5fUZmeHPYlFKIgl7oA+az3M+JQ6WNexgx
+ wCK2W2gh4KZsTzLDfKuLYrQonKaRhcmJm5nLNuR0+ZvXpXgzjViSdjxTI9P7HsZwhl14LHzbA
+ mzrPQJecDkEt6UBWEY5JYL79JlnJTlJ/DfHkrsM6Vj+XJAgNum9VasxtIB5sx+UA19rngO2fp
+ lo9rjDUfuMDclMBBqN/izdqrNNr4hW7YpXSwq3Vc9kAEHF62BAo9LxPkKsKA=
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Chandana,
+> Using cocciecheck to ensure there are no semantic issues in
+> i2c-qup driver.
 
-On Tue, Sep 17, 2019 at 04:39:20PM +0530, cchiluve@codeaurora.org wrote:
-> Hi Matthias,
-> 
-> Thanks for the review. I Will address below comments and post changes in new
-> version.
-> 
-> On 2019-09-17 03:54, Matthias Kaehlcke wrote:
-> > Hi Chandana,
-> > 
-> > On Mon, Sep 16, 2019 at 05:11:00PM +0530, Chandana Kishori Chiluveru
-> > wrote:
-> > > Add interconnect support in dwc3-qcom driver to vote for bus
-> > > bandwidth.
-> > > 
-> > > This requires for two different paths - from USB master to
-> > > DDR slave. The other is from APPS master to USB slave.
-> > > 
-> > > Signed-off-by: Chandana Kishori Chiluveru <cchiluve@codeaurora.org>
-> > > ---
-> > >  drivers/usb/dwc3/dwc3-qcom.c | 145
-> > > ++++++++++++++++++++++++++++++++++++++++++-
-> > >  1 file changed, 143 insertions(+), 2 deletions(-)
-> > > 
-> > > diff --git a/drivers/usb/dwc3/dwc3-qcom.c
-> > > b/drivers/usb/dwc3/dwc3-qcom.c
-> > > index 184df4d..4f6c9736 100644
-> > > --- a/drivers/usb/dwc3/dwc3-qcom.c
-> > > +++ b/drivers/usb/dwc3/dwc3-qcom.c
-> > > @@ -14,6 +14,7 @@
-> > >  #include <linux/extcon.h>
-> > >  #include <linux/of_platform.h>
-> > >  #include <linux/platform_device.h>
-> > > +#include <linux/interconnect.h>
-> > 
-> > please use alphabetical order, i.e. this should be after
-> > 'linux/extcon.h'.
-> > 
-> > >  #include <linux/phy/phy.h>
-> > >  #include <linux/usb/of.h>
-> > >  #include <linux/reset.h>
-> > > @@ -59,8 +60,13 @@ struct dwc3_qcom {
-> > >  	enum usb_dr_mode	mode;
-> > >  	bool			is_suspended;
-> > >  	bool			pm_suspended;
-> > > +	struct icc_path		*usb_ddr_icc_path;
-> > > +	struct icc_path		*apps_usb_icc_path;
-> > >  };
-> > > 
-> > > +static int usb_interconnect_enable(struct dwc3_qcom *qcom);
-> > > +static int usb_interconnect_disable(struct dwc3_qcom *qcom);
-> > > +
-> > >  static inline void dwc3_qcom_setbits(void __iomem *base, u32
-> > > offset, u32 val)
-> > >  {
-> > >  	u32 reg;
-> > > @@ -222,7 +228,7 @@ static void dwc3_qcom_enable_interrupts(struct
-> > > dwc3_qcom *qcom)
-> > >  static int dwc3_qcom_suspend(struct dwc3_qcom *qcom)
-> > >  {
-> > >  	u32 val;
-> > > -	int i;
-> > > +	int i, ret;
-> > > 
-> > >  	if (qcom->is_suspended)
-> > >  		return 0;
-> > > @@ -234,6 +240,11 @@ static int dwc3_qcom_suspend(struct dwc3_qcom
-> > > *qcom)
-> > >  	for (i = qcom->num_clocks - 1; i >= 0; i--)
-> > >  		clk_disable_unprepare(qcom->clks[i]);
-> > > 
-> > > +	/* Remove bus voting */
-> > 
-> > IMO the comment doesn't add much, especially since there is a log in
-> > case of failure.
-> > 
-> > > +	ret = usb_interconnect_disable(qcom);
-> > > +	if (ret)
-> > > +		dev_err(qcom->dev, "bus bw voting failed %d\n", ret);
-> > 
-> > This should probably be a warning, since the function continues with
-> > normal execution.
-> > 
-> > nit: the function is called usb_interconnect_disable(), but the
-> > message says "bus bw voting failed". The function name encapsulates
-> > what the function does, but the message talks about implementation
-> > details. To be consistent either the function should have something
-> > about 'voting' in it's name, or the message should be "failed to
-> > disable interconnect" or similar.
-> > 
-> > > +
-> > >  	qcom->is_suspended = true;
-> > >  	dwc3_qcom_enable_interrupts(qcom);
-> > > 
-> > > @@ -259,6 +270,11 @@ static int dwc3_qcom_resume(struct dwc3_qcom
-> > > *qcom)
-> > >  		}
-> > >  	}
-> > > 
-> > > +	/* Add bus voting */
-> > > +	ret = usb_interconnect_enable(qcom);
-> > > +	if (ret)
-> > > +		dev_err(qcom->dev, "bus bw voting failed %d\n", ret);
-> > > +
-> > 
-> > same comments as for suspend()
-> > 
-> > >  	/* Clear existing events from PHY related to L2 in/out */
-> > >  	dwc3_qcom_setbits(qcom->qscratch_base, PWR_EVNT_IRQ_STAT_REG,
-> > >  			  PWR_EVNT_LPM_IN_L2_MASK | PWR_EVNT_LPM_OUT_L2_MASK);
-> > > @@ -268,6 +284,117 @@ static int dwc3_qcom_resume(struct dwc3_qcom
-> > > *qcom)
-> > >  	return 0;
-> > >  }
-> > > 
-> > > +/* Interconnect path bandwidths in MBps */
-> > > +#define USB_MEMORY_AVG_HS_BW MBps_to_icc(240)
-> > > +#define USB_MEMORY_PEAK_HS_BW MBps_to_icc(700)
-> > > +#define USB_MEMORY_AVG_SS_BW  MBps_to_icc(1000)
-> > > +#define USB_MEMORY_PEAK_SS_BW MBps_to_icc(2500)
-> > > +#define APPS_USB_AVG_BW 0
-> > > +#define APPS_USB_PEAK_BW MBps_to_icc(40)
-> > > +
-> > > +/**
-> > > + * usb_interconnect_init() -
-> > 
-> > A function named 'usb_*' is typically associated to be a USB core
-> > function. I would suggest to use the 'dwc3_qcom_' prefix like all
-> > other functions in this file. Applicable to all new functions.
-> > 
-> > > Request to get interconnect path handle
-> > 
-> > nit: handles
-> > 
-> > Get rid of "Request to"?
-> > 
-> > > + * @qcom:			Pointer to the concerned usb core.
-> > > + *
-> > > + */
-> > > +static int usb_interconnect_init(struct dwc3_qcom *qcom)
-> > > +{
-> > > +	struct device *dev = qcom->dev;
-> > > +
-> > > +	qcom->usb_ddr_icc_path = of_icc_get(dev, "usb-ddr");
-> > > +	if (IS_ERR(qcom->usb_ddr_icc_path)) {
-> > > +		dev_err(dev, "Error: (%ld) failed getting %s path\n",
-> > > +			PTR_ERR(qcom->usb_ddr_icc_path), "usb-ddr");
-> > 
-> > Why not put 'usb-ddr' in the format string, instead of using '%s'?
-> > 
-> > > +		return PTR_ERR(qcom->usb_ddr_icc_path);
-> > > +	}
-> > > +
-> > > +	qcom->apps_usb_icc_path = of_icc_get(dev, "apps-usb");
-> > > +	if (IS_ERR(qcom->apps_usb_icc_path)) {
-> > > +		dev_err(dev, "Error: (%ld) failed getting %s path\n",
-> > > +				PTR_ERR(qcom->apps_usb_icc_path), "apps-usb");
-> > 
-> > same comment as above.
-> > 
-> >      	     	icc_put(qcom->usb_ddr_icc_path);
-> > 
-> > > +		return PTR_ERR(qcom->usb_ddr_icc_path);
-> > 
-> > should be 'qcom->apps_usb_icc_path'
-> > 
-> > > +	}
-> > > +
-> > > +	return 0;
-> > > +}
-> > > +
-> > > +/**
-> > > + * geni_interconnect_exit() -
-> > 
-> > wrong prefix
-> > 
-> > > Request to release interconnect path handle
-> > 
-> > nit: handles
-> > 
-> > Get rid of "Request to"?
-> > 
-> > > + * @qcom:			Pointer to the concerned usb core.
-> > > + *
-> > > + * This function is used to release interconnect path handle.
-> > > + */
-> > > +static void usb_interconnect_exit(struct dwc3_qcom *qcom)
-> > > +{
-> > > +	icc_put(qcom->usb_ddr_icc_path);
-> > > +	icc_put(qcom->apps_usb_icc_path);
-> > > +}
-> > > +
-> > > +/* Currently we only use bandwidth level, so just "enable"
-> > > interconnects */
-> > > +static int usb_interconnect_enable(struct dwc3_qcom *qcom)
-> > > +{
-> > > +	struct dwc3 *dwc;
-> > > +	int ret;
-> > > +
-> > > +	dwc = platform_get_drvdata(qcom->dwc3);
-> > > +	if (!dwc) {
-> > > +		dev_err(qcom->dev, "Failed to get dwc3 device\n");
-> > > +		return -EPROBE_DEFER;
-> > > +	}
-> > 
-> > This should never happen, drvdata is set in _probe(). If it happens
-> > -EPROBE_DEFER doesn't seem to be an appropriate error code. I suggest
-> > to remove the condition entirely.
-> > 
-> In my testing i have seen a null pointer crash with "dwc->maximum_speed". To
-> prevent the crash i have added this logic.
-> Agree that drvdata is set in dwc3_probe(). Sometimes i can see that
-> dwc3_probe never getting completed before it can go and access
-> dwc->maximum_speed pointer here.
-> This is leading to null pointer access crash. if i defer the probe and try
-> again i can see that drvdata getting updated successfully in dwc3_probe.
+* This wording contains a typo.
 
-I see, _probe() sets the drvdata of the dwc3_qcom pdev, however
-_enable() gets the drvdata from the dwc3 pdev.
-
-Apparently dwc3_probe() and dwc3_qcom_probe() can run in paralel:
-
-dwc3_probe
-  // stuff
-
-  dwc3_get_properties
-    dwc->maximum_speed = usb_get_maximum_speed(dev);
-
-  platform_set_drvdata(pdev, dwc)
-
-  // more stuff
+* I would prefer to refer to a desired reduction of a few
+  source code quality concerns.
 
 
-dwc3_qcom_probe
-  dwc3_qcom_of_register_core
-    qcom->dwc3 = of_find_device_by_node()
+> Changes in =E2=80=A6
 
-  usb_interconnect_enable
-    dwc = platform_get_drvdata(qcom->dwc3);
+Can such a prefix be omitted?
 
-
-When dwc3_qcom_of_register_core() is called the dwc3 device may not be
-fully initialized yet. Also after the drvdata is set initialization is
-still ongoing. You can't really rely on the dwc3 struct to be fully
-initialized, but at least the maximum_speed attribute should be set
-when the drvdata is not NULL.
-
-I wonder if it would be clearer to do the check in _probe() instead of
-_interconnect_enable(), the -EPROBE_DEFER return value is confusing,
-especially since the function can be called from a non-probe context.
-
-You could possibly use device_is_bound() to confirm that dwc3_probe()
-is completed, the function isn't widely used though. Checking that the
-device is fully initialized before using it seems like a good idea,
-however there might be reasons for not using device_is_bound() which I
-ignore. Maybe others can offer advice on this.
+Regards,
+Markus
