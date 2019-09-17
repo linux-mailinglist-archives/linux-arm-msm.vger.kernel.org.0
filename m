@@ -2,85 +2,90 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 3A9D6B55B5
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Sep 2019 20:55:44 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9CDA8B55BF
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Sep 2019 20:56:27 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726794AbfIQSzn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 17 Sep 2019 14:55:43 -0400
-Received: from mail.kernel.org ([198.145.29.99]:37130 "EHLO mail.kernel.org"
+        id S1726169AbfIQS40 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 17 Sep 2019 14:56:26 -0400
+Received: from mail.kernel.org ([198.145.29.99]:37646 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726169AbfIQSzn (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 17 Sep 2019 14:55:43 -0400
+        id S1725927AbfIQS40 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 17 Sep 2019 14:56:26 -0400
 Received: from kernel.org (unknown [104.132.0.74])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 29EB5214AF;
-        Tue, 17 Sep 2019 18:55:42 +0000 (UTC)
+        by mail.kernel.org (Postfix) with ESMTPSA id 8A4A8214AF;
+        Tue, 17 Sep 2019 18:56:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1568746542;
-        bh=GES6jY4SrgchwiFDLmCd0LxgVWZjnEk+gbEGOc928XQ=;
+        s=default; t=1568746585;
+        bh=mbODalGRNQoWNnowm2tS1pcY2EbwBFAWll84phPGxbA=;
         h=In-Reply-To:References:Cc:To:From:Subject:Date:From;
-        b=k9LwQx38N2BdNc66+3x/viHSY2juEQIkGNDwqC7RC5qWXwJi29ZVStsSdAb4mMl/s
-         QwXwITGlVNF3gB3KQrxck1nkk79fvRSbAffQgGL0DxcRj6yvF6E3eUh8Ik6KDGZqrp
-         keQixx7YXQIb8U8MUxG+ZkXC3m274H2HeGOHSe6E=
+        b=X2afMEBspYqrVXT0KNPzGo8hs6SqE7bnObaYtDnvMs7z38QOJlK4gbKabuaAqCbOP
+         ECW6wcm77plYCjJXgCBwwyyI+0OSQOARJZVVveEUXUP3MPVeTbryP4q99Pt9Jmw6Ld
+         HKuDFOJ+H+7HjkuwaGkz3B4DI6P4W2cia6BT6KaQ=
 Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <1566327992-362-4-git-send-email-jcrouse@codeaurora.org>
-References: <1566327992-362-1-git-send-email-jcrouse@codeaurora.org> <1566327992-362-4-git-send-email-jcrouse@codeaurora.org>
-Cc:     linux-arm-msm@vger.kernel.org, Will Deacon <will@kernel.org>,
+In-Reply-To: <1566327992-362-3-git-send-email-jcrouse@codeaurora.org>
+References: <1566327992-362-1-git-send-email-jcrouse@codeaurora.org> <1566327992-362-3-git-send-email-jcrouse@codeaurora.org>
+Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
         linux-kernel@vger.kernel.org, iommu@lists.linux-foundation.org,
-        Robin Murphy <robin.murphy@arm.com>,
-        Joerg Roedel <joro@8bytes.org>,
-        linux-arm-kernel@lists.infradead.org
+        Rob Herring <robh+dt@kernel.org>,
+        Mark Rutland <mark.rutland@arm.com>,
+        Joerg Roedel <joro@8bytes.org>
 To:     Jordan Crouse <jcrouse@codeaurora.org>,
         freedreno@lists.freedesktop.org
 From:   Stephen Boyd <sboyd@kernel.org>
-Subject: Re: [PATCH 3/7] iommu/arm-smmu: Add a SMMU variant for the Adreno GPU
+Subject: Re: [PATCH 2/7] dt-bindings: arm-smmu: Add Adreno GPU variant
 User-Agent: alot/0.8.1
-Date:   Tue, 17 Sep 2019 11:55:41 -0700
-Message-Id: <20190917185542.29EB5214AF@mail.kernel.org>
+Date:   Tue, 17 Sep 2019 11:56:24 -0700
+Message-Id: <20190917185625.8A4A8214AF@mail.kernel.org>
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Jordan Crouse (2019-08-20 12:06:28)
-> diff --git a/drivers/iommu/arm-smmu.c b/drivers/iommu/arm-smmu.c
-> index 39e81ef..3f41cf7 100644
-> --- a/drivers/iommu/arm-smmu.c
-> +++ b/drivers/iommu/arm-smmu.c
-> @@ -1858,6 +1858,7 @@ ARM_SMMU_MATCH_DATA(arm_mmu401, ARM_SMMU_V1_64K, GE=
-NERIC_SMMU);
->  ARM_SMMU_MATCH_DATA(arm_mmu500, ARM_SMMU_V2, ARM_MMU500);
->  ARM_SMMU_MATCH_DATA(cavium_smmuv2, ARM_SMMU_V2, CAVIUM_SMMUV2);
->  ARM_SMMU_MATCH_DATA(qcom_smmuv2, ARM_SMMU_V2, QCOM_SMMUV2);
-> +ARM_SMMU_MATCH_DATA(qcom_adreno_smmuv2, ARM_SMMU_V2, QCOM_ADRENO_SMMUV2);
+Quoting Jordan Crouse (2019-08-20 12:06:27)
+> Add a compatible string to identify SMMUs that are attached
+> to Adreno GPU devices that wish to support split pagetables.
+>=20
+> Signed-off-by: Jordan Crouse <jcrouse@codeaurora.org>
+> ---
+>=20
+>  Documentation/devicetree/bindings/iommu/arm,smmu.txt | 7 +++++++
+>  1 file changed, 7 insertions(+)
+>=20
+> diff --git a/Documentation/devicetree/bindings/iommu/arm,smmu.txt b/Docum=
+entation/devicetree/bindings/iommu/arm,smmu.txt
+> index 3133f3b..3b07896 100644
+> --- a/Documentation/devicetree/bindings/iommu/arm,smmu.txt
+> +++ b/Documentation/devicetree/bindings/iommu/arm,smmu.txt
+> @@ -18,6 +18,7 @@ conditions.
+>                          "arm,mmu-500"
+>                          "cavium,smmu-v2"
+>                          "qcom,smmu-v2"
+> +                       "qcom,adreno-smmu-v2"
+
+Is the tabbing weird here or just my MUA is failing?
+
 > =20
->  static const struct of_device_id arm_smmu_of_match[] =3D {
->         { .compatible =3D "arm,smmu-v1", .data =3D &smmu_generic_v1 },
-> @@ -1867,6 +1868,7 @@ static const struct of_device_id arm_smmu_of_match[=
-] =3D {
->         { .compatible =3D "arm,mmu-500", .data =3D &arm_mmu500 },
->         { .compatible =3D "cavium,smmu-v2", .data =3D &cavium_smmuv2 },
->         { .compatible =3D "qcom,smmu-v2", .data =3D &qcom_smmuv2 },
-> +       { .compatible =3D "qcom,adreno-smmu-v2", .data =3D &qcom_adreno_s=
-mmuv2 },
-
-Can this be sorted on compat?
-
->         { },
->  };
+>                    depending on the particular implementation and/or the
+>                    version of the architecture implemented.
+> @@ -31,6 +32,12 @@ conditions.
+>                    as below, SoC-specific compatibles:
+>                    "qcom,sdm845-smmu-500", "arm,mmu-500"
 > =20
-> diff --git a/drivers/iommu/arm-smmu.h b/drivers/iommu/arm-smmu.h
-> index 91a4eb8..e5a2cc8 100644
-> --- a/drivers/iommu/arm-smmu.h
-> +++ b/drivers/iommu/arm-smmu.h
-> @@ -222,6 +222,7 @@ enum arm_smmu_implementation {
->         ARM_MMU500,
->         CAVIUM_SMMUV2,
->         QCOM_SMMUV2,
-> +       QCOM_ADRENO_SMMUV2,
+> +                 "qcom,adreno-smmu-v2" is a special implementation for
 
-Can this be sorted alphabetically?
+Heh, special.
 
+> +                 SMMU devices attached to the Adreno GPU on Qcom devices.
+> +                 If selected, this will enable split pagetable (TTBR1)
+
+Is this selected? Sounds like Kconfig here.
+
+> +                 support. Only use this if the GPU target is capable of
+> +                 supporting 64 bit addresses.
+> +
+>  - reg           : Base address and size of the SMMU.
+> =20
