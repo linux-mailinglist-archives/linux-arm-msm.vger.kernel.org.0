@@ -2,73 +2,122 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 07D61B62EA
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Sep 2019 14:15:06 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D8D17B6554
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Sep 2019 16:01:28 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730860AbfIRMPE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 18 Sep 2019 08:15:04 -0400
-Received: from mail-ot1-f66.google.com ([209.85.210.66]:45815 "EHLO
-        mail-ot1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727637AbfIRMPE (ORCPT
+        id S1726659AbfIROB1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 18 Sep 2019 10:01:27 -0400
+Received: from bhuna.collabora.co.uk ([46.235.227.227]:54524 "EHLO
+        bhuna.collabora.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726038AbfIROB1 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 18 Sep 2019 08:15:04 -0400
-Received: by mail-ot1-f66.google.com with SMTP id 41so6050039oti.12;
-        Wed, 18 Sep 2019 05:15:03 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=iwhCp5qcYnf6sA1iPmnMj21Y3p/sdCHl5i/JOjrNkTo=;
-        b=JWcmNX9mHjO6yPg7q6T7VIlwSY+o0UtFBDKRwQcHRN8Y42/mR8nFbmlCgf792+ytjq
-         p/iUYWLo5IEuJeVB4zSawkBdMIVprO6fBnC+1mEJPwHK8r764VOhg3I1cm8sZCIT5Mve
-         hNkivmR6wHgZXn5geHtt5BkBnLAy6ler2AoHOVCOUdQbGetkVJ41ruWS+ckvFnjyh4Xh
-         YAVM+8hKOTI/qWfwni+qUnkD406BO0jaUYMi7Yy3iQCW30CKuy5JlZBfef9xkzDdoIFp
-         dF0/os4cHICJoL5hZh2u3QqpF/6a34BfTm8GWuTh4Lz7/ReKrlttT+B+YR7VajSVPJly
-         BotA==
-X-Gm-Message-State: APjAAAWWnfMg33aZslhFfvV5fqbZX+91GxmU5DMWzf90591QXqLhllFv
-        PlD+VCbRXhhIwGbziX2adQ==
-X-Google-Smtp-Source: APXvYqylx/gSShddZtCWoCwVr8YsIaFdNTEn4984KKX/F9Ola6SeUx0xaI9HwZ9jz5zzmHxuvk370A==
-X-Received: by 2002:a9d:7e97:: with SMTP id m23mr2633158otp.324.1568808902856;
-        Wed, 18 Sep 2019 05:15:02 -0700 (PDT)
-Received: from localhost (24-155-109-49.dyn.grandenetworks.net. [24.155.109.49])
-        by smtp.gmail.com with ESMTPSA id v6sm1721538oie.4.2019.09.18.05.15.02
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 18 Sep 2019 05:15:02 -0700 (PDT)
-Date:   Wed, 18 Sep 2019 07:15:01 -0500
-From:   Rob Herring <robh@kernel.org>
-To:     Vinod Koul <vkoul@kernel.org>
-Cc:     Kishon Vijay Abraham I <kishon@ti.com>,
-        linux-arm-msm@vger.kernel.org,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Vinod Koul <vkoul@kernel.org>, Andy Gross <agross@kernel.org>,
-        Mark Rutland <mark.rutland@arm.com>,
-        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
-        Stephen Boyd <swboyd@chromium.org>
-Subject: Re: [PATCH v2 2/3] dt-bindings: phy-qcom-qmp: Add sm8150 UFS phy
- compatible string
-Message-ID: <20190918121501.GA32535@bogus>
-References: <20190906051017.26846-1-vkoul@kernel.org>
- <20190906051017.26846-3-vkoul@kernel.org>
+        Wed, 18 Sep 2019 10:01:27 -0400
+Received: from [127.0.0.1] (localhost [127.0.0.1])
+        (Authenticated sender: andrzej.p)
+        with ESMTPSA id 87FE728D029
+Subject: Re: [PATCH RESEND 00/14] Next round of associating ddc adapters with
+ connectors
+From:   Andrzej Pietrasiewicz <andrzej.p@collabora.com>
+To:     dri-devel@lists.freedesktop.org
+Cc:     Neil Armstrong <narmstrong@baylibre.com>,
+        David Airlie <airlied@linux.ie>,
+        Bhawanpreet Lakha <Bhawanpreet.Lakha@amd.com>,
+        Thierry Reding <thierry.reding@gmail.com>,
+        Laurent Pinchart <Laurent.pinchart@ideasonboard.com>,
+        kernel@collabora.com, Anthony Koo <Anthony.Koo@amd.com>,
+        Emil Velikov <emil.velikov@collabora.com>,
+        linux-samsung-soc@vger.kernel.org,
+        Tomi Valkeinen <tomi.valkeinen@ti.com>,
+        David Francis <David.Francis@amd.com>,
+        Krzysztof Kozlowski <krzk@kernel.org>,
+        Jonathan Hunter <jonathanh@nvidia.com>,
+        linux-rockchip@lists.infradead.org, Kukjin Kim <kgene@kernel.org>,
+        linux-arm-msm@vger.kernel.org, linux-tegra@vger.kernel.org,
+        Jonas Karlman <jonas@kwiboo.se>, Leo Li <sunpeng.li@amd.com>,
+        linux-kernel@vger.kernel.org, intel-gfx@lists.freedesktop.org,
+        Mamta Shukla <mamtashukla555@gmail.com>,
+        linux-mediatek@lists.infradead.org, Jyri Sarha <jsarha@ti.com>,
+        Rodrigo Vivi <rodrigo.vivi@intel.com>,
+        Matthias Brugger <matthias.bgg@gmail.com>,
+        Thomas Gleixner <tglx@linutronix.de>,
+        Sean Paul <sean@poorly.run>,
+        linux-arm-kernel@lists.infradead.org,
+        Jernej Skrabec <jernej.skrabec@siol.net>,
+        amd-gfx@lists.freedesktop.org, freedreno@lists.freedesktop.org,
+        Seung-Woo Kim <sw0312.kim@samsung.com>,
+        Nicholas Kazlauskas <nicholas.kazlauskas@amd.com>,
+        Todor Tomov <todor.tomov@linaro.org>,
+        Kyungmin Park <kyungmin.park@samsung.com>,
+        Alex Deucher <alexander.deucher@amd.com>,
+        Shawn Guo <shawnguo@kernel.org>,
+        =?UTF-8?Q?Christian_K=c3=b6nig?= <christian.koenig@amd.com>
+References: <cover.1566845537.git.andrzej.p@collabora.com>
+Message-ID: <0799e830-400d-4ced-7108-c8fcfd5ef8c0@collabora.com>
+Date:   Wed, 18 Sep 2019 16:01:20 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+ Thunderbird/60.8.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20190906051017.26846-3-vkoul@kernel.org>
-User-Agent: Mutt/1.10.1 (2018-07-13)
+In-Reply-To: <cover.1566845537.git.andrzej.p@collabora.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri,  6 Sep 2019 10:40:16 +0530, Vinod Koul wrote:
-> Document "qcom,sdm845-qmp-ufs-phy" compatible string for QMP UFS PHY
-> found on SM8150.
+Hi All,
+
+A gentle ping.
+
+Andrzej
+
+W dniu 26.08.2019 o 21:25, Andrzej Pietrasiewicz pisze:
+> I'm resending the patches which have somehow got lost: one patch
+> from Geert and 13 patches from me.
 > 
-> Signed-off-by: Vinod Koul <vkoul@kernel.org>
-> Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
-> Reviewed-by: Stephen Boyd <swboyd@chromium.org>
-> ---
->  Documentation/devicetree/bindings/phy/qcom-qmp-phy.txt | 7 ++++++-
->  1 file changed, 6 insertions(+), 1 deletion(-)
+> Geert's patch updates the error message to reflect the actually
+> called function's name.
+> 
+> Most of patches from me have their Acked-by and Reviewed-by tags
+> and deal with providing a ddc symlink in connector's sysfs directory.
+> 
+> Rebased onto drm-misc-next as of 26th August.
+> 
+> Andrzej Pietrasiewicz (13):
+>    drm/radeon: Provide ddc symlink in connector sysfs directory
+>    drm/amdgpu: Provide ddc symlink in dm connector's sysfs directory
+>    drm/exynos: Provide ddc symlink in connector's sysfs
+>    drm: rockchip: Provide ddc symlink in rk3066_hdmi sysfs directory
+>    drm: rockchip: Provide ddc symlink in inno_hdmi sysfs directory
+>    drm/msm/hdmi: Provide ddc symlink in hdmi connector sysfs directory
+>    drm/mediatek: Provide ddc symlink in hdmi connector sysfs directory
+>    drm/tegra: Provide ddc symlink in output connector sysfs directory
+>    drm/vc4: Provide ddc symlink in connector sysfs directory
+>    drm: zte: Provide ddc symlink in hdmi connector sysfs directory
+>    drm: zte: Provide ddc symlink in vga connector sysfs directory
+>    drm/tilcdc: Provide ddc symlink in connector sysfs directory
+>    drm/i915: Provide ddc symlink in hdmi connector sysfs directory
+> 
+> Geert Uytterhoeven (1):
+>    drm/bridge: ti-tfp410: Update drm_connector_init_with_ddc() error
+>      message
+> 
+>   .../gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c |   5 +-
+>   drivers/gpu/drm/bridge/ti-tfp410.c            |   3 +-
+>   drivers/gpu/drm/exynos/exynos_hdmi.c          |   6 +-
+>   drivers/gpu/drm/i915/display/intel_hdmi.c     |  12 +-
+>   drivers/gpu/drm/mediatek/mtk_hdmi.c           |   7 +-
+>   drivers/gpu/drm/msm/hdmi/hdmi_connector.c     |   6 +-
+>   drivers/gpu/drm/radeon/radeon_connectors.c    | 143 +++++++++++++-----
+>   drivers/gpu/drm/rockchip/inno_hdmi.c          |   6 +-
+>   drivers/gpu/drm/rockchip/rk3066_hdmi.c        |   7 +-
+>   drivers/gpu/drm/tegra/hdmi.c                  |   7 +-
+>   drivers/gpu/drm/tegra/sor.c                   |   7 +-
+>   drivers/gpu/drm/tilcdc/tilcdc_tfp410.c        |   6 +-
+>   drivers/gpu/drm/vc4/vc4_hdmi.c                |  12 +-
+>   drivers/gpu/drm/zte/zx_hdmi.c                 |   6 +-
+>   drivers/gpu/drm/zte/zx_vga.c                  |   6 +-
+>   15 files changed, 168 insertions(+), 71 deletions(-)
 > 
 
-Reviewed-by: Rob Herring <robh@kernel.org>
