@@ -2,97 +2,78 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id C063AB627D
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Sep 2019 13:51:04 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 338BDB62E5
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Sep 2019 14:14:40 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727316AbfIRLu7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 18 Sep 2019 07:50:59 -0400
-Received: from bombadil.infradead.org ([198.137.202.133]:46736 "EHLO
-        bombadil.infradead.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726759AbfIRLu7 (ORCPT
+        id S1728987AbfIRMOf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 18 Sep 2019 08:14:35 -0400
+Received: from mail-oi1-f196.google.com ([209.85.167.196]:33262 "EHLO
+        mail-oi1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727637AbfIRMOf (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 18 Sep 2019 07:50:59 -0400
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-        d=infradead.org; s=bombadil.20170209; h=In-Reply-To:Content-Type:MIME-Version
-        :References:Message-ID:Subject:Cc:To:From:Date:Sender:Reply-To:
-        Content-Transfer-Encoding:Content-ID:Content-Description:Resent-Date:
-        Resent-From:Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:List-Id:
-        List-Help:List-Unsubscribe:List-Subscribe:List-Post:List-Owner:List-Archive;
-         bh=xT04o0lekJxd/aozlQYGw0ZS4okGFGfqXe4QEtUwyYo=; b=q9flpAHDMXxzFuObshYoFv4be
-        l4DeXx4V8SrvfAc4numF8OpmqDp8v7qs+KxtSzngtECLx7U1LbsccCx+stgKPiidKUkh54hSVNnr0
-        9Sj0Kbpjdp6hILG+2b3vsUeWSmP6INfGpznkdo17UcauUjA5G6ZYhPEVWlO5OwzPplm6UxATM5806
-        fMgdqYjfDD7B6c3iRlBTuG2grXovldmp3e9CYL8jKxXlQqerays6DtzrsOslskJ9wtK1Tu6PuxjRB
-        m6r4X9EIVY71cnXLrYRwW1A/RcqY0hbyAEt1G7rAIbmfIhPsUmksvnKYZLxGveFJ9l4RYTugEyTIW
-        TEr30NsMQ==;
-Received: from willy by bombadil.infradead.org with local (Exim 4.92.2 #3 (Red Hat Linux))
-        id 1iAYU6-0000jz-Q9; Wed, 18 Sep 2019 11:50:58 +0000
-Date:   Wed, 18 Sep 2019 04:50:58 -0700
-From:   Matthew Wilcox <willy@infradead.org>
-To:     Jordan Crouse <jcrouse@codeaurora.org>
-Cc:     freedreno@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
-        linux-fsdevel@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] idr: Prevent unintended underflow for the idr index
-Message-ID: <20190918115058.GB9880@bombadil.infradead.org>
-References: <1568756922-2829-1-git-send-email-jcrouse@codeaurora.org>
+        Wed, 18 Sep 2019 08:14:35 -0400
+Received: by mail-oi1-f196.google.com with SMTP id e18so5782650oii.0;
+        Wed, 18 Sep 2019 05:14:33 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=x3q5Ep7ytIg0D5+RJg0Slh7fNjlsYm5ZAthpyyaoRs0=;
+        b=cUuiMTlPOFUHOB57f6KgjUdmqgswsxM5iwEyIwPelQHNwbbWaOpYU3spXvp1GfEi09
+         oY5FppjdgQAUvC8KA/ly15WBGHrnGTg19oyqo6wJ6qUHweI1l3DvHBAdTgbs+WoHu1kk
+         9Xtdh23A3Ypx/sNNjCSE9lyuepCVWcNNFroKygzpb/RFko0kjmY74JpSuRp+hbpMEMFK
+         hU2kc2AUCKMazWtAg8SXzYEgpPNIl4OjifHOLaSrtX0d5oFX6rd9pKRN8ICT/lzEb4QF
+         LDvcOou63upMIiEi4YBNQ4YVGGOwddIG+tGFa+Wweh06ySewcRSGhhOqXMhP/Jz2tdjI
+         ifiQ==
+X-Gm-Message-State: APjAAAXSNN48FEY4A+bf4Hvo9SAc4/QzhwuOoI7tvwT/nR5Ux1DAqwdq
+        oyJ5a/mjJN8WrkGpBd/JUw==
+X-Google-Smtp-Source: APXvYqwLlpAkVP9QcKDsnCJ/getcuLTVoSWYrmx09jqIuKydUoh5os3EbpmTVG12tKE5PyBzfc4+4w==
+X-Received: by 2002:aca:c38b:: with SMTP id t133mr1809859oif.22.1568808872899;
+        Wed, 18 Sep 2019 05:14:32 -0700 (PDT)
+Received: from localhost (24-155-109-49.dyn.grandenetworks.net. [24.155.109.49])
+        by smtp.gmail.com with ESMTPSA id 5sm1784320otp.20.2019.09.18.05.14.32
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 18 Sep 2019 05:14:32 -0700 (PDT)
+Date:   Wed, 18 Sep 2019 07:14:31 -0500
+From:   Rob Herring <robh@kernel.org>
+To:     Vinod Koul <vkoul@kernel.org>
+Cc:     Kishon Vijay Abraham I <kishon@ti.com>,
+        linux-arm-msm@vger.kernel.org,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Vinod Koul <vkoul@kernel.org>, Andy Gross <agross@kernel.org>,
+        Mark Rutland <mark.rutland@arm.com>,
+        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
+        "Martin K. Petersen" <martin.petersen@oracle.com>,
+        Evan Green <evgreen@chromium.org>,
+        Can Guo <cang@codeaurora.org>,
+        Stanley Chu <stanley.chu@mediatek.com>,
+        Subhash Jadavani <subhashj@codeaurora.org>,
+        Douglas Anderson <dianders@chromium.org>,
+        Stephen Boyd <swboyd@chromium.org>
+Subject: Re: [PATCH v2 1/3] dt-bindings: ufs: Add sm8150 compatible string
+Message-ID: <20190918121431.GA31663@bogus>
+References: <20190906051017.26846-1-vkoul@kernel.org>
+ <20190906051017.26846-2-vkoul@kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <1568756922-2829-1-git-send-email-jcrouse@codeaurora.org>
-User-Agent: Mutt/1.12.1 (2019-06-15)
+In-Reply-To: <20190906051017.26846-2-vkoul@kernel.org>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Sep 17, 2019 at 03:48:42PM -0600, Jordan Crouse wrote:
-> It is possible for unaware callers of several idr functions to accidentally
-> underflow the index by specifying a id that is less than the idr base.
+On Fri,  6 Sep 2019 10:40:15 +0530, Vinod Koul wrote:
+> Document "qcom,sm8150-ufshc" compatible string for UFS HC found on
+> SM8150.
+> 
+> Signed-off-by: Vinod Koul <vkoul@kernel.org>
+> Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+> Reviewed-by: Stephen Boyd <swboyd@chromium.org>
+> ---
+>  Documentation/devicetree/bindings/ufs/ufshcd-pltfrm.txt | 1 +
+>  1 file changed, 1 insertion(+)
+> 
 
-Hi Jordan.  Thanks for the patch, but this seems like a distinction
-without a difference.
-
->  void *idr_remove(struct idr *idr, unsigned long id)
->  {
-> +	if (id < idr->idr_base)
-> +		return NULL;
-> +
->  	return radix_tree_delete_item(&idr->idr_rt, id - idr->idr_base, NULL);
-
-If this underflows, we'll try to delete an index which doesn't exist,
-which will return NULL.
-
->  void *idr_find(const struct idr *idr, unsigned long id)
->  {
-> +	if (id < idr->idr_base)
-> +		return NULL;
-> +
->  	return radix_tree_lookup(&idr->idr_rt, id - idr->idr_base);
-
-If this underflows, we'll look up an entry which doesn't exist, which
-will return NULL.
-
-> @@ -302,6 +308,9 @@ void *idr_replace(struct idr *idr, void *ptr, unsigned long id)
->  	void __rcu **slot = NULL;
->  	void *entry;
->  
-> +	if (id < idr->idr_base)
-> +		return ERR_PTR(-ENOENT);
-> +
->  	id -= idr->idr_base;
->  
->  	entry = __radix_tree_lookup(&idr->idr_rt, id, &node, &slot);
-
-... just outside the context is this line:
-        if (!slot || radix_tree_tag_get(&idr->idr_rt, id, IDR_FREE))
-                return ERR_PTR(-ENOENT);
-
-Looking up an index which doesn't exist gets you a NULL slot, so you get
--ENOENT anyway.
-
-I did think about these possibilities when I was writing the code and
-convinced myself I didn't need them.  If you have an example of a case
-where I got thast wrong, I'd love to see it.
-
-More generally, the IDR is deprecated; I'm trying to convert users to
-the XArray.  If you're adding a new user, can you use the XArray API
-instead?
+Acked-by: Rob Herring <robh@kernel.org>
