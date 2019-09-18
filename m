@@ -2,212 +2,128 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 261B2B66BE
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Sep 2019 17:08:58 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 91FAAB6721
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Sep 2019 17:32:53 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730580AbfIRPI5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 18 Sep 2019 11:08:57 -0400
-Received: from ns.iliad.fr ([212.27.33.1]:60502 "EHLO ns.iliad.fr"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1728330AbfIRPI5 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 18 Sep 2019 11:08:57 -0400
-Received: from ns.iliad.fr (localhost [127.0.0.1])
-        by ns.iliad.fr (Postfix) with ESMTP id 8EF02206A6;
-        Wed, 18 Sep 2019 17:08:54 +0200 (CEST)
-Received: from [192.168.108.37] (freebox.vlq16.iliad.fr [213.36.7.13])
-        by ns.iliad.fr (Postfix) with ESMTP id 3BE1720840;
-        Wed, 18 Sep 2019 17:08:54 +0200 (CEST)
-Subject: Re: [PATCH v2 3/3] phy: qcom-qmp: Add SM8150 QMP UFS PHY support
-To:     Vinod Koul <vkoul@kernel.org>,
-        Kishon Vijay Abraham I <kishon@ti.com>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     MSM <linux-arm-msm@vger.kernel.org>,
-        Andy Gross <agross@kernel.org>,
-        LKML <linux-kernel@vger.kernel.org>,
-        Stephen Boyd <swboyd@chromium.org>
-References: <20190906051017.26846-1-vkoul@kernel.org>
- <20190906051017.26846-4-vkoul@kernel.org>
-From:   Marc Gonzalez <marc.w.gonzalez@free.fr>
-Message-ID: <ab149ba9-ab2e-5013-34ab-b01af51abc0a@free.fr>
-Date:   Wed, 18 Sep 2019 17:08:53 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.8.0
+        id S1729833AbfIRPcw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 18 Sep 2019 11:32:52 -0400
+Received: from smtp.codeaurora.org ([198.145.29.96]:34820 "EHLO
+        smtp.codeaurora.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726983AbfIRPcw (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 18 Sep 2019 11:32:52 -0400
+Received: by smtp.codeaurora.org (Postfix, from userid 1000)
+        id 1153B611BE; Wed, 18 Sep 2019 15:32:51 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
+        s=default; t=1568820771;
+        bh=TNmAPCB7e2qEqf6X6jXwm3UGb2yqNQTB+ZXg9tdTpQ4=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=OpcRnCZTCW6E4/7RqkverZwxbwC+kRsF1qSbrSw1RD+WyM+CbiBtNIOXl2/W5zXZF
+         jmFKPyA79C0l+w6zXXmy4VzHZ9bpAPdsindefawaxQYadfzqWbUPAIfaOEcgBQemsK
+         ihUXknr5Lw/NRp9zhrdnrciufcF6j4pMcYaQeA2g=
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        pdx-caf-mail.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.7 required=2.0 tests=ALL_TRUSTED,BAYES_00,
+        DKIM_INVALID,DKIM_SIGNED,SPF_NONE autolearn=no autolearn_force=no
+        version=3.4.0
+Received: from jcrouse1-lnx.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: jcrouse@smtp.codeaurora.org)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 11D456034D;
+        Wed, 18 Sep 2019 15:32:49 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
+        s=default; t=1568820770;
+        bh=TNmAPCB7e2qEqf6X6jXwm3UGb2yqNQTB+ZXg9tdTpQ4=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=EA/X6sJt/OwsZs68vHUGHAlVHrrFC1qbanywuabEu6rk/6VZRkIkegBN+AhImTk3z
+         /Yl/GAiL6XrIQhn3wa9+BHtW39EGDE2MASsOjlzYtvQJLMhzmjXpbo74EY4rIUpPsl
+         76sHfF/0JMocsmg6t9j8PrvYOfwA0AQ245+Pmt1c=
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 11D456034D
+Authentication-Results: pdx-caf-mail.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: pdx-caf-mail.web.codeaurora.org; spf=none smtp.mailfrom=jcrouse@codeaurora.org
+Date:   Wed, 18 Sep 2019 09:32:48 -0600
+From:   Jordan Crouse <jcrouse@codeaurora.org>
+To:     Matthew Wilcox <willy@infradead.org>
+Cc:     freedreno@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
+        linux-fsdevel@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH] idr: Prevent unintended underflow for the idr index
+Message-ID: <20190918153248.GC25762@jcrouse1-lnx.qualcomm.com>
+Mail-Followup-To: Matthew Wilcox <willy@infradead.org>,
+        freedreno@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
+        linux-fsdevel@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <1568756922-2829-1-git-send-email-jcrouse@codeaurora.org>
+ <20190918115058.GB9880@bombadil.infradead.org>
 MIME-Version: 1.0
-In-Reply-To: <20190906051017.26846-4-vkoul@kernel.org>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
-X-Virus-Scanned: ClamAV using ClamSMTP ; ns.iliad.fr ; Wed Sep 18 17:08:54 2019 +0200 (CEST)
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20190918115058.GB9880@bombadil.infradead.org>
+User-Agent: Mutt/1.5.24 (2015-08-30)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 06/09/2019 07:10, Vinod Koul wrote:
-
-> SM8150 UFS PHY is v4 of QMP phy. Add support for V4 QMP phy register
-> defines and support for SM8150 QMP UFS PHY.
+On Wed, Sep 18, 2019 at 04:50:58AM -0700, Matthew Wilcox wrote:
+> On Tue, Sep 17, 2019 at 03:48:42PM -0600, Jordan Crouse wrote:
+> > It is possible for unaware callers of several idr functions to accidentally
+> > underflow the index by specifying a id that is less than the idr base.
 > 
-> Signed-off-by: Vinod Koul <vkoul@kernel.org>
-> Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
-> ---
->  drivers/phy/qualcomm/phy-qcom-qmp.c | 125 ++++++++++++++++++++++++++++
->  drivers/phy/qualcomm/phy-qcom-qmp.h |  96 +++++++++++++++++++++
->  2 files changed, 221 insertions(+)
+> Hi Jordan.  Thanks for the patch, but this seems like a distinction
+> without a difference.
 > 
-> diff --git a/drivers/phy/qualcomm/phy-qcom-qmp.c b/drivers/phy/qualcomm/phy-qcom-qmp.c
-> index 34ff6434da8f..92d3048f2b36 100644
-> --- a/drivers/phy/qualcomm/phy-qcom-qmp.c
-> +++ b/drivers/phy/qualcomm/phy-qcom-qmp.c
-> @@ -164,6 +164,11 @@ static const unsigned int sdm845_ufsphy_regs_layout[] = {
->  	[QPHY_PCS_READY_STATUS]		= 0x160,
->  };
->  
-> +static const unsigned int sm8150_ufsphy_regs_layout[] = {
-> +	[QPHY_START_CTRL]		= 0x00,
-> +	[QPHY_PCS_READY_STATUS]		= 0x180,
-> +};
-> +
->  static const struct qmp_phy_init_tbl msm8996_pcie_serdes_tbl[] = {
->  	QMP_PHY_INIT_CFG(QSERDES_COM_BIAS_EN_CLKBUFLR_EN, 0x1c),
->  	QMP_PHY_INIT_CFG(QSERDES_COM_CLK_ENABLE1, 0x10),
-> @@ -878,6 +883,93 @@ static const struct qmp_phy_init_tbl msm8998_usb3_pcs_tbl[] = {
->  	QMP_PHY_INIT_CFG(QPHY_V3_PCS_RXEQTRAINING_RUN_TIME, 0x13),
->  };
->  
-> +static const struct qmp_phy_init_tbl sm8150_ufsphy_serdes_tbl[] = {
-> +	QMP_PHY_INIT_CFG(QPHY_POWER_DOWN_CONTROL, 0x01),
-> +	QMP_PHY_INIT_CFG(QSERDES_COM_V4_SYSCLK_EN_SEL, 0xd9),
-> +	QMP_PHY_INIT_CFG(QSERDES_COM_V4_HSCLK_SEL, 0x11),
-> +	QMP_PHY_INIT_CFG(QSERDES_COM_V4_HSCLK_HS_SWITCH_SEL, 0x00),
-> +	QMP_PHY_INIT_CFG(QSERDES_COM_V4_LOCK_CMP_EN, 0x01),
-> +	QMP_PHY_INIT_CFG(QSERDES_COM_V4_VCO_TUNE_MAP, 0x02),
-> +	QMP_PHY_INIT_CFG(QSERDES_COM_V4_PLL_IVCO, 0x0f),
-> +	QMP_PHY_INIT_CFG(QSERDES_COM_V4_VCO_TUNE_INITVAL2, 0x00),
-> +	QMP_PHY_INIT_CFG(QSERDES_COM_V4_BIN_VCOCAL_HSCLK_SEL, 0x11),
-> +	QMP_PHY_INIT_CFG(QSERDES_COM_V4_DEC_START_MODE0, 0x82),
-> +	QMP_PHY_INIT_CFG(QSERDES_COM_V4_CP_CTRL_MODE0, 0x06),
-> +	QMP_PHY_INIT_CFG(QSERDES_COM_V4_PLL_RCTRL_MODE0, 0x16),
-> +	QMP_PHY_INIT_CFG(QSERDES_COM_V4_PLL_CCTRL_MODE0, 0x36),
-> +	QMP_PHY_INIT_CFG(QSERDES_COM_V4_LOCK_CMP1_MODE0, 0xff),
-> +	QMP_PHY_INIT_CFG(QSERDES_COM_V4_LOCK_CMP2_MODE0, 0x0c),
-> +	QMP_PHY_INIT_CFG(QSERDES_COM_V4_BIN_VCOCAL_CMP_CODE1_MODE0, 0xac),
-> +	QMP_PHY_INIT_CFG(QSERDES_COM_V4_BIN_VCOCAL_CMP_CODE2_MODE0, 0x1e),
-> +	QMP_PHY_INIT_CFG(QSERDES_COM_V4_DEC_START_MODE1, 0x98),
-> +	QMP_PHY_INIT_CFG(QSERDES_COM_V4_CP_CTRL_MODE1, 0x06),
-> +	QMP_PHY_INIT_CFG(QSERDES_COM_V4_PLL_RCTRL_MODE1, 0x16),
-> +	QMP_PHY_INIT_CFG(QSERDES_COM_V4_PLL_CCTRL_MODE1, 0x36),
-> +	QMP_PHY_INIT_CFG(QSERDES_COM_V4_LOCK_CMP1_MODE1, 0x32),
-> +	QMP_PHY_INIT_CFG(QSERDES_COM_V4_LOCK_CMP2_MODE1, 0x0f),
-> +	QMP_PHY_INIT_CFG(QSERDES_COM_V4_BIN_VCOCAL_CMP_CODE1_MODE1, 0xdd),
-> +	QMP_PHY_INIT_CFG(QSERDES_COM_V4_BIN_VCOCAL_CMP_CODE2_MODE1, 0x23),
-> +
-> +	/* Rate B */
-> +	QMP_PHY_INIT_CFG(QSERDES_COM_V4_VCO_TUNE_MAP, 0x06),
+> >  void *idr_remove(struct idr *idr, unsigned long id)
+> >  {
+> > +	if (id < idr->idr_base)
+> > +		return NULL;
+> > +
+> >  	return radix_tree_delete_item(&idr->idr_rt, id - idr->idr_base, NULL);
+> 
+> If this underflows, we'll try to delete an index which doesn't exist,
+> which will return NULL.
+> 
+> >  void *idr_find(const struct idr *idr, unsigned long id)
+> >  {
+> > +	if (id < idr->idr_base)
+> > +		return NULL;
+> > +
+> >  	return radix_tree_lookup(&idr->idr_rt, id - idr->idr_base);
+> 
+> If this underflows, we'll look up an entry which doesn't exist, which
+> will return NULL.
+> 
+> > @@ -302,6 +308,9 @@ void *idr_replace(struct idr *idr, void *ptr, unsigned long id)
+> >  	void __rcu **slot = NULL;
+> >  	void *entry;
+> >  
+> > +	if (id < idr->idr_base)
+> > +		return ERR_PTR(-ENOENT);
+> > +
+> >  	id -= idr->idr_base;
+> >  
+> >  	entry = __radix_tree_lookup(&idr->idr_rt, id, &node, &slot);
+> 
+> ... just outside the context is this line:
+>         if (!slot || radix_tree_tag_get(&idr->idr_rt, id, IDR_FREE))
+>                 return ERR_PTR(-ENOENT);
+> 
+> Looking up an index which doesn't exist gets you a NULL slot, so you get
+> -ENOENT anyway.
+> 
+> I did think about these possibilities when I was writing the code and
+> convinced myself I didn't need them.  If you have an example of a case
+> where I got thast wrong, I'd love to see it.
+> 
+> More generally, the IDR is deprecated; I'm trying to convert users to
+> the XArray.  If you're adding a new user, can you use the XArray API
+> instead?
 
-IMO, the name of the symbolic constants should be QSERDES_V4_COM*
-(like below for QSERDES_V4_TX* and QSERDES_V4_RX*)
+Thanks for the explanation. I happened to walk by while code inspecting an
+existing out-of-tree user and thought there might be a small hole to fill
+but I agree it is unlikely that the underflow is likely to be a valid id.
 
-
-> +static const struct qmp_phy_init_tbl sm8150_ufsphy_tx_tbl[] = {
-> +	QMP_PHY_INIT_CFG(QSERDES_V4_TX_PWM_GEAR_1_DIVIDER_BAND0_1, 0x06),
-> +	QMP_PHY_INIT_CFG(QSERDES_V4_TX_PWM_GEAR_2_DIVIDER_BAND0_1, 0x03),
-> +	QMP_PHY_INIT_CFG(QSERDES_V4_TX_PWM_GEAR_3_DIVIDER_BAND0_1, 0x01),
-> +	QMP_PHY_INIT_CFG(QSERDES_V4_TX_PWM_GEAR_4_DIVIDER_BAND0_1, 0x00),
-> +	QMP_PHY_INIT_CFG(QSERDES_V4_TX_LANE_MODE_1, 0x05),
-> +	QMP_PHY_INIT_CFG(QSERDES_V4_TX_TRAN_DRVR_EMP_EN, 0x0c),
-> +};
-> +
-> +static const struct qmp_phy_init_tbl sm8150_ufsphy_rx_tbl[] = {
-> +	QMP_PHY_INIT_CFG(QSERDES_V4_RX_SIGDET_LVL, 0x24),
-> +	QMP_PHY_INIT_CFG(QSERDES_V4_RX_SIGDET_CNTRL, 0x0f),
-> +	QMP_PHY_INIT_CFG(QSERDES_V4_RX_SIGDET_DEGLITCH_CNTRL, 0x1e),
-> +	QMP_PHY_INIT_CFG(QSERDES_V4_RX_RX_BAND, 0x18),
-> +	QMP_PHY_INIT_CFG(QSERDES_V4_RX_UCDR_FASTLOCK_FO_GAIN, 0x0a),
-> +	QMP_PHY_INIT_CFG(QSERDES_V4_RX_UCDR_SO_SATURATION_AND_ENABLE, 0x4b),
-> +	QMP_PHY_INIT_CFG(QSERDES_V4_RX_UCDR_PI_CONTROLS, 0xf1),
-> +	QMP_PHY_INIT_CFG(QSERDES_V4_RX_UCDR_FASTLOCK_COUNT_LOW, 0x80),
-> +	QMP_PHY_INIT_CFG(QSERDES_V4_RX_UCDR_PI_CTRL2, 0x80),
-> +	QMP_PHY_INIT_CFG(QSERDES_V4_RX_UCDR_FO_GAIN, 0x0c),
-> +	QMP_PHY_INIT_CFG(QSERDES_V4_RX_UCDR_SO_GAIN, 0x04),
-> +	QMP_PHY_INIT_CFG(QSERDES_V4_RX_RX_TERM_BW, 0x1b),
-> +	QMP_PHY_INIT_CFG(QSERDES_V4_RX_RX_EQU_ADAPTOR_CNTRL2, 0x06),
-> +	QMP_PHY_INIT_CFG(QSERDES_V4_RX_RX_EQU_ADAPTOR_CNTRL3, 0x04),
-> +	QMP_PHY_INIT_CFG(QSERDES_V4_RX_RX_EQU_ADAPTOR_CNTRL4, 0x1d),
-> +	QMP_PHY_INIT_CFG(QSERDES_V4_RX_RX_OFFSET_ADAPTOR_CNTRL2, 0x00),
-> +	QMP_PHY_INIT_CFG(QSERDES_V4_RX_RX_IDAC_MEASURE_TIME, 0x10),
-> +	QMP_PHY_INIT_CFG(QSERDES_V4_RX_RX_IDAC_TSETTLE_LOW, 0xc0),
-> +	QMP_PHY_INIT_CFG(QSERDES_V4_RX_RX_IDAC_TSETTLE_HIGH, 0x00),
-> +	QMP_PHY_INIT_CFG(QSERDES_V4_RX_RX_MODE_00_LOW, 0x36),
-> +	QMP_PHY_INIT_CFG(QSERDES_V4_RX_RX_MODE_00_HIGH, 0x36),
-> +	QMP_PHY_INIT_CFG(QSERDES_V4_RX_RX_MODE_00_HIGH2, 0xf6),
-> +	QMP_PHY_INIT_CFG(QSERDES_V4_RX_RX_MODE_00_HIGH3, 0x3b),
-> +	QMP_PHY_INIT_CFG(QSERDES_V4_RX_RX_MODE_00_HIGH4, 0x3d),
-> +	QMP_PHY_INIT_CFG(QSERDES_V4_RX_RX_MODE_01_LOW, 0xe0),
-> +	QMP_PHY_INIT_CFG(QSERDES_V4_RX_RX_MODE_01_HIGH, 0xc8),
-> +	QMP_PHY_INIT_CFG(QSERDES_V4_RX_RX_MODE_01_HIGH2, 0xc8),
-> +	QMP_PHY_INIT_CFG(QSERDES_V4_RX_RX_MODE_01_HIGH3, 0x3b),
-> +	QMP_PHY_INIT_CFG(QSERDES_V4_RX_RX_MODE_01_HIGH4, 0xb1),
-> +	QMP_PHY_INIT_CFG(QSERDES_V4_RX_RX_MODE_10_LOW, 0xe0),
-> +	QMP_PHY_INIT_CFG(QSERDES_V4_RX_RX_MODE_10_HIGH, 0xc8),
-> +	QMP_PHY_INIT_CFG(QSERDES_V4_RX_RX_MODE_10_HIGH2, 0xc8),
-> +	QMP_PHY_INIT_CFG(QSERDES_V4_RX_RX_MODE_10_HIGH3, 0x3b),
-> +	QMP_PHY_INIT_CFG(QSERDES_V4_RX_RX_MODE_10_HIGH4, 0xb1),
-> +
-> +};
-> +
-> +static const struct qmp_phy_init_tbl sm8150_ufsphy_pcs_tbl[] = {
-> +	QMP_PHY_INIT_CFG(QPHY_V4_RX_SIGDET_CTRL2, 0x6d),
-> +	QMP_PHY_INIT_CFG(QPHY_V4_TX_LARGE_AMP_DRV_LVL, 0x0a),
-> +	QMP_PHY_INIT_CFG(QPHY_V4_TX_SMALL_AMP_DRV_LVL, 0x02),
-> +	QMP_PHY_INIT_CFG(QPHY_V4_TX_MID_TERM_CTRL1, 0x43),
-> +	QMP_PHY_INIT_CFG(QPHY_V4_DEBUG_BUS_CLKSEL, 0x1f),
-> +	QMP_PHY_INIT_CFG(QPHY_V4_RX_MIN_HIBERN8_TIME, 0xff),
-> +	QMP_PHY_INIT_CFG(QPHY_V4_MULTI_LANE_CTRL1, 0x02),
-> +};
->  
->  /* struct qmp_phy_cfg - per-PHY initialization config */
->  struct qmp_phy_cfg {
-> @@ -1038,6 +1130,10 @@ static const char * const sdm845_ufs_phy_clk_l[] = {
->  	"ref", "ref_aux",
->  };
->  
-> +static const char * const sm8150_ufs_phy_clk_l[] = {
-> +	"ref", "ref_aux",
-> +};
-> +
-
-Why not just reuse sdm845_ufs_phy_clk_l?
-
->  /* list of resets */
->  static const char * const msm8996_pciephy_reset_l[] = {
->  	"phy", "common", "cfg",
-> @@ -1284,6 +1380,32 @@ static const struct qmp_phy_cfg msm8998_usb3phy_cfg = {
->  	.is_dual_lane_phy       = true,
->  };
->  
-> +static const struct qmp_phy_cfg sm8150_ufsphy_cfg = {
-> +	.type			= PHY_TYPE_UFS,
-> +	.nlanes			= 2,
-> +
-> +	.serdes_tbl		= sm8150_ufsphy_serdes_tbl,
-> +	.serdes_tbl_num		= ARRAY_SIZE(sm8150_ufsphy_serdes_tbl),
-> +	.tx_tbl			= sm8150_ufsphy_tx_tbl,
-> +	.tx_tbl_num		= ARRAY_SIZE(sm8150_ufsphy_tx_tbl),
-> +	.rx_tbl			= sm8150_ufsphy_rx_tbl,
-> +	.rx_tbl_num		= ARRAY_SIZE(sm8150_ufsphy_rx_tbl),
-> +	.pcs_tbl		= sm8150_ufsphy_pcs_tbl,
-> +	.pcs_tbl_num		= ARRAY_SIZE(sm8150_ufsphy_pcs_tbl),
-> +	.clk_list		= sm8150_ufs_phy_clk_l,
-> +	.num_clks		= ARRAY_SIZE(sm8150_ufs_phy_clk_l),
-> +	.vreg_list		= qmp_phy_vreg_l,
-> +	.num_vregs		= ARRAY_SIZE(qmp_phy_vreg_l),
-> +	.regs			= sm8150_ufsphy_regs_layout,
-> +
-> +	.start_ctrl		= SERDES_START,
-> +	.pwrdn_ctrl		= SW_PWRDN,
-> +	.mask_pcs_ready		= PCS_READY,
-
-I think you need to rework your patch on top of
-"phy: qcom-qmp: Correct ready status, again"
-(it removed this field)
+Jordan
+-- 
+The Qualcomm Innovation Center, Inc. is a member of Code Aurora Forum,
+a Linux Foundation Collaborative Project
