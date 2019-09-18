@@ -2,114 +2,120 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 6FF7EB57C4
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Sep 2019 23:50:24 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 50F19B5939
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Sep 2019 03:22:22 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726664AbfIQVuX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 17 Sep 2019 17:50:23 -0400
-Received: from smtp.codeaurora.org ([198.145.29.96]:35526 "EHLO
-        smtp.codeaurora.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725866AbfIQVuX (ORCPT
+        id S1726415AbfIRBWV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 17 Sep 2019 21:22:21 -0400
+Received: from mail-ed1-f66.google.com ([209.85.208.66]:36118 "EHLO
+        mail-ed1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726277AbfIRBWV (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 17 Sep 2019 17:50:23 -0400
-Received: by smtp.codeaurora.org (Postfix, from userid 1000)
-        id 4BFB160767; Tue, 17 Sep 2019 21:50:22 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
-        s=default; t=1568757022;
-        bh=+bL3Z3Y6Hl+C8MixFa02sCzsCPEv0bSGIE8FlarpAD8=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=LucnLAvs8c/a4VPdqBtIeaYQh0PZTAR2nm7XpcSuPUokuG86a76YQclF3twIDmrSp
-         vC79sFw8HFGl4AyO/ceqwgeGYfrnyTu6fRK8t5AxtYLDQrnRjzlxxdtjnxnPbsQv7E
-         HLeRVzSMDDs9TZocDCx+Ii9gW13Pn22eaLupuDAk=
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        pdx-caf-mail.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.7 required=2.0 tests=ALL_TRUSTED,BAYES_00,
-        DKIM_INVALID,DKIM_SIGNED,SPF_NONE autolearn=no autolearn_force=no
-        version=3.4.0
-Received: from localhost (i-global254.qualcomm.com [199.106.103.254])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: ilina@smtp.codeaurora.org)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 5F12960767;
-        Tue, 17 Sep 2019 21:50:21 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
-        s=default; t=1568757021;
-        bh=+bL3Z3Y6Hl+C8MixFa02sCzsCPEv0bSGIE8FlarpAD8=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=e9PVkqaCJJO0YMqwe3jsNEicNdxouQtoYWnqdXy3te9d5yDe/6oHUZUQ2C5sAfk6C
-         M3mYJ/Kkle2a7MZbfKh3TbRsFO6qSOtTH/108NZ3Kww17HmyM1bJPNmC6LJcbmX/ZU
-         RHPYsUM0UGBdYuom3CfytQRGQlYZ2t2W19Tv6jyc=
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 5F12960767
-Authentication-Results: pdx-caf-mail.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: pdx-caf-mail.web.codeaurora.org; spf=none smtp.mailfrom=ilina@codeaurora.org
-Date:   Tue, 17 Sep 2019 15:50:20 -0600
-From:   Lina Iyer <ilina@codeaurora.org>
-To:     Stephen Boyd <swboyd@chromium.org>
-Cc:     Rob Herring <robh@kernel.org>, evgreen@chromium.org,
-        linus.walleij@linaro.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, bjorn.andersson@linaro.org,
-        mkshah@codeaurora.org, linux-gpio@vger.kernel.org,
-        rnayak@codeaurora.org, devicetree@vger.kernel.org, maz@kernel.org,
-        sibis@codeaurora.org
-Subject: Re: [PATCH RFC 05/14] dt-bindings/interrupt-controller: pdc: add SPI
- config register
-Message-ID: <20190917215020.GA15853@codeaurora.org>
-References: <20190829181203.2660-1-ilina@codeaurora.org>
- <20190829181203.2660-6-ilina@codeaurora.org>
- <5d6d1b72.1c69fb81.ee88.efcf@mx.google.com>
- <102c9268-c4ce-6133-3b0a-67c2fcba1e7a@arm.com>
- <20190903170722.GA31716@codeaurora.org>
- <5d71a247.1c69fb81.2146f.7ed2@mx.google.com>
- <20190913195326.GA3293@codeaurora.org>
+        Tue, 17 Sep 2019 21:22:21 -0400
+Received: by mail-ed1-f66.google.com with SMTP id f2so5088846edw.3;
+        Tue, 17 Sep 2019 18:22:20 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=jmVlm1jUulhRNDWUAIDhxEV+UjKaBeH5ZgS3p3eH2ow=;
+        b=O67gS0zNNb8AG6ODEGN1OqAHrHAVixyyp79QI70EvE0Mpcom7nT8hlTFb3xh8Waekp
+         Kamy8iwHkC+j8VfD47sRSZ8jeTbKa7J9hZ4+2hZXtJzr06YsrHb48h5IIidbdP9ndnzE
+         ARzB1fGVVCCsSWutrt8/Csnqwe0ONOvnp+x8g9sxUIzqpnWiCj3U5e1csb+kPMSzV9o2
+         hudZldSg0qndlVl9qfldI4mOcdWOm1orjNzZwsV4wu6YUxUkPn8WSozxskq+NDgxNqRG
+         aaFB+QAanF7yaWNGbmsLVDMUJSaSk1NiY25ElsbPsSzGeJxCYMjClfAmgjj2JOYxwLUT
+         mCKg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=jmVlm1jUulhRNDWUAIDhxEV+UjKaBeH5ZgS3p3eH2ow=;
+        b=WFdnJxN8TIQB+viPmGzgce/yOopWC3SbQZT24Z4UhQ1v1WX0yMeGab3AAzSAioK67O
+         5Y3yHuQKgB/dDZHV41Y/gY8Us1HXkcNkCBvdfMHgWijGn/6jjgogCr3lZmqnWzbhCTc3
+         NhMcsmVHIunrsbnTM1YSO7QhCSWvLZQtXIbd1RkwHBVMLHBRuAPNEdaABmOL5lNnhNTz
+         JOYbXXpRBIkrErJlVEbAmUBOJz99Iw20EkWSKiSQWyiTFLfOn+oy6IDGij/cKm9nbBHk
+         2YRtnkdY5JYOZH6e/1Ckso6SLv9BDPQIkck8CZd3RpFI8/sGzuS4/KjrPjf+f5IKQ7PZ
+         CEVQ==
+X-Gm-Message-State: APjAAAWuGwcjyia3pTC1uuaBAPRC5fal69mzTwCEidBqGJVhdwZkYBbE
+        x0Dbye3mP3Tj4dTDZ7v3TrQEw43xe3nltmzBznw=
+X-Google-Smtp-Source: APXvYqwhWXpzktRd+5vRWfk9UpsttS+IpYu81FG1a3dXaB1RHhj8YAh4LwU6mfV0UMe9SGhJOT6fCHKgk1AqdPdkgZ4=
+X-Received: by 2002:a17:906:c79a:: with SMTP id cw26mr7214469ejb.265.1568769739678;
+ Tue, 17 Sep 2019 18:22:19 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii; format=flowed
-Content-Disposition: inline
-In-Reply-To: <20190913195326.GA3293@codeaurora.org>
-User-Agent: Mutt/1.5.24 (2015-08-30)
+References: <20190916201154.212465-1-ddavenport@chromium.org>
+ <CAF6AEGurXuCMj=bc5=9CwBqzNM_BKEaJupk+-V7=aYou=wgmDQ@mail.gmail.com> <20190917171420.GB25762@jcrouse1-lnx.qualcomm.com>
+In-Reply-To: <20190917171420.GB25762@jcrouse1-lnx.qualcomm.com>
+From:   Rob Clark <robdclark@gmail.com>
+Date:   Tue, 17 Sep 2019 18:22:06 -0700
+Message-ID: <CAF6AEGt_isMOiC6NL_xorUSnAEK5YnrzGanQrPV0YP=E5hV0VQ@mail.gmail.com>
+Subject: Re: [PATCH] drm/msm: Remove unused function arguments
+To:     Jordan Crouse <jcrouse@codeaurora.org>
+Cc:     Drew Davenport <ddavenport@chromium.org>,
+        dri-devel <dri-devel@lists.freedesktop.org>,
+        Sean Paul <sean@poorly.run>,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        David Airlie <airlied@linux.ie>,
+        Thomas Gleixner <tglx@linutronix.de>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Jeffrey Hugo <jeffrey.l.hugo@gmail.com>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        Jeykumar Sankaran <jsanka@codeaurora.org>,
+        Sravanthi Kollukuduru <skolluku@codeaurora.org>,
+        Enrico Weigelt <info@metux.net>,
+        Bruce Wang <bzwang@chromium.org>,
+        Sam Ravnborg <sam@ravnborg.org>,
+        Brian Masney <masneyb@onstation.org>,
+        Jonathan Marek <jonathan@marek.ca>,
+        Georgi Djakov <georgi.djakov@linaro.org>,
+        freedreno <freedreno@lists.freedesktop.org>,
+        Mamta Shukla <mamtashukla555@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Adding Sibi
+On Tue, Sep 17, 2019 at 10:14 AM Jordan Crouse <jcrouse@codeaurora.org> wrote:
+>
+> On Mon, Sep 16, 2019 at 01:34:55PM -0700, Rob Clark wrote:
+> > On Mon, Sep 16, 2019 at 1:12 PM Drew Davenport <ddavenport@chromium.org> wrote:
+> > >
+> > > The arguments related to IOMMU port name have been unused since
+> > > commit 944fc36c31ed ("drm/msm: use upstream iommu") and can be removed.
+> > >
+> > > Signed-off-by: Drew Davenport <ddavenport@chromium.org>
+> > > ---
+> > > Rob, in the original commit the port name stuff was left intentionally.
+> > > Would it be alright to remove it now?
+> >
+> > Upstream support for snapdragon has improved considerably since then,
+> > it's been at least a couple years since I've had to backport drm to a
+> > downstream android vendor kernel.  (And I think the downstream vendor
+> > kernel is getting closer to upstream.)  So I think we can drop things
+> > that were originally left in place to simplify backporting to vendor
+> > kernel.
+>
+> Downstream has gotten close enough to the IOMMU API over the last few LTS
+> cycles and nearly everything outside of a2xx that can work on a modern
+> kernel will likely be using a arm-smmu-v2 or a MMU-500.  This code can happily
+> go.
+>
+> > (Also, some of the regulator usage falls into this category.. at one
+> > point the downstream kernel modeled gdsc's as regulators, but upstream
+> > uses genpd.)
+>
+> Downstream still uses regulators. If we ever needed to use a downstream kernel
+> for whatever reason we could easily hack them back in but I don't feel like this
+> is a likely scenario.
 
-On Fri, Sep 13 2019 at 13:53 -0600, Lina Iyer wrote:
->Sorry, I couldn't get to this earlier.
->
->On Thu, Sep 05 2019 at 18:03 -0600, Stephen Boyd wrote:
->>Quoting Lina Iyer (2019-09-03 10:07:22)
->>>On Mon, Sep 02 2019 at 07:58 -0600, Marc Zyngier wrote:
->>>>On 02/09/2019 14:38, Rob Herring wrote:
->>>>> On Thu, Aug 29, 2019 at 12:11:54PM -0600, Lina Iyer wrote:
->>>These are not GIC registers but located on the PDC interface to the GIC.
->>>They may or may not be secure access controlled, depending on the SoC.
->>>
->>
->>It looks like it falls under this "mailbox" device which is really the
->>catch all bucket for bits with no home besides they're related to the
->>apps CPUs/subsystem.
->>
->Thanks for pointing to this.
->>	apss_shared: mailbox@17990000 {
->>		compatible = "qcom,sdm845-apss-shared";
->>		reg = <0 0x17990000 0 0x1000>;
->But this doesn't seem correct. The registers in this page are all not
->mailbox door bell registers. We should restrict the space allocated to
->the mbox to 0xC or something, definitely, not the whole page. They all
->cannot be treated as a mailbox registers.
->>		#mbox-cells = <1>;
->>	};
->>
->>Can you point to this node with a phandle and then parse the reg
->>property out of it to use in the scm readl/writel APIs? Maybe it can be
->>a two cell property with <&apps_shared 0xf0> to indicate the offset to
->>the registers to read/write? In non-secure mode presumably we need to
->>also write these registers? Good news is that there's a regmap for this
->>driver already, so maybe that can be acquired from the pdc driver.
->>
->The register space collection seems to be mix of different types of
->application processor registers that should probably not be grouped up
->under one subsystem. A single regmap doesn't seem correct either.
->
->-- Lina
+ok, maybe we can keep the regulator cruft for a bit longer until
+downstream moves to genpd.. with dummy-regulator, it doesn't really
+hurt anything.
+
+Do let me know if future downstream rebase moves to genpd, I suppose
+after the next LTS after that would be a good time to garbage-collect
+the regulator related gdsc management
+
+BR,
+-R
