@@ -2,125 +2,82 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id A728EB5D61
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Sep 2019 08:34:28 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 43074B5FB4
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Sep 2019 11:00:35 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726835AbfIRGeK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 18 Sep 2019 02:34:10 -0400
-Received: from mail-pf1-f195.google.com ([209.85.210.195]:37301 "EHLO
-        mail-pf1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727536AbfIRGeH (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 18 Sep 2019 02:34:07 -0400
-Received: by mail-pf1-f195.google.com with SMTP id y5so3690115pfo.4
-        for <linux-arm-msm@vger.kernel.org>; Tue, 17 Sep 2019 23:34:06 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=7hTH+QZ0Rg1J8IDO+1UiOPyFh3Jvo6QqRltmoWe2MW4=;
-        b=X0g3AnbCKw+4TwyXRilD5SoauIs7wFaCMcwJKFXFr+zMxnDhMe2h8FvUT7Uilb0cyQ
-         rOHGkNZRi46MCx5F3tyS4fy75friu9ruEtFpKh0Z2S6tWdUkZx4uLAeBKh4xjqoxzzut
-         G81E4cQU5C8fHwDxi0SovdBNlntxF3QSRCx+VA6snwPzZXgabK/h0b2LIylAYFPIKd47
-         JWy1+Eyc3nQWc3YU6i5tTx4u3XuZVT0CYgFy7OpgYJpZi0MtU3J1bN49gsY96lzLHLk9
-         z5THRSdFErwm8GSn5Xt6MaUpUggMzlOHC/DVjWGjGE6c61eUSrIhwQ5edcmv5qO4QayY
-         wi/w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=7hTH+QZ0Rg1J8IDO+1UiOPyFh3Jvo6QqRltmoWe2MW4=;
-        b=b0srFKljQV4qIKqX9KU22jny5NWiu84daBYxCNEExLIA//yH/bq33Bivx1c+nOkJKP
-         +feF4lEJqQqBMGCy4TqQef7zKwhyS6EzAg88IoDbFcVZhAIn/OJ8e/kVuFH72aSD50sK
-         7DbLJKubtWDzK0pSzgGaVDExaNMx12r+vZluZDKv6s9/ReSDpNzWyhqLAbh3H2smfFXp
-         iu6mz0sbXxgbRwJuOzPUPXQso5X/HKInzuk3tc+GQNxn9lmSuCFZEaCKmmda2XUdDUpX
-         leKQVMKOLkhvVqjw1CVTReyLpIJVYdVfU4EQzdNKtmYmXRFc+AxA+UIuWMwB3rXulMTQ
-         TxHw==
-X-Gm-Message-State: APjAAAVFGMn1wVxnnXO8/WPS1358LoIF9H9//xVRRuD3Tmwo9yF+NtF/
-        FRJNj8dbx1E6PV3uuQRgHjsD+Q==
-X-Google-Smtp-Source: APXvYqzAcu1KGj9IOpAdn6O/jLmmzMqwMmQyCiZJCCQ7WyfF5e2xkCOUO7dFfLtz2I7kRQrfl391pA==
-X-Received: by 2002:aa7:8dcf:: with SMTP id j15mr2449689pfr.5.1568788446445;
-        Tue, 17 Sep 2019 23:34:06 -0700 (PDT)
-Received: from tuxbook-pro (104-188-17-28.lightspeed.sndgca.sbcglobal.net. [104.188.17.28])
-        by smtp.gmail.com with ESMTPSA id y28sm7614921pfq.48.2019.09.17.23.34.05
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 17 Sep 2019 23:34:05 -0700 (PDT)
-Date:   Tue, 17 Sep 2019 23:34:03 -0700
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Jorge Ramirez-Ortiz <jorge.ramirez-ortiz@linaro.org>
-Cc:     gregkh@linuxfoundation.org, arnd@arndb.de,
-        srinivas.kandagatla@linaro.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH 2/5] misc: fastrpc: fix memory leak from miscdev->name
-Message-ID: <20190918063403.GD1636@tuxbook-pro>
-References: <20190913152532.24484-1-jorge.ramirez-ortiz@linaro.org>
- <20190913152532.24484-3-jorge.ramirez-ortiz@linaro.org>
+        id S1726772AbfIRJAe (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 18 Sep 2019 05:00:34 -0400
+Received: from ns.iliad.fr ([212.27.33.1]:40740 "EHLO ns.iliad.fr"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1725909AbfIRJAe (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 18 Sep 2019 05:00:34 -0400
+Received: from ns.iliad.fr (localhost [127.0.0.1])
+        by ns.iliad.fr (Postfix) with ESMTP id 3517A206A6;
+        Wed, 18 Sep 2019 11:00:32 +0200 (CEST)
+Received: from [192.168.108.37] (freebox.vlq16.iliad.fr [213.36.7.13])
+        by ns.iliad.fr (Postfix) with ESMTP id 1D65120186;
+        Wed, 18 Sep 2019 11:00:32 +0200 (CEST)
+Subject: Re: [PATCH v2 2/3] i2c: qup: Remove dev_err() log after
+ platform_get_irq*() failure
+To:     Saiyam Doshi <saiyamdoshi.in@gmail.com>
+Cc:     MSM <linux-arm-msm@vger.kernel.org>,
+        I2C <linux-i2c@vger.kernel.org>,
+        LKML <linux-kernel@vger.kernel.org>,
+        Marc Zyngier <maz@kernel.org>,
+        Thomas Gleixner <tglx@linutronix.de>
+References: <20190917172120.GA11581@SD>
+From:   Marc Gonzalez <marc.w.gonzalez@free.fr>
+Message-ID: <4e65aeeb-40da-7856-a22e-ce7aac21ae46@free.fr>
+Date:   Wed, 18 Sep 2019 11:00:32 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+ Thunderbird/60.8.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20190913152532.24484-3-jorge.ramirez-ortiz@linaro.org>
-User-Agent: Mutt/1.12.1 (2019-06-15)
+In-Reply-To: <20190917172120.GA11581@SD>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
+X-Virus-Scanned: ClamAV using ClamSMTP ; ns.iliad.fr ; Wed Sep 18 11:00:32 2019 +0200 (CEST)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri 13 Sep 08:25 PDT 2019, Jorge Ramirez-Ortiz wrote:
+On 17/09/2019 19:21, Saiyam Doshi wrote:
 
-> From: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+> The debug message after platform_get_irq() failure is redundant
+> because platform_get_irq() already prints an error. Thus remove it.
 > 
-> Fix a memory leak in miscdev->name by using devm_variant
+> Generated by: scripts/coccinelle/api/platform_get_irq.cocci
 > 
-> Orignally reported by kmemleak:
->     [<ffffff80088b74d8>] kmemleak_alloc+0x50/0x84
->     [<ffffff80081e015c>] __kmalloc_track_caller+0xe8/0x168
->     [<ffffff8008371ab0>] kvasprintf+0x78/0x100
->     [<ffffff8008371c6c>] kasprintf+0x50/0x74
->     [<ffffff8008507f2c>] fastrpc_rpmsg_probe+0xd8/0x20c
->     [<ffffff80086b63b4>] rpmsg_dev_probe+0xa8/0x148
->     [<ffffff80084de50c>] really_probe+0x208/0x248
->     [<ffffff80084de2dc>] driver_probe_device+0x98/0xc0
->     [<ffffff80084dec6c>] __device_attach_driver+0x9c/0xac
->     [<ffffff80084dca8c>] bus_for_each_drv+0x60/0x8c
->     [<ffffff80084de64c>] __device_attach+0x8c/0x100
->     [<ffffff80084de6e0>] device_initial_probe+0x20/0x28
->     [<ffffff80084dcbd0>] bus_probe_device+0x34/0x7c
->     [<ffffff80084da32c>] device_add+0x420/0x498
->     [<ffffff80084da680>] device_register+0x24/0x2c
-> 
-
-Cc: stable@vger.kernel.org
-Fixes: f6f9279f2bf0 ("misc: fastrpc: Add Qualcomm fastrpc basic driver model")
-
-> Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-
-You should append your S-o-b here, as you forwarded the patch.
-
-
-Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
-
-Regards,
-Bjorn
-
+> Signed-off-by: Saiyam Doshi <saiyamdoshi.in@gmail.com>
 > ---
->  drivers/misc/fastrpc.c | 4 ++--
->  1 file changed, 2 insertions(+), 2 deletions(-)
+> Changes in v2:
+> Updated changelog and removed unnecessary braces after if condition.
 > 
-> diff --git a/drivers/misc/fastrpc.c b/drivers/misc/fastrpc.c
-> index 8903388993d3..bc03500bfe60 100644
-> --- a/drivers/misc/fastrpc.c
-> +++ b/drivers/misc/fastrpc.c
-> @@ -1599,8 +1599,8 @@ static int fastrpc_rpmsg_probe(struct rpmsg_device *rpdev)
->  	}
->  
->  	data->miscdev.minor = MISC_DYNAMIC_MINOR;
-> -	data->miscdev.name = kasprintf(GFP_KERNEL, "fastrpc-%s",
-> -				domains[domain_id]);
-> +	data->miscdev.name = devm_kasprintf(rdev, GFP_KERNEL, "fastrpc-%s",
-> +					    domains[domain_id]);
->  	data->miscdev.fops = &fastrpc_fops;
->  	err = misc_register(&data->miscdev);
->  	if (err)
-> -- 
-> 2.23.0
+>  drivers/i2c/busses/i2c-qup.c | 4 +---
+>  1 file changed, 1 insertion(+), 3 deletions(-)
 > 
+> diff --git a/drivers/i2c/busses/i2c-qup.c b/drivers/i2c/busses/i2c-qup.c
+> index 5519c19bfd9c..ed09a59066b2 100644
+> --- a/drivers/i2c/busses/i2c-qup.c
+> +++ b/drivers/i2c/busses/i2c-qup.c
+> @@ -1766,10 +1766,8 @@ static int qup_i2c_probe(struct platform_device *pdev)
+>  		return PTR_ERR(qup->base);
+> 
+>  	qup->irq = platform_get_irq(pdev, 0);
+> -	if (qup->irq < 0) {
+> -		dev_err(qup->dev, "No IRQ defined\n");
+> +	if (qup->irq < 0)
+>  		return qup->irq;
+> -	}
+
+As far as I understand, platform_get_irq() == 0 is also an error condition.
+
+I think the typical way to handle this peculiarity is:
+(Maybe the IRQ maintainers will correct me)
+
+	qup->irq = platform_get_irq(pdev, 0);
+	if (qup->irq <= 0)
+		return qup->irq ? : -ENXIO;
+
+Regards.
