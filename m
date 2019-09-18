@@ -2,86 +2,102 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id DE4CFB68FC
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Sep 2019 19:21:23 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 388A6B69B5
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Sep 2019 19:38:51 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730422AbfIRRVW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 18 Sep 2019 13:21:22 -0400
-Received: from mail-pg1-f194.google.com ([209.85.215.194]:34066 "EHLO
-        mail-pg1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727000AbfIRRVW (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 18 Sep 2019 13:21:22 -0400
-Received: by mail-pg1-f194.google.com with SMTP id n9so241298pgc.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 18 Sep 2019 10:21:21 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id;
-        bh=4LdTXDWq3Uv3L2zd/NR5TCqm7My244nHQo+ObnVgt58=;
-        b=FqHH+Zoiq7lEG9/x/GOxUNp3JykuQnt4TdgW49TajHQUWWepwS/HhcutIkbTc4TJAE
-         4AbCZ075/oyErat+7EzcRPMlsw1Tuq9+zLj1jiNvm389RDdDz4BbUTjHMYxbPadBeIZd
-         AfR111JYfHvEOUFNCxRc/7NN+KyNPcw+NrlNkitfevmCkybcHhr2WyKWdy+/J5Y1xEmJ
-         YXOY/2Fv3axFRAGi7dDcS61Kn2TdKu0obx78TJWYSkFLNgkRUdQTZALdXujWzPCdwZxh
-         8gtu1fggCs8ry8ZHBOmL1OBKnHT0DeyHLfNo2xrbWmSNpmpBpNvQAWqNPcCc0rRu1qrO
-         xA6A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id;
-        bh=4LdTXDWq3Uv3L2zd/NR5TCqm7My244nHQo+ObnVgt58=;
-        b=KHt0+w3w6fQML5jPbpn+KXEO5zqHdiGKHQWZ2OACz5adMtbhrH0oIe5PGkZgSEl7P0
-         WbBm8XxeS9pyQAFKmVftjELu/yxjeOGdh4KmByAWWeq9vnnqfiQubFxek3aYJisB5++2
-         eP3Orv7IWjM/K3N9Owfe2217xSOrm/EAFTALJ4E66DWv0JSuQdlLOv9wTpaWOAt8qvsQ
-         xXDHcayTtEjYvDPJuOgbDS8/jvxpDEfB9Ldy7OxlcFQUXlvX79u6XlKZpTXZPGNklWE2
-         owuHlJYERN2bZ682nRNO9AuOCIyiJppWyGK+Ppkg5Or0ZGA7D83nXcnQ6doehZa4bVRs
-         LjRw==
-X-Gm-Message-State: APjAAAWTLdJBtr+OHJeg8ARkPlg97EyGrcOmnaTQzxo9HcYmp9D/C8uZ
-        KWkMkfZHJFGLXhneRCfft6ofRQ==
-X-Google-Smtp-Source: APXvYqwNoFVjaPm3eL6jMcaK8G2c8PabKi7HOM0JHnfEaNT+uqzgU9EB16AZzHifjaoL4rpVj6VvPw==
-X-Received: by 2002:a62:ed17:: with SMTP id u23mr5387020pfh.147.1568827281215;
-        Wed, 18 Sep 2019 10:21:21 -0700 (PDT)
-Received: from localhost.localdomain (104-188-17-28.lightspeed.sndgca.sbcglobal.net. [104.188.17.28])
-        by smtp.gmail.com with ESMTPSA id g5sm6977032pfh.133.2019.09.18.10.21.20
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 18 Sep 2019 10:21:20 -0700 (PDT)
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     "David S. Miller" <davem@davemloft.net>
-Cc:     netdev@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org,
-        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-        stable@vger.kernel.org
-Subject: [PATCH] net: qrtr: Stop rx_worker before freeing node
-Date:   Wed, 18 Sep 2019 10:21:17 -0700
-Message-Id: <20190918172117.4116-1-bjorn.andersson@linaro.org>
-X-Mailer: git-send-email 2.18.0
+        id S1727436AbfIRRiu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 18 Sep 2019 13:38:50 -0400
+Received: from mail.kernel.org ([198.145.29.99]:47246 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726369AbfIRRiu (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 18 Sep 2019 13:38:50 -0400
+Received: from localhost (unknown [122.178.229.153])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by mail.kernel.org (Postfix) with ESMTPSA id 75DB421848;
+        Wed, 18 Sep 2019 17:38:48 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=default; t=1568828329;
+        bh=oDaAt4kb6dNCXmBDXCWSMj7k/3bfxowZZKYYhcDrpno=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=q0K6ybPSmvbeIODZ4Ex+QAN52nVP68aXJhMuepJqC3Ful3NqGZf6aFopaaNRGDVWi
+         wVXOyGHynjvhEmMG1vU2eEa1+7tNKgNp/gZ/F0QqYjbAHuh0V7AoBlPtuoPDS2Xbd1
+         2af7JTD5fh7SF8J73dFBxeumH+sFkxyk+yxVRdZ8=
+Date:   Wed, 18 Sep 2019 23:07:40 +0530
+From:   Vinod Koul <vkoul@kernel.org>
+To:     Marc Gonzalez <marc.w.gonzalez@free.fr>
+Cc:     Kishon Vijay Abraham I <kishon@ti.com>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        MSM <linux-arm-msm@vger.kernel.org>,
+        Andy Gross <agross@kernel.org>,
+        LKML <linux-kernel@vger.kernel.org>,
+        Stephen Boyd <swboyd@chromium.org>
+Subject: Re: [PATCH v2 3/3] phy: qcom-qmp: Add SM8150 QMP UFS PHY support
+Message-ID: <20190918173740.GQ4392@vkoul-mobl>
+References: <20190906051017.26846-1-vkoul@kernel.org>
+ <20190906051017.26846-4-vkoul@kernel.org>
+ <ab149ba9-ab2e-5013-34ab-b01af51abc0a@free.fr>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <ab149ba9-ab2e-5013-34ab-b01af51abc0a@free.fr>
+User-Agent: Mutt/1.12.1 (2019-06-15)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-As the endpoint is unregistered there might still be work pending to
-handle incoming messages, which will result in a use after free
-scenario. The plan is to remove the rx_worker, but until then (and for
-stable@) ensure that the work is stopped before the node is freed.
+On 18-09-19, 17:08, Marc Gonzalez wrote:
+> On 06/09/2019 07:10, Vinod Koul wrote:
 
-Fixes: bdabad3e363d ("net: Add Qualcomm IPC router")
-Cc: stable@vger.kernel.org
-Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
----
- net/qrtr/qrtr.c | 1 +
- 1 file changed, 1 insertion(+)
+> > +	QMP_PHY_INIT_CFG(QSERDES_COM_V4_LOCK_CMP2_MODE1, 0x0f),
+> > +	QMP_PHY_INIT_CFG(QSERDES_COM_V4_BIN_VCOCAL_CMP_CODE1_MODE1, 0xdd),
+> > +	QMP_PHY_INIT_CFG(QSERDES_COM_V4_BIN_VCOCAL_CMP_CODE2_MODE1, 0x23),
+> > +
+> > +	/* Rate B */
+> > +	QMP_PHY_INIT_CFG(QSERDES_COM_V4_VCO_TUNE_MAP, 0x06),
+> 
+> IMO, the name of the symbolic constants should be QSERDES_V4_COM*
+> (like below for QSERDES_V4_TX* and QSERDES_V4_RX*)
 
-diff --git a/net/qrtr/qrtr.c b/net/qrtr/qrtr.c
-index 6c8b0f6d28f9..88f98f27ad88 100644
---- a/net/qrtr/qrtr.c
-+++ b/net/qrtr/qrtr.c
-@@ -150,6 +150,7 @@ static void __qrtr_node_release(struct kref *kref)
- 	list_del(&node->item);
- 	mutex_unlock(&qrtr_node_lock);
+Agreed this should have been QSERDES_V4_COM_*
  
-+	cancel_work_sync(&node->work);
- 	skb_queue_purge(&node->rx_queue);
- 	kfree(node);
- }
--- 
-2.18.0
+> > +static const char * const sm8150_ufs_phy_clk_l[] = {
+> > +	"ref", "ref_aux",
+> > +};
+> > +
+> 
+> Why not just reuse sdm845_ufs_phy_clk_l?
 
+I think that is a good idea, will do
+
+> > +static const struct qmp_phy_cfg sm8150_ufsphy_cfg = {
+> > +	.type			= PHY_TYPE_UFS,
+> > +	.nlanes			= 2,
+> > +
+> > +	.serdes_tbl		= sm8150_ufsphy_serdes_tbl,
+> > +	.serdes_tbl_num		= ARRAY_SIZE(sm8150_ufsphy_serdes_tbl),
+> > +	.tx_tbl			= sm8150_ufsphy_tx_tbl,
+> > +	.tx_tbl_num		= ARRAY_SIZE(sm8150_ufsphy_tx_tbl),
+> > +	.rx_tbl			= sm8150_ufsphy_rx_tbl,
+> > +	.rx_tbl_num		= ARRAY_SIZE(sm8150_ufsphy_rx_tbl),
+> > +	.pcs_tbl		= sm8150_ufsphy_pcs_tbl,
+> > +	.pcs_tbl_num		= ARRAY_SIZE(sm8150_ufsphy_pcs_tbl),
+> > +	.clk_list		= sm8150_ufs_phy_clk_l,
+> > +	.num_clks		= ARRAY_SIZE(sm8150_ufs_phy_clk_l),
+> > +	.vreg_list		= qmp_phy_vreg_l,
+> > +	.num_vregs		= ARRAY_SIZE(qmp_phy_vreg_l),
+> > +	.regs			= sm8150_ufsphy_regs_layout,
+> > +
+> > +	.start_ctrl		= SERDES_START,
+> > +	.pwrdn_ctrl		= SW_PWRDN,
+> > +	.mask_pcs_ready		= PCS_READY,
+> 
+> I think you need to rework your patch on top of
+> "phy: qcom-qmp: Correct ready status, again"
+> (it removed this field)
+
+Yes will rebase on rc1 (when out) and resend, thanks for pointing
+
+-- 
+~Vinod
