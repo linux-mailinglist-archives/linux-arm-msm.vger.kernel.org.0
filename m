@@ -2,109 +2,96 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id E154EB7EEC
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 Sep 2019 18:18:25 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 57BFEB7F5E
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 Sep 2019 18:50:12 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2390448AbfISQSZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 19 Sep 2019 12:18:25 -0400
-Received: from mail-qk1-f196.google.com ([209.85.222.196]:41134 "EHLO
-        mail-qk1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2390392AbfISQSY (ORCPT
+        id S1732787AbfISQuL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 19 Sep 2019 12:50:11 -0400
+Received: from mail-wm1-f65.google.com ([209.85.128.65]:33483 "EHLO
+        mail-wm1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1732783AbfISQuL (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 19 Sep 2019 12:18:24 -0400
-Received: by mail-qk1-f196.google.com with SMTP id p10so3955491qkg.8
-        for <linux-arm-msm@vger.kernel.org>; Thu, 19 Sep 2019 09:18:24 -0700 (PDT)
+        Thu, 19 Sep 2019 12:50:11 -0400
+Received: by mail-wm1-f65.google.com with SMTP id r17so7592618wme.0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 19 Sep 2019 09:50:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id;
-        bh=3Yye6iqRCV5drve2C5oFfaJYT6iHjklqWnjrwbuk4nU=;
-        b=DfOsUoTIpzx2QhunV87jDAkhaGaTZF2Wq9kXmOpB+RnTf0cmun6xSFOeGFWc1nlk8i
-         Vbi2UOvCcag/k7KveMGBxKzBCg6linJ09RjddursD6qERVdl8RmzZcglttS95B1AtRz6
-         t0IdbZ8RQ+GvXnvBMXLvdH/2Wqp8GvwjAwV5dnZ+0E9T/erjw84k5KwDogl1K9OSL3VL
-         1v5O8ENeEjqq3rbwd2pzUsMXosH69kJ4BcjnYaBudSzO8rxxyM0a/p67VWhjO9pIZ7vH
-         6h//AyT8kI2oXAKMshKUTETDne/WMwb/v06zc89YrcaE1VSOwHQ3Mu6c8Pnl6eplsePJ
-         iSOg==
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=qEDrSkRuuo6lL+9DY4DVGx51w66YHOspKUBct+J7PsM=;
+        b=q9V8LOeiE+364i78EeVgeUXc7zuwpTt9nK4dpxcKgjCZKsP3mEzEClf2oOVu8qEnD6
+         tPFAmHMOG9eBWSWp8YzG0RZ3ekqH6iBxnlmCPbirm7oFujKUdlDtTDI3aBEBVLA5XFua
+         gvMGkkreSEoPSoirpYZpNA/0L727emywPGT3ugA35ZYvBsHoUHjGfyTZfTCir7rPFcST
+         L9MGeDnc+DC/oSqemRoZfvhCy00ebMmIiJWVmZOMMHFu3LBZy17QiRwim3RSq0q2+uCR
+         usoqBvFwTmxj8a7DY1gIOKsYat/lJNAdwR9/8DVXaORL8Sh7hhT1c8bcQ6l/S906xAI9
+         P88Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id;
-        bh=3Yye6iqRCV5drve2C5oFfaJYT6iHjklqWnjrwbuk4nU=;
-        b=frxkmjuQ5G6CAJubOaKd26FX+AJs4mUjWLXB7RIVq0AkHuBgmNbClgLyfQ7615JJuV
-         iz45N1Wy/fdU/9q08DfuhcUmsayknL7T9oncwq/PFe6FweKakeX0xuIDdSLyS3lEyECj
-         /8dyrzdL3TkGPD9YZttkyedO7IAbo3b35IxOW+wbyQI+Byfmey7+vaA4dEjtjJqriEPA
-         TJaf9PuLUlMIcsz9w1NPGTAti0rTMEJf9b3VeyDlKUnvebBj1MOW3RatP2CxM2FQriW3
-         qNZhU6XwpCPrV9X7fcJCKkiq2COipcQ8vhqfiuDbfCszq4tlny7MDjAP4ZGG8AbddAex
-         EBMQ==
-X-Gm-Message-State: APjAAAXASzeQ0EUYgJ1RLSLF/r2gFoTlx6C30Zb7rie7mHI/9M+pcmgy
-        hFOgOxbKffIvwvXvwrRFRAWi7g==
-X-Google-Smtp-Source: APXvYqwxFzSC67Uj/43CUBfNaRyYl2MKB2Q0JUrBMbcegGoYZlv0KJ4P+lO0843mrSwB6NClo3xNdQ==
-X-Received: by 2002:a05:620a:694:: with SMTP id f20mr3781309qkh.379.1568909903952;
-        Thu, 19 Sep 2019 09:18:23 -0700 (PDT)
-Received: from Thara-Work-Ubuntu.fios-router.home (pool-71-255-246-27.washdc.fios.verizon.net. [71.255.246.27])
-        by smtp.googlemail.com with ESMTPSA id q62sm4561185qkb.69.2019.09.19.09.18.23
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Thu, 19 Sep 2019 09:18:23 -0700 (PDT)
-From:   Thara Gopinath <thara.gopinath@linaro.org>
-To:     bjorn.andersson@linaro.org, agross@kernel.org
-Cc:     linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: [PATCH] soc: qcom: Invert the cooling states for the aoss resources that can act as warming devices
-Date:   Thu, 19 Sep 2019 12:18:22 -0400
-Message-Id: <1568909902-8446-1-git-send-email-thara.gopinath@linaro.org>
-X-Mailer: git-send-email 2.1.4
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=qEDrSkRuuo6lL+9DY4DVGx51w66YHOspKUBct+J7PsM=;
+        b=qbQOJq5fyZil1p9fCMAm1InXl56lypK+L8DGqi3lY8rJcbJb5VRTgQ8K692A2i50QA
+         GHYQRRcryUqKHxo0XEuLDNiiYUQvkosIoTSLrgV7a3Pc97oW97jOT1P13ECsvh6aPk0O
+         36Z7TLoQAbUKBTM22aOv2lQoBtY2NanUS27DFEEqGI/CVKMT5g/uUhQ+InFSRVcxW3Ze
+         e++GDUcSCIVVfBlSRh2Omrlm163QAc2BrtCZcDEnrmzCqXFZtSivKKkkD5KImOMU8Loh
+         SL7+d1AMm/Ki5PhN9Y5mlmlRuvt8WMbjZwqnkEaivS4Tx3psC0U/x2ITHkRme2gomZyv
+         G+nQ==
+X-Gm-Message-State: APjAAAXA1VPVypqPAt88rLBttfNmNOLdcu6PGX5RYw+CPW9+HwAoXJOZ
+        ZBZguSn87fsLPRrS5MJFLBy/qg==
+X-Google-Smtp-Source: APXvYqzBroZEcwk9i2c/xO/jp6uxLLX76ENOImmzPZLTWzLhoVXMVZ0JbZLe5mS0tiXjoN63s5XMPQ==
+X-Received: by 2002:a1c:2d44:: with SMTP id t65mr3654035wmt.12.1568911809121;
+        Thu, 19 Sep 2019 09:50:09 -0700 (PDT)
+Received: from [192.168.86.34] (cpc89974-aztw32-2-0-cust43.18-1.cable.virginm.net. [86.30.250.44])
+        by smtp.googlemail.com with ESMTPSA id u10sm17381210wrg.55.2019.09.19.09.50.07
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Thu, 19 Sep 2019 09:50:08 -0700 (PDT)
+Subject: Re: [PATCH 0/6] rpmsg: glink stability fixes
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Ohad Ben-Cohen <ohad@wizery.com>,
+        Jorge Ramirez <jorge.ramirez-ortiz@linaro.org>
+Cc:     linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+References: <20190918171916.4039-1-bjorn.andersson@linaro.org>
+From:   Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+Message-ID: <74b3d165-b1ea-e4e3-df50-98bda8691d5c@linaro.org>
+Date:   Thu, 19 Sep 2019 17:50:07 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+ Thunderbird/60.8.0
+MIME-Version: 1.0
+In-Reply-To: <20190918171916.4039-1-bjorn.andersson@linaro.org>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Thermal framework takes 0 as the lowest/default state for a
-cooling/warming device. The current code has the order reverted with
-1 corresponding to lowest state in hardware and 0 the highest state.
-Invert this for a better fit with the thermal framework.
 
-Signed-off-by: Thara Gopinath <thara.gopinath@linaro.org>
----
- drivers/soc/qcom/qcom_aoss.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/soc/qcom/qcom_aoss.c b/drivers/soc/qcom/qcom_aoss.c
-index 33a27e6..006ac40 100644
---- a/drivers/soc/qcom/qcom_aoss.c
-+++ b/drivers/soc/qcom/qcom_aoss.c
-@@ -44,7 +44,7 @@
- 
- #define QMP_NUM_COOLING_RESOURCES	2
- 
--static bool qmp_cdev_init_state = 1;
-+static bool qmp_cdev_max_state = 1;
- 
- struct qmp_cooling_device {
- 	struct thermal_cooling_device *cdev;
-@@ -402,7 +402,7 @@ static void qmp_pd_remove(struct qmp *qmp)
- static int qmp_cdev_get_max_state(struct thermal_cooling_device *cdev,
- 				  unsigned long *state)
- {
--	*state = qmp_cdev_init_state;
-+	*state = qmp_cdev_max_state;
- 	return 0;
- }
- 
-@@ -432,7 +432,7 @@ static int qmp_cdev_set_cur_state(struct thermal_cooling_device *cdev,
- 	snprintf(buf, sizeof(buf),
- 		 "{class: volt_flr, event:zero_temp, res:%s, value:%s}",
- 			qmp_cdev->name,
--			cdev_state ? "off" : "on");
-+			cdev_state ? "on" : "off");
- 
- 	ret = qmp_send(qmp_cdev->qmp, buf, sizeof(buf));
- 
-@@ -455,7 +455,7 @@ static int qmp_cooling_device_add(struct qmp *qmp,
- 	char *cdev_name = (char *)node->name;
- 
- 	qmp_cdev->qmp = qmp;
--	qmp_cdev->state = qmp_cdev_init_state;
-+	qmp_cdev->state = !qmp_cdev_max_state;
- 	qmp_cdev->name = cdev_name;
- 	qmp_cdev->cdev = devm_thermal_of_cooling_device_register
- 				(qmp->dev, node,
--- 
-2.1.4
+On 18/09/2019 18:19, Bjorn Andersson wrote:
+> Fixes for issues found in GLINK during reboot testing of a remoteproc.
+> 
+> Arun Kumar Neelakantam (2):
+>    rpmsg: glink: Fix reuse intents memory leak issue
+>    rpmsg: glink: Fix use after free in open_ack TIMEOUT case
+> 
+> Bjorn Andersson (2):
+>    rpmsg: glink: Don't send pending rx_done during remove
+>    rpmsg: glink: Free pending deferred work on remove
+> 
+> Chris Lew (2):
+>    rpmsg: glink: Put an extra reference during cleanup
+>    rpmsg: glink: Fix rpmsg_register_device err handling
+> 
+>   drivers/rpmsg/qcom_glink_native.c | 50 ++++++++++++++++++++++++++-----
+>   1 file changed, 42 insertions(+), 8 deletions(-)
+> 
 
+Thanks for the fixes.
+
+Tested-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+
+
+--srini
