@@ -2,109 +2,185 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 4A480B771C
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 Sep 2019 12:05:59 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C3EEEB7837
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 Sep 2019 13:08:37 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2389098AbfISKF6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 19 Sep 2019 06:05:58 -0400
-Received: from mail-wm1-f66.google.com ([209.85.128.66]:34886 "EHLO
-        mail-wm1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2389018AbfISKF6 (ORCPT
+        id S2388945AbfISLId (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 19 Sep 2019 07:08:33 -0400
+Received: from smtp.codeaurora.org ([198.145.29.96]:56778 "EHLO
+        smtp.codeaurora.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2388924AbfISLIc (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 19 Sep 2019 06:05:58 -0400
-Received: by mail-wm1-f66.google.com with SMTP id y21so3266267wmi.0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 19 Sep 2019 03:05:57 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=0qCMMPkPMs7VBfcvx3JaPL0V56C94XiExPoi5TYfUdo=;
-        b=YJ3anWqkz3yfMdDXZlWvfwd2aRSX1GEWmuiEvzP4HnRI/QUu14biCE0o0kKjREXsCf
-         KuW4986tQaHaCZuqMpurrkj8rK6Txizw1DhqQIJ4AWTDSZ9yeaLNKdWapvPAu+a1e0Wy
-         0NKhkRAFN1BL+Fro8CrV82lsXppSNdtTsQJBE1IVuxoJfBHtHV0Ve6IKj8vqag92lSBl
-         6fHu8EODi8AyrZZvYOiJJa6KyqEiyjkvyJH8Hg6zgKhSxat7GGzDkPtc1y9q0pGjD6ZO
-         JZI34ycmL8mzIKssv01a5fULUS5KbRJnJUBPhdgzDG+SPSdDnQJYtuJplCrc7J5SExLd
-         xijQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=0qCMMPkPMs7VBfcvx3JaPL0V56C94XiExPoi5TYfUdo=;
-        b=iu/D/W39Ebvn1GdGl8tdznrevszELD+PgsmbDFYUV4DNaZESLy0paLAZ0zFXnXFjFB
-         RfmfNcx7dmBl/1LikRtYrLogMycH0DPOSPlK5/mCvNwc5ZerFuLRHvK4gIFo+E87/PK7
-         zMeVbfShErA3izYVQgNJqJm382awz1M7ODGKmG+YemqI9iESRh8fNXDVXCRA38UrrTcG
-         05o/MSCA+VjMdDchIWSaAQsg5eLVQCr39Q1awFLQuaUGGrwQRsLDThsugeg6DVepFAir
-         zdMy2Lh/wAHdXQUrfJoAZvgOt+xKUBLkcWI25WMM+j1PDTTZZ8upjhdBpkAIsDp31dQO
-         Uu2w==
-X-Gm-Message-State: APjAAAX6+sioEI+ZELhpOVQPdY6RCqOeR50DDn00vbVYlsK1P4QvxmtS
-        6RyrghekEalNk4wd0Wm4Otr74A==
-X-Google-Smtp-Source: APXvYqxgniKjpSqUKCq3LuuJ49giEyIk2zZbAqW994p+uQN2HoctohFog3xIGNP6T7hvGty7R9NUXQ==
-X-Received: by 2002:a7b:c4d6:: with SMTP id g22mr2081077wmk.21.1568887556601;
-        Thu, 19 Sep 2019 03:05:56 -0700 (PDT)
-Received: from srini-hackbox.lan (cpc89974-aztw32-2-0-cust43.18-1.cable.virginm.net. [86.30.250.44])
-        by smtp.gmail.com with ESMTPSA id s10sm8590175wmf.48.2019.09.19.03.05.55
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 19 Sep 2019 03:05:56 -0700 (PDT)
-From:   Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-To:     ohad@wizery.com, bjorn.andersson@linaro.org
-Cc:     linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org,
-        linux-kernel@vger.kernel.org,
-        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-Subject: [PATCH] rpmsg: glink: Fix channel memory leak
-Date:   Thu, 19 Sep 2019 11:05:40 +0100
-Message-Id: <20190919100540.28159-1-srinivas.kandagatla@linaro.org>
-X-Mailer: git-send-email 2.21.0
+        Thu, 19 Sep 2019 07:08:32 -0400
+Received: by smtp.codeaurora.org (Postfix, from userid 1000)
+        id ACBB560736; Thu, 19 Sep 2019 11:08:29 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
+        s=default; t=1568891310;
+        bh=K9ke7ozlRukiKpFPzOB06YIaFObZUHMF5JsQi3muFHI=;
+        h=Subject:To:Cc:References:From:Date:In-Reply-To:From;
+        b=VlWFQna5g8zHvZ20t/fP2hnMbTUuQQk0HPFdoM0RPra0OXd/0bDPuPul+zJ8PZs6P
+         Kqdx7d6K3OwVRDDCvMuyyBVnjLFQT2H2jm7KEBlRkuSksAwySiFaq+EKeyQ2wSqOnU
+         sl/r5nx7i+AUwHw+7du9HmgsZlBPt5Xtg4vAEFp0=
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        pdx-caf-mail.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.7 required=2.0 tests=ALL_TRUSTED,BAYES_00,
+        DKIM_INVALID,DKIM_SIGNED,SPF_NONE autolearn=no autolearn_force=no
+        version=3.4.0
+Received: from [192.168.0.103] (unknown [49.207.53.137])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: rnayak@smtp.codeaurora.org)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id E459E60736;
+        Thu, 19 Sep 2019 11:08:22 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
+        s=default; t=1568891307;
+        bh=K9ke7ozlRukiKpFPzOB06YIaFObZUHMF5JsQi3muFHI=;
+        h=Subject:To:Cc:References:From:Date:In-Reply-To:From;
+        b=FeJksmbvaaiudlu+lpWCm/Vwk/sZ308XFKnIVSMGYA98VvX8Nq9AcFXYCEpTzSWDl
+         k1m4aIdM545LgyrKGUD3DMPYTVFermJtdTky1HawKyLuTZf50+nEEdSnTtbVri6Eg/
+         LTKqU6Fji/3Mbtfpp4zhb2+5dKSMmoFTWrSqCxd8=
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org E459E60736
+Authentication-Results: pdx-caf-mail.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: pdx-caf-mail.web.codeaurora.org; spf=none smtp.mailfrom=rnayak@codeaurora.org
+Subject: Re: [PATCH v3 3/3] clk: qcom: Add Global Clock controller (GCC)
+ driver for SC7180
+To:     Taniya Das <tdas@codeaurora.org>, Stephen Boyd <sboyd@kernel.org>,
+        Michael Turquette <mturquette@baylibre.com>, robh+dt@kernel.org
+Cc:     David Brown <david.brown@linaro.org>,
+        linux-arm-msm@vger.kernel.org, linux-soc@vger.kernel.org,
+        linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org,
+        devicetree@vger.kernel.org
+References: <20190918095018.17979-1-tdas@codeaurora.org>
+ <20190918095018.17979-4-tdas@codeaurora.org>
+From:   Rajendra Nayak <rnayak@codeaurora.org>
+Message-ID: <74643831-1a58-e279-aca3-8753f5fcbe04@codeaurora.org>
+Date:   Thu, 19 Sep 2019 16:38:19 +0530
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
+ Thunderbird/60.9.0
 MIME-Version: 1.0
+In-Reply-To: <20190918095018.17979-4-tdas@codeaurora.org>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
 Content-Transfer-Encoding: 8bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-If we stop and start the dsp while channel is open then there is a leak
-in the driver as the refcount is not accounted for the open.
+[]..
 
-This patch checks if the channel is open while running cleanup code
-and does an extra kref_put to account for open which would ensure
-that channel does not leak.
+> +static struct clk_rcg_dfs_data gcc_dfs_clocks[] = {
+> +	DEFINE_RCG_DFS(gcc_qupv3_wrap0_s0_clk_src),
+> +	DEFINE_RCG_DFS(gcc_qupv3_wrap0_s1_clk_src),
+> +	DEFINE_RCG_DFS(gcc_qupv3_wrap0_s2_clk_src),
+> +	DEFINE_RCG_DFS(gcc_qupv3_wrap0_s3_clk_src),
+> +	DEFINE_RCG_DFS(gcc_qupv3_wrap0_s4_clk_src),
+> +	DEFINE_RCG_DFS(gcc_qupv3_wrap0_s5_clk_src),
+> +	DEFINE_RCG_DFS(gcc_qupv3_wrap1_s0_clk_src),
+> +	DEFINE_RCG_DFS(gcc_qupv3_wrap1_s1_clk_src),
+> +	DEFINE_RCG_DFS(gcc_qupv3_wrap1_s2_clk_src),
+> +	DEFINE_RCG_DFS(gcc_qupv3_wrap1_s3_clk_src),
+> +	DEFINE_RCG_DFS(gcc_qupv3_wrap1_s4_clk_src),
+> +	DEFINE_RCG_DFS(gcc_qupv3_wrap1_s5_clk_src),
+> +};
 
-Originally detected by kmemleak:
-  backtrace:
-    [<ffffff80088b74d8>] kmemleak_alloc+0x50/0x84
-    [<ffffff80081ddbc8>] kmem_cache_alloc_trace+0xd4/0x178
-    [<ffffff80086b8bd0>] qcom_glink_alloc_channel+0x34/0x148
-    [<ffffff80086b8038>] qcom_glink_work+0x3b0/0x664
-    [<ffffff80080c3da8>] process_one_work+0x160/0x2f8
-    [<ffffff80080c4198>] worker_thread+0x1e8/0x2d4
-    [<ffffff80080c8b24>] kthread+0x128/0x138
-    [<ffffff80080845b4>] ret_from_fork+0x10/0x18
-    [<ffffffffffffffff>] 0xffffffffffffffff
-unreferenced object 0xffffffc02cf5ed80 (size 128):
+this fails to build..
 
-Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
----
- drivers/rpmsg/qcom_glink_native.c | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+In file included from drivers/clk/qcom/gcc-sc7180.c:17:0:
+drivers/clk/qcom/gcc-sc7180.c:2429:17: error: ‘gcc_qupv3_wrap0_s0_clk_src_src’ undeclared here (not in a function)
+   DEFINE_RCG_DFS(gcc_qupv3_wrap0_s0_clk_src),
+                  ^
+drivers/clk/qcom/clk-rcg.h:171:12: note: in definition of macro ‘DEFINE_RCG_DFS’
+   { .rcg = &r##_src, .init = &r##_init }
+             ^
+drivers/clk/qcom/gcc-sc7180.c:2430:17: error: ‘gcc_qupv3_wrap0_s1_clk_src_src’ undeclared here (not in a function)
+   DEFINE_RCG_DFS(gcc_qupv3_wrap0_s1_clk_src),
+                  ^
+drivers/clk/qcom/clk-rcg.h:171:12: note: in definition of macro ‘DEFINE_RCG_DFS’
+   { .rcg = &r##_src, .init = &r##_init }
+             ^
+Perhaps you should drop _src here and in the clk_init_data names.
 
-diff --git a/drivers/rpmsg/qcom_glink_native.c b/drivers/rpmsg/qcom_glink_native.c
-index dc7d3d098fd3..38a10dcc2029 100644
---- a/drivers/rpmsg/qcom_glink_native.c
-+++ b/drivers/rpmsg/qcom_glink_native.c
-@@ -1660,8 +1660,13 @@ void qcom_glink_native_remove(struct qcom_glink *glink)
- 
- 	spin_lock_irqsave(&glink->idr_lock, flags);
- 	/* Release any defunct local channels, waiting for close-ack */
--	idr_for_each_entry(&glink->lcids, channel, cid)
-+	idr_for_each_entry(&glink->lcids, channel, cid) {
-+		if (channel->rcid)
-+			kref_put(&channel->refcount,
-+				 qcom_glink_channel_release);
-+
- 		kref_put(&channel->refcount, qcom_glink_channel_release);
-+	}
- 
- 	/* Release any defunct local channels, waiting for close-req */
- 	idr_for_each_entry(&glink->rcids, channel, cid)
+> +
+> +static const struct regmap_config gcc_sc7180_regmap_config = {
+> +	.reg_bits = 32,
+> +	.reg_stride = 4,
+> +	.val_bits = 32,
+> +	.max_register = 0x18208c,
+> +	.fast_io = true,
+> +};
+> +
+> +static const struct qcom_cc_desc gcc_sc7180_desc = {
+> +	.config = &gcc_sc7180_regmap_config,
+> +	.clk_hws = gcc_sc7180_hws,
+> +	.num_clk_hws = ARRAY_SIZE(gcc_sc7180_hws),
+> +	.clks = gcc_sc7180_clocks,
+> +	.num_clks = ARRAY_SIZE(gcc_sc7180_clocks),
+> +	.resets = gcc_sc7180_resets,
+> +	.num_resets = ARRAY_SIZE(gcc_sc7180_resets),
+> +	.gdscs = gcc_sc7180_gdscs,
+> +	.num_gdscs = ARRAY_SIZE(gcc_sc7180_gdscs),
+> +};
+> +
+> +static const struct of_device_id gcc_sc7180_match_table[] = {
+> +	{ .compatible = "qcom,gcc-sc7180" },
+> +	{ }
+> +};
+> +MODULE_DEVICE_TABLE(of, gcc_sc7180_match_table);
+> +
+> +static int gcc_sc7180_probe(struct platform_device *pdev)
+> +{
+> +	struct regmap *regmap;
+> +	int ret;
+> +
+> +	regmap = qcom_cc_map(pdev, &gcc_sc7180_desc);
+> +	if (IS_ERR(regmap))
+> +		return PTR_ERR(regmap);
+> +
+> +	/*
+> +	 * Disable the GPLL0 active input to MM blocks, NPU
+> +	 * and GPU via MISC registers.
+> +	 */
+> +	regmap_update_bits(regmap, GCC_MMSS_MISC, 0x3, 0x3);
+> +	regmap_update_bits(regmap, GCC_NPU_MISC, 0x3, 0x3);
+> +	regmap_update_bits(regmap, GCC_GPU_MISC, 0x3, 0x3);
+> +
+> +	ret = qcom_cc_register_rcg_dfs(regmap, gcc_dfs_clocks,
+> +					ARRAY_SIZE(gcc_dfs_clocks));
+> +	if (ret)
+> +		return ret;
+> +
+> +	return qcom_cc_really_probe(pdev, &gcc_sc7180_desc, regmap);
+> +}
+> +
+> +static struct platform_driver gcc_sc7180_driver = {
+> +	.probe = gcc_sc7180_probe,
+> +	.driver = {
+> +		.name = "gcc-sc7180",
+> +		.of_match_table = gcc_sc7180_match_table,
+> +	},
+> +};
+> +
+> +static int __init gcc_sc7180_init(void)
+> +{
+> +	return platform_driver_register(&gcc_sc7180_driver);
+> +}
+> +subsys_initcall(gcc_sc7180_init);
+> +
+> +static void __exit gcc_sc7180_exit(void)
+> +{
+> +	platform_driver_unregister(&gcc_sc7180_driver);
+> +}
+> +module_exit(gcc_sc7180_exit);
+> +
+> +MODULE_DESCRIPTION("QTI GCC SC7180 Driver");
+> +MODULE_LICENSE("GPL v2");
+> --
+> Qualcomm INDIA, on behalf of Qualcomm Innovation Center, Inc.is a member
+> of the Code Aurora Forum, hosted by the  Linux Foundation.
+> 
+
 -- 
-2.21.0
-
+QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
+of Code Aurora Forum, hosted by The Linux Foundation
