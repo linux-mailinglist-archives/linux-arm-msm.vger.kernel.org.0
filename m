@@ -2,102 +2,67 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id CF80DB95EE
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 Sep 2019 18:45:46 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id AA941B97C4
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 Sep 2019 21:28:08 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2390364AbfITQpq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 20 Sep 2019 12:45:46 -0400
-Received: from mail.kernel.org ([198.145.29.99]:54942 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S2389184AbfITQpq (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 20 Sep 2019 12:45:46 -0400
-Received: from kernel.org (unknown [104.132.0.74])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 68FFB20717;
-        Fri, 20 Sep 2019 16:45:45 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1568997945;
-        bh=7uHZpCyprQ+ExDBGZqIoxuu9cl0f/lWQvotmf0EacHA=;
-        h=In-Reply-To:References:Cc:To:From:Subject:Date:From;
-        b=ceDU+qwuK9oo+gOGz+xEIQPbYNs+uXlRoiQwcFQpYWpEl+BJEsUuClxUZFtdIozhS
-         V5a6zobi1vycFbhwmfKDa3+AzkItBBjMn1NAq3VX7+ydvGeAg2UsrdDhWFYIcWT07Q
-         LnT7F3T1SXulg9eyo04RR5eolqZkazCMLxE0c6rU=
-Content-Type: text/plain; charset="utf-8"
+        id S1726363AbfITT2H (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 20 Sep 2019 15:28:07 -0400
+Received: from mail-qt1-f196.google.com ([209.85.160.196]:34878 "EHLO
+        mail-qt1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726257AbfITT2H (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 20 Sep 2019 15:28:07 -0400
+Received: by mail-qt1-f196.google.com with SMTP id m15so9993036qtq.2;
+        Fri, 20 Sep 2019 12:28:07 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=XHTMSzwJkliwgOP7eZyXNvC4MBsPW4A1aJFqBEd8zAQ=;
+        b=N52OJsy0o51lGf/l/GmuR7130d5E5iLIcEiaAjDKQzydlhLNAeXfLqwDSAD9G7J3AT
+         htygPBdd8egAi+hE3UqCjlxhL3VTOEWlFFq4vSxQu4T2TufCJCQGgVIBLCA0/PR/RvRv
+         9q5pWSsxyScMnCCk7375lTw87wLLKzbKddn5brZv4QxF76wA7eafynmAUIKSm+SFij6z
+         t9eaHYKj78dGvKM1K69gMotqpxLdjI3ZIo5m/Ik51x1lloIvhM5s7myVttZqGmGSjIRf
+         EBj1LsBugPnI5vQlCHTpDm9rfOxCqVnYkV1gD+9WwTcWD9N1Fxff9hND2/HAOcL2KbFv
+         7gcQ==
+X-Gm-Message-State: APjAAAXoFMwy8AL0wQlJd0Gir2l3Vx7scVsHacFF7KvtFc7rFloLbVhu
+        gNc7ioFAALA43tQFZ8c2FoNkreI/QauciVqyKM0=
+X-Google-Smtp-Source: APXvYqwWOpxfEuTbjipdTHmB6EfT06OsCibdbejJw96yuSuerdplxAt2quCcZKxMg+fYIYqo4rdAsPypOYpd/xZ9iOA=
+X-Received: by 2002:ac8:342a:: with SMTP id u39mr5115350qtb.7.1569007686519;
+ Fri, 20 Sep 2019 12:28:06 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <20190920145543.1732316-1-arnd@arndb.de>
-References: <20190920145543.1732316-1-arnd@arndb.de>
-Cc:     Arnd Bergmann <arnd@arndb.de>,
+References: <20190920145543.1732316-1-arnd@arndb.de> <20190920164545.68FFB20717@mail.kernel.org>
+In-Reply-To: <20190920164545.68FFB20717@mail.kernel.org>
+From:   Arnd Bergmann <arnd@arndb.de>
+Date:   Fri, 20 Sep 2019 21:27:50 +0200
+Message-ID: <CAK8P3a2j6QG19i3YtRPh7qD4Zr5TiHmK_5=s9mSD2pHVmE99HA@mail.gmail.com>
+Subject: Re: [PATCH] mbox: qcom: avoid unused-variable warning
+To:     Stephen Boyd <sboyd@kernel.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Jassi Brar <jassisinghbrar@gmail.com>,
         Niklas Cassel <niklas.cassel@linaro.org>,
         Jorge Ramirez-Ortiz <jorge.ramirez-ortiz@linaro.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
         Jassi Brar <jaswinder.singh@linaro.org>,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-To:     Andy Gross <agross@kernel.org>, Arnd Bergmann <arnd@arndb.de>,
-        Jassi Brar <jassisinghbrar@gmail.com>
-From:   Stephen Boyd <sboyd@kernel.org>
-Subject: Re: [PATCH] mbox: qcom: avoid unused-variable warning
-User-Agent: alot/0.8.1
-Date:   Fri, 20 Sep 2019 09:45:44 -0700
-Message-Id: <20190920164545.68FFB20717@mail.kernel.org>
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Arnd Bergmann (2019-09-20 07:55:29)
-> Without CONFIG_OF, there is no reference to the apcs_clk_match_table[]
-> array, causing a harmless warning:
->=20
-> drivers/mailbox/qcom-apcs-ipc-mailbox.c:57:28: error: unused variable 'ap=
-cs_clk_match_table' [-Werror,-Wunused-variable]
->         const struct of_device_id apcs_clk_match_table[] =3D {
->=20
-> Move the variable out of the variable scope and mark it 'static'
-> to avoid the warning (static const variables get silently dropped
-> by the compiler), and avoid the on-stack copy at the same time.
->=20
-> Fixes: 78c86458a440 ("mbox: qcom: add APCS child device for QCS404")
-> Signed-off-by: Arnd Bergmann <arnd@arndb.de>
-> ---
->  drivers/mailbox/qcom-apcs-ipc-mailbox.c | 11 ++++++-----
->  1 file changed, 6 insertions(+), 5 deletions(-)
->=20
-> diff --git a/drivers/mailbox/qcom-apcs-ipc-mailbox.c b/drivers/mailbox/qc=
-om-apcs-ipc-mailbox.c
-> index eeebafd546e5..10557a950c2d 100644
-> --- a/drivers/mailbox/qcom-apcs-ipc-mailbox.c
-> +++ b/drivers/mailbox/qcom-apcs-ipc-mailbox.c
-> @@ -45,6 +45,12 @@ static const struct mbox_chan_ops qcom_apcs_ipc_ops =
-=3D {
->         .send_data =3D qcom_apcs_ipc_send_data,
->  };
-> =20
-> +static const struct of_device_id apcs_clk_match_table[] =3D {
-> +       { .compatible =3D "qcom,msm8916-apcs-kpss-global", },
-> +       { .compatible =3D "qcom,qcs404-apcs-apps-global", },
-> +       {}
-> +};
-> +
->  static int qcom_apcs_ipc_probe(struct platform_device *pdev)
->  {
->         struct qcom_apcs_ipc *apcs;
-> @@ -54,11 +60,6 @@ static int qcom_apcs_ipc_probe(struct platform_device =
-*pdev)
->         void __iomem *base;
->         unsigned long i;
->         int ret;
-> -       const struct of_device_id apcs_clk_match_table[] =3D {
+On Fri, Sep 20, 2019 at 6:45 PM Stephen Boyd <sboyd@kernel.org> wrote:
+> > @@ -54,11 +60,6 @@ static int qcom_apcs_ipc_probe(struct platform_device *pdev)
+> >         void __iomem *base;
+> >         unsigned long i;
+> >         int ret;
+> > -       const struct of_device_id apcs_clk_match_table[] = {
+>
+> Does marking it static here work too? It would be nice to limit the
+> scope of this variable to this function instead of making it a global.
+> Also, it might be slightly smaller code size if that works.
 
-Does marking it static here work too? It would be nice to limit the
-scope of this variable to this function instead of making it a global.
-Also, it might be slightly smaller code size if that works.
+No, I just tried and the warning returned.
 
-> -               { .compatible =3D "qcom,msm8916-apcs-kpss-global", },
-> -               { .compatible =3D "qcom,qcs404-apcs-apps-global", },
-> -               {}
-> -       };
-> =20
->         apcs =3D devm_kzalloc(&pdev->dev, sizeof(*apcs), GFP_KERNEL);
->         if (!apcs)
+      Arnd
