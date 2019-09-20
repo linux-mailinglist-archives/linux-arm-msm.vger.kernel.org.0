@@ -2,55 +2,53 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 5313CB997C
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 21 Sep 2019 00:07:39 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 6E157B9980
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 21 Sep 2019 00:09:36 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727950AbfITWHi (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 20 Sep 2019 18:07:38 -0400
-Received: from mail-vs1-f66.google.com ([209.85.217.66]:33112 "EHLO
-        mail-vs1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727710AbfITWHi (ORCPT
+        id S1726405AbfITWJf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 20 Sep 2019 18:09:35 -0400
+Received: from mail-pl1-f193.google.com ([209.85.214.193]:33832 "EHLO
+        mail-pl1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726410AbfITWJf (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 20 Sep 2019 18:07:38 -0400
-Received: by mail-vs1-f66.google.com with SMTP id p13so5735079vso.0
-        for <linux-arm-msm@vger.kernel.org>; Fri, 20 Sep 2019 15:07:37 -0700 (PDT)
+        Fri, 20 Sep 2019 18:09:35 -0400
+Received: by mail-pl1-f193.google.com with SMTP id d3so3830276plr.1
+        for <linux-arm-msm@vger.kernel.org>; Fri, 20 Sep 2019 15:09:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=03nfbfvsWWjjBwaHeiInD+GImNWbMhv6TdWghMdfSkE=;
-        b=Fg0uHGtz9xrUmln9AWbT87mBPHsSYrvhbyp/Z2l6q5JCSTHmZmnE9NH9JbgABUqdaG
-         gUjQSZgrNY0gvGOAiTX28wb9Vj6Rd+qUyBxBIQ2L4UWajRAzETrapZfKgVIt8Hf+QitM
-         wGvL/Do5izdrq3ar6vEU5LHT87nhE2ihqb9u+Uq3pHX34e51aW7KNC4EOeo31piZB68x
-         Y9wasNwm7hMgASdBb+p7pBu0h6BWMY324irB5UQC6fqLt7K6GZqYYQvAnmSJ35AZW6/0
-         eR7lupLa5YgTGE75XoBK0N+zZaOjCC15N58CwMSQRmjdbBHrvl9QAY1J4zoC1tN0XTH9
-         g/jg==
+        d=chromium.org; s=google;
+        h=message-id:mime-version:content-transfer-encoding:in-reply-to
+         :references:cc:to:from:subject:user-agent:date;
+        bh=Ia51y5IXDxm/cJxz0UGqZ4dK87iJysuphikAUaMsngE=;
+        b=lrRcHrdKiD38yhoWkw/8qIWPHY/a8TSdarnatkKzzDWnVihCAQdN/qq27pE+qZ/mPF
+         OhDDTovjCVKiVleFyTelAfpP5Z8IFgmQ8V1avSOD1mlxAmYjWLPbuyiArlkW1VPbi7kS
+         dCAI6SFMgnOswIsah6MSsQsT9NapqEYtR6zrs=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=03nfbfvsWWjjBwaHeiInD+GImNWbMhv6TdWghMdfSkE=;
-        b=et/yWcyBZSps9NKVxSxVAmFr3IDo5LAO6RP/pVSqc7YVy15oTuZDkfOc4hsgNmFk5h
-         Vay2ljAIeUi/0SPirDH/eQ8nh4veaTsqKVxBryWUVu89Pqq0VScPvtju10m72J9iF37k
-         KiRNPIzfH0zA2y3FFGfEGvUkrxtbS3o0PfvSboxlWmrEkc2BaM4ViHdtjRSTSH1+a+Xl
-         wFxVOkcGxR/qIQSnVCAVajgSiXAJYQ7B55/pggT1d+yEglPhahf3DNnczotbCYK+J98H
-         skZdRiQP7sBfod7wK78TwYUXxpCkedzf+PdunNTve4oiNrurJahaLJFq3bhOJyx4fJPM
-         opiw==
-X-Gm-Message-State: APjAAAViyGAYzKjPsJgdszc325/EccbcWvCRdfHAoB+TUpCfQ+aXwPpg
-        icBd27TO6Pl/R/aY9MyNIFSdh2j5ru5kVVPQniMtgQ==
-X-Google-Smtp-Source: APXvYqyqthmZ/2dM7Axc4UDmIh60LcEGo84Gs0A+ZlbPDaKhFus8SJNw2ooezgIRH2f6v083XtEVhrMYLS8fTXPWU4w=
-X-Received: by 2002:a67:f058:: with SMTP id q24mr4000012vsm.27.1569017256934;
- Fri, 20 Sep 2019 15:07:36 -0700 (PDT)
+        h=x-gm-message-state:message-id:mime-version
+         :content-transfer-encoding:in-reply-to:references:cc:to:from:subject
+         :user-agent:date;
+        bh=Ia51y5IXDxm/cJxz0UGqZ4dK87iJysuphikAUaMsngE=;
+        b=kRNn5LydaVBVQuvzUhAp/FnZe6VfTO7kJNee7n9le0BiTEr4iUKVR6GTM+DKapgQym
+         nPa7VBrNjW/0vyzq67zb8ryAxdE09a1GgUyMme+eqRJ0jH7C/yRdCXMZLak3vem2Nq0B
+         u7tYKHxmgoYlaP+6PqzxMHCRAqlUWzmQmr1sk3wjlTx1KHx5sgQmN2UhBjRgv+RgA9FK
+         o3WS64ixjvjspD4wzREWLVbQOLDkxFnlQiSq4Jeq9nyHCb2AK13VPsDCpccSuUfNqgj6
+         NckmojUJYLGuG+XwW+kSuxc0HgOcCPvp4ki0C27FsBimwjJP52aa63LFHy8vnVJdjVVG
+         SZzg==
+X-Gm-Message-State: APjAAAWWeNIewo4WbWQk9uWWoHXC4t4Dz5Mk8Nk7QBj2nOsxcKFl5EE8
+        7smIiPgHoftaXPzCzTYIjkmkZg==
+X-Google-Smtp-Source: APXvYqwePnl3IPYOcD3W2Z6H0IwI2bTRc6lUa7mXRarmtkQpqr4egd2BS/VAtpTlhP6S2E6JZLVPzA==
+X-Received: by 2002:a17:902:728f:: with SMTP id d15mr19555584pll.211.1569017374255;
+        Fri, 20 Sep 2019 15:09:34 -0700 (PDT)
+Received: from chromium.org ([2620:15c:202:1:fa53:7765:582b:82b9])
+        by smtp.gmail.com with ESMTPSA id q132sm3558103pfq.16.2019.09.20.15.09.33
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 20 Sep 2019 15:09:33 -0700 (PDT)
+Message-ID: <5d854e1d.1c69fb81.4f771.9391@mx.google.com>
+Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
-References: <cover.1569015835.git.amit.kucheria@linaro.org>
- <f627e66c455f52b5662bef6526d7c72869808401.1569015835.git.amit.kucheria@linaro.org>
- <5d854c82.1c69fb81.66e1f.96ab@mx.google.com>
-In-Reply-To: <5d854c82.1c69fb81.66e1f.96ab@mx.google.com>
-From:   Amit Kucheria <amit.kucheria@linaro.org>
-Date:   Fri, 20 Sep 2019 15:07:25 -0700
-Message-ID: <CAHLCerPqEK2sSGGtDj85DH+qCzgtWi4ainuQv8BgQ3-Dgi93BQ@mail.gmail.com>
-Subject: Re: [PATCH v4 09/15] arm64: dts: msm8996: thermal: Add interrupt support
-To:     Stephen Boyd <swboyd@chromium.org>
+Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <CAHLCerPqEK2sSGGtDj85DH+qCzgtWi4ainuQv8BgQ3-Dgi93BQ@mail.gmail.com>
+References: <cover.1569015835.git.amit.kucheria@linaro.org> <f627e66c455f52b5662bef6526d7c72869808401.1569015835.git.amit.kucheria@linaro.org> <5d854c82.1c69fb81.66e1f.96ab@mx.google.com> <CAHLCerPqEK2sSGGtDj85DH+qCzgtWi4ainuQv8BgQ3-Dgi93BQ@mail.gmail.com>
 Cc:     Daniel Lezcano <daniel.lezcano@linaro.org>,
         Mark Rutland <mark.rutland@arm.com>,
         Rob Herring <robh+dt@kernel.org>,
@@ -63,40 +61,50 @@ Cc:     Daniel Lezcano <daniel.lezcano@linaro.org>,
         Brian Masney <masneyb@onstation.org>,
         "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
         <devicetree@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+To:     Amit Kucheria <amit.kucheria@linaro.org>
+From:   Stephen Boyd <swboyd@chromium.org>
+Subject: Re: [PATCH v4 09/15] arm64: dts: msm8996: thermal: Add interrupt support
+User-Agent: alot/0.8.1
+Date:   Fri, 20 Sep 2019 15:09:32 -0700
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, Sep 20, 2019 at 3:02 PM Stephen Boyd <swboyd@chromium.org> wrote:
->
-> Quoting Amit Kucheria (2019-09-20 14:52:24)
-> > Register upper-lower interrupts for each of the two tsens controllers.
+Quoting Amit Kucheria (2019-09-20 15:07:25)
+> On Fri, Sep 20, 2019 at 3:02 PM Stephen Boyd <swboyd@chromium.org> wrote:
 > >
-> > Signed-off-by: Amit Kucheria <amit.kucheria@linaro.org>
-> > ---
-> >  arch/arm64/boot/dts/qcom/msm8996.dtsi | 60 ++++++++++++++-------------
-> >  1 file changed, 32 insertions(+), 28 deletions(-)
+> > Quoting Amit Kucheria (2019-09-20 14:52:24)
+> > > Register upper-lower interrupts for each of the two tsens controllers.
+> > >
+> > > Signed-off-by: Amit Kucheria <amit.kucheria@linaro.org>
+> > > ---
+> > >  arch/arm64/boot/dts/qcom/msm8996.dtsi | 60 ++++++++++++++-----------=
+--
+> > >  1 file changed, 32 insertions(+), 28 deletions(-)
+> > >
+> > > diff --git a/arch/arm64/boot/dts/qcom/msm8996.dtsi b/arch/arm64/boot/=
+dts/qcom/msm8996.dtsi
+> > > index 96c0a481f454..bb763b362c16 100644
+> > > --- a/arch/arm64/boot/dts/qcom/msm8996.dtsi
+> > > +++ b/arch/arm64/boot/dts/qcom/msm8996.dtsi
+> > > @@ -175,8 +175,8 @@
+> > >
+> > >         thermal-zones {
+> > >                 cpu0-thermal {
+> > > -                       polling-delay-passive =3D <250>;
+> > > -                       polling-delay =3D <1000>;
+> > > +                       polling-delay-passive =3D <0>;
+> > > +                       polling-delay =3D <0>;
 > >
-> > diff --git a/arch/arm64/boot/dts/qcom/msm8996.dtsi b/arch/arm64/boot/dts/qcom/msm8996.dtsi
-> > index 96c0a481f454..bb763b362c16 100644
-> > --- a/arch/arm64/boot/dts/qcom/msm8996.dtsi
-> > +++ b/arch/arm64/boot/dts/qcom/msm8996.dtsi
-> > @@ -175,8 +175,8 @@
-> >
-> >         thermal-zones {
-> >                 cpu0-thermal {
-> > -                       polling-delay-passive = <250>;
-> > -                       polling-delay = <1000>;
-> > +                       polling-delay-passive = <0>;
-> > +                       polling-delay = <0>;
->
-> I thought the plan was to make this unnecessary to change?
+> > I thought the plan was to make this unnecessary to change?
+>=20
+> IMO that change should be part of a different series to the thermal
+> core. I've not actually started working on it yet (traveling for the
+> next 10 days or so) but plan to do it.
+>=20
 
-IMO that change should be part of a different series to the thermal
-core. I've not actually started working on it yet (traveling for the
-next 10 days or so) but plan to do it.
+Ok so the plan is to change DT and then change it back? That sounds
+quite bad so please fix the thermal core to not care about this before
+applying these changes so that we don't churn DT.
 
-Regards,
-Amit
