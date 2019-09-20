@@ -2,201 +2,177 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id F20A1B8A35
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 Sep 2019 06:44:53 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 289BCB8AE6
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 Sep 2019 08:11:01 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727384AbfITEoS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 20 Sep 2019 00:44:18 -0400
-Received: from smtp.codeaurora.org ([198.145.29.96]:41268 "EHLO
-        smtp.codeaurora.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726395AbfITEoR (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 20 Sep 2019 00:44:17 -0400
-Received: by smtp.codeaurora.org (Postfix, from userid 1000)
-        id E09546032C; Fri, 20 Sep 2019 04:44:16 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
-        s=default; t=1568954656;
-        bh=5IzgzM6HNJw351IaOSYCnNV2iICFMAjVHpqKzXjNkYw=;
-        h=Subject:To:Cc:References:From:Date:In-Reply-To:From;
-        b=XZLlOrRrzZ38GeRIueOS7IgV26q4NIQgjIQg306oSed5HrsbK2VB0ZZre6cy34N0j
-         YYWt8xnAhyjhPNjEX0zRdaHGliiShnszBxYz3wUGOLkaUZwlXkOtO8xaqHzsRgQhja
-         mbkaKTgvGUhWEbeReJNiSAwUQo2Eyk0o+a28KTpI=
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        pdx-caf-mail.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.7 required=2.0 tests=ALL_TRUSTED,BAYES_00,
-        DKIM_INVALID,DKIM_SIGNED,SPF_NONE autolearn=no autolearn_force=no
-        version=3.4.0
-Received: from [192.168.43.252] (unknown [27.59.41.18])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        id S2394774AbfITGKx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 20 Sep 2019 02:10:53 -0400
+Received: from mail.kernel.org ([198.145.29.99]:51078 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S2394772AbfITGKx (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 20 Sep 2019 02:10:53 -0400
+Received: from localhost (unknown [145.15.244.23])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        (Authenticated sender: rnayak@smtp.codeaurora.org)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 6CD7C60A60;
-        Fri, 20 Sep 2019 04:44:10 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
-        s=default; t=1568954655;
-        bh=5IzgzM6HNJw351IaOSYCnNV2iICFMAjVHpqKzXjNkYw=;
-        h=Subject:To:Cc:References:From:Date:In-Reply-To:From;
-        b=O6VBXZ0zBregHp5pjlLMBT7dc7zLTHbvGUcCRTVhqnyL0cTATCsVrl5V8eSCRHg+Y
-         I9UfbYQhw38hen/IMIOWCazvDiblKuhF92KzCCSz/tBikR6mJRBf4dypQp1mP34hD5
-         L2LXf77mqDX/LoTnmMBlf6on9OVJ6Q7sOhAZJRMg=
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 6CD7C60A60
-Authentication-Results: pdx-caf-mail.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: pdx-caf-mail.web.codeaurora.org; spf=none smtp.mailfrom=rnayak@codeaurora.org
-Subject: Re: [PATCH v3 3/3] clk: qcom: Add Global Clock controller (GCC)
- driver for SC7180
-To:     Taniya Das <tdas@codeaurora.org>, Stephen Boyd <sboyd@kernel.org>,
-        Michael Turquette <mturquette@baylibre.com>, robh+dt@kernel.org
-Cc:     David Brown <david.brown@linaro.org>,
-        linux-arm-msm@vger.kernel.org, linux-soc@vger.kernel.org,
-        linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org,
-        devicetree@vger.kernel.org
-References: <20190918095018.17979-1-tdas@codeaurora.org>
- <20190918095018.17979-4-tdas@codeaurora.org>
- <74643831-1a58-e279-aca3-8753f5fcbe04@codeaurora.org>
- <28d2670d-a8bb-50d6-2154-79278db64bca@codeaurora.org>
-From:   Rajendra Nayak <rnayak@codeaurora.org>
-Message-ID: <9c6a3aa5-5e89-4fe0-9e35-16b031aca899@codeaurora.org>
-Date:   Fri, 20 Sep 2019 10:14:06 +0530
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
- Thunderbird/60.9.0
+        by mail.kernel.org (Postfix) with ESMTPSA id A1C9020644;
+        Fri, 20 Sep 2019 06:10:51 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=default; t=1568959852;
+        bh=DdBcbVRENUO54Bp6t6sSNCw9+KudSOiy7KOisGl0Jcg=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=Hzdh/+d2RcGhzFVKV+4Rr6zdTctpOtRlIzbb4gS18YcRU+hHjkg1lfIVJoKs2UX37
+         DzxWTUd1V5HXVZpS24wM9wu+s35rRhAIkwbEP6gr7G4ub6Bk3ofUUohCHHSan+h9E9
+         uZHEIwU+T1HlOpUoB/AI8TkHmLvw9n5OMNRcpkwk=
+Date:   Fri, 20 Sep 2019 08:10:06 +0200
+From:   Greg KH <gregkh@linuxfoundation.org>
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     Murali Nalajala <mnalajal@codeaurora.org>, rafael@kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Linus Walleij <linus.walleij@linaro.org>
+Subject: Re: [PATCH] base: soc: Export soc_device_to_device API
+Message-ID: <20190920061006.GC473898@kroah.com>
+References: <1568927624-13682-1-git-send-email-mnalajal@codeaurora.org>
+ <20190919213203.GA395325@kroah.com>
+ <20190919215300.GC1418@minitux>
+ <20190919215836.GA426988@kroah.com>
+ <20190919221456.GA63675@minitux>
+ <20190919222525.GA445429@kroah.com>
+ <20190919224017.GB63675@minitux>
+ <20190919224514.GA447028@kroah.com>
+ <20190920033651.GC63675@minitux>
 MIME-Version: 1.0
-In-Reply-To: <28d2670d-a8bb-50d6-2154-79278db64bca@codeaurora.org>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20190920033651.GC63675@minitux>
+User-Agent: Mutt/1.12.1 (2019-06-15)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-
-
-On 9/20/2019 9:30 AM, Taniya Das wrote:
-> Hi Rajendra,
+On Thu, Sep 19, 2019 at 08:36:51PM -0700, Bjorn Andersson wrote:
+> On Thu 19 Sep 15:45 PDT 2019, Greg KH wrote:
 > 
-> Please pick the patch in the series : https://patchwork.kernel.org/patch/11150013/
-
-ah, right, not sure how I missed the PATCH 1/3 in the series.
-Sorry about the noise.
-
+> > On Thu, Sep 19, 2019 at 03:40:17PM -0700, Bjorn Andersson wrote:
+> > > On Thu 19 Sep 15:25 PDT 2019, Greg KH wrote:
+> > > 
+> > > > On Thu, Sep 19, 2019 at 03:14:56PM -0700, Bjorn Andersson wrote:
+> > > > > On Thu 19 Sep 14:58 PDT 2019, Greg KH wrote:
+> > > > > 
+> > > > > > On Thu, Sep 19, 2019 at 02:53:00PM -0700, Bjorn Andersson wrote:
+> > > > > > > On Thu 19 Sep 14:32 PDT 2019, Greg KH wrote:
+> > > > > > > 
+> > > > > > > > On Thu, Sep 19, 2019 at 02:13:44PM -0700, Murali Nalajala wrote:
+> > > > > > > > > If the soc drivers want to add custom sysfs entries it needs to
+> > > > > > > > > access "dev" field in "struct soc_device". This can be achieved
+> > > > > > > > > by "soc_device_to_device" API. Soc drivers which are built as a
+> > > > > > > > > module they need above API to be exported. Otherwise one can
+> > > > > > > > > observe compilation issues.
+> > > > > > > > > 
+> > > > > > > > > Signed-off-by: Murali Nalajala <mnalajal@codeaurora.org>
+> > > > > > > > > ---
+> > > > > > > > >  drivers/base/soc.c | 1 +
+> > > > > > > > >  1 file changed, 1 insertion(+)
+> > > > > > > > > 
+> > > > > > > > > diff --git a/drivers/base/soc.c b/drivers/base/soc.c
+> > > > > > > > > index 7c0c5ca..4ad52f6 100644
+> > > > > > > > > --- a/drivers/base/soc.c
+> > > > > > > > > +++ b/drivers/base/soc.c
+> > > > > > > > > @@ -41,6 +41,7 @@ struct device *soc_device_to_device(struct soc_device *soc_dev)
+> > > > > > > > >  {
+> > > > > > > > >  	return &soc_dev->dev;
+> > > > > > > > >  }
+> > > > > > > > > +EXPORT_SYMBOL_GPL(soc_device_to_device);
+> > > > > > > > >  
+> > > > > > > > >  static umode_t soc_attribute_mode(struct kobject *kobj,
+> > > > > > > > >  				struct attribute *attr,
+> > > > > > > > 
+> > > > > > > > What in-kernel driver needs this?
+> > > > > > > > 
+> > > > > > > 
+> > > > > > > Half of the drivers interacting with the soc driver calls this API,
+> > > > > > > several of these I see no reason for being builtin (e.g.
+> > > > > > > ux500 andversatile). So I think this patch makes sense to allow us to
+> > > > > > > build these as modules.
+> > > > > > > 
+> > > > > > > > Is linux-next breaking without this?
+> > > > > > > > 
+> > > > > > > 
+> > > > > > > No, we postponed the addition of any sysfs attributes in the Qualcomm
+> > > > > > > socinfo driver.
+> > > > > > > 
+> > > > > > > > We don't export things unless we have a user of the export.
+> > > > > > > > 
+> > > > > > > > Also, adding "custom" sysfs attributes is almost always not the correct
+> > > > > > > > thing to do at all.  The driver should be doing it, by setting up the
+> > > > > > > > attribute group properly so that the driver core can do it automatically
+> > > > > > > > for it.
+> > > > > > > > 
+> > > > > > > > No driver should be doing individual add/remove of sysfs files.  If it
+> > > > > > > > does so, it is almost guaranteed to be doing it incorrectly and racing
+> > > > > > > > userspace.
+> > > > > > > > 
+> > > > > > > 
+> > > > > > > The problem here is that the attributes are expected to be attached to
+> > > > > > > the soc driver, which is separate from the platform-specific drivers. So
+> > > > > > > there's no way to do platform specific attributes the right way.
+> > > > > > > 
+> > > > > > > > And yes, there's loads of in-kernel examples of doing this wrong, I've
+> > > > > > > > been working on fixing that up, look at the patches now in Linus's tree
+> > > > > > > > for platform and USB drivers that do this as examples of how to do it
+> > > > > > > > right.
+> > > > > > > > 
+> > > > > > > 
+> > > > > > > Agreed, this patch should not be used as an approval for any crazy
+> > > > > > > attributes; but it's necessary in order to extend the soc device's
+> > > > > > > attributes, per the current design.
+> > > > > > 
+> > > > > > Wait, no, let's not let the "current design" remain if it is broken!
+> > > > > > 
+> > > > > > Why can't the soc driver handle the attributes properly so that the
+> > > > > > individual driver doesn't have to do the create/remove?
+> > > > > > 
+> > > > > 
+> > > > > The custom attributes that these drivers want to add to the common ones
+> > > > > are known in advance, so I presume we could have them passed into
+> > > > > soc_device_register() and registered together with the common
+> > > > > attributes...
+> > > > > 
+> > > > > It sounds like it's worth a prototype.
+> > > > 
+> > > > Do you have an in-kernel example I can look at to get an idea of what is
+> > > > needed here?
+> > > > 
+> > > 
+> > > realview_soc_probe(), in drivers/soc/versatile/soc-realview.c,
+> > > implements the current mechanism of acquiring the soc's struct device
+> > > and then issuing a few device_create_file calls on that.
+> > 
+> > That looks to be a trivial driver to fix up.  Look at 6d03c140db2e
+> > ("USB: phy: fsl-usb: convert platform driver to use dev_groups") as an
+> > example of how to do this.
+> > 
 > 
-> On 9/19/2019 4:38 PM, Rajendra Nayak wrote:
->> []..
->>
->>> +static struct clk_rcg_dfs_data gcc_dfs_clocks[] = {
->>> +    DEFINE_RCG_DFS(gcc_qupv3_wrap0_s0_clk_src),
->>> +    DEFINE_RCG_DFS(gcc_qupv3_wrap0_s1_clk_src),
->>> +    DEFINE_RCG_DFS(gcc_qupv3_wrap0_s2_clk_src),
->>> +    DEFINE_RCG_DFS(gcc_qupv3_wrap0_s3_clk_src),
->>> +    DEFINE_RCG_DFS(gcc_qupv3_wrap0_s4_clk_src),
->>> +    DEFINE_RCG_DFS(gcc_qupv3_wrap0_s5_clk_src),
->>> +    DEFINE_RCG_DFS(gcc_qupv3_wrap1_s0_clk_src),
->>> +    DEFINE_RCG_DFS(gcc_qupv3_wrap1_s1_clk_src),
->>> +    DEFINE_RCG_DFS(gcc_qupv3_wrap1_s2_clk_src),
->>> +    DEFINE_RCG_DFS(gcc_qupv3_wrap1_s3_clk_src),
->>> +    DEFINE_RCG_DFS(gcc_qupv3_wrap1_s4_clk_src),
->>> +    DEFINE_RCG_DFS(gcc_qupv3_wrap1_s5_clk_src),
->>> +};
->>
->> this fails to build..
->>
->> In file included from drivers/clk/qcom/gcc-sc7180.c:17:0:
->> drivers/clk/qcom/gcc-sc7180.c:2429:17: error: ‘gcc_qupv3_wrap0_s0_clk_src_src’ undeclared here (not in a function)
->>    DEFINE_RCG_DFS(gcc_qupv3_wrap0_s0_clk_src),
->>                   ^
->> drivers/clk/qcom/clk-rcg.h:171:12: note: in definition of macro ‘DEFINE_RCG_DFS’
->>    { .rcg = &r##_src, .init = &r##_init }
->>              ^
->> drivers/clk/qcom/gcc-sc7180.c:2430:17: error: ‘gcc_qupv3_wrap0_s1_clk_src_src’ undeclared here (not in a function)
->>    DEFINE_RCG_DFS(gcc_qupv3_wrap0_s1_clk_src),
->>                   ^
->> drivers/clk/qcom/clk-rcg.h:171:12: note: in definition of macro ‘DEFINE_RCG_DFS’
->>    { .rcg = &r##_src, .init = &r##_init }
->>              ^
->> Perhaps you should drop _src here and in the clk_init_data names.
->>
->>> +
->>> +static const struct regmap_config gcc_sc7180_regmap_config = {
->>> +    .reg_bits = 32,
->>> +    .reg_stride = 4,
->>> +    .val_bits = 32,
->>> +    .max_register = 0x18208c,
->>> +    .fast_io = true,
->>> +};
->>> +
->>> +static const struct qcom_cc_desc gcc_sc7180_desc = {
->>> +    .config = &gcc_sc7180_regmap_config,
->>> +    .clk_hws = gcc_sc7180_hws,
->>> +    .num_clk_hws = ARRAY_SIZE(gcc_sc7180_hws),
->>> +    .clks = gcc_sc7180_clocks,
->>> +    .num_clks = ARRAY_SIZE(gcc_sc7180_clocks),
->>> +    .resets = gcc_sc7180_resets,
->>> +    .num_resets = ARRAY_SIZE(gcc_sc7180_resets),
->>> +    .gdscs = gcc_sc7180_gdscs,
->>> +    .num_gdscs = ARRAY_SIZE(gcc_sc7180_gdscs),
->>> +};
->>> +
->>> +static const struct of_device_id gcc_sc7180_match_table[] = {
->>> +    { .compatible = "qcom,gcc-sc7180" },
->>> +    { }
->>> +};
->>> +MODULE_DEVICE_TABLE(of, gcc_sc7180_match_table);
->>> +
->>> +static int gcc_sc7180_probe(struct platform_device *pdev)
->>> +{
->>> +    struct regmap *regmap;
->>> +    int ret;
->>> +
->>> +    regmap = qcom_cc_map(pdev, &gcc_sc7180_desc);
->>> +    if (IS_ERR(regmap))
->>> +        return PTR_ERR(regmap);
->>> +
->>> +    /*
->>> +     * Disable the GPLL0 active input to MM blocks, NPU
->>> +     * and GPU via MISC registers.
->>> +     */
->>> +    regmap_update_bits(regmap, GCC_MMSS_MISC, 0x3, 0x3);
->>> +    regmap_update_bits(regmap, GCC_NPU_MISC, 0x3, 0x3);
->>> +    regmap_update_bits(regmap, GCC_GPU_MISC, 0x3, 0x3);
->>> +
->>> +    ret = qcom_cc_register_rcg_dfs(regmap, gcc_dfs_clocks,
->>> +                    ARRAY_SIZE(gcc_dfs_clocks));
->>> +    if (ret)
->>> +        return ret;
->>> +
->>> +    return qcom_cc_really_probe(pdev, &gcc_sc7180_desc, regmap);
->>> +}
->>> +
->>> +static struct platform_driver gcc_sc7180_driver = {
->>> +    .probe = gcc_sc7180_probe,
->>> +    .driver = {
->>> +        .name = "gcc-sc7180",
->>> +        .of_match_table = gcc_sc7180_match_table,
->>> +    },
->>> +};
->>> +
->>> +static int __init gcc_sc7180_init(void)
->>> +{
->>> +    return platform_driver_register(&gcc_sc7180_driver);
->>> +}
->>> +subsys_initcall(gcc_sc7180_init);
->>> +
->>> +static void __exit gcc_sc7180_exit(void)
->>> +{
->>> +    platform_driver_unregister(&gcc_sc7180_driver);
->>> +}
->>> +module_exit(gcc_sc7180_exit);
->>> +
->>> +MODULE_DESCRIPTION("QTI GCC SC7180 Driver");
->>> +MODULE_LICENSE("GPL v2");
->>> -- 
->>> Qualcomm INDIA, on behalf of Qualcomm Innovation Center, Inc.is a member
->>> of the Code Aurora Forum, hosted by the  Linux Foundation.
->>>
->>
-> 
+> The difference between the two cases is that in the fsl-usb case it's
+> attributes of the device itself, while in the soc case the realview-soc
+> driver (or the others doing this) calls soc_device_register() to
+> register a new (dangling) soc device, which it then adds its attributes
+> onto.
 
--- 
-QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
-of Code Aurora Forum, hosted by The Linux Foundation
+That sounds really really odd.  Why can't the soc device do the creation
+"automatically" when the device is registered?  The soc core should
+handle this for the soc "drivers", that's what it is there for.
+
+> We can't use dev_groups, because the soc_device (soc.c) isn't actually a
+> driver and the list of attributes is a combination of things from soc.c
+> and e.g. soc-realview.c.
+> 
+> But if we pass a struct attribute_group into soc_device_register() and
+> then have that register both groups using dev.groups, this should be
+> much cleaner at least.
+
+Don't you have a structure you can store these in as well?
+
+thanks,
+
+greg k-h
