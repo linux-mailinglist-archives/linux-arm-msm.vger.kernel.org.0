@@ -2,174 +2,140 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 9E653B983A
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 Sep 2019 22:03:54 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 1A1CDB98C0
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 Sep 2019 23:07:32 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728300AbfITUDx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 20 Sep 2019 16:03:53 -0400
-Received: from mail-qk1-f195.google.com ([209.85.222.195]:42467 "EHLO
-        mail-qk1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725869AbfITUDx (ORCPT
+        id S2387479AbfITVHb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 20 Sep 2019 17:07:31 -0400
+Received: from mail-pf1-f195.google.com ([209.85.210.195]:46826 "EHLO
+        mail-pf1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2387431AbfITVHb (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 20 Sep 2019 16:03:53 -0400
-Received: by mail-qk1-f195.google.com with SMTP id f16so8539675qkl.9
-        for <linux-arm-msm@vger.kernel.org>; Fri, 20 Sep 2019 13:03:50 -0700 (PDT)
+        Fri, 20 Sep 2019 17:07:31 -0400
+Received: by mail-pf1-f195.google.com with SMTP id q5so5290616pfg.13
+        for <linux-arm-msm@vger.kernel.org>; Fri, 20 Sep 2019 14:07:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=uwa4EAZC1poPppej+zNVzAUxvGIzsTLI+17C+mtmgsk=;
-        b=YsNojTry/Nt93tlKFnCheF3yiEmyKEjG2+8LifXCmZJPK4E4QsUjCh6XnOJW9de5AW
-         GytnyL9No6uzzc6oYCYdKCR1fG1x52S2/cjszyRqNwLteYDsCaB1iaEVxl0TM0sYy56F
-         jkBQwOBhRZG0tB5VwcByEkqhenKyDlPx3xSfOWJNcIuS2YTxCEFAggWkeS47CB8ys7eO
-         f3vocqpxxwh17D86th2AdSOdm8dgBdoDp9wyBx1MM0Y/x/m4Z5GtiCfWx3+BD8Izx27d
-         lI5SvDWiL3kaMtLRk3NCZW9yqUChIPag64R1/tJJcCC+JaxQD5TLsafnTUZuz9tuvX7E
-         9mXg==
+        d=chromium.org; s=google;
+        h=message-id:mime-version:content-transfer-encoding:in-reply-to
+         :references:cc:to:from:subject:user-agent:date;
+        bh=lPIgzmO/aPJJEw9pL/CRSzhyVtzs0JpO8UpzUFEOaBQ=;
+        b=b2M0SMWw96aMNTsOlmWo8NW6A6GBgxj00yVxoie2lvcFcImFjACQ5a6NVxXmBr1fZ3
+         KcXfxvujifhSx74q2XGy3QX2C1PtePSqzBOgzegWIMspO1BvCQI3jqQ1F9mHe79PHfyw
+         kXiu5/W/2czx7NlzaTVvv774NlIsaW+Tu0Bto=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=uwa4EAZC1poPppej+zNVzAUxvGIzsTLI+17C+mtmgsk=;
-        b=Val+qsOCPhQAq6ftujjYBIyCFYUd7GEu6O4fctaPzU2mV4YSpp2mN9lZh7/VOdtmoJ
-         yQAjlRoFwSyRU6pkh9xBdVxBQ+n9CgPgS3Vb72mcFSdeYYOmcvEFwUZpaAzPAdsHGBu/
-         m0CsO6JRX72kT17fZRus0U0jJ+OgiOA4br9lck0BhrnmCf0g7dQK3go6xn/zR4XqDK6e
-         TQ4yblqRp567g9ACbagXi59PiFrvkQjEIBwZa5gVSDZYcme0/8cDRw9kpQU0W54WEt7f
-         4PYPW10M3JqMyVZ+/dFQvhBFGl8uoHyr6I6y/PlvMmJIvbwZexv3i2Jpk8FLY90yLMu6
-         fVaQ==
-X-Gm-Message-State: APjAAAWy637JHCa3Xc5UY9yACWr9BXaRghwNwSOdFlQk5z5y2mZyrsQy
-        L7oV+vdTdHCGGvGOQPeVsT9mAgdkZlJQVExCoWKUyA==
-X-Google-Smtp-Source: APXvYqwzQEWk2WXsSzH0cM+f21LhG2/T3g+JPI6SID+TAjvudvGxccjtSqDO+6NeLBY2Pbv22xx/3k6DAZtMQ/4Xqjc=
-X-Received: by 2002:a37:6d2:: with SMTP id 201mr5583270qkg.106.1569009829829;
- Fri, 20 Sep 2019 13:03:49 -0700 (PDT)
+        h=x-gm-message-state:message-id:mime-version
+         :content-transfer-encoding:in-reply-to:references:cc:to:from:subject
+         :user-agent:date;
+        bh=lPIgzmO/aPJJEw9pL/CRSzhyVtzs0JpO8UpzUFEOaBQ=;
+        b=U6qYApDWndD05DJxIQ+I7Yzm7K8DNmJrMNreMfPF7xK1MIheUXx3sK2ZKT56YtyTJB
+         S0O7kvniJi72G9XrDTuAxfPEXlOmDivFOKF4JPcTLJbt78cAaTYUp7tYxfGs7+3uL+jH
+         hHlLcebR4yXjqMoPTZVHSoK4ja2enBKbed1AS7pv+Bml+oerY8GL92OuapvV23ZFI83A
+         Rl2T0Vtq0ZVd/mn5P7rMPmig2mWgJ9WabqFWj824vwcyv/+fXEcYKrSyBZQXlj4q8cSm
+         nUH4gw4lZls+loRDBRRgNh7rmZsJek+RRD7J9gxG+fq4ZRvAKqt2RIsc13fgKZesEl9U
+         nytg==
+X-Gm-Message-State: APjAAAUfZd4eqyZ1VgTQb0mtr3OFuN/5fpRsMTFh4QAu5jxeDv0mmP8r
+        vaVYKnf9dkCfjTebO13suSyMrVnEyUE=
+X-Google-Smtp-Source: APXvYqyAWN51mb5bwvg5tMBgXdaWqe6d1zPHJiWwX3nmpCkKnqqQBzcRed7PrS5FMAE8YAwI65K7Cg==
+X-Received: by 2002:a62:e21a:: with SMTP id a26mr20135657pfi.80.1569013649984;
+        Fri, 20 Sep 2019 14:07:29 -0700 (PDT)
+Received: from chromium.org ([2620:15c:202:1:fa53:7765:582b:82b9])
+        by smtp.gmail.com with ESMTPSA id a11sm3742571pfg.94.2019.09.20.14.07.29
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 20 Sep 2019 14:07:29 -0700 (PDT)
+Message-ID: <5d853f91.1c69fb81.a630b.98dd@mx.google.com>
+Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
-References: <cover.1568240476.git.amit.kucheria@linaro.org>
- <b731b713d8738239c26361ece7f5cadea035b353.1568240476.git.amit.kucheria@linaro.org>
- <20190917093412.GA24757@bogus> <58e60ca4-9615-bbdf-5fe7-2a0e1d7f48d8@linaro.org>
- <20190917132035.GB30016@bogus>
-In-Reply-To: <20190917132035.GB30016@bogus>
-From:   Amit Kucheria <amit.kucheria@linaro.org>
-Date:   Fri, 20 Sep 2019 13:03:38 -0700
-Message-ID: <CAP245DWSKGgJWkbGhXMazqjsEy7PBumN_r0Do6nhbQRv58R_zw@mail.gmail.com>
-Subject: Re: [PATCH 5/5] cpufreq: qcom-hw: Move driver initialisation earlier
-To:     Sudeep Holla <sudeep.holla@arm.com>
-Cc:     Daniel Lezcano <daniel.lezcano@linaro.org>,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Eduardo Valentin <edubezval@gmail.com>,
-        Andy Gross <agross@kernel.org>,
-        Taniya Das <tdas@codeaurora.org>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Lina Iyer <ilina@codeaurora.org>,
-        "Rafael J. Wysocki" <rjw@rjwysocki.net>,
-        Viresh Kumar <viresh.kumar@linaro.org>,
-        Zhang Rui <rui.zhang@intel.com>,
-        Linux PM list <linux-pm@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <3ed0de38b57fda1995d0f231cbcec38c16387a2a.1568966170.git.saiprakash.ranjan@codeaurora.org>
+References: <cover.1568966170.git.saiprakash.ranjan@codeaurora.org> <3ed0de38b57fda1995d0f231cbcec38c16387a2a.1568966170.git.saiprakash.ranjan@codeaurora.org>
+Cc:     linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Rajendra Nayak <rnayak@codeaurora.org>,
+        Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
+To:     Andy Gross <agross@kernel.org>, Joerg Roedel <joro@8bytes.org>,
+        Robin Murphy <robin.murphy@arm.com>,
+        Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>,
+        Vivek Gautam <vivek.gautam@codeaurora.org>,
+        Will Deacon <will@kernel.org>, bjorn.andersson@linaro.org,
+        iommu@lists.linux-foundation.org
+From:   Stephen Boyd <swboyd@chromium.org>
+Subject: Re: [PATCHv7 3/3] iommu: arm-smmu-impl: Add sdm845 implementation hook
+User-Agent: alot/0.8.1
+Date:   Fri, 20 Sep 2019 14:07:28 -0700
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Sudeep,
+Quoting Sai Prakash Ranjan (2019-09-20 01:04:29)
+> From: Vivek Gautam <vivek.gautam@codeaurora.org>
+>=20
+> Add reset hook for sdm845 based platforms to turn off
+> the wait-for-safe sequence.
+>=20
+> Understanding how wait-for-safe logic affects USB and UFS performance
+> on MTP845 and DB845 boards:
+>=20
+> Qcom's implementation of arm,mmu-500 adds a WAIT-FOR-SAFE logic
+> to address under-performance issues in real-time clients, such as
+> Display, and Camera.
+> On receiving an invalidation requests, the SMMU forwards SAFE request
+> to these clients and waits for SAFE ack signal from real-time clients.
+> The SAFE signal from such clients is used to qualify the start of
+> invalidation.
+> This logic is controlled by chicken bits, one for each - MDP (display),
+> IFE0, and IFE1 (camera), that can be accessed only from secure software
+> on sdm845.
+>=20
+> This configuration, however, degrades the performance of non-real time
+> clients, such as USB, and UFS etc. This happens because, with wait-for-sa=
+fe
+> logic enabled the hardware tries to throttle non-real time clients while
+> waiting for SAFE ack signals from real-time clients.
+>=20
+> On mtp845 and db845 devices, with wait-for-safe logic enabled by the
+> bootloaders we see degraded performance of USB and UFS when kernel
+> enables the smmu stage-1 translations for these clients.
+> Turn off this wait-for-safe logic from the kernel gets us back the perf
+> of USB and UFS devices until we re-visit this when we start seeing perf
+> issues on display/camera on upstream supported SDM845 platforms.
+> The bootloaders on these boards implement secure monitor callbacks to
+> handle a specific command - QCOM_SCM_SVC_SMMU_PROGRAM with which the
+> logic can be toggled.
+>=20
+> There are other boards such as cheza whose bootloaders don't enable this
+> logic. Such boards don't implement callbacks to handle the specific SCM
+> call so disabling this logic for such boards will be a no-op.
+>=20
+> This change is inspired by the downstream change from Patrick Daly
+> to address performance issues with display and camera by handling
+> this wait-for-safe within separte io-pagetable ops to do TLB
+> maintenance. So a big thanks to him for the change and for all the
+> offline discussions.
+>=20
+> Without this change the UFS reads are pretty slow:
+> $ time dd if=3D/dev/sda of=3D/dev/zero bs=3D1048576 count=3D10 conv=3Dsync
+> 10+0 records in
+> 10+0 records out
+> 10485760 bytes (10.0MB) copied, 22.394903 seconds, 457.2KB/s
+> real    0m 22.39s
+> user    0m 0.00s
+> sys     0m 0.01s
+>=20
+> With this change they are back to rock!
+> $ time dd if=3D/dev/sda of=3D/dev/zero bs=3D1048576 count=3D300 conv=3Dsy=
+nc
+> 300+0 records in
+> 300+0 records out
+> 314572800 bytes (300.0MB) copied, 1.030541 seconds, 291.1MB/s
+> real    0m 1.03s
+> user    0m 0.00s
+> sys     0m 0.54s
+>=20
+> Signed-off-by: Vivek Gautam <vivek.gautam@codeaurora.org>
+> Reviewed-by: Robin Murphy <robin.murphy@arm.com>
+> Signed-off-by: Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
+> ---
 
-On Tue, Sep 17, 2019 at 6:20 AM Sudeep Holla <sudeep.holla@arm.com> wrote:
->
-> On Tue, Sep 17, 2019 at 02:47:22PM +0200, Daniel Lezcano wrote:
-> >
-> > Hi Sudeep,
-> >
-> > On 17/09/2019 11:34, Sudeep Holla wrote:
-> > > On Thu, Sep 12, 2019 at 04:02:34AM +0530, Amit Kucheria wrote:
-> > >> Allow qcom-hw driver to initialise right after the cpufreq and thermal
-> > >> subsystems are initialised in core_initcall so we get earlier access to
-> > >> thermal mitigation.
-> > >>
-> > >> Signed-off-by: Amit Kucheria <amit.kucheria@linaro.org>
-> > >> ---
-> > >>  drivers/cpufreq/qcom-cpufreq-hw.c | 2 +-
-> > >>  1 file changed, 1 insertion(+), 1 deletion(-)
-> > >>
-> > >> diff --git a/drivers/cpufreq/qcom-cpufreq-hw.c b/drivers/cpufreq/qcom-cpufreq-hw.c
-> > >> index 4b0b50403901..04676cc82ba6 100644
-> > >> --- a/drivers/cpufreq/qcom-cpufreq-hw.c
-> > >> +++ b/drivers/cpufreq/qcom-cpufreq-hw.c
-> > >> @@ -327,7 +327,7 @@ static int __init qcom_cpufreq_hw_init(void)
-> > >>  {
-> > >>    return platform_driver_register(&qcom_cpufreq_hw_driver);
-> > >>  }
-> > >> -device_initcall(qcom_cpufreq_hw_init);
-> > >> +postcore_initcall(qcom_cpufreq_hw_init);
-> > >
-> > > I am fine with core framework initcall pushed to earlier initcall levels
-> > > if required, but for individual/platform specific drivers I am not so
-> > > happy to see that.
-> > >
-> > > This goes against the grand plan of single common kernel strategy by
-> > > Android moving all drivers as modules. We might decide to make this
-> > > a module.
-> >
-> > module = mounted file system = very late initialization
-> >
-> > Is that the plan? Force every driver to load too late?
-> >
->
-> Yes. Something similar to what we have on desktops/servers.
->
-> > There are core drivers which must be loaded as soon as possible. If the
-> > qcom driver is one of them, then what is the problem?
-> >
->
-> I am fine with that if it's really issue but it shouldn't become the
-> defacto trend.
+Reviewed-by: Stephen Boyd <swboyd@chromium.org>
 
-I didn't convert other HW drivers on purpose since it's really up to
-the platform to decide. I have tested with all drivers converted to
-core_initcall and didn't find any boot issues on kernelci.
-
-> > "The grand plan" will have to solve this first before doing the module
-> > move.
-> >
->
-> Sure, I just expressed my view as it looks to be going in different
-> direction for me.
->
-> > > Also there are few cpufreq drivers that are modules. Will
-> > > they have issues ? If not, why do we need this change at all.
-> >
-> > Because some boards don't have thermal issues with the cpufreq drivers
-> > as module, other boards have.
-> >
->
-> OK, so this platform boots with default high OPP and needs thermal
-> mitigation that early ? If so, that's fine.
-
-That is indeed the case - 30-40 degree rise in under 50ms can be seen
-on some of these platforms.
-
-> > > Needing
-> > > thermal mitigation during boot this earlier is still too much of
-> > > expectation, I would rather boot slowly than relying on this feature.
-> >
-> > And what if we want to boot faster? The boot time is one of a key point
-> > of benchmark.
-> >
->
-> I understand the requirement, though for me it's really sounds stupid.
-
-Is it stupid if the SoC was being used in automotive with a 2s (or
-less) startup requirement? :-)
-
-> As Quentin pointed out, it would be good to get all those benchmark
-> details, and preferably in the commit log so that we can look back
-> whenever someone else take the same approach later.
-
-I'm traveling for Connect this week but will try to post some logs
-with initcall_debug turned on where changing these initcalls shaves
-off several seconds. Just to reassure everyone that GKI isn't
-forgotten, the next set of patches will actually add module support
-for the tsens driver so AOSP can make them modules and things will
-still work.
-
-Regards,
-Amit
