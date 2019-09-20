@@ -2,102 +2,99 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 7B903B99B0
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 21 Sep 2019 00:31:45 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 274B9B9A92
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 21 Sep 2019 01:21:44 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2403975AbfITWbp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 20 Sep 2019 18:31:45 -0400
-Received: from smtp.codeaurora.org ([198.145.29.96]:44106 "EHLO
-        smtp.codeaurora.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2393874AbfITWbo (ORCPT
+        id S2437274AbfITXVd (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 20 Sep 2019 19:21:33 -0400
+Received: from mail-pl1-f193.google.com ([209.85.214.193]:46069 "EHLO
+        mail-pl1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2407093AbfITXTy (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 20 Sep 2019 18:31:44 -0400
-Received: by smtp.codeaurora.org (Postfix, from userid 1000)
-        id E1ABB6118D; Fri, 20 Sep 2019 22:31:43 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
-        s=default; t=1569018703;
-        bh=+crPnGft+zZHXGVhTxLrCRBi5J41OVmy7KmdT97O34E=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=cIu4Ag7IzhL+frMMcRMaDtGCKgqg6EDR0OLFaZAhBw9mgXCfgJR9qiGixHlTglBSz
-         GUqWIieWCgsvIyZpALpcitmjpUKnXhKDiR45iQwEwy0/+F3X7TgWbc8SgyT8SPTUIH
-         nQi4BWwil+oLjdZo7MjrDbMGOgBhby6m7bfBRGZA=
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        pdx-caf-mail.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.7 required=2.0 tests=ALL_TRUSTED,BAYES_00,
-        DKIM_INVALID,DKIM_SIGNED,SPF_NONE autolearn=no autolearn_force=no
-        version=3.4.0
-Received: from localhost (i-global254.qualcomm.com [199.106.103.254])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: ilina@smtp.codeaurora.org)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id ECFEB60A60;
-        Fri, 20 Sep 2019 22:31:42 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
-        s=default; t=1569018703;
-        bh=+crPnGft+zZHXGVhTxLrCRBi5J41OVmy7KmdT97O34E=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=cIu4Ag7IzhL+frMMcRMaDtGCKgqg6EDR0OLFaZAhBw9mgXCfgJR9qiGixHlTglBSz
-         GUqWIieWCgsvIyZpALpcitmjpUKnXhKDiR45iQwEwy0/+F3X7TgWbc8SgyT8SPTUIH
-         nQi4BWwil+oLjdZo7MjrDbMGOgBhby6m7bfBRGZA=
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org ECFEB60A60
-Authentication-Results: pdx-caf-mail.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: pdx-caf-mail.web.codeaurora.org; spf=none smtp.mailfrom=ilina@codeaurora.org
-Date:   Fri, 20 Sep 2019 16:31:42 -0600
-From:   Lina Iyer <ilina@codeaurora.org>
-To:     Stephen Boyd <swboyd@chromium.org>
-Cc:     evgreen@chromium.org, linus.walleij@linaro.org,
-        marc.zyngier@arm.com, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, bjorn.andersson@linaro.org,
-        mkshah@codeaurora.org, linux-gpio@vger.kernel.org,
-        rnayak@codeaurora.org
-Subject: Re: [PATCH RFC 02/14] drivers: irqchip: pdc: Do not toggle
- IRQ_ENABLE during mask/unmask
-Message-ID: <20190920223142.GI15853@codeaurora.org>
-References: <20190829181203.2660-1-ilina@codeaurora.org>
- <20190829181203.2660-3-ilina@codeaurora.org>
- <5d71aad9.1c69fb81.f469e.262f@mx.google.com>
- <20190911161557.GB30053@codeaurora.org>
- <5d85511e.1c69fb81.98f62.dae0@mx.google.com>
+        Fri, 20 Sep 2019 19:19:54 -0400
+Received: by mail-pl1-f193.google.com with SMTP id u12so3870948pls.12
+        for <linux-arm-msm@vger.kernel.org>; Fri, 20 Sep 2019 16:19:54 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=message-id:mime-version:content-transfer-encoding:in-reply-to
+         :references:cc:to:from:subject:user-agent:date;
+        bh=x3KkooxIJHeflg3Q/MEdAWrgYVbuQ7dU5z8XbMOS1lc=;
+        b=QzLHfKdIn3q1t4ZF2RMzkmMjfTHq/FprJnnZJs3zYFU7y2qEoRaLlRN0Y7Jq0AdNAC
+         PDfaWzDyVmNcPgDP160yRKk+6DjeC8GYQEpY8ACjMkLlsfsLOmx+dwv1tNluk5ekf3ru
+         UgXwy6ysHSMAxJ7o+Uw8r0YgF2N9y5ueHmVKo=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:message-id:mime-version
+         :content-transfer-encoding:in-reply-to:references:cc:to:from:subject
+         :user-agent:date;
+        bh=x3KkooxIJHeflg3Q/MEdAWrgYVbuQ7dU5z8XbMOS1lc=;
+        b=rpsDU23vr8Jb4i0rhOYNqQh9eSInwp4QtzQG273/iduItXUmCDfDrBebu2UsDlM4wF
+         ongkQBPczXlktSVZqa5IW+hPV7rjXie9g2OGHnP1A0WOON5pcH5xx/UwIwQDP3DhgAMn
+         geO5MMSuAHyVGZ3UHOApELS7xjN/Iop03HhJ/Bb5FR12EcPQm+7TjRMh39+p5J+dH8Cq
+         FQGJvJEkomrsKRT0OKHc4WjGV6wNPTpPZh6+aEZ9MXMTtyXVKQFGp9HUIbDuo9EMo1Xd
+         m2Z4qdGksLXpZfBI6JKBFNaNBTY0xzqMEe9K1qnUWasr3+J7BurU6v9pQzOF42RikvvO
+         L4Ew==
+X-Gm-Message-State: APjAAAVRl+v4kd/Gabw3Njaiv+gaEf9Wp+tQyf7iCLPU8Nv1ocrhehoQ
+        0InpzD4QSIr0Mv/QyFv/EtTXhA==
+X-Google-Smtp-Source: APXvYqw+23bVFXVYDopNzEoteLtijFTF7+FHjQV5JUkx0GnkKnOeZTAyxgjw8he9IKiO6G9R5MvM2g==
+X-Received: by 2002:a17:902:5a89:: with SMTP id r9mr18599724pli.206.1569021594105;
+        Fri, 20 Sep 2019 16:19:54 -0700 (PDT)
+Received: from chromium.org ([2620:15c:202:1:fa53:7765:582b:82b9])
+        by smtp.gmail.com with ESMTPSA id a4sm2720148pgq.6.2019.09.20.16.19.53
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 20 Sep 2019 16:19:53 -0700 (PDT)
+Message-ID: <5d855e99.1c69fb81.1d457.733b@mx.google.com>
+Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii; format=flowed
-Content-Disposition: inline
-In-Reply-To: <5d85511e.1c69fb81.98f62.dae0@mx.google.com>
-User-Agent: Mutt/1.5.24 (2015-08-30)
+Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <CAHLCerNqsf1j4vsOPjdav8+UtXtGP55k6_==jjg1QeZ1qCX1RA@mail.gmail.com>
+References: <cover.1569015835.git.amit.kucheria@linaro.org> <f627e66c455f52b5662bef6526d7c72869808401.1569015835.git.amit.kucheria@linaro.org> <5d854c82.1c69fb81.66e1f.96ab@mx.google.com> <CAHLCerPqEK2sSGGtDj85DH+qCzgtWi4ainuQv8BgQ3-Dgi93BQ@mail.gmail.com> <5d854e1d.1c69fb81.4f771.9391@mx.google.com> <CAHLCerNqsf1j4vsOPjdav8+UtXtGP55k6_==jjg1QeZ1qCX1RA@mail.gmail.com>
+Cc:     Daniel Lezcano <daniel.lezcano@linaro.org>,
+        Mark Rutland <mark.rutland@arm.com>,
+        Rob Herring <robh+dt@kernel.org>,
+        Zhang Rui <rui.zhang@intel.com>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Eduardo Valentin <edubezval@gmail.com>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        LKML <linux-kernel@vger.kernel.org>,
+        Brian Masney <masneyb@onstation.org>,
+        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
+        <devicetree@vger.kernel.org>
+To:     Amit Kucheria <amit.kucheria@linaro.org>
+From:   Stephen Boyd <swboyd@chromium.org>
+Subject: Re: [PATCH v4 09/15] arm64: dts: msm8996: thermal: Add interrupt support
+User-Agent: alot/0.8.1
+Date:   Fri, 20 Sep 2019 16:19:52 -0700
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, Sep 20 2019 at 16:22 -0600, Stephen Boyd wrote:
->Quoting Lina Iyer (2019-09-11 09:15:57)
->> On Thu, Sep 05 2019 at 18:39 -0600, Stephen Boyd wrote:
->> >Quoting Lina Iyer (2019-08-29 11:11:51)
->> >> When an interrupt is to be serviced, the convention is to mask the
->> >> interrupt at the chip and unmask after servicing the interrupt. Enabling
->> >> and disabling the interrupt at the PDC irqchip causes an interrupt storm
->> >> due to the way dual edge interrupts are handled in hardware.
->> >>
->> >> Skip configuring the PDC when the IRQ is masked and unmasked, instead
->> >> use the irq_enable/irq_disable callbacks to toggle the IRQ_ENABLE
->> >> register at the PDC. The PDC's IRQ_ENABLE register is only used during
->> >> the monitoring mode when the system is asleep and is not needed for
->> >> active mode detection.
->> >
->> >I think this is saying that we want to always let the line be sent
->> >through the PDC to the parent irqchip, in this case GIC, so that we
->> >don't get an interrupt storm for dual edge interrupts? Why does dual
->> >edge interrupts cause a problem?
->> >
->> I am not sure about the hardware details, but the PDC designers did not
->> expect enable and disable to be called whenever the interrupt is
->> handled. This specially becomes a problem for dual edge interrupts which
->> seems to generate a interrupt storm when enabled/disabled while handling
->> the interrupt.
->>
->
->Ok. I just wanted to confirm that masking "doesn't matter" to the PDC
->because it assumes the irqchip closer to the CPU will be able to mask it
->anyway. Is that right?
->
-That is correct.
+Quoting Amit Kucheria (2019-09-20 15:14:58)
+> On Fri, Sep 20, 2019 at 3:09 PM Stephen Boyd <swboyd@chromium.org> wrote:
+> >
+> > Ok so the plan is to change DT and then change it back? That sounds
+> > quite bad so please fix the thermal core to not care about this before
+> > applying these changes so that we don't churn DT.
+>=20
+> Hi Stephen,
+>=20
+> Our emails crossed paths. I think we could just make the property
+> optional so that we can remove the property completely for drivers
+> that support interrupts. Comments?
+
+OK. This means that the delay properties become irrelevant once an
+interrupt is there? I guess that's OK. My concern is that we need to
+choose one or the other when it would be simpler to have both and
+fallback to the delays so that DT migration strategies are purely
+additive. It's not like the delays aren't calculated to be those numbers
+anymore. They're just not going to be used.
+
+>=20
+> That is a bigger change to the bindings and I don't want to hold the
+> tsens interrupt support hostage to agreement on this.
+
+Alright. I admit I haven't looked into the details but is it hard for
+some reason to make it use interrupts before delays?
+
