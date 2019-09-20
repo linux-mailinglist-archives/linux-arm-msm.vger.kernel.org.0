@@ -2,140 +2,305 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 1A1CDB98C0
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 Sep 2019 23:07:32 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A1D26B9924
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 Sep 2019 23:43:22 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2387479AbfITVHb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 20 Sep 2019 17:07:31 -0400
-Received: from mail-pf1-f195.google.com ([209.85.210.195]:46826 "EHLO
-        mail-pf1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2387431AbfITVHb (ORCPT
+        id S2392624AbfITVnL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 20 Sep 2019 17:43:11 -0400
+Received: from mail-vs1-f65.google.com ([209.85.217.65]:46627 "EHLO
+        mail-vs1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2392804AbfITVnL (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 20 Sep 2019 17:07:31 -0400
-Received: by mail-pf1-f195.google.com with SMTP id q5so5290616pfg.13
-        for <linux-arm-msm@vger.kernel.org>; Fri, 20 Sep 2019 14:07:30 -0700 (PDT)
+        Fri, 20 Sep 2019 17:43:11 -0400
+Received: by mail-vs1-f65.google.com with SMTP id z14so5637310vsz.13
+        for <linux-arm-msm@vger.kernel.org>; Fri, 20 Sep 2019 14:43:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=message-id:mime-version:content-transfer-encoding:in-reply-to
-         :references:cc:to:from:subject:user-agent:date;
-        bh=lPIgzmO/aPJJEw9pL/CRSzhyVtzs0JpO8UpzUFEOaBQ=;
-        b=b2M0SMWw96aMNTsOlmWo8NW6A6GBgxj00yVxoie2lvcFcImFjACQ5a6NVxXmBr1fZ3
-         KcXfxvujifhSx74q2XGy3QX2C1PtePSqzBOgzegWIMspO1BvCQI3jqQ1F9mHe79PHfyw
-         kXiu5/W/2czx7NlzaTVvv774NlIsaW+Tu0Bto=
+        d=linaro.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=DsLE449MYN0lijunGmoaJH+J0lh52Nq00qDntzefXoo=;
+        b=Y41UWNhXfoaLvFvHT2mK5PnQUDu2rsLdZVpGTzNyuAkQMu8tbTrR/zLCcF2rY4aTZ6
+         lfszb21KlSm+f2/ZQ2WXSn4tmBCbqbPo5kf1qEnnT9gmxwoD6WodV6ekHlj96UWiacrp
+         QpugkSZICRkCQLCUiQ8BP6ekjlj0AwYL0agn5KeiOA9Sf0/VH0SEHoZb/21l1Eqt5pub
+         cJ43PMl4W4FFT+vJAJoO17u9IuNKgx6aK1PZW8jBhWEtXMnzyW2Q68TfpS4BW2BmGFrz
+         BJWz3H0Z7zaAtUvsUf7dwPr3Qvjyxlvt+OYmKzb7Qb1aCzpyDMrW66M2LKk4wZAOWMQ4
+         3Aug==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:mime-version
-         :content-transfer-encoding:in-reply-to:references:cc:to:from:subject
-         :user-agent:date;
-        bh=lPIgzmO/aPJJEw9pL/CRSzhyVtzs0JpO8UpzUFEOaBQ=;
-        b=U6qYApDWndD05DJxIQ+I7Yzm7K8DNmJrMNreMfPF7xK1MIheUXx3sK2ZKT56YtyTJB
-         S0O7kvniJi72G9XrDTuAxfPEXlOmDivFOKF4JPcTLJbt78cAaTYUp7tYxfGs7+3uL+jH
-         hHlLcebR4yXjqMoPTZVHSoK4ja2enBKbed1AS7pv+Bml+oerY8GL92OuapvV23ZFI83A
-         Rl2T0Vtq0ZVd/mn5P7rMPmig2mWgJ9WabqFWj824vwcyv/+fXEcYKrSyBZQXlj4q8cSm
-         nUH4gw4lZls+loRDBRRgNh7rmZsJek+RRD7J9gxG+fq4ZRvAKqt2RIsc13fgKZesEl9U
-         nytg==
-X-Gm-Message-State: APjAAAUfZd4eqyZ1VgTQb0mtr3OFuN/5fpRsMTFh4QAu5jxeDv0mmP8r
-        vaVYKnf9dkCfjTebO13suSyMrVnEyUE=
-X-Google-Smtp-Source: APXvYqyAWN51mb5bwvg5tMBgXdaWqe6d1zPHJiWwX3nmpCkKnqqQBzcRed7PrS5FMAE8YAwI65K7Cg==
-X-Received: by 2002:a62:e21a:: with SMTP id a26mr20135657pfi.80.1569013649984;
-        Fri, 20 Sep 2019 14:07:29 -0700 (PDT)
-Received: from chromium.org ([2620:15c:202:1:fa53:7765:582b:82b9])
-        by smtp.gmail.com with ESMTPSA id a11sm3742571pfg.94.2019.09.20.14.07.29
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 20 Sep 2019 14:07:29 -0700 (PDT)
-Message-ID: <5d853f91.1c69fb81.a630b.98dd@mx.google.com>
-Content-Type: text/plain; charset="utf-8"
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=DsLE449MYN0lijunGmoaJH+J0lh52Nq00qDntzefXoo=;
+        b=t6Y9laWJxD7loNsQhjOoymOFgS5ypsVvS+3dERuDE2LGhyyxmPvjb+qrdE1UPh2X+j
+         qqL1Q61kHupFGoqgrPh0FzwLMaWLww+earSc4KBiF/J8RwzTJkFohsUSNrGoMS1Jti7N
+         ViFH4l5GWXT0REGPW9lDjNFN8GBlSGdVMWMHMtNfkPqbPQ4REOZjyW6Il3CHiOB8GhXw
+         r0F9ZEfIE5jeSq9Nb68KPepYJ2OLTDuXAYEF8T1+nW5y4JTQg4XwIOeocXyCDjY74efJ
+         4lNzaoK/B8Qqov2rLCzzb/3Vv8IjjSRHQqOiKWsMASaCvMuPPoO0L6SYaKsw1ul1sKSV
+         IDoQ==
+X-Gm-Message-State: APjAAAX2U8g5Kdv9Z1tjV56pLn63CNKYOy1nd6DEEloD1ZE0I+A5yCB0
+        a2/VRBFmFpFZCoZvyu4p5gQx8HqaoHG5k4LmG6Z6Hg==
+X-Google-Smtp-Source: APXvYqxqwvjtfbTFvURwOAkGiT1FsWywrL0zaIpbPwm+wwJzPOW+clQhLp9/KxIWk3c8VeHdjYcFDVe6vOxn0tYw7GQ=
+X-Received: by 2002:a67:6044:: with SMTP id u65mr3810616vsb.95.1569015788245;
+ Fri, 20 Sep 2019 14:43:08 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <3ed0de38b57fda1995d0f231cbcec38c16387a2a.1568966170.git.saiprakash.ranjan@codeaurora.org>
-References: <cover.1568966170.git.saiprakash.ranjan@codeaurora.org> <3ed0de38b57fda1995d0f231cbcec38c16387a2a.1568966170.git.saiprakash.ranjan@codeaurora.org>
-Cc:     linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Rajendra Nayak <rnayak@codeaurora.org>,
-        Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
-To:     Andy Gross <agross@kernel.org>, Joerg Roedel <joro@8bytes.org>,
-        Robin Murphy <robin.murphy@arm.com>,
-        Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>,
-        Vivek Gautam <vivek.gautam@codeaurora.org>,
-        Will Deacon <will@kernel.org>, bjorn.andersson@linaro.org,
-        iommu@lists.linux-foundation.org
-From:   Stephen Boyd <swboyd@chromium.org>
-Subject: Re: [PATCHv7 3/3] iommu: arm-smmu-impl: Add sdm845 implementation hook
-User-Agent: alot/0.8.1
-Date:   Fri, 20 Sep 2019 14:07:28 -0700
+References: <cover.1568185732.git.amit.kucheria@linaro.org>
+ <933f033298cbd7726a6c0b4b3b6cc7adc81784ba.1568185732.git.amit.kucheria@linaro.org>
+ <20190917190619.GA9311@bogus>
+In-Reply-To: <20190917190619.GA9311@bogus>
+From:   Amit Kucheria <amit.kucheria@linaro.org>
+Date:   Fri, 20 Sep 2019 14:42:57 -0700
+Message-ID: <CAHLCerMc=+Xyf-KkJ4gn0Cfs8yuTTLetKEuSiKCwK4kAWo7ocw@mail.gmail.com>
+Subject: Re: [PATCH v3 07/15] dt-bindings: thermal: tsens: Convert over to a
+ yaml schema
+To:     Rob Herring <robh@kernel.org>
+Cc:     LKML <linux-kernel@vger.kernel.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Eduardo Valentin <edubezval@gmail.com>,
+        Andy Gross <agross@kernel.org>,
+        Brian Masney <masneyb@onstation.org>,
+        Stephen Boyd <swboyd@chromium.org>,
+        Daniel Lezcano <daniel.lezcano@linaro.org>,
+        Mark Rutland <mark.rutland@arm.com>,
+        Zhang Rui <rui.zhang@intel.com>,
+        Linux PM list <linux-pm@vger.kernel.org>,
+        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
+        <devicetree@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Sai Prakash Ranjan (2019-09-20 01:04:29)
-> From: Vivek Gautam <vivek.gautam@codeaurora.org>
->=20
-> Add reset hook for sdm845 based platforms to turn off
-> the wait-for-safe sequence.
->=20
-> Understanding how wait-for-safe logic affects USB and UFS performance
-> on MTP845 and DB845 boards:
->=20
-> Qcom's implementation of arm,mmu-500 adds a WAIT-FOR-SAFE logic
-> to address under-performance issues in real-time clients, such as
-> Display, and Camera.
-> On receiving an invalidation requests, the SMMU forwards SAFE request
-> to these clients and waits for SAFE ack signal from real-time clients.
-> The SAFE signal from such clients is used to qualify the start of
-> invalidation.
-> This logic is controlled by chicken bits, one for each - MDP (display),
-> IFE0, and IFE1 (camera), that can be accessed only from secure software
-> on sdm845.
->=20
-> This configuration, however, degrades the performance of non-real time
-> clients, such as USB, and UFS etc. This happens because, with wait-for-sa=
-fe
-> logic enabled the hardware tries to throttle non-real time clients while
-> waiting for SAFE ack signals from real-time clients.
->=20
-> On mtp845 and db845 devices, with wait-for-safe logic enabled by the
-> bootloaders we see degraded performance of USB and UFS when kernel
-> enables the smmu stage-1 translations for these clients.
-> Turn off this wait-for-safe logic from the kernel gets us back the perf
-> of USB and UFS devices until we re-visit this when we start seeing perf
-> issues on display/camera on upstream supported SDM845 platforms.
-> The bootloaders on these boards implement secure monitor callbacks to
-> handle a specific command - QCOM_SCM_SVC_SMMU_PROGRAM with which the
-> logic can be toggled.
->=20
-> There are other boards such as cheza whose bootloaders don't enable this
-> logic. Such boards don't implement callbacks to handle the specific SCM
-> call so disabling this logic for such boards will be a no-op.
->=20
-> This change is inspired by the downstream change from Patrick Daly
-> to address performance issues with display and camera by handling
-> this wait-for-safe within separte io-pagetable ops to do TLB
-> maintenance. So a big thanks to him for the change and for all the
-> offline discussions.
->=20
-> Without this change the UFS reads are pretty slow:
-> $ time dd if=3D/dev/sda of=3D/dev/zero bs=3D1048576 count=3D10 conv=3Dsync
-> 10+0 records in
-> 10+0 records out
-> 10485760 bytes (10.0MB) copied, 22.394903 seconds, 457.2KB/s
-> real    0m 22.39s
-> user    0m 0.00s
-> sys     0m 0.01s
->=20
-> With this change they are back to rock!
-> $ time dd if=3D/dev/sda of=3D/dev/zero bs=3D1048576 count=3D300 conv=3Dsy=
-nc
-> 300+0 records in
-> 300+0 records out
-> 314572800 bytes (300.0MB) copied, 1.030541 seconds, 291.1MB/s
-> real    0m 1.03s
-> user    0m 0.00s
-> sys     0m 0.54s
->=20
-> Signed-off-by: Vivek Gautam <vivek.gautam@codeaurora.org>
-> Reviewed-by: Robin Murphy <robin.murphy@arm.com>
-> Signed-off-by: Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
-> ---
+On Tue, Sep 17, 2019 at 12:06 PM Rob Herring <robh@kernel.org> wrote:
+>
+> On Wed, Sep 11, 2019 at 12:46:24PM +0530, Amit Kucheria wrote:
+> > Document interrupt support in the tsens driver by converting over to a
+> > YAML schema.
+> >
+> > Suggested-by: Stephen Boyd <swboyd@chromium.org>
+> > Signed-off-by: Amit Kucheria <amit.kucheria@linaro.org>
+> > ---
+> >  .../bindings/thermal/qcom-tsens.txt           |  55 ------
+> >  .../bindings/thermal/qcom-tsens.yaml          | 174 ++++++++++++++++++
+> >  MAINTAINERS                                   |   1 +
+> >  3 files changed, 175 insertions(+), 55 deletions(-)
+> >  delete mode 100644 Documentation/devicetree/bindings/thermal/qcom-tsens.txt
+> >  create mode 100644 Documentation/devicetree/bindings/thermal/qcom-tsens.yaml
+>
+>
+> > diff --git a/Documentation/devicetree/bindings/thermal/qcom-tsens.yaml b/Documentation/devicetree/bindings/thermal/qcom-tsens.yaml
+> > new file mode 100644
+> > index 000000000000..6784766fe58f
+> > --- /dev/null
+> > +++ b/Documentation/devicetree/bindings/thermal/qcom-tsens.yaml
+> > @@ -0,0 +1,174 @@
+> > +# SPDX-License-Identifier: (GPL-2.0 OR MIT)
+> > +# Copyright 2019 Linaro Ltd.
+> > +%YAML 1.2
+> > +---
+> > +$id: http://devicetree.org/schemas/thermal/qcom-tsens.yaml#
+> > +$schema: http://devicetree.org/meta-schemas/core.yaml#
+> > +
+> > +title: QCOM SoC Temperature Sensor (TSENS)
+> > +
+> > +maintainers:
+> > +  - Amit Kucheria <amit.kucheria@linaro.org>
+> > +
+> > +description: |
+> > +  QCOM SoCs have TSENS IP to allow temperature measurement. There are currently
+> > +  three distinct major versions of the IP that is supported by a single driver.
+> > +  The IP versions are named v0.1, v1 and v2 in the driver, where v0.1 captures
+> > +  everything before v1 when there was no versioning information.
+> > +
+> > +properties:
+> > +  compatible:
+> > +    oneOf:
+> > +      - description: v0.1 of TSENS
+> > +        items:
+> > +          - enum:
+> > +              - qcom,msm8916-tsens
+> > +              - qcom,msm8974-tsens
+> > +          - const: qcom,tsens-v0_1
+> > +
+> > +      - description: v1 of TSENS
+> > +        items:
+> > +          - enum:
+> > +              - qcom,qcs404-tsens
+> > +          - const: qcom,tsens-v1
+> > +
+> > +      - description: v2 of TSENS
+> > +        items:
+> > +          - enum:
+> > +              - qcom,msm8996-tsens
+> > +              - qcom,msm8998-tsens
+> > +              - qcom,sdm845-tsens
+> > +          - const: qcom,tsens-v2
+> > +
+> > +  reg:
+> > +    maxItems: 2
+> > +    items:
+> > +      - description: TM registers
+> > +      - description: SROT registers
+> > +
+> > +  nvmem-cells:
+> > +    minItems: 1
+> > +    maxItems: 2
+> > +    description:
+> > +      Reference to an nvmem node for the calibration data
+> > +
+> > +  nvmem-cells-names:
+>
+> This is going to require 2 items, so you need an explicit minItems and
+> maxItems.
 
-Reviewed-by: Stephen Boyd <swboyd@chromium.org>
+Will fix.
 
+> > +    items:
+> > +      - enum:
+> > +        - caldata
+> > +        - calsel
+> > +
+> > +  "#qcom,sensors":
+> > +    allOf:
+> > +      - $ref: /schemas/types.yaml#/definitions/uint32
+> > +      - minimum: 1
+> > +      - maximum: 16
+> > +    description:
+> > +      Number of sensors enabled on this platform
+> > +
+> > +  "#thermal-sensor-cells":
+> > +    const: 1
+> > +    description:
+> > +      Number of cells required to uniquely identify the thermal sensors. Since
+> > +      we have multiple sensors this is set to 1
+> > +
+> > +allOf:
+> > +  - if:
+> > +      properties:
+> > +        compatible:
+> > +          contains:
+> > +            enum:
+> > +              - qcom,msm8916-tsens
+> > +              - qcom,msm8974-tsens
+> > +              - qcom,qcs404-tsens
+> > +              - qcom,tsens-v0_1
+> > +              - qcom,tsens-v1
+> > +    then:
+> > +      properties:
+> > +        interrupts:
+>
+> > +          minItems: 1
+> > +          maxItems: 1
+>
+> These can be implicit.
+
+Will remove all of these.
+
+> > +          items:
+> > +            - description: Combined interrupt if upper or lower threshold crossed
+> > +        interrupt-names:
+> > +          minItems: 1
+> > +          maxItems: 1
+>
+> ditto.
+>
+> > +          items:
+> > +            - const: uplow
+> > +
+> > +    else:
+> > +      properties:
+> > +        interrupts:
+> > +          minItems: 2
+> > +          maxItems: 2
+>
+> ditto.
+>
+> > +          items:
+> > +            - description: Combined interrupt if upper or lower threshold crossed
+> > +            - description: Interrupt if critical threshold crossed
+> > +        interrupt-names:
+> > +          minItems: 2
+> > +          maxItems: 2
+>
+> ditto.
+>
+> > +          items:
+> > +            - const: uplow
+> > +            - const: critical
+> > +
+> > +required:
+> > +  - compatible
+> > +  - reg
+> > +  - "#qcom,sensors"
+> > +  - interrupts
+> > +  - interrupt-names
+> > +  - "#thermal-sensor-cells"
+> > +
+> > +examples:
+> > +  - |
+> > +    #include <dt-bindings/interrupt-controller/arm-gic.h>
+> > +    // Example 1 (legacy: for pre v1 IP):
+> > +    tsens1: thermal-sensor@900000 {
+> > +           compatible = "qcom,msm8916-tsens", "qcom,tsens-v0_1";
+> > +           reg = <0x4a9000 0x1000>, /* TM */
+> > +                 <0x4a8000 0x1000>; /* SROT */
+> > +
+> > +           nvmem-cells = <&tsens_caldata>, <&tsens_calsel>;
+> > +           nvmem-cell-names = "caldata", "calsel";
+> > +
+> > +           interrupts = <GIC_SPI 184 IRQ_TYPE_LEVEL_HIGH>;
+> > +           interrupt-names = "uplow";
+> > +
+> > +           #qcom,sensors = <5>;
+> > +           #thermal-sensor-cells = <1>;
+> > +    };
+> > +
+> > +  - |
+> > +    #include <dt-bindings/interrupt-controller/arm-gic.h>
+> > +    // Example 2 (for any platform containing v1 of the TSENS IP):
+> > +    tsens2: thermal-sensor@4a9000 {
+> > +          compatible = "qcom,qcs404-tsens", "qcom,tsens-v1";
+> > +          reg = <0x004a9000 0x1000>, /* TM */
+> > +                <0x004a8000 0x1000>; /* SROT */
+> > +
+> > +          nvmem-cells = <&tsens_caldata>;
+> > +          nvmem-cell-names = "calib";
+> > +
+> > +          interrupts = <GIC_SPI 506 IRQ_TYPE_LEVEL_HIGH>;
+> > +          interrupt-names = "uplow";
+> > +
+> > +          #qcom,sensors = <10>;
+> > +          #thermal-sensor-cells = <1>;
+> > +    };
+> > +
+> > +  - |
+> > +    #include <dt-bindings/interrupt-controller/arm-gic.h>
+> > +    // Example 3 (for any platform containing v2 of the TSENS IP):
+> > +    tsens3: thermal-sensor@c263000 {
+> > +           compatible = "qcom,sdm845-tsens", "qcom,tsens-v2";
+> > +           reg = <0xc263000 0x1ff>,
+> > +                 <0xc222000 0x1ff>;
+> > +
+> > +           interrupts = <GIC_SPI 506 IRQ_TYPE_LEVEL_HIGH>,
+> > +                        <GIC_SPI 508 IRQ_TYPE_LEVEL_HIGH>;
+> > +           interrupt-names = "uplow", "critical";
+> > +
+> > +           #qcom,sensors = <13>;
+> > +           #thermal-sensor-cells = <1>;
+> > +    };
+> > +...
+> > diff --git a/MAINTAINERS b/MAINTAINERS
+> > index e7a47b5210fd..ff757a4a060c 100644
+> > --- a/MAINTAINERS
+> > +++ b/MAINTAINERS
+> > @@ -13360,6 +13360,7 @@ L:    linux-pm@vger.kernel.org
+> >  L:   linux-arm-msm@vger.kernel.org
+> >  S:   Maintained
+> >  F:   drivers/thermal/qcom/
+> > +F:   Documentation/devicetree/bindings/thermal/qcom-tsens.yaml
+> >
+> >  QUALCOMM VENUS VIDEO ACCELERATOR DRIVER
+> >  M:   Stanimir Varbanov <stanimir.varbanov@linaro.org>
+> > --
+> > 2.17.1
+> >
