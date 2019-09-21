@@ -2,57 +2,57 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 714B7B9D36
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 21 Sep 2019 11:51:28 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id F2C94B9D35
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 21 Sep 2019 11:51:27 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2405563AbfIUJv1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        id S2405562AbfIUJv1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
         Sat, 21 Sep 2019 05:51:27 -0400
-Received: from mail-wr1-f66.google.com ([209.85.221.66]:39204 "EHLO
-        mail-wr1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2405234AbfIUJv1 (ORCPT
+Received: from mail-wr1-f65.google.com ([209.85.221.65]:44601 "EHLO
+        mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2405436AbfIUJv1 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
         Sat, 21 Sep 2019 05:51:27 -0400
-Received: by mail-wr1-f66.google.com with SMTP id r3so9104917wrj.6
-        for <linux-arm-msm@vger.kernel.org>; Sat, 21 Sep 2019 02:51:23 -0700 (PDT)
+Received: by mail-wr1-f65.google.com with SMTP id i18so9056787wru.11
+        for <linux-arm-msm@vger.kernel.org>; Sat, 21 Sep 2019 02:51:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=gUvB2IDVhucqoDU2QjHJoWGF/q3qwY0/f00xRAU61Xc=;
-        b=JFoS5ykBI8PzvRpm+qwTIXfFfXGXJOqQQUJh1GiZhfPKHago+sJ0Q1KjyZ4NbrvBub
-         V1kFCKpw4kBZcaEjLFWrk8xNwH2UZtwbxWdCu0QzKwD/8a277WYNDT9XxWTgwBGJq+ZA
-         HBSZ1VZRmQLUngV9x7MKa89u7oqtvs8eIeaoR9efIzuJRzkugH191hw2mL7TgWTX1/O8
-         KU+ar7NvpvIKQviu0ZSUEpSQtshnshfdNOal2jNnIQZTJ34ClaLsr+k251+eBdLxKfvY
-         XPmshK+vkYQHJSWybIcnWT48hqJS0wDw+ll0QUmi4EMD2zB9X+UfEbOxqPF4YZLU3h1K
-         ubFQ==
+        bh=NX5OSIPn5P4G+m7Kvbj+EXa/e5zf+0aUXiYf+I4+xpg=;
+        b=iN44MZGhre8O2zbPZkc89lIMx7nJR4peTcJDwIxVLMu4Es7O5Z4qc9dBVu4mbFaEAD
+         7Fovsg6Fr7awR7c50vduzk8Xjbw8TxvtyVYiOfsBwl8+aQ3NRr8ojMYwHxDyITgvm0Iz
+         PG3PyL79hJO8vPV61mmJqZHtg3nyjbJhvnRr39KfdNAeh40o7EKuPc6juErz0n8m57/H
+         kqwZEaDtF//79xXQNY/gynrcqfe8sTUf1fUjelW0CgYsi5MfXYjs5XT3n7jd6wU+twvz
+         nFyDhOH4L+Cze32iRgpT4tepf8ITzW2itOMQEFR8kGNAhKqnX0CN8MgQhNGXYWPfJeh9
+         tcJg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=gUvB2IDVhucqoDU2QjHJoWGF/q3qwY0/f00xRAU61Xc=;
-        b=KbTPm998ogKSzmfUaf5rhgN2wrNLcuQ8fDhX8EmsJfR+Bjy+r7BFXYyDwMgwAbeuOw
-         7m8fC3i3wusTc0gav6Qumn/Vz03b4vVW1hXyD7LZ/ayCa3VISgKNWyjps13LMTU/AXBz
-         DyWhfnLIO7MdKlE6Hip9btSSd/KMCJQV470TW3xFCgE5ch0Ev4kPWc+E3nw6NY1aixHg
-         HOcuWgS4p7NjwLkl77USo8HB8H57SlOlrJHYtXeVGPYVAtwws9QBqXOxAtJSAGq62bP0
-         EfR7Ldt60GUIb9fSwj5XIlAx/GBPpQofeic9XBh59+9gZgJw2gZQF1LVJfH9tnq791pY
-         5ScQ==
-X-Gm-Message-State: APjAAAWU4chv41izsBtOYtpym8DMfcXri86U/RbU/l8m7ylUMoucmdGY
-        lBLMNqIYuU11THF/6ui75HAaSRSjbZc=
-X-Google-Smtp-Source: APXvYqz1tKsCSD3IpVNWl/0D5wILgSZMUp65qPJpU/7eDyy2OF+IE0ziKvsHgFrNg6WCqeHddeDaeA==
-X-Received: by 2002:adf:f112:: with SMTP id r18mr15470191wro.88.1569059482543;
-        Sat, 21 Sep 2019 02:51:22 -0700 (PDT)
+        bh=NX5OSIPn5P4G+m7Kvbj+EXa/e5zf+0aUXiYf+I4+xpg=;
+        b=b3D6km4w9aNcDPuUxAXC/0VqhFsd4DNepKiofTthX6yyIvxR7y2vepVfL5oiu23aUd
+         O7Bz18I1hSk7R4WPYt0PHChQnXGZUuMpKPwMRklV3r10ZImiig7Xjkks9sEC+MP3GTI+
+         nUPQ2gfLFvHBkmMDWsY7K3WD5whdCgYZGWl5iOZVj51rN5BiKO9OXjU4ccBtKAyk4DSC
+         cmZaZH0AEkRJ4YXaiFyvZIvKP6NDOvjfHvSn0CgJPOSdokd49rAry3iO/VEfRx8MO6gE
+         H+XhRueVnwwlMAu6mngodnt+0p5ce8t3O/+fsiWl8sMNV2/gkSSiosJkGSvtQ9iPF8Wk
+         fXiw==
+X-Gm-Message-State: APjAAAXZ1DQ0GhFMA1JcTz74BUU+ATUg/wCR4ECJNmAt6Scb0dg1XHGP
+        kVWIbW4UIW3VO45j5Fhz77NeW6247Wc=
+X-Google-Smtp-Source: APXvYqw8aSkPgi4t5JZsZWR1GPSMfZQ68hj3jG/9YJsuL4F3657INL0Tiaxn+Al0B04mgmtdWXd5vQ==
+X-Received: by 2002:adf:e84c:: with SMTP id d12mr2405526wrn.373.1569059483423;
+        Sat, 21 Sep 2019 02:51:23 -0700 (PDT)
 Received: from IcarusMOD.eternityproject.eu ([93.51.16.173])
-        by smtp.gmail.com with ESMTPSA id c8sm4947094wrr.49.2019.09.21.02.51.21
+        by smtp.gmail.com with ESMTPSA id c8sm4947094wrr.49.2019.09.21.02.51.22
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sat, 21 Sep 2019 02:51:21 -0700 (PDT)
+        Sat, 21 Sep 2019 02:51:22 -0700 (PDT)
 From:   kholk11@gmail.com
 To:     linux-arm-msm@vger.kernel.org
 Cc:     kholk11@gmail.com, marijns95@gmail.com, broonie@kernel.org,
         lgirdwood@gmail.com, mark.rutland@arm.com, robh+dt@kernel.org,
         lee.jones@linaro.org, agross@kernel.org
-Subject: [PATCH 2/5] regulator: qcom_spmi: Add PM8950 SPMI regulator
-Date:   Sat, 21 Sep 2019 11:50:40 +0200
-Message-Id: <20190921095043.62593-3-kholk11@gmail.com>
+Subject: [PATCH 3/5] regulator: qcom_smd: Add PM8950 regulators
+Date:   Sat, 21 Sep 2019 11:50:41 +0200
+Message-Id: <20190921095043.62593-4-kholk11@gmail.com>
 X-Mailer: git-send-email 2.21.0
 In-Reply-To: <20190921095043.62593-1-kholk11@gmail.com>
 References: <20190921095043.62593-1-kholk11@gmail.com>
@@ -65,31 +65,31 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 From: "Angelo G. Del Regno" <kholk11@gmail.com>
 
-The PM8950 has 5 HFSMPS, 1 FTSMPS2.5 (s5, controlling APC voltage)
-and 23 LDO regulators.
-Add the configuration for this chip.
+The PM8950 provides 6 SMPS regulators, of which 5 HFSMPS
+and one FTSMPS2.5 (s5), and 23 LDOs.
+Add these to the RPM regulator driver.
 
 Signed-off-by: Angelo G. Del Regno <kholk11@gmail.com>
 ---
- .../regulator/qcom,spmi-regulator.txt         | 21 ++++++++++++
- drivers/regulator/qcom_spmi-regulator.c       | 34 +++++++++++++++++++
- 2 files changed, 55 insertions(+)
+ .../regulator/qcom,smd-rpm-regulator.txt      | 21 +++++
+ drivers/regulator/qcom_smd-regulator.c        | 92 +++++++++++++++++++
+ 2 files changed, 113 insertions(+)
 
-diff --git a/Documentation/devicetree/bindings/regulator/qcom,spmi-regulator.txt b/Documentation/devicetree/bindings/regulator/qcom,spmi-regulator.txt
-index 430b8622bda1..76885fd8a3c9 100644
---- a/Documentation/devicetree/bindings/regulator/qcom,spmi-regulator.txt
-+++ b/Documentation/devicetree/bindings/regulator/qcom,spmi-regulator.txt
-@@ -8,6 +8,7 @@ Qualcomm SPMI Regulators
- 			"qcom,pm8841-regulators"
- 			"qcom,pm8916-regulators"
- 			"qcom,pm8941-regulators"
-+			"qcom,pm8950-regulators"
- 			"qcom,pm8994-regulators"
- 			"qcom,pmi8994-regulators"
- 			"qcom,pms405-regulators"
-@@ -72,6 +73,26 @@ Qualcomm SPMI Regulators
- 	Definition: Reference to regulator supplying the input pin, as
- 		    described in the data sheet.
+diff --git a/Documentation/devicetree/bindings/regulator/qcom,smd-rpm-regulator.txt b/Documentation/devicetree/bindings/regulator/qcom,smd-rpm-regulator.txt
+index 45025b5b67f6..d126df043403 100644
+--- a/Documentation/devicetree/bindings/regulator/qcom,smd-rpm-regulator.txt
++++ b/Documentation/devicetree/bindings/regulator/qcom,smd-rpm-regulator.txt
+@@ -22,6 +22,7 @@ Regulator nodes are identified by their compatible:
+ 		    "qcom,rpm-pm8841-regulators"
+ 		    "qcom,rpm-pm8916-regulators"
+ 		    "qcom,rpm-pm8941-regulators"
++		    "qcom,rpm-pm8950-regulators"
+ 		    "qcom,rpm-pm8994-regulators"
+ 		    "qcom,rpm-pm8998-regulators"
+ 		    "qcom,rpm-pma8084-regulators"
+@@ -54,6 +55,26 @@ Regulator nodes are identified by their compatible:
+ 	Definition: reference to regulator supplying the input pin, as
+ 		    described in the data sheet
  
 +- vdd_s1-supply:
 +- vdd_s2-supply:
@@ -114,58 +114,123 @@ index 430b8622bda1..76885fd8a3c9 100644
  - vdd_s1-supply:
  - vdd_s2-supply:
  - vdd_s3-supply:
-diff --git a/drivers/regulator/qcom_spmi-regulator.c b/drivers/regulator/qcom_spmi-regulator.c
-index 5a269ec46963..3504d9054df1 100644
---- a/drivers/regulator/qcom_spmi-regulator.c
-+++ b/drivers/regulator/qcom_spmi-regulator.c
-@@ -1871,6 +1871,39 @@ static const struct spmi_regulator_data pm8916_regulators[] = {
- 	{ }
+diff --git a/drivers/regulator/qcom_smd-regulator.c b/drivers/regulator/qcom_smd-regulator.c
+index 3b0828c79e2b..fff8d5fdef6a 100644
+--- a/drivers/regulator/qcom_smd-regulator.c
++++ b/drivers/regulator/qcom_smd-regulator.c
+@@ -338,6 +338,63 @@ static const struct regulator_desc pm8916_buck_hvo_smps = {
+ 	.ops = &rpm_smps_ldo_ops,
  };
  
-+static const struct spmi_regulator_data pm8950_regulators[] = {
-+	{ "s1", 0x1400, "vdd_s1", },
-+	{ "s2", 0x1700, "vdd_s2", },
-+	{ "s3", 0x1a00, "vdd_s3", },
-+	{ "s4", 0x1d00, "vdd_s4", },
-+	{ "s5", 0x2000, "vdd_s5", },
-+	{ "s6", 0x2300, "vdd_s6", },
-+	{ "l1", 0x4000, "vdd_l1_l19", },
-+	{ "l2", 0x4100, "vdd_l2_l23", },
-+	{ "l3", 0x4200, "vdd_l3", },
-+	{ "l4", 0x4300, "vdd_l4_l5_l6_l7_l16", },
-+	{ "l5", 0x4400, "vdd_l4_l5_l6_l7_l16", },
-+	{ "l6", 0x4500, "vdd_l4_l5_l6_l7_l16", },
-+	{ "l7", 0x4600, "vdd_l4_l5_l6_l7_l16", },
-+	{ "l8", 0x4700, "vdd_l8_l11_l12_l17_l22", },
-+	{ "l9", 0x4800, "vdd_l9_l10_l13_l14_l15_l18", },
-+	{ "l10", 0x4900, "vdd_l9_l10_l13_l14_l15_l18", },
-+	{ "l11", 0x4a00, "vdd_l8_l11_l12_l17_l22", },
-+	{ "l12", 0x4b00, "vdd_l8_l11_l12_l17_l22", },
-+	{ "l13", 0x4c00, "vdd_l9_l10_l13_l14_l15_l18", },
-+	{ "l14", 0x4d00, "vdd_l9_l10_l13_l14_l15_l18", },
-+	{ "l15", 0x4e00, "vdd_l9_l10_l13_l14_l15_l18", },
-+	{ "l16", 0x4f00, "vdd_l4_l5_l6_l7_l16", },
-+	{ "l17", 0x5000, "vdd_l8_l11_l12_l17_l22", },
-+	{ "l18", 0x5100, "vdd_l9_l10_l13_l14_l15_l18", },
-+	{ "l19", 0x5200, "vdd_l1_l19", },
-+	{ "l20", 0x5300, "vdd_l20", },
-+	{ "l21", 0x5400, "vdd_l21", },
-+	{ "l22", 0x5500, "vdd_l8_l11_l12_l17_l22", },
-+	{ "l23", 0x5600, "vdd_l2_l23", },
-+	{ }
++static const struct regulator_desc pm8950_hfsmps = {
++	.linear_ranges = (struct regulator_linear_range[]) {
++		REGULATOR_LINEAR_RANGE(375000, 0, 95, 12500),
++		REGULATOR_LINEAR_RANGE(1550000, 96, 127, 25000),
++	},
++	.n_linear_ranges = 2,
++	.n_voltages = 128,
++	.ops = &rpm_smps_ldo_ops,
 +};
 +
- static const struct spmi_regulator_data pm8994_regulators[] = {
- 	{ "s1", 0x1400, "vdd_s1", },
- 	{ "s2", 0x1700, "vdd_s2", },
-@@ -1947,6 +1980,7 @@ static const struct of_device_id qcom_spmi_regulator_match[] = {
- 	{ .compatible = "qcom,pm8841-regulators", .data = &pm8841_regulators },
- 	{ .compatible = "qcom,pm8916-regulators", .data = &pm8916_regulators },
- 	{ .compatible = "qcom,pm8941-regulators", .data = &pm8941_regulators },
-+	{ .compatible = "qcom,pm8950-regulators", .data = &pm8950_regulators },
- 	{ .compatible = "qcom,pm8994-regulators", .data = &pm8994_regulators },
- 	{ .compatible = "qcom,pmi8994-regulators", .data = &pmi8994_regulators },
- 	{ .compatible = "qcom,pms405-regulators", .data = &pms405_regulators },
++static const struct regulator_desc pm8950_ftsmps2p5 = {
++	.linear_ranges = (struct regulator_linear_range[]) {
++		REGULATOR_LINEAR_RANGE(80000, 0, 255, 5000),
++		REGULATOR_LINEAR_RANGE(160000, 256, 460, 10000),
++	},
++	.n_linear_ranges = 2,
++	.n_voltages = 461,
++	.ops = &rpm_smps_ldo_ops,
++};
++
++static const struct regulator_desc pm8950_ult_nldo = {
++	.linear_ranges = (struct regulator_linear_range[]) {
++		REGULATOR_LINEAR_RANGE(375000, 0, 202, 12500),
++	},
++	.n_linear_ranges = 1,
++	.n_voltages = 203,
++	.ops = &rpm_smps_ldo_ops,
++};
++
++static const struct regulator_desc pm8950_ult_pldo = {
++	.linear_ranges = (struct regulator_linear_range[]) {
++		REGULATOR_LINEAR_RANGE(1750000, 0, 127, 12500),
++	},
++	.n_linear_ranges = 1,
++	.n_voltages = 128,
++	.ops = &rpm_smps_ldo_ops,
++};
++
++static const struct regulator_desc pm8950_pldo_lv = {
++	.linear_ranges = (struct regulator_linear_range[]) {
++		REGULATOR_LINEAR_RANGE(1500000, 0, 16, 25000),
++	},
++	.n_linear_ranges = 1,
++	.n_voltages = 17,
++	.ops = &rpm_smps_ldo_ops,
++};
++
++static const struct regulator_desc pm8950_pldo = {
++	.linear_ranges = (struct regulator_linear_range[]) {
++		REGULATOR_LINEAR_RANGE(975000, 0, 164, 12500),
++	},
++	.n_linear_ranges = 1,
++	.n_voltages = 165,
++	.ops = &rpm_smps_ldo_ops,
++};
++
++
+ static const struct regulator_desc pm8994_hfsmps = {
+ 	.linear_ranges = (struct regulator_linear_range[]) {
+ 		REGULATOR_LINEAR_RANGE( 375000,  0,  95, 12500),
+@@ -638,6 +695,40 @@ static const struct rpm_regulator_data rpm_pma8084_regulators[] = {
+ 	{}
+ };
+ 
++static const struct rpm_regulator_data rpm_pm8950_regulators[] = {
++	{ "s1", QCOM_SMD_RPM_SMPA, 1, &pm8950_hfsmps, "vdd_s1" },
++	{ "s2", QCOM_SMD_RPM_SMPA, 2, &pm8950_hfsmps, "vdd_s2" },
++	{ "s3", QCOM_SMD_RPM_SMPA, 3, &pm8950_hfsmps, "vdd_s3" },
++	{ "s4", QCOM_SMD_RPM_SMPA, 4, &pm8950_hfsmps, "vdd_s4" },
++	{ "s5", QCOM_SMD_RPM_SMPA, 5, &pm8950_ftsmps2p5, "vdd_s5" },
++	{ "s6", QCOM_SMD_RPM_SMPA, 6, &pm8950_hfsmps, "vdd_s6" },
++
++	{ "l1", QCOM_SMD_RPM_LDOA, 1, &pm8950_ult_nldo, "vdd_l1_l19" },
++	{ "l2", QCOM_SMD_RPM_LDOA, 2, &pm8950_ult_nldo, "vdd_l2_l23" },
++	{ "l3", QCOM_SMD_RPM_LDOA, 3, &pm8950_ult_nldo, "vdd_l3" },
++	{ "l4", QCOM_SMD_RPM_LDOA, 4, &pm8950_ult_pldo, "vdd_l4_l5_l6_l7_l16" },
++	{ "l5", QCOM_SMD_RPM_LDOA, 5, &pm8950_pldo_lv, "vdd_l4_l5_l6_l7_l16" },
++	{ "l6", QCOM_SMD_RPM_LDOA, 6, &pm8950_pldo_lv, "vdd_l4_l5_l6_l7_l16" },
++	{ "l7", QCOM_SMD_RPM_LDOA, 7, &pm8950_pldo_lv, "vdd_l4_l5_l6_l7_l16" },
++	{ "l8", QCOM_SMD_RPM_LDOA, 8, &pm8950_ult_pldo, "vdd_l8_l11_l12_l17_l22" },
++	{ "l9", QCOM_SMD_RPM_LDOA, 9, &pm8950_ult_pldo, "vdd_l9_l10_l13_l14_l15_l18" },
++	{ "l10", QCOM_SMD_RPM_LDOA, 10, &pm8950_ult_nldo, "vdd_l9_l10_l13_l14_l15_l18"},
++	{ "l11", QCOM_SMD_RPM_LDOA, 11, &pm8950_ult_pldo, "vdd_l8_l11_l12_l17_l22"},
++	{ "l12", QCOM_SMD_RPM_LDOA, 12, &pm8950_ult_pldo, "vdd_l8_l11_l12_l17_l22"},
++	{ "l13", QCOM_SMD_RPM_LDOA, 13, &pm8950_ult_pldo, "vdd_l9_l10_l13_l14_l15_l18"},
++	{ "l14", QCOM_SMD_RPM_LDOA, 14, &pm8950_ult_pldo, "vdd_l9_l10_l13_l14_l15_l18"},
++	{ "l15", QCOM_SMD_RPM_LDOA, 15, &pm8950_ult_pldo, "vdd_l9_l10_l13_l14_l15_l18"},
++	{ "l16", QCOM_SMD_RPM_LDOA, 16, &pm8950_ult_pldo, "vdd_l4_l5_l6_l7_l16"},
++	{ "l17", QCOM_SMD_RPM_LDOA, 17, &pm8950_ult_pldo, "vdd_l8_l11_l12_l17_l22"},
++	{ "l18", QCOM_SMD_RPM_LDOA, 18, &pm8950_ult_pldo, "vdd_l9_l10_l13_l14_l15_l18"},
++	{ "l19", QCOM_SMD_RPM_LDOA, 18, &pm8950_pldo, "vdd_l1_l19"},
++	{ "l20", QCOM_SMD_RPM_LDOA, 18, &pm8950_pldo, "vdd_l20"},
++	{ "l21", QCOM_SMD_RPM_LDOA, 18, &pm8950_pldo, "vdd_l21"},
++	{ "l22", QCOM_SMD_RPM_LDOA, 18, &pm8950_pldo, "vdd_l8_l11_l12_l17_l22"},
++	{ "l23", QCOM_SMD_RPM_LDOA, 18, &pm8950_pldo, "vdd_l2_l23"},
++	{}
++};
++
+ static const struct rpm_regulator_data rpm_pm8994_regulators[] = {
+ 	{ "s1", QCOM_SMD_RPM_SMPA, 1, &pm8994_ftsmps, "vdd_s1" },
+ 	{ "s2", QCOM_SMD_RPM_SMPA, 2, &pm8994_ftsmps, "vdd_s2" },
+@@ -767,6 +858,7 @@ static const struct of_device_id rpm_of_match[] = {
+ 	{ .compatible = "qcom,rpm-pm8841-regulators", .data = &rpm_pm8841_regulators },
+ 	{ .compatible = "qcom,rpm-pm8916-regulators", .data = &rpm_pm8916_regulators },
+ 	{ .compatible = "qcom,rpm-pm8941-regulators", .data = &rpm_pm8941_regulators },
++	{ .compatible = "qcom,rpm-pm8950-regulators", .data = &rpm_pm8950_regulators },
+ 	{ .compatible = "qcom,rpm-pm8994-regulators", .data = &rpm_pm8994_regulators },
+ 	{ .compatible = "qcom,rpm-pm8998-regulators", .data = &rpm_pm8998_regulators },
+ 	{ .compatible = "qcom,rpm-pma8084-regulators", .data = &rpm_pma8084_regulators },
 -- 
 2.21.0
 
