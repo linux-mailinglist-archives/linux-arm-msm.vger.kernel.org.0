@@ -2,49 +2,49 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 9076EB9D43
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 21 Sep 2019 12:04:48 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 772FFB9D45
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 21 Sep 2019 12:04:49 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2405581AbfIUKEs (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        id S2407270AbfIUKEs (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
         Sat, 21 Sep 2019 06:04:48 -0400
-Received: from mail-wr1-f65.google.com ([209.85.221.65]:36927 "EHLO
-        mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2405764AbfIUKEr (ORCPT
+Received: from mail-wm1-f65.google.com ([209.85.128.65]:50821 "EHLO
+        mail-wm1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2407333AbfIUKEs (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 21 Sep 2019 06:04:47 -0400
-Received: by mail-wr1-f65.google.com with SMTP id i1so9117663wro.4
-        for <linux-arm-msm@vger.kernel.org>; Sat, 21 Sep 2019 03:04:46 -0700 (PDT)
+        Sat, 21 Sep 2019 06:04:48 -0400
+Received: by mail-wm1-f65.google.com with SMTP id 5so4929101wmg.0
+        for <linux-arm-msm@vger.kernel.org>; Sat, 21 Sep 2019 03:04:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=Y8yDViXpHqhxHd9Sp8XJBl9klumTFt9ab9bndlNAw2U=;
-        b=h+r1kNCWFx6IojVHXwozmqlihr97x2WF5h289HmqdRFtaHjkrQZBlnaXnWvcVbdODl
-         9GuVcgzjT8IdUZllfHwcYyxFjVZWqibfu5MoxpOlRVO0gIJHoJRMYMZtyvRg/+XtQCva
-         FBN37ygDlz/LKgyu/aCC3WEEgGWHpHB0GQRsQ94iupYIBU9QLBbpp8zABRhLXNM5/r+9
-         5nSGFjVtd+D3kpAI4MPX5b+nZ7rnHnN1C0qqpDAHtp39Y+Id89YtqiY+8vdatzBrZiQR
-         /WbzAe+cIzjWSLy4kWUaQz/ynU818JSs+qeazGn761bkQwGiUJQd7ehfo5tz4hn0IvgP
-         N4yA==
+        bh=XFvYO/QeVSK7xJEhN7BDjaA/PqF/h3aDS+4+gIYeg2s=;
+        b=DIEAaixRbNEzw7U1WcaD3iFxJO76nAtOdHLofhG7o8d7Vvoiz8cOUaJPcVUCkOi2cA
+         kHv8IiAxsHd3bQ9aVzt/pz+ExvuTfhxRM2NeV5LBluyuFm41KiKKs68o+ru0F/EI/Tde
+         dlUhKJuK+5Xnipr7PVwF8aTtJbM8HcB1M0cb2V5p7W7OiZyspstcitVmft+7zaMiQJlm
+         Y4GVxl0IjOAadUl6r1SYuRki9Nl2tYEy1MoM5IH4yVZqzFtpw3pvZeCsdSzgiGfHrb8I
+         t81JokygWmqXjKAMbu2vd1K4wuMaBGkmT7bGYdDY3hpHMAuKtiw/V35Q+pcBzbU+D6N4
+         58Aw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=Y8yDViXpHqhxHd9Sp8XJBl9klumTFt9ab9bndlNAw2U=;
-        b=HKWKtHXlV6ucLx8FENWTQjmBe4wwnJEUhSaQuk9CNvIV7K61urleMn4Bx0jaE1zMwj
-         0lhd5KUT3+twPqYUtDUgkv3TBkXmaXjSuMeRR9MoXsoKVdUorDMWAoYLM7MTi1x+1qjx
-         MkJdt4rrgnXLVQqwpqvh5BmIAGt4loHBgLDWMyl/mP87QkJNLdtpkajG8VRfvcQEjVMG
-         Vwh1yo0ApiulQDDfQGZ9HzBZqxXAk+ai2JwfClU8a999MXbzs/86StTcQLWsbNFqFrBR
-         7kTCgY1FdM7vl3tAllsXBE8LR5h/Lw3i9G7+hI32pb0Sf+DG9g2dmpj95M7b4StEAtBQ
-         oFsQ==
-X-Gm-Message-State: APjAAAVmjJmtBRBx+BiaowkMd0OPWqaruscC+G5tYJHRW2+6C4GbPdu2
-        m8/sKu64jnLLbk8PVtBn9iFDkhK3+OM=
-X-Google-Smtp-Source: APXvYqwkoDFR+0NW7IwW7dQ5FtdQpZ1ZxcryyVyI5DzLgyi+BjVgWOPH1MbsZm7NVXr+oaCJ1Ea+Sg==
-X-Received: by 2002:a5d:694c:: with SMTP id r12mr10266988wrw.44.1569060285336;
-        Sat, 21 Sep 2019 03:04:45 -0700 (PDT)
+        bh=XFvYO/QeVSK7xJEhN7BDjaA/PqF/h3aDS+4+gIYeg2s=;
+        b=sTlyjz3nsDRi9+exO2Hv29Dbbj3q5a4Nw7vEcgu/h8UX2BiIPFahRvwFWuQBabVLrt
+         mzNF0sj8vZVYci/O6f2m0mZ90zLd28pmxMWCnMk/eiUO6s6tZ7SQAbryW3DxXZg0K3ao
+         k6Of+haCNcd4DUeIzkokt95QDJT9nm042gY0dlOCsfrRoYIjk6e39Z6BU83zmbhmkhgT
+         y7IFUzsoQEb3bTSn2lFfjGL2zsZcsIqBJ2nxXo4r+uf/8TzRg8QuSWRz/jrB4smvQLVF
+         Tbxfzpm7MTC9MilT8G938A8K6V5UfcuX0EvUDo0dTBvfNR8YaRActz5fxBp3FgfVOyrO
+         a5Ug==
+X-Gm-Message-State: APjAAAV7BcNRa0x1pI/Ywk0bKmzxWMs33Xt44N6Y7GYON17rmMfyo6/Q
+        5rITrsTP1bGmrM0z2eeN2YZlXuKqh9g=
+X-Google-Smtp-Source: APXvYqwMJovp3jiOl0eSPqwlE/xSLDsA5D0arohOs70uT8p01Cg6m96qjZqxI5uMJrSx6jrVSvSDZg==
+X-Received: by 2002:a7b:c7c9:: with SMTP id z9mr6076363wmk.61.1569060286286;
+        Sat, 21 Sep 2019 03:04:46 -0700 (PDT)
 Received: from IcarusMOD.eternityproject.eu ([93.51.16.173])
-        by smtp.gmail.com with ESMTPSA id g1sm3963575wrv.68.2019.09.21.03.04.44
+        by smtp.gmail.com with ESMTPSA id g1sm3963575wrv.68.2019.09.21.03.04.45
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sat, 21 Sep 2019 03:04:44 -0700 (PDT)
+        Sat, 21 Sep 2019 03:04:45 -0700 (PDT)
 From:   kholk11@gmail.com
 To:     linux-arm-msm@vger.kernel.org
 Cc:     kholk11@gmail.com, marijns95@gmail.com, robdclark@gmail.com,
@@ -53,9 +53,9 @@ Cc:     kholk11@gmail.com, marijns95@gmail.com, robdclark@gmail.com,
         jonathan@marek.ca, bjorn.andersson@linaro.org,
         georgi.djakov@linaro.org, gregkh@linuxfoundation.org,
         dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org
-Subject: [PATCH 2/5] drm/msm/mdp5: Add configuration for msm8x56
-Date:   Sat, 21 Sep 2019 12:04:36 +0200
-Message-Id: <20190921100439.64402-3-kholk11@gmail.com>
+Subject: [PATCH 3/5] drm/msm/dsi: Add configuration for 28nm PLL on family B
+Date:   Sat, 21 Sep 2019 12:04:37 +0200
+Message-Id: <20190921100439.64402-4-kholk11@gmail.com>
 X-Mailer: git-send-email 2.21.0
 In-Reply-To: <20190921100439.64402-1-kholk11@gmail.com>
 References: <20190921100439.64402-1-kholk11@gmail.com>
@@ -68,131 +68,84 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 From: "Angelo G. Del Regno" <kholk11@gmail.com>
 
-Add the configuration entries for the MDP5 v1.11, found on MSM8956
-and APQ8056.
+The 28nm PLL has a different iospace on MSM/APQ family B SoCs:
+add a new configuration and use it when the DT reports the
+"qcom,dsi-phy-28nm-hpm-fam-b" compatible.
 
 Signed-off-by: Angelo G. Del Regno <kholk11@gmail.com>
 ---
- drivers/gpu/drm/msm/disp/mdp5/mdp5_cfg.c | 99 ++++++++++++++++++++++++
- 1 file changed, 99 insertions(+)
+ .../devicetree/bindings/display/msm/dsi.txt    |  1 +
+ drivers/gpu/drm/msm/dsi/phy/dsi_phy.c          |  2 ++
+ drivers/gpu/drm/msm/dsi/phy/dsi_phy.h          |  1 +
+ drivers/gpu/drm/msm/dsi/phy/dsi_phy_28nm.c     | 18 ++++++++++++++++++
+ 4 files changed, 22 insertions(+)
 
-diff --git a/drivers/gpu/drm/msm/disp/mdp5/mdp5_cfg.c b/drivers/gpu/drm/msm/disp/mdp5/mdp5_cfg.c
-index dd1daf0e305a..9ff44e7fc7c7 100644
---- a/drivers/gpu/drm/msm/disp/mdp5/mdp5_cfg.c
-+++ b/drivers/gpu/drm/msm/disp/mdp5/mdp5_cfg.c
-@@ -545,6 +545,104 @@ const struct mdp5_cfg_hw msm8x96_config = {
- 	.max_clk = 412500000,
+diff --git a/Documentation/devicetree/bindings/display/msm/dsi.txt b/Documentation/devicetree/bindings/display/msm/dsi.txt
+index af95586c898f..d3ba9ee22f38 100644
+--- a/Documentation/devicetree/bindings/display/msm/dsi.txt
++++ b/Documentation/devicetree/bindings/display/msm/dsi.txt
+@@ -83,6 +83,7 @@ DSI PHY:
+ Required properties:
+ - compatible: Could be the following
+   * "qcom,dsi-phy-28nm-hpm"
++  * "qcom,dsi-phy-28nm-hpm-fam-b"
+   * "qcom,dsi-phy-28nm-lp"
+   * "qcom,dsi-phy-20nm"
+   * "qcom,dsi-phy-28nm-8960"
+diff --git a/drivers/gpu/drm/msm/dsi/phy/dsi_phy.c b/drivers/gpu/drm/msm/dsi/phy/dsi_phy.c
+index 4097eca1b3ef..507c0146a305 100644
+--- a/drivers/gpu/drm/msm/dsi/phy/dsi_phy.c
++++ b/drivers/gpu/drm/msm/dsi/phy/dsi_phy.c
+@@ -481,6 +481,8 @@ static const struct of_device_id dsi_phy_dt_match[] = {
+ #ifdef CONFIG_DRM_MSM_DSI_28NM_PHY
+ 	{ .compatible = "qcom,dsi-phy-28nm-hpm",
+ 	  .data = &dsi_phy_28nm_hpm_cfgs },
++	{ .compatible = "qcom,dsi-phy-28nm-hpm-fam-b",
++	  .data = &dsi_phy_28nm_hpm_famb_cfgs },
+ 	{ .compatible = "qcom,dsi-phy-28nm-lp",
+ 	  .data = &dsi_phy_28nm_lp_cfgs },
+ #endif
+diff --git a/drivers/gpu/drm/msm/dsi/phy/dsi_phy.h b/drivers/gpu/drm/msm/dsi/phy/dsi_phy.h
+index c4069ce6afe6..24b294ed3059 100644
+--- a/drivers/gpu/drm/msm/dsi/phy/dsi_phy.h
++++ b/drivers/gpu/drm/msm/dsi/phy/dsi_phy.h
+@@ -40,6 +40,7 @@ struct msm_dsi_phy_cfg {
  };
  
-+const struct mdp5_cfg_hw msm8x56_config = {
-+	.name = "msm8x56",
-+	.mdp = {
-+		.count = 1,
-+		.caps = MDP_CAP_SMP |
-+			MDP_CAP_DSC |
-+			MDP_CAP_SRC_SPLIT |
-+			0,
-+	},
-+	.ctl = {
-+		.count = 3,
-+		.base = { 0x01000, 0x01200, 0x01400 },
-+		.flush_hw_mask = 0xffffffff,
-+	},
-+	.smp = {
-+		.mmb_count = 10,
-+		.mmb_size = 10240,
-+		.clients = {
-+			[SSPP_VIG0] = 1, [SSPP_VIG1] = 9,
-+			[SSPP_DMA0] = 4,
-+			[SSPP_RGB0] = 7, [SSPP_RGB1] = 8,
+ extern const struct msm_dsi_phy_cfg dsi_phy_28nm_hpm_cfgs;
++extern const struct msm_dsi_phy_cfg dsi_phy_28nm_hpm_famb_cfgs;
+ extern const struct msm_dsi_phy_cfg dsi_phy_28nm_lp_cfgs;
+ extern const struct msm_dsi_phy_cfg dsi_phy_20nm_cfgs;
+ extern const struct msm_dsi_phy_cfg dsi_phy_28nm_8960_cfgs;
+diff --git a/drivers/gpu/drm/msm/dsi/phy/dsi_phy_28nm.c b/drivers/gpu/drm/msm/dsi/phy/dsi_phy_28nm.c
+index b3f678f6c2aa..3b9300545e16 100644
+--- a/drivers/gpu/drm/msm/dsi/phy/dsi_phy_28nm.c
++++ b/drivers/gpu/drm/msm/dsi/phy/dsi_phy_28nm.c
+@@ -142,6 +142,24 @@ const struct msm_dsi_phy_cfg dsi_phy_28nm_hpm_cfgs = {
+ 	.num_dsi_phy = 2,
+ };
+ 
++const struct msm_dsi_phy_cfg dsi_phy_28nm_hpm_famb_cfgs = {
++	.type = MSM_DSI_PHY_28NM_HPM,
++	.src_pll_truthtable = { {true, true}, {false, true} },
++	.reg_cfg = {
++		.num = 1,
++		.regs = {
++			{"vddio", 100000, 100},
 +		},
 +	},
-+	.pipe_vig = {
-+		.count = 2,
-+		.base = { 0x04000, 0x06000 },
-+		.caps = MDP_PIPE_CAP_HFLIP	|
-+			MDP_PIPE_CAP_VFLIP	|
-+			MDP_PIPE_CAP_SCALE	|
-+			MDP_PIPE_CAP_CSC	|
-+			MDP_PIPE_CAP_DECIMATION	|
-+			MDP_PIPE_CAP_SW_PIX_EXT	|
-+			0,
++	.ops = {
++		.enable = dsi_28nm_phy_enable,
++		.disable = dsi_28nm_phy_disable,
++		.init = msm_dsi_phy_init_common,
 +	},
-+	.pipe_rgb = {
-+		.count = 2,
-+		.base = { 0x14000, 0x16000 },
-+		.caps = MDP_PIPE_CAP_HFLIP	|
-+			MDP_PIPE_CAP_VFLIP	|
-+			MDP_PIPE_CAP_DECIMATION	|
-+			MDP_PIPE_CAP_SW_PIX_EXT	|
-+			0,
-+	},
-+	.pipe_dma = {
-+		.count = 1,
-+		.base = { 0x24000 },
-+		.caps = MDP_PIPE_CAP_HFLIP	|
-+			MDP_PIPE_CAP_VFLIP	|
-+			MDP_PIPE_CAP_SW_PIX_EXT	|
-+			0,
-+	},
-+	.pipe_cursor = {
-+		.count = 1,
-+		.base = { 0x440DC },
-+		.caps = MDP_PIPE_CAP_HFLIP	|
-+			MDP_PIPE_CAP_VFLIP	|
-+			MDP_PIPE_CAP_SW_PIX_EXT	|
-+			MDP_PIPE_CAP_CURSOR	|
-+			0,
-+	},
-+
-+	.lm = {
-+		.count = 2,
-+		.base = { 0x44000, 0x45000 },
-+		.instances = {
-+				{ .id = 0, .pp = 0, .dspp = 0,
-+				  .caps = MDP_LM_CAP_DISPLAY, },
-+				{ .id = 1, .pp = -1, .dspp = -1,
-+				  .caps = MDP_LM_CAP_WB },
-+			     },
-+		.nb_stages = 8,
-+		.max_width = 2560,
-+		.max_height = 0xFFFF,
-+	},
-+	.dspp = {
-+		.count = 1,
-+		.base = { 0x54000 },
-+
-+	},
-+	.pp = {
-+		.count = 3,
-+		.base = { 0x70000, 0x70800, 0x72000 },
-+	},
-+	.dsc = {
-+		.count = 2,
-+		.base = { 0x80000, 0x80400 },
-+	},
-+	.intf = {
-+		.base = { 0x6a000, 0x6a800, 0x6b000 },
-+		.connect = {
-+			[0] = INTF_DISABLED,
-+			[1] = INTF_DSI,
-+			[2] = INTF_DSI,
-+		},
-+	},
-+	.max_clk = 360000000,
++	.io_start = { 0x1a94400, 0x1a94800 },
++	.num_dsi_phy = 2,
 +};
 +
- const struct mdp5_cfg_hw msm8917_config = {
- 	.name = "msm8917",
- 	.mdp = {
-@@ -637,6 +735,7 @@ static const struct mdp5_cfg_handler cfg_handlers[] = {
- 	{ .revision = 6, .config = { .hw = &msm8x16_config } },
- 	{ .revision = 9, .config = { .hw = &msm8x94_config } },
- 	{ .revision = 7, .config = { .hw = &msm8x96_config } },
-+	{ .revision = 11, .config = { .hw = &msm8x56_config } },
- 	{ .revision = 15, .config = { .hw = &msm8917_config } },
- };
- 
+ const struct msm_dsi_phy_cfg dsi_phy_28nm_lp_cfgs = {
+ 	.type = MSM_DSI_PHY_28NM_LP,
+ 	.src_pll_truthtable = { {true, true}, {true, true} },
 -- 
 2.21.0
 
