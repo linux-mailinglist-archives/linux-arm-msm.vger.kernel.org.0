@@ -2,99 +2,92 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 274B9B9A92
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 21 Sep 2019 01:21:44 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 566CAB9D33
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 21 Sep 2019 11:51:24 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2437274AbfITXVd (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 20 Sep 2019 19:21:33 -0400
-Received: from mail-pl1-f193.google.com ([209.85.214.193]:46069 "EHLO
-        mail-pl1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2407093AbfITXTy (ORCPT
+        id S2394077AbfIUJvX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 21 Sep 2019 05:51:23 -0400
+Received: from mail-wr1-f67.google.com ([209.85.221.67]:33210 "EHLO
+        mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2389497AbfIUJvX (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 20 Sep 2019 19:19:54 -0400
-Received: by mail-pl1-f193.google.com with SMTP id u12so3870948pls.12
-        for <linux-arm-msm@vger.kernel.org>; Fri, 20 Sep 2019 16:19:54 -0700 (PDT)
+        Sat, 21 Sep 2019 05:51:23 -0400
+Received: by mail-wr1-f67.google.com with SMTP id b9so9141391wrs.0
+        for <linux-arm-msm@vger.kernel.org>; Sat, 21 Sep 2019 02:51:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=message-id:mime-version:content-transfer-encoding:in-reply-to
-         :references:cc:to:from:subject:user-agent:date;
-        bh=x3KkooxIJHeflg3Q/MEdAWrgYVbuQ7dU5z8XbMOS1lc=;
-        b=QzLHfKdIn3q1t4ZF2RMzkmMjfTHq/FprJnnZJs3zYFU7y2qEoRaLlRN0Y7Jq0AdNAC
-         PDfaWzDyVmNcPgDP160yRKk+6DjeC8GYQEpY8ACjMkLlsfsLOmx+dwv1tNluk5ekf3ru
-         UgXwy6ysHSMAxJ7o+Uw8r0YgF2N9y5ueHmVKo=
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=u1M/FU0V6bWnRge+RDqMTT8z1z1pC5FEaXUJkUWtccg=;
+        b=LjGOzbYb/xh8iQ0EbUKDdKjXjH8SbPSzvQTAlABBlkHnJJzZFRF7tOpS4JmP9408wU
+         M1fGCVLyvKcA1EYMeypio1GFAbSdArZnYnkE7Nu8oBGG/TFPiyVdaKkDMplYJHhvwYTd
+         t5grxtwqQzXuQd8S9wMvW6aIfXlQbTLwgzZTmksgVvesrB0lvyQ3UnFfiE9188GtUT9B
+         mo5uLLD/ZrKvN/O+zZZ9HTdNj/4HZHvQl1wT/8hHMAmzpb8mM9IAsLhYNGaSk9xmDkJR
+         CFWKS6zu87Act/19DPJ58ToUtYF6FPrXmHkfD83MoGY2xvnGcKYImuGK21M+5IFSi/Go
+         aMVg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:mime-version
-         :content-transfer-encoding:in-reply-to:references:cc:to:from:subject
-         :user-agent:date;
-        bh=x3KkooxIJHeflg3Q/MEdAWrgYVbuQ7dU5z8XbMOS1lc=;
-        b=rpsDU23vr8Jb4i0rhOYNqQh9eSInwp4QtzQG273/iduItXUmCDfDrBebu2UsDlM4wF
-         ongkQBPczXlktSVZqa5IW+hPV7rjXie9g2OGHnP1A0WOON5pcH5xx/UwIwQDP3DhgAMn
-         geO5MMSuAHyVGZ3UHOApELS7xjN/Iop03HhJ/Bb5FR12EcPQm+7TjRMh39+p5J+dH8Cq
-         FQGJvJEkomrsKRT0OKHc4WjGV6wNPTpPZh6+aEZ9MXMTtyXVKQFGp9HUIbDuo9EMo1Xd
-         m2Z4qdGksLXpZfBI6JKBFNaNBTY0xzqMEe9K1qnUWasr3+J7BurU6v9pQzOF42RikvvO
-         L4Ew==
-X-Gm-Message-State: APjAAAVRl+v4kd/Gabw3Njaiv+gaEf9Wp+tQyf7iCLPU8Nv1ocrhehoQ
-        0InpzD4QSIr0Mv/QyFv/EtTXhA==
-X-Google-Smtp-Source: APXvYqw+23bVFXVYDopNzEoteLtijFTF7+FHjQV5JUkx0GnkKnOeZTAyxgjw8he9IKiO6G9R5MvM2g==
-X-Received: by 2002:a17:902:5a89:: with SMTP id r9mr18599724pli.206.1569021594105;
-        Fri, 20 Sep 2019 16:19:54 -0700 (PDT)
-Received: from chromium.org ([2620:15c:202:1:fa53:7765:582b:82b9])
-        by smtp.gmail.com with ESMTPSA id a4sm2720148pgq.6.2019.09.20.16.19.53
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 20 Sep 2019 16:19:53 -0700 (PDT)
-Message-ID: <5d855e99.1c69fb81.1d457.733b@mx.google.com>
-Content-Type: text/plain; charset="utf-8"
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=u1M/FU0V6bWnRge+RDqMTT8z1z1pC5FEaXUJkUWtccg=;
+        b=OubA5cIXl2K9ZgSNP4s/AWOz4378A2NZg7v5PFHtwaQ8zgGCPPX9lr23NfGfiDuaQN
+         2YHoja+kwFj2fvRDMHxP2Mif0VlGU1BGTRVQaP7BW+qNsShEd2GkABj3XO0tbwalhx+9
+         51WoiOjRkHSFwKQSCM+AEixeUNYeBgWGFvjaVdi/1xctylvpATQ7of0vDKAuWPshLG8i
+         9Dz9UP1+LJAc+v44kNxr/HMwkhDbAGNX1Na4Y9NmHRxC3vQ8KSAttL5wTE6l2f8cV6uv
+         aB8UjAN0keNpDCKXBZ9YKwlq4dP2EQhDXklkoFNZLSQWxrECsb6FkVPnbPMVJOjbn9rJ
+         umzQ==
+X-Gm-Message-State: APjAAAVwp+TnMzuw03QGdGZ5H4jRxywGj0cDEOUxn/Ld03iPpi+J+rQH
+        VcPhN1N52H86oFzuh36m3Kc4RO7DV3Y=
+X-Google-Smtp-Source: APXvYqzzV/9GAmv5QqmY99eXTU2VNYUGZ4D3EaxsCyZRfEGBjAWZBhSGwgaMtvRZ8PZVXZ1ICZ0C2A==
+X-Received: by 2002:adf:8b13:: with SMTP id n19mr15326285wra.203.1569059480757;
+        Sat, 21 Sep 2019 02:51:20 -0700 (PDT)
+Received: from IcarusMOD.eternityproject.eu ([93.51.16.173])
+        by smtp.gmail.com with ESMTPSA id c8sm4947094wrr.49.2019.09.21.02.51.19
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Sat, 21 Sep 2019 02:51:20 -0700 (PDT)
+From:   kholk11@gmail.com
+To:     linux-arm-msm@vger.kernel.org
+Cc:     kholk11@gmail.com, marijns95@gmail.com, broonie@kernel.org,
+        lgirdwood@gmail.com, mark.rutland@arm.com, robh+dt@kernel.org,
+        lee.jones@linaro.org, agross@kernel.org
+Subject: [PATCH 0/5] Add support for PM8950/PMI8950/PM8004 regulators
+Date:   Sat, 21 Sep 2019 11:50:38 +0200
+Message-Id: <20190921095043.62593-1-kholk11@gmail.com>
+X-Mailer: git-send-email 2.21.0
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <CAHLCerNqsf1j4vsOPjdav8+UtXtGP55k6_==jjg1QeZ1qCX1RA@mail.gmail.com>
-References: <cover.1569015835.git.amit.kucheria@linaro.org> <f627e66c455f52b5662bef6526d7c72869808401.1569015835.git.amit.kucheria@linaro.org> <5d854c82.1c69fb81.66e1f.96ab@mx.google.com> <CAHLCerPqEK2sSGGtDj85DH+qCzgtWi4ainuQv8BgQ3-Dgi93BQ@mail.gmail.com> <5d854e1d.1c69fb81.4f771.9391@mx.google.com> <CAHLCerNqsf1j4vsOPjdav8+UtXtGP55k6_==jjg1QeZ1qCX1RA@mail.gmail.com>
-Cc:     Daniel Lezcano <daniel.lezcano@linaro.org>,
-        Mark Rutland <mark.rutland@arm.com>,
-        Rob Herring <robh+dt@kernel.org>,
-        Zhang Rui <rui.zhang@intel.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Eduardo Valentin <edubezval@gmail.com>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        LKML <linux-kernel@vger.kernel.org>,
-        Brian Masney <masneyb@onstation.org>,
-        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
-        <devicetree@vger.kernel.org>
-To:     Amit Kucheria <amit.kucheria@linaro.org>
-From:   Stephen Boyd <swboyd@chromium.org>
-Subject: Re: [PATCH v4 09/15] arm64: dts: msm8996: thermal: Add interrupt support
-User-Agent: alot/0.8.1
-Date:   Fri, 20 Sep 2019 16:19:52 -0700
+Content-Transfer-Encoding: 8bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Amit Kucheria (2019-09-20 15:14:58)
-> On Fri, Sep 20, 2019 at 3:09 PM Stephen Boyd <swboyd@chromium.org> wrote:
-> >
-> > Ok so the plan is to change DT and then change it back? That sounds
-> > quite bad so please fix the thermal core to not care about this before
-> > applying these changes so that we don't churn DT.
->=20
-> Hi Stephen,
->=20
-> Our emails crossed paths. I think we could just make the property
-> optional so that we can remove the property completely for drivers
-> that support interrupts. Comments?
+From: "Angelo G. Del Regno" <kholk11@gmail.com>
 
-OK. This means that the delay properties become irrelevant once an
-interrupt is there? I guess that's OK. My concern is that we need to
-choose one or the other when it would be simpler to have both and
-fallback to the delays so that DT migration strategies are purely
-additive. It's not like the delays aren't calculated to be those numbers
-anymore. They're just not going to be used.
+In this patch series, I'm adding support for the PM8950, PMI8950
+and PM8004 regulators (smd/spmi).
+The PM(I)8950 regulators are required for multiple SoCs, like
+MSM8956, MSM8976, MSM8953 (and maybe others), since they all use
+the same PM/PMI combo in their own variants.
+The personal aim is to upstream MSM8956 as much as possible.
 
->=20
-> That is a bigger change to the bindings and I don't want to hold the
-> tsens interrupt support hostage to agreement on this.
+This code has been tested on two Sony phones featuring the Qualcomm
+MSM8956 SoC, with PM/PMI8950 and PM8004.
 
-Alright. I admit I haven't looked into the details but is it hard for
-some reason to make it use interrupts before delays?
+Angelo G. Del Regno (5):
+  qcom: spmi-regulator: Add support for ULT LV_P50 and ULT P300
+  regulator: qcom_spmi: Add PM8950 SPMI regulator
+  regulator: qcom_smd: Add PM8950 regulators
+  mfd: qcom-spmi-pmic: Add support for PM/PMI8950
+  regulator: qcom_spmi: Add support for PM8004 regulators
+
+ .../bindings/mfd/qcom,spmi-pmic.txt           |  2 +
+ .../regulator/qcom,smd-rpm-regulator.txt      | 21 +++++
+ .../regulator/qcom,spmi-regulator.txt         | 25 +++++
+ drivers/mfd/qcom-spmi-pmic.c                  |  4 +
+ drivers/regulator/qcom_smd-regulator.c        | 92 +++++++++++++++++++
+ drivers/regulator/qcom_spmi-regulator.c       | 43 +++++++++
+ 6 files changed, 187 insertions(+)
+
+-- 
+2.21.0
 
