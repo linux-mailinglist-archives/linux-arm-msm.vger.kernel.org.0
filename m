@@ -2,57 +2,57 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id BDC82B9D37
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 21 Sep 2019 11:51:28 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 8A492B9D38
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 21 Sep 2019 11:51:29 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2405436AbfIUJv1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 21 Sep 2019 05:51:27 -0400
-Received: from mail-wm1-f66.google.com ([209.85.128.66]:35750 "EHLO
-        mail-wm1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2405440AbfIUJv1 (ORCPT
+        id S2405234AbfIUJv3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 21 Sep 2019 05:51:29 -0400
+Received: from mail-wr1-f65.google.com ([209.85.221.65]:36789 "EHLO
+        mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2405440AbfIUJv2 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 21 Sep 2019 05:51:27 -0400
-Received: by mail-wm1-f66.google.com with SMTP id y21so4477813wmi.0
-        for <linux-arm-msm@vger.kernel.org>; Sat, 21 Sep 2019 02:51:25 -0700 (PDT)
+        Sat, 21 Sep 2019 05:51:28 -0400
+Received: by mail-wr1-f65.google.com with SMTP id y19so9115090wrd.3
+        for <linux-arm-msm@vger.kernel.org>; Sat, 21 Sep 2019 02:51:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=Jmzhv0DcxS1wnuv+FFRJ18wJXKFJBKQZi54zSp+QSrg=;
-        b=X0AvqD7ZnPweyNvQ6wpbX1Lq7xU03M/laYRS1MFQLLKsjdgjSwzZueWQhGGuzX+v0J
-         p18ji2hVF3xR2gcT55WTk6wG4iCtg3bMIkR+xO4SUnGPGOsgFYlt+3KbGHSxRFMub79I
-         MaYGm7qasqD9juKB5mKtndOJJhnEJI8kFmfuOp2nzsrOZik3d4C1gYfuyZALPo5Lhelw
-         m1Ef9MiD7BM63fnRIeIIvFopqtIhFXsjKfAkqmxZWPvk1XsN7PKV+PkoJWFWXXumcWFQ
-         FjzBYgZZE6u7vc6TVm9qrBqWvp/J9jgPvn47Zl/kmKVqVctuOGFRBx709E7anf5yXUIO
-         LGBQ==
+        bh=vVJvBclMyuRvPJqXx7DYYb5mol1nE8l67gPoZ0nMZWw=;
+        b=TaCP+vgCAscjViMEDysUrg01ykmCKZuGgxSRi2Da0Qn160L/Ov73TFAkgw5XT76m+H
+         Y8CiF6aKSfIU4oPW5wofcYNDGDc8l+wxgBYdLSsuwTh7LcQ7fKC25d1hBHDZf8O1ubxy
+         URLQa7LLjn1Tc+CZXf20wCKge3QYuE+bJn5bhKpHwJadIpsydVPhpbqvTDNRxah9GdVx
+         I05XGJkEIACrq4hSsj1n7UUWxvoU5Q+mxya4PSjOM+mN7cJ/SL5I6/O/IZ61rMpXSMOv
+         SWw30+3aEYRSttaqhklrorlqKNXMmtyyy/broHqkPtAdZcpbH8KENzB3rLoOPnusWD0a
+         tXFw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=Jmzhv0DcxS1wnuv+FFRJ18wJXKFJBKQZi54zSp+QSrg=;
-        b=WTuMF/WZsNes8CkysjGzyXKLsWK+2ZoVthNr4ilG2OPxOn7F9jUc20Op/SGaA9vc4G
-         R9HL1vE1OPmJQAhWSgwrmvY1kMejwkpfwLC6RtxKaG/7tH8FpOATfP3idBNRD1lQatgp
-         xV6jo0tmLQgDV/IH+qyIQStWBEKyw46Fz6dXMNnR1EmDLGaTIsqk0wMl0kVd9xMhVJV8
-         OglhbgXnJ4eH928QQdmbl5peHRxFUMK1zukSo++hMSupaioXXMsxK94q392zLRb9pRri
-         5tIJc32kvuf4JBw2oNsl+gInrBm4xd09gcglNVc5YbCeiN0rSjJGTKv5gOfrpHVoycy8
-         5viQ==
-X-Gm-Message-State: APjAAAUCshtIVfDv5wl49aEwbn43ZT6S/PS2tEfBc3YN7JThLmMde1jY
-        0sfR2W+nh0ltgB8ZWYjZxwVCC0yvnlQ=
-X-Google-Smtp-Source: APXvYqwMlwVK4IsiorAV7SdzI22+V4K1q5V4eK+ddVZdS+dHTr3dv96xQcp6NMed4wUlRkO6afGikQ==
-X-Received: by 2002:a1c:7f4f:: with SMTP id a76mr6638131wmd.117.1569059484400;
-        Sat, 21 Sep 2019 02:51:24 -0700 (PDT)
+        bh=vVJvBclMyuRvPJqXx7DYYb5mol1nE8l67gPoZ0nMZWw=;
+        b=cQtOrPu2T5dXf2L6pOfFlJGoy8SB0UcgusL+Q7sxvQ0SkIPshdZPhqMUDMamfdua2B
+         82aG+ETRgyIISEHopbVcA6V3NJnEr8Zz1r5VmP9eRYz/o01wgAITP9GRzypMdZyOTa7P
+         CMVOrwAsbxJEHJnLgCWqvfkQb4706HNkjkhk5jl8oEwPQzS4SGOQ5OGqSWrACRIPVwjF
+         7LZ8ncXDB4EjEErxgD3+2QLjB0uafCEsjhJLPbn5VZCy01V56ndIb0Xnnpg/x3jbkIRy
+         /+uh60sAGvQ7c2LUZhnIqdbOntr7tMIxrDYSr/X1c8rKT6FV08U0NP+CS8mXah6NFYxP
+         w6Kw==
+X-Gm-Message-State: APjAAAXz1EuaFnnaF30sN51QXTSi9bjFaktoqBDygDQIgruCopJMUsyS
+        cLHc4xtbmr7WAuE7FFIoQAAHTqBgjP0=
+X-Google-Smtp-Source: APXvYqxeveJxUycvDgHZzB1sNuVURFfk/ZmWFIGSv5wcr1Dnn6zp9zaGVCbD1gIBx6JpcvYGALiB9A==
+X-Received: by 2002:a05:6000:45:: with SMTP id k5mr15315340wrx.259.1569059485399;
+        Sat, 21 Sep 2019 02:51:25 -0700 (PDT)
 Received: from IcarusMOD.eternityproject.eu ([93.51.16.173])
-        by smtp.gmail.com with ESMTPSA id c8sm4947094wrr.49.2019.09.21.02.51.23
+        by smtp.gmail.com with ESMTPSA id c8sm4947094wrr.49.2019.09.21.02.51.24
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sat, 21 Sep 2019 02:51:23 -0700 (PDT)
+        Sat, 21 Sep 2019 02:51:24 -0700 (PDT)
 From:   kholk11@gmail.com
 To:     linux-arm-msm@vger.kernel.org
 Cc:     kholk11@gmail.com, marijns95@gmail.com, broonie@kernel.org,
         lgirdwood@gmail.com, mark.rutland@arm.com, robh+dt@kernel.org,
         lee.jones@linaro.org, agross@kernel.org
-Subject: [PATCH 4/5] mfd: qcom-spmi-pmic: Add support for PM/PMI8950
-Date:   Sat, 21 Sep 2019 11:50:42 +0200
-Message-Id: <20190921095043.62593-5-kholk11@gmail.com>
+Subject: [PATCH 5/5] regulator: qcom_spmi: Add support for PM8004 regulators
+Date:   Sat, 21 Sep 2019 11:50:43 +0200
+Message-Id: <20190921095043.62593-6-kholk11@gmail.com>
 X-Mailer: git-send-email 2.21.0
 In-Reply-To: <20190921095043.62593-1-kholk11@gmail.com>
 References: <20190921095043.62593-1-kholk11@gmail.com>
@@ -65,51 +65,65 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 From: "Angelo G. Del Regno" <kholk11@gmail.com>
 
-Add the subtype and compatible strings for PM8950 and PMI8950,
-found in various SoCs, including MSM8953, MSM8956, MSM8976 and
-APQ variants.
+This Power IC is used in combination with various PMIC combos,
+generally found on boards with MSM8992, MSM8994, MSM8996,
+MSM8956, MSM8976 and others, usually at address 0x5 on the SPMI
+bus, and its usual usage is to provide power to the GPU and/or
+to the CPU clusters (APC0/APC1).
 
 Signed-off-by: Angelo G. Del Regno <kholk11@gmail.com>
 ---
- Documentation/devicetree/bindings/mfd/qcom,spmi-pmic.txt | 2 ++
- drivers/mfd/qcom-spmi-pmic.c                             | 4 ++++
- 2 files changed, 6 insertions(+)
+ .../devicetree/bindings/regulator/qcom,spmi-regulator.txt  | 4 ++++
+ drivers/regulator/qcom_spmi-regulator.c                    | 7 +++++++
+ 2 files changed, 11 insertions(+)
 
-diff --git a/Documentation/devicetree/bindings/mfd/qcom,spmi-pmic.txt b/Documentation/devicetree/bindings/mfd/qcom,spmi-pmic.txt
-index 143706222a51..fffc8fde3302 100644
---- a/Documentation/devicetree/bindings/mfd/qcom,spmi-pmic.txt
-+++ b/Documentation/devicetree/bindings/mfd/qcom,spmi-pmic.txt
-@@ -29,6 +29,8 @@ Required properties:
-                    "qcom,pm8916",
-                    "qcom,pm8004",
-                    "qcom,pm8909",
-+                   "qcom,pm8950",
-+                   "qcom,pmi8950",
-                    "qcom,pm8998",
-                    "qcom,pmi8998",
-                    "qcom,pm8005",
-diff --git a/drivers/mfd/qcom-spmi-pmic.c b/drivers/mfd/qcom-spmi-pmic.c
-index e8fe705073fa..1df1a2711328 100644
---- a/drivers/mfd/qcom-spmi-pmic.c
-+++ b/drivers/mfd/qcom-spmi-pmic.c
-@@ -31,6 +31,8 @@
- #define PM8916_SUBTYPE		0x0b
- #define PM8004_SUBTYPE		0x0c
- #define PM8909_SUBTYPE		0x0d
-+#define PM8950_SUBTYPE		0x10
-+#define PMI8950_SUBTYPE		0x11
- #define PM8998_SUBTYPE		0x14
- #define PMI8998_SUBTYPE		0x15
- #define PM8005_SUBTYPE		0x18
-@@ -50,6 +52,8 @@ static const struct of_device_id pmic_spmi_id_table[] = {
- 	{ .compatible = "qcom,pm8916",    .data = (void *)PM8916_SUBTYPE },
- 	{ .compatible = "qcom,pm8004",    .data = (void *)PM8004_SUBTYPE },
- 	{ .compatible = "qcom,pm8909",    .data = (void *)PM8909_SUBTYPE },
-+	{ .compatible = "qcom,pm8950",    .data = (void *)PM8950_SUBTYPE },
-+	{ .compatible = "qcom,pmi8950",   .data = (void *)PMI8950_SUBTYPE },
- 	{ .compatible = "qcom,pm8998",    .data = (void *)PM8998_SUBTYPE },
- 	{ .compatible = "qcom,pmi8998",   .data = (void *)PMI8998_SUBTYPE },
- 	{ .compatible = "qcom,pm8005",    .data = (void *)PM8005_SUBTYPE },
+diff --git a/Documentation/devicetree/bindings/regulator/qcom,spmi-regulator.txt b/Documentation/devicetree/bindings/regulator/qcom,spmi-regulator.txt
+index 76885fd8a3c9..f5cdac8b2847 100644
+--- a/Documentation/devicetree/bindings/regulator/qcom,spmi-regulator.txt
++++ b/Documentation/devicetree/bindings/regulator/qcom,spmi-regulator.txt
+@@ -4,6 +4,7 @@ Qualcomm SPMI Regulators
+ 	Usage: required
+ 	Value type: <string>
+ 	Definition: must be one of:
++			"qcom,pm8004-regulators"
+ 			"qcom,pm8005-regulators"
+ 			"qcom,pm8841-regulators"
+ 			"qcom,pm8916-regulators"
+@@ -160,6 +161,9 @@ The regulator node houses sub-nodes for each regulator within the device. Each
+ sub-node is identified using the node's name, with valid values listed for each
+ of the PMICs below.
+ 
++pm8005:
++	s2, s5
++
+ pm8005:
+ 	s1, s2, s3, s4
+ 
+diff --git a/drivers/regulator/qcom_spmi-regulator.c b/drivers/regulator/qcom_spmi-regulator.c
+index 3504d9054df1..7433dc807bfb 100644
+--- a/drivers/regulator/qcom_spmi-regulator.c
++++ b/drivers/regulator/qcom_spmi-regulator.c
+@@ -1962,6 +1962,12 @@ static const struct spmi_regulator_data pmi8994_regulators[] = {
+ 	{ }
+ };
+ 
++static const struct spmi_regulator_data pm8004_regulators[] = {
++	{ "s2", 0x1700, "vdd_s2", },
++	{ "s5", 0x2000, "vdd_s5", },
++	{ }
++};
++
+ static const struct spmi_regulator_data pm8005_regulators[] = {
+ 	{ "s1", 0x1400, "vdd_s1", },
+ 	{ "s2", 0x1700, "vdd_s2", },
+@@ -1976,6 +1982,7 @@ static const struct spmi_regulator_data pms405_regulators[] = {
+ };
+ 
+ static const struct of_device_id qcom_spmi_regulator_match[] = {
++	{ .compatible = "qcom,pm8004-regulators", .data = &pm8004_regulators },
+ 	{ .compatible = "qcom,pm8005-regulators", .data = &pm8005_regulators },
+ 	{ .compatible = "qcom,pm8841-regulators", .data = &pm8841_regulators },
+ 	{ .compatible = "qcom,pm8916-regulators", .data = &pm8916_regulators },
 -- 
 2.21.0
 
