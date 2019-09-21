@@ -2,49 +2,49 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 09F84B9D44
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 21 Sep 2019 12:04:49 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9076EB9D43
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 21 Sep 2019 12:04:48 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2405764AbfIUKEs (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        id S2405581AbfIUKEs (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
         Sat, 21 Sep 2019 06:04:48 -0400
-Received: from mail-wr1-f66.google.com ([209.85.221.66]:35660 "EHLO
-        mail-wr1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2407270AbfIUKEs (ORCPT
+Received: from mail-wr1-f65.google.com ([209.85.221.65]:36927 "EHLO
+        mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2405764AbfIUKEr (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 21 Sep 2019 06:04:48 -0400
-Received: by mail-wr1-f66.google.com with SMTP id v8so9142009wrt.2
-        for <linux-arm-msm@vger.kernel.org>; Sat, 21 Sep 2019 03:04:45 -0700 (PDT)
+        Sat, 21 Sep 2019 06:04:47 -0400
+Received: by mail-wr1-f65.google.com with SMTP id i1so9117663wro.4
+        for <linux-arm-msm@vger.kernel.org>; Sat, 21 Sep 2019 03:04:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=TU10K6Skk15L/pvzqM4I92P+pNTDJ30jUP1jPCOCqPY=;
-        b=XY0Cy9iBpFXG+7DlS/LSIOMpO+wtX7mf5/MYkaQM9RCICkrmtNVS1BwPbXjSz9yiGb
-         PwN5Cg/toj1zWu4s0xw21sYWWxx4rqklv0Wt7hIy/RIYEcu/WS8sdZIm8cAlj7pYXhCP
-         2zS5Vj7aCJDl9XHmXpRClUT/lysiDhC3P9g7ZISsoq4kZgEYme/i5N0YNJcM93Y5KnyV
-         Chy3sOdfQEuw6hQ+hRJ6kAcEW+5IK3XizXkQ8QFecTEBh0FKFR49vmzrFQcx8EtWGDto
-         U5C0yaSlP9FyGywimXCpsqwejPxddp8emVjiY2gTdBXLRC0u9pKAqkOpOhrvjB400f3h
-         nErQ==
+        bh=Y8yDViXpHqhxHd9Sp8XJBl9klumTFt9ab9bndlNAw2U=;
+        b=h+r1kNCWFx6IojVHXwozmqlihr97x2WF5h289HmqdRFtaHjkrQZBlnaXnWvcVbdODl
+         9GuVcgzjT8IdUZllfHwcYyxFjVZWqibfu5MoxpOlRVO0gIJHoJRMYMZtyvRg/+XtQCva
+         FBN37ygDlz/LKgyu/aCC3WEEgGWHpHB0GQRsQ94iupYIBU9QLBbpp8zABRhLXNM5/r+9
+         5nSGFjVtd+D3kpAI4MPX5b+nZ7rnHnN1C0qqpDAHtp39Y+Id89YtqiY+8vdatzBrZiQR
+         /WbzAe+cIzjWSLy4kWUaQz/ynU818JSs+qeazGn761bkQwGiUJQd7ehfo5tz4hn0IvgP
+         N4yA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=TU10K6Skk15L/pvzqM4I92P+pNTDJ30jUP1jPCOCqPY=;
-        b=X2y1uKjS4+UqEIB4enfEs8AQs1B6YhcJ5Z5Itjgtw+F5gAjg6tDEpVLoKa08tLIFXX
-         Jf95SGJSHmR1WwpraqFe0CYg91ZddPqD/udXHLfJJxOQNLU1fSql524AMw44ijlV4BUo
-         VglXVJLF5YxHVFnXAciEppV7QOCxSS1k1Uq0bFjfm/+3WWIH45H/lLDe3XSCaxGJtbdY
-         HbGAIyZ5sOgHwRj0yo6UB0RGdYLzebWkWPJpB+MLldS2Jz9Drj7aM2UCcJj9Wd9gwYFS
-         Vby2wQcPexNL9y+m3JUvz6gaHJWc52uh6MpGnLP1+5YZfdaEuM0mTdd3emDZjPH8riz5
-         OYkQ==
-X-Gm-Message-State: APjAAAW8RtpV5QbQ1iq3aswu54xHkpmiA/lBcHK00KoMrEobRyNMkXlR
-        sF2svhL/V+FteMmImQynxnv+Yi9lZmg=
-X-Google-Smtp-Source: APXvYqzNjrxbkngU7LFFU+dHNZwp1gDMTaPtjHFrjch0u5EbG+NCe6vOQXL5XIfiCN9G6kZiVS2bew==
-X-Received: by 2002:a5d:61c4:: with SMTP id q4mr14466640wrv.327.1569060284345;
-        Sat, 21 Sep 2019 03:04:44 -0700 (PDT)
+        bh=Y8yDViXpHqhxHd9Sp8XJBl9klumTFt9ab9bndlNAw2U=;
+        b=HKWKtHXlV6ucLx8FENWTQjmBe4wwnJEUhSaQuk9CNvIV7K61urleMn4Bx0jaE1zMwj
+         0lhd5KUT3+twPqYUtDUgkv3TBkXmaXjSuMeRR9MoXsoKVdUorDMWAoYLM7MTi1x+1qjx
+         MkJdt4rrgnXLVQqwpqvh5BmIAGt4loHBgLDWMyl/mP87QkJNLdtpkajG8VRfvcQEjVMG
+         Vwh1yo0ApiulQDDfQGZ9HzBZqxXAk+ai2JwfClU8a999MXbzs/86StTcQLWsbNFqFrBR
+         7kTCgY1FdM7vl3tAllsXBE8LR5h/Lw3i9G7+hI32pb0Sf+DG9g2dmpj95M7b4StEAtBQ
+         oFsQ==
+X-Gm-Message-State: APjAAAVmjJmtBRBx+BiaowkMd0OPWqaruscC+G5tYJHRW2+6C4GbPdu2
+        m8/sKu64jnLLbk8PVtBn9iFDkhK3+OM=
+X-Google-Smtp-Source: APXvYqwkoDFR+0NW7IwW7dQ5FtdQpZ1ZxcryyVyI5DzLgyi+BjVgWOPH1MbsZm7NVXr+oaCJ1Ea+Sg==
+X-Received: by 2002:a5d:694c:: with SMTP id r12mr10266988wrw.44.1569060285336;
+        Sat, 21 Sep 2019 03:04:45 -0700 (PDT)
 Received: from IcarusMOD.eternityproject.eu ([93.51.16.173])
-        by smtp.gmail.com with ESMTPSA id g1sm3963575wrv.68.2019.09.21.03.04.43
+        by smtp.gmail.com with ESMTPSA id g1sm3963575wrv.68.2019.09.21.03.04.44
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sat, 21 Sep 2019 03:04:43 -0700 (PDT)
+        Sat, 21 Sep 2019 03:04:44 -0700 (PDT)
 From:   kholk11@gmail.com
 To:     linux-arm-msm@vger.kernel.org
 Cc:     kholk11@gmail.com, marijns95@gmail.com, robdclark@gmail.com,
@@ -53,9 +53,9 @@ Cc:     kholk11@gmail.com, marijns95@gmail.com, robdclark@gmail.com,
         jonathan@marek.ca, bjorn.andersson@linaro.org,
         georgi.djakov@linaro.org, gregkh@linuxfoundation.org,
         dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org
-Subject: [PATCH 1/5] drm/msm/mdp5: Add optional TBU and TBU_RT clocks
-Date:   Sat, 21 Sep 2019 12:04:35 +0200
-Message-Id: <20190921100439.64402-2-kholk11@gmail.com>
+Subject: [PATCH 2/5] drm/msm/mdp5: Add configuration for msm8x56
+Date:   Sat, 21 Sep 2019 12:04:36 +0200
+Message-Id: <20190921100439.64402-3-kholk11@gmail.com>
 X-Mailer: git-send-email 2.21.0
 In-Reply-To: <20190921100439.64402-1-kholk11@gmail.com>
 References: <20190921100439.64402-1-kholk11@gmail.com>
@@ -68,64 +68,131 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 From: "Angelo G. Del Regno" <kholk11@gmail.com>
 
-Some SoCs, like MSM8956/8976 (and APQ variants), do feature these
-clocks and we need to enable them in order to get the hardware to
-properly work.
+Add the configuration entries for the MDP5 v1.11, found on MSM8956
+and APQ8056.
 
 Signed-off-by: Angelo G. Del Regno <kholk11@gmail.com>
 ---
- drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c | 10 ++++++++++
- drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.h |  2 ++
- 2 files changed, 12 insertions(+)
+ drivers/gpu/drm/msm/disp/mdp5/mdp5_cfg.c | 99 ++++++++++++++++++++++++
+ 1 file changed, 99 insertions(+)
 
-diff --git a/drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c b/drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c
-index fec6ef1ae3b9..23be9b95dd7e 100644
---- a/drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c
-+++ b/drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c
-@@ -293,6 +293,10 @@ int mdp5_disable(struct mdp5_kms *mdp5_kms)
- 	mdp5_kms->enable_count--;
- 	WARN_ON(mdp5_kms->enable_count < 0);
+diff --git a/drivers/gpu/drm/msm/disp/mdp5/mdp5_cfg.c b/drivers/gpu/drm/msm/disp/mdp5/mdp5_cfg.c
+index dd1daf0e305a..9ff44e7fc7c7 100644
+--- a/drivers/gpu/drm/msm/disp/mdp5/mdp5_cfg.c
++++ b/drivers/gpu/drm/msm/disp/mdp5/mdp5_cfg.c
+@@ -545,6 +545,104 @@ const struct mdp5_cfg_hw msm8x96_config = {
+ 	.max_clk = 412500000,
+ };
  
-+	if (mdp5_kms->tbu_rt_clk)
-+		clk_disable_unprepare(mdp5_kms->tbu_rt_clk);
-+	if (mdp5_kms->tbu_clk)
-+		clk_disable_unprepare(mdp5_kms->tbu_clk);
- 	clk_disable_unprepare(mdp5_kms->ahb_clk);
- 	clk_disable_unprepare(mdp5_kms->axi_clk);
- 	clk_disable_unprepare(mdp5_kms->core_clk);
-@@ -313,6 +317,10 @@ int mdp5_enable(struct mdp5_kms *mdp5_kms)
- 	clk_prepare_enable(mdp5_kms->core_clk);
- 	if (mdp5_kms->lut_clk)
- 		clk_prepare_enable(mdp5_kms->lut_clk);
-+	if (mdp5_kms->tbu_clk)
-+		clk_prepare_enable(mdp5_kms->tbu_clk);
-+	if (mdp5_kms->tbu_rt_clk)
-+		clk_prepare_enable(mdp5_kms->tbu_rt_clk);
++const struct mdp5_cfg_hw msm8x56_config = {
++	.name = "msm8x56",
++	.mdp = {
++		.count = 1,
++		.caps = MDP_CAP_SMP |
++			MDP_CAP_DSC |
++			MDP_CAP_SRC_SPLIT |
++			0,
++	},
++	.ctl = {
++		.count = 3,
++		.base = { 0x01000, 0x01200, 0x01400 },
++		.flush_hw_mask = 0xffffffff,
++	},
++	.smp = {
++		.mmb_count = 10,
++		.mmb_size = 10240,
++		.clients = {
++			[SSPP_VIG0] = 1, [SSPP_VIG1] = 9,
++			[SSPP_DMA0] = 4,
++			[SSPP_RGB0] = 7, [SSPP_RGB1] = 8,
++		},
++	},
++	.pipe_vig = {
++		.count = 2,
++		.base = { 0x04000, 0x06000 },
++		.caps = MDP_PIPE_CAP_HFLIP	|
++			MDP_PIPE_CAP_VFLIP	|
++			MDP_PIPE_CAP_SCALE	|
++			MDP_PIPE_CAP_CSC	|
++			MDP_PIPE_CAP_DECIMATION	|
++			MDP_PIPE_CAP_SW_PIX_EXT	|
++			0,
++	},
++	.pipe_rgb = {
++		.count = 2,
++		.base = { 0x14000, 0x16000 },
++		.caps = MDP_PIPE_CAP_HFLIP	|
++			MDP_PIPE_CAP_VFLIP	|
++			MDP_PIPE_CAP_DECIMATION	|
++			MDP_PIPE_CAP_SW_PIX_EXT	|
++			0,
++	},
++	.pipe_dma = {
++		.count = 1,
++		.base = { 0x24000 },
++		.caps = MDP_PIPE_CAP_HFLIP	|
++			MDP_PIPE_CAP_VFLIP	|
++			MDP_PIPE_CAP_SW_PIX_EXT	|
++			0,
++	},
++	.pipe_cursor = {
++		.count = 1,
++		.base = { 0x440DC },
++		.caps = MDP_PIPE_CAP_HFLIP	|
++			MDP_PIPE_CAP_VFLIP	|
++			MDP_PIPE_CAP_SW_PIX_EXT	|
++			MDP_PIPE_CAP_CURSOR	|
++			0,
++	},
++
++	.lm = {
++		.count = 2,
++		.base = { 0x44000, 0x45000 },
++		.instances = {
++				{ .id = 0, .pp = 0, .dspp = 0,
++				  .caps = MDP_LM_CAP_DISPLAY, },
++				{ .id = 1, .pp = -1, .dspp = -1,
++				  .caps = MDP_LM_CAP_WB },
++			     },
++		.nb_stages = 8,
++		.max_width = 2560,
++		.max_height = 0xFFFF,
++	},
++	.dspp = {
++		.count = 1,
++		.base = { 0x54000 },
++
++	},
++	.pp = {
++		.count = 3,
++		.base = { 0x70000, 0x70800, 0x72000 },
++	},
++	.dsc = {
++		.count = 2,
++		.base = { 0x80000, 0x80400 },
++	},
++	.intf = {
++		.base = { 0x6a000, 0x6a800, 0x6b000 },
++		.connect = {
++			[0] = INTF_DISABLED,
++			[1] = INTF_DSI,
++			[2] = INTF_DSI,
++		},
++	},
++	.max_clk = 360000000,
++};
++
+ const struct mdp5_cfg_hw msm8917_config = {
+ 	.name = "msm8917",
+ 	.mdp = {
+@@ -637,6 +735,7 @@ static const struct mdp5_cfg_handler cfg_handlers[] = {
+ 	{ .revision = 6, .config = { .hw = &msm8x16_config } },
+ 	{ .revision = 9, .config = { .hw = &msm8x94_config } },
+ 	{ .revision = 7, .config = { .hw = &msm8x96_config } },
++	{ .revision = 11, .config = { .hw = &msm8x56_config } },
+ 	{ .revision = 15, .config = { .hw = &msm8917_config } },
+ };
  
- 	return 0;
- }
-@@ -948,6 +956,8 @@ static int mdp5_init(struct platform_device *pdev, struct drm_device *dev)
- 
- 	/* optional clocks: */
- 	get_clk(pdev, &mdp5_kms->lut_clk, "lut", false);
-+	get_clk(pdev, &mdp5_kms->tbu_clk, "tbu", false);
-+	get_clk(pdev, &mdp5_kms->tbu_rt_clk, "tbu_rt", false);
- 
- 	/* we need to set a default rate before enabling.  Set a safe
- 	 * rate first, then figure out hw revision, and then set a
-diff --git a/drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.h b/drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.h
-index d1bf4fdfc815..128866742593 100644
---- a/drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.h
-+++ b/drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.h
-@@ -53,6 +53,8 @@ struct mdp5_kms {
- 	struct clk *ahb_clk;
- 	struct clk *core_clk;
- 	struct clk *lut_clk;
-+	struct clk *tbu_clk;
-+	struct clk *tbu_rt_clk;
- 	struct clk *vsync_clk;
- 
- 	/*
 -- 
 2.21.0
 
