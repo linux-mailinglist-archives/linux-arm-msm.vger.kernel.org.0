@@ -2,90 +2,123 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 2D6D4BA351
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 22 Sep 2019 19:09:17 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 86071BA3CF
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 22 Sep 2019 20:45:49 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2387814AbfIVRJO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 22 Sep 2019 13:09:14 -0400
-Received: from mail-pf1-f182.google.com ([209.85.210.182]:37977 "EHLO
-        mail-pf1-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2387562AbfIVRJO (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 22 Sep 2019 13:09:14 -0400
-Received: by mail-pf1-f182.google.com with SMTP id h195so7535805pfe.5;
-        Sun, 22 Sep 2019 10:09:13 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=hHobqoGYvKr31jIojYx1ULHBxGJ4jtH7umzyrIjmR8E=;
-        b=TuDpW8wz6k1OfD/frjG7tOMCfMmyD6VrI0Zql2fjLaLljB6TcAcKYPgw/iB9W8WQ4l
-         gsBV961/JYmIYlF0XhdjGcAwpNqHDYcsF2D43efp7Gb5xBwe5H1Hp2SKVK3HRvQLx9cH
-         SJ7TrB19gt4XwBgRJkwvcVPoTbyCd4Ts1u5SAaTorXbhwVtCj6h79UJautimw1UXOTF6
-         Xzmc7DFRxyJYo4HuO0nZyiTP1ZwxTm5076chBkMWUfw5xjhPe7cUKbyBhKXCXxA0M/tA
-         rntmZflAv3gLkTNB7YnTpUN6/ax8k0Lz5RA2weO7YYYykkbGeqNf7tqLeI6gaQ6DzFTQ
-         b7Rg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=hHobqoGYvKr31jIojYx1ULHBxGJ4jtH7umzyrIjmR8E=;
-        b=AWDWv5/eor8iXPeoAoqT7KpdtLZhMQZVb9zR6s3rdgrnWeQ+++w+MFeacaXfrEkD77
-         hQ9aVCTfr+K8jCR3eYG9NRgDas4n+J3tIjNEk7JI/CYmevZanizZLtbzWOQcN5jtyz3o
-         GX5vxKvZNlWCDVrQPkcC4cU1qfDSL4vajZQW6l7bYwdBdOX6W41E5q28a0oCypCSDqLF
-         ntvr+IltKHFs7kFO10/TLLa5lDyiOc9IZft+/EtLjMEgmZ8VLLTAa5oPP/RKzpJXOA8B
-         VfnwUHH3/aS8aNCYJY/vTXFpYa0swPlVEFNXGpBsmYHwXwS8qrg0IF3jOfmR9mkXKWre
-         UN6Q==
-X-Gm-Message-State: APjAAAU6j/4IALzlNM3vN1aY0mLLGeM5JM8NGuPBf6hbm8finzv9amVo
-        mIg4kUISOkgJLO4/PqnXKUA=
-X-Google-Smtp-Source: APXvYqyTEabIP7SvDyQkFpy3GvV5Sk50KOc3Uj67J+U2y/TqWXh8/bAaWsPcumRo+Xbh/mAuxkflsg==
-X-Received: by 2002:a17:90a:ba94:: with SMTP id t20mr16733037pjr.8.1569172152908;
-        Sun, 22 Sep 2019 10:09:12 -0700 (PDT)
-Received: from SD ([2409:4041:2e8b:6e6f:acd5:5ade:157f:5f8f])
-        by smtp.gmail.com with ESMTPSA id j25sm5308411pfi.113.2019.09.22.10.09.09
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 22 Sep 2019 10:09:12 -0700 (PDT)
-Date:   Sun, 22 Sep 2019 22:39:06 +0530
-From:   Saiyam Doshi <saiyamdoshi.in@gmail.com>
-To:     Wolfram Sang <wsa@the-dreams.de>, Markus.Elfring@web.de
-Cc:     Andy Gross <agross@kernel.org>, linux-arm-msm@vger.kernel.org,
-        linux-i2c@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [v2 0/3] Fix issues reported by Coccinelle
-Message-ID: <20190922170906.GB5589@SD>
-References: <20190917172758.GA11926@SD>
- <76e99512-8818-cec2-9e77-799e4c8481ab@web.de>
- <20190917181423.GB28182@ninjato>
+        id S2388703AbfIVSox (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 22 Sep 2019 14:44:53 -0400
+Received: from mail.kernel.org ([198.145.29.99]:39668 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S2388681AbfIVSoF (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Sun, 22 Sep 2019 14:44:05 -0400
+Received: from sasha-vm.mshome.net (c-73-47-72-35.hsd1.nh.comcast.net [73.47.72.35])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        by mail.kernel.org (Postfix) with ESMTPSA id 333D520882;
+        Sun, 22 Sep 2019 18:44:03 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=default; t=1569177844;
+        bh=Va9nDflhvZE8l4fVYvtxdcbe6XHlni19RRugg5yBB5I=;
+        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+        b=G88vT3v5FgiPB38CYE7NhMN7O1J5EjzToaNNXqLs3iOnusGDqXgE6ePRcciIuidkj
+         Fa2CYoGUeCACzdB8tJkefornwQZ25JkbiptS6M7TfIhjSp9qXzrePu4Onn7NNL7bSG
+         RLuZiD4sPRhl+WOBpYtdQpT5jOk6HMwFaRObhnC4=
+From:   Sasha Levin <sashal@kernel.org>
+To:     linux-kernel@vger.kernel.org, stable@vger.kernel.org
+Cc:     Stephen Boyd <swboyd@chromium.org>,
+        Ian Jackson <ian.jackson@citrix.com>,
+        Julien Grall <julien.grall@arm.com>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Avaneesh Kumar Dwivedi <akdwived@codeaurora.org>,
+        Sasha Levin <sashal@kernel.org>, linux-arm-msm@vger.kernel.org,
+        linux-soc@vger.kernel.org
+Subject: [PATCH AUTOSEL 5.3 011/203] firmware: qcom_scm: Use proper types for dma mappings
+Date:   Sun, 22 Sep 2019 14:40:37 -0400
+Message-Id: <20190922184350.30563-11-sashal@kernel.org>
+X-Mailer: git-send-email 2.20.1
+In-Reply-To: <20190922184350.30563-1-sashal@kernel.org>
+References: <20190922184350.30563-1-sashal@kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20190917181423.GB28182@ninjato>
-User-Agent: Mutt/1.10.1 (2018-07-13)
+X-stable: review
+X-Patchwork-Hint: Ignore
+Content-Transfer-Encoding: 8bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Sep 17, 2019 at 08:14:23PM +0200, Wolfram Sang wrote:
-> On Tue, Sep 17, 2019 at 08:10:45PM +0200, Markus Elfring wrote:
-> > > Using cocciecheck to ensure there are no semantic issues in
-> > > i2c-qup driver.
-> > 
-> > * This wording contains a typo.
-> 
-> Doesn't matter to me for a cover letter as long as we can understand it.
-> 
-> > * I would prefer to refer to a desired reduction of a few
-> >   source code quality concerns.
-> 
-> Not needed. I understand what is going on here.
+From: Stephen Boyd <swboyd@chromium.org>
 
-Markus - By "ensure", I mean there are no further cocciecheck issues at this
-point in time. And further, what changed is covered in individual patch
-changelog. So, I think this information is fine in cover.
+[ Upstream commit 6e37ccf78a53296c6c7bf426065762c27829eb84 ]
 
-> > Can such a prefix be omitted?
-Can be, but I like to keep it.
+We need to use the proper types and convert between physical addresses
+and dma addresses here to avoid mismatch warnings. This is especially
+important on systems with a different size for dma addresses and
+physical addresses. Otherwise, we get the following warning:
 
-Thanks for review.
+  drivers/firmware/qcom_scm.c: In function "qcom_scm_assign_mem":
+  drivers/firmware/qcom_scm.c:469:47: error: passing argument 3 of "dma_alloc_coherent" from incompatible pointer type [-Werror=incompatible-pointer-types]
 
--Saiyam
+We also fix the size argument to dma_free_coherent() because that size
+doesn't need to be aligned after it's already aligned on the allocation
+size. In fact, dma debugging expects the same arguments to be passed to
+both the allocation and freeing sides of the functions so changing the
+size is incorrect regardless.
+
+Reported-by: Ian Jackson <ian.jackson@citrix.com>
+Cc: Ian Jackson <ian.jackson@citrix.com>
+Cc: Julien Grall <julien.grall@arm.com>
+Cc: Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc: Avaneesh Kumar Dwivedi <akdwived@codeaurora.org>
+Tested-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+Signed-off-by: Stephen Boyd <swboyd@chromium.org>
+Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
+---
+ drivers/firmware/qcom_scm.c | 7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
+
+diff --git a/drivers/firmware/qcom_scm.c b/drivers/firmware/qcom_scm.c
+index 2ddc118dba1b4..74b84244a0db8 100644
+--- a/drivers/firmware/qcom_scm.c
++++ b/drivers/firmware/qcom_scm.c
+@@ -9,6 +9,7 @@
+ #include <linux/init.h>
+ #include <linux/cpumask.h>
+ #include <linux/export.h>
++#include <linux/dma-direct.h>
+ #include <linux/dma-mapping.h>
+ #include <linux/module.h>
+ #include <linux/types.h>
+@@ -440,6 +441,7 @@ int qcom_scm_assign_mem(phys_addr_t mem_addr, size_t mem_sz,
+ 	phys_addr_t mem_to_map_phys;
+ 	phys_addr_t dest_phys;
+ 	phys_addr_t ptr_phys;
++	dma_addr_t ptr_dma;
+ 	size_t mem_to_map_sz;
+ 	size_t dest_sz;
+ 	size_t src_sz;
+@@ -457,9 +459,10 @@ int qcom_scm_assign_mem(phys_addr_t mem_addr, size_t mem_sz,
+ 	ptr_sz = ALIGN(src_sz, SZ_64) + ALIGN(mem_to_map_sz, SZ_64) +
+ 			ALIGN(dest_sz, SZ_64);
+ 
+-	ptr = dma_alloc_coherent(__scm->dev, ptr_sz, &ptr_phys, GFP_KERNEL);
++	ptr = dma_alloc_coherent(__scm->dev, ptr_sz, &ptr_dma, GFP_KERNEL);
+ 	if (!ptr)
+ 		return -ENOMEM;
++	ptr_phys = dma_to_phys(__scm->dev, ptr_dma);
+ 
+ 	/* Fill source vmid detail */
+ 	src = ptr;
+@@ -489,7 +492,7 @@ int qcom_scm_assign_mem(phys_addr_t mem_addr, size_t mem_sz,
+ 
+ 	ret = __qcom_scm_assign_mem(__scm->dev, mem_to_map_phys, mem_to_map_sz,
+ 				    ptr_phys, src_sz, dest_phys, dest_sz);
+-	dma_free_coherent(__scm->dev, ALIGN(ptr_sz, SZ_64), ptr, ptr_phys);
++	dma_free_coherent(__scm->dev, ptr_sz, ptr, ptr_dma);
+ 	if (ret) {
+ 		dev_err(__scm->dev,
+ 			"Assign memory protection call failed %d.\n", ret);
+-- 
+2.20.1
+
