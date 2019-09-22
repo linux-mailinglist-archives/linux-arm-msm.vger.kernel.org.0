@@ -2,39 +2,37 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 86071BA3CF
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 22 Sep 2019 20:45:49 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 30AFABA431
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 22 Sep 2019 20:56:14 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2388703AbfIVSox (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 22 Sep 2019 14:44:53 -0400
-Received: from mail.kernel.org ([198.145.29.99]:39668 "EHLO mail.kernel.org"
+        id S2390166AbfIVSqo (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 22 Sep 2019 14:46:44 -0400
+Received: from mail.kernel.org ([198.145.29.99]:42996 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S2388681AbfIVSoF (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 22 Sep 2019 14:44:05 -0400
+        id S2390149AbfIVSqn (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Sun, 22 Sep 2019 14:46:43 -0400
 Received: from sasha-vm.mshome.net (c-73-47-72-35.hsd1.nh.comcast.net [73.47.72.35])
         (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
         (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 333D520882;
-        Sun, 22 Sep 2019 18:44:03 +0000 (UTC)
+        by mail.kernel.org (Postfix) with ESMTPSA id AEFA1214AF;
+        Sun, 22 Sep 2019 18:46:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1569177844;
-        bh=Va9nDflhvZE8l4fVYvtxdcbe6XHlni19RRugg5yBB5I=;
+        s=default; t=1569178002;
+        bh=laBXdjhEBj/+X/JVTuEkEsHnRzQeu89qrZqIqosxvkg=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=G88vT3v5FgiPB38CYE7NhMN7O1J5EjzToaNNXqLs3iOnusGDqXgE6ePRcciIuidkj
-         Fa2CYoGUeCACzdB8tJkefornwQZ25JkbiptS6M7TfIhjSp9qXzrePu4Onn7NNL7bSG
-         RLuZiD4sPRhl+WOBpYtdQpT5jOk6HMwFaRObhnC4=
+        b=0cjrGVl0lewtS1m9wU/GdJHd0XJoWK56G1vpc80YJzufgkGjN3JFjQnOBM7l/p2jW
+         a5u/zQa1A6/JnD+r7cu7WhE5jTT/eneGJToYABRJk2H15y02YRHzQaLDYPvF791a0L
+         /keOVVhk3Wnn6WyARXPjujcuR8Zsf9ceM+fcV3SI=
 From:   Sasha Levin <sashal@kernel.org>
 To:     linux-kernel@vger.kernel.org, stable@vger.kernel.org
-Cc:     Stephen Boyd <swboyd@chromium.org>,
-        Ian Jackson <ian.jackson@citrix.com>,
-        Julien Grall <julien.grall@arm.com>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Avaneesh Kumar Dwivedi <akdwived@codeaurora.org>,
+Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Niklas Cassel <niklas.cassel@linaro.org>,
+        Mark Brown <broonie@kernel.org>,
         Sasha Levin <sashal@kernel.org>, linux-arm-msm@vger.kernel.org,
-        linux-soc@vger.kernel.org
-Subject: [PATCH AUTOSEL 5.3 011/203] firmware: qcom_scm: Use proper types for dma mappings
-Date:   Sun, 22 Sep 2019 14:40:37 -0400
-Message-Id: <20190922184350.30563-11-sashal@kernel.org>
+        linux-soc@vger.kernel.org, devicetree@vger.kernel.org
+Subject: [PATCH AUTOSEL 5.3 091/203] arm64: dts: qcom: qcs404-evb: Mark WCSS clocks protected
+Date:   Sun, 22 Sep 2019 14:41:57 -0400
+Message-Id: <20190922184350.30563-91-sashal@kernel.org>
 X-Mailer: git-send-email 2.20.1
 In-Reply-To: <20190922184350.30563-1-sashal@kernel.org>
 References: <20190922184350.30563-1-sashal@kernel.org>
@@ -47,78 +45,46 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Stephen Boyd <swboyd@chromium.org>
+From: Bjorn Andersson <bjorn.andersson@linaro.org>
 
-[ Upstream commit 6e37ccf78a53296c6c7bf426065762c27829eb84 ]
+[ Upstream commit 54d895bea43c94f31304d59f82d755b7f4b59e7c ]
 
-We need to use the proper types and convert between physical addresses
-and dma addresses here to avoid mismatch warnings. This is especially
-important on systems with a different size for dma addresses and
-physical addresses. Otherwise, we get the following warning:
+'7d0c76bdf227 ("clk: qcom: Add WCSS gcc clock control for QCS404")'
+introduces two new clocks to gcc. These are not used before
+clk_disable_unused() and as such the clock framework tries to disable
+them.
 
-  drivers/firmware/qcom_scm.c: In function "qcom_scm_assign_mem":
-  drivers/firmware/qcom_scm.c:469:47: error: passing argument 3 of "dma_alloc_coherent" from incompatible pointer type [-Werror=incompatible-pointer-types]
+But on the EVB these registers are only accessible through TrustZone, so
+these clocks must be marked as "protected" to prevent the clock code
+from touching them.
 
-We also fix the size argument to dma_free_coherent() because that size
-doesn't need to be aligned after it's already aligned on the allocation
-size. In fact, dma debugging expects the same arguments to be passed to
-both the allocation and freeing sides of the functions so changing the
-size is incorrect regardless.
+Numerical values are used as the constants are not yet available in a
+common tree.
 
-Reported-by: Ian Jackson <ian.jackson@citrix.com>
-Cc: Ian Jackson <ian.jackson@citrix.com>
-Cc: Julien Grall <julien.grall@arm.com>
-Cc: Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc: Avaneesh Kumar Dwivedi <akdwived@codeaurora.org>
-Tested-by: Bjorn Andersson <bjorn.andersson@linaro.org>
-Signed-off-by: Stephen Boyd <swboyd@chromium.org>
+Reviewed-by: Niklas Cassel <niklas.cassel@linaro.org>
+Reported-by: Mark Brown <broonie@kernel.org>
+Reported-by: Niklas Cassel <niklas.cassel@linaro.org>
 Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/firmware/qcom_scm.c | 7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ arch/arm64/boot/dts/qcom/qcs404-evb.dtsi | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/firmware/qcom_scm.c b/drivers/firmware/qcom_scm.c
-index 2ddc118dba1b4..74b84244a0db8 100644
---- a/drivers/firmware/qcom_scm.c
-+++ b/drivers/firmware/qcom_scm.c
-@@ -9,6 +9,7 @@
- #include <linux/init.h>
- #include <linux/cpumask.h>
- #include <linux/export.h>
-+#include <linux/dma-direct.h>
- #include <linux/dma-mapping.h>
- #include <linux/module.h>
- #include <linux/types.h>
-@@ -440,6 +441,7 @@ int qcom_scm_assign_mem(phys_addr_t mem_addr, size_t mem_sz,
- 	phys_addr_t mem_to_map_phys;
- 	phys_addr_t dest_phys;
- 	phys_addr_t ptr_phys;
-+	dma_addr_t ptr_dma;
- 	size_t mem_to_map_sz;
- 	size_t dest_sz;
- 	size_t src_sz;
-@@ -457,9 +459,10 @@ int qcom_scm_assign_mem(phys_addr_t mem_addr, size_t mem_sz,
- 	ptr_sz = ALIGN(src_sz, SZ_64) + ALIGN(mem_to_map_sz, SZ_64) +
- 			ALIGN(dest_sz, SZ_64);
+diff --git a/arch/arm64/boot/dts/qcom/qcs404-evb.dtsi b/arch/arm64/boot/dts/qcom/qcs404-evb.dtsi
+index 11c0a7137823d..db6df76e97a1a 100644
+--- a/arch/arm64/boot/dts/qcom/qcs404-evb.dtsi
++++ b/arch/arm64/boot/dts/qcom/qcs404-evb.dtsi
+@@ -61,7 +61,9 @@
+ 	protected-clocks = <GCC_BIMC_CDSP_CLK>,
+ 			   <GCC_CDSP_CFG_AHB_CLK>,
+ 			   <GCC_CDSP_BIMC_CLK_SRC>,
+-			   <GCC_CDSP_TBU_CLK>;
++			   <GCC_CDSP_TBU_CLK>,
++			   <141>, /* GCC_WCSS_Q6_AHB_CLK */
++			   <142>; /* GCC_WCSS_Q6_AXIM_CLK */
+ };
  
--	ptr = dma_alloc_coherent(__scm->dev, ptr_sz, &ptr_phys, GFP_KERNEL);
-+	ptr = dma_alloc_coherent(__scm->dev, ptr_sz, &ptr_dma, GFP_KERNEL);
- 	if (!ptr)
- 		return -ENOMEM;
-+	ptr_phys = dma_to_phys(__scm->dev, ptr_dma);
- 
- 	/* Fill source vmid detail */
- 	src = ptr;
-@@ -489,7 +492,7 @@ int qcom_scm_assign_mem(phys_addr_t mem_addr, size_t mem_sz,
- 
- 	ret = __qcom_scm_assign_mem(__scm->dev, mem_to_map_phys, mem_to_map_sz,
- 				    ptr_phys, src_sz, dest_phys, dest_sz);
--	dma_free_coherent(__scm->dev, ALIGN(ptr_sz, SZ_64), ptr, ptr_phys);
-+	dma_free_coherent(__scm->dev, ptr_sz, ptr, ptr_dma);
- 	if (ret) {
- 		dev_err(__scm->dev,
- 			"Assign memory protection call failed %d.\n", ret);
+ &pms405_spmi_regulators {
 -- 
 2.20.1
 
