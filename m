@@ -2,81 +2,90 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id BBA53BA02B
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 22 Sep 2019 03:54:46 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 2D6D4BA351
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 22 Sep 2019 19:09:17 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727080AbfIVByp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 21 Sep 2019 21:54:45 -0400
-Received: from mail-pl1-f196.google.com ([209.85.214.196]:44198 "EHLO
-        mail-pl1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727073AbfIVByp (ORCPT
+        id S2387814AbfIVRJO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 22 Sep 2019 13:09:14 -0400
+Received: from mail-pf1-f182.google.com ([209.85.210.182]:37977 "EHLO
+        mail-pf1-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2387562AbfIVRJO (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 21 Sep 2019 21:54:45 -0400
-Received: by mail-pl1-f196.google.com with SMTP id q15so4899973pll.11
-        for <linux-arm-msm@vger.kernel.org>; Sat, 21 Sep 2019 18:54:45 -0700 (PDT)
+        Sun, 22 Sep 2019 13:09:14 -0400
+Received: by mail-pf1-f182.google.com with SMTP id h195so7535805pfe.5;
+        Sun, 22 Sep 2019 10:09:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=netronome-com.20150623.gappssmtp.com; s=20150623;
-        h=date:from:to:cc:subject:message-id:in-reply-to:references
-         :organization:mime-version:content-transfer-encoding;
-        bh=rYCMTzf5XfwKOsEzh41FsTMKmDMxiUBIaULFJietvkw=;
-        b=K1naXdvogaEe5TxFqSMSp7rDFEAdpuCR6rMwFHF6+4xLaFXeYhBbRiO6hk5gh3YqpU
-         jwwB0ltth8D95PruCSjAOPsUo2eoTxBTaercBm/obwPCKjWSD2kA0vOA/uMTFROdRV/F
-         VPI/omVqHyoG24hazhflJa03GRTeRHxfTeka+u2+Wo2d+iu88ol6oTI27m0bHtGiv/J5
-         oqz8TurWzaQJkX7Z6xKq1VryuuitQQqc2DBqyRA9qh/BMMy5/9fF8tJbRbV0O4T1dA02
-         r5P6UMjdsvoJvR0FoZVOb1yXgikZsx3cwdIISP9CjO6Ya+mV0oL9HYnGDubUBjTmRVjU
-         EkeA==
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=hHobqoGYvKr31jIojYx1ULHBxGJ4jtH7umzyrIjmR8E=;
+        b=TuDpW8wz6k1OfD/frjG7tOMCfMmyD6VrI0Zql2fjLaLljB6TcAcKYPgw/iB9W8WQ4l
+         gsBV961/JYmIYlF0XhdjGcAwpNqHDYcsF2D43efp7Gb5xBwe5H1Hp2SKVK3HRvQLx9cH
+         SJ7TrB19gt4XwBgRJkwvcVPoTbyCd4Ts1u5SAaTorXbhwVtCj6h79UJautimw1UXOTF6
+         Xzmc7DFRxyJYo4HuO0nZyiTP1ZwxTm5076chBkMWUfw5xjhPe7cUKbyBhKXCXxA0M/tA
+         rntmZflAv3gLkTNB7YnTpUN6/ax8k0Lz5RA2weO7YYYykkbGeqNf7tqLeI6gaQ6DzFTQ
+         b7Rg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:in-reply-to
-         :references:organization:mime-version:content-transfer-encoding;
-        bh=rYCMTzf5XfwKOsEzh41FsTMKmDMxiUBIaULFJietvkw=;
-        b=EaJiHIHmXj7szk88jZpNuEy/HqLU4iqoVgdo51O9odUQla7/azTZAuYszkz+30TUwE
-         WJ7DC142GbH7+jrLK+swNwhMgrb4a/Ot0iKaIWhz9Y0ggab8217Yyd4cka8cTe4mnZrj
-         3rWdEJ+I8VVsYmRFUyDUv9ZIaPLlNm8aQOQOJD/xfz9cI+rp09P3qzHvTV2J9mlkvsuG
-         cdsFwYfaMU3iVvUoeL5wO8HBz9uq2T52pzZsTqEJgEE/TSz/U9KkSBKNgRo4XtALngjW
-         SUQKM0SPoxpsn+uLof9ywO0lumDt3O1i/bOkfsVZpGQfmzDkEdDawlYPFSMjNzvI3S8J
-         eJAA==
-X-Gm-Message-State: APjAAAXCyKpvesnRCHtRmUMBsjLWZwwNvjn3n5ezG5lz4S1r2nN7VnMF
-        3QM7vJrL7eivCj8MRZwz6cLbzw==
-X-Google-Smtp-Source: APXvYqxYgsXnRkO1NtPedKypWdAMA42UdD6RehIiW7hqLUVf5E2h9si/0m974x4xEY25hFo7Ku9ezA==
-X-Received: by 2002:a17:902:9a43:: with SMTP id x3mr25633936plv.145.1569117284881;
-        Sat, 21 Sep 2019 18:54:44 -0700 (PDT)
-Received: from cakuba.netronome.com (c-73-202-202-92.hsd1.ca.comcast.net. [73.202.202.92])
-        by smtp.gmail.com with ESMTPSA id f6sm8097858pfq.169.2019.09.21.18.54.44
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=hHobqoGYvKr31jIojYx1ULHBxGJ4jtH7umzyrIjmR8E=;
+        b=AWDWv5/eor8iXPeoAoqT7KpdtLZhMQZVb9zR6s3rdgrnWeQ+++w+MFeacaXfrEkD77
+         hQ9aVCTfr+K8jCR3eYG9NRgDas4n+J3tIjNEk7JI/CYmevZanizZLtbzWOQcN5jtyz3o
+         GX5vxKvZNlWCDVrQPkcC4cU1qfDSL4vajZQW6l7bYwdBdOX6W41E5q28a0oCypCSDqLF
+         ntvr+IltKHFs7kFO10/TLLa5lDyiOc9IZft+/EtLjMEgmZ8VLLTAa5oPP/RKzpJXOA8B
+         VfnwUHH3/aS8aNCYJY/vTXFpYa0swPlVEFNXGpBsmYHwXwS8qrg0IF3jOfmR9mkXKWre
+         UN6Q==
+X-Gm-Message-State: APjAAAU6j/4IALzlNM3vN1aY0mLLGeM5JM8NGuPBf6hbm8finzv9amVo
+        mIg4kUISOkgJLO4/PqnXKUA=
+X-Google-Smtp-Source: APXvYqyTEabIP7SvDyQkFpy3GvV5Sk50KOc3Uj67J+U2y/TqWXh8/bAaWsPcumRo+Xbh/mAuxkflsg==
+X-Received: by 2002:a17:90a:ba94:: with SMTP id t20mr16733037pjr.8.1569172152908;
+        Sun, 22 Sep 2019 10:09:12 -0700 (PDT)
+Received: from SD ([2409:4041:2e8b:6e6f:acd5:5ade:157f:5f8f])
+        by smtp.gmail.com with ESMTPSA id j25sm5308411pfi.113.2019.09.22.10.09.09
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 21 Sep 2019 18:54:44 -0700 (PDT)
-Date:   Sat, 21 Sep 2019 18:54:41 -0700
-From:   Jakub Kicinski <jakub.kicinski@netronome.com>
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     "David S. Miller" <davem@davemloft.net>, netdev@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-        stable@vger.kernel.org
-Subject: Re: [PATCH] net: qrtr: Stop rx_worker before freeing node
-Message-ID: <20190921185441.0350ce9e@cakuba.netronome.com>
-In-Reply-To: <20190918172117.4116-1-bjorn.andersson@linaro.org>
-References: <20190918172117.4116-1-bjorn.andersson@linaro.org>
-Organization: Netronome Systems, Ltd.
+        Sun, 22 Sep 2019 10:09:12 -0700 (PDT)
+Date:   Sun, 22 Sep 2019 22:39:06 +0530
+From:   Saiyam Doshi <saiyamdoshi.in@gmail.com>
+To:     Wolfram Sang <wsa@the-dreams.de>, Markus.Elfring@web.de
+Cc:     Andy Gross <agross@kernel.org>, linux-arm-msm@vger.kernel.org,
+        linux-i2c@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [v2 0/3] Fix issues reported by Coccinelle
+Message-ID: <20190922170906.GB5589@SD>
+References: <20190917172758.GA11926@SD>
+ <76e99512-8818-cec2-9e77-799e4c8481ab@web.de>
+ <20190917181423.GB28182@ninjato>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20190917181423.GB28182@ninjato>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, 18 Sep 2019 10:21:17 -0700, Bjorn Andersson wrote:
-> As the endpoint is unregistered there might still be work pending to
-> handle incoming messages, which will result in a use after free
-> scenario. The plan is to remove the rx_worker, but until then (and for
-> stable@) ensure that the work is stopped before the node is freed.
+On Tue, Sep 17, 2019 at 08:14:23PM +0200, Wolfram Sang wrote:
+> On Tue, Sep 17, 2019 at 08:10:45PM +0200, Markus Elfring wrote:
+> > > Using cocciecheck to ensure there are no semantic issues in
+> > > i2c-qup driver.
+> > 
+> > * This wording contains a typo.
 > 
-> Fixes: bdabad3e363d ("net: Add Qualcomm IPC router")
-> Cc: stable@vger.kernel.org
-> Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+> Doesn't matter to me for a cover letter as long as we can understand it.
+> 
+> > * I would prefer to refer to a desired reduction of a few
+> >   source code quality concerns.
+> 
+> Not needed. I understand what is going on here.
 
-Thanks! Applied, and queued for 4.9+.
+Markus - By "ensure", I mean there are no further cocciecheck issues at this
+point in time. And further, what changed is covered in individual patch
+changelog. So, I think this information is fine in cover.
 
-FWIW Dave handles the stable submission himself, so no need to CC
-stable on networking patches:
-https://www.kernel.org/doc/html/latest/networking/netdev-FAQ.html#q-i-see-a-network-patch-and-i-think-it-should-be-backported-to-stable
+> > Can such a prefix be omitted?
+Can be, but I like to keep it.
+
+Thanks for review.
+
+-Saiyam
