@@ -2,123 +2,82 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 6C781BA65A
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 22 Sep 2019 21:46:21 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 16EAABAC34
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 23 Sep 2019 02:45:29 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2392489AbfIVStk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 22 Sep 2019 14:49:40 -0400
-Received: from mail.kernel.org ([198.145.29.99]:46694 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S2392475AbfIVStj (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 22 Sep 2019 14:49:39 -0400
-Received: from sasha-vm.mshome.net (c-73-47-72-35.hsd1.nh.comcast.net [73.47.72.35])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 5401A208C2;
-        Sun, 22 Sep 2019 18:49:37 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1569178178;
-        bh=Va9nDflhvZE8l4fVYvtxdcbe6XHlni19RRugg5yBB5I=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=RfBhuQ04waaA0TrkhJukY8MrPEhu+u2pLtnna29JG5ANWnCCZU4SwhAw8uWKRPIAk
-         atPu0LEqVpe7gCojD4eoSA4g0dQTlyUM3c2WPCU8MgiVZOtgTiu8f9jP9Y0RZiVi/a
-         +3t1gUSs/o+dOEAdZSaZmYspVhmGYuWPo9/K2fPc=
-From:   Sasha Levin <sashal@kernel.org>
-To:     linux-kernel@vger.kernel.org, stable@vger.kernel.org
-Cc:     Stephen Boyd <swboyd@chromium.org>,
-        Ian Jackson <ian.jackson@citrix.com>,
-        Julien Grall <julien.grall@arm.com>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Avaneesh Kumar Dwivedi <akdwived@codeaurora.org>,
-        Sasha Levin <sashal@kernel.org>, linux-arm-msm@vger.kernel.org,
-        linux-soc@vger.kernel.org
-Subject: [PATCH AUTOSEL 5.2 009/185] firmware: qcom_scm: Use proper types for dma mappings
-Date:   Sun, 22 Sep 2019 14:46:27 -0400
-Message-Id: <20190922184924.32534-9-sashal@kernel.org>
-X-Mailer: git-send-email 2.20.1
-In-Reply-To: <20190922184924.32534-1-sashal@kernel.org>
-References: <20190922184924.32534-1-sashal@kernel.org>
+        id S1730405AbfIWAp2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 22 Sep 2019 20:45:28 -0400
+Received: from mail-io1-f67.google.com ([209.85.166.67]:42714 "EHLO
+        mail-io1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1730404AbfIWAp2 (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Sun, 22 Sep 2019 20:45:28 -0400
+Received: by mail-io1-f67.google.com with SMTP id n197so29373862iod.9
+        for <linux-arm-msm@vger.kernel.org>; Sun, 22 Sep 2019 17:45:27 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=cqpLn56ftCZ3D2OqkmnD8h0ixYYYiXCXrh0JwWenL8g=;
+        b=ZeuGpGJpAEjBfJH1N0u9mPuHqif+b2Bn6YI+YUXHDTbISBlqC9ugWAA7U9re1L7n6R
+         y5FQ9jU4LTv48aDVAbzB2EDkg+laBqcqrP+gDJ9pJv1TRzjvmmVm5fzzZf7cCLCZc3jw
+         tg/1QUn7X9uDWRQ7B6M3Bk/VFQjowuFxQv8x13IwlrW0DSack9yxox+EeTuShX5tIVjH
+         My5TlFBVlnocLhrlBJq4CRUkDLYnuNPw1/NF2kT4hrkwXezaguaRSRyd3jR70KtUjeGO
+         ahVHOtq49iKv5pmA7f2cBdqwrKqfjv4bH1ukkpgyqSjRIGikYwuEHsE+Z2U1Utekx8Q0
+         FVmA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=cqpLn56ftCZ3D2OqkmnD8h0ixYYYiXCXrh0JwWenL8g=;
+        b=tBk+4EWGUFjbipo1xDoMpE5pH9sujC1wRePx488m4VJZUo26VjPnewugnnwLTw530q
+         hUPA2qfvjISisCQcY84vM83EUGJ7qOLcOb7/Klto8tB6EeCCpmJQMVR+aOsUY9bbHU/M
+         EGWfwcMgG73x0TJW7tfE7y+VGpsEo/RAfKbZtYgk+xFPVrmYzveb2m2bADN9mriA8vDK
+         USPPKCyuajF0PoH/mL8qSqj50w6Gj7b8Gh05LPUtklEy9UsbYW0AvVVTPECl2n4uxh1n
+         GFDm6F1jYiM2424Gz+2YzqxM3876Ft1/Z7aN2Ek80YHkdBEDQrzKx2eLSOswwAYLg2h8
+         GoeQ==
+X-Gm-Message-State: APjAAAXUUT65QUN4p8F0vnhAT471c7UzuAnVB7zP+VC3OR2EkZ4Rs87C
+        GdEOBHcs2gDnTlCyaXpwszJtxmZQLz1rb0di9NU=
+X-Google-Smtp-Source: APXvYqyMIbEO0sNm1MdaPV8JwkGnFJVnNrH75QeI6zGjPiZYD5y/r31davFH2Y7jcs+UrwZ8FTBhPw2LDZOVWvLcZHk=
+X-Received: by 2002:a5e:a712:: with SMTP id b18mr16874651iod.263.1569199527197;
+ Sun, 22 Sep 2019 17:45:27 -0700 (PDT)
 MIME-Version: 1.0
-X-stable: review
-X-Patchwork-Hint: Ignore
-Content-Transfer-Encoding: 8bit
+References: <20190921100439.64402-1-kholk11@gmail.com> <20190921100439.64402-2-kholk11@gmail.com>
+In-Reply-To: <20190921100439.64402-2-kholk11@gmail.com>
+From:   Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
+Date:   Sun, 22 Sep 2019 18:45:16 -0600
+Message-ID: <CAOCk7NrAoZw3NDPoW-f+Od+zb6WXav7OqGqoGJR3vcV8doTSqw@mail.gmail.com>
+Subject: Re: [Freedreno] [PATCH 1/5] drm/msm/mdp5: Add optional TBU and TBU_RT clocks
+To:     kholk11@gmail.com
+Cc:     MSM <linux-arm-msm@vger.kernel.org>,
+        Mark Rutland <mark.rutland@arm.com>,
+        freedreno <freedreno@lists.freedesktop.org>, marijns95@gmail.com,
+        Jonathan Marek <jonathan@marek.ca>,
+        Dave Airlie <airlied@linux.ie>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        "open list:DRM PANEL DRIVERS" <dri-devel@lists.freedesktop.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Clark <robdclark@gmail.com>,
+        Rob Herring <robh+dt@kernel.org>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Thomas Gleixner <tglx@linutronix.de>,
+        Sean Paul <sean@poorly.run>,
+        Georgi Djakov <georgi.djakov@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Stephen Boyd <swboyd@chromium.org>
+On Sun, Sep 22, 2019 at 8:16 AM <kholk11@gmail.com> wrote:
+>
+> From: "Angelo G. Del Regno" <kholk11@gmail.com>
+>
+> Some SoCs, like MSM8956/8976 (and APQ variants), do feature these
+> clocks and we need to enable them in order to get the hardware to
+> properly work.
+>
+> Signed-off-by: Angelo G. Del Regno <kholk11@gmail.com>
 
-[ Upstream commit 6e37ccf78a53296c6c7bf426065762c27829eb84 ]
-
-We need to use the proper types and convert between physical addresses
-and dma addresses here to avoid mismatch warnings. This is especially
-important on systems with a different size for dma addresses and
-physical addresses. Otherwise, we get the following warning:
-
-  drivers/firmware/qcom_scm.c: In function "qcom_scm_assign_mem":
-  drivers/firmware/qcom_scm.c:469:47: error: passing argument 3 of "dma_alloc_coherent" from incompatible pointer type [-Werror=incompatible-pointer-types]
-
-We also fix the size argument to dma_free_coherent() because that size
-doesn't need to be aligned after it's already aligned on the allocation
-size. In fact, dma debugging expects the same arguments to be passed to
-both the allocation and freeing sides of the functions so changing the
-size is incorrect regardless.
-
-Reported-by: Ian Jackson <ian.jackson@citrix.com>
-Cc: Ian Jackson <ian.jackson@citrix.com>
-Cc: Julien Grall <julien.grall@arm.com>
-Cc: Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc: Avaneesh Kumar Dwivedi <akdwived@codeaurora.org>
-Tested-by: Bjorn Andersson <bjorn.andersson@linaro.org>
-Signed-off-by: Stephen Boyd <swboyd@chromium.org>
-Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
----
- drivers/firmware/qcom_scm.c | 7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
-
-diff --git a/drivers/firmware/qcom_scm.c b/drivers/firmware/qcom_scm.c
-index 2ddc118dba1b4..74b84244a0db8 100644
---- a/drivers/firmware/qcom_scm.c
-+++ b/drivers/firmware/qcom_scm.c
-@@ -9,6 +9,7 @@
- #include <linux/init.h>
- #include <linux/cpumask.h>
- #include <linux/export.h>
-+#include <linux/dma-direct.h>
- #include <linux/dma-mapping.h>
- #include <linux/module.h>
- #include <linux/types.h>
-@@ -440,6 +441,7 @@ int qcom_scm_assign_mem(phys_addr_t mem_addr, size_t mem_sz,
- 	phys_addr_t mem_to_map_phys;
- 	phys_addr_t dest_phys;
- 	phys_addr_t ptr_phys;
-+	dma_addr_t ptr_dma;
- 	size_t mem_to_map_sz;
- 	size_t dest_sz;
- 	size_t src_sz;
-@@ -457,9 +459,10 @@ int qcom_scm_assign_mem(phys_addr_t mem_addr, size_t mem_sz,
- 	ptr_sz = ALIGN(src_sz, SZ_64) + ALIGN(mem_to_map_sz, SZ_64) +
- 			ALIGN(dest_sz, SZ_64);
- 
--	ptr = dma_alloc_coherent(__scm->dev, ptr_sz, &ptr_phys, GFP_KERNEL);
-+	ptr = dma_alloc_coherent(__scm->dev, ptr_sz, &ptr_dma, GFP_KERNEL);
- 	if (!ptr)
- 		return -ENOMEM;
-+	ptr_phys = dma_to_phys(__scm->dev, ptr_dma);
- 
- 	/* Fill source vmid detail */
- 	src = ptr;
-@@ -489,7 +492,7 @@ int qcom_scm_assign_mem(phys_addr_t mem_addr, size_t mem_sz,
- 
- 	ret = __qcom_scm_assign_mem(__scm->dev, mem_to_map_phys, mem_to_map_sz,
- 				    ptr_phys, src_sz, dest_phys, dest_sz);
--	dma_free_coherent(__scm->dev, ALIGN(ptr_sz, SZ_64), ptr, ptr_phys);
-+	dma_free_coherent(__scm->dev, ptr_sz, ptr, ptr_dma);
- 	if (ret) {
- 		dev_err(__scm->dev,
- 			"Assign memory protection call failed %d.\n", ret);
--- 
-2.20.1
-
+I don't see these clocks documented in the mdp5 DT bindings document.
+They need to be added in the DT first.
