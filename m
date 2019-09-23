@@ -2,209 +2,204 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 637FABBB3A
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 23 Sep 2019 20:23:51 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4911CBBE04
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 23 Sep 2019 23:35:37 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2440181AbfIWSXu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 23 Sep 2019 14:23:50 -0400
-Received: from mail-ed1-f65.google.com ([209.85.208.65]:35089 "EHLO
-        mail-ed1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2438123AbfIWSXu (ORCPT
+        id S2388604AbfIWVfg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 23 Sep 2019 17:35:36 -0400
+Received: from smtp.codeaurora.org ([198.145.29.96]:57574 "EHLO
+        smtp.codeaurora.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729120AbfIWVfg (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 23 Sep 2019 14:23:50 -0400
-Received: by mail-ed1-f65.google.com with SMTP id v8so13873000eds.2
-        for <linux-arm-msm@vger.kernel.org>; Mon, 23 Sep 2019 11:23:48 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=3xcfsEgRrEbJyl/8rY90WK/st4+6aUCMiCigcJxvmoU=;
-        b=NIQiIpMhxjglBAt49K8JN6VdJ2tJOQE7AfkpYKzggFWiNTdbYCLCXtUmdA3DgjVXKn
-         EhWvona4E9SvUc5qCUMIEP976sLgqifLnwXnjJv9zJ6EuynGJhEd3IbYWL2M53sM03eO
-         i9coYeCrfICrHq/fcCcRQurOGMzTFeCSqEiaOfpBFn/VERVRyI1j7yquZHSdpXEjaCix
-         hiNtMYkaGMeXpYai5qVrR8NyzTDKv5F9dS/mBd0uAczq7bcdt9Kl8Sbf8LcM9+u/Au+9
-         31yQ0RX4brcBY37UcH4P/njJxb71KFpbr4Q1IIykvVrmX5cXNKXqq0Jt+BlOSLz4bmxv
-         yRIQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=3xcfsEgRrEbJyl/8rY90WK/st4+6aUCMiCigcJxvmoU=;
-        b=SafsPIAsG26iTXmMIYtGAgG85vgXIYvbv88dy4dWr9o0mAAqyrMu+iRE3c/H63O9hu
-         pdZz7UGy6ZAVLcQariOjSQiHVYU3KWiFC+ckjmF4gc0goY+de18GmHPYNPy5lWJNAcBt
-         /CPCauHuYssnFc7Mq8LOWvfDPX8VE7auv2HsdAwZb4YeD0eHnC9pJn51Ne5j0tDmgRRU
-         gn/qNPykhO6QMaYDwjSPfb2d8EUTmJTojjfo+uEiOM9npXollBw5+dwtE1ppcSncmPxL
-         zu9EOtbwuEwigV+HoR/DbcdPBwInDfhaDuhP2qalzu1GAMjpEOxH8v4fplxvmDLcAy9o
-         f8nQ==
-X-Gm-Message-State: APjAAAV5hV4u6gMoG3NP+8I6at1K1Pn0XPOMTHA+Hb8UZf7jeptdz/fy
-        5nt2oy6aoybp4CiCByhukkCPlh75w0Xrd2Z1DcY=
-X-Google-Smtp-Source: APXvYqxLqVRUOY5y5KZoAkOCBIZMudRu991gx5Gm+0zlcR/qBUEapUScCGc8t1hGaMG77Hp5NnKpbFZqyzAytd76La0=
-X-Received: by 2002:a05:6402:120e:: with SMTP id c14mr1531255edw.272.1569263028159;
- Mon, 23 Sep 2019 11:23:48 -0700 (PDT)
+        Mon, 23 Sep 2019 17:35:36 -0400
+Received: by smtp.codeaurora.org (Postfix, from userid 1000)
+        id CBF80602CC; Mon, 23 Sep 2019 21:35:34 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
+        s=default; t=1569274534;
+        bh=3gVfmwZnaCbRSwwu9Wjpej8a131QZ7soIErZsrCYxrY=;
+        h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
+        b=YFcWeVOPuaLbu5jlwlFkHHEJEIcOGKV8nisoNq/qwod+qtIDYZxzeAyHkU3kPpm7D
+         v5hK0lHO9shnbr417cR8mI9uE6fZj2ub+ygXGDHJxYyVNJPSKn/oNDm/uu7ceP+q1d
+         vsL7coT5HwqWybk/PCRIUQhuDH2sl37eJl7lko/8=
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        pdx-caf-mail.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.7 required=2.0 tests=ALL_TRUSTED,BAYES_00,
+        DKIM_INVALID,DKIM_SIGNED autolearn=no autolearn_force=no version=3.4.0
+Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
+        by smtp.codeaurora.org (Postfix) with ESMTP id 3149060240;
+        Mon, 23 Sep 2019 21:35:33 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
+        s=default; t=1569274533;
+        bh=3gVfmwZnaCbRSwwu9Wjpej8a131QZ7soIErZsrCYxrY=;
+        h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
+        b=dgCmRKJ7UFitfIyjPDHQ1LSiE18P5kQ3BC1Gjf2NalbcR7d4+R8rdZFtXYPw4JLBB
+         Pu5r2Io3c+iW/tVfL2Xxvcgyl5/haPXv3FO1B50ZjP76kYP+gvM/qs6ZrUy/Q8mN9o
+         eHj+ZyIzQjpefYZvky9OEIwvFRs5zW6zg9s7+tms=
 MIME-Version: 1.0
-References: <20190921100439.64402-1-kholk11@gmail.com> <20190921100439.64402-6-kholk11@gmail.com>
- <CAF6AEGubLrqmc5s3hYrYyygx0z2hDYrAfsqTSetmtUJy6rq-kQ@mail.gmail.com> <CAK7fi1ZKXz59yQgB0BxrZXhwXSsBmABWzWmi-CHvKo4B9bpS3g@mail.gmail.com>
-In-Reply-To: <CAK7fi1ZKXz59yQgB0BxrZXhwXSsBmABWzWmi-CHvKo4B9bpS3g@mail.gmail.com>
-From:   Rob Clark <robdclark@gmail.com>
-Date:   Mon, 23 Sep 2019 11:23:36 -0700
-Message-ID: <CAF6AEGuC_YEBhUafJJ_qqm9bLd8z2BAAku5H-K2dQ90Yk_O3Sw@mail.gmail.com>
-Subject: Re: [PATCH 5/5] drm/msm/adreno: Add support for Adreno 510 GPU
-To:     AngeloGioacchino Del Regno <kholk11@gmail.com>
-Cc:     linux-arm-msm <linux-arm-msm@vger.kernel.org>, marijns95@gmail.com,
-        Sean Paul <sean@poorly.run>, David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Rob Herring <robh+dt@kernel.org>,
-        Mark Rutland <mark.rutland@arm.com>,
-        Thomas Gleixner <tglx@linutronix.de>,
-        Jonathan <jonathan@marek.ca>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Georgi Djakov <georgi.djakov@linaro.org>,
-        Greg KH <gregkh@linuxfoundation.org>,
-        dri-devel <dri-devel@lists.freedesktop.org>,
-        freedreno <freedreno@lists.freedesktop.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
+Content-Transfer-Encoding: 7bit
+Date:   Mon, 23 Sep 2019 14:35:33 -0700
+From:   mnalajal@codeaurora.org
+To:     Greg KH <gregkh@linuxfoundation.org>
+Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>, rafael@kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Linus Walleij <linus.walleij@linaro.org>
+Subject: Re: [PATCH] base: soc: Export soc_device_to_device API
+In-Reply-To: <20190920061006.GC473898@kroah.com>
+References: <1568927624-13682-1-git-send-email-mnalajal@codeaurora.org>
+ <20190919213203.GA395325@kroah.com> <20190919215300.GC1418@minitux>
+ <20190919215836.GA426988@kroah.com> <20190919221456.GA63675@minitux>
+ <20190919222525.GA445429@kroah.com> <20190919224017.GB63675@minitux>
+ <20190919224514.GA447028@kroah.com> <20190920033651.GC63675@minitux>
+ <20190920061006.GC473898@kroah.com>
+Message-ID: <5d9d1f3d11b1e4173990d4c5ac547193@codeaurora.org>
+X-Sender: mnalajal@codeaurora.org
+User-Agent: Roundcube Webmail/1.2.5
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Sep 23, 2019 at 10:27 AM AngeloGioacchino Del Regno
-<kholk11@gmail.com> wrote:
->
-> Il giorno lun 23 set 2019 alle ore 18:37 Rob Clark
-> <robdclark@gmail.com> ha scritto:
-> >
-> > On Sat, Sep 21, 2019 at 3:04 AM <kholk11@gmail.com> wrote:
-> > >
-> > > From: "Angelo G. Del Regno" <kholk11@gmail.com>
-> > >
-> > > The Adreno 510 GPU is a stripped version of the Adreno 5xx,
-> > > found in low-end SoCs like 8x56 and 8x76, which has 256K of
-> > > GMEM, with no GPMU nor ZAP.
-> > > Also, since the Adreno 5xx part of this driver seems to be
-> > > developed with high-end Adreno GPUs in mind, and since this
-> > > is a lower end one, add a comment making clear which GPUs
-> > > which support is not implemented yet is not using the GPMU
-> > > related hw init code, so that future developers will not go
-> > > crazy with that.
-> > >
-> > > By the way, the lower end Adreno GPUs with no GPMU are:
-> > > A505/A506/A510 (no ZAP firmware)
-> > > A508/A509/A512 (with ZAP firmware)
-> > >
-> >
-> > Hi, thanks for the patch.. one comment below about zap firmware...
-> > which is not completely to do with this patch, but is my thoughts on
-> > how we should clean up zap handling
-> >
-> > > Signed-off-by: Angelo G. Del Regno <kholk11@gmail.com>
-> >
-> > [snip]
-> >
-> > > @@ -679,7 +716,8 @@ static int a5xx_hw_init(struct msm_gpu *gpu)
-> > >
-> > >         a5xx_preempt_hw_init(gpu);
-> > >
-> > > -       a5xx_gpmu_ucode_init(gpu);
-> > > +       if (!adreno_is_a510(adreno_gpu))
-> > > +               a5xx_gpmu_ucode_init(gpu);
-> > >
-> > >         ret = a5xx_ucode_init(gpu);
-> > >         if (ret)
-> > > @@ -712,12 +750,18 @@ static int a5xx_hw_init(struct msm_gpu *gpu)
-> > >         }
-> > >
-> > >         /*
-> > > -        * Try to load a zap shader into the secure world. If successful
-> > > +        * If the chip that we are using does support loading one, then
-> > > +        * try to load a zap shader into the secure world. If successful
-> > >          * we can use the CP to switch out of secure mode. If not then we
-> > >          * have no resource but to try to switch ourselves out manually. If we
-> > >          * guessed wrong then access to the RBBM_SECVID_TRUST_CNTL register will
-> > >          * be blocked and a permissions violation will soon follow.
-> > >          */
-> > > +       if (adreno_is_a510(adreno_gpu)) {
-> > > +               gpu_write(gpu, REG_A5XX_RBBM_SECVID_TRUST_CNTL, 0x0);
-> > > +               goto skip_zap;
-> > > +       }
-> >
-> > This is something we need to cleanup on a6xx as well.  But it is
-> > actually possible to have the same GPU with and without zap.  We have
-> > this situation today with sdm845, for example.
-> >
-> > What I'd like to do is rather than guess whether we can write
-> > RBBM_SECVID_TRUST_CNTL or not (since that goes spectacularly wrong
-> > when we guess incorrectly), is choose based on the presence of the
-> > zap-shader child node in dtb.  (Currently a6xx tries to choose based
-> > on whether zap firmware is present.. which we need to fix.)
-> >
-> > Originally I was thinking we could keep the zap-shader node in the
-> > SoC's "core" dtsi (ie. msm8996.dtsi, sdm845.dtsi, etc) and using
-> > /delete-node/ in per-device dts files for devices without zap.. but
-> > (AFAIU) the zap shader ends up being signed with a vendor key in most
-> > cases, meaning that to have a "generic" (not device-specific) distro
-> > image need to have different zap file names/paths for devices from
-> > different vendors.  Given this, I think it makes more sense to move
-> > the zap-shader node into a per-device (or at least, per-vendor) dts
-> > file, ie. something like:
-> >
-> >    /* sdm850-lenovo-yoga-c630.dts: */
-> >   gpu {
-> >      zap-shader {
-> >         memory-region = <&gpu_mem>;
-> >         zap-prefix = "LENOVO";
-> >     };
-> >   };
-> >
-> > which would trigger the driver to try to load
-> > /lib/firmware/qcom/LENOVO/a630_zap.mbn
-> >
-> > (I'd like to, at least for devices that have ACPI/SMBIOS tables,
-> > standardize on using the vendor name from SMBIOS tables as this
-> > prefix.. so we have a way to construct the firmware path if we
-> > eventually have ACPI boot support on the aarch64 laptops.)
-> >
-> > BR,
-> > -R
-> >
-> > > +
-> > >         ret = a5xx_zap_shader_init(gpu);
-> > >         if (!ret) {
-> > >                 OUT_PKT7(gpu->rb[0], CP_SET_SECURE_MODE, 1);
-> > > @@ -733,6 +777,7 @@ static int a5xx_hw_init(struct msm_gpu *gpu)
-> > >                 gpu_write(gpu, REG_A5XX_RBBM_SECVID_TRUST_CNTL, 0x0);
-> > >         }
-> > >
-> > > +skip_zap:
-> > >         /* Last step - yield the ringbuffer */
-> > >         a5xx_preempt_start(gpu);
-> > >
-> > > @@ -1066,6 +1111,7 @@ static void a5xx_dump(struct msm_gpu *gpu)
->
-> Thanks to you for the review.
-> What I've documented there about the A5xx chips having ZAP and the ones not
-> having it, came out after a research in the downstream KGSL driver, where qcom
-> does this distinction based on just the Adreno model, which is the main reason
-> why I did it like that :)))
->
-> I am personally not aware of any A5xx chip having this behavior, so that's why I
-> didn't even try to think different about this patch. It just seemed to
-> be the right
-> thing to do...
+On 2019-09-19 23:10, Greg KH wrote:
+> On Thu, Sep 19, 2019 at 08:36:51PM -0700, Bjorn Andersson wrote:
+>> On Thu 19 Sep 15:45 PDT 2019, Greg KH wrote:
+>> 
+>> > On Thu, Sep 19, 2019 at 03:40:17PM -0700, Bjorn Andersson wrote:
+>> > > On Thu 19 Sep 15:25 PDT 2019, Greg KH wrote:
+>> > >
+>> > > > On Thu, Sep 19, 2019 at 03:14:56PM -0700, Bjorn Andersson wrote:
+>> > > > > On Thu 19 Sep 14:58 PDT 2019, Greg KH wrote:
+>> > > > >
+>> > > > > > On Thu, Sep 19, 2019 at 02:53:00PM -0700, Bjorn Andersson wrote:
+>> > > > > > > On Thu 19 Sep 14:32 PDT 2019, Greg KH wrote:
+>> > > > > > >
+>> > > > > > > > On Thu, Sep 19, 2019 at 02:13:44PM -0700, Murali Nalajala wrote:
+>> > > > > > > > > If the soc drivers want to add custom sysfs entries it needs to
+>> > > > > > > > > access "dev" field in "struct soc_device". This can be achieved
+>> > > > > > > > > by "soc_device_to_device" API. Soc drivers which are built as a
+>> > > > > > > > > module they need above API to be exported. Otherwise one can
+>> > > > > > > > > observe compilation issues.
+>> > > > > > > > >
+>> > > > > > > > > Signed-off-by: Murali Nalajala <mnalajal@codeaurora.org>
+>> > > > > > > > > ---
+>> > > > > > > > >  drivers/base/soc.c | 1 +
+>> > > > > > > > >  1 file changed, 1 insertion(+)
+>> > > > > > > > >
+>> > > > > > > > > diff --git a/drivers/base/soc.c b/drivers/base/soc.c
+>> > > > > > > > > index 7c0c5ca..4ad52f6 100644
+>> > > > > > > > > --- a/drivers/base/soc.c
+>> > > > > > > > > +++ b/drivers/base/soc.c
+>> > > > > > > > > @@ -41,6 +41,7 @@ struct device *soc_device_to_device(struct soc_device *soc_dev)
+>> > > > > > > > >  {
+>> > > > > > > > >  	return &soc_dev->dev;
+>> > > > > > > > >  }
+>> > > > > > > > > +EXPORT_SYMBOL_GPL(soc_device_to_device);
+>> > > > > > > > >
+>> > > > > > > > >  static umode_t soc_attribute_mode(struct kobject *kobj,
+>> > > > > > > > >  				struct attribute *attr,
+>> > > > > > > >
+>> > > > > > > > What in-kernel driver needs this?
+>> > > > > > > >
+>> > > > > > >
+>> > > > > > > Half of the drivers interacting with the soc driver calls this API,
+>> > > > > > > several of these I see no reason for being builtin (e.g.
+>> > > > > > > ux500 andversatile). So I think this patch makes sense to allow us to
+>> > > > > > > build these as modules.
+>> > > > > > >
+>> > > > > > > > Is linux-next breaking without this?
+>> > > > > > > >
+>> > > > > > >
+>> > > > > > > No, we postponed the addition of any sysfs attributes in the Qualcomm
+>> > > > > > > socinfo driver.
+>> > > > > > >
+>> > > > > > > > We don't export things unless we have a user of the export.
+>> > > > > > > >
+>> > > > > > > > Also, adding "custom" sysfs attributes is almost always not the correct
+>> > > > > > > > thing to do at all.  The driver should be doing it, by setting up the
+>> > > > > > > > attribute group properly so that the driver core can do it automatically
+>> > > > > > > > for it.
+>> > > > > > > >
+>> > > > > > > > No driver should be doing individual add/remove of sysfs files.  If it
+>> > > > > > > > does so, it is almost guaranteed to be doing it incorrectly and racing
+>> > > > > > > > userspace.
+>> > > > > > > >
+>> > > > > > >
+>> > > > > > > The problem here is that the attributes are expected to be attached to
+>> > > > > > > the soc driver, which is separate from the platform-specific drivers. So
+>> > > > > > > there's no way to do platform specific attributes the right way.
+>> > > > > > >
+>> > > > > > > > And yes, there's loads of in-kernel examples of doing this wrong, I've
+>> > > > > > > > been working on fixing that up, look at the patches now in Linus's tree
+>> > > > > > > > for platform and USB drivers that do this as examples of how to do it
+>> > > > > > > > right.
+>> > > > > > > >
+>> > > > > > >
+>> > > > > > > Agreed, this patch should not be used as an approval for any crazy
+>> > > > > > > attributes; but it's necessary in order to extend the soc device's
+>> > > > > > > attributes, per the current design.
+>> > > > > >
+>> > > > > > Wait, no, let's not let the "current design" remain if it is broken!
+>> > > > > >
+>> > > > > > Why can't the soc driver handle the attributes properly so that the
+>> > > > > > individual driver doesn't have to do the create/remove?
+>> > > > > >
+>> > > > >
+>> > > > > The custom attributes that these drivers want to add to the common ones
+>> > > > > are known in advance, so I presume we could have them passed into
+>> > > > > soc_device_register() and registered together with the common
+>> > > > > attributes...
+>> > > > >
+>> > > > > It sounds like it's worth a prototype.
+>> > > >
+>> > > > Do you have an in-kernel example I can look at to get an idea of what is
+>> > > > needed here?
+>> > > >
+>> > >
+>> > > realview_soc_probe(), in drivers/soc/versatile/soc-realview.c,
+>> > > implements the current mechanism of acquiring the soc's struct device
+>> > > and then issuing a few device_create_file calls on that.
+>> >
+>> > That looks to be a trivial driver to fix up.  Look at 6d03c140db2e
+>> > ("USB: phy: fsl-usb: convert platform driver to use dev_groups") as an
+>> > example of how to do this.
+>> >
+>> 
+>> The difference between the two cases is that in the fsl-usb case it's
+>> attributes of the device itself, while in the soc case the 
+>> realview-soc
+>> driver (or the others doing this) calls soc_device_register() to
+>> register a new (dangling) soc device, which it then adds its 
+>> attributes
+>> onto.
+> 
+> That sounds really really odd.  Why can't the soc device do the 
+> creation
+> "automatically" when the device is registered?  The soc core should
+> handle this for the soc "drivers", that's what it is there for.
+> 
+Clients are registering to soc framework using "soce_device_register()"
+with "soc_device_attribute". This attribute structure does not have all
+the sysfs fields what client are interested. Hence clients are handling
+their required sysfs fields in their drivers.
+https://elixir.bootlin.com/linux/v5.3/source/drivers/base/soc.c#L114
 
-I'm not aware of the case where a fw (hyp/tz) difference means you
-don't have zap shader on any a5xx device.  But seeing it on a6xx made
-me realize that this is really more about the fw than the hw.  Which
-is something that I didn't realize when the a5xx zap support initially
-landed.
+>> We can't use dev_groups, because the soc_device (soc.c) isn't actually 
+>> a
+>> driver and the list of attributes is a combination of things from 
+>> soc.c
+>> and e.g. soc-realview.c.
+>> 
+>> But if we pass a struct attribute_group into soc_device_register() and
+>> then have that register both groups using dev.groups, this should be
+>> much cleaner at least.
+> 
+> Don't you have a structure you can store these in as well?
+At present client is populating entries one-by-one
+https://android.googlesource.com/kernel/msm/+/android-7.1.0_r0.2/drivers/soc/qcom/socinfo.c#1254
 
-I think what I'd do for now is, instead of if (adreno_is_XYZ() ||
-adreno_is_ABC() || ...) { skip_zap }, I'd change that to if
-(!has_zap_node)..  and for the dts files we should start adding the
-zap node in device specific .dts files.
-
-Also I suppose we might need to slightly change where we load the zap
-fw, ie. we can skip trying to load zap fw in the !has_zap_node case.
-
-BR,
--R
+> 
+> thanks,
+> 
+> greg k-h
