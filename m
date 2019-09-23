@@ -2,93 +2,142 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 6A7FCBB2BD
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 23 Sep 2019 13:20:59 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4C359BB44E
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 23 Sep 2019 14:52:21 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2393682AbfIWLU6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 23 Sep 2019 07:20:58 -0400
-Received: from mail.kernel.org ([198.145.29.99]:54880 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S2393655AbfIWLU6 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 23 Sep 2019 07:20:58 -0400
-Received: from mail-qk1-f171.google.com (mail-qk1-f171.google.com [209.85.222.171])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 6857F2089F
-        for <linux-arm-msm@vger.kernel.org>; Mon, 23 Sep 2019 11:20:57 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1569237657;
-        bh=54KCDgkiYR/EK4knsMzq4Nad/givPEjvHxSbPFtNuE0=;
-        h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
-        b=f5lgC/QovE7e9oEB1QhLLVe7AIMcxYZKdlnegI/WrNpx9tT/UMDxAncpMeua8ltD7
-         cQ6iEkvYZtsQ5JFKnjnyHjT1JNMFJTa9ve9mR6llz6CD0HJBCrJRMtV+KgP7FoudH7
-         8tYWJRPPGHCuvME3+R57/Wyg4rBubn+9CaYIAf/Q=
-Received: by mail-qk1-f171.google.com with SMTP id y144so14892252qkb.7
-        for <linux-arm-msm@vger.kernel.org>; Mon, 23 Sep 2019 04:20:57 -0700 (PDT)
-X-Gm-Message-State: APjAAAUZhKBzUrges3NgyrsA7djRJwmYZ8KtGd/sSdK8t7b0GS3ukFtZ
-        DeUNxrAgW4qfAuPz0x1VSzu5Zr5lgKfRFQqcr+Y=
-X-Google-Smtp-Source: APXvYqyha8+ncFM7dMYuwPmOlQgA9HYT9RPM7Gbv/980R91y3afn48aNhDRnEMeVaJXits+zjZhrMI+JGsJ6J9ggJLc=
-X-Received: by 2002:a05:620a:65d:: with SMTP id a29mr17324956qka.285.1569237656571;
- Mon, 23 Sep 2019 04:20:56 -0700 (PDT)
-MIME-Version: 1.0
-References: <CAP71WjwcmNn+8t3pSSUf+SLayiH8AWcu8iZYFTrx=FVdPQB+Nw@mail.gmail.com>
- <20190910050305.GC5157@tuxbook-pro> <CAJs_Fx5PFLD+BaUMxqj9apBxg1mDWGbDUiBsgYfG7wpX6UGyKA@mail.gmail.com>
-In-Reply-To: <CAJs_Fx5PFLD+BaUMxqj9apBxg1mDWGbDUiBsgYfG7wpX6UGyKA@mail.gmail.com>
-From:   Josh Boyer <jwboyer@kernel.org>
-Date:   Mon, 23 Sep 2019 07:20:45 -0400
-X-Gmail-Original-Message-ID: <CA+5PVA7+2Bj1PdAeWwyxG+XfudTvBJwTo16gn=4UryJ1gvR6OA@mail.gmail.com>
-Message-ID: <CA+5PVA7+2Bj1PdAeWwyxG+XfudTvBJwTo16gn=4UryJ1gvR6OA@mail.gmail.com>
-Subject: Re: qcom: add firmware files for Adreno a630
-To:     Rob Clark <robdclark@chromium.org>
-Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Nicolas Dechesne <nicolas.dechesne@linaro.org>,
-        Linux Firmware <linux-firmware@kernel.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+        id S2404621AbfIWMwG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 23 Sep 2019 08:52:06 -0400
+Received: from regular1.263xmail.com ([211.150.70.206]:57912 "EHLO
+        regular1.263xmail.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2405264AbfIWMwG (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 23 Sep 2019 08:52:06 -0400
+X-Greylist: delayed 484 seconds by postgrey-1.27 at vger.kernel.org; Mon, 23 Sep 2019 08:52:03 EDT
+Received: from hjc?rock-chips.com (unknown [192.168.167.16])
+        by regular1.263xmail.com (Postfix) with ESMTP id 1CF38452;
+        Mon, 23 Sep 2019 20:43:56 +0800 (CST)
+X-263anti-spam: KSV:0;BIG:0;
+X-MAIL-GRAY: 0
+X-MAIL-DELIVERY: 1
+X-KSVirus-check: 0
+X-ADDR-CHECKED4: 1
+X-ABS-CHECKED: 1
+X-SKE-CHECKED: 1
+X-ANTISPAM-LEVEL: 2
+Received: from localhost.localdomain (unknown [58.22.7.114])
+        by smtp.263.net (postfix) whith ESMTP id P3051T140289744058112S1569242621440080_;
+        Mon, 23 Sep 2019 20:43:57 +0800 (CST)
+X-IP-DOMAINF: 1
+X-UNIQUE-TAG: <fe5a9893bb74d8c2b2afc522284afcec>
+X-RL-SENDER: hjc@rock-chips.com
+X-SENDER: hjc@rock-chips.com
+X-LOGIN-NAME: hjc@rock-chips.com
+X-FST-TO: dri-devel@lists.freedesktop.org
+X-SENDER-IP: 58.22.7.114
+X-ATTACHMENT-NUM: 0
+X-DNS-TYPE: 0
+From:   Sandy Huang <hjc@rock-chips.com>
+To:     dri-devel@lists.freedesktop.org, Rob Clark <robdclark@gmail.com>,
+        Sean Paul <sean@poorly.run>, David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Jeykumar Sankaran <jsanka@codeaurora.org>,
+        Bruce Wang <bzwang@chromium.org>,
+        Jordan Crouse <jcrouse@codeaurora.org>,
+        Sravanthi Kollukuduru <skolluku@codeaurora.org>,
+        Maxime Ripard <maxime.ripard@bootlin.com>,
+        Sam Ravnborg <sam@ravnborg.org>,
+        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+        Thomas Gleixner <tglx@linutronix.de>,
+        Mamta Shukla <mamtashukla555@gmail.com>,
+        Shayenne Moura <shayenneluzmoura@gmail.com>,
+        Paul Kocialkowski <paul.kocialkowski@bootlin.com>,
+        Emil Velikov <emil.velikov@collabora.com>,
+        Allison Randal <allison@lohutok.net>,
+        Sandy Huang <hjc@rock-chips.com>
+Cc:     Sean Paul <seanpaul@chromium.org>,
+        Rob Clark <robdclark@chromium.org>,
+        Daniel Vetter <daniel.vetter@ffwll.ch>,
+        Philipp Zabel <p.zabel@pengutronix.de>,
+        linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org,
+        linux-kernel@vger.kernel.org
+Subject: [PATCH 08/36] drm/msm: use bpp instead of cpp for drm_format_info
+Date:   Mon, 23 Sep 2019 20:41:12 +0800
+Message-Id: <1569242500-182337-9-git-send-email-hjc@rock-chips.com>
+X-Mailer: git-send-email 2.7.4
+In-Reply-To: <1569242500-182337-7-git-send-email-hjc@rock-chips.com>
+References: <1569242500-182337-7-git-send-email-hjc@rock-chips.com>
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Sep 10, 2019 at 1:29 AM Rob Clark <robdclark@chromium.org> wrote:
->
-> On Mon, Sep 9, 2019 at 10:03 PM Bjorn Andersson
-> <bjorn.andersson@linaro.org> wrote:
-> >
-> > On Mon 09 Sep 12:52 PDT 2019, Nicolas Dechesne wrote:
-> >
-> > > hi
-> > >
-> > > this pull request adds firmware for Adreno A630 GPU found on devices
-> > > based on Qualcomm Snapdragon 845. The original firmware files are
-> > > distributed by Thundercomm, the vendor of the SDM845 based Dragonboard
-> > > 845c, using license terms defined by Qualcomm for previous
-> > > generations. The original firmware files can be found here:
-> > > https://releases.linaro.org/96boards/dragonboard845c/qualcomm/firmware/
-> > >
-> > > The following changes since commit 6c6918ad8ae0dfb2cb591484eba525409980c16f:
-> > >
-> > >   linux-firmware: Update firmware file for Intel Bluetooth AX201
-> > > (2019-09-09 04:22:42 -0400)
-> > >
-> > > are available in the Git repository at:
-> > >
-> > >   https://github.com/ndechesne/linux-firmware.git gpu-845
-> > >
-> > > for you to fetch changes up to 88ea23e7eed04e78111013df9b81dd851037e4da:
-> > >
-> > >   qcom: add firmware files for Adreno a630 (2019-09-09 18:13:55 +0200)
-> > >
-> > > ----------------------------------------------------------------
-> > > Nicolas Dechesne (1):
-> > >       qcom: add firmware files for Adreno a630
-> >
-> > Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
->
-> Not sure if t-b is applicable for linux-firmare, but if it is:
->
-> Tested-by: Rob Clark <robdclark@gmail.com>
+cpp[BytePerPlane] can't describe the 10bit data format correctly,
+So we use bpp[BitPerPlane] to instead cpp.
 
-Pulled and pushed out.  Thanks.
+Signed-off-by: Sandy Huang <hjc@rock-chips.com>
+---
+ drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c  | 4 ++--
+ drivers/gpu/drm/msm/disp/mdp5/mdp5_crtc.c | 2 +-
+ drivers/gpu/drm/msm/disp/mdp5/mdp5_smp.c  | 2 +-
+ drivers/gpu/drm/msm/msm_fb.c              | 2 +-
+ 4 files changed, 5 insertions(+), 5 deletions(-)
 
-josh
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
+index b3417d5..c57731c 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
++++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
+@@ -1148,8 +1148,8 @@ static int _dpu_debugfs_status_show(struct seq_file *s, void *data)
+ 				fb->base.id, (char *) &fb->format->format,
+ 				fb->width, fb->height);
+ 			for (i = 0; i < ARRAY_SIZE(fb->format->cpp); ++i)
+-				seq_printf(s, "cpp[%d]:%u ",
+-						i, fb->format->cpp[i]);
++				seq_printf(s, "bpp[%d]:%u ",
++						i, fb->format->bpp[i]);
+ 			seq_puts(s, "\n\t");
+ 
+ 			seq_printf(s, "modifier:%8llu ", fb->modifier);
+diff --git a/drivers/gpu/drm/msm/disp/mdp5/mdp5_crtc.c b/drivers/gpu/drm/msm/disp/mdp5/mdp5_crtc.c
+index ff14555..61ab4dc 100644
+--- a/drivers/gpu/drm/msm/disp/mdp5/mdp5_crtc.c
++++ b/drivers/gpu/drm/msm/disp/mdp5/mdp5_crtc.c
+@@ -790,7 +790,7 @@ static void mdp5_crtc_restore_cursor(struct drm_crtc *crtc)
+ 	width = mdp5_crtc->cursor.width;
+ 	height = mdp5_crtc->cursor.height;
+ 
+-	stride = width * info->cpp[0];
++	stride = width * info->bpp[0] / 8;
+ 
+ 	get_roi(crtc, &roi_w, &roi_h);
+ 
+diff --git a/drivers/gpu/drm/msm/disp/mdp5/mdp5_smp.c b/drivers/gpu/drm/msm/disp/mdp5/mdp5_smp.c
+index 776337f..992477d 100644
+--- a/drivers/gpu/drm/msm/disp/mdp5/mdp5_smp.c
++++ b/drivers/gpu/drm/msm/disp/mdp5/mdp5_smp.c
+@@ -147,7 +147,7 @@ uint32_t mdp5_smp_calculate(struct mdp5_smp *smp,
+ 	for (i = 0; i < nplanes; i++) {
+ 		int n, fetch_stride, cpp;
+ 
+-		cpp = info->cpp[i];
++		cpp = info->bpp[i] / 8;
+ 		fetch_stride = width * cpp / (i ? hsub : 1);
+ 
+ 		n = DIV_ROUND_UP(fetch_stride * nlines, smp->blk_size);
+diff --git a/drivers/gpu/drm/msm/msm_fb.c b/drivers/gpu/drm/msm/msm_fb.c
+index 5bcd5e5..4545fa1 100644
+--- a/drivers/gpu/drm/msm/msm_fb.c
++++ b/drivers/gpu/drm/msm/msm_fb.c
+@@ -172,7 +172,7 @@ static struct drm_framebuffer *msm_framebuffer_init(struct drm_device *dev,
+ 		unsigned int min_size;
+ 
+ 		min_size = (height - 1) * mode_cmd->pitches[i]
+-			 + width * info->cpp[i]
++			 + width * info->bpp[i] / 8
+ 			 + mode_cmd->offsets[i];
+ 
+ 		if (bos[i]->size < min_size) {
+-- 
+2.7.4
+
+
+
