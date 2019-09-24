@@ -2,95 +2,117 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 707A8BD120
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Sep 2019 20:01:22 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C3DBEBD1A0
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Sep 2019 20:14:30 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2391108AbfIXSBV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 24 Sep 2019 14:01:21 -0400
-Received: from inva020.nxp.com ([92.121.34.13]:53794 "EHLO inva020.nxp.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S2389911AbfIXSBU (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 24 Sep 2019 14:01:20 -0400
-Received: from inva020.nxp.com (localhost [127.0.0.1])
-        by inva020.eu-rdc02.nxp.com (Postfix) with ESMTP id 6E2261A0A42;
-        Tue, 24 Sep 2019 20:01:18 +0200 (CEST)
-Received: from inva024.eu-rdc02.nxp.com (inva024.eu-rdc02.nxp.com [134.27.226.22])
-        by inva020.eu-rdc02.nxp.com (Postfix) with ESMTP id 60E9F1A0767;
-        Tue, 24 Sep 2019 20:01:18 +0200 (CEST)
-Received: from fsr-ub1864-112.ea.freescale.net (fsr-ub1864-112.ea.freescale.net [10.171.82.98])
-        by inva024.eu-rdc02.nxp.com (Postfix) with ESMTP id 0CF4F205ED;
-        Tue, 24 Sep 2019 20:01:18 +0200 (CEST)
-From:   Leonard Crestez <leonard.crestez@nxp.com>
-To:     Georgi Djakov <georgi.djakov@linaro.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     Evan Green <evgreen@chromium.org>,
-        David Dai <daidavid1@codeaurora.org>,
-        Jordan Crouse <jcrouse@codeaurora.org>,
-        linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org
-Subject: [PATCH] interconnect: qcom: Fix icc_onecell_data allocation
-Date:   Tue, 24 Sep 2019 21:01:15 +0300
-Message-Id: <a7360abb6561917e30bbfaa6084578449152bf1d.1569348056.git.leonard.crestez@nxp.com>
-X-Mailer: git-send-email 2.17.1
-X-Virus-Scanned: ClamAV using ClamSMTP
+        id S2439577AbfIXSMz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 24 Sep 2019 14:12:55 -0400
+Received: from mx2.suse.de ([195.135.220.15]:43946 "EHLO mx1.suse.de"
+        rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+        id S2393874AbfIXSMy (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 24 Sep 2019 14:12:54 -0400
+X-Virus-Scanned: by amavisd-new at test-mx.suse.de
+Received: from relay2.suse.de (unknown [195.135.220.254])
+        by mx1.suse.de (Postfix) with ESMTP id 22E57AC93;
+        Tue, 24 Sep 2019 18:12:51 +0000 (UTC)
+From:   Nicolas Saenz Julienne <nsaenzjulienne@suse.de>
+To:     robh+dt@kernel.org, devicetree@vger.kernel.org,
+        frowand.list@gmail.com, linux-arm-kernel@lists.infradead.org,
+        linux-wireless@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, dmaengine@vger.kernel.org,
+        etnaviv@lists.freedesktop.org, dri-devel@lists.freedesktop.org,
+        xen-devel@lists.xenproject.org, linux-tegra@vger.kernel.org,
+        linux-media@vger.kernel.org, linux-pci@vger.kernel.org
+Cc:     mbrugger@suse.com, robin.murphy@arm.com, f.fainelli@gmail.com,
+        james.quinlan@broadcom.com, wahrenst@gmx.net,
+        Nicolas Saenz Julienne <nsaenzjulienne@suse.de>,
+        Dan Williams <dan.j.williams@intel.com>,
+        freedreno@lists.freedesktop.org
+Subject: [PATCH 00/11] of: Fix DMA configuration for non-DT masters
+Date:   Tue, 24 Sep 2019 20:12:31 +0200
+Message-Id: <20190924181244.7159-1-nsaenzjulienne@suse.de>
+X-Mailer: git-send-email 2.23.0
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-This is a struct with a trailing zero-length array of icc_node pointers
-but it's allocated as if it were a single array of icc_nodes instead.
+Hi All,
+this series tries to address one of the issues blocking us from
+upstreaming Broadcom's STB PCIe controller[1]. Namely, the fact that
+devices not represented in DT which sit behind a PCI bus fail to get the
+bus' DMA addressing constraints.
 
-This allocates too much memory at probe time but shouldn't have any
-noticeable effect. Both sdm845 and qcs404 are affected.
+This is due to the fact that of_dma_configure() assumes it's receiving a
+DT node representing the device being configured, as opposed to the PCIe
+bridge node we currently pass. This causes the code to directly jump
+into PCI's parent node when checking for 'dma-ranges' and misses
+whatever was set there.
 
-Fix by replacing kcalloc with kzalloc and using the "struct_size" macro.
+To address this I create a new API in OF - inspired from Robin Murphys
+original proposal[2] - which accepts a bus DT node as it's input in
+order to configure a device's DMA constraints. The changes go deep into
+of/address.c's implementation, as a device being having a DT node
+assumption was pretty strong.
 
-Signed-off-by: Leonard Crestez <leonard.crestez@nxp.com>
+On top of this work, I also cleaned up of_dma_configure() removing its
+redundant arguments and creating an alternative function for the special cases
+not applicable to either the above case or the default usage.
+
+IMO the resulting functions are more explicit. They will probably
+surface some hacky usages that can be properly fixed as I show with the
+DT fixes on the Layerscape platform.
+
+This was also tested on a Raspberry Pi 4 with a custom PCIe driver and
+on a Seattle AMD board.
+
+Regards,
+Nicolas
+
+[1] https://patchwork.kernel.org/patch/9650345/#20294961
+[2] https://patchwork.kernel.org/patch/9650345/
 
 ---
 
-Didn't test beyond compiling, this was found this by reading the code.
----
- drivers/interconnect/qcom/qcs404.c | 3 ++-
- drivers/interconnect/qcom/sdm845.c | 3 ++-
- 2 files changed, 4 insertions(+), 2 deletions(-)
+Nicolas Saenz Julienne (11):
+  of: address: clean-up unused variable in of_dma_get_range()
+  of: base: introduce __of_n_*_cells_parent()
+  of: address: use parent DT node in bus->count_cells()
+  of: address: introduce of_translate_dma_address_parent()
+  of: expose __of_get_dma_parent() to OF subsystem
+  of: address: use parent OF node in of_dma_get_range()
+  dts: arm64: layerscape: add dma-ranges property to qoric-mc node
+  dts: arm64: layerscape: add dma-ranges property to pcie nodes
+  of: device: remove comment in of_dma_configure()
+  of: device: introduce of_dma_configure_parent()
+  of: simplify of_dma_config()'s arguments
 
-diff --git a/drivers/interconnect/qcom/qcs404.c b/drivers/interconnect/qcom/qcs404.c
-index 910081d6ddc0..b4966d8f3348 100644
---- a/drivers/interconnect/qcom/qcs404.c
-+++ b/drivers/interconnect/qcom/qcs404.c
-@@ -431,11 +431,12 @@ static int qnoc_probe(struct platform_device *pdev)
- 
- 	qp = devm_kzalloc(dev, sizeof(*qp), GFP_KERNEL);
- 	if (!qp)
- 		return -ENOMEM;
- 
--	data = devm_kcalloc(dev, num_nodes, sizeof(*node), GFP_KERNEL);
-+	data = devm_kzalloc(dev, struct_size(data, nodes, num_nodes),
-+			    GFP_KERNEL);
- 	if (!data)
- 		return -ENOMEM;
- 
- 	qp->bus_clks = devm_kmemdup(dev, bus_clocks, sizeof(bus_clocks),
- 				    GFP_KERNEL);
-diff --git a/drivers/interconnect/qcom/sdm845.c b/drivers/interconnect/qcom/sdm845.c
-index 57955596bb59..502a6c22b41e 100644
---- a/drivers/interconnect/qcom/sdm845.c
-+++ b/drivers/interconnect/qcom/sdm845.c
-@@ -788,11 +788,12 @@ static int qnoc_probe(struct platform_device *pdev)
- 
- 	qp = devm_kzalloc(&pdev->dev, sizeof(*qp), GFP_KERNEL);
- 	if (!qp)
- 		return -ENOMEM;
- 
--	data = devm_kcalloc(&pdev->dev, num_nodes, sizeof(*node), GFP_KERNEL);
-+	data = devm_kzalloc(&pdev->dev, struct_size(data, nodes, num_nodes),
-+			    GFP_KERNEL);
- 	if (!data)
- 		return -ENOMEM;
- 
- 	provider = &qp->provider;
- 	provider->dev = &pdev->dev;
+ .../arm64/boot/dts/freescale/fsl-ls1088a.dtsi |   1 +
+ .../arm64/boot/dts/freescale/fsl-ls208xa.dtsi |   5 +
+ .../arm64/boot/dts/freescale/fsl-lx2160a.dtsi |   1 +
+ drivers/base/platform.c                       |   2 +-
+ drivers/bcma/main.c                           |   2 +-
+ drivers/bus/fsl-mc/fsl-mc-bus.c               |   2 +-
+ drivers/dma/qcom/hidma_mgmt.c                 |   2 +-
+ drivers/gpu/drm/etnaviv/etnaviv_drv.c         |   2 +-
+ drivers/gpu/drm/msm/adreno/a6xx_gmu.c         |   2 +-
+ drivers/gpu/drm/sun4i/sun4i_backend.c         |   2 +-
+ drivers/gpu/drm/xen/xen_drm_front.c           |   2 +-
+ drivers/gpu/host1x/bus.c                      |   4 +-
+ drivers/media/platform/qcom/venus/firmware.c  |   2 +-
+ drivers/media/platform/s5p-mfc/s5p_mfc.c      |   2 +-
+ drivers/of/address.c                          | 136 +++++++++---------
+ drivers/of/base.c                             |  69 +++++++--
+ drivers/of/device.c                           |  59 +++++++-
+ drivers/of/of_private.h                       |   5 +
+ drivers/pci/pci-driver.c                      |   3 +-
+ drivers/xen/gntdev.c                          |   2 +-
+ include/linux/of_address.h                    |   8 +-
+ include/linux/of_device.h                     |  23 ++-
+ 22 files changed, 223 insertions(+), 113 deletions(-)
+
 -- 
-2.17.1
+2.23.0
 
