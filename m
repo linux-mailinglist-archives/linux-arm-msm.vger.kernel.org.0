@@ -2,101 +2,95 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 037E9BCF5F
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Sep 2019 19:01:54 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 707A8BD120
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Sep 2019 20:01:22 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730040AbfIXQzr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 24 Sep 2019 12:55:47 -0400
-Received: from mail.kernel.org ([198.145.29.99]:43238 "EHLO mail.kernel.org"
+        id S2391108AbfIXSBV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 24 Sep 2019 14:01:21 -0400
+Received: from inva020.nxp.com ([92.121.34.13]:53794 "EHLO inva020.nxp.com"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S2391488AbfIXQuY (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 24 Sep 2019 12:50:24 -0400
-Received: from sasha-vm.mshome.net (c-73-47-72-35.hsd1.nh.comcast.net [73.47.72.35])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 035FF21906;
-        Tue, 24 Sep 2019 16:50:22 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1569343823;
-        bh=JpYnaaRnpqG1IJ9LpF43Ky4t2CfiGETqsYi76zPHC88=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=tydnbpSdLWD2ib+QF5eEyCNFQDv0BTwD90owdwhLmyQUex1QNmMecfLRvj7EUTHyt
-         oXgHx1jdnKOV2t4t5lRKxekC/vrEsH3RtpGikBmrq6aletWYEAdjJnB7whGbE8L510
-         ppeFtCCmw1RuNHUogU+6m2SWvEmkj0WCJr+gzTxM=
-From:   Sasha Levin <sashal@kernel.org>
-To:     linux-kernel@vger.kernel.org, stable@vger.kernel.org
-Cc:     Jorge Ramirez-Ortiz <jorge.ramirez-ortiz@linaro.org>,
-        Niklas Cassel <niklas.cassel@linaro.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Jassi Brar <jaswinder.singh@linaro.org>,
-        Sasha Levin <sashal@kernel.org>, linux-arm-msm@vger.kernel.org
-Subject: [PATCH AUTOSEL 4.19 46/50] mbox: qcom: add APCS child device for QCS404
-Date:   Tue, 24 Sep 2019 12:48:43 -0400
-Message-Id: <20190924164847.27780-46-sashal@kernel.org>
-X-Mailer: git-send-email 2.20.1
-In-Reply-To: <20190924164847.27780-1-sashal@kernel.org>
-References: <20190924164847.27780-1-sashal@kernel.org>
-MIME-Version: 1.0
-X-stable: review
-X-Patchwork-Hint: Ignore
-Content-Transfer-Encoding: 8bit
+        id S2389911AbfIXSBU (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 24 Sep 2019 14:01:20 -0400
+Received: from inva020.nxp.com (localhost [127.0.0.1])
+        by inva020.eu-rdc02.nxp.com (Postfix) with ESMTP id 6E2261A0A42;
+        Tue, 24 Sep 2019 20:01:18 +0200 (CEST)
+Received: from inva024.eu-rdc02.nxp.com (inva024.eu-rdc02.nxp.com [134.27.226.22])
+        by inva020.eu-rdc02.nxp.com (Postfix) with ESMTP id 60E9F1A0767;
+        Tue, 24 Sep 2019 20:01:18 +0200 (CEST)
+Received: from fsr-ub1864-112.ea.freescale.net (fsr-ub1864-112.ea.freescale.net [10.171.82.98])
+        by inva024.eu-rdc02.nxp.com (Postfix) with ESMTP id 0CF4F205ED;
+        Tue, 24 Sep 2019 20:01:18 +0200 (CEST)
+From:   Leonard Crestez <leonard.crestez@nxp.com>
+To:     Georgi Djakov <georgi.djakov@linaro.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     Evan Green <evgreen@chromium.org>,
+        David Dai <daidavid1@codeaurora.org>,
+        Jordan Crouse <jcrouse@codeaurora.org>,
+        linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org
+Subject: [PATCH] interconnect: qcom: Fix icc_onecell_data allocation
+Date:   Tue, 24 Sep 2019 21:01:15 +0300
+Message-Id: <a7360abb6561917e30bbfaa6084578449152bf1d.1569348056.git.leonard.crestez@nxp.com>
+X-Mailer: git-send-email 2.17.1
+X-Virus-Scanned: ClamAV using ClamSMTP
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Jorge Ramirez-Ortiz <jorge.ramirez-ortiz@linaro.org>
+This is a struct with a trailing zero-length array of icc_node pointers
+but it's allocated as if it were a single array of icc_nodes instead.
 
-[ Upstream commit 78c86458a440ff356073c21b568cb58ddb67b82b ]
+This allocates too much memory at probe time but shouldn't have any
+noticeable effect. Both sdm845 and qcs404 are affected.
 
-There is clock controller functionality in the APCS hardware block of
-qcs404 devices similar to msm8916.
+Fix by replacing kcalloc with kzalloc and using the "struct_size" macro.
 
-Co-developed-by: Niklas Cassel <niklas.cassel@linaro.org>
-Signed-off-by: Niklas Cassel <niklas.cassel@linaro.org>
-Signed-off-by: Jorge Ramirez-Ortiz <jorge.ramirez-ortiz@linaro.org>
-Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
-Reviewed-by: Stephen Boyd <sboyd@kernel.org>
-Signed-off-by: Jassi Brar <jaswinder.singh@linaro.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Leonard Crestez <leonard.crestez@nxp.com>
+
 ---
- drivers/mailbox/qcom-apcs-ipc-mailbox.c | 8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/mailbox/qcom-apcs-ipc-mailbox.c b/drivers/mailbox/qcom-apcs-ipc-mailbox.c
-index 333ed4a9d4b8f..5255dcb551a78 100644
---- a/drivers/mailbox/qcom-apcs-ipc-mailbox.c
-+++ b/drivers/mailbox/qcom-apcs-ipc-mailbox.c
-@@ -55,7 +55,6 @@ static const struct mbox_chan_ops qcom_apcs_ipc_ops = {
+Didn't test beyond compiling, this was found this by reading the code.
+---
+ drivers/interconnect/qcom/qcs404.c | 3 ++-
+ drivers/interconnect/qcom/sdm845.c | 3 ++-
+ 2 files changed, 4 insertions(+), 2 deletions(-)
+
+diff --git a/drivers/interconnect/qcom/qcs404.c b/drivers/interconnect/qcom/qcs404.c
+index 910081d6ddc0..b4966d8f3348 100644
+--- a/drivers/interconnect/qcom/qcs404.c
++++ b/drivers/interconnect/qcom/qcs404.c
+@@ -431,11 +431,12 @@ static int qnoc_probe(struct platform_device *pdev)
  
- static int qcom_apcs_ipc_probe(struct platform_device *pdev)
- {
--	struct device_node *np = pdev->dev.of_node;
- 	struct qcom_apcs_ipc *apcs;
- 	struct regmap *regmap;
- 	struct resource *res;
-@@ -63,6 +62,11 @@ static int qcom_apcs_ipc_probe(struct platform_device *pdev)
- 	void __iomem *base;
- 	unsigned long i;
- 	int ret;
-+	const struct of_device_id apcs_clk_match_table[] = {
-+		{ .compatible = "qcom,msm8916-apcs-kpss-global", },
-+		{ .compatible = "qcom,qcs404-apcs-apps-global", },
-+		{}
-+	};
+ 	qp = devm_kzalloc(dev, sizeof(*qp), GFP_KERNEL);
+ 	if (!qp)
+ 		return -ENOMEM;
  
- 	apcs = devm_kzalloc(&pdev->dev, sizeof(*apcs), GFP_KERNEL);
- 	if (!apcs)
-@@ -97,7 +101,7 @@ static int qcom_apcs_ipc_probe(struct platform_device *pdev)
- 		return ret;
- 	}
+-	data = devm_kcalloc(dev, num_nodes, sizeof(*node), GFP_KERNEL);
++	data = devm_kzalloc(dev, struct_size(data, nodes, num_nodes),
++			    GFP_KERNEL);
+ 	if (!data)
+ 		return -ENOMEM;
  
--	if (of_device_is_compatible(np, "qcom,msm8916-apcs-kpss-global")) {
-+	if (of_match_device(apcs_clk_match_table, &pdev->dev)) {
- 		apcs->clk = platform_device_register_data(&pdev->dev,
- 							  "qcom-apcs-msm8916-clk",
- 							  -1, NULL, 0);
+ 	qp->bus_clks = devm_kmemdup(dev, bus_clocks, sizeof(bus_clocks),
+ 				    GFP_KERNEL);
+diff --git a/drivers/interconnect/qcom/sdm845.c b/drivers/interconnect/qcom/sdm845.c
+index 57955596bb59..502a6c22b41e 100644
+--- a/drivers/interconnect/qcom/sdm845.c
++++ b/drivers/interconnect/qcom/sdm845.c
+@@ -788,11 +788,12 @@ static int qnoc_probe(struct platform_device *pdev)
+ 
+ 	qp = devm_kzalloc(&pdev->dev, sizeof(*qp), GFP_KERNEL);
+ 	if (!qp)
+ 		return -ENOMEM;
+ 
+-	data = devm_kcalloc(&pdev->dev, num_nodes, sizeof(*node), GFP_KERNEL);
++	data = devm_kzalloc(&pdev->dev, struct_size(data, nodes, num_nodes),
++			    GFP_KERNEL);
+ 	if (!data)
+ 		return -ENOMEM;
+ 
+ 	provider = &qp->provider;
+ 	provider->dev = &pdev->dev;
 -- 
-2.20.1
+2.17.1
 
