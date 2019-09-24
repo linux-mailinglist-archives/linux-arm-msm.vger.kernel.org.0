@@ -2,197 +2,104 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 8F946BC125
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Sep 2019 06:50:10 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E748BBC174
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Sep 2019 07:48:03 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2404402AbfIXEuJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 24 Sep 2019 00:50:09 -0400
-Received: from mail.kernel.org ([198.145.29.99]:57316 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S2394439AbfIXEuJ (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 24 Sep 2019 00:50:09 -0400
-Received: from localhost (83-86-89-107.cable.dynamic.v4.ziggo.nl [83.86.89.107])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        id S2405894AbfIXFsD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 24 Sep 2019 01:48:03 -0400
+Received: from smtp.codeaurora.org ([198.145.29.96]:40546 "EHLO
+        smtp.codeaurora.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2405096AbfIXFsC (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 24 Sep 2019 01:48:02 -0400
+Received: by smtp.codeaurora.org (Postfix, from userid 1000)
+        id AB07460A60; Tue, 24 Sep 2019 05:48:01 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
+        s=default; t=1569304081;
+        bh=xvymJ4GYEKWrSL7puVuOYOXGQH4K71w3rf2tjoJNIHM=;
+        h=From:To:Cc:Subject:Date:From;
+        b=SlRZNR43c1USLJn+QyViLdXTmkFllIkBE8Ymk/nRUqnsyYW+Zpbymxv1c/wNK9nhU
+         AePAlZCwLySx4RI8PFKL1KBuGdv1uvnYSgQ38G0KngROHJsRAjd6gqyl2w7UTLgCWf
+         AnR4/S7BdNcrOaofP1tYKycmfwFf0QVeZtJN+mss=
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        pdx-caf-mail.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.7 required=2.0 tests=ALL_TRUSTED,BAYES_00,
+        DKIM_INVALID,DKIM_SIGNED,SPF_NONE autolearn=no autolearn_force=no
+        version=3.4.0
+Received: from amasule-linux.qualcomm.com (blr-c-bdr-fw-01_globalnat_allzones-outside.qualcomm.com [103.229.19.19])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
         (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 8E6A0207FD;
-        Tue, 24 Sep 2019 04:50:07 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1569300608;
-        bh=G9RP+Qa3dNbYQldyep2Vb0GBoLFopZ+7tVc/FnTIKlQ=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=Nb8MS+IEqhMvhrlbvBw0bZaZ8fGhQdqJG7WWs5zsFdBiUlqYUdrDQ800F4hJwiixv
-         wlE1LZT/jmCMEIRniIUEsGRaMdRt2cUwjgzEuSeLpLDQhLLg4PF0JDtIWxcV0q8MBC
-         FVOqb7G8xPF8REzEg5yNQTkerUWwGsNuZxEy3YRw=
-Date:   Tue, 24 Sep 2019 06:50:05 +0200
-From:   Greg KH <gregkh@linuxfoundation.org>
-To:     mnalajal@codeaurora.org
-Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>, rafael@kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Linus Walleij <linus.walleij@linaro.org>
-Subject: Re: [PATCH] base: soc: Export soc_device_to_device API
-Message-ID: <20190924045005.GB2700@kroah.com>
-References: <20190919213203.GA395325@kroah.com>
- <20190919215300.GC1418@minitux>
- <20190919215836.GA426988@kroah.com>
- <20190919221456.GA63675@minitux>
- <20190919222525.GA445429@kroah.com>
- <20190919224017.GB63675@minitux>
- <20190919224514.GA447028@kroah.com>
- <20190920033651.GC63675@minitux>
- <20190920061006.GC473898@kroah.com>
- <5d9d1f3d11b1e4173990d4c5ac547193@codeaurora.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <5d9d1f3d11b1e4173990d4c5ac547193@codeaurora.org>
-User-Agent: Mutt/1.12.2 (2019-09-21)
+        (Authenticated sender: amasule@codeaurora.org)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id C92A460256;
+        Tue, 24 Sep 2019 05:47:58 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
+        s=default; t=1569304081;
+        bh=xvymJ4GYEKWrSL7puVuOYOXGQH4K71w3rf2tjoJNIHM=;
+        h=From:To:Cc:Subject:Date:From;
+        b=SlRZNR43c1USLJn+QyViLdXTmkFllIkBE8Ymk/nRUqnsyYW+Zpbymxv1c/wNK9nhU
+         AePAlZCwLySx4RI8PFKL1KBuGdv1uvnYSgQ38G0KngROHJsRAjd6gqyl2w7UTLgCWf
+         AnR4/S7BdNcrOaofP1tYKycmfwFf0QVeZtJN+mss=
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org C92A460256
+Authentication-Results: pdx-caf-mail.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: pdx-caf-mail.web.codeaurora.org; spf=none smtp.mailfrom=amasule@codeaurora.org
+From:   Aniket Masule <amasule@codeaurora.org>
+To:     linux-media@vger.kernel.org, stanimir.varbanov@linaro.org
+Cc:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        vgarodia@codeaurora.org, Aniket Masule <amasule@codeaurora.org>
+Subject: [RESEND v7 0/2]media: venus: Update clock scaling 
+Date:   Tue, 24 Sep 2019 11:17:47 +0530
+Message-Id: <1569304069-20713-1-git-send-email-amasule@codeaurora.org>
+X-Mailer: git-send-email 1.9.1
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Sep 23, 2019 at 02:35:33PM -0700, mnalajal@codeaurora.org wrote:
-> On 2019-09-19 23:10, Greg KH wrote:
-> > On Thu, Sep 19, 2019 at 08:36:51PM -0700, Bjorn Andersson wrote:
-> > > On Thu 19 Sep 15:45 PDT 2019, Greg KH wrote:
-> > > 
-> > > > On Thu, Sep 19, 2019 at 03:40:17PM -0700, Bjorn Andersson wrote:
-> > > > > On Thu 19 Sep 15:25 PDT 2019, Greg KH wrote:
-> > > > >
-> > > > > > On Thu, Sep 19, 2019 at 03:14:56PM -0700, Bjorn Andersson wrote:
-> > > > > > > On Thu 19 Sep 14:58 PDT 2019, Greg KH wrote:
-> > > > > > >
-> > > > > > > > On Thu, Sep 19, 2019 at 02:53:00PM -0700, Bjorn Andersson wrote:
-> > > > > > > > > On Thu 19 Sep 14:32 PDT 2019, Greg KH wrote:
-> > > > > > > > >
-> > > > > > > > > > On Thu, Sep 19, 2019 at 02:13:44PM -0700, Murali Nalajala wrote:
-> > > > > > > > > > > If the soc drivers want to add custom sysfs entries it needs to
-> > > > > > > > > > > access "dev" field in "struct soc_device". This can be achieved
-> > > > > > > > > > > by "soc_device_to_device" API. Soc drivers which are built as a
-> > > > > > > > > > > module they need above API to be exported. Otherwise one can
-> > > > > > > > > > > observe compilation issues.
-> > > > > > > > > > >
-> > > > > > > > > > > Signed-off-by: Murali Nalajala <mnalajal@codeaurora.org>
-> > > > > > > > > > > ---
-> > > > > > > > > > >  drivers/base/soc.c | 1 +
-> > > > > > > > > > >  1 file changed, 1 insertion(+)
-> > > > > > > > > > >
-> > > > > > > > > > > diff --git a/drivers/base/soc.c b/drivers/base/soc.c
-> > > > > > > > > > > index 7c0c5ca..4ad52f6 100644
-> > > > > > > > > > > --- a/drivers/base/soc.c
-> > > > > > > > > > > +++ b/drivers/base/soc.c
-> > > > > > > > > > > @@ -41,6 +41,7 @@ struct device *soc_device_to_device(struct soc_device *soc_dev)
-> > > > > > > > > > >  {
-> > > > > > > > > > >  	return &soc_dev->dev;
-> > > > > > > > > > >  }
-> > > > > > > > > > > +EXPORT_SYMBOL_GPL(soc_device_to_device);
-> > > > > > > > > > >
-> > > > > > > > > > >  static umode_t soc_attribute_mode(struct kobject *kobj,
-> > > > > > > > > > >  				struct attribute *attr,
-> > > > > > > > > >
-> > > > > > > > > > What in-kernel driver needs this?
-> > > > > > > > > >
-> > > > > > > > >
-> > > > > > > > > Half of the drivers interacting with the soc driver calls this API,
-> > > > > > > > > several of these I see no reason for being builtin (e.g.
-> > > > > > > > > ux500 andversatile). So I think this patch makes sense to allow us to
-> > > > > > > > > build these as modules.
-> > > > > > > > >
-> > > > > > > > > > Is linux-next breaking without this?
-> > > > > > > > > >
-> > > > > > > > >
-> > > > > > > > > No, we postponed the addition of any sysfs attributes in the Qualcomm
-> > > > > > > > > socinfo driver.
-> > > > > > > > >
-> > > > > > > > > > We don't export things unless we have a user of the export.
-> > > > > > > > > >
-> > > > > > > > > > Also, adding "custom" sysfs attributes is almost always not the correct
-> > > > > > > > > > thing to do at all.  The driver should be doing it, by setting up the
-> > > > > > > > > > attribute group properly so that the driver core can do it automatically
-> > > > > > > > > > for it.
-> > > > > > > > > >
-> > > > > > > > > > No driver should be doing individual add/remove of sysfs files.  If it
-> > > > > > > > > > does so, it is almost guaranteed to be doing it incorrectly and racing
-> > > > > > > > > > userspace.
-> > > > > > > > > >
-> > > > > > > > >
-> > > > > > > > > The problem here is that the attributes are expected to be attached to
-> > > > > > > > > the soc driver, which is separate from the platform-specific drivers. So
-> > > > > > > > > there's no way to do platform specific attributes the right way.
-> > > > > > > > >
-> > > > > > > > > > And yes, there's loads of in-kernel examples of doing this wrong, I've
-> > > > > > > > > > been working on fixing that up, look at the patches now in Linus's tree
-> > > > > > > > > > for platform and USB drivers that do this as examples of how to do it
-> > > > > > > > > > right.
-> > > > > > > > > >
-> > > > > > > > >
-> > > > > > > > > Agreed, this patch should not be used as an approval for any crazy
-> > > > > > > > > attributes; but it's necessary in order to extend the soc device's
-> > > > > > > > > attributes, per the current design.
-> > > > > > > >
-> > > > > > > > Wait, no, let's not let the "current design" remain if it is broken!
-> > > > > > > >
-> > > > > > > > Why can't the soc driver handle the attributes properly so that the
-> > > > > > > > individual driver doesn't have to do the create/remove?
-> > > > > > > >
-> > > > > > >
-> > > > > > > The custom attributes that these drivers want to add to the common ones
-> > > > > > > are known in advance, so I presume we could have them passed into
-> > > > > > > soc_device_register() and registered together with the common
-> > > > > > > attributes...
-> > > > > > >
-> > > > > > > It sounds like it's worth a prototype.
-> > > > > >
-> > > > > > Do you have an in-kernel example I can look at to get an idea of what is
-> > > > > > needed here?
-> > > > > >
-> > > > >
-> > > > > realview_soc_probe(), in drivers/soc/versatile/soc-realview.c,
-> > > > > implements the current mechanism of acquiring the soc's struct device
-> > > > > and then issuing a few device_create_file calls on that.
-> > > >
-> > > > That looks to be a trivial driver to fix up.  Look at 6d03c140db2e
-> > > > ("USB: phy: fsl-usb: convert platform driver to use dev_groups") as an
-> > > > example of how to do this.
-> > > >
-> > > 
-> > > The difference between the two cases is that in the fsl-usb case it's
-> > > attributes of the device itself, while in the soc case the
-> > > realview-soc
-> > > driver (or the others doing this) calls soc_device_register() to
-> > > register a new (dangling) soc device, which it then adds its
-> > > attributes
-> > > onto.
-> > 
-> > That sounds really really odd.  Why can't the soc device do the creation
-> > "automatically" when the device is registered?  The soc core should
-> > handle this for the soc "drivers", that's what it is there for.
-> > 
-> Clients are registering to soc framework using "soce_device_register()"
-> with "soc_device_attribute". This attribute structure does not have all
-> the sysfs fields what client are interested. Hence clients are handling
-> their required sysfs fields in their drivers.
-> https://elixir.bootlin.com/linux/v5.3/source/drivers/base/soc.c#L114
+In this patch series, clock scaling and core selection methods are
+updated. Current clock scaling is same for vpu4 and previous versions.
+Introducing load calculations using vpp cycles, which indicates the
+cycles required by video hardware to process each macroblock. Also
+adding vsp cycles, cycles require by stream processor. Clock scaling
+is now done more precisely using vpp and vsp cycles.
+Removing core selection from this series, there will be separate patch
+once issue related to power domain is fixed.
 
-Then you should fix that :)
+This patch depends on the following patch:
+https://patchwork.kernel.org/patch/11142557/ - Venus interconnect support for sdm845
 
-> > > We can't use dev_groups, because the soc_device (soc.c) isn't
-> > > actually a
-> > > driver and the list of attributes is a combination of things from
-> > > soc.c
-> > > and e.g. soc-realview.c.
-> > > 
-> > > But if we pass a struct attribute_group into soc_device_register() and
-> > > then have that register both groups using dev.groups, this should be
-> > > much cleaner at least.
-> > 
-> > Don't you have a structure you can store these in as well?
-> At present client is populating entries one-by-one
-> https://android.googlesource.com/kernel/msm/+/android-7.1.0_r0.2/drivers/soc/qcom/socinfo.c#1254
+Changes since v6:
+ - Removed core selection.
+ - Corrected frequency calculations.
+ - Removed instance lock used while iterating over buffers.
+ 
+Changes since v5:
+ - Corrected load_per_core calculations.
 
-And that is known to be broken and racy and will cause problems with
-userspace.  This should be fixed...
+Changes since v4:
+ - Added call to load_scale_clocks from venus_helper_vb2_buf_queue.
+ - Modified check to match core_id in core_selection.
 
-thanks,
+Changes since v3:
+ - vsp_cycles and vpp_cyles are now unsigned long.
+ - Core number counting aligned with VIDC_CORE_ID_.
+ - Aligned hardware overload handling of scale_clocks_v4 with scale_clocks.
+ - Added bitrate based clock scaling patch in this patch series.
+ - Instance state check is now moved from scale_clocks to load_scale_clocks
 
-greg k-h
+Aniket Masule (2):
+  media: venus: Add codec data table
+  media: venus: Update clock scaling
+
+ drivers/media/platform/qcom/venus/core.c    |  13 ++
+ drivers/media/platform/qcom/venus/core.h    |  16 +++
+ drivers/media/platform/qcom/venus/helpers.c | 187 +++++++++++++++++++++++++---
+ drivers/media/platform/qcom/venus/helpers.h |   3 +-
+ drivers/media/platform/qcom/venus/vdec.c    |   8 +-
+ drivers/media/platform/qcom/venus/venc.c    |   4 +
+ 6 files changed, 208 insertions(+), 23 deletions(-)
+
+-- 
+The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
+a Linux Foundation Collaborative Project
+
