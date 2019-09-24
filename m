@@ -2,38 +2,38 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id B5583BCFB5
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Sep 2019 19:02:34 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 76A02BCFB0
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Sep 2019 19:02:32 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2409923AbfIXQoy (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 24 Sep 2019 12:44:54 -0400
-Received: from mail.kernel.org ([198.145.29.99]:34312 "EHLO mail.kernel.org"
+        id S2404027AbfIXQpg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 24 Sep 2019 12:45:36 -0400
+Received: from mail.kernel.org ([198.145.29.99]:35460 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S2409919AbfIXQoy (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 24 Sep 2019 12:44:54 -0400
+        id S2409989AbfIXQpf (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 24 Sep 2019 12:45:35 -0400
 Received: from sasha-vm.mshome.net (c-73-47-72-35.hsd1.nh.comcast.net [73.47.72.35])
         (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
         (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id BD971217D9;
-        Tue, 24 Sep 2019 16:44:52 +0000 (UTC)
+        by mail.kernel.org (Postfix) with ESMTPSA id C3C3520872;
+        Tue, 24 Sep 2019 16:45:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1569343493;
-        bh=ufQvx7ZNex7e9L1n3iz0qxl2DPV4jX3rgvJ6+P7qKWY=;
+        s=default; t=1569343534;
+        bh=ENY7C6ndhTKXioNw1tKj1SAOP8oceyqR21UUp1PZOIA=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=WAjV6HN8gdrTNe2vPwKlBWRH1xihV1OeYA2OQJOqadFPzEX7hNMomuvxrO5CDMjbu
-         N2uv+4IW6IDclb3toYX4gkwkh7sKjNMh1qCCPtPHcwdGB0i4ERE3kf1te2ziPseBQA
-         7vWafXFJBaM4XweQwZtWn09LDkg3DBX1Udyvsmpw=
+        b=QFb+bzIK6wEaRLkfG9f7F1WDxdmReKbmdkPxC/kgFDahE3lubg3S9D6Wk2DFQ8pfw
+         JSXXAQY6BZNn4QBygxsiYJhmNTwq1Oz0FQJQebKYEO7nrltDkoggSEoxdnvTGS6lGk
+         nWF0BMGIeJ4pZXsGP1rDYxsNwe26LPgx2EhXqXBQ=
 From:   Sasha Levin <sashal@kernel.org>
 To:     linux-kernel@vger.kernel.org, stable@vger.kernel.org
-Cc:     Stephen Boyd <swboyd@chromium.org>,
-        Douglas Anderson <dianders@chromium.org>,
-        Taniya Das <tdas@codeaurora.org>,
+Cc:     Jorge Ramirez-Ortiz <jorge.ramirez-ortiz@linaro.org>,
+        Niklas Cassel <niklas.cassel@linaro.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
         Stephen Boyd <sboyd@kernel.org>,
-        Sasha Levin <sashal@kernel.org>, linux-arm-msm@vger.kernel.org,
-        linux-clk@vger.kernel.org
-Subject: [PATCH AUTOSEL 5.3 70/87] clk: qcom: gcc-sdm845: Use floor ops for sdcc clks
-Date:   Tue, 24 Sep 2019 12:41:26 -0400
-Message-Id: <20190924164144.25591-70-sashal@kernel.org>
+        Jassi Brar <jaswinder.singh@linaro.org>,
+        Sasha Levin <sashal@kernel.org>, linux-arm-msm@vger.kernel.org
+Subject: [PATCH AUTOSEL 5.3 81/87] mbox: qcom: add APCS child device for QCS404
+Date:   Tue, 24 Sep 2019 12:41:37 -0400
+Message-Id: <20190924164144.25591-81-sashal@kernel.org>
 X-Mailer: git-send-email 2.20.1
 In-Reply-To: <20190924164144.25591-1-sashal@kernel.org>
 References: <20190924164144.25591-1-sashal@kernel.org>
@@ -46,54 +46,57 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Stephen Boyd <swboyd@chromium.org>
+From: Jorge Ramirez-Ortiz <jorge.ramirez-ortiz@linaro.org>
 
-[ Upstream commit 5e4b7e82d497580bc430576c4c9bce157dd72512 ]
+[ Upstream commit 78c86458a440ff356073c21b568cb58ddb67b82b ]
 
-Some MMC cards fail to enumerate properly when inserted into an MMC slot
-on sdm845 devices. This is because the clk ops for qcom clks round the
-frequency up to the nearest rate instead of down to the nearest rate.
-For example, the MMC driver requests a frequency of 52MHz from
-clk_set_rate() but the qcom implementation for these clks rounds 52MHz
-up to the next supported frequency of 100MHz. The MMC driver could be
-modified to request clk rate ranges but for now we can fix this in the
-clk driver by changing the rounding policy for this clk to be round down
-instead of round up.
+There is clock controller functionality in the APCS hardware block of
+qcs404 devices similar to msm8916.
 
-Fixes: 06391eddb60a ("clk: qcom: Add Global Clock controller (GCC) driver for SDM845")
-Reported-by: Douglas Anderson <dianders@chromium.org>
-Cc: Taniya Das <tdas@codeaurora.org>
-Signed-off-by: Stephen Boyd <swboyd@chromium.org>
-Link: https://lkml.kernel.org/r/20190830195142.103564-1-swboyd@chromium.org
-Reviewed-by: Douglas Anderson <dianders@chromium.org>
-Signed-off-by: Stephen Boyd <sboyd@kernel.org>
+Co-developed-by: Niklas Cassel <niklas.cassel@linaro.org>
+Signed-off-by: Niklas Cassel <niklas.cassel@linaro.org>
+Signed-off-by: Jorge Ramirez-Ortiz <jorge.ramirez-ortiz@linaro.org>
+Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+Reviewed-by: Stephen Boyd <sboyd@kernel.org>
+Signed-off-by: Jassi Brar <jaswinder.singh@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/qcom/gcc-sdm845.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/mailbox/qcom-apcs-ipc-mailbox.c | 8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/clk/qcom/gcc-sdm845.c b/drivers/clk/qcom/gcc-sdm845.c
-index 7131dcf9b0603..95be125c3bddf 100644
---- a/drivers/clk/qcom/gcc-sdm845.c
-+++ b/drivers/clk/qcom/gcc-sdm845.c
-@@ -685,7 +685,7 @@ static struct clk_rcg2 gcc_sdcc2_apps_clk_src = {
- 		.name = "gcc_sdcc2_apps_clk_src",
- 		.parent_names = gcc_parent_names_10,
- 		.num_parents = 5,
--		.ops = &clk_rcg2_ops,
-+		.ops = &clk_rcg2_floor_ops,
- 	},
- };
+diff --git a/drivers/mailbox/qcom-apcs-ipc-mailbox.c b/drivers/mailbox/qcom-apcs-ipc-mailbox.c
+index 705e17a5479cc..d3676fd3cf945 100644
+--- a/drivers/mailbox/qcom-apcs-ipc-mailbox.c
++++ b/drivers/mailbox/qcom-apcs-ipc-mailbox.c
+@@ -47,7 +47,6 @@ static const struct mbox_chan_ops qcom_apcs_ipc_ops = {
  
-@@ -709,7 +709,7 @@ static struct clk_rcg2 gcc_sdcc4_apps_clk_src = {
- 		.name = "gcc_sdcc4_apps_clk_src",
- 		.parent_names = gcc_parent_names_0,
- 		.num_parents = 4,
--		.ops = &clk_rcg2_ops,
-+		.ops = &clk_rcg2_floor_ops,
- 	},
- };
+ static int qcom_apcs_ipc_probe(struct platform_device *pdev)
+ {
+-	struct device_node *np = pdev->dev.of_node;
+ 	struct qcom_apcs_ipc *apcs;
+ 	struct regmap *regmap;
+ 	struct resource *res;
+@@ -55,6 +54,11 @@ static int qcom_apcs_ipc_probe(struct platform_device *pdev)
+ 	void __iomem *base;
+ 	unsigned long i;
+ 	int ret;
++	const struct of_device_id apcs_clk_match_table[] = {
++		{ .compatible = "qcom,msm8916-apcs-kpss-global", },
++		{ .compatible = "qcom,qcs404-apcs-apps-global", },
++		{}
++	};
  
+ 	apcs = devm_kzalloc(&pdev->dev, sizeof(*apcs), GFP_KERNEL);
+ 	if (!apcs)
+@@ -89,7 +93,7 @@ static int qcom_apcs_ipc_probe(struct platform_device *pdev)
+ 		return ret;
+ 	}
+ 
+-	if (of_device_is_compatible(np, "qcom,msm8916-apcs-kpss-global")) {
++	if (of_match_device(apcs_clk_match_table, &pdev->dev)) {
+ 		apcs->clk = platform_device_register_data(&pdev->dev,
+ 							  "qcom-apcs-msm8916-clk",
+ 							  -1, NULL, 0);
 -- 
 2.20.1
 
