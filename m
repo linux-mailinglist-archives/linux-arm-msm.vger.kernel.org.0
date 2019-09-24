@@ -2,27 +2,27 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 76A02BCFB0
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Sep 2019 19:02:32 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 8C639BCEDF
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Sep 2019 19:00:54 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2404027AbfIXQpg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 24 Sep 2019 12:45:36 -0400
-Received: from mail.kernel.org ([198.145.29.99]:35460 "EHLO mail.kernel.org"
+        id S2392805AbfIXQsj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 24 Sep 2019 12:48:39 -0400
+Received: from mail.kernel.org ([198.145.29.99]:40336 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S2409989AbfIXQpf (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 24 Sep 2019 12:45:35 -0400
+        id S2410533AbfIXQsh (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 24 Sep 2019 12:48:37 -0400
 Received: from sasha-vm.mshome.net (c-73-47-72-35.hsd1.nh.comcast.net [73.47.72.35])
         (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
         (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id C3C3520872;
-        Tue, 24 Sep 2019 16:45:33 +0000 (UTC)
+        by mail.kernel.org (Postfix) with ESMTPSA id 5A84521906;
+        Tue, 24 Sep 2019 16:48:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1569343534;
+        s=default; t=1569343716;
         bh=ENY7C6ndhTKXioNw1tKj1SAOP8oceyqR21UUp1PZOIA=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=QFb+bzIK6wEaRLkfG9f7F1WDxdmReKbmdkPxC/kgFDahE3lubg3S9D6Wk2DFQ8pfw
-         JSXXAQY6BZNn4QBygxsiYJhmNTwq1Oz0FQJQebKYEO7nrltDkoggSEoxdnvTGS6lGk
-         nWF0BMGIeJ4pZXsGP1rDYxsNwe26LPgx2EhXqXBQ=
+        b=N1KNZrJbe3yI6n7ZLCk5owTsVNkA5m+gpxo+dtR5EnSeOhRh83OapA4XjOAmohWB3
+         hI8TJv3tcaDPfBFox0Ngg6h06B0mxDUoeGkZf9t8tBEToPo9/k2+OZ7ztxwbejotsD
+         xVR+ktxWLUZFdi2tDr/g96VAEUYwT99/uWl9K0us=
 From:   Sasha Levin <sashal@kernel.org>
 To:     linux-kernel@vger.kernel.org, stable@vger.kernel.org
 Cc:     Jorge Ramirez-Ortiz <jorge.ramirez-ortiz@linaro.org>,
@@ -31,12 +31,12 @@ Cc:     Jorge Ramirez-Ortiz <jorge.ramirez-ortiz@linaro.org>,
         Stephen Boyd <sboyd@kernel.org>,
         Jassi Brar <jaswinder.singh@linaro.org>,
         Sasha Levin <sashal@kernel.org>, linux-arm-msm@vger.kernel.org
-Subject: [PATCH AUTOSEL 5.3 81/87] mbox: qcom: add APCS child device for QCS404
-Date:   Tue, 24 Sep 2019 12:41:37 -0400
-Message-Id: <20190924164144.25591-81-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 5.2 64/70] mbox: qcom: add APCS child device for QCS404
+Date:   Tue, 24 Sep 2019 12:45:43 -0400
+Message-Id: <20190924164549.27058-64-sashal@kernel.org>
 X-Mailer: git-send-email 2.20.1
-In-Reply-To: <20190924164144.25591-1-sashal@kernel.org>
-References: <20190924164144.25591-1-sashal@kernel.org>
+In-Reply-To: <20190924164549.27058-1-sashal@kernel.org>
+References: <20190924164549.27058-1-sashal@kernel.org>
 MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
