@@ -2,27 +2,27 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id D4052BCDFD
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Sep 2019 18:52:18 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B5583BCFB5
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Sep 2019 19:02:34 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2410424AbfIXQsE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 24 Sep 2019 12:48:04 -0400
-Received: from mail.kernel.org ([198.145.29.99]:39594 "EHLO mail.kernel.org"
+        id S2409923AbfIXQoy (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 24 Sep 2019 12:44:54 -0400
+Received: from mail.kernel.org ([198.145.29.99]:34312 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S2633345AbfIXQsD (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 24 Sep 2019 12:48:03 -0400
+        id S2409919AbfIXQoy (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 24 Sep 2019 12:44:54 -0400
 Received: from sasha-vm.mshome.net (c-73-47-72-35.hsd1.nh.comcast.net [73.47.72.35])
         (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
         (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id B490921906;
-        Tue, 24 Sep 2019 16:48:01 +0000 (UTC)
+        by mail.kernel.org (Postfix) with ESMTPSA id BD971217D9;
+        Tue, 24 Sep 2019 16:44:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1569343682;
+        s=default; t=1569343493;
         bh=ufQvx7ZNex7e9L1n3iz0qxl2DPV4jX3rgvJ6+P7qKWY=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=CsAV6YJ0eziUwMY8ZKN0mBoYFPzHMrgQVLWSVaTrTkKdyk+Kp30f78C8BG9M6CsmK
-         5RO2yeczRz4WwZFq8L7FxDQCDejEorcJeTn6hx2EIv3X04EOo1b7o8imBwFlQnjADL
-         JnN+oVZwjAQ0nlTRcqcfmgClE3x5OVfNUepuZBMw=
+        b=WAjV6HN8gdrTNe2vPwKlBWRH1xihV1OeYA2OQJOqadFPzEX7hNMomuvxrO5CDMjbu
+         N2uv+4IW6IDclb3toYX4gkwkh7sKjNMh1qCCPtPHcwdGB0i4ERE3kf1te2ziPseBQA
+         7vWafXFJBaM4XweQwZtWn09LDkg3DBX1Udyvsmpw=
 From:   Sasha Levin <sashal@kernel.org>
 To:     linux-kernel@vger.kernel.org, stable@vger.kernel.org
 Cc:     Stephen Boyd <swboyd@chromium.org>,
@@ -31,12 +31,12 @@ Cc:     Stephen Boyd <swboyd@chromium.org>,
         Stephen Boyd <sboyd@kernel.org>,
         Sasha Levin <sashal@kernel.org>, linux-arm-msm@vger.kernel.org,
         linux-clk@vger.kernel.org
-Subject: [PATCH AUTOSEL 5.2 54/70] clk: qcom: gcc-sdm845: Use floor ops for sdcc clks
-Date:   Tue, 24 Sep 2019 12:45:33 -0400
-Message-Id: <20190924164549.27058-54-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 5.3 70/87] clk: qcom: gcc-sdm845: Use floor ops for sdcc clks
+Date:   Tue, 24 Sep 2019 12:41:26 -0400
+Message-Id: <20190924164144.25591-70-sashal@kernel.org>
 X-Mailer: git-send-email 2.20.1
-In-Reply-To: <20190924164549.27058-1-sashal@kernel.org>
-References: <20190924164549.27058-1-sashal@kernel.org>
+In-Reply-To: <20190924164144.25591-1-sashal@kernel.org>
+References: <20190924164144.25591-1-sashal@kernel.org>
 MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
