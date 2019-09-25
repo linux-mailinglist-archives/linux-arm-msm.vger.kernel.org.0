@@ -2,221 +2,78 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 3DD9CBD55F
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Sep 2019 01:12:41 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E0A0CBD6DF
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Sep 2019 05:54:53 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2406772AbfIXXMZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 24 Sep 2019 19:12:25 -0400
-Received: from mail.kernel.org ([198.145.29.99]:50906 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S2389437AbfIXXMZ (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 24 Sep 2019 19:12:25 -0400
-Received: from kernel.org (unknown [104.132.0.74])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 9012C207FD;
-        Tue, 24 Sep 2019 23:12:23 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1569366743;
-        bh=+j5AnNwQqbgf/RjmaOj47PhlrItx9j7FWIaZz17xSJk=;
-        h=In-Reply-To:References:Cc:To:From:Subject:Date:From;
-        b=gH92DrEndcCCHU6/4MPa6jo3NtGaa0u6iNz3U6tb/8zo5SH7Nob3dwlKOkhSyzZzi
-         xl0loW0SfMexj9nNqeKL+9BK7JyvK9IaxjatCtf5c1xUm492fCGe6H2XwmlhxrCJg3
-         Y1ea2aiR/GKHMN9nu5jHURN4wlEJGNE6G/RBOQho=
-Content-Type: text/plain; charset="utf-8"
+        id S2404175AbfIYDyx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 24 Sep 2019 23:54:53 -0400
+Received: from mail-io1-f68.google.com ([209.85.166.68]:33442 "EHLO
+        mail-io1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2404095AbfIYDyw (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 24 Sep 2019 23:54:52 -0400
+Received: by mail-io1-f68.google.com with SMTP id z19so10076825ior.0;
+        Tue, 24 Sep 2019 20:54:52 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=a+acqBt5VJ99apROCi/NPB4kB1o37RjLA3YAAnHYyo4=;
+        b=buATyQf+LCIhqKqdo7D+IJ20njSJeyMrVsmBHxp8Y13ne2ZnFoyIjp/ckaLFUU+W39
+         qr+oB81+bg8DfteiGTJ59GCkFcUnn/T47eEe+yGJ6z/W1XfahvLgxqeEW05vwN4GAcGI
+         OIEBMIG4pjsinzGWdq6gQUHbX0am7zBVNJ2qxRi9M9fIoziij29AAYtVS3wro0yMl8hM
+         TxSlmVfHM6hTxbuJOBrQVeagEVS8gBp0sOFW4KDH4E/2qaPMJmjerxRlurEtHsgDE73I
+         OYSjDgXWqNeeO7YsXQlhsFKHFwNNVlcEjtJEGXwkBcbBn+BklkVuul4MrvL9ol6nGVlg
+         jsNA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=a+acqBt5VJ99apROCi/NPB4kB1o37RjLA3YAAnHYyo4=;
+        b=kGhdDc4VMK71r6iRbuoNeUHpszGYLDVd+jobJoqv14F02V7G68T8Ps7t/nfhTmPANb
+         iFWPyKmoNLaCTo1NlT2/ywCVGfSYzS4ulZt70BMh0GGNI7eDm4SJoUMKa+etk1pa8b92
+         V4JSW5xrWtWyRUshxaRmG67wrjmof3hDLIBtUYfW7pgYLPdCu+rMWTcNkKVX+rXzjFKv
+         PyHov06hg5gJQpWQ0Nr9JaO4WRg5Ic7ri4ESM5aAcWclYi1l9IOtgNazhw+geFLxHkHF
+         Ec+b532caJ1GwWvH1YQf+2uJXO3/yLMEZikKevO3ziorWrMtqOL47+OFTUlCzq4Kkvkn
+         PaHw==
+X-Gm-Message-State: APjAAAXaqC+/IJ3iY9fB+63VvBH035ZWXfnEmuIKGlOqtOPenOG0fH5g
+        cVr/jq5jMrnmYWOBA3QdwuJ0xgU8KiDMl6Ak6s8=
+X-Google-Smtp-Source: APXvYqwOoVKktSMIAIiLEl03PizysUXeuZVzbrclwTXFGwOhkM8lHWPbcUN0RxN3XVJOK8eO1stk3H677Fi9e/tCYr8=
+X-Received: by 2002:a5e:a712:: with SMTP id b18mr8026975iod.263.1569383691941;
+ Tue, 24 Sep 2019 20:54:51 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <a3cd82c9-8bfa-f4a3-ab1f-2e397fbd9d16@codeaurora.org>
-References: <20190918095018.17979-1-tdas@codeaurora.org> <20190918095018.17979-4-tdas@codeaurora.org> <20190918213946.DC03521924@mail.kernel.org> <a3cd82c9-8bfa-f4a3-ab1f-2e397fbd9d16@codeaurora.org>
-Cc:     David Brown <david.brown@linaro.org>,
-        Rajendra Nayak <rnayak@codeaurora.org>,
-        linux-arm-msm@vger.kernel.org, linux-soc@vger.kernel.org,
-        linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org,
-        devicetree@vger.kernel.org
-To:     Michael Turquette <mturquette@baylibre.com>,
-        Taniya Das <tdas@codeaurora.org>, robh+dt@kernel.org
-From:   Stephen Boyd <sboyd@kernel.org>
-Subject: Re: [PATCH v3 3/3] clk: qcom: Add Global Clock controller (GCC) driver for SC7180
-User-Agent: alot/0.8.1
-Date:   Tue, 24 Sep 2019 16:12:22 -0700
-Message-Id: <20190924231223.9012C207FD@mail.kernel.org>
+References: <20190912091019.5334-1-srinivas.kandagatla@linaro.org> <5d7fe5d1.1c69fb81.eca3b.1121@mx.google.com>
+In-Reply-To: <5d7fe5d1.1c69fb81.eca3b.1121@mx.google.com>
+From:   Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
+Date:   Tue, 24 Sep 2019 21:54:41 -0600
+Message-ID: <CAOCk7NoNX7+fxCYNOCMVCv1_-X3ZbaHwFjzWjMp6VKL6ZoroLA@mail.gmail.com>
+Subject: Re: [PATCH] soc: qcom: socinfo: add missing soc_id sysfs entry
+To:     Stephen Boyd <swboyd@chromium.org>
+Cc:     Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+        Andy Gross <andy.gross@linaro.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        MSM <linux-arm-msm@vger.kernel.org>,
+        lkml <linux-kernel@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Taniya Das (2019-09-23 01:01:11)
-> Hi Stephen,
->=20
-> Thanks for your comments.
->=20
-> On 9/19/2019 3:09 AM, Stephen Boyd wrote:
-> > Quoting Taniya Das (2019-09-18 02:50:18)
-> >> diff --git a/drivers/clk/qcom/gcc-sc7180.c b/drivers/clk/qcom/gcc-sc71=
-80.c
-> >> new file mode 100644
-> >> index 000000000000..d47865d5408f
-> >> --- /dev/null
-> >> +++ b/drivers/clk/qcom/gcc-sc7180.c
-> >> @@ -0,0 +1,2515 @@
-> >> +// SPDX-License-Identifier: GPL-2.0
-> >> +/*
-> >> + * Copyright (c) 2019, The Linux Foundation. All rights reserved.
-> >> + */
-> >> +
-> >> +#include <linux/err.h>
-> >> +#include <linux/kernel.h>
-> >> +#include <linux/module.h>
-> >> +#include <linux/of.h>
-> >> +#include <linux/of_device.h>
-> >> +#include <linux/regmap.h>
-> >=20
-> > include clk-provider.h
-> >=20
->=20
-> will add this header.
-> Currently the <drivers/clk/qcom/clk-regmap.h> already includes it.
+On Mon, Sep 16, 2019 at 3:44 PM Stephen Boyd <swboyd@chromium.org> wrote:
+>
+> Quoting Srinivas Kandagatla (2019-09-12 02:10:19)
+> > looks like SoC ID is not exported to sysfs for some reason.
+> > This patch adds it!
+> >
+> > This is mostly used by userspace libraries like SNPE.
+>
+> What is SNPE?
 
-Yes but it should be included in any clk-provider drivers too.
-
-> >> +
-> >> +/* Leave the clock ON for parent config_noc_clk to be kept enabled */
-> >> +static struct clk_branch gcc_disp_ahb_clk =3D {
-> >> +       .halt_reg =3D 0xb00c,
-> >> +       .halt_check =3D BRANCH_HALT,
-> >> +       .hwcg_reg =3D 0xb00c,
-> >> +       .hwcg_bit =3D 1,
-> >> +       .clkr =3D {
-> >> +               .enable_reg =3D 0xb00c,
-> >> +               .enable_mask =3D BIT(0),
-> >> +               .hw.init =3D &(struct clk_init_data){
-> >> +                       .name =3D "gcc_disp_ahb_clk",
-> >> +                       .flags =3D CLK_IS_CRITICAL,
-> >=20
-> > Does this assume the display is left enabled out of the bootloader? Why
-> > is this critical to system operation? Maybe it is really
-> > CLK_IGNORE_UNUSED?
-> >=20
->=20
-> This clock is not kept enabled by bootloader. But leaving this ON for=20
-> clients on config noc.
-
-Please see below comment for the other critical clk with no parent.
-
->=20
-> >> +                       .ops =3D &clk_branch2_ops,
-> >> +               },
-> >> +       },
-> >> +};
-> >> +
-[...]
-> >> +static struct clk_branch gcc_ufs_phy_phy_aux_clk =3D {
-> >> +       .halt_reg =3D 0x77094,
-> >> +       .halt_check =3D BRANCH_HALT,
-> >> +       .hwcg_reg =3D 0x77094,
-> >> +       .hwcg_bit =3D 1,
-> >> +       .clkr =3D {
-> >> +               .enable_reg =3D 0x77094,
-> >> +               .enable_mask =3D BIT(0),
-> >> +               .hw.init =3D &(struct clk_init_data){
-> >> +                       .name =3D "gcc_ufs_phy_phy_aux_clk",
-> >> +                       .parent_data =3D &(const struct clk_parent_dat=
-a){
-> >> +                               .hw =3D &gcc_ufs_phy_phy_aux_clk_src.c=
-lkr.hw,
-> >> +                       },
-> >> +                       .num_parents =3D 1,
-> >> +                       .flags =3D CLK_SET_RATE_PARENT,
-> >> +                       .ops =3D &clk_branch2_ops,
-> >> +               },
-> >> +       },
-> >> +};
-> >> +
-> >> +static struct clk_branch gcc_ufs_phy_rx_symbol_0_clk =3D {
-> >> +       .halt_reg =3D 0x7701c,
-> >> +       .halt_check =3D BRANCH_HALT_SKIP,
-> >=20
-> > Again, nobody has fixed the UFS driver to not need to do this halt skip
-> > check for these clks? It's been over a year.
-> >=20
->=20
-> The UFS_PHY_RX/TX clocks could be left enabled due to certain HW boot=20
-> configuration and thus during the late initcall of clk_disable there=20
-> could be warnings of "clock stuck ON" in the dmesg. That is the reason=20
-> also to use the BRANCH_HALT_SKIP flag.
-
-Oh that's bad. Why do the clks stay on when we try to turn them off?
-
->=20
-> I would also check internally for the UFS driver fix you are referring he=
-re.
-
-Sure. I keep asking but nothing is done :(
-
->=20
-> >> +       .clkr =3D {
-> >> +               .enable_reg =3D 0x7701c,
-> >> +               .enable_mask =3D BIT(0),
-> >> +               .hw.init =3D &(struct clk_init_data){
-> >> +                       .name =3D "gcc_ufs_phy_rx_symbol_0_clk",
-> >> +                       .ops =3D &clk_branch2_ops,
-> >> +               },
-> >> +       },
-> >> +};
-> >> +
-[...]
-> >> +
-> >> +static struct clk_branch gcc_usb3_prim_phy_pipe_clk =3D {
-> >> +       .halt_reg =3D 0xf058,
-> >> +       .halt_check =3D BRANCH_HALT_SKIP,
-> >=20
-> > Why does this need halt_skip?
->=20
-> This is required as the source is external PHY, so we want to not check=20
-> for HALT.
-
-This doesn't really answer my question. If the source is an external phy
-then it should be listed as a clock in the DT binding and the parent
-should be specified here. Unless something doesn't work because of that?
-
->=20
-> >=20
-> >> +       .clkr =3D {
-> >> +               .enable_reg =3D 0xf058,
-> >> +               .enable_mask =3D BIT(0),
-> >> +               .hw.init =3D &(struct clk_init_data){
-> >> +                       .name =3D "gcc_usb3_prim_phy_pipe_clk",
-> >> +                       .ops =3D &clk_branch2_ops,
-> >> +               },
-> >> +       },
-> >> +};
-> >> +
-> >> +static struct clk_branch gcc_usb_phy_cfg_ahb2phy_clk =3D {
-> >> +       .halt_reg =3D 0x6a004,
-> >> +       .halt_check =3D BRANCH_HALT,
-> >> +       .hwcg_reg =3D 0x6a004,
-> >> +       .hwcg_bit =3D 1,
-> >> +       .clkr =3D {
-> >> +               .enable_reg =3D 0x6a004,
-> >> +               .enable_mask =3D BIT(0),
-> >> +               .hw.init =3D &(struct clk_init_data){
-> >> +                       .name =3D "gcc_usb_phy_cfg_ahb2phy_clk",
-> >> +                       .ops =3D &clk_branch2_ops,
-> >> +               },
-> >> +       },
-> >> +};
-> >> +
-> >> +/* Leave the clock ON for parent config_noc_clk to be kept enabled */
-> >=20
-> > There's no parent though... So I guess this means it keeps it enabled
-> > implicitly in hardware?
-> >=20
->=20
-> These are not left enabled, but want to leave them enabled for clients=20
-> on config NOC.
-
-Sure. It just doesn't make sense to create clk structures and expose
-them in the kernel when we just want to turn the bits on and leave them
-on forever. Why not just do some register writes in probe for this
-driver? Doesn't that work just as well and use less memory?
-
+Snapdragon Neural Processing Engine.  Pronounced "snap-e".  Its
+basically the framework someone goes through to run a neural network
+on a Qualcomm mobile SoC.  SNPE can utilize various hardware resources
+such as the applications CPU, GPU, and dedicated compute resources
+such as a NSP, if available.  Its been around for over a year, and
+much more information can be found by just doing a simple search since
+SNPE is pretty much a unique search term currently.
