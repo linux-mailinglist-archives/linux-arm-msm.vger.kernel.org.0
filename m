@@ -2,229 +2,112 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 7C6EFBD800
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Sep 2019 07:59:39 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D1BB2BD83E
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Sep 2019 08:24:14 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2411816AbfIYF7i (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 25 Sep 2019 01:59:38 -0400
-Received: from mail-pl1-f194.google.com ([209.85.214.194]:43694 "EHLO
-        mail-pl1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2411814AbfIYF7i (ORCPT
+        id S2411876AbfIYGYN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 25 Sep 2019 02:24:13 -0400
+Received: from smtp.codeaurora.org ([198.145.29.96]:45338 "EHLO
+        smtp.codeaurora.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2404570AbfIYGYN (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 25 Sep 2019 01:59:38 -0400
-Received: by mail-pl1-f194.google.com with SMTP id 4so1933149pld.10
-        for <linux-arm-msm@vger.kernel.org>; Tue, 24 Sep 2019 22:59:38 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=sixuJfcEsKxEyNW6NClPoa+el3r6rMOWUSS7IBto0XY=;
-        b=fugNAyjuuul94jLQlDha8DZAOXx0OEgTyKPvUnQEcK8AvLJ/FyP+4aF+fDv1xZ+7dB
-         cL1ixpnjA7X8pyjxCmMGwBC10bTNlgxg3Y6YgN24yvXDsn5taqBjkvHUU2R0hlz6+jWJ
-         Qh+re2BLHDPC6cusIbTsDAmCEwyOyH9NA7l9rdqVN+z2aqTDmjG0RqzSwt3Bp2iihG0s
-         7TmqF7wLopmIRMtPvUotA8ZmVgeVHCSjuQpQYP/cHRgHZcBw4/ULNN+xo5qfpY05sqZx
-         X68hklDqSibAix2Ol0HeEDkXK53MhPn+YRpYL8ll+hxM9XQlBc0f0oDmzl4ZdZSZP8ko
-         pHJQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=sixuJfcEsKxEyNW6NClPoa+el3r6rMOWUSS7IBto0XY=;
-        b=GF0F+xGEvFrgV1R9VaVg6S2/krrB6UtITjNzi0BFwgwETKPPFKyUmCIf2ejqSBSm1T
-         ztXgyaymQgpf4+L3S9ZGDcHGvz/PdfVcYWl6skCfHLT7xZq9GN0CFXjGPJfdn3QnojsD
-         mJoZxZdygBfAoteDKLQG5G+MCnSFyuDvvfHtlhGHViZPi/EzPeUgnySyJXOt4Vor/ow7
-         lUe4en1SmsHMuUHliKEn9m2HcwNCgAAAAL8qIrc6LNhL6+69My3i3Vl1ZxxCtigXl5Im
-         RTBeBaPskkIIhSLRmYpI5xwkHqB06XR46V37QGm+0DVe4Y9tKdrj9CVhrB7B2QhKcZvp
-         6uMw==
-X-Gm-Message-State: APjAAAVO3yFNtnbI1o0c60vE1Gw+oKIRSDs9W+4p33B579EB9s1FQCLl
-        U46CeAlZU20pOHh686yUcAOuLQ==
-X-Google-Smtp-Source: APXvYqx7ulhyhAYLr9kjOcD6g1JpEuN670axDok3c12zNjsU6NkNSJN3yZGCTMd13XVgsr/OZTbVGQ==
-X-Received: by 2002:a17:902:850b:: with SMTP id bj11mr7394125plb.39.1569391177288;
-        Tue, 24 Sep 2019 22:59:37 -0700 (PDT)
-Received: from tuxbook-pro (104-188-17-28.lightspeed.sndgca.sbcglobal.net. [104.188.17.28])
-        by smtp.gmail.com with ESMTPSA id m2sm3836534pgc.19.2019.09.24.22.59.35
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 24 Sep 2019 22:59:36 -0700 (PDT)
-Date:   Tue, 24 Sep 2019 22:59:33 -0700
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Stephen Boyd <swboyd@chromium.org>
-Cc:     Georgi Djakov <georgi.djakov@linaro.org>,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org,
-        Maxime Ripard <mripard@kernel.org>, linux-pm@vger.kernel.org,
-        Rob Herring <robh+dt@kernel.org>, devicetree@vger.kernel.org,
-        Evan Green <evgreen@chromium.org>,
-        David Dai <daidavid1@codeaurora.org>
-Subject: Re: [RFC PATCH] interconnect: Replace of_icc_get() with icc_get()
- and reduce DT binding
-Message-ID: <20190925055933.GA2810@tuxbook-pro>
-References: <20190925054133.206992-1-swboyd@chromium.org>
+        Wed, 25 Sep 2019 02:24:13 -0400
+Received: by smtp.codeaurora.org (Postfix, from userid 1000)
+        id EA4E861197; Wed, 25 Sep 2019 06:24:11 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
+        s=default; t=1569392651;
+        bh=efyvQV7q7fIN6ZkOeoxT6VazF4LiJT3OJPSTTXRZbJQ=;
+        h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
+        b=ogaMPrR+nmcQbEvlzytpjir1Xy/qKVqEGmn5ROTxTq8C81BvoSE7POnTLXwIKgBgj
+         tx2zGwFW0ps/spY586xrdcflVRQUGMzPTX2cpk44BPmodH+EHNAYbeknxeheXjecJd
+         8sVlaO1xL6gSyL71OJWFVeW4BymdvSCHhuuWwUg0=
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        pdx-caf-mail.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.7 required=2.0 tests=ALL_TRUSTED,BAYES_00,
+        DKIM_INVALID,DKIM_SIGNED autolearn=no autolearn_force=no version=3.4.0
+Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
+        by smtp.codeaurora.org (Postfix) with ESMTP id 3292560128;
+        Wed, 25 Sep 2019 06:24:11 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
+        s=default; t=1569392651;
+        bh=efyvQV7q7fIN6ZkOeoxT6VazF4LiJT3OJPSTTXRZbJQ=;
+        h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
+        b=ogaMPrR+nmcQbEvlzytpjir1Xy/qKVqEGmn5ROTxTq8C81BvoSE7POnTLXwIKgBgj
+         tx2zGwFW0ps/spY586xrdcflVRQUGMzPTX2cpk44BPmodH+EHNAYbeknxeheXjecJd
+         8sVlaO1xL6gSyL71OJWFVeW4BymdvSCHhuuWwUg0=
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20190925054133.206992-1-swboyd@chromium.org>
-User-Agent: Mutt/1.12.1 (2019-06-15)
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
+Content-Transfer-Encoding: 7bit
+Date:   Wed, 25 Sep 2019 11:54:11 +0530
+From:   ppvk@codeaurora.org
+To:     Georgi Djakov <georgi.djakov@linaro.org>
+Cc:     adrian.hunter@intel.com, ulf.hansson@linaro.org,
+        robh+dt@kernel.org, asutoshd@codeaurora.org,
+        vbadigan@codeaurora.org, stummala@codeaurora.org,
+        sayalil@codeaurora.org, rampraka@codeaurora.org,
+        linux-mmc@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        Subhash Jadavani <subhashj@codeaurora.org>,
+        Andy Gross <agross@kernel.org>, linux-mmc-owner@vger.kernel.org
+Subject: Re: [RFC 1/2] mmc: sdhci-msm: Add support for bus bandwidth voting
+In-Reply-To: <616c7a8c-a1cf-2043-4ea4-f452ee90f083@linaro.org>
+References: <1567774037-2344-1-git-send-email-ppvk@codeaurora.org>
+ <1567774037-2344-2-git-send-email-ppvk@codeaurora.org>
+ <616c7a8c-a1cf-2043-4ea4-f452ee90f083@linaro.org>
+Message-ID: <d10c21360d4830c864374a57c491c21c@codeaurora.org>
+X-Sender: ppvk@codeaurora.org
+User-Agent: Roundcube Webmail/1.2.5
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue 24 Sep 22:41 PDT 2019, Stephen Boyd wrote:
-
-> I don't see any users of icc_get() in the kernel today, and adding them
-> doesn't make sense. That's because adding calls to that function in a
-> driver will make the driver SoC specific given that the arguments are
-> some sort of source and destination numbers that would typically be
-> listed in DT or come from platform data so they can match a global
-> numberspace of interconnect numbers. It would be better to follow the
-> approach of other kernel frameworks where the API is the same no matter
-> how the platform is described (i.e. platform data, DT, ACPI, etc.) and
-> swizzle the result in the framework to match whatever the device is by
-> checking for a DT node pointer or a fwnode pointer, etc. Therefore,
-> install icc_get() as the defacto API and make drivers use that instead
-> of of_icc_get() which implies the driver is DT specific when it doesn't
-> need to be.
+On 2019-09-12 18:26, Georgi Djakov wrote:
+> Hi Pradeep,
 > 
-
-+1 on this part!
-
-> The DT binding could also be simplified somewhat. Currently a path needs
-> to be specified in DT for each and every use case that is possible for a
-> device to want. Typically the path is to memory, which looks to be
-> reserved for in the binding with the "dma-mem" named path, but sometimes
-> the path is from a device to the CPU or more generically from a device
-> to another device which could be a CPU, cache, DMA master, or another
-> device if some sort of DMA to DMA scenario is happening. Let's remove
-> the pair part of the binding so that we just list out a device's
-> possible endpoints on the bus or busses that it's connected to.
+> Thanks for the patch!
 > 
-> If the kernel wants to figure out what the path is to memory or the CPU
-> or a cache or something else it should be able to do that by finding the
-> node for the "destination" endpoint, extracting that node's
-> "interconnects" property, and deriving the path in software. For
-> example, we shouldn't need to write out each use case path by path in DT
-> for each endpoint node that wants to set a bandwidth to memory. We
-> should just be able to indicate what endpoint(s) a device sits on based
-> on the interconnect provider in the system and then walk the various
-> interconnects to find the path from that source endpoint to the
-> destination endpoint.
+> On 9/6/19 15:47, Pradeep P V K wrote:
+>> Vote for the MSM bus bandwidth required by SDHC driver
+>> based on the clock frequency and bus width of the card.
+>> Otherwise,the system clocks may run at minimum clock speed
+>> and thus affecting the performance.
+>> 
+>> This change is based on Georgi Djakov [RFC]
+>> (https://lkml.org/lkml/2018/10/11/499)
 > 
-
-But doesn't this implies that the other end of the path is always some
-specific node, e.g. DDR? With a single node how would you describe
-CPU->LLCC or GPU->OCIMEM?
-
-> Obviously this patch doesn't compile but I'm sending it out to start
-> this discussion so we don't get stuck on the binding or the kernel APIs
-> for a long time. It looks like we should be OK in terms of backwards
-> compatibility because we can just ignore the second element in an old
-> binding, but maybe we'll want to describe paths in different directions
-> (e.g. the path from the CPU to the SD controller may be different than
-> the path the SD controller takes to the CPU) and that may require
-> extending interconnect-names to indicate what direction/sort of path it
-> is. I'm basically thinking about master vs. slave ports in AXI land.
+> I am just wondering whether do we really need to predefine the 
+> bandwidth values
+> in DT? Can't we use the computations from the above patch or is there 
+> any
+> problem with that approach?
 > 
-> Cc: Maxime Ripard <mripard@kernel.org>
-> Cc: <linux-pm@vger.kernel.org>
-> Cc: Rob Herring <robh+dt@kernel.org>
-> Cc: <devicetree@vger.kernel.org>
-> Cc: Bjorn Andersson <bjorn.andersson@linaro.org>
-> Cc: Evan Green <evgreen@chromium.org>
-> Cc: David Dai <daidavid1@codeaurora.org>
-> Signed-off-by: Stephen Boyd <swboyd@chromium.org>
-> ---
->  .../bindings/interconnect/interconnect.txt    | 19 ++++---------------
->  include/linux/interconnect.h                  | 13 ++-----------
->  2 files changed, 6 insertions(+), 26 deletions(-)
-> 
-> diff --git a/Documentation/devicetree/bindings/interconnect/interconnect.txt b/Documentation/devicetree/bindings/interconnect/interconnect.txt
-> index 6f5d23a605b7..f8979186b8a7 100644
-> --- a/Documentation/devicetree/bindings/interconnect/interconnect.txt
-> +++ b/Documentation/devicetree/bindings/interconnect/interconnect.txt
-> @@ -11,7 +11,7 @@ The interconnect provider binding is intended to represent the interconnect
->  controllers in the system. Each provider registers a set of interconnect
->  nodes, which expose the interconnect related capabilities of the interconnect
->  to consumer drivers. These capabilities can be throughput, latency, priority
-> -etc. The consumer drivers set constraints on interconnect path (or endpoints)
-> +etc. The consumer drivers set constraints on interconnect paths (or endpoints)
->  depending on the use case. Interconnect providers can also be interconnect
->  consumers, such as in the case where two network-on-chip fabrics interface
->  directly.
-> @@ -42,23 +42,12 @@ multiple paths from different providers depending on use case and the
->  components it has to interact with.
->  
->  Required properties:
-> -interconnects : Pairs of phandles and interconnect provider specifier to denote
-> -	        the edge source and destination ports of the interconnect path.
-> -
-> -Optional properties:
-> -interconnect-names : List of interconnect path name strings sorted in the same
-> -		     order as the interconnects property. Consumers drivers will use
-> -		     interconnect-names to match interconnect paths with interconnect
-> -		     specifier pairs.
-> -
-> -                     Reserved interconnect names:
-> -			 * dma-mem: Path from the device to the main memory of
-> -			            the system
-> +interconnects : phandle and interconnect provider specifier to denote
-> +	        the edge source for this node.
->  
->  Example:
->  
->  	sdhci@7864000 {
->  		...
-> -		interconnects = <&pnoc MASTER_SDCC_1 &bimc SLAVE_EBI_CH0>;
-> -		interconnect-names = "sdhc-mem";
-> +		interconnects = <&pnoc MASTER_SDCC_1>;
+> Thanks,
+> Georgi
 
-This example seems incomplete, as it doesn't describe the path between
-CPU and the config space, with this in place I think you need the
-interconnect-names.
+Hi Georgi,
 
+By using the direct required bandwidth(bw / 1000) values, it will not 
+guarantee
+that all the NOC clocks are running in the same voltage corner as 
+required,
+which is very crucial for power concern devices like Mobiles etc.
+Also, it will not guarantee that the value passed is in proper Clock 
+Plans domain
+there by effecting the requested Bandwidth.
+I think, you already aware of these consequences on using direct 
+bandwidth values for
+RPMh based devices.
 
-But with a single interconnect, the interconnect-names should be
-omitted, as done in other frameworks.
+The value the we passed in DT will make sure that all the NOC clocks 
+between the end points
+are running in the same voltage corners as required and also it will 
+guarantee that
+the requested BW's for the clients are obtained.
 
->  	};
-> diff --git a/include/linux/interconnect.h b/include/linux/interconnect.h
-> index d70a914cba11..e1ae704f5ab1 100644
-> --- a/include/linux/interconnect.h
-> +++ b/include/linux/interconnect.h
-> @@ -25,23 +25,14 @@ struct device;
->  
->  #if IS_ENABLED(CONFIG_INTERCONNECT)
->  
-> -struct icc_path *icc_get(struct device *dev, const int src_id,
-> -			 const int dst_id);
-> -struct icc_path *of_icc_get(struct device *dev, const char *name);
-> +struct icc_path *icc_get(struct device *dev, const char *name);
->  void icc_put(struct icc_path *path);
->  int icc_set_bw(struct icc_path *path, u32 avg_bw, u32 peak_bw);
->  void icc_set_tag(struct icc_path *path, u32 tag);
->  
->  #else
->  
-> -static inline struct icc_path *icc_get(struct device *dev, const int src_id,
-> -				       const int dst_id)
-> -{
-> -	return NULL;
-> -}
-> -
-> -static inline struct icc_path *of_icc_get(struct device *dev,
-> -					  const char *name)
-> +static inline struct icc_path *icc_get(struct device *dev, const char *name)
+Hence the reason for passing the predefined bandwidth values in DT.
 
-I like this part, if mimics what's done in other frameworks and removes
-the ties to OF from the API.
-
-Regards,
-Bjorn
-
->  {
->  	return NULL;
->  }
-> 
-> base-commit: b5b3bd898ba99fb0fb6aed3b23ec6353a1724d6f
-> -- 
-> Sent by a computer through tubes
-> 
+Thanks and Regards,
+Pradeep
