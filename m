@@ -2,112 +2,108 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id D1BB2BD83E
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Sep 2019 08:24:14 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id F0038BD8B0
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Sep 2019 09:03:37 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2411876AbfIYGYN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 25 Sep 2019 02:24:13 -0400
-Received: from smtp.codeaurora.org ([198.145.29.96]:45338 "EHLO
-        smtp.codeaurora.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2404570AbfIYGYN (ORCPT
+        id S2442439AbfIYHDd (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 25 Sep 2019 03:03:33 -0400
+Received: from mail-pg1-f194.google.com ([209.85.215.194]:38837 "EHLO
+        mail-pg1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2442433AbfIYHDc (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 25 Sep 2019 02:24:13 -0400
-Received: by smtp.codeaurora.org (Postfix, from userid 1000)
-        id EA4E861197; Wed, 25 Sep 2019 06:24:11 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
-        s=default; t=1569392651;
-        bh=efyvQV7q7fIN6ZkOeoxT6VazF4LiJT3OJPSTTXRZbJQ=;
-        h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
-        b=ogaMPrR+nmcQbEvlzytpjir1Xy/qKVqEGmn5ROTxTq8C81BvoSE7POnTLXwIKgBgj
-         tx2zGwFW0ps/spY586xrdcflVRQUGMzPTX2cpk44BPmodH+EHNAYbeknxeheXjecJd
-         8sVlaO1xL6gSyL71OJWFVeW4BymdvSCHhuuWwUg0=
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        pdx-caf-mail.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.7 required=2.0 tests=ALL_TRUSTED,BAYES_00,
-        DKIM_INVALID,DKIM_SIGNED autolearn=no autolearn_force=no version=3.4.0
-Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
-        by smtp.codeaurora.org (Postfix) with ESMTP id 3292560128;
-        Wed, 25 Sep 2019 06:24:11 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
-        s=default; t=1569392651;
-        bh=efyvQV7q7fIN6ZkOeoxT6VazF4LiJT3OJPSTTXRZbJQ=;
-        h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
-        b=ogaMPrR+nmcQbEvlzytpjir1Xy/qKVqEGmn5ROTxTq8C81BvoSE7POnTLXwIKgBgj
-         tx2zGwFW0ps/spY586xrdcflVRQUGMzPTX2cpk44BPmodH+EHNAYbeknxeheXjecJd
-         8sVlaO1xL6gSyL71OJWFVeW4BymdvSCHhuuWwUg0=
-MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
-Content-Transfer-Encoding: 7bit
-Date:   Wed, 25 Sep 2019 11:54:11 +0530
-From:   ppvk@codeaurora.org
-To:     Georgi Djakov <georgi.djakov@linaro.org>
-Cc:     adrian.hunter@intel.com, ulf.hansson@linaro.org,
-        robh+dt@kernel.org, asutoshd@codeaurora.org,
-        vbadigan@codeaurora.org, stummala@codeaurora.org,
-        sayalil@codeaurora.org, rampraka@codeaurora.org,
-        linux-mmc@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        Subhash Jadavani <subhashj@codeaurora.org>,
-        Andy Gross <agross@kernel.org>, linux-mmc-owner@vger.kernel.org
-Subject: Re: [RFC 1/2] mmc: sdhci-msm: Add support for bus bandwidth voting
-In-Reply-To: <616c7a8c-a1cf-2043-4ea4-f452ee90f083@linaro.org>
-References: <1567774037-2344-1-git-send-email-ppvk@codeaurora.org>
- <1567774037-2344-2-git-send-email-ppvk@codeaurora.org>
- <616c7a8c-a1cf-2043-4ea4-f452ee90f083@linaro.org>
-Message-ID: <d10c21360d4830c864374a57c491c21c@codeaurora.org>
-X-Sender: ppvk@codeaurora.org
-User-Agent: Roundcube Webmail/1.2.5
+        Wed, 25 Sep 2019 03:03:32 -0400
+Received: by mail-pg1-f194.google.com with SMTP id x10so2672329pgi.5
+        for <linux-arm-msm@vger.kernel.org>; Wed, 25 Sep 2019 00:03:32 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=from:to:cc:subject:date:message-id;
+        bh=QtDjGuT6GYExoPUWAryXx0/SjRXtIy1CTdSczN1NQCM=;
+        b=RmY/xOXe2eKL26y3uj55F1Fit+H+0WrrZaOHcLMNCDSNoi2kMXrhnE0ucEForuiEA+
+         JyRluTVi28yl+sTJGSRelaPvSKuza6Hk+Q9GRAPSRoAwq1VWLfr4h3eTKtsojFr+xrG8
+         zaY9vImby+VTXEwcWMmtB7mGhtQcEn/Gbn+gOrIIVg6zcpp/o2JX2j313Dln/oC0dVVe
+         dwrSa+J5kDasv/Awru0qA99xL8YL5AZEQYzOpVkazBCDdADqsEzMLVdWX8iGhVjqi5wq
+         IYNJJ7jeetpPukK/+WzB7j4TGb2RgEWr7x1WdwwyLnhmEJcVT6h0hfP3bpj7kkLXXnLb
+         GK1A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=QtDjGuT6GYExoPUWAryXx0/SjRXtIy1CTdSczN1NQCM=;
+        b=frqtadVUDcnaCxasRAaq+GXhf/zS7TWSh/93z2ScQ/uAifzk69DDfqoybdM2D+d6pa
+         lMJiN/j0JoOZUYvTgDTEpJuTvTS3NNjxjngBKwSIwe/XjB550CH8OuTzzr3JP83QP89Z
+         48+vZlJ8XTPpK+aOGEfC2HwC/ACG0PqLWt5JyV4kFDvlxXjD/Pxp7PyjwQW9jpmm/F0k
+         0SKywTusZ0x/g8DKCzwQ8WcQdPaZDJpLHaPxIZ3CBKWm0LSx0h6TgP+3DncrlIyLUgbg
+         /E0A4D9iaiWXTU9esaQOkrG5rHYiLSG6loOlh/x2ijXwtTs6ta+Wf1eqXtV+MZ9plNZ0
+         6Eww==
+X-Gm-Message-State: APjAAAUvmvcmsZ54OTWN4BuVvSLc9t6fVQ72ogrn1dnNmgI5evCQgjia
+        zpFkcPnYA0ckkYzYdP9a8m0mHw==
+X-Google-Smtp-Source: APXvYqwK0vMFcB0zMbrgYeYbjpMtEMvsl5ew0HFiuRMmFs5VRtF6LUvKhv2I9PfhGnJ3lD3U/s/nHg==
+X-Received: by 2002:a17:90a:fa02:: with SMTP id cm2mr4735395pjb.133.1569395011749;
+        Wed, 25 Sep 2019 00:03:31 -0700 (PDT)
+Received: from localhost.localdomain (104-188-17-28.lightspeed.sndgca.sbcglobal.net. [104.188.17.28])
+        by smtp.gmail.com with ESMTPSA id t3sm1541054pje.7.2019.09.25.00.03.30
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Wed, 25 Sep 2019 00:03:31 -0700 (PDT)
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     Andy Gross <agross@kernel.org>
+Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org,
+        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+Subject: [PATCH] arm64: dts: qcom: c630: Enable adsp, cdsp and mpss
+Date:   Wed, 25 Sep 2019 00:03:28 -0700
+Message-Id: <20190925070328.13554-1-bjorn.andersson@linaro.org>
+X-Mailer: git-send-email 2.18.0
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2019-09-12 18:26, Georgi Djakov wrote:
-> Hi Pradeep,
-> 
-> Thanks for the patch!
-> 
-> On 9/6/19 15:47, Pradeep P V K wrote:
->> Vote for the MSM bus bandwidth required by SDHC driver
->> based on the clock frequency and bus width of the card.
->> Otherwise,the system clocks may run at minimum clock speed
->> and thus affecting the performance.
->> 
->> This change is based on Georgi Djakov [RFC]
->> (https://lkml.org/lkml/2018/10/11/499)
-> 
-> I am just wondering whether do we really need to predefine the 
-> bandwidth values
-> in DT? Can't we use the computations from the above patch or is there 
-> any
-> problem with that approach?
-> 
-> Thanks,
-> Georgi
+Specify the firmware-name for the adsp, cdsp and mpss and enable the
+nodes.
 
-Hi Georgi,
+Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+---
+ .../boot/dts/qcom/sdm850-lenovo-yoga-c630.dts      | 14 ++++++++++++++
+ 1 file changed, 14 insertions(+)
 
-By using the direct required bandwidth(bw / 1000) values, it will not 
-guarantee
-that all the NOC clocks are running in the same voltage corner as 
-required,
-which is very crucial for power concern devices like Mobiles etc.
-Also, it will not guarantee that the value passed is in proper Clock 
-Plans domain
-there by effecting the requested Bandwidth.
-I think, you already aware of these consequences on using direct 
-bandwidth values for
-RPMh based devices.
+diff --git a/arch/arm64/boot/dts/qcom/sdm850-lenovo-yoga-c630.dts b/arch/arm64/boot/dts/qcom/sdm850-lenovo-yoga-c630.dts
+index ded120d3aef5..d3c841628d66 100644
+--- a/arch/arm64/boot/dts/qcom/sdm850-lenovo-yoga-c630.dts
++++ b/arch/arm64/boot/dts/qcom/sdm850-lenovo-yoga-c630.dts
+@@ -20,6 +20,11 @@
+ 	};
+ };
+ 
++&adsp_pas {
++	firmware-name = "qcom/c630/qcadsp850.mbn";
++	status = "okay";
++};
++
+ &apps_rsc {
+ 	pm8998-rpmh-regulators {
+ 		compatible = "qcom,pm8998-rpmh-regulators";
+@@ -229,6 +234,11 @@
+ 	status = "disabled";
+ };
+ 
++&cdsp_pas {
++	firmware-name = "qcom/c630/qccdsp850.mbn";
++	status = "okay";
++};
++
+ &gcc {
+ 	protected-clocks = <GCC_QSPI_CORE_CLK>,
+ 			   <GCC_QSPI_CORE_CLK_SRC>,
+@@ -296,6 +306,10 @@
+ 	};
+ };
+ 
++&mss_pil {
++	firmware-name = "qcom/c630/qcdsp1v2850.mbn", "qcom/c630/qcdsp2850.mbn";
++};
++
+ &qup_i2c12_default {
+ 	drive-strength = <2>;
+ 	bias-disable;
+-- 
+2.18.0
 
-The value the we passed in DT will make sure that all the NOC clocks 
-between the end points
-are running in the same voltage corners as required and also it will 
-guarantee that
-the requested BW's for the clients are obtained.
-
-Hence the reason for passing the predefined bandwidth values in DT.
-
-Thanks and Regards,
-Pradeep
