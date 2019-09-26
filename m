@@ -2,168 +2,137 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 99BC6BF27A
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Sep 2019 14:05:27 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B0368BF3BA
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Sep 2019 15:07:26 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725939AbfIZMF1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 26 Sep 2019 08:05:27 -0400
-Received: from mail-wm1-f66.google.com ([209.85.128.66]:54887 "EHLO
-        mail-wm1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726438AbfIZMF0 (ORCPT
+        id S1726666AbfIZNH0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 26 Sep 2019 09:07:26 -0400
+Received: from mail-ot1-f68.google.com ([209.85.210.68]:44836 "EHLO
+        mail-ot1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726498AbfIZNHZ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 26 Sep 2019 08:05:26 -0400
-Received: by mail-wm1-f66.google.com with SMTP id p7so2451000wmp.4
-        for <linux-arm-msm@vger.kernel.org>; Thu, 26 Sep 2019 05:05:25 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=5nnUa/Si31PTL5dtLPgVx571em/1pS4POdS50m/K5Ds=;
-        b=V3NuFBWSJu7xEOXvNeF1piDC1tlhTyi/vK910RcpaIn2zWhzeot+1ei2FnYv/f8kUc
-         O51NoIb3sNyHPDnj2zFTngZV4r0wlHwtfZfS/zJh215Lo59zpCTx+TJPKF8fZZJgcaDQ
-         NPBXBb7qQfi3xh+kR/2S7NP+/KLKLQuNqiLkwiAA8KDB/vI1G5TlAt4L4LhmgCoDJQ7a
-         q27OGxllJCBRf17t3tZUniq/synG/txoGSkUk99LRK15yDnSF7vE8Le21lz/QUpuZdN7
-         1TchS1eGR80KMNFnhLZRl+hu1QKnkVrMKlz0MURq8KGXiWe/tMrPFeOghvdGlOf1myAg
-         IWNw==
+        Thu, 26 Sep 2019 09:07:25 -0400
+Received: by mail-ot1-f68.google.com with SMTP id 21so1889169otj.11;
+        Thu, 26 Sep 2019 06:07:25 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=5nnUa/Si31PTL5dtLPgVx571em/1pS4POdS50m/K5Ds=;
-        b=I75exGJ8jD9cciCgMw8DXhkDDG9rfA6t16YK6owOPyFI3eECIeSaszziDsr54NOb/4
-         Khb95uumMGFnvpvEv9qqScDU3sRFVYEPY5lrP7U6hn6P/bldG/teYQkodLvDTmGa7xwQ
-         OSttbLbi4/jrqL4FII+FdbwiDbobeatIzF/zFYo0RiMg2QKeXBpqSOAheC12+0aeZHIu
-         dnmV5pqH+2p1YTsbrQ+CjMEg1H0XOJAv5coYB6wS1H7kqIC0Kf7k/Plrzc0vdvILZbAa
-         iSVzAO83XMMTLxXGzqEogjOTEmrVQHA5q+rR0Vof+MF/719AzdB93aoY+fPkhuaGm8ho
-         4vPg==
-X-Gm-Message-State: APjAAAX/CXFY35wLxwGBfq2UDs4DiXZ4ed0YuVkXF0YUJh52nvtfoc9Z
-        My9ZiAKQWQGtWnP9y9BRuXvhl03+nGE=
-X-Google-Smtp-Source: APXvYqyEWOYPa4keiWseUvTvM6yh5wlL+BUNL3hKBl65XKnCQR456P4dLtJCZ7AfGFBeADHVgB350g==
-X-Received: by 2002:a7b:cb08:: with SMTP id u8mr2934851wmj.6.1569499524282;
-        Thu, 26 Sep 2019 05:05:24 -0700 (PDT)
-Received: from IcarusMOD.eternityproject.eu ([93.51.16.173])
-        by smtp.gmail.com with ESMTPSA id d193sm5289584wmd.0.2019.09.26.05.05.23
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 26 Sep 2019 05:05:23 -0700 (PDT)
-From:   kholk11@gmail.com
-To:     linux-arm-msm@vger.kernel.org
-Cc:     iommu@lists.linux-foundation.org, marijns95@gmail.com,
-        agross@kernel.org, robdclark@gmail.com, joro@8bytes.org,
-        AngeloGioacchino Del Regno <kholk11@gmail.com>
-Subject: [PATCH 6/6] iommu/qcom: Add support for QCIOMMUv2 and QCIOMMU-500 secured contexts
-Date:   Thu, 26 Sep 2019 14:05:16 +0200
-Message-Id: <20190926120516.4981-7-kholk11@gmail.com>
-X-Mailer: git-send-email 2.21.0
-In-Reply-To: <20190926120516.4981-1-kholk11@gmail.com>
-References: <20190926120516.4981-1-kholk11@gmail.com>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=86m3tEw17ZZT6CjXyqouKt75t9HK9/dLvE6avVr8dZs=;
+        b=IvMHiMVBN63FdbueUV0JAG6kT4kin+SVuPTFlUn5a596ZWmXdMAlfNDdXQ1j49ySrf
+         aoQYwlQi+Z8D6pAfd+/sl6ubgmogsskTGqaE9rVSePiYXAFPIB3GAilS7+RIGuEVpvdl
+         CxqPGP12liizDVBd2vYUZIoTnvpNohXSAnlOlbJJYlqO9N1zKTfiekgMZo1dEH2IdtAo
+         oFPuAmzqg3ipv1AQR6+Bx+qFnaWU+e04iNv1nGwyY6+3QoyjwYlu/9sM/jUdyqkCGspk
+         qKqXOB9FZavJhIZVlKSlpQqK/iAgaq5kzzp4FQFn8ezPkByIvdXXQ/RwMCOK2BjsKYDk
+         X08w==
+X-Gm-Message-State: APjAAAWEtr6oNMxpg/lGXqXOalbrk2pLBgkwvBoAenNJTaDfOxxpi3MK
+        GzkYtBNXRPcfUflO1MCptdgEKB2tnyw0eLpTKRk=
+X-Google-Smtp-Source: APXvYqyF+2ywzccFvxySPta2+p7JqxfW8g7zy3c181s3oawgGhiKDX3kMuzJ0IclsWTNlSfKVlQf33YA/yysIT0xMpg=
+X-Received: by 2002:a9d:193:: with SMTP id e19mr2408625ote.107.1569503244659;
+ Thu, 26 Sep 2019 06:07:24 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <20190920145543.1732316-1-arnd@arndb.de> <20190920164545.68FFB20717@mail.kernel.org>
+ <CAK8P3a2j6QG19i3YtRPh7qD4Zr5TiHmK_5=s9mSD2pHVmE99HA@mail.gmail.com> <20190920210622.51382205F4@mail.kernel.org>
+In-Reply-To: <20190920210622.51382205F4@mail.kernel.org>
+From:   Geert Uytterhoeven <geert@linux-m68k.org>
+Date:   Thu, 26 Sep 2019 15:07:13 +0200
+Message-ID: <CAMuHMdWqCQD+3dzn8orUjDcXn123VujNgPQz20hLOF3=F2BP5w@mail.gmail.com>
+Subject: Re: [PATCH] mbox: qcom: avoid unused-variable warning
+To:     Stephen Boyd <sboyd@kernel.org>
+Cc:     Arnd Bergmann <arnd@arndb.de>,
+        Geert Uytterhoeven <geert+renesas@glider.be>,
+        Andy Gross <agross@kernel.org>,
+        Jassi Brar <jassisinghbrar@gmail.com>,
+        Niklas Cassel <niklas.cassel@linaro.org>,
+        Jorge Ramirez-Ortiz <jorge.ramirez-ortiz@linaro.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Jassi Brar <jaswinder.singh@linaro.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: AngeloGioacchino Del Regno <kholk11@gmail.com>
+Hi Stephen,
 
-This IOMMU is yet another Qualcomm variant of known IOMMUs, found in
-Family-B SoCs, such as MSM8956, MSM8976, MSM8953, MSM8917 and others,
-and that firmware perfectly adheres to this driver logic.
-This time, though, the catch is that the secure contexts are also
-secured, meaning that these are programmed by the bootloader or TZ
-and their "interesting" registers are locked out, so the hypervisor
-disallows touching them from the non-secure world: in this case
-the OS is supposed to blindly trust the secure configuration of
-these contexts and just use them "as they are".
+On Fri, Sep 20, 2019 at 11:06 PM Stephen Boyd <sboyd@kernel.org> wrote:
+> Quoting Arnd Bergmann (2019-09-20 12:27:50)
+> > On Fri, Sep 20, 2019 at 6:45 PM Stephen Boyd <sboyd@kernel.org> wrote:
+> > > > @@ -54,11 +60,6 @@ static int qcom_apcs_ipc_probe(struct platform_device *pdev)
+> > > >         void __iomem *base;
+> > > >         unsigned long i;
+> > > >         int ret;
+> > > > -       const struct of_device_id apcs_clk_match_table[] = {
+> > >
+> > > Does marking it static here work too? It would be nice to limit the
+> > > scope of this variable to this function instead of making it a global.
+> > > Also, it might be slightly smaller code size if that works.
+> >
+> > No, I just tried and the warning returned.
 
-For this reason, it is necessary to distinguish between the v1 and
-500/v2 secure contexts in this driver in order to adhere to this
-specification. To do this, add a new DT compatible, named
-"qcom,msm-iommu-v2-sec" that will trigger the new behavior.
+It's there for the convenience for the user, so he doesn't have to add it
+himself explicitly.
 
-For the sake of completeness, also add a "qcom,msm-iommu-v2-ns" so
-that the human eye gets pleased with it when reading the contexts
-in the final SoC DT. Of course, the latter is just cosmetic.
+> ("of/device: Nullify match table in of_match_device() for CONFIG_OF=n"),
+> but it's been 5 years! Surely we can revert this change now that commit
+> 219a7bc577e6 ("spi: rspi: Use of_device_get_match_data() helper") is
+> merged.
 
-Signed-off-by: AngeloGioacchino Del Regno <kholk11@gmail.com>
----
- .../devicetree/bindings/iommu/qcom,iommu.txt  |  2 ++
- drivers/iommu/qcom_iommu.c                    | 19 +++++++++++++++++--
- 2 files changed, 19 insertions(+), 2 deletions(-)
+Right, the particular error case in the RSPI driver can no longer happen.
 
-diff --git a/Documentation/devicetree/bindings/iommu/qcom,iommu.txt b/Documentation/devicetree/bindings/iommu/qcom,iommu.txt
-index a4dd76b8c566..44676d3221d5 100644
---- a/Documentation/devicetree/bindings/iommu/qcom,iommu.txt
-+++ b/Documentation/devicetree/bindings/iommu/qcom,iommu.txt
-@@ -36,6 +36,8 @@ to non-secure vs secure interrupt line.
-   - compatible     : Should be one of:
-         - "qcom,msm-iommu-v1-ns"  : non-secure context bank
-         - "qcom,msm-iommu-v1-sec" : secure context bank
-+        - "qcom,msm-iommu-v2-ns"  : non-secure QSMMUv2/QSMMU500 context bank
-+        - "qcom,msm-iommu-v2-sec" : secure QSMMUv2/QSMMU500 context bank
-   - reg            : Base address and size of context bank within the iommu
-   - interrupts     : The context fault irq.
-   - qcom,ctx-num   : The number associated to the context bank
-diff --git a/drivers/iommu/qcom_iommu.c b/drivers/iommu/qcom_iommu.c
-index 03c68fe9439b..2f65a4cdca78 100644
---- a/drivers/iommu/qcom_iommu.c
-+++ b/drivers/iommu/qcom_iommu.c
-@@ -56,6 +56,7 @@ struct qcom_iommu_ctx {
- 	struct device		*dev;
- 	void __iomem		*base;
- 	bool			 secure_init;
-+	bool			 secured_ctx;
- 	u8			 asid;      /* asid and ctx bank # are 1:1 */
- 	struct iommu_domain	*domain;
- };
-@@ -281,6 +282,12 @@ static int qcom_iommu_init_domain(struct iommu_domain *domain,
- 			ctx->secure_init = true;
- 		}
- 
-+		/* Secured QSMMU-500/QSMMU-v2 contexts cannot be programmed */
-+		if (ctx->secured_ctx) {
-+			ctx->domain = domain;
-+			break;
-+		}
-+
- 		qcom_iommu_reset_ctx(ctx);
- 
- 		tcr[0] = pgtbl_cfg.arm_lpae_s1_cfg.tcr;
-@@ -762,10 +769,15 @@ static int qcom_iommu_ctx_probe(struct platform_device *pdev)
- 		return -ENODEV;
- 	}
- 
-+	if (of_device_is_compatible(dev->of_node, "qcom,msm-iommu-v2-sec"))
-+		ctx->secured_ctx = true;
-+
- 	/* clear IRQs before registering fault handler, just in case the
- 	 * boot-loader left us a surprise:
- 	 */
--	iommu_writel(ctx, ARM_SMMU_CB_FSR, iommu_readl(ctx, ARM_SMMU_CB_FSR));
-+	if (!ctx->secured_ctx)
-+		iommu_writel(ctx, ARM_SMMU_CB_FSR,
-+			     iommu_readl(ctx, ARM_SMMU_CB_FSR));
- 
- 	ret = devm_request_irq(dev, irq,
- 			       qcom_iommu_fault,
-@@ -807,6 +819,8 @@ static int qcom_iommu_ctx_remove(struct platform_device *pdev)
- static const struct of_device_id ctx_of_match[] = {
- 	{ .compatible = "qcom,msm-iommu-v1-ns" },
- 	{ .compatible = "qcom,msm-iommu-v1-sec" },
-+	{ .compatible = "qcom,msm-iommu-v2-ns" },
-+	{ .compatible = "qcom,msm-iommu-v2-sec" },
- 	{ /* sentinel */ }
- };
- 
-@@ -824,7 +838,8 @@ static bool qcom_iommu_has_secure_context(struct qcom_iommu_dev *qcom_iommu)
- 	struct device_node *child;
- 
- 	for_each_child_of_node(qcom_iommu->dev->of_node, child)
--		if (of_device_is_compatible(child, "qcom,msm-iommu-v1-sec"))
-+		if (of_device_is_compatible(child, "qcom,msm-iommu-v1-sec") ||
-+		    of_device_is_compatible(child, "qcom,msm-iommu-v2-sec"))
- 			return true;
- 
- 	return false;
+Calling of_device_get_match_data() is the better solution anyway, as
+that uses the match table stored in dev->driver->of_match_table, so
+there's no need to pass the table explicitly, and conditionally.
+
+Hence...
+
+> --- a/drivers/leds/leds-pca9532.c
+> +++ b/drivers/leds/leds-pca9532.c
+> @@ -472,7 +472,7 @@ pca9532_of_populate_pdata(struct device *dev, struct device_node *np)
+>         int i = 0;
+>         const char *state;
+>
+> -       match = of_match_device(of_pca9532_leds_match, dev);
+> +       match = of_match_device(of_match_ptr(of_pca9532_leds_match), dev);
+>         if (!match)
+>                 return ERR_PTR(-ENODEV);
+
+Please convert to of_device_get_match_data() instead of adding
+of_match_ptr() invocations...
+
+> @@ -525,7 +525,7 @@ static int pca9532_probe(struct i2c_client *client,
+>                         dev_err(&client->dev, "no platform data\n");
+>                         return -EINVAL;
+>                 }
+> -               of_id = of_match_device(of_pca9532_leds_match,
+> +               of_id = of_match_device(of_match_ptr(of_pca9532_leds_match),
+
+Likewise.
+
+> --- a/sound/soc/jz4740/jz4740-i2s.c
+> +++ b/sound/soc/jz4740/jz4740-i2s.c
+> @@ -503,7 +503,7 @@ static int jz4740_i2s_dev_probe(struct platform_device *pdev)
+>         if (!i2s)
+>                 return -ENOMEM;
+>
+> -       match = of_match_device(jz4740_of_matches, &pdev->dev);
+> +       match = of_match_device(of_match_ptr(jz4740_of_matches), &pdev->dev);
+
+Given of_device_get_match_data() returns NULL, not an error code, even
+this one could use of_device_get_match_data().
+
+>         if (match)
+>                 i2s->version = (enum jz47xx_i2s_version)match->data;
+
+Gr{oetje,eeting}s,
+
+                        Geert
+
 -- 
-2.21.0
+Geert Uytterhoeven -- There's lots of Linux beyond ia32 -- geert@linux-m68k.org
 
+In personal conversations with technical people, I call myself a hacker. But
+when I'm talking to journalists I just say "programmer" or something like that.
+                                -- Linus Torvalds
