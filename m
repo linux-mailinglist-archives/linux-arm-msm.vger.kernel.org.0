@@ -2,175 +2,127 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id AA863BE752
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Sep 2019 23:33:43 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D6888BECD6
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Sep 2019 09:48:25 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727107AbfIYVdi (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 25 Sep 2019 17:33:38 -0400
-Received: from mail.kernel.org ([198.145.29.99]:45994 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1727058AbfIYVdh (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 25 Sep 2019 17:33:37 -0400
-Received: from mail-qt1-f181.google.com (mail-qt1-f181.google.com [209.85.160.181])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 95011222BD;
-        Wed, 25 Sep 2019 21:33:35 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1569447215;
-        bh=TszXw7S5GIEzEo992EEMfz4W0WtzSxu1MBpaBhf4tmw=;
-        h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
-        b=QlI2Sj1D5LJahPlbpQRPzC/Kfp42A3NwekR29GtyvfIPAZlvPN1zAfycydpBTfcd8
-         IvT8WVCyptqcO23hrQq7/1AbSsfzPRa68TLRQRP+hrXx+5Qsz/4M4CfEt25gMVn9on
-         EMq0EmayAeKNvnaIFqzE8CzGz5kGoSiMNjw4W64I=
-Received: by mail-qt1-f181.google.com with SMTP id m15so298885qtq.2;
-        Wed, 25 Sep 2019 14:33:35 -0700 (PDT)
-X-Gm-Message-State: APjAAAU/MDgYmsvDWUxhr0S/Q958v/NMn7J4JTGJNu6zn2KE6uwZuvLx
-        +uW755Pt4Q2Nc+sOQUjGxURuNzeHmiO1sPSfVA==
-X-Google-Smtp-Source: APXvYqy9YJ9VRUtFzrkZ+iKb5Tx5rlamJJuwaAKBRmCflwCEbYKpuVBbZPPVrEImTOCJgn8Jl5TlEwRQfbhe0HNZXOU=
-X-Received: by 2002:a0c:8a6d:: with SMTP id 42mr1647258qvu.138.1569447214653;
- Wed, 25 Sep 2019 14:33:34 -0700 (PDT)
+        id S1730002AbfIZHsZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 26 Sep 2019 03:48:25 -0400
+Received: from new2-smtp.messagingengine.com ([66.111.4.224]:50221 "EHLO
+        new2-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1729343AbfIZHsY (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 26 Sep 2019 03:48:24 -0400
+Received: from compute6.internal (compute6.nyi.internal [10.202.2.46])
+        by mailnew.nyi.internal (Postfix) with ESMTP id C921C30E6;
+        Thu, 26 Sep 2019 03:48:23 -0400 (EDT)
+Received: from mailfrontend2 ([10.202.2.163])
+  by compute6.internal (MEProxy); Thu, 26 Sep 2019 03:48:23 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=engestrom.ch; h=
+        date:from:to:cc:subject:message-id:mime-version:content-type
+        :content-transfer-encoding:in-reply-to; s=fm2; bh=w+s9r045arvlx/
+        7fyu9GSn1qP1pE18hWMcKzZta1ao0=; b=cHYfMHXNmz4X1JJpDas6Cp3OR2p1ub
+        yARL/LXju2LibRlSdvE7Y4kpqKUn3NpKtbVgoUGmXNxj8jEDjjjs4r/MSuANhtxO
+        6KlVMgwDuWQMAAPOm+elAQdIexV/xQBvcRCgMxecf4OvDx9gDgFoqkKI3nCsgFs+
+        E6MPnAfsrrArWaaL5Ohe/ri8NEIDiTPtfLnB/Ma7IlLPqfWKIkY2CAyctrjMe6Yg
+        DLPBDtci+LWxrI8moASHkXFZ4Ozn5mbLskC5Eum/s/LmiQWnyYpw98h4s438UieO
+        vmZANMPK40b/SJPC+MHFyhwwOA7y8HyPM/sDnYNvHimogDatRL80ytiQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+        messagingengine.com; h=cc:content-transfer-encoding:content-type
+        :date:from:in-reply-to:message-id:mime-version:subject:to
+        :x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
+        fm3; bh=w+s9r045arvlx/7fyu9GSn1qP1pE18hWMcKzZta1ao0=; b=zhkl16JI
+        +L5HYpQBmQ8847J9Obh1ZPQO/sx2am0uy3M4JH1beGSKzGyxRwyLfrGn0z/fUfhz
+        /kh35aK+i7UZsyrWpzZW6nWqVVgMUEVpRuPVVgiQSz32ehKyTdg71pBtSXil0gSn
+        2Xm+Y9Qi7GYWp/UX8B7yFa1N/NhOyjEjqnvpvJUHHIwbyNmVvIDDr2TNJ6HwBE89
+        ZIDhAFuuwDUIJWZmBBAK35POLFSyXEQ6IRvd9z9fiPoL72xDZMozgm1YMJ213IYY
+        elcu9MyCWMgXrSY2MNcxseJEN/UC/Yxtv8O7qOeDS1JlXrYJhDZeuh9JMsGc0IxC
+        R2yHYgL3ZdGSSQ==
+X-ME-Sender: <xms:RW2MXTBz5sy02KvxEz3F__h8A5E6GRMtXZ_SuqCXRci3N2YrV-rNiA>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedufedrfeefgdduvdegucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
+    uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
+    cujfgurhepfffhvffukfggtggugfgjohgfsehtkeertddtreejnecuhfhrohhmpefgrhhi
+    tgcugfhnghgvshhtrhhomhcuoegvrhhitgesvghnghgvshhtrhhomhdrtghhqeenucffoh
+    hmrghinhepmhgrihhlqdgrrhgthhhivhgvrdgtohhmnecukfhppedukeekrddvledrudei
+    hedrudefvdenucfrrghrrghmpehmrghilhhfrhhomhepvghrihgtsegvnhhgvghsthhroh
+    hmrdgthhenucevlhhushhtvghrufhiiigvpedt
+X-ME-Proxy: <xmx:RW2MXeYCrpZtXzMH7FzTo2KlvyHa95r2ZIvgDEuubID58JW17PEyxQ>
+    <xmx:RW2MXXIoBtJiAtOC7yGGIqT3XTt8dejFx73SBHXWSJChe11KVGLwug>
+    <xmx:RW2MXXDzEPYOIelKXwiciRwa0zGZ7RWOaW9nF4l4IdQFfJ-GmJ_KzQ>
+    <xmx:R22MXfyTonuRreeRd8IR2CPBzDSRL3ubmekqQfULp65TLSbHg86NAQ>
+Received: from engestrom.ch (188.29.165.132.threembb.co.uk [188.29.165.132])
+        by mail.messagingengine.com (Postfix) with ESMTPA id AF3CAD60063;
+        Thu, 26 Sep 2019 03:48:18 -0400 (EDT)
+Date:   Thu, 26 Sep 2019 08:48:14 +0100
+From:   Eric Engestrom <eric@engestrom.ch>
+To:     Jani Nikula <jani.nikula@intel.com>
+Cc:     dri-devel@lists.freedesktop.org, intel-gfx@lists.freedesktop.org,
+        Alex Deucher <alexander.deucher@amd.com>,
+        Christian =?utf-8?B?S8O2bmln?= <christian.koenig@amd.com>,
+        David Zhou <David1.Zhou@amd.com>,
+        amd-gfx@lists.freedesktop.org, Ben Skeggs <bskeggs@redhat.com>,
+        nouveau@lists.freedesktop.org, Rob Clark <robdclark@gmail.com>,
+        Sean Paul <sean@poorly.run>, linux-arm-msm@vger.kernel.org,
+        freedreno@lists.freedesktop.org,
+        Francisco Jerez <currojerez@riseup.net>,
+        Lucas Stach <l.stach@pengutronix.de>,
+        Russell King <linux+etnaviv@armlinux.org.uk>,
+        Christian Gmeiner <christian.gmeiner@gmail.com>,
+        etnaviv@lists.freedesktop.org
+Subject: Re: [PATCH v2 0/9] drm/print: add and use drm_debug_enabled()
+Message-ID: <20190926074814.rdzxjmut6izqf4d5@engestrom.ch>
 MIME-Version: 1.0
-References: <20190924181244.7159-1-nsaenzjulienne@suse.de> <CAL_Jsq+v+svTyna7UzQdRVqfNc5Z_bgWzxNRXv7-Wqv3NwDu2g@mail.gmail.com>
- <d1a31a2ec8eb2f226b1fb41f6c24ffb47c3bf7c7.camel@suse.de> <e404c65b-5a66-6f91-5b38-8bf89a7697b2@arm.com>
- <43fb5fe1de317d65a4edf592f88ea150c6e3b8cc.camel@suse.de> <CAL_JsqLhx500cx3YLoC7HL1ux3bBpV+fEA2Qnk7D5RFGgiGzSw@mail.gmail.com>
- <aa4c8d62-7990-e385-2bb1-cec55148f0a8@arm.com>
-In-Reply-To: <aa4c8d62-7990-e385-2bb1-cec55148f0a8@arm.com>
-From:   Rob Herring <robh+dt@kernel.org>
-Date:   Wed, 25 Sep 2019 16:33:23 -0500
-X-Gmail-Original-Message-ID: <CAL_JsqKKYcHPnA80ZwLY=Sk3e5MqrimedUhWQ5+iuPZXQxYHdA@mail.gmail.com>
-Message-ID: <CAL_JsqKKYcHPnA80ZwLY=Sk3e5MqrimedUhWQ5+iuPZXQxYHdA@mail.gmail.com>
-Subject: Re: [PATCH 00/11] of: Fix DMA configuration for non-DT masters
-To:     Robin Murphy <robin.murphy@arm.com>
-Cc:     Nicolas Saenz Julienne <nsaenzjulienne@suse.de>,
-        devicetree@vger.kernel.org, Matthias Brugger <mbrugger@suse.com>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        linux-wireless <linux-wireless@vger.kernel.org>,
-        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
-        dri-devel <dri-devel@lists.freedesktop.org>,
-        etnaviv@lists.freedesktop.org, linux-tegra@vger.kernel.org,
-        Florian Fainelli <f.fainelli@gmail.com>,
-        Stefan Wahren <wahrenst@gmx.net>, james.quinlan@broadcom.com,
-        linux-pci@vger.kernel.org,
-        "open list:DMA GENERIC OFFLOAD ENGINE SUBSYSTEM" 
-        <dmaengine@vger.kernel.org>, xen-devel@lists.xenproject.org,
-        Dan Williams <dan.j.williams@intel.com>,
-        freedreno <freedreno@lists.freedesktop.org>,
-        Frank Rowand <frowand.list@gmail.com>,
-        "moderated list:ARM/FREESCALE IMX / MXC ARM ARCHITECTURE" 
-        <linux-arm-kernel@lists.infradead.org>,
-        Linux Media Mailing List <linux-media@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <cover.1569329774.git.jani.nikula@intel.com>
+Organization: Intel Corporation (UK) Ltd. - Co. Reg. 1134945 - Pipers Way,
+ Swindon SN3 1RJ
+User-Agent: NeoMutt/20180716
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Sep 25, 2019 at 11:52 AM Robin Murphy <robin.murphy@arm.com> wrote:
->
-> On 25/09/2019 17:16, Rob Herring wrote:
-> > On Wed, Sep 25, 2019 at 10:30 AM Nicolas Saenz Julienne
-> > <nsaenzjulienne@suse.de> wrote:
-> >>
-> >> On Wed, 2019-09-25 at 16:09 +0100, Robin Murphy wrote:
-> >>> On 25/09/2019 15:52, Nicolas Saenz Julienne wrote:
-> >>>> On Tue, 2019-09-24 at 16:59 -0500, Rob Herring wrote:
-> >>>>> On Tue, Sep 24, 2019 at 1:12 PM Nicolas Saenz Julienne
-> >>>>> <nsaenzjulienne@suse.de> wrote:
-> >>>>>> Hi All,
-> >>>>>> this series tries to address one of the issues blocking us from
-> >>>>>> upstreaming Broadcom's STB PCIe controller[1]. Namely, the fact that
-> >>>>>> devices not represented in DT which sit behind a PCI bus fail to get the
-> >>>>>> bus' DMA addressing constraints.
-> >>>>>>
-> >>>>>> This is due to the fact that of_dma_configure() assumes it's receiving a
-> >>>>>> DT node representing the device being configured, as opposed to the PCIe
-> >>>>>> bridge node we currently pass. This causes the code to directly jump
-> >>>>>> into PCI's parent node when checking for 'dma-ranges' and misses
-> >>>>>> whatever was set there.
-> >>>>>>
-> >>>>>> To address this I create a new API in OF - inspired from Robin Murphys
-> >>>>>> original proposal[2] - which accepts a bus DT node as it's input in
-> >>>>>> order to configure a device's DMA constraints. The changes go deep into
-> >>>>>> of/address.c's implementation, as a device being having a DT node
-> >>>>>> assumption was pretty strong.
-> >>>>>>
-> >>>>>> On top of this work, I also cleaned up of_dma_configure() removing its
-> >>>>>> redundant arguments and creating an alternative function for the special
-> >>>>>> cases
-> >>>>>> not applicable to either the above case or the default usage.
-> >>>>>>
-> >>>>>> IMO the resulting functions are more explicit. They will probably
-> >>>>>> surface some hacky usages that can be properly fixed as I show with the
-> >>>>>> DT fixes on the Layerscape platform.
-> >>>>>>
-> >>>>>> This was also tested on a Raspberry Pi 4 with a custom PCIe driver and
-> >>>>>> on a Seattle AMD board.
-> >>>>>
-> >>>>> Humm, I've been working on this issue too. Looks similar though yours
-> >>>>> has a lot more churn and there's some other bugs I've found.
-> >>>>
-> >>>> That's good news, and yes now that I see it, some stuff on my series is
-> >>>> overly
-> >>>> complicated. Specially around of_translate_*().
-> >>>>
-> >>>> On top of that, you removed in of_dma_get_range():
-> >>>>
-> >>>> -   /*
-> >>>> -    * At least empty ranges has to be defined for parent node if
-> >>>> -    * DMA is supported
-> >>>> -    */
-> >>>> -   if (!ranges)
-> >>>> -           break;
-> >>>>
-> >>>> Which I assumed was bound to the standard and makes things easier.
-> >>>>
-> >>>>> Can you test out this branch[1]. I don't have any h/w needing this,
-> >>>>> but wrote a unittest and tested with modified QEMU.
-> >>>>
-> >>>> I reviewed everything, I did find a minor issue, see the patch attached.
-> >>>
-> >>> WRT that patch, the original intent of "force_dma" was purely to
-> >>> consider a device DMA-capable regardless of the presence of
-> >>> "dma-ranges". Expecting of_dma_configure() to do anything for a non-OF
-> >>> device has always been bogus - magic paravirt devices which appear out
-> >>> of nowhere and expect to be treated as genuine DMA masters are a
-> >>> separate problem that we haven't really approached yet.
-> >>
-> >> I agree it's clearly abusing the function. I have no problem with the behaviour
-> >> change if it's OK with you.
->
-> Thinking about it, you could probably just remove that call from the Xen
-> DRM driver now anyway - since the dma-direct rework, we lost the ability
-> to set dma_dummy_ops by default, and NULL ops now represent what it
-> (presumably) wants.
+On Tuesday, 2019-09-24 15:58:56 +0300, Jani Nikula wrote:
+> Hi all, v2 of [1], a little refactoring around drm_debug access to
+> abstract it better. There shouldn't be any functional changes.
+> 
+> I'd appreciate acks for merging the lot via drm-misc. If there are any
+> objections to that, we'll need to postpone the last patch until
+> everything has been merged and converted in drm-next.
+> 
+> BR,
+> Jani.
+> 
+> Cc: Eric Engestrom <eric.engestrom@intel.com>
+> Cc: Alex Deucher <alexander.deucher@amd.com>
+> Cc: Christian König <christian.koenig@amd.com>
+> Cc: David (ChunMing) Zhou <David1.Zhou@amd.com>
+> Cc: amd-gfx@lists.freedesktop.org
+> Cc: Ben Skeggs <bskeggs@redhat.com>
+> Cc: nouveau@lists.freedesktop.org
+> Cc: Rob Clark <robdclark@gmail.com>
+> Cc: Sean Paul <sean@poorly.run>
+> Cc: linux-arm-msm@vger.kernel.org
+> Cc: freedreno@lists.freedesktop.org
+> Cc: Francisco Jerez <currojerez@riseup.net>
+> Cc: Lucas Stach <l.stach@pengutronix.de>
+> Cc: Russell King <linux+etnaviv@armlinux.org.uk>
+> Cc: Christian Gmeiner <christian.gmeiner@gmail.com>
+> Cc: etnaviv@lists.freedesktop.org
+> 
+> 
+> [1] http://mid.mail-archive.com/cover.1568375189.git.jani.nikula@intel.com
+> 
+> Jani Nikula (9):
+>   drm/print: move drm_debug variable to drm_print.[ch]
+>   drm/print: add drm_debug_enabled()
+>   drm/i915: use drm_debug_enabled() to check for debug categories
+>   drm/print: rename drm_debug to __drm_debug to discourage use
 
-Not xen_dma_ops? In any case, I'll send out a patch for the the Xen
-folks to comment on.
+The above four patches are:
+Reviewed-by: Eric Engestrom <eric@engestrom.ch>
 
-> >> Robin, have you looked into supporting multiple dma-ranges? It's the next thing
-> >> we need for BCM STB's PCIe. I'll have a go at it myself if nothing is in the
-> >> works already.
-> >
-> > Multiple dma-ranges as far as configuring inbound windows should work
-> > already other than the bug when there's any parent translation. But if
-> > you mean supporting multiple DMA offsets and masks per device in the
-> > DMA API, there's nothing in the works yet.
->
-> There's also the in-between step of making of_dma_get_range() return a
-> size based on all the dma-ranges entries rather than only the first one
-> - otherwise, something like [1] can lead to pretty unworkable default
-> masks. We implemented that when doing acpi_dma_get_range(), it's just
-> that the OF counterpart never caught up.
-
-Right. I suppose we assume any holes in the ranges are addressable by
-the device but won't get used for other reasons (such as no memory
-there). However, to be correct, the range of the dma offset plus mask
-would need to be within the min start and max end addresses. IOW,
-while we need to round up (0xa_8000_0000 - 0x2c1c_0000) to the next
-power of 2, the 'correct' thing to do is round down.
-
-Rob
-
-> [1]
-> http://linux-arm.org/git?p=linux-rm.git;a=commitdiff;h=a2814af56b3486c2985a95540a88d8f9fa3a699f
+Did you check to make sure the `unlikely()` is propagated correctly
+outside the `drm_debug_enabled()` call?
