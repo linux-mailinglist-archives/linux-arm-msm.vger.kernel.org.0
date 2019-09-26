@@ -2,303 +2,115 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id D4851BF072
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Sep 2019 12:54:10 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4FC4EBF11F
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Sep 2019 13:20:56 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726866AbfIZKx3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 26 Sep 2019 06:53:29 -0400
-Received: from mail-wm1-f67.google.com ([209.85.128.67]:50518 "EHLO
-        mail-wm1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726769AbfIZKx2 (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 26 Sep 2019 06:53:28 -0400
-Received: by mail-wm1-f67.google.com with SMTP id 5so2213885wmg.0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 26 Sep 2019 03:53:26 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=YX2q2l0IB9GS+/BKJU46b4Bovrv9gcTs5FXGmQGtRPc=;
-        b=keiNF0rml3xsx0arv5W/KSyQHbNQKT7tWYoqsRluNg5J9hCDOgbBdlASZZSsdjtwJG
-         s8gambwY9uejDWxIuUZkyPnL7AnTHXEMpjhP+7FKHxXMY3alXXI5lRX4EYlhNsKD69qD
-         gyI4Ma7f85+klCPXn2Bzt1AA8C2FavJccfiD85EI2ktw6YJfrMKwsv5Otrn8v+jddq5k
-         7X99UKsSnDIBLPgY2jXndSdWwzo9EN/Uahx5i1gnCIINA/U3Puh+/UZcasV/vyZb8aX+
-         ZYZGLshCc1h85atr/tXZ9a3lJGEtWo6CEsAyAVitIn2lASqfQxOZ7KY5p5nRmRYyfgAN
-         S3XQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=YX2q2l0IB9GS+/BKJU46b4Bovrv9gcTs5FXGmQGtRPc=;
-        b=OFuzA1oreYLVFZwak15r60GhhfzDDF4nzvvwIYXW0RJHvSe/beFSshzRq2+Fec4s3f
-         LE4IuHqxRLJB6p6qIbW3LzwE7yEph+78gyzxRYHGRhYDcrCcerg1EzsbVGDdOYTkhBkJ
-         uwBqA30HWvjJm0nQbJbKC5SbDQwOgNps88vTeKb8ipnDXDDCG5U9rK+JmuQJ5YWZmJte
-         za9uXI2geCeK29fjNRIXlJRwimM8HVljSQz62NPcCqMv4aU2z5Yf0uNXk2OhIOYBw1OW
-         OvxBCSMwgeDn9fXYiAGT5JBfO/bWCDmuGfiuhiKcswTu1VncqiU4LtWKynWPiH5px6DP
-         mIog==
-X-Gm-Message-State: APjAAAUOjN6L4vZho73zn2ucQMw2aQ+HvemXVyLHGPHm2hdGj83gjZvZ
-        PDqv4NiH7ocyGNaq4Q8JWe5sBilSLTA=
-X-Google-Smtp-Source: APXvYqygBVHxolMaQX4WABLgHD4ZJgEc3yTU3QyzNNqaz2sztZBoMKKYa/fzTuLZmPKHBD2tG9Snug==
-X-Received: by 2002:a05:600c:34e:: with SMTP id u14mr2301720wmd.110.1569495205426;
-        Thu, 26 Sep 2019 03:53:25 -0700 (PDT)
-Received: from IcarusMOD.eternityproject.eu ([93.51.16.173])
-        by smtp.gmail.com with ESMTPSA id d9sm3468412wrc.44.2019.09.26.03.53.24
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 26 Sep 2019 03:53:24 -0700 (PDT)
-From:   kholk11@gmail.com
-To:     linux-arm-msm@vger.kernel.org
-Cc:     kholk11@gmail.com, marijns95@gmail.com, robdclark@gmail.com,
-        sean@poorly.run, airlied@linux.ie, daniel@ffwll.ch,
-        robh+dt@kernel.org, mark.rutland@arm.com, tglx@linutronix.de,
-        jonathan@marek.ca, bjorn.andersson@linaro.org,
-        georgi.djakov@linaro.org, gregkh@linuxfoundation.org,
-        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org
-Subject: [PATCH v2 5/5] drm/msm/adreno: Add support for Adreno 510 GPU
-Date:   Thu, 26 Sep 2019 12:52:56 +0200
-Message-Id: <20190926105256.61412-6-kholk11@gmail.com>
-X-Mailer: git-send-email 2.21.0
-In-Reply-To: <20190926105256.61412-1-kholk11@gmail.com>
-References: <20190926105256.61412-1-kholk11@gmail.com>
+        id S1725784AbfIZLUz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 26 Sep 2019 07:20:55 -0400
+Received: from foss.arm.com ([217.140.110.172]:46496 "EHLO foss.arm.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1725536AbfIZLUy (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 26 Sep 2019 07:20:54 -0400
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 9053B142F;
+        Thu, 26 Sep 2019 04:20:53 -0700 (PDT)
+Received: from [192.168.1.124] (unknown [172.31.20.19])
+        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id A8D1D3F67D;
+        Thu, 26 Sep 2019 04:20:50 -0700 (PDT)
+Subject: Re: [PATCH 00/11] of: Fix DMA configuration for non-DT masters
+To:     Nicolas Saenz Julienne <nsaenzjulienne@suse.de>,
+        Rob Herring <robh+dt@kernel.org>
+Cc:     "moderated list:ARM/FREESCALE IMX / MXC ARM ARCHITECTURE" 
+        <linux-arm-kernel@lists.infradead.org>, devicetree@vger.kernel.org,
+        Matthias Brugger <mbrugger@suse.com>,
+        Frank Rowand <frowand.list@gmail.com>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        linux-wireless <linux-wireless@vger.kernel.org>,
+        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
+        dri-devel <dri-devel@lists.freedesktop.org>,
+        etnaviv@lists.freedesktop.org,
+        "open list:DMA GENERIC OFFLOAD ENGINE SUBSYSTEM" 
+        <dmaengine@vger.kernel.org>,
+        Florian Fainelli <f.fainelli@gmail.com>,
+        Stefan Wahren <wahrenst@gmx.net>, james.quinlan@broadcom.com,
+        linux-pci@vger.kernel.org, linux-tegra@vger.kernel.org,
+        xen-devel@lists.xenproject.org,
+        Dan Williams <dan.j.williams@intel.com>,
+        freedreno <freedreno@lists.freedesktop.org>,
+        Linux Media Mailing List <linux-media@vger.kernel.org>
+References: <20190924181244.7159-1-nsaenzjulienne@suse.de>
+ <CAL_Jsq+v+svTyna7UzQdRVqfNc5Z_bgWzxNRXv7-Wqv3NwDu2g@mail.gmail.com>
+ <d1a31a2ec8eb2f226b1fb41f6c24ffb47c3bf7c7.camel@suse.de>
+ <e404c65b-5a66-6f91-5b38-8bf89a7697b2@arm.com>
+ <43fb5fe1de317d65a4edf592f88ea150c6e3b8cc.camel@suse.de>
+ <CAL_JsqLhx500cx3YLoC7HL1ux3bBpV+fEA2Qnk7D5RFGgiGzSw@mail.gmail.com>
+ <aa4c8d62-7990-e385-2bb1-cec55148f0a8@arm.com>
+ <CAL_JsqKKYcHPnA80ZwLY=Sk3e5MqrimedUhWQ5+iuPZXQxYHdA@mail.gmail.com>
+ <307b988d0c67fb1c42166eca12742bcfda09d92d.camel@suse.de>
+From:   Robin Murphy <robin.murphy@arm.com>
+Message-ID: <c27a51e1-1adf-ae6a-dc67-ae76222a1163@arm.com>
+Date:   Thu, 26 Sep 2019 12:20:44 +0100
+User-Agent: Mozilla/5.0 (Windows NT 10.0; rv:68.0) Gecko/20100101
+ Thunderbird/68.1.0
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+In-Reply-To: <307b988d0c67fb1c42166eca12742bcfda09d92d.camel@suse.de>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-GB
+Content-Transfer-Encoding: 7bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: "Angelo G. Del Regno" <kholk11@gmail.com>
+On 2019-09-26 11:44 am, Nicolas Saenz Julienne wrote:
+>>>>> Robin, have you looked into supporting multiple dma-ranges? It's the
+>>>>> next thing
+>>>>> we need for BCM STB's PCIe. I'll have a go at it myself if nothing is in
+>>>>> the
+>>>>> works already.
+>>>>
+>>>> Multiple dma-ranges as far as configuring inbound windows should work
+>>>> already other than the bug when there's any parent translation. But if
+>>>> you mean supporting multiple DMA offsets and masks per device in the
+>>>> DMA API, there's nothing in the works yet.
+> 
+> Sorry, I meant supporting multiple DMA offsets[1]. I think I could still make
+> it with a single DMA mask though.
 
-The Adreno 510 GPU is a stripped version of the Adreno 5xx,
-found in low-end SoCs like 8x56 and 8x76, which has 256K of
-GMEM, with no GPMU nor ZAP.
-Also, since the Adreno 5xx part of this driver seems to be
-developed with high-end Adreno GPUs in mind, and since this
-is a lower end one, add a comment making clear which GPUs
-which support is not implemented yet is not using the GPMU
-related hw init code, so that future developers will not go
-crazy with that.
+The main problem for supporting that case in general is the disgusting 
+carving up of the physical memory map you may have to do to guarantee 
+that a single buffer allocation cannot ever span two windows with 
+different offsets. I don't think we ever reached a conclusion on whether 
+that was even achievable in practice.
 
-By the way, the lower end Adreno GPUs with no GPMU are:
-A505/A506/A510 (usually no ZAP firmware)
-A508/A509/A512 (usually with ZAP firmware)
+>>> There's also the in-between step of making of_dma_get_range() return a
+>>> size based on all the dma-ranges entries rather than only the first one
+>>> - otherwise, something like [1] can lead to pretty unworkable default
+>>> masks. We implemented that when doing acpi_dma_get_range(), it's just
+>>> that the OF counterpart never caught up.
+>>
+>> Right. I suppose we assume any holes in the ranges are addressable by
+>> the device but won't get used for other reasons (such as no memory
+>> there). However, to be correct, the range of the dma offset plus mask
+>> would need to be within the min start and max end addresses. IOW,
+>> while we need to round up (0xa_8000_0000 - 0x2c1c_0000) to the next
+>> power of 2, the 'correct' thing to do is round down.
+> 
+> IIUC I also have this issue on my list. The RPi4 PCIe block has an integration
+> bug that only allows DMA to the lower 3GB. With dma-ranges of size 0xc000_0000
+> you get a 32bit DMA mask wich is not what you need. So far I faked it in the
+> device-tree but I guess it be better to add an extra check in
+> of_dma_configure(), decrease the mask and print some kind of warning stating
+> that DMA addressing is suboptimal.
 
-Signed-off-by: Angelo G. Del Regno <kholk11@gmail.com>
-Signed-off-by: AngeloGioacchino Del Regno <kholk11@gmail.com>
----
- drivers/gpu/drm/msm/adreno/a5xx_gpu.c      | 73 +++++++++++++++++-----
- drivers/gpu/drm/msm/adreno/a5xx_power.c    |  7 +++
- drivers/gpu/drm/msm/adreno/adreno_device.c | 15 +++++
- drivers/gpu/drm/msm/adreno/adreno_gpu.h    |  5 ++
- 4 files changed, 86 insertions(+), 14 deletions(-)
+Yeah, there's just no way for masks to describe that the device can 
+drive all the individual bits, just not in certain combinations :(
 
-diff --git a/drivers/gpu/drm/msm/adreno/a5xx_gpu.c b/drivers/gpu/drm/msm/adreno/a5xx_gpu.c
-index e9c55d1d6c04..e497e08b08f7 100644
---- a/drivers/gpu/drm/msm/adreno/a5xx_gpu.c
-+++ b/drivers/gpu/drm/msm/adreno/a5xx_gpu.c
-@@ -353,6 +353,9 @@ static int a5xx_me_init(struct msm_gpu *gpu)
- 		 * 2D mode 3 draw
- 		 */
- 		OUT_RING(ring, 0x0000000B);
-+	} else if (adreno_is_a510(adreno_gpu)) {
-+		/* Workaround for token and syncs */
-+		OUT_RING(ring, 0x00000001);
- 	} else {
- 		/* No workarounds enabled */
- 		OUT_RING(ring, 0x00000000);
-@@ -568,15 +571,24 @@ static int a5xx_hw_init(struct msm_gpu *gpu)
- 		0x00100000 + adreno_gpu->gmem - 1);
- 	gpu_write(gpu, REG_A5XX_UCHE_GMEM_RANGE_MAX_HI, 0x00000000);
- 
--	gpu_write(gpu, REG_A5XX_CP_MEQ_THRESHOLDS, 0x40);
--	if (adreno_is_a530(adreno_gpu))
--		gpu_write(gpu, REG_A5XX_CP_MERCIU_SIZE, 0x40);
--	if (adreno_is_a540(adreno_gpu))
--		gpu_write(gpu, REG_A5XX_CP_MERCIU_SIZE, 0x400);
--	gpu_write(gpu, REG_A5XX_CP_ROQ_THRESHOLDS_2, 0x80000060);
--	gpu_write(gpu, REG_A5XX_CP_ROQ_THRESHOLDS_1, 0x40201B16);
--
--	gpu_write(gpu, REG_A5XX_PC_DBG_ECO_CNTL, (0x400 << 11 | 0x300 << 22));
-+	if (adreno_is_a510(adreno_gpu)) {
-+		gpu_write(gpu, REG_A5XX_CP_MEQ_THRESHOLDS, 0x20);
-+		gpu_write(gpu, REG_A5XX_CP_MERCIU_SIZE, 0x20);
-+		gpu_write(gpu, REG_A5XX_CP_ROQ_THRESHOLDS_2, 0x40000030);
-+		gpu_write(gpu, REG_A5XX_CP_ROQ_THRESHOLDS_1, 0x20100D0A);
-+		gpu_write(gpu, REG_A5XX_PC_DBG_ECO_CNTL,
-+			  (0x200 << 11 | 0x200 << 22));
-+	} else {
-+		gpu_write(gpu, REG_A5XX_CP_MEQ_THRESHOLDS, 0x40);
-+		if (adreno_is_a530(adreno_gpu))
-+			gpu_write(gpu, REG_A5XX_CP_MERCIU_SIZE, 0x40);
-+		if (adreno_is_a540(adreno_gpu))
-+			gpu_write(gpu, REG_A5XX_CP_MERCIU_SIZE, 0x400);
-+		gpu_write(gpu, REG_A5XX_CP_ROQ_THRESHOLDS_2, 0x80000060);
-+		gpu_write(gpu, REG_A5XX_CP_ROQ_THRESHOLDS_1, 0x40201B16);
-+		gpu_write(gpu, REG_A5XX_PC_DBG_ECO_CNTL,
-+			  (0x400 << 11 | 0x300 << 22));
-+	}
- 
- 	if (adreno_gpu->info->quirks & ADRENO_QUIRK_TWO_PASS_USE_WFI)
- 		gpu_rmw(gpu, REG_A5XX_PC_DBG_ECO_CNTL, 0, (1 << 8));
-@@ -589,6 +601,19 @@ static int a5xx_hw_init(struct msm_gpu *gpu)
- 	/* Enable ME/PFP split notification */
- 	gpu_write(gpu, REG_A5XX_RBBM_AHB_CNTL1, 0xA6FFFFFF);
- 
-+	/*
-+	 *  In A5x, CCU can send context_done event of a particular context to
-+	 *  UCHE which ultimately reaches CP even when there is valid
-+	 *  transaction of that context inside CCU. This can let CP to program
-+	 *  config registers, which will make the "valid transaction" inside
-+	 *  CCU to be interpreted differently. This can cause gpu fault. This
-+	 *  bug is fixed in latest A510 revision. To enable this bug fix -
-+	 *  bit[11] of RB_DBG_ECO_CNTL need to be set to 0, default is 1
-+	 *  (disable). For older A510 version this bit is unused.
-+	 */
-+	if (adreno_is_a510(adreno_gpu))
-+		gpu_rmw(gpu, REG_A5XX_RB_DBG_ECO_CNTL, (1 << 11), 0);
-+
- 	/* Enable HWCG */
- 	a5xx_set_hwcg(gpu, true);
- 
-@@ -635,7 +660,7 @@ static int a5xx_hw_init(struct msm_gpu *gpu)
- 	/* UCHE */
- 	gpu_write(gpu, REG_A5XX_CP_PROTECT(16), ADRENO_PROTECT_RW(0xE80, 16));
- 
--	if (adreno_is_a530(adreno_gpu))
-+	if (adreno_is_a530(adreno_gpu) || adreno_is_a510(adreno_gpu))
- 		gpu_write(gpu, REG_A5XX_CP_PROTECT(17),
- 			ADRENO_PROTECT_RW(0x10000, 0x8000));
- 
-@@ -679,7 +704,8 @@ static int a5xx_hw_init(struct msm_gpu *gpu)
- 
- 	a5xx_preempt_hw_init(gpu);
- 
--	a5xx_gpmu_ucode_init(gpu);
-+	if (!adreno_is_a510(adreno_gpu))
-+		a5xx_gpmu_ucode_init(gpu);
- 
- 	ret = a5xx_ucode_init(gpu);
- 	if (ret)
-@@ -712,7 +738,8 @@ static int a5xx_hw_init(struct msm_gpu *gpu)
- 	}
- 
- 	/*
--	 * Try to load a zap shader into the secure world. If successful
-+	 * If the chip that we are using does support loading one, then
-+	 * try to load a zap shader into the secure world. If successful
- 	 * we can use the CP to switch out of secure mode. If not then we
- 	 * have no resource but to try to switch ourselves out manually. If we
- 	 * guessed wrong then access to the RBBM_SECVID_TRUST_CNTL register will
-@@ -1066,6 +1093,7 @@ static void a5xx_dump(struct msm_gpu *gpu)
- 
- static int a5xx_pm_resume(struct msm_gpu *gpu)
- {
-+	struct adreno_gpu *adreno_gpu = to_adreno_gpu(gpu);
- 	int ret;
- 
- 	/* Turn on the core power */
-@@ -1073,6 +1101,15 @@ static int a5xx_pm_resume(struct msm_gpu *gpu)
- 	if (ret)
- 		return ret;
- 
-+	if (adreno_is_a510(adreno_gpu)) {
-+		/* Halt the sp_input_clk at HM level */
-+		gpu_write(gpu, REG_A5XX_RBBM_CLOCK_CNTL, 0x00000055);
-+		a5xx_set_hwcg(gpu, true);
-+		/* Turn on sp_input_clk at HM level */
-+		gpu_rmw(gpu, REG_A5XX_RBBM_CLOCK_CNTL, 0xff, 0);
-+		return 0;
-+	}
-+
- 	/* Turn the RBCCU domain first to limit the chances of voltage droop */
- 	gpu_write(gpu, REG_A5XX_GPMU_RBCCU_POWER_CNTL, 0x778000);
- 
-@@ -1101,9 +1138,17 @@ static int a5xx_pm_resume(struct msm_gpu *gpu)
- 
- static int a5xx_pm_suspend(struct msm_gpu *gpu)
- {
-+	struct adreno_gpu *adreno_gpu = to_adreno_gpu(gpu);
-+	u32 mask = 0xf;
-+
-+	/* A510 has 3 XIN ports in VBIF */
-+	if (adreno_is_a510(adreno_gpu))
-+		mask = 0x7;
-+
- 	/* Clear the VBIF pipe before shutting down */
--	gpu_write(gpu, REG_A5XX_VBIF_XIN_HALT_CTRL0, 0xF);
--	spin_until((gpu_read(gpu, REG_A5XX_VBIF_XIN_HALT_CTRL1) & 0xF) == 0xF);
-+	gpu_write(gpu, REG_A5XX_VBIF_XIN_HALT_CTRL0, mask);
-+	spin_until((gpu_read(gpu, REG_A5XX_VBIF_XIN_HALT_CTRL1) &
-+				mask) == mask);
- 
- 	gpu_write(gpu, REG_A5XX_VBIF_XIN_HALT_CTRL0, 0);
- 
-diff --git a/drivers/gpu/drm/msm/adreno/a5xx_power.c b/drivers/gpu/drm/msm/adreno/a5xx_power.c
-index a3a06db675ba..321a8061fd32 100644
---- a/drivers/gpu/drm/msm/adreno/a5xx_power.c
-+++ b/drivers/gpu/drm/msm/adreno/a5xx_power.c
-@@ -297,6 +297,10 @@ int a5xx_power_init(struct msm_gpu *gpu)
- 	struct adreno_gpu *adreno_gpu = to_adreno_gpu(gpu);
- 	int ret;
- 
-+	/* Not all A5xx chips have a GPMU */
-+	if (adreno_is_a510(adreno_gpu))
-+		return 0;
-+
- 	/* Set up the limits management */
- 	if (adreno_is_a530(adreno_gpu))
- 		a530_lm_setup(gpu);
-@@ -326,6 +330,9 @@ void a5xx_gpmu_ucode_init(struct msm_gpu *gpu)
- 	unsigned int *data, *ptr, *cmds;
- 	unsigned int cmds_size;
- 
-+	if (adreno_is_a510(adreno_gpu))
-+		return;
-+
- 	if (a5xx_gpu->gpmu_bo)
- 		return;
- 
-diff --git a/drivers/gpu/drm/msm/adreno/adreno_device.c b/drivers/gpu/drm/msm/adreno/adreno_device.c
-index 40133a43960c..d0cd6bc0123b 100644
---- a/drivers/gpu/drm/msm/adreno/adreno_device.c
-+++ b/drivers/gpu/drm/msm/adreno/adreno_device.c
-@@ -114,6 +114,21 @@ static const struct adreno_info gpulist[] = {
- 		.gmem  = (SZ_1M + SZ_512K),
- 		.inactive_period = DRM_MSM_INACTIVE_PERIOD,
- 		.init  = a4xx_gpu_init,
-+	}, {
-+		.rev   = ADRENO_REV(5, 1, 0, ANY_ID),
-+		.revn = 510,
-+		.name = "A510",
-+		.fw = {
-+			[ADRENO_FW_PM4] = "a530_pm4.fw",
-+			[ADRENO_FW_PFP] = "a530_pfp.fw",
-+		},
-+		.gmem = SZ_256K,
-+		/*
-+		 * Increase inactive period to 250 to avoid bouncing
-+		 * the GDSC which appears to make it grumpy
-+		 */
-+		.inactive_period = 250,
-+		.init = a5xx_gpu_init,
- 	}, {
- 		.rev = ADRENO_REV(5, 3, 0, 2),
- 		.revn = 530,
-diff --git a/drivers/gpu/drm/msm/adreno/adreno_gpu.h b/drivers/gpu/drm/msm/adreno/adreno_gpu.h
-index c7441fb8313e..9f93916c8910 100644
---- a/drivers/gpu/drm/msm/adreno/adreno_gpu.h
-+++ b/drivers/gpu/drm/msm/adreno/adreno_gpu.h
-@@ -206,6 +206,11 @@ static inline int adreno_is_a430(struct adreno_gpu *gpu)
-        return gpu->revn == 430;
- }
- 
-+static inline int adreno_is_a510(struct adreno_gpu *gpu)
-+{
-+	return gpu->revn == 510;
-+}
-+
- static inline int adreno_is_a530(struct adreno_gpu *gpu)
- {
- 	return gpu->revn == 530;
--- 
-2.21.0
+The plan I have sketched out there is to merge dma_pfn_offset and 
+bus_dma_mask into a "DMA range" descriptor, so we can then hang one or 
+more of those off a device to properly cope with all these weird 
+interconnects. Conceptually it feels pretty straightforward; I think 
+most of the challenge is in implementing it efficiently. Plus there's 
+the question of whether it could also subsume the dma_mask as well.
 
+Robin.
