@@ -2,47 +2,47 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 02320BF278
+	by mail.lfdr.de (Postfix) with ESMTP id 8938CBF279
 	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Sep 2019 14:05:26 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726440AbfIZMFZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 26 Sep 2019 08:05:25 -0400
-Received: from mail-wm1-f67.google.com ([209.85.128.67]:52839 "EHLO
-        mail-wm1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725815AbfIZMFZ (ORCPT
+        id S1725815AbfIZMF0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 26 Sep 2019 08:05:26 -0400
+Received: from mail-wr1-f68.google.com ([209.85.221.68]:42545 "EHLO
+        mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726004AbfIZMFZ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
         Thu, 26 Sep 2019 08:05:25 -0400
-Received: by mail-wm1-f67.google.com with SMTP id r19so2457991wmh.2
-        for <linux-arm-msm@vger.kernel.org>; Thu, 26 Sep 2019 05:05:23 -0700 (PDT)
+Received: by mail-wr1-f68.google.com with SMTP id n14so2150244wrw.9
+        for <linux-arm-msm@vger.kernel.org>; Thu, 26 Sep 2019 05:05:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=sU9LGzm25m7VZZPogRsBDM2tG6wZORjJNn8G8mv06GY=;
-        b=bPlmIWMqsfl8ZAfuh/aBXpi4hC3cut+/yLP89KvOzHf684MaN+wxWn8M32T84p2d0B
-         AJPv9VYmjdLUkDZ1f0HXVxfYN7cvSFc7RrTeUe3PT3txnxlR8mXMp/mSj++lfrsCCUP7
-         xau/PPshZu+J5ulERk1ZbX23zXb8hrWa3qOViqeNS0pNt4vgZ0P5Gls1TT5FWVMYKnH6
-         eiXKQ4xaAdAzbjZokq1b1fgMLwJGSSRc1qtcpIyuQerBqBD+vXwTJOCJD6rxq+QZtUOo
-         jNpA+Sopnq51T3GY2Oh5raJHQfSG8rD5K2ZfdYvqc06XEIMn0ndRl9wryMwKw+57oMNi
-         H5nA==
+        bh=hM8YfKOj/veQZGpRjHkC1Z8EKmrCYB/PVErpOmpXBBM=;
+        b=lBuLbIw4VBqFeCaW65bXt3a9GvcgmPYUq/9I5AxJDVG/eQ9VtHShtO2zXx/zH0y/Ih
+         bs1Cytd9GRcn16B4ghrrY1A3nkd1rtSvpC3GQCeC2aYAXw7o1kxquZxjxeWVz3t2ONos
+         ym8Sv+6Ha/gpQPexDPsG95SJrV/v3ElbtlxM1YORNHm2uYqEGFJxrFViSmzqLey7DFZy
+         1JvOZ/RY9M4pLxRHMjQSg9PEkmTC8cf8CokM8TO4dK4KXGmE923rUZDAOyPDe/bwAzcO
+         Ne3NI3xkR3xjhvSXAC9EunpKM8hkqsTLMxyFw2P+qVJs2aSLdVkvZQDQrnlyH3xI3fD9
+         FR0g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=sU9LGzm25m7VZZPogRsBDM2tG6wZORjJNn8G8mv06GY=;
-        b=PFMmpgzMlUQN4U9O92EF+mWI2q4Df5PHAKcqtN9LO2YNvURE4Tli0Xl6r1bP2SrHCh
-         AAlfxzR9oZG6AYvlk/GkjZ1sXYCOejqUNzA+baSDFZUpuapaS5qU6Y7FGGszixscAERh
-         l3DRburB0qmbne2OjrBByDg2xiiVeSz1aCcKwMNNKNGxhB3Kgy1WRKTOm46quwtX1H2E
-         HenbC4WaGKmKLmf1MIJTAwcluinYXlPzat+Dz88edVw+VvP3nXsv2n+MuTZ1GfLI9bGp
-         oVcBX9QaLW+201zppIgIOTx701JK3b5xk4QN6T21QcPjE4RlqujF5djJTJNxoYqh+x/p
-         /NUg==
-X-Gm-Message-State: APjAAAVSnLzjVT1XvBROdRG8ka1437yeqNC7Rke5L1LVyiId2Dbimxo3
-        952SO2KgvzKcrnfMIk/aDVx3UKG6s0U=
-X-Google-Smtp-Source: APXvYqxVWTrsRb8oFVbw1gZHNMoT+7W7CEoKwY9OUqlbc2si7VSoXCsLKQwqF3gHNLg2GCh9t9rpxQ==
-X-Received: by 2002:a1c:2d11:: with SMTP id t17mr2787148wmt.147.1569499522699;
-        Thu, 26 Sep 2019 05:05:22 -0700 (PDT)
+        bh=hM8YfKOj/veQZGpRjHkC1Z8EKmrCYB/PVErpOmpXBBM=;
+        b=jLoLHjgG+8s5F615EWnjWYI7xJ2GEAsPmsm4830eOs90/qvrYvaAI82hV2EYijNN1/
+         IkZ0xFH2+FEReXg4OwP7EJstWYl1Cmt7P/Kqk3wiuqbSHNL7Qjuv5yznAtLl8KnNxeVP
+         ZgYCJ2FzLyogT+SHfIOS+QDm1a+y6+h0fUjep8MB24XExII838PFDywDPOjSiVaZK1+Z
+         B9E07Xy0K2cOsNg26RdrX9X9FuZAzlt4XkjCo9ue7GSULwIkrIj13PycSdXqhiwN1wap
+         CYKUAu8K35ExQDWhnNH0266thMmCgSkdgEpu79wQ/KIelIe+kgsngaasr9PTokUGr7El
+         1HIQ==
+X-Gm-Message-State: APjAAAXYt2grMOrI2Q/8lBy86WTpoHAj5txpwZnCn2KcL1XINt3IUxAj
+        B/h9XJQLtCNfb+yR0BGqt4K+iBf78oQ=
+X-Google-Smtp-Source: APXvYqwoV1mUBUqMaCRaQReRjtFRL+Eof45k7bEWpHYlUxNeuRjc0LbO5xv8g1O5IYmkkn1VosjXJQ==
+X-Received: by 2002:adf:e488:: with SMTP id i8mr2882218wrm.20.1569499523392;
+        Thu, 26 Sep 2019 05:05:23 -0700 (PDT)
 Received: from IcarusMOD.eternityproject.eu ([93.51.16.173])
-        by smtp.gmail.com with ESMTPSA id d193sm5289584wmd.0.2019.09.26.05.05.21
+        by smtp.gmail.com with ESMTPSA id d193sm5289584wmd.0.2019.09.26.05.05.22
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
         Thu, 26 Sep 2019 05:05:22 -0700 (PDT)
 From:   kholk11@gmail.com
@@ -50,9 +50,9 @@ To:     linux-arm-msm@vger.kernel.org
 Cc:     iommu@lists.linux-foundation.org, marijns95@gmail.com,
         agross@kernel.org, robdclark@gmail.com, joro@8bytes.org,
         AngeloGioacchino Del Regno <kholk11@gmail.com>
-Subject: [PATCH 4/6] iommu/qcom: Add support for AArch64 IOMMU pagetables
-Date:   Thu, 26 Sep 2019 14:05:14 +0200
-Message-Id: <20190926120516.4981-5-kholk11@gmail.com>
+Subject: [PATCH 5/6] iommu/qcom: Index contexts by asid number to allow asid 0
+Date:   Thu, 26 Sep 2019 14:05:15 +0200
+Message-Id: <20190926120516.4981-6-kholk11@gmail.com>
 X-Mailer: git-send-email 2.21.0
 In-Reply-To: <20190926120516.4981-1-kholk11@gmail.com>
 References: <20190926120516.4981-1-kholk11@gmail.com>
@@ -65,160 +65,85 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 From: AngeloGioacchino Del Regno <kholk11@gmail.com>
 
-Some IOMMUs associated with some TZ firmwares may support switching
-to the AArch64 pagetable format by sending a "set pagetable format"
-scm command indicating the IOMMU secure ID and the context number
-to switch.
+This driver was indexing the contexts by asid-1, which is probably
+done under the assumption that the first ASID is always 1.
 
-Add a DT property "qcom,use-aarch64-pagetables" for this driver to
-send this command to the secure world and to switch the pagetable
-format to benefit of the ARM64 IOMMU pagetables, where possible.
-
-Note that, even though the command should be valid to switch each
-context, the property is made global because:
-1. It doesn't make too much sense to switch only one or two
-   context(s) to AA64 instead of just the entire thing
-2. Some IOMMUs will go crazy and produce spectacular results when
-   trying to mix up the pagetables on a per-context basis.
+Unfortunately this is not entirely true: at least in the MSM8956
+and MSM8976 GPU IOMMU, the gpu_user context's ASID number is zero.
+To allow using an asid number of zero, stop indexing the contexts
+by asid-1 and rather index them by asid.
 
 Signed-off-by: AngeloGioacchino Del Regno <kholk11@gmail.com>
 ---
- .../devicetree/bindings/iommu/qcom,iommu.txt  |  2 +
- drivers/iommu/qcom_iommu.c                    | 55 +++++++++++++++----
- 2 files changed, 47 insertions(+), 10 deletions(-)
+ drivers/iommu/qcom_iommu.c | 19 +++++++++----------
+ 1 file changed, 9 insertions(+), 10 deletions(-)
 
-diff --git a/Documentation/devicetree/bindings/iommu/qcom,iommu.txt b/Documentation/devicetree/bindings/iommu/qcom,iommu.txt
-index 98102b323196..a4dd76b8c566 100644
---- a/Documentation/devicetree/bindings/iommu/qcom,iommu.txt
-+++ b/Documentation/devicetree/bindings/iommu/qcom,iommu.txt
-@@ -39,6 +39,8 @@ to non-secure vs secure interrupt line.
-   - reg            : Base address and size of context bank within the iommu
-   - interrupts     : The context fault irq.
-   - qcom,ctx-num   : The number associated to the context bank
-+  - qcom,use-aarch64-pagetables : Switch to AArch64 pagetable format on all
-+                                  contexts declared in this IOMMU
- 
- ** Optional properties:
- 
 diff --git a/drivers/iommu/qcom_iommu.c b/drivers/iommu/qcom_iommu.c
-index 2f31da2e7add..233ef496af27 100644
+index 233ef496af27..03c68fe9439b 100644
 --- a/drivers/iommu/qcom_iommu.c
 +++ b/drivers/iommu/qcom_iommu.c
-@@ -48,6 +48,7 @@ struct qcom_iommu_dev {
- 	void __iomem		*local_base;
+@@ -49,7 +49,7 @@ struct qcom_iommu_dev {
  	u32			 sec_id;
  	u8			 num_ctxs;
-+	bool			 use_aarch64_pt;
- 	struct qcom_iommu_ctx	*ctxs[0];   /* indexed by asid-1 */
+ 	bool			 use_aarch64_pt;
+-	struct qcom_iommu_ctx	*ctxs[0];   /* indexed by asid-1 */
++	struct qcom_iommu_ctx	*ctxs[0];   /* indexed by asid */
  };
  
-@@ -153,11 +154,17 @@ static void qcom_iommu_tlb_inv_range_nosync(unsigned long iova, size_t size,
- 	reg = leaf ? ARM_SMMU_CB_S1_TLBIVAL : ARM_SMMU_CB_S1_TLBIVA;
+ struct qcom_iommu_ctx {
+@@ -87,7 +87,7 @@ static struct qcom_iommu_ctx * to_ctx(struct iommu_fwspec *fwspec, unsigned asid
+ 	struct qcom_iommu_dev *qcom_iommu = to_iommu(fwspec);
+ 	if (!qcom_iommu)
+ 		return NULL;
+-	return qcom_iommu->ctxs[asid - 1];
++	return qcom_iommu->ctxs[asid];
+ }
  
- 	for (i = 0; i < fwspec->num_ids; i++) {
-+		struct qcom_iommu_dev *qcom_iommu = to_iommu(fwspec);
- 		struct qcom_iommu_ctx *ctx = to_ctx(fwspec, fwspec->ids[i]);
- 		size_t s = size;
+ static inline void
+@@ -604,12 +604,10 @@ static int qcom_iommu_of_xlate(struct device *dev, struct of_phandle_args *args)
+ 	qcom_iommu = platform_get_drvdata(iommu_pdev);
  
--		iova &= ~12UL;
--		iova |= ctx->asid;
-+		if (qcom_iommu->use_aarch64_pt) {
-+			iova >>= 12;
-+			iova |= (u64)ctx->asid << 48;
-+		} else {
-+			iova &= ~12UL;
-+			iova |= ctx->asid;
-+		}
- 		do {
- 			iommu_writel(ctx, reg, iova);
- 			iova += granule;
-@@ -222,6 +229,8 @@ static int qcom_iommu_init_domain(struct iommu_domain *domain,
- 	struct qcom_iommu_domain *qcom_domain = to_qcom_iommu_domain(domain);
- 	struct io_pgtable_ops *pgtbl_ops;
- 	struct io_pgtable_cfg pgtbl_cfg;
-+	enum io_pgtable_fmt pgtbl_fmt;
-+	unsigned long ias, oas;
- 	int i, ret = 0;
- 	u32 reg;
+ 	/* make sure the asid specified in dt is valid, so we don't have
+-	 * to sanity check this elsewhere, since 'asid - 1' is used to
+-	 * index into qcom_iommu->ctxs:
++	 * to sanity check this elsewhere:
+ 	 */
+-	if (WARN_ON(asid < 1) ||
+-	    WARN_ON(asid > qcom_iommu->num_ctxs) ||
+-	    WARN_ON(qcom_iommu->ctxs[asid - 1] == NULL))
++	if (WARN_ON(asid > qcom_iommu->num_ctxs) ||
++	    WARN_ON(qcom_iommu->ctxs[asid] == NULL))
+ 		return -EINVAL;
  
-@@ -229,16 +238,25 @@ static int qcom_iommu_init_domain(struct iommu_domain *domain,
- 	if (qcom_domain->iommu)
- 		goto out_unlock;
+ 	if (!fwspec->iommu_priv) {
+@@ -789,7 +787,7 @@ static int qcom_iommu_ctx_probe(struct platform_device *pdev)
  
-+	if (qcom_iommu->use_aarch64_pt) {
-+		pgtbl_fmt = ARM_64_LPAE_S1;
-+		ias = oas = 48;
-+	} else {
-+		pgtbl_fmt = ARM_32_LPAE_S1;
-+		ias = 32;
-+		oas = 40;
-+	}
-+
- 	pgtbl_cfg = (struct io_pgtable_cfg) {
- 		.pgsize_bitmap	= qcom_iommu_ops.pgsize_bitmap,
--		.ias		= 32,
--		.oas		= 40,
-+		.ias		= ias,
-+		.oas		= oas,
- 		.tlb		= &qcom_gather_ops,
- 		.iommu_dev	= qcom_iommu->dev,
- 	};
+ 	dev_dbg(dev, "found asid %u\n", ctx->asid);
  
- 	qcom_domain->iommu = qcom_iommu;
--	pgtbl_ops = alloc_io_pgtable_ops(ARM_32_LPAE_S1, &pgtbl_cfg, fwspec);
-+	pgtbl_ops = alloc_io_pgtable_ops(pgtbl_fmt, &pgtbl_cfg, fwspec);
- 	if (!pgtbl_ops) {
- 		dev_err(qcom_iommu->dev, "failed to allocate pagetable ops\n");
- 		ret = -ENOMEM;
-@@ -252,6 +270,7 @@ static int qcom_iommu_init_domain(struct iommu_domain *domain,
+-	qcom_iommu->ctxs[ctx->asid - 1] = ctx;
++	qcom_iommu->ctxs[ctx->asid] = ctx;
  
- 	for (i = 0; i < fwspec->num_ids; i++) {
- 		struct qcom_iommu_ctx *ctx = to_ctx(fwspec, fwspec->ids[i]);
-+		u32 tcr[2];
+ 	return 0;
+ }
+@@ -801,7 +799,7 @@ static int qcom_iommu_ctx_remove(struct platform_device *pdev)
  
- 		if (!ctx->secure_init) {
- 			ret = qcom_scm_restore_sec_cfg(qcom_iommu->sec_id, ctx->asid);
-@@ -264,12 +283,25 @@ static int qcom_iommu_init_domain(struct iommu_domain *domain,
+ 	platform_set_drvdata(pdev, NULL);
  
- 		qcom_iommu_reset_ctx(ctx);
+-	qcom_iommu->ctxs[ctx->asid - 1] = NULL;
++	qcom_iommu->ctxs[ctx->asid] = NULL;
  
-+		tcr[0] = pgtbl_cfg.arm_lpae_s1_cfg.tcr;
-+		tcr[1] = pgtbl_cfg.arm_lpae_s1_cfg.tcr >> 32;
-+		tcr[1] |= FIELD_PREP(TCR2_SEP, TCR2_SEP_UPSTREAM);
-+
-+		if (qcom_iommu->use_aarch64_pt) {
-+			/* This shall not fail, or spectacular things happen */
-+			if (qcom_scm_iommu_set_pt_format(qcom_iommu->sec_id,
-+							 ctx->asid, 1)) {
-+				dev_warn(qcom_iommu->dev,
-+					 "Cannot set AArch64 pt format\n");
-+				goto out_clear_iommu;
-+			}
-+
-+			tcr[1] |= TCR2_AS;
-+		}
-+
- 		/* TCR */
--		iommu_writel(ctx, ARM_SMMU_CB_TCR2,
--				(pgtbl_cfg.arm_lpae_s1_cfg.tcr >> 32) |
--				FIELD_PREP(TCR2_SEP, TCR2_SEP_UPSTREAM));
--		iommu_writel(ctx, ARM_SMMU_CB_TCR,
--				pgtbl_cfg.arm_lpae_s1_cfg.tcr);
-+		iommu_writel(ctx, ARM_SMMU_CB_TCR2, tcr[1]);
-+		iommu_writel(ctx, ARM_SMMU_CB_TCR, tcr[0]);
+ 	return 0;
+ }
+@@ -846,7 +844,8 @@ static int qcom_iommu_device_probe(struct platform_device *pdev)
+ 	for_each_child_of_node(dev->of_node, child)
+ 		max_asid = max(max_asid, get_asid(child));
  
- 		/* TTBRs */
- 		iommu_writeq(ctx, ARM_SMMU_CB_TTBR0,
-@@ -844,6 +876,9 @@ static int qcom_iommu_device_probe(struct platform_device *pdev)
- 		return -ENODEV;
- 	}
+-	sz = sizeof(*qcom_iommu) + (max_asid * sizeof(qcom_iommu->ctxs[0]));
++	sz = sizeof(*qcom_iommu);
++	sz += (max_asid + 1) * sizeof(qcom_iommu->ctxs[0]);
  
-+	if (of_property_read_bool(dev->of_node, "qcom,use-aarch64-pagetables"))
-+		qcom_iommu->use_aarch64_pt = true;
-+
- 	if (qcom_iommu_has_secure_context(qcom_iommu)) {
- 		ret = qcom_iommu_sec_ptbl_init(dev);
- 		if (ret) {
+ 	qcom_iommu = devm_kzalloc(dev, sz, GFP_KERNEL);
+ 	if (!qcom_iommu)
 -- 
 2.21.0
 
