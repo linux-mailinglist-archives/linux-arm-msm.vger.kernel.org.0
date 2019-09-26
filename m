@@ -2,130 +2,110 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 9A1ADBEFEC
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Sep 2019 12:45:01 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 942C9BF06C
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Sep 2019 12:54:08 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725878AbfIZKpA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 26 Sep 2019 06:45:00 -0400
-Received: from mx2.suse.de ([195.135.220.15]:58398 "EHLO mx1.suse.de"
-        rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-        id S1725813AbfIZKo7 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 26 Sep 2019 06:44:59 -0400
-X-Virus-Scanned: by amavisd-new at test-mx.suse.de
-Received: from relay2.suse.de (unknown [195.135.220.254])
-        by mx1.suse.de (Postfix) with ESMTP id 4D89AAFA7;
-        Thu, 26 Sep 2019 10:44:56 +0000 (UTC)
-Message-ID: <307b988d0c67fb1c42166eca12742bcfda09d92d.camel@suse.de>
-Subject: Re: [PATCH 00/11] of: Fix DMA configuration for non-DT masters
-From:   Nicolas Saenz Julienne <nsaenzjulienne@suse.de>
-To:     Rob Herring <robh+dt@kernel.org>,
-        Robin Murphy <robin.murphy@arm.com>
-Cc:     "moderated list:ARM/FREESCALE IMX / MXC ARM ARCHITECTURE" 
-        <linux-arm-kernel@lists.infradead.org>, devicetree@vger.kernel.org,
-        Matthias Brugger <mbrugger@suse.com>,
-        Frank Rowand <frowand.list@gmail.com>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        linux-wireless <linux-wireless@vger.kernel.org>,
-        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
-        dri-devel <dri-devel@lists.freedesktop.org>,
-        etnaviv@lists.freedesktop.org,
-        "open list:DMA GENERIC OFFLOAD ENGINE SUBSYSTEM" 
-        <dmaengine@vger.kernel.org>,
-        Florian Fainelli <f.fainelli@gmail.com>,
-        Stefan Wahren <wahrenst@gmx.net>, james.quinlan@broadcom.com,
-        linux-pci@vger.kernel.org, linux-tegra@vger.kernel.org,
-        xen-devel@lists.xenproject.org,
-        Dan Williams <dan.j.williams@intel.com>,
-        freedreno <freedreno@lists.freedesktop.org>,
-        Linux Media Mailing List <linux-media@vger.kernel.org>
-Date:   Thu, 26 Sep 2019 12:44:53 +0200
-In-Reply-To: <CAL_JsqKKYcHPnA80ZwLY=Sk3e5MqrimedUhWQ5+iuPZXQxYHdA@mail.gmail.com>
-References: <20190924181244.7159-1-nsaenzjulienne@suse.de>
-         <CAL_Jsq+v+svTyna7UzQdRVqfNc5Z_bgWzxNRXv7-Wqv3NwDu2g@mail.gmail.com>
-         <d1a31a2ec8eb2f226b1fb41f6c24ffb47c3bf7c7.camel@suse.de>
-         <e404c65b-5a66-6f91-5b38-8bf89a7697b2@arm.com>
-         <43fb5fe1de317d65a4edf592f88ea150c6e3b8cc.camel@suse.de>
-         <CAL_JsqLhx500cx3YLoC7HL1ux3bBpV+fEA2Qnk7D5RFGgiGzSw@mail.gmail.com>
-         <aa4c8d62-7990-e385-2bb1-cec55148f0a8@arm.com>
-         <CAL_JsqKKYcHPnA80ZwLY=Sk3e5MqrimedUhWQ5+iuPZXQxYHdA@mail.gmail.com>
-Content-Type: multipart/signed; micalg="pgp-sha256";
-        protocol="application/pgp-signature"; boundary="=-spHfnjbbIi+e7UZn+wYh"
-User-Agent: Evolution 3.32.4 
+        id S1726762AbfIZKxX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 26 Sep 2019 06:53:23 -0400
+Received: from mail-wm1-f67.google.com ([209.85.128.67]:40890 "EHLO
+        mail-wm1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726817AbfIZKxX (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 26 Sep 2019 06:53:23 -0400
+Received: by mail-wm1-f67.google.com with SMTP id b24so2063836wmj.5
+        for <linux-arm-msm@vger.kernel.org>; Thu, 26 Sep 2019 03:53:21 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=edVq6toJYtTG1F9wGfOEc0Dk1VMZscjnLagdzkANlQ4=;
+        b=PIu6pqs6DvVRWOC7lo0X0ctSHAZ30u/lCM4IA4tEeiLfx6xBsO7ZyZjDEYuzb1tsrO
+         arkdPbRVfrBozBRs2QGpPLvxgHYUR1CegZeE2fqc2I5a1kZbNQy92VurQGKbS2GmlwGt
+         /ixqttbBlYEb++l+mWbMeCa7JJCGKqW9R6CzSRjKrr1bRj4Syn5SPb8f7dra2FWkOl/f
+         ci6HBoJ9NG8u5xq7hh+KNFty5x/TZ+V9H3+zHBCTma1KO5JYj73ukl5Y/L343zL1+uWo
+         e5iBSxP7jKD/ugK3V/gYB0VtASWSU7pMBOLDdj7YHq6UqyC+Xc8ER/9rTA+78o+YDrz/
+         DX/w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=edVq6toJYtTG1F9wGfOEc0Dk1VMZscjnLagdzkANlQ4=;
+        b=OIrKfyv/Ml2/yjX5HgoUhJjes3OEgeQxo+Hp9MjBTRDIdvmgiXUVcbdBtAMv5hOj5C
+         RsXTYEwaSwqkT4bM4MhXrhc0dxnTG7jqxdOEEWGkvJMsvjqv2R0FrYpZe8JOMrK192n4
+         +ElXYBxFSqrx309j1y/U7DClSfn29M4V9p3mTpjOwdp/HdvBW5m25ioc54ZAkdJ0MFy7
+         DYZUsyhP+1HJT4IijI1YKbmhtVmjgXoidYURVneocXg9+i4IxMR/gFENVD9+DKKU5cjT
+         h74yXyiGPoWDBfyjXJfFIQebEXND6a4UtTXOpQPckzdJCMBoS4RotaCn6bpA9BWgUJ7k
+         Pcfw==
+X-Gm-Message-State: APjAAAW+nqhhN2FGr1P9sFmfBFTxjU7twlhbCp+oFMdmO5C+Qb7SRygM
+        p6Vd9m+Z74AkzJ+ezLEjKp/shq3RMCA=
+X-Google-Smtp-Source: APXvYqyUXjsRAd5bewdDGkceJIo2vtV19a4VCmE8yGuxHY0WGu2WNg/FtXqclOKryn8aOmIqfO48Ww==
+X-Received: by 2002:a1c:3281:: with SMTP id y123mr2382966wmy.118.1569495200278;
+        Thu, 26 Sep 2019 03:53:20 -0700 (PDT)
+Received: from IcarusMOD.eternityproject.eu ([93.51.16.173])
+        by smtp.gmail.com with ESMTPSA id d9sm3468412wrc.44.2019.09.26.03.53.18
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Thu, 26 Sep 2019 03:53:19 -0700 (PDT)
+From:   kholk11@gmail.com
+To:     linux-arm-msm@vger.kernel.org
+Cc:     kholk11@gmail.com, marijns95@gmail.com, robdclark@gmail.com,
+        sean@poorly.run, airlied@linux.ie, daniel@ffwll.ch,
+        robh+dt@kernel.org, mark.rutland@arm.com, tglx@linutronix.de,
+        jonathan@marek.ca, bjorn.andersson@linaro.org,
+        georgi.djakov@linaro.org, gregkh@linuxfoundation.org,
+        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org
+Subject: [PATCH v2 0/5] DRM/MSM: Add support for MSM8956 and Adreno 510
+Date:   Thu, 26 Sep 2019 12:52:51 +0200
+Message-Id: <20190926105256.61412-1-kholk11@gmail.com>
+X-Mailer: git-send-email 2.21.0
 MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+From: AngeloGioacchino Del Regno <kholk11@gmail.com>
 
---=-spHfnjbbIi+e7UZn+wYh
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+This patch series enables support for MSM8956/76 and its Adreno 510
+GPU on the current DRM driver.
 
-> > > > Robin, have you looked into supporting multiple dma-ranges? It's th=
-e
-> > > > next thing
-> > > > we need for BCM STB's PCIe. I'll have a go at it myself if nothing =
-is in
-> > > > the
-> > > > works already.
-> > >=20
-> > > Multiple dma-ranges as far as configuring inbound windows should work
-> > > already other than the bug when there's any parent translation. But i=
-f
-> > > you mean supporting multiple DMA offsets and masks per device in the
-> > > DMA API, there's nothing in the works yet.
+The personal aim is to upstream MSM8956 as much as possible.
 
-Sorry, I meant supporting multiple DMA offsets[1]. I think I could still ma=
-ke
-it with a single DMA mask though.
+This code has been tested on two Sony phones featuring the Qualcomm
+MSM8956 SoC.
 
-> > There's also the in-between step of making of_dma_get_range() return a
-> > size based on all the dma-ranges entries rather than only the first one
-> > - otherwise, something like [1] can lead to pretty unworkable default
-> > masks. We implemented that when doing acpi_dma_get_range(), it's just
-> > that the OF counterpart never caught up.
->=20
-> Right. I suppose we assume any holes in the ranges are addressable by
-> the device but won't get used for other reasons (such as no memory
-> there). However, to be correct, the range of the dma offset plus mask
-> would need to be within the min start and max end addresses. IOW,
-> while we need to round up (0xa_8000_0000 - 0x2c1c_0000) to the next
-> power of 2, the 'correct' thing to do is round down.
+Changes in v2:
+- MDP5: Documented tbu and tbu_rt clocks (Jeffrey)
+- Adreno510:
+  - Lower case hex where required (Jordan)
+  - Direct register writes (Jordan)
+  - Used gpu_rmw() where required (Jordan)
+  - No mentioning of unsupported A5xx (Jordan)
+  - ZAP firmware exclusions not per-model (Rob)
 
-IIUC I also have this issue on my list. The RPi4 PCIe block has an integrat=
-ion
-bug that only allows DMA to the lower 3GB. With dma-ranges of size 0xc000_0=
-000
-you get a 32bit DMA mask wich is not what you need. So far I faked it in th=
-e
-device-tree but I guess it be better to add an extra check in
-of_dma_configure(), decrease the mask and print some kind of warning statin=
-g
-that DMA addressing is suboptimal.
+Angelo G. Del Regno (5):
+  drm/msm/mdp5: Add optional TBU and TBU_RT clocks
+  drm/msm/mdp5: Add configuration for msm8x56
+  drm/msm/dsi: Add configuration for 28nm PLL on family B
+  drm/msm/dsi: Add configuration for 8x56
+  drm/msm/adreno: Add support for Adreno 510 GPU
 
-Regards,
-Nicolas
+ .../devicetree/bindings/display/msm/dsi.txt   |  1 +
+ .../devicetree/bindings/display/msm/mdp5.txt  |  2 +
+ drivers/gpu/drm/msm/adreno/a5xx_gpu.c         | 73 +++++++++++---
+ drivers/gpu/drm/msm/adreno/a5xx_power.c       |  7 ++
+ drivers/gpu/drm/msm/adreno/adreno_device.c    | 15 +++
+ drivers/gpu/drm/msm/adreno/adreno_gpu.h       |  5 +
+ drivers/gpu/drm/msm/disp/mdp5/mdp5_cfg.c      | 99 +++++++++++++++++++
+ drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c      | 10 ++
+ drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.h      |  2 +
+ drivers/gpu/drm/msm/dsi/dsi_cfg.c             | 22 +++++
+ drivers/gpu/drm/msm/dsi/dsi_cfg.h             |  1 +
+ drivers/gpu/drm/msm/dsi/phy/dsi_phy.c         |  2 +
+ drivers/gpu/drm/msm/dsi/phy/dsi_phy.h         |  1 +
+ drivers/gpu/drm/msm/dsi/phy/dsi_phy_28nm.c    | 18 ++++
+ 14 files changed, 244 insertions(+), 14 deletions(-)
 
-[1] https://lkml.org/lkml/2018/9/19/641
-
-
---=-spHfnjbbIi+e7UZn+wYh
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: This is a digitally signed message part
-Content-Transfer-Encoding: 7bit
-
------BEGIN PGP SIGNATURE-----
-
-iQEzBAABCAAdFiEErOkkGDHCg2EbPcGjlfZmHno8x/4FAl2MlqUACgkQlfZmHno8
-x/6+gwgAlzKCB9vN8cCZUfRnnPT+EcYA2/s3oFjf1ar+/e5UsMfCNI5W7cJaKzg9
-w0PGZ5VKk5N0wpkGIpUjOYQ9J5PFZwu5bqsce0zWywlRlYCexKvzpQfkplWi0JuI
-cVAt9Sw5mle+ppW+x9T5UlBcHoCByuQDG9ga44Z7O4jrk/lIp7vK2fmSN3hIEcHV
-gUPxojWighnxCu+5COgwa182Ncfo3tTLw39oV8uiLOzxXxVkprxdxQHakXPoyg1o
-WH0OvR09u1lXZAQ1qKtOxHNgKcrNzpr69VBUL/WYvrSqKdg0EI8QRmkByk5cYgrC
-ztco//83y3fCRh8dEph0BSrKU3/vFA==
-=P2KB
------END PGP SIGNATURE-----
-
---=-spHfnjbbIi+e7UZn+wYh--
+-- 
+2.21.0
 
