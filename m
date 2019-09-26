@@ -2,137 +2,236 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id B0368BF3BA
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Sep 2019 15:07:26 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D4A60BF51D
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Sep 2019 16:33:27 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726666AbfIZNH0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 26 Sep 2019 09:07:26 -0400
-Received: from mail-ot1-f68.google.com ([209.85.210.68]:44836 "EHLO
-        mail-ot1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726498AbfIZNHZ (ORCPT
+        id S1726987AbfIZOd1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 26 Sep 2019 10:33:27 -0400
+Received: from smtp.codeaurora.org ([198.145.29.96]:54574 "EHLO
+        smtp.codeaurora.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726984AbfIZOd0 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 26 Sep 2019 09:07:25 -0400
-Received: by mail-ot1-f68.google.com with SMTP id 21so1889169otj.11;
-        Thu, 26 Sep 2019 06:07:25 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=86m3tEw17ZZT6CjXyqouKt75t9HK9/dLvE6avVr8dZs=;
-        b=IvMHiMVBN63FdbueUV0JAG6kT4kin+SVuPTFlUn5a596ZWmXdMAlfNDdXQ1j49ySrf
-         aoQYwlQi+Z8D6pAfd+/sl6ubgmogsskTGqaE9rVSePiYXAFPIB3GAilS7+RIGuEVpvdl
-         CxqPGP12liizDVBd2vYUZIoTnvpNohXSAnlOlbJJYlqO9N1zKTfiekgMZo1dEH2IdtAo
-         oFPuAmzqg3ipv1AQR6+Bx+qFnaWU+e04iNv1nGwyY6+3QoyjwYlu/9sM/jUdyqkCGspk
-         qKqXOB9FZavJhIZVlKSlpQqK/iAgaq5kzzp4FQFn8ezPkByIvdXXQ/RwMCOK2BjsKYDk
-         X08w==
-X-Gm-Message-State: APjAAAWEtr6oNMxpg/lGXqXOalbrk2pLBgkwvBoAenNJTaDfOxxpi3MK
-        GzkYtBNXRPcfUflO1MCptdgEKB2tnyw0eLpTKRk=
-X-Google-Smtp-Source: APXvYqyF+2ywzccFvxySPta2+p7JqxfW8g7zy3c181s3oawgGhiKDX3kMuzJ0IclsWTNlSfKVlQf33YA/yysIT0xMpg=
-X-Received: by 2002:a9d:193:: with SMTP id e19mr2408625ote.107.1569503244659;
- Thu, 26 Sep 2019 06:07:24 -0700 (PDT)
+        Thu, 26 Sep 2019 10:33:26 -0400
+Received: by smtp.codeaurora.org (Postfix, from userid 1000)
+        id 0B15860BF9; Thu, 26 Sep 2019 14:33:25 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
+        s=default; t=1569508405;
+        bh=fOpT9JZFuSEtZdGC6HncrAYtN9PjpbcvId6OJQD6nYU=;
+        h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
+        b=Xa8wAxdIyxYios5HF9laFu8pMfqsojsq4WYnTnI8K43vfME/m+Z+5KRpYbxIaJ6Cc
+         9naBtpMJ97z1UXHPl0ribCLIKPFnsM4GOHIGrq5fO4SSqCxkjbV2qq65fyt6Nlzfzp
+         2/Se2lU376MxQwNANWa0F//qCGUEIpDkrjvnspuw=
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        pdx-caf-mail.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.7 required=2.0 tests=ALL_TRUSTED,BAYES_00,
+        DKIM_INVALID,DKIM_SIGNED autolearn=no autolearn_force=no version=3.4.0
+Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
+        by smtp.codeaurora.org (Postfix) with ESMTP id B8A0A609F3;
+        Thu, 26 Sep 2019 14:33:21 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
+        s=default; t=1569508401;
+        bh=fOpT9JZFuSEtZdGC6HncrAYtN9PjpbcvId6OJQD6nYU=;
+        h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
+        b=ntcP0jtGbWkQtaoZKW3vi2xqISw73RTDHwYbc38MGJfAP9Xh/yHr+9p1lYysoppBf
+         GIxcZXEyDa2/rkgXQOvW4k1j/6P5hsqryhtnJ332wlaaljHspAHrjyXBjd+G5YKde9
+         qsDQeqULU1nfPzgE0fTiwVaCbFiOLmHVF/GUXoUs=
 MIME-Version: 1.0
-References: <20190920145543.1732316-1-arnd@arndb.de> <20190920164545.68FFB20717@mail.kernel.org>
- <CAK8P3a2j6QG19i3YtRPh7qD4Zr5TiHmK_5=s9mSD2pHVmE99HA@mail.gmail.com> <20190920210622.51382205F4@mail.kernel.org>
-In-Reply-To: <20190920210622.51382205F4@mail.kernel.org>
-From:   Geert Uytterhoeven <geert@linux-m68k.org>
-Date:   Thu, 26 Sep 2019 15:07:13 +0200
-Message-ID: <CAMuHMdWqCQD+3dzn8orUjDcXn123VujNgPQz20hLOF3=F2BP5w@mail.gmail.com>
-Subject: Re: [PATCH] mbox: qcom: avoid unused-variable warning
-To:     Stephen Boyd <sboyd@kernel.org>
-Cc:     Arnd Bergmann <arnd@arndb.de>,
-        Geert Uytterhoeven <geert+renesas@glider.be>,
-        Andy Gross <agross@kernel.org>,
-        Jassi Brar <jassisinghbrar@gmail.com>,
-        Niklas Cassel <niklas.cassel@linaro.org>,
-        Jorge Ramirez-Ortiz <jorge.ramirez-ortiz@linaro.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Jassi Brar <jaswinder.singh@linaro.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
+Content-Transfer-Encoding: 7bit
+Date:   Thu, 26 Sep 2019 07:33:21 -0700
+From:   mnalajal@codeaurora.org
+To:     Greg KH <gregkh@linuxfoundation.org>
+Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>, rafael@kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Linus Walleij <linus.walleij@linaro.org>
+Subject: Re: [PATCH] base: soc: Export soc_device_to_device API
+In-Reply-To: <20190924045005.GB2700@kroah.com>
+References: <20190919213203.GA395325@kroah.com>
+ <20190919215300.GC1418@minitux> <20190919215836.GA426988@kroah.com>
+ <20190919221456.GA63675@minitux> <20190919222525.GA445429@kroah.com>
+ <20190919224017.GB63675@minitux> <20190919224514.GA447028@kroah.com>
+ <20190920033651.GC63675@minitux> <20190920061006.GC473898@kroah.com>
+ <5d9d1f3d11b1e4173990d4c5ac547193@codeaurora.org>
+ <20190924045005.GB2700@kroah.com>
+Message-ID: <c2ea4365915e4a0fbb3e199cbdb9e1df@codeaurora.org>
+X-Sender: mnalajal@codeaurora.org
+User-Agent: Roundcube Webmail/1.2.5
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Stephen,
+On 2019-09-23 21:50, Greg KH wrote:
+> On Mon, Sep 23, 2019 at 02:35:33PM -0700, mnalajal@codeaurora.org 
+> wrote:
+>> On 2019-09-19 23:10, Greg KH wrote:
+>> > On Thu, Sep 19, 2019 at 08:36:51PM -0700, Bjorn Andersson wrote:
+>> > > On Thu 19 Sep 15:45 PDT 2019, Greg KH wrote:
+>> > >
+>> > > > On Thu, Sep 19, 2019 at 03:40:17PM -0700, Bjorn Andersson wrote:
+>> > > > > On Thu 19 Sep 15:25 PDT 2019, Greg KH wrote:
+>> > > > >
+>> > > > > > On Thu, Sep 19, 2019 at 03:14:56PM -0700, Bjorn Andersson wrote:
+>> > > > > > > On Thu 19 Sep 14:58 PDT 2019, Greg KH wrote:
+>> > > > > > >
+>> > > > > > > > On Thu, Sep 19, 2019 at 02:53:00PM -0700, Bjorn Andersson wrote:
+>> > > > > > > > > On Thu 19 Sep 14:32 PDT 2019, Greg KH wrote:
+>> > > > > > > > >
+>> > > > > > > > > > On Thu, Sep 19, 2019 at 02:13:44PM -0700, Murali Nalajala wrote:
+>> > > > > > > > > > > If the soc drivers want to add custom sysfs entries it needs to
+>> > > > > > > > > > > access "dev" field in "struct soc_device". This can be achieved
+>> > > > > > > > > > > by "soc_device_to_device" API. Soc drivers which are built as a
+>> > > > > > > > > > > module they need above API to be exported. Otherwise one can
+>> > > > > > > > > > > observe compilation issues.
+>> > > > > > > > > > >
+>> > > > > > > > > > > Signed-off-by: Murali Nalajala <mnalajal@codeaurora.org>
+>> > > > > > > > > > > ---
+>> > > > > > > > > > >  drivers/base/soc.c | 1 +
+>> > > > > > > > > > >  1 file changed, 1 insertion(+)
+>> > > > > > > > > > >
+>> > > > > > > > > > > diff --git a/drivers/base/soc.c b/drivers/base/soc.c
+>> > > > > > > > > > > index 7c0c5ca..4ad52f6 100644
+>> > > > > > > > > > > --- a/drivers/base/soc.c
+>> > > > > > > > > > > +++ b/drivers/base/soc.c
+>> > > > > > > > > > > @@ -41,6 +41,7 @@ struct device *soc_device_to_device(struct soc_device *soc_dev)
+>> > > > > > > > > > >  {
+>> > > > > > > > > > >  	return &soc_dev->dev;
+>> > > > > > > > > > >  }
+>> > > > > > > > > > > +EXPORT_SYMBOL_GPL(soc_device_to_device);
+>> > > > > > > > > > >
+>> > > > > > > > > > >  static umode_t soc_attribute_mode(struct kobject *kobj,
+>> > > > > > > > > > >  				struct attribute *attr,
+>> > > > > > > > > >
+>> > > > > > > > > > What in-kernel driver needs this?
+>> > > > > > > > > >
+>> > > > > > > > >
+>> > > > > > > > > Half of the drivers interacting with the soc driver calls this API,
+>> > > > > > > > > several of these I see no reason for being builtin (e.g.
+>> > > > > > > > > ux500 andversatile). So I think this patch makes sense to allow us to
+>> > > > > > > > > build these as modules.
+>> > > > > > > > >
+>> > > > > > > > > > Is linux-next breaking without this?
+>> > > > > > > > > >
+>> > > > > > > > >
+>> > > > > > > > > No, we postponed the addition of any sysfs attributes in the Qualcomm
+>> > > > > > > > > socinfo driver.
+>> > > > > > > > >
+>> > > > > > > > > > We don't export things unless we have a user of the export.
+>> > > > > > > > > >
+>> > > > > > > > > > Also, adding "custom" sysfs attributes is almost always not the correct
+>> > > > > > > > > > thing to do at all.  The driver should be doing it, by setting up the
+>> > > > > > > > > > attribute group properly so that the driver core can do it automatically
+>> > > > > > > > > > for it.
+>> > > > > > > > > >
+>> > > > > > > > > > No driver should be doing individual add/remove of sysfs files.  If it
+>> > > > > > > > > > does so, it is almost guaranteed to be doing it incorrectly and racing
+>> > > > > > > > > > userspace.
+>> > > > > > > > > >
+>> > > > > > > > >
+>> > > > > > > > > The problem here is that the attributes are expected to be attached to
+>> > > > > > > > > the soc driver, which is separate from the platform-specific drivers. So
+>> > > > > > > > > there's no way to do platform specific attributes the right way.
+>> > > > > > > > >
+>> > > > > > > > > > And yes, there's loads of in-kernel examples of doing this wrong, I've
+>> > > > > > > > > > been working on fixing that up, look at the patches now in Linus's tree
+>> > > > > > > > > > for platform and USB drivers that do this as examples of how to do it
+>> > > > > > > > > > right.
+>> > > > > > > > > >
+>> > > > > > > > >
+>> > > > > > > > > Agreed, this patch should not be used as an approval for any crazy
+>> > > > > > > > > attributes; but it's necessary in order to extend the soc device's
+>> > > > > > > > > attributes, per the current design.
+>> > > > > > > >
+>> > > > > > > > Wait, no, let's not let the "current design" remain if it is broken!
+>> > > > > > > >
+>> > > > > > > > Why can't the soc driver handle the attributes properly so that the
+>> > > > > > > > individual driver doesn't have to do the create/remove?
+>> > > > > > > >
+>> > > > > > >
+>> > > > > > > The custom attributes that these drivers want to add to the common ones
+>> > > > > > > are known in advance, so I presume we could have them passed into
+>> > > > > > > soc_device_register() and registered together with the common
+>> > > > > > > attributes...
+>> > > > > > >
+>> > > > > > > It sounds like it's worth a prototype.
+>> > > > > >
+>> > > > > > Do you have an in-kernel example I can look at to get an idea of what is
+>> > > > > > needed here?
+>> > > > > >
+>> > > > >
+>> > > > > realview_soc_probe(), in drivers/soc/versatile/soc-realview.c,
+>> > > > > implements the current mechanism of acquiring the soc's struct device
+>> > > > > and then issuing a few device_create_file calls on that.
+>> > > >
+>> > > > That looks to be a trivial driver to fix up.  Look at 6d03c140db2e
+>> > > > ("USB: phy: fsl-usb: convert platform driver to use dev_groups") as an
+>> > > > example of how to do this.
+>> > > >
+>> > >
+>> > > The difference between the two cases is that in the fsl-usb case it's
+>> > > attributes of the device itself, while in the soc case the
+>> > > realview-soc
+>> > > driver (or the others doing this) calls soc_device_register() to
+>> > > register a new (dangling) soc device, which it then adds its
+>> > > attributes
+>> > > onto.
+>> >
+>> > That sounds really really odd.  Why can't the soc device do the creation
+>> > "automatically" when the device is registered?  The soc core should
+>> > handle this for the soc "drivers", that's what it is there for.
+>> >
+>> Clients are registering to soc framework using 
+>> "soce_device_register()"
+>> with "soc_device_attribute". This attribute structure does not have 
+>> all
+>> the sysfs fields what client are interested. Hence clients are 
+>> handling
+>> their required sysfs fields in their drivers.
+>> https://elixir.bootlin.com/linux/v5.3/source/drivers/base/soc.c#L114
+> 
+> Then you should fix that :)
+If i understand, you are asking me to address additional sysfs entries 
+from the client side using "default attribute" groups.
+I saw your patches about "dev_groups" usage which might be part of 
+5.4-rc1.
+If i go with above approach, i end up seeing the soc information at two 
+different sysfs paths i.e.
+Is this my understanding correct?
 
-On Fri, Sep 20, 2019 at 11:06 PM Stephen Boyd <sboyd@kernel.org> wrote:
-> Quoting Arnd Bergmann (2019-09-20 12:27:50)
-> > On Fri, Sep 20, 2019 at 6:45 PM Stephen Boyd <sboyd@kernel.org> wrote:
-> > > > @@ -54,11 +60,6 @@ static int qcom_apcs_ipc_probe(struct platform_device *pdev)
-> > > >         void __iomem *base;
-> > > >         unsigned long i;
-> > > >         int ret;
-> > > > -       const struct of_device_id apcs_clk_match_table[] = {
-> > >
-> > > Does marking it static here work too? It would be nice to limit the
-> > > scope of this variable to this function instead of making it a global.
-> > > Also, it might be slightly smaller code size if that works.
-> >
-> > No, I just tried and the warning returned.
+1. /sys/devices/soc0/*
+2. /sys/bus/platform/drivers/msm-socinfo/*
 
-It's there for the convenience for the user, so he doesn't have to add it
-himself explicitly.
+Couple of things which i can think of addressing this issue is:
+1. Modify the soc framework APIs to pass the client side sysfs 
+attributes. This will ensure all the soc information fall under 
+/sys/devices/soc0/*
+2. Modify "struct soc_device_attribute" and add more entries. So that we 
+do not need to change any soc framework.
+Problem here is others might have a different requirement which will not 
+be full fill if i do this.
 
-> ("of/device: Nullify match table in of_match_device() for CONFIG_OF=n"),
-> but it's been 5 years! Surely we can revert this change now that commit
-> 219a7bc577e6 ("spi: rspi: Use of_device_get_match_data() helper") is
-> merged.
-
-Right, the particular error case in the RSPI driver can no longer happen.
-
-Calling of_device_get_match_data() is the better solution anyway, as
-that uses the match table stored in dev->driver->of_match_table, so
-there's no need to pass the table explicitly, and conditionally.
-
-Hence...
-
-> --- a/drivers/leds/leds-pca9532.c
-> +++ b/drivers/leds/leds-pca9532.c
-> @@ -472,7 +472,7 @@ pca9532_of_populate_pdata(struct device *dev, struct device_node *np)
->         int i = 0;
->         const char *state;
->
-> -       match = of_match_device(of_pca9532_leds_match, dev);
-> +       match = of_match_device(of_match_ptr(of_pca9532_leds_match), dev);
->         if (!match)
->                 return ERR_PTR(-ENODEV);
-
-Please convert to of_device_get_match_data() instead of adding
-of_match_ptr() invocations...
-
-> @@ -525,7 +525,7 @@ static int pca9532_probe(struct i2c_client *client,
->                         dev_err(&client->dev, "no platform data\n");
->                         return -EINVAL;
->                 }
-> -               of_id = of_match_device(of_pca9532_leds_match,
-> +               of_id = of_match_device(of_match_ptr(of_pca9532_leds_match),
-
-Likewise.
-
-> --- a/sound/soc/jz4740/jz4740-i2s.c
-> +++ b/sound/soc/jz4740/jz4740-i2s.c
-> @@ -503,7 +503,7 @@ static int jz4740_i2s_dev_probe(struct platform_device *pdev)
->         if (!i2s)
->                 return -ENOMEM;
->
-> -       match = of_match_device(jz4740_of_matches, &pdev->dev);
-> +       match = of_match_device(of_match_ptr(jz4740_of_matches), &pdev->dev);
-
-Given of_device_get_match_data() returns NULL, not an error code, even
-this one could use of_device_get_match_data().
-
->         if (match)
->                 i2s->version = (enum jz47xx_i2s_version)match->data;
-
-Gr{oetje,eeting}s,
-
-                        Geert
-
--- 
-Geert Uytterhoeven -- There's lots of Linux beyond ia32 -- geert@linux-m68k.org
-
-In personal conversations with technical people, I call myself a hacker. But
-when I'm talking to journalists I just say "programmer" or something like that.
-                                -- Linus Torvalds
+> 
+>> > > We can't use dev_groups, because the soc_device (soc.c) isn't
+>> > > actually a
+>> > > driver and the list of attributes is a combination of things from
+>> > > soc.c
+>> > > and e.g. soc-realview.c.
+>> > >
+>> > > But if we pass a struct attribute_group into soc_device_register() and
+>> > > then have that register both groups using dev.groups, this should be
+>> > > much cleaner at least.
+>> >
+>> > Don't you have a structure you can store these in as well?
+>> At present client is populating entries one-by-one
+>> https://android.googlesource.com/kernel/msm/+/android-7.1.0_r0.2/drivers/soc/qcom/socinfo.c#1254
+> 
+> And that is known to be broken and racy and will cause problems with
+> userspace.  This should be fixed...
+I saw your explanation here about race 
+http://kroah.com/log/blog/2013/06/26/how-to-create-a-sysfs-file-correctly/
+> 
+> thanks,
+> 
+> greg k-h
