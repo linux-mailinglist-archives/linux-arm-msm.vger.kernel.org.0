@@ -2,123 +2,107 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id E451FC0BF4
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 Sep 2019 21:10:25 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id EB124C0D25
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 Sep 2019 23:18:18 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725980AbfI0TKZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 27 Sep 2019 15:10:25 -0400
-Received: from mail-ot1-f67.google.com ([209.85.210.67]:32977 "EHLO
-        mail-ot1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725790AbfI0TKZ (ORCPT
+        id S1726116AbfI0VRv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 27 Sep 2019 17:17:51 -0400
+Received: from mail-pg1-f194.google.com ([209.85.215.194]:36743 "EHLO
+        mail-pg1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725306AbfI0VRv (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 27 Sep 2019 15:10:25 -0400
-Received: by mail-ot1-f67.google.com with SMTP id o9so2409777otl.0;
-        Fri, 27 Sep 2019 12:10:24 -0700 (PDT)
+        Fri, 27 Sep 2019 17:17:51 -0400
+Received: by mail-pg1-f194.google.com with SMTP id t14so4128754pgs.3
+        for <linux-arm-msm@vger.kernel.org>; Fri, 27 Sep 2019 14:17:49 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:content-transfer-encoding:in-reply-to
+         :user-agent;
+        bh=fIW9bjsbsDCoAYd1MI1Avm6rTaCkSpKz7mkNvIdoEoY=;
+        b=szfWtmIrwjzdD2PBxRD+UIstHqxjUH+lKlGcUD5u7w9UIwAqdA3JEjexN15j684Jso
+         oSGq/FKn5XDtCM98EUy6YSFFH7LFdleH6+KXChQ7KGfthYAF81uR2G2fK6INd5a9skx5
+         WVNlaL8hFy71wm+zVMraWozeALfoyncDIdipIIi96ILYm7fYv46nFQMMCCZCmxzxYbLV
+         Hac9mUBdnTlL3jd5Z3oz7xAZ4yq4KKCzQEGwLrsw0X2vALxYc7vCThZoGLIHt8bXMlTf
+         yB47vUOkmx0u/c4P7bf6EwZMOytfC9pnNd3AGjHueE2XYuGoReQwYmG9xwgddx1G6igs
+         K5pQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=SShdvwm8YmQTkXaAnJKKf+Jvu9BeG7WtDH8DT7H1nHQ=;
-        b=j7i5U6c5nwbzR3j9ExxdoN0UmD0qTgYsdlMMuQWN4WQVGeBJ05InS6x/7klJMjrRjs
-         RX681dikhPz8NnSajOxxNRuHFdVehIxVc8ZWHSrQEZK8DnfhmN3NgD6nED6UVglvVCnH
-         Znd+KI/WB8jxgLts9MRYTsSSQjf9TQKck6UkyYSPzXwtAHv/kcbn9Xz91Zh6Bm2cSrTo
-         vch/nMUfeKBl5+3gPWkhqg/h01vFFlLkOz4WW59oGId4gTgKDlPQSFLwntkuZP3WC0GR
-         awjURk+su/WKcpoyC0RfLUS1aahtj3jOoMl07UNBGtbq6Rz3xP+KPHNQtrkkyPrH+FrB
-         er9g==
-X-Gm-Message-State: APjAAAXRmdMY3IU5e9sCig369Sdn8HOTPyq2OW9xNhux38uMAuF6aJcJ
-        DZbYB15iTDkLgMLFjzapXuPmKKd9K7N5r8vXugg=
-X-Google-Smtp-Source: APXvYqy5j/Y8YJ693vdOu2We7Tm361Z+yjcnT+dnwM+5DnDEJBNT2O/FoVFFQp+ndNDD75+fJh/sg1Mc3jQYsmUlvMM=
-X-Received: by 2002:a9d:193:: with SMTP id e19mr4326637ote.107.1569611424113;
- Fri, 27 Sep 2019 12:10:24 -0700 (PDT)
-MIME-Version: 1.0
-References: <20190920145543.1732316-1-arnd@arndb.de> <20190920164545.68FFB20717@mail.kernel.org>
- <CAK8P3a2j6QG19i3YtRPh7qD4Zr5TiHmK_5=s9mSD2pHVmE99HA@mail.gmail.com>
- <20190920210622.51382205F4@mail.kernel.org> <CAMuHMdWqCQD+3dzn8orUjDcXn123VujNgPQz20hLOF3=F2BP5w@mail.gmail.com>
- <20190927182604.79F3E217D7@mail.kernel.org>
-In-Reply-To: <20190927182604.79F3E217D7@mail.kernel.org>
-From:   Geert Uytterhoeven <geert@linux-m68k.org>
-Date:   Fri, 27 Sep 2019 21:10:13 +0200
-Message-ID: <CAMuHMdUW0UcPDJcw8A4imPfVc5ywbMGuORungaeSk9j0omAjfQ@mail.gmail.com>
-Subject: Re: [PATCH] mbox: qcom: avoid unused-variable warning
-To:     Stephen Boyd <sboyd@kernel.org>
-Cc:     Arnd Bergmann <arnd@arndb.de>,
-        Geert Uytterhoeven <geert+renesas@glider.be>,
-        Andy Gross <agross@kernel.org>,
-        Jassi Brar <jassisinghbrar@gmail.com>,
-        Niklas Cassel <niklas.cassel@linaro.org>,
-        Jorge Ramirez-Ortiz <jorge.ramirez-ortiz@linaro.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Jassi Brar <jaswinder.singh@linaro.org>,
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        bh=fIW9bjsbsDCoAYd1MI1Avm6rTaCkSpKz7mkNvIdoEoY=;
+        b=i21FLU8hh/0igNaBPMMsZHEgp/BRmGV9wxI5Qo7pMjqbGstmGZWjw8i0LZ91f0hiJu
+         BflWgJWubl0COIot0ght4BDbXhI4Pnoo17YaW9YBwsf7nRriCNOK8TySvAR4zWpjhjPC
+         Gxa4EEvHblo/+hV+X8dXat9Tw3Ylt4aMs+2VoD8SfGJOBpHQrIiH3GbTnyfFkeIlunMN
+         1sk1IFfAn2Hsc8x/ErNtyHzUjdOMQ7OZMI9pl+Q0qY/CitWKhPYY2/y6z1sPmTBJMDj6
+         PvKmgR92imqwXVuLN3BVilCUduniTRrR5M/DL86KdDF0DUT7IGXfZ9PwRsiHCo/pDf1V
+         nSog==
+X-Gm-Message-State: APjAAAXTwERdhktovOQK4JiXk80uOGfCJBMMOEJ5kvEbpQjOudM9aoUO
+        yKCDLI2mBESr/8AOKZ+r9z7P7g==
+X-Google-Smtp-Source: APXvYqyfFqhb5U9wi2Eswf16arxZHKOY7mHg37ZMOwRLqpoDP9qw2MWHAeoLE6MnWdZroGFRroiMaw==
+X-Received: by 2002:a17:90a:2e8a:: with SMTP id r10mr12786306pjd.128.1569619069365;
+        Fri, 27 Sep 2019 14:17:49 -0700 (PDT)
+Received: from dell ([12.206.46.61])
+        by smtp.gmail.com with ESMTPSA id s18sm5465515pji.30.2019.09.27.14.17.47
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Fri, 27 Sep 2019 14:17:48 -0700 (PDT)
+Date:   Fri, 27 Sep 2019 22:17:45 +0100
+From:   Lee Jones <lee.jones@linaro.org>
+To:     Wolfram Sang <wsa@the-dreams.de>
+Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Arnd Bergmann <arnd@arndb.de>, Rob Clark <robdclark@gmail.com>,
+        Stephen Boyd <swboyd@chromium.org>,
+        Andy Gross <agross@kernel.org>, alokc@codeaurora.org,
+        Mark Rutland <mark.rutland@arm.com>,
+        Rob Herring <robh+dt@kernel.org>, vkoul@kernel.org,
+        linux-i2c@vger.kernel.org,
         linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
+        <devicetree@vger.kernel.org>
+Subject: Re: [RESEND v3 1/1] i2c: qcom-geni: Disable DMA processing on the
+ Lenovo Yoga C630
+Message-ID: <20190927211745.GF4469@dell>
+References: <20190906061448.GJ26880@dell>
+ <20190906065018.GA1019@kunai>
+ <20190906075600.GL26880@dell>
+ <20190906102355.GA3146@kunai>
+ <20190906105445.GO26880@dell>
+ <20190906183139.GB19123@kunai>
+ <CAF6AEGsHOaR1dRf8xGH5sRa38=S+Y3NvNiAJ9DpMkddWoLBw8g@mail.gmail.com>
+ <20190913142821.GD1022@kunai>
+ <20190913161345.GB8466@tuxbook-pro>
+ <20190913161748.GF1022@kunai>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20190913161748.GF1022@kunai>
+User-Agent: Mutt/1.9.4 (2018-02-28)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Stephen,
+On Fri, 13 Sep 2019, Wolfram Sang wrote:
 
-On Fri, Sep 27, 2019 at 8:26 PM Stephen Boyd <sboyd@kernel.org> wrote:
-> Quoting Geert Uytterhoeven (2019-09-26 06:07:13)
-> > On Fri, Sep 20, 2019 at 11:06 PM Stephen Boyd <sboyd@kernel.org> wrote:
-> > > Quoting Arnd Bergmann (2019-09-20 12:27:50)
-> > > > On Fri, Sep 20, 2019 at 6:45 PM Stephen Boyd <sboyd@kernel.org> wrote:
-> > > > > > @@ -54,11 +60,6 @@ static int qcom_apcs_ipc_probe(struct platform_device *pdev)
-> > > > > >         void __iomem *base;
-> > > > > >         unsigned long i;
-> > > > > >         int ret;
-> > > > > > -       const struct of_device_id apcs_clk_match_table[] = {
-> > > > >
-> > > > > Does marking it static here work too? It would be nice to limit the
-> > > > > scope of this variable to this function instead of making it a global.
-> > > > > Also, it might be slightly smaller code size if that works.
-> > > >
-> > > > No, I just tried and the warning returned.
-> >
-> > It's there for the convenience for the user, so he doesn't have to add it
-> > himself explicitly.
-> >
-> > > ("of/device: Nullify match table in of_match_device() for CONFIG_OF=n"),
-> > > but it's been 5 years! Surely we can revert this change now that commit
-> > > 219a7bc577e6 ("spi: rspi: Use of_device_get_match_data() helper") is
-> > > merged.
-> >
-> > Right, the particular error case in the RSPI driver can no longer happen.
-> >
-> > Calling of_device_get_match_data() is the better solution anyway, as
-> > that uses the match table stored in dev->driver->of_match_table, so
-> > there's no need to pass the table explicitly, and conditionally.
-> >
-> > Hence...
-> >
-> > > --- a/drivers/leds/leds-pca9532.c
-> > > +++ b/drivers/leds/leds-pca9532.c
-> > > @@ -472,7 +472,7 @@ pca9532_of_populate_pdata(struct device *dev, struct device_node *np)
-> > >         int i = 0;
-> > >         const char *state;
-> > >
-> > > -       match = of_match_device(of_pca9532_leds_match, dev);
-> > > +       match = of_match_device(of_match_ptr(of_pca9532_leds_match), dev);
-> > >         if (!match)
-> > >                 return ERR_PTR(-ENODEV);
-> >
-> > Please convert to of_device_get_match_data() instead of adding
-> > of_match_ptr() invocations...
->
-> How is this workable? I left it as of_match_device() because the value
-> returned may be 0 for the enum and that looks the same as NULL.
+> 
+> > It seems linux-next is now pulling from the soc.git, rather than
+> > arm-soc.git, but Arnd is still pushing patches to arm-soc.git.
+> 
+> Can you ask them to fix this?
+> 
+> > Arnd says that the patch will be in v5.4 and I merged Arnd's tree and
+> > gave it a spin here and this patch makes it boot. So please merge this
+> > patch for v5.4 as well.
+> 
+> No worries, this is clearly a bugfix. So it will easily go in with the
+> same release as the DTS file.
 
-This function is used for the DT case only, so there will always be a match.
-Hence you can do devid = (int)(uintptr_t)of_device_get_match_data(dev).
-
-Gr{oetje,eeting}s,
-
-                        Geert
+Still not in Mainline.  Is the plan to send this through the -rcs?
 
 -- 
-Geert Uytterhoeven -- There's lots of Linux beyond ia32 -- geert@linux-m68k.org
-
-In personal conversations with technical people, I call myself a hacker. But
-when I'm talking to journalists I just say "programmer" or something like that.
-                                -- Linus Torvalds
+Lee Jones [李琼斯]
+Linaro Services Technical Lead
+Linaro.org │ Open source software for ARM SoCs
+Follow Linaro: Facebook | Twitter | Blog
