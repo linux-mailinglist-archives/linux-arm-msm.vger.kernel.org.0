@@ -2,215 +2,224 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 95082BFBBA
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 Sep 2019 01:16:58 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 17FC8BFEA6
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 Sep 2019 07:46:34 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728254AbfIZXQ4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 26 Sep 2019 19:16:56 -0400
-Received: from mail-wr1-f67.google.com ([209.85.221.67]:40852 "EHLO
-        mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728441AbfIZXQz (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 26 Sep 2019 19:16:55 -0400
-Received: by mail-wr1-f67.google.com with SMTP id l3so588430wru.7
-        for <linux-arm-msm@vger.kernel.org>; Thu, 26 Sep 2019 16:16:53 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=subject:to:cc:references:from:openpgp:autocrypt:message-id:date
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=EjCi2EVKEO9MNaLzSFEPFOS+gH77W2l8Y4dxTk44W7g=;
-        b=HsC6hIg2jBQDPOwnYUdM++he3ysu/qvXKFyuQ6nYtzHS9bkuw5037MDlbXSpSMcczo
-         yQG0/JsOJUrwCxjqMuvc505Z29diKoJ45ReBJIZsL7e7Y6fmPZ4wWelBuPIibEXoHE6A
-         haEOPWBjloRXJ7WactVoXb/LahjqH7wQvv3uk8aVM5/vd3AMl09wFIHwxjTv8LQfcI4K
-         D+HRIIvSICJrNV+6un8jNUjMx55HmiDIAPPHhkik3lVMhHFlw321OzmnfHTxY3uVNTyF
-         LiVhZzSX+y539lY4A3b9t6CDyr3h6Ktkgsm6/M9EHNP8itmcl3Hfq6qKehRzJKhTrtso
-         daXA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:openpgp:autocrypt
-         :message-id:date:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=EjCi2EVKEO9MNaLzSFEPFOS+gH77W2l8Y4dxTk44W7g=;
-        b=suPvg4q1fw9S1d0rRK1/glKmYZp1o4CMnVEsAfWYoI3h8sAbNjzgoVQHEzT5mwlHpT
-         cW1x/rFiadvzt/ti8xcu4XVVJFKh6d2AvT5nIGqltvmqaXwnaSp+VaVGn/lnhT+L15t/
-         sQm7G+H++K/dX+lugHG49RAb1XR/qRjePNGeQGW6YryIMFnmZIVPflUJQe4dIHyy+g0c
-         cPhnpJ5XVke08blOuIPk02rsCvgCdkNWwYXEvcg7Zn1pA+QyOBa5MTj5L5mCV62Nm0by
-         xiNqRq+Z9yLoe/Wy3Sm+W7pCRjr8wk50ustLQrNtLmnlfzbJECD1CdEoeDOxvA4G6axx
-         MGnA==
-X-Gm-Message-State: APjAAAVGeSPKwf50jhK/nKAPPr6+uY4PD2s2i6wcPDGIMmnYk1ahoXcZ
-        qSI5357st1/zMR0YPqccCyjiMg==
-X-Google-Smtp-Source: APXvYqzdx4pJgp/+Ml1Bkt9bsB1vDr2MP1XIHb71Z8dzF4eRLaWIkEDtTHvJAqj8sJ2bf2HNCfqMiA==
-X-Received: by 2002:a5d:6049:: with SMTP id j9mr615213wrt.213.1569539812909;
-        Thu, 26 Sep 2019 16:16:52 -0700 (PDT)
-Received: from [10.44.66.8] ([212.45.67.2])
-        by smtp.googlemail.com with ESMTPSA id c10sm582111wrf.58.2019.09.26.16.16.49
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 26 Sep 2019 16:16:52 -0700 (PDT)
-Subject: Re: [PATCH v2 1/2] dt-bindings: interconnect: Add OSM L3 DT bindings
-To:     Sibi Sankar <sibis@codeaurora.org>, robh+dt@kernel.org
-Cc:     bjorn.andersson@linaro.org, agross@kernel.org,
-        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, mark.rutland@arm.com,
-        evgreen@chromium.org, daidavid1@codeaurora.org,
-        saravanak@google.com
-References: <20190821091132.14994-1-sibis@codeaurora.org>
- <20190821091132.14994-2-sibis@codeaurora.org>
-From:   Georgi Djakov <georgi.djakov@linaro.org>
-Openpgp: preference=signencrypt
-Autocrypt: addr=georgi.djakov@linaro.org; prefer-encrypt=mutual; keydata=
- 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
- KEmKjLDvB0pePJkdTw==
-Message-ID: <53e76100-b7c9-1069-b571-b17271fe41c5@linaro.org>
-Date:   Thu, 26 Sep 2019 16:16:47 -0700
+        id S1725800AbfI0Fqd (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 27 Sep 2019 01:46:33 -0400
+Received: from mail.kernel.org ([198.145.29.99]:47022 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1725268AbfI0Fqd (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 27 Sep 2019 01:46:33 -0400
+Received: from localhost (unknown [62.119.166.9])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by mail.kernel.org (Postfix) with ESMTPSA id 919B720872;
+        Fri, 27 Sep 2019 05:46:30 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=default; t=1569563191;
+        bh=D2BTwThn4Ip/3GdBOPpIaF4bBt/l9J1HYEHqc3wOE70=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=p5RoYqjr6MAZSUFXUfAN3wmKZnQT3zf2oXrhS1R+GgxuJBdi2uyvf76/dSTRyo8rr
+         bbgDMw//OYs4AP2bYFCXCuf/1A5U5yVYAi5jFi1z6GeBAqNkKlhbwC2sffOlkApV6V
+         bHy1ol+j7ZLXqRIitBBOgcF7Xup7wApwybJWmaaI=
+Date:   Fri, 27 Sep 2019 07:46:27 +0200
+From:   Greg KH <gregkh@linuxfoundation.org>
+To:     mnalajal@codeaurora.org
+Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>, rafael@kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Linus Walleij <linus.walleij@linaro.org>
+Subject: Re: [PATCH] base: soc: Export soc_device_to_device API
+Message-ID: <20190927054627.GA1782250@kroah.com>
+References: <20190919215836.GA426988@kroah.com>
+ <20190919221456.GA63675@minitux>
+ <20190919222525.GA445429@kroah.com>
+ <20190919224017.GB63675@minitux>
+ <20190919224514.GA447028@kroah.com>
+ <20190920033651.GC63675@minitux>
+ <20190920061006.GC473898@kroah.com>
+ <5d9d1f3d11b1e4173990d4c5ac547193@codeaurora.org>
+ <20190924045005.GB2700@kroah.com>
+ <c2ea4365915e4a0fbb3e199cbdb9e1df@codeaurora.org>
 MIME-Version: 1.0
-In-Reply-To: <20190821091132.14994-2-sibis@codeaurora.org>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <c2ea4365915e4a0fbb3e199cbdb9e1df@codeaurora.org>
+User-Agent: Mutt/1.12.2 (2019-09-21)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Sibi,
-
-On 8/21/19 02:11, Sibi Sankar wrote:
-> Add bindings for Operating State Manager (OSM) L3 interconnect provider
-> on SDM845 SoCs.
+On Thu, Sep 26, 2019 at 07:33:21AM -0700, mnalajal@codeaurora.org wrote:
+> On 2019-09-23 21:50, Greg KH wrote:
+> > On Mon, Sep 23, 2019 at 02:35:33PM -0700, mnalajal@codeaurora.org wrote:
+> > > On 2019-09-19 23:10, Greg KH wrote:
+> > > > On Thu, Sep 19, 2019 at 08:36:51PM -0700, Bjorn Andersson wrote:
+> > > > > On Thu 19 Sep 15:45 PDT 2019, Greg KH wrote:
+> > > > >
+> > > > > > On Thu, Sep 19, 2019 at 03:40:17PM -0700, Bjorn Andersson wrote:
+> > > > > > > On Thu 19 Sep 15:25 PDT 2019, Greg KH wrote:
+> > > > > > >
+> > > > > > > > On Thu, Sep 19, 2019 at 03:14:56PM -0700, Bjorn Andersson wrote:
+> > > > > > > > > On Thu 19 Sep 14:58 PDT 2019, Greg KH wrote:
+> > > > > > > > >
+> > > > > > > > > > On Thu, Sep 19, 2019 at 02:53:00PM -0700, Bjorn Andersson wrote:
+> > > > > > > > > > > On Thu 19 Sep 14:32 PDT 2019, Greg KH wrote:
+> > > > > > > > > > >
+> > > > > > > > > > > > On Thu, Sep 19, 2019 at 02:13:44PM -0700, Murali Nalajala wrote:
+> > > > > > > > > > > > > If the soc drivers want to add custom sysfs entries it needs to
+> > > > > > > > > > > > > access "dev" field in "struct soc_device". This can be achieved
+> > > > > > > > > > > > > by "soc_device_to_device" API. Soc drivers which are built as a
+> > > > > > > > > > > > > module they need above API to be exported. Otherwise one can
+> > > > > > > > > > > > > observe compilation issues.
+> > > > > > > > > > > > >
+> > > > > > > > > > > > > Signed-off-by: Murali Nalajala <mnalajal@codeaurora.org>
+> > > > > > > > > > > > > ---
+> > > > > > > > > > > > >  drivers/base/soc.c | 1 +
+> > > > > > > > > > > > >  1 file changed, 1 insertion(+)
+> > > > > > > > > > > > >
+> > > > > > > > > > > > > diff --git a/drivers/base/soc.c b/drivers/base/soc.c
+> > > > > > > > > > > > > index 7c0c5ca..4ad52f6 100644
+> > > > > > > > > > > > > --- a/drivers/base/soc.c
+> > > > > > > > > > > > > +++ b/drivers/base/soc.c
+> > > > > > > > > > > > > @@ -41,6 +41,7 @@ struct device *soc_device_to_device(struct soc_device *soc_dev)
+> > > > > > > > > > > > >  {
+> > > > > > > > > > > > >  	return &soc_dev->dev;
+> > > > > > > > > > > > >  }
+> > > > > > > > > > > > > +EXPORT_SYMBOL_GPL(soc_device_to_device);
+> > > > > > > > > > > > >
+> > > > > > > > > > > > >  static umode_t soc_attribute_mode(struct kobject *kobj,
+> > > > > > > > > > > > >  				struct attribute *attr,
+> > > > > > > > > > > >
+> > > > > > > > > > > > What in-kernel driver needs this?
+> > > > > > > > > > > >
+> > > > > > > > > > >
+> > > > > > > > > > > Half of the drivers interacting with the soc driver calls this API,
+> > > > > > > > > > > several of these I see no reason for being builtin (e.g.
+> > > > > > > > > > > ux500 andversatile). So I think this patch makes sense to allow us to
+> > > > > > > > > > > build these as modules.
+> > > > > > > > > > >
+> > > > > > > > > > > > Is linux-next breaking without this?
+> > > > > > > > > > > >
+> > > > > > > > > > >
+> > > > > > > > > > > No, we postponed the addition of any sysfs attributes in the Qualcomm
+> > > > > > > > > > > socinfo driver.
+> > > > > > > > > > >
+> > > > > > > > > > > > We don't export things unless we have a user of the export.
+> > > > > > > > > > > >
+> > > > > > > > > > > > Also, adding "custom" sysfs attributes is almost always not the correct
+> > > > > > > > > > > > thing to do at all.  The driver should be doing it, by setting up the
+> > > > > > > > > > > > attribute group properly so that the driver core can do it automatically
+> > > > > > > > > > > > for it.
+> > > > > > > > > > > >
+> > > > > > > > > > > > No driver should be doing individual add/remove of sysfs files.  If it
+> > > > > > > > > > > > does so, it is almost guaranteed to be doing it incorrectly and racing
+> > > > > > > > > > > > userspace.
+> > > > > > > > > > > >
+> > > > > > > > > > >
+> > > > > > > > > > > The problem here is that the attributes are expected to be attached to
+> > > > > > > > > > > the soc driver, which is separate from the platform-specific drivers. So
+> > > > > > > > > > > there's no way to do platform specific attributes the right way.
+> > > > > > > > > > >
+> > > > > > > > > > > > And yes, there's loads of in-kernel examples of doing this wrong, I've
+> > > > > > > > > > > > been working on fixing that up, look at the patches now in Linus's tree
+> > > > > > > > > > > > for platform and USB drivers that do this as examples of how to do it
+> > > > > > > > > > > > right.
+> > > > > > > > > > > >
+> > > > > > > > > > >
+> > > > > > > > > > > Agreed, this patch should not be used as an approval for any crazy
+> > > > > > > > > > > attributes; but it's necessary in order to extend the soc device's
+> > > > > > > > > > > attributes, per the current design.
+> > > > > > > > > >
+> > > > > > > > > > Wait, no, let's not let the "current design" remain if it is broken!
+> > > > > > > > > >
+> > > > > > > > > > Why can't the soc driver handle the attributes properly so that the
+> > > > > > > > > > individual driver doesn't have to do the create/remove?
+> > > > > > > > > >
+> > > > > > > > >
+> > > > > > > > > The custom attributes that these drivers want to add to the common ones
+> > > > > > > > > are known in advance, so I presume we could have them passed into
+> > > > > > > > > soc_device_register() and registered together with the common
+> > > > > > > > > attributes...
+> > > > > > > > >
+> > > > > > > > > It sounds like it's worth a prototype.
+> > > > > > > >
+> > > > > > > > Do you have an in-kernel example I can look at to get an idea of what is
+> > > > > > > > needed here?
+> > > > > > > >
+> > > > > > >
+> > > > > > > realview_soc_probe(), in drivers/soc/versatile/soc-realview.c,
+> > > > > > > implements the current mechanism of acquiring the soc's struct device
+> > > > > > > and then issuing a few device_create_file calls on that.
+> > > > > >
+> > > > > > That looks to be a trivial driver to fix up.  Look at 6d03c140db2e
+> > > > > > ("USB: phy: fsl-usb: convert platform driver to use dev_groups") as an
+> > > > > > example of how to do this.
+> > > > > >
+> > > > >
+> > > > > The difference between the two cases is that in the fsl-usb case it's
+> > > > > attributes of the device itself, while in the soc case the
+> > > > > realview-soc
+> > > > > driver (or the others doing this) calls soc_device_register() to
+> > > > > register a new (dangling) soc device, which it then adds its
+> > > > > attributes
+> > > > > onto.
+> > > >
+> > > > That sounds really really odd.  Why can't the soc device do the creation
+> > > > "automatically" when the device is registered?  The soc core should
+> > > > handle this for the soc "drivers", that's what it is there for.
+> > > >
+> > > Clients are registering to soc framework using
+> > > "soce_device_register()"
+> > > with "soc_device_attribute". This attribute structure does not have
+> > > all
+> > > the sysfs fields what client are interested. Hence clients are
+> > > handling
+> > > their required sysfs fields in their drivers.
+> > > https://elixir.bootlin.com/linux/v5.3/source/drivers/base/soc.c#L114
+> > 
+> > Then you should fix that :)
+> If i understand, you are asking me to address additional sysfs entries from
+> the client side using "default attribute" groups.
+> I saw your patches about "dev_groups" usage which might be part of 5.4-rc1.
+> If i go with above approach, i end up seeing the soc information at two
+> different sysfs paths i.e.
+> Is this my understanding correct?
 > 
-> Signed-off-by: Sibi Sankar <sibis@codeaurora.org>
-> ---
->  .../bindings/interconnect/qcom,osm-l3.yaml    | 56 +++++++++++++++++++
->  .../dt-bindings/interconnect/qcom,osm-l3.h    | 12 ++++
->  2 files changed, 68 insertions(+)
->  create mode 100644 Documentation/devicetree/bindings/interconnect/qcom,osm-l3.yaml
->  create mode 100644 include/dt-bindings/interconnect/qcom,osm-l3.h
-> 
-> diff --git a/Documentation/devicetree/bindings/interconnect/qcom,osm-l3.yaml b/Documentation/devicetree/bindings/interconnect/qcom,osm-l3.yaml
-> new file mode 100644
-> index 0000000000000..dab2b6875ab27
-> --- /dev/null
-> +++ b/Documentation/devicetree/bindings/interconnect/qcom,osm-l3.yaml
-> @@ -0,0 +1,56 @@
-> +# SPDX-License-Identifier: BSD-2-Clause
-> +%YAML 1.2
-> +---
-> +$id: http://devicetree.org/schemas/interconnect/qcom,osm-l3.yaml#
-> +$schema: http://devicetree.org/meta-schemas/core.yaml#
-> +
-> +title: Qualcomm Operating State Manager (OSM) L3 Interconnect Provider
-> +
-> +maintainers:
-> +  - Sibi Sankar <sibis@codeaurora.org>
-> +
-> +description:
-> +  L3 cache bandwidth requirements on Qualcomm SoCs is serviced by the OSM.
-> +  The OSM L3 interconnect provider aggregates the L3 bandwidth requests
-> +  from CPU/GPU and relays it to the OSM.
-> +
-> +properties:
-> +  compatible:
-> +    const: "qcom,sdm845-osm-l3"
-> +
-> +  reg:
-> +    maxItems: 1
-> +
-> +  clocks:
-> +    items:
-> +      - description: xo clock
-> +      - description: alternate clock
-> +
-> +  clock-names:
-> +    items:
-> +      - const: xo
-> +      - const: alternate
-> +
-> +  '#interconnect-cells':
-> +    const: 1
-> +
-> +required:
-> +  - compatible
-> +  - reg
-> +  - clocks
-> +  - clock-names
-> +  - '#interconnect-cells'
-> +
-> +additionalProperties: false
-> +
-> +examples:
-> +  - |
-> +    osm_l3: interconnect@17d41000 {
-> +      compatible = "qcom,sdm845-osm-l3";
-> +      reg = <0x17d41000 0x1400>;
-> +
-> +      clocks = <&rpmhcc 0>, <&gcc 165>;
-> +      clock-names = "xo", "alternate";
-> +
-> +      #interconnect-cells = <1>;
-> +    };
+> 1. /sys/devices/soc0/*
+> 2. /sys/bus/platform/drivers/msm-socinfo/*
 
-Are we going to do the bandwidth scaling from some cpufreq driver? Under which
-DT node will we put the "interconnects" property?
+Ah!
 
-Thanks,
-Georgi
+Ugh.
 
-> diff --git a/include/dt-bindings/interconnect/qcom,osm-l3.h b/include/dt-bindings/interconnect/qcom,osm-l3.h
-> new file mode 100644
-> index 0000000000000..54858ff7674d7
-> --- /dev/null
-> +++ b/include/dt-bindings/interconnect/qcom,osm-l3.h
-> @@ -0,0 +1,12 @@
-> +/* SPDX-License-Identifier: GPL-2.0 */
-> +/*
-> + * Copyright (C) 2019 The Linux Foundation. All rights reserved.
-> + */
-> +
-> +#ifndef __DT_BINDINGS_INTERCONNECT_QCOM_OSM_L3_H
-> +#define __DT_BINDINGS_INTERCONNECT_QCOM_OSM_L3_H
-> +
-> +#define MASTER_OSM_L3_APPS	0
-> +#define SLAVE_OSM_L3		1
-> +
-> +#endif
-> 
+Ok, if the soc "core" wants devices to put sysfs files under the "socX"
+device, then it needs to provide for a way to do this in a sane manner.
+Exposing the "struct device" of the device here is NOT the sane way to
+do this.
+
+So we are back to the original request I made here, the SOC "core" needs
+to be able to create these files for you, so an attribute group list
+must be available for the soc "driver" to set.
+
+What it is doing now is not ok.
+
+> Couple of things which i can think of addressing this issue is:
+> 1. Modify the soc framework APIs to pass the client side sysfs attributes.
+> This will ensure all the soc information fall under /sys/devices/soc0/*
+
+"pass"?  You mean "create", right?
+
+> 2. Modify "struct soc_device_attribute" and add more entries. So that we do
+> not need to change any soc framework.
+> Problem here is others might have a different requirement which will not be
+> full fill if i do this.
+
+I don't understand what you mean by this second option, sorry.
+
+See my suggestion above, what we have now is just not ok.
+
+thanks,
+
+greg k-h
