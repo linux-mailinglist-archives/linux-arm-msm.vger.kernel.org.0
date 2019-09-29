@@ -2,79 +2,54 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 1C9F4C11A2
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 28 Sep 2019 19:48:42 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5F824C1922
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 29 Sep 2019 21:34:22 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728617AbfI1Rsk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 28 Sep 2019 13:48:40 -0400
-Received: from sauhun.de ([88.99.104.3]:36250 "EHLO pokefinder.org"
+        id S1729222AbfI2TeR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 29 Sep 2019 15:34:17 -0400
+Received: from gloria.sntech.de ([185.11.138.130]:45272 "EHLO gloria.sntech.de"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1725965AbfI1Rsk (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 28 Sep 2019 13:48:40 -0400
-Received: from localhost (unknown [46.183.103.17])
-        by pokefinder.org (Postfix) with ESMTPSA id B52AB2C0489;
-        Sat, 28 Sep 2019 19:48:26 +0200 (CEST)
-Date:   Sat, 28 Sep 2019 19:48:08 +0200
-From:   Wolfram Sang <wsa@the-dreams.de>
-To:     Lee Jones <lee.jones@linaro.org>
-Cc:     alokc@codeaurora.org, agross@kernel.org, robh+dt@kernel.org,
-        mark.rutland@arm.com, bjorn.andersson@linaro.org, vkoul@kernel.org,
-        linux-i2c@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org
-Subject: Re: [RESEND v3 1/1] i2c: qcom-geni: Disable DMA processing on the
- Lenovo Yoga C630
-Message-ID: <20190928174801.GA2196@kunai>
-References: <20190905192412.23116-1-lee.jones@linaro.org>
+        id S1729098AbfI2TeQ (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Sun, 29 Sep 2019 15:34:16 -0400
+Received: from ip5f5a6266.dynamic.kabel-deutschland.de ([95.90.98.102] helo=phil.localnet)
+        by gloria.sntech.de with esmtpsa (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+        (Exim 4.89)
+        (envelope-from <heiko@sntech.de>)
+        id 1iEexA-0001BS-Tj; Sun, 29 Sep 2019 21:33:56 +0200
+From:   Heiko Stuebner <heiko@sntech.de>
+To:     Jerome Brunet <jbrunet@baylibre.com>
+Cc:     Michael Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>, linux-clk@vger.kernel.org,
+        linux-kernel@vger.kernel.org, Tero Kristo <t-kristo@ti.com>,
+        Andrew Lunn <andrew@lunn.ch>,
+        Florian Fainelli <f.fainelli@gmail.com>,
+        Heiner Kallweit <hkallweit1@gmail.com>,
+        "David S. Miller" <davem@davemloft.net>, netdev@vger.kernel.org,
+        linux-amlogic@lists.infradead.org, linux-arm-msm@vger.kernel.org,
+        linux-rockchip@lists.infradead.org, linux-omap@vger.kernel.org
+Subject: Re: [PATCH 2/3] clk: let init callback return an error code
+Date:   Sun, 29 Sep 2019 21:33:53 +0200
+Message-ID: <7697352.nLdc4jJAoa@phil>
+In-Reply-To: <20190924123954.31561-3-jbrunet@baylibre.com>
+References: <20190924123954.31561-1-jbrunet@baylibre.com> <20190924123954.31561-3-jbrunet@baylibre.com>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="jRHKVT23PllUwdXP"
-Content-Disposition: inline
-In-Reply-To: <20190905192412.23116-1-lee.jones@linaro.org>
-User-Agent: Mutt/1.10.1 (2018-07-13)
+Content-Transfer-Encoding: 7Bit
+Content-Type: text/plain; charset="us-ascii"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+Am Dienstag, 24. September 2019, 14:39:53 CEST schrieb Jerome Brunet:
+> If the init callback is allowed to request resources, it needs a return
+> value to report the outcome of such a request.
+> 
+> Signed-off-by: Jerome Brunet <jbrunet@baylibre.com>
+> ---
+[...]
+>  drivers/clk/rockchip/clk-pll.c        | 28 ++++++++++++++++-----------
 
---jRHKVT23PllUwdXP
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-
-On Thu, Sep 05, 2019 at 08:24:12PM +0100, Lee Jones wrote:
-> We have a production-level laptop (Lenovo Yoga C630) which is exhibiting
-> a rather horrific bug.  When I2C HID devices are being scanned for at
-> boot-time the QCom Geni based I2C (Serial Engine) attempts to use DMA.
-> When it does, the laptop reboots and the user never sees the OS.
->=20
-> Attempts are being made to debug the reason for the spontaneous reboot.
-> No luck so far, hence the requirement for this hot-fix.  This workaround
-> will be removed once we have a viable fix.
->=20
-> Signed-off-by: Lee Jones <lee.jones@linaro.org>
-
-Applied to for-current, thanks!
+for the Rockchip part
+Acked-by: Heiko Stuebner <heiko@sntech.de>
 
 
---jRHKVT23PllUwdXP
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAABCgAdFiEEOZGx6rniZ1Gk92RdFA3kzBSgKbYFAl2PnM0ACgkQFA3kzBSg
-KbZ89w//RAjbjnkY/ZBQx8eGD0B0WRlQ/Yu+vD3JZxj+76bqaqqvw0Y/uidr6l9T
-nGCdfBF7lGcxgO2tmfUVLNLVCmjcBi44XuVDeDbruWPqwpAoGLJ5rw+vzczavdE1
-l39g8hyiwCMZcvjAbdM03AlY/ARdt2a5noIvkKn22gtu1m/66+7BUEGc2YlpoBiO
-9SuFmlSHS2xG6SvJFeMid+CIAagC5Bz6gFo6us3oI54Wr+qZ/cOfIuVZwSzeY1RC
-Bcn0SkLYH0SmCEJzam5lDufEXW8tgvSB/Jr8FGX2AU+kNLAa2/EEfgf4WLc2adyF
-WiMzCrLX88KIEQc3XTCKTV7mHLuOzD+l7rskpIxbt2Rauk8OB1Wf9N4A0XUd5+zs
-IjLmKmJ/KfmYiZnXkaRAfybx2z+TNfdPm3/wr9eJrWDuM5KJsjc8y/V5haUnRr1q
-eg+Gt7QMz0TGgwAT8OBoSFugaQqrLw+XbMR57leVkhQGkJ4BZgQIUj4q8tI6eevt
-t0KlF/S8VEHLbhWmwUR1A8iz493/GAQnBbXqOMKRauX4IsIcLa2y3nFsBkVRbqyE
-4anx/8psj9PsyOpa6hyyJNVY2GXOIvudeWze81sHJq7scz5l8T7VkiCYCp8s1Td1
-lEa7CgP0PIg2dXpA6n+iQqBYP+B3S2WZbHqiel3sQYZ6GzkafVA=
-=0des
------END PGP SIGNATURE-----
-
---jRHKVT23PllUwdXP--
