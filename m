@@ -2,208 +2,153 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 1637BC2963
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  1 Oct 2019 00:20:34 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 243CCC299F
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  1 Oct 2019 00:33:18 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732414AbfI3WU2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 30 Sep 2019 18:20:28 -0400
-Received: from mail-io1-f67.google.com ([209.85.166.67]:42985 "EHLO
-        mail-io1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726350AbfI3WU2 (ORCPT
+        id S1726303AbfI3WdG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 30 Sep 2019 18:33:06 -0400
+Received: from mail-pg1-f196.google.com ([209.85.215.196]:45304 "EHLO
+        mail-pg1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726986AbfI3WdF (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 30 Sep 2019 18:20:28 -0400
-Received: by mail-io1-f67.google.com with SMTP id n197so42538771iod.9;
-        Mon, 30 Sep 2019 15:20:27 -0700 (PDT)
+        Mon, 30 Sep 2019 18:33:05 -0400
+Received: by mail-pg1-f196.google.com with SMTP id q7so8143968pgi.12
+        for <linux-arm-msm@vger.kernel.org>; Mon, 30 Sep 2019 15:33:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=eZx7FrxWnk9gZ+ux4zZK+PaCVpHhMuAm8pC5a4sXjxE=;
-        b=BKXc0564vtSldNkfJz18QSdtma0oJcBNDLeux0zcrflLIl5rLL22s/mVj/xfu7RkYr
-         Cpz4G5OoYu7qySxW/j0ZeZi+lMXVHHpwSnuKCoAguZt+fDkD5cs1f8BYqflWdryQsSjx
-         zqy1FON+ZpzmeuPPEInX0xM5V5FOa21naL5jhesnZJT6nmbq4BykPd4xj8cBhApj28Hm
-         9jMoepXtx1khl6h2WVy8qgQ+S5bi6reSLqiMUs9KZDchXT2mU5MJ0k7rvntO0ddR4gv8
-         Vv5IaJM9PTaULVBsMhxFlGnOTiJP8zpHSRITVaPsEUW3fC8pEi3ukViHVBvZ5s85MS+x
-         GbFQ==
+        d=chromium.org; s=google;
+        h=message-id:mime-version:content-transfer-encoding:in-reply-to
+         :references:from:to:cc:subject:user-agent:date;
+        bh=rmkqYB8bmzjDztcgVj4PfkZkIB/7SRqcGvT+pK2NFao=;
+        b=l/gXDbiy1YenXqFl2lZbKcRYbMIurpnW+XyMpKesD+2XT8Re0PBMl4FbQU1wWzeX9K
+         cTj2dGeT/qveI8TMM+I58Bn0TRXXjen+N4MNZ1ttjkMsewSrez0oAq7W85LiaU9I8Ku3
+         quWmCD2WM4+9BrBVoqBw7ZnNyAzgZNpA66jaY=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=eZx7FrxWnk9gZ+ux4zZK+PaCVpHhMuAm8pC5a4sXjxE=;
-        b=AeuRq/ZTR47fR+uX1qX+Q8HbyQ2ftr5dkM386OSG2xW7TzkGDTcc8tpSg98g/Munlm
-         i/EkouxDZGnMDbPDZftRR9VAFFzXSQvz8imuEC4Rm2RWzRbZZirM32JKN3DOz7GD0WZF
-         6pOw62zPPnJt6B0UHptviyMeS5UT5rGY73s74cw3h8V0j9TlDFgQ+SrgXYn1sDsx+tJN
-         wbMotEThqri3ZdJ7SAT26fiZxtLMd17sLz6a6YPskFJcMSU8P+N8IdUJI1sVRdMNSrwf
-         Dqgm+Tr2RovALVQkI15QeH9VqLVnlYexhe4pENSY6ds/d28DFAGAa8dHjq8MGErRQzx5
-         2RVQ==
-X-Gm-Message-State: APjAAAXcPihmYri48UZl0ezuP37mD57D6GHadj7gdUVM18bzmp39kh+b
-        I9lxyghIvm5lhVJtm8jOjaTSBZ6QkB9cGc7TRpc=
-X-Google-Smtp-Source: APXvYqxULtiRa/HTx9aPpOZT9V8yRuI/FyY4SP5XWd9VZ82JtRdYlIdKOqHYkC+5+ReMhF372RQ/yCwoLHTlSv8B3tU=
-X-Received: by 2002:a92:5e1b:: with SMTP id s27mr22666872ilb.178.1569882026899;
- Mon, 30 Sep 2019 15:20:26 -0700 (PDT)
+        h=x-gm-message-state:message-id:mime-version
+         :content-transfer-encoding:in-reply-to:references:from:to:cc:subject
+         :user-agent:date;
+        bh=rmkqYB8bmzjDztcgVj4PfkZkIB/7SRqcGvT+pK2NFao=;
+        b=bILGzUgleuXFXTv/4/HusodsO2rSjvsKKZmb34eJikFNgN292mKthlZI4E7IPY+4XD
+         z+f9JBL3uc0UjQdBhzSWb0nX1Eet+8Ow1lhB/e/QwX44tcSXst21j4m4irBPbhH+gQZt
+         cRBVPtZckGzsOBqc9crvh/louLqq5t6ecGlV2OoVH258DKUx4ivs6vomASX5kmJNTBO3
+         JqHES1wYA06X0AUf/h4U1eREYBH/xkMKxSgyDdeM+ORvPpWSAUJKeo4mTVWxXKvWJdg2
+         EfKu+eZYVsVSIQHk3/sevGZe74LhKx3uHDjQGxRi7zzG+lp/r5lYWi3PhZriUVRjtRz0
+         SkZA==
+X-Gm-Message-State: APjAAAWZIM1OeByTJyLYbs5HbXONDHSE8CRaWJHKGZLKOT1xWWt0eXWp
+        7l3ozIByECspNeZrX0zZSb/7RQ==
+X-Google-Smtp-Source: APXvYqyqekrGA/zBRXYld7eiG9Tkrnhft+G+K3lR7fTCvCFVRPIFeAsqvf/SQiIwvG8YKnVyqqkeqA==
+X-Received: by 2002:a17:90a:fb85:: with SMTP id cp5mr1796727pjb.42.1569882783243;
+        Mon, 30 Sep 2019 15:33:03 -0700 (PDT)
+Received: from chromium.org ([2620:15c:202:1:fa53:7765:582b:82b9])
+        by smtp.gmail.com with ESMTPSA id i1sm15310268pfg.2.2019.09.30.15.33.02
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 30 Sep 2019 15:33:02 -0700 (PDT)
+Message-ID: <5d92829e.1c69fb81.d860a.9096@mx.google.com>
+Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
-References: <cover.1558430617.git.amit.kucheria@linaro.org> <49cf5d94beb9af9ef4e78d4c52f3b0ad20b7c63f.1558430617.git.amit.kucheria@linaro.org>
-In-Reply-To: <49cf5d94beb9af9ef4e78d4c52f3b0ad20b7c63f.1558430617.git.amit.kucheria@linaro.org>
-From:   Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
-Date:   Mon, 30 Sep 2019 16:20:15 -0600
-Message-ID: <CAOCk7NptTHPOdyEkCAofjTPuDQ5dsnPMQgfC0R8=7cp05xKQiA@mail.gmail.com>
-Subject: Re: [PATCH v2 7/9] arm64: dts: qcom: msm8998: Add PSCI cpuidle low
- power states
-To:     Amit Kucheria <amit.kucheria@linaro.org>
-Cc:     lkml <linux-kernel@vger.kernel.org>,
-        MSM <linux-arm-msm@vger.kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Niklas Cassel <niklas.cassel@linaro.org>,
-        Marc Gonzalez <marc.w.gonzalez@free.fr>,
-        Sibi Sankar <sibis@codeaurora.org>, daniel.lezcano@linaro.org,
-        Andy Gross <andy.gross@linaro.org>,
-        David Brown <david.brown@linaro.org>,
-        Li Yang <leoyang.li@nxp.com>, Shawn Guo <shawnguo@kernel.org>,
-        DTML <devicetree@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <1568411962-1022-7-git-send-email-ilina@codeaurora.org>
+References: <1568411962-1022-1-git-send-email-ilina@codeaurora.org> <1568411962-1022-7-git-send-email-ilina@codeaurora.org>
+From:   Stephen Boyd <swboyd@chromium.org>
+To:     Lina Iyer <ilina@codeaurora.org>, evgreen@chromium.org,
+        linus.walleij@linaro.org, maz@kernel.org
+Cc:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        bjorn.andersson@linaro.org, mkshah@codeaurora.org,
+        linux-gpio@vger.kernel.org, Lina Iyer <ilina@codeaurora.org>,
+        devicetree@vger.kernel.org
+Subject: Re: [PATCH RFC v2 06/14] dt-bindings/interrupt-controller: pdc: add SPI config register
+User-Agent: alot/0.8.1
+Date:   Mon, 30 Sep 2019 15:33:01 -0700
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Amit, the merged version of the below change causes a boot failure
-(nasty hang, sometimes with RCU stalls) on the msm8998 laptops.  Oddly
-enough, it seems to be resolved if I remove the cpu-idle-states
-property from one of the cpu nodes.
-
-I see no issues with the msm8998 MTP.
-
-Do you have any suggestions on how we might debug this?
-
-On Tue, May 21, 2019 at 3:38 AM Amit Kucheria <amit.kucheria@linaro.org> wrote:
->
-> Add device bindings for cpuidle states for cpu devices.
->
-> Cc: Marc Gonzalez <marc.w.gonzalez@free.fr>
-> Signed-off-by: Amit Kucheria <amit.kucheria@linaro.org>
-> Acked-by: Daniel Lezcano <daniel.lezcano@linaro.org>
+Quoting Lina Iyer (2019-09-13 14:59:14)
+> In addition to configuring the PDC, additional registers that interface
+> the GIC have to be configured to match the GPIO type. The registers on
+> some QCOM SoCs are access restricted, while on other SoCs are not. They
+> SoCs with access restriction to these SPI registers need to be written
+> from the firmware using the SCM interface. Add a flag to indicate if the
+> register is to be written using SCM interface.
+>=20
+> Cc: devicetree@vger.kernel.org
+> Signed-off-by: Lina Iyer <ilina@codeaurora.org>
 > ---
->  arch/arm64/boot/dts/qcom/msm8998.dtsi | 50 +++++++++++++++++++++++++++
->  1 file changed, 50 insertions(+)
->
-> diff --git a/arch/arm64/boot/dts/qcom/msm8998.dtsi b/arch/arm64/boot/dts/qcom/msm8998.dtsi
-> index 3fd0769fe648..54810980fcf9 100644
-> --- a/arch/arm64/boot/dts/qcom/msm8998.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/msm8998.dtsi
-> @@ -78,6 +78,7 @@
->                         compatible = "arm,armv8";
->                         reg = <0x0 0x0>;
->                         enable-method = "psci";
-> +                       cpu-idle-states = <&LITTLE_CPU_SLEEP_0 &LITTLE_CPU_SLEEP_1>;
->                         efficiency = <1024>;
->                         next-level-cache = <&L2_0>;
->                         L2_0: l2-cache {
-> @@ -97,6 +98,7 @@
->                         compatible = "arm,armv8";
->                         reg = <0x0 0x1>;
->                         enable-method = "psci";
-> +                       cpu-idle-states = <&LITTLE_CPU_SLEEP_0 &LITTLE_CPU_SLEEP_1>;
->                         efficiency = <1024>;
->                         next-level-cache = <&L2_0>;
->                         L1_I_1: l1-icache {
-> @@ -112,6 +114,7 @@
->                         compatible = "arm,armv8";
->                         reg = <0x0 0x2>;
->                         enable-method = "psci";
-> +                       cpu-idle-states = <&LITTLE_CPU_SLEEP_0 &LITTLE_CPU_SLEEP_1>;
->                         efficiency = <1024>;
->                         next-level-cache = <&L2_0>;
->                         L1_I_2: l1-icache {
-> @@ -127,6 +130,7 @@
->                         compatible = "arm,armv8";
->                         reg = <0x0 0x3>;
->                         enable-method = "psci";
-> +                       cpu-idle-states = <&LITTLE_CPU_SLEEP_0 &LITTLE_CPU_SLEEP_1>;
->                         efficiency = <1024>;
->                         next-level-cache = <&L2_0>;
->                         L1_I_3: l1-icache {
-> @@ -142,6 +146,7 @@
->                         compatible = "arm,armv8";
->                         reg = <0x0 0x100>;
->                         enable-method = "psci";
-> +                       cpu-idle-states = <&BIG_CPU_SLEEP_0 &BIG_CPU_SLEEP_1>;
->                         efficiency = <1536>;
->                         next-level-cache = <&L2_1>;
->                         L2_1: l2-cache {
-> @@ -161,6 +166,7 @@
->                         compatible = "arm,armv8";
->                         reg = <0x0 0x101>;
->                         enable-method = "psci";
-> +                       cpu-idle-states = <&BIG_CPU_SLEEP_0 &BIG_CPU_SLEEP_1>;
->                         efficiency = <1536>;
->                         next-level-cache = <&L2_1>;
->                         L1_I_101: l1-icache {
-> @@ -176,6 +182,7 @@
->                         compatible = "arm,armv8";
->                         reg = <0x0 0x102>;
->                         enable-method = "psci";
-> +                       cpu-idle-states = <&BIG_CPU_SLEEP_0 &BIG_CPU_SLEEP_1>;
->                         efficiency = <1536>;
->                         next-level-cache = <&L2_1>;
->                         L1_I_102: l1-icache {
-> @@ -191,6 +198,7 @@
->                         compatible = "arm,armv8";
->                         reg = <0x0 0x103>;
->                         enable-method = "psci";
-> +                       cpu-idle-states = <&BIG_CPU_SLEEP_0 &BIG_CPU_SLEEP_1>;
->                         efficiency = <1536>;
->                         next-level-cache = <&L2_1>;
->                         L1_I_103: l1-icache {
-> @@ -238,6 +246,48 @@
->                                 };
->                         };
->                 };
+>  .../devicetree/bindings/interrupt-controller/qcom,pdc.txt   | 13 +++++++=
++++++-
+>  1 file changed, 12 insertions(+), 1 deletion(-)
+>=20
+> diff --git a/Documentation/devicetree/bindings/interrupt-controller/qcom,=
+pdc.txt b/Documentation/devicetree/bindings/interrupt-controller/qcom,pdc.t=
+xt
+> index 8e0797c..e329f8d 100644
+> --- a/Documentation/devicetree/bindings/interrupt-controller/qcom,pdc.txt
+> +++ b/Documentation/devicetree/bindings/interrupt-controller/qcom,pdc.txt
+> @@ -24,6 +24,9 @@ Properties:
+>         Usage: required
+>         Value type: <prop-encoded-array>
+>         Definition: Specifies the base physical address for PDC hardware.
+> +                   Optionally, specify the PDC's GIC interface registers=
+ that
+> +                   need to be configured for wakeup capable GPIOs routed=
+ to
+> +                   the PDC.
+> =20
+>  - interrupt-cells:
+>         Usage: required
+> @@ -50,15 +53,23 @@ Properties:
+>                     The second element is the GIC hwirq number for the PD=
+C port.
+>                     The third element is the number of interrupts in sequ=
+ence.
+> =20
+> +- qcom,scm-spi-cfg:
+> +       Usage: optional
+> +       Value type: <bool>
+> +       Definition: Specifies if the SPI configuration registers have to =
+be
+> +                   written from the firmware. Sometimes the PDC interface
+> +                   register to the GIC can only be written from the firm=
+ware.
 > +
-> +               idle-states {
-> +                       entry-method = "psci";
-> +
-> +                       LITTLE_CPU_SLEEP_0: cpu-sleep-0-0 {
-> +                               compatible = "arm,idle-state";
-> +                               idle-state-name = "little-retention";
-> +                               arm,psci-suspend-param = <0x00000002>;
-> +                               entry-latency-us = <43>;
-> +                               exit-latency-us = <86>;
-> +                               min-residency-us = <200>;
-> +                       };
-> +
-> +                       LITTLE_CPU_SLEEP_1: cpu-sleep-0-1 {
-> +                               compatible = "arm,idle-state";
-> +                               idle-state-name = "little-power-collapse";
-> +                               arm,psci-suspend-param = <0x00000003>;
-> +                               entry-latency-us = <100>;
-> +                               exit-latency-us = <612>;
-> +                               min-residency-us = <1000>;
-> +                               local-timer-stop;
-> +                       };
-> +
-> +                       BIG_CPU_SLEEP_0: cpu-sleep-1-0 {
-> +                               compatible = "arm,idle-state";
-> +                               idle-state-name = "big-retention";
-> +                               arm,psci-suspend-param = <0x00000002>;
-> +                               entry-latency-us = <41>;
-> +                               exit-latency-us = <82>;
-> +                               min-residency-us = <200>;
-> +                       };
-> +
-> +                       BIG_CPU_SLEEP_1: cpu-sleep-1-1 {
-> +                               compatible = "arm,idle-state";
-> +                               idle-state-name = "big-power-collapse";
-> +                               arm,psci-suspend-param = <0x00000003>;
-> +                               entry-latency-us = <100>;
-> +                               exit-latency-us = <525>;
-> +                               min-residency-us = <1000>;
-> +                               local-timer-stop;
-> +                       };
-> +               };
+>  Example:
+> =20
+>         pdc: interrupt-controller@b220000 {
+>                 compatible =3D "qcom,sdm845-pdc";
+> -               reg =3D <0xb220000 0x30000>;
+> +               reg =3D <0 0x0b220000 0 0x30000>, <0 0x179900f0 0 0x60>;
+>                 qcom,pdc-ranges =3D <0 512 94>, <94 641 15>, <115 662 7>;
+>                 #interrupt-cells =3D <2>;
+>                 interrupt-parent =3D <&intc>;
+>                 interrupt-controller;
+> +               qcom,scm-spi-cfg;
 >         };
->
->         firmware {
-> --
-> 2.17.1
->
+
+This overlaps register region with the mailbox node. That node is
+actually a pile of random "CPU" registers used to ping remote processors
+and apparently control how the PDC interacts with the GIC. Maybe this
+can be changed to a phandle and then the driver can interogate the
+phandle to determine if it's the SCM firmware or if it's the shared
+mailbox register? If it's a shared mailbox then it can write to it at
+the offset it knows about (because it's sdm845 compatible specific) and
+if it's SCM then it can use the hardcoded address as well?
+
+Basically I'm saying that it just needs a phandle.
+
+	qcom,spi-cfg =3D <&scm>;
+
+or
+
+	qcom,spi-cfg =3D <&mailbox>;
+
+and then driver knows how to use that to write into random registers.
+Maybe we can have an API in regmap that finds the regmap for a given
+device node? That way we don't have to funnel everything through syscon
+for this.
+
+	of_get_regmap(struct device_node *np, const char *name);
+
+Where NULL name means "first available" and then do the devres search
+otherwise for a device that has the matching node pointer.
+
