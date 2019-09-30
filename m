@@ -2,122 +2,74 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 9FD65C2386
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 30 Sep 2019 16:42:12 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 75D32C2957
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  1 Oct 2019 00:14:29 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731459AbfI3OmH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 30 Sep 2019 10:42:07 -0400
-Received: from mail-oi1-f193.google.com ([209.85.167.193]:40422 "EHLO
-        mail-oi1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1731190AbfI3OmH (ORCPT
+        id S1726784AbfI3WOT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 30 Sep 2019 18:14:19 -0400
+Received: from mail-oi1-f195.google.com ([209.85.167.195]:40991 "EHLO
+        mail-oi1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726350AbfI3WOT (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 30 Sep 2019 10:42:07 -0400
-Received: by mail-oi1-f193.google.com with SMTP id k9so11313632oib.7;
-        Mon, 30 Sep 2019 07:42:06 -0700 (PDT)
+        Mon, 30 Sep 2019 18:14:19 -0400
+Received: by mail-oi1-f195.google.com with SMTP id w17so12591670oiw.8;
+        Mon, 30 Sep 2019 15:14:19 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=EYSKNqzhWZ5pBYySik+qJ+6jR/qzoTuoas9JM4Wu8F8=;
-        b=pD/WFvJzTeQ75IM0qSoU/zoj0oyNc55V9h2o5gf6+VxQZyvRTpVUIZ5kkCLYLALTdf
-         Jil0VAMrjmjkELoI8H7u0dUiVhHcslE5HaE+lJ96CYlag7/3K2dCpQ37WAWEhDWlcI6I
-         Iso4P0SXDE5SuTKU40gbfeLLruqkxAkrGIa8kjI4hBLZzZm89Vhn2WHDPQiDNY1IXXRt
-         hEHzNcdjCsuR6FTjfvkAjREkHOtq0w3mobpM4RhP7QGmPF55Oc9NDjxLJ33kD5xKBk3m
-         A4FjlI5Bx7eZlo5sfd8bSS6YPz6eQ+4+A7Z81g6a8SR2zULYEMrM5t6/7tmRynJINB/q
-         a41Q==
-X-Gm-Message-State: APjAAAU22yfYSKVMBngCO18ym0VGVibZyPA8UTH9XnoCpszSwo6Z9Ao6
-        92fyubusjCzhHS4BXSuB4w==
-X-Google-Smtp-Source: APXvYqwX8v05lHHK67LEiARr1bwtyadlGwKRScnVJBehvPR1uH/YfAs2RwR6L1jOvqsZkjnT81Z0uA==
-X-Received: by 2002:aca:d9c4:: with SMTP id q187mr18629684oig.45.1569854526386;
-        Mon, 30 Sep 2019 07:42:06 -0700 (PDT)
+        bh=3JL07qcEomx/9mlKOqWt2erRCCI5K8JebJ9YmzD5Gcc=;
+        b=FtVpnwExQsggMVh7RFhTMB9eCMqn7W81w5JZTHd4RYQqgNt7t3LGGSX/8v3X5EwNMQ
+         iyHiSH0v9XJCY35ekbgTklNUFzO0Kn8dgofrdca0r9ayVVuiKPOIzmNgFAcupHqwvxUs
+         cT7p5eWGU+1nrElcN70DEVSApc2urM7X9YlrdeQkC2rdRGaGyJUSJ1YcKUF6stEoFZPl
+         S5HObIEr2UCXMgKNGTG+bopZgajHUxaSrXR/KXCf79joTtlBEqMiWcrw4BDJPcO0LyGv
+         ArHcwuHlx5PaPcm7i6R/J3IBuz+//8RDfldi7+nYu2a1tD2NoVOBJV//HRUNcNi6pcEB
+         IKrQ==
+X-Gm-Message-State: APjAAAWIpThG9+uwv7P6ZC/eYQgrfq3/SWnjgG3rWZUzOBaX+BxTQ5gu
+        dFgdHLDHlMXRUibdEGS6Jg==
+X-Google-Smtp-Source: APXvYqxpwQgOYAduUVZFilh7lH0oLGASilH357Tyg+So0faHgnmK5HDGm97eoKIonTvMwBkzrp5Ekw==
+X-Received: by 2002:aca:3c55:: with SMTP id j82mr1128598oia.135.1569881658562;
+        Mon, 30 Sep 2019 15:14:18 -0700 (PDT)
 Received: from localhost (24-155-109-49.dyn.grandenetworks.net. [24.155.109.49])
-        by smtp.gmail.com with ESMTPSA id 34sm3825189otf.55.2019.09.30.07.42.05
+        by smtp.gmail.com with ESMTPSA id v6sm4716139oie.4.2019.09.30.15.14.17
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 30 Sep 2019 07:42:05 -0700 (PDT)
-Date:   Mon, 30 Sep 2019 09:42:05 -0500
+        Mon, 30 Sep 2019 15:14:17 -0700 (PDT)
+Date:   Mon, 30 Sep 2019 17:14:16 -0500
 From:   Rob Herring <robh@kernel.org>
-To:     Thara Gopinath <thara.gopinath@linaro.org>
-Cc:     edubezval@gmail.com, rui.zhang@intel.com, ulf.hansson@linaro.org,
-        daniel.lezcano@linaro.org, bjorn.andersson@linaro.org,
-        agross@kernel.org, amit.kucheria@verdurent.com,
-        mark.rutland@arm.com, rjw@rjwysocki.net, linux-pm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 3/5] dt-bindings: thermal: Add generic power domain
- warming device binding
-Message-ID: <20190930144205.GA11539@bogus>
-References: <1568135676-9328-1-git-send-email-thara.gopinath@linaro.org>
- <1568135676-9328-4-git-send-email-thara.gopinath@linaro.org>
+To:     Lina Iyer <ilina@codeaurora.org>
+Cc:     swboyd@chromium.org, evgreen@chromium.org, maz@kernel.org,
+        linus.walleij@linaro.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, bjorn.andersson@linaro.org,
+        mkshah@codeaurora.org, linux-gpio@vger.kernel.org,
+        Lina Iyer <ilina@codeaurora.org>, devicetree@vger.kernel.org
+Subject: Re: [PATCH RFC v2 06/14] dt-bindings/interrupt-controller: pdc: add
+ SPI config register
+Message-ID: <20190930221416.GA2501@bogus>
+References: <1568411962-1022-1-git-send-email-ilina@codeaurora.org>
+ <1568411962-1022-7-git-send-email-ilina@codeaurora.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <1568135676-9328-4-git-send-email-thara.gopinath@linaro.org>
+In-Reply-To: <1568411962-1022-7-git-send-email-ilina@codeaurora.org>
 User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Sep 10, 2019 at 01:14:34PM -0400, Thara Gopinath wrote:
-> Add binding to define power domains as thermal warming
-> devices.
+On Fri, 13 Sep 2019 15:59:14 -0600, Lina Iyer wrote:
+> In addition to configuring the PDC, additional registers that interface
+> the GIC have to be configured to match the GPIO type. The registers on
+> some QCOM SoCs are access restricted, while on other SoCs are not. They
+> SoCs with access restriction to these SPI registers need to be written
+> from the firmware using the SCM interface. Add a flag to indicate if the
+> register is to be written using SCM interface.
 > 
-> Signed-off-by: Thara Gopinath <thara.gopinath@linaro.org>
+> Cc: devicetree@vger.kernel.org
+> Signed-off-by: Lina Iyer <ilina@codeaurora.org>
 > ---
->  .../bindings/thermal/pwr-domain-warming.txt        | 32 ++++++++++++++++++++++
->  1 file changed, 32 insertions(+)
->  create mode 100644 Documentation/devicetree/bindings/thermal/pwr-domain-warming.txt
+>  .../devicetree/bindings/interrupt-controller/qcom,pdc.txt   | 13 ++++++++++++-
+>  1 file changed, 12 insertions(+), 1 deletion(-)
 > 
-> diff --git a/Documentation/devicetree/bindings/thermal/pwr-domain-warming.txt b/Documentation/devicetree/bindings/thermal/pwr-domain-warming.txt
-> new file mode 100644
-> index 0000000..25fc568
-> --- /dev/null
-> +++ b/Documentation/devicetree/bindings/thermal/pwr-domain-warming.txt
-> @@ -0,0 +1,32 @@
-> +* Generic power domain based thermal warming device.
-> +
-> +This binding describes the power domains that can be used as a
-> +thermal warming device.
 
-This looks like just a gathering of properties and way to instantiate 
-some driver.
-
-I think this all belongs in the power domain provider. Make it a cooling 
-device and you should know which domains are relevant based on the 
-compatible (though perhaps we could consider a list in DT). If you want 
-to instantiate a separate driver to handle this, then make the power 
-domain driver do that.
-
-Rob
-
-> +
-> +- compatible:
-> +	Usage: required
-> +	Value type: <string>
-> +	Definition: must be "thermal-power-domain-wdev"
-> +
-> +- #temp-reg-cells:
-> +	Usage: required
-> +	Value type: <u32>
-> +	Definition: Must be 2
-> +
-> +- power-domains:
-> +	Usage: required
-> +	Value type: <phandle>
-> +	Definition: reference to power-domains that match power-domain-names
-> +
-> +- power-domain-names:
-> +	Usage: required
-> +	Value type: <stringlist>
-> +	Definition: The power-domains that can behave as warming devices
-> +
-> +Example 1
-> +thermal_wdev: rpmhpd_mx_wdev {
-> +		compatible = "thermal-power-domain-wdev";
-> +		#cooling-cells = <2>;
-> +		power-domains =  <&rpmhpd SDM845_MX>;
-> +		power-domain-names = "mx";
-> +	};
-> -- 
-> 2.1.4
-> 
+Reviewed-by: Rob Herring <robh@kernel.org>
