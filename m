@@ -2,224 +2,243 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 8A3E7C3706
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  1 Oct 2019 16:22:18 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 64F40C37A2
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  1 Oct 2019 16:38:46 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2389017AbfJAOWH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 1 Oct 2019 10:22:07 -0400
-Received: from mail-io1-f68.google.com ([209.85.166.68]:45154 "EHLO
-        mail-io1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2388994AbfJAOWG (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 1 Oct 2019 10:22:06 -0400
-Received: by mail-io1-f68.google.com with SMTP id c25so48295734iot.12;
-        Tue, 01 Oct 2019 07:22:05 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=lvgQDu9WXpCvWJp0oOMglHPGYf9ZHsEL9W0aSNo7TEo=;
-        b=rxOxoRq3U+cKt4FFrG3NOwdes/J/KJuRWeS4BdORHW6mtwrPawK8KLTLauQbZM4VA1
-         7IvT3qOuIk0KTwjD3YHkA1627hH68DWiJafqoEcdyK6s8RGWkjQj+d8a8zHCvo3RjN/I
-         JovOl9GOOMIQ4gbhJoqCNYV9ozPUrnxDbks32/xpZf95ydCWElw8/eIqFXG0+rb9YrQG
-         Ax4vlOF9Ljt5nS6qOY0DCFAvTOpYT5RXETaWgOJDHD1KfbxUEFwPVphoEUR5pH08Hj0F
-         f1depZObQeep5qvRPKRtaSwB9z/vi1+5e4STyz2OaK2F64zF7+Cm3vvD4O2noEeaZ8hY
-         WOVQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=lvgQDu9WXpCvWJp0oOMglHPGYf9ZHsEL9W0aSNo7TEo=;
-        b=ARNcCa3E9FFlfmRxW7FxRSLveIJkMBWoJ3R3+SSvb5JBepzq7+Mv+WUubZhuAFgQ8S
-         1gPn9ndGT5oFWm1+FmNAJXwvVKtaKCwKPAmir7JUwHIuT9FGt3OBU4G620owqmsP6/pu
-         /y/VX8NXX+pg9X+gg1qXa7oaCAJCwOA8l/x7n9ChPhk94cv/Z1rPdPegVzPCKstNhs/K
-         wmHzJ6kCplS48+i+BrGLPTT0j0P1MzzHbvD3Xxb/POl7Pt6JNBt4vaVkcmbxOLFhrFNU
-         h/YFUyLTi1gwLlJkYvepo4cFnSk1zeftzn1a7k6bZ2DpGXS3B6z+GvxxiuX/3xxuAr1C
-         d84A==
-X-Gm-Message-State: APjAAAVCM4eranipohU0O30/QVsTBlfC9hNMWB2cN86L0b6fcG1T90ai
-        mMsbd89z8EbxY3N1ZylyuOOcHRy3w39ppV/uBFY=
-X-Google-Smtp-Source: APXvYqzj3Dxc1vunf9zG16glLNgfbvBzc1tu6VphnQxFvrhVNxB+wbIjd5c7ptmWW4q03c4MTmTyqqAz/VzFpTwOuJY=
-X-Received: by 2002:a92:b752:: with SMTP id c18mr26696367ilm.42.1569939725259;
- Tue, 01 Oct 2019 07:22:05 -0700 (PDT)
+        id S2388870AbfJAOi1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 1 Oct 2019 10:38:27 -0400
+Received: from mail.kernel.org ([198.145.29.99]:50946 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1727143AbfJAOi1 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 1 Oct 2019 10:38:27 -0400
+Received: from kernel.org (unknown [104.132.0.74])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by mail.kernel.org (Postfix) with ESMTPSA id CD3212054F;
+        Tue,  1 Oct 2019 14:38:25 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=default; t=1569940705;
+        bh=BC6OroHcKot4AxHRsLzrj3gVVxqz2wKqdFSlgTuptpw=;
+        h=In-Reply-To:References:From:To:Cc:Subject:Date:From;
+        b=BYHEm8XyvTeCxQXNCByi8u5BlrT28BYw6+dYsZfyegW+qvnaE0V30GvfVl5LKhTVR
+         TbYCnlYyFno04qwhsbnta3Rc7FW7ECti0aE8lfZe5rdZapEbFkOtfAk/Vt2o9Mr7WJ
+         a93ez7ZSk3JUOhccqgPm8UbUZZ39MSaylIylYKNw=
+Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
-References: <cover.1558430617.git.amit.kucheria@linaro.org>
- <49cf5d94beb9af9ef4e78d4c52f3b0ad20b7c63f.1558430617.git.amit.kucheria@linaro.org>
- <CAOCk7NptTHPOdyEkCAofjTPuDQ5dsnPMQgfC0R8=7cp05xKQiA@mail.gmail.com> <CAHLCerOS1Hi3XdDZzTKFKnrsATj5cMKtjPEuJknWu-aPtwzP9g@mail.gmail.com>
-In-Reply-To: <CAHLCerOS1Hi3XdDZzTKFKnrsATj5cMKtjPEuJknWu-aPtwzP9g@mail.gmail.com>
-From:   Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
-Date:   Tue, 1 Oct 2019 08:21:54 -0600
-Message-ID: <CAOCk7NpA5OmgmH0PZpcrj1KmhdrTKvOb+3eUL6=Mo8HRUnKjdA@mail.gmail.com>
-Subject: Re: [PATCH v2 7/9] arm64: dts: qcom: msm8998: Add PSCI cpuidle low
- power states
-To:     Amit Kucheria <amit.kucheria@linaro.org>
-Cc:     lkml <linux-kernel@vger.kernel.org>,
-        MSM <linux-arm-msm@vger.kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Niklas Cassel <niklas.cassel@linaro.org>,
-        Marc Gonzalez <marc.w.gonzalez@free.fr>,
-        Sibi Sankar <sibis@codeaurora.org>,
-        Daniel Lezcano <daniel.lezcano@linaro.org>,
-        Andy Gross <andy.gross@linaro.org>,
-        David Brown <david.brown@linaro.org>,
-        Li Yang <leoyang.li@nxp.com>, Shawn Guo <shawnguo@kernel.org>,
-        DTML <devicetree@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <35f8b699-6ff7-9104-5e3d-ef4ee8635832@codeaurora.org>
+References: <20190918095018.17979-1-tdas@codeaurora.org> <20190918095018.17979-4-tdas@codeaurora.org> <20190918213946.DC03521924@mail.kernel.org> <a3cd82c9-8bfa-f4a3-ab1f-2e397fbd9d16@codeaurora.org> <20190924231223.9012C207FD@mail.kernel.org> <347780b9-c66b-01c4-b547-b03de2cf3078@codeaurora.org> <20190925130346.42E0820640@mail.kernel.org> <35f8b699-6ff7-9104-5e3d-ef4ee8635832@codeaurora.org>
+From:   Stephen Boyd <sboyd@kernel.org>
+To:     Michael Turquette <mturquette@baylibre.com>,
+        Taniya Das <tdas@codeaurora.org>, robh+dt@kernel.org
+Cc:     David Brown <david.brown@linaro.org>,
+        Rajendra Nayak <rnayak@codeaurora.org>,
+        linux-arm-msm@vger.kernel.org, linux-soc@vger.kernel.org,
+        linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org,
+        devicetree@vger.kernel.org
+Subject: Re: [PATCH v3 3/3] clk: qcom: Add Global Clock controller (GCC) driver for SC7180
+User-Agent: alot/0.8.1
+Date:   Tue, 01 Oct 2019 07:38:25 -0700
+Message-Id: <20191001143825.CD3212054F@mail.kernel.org>
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Sep 30, 2019 at 4:44 PM Amit Kucheria <amit.kucheria@linaro.org> wrote:
->
-> Can you try removing just the *SLEEP_1 states from the cpu-idle-states
-> property? I want to understand if this is triggered just by the deeper
-> C-state.
+Quoting Taniya Das (2019-09-27 00:37:57)
+> Hi Stephen,
+>=20
+> On 9/25/2019 6:33 PM, Stephen Boyd wrote:
+> > Quoting Taniya Das (2019-09-25 04:20:07)
+> >> Hi Stephen,
+> >>
+> >> Please find my comments.
+> >>
+> >> On 9/25/2019 4:42 AM, Stephen Boyd wrote:
+> >>> Quoting Taniya Das (2019-09-23 01:01:11)
+> >>>> Hi Stephen,
+> >>>>
+> >>>> Thanks for your comments.
+> >>>>
+> >>>> On 9/19/2019 3:09 AM, Stephen Boyd wrote:
+> >>>>> Quoting Taniya Das (2019-09-18 02:50:18)
+> >>>>>> diff --git a/drivers/clk/qcom/gcc-sc7180.c b/drivers/clk/qcom/gcc-=
+sc7180.c
+> >>>>>> new file mode 100644
+> >>>>>> index 000000000000..d47865d5408f
+> >>>>>> --- /dev/null
+> >>>>>> +++ b/drivers/clk/qcom/gcc-sc7180.c
+> >>>>>> +                       .ops =3D &clk_branch2_ops,
+> >>>>>> +               },
+> >>>>>> +       },
+> >>>>>> +};
+> >>>>>> +
+> >>> [...]
+> >>>>>> +static struct clk_branch gcc_ufs_phy_phy_aux_clk =3D {
+> >>>>>> +       .halt_reg =3D 0x77094,
+> >>>>>> +       .halt_check =3D BRANCH_HALT,
+> >>>>>> +       .hwcg_reg =3D 0x77094,
+> >>>>>> +       .hwcg_bit =3D 1,
+> >>>>>> +       .clkr =3D {
+> >>>>>> +               .enable_reg =3D 0x77094,
+> >>>>>> +               .enable_mask =3D BIT(0),
+> >>>>>> +               .hw.init =3D &(struct clk_init_data){
+> >>>>>> +                       .name =3D "gcc_ufs_phy_phy_aux_clk",
+> >>>>>> +                       .parent_data =3D &(const struct clk_parent=
+_data){
+> >>>>>> +                               .hw =3D &gcc_ufs_phy_phy_aux_clk_s=
+rc.clkr.hw,
+> >>>>>> +                       },
+> >>>>>> +                       .num_parents =3D 1,
+> >>>>>> +                       .flags =3D CLK_SET_RATE_PARENT,
+> >>>>>> +                       .ops =3D &clk_branch2_ops,
+> >>>>>> +               },
+> >>>>>> +       },
+> >>>>>> +};
+> >>>>>> +
+> >>>>>> +static struct clk_branch gcc_ufs_phy_rx_symbol_0_clk =3D {
+> >>>>>> +       .halt_reg =3D 0x7701c,
+> >>>>>> +       .halt_check =3D BRANCH_HALT_SKIP,
+> >>>>>
+> >>>>> Again, nobody has fixed the UFS driver to not need to do this halt =
+skip
+> >>>>> check for these clks? It's been over a year.
+> >>>>>
+> >>>>
+> >>>> The UFS_PHY_RX/TX clocks could be left enabled due to certain HW boot
+> >>>> configuration and thus during the late initcall of clk_disable there
+> >>>> could be warnings of "clock stuck ON" in the dmesg. That is the reas=
+on
+> >>>> also to use the BRANCH_HALT_SKIP flag.
+> >>>
+> >>> Oh that's bad. Why do the clks stay on when we try to turn them off?
+> >>>
+> >>
+> >> Those could be due to the configuration selected by HW and SW cannot
+> >> override them, so traditionally we have never polled for CLK_OFF for
+> >> these clocks.
+> >=20
+> > Is that the case or just a guess?
+> >=20
+>=20
+> This is the behavior :).
 
-Still seeing the issue with just the SLEEP_0 states.  For reference,
-Bjorn suggested adding kpti=no to the command line, which also
-appeared to have no effect on the issue.
+Ok. It's the same as sdm845 so I guess it's OK.
 
->
-> On Tue, Oct 1, 2019 at 3:50 AM Jeffrey Hugo <jeffrey.l.hugo@gmail.com> wrote:
-> >
-> > Amit, the merged version of the below change causes a boot failure
-> > (nasty hang, sometimes with RCU stalls) on the msm8998 laptops.  Oddly
-> > enough, it seems to be resolved if I remove the cpu-idle-states
-> > property from one of the cpu nodes.
-> >
-> > I see no issues with the msm8998 MTP.
-> >
-> > Do you have any suggestions on how we might debug this?
-> >
-> > On Tue, May 21, 2019 at 3:38 AM Amit Kucheria <amit.kucheria@linaro.org> wrote:
-> > >
-> > > Add device bindings for cpuidle states for cpu devices.
-> > >
-> > > Cc: Marc Gonzalez <marc.w.gonzalez@free.fr>
-> > > Signed-off-by: Amit Kucheria <amit.kucheria@linaro.org>
-> > > Acked-by: Daniel Lezcano <daniel.lezcano@linaro.org>
-> > > ---
-> > >  arch/arm64/boot/dts/qcom/msm8998.dtsi | 50 +++++++++++++++++++++++++++
-> > >  1 file changed, 50 insertions(+)
-> > >
-> > > diff --git a/arch/arm64/boot/dts/qcom/msm8998.dtsi b/arch/arm64/boot/dts/qcom/msm8998.dtsi
-> > > index 3fd0769fe648..54810980fcf9 100644
-> > > --- a/arch/arm64/boot/dts/qcom/msm8998.dtsi
-> > > +++ b/arch/arm64/boot/dts/qcom/msm8998.dtsi
-> > > @@ -78,6 +78,7 @@
-> > >                         compatible = "arm,armv8";
-> > >                         reg = <0x0 0x0>;
-> > >                         enable-method = "psci";
-> > > +                       cpu-idle-states = <&LITTLE_CPU_SLEEP_0 &LITTLE_CPU_SLEEP_1>;
-> > >                         efficiency = <1024>;
-> > >                         next-level-cache = <&L2_0>;
-> > >                         L2_0: l2-cache {
-> > > @@ -97,6 +98,7 @@
-> > >                         compatible = "arm,armv8";
-> > >                         reg = <0x0 0x1>;
-> > >                         enable-method = "psci";
-> > > +                       cpu-idle-states = <&LITTLE_CPU_SLEEP_0 &LITTLE_CPU_SLEEP_1>;
-> > >                         efficiency = <1024>;
-> > >                         next-level-cache = <&L2_0>;
-> > >                         L1_I_1: l1-icache {
-> > > @@ -112,6 +114,7 @@
-> > >                         compatible = "arm,armv8";
-> > >                         reg = <0x0 0x2>;
-> > >                         enable-method = "psci";
-> > > +                       cpu-idle-states = <&LITTLE_CPU_SLEEP_0 &LITTLE_CPU_SLEEP_1>;
-> > >                         efficiency = <1024>;
-> > >                         next-level-cache = <&L2_0>;
-> > >                         L1_I_2: l1-icache {
-> > > @@ -127,6 +130,7 @@
-> > >                         compatible = "arm,armv8";
-> > >                         reg = <0x0 0x3>;
-> > >                         enable-method = "psci";
-> > > +                       cpu-idle-states = <&LITTLE_CPU_SLEEP_0 &LITTLE_CPU_SLEEP_1>;
-> > >                         efficiency = <1024>;
-> > >                         next-level-cache = <&L2_0>;
-> > >                         L1_I_3: l1-icache {
-> > > @@ -142,6 +146,7 @@
-> > >                         compatible = "arm,armv8";
-> > >                         reg = <0x0 0x100>;
-> > >                         enable-method = "psci";
-> > > +                       cpu-idle-states = <&BIG_CPU_SLEEP_0 &BIG_CPU_SLEEP_1>;
-> > >                         efficiency = <1536>;
-> > >                         next-level-cache = <&L2_1>;
-> > >                         L2_1: l2-cache {
-> > > @@ -161,6 +166,7 @@
-> > >                         compatible = "arm,armv8";
-> > >                         reg = <0x0 0x101>;
-> > >                         enable-method = "psci";
-> > > +                       cpu-idle-states = <&BIG_CPU_SLEEP_0 &BIG_CPU_SLEEP_1>;
-> > >                         efficiency = <1536>;
-> > >                         next-level-cache = <&L2_1>;
-> > >                         L1_I_101: l1-icache {
-> > > @@ -176,6 +182,7 @@
-> > >                         compatible = "arm,armv8";
-> > >                         reg = <0x0 0x102>;
-> > >                         enable-method = "psci";
-> > > +                       cpu-idle-states = <&BIG_CPU_SLEEP_0 &BIG_CPU_SLEEP_1>;
-> > >                         efficiency = <1536>;
-> > >                         next-level-cache = <&L2_1>;
-> > >                         L1_I_102: l1-icache {
-> > > @@ -191,6 +198,7 @@
-> > >                         compatible = "arm,armv8";
-> > >                         reg = <0x0 0x103>;
-> > >                         enable-method = "psci";
-> > > +                       cpu-idle-states = <&BIG_CPU_SLEEP_0 &BIG_CPU_SLEEP_1>;
-> > >                         efficiency = <1536>;
-> > >                         next-level-cache = <&L2_1>;
-> > >                         L1_I_103: l1-icache {
-> > > @@ -238,6 +246,48 @@
-> > >                                 };
-> > >                         };
-> > >                 };
-> > > +
-> > > +               idle-states {
-> > > +                       entry-method = "psci";
-> > > +
-> > > +                       LITTLE_CPU_SLEEP_0: cpu-sleep-0-0 {
-> > > +                               compatible = "arm,idle-state";
-> > > +                               idle-state-name = "little-retention";
-> > > +                               arm,psci-suspend-param = <0x00000002>;
-> > > +                               entry-latency-us = <43>;
-> > > +                               exit-latency-us = <86>;
-> > > +                               min-residency-us = <200>;
-> > > +                       };
-> > > +
-> > > +                       LITTLE_CPU_SLEEP_1: cpu-sleep-0-1 {
-> > > +                               compatible = "arm,idle-state";
-> > > +                               idle-state-name = "little-power-collapse";
-> > > +                               arm,psci-suspend-param = <0x00000003>;
-> > > +                               entry-latency-us = <100>;
-> > > +                               exit-latency-us = <612>;
-> > > +                               min-residency-us = <1000>;
-> > > +                               local-timer-stop;
-> > > +                       };
-> > > +
-> > > +                       BIG_CPU_SLEEP_0: cpu-sleep-1-0 {
-> > > +                               compatible = "arm,idle-state";
-> > > +                               idle-state-name = "big-retention";
-> > > +                               arm,psci-suspend-param = <0x00000002>;
-> > > +                               entry-latency-us = <41>;
-> > > +                               exit-latency-us = <82>;
-> > > +                               min-residency-us = <200>;
-> > > +                       };
-> > > +
-> > > +                       BIG_CPU_SLEEP_1: cpu-sleep-1-1 {
-> > > +                               compatible = "arm,idle-state";
-> > > +                               idle-state-name = "big-power-collapse";
-> > > +                               arm,psci-suspend-param = <0x00000003>;
-> > > +                               entry-latency-us = <100>;
-> > > +                               exit-latency-us = <525>;
-> > > +                               min-residency-us = <1000>;
-> > > +                               local-timer-stop;
-> > > +                       };
-> > > +               };
-> > >         };
-> > >
-> > >         firmware {
-> > > --
-> > > 2.17.1
-> > >
+>=20
+> >>
+> >>>>
+> >>>> I would also check internally for the UFS driver fix you are referri=
+ng here.
+> >>>
+> >>> Sure. I keep asking but nothing is done :(
+> >>>
+> >>>>
+> >>>>>> +       .clkr =3D {
+> >>>>>> +               .enable_reg =3D 0x7701c,
+> >>>>>> +               .enable_mask =3D BIT(0),
+> >>>>>> +               .hw.init =3D &(struct clk_init_data){
+> >>>>>> +                       .name =3D "gcc_ufs_phy_rx_symbol_0_clk",
+> >>>>>> +                       .ops =3D &clk_branch2_ops,
+> >>>>>> +               },
+> >>>>>> +       },
+> >>>>>> +};
+> >>>>>> +
+> >>> [...]
+> >>>>>> +
+> >>>>>> +static struct clk_branch gcc_usb3_prim_phy_pipe_clk =3D {
+> >>>>>> +       .halt_reg =3D 0xf058,
+> >>>>>> +       .halt_check =3D BRANCH_HALT_SKIP,
+> >>>>>
+> >>>>> Why does this need halt_skip?
+> >>>>
+> >>>> This is required as the source is external PHY, so we want to not ch=
+eck
+> >>>> for HALT.
+> >>>
+> >>> This doesn't really answer my question. If the source is an external =
+phy
+> >>> then it should be listed as a clock in the DT binding and the parent
+> >>> should be specified here. Unless something doesn't work because of th=
+at?
+> >>>
+> >>
+> >> The USB phy is managed by the USB driver and clock driver is not aware
+> >> if USB driver models the phy as a clock. Thus we do want to keep a
+> >> dependency on the parent and not poll for CLK_ENABLE.
+> >=20
+> > The clk driver should be aware of the USB driver modeling the phy as a
+> > clk. We do that for other phys so what is the difference here?
+> >=20
+>=20
+> Let me check with the USB team, but could we keep them for now?
+
+Ok. It's also the same as sdm845 so I guess it's OK. Would be nice to
+properly model it though so we can be certain the clk is actually
+enabled.
+
+>=20
+> >>
+> >>>>
+> >>>>>
+> >>>>>> +       .clkr =3D {
+> >>>>>> +               .enable_reg =3D 0xf058,
+> >>>>>> +               .enable_mask =3D BIT(0),
+> >>>>>> +               .hw.init =3D &(struct clk_init_data){
+> >>>>>> +                       .name =3D "gcc_usb3_prim_phy_pipe_clk",
+> >>>>>> +                       .ops =3D &clk_branch2_ops,
+> >>>>>> +               },
+> >>>>>> +       },
+> >>>>>> +};
+> >>>>>> +
+> >>>>>> +static struct clk_branch gcc_usb_phy_cfg_ahb2phy_clk =3D {
+> >>>>>> +       .halt_reg =3D 0x6a004,
+> >>>>>> +       .halt_check =3D BRANCH_HALT,
+> >>>>>> +       .hwcg_reg =3D 0x6a004,
+> >>>>>> +       .hwcg_bit =3D 1,
+> >>>>>> +       .clkr =3D {
+> >>>>>> +               .enable_reg =3D 0x6a004,
+> >>>>>> +               .enable_mask =3D BIT(0),
+> >>>>>> +               .hw.init =3D &(struct clk_init_data){
+> >>>>>> +                       .name =3D "gcc_usb_phy_cfg_ahb2phy_clk",
+> >>>>>> +                       .ops =3D &clk_branch2_ops,
+> >>>>>> +               },
+> >>>>>> +       },
+> >>>>>> +};
+> >>>>>> +
+> >>>>>> +/* Leave the clock ON for parent config_noc_clk to be kept enable=
+d */
+> >>>>>
+> >>>>> There's no parent though... So I guess this means it keeps it enabl=
+ed
+> >>>>> implicitly in hardware?
+> >>>>>
+> >>>>
+> >>>> These are not left enabled, but want to leave them enabled for clien=
+ts
+> >>>> on config NOC.
+> >>>
+> >>> Sure. It just doesn't make sense to create clk structures and expose
+> >>> them in the kernel when we just want to turn the bits on and leave th=
+em
+> >>> on forever. Why not just do some register writes in probe for this
+> >>> driver? Doesn't that work just as well and use less memory?
+> >>>
+> >>
+> >> Even if I write these registers during probe, the late init check
+> >> 'clk_core_is_enabled' would return true and would be turned OFF, that =
+is
+> >> the reason for marking them CRITICAL.
+> >>
+> >=20
+> > That wouldn't happen if the clks weren't registered though, no?
+> >=20
+>=20
+> I want to keep these clock CRITICAL and registered for now, but we=20
+> should be able to revisit/clean them up later.
+>=20
+
+Why do you want to keep them critical and registered? I'm suggesting
+that any clk that is marked critical and doesn't have a parent should
+instead become a register write in probe to turn the clk on.
+
