@@ -2,57 +2,57 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 942A5C399B
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  1 Oct 2019 17:56:57 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 23479C399D
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  1 Oct 2019 17:57:00 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2389730AbfJAP45 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 1 Oct 2019 11:56:57 -0400
-Received: from mail-wr1-f67.google.com ([209.85.221.67]:41964 "EHLO
-        mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2389739AbfJAP44 (ORCPT
+        id S1727387AbfJAP46 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 1 Oct 2019 11:56:58 -0400
+Received: from mail-wm1-f66.google.com ([209.85.128.66]:40168 "EHLO
+        mail-wm1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2389749AbfJAP46 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 1 Oct 2019 11:56:56 -0400
-Received: by mail-wr1-f67.google.com with SMTP id h7so16199008wrw.8
-        for <linux-arm-msm@vger.kernel.org>; Tue, 01 Oct 2019 08:56:54 -0700 (PDT)
+        Tue, 1 Oct 2019 11:56:58 -0400
+Received: by mail-wm1-f66.google.com with SMTP id b24so3814221wmj.5
+        for <linux-arm-msm@vger.kernel.org>; Tue, 01 Oct 2019 08:56:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=AzvndIhQVi7PkccKpszP9q3kYn4x6KQ1z0v2TlWXPc4=;
-        b=BMLOwJbWkVn0zbUlNrg3GdPdEor9qWoQ6lh4jslJvSqyg63M9hNBBRzpsnprlOU/Wi
-         OHpgXn9kmFIgNXyBU4wfKxovsDa5VWwU/BItTTle3W8EPdGSkBLZ6fE5Ab0XVGq2z5zK
-         8TcovKGHr1z+OXUDyTNts7LIr1thdT5onv9QJ0EFIsbyEsUfU0TzLrZCP+oY43Pz0Xxg
-         y/SjAkQYnEw+DTdTS70GSjqExFUVxcwiXqE5BoQ68g4y2MQaFOvv82RQXN3upp0aHZdJ
-         Nnp4gOHpNQkn23PYBJrqn3cknq14wp61RIi4ORoq2W9RBiMHkMZGgmrP2cM/lQxKOx7q
-         dKcg==
+        bh=hNjIRfETItHrHAwc5fX92U90M7+/WUq/4UckUIkwrKY=;
+        b=G8LV0yqz0/7wpieIGxNYSdqop3flOifTawe8gjYNoU94tIFrlXcnUj3In0WrJ/wdp5
+         VQ9cyacalBh9d2zHkevulhWmqoNzqVjfNfHuLvNty86B3RuLm7e3Mr6CUADfUDt9/4rh
+         ElTOHvJYSAMcl2KiGc1CLnz1bo9A/FAyQkqhyYjX2VnU86puYiMAwPNtAeGBJLDs4W+V
+         /Sg/PP3EdmdOFSpdtQDiXNrgGwij23q0uivTY+S2zov015zKUuhEjU2clxOWGo7kcW/+
+         nidSwZWD3u4KX7A2YkeACrF7z0Qfjq4/vXNF8B/QWHpAcxvDs81Olc+X0A6qy8Ku0esF
+         KYwQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=AzvndIhQVi7PkccKpszP9q3kYn4x6KQ1z0v2TlWXPc4=;
-        b=MINt1Z2zYcztuJRDljdoxGZzmJek0n2gcqNzhO3qonZO12lKGceSAuPykMGeFuWp55
-         ggV4wMucHRJNN/iVv2SgGagLFmTdIsCD0bTDy6SVasKM68WniFyQf0BRW3xh/Zg9Drfq
-         iivWDUoo88zcRa31QyGek79Nu0OxdtQZXGMosFOEQjf6fqPSm2JTdLfimDkajAMh191U
-         ZK3xE6KDTVw89/8GoqMVg/m/ivibOQmAtwtLqR1+0PUTyk0+3ES538aaCNJ4Z5BmhYnD
-         MrABzViAfJebbaQpFims/V4wsenAYl5LyDo+RZus7WTktJFic4H0ar8xF/AnMzw3KmvJ
-         g9ag==
-X-Gm-Message-State: APjAAAUs7Jfp+rJwWJbcjHO4MJhLEeVMflzKUExMKU0E84dWgmZWsxlk
-        JOeN5UHuTo3mu+FXpFEvUf5GJfvtbN0owg==
-X-Google-Smtp-Source: APXvYqySbQPELpv1ZumQxF1Vk5aOIdlPrRFDCczcUDGUWaI3DVVZc+ik+LxF2F0v9dK/O8T+CAKY2w==
-X-Received: by 2002:a5d:5231:: with SMTP id i17mr18612203wra.142.1569945414006;
-        Tue, 01 Oct 2019 08:56:54 -0700 (PDT)
+        bh=hNjIRfETItHrHAwc5fX92U90M7+/WUq/4UckUIkwrKY=;
+        b=HDOsV1NQmHq6dCgBfr/UUJT+hXfXDVr/F5pAedp+0rbQTyDOZisF9IhHgXv9WlI1qL
+         t9aCQXUgRT7vwqutxjYnZrByNfUpEoMpqLRHRUBNSwYcK4YoZJUtGuXBfEaiR9ySX4fd
+         lS6OIp8XaAKoQc4nMptSsS8YKxdUSajhsdgqWGmrwRU1En/NblMIR0yxVcB2xBGwPyrI
+         7IovvYKo5OtwK3/C3ov11VH0SMdj2TwoG/FvPoLkkM+Emyv+M6m0Ft0ErAwewRzoIkJl
+         A+iJwJaQfKMnzSG8Wyol/Hg889C8y/BHq2o7KyUfVnI8pDlwYxatNdn2VMYRyczJmjNW
+         DSwA==
+X-Gm-Message-State: APjAAAUeYIlnqb4BuCaTJOzoVEhjVtN+Ei9rQA4vbuaBb5aS+l1T2tM6
+        S0o1+vMdxBJZPfmUjTtwvo7K51Zw03monw==
+X-Google-Smtp-Source: APXvYqx8PnIeAQsmG0Lb0jl1J7pgyjxNk2QYamMWU7XansZtVzuzg1wCO8eZYi/ndnKurupThHzGyw==
+X-Received: by 2002:a1c:7c0b:: with SMTP id x11mr4332465wmc.92.1569945415237;
+        Tue, 01 Oct 2019 08:56:55 -0700 (PDT)
 Received: from IcarusMOD.eternityproject.eu ([93.51.16.173])
-        by smtp.gmail.com with ESMTPSA id h63sm6209136wmf.15.2019.10.01.08.56.53
+        by smtp.gmail.com with ESMTPSA id h63sm6209136wmf.15.2019.10.01.08.56.54
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 01 Oct 2019 08:56:53 -0700 (PDT)
+        Tue, 01 Oct 2019 08:56:54 -0700 (PDT)
 From:   kholk11@gmail.com
 To:     linux-arm-msm@vger.kernel.org
 Cc:     kholk11@gmail.com, iommu@lists.linux-foundation.org,
         marijns95@gmail.com, agross@kernel.org, robdclark@gmail.com,
         joro@8bytes.org
-Subject: [PATCH v3 6/7] iommu/qcom: Index contexts by asid number to allow asid 0
-Date:   Tue,  1 Oct 2019 17:56:40 +0200
-Message-Id: <20191001155641.37117-7-kholk11@gmail.com>
+Subject: [PATCH v3 7/7] iommu/qcom: Add support for QCIOMMUv2 and QCIOMMU-500 secured contexts
+Date:   Tue,  1 Oct 2019 17:56:41 +0200
+Message-Id: <20191001155641.37117-8-kholk11@gmail.com>
 X-Mailer: git-send-email 2.21.0
 In-Reply-To: <20191001155641.37117-1-kholk11@gmail.com>
 References: <20191001155641.37117-1-kholk11@gmail.com>
@@ -65,86 +65,105 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 From: AngeloGioacchino Del Regno <kholk11@gmail.com>
 
-This driver was indexing the contexts by asid-1, which is probably
-done under the assumption that the first ASID is always 1.
+This IOMMU is yet another Qualcomm variant of known IOMMUs, found in
+Family-B SoCs, such as MSM8956, MSM8976, MSM8953, MSM8917 and others,
+and that firmware perfectly adheres to this driver logic.
+This time, though, the catch is that the secure contexts are also
+secured, meaning that these are programmed by the bootloader or TZ
+and their "interesting" registers are locked out, so the hypervisor
+disallows touching them from the non-secure world: in this case
+the OS is supposed to blindly trust the secure configuration of
+these contexts and just use them "as they are".
 
-Unfortunately this is not entirely true: at least in the MSM8956
-and MSM8976 GPU IOMMU, the gpu_user context's ASID number is zero.
-To allow using an asid number of zero, stop indexing the contexts
-by asid-1 and rather index them by asid.
+For this reason, it is necessary to distinguish between the v1 and
+500/v2 secure contexts in this driver in order to adhere to this
+specification. To do this, add a new DT compatible, named
+"qcom,msm-iommu-v2-sec" that will trigger the new behavior.
+
+For the sake of completeness, also add a "qcom,msm-iommu-v2-ns" so
+that the human eye gets pleased with it when reading the contexts
+in the final SoC DT. Of course, the latter is just cosmetic.
 
 Signed-off-by: AngeloGioacchino Del Regno <kholk11@gmail.com>
 ---
- drivers/iommu/qcom_iommu.c | 20 +++++++++-----------
- 1 file changed, 9 insertions(+), 11 deletions(-)
+ .../devicetree/bindings/iommu/qcom,iommu.txt  |  2 ++
+ drivers/iommu/qcom_iommu.c                    | 19 +++++++++++++++++--
+ 2 files changed, 19 insertions(+), 2 deletions(-)
 
+diff --git a/Documentation/devicetree/bindings/iommu/qcom,iommu.txt b/Documentation/devicetree/bindings/iommu/qcom,iommu.txt
+index 72ae0595efff..861c0cd9c512 100644
+--- a/Documentation/devicetree/bindings/iommu/qcom,iommu.txt
++++ b/Documentation/devicetree/bindings/iommu/qcom,iommu.txt
+@@ -36,6 +36,8 @@ to non-secure vs secure interrupt line.
+   - compatible     : Should be one of:
+         - "qcom,msm-iommu-v1-ns"  : non-secure context bank
+         - "qcom,msm-iommu-v1-sec" : secure context bank
++        - "qcom,msm-iommu-v2-ns"  : non-secure QSMMUv2/QSMMU500 context bank
++        - "qcom,msm-iommu-v2-sec" : secure QSMMUv2/QSMMU500 context bank
+   - reg            : Base address and size of context bank within the iommu
+   - interrupts     : The context fault irq.
+ 
 diff --git a/drivers/iommu/qcom_iommu.c b/drivers/iommu/qcom_iommu.c
-index dac77dbec0f0..555cbc55b073 100644
+index 555cbc55b073..eaecb009849c 100644
 --- a/drivers/iommu/qcom_iommu.c
 +++ b/drivers/iommu/qcom_iommu.c
-@@ -49,7 +49,7 @@ struct qcom_iommu_dev {
- 	u32			 sec_id;
- 	u8			 num_ctxs;
- 	bool			 use_aarch64_pt;
--	struct qcom_iommu_ctx	*ctxs[0];   /* indexed by asid-1 */
-+	struct qcom_iommu_ctx	*ctxs[0];   /* indexed by asid */
+@@ -56,6 +56,7 @@ struct qcom_iommu_ctx {
+ 	struct device		*dev;
+ 	void __iomem		*base;
+ 	bool			 secure_init;
++	bool			 secured_ctx;
+ 	u8			 asid;      /* asid and ctx bank # are 1:1 */
+ 	struct iommu_domain	*domain;
+ };
+@@ -303,6 +304,12 @@ static int qcom_iommu_init_domain(struct iommu_domain *domain,
+ 			ctx->secure_init = true;
+ 		}
+ 
++		/* Secured QSMMU-500/QSMMU-v2 contexts cannot be programmed */
++		if (ctx->secured_ctx) {
++			ctx->domain = domain;
++			break;
++		}
++
+ 		qcom_iommu_reset_ctx(ctx);
+ 
+ 		tcr[0] = pgtbl_cfg.arm_lpae_s1_cfg.tcr;
+@@ -788,10 +795,15 @@ static int qcom_iommu_ctx_probe(struct platform_device *pdev)
+ 	if (irq < 0)
+ 		return -ENODEV;
+ 
++	if (of_device_is_compatible(dev->of_node, "qcom,msm-iommu-v2-sec"))
++		ctx->secured_ctx = true;
++
+ 	/* clear IRQs before registering fault handler, just in case the
+ 	 * boot-loader left us a surprise:
+ 	 */
+-	iommu_writel(ctx, ARM_SMMU_CB_FSR, iommu_readl(ctx, ARM_SMMU_CB_FSR));
++	if (!ctx->secured_ctx)
++		iommu_writel(ctx, ARM_SMMU_CB_FSR,
++			     iommu_readl(ctx, ARM_SMMU_CB_FSR));
+ 
+ 	ret = devm_request_irq(dev, irq,
+ 			       qcom_iommu_fault,
+@@ -833,6 +845,8 @@ static int qcom_iommu_ctx_remove(struct platform_device *pdev)
+ static const struct of_device_id ctx_of_match[] = {
+ 	{ .compatible = "qcom,msm-iommu-v1-ns" },
+ 	{ .compatible = "qcom,msm-iommu-v1-sec" },
++	{ .compatible = "qcom,msm-iommu-v2-ns" },
++	{ .compatible = "qcom,msm-iommu-v2-sec" },
+ 	{ /* sentinel */ }
  };
  
- struct qcom_iommu_ctx {
-@@ -87,7 +87,7 @@ static struct qcom_iommu_ctx * to_ctx(struct iommu_fwspec *fwspec, unsigned asid
- 	struct qcom_iommu_dev *qcom_iommu = to_iommu(fwspec);
- 	if (!qcom_iommu)
- 		return NULL;
--	return qcom_iommu->ctxs[asid - 1];
-+	return qcom_iommu->ctxs[asid];
- }
+@@ -850,7 +864,8 @@ static bool qcom_iommu_has_secure_context(struct qcom_iommu_dev *qcom_iommu)
+ 	struct device_node *child;
  
- static inline void
-@@ -632,12 +632,10 @@ static int qcom_iommu_of_xlate(struct device *dev, struct of_phandle_args *args)
- 	qcom_iommu = platform_get_drvdata(iommu_pdev);
+ 	for_each_child_of_node(qcom_iommu->dev->of_node, child)
+-		if (of_device_is_compatible(child, "qcom,msm-iommu-v1-sec"))
++		if (of_device_is_compatible(child, "qcom,msm-iommu-v1-sec") ||
++		    of_device_is_compatible(child, "qcom,msm-iommu-v2-sec"))
+ 			return true;
  
- 	/* make sure the asid specified in dt is valid, so we don't have
--	 * to sanity check this elsewhere, since 'asid - 1' is used to
--	 * index into qcom_iommu->ctxs:
-+	 * to sanity check this elsewhere:
- 	 */
--	if (WARN_ON(asid < 1) ||
--	    WARN_ON(asid > qcom_iommu->num_ctxs) ||
--	    WARN_ON(qcom_iommu->ctxs[asid - 1] == NULL))
-+	if (WARN_ON(asid > qcom_iommu->num_ctxs) ||
-+	    WARN_ON(qcom_iommu->ctxs[asid] == NULL))
- 		return -EINVAL;
- 
- 	if (!fwspec->iommu_priv) {
-@@ -815,7 +813,7 @@ static int qcom_iommu_ctx_probe(struct platform_device *pdev)
- 
- 	dev_dbg(dev, "found asid %u\n", ctx->asid);
- 
--	qcom_iommu->ctxs[ctx->asid - 1] = ctx;
-+	qcom_iommu->ctxs[ctx->asid] = ctx;
- 
- 	return 0;
- }
-@@ -827,7 +825,7 @@ static int qcom_iommu_ctx_remove(struct platform_device *pdev)
- 
- 	platform_set_drvdata(pdev, NULL);
- 
--	qcom_iommu->ctxs[ctx->asid - 1] = NULL;
-+	qcom_iommu->ctxs[ctx->asid] = NULL;
- 
- 	return 0;
- }
-@@ -872,8 +870,8 @@ static int qcom_iommu_device_probe(struct platform_device *pdev)
- 	for_each_child_of_node(dev->of_node, child)
- 		max_asid = max(max_asid, get_asid(child));
- 
--	qcom_iommu = devm_kzalloc(dev, struct_size(qcom_iommu, ctxs, max_asid),
--				  GFP_KERNEL);
-+	qcom_iommu = devm_kzalloc(dev, struct_size(qcom_iommu, ctxs,
-+				  max_asid + 1), GFP_KERNEL);
- 	if (!qcom_iommu)
- 		return -ENOMEM;
- 	qcom_iommu->num_ctxs = max_asid;
+ 	return false;
 -- 
 2.21.0
 
