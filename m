@@ -2,57 +2,57 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 0C636C435F
+	by mail.lfdr.de (Postfix) with ESMTP id 74F10C4360
 	for <lists+linux-arm-msm@lfdr.de>; Wed,  2 Oct 2019 00:02:15 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728219AbfJAWCO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        id S1728245AbfJAWCO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
         Tue, 1 Oct 2019 18:02:14 -0400
-Received: from mail-wr1-f66.google.com ([209.85.221.66]:39587 "EHLO
-        mail-wr1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727701AbfJAWCN (ORCPT
+Received: from mail-wr1-f68.google.com ([209.85.221.68]:47000 "EHLO
+        mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728086AbfJAWCO (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 1 Oct 2019 18:02:13 -0400
-Received: by mail-wr1-f66.google.com with SMTP id r3so17300564wrj.6
-        for <linux-arm-msm@vger.kernel.org>; Tue, 01 Oct 2019 15:02:12 -0700 (PDT)
+        Tue, 1 Oct 2019 18:02:14 -0400
+Received: by mail-wr1-f68.google.com with SMTP id o18so17240197wrv.13
+        for <linux-arm-msm@vger.kernel.org>; Tue, 01 Oct 2019 15:02:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=xSQ3Gd/I78crTYWoKFJLF2LHykp/l0XNK/1ec4ayqbI=;
-        b=t249MXs++5WyIF3X50Nkg/LnfbT6WM1mHZpRGivgeImeFlsqtd6GwDxawpSD0sFfoZ
-         D2r6fOGps5fUNtZscW/c2jyOBVjUM0QdgwVaLKJu2HFRHcwyEx2SZoHgK7rkNMzaK5J9
-         tRLCzMgd7b6rh3Iw49RxI7sps2fJ6nfUQtj0UFja2TrZKExyiFkyrO28b9eGORbToX96
-         1iyZtGkPIpwbrohedj1RX80zf/pbAsT6HS9z8ahOuK67QUdP5rA3fVl5hy9J0Utnd0SZ
-         bLKbexglc8AZFn9R/bIVREpe48hx4wLZ4D6+FPDtVieJ4Re6wHg+hDNojNVDoxd2cDLB
-         84MQ==
+        bh=6cgkBIqWvnVkQ9N/MHRrfLaa6SBKNUc7qvNtHetLnKc=;
+        b=YnBSu9gZVLrXtQwQdqW3hmS32pySCSFuVuUDsUmP22VBIEv1/qbqzMxykfTX6jG7q5
+         m8E+FANl+2Vg3LsYGzw1t5i4tmtlWbYDP9Vf0YTbBdGeo4H1qPrHYlObWKWvbxYzLAC2
+         X4qe2CLsqPmFSAgpzAquZUlJvWRGkGypxRemURe3NrSEFdOKn/OJSgEl2N4X7P5Cc6Q4
+         CVwfBZIbu84YEOg4lPml2u+bRcfEpLdk8RhJ7ILfYwI5vwmnIV6/53sr6JlcBqOGM5PH
+         bDCT+jk2NruDmJpJiKZm858+uVjUbuxY9QVbF0pAutxrhGi4ohATa9/WuqANegcQazXU
+         206A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=xSQ3Gd/I78crTYWoKFJLF2LHykp/l0XNK/1ec4ayqbI=;
-        b=eBmnhWi/8TabMiG5JrKFcUFiZBsimKfITgDqllWnAKeXXzoFcPvB53USDxz8YhdzEH
-         GWkfwW+To334u7piAxEsHtDgsOljAKq4lUR5qdg9Pw+5/NPkKlz+Jfm2udPblZJr89Pi
-         yhizAMjznX0ZhRvJCcFpSkPHSmd5lBl/ORaMbyZpgMGix8ZiGep5nSx97QcFB21/7ytt
-         QrYo3ClA2UmGXncp1TCJN/z65qZQ8n8mY0gsQHtvLTyn5QgNFWwjuEJPth/C7LIRlums
-         6w5mjZtxSY2xF0/aN9liTvpJ7cfqJB6IY0b55lY2mJzGWbi9kEssygPoTyX+iGI7z+3Y
-         /qhQ==
-X-Gm-Message-State: APjAAAXsWFfWPvApn5bLP+lLazCzVbdR8MLLpBQnIWulziD4xaMPPfrq
-        nN5536ckref0NUyy82xYIgcEUN0T0/T9Ew==
-X-Google-Smtp-Source: APXvYqy1rskAcZSc9NovPC2LsJevqHjabSz0LpyN/SnQGRbcaQZj1rMNs2D0coMhRjTTbYPo3Ie7pQ==
-X-Received: by 2002:adf:a415:: with SMTP id d21mr18413810wra.94.1569967331329;
-        Tue, 01 Oct 2019 15:02:11 -0700 (PDT)
+        bh=6cgkBIqWvnVkQ9N/MHRrfLaa6SBKNUc7qvNtHetLnKc=;
+        b=KVi8giEHx1XCadhS212YuVCWOUvJQMMK29vxR3vkFrE4/IibOEH4qBOHq9BgLX96t5
+         w2WGMnRJj5/Bvx9Dk30VLsv+4gHU7fU/h2Q9QrrCGV5ZtYnfx8ip1COGqic6L/p5gBwy
+         6awQUtZLErz0OqX5s+OGbwzaBrRbnrTJyQ4Ux7HzO6OSo+MVw7RBYrpG0h9FPsYcE8cB
+         qIWSh+rXEbo6W145ZPg1vkoZfujDQVfsKzMMEZgMHQ0dXRAQZjzI1rCy29D15aDLioLS
+         OJmRjI+1JalU87yvfI9uwyA5u8upPGlP8S/OY7O2aZB/ebA6ETEqz2L+TRfB7wb2nLDH
+         touQ==
+X-Gm-Message-State: APjAAAWHRgQmYFYce3OAmfvdqsiLqQJoRjDD4hZiC8MEMwtqC8DB5gc8
+        shu3sTRPeOar40AHWe4jRL1z1dnPkKiPZg==
+X-Google-Smtp-Source: APXvYqyLP2W4fkfDJ0bBhSsMguSSPO4YqaLBDbTQuRW7rSo1g028l2jCO3bFuIjHhw9fdpXI7sA+pg==
+X-Received: by 2002:adf:ea92:: with SMTP id s18mr18521206wrm.137.1569967332257;
+        Tue, 01 Oct 2019 15:02:12 -0700 (PDT)
 Received: from IcarusMOD.eternityproject.eu ([93.51.16.173])
-        by smtp.gmail.com with ESMTPSA id v16sm21811219wrt.12.2019.10.01.15.02.10
+        by smtp.gmail.com with ESMTPSA id v16sm21811219wrt.12.2019.10.01.15.02.11
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 01 Oct 2019 15:02:10 -0700 (PDT)
+        Tue, 01 Oct 2019 15:02:11 -0700 (PDT)
 From:   kholk11@gmail.com
 To:     linux-arm-msm@vger.kernel.org
 Cc:     kholk11@gmail.com, iommu@lists.linux-foundation.org,
         marijns95@gmail.com, agross@kernel.org, robdclark@gmail.com,
         joro@8bytes.org
-Subject: [PATCH v4 3/7] iommu/qcom: Write TCR before TTBRs to fix ASID access behavior
-Date:   Wed,  2 Oct 2019 00:02:01 +0200
-Message-Id: <20191001220205.6423-4-kholk11@gmail.com>
+Subject: [PATCH v4 4/7] iommu/qcom: Properly reset the IOMMU context
+Date:   Wed,  2 Oct 2019 00:02:02 +0200
+Message-Id: <20191001220205.6423-5-kholk11@gmail.com>
 X-Mailer: git-send-email 2.21.0
 In-Reply-To: <20191001220205.6423-1-kholk11@gmail.com>
 References: <20191001220205.6423-1-kholk11@gmail.com>
@@ -65,47 +65,63 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 From: AngeloGioacchino Del Regno <kholk11@gmail.com>
 
-As also stated in the arm-smmu driver, we must write the TCR before
-writing the TTBRs, since the TCR determines the access behavior of
-some fields.
+To avoid context faults reset the context entirely on detach and
+to ensure a fresh clean start also do a complete reset before
+programming the context for domain initialization.
 
 Signed-off-by: AngeloGioacchino Del Regno <kholk11@gmail.com>
 ---
- drivers/iommu/qcom_iommu.c | 14 +++++++-------
- 1 file changed, 7 insertions(+), 7 deletions(-)
+ drivers/iommu/qcom_iommu.c | 23 +++++++++++++++++++++--
+ 1 file changed, 21 insertions(+), 2 deletions(-)
 
 diff --git a/drivers/iommu/qcom_iommu.c b/drivers/iommu/qcom_iommu.c
-index 504ca69adc5a..c8957ec83b92 100644
+index c8957ec83b92..b4a38ef129e3 100644
 --- a/drivers/iommu/qcom_iommu.c
 +++ b/drivers/iommu/qcom_iommu.c
-@@ -267,6 +267,13 @@ static int qcom_iommu_init_domain(struct iommu_domain *domain,
+@@ -220,6 +220,23 @@ static irqreturn_t qcom_iommu_fault(int irq, void *dev)
+ 	return IRQ_HANDLED;
+ }
+ 
++static void qcom_iommu_reset_ctx(struct qcom_iommu_ctx *ctx)
++{
++	iommu_writel(ctx, ARM_SMMU_CB_FAR, 0);
++	iommu_writel(ctx, ARM_SMMU_CB_FSR, 0);
++	iommu_writel(ctx, ARM_SMMU_CB_S1_MAIR1, 0);
++	iommu_writel(ctx, ARM_SMMU_CB_PAR, 0);
++	iommu_writel(ctx, ARM_SMMU_CB_S1_MAIR0, 0);
++	iommu_writel(ctx, ARM_SMMU_CB_SCTLR, 0);
++	iommu_writel(ctx, ARM_SMMU_CB_TCR2, 0);
++	iommu_writel(ctx, ARM_SMMU_CB_TCR, 0);
++	iommu_writeq(ctx, ARM_SMMU_CB_TTBR0, 0);
++	iommu_writeq(ctx, ARM_SMMU_CB_TTBR1, 0);
++
++	/* Should we issue a TLBSYNC there instead? */
++	mb();
++}
++
+ static int qcom_iommu_init_domain(struct iommu_domain *domain,
+ 				  struct qcom_iommu_dev *qcom_iommu,
+ 				  struct iommu_fwspec *fwspec)
+@@ -267,6 +284,8 @@ static int qcom_iommu_init_domain(struct iommu_domain *domain,
  			ctx->secure_init = true;
  		}
  
-+		/* TCR */
-+		iommu_writel(ctx, ARM_SMMU_CB_TCR2,
-+				(pgtbl_cfg.arm_lpae_s1_cfg.tcr >> 32) |
-+				FIELD_PREP(TCR2_SEP, TCR2_SEP_UPSTREAM));
-+		iommu_writel(ctx, ARM_SMMU_CB_TCR,
-+				pgtbl_cfg.arm_lpae_s1_cfg.tcr);
++		qcom_iommu_reset_ctx(ctx);
 +
- 		/* TTBRs */
- 		iommu_writeq(ctx, ARM_SMMU_CB_TTBR0,
- 				pgtbl_cfg.arm_lpae_s1_cfg.ttbr[0] |
-@@ -275,13 +282,6 @@ static int qcom_iommu_init_domain(struct iommu_domain *domain,
- 				pgtbl_cfg.arm_lpae_s1_cfg.ttbr[1] |
- 				FIELD_PREP(TTBRn_ASID, ctx->asid));
+ 		/* TCR */
+ 		iommu_writel(ctx, ARM_SMMU_CB_TCR2,
+ 				(pgtbl_cfg.arm_lpae_s1_cfg.tcr >> 32) |
+@@ -412,8 +431,8 @@ static void qcom_iommu_detach_dev(struct iommu_domain *domain, struct device *de
+ 	for (i = 0; i < fwspec->num_ids; i++) {
+ 		struct qcom_iommu_ctx *ctx = to_ctx(fwspec, fwspec->ids[i]);
  
--		/* TCR */
--		iommu_writel(ctx, ARM_SMMU_CB_TCR2,
--				(pgtbl_cfg.arm_lpae_s1_cfg.tcr >> 32) |
--				FIELD_PREP(TCR2_SEP, TCR2_SEP_UPSTREAM));
--		iommu_writel(ctx, ARM_SMMU_CB_TCR,
--				pgtbl_cfg.arm_lpae_s1_cfg.tcr);
--
- 		/* MAIRs (stage-1 only) */
- 		iommu_writel(ctx, ARM_SMMU_CB_S1_MAIR0,
- 				pgtbl_cfg.arm_lpae_s1_cfg.mair[0]);
+-		/* Disable the context bank: */
+-		iommu_writel(ctx, ARM_SMMU_CB_SCTLR, 0);
++		/* Disable and reset the context bank */
++		qcom_iommu_reset_ctx(ctx);
+ 
+ 		ctx->domain = NULL;
+ 	}
 -- 
 2.21.0
 
