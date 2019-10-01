@@ -2,181 +2,102 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id C277CC3458
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  1 Oct 2019 14:36:00 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 76805C360B
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  1 Oct 2019 15:42:00 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726181AbfJAMev (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 1 Oct 2019 08:34:51 -0400
-Received: from new2-smtp.messagingengine.com ([66.111.4.224]:44101 "EHLO
-        new2-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726086AbfJAMev (ORCPT
+        id S2388481AbfJANlw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 1 Oct 2019 09:41:52 -0400
+Received: from mail-oi1-f194.google.com ([209.85.167.194]:34825 "EHLO
+        mail-oi1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726898AbfJANlw (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 1 Oct 2019 08:34:51 -0400
-Received: from compute6.internal (compute6.nyi.internal [10.202.2.46])
-        by mailnew.nyi.internal (Postfix) with ESMTP id 4639E3845;
-        Tue,  1 Oct 2019 08:34:49 -0400 (EDT)
-Received: from mailfrontend1 ([10.202.2.162])
-  by compute6.internal (MEProxy); Tue, 01 Oct 2019 08:34:49 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=engestrom.ch; h=
-        date:from:to:cc:subject:message-id:references:mime-version
-        :content-type:content-transfer-encoding:in-reply-to; s=fm2; bh=Z
-        CFe4FL8sKu9d7TI/87cwj1RdFKXW/Wz6HLGUaYeNnI=; b=m1Gp8kez+Mhsuoi4T
-        59CzNqI2xz6J0ri2zucjgbPVBpCPvNnfW1I72iQXt6Ccox2FP7sJPMmq5zedAaAe
-        u1VPItyQPpjyQRFyXLABtQZVCX0P0uH2FzLn2NmqOuLaYJOSN5VU47/lOSUjOe4l
-        10L619Byl8rGD3Bll6LxYMBHAxSGFk/BmfxVcx4iWebAmS73+F/KI7qTkY1uHh/u
-        C0WCeIIomn/3XwiQbITJhzqN1mrZD5QWT4nuM3wTpeVcbSZ/r9g4GRzGfwndPcn/
-        wMgufUBTsqR1gaqBjh/OsDNHbxl/DETQWdRettbCLJMo/c3CU6qnDoAlsIiSYJcu
-        dGINA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-        messagingengine.com; h=cc:content-transfer-encoding:content-type
-        :date:from:in-reply-to:message-id:mime-version:references
-        :subject:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender
-        :x-sasl-enc; s=fm3; bh=ZCFe4FL8sKu9d7TI/87cwj1RdFKXW/Wz6HLGUaYeN
-        nI=; b=dFkaVP4Bn7gJ7omMjlTiFoZ3cnoGb1zVvbfEcidS6uuin4hSKTI/FQkpM
-        zrpw4kCydNUWW7HHlHwEnvhRD7bC8pH6CPFbq78ZkvF4NIT1YfBW+xrlFYJFuZOQ
-        oPz3LA8UEE7ymCFnz42v4YbUbuOgW2PGFPpIwXDhwnycwEArIuViJveZv9+mc1A2
-        +27Xa/s1R5THXnZEuGDNHmWyN/l73sFel1UlCWLVpA/KJUcbo1S4UxTA4lC2Rqit
-        RGfhGguKP2Fa3PcNJbplp03LkW3LzoonmSTQXJeTngjexH5pZEZ3mTvq9vJlbKss
-        tgX+5AvE3XsovZdSMK6O9JZjXKo4A==
-X-ME-Sender: <xms:6EeTXaSmkTPeD39T2XSHPMTkp-WY5YDiPJ21ZP7vgHNsw9n7GZVnGw>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedufedrgeeggdehvdcutefuodetggdotefrodftvf
-    curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
-    uegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenuc
-    fjughrpeffhffvuffkfhggtggugfgjfgesthekredttderjeenucfhrhhomhepgfhrihgt
-    ucfgnhhgvghsthhrohhmuceovghrihgtsegvnhhgvghsthhrohhmrdgthheqnecuffhomh
-    grihhnpehmrghilhdqrghrtghhihhvvgdrtghomhenucfkphepudelvddrudelkedrudeh
-    uddriedvnecurfgrrhgrmhepmhgrihhlfhhrohhmpegvrhhitgesvghnghgvshhtrhhomh
-    drtghhnecuvehluhhsthgvrhfuihiivgeptd
-X-ME-Proxy: <xmx:6EeTXRq02QouW8yYwmy576gHcxbzTACIpWRw9FmcOKU-dphW9L1tPA>
-    <xmx:6EeTXcdHOdUg3DLb04l7Uhsu16HO86uiu8934PHotLo8U-m-CLnLAA>
-    <xmx:6EeTXUiivZCN_PjMxsSFybsxeAROleH822OQOgl6Mn1QOHG761oRwg>
-    <xmx:6UeTXTH9iBGYqKpoM4s6_nphjJRotkce6hOVza1LY-Dt49PiVZuoKQ>
-Received: from engestrom.ch (unknown [192.198.151.62])
-        by mail.messagingengine.com (Postfix) with ESMTPA id 0DE7680063;
-        Tue,  1 Oct 2019 08:34:45 -0400 (EDT)
-Date:   Tue, 1 Oct 2019 13:34:44 +0100
-From:   Eric Engestrom <eric@engestrom.ch>
-To:     Jani Nikula <jani.nikula@intel.com>
-Cc:     dri-devel@lists.freedesktop.org, intel-gfx@lists.freedesktop.org,
-        Alex Deucher <alexander.deucher@amd.com>,
-        Christian =?utf-8?B?S8O2bmln?= <christian.koenig@amd.com>,
-        David Zhou <David1.Zhou@amd.com>,
-        amd-gfx@lists.freedesktop.org, Ben Skeggs <bskeggs@redhat.com>,
-        nouveau@lists.freedesktop.org, Rob Clark <robdclark@gmail.com>,
-        Sean Paul <sean@poorly.run>, linux-arm-msm@vger.kernel.org,
-        freedreno@lists.freedesktop.org,
-        Francisco Jerez <currojerez@riseup.net>,
-        Lucas Stach <l.stach@pengutronix.de>,
-        Russell King <linux+etnaviv@armlinux.org.uk>,
-        Christian Gmeiner <christian.gmeiner@gmail.com>,
-        etnaviv@lists.freedesktop.org
-Subject: Re: [PATCH v2 0/9] drm/print: add and use drm_debug_enabled()
-Message-ID: <20191001123444.xtp7wpickwjus4m2@engestrom.ch>
-References: <20190926074814.rdzxjmut6izqf4d5@engestrom.ch>
- <875zl8d8x0.fsf@intel.com>
+        Tue, 1 Oct 2019 09:41:52 -0400
+Received: by mail-oi1-f194.google.com with SMTP id x3so14447435oig.2;
+        Tue, 01 Oct 2019 06:41:51 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=tB7ZzI9slzRkyB/NKt2yLakwQz4oIAuNh1K5WH9EW3I=;
+        b=m4TEs2vmzCiDynZ2QUerNqE79FYMqyDK2B6iYqa6am51WowrwIiQ8k1VmVPzkZJs5/
+         QbDwTUuto2RbQ9Dtd74PFff47JvzQwaMu36LEW9Wy9KeOwQIBzNZ8xcWBQZwPHsHbo38
+         60f8Zm1PmpViDJ8Fw06oRv/+JarQwDh+iS8E4nllIARYFotGVeRhjNA3iqXaR5FDcIAq
+         IMEJLCJZ2kLgzP+6W6vYD+Sr+GgnmkgoCeS5m3VsJoEc8WT7BL/eRrVRiDWoNjHjoAcs
+         atrjtbcZqDZ/I9LKFYZb5vvDXD/4uxH+ct8oPynpcfLvNDM8IYfqJi0KYkT4ivNujFuQ
+         0gPg==
+X-Gm-Message-State: APjAAAVaxvoppLT2ig+xxUMeRQN/iuyQMn0cGHi8ND+rf+14mI4qStOU
+        I7M4HqUG6QYTlWSGOX47Qw==
+X-Google-Smtp-Source: APXvYqz0OL9phdAxhE5mqvW9HwiUlHK1JCHdfaZJBoU6zRW18R8d9kkbTRTQjigQdMRgjNWNNOhjLg==
+X-Received: by 2002:aca:58c5:: with SMTP id m188mr3649522oib.74.1569937310961;
+        Tue, 01 Oct 2019 06:41:50 -0700 (PDT)
+Received: from localhost (24-155-109-49.dyn.grandenetworks.net. [24.155.109.49])
+        by smtp.gmail.com with ESMTPSA id o184sm5301535oia.28.2019.10.01.06.41.50
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 01 Oct 2019 06:41:50 -0700 (PDT)
+Date:   Tue, 1 Oct 2019 08:41:49 -0500
+From:   Rob Herring <robh@kernel.org>
+To:     Simon Horman <horms+renesas@verge.net.au>
+Cc:     Geert Uytterhoeven <geert+renesas@glider.be>,
+        Magnus Damm <magnus.damm@gmail.com>,
+        Yoshihiro Kaneko <ykaneko0929@gmail.com>,
+        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-renesas-soc@vger.kernel.org,
+        Simon Horman <horms+renesas@verge.net.au>
+Subject: Re: [PATCH v4 1/3] dt-bindings: bus: simple-pm-bus: convert bindings
+ to json-schema
+Message-ID: <20191001134149.GA17853@bogus>
+References: <20190930115205.25204-1-horms+renesas@verge.net.au>
+ <20190930115205.25204-2-horms+renesas@verge.net.au>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <875zl8d8x0.fsf@intel.com>
-User-Agent: NeoMutt/20180716
+In-Reply-To: <20190930115205.25204-2-horms+renesas@verge.net.au>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tuesday, 2019-10-01 14:03:55 +0300, Jani Nikula wrote:
-> On Thu, 26 Sep 2019, Eric Engestrom <eric@engestrom.ch> wrote:
-> > On Tuesday, 2019-09-24 15:58:56 +0300, Jani Nikula wrote:
-> >> Hi all, v2 of [1], a little refactoring around drm_debug access to
-> >> abstract it better. There shouldn't be any functional changes.
-> >> 
-> >> I'd appreciate acks for merging the lot via drm-misc. If there are any
-> >> objections to that, we'll need to postpone the last patch until
-> >> everything has been merged and converted in drm-next.
-> >> 
-> >> BR,
-> >> Jani.
-> >> 
-> >> Cc: Eric Engestrom <eric.engestrom@intel.com>
-> >> Cc: Alex Deucher <alexander.deucher@amd.com>
-> >> Cc: Christian König <christian.koenig@amd.com>
-> >> Cc: David (ChunMing) Zhou <David1.Zhou@amd.com>
-> >> Cc: amd-gfx@lists.freedesktop.org
-> >> Cc: Ben Skeggs <bskeggs@redhat.com>
-> >> Cc: nouveau@lists.freedesktop.org
-> >> Cc: Rob Clark <robdclark@gmail.com>
-> >> Cc: Sean Paul <sean@poorly.run>
-> >> Cc: linux-arm-msm@vger.kernel.org
-> >> Cc: freedreno@lists.freedesktop.org
-> >> Cc: Francisco Jerez <currojerez@riseup.net>
-> >> Cc: Lucas Stach <l.stach@pengutronix.de>
-> >> Cc: Russell King <linux+etnaviv@armlinux.org.uk>
-> >> Cc: Christian Gmeiner <christian.gmeiner@gmail.com>
-> >> Cc: etnaviv@lists.freedesktop.org
-> >> 
-> >> 
-> >> [1] http://mid.mail-archive.com/cover.1568375189.git.jani.nikula@intel.com
-> >> 
-> >> Jani Nikula (9):
-> >>   drm/print: move drm_debug variable to drm_print.[ch]
-> >>   drm/print: add drm_debug_enabled()
-> >>   drm/i915: use drm_debug_enabled() to check for debug categories
-> >>   drm/print: rename drm_debug to __drm_debug to discourage use
-> >
-> > The above four patches are:
-> > Reviewed-by: Eric Engestrom <eric@engestrom.ch>
-> >
-> > Did you check to make sure the `unlikely()` is propagated correctly
-> > outside the `drm_debug_enabled()` call?
+On Mon, 30 Sep 2019 13:52:03 +0200, Simon Horman wrote:
+> Convert Simple Power-Managed Bus bindings documentation to json-schema.
 > 
-> I did now.
+> As a side effect of this change only simple-pm-bus is used in example. A
+> follow-up patch will provide an example for the separately documented
+> Renesas Bus State Controller (BSC) that uses "renesas,bsc-sh73a0" and
+> "renesas,bsc" compat strings.
 > 
-> Having drm_debug_enabled() as a macro vs. as an inline function does not
-> seem to make a difference, so I think the inline is clearly preferrable.
+> Signed-off-by: Simon Horman <horms+renesas@verge.net.au>
+> ---
+> * Based on v5.3
+> * Tested using:
+>   # ARCH=arm64 make dtbs_check DT_SCHEMA_FILES=Documentation/devicetree/bindings/bus/simple-pm-bus.yaml
+>   # ARCH=arm   make dtbs_check DT_SCHEMA_FILES=Documentation/devicetree/bindings/bus/simple-pm-bus.yaml
+> 
+> v4
+> * Only allow '@' after bus in nodename
+> * Allow #address-cells to be 1 or 2.
+> 
+> v3
+> * v2 was miss-posted as v3
+> 
+> v2
+> * Add SPDX line
+> * Remove extra blank line
+> * Add $nodename
+> * Remove extra leading space in compatible
+> * Update compatible to allow override by other schemas
+> * Allow #size-cells to be 1 or 2
+> * Do not limit ranges or clocks to 1 item
+> * Add anyOf requirement on ranges or clocks
+> * Update example based on msm8996.dtsi
+> ---
+>  .../devicetree/bindings/bus/simple-pm-bus.txt      | 44 -------------
+>  .../devicetree/bindings/bus/simple-pm-bus.yaml     | 75 ++++++++++++++++++++++
+>  2 files changed, 75 insertions(+), 44 deletions(-)
+>  delete mode 100644 Documentation/devicetree/bindings/bus/simple-pm-bus.txt
+>  create mode 100644 Documentation/devicetree/bindings/bus/simple-pm-bus.yaml
+> 
 
-Agreed :)
+Applied, thanks.
 
-> 
-> However, for example
-> 
-> 	unlikely(foo && drm_debug & DRM_UT_DP)
-> 
-> does produce code different from
-> 
-> 	(foo && drm_debug_enabled(DRM_UT_DP))
-> 
-> indicating that the unlikely() within drm_debug_enabled() does not
-> propagate to the whole condition. It's possible to retain the same
-> assembly output with
-> 
-> 	(unlikely(foo) && drm_debug_enabled(DRM_UT_DP))
-> 
-> but it's unclear to me whether this is really worth it, either
-> readability or performance wise.
-> 
-> Thoughts?
-
-That kind of code only happens 2 times, both in
-drivers/gpu/drm/drm_dp_mst_topology.c (in patch 2/9), right?
-
-I think your suggestion is the right thing to do here:
-
--   if (unlikely(ret && drm_debug & DRM_UT_DP)) {
-+   if (unlikely(ret) && drm_debug_enabled(DRM_UT_DP)) {
-
-It doesn't really cost much in readability (especially compared to what
-it was before), and whether it's important performance wise I couldn't
-tell, but I think it's best to keep the code optimised as it was before
-unless there's a reason to drop it.
-
-Lyude might know more since she wrote 2f015ec6eab69301fdcf5, if you want
-to ping her?
-
-> 
-> BR,
-> Jani.
-> 
-> 
-> -- 
-> Jani Nikula, Intel Open Source Graphics Center
+Rob
