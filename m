@@ -2,243 +2,149 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 64F40C37A2
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  1 Oct 2019 16:38:46 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 994A9C386B
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  1 Oct 2019 17:03:19 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2388870AbfJAOi1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 1 Oct 2019 10:38:27 -0400
-Received: from mail.kernel.org ([198.145.29.99]:50946 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1727143AbfJAOi1 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 1 Oct 2019 10:38:27 -0400
-Received: from kernel.org (unknown [104.132.0.74])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id CD3212054F;
-        Tue,  1 Oct 2019 14:38:25 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1569940705;
-        bh=BC6OroHcKot4AxHRsLzrj3gVVxqz2wKqdFSlgTuptpw=;
-        h=In-Reply-To:References:From:To:Cc:Subject:Date:From;
-        b=BYHEm8XyvTeCxQXNCByi8u5BlrT28BYw6+dYsZfyegW+qvnaE0V30GvfVl5LKhTVR
-         TbYCnlYyFno04qwhsbnta3Rc7FW7ECti0aE8lfZe5rdZapEbFkOtfAk/Vt2o9Mr7WJ
-         a93ez7ZSk3JUOhccqgPm8UbUZZ39MSaylIylYKNw=
-Content-Type: text/plain; charset="utf-8"
+        id S2388702AbfJAPDN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 1 Oct 2019 11:03:13 -0400
+Received: from fllv0015.ext.ti.com ([198.47.19.141]:43366 "EHLO
+        fllv0015.ext.ti.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726987AbfJAPDN (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 1 Oct 2019 11:03:13 -0400
+Received: from fllv0034.itg.ti.com ([10.64.40.246])
+        by fllv0015.ext.ti.com (8.15.2/8.15.2) with ESMTP id x91F2tBo017997;
+        Tue, 1 Oct 2019 10:02:55 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ti.com;
+        s=ti-com-17Q1; t=1569942175;
+        bh=FtGKw7kQQovEcABguQcARfmvU81jXg7GbjUfgsdw1Q4=;
+        h=Subject:To:References:From:Date:In-Reply-To;
+        b=f8M2abPJ5E2aPEAh8yZeVPhhazCotY06RboI3cv1WILlrmTEBfP4Mg331gud3ggIu
+         sKf/jLzbNpsnvvV1kbHR6GzbhnKOS5pX83i9/nQjXYx65/DW9J7ndM17sktKdcG5k5
+         lwn04f+tpDpmFR/k7cCrgSRN2vfToIiYb5dftpKo=
+Received: from DFLE102.ent.ti.com (dfle102.ent.ti.com [10.64.6.23])
+        by fllv0034.itg.ti.com (8.15.2/8.15.2) with ESMTPS id x91F2tJE014138
+        (version=TLSv1.2 cipher=AES256-GCM-SHA384 bits=256 verify=FAIL);
+        Tue, 1 Oct 2019 10:02:55 -0500
+Received: from DFLE113.ent.ti.com (10.64.6.34) by DFLE102.ent.ti.com
+ (10.64.6.23) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256_P256) id 15.1.1713.5; Tue, 1 Oct
+ 2019 10:02:55 -0500
+Received: from fllv0040.itg.ti.com (10.64.41.20) by DFLE113.ent.ti.com
+ (10.64.6.34) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256_P256) id 15.1.1713.5 via
+ Frontend Transport; Tue, 1 Oct 2019 10:02:45 -0500
+Received: from [10.250.65.13] (ileax41-snat.itg.ti.com [10.172.224.153])
+        by fllv0040.itg.ti.com (8.15.2/8.15.2) with ESMTP id x91F2swW029639;
+        Tue, 1 Oct 2019 10:02:55 -0500
+Subject: Re: [PATCH V6 1/8] backlight: qcom-wled: Rename pm8941-wled.c to
+ qcom-wled.c
+To:     Kiran Gunda <kgunda@codeaurora.org>, <bjorn.andersson@linaro.org>,
+        <jingoohan1@gmail.com>, <lee.jones@linaro.org>,
+        <b.zolnierkie@samsung.com>, <dri-devel@lists.freedesktop.org>,
+        <daniel.thompson@linaro.org>, <jacek.anaszewski@gmail.com>,
+        <pavel@ucw.cz>, <robh+dt@kernel.org>, <mark.rutland@arm.com>,
+        <linux-leds@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, Andy Gross <agross@kernel.org>,
+        <linux-fbdev@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>
+References: <1569825553-26039-1-git-send-email-kgunda@codeaurora.org>
+ <1569825553-26039-2-git-send-email-kgunda@codeaurora.org>
+From:   Dan Murphy <dmurphy@ti.com>
+Message-ID: <3cbc14db-9d6d-f60f-eb92-4b4d80d3774d@ti.com>
+Date:   Tue, 1 Oct 2019 10:03:13 -0500
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+ Thunderbird/60.8.0
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <35f8b699-6ff7-9104-5e3d-ef4ee8635832@codeaurora.org>
-References: <20190918095018.17979-1-tdas@codeaurora.org> <20190918095018.17979-4-tdas@codeaurora.org> <20190918213946.DC03521924@mail.kernel.org> <a3cd82c9-8bfa-f4a3-ab1f-2e397fbd9d16@codeaurora.org> <20190924231223.9012C207FD@mail.kernel.org> <347780b9-c66b-01c4-b547-b03de2cf3078@codeaurora.org> <20190925130346.42E0820640@mail.kernel.org> <35f8b699-6ff7-9104-5e3d-ef4ee8635832@codeaurora.org>
-From:   Stephen Boyd <sboyd@kernel.org>
-To:     Michael Turquette <mturquette@baylibre.com>,
-        Taniya Das <tdas@codeaurora.org>, robh+dt@kernel.org
-Cc:     David Brown <david.brown@linaro.org>,
-        Rajendra Nayak <rnayak@codeaurora.org>,
-        linux-arm-msm@vger.kernel.org, linux-soc@vger.kernel.org,
-        linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org,
-        devicetree@vger.kernel.org
-Subject: Re: [PATCH v3 3/3] clk: qcom: Add Global Clock controller (GCC) driver for SC7180
-User-Agent: alot/0.8.1
-Date:   Tue, 01 Oct 2019 07:38:25 -0700
-Message-Id: <20191001143825.CD3212054F@mail.kernel.org>
+In-Reply-To: <1569825553-26039-2-git-send-email-kgunda@codeaurora.org>
+Content-Type: text/plain; charset="utf-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+Content-Language: en-US
+X-EXCLAIMER-MD-CONFIG: e1e8a2fd-e40a-4ac6-ac9b-f7e9cc9ee180
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Taniya Das (2019-09-27 00:37:57)
-> Hi Stephen,
->=20
-> On 9/25/2019 6:33 PM, Stephen Boyd wrote:
-> > Quoting Taniya Das (2019-09-25 04:20:07)
-> >> Hi Stephen,
-> >>
-> >> Please find my comments.
-> >>
-> >> On 9/25/2019 4:42 AM, Stephen Boyd wrote:
-> >>> Quoting Taniya Das (2019-09-23 01:01:11)
-> >>>> Hi Stephen,
-> >>>>
-> >>>> Thanks for your comments.
-> >>>>
-> >>>> On 9/19/2019 3:09 AM, Stephen Boyd wrote:
-> >>>>> Quoting Taniya Das (2019-09-18 02:50:18)
-> >>>>>> diff --git a/drivers/clk/qcom/gcc-sc7180.c b/drivers/clk/qcom/gcc-=
-sc7180.c
-> >>>>>> new file mode 100644
-> >>>>>> index 000000000000..d47865d5408f
-> >>>>>> --- /dev/null
-> >>>>>> +++ b/drivers/clk/qcom/gcc-sc7180.c
-> >>>>>> +                       .ops =3D &clk_branch2_ops,
-> >>>>>> +               },
-> >>>>>> +       },
-> >>>>>> +};
-> >>>>>> +
-> >>> [...]
-> >>>>>> +static struct clk_branch gcc_ufs_phy_phy_aux_clk =3D {
-> >>>>>> +       .halt_reg =3D 0x77094,
-> >>>>>> +       .halt_check =3D BRANCH_HALT,
-> >>>>>> +       .hwcg_reg =3D 0x77094,
-> >>>>>> +       .hwcg_bit =3D 1,
-> >>>>>> +       .clkr =3D {
-> >>>>>> +               .enable_reg =3D 0x77094,
-> >>>>>> +               .enable_mask =3D BIT(0),
-> >>>>>> +               .hw.init =3D &(struct clk_init_data){
-> >>>>>> +                       .name =3D "gcc_ufs_phy_phy_aux_clk",
-> >>>>>> +                       .parent_data =3D &(const struct clk_parent=
-_data){
-> >>>>>> +                               .hw =3D &gcc_ufs_phy_phy_aux_clk_s=
-rc.clkr.hw,
-> >>>>>> +                       },
-> >>>>>> +                       .num_parents =3D 1,
-> >>>>>> +                       .flags =3D CLK_SET_RATE_PARENT,
-> >>>>>> +                       .ops =3D &clk_branch2_ops,
-> >>>>>> +               },
-> >>>>>> +       },
-> >>>>>> +};
-> >>>>>> +
-> >>>>>> +static struct clk_branch gcc_ufs_phy_rx_symbol_0_clk =3D {
-> >>>>>> +       .halt_reg =3D 0x7701c,
-> >>>>>> +       .halt_check =3D BRANCH_HALT_SKIP,
-> >>>>>
-> >>>>> Again, nobody has fixed the UFS driver to not need to do this halt =
-skip
-> >>>>> check for these clks? It's been over a year.
-> >>>>>
-> >>>>
-> >>>> The UFS_PHY_RX/TX clocks could be left enabled due to certain HW boot
-> >>>> configuration and thus during the late initcall of clk_disable there
-> >>>> could be warnings of "clock stuck ON" in the dmesg. That is the reas=
-on
-> >>>> also to use the BRANCH_HALT_SKIP flag.
-> >>>
-> >>> Oh that's bad. Why do the clks stay on when we try to turn them off?
-> >>>
-> >>
-> >> Those could be due to the configuration selected by HW and SW cannot
-> >> override them, so traditionally we have never polled for CLK_OFF for
-> >> these clocks.
-> >=20
-> > Is that the case or just a guess?
-> >=20
->=20
-> This is the behavior :).
+Kiran
 
-Ok. It's the same as sdm845 so I guess it's OK.
+On 9/30/19 1:39 AM, Kiran Gunda wrote:
+> pm8941-wled.c driver is supporting the WLED peripheral
+> on pm8941. Rename it to qcom-wled.c so that it can support
+> WLED on multiple PMICs.
+>
+> Signed-off-by: Kiran Gunda <kgunda@codeaurora.org>
+> Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+> Acked-by: Rob Herring <robh@kernel.org>
+> Acked-by: Daniel Thompson <daniel.thompson@linaro.org>
+> Acked-by: Pavel Machek <pavel@ucw.cz>
+> ---
+>   .../bindings/leds/backlight/{pm8941-wled.txt => qcom-wled.txt}    | 2 +-
 
->=20
-> >>
-> >>>>
-> >>>> I would also check internally for the UFS driver fix you are referri=
-ng here.
-> >>>
-> >>> Sure. I keep asking but nothing is done :(
-> >>>
-> >>>>
-> >>>>>> +       .clkr =3D {
-> >>>>>> +               .enable_reg =3D 0x7701c,
-> >>>>>> +               .enable_mask =3D BIT(0),
-> >>>>>> +               .hw.init =3D &(struct clk_init_data){
-> >>>>>> +                       .name =3D "gcc_ufs_phy_rx_symbol_0_clk",
-> >>>>>> +                       .ops =3D &clk_branch2_ops,
-> >>>>>> +               },
-> >>>>>> +       },
-> >>>>>> +};
-> >>>>>> +
-> >>> [...]
-> >>>>>> +
-> >>>>>> +static struct clk_branch gcc_usb3_prim_phy_pipe_clk =3D {
-> >>>>>> +       .halt_reg =3D 0xf058,
-> >>>>>> +       .halt_check =3D BRANCH_HALT_SKIP,
-> >>>>>
-> >>>>> Why does this need halt_skip?
-> >>>>
-> >>>> This is required as the source is external PHY, so we want to not ch=
-eck
-> >>>> for HALT.
-> >>>
-> >>> This doesn't really answer my question. If the source is an external =
-phy
-> >>> then it should be listed as a clock in the DT binding and the parent
-> >>> should be specified here. Unless something doesn't work because of th=
-at?
-> >>>
-> >>
-> >> The USB phy is managed by the USB driver and clock driver is not aware
-> >> if USB driver models the phy as a clock. Thus we do want to keep a
-> >> dependency on the parent and not poll for CLK_ENABLE.
-> >=20
-> > The clk driver should be aware of the USB driver modeling the phy as a
-> > clk. We do that for other phys so what is the difference here?
-> >=20
->=20
-> Let me check with the USB team, but could we keep them for now?
+Instead of renaming this file would it be more maintainable to indicate 
+in the pm8941-wled.txt
 
-Ok. It's also the same as sdm845 so I guess it's OK. Would be nice to
-properly model it though so we can be certain the clk is actually
-enabled.
+to reference the qcom-wled.txt file for complete description?
 
->=20
-> >>
-> >>>>
-> >>>>>
-> >>>>>> +       .clkr =3D {
-> >>>>>> +               .enable_reg =3D 0xf058,
-> >>>>>> +               .enable_mask =3D BIT(0),
-> >>>>>> +               .hw.init =3D &(struct clk_init_data){
-> >>>>>> +                       .name =3D "gcc_usb3_prim_phy_pipe_clk",
-> >>>>>> +                       .ops =3D &clk_branch2_ops,
-> >>>>>> +               },
-> >>>>>> +       },
-> >>>>>> +};
-> >>>>>> +
-> >>>>>> +static struct clk_branch gcc_usb_phy_cfg_ahb2phy_clk =3D {
-> >>>>>> +       .halt_reg =3D 0x6a004,
-> >>>>>> +       .halt_check =3D BRANCH_HALT,
-> >>>>>> +       .hwcg_reg =3D 0x6a004,
-> >>>>>> +       .hwcg_bit =3D 1,
-> >>>>>> +       .clkr =3D {
-> >>>>>> +               .enable_reg =3D 0x6a004,
-> >>>>>> +               .enable_mask =3D BIT(0),
-> >>>>>> +               .hw.init =3D &(struct clk_init_data){
-> >>>>>> +                       .name =3D "gcc_usb_phy_cfg_ahb2phy_clk",
-> >>>>>> +                       .ops =3D &clk_branch2_ops,
-> >>>>>> +               },
-> >>>>>> +       },
-> >>>>>> +};
-> >>>>>> +
-> >>>>>> +/* Leave the clock ON for parent config_noc_clk to be kept enable=
-d */
-> >>>>>
-> >>>>> There's no parent though... So I guess this means it keeps it enabl=
-ed
-> >>>>> implicitly in hardware?
-> >>>>>
-> >>>>
-> >>>> These are not left enabled, but want to leave them enabled for clien=
-ts
-> >>>> on config NOC.
-> >>>
-> >>> Sure. It just doesn't make sense to create clk structures and expose
-> >>> them in the kernel when we just want to turn the bits on and leave th=
-em
-> >>> on forever. Why not just do some register writes in probe for this
-> >>> driver? Doesn't that work just as well and use less memory?
-> >>>
-> >>
-> >> Even if I write these registers during probe, the late init check
-> >> 'clk_core_is_enabled' would return true and would be turned OFF, that =
-is
-> >> the reason for marking them CRITICAL.
-> >>
-> >=20
-> > That wouldn't happen if the clks weren't registered though, no?
-> >=20
->=20
-> I want to keep these clock CRITICAL and registered for now, but we=20
-> should be able to revisit/clean them up later.
->=20
+I will let Rob comment on maintainability.
 
-Why do you want to keep them critical and registered? I'm suggesting
-that any clk that is marked critical and doesn't have a parent should
-instead become a register write in probe to turn the clk on.
+Dan
 
+>   drivers/video/backlight/Kconfig                                   | 8 ++++----
+>   drivers/video/backlight/Makefile                                  | 2 +-
+>   drivers/video/backlight/{pm8941-wled.c => qcom-wled.c}            | 0
+>   4 files changed, 6 insertions(+), 6 deletions(-)
+>   rename Documentation/devicetree/bindings/leds/backlight/{pm8941-wled.txt => qcom-wled.txt} (95%)
+>   rename drivers/video/backlight/{pm8941-wled.c => qcom-wled.c} (100%)
+>
+> diff --git a/Documentation/devicetree/bindings/leds/backlight/pm8941-wled.txt b/Documentation/devicetree/bindings/leds/backlight/qcom-wled.txt
+> similarity index 95%
+> rename from Documentation/devicetree/bindings/leds/backlight/pm8941-wled.txt
+> rename to Documentation/devicetree/bindings/leds/backlight/qcom-wled.txt
+> index e5b294d..fb39e32 100644
+> --- a/Documentation/devicetree/bindings/leds/backlight/pm8941-wled.txt
+> +++ b/Documentation/devicetree/bindings/leds/backlight/qcom-wled.txt
+> @@ -1,4 +1,4 @@
+> -Binding for Qualcomm PM8941 WLED driver
+> +Binding for Qualcomm Technologies, Inc. WLED driver
+>   
+>   Required properties:
+>   - compatible: should be "qcom,pm8941-wled"
+> diff --git a/drivers/video/backlight/Kconfig b/drivers/video/backlight/Kconfig
+> index 8b081d6..6ff3176 100644
+> --- a/drivers/video/backlight/Kconfig
+> +++ b/drivers/video/backlight/Kconfig
+> @@ -284,12 +284,12 @@ config BACKLIGHT_TOSA
+>   	  If you have an Sharp SL-6000 Zaurus say Y to enable a driver
+>   	  for its backlight
+>   
+> -config BACKLIGHT_PM8941_WLED
+> -	tristate "Qualcomm PM8941 WLED Driver"
+> +config BACKLIGHT_QCOM_WLED
+> +	tristate "Qualcomm PMIC WLED Driver"
+>   	select REGMAP
+>   	help
+> -	  If you have the Qualcomm PM8941, say Y to enable a driver for the
+> -	  WLED block.
+> +	  If you have the Qualcomm PMIC, say Y to enable a driver for the
+> +	  WLED block. Currently it supports PM8941 and PMI8998.
+>   
+>   config BACKLIGHT_SAHARA
+>   	tristate "Tabletkiosk Sahara Touch-iT Backlight Driver"
+> diff --git a/drivers/video/backlight/Makefile b/drivers/video/backlight/Makefile
+> index 63c507c..6f87770 100644
+> --- a/drivers/video/backlight/Makefile
+> +++ b/drivers/video/backlight/Makefile
+> @@ -48,8 +48,8 @@ obj-$(CONFIG_BACKLIGHT_OMAP1)		+= omap1_bl.o
+>   obj-$(CONFIG_BACKLIGHT_OT200)		+= ot200_bl.o
+>   obj-$(CONFIG_BACKLIGHT_PANDORA)		+= pandora_bl.o
+>   obj-$(CONFIG_BACKLIGHT_PCF50633)	+= pcf50633-backlight.o
+> -obj-$(CONFIG_BACKLIGHT_PM8941_WLED)	+= pm8941-wled.o
+>   obj-$(CONFIG_BACKLIGHT_PWM)		+= pwm_bl.o
+> +obj-$(CONFIG_BACKLIGHT_QCOM_WLED)	+= qcom-wled.o
+>   obj-$(CONFIG_BACKLIGHT_SAHARA)		+= kb3886_bl.o
+>   obj-$(CONFIG_BACKLIGHT_SKY81452)	+= sky81452-backlight.o
+>   obj-$(CONFIG_BACKLIGHT_TOSA)		+= tosa_bl.o
+> diff --git a/drivers/video/backlight/pm8941-wled.c b/drivers/video/backlight/qcom-wled.c
+> similarity index 100%
+> rename from drivers/video/backlight/pm8941-wled.c
+> rename to drivers/video/backlight/qcom-wled.c
