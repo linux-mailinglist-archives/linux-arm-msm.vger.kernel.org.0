@@ -2,97 +2,123 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 0A93FC2F64
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  1 Oct 2019 10:57:23 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id CA13FC31F6
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  1 Oct 2019 13:04:24 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1733238AbfJAI5W (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 1 Oct 2019 04:57:22 -0400
-Received: from mail-wr1-f67.google.com ([209.85.221.67]:36084 "EHLO
-        mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1733185AbfJAI5W (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 1 Oct 2019 04:57:22 -0400
-Received: by mail-wr1-f67.google.com with SMTP id y19so14457240wrd.3
-        for <linux-arm-msm@vger.kernel.org>; Tue, 01 Oct 2019 01:57:20 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=PdQqnIRetGhmX5t5KUNz0D/PW18I35dBAgGn5+TVGHo=;
-        b=UtODBx2HnS7k4A0GsfJKVqAKfE5096QcSo11mtR5Z6ipZCDcWTwIcdDhF4Z4Fk4qBa
-         HXj6s3TzupPT4bB54WfpIBVn3HGHGWMS1FxiStLdXcjbgNSxWjoKi1BILumyUyuSbyAw
-         Ackyr8YKVN6TYPeruM89l7yRaELXfCrK6fxSDje5UEgcuZ47I2KHj0Wg4JyjinJzaQoj
-         3Kv3uAAFsMb4QK0kAMtQR3Jq7j0A2pdkuYCsDjvsawd9anzpUtEdhinqwIRY2h0kbGmK
-         qHx1aAim8oerfaBmStMLZRFU4WjFK1Ll8BKltZdBOJmLtSpy5RnyizO0vDMEsiH396MV
-         SyoQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=PdQqnIRetGhmX5t5KUNz0D/PW18I35dBAgGn5+TVGHo=;
-        b=GmD34588CblSzXmz6iZpXwb+Gpsjlt0wdvnZtEWxHllt1INdPN5xp7KFx6Jl6vBcOy
-         hrHT/aL5YY/05XzLhoPnRTTVVV96Zq9v3kOLsiELga1KM3JB/7Aid6ybdvcoNhFEAhGo
-         NxdzTo31ZdMjwl6e9Kt5xdsPTAmMYlIUJ/FyhMWV5PYbEk8zfvmd9X6B1lFPC0Pq7kjq
-         RhS7OTtkNfITThyTNM5e7HSwGNAgEdxvvl3lePUEDmdpT9nqfaLJyZSeR0lj6U1SsJwM
-         gDP3I+145jA3/3oBlgIPB3iDaR0sksPH3WfG1I4Eq1ir466iDAxJzuYy5kr0fRxnhmFn
-         jMhA==
-X-Gm-Message-State: APjAAAXz4TmXTIOatifRshiMVwM6/9MFBGjA7tmxMafKZKXI9BkscZbe
-        oLRQoT8P+7MFtFklmDHn2S1PRHlLtuk=
-X-Google-Smtp-Source: APXvYqy7b4jLqxbUxm2RLSyA6GHEm+sw+WqhkZ33SsCp/PbHkoJ/fiibUnBgQUFiT6bM0iWO1pXZwQ==
-X-Received: by 2002:a5d:5384:: with SMTP id d4mr16020685wrv.255.1569920240066;
-        Tue, 01 Oct 2019 01:57:20 -0700 (PDT)
-Received: from IcarusMOD.eternityproject.eu ([93.51.16.173])
-        by smtp.gmail.com with ESMTPSA id u68sm4600611wmu.12.2019.10.01.01.57.19
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 01 Oct 2019 01:57:19 -0700 (PDT)
-From:   kholk11@gmail.com
-To:     linux-arm-msm@vger.kernel.org
-Cc:     kholk11@gmail.com, marijns95@gmail.com, agross@kernel.org,
-        daniel.lezcano@linaro.org, robh+dt@kernel.org,
-        mark.rutland@arm.com, amit.kucheria@linaro.org
-Subject: [PATCH v2 2/2] dt: thermal: tsens: Document compatible for MSM8976/56
-Date:   Tue,  1 Oct 2019 10:57:07 +0200
-Message-Id: <20191001085707.8424-3-kholk11@gmail.com>
-X-Mailer: git-send-email 2.21.0
-In-Reply-To: <20191001085707.8424-1-kholk11@gmail.com>
-References: <20191001085707.8424-1-kholk11@gmail.com>
+        id S1725865AbfJALEG convert rfc822-to-8bit (ORCPT
+        <rfc822;lists+linux-arm-msm@lfdr.de>); Tue, 1 Oct 2019 07:04:06 -0400
+Received: from mga06.intel.com ([134.134.136.31]:5667 "EHLO mga06.intel.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1725844AbfJALEG (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 1 Oct 2019 07:04:06 -0400
+X-Amp-Result: SKIPPED(no attachment in message)
+X-Amp-File-Uploaded: False
+Received: from orsmga006.jf.intel.com ([10.7.209.51])
+  by orsmga104.jf.intel.com with ESMTP/TLS/DHE-RSA-AES256-GCM-SHA384; 01 Oct 2019 04:04:05 -0700
+X-IronPort-AV: E=Sophos;i="5.64,570,1559545200"; 
+   d="scan'208";a="195612547"
+Received: from jnikula-mobl3.fi.intel.com (HELO localhost) ([10.237.66.161])
+  by orsmga006-auth.jf.intel.com with ESMTP/TLS/DHE-RSA-AES256-GCM-SHA384; 01 Oct 2019 04:03:58 -0700
+From:   Jani Nikula <jani.nikula@intel.com>
+To:     Eric Engestrom <eric@engestrom.ch>
+Cc:     dri-devel@lists.freedesktop.org, intel-gfx@lists.freedesktop.org,
+        Alex Deucher <alexander.deucher@amd.com>,
+        Christian =?utf-8?Q?K=C3=B6nig?= <christian.koenig@amd.com>,
+        David Zhou <David1.Zhou@amd.com>,
+        amd-gfx@lists.freedesktop.org, Ben Skeggs <bskeggs@redhat.com>,
+        nouveau@lists.freedesktop.org, Rob Clark <robdclark@gmail.com>,
+        Sean Paul <sean@poorly.run>, linux-arm-msm@vger.kernel.org,
+        freedreno@lists.freedesktop.org,
+        Francisco Jerez <currojerez@riseup.net>,
+        Lucas Stach <l.stach@pengutronix.de>,
+        Russell King <linux+etnaviv@armlinux.org.uk>,
+        Christian Gmeiner <christian.gmeiner@gmail.com>,
+        etnaviv@lists.freedesktop.org
+Subject: Re: [PATCH v2 0/9] drm/print: add and use drm_debug_enabled()
+In-Reply-To: <20190926074814.rdzxjmut6izqf4d5@engestrom.ch>
+Organization: Intel Finland Oy - BIC 0357606-4 - Westendinkatu 7, 02160 Espoo
+References: <20190926074814.rdzxjmut6izqf4d5@engestrom.ch>
+Date:   Tue, 01 Oct 2019 14:03:55 +0300
+Message-ID: <875zl8d8x0.fsf@intel.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8BIT
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: AngeloGioacchino Del Regno <kholk11@gmail.com>
+On Thu, 26 Sep 2019, Eric Engestrom <eric@engestrom.ch> wrote:
+> On Tuesday, 2019-09-24 15:58:56 +0300, Jani Nikula wrote:
+>> Hi all, v2 of [1], a little refactoring around drm_debug access to
+>> abstract it better. There shouldn't be any functional changes.
+>> 
+>> I'd appreciate acks for merging the lot via drm-misc. If there are any
+>> objections to that, we'll need to postpone the last patch until
+>> everything has been merged and converted in drm-next.
+>> 
+>> BR,
+>> Jani.
+>> 
+>> Cc: Eric Engestrom <eric.engestrom@intel.com>
+>> Cc: Alex Deucher <alexander.deucher@amd.com>
+>> Cc: Christian König <christian.koenig@amd.com>
+>> Cc: David (ChunMing) Zhou <David1.Zhou@amd.com>
+>> Cc: amd-gfx@lists.freedesktop.org
+>> Cc: Ben Skeggs <bskeggs@redhat.com>
+>> Cc: nouveau@lists.freedesktop.org
+>> Cc: Rob Clark <robdclark@gmail.com>
+>> Cc: Sean Paul <sean@poorly.run>
+>> Cc: linux-arm-msm@vger.kernel.org
+>> Cc: freedreno@lists.freedesktop.org
+>> Cc: Francisco Jerez <currojerez@riseup.net>
+>> Cc: Lucas Stach <l.stach@pengutronix.de>
+>> Cc: Russell King <linux+etnaviv@armlinux.org.uk>
+>> Cc: Christian Gmeiner <christian.gmeiner@gmail.com>
+>> Cc: etnaviv@lists.freedesktop.org
+>> 
+>> 
+>> [1] http://mid.mail-archive.com/cover.1568375189.git.jani.nikula@intel.com
+>> 
+>> Jani Nikula (9):
+>>   drm/print: move drm_debug variable to drm_print.[ch]
+>>   drm/print: add drm_debug_enabled()
+>>   drm/i915: use drm_debug_enabled() to check for debug categories
+>>   drm/print: rename drm_debug to __drm_debug to discourage use
+>
+> The above four patches are:
+> Reviewed-by: Eric Engestrom <eric@engestrom.ch>
+>
+> Did you check to make sure the `unlikely()` is propagated correctly
+> outside the `drm_debug_enabled()` call?
 
-Support for MSM8976 and MSM8956 (having tsens ip version 1) has
-been added to the qcom tsens driver: document the addition here.
+I did now.
 
-Signed-off-by: AngeloGioacchino Del Regno <kholk11@gmail.com>
----
- Documentation/devicetree/bindings/thermal/qcom-tsens.yaml | 2 ++
- 1 file changed, 2 insertions(+)
+Having drm_debug_enabled() as a macro vs. as an inline function does not
+seem to make a difference, so I think the inline is clearly preferrable.
 
-diff --git a/Documentation/devicetree/bindings/thermal/qcom-tsens.yaml b/Documentation/devicetree/bindings/thermal/qcom-tsens.yaml
-index 23afc7bf5a44..eef13b9446a8 100644
---- a/Documentation/devicetree/bindings/thermal/qcom-tsens.yaml
-+++ b/Documentation/devicetree/bindings/thermal/qcom-tsens.yaml
-@@ -29,6 +29,7 @@ properties:
-       - description: v1 of TSENS
-         items:
-           - enum:
-+              - qcom,msm8976-tsens
-               - qcom,qcs404-tsens
-           - const: qcom,tsens-v1
- 
-@@ -82,6 +83,7 @@ allOf:
-             enum:
-               - qcom,msm8916-tsens
-               - qcom,msm8974-tsens
-+              - qcom,msm8976-tsens
-               - qcom,qcs404-tsens
-               - qcom,tsens-v0_1
-               - qcom,tsens-v1
+However, for example
+
+	unlikely(foo && drm_debug & DRM_UT_DP)
+
+does produce code different from
+
+	(foo && drm_debug_enabled(DRM_UT_DP))
+
+indicating that the unlikely() within drm_debug_enabled() does not
+propagate to the whole condition. It's possible to retain the same
+assembly output with
+
+	(unlikely(foo) && drm_debug_enabled(DRM_UT_DP))
+
+but it's unclear to me whether this is really worth it, either
+readability or performance wise.
+
+Thoughts?
+
+BR,
+Jani.
+
+
 -- 
-2.21.0
-
+Jani Nikula, Intel Open Source Graphics Center
