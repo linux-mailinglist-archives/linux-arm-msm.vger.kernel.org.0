@@ -2,57 +2,57 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 38F3CC435D
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  2 Oct 2019 00:02:13 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0C636C435F
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  2 Oct 2019 00:02:15 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727979AbfJAWCM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 1 Oct 2019 18:02:12 -0400
-Received: from mail-wr1-f65.google.com ([209.85.221.65]:46992 "EHLO
-        mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726000AbfJAWCM (ORCPT
+        id S1728219AbfJAWCO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 1 Oct 2019 18:02:14 -0400
+Received: from mail-wr1-f66.google.com ([209.85.221.66]:39587 "EHLO
+        mail-wr1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727701AbfJAWCN (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 1 Oct 2019 18:02:12 -0400
-Received: by mail-wr1-f65.google.com with SMTP id o18so17240116wrv.13
-        for <linux-arm-msm@vger.kernel.org>; Tue, 01 Oct 2019 15:02:11 -0700 (PDT)
+        Tue, 1 Oct 2019 18:02:13 -0400
+Received: by mail-wr1-f66.google.com with SMTP id r3so17300564wrj.6
+        for <linux-arm-msm@vger.kernel.org>; Tue, 01 Oct 2019 15:02:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=hteX5Po5jH9mp6pG+BqMJxAmFHZvrUZhbwHbRe2F5fc=;
-        b=SaKNLF6hmU7isKtHSAvW2k1hH/JhnGAhRZ7eMLJ66AQnleQcgoCf+e5FeoqeeKFtgf
-         GXhqIVMCDJyzp+NYe2NQEJRm0CR41svyJfFQJ1lLdM03q4TWTIzMpPBbP0KHm8DxpLir
-         DcnYp5R766EW42RRnTUSDnX+0HTg8c47CVYxIxQ4aKn1EYr09ptMjwYPnQh12U0770gX
-         Lw+s64vHKggF4mmJk4Ip0XPcEowFy6lvtn8JCMOBg1sPII4kIYCaOqu7iOtn0Z/8w3rx
-         Vl8z1j6oVnoxMetPHBh1J74klpDEpR6y/mGXhFfl6nX/WTCYvvxA0CLge4liKX8Lv8/z
-         EDeQ==
+        bh=xSQ3Gd/I78crTYWoKFJLF2LHykp/l0XNK/1ec4ayqbI=;
+        b=t249MXs++5WyIF3X50Nkg/LnfbT6WM1mHZpRGivgeImeFlsqtd6GwDxawpSD0sFfoZ
+         D2r6fOGps5fUNtZscW/c2jyOBVjUM0QdgwVaLKJu2HFRHcwyEx2SZoHgK7rkNMzaK5J9
+         tRLCzMgd7b6rh3Iw49RxI7sps2fJ6nfUQtj0UFja2TrZKExyiFkyrO28b9eGORbToX96
+         1iyZtGkPIpwbrohedj1RX80zf/pbAsT6HS9z8ahOuK67QUdP5rA3fVl5hy9J0Utnd0SZ
+         bLKbexglc8AZFn9R/bIVREpe48hx4wLZ4D6+FPDtVieJ4Re6wHg+hDNojNVDoxd2cDLB
+         84MQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=hteX5Po5jH9mp6pG+BqMJxAmFHZvrUZhbwHbRe2F5fc=;
-        b=uLcrDbeLcMFgl0I27JdX5xdba71RzE1JWIm7b3AnT1uEPZ8kPOKy7jtd2x1I4SyHmz
-         pNaAaLi6ACmssgZ4bNYVtgYV/70Binrilx79G0ZZCxEuPQjZovuq3c7f5L4ZBoB5qfdH
-         3/5GgUUwcmInymU5Oha3rhUxuBzkrvnLVIVsOsg0Pf7p5Nh4IrrWLdJRYjuroSLr97NN
-         hUq6VWqG3qP6wGVtshN70OCJIUOGOYBMcmruURzv68aiiUqeIDig1hHvY5stv3zD+VtB
-         Evr3Tlr+7K62CWh+o6Rfx7UsdUYJ9Jxn0v0SSQHxHH6rivWVM/4gVJ28N8KrwzA2rtBg
-         cBOA==
-X-Gm-Message-State: APjAAAVZO5fk2jOpFx/CBmjZ+pQjrPblUeMnRhHcsPr0/huIPOtKjAbU
-        CkU2tOL28Oh1jfLELzZGHHcuZ/ef+b31dQ==
-X-Google-Smtp-Source: APXvYqzHW80JeoqBqf3ODbZgwnZ22i7c0iPjee8HOvTf3Qev1Ltnbao5xz6b8sb5eYJMhtBvxA80ug==
-X-Received: by 2002:adf:cf0e:: with SMTP id o14mr19324573wrj.277.1569967330396;
-        Tue, 01 Oct 2019 15:02:10 -0700 (PDT)
+        bh=xSQ3Gd/I78crTYWoKFJLF2LHykp/l0XNK/1ec4ayqbI=;
+        b=eBmnhWi/8TabMiG5JrKFcUFiZBsimKfITgDqllWnAKeXXzoFcPvB53USDxz8YhdzEH
+         GWkfwW+To334u7piAxEsHtDgsOljAKq4lUR5qdg9Pw+5/NPkKlz+Jfm2udPblZJr89Pi
+         yhizAMjznX0ZhRvJCcFpSkPHSmd5lBl/ORaMbyZpgMGix8ZiGep5nSx97QcFB21/7ytt
+         QrYo3ClA2UmGXncp1TCJN/z65qZQ8n8mY0gsQHtvLTyn5QgNFWwjuEJPth/C7LIRlums
+         6w5mjZtxSY2xF0/aN9liTvpJ7cfqJB6IY0b55lY2mJzGWbi9kEssygPoTyX+iGI7z+3Y
+         /qhQ==
+X-Gm-Message-State: APjAAAXsWFfWPvApn5bLP+lLazCzVbdR8MLLpBQnIWulziD4xaMPPfrq
+        nN5536ckref0NUyy82xYIgcEUN0T0/T9Ew==
+X-Google-Smtp-Source: APXvYqy1rskAcZSc9NovPC2LsJevqHjabSz0LpyN/SnQGRbcaQZj1rMNs2D0coMhRjTTbYPo3Ie7pQ==
+X-Received: by 2002:adf:a415:: with SMTP id d21mr18413810wra.94.1569967331329;
+        Tue, 01 Oct 2019 15:02:11 -0700 (PDT)
 Received: from IcarusMOD.eternityproject.eu ([93.51.16.173])
-        by smtp.gmail.com with ESMTPSA id v16sm21811219wrt.12.2019.10.01.15.02.09
+        by smtp.gmail.com with ESMTPSA id v16sm21811219wrt.12.2019.10.01.15.02.10
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 01 Oct 2019 15:02:09 -0700 (PDT)
+        Tue, 01 Oct 2019 15:02:10 -0700 (PDT)
 From:   kholk11@gmail.com
 To:     linux-arm-msm@vger.kernel.org
 Cc:     kholk11@gmail.com, iommu@lists.linux-foundation.org,
         marijns95@gmail.com, agross@kernel.org, robdclark@gmail.com,
         joro@8bytes.org
-Subject: [PATCH v4 2/7] iommu/qcom: Use the asid read from device-tree if specified
-Date:   Wed,  2 Oct 2019 00:02:00 +0200
-Message-Id: <20191001220205.6423-3-kholk11@gmail.com>
+Subject: [PATCH v4 3/7] iommu/qcom: Write TCR before TTBRs to fix ASID access behavior
+Date:   Wed,  2 Oct 2019 00:02:01 +0200
+Message-Id: <20191001220205.6423-4-kholk11@gmail.com>
 X-Mailer: git-send-email 2.21.0
 In-Reply-To: <20191001220205.6423-1-kholk11@gmail.com>
 References: <20191001220205.6423-1-kholk11@gmail.com>
@@ -65,75 +65,47 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 From: AngeloGioacchino Del Regno <kholk11@gmail.com>
 
-As specified in this driver, the context banks are 0x1000 apart.
-Problem is that sometimes the context number (our asid) does not
-match this logic and we end up using the wrong one: this starts
-being a problem in the case that we need to send TZ commands
-to do anything on a specific context.
-
-For this reason, read the ASID from the DT if the property
-"qcom,ctx-num" is present on the IOMMU context node.
+As also stated in the arm-smmu driver, we must write the TCR before
+writing the TTBRs, since the TCR determines the access behavior of
+some fields.
 
 Signed-off-by: AngeloGioacchino Del Regno <kholk11@gmail.com>
 ---
- .../devicetree/bindings/iommu/qcom,iommu.txt    |  1 +
- drivers/iommu/qcom_iommu.c                      | 17 ++++++++++++++---
- 2 files changed, 15 insertions(+), 3 deletions(-)
+ drivers/iommu/qcom_iommu.c | 14 +++++++-------
+ 1 file changed, 7 insertions(+), 7 deletions(-)
 
-diff --git a/Documentation/devicetree/bindings/iommu/qcom,iommu.txt b/Documentation/devicetree/bindings/iommu/qcom,iommu.txt
-index 059139abce35..ba0b77889f02 100644
---- a/Documentation/devicetree/bindings/iommu/qcom,iommu.txt
-+++ b/Documentation/devicetree/bindings/iommu/qcom,iommu.txt
-@@ -46,6 +46,7 @@ to non-secure vs secure interrupt line.
-                      for routing of context bank irq's to secure vs non-
-                      secure lines.  (Ie. if the iommu contains secure
-                      context banks)
-+- qcom,ctx-num     : The number associated to the context bank
- 
- 
- ** Examples:
 diff --git a/drivers/iommu/qcom_iommu.c b/drivers/iommu/qcom_iommu.c
-index c31e7bc4ccbe..504ca69adc5a 100644
+index 504ca69adc5a..c8957ec83b92 100644
 --- a/drivers/iommu/qcom_iommu.c
 +++ b/drivers/iommu/qcom_iommu.c
-@@ -585,7 +585,8 @@ static int qcom_iommu_of_xlate(struct device *dev, struct of_phandle_args *args)
- 	 * index into qcom_iommu->ctxs:
- 	 */
- 	if (WARN_ON(asid < 1) ||
--	    WARN_ON(asid > qcom_iommu->num_ctxs))
-+	    WARN_ON(asid > qcom_iommu->num_ctxs) ||
-+	    WARN_ON(qcom_iommu->ctxs[asid - 1] == NULL))
- 		return -EINVAL;
+@@ -267,6 +267,13 @@ static int qcom_iommu_init_domain(struct iommu_domain *domain,
+ 			ctx->secure_init = true;
+ 		}
  
- 	if (!fwspec->iommu_priv) {
-@@ -693,7 +694,8 @@ static int qcom_iommu_sec_ptbl_init(struct device *dev)
- 
- static int get_asid(const struct device_node *np)
- {
--	u32 reg;
-+	u32 reg, val;
-+	int asid;
- 
- 	/* read the "reg" property directly to get the relative address
- 	 * of the context bank, and calculate the asid from that:
-@@ -701,7 +703,16 @@ static int get_asid(const struct device_node *np)
- 	if (of_property_read_u32_index(np, "reg", 0, &reg))
- 		return -ENODEV;
- 
--	return reg / 0x1000;      /* context banks are 0x1000 apart */
-+	/* Context banks are 0x1000 apart but, in some cases, the ASID
-+	 * number doesn't match to this logic and needs to be passed
-+	 * from the DT configuration explicitly.
-+	 */
-+	if (of_property_read_u32(np, "qcom,ctx-num", &val))
-+		asid = reg / 0x1000;
-+	else
-+		asid = val;
++		/* TCR */
++		iommu_writel(ctx, ARM_SMMU_CB_TCR2,
++				(pgtbl_cfg.arm_lpae_s1_cfg.tcr >> 32) |
++				FIELD_PREP(TCR2_SEP, TCR2_SEP_UPSTREAM));
++		iommu_writel(ctx, ARM_SMMU_CB_TCR,
++				pgtbl_cfg.arm_lpae_s1_cfg.tcr);
 +
-+	return asid;
- }
+ 		/* TTBRs */
+ 		iommu_writeq(ctx, ARM_SMMU_CB_TTBR0,
+ 				pgtbl_cfg.arm_lpae_s1_cfg.ttbr[0] |
+@@ -275,13 +282,6 @@ static int qcom_iommu_init_domain(struct iommu_domain *domain,
+ 				pgtbl_cfg.arm_lpae_s1_cfg.ttbr[1] |
+ 				FIELD_PREP(TTBRn_ASID, ctx->asid));
  
- static int qcom_iommu_ctx_probe(struct platform_device *pdev)
+-		/* TCR */
+-		iommu_writel(ctx, ARM_SMMU_CB_TCR2,
+-				(pgtbl_cfg.arm_lpae_s1_cfg.tcr >> 32) |
+-				FIELD_PREP(TCR2_SEP, TCR2_SEP_UPSTREAM));
+-		iommu_writel(ctx, ARM_SMMU_CB_TCR,
+-				pgtbl_cfg.arm_lpae_s1_cfg.tcr);
+-
+ 		/* MAIRs (stage-1 only) */
+ 		iommu_writel(ctx, ARM_SMMU_CB_S1_MAIR0,
+ 				pgtbl_cfg.arm_lpae_s1_cfg.mair[0]);
 -- 
 2.21.0
 
