@@ -2,91 +2,127 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id A1E2CC465B
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  2 Oct 2019 06:17:00 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 52F2FC4950
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  2 Oct 2019 10:20:42 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726685AbfJBEQ7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 2 Oct 2019 00:16:59 -0400
-Received: from mail-pg1-f194.google.com ([209.85.215.194]:45229 "EHLO
-        mail-pg1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726346AbfJBEQ7 (ORCPT
+        id S1727657AbfJBIUX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 2 Oct 2019 04:20:23 -0400
+Received: from mail-wr1-f67.google.com ([209.85.221.67]:34960 "EHLO
+        mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726067AbfJBIUX (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 2 Oct 2019 00:16:59 -0400
-Received: by mail-pg1-f194.google.com with SMTP id q7so11144223pgi.12
-        for <linux-arm-msm@vger.kernel.org>; Tue, 01 Oct 2019 21:16:58 -0700 (PDT)
+        Wed, 2 Oct 2019 04:20:23 -0400
+Received: by mail-wr1-f67.google.com with SMTP id v8so18553347wrt.2
+        for <linux-arm-msm@vger.kernel.org>; Wed, 02 Oct 2019 01:20:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id;
-        bh=yB6EANp2Gq2nUYi0fb1/BMw/e2qObJRACvpr+KuVRDo=;
-        b=H4UzvH8s1D6iyBib4zTgN4lMKIc7Ddl66kGBgRvUt2vZCz0fN3PgY5MeWjfW5WNtOv
-         XBqf2xOjig9aRUTTluZryXiJBTonzxGvntVT6u/hSOnQGbDbh4h6x8w+/eJ6ip72tROs
-         614tDITQjEweLmuhU79n/mvp75x6Xph8oSsP1HxnkBGg1CHM3tsvzx7RF7oqh+E2FkCj
-         NBpgLewGFWwp1Hb4mZerIFkZz6DvyTUDJoigib5+rscmJgC0xKCSoWwkNQhSmmvSU3tD
-         YvINPYlznif8X8fb7oxhzKpjnUeySO8ObwJSz41MU+1T1icieqSgzuebgLQRuAQSq1QB
-         el5A==
+        h=subject:to:cc:references:from:openpgp:autocrypt:message-id:date
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=7wzUFXF7wK9XYz2rOpybUs704S8i3ga6y6oP1J1Vz28=;
+        b=b6kEri6nb09ILkYxLII5zQNpcvQ8qiIJOKYRnROpWqXK62dnms9uC94NF6MJicHIVx
+         CaXWEbI30xm/rV+EPbdTAOZ3sVMb0LIxFgpXjzeYllJjRBkkKSR7jVTV3BPtt7iVXvNr
+         t/fXqodsJLe1LvifG3G2+IWyFnWpP/a30KvdSZrlmxkNkrFYYNNAgpcH0W7MZjKEm7nD
+         BKNH2IaSMTyDERRXlknkauXl80Qr/FmSPGbZnEoPMrgd3vnYclt1oUjofByLcmf4+zqe
+         5Tld+K4IGwc5NBsTIM8892i3Pw6Sc4v5rCxH8C/2lq85YitjchhRPtCvMsjdv1IyUpn6
+         Lfjw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id;
-        bh=yB6EANp2Gq2nUYi0fb1/BMw/e2qObJRACvpr+KuVRDo=;
-        b=A2b4h6QqHtoO9KYlJ4l5Fw/mCKCp0D8BQhCRsnvGCikeVFpjkZCvOrU/vReXHwKfix
-         meEI2n8epe775KhNyjJAYrznMqk7JdP1Z70AST8Ue9/g+Ucybh1DEgSngpsyyMpm044P
-         wPWhO4P25ec9ZeOV4h/3WArwv7isXeuaLpKy/jEPyh7q1dG7jfdPxYq56BMB/3YMaUhU
-         WQm+8grI2e+wepmBWNvCEKIdqP4IbB42oFb+w7xeek/33QuuJvXV1Wd2yHD880mqxeyY
-         KsasNVXXcsLY1X96A6S8PBdLbvfpE7racNqOTIuBm3Tn+E4+XIHMvk8S8QlcxFS3K2kv
-         JZvA==
-X-Gm-Message-State: APjAAAV/WejOVkk4jwnCYjUHEazqR+/x/s+UjzmZw+OtbkgtRhzKvFNT
-        7Niv+GodtdbOoxaPD12una8Z/A==
-X-Google-Smtp-Source: APXvYqwBVvw6q508G5o3bf3yw4tBbE/PmtZBiLhL99mw7fwFWisBT9Caa+zDSh/1LGrKgk4EGRcVwg==
-X-Received: by 2002:a62:d14c:: with SMTP id t12mr2223538pfl.185.1569989818127;
-        Tue, 01 Oct 2019 21:16:58 -0700 (PDT)
-Received: from localhost.localdomain (104-188-17-28.lightspeed.sndgca.sbcglobal.net. [104.188.17.28])
-        by smtp.gmail.com with ESMTPSA id 37sm18013315pgv.32.2019.10.01.21.16.57
+        h=x-gm-message-state:subject:to:cc:references:from:openpgp:autocrypt
+         :message-id:date:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=7wzUFXF7wK9XYz2rOpybUs704S8i3ga6y6oP1J1Vz28=;
+        b=UM4Z4+qsbwyKQxl2e69kM3Ld0T8b4shsx2cVPPmu1bRXMFckvqqc1WUgdDrfDqwKtb
+         c0G/CPZvAvRnGrNmWRcE4Jb0DCrm+Cg22G3fe7o+VjwJvnaR+SDtrEfC9qO3fZ1eeR2n
+         QW/a1W9Y0aNzebGTQUODqyqODiNRr5kHOhgysvLtDPo5R1sSZ8s9STZdeGJO4590Elmg
+         aouxH7bt7KAkyN9yH/8TVZIElHx/mValNbbz56rHf/4Uz9/ZEtNS03IvRIStYa+wfwL2
+         YNCI/CgXrxG6eBUGwWJ3ZRDvVRydF6jGguAZK9RPdSzCr8UTfeYAIJDQDloql5DsH+r3
+         fNrg==
+X-Gm-Message-State: APjAAAUC1elqZnsiLPtU0TRRH9//Q03ApXBLJoR3aIFHN9nFxXiYZbj2
+        +Fr9G3IYHIKV4oNM3fjxzVKDlP+2poCeug==
+X-Google-Smtp-Source: APXvYqx71p2MA7x5bcV4o/uxfUyeXTsg9DVALYdknfhfxmJX2WlklOH73Ug2nD6XwyGdR2gFI7aQrw==
+X-Received: by 2002:a5d:4f0b:: with SMTP id c11mr1622832wru.63.1570004421123;
+        Wed, 02 Oct 2019 01:20:21 -0700 (PDT)
+Received: from [10.44.66.8] ([212.45.67.2])
+        by smtp.googlemail.com with ESMTPSA id t6sm9487103wmf.8.2019.10.02.01.20.19
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 01 Oct 2019 21:16:57 -0700 (PDT)
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Andy Gross <agross@kernel.org>
-Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: [PATCH] arm64: dts: qcom: db845c: Enable LVS 1 and 2
-Date:   Tue,  1 Oct 2019 21:16:54 -0700
-Message-Id: <20191002041654.3620-1-bjorn.andersson@linaro.org>
-X-Mailer: git-send-email 2.18.0
+        Wed, 02 Oct 2019 01:20:20 -0700 (PDT)
+Subject: Re: [PATCH v2 1/2] venus: use on-chip interconnect API
+To:     Stanimir Varbanov <stanimir.varbanov@linaro.org>,
+        linux-media@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org
+Cc:     Vikash Garodia <vgarodia@codeaurora.org>,
+        Andy Gross <agross@kernel.org>,
+        Linux PM list <linux-pm@vger.kernel.org>
+References: <20190912082948.22836-1-stanimir.varbanov@linaro.org>
+ <20190912082948.22836-2-stanimir.varbanov@linaro.org>
+From:   Georgi Djakov <georgi.djakov@linaro.org>
+Openpgp: preference=signencrypt
+Autocrypt: addr=georgi.djakov@linaro.org; prefer-encrypt=mutual; keydata=
+ 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
+ KEmKjLDvB0pePJkdTw==
+Message-ID: <c1e242ee-f7ec-de35-d5ae-9964473d473e@linaro.org>
+Date:   Wed, 2 Oct 2019 11:20:18 +0300
+MIME-Version: 1.0
+In-Reply-To: <20190912082948.22836-2-stanimir.varbanov@linaro.org>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-vreg_lvs1a_1p8 and vreg_lvs2a_1p8 are both feeding pins in the low speed
-connectors and should as such alway be on, so enable them.
+Hi Stan,
 
-Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
----
- arch/arm64/boot/dts/qcom/sdm845-db845c.dts | 12 ++++++++++++
- 1 file changed, 12 insertions(+)
+On 9/12/19 01:29, Stanimir Varbanov wrote:
+> This aims to add a requests for bandwidth scaling depending
+> on the resolution and framerate (macroblocks per second). The
+> exact value of the requested bandwidth is get from a
+> pre-calculated tables for encoder and decoder.
+> 
+> Signed-off-by: Stanimir Varbanov <stanimir.varbanov@linaro.org>
 
-diff --git a/arch/arm64/boot/dts/qcom/sdm845-db845c.dts b/arch/arm64/boot/dts/qcom/sdm845-db845c.dts
-index c314b5d55796..6e97ae7f7a08 100644
---- a/arch/arm64/boot/dts/qcom/sdm845-db845c.dts
-+++ b/arch/arm64/boot/dts/qcom/sdm845-db845c.dts
-@@ -312,6 +312,18 @@
- 			regulator-max-microvolt = <1200000>;
- 			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
- 		};
-+
-+		vreg_lvs1a_1p8: lvs1 {
-+			regulator-min-microvolt = <1800000>;
-+			regulator-max-microvolt = <1800000>;
-+			regulator-always-on;
-+		};
-+
-+		vreg_lvs2a_1p8: lvs2 {
-+			regulator-min-microvolt = <1800000>;
-+			regulator-max-microvolt = <1800000>;
-+			regulator-always-on;
-+		};
- 	};
- 
- 	pmi8998-rpmh-regulators {
--- 
-2.18.0
+Acked-by: Georgi Djakov <georgi.djakov@linaro.org>
 
+Thanks,
+Georgi
