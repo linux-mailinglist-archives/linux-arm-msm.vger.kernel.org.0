@@ -2,111 +2,153 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 05E6CC90A9
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  2 Oct 2019 20:19:14 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 10166C90CF
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  2 Oct 2019 20:28:13 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728662AbfJBSSu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 2 Oct 2019 14:18:50 -0400
-Received: from mail-io1-f65.google.com ([209.85.166.65]:40951 "EHLO
-        mail-io1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726669AbfJBSSt (ORCPT
+        id S1728806AbfJBS2L (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 2 Oct 2019 14:28:11 -0400
+Received: from mail-pg1-f196.google.com ([209.85.215.196]:43682 "EHLO
+        mail-pg1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726076AbfJBS2L (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 2 Oct 2019 14:18:49 -0400
-Received: by mail-io1-f65.google.com with SMTP id h144so59079735iof.7;
-        Wed, 02 Oct 2019 11:18:49 -0700 (PDT)
+        Wed, 2 Oct 2019 14:28:11 -0400
+Received: by mail-pg1-f196.google.com with SMTP id v27so12326847pgk.10;
+        Wed, 02 Oct 2019 11:28:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=eG6ofvrckUFcFRYXwx/ccEp5zbwUgI4UE493A1wR4no=;
-        b=eRzFCqQe4nvNRGO5zbc7vgTWV5c8zYTtTrbRd770nTtsJNwmMCYJLSiO4h2k1DrsuZ
-         62XWZvx0kPFUhkur2RFvwrd4gsi4/cO2A4Bt15ywfZNYne9TWPqG2X+5/ALs7eOV1mm+
-         KppNrSUsi4PuPhIRxsgKFsGSLguuq+HffYC5ksmIuHNOsuc7dY93DYi5RMHmjgGYW8fS
-         m/x8E9QBLa9U9RlWS2GQM6MyORB5fIW2Za7HIBKRc8y7xU7xyghufZZq9ZXWbZYOZ71a
-         xOFdQpRiKVSWyhl0LmbvEy7I/xmkD9ksVFS/38CVNTxDJf0Ek908Nxo/7LBMD5kZyk/4
-         zBAg==
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=izcdKMTlTPXdg1rZpK9PkNPTeAL5ACc5p0aT6ECn+3o=;
+        b=nr6ZKcXN/729CI5YvKkqVc0Bz2wyp7AqMiNJbnneIbJ2S8a6/RpgT+vQxveooa1g8o
+         Tzstjrebdj0ch6CBEQIhLHedt+Meqh8poQODSN2lg0OykjXXZCvv3ItaPXFO7ZImXqcW
+         RuKmutNc32nfhTfdTSE+Gn+FP0hyvVehIb12ZNHr5rdWDezRIrhU/4qCY2koq02vv9hS
+         0JYsKwzPEkKLeHC0o1yMLr4lNeC7nIidqjJQlgZ17X3hwG7uMGUGlb0FYDKstybAoxSN
+         PuzGKEISFL71Mt9LOzHTLH19Bi/ikZqtSvsTTAUBs/9/pSrhf3mQrJw/Bi+Y2mWPIur/
+         yzHQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=eG6ofvrckUFcFRYXwx/ccEp5zbwUgI4UE493A1wR4no=;
-        b=HF4EUxxL9YndIHIpIq2T3+mYsJ1oX3RsruS1Vs6N33ayoUIXU9bnfRP60jkTDs+mGN
-         GQl6tM7lXQu7belpxbcRULEDhpDIWA1uyDN3Uk1zGT19rK/HhWizb4RuoZFTf66nvBLY
-         gzsZqvvYTBYwpOuPIMYpndXHyccoD528KKeNTeWl5wNnL1NqYA139jtXFEaP5ecbu2Vn
-         V1fPWLobFkqUNJ9fGfv8XY33XyG9TLdHLrAng/R/MOJ9t4ED5nzPe1O9u6J4Hl3R7wLf
-         27ENMdWNz3O60xtmWdEjrKTBlz7oDS/QP8gUMuLUWxIuIZWKHwfMyKzawv6oXJv3TfJL
-         Ukhg==
-X-Gm-Message-State: APjAAAUQJKaVm63Dfj7VsPKLytR1hWofA3TyZmy0zWN/JwQ0efdzovcq
-        +U43gxJCrjfA9kZ9QNtU8c/j+pzrJfxlqVXJBAU=
-X-Google-Smtp-Source: APXvYqzeGOG+vjdbOlerjELbGdZs+cwv0jd4E+qA7STc6TTnUbh87zuNhWs38yf4kxrOP6qiE/fmRvTpGxP8XFDpqFg=
-X-Received: by 2002:a02:cd2d:: with SMTP id h13mr5165251jaq.19.1570040328827;
- Wed, 02 Oct 2019 11:18:48 -0700 (PDT)
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=izcdKMTlTPXdg1rZpK9PkNPTeAL5ACc5p0aT6ECn+3o=;
+        b=pmsHGoI1ePqZE8TLIu0Dey8pVqh1NIIj/A8bMidf6zGs1MH2FE1AqnpVY91B+3CLt4
+         8BheWaKNwiIe64AuVFIJOqTmRF+wchCvko/tc6ceKJuIY8xNxd18XG4w7zxqtj7bOmQM
+         23z+BEWQzE3U6Kc5/wR3Ro7gBJr/RNPvTtzVCBwWjkobkxurHdBt8LgZEXKKObj/ijfp
+         V1Z9ByZuI2uY3INWNDsKubaNPWcLw4eDL/a8pIDp789JIRi43c9zAMNUZiMvu13fc4ug
+         oD3vwMBWsm5OejBjBXsSYU+mE8l75Yv7FuI+nl6TSMi5293fIXUyqTuPChzLR1LiXXB7
+         3y7Q==
+X-Gm-Message-State: APjAAAWttjPq1lnPKLQ3CMBX0r/izgeFIFB8DCBRwvf1KTLBlY3nuQVw
+        rLq29wRs+YQEyzQLoW9cqqNMYGeN
+X-Google-Smtp-Source: APXvYqwrs3FB89RH0+kgXBF3ejwmYPZLTgHaLNuUiXE1AjcShSZR76+3xPYW28RCBcE0p63294782w==
+X-Received: by 2002:a17:90a:c214:: with SMTP id e20mr5758828pjt.81.1570040889544;
+        Wed, 02 Oct 2019 11:28:09 -0700 (PDT)
+Received: from [10.69.78.41] ([192.19.223.252])
+        by smtp.gmail.com with ESMTPSA id b14sm162486pfi.95.2019.10.02.11.28.07
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 02 Oct 2019 11:28:08 -0700 (PDT)
+Subject: Re: [PATCH 00/11] of: Fix DMA configuration for non-DT masters
+To:     Robin Murphy <robin.murphy@arm.com>,
+        Nicolas Saenz Julienne <nsaenzjulienne@suse.de>,
+        Rob Herring <robh+dt@kernel.org>
+Cc:     "moderated list:ARM/FREESCALE IMX / MXC ARM ARCHITECTURE" 
+        <linux-arm-kernel@lists.infradead.org>, devicetree@vger.kernel.org,
+        Matthias Brugger <mbrugger@suse.com>,
+        Frank Rowand <frowand.list@gmail.com>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        linux-wireless <linux-wireless@vger.kernel.org>,
+        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
+        dri-devel <dri-devel@lists.freedesktop.org>,
+        etnaviv@lists.freedesktop.org,
+        "open list:DMA GENERIC OFFLOAD ENGINE SUBSYSTEM" 
+        <dmaengine@vger.kernel.org>, Stefan Wahren <wahrenst@gmx.net>,
+        james.quinlan@broadcom.com, linux-pci@vger.kernel.org,
+        linux-tegra@vger.kernel.org, xen-devel@lists.xenproject.org,
+        Dan Williams <dan.j.williams@intel.com>,
+        freedreno <freedreno@lists.freedesktop.org>,
+        Linux Media Mailing List <linux-media@vger.kernel.org>
+References: <20190924181244.7159-1-nsaenzjulienne@suse.de>
+ <CAL_Jsq+v+svTyna7UzQdRVqfNc5Z_bgWzxNRXv7-Wqv3NwDu2g@mail.gmail.com>
+ <d1a31a2ec8eb2f226b1fb41f6c24ffb47c3bf7c7.camel@suse.de>
+ <e404c65b-5a66-6f91-5b38-8bf89a7697b2@arm.com>
+ <43fb5fe1de317d65a4edf592f88ea150c6e3b8cc.camel@suse.de>
+ <CAL_JsqLhx500cx3YLoC7HL1ux3bBpV+fEA2Qnk7D5RFGgiGzSw@mail.gmail.com>
+ <aa4c8d62-7990-e385-2bb1-cec55148f0a8@arm.com>
+ <CAL_JsqKKYcHPnA80ZwLY=Sk3e5MqrimedUhWQ5+iuPZXQxYHdA@mail.gmail.com>
+ <307b988d0c67fb1c42166eca12742bcfda09d92d.camel@suse.de>
+ <c27a51e1-1adf-ae6a-dc67-ae76222a1163@arm.com>
+From:   Florian Fainelli <f.fainelli@gmail.com>
+Message-ID: <fbae48ca-fbd4-e32b-e874-92b5bba5df4d@gmail.com>
+Date:   Wed, 2 Oct 2019 11:28:06 -0700
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
+ Thunderbird/68.1.1
 MIME-Version: 1.0
-References: <cover.1558430617.git.amit.kucheria@linaro.org>
- <49cf5d94beb9af9ef4e78d4c52f3b0ad20b7c63f.1558430617.git.amit.kucheria@linaro.org>
- <CAOCk7NptTHPOdyEkCAofjTPuDQ5dsnPMQgfC0R8=7cp05xKQiA@mail.gmail.com>
- <20191002091950.GA9393@centauri> <20191002092734.GA15523@centauri>
-In-Reply-To: <20191002092734.GA15523@centauri>
-From:   Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
-Date:   Wed, 2 Oct 2019 12:18:37 -0600
-Message-ID: <CAOCk7Nqqm6d3bR9hFJH6rp1jMPmx2e2qmJtnOuw5viaGWohEZA@mail.gmail.com>
-Subject: Re: [PATCH v2 7/9] arm64: dts: qcom: msm8998: Add PSCI cpuidle low
- power states
-To:     Niklas Cassel <niklas.cassel@linaro.org>
-Cc:     Amit Kucheria <amit.kucheria@linaro.org>,
-        lkml <linux-kernel@vger.kernel.org>,
-        MSM <linux-arm-msm@vger.kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Marc Gonzalez <marc.w.gonzalez@free.fr>,
-        Sibi Sankar <sibis@codeaurora.org>,
-        Daniel Lezcano <daniel.lezcano@linaro.org>,
-        David Brown <david.brown@linaro.org>,
-        Li Yang <leoyang.li@nxp.com>, Shawn Guo <shawnguo@kernel.org>,
-        DTML <devicetree@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+In-Reply-To: <c27a51e1-1adf-ae6a-dc67-ae76222a1163@arm.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Oct 2, 2019 at 3:27 AM Niklas Cassel <niklas.cassel@linaro.org> wrote:
->
-> On Wed, Oct 02, 2019 at 11:19:50AM +0200, Niklas Cassel wrote:
-> > On Mon, Sep 30, 2019 at 04:20:15PM -0600, Jeffrey Hugo wrote:
-> > > Amit, the merged version of the below change causes a boot failure
-> > > (nasty hang, sometimes with RCU stalls) on the msm8998 laptops.  Oddly
-> > > enough, it seems to be resolved if I remove the cpu-idle-states
-> > > property from one of the cpu nodes.
-> > >
-> > > I see no issues with the msm8998 MTP.
-> >
-> > Hello Jeffrey, Amit,
-> >
-> > If the PSCI idle states work properly on the msm8998 devboard (MTP),
-> > but causes crashes on msm8998 laptops, the only logical change is
-> > that the PSCI firmware is different between the two devices.
->
-> Since the msm8998 laptops boot using ACPI, perhaps these laptops
-> doesn't support PSCI/have any PSCI firmware at all.
 
-They have PSCI.  If there was no PSCI, I would expect the PSCI
-get_version request from Linux to fail, and all PSCI functionality to
-be disabled.
 
-However, your mention about ACPI sparked a thought.  ACPI describes
-the idle states, along with the PSCI info, in the ACPI0007 devices.
-Those exist on the laptops, and the info mostly correlates with Amit's
-patch (ACPI seems to be a bit more conservative about the latencies,
-and describes one additional deeper state).  However, upon a detailed
-analysis of the ACPI description, I did find something relevant - the
-retention state is not enabled.
+On 9/26/2019 4:20 AM, Robin Murphy wrote:
+> On 2019-09-26 11:44 am, Nicolas Saenz Julienne wrote:
+>>>>>> Robin, have you looked into supporting multiple dma-ranges? It's the
+>>>>>> next thing
+>>>>>> we need for BCM STB's PCIe. I'll have a go at it myself if nothing
+>>>>>> is in
+>>>>>> the
+>>>>>> works already.
+>>>>>
+>>>>> Multiple dma-ranges as far as configuring inbound windows should work
+>>>>> already other than the bug when there's any parent translation. But if
+>>>>> you mean supporting multiple DMA offsets and masks per device in the
+>>>>> DMA API, there's nothing in the works yet.
+>>
+>> Sorry, I meant supporting multiple DMA offsets[1]. I think I could
+>> still make
+>> it with a single DMA mask though.
+> 
+> The main problem for supporting that case in general is the disgusting
+> carving up of the physical memory map you may have to do to guarantee
+> that a single buffer allocation cannot ever span two windows with
+> different offsets. I don't think we ever reached a conclusion on whether
+> that was even achievable in practice.
 
-So, I hacked out the retention state from Amit's patch, and I did not
-observe a hang.  I used sysfs, and appeared able to validate that the
-power collapse state was being used successfully.
+It is with the Broadcom STB SoCs which have between 1 and 3 memory
+controllers depending on the SoC, and multiple dma-ranges cells for PCIe
+as a consequence.
 
-I'm guessing that something is weird with the laptops, where the CPUs
-can go into retention, but not come out, thus causing issues.
+Each memory controller has a different physical address aperture in the
+CPU's physical address map (e.g.: MEMC0 is 0x0 - 0x3fff_ffff, MEMC1
+0x4000_0000 - 0x7ffff_ffff and MEMC2 0x8000_0000 - 0xbfff_ffff, not
+counting the extension regions above 4GB), and while the CPU is
+scheduled and arbitrated the same way across all memory controllers
+(thus making it virtually UMA, almost) having a buffer span two memory
+controllers would be problematic because the memory controllers do not
+know how to guarantee the transaction ordering and buffer data
+consistency in both DRAM itself and for other memory controller clients,
+like PCIe.
 
-I'll post a patch to fix up the laptops.  Thanks for all the help.
+We historically had to reserve the last 4KB of each memory controller to
+avoid problematic controllers like EHCI to prefetch beyond the end of a
+memory controller's populated memory and that also incidentally takes
+care of never having a buffer cross a controller boundary. Either you
+can allocate the entire buffer on a given memory controller, or you
+cannot allocate memory at all on that zone/region and another one must
+be found (or there is no more memory and there is a genuine OOM).
+
+The way we reserve memory right now is based on the first patch
+submitted by Jim:
+
+https://lore.kernel.org/patchwork/patch/988469/
+
+whereby we read the memory node's "reg" property and we map the physical
+addresses to the memory controller configuration read from the specific
+registers in the CPU's Bus Interface Unit (where the memory controller
+apertures are architecturally defined) and then we use that to call
+memblock_reserve() (not part of that patch, it should be though).
+-- 
+Florian
