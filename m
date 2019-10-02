@@ -2,156 +2,111 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 0C596C8DB7
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  2 Oct 2019 18:07:42 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 05E6CC90A9
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  2 Oct 2019 20:19:14 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729193AbfJBQHH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 2 Oct 2019 12:07:07 -0400
-Received: from mail.kernel.org ([198.145.29.99]:36258 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1729190AbfJBQHH (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 2 Oct 2019 12:07:07 -0400
-Received: from localhost.localdomain (unknown [194.230.155.145])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id B1851222BE;
-        Wed,  2 Oct 2019 16:06:58 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1570032426;
-        bh=mQPcQHUPwO41tj6eZFL6xjysxPvRcXAHP637dM6rPBA=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=xqXgGJ9vZy7bk8yuGyGyCZ7HwYOrs+sZX0ScjPpHW2skiKsRVVRbzRGyQcfqtu4D8
-         sDlbVfZP8EPCOarDCvgd/OoIf7Cf8wm0Dk0jsfDjrCD4nx9pQtHbxNAKOrgy5zMzDi
-         vbSyChOYqADcyyWF+Gryao3inEuvv8/IJSvZMhXw=
-From:   Krzysztof Kozlowski <krzk@kernel.org>
-To:     Sudeep Holla <sudeep.holla@arm.com>,
-        Rob Herring <robh+dt@kernel.org>,
-        Mark Rutland <mark.rutland@arm.com>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Kevin Hilman <khilman@baylibre.com>,
-        "Rafael J. Wysocki" <rjw@rjwysocki.net>,
-        Ulf Hansson <ulf.hansson@linaro.org>,
-        linux-arm-kernel@lists.infradead.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-clk@vger.kernel.org,
-        linux-samsung-soc@vger.kernel.org, etnaviv@lists.freedesktop.org,
-        dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
-        freedreno@lists.freedesktop.org, linux-tegra@vger.kernel.org,
-        linux-media@vger.kernel.org, linux-pm@vger.kernel.org,
-        linux-pci@vger.kernel.org, linux-amlogic@lists.infradead.org,
-        bcm-kernel-feedback-list@broadcom.com,
-        linux-rpi-kernel@lists.infradead.org, linux-usb@vger.kernel.org,
-        linux-mediatek@lists.infradead.org
-Cc:     Krzysztof Kozlowski <krzk@kernel.org>
-Subject: [PATCH v2 3/3] ARM: dts: exynos: Rename power domain nodes to "power-domain" in Exynos4
-Date:   Wed,  2 Oct 2019 18:06:32 +0200
-Message-Id: <20191002160632.11140-3-krzk@kernel.org>
-X-Mailer: git-send-email 2.17.1
-In-Reply-To: <20191002160632.11140-1-krzk@kernel.org>
-References: <20191002160632.11140-1-krzk@kernel.org>
+        id S1728662AbfJBSSu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 2 Oct 2019 14:18:50 -0400
+Received: from mail-io1-f65.google.com ([209.85.166.65]:40951 "EHLO
+        mail-io1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726669AbfJBSSt (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 2 Oct 2019 14:18:49 -0400
+Received: by mail-io1-f65.google.com with SMTP id h144so59079735iof.7;
+        Wed, 02 Oct 2019 11:18:49 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=eG6ofvrckUFcFRYXwx/ccEp5zbwUgI4UE493A1wR4no=;
+        b=eRzFCqQe4nvNRGO5zbc7vgTWV5c8zYTtTrbRd770nTtsJNwmMCYJLSiO4h2k1DrsuZ
+         62XWZvx0kPFUhkur2RFvwrd4gsi4/cO2A4Bt15ywfZNYne9TWPqG2X+5/ALs7eOV1mm+
+         KppNrSUsi4PuPhIRxsgKFsGSLguuq+HffYC5ksmIuHNOsuc7dY93DYi5RMHmjgGYW8fS
+         m/x8E9QBLa9U9RlWS2GQM6MyORB5fIW2Za7HIBKRc8y7xU7xyghufZZq9ZXWbZYOZ71a
+         xOFdQpRiKVSWyhl0LmbvEy7I/xmkD9ksVFS/38CVNTxDJf0Ek908Nxo/7LBMD5kZyk/4
+         zBAg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=eG6ofvrckUFcFRYXwx/ccEp5zbwUgI4UE493A1wR4no=;
+        b=HF4EUxxL9YndIHIpIq2T3+mYsJ1oX3RsruS1Vs6N33ayoUIXU9bnfRP60jkTDs+mGN
+         GQl6tM7lXQu7belpxbcRULEDhpDIWA1uyDN3Uk1zGT19rK/HhWizb4RuoZFTf66nvBLY
+         gzsZqvvYTBYwpOuPIMYpndXHyccoD528KKeNTeWl5wNnL1NqYA139jtXFEaP5ecbu2Vn
+         V1fPWLobFkqUNJ9fGfv8XY33XyG9TLdHLrAng/R/MOJ9t4ED5nzPe1O9u6J4Hl3R7wLf
+         27ENMdWNz3O60xtmWdEjrKTBlz7oDS/QP8gUMuLUWxIuIZWKHwfMyKzawv6oXJv3TfJL
+         Ukhg==
+X-Gm-Message-State: APjAAAUQJKaVm63Dfj7VsPKLytR1hWofA3TyZmy0zWN/JwQ0efdzovcq
+        +U43gxJCrjfA9kZ9QNtU8c/j+pzrJfxlqVXJBAU=
+X-Google-Smtp-Source: APXvYqzeGOG+vjdbOlerjELbGdZs+cwv0jd4E+qA7STc6TTnUbh87zuNhWs38yf4kxrOP6qiE/fmRvTpGxP8XFDpqFg=
+X-Received: by 2002:a02:cd2d:: with SMTP id h13mr5165251jaq.19.1570040328827;
+ Wed, 02 Oct 2019 11:18:48 -0700 (PDT)
+MIME-Version: 1.0
+References: <cover.1558430617.git.amit.kucheria@linaro.org>
+ <49cf5d94beb9af9ef4e78d4c52f3b0ad20b7c63f.1558430617.git.amit.kucheria@linaro.org>
+ <CAOCk7NptTHPOdyEkCAofjTPuDQ5dsnPMQgfC0R8=7cp05xKQiA@mail.gmail.com>
+ <20191002091950.GA9393@centauri> <20191002092734.GA15523@centauri>
+In-Reply-To: <20191002092734.GA15523@centauri>
+From:   Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
+Date:   Wed, 2 Oct 2019 12:18:37 -0600
+Message-ID: <CAOCk7Nqqm6d3bR9hFJH6rp1jMPmx2e2qmJtnOuw5viaGWohEZA@mail.gmail.com>
+Subject: Re: [PATCH v2 7/9] arm64: dts: qcom: msm8998: Add PSCI cpuidle low
+ power states
+To:     Niklas Cassel <niklas.cassel@linaro.org>
+Cc:     Amit Kucheria <amit.kucheria@linaro.org>,
+        lkml <linux-kernel@vger.kernel.org>,
+        MSM <linux-arm-msm@vger.kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Marc Gonzalez <marc.w.gonzalez@free.fr>,
+        Sibi Sankar <sibis@codeaurora.org>,
+        Daniel Lezcano <daniel.lezcano@linaro.org>,
+        David Brown <david.brown@linaro.org>,
+        Li Yang <leoyang.li@nxp.com>, Shawn Guo <shawnguo@kernel.org>,
+        DTML <devicetree@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The device node name should reflect generic class of a device so rename
-power domain nodes to "power-domain".  No functional change.
+On Wed, Oct 2, 2019 at 3:27 AM Niklas Cassel <niklas.cassel@linaro.org> wrote:
+>
+> On Wed, Oct 02, 2019 at 11:19:50AM +0200, Niklas Cassel wrote:
+> > On Mon, Sep 30, 2019 at 04:20:15PM -0600, Jeffrey Hugo wrote:
+> > > Amit, the merged version of the below change causes a boot failure
+> > > (nasty hang, sometimes with RCU stalls) on the msm8998 laptops.  Oddly
+> > > enough, it seems to be resolved if I remove the cpu-idle-states
+> > > property from one of the cpu nodes.
+> > >
+> > > I see no issues with the msm8998 MTP.
+> >
+> > Hello Jeffrey, Amit,
+> >
+> > If the PSCI idle states work properly on the msm8998 devboard (MTP),
+> > but causes crashes on msm8998 laptops, the only logical change is
+> > that the PSCI firmware is different between the two devices.
+>
+> Since the msm8998 laptops boot using ACPI, perhaps these laptops
+> doesn't support PSCI/have any PSCI firmware at all.
 
-Signed-off-by: Krzysztof Kozlowski <krzk@kernel.org>
----
- arch/arm/boot/dts/exynos4.dtsi    | 14 +++++++-------
- arch/arm/boot/dts/exynos4210.dtsi |  2 +-
- arch/arm/boot/dts/exynos4412.dtsi |  2 +-
- 3 files changed, 9 insertions(+), 9 deletions(-)
+They have PSCI.  If there was no PSCI, I would expect the PSCI
+get_version request from Linux to fail, and all PSCI functionality to
+be disabled.
 
-diff --git a/arch/arm/boot/dts/exynos4.dtsi b/arch/arm/boot/dts/exynos4.dtsi
-index 433f109d97ca..d2779a790ce3 100644
---- a/arch/arm/boot/dts/exynos4.dtsi
-+++ b/arch/arm/boot/dts/exynos4.dtsi
-@@ -111,28 +111,28 @@
- 			syscon = <&pmu_system_controller>;
- 		};
- 
--		pd_mfc: mfc-power-domain@10023c40 {
-+		pd_mfc: power-domain@10023c40 {
- 			compatible = "samsung,exynos4210-pd";
- 			reg = <0x10023C40 0x20>;
- 			#power-domain-cells = <0>;
- 			label = "MFC";
- 		};
- 
--		pd_g3d: g3d-power-domain@10023c60 {
-+		pd_g3d: power-domain@10023c60 {
- 			compatible = "samsung,exynos4210-pd";
- 			reg = <0x10023C60 0x20>;
- 			#power-domain-cells = <0>;
- 			label = "G3D";
- 		};
- 
--		pd_lcd0: lcd0-power-domain@10023c80 {
-+		pd_lcd0: power-domain@10023c80 {
- 			compatible = "samsung,exynos4210-pd";
- 			reg = <0x10023C80 0x20>;
- 			#power-domain-cells = <0>;
- 			label = "LCD0";
- 		};
- 
--		pd_tv: tv-power-domain@10023c20 {
-+		pd_tv: power-domain@10023c20 {
- 			compatible = "samsung,exynos4210-pd";
- 			reg = <0x10023C20 0x20>;
- 			#power-domain-cells = <0>;
-@@ -140,21 +140,21 @@
- 			label = "TV";
- 		};
- 
--		pd_cam: cam-power-domain@10023c00 {
-+		pd_cam: power-domain@10023c00 {
- 			compatible = "samsung,exynos4210-pd";
- 			reg = <0x10023C00 0x20>;
- 			#power-domain-cells = <0>;
- 			label = "CAM";
- 		};
- 
--		pd_gps: gps-power-domain@10023ce0 {
-+		pd_gps: power-domain@10023ce0 {
- 			compatible = "samsung,exynos4210-pd";
- 			reg = <0x10023CE0 0x20>;
- 			#power-domain-cells = <0>;
- 			label = "GPS";
- 		};
- 
--		pd_gps_alive: gps-alive-power-domain@10023d00 {
-+		pd_gps_alive: power-domain@10023d00 {
- 			compatible = "samsung,exynos4210-pd";
- 			reg = <0x10023D00 0x20>;
- 			#power-domain-cells = <0>;
-diff --git a/arch/arm/boot/dts/exynos4210.dtsi b/arch/arm/boot/dts/exynos4210.dtsi
-index f220716239db..ff9a3fb21a85 100644
---- a/arch/arm/boot/dts/exynos4210.dtsi
-+++ b/arch/arm/boot/dts/exynos4210.dtsi
-@@ -90,7 +90,7 @@
- 			};
- 		};
- 
--		pd_lcd1: lcd1-power-domain@10023ca0 {
-+		pd_lcd1: power-domain@10023ca0 {
- 			compatible = "samsung,exynos4210-pd";
- 			reg = <0x10023CA0 0x20>;
- 			#power-domain-cells = <0>;
-diff --git a/arch/arm/boot/dts/exynos4412.dtsi b/arch/arm/boot/dts/exynos4412.dtsi
-index d20db2dfe8e2..1c40bd56ce00 100644
---- a/arch/arm/boot/dts/exynos4412.dtsi
-+++ b/arch/arm/boot/dts/exynos4412.dtsi
-@@ -206,7 +206,7 @@
- 			};
- 		};
- 
--		pd_isp: isp-power-domain@10023ca0 {
-+		pd_isp: power-domain@10023ca0 {
- 			compatible = "samsung,exynos4210-pd";
- 			reg = <0x10023CA0 0x20>;
- 			#power-domain-cells = <0>;
--- 
-2.17.1
+However, your mention about ACPI sparked a thought.  ACPI describes
+the idle states, along with the PSCI info, in the ACPI0007 devices.
+Those exist on the laptops, and the info mostly correlates with Amit's
+patch (ACPI seems to be a bit more conservative about the latencies,
+and describes one additional deeper state).  However, upon a detailed
+analysis of the ACPI description, I did find something relevant - the
+retention state is not enabled.
 
+So, I hacked out the retention state from Amit's patch, and I did not
+observe a hang.  I used sysfs, and appeared able to validate that the
+power collapse state was being used successfully.
+
+I'm guessing that something is weird with the laptops, where the CPUs
+can go into retention, but not come out, thus causing issues.
+
+I'll post a patch to fix up the laptops.  Thanks for all the help.
