@@ -2,226 +2,214 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 82862CB13C
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  3 Oct 2019 23:36:55 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 023F7CB1DF
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  4 Oct 2019 00:24:56 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1733197AbfJCVgy (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 3 Oct 2019 17:36:54 -0400
-Received: from mail-pl1-f193.google.com ([209.85.214.193]:37249 "EHLO
-        mail-pl1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1731945AbfJCVgy (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 3 Oct 2019 17:36:54 -0400
-Received: by mail-pl1-f193.google.com with SMTP id u20so2117108plq.4
-        for <linux-arm-msm@vger.kernel.org>; Thu, 03 Oct 2019 14:36:53 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=tcX5x0C+xpmYXyYNCFKGEi47GTPK36S9z6JV/CqMXvM=;
-        b=oLC2xsYXDT6rruB+EivBNYLkjtGT43Znq/A4fpIT7TrnxT717GlHuh7q5l7Cx6PSZL
-         HgPaqXdV3HcScyLxcPyesIJnhgo/CmZzY4R6cigv339E7eetOe8JvnZRvuNvVjlwPEGG
-         ekBAYMSQ0a8ECLOez4o8F/i05ij0CO4eoPxYYhJdGVXEK+eG543ow7IGuoQJYwfbioNN
-         JpGmrDV/poiTVnaQA+KU5uQCslDt1K3CXFz9bCyuLq0iB8Zku1eELxPcWAJvDEP+B65e
-         RE5An2nrTjyFJP62QEuBcrDH1xSp4vzTPilPj/uwxvUcWtP8UKczoXPQssUHZbZahk8i
-         ti8Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=tcX5x0C+xpmYXyYNCFKGEi47GTPK36S9z6JV/CqMXvM=;
-        b=e/QgliSrkBKN4H7XFGhKjll/pig6SG0WGfpUlC46LntpHt0Wb6zHqIA+KgMzUOWHUs
-         cH7LZLxFC7k8y/9jh49daVbbPflhEGRCSRE6135AULuf6XFo28d9Tcb7X7GqGU+uP3xy
-         BPF8EFqgJU+TrH0l3GdKUqOJu6Pd+Lmir73y11w7Bzwq4yLVlrEWsI18svN/watm6lw0
-         T5sr2xgkJ5DbCb2ATe4Z+jlDuIkDYf+guRT20E3RG+3oiZ/mfdMKRVvwhr6S3u5gEHZ3
-         5K794VU7tHiYcNIFQt8LRIih2NpALly11HoN5u6H82VfIrb3Usl+RC7KxEzSEuus/zki
-         nXlQ==
-X-Gm-Message-State: APjAAAUWk0u3BvdvMFr8yDLjpyCm+Vt0WGh2uNKY+pznIz6NxXGzKshb
-        /f961CcWkfDrqjD8S8+UOjThgQ==
-X-Google-Smtp-Source: APXvYqwqTDr05PZx0Wi+AfRkYdAL2FYdwltFLrXQo5Tysz6jBXVcQebqzX54I5rDTZYv8rn8zWh6/g==
-X-Received: by 2002:a17:902:9b86:: with SMTP id y6mr12091545plp.10.1570138613043;
-        Thu, 03 Oct 2019 14:36:53 -0700 (PDT)
-Received: from minitux (104-188-17-28.lightspeed.sndgca.sbcglobal.net. [104.188.17.28])
-        by smtp.gmail.com with ESMTPSA id w11sm4841457pfd.116.2019.10.03.14.36.51
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 03 Oct 2019 14:36:52 -0700 (PDT)
-Date:   Thu, 3 Oct 2019 14:36:50 -0700
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     mnalajal@codeaurora.org
-Cc:     Greg KH <gregkh@linuxfoundation.org>, rafael@kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] base: soc: Handle custom soc information sysfs entries
-Message-ID: <20191003213650.GF63675@minitux>
-References: <1570061174-4918-1-git-send-email-mnalajal@codeaurora.org>
- <20191003070610.GC1814133@kroah.com>
- <0d219d344cea82b5f6c1ab23341de25b@codeaurora.org>
- <20191003183357.GA3580296@kroah.com>
- <6e7d5e14c231d2fe51c7ae78d5d0dee8@codeaurora.org>
+        id S1728795AbfJCWYz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 3 Oct 2019 18:24:55 -0400
+Received: from foss.arm.com ([217.140.110.172]:57830 "EHLO foss.arm.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1728288AbfJCWYy (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 3 Oct 2019 18:24:54 -0400
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 028501000;
+        Thu,  3 Oct 2019 15:24:54 -0700 (PDT)
+Received: from [192.168.1.124] (unknown [172.31.20.19])
+        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 3D2603F534;
+        Thu,  3 Oct 2019 15:24:51 -0700 (PDT)
+Subject: Re: [PATCH v2] iommu/arm-smmu: Break insecure users by disabling
+ bypass by default
+To:     Tim Harvey <tharvey@gateworks.com>
+Cc:     Douglas Anderson <dianders@chromium.org>,
+        Tirumalesh Chalamarla <tchalamarla@caviumnetworks.com>,
+        Joerg Roedel <joro@8bytes.org>,
+        Will Deacon <will.deacon@arm.com>,
+        linux-arm-msm@vger.kernel.org, evgreen@chromium.org,
+        tfiga@chromium.org, Rob Clark <robdclark@gmail.com>,
+        iommu@lists.linux-foundation.org,
+        linux-arm-kernel@lists.infradead.org,
+        Vivek Gautam <vivek.gautam@codeaurora.org>,
+        open list <linux-kernel@vger.kernel.org>
+References: <20190301192017.39770-1-dianders@chromium.org>
+ <CAJ+vNU0Ma5nG9_ThLO4cdO+=ivf7rmXiHZonF0HY0xx6X3R6Hw@mail.gmail.com>
+ <5dce2964-8761-e7d0-8963-f0f5cb2feb02@arm.com>
+ <CAJ+vNU0Q1-d7YDbAAEMqEcWnniqo6jLdKBbcUTar5=hJ+AC8vQ@mail.gmail.com>
+From:   Robin Murphy <robin.murphy@arm.com>
+Message-ID: <1f6f7eb0-e1dc-d5a8-fb38-44c5bd839894@arm.com>
+Date:   Thu, 3 Oct 2019 23:24:48 +0100
+User-Agent: Mozilla/5.0 (Windows NT 10.0; rv:68.0) Gecko/20100101
+ Thunderbird/68.1.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <6e7d5e14c231d2fe51c7ae78d5d0dee8@codeaurora.org>
-User-Agent: Mutt/1.12.1 (2019-06-15)
+In-Reply-To: <CAJ+vNU0Q1-d7YDbAAEMqEcWnniqo6jLdKBbcUTar5=hJ+AC8vQ@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-GB
+Content-Transfer-Encoding: 7bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu 03 Oct 14:11 PDT 2019, mnalajal@codeaurora.org wrote:
-
-> On 2019-10-03 11:33, Greg KH wrote:
-> > On Thu, Oct 03, 2019 at 11:23:45AM -0700, mnalajal@codeaurora.org wrote:
-> > > On 2019-10-03 00:06, Greg KH wrote:
-> > > > On Wed, Oct 02, 2019 at 05:06:14PM -0700, Murali Nalajala wrote:
-> > > > > Soc framework exposed sysfs entries are not sufficient for some
-> > > > > of the h/w platforms. Currently there is no interface where soc
-> > > > > drivers can expose further information about their SoCs via soc
-> > > > > framework. This change address this limitation where clients can
-> > > > > pass their custom entries as attribute group and soc framework
-> > > > > would expose them as sysfs properties.
-> > > > >
-> > > > > Signed-off-by: Murali Nalajala <mnalajal@codeaurora.org>
-> > > > > ---
-> > > > >  drivers/base/soc.c      | 26 ++++++++++++++++++--------
-> > > > >  include/linux/sys_soc.h |  1 +
-> > > > >  2 files changed, 19 insertions(+), 8 deletions(-)
-> > > > >
-> > > > > diff --git a/drivers/base/soc.c b/drivers/base/soc.c
-> > > > > index 7c0c5ca..ec70a58 100644
-> > > > > --- a/drivers/base/soc.c
-> > > > > +++ b/drivers/base/soc.c
-> > > > > @@ -15,6 +15,8 @@
-> > > > >  #include <linux/err.h>
-> > > > >  #include <linux/glob.h>
-> > > > >
-> > > > > +#define NUM_ATTR_GROUPS 3
-> > > > > +
-> > > > >  static DEFINE_IDA(soc_ida);
-> > > > >
-> > > > >  static ssize_t soc_info_get(struct device *dev,
-> > > > > @@ -104,11 +106,6 @@ static ssize_t soc_info_get(struct device *dev,
-> > > > >  	.is_visible = soc_attribute_mode,
-> > > > >  };
-> > > > >
-> > > > > -static const struct attribute_group *soc_attr_groups[] = {
-> > > > > -	&soc_attr_group,
-> > > > > -	NULL,
-> > > > > -};
-> > > > > -
-> > > > >  static void soc_release(struct device *dev)
-> > > > >  {
-> > > > >  	struct soc_device *soc_dev = container_of(dev, struct soc_device,
-> > > > > dev);
-> > > > > @@ -121,6 +118,7 @@ static void soc_release(struct device *dev)
-> > > > >  struct soc_device *soc_device_register(struct soc_device_attribute
-> > > > > *soc_dev_attr)
-> > > > >  {
-> > > > >  	struct soc_device *soc_dev;
-> > > > > +	const struct attribute_group **soc_attr_groups = NULL;
-> > > > >  	int ret;
-> > > > >
-> > > > >  	if (!soc_bus_type.p) {
-> > > > > @@ -136,10 +134,20 @@ struct soc_device *soc_device_register(struct
-> > > > > soc_device_attribute *soc_dev_attr
-> > > > >  		goto out1;
-> > > > >  	}
-> > > > >
-> > > > > +	soc_attr_groups = kzalloc(sizeof(*soc_attr_groups) *
-> > > > > +						NUM_ATTR_GROUPS, GFP_KERNEL);
-> > > > > +	if (!soc_attr_groups) {
-> > > > > +		ret = -ENOMEM;
-> > > > > +		goto out2;
-> > > > > +	}
-> > > > > +	soc_attr_groups[0] = &soc_attr_group;
-> > > > > +	soc_attr_groups[1] = soc_dev_attr->custom_attr_group;
-> > > > > +	soc_attr_groups[2] = NULL;
-> > > > > +
-> > > > >  	/* Fetch a unique (reclaimable) SOC ID. */
-> > > > >  	ret = ida_simple_get(&soc_ida, 0, 0, GFP_KERNEL);
-> > > > >  	if (ret < 0)
-> > > > > -		goto out2;
-> > > > > +		goto out3;
-> > > > >  	soc_dev->soc_dev_num = ret;
-> > > > >
-> > > > >  	soc_dev->attr = soc_dev_attr;
-> > > > > @@ -151,14 +159,16 @@ struct soc_device *soc_device_register(struct
-> > > > > soc_device_attribute *soc_dev_attr
-> > > > >
-> > > > >  	ret = device_register(&soc_dev->dev);
-> > > > >  	if (ret)
-> > > > > -		goto out3;
-> > > > > +		goto out4;
-> > > > >
-> > > > >  	return soc_dev;
-> > > > >
-> > > > > -out3:
-> > > > > +out4:
-> > > > >  	ida_simple_remove(&soc_ida, soc_dev->soc_dev_num);
-> > > > >  	put_device(&soc_dev->dev);
-> > > > >  	soc_dev = NULL;
-> > > > > +out3:
-> > > > > +	kfree(soc_attr_groups);
-> > > > >  out2:
-> > > > >  	kfree(soc_dev);
-> > > > >  out1:
-> > > > > diff --git a/include/linux/sys_soc.h b/include/linux/sys_soc.h
-> > > > > index 48ceea8..d9b3cf0 100644
-> > > > > --- a/include/linux/sys_soc.h
-> > > > > +++ b/include/linux/sys_soc.h
-> > > > > @@ -15,6 +15,7 @@ struct soc_device_attribute {
-> > > > >  	const char *serial_number;
-> > > > >  	const char *soc_id;
-> > > > >  	const void *data;
-> > > > > +	const struct attribute_group *custom_attr_group;
-> > > >
-> > > > Shouldn't you make this:
-> > > > 	const struct attribute_group **soc_groups;
-> > > >
-> > > > to match up with the rest of the way the driver core works?
-> > > Assumption is, soc drivers send their custom attribute group and soc
-> > > framework has already soc_attr_group" (basic info exposed).
-> > > With my changes i am combining these two groups and passing to
-> > > "device_register()".
-> > > I do not think soc drivers have a requirement where they can pass
-> > > various
-> > > groups rather one single group attribute.
-> > 
-> > Ok, I guess this is "good enough" such that no individual SOC driver
-> > will want to create subdirs and lots of fun like that.  If they do, then
-> > we can change the api at that point in time :)
-> > 
-> > thanks,
-> > 
-> > greg k-h
+On 2019-10-03 9:51 pm, Tim Harvey wrote:
+> On Thu, Oct 3, 2019 at 1:42 PM Robin Murphy <robin.murphy@arm.com> wrote:
+>>
+>> Hi Tim,
+>>
+>> On 2019-10-03 7:27 pm, Tim Harvey wrote:
+>>> On Fri, Mar 1, 2019 at 11:21 AM Douglas Anderson <dianders@chromium.org> wrote:
+>>>>
+>>>> If you're bisecting why your peripherals stopped working, it's
+>>>> probably this CL.  Specifically if you see this in your dmesg:
+>>>>     Unexpected global fault, this could be serious
+>>>> ...then it's almost certainly this CL.
+>>>>
+>>>> Running your IOMMU-enabled peripherals with the IOMMU in bypass mode
+>>>> is insecure and effectively disables the protection they provide.
+>>>> There are few reasons to allow unmatched stream bypass, and even fewer
+>>>> good ones.
+>>>>
+>>>> This patch starts the transition over to make it much harder to run
+>>>> your system insecurely.  Expected steps:
+>>>>
+>>>> 1. By default disable bypass (so anyone insecure will notice) but make
+>>>>      it easy for someone to re-enable bypass with just a KConfig change.
+>>>>      That's this patch.
+>>>>
+>>>> 2. After people have had a little time to come to grips with the fact
+>>>>      that they need to set their IOMMUs properly and have had time to
+>>>>      dig into how to do this, the KConfig will be eliminated and bypass
+>>>>      will simply be disabled.  Folks who are truly upset and still
+>>>>      haven't fixed their system can either figure out how to add
+>>>>      'arm-smmu.disable_bypass=n' to their command line or revert the
+>>>>      patch in their own private kernel.  Of course these folks will be
+>>>>      less secure.
+>>>>
+>>>> Suggested-by: Robin Murphy <robin.murphy@arm.com>
+>>>> Signed-off-by: Douglas Anderson <dianders@chromium.org>
+>>>> ---
+>>>
+>>> Hi Doug / Robin,
+>>>
+>>> I ran into this breaking things on OcteonTx boards based on CN80XX
+>>> CPU. The IOMMU configuration is a bit beyond me and I'm hoping you can
+>>> offer some advice. The IOMMU here is cavium,smmu-v2 as defined in
+>>> https://github.com/Gateworks/dts-newport/blob/master/cn81xx-linux.dtsi
+>>>
+>>> Booting with 'arm-smmu.disable_bypass=n' does indeed work around the
+>>> breakage as the commit suggests.
+>>>
+>>> Any suggestions for a proper fix?
+>>
+>> Ah, you're using the old "mmu-masters" binding (and in a way which isn't
+>> well-defined - it's never been specified what the stream ID argument(s)
+>> would mean for a PCI host bridge, and Linux just ignores them). The
+>> ideal thing would be to update the DT to generic "iommu-map" properties
+>> - it's been a long time since I last played with a ThunderX, but I
+>> believe the SMMU stream IDs should just be the same as the ITS device
+>> IDs (which is how the "mmu-masters" mapping would have played out anyway).
+>>
+>> The arm-smmu driver support for the old binding has always relied on
+>> implicit bypass - there are technical reasons why we can't realistically
+>> support the full functionality offered to the generic bindings, but it
+>> would be possible to add some degree of workaround to prevent it
+>> interacting quite so poorly with disable_bypass, if necessary. Do you
+>> have deployed systems with DTs that can't be updated, but still might
+>> need to run new kernels?
+>>
 > 
-> I trying to fix an issue in the existing "soc_device_register()" code. This
-> looks to me a memory leak.
+> Robin,
 > 
-> 	ret = device_register(&soc_dev->dev);
-> 	if (ret)
-> 		goto out3;
-> 	return soc_dev;
-> out3:
-> 	ida_simple_remove(&soc_ida, soc_dev->soc_dev_num);
-> 	put_device(&soc_dev->dev);
+> Thanks for the response. I don't care too much about supporting new
+> kernels with the current DT - I'm good with fixing this with a DT
+> change. Would you be able to give me an example? I would love to see
+> Cavium mainline an cn81xx dts/dtsi in arch/arm64/boot/dts to be used
+> as a base as the only thing we have to go off of currently is the
+> Cavium SDK which has fairly old kernel support.
 
-This put_device() will invoke soc_release() which will free soc_dev.
+No promises (it's a late-night hack from my sofa), but try giving this a 
+go...
 
-> 	soc_dev = NULL;
+Robin.
 
-So setting soc_dev to NULL here turns below kfree() into a nop.
-> out2:
-> 	kfree(soc_dev);
-> 
-> Here we are assigning "soc_dev=NULL" before freeing. I see this assignment
-> is unnecessary here.
+----->8-----
+diff --git a/cn81xx-linux.dtsi b/cn81xx-linux.dtsi
+index 3b759d9575fe..dabc9047c674 100644
+--- a/cn81xx-linux.dtsi
++++ b/cn81xx-linux.dtsi
+@@ -234,7 +234,7 @@
+  			clocks = <&sclk>;
+  		};
 
-The code works as intended and the assignment prevents a double free.
-But it's perhaps slightly too clever.
+-		smmu0@830000000000 {
++		smmu: smmu0@830000000000 {
+  			compatible = "cavium,smmu-v2";
+  			reg = <0x8300 0x0 0x0 0x2000000>;
+  			#global-interrupts = <1>;
+@@ -249,23 +249,18 @@
+  				     <0 69 4>, <0 69 4>, <0 69 4>, <0 69 4>, <0 69 4>, <0 69 4>,
+  				     <0 69 4>, <0 69 4>, <0 69 4>, <0 69 4>, <0 69 4>, <0 69 4>,
+  				     <0 69 4>, <0 69 4>, <0 69 4>, <0 69 4>, <0 69 4>;
+-
+-			mmu-masters = <&ecam0 0x100>,
+-				      <&pem0  0x200>,
+-				      <&pem1  0x300>,
+-				      <&pem2  0x400>;
+-
++			#iommu-cells = <1>;
++			dma-coherent;
+  		};
 
+  		ecam0: pci@848000000000 {
+  			compatible = "pci-host-ecam-generic";
+  			device_type = "pci";
+-			msi-parent = <&its>;
+  			msi-map = <0 &its 0 0x10000>;
++			iommu-map = <0 &smmu 0 0x10000>;
+  			bus-range = <0 31>;
+  			#size-cells = <2>;
+  			#address-cells = <3>;
+-			#stream-id-cells = <1>;
+  			u-boot,dm-pre-reloc;
+  			dma-coherent;
+  			reg = <0x8480 0x00000000 0 0x02000000>;	 /* Configuration space */
+@@ -399,12 +394,11 @@
 
-Swapping the allocation order of the ida and soc_dev would make this
-clearer.
-
-Regards,
-Bjorn
+  			compatible = "cavium,pci-host-thunder-pem";
+  			device_type = "pci";
+-			msi-parent = <&its>;
+  			msi-map = <0 &its 0 0x10000>;
++			iommu-map = <0 &smmu 0 0x10000>;
+  			bus-range = <0x1f 0x57>;
+  			#size-cells = <2>;
+  			#address-cells = <3>;
+-			#stream-id-cells = <1>;
+  			dma-coherent;
+  			reg = <0x8800 0x1f000000 0x0 0x39000000>,  /* Configuration space */
+  				<0x87e0 0xc0000000 0x0 0x01000000>; /* PEM space */
+@@ -424,12 +418,11 @@
+  		pem1: pci@87e0c1000000 {
+  			compatible = "cavium,pci-host-thunder-pem";
+  			device_type = "pci";
+-			msi-parent = <&its>;
+  			msi-map = <0 &its 0 0x10000>;
++			iommu-map = <0 &smmu 0 0x10000>;
+  			bus-range = <0x57 0x8f>;
+  			#size-cells = <2>;
+  			#address-cells = <3>;
+-			#stream-id-cells = <1>;
+  			dma-coherent;
+  			reg = <0x8840 0x57000000 0x0 0x39000000>,  /* Configuration space */
+  				<0x87e0 0xc1000000 0x0 0x01000000>; /* PEM space */
+@@ -449,12 +442,11 @@
+  		pem2: pci@87e0c2000000 {
+  			compatible = "cavium,pci-host-thunder-pem";
+  			device_type = "pci";
+-			msi-parent = <&its>;
+  			msi-map = <0 &its 0 0x10000>;
++			iommu-map = <0 &smmu 0 0x10000>;
+  			bus-range = <0x8f 0xc7>;
+  			#size-cells = <2>;
+  			#address-cells = <3>;
+-			#stream-id-cells = <1>;
+  			dma-coherent;
+  			reg = <0x8880 0x8f000000 0x0 0x39000000>,  /* Configuration space */
+  				<0x87e0 0xc2000000 0x0 0x01000000>; /* PEM space */
