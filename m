@@ -2,102 +2,68 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 533CCCA112
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  3 Oct 2019 17:21:49 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B76E8CA8E0
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  3 Oct 2019 19:19:57 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728031AbfJCPVs (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 3 Oct 2019 11:21:48 -0400
-Received: from smtp.codeaurora.org ([198.145.29.96]:49030 "EHLO
-        smtp.codeaurora.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727587AbfJCPVs (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 3 Oct 2019 11:21:48 -0400
-Received: by smtp.codeaurora.org (Postfix, from userid 1000)
-        id 93967611BE; Thu,  3 Oct 2019 15:21:47 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
-        s=default; t=1570116107;
-        bh=wrF+mAtbKK35bIsjW1eEOP2bIDJkMLZvW9UvGD8kv0c=;
-        h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
-        b=NiXzjB8POJq6c49Y2fnoEw68KFMNvPlQJ/7w6vTWJCoAnF5tMXprjguDaFGUlnesy
-         fI2nk9BJxQLEnt7tLz7Ku5+ZKPjzVfwNHZVNlkNn6y2xWwO1ynJa7ILFftggawnfxW
-         3awHwFDp69wyttHCjer7RzMQ37u6dLBrI35qN2Ik=
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        pdx-caf-mail.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.7 required=2.0 tests=ALL_TRUSTED,BAYES_00,
-        DKIM_INVALID,DKIM_SIGNED autolearn=no autolearn_force=no version=3.4.0
-Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
-        by smtp.codeaurora.org (Postfix) with ESMTP id 8656760ADE;
-        Thu,  3 Oct 2019 15:21:46 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
-        s=default; t=1570116106;
-        bh=wrF+mAtbKK35bIsjW1eEOP2bIDJkMLZvW9UvGD8kv0c=;
-        h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
-        b=Sg9Nov1mh/nDNVMzTBKKGarxyT2GpyPeRjsw6o1kLIrwNWXyqGGa4GG+tPttWBVZz
-         lOMOaeM+kR8AVvJSOiPCASZF7YraLRX7dOCgd7kjUlBLIlVd6msmHp9ow43AfS0oCX
-         /Kz0NL+3r1y8coTb8+3SXrUxk/ZMkhNcPatJ19ok=
+        id S2404130AbfJCQeH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 3 Oct 2019 12:34:07 -0400
+Received: from mail.kernel.org ([198.145.29.99]:42382 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S2392095AbfJCQeG (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 3 Oct 2019 12:34:06 -0400
+Received: from kernel.org (unknown [104.132.0.74])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by mail.kernel.org (Postfix) with ESMTPSA id 4263921783;
+        Thu,  3 Oct 2019 16:34:05 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=default; t=1570120445;
+        bh=3Bz1OUoxGDjgeT98hppsGEw91e3Ye36LUrMKlBtqcSU=;
+        h=In-Reply-To:References:From:To:Cc:Subject:Date:From;
+        b=j/K162GHR8smbdtnU3kJ9VWiqmsrEwDD+5DiuSNo/q0iv/ITY+YoqW2+yjI1POSoX
+         UhSWY7N6nAoeYF55YeI0ITa7Ya91LlcNCgn/L8LsNRbxn5mYuNKwbhWSHK+NX8cnXW
+         fLO2UPAEPnRh95wTpBNoIcAzJl/2QPOMSTploa9s=
+Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
-Content-Transfer-Encoding: 7bit
-Date:   Thu, 03 Oct 2019 20:51:46 +0530
-From:   Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
-To:     Marc Gonzalez <marc.w.gonzalez@free.fr>
-Cc:     Jeffrey Hugo <jeffrey.l.hugo@gmail.com>,
-        Rob Herring <robh+dt@kernel.org>,
-        Mathieu Poirier <mathieu.poirier@linaro.org>,
-        Suzuki K Poulose <suzuki.poulose@arm.com>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Andy Gross <agross@kernel.org>,
+Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <20191002160632.11140-1-krzk@kernel.org>
+References: <20191002160632.11140-1-krzk@kernel.org>
+From:   Stephen Boyd <sboyd@kernel.org>
+To:     "Rafael J. Wysocki" <rjw@rjwysocki.net>,
+        Kevin Hilman <khilman@baylibre.com>,
+        Krzysztof Kozlowski <krzk@kernel.org>,
         Mark Rutland <mark.rutland@arm.com>,
-        Linux ARM <linux-arm-kernel@lists.infradead.org>,
-        MSM <linux-arm-msm@vger.kernel.org>,
-        DT <devicetree@vger.kernel.org>
-Subject: Re: [PATCH] arm64: dts: qcom: msm8998: Disable coresight by default
-In-Reply-To: <aecbc7a2-05fd-f30f-81c7-81947dc31c9f@free.fr>
-References: <20191003064449.2201-1-saiprakash.ranjan@codeaurora.org>
- <aecbc7a2-05fd-f30f-81c7-81947dc31c9f@free.fr>
-Message-ID: <89f5f76ae26682e902faa1b06379cc0f@codeaurora.org>
-X-Sender: saiprakash.ranjan@codeaurora.org
-User-Agent: Roundcube Webmail/1.2.5
+        Michael Turquette <mturquette@baylibre.com>,
+        Rob Herring <robh+dt@kernel.org>,
+        Sudeep Holla <sudeep.holla@arm.com>,
+        Ulf Hansson <ulf.hansson@linaro.org>,
+        bcm-kernel-feedback-list@broadcom.com, devicetree@vger.kernel.org,
+        dri-devel@lists.freedesktop.org, etnaviv@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org, linux-amlogic@lists.infradead.org,
+        linux-arm-kernel@lists.infradead.org,
+        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-media@vger.kernel.org,
+        linux-mediatek@lists.infradead.org, linux-pci@vger.kernel.org,
+        linux-pm@vger.kernel.org, linux-rpi-kernel@lists.infradead.org,
+        linux-samsung-soc@vger.kernel.org, linux-tegra@vger.kernel.org,
+        linux-usb@vger.kernel.org
+Cc:     Krzysztof Kozlowski <krzk@kernel.org>
+Subject: Re: [PATCH v2 1/3] dt-bindings: power: Convert Generic Power Domain bindings to json-schema
+User-Agent: alot/0.8.1
+Date:   Thu, 03 Oct 2019 09:34:04 -0700
+Message-Id: <20191003163405.4263921783@mail.kernel.org>
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2019-10-03 18:23, Marc Gonzalez wrote:
-> On 03/10/2019 08:44, Sai Prakash Ranjan wrote:
-> 
->> Boot failure has been reported on MSM8998 based laptop when
->> coresight is enabled. This is most likely due to lack of
->> firmware support for coresight on production device when
->> compared to debug device like MTP where this issue is not
->> observed. So disable coresight by default for MSM8998 and
->> enable it only for MSM8998 MTP.
->> 
->> Reported-and-tested-by: Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
->> Fixes: 783abfa2249a ("arm64: dts: qcom: msm8998: Add Coresight 
->> support")
->> Signed-off-by: Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
->> ---
->>  arch/arm64/boot/dts/qcom/msm8998-mtp.dtsi | 68 
->> +++++++++++++++++++++++
->>  arch/arm64/boot/dts/qcom/msm8998.dtsi     | 51 +++++++++++------
->>  2 files changed, 102 insertions(+), 17 deletions(-)
-> 
-> Just wanted to toss an alternative, based on Suzuki's suggestion
-> (i.e. move the coresight nodes to a separate file)
-> 
-> 
+Quoting Krzysztof Kozlowski (2019-10-02 09:06:30)
+> Convert Generic Power Domain bindings to DT schema format using
+> json-schema.  The consumer bindings are split to separate file.
+>=20
+> Signed-off-by: Krzysztof Kozlowski <krzk@kernel.org>
+>=20
+> ---
 
-I believe this is a better approach.
-Initially I had coresight components in a separate file like this but 
-Bjorn had some concerns about having 2 separate files. If he is OK with 
-this,
+Acked-by: Stephen Boyd <sboyd@kernel.org>
 
-Acked-by: Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
-
--- 
-QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a 
-member
-of Code Aurora Forum, hosted by The Linux Foundation
