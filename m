@@ -2,214 +2,100 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 023F7CB1DF
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  4 Oct 2019 00:24:56 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 21EBFCB241
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  4 Oct 2019 01:23:04 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728795AbfJCWYz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 3 Oct 2019 18:24:55 -0400
-Received: from foss.arm.com ([217.140.110.172]:57830 "EHLO foss.arm.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1728288AbfJCWYy (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 3 Oct 2019 18:24:54 -0400
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 028501000;
-        Thu,  3 Oct 2019 15:24:54 -0700 (PDT)
-Received: from [192.168.1.124] (unknown [172.31.20.19])
-        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 3D2603F534;
-        Thu,  3 Oct 2019 15:24:51 -0700 (PDT)
-Subject: Re: [PATCH v2] iommu/arm-smmu: Break insecure users by disabling
- bypass by default
-To:     Tim Harvey <tharvey@gateworks.com>
-Cc:     Douglas Anderson <dianders@chromium.org>,
-        Tirumalesh Chalamarla <tchalamarla@caviumnetworks.com>,
-        Joerg Roedel <joro@8bytes.org>,
-        Will Deacon <will.deacon@arm.com>,
-        linux-arm-msm@vger.kernel.org, evgreen@chromium.org,
-        tfiga@chromium.org, Rob Clark <robdclark@gmail.com>,
-        iommu@lists.linux-foundation.org,
-        linux-arm-kernel@lists.infradead.org,
-        Vivek Gautam <vivek.gautam@codeaurora.org>,
-        open list <linux-kernel@vger.kernel.org>
-References: <20190301192017.39770-1-dianders@chromium.org>
- <CAJ+vNU0Ma5nG9_ThLO4cdO+=ivf7rmXiHZonF0HY0xx6X3R6Hw@mail.gmail.com>
- <5dce2964-8761-e7d0-8963-f0f5cb2feb02@arm.com>
- <CAJ+vNU0Q1-d7YDbAAEMqEcWnniqo6jLdKBbcUTar5=hJ+AC8vQ@mail.gmail.com>
-From:   Robin Murphy <robin.murphy@arm.com>
-Message-ID: <1f6f7eb0-e1dc-d5a8-fb38-44c5bd839894@arm.com>
-Date:   Thu, 3 Oct 2019 23:24:48 +0100
-User-Agent: Mozilla/5.0 (Windows NT 10.0; rv:68.0) Gecko/20100101
- Thunderbird/68.1.1
+        id S1731221AbfJCXXD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 3 Oct 2019 19:23:03 -0400
+Received: from mail-pl1-f196.google.com ([209.85.214.196]:39480 "EHLO
+        mail-pl1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727452AbfJCXXD (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 3 Oct 2019 19:23:03 -0400
+Received: by mail-pl1-f196.google.com with SMTP id s17so2227148plp.6
+        for <linux-arm-msm@vger.kernel.org>; Thu, 03 Oct 2019 16:23:02 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=message-id:mime-version:content-transfer-encoding:in-reply-to
+         :references:from:to:cc:subject:user-agent:date;
+        bh=TiQAIr9ujj+zBKHfm8KctaRq17mtsGT6UynXcmjKAZc=;
+        b=WY4aT7DqS6IE6Gh2reTYnoeEJWe4VpS+j3vX3ix0BQe83t331uITUPgiKeEnabROhP
+         Oxc+enz2CsjCq00kr0/IXVwvGVTMdOMfGbfWz0felSjYhJsh0CZJHP2y/C/Cp+kxomU5
+         8scxJbiIK7o5xWZNYnTTsu4LSc71Ge3BRxvXk=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:message-id:mime-version
+         :content-transfer-encoding:in-reply-to:references:from:to:cc:subject
+         :user-agent:date;
+        bh=TiQAIr9ujj+zBKHfm8KctaRq17mtsGT6UynXcmjKAZc=;
+        b=c84BFcaSjM60/4Izy6hfIQlHuyEl6aj+WsgxNfVLqHS7ubqwhKBAVtwFYf6TThmFbE
+         JMNKwqV0RHa45mupJoTC6fSAuxhKVKRvlnTtxvq6+B+sza0Anuu7YKpHTbuMahhNlmtp
+         Uo3WI0f1Upvq4rQ7IMovJZgNPsePm8/P1ECP0w0R4culXhbHHqx/wUJZTWEYtYJ8AoGk
+         TXK1O9BctK84ZqJjGSbiK85X6VamYu5yBR8AdpG4CUn4pCayP4tZDS8GQO90Hi5a61GJ
+         0J8/kTKldXwW5O9hun82pd959ew7Y5cvZ8Y54sqSRxWwM/y1lDrD2I2+mYpjJJvg8z7n
+         eATA==
+X-Gm-Message-State: APjAAAUtzRipi6e7tpFmrl+5RwyHHF7+YXOR5i5cf2rT1Md7uvExtSV5
+        vrxnorM2GjLmkBD6/Xo3CPFm9g==
+X-Google-Smtp-Source: APXvYqwa8ClrHoSx3+ILUpKWaD9UmZCA+Ooz3j2P/NN8Tj5I9zGlyJEhqu7+JzCyCf/0ukStyC030A==
+X-Received: by 2002:a17:902:b909:: with SMTP id bf9mr12302497plb.60.1570144981888;
+        Thu, 03 Oct 2019 16:23:01 -0700 (PDT)
+Received: from chromium.org ([2620:15c:202:1:fa53:7765:582b:82b9])
+        by smtp.gmail.com with ESMTPSA id z21sm3847587pfa.119.2019.10.03.16.23.00
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 03 Oct 2019 16:23:01 -0700 (PDT)
+Message-ID: <5d9682d5.1c69fb81.4efda.d786@mx.google.com>
+Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
-In-Reply-To: <CAJ+vNU0Q1-d7YDbAAEMqEcWnniqo6jLdKBbcUTar5=hJ+AC8vQ@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-GB
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <1570061174-4918-1-git-send-email-mnalajal@codeaurora.org>
+References: <1570061174-4918-1-git-send-email-mnalajal@codeaurora.org>
+From:   Stephen Boyd <swboyd@chromium.org>
+To:     Murali Nalajala <mnalajal@codeaurora.org>,
+        gregkh@linuxfoundation.org, rafael@kernel.org
+Cc:     mnalajal@codeaurora.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, bjorn.andersson@linaro.org
+Subject: Re: [PATCH] base: soc: Handle custom soc information sysfs entries
+User-Agent: alot/0.8.1
+Date:   Thu, 03 Oct 2019 16:22:59 -0700
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2019-10-03 9:51 pm, Tim Harvey wrote:
-> On Thu, Oct 3, 2019 at 1:42 PM Robin Murphy <robin.murphy@arm.com> wrote:
->>
->> Hi Tim,
->>
->> On 2019-10-03 7:27 pm, Tim Harvey wrote:
->>> On Fri, Mar 1, 2019 at 11:21 AM Douglas Anderson <dianders@chromium.org> wrote:
->>>>
->>>> If you're bisecting why your peripherals stopped working, it's
->>>> probably this CL.  Specifically if you see this in your dmesg:
->>>>     Unexpected global fault, this could be serious
->>>> ...then it's almost certainly this CL.
->>>>
->>>> Running your IOMMU-enabled peripherals with the IOMMU in bypass mode
->>>> is insecure and effectively disables the protection they provide.
->>>> There are few reasons to allow unmatched stream bypass, and even fewer
->>>> good ones.
->>>>
->>>> This patch starts the transition over to make it much harder to run
->>>> your system insecurely.  Expected steps:
->>>>
->>>> 1. By default disable bypass (so anyone insecure will notice) but make
->>>>      it easy for someone to re-enable bypass with just a KConfig change.
->>>>      That's this patch.
->>>>
->>>> 2. After people have had a little time to come to grips with the fact
->>>>      that they need to set their IOMMUs properly and have had time to
->>>>      dig into how to do this, the KConfig will be eliminated and bypass
->>>>      will simply be disabled.  Folks who are truly upset and still
->>>>      haven't fixed their system can either figure out how to add
->>>>      'arm-smmu.disable_bypass=n' to their command line or revert the
->>>>      patch in their own private kernel.  Of course these folks will be
->>>>      less secure.
->>>>
->>>> Suggested-by: Robin Murphy <robin.murphy@arm.com>
->>>> Signed-off-by: Douglas Anderson <dianders@chromium.org>
->>>> ---
->>>
->>> Hi Doug / Robin,
->>>
->>> I ran into this breaking things on OcteonTx boards based on CN80XX
->>> CPU. The IOMMU configuration is a bit beyond me and I'm hoping you can
->>> offer some advice. The IOMMU here is cavium,smmu-v2 as defined in
->>> https://github.com/Gateworks/dts-newport/blob/master/cn81xx-linux.dtsi
->>>
->>> Booting with 'arm-smmu.disable_bypass=n' does indeed work around the
->>> breakage as the commit suggests.
->>>
->>> Any suggestions for a proper fix?
->>
->> Ah, you're using the old "mmu-masters" binding (and in a way which isn't
->> well-defined - it's never been specified what the stream ID argument(s)
->> would mean for a PCI host bridge, and Linux just ignores them). The
->> ideal thing would be to update the DT to generic "iommu-map" properties
->> - it's been a long time since I last played with a ThunderX, but I
->> believe the SMMU stream IDs should just be the same as the ITS device
->> IDs (which is how the "mmu-masters" mapping would have played out anyway).
->>
->> The arm-smmu driver support for the old binding has always relied on
->> implicit bypass - there are technical reasons why we can't realistically
->> support the full functionality offered to the generic bindings, but it
->> would be possible to add some degree of workaround to prevent it
->> interacting quite so poorly with disable_bypass, if necessary. Do you
->> have deployed systems with DTs that can't be updated, but still might
->> need to run new kernels?
->>
-> 
-> Robin,
-> 
-> Thanks for the response. I don't care too much about supporting new
-> kernels with the current DT - I'm good with fixing this with a DT
-> change. Would you be able to give me an example? I would love to see
-> Cavium mainline an cn81xx dts/dtsi in arch/arm64/boot/dts to be used
-> as a base as the only thing we have to go off of currently is the
-> Cavium SDK which has fairly old kernel support.
+Quoting Murali Nalajala (2019-10-02 17:06:14)
+> @@ -121,6 +118,7 @@ static void soc_release(struct device *dev)
+>  struct soc_device *soc_device_register(struct soc_device_attribute *soc_=
+dev_attr)
+>  {
+>         struct soc_device *soc_dev;
+> +       const struct attribute_group **soc_attr_groups =3D NULL;
 
-No promises (it's a late-night hack from my sofa), but try giving this a 
-go...
+Don't initialize this to NULL because it is only tested after it's been
+unconditionally assigned to the result of the allocation.
 
-Robin.
+>         int ret;
+> =20
+>         if (!soc_bus_type.p) {
+> @@ -136,10 +134,20 @@ struct soc_device *soc_device_register(struct soc_d=
+evice_attribute *soc_dev_attr
+>                 goto out1;
+>         }
+> =20
+> +       soc_attr_groups =3D kzalloc(sizeof(*soc_attr_groups) *
 
------>8-----
-diff --git a/cn81xx-linux.dtsi b/cn81xx-linux.dtsi
-index 3b759d9575fe..dabc9047c674 100644
---- a/cn81xx-linux.dtsi
-+++ b/cn81xx-linux.dtsi
-@@ -234,7 +234,7 @@
-  			clocks = <&sclk>;
-  		};
+Please use kcalloc() instead and drop the define for NUM_ATTR_GROUPS
+because it's used once.
 
--		smmu0@830000000000 {
-+		smmu: smmu0@830000000000 {
-  			compatible = "cavium,smmu-v2";
-  			reg = <0x8300 0x0 0x0 0x2000000>;
-  			#global-interrupts = <1>;
-@@ -249,23 +249,18 @@
-  				     <0 69 4>, <0 69 4>, <0 69 4>, <0 69 4>, <0 69 4>, <0 69 4>,
-  				     <0 69 4>, <0 69 4>, <0 69 4>, <0 69 4>, <0 69 4>, <0 69 4>,
-  				     <0 69 4>, <0 69 4>, <0 69 4>, <0 69 4>, <0 69 4>;
--
--			mmu-masters = <&ecam0 0x100>,
--				      <&pem0  0x200>,
--				      <&pem1  0x300>,
--				      <&pem2  0x400>;
--
-+			#iommu-cells = <1>;
-+			dma-coherent;
-  		};
+> +                                               NUM_ATTR_GROUPS, GFP_KERN=
+EL);
+> +       if (!soc_attr_groups) {
+> +               ret =3D -ENOMEM;
+> +               goto out2;
+> +       }
+> +       soc_attr_groups[0] =3D &soc_attr_group;
+> +       soc_attr_groups[1] =3D soc_dev_attr->custom_attr_group;
+> +       soc_attr_groups[2] =3D NULL;
 
-  		ecam0: pci@848000000000 {
-  			compatible = "pci-host-ecam-generic";
-  			device_type = "pci";
--			msi-parent = <&its>;
-  			msi-map = <0 &its 0 0x10000>;
-+			iommu-map = <0 &smmu 0 0x10000>;
-  			bus-range = <0 31>;
-  			#size-cells = <2>;
-  			#address-cells = <3>;
--			#stream-id-cells = <1>;
-  			u-boot,dm-pre-reloc;
-  			dma-coherent;
-  			reg = <0x8480 0x00000000 0 0x02000000>;	 /* Configuration space */
-@@ -399,12 +394,11 @@
+Drop this assignment to NULL because kzalloc() and kcalloc() zero out
+the memory anyway.
 
-  			compatible = "cavium,pci-host-thunder-pem";
-  			device_type = "pci";
--			msi-parent = <&its>;
-  			msi-map = <0 &its 0 0x10000>;
-+			iommu-map = <0 &smmu 0 0x10000>;
-  			bus-range = <0x1f 0x57>;
-  			#size-cells = <2>;
-  			#address-cells = <3>;
--			#stream-id-cells = <1>;
-  			dma-coherent;
-  			reg = <0x8800 0x1f000000 0x0 0x39000000>,  /* Configuration space */
-  				<0x87e0 0xc0000000 0x0 0x01000000>; /* PEM space */
-@@ -424,12 +418,11 @@
-  		pem1: pci@87e0c1000000 {
-  			compatible = "cavium,pci-host-thunder-pem";
-  			device_type = "pci";
--			msi-parent = <&its>;
-  			msi-map = <0 &its 0 0x10000>;
-+			iommu-map = <0 &smmu 0 0x10000>;
-  			bus-range = <0x57 0x8f>;
-  			#size-cells = <2>;
-  			#address-cells = <3>;
--			#stream-id-cells = <1>;
-  			dma-coherent;
-  			reg = <0x8840 0x57000000 0x0 0x39000000>,  /* Configuration space */
-  				<0x87e0 0xc1000000 0x0 0x01000000>; /* PEM space */
-@@ -449,12 +442,11 @@
-  		pem2: pci@87e0c2000000 {
-  			compatible = "cavium,pci-host-thunder-pem";
-  			device_type = "pci";
--			msi-parent = <&its>;
-  			msi-map = <0 &its 0 0x10000>;
-+			iommu-map = <0 &smmu 0 0x10000>;
-  			bus-range = <0x8f 0xc7>;
-  			#size-cells = <2>;
-  			#address-cells = <3>;
--			#stream-id-cells = <1>;
-  			dma-coherent;
-  			reg = <0x8880 0x8f000000 0x0 0x39000000>,  /* Configuration space */
-  				<0x87e0 0xc2000000 0x0 0x01000000>; /* PEM space */
