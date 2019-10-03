@@ -2,120 +2,160 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 0DDF8C9213
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  2 Oct 2019 21:15:45 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A7222C955C
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  3 Oct 2019 02:06:41 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730249AbfJBTOB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 2 Oct 2019 15:14:01 -0400
-Received: from mail-pf1-f193.google.com ([209.85.210.193]:46192 "EHLO
-        mail-pf1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729012AbfJBTII (ORCPT
+        id S1726357AbfJCAGk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 2 Oct 2019 20:06:40 -0400
+Received: from smtp.codeaurora.org ([198.145.29.96]:45032 "EHLO
+        smtp.codeaurora.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726137AbfJCAGk (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 2 Oct 2019 15:08:08 -0400
-Received: by mail-pf1-f193.google.com with SMTP id q5so11003918pfg.13;
-        Wed, 02 Oct 2019 12:08:08 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id;
-        bh=/qPlGqzwiHfUgsEEnoPvPDRChosCodooY7FGNhUIqb4=;
-        b=oUCtj95vawtZ6VFMXXreO5ecMCUqNCDEHkjPFiP71I/EyVK0idhjd08I5YpAGbN+fR
-         cO32ZA9ZTIeqPm9l+7EjnuAzT6YnCeeAJNEgO3eNMG4HRIVECN1N1Ave9D0q3ksJRnqo
-         /3/bJBnfjU2OLdWbH8u1XT5bPtJB2mwjfAH47vLd8t4yW7rzSgvCHH+0MOWhIimBsVV0
-         dxS5DZdbgVTZ8/YsueQzWUpeCIc9iJN1yK3SRDseJfgy2FI8SPHmyRNKzaAyvOHOjAiT
-         G8bhMflOWCsdt23kKEpKkfPlSn5ulIHTIu4Tnf74hbkBE/nVW7S+I61zQJ7Tk/V47TBe
-         DbVA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id;
-        bh=/qPlGqzwiHfUgsEEnoPvPDRChosCodooY7FGNhUIqb4=;
-        b=Od2Ch1dQTyM/R4d0siTNhYcczOw99W1LeXd5kTBswoqi3yURhj6pESFwgXJCIBd1mB
-         wKspvc3acLITz1GodRCB17/OSvMuLzykfpKjpeKYOkSRkIRFCG/dtRclfs8ToKPXyUbz
-         dhkCt4zE7cq/xjQEgdhN+a+6/PISK4SLv1bKdbvCglAGtIJBGVgJgwbiOrgQZt1RGDLs
-         lRmr4SHTlHx0FMZHaVUclA4jy6I+wJLlULvlNI21FPONgU8ApxQF+Uy3eP22sgGF3GcW
-         z0zolR2R5xr5Hyz0LPUShT9pQg6X2qne3q/ln320Co8x4jPFxXBVTYySYOgNAqsaaxC6
-         hKlg==
-X-Gm-Message-State: APjAAAXvZxXhLCXWba3CE5EKhFbGZd7x5vxEZUYCnmhEliRrks4HYqgX
-        BlPM4cEShvVs2Wd0lJoMzbI=
-X-Google-Smtp-Source: APXvYqyTZ7B8Y/f4lgkbP9JaZCOCcMf3vbwZbJ2Sblih9aO8xyZ5ufr75PLeX8FT5IShKnQT9fGn7g==
-X-Received: by 2002:a17:90a:e38b:: with SMTP id b11mr5866664pjz.138.1570043287656;
-        Wed, 02 Oct 2019 12:08:07 -0700 (PDT)
-Received: from aw-bldr-10.qualcomm.com (i-global254.qualcomm.com. [199.106.103.254])
-        by smtp.gmail.com with ESMTPSA id s17sm153974pgg.77.2019.10.02.12.08.05
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 02 Oct 2019 12:08:07 -0700 (PDT)
-From:   Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
-To:     bjorn.andersson@linaro.org, agross@kernel.org
-Cc:     linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
-Subject: [PATCH] arm64: dts: qcom: msm8998-clamshell: Remove retention idle state
-Date:   Wed,  2 Oct 2019 12:07:56 -0700
-Message-Id: <20191002190756.26895-1-jeffrey.l.hugo@gmail.com>
-X-Mailer: git-send-email 2.17.1
+        Wed, 2 Oct 2019 20:06:40 -0400
+Received: by smtp.codeaurora.org (Postfix, from userid 1000)
+        id C1A7D60744; Thu,  3 Oct 2019 00:06:39 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
+        s=default; t=1570061199;
+        bh=UfQYYcXITHs98xOB69Xw/qbyimXAGXlGMvhd+tkeSZY=;
+        h=From:To:Cc:Subject:Date:From;
+        b=B/fMs0X1f3Om1UM4zMoCrmN9EjMwVXnPBpPeXpgAKyf0wdWXhH9Zda94vMFUpB1fL
+         XJqN5bmLde4q16NUzsWWyT658qg9RCT9NZQzMoZGFgpEzFqxKobQsHafxG5nqiFofB
+         J3VT4yDokc2pfCG7BoNxHGJGLSEoAc784Ko7QgAg=
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        pdx-caf-mail.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.7 required=2.0 tests=ALL_TRUSTED,BAYES_00,
+        DKIM_INVALID,DKIM_SIGNED,SPF_NONE autolearn=no autolearn_force=no
+        version=3.4.0
+Received: from codeaurora.org (i-global254.qualcomm.com [199.106.103.254])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: mnalajal@smtp.codeaurora.org)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 72A3561156;
+        Thu,  3 Oct 2019 00:06:37 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
+        s=default; t=1570061197;
+        bh=UfQYYcXITHs98xOB69Xw/qbyimXAGXlGMvhd+tkeSZY=;
+        h=From:To:Cc:Subject:Date:From;
+        b=o8mRnDXNhGyDJtHjcQD9iVltRw9HKUSxHwoAXGfonbuMME41ijDiv7asFnvpQJEpb
+         9DpPQ0qYMgQSYxmM/BYulm2J6kPMBKhUBqDxOuD2nfr3Zvf9qfIUr2NJdoAhkvwTYh
+         Ip7B3cjqB5eE+Oo9a3GzAQ2ER/0/NxmoxqUJkdOQ=
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 72A3561156
+Authentication-Results: pdx-caf-mail.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: pdx-caf-mail.web.codeaurora.org; spf=none smtp.mailfrom=mnalajal@codeaurora.org
+From:   Murali Nalajala <mnalajal@codeaurora.org>
+To:     gregkh@linuxfoundation.org, rafael@kernel.org
+Cc:     mnalajal@codeaurora.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, bjorn.andersson@linaro.org
+Subject: [PATCH] base: soc: Handle custom soc information sysfs entries
+Date:   Wed,  2 Oct 2019 17:06:14 -0700
+Message-Id: <1570061174-4918-1-git-send-email-mnalajal@codeaurora.org>
+X-Mailer: git-send-email 1.9.1
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The retention idle state does not appear to be supported by the firmware
-present on the msm8998 laptops since the state is advertised as disabled
-in ACPI, and attempting to enable the state in DT is observed to result
-in boot hangs.  Therefore, remove the state from use to address the
-observed issues.
+Soc framework exposed sysfs entries are not sufficient for some
+of the h/w platforms. Currently there is no interface where soc
+drivers can expose further information about their SoCs via soc
+framework. This change address this limitation where clients can
+pass their custom entries as attribute group and soc framework
+would expose them as sysfs properties.
 
-Fixes: 2c6d2d3a580a (arm64: dts: qcom: Add Lenovo Miix 630)
-Signed-off-by: Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
+Signed-off-by: Murali Nalajala <mnalajal@codeaurora.org>
 ---
- .../boot/dts/qcom/msm8998-clamshell.dtsi      | 37 +++++++++++++++++++
- 1 file changed, 37 insertions(+)
+ drivers/base/soc.c      | 26 ++++++++++++++++++--------
+ include/linux/sys_soc.h |  1 +
+ 2 files changed, 19 insertions(+), 8 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/msm8998-clamshell.dtsi b/arch/arm64/boot/dts/qcom/msm8998-clamshell.dtsi
-index 9682d4dd7496..1bae90705746 100644
---- a/arch/arm64/boot/dts/qcom/msm8998-clamshell.dtsi
-+++ b/arch/arm64/boot/dts/qcom/msm8998-clamshell.dtsi
-@@ -23,6 +23,43 @@
- 	};
+diff --git a/drivers/base/soc.c b/drivers/base/soc.c
+index 7c0c5ca..ec70a58 100644
+--- a/drivers/base/soc.c
++++ b/drivers/base/soc.c
+@@ -15,6 +15,8 @@
+ #include <linux/err.h>
+ #include <linux/glob.h>
+ 
++#define NUM_ATTR_GROUPS 3
++
+ static DEFINE_IDA(soc_ida);
+ 
+ static ssize_t soc_info_get(struct device *dev,
+@@ -104,11 +106,6 @@ static ssize_t soc_info_get(struct device *dev,
+ 	.is_visible = soc_attribute_mode,
  };
  
-+/*
-+ * The laptop FW does not appear to support the retention state as it is
-+ * not advertised as enabled in ACPI, and enabling it in DT can cause boot
-+ * hangs.
-+ */
-+&CPU0 {
-+	cpu-idle-states = <&LITTLE_CPU_SLEEP_1>;
-+};
-+
-+&CPU1 {
-+	cpu-idle-states = <&LITTLE_CPU_SLEEP_1>;
-+};
-+
-+&CPU2 {
-+	cpu-idle-states = <&LITTLE_CPU_SLEEP_1>;
-+};
-+
-+&CPU3 {
-+	cpu-idle-states = <&LITTLE_CPU_SLEEP_1>;
-+};
-+
-+&CPU4 {
-+	cpu-idle-states = <&BIG_CPU_SLEEP_1>;
-+};
-+
-+&CPU5 {
-+	cpu-idle-states = <&BIG_CPU_SLEEP_1>;
-+};
-+
-+&CPU6 {
-+	cpu-idle-states = <&BIG_CPU_SLEEP_1>;
-+};
-+
-+&CPU7 {
-+	cpu-idle-states = <&BIG_CPU_SLEEP_1>;
-+};
-+
- &qusb2phy {
- 	status = "okay";
+-static const struct attribute_group *soc_attr_groups[] = {
+-	&soc_attr_group,
+-	NULL,
+-};
+-
+ static void soc_release(struct device *dev)
+ {
+ 	struct soc_device *soc_dev = container_of(dev, struct soc_device, dev);
+@@ -121,6 +118,7 @@ static void soc_release(struct device *dev)
+ struct soc_device *soc_device_register(struct soc_device_attribute *soc_dev_attr)
+ {
+ 	struct soc_device *soc_dev;
++	const struct attribute_group **soc_attr_groups = NULL;
+ 	int ret;
  
+ 	if (!soc_bus_type.p) {
+@@ -136,10 +134,20 @@ struct soc_device *soc_device_register(struct soc_device_attribute *soc_dev_attr
+ 		goto out1;
+ 	}
+ 
++	soc_attr_groups = kzalloc(sizeof(*soc_attr_groups) *
++						NUM_ATTR_GROUPS, GFP_KERNEL);
++	if (!soc_attr_groups) {
++		ret = -ENOMEM;
++		goto out2;
++	}
++	soc_attr_groups[0] = &soc_attr_group;
++	soc_attr_groups[1] = soc_dev_attr->custom_attr_group;
++	soc_attr_groups[2] = NULL;
++
+ 	/* Fetch a unique (reclaimable) SOC ID. */
+ 	ret = ida_simple_get(&soc_ida, 0, 0, GFP_KERNEL);
+ 	if (ret < 0)
+-		goto out2;
++		goto out3;
+ 	soc_dev->soc_dev_num = ret;
+ 
+ 	soc_dev->attr = soc_dev_attr;
+@@ -151,14 +159,16 @@ struct soc_device *soc_device_register(struct soc_device_attribute *soc_dev_attr
+ 
+ 	ret = device_register(&soc_dev->dev);
+ 	if (ret)
+-		goto out3;
++		goto out4;
+ 
+ 	return soc_dev;
+ 
+-out3:
++out4:
+ 	ida_simple_remove(&soc_ida, soc_dev->soc_dev_num);
+ 	put_device(&soc_dev->dev);
+ 	soc_dev = NULL;
++out3:
++	kfree(soc_attr_groups);
+ out2:
+ 	kfree(soc_dev);
+ out1:
+diff --git a/include/linux/sys_soc.h b/include/linux/sys_soc.h
+index 48ceea8..d9b3cf0 100644
+--- a/include/linux/sys_soc.h
++++ b/include/linux/sys_soc.h
+@@ -15,6 +15,7 @@ struct soc_device_attribute {
+ 	const char *serial_number;
+ 	const char *soc_id;
+ 	const void *data;
++	const struct attribute_group *custom_attr_group;
+ };
+ 
+ /**
 -- 
-2.17.1
+The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
+a Linux Foundation Collaborative Project
 
