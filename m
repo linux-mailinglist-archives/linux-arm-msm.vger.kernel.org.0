@@ -2,34 +2,34 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id DA6AFC98C7
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  3 Oct 2019 09:05:06 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 2FD29C98CC
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  3 Oct 2019 09:06:15 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726393AbfJCHFG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 3 Oct 2019 03:05:06 -0400
-Received: from mail.kernel.org ([198.145.29.99]:37876 "EHLO mail.kernel.org"
+        id S1727331AbfJCHGO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 3 Oct 2019 03:06:14 -0400
+Received: from mail.kernel.org ([198.145.29.99]:38074 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726199AbfJCHFG (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 3 Oct 2019 03:05:06 -0400
+        id S1726798AbfJCHGO (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 3 Oct 2019 03:06:14 -0400
 Received: from localhost (83-86-89-107.cable.dynamic.v4.ziggo.nl [83.86.89.107])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 3A7D121848;
-        Thu,  3 Oct 2019 07:05:04 +0000 (UTC)
+        by mail.kernel.org (Postfix) with ESMTPSA id 917DB21848;
+        Thu,  3 Oct 2019 07:06:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1570086304;
-        bh=P72i2zDsl2uq8QkSUH5tqLVz02cD3mVZ7BWdP72srnc=;
+        s=default; t=1570086373;
+        bh=Z52YU1Rb8AyRAWvQJRdXCtaUHZIoCZ2oPG25QZxyvHM=;
         h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=ZsvbwaT61NMcEm5QxYcwuqiqfaxfNO0v6RZnlsCum/MKFyFv58zIKDIYIwB5GvWXC
-         KB+y2Noqtk8o88KWEJ5sxhKcqj0juG8bWWGybRhT8sYjdTbFm3HrLgIvyUGUWs1PbD
-         Cv3Lt8VQdA8DkVZSeD+V4GUEai8aH02XogBAuwJA=
-Date:   Thu, 3 Oct 2019 09:05:02 +0200
+        b=JMkyYz3pcLeMRCJ9cd0+Vo/tTrkE7SOXQBKCNZfeBPfsXHjKacGPD2/C8gE5ORVJ2
+         dYqiVpKQK/9zOLcvoOcbkS8BsQRPPoHw7KnSX45A/gVUsEc6vv433DzI+s2BiSPdaR
+         bWzJwmYx+rBNs/AJyXP3SUHeCL/LiDcUnl/ivzYo=
+Date:   Thu, 3 Oct 2019 09:06:10 +0200
 From:   Greg KH <gregkh@linuxfoundation.org>
 To:     Murali Nalajala <mnalajal@codeaurora.org>
 Cc:     rafael@kernel.org, linux-arm-msm@vger.kernel.org,
         linux-kernel@vger.kernel.org, bjorn.andersson@linaro.org
 Subject: Re: [PATCH] base: soc: Handle custom soc information sysfs entries
-Message-ID: <20191003070502.GB1814133@kroah.com>
+Message-ID: <20191003070610.GC1814133@kroah.com>
 References: <1570061174-4918-1-git-send-email-mnalajal@codeaurora.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
@@ -54,10 +54,6 @@ On Wed, Oct 02, 2019 at 05:06:14PM -0700, Murali Nalajala wrote:
 >  drivers/base/soc.c      | 26 ++++++++++++++++++--------
 >  include/linux/sys_soc.h |  1 +
 >  2 files changed, 19 insertions(+), 8 deletions(-)
-
-Can you change a soc driver to use this?  I don't think that this patch
-works because:
-
 > 
 > diff --git a/drivers/base/soc.c b/drivers/base/soc.c
 > index 7c0c5ca..ec70a58 100644
@@ -105,10 +101,6 @@ works because:
 > +	soc_attr_groups[0] = &soc_attr_group;
 > +	soc_attr_groups[1] = soc_dev_attr->custom_attr_group;
 > +	soc_attr_groups[2] = NULL;
-
-You set this, but never do anything with it that I can see.  What am I
-missing?
-
 > +
 >  	/* Fetch a unique (reclaimable) SOC ID. */
 >  	ret = ida_simple_get(&soc_ida, 0, 0, GFP_KERNEL);
@@ -137,8 +129,20 @@ missing?
 >  out2:
 >  	kfree(soc_dev);
 >  out1:
+> diff --git a/include/linux/sys_soc.h b/include/linux/sys_soc.h
+> index 48ceea8..d9b3cf0 100644
+> --- a/include/linux/sys_soc.h
+> +++ b/include/linux/sys_soc.h
+> @@ -15,6 +15,7 @@ struct soc_device_attribute {
+>  	const char *serial_number;
+>  	const char *soc_id;
+>  	const void *data;
+> +	const struct attribute_group *custom_attr_group;
 
-You don't free it when the soc is removed?
+Shouldn't you make this:
+	const struct attribute_group **soc_groups;
+
+to match up with the rest of the way the driver core works?
 
 thanks,
 
