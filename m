@@ -2,106 +2,177 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 8F57ACC221
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  4 Oct 2019 19:54:00 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 1971ECC25F
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  4 Oct 2019 20:14:21 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2389012AbfJDRxL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 4 Oct 2019 13:53:11 -0400
-Received: from heliosphere.sirena.org.uk ([172.104.155.198]:50966 "EHLO
-        heliosphere.sirena.org.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2388648AbfJDRwr (ORCPT
+        id S2387468AbfJDSOT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 4 Oct 2019 14:14:19 -0400
+Received: from mail-pg1-f194.google.com ([209.85.215.194]:39274 "EHLO
+        mail-pg1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1730347AbfJDSOT (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 4 Oct 2019 13:52:47 -0400
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-        d=sirena.org.uk; s=20170815-heliosphere; h=Date:Message-Id:In-Reply-To:
-        Subject:Cc:To:From:Sender:Reply-To:MIME-Version:Content-Type:
-        Content-Transfer-Encoding:Content-ID:Content-Description:Resent-Date:
-        Resent-From:Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:References:
-        List-Id:List-Help:List-Unsubscribe:List-Subscribe:List-Post:List-Owner:
-        List-Archive; bh=Z7nsFJXI9WnA9ER91wdkft7vbWP+YLeTSIFLA7ZXd9A=; b=lYettB7+ajDb
-        JD3KPvzeWCkXx3uhtELzTsMAQ2QMzjAF0765h3Q9saXBwlRBSbQo5pYjILePyTSAWA4krh8RN21m0
-        OenwhjTCRC4Vx10XU0zMlvtuyyl44HF/gB2bdX/3cJveAYSnehqUVUhRB2cKkIJmAmCrphtER4Vsc
-        5lyNA=;
-Received: from cpc102320-sgyl38-2-0-cust46.18-2.cable.virginm.net ([82.37.168.47] helo=ypsilon.sirena.org.uk)
-        by heliosphere.sirena.org.uk with esmtpsa (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256)
-        (Exim 4.92)
-        (envelope-from <broonie@sirena.co.uk>)
-        id 1iGRkx-0003wW-Np; Fri, 04 Oct 2019 17:52:43 +0000
-Received: by ypsilon.sirena.org.uk (Postfix, from userid 1000)
-        id 44F772741F98; Fri,  4 Oct 2019 18:52:43 +0100 (BST)
-From:   Mark Brown <broonie@kernel.org>
-To:     Kiran Gunda <kgunda@codeaurora.org>
-Cc:     Andy Gross <agross@kernel.org>, bjorn.andersson@linaro.org,
-        Liam Girdwood <lgirdwood@gmail.com>,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Mark Brown <broonie@kernel.org>
-Subject: Applied "regulator: qcom-rpmh: Fix PMIC5 BoB min voltage" to the regulator tree
-In-Reply-To: <1570184215-5355-1-git-send-email-kgunda@codeaurora.org>
-X-Patchwork-Hint: ignore
-Message-Id: <20191004175243.44F772741F98@ypsilon.sirena.org.uk>
-Date:   Fri,  4 Oct 2019 18:52:43 +0100 (BST)
+        Fri, 4 Oct 2019 14:14:19 -0400
+Received: by mail-pg1-f194.google.com with SMTP id e1so4191025pgj.6
+        for <linux-arm-msm@vger.kernel.org>; Fri, 04 Oct 2019 11:14:18 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=message-id:mime-version:content-transfer-encoding:in-reply-to
+         :references:from:to:cc:subject:user-agent:date;
+        bh=0IDOtQgHmElD8p5B2w+YjcptWdtlf5vVNP5fCQ18Cjw=;
+        b=jSQrChLhcmVVMxN2vgpR1Q4UdZbgBNU+3E5G58XTneDBys4wlfUOE/GPLXVR6uhnZL
+         C1ui8JAyehI+IdvfyllS9IV1T4aFagv+PAyy04d/FQwIS16exf2GNN1UZFS5Jb3XLE6c
+         mrYnztcJZlAuKjskuh33FNmaFjfevzrjGaS1s=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:message-id:mime-version
+         :content-transfer-encoding:in-reply-to:references:from:to:cc:subject
+         :user-agent:date;
+        bh=0IDOtQgHmElD8p5B2w+YjcptWdtlf5vVNP5fCQ18Cjw=;
+        b=QPtP0YQPl4aeei2df6/RryW1bHIsB9nFH+aVSGza4H3BBg8Mnxiy5oqbru5gcZIXC6
+         HNx9nSjnD2QRweZZrrUzhmeCOhGnrS4USxKOXpeIam2qjAArGoel4reYecPujO1xo75n
+         4xm5Ev0s96mrx6OJCd5kZD8Cj5aZ/1/mhaujoJUjLyeco3xYfCB4AZA0eEXrIgG2Hrze
+         QDkQSdKuOeEFmdEd8djtZoBj/n5ub4Y6f85MZphTZDolpYI5HJ5IxAs8KOS/pA+L30Tz
+         8sl5uRTKEQDwkYBAmdXtJ4L//ERF1waGxnZfeTunaa6GzFUBn3X2JdCUPHU7MIGtLxkN
+         XkqQ==
+X-Gm-Message-State: APjAAAWTL9MavDrRjBv1FbO4R341Ho1m8NTF0hyd6wcCAWBp+aSGGdC9
+        SDrZwbMv8FO66VqpzpsaqHng5w==
+X-Google-Smtp-Source: APXvYqzXmG1bMyrx+EgqINn91jy469r0K12/xfrx1x9Ey0oZZUEtP/hNvIYFYGlkN+MklxIFvSurxQ==
+X-Received: by 2002:a62:62c6:: with SMTP id w189mr18679300pfb.235.1570212858215;
+        Fri, 04 Oct 2019 11:14:18 -0700 (PDT)
+Received: from chromium.org ([2620:15c:202:1:fa53:7765:582b:82b9])
+        by smtp.gmail.com with ESMTPSA id i6sm10089700pfq.20.2019.10.04.11.14.17
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 04 Oct 2019 11:14:17 -0700 (PDT)
+Message-ID: <5d978bf9.1c69fb81.7b927.b6ac@mx.google.com>
+Content-Type: text/plain; charset="utf-8"
+MIME-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <91d09847-31ad-e238-d84d-f7e0e21c6ef1@codeaurora.org>
+References: <20190925054133.206992-1-swboyd@chromium.org> <20190925055933.GA2810@tuxbook-pro> <5d8b6b8b.1c69fb81.14b36.c053@mx.google.com> <91d09847-31ad-e238-d84d-f7e0e21c6ef1@codeaurora.org>
+From:   Stephen Boyd <swboyd@chromium.org>
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        David Dai <daidavid1@codeaurora.org>
+Cc:     Georgi Djakov <georgi.djakov@linaro.org>,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org,
+        Maxime Ripard <mripard@kernel.org>, linux-pm@vger.kernel.org,
+        Rob Herring <robh+dt@kernel.org>, devicetree@vger.kernel.org,
+        Evan Green <evgreen@chromium.org>
+Subject: Re: [RFC PATCH] interconnect: Replace of_icc_get() with icc_get() and reduce DT binding
+User-Agent: alot/0.8.1
+Date:   Fri, 04 Oct 2019 11:14:16 -0700
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The patch
+Quoting David Dai (2019-09-27 10:16:07)
+>=20
+> On 9/25/2019 6:28 AM, Stephen Boyd wrote:
+> > Quoting Bjorn Andersson (2019-09-24 22:59:33)
+> >> On Tue 24 Sep 22:41 PDT 2019, Stephen Boyd wrote:
+> >>
+> >>> The DT binding could also be simplified somewhat. Currently a path ne=
+eds
+> >>> to be specified in DT for each and every use case that is possible fo=
+r a
+> >>> device to want. Typically the path is to memory, which looks to be
+> >>> reserved for in the binding with the "dma-mem" named path, but someti=
+mes
+> >>> the path is from a device to the CPU or more generically from a device
+> >>> to another device which could be a CPU, cache, DMA master, or another
+> >>> device if some sort of DMA to DMA scenario is happening. Let's remove
+> >>> the pair part of the binding so that we just list out a device's
+> >>> possible endpoints on the bus or busses that it's connected to.
+> >>>
+> >>> If the kernel wants to figure out what the path is to memory or the C=
+PU
+> >>> or a cache or something else it should be able to do that by finding =
+the
+> >>> node for the "destination" endpoint, extracting that node's
+> >>> "interconnects" property, and deriving the path in software. For
+> >>> example, we shouldn't need to write out each use case path by path in=
+ DT
+> >>> for each endpoint node that wants to set a bandwidth to memory. We
+> >>> should just be able to indicate what endpoint(s) a device sits on bas=
+ed
+> >>> on the interconnect provider in the system and then walk the various
+> >>> interconnects to find the path from that source endpoint to the
+> >>> destination endpoint.
+> >>>
+> >> But doesn't this implies that the other end of the path is always some
+> >> specific node, e.g. DDR? With a single node how would you describe
+> >> CPU->LLCC or GPU->OCIMEM?
+> > By only specifying the endpoint the device uses it describes what the
+> > hardware block interfaces with. It doesn't imply that there's only one
+> > other end of the path. It implies that the paths should be discoverable
+> > by walking the interconnect graph given some source device node and
+> > target device node. In most cases the target device node will be a DDR
+> > controller node, but sometimes it could be LLCC or OCIMEM. We may need
+> > to add some sort of "get the DDR controller device" API or work it into
+> > the interconnect API somehow to indicate what target endpoint is
+> > desired. By not listing all those paths in DT we gain flexibility to add
+> > more paths later on without having to update or tweak DT to describe
+> > more paths/routes through the interconnect.
+>=20
+>=20
+> I'm unsure that using the target device node or target source device is=20
+> the correct way to represent the constraints that the consumers apply on =
 
-   regulator: qcom-rpmh: Fix PMIC5 BoB min voltage
+> the interconnects. While it's true the traffic is intended for the=20
+> targeted devices, the constraints(QoS or BW) are for the interconnect or =
 
-has been applied to the regulator tree at
+> specifically the paths that span across the ports of various=20
+> interconnects(NoC devices in this case). I think having both src and dst =
 
-   https://git.kernel.org/pub/scm/linux/kernel/git/broonie/regulator.git for-5.4
+> properties is still the simplest way to achieve the flexibility that we=20
+> require to set the constraints for ports(that may not have a target=20
+> device defined in DT or exists as some intermediate port across multiple =
 
-All being well this means that it will be integrated into the linux-next
-tree (usually sometime in the next 24 hours) and sent to Linus during
-the next merge window (or sooner if it is a bug fix), however if
-problems are discovered then the patch may be dropped or reverted.  
+> interconnects).
+>=20
 
-You may get further e-mails resulting from automated or manual testing
-and review of the tree, please engage with people reporting problems and
-send followup patches addressing any issues that are reported if needed.
+The need for paths described in DT may make sense for certain cases but
+that seems to be the minority. My guess is that maybe an OPP binding
+would need to describe the path to apply the bandwidth to. Otherwise I
+don't see what the need is for. Maybe you can list out more scenarios?
 
-If any updates are required or you are submitting further changes they
-should be sent as incremental updates against current git, existing
-patches will not be replaced.
+Either way, the binding has been designed to cover all the possibilities
+by just saying that we have to describe at least two points for an
+'interconnect'. It is a path based binding. I'd rather see us have an
+endpoint based binding with the option to fallback to paths if we need
+to constrain something. Maybe this can be a new property that is used
+the majority of the time?
 
-Please add any relevant lists and maintainers to the CCs when replying
-to this mail.
-
-Thanks,
-Mark
-
-From 77fd66c9ff3e992718a79fa6407148935d34b50f Mon Sep 17 00:00:00 2001
-From: Kiran Gunda <kgunda@codeaurora.org>
-Date: Fri, 4 Oct 2019 15:46:55 +0530
-Subject: [PATCH] regulator: qcom-rpmh: Fix PMIC5 BoB min voltage
-
-Correct the PMIC5 BoB min voltage from 0.3V to 3V. Also correct
-the voltage selector accordingly.
-
-Signed-off-by: Kiran Gunda <kgunda@codeaurora.org>
-Link: https://lore.kernel.org/r/1570184215-5355-1-git-send-email-kgunda@codeaurora.org
-Signed-off-by: Mark Brown <broonie@kernel.org>
----
- drivers/regulator/qcom-rpmh-regulator.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
-
-diff --git a/drivers/regulator/qcom-rpmh-regulator.c b/drivers/regulator/qcom-rpmh-regulator.c
-index db6c085da65e..0246b6f99fb5 100644
---- a/drivers/regulator/qcom-rpmh-regulator.c
-+++ b/drivers/regulator/qcom-rpmh-regulator.c
-@@ -735,8 +735,8 @@ static const struct rpmh_vreg_hw_data pmic5_hfsmps515 = {
- static const struct rpmh_vreg_hw_data pmic5_bob = {
- 	.regulator_type = VRM,
- 	.ops = &rpmh_regulator_vrm_bypass_ops,
--	.voltage_range = REGULATOR_LINEAR_RANGE(300000, 0, 135, 32000),
--	.n_voltages = 136,
-+	.voltage_range = REGULATOR_LINEAR_RANGE(3000000, 0, 31, 32000),
-+	.n_voltages = 32,
- 	.pmic_mode_map = pmic_mode_map_pmic5_bob,
- 	.of_map_mode = rpmh_regulator_pmic4_bob_of_map_mode,
+ gpu@f00 {
+   interconnect-endpoints =3D <&icc GPU_SLAVE_PORT>, <&icc GPU_MASTER_PORT0=
+>, <&icc GPU_MASTER_PORT1>;
+   interconnect-endpoint-names =3D "slave", "master0", "master1";
  };
--- 
-2.20.1
+
+(Or we can invert it and make interconnect-paths be non-standard)
+
+The property would describe what's going to this device and how it's
+integrated into the SoC. This is similar to how we describe what port is
+connected to a device with the of graph binding or how we only list the
+clk or regulator that goes to a device and not the whole path to the
+root of the respective tree.
+
+There can be a driver API that gets these port numbers out and
+constructs a path to another struct device or struct device_node. I
+imagine that 90% of the time a driver is going to request some bandwidth
+from their master port (or ports) to the DDR controller. We could either
+make the DDR controller a device that can be globally acquired or
+integrate it deeply into the API to the point that it looks for a DDR
+controller somewhere or relies on interconnect providers to tell the
+framework about the controller.
+
+TL;DR is that I don't want to have to specify paths in each and every
+node to say that some port on this device here is connected to some port
+on the DDR controller and that we want to adjust the bandwidth or QoS
+across this path. I'd like to describe a device "hermetically" by
+listing out the ports the device has. Then we can rely on the OS to
+figure out what paths to construct and change. If we need to constrain
+or tweak those paths then we can do that with the existing interconnects
+binding, but let's worry about that when we get there.
 
