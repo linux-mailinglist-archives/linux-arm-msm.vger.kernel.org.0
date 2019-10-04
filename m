@@ -2,89 +2,89 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 8F6A6CC4B2
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  4 Oct 2019 23:17:01 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 7873ACC536
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  4 Oct 2019 23:50:35 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730598AbfJDVRA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 4 Oct 2019 17:17:00 -0400
-Received: from mail-lj1-f194.google.com ([209.85.208.194]:40251 "EHLO
-        mail-lj1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725826AbfJDVRA (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 4 Oct 2019 17:17:00 -0400
-Received: by mail-lj1-f194.google.com with SMTP id 7so7863308ljw.7
-        for <linux-arm-msm@vger.kernel.org>; Fri, 04 Oct 2019 14:16:59 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=Mitmi3lOMqSpYTCDDP4OehKdhas886p4UDP9S7yQMAs=;
-        b=lK2gFZ1qa+irwSUDd4m5G0GGGVDwSqXGEGwE9XSPDVK9mkW5D5pX8lir0ilN0Wl9Ww
-         tTa7IohtNwD7QWPSsI/kieHPMvZNDLQLySmZ5WTBTPlHo6cge7H4hKRpXAqZToukjHwK
-         BvIDHYzaLPxqn3yqyv5w7FTZbCI3FkhQkHXHGtdDlYffqKNKqCEbjeL6QEPfHYaAWiZ5
-         1DUmkNepBkT1xVg9q4MWBde5ANLw1r5w/FuUm09/5z9MkdeGleQ0APAeNcWqoDXK454w
-         QE9A9NA8qgdzVNbZirmmQuKsoTvhBWF8vkHdLqs2BIUh6rxxErtCPe1p7KM9FvB/oO4H
-         0G8A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=Mitmi3lOMqSpYTCDDP4OehKdhas886p4UDP9S7yQMAs=;
-        b=BKvrVpqygbDI/aSve5T1hBpjWK7bFYvP03bMz9Ydb1aaDS+LQFQ8rwM4HPhBAp48zL
-         bGGsys4pHuQnrq1qT6ywea+kcMlKO4GDt876gPgd33e0K9JXi6hBm8FvpWMmlXHXuTgj
-         c8/r4zjQnHnqr5BuARLhtp9MWwgyaxJaMWK7CvTGuaQtpBXLUX+qBenD+w9+S28Hcj3Q
-         1vI2uvGcOPBxdU3gJ3ChbCXdcVk8Wl4jjLMNHy4cRsh6W6fDYbzgpX/D2Qnsh209oMCb
-         SefgMUvPTtxOyvH/F5Mck9Syb5YV44Vlu6+tDPsFM497W6S31lpF8sBw8FHxVxW+KFvy
-         cJuQ==
-X-Gm-Message-State: APjAAAXvQTqNnxzRGI4FwatMGkZuzbgJ2dVze5PpPDcs2X6jthwsUx64
-        q+clb69Cy7m7rFQzR5DiakgYtxRX+pT/lELjQ76nfQ==
-X-Google-Smtp-Source: APXvYqyvx1ZJVx3BdlEwVPKWVbrlnWhYW68EF/q5bhSKJMO+egyDnB8hTFcsfD4uKHWflQL5bAmuc673rey06t4k4d8=
-X-Received: by 2002:a2e:80d3:: with SMTP id r19mr10497466ljg.41.1570223818492;
- Fri, 04 Oct 2019 14:16:58 -0700 (PDT)
+        id S1728356AbfJDVuR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 4 Oct 2019 17:50:17 -0400
+Received: from gloria.sntech.de ([185.11.138.130]:38224 "EHLO gloria.sntech.de"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1727548AbfJDVuR (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 4 Oct 2019 17:50:17 -0400
+Received: from 94.112.246.102.static.b2b.upcbusiness.cz ([94.112.246.102] helo=phil.localnet)
+        by gloria.sntech.de with esmtpsa (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+        (Exim 4.89)
+        (envelope-from <heiko@sntech.de>)
+        id 1iGVSP-0006tk-DS; Fri, 04 Oct 2019 23:49:49 +0200
+From:   Heiko Stuebner <heiko@sntech.de>
+To:     YueHaibing <yuehaibing@huawei.com>
+Cc:     miquel.raynal@bootlin.com, rui.zhang@intel.com,
+        edubezval@gmail.com, daniel.lezcano@linaro.org,
+        amit.kucheria@verdurent.com, eric@anholt.net, wahrenst@gmx.net,
+        f.fainelli@gmail.com, rjui@broadcom.com, sbranden@broadcom.com,
+        mmayer@broadcom.com, computersforpeace@gmail.com,
+        gregory.0xf0@gmail.com, matthias.bgg@gmail.com, agross@kernel.org,
+        mcoquelin.stm32@gmail.com, alexandre.torgue@st.com,
+        marc.w.gonzalez@free.fr, mans@mansr.com, talel@amazon.com,
+        jun.nie@linaro.org, shawnguo@kernel.org, phil@raspberrypi.org,
+        gregkh@linuxfoundation.org, david.hernandezsanchez@st.com,
+        horms+renesas@verge.net.au, wsa+renesas@sang-engineering.com,
+        bcm-kernel-feedback-list@broadcom.com, linux-pm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-rpi-kernel@lists.infradead.org,
+        linux-arm-kernel@lists.infradead.org,
+        linux-mediatek@lists.infradead.org, linux-arm-msm@vger.kernel.org,
+        linux-rockchip@lists.infradead.org,
+        linux-stm32@st-md-mailman.stormreply.com
+Subject: Re: [PATCH -next 09/15] thermal: rockchip: use devm_platform_ioremap_resource() to simplify code
+Date:   Fri, 04 Oct 2019 23:49:47 +0200
+Message-ID: <6308452.QoXZFhLlpT@phil>
+In-Reply-To: <20190904122939.23780-10-yuehaibing@huawei.com>
+References: <20190904122939.23780-1-yuehaibing@huawei.com> <20190904122939.23780-10-yuehaibing@huawei.com>
 MIME-Version: 1.0
-References: <20190921101207.65042-1-kholk11@gmail.com> <20190921101207.65042-2-kholk11@gmail.com>
-In-Reply-To: <20190921101207.65042-2-kholk11@gmail.com>
-From:   Linus Walleij <linus.walleij@linaro.org>
-Date:   Fri, 4 Oct 2019 23:16:46 +0200
-Message-ID: <CACRpkdZH9VxYHh5c7r405nKHo8vq8PWZZnncP4yzTyJe_Zvnng@mail.gmail.com>
-Subject: Re: [PATCH 1/5] pinctrl: qcom: Add a pinctrl driver for MSM8976 and 8956
-To:     kholk11@gmail.com
-Cc:     MSM <linux-arm-msm@vger.kernel.org>, marijns95@gmail.com,
-        Andy Gross <agross@kernel.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Mark Rutland <mark.rutland@arm.com>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        linux-clk <linux-clk@vger.kernel.org>,
-        "open list:GPIO SUBSYSTEM" <linux-gpio@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 7Bit
+Content-Type: text/plain; charset="us-ascii"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Angelo!
+Am Mittwoch, 4. September 2019, 14:29:33 CEST schrieb YueHaibing:
+> Use devm_platform_ioremap_resource() to simplify the code a bit.
+> This is detected by coccinelle.
+> 
+> Reported-by: Hulk Robot <hulkci@huawei.com>
+> Signed-off-by: YueHaibing <yuehaibing@huawei.com>
 
-Thanks for your patch!
+Reviewed-by: Heiko Stuebner <heiko@sntech.de>
 
-On Sat, Sep 21, 2019 at 12:12 PM <kholk11@gmail.com> wrote:
+> ---
+>  drivers/thermal/rockchip_thermal.c | 4 +---
+>  1 file changed, 1 insertion(+), 3 deletions(-)
+> 
+> diff --git a/drivers/thermal/rockchip_thermal.c b/drivers/thermal/rockchip_thermal.c
+> index 343c2f5..044e6eb 100644
+> --- a/drivers/thermal/rockchip_thermal.c
+> +++ b/drivers/thermal/rockchip_thermal.c
+> @@ -1219,7 +1219,6 @@ static int rockchip_thermal_probe(struct platform_device *pdev)
+>  	struct device_node *np = pdev->dev.of_node;
+>  	struct rockchip_thermal_data *thermal;
+>  	const struct of_device_id *match;
+> -	struct resource *res;
+>  	int irq;
+>  	int i;
+>  	int error;
+> @@ -1245,8 +1244,7 @@ static int rockchip_thermal_probe(struct platform_device *pdev)
+>  	if (!thermal->chip)
+>  		return -EINVAL;
+>  
+> -	res = platform_get_resource(pdev, IORESOURCE_MEM, 0);
+> -	thermal->regs = devm_ioremap_resource(&pdev->dev, res);
+> +	thermal->regs = devm_platform_ioremap_resource(pdev, 0);
+>  	if (IS_ERR(thermal->regs))
+>  		return PTR_ERR(thermal->regs);
+>  
+> 
 
-> From: "Angelo G. Del Regno" <kholk11@gmail.com>
->
-> Add the pinctrl driver to support pin configuration with the
-> pinctrl framework on MSM8976, MSM8956, APQ8056, APQ8076.
->
-> Signed-off-by: Angelo G. Del Regno <kholk11@gmail.com>
 
-This changes device tree bindings so you need to Cc devicetree@vger.kernel.org.
 
-Usually they want the device tree changes in a separate patch.
 
-It'd be great if I can apply the pinctrl patches separately from the rest of
-the series.
-
-Also I need Bjorn's review on it first.
-
-Yours,
-Linus Walleij
