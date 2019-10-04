@@ -2,109 +2,108 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id C4F25CB905
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  4 Oct 2019 13:20:56 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 1D981CB955
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  4 Oct 2019 13:40:59 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730885AbfJDLUz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 4 Oct 2019 07:20:55 -0400
-Received: from smtp.codeaurora.org ([198.145.29.96]:45492 "EHLO
+        id S1730977AbfJDLk5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 4 Oct 2019 07:40:57 -0400
+Received: from smtp.codeaurora.org ([198.145.29.96]:49326 "EHLO
         smtp.codeaurora.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729585AbfJDLUz (ORCPT
+        with ESMTP id S1725826AbfJDLk5 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 4 Oct 2019 07:20:55 -0400
+        Fri, 4 Oct 2019 07:40:57 -0400
 Received: by smtp.codeaurora.org (Postfix, from userid 1000)
-        id AD9756034E; Fri,  4 Oct 2019 11:20:53 +0000 (UTC)
+        id 53CEE61A10; Fri,  4 Oct 2019 11:40:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
-        s=default; t=1570188053;
-        bh=13JrP6NAsup1Fp+Re+RfVIJcKlXbS8TUEZmgMR+KpCs=;
-        h=From:To:Cc:Subject:Date:From;
-        b=gLU47tsMK/5sQwAf2jcRZzGVW0l5rd49H73OaDttdUekdzxKisaK+Vr3o/zGj1Mjj
-         /2rYSfYecyxhqadepobOlCYmpekoFBdrsix3IWL1trV9ruswT23NKjlgXRe7vd8l/+
-         fNflSgIVTlsw4JZlEwlnGeRJbWJO9CPWqideMdzE=
+        s=default; t=1570189256;
+        bh=ripHZzJ25rIS8dQQRxX/6LaM0R0g+Keu+K/houPPzd0=;
+        h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
+        b=R3024MVWCCQCzJyN7l7EPvE6OimHjRwpfQ1q4AMmwx3hH5cz6hAKcI4HltdkcfgAc
+         CcFrVwaR8zBHBuWXMaxcA0paxWbuCAkl/wvl8jfbU7Ey+jheo9/SYXX4rcOdwwA1jf
+         KdRxyuK3t93WGAwKZS4qJ3KeNH2bdF/1AWcXYdkY=
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
         pdx-caf-mail.web.codeaurora.org
 X-Spam-Level: 
 X-Spam-Status: No, score=-2.7 required=2.0 tests=ALL_TRUSTED,BAYES_00,
-        DKIM_INVALID,DKIM_SIGNED,SPF_NONE autolearn=no autolearn_force=no
-        version=3.4.0
-Received: from kgunda-linux.qualcomm.com (blr-c-bdr-fw-01_globalnat_allzones-outside.qualcomm.com [103.229.19.19])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: kgunda@smtp.codeaurora.org)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id A1E7D60A4E;
-        Fri,  4 Oct 2019 11:20:49 +0000 (UTC)
+        DKIM_INVALID,DKIM_SIGNED autolearn=no autolearn_force=no version=3.4.0
+Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
+        by smtp.codeaurora.org (Postfix) with ESMTP id 3E641614B5;
+        Fri,  4 Oct 2019 11:40:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
-        s=default; t=1570188053;
-        bh=13JrP6NAsup1Fp+Re+RfVIJcKlXbS8TUEZmgMR+KpCs=;
-        h=From:To:Cc:Subject:Date:From;
-        b=gLU47tsMK/5sQwAf2jcRZzGVW0l5rd49H73OaDttdUekdzxKisaK+Vr3o/zGj1Mjj
-         /2rYSfYecyxhqadepobOlCYmpekoFBdrsix3IWL1trV9ruswT23NKjlgXRe7vd8l/+
-         fNflSgIVTlsw4JZlEwlnGeRJbWJO9CPWqideMdzE=
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org A1E7D60A4E
-Authentication-Results: pdx-caf-mail.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: pdx-caf-mail.web.codeaurora.org; spf=none smtp.mailfrom=kgunda@codeaurora.org
-From:   Kiran Gunda <kgunda@codeaurora.org>
-To:     bjorn.andersson@linaro.org, Andy Gross <agross@kernel.org>,
-        Linus Walleij <linus.walleij@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Mark Rutland <mark.rutland@arm.com>,
-        linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Cc:     Kiran Gunda <kgunda@codeaurora.org>
-Subject: [PATCH V1] dt-bindings: pinctrl: qcom-pmic-gpio: Add support for pm6150/pm6150l
-Date:   Fri,  4 Oct 2019 16:50:39 +0530
-Message-Id: <1570188039-22122-1-git-send-email-kgunda@codeaurora.org>
-X-Mailer: git-send-email 1.9.1
+        s=default; t=1570189255;
+        bh=ripHZzJ25rIS8dQQRxX/6LaM0R0g+Keu+K/houPPzd0=;
+        h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
+        b=Nzm3x7gi6Cr0TVvrsQvNSRUYb5+6KKewDbjcBIgCiixY8wy2Xu9fSgcD2qR2u9xDr
+         F86dOqf+oyr754oV9v4r+JeemzF8pOVIcQyAS6AfciI891D6YdEdGyGMeffzjbYBi/
+         OFHbeR3xAIGiuXhigwdb6Ye09pV6lL0lVroympqM=
+MIME-Version: 1.0
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
+Content-Transfer-Encoding: 7bit
+Date:   Fri, 04 Oct 2019 17:10:55 +0530
+From:   kgunda@codeaurora.org
+To:     Dan Murphy <dmurphy@ti.com>
+Cc:     bjorn.andersson@linaro.org, jingoohan1@gmail.com,
+        lee.jones@linaro.org, b.zolnierkie@samsung.com,
+        dri-devel@lists.freedesktop.org, daniel.thompson@linaro.org,
+        jacek.anaszewski@gmail.com, pavel@ucw.cz, robh+dt@kernel.org,
+        mark.rutland@arm.com, linux-leds@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Andy Gross <agross@kernel.org>, linux-arm-msm@vger.kernel.org,
+        linux-fbdev@vger.kernel.org
+Subject: Re: [PATCH V6 5/8] backlight: qcom-wled: Restructure the driver for
+ WLED3
+In-Reply-To: <6f50ea19-f320-b4e6-f269-4d1e2189fa77@ti.com>
+References: <1569825553-26039-1-git-send-email-kgunda@codeaurora.org>
+ <1569825553-26039-6-git-send-email-kgunda@codeaurora.org>
+ <6f50ea19-f320-b4e6-f269-4d1e2189fa77@ti.com>
+Message-ID: <7300c740873439b341d05ee40e071c3f@codeaurora.org>
+X-Sender: kgunda@codeaurora.org
+User-Agent: Roundcube Webmail/1.2.5
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add support for the PM6150 and PM6150L GPIO support to the
-Qualcomm PMIC GPIO binding.
-
-Signed-off-by: Kiran Gunda <kgunda@codeaurora.org>
----
- Documentation/devicetree/bindings/pinctrl/qcom,pmic-gpio.txt | 4 ++++
- drivers/pinctrl/qcom/pinctrl-spmi-gpio.c                     | 2 ++
- 2 files changed, 6 insertions(+)
-
-diff --git a/Documentation/devicetree/bindings/pinctrl/qcom,pmic-gpio.txt b/Documentation/devicetree/bindings/pinctrl/qcom,pmic-gpio.txt
-index c32bf32..2f48cca 100644
---- a/Documentation/devicetree/bindings/pinctrl/qcom,pmic-gpio.txt
-+++ b/Documentation/devicetree/bindings/pinctrl/qcom,pmic-gpio.txt
-@@ -23,6 +23,8 @@ PMIC's from Qualcomm.
- 		    "qcom,pms405-gpio"
- 		    "qcom,pm8150-gpio"
- 		    "qcom,pm8150b-gpio"
-+		    "qcom,pm6150-gpio"
-+		    "qcom,pm6150l-gpio"
- 
- 		    And must contain either "qcom,spmi-gpio" or "qcom,ssbi-gpio"
- 		    if the device is on an spmi bus or an ssbi bus respectively
-@@ -100,6 +102,8 @@ to specify in a pin configuration subnode:
- 					     and gpio8)
- 		    gpio1-gpio12 for pm8150b (holes on gpio3, gpio4, gpio7)
- 		    gpio1-gpio12 for pm8150l (hole on gpio7)
-+		    gpio1-gpio10 for pm6150
-+		    gpio1-gpio12 for pm6150l
- 
- - function:
- 	Usage: required
-diff --git a/drivers/pinctrl/qcom/pinctrl-spmi-gpio.c b/drivers/pinctrl/qcom/pinctrl-spmi-gpio.c
-index f1fece5..387917c 100644
---- a/drivers/pinctrl/qcom/pinctrl-spmi-gpio.c
-+++ b/drivers/pinctrl/qcom/pinctrl-spmi-gpio.c
-@@ -1121,6 +1121,8 @@ static int pmic_gpio_remove(struct platform_device *pdev)
- 	{ .compatible = "qcom,pm8150b-gpio", .data = (void *) 12 },
- 	/* pm8150l has 12 GPIOs with holes on 7 */
- 	{ .compatible = "qcom,pm8150l-gpio", .data = (void *) 12 },
-+	{ .compatible = "qcom,pm6150-gpio", .data = (void *) 10 },
-+	{ .compatible = "qcom,pm6150l-gpio", .data = (void *) 12 },
- 	{ },
- };
- 
--- 
-The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
- a Linux Foundation Collaborative Project
-
+On 2019-10-01 20:47, Dan Murphy wrote:
+> Kiran
+> 
+> On 9/30/19 1:39 AM, Kiran Gunda wrote:
+>> Restructure the driver to add the support for new WLED
+>> peripherals.
+>> 
+>> Signed-off-by: Kiran Gunda <kgunda@codeaurora.org>
+>> Acked-by: Daniel Thompson <daniel.thompson@linaro.org>
+>> ---
+>>   drivers/video/backlight/qcom-wled.c | 395 
+>> ++++++++++++++++++++++--------------
+>>   1 file changed, 245 insertions(+), 150 deletions(-)
+>> 
+>> diff --git a/drivers/video/backlight/qcom-wled.c 
+>> b/drivers/video/backlight/qcom-wled.c
+>> index f191242..740f1b6 100644
+>> --- a/drivers/video/backlight/qcom-wled.c
+>> +++ b/drivers/video/backlight/qcom-wled.c
+>> @@ -7,59 +7,71 @@
+>>   #include <linux/module.h>
+>>   #include <linux/of.h>
+>>   #include <linux/of_device.h>
+>> +#include <linux/of_address.h>
+>>   #include <linux/regmap.h>
+>>     /* From DT binding */
+>> +#define WLED_MAX_STRINGS				4
+>> +
+>>   #define WLED_DEFAULT_BRIGHTNESS				2048
+>>   -#define WLED3_SINK_REG_BRIGHT_MAX			0xFFF
+>> -#define WLED3_CTRL_REG_VAL_BASE				0x40
+>> +#define WLED_SINK_REG_BRIGHT_MAX			0xFFF
+> 
+> Why did you change some of these again?
+> 
+> Can you just change it to the final #define in patch 4/8?
+> 
+> Dan
+> 
+> <snip>
+Ok.. Looks like some thing went wrong with this series. I will re-upload 
+it again.
