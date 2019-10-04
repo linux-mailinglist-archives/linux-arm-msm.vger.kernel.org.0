@@ -2,14 +2,14 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 4EC1CCC209
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  4 Oct 2019 19:52:48 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 8F57ACC221
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  4 Oct 2019 19:54:00 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2388667AbfJDRwr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 4 Oct 2019 13:52:47 -0400
-Received: from heliosphere.sirena.org.uk ([172.104.155.198]:50930 "EHLO
+        id S2389012AbfJDRxL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 4 Oct 2019 13:53:11 -0400
+Received: from heliosphere.sirena.org.uk ([172.104.155.198]:50966 "EHLO
         heliosphere.sirena.org.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2388643AbfJDRwr (ORCPT
+        with ESMTP id S2388648AbfJDRwr (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
         Fri, 4 Oct 2019 13:52:47 -0400
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
@@ -18,30 +18,28 @@ DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
         Content-Transfer-Encoding:Content-ID:Content-Description:Resent-Date:
         Resent-From:Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:References:
         List-Id:List-Help:List-Unsubscribe:List-Subscribe:List-Post:List-Owner:
-        List-Archive; bh=DZteKWiCg/rzRkGg/VW0yCwD7S2qYWJWyPuyGedcDZc=; b=YtY6+wThIvSZ
-        Vh4I5gFdI+VGZtDtGv4taDLVXjfuMAXgj8+BjJHVBHei20mw//JqV9sOFmz8JSPXPSL37R6wJREpd
-        G1pJ9Pg/+tlatuWnx0WVs5SfIZkbhZThmrxrk8CfkYAIJ8i1nutNYXZqtGVvb6zq58mRy/v4/lVWS
-        WugLM=;
+        List-Archive; bh=Z7nsFJXI9WnA9ER91wdkft7vbWP+YLeTSIFLA7ZXd9A=; b=lYettB7+ajDb
+        JD3KPvzeWCkXx3uhtELzTsMAQ2QMzjAF0765h3Q9saXBwlRBSbQo5pYjILePyTSAWA4krh8RN21m0
+        OenwhjTCRC4Vx10XU0zMlvtuyyl44HF/gB2bdX/3cJveAYSnehqUVUhRB2cKkIJmAmCrphtER4Vsc
+        5lyNA=;
 Received: from cpc102320-sgyl38-2-0-cust46.18-2.cable.virginm.net ([82.37.168.47] helo=ypsilon.sirena.org.uk)
         by heliosphere.sirena.org.uk with esmtpsa (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256)
         (Exim 4.92)
         (envelope-from <broonie@sirena.co.uk>)
-        id 1iGRkx-0003wJ-7e; Fri, 04 Oct 2019 17:52:43 +0000
+        id 1iGRkx-0003wW-Np; Fri, 04 Oct 2019 17:52:43 +0000
 Received: by ypsilon.sirena.org.uk (Postfix, from userid 1000)
-        id C0B6B2741EF2; Fri,  4 Oct 2019 18:52:42 +0100 (BST)
+        id 44F772741F98; Fri,  4 Oct 2019 18:52:43 +0100 (BST)
 From:   Mark Brown <broonie@kernel.org>
 To:     Kiran Gunda <kgunda@codeaurora.org>
 Cc:     Andy Gross <agross@kernel.org>, bjorn.andersson@linaro.org,
-        devicetree@vger.kernel.org, Liam Girdwood <lgirdwood@gmail.com>,
+        Liam Girdwood <lgirdwood@gmail.com>,
         linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Mark Brown <broonie@kernel.org>,
-        Mark Rutland <mark.rutland@arm.com>,
-        Rob Herring <robh+dt@kernel.org>
-Subject: Applied "regulator: dt-bindings: Add PM6150x compatibles" to the regulator tree
-In-Reply-To: <1570183734-30706-2-git-send-email-kgunda@codeaurora.org>
+        Mark Brown <broonie@kernel.org>
+Subject: Applied "regulator: qcom-rpmh: Fix PMIC5 BoB min voltage" to the regulator tree
+In-Reply-To: <1570184215-5355-1-git-send-email-kgunda@codeaurora.org>
 X-Patchwork-Hint: ignore
-Message-Id: <20191004175242.C0B6B2741EF2@ypsilon.sirena.org.uk>
-Date:   Fri,  4 Oct 2019 18:52:42 +0100 (BST)
+Message-Id: <20191004175243.44F772741F98@ypsilon.sirena.org.uk>
+Date:   Fri,  4 Oct 2019 18:52:43 +0100 (BST)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
@@ -49,11 +47,11 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 The patch
 
-   regulator: dt-bindings: Add PM6150x compatibles
+   regulator: qcom-rpmh: Fix PMIC5 BoB min voltage
 
 has been applied to the regulator tree at
 
-   https://git.kernel.org/pub/scm/linux/kernel/git/broonie/regulator.git for-5.5
+   https://git.kernel.org/pub/scm/linux/kernel/git/broonie/regulator.git for-5.4
 
 All being well this means that it will be integrated into the linux-next
 tree (usually sometime in the next 24 hours) and sent to Linus during
@@ -74,42 +72,36 @@ to this mail.
 Thanks,
 Mark
 
-From 0c06b311c053ab12a9690e17a98ff4e4a90ab3e5 Mon Sep 17 00:00:00 2001
+From 77fd66c9ff3e992718a79fa6407148935d34b50f Mon Sep 17 00:00:00 2001
 From: Kiran Gunda <kgunda@codeaurora.org>
-Date: Fri, 4 Oct 2019 15:38:53 +0530
-Subject: [PATCH] regulator: dt-bindings: Add PM6150x compatibles
+Date: Fri, 4 Oct 2019 15:46:55 +0530
+Subject: [PATCH] regulator: qcom-rpmh: Fix PMIC5 BoB min voltage
 
-Add PM6150 and PM6150L compatibles for Qualcomm SC7180 platfrom.
+Correct the PMIC5 BoB min voltage from 0.3V to 3V. Also correct
+the voltage selector accordingly.
 
 Signed-off-by: Kiran Gunda <kgunda@codeaurora.org>
-Link: https://lore.kernel.org/r/1570183734-30706-2-git-send-email-kgunda@codeaurora.org
+Link: https://lore.kernel.org/r/1570184215-5355-1-git-send-email-kgunda@codeaurora.org
 Signed-off-by: Mark Brown <broonie@kernel.org>
 ---
- .../devicetree/bindings/regulator/qcom,rpmh-regulator.txt     | 4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/regulator/qcom-rpmh-regulator.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/Documentation/devicetree/bindings/regulator/qcom,rpmh-regulator.txt b/Documentation/devicetree/bindings/regulator/qcom,rpmh-regulator.txt
-index bab9f71140b8..97c3e0b7611c 100644
---- a/Documentation/devicetree/bindings/regulator/qcom,rpmh-regulator.txt
-+++ b/Documentation/devicetree/bindings/regulator/qcom,rpmh-regulator.txt
-@@ -28,6 +28,8 @@ Supported regulator node names:
- 	PM8150L:	smps1 - smps8, ldo1 - ldo11, bob, flash, rgb
- 	PM8998:		smps1 - smps13, ldo1 - ldo28, lvs1 - lvs2
- 	PMI8998:	bob
-+	PM6150:         smps1 - smps5, ldo1 - ldo19
-+	PM6150L:        smps1 - smps8, ldo1 - ldo11, bob
- 
- ========================
- First Level Nodes - PMIC
-@@ -43,6 +45,8 @@ First Level Nodes - PMIC
- 		    "qcom,pm8150l-rpmh-regulators"
- 		    "qcom,pm8998-rpmh-regulators"
- 		    "qcom,pmi8998-rpmh-regulators"
-+		    "qcom,pm6150-rpmh-regulators"
-+		    "qcom,pm6150l-rpmh-regulators"
- 
- - qcom,pmic-id
- 	Usage:      required
+diff --git a/drivers/regulator/qcom-rpmh-regulator.c b/drivers/regulator/qcom-rpmh-regulator.c
+index db6c085da65e..0246b6f99fb5 100644
+--- a/drivers/regulator/qcom-rpmh-regulator.c
++++ b/drivers/regulator/qcom-rpmh-regulator.c
+@@ -735,8 +735,8 @@ static const struct rpmh_vreg_hw_data pmic5_hfsmps515 = {
+ static const struct rpmh_vreg_hw_data pmic5_bob = {
+ 	.regulator_type = VRM,
+ 	.ops = &rpmh_regulator_vrm_bypass_ops,
+-	.voltage_range = REGULATOR_LINEAR_RANGE(300000, 0, 135, 32000),
+-	.n_voltages = 136,
++	.voltage_range = REGULATOR_LINEAR_RANGE(3000000, 0, 31, 32000),
++	.n_voltages = 32,
+ 	.pmic_mode_map = pmic_mode_map_pmic5_bob,
+ 	.of_map_mode = rpmh_regulator_pmic4_bob_of_map_mode,
+ };
 -- 
 2.20.1
 
