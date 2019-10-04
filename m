@@ -2,122 +2,177 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id A4F2ECC1DE
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  4 Oct 2019 19:39:58 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 3C8B3CC21E
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  4 Oct 2019 19:53:59 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2387790AbfJDRjm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 4 Oct 2019 13:39:42 -0400
-Received: from smtp.codeaurora.org ([198.145.29.96]:60824 "EHLO
-        smtp.codeaurora.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2387428AbfJDRjm (ORCPT
+        id S2388727AbfJDRwr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 4 Oct 2019 13:52:47 -0400
+Received: from heliosphere.sirena.org.uk ([172.104.155.198]:50924 "EHLO
+        heliosphere.sirena.org.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2388197AbfJDRwr (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 4 Oct 2019 13:39:42 -0400
-Received: by smtp.codeaurora.org (Postfix, from userid 1000)
-        id 342A86081E; Fri,  4 Oct 2019 17:39:41 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
-        s=default; t=1570210781;
-        bh=Xy3fQzgklWWmrTL56KOs57tZvRR4HJiCwiXK2LW/+2U=;
-        h=Subject:To:Cc:References:From:Date:In-Reply-To:From;
-        b=GRiT1kNtfbftNap7rnqSoOhcBvBJvKr7cMBwB7AFi8SRsPiaB6deP5LDpezqpQB9i
-         FBenvrQ62ecA0vh5D+Axpcwh3xwiQ7+qo/VJb28dqSA0LgnPOu/rzmAIj/OZTAE8G4
-         YvUxsHs1CNNAecUcr3KalDF9oCiNImgBohfMsMCk=
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        pdx-caf-mail.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.7 required=2.0 tests=ALL_TRUSTED,BAYES_00,
-        DKIM_INVALID,DKIM_SIGNED,SPF_NONE autolearn=no autolearn_force=no
-        version=3.4.0
-Received: from [10.79.165.229] (blr-bdr-fw-01_globalnat_allzones-outside.qualcomm.com [103.229.18.19])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: tdas@smtp.codeaurora.org)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 6DD9E6016D;
-        Fri,  4 Oct 2019 17:39:34 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
-        s=default; t=1570210780;
-        bh=Xy3fQzgklWWmrTL56KOs57tZvRR4HJiCwiXK2LW/+2U=;
-        h=Subject:To:Cc:References:From:Date:In-Reply-To:From;
-        b=GkeyLHMcqKS10Cha3XKBd3VfPjuyAA9vxaCy5r2w0HAuxTM4WOJ9VlHTQ9tiVOnG6
-         IZFf11s10EMq5BMykHNoFBXR67hSc9YFTFEzqsFFpMXXQx+dkj7a1L9xnsavUjfbZN
-         uv0IylCjnT0vfx5PHqVuu0vGzmH7VQWTL99uvbpg=
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 6DD9E6016D
-Authentication-Results: pdx-caf-mail.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: pdx-caf-mail.web.codeaurora.org; spf=none smtp.mailfrom=tdas@codeaurora.org
-Subject: Re: [PATCH v3 3/3] clk: qcom: Add Global Clock controller (GCC)
- driver for SC7180
-To:     Stephen Boyd <sboyd@kernel.org>,
-        Michael Turquette <mturquette@baylibre.com>, robh+dt@kernel.org
-Cc:     David Brown <david.brown@linaro.org>,
-        Rajendra Nayak <rnayak@codeaurora.org>,
-        linux-arm-msm@vger.kernel.org, linux-soc@vger.kernel.org,
-        linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org,
-        devicetree@vger.kernel.org
-References: <20190918095018.17979-1-tdas@codeaurora.org>
- <20190918095018.17979-4-tdas@codeaurora.org>
- <20190918213946.DC03521924@mail.kernel.org>
- <a3cd82c9-8bfa-f4a3-ab1f-2e397fbd9d16@codeaurora.org>
- <20190924231223.9012C207FD@mail.kernel.org>
- <347780b9-c66b-01c4-b547-b03de2cf3078@codeaurora.org>
- <20190925130346.42E0820640@mail.kernel.org>
- <35f8b699-6ff7-9104-5e3d-ef4ee8635832@codeaurora.org>
- <20191001143825.CD3212054F@mail.kernel.org>
- <7ac5f6bf-33c5-580e-bd40-e82f3052d460@codeaurora.org>
- <20191003160130.5A19B222D0@mail.kernel.org>
-From:   Taniya Das <tdas@codeaurora.org>
-Message-ID: <81a2fa46-a7e6-66a2-9649-009f22813c81@codeaurora.org>
-Date:   Fri, 4 Oct 2019 23:09:31 +0530
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
- Thunderbird/60.9.0
-MIME-Version: 1.0
-In-Reply-To: <20191003160130.5A19B222D0@mail.kernel.org>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+        Fri, 4 Oct 2019 13:52:47 -0400
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+        d=sirena.org.uk; s=20170815-heliosphere; h=Date:Message-Id:In-Reply-To:
+        Subject:Cc:To:From:Sender:Reply-To:MIME-Version:Content-Type:
+        Content-Transfer-Encoding:Content-ID:Content-Description:Resent-Date:
+        Resent-From:Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:References:
+        List-Id:List-Help:List-Unsubscribe:List-Subscribe:List-Post:List-Owner:
+        List-Archive; bh=sMkHH0pSI2MS68VocQhEDZJx0GzenhkJgmdqKKsYmK4=; b=WVjzwc/oa81x
+        zzmtESpbNy+upbrHA/owAtwq/OsaAWGB/T7X76VR4Y0LAX1yCIpcLzPAJ3U4gQbmVHCJggh3UvwtU
+        W+6mtE7spWEK47np5unguxMkowlQ7AXQDXOj9e/G8KsqP1n5f5osKAUF0e2JZtApxlFc40aDWX6nx
+        fMiS4=;
+Received: from cpc102320-sgyl38-2-0-cust46.18-2.cable.virginm.net ([82.37.168.47] helo=ypsilon.sirena.org.uk)
+        by heliosphere.sirena.org.uk with esmtpsa (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256)
+        (Exim 4.92)
+        (envelope-from <broonie@sirena.co.uk>)
+        id 1iGRkw-0003wG-Tm; Fri, 04 Oct 2019 17:52:42 +0000
+Received: by ypsilon.sirena.org.uk (Postfix, from userid 1000)
+        id 690D52741EF0; Fri,  4 Oct 2019 18:52:42 +0100 (BST)
+From:   Mark Brown <broonie@kernel.org>
+To:     Kiran Gunda <kgunda@codeaurora.org>
+Cc:     Andy Gross <agross@kernel.org>, bjorn.andersson@linaro.org,
+        Liam Girdwood <lgirdwood@gmail.com>,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Mark Brown <broonie@kernel.org>
+Subject: Applied "regulator: qcom-rpmh: add PM6150/PM6150L regulator support" to the regulator tree
+In-Reply-To: <1570183734-30706-3-git-send-email-kgunda@codeaurora.org>
+X-Patchwork-Hint: ignore
+Message-Id: <20191004175242.690D52741EF0@ypsilon.sirena.org.uk>
+Date:   Fri,  4 Oct 2019 18:52:42 +0100 (BST)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Stephen,
+The patch
 
-On 10/3/2019 9:31 PM, Stephen Boyd wrote:
-> Quoting Taniya Das (2019-10-03 03:31:15)
->> Hi Stephen,
->>
->> On 10/1/2019 8:08 PM, Stephen Boyd wrote:
->>>
->>> Why do you want to keep them critical and registered? I'm suggesting
->>> that any clk that is marked critical and doesn't have a parent should
->>> instead become a register write in probe to turn the clk on.
->>>
->> Sure, let me do a one-time enable from probe for the clocks which
->> doesn't have a parent.
->> But I would now have to educate the clients of these clocks to remove
->> using them.
->>
-> 
-> If anyone is using these clks we can return NULL from the provider for
-> the specifier so that we indicate there isn't support for them in the
-> kernel. At least I hope that code path still works given all the recent
-> changes to clk_get().
-> 
+   regulator: qcom-rpmh: add PM6150/PM6150L regulator support
 
-Could you please confirm if you are referring to update the below?
+has been applied to the regulator tree at
 
---- a/drivers/clk/qcom/common.c
-+++ b/drivers/clk/qcom/common.c
-@@ -218,7 +218,7 @@ static struct clk_hw *qcom_cc_clk_hw_get(struct 
-of_phandle_args *clkspec,
-                 return ERR_PTR(-EINVAL);
-         }
+   https://git.kernel.org/pub/scm/linux/kernel/git/broonie/regulator.git for-5.5
 
--       return cc->rclks[idx] ? &cc->rclks[idx]->hw : ERR_PTR(-ENOENT);
-+       return cc->rclks[idx] ? &cc->rclks[idx]->hw : NULL;
-  }
+All being well this means that it will be integrated into the linux-next
+tree (usually sometime in the next 24 hours) and sent to Linus during
+the next merge window (or sooner if it is a bug fix), however if
+problems are discovered then the patch may be dropped or reverted.  
 
+You may get further e-mails resulting from automated or manual testing
+and review of the tree, please engage with people reporting problems and
+send followup patches addressing any issues that are reported if needed.
 
+If any updates are required or you are submitting further changes they
+should be sent as incremental updates against current git, existing
+patches will not be replaced.
+
+Please add any relevant lists and maintainers to the CCs when replying
+to this mail.
+
+Thanks,
+Mark
+
+From 75bb518e9bbf666a851cd43a9aba8e085b5008d8 Mon Sep 17 00:00:00 2001
+From: Kiran Gunda <kgunda@codeaurora.org>
+Date: Fri, 4 Oct 2019 15:38:54 +0530
+Subject: [PATCH] regulator: qcom-rpmh: add PM6150/PM6150L regulator support
+
+Add support for PM6150/PM6150L regulators. This ensures
+that consumers are able to modify the physical state of PMIC
+regulators.
+
+Signed-off-by: Kiran Gunda <kgunda@codeaurora.org>
+Link: https://lore.kernel.org/r/1570183734-30706-3-git-send-email-kgunda@codeaurora.org
+Signed-off-by: Mark Brown <broonie@kernel.org>
+---
+ drivers/regulator/qcom-rpmh-regulator.c | 62 ++++++++++++++++++++++++-
+ 1 file changed, 61 insertions(+), 1 deletion(-)
+
+diff --git a/drivers/regulator/qcom-rpmh-regulator.c b/drivers/regulator/qcom-rpmh-regulator.c
+index db6c085da65e..8ae7ddf93b52 100644
+--- a/drivers/regulator/qcom-rpmh-regulator.c
++++ b/drivers/regulator/qcom-rpmh-regulator.c
+@@ -1,5 +1,5 @@
+ // SPDX-License-Identifier: GPL-2.0
+-// Copyright (c) 2018, The Linux Foundation. All rights reserved.
++// Copyright (c) 2018-2019, The Linux Foundation. All rights reserved.
+ 
+ #define pr_fmt(fmt) "%s: " fmt, __func__
+ 
+@@ -878,6 +878,58 @@ static const struct rpmh_vreg_init_data pm8009_vreg_data[] = {
+ 	{},
+ };
+ 
++static const struct rpmh_vreg_init_data pm6150_vreg_data[] = {
++	RPMH_VREG("smps1",  "smp%s1",  &pmic5_ftsmps510, "vdd-s1"),
++	RPMH_VREG("smps2",  "smp%s2",  &pmic5_ftsmps510, "vdd-s2"),
++	RPMH_VREG("smps3",  "smp%s3",  &pmic5_ftsmps510, "vdd-s3"),
++	RPMH_VREG("smps4",  "smp%s4",  &pmic5_hfsmps510, "vdd-s4"),
++	RPMH_VREG("smps5",  "smp%s5",  &pmic5_hfsmps510, "vdd-s5"),
++	RPMH_VREG("ldo1",   "ldo%s1",  &pmic5_nldo,      "vdd-l1"),
++	RPMH_VREG("ldo2",   "ldo%s2",  &pmic5_nldo,      "vdd-l2-l3"),
++	RPMH_VREG("ldo3",   "ldo%s3",  &pmic5_nldo,      "vdd-l2-l3"),
++	RPMH_VREG("ldo4",   "ldo%s4",  &pmic5_nldo,      "vdd-l4-l7-l8"),
++	RPMH_VREG("ldo5",   "ldo%s5",  &pmic5_pldo,   "vdd-l5-l16-l17-l18-l19"),
++	RPMH_VREG("ldo6",   "ldo%s6",  &pmic5_nldo,      "vdd-l6"),
++	RPMH_VREG("ldo7",   "ldo%s7",  &pmic5_nldo,      "vdd-l4-l7-l8"),
++	RPMH_VREG("ldo8",   "ldo%s8",  &pmic5_nldo,      "vdd-l4-l7-l8"),
++	RPMH_VREG("ldo9",   "ldo%s9",  &pmic5_nldo,      "vdd-l9"),
++	RPMH_VREG("ldo10",  "ldo%s10", &pmic5_pldo_lv,   "vdd-l10-l14-l15"),
++	RPMH_VREG("ldo11",  "ldo%s11", &pmic5_pldo_lv,   "vdd-l11-l12-l13"),
++	RPMH_VREG("ldo12",  "ldo%s12", &pmic5_pldo_lv,   "vdd-l11-l12-l13"),
++	RPMH_VREG("ldo13",  "ldo%s13", &pmic5_pldo_lv,   "vdd-l11-l12-l13"),
++	RPMH_VREG("ldo14",  "ldo%s14", &pmic5_pldo_lv,   "vdd-l10-l14-l15"),
++	RPMH_VREG("ldo15",  "ldo%s15", &pmic5_pldo_lv,   "vdd-l10-l14-l15"),
++	RPMH_VREG("ldo16",  "ldo%s16", &pmic5_pldo,   "vdd-l5-l16-l17-l18-l19"),
++	RPMH_VREG("ldo17",  "ldo%s17", &pmic5_pldo,   "vdd-l5-l16-l17-l18-l19"),
++	RPMH_VREG("ldo18",  "ldo%s18", &pmic5_pldo,   "vdd-l5-l16-l17-l18-l19"),
++	RPMH_VREG("ldo19",  "ldo%s19", &pmic5_pldo,   "vdd-l5-l16-l17-l18-l19"),
++	{},
++};
++
++static const struct rpmh_vreg_init_data pm6150l_vreg_data[] = {
++	RPMH_VREG("smps1",  "smp%s1",  &pmic5_ftsmps510, "vdd-s1"),
++	RPMH_VREG("smps2",  "smp%s2",  &pmic5_ftsmps510, "vdd-s2"),
++	RPMH_VREG("smps3",  "smp%s3",  &pmic5_ftsmps510, "vdd-s3"),
++	RPMH_VREG("smps4",  "smp%s4",  &pmic5_ftsmps510, "vdd-s4"),
++	RPMH_VREG("smps5",  "smp%s5",  &pmic5_ftsmps510, "vdd-s5"),
++	RPMH_VREG("smps6",  "smp%s6",  &pmic5_ftsmps510, "vdd-s6"),
++	RPMH_VREG("smps7",  "smp%s7",  &pmic5_ftsmps510, "vdd-s7"),
++	RPMH_VREG("smps8",  "smp%s8",  &pmic5_hfsmps510, "vdd-s8"),
++	RPMH_VREG("ldo1",   "ldo%s1",  &pmic5_pldo_lv,   "vdd-l1-l8"),
++	RPMH_VREG("ldo2",   "ldo%s2",  &pmic5_nldo,      "vdd-l2-l3"),
++	RPMH_VREG("ldo3",   "ldo%s3",  &pmic5_nldo,      "vdd-l2-l3"),
++	RPMH_VREG("ldo4",   "ldo%s4",  &pmic5_pldo,      "vdd-l4-l5-l6"),
++	RPMH_VREG("ldo5",   "ldo%s5",  &pmic5_pldo,      "vdd-l4-l5-l6"),
++	RPMH_VREG("ldo6",   "ldo%s6",  &pmic5_pldo,      "vdd-l4-l5-l6"),
++	RPMH_VREG("ldo7",   "ldo%s7",  &pmic5_pldo,      "vdd-l7-l11"),
++	RPMH_VREG("ldo8",   "ldo%s8",  &pmic5_pldo,      "vdd-l1-l8"),
++	RPMH_VREG("ldo9",   "ldo%s9",  &pmic5_pldo,      "vdd-l9-l10"),
++	RPMH_VREG("ldo10",  "ldo%s10", &pmic5_pldo,      "vdd-l9-l10"),
++	RPMH_VREG("ldo11",  "ldo%s11", &pmic5_pldo,      "vdd-l7-l11"),
++	RPMH_VREG("bob",    "bob%s1",  &pmic5_bob,       "vdd-bob"),
++	{},
++};
++
+ static int rpmh_regulator_probe(struct platform_device *pdev)
+ {
+ 	struct device *dev = &pdev->dev;
+@@ -940,6 +992,14 @@ static const struct of_device_id rpmh_regulator_match_table[] = {
+ 		.compatible = "qcom,pmi8998-rpmh-regulators",
+ 		.data = pmi8998_vreg_data,
+ 	},
++	{
++		.compatible = "qcom,pm6150-rpmh-regulators",
++		.data = pm6150_vreg_data,
++	},
++	{
++		.compatible = "qcom,pm6150l-rpmh-regulators",
++		.data = pm6150l_vreg_data,
++	},
+ 	{}
+ };
+ MODULE_DEVICE_TABLE(of, rpmh_regulator_match_table);
 -- 
-QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
-of Code Aurora Forum, hosted by The Linux Foundation.
+2.20.1
 
---
