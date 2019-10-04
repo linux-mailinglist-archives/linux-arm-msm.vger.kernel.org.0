@@ -2,129 +2,96 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id EB934CB398
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  4 Oct 2019 05:54:14 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 1E745CB437
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  4 Oct 2019 07:38:21 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2387642AbfJDDyO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 3 Oct 2019 23:54:14 -0400
-Received: from mail-vk1-f196.google.com ([209.85.221.196]:40864 "EHLO
-        mail-vk1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2387501AbfJDDyN (ORCPT
+        id S1730420AbfJDFiU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 4 Oct 2019 01:38:20 -0400
+Received: from mail-pg1-f193.google.com ([209.85.215.193]:45074 "EHLO
+        mail-pg1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1730407AbfJDFiU (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 3 Oct 2019 23:54:13 -0400
-Received: by mail-vk1-f196.google.com with SMTP id d126so1161060vkf.7
-        for <linux-arm-msm@vger.kernel.org>; Thu, 03 Oct 2019 20:54:13 -0700 (PDT)
+        Fri, 4 Oct 2019 01:38:20 -0400
+Received: by mail-pg1-f193.google.com with SMTP id q7so3075972pgi.12
+        for <linux-arm-msm@vger.kernel.org>; Thu, 03 Oct 2019 22:38:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=verdurent-com.20150623.gappssmtp.com; s=20150623;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=0gPgCpIAYJa8p/vY1UkyEnZoeMekLpn4eiArUKNY2gk=;
-        b=E/xgeOAsMphC/AV8gSRd0LsfY8+LvGdoxkgrJBnEM8B+UmyPeaF3NbcHIIpeBGc6/P
-         Tljzvp0RNW+wd31RlAuYdFOApTPiUJHnU7Ffu7OdTcHWo4XL9OQfXnRdwTK1/3LuJjEV
-         cubjToPvH6J6Gy4zKZ+BH2srchI9CoJYlHGqTtUvl+aARv1CWWsvmJ76Kqxchg59IdbC
-         6Hr+3W5VUZ8rQQJsOmE7lxEQ2eLbx1VPsYHkLhebqd76BfTZt54hCMOwIE+niV2Z+E8K
-         FmYF36qxu+7MV5unn7ljRpznvuiUPTCNF0pJyP7t00I1eDvmXGmT9p8Anz438uxoZSV2
-         HkSQ==
+        d=chromium.org; s=google;
+        h=message-id:mime-version:content-transfer-encoding:in-reply-to
+         :references:from:to:cc:subject:user-agent:date;
+        bh=SQfRKBgFCS7Kr+5S+BnplfeUt3NczTKM6BoWv0zOCcI=;
+        b=O9PJIu0GICr7g7nea8KAKuJrmqEE17mZUBrdxBF8OJO2BKa3wTGDLRui9pr8RcSIks
+         HE1Hh5HPbPxvISJcEvGh6WrG9I0RYsNBa1ExeclxjzokVpuzzkIoAjOaQ1zimnuI61eh
+         3SmGZvEeeTeINWh7Wb52qDupyKkBWLdnxgutE=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=0gPgCpIAYJa8p/vY1UkyEnZoeMekLpn4eiArUKNY2gk=;
-        b=phyS/XnL7MnP5Dc8xj1Bgz3Wc4h39MWP+xslgpffWnYe6dGHxJd71gjIBZjEdsgLAA
-         PWdcuRz75QI1WeRD0OIloIO17jVgAWSh+xAUjD3/khBbJ2xgIJUhLGtJKPU+aGz345rF
-         NP3F77wC6X71HmmF+ickwHLpxn4oc/0ikmJtn6dH2LbaT9nCV2zmEEGGHi4C9bRVB2Gm
-         SHbhwan8SnQy9E6m3cVRee1EgSJft4OOvhEV9VQSMPA1HVByNtAyIgKPHrgcWRPBNpoh
-         cnd1Ji6S25N7yi1Y57TAh1pOMg8SmqLnaHA/6ooEm6kEmQ5NopONQ69Kwic75Jj9chGV
-         Cdxg==
-X-Gm-Message-State: APjAAAVF08z2zgt56WxAeiZLxG4EJqdv1SED3jVZXifaJEwTdAY4IswD
-        LtJSjlJGeEtZBY3Jmsk8TDQDZRshR0a2iL1DjHwAUA==
-X-Google-Smtp-Source: APXvYqwPwuXqe3t7ih6EMNyN0uj3L4Kc/6XM37p8JU0DMEQcWc0VWxTEk5XW5aWnyxQ3ZhnPR6xPLaI1/x1x32gkMuQ=
-X-Received: by 2002:a1f:bd94:: with SMTP id n142mr7016504vkf.86.1570161252601;
- Thu, 03 Oct 2019 20:54:12 -0700 (PDT)
+        h=x-gm-message-state:message-id:mime-version
+         :content-transfer-encoding:in-reply-to:references:from:to:cc:subject
+         :user-agent:date;
+        bh=SQfRKBgFCS7Kr+5S+BnplfeUt3NczTKM6BoWv0zOCcI=;
+        b=OgU/dYP0enNhks/N9bTQRFrzcUU7ZD3aui3+S5ysjdt3EdpKc+NpZD193OyxqgX2Rm
+         jy1fCpqhE7zy1+QV2RohX+kLD1VRiJ3A+9tS6X2qPnHIzzKXGTpU6dskNPK+ZR9/b5+t
+         weMQgCuucQkU7CdMYt2cfa6Q/pGMw7ShVqO+2td+9MJW1bYUSVsSFCN9ZCJD5rt2si0k
+         nL+0rg9EkF3g/JtV7oQ30SGuTXtk6cs92ySASyNDIgXRmljs4P7z348JFv8n7Cj0kIrQ
+         uHgPYlnZRt8PF6nOv7exfJflZtIcnyHcSFfYr8iOt2eYaSSanleLVp4NC187VdLtrs6e
+         UT5A==
+X-Gm-Message-State: APjAAAWckBBYP3yYEU89XWcf035mSU8+cjyx2TrQhtBiX8j1It2kAqbL
+        nLxEhBKOnq3eHALJqNQgASdS3g==
+X-Google-Smtp-Source: APXvYqy6BwElSHd5ZVhMCLTrRU1VdGZdH6l+QcctDAUDE3FsXUNCPW3wO1iPMNQXVDf1sd8qpCPHkg==
+X-Received: by 2002:aa7:81cb:: with SMTP id c11mr15100061pfn.251.1570167499217;
+        Thu, 03 Oct 2019 22:38:19 -0700 (PDT)
+Received: from chromium.org ([2620:15c:202:1:fa53:7765:582b:82b9])
+        by smtp.gmail.com with ESMTPSA id g6sm4250083pgk.64.2019.10.03.22.38.17
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 03 Oct 2019 22:38:18 -0700 (PDT)
+Message-ID: <5d96daca.1c69fb81.fe5e4.e623@mx.google.com>
+Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
-References: <20191002190756.26895-1-jeffrey.l.hugo@gmail.com>
-In-Reply-To: <20191002190756.26895-1-jeffrey.l.hugo@gmail.com>
-From:   Amit Kucheria <amit.kucheria@verdurent.com>
-Date:   Fri, 4 Oct 2019 09:24:01 +0530
-Message-ID: <CAHLCerOTycP9++w_VPOqVkd7QGY8Jfun4fd0mZqinTPE46+T7w@mail.gmail.com>
-Subject: Re: [PATCH] arm64: dts: qcom: msm8998-clamshell: Remove retention
- idle state
-To:     Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
-Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        LKML <linux-kernel@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <1570146710-13503-1-git-send-email-mnalajal@codeaurora.org>
+References: <1570146710-13503-1-git-send-email-mnalajal@codeaurora.org>
+From:   Stephen Boyd <swboyd@chromium.org>
+To:     Murali Nalajala <mnalajal@codeaurora.org>,
+        gregkh@linuxfoundation.org, rafael@kernel.org
+Cc:     mnalajal@codeaurora.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, bjorn.andersson@linaro.org
+Subject: Re: [PATCH v1] base: soc: Handle custom soc information sysfs entries
+User-Agent: alot/0.8.1
+Date:   Thu, 03 Oct 2019 22:38:17 -0700
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Oct 3, 2019 at 12:44 AM Jeffrey Hugo <jeffrey.l.hugo@gmail.com> wrote:
->
-> The retention idle state does not appear to be supported by the firmware
-> present on the msm8998 laptops since the state is advertised as disabled
-> in ACPI, and attempting to enable the state in DT is observed to result
-> in boot hangs.  Therefore, remove the state from use to address the
-> observed issues.
->
-> Fixes: 2c6d2d3a580a (arm64: dts: qcom: Add Lenovo Miix 630)
-> Signed-off-by: Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
+Quoting Murali Nalajala (2019-10-03 16:51:50)
+> @@ -151,14 +156,16 @@ struct soc_device *soc_device_register(struct soc_d=
+evice_attribute *soc_dev_attr
+> =20
+>         ret =3D device_register(&soc_dev->dev);
+>         if (ret)
+> -               goto out3;
+> +               goto out4;
+> =20
+>         return soc_dev;
+> =20
+> -out3:
+> +out4:
+>         ida_simple_remove(&soc_ida, soc_dev->soc_dev_num);
+>         put_device(&soc_dev->dev);
+>         soc_dev =3D NULL;
+> +out3:
+> +       kfree(soc_attr_groups);
 
-Reviewed-by: Amit Kucheria <amit.kucheria@linaro.org>
+This code is tricky. put_device(&soc_dev->dev) will call soc_release()
+so we set soc_dev to NULL before calling kfree() on the error path. This
+way we don't doubly free a pointer that the release function will take
+care of. I wonder if the release function could free the ida as well,
+and then we could just make the device_register() failure path call
+put_device() and return ERR_PTR(ret) directly. Then the error path is
+simpler because we can avoid changing two pointers to NULL to avoid the
+double free twice. Or just inline the ida remove and put_device() call
+in the if and then goto out1 to consolidate the error pointer
+conversion.
 
-> ---
->  .../boot/dts/qcom/msm8998-clamshell.dtsi      | 37 +++++++++++++++++++
->  1 file changed, 37 insertions(+)
->
-> diff --git a/arch/arm64/boot/dts/qcom/msm8998-clamshell.dtsi b/arch/arm64/boot/dts/qcom/msm8998-clamshell.dtsi
-> index 9682d4dd7496..1bae90705746 100644
-> --- a/arch/arm64/boot/dts/qcom/msm8998-clamshell.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/msm8998-clamshell.dtsi
-> @@ -23,6 +23,43 @@
->         };
->  };
->
-> +/*
-> + * The laptop FW does not appear to support the retention state as it is
-> + * not advertised as enabled in ACPI, and enabling it in DT can cause boot
-> + * hangs.
-> + */
-> +&CPU0 {
-> +       cpu-idle-states = <&LITTLE_CPU_SLEEP_1>;
-> +};
-> +
-> +&CPU1 {
-> +       cpu-idle-states = <&LITTLE_CPU_SLEEP_1>;
-> +};
-> +
-> +&CPU2 {
-> +       cpu-idle-states = <&LITTLE_CPU_SLEEP_1>;
-> +};
-> +
-> +&CPU3 {
-> +       cpu-idle-states = <&LITTLE_CPU_SLEEP_1>;
-> +};
-> +
-> +&CPU4 {
-> +       cpu-idle-states = <&BIG_CPU_SLEEP_1>;
-> +};
-> +
-> +&CPU5 {
-> +       cpu-idle-states = <&BIG_CPU_SLEEP_1>;
-> +};
-> +
-> +&CPU6 {
-> +       cpu-idle-states = <&BIG_CPU_SLEEP_1>;
-> +};
-> +
-> +&CPU7 {
-> +       cpu-idle-states = <&BIG_CPU_SLEEP_1>;
-> +};
-> +
->  &qusb2phy {
->         status = "okay";
->
-> --
-> 2.17.1
->
+>  out2:
+>         kfree(soc_dev);
+>  out1:
