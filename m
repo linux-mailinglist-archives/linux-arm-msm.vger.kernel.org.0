@@ -2,25 +2,25 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 62B4ECB8DC
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  4 Oct 2019 13:04:21 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C4F25CB905
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  4 Oct 2019 13:20:56 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730707AbfJDLEN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 4 Oct 2019 07:04:13 -0400
-Received: from smtp.codeaurora.org ([198.145.29.96]:41634 "EHLO
+        id S1730885AbfJDLUz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 4 Oct 2019 07:20:55 -0400
+Received: from smtp.codeaurora.org ([198.145.29.96]:45492 "EHLO
         smtp.codeaurora.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725788AbfJDLEM (ORCPT
+        with ESMTP id S1729585AbfJDLUz (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 4 Oct 2019 07:04:12 -0400
+        Fri, 4 Oct 2019 07:20:55 -0400
 Received: by smtp.codeaurora.org (Postfix, from userid 1000)
-        id 5AE8561A20; Fri,  4 Oct 2019 11:04:11 +0000 (UTC)
+        id AD9756034E; Fri,  4 Oct 2019 11:20:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
-        s=default; t=1570187051;
-        bh=okwnO27NbFYjjfsCFRbJqJqJfz8rw0aIBzpv6lhT0QM=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=oXPGDijA0kx50+E9UIbDxa9MmvYTcHp/+Kbah5NuPLItMqovX/AJJ8R/fMICmRP5g
-         7yZyaAtRq3aKpxo2dR9fE7vj7L8qMppjF4YCfs+wqjAs9US4cJuottu7fDsRfofyh2
-         khM60s4RkizhskndU4q/Nzc4g6AAIyXR8TXvkP6Y=
+        s=default; t=1570188053;
+        bh=13JrP6NAsup1Fp+Re+RfVIJcKlXbS8TUEZmgMR+KpCs=;
+        h=From:To:Cc:Subject:Date:From;
+        b=gLU47tsMK/5sQwAf2jcRZzGVW0l5rd49H73OaDttdUekdzxKisaK+Vr3o/zGj1Mjj
+         /2rYSfYecyxhqadepobOlCYmpekoFBdrsix3IWL1trV9ruswT23NKjlgXRe7vd8l/+
+         fNflSgIVTlsw4JZlEwlnGeRJbWJO9CPWqideMdzE=
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
         pdx-caf-mail.web.codeaurora.org
 X-Spam-Level: 
@@ -31,262 +31,79 @@ Received: from kgunda-linux.qualcomm.com (blr-c-bdr-fw-01_globalnat_allzones-out
         (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
         (No client certificate requested)
         (Authenticated sender: kgunda@smtp.codeaurora.org)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 83F7360A37;
-        Fri,  4 Oct 2019 11:04:07 +0000 (UTC)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id A1E7D60A4E;
+        Fri,  4 Oct 2019 11:20:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
-        s=default; t=1570187050;
-        bh=okwnO27NbFYjjfsCFRbJqJqJfz8rw0aIBzpv6lhT0QM=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=E/0xfFWJfhFfy4xz+DBURbyPmCmjjYEZnFHpj8l0A3w59BfmAb/UJ8nd3TRc540UW
-         pjnSe3mMEGZJApW5xz3E/zvE+wJ/Fc33iHlFTt6yTWrfD7O5o+HiQx/Nx9caeX5aKJ
-         /e7cw8RgbV7ZicVGoNOVMCGOPaX2d/p5hjEfiSzs=
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 83F7360A37
+        s=default; t=1570188053;
+        bh=13JrP6NAsup1Fp+Re+RfVIJcKlXbS8TUEZmgMR+KpCs=;
+        h=From:To:Cc:Subject:Date:From;
+        b=gLU47tsMK/5sQwAf2jcRZzGVW0l5rd49H73OaDttdUekdzxKisaK+Vr3o/zGj1Mjj
+         /2rYSfYecyxhqadepobOlCYmpekoFBdrsix3IWL1trV9ruswT23NKjlgXRe7vd8l/+
+         fNflSgIVTlsw4JZlEwlnGeRJbWJO9CPWqideMdzE=
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org A1E7D60A4E
 Authentication-Results: pdx-caf-mail.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
 Authentication-Results: pdx-caf-mail.web.codeaurora.org; spf=none smtp.mailfrom=kgunda@codeaurora.org
 From:   Kiran Gunda <kgunda@codeaurora.org>
 To:     bjorn.andersson@linaro.org, Andy Gross <agross@kernel.org>,
+        Linus Walleij <linus.walleij@linaro.org>,
         Rob Herring <robh+dt@kernel.org>,
         Mark Rutland <mark.rutland@arm.com>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
+        linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
 Cc:     Kiran Gunda <kgunda@codeaurora.org>
-Subject: [PATCH V2 2/2] ARM: dts: qcom: sc7180-regulator: Add RPMh regulators for SC7180
-Date:   Fri,  4 Oct 2019 16:33:49 +0530
-Message-Id: <1570187029-12470-3-git-send-email-kgunda@codeaurora.org>
+Subject: [PATCH V1] dt-bindings: pinctrl: qcom-pmic-gpio: Add support for pm6150/pm6150l
+Date:   Fri,  4 Oct 2019 16:50:39 +0530
+Message-Id: <1570188039-22122-1-git-send-email-kgunda@codeaurora.org>
 X-Mailer: git-send-email 1.9.1
-In-Reply-To: <1570187029-12470-1-git-send-email-kgunda@codeaurora.org>
-References: <1570187029-12470-1-git-send-email-kgunda@codeaurora.org>
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add regulator devices for SC7180 as RPMh regulators. This ensures
-that consumers are able to modify the physical state of PMIC
-regulators.
+Add support for the PM6150 and PM6150L GPIO support to the
+Qualcomm PMIC GPIO binding.
 
 Signed-off-by: Kiran Gunda <kgunda@codeaurora.org>
 ---
- arch/arm64/boot/dts/qcom/sc7180-regulator.dtsi | 210 +++++++++++++++++++++++++
- 1 file changed, 210 insertions(+)
- create mode 100644 arch/arm64/boot/dts/qcom/sc7180-regulator.dtsi
+ Documentation/devicetree/bindings/pinctrl/qcom,pmic-gpio.txt | 4 ++++
+ drivers/pinctrl/qcom/pinctrl-spmi-gpio.c                     | 2 ++
+ 2 files changed, 6 insertions(+)
 
-diff --git a/arch/arm64/boot/dts/qcom/sc7180-regulator.dtsi b/arch/arm64/boot/dts/qcom/sc7180-regulator.dtsi
-new file mode 100644
-index 0000000..50a675b
---- /dev/null
-+++ b/arch/arm64/boot/dts/qcom/sc7180-regulator.dtsi
-@@ -0,0 +1,210 @@
-+// SPDX-License-Identifier: GPL-2.0
-+// Copyright (c) 2019, The Linux Foundation. All rights reserved.
-+
-+#include <dt-bindings/regulator/qcom,rpmh-regulator.h>
-+
-+&apps_rsc {
-+	pm6150-rpmh-regulators {
-+		compatible = "qcom,pm6150-rpmh-regulators";
-+		qcom,pmic-id = "a";
-+
-+		vreg_s1a_1p1: smps1 {
-+			regulator-min-microvolt = <1128000>;
-+			regulator-max-microvolt = <1128000>;
-+		};
-+
-+		vreg_s4a_1p0: smps4 {
-+			regulator-min-microvolt = <824000>;
-+			regulator-max-microvolt = <1120000>;
-+		};
-+
-+		vreg_s5a_2p0: smps5 {
-+			regulator-min-microvolt = <1744000>;
-+			regulator-max-microvolt = <2040000>;
-+		};
-+
-+		vreg_l1a_1p2: ldo1 {
-+			regulator-min-microvolt = <1178000>;
-+			regulator-max-microvolt = <1256000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_LPM>;
-+		};
-+
-+		vreg_l2a_1p0: ldo2 {
-+			regulator-min-microvolt = <944000>;
-+			regulator-max-microvolt = <1056000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_LPM>;
-+		};
-+
-+		vreg_l3a_1p0: ldo3 {
-+			regulator-min-microvolt = <968000>;
-+			regulator-max-microvolt = <1064000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_LPM>;
-+		};
-+
-+		vreg_l4a_0p8: ldo4 {
-+			regulator-min-microvolt = <824000>;
-+			regulator-max-microvolt = <928000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_LPM>;
-+		};
-+
-+		vreg_l5a_2p7: ldo5 {
-+			regulator-min-microvolt = <2496000>;
-+			regulator-max-microvolt = <3000000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_LPM>;
-+		};
-+
-+		vreg_l6a_0p6: ldo6 {
-+			regulator-min-microvolt = <568000>;
-+			regulator-max-microvolt = <648000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_LPM>;
-+		};
-+
-+		vreg_l9a_0p6: ldo9 {
-+			regulator-min-microvolt = <488000>;
-+			regulator-max-microvolt = <800000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_LPM>;
-+		};
-+
-+		vreg_l10a_1p8: ldo10 {
-+			regulator-min-microvolt = <1800000>;
-+			regulator-max-microvolt = <1832000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_LPM>;
-+		};
-+
-+		vreg_l11a_1p8: ldo11 {
-+			regulator-min-microvolt = <1696000>;
-+			regulator-max-microvolt = <1904000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_LPM>;
-+		};
-+
-+		vreg_l12a_1p8: ldo12 {
-+			regulator-min-microvolt = <1696000>;
-+			regulator-max-microvolt = <1952000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_LPM>;
-+		};
-+
-+		vreg_l13a_1p8: ldo13 {
-+			regulator-min-microvolt = <1696000>;
-+			regulator-max-microvolt = <1904000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_LPM>;
-+		};
-+
-+		vreg_l14a_1p8: ldo14 {
-+			regulator-min-microvolt = <1728000>;
-+			regulator-max-microvolt = <1832000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_LPM>;
-+		};
-+
-+		vreg_l15a_1p8: ldo15 {
-+			regulator-min-microvolt = <1696000>;
-+			regulator-max-microvolt = <1904000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_LPM>;
-+		};
-+
-+		vreg_l16a_2p7: ldo16 {
-+			regulator-min-microvolt = <2496000>;
-+			regulator-max-microvolt = <3304000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_LPM>;
-+		};
-+
-+		vreg_l17a_3p0: ldo17 {
-+			regulator-min-microvolt = <2920000>;
-+			regulator-max-microvolt = <3232000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_LPM>;
-+		};
-+
-+		vreg_l18a_2p8: ldo18 {
-+			regulator-min-microvolt = <2496000>;
-+			regulator-max-microvolt = <3304000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_LPM>;
-+		};
-+
-+		vreg_l19a_2p9: ldo19 {
-+			regulator-min-microvolt = <2696000>;
-+			regulator-max-microvolt = <3304000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_LPM>;
-+		};
-+	};
-+
-+	pm6150l-rpmh-regulators {
-+		compatible = "qcom,pm6150l-rpmh-regulators";
-+		qcom,pmic-id = "c";
-+
-+		vreg_s8c_1p3: smps8 {
-+			regulator-min-microvolt = <1120000>;
-+			regulator-max-microvolt = <1408000>;
-+		};
-+
-+		vreg_l1c_1p8: ldo1 {
-+			regulator-min-microvolt = <1616000>;
-+			regulator-max-microvolt = <1984000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_LPM>;
-+		};
-+
-+		vreg_l2c_1p3: ldo2 {
-+			regulator-min-microvolt = <1168000>;
-+			regulator-max-microvolt = <1304000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_LPM>;
-+		};
-+
-+		vreg_l3c_1p2: ldo3 {
-+			regulator-min-microvolt = <1144000>;
-+			regulator-max-microvolt = <1304000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_LPM>;
-+		};
-+
-+		vreg_l4c_1p8: ldo4 {
-+			regulator-min-microvolt = <1648000>;
-+			regulator-max-microvolt = <3304000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_LPM>;
-+		};
-+
-+		vreg_l5c_1p8: ldo5 {
-+			regulator-min-microvolt = <1648000>;
-+			regulator-max-microvolt = <3304000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_LPM>;
-+		};
-+
-+		vreg_l6c_2p9: ldo6 {
-+			regulator-min-microvolt = <2696000>;
-+			regulator-max-microvolt = <3304000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_LPM>;
-+		};
-+
-+		vreg_l7c_3p0: ldo7 {
-+			regulator-min-microvolt = <3000000>;
-+			regulator-max-microvolt = <3312000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_LPM>;
-+		};
-+
-+		vreg_l8c_1p8: ldo8 {
-+			regulator-min-microvolt = <1800000>;
-+			regulator-max-microvolt = <1904000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_LPM>;
-+		};
-+
-+		vreg_l9c_2p9: ldo9 {
-+			regulator-min-microvolt = <2952000>;
-+			regulator-max-microvolt = <3304000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_LPM>;
-+		};
-+
-+		vreg_l10c_3p3: ldo10 {
-+			regulator-min-microvolt = <3000000>;
-+			regulator-max-microvolt = <3400000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_LPM>;
-+		};
-+
-+		vreg_l11c_3p3: ldo11 {
-+			regulator-min-microvolt = <3000000>;
-+			regulator-max-microvolt = <3400000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_LPM>;
-+		};
-+
-+		vreg_bob: bob {
-+			regulator-min-microvolt = <3008000>;
-+			regulator-max-microvolt = <3960000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_AUTO>;
-+		};
-+	};
-+};
+diff --git a/Documentation/devicetree/bindings/pinctrl/qcom,pmic-gpio.txt b/Documentation/devicetree/bindings/pinctrl/qcom,pmic-gpio.txt
+index c32bf32..2f48cca 100644
+--- a/Documentation/devicetree/bindings/pinctrl/qcom,pmic-gpio.txt
++++ b/Documentation/devicetree/bindings/pinctrl/qcom,pmic-gpio.txt
+@@ -23,6 +23,8 @@ PMIC's from Qualcomm.
+ 		    "qcom,pms405-gpio"
+ 		    "qcom,pm8150-gpio"
+ 		    "qcom,pm8150b-gpio"
++		    "qcom,pm6150-gpio"
++		    "qcom,pm6150l-gpio"
+ 
+ 		    And must contain either "qcom,spmi-gpio" or "qcom,ssbi-gpio"
+ 		    if the device is on an spmi bus or an ssbi bus respectively
+@@ -100,6 +102,8 @@ to specify in a pin configuration subnode:
+ 					     and gpio8)
+ 		    gpio1-gpio12 for pm8150b (holes on gpio3, gpio4, gpio7)
+ 		    gpio1-gpio12 for pm8150l (hole on gpio7)
++		    gpio1-gpio10 for pm6150
++		    gpio1-gpio12 for pm6150l
+ 
+ - function:
+ 	Usage: required
+diff --git a/drivers/pinctrl/qcom/pinctrl-spmi-gpio.c b/drivers/pinctrl/qcom/pinctrl-spmi-gpio.c
+index f1fece5..387917c 100644
+--- a/drivers/pinctrl/qcom/pinctrl-spmi-gpio.c
++++ b/drivers/pinctrl/qcom/pinctrl-spmi-gpio.c
+@@ -1121,6 +1121,8 @@ static int pmic_gpio_remove(struct platform_device *pdev)
+ 	{ .compatible = "qcom,pm8150b-gpio", .data = (void *) 12 },
+ 	/* pm8150l has 12 GPIOs with holes on 7 */
+ 	{ .compatible = "qcom,pm8150l-gpio", .data = (void *) 12 },
++	{ .compatible = "qcom,pm6150-gpio", .data = (void *) 10 },
++	{ .compatible = "qcom,pm6150l-gpio", .data = (void *) 12 },
+ 	{ },
+ };
+ 
 -- 
 The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
  a Linux Foundation Collaborative Project
