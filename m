@@ -2,130 +2,129 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 642E5CB375
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  4 Oct 2019 05:14:28 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id EB934CB398
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  4 Oct 2019 05:54:14 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728962AbfJDDO1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 3 Oct 2019 23:14:27 -0400
-Received: from mail-io1-f67.google.com ([209.85.166.67]:42850 "EHLO
-        mail-io1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727758AbfJDDO1 (ORCPT
+        id S2387642AbfJDDyO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 3 Oct 2019 23:54:14 -0400
+Received: from mail-vk1-f196.google.com ([209.85.221.196]:40864 "EHLO
+        mail-vk1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2387501AbfJDDyN (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 3 Oct 2019 23:14:27 -0400
-Received: by mail-io1-f67.google.com with SMTP id n197so10362339iod.9;
-        Thu, 03 Oct 2019 20:14:26 -0700 (PDT)
+        Thu, 3 Oct 2019 23:54:13 -0400
+Received: by mail-vk1-f196.google.com with SMTP id d126so1161060vkf.7
+        for <linux-arm-msm@vger.kernel.org>; Thu, 03 Oct 2019 20:54:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
+        d=verdurent-com.20150623.gappssmtp.com; s=20150623;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=roEhTXREkSRHHDtWlBoYOXDT2mRuIiBIXyDIcrT3vnQ=;
-        b=pCMUpk16480gB77pJSrNiyNSOPkRZkZaqejqw6Yku64DtiHhchNQbsMIuEhmZ9ca2+
-         4AYRQc2QSoBtSL76F7FuQak2kx6ThaelHw9AhoE2TJxykNyuP1KtEYJGbHHzA7Yu/v6k
-         hzFBc4CNCazkXf9VO5BXTyHQeGnQrV+Cp4HwKQqj3bdcTXJ4D1/rCzKK0+8bo2wHDvPe
-         K9PQE7yXdvQRyBB3M1VHZnJ7v0oQVk7uJupy1psoALMijoiRR3kNuA8hpBe/QPUJdORX
-         JjS0xVE0Kk9v4WeIj+4fLwja8q8f7iRPF7rI0EnZ7dAdC92A02I99x85S/1UYuiJgFUZ
-         9G7Q==
+        bh=0gPgCpIAYJa8p/vY1UkyEnZoeMekLpn4eiArUKNY2gk=;
+        b=E/xgeOAsMphC/AV8gSRd0LsfY8+LvGdoxkgrJBnEM8B+UmyPeaF3NbcHIIpeBGc6/P
+         Tljzvp0RNW+wd31RlAuYdFOApTPiUJHnU7Ffu7OdTcHWo4XL9OQfXnRdwTK1/3LuJjEV
+         cubjToPvH6J6Gy4zKZ+BH2srchI9CoJYlHGqTtUvl+aARv1CWWsvmJ76Kqxchg59IdbC
+         6Hr+3W5VUZ8rQQJsOmE7lxEQ2eLbx1VPsYHkLhebqd76BfTZt54hCMOwIE+niV2Z+E8K
+         FmYF36qxu+7MV5unn7ljRpznvuiUPTCNF0pJyP7t00I1eDvmXGmT9p8Anz438uxoZSV2
+         HkSQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=roEhTXREkSRHHDtWlBoYOXDT2mRuIiBIXyDIcrT3vnQ=;
-        b=R+/atEZwlMAH03u7xUPBvkngCvDKIJah1Mho89z/hR6wGqbp9gJ1BYniufsfVfNyPY
-         K0GLON3kZr3bw5FaNahBuMviwveZtuKD/GyGPlvCi+8q40+CEr36ExO5fPSzfAQJlJ1X
-         6ZoZsGur0qjv4HR/9mArhMioOqsJCZh9rlTQ/v5unjBWMpA6uyMAynJJwvzGfZbYVgU8
-         M4UvfglnNz8Lw4Xsxov6tp/rh27IEPgtLvs+jJK3zbsSya6yrChBs7u4ss0N3nlpgEve
-         cJ69qa0Ir/K1Vqt8cYKZYpV8GeqrYDnKoAKdYaHw35oHc/7yCWuO27Gol+jdGCdq9EIq
-         pUpg==
-X-Gm-Message-State: APjAAAWJt5DLQGvEf/1xzBEqz4YnsgfgE9SifrZj5tBKS6qMLINg125e
-        NQHX6H8JcqLlOsiicI7dEnIgS5xCmE/OabwJ03w=
-X-Google-Smtp-Source: APXvYqzif+N7XqxPwr2xddTlIMlNvcz/9uKR2psSncZJvQaF5XNDj8aSVxqHFul0NfVlmu2vO0Pl1fnb04c8ZvOA3Vs=
-X-Received: by 2002:a05:6e02:6cb:: with SMTP id p11mr12692504ils.33.1570158866353;
- Thu, 03 Oct 2019 20:14:26 -0700 (PDT)
+        bh=0gPgCpIAYJa8p/vY1UkyEnZoeMekLpn4eiArUKNY2gk=;
+        b=phyS/XnL7MnP5Dc8xj1Bgz3Wc4h39MWP+xslgpffWnYe6dGHxJd71gjIBZjEdsgLAA
+         PWdcuRz75QI1WeRD0OIloIO17jVgAWSh+xAUjD3/khBbJ2xgIJUhLGtJKPU+aGz345rF
+         NP3F77wC6X71HmmF+ickwHLpxn4oc/0ikmJtn6dH2LbaT9nCV2zmEEGGHi4C9bRVB2Gm
+         SHbhwan8SnQy9E6m3cVRee1EgSJft4OOvhEV9VQSMPA1HVByNtAyIgKPHrgcWRPBNpoh
+         cnd1Ji6S25N7yi1Y57TAh1pOMg8SmqLnaHA/6ooEm6kEmQ5NopONQ69Kwic75Jj9chGV
+         Cdxg==
+X-Gm-Message-State: APjAAAVF08z2zgt56WxAeiZLxG4EJqdv1SED3jVZXifaJEwTdAY4IswD
+        LtJSjlJGeEtZBY3Jmsk8TDQDZRshR0a2iL1DjHwAUA==
+X-Google-Smtp-Source: APXvYqwPwuXqe3t7ih6EMNyN0uj3L4Kc/6XM37p8JU0DMEQcWc0VWxTEk5XW5aWnyxQ3ZhnPR6xPLaI1/x1x32gkMuQ=
+X-Received: by 2002:a1f:bd94:: with SMTP id n142mr7016504vkf.86.1570161252601;
+ Thu, 03 Oct 2019 20:54:12 -0700 (PDT)
 MIME-Version: 1.0
-References: <cover.1558430617.git.amit.kucheria@linaro.org>
- <49cf5d94beb9af9ef4e78d4c52f3b0ad20b7c63f.1558430617.git.amit.kucheria@linaro.org>
- <CAOCk7NptTHPOdyEkCAofjTPuDQ5dsnPMQgfC0R8=7cp05xKQiA@mail.gmail.com>
- <20191002091950.GA9393@centauri> <20191002092734.GA15523@centauri>
- <CAOCk7Nqqm6d3bR9hFJH6rp1jMPmx2e2qmJtnOuw5viaGWohEZA@mail.gmail.com> <CAHLCerN6T2WszczwDOeg=F2MQ3hHBkgYubCu9WyuhsOaAR=mMg@mail.gmail.com>
-In-Reply-To: <CAHLCerN6T2WszczwDOeg=F2MQ3hHBkgYubCu9WyuhsOaAR=mMg@mail.gmail.com>
-From:   Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
-Date:   Thu, 3 Oct 2019 21:14:14 -0600
-Message-ID: <CAOCk7NqF3+34aM-SG30mevUx6PWyvByrvRHCgAJpZ8z0JGy++A@mail.gmail.com>
-Subject: Re: [PATCH v2 7/9] arm64: dts: qcom: msm8998: Add PSCI cpuidle low
- power states
-To:     Amit Kucheria <amit.kucheria@linaro.org>
-Cc:     Niklas Cassel <niklas.cassel@linaro.org>,
-        lkml <linux-kernel@vger.kernel.org>,
-        MSM <linux-arm-msm@vger.kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
+References: <20191002190756.26895-1-jeffrey.l.hugo@gmail.com>
+In-Reply-To: <20191002190756.26895-1-jeffrey.l.hugo@gmail.com>
+From:   Amit Kucheria <amit.kucheria@verdurent.com>
+Date:   Fri, 4 Oct 2019 09:24:01 +0530
+Message-ID: <CAHLCerOTycP9++w_VPOqVkd7QGY8Jfun4fd0mZqinTPE46+T7w@mail.gmail.com>
+Subject: Re: [PATCH] arm64: dts: qcom: msm8998-clamshell: Remove retention
+ idle state
+To:     Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
+Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
         Andy Gross <agross@kernel.org>,
-        Marc Gonzalez <marc.w.gonzalez@free.fr>,
-        Sibi Sankar <sibis@codeaurora.org>,
-        Daniel Lezcano <daniel.lezcano@linaro.org>,
-        David Brown <david.brown@linaro.org>,
-        Li Yang <leoyang.li@nxp.com>, Shawn Guo <shawnguo@kernel.org>,
-        DTML <devicetree@vger.kernel.org>
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        LKML <linux-kernel@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Oct 3, 2019 at 7:36 PM Amit Kucheria <amit.kucheria@linaro.org> wrote:
+On Thu, Oct 3, 2019 at 12:44 AM Jeffrey Hugo <jeffrey.l.hugo@gmail.com> wrote:
 >
-> On Wed, Oct 2, 2019 at 11:48 PM Jeffrey Hugo <jeffrey.l.hugo@gmail.com> wrote:
-> >
-> > On Wed, Oct 2, 2019 at 3:27 AM Niklas Cassel <niklas.cassel@linaro.org> wrote:
-> > >
-> > > On Wed, Oct 02, 2019 at 11:19:50AM +0200, Niklas Cassel wrote:
-> > > > On Mon, Sep 30, 2019 at 04:20:15PM -0600, Jeffrey Hugo wrote:
-> > > > > Amit, the merged version of the below change causes a boot failure
-> > > > > (nasty hang, sometimes with RCU stalls) on the msm8998 laptops.  Oddly
-> > > > > enough, it seems to be resolved if I remove the cpu-idle-states
-> > > > > property from one of the cpu nodes.
-> > > > >
-> > > > > I see no issues with the msm8998 MTP.
-> > > >
-> > > > Hello Jeffrey, Amit,
-> > > >
-> > > > If the PSCI idle states work properly on the msm8998 devboard (MTP),
-> > > > but causes crashes on msm8998 laptops, the only logical change is
-> > > > that the PSCI firmware is different between the two devices.
-> > >
-> > > Since the msm8998 laptops boot using ACPI, perhaps these laptops
-> > > doesn't support PSCI/have any PSCI firmware at all.
-> >
-> > They have PSCI.  If there was no PSCI, I would expect the PSCI
-> > get_version request from Linux to fail, and all PSCI functionality to
-> > be disabled.
-> >
-> > However, your mention about ACPI sparked a thought.  ACPI describes
-> > the idle states, along with the PSCI info, in the ACPI0007 devices.
-> > Those exist on the laptops, and the info mostly correlates with Amit's
-> > patch (ACPI seems to be a bit more conservative about the latencies,
-> > and describes one additional deeper state).  However, upon a detailed
-> > analysis of the ACPI description, I did find something relevant - the
-> > retention state is not enabled.
-> >
-> > So, I hacked out the retention state from Amit's patch, and I did not
-> > observe a hang.  I used sysfs, and appeared able to validate that the
-> > power collapse state was being used successfully.
+> The retention idle state does not appear to be supported by the firmware
+> present on the msm8998 laptops since the state is advertised as disabled
+> in ACPI, and attempting to enable the state in DT is observed to result
+> in boot hangs.  Therefore, remove the state from use to address the
+> observed issues.
 >
-> Interesting that the shallower sleep state was causing problems.
-> Usually, it is the deeper states that cause problems. So you plan to
-> override the idle states table in the board-specific DT?
+> Fixes: 2c6d2d3a580a (arm64: dts: qcom: Add Lenovo Miix 630)
+> Signed-off-by: Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
 
-Yes.  Already posted.
+Reviewed-by: Amit Kucheria <amit.kucheria@linaro.org>
 
+> ---
+>  .../boot/dts/qcom/msm8998-clamshell.dtsi      | 37 +++++++++++++++++++
+>  1 file changed, 37 insertions(+)
 >
-> Why does the platform even rely on DT? Shouldn't we use the ACPI tables instead?
-
-In theory, yes.  However the ACPI seems to be incomplete (assumes
-things are just hardcoded in the driver maybe?) and has tons of
-non-standard things in it.  DT seems to be the easy path to
-enablement.
+> diff --git a/arch/arm64/boot/dts/qcom/msm8998-clamshell.dtsi b/arch/arm64/boot/dts/qcom/msm8998-clamshell.dtsi
+> index 9682d4dd7496..1bae90705746 100644
+> --- a/arch/arm64/boot/dts/qcom/msm8998-clamshell.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/msm8998-clamshell.dtsi
+> @@ -23,6 +23,43 @@
+>         };
+>  };
 >
-> > I'm guessing that something is weird with the laptops, where the CPUs
-> > can go into retention, but not come out, thus causing issues.
-> >
-> > I'll post a patch to fix up the laptops.  Thanks for all the help.
+> +/*
+> + * The laptop FW does not appear to support the retention state as it is
+> + * not advertised as enabled in ACPI, and enabling it in DT can cause boot
+> + * hangs.
+> + */
+> +&CPU0 {
+> +       cpu-idle-states = <&LITTLE_CPU_SLEEP_1>;
+> +};
+> +
+> +&CPU1 {
+> +       cpu-idle-states = <&LITTLE_CPU_SLEEP_1>;
+> +};
+> +
+> +&CPU2 {
+> +       cpu-idle-states = <&LITTLE_CPU_SLEEP_1>;
+> +};
+> +
+> +&CPU3 {
+> +       cpu-idle-states = <&LITTLE_CPU_SLEEP_1>;
+> +};
+> +
+> +&CPU4 {
+> +       cpu-idle-states = <&BIG_CPU_SLEEP_1>;
+> +};
+> +
+> +&CPU5 {
+> +       cpu-idle-states = <&BIG_CPU_SLEEP_1>;
+> +};
+> +
+> +&CPU6 {
+> +       cpu-idle-states = <&BIG_CPU_SLEEP_1>;
+> +};
+> +
+> +&CPU7 {
+> +       cpu-idle-states = <&BIG_CPU_SLEEP_1>;
+> +};
+> +
+>  &qusb2phy {
+>         status = "okay";
+>
+> --
+> 2.17.1
+>
