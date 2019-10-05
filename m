@@ -2,259 +2,153 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 91FFACC7FB
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  5 Oct 2019 07:03:15 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 03D9ACC90D
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  5 Oct 2019 11:19:52 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726327AbfJEFDN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 5 Oct 2019 01:03:13 -0400
-Received: from mail-pg1-f196.google.com ([209.85.215.196]:45425 "EHLO
-        mail-pg1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726308AbfJEFDN (ORCPT
+        id S1725976AbfJEJTu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 5 Oct 2019 05:19:50 -0400
+Received: from mail-wm1-f67.google.com ([209.85.128.67]:55545 "EHLO
+        mail-wm1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725862AbfJEJTu (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 5 Oct 2019 01:03:13 -0400
-Received: by mail-pg1-f196.google.com with SMTP id q7so4889156pgi.12
-        for <linux-arm-msm@vger.kernel.org>; Fri, 04 Oct 2019 22:03:12 -0700 (PDT)
+        Sat, 5 Oct 2019 05:19:50 -0400
+Received: by mail-wm1-f67.google.com with SMTP id a6so7948327wma.5;
+        Sat, 05 Oct 2019 02:19:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=5mOmufgrQN1rMhu5F69YwBqIp2cym8oND1sseJBaP6I=;
-        b=FL3Zwdsefzn0O38UddZ5LFJOf8D/gvG49aVGx0X2+6R/UbUrFfgl9MQQLUL0efRw2+
-         YoJmh8OB9frp1/yZ/hphQzTvsvMv35uIXnhK8e5mkHY+c/FiFr9psd5FB5nbsiC4szbK
-         8ESmmvdcudPNIUBgRit7AxOeugy2FWN3AmEgrVA2caVnp0fYlFr7+24LKay6XbV1JVxA
-         hPKa6s9y1Wk2eDIVAscqJ00IMJMn+PN1BN6pi0fmRlk0Bnlr0TIBGCiF8IYIBU7pkyGr
-         Ue6PLfEUhSRZdI4MIkVrltFohx9gyWwpF39WVHMsgQJ2RLsYWnFdHwVGBMGZZxXlPi0Q
-         LeJQ==
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=yvIRA62tf+Id/1C1Iw9pWjY61unNIlcfEnBQ+FsDC9I=;
+        b=SD25cdX2nkZyVjKM8hZcX4l8pxfctJxVJUlwVM6fCHB1wE/QVLmtgKna86JVgJZMyZ
+         WnBh16+K76LYEvhvUlMq1Ggs1kdW8NMa1ut4WIBHMHQSvUfb0FCUGiHdpxzvzuBvWJYf
+         PclPLw8+r84uWQEpjxr4d5QXEZqxBMEHn9q0Zusng9QBo6C7lWLvuFWbwgZZlCVAhY8k
+         4+nxUPtUOm1jPqQTqXISY024InaI+hfTsI7u0vdAlcFkFgzY79UGhsCI2aOpTCgizKqv
+         TBs+HE9koR92+aQU4xrdAB7pUY1uMCYQ1aPu3UfQERzOLdEWIO0tN3Dzjxb3S4UD+ZCv
+         Uqmg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=5mOmufgrQN1rMhu5F69YwBqIp2cym8oND1sseJBaP6I=;
-        b=gFvtprMpATTp3OghS18/Q0VQWepO/EEe22+ABrkRhEeCbOTkCpse1il+kw9XFHX5Zi
-         JIlQISjl3u1ps+aE3qww3lLE8rlTBTqJGgowzHYgenotr7MaNpwL0LbbFNT+ACbQ5nH1
-         vKrp46dCLCHl6I1Zo1aAiQH8fQH3YJwjYacWwaAUnaS9AeItiZcsb1QbFJeMGZisRdyT
-         4pWJqtDPn4Yem/7rPAv1mPk0v2wEopXMgR+8mez1Cwdp9zE31Ey4LH3iXaD0DDAG8SMg
-         a1L9jy+X7jWqs9jbo1AON12FJfLeXmpbl3voMedbBukxiRloyWbO90THAhZdC+bO6oEr
-         FKBQ==
-X-Gm-Message-State: APjAAAX9ciuAyRQUVkorgoXW7M212BFw8qKp/uz/IjQ4og4nNpFa2Qnz
-        z6LLGO2wDaBCx1vW1mPYE5s/9g==
-X-Google-Smtp-Source: APXvYqyi5uG8TZbJF1LNo04wER1bRKiD/ShWLANGjRAO1qPp/v3//uX4jbpbmNjw2n54JQbt5cK5HA==
-X-Received: by 2002:a17:90a:c501:: with SMTP id k1mr20977446pjt.37.1570251791789;
-        Fri, 04 Oct 2019 22:03:11 -0700 (PDT)
-Received: from tuxbook-pro (104-188-17-28.lightspeed.sndgca.sbcglobal.net. [104.188.17.28])
-        by smtp.gmail.com with ESMTPSA id k9sm8426399pfk.72.2019.10.04.22.03.10
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 04 Oct 2019 22:03:11 -0700 (PDT)
-Date:   Fri, 4 Oct 2019 22:03:08 -0700
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
-Cc:     Robin Murphy <robin.murphy@arm.com>, Will Deacon <will@kernel.org>,
-        Joerg Roedel <joro@8bytes.org>,
-        iommu@lists.linux-foundation.org,
-        Stephen Boyd <swboyd@chromium.org>,
-        Vivek Gautam <vivek.gautam@codeaurora.org>,
-        Andy Gross <agross@kernel.org>, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org,
-        Rajendra Nayak <rnayak@codeaurora.org>
-Subject: Re: [PATCHv7 3/3] iommu: arm-smmu-impl: Add sdm845 implementation
- hook
-Message-ID: <20191005050308.GG6390@tuxbook-pro>
-References: <cover.1568966170.git.saiprakash.ranjan@codeaurora.org>
- <3ed0de38b57fda1995d0f231cbcec38c16387a2a.1568966170.git.saiprakash.ranjan@codeaurora.org>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=yvIRA62tf+Id/1C1Iw9pWjY61unNIlcfEnBQ+FsDC9I=;
+        b=JgMagZcd3ITyrCkIx0Xirh3l2qO4hUQ7vLlgEd+sf84i6jtnF+rinh631htuKVSgwk
+         PBj3SrBGdHTLEzqh2hEg4okKahEr2Z3HK/guJpcPh2r3AYhRJggQ9dZyHvCAcSPTHq61
+         0Wt+Cc1u6eYGpnR2/RmyqS6hb/dwmiIfjnmkU3oi3d3ZvSzODe9F1O9oZDx2MCYi5ETN
+         i6yhMfyL6bzIByAY7eMR5xk8V+FNWq3evWMJD2is41qitRccVbiEhYwCE4E+2ZSux6Mn
+         6ldVMGvbLGXwj90xPoEHqJs//PljBBPVdBE34K5ZbwnX4uPAiI9A5YuaaFDgKMKpr59K
+         BNaw==
+X-Gm-Message-State: APjAAAVZ073iD5OruiOIobvnRI89Zd5geTnf0DDgZq0cUZVlRpU4myaX
+        vzdDaN02DeKcZp+NVVnTkCiMur8OKtq/8ScfK8E/GKa6
+X-Google-Smtp-Source: APXvYqxwf0KpXaoAxvxmIrDNxz0S67HAfxmjTzqx3HTl7NVvv2rZQ2gyQQddzFjQ1DrQ/Qfyy81p8G7dTKbi3ub7iF4=
+X-Received: by 2002:a1c:4108:: with SMTP id o8mr14550830wma.129.1570267187819;
+ Sat, 05 Oct 2019 02:19:47 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <3ed0de38b57fda1995d0f231cbcec38c16387a2a.1568966170.git.saiprakash.ranjan@codeaurora.org>
-User-Agent: Mutt/1.12.1 (2019-06-15)
+References: <20190921101207.65042-1-kholk11@gmail.com> <20190921101207.65042-2-kholk11@gmail.com>
+ <20191005035931.GC2999@tuxbook-pro>
+In-Reply-To: <20191005035931.GC2999@tuxbook-pro>
+From:   AngeloGioacchino Del Regno <kholk11@gmail.com>
+Date:   Sat, 5 Oct 2019 11:19:35 +0200
+Message-ID: <CAK7fi1ahvqbT_EtZTV=nzjMdF-xOr6DBciry56z9L065xLoGhg@mail.gmail.com>
+Subject: Re: [PATCH 1/5] pinctrl: qcom: Add a pinctrl driver for MSM8976 and 8956
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     MSM <linux-arm-msm@vger.kernel.org>, marijns95@gmail.com,
+        agross@kernel.org, Michael Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Mark Rutland <mark.rutland@arm.com>,
+        Linus Walleij <linus.walleij@linaro.org>,
+        linux-clk@vger.kernel.org, linux-gpio@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri 20 Sep 01:04 PDT 2019, Sai Prakash Ranjan wrote:
+Il giorno sab 5 ott 2019 alle ore 05:59 Bjorn Andersson
+<bjorn.andersson@linaro.org> ha scritto:
+>
+> On Sat 21 Sep 03:12 PDT 2019, kholk11@gmail.com wrote:
+>
+> > From: "Angelo G. Del Regno" <kholk11@gmail.com>
+> >
+> > Add the pinctrl driver to support pin configuration with the
+> > pinctrl framework on MSM8976, MSM8956, APQ8056, APQ8076.
+> >
+> > Signed-off-by: Angelo G. Del Regno <kholk11@gmail.com>
+> > ---
+> >  .../bindings/pinctrl/qcom,msm8976-pinctrl.txt |  183 +++
+> >  drivers/pinctrl/qcom/Kconfig                  |   10 +
+> >  drivers/pinctrl/qcom/Makefile                 |    1 +
+> >  drivers/pinctrl/qcom/pinctrl-msm8976.c        | 1128 +++++++++++++++++
+> >  4 files changed, 1322 insertions(+)
+> >  create mode 100644 Documentation/devicetree/bindings/pinctrl/qcom,msm8976-pinctrl.txt
+> >  create mode 100644 drivers/pinctrl/qcom/pinctrl-msm8976.c
+> >
+> > diff --git a/Documentation/devicetree/bindings/pinctrl/qcom,msm8976-pinctrl.txt b/Documentation/devicetree/bindings/pinctrl/qcom,msm8976-pinctrl.txt
+> > new file mode 100644
+> > index 000000000000..4e944f84b7d7
+> > --- /dev/null
+> > +++ b/Documentation/devicetree/bindings/pinctrl/qcom,msm8976-pinctrl.txt
+> > @@ -0,0 +1,183 @@
+> > +Qualcomm MSM8976 TLMM block
+>
+> As Linus indicated, please send your the DT bindings in separate
+> patches.
+>
+> > +
+> [..]
+> > +Example:
+> > +
+> > +     tlmm: pinctrl@1000000 {
+> > +             compatible = "qcom,msm8976-pinctrl";
+> > +             reg = <0x1000000 0x300000>;
+> > +             interrupts = <0 208 0>;
+>
+> <GIC_SPI 208 IRQ_TYPE_LEVEL_HIGH>
+>
+> > +             gpio-controller;
+> > +             #gpio-cells = <2>;
+> > +             gpio-ranges = <&tlmm 0 0 145>;
+> > +             interrupt-controller;
+> > +             #interrupt-cells = <2>;
+> > +
+> > +             blsp1_uart2_active: blsp1_uart2_active {
+> > +                     mux {
+> > +                             pins = "gpio4", "gpio5", "gpio6", "gpio7";
+> > +                             function = "blsp_uart2";
+> > +                     };
+> > +
+> > +                     config {
+> > +                             pins = "gpio4", "gpio5", "gpio6", "gpio7";
+> > +                             drive-strength = <2>;
+> > +                             bias-disable;
+> > +                     };
+> > +             };
+> > +     };
+> > diff --git a/drivers/pinctrl/qcom/Kconfig b/drivers/pinctrl/qcom/Kconfig
+> [..]
+> > +static struct platform_driver msm8976_pinctrl_driver = {
+> > +     .driver = {
+> > +             .name = "msm8976-pinctrl",
+> > +             .owner = THIS_MODULE,
+>
+> No need to specify .onwer on platform_drivers anymore.
+>
+>
+> Apart from that, I think this patch looks good.
+>
+> Regards,
+> Bjorn
 
-> From: Vivek Gautam <vivek.gautam@codeaurora.org>
-> 
-> Add reset hook for sdm845 based platforms to turn off
-> the wait-for-safe sequence.
-> 
-> Understanding how wait-for-safe logic affects USB and UFS performance
-> on MTP845 and DB845 boards:
-> 
-> Qcom's implementation of arm,mmu-500 adds a WAIT-FOR-SAFE logic
-> to address under-performance issues in real-time clients, such as
-> Display, and Camera.
-> On receiving an invalidation requests, the SMMU forwards SAFE request
-> to these clients and waits for SAFE ack signal from real-time clients.
-> The SAFE signal from such clients is used to qualify the start of
-> invalidation.
-> This logic is controlled by chicken bits, one for each - MDP (display),
-> IFE0, and IFE1 (camera), that can be accessed only from secure software
-> on sdm845.
-> 
-> This configuration, however, degrades the performance of non-real time
-> clients, such as USB, and UFS etc. This happens because, with wait-for-safe
-> logic enabled the hardware tries to throttle non-real time clients while
-> waiting for SAFE ack signals from real-time clients.
-> 
-> On mtp845 and db845 devices, with wait-for-safe logic enabled by the
-> bootloaders we see degraded performance of USB and UFS when kernel
-> enables the smmu stage-1 translations for these clients.
-> Turn off this wait-for-safe logic from the kernel gets us back the perf
-> of USB and UFS devices until we re-visit this when we start seeing perf
-> issues on display/camera on upstream supported SDM845 platforms.
-> The bootloaders on these boards implement secure monitor callbacks to
-> handle a specific command - QCOM_SCM_SVC_SMMU_PROGRAM with which the
-> logic can be toggled.
-> 
-> There are other boards such as cheza whose bootloaders don't enable this
-> logic. Such boards don't implement callbacks to handle the specific SCM
-> call so disabling this logic for such boards will be a no-op.
-> 
-> This change is inspired by the downstream change from Patrick Daly
-> to address performance issues with display and camera by handling
-> this wait-for-safe within separte io-pagetable ops to do TLB
-> maintenance. So a big thanks to him for the change and for all the
-> offline discussions.
-> 
-> Without this change the UFS reads are pretty slow:
-> $ time dd if=/dev/sda of=/dev/zero bs=1048576 count=10 conv=sync
-> 10+0 records in
-> 10+0 records out
-> 10485760 bytes (10.0MB) copied, 22.394903 seconds, 457.2KB/s
-> real    0m 22.39s
-> user    0m 0.00s
-> sys     0m 0.01s
-> 
-> With this change they are back to rock!
-> $ time dd if=/dev/sda of=/dev/zero bs=1048576 count=300 conv=sync
-> 300+0 records in
-> 300+0 records out
-> 314572800 bytes (300.0MB) copied, 1.030541 seconds, 291.1MB/s
-> real    0m 1.03s
-> user    0m 0.00s
-> sys     0m 0.54s
-> 
-> Signed-off-by: Vivek Gautam <vivek.gautam@codeaurora.org>
-> Reviewed-by: Robin Murphy <robin.murphy@arm.com>
-> Signed-off-by: Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
+Thanks guys for the review.
 
-Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+Well, I did it in one patch after seeing this practice on other
+patches, so I thought to replicate,
+despite the well known rule... but yeah, of course, there's absolutely
+no problem, I'll send the
+two separate patches in a separate series and I'll do the same for the
+GCC driver as well,
+which doesn't seem that it got sent to the list for some obscure reason.
 
-> ---
->  drivers/iommu/Makefile        |  2 +-
->  drivers/iommu/arm-smmu-impl.c |  5 +++-
->  drivers/iommu/arm-smmu-qcom.c | 51 +++++++++++++++++++++++++++++++++++
->  drivers/iommu/arm-smmu.h      |  3 +++
->  4 files changed, 59 insertions(+), 2 deletions(-)
->  create mode 100644 drivers/iommu/arm-smmu-qcom.c
-> 
-> diff --git a/drivers/iommu/Makefile b/drivers/iommu/Makefile
-> index 4f405f926e73..86dadd13b2e6 100644
-> --- a/drivers/iommu/Makefile
-> +++ b/drivers/iommu/Makefile
-> @@ -13,7 +13,7 @@ obj-$(CONFIG_MSM_IOMMU) += msm_iommu.o
->  obj-$(CONFIG_AMD_IOMMU) += amd_iommu.o amd_iommu_init.o amd_iommu_quirks.o
->  obj-$(CONFIG_AMD_IOMMU_DEBUGFS) += amd_iommu_debugfs.o
->  obj-$(CONFIG_AMD_IOMMU_V2) += amd_iommu_v2.o
-> -obj-$(CONFIG_ARM_SMMU) += arm-smmu.o arm-smmu-impl.o
-> +obj-$(CONFIG_ARM_SMMU) += arm-smmu.o arm-smmu-impl.o arm-smmu-qcom.o
->  obj-$(CONFIG_ARM_SMMU_V3) += arm-smmu-v3.o
->  obj-$(CONFIG_DMAR_TABLE) += dmar.o
->  obj-$(CONFIG_INTEL_IOMMU) += intel-iommu.o intel-pasid.o
-> diff --git a/drivers/iommu/arm-smmu-impl.c b/drivers/iommu/arm-smmu-impl.c
-> index 5c87a38620c4..b2fe72a8f019 100644
-> --- a/drivers/iommu/arm-smmu-impl.c
-> +++ b/drivers/iommu/arm-smmu-impl.c
-> @@ -109,7 +109,7 @@ static struct arm_smmu_device *cavium_smmu_impl_init(struct arm_smmu_device *smm
->  #define ARM_MMU500_ACR_S2CRB_TLBEN	(1 << 10)
->  #define ARM_MMU500_ACR_SMTNMB_TLBEN	(1 << 8)
->  
-> -static int arm_mmu500_reset(struct arm_smmu_device *smmu)
-> +int arm_mmu500_reset(struct arm_smmu_device *smmu)
->  {
->  	u32 reg, major;
->  	int i;
-> @@ -170,5 +170,8 @@ struct arm_smmu_device *arm_smmu_impl_init(struct arm_smmu_device *smmu)
->  				  "calxeda,smmu-secure-config-access"))
->  		smmu->impl = &calxeda_impl;
->  
-> +	if (of_device_is_compatible(smmu->dev->of_node, "qcom,sdm845-smmu-500"))
-> +		return qcom_smmu_impl_init(smmu);
-> +
->  	return smmu;
->  }
-> diff --git a/drivers/iommu/arm-smmu-qcom.c b/drivers/iommu/arm-smmu-qcom.c
-> new file mode 100644
-> index 000000000000..24c071c1d8b0
-> --- /dev/null
-> +++ b/drivers/iommu/arm-smmu-qcom.c
-> @@ -0,0 +1,51 @@
-> +// SPDX-License-Identifier: GPL-2.0-only
-> +/*
-> + * Copyright (c) 2019, The Linux Foundation. All rights reserved.
-> + */
-> +
-> +#include <linux/qcom_scm.h>
-> +
-> +#include "arm-smmu.h"
-> +
-> +struct qcom_smmu {
-> +	struct arm_smmu_device smmu;
-> +};
-> +
-> +static int qcom_sdm845_smmu500_reset(struct arm_smmu_device *smmu)
-> +{
-> +	int ret;
-> +
-> +	arm_mmu500_reset(smmu);
-> +
-> +	/*
-> +	 * To address performance degradation in non-real time clients,
-> +	 * such as USB and UFS, turn off wait-for-safe on sdm845 based boards,
-> +	 * such as MTP and db845, whose firmwares implement secure monitor
-> +	 * call handlers to turn on/off the wait-for-safe logic.
-> +	 */
-> +	ret = qcom_scm_qsmmu500_wait_safe_toggle(0);
-> +	if (ret)
-> +		dev_warn(smmu->dev, "Failed to turn off SAFE logic\n");
-> +
-> +	return ret;
-> +}
-> +
-> +static const struct arm_smmu_impl qcom_smmu_impl = {
-> +	.reset = qcom_sdm845_smmu500_reset,
-> +};
-> +
-> +struct arm_smmu_device *qcom_smmu_impl_init(struct arm_smmu_device *smmu)
-> +{
-> +	struct qcom_smmu *qsmmu;
-> +
-> +	qsmmu = devm_kzalloc(smmu->dev, sizeof(*qsmmu), GFP_KERNEL);
-> +	if (!qsmmu)
-> +		return ERR_PTR(-ENOMEM);
-> +
-> +	qsmmu->smmu = *smmu;
-> +
-> +	qsmmu->smmu.impl = &qcom_smmu_impl;
-> +	devm_kfree(smmu->dev, smmu);
-> +
-> +	return &qsmmu->smmu;
-> +}
-> diff --git a/drivers/iommu/arm-smmu.h b/drivers/iommu/arm-smmu.h
-> index b19b6cae9b5e..de99a85e140a 100644
-> --- a/drivers/iommu/arm-smmu.h
-> +++ b/drivers/iommu/arm-smmu.h
-> @@ -398,5 +398,8 @@ static inline void arm_smmu_writeq(struct arm_smmu_device *smmu, int page,
->  	arm_smmu_writeq((s), ARM_SMMU_CB((s), (n)), (o), (v))
->  
->  struct arm_smmu_device *arm_smmu_impl_init(struct arm_smmu_device *smmu);
-> +struct arm_smmu_device *qcom_smmu_impl_init(struct arm_smmu_device *smmu);
-> +
-> +int arm_mmu500_reset(struct arm_smmu_device *smmu);
->  
->  #endif /* _ARM_SMMU_H */
-> -- 
-> QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
-> of Code Aurora Forum, hosted by The Linux Foundation
-> 
+About the requested changes... sure, I will apply them and resend ASAP.
+
+Thanks again!
