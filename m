@@ -2,122 +2,124 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 59F7BCC7E6
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  5 Oct 2019 06:38:40 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 788C6CC7F5
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  5 Oct 2019 06:56:31 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726439AbfJEEij (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 5 Oct 2019 00:38:39 -0400
-Received: from mail-pf1-f196.google.com ([209.85.210.196]:42434 "EHLO
+        id S1725811AbfJEE4a (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 5 Oct 2019 00:56:30 -0400
+Received: from mail-pf1-f196.google.com ([209.85.210.196]:34274 "EHLO
         mail-pf1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726285AbfJEEij (ORCPT
+        with ESMTP id S1725796AbfJEE4a (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 5 Oct 2019 00:38:39 -0400
-Received: by mail-pf1-f196.google.com with SMTP id q12so5091365pff.9
-        for <linux-arm-msm@vger.kernel.org>; Fri, 04 Oct 2019 21:38:38 -0700 (PDT)
+        Sat, 5 Oct 2019 00:56:30 -0400
+Received: by mail-pf1-f196.google.com with SMTP id b128so5152935pfa.1
+        for <linux-arm-msm@vger.kernel.org>; Fri, 04 Oct 2019 21:56:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to:user-agent;
-        bh=gojjLX+lTwGZmg+qENDnRVGuBFOraGHa2B2vpf7iVZU=;
-        b=aoJD5LqfjCMzYKl2Xwu3Wklmzvu7Hh9AhSF/aixsCOh0sn3oS4pK3FjHL/0jBgFAqU
-         UQ5M799eRDsX9N3DOgF89P6R8Pt9oHIg9YqJ+u22TNw15lvNiMYLxneCH39xxlCkookY
-         E6b9yZ9zR+j8gRX5pq7hv1c5ST9WyOm7pn/Tc8agfncncn9s/5O6d1EohcNBYMSTECtG
-         G2XqTK5nejhi/RHWpIa9Z6yjy7Q2U11yrCrnU2Y0iCOtGhQryHhfmlDctxdCueziuQE+
-         NY13ZbDKQ+Pk3RIT/g4g2KBOYVDSsQm/LHsKj+9MvSP5JCyPS66DWRYHAJMXVqKMuHzf
-         Jg8Q==
+        bh=nxVm0xunWOBBVAAFXWndvWPXDw/0SmFto2e0wGq2Utk=;
+        b=Es6/WFDpSDi+uUS3ssFw8k2X6y9T2lLmlB3BJ5yMVSfrXVNwu6fCRLjOurcjJCLeZp
+         j/2vkFLP2Y3MIWe5OrvrkX/VPjYh8WDB7WXUIcrXPBdZZTXSFYC6WoAVc0aPWJJ9nT9H
+         UIONclhMdlXmiX124VebxUKGUcIfV4qN5jNdIdMphwOcKN/ILU6JpHKTZpYzX6z8Sc3F
+         vWwIUxav/2EUYWAqwVoGXDr2hjAvsA5MbBYvnU8hJ6ckl3XTOi9+tFbxcjdjuoILN3gI
+         FqLdpbLD4MhCjdUJXPrRhTSIGfieyHZjR/SlWHn/cxAw/Iq13I1b6emvNTVDnLQDfQ2b
+         UM8Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=gojjLX+lTwGZmg+qENDnRVGuBFOraGHa2B2vpf7iVZU=;
-        b=oJ4XMhB23fvp6qolxZEwBX9jZCtjxEE1efJkH1V0+dlFucozzQyiBuD5xPt3RAiKP0
-         mpB10ttoswDDrk4J8GV/XLQbCGlpfXeBKesT1krUTlGK7a/FjTL7TnrXrZoqw2JALEhc
-         NAX4BQYMQam8gWEvNwD//54KRXs+kCRUPM3xxgG2FSbBmuTv1TUC8tFH36DNXIU4LWpe
-         F7+/orsHe2nUxbDJcEOjGVCmw0NFZB8vMTzFrUPZ/v5JkxfsYhpFCF7Y16vqNEv31uiB
-         /GTuZZ7DRyAdbteht0AdJb3UecnApGxe1Z20ZDVcZ0pBNKMbNCziq0COm6raI2sPDVQj
-         qy8g==
-X-Gm-Message-State: APjAAAWJcdNd7pEki/n6gtp3pMlp7+7aIR3VXwX14CFGzENCbpbjp5RF
-        redb0AYQVNJmhSv0lRfa773G6g==
-X-Google-Smtp-Source: APXvYqybrYaoAQQO0OhNSmIB0UUOdfqyJ4Qu//EasKPhAapNYmiKSK5FOIodqcUwgnxNhBbXOE/eTQ==
-X-Received: by 2002:a65:5546:: with SMTP id t6mr18868858pgr.441.1570250318244;
-        Fri, 04 Oct 2019 21:38:38 -0700 (PDT)
+        bh=nxVm0xunWOBBVAAFXWndvWPXDw/0SmFto2e0wGq2Utk=;
+        b=IEpEKZpLMVm5j6DH8PcTJ4HgHLjX9+vxFYsz27+Ct+plZgmWkPpSrdbqLBt4CG0mV4
+         0Mm+WbHI16id2TQ47AWoF0BvLXyAMaeMlCWdwZoQjJGixWOj7MzHsxGPiqGGkw0yv0kq
+         Vv24rR6PlAVmNDM+FUYcr1P/t7wkz8bSATiFtD8K2bmyqHPwcIWsZ1xYb8We4R81Fu5Y
+         xaMu6a5UEzjkmizpk9ie/9gPDzWTuGt423WupmElqNe3KoaF+eATgeMo+HLT2fSvAA8n
+         Js+joCsRJTtIc68RnlTMAr/EVY+PuDNcF6Y0UClH8mVsrzcRhzEyRyRBXeEYIfFEvweF
+         daJw==
+X-Gm-Message-State: APjAAAWrjaN6jLwJ5aJfn9w/BYlRZb/StyXiSo2GH+Cv8xgADlz+JOnT
+        /upMwVp4f+JPmZVBTjDWwHmEVw==
+X-Google-Smtp-Source: APXvYqxUDnIpVTFnF1XELHDDilE2OljkXH45wCip/vedAt6UgJnmqiscN0yJy1vKGz9lAlTEWEusow==
+X-Received: by 2002:a17:90a:cc08:: with SMTP id b8mr20841755pju.119.1570251389539;
+        Fri, 04 Oct 2019 21:56:29 -0700 (PDT)
 Received: from tuxbook-pro (104-188-17-28.lightspeed.sndgca.sbcglobal.net. [104.188.17.28])
-        by smtp.gmail.com with ESMTPSA id 1sm8310336pff.39.2019.10.04.21.38.36
+        by smtp.gmail.com with ESMTPSA id b3sm6041371pjp.13.2019.10.04.21.56.27
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 04 Oct 2019 21:38:37 -0700 (PDT)
-Date:   Fri, 4 Oct 2019 21:38:35 -0700
+        Fri, 04 Oct 2019 21:56:28 -0700 (PDT)
+Date:   Fri, 4 Oct 2019 21:56:26 -0700
 From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Kiran Gunda <kgunda@codeaurora.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Linus Walleij <linus.walleij@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Mark Rutland <mark.rutland@arm.com>,
-        linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH V1] dt-bindings: pinctrl: qcom-pmic-gpio: Add support for
- pm6150/pm6150l
-Message-ID: <20191005043835.GD6390@tuxbook-pro>
-References: <1570188039-22122-1-git-send-email-kgunda@codeaurora.org>
+To:     kholk11@gmail.com
+Cc:     linux-arm-msm@vger.kernel.org, iommu@lists.linux-foundation.org,
+        marijns95@gmail.com, agross@kernel.org, robdclark@gmail.com,
+        joro@8bytes.org
+Subject: Re: [PATCH v4 0/7] Add support for QCOM IOMMU v2 and 500
+Message-ID: <20191005045626.GE6390@tuxbook-pro>
+References: <20191001220205.6423-1-kholk11@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <1570188039-22122-1-git-send-email-kgunda@codeaurora.org>
+In-Reply-To: <20191001220205.6423-1-kholk11@gmail.com>
 User-Agent: Mutt/1.12.1 (2019-06-15)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri 04 Oct 04:20 PDT 2019, Kiran Gunda wrote:
+On Tue 01 Oct 15:01 PDT 2019, kholk11@gmail.com wrote:
 
-> Add support for the PM6150 and PM6150L GPIO support to the
-> Qualcomm PMIC GPIO binding.
+> From: AngeloGioacchino Del Regno <kholk11@gmail.com>
 > 
-> Signed-off-by: Kiran Gunda <kgunda@codeaurora.org>
-
-Acked-by: Bjorn Andersson <bjorn.andersson@linaro.org>
-
-> ---
->  Documentation/devicetree/bindings/pinctrl/qcom,pmic-gpio.txt | 4 ++++
->  drivers/pinctrl/qcom/pinctrl-spmi-gpio.c                     | 2 ++
->  2 files changed, 6 insertions(+)
+> Some Qualcomm Family-B SoCs have got a different version of the QCOM
+> IOMMU, specifically v2 and 500, which perfectly adhere to the current
+> qcom_iommu driver, but need some variations due to slightly different
+> hypervisor behavior.
 > 
-> diff --git a/Documentation/devicetree/bindings/pinctrl/qcom,pmic-gpio.txt b/Documentation/devicetree/bindings/pinctrl/qcom,pmic-gpio.txt
-> index c32bf32..2f48cca 100644
-> --- a/Documentation/devicetree/bindings/pinctrl/qcom,pmic-gpio.txt
-> +++ b/Documentation/devicetree/bindings/pinctrl/qcom,pmic-gpio.txt
-> @@ -23,6 +23,8 @@ PMIC's from Qualcomm.
->  		    "qcom,pms405-gpio"
->  		    "qcom,pm8150-gpio"
->  		    "qcom,pm8150b-gpio"
-> +		    "qcom,pm6150-gpio"
-> +		    "qcom,pm6150l-gpio"
->  
->  		    And must contain either "qcom,spmi-gpio" or "qcom,ssbi-gpio"
->  		    if the device is on an spmi bus or an ssbi bus respectively
-> @@ -100,6 +102,8 @@ to specify in a pin configuration subnode:
->  					     and gpio8)
->  		    gpio1-gpio12 for pm8150b (holes on gpio3, gpio4, gpio7)
->  		    gpio1-gpio12 for pm8150l (hole on gpio7)
-> +		    gpio1-gpio10 for pm6150
-> +		    gpio1-gpio12 for pm6150l
->  
->  - function:
->  	Usage: required
-> diff --git a/drivers/pinctrl/qcom/pinctrl-spmi-gpio.c b/drivers/pinctrl/qcom/pinctrl-spmi-gpio.c
-> index f1fece5..387917c 100644
-> --- a/drivers/pinctrl/qcom/pinctrl-spmi-gpio.c
-> +++ b/drivers/pinctrl/qcom/pinctrl-spmi-gpio.c
-> @@ -1121,6 +1121,8 @@ static int pmic_gpio_remove(struct platform_device *pdev)
->  	{ .compatible = "qcom,pm8150b-gpio", .data = (void *) 12 },
->  	/* pm8150l has 12 GPIOs with holes on 7 */
->  	{ .compatible = "qcom,pm8150l-gpio", .data = (void *) 12 },
-> +	{ .compatible = "qcom,pm6150-gpio", .data = (void *) 10 },
-> +	{ .compatible = "qcom,pm6150l-gpio", .data = (void *) 12 },
->  	{ },
->  };
->  
+
+Do you think it's out of the question to get the arm-smmu driver to play
+nice with this platform?
+
+
+If not, would it be possible to change the DT binding so that we specify
+the SID and then read the SMR and S2CR registers to figure out the
+associated context bank?
+
+Regards,
+Bjorn
+
+> The personal aim is to upstream MSM8956 as much as possible.
+> 
+> This code has been tested on two Sony phones featuring the Qualcomm
+> MSM8956 SoC.
+> 
+> Changes in v2:
+> - Fixed optional properties placement in documentation
+> 
+> Changes in v3:
+> - Rebased onto linux-next 01/10/2019
+> - Added missing SCM commit (required by the AArch64 PT switch support)
+> 
+> Changes in v4:
+> - Removed rej files from the SCM patch (I'm truly sorry for the noise...)
+> 
+> Angelo G. Del Regno (1):
+>   firmware: qcom: scm: Add function to set IOMMU pagetable addressing
+> 
+> AngeloGioacchino Del Regno (6):
+>   iommu/qcom: Use the asid read from device-tree if specified
+>   iommu/qcom: Write TCR before TTBRs to fix ASID access behavior
+>   iommu/qcom: Properly reset the IOMMU context
+>   iommu/qcom: Add support for AArch64 IOMMU pagetables
+>   iommu/qcom: Index contexts by asid number to allow asid 0
+>   iommu/qcom: Add support for QCIOMMUv2 and QCIOMMU-500 secured contexts
+> 
+>  .../devicetree/bindings/iommu/qcom,iommu.txt  |   5 +
+>  drivers/firmware/qcom_scm-32.c                |   6 +
+>  drivers/firmware/qcom_scm-64.c                |  15 ++
+>  drivers/firmware/qcom_scm.c                   |   7 +
+>  drivers/firmware/qcom_scm.h                   |   4 +
+>  drivers/iommu/qcom_iommu.c                    | 134 ++++++++++++++----
+>  include/linux/qcom_scm.h                      |   2 +
+>  7 files changed, 145 insertions(+), 28 deletions(-)
+> 
 > -- 
-> The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
->  a Linux Foundation Collaborative Project
+> 2.21.0
 > 
