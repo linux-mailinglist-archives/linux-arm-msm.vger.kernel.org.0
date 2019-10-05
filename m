@@ -2,105 +2,91 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 2CDA9CC91F
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  5 Oct 2019 11:34:29 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0A064CC967
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  5 Oct 2019 12:41:52 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725985AbfJEJe2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 5 Oct 2019 05:34:28 -0400
-Received: from mail-wr1-f66.google.com ([209.85.221.66]:38653 "EHLO
+        id S1726654AbfJEKlv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 5 Oct 2019 06:41:51 -0400
+Received: from mail-wr1-f66.google.com ([209.85.221.66]:39309 "EHLO
         mail-wr1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725976AbfJEJe2 (ORCPT
+        with ESMTP id S1726283AbfJEKlv (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 5 Oct 2019 05:34:28 -0400
-Received: by mail-wr1-f66.google.com with SMTP id w12so9835289wro.5
-        for <linux-arm-msm@vger.kernel.org>; Sat, 05 Oct 2019 02:34:25 -0700 (PDT)
+        Sat, 5 Oct 2019 06:41:51 -0400
+Received: by mail-wr1-f66.google.com with SMTP id r3so9965156wrj.6
+        for <linux-arm-msm@vger.kernel.org>; Sat, 05 Oct 2019 03:41:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=ihOI4gm6hRizEvLNEnamyniwwFr7PUlkkpGC0HKX6Is=;
-        b=Y+scmVjJvbOUAqslPlcrUAq/YgPwU8/NJTPZBHaPt5UhgQrXVTWSgALCtRtsnipiAg
-         217v2lKEBiRmvYps/dylHmvxNWqTZz+lmD++8zfr48eZv8vuUiMfe1jm+hyCln6Ko9rH
-         h6sQLWcDI/eL5+uMzeYWw00cVL0h648N3CRam9yrnoIbsPrGFsA3nkkbA8OfgGuGEYRt
-         a9bh8OsxWt1sHzcYR6uJL+jFpoZ81Mb3kb0iMjjl7+tg1YyIGXt5iHQGBiehUHghB4go
-         WjeP/acvKaFRoL/ZxpvVy1ErJUfd6IayX6AsmIlS08jo4kY+lK/35Oxl9uLVKbPbxgJ1
-         8vkw==
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=Aw37vOBbBkbz/6eeQpQQebEhTdPnXBVYhPJICR6GWEk=;
+        b=iu2UidzNbGoPVZH9z3gqUJ4dpe50KWJPYLXeRPYzYh9rT+HybDZSElGqMpSeDFFwIJ
+         TUv53EKs1WrMNI2mOPcN36Ax5Ad5hamKsBXWP89Lt8k+UFho4l63YF59+jH2dFa+BtD3
+         anzJ7E5l1rgZJIWhGDH5VPWXYSXJQLCwX+djMRUIspe1j1qAGQyznx6VWSxDX/tSBuwC
+         voVY43jzRv0fINz8ndCnpj7adNHCN+7uQTjsN+JhgI4Iu8CHBQXqOThWI2glgAl2YlPC
+         4gqUtJYg+iSjHeMGIpvfpj5CpJVnyU246uL+80kVOOMk6g1yhZipAeRZPGliOHgwezz4
+         nBkQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=ihOI4gm6hRizEvLNEnamyniwwFr7PUlkkpGC0HKX6Is=;
-        b=oCkYCp86GIbmjrIT56N4NL6ClWUrNU4azS9wEkg9+sVxqAnm3d8WLOhHPcwI5pYA/X
-         lO2lGrqL8trDr/JEkRZHQG8APenrv07oyU3RKBheCMAZXkAqz4NRjOxjK2IdsFNjU4s2
-         L/eGUAkSbU8gwzLkDGPEEtXX9P0THqNaNVh4JL9xgsnKo1EJR23rcyYI9nulFAmbm12X
-         3E6xH1jXINDMcBNP/PlAILOEY9DP0Pxshe0OUry5zOzBSEnlrXjoUd075LCQNu6EDTUE
-         o+ztkiQjr6mNLxy7B6jvxx7gVwt7otz6/ALLlK2cWXt0cuAQSkQMSJCYcq944uDM3HJD
-         Ercg==
-X-Gm-Message-State: APjAAAXqBRjflCWW9P9qbQoBuQAASn5hGniw3lJAfeZGzv/cBJ+YYsWX
-        MmEGiagKUhk0nuqE4BE+7JdCEa+lBWlHvOmN84k=
-X-Google-Smtp-Source: APXvYqzuSPdg+b75mfuUEtIYzFjQFP/rJ2FCVGIOkYHn7gtTV04cbRPGovXTPMLxd4mgMDyuZDluyw+uNqPWeZkroTg=
-X-Received: by 2002:adf:ea88:: with SMTP id s8mr15762064wrm.114.1570268064627;
- Sat, 05 Oct 2019 02:34:24 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=Aw37vOBbBkbz/6eeQpQQebEhTdPnXBVYhPJICR6GWEk=;
+        b=BW8ZEvv4m6mN7dj+2k487uX3xRcyEhYkdAHV2XHayfSDgKvbqcTyVg2VZrey+PXbL1
+         fJE88dr/cAMf9ufi4W4UM99PF7Z1ZeCCTB/llPQynWz9YszsibsGRfNCM3Qsdg5Otxga
+         Qq2PAnnZ0LEbZy0F1xGRSxkRNkZisErE1Xk9/uN9xR4RTaFbBIBmTGdwWqyECBqO3I15
+         qfHyn/MLlDF8Vh2aFE1wl5jaCg+dfjqo4oTMRgsbGc6E+ldcsYVmNP3Z7skLTaVTl3Sy
+         WcN18C2NBRCKNQej0NJBGY8P85jr4wMOBWK1zAQ7gSynmLh8DO8dfCvYLzXb6PhAwI9r
+         CDTw==
+X-Gm-Message-State: APjAAAWFoM5A62DQdYFzKi7IAs6SGftNlDzYiuY2HMnq5SUrsoeB1Z8u
+        flIkimCWzdNTsFdzjL+PqzT+RrsfNzZjNA==
+X-Google-Smtp-Source: APXvYqwWMl6ik/LLtJtzFhc/KnPTOdjgQenXo4JxDBnIYFvI0sScz71/ZtXVNlYbbvhogcvzgiv+uA==
+X-Received: by 2002:adf:fa86:: with SMTP id h6mr14966830wrr.152.1570272108520;
+        Sat, 05 Oct 2019 03:41:48 -0700 (PDT)
+Received: from IcarusMOD.eternityproject.eu ([93.51.16.173])
+        by smtp.gmail.com with ESMTPSA id u4sm16471674wmg.41.2019.10.05.03.41.47
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Sat, 05 Oct 2019 03:41:47 -0700 (PDT)
+From:   kholk11@gmail.com
+To:     linux-arm-msm@vger.kernel.org
+Cc:     kholk11@gmail.com, marijns95@gmail.com, agross@kernel.org,
+        daniel.lezcano@linaro.org, robh+dt@kernel.org,
+        mark.rutland@arm.com, amit.kucheria@linaro.org
+Subject: [PATCH v3 0/3] Add TSENS support for MSM8956/76
+Date:   Sat,  5 Oct 2019 12:41:30 +0200
+Message-Id: <20191005104133.30297-1-kholk11@gmail.com>
+X-Mailer: git-send-email 2.21.0
 MIME-Version: 1.0
-References: <20191001085707.8424-1-kholk11@gmail.com> <20191001085707.8424-2-kholk11@gmail.com>
- <CAP245DXyPraU_cL6PezSLL8sHP7-JQ6J-qtjqfV6eOxmhOb9pg@mail.gmail.com>
- <f1881a4a-f8d4-ec64-972f-cbef506bef0c@linaro.org> <CAHLCerPXEXV_poraTzS93Ximitf-mx=CNdCikfczNfW7_NUSfA@mail.gmail.com>
-In-Reply-To: <CAHLCerPXEXV_poraTzS93Ximitf-mx=CNdCikfczNfW7_NUSfA@mail.gmail.com>
-From:   AngeloGioacchino Del Regno <kholk11@gmail.com>
-Date:   Sat, 5 Oct 2019 11:34:13 +0200
-Message-ID: <CAK7fi1Y3NizYq9R+F=aMFAzkt0qcJAWf40f_SGDchkF3orq9qg@mail.gmail.com>
-Subject: Re: [PATCH v2 1/2] thermal: qcom: tsens-v1: Add support for MSM8956
- and MSM8976
-To:     Amit Kucheria <amit.kucheria@linaro.org>
-Cc:     Daniel Lezcano <daniel.lezcano@linaro.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        marijns95@gmail.com, Andy Gross <agross@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Mark Rutland <mark.rutland@arm.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Il giorno gio 3 ott 2019 alle ore 16:02 Amit Kucheria
-<amit.kucheria@linaro.org> ha scritto:
->
-> On Wed, Oct 2, 2019 at 8:57 AM Daniel Lezcano <daniel.lezcano@linaro.org> wrote:
-> >
-> > On 02/10/2019 01:00, Amit Kucheria wrote:
-> > > On Tue, Oct 1, 2019 at 2:27 PM <kholk11@gmail.com> wrote:
-> > >>
-> > >> From: AngeloGioacchino Del Regno <kholk11@gmail.com>
-> > >>
-> > >> Add support for reading calibrated value from thermistors in
-> > >> MSM8956, MSM8976 and their APQ variants.
-> > >>
-> > >> Signed-off-by: AngeloGioacchino Del Regno <kholk11@gmail.com>
-> > >> ---
-> >
-> > [ ... ]
-> >
-> > >> -/* v1.x: qcs404,405 */
-> > >> +static int calibrate_8976(struct tsens_priv *priv)
-> > >> +{
-> > >> +       int base0 = 0, base1 = 0, i;
-> > >> +       u32 p1[11], p2[11];
-> > >> +       int mode = 0, tmp = 0;
-> > >> +       u32 *qfprom_cdata;
-> > >> +
-> > >> +       qfprom_cdata = (u32 *)qfprom_read(priv->dev, "calib");
-> > >> +       if (IS_ERR(qfprom_cdata))
-> > >
-> > > kfree(qfprom_data) here
-> >
-> > (Assuming s/qfprom_data/qfprom_cdata/)
-> >
-> > Where the allocation happen?
-> >
->
-> nvmem_cell_read() call inside qfprom_read()
->
-> /Amit
+From: AngeloGioacchino Del Regno <kholk11@gmail.com>
 
-Thanks for the review. I will apply the suggested changes and resend ASAP.
+Add the TSENS support for MSM8956/76 using TSENS IP v1.
+
+This code has been tested on two Sony phones featuring the Qualcomm
+MSM8956 SoC.
+
+Changes in v2:
+- Switched documentation to YAML (Amit)
+- Changed code style as per request (Amit)
+
+Changes in v3:
+- Added suggested kfree in calibrate_8976 (Amit)
+- Also fixed the calibrate_v1 for missing kfree(s).
+
+AngeloGioacchino Del Regno (3):
+  thermal: qcom: tsens-v1: Add support for MSM8956 and MSM8976
+  dt: thermal: tsens: Document compatible for MSM8976/56
+  thermal: qcom: tsens-v1: Free memory in calibrate_v1 where required
+
+ .../bindings/thermal/qcom-tsens.yaml          |   2 +
+ drivers/thermal/qcom/tsens-v1.c               | 176 +++++++++++++++++-
+ drivers/thermal/qcom/tsens.c                  |   3 +
+ drivers/thermal/qcom/tsens.h                  |   2 +-
+ 4 files changed, 180 insertions(+), 3 deletions(-)
+
+-- 
+2.21.0
+
