@@ -2,113 +2,122 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 5E52FCC7DF
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  5 Oct 2019 06:26:52 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 59F7BCC7E6
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  5 Oct 2019 06:38:40 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726446AbfJEE0v (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 5 Oct 2019 00:26:51 -0400
-Received: from szxga07-in.huawei.com ([45.249.212.35]:41374 "EHLO huawei.com"
-        rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-        id S1726327AbfJEE0v (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 5 Oct 2019 00:26:51 -0400
-Received: from DGGEMS404-HUB.china.huawei.com (unknown [172.30.72.58])
-        by Forcepoint Email with ESMTP id 1624C2645E4749C055E1;
-        Sat,  5 Oct 2019 12:26:50 +0800 (CST)
-Received: from huawei.com (10.90.53.225) by DGGEMS404-HUB.china.huawei.com
- (10.3.19.204) with Microsoft SMTP Server id 14.3.439.0; Sat, 5 Oct 2019
- 12:26:39 +0800
-From:   zhengbin <zhengbin13@huawei.com>
-To:     <robdclark@gmail.com>, <sean@poorly.run>, <airlied@linux.ie>,
-        <daniel@ffwll.ch>, <jsanka@codeaurora.org>,
-        <jcrouse@codeaurora.org>, <gregkh@linuxfoundation.org>,
-        <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
-        <freedreno@lists.freedesktop.org>
-CC:     <zhengbin13@huawei.com>
-Subject: [PATCH 6/6] drm/msm/dpu: Remove set but not used variables 'mode','dpu_kms','priv'
-Date:   Sat, 5 Oct 2019 12:33:49 +0800
-Message-ID: <1570250029-67639-7-git-send-email-zhengbin13@huawei.com>
-X-Mailer: git-send-email 2.7.4
-In-Reply-To: <1570250029-67639-1-git-send-email-zhengbin13@huawei.com>
-References: <1570250029-67639-1-git-send-email-zhengbin13@huawei.com>
+        id S1726439AbfJEEij (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 5 Oct 2019 00:38:39 -0400
+Received: from mail-pf1-f196.google.com ([209.85.210.196]:42434 "EHLO
+        mail-pf1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726285AbfJEEij (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Sat, 5 Oct 2019 00:38:39 -0400
+Received: by mail-pf1-f196.google.com with SMTP id q12so5091365pff.9
+        for <linux-arm-msm@vger.kernel.org>; Fri, 04 Oct 2019 21:38:38 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=gojjLX+lTwGZmg+qENDnRVGuBFOraGHa2B2vpf7iVZU=;
+        b=aoJD5LqfjCMzYKl2Xwu3Wklmzvu7Hh9AhSF/aixsCOh0sn3oS4pK3FjHL/0jBgFAqU
+         UQ5M799eRDsX9N3DOgF89P6R8Pt9oHIg9YqJ+u22TNw15lvNiMYLxneCH39xxlCkookY
+         E6b9yZ9zR+j8gRX5pq7hv1c5ST9WyOm7pn/Tc8agfncncn9s/5O6d1EohcNBYMSTECtG
+         G2XqTK5nejhi/RHWpIa9Z6yjy7Q2U11yrCrnU2Y0iCOtGhQryHhfmlDctxdCueziuQE+
+         NY13ZbDKQ+Pk3RIT/g4g2KBOYVDSsQm/LHsKj+9MvSP5JCyPS66DWRYHAJMXVqKMuHzf
+         Jg8Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=gojjLX+lTwGZmg+qENDnRVGuBFOraGHa2B2vpf7iVZU=;
+        b=oJ4XMhB23fvp6qolxZEwBX9jZCtjxEE1efJkH1V0+dlFucozzQyiBuD5xPt3RAiKP0
+         mpB10ttoswDDrk4J8GV/XLQbCGlpfXeBKesT1krUTlGK7a/FjTL7TnrXrZoqw2JALEhc
+         NAX4BQYMQam8gWEvNwD//54KRXs+kCRUPM3xxgG2FSbBmuTv1TUC8tFH36DNXIU4LWpe
+         F7+/orsHe2nUxbDJcEOjGVCmw0NFZB8vMTzFrUPZ/v5JkxfsYhpFCF7Y16vqNEv31uiB
+         /GTuZZ7DRyAdbteht0AdJb3UecnApGxe1Z20ZDVcZ0pBNKMbNCziq0COm6raI2sPDVQj
+         qy8g==
+X-Gm-Message-State: APjAAAWJcdNd7pEki/n6gtp3pMlp7+7aIR3VXwX14CFGzENCbpbjp5RF
+        redb0AYQVNJmhSv0lRfa773G6g==
+X-Google-Smtp-Source: APXvYqybrYaoAQQO0OhNSmIB0UUOdfqyJ4Qu//EasKPhAapNYmiKSK5FOIodqcUwgnxNhBbXOE/eTQ==
+X-Received: by 2002:a65:5546:: with SMTP id t6mr18868858pgr.441.1570250318244;
+        Fri, 04 Oct 2019 21:38:38 -0700 (PDT)
+Received: from tuxbook-pro (104-188-17-28.lightspeed.sndgca.sbcglobal.net. [104.188.17.28])
+        by smtp.gmail.com with ESMTPSA id 1sm8310336pff.39.2019.10.04.21.38.36
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 04 Oct 2019 21:38:37 -0700 (PDT)
+Date:   Fri, 4 Oct 2019 21:38:35 -0700
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     Kiran Gunda <kgunda@codeaurora.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Linus Walleij <linus.walleij@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Mark Rutland <mark.rutland@arm.com>,
+        linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH V1] dt-bindings: pinctrl: qcom-pmic-gpio: Add support for
+ pm6150/pm6150l
+Message-ID: <20191005043835.GD6390@tuxbook-pro>
+References: <1570188039-22122-1-git-send-email-kgunda@codeaurora.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Originating-IP: [10.90.53.225]
-X-CFilter-Loop: Reflected
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <1570188039-22122-1-git-send-email-kgunda@codeaurora.org>
+User-Agent: Mutt/1.12.1 (2019-06-15)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Fixes gcc '-Wunused-but-set-variable' warning:
+On Fri 04 Oct 04:20 PDT 2019, Kiran Gunda wrote:
 
-drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c: In function dpu_encoder_virt_disable:
-drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c:1199:27: warning: variable mode set but not used [-Wunused-but-set-variable]
-drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c: In function _dpu_encoder_init_debugfs:
-drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c:1963:18: warning: variable dpu_kms set but not used [-Wunused-but-set-variable]
-drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c: In function dpu_encoder_frame_done_timeout:
-drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c:2183:26: warning: variable priv set but not used [-Wunused-but-set-variable]
+> Add support for the PM6150 and PM6150L GPIO support to the
+> Qualcomm PMIC GPIO binding.
+> 
+> Signed-off-by: Kiran Gunda <kgunda@codeaurora.org>
 
-They are not used since commit 25fdd5933e4c ("drm/msm:
-Add SDM845 DPU support")
+Acked-by: Bjorn Andersson <bjorn.andersson@linaro.org>
 
-Reported-by: Hulk Robot <hulkci@huawei.com>
-Signed-off-by: zhengbin <zhengbin13@huawei.com>
----
- drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c | 7 -------
- 1 file changed, 7 deletions(-)
-
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
-index d82ea99..e6fe208 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
-@@ -1184,7 +1184,6 @@ static void dpu_encoder_virt_disable(struct drm_encoder *drm_enc)
- 	struct dpu_encoder_virt *dpu_enc = NULL;
- 	struct msm_drm_private *priv;
- 	struct dpu_kms *dpu_kms;
--	struct drm_display_mode *mode;
- 	int i = 0;
-
- 	if (!drm_enc) {
-@@ -1204,8 +1203,6 @@ static void dpu_encoder_virt_disable(struct drm_encoder *drm_enc)
- 	mutex_lock(&dpu_enc->enc_lock);
- 	dpu_enc->enabled = false;
-
--	mode = &drm_enc->crtc->state->adjusted_mode;
--
- 	priv = drm_enc->dev->dev_private;
- 	dpu_kms = to_dpu_kms(priv->kms);
-
-@@ -1915,7 +1912,6 @@ static int _dpu_encoder_init_debugfs(struct drm_encoder *drm_enc)
- {
- 	struct dpu_encoder_virt *dpu_enc = to_dpu_encoder_virt(drm_enc);
- 	struct msm_drm_private *priv;
--	struct dpu_kms *dpu_kms;
- 	int i;
-
- 	static const struct file_operations debugfs_status_fops = {
-@@ -1933,7 +1929,6 @@ static int _dpu_encoder_init_debugfs(struct drm_encoder *drm_enc)
- 	}
-
- 	priv = drm_enc->dev->dev_private;
--	dpu_kms = to_dpu_kms(priv->kms);
-
- 	snprintf(name, DPU_NAME_SIZE, "encoder%u", drm_enc->base.id);
-
-@@ -2133,14 +2128,12 @@ static void dpu_encoder_frame_done_timeout(struct timer_list *t)
- 	struct dpu_encoder_virt *dpu_enc = from_timer(dpu_enc, t,
- 			frame_done_timer);
- 	struct drm_encoder *drm_enc = &dpu_enc->base;
--	struct msm_drm_private *priv;
- 	u32 event;
-
- 	if (!drm_enc->dev || !drm_enc->dev->dev_private) {
- 		DPU_ERROR("invalid parameters\n");
- 		return;
- 	}
--	priv = drm_enc->dev->dev_private;
-
- 	if (!dpu_enc->frame_busy_mask[0] || !dpu_enc->crtc_frame_event_cb) {
- 		DRM_DEBUG_KMS("id:%u invalid timeout frame_busy_mask=%lu\n",
---
-2.7.4
-
+> ---
+>  Documentation/devicetree/bindings/pinctrl/qcom,pmic-gpio.txt | 4 ++++
+>  drivers/pinctrl/qcom/pinctrl-spmi-gpio.c                     | 2 ++
+>  2 files changed, 6 insertions(+)
+> 
+> diff --git a/Documentation/devicetree/bindings/pinctrl/qcom,pmic-gpio.txt b/Documentation/devicetree/bindings/pinctrl/qcom,pmic-gpio.txt
+> index c32bf32..2f48cca 100644
+> --- a/Documentation/devicetree/bindings/pinctrl/qcom,pmic-gpio.txt
+> +++ b/Documentation/devicetree/bindings/pinctrl/qcom,pmic-gpio.txt
+> @@ -23,6 +23,8 @@ PMIC's from Qualcomm.
+>  		    "qcom,pms405-gpio"
+>  		    "qcom,pm8150-gpio"
+>  		    "qcom,pm8150b-gpio"
+> +		    "qcom,pm6150-gpio"
+> +		    "qcom,pm6150l-gpio"
+>  
+>  		    And must contain either "qcom,spmi-gpio" or "qcom,ssbi-gpio"
+>  		    if the device is on an spmi bus or an ssbi bus respectively
+> @@ -100,6 +102,8 @@ to specify in a pin configuration subnode:
+>  					     and gpio8)
+>  		    gpio1-gpio12 for pm8150b (holes on gpio3, gpio4, gpio7)
+>  		    gpio1-gpio12 for pm8150l (hole on gpio7)
+> +		    gpio1-gpio10 for pm6150
+> +		    gpio1-gpio12 for pm6150l
+>  
+>  - function:
+>  	Usage: required
+> diff --git a/drivers/pinctrl/qcom/pinctrl-spmi-gpio.c b/drivers/pinctrl/qcom/pinctrl-spmi-gpio.c
+> index f1fece5..387917c 100644
+> --- a/drivers/pinctrl/qcom/pinctrl-spmi-gpio.c
+> +++ b/drivers/pinctrl/qcom/pinctrl-spmi-gpio.c
+> @@ -1121,6 +1121,8 @@ static int pmic_gpio_remove(struct platform_device *pdev)
+>  	{ .compatible = "qcom,pm8150b-gpio", .data = (void *) 12 },
+>  	/* pm8150l has 12 GPIOs with holes on 7 */
+>  	{ .compatible = "qcom,pm8150l-gpio", .data = (void *) 12 },
+> +	{ .compatible = "qcom,pm6150-gpio", .data = (void *) 10 },
+> +	{ .compatible = "qcom,pm6150l-gpio", .data = (void *) 12 },
+>  	{ },
+>  };
+>  
+> -- 
+> The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
+>  a Linux Foundation Collaborative Project
+> 
