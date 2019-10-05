@@ -2,174 +2,148 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 8697FCC915
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  5 Oct 2019 11:23:33 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 67CC5CC91C
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  5 Oct 2019 11:32:50 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726853AbfJEJXc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 5 Oct 2019 05:23:32 -0400
-Received: from mail-wm1-f65.google.com ([209.85.128.65]:34478 "EHLO
-        mail-wm1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725862AbfJEJXc (ORCPT
+        id S1725901AbfJEJct (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 5 Oct 2019 05:32:49 -0400
+Received: from mail-wr1-f68.google.com ([209.85.221.68]:38514 "EHLO
+        mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725862AbfJEJct (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 5 Oct 2019 05:23:32 -0400
-Received: by mail-wm1-f65.google.com with SMTP id y135so11220172wmc.1;
-        Sat, 05 Oct 2019 02:23:29 -0700 (PDT)
+        Sat, 5 Oct 2019 05:32:49 -0400
+Received: by mail-wr1-f68.google.com with SMTP id w12so9832482wro.5
+        for <linux-arm-msm@vger.kernel.org>; Sat, 05 Oct 2019 02:32:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=hjzyggOz9U/yn8evnsKwr6dIVzKr7dCckaek808/z2g=;
-        b=EJ0T65b2yF5ELwKmMgkJNTG+J47ImouATVjqm2hVHsVw0xGo+gG8mZcw9QC8wXSU4t
-         0r+FKBtQb0kVp0JqNpX87Uw3PuL6wpY9MAU0TFF90qgeEe7WJW1xexxZuW3Giy9KWV6B
-         pLYmkHJNXGOFT9KwkS37cyp43p4TGPVOQV+qeKjnKoJTmKm4pIFyhc/xtOtMhqySBiza
-         pqY419wuCCG5aE9w7ra5NLmr2OWnSV6yjDoowLk5VaHh3hqXKjrJYp53kQWlQ+pIjsVH
-         IuhPR47+faUZI0GD5iju7iVf4z/BfcbRw2NgYaB+Rj0iCfuhX8frwck7HG1wEO64sFCg
-         YHzA==
+        bh=pntu1CK1dS0lzxHUf7ofFrO+ckSUEFkqFaRN5hyK1jU=;
+        b=HGgoSK/5GYJR0F3GhQO9EUDjvhWsWUTrsahMmDknizjIbjJmLjXRmbnisKdFDlw1tb
+         Fw4MJLW8E2VlPwkt0nwPlxiBoKuW/zCsEPpThmchb3CrQ3EqAH++QFEoesimKCIWnVMD
+         ofLDZFqsBr+ThbFkMO2EfB8ZESM7/7KgpNq7fsk9/g+RlViKrzfXbIdHT1Qhbu3lvIMx
+         UtXgkQ9vuoDvl5oMsNJk8JnHyaxlk1f4aIVnAav3PF6OoByX1K6fCXrEjXLm1henmxoK
+         f1Y2evRq/iKiWRz1owlmAHKpucSsklKC/tTRzPWTL/JTKLa3oXOkfuVKdQvl9A4NfQf2
+         AmAg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=hjzyggOz9U/yn8evnsKwr6dIVzKr7dCckaek808/z2g=;
-        b=f/H8usVs9mF2V/QBvhyYowERoeYkjX4uuVON8zFYueSwAwtWY3ULvWagmJ2Uf+ycQL
-         bMedSQ1mNlvjZPIMSRxJCHsUFITZwOtbkbXglXWxZ/qtcgONT43IQFsG+5v9lJ/SbUv4
-         h/BiTKIF8EC9lQVphYSjyygIG7i6Sep+3YTXP9eXlZP0qvDMezIZp0jLzzRoStdxJYEZ
-         mM0wivnuh6JBuG0UVUtOYXjdJZS7qCey3lQck2k6CQwsZPI0qqw6uSFrN9NT7iIfO/CO
-         0yJlh+oAViyL8KEu+jHhYTlhfsPofd5E158eZI9gsNV3l2LOTJe5mC7OhB+9uDrlOie0
-         mesA==
-X-Gm-Message-State: APjAAAU18Fbs9Erw+vx+3niGmmrwmEpFGaj6c+9KsEp6bVoaflOB8ZzC
-        Qo57r963RfBInjqitSJ4ZynJ2nhYO5I2zG+iO/sBeC9p1V0=
-X-Google-Smtp-Source: APXvYqzdjuti+4Bh0M6nr+3a67DRXE95QOoL5hlBGjUvhD538JgZ2Mm+5XvQ5ajCq26jlPE6zUI/zatYUFSvWudS9lY=
-X-Received: by 2002:a1c:8097:: with SMTP id b145mr5266595wmd.29.1570267408889;
- Sat, 05 Oct 2019 02:23:28 -0700 (PDT)
+        bh=pntu1CK1dS0lzxHUf7ofFrO+ckSUEFkqFaRN5hyK1jU=;
+        b=mlFGzcC6/h5QGPqV2rM2M6EATtP9n8G6opoMlbfgLlhn+Snggx2sfXZB2dbxnXO1xT
+         rCgIBbqsAQzcnwODKvQSpnWixf7IHSUjkUurtFlo1RVmPZsR95jWMXPMLIAcwag2cKQW
+         4NxPloKFj+3R7sF6rMyNBo/VNYtU+mMZroyIhfEkPgJUi3ytjVXLFfrYkh9VSKy8UD31
+         sgM1WlK9myQ47I5lXzNgReTs6akeVDgzE0fXTqbCi2o+tg2BES8jW10B1Tq83vhRoqgT
+         z6Wg5YqUK+8Yy7VzMmE8s0MMmHmCFLOYoBh0EHBZQBl7Jpb0+tpCgLBUDx3uQQRTNfrA
+         DtfQ==
+X-Gm-Message-State: APjAAAWiy8n6pWvdiYNWttSq7BQr5lQihqPtW1X4SMUuOXxPczf3K6MI
+        CHXVQd2qr8GFnCh+6O/m1URHx6zhus9G7PwyxT4=
+X-Google-Smtp-Source: APXvYqxNtYBHk5Odq96y9vD4Gs9Bcv17kGdUpQoSlANLkRooaQClL7PwH5ECnkRRm/7MQgBARX7Ox4LIRBgsSh74Oz4=
+X-Received: by 2002:a05:6000:1090:: with SMTP id y16mr14481615wrw.316.1570267966846;
+ Sat, 05 Oct 2019 02:32:46 -0700 (PDT)
 MIME-Version: 1.0
-References: <20190921101207.65042-1-kholk11@gmail.com> <20190921101207.65042-6-kholk11@gmail.com>
- <20191005042559.GB6390@tuxbook-pro>
-In-Reply-To: <20191005042559.GB6390@tuxbook-pro>
+References: <20191001220205.6423-1-kholk11@gmail.com> <20191005045626.GE6390@tuxbook-pro>
+In-Reply-To: <20191005045626.GE6390@tuxbook-pro>
 From:   AngeloGioacchino Del Regno <kholk11@gmail.com>
-Date:   Sat, 5 Oct 2019 11:23:17 +0200
-Message-ID: <CAK7fi1a8YK-P+ZdcDQBFFR=4rL2jW+XPPTD=WUYYdi=Oyk0u=Q@mail.gmail.com>
-Subject: Re: [PATCH 5/5] soc: qcom: rpmpd: Add rpm power domains for msm8956
+Date:   Sat, 5 Oct 2019 11:32:35 +0200
+Message-ID: <CAK7fi1ZkjV6vt=OeRYz2JGC9v4n4eb5Rupqc0TWQmnM1UdJ-mg@mail.gmail.com>
+Subject: Re: [PATCH v4 0/7] Add support for QCOM IOMMU v2 and 500
 To:     Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     MSM <linux-arm-msm@vger.kernel.org>, marijns95@gmail.com,
-        agross@kernel.org, Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Mark Rutland <mark.rutland@arm.com>,
-        Linus Walleij <linus.walleij@linaro.org>,
-        linux-clk@vger.kernel.org, linux-gpio@vger.kernel.org
+Cc:     MSM <linux-arm-msm@vger.kernel.org>,
+        iommu@lists.linux-foundation.org, marijns95@gmail.com,
+        agross@kernel.org, Rob Clark <robdclark@gmail.com>, joro@8bytes.org
 Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Il giorno sab 5 ott 2019 alle ore 06:26 Bjorn Andersson
+Il giorno sab 5 ott 2019 alle ore 06:56 Bjorn Andersson
 <bjorn.andersson@linaro.org> ha scritto:
 >
-> On Sat 21 Sep 03:12 PDT 2019, kholk11@gmail.com wrote:
+> On Tue 01 Oct 15:01 PDT 2019, kholk11@gmail.com wrote:
 >
-> > From: "Angelo G. Del Regno" <kholk11@gmail.com>
+> > From: AngeloGioacchino Del Regno <kholk11@gmail.com>
 > >
-> > The MSM8956 SoC has two main voltage-level power domains, VDD_CX
-> > and VDD_MX, which also have their own voltage-floor-level (VFL)
-> > corner.
+> > Some Qualcomm Family-B SoCs have got a different version of the QCOM
+> > IOMMU, specifically v2 and 500, which perfectly adhere to the current
+> > qcom_iommu driver, but need some variations due to slightly different
+> > hypervisor behavior.
 > >
-> > Signed-off-by: Angelo G. Del Regno <kholk11@gmail.com>
 >
-> I was under the impression that 8956/76 can be used interchangeably, if
-> so I would prefer if you pick one (8976 as that seems to be your common
-> choice) and stick with that.
+> Do you think it's out of the question to get the arm-smmu driver to play
+> nice with this platform?
 >
-> If not, I think it would be nice if all bindings came with both
-> compatibles.
+>
+> If not, would it be possible to change the DT binding so that we specify
+> the SID and then read the SMR and S2CR registers to figure out the
+> associated context bank?
 >
 > Regards,
 > Bjorn
 >
-> > ---
-> >  .../devicetree/bindings/power/qcom,rpmpd.txt  |  1 +
-> >  drivers/soc/qcom/rpmpd.c                      | 23 +++++++++++++++++++
-> >  include/dt-bindings/power/qcom-rpmpd.h        |  8 +++++++
-> >  3 files changed, 32 insertions(+)
+> > The personal aim is to upstream MSM8956 as much as possible.
 > >
-> > diff --git a/Documentation/devicetree/bindings/power/qcom,rpmpd.txt b/Documentation/devicetree/bindings/power/qcom,rpmpd.txt
-> > index eb35b22f9e23..30176b1e595a 100644
-> > --- a/Documentation/devicetree/bindings/power/qcom,rpmpd.txt
-> > +++ b/Documentation/devicetree/bindings/power/qcom,rpmpd.txt
-> > @@ -5,6 +5,7 @@ which then translates it into a corresponding voltage on a rail
+> > This code has been tested on two Sony phones featuring the Qualcomm
+> > MSM8956 SoC.
 > >
-> >  Required Properties:
-> >   - compatible: Should be one of the following
-> > +     * qcom,msm8956-rpmpd: RPM Power domain for the msm8956 family of SoC
-> >       * qcom,msm8996-rpmpd: RPM Power domain for the msm8996 family of SoC
-> >       * qcom,msm8998-rpmpd: RPM Power domain for the msm8998 family of SoC
-> >       * qcom,qcs404-rpmpd: RPM Power domain for the qcs404 family of SoC
-> > diff --git a/drivers/soc/qcom/rpmpd.c b/drivers/soc/qcom/rpmpd.c
-> > index 3c1a55cf25d6..b50f62851461 100644
-> > --- a/drivers/soc/qcom/rpmpd.c
-> > +++ b/drivers/soc/qcom/rpmpd.c
-> > @@ -115,6 +115,28 @@ struct rpmpd_desc {
+> > Changes in v2:
+> > - Fixed optional properties placement in documentation
 > >
-> >  static DEFINE_MUTEX(rpmpd_lock);
+> > Changes in v3:
+> > - Rebased onto linux-next 01/10/2019
+> > - Added missing SCM commit (required by the AArch64 PT switch support)
 > >
-> > +/* msm8956 RPM Power Domains */
-> > +DEFINE_RPMPD_PAIR(msm8956, vddcx, vddcx_ao, SMPA, LEVEL, 2);
-> > +DEFINE_RPMPD_PAIR(msm8956, vddmx, vddmx_ao, SMPA, LEVEL, 6);
-> > +
-> > +DEFINE_RPMPD_VFL(msm8956, vddcx_vfl, RWSC, 2);
-> > +DEFINE_RPMPD_VFL(msm8956, vddmx_vfl, RWSM, 6);
-> > +
-> > +static struct rpmpd *msm8956_rpmpds[] = {
-> > +     [MSM8956_VDDCX] =       &msm8956_vddcx,
-> > +     [MSM8956_VDDCX_AO] =    &msm8956_vddcx_ao,
-> > +     [MSM8956_VDDCX_VFL] =   &msm8956_vddcx_vfl,
-> > +     [MSM8956_VDDMX] =       &msm8956_vddmx,
-> > +     [MSM8956_VDDMX_AO] =    &msm8956_vddmx_ao,
-> > +     [MSM8956_VDDMX_VFL] =   &msm8956_vddmx_vfl,
-> > +};
-> > +
-> > +static const struct rpmpd_desc msm8956_desc = {
-> > +     .rpmpds = msm8956_rpmpds,
-> > +     .num_pds = ARRAY_SIZE(msm8956_rpmpds),
-> > +     .max_state = RPM_SMD_LEVEL_TURBO_HIGH,
-> > +};
-> > +
-> >  /* msm8996 RPM Power domains */
-> >  DEFINE_RPMPD_PAIR(msm8996, vddcx, vddcx_ao, SMPA, CORNER, 1);
-> >  DEFINE_RPMPD_PAIR(msm8996, vddmx, vddmx_ao, SMPA, CORNER, 2);
-> > @@ -198,6 +220,7 @@ static const struct rpmpd_desc qcs404_desc = {
-> >  };
+> > Changes in v4:
+> > - Removed rej files from the SCM patch (I'm truly sorry for the noise...)
 > >
-> >  static const struct of_device_id rpmpd_match_table[] = {
-> > +     { .compatible = "qcom,msm8956-rpmpd", .data = &msm8956_desc },
-> >       { .compatible = "qcom,msm8996-rpmpd", .data = &msm8996_desc },
-> >       { .compatible = "qcom,msm8998-rpmpd", .data = &msm8998_desc },
-> >       { .compatible = "qcom,qcs404-rpmpd", .data = &qcs404_desc },
-> > diff --git a/include/dt-bindings/power/qcom-rpmpd.h b/include/dt-bindings/power/qcom-rpmpd.h
-> > index 30a0aee0df57..3423f964c233 100644
-> > --- a/include/dt-bindings/power/qcom-rpmpd.h
-> > +++ b/include/dt-bindings/power/qcom-rpmpd.h
-> > @@ -27,6 +27,14 @@
-> >  #define RPMH_REGULATOR_LEVEL_TURBO   384
-> >  #define RPMH_REGULATOR_LEVEL_TURBO_L1        416
+> > Angelo G. Del Regno (1):
+> >   firmware: qcom: scm: Add function to set IOMMU pagetable addressing
 > >
-> > +/* MSM8956 Power Domain Indexes */
-> > +#define MSM8956_VDDCX                0
-> > +#define MSM8956_VDDCX_AO     1
-> > +#define MSM8956_VDDCX_VFL    2
-> > +#define MSM8956_VDDMX                3
-> > +#define MSM8956_VDDMX_AO     4
-> > +#define MSM8956_VDDMX_VFL    5
-> > +
-> >  /* MSM8996 Power Domain Indexes */
-> >  #define MSM8996_VDDCX                0
-> >  #define MSM8996_VDDCX_AO     1
+> > AngeloGioacchino Del Regno (6):
+> >   iommu/qcom: Use the asid read from device-tree if specified
+> >   iommu/qcom: Write TCR before TTBRs to fix ASID access behavior
+> >   iommu/qcom: Properly reset the IOMMU context
+> >   iommu/qcom: Add support for AArch64 IOMMU pagetables
+> >   iommu/qcom: Index contexts by asid number to allow asid 0
+> >   iommu/qcom: Add support for QCIOMMUv2 and QCIOMMU-500 secured contexts
+> >
+> >  .../devicetree/bindings/iommu/qcom,iommu.txt  |   5 +
+> >  drivers/firmware/qcom_scm-32.c                |   6 +
+> >  drivers/firmware/qcom_scm-64.c                |  15 ++
+> >  drivers/firmware/qcom_scm.c                   |   7 +
+> >  drivers/firmware/qcom_scm.h                   |   4 +
+> >  drivers/iommu/qcom_iommu.c                    | 134 ++++++++++++++----
+> >  include/linux/qcom_scm.h                      |   2 +
+> >  7 files changed, 145 insertions(+), 28 deletions(-)
+> >
 > > --
 > > 2.21.0
 > >
 
-Yup. My brain stopped working for a minute on that patch :)))
-This is applicable to both MSM8956 and MSM8976... and the other drivers that
-I've sent are actually reporting a 8976 compatible, so, yes I'll
-resend that one as
-8976 instead.
+In reality, when I started the IOMMU integration for this SoC, the
+arm-smmu didn't even
+have the new arm-smmu-impl stuff....
+I tried multiple times to get the arm-smmu driver to play nice with
+this IOMMU, but it's
+really too much work to do there, (even with the new arm-smmu-impl
+stuff) as we would
+have to make a lot of changes in that driver just to support
+this thing which, yes - it's standard-ish - but no, due to the
+firmware configuration that
+happens on this kind of platforms (the entire family, 8917, 8953,
+8956, 8976 and others)
+there is a lil percent of the arm-smmu code that would apply.
+
+Shorter said, since it would be a complete mess to integrate the
+support there, IMHO
+it's really not a good idea.
+In my trials for that I've ended up changing like 50% of the arm-smmu driver.
+
+After all, the qcom_iommu driver is there to get IOMMUs with this kind
+of firmware
+configuration working and, even if it was originally done for
+QCIOMMUv1, as I have
+also explained in one of the patches here, 98-99% of the reasons why we have a
+separate driver called qcom_iommu are applying to the implementation
+that I've done.
