@@ -2,114 +2,140 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 3B085CC68D
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  5 Oct 2019 01:31:36 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 2A7D8CC792
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  5 Oct 2019 05:59:37 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729439AbfJDXbf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 4 Oct 2019 19:31:35 -0400
-Received: from mail-pg1-f195.google.com ([209.85.215.195]:46684 "EHLO
-        mail-pg1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729214AbfJDXbf (ORCPT
+        id S1726816AbfJED7g (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 4 Oct 2019 23:59:36 -0400
+Received: from mail-pf1-f196.google.com ([209.85.210.196]:42498 "EHLO
+        mail-pf1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726814AbfJED7g (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 4 Oct 2019 19:31:35 -0400
-Received: by mail-pg1-f195.google.com with SMTP id a3so4564835pgm.13
-        for <linux-arm-msm@vger.kernel.org>; Fri, 04 Oct 2019 16:31:34 -0700 (PDT)
+        Fri, 4 Oct 2019 23:59:36 -0400
+Received: by mail-pf1-f196.google.com with SMTP id q12so5052291pff.9
+        for <linux-arm-msm@vger.kernel.org>; Fri, 04 Oct 2019 20:59:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=Z/e8EWlo6oLC7kCwtiuv+KxxSwajNXvXX9ykyyY6BXQ=;
-        b=A9cyjOZfmGNJRtBUCkiBi2TuxwF55Q/M0+hqtI34DENevjHtgY9umyIm7u36Iz0j+g
-         Lkd4Ob68hSOl0uzuZTbsgLxNwwwb9nHDqlVVzndUFWVcTvi2G8I0/p/YuMAcd79CNQWO
-         5SkxAMqekumVhVpWVAADypyDFqRazJQxzofpQ=
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=gpGqz6qLsuq0UsH1+84/WmkwPkrLAGN7fBYEexcSldM=;
+        b=uK++wzGosptpGduXlSUxTUHmlRO1XWli+xCI7im3pB0zG8jAFV2/Qb2ASfjQpbv3OP
+         hhX5dlNkKgV8w7EVNVVbAshg+Ep8TLo6MDHeflph1ILzI6HTyk+JVqxsCbrYeUUX8rbk
+         p4VF5L7SGVWmZO3N1gNqRBw6n70jg8S7KhWjlxNLhz6LP1reXQGjaPvlyCdUk7kXZp8e
+         cYc6XYG8mrLCun653UUFiHKWRnwj9SHtbbc2AzEwJ3UkHTVHssAS8uvTE73JqyByuyo0
+         GDFYYaAHekIUKdVLufze88m8V5f4+FKVbOXyEALvi2EGhyOlnKXBaTDYVsZPXezylaOO
+         165Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=Z/e8EWlo6oLC7kCwtiuv+KxxSwajNXvXX9ykyyY6BXQ=;
-        b=DviMRTAZ2+bJeYvoe9U6dE51vjCRLTtat8240w1elpo/s8T0il1MEwBXfJFA0Qpf5P
-         +O+1EwyL09BljB3Utt156hv11rSTdBniQyJTyae1j5ARR27cr41ldxMwf2XEWYruw3gw
-         iLDejARO+arMvkXC3ku7mYuOlcei0uDSfhFZHYQ5nDYu+YahK/rvnHxSBffFO7pmqS/E
-         LJNEBsDnwkkNPHpQ9ipz8zpojfifFd7d5KhWR3qLQC+ZfxJ3Q1/tstlF+YIHhPjC+ztt
-         RLtfD5/p3VGLspEjB5+MoqrBLc9iJ1jeSsCyHVzVpmGcOMlAupyEzjNkiHGfgMjy04Pq
-         7CwA==
-X-Gm-Message-State: APjAAAWz1i1DYiBfBBT5TKmMt2VJyFB7gp3TYo1aghQOptMHNJl94eIY
-        HRtqel3ToJcPCndCzKP4BgiYsQ==
-X-Google-Smtp-Source: APXvYqy8JT/xvn3Mcha8YwAHzxwblBG3zVfUPB4cSLKRJxVmOvfKOSrnLLhHkWqixsEGTNN59npHyA==
-X-Received: by 2002:a17:90a:8b8c:: with SMTP id z12mr20065560pjn.100.1570231894192;
-        Fri, 04 Oct 2019 16:31:34 -0700 (PDT)
-Received: from smtp.gmail.com ([2620:15c:202:1:fa53:7765:582b:82b9])
-        by smtp.gmail.com with ESMTPSA id g24sm7893668pfi.81.2019.10.04.16.31.33
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=gpGqz6qLsuq0UsH1+84/WmkwPkrLAGN7fBYEexcSldM=;
+        b=cOdTClRHnAftkul+oSnGrz8gvtRJbttrPpKMBGM7oBPldZc7gINXPFHS9CWAyM57U3
+         pDKY5m9VsWSQ8TiytM2VUS+bZgbMzmQ2LqUQwkhTgT28Tcmz23boWCt1rl92wOENzZky
+         L4UxgswQ7MzG9Zyq6dCepQO2ftiCZjjMwiaNeQcbNQId5Ur2GVlyuhiwcqUieiRap6nC
+         DHCKKOsRLxBLFTzbJtbVgTbu3vRFfZpHL3Zk3urMhyWyVIssT9/qYrxYO77Z5DRBEuxR
+         2zW5Q05fIxpRwxRqoGJBzuBQ01kdYFGx33nfjyeTawL28WLAX5WM5QymeuOyekJK4zNF
+         dR6g==
+X-Gm-Message-State: APjAAAUBR4Vah+IqHNnobe6zd44LiTgS+leyQ8nYv93WmzQ+ujJHjli1
+        0S5d+qWQnkZ7X+ZUSR0lBGXnKg==
+X-Google-Smtp-Source: APXvYqxupw1jvo2pAKkclaXYZJvV74UNrF9j5Q4wH5Pb4D0Yq8va+heTNSZw6zDzEa07ocHUbUr/pA==
+X-Received: by 2002:aa7:9216:: with SMTP id 22mr21381031pfo.214.1570247974353;
+        Fri, 04 Oct 2019 20:59:34 -0700 (PDT)
+Received: from tuxbook-pro (104-188-17-28.lightspeed.sndgca.sbcglobal.net. [104.188.17.28])
+        by smtp.gmail.com with ESMTPSA id f15sm7808398pfd.141.2019.10.04.20.59.32
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 04 Oct 2019 16:31:33 -0700 (PDT)
-From:   Stephen Boyd <swboyd@chromium.org>
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        Venkata Narendra Kumar Gutta <vnkgutta@codeaurora.org>,
-        Evan Green <evgreen@chromium.org>
-Subject: [PATCH] soc: qcom: llcc: Name regmaps to avoid collisions
-Date:   Fri,  4 Oct 2019 16:31:32 -0700
-Message-Id: <20191004233132.194336-1-swboyd@chromium.org>
-X-Mailer: git-send-email 2.23.0.581.g78d2f28ef7-goog
+        Fri, 04 Oct 2019 20:59:33 -0700 (PDT)
+Date:   Fri, 4 Oct 2019 20:59:31 -0700
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     kholk11@gmail.com
+Cc:     linux-arm-msm@vger.kernel.org, marijns95@gmail.com,
+        agross@kernel.org, mturquette@baylibre.com, sboyd@kernel.org,
+        robh+dt@kernel.org, mark.rutland@arm.com, linus.walleij@linaro.org,
+        linux-clk@vger.kernel.org, linux-gpio@vger.kernel.org
+Subject: Re: [PATCH 1/5] pinctrl: qcom: Add a pinctrl driver for MSM8976 and
+ 8956
+Message-ID: <20191005035931.GC2999@tuxbook-pro>
+References: <20190921101207.65042-1-kholk11@gmail.com>
+ <20190921101207.65042-2-kholk11@gmail.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20190921101207.65042-2-kholk11@gmail.com>
+User-Agent: Mutt/1.12.1 (2019-06-15)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-We'll end up with debugfs collisions if we don't give names to the
-regmaps created inside this driver. Copy the template config over into
-this function and give the regmap the same name as the resource name.
+On Sat 21 Sep 03:12 PDT 2019, kholk11@gmail.com wrote:
 
-Fixes: 7f9c136216c7 ("soc: qcom: Add broadcast base for Last Level Cache Controller (LLCC)")
-Cc: Venkata Narendra Kumar Gutta <vnkgutta@codeaurora.org>
-Cc: Evan Green <evgreen@chromium.org>
-Signed-off-by: Stephen Boyd <swboyd@chromium.org>
----
- drivers/soc/qcom/llcc-slice.c | 14 +++++++-------
- 1 file changed, 7 insertions(+), 7 deletions(-)
+> From: "Angelo G. Del Regno" <kholk11@gmail.com>
+> 
+> Add the pinctrl driver to support pin configuration with the
+> pinctrl framework on MSM8976, MSM8956, APQ8056, APQ8076.
+> 
+> Signed-off-by: Angelo G. Del Regno <kholk11@gmail.com>
+> ---
+>  .../bindings/pinctrl/qcom,msm8976-pinctrl.txt |  183 +++
+>  drivers/pinctrl/qcom/Kconfig                  |   10 +
+>  drivers/pinctrl/qcom/Makefile                 |    1 +
+>  drivers/pinctrl/qcom/pinctrl-msm8976.c        | 1128 +++++++++++++++++
+>  4 files changed, 1322 insertions(+)
+>  create mode 100644 Documentation/devicetree/bindings/pinctrl/qcom,msm8976-pinctrl.txt
+>  create mode 100644 drivers/pinctrl/qcom/pinctrl-msm8976.c
+> 
+> diff --git a/Documentation/devicetree/bindings/pinctrl/qcom,msm8976-pinctrl.txt b/Documentation/devicetree/bindings/pinctrl/qcom,msm8976-pinctrl.txt
+> new file mode 100644
+> index 000000000000..4e944f84b7d7
+> --- /dev/null
+> +++ b/Documentation/devicetree/bindings/pinctrl/qcom,msm8976-pinctrl.txt
+> @@ -0,0 +1,183 @@
+> +Qualcomm MSM8976 TLMM block
 
-diff --git a/drivers/soc/qcom/llcc-slice.c b/drivers/soc/qcom/llcc-slice.c
-index 9090ea12eaf3..aa342938c403 100644
---- a/drivers/soc/qcom/llcc-slice.c
-+++ b/drivers/soc/qcom/llcc-slice.c
-@@ -48,13 +48,6 @@
- 
- static struct llcc_drv_data *drv_data = (void *) -EPROBE_DEFER;
- 
--static const struct regmap_config llcc_regmap_config = {
--	.reg_bits = 32,
--	.reg_stride = 4,
--	.val_bits = 32,
--	.fast_io = true,
--};
--
- /**
-  * llcc_slice_getd - get llcc slice descriptor
-  * @uid: usecase_id for the client
-@@ -314,6 +307,12 @@ static struct regmap *qcom_llcc_init_mmio(struct platform_device *pdev,
- {
- 	struct resource *res;
- 	void __iomem *base;
-+	static struct regmap_config llcc_regmap_config = {
-+		.reg_bits = 32,
-+		.reg_stride = 4,
-+		.val_bits = 32,
-+		.fast_io = true,
-+	};
- 
- 	res = platform_get_resource_byname(pdev, IORESOURCE_MEM, name);
- 	if (!res)
-@@ -323,6 +322,7 @@ static struct regmap *qcom_llcc_init_mmio(struct platform_device *pdev,
- 	if (IS_ERR(base))
- 		return ERR_CAST(base);
- 
-+	llcc_regmap_config.name = name;
- 	return devm_regmap_init_mmio(&pdev->dev, base, &llcc_regmap_config);
- }
- 
--- 
-Sent by a computer through tubes
+As Linus indicated, please send your the DT bindings in separate
+patches.
 
+> +
+[..]
+> +Example:
+> +
+> +	tlmm: pinctrl@1000000 {
+> +		compatible = "qcom,msm8976-pinctrl";
+> +		reg = <0x1000000 0x300000>;
+> +		interrupts = <0 208 0>;
+
+<GIC_SPI 208 IRQ_TYPE_LEVEL_HIGH>
+
+> +		gpio-controller;
+> +		#gpio-cells = <2>;
+> +		gpio-ranges = <&tlmm 0 0 145>;
+> +		interrupt-controller;
+> +		#interrupt-cells = <2>;
+> +
+> +		blsp1_uart2_active: blsp1_uart2_active {
+> +			mux {
+> +				pins = "gpio4", "gpio5", "gpio6", "gpio7";
+> +				function = "blsp_uart2";
+> +			};
+> +
+> +			config {
+> +				pins = "gpio4", "gpio5", "gpio6", "gpio7";
+> +				drive-strength = <2>;
+> +				bias-disable;
+> +			};
+> +		};
+> +	};
+> diff --git a/drivers/pinctrl/qcom/Kconfig b/drivers/pinctrl/qcom/Kconfig
+[..]
+> +static struct platform_driver msm8976_pinctrl_driver = {
+> +	.driver = {
+> +		.name = "msm8976-pinctrl",
+> +		.owner = THIS_MODULE,
+
+No need to specify .onwer on platform_drivers anymore.
+
+
+Apart from that, I think this patch looks good.
+
+Regards,
+Bjorn
