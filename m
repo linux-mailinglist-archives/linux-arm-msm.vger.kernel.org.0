@@ -2,85 +2,97 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 9DAECCD302
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  6 Oct 2019 17:47:47 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 871BCCDA38
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  7 Oct 2019 03:45:23 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726134AbfJFPrm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 6 Oct 2019 11:47:42 -0400
-Received: from mail-wm1-f65.google.com ([209.85.128.65]:55716 "EHLO
-        mail-wm1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725905AbfJFPrm (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 6 Oct 2019 11:47:42 -0400
-Received: by mail-wm1-f65.google.com with SMTP id a6so10044625wma.5;
-        Sun, 06 Oct 2019 08:47:39 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=SBpRb6qd+48zQK5uPLn0YvEluIoUY9o3FhFhGA6TXtY=;
-        b=Z37+ICp7Y2QDT49t+AdNnVTJVt76pPZFd6B69eHRoUoNZlsdtFkBCYnSdEyhWhNbuK
-         XyETKrUDNSnLU0N40QS4exLwpNzCn3/7e6RprNKgM+Qgr2l5BRucGBLAeRfUBtKOQMJ/
-         5E9krxQL8OOHlalnke9FA7tibZzAe6GFB/E4Tjd1T8SsglrBwPlPGPzr8Yl+7Mdbg35j
-         IFXYmMzgkgcDjGXuUelcoGSjezWAQjoj/QavICNDeyyyRPhrYYOc89Nr353qflFxSsn4
-         1BvgZwAEXST7N03PUH5ali/fZNJcdatPFLpTHv6qfPMQra3BvYtNieDoXbXlpO+z1NTI
-         sjXw==
-X-Gm-Message-State: APjAAAUxUmMz14TPUm0Zi7j50psy10b7VPGg5JHEvkXkDaeqENUPDqXP
-        tPZ/Wxzu3jmyhFXsDcYOxAA=
-X-Google-Smtp-Source: APXvYqwiD5w33vuIYv9624AWG0k3vsCYtE8uO59mkpTJi1G/TZQDv7OS1UJvxH3zuwZ0w6XxIwuUIQ==
-X-Received: by 2002:a1c:9988:: with SMTP id b130mr18139392wme.164.1570376858781;
-        Sun, 06 Oct 2019 08:47:38 -0700 (PDT)
-Received: from kozik-lap ([194.230.155.145])
-        by smtp.googlemail.com with ESMTPSA id o22sm31539882wra.96.2019.10.06.08.47.36
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Sun, 06 Oct 2019 08:47:38 -0700 (PDT)
-Date:   Sun, 6 Oct 2019 17:47:34 +0200
-From:   Krzysztof Kozlowski <krzk@kernel.org>
-To:     Sudeep Holla <sudeep.holla@arm.com>,
-        Rob Herring <robh+dt@kernel.org>,
-        Mark Rutland <mark.rutland@arm.com>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Kevin Hilman <khilman@baylibre.com>,
-        "Rafael J. Wysocki" <rjw@rjwysocki.net>,
-        Ulf Hansson <ulf.hansson@linaro.org>,
-        linux-arm-kernel@lists.infradead.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-clk@vger.kernel.org,
-        linux-samsung-soc@vger.kernel.org, etnaviv@lists.freedesktop.org,
-        dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
-        freedreno@lists.freedesktop.org, linux-tegra@vger.kernel.org,
-        linux-media@vger.kernel.org, linux-pm@vger.kernel.org,
-        linux-pci@vger.kernel.org, linux-amlogic@lists.infradead.org,
-        bcm-kernel-feedback-list@broadcom.com,
-        linux-rpi-kernel@lists.infradead.org, linux-usb@vger.kernel.org,
-        linux-mediatek@lists.infradead.org
-Subject: Re: [PATCH v2 3/3] ARM: dts: exynos: Rename power domain nodes to
- "power-domain" in Exynos4
-Message-ID: <20191006154734.GA29365@kozik-lap>
-References: <20191002160632.11140-1-krzk@kernel.org>
- <20191002160632.11140-3-krzk@kernel.org>
+        id S1727122AbfJGBpW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 6 Oct 2019 21:45:22 -0400
+Received: from onstation.org ([52.200.56.107]:32998 "EHLO onstation.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726777AbfJGBpW (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Sun, 6 Oct 2019 21:45:22 -0400
+Received: from localhost.localdomain (c-98-239-145-235.hsd1.wv.comcast.net [98.239.145.235])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits))
+        (No client certificate requested)
+        (Authenticated sender: masneyb)
+        by onstation.org (Postfix) with ESMTPSA id D22D93E993;
+        Mon,  7 Oct 2019 01:45:20 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=onstation.org;
+        s=default; t=1570412721;
+        bh=2LFYD1AbGmqiPuHcwwZO5b7nowKRrVSD+MvHYSK0LXw=;
+        h=From:To:Cc:Subject:Date:From;
+        b=cZey47tp1WKt/0iGdl5Ym462saWPW/DMHEgcki0YsqTp+o4/1AqpwfSfN8Ujv7vQy
+         m/mR3NGN0yq9puJCU5gVXNbckacCqNZ9aCqWzzi8WQZAi22vGpMgh8YAOtWSYd8J69
+         51HZMu4MN5aNJvLtaMbPn9RIfsjm5S66Gw9sYBnY=
+From:   Brian Masney <masneyb@onstation.org>
+To:     robdclark@gmail.com, sean@poorly.run
+Cc:     bjorn.andersson@linaro.org, a.hajda@samsung.com,
+        Laurent.pinchart@ideasonboard.com, airlied@linux.ie,
+        daniel@ffwll.ch, dri-devel@lists.freedesktop.org,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        freedreno@lists.freedesktop.org, jonathan@marek.ca
+Subject: [PATCH RFC v2 0/5] drm/msm: external HDMI support for Nexus 5 phone
+Date:   Sun,  6 Oct 2019 21:45:04 -0400
+Message-Id: <20191007014509.25180-1-masneyb@onstation.org>
+X-Mailer: git-send-email 2.21.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20191002160632.11140-3-krzk@kernel.org>
-User-Agent: Mutt/1.9.4 (2018-02-28)
+Content-Transfer-Encoding: 8bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Oct 02, 2019 at 06:06:32PM +0200, Krzysztof Kozlowski wrote:
-> The device node name should reflect generic class of a device so rename
-> power domain nodes to "power-domain".  No functional change.
-> 
-> Signed-off-by: Krzysztof Kozlowski <krzk@kernel.org>
-> ---
->  arch/arm/boot/dts/exynos4.dtsi    | 14 +++++++-------
->  arch/arm/boot/dts/exynos4210.dtsi |  2 +-
->  arch/arm/boot/dts/exynos4412.dtsi |  2 +-
->  3 files changed, 9 insertions(+), 9 deletions(-)
+I am using an Analogix SP6001 SlimPort Micro-USB to 4K HDMI Adapter to
+connect my Nexus 5 phone to an external display. The external display is
+not fully working yet however I think I'm close. When I plug the cable
+into the phone, the interrupt for the hot plug detect GPIO for the HDMI
+bridge (Analogix ANX7808) fires and anx78xx_handle_common_int_4() shows
+that the interrupt status bit is set to SP_HPD_ESYNC_ERR.
 
-Applied.
+The second hot plug detect pin (for qcom,hdmi-tx-8974 for the MSM
+KMS/DRM driver) does not fire, and the clocks are not configured via
+msm_hdmi_phy_pll_init(). I suspect that this is the issue that I need to
+solve next.
 
-Best regards,
-Krzysztof
+I verified in the downstream MSM sources that IRQ 8 on the mdss is the
+correct IRQ number for hdmi-tx. Here's the relevant line from
+/proc/interrupts showing that no interrupts are triggered:
+93: 0 0 0 0 mdss 8 Edge hdmi_isr.
+
+I'm going to continue digging through the code but I'd appreciate any
+suggestions for things to check. I assume that the IRQs for both hot
+plug detect pins should fire when I plug the cable in. Unfortunately,
+the display doesn't work for me with the downstream kernel and I only
+have access to a running downstream kernel over the serial console.
+
+High-level changes since v1:
+- Hot plug detect interrupt now working properly on HDMI bridge
+- Introduce msm8974 PLL support
+
+I've held back some cosmetic changes to the drivers and only included
+the necessary changes required to get this functional. This requires
+the following patch I sent out on 2019-09-22 to analogix-anx78xx that
+corrects an i2c address:
+https://lore.kernel.org/lkml/20190922175940.5311-1-masneyb@onstation.org/
+
+Brian Masney (5):
+  drm/bridge: analogix-anx78xx: add support for avdd33 regulator
+  drm/msm/hdmi: add msm8974 PLL support
+  ARM: dts: qcom: pm8941: add 5vs2 regulator node
+  ARM: dts: qcom: msm8974: add HDMI nodes
+  ARM: dts: qcom: msm8974-hammerhead: add support for external display
+
+ .../qcom-msm8974-lge-nexus5-hammerhead.dts    | 142 ++++
+ arch/arm/boot/dts/qcom-msm8974.dtsi           |  78 ++
+ arch/arm/boot/dts/qcom-pm8941.dtsi            |  10 +
+ drivers/gpu/drm/bridge/analogix-anx78xx.c     |  33 +
+ drivers/gpu/drm/msm/Makefile                  |   1 +
+ drivers/gpu/drm/msm/hdmi/hdmi.h               |   6 +
+ drivers/gpu/drm/msm/hdmi/hdmi_phy.c           |   4 +-
+ drivers/gpu/drm/msm/hdmi/hdmi_pll_8974.c      | 684 ++++++++++++++++++
+ 8 files changed, 957 insertions(+), 1 deletion(-)
+ create mode 100644 drivers/gpu/drm/msm/hdmi/hdmi_pll_8974.c
+
+-- 
+2.21.0
+
