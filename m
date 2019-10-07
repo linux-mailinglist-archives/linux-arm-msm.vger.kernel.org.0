@@ -2,28 +2,28 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id C365ECDA46
+	by mail.lfdr.de (Postfix) with ESMTP id 54529CDA45
 	for <lists+linux-arm-msm@lfdr.de>; Mon,  7 Oct 2019 03:45:52 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727220AbfJGBpc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 6 Oct 2019 21:45:32 -0400
-Received: from onstation.org ([52.200.56.107]:33086 "EHLO onstation.org"
+        id S1727212AbfJGBpb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 6 Oct 2019 21:45:31 -0400
+Received: from onstation.org ([52.200.56.107]:33064 "EHLO onstation.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1727158AbfJGBpY (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        id S1727161AbfJGBpY (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
         Sun, 6 Oct 2019 21:45:24 -0400
 Received: from localhost.localdomain (c-98-239-145-235.hsd1.wv.comcast.net [98.239.145.235])
         (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits))
         (No client certificate requested)
         (Authenticated sender: masneyb)
-        by onstation.org (Postfix) with ESMTPSA id 24DC03F23D;
+        by onstation.org (Postfix) with ESMTPSA id 8ECBD3F23E;
         Mon,  7 Oct 2019 01:45:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=onstation.org;
         s=default; t=1570412723;
-        bh=qSF7JxG0bFyn3cQPR8q7gVg5cnvbx8ozSyPIX8JTT9c=;
+        bh=Op5NIl5dzUMCbi20BwmEjr/2tRkcbaO8At1lhZxnx7s=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=MQ17mbX0Vsr/tmary8b/IbFnHUF9g4q96V0QWEe7CEGCSGnd62+BzOTpbjTDrNxcM
-         h3cVvNbZ5/DGjMCi0EqY2j1hg/9qki3fxibtvEGECG3dFENvMewbniGUGU6iVAAQdH
-         xoahdq/riTIuaqz+bBsU9JvI/+/CyJbneBdyaGYA=
+        b=mNP9EwTPzoHbHLeLsX5BR1DF+2vSpWaVzjQyepCD3zAfHjDsbCE1AjSOGl35KZPGA
+         AA7AEj3QCxf1EI58bMkvQB0AlhkGjBs7iE+DF5EPwhS3wmZJ8al4fipsaoYtRJIOL+
+         gEZrb06eq/iomdxdPVaVjgCETgml8x66o99pfuHU=
 From:   Brian Masney <masneyb@onstation.org>
 To:     robdclark@gmail.com, sean@poorly.run
 Cc:     bjorn.andersson@linaro.org, a.hajda@samsung.com,
@@ -32,9 +32,9 @@ Cc:     bjorn.andersson@linaro.org, a.hajda@samsung.com,
         linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
         freedreno@lists.freedesktop.org, jonathan@marek.ca,
         Linus Walleij <linus.walleij@linaro.org>
-Subject: [PATCH RFC v2 4/5] ARM: dts: qcom: msm8974: add HDMI nodes
-Date:   Sun,  6 Oct 2019 21:45:08 -0400
-Message-Id: <20191007014509.25180-5-masneyb@onstation.org>
+Subject: [PATCH RFC v2 5/5] ARM: dts: qcom: msm8974-hammerhead: add support for external display
+Date:   Sun,  6 Oct 2019 21:45:09 -0400
+Message-Id: <20191007014509.25180-6-masneyb@onstation.org>
 X-Mailer: git-send-email 2.21.0
 In-Reply-To: <20191007014509.25180-1-masneyb@onstation.org>
 References: <20191007014509.25180-1-masneyb@onstation.org>
@@ -45,118 +45,200 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add HDMI tx and phy nodes to support an external display that can be
-connected over the SlimPort. This is based on work from Jonathan Marek.
+Add HDMI nodes and other supporting infrastructure in order to support
+the external display. This is based on work from Jonathan Marek.
 
 Signed-off-by: Brian Masney <masneyb@onstation.org>
 Reviewed-by: Linus Walleij <linus.walleij@linaro.org>
 ---
 Changes since v1:
-- Add hdmi_pll to hdmi-phy node
-- add power-domain to hdmi-phy per binding specification
-- Remove FIXME comment regarding the hpd-gdsc-supply. I saw a recent
-  post on linux-arm-msm that this is present for running the upstream
-  MSM display driver on the downstream kernel.
+- Regulators always on as a temporary haack.
+- Hot plug detect pin for the HDMI bridge needs to be low.
 
- arch/arm/boot/dts/qcom-msm8974.dtsi | 78 +++++++++++++++++++++++++++++
- 1 file changed, 78 insertions(+)
+ .../qcom-msm8974-lge-nexus5-hammerhead.dts    | 142 ++++++++++++++++++
+ 1 file changed, 142 insertions(+)
 
-diff --git a/arch/arm/boot/dts/qcom-msm8974.dtsi b/arch/arm/boot/dts/qcom-msm8974.dtsi
-index 7fc23e422cc5..af02eace14e2 100644
---- a/arch/arm/boot/dts/qcom-msm8974.dtsi
-+++ b/arch/arm/boot/dts/qcom-msm8974.dtsi
-@@ -1258,6 +1258,13 @@
+diff --git a/arch/arm/boot/dts/qcom-msm8974-lge-nexus5-hammerhead.dts b/arch/arm/boot/dts/qcom-msm8974-lge-nexus5-hammerhead.dts
+index b607c9ff9e12..380a805cd1f0 100644
+--- a/arch/arm/boot/dts/qcom-msm8974-lge-nexus5-hammerhead.dts
++++ b/arch/arm/boot/dts/qcom-msm8974-lge-nexus5-hammerhead.dts
+@@ -235,6 +235,36 @@
+ 		pinctrl-names = "default";
+ 		pinctrl-0 = <&wlan_regulator_pin>;
+ 	};
++
++	anx_avdd33: avdd33 {
++		compatible = "regulator-fixed";
++
++		regulator-name = "avdd-3p3";
++		regulator-min-microvolt = <3300000>;
++		regulator-max-microvolt = <3300000>;
++		regulator-always-on; // FIXME
++
++		gpio = <&pm8941_gpios 26 GPIO_ACTIVE_HIGH>;
++		enable-active-high;
++
++		pinctrl-names = "default";
++		pinctrl-0 = <&anx_avdd33_pin>;
++	};
++
++	anx_vdd10: vdd10 {
++		compatible = "regulator-fixed";
++
++		regulator-name = "vdd-1p0";
++		regulator-min-microvolt = <1000000>;
++		regulator-max-microvolt = <1000000>;
++		regulator-always-on; // FIXME
++
++		gpio = <&pm8941_gpios 8 GPIO_ACTIVE_HIGH>;
++		enable-active-high;
++
++		pinctrl-names = "default";
++		pinctrl-0 = <&anx_vdd10_pin>;
++	};
+ };
  
- 					port@0 {
- 						reg = <0>;
-+						mdp5_intf3_out: endpoint {
-+							remote-endpoint = <&hdmi_in>;
-+						};
-+					};
-+
-+					port@1 {
-+						reg = <1>;
- 						mdp5_intf1_out: endpoint {
- 							remote-endpoint = <&dsi0_in>;
- 						};
-@@ -1335,6 +1342,77 @@
- 				clocks = <&mmcc MDSS_AHB_CLK>;
- 				clock-names = "iface";
+ &soc {
+@@ -371,6 +401,40 @@
+ 				function = "gpio";
  			};
+ 		};
 +
-+			hdmi: hdmi-tx@fd922100 {
-+				status = "disabled";
++		hdmi_pin: hdmi {
++			cec {
++				pins = "gpio31";
++				function = "hdmi_cec";
++			};
 +
-+				compatible = "qcom,hdmi-tx-8974";
-+				reg = <0xfd922100 0x35c>,
-+				      <0xfc4b8000 0x60f0>;
-+				reg-names = "core_physical",
-+				            "qfprom_physical";
++			ddc {
++				pins = "gpio32", "gpio33";
++				function = "hdmi_ddc";
++			};
 +
-+				interrupt-parent = <&mdss>;
-+				interrupts = <8 IRQ_TYPE_LEVEL_HIGH>;
++			hpd {
++				pins = "gpio34";
++				function = "hdmi_hpd";
++			};
++		};
 +
-+				power-domains = <&mmcc MDSS_GDSC>;
++		anx_msm_pin: anx {
++			irq {
++				pins = "gpio28";
++				function = "gpio";
++				drive-strength = <8>;
++				bias-pull-up;
++				input-enable;
++			};
 +
-+				clocks = <&mmcc MDSS_MDP_CLK>,
-+				         <&mmcc MDSS_AHB_CLK>,
-+				         <&mmcc MDSS_HDMI_CLK>,
-+				         <&mmcc MDSS_HDMI_AHB_CLK>,
-+				         <&mmcc MDSS_EXTPCLK_CLK>;
-+				clock-names = "mdp_core",
-+				              "iface",
-+				              "core",
-+				              "alt_iface",
-+				              "extp";
++			reset {
++				pins = "gpio68";
++				function = "gpio";
++				drive-strength = <8>;
++				bias-pull-up;
++			};
++		};
+ 	};
+ 
+ 	vibrator@fd8c3450 {
+@@ -471,6 +535,28 @@
+ 				default-brightness = <200>;
+ 			};
+ 		};
 +
-+				hpd-5v-supply = <&pm8941_5vs2>;
-+				core-vdda-supply = <&pm8941_l12>;
-+				core-vcc-supply = <&pm8941_s3>;
++		anx7808@72 {
++			compatible = "analogix,anx7808";
++			reg = <0x72>;
++			interrupts-extended = <&msmgpio 28 IRQ_TYPE_EDGE_RISING>;
 +
-+				phys = <&hdmi_phy>;
-+				phy-names = "hdmi_phy";
++			hpd-gpios = <&pm8941_gpios 13 GPIO_ACTIVE_LOW>;
++			pd-gpios = <&pm8941_gpios 14 GPIO_ACTIVE_HIGH>;
++			reset-gpios = <&msmgpio 68 GPIO_ACTIVE_LOW>;
 +
-+				ports {
-+					#address-cells = <1>;
-+					#size-cells = <0>;
++			pinctrl-names = "default";
++			pinctrl-0 = <&anx_msm_pin>, <&anx_pin>;
 +
-+					port@0 {
-+						reg = <0>;
-+						hdmi_in: endpoint {
-+							remote-endpoint = <&mdp5_intf3_out>;
-+						};
-+					};
++			dvdd10-supply = <&anx_vdd10>;
++			avdd33-supply = <&anx_avdd33>;
 +
-+					port@1 {
-+						reg = <1>;
++			port {
++				anx7808_in: endpoint {
++					remote-endpoint = <&hdmi_out>;
++				};
++			};
++		};
+ 	};
+ 
+ 	i2c@f9968000 {
+@@ -664,6 +750,29 @@
+ 
+ 			vddio-supply = <&pm8941_l12>;
+ 		};
++
++		hdmi-tx@fd922100 {
++			status = "ok";
++
++			pinctrl-names = "default";
++			pinctrl-0 = <&hdmi_pin>;
++
++			qcom,hdmi-tx-ddc-clk = <&msmgpio 32 GPIO_ACTIVE_HIGH>;
++			qcom,hdmi-tx-ddc-data = <&msmgpio 33 GPIO_ACTIVE_HIGH>;
++			qcom,hdmi-tx-hpd = <&msmgpio 34 GPIO_ACTIVE_HIGH>;
++
++			ports {
++				port@1 {
++					hdmi_out: endpoint {
++						remote-endpoint = <&anx7808_in>;
 +					};
 +				};
 +			};
++		};
 +
-+			hdmi_phy: hdmi-phy@fd922500 {
-+				status = "disabled";
++		hdmi-phy@fd922500 {
++			status = "ok";
++		};
+ 	};
+ };
+ 
+@@ -700,6 +809,39 @@
+ 				output-high;
+ 				line-name = "otg-gpio";
+ 			};
 +
-+				compatible = "qcom,hdmi-phy-8974";
-+				reg = <0xfd922500 0x7c>,
-+				      <0xfd922700 0xd4>;
-+				reg-names = "hdmi_phy",
-+				            "hdmi_pll";
++			anx_pin: anx {
++				cbldet {
++					pins = "gpio13";
++					function = "normal";
++					input-enable;
++					bias-pull-down;
++					power-source = <PM8941_GPIO_S3>;
++				};
 +
-+				clocks = <&mmcc MDSS_AHB_CLK>,
-+				         <&mmcc MDSS_HDMI_AHB_CLK>;
-+				clock-names = "iface",
-+				              "alt_iface";
++				pd {
++					pins = "gpio14";
++					function = "normal";
++					bias-disable;
++					power-source = <PM8941_GPIO_S3>;
++				};
++			};
 +
-+				core-vdda-supply = <&pm8941_l12>;
-+				vddio-supply = <&pm8941_s3>;
++			anx_avdd33_pin: anxvdd3  {
++				pins = "gpio26";
++				function = "normal";
 +
-+				power-domains = <&mmcc MDSS_GDSC>;
++				bias-disable;
++				power-source = <PM8941_GPIO_S3>;
++			};
 +
-+				#phy-cells = <0>;
++			anx_vdd10_pin: anxvdd1 {
++				pins = "gpio8";
++				function = "normal";
++
++				bias-disable;
++				power-source = <PM8941_GPIO_S3>;
 +			};
  		};
  	};
- 
+ };
 -- 
 2.21.0
 
