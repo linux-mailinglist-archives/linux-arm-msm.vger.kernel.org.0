@@ -2,125 +2,174 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id ED000CED96
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  7 Oct 2019 22:35:39 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 09B4DCED9E
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  7 Oct 2019 22:37:55 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728212AbfJGUfj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 7 Oct 2019 16:35:39 -0400
-Received: from mail-pf1-f196.google.com ([209.85.210.196]:45957 "EHLO
-        mail-pf1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728187AbfJGUfi (ORCPT
+        id S1728980AbfJGUhy (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 7 Oct 2019 16:37:54 -0400
+Received: from smtp.codeaurora.org ([198.145.29.96]:37616 "EHLO
+        smtp.codeaurora.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728187AbfJGUhy (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 7 Oct 2019 16:35:38 -0400
-Received: by mail-pf1-f196.google.com with SMTP id y72so9349638pfb.12;
-        Mon, 07 Oct 2019 13:35:38 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=CqfvJ5pvQPXk0BHnC/qiO7SxY725BiWlCHyn+q4BOxc=;
-        b=ToO/RKWqkLaXMfa+snaXo9WKFKvpYC1NfRgs4c/h85/8LQmRMMP7WIwrafm0v2mEXK
-         pv6Qb21fzchRVOgFzQWuwXbldwIZE37+0mbjGol0bwP+Wb8wdWeyXV4B/GFCX4jH+GMA
-         P9MY0XNkRzbAzkgZuE0LWDERaLivykyGf+D8y+f28XzdibEKlDT2V6gJkJMtw+JCKSCR
-         nzhUFw4nmOEx2eA6FUw6kwpABWh6mP01CuhPBkQ7rcpozRZSG4FvxYqOYDkl8PMK7Lr9
-         2PM/Ngfkzmw2nqzTIS0uyJhb+Bc2C/8XB9wnu3CRu/Wtc9xdsfI6aVSgwVdVWQn8/F/i
-         UDhQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=CqfvJ5pvQPXk0BHnC/qiO7SxY725BiWlCHyn+q4BOxc=;
-        b=dOwlSrZ7+o7CxsxvWH26rsM3eiwa7TTg/q6Q1GWdHYROs+qIzf1+pi770ukyMOKQPl
-         SLDgtgpHA+zMGoZaITUZYvQkqBvTbtftopIlx5qR53GYgUCg7OY9jyYkC6VTclUZzxtO
-         W4GKhjElSrncJbtq+pkeYgO0DzukpahHWAJ1sZplbGMKzEc3qEXy2BIU2qXA1ku1kgOy
-         L5WbGm5Y464mcnbZVYZgf7aJzYOU64Z1MSJJWwL+f0mABNunrV4tZ4sEqnzQo5OLIlvh
-         7V8An8dzj5maD5x0Dy48wfk1UjMmfnkzf50KznWzzcyJu+9WJXwd643XYzhlEJ8s2x9W
-         qT2g==
-X-Gm-Message-State: APjAAAUNd6W5G2BHONt7d5nsWCxVaLmn/1NLuMrDsJKXd8JJaA3BoCOD
-        DxOTbz0CFRD3IgmGQ/OxNSc=
-X-Google-Smtp-Source: APXvYqwdvdnGsnyePeqeHBTBNU74U6yfa020DAsY08IaRi36nJv8u4329HayFHYz+95BFWYxqkzUwA==
-X-Received: by 2002:a63:f957:: with SMTP id q23mr170715pgk.81.1570480538059;
-        Mon, 07 Oct 2019 13:35:38 -0700 (PDT)
-Received: from localhost ([100.118.89.196])
-        by smtp.gmail.com with ESMTPSA id q20sm20502851pfl.79.2019.10.07.13.35.37
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 07 Oct 2019 13:35:37 -0700 (PDT)
-From:   Rob Clark <robdclark@gmail.com>
-To:     dri-devel@lists.freedesktop.org
-Cc:     freedreno@lists.freedesktop.org,
-        Rob Clark <robdclark@chromium.org>,
-        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        linux-arm-msm@vger.kernel.org (open list:DRM DRIVER FOR MSM ADRENO GPU),
-        linux-kernel@vger.kernel.org (open list)
-Subject: [PATCH 2/2] drm/msm: always dump buffer base/size
-Date:   Mon,  7 Oct 2019 13:31:08 -0700
-Message-Id: <20191007203108.18667-2-robdclark@gmail.com>
-X-Mailer: git-send-email 2.21.0
-In-Reply-To: <20191007203108.18667-1-robdclark@gmail.com>
-References: <20191007203108.18667-1-robdclark@gmail.com>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+        Mon, 7 Oct 2019 16:37:54 -0400
+Received: by smtp.codeaurora.org (Postfix, from userid 1000)
+        id 03A1D60247; Mon,  7 Oct 2019 20:37:52 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
+        s=default; t=1570480673;
+        bh=SEnedzx2FMZvyrh+5jvrhsQBlHkAyi4t9VFjjBFhgW0=;
+        h=From:To:Cc:Subject:Date:From;
+        b=IS0gf27qnWncyecm9//EW0AoT8v/Y2u+zrT/Ps5y4YTagufHxkOaUYl7OBlnUvu9x
+         neqOyDSKRJ6OGenzhCRkrpEejlgkTOhXmVVIlLUtj5UPJlSSJI9ArrdFGG4ExAoRNN
+         Q0EIcCpdhQIrlCPEsdIbUZngYSzaNgcm+cEPrOzg=
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        pdx-caf-mail.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.7 required=2.0 tests=ALL_TRUSTED,BAYES_00,
+        DKIM_INVALID,DKIM_SIGNED,SPF_NONE autolearn=no autolearn_force=no
+        version=3.4.0
+Received: from codeaurora.org (i-global254.qualcomm.com [199.106.103.254])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: mnalajal@smtp.codeaurora.org)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id AEC9160247;
+        Mon,  7 Oct 2019 20:37:51 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
+        s=default; t=1570480672;
+        bh=SEnedzx2FMZvyrh+5jvrhsQBlHkAyi4t9VFjjBFhgW0=;
+        h=From:To:Cc:Subject:Date:From;
+        b=HaJY6c9LFhtOvGGneyuH/oJoUaeRGGiE/qMxt2WnVZ5ayWomPMp9qUyIrBDYFGKy5
+         Lc497TtmBkcT01tJt0Dran7M/BzlCAU7tHhgTNUYO1S795ZbM3mCaADtnGzvCDlCGk
+         4FADQmKR1gwCEw/0s5SEhUukKy2efirrv5EwyGjo=
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org AEC9160247
+Authentication-Results: pdx-caf-mail.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: pdx-caf-mail.web.codeaurora.org; spf=none smtp.mailfrom=mnalajal@codeaurora.org
+From:   Murali Nalajala <mnalajal@codeaurora.org>
+To:     gregkh@linuxfoundation.org, rafael@kernel.org, swboyd@chromium.org
+Cc:     mnalajal@codeaurora.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, bjorn.andersson@linaro.org
+Subject: [PATCH v2] base: soc: Handle custom soc information sysfs entries
+Date:   Mon,  7 Oct 2019 13:37:42 -0700
+Message-Id: <1570480662-25252-1-git-send-email-mnalajal@codeaurora.org>
+X-Mailer: git-send-email 1.9.1
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Rob Clark <robdclark@chromium.org>
+Soc framework exposed sysfs entries are not sufficient for some
+of the h/w platforms. Currently there is no interface where soc
+drivers can expose further information about their SoCs via soc
+framework. This change address this limitation where clients can
+pass their custom entries as attribute group and soc framework
+would expose them as sysfs properties.
 
-Even if we are not dumping the buffer's contents, it is useful to log
-their base address and size.  This makes it easier to see when different
-gpu pointers point to a single buffer, for example higher mipmap levels
-of a single texture.
-
-Signed-off-by: Rob Clark <robdclark@chromium.org>
+Signed-off-by: Murali Nalajala <mnalajal@codeaurora.org>
 ---
- drivers/gpu/drm/msm/msm_rd.c | 10 ++++++----
- 1 file changed, 6 insertions(+), 4 deletions(-)
+Changes in v2:
+- Address comments from Stephen Boyd about "soc_dev" clean up in error paths.
 
-diff --git a/drivers/gpu/drm/msm/msm_rd.c b/drivers/gpu/drm/msm/msm_rd.c
-index f8f654301def..0896419ed95d 100644
---- a/drivers/gpu/drm/msm/msm_rd.c
-+++ b/drivers/gpu/drm/msm/msm_rd.c
-@@ -295,7 +295,7 @@ void msm_rd_debugfs_cleanup(struct msm_drm_private *priv)
+Changes in v1:
+- Remove NULL initialization of "soc_attr_groups"
+- Taken care of freeing "soc_attr_groups" in soc_release()
+- Addressed Stephen Boyd comments on usage of "kalloc"
+
+ drivers/base/soc.c      | 30 +++++++++++++++++-------------
+ include/linux/sys_soc.h |  1 +
+ 2 files changed, 18 insertions(+), 13 deletions(-)
+
+diff --git a/drivers/base/soc.c b/drivers/base/soc.c
+index 7c0c5ca..4af11a4 100644
+--- a/drivers/base/soc.c
++++ b/drivers/base/soc.c
+@@ -104,15 +104,12 @@ static ssize_t soc_info_get(struct device *dev,
+ 	.is_visible = soc_attribute_mode,
+ };
  
- static void snapshot_buf(struct msm_rd_state *rd,
- 		struct msm_gem_submit *submit, int idx,
--		uint64_t iova, uint32_t size)
-+		uint64_t iova, uint32_t size, bool full)
+-static const struct attribute_group *soc_attr_groups[] = {
+-	&soc_attr_group,
+-	NULL,
+-};
+-
+ static void soc_release(struct device *dev)
  {
- 	struct msm_gem_object *obj = submit->bos[idx].obj;
- 	unsigned offset = 0;
-@@ -315,6 +315,9 @@ static void snapshot_buf(struct msm_rd_state *rd,
- 	rd_write_section(rd, RD_GPUADDR,
- 			(uint32_t[3]){ iova, size, iova >> 32 }, 12);
+ 	struct soc_device *soc_dev = container_of(dev, struct soc_device, dev);
  
-+	if (!full)
-+		return;
-+
- 	/* But only dump the contents of buffers marked READ */
- 	if (!(submit->bos[idx].flags & MSM_SUBMIT_BO_READ))
- 		return;
-@@ -378,8 +381,7 @@ void msm_rd_dump_submit(struct msm_rd_state *rd, struct msm_gem_submit *submit,
- 	rd_write_section(rd, RD_CMD, msg, ALIGN(n, 4));
++	ida_simple_remove(&soc_ida, soc_dev->soc_dev_num);
++	kfree(soc_dev->dev.groups);
+ 	kfree(soc_dev);
+ }
  
- 	for (i = 0; i < submit->nr_bos; i++)
--		if (should_dump(submit, i))
--			snapshot_buf(rd, submit, i, 0, 0);
-+		snapshot_buf(rd, submit, i, 0, 0, should_dump(submit, i));
+@@ -121,6 +118,7 @@ static void soc_release(struct device *dev)
+ struct soc_device *soc_device_register(struct soc_device_attribute *soc_dev_attr)
+ {
+ 	struct soc_device *soc_dev;
++	const struct attribute_group **soc_attr_groups;
+ 	int ret;
  
- 	for (i = 0; i < submit->nr_cmds; i++) {
- 		uint32_t szd  = submit->cmd[i].size; /* in dwords */
-@@ -387,7 +389,7 @@ void msm_rd_dump_submit(struct msm_rd_state *rd, struct msm_gem_submit *submit,
- 		/* snapshot cmdstream bo's (if we haven't already): */
- 		if (!should_dump(submit, i)) {
- 			snapshot_buf(rd, submit, submit->cmd[i].idx,
--					submit->cmd[i].iova, szd * 4);
-+					submit->cmd[i].iova, szd * 4, true);
- 		}
+ 	if (!soc_bus_type.p) {
+@@ -136,10 +134,18 @@ struct soc_device *soc_device_register(struct soc_device_attribute *soc_dev_attr
+ 		goto out1;
  	}
  
++	soc_attr_groups = kcalloc(3, sizeof(*soc_attr_groups), GFP_KERNEL);
++	if (!soc_attr_groups) {
++		ret = -ENOMEM;
++		goto out2;
++	}
++	soc_attr_groups[0] = &soc_attr_group;
++	soc_attr_groups[1] = soc_dev_attr->custom_attr_group;
++
+ 	/* Fetch a unique (reclaimable) SOC ID. */
+ 	ret = ida_simple_get(&soc_ida, 0, 0, GFP_KERNEL);
+ 	if (ret < 0)
+-		goto out2;
++		goto out3;
+ 	soc_dev->soc_dev_num = ret;
+ 
+ 	soc_dev->attr = soc_dev_attr;
+@@ -150,15 +156,15 @@ struct soc_device *soc_device_register(struct soc_device_attribute *soc_dev_attr
+ 	dev_set_name(&soc_dev->dev, "soc%d", soc_dev->soc_dev_num);
+ 
+ 	ret = device_register(&soc_dev->dev);
+-	if (ret)
+-		goto out3;
++	if (ret) {
++		put_device(&soc_dev->dev);
++		return ERR_PTR(ret);
++	}
+ 
+ 	return soc_dev;
+ 
+ out3:
+-	ida_simple_remove(&soc_ida, soc_dev->soc_dev_num);
+-	put_device(&soc_dev->dev);
+-	soc_dev = NULL;
++	kfree(soc_attr_groups);
+ out2:
+ 	kfree(soc_dev);
+ out1:
+@@ -169,8 +175,6 @@ struct soc_device *soc_device_register(struct soc_device_attribute *soc_dev_attr
+ /* Ensure soc_dev->attr is freed prior to calling soc_device_unregister. */
+ void soc_device_unregister(struct soc_device *soc_dev)
+ {
+-	ida_simple_remove(&soc_ida, soc_dev->soc_dev_num);
+-
+ 	device_unregister(&soc_dev->dev);
+ 	early_soc_dev_attr = NULL;
+ }
+diff --git a/include/linux/sys_soc.h b/include/linux/sys_soc.h
+index 48ceea8..d9b3cf0 100644
+--- a/include/linux/sys_soc.h
++++ b/include/linux/sys_soc.h
+@@ -15,6 +15,7 @@ struct soc_device_attribute {
+ 	const char *serial_number;
+ 	const char *soc_id;
+ 	const void *data;
++	const struct attribute_group *custom_attr_group;
+ };
+ 
+ /**
 -- 
-2.21.0
+The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
+a Linux Foundation Collaborative Project
 
