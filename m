@@ -2,164 +2,119 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 492B2CDB6D
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  7 Oct 2019 07:29:00 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 65170CDB98
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  7 Oct 2019 07:48:07 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727115AbfJGF27 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 7 Oct 2019 01:28:59 -0400
-Received: from mail-pg1-f193.google.com ([209.85.215.193]:37918 "EHLO
-        mail-pg1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726889AbfJGF27 (ORCPT
+        id S1727010AbfJGFsG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 7 Oct 2019 01:48:06 -0400
+Received: from mail-pg1-f196.google.com ([209.85.215.196]:43716 "EHLO
+        mail-pg1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726984AbfJGFsG (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 7 Oct 2019 01:28:59 -0400
-Received: by mail-pg1-f193.google.com with SMTP id x10so7483736pgi.5
-        for <linux-arm-msm@vger.kernel.org>; Sun, 06 Oct 2019 22:28:59 -0700 (PDT)
+        Mon, 7 Oct 2019 01:48:06 -0400
+Received: by mail-pg1-f196.google.com with SMTP id i32so197555pgl.10
+        for <linux-arm-msm@vger.kernel.org>; Sun, 06 Oct 2019 22:48:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to:user-agent;
-        bh=8CXK/TfIsFpbZLDTPIgvREp06YCnBiMnqmaYjisViyY=;
-        b=LAR6H5ZasQ8iPevuWF+vXdOwHJGt5uk3xJbaFv6C3Wd9u8HmgtJ7Qg1L9LdY53wOkb
-         VlAWraIS3WJAoWfzYnoOTrCajo64NTbKw29mvKtcijueTi461E0NhHneWYXchgRAwGPo
-         OMLFjD8p8ob0dUXytONE0BJpczSF3nlVSXdXrh3BvIgv9AY1c+ZtfF4K81uinVuGJm9i
-         mQEgpVY2dy5APQJBUNydRXtQtV7aEMZRBSm4hbPfzEv8nh+cXOUbiOHDsZXfpH+oefTi
-         0P5coqYfZJRXraFDBNiwdwdnLyo4W/A77yzEzLD85hCoSy5o8VgzOEZabEEgo/QzXanB
-         qnEQ==
+        bh=5tzoF5jEWBGYn2YEncgp+nUwEVI8tjzoOCexGDe1hVc=;
+        b=iWm2gbrxXJtQbLIiHmiKtOzlK0kdACMqzvNyCI0Bvt31xz+eLXkAX3gfjASqtsyxd2
+         pibAMwyUux/rIge9wN9ApuhvjHkiHSb6pKraakhzlhJbh8JgeyELWbZL3PIl53pLUXyM
+         iC4fFVNWHchNI0Y9vRlKepoKrk43B7Q/GtfRWIqXe+L/euPWh53pNl7YkRPu2Px87Ijb
+         ti4S14CzINDFcQoHtWJxeSosRNR3kd6DjPJfm/4b+LrhRudNDYrseCHJvA0sPBhBVIts
+         zkUet9HlTvXp/wvmIvi/ZrzCOh/d/RQI2xYxO0LV3j4KYxlVl9xwzjWI37g1ahIIy/6B
+         m2Gg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=8CXK/TfIsFpbZLDTPIgvREp06YCnBiMnqmaYjisViyY=;
-        b=WIT8qvsteimd5r3plyJ7j+64OquGPzPW2/+SnGeFLvXcvrjeMIGU/AaJXUgYxyUgpQ
-         Uxk6HLdeUwwyZxbcfeNLscnIIPXifEY4BEQ2lp7PgMjNC2TBHfKPKJVRhCmNShom+c3I
-         bXjN25LRml0qa7UGlgb4tcs4/v3WL9lpQXp00r11xfYOVw8HCKJKqS0vfMjQzn2hbj5v
-         Irxmzy38lXUEjX427IGJuqYDBeFb11d4mlbWe4LppBm0aWuuK20HuJdDIRvLN9hivvuA
-         S2XNGBKkpqlWc5Sh/meXkX8wWmOvBX3OzBOJO7JTQo+3RLxfy27ZIVg6Zo4Br7V4Egzc
-         QJ9A==
-X-Gm-Message-State: APjAAAX/3aTIi5ACGm9YQVGAyaus/lslukvR5qQOuH6DsmPPX0u29cjF
-        wjLVeqD+2XJyiY18fIKPrWGCUQ==
-X-Google-Smtp-Source: APXvYqwARGPm8j9a3QW8CuObVYB93bhWW7qnb5wALsOagBKs4r23n5w4xw65KVbYM5DnmJnWEkGMBA==
-X-Received: by 2002:a62:8683:: with SMTP id x125mr30083504pfd.108.1570426138723;
-        Sun, 06 Oct 2019 22:28:58 -0700 (PDT)
+        bh=5tzoF5jEWBGYn2YEncgp+nUwEVI8tjzoOCexGDe1hVc=;
+        b=lK27zn+QLmTpgpzpfAIhONjwVSCpeYFx6y4tkQaRij39KnVhGxDOXUmAhrLBsA0JpM
+         c8rlumbmmiQgj+BmUN9xPSwqTvhDB+vUBtxrzvfbtLIy9urHejhDumHanVWpJcuAjatC
+         kx+XTlzoBjGsXFhaSiieV4JzHs6+itQjWKyeyOXWm88xM5MjsZwfBCFj3KfyIph1SEbN
+         Zxk4AqXVzs1rrlHIFNpw+cIkePV8OUvrx/mjzt9UxnPTI9DdrLi+2hp8dc027eLEAh+l
+         ktxMpEc3C/8TC7s8lfjeMijdLapxRAwnwrFrtT1XtPFUUGth+EKQJFkLTOKuM64lSebl
+         Pf4Q==
+X-Gm-Message-State: APjAAAVGn5gvUbKrknIX/WsYrR2DscB05Aix7g/0RBSc/mqH3f6mcG6e
+        cf5IeLpiL1oO2UiODv7xp+mJdA==
+X-Google-Smtp-Source: APXvYqx8wMELgRKaVDfwPVaxFK4vskD26Isa8VG9p6kFK7Fr+X+pG18Z3YrxVjib5kmWx8LxnhwKbg==
+X-Received: by 2002:a65:504c:: with SMTP id k12mr16046935pgo.252.1570427285224;
+        Sun, 06 Oct 2019 22:48:05 -0700 (PDT)
 Received: from tuxbook-pro (104-188-17-28.lightspeed.sndgca.sbcglobal.net. [104.188.17.28])
-        by smtp.gmail.com with ESMTPSA id d20sm18058167pfq.88.2019.10.06.22.28.57
+        by smtp.gmail.com with ESMTPSA id u7sm5730980pfn.61.2019.10.06.22.48.03
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 06 Oct 2019 22:28:57 -0700 (PDT)
-Date:   Sun, 6 Oct 2019 22:28:55 -0700
+        Sun, 06 Oct 2019 22:48:04 -0700 (PDT)
+Date:   Sun, 6 Oct 2019 22:48:01 -0700
 From:   Bjorn Andersson <bjorn.andersson@linaro.org>
 To:     Brian Masney <masneyb@onstation.org>
-Cc:     Georgi Djakov <georgi.djakov@linaro.org>, robh+dt@kernel.org,
-        agross@kernel.org, vkoul@kernel.org, evgreen@chromium.org,
-        daidavid1@codeaurora.org, linux-pm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH v4 2/5] soc: qcom: smd-rpm: Create RPM interconnect proxy
- child device
-Message-ID: <20191007052855.GE2999@tuxbook-pro>
-References: <20190613151323.10850-1-georgi.djakov@linaro.org>
- <20190613151323.10850-3-georgi.djakov@linaro.org>
- <20191007020152.GA16902@onstation.org>
+Cc:     robdclark@gmail.com, sean@poorly.run, a.hajda@samsung.com,
+        Laurent.pinchart@ideasonboard.com, airlied@linux.ie,
+        daniel@ffwll.ch, dri-devel@lists.freedesktop.org,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        freedreno@lists.freedesktop.org, jonathan@marek.ca,
+        Linus Walleij <linus.walleij@linaro.org>
+Subject: Re: [PATCH RFC v2 3/5] ARM: dts: qcom: pm8941: add 5vs2 regulator
+ node
+Message-ID: <20191007054801.GH6390@tuxbook-pro>
+References: <20191007014509.25180-1-masneyb@onstation.org>
+ <20191007014509.25180-4-masneyb@onstation.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20191007020152.GA16902@onstation.org>
+In-Reply-To: <20191007014509.25180-4-masneyb@onstation.org>
 User-Agent: Mutt/1.12.1 (2019-06-15)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Sun 06 Oct 19:01 PDT 2019, Brian Masney wrote:
+On Sun 06 Oct 18:45 PDT 2019, Brian Masney wrote:
 
-> On Thu, Jun 13, 2019 at 06:13:20PM +0300, Georgi Djakov wrote:
-> > Register a platform device to handle the communication of bus bandwidth
-> > requests with the remote processor. The interconnect proxy device is part
-> > of this remote processor (RPM) hardware. Let's create a icc-smd-rpm proxy
-> > child device to represent the bus throughput functionality that is provided
-> > by the RPM.
-> > 
-> > Signed-off-by: Georgi Djakov <georgi.djakov@linaro.org>
+> pm8941 is missing the 5vs2 regulator node so let's add it since its
+> needed to get the external display working. This regulator was already
+> configured in the interrupts property on the parent node.
 > 
-> Reviewed-by: Brian Masney <masneyb@onstation.org>
-> Tested-by: Brian Masney <masneyb@onstation.org> # msm8974
+> Note that this regulator is referred to as mvs2 in the downstream MSM
+> kernel sources.
 > 
-> I think this patch may have fell through the cracks since I don't see
-> it in linux-next. The qcs404 patches in this series were merged.
-> 
+> Signed-off-by: Brian Masney <masneyb@onstation.org>
+> Reviewed-by: Linus Walleij <linus.walleij@linaro.org>
 
-Yes, I was expecting Georgi to pick the entire series through his tree,
-but see now that I didn't actually ask Georgi to do so. Sorry about
-that.
+Picked this patch for now, once the driver updates are landed I will
+take the last two dts patches.
 
-I picked the this and the dts patch last week, so if it's not in
-linux-next yet it should show up in the next one.
-
-Thanks,
+Regards,
 Bjorn
 
-> Brian
+> ---
+> Changes since v1:
+> - None
 > 
-> > ---
-> > 
-> > v4:
-> > - Return error if platform_device_register_data() fails
-> > - Remove platform_set_drvdata() on the child device.
-> > 
-> > v3:
-> > - New patch.
-> > 
-> >  drivers/soc/qcom/smd-rpm.c | 17 ++++++++++++++++-
-> >  1 file changed, 16 insertions(+), 1 deletion(-)
-> > 
-> > diff --git a/drivers/soc/qcom/smd-rpm.c b/drivers/soc/qcom/smd-rpm.c
-> > index fa9dd12b5e39..34cdd638a6c1 100644
-> > --- a/drivers/soc/qcom/smd-rpm.c
-> > +++ b/drivers/soc/qcom/smd-rpm.c
-> > @@ -19,12 +19,14 @@
-> >  /**
-> >   * struct qcom_smd_rpm - state of the rpm device driver
-> >   * @rpm_channel:	reference to the smd channel
-> > + * @icc:		interconnect proxy device
-> >   * @ack:		completion for acks
-> >   * @lock:		mutual exclusion around the send/complete pair
-> >   * @ack_status:		result of the rpm request
-> >   */
-> >  struct qcom_smd_rpm {
-> >  	struct rpmsg_endpoint *rpm_channel;
-> > +	struct platform_device *icc;
-> >  	struct device *dev;
-> >  
-> >  	struct completion ack;
-> > @@ -193,6 +195,7 @@ static int qcom_smd_rpm_callback(struct rpmsg_device *rpdev,
-> >  static int qcom_smd_rpm_probe(struct rpmsg_device *rpdev)
-> >  {
-> >  	struct qcom_smd_rpm *rpm;
-> > +	int ret;
-> >  
-> >  	rpm = devm_kzalloc(&rpdev->dev, sizeof(*rpm), GFP_KERNEL);
-> >  	if (!rpm)
-> > @@ -205,11 +208,23 @@ static int qcom_smd_rpm_probe(struct rpmsg_device *rpdev)
-> >  	rpm->rpm_channel = rpdev->ept;
-> >  	dev_set_drvdata(&rpdev->dev, rpm);
-> >  
-> > -	return of_platform_populate(rpdev->dev.of_node, NULL, NULL, &rpdev->dev);
-> > +	rpm->icc = platform_device_register_data(&rpdev->dev, "icc_smd_rpm", -1,
-> > +						 NULL, 0);
-> > +	if (IS_ERR(rpm->icc))
-> > +		return PTR_ERR(rpm->icc);
-> > +
-> > +	ret = of_platform_populate(rpdev->dev.of_node, NULL, NULL, &rpdev->dev);
-> > +	if (ret)
-> > +		platform_device_unregister(rpm->icc);
-> > +
-> > +	return ret;
-> >  }
-> >  
-> >  static void qcom_smd_rpm_remove(struct rpmsg_device *rpdev)
-> >  {
-> > +	struct qcom_smd_rpm *rpm = dev_get_drvdata(&rpdev->dev);
-> > +
-> > +	platform_device_unregister(rpm->icc);
-> >  	of_platform_depopulate(&rpdev->dev);
-> >  }
-> >  
+>  arch/arm/boot/dts/qcom-pm8941.dtsi | 10 ++++++++++
+>  1 file changed, 10 insertions(+)
+> 
+> diff --git a/arch/arm/boot/dts/qcom-pm8941.dtsi b/arch/arm/boot/dts/qcom-pm8941.dtsi
+> index f198480c8ef4..c1f2012d1c8b 100644
+> --- a/arch/arm/boot/dts/qcom-pm8941.dtsi
+> +++ b/arch/arm/boot/dts/qcom-pm8941.dtsi
+> @@ -178,6 +178,16 @@
+>  				qcom,vs-soft-start-strength = <0>;
+>  				regulator-initial-mode = <1>;
+>  			};
+> +
+> +			pm8941_5vs2: 5vs2 {
+> +				regulator-enable-ramp-delay = <1000>;
+> +				regulator-pull-down;
+> +				regulator-over-current-protection;
+> +				qcom,ocp-max-retries = <10>;
+> +				qcom,ocp-retry-delay = <30>;
+> +				qcom,vs-soft-start-strength = <0>;
+> +				regulator-initial-mode = <1>;
+> +			};
+>  		};
+>  	};
+>  };
+> -- 
+> 2.21.0
+> 
