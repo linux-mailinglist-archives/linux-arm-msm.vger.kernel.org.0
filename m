@@ -2,127 +2,103 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 18F0CCDA61
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  7 Oct 2019 04:01:58 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 749EACDB37
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  7 Oct 2019 07:09:46 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726777AbfJGCBy (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 6 Oct 2019 22:01:54 -0400
-Received: from onstation.org ([52.200.56.107]:33194 "EHLO onstation.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726772AbfJGCBx (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 6 Oct 2019 22:01:53 -0400
-Received: from localhost (c-98-239-145-235.hsd1.wv.comcast.net [98.239.145.235])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        (Authenticated sender: masneyb)
-        by onstation.org (Postfix) with ESMTPSA id 78E843E993;
-        Mon,  7 Oct 2019 02:01:52 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=onstation.org;
-        s=default; t=1570413712;
-        bh=siGWMgbrgb+20s6v5IDlxItW2optKHnyECSIZMUdXig=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=pvTNK9Yz7kQHuKGejnj4blW9gNA47X4z3/NOu47ocWrvNGYUaCQH1S1ESdEsIcIts
-         QbXVe2EqqsJK+wvDoZ12k9X7ba9rHuE7p0gTW3dsidijC02JprpFBiKoM1KiVTeDGv
-         QqWzc8pdlgKIkhaRFmj5fjWSZObYleCU7m9vnyfk=
-Date:   Sun, 6 Oct 2019 22:01:52 -0400
-From:   Brian Masney <masneyb@onstation.org>
-To:     Georgi Djakov <georgi.djakov@linaro.org>
-Cc:     robh+dt@kernel.org, bjorn.andersson@linaro.org, agross@kernel.org,
-        vkoul@kernel.org, evgreen@chromium.org, daidavid1@codeaurora.org,
-        linux-pm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH v4 2/5] soc: qcom: smd-rpm: Create RPM interconnect proxy
- child device
-Message-ID: <20191007020152.GA16902@onstation.org>
-References: <20190613151323.10850-1-georgi.djakov@linaro.org>
- <20190613151323.10850-3-georgi.djakov@linaro.org>
+        id S1726969AbfJGFJp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 7 Oct 2019 01:09:45 -0400
+Received: from mail-ua1-f67.google.com ([209.85.222.67]:45805 "EHLO
+        mail-ua1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726960AbfJGFJp (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 7 Oct 2019 01:09:45 -0400
+Received: by mail-ua1-f67.google.com with SMTP id j5so3639204uak.12
+        for <linux-arm-msm@vger.kernel.org>; Sun, 06 Oct 2019 22:09:43 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=avIz7XS3ROBd92JOqOv8txx5HcOKNYvNhez7Bn0stVI=;
+        b=MCGwD1tcugssvqnFf8p2haGilsW78iL0h7kkRuX5QYz5Iy5YCTkTwweVJ3n9vbk3A2
+         8OvPg3GABXEV2CANd9Jkb+ilaxyaw7QdMLF8bhCKFsSZv2N+AkTNfAm/C1HGERb5fGeL
+         VtOULSKt+UZBmW7Rwn/aYEo+95yRu1SSt94+iGdqEQAgb35QhkmqXWnUpxqeWLClpMoP
+         QKJPUNJZuiwLoaa5AbxhTzqzOQHu5W6mqVl72uD6kSdIUtyLuqYvmfFayuR9kxdjBTu1
+         yE8HTvbSb1DKMu87lWIvCLcrzmjbLoo+yMnOS0SrqKKIau1IsGr/nvkqZgJHRKF5XIjo
+         BMvA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=avIz7XS3ROBd92JOqOv8txx5HcOKNYvNhez7Bn0stVI=;
+        b=a1poeVgaSDE0RAWUF5KtR4Effdc1twJSfoOhzH7wp4mVfgQCDfDzZyQee79rnUsi6j
+         Joeu1P26YustsUJUAOhQsv0Tc1YK//hP/hiq4ztJSRipYkNtc+6+vb7yzx79bPeREF8C
+         ocmWnhmA1O5KuQXqpY434Vjv1ltvqBeqggRszEo7S620+THNapoWZKVhACtaLKR2AF2U
+         jyW65cxaLshfsBQDq7SCwya9/9MhlqG+93iCG+GAKG9CdNn6OEY68IiY6u6SGIFoTOOc
+         owBX7rGRYLCHEVeKvb98uh8D+R1DcuWYDaNMpMLdM7u2SpZC8Bc1ZahzenNt6rDebZlo
+         p1xQ==
+X-Gm-Message-State: APjAAAUjtk4i8GTDMI9VCdRnGwy0WW6Jde60xwpPBbdeL0VKNcjdniOP
+        +6SHqJ017emyjTGb/6vkriAKT2vxOayoen459Lahfw==
+X-Google-Smtp-Source: APXvYqy7sJLBDqQBmD3XwTTshM9+tcdQZIofbPodeSN3O8elXWNUgTJE1UC109n2mvdDdf85PUZ+3sDssB3brf55NyQ=
+X-Received: by 2002:ab0:7415:: with SMTP id r21mr5352880uap.77.1570424982681;
+ Sun, 06 Oct 2019 22:09:42 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20190613151323.10850-3-georgi.djakov@linaro.org>
+References: <20191005104133.30297-1-kholk11@gmail.com> <20191005104133.30297-4-kholk11@gmail.com>
+In-Reply-To: <20191005104133.30297-4-kholk11@gmail.com>
+From:   Amit Kucheria <amit.kucheria@linaro.org>
+Date:   Mon, 7 Oct 2019 10:39:30 +0530
+Message-ID: <CAHLCerMUR6b_oQoALC5a92aQyuzV4oFTGYHvH7or=7x5e5GW4Q@mail.gmail.com>
+Subject: Re: [PATCH v3 3/3] thermal: qcom: tsens-v1: Free memory in
+ calibrate_v1 where required
+To:     kholk11@gmail.com
+Cc:     linux-arm-msm <linux-arm-msm@vger.kernel.org>, marijns95@gmail.com,
+        Andy Gross <agross@kernel.org>,
+        Daniel Lezcano <daniel.lezcano@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Mark Rutland <mark.rutland@arm.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Jun 13, 2019 at 06:13:20PM +0300, Georgi Djakov wrote:
-> Register a platform device to handle the communication of bus bandwidth
-> requests with the remote processor. The interconnect proxy device is part
-> of this remote processor (RPM) hardware. Let's create a icc-smd-rpm proxy
-> child device to represent the bus throughput functionality that is provided
-> by the RPM.
-> 
-> Signed-off-by: Georgi Djakov <georgi.djakov@linaro.org>
+On Sat, Oct 5, 2019 at 4:11 PM <kholk11@gmail.com> wrote:
+>
+> From: AngeloGioacchino Del Regno <kholk11@gmail.com>
+>
+> The calibrate_v1 function allocates the qfprom_cdata variable
+> during qfprom_read, but it never gets freed: properly kfree it.
 
-Reviewed-by: Brian Masney <masneyb@onstation.org>
-Tested-by: Brian Masney <masneyb@onstation.org> # msm8974
+This has already been fixed upstream. So this patch isn't required.
 
-I think this patch may have fell through the cracks since I don't see
-it in linux-next. The qcs404 patches in this series were merged.
-
-Brian
-
+> Signed-off-by: AngeloGioacchino Del Regno <kholk11@gmail.com>
 > ---
-> 
-> v4:
-> - Return error if platform_device_register_data() fails
-> - Remove platform_set_drvdata() on the child device.
-> 
-> v3:
-> - New patch.
-> 
->  drivers/soc/qcom/smd-rpm.c | 17 ++++++++++++++++-
->  1 file changed, 16 insertions(+), 1 deletion(-)
-> 
-> diff --git a/drivers/soc/qcom/smd-rpm.c b/drivers/soc/qcom/smd-rpm.c
-> index fa9dd12b5e39..34cdd638a6c1 100644
-> --- a/drivers/soc/qcom/smd-rpm.c
-> +++ b/drivers/soc/qcom/smd-rpm.c
-> @@ -19,12 +19,14 @@
->  /**
->   * struct qcom_smd_rpm - state of the rpm device driver
->   * @rpm_channel:	reference to the smd channel
-> + * @icc:		interconnect proxy device
->   * @ack:		completion for acks
->   * @lock:		mutual exclusion around the send/complete pair
->   * @ack_status:		result of the rpm request
->   */
->  struct qcom_smd_rpm {
->  	struct rpmsg_endpoint *rpm_channel;
-> +	struct platform_device *icc;
->  	struct device *dev;
->  
->  	struct completion ack;
-> @@ -193,6 +195,7 @@ static int qcom_smd_rpm_callback(struct rpmsg_device *rpdev,
->  static int qcom_smd_rpm_probe(struct rpmsg_device *rpdev)
->  {
->  	struct qcom_smd_rpm *rpm;
-> +	int ret;
->  
->  	rpm = devm_kzalloc(&rpdev->dev, sizeof(*rpm), GFP_KERNEL);
->  	if (!rpm)
-> @@ -205,11 +208,23 @@ static int qcom_smd_rpm_probe(struct rpmsg_device *rpdev)
->  	rpm->rpm_channel = rpdev->ept;
->  	dev_set_drvdata(&rpdev->dev, rpm);
->  
-> -	return of_platform_populate(rpdev->dev.of_node, NULL, NULL, &rpdev->dev);
-> +	rpm->icc = platform_device_register_data(&rpdev->dev, "icc_smd_rpm", -1,
-> +						 NULL, 0);
-> +	if (IS_ERR(rpm->icc))
-> +		return PTR_ERR(rpm->icc);
-> +
-> +	ret = of_platform_populate(rpdev->dev.of_node, NULL, NULL, &rpdev->dev);
-> +	if (ret)
-> +		platform_device_unregister(rpm->icc);
-> +
-> +	return ret;
+>  drivers/thermal/qcom/tsens-v1.c | 5 ++++-
+>  1 file changed, 4 insertions(+), 1 deletion(-)
+>
+> diff --git a/drivers/thermal/qcom/tsens-v1.c b/drivers/thermal/qcom/tsens-v1.c
+> index 3c85a698123a..017501f37a41 100644
+> --- a/drivers/thermal/qcom/tsens-v1.c
+> +++ b/drivers/thermal/qcom/tsens-v1.c
+> @@ -173,8 +173,10 @@ static int calibrate_v1(struct tsens_priv *priv)
+>         int i;
+>
+>         qfprom_cdata = (u32 *)qfprom_read(priv->dev, "calib");
+> -       if (IS_ERR(qfprom_cdata))
+> +       if (IS_ERR(qfprom_cdata)) {
+> +               kfree(qfprom_cdata);
+>                 return PTR_ERR(qfprom_cdata);
+> +       }
+>
+>         mode = (qfprom_cdata[4] & CAL_SEL_MASK) >> CAL_SEL_SHIFT;
+>         dev_dbg(priv->dev, "calibration mode is %d\n", mode);
+> @@ -225,6 +227,7 @@ static int calibrate_v1(struct tsens_priv *priv)
+>         }
+>
+>         compute_intercept_slope(priv, p1, p2, mode);
+> +       kfree(qfprom_cdata);
+>
+>         return 0;
 >  }
->  
->  static void qcom_smd_rpm_remove(struct rpmsg_device *rpdev)
->  {
-> +	struct qcom_smd_rpm *rpm = dev_get_drvdata(&rpdev->dev);
-> +
-> +	platform_device_unregister(rpm->icc);
->  	of_platform_depopulate(&rpdev->dev);
->  }
->  
+> --
+> 2.21.0
+>
