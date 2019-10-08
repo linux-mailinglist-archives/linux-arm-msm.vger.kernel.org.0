@@ -2,66 +2,186 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id C5701CFDF4
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Oct 2019 17:43:50 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0F335CFE45
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Oct 2019 17:59:58 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726066AbfJHPnt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 8 Oct 2019 11:43:49 -0400
-Received: from mail.kernel.org ([198.145.29.99]:47980 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1725908AbfJHPnt (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 8 Oct 2019 11:43:49 -0400
-Received: from localhost (unknown [89.205.136.99])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 9E9C7217D7;
-        Tue,  8 Oct 2019 15:43:48 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1570549429;
-        bh=W4qbPuJMKTMXYc7ExZx/Lic/BRAYA1i782fPAsu3PKk=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=yc/q6+HFFtbovKZs1x6TdjAqSShe6t8mYq2/4+Utc1BHUg5OQHv5Pi4SpOpDRcBiR
-         pQQXuuSbvsaLkVPrf4CPQQPXw7r8tzr0gjCq+mFAWXtXIkBCSRKnNfhfwlxNICD9Uj
-         ubgo0KcbFLZkszDZEMNYIH1y8dOqrzXwIta4+mew=
-Date:   Tue, 8 Oct 2019 17:43:46 +0200
-From:   Greg KH <gregkh@linuxfoundation.org>
-To:     Stephen Boyd <swboyd@chromium.org>
-Cc:     Murali Nalajala <mnalajal@codeaurora.org>, rafael@kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        bjorn.andersson@linaro.org
-Subject: Re: [PATCH v2] base: soc: Handle custom soc information sysfs entries
-Message-ID: <20191008154346.GA2881455@kroah.com>
-References: <1570480662-25252-1-git-send-email-mnalajal@codeaurora.org>
- <5d9cac38.1c69fb81.682ec.053a@mx.google.com>
+        id S1726257AbfJHP75 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 8 Oct 2019 11:59:57 -0400
+Received: from mail-io1-f67.google.com ([209.85.166.67]:32868 "EHLO
+        mail-io1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725908AbfJHP75 (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 8 Oct 2019 11:59:57 -0400
+Received: by mail-io1-f67.google.com with SMTP id z19so37756825ior.0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 08 Oct 2019 08:59:56 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=lixom-net.20150623.gappssmtp.com; s=20150623;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=tBcYZS8wTLJ+jyCTUqfygduDl+keSPK2KmttGIFgonY=;
+        b=M/ESIIsDxB9Ncm/b7SrUpQK2qVva33uQVjzi0rmMNZWq+KjIL4kQkdUI6PDLqU/YO0
+         NizkAN6jpaDwaYsdMmnkZNXTiTw1jJ+zVkTDYA/lUqABHr4pIaFRqaMSCzBxtVbHR1VZ
+         W5O61xR+bDEC4nuTDqOy/p8AXbBLd8hpsQv8gtlYA7SRZXmD5ks72VKXDo1PFN8cDKDc
+         u1FSmMLttZ1FH2imVoFaRFZGhWVppi2xW4NChmzu3G/5rUR84dHQwCFid99lcEpRkHXZ
+         32yB2Ijm9S2jk5yGsVvOUma6diTYFfZIsF4IzLIRtWRF67jK0JXedwEtHlt4eLm/N8rT
+         mJDQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=tBcYZS8wTLJ+jyCTUqfygduDl+keSPK2KmttGIFgonY=;
+        b=SVRELT3bVBgSnuoi53DetlLcdZmra0jJyZ6n4zWLR8ogIJsTXtsyaTmWwLtO8wyMsx
+         Ku95CYav6r/YOUcOv3PwZjpTIGiPbq1QOeWnxHfEEHs2rSnjtuWwB2BYHic6C/tSPQzP
+         yFcTjkxJPaOi6A8HM6IV66tsEBlOAp6AlrqqAe4QpfBecym5DKx2IXeNvnUEI3DCT2ht
+         l5DOtmLJGjTNpNAyqt/DickzXKG34L+Knps6D5LKxjyO8YRn9b3knFUtXb3ZZGt8WzWM
+         X8pjweQR81lcOKRw5wCoVl7hMrPfbkL2XaIhP5X7xWXlF0mCf2R17/mSZbX9PNfEwczk
+         fPlw==
+X-Gm-Message-State: APjAAAUW4TiXSh3//HIW28lFEkiCRhVLG78d0QNt0N3jZCg9eaHtNYgK
+        JXPtN2Nk6g7yhLFji54Gbcm8UNWYk3dhWNtl5oxwYQ==
+X-Google-Smtp-Source: APXvYqymrV9utqTVCvOUYGzIJ6y1+AXeNbE8gVyHhEeLwYRevHtWq7pSIXdwblnHIwynvlpahdExjkvZ4QC8O2T4/QY=
+X-Received: by 2002:a6b:ca85:: with SMTP id a127mr29155336iog.278.1570550395547;
+ Tue, 08 Oct 2019 08:59:55 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <5d9cac38.1c69fb81.682ec.053a@mx.google.com>
-User-Agent: Mutt/1.12.2 (2019-09-21)
+References: <20190822192451.5983-1-scott.branden@broadcom.com>
+ <20190822192451.5983-6-scott.branden@broadcom.com> <61c3e8a2-b230-844e-466c-ba45b42542a1@ideasonboard.com>
+In-Reply-To: <61c3e8a2-b230-844e-466c-ba45b42542a1@ideasonboard.com>
+From:   Olof Johansson <olof@lixom.net>
+Date:   Tue, 8 Oct 2019 08:59:43 -0700
+Message-ID: <CAOesGMg6f2pK4ZZ8bz=0nMgCJG-8JhLZe41prZoGsBhgGs6_jA@mail.gmail.com>
+Subject: Re: [PATCH 5/7] bcm-vk: add bcm_vk UAPI
+To:     kieran.bingham@ideasonboard.com
+Cc:     Scott Branden <scott.branden@broadcom.com>,
+        Luis Chamberlain <mcgrof@kernel.org>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        David Brown <david.brown@linaro.org>,
+        Alexander Viro <viro@zeniv.linux.org.uk>,
+        Shuah Khan <shuah@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Shuah Khan <skhan@linuxfoundation.org>,
+        Arnd Bergmann <arnd@arndb.de>,
+        "Rafael J . Wysocki" <rafael@kernel.org>,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        linux-fsdevel@vger.kernel.org,
+        BCM Kernel Feedback <bcm-kernel-feedback-list@broadcom.com>,
+        Andrew Morton <akpm@linux-foundation.org>,
+        Dan Carpenter <dan.carpenter@oracle.com>,
+        Colin Ian King <colin.king@canonical.com>,
+        Kees Cook <keescook@chromium.org>,
+        Takashi Iwai <tiwai@suse.de>,
+        "open list:KERNEL SELFTEST FRAMEWORK" 
+        <linux-kselftest@vger.kernel.org>, Ohad Ben-Cohen <ohad@wizery.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Oct 08, 2019 at 08:33:11AM -0700, Stephen Boyd wrote:
-> Quoting Murali Nalajala (2019-10-07 13:37:42)
-> > Soc framework exposed sysfs entries are not sufficient for some
-> > of the h/w platforms. Currently there is no interface where soc
-> > drivers can expose further information about their SoCs via soc
-> > framework. This change address this limitation where clients can
-> > pass their custom entries as attribute group and soc framework
-> > would expose them as sysfs properties.
-> > 
-> > Signed-off-by: Murali Nalajala <mnalajal@codeaurora.org>
+On Tue, Aug 27, 2019 at 7:49 AM Kieran Bingham
+<kieran.bingham@ideasonboard.com> wrote:
+>
+> Hi Scott,
+>
+> On 22/08/2019 20:24, Scott Branden wrote:
+> > Add user space api for bcm-vk driver.
+> >
+> > Signed-off-by: Scott Branden <scott.branden@broadcom.com>
 > > ---
-> 
-> Reviewed-by: Stephen Boyd <swboyd@chromium.org>
-> 
+> >  include/uapi/linux/misc/bcm_vk.h | 88 ++++++++++++++++++++++++++++++++
+> >  1 file changed, 88 insertions(+)
+> >  create mode 100644 include/uapi/linux/misc/bcm_vk.h
+> >
+> > diff --git a/include/uapi/linux/misc/bcm_vk.h b/include/uapi/linux/misc/bcm_vk.h
+> > new file mode 100644
+> > index 000000000000..df7dfd7f0702
+> > --- /dev/null
+> > +++ b/include/uapi/linux/misc/bcm_vk.h
+> > @@ -0,0 +1,88 @@
+> > +/* SPDX-License-Identifier: ((GPL-2.0 WITH Linux-syscall-note) OR BSD-2-Clause) */
+> > +/*
+> > + * Copyright(c) 2018 Broadcom
+> > + */
+> > +
+> > +#ifndef __UAPI_LINUX_MISC_BCM_VK_H
+> > +#define __UAPI_LINUX_MISC_BCM_VK_H
+> > +
+> > +#include <linux/ioctl.h>
+> > +#include <linux/types.h>
+> > +
+> > +struct vk_metadata {
+> > +     /* struct version, always backwards compatible */
+> > +     __u32 version;
+> > +
+> > +     /* Version 0 fields */
+> > +     __u32 card_status;
+> > +#define VK_CARD_STATUS_FASTBOOT_READY BIT(0)
+> > +#define VK_CARD_STATUS_FWLOADER_READY BIT(1)
+> > +
+> > +     __u32 firmware_version;
+> > +     __u32 fw_status;
+> > +     /* End version 0 fields */
+> > +
+> > +     __u64 reserved[14];
+> > +     /* Total of 16*u64 for all versions */
+> > +};
+> > +
+> > +struct vk_image {
+> > +     __u32 type;     /* Type of image */
+> > +#define VK_IMAGE_TYPE_BOOT1 1 /* 1st stage (load to SRAM) */
+> > +#define VK_IMAGE_TYPE_BOOT2 2 /* 2nd stage (load to DDR) */
+> > +     char filename[64]; /* Filename of image */
+> > +};
+> > +
+> > +/* default firmware images names */
+> > +#define VK_BOOT1_DEF_FILENAME            "vk-boot1.bin"
+> > +#define VK_BOOT2_DEF_FILENAME            "vk-boot2.bin"
+> > +
+> > +struct vk_access {
+> > +     __u8 barno;     /* BAR number to use */
+> > +     __u8 type;      /* Type of access */
+> > +#define VK_ACCESS_READ 0
+> > +#define VK_ACCESS_WRITE 1
+> > +     __u32 len;      /* length of data */
+> > +     __u64 offset;   /* offset in BAR */
+> > +     __u32 *data;    /* where to read/write data to */
+> > +};
+> > +
+> > +struct vk_reset {
+> > +     __u32 arg1;
+> > +     __u32 arg2;
+> > +};
+> > +
+> > +#define VK_MAGIC              0x5E
+> > +
+> > +/* Get metadata from Valkyrie (firmware version, card status, etc) */
+> > +#define VK_IOCTL_GET_METADATA _IOR(VK_MAGIC, 0x1, struct vk_metadata)
+> > +
+> > +/* Load image to Valkyrie */
+> > +#define VK_IOCTL_LOAD_IMAGE   _IOW(VK_MAGIC, 0x2, struct vk_image)
+> > +
+> > +/* Read data from Valkyrie */
+> > +#define VK_IOCTL_ACCESS_BAR   _IOWR(VK_MAGIC, 0x3, struct vk_access)
+> > +
+> > +/* Send Reset to Valkyrie */
+> > +#define VK_IOCTL_RESET        _IOW(VK_MAGIC, 0x4, struct vk_reset)
+>
+> It sounds a bit like the valkyrie is a generic asynchronous coprocessor,
+> does it merit using the remoteproc interfaces to control it ?
+>
+> Or is it really just a single purpose cell doing video operations ?
 
-Nice, can we convert the existing soc drivers to use this interface
-instead of the "export the device pointer" mess that they currently
-have?  That way we can drop that function entirely.
+Remoteproc brings some useful shared functionality, in particular
+around loading and parsing firmware formats for platforms where the
+remote processor uses system carved out memory to run, etc.
 
-thanks,
+For something like a PCIe device, it *can* be used but it really
+doesn't bring any immediate benefit, especially if there aren't
+multiple in-kernel drivers that need to talk to the hardware in an
+abstracted way.
 
-greg k-h
+
+-Olof
+
+
+
+-Olof
