@@ -2,102 +2,115 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 03E65CFE93
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Oct 2019 18:11:33 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B47DECFF8F
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Oct 2019 19:10:10 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725795AbfJHQLc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 8 Oct 2019 12:11:32 -0400
-Received: from mail-lj1-f195.google.com ([209.85.208.195]:42080 "EHLO
-        mail-lj1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725966AbfJHQLb (ORCPT
+        id S1725966AbfJHRKJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 8 Oct 2019 13:10:09 -0400
+Received: from smtp.codeaurora.org ([198.145.29.96]:57020 "EHLO
+        smtp.codeaurora.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725900AbfJHRKJ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 8 Oct 2019 12:11:31 -0400
-Received: by mail-lj1-f195.google.com with SMTP id y23so18171056lje.9;
-        Tue, 08 Oct 2019 09:11:30 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=AT+kDpEjrdBshsMqJBNVg8JsTs5Ln99yNIaxkRDtThA=;
-        b=H6F4206g5t18kFz01VuQPieIxoQpVLKANGGFoXM6ePueTOX2VPQy9nC+c5TYLTnnzm
-         cXmJh9QSTByOD5ZAOuYOjClZi5iBiCF0vNx1zq00dK7Wyi1H1+gZlfWIMVXePyHUeYca
-         DY1z20zNcqEog30lb3AZ6JYZ1rz+7vvs4wfDZc0EOU+hH9z4Q1aohsLuA7I8reUzxSLw
-         3K8n5XJvZDHvVgXXusNohBOFHHLJC86XiJ/xtyMX1XKyUSo2F2L+ZdP+p3GKZUX8WDMv
-         B8EVK03VA/5XGiwYMQQnR7PVYVqDziUUOGQJqQZlwKxx2OrIIOUYImbDXX5TRgaykp2i
-         qvKg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=AT+kDpEjrdBshsMqJBNVg8JsTs5Ln99yNIaxkRDtThA=;
-        b=ECJwNgmcDo/Shvz3vVGn9uI2XqEpooBCzy+1KaVHFJTHyjBkRgiOGBdz55f0FTPEDp
-         Wd8H6t0e/6XXLYUMCi6fEgvd3XF2XxPguJBAUuHOSveIqF13aPsAsMKgaX9Lnk8yN8xL
-         dRAXN/sgYdVIuf/eT1FcwiAegexdByDDNOY4ymxhV0L7zcWszjuDovWogPqXHybKr4FU
-         NZ4NcYsiSGqDNpAcz47/N331bqzteFByo3X7mQk1k1Nt8bNCxixMjCctW5+vaqjoEONF
-         26Q/gk4SMm8d51Eu75goNxmiTHYViqN1rjPwonoz+pD49Ph4ctkdPV1Ih0YR7ADRXG1X
-         ij6g==
-X-Gm-Message-State: APjAAAUxObYZw+iYflbK0k1zam7JImYFLEH8kWI3PnxXlUTsoiP00nov
-        ZVibZ7eSKZOvxUEm1YMsKlA2sYC0cpSfTW6kRp4=
-X-Google-Smtp-Source: APXvYqwn5DlZGijUmc7DgbkIfu62kvr3NLZ18Ba3IyP+/Ho1XmFOjIm2o1fNq5KIpNcvuRoaxSrAnDitq5DGjmcTndI=
-X-Received: by 2002:a2e:7502:: with SMTP id q2mr23044246ljc.202.1570551089481;
- Tue, 08 Oct 2019 09:11:29 -0700 (PDT)
+        Tue, 8 Oct 2019 13:10:09 -0400
+Received: by smtp.codeaurora.org (Postfix, from userid 1000)
+        id E718660709; Tue,  8 Oct 2019 17:10:08 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
+        s=default; t=1570554608;
+        bh=Hl31l3HzL5RJakGhA/0Av14OVr8Gji2rQOUJ4T9TSIs=;
+        h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
+        b=iHd/rtuIymcUsQq10MFmlHuU9cEYiM4GYFrSEl3S23iWaDpmqcmlBoOCpep8jyllw
+         c7+wworL1NhWBSDjBDgYTBLyW0CsQk6npOTgHsAhloZvOkV0nhh2fvb9kag7HYRGEC
+         tHNyZHimMeuAfcVzpxoNYWWTy2DiPPK0iDCIqcT4=
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        pdx-caf-mail.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.7 required=2.0 tests=ALL_TRUSTED,BAYES_00,
+        DKIM_INVALID,DKIM_SIGNED autolearn=no autolearn_force=no version=3.4.0
+Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
+        by smtp.codeaurora.org (Postfix) with ESMTP id 0B153602C8;
+        Tue,  8 Oct 2019 17:10:08 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
+        s=default; t=1570554608;
+        bh=Hl31l3HzL5RJakGhA/0Av14OVr8Gji2rQOUJ4T9TSIs=;
+        h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
+        b=iHd/rtuIymcUsQq10MFmlHuU9cEYiM4GYFrSEl3S23iWaDpmqcmlBoOCpep8jyllw
+         c7+wworL1NhWBSDjBDgYTBLyW0CsQk6npOTgHsAhloZvOkV0nhh2fvb9kag7HYRGEC
+         tHNyZHimMeuAfcVzpxoNYWWTy2DiPPK0iDCIqcT4=
 MIME-Version: 1.0
-References: <20190904171723.2956-1-robdclark@gmail.com>
-In-Reply-To: <20190904171723.2956-1-robdclark@gmail.com>
-From:   Fabio Estevam <festevam@gmail.com>
-Date:   Tue, 8 Oct 2019 13:11:19 -0300
-Message-ID: <CAOMZO5DgnB0kuSTxg1=ngJYiRvbq6bqBC4K-R5nQMzEinBYq7A@mail.gmail.com>
-Subject: Re: [PATCH] drm/msm: Use the correct dma_sync calls harder
-To:     Rob Clark <robdclark@gmail.com>
-Cc:     DRI mailing list <dri-devel@lists.freedesktop.org>,
-        Rob Clark <robdclark@chromium.org>,
-        Sean Paul <sean@poorly.run>, David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        "open list:DRM DRIVER FOR MSM ADRENO GPU" 
-        <linux-arm-msm@vger.kernel.org>,
-        "open list:DRM DRIVER FOR MSM ADRENO GPU" 
-        <freedreno@lists.freedesktop.org>,
-        open list <linux-kernel@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
+Content-Transfer-Encoding: 7bit
+Date:   Tue, 08 Oct 2019 10:10:08 -0700
+From:   mnalajal@codeaurora.org
+To:     Greg KH <gregkh@linuxfoundation.org>
+Cc:     Stephen Boyd <swboyd@chromium.org>, rafael@kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        bjorn.andersson@linaro.org
+Subject: Re: [PATCH v2] base: soc: Handle custom soc information sysfs entries
+In-Reply-To: <20191008154346.GA2881455@kroah.com>
+References: <1570480662-25252-1-git-send-email-mnalajal@codeaurora.org>
+ <5d9cac38.1c69fb81.682ec.053a@mx.google.com>
+ <20191008154346.GA2881455@kroah.com>
+Message-ID: <463ec0b5a3f1946df0ed2771ba741545@codeaurora.org>
+X-Sender: mnalajal@codeaurora.org
+User-Agent: Roundcube Webmail/1.2.5
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Rob,
+On 2019-10-08 08:43, Greg KH wrote:
+> On Tue, Oct 08, 2019 at 08:33:11AM -0700, Stephen Boyd wrote:
+>> Quoting Murali Nalajala (2019-10-07 13:37:42)
+>> > Soc framework exposed sysfs entries are not sufficient for some
+>> > of the h/w platforms. Currently there is no interface where soc
+>> > drivers can expose further information about their SoCs via soc
+>> > framework. This change address this limitation where clients can
+>> > pass their custom entries as attribute group and soc framework
+>> > would expose them as sysfs properties.
+>> >
+>> > Signed-off-by: Murali Nalajala <mnalajal@codeaurora.org>
+>> > ---
+>> 
+>> Reviewed-by: Stephen Boyd <swboyd@chromium.org>
+>> 
+> 
+> Nice, can we convert the existing soc drivers to use this interface
+> instead of the "export the device pointer" mess that they currently
+> have?  That way we can drop that function entirely.
+> 
+Thank you for the reviews.
+In the current linux tree i can find these driver instances who is using 
+"soc_device_to_device" for populating their sysfs entries.
 
-On Wed, Sep 4, 2019 at 2:19 PM Rob Clark <robdclark@gmail.com> wrote:
->
-> From: Rob Clark <robdclark@chromium.org>
->
-> Looks like the dma_sync calls don't do what we want on armv7 either.
-> Fixes:
->
->   Unable to handle kernel paging request at virtual address 50001000
->   pgd = (ptrval)
->   [50001000] *pgd=00000000
->   Internal error: Oops: 805 [#1] SMP ARM
->   Modules linked in:
->   CPU: 0 PID: 1 Comm: swapper/0 Not tainted 5.3.0-rc6-00271-g9f159ae07f07 #4
->   Hardware name: Freescale i.MX53 (Device Tree Support)
->   PC is at v7_dma_clean_range+0x20/0x38
->   LR is at __dma_page_cpu_to_dev+0x28/0x90
->   pc : [<c011c76c>]    lr : [<c01181c4>]    psr: 20000013
->   sp : d80b5a88  ip : de96c000  fp : d840ce6c
->   r10: 00000000  r9 : 00000001  r8 : d843e010
->   r7 : 00000000  r6 : 00008000  r5 : ddb6c000  r4 : 00000000
->   r3 : 0000003f  r2 : 00000040  r1 : 50008000  r0 : 50001000
->   Flags: nzCv  IRQs on  FIQs on  Mode SVC_32  ISA ARM  Segment none
->   Control: 10c5387d  Table: 70004019  DAC: 00000051
->   Process swapper/0 (pid: 1, stack limit = 0x(ptrval))
->
-> Signed-off-by: Rob Clark <robdclark@chromium.org>
-> Fixes: 3de433c5b38a ("drm/msm: Use the correct dma_sync calls in msm_gem")
-> Tested-by: Fabio Estevam <festevam@gmail.com>
+drivers/soc/ux500/ux500-soc-id.c:       parent = 
+soc_device_to_device(soc_dev);
+drivers/soc/tegra/fuse/fuse-tegra.c:    return 
+soc_device_to_device(dev);
+drivers/soc/amlogic/meson-gx-socinfo.c: dev = 
+soc_device_to_device(soc_dev);
+drivers/soc/amlogic/meson-mx-socinfo.c: 
+dev_info(soc_device_to_device(soc_dev), "Amlogic %s %s detected\n",
+drivers/soc/imx/soc-imx8.c:     ret = 
+device_create_file(soc_device_to_device(soc_dev),
+drivers/soc/imx/soc-imx-scu.c:  ret = 
+device_create_file(soc_device_to_device(soc_dev),
+drivers/soc/versatile/soc-realview.c:   
+device_create_file(soc_device_to_device(soc_dev), &realview_manf_attr);
+drivers/soc/versatile/soc-realview.c:   
+device_create_file(soc_device_to_device(soc_dev), &realview_board_attr);
+drivers/soc/versatile/soc-realview.c:   
+device_create_file(soc_device_to_device(soc_dev), &realview_arch_attr);
+drivers/soc/versatile/soc-realview.c:   
+device_create_file(soc_device_to_device(soc_dev), &realview_build_attr);
+drivers/soc/versatile/soc-integrator.c: dev = 
+soc_device_to_device(soc_dev);
 
-I see this one got applied in linux-next already.
-Could it be sent to 5.4-rc, please?
+These drivers can use the current proposed approach to expose their 
+sysfs entries.
+Will try to address these and submit. But i can't able to test these 
+changes because i do not have these h/w's
 
-mx53 boards cannot boot in mainline because of this.
-
-Thanks
+> thanks,
+> 
+> greg k-h
