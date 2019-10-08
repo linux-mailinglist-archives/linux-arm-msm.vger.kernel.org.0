@@ -2,44 +2,46 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 7956CCF764
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Oct 2019 12:47:21 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id DAF63CF8F7
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Oct 2019 13:56:39 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730278AbfJHKrU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 8 Oct 2019 06:47:20 -0400
-Received: from bombadil.infradead.org ([198.137.202.133]:44734 "EHLO
-        bombadil.infradead.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730026AbfJHKrU (ORCPT
+        id S1730439AbfJHL4j (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 8 Oct 2019 07:56:39 -0400
+Received: from mo4-p01-ob.smtp.rzone.de ([81.169.146.166]:23430 "EHLO
+        mo4-p01-ob.smtp.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1730332AbfJHL4i (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 8 Oct 2019 06:47:20 -0400
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-        d=infradead.org; s=bombadil.20170209; h=Sender:Content-Transfer-Encoding:
-        MIME-Version:Message-Id:Date:Subject:Cc:To:From:Reply-To:Content-Type:
-        Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender:
-        Resent-To:Resent-Cc:Resent-Message-ID:In-Reply-To:References:List-Id:
-        List-Help:List-Unsubscribe:List-Subscribe:List-Post:List-Owner:List-Archive;
-         bh=Rb6Rd4h4jcCyK5/exmA3E1tM/0mlAcZYCYGv9TxKgsQ=; b=TJDbGx983pekipOac7pyQbqUE
-        zuFJCzmpmhhh+d+8X0AemJyXIDoiRVBlsmzMsrWH2FP9lmZ3atLifgiMIFqabWoDuzSHfVK80qG+B
-        dLiuUA6RVIyuPdFWwZm0+KMEU5vk0fVOBr+NQAc5UeLkQObutk26qaqYFt9NtgHc2u4ujkc8unck5
-        43dA6ZWYZ4PMkwJqAxWDocjkX+Hg3fiZqFeUnqg++adorzBSRMGIUzi0m2Q0K0nlDlrR9g9hX4amE
-        HdUgxAuWBxsGMAfzr8t6SplGXKD5MbE6RU6nQx3MOHqe/FOBLBFa8jOR0M2WhMGsD2mUayR7Ab1Ot
-        P7EZ/GVIQ==;
-Received: from [179.95.33.153] (helo=bombadil.infradead.org)
-        by bombadil.infradead.org with esmtpsa (Exim 4.92.2 #3 (Red Hat Linux))
-        id 1iHn1T-0006Qy-SW; Tue, 08 Oct 2019 10:47:19 +0000
-Received: from mchehab by bombadil.infradead.org with local (Exim 4.92.3)
-        (envelope-from <mchehab@bombadil.infradead.org>)
-        id 1iHn1H-0003sZ-DP; Tue, 08 Oct 2019 07:47:07 -0300
-From:   Mauro Carvalho Chehab <mchehab+samsung@kernel.org>
-To:     Linux Media Mailing List <linux-media@vger.kernel.org>
-Cc:     Mauro Carvalho Chehab <mchehab+samsung@kernel.org>,
-        Mauro Carvalho Chehab <mchehab@infradead.org>,
-        Stanimir Varbanov <stanimir.varbanov@linaro.org>,
-        Andy Gross <agross@kernel.org>, linux-arm-msm@vger.kernel.org
-Subject: [PATCH v2] media: venus: fix build on 32bit environments
-Date:   Tue,  8 Oct 2019 07:47:06 -0300
-Message-Id: <fe713104c8e1c218149013576e8e99f8563796bd.1570531619.git.mchehab+samsung@kernel.org>
-X-Mailer: git-send-email 2.21.0
+        Tue, 8 Oct 2019 07:56:38 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; t=1570535796;
+        s=strato-dkim-0002; d=gerhold.net;
+        h=Message-Id:Date:Subject:Cc:To:From:X-RZG-CLASS-ID:X-RZG-AUTH:From:
+        Subject:Sender;
+        bh=yee+vmGTEvPzUFyOOm1UtSX+ezPtsQmQBiqqk5yc0vE=;
+        b=jqPdlIW2yG1pJ8Fz1r1x2aZU7ptmb8Rr8lS7eLNXYXoRo3kcUAq2QBcCWdJn9ajNFh
+        zeYaEu9wPf9PYMUoNGtazagrLyflwGrx793nmmH1r+iYOOqb7+bPD/GxqZQNIdiwA6bK
+        RH7bEXextpxWnJPxYNyQ8ECThgFiL4zhE1t/4tEgKk0/ftg8cVK1fA/OlkhMXndtX9mX
+        4jxRxSrD/khLpes2qadcvd5zvrntvDs1E83aAd+IcWzSJr0CfxsBhpyI0syUHwQ3/ftE
+        +/SWF0Y91Vjg3cVP+n1H9YhbokjugFI8l2VyK4wsWObMeelePTDCh8LDIJdz/rODbj2B
+        rtmA==
+X-RZG-AUTH: ":P3gBZUipdd93FF5ZZvYFPugejmSTVR2nRPhVORvLd4SsytBXQrEOHTIXuMPvtxBR0Q=="
+X-RZG-CLASS-ID: mo00
+Received: from localhost.localdomain
+        by smtp.strato.de (RZmta 44.28.0 AUTH)
+        with ESMTPSA id L0811cv98BrU8B7
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (curve secp521r1 with 521 ECDH bits, eq. 15360 bits RSA))
+        (Client did not present a certificate);
+        Tue, 8 Oct 2019 13:53:30 +0200 (CEST)
+From:   Stephan Gerhold <stephan@gerhold.net>
+To:     Kishon Vijay Abraham I <kishon@ti.com>
+Cc:     Chanwoo Choi <cw00.choi@samsung.com>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Stephan Gerhold <stephan@gerhold.net>
+Subject: [PATCH] phy: qcom-usb-hs: Fix extcon double register after power cycle
+Date:   Tue,  8 Oct 2019 13:52:08 +0200
+Message-Id: <20191008115208.149987-1-stephan@gerhold.net>
+X-Mailer: git-send-email 2.23.0
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Sender: linux-arm-msm-owner@vger.kernel.org
@@ -47,41 +49,67 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-As reported by jenkins@linuxtv.org, the build with i386 fails
-with:
+Commit f0b5c2c96370 ("phy: qcom-usb-hs: Replace the extcon API")
+switched from extcon_register_notifier() to the resource-managed
+API, i.e. devm_extcon_register_notifier().
 
-	ld: drivers/media/platform/qcom/venus/helpers.o: in function `venus_helper_load_scale_clocks':
-	(.text+0x1d77): undefined reference to `__udivdi3'
-	ld: (.text+0x1dce): undefined reference to `__udivdi3'
-	make: *** [Makefile:1094: vmlinux] Error 1
+This is problematic in this case, because the extcon notifier
+is dynamically registered/unregistered whenever the PHY is powered
+on/off. The resource-managed API does not unregister the notifier
+until the driver is removed, so as soon as the PHY is power cycled,
+attempting to register the notifier again results in:
 
-That's because it divides an u32 bit integer by a u64 one.
+	double register detected
+	WARNING: CPU: 1 PID: 182 at kernel/notifier.c:26 notifier_chain_register+0x74/0xa0
+	Call trace:
+	 ...
+	 extcon_register_notifier+0x74/0xb8
+	 devm_extcon_register_notifier+0x54/0xb8
+	 qcom_usb_hs_phy_power_on+0x1fc/0x208
+	 ...
 
-Fix it by explicitly callind do_div.
+... and USB stops working after plugging the cable out and in
+another time.
 
-Signed-off-by: Mauro Carvalho Chehab <mchehab+samsung@kernel.org>
+The easiest way to fix this is to make a partial revert of
+commit f0b5c2c96370 ("phy: qcom-usb-hs: Replace the extcon API")
+and avoid using the resource-managed API in this case.
+
+Fixes: f0b5c2c96370 ("phy: qcom-usb-hs: Replace the extcon API")
+Signed-off-by: Stephan Gerhold <stephan@gerhold.net>
 ---
- drivers/media/platform/qcom/venus/helpers.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+An other way to fix this would be keep the extcon notifier
+permanently registered, and check in qcom_usb_hs_phy_vbus_notifier
+if the PHY is currently powered on.
+---
+ drivers/phy/qualcomm/phy-qcom-usb-hs.c | 7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/media/platform/qcom/venus/helpers.c b/drivers/media/platform/qcom/venus/helpers.c
-index 5ea5d90f8e5f..a172f1ac0b35 100644
---- a/drivers/media/platform/qcom/venus/helpers.c
-+++ b/drivers/media/platform/qcom/venus/helpers.c
-@@ -520,10 +520,11 @@ static unsigned long calculate_inst_freq(struct venus_inst *inst,
- 					 unsigned long filled_len)
+diff --git a/drivers/phy/qualcomm/phy-qcom-usb-hs.c b/drivers/phy/qualcomm/phy-qcom-usb-hs.c
+index b163b3a1558d..61054272a7c8 100644
+--- a/drivers/phy/qualcomm/phy-qcom-usb-hs.c
++++ b/drivers/phy/qualcomm/phy-qcom-usb-hs.c
+@@ -158,8 +158,8 @@ static int qcom_usb_hs_phy_power_on(struct phy *phy)
+ 		/* setup initial state */
+ 		qcom_usb_hs_phy_vbus_notifier(&uphy->vbus_notify, state,
+ 					      uphy->vbus_edev);
+-		ret = devm_extcon_register_notifier(&ulpi->dev, uphy->vbus_edev,
+-				EXTCON_USB, &uphy->vbus_notify);
++		ret = extcon_register_notifier(uphy->vbus_edev, EXTCON_USB,
++					       &uphy->vbus_notify);
+ 		if (ret)
+ 			goto err_ulpi;
+ 	}
+@@ -180,6 +180,9 @@ static int qcom_usb_hs_phy_power_off(struct phy *phy)
  {
- 	unsigned long vpp_freq = 0, vsp_freq = 0;
--	u64 fps = inst->fps;
-+	u32 fps = (u32)inst->fps;
- 	u32 mbs_per_sec;
+ 	struct qcom_usb_hs_phy *uphy = phy_get_drvdata(phy);
  
--	mbs_per_sec = load_per_instance(inst) / inst->fps;
-+	mbs_per_sec = load_per_instance(inst) / fps;
-+
- 	vpp_freq = mbs_per_sec * inst->clk_data.codec_freq_data->vpp_freq;
- 	/* 21 / 20 is overhead factor */
- 	vpp_freq += vpp_freq / 20;
++	if (uphy->vbus_edev)
++		extcon_unregister_notifier(uphy->vbus_edev, EXTCON_USB,
++					   &uphy->vbus_notify);
+ 	regulator_disable(uphy->v3p3);
+ 	regulator_disable(uphy->v1p8);
+ 	clk_disable_unprepare(uphy->sleep_clk);
 -- 
-2.21.0
+2.23.0
 
