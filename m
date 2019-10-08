@@ -2,119 +2,110 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 7CFEAD03A3
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  9 Oct 2019 00:57:47 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id AF983D03CE
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  9 Oct 2019 01:08:19 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725914AbfJHW5r (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 8 Oct 2019 18:57:47 -0400
-Received: from mail-pl1-f196.google.com ([209.85.214.196]:40182 "EHLO
-        mail-pl1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725908AbfJHW5q (ORCPT
+        id S1725879AbfJHXIS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 8 Oct 2019 19:08:18 -0400
+Received: from mail-ed1-f68.google.com ([209.85.208.68]:39221 "EHLO
+        mail-ed1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725848AbfJHXIS (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 8 Oct 2019 18:57:46 -0400
-Received: by mail-pl1-f196.google.com with SMTP id d22so66945pll.7
-        for <linux-arm-msm@vger.kernel.org>; Tue, 08 Oct 2019 15:57:46 -0700 (PDT)
+        Tue, 8 Oct 2019 19:08:18 -0400
+Received: by mail-ed1-f68.google.com with SMTP id a15so305386edt.6;
+        Tue, 08 Oct 2019 16:08:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=message-id:mime-version:content-transfer-encoding:in-reply-to
-         :references:from:to:cc:subject:user-agent:date;
-        bh=1iVg1bgTgNlX0dVm1aEShQI+wslCHb8bQCi8jJ4tNNc=;
-        b=QDUlhMJXKqmHUqSjPCk5eUuvJMAi05vnUZjLZXoyWt4EJdXtiOz2Y6Nr/MuLSLI04w
-         0toDdOgS4ewieZ4KychKuLMMZDFwLqkjBPNmy/f7ti9npdfWUKH4nlcvtVwvuKRgpJ6J
-         r20qPnrBvGNsk7IEz5JRvMz4WuJpc2KtWI6Bo=
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=m05pDGZbsmhzbNGDVdoCCzYWm/2mMB34A9buFwlNp74=;
+        b=PCGM6guQKhDbaOQdYY6yu/4FRo9KFErdzinvSJkD/xR34bkT83TUTqzx86ts6dUBIY
+         Nqgf5WKWb6yQO9x3LUq1zENOssXQWqFYeZZ03ylWwN0vqyoMBrZc0SiDhE1mNMGGtRn2
+         imNB6637YBRg/Jsw9usqT2MgtBeR2EJ9w2vPMz+4uljvly8BPXW8nt16RFhBVw78KneW
+         4fkCuNLxd5BuDStS2/Y0N96jHHXmgOucs0AEs2P+XFkXUnf3qbhdNaTCgCY4q2prPFnO
+         7+32tqKT9otZjZTB0S5GtWQ52BaI4a1D22bvIh2vk6mcDz0hcARptsXrqvCo12AZqb/Y
+         aAoA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:mime-version
-         :content-transfer-encoding:in-reply-to:references:from:to:cc:subject
-         :user-agent:date;
-        bh=1iVg1bgTgNlX0dVm1aEShQI+wslCHb8bQCi8jJ4tNNc=;
-        b=dz2YI28MBXgSE+bOEazJNmumwF5BSjjO2WCOBhPG882Noju8Cw2yFfPKqFwP6seXtp
-         s/VpTcvc+7CKQXu51dI+QbU97xhp9WI0AKEvCHXtrDcHz4v8HDb/bIA2vmUBaGWI7B09
-         x1RSy0YjYeWztTh3v7nv2qgggZVX5Em/G59J75TgG2N/xMHkUctfrHQqPga8dCgy19Dx
-         jHNjUTIDuWYxpCyQ2AlTG3aMLMdfaRy2oNMZfRkPpB1QgLJYwYGBeblkV9TsDezZvbVG
-         BgZI+Iyb5DXmCeG7eEEX+RxJgXl+6iLxoN5HUCRBc4r8FJHtqvUvwqlDd+cBXmEJ3YVW
-         zLXQ==
-X-Gm-Message-State: APjAAAVSBXBvpwdfIQ027NLh+GcZudqKjVs8/5Ih2VXMLtvQH+hK2CmT
-        CHD3buG0FfemjUlgZR58a1KLPA==
-X-Google-Smtp-Source: APXvYqzV5T/dDRhxX/AyCWGZl/1A1CtlsmcvDIFOotNiWyYZfmr0klgV6tsCqwZoGEkXP0gf/1Z7gA==
-X-Received: by 2002:a17:902:a704:: with SMTP id w4mr37148337plq.177.1570575465981;
-        Tue, 08 Oct 2019 15:57:45 -0700 (PDT)
-Received: from chromium.org ([2620:15c:202:1:fa53:7765:582b:82b9])
-        by smtp.gmail.com with ESMTPSA id d4sm205853pjs.9.2019.10.08.15.57.44
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 08 Oct 2019 15:57:44 -0700 (PDT)
-Message-ID: <5d9d1468.1c69fb81.1bb45.193a@mx.google.com>
-Content-Type: text/plain; charset="utf-8"
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=m05pDGZbsmhzbNGDVdoCCzYWm/2mMB34A9buFwlNp74=;
+        b=Hh7ip/aKJSigiN+Su3WqrXioJtHyzO2DSyXPM2oH3xexZdd3CgJTKeneDUcFC25tYL
+         0tl8qyWd/a5m+BMc5QJVPhAigWuxU7BTqWWoBubxSQFMrLsDNDtUb7/lfhjWLSjirHB6
+         0r/FIeCNCFsqJfwbNcgGQRlqorEL6A52KSprad31J3jcLZXSfwbe+YjBKEbZKdNCvcMT
+         YfM4ZmEuEkrmKYDSmZQkyByhGJZ1eDynVlFrXqew9cn5FgmtxI+fSdUYsBTH+5ZBPNN5
+         YZv3OOAjZbvpT8UKeEIyRm9OBue/aRRmNj8zvbufFObKLHUiLlT/f69Y3cUd+TmaiXzJ
+         yG1A==
+X-Gm-Message-State: APjAAAVjkbKQXmYufREFWSDaFr3sm20U5Bj9KAmerW2dm7LzLwahc2Yl
+        mOK4EH0sSQMuLu8ZmDAaVMpfLSXwIIQABt5vBlk=
+X-Google-Smtp-Source: APXvYqzfJEUClDx5VkmVpottFYGdPrGDGEyJc9nTTMrE1y2oto+PY6SOncAVBcyPn5xQTMvrJXn8EaSZxX2RzN0PHDc=
+X-Received: by 2002:a05:6402:557:: with SMTP id i23mr399826edx.71.1570576096925;
+ Tue, 08 Oct 2019 16:08:16 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <CAE=gft4Rp_GmoVc1iRFH3tiu_taC=i72_Y+xXzk6eU6J80YhQw@mail.gmail.com>
-References: <20191004233132.194336-1-swboyd@chromium.org> <CAE=gft4Rp_GmoVc1iRFH3tiu_taC=i72_Y+xXzk6eU6J80YhQw@mail.gmail.com>
-From:   Stephen Boyd <swboyd@chromium.org>
-To:     Evan Green <evgreen@chromium.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        LKML <linux-kernel@vger.kernel.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Venkata Narendra Kumar Gutta <vnkgutta@codeaurora.org>
-Subject: Re: [PATCH] soc: qcom: llcc: Name regmaps to avoid collisions
-User-Agent: alot/0.8.1
-Date:   Tue, 08 Oct 2019 15:57:43 -0700
+References: <20190904171723.2956-1-robdclark@gmail.com> <CAOMZO5DgnB0kuSTxg1=ngJYiRvbq6bqBC4K-R5nQMzEinBYq7A@mail.gmail.com>
+In-Reply-To: <CAOMZO5DgnB0kuSTxg1=ngJYiRvbq6bqBC4K-R5nQMzEinBYq7A@mail.gmail.com>
+From:   Rob Clark <robdclark@gmail.com>
+Date:   Tue, 8 Oct 2019 16:08:05 -0700
+Message-ID: <CAF6AEGtTt4Em=7GJiuqhAdvJ-cB8hp=iOuT7egoVr3vW=VMN5w@mail.gmail.com>
+Subject: Re: [PATCH] drm/msm: Use the correct dma_sync calls harder
+To:     Fabio Estevam <festevam@gmail.com>
+Cc:     DRI mailing list <dri-devel@lists.freedesktop.org>,
+        Rob Clark <robdclark@chromium.org>,
+        Sean Paul <sean@poorly.run>, David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        "open list:DRM DRIVER FOR MSM ADRENO GPU" 
+        <linux-arm-msm@vger.kernel.org>,
+        "open list:DRM DRIVER FOR MSM ADRENO GPU" 
+        <freedreno@lists.freedesktop.org>,
+        open list <linux-kernel@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Evan Green (2019-10-07 14:20:47)
-> On Fri, Oct 4, 2019 at 4:31 PM Stephen Boyd <swboyd@chromium.org> wrote:
+On Tue, Oct 8, 2019 at 9:11 AM Fabio Estevam <festevam@gmail.com> wrote:
+>
+> Hi Rob,
+>
+> On Wed, Sep 4, 2019 at 2:19 PM Rob Clark <robdclark@gmail.com> wrote:
 > >
-> > We'll end up with debugfs collisions if we don't give names to the
-> > regmaps created inside this driver. Copy the template config over into
-> > this function and give the regmap the same name as the resource name.
+> > From: Rob Clark <robdclark@chromium.org>
 > >
-> > Fixes: 7f9c136216c7 ("soc: qcom: Add broadcast base for Last Level Cach=
-e Controller (LLCC)")
-> > Cc: Venkata Narendra Kumar Gutta <vnkgutta@codeaurora.org>
-> > Cc: Evan Green <evgreen@chromium.org>
-> > Signed-off-by: Stephen Boyd <swboyd@chromium.org>
-> > ---
-> >  drivers/soc/qcom/llcc-slice.c | 14 +++++++-------
-> >  1 file changed, 7 insertions(+), 7 deletions(-)
+> > Looks like the dma_sync calls don't do what we want on armv7 either.
+> > Fixes:
 > >
-> > diff --git a/drivers/soc/qcom/llcc-slice.c b/drivers/soc/qcom/llcc-slic=
-e.c
-> > index 9090ea12eaf3..aa342938c403 100644
-> > --- a/drivers/soc/qcom/llcc-slice.c
-> > +++ b/drivers/soc/qcom/llcc-slice.c
-> > @@ -48,13 +48,6 @@
+> >   Unable to handle kernel paging request at virtual address 50001000
+> >   pgd = (ptrval)
+> >   [50001000] *pgd=00000000
+> >   Internal error: Oops: 805 [#1] SMP ARM
+> >   Modules linked in:
+> >   CPU: 0 PID: 1 Comm: swapper/0 Not tainted 5.3.0-rc6-00271-g9f159ae07f07 #4
+> >   Hardware name: Freescale i.MX53 (Device Tree Support)
+> >   PC is at v7_dma_clean_range+0x20/0x38
+> >   LR is at __dma_page_cpu_to_dev+0x28/0x90
+> >   pc : [<c011c76c>]    lr : [<c01181c4>]    psr: 20000013
+> >   sp : d80b5a88  ip : de96c000  fp : d840ce6c
+> >   r10: 00000000  r9 : 00000001  r8 : d843e010
+> >   r7 : 00000000  r6 : 00008000  r5 : ddb6c000  r4 : 00000000
+> >   r3 : 0000003f  r2 : 00000040  r1 : 50008000  r0 : 50001000
+> >   Flags: nzCv  IRQs on  FIQs on  Mode SVC_32  ISA ARM  Segment none
+> >   Control: 10c5387d  Table: 70004019  DAC: 00000051
+> >   Process swapper/0 (pid: 1, stack limit = 0x(ptrval))
 > >
-> >  static struct llcc_drv_data *drv_data =3D (void *) -EPROBE_DEFER;
-> >
-> > -static const struct regmap_config llcc_regmap_config =3D {
-> > -       .reg_bits =3D 32,
-> > -       .reg_stride =3D 4,
-> > -       .val_bits =3D 32,
-> > -       .fast_io =3D true,
-> > -};
-> > -
-> >  /**
-> >   * llcc_slice_getd - get llcc slice descriptor
-> >   * @uid: usecase_id for the client
-> > @@ -314,6 +307,12 @@ static struct regmap *qcom_llcc_init_mmio(struct p=
-latform_device *pdev,
-> >  {
-> >         struct resource *res;
-> >         void __iomem *base;
-> > +       static struct regmap_config llcc_regmap_config =3D {
-> > +               .reg_bits =3D 32,
-> > +               .reg_stride =3D 4,
-> > +               .val_bits =3D 32,
-> > +               .fast_io =3D true,
-> > +       };
->=20
-> Why did you move this to be a static local? I think it works, but it
-> makes it look like this is a local variable that's possibly used out
-> of scope. Maybe leave it as a global?
+> > Signed-off-by: Rob Clark <robdclark@chromium.org>
+> > Fixes: 3de433c5b38a ("drm/msm: Use the correct dma_sync calls in msm_gem")
+> > Tested-by: Fabio Estevam <festevam@gmail.com>
+>
+> I see this one got applied in linux-next already.
+> Could it be sent to 5.4-rc, please?
 
-And have a followup patch to move it to a static local? Sounds ok to me
-if you prefer.
+afaict this should be at least in v5.4-rc2.. am I missing something?
 
+BR,
+-R
+
+>
+> mx53 boards cannot boot in mainline because of this.
+>
+> Thanks
