@@ -2,109 +2,108 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id A66CFD1378
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  9 Oct 2019 18:02:13 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 20F0BD1496
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  9 Oct 2019 18:51:32 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731385AbfJIQCE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 9 Oct 2019 12:02:04 -0400
-Received: from mail-lf1-f66.google.com ([209.85.167.66]:40020 "EHLO
-        mail-lf1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730503AbfJIQCD (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 9 Oct 2019 12:02:03 -0400
-Received: by mail-lf1-f66.google.com with SMTP id d17so2073414lfa.7
-        for <linux-arm-msm@vger.kernel.org>; Wed, 09 Oct 2019 09:02:02 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=17Y7y039jET7/TQrdZoED93OrqqyMRwnQxJ9vtZBzO8=;
-        b=c9Atcn/EI08Kf2cBMOvlLq7SNQ707PZ6EdVeCazR/Dm8zc5uaCAs3UNj/GYvUqYqzJ
-         aMXdTfRdgQTYmaPwcj4QiAuKEHKcxMD9ezuazTOGBACs29dqmx3rbJGAvaRpsxX26MTQ
-         fdzuLGgOcX6EDmt6y6XBhXYz14ayEhIMnEfqU=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=17Y7y039jET7/TQrdZoED93OrqqyMRwnQxJ9vtZBzO8=;
-        b=llOWnJQCFZjxiCxUtY40EvKNupQ/1Bul7en1PDGHYo1r0QBCdt/+2dj6NoTKx5wWMF
-         jx3XmzLrKe6aQb8LzhtaXvYC92KXJsAtRePF+chklbGJVB5d1P5ONBh0z5Z4Q85umuqd
-         +ZiPaymOfwjzBzEPw+T8+lTQecmH+OqjmalillzkUZZbJXonrhhMcTdUBqtZ9BpuHKTb
-         fDP/p4hxNh0KQGEBuaejr8CsP92jiWaX7HEZvSD9C5HIrH90S1KsZZIUfgb1/syluLmL
-         cE0bp5UqzgvIHELa6WH/YPzYz3k1dW1E78D47jST5TXUArSxvI0jUb0RJ03RYDU5/SKy
-         8QJQ==
-X-Gm-Message-State: APjAAAWi2NY2CraFIExmmbnG4N5poz9tyDsDK9K2NsZaQ0TzYGho4m3f
-        QPZN2qEPuZIZhRFuB8H0fLT2gojgU4M=
-X-Google-Smtp-Source: APXvYqxcwMsxsKgEYErrj8hWLxb01eCmTv0D0VIexn4/1/jvCDfTvCD1mh6XptbaN07m/dC/TskG1Q==
-X-Received: by 2002:ac2:5453:: with SMTP id d19mr2633253lfn.89.1570636921092;
-        Wed, 09 Oct 2019 09:02:01 -0700 (PDT)
-Received: from mail-lj1-f173.google.com (mail-lj1-f173.google.com. [209.85.208.173])
-        by smtp.gmail.com with ESMTPSA id i6sm565488lfc.37.2019.10.09.09.02.00
-        for <linux-arm-msm@vger.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 09 Oct 2019 09:02:00 -0700 (PDT)
-Received: by mail-lj1-f173.google.com with SMTP id m13so3015618ljj.11
-        for <linux-arm-msm@vger.kernel.org>; Wed, 09 Oct 2019 09:02:00 -0700 (PDT)
-X-Received: by 2002:a2e:a41a:: with SMTP id p26mr2740656ljn.15.1570636919621;
- Wed, 09 Oct 2019 09:01:59 -0700 (PDT)
+        id S1731538AbfJIQvb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 9 Oct 2019 12:51:31 -0400
+Received: from onstation.org ([52.200.56.107]:53566 "EHLO onstation.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1731432AbfJIQva (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 9 Oct 2019 12:51:30 -0400
+Received: from localhost (c-98-239-145-235.hsd1.wv.comcast.net [98.239.145.235])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        (Authenticated sender: masneyb)
+        by onstation.org (Postfix) with ESMTPSA id BAD3A3E89B;
+        Wed,  9 Oct 2019 16:51:28 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=onstation.org;
+        s=default; t=1570639889;
+        bh=XuRSZUxqlEHuVzlpMa3RostZ9o3RMjnb4AAbLDyG678=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=T06iGA5qp+VAkynZyImFdjFWH6v2KZuxbkYf0n8YKuB5Fyk1DpWhhk9uYLM7m7XeP
+         IMpFzOiFszccfUZpJZTse7j+c2PP5dMpwJBMjFTjccmE0tPUwd0+CDRenOz6CsDInm
+         2ErwCd4ddJOfkcQvPEqjDVwPWfP1Kn1310fpKS+k=
+Date:   Wed, 9 Oct 2019 12:51:28 -0400
+From:   Brian Masney <masneyb@onstation.org>
+To:     Stephen Boyd <sboyd@kernel.org>
+Cc:     robdclark@gmail.com, sean@poorly.run, bjorn.andersson@linaro.org,
+        a.hajda@samsung.com, Laurent.pinchart@ideasonboard.com,
+        airlied@linux.ie, daniel@ffwll.ch, dri-devel@lists.freedesktop.org,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        freedreno@lists.freedesktop.org, jonathan@marek.ca,
+        Linus Walleij <linus.walleij@linaro.org>
+Subject: Re: [PATCH RFC v2 4/5] ARM: dts: qcom: msm8974: add HDMI nodes
+Message-ID: <20191009165128.GB1595@onstation.org>
+References: <20191007014509.25180-1-masneyb@onstation.org>
+ <20191007014509.25180-5-masneyb@onstation.org>
+ <20191009022131.604B52070B@mail.kernel.org>
+ <20191009060520.GA14506@onstation.org>
+ <20191009153927.3DC5D21848@mail.kernel.org>
 MIME-Version: 1.0
-References: <20191008234505.222991-1-swboyd@chromium.org> <20191008235504.GN63675@minitux>
- <5d9d3ed4.1c69fb81.5a936.2b18@mx.google.com>
-In-Reply-To: <5d9d3ed4.1c69fb81.5a936.2b18@mx.google.com>
-From:   Evan Green <evgreen@chromium.org>
-Date:   Wed, 9 Oct 2019 09:01:22 -0700
-X-Gmail-Original-Message-ID: <CAE=gft6SmWH3-Td-mZZPn-3=EzwexEdYTR00z5NCP-X1sspihA@mail.gmail.com>
-Message-ID: <CAE=gft6SmWH3-Td-mZZPn-3=EzwexEdYTR00z5NCP-X1sspihA@mail.gmail.com>
-Subject: Re: [PATCH v2 0/2] Avoid regmap debugfs collisions in qcom llcc driver
-To:     Stephen Boyd <swboyd@chromium.org>
-Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        LKML <linux-kernel@vger.kernel.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Venkata Narendra Kumar Gutta <vnkgutta@codeaurora.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20191009153927.3DC5D21848@mail.kernel.org>
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Oct 8, 2019 at 6:58 PM Stephen Boyd <swboyd@chromium.org> wrote:
->
-> Quoting Bjorn Andersson (2019-10-08 16:55:04)
-> > On Tue 08 Oct 16:45 PDT 2019, Stephen Boyd wrote:
-> > >     @@ drivers/soc/qcom/llcc-slice.c
-> > >
-> > >       static struct llcc_drv_data *drv_data = (void *) -EPROBE_DEFER;
-> > >
-> > >     --static const struct regmap_config llcc_regmap_config = {
-> > >     +-static struct regmap_config llcc_regmap_config = {
-> > >      -        .reg_bits = 32,
-> > >      -        .reg_stride = 4,
-> > >      -        .val_bits = 32,
-> > >     @@ drivers/soc/qcom/llcc-slice.c: static struct regmap *qcom_llcc_init_mmio(struct
-> > >       {
-> > >               struct resource *res;
-> > >               void __iomem *base;
-> > >     -+        static struct regmap_config llcc_regmap_config = {
-> > >     ++        struct regmap_config llcc_regmap_config = {
-> >
-> > Now that this isn't static I like the end result better. Not sure about
-> > the need for splitting it in two patches, but if Evan is happy I'll take
-> > it.
-> >
->
-> Well I split it into bug fix and micro-optimization so backport choices
-> can be made. But yeah, I hope Evan is happy enough to provide a
-> reviewed-by tag!
+On Wed, Oct 09, 2019 at 08:39:26AM -0700, Stephen Boyd wrote:
+> Quoting Brian Masney (2019-10-08 23:05:20)
+> > On Tue, Oct 08, 2019 at 07:21:30PM -0700, Stephen Boyd wrote:
+> > > Quoting Brian Masney (2019-10-06 18:45:08)
+> > > > diff --git a/arch/arm/boot/dts/qcom-msm8974.dtsi b/arch/arm/boot/dts/qcom-msm8974.dtsi
+> > > > index 7fc23e422cc5..af02eace14e2 100644
+> > > > --- a/arch/arm/boot/dts/qcom-msm8974.dtsi
+> > > > +++ b/arch/arm/boot/dts/qcom-msm8974.dtsi
+> > > > @@ -1335,6 +1342,77 @@
+> > > >                                 clocks = <&mmcc MDSS_AHB_CLK>;
+> > > >                                 clock-names = "iface";
+> > > >                         };
+> > > > +
+> > > > +                       hdmi: hdmi-tx@fd922100 {
+> > > > +                               status = "disabled";
+> > > > +
+> > > > +                               compatible = "qcom,hdmi-tx-8974";
+> > > > +                               reg = <0xfd922100 0x35c>,
+> > > > +                                     <0xfc4b8000 0x60f0>;
+> > > > +                               reg-names = "core_physical",
+> > > > +                                           "qfprom_physical";
+> > > 
+> > > Is this the qfprom "uncorrected" physical address? If so, why can't this
+> > > node use an nvmem to read whatever it needs out of the qfprom?
+> > 
+> > The MSM HDMI code is configured to look for this reg-name here:
+> > 
+> > https://elixir.bootlin.com/linux/latest/source/drivers/gpu/drm/msm/hdmi/hdmi.c#L582
+> > 
+> > There is a qcom,qfprom configured for this board in DTS, however its at
+> > a different address range, so maybe there are multiple qfproms?
+> > 
+> > https://elixir.bootlin.com/linux/latest/source/arch/arm/boot/dts/qcom-msm8974.dtsi#L424
+> > 
+> > msm8996.dtsi has the same style of configuration:
+> > 
+> > https://elixir.bootlin.com/linux/latest/source/arch/arm64/boot/dts/qcom/msm8996.dtsi#L956
+> > https://elixir.bootlin.com/linux/latest/source/arch/arm64/boot/dts/qcom/msm8996.dtsi#L1736
+> > 
+> 
+> There's only one qfprom and there's the address space that's
+> "uncorrected" which is not supposed to be used and there's the space
+> that is "corrected" and is supposed to be used. It looks like this is
+> poking the uncorrected space and it should probably stop doing that and
+> use the nvmem provider instead. Maybe someone with docs for this chip
+> and 8996 can help confirm this.
 
-It's definitely better without the static local since it no longer has
-the cognitive trap, but I still don't really get why we're messing
-with the global v. local aspect of it. We're now inconsistent with
-every other caller of this function, and for what exactly? We've
-traded some data space for a call to memset() and some instructions. I
-would have thought anecdotally that memory was the cheaper thing (ie
-cpu speeds stopped increasing awhile ago, but memory is still getting
-cheaper).
+Do you know of any publicly-available documentation that describes the
+"uncorrected" and "corrected" addresses? I got that qfprom address for
+the HDMI from here:
 
-But either way it's correct, so really it's fine if you ignore me :)
--Evan
+https://github.com/AICP/kernel_lge_hammerhead/blob/n7.1/arch/arm/boot/dts/msm8974-mdss.dtsi#L101
+
+I assume the downstream kernel probably doesn't have the corrected
+address anywhere else?
+
+Brian
+
