@@ -2,228 +2,124 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 8C3CAD16F8
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  9 Oct 2019 19:39:12 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B60E5D1707
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  9 Oct 2019 19:46:27 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732055AbfJIRjH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 9 Oct 2019 13:39:07 -0400
-Received: from mail-pg1-f193.google.com ([209.85.215.193]:39292 "EHLO
-        mail-pg1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1732028AbfJIRjH (ORCPT
+        id S1730546AbfJIRq1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 9 Oct 2019 13:46:27 -0400
+Received: from mail-pl1-f193.google.com ([209.85.214.193]:39504 "EHLO
+        mail-pl1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728804AbfJIRq1 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 9 Oct 2019 13:39:07 -0400
-Received: by mail-pg1-f193.google.com with SMTP id e1so1863022pgj.6
-        for <linux-arm-msm@vger.kernel.org>; Wed, 09 Oct 2019 10:39:06 -0700 (PDT)
+        Wed, 9 Oct 2019 13:46:27 -0400
+Received: by mail-pl1-f193.google.com with SMTP id s17so1395478plp.6
+        for <linux-arm-msm@vger.kernel.org>; Wed, 09 Oct 2019 10:46:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to:user-agent;
-        bh=L8Js8kZvbgCYVI2QyS8R6uJL7k9QOYvlnFzB0XQV1NY=;
-        b=zEITJ9ptdEbe4Kd+wErOiMycPRneU1csyzM46b9bx6yNxkCwajksugUpZsF1QhW/Yw
-         hIFW3Dz9aarzqMKR2LDV36teMslOaIbSOirpGgE/Au8DOBxKTdSKPXia5LRWwbDJGm8s
-         ApMZLA7DgPvis/xHs0yh2xp3vBR+wQVBIibqQCFMhG/E7qnuaeu31sVgusyCMd7VHKJq
-         nenS7ghnwe60Xf020MQvivQ/HALLF3anqUTFM284sEOQXBD+3axfDZufXVVoOeNe/6sy
-         NXYDhuTtTAPSm7FK7IcEdVoV6UuaON67zYECszcXu0A1Ac2y+cY9oBZ4EZexcBRD0mSL
-         vOdw==
+        bh=MbE7z5W7ioIBLheoArWEi8ACV7BI03I7k7Tq4Oesang=;
+        b=VVg5Ak5KU1xSdk0RBsT3k0A4/vZQLLZOjy/FBt3gQ5jOMQmJVTn7aaf515emr9ZUt6
+         1HvIUeVU69kiIViKNdtj8vfctwpfq1Vv8naEzK0IzBYPHxg+/LoO8zoiUbjDfEXBRRue
+         lAEY7AgLOYiX5wEadnk5EwphSPpfWp/tRmg7d8yEb3NZUiAdCP5f8p7lyKp5uZQm48ud
+         qe2hlsiQYcW6PpWnf+VR7emr+ISqUhHf0r0k0CFOdxtfXWfFbfDtJNwAvBy3zmFcF/nc
+         dgUzRn2CdPipSVV+D/pOUdjPm3SbmCgWNy14iG3Q7M/6jRb0kbWHaeTK4NcSJh4TqGN8
+         I+Ow==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=L8Js8kZvbgCYVI2QyS8R6uJL7k9QOYvlnFzB0XQV1NY=;
-        b=c78+xYKgRGQvEk2b3kgsW/JLgC+7u4CjxyfLs88xT7Oiv1h2xJzehvNd7w0vaQHDwk
-         9Ma4NdmwxjFbhjhecaWUAkkuFMPZEQV66zWew02xInjABD2dB5GuLAdfIqv4iYMdUwu4
-         cpIvW2FuL+dcT1WHsqod5oRO1cgkC7riNmIYEGVjF8bwpdjW0MRDIWjsAu+jf9hyDjxi
-         w8wmeUfOdUhYcxxLOP2PngGp9ZnYyacd8DdQ/9mFGVlpRaf/l52lIcw4HYsG3MR7qidc
-         w567kTkz5QV9AVqPUOXRdxwj6UpPTlACvBQOF+JOQG2oIVBXhx85I6wNfv+21vl020g4
-         38xQ==
-X-Gm-Message-State: APjAAAVGOCAnTXDVeN8vCGi3VNqy1T5mVcvR9ALXa3YcyEnmy7XhSY/C
-        69QQonW+1PMMJXnFoHqp3L7X/w==
-X-Google-Smtp-Source: APXvYqwn9tO6PZbW6jj/ziXR3QqtGNubxwFnDNi4apZb7SO1ZnVGM0cAabx+RI44Uox6cowfB2et6Q==
-X-Received: by 2002:a63:5813:: with SMTP id m19mr5646017pgb.43.1570642745999;
-        Wed, 09 Oct 2019 10:39:05 -0700 (PDT)
+        bh=MbE7z5W7ioIBLheoArWEi8ACV7BI03I7k7Tq4Oesang=;
+        b=CQ1Fc2pu3uNzUxQincCfJrm3V/SjHOjkMo2y9l7NU8jyDE10W2NllwG623LesDCTcj
+         BiycFSUz+4wyEqmg2XdvVWwivJZiGD3njB+AYhaKpvrnO/UL28bLTAB004APA1EVXC/F
+         TAl82eXS7m2eSw4XEyNYXBnaYLB93FSSXTSq7Xt8b4VmwbEdcnBxy3p1NCjGjwrhh6Uc
+         8PH7szy/fbZVMaJiZ9XkHJyoiAyIorXIDBuVgDypHKGoX8dUOmCVZrpdLcirjRC4AWdH
+         zeoFMNVKefdTKERssmIxJ8wWhTMvQIJoTkomoreZyjFdvhgYAYUE+WOyE5Lzww3+pLNe
+         BNQg==
+X-Gm-Message-State: APjAAAXoZZv6FQyyiuFHBgzrvzvdlwPJbLp7BDIsVt0U8gy1E1vNQE5/
+        guXBQI7JYkxQMUL/C2BRM84+kA==
+X-Google-Smtp-Source: APXvYqyvJU3vtruPnm2JedhdKvdF79YReSOkeMwZ4oW7uVcC2P2GKRZ7nSzCMKTocy+KCK8j1h4Gnw==
+X-Received: by 2002:a17:902:209:: with SMTP id 9mr4621032plc.25.1570643186201;
+        Wed, 09 Oct 2019 10:46:26 -0700 (PDT)
 Received: from tuxbook-pro (104-188-17-28.lightspeed.sndgca.sbcglobal.net. [104.188.17.28])
-        by smtp.gmail.com with ESMTPSA id s97sm2713599pjc.4.2019.10.09.10.39.04
+        by smtp.gmail.com with ESMTPSA id a21sm2927273pfi.0.2019.10.09.10.46.24
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 09 Oct 2019 10:39:04 -0700 (PDT)
-Date:   Wed, 9 Oct 2019 10:39:02 -0700
+        Wed, 09 Oct 2019 10:46:25 -0700 (PDT)
+Date:   Wed, 9 Oct 2019 10:46:22 -0700
 From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     YueHaibing <yuehaibing@huawei.com>
-Cc:     agross@kernel.org, vivek.gautam@codeaurora.org,
-        jcrouse@codeaurora.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: Re: [PATCH -next] soc: qcom: Fix llcc-qcom definitions to include
-Message-ID: <20191009173902.GM6390@tuxbook-pro>
-References: <20191008071614.21692-1-yuehaibing@huawei.com>
+To:     Evan Green <evgreen@chromium.org>
+Cc:     Stephen Boyd <swboyd@chromium.org>, Andy Gross <agross@kernel.org>,
+        LKML <linux-kernel@vger.kernel.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        Venkata Narendra Kumar Gutta <vnkgutta@codeaurora.org>
+Subject: Re: [PATCH v2 0/2] Avoid regmap debugfs collisions in qcom llcc
+ driver
+Message-ID: <20191009174622.GN6390@tuxbook-pro>
+References: <20191008234505.222991-1-swboyd@chromium.org>
+ <20191008235504.GN63675@minitux>
+ <5d9d3ed4.1c69fb81.5a936.2b18@mx.google.com>
+ <CAE=gft6SmWH3-Td-mZZPn-3=EzwexEdYTR00z5NCP-X1sspihA@mail.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20191008071614.21692-1-yuehaibing@huawei.com>
+In-Reply-To: <CAE=gft6SmWH3-Td-mZZPn-3=EzwexEdYTR00z5NCP-X1sspihA@mail.gmail.com>
 User-Agent: Mutt/1.12.1 (2019-06-15)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue 08 Oct 00:16 PDT 2019, YueHaibing wrote:
+On Wed 09 Oct 09:01 PDT 2019, Evan Green wrote:
 
-> commit 99356b03b431 ("soc: qcom: Make llcc-qcom a
-> generic driver") move these out of llcc-qcom.h, make
-> the building fails:
+> On Tue, Oct 8, 2019 at 6:58 PM Stephen Boyd <swboyd@chromium.org> wrote:
+> >
+> > Quoting Bjorn Andersson (2019-10-08 16:55:04)
+> > > On Tue 08 Oct 16:45 PDT 2019, Stephen Boyd wrote:
+> > > >     @@ drivers/soc/qcom/llcc-slice.c
+> > > >
+> > > >       static struct llcc_drv_data *drv_data = (void *) -EPROBE_DEFER;
+> > > >
+> > > >     --static const struct regmap_config llcc_regmap_config = {
+> > > >     +-static struct regmap_config llcc_regmap_config = {
+> > > >      -        .reg_bits = 32,
+> > > >      -        .reg_stride = 4,
+> > > >      -        .val_bits = 32,
+> > > >     @@ drivers/soc/qcom/llcc-slice.c: static struct regmap *qcom_llcc_init_mmio(struct
+> > > >       {
+> > > >               struct resource *res;
+> > > >               void __iomem *base;
+> > > >     -+        static struct regmap_config llcc_regmap_config = {
+> > > >     ++        struct regmap_config llcc_regmap_config = {
+> > >
+> > > Now that this isn't static I like the end result better. Not sure about
+> > > the need for splitting it in two patches, but if Evan is happy I'll take
+> > > it.
+> > >
+> >
+> > Well I split it into bug fix and micro-optimization so backport choices
+> > can be made. But yeah, I hope Evan is happy enough to provide a
+> > reviewed-by tag!
 > 
-> drivers/edac/qcom_edac.c:86:40: error: array type has incomplete element type struct llcc_edac_reg_data
->  static const struct llcc_edac_reg_data edac_reg_data[] = {
->                                         ^~~~~~~~~~~~~
-> drivers/edac/qcom_edac.c:87:3: error: array index in non-array initializer
->   [LLCC_DRAM_CE] = {
->    ^~~~~~~~~~~~
-> drivers/edac/qcom_edac.c:87:3: note: (near initialization for edac_reg_data)
-> drivers/edac/qcom_edac.c:88:3: error: field name not in record or union initializer
->    .name = "DRAM Single-bit",
-> ...
-> drivers/edac/qcom_edac.c:169:51: warning: struct llcc_drv_data declared inside parameter
->  list will not be visible outside of this definition or declaration
->  qcom_llcc_clear_error_status(int err_type, struct llcc_drv_data *drv)
->                                                    ^~~~~~~~~~~~~
+> It's definitely better without the static local since it no longer has
+> the cognitive trap, but I still don't really get why we're messing
+> with the global v. local aspect of it. We're now inconsistent with
+> every other caller of this function, and for what exactly? We've
+> traded some data space for a call to memset() and some instructions. I
+> would have thought anecdotally that memory was the cheaper thing (ie
+> cpu speeds stopped increasing awhile ago, but memory is still getting
+> cheaper).
 > 
-> This patch move the needed definitions back to include.
-> 
-> Reported-by: Hulk Robot <hulkci@huawei.com>
-> Fixes: 99356b03b431 ("soc: qcom: Make llcc-qcom a generic driver")
-> Signed-off-by: YueHaibing <yuehaibing@huawei.com>
 
-Sorry for missing this, thanks for the fix YueHaibing!
+The reason for making the structure local is because it's being modified
+per instance, meaning it would still work as long as
+qcom_llcc_init_mmio() is never called concurrently for two llcc
+instances. But the correctness outweighs the performance degradation of
+setting it up on the stack in my view.
+
+Or am I missing something?
 
 Regards,
 Bjorn
 
-> ---
->  drivers/soc/qcom/llcc-qcom.c       | 50 --------------------------------------
->  include/linux/soc/qcom/llcc-qcom.h | 50 ++++++++++++++++++++++++++++++++++++++
->  2 files changed, 50 insertions(+), 50 deletions(-)
-> 
-> diff --git a/drivers/soc/qcom/llcc-qcom.c b/drivers/soc/qcom/llcc-qcom.c
-> index 98563ef..43606736 100644
-> --- a/drivers/soc/qcom/llcc-qcom.c
-> +++ b/drivers/soc/qcom/llcc-qcom.c
-> @@ -86,56 +86,6 @@ struct llcc_slice_config {
->  	bool activate_on_init;
->  };
->  
-> -/**
-> - * llcc_drv_data - Data associated with the llcc driver
-> - * @regmap: regmap associated with the llcc device
-> - * @bcast_regmap: regmap associated with llcc broadcast offset
-> - * @cfg: pointer to the data structure for slice configuration
-> - * @lock: mutex associated with each slice
-> - * @cfg_size: size of the config data table
-> - * @max_slices: max slices as read from device tree
-> - * @num_banks: Number of llcc banks
-> - * @bitmap: Bit map to track the active slice ids
-> - * @offsets: Pointer to the bank offsets array
-> - * @ecc_irq: interrupt for llcc cache error detection and reporting
-> - */
-> -struct llcc_drv_data {
-> -	struct regmap *regmap;
-> -	struct regmap *bcast_regmap;
-> -	const struct llcc_slice_config *cfg;
-> -	struct mutex lock;
-> -	u32 cfg_size;
-> -	u32 max_slices;
-> -	u32 num_banks;
-> -	unsigned long *bitmap;
-> -	u32 *offsets;
-> -	int ecc_irq;
-> -};
-> -
-> -/**
-> - * llcc_edac_reg_data - llcc edac registers data for each error type
-> - * @name: Name of the error
-> - * @synd_reg: Syndrome register address
-> - * @count_status_reg: Status register address to read the error count
-> - * @ways_status_reg: Status register address to read the error ways
-> - * @reg_cnt: Number of registers
-> - * @count_mask: Mask value to get the error count
-> - * @ways_mask: Mask value to get the error ways
-> - * @count_shift: Shift value to get the error count
-> - * @ways_shift: Shift value to get the error ways
-> - */
-> -struct llcc_edac_reg_data {
-> -	char *name;
-> -	u64 synd_reg;
-> -	u64 count_status_reg;
-> -	u64 ways_status_reg;
-> -	u32 reg_cnt;
-> -	u32 count_mask;
-> -	u32 ways_mask;
-> -	u8  count_shift;
-> -	u8  ways_shift;
-> -};
-> -
->  struct qcom_llcc_config {
->  	const struct llcc_slice_config *sct_data;
->  	int size;
-> diff --git a/include/linux/soc/qcom/llcc-qcom.h b/include/linux/soc/qcom/llcc-qcom.h
-> index c0acdb2..90b8646 100644
-> --- a/include/linux/soc/qcom/llcc-qcom.h
-> +++ b/include/linux/soc/qcom/llcc-qcom.h
-> @@ -37,6 +37,56 @@ struct llcc_slice_desc {
->  	size_t slice_size;
->  };
->  
-> +/**
-> + * llcc_edac_reg_data - llcc edac registers data for each error type
-> + * @name: Name of the error
-> + * @synd_reg: Syndrome register address
-> + * @count_status_reg: Status register address to read the error count
-> + * @ways_status_reg: Status register address to read the error ways
-> + * @reg_cnt: Number of registers
-> + * @count_mask: Mask value to get the error count
-> + * @ways_mask: Mask value to get the error ways
-> + * @count_shift: Shift value to get the error count
-> + * @ways_shift: Shift value to get the error ways
-> + */
-> +struct llcc_edac_reg_data {
-> +	char *name;
-> +	u64 synd_reg;
-> +	u64 count_status_reg;
-> +	u64 ways_status_reg;
-> +	u32 reg_cnt;
-> +	u32 count_mask;
-> +	u32 ways_mask;
-> +	u8  count_shift;
-> +	u8  ways_shift;
-> +};
-> +
-> +/**
-> + * llcc_drv_data - Data associated with the llcc driver
-> + * @regmap: regmap associated with the llcc device
-> + * @bcast_regmap: regmap associated with llcc broadcast offset
-> + * @cfg: pointer to the data structure for slice configuration
-> + * @lock: mutex associated with each slice
-> + * @cfg_size: size of the config data table
-> + * @max_slices: max slices as read from device tree
-> + * @num_banks: Number of llcc banks
-> + * @bitmap: Bit map to track the active slice ids
-> + * @offsets: Pointer to the bank offsets array
-> + * @ecc_irq: interrupt for llcc cache error detection and reporting
-> + */
-> +struct llcc_drv_data {
-> +	struct regmap *regmap;
-> +	struct regmap *bcast_regmap;
-> +	const struct llcc_slice_config *cfg;
-> +	struct mutex lock;
-> +	u32 cfg_size;
-> +	u32 max_slices;
-> +	u32 num_banks;
-> +	unsigned long *bitmap;
-> +	u32 *offsets;
-> +	int ecc_irq;
-> +};
-> +
->  #if IS_ENABLED(CONFIG_QCOM_LLCC)
->  /**
->   * llcc_slice_getd - get llcc slice descriptor
-> -- 
-> 2.7.4
-> 
-> 
+> But either way it's correct, so really it's fine if you ignore me :)
+> -Evan
