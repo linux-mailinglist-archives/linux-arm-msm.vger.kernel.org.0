@@ -2,108 +2,89 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 1DD00D04AA
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  9 Oct 2019 02:14:50 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id ED0DAD04E1
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  9 Oct 2019 02:49:35 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729487AbfJIAOt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 8 Oct 2019 20:14:49 -0400
-Received: from mail-pf1-f195.google.com ([209.85.210.195]:40878 "EHLO
-        mail-pf1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727051AbfJIAOt (ORCPT
+        id S1729737AbfJIAtc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 8 Oct 2019 20:49:32 -0400
+Received: from smtp.codeaurora.org ([198.145.29.96]:48536 "EHLO
+        smtp.codeaurora.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727051AbfJIAtc (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 8 Oct 2019 20:14:49 -0400
-Received: by mail-pf1-f195.google.com with SMTP id x127so399065pfb.7
-        for <linux-arm-msm@vger.kernel.org>; Tue, 08 Oct 2019 17:14:48 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id;
-        bh=2daljnqJ+TtRPEyYLJ4e1aRJCyE8bNHOU/f2G9I+p7o=;
-        b=gzi+Iqn+b7UyW+Nn5p2dSIEhAAfOdFiPkN+vo4RpC07gdosWLT/KX3vesssNIs1Zi6
-         cGPzjR1SNhZm5gov+c5mEkEb7yM3Ub1kxh7Oe3FJC3Pl3By1UgUY8sqqXuXi3lsOmI8m
-         DQSd3Fdcpu8+qwy+tS0rVgU391WWmA6aLrcnJS9IPZBH4yVW3L+Dv/3Z1cgOe/YqQSnm
-         Cyb82QPumv1lT9O2GRLn/u/Q/MMPvmS4mcDb0X+C6Z3r3O16dkUjJi+y8ot0f1poSCt/
-         ZlriLBgN9QW/tXS563BQs3cTeI+MC7Lr55OlDBFudWzjcFij36DsUnPQogs0nxHuTe2L
-         U26Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id;
-        bh=2daljnqJ+TtRPEyYLJ4e1aRJCyE8bNHOU/f2G9I+p7o=;
-        b=JO13nuMJZjryU1nPuK/mL2X173bYCL/yWEkZTAWVqMoTbvXQtY6EKl7+cDR7mor3y8
-         +L2ALf1D34sYcAfgAIizxdzBpvWf+xiexOSpyf3h0ZsRMGR+TnCk6rXUYMJUcNnGdPMA
-         gje2WNJb3+puCiZFCGWEVWBwp4YkgKy5YD/P9w3qced6NA1LXVF+0JG5e9pWH4rgWjhd
-         T5NOU3AirLVkWeHfGnJGLxNYbwYKcvye8xj7QmJxJOsFLJYUhpfVaBXEO89XhsrZeMGS
-         Bi+e86f/ovLPkxy5GLXRcdX+FRTADRwsmVJJqHhAIsvWzxHYxfoAaxAH3kEwk+bwgYOa
-         Nq5w==
-X-Gm-Message-State: APjAAAVFBFYvcl3Iqf1IFXgl4Diy5onbFhDf8mCJRVfNhYeyMxSyE6EJ
-        e08b9zx/o+EdMjDNx32I8h+26Q==
-X-Google-Smtp-Source: APXvYqxXp6F2cO1CIJ92gpJFgWmn49fZlqWDTCkmzg84veYWn8c3Rr5ldjJ0xnGY2Y06Ve/FVc+wWA==
-X-Received: by 2002:a17:90a:2302:: with SMTP id f2mr661674pje.132.1570580087804;
-        Tue, 08 Oct 2019 17:14:47 -0700 (PDT)
-Received: from localhost.localdomain (104-188-17-28.lightspeed.sndgca.sbcglobal.net. [104.188.17.28])
-        by smtp.gmail.com with ESMTPSA id v3sm241289pfn.18.2019.10.08.17.14.46
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 08 Oct 2019 17:14:47 -0700 (PDT)
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Catalin Marinas <catalin.marinas@arm.com>,
-        Will Deacon <will@kernel.org>, Shawn Guo <shawnguo@kernel.org>,
-        Olof Johansson <olof@lixom.net>,
-        Maxime Ripard <mripard@kernel.org>,
-        Arnd Bergmann <arnd@arndb.de>,
-        Jagan Teki <jagan@amarulasolutions.com>,
-        Anson Huang <Anson.Huang@nxp.com>,
-        Leonard Crestez <leonard.crestez@nxp.com>,
-        Dinh Nguyen <dinguyen@kernel.org>,
-        Marcin Juszkiewicz <marcin.juszkiewicz@linaro.org>
-Cc:     linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, Alex Elder <elder@linaro.org>
-Subject: [PATCH] arm64: defconfig: Enable Qualcomm remoteproc dependencies
-Date:   Tue,  8 Oct 2019 17:14:42 -0700
-Message-Id: <20191009001442.15719-1-bjorn.andersson@linaro.org>
-X-Mailer: git-send-email 2.18.0
+        Tue, 8 Oct 2019 20:49:32 -0400
+Received: by smtp.codeaurora.org (Postfix, from userid 1000)
+        id 0206560ACA; Wed,  9 Oct 2019 00:49:30 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
+        s=default; t=1570582171;
+        bh=H6YaNArkGuc3fuAMFOk1zbKLBbvYg8Y8HDQPakVxx04=;
+        h=Subject:To:Cc:References:From:Date:In-Reply-To:From;
+        b=ZdZLIS4Q8T7M7aCIdidVevKxJywkhvXp6g5dtBrNuNKwQlmDqgAnU6muc83VsK2H9
+         BX9RmNBNHulMTmcxd4j7EVABSk1ff+LyGzxdVQU81Ol4POJr3f5GLBM86R/o7I+D/o
+         u70siJ1WRb3dHSx3wWmSA7Oo7JdXURn9t38uff1k=
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        pdx-caf-mail.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.7 required=2.0 tests=ALL_TRUSTED,BAYES_00,
+        DKIM_INVALID,DKIM_SIGNED,SPF_NONE autolearn=no autolearn_force=no
+        version=3.4.0
+Received: from [192.168.142.6] (i-global254.qualcomm.com [199.106.103.254])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: clew@smtp.codeaurora.org)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 59011602C8;
+        Wed,  9 Oct 2019 00:49:30 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
+        s=default; t=1570582170;
+        bh=H6YaNArkGuc3fuAMFOk1zbKLBbvYg8Y8HDQPakVxx04=;
+        h=Subject:To:Cc:References:From:Date:In-Reply-To:From;
+        b=QLjzV1hlQo9QdIh7pR8i2L0CtssDRtDQaTOA+UelrN4QzEIoe3COu+w4mmMErzf9D
+         UWvyzDgZ6oEOrqRyl1Tc1TQ/imfqq4V3F3fGhdX6gn3n7gUi3doi3F+5RrlOcekmR/
+         khIv6Hn6IA/Vj1AIKQj/tROOXeZHhg9KJaVpGdNs=
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 59011602C8
+Authentication-Results: pdx-caf-mail.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: pdx-caf-mail.web.codeaurora.org; spf=none smtp.mailfrom=clew@codeaurora.org
+Subject: Re: [PATCH v2 1/6] rpmsg: glink: Fix reuse intents memory leak issue
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Ohad Ben-Cohen <ohad@wizery.com>
+Cc:     linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org,
+        linux-kernel@vger.kernel.org, stable@vger.kernel.org
+References: <20191004222702.8632-1-bjorn.andersson@linaro.org>
+ <20191004222702.8632-2-bjorn.andersson@linaro.org>
+From:   Chris Lew <clew@codeaurora.org>
+Message-ID: <22fc76bf-9d2e-f016-fb63-a481f69f0a6c@codeaurora.org>
+Date:   Tue, 8 Oct 2019 17:49:29 -0700
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
+ Thunderbird/60.9.0
+MIME-Version: 1.0
+In-Reply-To: <20191004222702.8632-2-bjorn.andersson@linaro.org>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Enable the the power domains, reset controllers and remote block device
-memory access drivers necessary to boot the Audio, Compute and Modem
-DSPs on Qualcomm SDM845.
 
-None of the power domains are system critical, but needs to be builtin
-as the driver core prohibits probe deferal past late initcall.
 
-Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
----
- arch/arm64/configs/defconfig | 5 +++++
- 1 file changed, 5 insertions(+)
+On 10/4/2019 3:26 PM, Bjorn Andersson wrote:
+> From: Arun Kumar Neelakantam <aneela@codeaurora.org>
+> 
+> Memory allocated for re-usable intents are not freed during channel
+> cleanup which causes memory leak in system.
+> 
+> Check and free all re-usable memory to avoid memory leak.
+> 
+> Fixes: 933b45da5d1d ("rpmsg: glink: Add support for TX intents")
+> Cc: stable@vger.kernel.org
+> Tested-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+> Signed-off-by: Arun Kumar Neelakantam <aneela@codeaurora.org>
+> Reported-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+> Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+> ---
 
-diff --git a/arch/arm64/configs/defconfig b/arch/arm64/configs/defconfig
-index c9a867ac32d4..42f042ba1039 100644
---- a/arch/arm64/configs/defconfig
-+++ b/arch/arm64/configs/defconfig
-@@ -732,10 +732,13 @@ CONFIG_RPMSG_QCOM_GLINK_SMEM=m
- CONFIG_RPMSG_QCOM_SMD=y
- CONFIG_RASPBERRYPI_POWER=y
- CONFIG_IMX_SCU_SOC=y
-+CONFIG_QCOM_AOSS_QMP=y
- CONFIG_QCOM_COMMAND_DB=y
- CONFIG_QCOM_GENI_SE=y
- CONFIG_QCOM_GLINK_SSR=m
-+CONFIG_QCOM_RMTFS_MEM=m
- CONFIG_QCOM_RPMH=y
-+CONFIG_QCOM_RPMHPD=y
- CONFIG_QCOM_SMEM=y
- CONFIG_QCOM_SMD_RPM=y
- CONFIG_QCOM_SMP2P=y
-@@ -780,6 +783,8 @@ CONFIG_PWM_ROCKCHIP=y
- CONFIG_PWM_SAMSUNG=y
- CONFIG_PWM_SUN4I=m
- CONFIG_PWM_TEGRA=m
-+CONFIG_RESET_QCOM_AOSS=y
-+CONFIG_RESET_QCOM_PDC=m
- CONFIG_RESET_TI_SCI=y
- CONFIG_PHY_XGENE=y
- CONFIG_PHY_SUN4I_USB=y
+Acked-By: Chris Lew <clew@codeaurora.org>
+
 -- 
-2.18.0
-
+Qualcomm Innovation Center, Inc. is a member of Code Aurora Forum,
+a Linux Foundation Collaborative Project
