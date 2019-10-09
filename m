@@ -2,108 +2,228 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 20F0BD1496
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  9 Oct 2019 18:51:32 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 8C3CAD16F8
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  9 Oct 2019 19:39:12 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731538AbfJIQvb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 9 Oct 2019 12:51:31 -0400
-Received: from onstation.org ([52.200.56.107]:53566 "EHLO onstation.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1731432AbfJIQva (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 9 Oct 2019 12:51:30 -0400
-Received: from localhost (c-98-239-145-235.hsd1.wv.comcast.net [98.239.145.235])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        (Authenticated sender: masneyb)
-        by onstation.org (Postfix) with ESMTPSA id BAD3A3E89B;
-        Wed,  9 Oct 2019 16:51:28 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=onstation.org;
-        s=default; t=1570639889;
-        bh=XuRSZUxqlEHuVzlpMa3RostZ9o3RMjnb4AAbLDyG678=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=T06iGA5qp+VAkynZyImFdjFWH6v2KZuxbkYf0n8YKuB5Fyk1DpWhhk9uYLM7m7XeP
-         IMpFzOiFszccfUZpJZTse7j+c2PP5dMpwJBMjFTjccmE0tPUwd0+CDRenOz6CsDInm
-         2ErwCd4ddJOfkcQvPEqjDVwPWfP1Kn1310fpKS+k=
-Date:   Wed, 9 Oct 2019 12:51:28 -0400
-From:   Brian Masney <masneyb@onstation.org>
-To:     Stephen Boyd <sboyd@kernel.org>
-Cc:     robdclark@gmail.com, sean@poorly.run, bjorn.andersson@linaro.org,
-        a.hajda@samsung.com, Laurent.pinchart@ideasonboard.com,
-        airlied@linux.ie, daniel@ffwll.ch, dri-devel@lists.freedesktop.org,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        freedreno@lists.freedesktop.org, jonathan@marek.ca,
-        Linus Walleij <linus.walleij@linaro.org>
-Subject: Re: [PATCH RFC v2 4/5] ARM: dts: qcom: msm8974: add HDMI nodes
-Message-ID: <20191009165128.GB1595@onstation.org>
-References: <20191007014509.25180-1-masneyb@onstation.org>
- <20191007014509.25180-5-masneyb@onstation.org>
- <20191009022131.604B52070B@mail.kernel.org>
- <20191009060520.GA14506@onstation.org>
- <20191009153927.3DC5D21848@mail.kernel.org>
+        id S1732055AbfJIRjH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 9 Oct 2019 13:39:07 -0400
+Received: from mail-pg1-f193.google.com ([209.85.215.193]:39292 "EHLO
+        mail-pg1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1732028AbfJIRjH (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 9 Oct 2019 13:39:07 -0400
+Received: by mail-pg1-f193.google.com with SMTP id e1so1863022pgj.6
+        for <linux-arm-msm@vger.kernel.org>; Wed, 09 Oct 2019 10:39:06 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=L8Js8kZvbgCYVI2QyS8R6uJL7k9QOYvlnFzB0XQV1NY=;
+        b=zEITJ9ptdEbe4Kd+wErOiMycPRneU1csyzM46b9bx6yNxkCwajksugUpZsF1QhW/Yw
+         hIFW3Dz9aarzqMKR2LDV36teMslOaIbSOirpGgE/Au8DOBxKTdSKPXia5LRWwbDJGm8s
+         ApMZLA7DgPvis/xHs0yh2xp3vBR+wQVBIibqQCFMhG/E7qnuaeu31sVgusyCMd7VHKJq
+         nenS7ghnwe60Xf020MQvivQ/HALLF3anqUTFM284sEOQXBD+3axfDZufXVVoOeNe/6sy
+         NXYDhuTtTAPSm7FK7IcEdVoV6UuaON67zYECszcXu0A1Ac2y+cY9oBZ4EZexcBRD0mSL
+         vOdw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=L8Js8kZvbgCYVI2QyS8R6uJL7k9QOYvlnFzB0XQV1NY=;
+        b=c78+xYKgRGQvEk2b3kgsW/JLgC+7u4CjxyfLs88xT7Oiv1h2xJzehvNd7w0vaQHDwk
+         9Ma4NdmwxjFbhjhecaWUAkkuFMPZEQV66zWew02xInjABD2dB5GuLAdfIqv4iYMdUwu4
+         cpIvW2FuL+dcT1WHsqod5oRO1cgkC7riNmIYEGVjF8bwpdjW0MRDIWjsAu+jf9hyDjxi
+         w8wmeUfOdUhYcxxLOP2PngGp9ZnYyacd8DdQ/9mFGVlpRaf/l52lIcw4HYsG3MR7qidc
+         w567kTkz5QV9AVqPUOXRdxwj6UpPTlACvBQOF+JOQG2oIVBXhx85I6wNfv+21vl020g4
+         38xQ==
+X-Gm-Message-State: APjAAAVGOCAnTXDVeN8vCGi3VNqy1T5mVcvR9ALXa3YcyEnmy7XhSY/C
+        69QQonW+1PMMJXnFoHqp3L7X/w==
+X-Google-Smtp-Source: APXvYqwn9tO6PZbW6jj/ziXR3QqtGNubxwFnDNi4apZb7SO1ZnVGM0cAabx+RI44Uox6cowfB2et6Q==
+X-Received: by 2002:a63:5813:: with SMTP id m19mr5646017pgb.43.1570642745999;
+        Wed, 09 Oct 2019 10:39:05 -0700 (PDT)
+Received: from tuxbook-pro (104-188-17-28.lightspeed.sndgca.sbcglobal.net. [104.188.17.28])
+        by smtp.gmail.com with ESMTPSA id s97sm2713599pjc.4.2019.10.09.10.39.04
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 09 Oct 2019 10:39:04 -0700 (PDT)
+Date:   Wed, 9 Oct 2019 10:39:02 -0700
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     YueHaibing <yuehaibing@huawei.com>
+Cc:     agross@kernel.org, vivek.gautam@codeaurora.org,
+        jcrouse@codeaurora.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: Re: [PATCH -next] soc: qcom: Fix llcc-qcom definitions to include
+Message-ID: <20191009173902.GM6390@tuxbook-pro>
+References: <20191008071614.21692-1-yuehaibing@huawei.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20191009153927.3DC5D21848@mail.kernel.org>
+In-Reply-To: <20191008071614.21692-1-yuehaibing@huawei.com>
+User-Agent: Mutt/1.12.1 (2019-06-15)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Oct 09, 2019 at 08:39:26AM -0700, Stephen Boyd wrote:
-> Quoting Brian Masney (2019-10-08 23:05:20)
-> > On Tue, Oct 08, 2019 at 07:21:30PM -0700, Stephen Boyd wrote:
-> > > Quoting Brian Masney (2019-10-06 18:45:08)
-> > > > diff --git a/arch/arm/boot/dts/qcom-msm8974.dtsi b/arch/arm/boot/dts/qcom-msm8974.dtsi
-> > > > index 7fc23e422cc5..af02eace14e2 100644
-> > > > --- a/arch/arm/boot/dts/qcom-msm8974.dtsi
-> > > > +++ b/arch/arm/boot/dts/qcom-msm8974.dtsi
-> > > > @@ -1335,6 +1342,77 @@
-> > > >                                 clocks = <&mmcc MDSS_AHB_CLK>;
-> > > >                                 clock-names = "iface";
-> > > >                         };
-> > > > +
-> > > > +                       hdmi: hdmi-tx@fd922100 {
-> > > > +                               status = "disabled";
-> > > > +
-> > > > +                               compatible = "qcom,hdmi-tx-8974";
-> > > > +                               reg = <0xfd922100 0x35c>,
-> > > > +                                     <0xfc4b8000 0x60f0>;
-> > > > +                               reg-names = "core_physical",
-> > > > +                                           "qfprom_physical";
-> > > 
-> > > Is this the qfprom "uncorrected" physical address? If so, why can't this
-> > > node use an nvmem to read whatever it needs out of the qfprom?
-> > 
-> > The MSM HDMI code is configured to look for this reg-name here:
-> > 
-> > https://elixir.bootlin.com/linux/latest/source/drivers/gpu/drm/msm/hdmi/hdmi.c#L582
-> > 
-> > There is a qcom,qfprom configured for this board in DTS, however its at
-> > a different address range, so maybe there are multiple qfproms?
-> > 
-> > https://elixir.bootlin.com/linux/latest/source/arch/arm/boot/dts/qcom-msm8974.dtsi#L424
-> > 
-> > msm8996.dtsi has the same style of configuration:
-> > 
-> > https://elixir.bootlin.com/linux/latest/source/arch/arm64/boot/dts/qcom/msm8996.dtsi#L956
-> > https://elixir.bootlin.com/linux/latest/source/arch/arm64/boot/dts/qcom/msm8996.dtsi#L1736
-> > 
+On Tue 08 Oct 00:16 PDT 2019, YueHaibing wrote:
+
+> commit 99356b03b431 ("soc: qcom: Make llcc-qcom a
+> generic driver") move these out of llcc-qcom.h, make
+> the building fails:
 > 
-> There's only one qfprom and there's the address space that's
-> "uncorrected" which is not supposed to be used and there's the space
-> that is "corrected" and is supposed to be used. It looks like this is
-> poking the uncorrected space and it should probably stop doing that and
-> use the nvmem provider instead. Maybe someone with docs for this chip
-> and 8996 can help confirm this.
+> drivers/edac/qcom_edac.c:86:40: error: array type has incomplete element type struct llcc_edac_reg_data
+>  static const struct llcc_edac_reg_data edac_reg_data[] = {
+>                                         ^~~~~~~~~~~~~
+> drivers/edac/qcom_edac.c:87:3: error: array index in non-array initializer
+>   [LLCC_DRAM_CE] = {
+>    ^~~~~~~~~~~~
+> drivers/edac/qcom_edac.c:87:3: note: (near initialization for edac_reg_data)
+> drivers/edac/qcom_edac.c:88:3: error: field name not in record or union initializer
+>    .name = "DRAM Single-bit",
+> ...
+> drivers/edac/qcom_edac.c:169:51: warning: struct llcc_drv_data declared inside parameter
+>  list will not be visible outside of this definition or declaration
+>  qcom_llcc_clear_error_status(int err_type, struct llcc_drv_data *drv)
+>                                                    ^~~~~~~~~~~~~
+> 
+> This patch move the needed definitions back to include.
+> 
+> Reported-by: Hulk Robot <hulkci@huawei.com>
+> Fixes: 99356b03b431 ("soc: qcom: Make llcc-qcom a generic driver")
+> Signed-off-by: YueHaibing <yuehaibing@huawei.com>
 
-Do you know of any publicly-available documentation that describes the
-"uncorrected" and "corrected" addresses? I got that qfprom address for
-the HDMI from here:
+Sorry for missing this, thanks for the fix YueHaibing!
 
-https://github.com/AICP/kernel_lge_hammerhead/blob/n7.1/arch/arm/boot/dts/msm8974-mdss.dtsi#L101
+Regards,
+Bjorn
 
-I assume the downstream kernel probably doesn't have the corrected
-address anywhere else?
-
-Brian
-
+> ---
+>  drivers/soc/qcom/llcc-qcom.c       | 50 --------------------------------------
+>  include/linux/soc/qcom/llcc-qcom.h | 50 ++++++++++++++++++++++++++++++++++++++
+>  2 files changed, 50 insertions(+), 50 deletions(-)
+> 
+> diff --git a/drivers/soc/qcom/llcc-qcom.c b/drivers/soc/qcom/llcc-qcom.c
+> index 98563ef..43606736 100644
+> --- a/drivers/soc/qcom/llcc-qcom.c
+> +++ b/drivers/soc/qcom/llcc-qcom.c
+> @@ -86,56 +86,6 @@ struct llcc_slice_config {
+>  	bool activate_on_init;
+>  };
+>  
+> -/**
+> - * llcc_drv_data - Data associated with the llcc driver
+> - * @regmap: regmap associated with the llcc device
+> - * @bcast_regmap: regmap associated with llcc broadcast offset
+> - * @cfg: pointer to the data structure for slice configuration
+> - * @lock: mutex associated with each slice
+> - * @cfg_size: size of the config data table
+> - * @max_slices: max slices as read from device tree
+> - * @num_banks: Number of llcc banks
+> - * @bitmap: Bit map to track the active slice ids
+> - * @offsets: Pointer to the bank offsets array
+> - * @ecc_irq: interrupt for llcc cache error detection and reporting
+> - */
+> -struct llcc_drv_data {
+> -	struct regmap *regmap;
+> -	struct regmap *bcast_regmap;
+> -	const struct llcc_slice_config *cfg;
+> -	struct mutex lock;
+> -	u32 cfg_size;
+> -	u32 max_slices;
+> -	u32 num_banks;
+> -	unsigned long *bitmap;
+> -	u32 *offsets;
+> -	int ecc_irq;
+> -};
+> -
+> -/**
+> - * llcc_edac_reg_data - llcc edac registers data for each error type
+> - * @name: Name of the error
+> - * @synd_reg: Syndrome register address
+> - * @count_status_reg: Status register address to read the error count
+> - * @ways_status_reg: Status register address to read the error ways
+> - * @reg_cnt: Number of registers
+> - * @count_mask: Mask value to get the error count
+> - * @ways_mask: Mask value to get the error ways
+> - * @count_shift: Shift value to get the error count
+> - * @ways_shift: Shift value to get the error ways
+> - */
+> -struct llcc_edac_reg_data {
+> -	char *name;
+> -	u64 synd_reg;
+> -	u64 count_status_reg;
+> -	u64 ways_status_reg;
+> -	u32 reg_cnt;
+> -	u32 count_mask;
+> -	u32 ways_mask;
+> -	u8  count_shift;
+> -	u8  ways_shift;
+> -};
+> -
+>  struct qcom_llcc_config {
+>  	const struct llcc_slice_config *sct_data;
+>  	int size;
+> diff --git a/include/linux/soc/qcom/llcc-qcom.h b/include/linux/soc/qcom/llcc-qcom.h
+> index c0acdb2..90b8646 100644
+> --- a/include/linux/soc/qcom/llcc-qcom.h
+> +++ b/include/linux/soc/qcom/llcc-qcom.h
+> @@ -37,6 +37,56 @@ struct llcc_slice_desc {
+>  	size_t slice_size;
+>  };
+>  
+> +/**
+> + * llcc_edac_reg_data - llcc edac registers data for each error type
+> + * @name: Name of the error
+> + * @synd_reg: Syndrome register address
+> + * @count_status_reg: Status register address to read the error count
+> + * @ways_status_reg: Status register address to read the error ways
+> + * @reg_cnt: Number of registers
+> + * @count_mask: Mask value to get the error count
+> + * @ways_mask: Mask value to get the error ways
+> + * @count_shift: Shift value to get the error count
+> + * @ways_shift: Shift value to get the error ways
+> + */
+> +struct llcc_edac_reg_data {
+> +	char *name;
+> +	u64 synd_reg;
+> +	u64 count_status_reg;
+> +	u64 ways_status_reg;
+> +	u32 reg_cnt;
+> +	u32 count_mask;
+> +	u32 ways_mask;
+> +	u8  count_shift;
+> +	u8  ways_shift;
+> +};
+> +
+> +/**
+> + * llcc_drv_data - Data associated with the llcc driver
+> + * @regmap: regmap associated with the llcc device
+> + * @bcast_regmap: regmap associated with llcc broadcast offset
+> + * @cfg: pointer to the data structure for slice configuration
+> + * @lock: mutex associated with each slice
+> + * @cfg_size: size of the config data table
+> + * @max_slices: max slices as read from device tree
+> + * @num_banks: Number of llcc banks
+> + * @bitmap: Bit map to track the active slice ids
+> + * @offsets: Pointer to the bank offsets array
+> + * @ecc_irq: interrupt for llcc cache error detection and reporting
+> + */
+> +struct llcc_drv_data {
+> +	struct regmap *regmap;
+> +	struct regmap *bcast_regmap;
+> +	const struct llcc_slice_config *cfg;
+> +	struct mutex lock;
+> +	u32 cfg_size;
+> +	u32 max_slices;
+> +	u32 num_banks;
+> +	unsigned long *bitmap;
+> +	u32 *offsets;
+> +	int ecc_irq;
+> +};
+> +
+>  #if IS_ENABLED(CONFIG_QCOM_LLCC)
+>  /**
+>   * llcc_slice_getd - get llcc slice descriptor
+> -- 
+> 2.7.4
+> 
+> 
