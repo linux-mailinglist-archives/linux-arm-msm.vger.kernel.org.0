@@ -2,96 +2,80 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id D9A23D1187
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  9 Oct 2019 16:41:45 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B687CD1265
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  9 Oct 2019 17:26:17 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731599AbfJIOlm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 9 Oct 2019 10:41:42 -0400
-Received: from mail-wr1-f67.google.com ([209.85.221.67]:37927 "EHLO
-        mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1731584AbfJIOll (ORCPT
+        id S1731661AbfJIP0Q (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 9 Oct 2019 11:26:16 -0400
+Received: from mail-lf1-f65.google.com ([209.85.167.65]:43391 "EHLO
+        mail-lf1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729644AbfJIP0P (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 9 Oct 2019 10:41:41 -0400
-Received: by mail-wr1-f67.google.com with SMTP id w12so3349291wro.5
-        for <linux-arm-msm@vger.kernel.org>; Wed, 09 Oct 2019 07:41:40 -0700 (PDT)
+        Wed, 9 Oct 2019 11:26:15 -0400
+Received: by mail-lf1-f65.google.com with SMTP id u3so1978438lfl.10
+        for <linux-arm-msm@vger.kernel.org>; Wed, 09 Oct 2019 08:26:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=HkWnKjTS7NNaz0B8BlFiWfLhS4jldKU7yfNvUhiWaQM=;
-        b=f7ss43sXwKeRE+g80ck8yRpx+79MpXlAU1ICqgUsyPCZ2LLoVvxA6BOR3KRt21gjwW
-         kj915Hpw47CWN/pKnCTCFjdRM/v5W+s/gP8vs150QmXsqlTTQOTwS72avXQMVZWJnN7w
-         zKo+Hh6J9IYLXPkRfaF7Ab76QKgZTdMr2EHbyDJ9DLBwwO7YhAOjCf8xeg7skOoPZ1nv
-         ya8FNp987bJwuINtL34bTWlctIy/qGZ5UVjvTb+h2al2y5U2fwK9m3feljXXWwWmPa36
-         LAFwBkOEVebcAmYlLeNYoSRxrgjlVI1E80f6VOPl5n2DSZaCAuOuebstfC8IHlKoC0RQ
-         o8BA==
+        d=chromium.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=wOcaopzXOXD+usHp96MLejtldLwmcKRCmKe5gubp3hM=;
+        b=iKWeJdmGRHccgf9FoMbmzUbBRxoUHujF6DrYvq+P3h8z3/GprEMW5NrvUjL0ldy49E
+         5QO1X2+wfCkASte84vp+wlGB00QffleBOZHr5Vylz1e/euzezmmJhMQSGN2L25t50xla
+         PkmWcucmGn2OMDcU9YwHCf4Q5ArXbKCXWL2Lg=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=HkWnKjTS7NNaz0B8BlFiWfLhS4jldKU7yfNvUhiWaQM=;
-        b=ZA9/pP8k5hDalysOafDCGD2ufuqo2f5sbwduvhN6bf75cwd9/SMR/hRBLEBWIfebCO
-         YBlcBkTKmpeVmz4tAcEONqaTR/aBOX1oBONej4oOJ54ttSLtwaV99UgLHSCLuL9de0TS
-         SdzlCgQObyCMVZK6waz1naJ8vAR2OIkXSnE9xegF6ygJCeSurG/g565bDGV43tM0f4ZB
-         LjeQhSwUPSJ86T10ykK3iMhlymA31LRh+qL63JiB0QbjJhrWIGb8aosBxJHBtu8x3nZM
-         JAnZ70lVXX0l3a3k/eMIhONlcBpbJf4XPiUUieL0NcLxm1w2iv5uHXCLBo6YkJwHpbD4
-         QV7g==
-X-Gm-Message-State: APjAAAUf7xifP95siQZ1MVlzNN8UDtj7OD3zxvhgsNnbvyF/qiRqqm1I
-        YvEhUBeq7ZW5anohaDl3Npj2xA==
-X-Google-Smtp-Source: APXvYqxrW+4MKBUxqo35A6KxiZEfmmI3wiTuBUBugFCDOTeazkkMYZAnEeaq00wfCfqQUYZZKfSnrQ==
-X-Received: by 2002:adf:dfc4:: with SMTP id q4mr3238951wrn.302.1570632099807;
-        Wed, 09 Oct 2019 07:41:39 -0700 (PDT)
-Received: from srini-hackbox.lan (cpc89974-aztw32-2-0-cust43.18-1.cable.virginm.net. [86.30.250.44])
-        by smtp.gmail.com with ESMTPSA id b7sm3031770wrx.56.2019.10.09.07.41.35
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 09 Oct 2019 07:41:36 -0700 (PDT)
-From:   Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-To:     gregkh@linuxfoundation.org
-Cc:     arnd@arndb.de, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org,
-        Jorge Ramirez-Ortiz <jorge.ramirez-ortiz@linaro.org>,
-        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-Subject: [PATCH v3 5/5] misc: fastrpc: revert max init file size back to 2MB
-Date:   Wed,  9 Oct 2019 15:41:23 +0100
-Message-Id: <20191009144123.24583-6-srinivas.kandagatla@linaro.org>
-X-Mailer: git-send-email 2.21.0
-In-Reply-To: <20191009144123.24583-1-srinivas.kandagatla@linaro.org>
-References: <20191009144123.24583-1-srinivas.kandagatla@linaro.org>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=wOcaopzXOXD+usHp96MLejtldLwmcKRCmKe5gubp3hM=;
+        b=Mmjc3JHRRBydPR/WjQvCjMLPFKU8m0y4jXl6YXA63QvXbmu7Pse9mf5BNRUWbdyEGh
+         K81y6U/AOWPEK5HdbPBC0xV4CQPgjbtPrXFLrOsl+M90y+nx+CfXQ1KTrqY2LyvIFZeg
+         eqrgVbbe0sW+XEDSRhFmWYTXP4/34VBzAi03mNQtP7c9d1u+48z3zw0GEw61Mb/L1OuH
+         mMVPz+pGbFTuuschrIlvMmu89G9YG7gI6O4W6jJUkCpXffgPXeJOejwF8y/5PO1Kmv5a
+         7w6PQiwXeJi8MiW3PLKiVJwu7i8TgvjGyxhJhL3tE1rcupgy8Ff8AUaMhY/s8VhhmLQs
+         jw4g==
+X-Gm-Message-State: APjAAAX2aYssp6485WGkYZeu546WRWbl4lrXQjiW84sOlEbFoFiOafP2
+        czv4lPnn7xd80wBJjJWaAvwnfkcomq0=
+X-Google-Smtp-Source: APXvYqz/FpkLQyvWxfWFtl7rBa70IrKCV0itEFFDHMHamv6+fJSvQipef47tp6YTwLLcQiBvK0s+Ow==
+X-Received: by 2002:ac2:5209:: with SMTP id a9mr2553567lfl.48.1570634772300;
+        Wed, 09 Oct 2019 08:26:12 -0700 (PDT)
+Received: from mail-lj1-f182.google.com (mail-lj1-f182.google.com. [209.85.208.182])
+        by smtp.gmail.com with ESMTPSA id l3sm540307lfc.31.2019.10.09.08.26.11
+        for <linux-arm-msm@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 09 Oct 2019 08:26:11 -0700 (PDT)
+Received: by mail-lj1-f182.google.com with SMTP id y3so2928571ljj.6
+        for <linux-arm-msm@vger.kernel.org>; Wed, 09 Oct 2019 08:26:11 -0700 (PDT)
+X-Received: by 2002:a2e:9ec2:: with SMTP id h2mr2389130ljk.85.1570634770860;
+ Wed, 09 Oct 2019 08:26:10 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <20191008234505.222991-1-swboyd@chromium.org> <20191008234505.222991-2-swboyd@chromium.org>
+In-Reply-To: <20191008234505.222991-2-swboyd@chromium.org>
+From:   Evan Green <evgreen@chromium.org>
+Date:   Wed, 9 Oct 2019 08:25:32 -0700
+X-Gmail-Original-Message-ID: <CAE=gft76a_UFaSjca-1nR0Pf5TUU1FqWaEjzRyRhn_SkFmLsTA@mail.gmail.com>
+Message-ID: <CAE=gft76a_UFaSjca-1nR0Pf5TUU1FqWaEjzRyRhn_SkFmLsTA@mail.gmail.com>
+Subject: Re: [PATCH v2 1/2] soc: qcom: llcc: Name regmaps to avoid collisions
+To:     Stephen Boyd <swboyd@chromium.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        LKML <linux-kernel@vger.kernel.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        Venkata Narendra Kumar Gutta <vnkgutta@codeaurora.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Jorge Ramirez-Ortiz <jorge.ramirez-ortiz@linaro.org>
+On Tue, Oct 8, 2019 at 4:45 PM Stephen Boyd <swboyd@chromium.org> wrote:
+>
+> We'll end up with debugfs collisions if we don't give names to the
+> regmaps created by this driver. Change the name of the config before
+> registering it so we don't collide in debugfs.
+>
+> Fixes: 7f9c136216c7 ("soc: qcom: Add broadcast base for Last Level Cache Controller (LLCC)")
+> Cc: Venkata Narendra Kumar Gutta <vnkgutta@codeaurora.org>
+> Cc: Evan Green <evgreen@chromium.org>
+> Signed-off-by: Stephen Boyd <swboyd@chromium.org>
 
-With the integration of the mmap/unmap functionality, it is no longer
-necessary to allow large memory allocations upfront since they can be
-handled during runtime.
-
-Tested on QCS404 with CDSP Neural Processing test suite.
-
-Signed-off-by: Jorge Ramirez-Ortiz <jorge.ramirez-ortiz@linaro.org>
-Reviewed-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
----
- drivers/misc/fastrpc.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/drivers/misc/fastrpc.c b/drivers/misc/fastrpc.c
-index eef2cdc00672..b6420aae45b9 100644
---- a/drivers/misc/fastrpc.c
-+++ b/drivers/misc/fastrpc.c
-@@ -32,7 +32,7 @@
- #define FASTRPC_CTX_MAX (256)
- #define FASTRPC_INIT_HANDLE	1
- #define FASTRPC_CTXID_MASK (0xFF0)
--#define INIT_FILELEN_MAX (64 * 1024 * 1024)
-+#define INIT_FILELEN_MAX (2 * 1024 * 1024)
- #define FASTRPC_DEVICE_NAME	"fastrpc"
- #define ADSP_MMAP_ADD_PAGES 0x1000
- 
--- 
-2.21.0
-
+Reviewed-by: Evan Green <evgreen@chromium.org>
