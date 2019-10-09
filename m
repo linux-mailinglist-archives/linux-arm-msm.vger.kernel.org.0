@@ -2,124 +2,109 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 118B6D132D
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  9 Oct 2019 17:44:14 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A66CFD1378
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  9 Oct 2019 18:02:13 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731386AbfJIPoN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 9 Oct 2019 11:44:13 -0400
-Received: from smtp.codeaurora.org ([198.145.29.96]:33850 "EHLO
-        smtp.codeaurora.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1731145AbfJIPoN (ORCPT
+        id S1731385AbfJIQCE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 9 Oct 2019 12:02:04 -0400
+Received: from mail-lf1-f66.google.com ([209.85.167.66]:40020 "EHLO
+        mail-lf1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1730503AbfJIQCD (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 9 Oct 2019 11:44:13 -0400
-Received: by smtp.codeaurora.org (Postfix, from userid 1000)
-        id 048D16070D; Wed,  9 Oct 2019 15:44:11 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
-        s=default; t=1570635852;
-        bh=H77E6QRpj902y5ZjTMISRgJie95q1ZRTaFiWuLsQ4nA=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=atcYYeORRrXNix+K29y+j6BTlu+GbjSjfv9zINWQV1L43uuqLuobRXyJkBTaTaLpJ
-         noK0WLvsJHdNJhwZS4zPPb4IKJISFupDxraAeVxuMddLRE+Rf6AVlOtQNn8VqiSFxl
-         yqBg/sa0qEZdEj8C283qh8cwIRAsMhAFgBqJ/PaE=
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        pdx-caf-mail.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.7 required=2.0 tests=ALL_TRUSTED,BAYES_00,
-        DKIM_INVALID,DKIM_SIGNED,SPF_NONE autolearn=no autolearn_force=no
-        version=3.4.0
-Received: from jcrouse1-lnx.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: jcrouse@smtp.codeaurora.org)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id C2188602F2;
-        Wed,  9 Oct 2019 15:44:08 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
-        s=default; t=1570635849;
-        bh=H77E6QRpj902y5ZjTMISRgJie95q1ZRTaFiWuLsQ4nA=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=f7nmvh3GhgeBppz79Sb9yZbcgBGkjcIxha0vZ8VqEMhZW1wM8O3vRZT4AlScCRBI2
-         E2w1vLzUwLXr88DnlmYfyH1UMEE/e1Nrt13okQADr0lpZPJF20xGYiMjC7mYkrj4Q0
-         ySQ3lj4rhkVKlHNvBIkGbjjlA0d8ULpIFR7xlUeg=
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org C2188602F2
-Authentication-Results: pdx-caf-mail.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: pdx-caf-mail.web.codeaurora.org; spf=none smtp.mailfrom=jcrouse@codeaurora.org
-Date:   Wed, 9 Oct 2019 09:44:06 -0600
-From:   Jordan Crouse <jcrouse@codeaurora.org>
-To:     Ben Dooks <ben.dooks@codethink.co.uk>
-Cc:     linux-kernel@lists.codethink.co.uk,
-        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>, linux-arm-msm@vger.kernel.org,
-        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org
-Subject: Re: [PATCH] drm/msm: make a5xx_show and a5xx_gpu_state_put static
-Message-ID: <20191009154406.GB13386@jcrouse1-lnx.qualcomm.com>
-Mail-Followup-To: Ben Dooks <ben.dooks@codethink.co.uk>,
-        linux-kernel@lists.codethink.co.uk, Rob Clark <robdclark@gmail.com>,
-        Sean Paul <sean@poorly.run>, David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>, linux-arm-msm@vger.kernel.org,
-        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org
-References: <20191009114607.701-1-ben.dooks@codethink.co.uk>
+        Wed, 9 Oct 2019 12:02:03 -0400
+Received: by mail-lf1-f66.google.com with SMTP id d17so2073414lfa.7
+        for <linux-arm-msm@vger.kernel.org>; Wed, 09 Oct 2019 09:02:02 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=17Y7y039jET7/TQrdZoED93OrqqyMRwnQxJ9vtZBzO8=;
+        b=c9Atcn/EI08Kf2cBMOvlLq7SNQ707PZ6EdVeCazR/Dm8zc5uaCAs3UNj/GYvUqYqzJ
+         aMXdTfRdgQTYmaPwcj4QiAuKEHKcxMD9ezuazTOGBACs29dqmx3rbJGAvaRpsxX26MTQ
+         fdzuLGgOcX6EDmt6y6XBhXYz14ayEhIMnEfqU=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=17Y7y039jET7/TQrdZoED93OrqqyMRwnQxJ9vtZBzO8=;
+        b=llOWnJQCFZjxiCxUtY40EvKNupQ/1Bul7en1PDGHYo1r0QBCdt/+2dj6NoTKx5wWMF
+         jx3XmzLrKe6aQb8LzhtaXvYC92KXJsAtRePF+chklbGJVB5d1P5ONBh0z5Z4Q85umuqd
+         +ZiPaymOfwjzBzEPw+T8+lTQecmH+OqjmalillzkUZZbJXonrhhMcTdUBqtZ9BpuHKTb
+         fDP/p4hxNh0KQGEBuaejr8CsP92jiWaX7HEZvSD9C5HIrH90S1KsZZIUfgb1/syluLmL
+         cE0bp5UqzgvIHELa6WH/YPzYz3k1dW1E78D47jST5TXUArSxvI0jUb0RJ03RYDU5/SKy
+         8QJQ==
+X-Gm-Message-State: APjAAAWi2NY2CraFIExmmbnG4N5poz9tyDsDK9K2NsZaQ0TzYGho4m3f
+        QPZN2qEPuZIZhRFuB8H0fLT2gojgU4M=
+X-Google-Smtp-Source: APXvYqxcwMsxsKgEYErrj8hWLxb01eCmTv0D0VIexn4/1/jvCDfTvCD1mh6XptbaN07m/dC/TskG1Q==
+X-Received: by 2002:ac2:5453:: with SMTP id d19mr2633253lfn.89.1570636921092;
+        Wed, 09 Oct 2019 09:02:01 -0700 (PDT)
+Received: from mail-lj1-f173.google.com (mail-lj1-f173.google.com. [209.85.208.173])
+        by smtp.gmail.com with ESMTPSA id i6sm565488lfc.37.2019.10.09.09.02.00
+        for <linux-arm-msm@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 09 Oct 2019 09:02:00 -0700 (PDT)
+Received: by mail-lj1-f173.google.com with SMTP id m13so3015618ljj.11
+        for <linux-arm-msm@vger.kernel.org>; Wed, 09 Oct 2019 09:02:00 -0700 (PDT)
+X-Received: by 2002:a2e:a41a:: with SMTP id p26mr2740656ljn.15.1570636919621;
+ Wed, 09 Oct 2019 09:01:59 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20191009114607.701-1-ben.dooks@codethink.co.uk>
-User-Agent: Mutt/1.5.24 (2015-08-30)
+References: <20191008234505.222991-1-swboyd@chromium.org> <20191008235504.GN63675@minitux>
+ <5d9d3ed4.1c69fb81.5a936.2b18@mx.google.com>
+In-Reply-To: <5d9d3ed4.1c69fb81.5a936.2b18@mx.google.com>
+From:   Evan Green <evgreen@chromium.org>
+Date:   Wed, 9 Oct 2019 09:01:22 -0700
+X-Gmail-Original-Message-ID: <CAE=gft6SmWH3-Td-mZZPn-3=EzwexEdYTR00z5NCP-X1sspihA@mail.gmail.com>
+Message-ID: <CAE=gft6SmWH3-Td-mZZPn-3=EzwexEdYTR00z5NCP-X1sspihA@mail.gmail.com>
+Subject: Re: [PATCH v2 0/2] Avoid regmap debugfs collisions in qcom llcc driver
+To:     Stephen Boyd <swboyd@chromium.org>
+Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        LKML <linux-kernel@vger.kernel.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        Venkata Narendra Kumar Gutta <vnkgutta@codeaurora.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Oct 09, 2019 at 12:46:07PM +0100, Ben Dooks wrote:
-> The a5xx_show and a5xx_gpu_state_put objects are not exported
-> outside of the file, so make them static to avoid the following
-> warnings from sparse:
-> 
-> drivers/gpu/drm/msm/adreno/a5xx_gpu.c:1292:5: warning: symbol 'a5xx_gpu_state_put' was not declared. Should it be static?
-> drivers/gpu/drm/msm/adreno/a5xx_gpu.c:1302:6: warning: symbol 'a5xx_show' was not declared. Should it be static?
+On Tue, Oct 8, 2019 at 6:58 PM Stephen Boyd <swboyd@chromium.org> wrote:
+>
+> Quoting Bjorn Andersson (2019-10-08 16:55:04)
+> > On Tue 08 Oct 16:45 PDT 2019, Stephen Boyd wrote:
+> > >     @@ drivers/soc/qcom/llcc-slice.c
+> > >
+> > >       static struct llcc_drv_data *drv_data = (void *) -EPROBE_DEFER;
+> > >
+> > >     --static const struct regmap_config llcc_regmap_config = {
+> > >     +-static struct regmap_config llcc_regmap_config = {
+> > >      -        .reg_bits = 32,
+> > >      -        .reg_stride = 4,
+> > >      -        .val_bits = 32,
+> > >     @@ drivers/soc/qcom/llcc-slice.c: static struct regmap *qcom_llcc_init_mmio(struct
+> > >       {
+> > >               struct resource *res;
+> > >               void __iomem *base;
+> > >     -+        static struct regmap_config llcc_regmap_config = {
+> > >     ++        struct regmap_config llcc_regmap_config = {
+> >
+> > Now that this isn't static I like the end result better. Not sure about
+> > the need for splitting it in two patches, but if Evan is happy I'll take
+> > it.
+> >
+>
+> Well I split it into bug fix and micro-optimization so backport choices
+> can be made. But yeah, I hope Evan is happy enough to provide a
+> reviewed-by tag!
 
-Reviewed-by: Jordan Crouse <jcrouse@codeaurora.org>
+It's definitely better without the static local since it no longer has
+the cognitive trap, but I still don't really get why we're messing
+with the global v. local aspect of it. We're now inconsistent with
+every other caller of this function, and for what exactly? We've
+traded some data space for a call to memset() and some instructions. I
+would have thought anecdotally that memory was the cheaper thing (ie
+cpu speeds stopped increasing awhile ago, but memory is still getting
+cheaper).
 
-> Signed-off-by: Ben Dooks <ben.dooks@codethink.co.uk>
-> ---
-> Cc: Rob Clark <robdclark@gmail.com>
-> Cc: Sean Paul <sean@poorly.run>
-> Cc: David Airlie <airlied@linux.ie>
-> Cc: Daniel Vetter <daniel@ffwll.ch>
-> Cc: linux-arm-msm@vger.kernel.org
-> Cc: dri-devel@lists.freedesktop.org
-> Cc: freedreno@lists.freedesktop.org
-> ---
->  drivers/gpu/drm/msm/adreno/a5xx_gpu.c | 6 +++---
->  1 file changed, 3 insertions(+), 3 deletions(-)
-> 
-> diff --git a/drivers/gpu/drm/msm/adreno/a5xx_gpu.c b/drivers/gpu/drm/msm/adreno/a5xx_gpu.c
-> index e9c55d1d6c04..7fdc9e2bcaac 100644
-> --- a/drivers/gpu/drm/msm/adreno/a5xx_gpu.c
-> +++ b/drivers/gpu/drm/msm/adreno/a5xx_gpu.c
-> @@ -1289,7 +1289,7 @@ static void a5xx_gpu_state_destroy(struct kref *kref)
->  	kfree(a5xx_state);
->  }
->  
-> -int a5xx_gpu_state_put(struct msm_gpu_state *state)
-> +static int a5xx_gpu_state_put(struct msm_gpu_state *state)
->  {
->  	if (IS_ERR_OR_NULL(state))
->  		return 1;
-> @@ -1299,8 +1299,8 @@ int a5xx_gpu_state_put(struct msm_gpu_state *state)
->  
->  
->  #if defined(CONFIG_DEBUG_FS) || defined(CONFIG_DEV_COREDUMP)
-> -void a5xx_show(struct msm_gpu *gpu, struct msm_gpu_state *state,
-> -		struct drm_printer *p)
-> +static void a5xx_show(struct msm_gpu *gpu, struct msm_gpu_state *state,
-> +		      struct drm_printer *p)
->  {
->  	int i, j;
->  	u32 pos = 0;
-> -- 
-> 2.23.0
-> 
-
--- 
-The Qualcomm Innovation Center, Inc. is a member of Code Aurora Forum,
-a Linux Foundation Collaborative Project
+But either way it's correct, so really it's fine if you ignore me :)
+-Evan
