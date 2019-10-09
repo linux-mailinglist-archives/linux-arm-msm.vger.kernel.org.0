@@ -2,110 +2,114 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 96F22D1AFE
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  9 Oct 2019 23:35:00 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0B7BDD1B92
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 10 Oct 2019 00:21:10 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730675AbfJIVfA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 9 Oct 2019 17:35:00 -0400
-Received: from mail-pg1-f196.google.com ([209.85.215.196]:32939 "EHLO
-        mail-pg1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728804AbfJIVfA (ORCPT
+        id S1731763AbfJIWVJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 9 Oct 2019 18:21:09 -0400
+Received: from mail-oi1-f195.google.com ([209.85.167.195]:46456 "EHLO
+        mail-oi1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1731158AbfJIWVI (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 9 Oct 2019 17:35:00 -0400
-Received: by mail-pg1-f196.google.com with SMTP id i76so2272045pgc.0;
-        Wed, 09 Oct 2019 14:34:59 -0700 (PDT)
+        Wed, 9 Oct 2019 18:21:08 -0400
+Received: by mail-oi1-f195.google.com with SMTP id k25so3143537oiw.13
+        for <linux-arm-msm@vger.kernel.org>; Wed, 09 Oct 2019 15:21:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id;
-        bh=93XeND10daxMH10mUwFpx+iBqyMkuxVptnzWDGZ5rAE=;
-        b=t9EwRTa0xVN+CnzMK1VtNToY63kjkFdBHNGmDJKvSh5OpWOkXi73cg74gjLP3/zpE9
-         8hDObmZpCkDo7ajMaDTaC0YqBqm/gLqP/YWhIZtuNWsiIUm4xXYrryOSGFhNh+4sEfcJ
-         YrzNkCeLcHwbWrDTGSE02GDGEfL6uYCHwZYH0Bnx7cedasuYNHoYp8tEsYkW8LOrUeR8
-         qs0gVgJeN1yLXWsHHBJgI6UBnJAZOTMAwEjaNQoClUyj5wg4SX9ZXiJoQ2HcsgDqG/mK
-         VyQ+caX2EITecNehpw8oXyriS+EHejuw9GUEOLGzfH7reWdxnj16hHMXmhKKJSep448w
-         QJFg==
+        d=ffwll.ch; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=dE2a4Z4lXPuGGmpfVMZQR36XbB7tSgoxGtELVA7jbxI=;
+        b=Re1yOGYe6pPM8HE/LlFTxrSDK2/zgXd0OIeCnpEpEZdLx22d/fC4wfAmETSAcCsaxG
+         Q2CznxPJLfKj0UJ8rnu5QjZgmIuvTFiVMy4bctrd3vdkYeWq20CcZiZGKSO/5Qp4Cmmn
+         v0amAw8IpzLiXymgE7aGFIB74nQkOil/Cqpck=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id;
-        bh=93XeND10daxMH10mUwFpx+iBqyMkuxVptnzWDGZ5rAE=;
-        b=hGcS3eWkJpIe5s1RparBe4PqHTzzGP0h/2DUeq+DJpdzh5DPZ4Sxmw2GB1yGmoVdl9
-         LK96TGxfS/xitgYCeF4zPCGdOXQpElBSCll/JK9OGoMtk2Kv2ZaabnpAk9wiH28ddMLx
-         +H3cz62dVpL7G36gXpBW3BAsF1YIw6mwFH6fJQHnI74FkM+0wu1Ke+rXF6m23TmF9Mf+
-         r71gpbB1H7TRW3cAEZeYX3fkDBManV6+Oeuamho81qIdfaojLNMkyVL72tBD9P7u4fJ5
-         z80DCyjZDaK4elHNnroQ9WCNoI3IPJ9L7ssVZpEyvrcJpWacDrUiS3s8Wi3ShPe7+EBB
-         AtAw==
-X-Gm-Message-State: APjAAAWULsNbXn7HfyGKFx1/vhaxXMFhsmn01Bn0OtsbQ9fSxSOzp2C+
-        oWL4loIpvBpTkiDIoGwnzBrfInfH
-X-Google-Smtp-Source: APXvYqwrTT1N5CbtoW7bGcow975hWrDFM7VA+ZKxMMKBQH74XTjBbjGPFN7q5ngTfy00REM0jSRMPA==
-X-Received: by 2002:a63:734a:: with SMTP id d10mr4055370pgn.334.1570656898956;
-        Wed, 09 Oct 2019 14:34:58 -0700 (PDT)
-Received: from aw-bldr-10.qualcomm.com (i-global254.qualcomm.com. [199.106.103.254])
-        by smtp.gmail.com with ESMTPSA id h4sm3336017pfg.159.2019.10.09.14.34.57
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 09 Oct 2019 14:34:58 -0700 (PDT)
-From:   Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
-To:     robdclark@gmail.com, sean@poorly.run, airlied@linux.ie,
-        daniel@ffwll.ch
-Cc:     linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org,
-        Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
-Subject: [PATCH] drm/msm/dsi: Implement reset correctly
-Date:   Wed,  9 Oct 2019 14:34:54 -0700
-Message-Id: <20191009213454.32891-1-jeffrey.l.hugo@gmail.com>
-X-Mailer: git-send-email 2.17.1
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=dE2a4Z4lXPuGGmpfVMZQR36XbB7tSgoxGtELVA7jbxI=;
+        b=Kgqr7Q9XyfBY6bqlnroqCBRZnsvu2ZZmgQ8BjXQbox4lxJWjflUXUE0LBz8k+4xARm
+         OxnJ2xm1zsnDaIzs/4ozZq0yaTlugRnbSqXZ2IuLSPB1wbQezAsdjtsophaD3sAOs/Xd
+         dKjL30edCNOIDoDmZV/kZfINAotJPyMDMyQ0aaPiOjEPhgTy5cOG3/FRjJn8MSgvc7KS
+         3+PNg1pkPkmWVHS8gmTSiDa5CKUVxMwIEaeJb48WUWvzBsm8nd74iS/pdeha+2LAaaNw
+         YF8K9bAHv5fHMz7c2piQS8rxF+jsxuBorKBvjgKSvI4TBJrIQbCDkd0ED7TgMjmxAt64
+         GmSg==
+X-Gm-Message-State: APjAAAURkxyHdjamYMeMd/34taVqAJCxfF8uR2P4vtiSv897QA946PoG
+        7ucUP8Oij0g8r9WDikBhTraMrElxgUIGDpccnJCt1MrZ
+X-Google-Smtp-Source: APXvYqxZ8tmU1al9WeQDUSkxISPtGig+OBzBdxC+nV+lPvUajS7ItruLNHqHHF/s6KsQ3cjo8125dbwbpNeUimnrJQ4=
+X-Received: by 2002:aca:e046:: with SMTP id x67mr4268077oig.101.1570659667984;
+ Wed, 09 Oct 2019 15:21:07 -0700 (PDT)
+MIME-Version: 1.0
+References: <20181116184238.170034-1-sean@poorly.run> <20181116184238.170034-17-sean@poorly.run>
+In-Reply-To: <20181116184238.170034-17-sean@poorly.run>
+From:   Daniel Vetter <daniel@ffwll.ch>
+Date:   Thu, 10 Oct 2019 00:20:56 +0200
+Message-ID: <CAKMK7uEx2fL69jPGXVpQhhcj8Q8zEzb3ogCv-uVyGrX3QYFeWQ@mail.gmail.com>
+Subject: Re: [PATCH v2 16/24] drm/msm: dpu: Add modeset lock checks where applicable
+To:     Sean Paul <sean@poorly.run>
+Cc:     dri-devel <dri-devel@lists.freedesktop.org>,
+        freedreno <freedreno@lists.freedesktop.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        Sean Paul <seanpaul@chromium.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On msm8998, vblank timeouts are observed because the DSI controller is not
-reset properly, which ends up stalling the MDP.  This is because the reset
-logic is not correct per the hardware documentation.
+On Fri, Nov 16, 2018 at 7:44 PM Sean Paul <sean@poorly.run> wrote:
+>
+> From: Sean Paul <seanpaul@chromium.org>
+>
+> Add modeset lock checks to functions that could be called outside the
+> core atomic stack.
+>
+> Changes in v2:
+> - None
+>
+> Signed-off-by: Sean Paul <seanpaul@chromium.org>
+> ---
+>  drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c | 2 ++
+>  drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c  | 1 +
+>  2 files changed, 3 insertions(+)
+>
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
+> index a008a87a8113..cd0a0bea4335 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
+> @@ -284,6 +284,8 @@ enum dpu_intf_mode dpu_crtc_get_intf_mode(struct drm_crtc *crtc)
+>                 return INTF_MODE_NONE;
+>         }
+>
+> +       WARN_ON(!drm_modeset_is_locked(&crtc->mutex));
+> +
+>         /* TODO: Returns the first INTF_MODE, could there be multiple values? */
+>         drm_for_each_encoder_mask(encoder, crtc->dev, crtc->state->encoder_mask)
+>                 return dpu_encoder_get_intf_mode(encoder);
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
+> index 64134d619748..5104fc01147e 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
+> @@ -358,6 +358,7 @@ void dpu_kms_encoder_enable(struct drm_encoder *encoder)
+>         if (funcs && funcs->commit)
+>                 funcs->commit(encoder);
+>
+> +       WARN_ON(!drm_modeset_is_locked(&dev->mode_config.connection_mutex));
+>         drm_for_each_crtc(crtc, dev) {
+>                 if (!(crtc->state->encoder_mask & drm_encoder_mask(encoder)))
+>                         continue;
 
-The documentation states that after asserting reset, software should wait
-some time (no indication of how long), or poll the status register until it
-returns 0 before deasserting reset.
+I'm fairly sure this is called in the atomic_commit path, and in there
+you might not actually hold these locks (if you do a nonblocking
+modeset).
 
-wmb() is insufficient for this purpose since it just ensures ordering, not
-timing between writes.  Since asserting and deasserting reset occurs on the
-same register, ordering is already guaranteed by the architecture, making
-the wmb extraneous.
+The locking rules for ->state are pretty fun: Either hold the lock, or
+be in atomic commit. In the later case atomic helpers' commit ordering
+guarantees that you can safely access ->state (but read-only only)
+without hodling any locks. You might want to revert.
 
-Since we would define a timeout for polling the status register to avoid a
-possible infinite loop, lets just use a static delay of 20 ms, since 16.666
-ms is the time available to process one frame at 60 fps.
-
-Fixes: a689554ba6ed (drm/msm: Initial add DSI connector support)
-Signed-off-by: Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
----
-
-Rob et al, is it possible for this to go into a 5.4-rc?
-
- drivers/gpu/drm/msm/dsi/dsi_host.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
-
-diff --git a/drivers/gpu/drm/msm/dsi/dsi_host.c b/drivers/gpu/drm/msm/dsi/dsi_host.c
-index 663ff9f4fac9..68ded9b4735d 100644
---- a/drivers/gpu/drm/msm/dsi/dsi_host.c
-+++ b/drivers/gpu/drm/msm/dsi/dsi_host.c
-@@ -986,7 +986,7 @@ static void dsi_sw_reset(struct msm_dsi_host *msm_host)
- 	wmb(); /* clocks need to be enabled before reset */
- 
- 	dsi_write(msm_host, REG_DSI_RESET, 1);
--	wmb(); /* make sure reset happen */
-+	msleep(20); /* make sure reset happen */
- 	dsi_write(msm_host, REG_DSI_RESET, 0);
- }
- 
-@@ -1396,7 +1396,7 @@ static void dsi_sw_reset_restore(struct msm_dsi_host *msm_host)
- 
- 	/* dsi controller can only be reset while clocks are running */
- 	dsi_write(msm_host, REG_DSI_RESET, 1);
--	wmb();	/* make sure reset happen */
-+	msleep(20);	/* make sure reset happen */
- 	dsi_write(msm_host, REG_DSI_RESET, 0);
- 	wmb();	/* controller out of reset */
- 	dsi_write(msm_host, REG_DSI_CTRL, data0);
+Don't ask why I stumbled over this.
+-Daniel
 -- 
-2.17.1
-
+Daniel Vetter
+Software Engineer, Intel Corporation
++41 (0) 79 365 57 48 - http://blog.ffwll.ch
