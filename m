@@ -2,126 +2,110 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 0BF78D173B
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  9 Oct 2019 20:00:13 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 96F22D1AFE
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  9 Oct 2019 23:35:00 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731072AbfJISAM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 9 Oct 2019 14:00:12 -0400
-Received: from mail-lj1-f195.google.com ([209.85.208.195]:37385 "EHLO
-        mail-lj1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729865AbfJISAM (ORCPT
+        id S1730675AbfJIVfA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 9 Oct 2019 17:35:00 -0400
+Received: from mail-pg1-f196.google.com ([209.85.215.196]:32939 "EHLO
+        mail-pg1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728804AbfJIVfA (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 9 Oct 2019 14:00:12 -0400
-Received: by mail-lj1-f195.google.com with SMTP id l21so3436549lje.4
-        for <linux-arm-msm@vger.kernel.org>; Wed, 09 Oct 2019 11:00:10 -0700 (PDT)
+        Wed, 9 Oct 2019 17:35:00 -0400
+Received: by mail-pg1-f196.google.com with SMTP id i76so2272045pgc.0;
+        Wed, 09 Oct 2019 14:34:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=YmeJKDAW2I1yruAY3lk0iKjTiIjTCk6xnz0bx6eLJkE=;
-        b=XMrdMa5P0q1bpVT/YQRnvcSKOWRUN0f0eZRKmI7S0MK6/Uf2O8KITsEALxVxHVbbh8
-         WSVOOol/gviCdzpPsJeQZ9KYe4hJRDsZlXKOFRkUAnyHfVoTY9JKZbRSz68oJQxnIngB
-         IFJB85PFJahGQ+uE43aCf5Huxucwr1DomVkeg=
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id;
+        bh=93XeND10daxMH10mUwFpx+iBqyMkuxVptnzWDGZ5rAE=;
+        b=t9EwRTa0xVN+CnzMK1VtNToY63kjkFdBHNGmDJKvSh5OpWOkXi73cg74gjLP3/zpE9
+         8hDObmZpCkDo7ajMaDTaC0YqBqm/gLqP/YWhIZtuNWsiIUm4xXYrryOSGFhNh+4sEfcJ
+         YrzNkCeLcHwbWrDTGSE02GDGEfL6uYCHwZYH0Bnx7cedasuYNHoYp8tEsYkW8LOrUeR8
+         qs0gVgJeN1yLXWsHHBJgI6UBnJAZOTMAwEjaNQoClUyj5wg4SX9ZXiJoQ2HcsgDqG/mK
+         VyQ+caX2EITecNehpw8oXyriS+EHejuw9GUEOLGzfH7reWdxnj16hHMXmhKKJSep448w
+         QJFg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=YmeJKDAW2I1yruAY3lk0iKjTiIjTCk6xnz0bx6eLJkE=;
-        b=JHmxH7FZliVW8oYFyXVaUb2CmqUUdoNbjiAMar3509nFRGv+KLhcNVgzfOvErKm5dp
-         eySn/kW/XarZm7QpQuhOOg8xZLwnKTGLHd3GxOPJ8EtqvvN1MKUUjoVD3BNdoHZtDNBP
-         5uyxcLaxcHacwCJEdQtuR0Lqqspn0zpU/8XIybVeSFWUPhuD9+4EmswP8M8wtpdAuc2O
-         /sCscktvaAbdxGGJPr+Fa5K4D1DqvC752XESbYpfK36XYx+FHHICc4QHPIvZbt0p0NFP
-         UXY6Lf9oj81uzcbRsnCUC+kwp9tC5NekHbFA8DQfIP/LSbKBMH6vIGJIsN3rUclyJGNA
-         PFaQ==
-X-Gm-Message-State: APjAAAWqJ3pSKmuu0Cj59Y2nAJmtg8ovYXZrbLcZ8PyX8aarQ7nUna3y
-        0l0V7bKdrwGdZoc6pDI3giEKQLP+OCQ=
-X-Google-Smtp-Source: APXvYqxcZ/2cjo+KErUcfowmUyimUHlyR8T4eIB2pvvHPaRp0CQJV7nSBEZVCgUNIjPaV02TsaAx4g==
-X-Received: by 2002:a2e:9f4d:: with SMTP id v13mr2797789ljk.180.1570644009204;
-        Wed, 09 Oct 2019 11:00:09 -0700 (PDT)
-Received: from mail-lj1-f182.google.com (mail-lj1-f182.google.com. [209.85.208.182])
-        by smtp.gmail.com with ESMTPSA id o5sm644031lfn.42.2019.10.09.11.00.08
-        for <linux-arm-msm@vger.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 09 Oct 2019 11:00:08 -0700 (PDT)
-Received: by mail-lj1-f182.google.com with SMTP id 7so3418750ljw.7
-        for <linux-arm-msm@vger.kernel.org>; Wed, 09 Oct 2019 11:00:08 -0700 (PDT)
-X-Received: by 2002:a2e:584b:: with SMTP id x11mr3244996ljd.36.1570644007544;
- Wed, 09 Oct 2019 11:00:07 -0700 (PDT)
-MIME-Version: 1.0
-References: <20191008234505.222991-1-swboyd@chromium.org> <20191008235504.GN63675@minitux>
- <5d9d3ed4.1c69fb81.5a936.2b18@mx.google.com> <CAE=gft6SmWH3-Td-mZZPn-3=EzwexEdYTR00z5NCP-X1sspihA@mail.gmail.com>
- <20191009174622.GN6390@tuxbook-pro>
-In-Reply-To: <20191009174622.GN6390@tuxbook-pro>
-From:   Evan Green <evgreen@chromium.org>
-Date:   Wed, 9 Oct 2019 10:59:30 -0700
-X-Gmail-Original-Message-ID: <CAE=gft53-N+kWZKQO6YRAT0NBX_zrGYkqTUWOGrK2mT5Krf+3w@mail.gmail.com>
-Message-ID: <CAE=gft53-N+kWZKQO6YRAT0NBX_zrGYkqTUWOGrK2mT5Krf+3w@mail.gmail.com>
-Subject: Re: [PATCH v2 0/2] Avoid regmap debugfs collisions in qcom llcc driver
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     Stephen Boyd <swboyd@chromium.org>, Andy Gross <agross@kernel.org>,
-        LKML <linux-kernel@vger.kernel.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Venkata Narendra Kumar Gutta <vnkgutta@codeaurora.org>
-Content-Type: text/plain; charset="UTF-8"
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=93XeND10daxMH10mUwFpx+iBqyMkuxVptnzWDGZ5rAE=;
+        b=hGcS3eWkJpIe5s1RparBe4PqHTzzGP0h/2DUeq+DJpdzh5DPZ4Sxmw2GB1yGmoVdl9
+         LK96TGxfS/xitgYCeF4zPCGdOXQpElBSCll/JK9OGoMtk2Kv2ZaabnpAk9wiH28ddMLx
+         +H3cz62dVpL7G36gXpBW3BAsF1YIw6mwFH6fJQHnI74FkM+0wu1Ke+rXF6m23TmF9Mf+
+         r71gpbB1H7TRW3cAEZeYX3fkDBManV6+Oeuamho81qIdfaojLNMkyVL72tBD9P7u4fJ5
+         z80DCyjZDaK4elHNnroQ9WCNoI3IPJ9L7ssVZpEyvrcJpWacDrUiS3s8Wi3ShPe7+EBB
+         AtAw==
+X-Gm-Message-State: APjAAAWULsNbXn7HfyGKFx1/vhaxXMFhsmn01Bn0OtsbQ9fSxSOzp2C+
+        oWL4loIpvBpTkiDIoGwnzBrfInfH
+X-Google-Smtp-Source: APXvYqwrTT1N5CbtoW7bGcow975hWrDFM7VA+ZKxMMKBQH74XTjBbjGPFN7q5ngTfy00REM0jSRMPA==
+X-Received: by 2002:a63:734a:: with SMTP id d10mr4055370pgn.334.1570656898956;
+        Wed, 09 Oct 2019 14:34:58 -0700 (PDT)
+Received: from aw-bldr-10.qualcomm.com (i-global254.qualcomm.com. [199.106.103.254])
+        by smtp.gmail.com with ESMTPSA id h4sm3336017pfg.159.2019.10.09.14.34.57
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Wed, 09 Oct 2019 14:34:58 -0700 (PDT)
+From:   Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
+To:     robdclark@gmail.com, sean@poorly.run, airlied@linux.ie,
+        daniel@ffwll.ch
+Cc:     linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org,
+        Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
+Subject: [PATCH] drm/msm/dsi: Implement reset correctly
+Date:   Wed,  9 Oct 2019 14:34:54 -0700
+Message-Id: <20191009213454.32891-1-jeffrey.l.hugo@gmail.com>
+X-Mailer: git-send-email 2.17.1
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Oct 9, 2019 at 10:46 AM Bjorn Andersson
-<bjorn.andersson@linaro.org> wrote:
->
-> On Wed 09 Oct 09:01 PDT 2019, Evan Green wrote:
->
-> > On Tue, Oct 8, 2019 at 6:58 PM Stephen Boyd <swboyd@chromium.org> wrote:
-> > >
-> > > Quoting Bjorn Andersson (2019-10-08 16:55:04)
-> > > > On Tue 08 Oct 16:45 PDT 2019, Stephen Boyd wrote:
-> > > > >     @@ drivers/soc/qcom/llcc-slice.c
-> > > > >
-> > > > >       static struct llcc_drv_data *drv_data = (void *) -EPROBE_DEFER;
-> > > > >
-> > > > >     --static const struct regmap_config llcc_regmap_config = {
-> > > > >     +-static struct regmap_config llcc_regmap_config = {
-> > > > >      -        .reg_bits = 32,
-> > > > >      -        .reg_stride = 4,
-> > > > >      -        .val_bits = 32,
-> > > > >     @@ drivers/soc/qcom/llcc-slice.c: static struct regmap *qcom_llcc_init_mmio(struct
-> > > > >       {
-> > > > >               struct resource *res;
-> > > > >               void __iomem *base;
-> > > > >     -+        static struct regmap_config llcc_regmap_config = {
-> > > > >     ++        struct regmap_config llcc_regmap_config = {
-> > > >
-> > > > Now that this isn't static I like the end result better. Not sure about
-> > > > the need for splitting it in two patches, but if Evan is happy I'll take
-> > > > it.
-> > > >
-> > >
-> > > Well I split it into bug fix and micro-optimization so backport choices
-> > > can be made. But yeah, I hope Evan is happy enough to provide a
-> > > reviewed-by tag!
-> >
-> > It's definitely better without the static local since it no longer has
-> > the cognitive trap, but I still don't really get why we're messing
-> > with the global v. local aspect of it. We're now inconsistent with
-> > every other caller of this function, and for what exactly? We've
-> > traded some data space for a call to memset() and some instructions. I
-> > would have thought anecdotally that memory was the cheaper thing (ie
-> > cpu speeds stopped increasing awhile ago, but memory is still getting
-> > cheaper).
-> >
->
-> The reason for making the structure local is because it's being modified
-> per instance, meaning it would still work as long as
-> qcom_llcc_init_mmio() is never called concurrently for two llcc
-> instances. But the correctness outweighs the performance degradation of
-> setting it up on the stack in my view.
->
+On msm8998, vblank timeouts are observed because the DSI controller is not
+reset properly, which ends up stalling the MDP.  This is because the reset
+logic is not correct per the hardware documentation.
 
-I hadn't considered the concurrency aspect of the change, since I had
-anchored myself on the static local. I'm convinced. Might be worth
-mentioning that in the commit message.
+The documentation states that after asserting reset, software should wait
+some time (no indication of how long), or poll the status register until it
+returns 0 before deasserting reset.
 
-For the series:
-Reviewed-by: Evan Green <evgreen@chromium.org>
+wmb() is insufficient for this purpose since it just ensures ordering, not
+timing between writes.  Since asserting and deasserting reset occurs on the
+same register, ordering is already guaranteed by the architecture, making
+the wmb extraneous.
+
+Since we would define a timeout for polling the status register to avoid a
+possible infinite loop, lets just use a static delay of 20 ms, since 16.666
+ms is the time available to process one frame at 60 fps.
+
+Fixes: a689554ba6ed (drm/msm: Initial add DSI connector support)
+Signed-off-by: Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
+---
+
+Rob et al, is it possible for this to go into a 5.4-rc?
+
+ drivers/gpu/drm/msm/dsi/dsi_host.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/drivers/gpu/drm/msm/dsi/dsi_host.c b/drivers/gpu/drm/msm/dsi/dsi_host.c
+index 663ff9f4fac9..68ded9b4735d 100644
+--- a/drivers/gpu/drm/msm/dsi/dsi_host.c
++++ b/drivers/gpu/drm/msm/dsi/dsi_host.c
+@@ -986,7 +986,7 @@ static void dsi_sw_reset(struct msm_dsi_host *msm_host)
+ 	wmb(); /* clocks need to be enabled before reset */
+ 
+ 	dsi_write(msm_host, REG_DSI_RESET, 1);
+-	wmb(); /* make sure reset happen */
++	msleep(20); /* make sure reset happen */
+ 	dsi_write(msm_host, REG_DSI_RESET, 0);
+ }
+ 
+@@ -1396,7 +1396,7 @@ static void dsi_sw_reset_restore(struct msm_dsi_host *msm_host)
+ 
+ 	/* dsi controller can only be reset while clocks are running */
+ 	dsi_write(msm_host, REG_DSI_RESET, 1);
+-	wmb();	/* make sure reset happen */
++	msleep(20);	/* make sure reset happen */
+ 	dsi_write(msm_host, REG_DSI_RESET, 0);
+ 	wmb();	/* controller out of reset */
+ 	dsi_write(msm_host, REG_DSI_CTRL, data0);
+-- 
+2.17.1
+
