@@ -2,48 +2,48 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 1DCCBD281F
+	by mail.lfdr.de (Postfix) with ESMTP id DB1DFD2820
 	for <lists+linux-arm-msm@lfdr.de>; Thu, 10 Oct 2019 13:40:15 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727480AbfJJLkO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 10 Oct 2019 07:40:14 -0400
-Received: from mail-lj1-f194.google.com ([209.85.208.194]:46247 "EHLO
-        mail-lj1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1731230AbfJJLkO (ORCPT
+        id S1731230AbfJJLkP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 10 Oct 2019 07:40:15 -0400
+Received: from mail-lj1-f196.google.com ([209.85.208.196]:43879 "EHLO
+        mail-lj1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1731916AbfJJLkP (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 10 Oct 2019 07:40:14 -0400
-Received: by mail-lj1-f194.google.com with SMTP id d1so5794975ljl.13
-        for <linux-arm-msm@vger.kernel.org>; Thu, 10 Oct 2019 04:40:12 -0700 (PDT)
+        Thu, 10 Oct 2019 07:40:15 -0400
+Received: by mail-lj1-f196.google.com with SMTP id n14so5809932ljj.10
+        for <linux-arm-msm@vger.kernel.org>; Thu, 10 Oct 2019 04:40:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=GuctgQaNXDpvCtGnyWFncLAWkLOPv4PuyrC/plBYoKw=;
-        b=DanIYhUZr/1fcPOq8Ic6qUfgUj21pf/pck8soG6eZQCQYhtidxPLIlbpjpwqD+1XB+
-         LMxMZ2fIBihfggtcjrtFGfxbLLq8eIV21kCamNCqUj6Y/iWMUWu5aY+SkSB36/59rvHv
-         j2I8r/mohLV8cTtkXEd+eQ4NLXVuf773dkPbaDzPLUWhrFdJ/PkSO1P1JFPRVaQlfxR6
-         x153P2vsxw0BA+ayURQPn/ry91aXPfcYe4iFNFCWze/i0veaWf0Nw7nIyqJZhu/YfH1Z
-         HbqHDu1AQp+bYI6dm7I4KRDV4j0iojylqAYBVwYJwMtnRXRspSEkZSOnemFgvBXNAT0P
-         fYJQ==
+        bh=uPQQL2LvieO3hRSdVOoT+soulZMhG9ActuEg4qQLyaA=;
+        b=T0nFsd0F5yhLoTBaFcw7y7TSJ7swFLFrCm0iZ9fxXkpwH6LgoqyNcmtnY+mHnZ7wqA
+         tzclaFDIjVJeRj4TRzdNHxas/7Vc8CSCkhEVswvN1U/GYZXItT1Dooz0x75Gut6BZJwe
+         4S12SRko6dhQUiVAR7mIGBsqkpltXwc+NMvmdHK8upCiNxXR8JCoLhsHRJqg1TNG15Iv
+         a8dMDov2BYDB7gaiCVsBOvN3bHHR40LV7UsV9TRjpeuPT4Ri5Tw3COGyo494xPZWl7xQ
+         Q9jZ1l0HBJVKHFxRnUwvZuXn9e9UCxKzqe6oBIidHY+cpmTeJzdcMO6Goptv3Oz/YpEU
+         VJHQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=GuctgQaNXDpvCtGnyWFncLAWkLOPv4PuyrC/plBYoKw=;
-        b=uZ1fw8fDFMO8Hl55FssT9S/5a5lcC1qx9aSc+O8zGeczD7bDS4Vfg1oGGNLK3eeTOU
-         qGBwDm42oJaj2etARC/NZQRckZANO78hkEn9Xcx89luAB1fHjsA28FLm65RM8XzOltCn
-         JvwCXrTAEgQ8Sx2rQVs7Nvb/e2UCgU2QDUvR+1/lSu0zsHm4S4H98ComhwrBVpDL2ds6
-         A57ODw+FKZzTWmRW4K2K6rrd/Cij0vxHV1FZYrTasdFULzFJECeDRAr/rWxYitxi9oX8
-         4k/JCwYKCh9DYxUB0PG3F0oW4xvIZgO7jgXSx2+SQ2wN1+RoAIg3UkKeUe9yg8Axkt+K
-         uMhA==
-X-Gm-Message-State: APjAAAXlcBIT43s1ZEitUULZY09JpNIFrCMpnzU0MRNUXWYXYwywYqul
-        0yiZtlXNuwU7vPfisnKKJIEWxQ==
-X-Google-Smtp-Source: APXvYqzJlSXBelf9XaR8Fb0R4bdv691aPCwO1Z3PRCtK+D7bKXcC8xeURfNHeN93zAvSqzcikcMDsw==
-X-Received: by 2002:a2e:286:: with SMTP id y6mr6266107lje.184.1570707611403;
-        Thu, 10 Oct 2019 04:40:11 -0700 (PDT)
+        bh=uPQQL2LvieO3hRSdVOoT+soulZMhG9ActuEg4qQLyaA=;
+        b=D+POr1ecRLAUScrKdX5RkbadKHMdI/G2iLTB+aNF+DwMx4gpSFMQ/22dlYA8MbgGcD
+         DkN6d3tak2w8k4hrvCEFJmwmDlFfK7vH+2jAFMugSZ1+hC8zHRdhDPS1Ih29MEy0BcJm
+         AiUg3tbi+PXi/ViakPc9QPhuyCroNYk7HbJ9QAeNwBjEfeIZ/TGKdd40MNS+szLIvXto
+         XV2yKZEpQS50PG5wEBSDhPmtzX4GlqXW2Y7Dn1SoFEOAnMQ7zfduMexRKF8ZA0teTo7+
+         RCdmxJZSGImSCsKNqJkaZ/7y/hGxGoSf+prv8qKMjvQi26g7pxWOK2lGm+zk2PMQ0pkr
+         IDjQ==
+X-Gm-Message-State: APjAAAVG68VJimT+BQNqltQAnEhRGus9RptmsNMEHwIII0BZpai7eP7E
+        QWDBxjmMHAlsOTJ9MQyRNfq09A==
+X-Google-Smtp-Source: APXvYqwd9hZQk2PNNSWawnj+vwKKoXgMm6PDK8dcNZdYDc7Bp/XO4FPg5jdpJ5ioW9H9llCi9Uk6EQ==
+X-Received: by 2002:a2e:6f0f:: with SMTP id k15mr6301625ljc.12.1570707613211;
+        Thu, 10 Oct 2019 04:40:13 -0700 (PDT)
 Received: from localhost.localdomain (h-158-174-22-210.NA.cust.bahnhof.se. [158.174.22.210])
-        by smtp.gmail.com with ESMTPSA id p3sm1168937ljn.78.2019.10.10.04.40.09
+        by smtp.gmail.com with ESMTPSA id p3sm1168937ljn.78.2019.10.10.04.40.11
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 10 Oct 2019 04:40:10 -0700 (PDT)
+        Thu, 10 Oct 2019 04:40:12 -0700 (PDT)
 From:   Ulf Hansson <ulf.hansson@linaro.org>
 To:     "Rafael J . Wysocki" <rjw@rjwysocki.net>,
         Daniel Lezcano <daniel.lezcano@linaro.org>,
@@ -59,9 +59,9 @@ Cc:     Rob Herring <robh+dt@kernel.org>,
         Ulf Hansson <ulf.hansson@linaro.org>,
         linux-arm-kernel@lists.infradead.org,
         linux-arm-msm@vger.kernel.org, Lina Iyer <lina.iyer@linaro.org>
-Subject: [PATCH 04/13] of: base: Add of_get_cpu_state_node() to get idle states for a CPU node
-Date:   Thu, 10 Oct 2019 13:39:28 +0200
-Message-Id: <20191010113937.15962-5-ulf.hansson@linaro.org>
+Subject: [PATCH 05/13] cpuidle: dt: Support hierarchical CPU idle states
+Date:   Thu, 10 Oct 2019 13:39:29 +0200
+Message-Id: <20191010113937.15962-6-ulf.hansson@linaro.org>
 X-Mailer: git-send-email 2.17.1
 In-Reply-To: <20191010113937.15962-1-ulf.hansson@linaro.org>
 References: <20191010113937.15962-1-ulf.hansson@linaro.org>
@@ -70,106 +70,44 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The CPU's idle state nodes are currently parsed at the common cpuidle DT
-library, but also when initializing data for specific CPU idle operations,
-as in the PSCI cpuidle driver case and qcom-spm cpuidle case.
+From: Lina Iyer <lina.iyer@linaro.org>
 
-To avoid open-coding, let's introduce of_get_cpu_state_node(), which takes
-the device node for the CPU and the index to the requested idle state node,
-as in-parameters. In case a corresponding idle state node is found, it
-returns the node with the refcount incremented for it, else it returns
-NULL.
-
-Moreover, for PSCI there are two options to describe the CPU's idle states
-[1], either via a flattened description or a hierarchical layout. Hence,
-let's take both options into account.
-
-[1] Documentation/devicetree/bindings/arm/psci.yaml
+Currently CPU's idle states are represented using the flattened model.
+Let's add support for the hierarchical layout, via converting to use
+of_get_cpu_state_node().
 
 Suggested-by: Sudeep Holla <sudeep.holla@arm.com>
-Co-developed-by: Lina Iyer <lina.iyer@linaro.org>
 Signed-off-by: Lina Iyer <lina.iyer@linaro.org>
-Reviewed-by: Rob Herring <robh@kernel.org>
 Reviewed-by: Daniel Lezcano <daniel.lezcano@linaro.org>
+Co-developed-by: Ulf Hansson <ulf.hansson@linaro.org>
 Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
 ---
- drivers/of/base.c  | 36 ++++++++++++++++++++++++++++++++++++
- include/linux/of.h |  8 ++++++++
- 2 files changed, 44 insertions(+)
+ drivers/cpuidle/dt_idle_states.c | 5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/of/base.c b/drivers/of/base.c
-index 1d667eb730e1..0e4cdf0f3864 100644
---- a/drivers/of/base.c
-+++ b/drivers/of/base.c
-@@ -477,6 +477,42 @@ int of_cpu_node_to_id(struct device_node *cpu_node)
- }
- EXPORT_SYMBOL(of_cpu_node_to_id);
+diff --git a/drivers/cpuidle/dt_idle_states.c b/drivers/cpuidle/dt_idle_states.c
+index d06d21a9525d..252f2a9686a6 100644
+--- a/drivers/cpuidle/dt_idle_states.c
++++ b/drivers/cpuidle/dt_idle_states.c
+@@ -111,8 +111,7 @@ static bool idle_state_valid(struct device_node *state_node, unsigned int idx,
+ 	for (cpu = cpumask_next(cpumask_first(cpumask), cpumask);
+ 	     cpu < nr_cpu_ids; cpu = cpumask_next(cpu, cpumask)) {
+ 		cpu_node = of_cpu_device_node_get(cpu);
+-		curr_state_node = of_parse_phandle(cpu_node, "cpu-idle-states",
+-						   idx);
++		curr_state_node = of_get_cpu_state_node(cpu_node, idx);
+ 		if (state_node != curr_state_node)
+ 			valid = false;
  
-+/**
-+ * of_get_cpu_state_node - Get CPU's idle state node at the given index
-+ *
-+ * @cpu_node: The device node for the CPU
-+ * @index: The index in the list of the idle states
-+ *
-+ * Two generic methods can be used to describe a CPU's idle states, either via
-+ * a flattened description through the "cpu-idle-states" binding or via the
-+ * hierarchical layout, using the "power-domains" and the "domain-idle-states"
-+ * bindings. This function check for both and returns the idle state node for
-+ * the requested index.
-+ *
-+ * In case an idle state node is found at @index, the refcount is incremented
-+ * for it, so call of_node_put() on it when done. Returns NULL if not found.
-+ */
-+struct device_node *of_get_cpu_state_node(struct device_node *cpu_node,
-+					  int index)
-+{
-+	struct of_phandle_args args;
-+	int err;
-+
-+	err = of_parse_phandle_with_args(cpu_node, "power-domains",
-+					"#power-domain-cells", 0, &args);
-+	if (!err) {
-+		struct device_node *state_node =
-+			of_parse_phandle(args.np, "domain-idle-states", index);
-+
-+		of_node_put(args.np);
-+		if (state_node)
-+			return state_node;
-+	}
-+
-+	return of_parse_phandle(cpu_node, "cpu-idle-states", index);
-+}
-+EXPORT_SYMBOL(of_get_cpu_state_node);
-+
- /**
-  * __of_device_is_compatible() - Check if the node matches given constraints
-  * @device: pointer to node
-diff --git a/include/linux/of.h b/include/linux/of.h
-index 844f89e1b039..c669c0a4732f 100644
---- a/include/linux/of.h
-+++ b/include/linux/of.h
-@@ -351,6 +351,8 @@ extern const void *of_get_property(const struct device_node *node,
- 				int *lenp);
- extern struct device_node *of_get_cpu_node(int cpu, unsigned int *thread);
- extern struct device_node *of_get_next_cpu_node(struct device_node *prev);
-+extern struct device_node *of_get_cpu_state_node(struct device_node *cpu_node,
-+						 int index);
+@@ -170,7 +169,7 @@ int dt_init_idle_driver(struct cpuidle_driver *drv,
+ 	cpu_node = of_cpu_device_node_get(cpumask_first(cpumask));
  
- #define for_each_property_of_node(dn, pp) \
- 	for (pp = dn->properties; pp != NULL; pp = pp->next)
-@@ -765,6 +767,12 @@ static inline struct device_node *of_get_next_cpu_node(struct device_node *prev)
- 	return NULL;
- }
+ 	for (i = 0; ; i++) {
+-		state_node = of_parse_phandle(cpu_node, "cpu-idle-states", i);
++		state_node = of_get_cpu_state_node(cpu_node, i);
+ 		if (!state_node)
+ 			break;
  
-+static inline struct device_node *of_get_cpu_state_node(struct device_node *cpu_node,
-+					int index)
-+{
-+	return NULL;
-+}
-+
- static inline int of_n_addr_cells(struct device_node *np)
- {
- 	return 0;
 -- 
 2.17.1
 
