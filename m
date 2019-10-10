@@ -2,162 +2,145 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id E5A5DD30FF
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 10 Oct 2019 20:58:17 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 2E179D3112
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 10 Oct 2019 21:00:05 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726595AbfJJS6R (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 10 Oct 2019 14:58:17 -0400
-Received: from mail-yw1-f66.google.com ([209.85.161.66]:38553 "EHLO
-        mail-yw1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726387AbfJJS6R (ORCPT
+        id S1727005AbfJJTAE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 10 Oct 2019 15:00:04 -0400
+Received: from mail-io1-f65.google.com ([209.85.166.65]:34186 "EHLO
+        mail-io1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726695AbfJJTAE (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 10 Oct 2019 14:58:17 -0400
-Received: by mail-yw1-f66.google.com with SMTP id s6so2563382ywe.5
-        for <linux-arm-msm@vger.kernel.org>; Thu, 10 Oct 2019 11:58:16 -0700 (PDT)
+        Thu, 10 Oct 2019 15:00:04 -0400
+Received: by mail-io1-f65.google.com with SMTP id q1so16194748ion.1;
+        Thu, 10 Oct 2019 12:00:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=poorly.run; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=HnzDo6J7XPtXSDGmFJ7m3yzfxGtmqMxou+frhT1YXbY=;
-        b=CQDn43tZBrhtRfHpzLdWL4rdyoSA0rTfFg/J40LA8pTbo9zJBlPXaAKX8dCLzTbriS
-         USdPMwP8uzu7N7TGxaqN9xLUWJtG4knYWhb/kdT5uPwLy/3AxHkSb6aNm0QaKxnv7PsT
-         H89yVk/OqtnXkLyrEHWazDd6ioGboYjwP/mPLNwQvAlK1an72DiOEN+mFdjA9Zi0CFHw
-         AYX6bD46i2M3Tj7ZyYwtH4CnJjN4xCdKIjNT2Q6b/4eHTdNPprqkJn9el6CgpJ0N5CF9
-         k6cYdWo7rGN2Upddpdf5M2idrg4Fd/f0md4xNV+ct5LJFzQwryNg2zNXkqPu+P0CxEUD
-         prWA==
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=cA1nu7WjrWAqmer6330wc0ijhhk83SGo4tS7biMmkzM=;
+        b=ZgAEAuKGNSm1/2mqvjdNeg2BeAXi21dVyn9q62E+Iu/ozmBo3wcCaT/7BKIoBAZOTj
+         dDAHRUs/OzQ4mTOWyMfo+0XcOuQL0I26UncPEfNPzUC804jb3T4Ly123g8ax48QIngr6
+         ER3d5u50DZRrZBkNfjBnSDd9Ru7og2vz6dQCKOlRmNo8Q6gP2XcFXUmp1fISS1lJQO3C
+         7yVg8gGSq3+aJ1brvf7pGPBu/31vmXwMNyeEIdVATaihqc7Q3kjg9bKwkGJF57w2L3RJ
+         /5EEERwn/sqHHPy8HoLZ9eMxPloJNKEjdVsMYUrO2tZps2E0fU1HCPGcaKdEWGBDtoXi
+         1xRw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=HnzDo6J7XPtXSDGmFJ7m3yzfxGtmqMxou+frhT1YXbY=;
-        b=UK3RYnI3JSs60aHJAgeaVhUYB/fG+lON7/CdtP7o1VPhjm+pVDmCaX9EmZnSGULXOF
-         mHXASjb5yeT1nV5ljxoZNDY8BBfvNdsuqWSllWgudDIF1HOPO04vifTeYpwRvgM1OscI
-         GVM8AV2MUTDQFetHSx99/Gnxjn2rAhO0JOsQk8RpTgot89EuGvwMGI+fXZX9153FIxbY
-         ukOw/BpcLMFTefmwWr1kYgzXyKvwTVT7moOtW2xolZvpyF2/8FUYK4jYpe7BtmF6Oqaf
-         VsrBMQ3UBJMM2s1idqrCwWc+kPTLVpSV4VPLei57tYZ0OtwFNvzhaGwvPleP0uGlVsZn
-         pv4A==
-X-Gm-Message-State: APjAAAU3WDujTuA5khrUiDvX8oURm8HrhJlhmErVRtWH/oxuUoFu4MVJ
-        PxYUy/eJ9jFq3hhVb1ebaOA95w==
-X-Google-Smtp-Source: APXvYqykLeC0EhYVvNXlLWQlfAuhK8feubMl8CwTajOuOLhB38mkuNImas2t5fnAYgZxwucnqhDaaw==
-X-Received: by 2002:a0d:c385:: with SMTP id f127mr8349803ywd.509.1570733896503;
-        Thu, 10 Oct 2019 11:58:16 -0700 (PDT)
-Received: from localhost ([2620:0:1013:11:89c6:2139:5435:371d])
-        by smtp.gmail.com with ESMTPSA id r193sm1583030ywg.38.2019.10.10.11.58.16
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 10 Oct 2019 11:58:16 -0700 (PDT)
-Date:   Thu, 10 Oct 2019 14:58:15 -0400
-From:   Sean Paul <sean@poorly.run>
-To:     kholk11@gmail.com
-Cc:     linux-arm-msm@vger.kernel.org, marijns95@gmail.com,
-        robdclark@gmail.com, sean@poorly.run, airlied@linux.ie,
-        daniel@ffwll.ch, robh+dt@kernel.org, mark.rutland@arm.com,
-        tglx@linutronix.de, jonathan@marek.ca, bjorn.andersson@linaro.org,
-        georgi.djakov@linaro.org, gregkh@linuxfoundation.org,
-        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org
-Subject: Re: [PATCH v2 3/5] drm/msm/dsi: Add configuration for 28nm PLL on
- family B
-Message-ID: <20191010185815.GM85762@art_vandelay>
-References: <20190926105256.61412-1-kholk11@gmail.com>
- <20190926105256.61412-4-kholk11@gmail.com>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=cA1nu7WjrWAqmer6330wc0ijhhk83SGo4tS7biMmkzM=;
+        b=UMk6RqdR6KqStIrYl8SpVKGtXuj+KFH7cr5jJcU8FJ1++tE0iQrRcQXLdjixNU6Bl8
+         UrhQFgXODB6n5TMw0CnLsBNeyoXfbvic6Tmcaz0S1+2pzZcQJixpEhFs+AXP7RqIdtx0
+         Ze4etB7bv6mMwikRukb7lvH8lNTg/kByFxQlkR88t4AaYw9RaGUQvXsFJwXwuj9KbFFt
+         tzrqjsqBxYvXLSZKHJA1YreA2OnJX8hBFpmJJHKRztkAGdoQiv2kXChNZEc/UbyfngF9
+         nJGZ9IaJx2FiIHel2kgG8YelbO4OB0eDDQZtf95/RTNtSUaLmwDqLJIQq7ZMzKoj/SOa
+         jEog==
+X-Gm-Message-State: APjAAAV14vbXTlVxjIYl4nJHDe0SqSnVIzhRaC6FCBYJ0qbbQf5pt9hb
+        fGL9CjuMl9L5lU6NF8+auLBq5H5Zpo7W2dFgg8U1vQ==
+X-Google-Smtp-Source: APXvYqy2jIsV/0okFyYF1KBC8/M37CPZIxf/tq3+cYPkx00MgiScI6/1sGtqXgBQgssHUI2lYs/pujp8uSI9sAIhI4E=
+X-Received: by 2002:a5d:904e:: with SMTP id v14mr11728084ioq.33.1570734003178;
+ Thu, 10 Oct 2019 12:00:03 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20190926105256.61412-4-kholk11@gmail.com>
-User-Agent: Mutt/1.10.1 (2018-07-13)
+References: <20191009213454.32891-1-jeffrey.l.hugo@gmail.com>
+ <20191010184544.GK85762@art_vandelay> <CAMavQKJ7iMD+4a0eftNre9xMvyoZy_=sAPRAuMctX5bueugk1g@mail.gmail.com>
+In-Reply-To: <CAMavQKJ7iMD+4a0eftNre9xMvyoZy_=sAPRAuMctX5bueugk1g@mail.gmail.com>
+From:   Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
+Date:   Thu, 10 Oct 2019 12:59:52 -0600
+Message-ID: <CAOCk7NqW=85qduSFquCgivHTDxDpJ7xK9zBjgbd1nM8QS7xM=Q@mail.gmail.com>
+Subject: Re: [PATCH] drm/msm/dsi: Implement reset correctly
+To:     Sean Paul <sean@poorly.run>
+Cc:     Rob Clark <robdclark@gmail.com>, Dave Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        dri-devel <dri-devel@lists.freedesktop.org>,
+        freedreno <freedreno@lists.freedesktop.org>,
+        LKML <linux-kernel@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Sep 26, 2019 at 12:52:54PM +0200, kholk11@gmail.com wrote:
-> From: "Angelo G. Del Regno" <kholk11@gmail.com>
-> 
-> The 28nm PLL has a different iospace on MSM/APQ family B SoCs:
-> add a new configuration and use it when the DT reports the
-> "qcom,dsi-phy-28nm-hpm-fam-b" compatible.
-> 
-> Signed-off-by: Angelo G. Del Regno <kholk11@gmail.com>
-> ---
->  .../devicetree/bindings/display/msm/dsi.txt    |  1 +
->  drivers/gpu/drm/msm/dsi/phy/dsi_phy.c          |  2 ++
->  drivers/gpu/drm/msm/dsi/phy/dsi_phy.h          |  1 +
->  drivers/gpu/drm/msm/dsi/phy/dsi_phy_28nm.c     | 18 ++++++++++++++++++
->  4 files changed, 22 insertions(+)
-> 
-> diff --git a/Documentation/devicetree/bindings/display/msm/dsi.txt b/Documentation/devicetree/bindings/display/msm/dsi.txt
-> index af95586c898f..d3ba9ee22f38 100644
-> --- a/Documentation/devicetree/bindings/display/msm/dsi.txt
-> +++ b/Documentation/devicetree/bindings/display/msm/dsi.txt
-> @@ -83,6 +83,7 @@ DSI PHY:
->  Required properties:
->  - compatible: Could be the following
->    * "qcom,dsi-phy-28nm-hpm"
-> +  * "qcom,dsi-phy-28nm-hpm-fam-b"
->    * "qcom,dsi-phy-28nm-lp"
->    * "qcom,dsi-phy-20nm"
->    * "qcom,dsi-phy-28nm-8960"
+On Thu, Oct 10, 2019 at 12:49 PM Sean Paul <sean@poorly.run> wrote:
+>
+> On Thu, Oct 10, 2019 at 2:45 PM Sean Paul <sean@poorly.run> wrote:
+> >
+> > On Wed, Oct 09, 2019 at 02:34:54PM -0700, Jeffrey Hugo wrote:
+> > > On msm8998, vblank timeouts are observed because the DSI controller is not
+> > > reset properly, which ends up stalling the MDP.  This is because the reset
+> > > logic is not correct per the hardware documentation.
+> > >
+> > > The documentation states that after asserting reset, software should wait
+> > > some time (no indication of how long), or poll the status register until it
+> > > returns 0 before deasserting reset.
+> > >
+> > > wmb() is insufficient for this purpose since it just ensures ordering, not
+> > > timing between writes.  Since asserting and deasserting reset occurs on the
+> > > same register, ordering is already guaranteed by the architecture, making
+> > > the wmb extraneous.
+> > >
+> > > Since we would define a timeout for polling the status register to avoid a
+> > > possible infinite loop, lets just use a static delay of 20 ms, since 16.666
+> > > ms is the time available to process one frame at 60 fps.
+> > >
+> > > Fixes: a689554ba6ed (drm/msm: Initial add DSI connector support)
+> > > Signed-off-by: Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
+> > > ---
+> > >
+> > > Rob et al, is it possible for this to go into a 5.4-rc?
+>
+> Sorry, I missed this on the first go-around, I'm Ok with this getting
+> into 5.4. Rob, if you're Ok with this, I can send it through -misc
+> unless you're planning an msm-fixes PR.
+>
+> > >
+> > >  drivers/gpu/drm/msm/dsi/dsi_host.c | 4 ++--
+> > >  1 file changed, 2 insertions(+), 2 deletions(-)
+> > >
+> > > diff --git a/drivers/gpu/drm/msm/dsi/dsi_host.c b/drivers/gpu/drm/msm/dsi/dsi_host.c
+> > > index 663ff9f4fac9..68ded9b4735d 100644
+> > > --- a/drivers/gpu/drm/msm/dsi/dsi_host.c
+> > > +++ b/drivers/gpu/drm/msm/dsi/dsi_host.c
+> > > @@ -986,7 +986,7 @@ static void dsi_sw_reset(struct msm_dsi_host *msm_host)
+> > >       wmb(); /* clocks need to be enabled before reset */
+> > >
+> > >       dsi_write(msm_host, REG_DSI_RESET, 1);
+> > > -     wmb(); /* make sure reset happen */
+> > > +     msleep(20); /* make sure reset happen */
+> >
+> > Could you please pull this out into a #define used for both in case we decide to
+> > tweak it? I don't want these 2 values to drift.
+> >
 
-Same comment here re: putting binding updates in separate patches.
+Oh, yeah.  That's a really good point.  Will fix.
 
-Sean
+>
+> oh yeah, and with that fixed,
+>
+> Reviewed-by: Sean Paul <sean@poorly.run>
 
-> diff --git a/drivers/gpu/drm/msm/dsi/phy/dsi_phy.c b/drivers/gpu/drm/msm/dsi/phy/dsi_phy.c
-> index 4097eca1b3ef..507c0146a305 100644
-> --- a/drivers/gpu/drm/msm/dsi/phy/dsi_phy.c
-> +++ b/drivers/gpu/drm/msm/dsi/phy/dsi_phy.c
-> @@ -481,6 +481,8 @@ static const struct of_device_id dsi_phy_dt_match[] = {
->  #ifdef CONFIG_DRM_MSM_DSI_28NM_PHY
->  	{ .compatible = "qcom,dsi-phy-28nm-hpm",
->  	  .data = &dsi_phy_28nm_hpm_cfgs },
-> +	{ .compatible = "qcom,dsi-phy-28nm-hpm-fam-b",
-> +	  .data = &dsi_phy_28nm_hpm_famb_cfgs },
->  	{ .compatible = "qcom,dsi-phy-28nm-lp",
->  	  .data = &dsi_phy_28nm_lp_cfgs },
->  #endif
-> diff --git a/drivers/gpu/drm/msm/dsi/phy/dsi_phy.h b/drivers/gpu/drm/msm/dsi/phy/dsi_phy.h
-> index c4069ce6afe6..24b294ed3059 100644
-> --- a/drivers/gpu/drm/msm/dsi/phy/dsi_phy.h
-> +++ b/drivers/gpu/drm/msm/dsi/phy/dsi_phy.h
-> @@ -40,6 +40,7 @@ struct msm_dsi_phy_cfg {
->  };
->  
->  extern const struct msm_dsi_phy_cfg dsi_phy_28nm_hpm_cfgs;
-> +extern const struct msm_dsi_phy_cfg dsi_phy_28nm_hpm_famb_cfgs;
->  extern const struct msm_dsi_phy_cfg dsi_phy_28nm_lp_cfgs;
->  extern const struct msm_dsi_phy_cfg dsi_phy_20nm_cfgs;
->  extern const struct msm_dsi_phy_cfg dsi_phy_28nm_8960_cfgs;
-> diff --git a/drivers/gpu/drm/msm/dsi/phy/dsi_phy_28nm.c b/drivers/gpu/drm/msm/dsi/phy/dsi_phy_28nm.c
-> index b3f678f6c2aa..3b9300545e16 100644
-> --- a/drivers/gpu/drm/msm/dsi/phy/dsi_phy_28nm.c
-> +++ b/drivers/gpu/drm/msm/dsi/phy/dsi_phy_28nm.c
-> @@ -142,6 +142,24 @@ const struct msm_dsi_phy_cfg dsi_phy_28nm_hpm_cfgs = {
->  	.num_dsi_phy = 2,
->  };
->  
-> +const struct msm_dsi_phy_cfg dsi_phy_28nm_hpm_famb_cfgs = {
-> +	.type = MSM_DSI_PHY_28NM_HPM,
-> +	.src_pll_truthtable = { {true, true}, {false, true} },
-> +	.reg_cfg = {
-> +		.num = 1,
-> +		.regs = {
-> +			{"vddio", 100000, 100},
-> +		},
-> +	},
-> +	.ops = {
-> +		.enable = dsi_28nm_phy_enable,
-> +		.disable = dsi_28nm_phy_disable,
-> +		.init = msm_dsi_phy_init_common,
-> +	},
-> +	.io_start = { 0x1a94400, 0x1a94800 },
-> +	.num_dsi_phy = 2,
-> +};
-> +
->  const struct msm_dsi_phy_cfg dsi_phy_28nm_lp_cfgs = {
->  	.type = MSM_DSI_PHY_28NM_LP,
->  	.src_pll_truthtable = { {true, true}, {true, true} },
-> -- 
-> 2.21.0
-> 
+Thanks.
 
--- 
-Sean Paul, Software Engineer, Google / Chromium OS
+>
+> > Thanks,
+> > Sean
+> >
+> > >       dsi_write(msm_host, REG_DSI_RESET, 0);
+> > >  }
+> > >
+> > > @@ -1396,7 +1396,7 @@ static void dsi_sw_reset_restore(struct msm_dsi_host *msm_host)
+> > >
+> > >       /* dsi controller can only be reset while clocks are running */
+> > >       dsi_write(msm_host, REG_DSI_RESET, 1);
+> > > -     wmb();  /* make sure reset happen */
+> > > +     msleep(20);     /* make sure reset happen */
+> > >       dsi_write(msm_host, REG_DSI_RESET, 0);
+> > >       wmb();  /* controller out of reset */
+> > >       dsi_write(msm_host, REG_DSI_CTRL, data0);
+> > > --
+> > > 2.17.1
+> > >
+> >
+> > --
+> > Sean Paul, Software Engineer, Google / Chromium OS
