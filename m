@@ -2,114 +2,133 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id F303FD2D60
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 10 Oct 2019 17:14:03 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 77D65D2D9A
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 10 Oct 2019 17:22:46 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726146AbfJJPNx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 10 Oct 2019 11:13:53 -0400
-Received: from mail-yw1-f65.google.com ([209.85.161.65]:42781 "EHLO
-        mail-yw1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725901AbfJJPNx (ORCPT
+        id S1726583AbfJJPWn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 10 Oct 2019 11:22:43 -0400
+Received: from mail-ot1-f68.google.com ([209.85.210.68]:42571 "EHLO
+        mail-ot1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725901AbfJJPWn (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 10 Oct 2019 11:13:53 -0400
-Received: by mail-yw1-f65.google.com with SMTP id i207so2279487ywc.9
-        for <linux-arm-msm@vger.kernel.org>; Thu, 10 Oct 2019 08:13:53 -0700 (PDT)
+        Thu, 10 Oct 2019 11:22:43 -0400
+Received: by mail-ot1-f68.google.com with SMTP id c10so5199701otd.9
+        for <linux-arm-msm@vger.kernel.org>; Thu, 10 Oct 2019 08:22:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=poorly.run; s=google;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=/ETAqkaGrUZ6wcJiRClzdVf0p22iN64aDCNAmSQb2kI=;
-        b=Dz8qx3cl6V8r5hcyRxz0ifUK4tg8h9IuwrTeWgWDOmpVOeWGYEJ7wa9PdxnX4Dh7AM
-         ncXNWRlMWxinr0zh1dUv/gTHragMFEKu1nciild7GOesGLsf406xt94bqScfEvLHTjzi
-         P9qTWKBYunU844KzFMIdkZL/CZ6OQ8UD76SnoC4Hq+M7WjGc9QqL9WwFkwGbIusvZmZH
-         lzVTGz2n6zL/cO/DcyIYly1Tq2H0pY8j+3B40frwKZWGBKYORBW/Gt/aKZoZYKNT/77j
-         rmUdrJfBhhH5SxkmNFVgRAmBsGRqcJmyqqdXRzkiHwy+pm00oGkZGwymIlmpCr5jlnUO
-         SLLw==
+        d=ffwll.ch; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=PenGaXGBrENWr4HRhl2ZMGFHyym9ywCGyc7wJWTP8Es=;
+        b=Ihehkphoadi3HQFuRPEVdSQBReqPm7/Gh+3uPF13qJdc3RayvK0KsK2yAOWJXFJVtO
+         5F3UVbMUgp0wahT+XDbIUClseAVeciWIPjDOxH8ybNvyGlNXnNQxDT8b9di8kLxPcUtt
+         Fgk4ORb/+HSQpRwQyRPIsQ+U+a3Bzr/vzonqE=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=/ETAqkaGrUZ6wcJiRClzdVf0p22iN64aDCNAmSQb2kI=;
-        b=jow021OBz+ojHOlba5aNWLb8tTOFJmVX3X1+upEAxvYZ8h7fj2IpkAHv3YNQUkJZRI
-         LQwErgNPJhimD5AWVWaUdIzObhoPWpbgQl77PgC4P4zVbIacZwiuT+6qC64s6i3cFdAi
-         9kls1eaFKdv2t4z1DoZBe5IURwvqL54EtcrwCU0H2GDJ0xzPw21LGwEV2EY0xFET26YK
-         yXSGrAV86QAcrXbA5+0/6ewtK0OUgp4ZSW1krwp4C1Swo3GZZVyinya4pTwN6eCP7uJq
-         8ivGf5+3ou+g093ejyZqatdhtp2nzua5pAe+jH5OtGPumixmjnYjrB20QkgrMZbWe8gA
-         xaDg==
-X-Gm-Message-State: APjAAAVmrE8SfJJjAlLrxO9ecOepbYq28H/XWI81Fr7Hso4fSXTa/k2+
-        fj84myAMhH7ZMoqK2K9EbnwsxA==
-X-Google-Smtp-Source: APXvYqz6i78IG2fD7IiQje6iL9Cb+MroBUgJuXZPwgwWNAKs6ZG6tZzGdvSBvRsa17xsCnto2rm+VA==
-X-Received: by 2002:a0d:eb01:: with SMTP id u1mr7890799ywe.116.1570720432646;
-        Thu, 10 Oct 2019 08:13:52 -0700 (PDT)
-Received: from rosewood.cam.corp.google.com ([2620:0:1013:11:89c6:2139:5435:371d])
-        by smtp.gmail.com with ESMTPSA id l77sm1425220ywb.32.2019.10.10.08.13.51
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 10 Oct 2019 08:13:52 -0700 (PDT)
-From:   Sean Paul <sean@poorly.run>
-To:     dri-devel@lists.freedesktop.org
-Cc:     Sean Paul <seanpaul@chromium.org>,
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=PenGaXGBrENWr4HRhl2ZMGFHyym9ywCGyc7wJWTP8Es=;
+        b=OWZ+nO1dSCXv4SwnhPj0ZQXWW4CQPnuLu15T7didyevZxYKSuqEupOzN9trUoCs1W2
+         Vq8Ibvrfs7ud9i2yV4pBjZTiR+N0I6vDO8jWCFgWy1qzgeNuKMSfiBTZZTBFiQsYvcv3
+         haSTbGwY1dn1I+iReLieKaujCbvEy0cVwACwJorEHZWYM/Jy0UWF5LRIL06nnieV1jK8
+         acuJmZ/CZvHHQaOJgGbTS+gMoP7xpSuSPycgpL1xO97ygNpydvKw2NlwL04VKM9kBh1i
+         Mz9fh4jzZhqKNu2NHKHMPZJT7mnPtMBUZJrU6MsGcoKN8VUxHuRlDUPw0G+GC1znuZA0
+         We6w==
+X-Gm-Message-State: APjAAAWXY+xk8PzDtRzHsGLeAc6QG6Ar0RQQ3cm0Sum3Og9jJxEl+En1
+        JCq3ERhyDCB34wHlNCEBMAU2KdrEqNe1tOyBtuqzZA==
+X-Google-Smtp-Source: APXvYqxwi0Gygs5kPGzDnCCyiTgHjRRdKCaJiHfsGaRjDAslpSjYSTlDyMH2eIjfnkx+3+OX6wcHgbuj9WokzULHAWI=
+X-Received: by 2002:a9d:6b0a:: with SMTP id g10mr8284705otp.303.1570720960988;
+ Thu, 10 Oct 2019 08:22:40 -0700 (PDT)
+MIME-Version: 1.0
+References: <20191010151351.126735-1-sean@poorly.run>
+In-Reply-To: <20191010151351.126735-1-sean@poorly.run>
+From:   Daniel Vetter <daniel@ffwll.ch>
+Date:   Thu, 10 Oct 2019 17:22:29 +0200
+Message-ID: <CAKMK7uF2HsM5WrC5j_WNXWDjkXTyK5tP2DuoRt78FeaL5791QA@mail.gmail.com>
+Subject: Re: [PATCH] Revert "drm/msm: dpu: Add modeset lock checks where applicable"
+To:     Sean Paul <sean@poorly.run>
+Cc:     dri-devel <dri-devel@lists.freedesktop.org>,
+        Sean Paul <seanpaul@chromium.org>,
         Jeykumar Sankaran <jsanka@codeaurora.org>,
         Rob Clark <robdclark@chromium.org>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Rob Clark <robdclark@gmail.com>, linux-arm-msm@vger.kernel.org,
-        freedreno@lists.freedesktop.org
-Subject: [PATCH] Revert "drm/msm: dpu: Add modeset lock checks where applicable"
-Date:   Thu, 10 Oct 2019 11:13:21 -0400
-Message-Id: <20191010151351.126735-1-sean@poorly.run>
-X-Mailer: git-send-email 2.23.0.700.g56cf767bdb-goog
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+        Rob Clark <robdclark@gmail.com>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        freedreno <freedreno@lists.freedesktop.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Sean Paul <seanpaul@chromium.org>
+On Thu, Oct 10, 2019 at 5:13 PM Sean Paul <sean@poorly.run> wrote:
+>
+> From: Sean Paul <seanpaul@chromium.org>
+>
+> This reverts commit 1dfdb0e107dbe6ebff3f6bbbe4aad0b5aa87bba4.
+>
+> As Daniel mentions in his email [1], non-blocking commits don't hold the
+> modeset locks, so we can safely access state as long as these functions
+> are in the commit path. I'm not entirely sure if these have always been
+> isolated to the commit path, but they seem to be now.
+>
+> [1]- https://lists.freedesktop.org/archives/dri-devel/2019-October/239441.html
+>
+> Fixes: 1dfdb0e107db ("drm/msm: dpu: Add modeset lock checks where applicable")
+> Cc: Jeykumar Sankaran <jsanka@codeaurora.org>
+> Cc: Rob Clark <robdclark@chromium.org>
+> Suggested-by: Daniel Vetter <daniel@ffwll.ch>
+> Signed-off-by: Sean Paul <seanpaul@chromium.org>
+> ---
+>  drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c | 2 --
+>  drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c  | 1 -
+>  2 files changed, 3 deletions(-)
+>
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
+> index db6c9ccf3be26..c645dd201368b 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
+> @@ -282,8 +282,6 @@ enum dpu_intf_mode dpu_crtc_get_intf_mode(struct drm_crtc *crtc)
+>                 return INTF_MODE_NONE;
+>         }
+>
+> -       WARN_ON(!drm_modeset_is_locked(&crtc->mutex));
 
-This reverts commit 1dfdb0e107dbe6ebff3f6bbbe4aad0b5aa87bba4.
+This one is worse ... it's used in two places:
+- debugfs, where you actually want to make sure you're holding this lock
+- atomic_check, where this is broken since you're supposed to look at
+the free-standing states only, except if you really know what you're
+doing. Given that there's no comment here, I suspect that's not the
+case. Note that for atomic_check you're guaranteed to hold the modeset
+lock.
 
-As Daniel mentions in his email [1], non-blocking commits don't hold the
-modeset locks, so we can safely access state as long as these functions
-are in the commit path. I'm not entirely sure if these have always been
-isolated to the commit path, but they seem to be now.
+I'd put a FIXME here, but leave the WARN_ON until this is fixed properly.
+> -
+>         /* TODO: Returns the first INTF_MODE, could there be multiple values? */
+>         drm_for_each_encoder_mask(encoder, crtc->dev, crtc->state->encoder_mask)
+>                 return dpu_encoder_get_intf_mode(encoder);
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
+> index e393a423d7d7a..0e68e20d19c87 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
+> @@ -305,7 +305,6 @@ void dpu_kms_encoder_enable(struct drm_encoder *encoder)
+>         if (funcs && funcs->commit)
+>                 funcs->commit(encoder);
+>
+> -       WARN_ON(!drm_modeset_is_locked(&dev->mode_config.connection_mutex));
 
-[1]- https://lists.freedesktop.org/archives/dri-devel/2019-October/239441.html
+Reviewed-by: Daniel Vetter <daniel.vetter@ffwll.ch>
 
-Fixes: 1dfdb0e107db ("drm/msm: dpu: Add modeset lock checks where applicable")
-Cc: Jeykumar Sankaran <jsanka@codeaurora.org>
-Cc: Rob Clark <robdclark@chromium.org>
-Suggested-by: Daniel Vetter <daniel@ffwll.ch>
-Signed-off-by: Sean Paul <seanpaul@chromium.org>
----
- drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c | 2 --
- drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c  | 1 -
- 2 files changed, 3 deletions(-)
+but only for this hunk here.
+-Daniel
 
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
-index db6c9ccf3be26..c645dd201368b 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
-@@ -282,8 +282,6 @@ enum dpu_intf_mode dpu_crtc_get_intf_mode(struct drm_crtc *crtc)
- 		return INTF_MODE_NONE;
- 	}
- 
--	WARN_ON(!drm_modeset_is_locked(&crtc->mutex));
--
- 	/* TODO: Returns the first INTF_MODE, could there be multiple values? */
- 	drm_for_each_encoder_mask(encoder, crtc->dev, crtc->state->encoder_mask)
- 		return dpu_encoder_get_intf_mode(encoder);
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
-index e393a423d7d7a..0e68e20d19c87 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
-@@ -305,7 +305,6 @@ void dpu_kms_encoder_enable(struct drm_encoder *encoder)
- 	if (funcs && funcs->commit)
- 		funcs->commit(encoder);
- 
--	WARN_ON(!drm_modeset_is_locked(&dev->mode_config.connection_mutex));
- 	drm_for_each_crtc(crtc, dev) {
- 		if (!(crtc->state->encoder_mask & drm_encoder_mask(encoder)))
- 			continue;
+>         drm_for_each_crtc(crtc, dev) {
+>                 if (!(crtc->state->encoder_mask & drm_encoder_mask(encoder)))
+>                         continue;
+> --
+> Sean Paul, Software Engineer, Google / Chromium OS
+>
+
+
 -- 
-Sean Paul, Software Engineer, Google / Chromium OS
-
+Daniel Vetter
+Software Engineer, Intel Corporation
++41 (0) 79 365 57 48 - http://blog.ffwll.ch
