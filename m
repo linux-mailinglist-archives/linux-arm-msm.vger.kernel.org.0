@@ -2,65 +2,79 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 45371D1F6D
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 10 Oct 2019 06:16:31 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 26192D1FE2
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 10 Oct 2019 07:07:15 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726524AbfJJEQa (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 10 Oct 2019 00:16:30 -0400
-Received: from mail.kernel.org ([198.145.29.99]:48770 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1725601AbfJJEQa (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 10 Oct 2019 00:16:30 -0400
-Received: from kernel.org (unknown [104.132.0.74])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 6E771208C3;
-        Thu, 10 Oct 2019 04:16:29 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1570680989;
-        bh=jkym8ovsgPYWmAnsP8E+JrX02gbHvAT96T30iEAJB0g=;
-        h=In-Reply-To:References:From:To:Cc:Subject:Date:From;
-        b=Sc+3ONYgfB0a8MfoDZHiWBzooO3m/K9COsajQpUHl+4a0KGi9ZLHoHdl6qoDFqgs7
-         VSM4BWFq7mFiPsS9N6HoW2RZx6DIK6HEnMhw0V6dxhjFKc64uldBQhBfNnP7UOS2um
-         QrOF+nNN4sUtSu9KET7tW9SFClzeiEgL34frJMak=
+        id S1732735AbfJJFEG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 10 Oct 2019 01:04:06 -0400
+Received: from mail-pg1-f195.google.com ([209.85.215.195]:40490 "EHLO
+        mail-pg1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726065AbfJJFEG (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 10 Oct 2019 01:04:06 -0400
+Received: by mail-pg1-f195.google.com with SMTP id d26so2864994pgl.7
+        for <linux-arm-msm@vger.kernel.org>; Wed, 09 Oct 2019 22:04:05 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=message-id:mime-version:content-transfer-encoding:in-reply-to
+         :references:from:to:cc:subject:user-agent:date;
+        bh=RDcgYyHGE7Ugaco0qkuIi9HynTd/fxe2Ca020N/JEPg=;
+        b=Zmt7MuwX3mgqOtO1SLFiulXF3/JFoK87LeyjYNh8GzlLx5Peho4Bfp083Cv/wJtq/p
+         qnNtMYUTITHeIv/R9giQdM6XXx/g4bBwXMGW8Y7lGhTERwMu18oYccSNphKgRGHRwzvM
+         CsD5zrNHrYDnYRquheyibQcOKC0RePR1BdPoA=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:message-id:mime-version
+         :content-transfer-encoding:in-reply-to:references:from:to:cc:subject
+         :user-agent:date;
+        bh=RDcgYyHGE7Ugaco0qkuIi9HynTd/fxe2Ca020N/JEPg=;
+        b=hLNR/3C8OdHMCftEbcnEoGYm8oFZSIJQGOfZgptYgv/rFhpQ9bZGLtirQvvoAZQeet
+         LDOFXd+wTm6/LtDwtkyQP8BU+RMoRLKRYxfRkAwD75u4u3r+73y3IDx6J9D1h8N75pnH
+         /NrcNpAj1RG/K+TQpBTbPilKe0qxcs81ebD70H1Ei5yDLR4rshZLNl9UtEXj/zJ+617R
+         Q4fNLpyAyX7FGQEAK31a4jxd3s668nGH6UbcaTwOOHhZn/vpX7GJLWByCXCEJmdyfn61
+         SvRBhc+mel3aPXhGbtOFLwUs67KnFx6nfFXdPW3tPs4eOhIh4foMSP72chQdr+ObTmec
+         efNQ==
+X-Gm-Message-State: APjAAAV/946fk2hwYe9Ed5Mxarg+Uq+T0ps/bGfvwdKTWIvk5JJZ7F9n
+        EX16hEb/kmbwGi23No53ZFqITw==
+X-Google-Smtp-Source: APXvYqw9/raUa8lawyg+DLKK8BYDVbYecdV9aYm7AXYeJETU44FJ3FlHZKqeiYmyuHb821nDWHBGsw==
+X-Received: by 2002:a63:4624:: with SMTP id t36mr6066126pga.376.1570683844943;
+        Wed, 09 Oct 2019 22:04:04 -0700 (PDT)
+Received: from chromium.org ([2620:15c:202:1:fa53:7765:582b:82b9])
+        by smtp.gmail.com with ESMTPSA id p68sm4911397pfp.9.2019.10.09.22.04.03
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 09 Oct 2019 22:04:04 -0700 (PDT)
+Message-ID: <5d9ebbc4.1c69fb81.b45e2.25ce@mx.google.com>
 Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <d17dad3d-d32c-b71c-0e56-d15cb246f742@codeaurora.org>
-References: <20190918095018.17979-1-tdas@codeaurora.org> <347780b9-c66b-01c4-b547-b03de2cf3078@codeaurora.org> <20190925130346.42E0820640@mail.kernel.org> <35f8b699-6ff7-9104-5e3d-ef4ee8635832@codeaurora.org> <20191001143825.CD3212054F@mail.kernel.org> <7ac5f6bf-33c5-580e-bd40-e82f3052d460@codeaurora.org> <20191003160130.5A19B222D0@mail.kernel.org> <81a2fa46-a7e6-66a2-9649-009f22813c81@codeaurora.org> <20191004232022.062A1215EA@mail.kernel.org> <d17dad3d-d32c-b71c-0e56-d15cb246f742@codeaurora.org>
-From:   Stephen Boyd <sboyd@kernel.org>
-To:     Michael Turquette <mturquette@baylibre.com>,
-        Taniya Das <tdas@codeaurora.org>, robh+dt@kernel.org
-Cc:     David Brown <david.brown@linaro.org>,
-        Rajendra Nayak <rnayak@codeaurora.org>,
-        linux-arm-msm@vger.kernel.org, linux-soc@vger.kernel.org,
-        linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org,
-        devicetree@vger.kernel.org
-Subject: Re: [PATCH v3 3/3] clk: qcom: Add Global Clock controller (GCC) driver for SC7180
+In-Reply-To: <20191009013345.17192-1-clew@codeaurora.org>
+References: <20191009013345.17192-1-clew@codeaurora.org>
+From:   Stephen Boyd <swboyd@chromium.org>
+To:     Chris Lew <clew@codeaurora.org>, bjorn.andersson@linaro.org,
+        ohad@wizery.com
+Cc:     aneela@codeaurora.org, linux-arm-msm@vger.kernel.org,
+        linux-remoteproc@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Chris Lew <clew@codeaurora.org>
+Subject: Re: [PATCH] rpmsg: glink: Remove channel decouple from rpdev release
 User-Agent: alot/0.8.1
-Date:   Wed, 09 Oct 2019 21:16:28 -0700
-Message-Id: <20191010041629.6E771208C3@mail.kernel.org>
+Date:   Wed, 09 Oct 2019 22:04:02 -0700
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Taniya Das (2019-10-09 02:19:39)
-> Hi Stephen,
+Quoting Chris Lew (2019-10-08 18:33:45)
+> If a channel is being rapidly restarted and the kobj release worker is
+> busy, there is a chance the the rpdev_release function will run after
+> the channel struct itself has been released.
 >=20
-> On 10/5/2019 4:50 AM, Stephen Boyd wrote:
-> > Quoting Taniya Das (2019-10-04 10:39:31)
-> >>
-> >> Could you please confirm if you are referring to update the below?
-> >=20
-> > I wasn't suggesting that explicitly but sure. Something like this would
-> > be necessary to make clk_get() pass back a NULL pointer to the caller.
-> > Does everything keep working with this change?
-> >=20
+> There should not be a need to decouple the channel from rpdev in the
+> rpdev release since that should only happen from the channel close
+> commands.
 >=20
-> Even if I pass back NULL, I don't see it working. Please suggest how to=20
-> take it forward.
->=20
+> Signed-off-by: Chris Lew <clew@codeaurora.org>
 
-Why doesn't it work?
+Fixes tag? The whole thing sounds broken and probably is still racy in
+the face of SMP given that channel->rpdev is tested for "published" or
+not. Can you describe the race that you're closing more?
 
