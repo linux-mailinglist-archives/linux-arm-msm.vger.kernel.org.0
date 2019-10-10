@@ -2,145 +2,89 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 2E179D3112
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 10 Oct 2019 21:00:05 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 8CA5DD31A4
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 10 Oct 2019 21:48:12 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727005AbfJJTAE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 10 Oct 2019 15:00:04 -0400
-Received: from mail-io1-f65.google.com ([209.85.166.65]:34186 "EHLO
-        mail-io1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726695AbfJJTAE (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 10 Oct 2019 15:00:04 -0400
-Received: by mail-io1-f65.google.com with SMTP id q1so16194748ion.1;
-        Thu, 10 Oct 2019 12:00:03 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=cA1nu7WjrWAqmer6330wc0ijhhk83SGo4tS7biMmkzM=;
-        b=ZgAEAuKGNSm1/2mqvjdNeg2BeAXi21dVyn9q62E+Iu/ozmBo3wcCaT/7BKIoBAZOTj
-         dDAHRUs/OzQ4mTOWyMfo+0XcOuQL0I26UncPEfNPzUC804jb3T4Ly123g8ax48QIngr6
-         ER3d5u50DZRrZBkNfjBnSDd9Ru7og2vz6dQCKOlRmNo8Q6gP2XcFXUmp1fISS1lJQO3C
-         7yVg8gGSq3+aJ1brvf7pGPBu/31vmXwMNyeEIdVATaihqc7Q3kjg9bKwkGJF57w2L3RJ
-         /5EEERwn/sqHHPy8HoLZ9eMxPloJNKEjdVsMYUrO2tZps2E0fU1HCPGcaKdEWGBDtoXi
-         1xRw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=cA1nu7WjrWAqmer6330wc0ijhhk83SGo4tS7biMmkzM=;
-        b=UMk6RqdR6KqStIrYl8SpVKGtXuj+KFH7cr5jJcU8FJ1++tE0iQrRcQXLdjixNU6Bl8
-         UrhQFgXODB6n5TMw0CnLsBNeyoXfbvic6Tmcaz0S1+2pzZcQJixpEhFs+AXP7RqIdtx0
-         Ze4etB7bv6mMwikRukb7lvH8lNTg/kByFxQlkR88t4AaYw9RaGUQvXsFJwXwuj9KbFFt
-         tzrqjsqBxYvXLSZKHJA1YreA2OnJX8hBFpmJJHKRztkAGdoQiv2kXChNZEc/UbyfngF9
-         nJGZ9IaJx2FiIHel2kgG8YelbO4OB0eDDQZtf95/RTNtSUaLmwDqLJIQq7ZMzKoj/SOa
-         jEog==
-X-Gm-Message-State: APjAAAV14vbXTlVxjIYl4nJHDe0SqSnVIzhRaC6FCBYJ0qbbQf5pt9hb
-        fGL9CjuMl9L5lU6NF8+auLBq5H5Zpo7W2dFgg8U1vQ==
-X-Google-Smtp-Source: APXvYqy2jIsV/0okFyYF1KBC8/M37CPZIxf/tq3+cYPkx00MgiScI6/1sGtqXgBQgssHUI2lYs/pujp8uSI9sAIhI4E=
-X-Received: by 2002:a5d:904e:: with SMTP id v14mr11728084ioq.33.1570734003178;
- Thu, 10 Oct 2019 12:00:03 -0700 (PDT)
+        id S1726187AbfJJTsL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 10 Oct 2019 15:48:11 -0400
+Received: from mail.kernel.org ([198.145.29.99]:45818 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726184AbfJJTsL (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 10 Oct 2019 15:48:11 -0400
+Received: from kernel.org (unknown [104.132.0.74])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by mail.kernel.org (Postfix) with ESMTPSA id 47D062067B;
+        Thu, 10 Oct 2019 19:48:10 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=default; t=1570736890;
+        bh=jXIkbRU0oflIoHOMtUU/jK4XJNqOCPlVs8pWEr3VRsI=;
+        h=In-Reply-To:References:From:To:Cc:Subject:Date:From;
+        b=vga664TttFPejM4kjwOinqCsK/1/++6qmPAcZZa1ChrrfmrHfr8ITRlubo4Y5hEnO
+         XYpklj3YM84bgLoIjvDot7SY7qV1bqZruOmWsNIjlLOT4187ZAdTW3yVXirOZd8Pxc
+         qsAySe5ju+EirakXvUXYBmQ8nUmX/CSTTywBuBlU=
+Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
-References: <20191009213454.32891-1-jeffrey.l.hugo@gmail.com>
- <20191010184544.GK85762@art_vandelay> <CAMavQKJ7iMD+4a0eftNre9xMvyoZy_=sAPRAuMctX5bueugk1g@mail.gmail.com>
-In-Reply-To: <CAMavQKJ7iMD+4a0eftNre9xMvyoZy_=sAPRAuMctX5bueugk1g@mail.gmail.com>
-From:   Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
-Date:   Thu, 10 Oct 2019 12:59:52 -0600
-Message-ID: <CAOCk7NqW=85qduSFquCgivHTDxDpJ7xK9zBjgbd1nM8QS7xM=Q@mail.gmail.com>
-Subject: Re: [PATCH] drm/msm/dsi: Implement reset correctly
-To:     Sean Paul <sean@poorly.run>
-Cc:     Rob Clark <robdclark@gmail.com>, Dave Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        dri-devel <dri-devel@lists.freedesktop.org>,
-        freedreno <freedreno@lists.freedesktop.org>,
-        LKML <linux-kernel@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <a8540fe3-9500-4998-ca25-a06269541383@codeaurora.org>
+References: <a7e27415-02d9-bfe9-c0ea-59dc236a7f91@free.fr> <c1762201-a1fa-8ed1-24ff-f30916ee45dd@free.fr> <155389876377.20095.15037552865160559827@swboyd.mtv.corp.google.com> <eba920f5-f5a2-53d5-2227-529b5ea99d32@codeaurora.org> <20191010041551.6D7E0208C3@mail.kernel.org> <a8540fe3-9500-4998-ca25-a06269541383@codeaurora.org>
+From:   Stephen Boyd <sboyd@kernel.org>
+To:     Manu Gautam <mgautam@codeaurora.org>,
+        Marc Gonzalez <marc.w.gonzalez@free.fr>,
+        Michael Turquette <mturquette@baylibre.com>
+Cc:     Jeffrey Hugo <jhugo@codeaurora.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        linux-clk <linux-clk@vger.kernel.org>,
+        MSM <linux-arm-msm@vger.kernel.org>,
+        Evan Green <evgreen@chromium.org>,
+        Douglas Anderson <dianders@chromium.org>,
+        Vinod Koul <vkoul@kernel.org>,
+        Amit Nischal <anischal@codeaurora.org>
+Subject: Re: [PATCH v1] clk: qcom: Skip halt checks on gcc_pcie_0_pipe_clk for 8998
+User-Agent: alot/0.8.1
+Date:   Thu, 10 Oct 2019 12:48:09 -0700
+Message-Id: <20191010194810.47D062067B@mail.kernel.org>
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Oct 10, 2019 at 12:49 PM Sean Paul <sean@poorly.run> wrote:
->
-> On Thu, Oct 10, 2019 at 2:45 PM Sean Paul <sean@poorly.run> wrote:
+Quoting Manu Gautam (2019-10-10 00:33:32)
+> Hi,
+>=20
+> On 10/10/2019 9:45 AM, Stephen Boyd wrote:
+> > Quoting Manu Gautam (2019-10-09 01:31:09)
+> >>
+> [snip]
+> >> I have followed this up with QMP PHY hardware designers and they have
+> >> confirmed that QMP PHY must have pipe clock enabled at the beginning
+> >> of initialization sequence i.e. before bringing it out of reset and st=
+arting it.
+> > Awesome, thanks for following up.
 > >
-> > On Wed, Oct 09, 2019 at 02:34:54PM -0700, Jeffrey Hugo wrote:
-> > > On msm8998, vblank timeouts are observed because the DSI controller is not
-> > > reset properly, which ends up stalling the MDP.  This is because the reset
-> > > logic is not correct per the hardware documentation.
-> > >
-> > > The documentation states that after asserting reset, software should wait
-> > > some time (no indication of how long), or poll the status register until it
-> > > returns 0 before deasserting reset.
-> > >
-> > > wmb() is insufficient for this purpose since it just ensures ordering, not
-> > > timing between writes.  Since asserting and deasserting reset occurs on the
-> > > same register, ordering is already guaranteed by the architecture, making
-> > > the wmb extraneous.
-> > >
-> > > Since we would define a timeout for polling the status register to avoid a
-> > > possible infinite loop, lets just use a static delay of 20 ms, since 16.666
-> > > ms is the time available to process one frame at 60 fps.
-> > >
-> > > Fixes: a689554ba6ed (drm/msm: Initial add DSI connector support)
-> > > Signed-off-by: Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
-> > > ---
-> > >
-> > > Rob et al, is it possible for this to go into a 5.4-rc?
->
-> Sorry, I missed this on the first go-around, I'm Ok with this getting
-> into 5.4. Rob, if you're Ok with this, I can send it through -misc
-> unless you're planning an msm-fixes PR.
->
-> > >
-> > >  drivers/gpu/drm/msm/dsi/dsi_host.c | 4 ++--
-> > >  1 file changed, 2 insertions(+), 2 deletions(-)
-> > >
-> > > diff --git a/drivers/gpu/drm/msm/dsi/dsi_host.c b/drivers/gpu/drm/msm/dsi/dsi_host.c
-> > > index 663ff9f4fac9..68ded9b4735d 100644
-> > > --- a/drivers/gpu/drm/msm/dsi/dsi_host.c
-> > > +++ b/drivers/gpu/drm/msm/dsi/dsi_host.c
-> > > @@ -986,7 +986,7 @@ static void dsi_sw_reset(struct msm_dsi_host *msm_host)
-> > >       wmb(); /* clocks need to be enabled before reset */
-> > >
-> > >       dsi_write(msm_host, REG_DSI_RESET, 1);
-> > > -     wmb(); /* make sure reset happen */
-> > > +     msleep(20); /* make sure reset happen */
-> >
-> > Could you please pull this out into a #define used for both in case we decide to
-> > tweak it? I don't want these 2 values to drift.
-> >
+> >> Otherwise there is possibility of incorrect locking of pipe_interface/
+> >> retime buffers in PHY.
+> >> Hence, for both USB and PCIe we have to continue to use HALT_SKIP flag.
+> > Does anything go wrong if we just leave these clks enabled forever out
+> > of boot? I'm inclined to rip the clks out and just slam the branch
+> > enable bit on all the time in gcc driver probe and return NULL to the
+> > callers of clk_get() for these clks. I don't see how this would be a
+> > problem because when the upstream phy is disabled this clk is disabled
+> > and so we aren't wasting power. It should also save us time and memory
+> > because now we don't have to call into the clk framework to turn it on
+> > and sequence that just right in the phy driver.
+>=20
+> That might work, however on some platforms gcc_pipe_clk parent is changed=
+ to
+> XO and back to phy_pipe_clk across low power mode.
+> It requires PHY driver to use clk_set_parent().
+>=20
 
-Oh, yeah.  That's a really good point.  Will fix.
+Hm ok. Where is the call to clk_set_parent()? I don't see this in the
+kernel.
 
->
-> oh yeah, and with that fixed,
->
-> Reviewed-by: Sean Paul <sean@poorly.run>
+ $ git grep clk_set_parent -- drivers/usb/phy drivers/phy | wc -l
+ 0
 
-Thanks.
+What platforms do this? Are they upstream?
 
->
-> > Thanks,
-> > Sean
-> >
-> > >       dsi_write(msm_host, REG_DSI_RESET, 0);
-> > >  }
-> > >
-> > > @@ -1396,7 +1396,7 @@ static void dsi_sw_reset_restore(struct msm_dsi_host *msm_host)
-> > >
-> > >       /* dsi controller can only be reset while clocks are running */
-> > >       dsi_write(msm_host, REG_DSI_RESET, 1);
-> > > -     wmb();  /* make sure reset happen */
-> > > +     msleep(20);     /* make sure reset happen */
-> > >       dsi_write(msm_host, REG_DSI_RESET, 0);
-> > >       wmb();  /* controller out of reset */
-> > >       dsi_write(msm_host, REG_DSI_CTRL, data0);
-> > > --
-> > > 2.17.1
-> > >
-> >
-> > --
-> > Sean Paul, Software Engineer, Google / Chromium OS
