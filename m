@@ -2,136 +2,107 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id E42A1D1F24
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 10 Oct 2019 05:58:01 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E2E79D1F29
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 10 Oct 2019 06:00:14 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732252AbfJJD6B (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 9 Oct 2019 23:58:01 -0400
-Received: from mail-pl1-f194.google.com ([209.85.214.194]:45567 "EHLO
-        mail-pl1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726722AbfJJD6A (ORCPT
+        id S1725601AbfJJEAO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 10 Oct 2019 00:00:14 -0400
+Received: from mail-pg1-f194.google.com ([209.85.215.194]:44496 "EHLO
+        mail-pg1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725267AbfJJEAN (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 9 Oct 2019 23:58:00 -0400
-Received: by mail-pl1-f194.google.com with SMTP id u12so2083314pls.12
-        for <linux-arm-msm@vger.kernel.org>; Wed, 09 Oct 2019 20:58:00 -0700 (PDT)
+        Thu, 10 Oct 2019 00:00:13 -0400
+Received: by mail-pg1-f194.google.com with SMTP id u12so2757275pgb.11
+        for <linux-arm-msm@vger.kernel.org>; Wed, 09 Oct 2019 21:00:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to:user-agent;
-        bh=yCBdvs8Jwa4VDHxDVMtxSZywytfhhhvE/gNvUzK59Sg=;
-        b=FEpH5vFgHGLCreqL5r4bs7SmKkP36vBz0MrW9FclpZUgbtvvEPkVvUGYqhdViiKokZ
-         RxyexodfIs6bIGkx40fmCLJNeERf44jsytAqg9qHRLoQSWrYX2F64dSZjgA+swnvd0xc
-         mPdkvg1f8fS3b5A5MIdv3/e0vqnoF1FxU1gTydMLEqG1XqikpqNEHASO4p2GC4KR/JYR
-         2xICkptpoXWyvyoJdgSvpAjSpokTT66S0BbtK09iNYTw9N6lVpz2JX1TskOC9w/9eqP/
-         0KqAg/Ve/rUAkQAbDhIsVIwddPGRQTvNVoqKEAfmLemzzv2exwoh2UVJNgMWAJHiJye8
-         SlEA==
+        bh=A9so9NzeHO42VwWr5hvpwtUD9ohInwQ0WN2EfuSCaYQ=;
+        b=s4W0J/XFJ7RamPtActqgeS4CLDn8XfPdVYh0M1LVeYXO9BPvLAFSv83QwINQYNhoPR
+         gtMN5d1eJFZuU2/E7j42QEeL5oOUuOlRmv5mJ8xO0gKZRlqiwCxJSbmwlISC7IORvVCw
+         qQ3upCAthSxLtiGZfhyYeaT8i3hT9qXa/QfYVkKrITAPKXZyDREy0BdKKsrsMY4LuDaW
+         DWrdEHCKhZo9xVDDQKWxsMDtwJbmO8/QkrpnnseUYlMZgA5za6ghnVVEYSK+qWw4mabD
+         ZYUEZ58tRZxuvChDkxXbsLCqvKUy+ABN39s9bQncQh2OIGcapstEcSKwW/jZ3fCK6J5H
+         FanA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=yCBdvs8Jwa4VDHxDVMtxSZywytfhhhvE/gNvUzK59Sg=;
-        b=lc4APANV2E5wqd64ZlV+POw2v0f5jBpFdYokR2R5mr14otnLDn9Qr4MjkciB6rj4eL
-         fJCIk2KsnlTRELzcM6cWZOhEn6n4I84Znlbk8Q8ODZvNa0u//doAJyWn1HXoBwFcHc6D
-         dd/wV8va0HBFbaG4QpDGmtLUxdAxbQwwB1ccryBX9i4e32Z63HslutpAAnIhNcFc/sao
-         PsdCwY+kHmqRb3kBE8lZKU9QuROVUcwLUu75jsRotVlR0V6syNzdi2xDETcbWR4oZ/Co
-         +ljQ+AI2H5w+W5AIq75gzHqEXHxnk93cqPnBgE1Y16SmQ1lQ4n2odmWb9ymgwXaFeMIx
-         gbFA==
-X-Gm-Message-State: APjAAAVmvd4lS000rnbYpi0tK5h7fMZo85kXudoIpmzrPty47fhKKCf9
-        vaKzfiROBaQSlBkbBaHlDGRBtsuLVU0=
-X-Google-Smtp-Source: APXvYqwrjD+eNGeAY4orJiDSqtPDPRYaXVK8xhcPyGwnRFCFwxeZwpNJDxmSq5bBL9A+5eqDU0f9kQ==
-X-Received: by 2002:a17:902:7202:: with SMTP id ba2mr7050650plb.267.1570679879840;
-        Wed, 09 Oct 2019 20:57:59 -0700 (PDT)
+        bh=A9so9NzeHO42VwWr5hvpwtUD9ohInwQ0WN2EfuSCaYQ=;
+        b=e/EJebDl858HCjZDejI1VeOO1Ze0LvmEyKgZ+iuEyzlHFInNoa7E/HDCf9k4zX0xHJ
+         mzx/9HOnbYSNsfz0aA7HZiR8DOYQIf+v6BEFuRVXHmXy230elegvs6lv58GeTQbJGoM3
+         wK/B3r8jX4+kEXt5toTJafpqid6eay09pjuBTNPOQhpuIq6iRIssx8uDxtBAhZdqHzGu
+         xaMiV9I+RUSvCSX89L6KjJRt+QID3q0BPtx+1X4zeawfqPMtI0rMbw9t4TzPAnYTljPl
+         q6XfoYmPGoP10F+a8usirnoaf/MKJHhnZOjRNgG5/SBRIkkQF8CH13r3oX5nxdO+weKz
+         Pidg==
+X-Gm-Message-State: APjAAAUdXKeUsszyfJtffE9W/fS7cvvS+Aw1NVdpbAUVDnAgNUT3fxbo
+        OeQiLoYDyv3FdcO+0KKP6ulS3g==
+X-Google-Smtp-Source: APXvYqyMCqNfgvu9rSzgpLBith2VQ2EjFXAb8ru9qakTkbGzpJFfAzqmKezZYqlKdqVa6ckEkHpirA==
+X-Received: by 2002:a17:90a:718a:: with SMTP id i10mr8374336pjk.54.1570680011597;
+        Wed, 09 Oct 2019 21:00:11 -0700 (PDT)
 Received: from tuxbook-pro (104-188-17-28.lightspeed.sndgca.sbcglobal.net. [104.188.17.28])
-        by smtp.gmail.com with ESMTPSA id v1sm5423513pjd.22.2019.10.09.20.57.58
+        by smtp.gmail.com with ESMTPSA id o185sm4296079pfg.136.2019.10.09.21.00.10
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 09 Oct 2019 20:57:59 -0700 (PDT)
-Date:   Wed, 9 Oct 2019 20:57:56 -0700
+        Wed, 09 Oct 2019 21:00:10 -0700 (PDT)
+Date:   Wed, 9 Oct 2019 21:00:08 -0700
 From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Evan Green <evgreen@chromium.org>
-Cc:     Stephen Boyd <swboyd@chromium.org>, Andy Gross <agross@kernel.org>,
-        LKML <linux-kernel@vger.kernel.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Venkata Narendra Kumar Gutta <vnkgutta@codeaurora.org>
-Subject: Re: [PATCH v2 0/2] Avoid regmap debugfs collisions in qcom llcc
- driver
-Message-ID: <20191010035756.GO6390@tuxbook-pro>
-References: <20191008234505.222991-1-swboyd@chromium.org>
- <20191008235504.GN63675@minitux>
- <5d9d3ed4.1c69fb81.5a936.2b18@mx.google.com>
- <CAE=gft6SmWH3-Td-mZZPn-3=EzwexEdYTR00z5NCP-X1sspihA@mail.gmail.com>
- <20191009174622.GN6390@tuxbook-pro>
- <CAE=gft53-N+kWZKQO6YRAT0NBX_zrGYkqTUWOGrK2mT5Krf+3w@mail.gmail.com>
+To:     zhengbin <zhengbin13@huawei.com>
+Cc:     robdclark@gmail.com, sean@poorly.run, airlied@linux.ie,
+        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org
+Subject: Re: [PATCH] drm/msm/mdp5: Remove set but not used variable 'hw_cfg'
+ in modeset_init
+Message-ID: <20191010040008.GP6390@tuxbook-pro>
+References: <1570630403-92371-1-git-send-email-zhengbin13@huawei.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <CAE=gft53-N+kWZKQO6YRAT0NBX_zrGYkqTUWOGrK2mT5Krf+3w@mail.gmail.com>
+In-Reply-To: <1570630403-92371-1-git-send-email-zhengbin13@huawei.com>
 User-Agent: Mutt/1.12.1 (2019-06-15)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed 09 Oct 10:59 PDT 2019, Evan Green wrote:
+On Wed 09 Oct 07:13 PDT 2019, zhengbin wrote:
 
-> On Wed, Oct 9, 2019 at 10:46 AM Bjorn Andersson
-> <bjorn.andersson@linaro.org> wrote:
-> >
-> > On Wed 09 Oct 09:01 PDT 2019, Evan Green wrote:
-> >
-> > > On Tue, Oct 8, 2019 at 6:58 PM Stephen Boyd <swboyd@chromium.org> wrote:
-> > > >
-> > > > Quoting Bjorn Andersson (2019-10-08 16:55:04)
-> > > > > On Tue 08 Oct 16:45 PDT 2019, Stephen Boyd wrote:
-> > > > > >     @@ drivers/soc/qcom/llcc-slice.c
-> > > > > >
-> > > > > >       static struct llcc_drv_data *drv_data = (void *) -EPROBE_DEFER;
-> > > > > >
-> > > > > >     --static const struct regmap_config llcc_regmap_config = {
-> > > > > >     +-static struct regmap_config llcc_regmap_config = {
-> > > > > >      -        .reg_bits = 32,
-> > > > > >      -        .reg_stride = 4,
-> > > > > >      -        .val_bits = 32,
-> > > > > >     @@ drivers/soc/qcom/llcc-slice.c: static struct regmap *qcom_llcc_init_mmio(struct
-> > > > > >       {
-> > > > > >               struct resource *res;
-> > > > > >               void __iomem *base;
-> > > > > >     -+        static struct regmap_config llcc_regmap_config = {
-> > > > > >     ++        struct regmap_config llcc_regmap_config = {
-> > > > >
-> > > > > Now that this isn't static I like the end result better. Not sure about
-> > > > > the need for splitting it in two patches, but if Evan is happy I'll take
-> > > > > it.
-> > > > >
-> > > >
-> > > > Well I split it into bug fix and micro-optimization so backport choices
-> > > > can be made. But yeah, I hope Evan is happy enough to provide a
-> > > > reviewed-by tag!
-> > >
-> > > It's definitely better without the static local since it no longer has
-> > > the cognitive trap, but I still don't really get why we're messing
-> > > with the global v. local aspect of it. We're now inconsistent with
-> > > every other caller of this function, and for what exactly? We've
-> > > traded some data space for a call to memset() and some instructions. I
-> > > would have thought anecdotally that memory was the cheaper thing (ie
-> > > cpu speeds stopped increasing awhile ago, but memory is still getting
-> > > cheaper).
-> > >
-> >
-> > The reason for making the structure local is because it's being modified
-> > per instance, meaning it would still work as long as
-> > qcom_llcc_init_mmio() is never called concurrently for two llcc
-> > instances. But the correctness outweighs the performance degradation of
-> > setting it up on the stack in my view.
-> >
+> Fixes gcc '-Wunused-but-set-variable' warning:
 > 
-> I hadn't considered the concurrency aspect of the change, since I had
-> anchored myself on the static local. I'm convinced. Might be worth
-> mentioning that in the commit message.
+> drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c: In function modeset_init:
+> drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c:458:28: warning: variable hw_cfg set but not used [-Wunused-but-set-variable]
 > 
-> For the series:
-> Reviewed-by: Evan Green <evgreen@chromium.org>
+> It is not used since commit 36d1364abbed ("drm/msm/mdp5:
+> Clean up interface assignment")
+> 
+> Reported-by: Hulk Robot <hulkci@huawei.com>
+> Signed-off-by: zhengbin <zhengbin13@huawei.com>
 
-Thank you, patches applied.
+Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
 
-Regards,
-Bjorn
+> ---
+>  drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c | 3 ---
+>  1 file changed, 3 deletions(-)
+> 
+> diff --git a/drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c b/drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c
+> index f8bd0bf..5476892 100644
+> --- a/drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c
+> +++ b/drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c
+> @@ -461,14 +461,11 @@ static int modeset_init(struct mdp5_kms *mdp5_kms)
+>  {
+>  	struct drm_device *dev = mdp5_kms->dev;
+>  	struct msm_drm_private *priv = dev->dev_private;
+> -	const struct mdp5_cfg_hw *hw_cfg;
+>  	unsigned int num_crtcs;
+>  	int i, ret, pi = 0, ci = 0;
+>  	struct drm_plane *primary[MAX_BASES] = { NULL };
+>  	struct drm_plane *cursor[MAX_BASES] = { NULL };
+> 
+> -	hw_cfg = mdp5_cfg_get_hw_config(mdp5_kms->cfg);
+> -
+>  	/*
+>  	 * Construct encoders and modeset initialize connector devices
+>  	 * for each external display interface.
+> --
+> 2.7.4
+> 
