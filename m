@@ -2,109 +2,250 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id A10CED21CF
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 10 Oct 2019 09:39:16 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 3FB53D245E
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 10 Oct 2019 11:00:04 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1733142AbfJJHiK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 10 Oct 2019 03:38:10 -0400
-Received: from smtp.codeaurora.org ([198.145.29.96]:48392 "EHLO
+        id S2388898AbfJJIoP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 10 Oct 2019 04:44:15 -0400
+Received: from smtp.codeaurora.org ([198.145.29.96]:53986 "EHLO
         smtp.codeaurora.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1733072AbfJJHdk (ORCPT
+        with ESMTP id S2387593AbfJJIoP (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 10 Oct 2019 03:33:40 -0400
+        Thu, 10 Oct 2019 04:44:15 -0400
 Received: by smtp.codeaurora.org (Postfix, from userid 1000)
-        id E3D5E60E5D; Thu, 10 Oct 2019 07:33:38 +0000 (UTC)
+        id 9C4166110F; Thu, 10 Oct 2019 08:44:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
-        s=default; t=1570692818;
-        bh=W6+NL+DXHTLF8zDU7lHpKteWUSg2nqdC5NVtTEOnVA8=;
-        h=Subject:To:Cc:References:From:Date:In-Reply-To:From;
-        b=oZV627CKNJaQXCXinZ0mv5wXbDSxC8xGkTGvgm0JcPtgxAcx4TZnYyj7Sq83o2crT
-         SA22sRETeDufgGeY3gmigO4xvCBbDawUNvET84ChMTxhqwShrqVeqlhbIEg0N9rGEf
-         9yenMD0WhuxueOQT91ogdFTsyniNXeUxn2xiWpEo=
+        s=default; t=1570697053;
+        bh=UDhKVkz9QY0QGvMmnBlutkzlXc66C4GbTuW0RB9n/1w=;
+        h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
+        b=XwHGMQYup3q6hldfwXVxCPlhzQEYoYZxtFYduY0lcR3Xm8iUd2zfvCPi5oGkYZzFP
+         qSGyKjZ9A81q9h08zOMmh7XSDxhSSWU0N91j7WuhCXwBw0ft8NnYFTWr3p4PVB5Unv
+         c5vSe8ETLQ4VxurHXZhKcQp79ayblw8N4oQxTRhk=
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
         pdx-caf-mail.web.codeaurora.org
 X-Spam-Level: 
 X-Spam-Status: No, score=-2.7 required=2.0 tests=ALL_TRUSTED,BAYES_00,
-        DKIM_INVALID,DKIM_SIGNED,SPF_NONE autolearn=no autolearn_force=no
-        version=3.4.0
-Received: from [10.206.24.216] (blr-c-bdr-fw-01_globalnat_allzones-outside.qualcomm.com [103.229.19.19])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: mgautam@smtp.codeaurora.org)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id AE6C760EA5;
-        Thu, 10 Oct 2019 07:33:34 +0000 (UTC)
+        DKIM_INVALID,DKIM_SIGNED autolearn=no autolearn_force=no version=3.4.0
+Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
+        by smtp.codeaurora.org (Postfix) with ESMTP id 94CEC6119F;
+        Thu, 10 Oct 2019 08:44:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
-        s=default; t=1570692818;
-        bh=W6+NL+DXHTLF8zDU7lHpKteWUSg2nqdC5NVtTEOnVA8=;
-        h=Subject:To:Cc:References:From:Date:In-Reply-To:From;
-        b=oZV627CKNJaQXCXinZ0mv5wXbDSxC8xGkTGvgm0JcPtgxAcx4TZnYyj7Sq83o2crT
-         SA22sRETeDufgGeY3gmigO4xvCBbDawUNvET84ChMTxhqwShrqVeqlhbIEg0N9rGEf
-         9yenMD0WhuxueOQT91ogdFTsyniNXeUxn2xiWpEo=
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org AE6C760EA5
-Authentication-Results: pdx-caf-mail.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: pdx-caf-mail.web.codeaurora.org; spf=none smtp.mailfrom=mgautam@codeaurora.org
-Subject: Re: [PATCH v1] clk: qcom: Skip halt checks on gcc_pcie_0_pipe_clk for
- 8998
-To:     Stephen Boyd <sboyd@kernel.org>,
-        Marc Gonzalez <marc.w.gonzalez@free.fr>,
-        Michael Turquette <mturquette@baylibre.com>
-Cc:     Jeffrey Hugo <jhugo@codeaurora.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        linux-clk <linux-clk@vger.kernel.org>,
-        MSM <linux-arm-msm@vger.kernel.org>,
-        Evan Green <evgreen@chromium.org>,
-        Douglas Anderson <dianders@chromium.org>,
-        Vinod Koul <vkoul@kernel.org>,
-        Amit Nischal <anischal@codeaurora.org>
-References: <a7e27415-02d9-bfe9-c0ea-59dc236a7f91@free.fr>
- <c1762201-a1fa-8ed1-24ff-f30916ee45dd@free.fr>
- <155389876377.20095.15037552865160559827@swboyd.mtv.corp.google.com>
- <eba920f5-f5a2-53d5-2227-529b5ea99d32@codeaurora.org>
- <20191010041551.6D7E0208C3@mail.kernel.org>
-From:   Manu Gautam <mgautam@codeaurora.org>
-Message-ID: <a8540fe3-9500-4998-ca25-a06269541383@codeaurora.org>
-Date:   Thu, 10 Oct 2019 13:03:32 +0530
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
- Thunderbird/60.9.0
+        s=default; t=1570697050;
+        bh=UDhKVkz9QY0QGvMmnBlutkzlXc66C4GbTuW0RB9n/1w=;
+        h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
+        b=fLEX2doG+P+oecPqTV5RAMF6Leho228CZoNyzMKT6Yw5BGnUdx8oSJAJFGI6xl5vI
+         ITRFM4COQ/VrA9hrm3M4bH+kSu5PR8JVjVIUBRrzbkRt0iTijaQbdCSuRKdxS8VbbU
+         EsLiXhCHSSy3dz1JN3uHrTrUnPfqJOQ/NP1Q0vLE=
 MIME-Version: 1.0
-In-Reply-To: <20191010041551.6D7E0208C3@mail.kernel.org>
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
 Content-Transfer-Encoding: 7bit
-Content-Language: en-US
+Date:   Thu, 10 Oct 2019 14:14:09 +0530
+From:   akashast@codeaurora.org
+To:     Stephen Boyd <swboyd@chromium.org>
+Cc:     agross@kernel.org, gregkh@linuxfoundation.org,
+        linux-arm-msm@vger.kernel.org, linux-serial@vger.kernel.org,
+        mgautam@codeaurora.org, jslaby@suse.com,
+        bjorn.andersson@linaro.org, linux-arm-msm-owner@vger.kernel.org
+Subject: Re: [PATCH] tty: serial: qcom_geni_serial: Wakeup over UART RX
+In-Reply-To: <5d83c725.1c69fb81.9e57a.5569@mx.google.com>
+References: <1568877366-1758-1-git-send-email-akashast@codeaurora.org>
+ <5d83c725.1c69fb81.9e57a.5569@mx.google.com>
+Message-ID: <f50ca3b2bd4dbd081c3270d93df4ca7a@codeaurora.org>
+X-Sender: akashast@codeaurora.org
+User-Agent: Roundcube Webmail/1.2.5
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi,
+On 2019-09-19 23:51, Stephen Boyd wrote:
+> Quoting Akash Asthana (2019-09-19 00:16:06)
+>> Add system wakeup capability over UART RX line for wakeup capable 
+>> UART.
+>> When system is suspended, RX line act as an interrupt to wakeup system
+>> for any communication requests from peer.
+>> 
+>> Cleanup of IRQ registration, moving it to probe from startup function.
+> 
+> Probably should be a different patch than the one that adds wakeup irq
+> handling.
+> 
 
-On 10/10/2019 9:45 AM, Stephen Boyd wrote:
-> Quoting Manu Gautam (2019-10-09 01:31:09)
->>
-[snip]
->> I have followed this up with QMP PHY hardware designers and they have
->> confirmed that QMP PHY must have pipe clock enabled at the beginning
->> of initialization sequence i.e. before bringing it out of reset and starting it.
-> Awesome, thanks for following up.
->
->> Otherwise there is possibility of incorrect locking of pipe_interface/
->> retime buffers in PHY.
->> Hence, for both USB and PCIe we have to continue to use HALT_SKIP flag.
-> Does anything go wrong if we just leave these clks enabled forever out
-> of boot? I'm inclined to rip the clks out and just slam the branch
-> enable bit on all the time in gcc driver probe and return NULL to the
-> callers of clk_get() for these clks. I don't see how this would be a
-> problem because when the upstream phy is disabled this clk is disabled
-> and so we aren't wasting power. It should also save us time and memory
-> because now we don't have to call into the clk framework to turn it on
-> and sequence that just right in the phy driver.
+Sure, will do it.
 
-That might work, however on some platforms gcc_pipe_clk parent is changed to
-XO and back to phy_pipe_clk across low power mode.
-It requires PHY driver to use clk_set_parent().
+>> 
+>> Signed-off-by: Akash Asthana <akashast@codeaurora.org>
+>> ---
+>>  drivers/tty/serial/qcom_geni_serial.c | 73 
+>> +++++++++++++++++++++++++++++------
+>>  1 file changed, 62 insertions(+), 11 deletions(-)
+>> 
+>> diff --git a/drivers/tty/serial/qcom_geni_serial.c 
+>> b/drivers/tty/serial/qcom_geni_serial.c
+>> index 35e5f9c..43d1da4 100644
+>> --- a/drivers/tty/serial/qcom_geni_serial.c
+>> +++ b/drivers/tty/serial/qcom_geni_serial.c
+>> @@ -19,6 +19,8 @@
+>>  #include <linux/slab.h>
+>>  #include <linux/tty.h>
+>>  #include <linux/tty_flip.h>
+>> +#include <linux/pm_wakeirq.h>
+>> +#include <linux/irq.h>
+> 
+> Can you sort these includes alphabetically? Or at least attempt to 
+> place
+> this somewhere in there alphabetically?
+> 
 
+ok
 
--- 
-The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
-a Linux Foundation Collaborative Project
+>> 
+>>  /* UART specific GENI registers */
+>>  #define SE_UART_LOOPBACK_CFG           0x22c
+>> @@ -98,6 +100,8 @@
+>>  #define CONSOLE_RX_BYTES_PW 4
+>>  #endif
+>> 
+>> +#define WAKEUP_EVENT_MSEC   2000
+> 
+> This is used one place. Just inline it and drop this define.
+> 
+
+ok
+
+>> +
+>>  struct qcom_geni_serial_port {
+>>         struct uart_port uport;
+>>         struct geni_se se;
+>> @@ -115,6 +119,7 @@ struct qcom_geni_serial_port {
+>>         bool brk;
+>> 
+>>         unsigned int tx_remaining;
+>> +       int wakeup_irq;
+>>  };
+>> 
+>>  static const struct uart_ops qcom_geni_console_pops;
+>> @@ -756,6 +761,15 @@ static void qcom_geni_serial_handle_tx(struct 
+>> uart_port *uport, bool done,
+>>                 uart_write_wakeup(uport);
+>>  }
+>> 
+>> +static irqreturn_t qcom_geni_serial_wakeup_isr(int isr, void *dev)
+>> +{
+>> +       struct uart_port *uport = dev;
+>> +
+>> +       pm_wakeup_event(uport->dev, WAKEUP_EVENT_MSEC);
+>> +
+>> +       return IRQ_HANDLED;
+>> +}
+>> +
+>>  static irqreturn_t qcom_geni_serial_isr(int isr, void *dev)
+>>  {
+>>         u32 m_irq_en;
+>> @@ -1290,6 +1297,8 @@ static int qcom_geni_serial_probe(struct 
+>> platform_device *pdev)
+>>         port->rx_fifo_depth = DEF_FIFO_DEPTH_WORDS;
+>>         port->tx_fifo_width = DEF_FIFO_WIDTH_BITS;
+>> 
+>> +       scnprintf(port->name, sizeof(port->name), 
+>> "qcom_geni_serial_%s%d",
+>> +               (uart_console(uport) ? "console" : "uart"), 
+>> uport->line);
+> 
+> This looks like an unrelated change?
+> 
+
+We moved this change to probe from startup as part of IRQ cleanup. We 
+are initializing port->name variable here that is used in 
+devm_request_irq call.
+
+>>         irq = platform_get_irq(pdev, 0);
+>>         if (irq < 0) {
+>>                 dev_err(&pdev->dev, "Failed to get IRQ %d\n", irq);
+>> @@ -1297,6 +1306,39 @@ static int qcom_geni_serial_probe(struct 
+>> platform_device *pdev)
+>>         }
+>>         uport->irq = irq;
+>> 
+>> +       irq_set_status_flags(uport->irq, IRQ_NOAUTOEN);
+>> +       ret = devm_request_irq(uport->dev, uport->irq, 
+>> qcom_geni_serial_isr,
+>> +                               IRQF_TRIGGER_HIGH, port->name, uport);
+>> +       if (ret) {
+>> +               dev_err(uport->dev, "Failed to get IRQ ret %d\n", 
+>> ret);
+>> +               return ret;
+>> +       }
+>> +
+>> +       if (!console) {
+>> +               port->wakeup_irq = platform_get_irq(pdev, 1);
+> 
+> Can you use dev_pm_set_wake_irq() instead?
+> 
+
+okay, we are using this API this will take care of 
+enable_irq_wake/disable_irq_wake during suspend and resume but still, we 
+need to enable/disable wakeup irq in suspend and resume call.
+
+>> +               if (port->wakeup_irq < 0) {
+>> +                       dev_err(&pdev->dev, "Failed to get wakeup IRQ 
+>> %d\n",
+>> +                                                       
+>> port->wakeup_irq);
+>> +               } else {
+>> +                       dev_info(&pdev->dev, "wakeup_irq =%d\n",
+>> +                               port->wakeup_irq);
+> 
+> Please no dev_info() messages like this.
+> 
+
+ok
+
+>> +                       irq_set_status_flags(port->wakeup_irq, 
+>> IRQ_NOAUTOEN);
+>> +                       ret = devm_request_irq(uport->dev, 
+>> port->wakeup_irq,
+>> +                               qcom_geni_serial_wakeup_isr,
+>> +                               IRQF_TRIGGER_FALLING, "uart_wakeup", 
+>> uport);
+>> +                       if (ret) {
+>> +                               dev_err(uport->dev, "Failed to 
+>> register wakeup "
+>> +                                       "IRQ ret %d\n", ret);
+> 
+> Don't split format strings across many lines. The arguments can go to a
+> different line, but the string can be on a single line.
+> 
+
+ok
+
+>> +                               return ret;
+>> +                       }
+>> +
+>> +                       device_init_wakeup(&pdev->dev, true);
+>> +                       ret = enable_irq_wake(port->wakeup_irq);
+>> +                       if (unlikely(ret))
+>> +                               dev_err(uport->dev, "%s:Failed to set 
+>> IRQ "
+>> +                                       "wake:%d\n", __func__, ret);
+>> +               }
+>> +       }
+>>         uport->private_data = drv;
+>>         platform_set_drvdata(pdev, port);
+>>         port->handle_rx = console ? handle_rx_console : 
+>> handle_rx_uart;
+>> @@ -1311,6 +1353,7 @@ static int qcom_geni_serial_remove(struct 
+>> platform_device *pdev)
+>>         struct uart_driver *drv = port->uport.private_data;
+>> 
+>>         uart_remove_one_port(drv, &port->uport);
+>> +
+>>         return 0;
+>>  }
+>> 
+> 
+> This hunk shouldn't be here. Please drop
+
+ok
 
