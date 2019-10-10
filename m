@@ -2,17 +2,17 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 7EEBCD20F6
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 10 Oct 2019 08:48:09 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D3A5FD20FA
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 10 Oct 2019 08:48:12 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726840AbfJJGsI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 10 Oct 2019 02:48:08 -0400
-Received: from szxga07-in.huawei.com ([45.249.212.35]:56672 "EHLO huawei.com"
+        id S1732897AbfJJGsM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 10 Oct 2019 02:48:12 -0400
+Received: from szxga04-in.huawei.com ([45.249.212.190]:3682 "EHLO huawei.com"
         rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-        id S1732759AbfJJGsI (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 10 Oct 2019 02:48:08 -0400
-Received: from DGGEMS412-HUB.china.huawei.com (unknown [172.30.72.58])
-        by Forcepoint Email with ESMTP id 4C858EB0C575B4513E8B;
+        id S1732759AbfJJGsM (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 10 Oct 2019 02:48:12 -0400
+Received: from DGGEMS412-HUB.china.huawei.com (unknown [172.30.72.60])
+        by Forcepoint Email with ESMTP id 7A8F794905A5AC752912;
         Thu, 10 Oct 2019 14:48:07 +0800 (CST)
 Received: from huawei.com (10.90.53.225) by DGGEMS412-HUB.china.huawei.com
  (10.3.19.212) with Microsoft SMTP Server id 14.3.439.0; Thu, 10 Oct 2019
@@ -23,9 +23,9 @@ To:     <robdclark@chromium.org>, <sean@poorly.run>, <airlied@linux.ie>,
         <dri-devel@lists.freedesktop.org>,
         <freedreno@lists.freedesktop.org>
 CC:     <zhengbin13@huawei.com>
-Subject: [PATCH 3/4] drm/msm/dsi: Remove set but not used variable 'lpx'
-Date:   Thu, 10 Oct 2019 14:55:05 +0800
-Message-ID: <1570690506-83287-4-git-send-email-zhengbin13@huawei.com>
+Subject: [PATCH 4/4] drm/msm/dsi: Remove set but not used variable 'lp'
+Date:   Thu, 10 Oct 2019 14:55:06 +0800
+Message-ID: <1570690506-83287-5-git-send-email-zhengbin13@huawei.com>
 X-Mailer: git-send-email 2.7.4
 In-Reply-To: <1570690506-83287-1-git-send-email-zhengbin13@huawei.com>
 References: <1570690506-83287-1-git-send-email-zhengbin13@huawei.com>
@@ -40,61 +40,38 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 Fixes gcc '-Wunused-but-set-variable' warning:
 
-drivers/gpu/drm/msm/dsi/phy/dsi_phy.c: In function msm_dsi_dphy_timing_calc_v2:
-drivers/gpu/drm/msm/dsi/phy/dsi_phy.c:156:17: warning: variable lpx set but not used [-Wunused-but-set-variable]
-drivers/gpu/drm/msm/dsi/phy/dsi_phy.c: In function msm_dsi_dphy_timing_calc_v3:
-drivers/gpu/drm/msm/dsi/phy/dsi_phy.c:273:17: warning: variable lpx set but not used [-Wunused-but-set-variable]
+drivers/gpu/drm/msm/dsi/dsi_host.c: In function dsi_cmd_dma_rx:
+drivers/gpu/drm/msm/dsi/dsi_host.c:1302:7: warning: variable lp set but not used [-Wunused-but-set-variable]
 
-'lpx' in msm_dsi_dphy_timing_calc_v2 is not used since commit a4df68fa232e
-("drm/msm/dsi: Add new method to calculate 14nm PHY timings")
-
-'lpx' in msm_dsi_dphy_timing_calc_v3 is not used since commit f1fa7ff44056
-("drm/msm/dsi: implement auto PHY timing calculator for 10nm PHY")
+It is not used since commit a689554ba6ed ("drm/msm:
+Initial add DSI connector support")
 
 Reported-by: Hulk Robot <hulkci@huawei.com>
 Signed-off-by: zhengbin <zhengbin13@huawei.com>
 ---
- drivers/gpu/drm/msm/dsi/phy/dsi_phy.c | 6 ++----
- 1 file changed, 2 insertions(+), 4 deletions(-)
+ drivers/gpu/drm/msm/dsi/dsi_host.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/drivers/gpu/drm/msm/dsi/phy/dsi_phy.c b/drivers/gpu/drm/msm/dsi/phy/dsi_phy.c
-index 3522863..aa22c3a 100644
---- a/drivers/gpu/drm/msm/dsi/phy/dsi_phy.c
-+++ b/drivers/gpu/drm/msm/dsi/phy/dsi_phy.c
-@@ -145,7 +145,7 @@ int msm_dsi_dphy_timing_calc_v2(struct msm_dsi_dphy_timing *timing,
+diff --git a/drivers/gpu/drm/msm/dsi/dsi_host.c b/drivers/gpu/drm/msm/dsi/dsi_host.c
+index 663ff9f..4851188 100644
+--- a/drivers/gpu/drm/msm/dsi/dsi_host.c
++++ b/drivers/gpu/drm/msm/dsi/dsi_host.c
+@@ -1291,14 +1291,13 @@ static int dsi_cmd_dma_tx(struct msm_dsi_host *msm_host, int len)
+ static int dsi_cmd_dma_rx(struct msm_dsi_host *msm_host,
+ 			u8 *buf, int rx_byte, int pkt_size)
  {
- 	const unsigned long bit_rate = clk_req->bitclk_rate;
- 	const unsigned long esc_rate = clk_req->escclk_rate;
--	s32 ui, ui_x8, lpx;
-+	s32 ui, ui_x8;
- 	s32 tmax, tmin;
- 	s32 pcnt0 = 50;
- 	s32 pcnt1 = 50;
-@@ -175,7 +175,6 @@ int msm_dsi_dphy_timing_calc_v2(struct msm_dsi_dphy_timing *timing,
+-	u32 *lp, *temp, data;
++	u32 *temp, data;
+ 	int i, j = 0, cnt;
+ 	u32 read_cnt;
+ 	u8 reg[16];
+ 	int repeated_bytes = 0;
+ 	int buf_offset = buf - msm_host->rx_buf;
 
- 	ui = mult_frac(NSEC_PER_MSEC, coeff, bit_rate / 1000);
- 	ui_x8 = ui << 3;
--	lpx = mult_frac(NSEC_PER_MSEC, coeff, esc_rate / 1000);
-
- 	temp = S_DIV_ROUND_UP(38 * coeff - val_ckln * ui, ui_x8);
- 	tmin = max_t(s32, temp, 0);
-@@ -262,7 +261,7 @@ int msm_dsi_dphy_timing_calc_v3(struct msm_dsi_dphy_timing *timing,
- {
- 	const unsigned long bit_rate = clk_req->bitclk_rate;
- 	const unsigned long esc_rate = clk_req->escclk_rate;
--	s32 ui, ui_x8, lpx;
-+	s32 ui, ui_x8;
- 	s32 tmax, tmin;
- 	s32 pcnt0 = 50;
- 	s32 pcnt1 = 50;
-@@ -284,7 +283,6 @@ int msm_dsi_dphy_timing_calc_v3(struct msm_dsi_dphy_timing *timing,
-
- 	ui = mult_frac(NSEC_PER_MSEC, coeff, bit_rate / 1000);
- 	ui_x8 = ui << 3;
--	lpx = mult_frac(NSEC_PER_MSEC, coeff, esc_rate / 1000);
-
- 	temp = S_DIV_ROUND_UP(38 * coeff, ui_x8);
- 	tmin = max_t(s32, temp, 0);
+-	lp = (u32 *)buf;
+ 	temp = (u32 *)reg;
+ 	cnt = (rx_byte + 3) >> 2;
+ 	if (cnt > 4)
 --
 2.7.4
 
