@@ -2,133 +2,131 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 77D65D2D9A
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 10 Oct 2019 17:22:46 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C0D19D3019
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 10 Oct 2019 20:18:05 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726583AbfJJPWn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 10 Oct 2019 11:22:43 -0400
-Received: from mail-ot1-f68.google.com ([209.85.210.68]:42571 "EHLO
-        mail-ot1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725901AbfJJPWn (ORCPT
+        id S1726944AbfJJSSE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 10 Oct 2019 14:18:04 -0400
+Received: from mail-yw1-f68.google.com ([209.85.161.68]:36541 "EHLO
+        mail-yw1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726832AbfJJSSD (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 10 Oct 2019 11:22:43 -0400
-Received: by mail-ot1-f68.google.com with SMTP id c10so5199701otd.9
-        for <linux-arm-msm@vger.kernel.org>; Thu, 10 Oct 2019 08:22:41 -0700 (PDT)
+        Thu, 10 Oct 2019 14:18:03 -0400
+Received: by mail-yw1-f68.google.com with SMTP id x64so2521163ywg.3
+        for <linux-arm-msm@vger.kernel.org>; Thu, 10 Oct 2019 11:18:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ffwll.ch; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=PenGaXGBrENWr4HRhl2ZMGFHyym9ywCGyc7wJWTP8Es=;
-        b=Ihehkphoadi3HQFuRPEVdSQBReqPm7/Gh+3uPF13qJdc3RayvK0KsK2yAOWJXFJVtO
-         5F3UVbMUgp0wahT+XDbIUClseAVeciWIPjDOxH8ybNvyGlNXnNQxDT8b9di8kLxPcUtt
-         Fgk4ORb/+HSQpRwQyRPIsQ+U+a3Bzr/vzonqE=
+        d=poorly.run; s=google;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=I3NYY2QPFYsrCHTKk5YmsfIPZArib3V6JUbjM+pfbtk=;
+        b=Pm7yW+Mlg8HU+zV5SUUYNHDjOvAKZ1fA3D1kZr0I20jfIJ5rXh7hg2VRVeR2WCgKhK
+         G9hQeneR5KwXOwrRSb2fEDoAc/etxWRvyhPanSJk4ZQCq81q3w9Z9IzZkroaMsQUSuIA
+         z1PARH9axbw/cdU78pIIsPdYGYega3Pk5wL9PvDKdmsAaLDUlsw5K2wqs/6nmmRUHHe/
+         K5Rhz+qsTQ0aaSqpIOLcDb0eBmZVleFf1fM2lTUMLSvg9L0gKIUYG5wJHoJEHW2KuQ/0
+         c/Y1o2qcJUbkfglW/N/gh8a0tNdgCPY7soKbleJeRN/57kTiaPn/S7Chk6/SPV1Unn0X
+         /+tg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=PenGaXGBrENWr4HRhl2ZMGFHyym9ywCGyc7wJWTP8Es=;
-        b=OWZ+nO1dSCXv4SwnhPj0ZQXWW4CQPnuLu15T7didyevZxYKSuqEupOzN9trUoCs1W2
-         Vq8Ibvrfs7ud9i2yV4pBjZTiR+N0I6vDO8jWCFgWy1qzgeNuKMSfiBTZZTBFiQsYvcv3
-         haSTbGwY1dn1I+iReLieKaujCbvEy0cVwACwJorEHZWYM/Jy0UWF5LRIL06nnieV1jK8
-         acuJmZ/CZvHHQaOJgGbTS+gMoP7xpSuSPycgpL1xO97ygNpydvKw2NlwL04VKM9kBh1i
-         Mz9fh4jzZhqKNu2NHKHMPZJT7mnPtMBUZJrU6MsGcoKN8VUxHuRlDUPw0G+GC1znuZA0
-         We6w==
-X-Gm-Message-State: APjAAAWXY+xk8PzDtRzHsGLeAc6QG6Ar0RQQ3cm0Sum3Og9jJxEl+En1
-        JCq3ERhyDCB34wHlNCEBMAU2KdrEqNe1tOyBtuqzZA==
-X-Google-Smtp-Source: APXvYqxwi0Gygs5kPGzDnCCyiTgHjRRdKCaJiHfsGaRjDAslpSjYSTlDyMH2eIjfnkx+3+OX6wcHgbuj9WokzULHAWI=
-X-Received: by 2002:a9d:6b0a:: with SMTP id g10mr8284705otp.303.1570720960988;
- Thu, 10 Oct 2019 08:22:40 -0700 (PDT)
-MIME-Version: 1.0
-References: <20191010151351.126735-1-sean@poorly.run>
-In-Reply-To: <20191010151351.126735-1-sean@poorly.run>
-From:   Daniel Vetter <daniel@ffwll.ch>
-Date:   Thu, 10 Oct 2019 17:22:29 +0200
-Message-ID: <CAKMK7uF2HsM5WrC5j_WNXWDjkXTyK5tP2DuoRt78FeaL5791QA@mail.gmail.com>
-Subject: Re: [PATCH] Revert "drm/msm: dpu: Add modeset lock checks where applicable"
-To:     Sean Paul <sean@poorly.run>
-Cc:     dri-devel <dri-devel@lists.freedesktop.org>,
-        Sean Paul <seanpaul@chromium.org>,
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=I3NYY2QPFYsrCHTKk5YmsfIPZArib3V6JUbjM+pfbtk=;
+        b=i3J0RD/uvlP9lziwcsBgoPymk4DaSN3S7Sit+Aq8ZWv3IbYzDgbhHiD+7czMUoE+GR
+         Ltd2VYE2gx1efvnFWeesXFwvU6x6ieNqnstvv8/mHBjW6QFRtI+nlClFUpP5EKZDpQxc
+         CcK3JyWJbxr0fn+EaI97gtYSbcwyEudak0QDAWH4UJZvnGs31mUhZSvsHjUjdcWaQn/o
+         C2wX+pR/E+fd/9oyJpVYiqX13d+hoHfugsUXPk5iV6ECDrm8jCDu/NdcdYUd+Mjm/GZf
+         e1tNrux3snIsYYTR/n4QpnvTpDRWafJlIq8twml1dYxrv37Zq1naAURvHBEW2SmwueWA
+         bgPw==
+X-Gm-Message-State: APjAAAV8CSdXb8YlcL1jfKYCSWkwbzLDMgi5Loq4w+mlmSYwEttauuaa
+        71Df/30OHlpcDXJPkbMd5yc9Og==
+X-Google-Smtp-Source: APXvYqwWkZ/j2WUxUMUi7rtAQr9RIGT9e9QFfEaeBR3++xYI0pkcWkRXA/IBRy8ly+roicnd6RA+vg==
+X-Received: by 2002:a81:35cc:: with SMTP id c195mr8670868ywa.412.1570731482895;
+        Thu, 10 Oct 2019 11:18:02 -0700 (PDT)
+Received: from rosewood.cam.corp.google.com ([2620:0:1013:11:89c6:2139:5435:371d])
+        by smtp.gmail.com with ESMTPSA id p199sm1528659ywe.1.2019.10.10.11.18.01
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 10 Oct 2019 11:18:02 -0700 (PDT)
+From:   Sean Paul <sean@poorly.run>
+To:     dri-devel@lists.freedesktop.org
+Cc:     Sean Paul <seanpaul@chromium.org>,
         Jeykumar Sankaran <jsanka@codeaurora.org>,
         Rob Clark <robdclark@chromium.org>,
-        Rob Clark <robdclark@gmail.com>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        freedreno <freedreno@lists.freedesktop.org>
-Content-Type: text/plain; charset="UTF-8"
+        Daniel Vetter <daniel@ffwll.ch>,
+        Daniel Vetter <daniel.vetter@ffwll.ch>,
+        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org
+Subject: [PATCH v2] drm/msm: Sanitize the modeset_is_locked checks in dpu
+Date:   Thu, 10 Oct 2019 14:17:44 -0400
+Message-Id: <20191010181801.186069-1-sean@poorly.run>
+X-Mailer: git-send-email 2.23.0.700.g56cf767bdb-goog
+In-Reply-To: <CAKMK7uF2HsM5WrC5j_WNXWDjkXTyK5tP2DuoRt78FeaL5791QA@mail.gmail.com>
+References: <CAKMK7uF2HsM5WrC5j_WNXWDjkXTyK5tP2DuoRt78FeaL5791QA@mail.gmail.com>
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Oct 10, 2019 at 5:13 PM Sean Paul <sean@poorly.run> wrote:
->
-> From: Sean Paul <seanpaul@chromium.org>
->
-> This reverts commit 1dfdb0e107dbe6ebff3f6bbbe4aad0b5aa87bba4.
->
-> As Daniel mentions in his email [1], non-blocking commits don't hold the
-> modeset locks, so we can safely access state as long as these functions
-> are in the commit path. I'm not entirely sure if these have always been
-> isolated to the commit path, but they seem to be now.
->
-> [1]- https://lists.freedesktop.org/archives/dri-devel/2019-October/239441.html
->
-> Fixes: 1dfdb0e107db ("drm/msm: dpu: Add modeset lock checks where applicable")
-> Cc: Jeykumar Sankaran <jsanka@codeaurora.org>
-> Cc: Rob Clark <robdclark@chromium.org>
-> Suggested-by: Daniel Vetter <daniel@ffwll.ch>
-> Signed-off-by: Sean Paul <seanpaul@chromium.org>
-> ---
->  drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c | 2 --
->  drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c  | 1 -
->  2 files changed, 3 deletions(-)
->
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
-> index db6c9ccf3be26..c645dd201368b 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
-> @@ -282,8 +282,6 @@ enum dpu_intf_mode dpu_crtc_get_intf_mode(struct drm_crtc *crtc)
->                 return INTF_MODE_NONE;
->         }
->
-> -       WARN_ON(!drm_modeset_is_locked(&crtc->mutex));
+From: Sean Paul <seanpaul@chromium.org>
 
-This one is worse ... it's used in two places:
-- debugfs, where you actually want to make sure you're holding this lock
-- atomic_check, where this is broken since you're supposed to look at
-the free-standing states only, except if you really know what you're
-doing. Given that there's no comment here, I suspect that's not the
-case. Note that for atomic_check you're guaranteed to hold the modeset
-lock.
+As Daniel mentions in his email [1], non-blocking commits don't hold the
+modeset locks, so we can safely access state as long as these functions
+are in the commit path. So remove the WARN_ON in dpu_kms_encoder_enable.
 
-I'd put a FIXME here, but leave the WARN_ON until this is fixed properly.
-> -
->         /* TODO: Returns the first INTF_MODE, could there be multiple values? */
->         drm_for_each_encoder_mask(encoder, crtc->dev, crtc->state->encoder_mask)
->                 return dpu_encoder_get_intf_mode(encoder);
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
-> index e393a423d7d7a..0e68e20d19c87 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
-> @@ -305,7 +305,6 @@ void dpu_kms_encoder_enable(struct drm_encoder *encoder)
->         if (funcs && funcs->commit)
->                 funcs->commit(encoder);
->
-> -       WARN_ON(!drm_modeset_is_locked(&dev->mode_config.connection_mutex));
+In dpu_crtc_get_intf_mode, things are a bit more complicated. So keep
+the WARN_ON, but add a comment explaining the situation and hope someone
+comes along and fixes the issue.
 
-Reviewed-by: Daniel Vetter <daniel.vetter@ffwll.ch>
+[1]- https://lists.freedesktop.org/archives/dri-devel/2019-October/239441.html
 
-but only for this hunk here.
--Daniel
+Link to v1: https://patchwork.freedesktop.org/patch/msgid/20191010151351.126735-1-sean@poorly.run
 
->         drm_for_each_crtc(crtc, dev) {
->                 if (!(crtc->state->encoder_mask & drm_encoder_mask(encoder)))
->                         continue;
-> --
-> Sean Paul, Software Engineer, Google / Chromium OS
->
+Changes in v2:
+- Restored the WARN_ON in get_intf_mode and added a clarifying comment (Daniel)
 
+Fixes: 1dfdb0e107db ("drm/msm: dpu: Add modeset lock checks where applicable")
+Cc: Jeykumar Sankaran <jsanka@codeaurora.org>
+Cc: Rob Clark <robdclark@chromium.org>
+Suggested-by: Daniel Vetter <daniel@ffwll.ch>
+Partially-Reviewed-by: Daniel Vetter <daniel.vetter@ffwll.ch>
+Signed-off-by: Sean Paul <seanpaul@chromium.org>
+---
+ drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c | 9 +++++++++
+ drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c  | 1 -
+ 2 files changed, 9 insertions(+), 1 deletion(-)
 
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
+index 0b9dc042d2e22..f197dce545761 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
++++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
+@@ -271,6 +271,15 @@ enum dpu_intf_mode dpu_crtc_get_intf_mode(struct drm_crtc *crtc)
+ 		return INTF_MODE_NONE;
+ 	}
+ 
++	/*
++	 * TODO: This function is called from dpu debugfs and as part of atomic
++	 * check. When called from debugfs, the crtc->mutex must be held to
++	 * read crtc->state. However reading crtc->state from atomic check isn't
++	 * allowed (unless you have a good reason, a big comment, and a deep
++	 * understanding of how the atomic/modeset locks work (<- and this is
++	 * probably not possible)). So we'll keep the WARN_ON here for now, but
++	 * really we need to figure out a better way to track our operating mode
++	 */
+ 	WARN_ON(!drm_modeset_is_locked(&crtc->mutex));
+ 
+ 	/* TODO: Returns the first INTF_MODE, could there be multiple values? */
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
+index b1645ad83a1e1..6c92f0fbeac98 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
++++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
+@@ -316,7 +316,6 @@ void dpu_kms_encoder_enable(struct drm_encoder *encoder)
+ 	if (funcs && funcs->commit)
+ 		funcs->commit(encoder);
+ 
+-	WARN_ON(!drm_modeset_is_locked(&dev->mode_config.connection_mutex));
+ 	drm_for_each_crtc(crtc, dev) {
+ 		if (!(crtc->state->encoder_mask & drm_encoder_mask(encoder)))
+ 			continue;
 -- 
-Daniel Vetter
-Software Engineer, Intel Corporation
-+41 (0) 79 365 57 48 - http://blog.ffwll.ch
+Sean Paul, Software Engineer, Google / Chromium OS
+
