@@ -2,207 +2,137 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 4FCDDD2833
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 10 Oct 2019 13:40:33 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 62477D2A5C
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 10 Oct 2019 15:07:22 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732944AbfJJLk2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 10 Oct 2019 07:40:28 -0400
-Received: from mail-lj1-f193.google.com ([209.85.208.193]:36111 "EHLO
-        mail-lj1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1732792AbfJJLk2 (ORCPT
+        id S2388015AbfJJNHP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 10 Oct 2019 09:07:15 -0400
+Received: from mail-io1-f66.google.com ([209.85.166.66]:45447 "EHLO
+        mail-io1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2387917AbfJJNHP (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 10 Oct 2019 07:40:28 -0400
-Received: by mail-lj1-f193.google.com with SMTP id v24so5860456ljj.3
-        for <linux-arm-msm@vger.kernel.org>; Thu, 10 Oct 2019 04:40:26 -0700 (PDT)
+        Thu, 10 Oct 2019 09:07:15 -0400
+Received: by mail-io1-f66.google.com with SMTP id c25so13378980iot.12
+        for <linux-arm-msm@vger.kernel.org>; Thu, 10 Oct 2019 06:07:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=seqtCL6qQP1lHpVV6JxVbCofE6J8aEcyzCDtbKaRiuo=;
-        b=ttocmxpO4BTiaii5K7cn0npU6eVhqZ9uMEDMEG7dnyW79epK0rCXS/lpw4SkqbYIYg
-         W59Vn7rAze9cJVsyqKmksnN9Di4v2QsCN03gmrmsqBwJ/hkNQiPz0b1pmIgAI601KtUS
-         aSppXlnpANOGQrmU9eDiPdCo6OV3bH+oi46O/xtlYtnNSj1loyozvQ3GaZcs7LOYfHih
-         30F0tcFKMkGwAo2oAQogPCkIcT9AmDSJ9rlR/88iiStn7tuBkFUijM/paQ7/7P3O8FJp
-         cMKAdQl/TnVG7+eXCp+OBz/Zuzksl0YdnzPxvlspzR/jpoJqQbicu/XpqqncUNiFreNm
-         lOHg==
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=zlF+lm3JRhGGGTiYfCuwp6G/d6yyrmwzyu8GIS+igK4=;
+        b=H1dTyMBFIxWKLe11ms1NCdcfBtCBpqXVkW+dP5rVr0WIdme7EQjM/pMm7lcwrIxxM8
+         OSmpVngDeVcQJH6WBnFGd5CBlGk1jJn2wITfkXttoIYjJGOc9j6F8GEHm3hqKHUFR7b/
+         E463+H76GPy5mHM7FEZ7YO0YV1dEHrrpuEFQTn+9VnXu+uMyin7MPc3glOXQCQpc9IZJ
+         h+wVKXChEJU3K1WkMUkwl77tP3C65QvxLJAw4MCzbDlN5OhboWRLuKZZ/E6WGVleIRqd
+         Sq69NsqFHpZ7UT1ak4bUVHSqs8JR/AiW3d7uap6GqMi0sq9dGkAHTxvbkTrRyKpv4snl
+         7ktA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=seqtCL6qQP1lHpVV6JxVbCofE6J8aEcyzCDtbKaRiuo=;
-        b=eq+IT0AFfwx6UBZkF788vxUdatkSk2kxbaZl0I2qw01/Ib650qegeijC+cw/7zKrVL
-         KZhlX30k2AuagOJOzH5KaIdqeoLs6rRN08agdlcIATFyK78PPN1fT9fEmBIndkAqStvW
-         QCNYl8qHGW9cBAt2P/omKtwJC0pVKqFt19ydK4o5FrYnHbA70FOu1gh6N7W7GeMcG/mp
-         VaUcY9mu+k7Ul2InSlhPeEvHby5BClBOi0Hhw3+exLzR+2OCRS20Ehylp4zr0FiNQlsM
-         KK1VUf5LpNBOsGptH0+78P0BUl3UTtOBiGHLf82Uqi5b9uXouLDhLm7+9aFmQIoAWhuh
-         EsvA==
-X-Gm-Message-State: APjAAAVPwwoB/Vy1rEJe8cEszpNH3iTenmkpZipPBt/O0Z1A0Ptt3cKF
-        /l4k7EFn7ZNkiTHewyy9DVfzYg==
-X-Google-Smtp-Source: APXvYqzAtQRFaFdOYUhWXaaCWhBIREvEFZI1olu/oFVmp742iMrFKC80mDD/KfhtuHeGyAmVXW6Erg==
-X-Received: by 2002:a2e:9205:: with SMTP id k5mr6239604ljg.202.1570707626147;
-        Thu, 10 Oct 2019 04:40:26 -0700 (PDT)
-Received: from localhost.localdomain (h-158-174-22-210.NA.cust.bahnhof.se. [158.174.22.210])
-        by smtp.gmail.com with ESMTPSA id p3sm1168937ljn.78.2019.10.10.04.40.24
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 10 Oct 2019 04:40:25 -0700 (PDT)
-From:   Ulf Hansson <ulf.hansson@linaro.org>
-To:     "Rafael J . Wysocki" <rjw@rjwysocki.net>,
-        Daniel Lezcano <daniel.lezcano@linaro.org>,
-        Sudeep Holla <sudeep.holla@arm.com>,
-        Lorenzo Pieralisi <Lorenzo.Pieralisi@arm.com>,
-        Mark Rutland <mark.rutland@arm.com>,
-        Lina Iyer <ilina@codeaurora.org>, linux-pm@vger.kernel.org
-Cc:     Rob Herring <robh+dt@kernel.org>,
-        Vincent Guittot <vincent.guittot@linaro.org>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Kevin Hilman <khilman@kernel.org>,
-        Ulf Hansson <ulf.hansson@linaro.org>,
-        linux-arm-kernel@lists.infradead.org,
-        linux-arm-msm@vger.kernel.org, Andy Gross <andy.gross@linaro.org>,
-        Lina Iyer <lina.iyer@linaro.org>
-Subject: [PATCH 13/13] arm64: dts: Convert to the hierarchical CPU topology layout for MSM8916
-Date:   Thu, 10 Oct 2019 13:39:37 +0200
-Message-Id: <20191010113937.15962-14-ulf.hansson@linaro.org>
-X-Mailer: git-send-email 2.17.1
-In-Reply-To: <20191010113937.15962-1-ulf.hansson@linaro.org>
-References: <20191010113937.15962-1-ulf.hansson@linaro.org>
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=zlF+lm3JRhGGGTiYfCuwp6G/d6yyrmwzyu8GIS+igK4=;
+        b=NlH+75cPbwAGsdhhZw4mY6mAo5JrY5rQKnVihxRl1MkZQ4DmO88sndSM+pBaEvtEjx
+         L9zslPX4slXBKoIefD4dXp7tzwIO9ezOsNeEalfH+vnNVgQDe96HbtMoJsPMtbqtUIQL
+         CSKxbWRnjr45ahn+jLb6HD6HAzYPSaVZV1KPgr2iyr1nXWfACZaB+7f0jyUVH2WqCDMX
+         o8km6TPO9ZwFW8oI9U+8Arg2VB+z3z+nf8QOjI9JNLjq4j2Pph8YOFaqEccuhJIpv/T/
+         lUqHdUh8k4D1bAHEi9llNdD5KVc9rq6XcdRNL/xXAFeit8i1V8FgmQGWFT4Wz6879D1J
+         orWg==
+X-Gm-Message-State: APjAAAXrB5KbEM4RkqXJ4PRDLfE3nQbVpAcPRoH6MczWUqN902JeWmG8
+        icXoOPng8gODtGifKkWXFunongkxqrw=
+X-Google-Smtp-Source: APXvYqyAjQRQelOCSKOee17IGyMMbI3XhdVPttdK72+RBX5FZw+MN5wAbpJ99qPYf6OKqWinlI7l9w==
+X-Received: by 2002:a92:7e91:: with SMTP id q17mr6655ill.22.1570712833738;
+        Thu, 10 Oct 2019 06:07:13 -0700 (PDT)
+Received: from [172.22.22.26] (c-71-195-29-92.hsd1.mn.comcast.net. [71.195.29.92])
+        by smtp.googlemail.com with ESMTPSA id i26sm3491521iol.84.2019.10.10.06.07.11
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Thu, 10 Oct 2019 06:07:12 -0700 (PDT)
+Subject: Re: [PATCH] arm64: defconfig: Enable Qualcomm remoteproc dependencies
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Catalin Marinas <catalin.marinas@arm.com>,
+        Will Deacon <will@kernel.org>, Shawn Guo <shawnguo@kernel.org>,
+        Olof Johansson <olof@lixom.net>,
+        Maxime Ripard <mripard@kernel.org>,
+        Arnd Bergmann <arnd@arndb.de>,
+        Jagan Teki <jagan@amarulasolutions.com>,
+        Anson Huang <Anson.Huang@nxp.com>,
+        Leonard Crestez <leonard.crestez@nxp.com>,
+        Dinh Nguyen <dinguyen@kernel.org>,
+        Marcin Juszkiewicz <marcin.juszkiewicz@linaro.org>
+Cc:     linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org
+References: <20191009001442.15719-1-bjorn.andersson@linaro.org>
+From:   Alex Elder <elder@linaro.org>
+Message-ID: <cc0482aa-10fe-9a49-da2d-6f30b130da3d@linaro.org>
+Date:   Thu, 10 Oct 2019 08:07:11 -0500
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+ Thunderbird/60.9.0
+MIME-Version: 1.0
+In-Reply-To: <20191009001442.15719-1-bjorn.andersson@linaro.org>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-To enable the OS to better support PSCI OS initiated CPU suspend mode,
-let's convert from the flattened layout to the hierarchical layout.
+On 10/8/19 7:14 PM, Bjorn Andersson wrote:
+> Enable the the power domains, reset controllers and remote block device
+> memory access drivers necessary to boot the Audio, Compute and Modem
+> DSPs on Qualcomm SDM845.
+> 
+> None of the power domains are system critical, but needs to be builtin
+> as the driver core prohibits probe deferal past late initcall.
 
-In the hierarchical layout, let's create a power domain provider per CPU
-and describe the idle states for each CPU inside the power domain provider
-node. To group the CPUs into a cluster, let's add another power domain
-provider and make it act as the master domain. Note that, the CPU's idle
-states remains compatible with "arm,idle-state", while the cluster's idle
-state becomes compatible with "domain-idle-state".
+I asked Bjorn privately about the need for these to be built in,
+and he clarified:
 
-Cc: Andy Gross <andy.gross@linaro.org>
-Co-developed-by: Lina Iyer <lina.iyer@linaro.org>
-Signed-off-by: Lina Iyer <lina.iyer@linaro.org>
-Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
----
- arch/arm64/boot/dts/qcom/msm8916.dtsi | 57 +++++++++++++++++++++++++--
- 1 file changed, 53 insertions(+), 4 deletions(-)
+> However, Rob Herring introduced a nice feature last year that means that
+> if you request a power-domain from a driver that has not yet probed at
+> late_initcall that request will fail instead of returning EPROBE_DEFER.
+> So compiling these as modules will, based on kernel module load order,
+> cause intermittent failures to probe the consumer drivers.
 
-diff --git a/arch/arm64/boot/dts/qcom/msm8916.dtsi b/arch/arm64/boot/dts/qcom/msm8916.dtsi
-index 5ea9fb8f2f87..1ece0c763592 100644
---- a/arch/arm64/boot/dts/qcom/msm8916.dtsi
-+++ b/arch/arm64/boot/dts/qcom/msm8916.dtsi
-@@ -102,10 +102,11 @@
- 			reg = <0x0>;
- 			next-level-cache = <&L2_0>;
- 			enable-method = "psci";
--			cpu-idle-states = <&CPU_SLEEP_0>;
- 			clocks = <&apcs>;
- 			operating-points-v2 = <&cpu_opp_table>;
- 			#cooling-cells = <2>;
-+			power-domains = <&CPU_PD0>;
-+			power-domain-names = "psci";
- 		};
- 
- 		CPU1: cpu@1 {
-@@ -114,10 +115,11 @@
- 			reg = <0x1>;
- 			next-level-cache = <&L2_0>;
- 			enable-method = "psci";
--			cpu-idle-states = <&CPU_SLEEP_0>;
- 			clocks = <&apcs>;
- 			operating-points-v2 = <&cpu_opp_table>;
- 			#cooling-cells = <2>;
-+			power-domains = <&CPU_PD1>;
-+			power-domain-names = "psci";
- 		};
- 
- 		CPU2: cpu@2 {
-@@ -126,10 +128,11 @@
- 			reg = <0x2>;
- 			next-level-cache = <&L2_0>;
- 			enable-method = "psci";
--			cpu-idle-states = <&CPU_SLEEP_0>;
- 			clocks = <&apcs>;
- 			operating-points-v2 = <&cpu_opp_table>;
- 			#cooling-cells = <2>;
-+			power-domains = <&CPU_PD2>;
-+			power-domain-names = "psci";
- 		};
- 
- 		CPU3: cpu@3 {
-@@ -138,10 +141,11 @@
- 			reg = <0x3>;
- 			next-level-cache = <&L2_0>;
- 			enable-method = "psci";
--			cpu-idle-states = <&CPU_SLEEP_0>;
- 			clocks = <&apcs>;
- 			operating-points-v2 = <&cpu_opp_table>;
- 			#cooling-cells = <2>;
-+			power-domains = <&CPU_PD3>;
-+			power-domain-names = "psci";
- 		};
- 
- 		L2_0: l2-cache {
-@@ -161,12 +165,57 @@
- 				min-residency-us = <2000>;
- 				local-timer-stop;
- 			};
-+
-+			CLUSTER_RET: cluster-retention {
-+				compatible = "domain-idle-state";
-+				arm,psci-suspend-param = <0x41000012>;
-+				entry-latency-us = <500>;
-+				exit-latency-us = <500>;
-+				min-residency-us = <2000>;
-+			};
-+
-+			CLUSTER_PWRDN: cluster-gdhs {
-+				compatible = "domain-idle-state";
-+				arm,psci-suspend-param = <0x41000032>;
-+				entry-latency-us = <2000>;
-+				exit-latency-us = <2000>;
-+				min-residency-us = <6000>;
-+			};
- 		};
- 	};
- 
- 	psci {
- 		compatible = "arm,psci-1.0";
- 		method = "smc";
-+
-+		CPU_PD0: cpu-pd0 {
-+			#power-domain-cells = <0>;
-+			power-domains = <&CLUSTER_PD>;
-+			domain-idle-states = <&CPU_SLEEP_0>;
-+		};
-+
-+		CPU_PD1: cpu-pd1 {
-+			#power-domain-cells = <0>;
-+			power-domains = <&CLUSTER_PD>;
-+			domain-idle-states = <&CPU_SLEEP_0>;
-+		};
-+
-+		CPU_PD2: cpu-pd2 {
-+			#power-domain-cells = <0>;
-+			power-domains = <&CLUSTER_PD>;
-+			domain-idle-states = <&CPU_SLEEP_0>;
-+		};
-+
-+		CPU_PD3: cpu-pd3 {
-+			#power-domain-cells = <0>;
-+			power-domains = <&CLUSTER_PD>;
-+			domain-idle-states = <&CPU_SLEEP_0>;
-+		};
-+
-+		CLUSTER_PD: cluster-pd {
-+			#power-domain-cells = <0>;
-+			domain-idle-states = <&CLUSTER_RET>, <&CLUSTER_PWRDN>;
-+		};
- 	};
- 
- 	pmu {
--- 
-2.17.1
+So that's what "the driver core prohibits probe deferral past late
+initcall" means, and better explains the issue that requires some of
+these to be built-in rather than be built as kernel modules.
+
+I was able to test with and without this applied, and I find that without
+the patch the modem won't boot, and it boots successfully when used.
+
+Tested-by: Alex Elder <elder@linaro.org>
+
+> Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+> ---
+>  arch/arm64/configs/defconfig | 5 +++++
+>  1 file changed, 5 insertions(+)
+> 
+> diff --git a/arch/arm64/configs/defconfig b/arch/arm64/configs/defconfig
+> index c9a867ac32d4..42f042ba1039 100644
+> --- a/arch/arm64/configs/defconfig
+> +++ b/arch/arm64/configs/defconfig
+> @@ -732,10 +732,13 @@ CONFIG_RPMSG_QCOM_GLINK_SMEM=m
+>  CONFIG_RPMSG_QCOM_SMD=y
+>  CONFIG_RASPBERRYPI_POWER=y
+>  CONFIG_IMX_SCU_SOC=y
+> +CONFIG_QCOM_AOSS_QMP=y
+>  CONFIG_QCOM_COMMAND_DB=y
+>  CONFIG_QCOM_GENI_SE=y
+>  CONFIG_QCOM_GLINK_SSR=m
+> +CONFIG_QCOM_RMTFS_MEM=m
+>  CONFIG_QCOM_RPMH=y
+> +CONFIG_QCOM_RPMHPD=y
+>  CONFIG_QCOM_SMEM=y
+>  CONFIG_QCOM_SMD_RPM=y
+>  CONFIG_QCOM_SMP2P=y
+> @@ -780,6 +783,8 @@ CONFIG_PWM_ROCKCHIP=y
+>  CONFIG_PWM_SAMSUNG=y
+>  CONFIG_PWM_SUN4I=m
+>  CONFIG_PWM_TEGRA=m
+> +CONFIG_RESET_QCOM_AOSS=y
+> +CONFIG_RESET_QCOM_PDC=m
+>  CONFIG_RESET_TI_SCI=y
+>  CONFIG_PHY_XGENE=y
+>  CONFIG_PHY_SUN4I_USB=y
+> 
 
