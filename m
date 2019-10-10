@@ -2,114 +2,136 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 0B7BDD1B92
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 10 Oct 2019 00:21:10 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E42A1D1F24
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 10 Oct 2019 05:58:01 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731763AbfJIWVJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 9 Oct 2019 18:21:09 -0400
-Received: from mail-oi1-f195.google.com ([209.85.167.195]:46456 "EHLO
-        mail-oi1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1731158AbfJIWVI (ORCPT
+        id S1732252AbfJJD6B (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 9 Oct 2019 23:58:01 -0400
+Received: from mail-pl1-f194.google.com ([209.85.214.194]:45567 "EHLO
+        mail-pl1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726722AbfJJD6A (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 9 Oct 2019 18:21:08 -0400
-Received: by mail-oi1-f195.google.com with SMTP id k25so3143537oiw.13
-        for <linux-arm-msm@vger.kernel.org>; Wed, 09 Oct 2019 15:21:08 -0700 (PDT)
+        Wed, 9 Oct 2019 23:58:00 -0400
+Received: by mail-pl1-f194.google.com with SMTP id u12so2083314pls.12
+        for <linux-arm-msm@vger.kernel.org>; Wed, 09 Oct 2019 20:58:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ffwll.ch; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=dE2a4Z4lXPuGGmpfVMZQR36XbB7tSgoxGtELVA7jbxI=;
-        b=Re1yOGYe6pPM8HE/LlFTxrSDK2/zgXd0OIeCnpEpEZdLx22d/fC4wfAmETSAcCsaxG
-         Q2CznxPJLfKj0UJ8rnu5QjZgmIuvTFiVMy4bctrd3vdkYeWq20CcZiZGKSO/5Qp4Cmmn
-         v0amAw8IpzLiXymgE7aGFIB74nQkOil/Cqpck=
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=yCBdvs8Jwa4VDHxDVMtxSZywytfhhhvE/gNvUzK59Sg=;
+        b=FEpH5vFgHGLCreqL5r4bs7SmKkP36vBz0MrW9FclpZUgbtvvEPkVvUGYqhdViiKokZ
+         RxyexodfIs6bIGkx40fmCLJNeERf44jsytAqg9qHRLoQSWrYX2F64dSZjgA+swnvd0xc
+         mPdkvg1f8fS3b5A5MIdv3/e0vqnoF1FxU1gTydMLEqG1XqikpqNEHASO4p2GC4KR/JYR
+         2xICkptpoXWyvyoJdgSvpAjSpokTT66S0BbtK09iNYTw9N6lVpz2JX1TskOC9w/9eqP/
+         0KqAg/Ve/rUAkQAbDhIsVIwddPGRQTvNVoqKEAfmLemzzv2exwoh2UVJNgMWAJHiJye8
+         SlEA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=dE2a4Z4lXPuGGmpfVMZQR36XbB7tSgoxGtELVA7jbxI=;
-        b=Kgqr7Q9XyfBY6bqlnroqCBRZnsvu2ZZmgQ8BjXQbox4lxJWjflUXUE0LBz8k+4xARm
-         OxnJ2xm1zsnDaIzs/4ozZq0yaTlugRnbSqXZ2IuLSPB1wbQezAsdjtsophaD3sAOs/Xd
-         dKjL30edCNOIDoDmZV/kZfINAotJPyMDMyQ0aaPiOjEPhgTy5cOG3/FRjJn8MSgvc7KS
-         3+PNg1pkPkmWVHS8gmTSiDa5CKUVxMwIEaeJb48WUWvzBsm8nd74iS/pdeha+2LAaaNw
-         YF8K9bAHv5fHMz7c2piQS8rxF+jsxuBorKBvjgKSvI4TBJrIQbCDkd0ED7TgMjmxAt64
-         GmSg==
-X-Gm-Message-State: APjAAAURkxyHdjamYMeMd/34taVqAJCxfF8uR2P4vtiSv897QA946PoG
-        7ucUP8Oij0g8r9WDikBhTraMrElxgUIGDpccnJCt1MrZ
-X-Google-Smtp-Source: APXvYqxZ8tmU1al9WeQDUSkxISPtGig+OBzBdxC+nV+lPvUajS7ItruLNHqHHF/s6KsQ3cjo8125dbwbpNeUimnrJQ4=
-X-Received: by 2002:aca:e046:: with SMTP id x67mr4268077oig.101.1570659667984;
- Wed, 09 Oct 2019 15:21:07 -0700 (PDT)
-MIME-Version: 1.0
-References: <20181116184238.170034-1-sean@poorly.run> <20181116184238.170034-17-sean@poorly.run>
-In-Reply-To: <20181116184238.170034-17-sean@poorly.run>
-From:   Daniel Vetter <daniel@ffwll.ch>
-Date:   Thu, 10 Oct 2019 00:20:56 +0200
-Message-ID: <CAKMK7uEx2fL69jPGXVpQhhcj8Q8zEzb3ogCv-uVyGrX3QYFeWQ@mail.gmail.com>
-Subject: Re: [PATCH v2 16/24] drm/msm: dpu: Add modeset lock checks where applicable
-To:     Sean Paul <sean@poorly.run>
-Cc:     dri-devel <dri-devel@lists.freedesktop.org>,
-        freedreno <freedreno@lists.freedesktop.org>,
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=yCBdvs8Jwa4VDHxDVMtxSZywytfhhhvE/gNvUzK59Sg=;
+        b=lc4APANV2E5wqd64ZlV+POw2v0f5jBpFdYokR2R5mr14otnLDn9Qr4MjkciB6rj4eL
+         fJCIk2KsnlTRELzcM6cWZOhEn6n4I84Znlbk8Q8ODZvNa0u//doAJyWn1HXoBwFcHc6D
+         dd/wV8va0HBFbaG4QpDGmtLUxdAxbQwwB1ccryBX9i4e32Z63HslutpAAnIhNcFc/sao
+         PsdCwY+kHmqRb3kBE8lZKU9QuROVUcwLUu75jsRotVlR0V6syNzdi2xDETcbWR4oZ/Co
+         +ljQ+AI2H5w+W5AIq75gzHqEXHxnk93cqPnBgE1Y16SmQ1lQ4n2odmWb9ymgwXaFeMIx
+         gbFA==
+X-Gm-Message-State: APjAAAVmvd4lS000rnbYpi0tK5h7fMZo85kXudoIpmzrPty47fhKKCf9
+        vaKzfiROBaQSlBkbBaHlDGRBtsuLVU0=
+X-Google-Smtp-Source: APXvYqwrjD+eNGeAY4orJiDSqtPDPRYaXVK8xhcPyGwnRFCFwxeZwpNJDxmSq5bBL9A+5eqDU0f9kQ==
+X-Received: by 2002:a17:902:7202:: with SMTP id ba2mr7050650plb.267.1570679879840;
+        Wed, 09 Oct 2019 20:57:59 -0700 (PDT)
+Received: from tuxbook-pro (104-188-17-28.lightspeed.sndgca.sbcglobal.net. [104.188.17.28])
+        by smtp.gmail.com with ESMTPSA id v1sm5423513pjd.22.2019.10.09.20.57.58
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 09 Oct 2019 20:57:59 -0700 (PDT)
+Date:   Wed, 9 Oct 2019 20:57:56 -0700
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     Evan Green <evgreen@chromium.org>
+Cc:     Stephen Boyd <swboyd@chromium.org>, Andy Gross <agross@kernel.org>,
+        LKML <linux-kernel@vger.kernel.org>,
         linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Sean Paul <seanpaul@chromium.org>
-Content-Type: text/plain; charset="UTF-8"
+        Venkata Narendra Kumar Gutta <vnkgutta@codeaurora.org>
+Subject: Re: [PATCH v2 0/2] Avoid regmap debugfs collisions in qcom llcc
+ driver
+Message-ID: <20191010035756.GO6390@tuxbook-pro>
+References: <20191008234505.222991-1-swboyd@chromium.org>
+ <20191008235504.GN63675@minitux>
+ <5d9d3ed4.1c69fb81.5a936.2b18@mx.google.com>
+ <CAE=gft6SmWH3-Td-mZZPn-3=EzwexEdYTR00z5NCP-X1sspihA@mail.gmail.com>
+ <20191009174622.GN6390@tuxbook-pro>
+ <CAE=gft53-N+kWZKQO6YRAT0NBX_zrGYkqTUWOGrK2mT5Krf+3w@mail.gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CAE=gft53-N+kWZKQO6YRAT0NBX_zrGYkqTUWOGrK2mT5Krf+3w@mail.gmail.com>
+User-Agent: Mutt/1.12.1 (2019-06-15)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, Nov 16, 2018 at 7:44 PM Sean Paul <sean@poorly.run> wrote:
->
-> From: Sean Paul <seanpaul@chromium.org>
->
-> Add modeset lock checks to functions that could be called outside the
-> core atomic stack.
->
-> Changes in v2:
-> - None
->
-> Signed-off-by: Sean Paul <seanpaul@chromium.org>
-> ---
->  drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c | 2 ++
->  drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c  | 1 +
->  2 files changed, 3 insertions(+)
->
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
-> index a008a87a8113..cd0a0bea4335 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
-> @@ -284,6 +284,8 @@ enum dpu_intf_mode dpu_crtc_get_intf_mode(struct drm_crtc *crtc)
->                 return INTF_MODE_NONE;
->         }
->
-> +       WARN_ON(!drm_modeset_is_locked(&crtc->mutex));
-> +
->         /* TODO: Returns the first INTF_MODE, could there be multiple values? */
->         drm_for_each_encoder_mask(encoder, crtc->dev, crtc->state->encoder_mask)
->                 return dpu_encoder_get_intf_mode(encoder);
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
-> index 64134d619748..5104fc01147e 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
-> @@ -358,6 +358,7 @@ void dpu_kms_encoder_enable(struct drm_encoder *encoder)
->         if (funcs && funcs->commit)
->                 funcs->commit(encoder);
->
-> +       WARN_ON(!drm_modeset_is_locked(&dev->mode_config.connection_mutex));
->         drm_for_each_crtc(crtc, dev) {
->                 if (!(crtc->state->encoder_mask & drm_encoder_mask(encoder)))
->                         continue;
+On Wed 09 Oct 10:59 PDT 2019, Evan Green wrote:
 
-I'm fairly sure this is called in the atomic_commit path, and in there
-you might not actually hold these locks (if you do a nonblocking
-modeset).
+> On Wed, Oct 9, 2019 at 10:46 AM Bjorn Andersson
+> <bjorn.andersson@linaro.org> wrote:
+> >
+> > On Wed 09 Oct 09:01 PDT 2019, Evan Green wrote:
+> >
+> > > On Tue, Oct 8, 2019 at 6:58 PM Stephen Boyd <swboyd@chromium.org> wrote:
+> > > >
+> > > > Quoting Bjorn Andersson (2019-10-08 16:55:04)
+> > > > > On Tue 08 Oct 16:45 PDT 2019, Stephen Boyd wrote:
+> > > > > >     @@ drivers/soc/qcom/llcc-slice.c
+> > > > > >
+> > > > > >       static struct llcc_drv_data *drv_data = (void *) -EPROBE_DEFER;
+> > > > > >
+> > > > > >     --static const struct regmap_config llcc_regmap_config = {
+> > > > > >     +-static struct regmap_config llcc_regmap_config = {
+> > > > > >      -        .reg_bits = 32,
+> > > > > >      -        .reg_stride = 4,
+> > > > > >      -        .val_bits = 32,
+> > > > > >     @@ drivers/soc/qcom/llcc-slice.c: static struct regmap *qcom_llcc_init_mmio(struct
+> > > > > >       {
+> > > > > >               struct resource *res;
+> > > > > >               void __iomem *base;
+> > > > > >     -+        static struct regmap_config llcc_regmap_config = {
+> > > > > >     ++        struct regmap_config llcc_regmap_config = {
+> > > > >
+> > > > > Now that this isn't static I like the end result better. Not sure about
+> > > > > the need for splitting it in two patches, but if Evan is happy I'll take
+> > > > > it.
+> > > > >
+> > > >
+> > > > Well I split it into bug fix and micro-optimization so backport choices
+> > > > can be made. But yeah, I hope Evan is happy enough to provide a
+> > > > reviewed-by tag!
+> > >
+> > > It's definitely better without the static local since it no longer has
+> > > the cognitive trap, but I still don't really get why we're messing
+> > > with the global v. local aspect of it. We're now inconsistent with
+> > > every other caller of this function, and for what exactly? We've
+> > > traded some data space for a call to memset() and some instructions. I
+> > > would have thought anecdotally that memory was the cheaper thing (ie
+> > > cpu speeds stopped increasing awhile ago, but memory is still getting
+> > > cheaper).
+> > >
+> >
+> > The reason for making the structure local is because it's being modified
+> > per instance, meaning it would still work as long as
+> > qcom_llcc_init_mmio() is never called concurrently for two llcc
+> > instances. But the correctness outweighs the performance degradation of
+> > setting it up on the stack in my view.
+> >
+> 
+> I hadn't considered the concurrency aspect of the change, since I had
+> anchored myself on the static local. I'm convinced. Might be worth
+> mentioning that in the commit message.
+> 
+> For the series:
+> Reviewed-by: Evan Green <evgreen@chromium.org>
 
-The locking rules for ->state are pretty fun: Either hold the lock, or
-be in atomic commit. In the later case atomic helpers' commit ordering
-guarantees that you can safely access ->state (but read-only only)
-without hodling any locks. You might want to revert.
+Thank you, patches applied.
 
-Don't ask why I stumbled over this.
--Daniel
--- 
-Daniel Vetter
-Software Engineer, Intel Corporation
-+41 (0) 79 365 57 48 - http://blog.ffwll.ch
+Regards,
+Bjorn
