@@ -2,89 +2,141 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 8CA5DD31A4
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 10 Oct 2019 21:48:12 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 39BB8D332F
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 10 Oct 2019 23:11:02 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726187AbfJJTsL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 10 Oct 2019 15:48:11 -0400
-Received: from mail.kernel.org ([198.145.29.99]:45818 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726184AbfJJTsL (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 10 Oct 2019 15:48:11 -0400
-Received: from kernel.org (unknown [104.132.0.74])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 47D062067B;
-        Thu, 10 Oct 2019 19:48:10 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1570736890;
-        bh=jXIkbRU0oflIoHOMtUU/jK4XJNqOCPlVs8pWEr3VRsI=;
-        h=In-Reply-To:References:From:To:Cc:Subject:Date:From;
-        b=vga664TttFPejM4kjwOinqCsK/1/++6qmPAcZZa1ChrrfmrHfr8ITRlubo4Y5hEnO
-         XYpklj3YM84bgLoIjvDot7SY7qV1bqZruOmWsNIjlLOT4187ZAdTW3yVXirOZd8Pxc
-         qsAySe5ju+EirakXvUXYBmQ8nUmX/CSTTywBuBlU=
-Content-Type: text/plain; charset="utf-8"
-MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <a8540fe3-9500-4998-ca25-a06269541383@codeaurora.org>
-References: <a7e27415-02d9-bfe9-c0ea-59dc236a7f91@free.fr> <c1762201-a1fa-8ed1-24ff-f30916ee45dd@free.fr> <155389876377.20095.15037552865160559827@swboyd.mtv.corp.google.com> <eba920f5-f5a2-53d5-2227-529b5ea99d32@codeaurora.org> <20191010041551.6D7E0208C3@mail.kernel.org> <a8540fe3-9500-4998-ca25-a06269541383@codeaurora.org>
-From:   Stephen Boyd <sboyd@kernel.org>
-To:     Manu Gautam <mgautam@codeaurora.org>,
-        Marc Gonzalez <marc.w.gonzalez@free.fr>,
-        Michael Turquette <mturquette@baylibre.com>
-Cc:     Jeffrey Hugo <jhugo@codeaurora.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        linux-clk <linux-clk@vger.kernel.org>,
-        MSM <linux-arm-msm@vger.kernel.org>,
-        Evan Green <evgreen@chromium.org>,
-        Douglas Anderson <dianders@chromium.org>,
-        Vinod Koul <vkoul@kernel.org>,
-        Amit Nischal <anischal@codeaurora.org>
-Subject: Re: [PATCH v1] clk: qcom: Skip halt checks on gcc_pcie_0_pipe_clk for 8998
-User-Agent: alot/0.8.1
-Date:   Thu, 10 Oct 2019 12:48:09 -0700
-Message-Id: <20191010194810.47D062067B@mail.kernel.org>
+        id S1726632AbfJJVHD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 10 Oct 2019 17:07:03 -0400
+Received: from mail-pf1-f194.google.com ([209.85.210.194]:43120 "EHLO
+        mail-pf1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725867AbfJJVHD (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 10 Oct 2019 17:07:03 -0400
+Received: by mail-pf1-f194.google.com with SMTP id a2so4673638pfo.10;
+        Thu, 10 Oct 2019 14:07:02 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id;
+        bh=qC40adZXU/tV5QzYgkBZx24z9et5UNUWBE0VYT7PPKM=;
+        b=I9lwiD04t1jKp5V8AgRfsBgUtqOqxbP2i2vMH/gvkQdGrPNFU8oba65acyXERV2WxY
+         v22XAjePeSNoSnuHvvSA3n0sZueH/ek4qoDsV1mF5gUidtlh0f9FoQfVDAR/jhkOcGhB
+         rnykdBOTlPwXGv1tJqfm+muTrjPsvtCHqZ6NIxprQmcBoo3Q1X3BOiJAKexs+98gGLXI
+         gy3kJH4Zzmx8dl5/AWZaZXQWidW/uMELQ+Df4m0RopDxA1X73CcmKuvV8DuDVa+IPveD
+         5JW71HSCGxBV95p5y9yuhCfuGDL78Qh7kwGviirnVfRQLpsrBLlk1ua2yXpUwA+5aM6b
+         ks0g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=qC40adZXU/tV5QzYgkBZx24z9et5UNUWBE0VYT7PPKM=;
+        b=bw55MY9Jn/eIZI2SJwlgas2/5GdWLFFbDwN4o5fzJxvsmRlxyk/wsAz3PqaN9Fu0Tp
+         8J3DCWvhdOLFm2MDogWGzqpv662ROZXN8juCcLz+Knin2ZejoETzo5GE7LItFNuh+X3j
+         jMVHKJKp9Ta+wrRjH9SFis+HNCUfOkfsHbz1mS/eoBT/aVek6pOOXVSvrNYe4tMqlG9+
+         mZaC5IbAngmwK5Qhwys+eP/wNxurcn817N/y1qcEdpjxt5t7FwUPvPJIUPCmCYMYZIxD
+         reX/AlFicatSmth9u8WG9KRMAgL0YRLsqssdQRvKC52ephAPsDx0HYxCw7+/UYZvpbeL
+         cazA==
+X-Gm-Message-State: APjAAAUQmSB9eBqoM7cVEOmeC1ilvh0Yf49BLn1rIaErBb3mCGuMLjm7
+        lARtDftMXIyqvzS8i9KirQs=
+X-Google-Smtp-Source: APXvYqxHvLlCmq0oZPemzFhc9sfBvjJdNcYUNGHxi4jnZ2DaNVAPm7JpzEYskIcPh0DGt6hKAW5iCg==
+X-Received: by 2002:aa7:8ece:: with SMTP id b14mr12791904pfr.113.1570741622461;
+        Thu, 10 Oct 2019 14:07:02 -0700 (PDT)
+Received: from aw-bldr-10.qualcomm.com (i-global254.qualcomm.com. [199.106.103.254])
+        by smtp.gmail.com with ESMTPSA id v68sm7898208pfv.47.2019.10.10.14.07.00
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 10 Oct 2019 14:07:02 -0700 (PDT)
+From:   Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
+To:     robh+dt@kernel.org, mark.rutland@arm.com
+Cc:     thierry.reding@gmail.com, sam@ravnborg.org, airlied@linux.ie,
+        daniel@ffwll.ch, bjorn.andersson@linaro.org,
+        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
+Subject: [PATCH] dt-bindings: display: Convert sharp,ld-d5116z01b panel to DT schema
+Date:   Thu, 10 Oct 2019 14:06:54 -0700
+Message-Id: <20191010210654.37426-1-jeffrey.l.hugo@gmail.com>
+X-Mailer: git-send-email 2.17.1
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Manu Gautam (2019-10-10 00:33:32)
-> Hi,
->=20
-> On 10/10/2019 9:45 AM, Stephen Boyd wrote:
-> > Quoting Manu Gautam (2019-10-09 01:31:09)
-> >>
-> [snip]
-> >> I have followed this up with QMP PHY hardware designers and they have
-> >> confirmed that QMP PHY must have pipe clock enabled at the beginning
-> >> of initialization sequence i.e. before bringing it out of reset and st=
-arting it.
-> > Awesome, thanks for following up.
-> >
-> >> Otherwise there is possibility of incorrect locking of pipe_interface/
-> >> retime buffers in PHY.
-> >> Hence, for both USB and PCIe we have to continue to use HALT_SKIP flag.
-> > Does anything go wrong if we just leave these clks enabled forever out
-> > of boot? I'm inclined to rip the clks out and just slam the branch
-> > enable bit on all the time in gcc driver probe and return NULL to the
-> > callers of clk_get() for these clks. I don't see how this would be a
-> > problem because when the upstream phy is disabled this clk is disabled
-> > and so we aren't wasting power. It should also save us time and memory
-> > because now we don't have to call into the clk framework to turn it on
-> > and sequence that just right in the phy driver.
->=20
-> That might work, however on some platforms gcc_pipe_clk parent is changed=
- to
-> XO and back to phy_pipe_clk across low power mode.
-> It requires PHY driver to use clk_set_parent().
->=20
+Convert the sharp,ld-d5116z01b panel binding to DT schema.
 
-Hm ok. Where is the call to clk_set_parent()? I don't see this in the
-kernel.
+Signed-off-by: Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
+---
+ .../display/panel/sharp,ld-d5116z01b.txt      | 26 ----------------
+ .../display/panel/sharp,ld-d5116z01b.yaml     | 30 +++++++++++++++++++
+ 2 files changed, 30 insertions(+), 26 deletions(-)
+ delete mode 100644 Documentation/devicetree/bindings/display/panel/sharp,ld-d5116z01b.txt
+ create mode 100644 Documentation/devicetree/bindings/display/panel/sharp,ld-d5116z01b.yaml
 
- $ git grep clk_set_parent -- drivers/usb/phy drivers/phy | wc -l
- 0
-
-What platforms do this? Are they upstream?
+diff --git a/Documentation/devicetree/bindings/display/panel/sharp,ld-d5116z01b.txt b/Documentation/devicetree/bindings/display/panel/sharp,ld-d5116z01b.txt
+deleted file mode 100644
+index fd9cf39bde77..000000000000
+--- a/Documentation/devicetree/bindings/display/panel/sharp,ld-d5116z01b.txt
++++ /dev/null
+@@ -1,26 +0,0 @@
+-Sharp LD-D5116Z01B 12.3" WUXGA+ eDP panel
+-
+-Required properties:
+-- compatible: should be "sharp,ld-d5116z01b"
+-- power-supply: regulator to provide the VCC supply voltage (3.3 volts)
+-
+-This binding is compatible with the simple-panel binding.
+-
+-The device node can contain one 'port' child node with one child
+-'endpoint' node, according to the bindings defined in [1]. This
+-node should describe panel's video bus.
+-
+-[1]: Documentation/devicetree/bindings/media/video-interfaces.txt
+-
+-Example:
+-
+-	panel: panel {
+-		compatible = "sharp,ld-d5116z01b";
+-		power-supply = <&vlcd_3v3>;
+-
+-		port {
+-			panel_ep: endpoint {
+-				remote-endpoint = <&bridge_out_ep>;
+-			};
+-		};
+-	};
+diff --git a/Documentation/devicetree/bindings/display/panel/sharp,ld-d5116z01b.yaml b/Documentation/devicetree/bindings/display/panel/sharp,ld-d5116z01b.yaml
+new file mode 100644
+index 000000000000..fbb647eb33c9
+--- /dev/null
++++ b/Documentation/devicetree/bindings/display/panel/sharp,ld-d5116z01b.yaml
+@@ -0,0 +1,30 @@
++# SPDX-License-Identifier: GPL-2.0
++%YAML 1.2
++---
++$id: http://devicetree.org/schemas/display/panel/sharp,ld-d5116z01b.yaml#
++$schema: http://devicetree.org/meta-schemas/core.yaml#
++
++title: Sharp LD-D5116Z01B 12.3" WUXGA+ eDP panel
++
++maintainers:
++  - Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
++
++allOf:
++  - $ref: panel-common.yaml#
++
++properties:
++  compatible:
++    const: sharp,ld-d5116z01b
++
++  power-supply: true
++  backlight: true
++  port: true
++  no-hpd: true
++
++additionalProperties: false
++
++required:
++  - compatible
++  - power-supply
++
++...
+-- 
+2.17.1
 
