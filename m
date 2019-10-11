@@ -2,112 +2,99 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id B0018D4244
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 11 Oct 2019 16:06:27 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5E167D42B4
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 11 Oct 2019 16:23:07 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728693AbfJKOGQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 11 Oct 2019 10:06:16 -0400
-Received: from inca-roads.misterjones.org ([213.251.177.50]:60603 "EHLO
-        inca-roads.misterjones.org" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1728691AbfJKOGP (ORCPT
+        id S1728621AbfJKOXD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 11 Oct 2019 10:23:03 -0400
+Received: from mail-wr1-f66.google.com ([209.85.221.66]:32958 "EHLO
+        mail-wr1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728068AbfJKOXC (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 11 Oct 2019 10:06:15 -0400
-Received: from 78.163-31-62.static.virginmediabusiness.co.uk ([62.31.163.78] helo=why)
-        by cheepnis.misterjones.org with esmtpsa (TLSv1.2:AES256-GCM-SHA384:256)
-        (Exim 4.80)
-        (envelope-from <maz@kernel.org>)
-        id 1iIvYa-0007hw-Ao; Fri, 11 Oct 2019 16:06:12 +0200
-Date:   Fri, 11 Oct 2019 15:06:10 +0100
-From:   Marc Zyngier <maz@kernel.org>
-To:     Mark Rutland <mark.rutland@arm.com>
-Cc:     Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>,
-        rnayak@codeaurora.org, suzuki.poulose@arm.com,
-        catalin.marinas@arm.com, linux-kernel@vger.kernel.org,
-        jeremy.linton@arm.com, bjorn.andersson@linaro.org,
-        linux-arm-msm@vger.kernel.org, andrew.murray@arm.com,
-        will@kernel.org, Dave.Martin@arm.com,
-        linux-arm-kernel@lists.infradead.org
-Subject: Re: Relax CPU features sanity checking on heterogeneous
- architectures
-Message-ID: <20191011150610.4e528a2d@why>
-In-Reply-To: <20191011135431.GB33537@lakrids.cambridge.arm.com>
-References: <b3606e76af42f7ecf65b1bfc2a5ed30a@codeaurora.org>
-        <20191011105010.GA29364@lakrids.cambridge.arm.com>
-        <20191011143343.541da66c@why>
-        <20191011135431.GB33537@lakrids.cambridge.arm.com>
-Organization: Approximate
-X-Mailer: Claws Mail 3.17.4 (GTK+ 2.24.32; x86_64-pc-linux-gnu)
+        Fri, 11 Oct 2019 10:23:02 -0400
+Received: by mail-wr1-f66.google.com with SMTP id b9so12189886wrs.0;
+        Fri, 11 Oct 2019 07:23:01 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=oSsh302Pu+csZ7xgzPuhonQMY9+lrqOfCEFZW1KhfS8=;
+        b=YkzDtjQyegcxDIXVHrLOrRGodGbYbIvrGtfLqnmauHdKO56uN7us77KHHdU8aytgqJ
+         bNnoUbnDiVDjtal5GKhtjsUiE1p0DuWzZdCRAskMhBwUkKvV7K7L5mqKaAWGE9PlIncZ
+         pM12m4DMw88Xtjw5x8kjeK4fZ0OeIKm/tHRe9ALTTJ9Wmb7jxzdInWdHRJeKZwaSr0X8
+         EKFmb3HQXXo/IS9d6AWLmk4SA9XRKq1xfu8rn5KoPNmKIfZkhOluEPIRKvQOnWFifUU/
+         YaD5qNy/bBiyM+UTdsRO07Frao7G4LRCq5u1UKU7OynmKYBJXPjOvtQS6G8qls/iOM6A
+         PRAg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=oSsh302Pu+csZ7xgzPuhonQMY9+lrqOfCEFZW1KhfS8=;
+        b=CJQ8zd52nAGVHkrhK0kFc++YO4VVfgnYijr381PtcbSOXa+npKwoGWtcjaghBnMbnP
+         Nd8qceeKrfK/gKfT0bWKFdqkQjzdog61pC4+kgXA6OLEt4n83si2aZsxUb0n82BMi8wk
+         EH9gpJP7JSsk5GuLxH3et75Aiq03tCpURHHnJAJtO4KLLGl8c0chDUgNx5QlOlXad2YQ
+         Qxc6T1qz+STrEGOiT0CZ57DgMzi0tLHX1ZUyOTxDpc/C/us002THDMCd2a4C7HvHsJ3y
+         Nm8CHTTS6NuTEo/Kir9InobAa9PkYnFYcWCdlTO1hlF8qRlWfHNPVhQX+Hjhcrut/U4h
+         ly6g==
+X-Gm-Message-State: APjAAAV0c2upUspatvEunckH8+TwtWzSttBdvptRYw3QjZABi/PGfVMj
+        cRS0LkZR83J1fX8wZ/9+IJM=
+X-Google-Smtp-Source: APXvYqzREndxRjfCDIpm3bXCE+fwFCs9sYSCEmAAfn2l++e3nTkTRa/NBdV+JHK7Vrlaklqk2uYUfA==
+X-Received: by 2002:adf:f744:: with SMTP id z4mr13921632wrp.22.1570803780129;
+        Fri, 11 Oct 2019 07:23:00 -0700 (PDT)
+Received: from gmail.com (net-93-144-2-18.cust.dsl.teletu.it. [93.144.2.18])
+        by smtp.gmail.com with ESMTPSA id v5sm3661396wrb.64.2019.10.11.07.22.59
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Fri, 11 Oct 2019 07:22:59 -0700 (PDT)
+Date:   Fri, 11 Oct 2019 16:22:59 +0200
+From:   Paolo Pisati <p.pisati@gmail.com>
+To:     Loic Poulain <loic.poulain@linaro.org>
+Cc:     Paolo Pisati <p.pisati@gmail.com>,
+        Brian Masney <masneyb@onstation.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        Andy Gross <agross@kernel.org>, linux-kernel@vger.kernel.org,
+        Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
+Subject: Re: msm8996: sdhci-msm: apq8096-db820c sdhci fails to init -
+ "Timeout waiting for hardware interrupt."
+Message-ID: <20191011142259.GA1558@harukaze>
+References: <20191010143232.GA13560@harukaze>
+ <20191011060130.GA12357@onstation.org>
+ <20191011112245.GA10461@harukaze>
+ <CAMZdPi9hTQQcFHMRkj2R9t-P9AiPh01hKGPP5_F8T+MUuckVHA@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-X-SA-Exim-Connect-IP: 62.31.163.78
-X-SA-Exim-Rcpt-To: mark.rutland@arm.com, saiprakash.ranjan@codeaurora.org, rnayak@codeaurora.org, suzuki.poulose@arm.com, catalin.marinas@arm.com, linux-kernel@vger.kernel.org, jeremy.linton@arm.com, bjorn.andersson@linaro.org, linux-arm-msm@vger.kernel.org, andrew.murray@arm.com, will@kernel.org, Dave.Martin@arm.com, linux-arm-kernel@lists.infradead.org
-X-SA-Exim-Mail-From: maz@kernel.org
-X-SA-Exim-Scanned: No (on cheepnis.misterjones.org); SAEximRunCond expanded to false
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CAMZdPi9hTQQcFHMRkj2R9t-P9AiPh01hKGPP5_F8T+MUuckVHA@mail.gmail.com>
+User-Agent: Mutt/1.9.4 (2018-02-28)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, 11 Oct 2019 14:54:31 +0100
-Mark Rutland <mark.rutland@arm.com> wrote:
-
-> On Fri, Oct 11, 2019 at 02:33:43PM +0100, Marc Zyngier wrote:
-> > On Fri, 11 Oct 2019 11:50:11 +0100
-> > Mark Rutland <mark.rutland@arm.com> wrote:
-> >   
-> > > Hi,
-> > > 
-> > > On Fri, Oct 11, 2019 at 11:19:00AM +0530, Sai Prakash Ranjan wrote:  
-> > > > On latest QCOM SoCs like SM8150 and SC7180 with big.LITTLE arch, below
-> > > > warnings are observed during bootup of big cpu cores.    
-> > > 
-> > > For reference, which CPUs are in those SoCs?
-> > >   
-> > > > SM8150:
-> > > > 
-> > > > [    0.271177] CPU features: SANITY CHECK: Unexpected variation in
-> > > > SYS_ID_AA64PFR0_EL1. Boot CPU: 0x00000011112222, CPU4: 0x00000011111112    
-> > > 
-> > > The differing fields are EL3, EL2, and EL1: the boot CPU supports
-> > > AArch64 and AArch32 at those exception levels, while the secondary only
-> > > supports AArch64.
-> > > 
-> > > Do we handle this variation in KVM?  
-> > 
-> > We do, at least at vcpu creation time (see kvm_reset_vcpu). But if one
-> > of the !AArch32 CPU comes in late in the game (after we've started a
-> > guest), all bets are off (we'll schedule the 32bit guest on that CPU,
-> > enter the guest, immediately take an Illegal Exception Return, and
-> > return to userspace with KVM_EXIT_FAIL_ENTRY).  
+On Fri, Oct 11, 2019 at 02:47:05PM +0200, Loic Poulain wrote:
+> > No dice, same exact problem.
+> >
+> > But the patch is present downstream[1]:
+> >
+> > commit c26727f853308dc4a6645dad09e9565429f8604f
+> > Author: Loic Poulain <loic.poulain@linaro.org>
+> > Date:   Wed Dec 12 17:51:48 2018 +0100
+> >
+> > arm64: dts: apq8096-db820c: Increase load on l21 for SDCARD
+> >
+> > In the same way as for msm8974-hammerhead, l21 load, used for SDCARD
+> > VMMC, needs to be increased in order to prevent any voltage drop issues
+> > (due to limited current) happening with some SDCARDS or during specific
+> > operations (e.g. write).
+> >
+> > Fixes: 660a9763c6a9 (arm64: dts: qcom: db820c: Add pm8994 regulator node)
+> > Signed-off-by: Loic Poulain <loic.poulain@linaro.org>
+> >
+> >
+> > so it's probably worth carrying it.
 > 
-> Ouch. We certainly can't remove the warning untill we deal with that
-> somehow, then.
+> I've sent it to LKML, but it has never landed (and I've never followed-up).
 
-Indeed. Same thing applies for hot-removing the AArch32-capable CPUs,
-by the way. You'd end-up in a situation where guests can't run, despite
-the initial contract that we're happy that configuration.
-
-> > Not sure we could do better, given the HW. My preference would be to
-> > fail these CPUs if they aren't present at boot time.  
-> 
-> I agree; I think we need logic to check the ID register fields against
-> their EXACT, {LOWER,HIGHER}_SAFE, etc rules regardless of whether we
-> have an associated cap. That can then abort a late onlining of a CPU
-> which violates those rules w.r.t. the finalised system value.
-> 
-> I suspect that we may want to split the notion of
-> safe-for-{user,kernel-guest} in the feature tables, as if nothing else
-> it will force us to consider those cases separately when adding new
-> stuff.
-
-Probably. There are bizarre overlaps, in the sense that some
-capabilities (such as this AArch32 EL1 support) are firmly kernel
-related, and yet have a direct impact on userspace. KVM blurs the lines
-in "interesting" ways... :-(.
-
-Thanks,
-
-	M.
+I see - btw, do you have a recent kernel where the mmc works on the db820c?
 -- 
-Jazz is not dead. It just smells funny...
+bye,
+p.
