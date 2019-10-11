@@ -2,88 +2,97 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id B2AF6D4163
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 11 Oct 2019 15:35:11 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 64953D4169
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 11 Oct 2019 15:35:14 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728219AbfJKNer (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 11 Oct 2019 09:34:47 -0400
-Received: from inca-roads.misterjones.org ([213.251.177.50]:36144 "EHLO
-        inca-roads.misterjones.org" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1727709AbfJKNer (ORCPT
+        id S1728513AbfJKNfK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 11 Oct 2019 09:35:10 -0400
+Received: from smtp.codeaurora.org ([198.145.29.96]:44072 "EHLO
+        smtp.codeaurora.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727589AbfJKNfK (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 11 Oct 2019 09:34:47 -0400
-Received: from 78.163-31-62.static.virginmediabusiness.co.uk ([62.31.163.78] helo=why)
-        by cheepnis.misterjones.org with esmtpsa (TLSv1.2:AES256-GCM-SHA384:256)
-        (Exim 4.80)
-        (envelope-from <maz@kernel.org>)
-        id 1iIv48-00079K-Cw; Fri, 11 Oct 2019 15:34:44 +0200
-Date:   Fri, 11 Oct 2019 14:34:42 +0100
-From:   Marc Zyngier <maz@kernel.org>
-To:     Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
-Cc:     Mark Rutland <mark.rutland@arm.com>, rnayak@codeaurora.org,
-        suzuki.poulose@arm.com, catalin.marinas@arm.com,
-        linux-arm-kernel <linux-arm-kernel-bounces@lists.infradead.org>,
-        linux-kernel@vger.kernel.org, jeremy.linton@arm.com,
-        bjorn.andersson@linaro.org, linux-arm-msm@vger.kernel.org,
-        andrew.murray@arm.com, will@kernel.org, Dave.Martin@arm.com,
-        linux-arm-kernel@lists.infradead.org
-Subject: Re: Relax CPU features sanity checking on heterogeneous
- architectures
-Message-ID: <20191011143442.515659f4@why>
-In-Reply-To: <7910f428bd96834c15fb56262f3c10f8@codeaurora.org>
-References: <b3606e76af42f7ecf65b1bfc2a5ed30a@codeaurora.org>
-        <20191011105010.GA29364@lakrids.cambridge.arm.com>
-        <7910f428bd96834c15fb56262f3c10f8@codeaurora.org>
-Organization: Approximate
-X-Mailer: Claws Mail 3.17.4 (GTK+ 2.24.32; x86_64-pc-linux-gnu)
+        Fri, 11 Oct 2019 09:35:10 -0400
+Received: by smtp.codeaurora.org (Postfix, from userid 1000)
+        id 79A7060EA5; Fri, 11 Oct 2019 13:35:09 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
+        s=default; t=1570800909;
+        bh=3JtiwsXLgH7sfDwmfscttrAvHhcHaIlyNhxJjY3Fb1k=;
+        h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
+        b=DtBJLjLkXqSDeNiNEnke8Rh1+AsHfRF0at6TS9/d24c4V1n83vB3ESx3z+9Bc7pb5
+         e4vLJnEL2mMaXkiDGtlDXGcaa6/PufTRtE55cRjP98sEzZE8KBcNBYfUVfHXqrv6HW
+         HedMgUE6nQsrPLc39rSAJp4K2ajhy2Uu0XB9QWVs=
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        pdx-caf-mail.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.7 required=2.0 tests=ALL_TRUSTED,BAYES_00,
+        DKIM_INVALID,DKIM_SIGNED autolearn=no autolearn_force=no version=3.4.0
+Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
+        by smtp.codeaurora.org (Postfix) with ESMTP id 44A3160F3A;
+        Fri, 11 Oct 2019 13:35:08 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
+        s=default; t=1570800908;
+        bh=3JtiwsXLgH7sfDwmfscttrAvHhcHaIlyNhxJjY3Fb1k=;
+        h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
+        b=QAjjvtKVeVfBJWmHFF/xshN/8M6ToDEV6Zm73SNEjmzvdSPI1qT5UUtshQdlqp/AC
+         Ux0CN3e3DAGIKG+vJJcS/0hV614HlwylAuA8OdSJcrwmqkVgweloQZubUNvccqYdp4
+         WrIBdJI10tYWtyRr11fBUnqeLIMvmEqTeBGeg4Mk=
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
 Content-Transfer-Encoding: 7bit
-X-SA-Exim-Connect-IP: 62.31.163.78
-X-SA-Exim-Rcpt-To: saiprakash.ranjan@codeaurora.org, mark.rutland@arm.com, rnayak@codeaurora.org, suzuki.poulose@arm.com, catalin.marinas@arm.com, linux-arm-kernel-bounces@lists.infradead.org, linux-kernel@vger.kernel.org, jeremy.linton@arm.com, bjorn.andersson@linaro.org, linux-arm-msm@vger.kernel.org, andrew.murray@arm.com, will@kernel.org, Dave.Martin@arm.com, linux-arm-kernel@lists.infradead.org
-X-SA-Exim-Mail-From: maz@kernel.org
-X-SA-Exim-Scanned: No (on cheepnis.misterjones.org); SAEximRunCond expanded to false
+Date:   Fri, 11 Oct 2019 19:05:08 +0530
+From:   Govind Singh <govinds@codeaurora.org>
+To:     Stephen Boyd <sboyd@kernel.org>
+Cc:     Rob Herring <robh@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        linux-clk <linux-clk@vger.kernel.org>,
+        devicetree@vger.kernel.org,
+        "open list:ARM/QUALCOMM SUPPORT" <linux-soc@vger.kernel.org>,
+        "open list:REMOTE PROCESSOR (REMOTEPROC) SUBSYSTEM" 
+        <linux-remoteproc@vger.kernel.org>
+Subject: Re: [PATCH_v3 1/2] dt-bindings: clock: qcom: Add QCOM Q6SSTOP clock
+ controller bindings
+In-Reply-To: <20190906203131.936A22070C@mail.kernel.org>
+References: <20190823131401.4011-1-govinds@codeaurora.org>
+ <20190823131401.4011-2-govinds@codeaurora.org>
+ <CAL_JsqLpVDJBh5qZwudncB8sggb85f3efqs1z9EA+zbVPWX++g@mail.gmail.com>
+ <20190906203131.936A22070C@mail.kernel.org>
+Message-ID: <0bf4caf58a0663fea75f12838249c572@codeaurora.org>
+X-Sender: govinds@codeaurora.org
+User-Agent: Roundcube Webmail/1.2.5
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, 11 Oct 2019 18:47:39 +0530
-Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org> wrote:
+On 2019-09-07 02:01, Stephen Boyd wrote:
+> Quoting Rob Herring (2019-08-27 05:27:19)
+>> On Fri, Aug 23, 2019 at 8:14 AM Govind Singh <govinds@codeaurora.org> 
+>> wrote:
+>> >
+>> > Add devicetree binding for the Q6SSTOP clock controller found in QCS404.
+>> >
+>> > Signed-off-by: Govind Singh <govinds@codeaurora.org>
+>> > ---
+>> >  .../bindings/clock/qcom,q6sstopcc.yaml        | 47 +++++++++++++++++++
+>> >  1 file changed, 47 insertions(+)
+>> >  create mode 100644 Documentation/devicetree/bindings/clock/qcom,q6sstopcc.yaml
+>> >
+>> > diff --git a/Documentation/devicetree/bindings/clock/qcom,q6sstopcc.yaml b/Documentation/devicetree/bindings/clock/qcom,q6sstopcc.yaml
+>> > new file mode 100644
+>> > index 000000000000..39621e2e2f4e
+>> > --- /dev/null
+>> > +++ b/Documentation/devicetree/bindings/clock/qcom,q6sstopcc.yaml
+>> > @@ -0,0 +1,47 @@
+>> > +# SPDX-License-Identifier: BSD-2-Clause
+>> 
+>> Dual license please.
+>> 
+> 
+> Yes, please fix the binding.
 
-> Hi Mark,
-> 
-> Thanks a lot for the detailed explanations, I did have a look at all the variations before posting this.
-> 
-> On 2019-10-11 16:20, Mark Rutland wrote:
-> > Hi,
-> > 
-> > On Fri, Oct 11, 2019 at 11:19:00AM +0530, Sai Prakash Ranjan wrote:  
-> >> On latest QCOM SoCs like SM8150 and SC7180 with big.LITTLE arch, below
-> >> warnings are observed during bootup of big cpu cores.  
-> > 
-> > For reference, which CPUs are in those SoCs?
-> >   
-> 
-> SM8150 is based on Cortex-A55(little cores) and Cortex-A76(big cores). I'm afraid I cannot give details about SC7180 yet.
-> 
-> >> SM8150:  
-> >> >> [    0.271177] CPU features: SANITY CHECK: Unexpected variation in  
-> >> SYS_ID_AA64PFR0_EL1. Boot CPU: 0x00000011112222, CPU4: >> 0x00000011111112  
-> > 
-> > The differing fields are EL3, EL2, and EL1: the boot CPU supports
-> > AArch64 and AArch32 at those exception levels, while the secondary only
-> > supports AArch64.
-> > 
-> > Do we handle this variation in KVM?  
-> 
-> We do not support KVM.
-
-Mainline does. You don't get to pick and choose what is supported or
-not.
+fixed in v4.
 
 Thanks,
-
-	M.
--- 
-Jazz is not dead. It just smells funny...
+Govind
