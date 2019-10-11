@@ -2,121 +2,113 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 810C7D4182
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 11 Oct 2019 15:39:47 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B845AD4188
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 11 Oct 2019 15:40:16 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728344AbfJKNjr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 11 Oct 2019 09:39:47 -0400
-Received: from mail-pl1-f196.google.com ([209.85.214.196]:37917 "EHLO
-        mail-pl1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727950AbfJKNjq (ORCPT
+        id S1728093AbfJKNkP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 11 Oct 2019 09:40:15 -0400
+Received: from smtp.codeaurora.org ([198.145.29.96]:45720 "EHLO
+        smtp.codeaurora.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727950AbfJKNkP (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 11 Oct 2019 09:39:46 -0400
-Received: by mail-pl1-f196.google.com with SMTP id w8so4487748plq.5;
-        Fri, 11 Oct 2019 06:39:45 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id;
-        bh=qGkUWDkWuy9rCgnYrcxxUjy8YGrJ1whz/5MzqghbV70=;
-        b=NBk7HErwPAcy77r0BblRtX/FoKDf2xjanp1mb1ZicXMdBKqGs5cEf1d7iE96FH7akP
-         gKHm4cPXwNja+OJ9wpWO5FctGJPduKDGTPyNHifr9IfLDlbHJgQziStyDnJh6oZ5nvBZ
-         P2NNw1hCrejdrWxN+NATA5AKvvdq47YXCu0BkvDbmW9icN7/1TdjjH8MjK2B1Ck++djP
-         WUew6Fo/9SDjaafj3VvjUN4G0VbT0/yTIkuFHDoPdEEb7WwjqMdjOHbj+Fn7HHwth1Lf
-         UuKH66p+BcF0DJGdS/qiI+HBgFFhNfXim9fSmvYApTfdzOKiPEhRikzCLsjApt3Tv6S5
-         84QA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id;
-        bh=qGkUWDkWuy9rCgnYrcxxUjy8YGrJ1whz/5MzqghbV70=;
-        b=cRNeBGgHAZTem98eXwYjsg2k8+xB1vl5rNMHgF9F5Trq+3t9lpp/Xxn2UzaIQLleCh
-         w+KgAmZBdVoDacR+bjyBZGuYJsrDaISFFSOmot1tfy/q41BRLuaY9nSlri06KPPM8oAR
-         dINe/KklhXx3yXmh42JsRgf5mxEZWjZO5PD1erScp5cf969xJ7Bg3enc7vqYPGdUFPPq
-         fI/yLOSTmhclNhhaXdJVmWumkKfgJuF/qVEYULgpOTJgKd5sFRwIKCyZUUsNLEnW0e5B
-         UFREIM76+Xg2o+Fa/XlmIX6g+JDDqJ/2J100kTlSEpyjVLnDQ2KGBooAjfAoDym9D0hN
-         rtvA==
-X-Gm-Message-State: APjAAAWomG0ygBAisMQhiNowJSiQg5VEo/EKrygWUXUy/cK12vvdAZ26
-        2m99nzKIIok5Fp/EVg2JN3Q=
-X-Google-Smtp-Source: APXvYqzeKH3l7K1RGHl7x8YfH51uO/BfgM5UGC2UadrBOkHc4M/Qz6TjJKWUTWI/gQ0YBexfLEapqg==
-X-Received: by 2002:a17:902:d909:: with SMTP id c9mr15296242plz.216.1570801184611;
-        Fri, 11 Oct 2019 06:39:44 -0700 (PDT)
-Received: from aw-bldr-10.qualcomm.com (i-global254.qualcomm.com. [199.106.103.254])
-        by smtp.gmail.com with ESMTPSA id n2sm11961743pgg.77.2019.10.11.06.39.42
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 11 Oct 2019 06:39:43 -0700 (PDT)
-From:   Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
-To:     robdclark@gmail.com, sean@poorly.run, airlied@linux.ie,
-        daniel@ffwll.ch
-Cc:     linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org,
-        Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
-Subject: [PATCH v2] drm/msm/dsi: Implement reset correctly
-Date:   Fri, 11 Oct 2019 06:39:39 -0700
-Message-Id: <20191011133939.16551-1-jeffrey.l.hugo@gmail.com>
-X-Mailer: git-send-email 2.17.1
+        Fri, 11 Oct 2019 09:40:15 -0400
+Received: by smtp.codeaurora.org (Postfix, from userid 1000)
+        id B2FBD6087B; Fri, 11 Oct 2019 13:40:14 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
+        s=default; t=1570801214;
+        bh=woLGvO2KYpg2LI7wSKbSPuYqu+XlHMDuEXAS7R5cZOs=;
+        h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
+        b=VKq0sCclKNivwnNSoPPjcMpAVnrxUj4hBlG/L0azIufkvsk5DtKK81UjfwA7wCJow
+         btgYgwBTr6mAFB3AVSiDgweZ8Ie7AaMZ95b+zWmH2d5v5bLzl7SkilRllSeOnknqQs
+         w5lfPP3qKW6Fm4NPgYWYvNJbH+7Xc+zrMt1coNDU=
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        pdx-caf-mail.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.7 required=2.0 tests=ALL_TRUSTED,BAYES_00,
+        DKIM_INVALID,DKIM_SIGNED autolearn=no autolearn_force=no version=3.4.0
+Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
+        by smtp.codeaurora.org (Postfix) with ESMTP id B5EB160265;
+        Fri, 11 Oct 2019 13:40:13 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
+        s=default; t=1570801213;
+        bh=woLGvO2KYpg2LI7wSKbSPuYqu+XlHMDuEXAS7R5cZOs=;
+        h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
+        b=eXa6dZiI4q1VAhio2kWuZBGU1fCbx8+AHMQtQJ9Br1yNLHJF6zk1weYdOIRYZyeeJ
+         dWKjwDS2U8FZt+T06BwB+V496sxzXc0wxItPawySpmI1hvxAPWbtEzYMZ4nKenzNnd
+         qj0OkdKjd172OZmH1j11jkel4U/S2MCEvWJGg76g=
+MIME-Version: 1.0
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
+Content-Transfer-Encoding: 7bit
+Date:   Fri, 11 Oct 2019 19:10:13 +0530
+From:   Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
+To:     Marc Zyngier <maz@kernel.org>
+Cc:     Mark Rutland <mark.rutland@arm.com>, rnayak@codeaurora.org,
+        suzuki.poulose@arm.com, catalin.marinas@arm.com,
+        linux-arm-kernel <linux-arm-kernel-bounces@lists.infradead.org>,
+        linux-kernel@vger.kernel.org, jeremy.linton@arm.com,
+        bjorn.andersson@linaro.org, linux-arm-msm@vger.kernel.org,
+        andrew.murray@arm.com, will@kernel.org, Dave.Martin@arm.com,
+        linux-arm-kernel@lists.infradead.org,
+        linux-arm-msm-owner@vger.kernel.org, marc.w.gonzalez@free.fr
+Subject: Re: Relax CPU features sanity checking on heterogeneous architectures
+In-Reply-To: <20191011143442.515659f4@why>
+References: <b3606e76af42f7ecf65b1bfc2a5ed30a@codeaurora.org>
+ <20191011105010.GA29364@lakrids.cambridge.arm.com>
+ <7910f428bd96834c15fb56262f3c10f8@codeaurora.org>
+ <20191011143442.515659f4@why>
+Message-ID: <ac7599b30461d6a814e4f36d68bba6c2@codeaurora.org>
+X-Sender: saiprakash.ranjan@codeaurora.org
+User-Agent: Roundcube Webmail/1.2.5
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On msm8998, vblank timeouts are observed because the DSI controller is not
-reset properly, which ends up stalling the MDP.  This is because the reset
-logic is not correct per the hardware documentation.
+On 2019-10-11 19:04, Marc Zyngier wrote:
+> On Fri, 11 Oct 2019 18:47:39 +0530
+> Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org> wrote:
+> 
+>> Hi Mark,
+>> 
+>> Thanks a lot for the detailed explanations, I did have a look at all 
+>> the variations before posting this.
+>> 
+>> On 2019-10-11 16:20, Mark Rutland wrote:
+>> > Hi,
+>> >
+>> > On Fri, Oct 11, 2019 at 11:19:00AM +0530, Sai Prakash Ranjan wrote:
+>> >> On latest QCOM SoCs like SM8150 and SC7180 with big.LITTLE arch, below
+>> >> warnings are observed during bootup of big cpu cores.
+>> >
+>> > For reference, which CPUs are in those SoCs?
+>> >
+>> 
+>> SM8150 is based on Cortex-A55(little cores) and Cortex-A76(big cores). 
+>> I'm afraid I cannot give details about SC7180 yet.
+>> 
+>> >> SM8150:
+>> >> >> [    0.271177] CPU features: SANITY CHECK: Unexpected variation in
+>> >> SYS_ID_AA64PFR0_EL1. Boot CPU: 0x00000011112222, CPU4: >> 0x00000011111112
+>> >
+>> > The differing fields are EL3, EL2, and EL1: the boot CPU supports
+>> > AArch64 and AArch32 at those exception levels, while the secondary only
+>> > supports AArch64.
+>> >
+>> > Do we handle this variation in KVM?
+>> 
+>> We do not support KVM.
+> 
+> Mainline does. You don't get to pick and choose what is supported or
+> not.
+> 
 
-The documentation states that after asserting reset, software should wait
-some time (no indication of how long), or poll the status register until it
-returns 0 before deasserting reset.
+Ok thats good.
 
-wmb() is insufficient for this purpose since it just ensures ordering, not
-timing between writes.  Since asserting and deasserting reset occurs on the
-same register, ordering is already guaranteed by the architecture, making
-the wmb extraneous.
+Thanks,
+Sai
 
-Since we would define a timeout for polling the status register to avoid a
-possible infinite loop, lets just use a static delay of 20 ms, since 16.666
-ms is the time available to process one frame at 60 fps.
-
-Fixes: a689554ba6ed (drm/msm: Initial add DSI connector support)
-Signed-off-by: Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
-Reviewed-by: Sean Paul <sean@poorly.run>
----
-
-v2:
--make a DEFINE for the delay
-
- drivers/gpu/drm/msm/dsi/dsi_host.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
-
-diff --git a/drivers/gpu/drm/msm/dsi/dsi_host.c b/drivers/gpu/drm/msm/dsi/dsi_host.c
-index 663ff9f4fac9..9a81705301c6 100644
---- a/drivers/gpu/drm/msm/dsi/dsi_host.c
-+++ b/drivers/gpu/drm/msm/dsi/dsi_host.c
-@@ -26,6 +26,8 @@
- #include "dsi_cfg.h"
- #include "msm_kms.h"
- 
-+#define RESET_DELAY 20
-+
- static int dsi_get_version(const void __iomem *base, u32 *major, u32 *minor)
- {
- 	u32 ver;
-@@ -986,7 +988,7 @@ static void dsi_sw_reset(struct msm_dsi_host *msm_host)
- 	wmb(); /* clocks need to be enabled before reset */
- 
- 	dsi_write(msm_host, REG_DSI_RESET, 1);
--	wmb(); /* make sure reset happen */
-+	msleep(RESET_DELAY); /* make sure reset happen */
- 	dsi_write(msm_host, REG_DSI_RESET, 0);
- }
- 
-@@ -1396,7 +1398,7 @@ static void dsi_sw_reset_restore(struct msm_dsi_host *msm_host)
- 
- 	/* dsi controller can only be reset while clocks are running */
- 	dsi_write(msm_host, REG_DSI_RESET, 1);
--	wmb();	/* make sure reset happen */
-+	msleep(RESET_DELAY);	/* make sure reset happen */
- 	dsi_write(msm_host, REG_DSI_RESET, 0);
- 	wmb();	/* controller out of reset */
- 	dsi_write(msm_host, REG_DSI_CTRL, data0);
 -- 
-2.17.1
-
+QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a 
+member
+of Code Aurora Forum, hosted by The Linux Foundation
