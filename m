@@ -2,90 +2,134 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 01F71D3C85
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 11 Oct 2019 11:36:33 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5BF8DD3CB6
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 11 Oct 2019 11:48:50 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727253AbfJKJg1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 11 Oct 2019 05:36:27 -0400
-Received: from mail-lf1-f66.google.com ([209.85.167.66]:40853 "EHLO
-        mail-lf1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726585AbfJKJg1 (ORCPT
+        id S1727664AbfJKJst (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 11 Oct 2019 05:48:49 -0400
+Received: from smtp.codeaurora.org ([198.145.29.96]:34624 "EHLO
+        smtp.codeaurora.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727470AbfJKJst (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 11 Oct 2019 05:36:27 -0400
-Received: by mail-lf1-f66.google.com with SMTP id d17so6561890lfa.7;
-        Fri, 11 Oct 2019 02:36:24 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=qlK9gLf5RoF6ICNJqAb4e5paI/AKdb6mnn7W5mQFGS0=;
-        b=ASYBycLtttb85mOEqujHjzNaJ1CBKftLEp8d9y0oEDIEg56PY0AlVEV4Ol+wk1U/Cp
-         sWycuGXNr1FiYjukc3Ru2DwLEb2yoA2pun0hPCkOa3a8BBYnLwvx4EQitas/NCsFkD8y
-         VBQF1q+kSn09L2HW2g7VWhzaUnjf6ms7MtD59j/LPu2AF8V4OHdjKt7V7rkTC7JLyfiv
-         6Xib6TV0vtZXhi6POBowySVhzIRSgRjsgUpPHq83lt1Fc9xicb1av41EK5fcFz6KIuOw
-         8lQDihilkl+S5Ox9DVpxGBo9WiGxteli+fT+YyxdahSeWeyOJm8vaSEJ9yFUrgnpFg0Y
-         4oGA==
-X-Gm-Message-State: APjAAAU6KZOks7h0u718r1E/ud3Qe+V6eR/AvkiSbBVv1J4ZozBOp0Gv
-        svMHFBpMFUInmPMrGbwjaLA=
-X-Google-Smtp-Source: APXvYqzjdCwjHmD1OUcUAPcjISlrTMTsyvKPvNaG5NGSDzSHzWzFAkSASl1KZH637V4hkoJQOY7nGw==
-X-Received: by 2002:a19:23cc:: with SMTP id j195mr8266076lfj.91.1570786584009;
-        Fri, 11 Oct 2019 02:36:24 -0700 (PDT)
-Received: from xi.terra (c-51f1e055.07-184-6d6c6d4.bbcust.telenor.se. [85.224.241.81])
-        by smtp.gmail.com with ESMTPSA id c16sm1961403lfj.8.2019.10.11.02.36.22
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 11 Oct 2019 02:36:23 -0700 (PDT)
-Received: from johan by xi.terra with local (Exim 4.92.2)
-        (envelope-from <johan@kernel.org>)
-        id 1iIrLd-0007T3-Ez; Fri, 11 Oct 2019 11:36:34 +0200
-Date:   Fri, 11 Oct 2019 11:36:33 +0200
-From:   Johan Hovold <johan@kernel.org>
-To:     Daniel Vetter <daniel@ffwll.ch>
-Cc:     Johan Hovold <johan@kernel.org>, Rob Clark <robdclark@gmail.com>,
-        Sean Paul <sean@poorly.run>,
-        Fabien Dessenne <fabien.dessenne@st.com>,
-        Mauro Carvalho Chehab <mchehab@kernel.org>,
-        Harald Freudenberger <freude@linux.ibm.com>,
-        David Airlie <airlied@linux.ie>,
-        Heiko Carstens <heiko.carstens@de.ibm.com>,
-        Vasily Gorbik <gor@linux.ibm.com>,
-        Christian Borntraeger <borntraeger@de.ibm.com>,
-        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org,
-        linux-media@vger.kernel.org, linux-s390@vger.kernel.org,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Al Viro <viro@zeniv.linux.org.uk>
-Subject: Re: [PATCH 0/4] treewide: fix interrupted release
-Message-ID: <20191011093633.GD27819@localhost>
-References: <20191010131333.23635-1-johan@kernel.org>
- <20191010135043.GA16989@phenom.ffwll.local>
+        Fri, 11 Oct 2019 05:48:49 -0400
+Received: by smtp.codeaurora.org (Postfix, from userid 1000)
+        id B032360AA3; Fri, 11 Oct 2019 09:48:47 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
+        s=default; t=1570787327;
+        bh=LZttN4Q6nh1yY9TN0gKFBPwWhpkdhCfv74mQOWuTlZM=;
+        h=Subject:To:Cc:References:From:Date:In-Reply-To:From;
+        b=enVIRGGDsEDp2gO/lHIMnF7wqujLvRj59IEJlLi38NjbiAEbJqeB/pmf1mZPM00Ob
+         Qv5Gj8GtrZ8tik/3QoS49aYdxRSrC9kPQBgKpVj5cBXBONIQle+kXxW+b06W6eAUtD
+         LImrdRQ2NaqOHSWLsYn+P0ZJQjOnOv1ZWcb3G1nA=
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        pdx-caf-mail.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.7 required=2.0 tests=ALL_TRUSTED,BAYES_00,
+        DKIM_INVALID,DKIM_SIGNED,SPF_NONE autolearn=no autolearn_force=no
+        version=3.4.0
+Received: from [10.252.222.65] (blr-c-bdr-fw-01_globalnat_allzones-outside.qualcomm.com [103.229.19.19])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: akashast@smtp.codeaurora.org)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id E9736606CF;
+        Fri, 11 Oct 2019 09:48:44 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
+        s=default; t=1570787327;
+        bh=LZttN4Q6nh1yY9TN0gKFBPwWhpkdhCfv74mQOWuTlZM=;
+        h=Subject:To:Cc:References:From:Date:In-Reply-To:From;
+        b=enVIRGGDsEDp2gO/lHIMnF7wqujLvRj59IEJlLi38NjbiAEbJqeB/pmf1mZPM00Ob
+         Qv5Gj8GtrZ8tik/3QoS49aYdxRSrC9kPQBgKpVj5cBXBONIQle+kXxW+b06W6eAUtD
+         LImrdRQ2NaqOHSWLsYn+P0ZJQjOnOv1ZWcb3G1nA=
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org E9736606CF
+Authentication-Results: pdx-caf-mail.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: pdx-caf-mail.web.codeaurora.org; spf=none smtp.mailfrom=akashast@codeaurora.org
+Subject: Re: [PATCH V2 2/2] tty: serial: qcom_geni_serial: Wakeup over UART RX
+To:     Stephen Boyd <swboyd@chromium.org>, gregkh@linuxfoundation.org
+Cc:     linux-arm-msm@vger.kernel.org, linux-serial@vger.kernel.org,
+        mgautam@codeaurora.org, bjorn.andersson@linaro.org
+References: <1570700803-17566-1-git-send-email-akashast@codeaurora.org>
+ <5d9f3f4f.1c69fb81.5120f.b90e@mx.google.com>
+From:   Akash Asthana <akashast@codeaurora.org>
+Message-ID: <a7dabb1d-b6af-acc5-ba4e-923ee5fc6ee3@codeaurora.org>
+Date:   Fri, 11 Oct 2019 15:18:42 +0530
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
+ Thunderbird/60.9.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20191010135043.GA16989@phenom.ffwll.local>
-User-Agent: Mutt/1.12.2 (2019-09-21)
+In-Reply-To: <5d9f3f4f.1c69fb81.5120f.b90e@mx.google.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Content-Language: en-US
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Oct 10, 2019 at 03:50:43PM +0200, Daniel Vetter wrote:
-> On Thu, Oct 10, 2019 at 03:13:29PM +0200, Johan Hovold wrote:
-> > Two old USB drivers had a bug in them which could lead to memory leaks
-> > if an interrupted process raced with a disconnect event.
-> > 
-> > Turns out we had a few more driver in other subsystems with the same
-> > kind of bug in them.
 
-> Random funny idea: Could we do some debug annotations (akin to
-> might_sleep) that splats when you might_sleep_interruptible somewhere
-> where interruptible sleeps are generally a bad idea? Like in
-> fops->release?
+On 10/10/2019 7:55 PM, Stephen Boyd wrote:
+> Quoting Akash Asthana (2019-10-10 02:46:43)
+>> diff --git a/drivers/tty/serial/qcom_geni_serial.c b/drivers/tty/serial/qcom_geni_serial.c
+>> index 5180cd8..ff63728 100644
+>> --- a/drivers/tty/serial/qcom_geni_serial.c
+>> +++ b/drivers/tty/serial/qcom_geni_serial.c
+>> @@ -1306,6 +1317,29 @@ static int qcom_geni_serial_probe(struct platform_device *pdev)
+>>                  return ret;
+>>          }
+>>   
+>> +       if (!console) {
+>> +               port->wakeup_irq = platform_get_irq(pdev, 1);
+> Should use platform_get_irq_optional() it seems.
+OK
+>
+>> +               if (port->wakeup_irq < 0) {
+>> +                       dev_err(&pdev->dev, "Failed to get wakeup IRQ %d\n",
+>> +                                       port->wakeup_irq);
+>> +               } else {
+>> +                       irq_set_status_flags(port->wakeup_irq, IRQ_NOAUTOEN);
+>> +                       ret = devm_request_irq(uport->dev, port->wakeup_irq,
+>> +                               qcom_geni_serial_wakeup_isr,
+>> +                               IRQF_TRIGGER_FALLING, "uart_wakeup", uport);
+>> +                       if (ret) {
+>> +                               dev_err(uport->dev, "Failed to register wakeup IRQ ret %d\n",
+>> +                                               ret);
+>> +                               return ret;
+>> +                       }
+>> +
+>> +                       device_init_wakeup(&pdev->dev, true);
+>> +                       ret = dev_pm_set_wake_irq(&pdev->dev, port->wakeup_irq);
+> Why can't we use dev_pm_set_dedicated_wake_irq() here?
 
-There's nothing wrong with interruptible sleep in fops->release per se,
-it's just that drivers cannot return -ERESTARTSYS and friends and expect
-to be called again later.
+If we use this API then handler "handle_threaded_wake_irq" uses device 
+specific pm_runtime functions to wake the device and currently this
 
-The return value from release() is ignored by vfs, and adding a splat in
-__fput() to catch these buggy drivers might be overkill.
+driver don't support runtime PM callbacks. Also, we want to register 
+"qcom_geni_serial_wakeup_isr" as our IRQ handler for wakeup scenario.
 
-Johan
+>
+>> +                       if (unlikely(ret))
+>> +                               dev_err(uport->dev, "%s:Failed to set IRQ wake:%d\n",
+>> +                                               __func__, ret);
+>> +               }
+>> +       }
+>>          uport->private_data = drv;
+>>          platform_set_drvdata(pdev, port);
+>>          port->handle_rx = console ? handle_rx_console : handle_rx_uart;
+>> @@ -1328,7 +1362,12 @@ static int __maybe_unused qcom_geni_serial_sys_suspend(struct device *dev)
+>>          struct qcom_geni_serial_port *port = dev_get_drvdata(dev);
+>>          struct uart_port *uport = &port->uport;
+>>   
+>> -       return uart_suspend_port(uport->private_data, uport);
+>> +       uart_suspend_port(uport->private_data, uport);
+>> +
+>> +       if (port->wakeup_irq > 0)
+>> +               enable_irq(port->wakeup_irq);
+>> +
+> Then this is hopefully done automatically?
+>
+>> +       return 0;
+>>   }
+>>   
+>>   static int __maybe_unused qcom_geni_serial_sys_resume(struct device *dev)
+
+-- 
+The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,\na Linux Foundation Collaborative Project
+
