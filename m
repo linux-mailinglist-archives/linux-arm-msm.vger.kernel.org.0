@@ -2,365 +2,94 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id C4ACCD4136
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 11 Oct 2019 15:30:14 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 07A33D4147
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 11 Oct 2019 15:31:29 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728603AbfJKN34 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 11 Oct 2019 09:29:56 -0400
-Received: from smtp.codeaurora.org ([198.145.29.96]:40044 "EHLO
-        smtp.codeaurora.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728575AbfJKN34 (ORCPT
+        id S1728002AbfJKNbY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 11 Oct 2019 09:31:24 -0400
+Received: from mail-pg1-f196.google.com ([209.85.215.196]:41597 "EHLO
+        mail-pg1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727950AbfJKNbY (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 11 Oct 2019 09:29:56 -0400
-Received: by smtp.codeaurora.org (Postfix, from userid 1000)
-        id 4345A60159; Fri, 11 Oct 2019 13:29:53 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
-        s=default; t=1570800594;
-        bh=02tvWempx51mtBj0cxQVk1Vc3Q+r7kCTjrt1bQNNRXE=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=CCkMcqzIfp5KTPxvnm6IwOB0RVf26rYC7q3r9ZiWASpJcjvG5k6LuySSQ4avmY0vq
-         h3/N/rLRFMdurH3Ve2fNyJKbHs4VnU5NW8gqPG5OP7gLjo5YbIaZlwcoTAGpN4uD34
-         7XSx8lk3cRyT4VrcS1nlA3R7Jijo7bZj6vvIyPU8=
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        pdx-caf-mail.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.7 required=2.0 tests=ALL_TRUSTED,BAYES_00,
-        DKIM_INVALID,DKIM_SIGNED,SPF_NONE autolearn=no autolearn_force=no
-        version=3.4.0
-Received: from govinds-linux.qualcomm.com (blr-c-bdr-fw-01_globalnat_allzones-outside.qualcomm.com [103.229.19.19])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: govinds@smtp.codeaurora.org)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id B239A61156;
-        Fri, 11 Oct 2019 13:29:48 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
-        s=default; t=1570800591;
-        bh=02tvWempx51mtBj0cxQVk1Vc3Q+r7kCTjrt1bQNNRXE=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=GY3ngWEEGC/s/vDGoN6u7BkSIBMZmwABeUjW/o7aDewgvgzQkKw4cOxseXi+IIjry
-         cesXrIvM+H/gSBeqjqV+kMPWad4HIfgW7P+82iEKLAR0eTg/qs3U5tPx7EpxPuxCfu
-         MwNP3o8fbrZ06WPM1NMGD2etgnteQy6UD+bqD5W0=
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org B239A61156
-Authentication-Results: pdx-caf-mail.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: pdx-caf-mail.web.codeaurora.org; spf=none smtp.mailfrom=govinds@codeaurora.org
-From:   Govind Singh <govinds@codeaurora.org>
-To:     robh@kernel.org, sboyd@kernel.org
-Cc:     bjorn.andersson@linaro.org, linux-arm-msm@vger.kernel.org,
-        linux-clk@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-soc@vger.kernel.org, linux-remoteproc@vger.kernel.org,
-        Govind Singh <govinds@codeaurora.org>
-Subject: [PATCH v4 2/2] clk: qcom: Add Q6SSTOP clock controller for QCS404
-Date:   Fri, 11 Oct 2019 18:59:28 +0530
-Message-Id: <20191011132928.9388-3-govinds@codeaurora.org>
-X-Mailer: git-send-email 2.22.0
-In-Reply-To: <20191011132928.9388-1-govinds@codeaurora.org>
-References: <20191011132928.9388-1-govinds@codeaurora.org>
+        Fri, 11 Oct 2019 09:31:24 -0400
+Received: by mail-pg1-f196.google.com with SMTP id t3so5806977pga.8;
+        Fri, 11 Oct 2019 06:31:22 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=PoH5MwnZ8mABUE4xEY3uv3HD3AizjwGwq9FYbMsqiJI=;
+        b=Dd1ZRQUqxJbJ4XmorKsIkCtEacO2eN09lx8ajkjbqAfiJu29ijb20yUVFhLES2aTAC
+         4QL7Kndoe+PxN+LYdFsp2lGfyuVNxnUBXgGL/HFakv10SrqS3+YzRMMBGS/5AuM0qlDn
+         VwX4247mLRYbydvGYCP7gGBNU2Uu7H+peXDi/cJUx3mDSY340fLjw2+5GB8Wc28eCZrS
+         n8QyxrNZjj0KNuY4OPv/yTNr5LKizc2oz1sB5GJD9k262ioPMubB2zzLWSBYfH526Ws9
+         AO5vQdOSr9WbeYAmcunbARwBa9vpuV9n8vty5ILql8hK+8i5Xpwgcg7QhX6eYZNQRz83
+         4QFA==
+X-Gm-Message-State: APjAAAXticFZNFAla4guUMdajszLoyuuDSFyefuqrKwJeTlx08PUfEfJ
+        ZBOLRBXD44y6QqNk+1pUpKY=
+X-Google-Smtp-Source: APXvYqx8TVKU23vxfiCJYNLm8ZBGLiP4x+3bYJYdBArplQPvFpQtfe3pjF2ftceD826I4XWYVhs9MQ==
+X-Received: by 2002:a17:90a:9f94:: with SMTP id o20mr17787166pjp.76.1570800682200;
+        Fri, 11 Oct 2019 06:31:22 -0700 (PDT)
+Received: from 42.do-not-panic.com (42.do-not-panic.com. [157.230.128.187])
+        by smtp.gmail.com with ESMTPSA id d4sm7744375pjs.9.2019.10.11.06.31.20
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 11 Oct 2019 06:31:21 -0700 (PDT)
+Received: by 42.do-not-panic.com (Postfix, from userid 1000)
+        id 61BD5403EA; Fri, 11 Oct 2019 13:31:20 +0000 (UTC)
+Date:   Fri, 11 Oct 2019 13:31:20 +0000
+From:   Luis Chamberlain <mcgrof@kernel.org>
+To:     Takashi Iwai <tiwai@suse.de>
+Cc:     Scott Branden <scott.branden@broadcom.com>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        David Brown <david.brown@linaro.org>,
+        Alexander Viro <viro@zeniv.linux.org.uk>,
+        Shuah Khan <shuah@kernel.org>, bjorn.andersson@linaro.org,
+        Shuah Khan <skhan@linuxfoundation.org>,
+        Arnd Bergmann <arnd@arndb.de>,
+        "Rafael J . Wysocki" <rafael@kernel.org>,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-fsdevel@vger.kernel.org,
+        BCM Kernel Feedback <bcm-kernel-feedback-list@broadcom.com>,
+        Olof Johansson <olof@lixom.net>,
+        Andrew Morton <akpm@linux-foundation.org>,
+        Dan Carpenter <dan.carpenter@oracle.com>,
+        Colin Ian King <colin.king@canonical.com>,
+        Kees Cook <keescook@chromium.org>,
+        linux-kselftest@vger.kernel.org
+Subject: Re: [PATCH 2/7] firmware: add offset to request_firmware_into_buf
+Message-ID: <20191011133120.GP16384@42.do-not-panic.com>
+References: <20190822192451.5983-1-scott.branden@broadcom.com>
+ <20190822192451.5983-3-scott.branden@broadcom.com>
+ <s5hef1crybq.wl-tiwai@suse.de>
+ <10461fcf-9eca-32b6-0f9d-23c63b3f3442@broadcom.com>
+ <s5hr258j6ln.wl-tiwai@suse.de>
+ <93b8285a-e5eb-d4a4-545d-426bbbeb8008@broadcom.com>
+ <s5ho90byhnv.wl-tiwai@suse.de>
+ <b440f372-45be-c06c-94a1-44ae6b1e7eb8@broadcom.com>
+ <s5hwoeyj3i5.wl-tiwai@suse.de>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <s5hwoeyj3i5.wl-tiwai@suse.de>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add support for the Q6SSTOP clock control used on qcs404
-based devices. This would allow wcss remoteproc driver to
-control the required WCSS Q6SSTOP clock/reset controls to
-bring the subsystem out of reset and shutdown the WCSS Q6DSP.
+On Tue, Aug 27, 2019 at 12:40:02PM +0200, Takashi Iwai wrote:
+> On Mon, 26 Aug 2019 19:24:22 +0200,
+> Scott Branden wrote:
+> > 
+> > I will admit I am not familiar with every subtlety of PCI
+> > accesses. Any comments to the Valkyrie driver in this patch series are
+> > appreciated.
+> > But not all drivers need to work on all architectures. I can add a
+> > depends on x86 64bit architectures to the driver to limit it to such.
+> 
+> But it's an individual board on PCIe, and should work no matter which
+> architecture is?  Or is this really exclusive to x86?
 
-Signed-off-by: Govind Singh <govinds@codeaurora.org>
----
- drivers/clk/qcom/Kconfig                      |   8 +
- drivers/clk/qcom/Makefile                     |   1 +
- drivers/clk/qcom/q6sstop-qcs404.c             | 223 ++++++++++++++++++
- .../dt-bindings/clock/qcom,q6sstopcc-qcs404.h |  18 ++
- 4 files changed, 250 insertions(+)
- create mode 100644 drivers/clk/qcom/q6sstop-qcs404.c
- create mode 100644 include/dt-bindings/clock/qcom,q6sstopcc-qcs404.h
+Poke Scott.
 
-diff --git a/drivers/clk/qcom/Kconfig b/drivers/clk/qcom/Kconfig
-index e1ff83cc361e..1b3c87a97521 100644
---- a/drivers/clk/qcom/Kconfig
-+++ b/drivers/clk/qcom/Kconfig
-@@ -250,6 +250,14 @@ config QCS_TURING_404
- 	  Support for the Turing Clock Controller on QCS404, provides clocks
- 	  and resets for the Turing subsystem.
- 
-+config QCS_Q6SSTOP_404
-+	tristate "QCS404 Q6SSTOP Clock Controller"
-+	select QCS_GCC_404
-+	help
-+	  Support for the Q6SSTOP clock controller on QCS404 devices.
-+	  Say Y if you want to use the Q6SSTOP branch clocks of the WCSS clock
-+	  controller to reset the Q6SSTOP subsystem.
-+
- config SDM_GCC_845
- 	tristate "SDM845 Global Clock Controller"
- 	select QCOM_GDSC
-diff --git a/drivers/clk/qcom/Makefile b/drivers/clk/qcom/Makefile
-index f0768fb1f037..086c053e0e03 100644
---- a/drivers/clk/qcom/Makefile
-+++ b/drivers/clk/qcom/Makefile
-@@ -43,6 +43,7 @@ obj-$(CONFIG_QCOM_CLK_RPMH) += clk-rpmh.o
- obj-$(CONFIG_QCOM_CLK_SMD_RPM) += clk-smd-rpm.o
- obj-$(CONFIG_QCS_GCC_404) += gcc-qcs404.o
- obj-$(CONFIG_QCS_TURING_404) += turingcc-qcs404.o
-+obj-$(CONFIG_QCS_Q6SSTOP_404) += q6sstop-qcs404.o
- obj-$(CONFIG_SDM_CAMCC_845) += camcc-sdm845.o
- obj-$(CONFIG_SDM_DISPCC_845) += dispcc-sdm845.o
- obj-$(CONFIG_SDM_GCC_660) += gcc-sdm660.o
-diff --git a/drivers/clk/qcom/q6sstop-qcs404.c b/drivers/clk/qcom/q6sstop-qcs404.c
-new file mode 100644
-index 000000000000..723f932fbf7d
---- /dev/null
-+++ b/drivers/clk/qcom/q6sstop-qcs404.c
-@@ -0,0 +1,223 @@
-+// SPDX-License-Identifier: GPL-2.0
-+/*
-+ * Copyright (c) 2018, The Linux Foundation. All rights reserved.
-+ */
-+
-+#include <linux/bitops.h>
-+#include <linux/err.h>
-+#include <linux/module.h>
-+#include <linux/platform_device.h>
-+#include <linux/pm_clock.h>
-+#include <linux/pm_runtime.h>
-+#include <linux/regmap.h>
-+
-+#include <dt-bindings/clock/qcom,q6sstopcc-qcs404.h>
-+
-+#include "clk-regmap.h"
-+#include "clk-branch.h"
-+#include "common.h"
-+#include "reset.h"
-+
-+static struct clk_branch lcc_ahbfabric_cbc_clk = {
-+	.halt_reg = 0x1b004,
-+	.halt_check = BRANCH_HALT,
-+	.clkr = {
-+		.enable_reg = 0x1b004,
-+		.enable_mask = BIT(0),
-+		.hw.init = &(struct clk_init_data){
-+			.name = "lcc_ahbfabric_cbc_clk",
-+			.ops = &clk_branch2_ops,
-+		},
-+	},
-+};
-+
-+static struct clk_branch lcc_q6ss_ahbs_cbc_clk = {
-+	.halt_reg = 0x22000,
-+	.halt_check = BRANCH_VOTED,
-+	.clkr = {
-+		.enable_reg = 0x22000,
-+		.enable_mask = BIT(0),
-+		.hw.init = &(struct clk_init_data){
-+			.name = "lcc_q6ss_ahbs_cbc_clk",
-+			.ops = &clk_branch2_ops,
-+		},
-+	},
-+};
-+
-+static struct clk_branch lcc_q6ss_tcm_slave_cbc_clk = {
-+	.halt_reg = 0x1c000,
-+	.halt_check = BRANCH_VOTED,
-+	.clkr = {
-+		.enable_reg = 0x1c000,
-+		.enable_mask = BIT(0),
-+		.hw.init = &(struct clk_init_data){
-+			.name = "lcc_q6ss_tcm_slave_cbc_clk",
-+			.ops = &clk_branch2_ops,
-+		},
-+	},
-+};
-+
-+static struct clk_branch lcc_q6ss_ahbm_cbc_clk = {
-+	.halt_reg = 0x22004,
-+	.halt_check = BRANCH_VOTED,
-+	.clkr = {
-+		.enable_reg = 0x22004,
-+		.enable_mask = BIT(0),
-+		.hw.init = &(struct clk_init_data){
-+			.name = "lcc_q6ss_ahbm_cbc_clk",
-+			.ops = &clk_branch2_ops,
-+		},
-+	},
-+};
-+
-+static struct clk_branch lcc_q6ss_axim_cbc_clk = {
-+	.halt_reg = 0x1c004,
-+	.halt_check = BRANCH_VOTED,
-+	.clkr = {
-+		.enable_reg = 0x1c004,
-+		.enable_mask = BIT(0),
-+		.hw.init = &(struct clk_init_data){
-+			.name = "lcc_q6ss_axim_cbc_clk",
-+			.ops = &clk_branch2_ops,
-+		},
-+	},
-+};
-+
-+static struct clk_branch lcc_q6ss_bcr_sleep_clk = {
-+	.halt_reg = 0x6004,
-+	.halt_check = BRANCH_VOTED,
-+	.clkr = {
-+		.enable_reg = 0x6004,
-+		.enable_mask = BIT(0),
-+		.hw.init = &(struct clk_init_data){
-+			.name = "lcc_q6ss_bcr_sleep_clk",
-+			.ops = &clk_branch2_ops,
-+		},
-+	},
-+};
-+
-+/* TCSR clock */
-+static struct clk_branch tcsr_lcc_csr_cbcr_clk = {
-+	.halt_reg = 0x8008,
-+	.halt_check = BRANCH_VOTED,
-+	.clkr = {
-+		.enable_reg = 0x8008,
-+		.enable_mask = BIT(0),
-+		.hw.init = &(struct clk_init_data){
-+			.name = "tcsr_lcc_csr_cbcr_clk",
-+			.ops = &clk_branch2_ops,
-+		},
-+	},
-+};
-+
-+static struct regmap_config q6sstop_regmap_config = {
-+	.reg_bits	= 32,
-+	.reg_stride	= 4,
-+	.val_bits	= 32,
-+	.fast_io	= true,
-+};
-+
-+static struct clk_regmap *q6sstop_qcs404_clocks[] = {
-+	[LCC_AHBFABRIC_CBC_CLK] = &lcc_ahbfabric_cbc_clk.clkr,
-+	[LCC_Q6SS_AHBS_CBC_CLK] = &lcc_q6ss_ahbs_cbc_clk.clkr,
-+	[LCC_Q6SS_TCM_SLAVE_CBC_CLK] = &lcc_q6ss_tcm_slave_cbc_clk.clkr,
-+	[LCC_Q6SS_AHBM_CBC_CLK] = &lcc_q6ss_ahbm_cbc_clk.clkr,
-+	[LCC_Q6SS_AXIM_CBC_CLK] = &lcc_q6ss_axim_cbc_clk.clkr,
-+	[LCC_Q6SS_BCR_SLEEP_CLK] = &lcc_q6ss_bcr_sleep_clk.clkr,
-+};
-+
-+static const struct qcom_reset_map q6sstop_qcs404_resets[] = {
-+	[Q6SSTOP_BCR_RESET] = { 0x6000 },
-+};
-+
-+static const struct qcom_cc_desc q6sstop_qcs404_desc = {
-+	.config = &q6sstop_regmap_config,
-+	.clks = q6sstop_qcs404_clocks,
-+	.num_clks = ARRAY_SIZE(q6sstop_qcs404_clocks),
-+	.resets = q6sstop_qcs404_resets,
-+	.num_resets = ARRAY_SIZE(q6sstop_qcs404_resets),
-+};
-+
-+static struct clk_regmap *tcsr_qcs404_clocks[] = {
-+	[TCSR_Q6SS_LCC_CBCR_CLK] = &tcsr_lcc_csr_cbcr_clk.clkr,
-+};
-+
-+static const struct qcom_cc_desc tcsr_qcs404_desc = {
-+	.config = &q6sstop_regmap_config,
-+	.clks = tcsr_qcs404_clocks,
-+	.num_clks = ARRAY_SIZE(tcsr_qcs404_clocks),
-+};
-+
-+static const struct of_device_id q6sstopcc_qcs404_match_table[] = {
-+	{ .compatible = "qcom,qcs404-q6sstopcc" },
-+	{ }
-+};
-+MODULE_DEVICE_TABLE(of, q6sstopcc_qcs404_match_table);
-+
-+static int q6sstopcc_qcs404_probe(struct platform_device *pdev)
-+{
-+	const struct qcom_cc_desc *desc;
-+	int ret;
-+
-+	pm_runtime_enable(&pdev->dev);
-+	ret = pm_clk_create(&pdev->dev);
-+	if (ret)
-+		goto disable_pm_runtime;
-+
-+	ret = pm_clk_add(&pdev->dev, NULL);
-+	if (ret < 0) {
-+		dev_err(&pdev->dev, "failed to acquire iface clock\n");
-+		goto destroy_pm_clk;
-+	}
-+
-+	q6sstop_regmap_config.name = "q6sstop_tcsr";
-+	desc = &tcsr_qcs404_desc;
-+
-+	ret = qcom_cc_probe_by_index(pdev, 1, desc);
-+	if (ret)
-+		goto destroy_pm_clk;
-+
-+	q6sstop_regmap_config.name = "q6sstop_cc";
-+	desc = &q6sstop_qcs404_desc;
-+
-+	ret = qcom_cc_probe_by_index(pdev, 0, desc);
-+	if (ret)
-+		goto destroy_pm_clk;
-+
-+	return 0;
-+
-+destroy_pm_clk:
-+	pm_clk_destroy(&pdev->dev);
-+
-+disable_pm_runtime:
-+	pm_runtime_disable(&pdev->dev);
-+
-+	return ret;
-+}
-+
-+static int q6sstopcc_qcs404_remove(struct platform_device *pdev)
-+{
-+	pm_clk_destroy(&pdev->dev);
-+	pm_runtime_disable(&pdev->dev);
-+
-+	return 0;
-+}
-+
-+static const struct dev_pm_ops q6sstopcc_pm_ops = {
-+	SET_RUNTIME_PM_OPS(pm_clk_suspend, pm_clk_resume, NULL)
-+};
-+
-+static struct platform_driver q6sstopcc_qcs404_driver = {
-+	.probe		= q6sstopcc_qcs404_probe,
-+	.remove		= q6sstopcc_qcs404_remove,
-+	.driver		= {
-+		.name	= "qcs404-q6sstopcc",
-+		.of_match_table = q6sstopcc_qcs404_match_table,
-+		.pm = &q6sstopcc_pm_ops,
-+	},
-+};
-+
-+module_platform_driver(q6sstopcc_qcs404_driver);
-+
-+MODULE_DESCRIPTION("QTI QCS404 Q6SSTOP Clock Controller Driver");
-+MODULE_LICENSE("GPL v2");
-diff --git a/include/dt-bindings/clock/qcom,q6sstopcc-qcs404.h b/include/dt-bindings/clock/qcom,q6sstopcc-qcs404.h
-new file mode 100644
-index 000000000000..c6f5290f0914
---- /dev/null
-+++ b/include/dt-bindings/clock/qcom,q6sstopcc-qcs404.h
-@@ -0,0 +1,18 @@
-+/* SPDX-License-Identifier: GPL-2.0 */
-+/*
-+ * Copyright (c) 2018, The Linux Foundation. All rights reserved.
-+ */
-+
-+#ifndef _DT_BINDINGS_CLK_Q6SSTOP_QCS404_H
-+#define _DT_BINDINGS_CLK_Q6SSTOP_QCS404_H
-+
-+#define LCC_AHBFABRIC_CBC_CLK			0
-+#define LCC_Q6SS_AHBS_CBC_CLK			1
-+#define LCC_Q6SS_TCM_SLAVE_CBC_CLK		2
-+#define LCC_Q6SS_AHBM_CBC_CLK			3
-+#define LCC_Q6SS_AXIM_CBC_CLK			4
-+#define LCC_Q6SS_BCR_SLEEP_CLK			5
-+#define TCSR_Q6SS_LCC_CBCR_CLK			6
-+
-+#define Q6SSTOP_BCR_RESET			1
-+#endif
--- 
-2.22.0
-
+  Luis
