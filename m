@@ -2,96 +2,98 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 76E47D4CBE
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 12 Oct 2019 06:19:06 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 7A039D4F37
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 12 Oct 2019 13:01:04 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727345AbfJLETC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 12 Oct 2019 00:19:02 -0400
-Received: from mail-pf1-f195.google.com ([209.85.210.195]:35859 "EHLO
-        mail-pf1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725308AbfJLETC (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 12 Oct 2019 00:19:02 -0400
-Received: by mail-pf1-f195.google.com with SMTP id y22so7226471pfr.3
-        for <linux-arm-msm@vger.kernel.org>; Fri, 11 Oct 2019 21:19:00 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=Biq3dW4bW0477lomZDFZTi490SFYFw1BtO4yj510/vM=;
-        b=r4RIe8BNwJ0mRu0383jbVNv+Pew63+jHslfI95XxABq09NjQfA2VbtjGuA/gXOLAQl
-         HZetYhW/n8CUHfMwH+Y/FRz0K1JSfvFnABT3Ywkd2sDXc97PjH/UNuAVYbf7TQ7Vw/+C
-         nDzAyJqC2ovtyVsY9x9bWkGB57LysASSXRfqls9P+Xs+CwKeCOCvAIkMhtdwb8dc2csx
-         RaQ/2BfeD5ZLEhTvJyyVcMc62wuRuAHNtxzSWPhLn3emvnNagm/59SAH8BfJGCsgei6h
-         KPjHK6QiSX2LhCf7rkvGvgxYHV6TDPoeFBIDb39q6g3YEv+9ZdsqQ474ZBj0zpWCjXo0
-         vI+g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=Biq3dW4bW0477lomZDFZTi490SFYFw1BtO4yj510/vM=;
-        b=RwY9VY9cL2RCasnnMn3D6ikI7+xI8MdvcOAoK1siroJjXc0mcuPimwn2POk9A2uKbw
-         Yq1CWbbuHqwIAGoDZpW3dILNFJTzHXsKVobRiiDrAuOvLzd+KEkhpyMUUL9cIQmf2EJF
-         YQgd60VDgzty2uvSAzHwItLB/OiAO4f55rEl0rfCZukEdw4CWK1pIdEqEmorFXji2hPF
-         Guw6G4iyROo2ku8l4+CJ54BWi02MtlA2AsCc8iHcw322dIC+AZIeszUEcyLD3Urqoh78
-         QaJEDYomdL+qgjjDuNvS7p0H4j+u6IjZUOWT0+L2h11P6iHXQ3iPXxFCYOuQ1SFhMpjQ
-         908g==
-X-Gm-Message-State: APjAAAVHgV/tCgEuDC978n8scakJgP935FMWq7Yqe6GV36v787VcLunm
-        YpvuSyWWjcUMf8tZRNWuy/C4Ig==
-X-Google-Smtp-Source: APXvYqyVEDPBqKwv5CKlG8eF2KQdfnZBkXGmGTJfcvzir7jHGT9V5OIUDE2xY5S2OQRADy06KWyO9Q==
-X-Received: by 2002:a62:8305:: with SMTP id h5mr19838213pfe.190.1570853939670;
-        Fri, 11 Oct 2019 21:18:59 -0700 (PDT)
-Received: from localhost.localdomain (104-188-17-28.lightspeed.sndgca.sbcglobal.net. [104.188.17.28])
-        by smtp.gmail.com with ESMTPSA id u9sm11142953pfl.138.2019.10.11.21.18.58
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 11 Oct 2019 21:18:58 -0700 (PDT)
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Catalin Marinas <catalin.marinas@arm.com>,
-        Will Deacon <will@kernel.org>, Shawn Guo <shawnguo@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Olof Johansson <olof@lixom.net>,
-        Maxime Ripard <mripard@kernel.org>,
-        Aisheng Dong <aisheng.dong@nxp.com>,
-        Anson Huang <Anson.Huang@nxp.com>,
-        Jagan Teki <jagan@amarulasolutions.com>,
-        Leonard Crestez <leonard.crestez@nxp.com>,
-        Dinh Nguyen <dinguyen@kernel.org>,
-        Marcin Juszkiewicz <marcin.juszkiewicz@linaro.org>
-Cc:     linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org
-Subject: [PATCH] arm64: defconfig: Enable Qualcomm SPI and QSPI controller
-Date:   Fri, 11 Oct 2019 21:18:55 -0700
-Message-Id: <20191012041855.511313-1-bjorn.andersson@linaro.org>
-X-Mailer: git-send-email 2.23.0
+        id S1728736AbfJLLAq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 12 Oct 2019 07:00:46 -0400
+Received: from onstation.org ([52.200.56.107]:39942 "EHLO onstation.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726555AbfJLLAq (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Sat, 12 Oct 2019 07:00:46 -0400
+Received: from localhost (c-98-239-145-235.hsd1.wv.comcast.net [98.239.145.235])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        (Authenticated sender: masneyb)
+        by onstation.org (Postfix) with ESMTPSA id E714D3E88D;
+        Sat, 12 Oct 2019 11:00:44 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=onstation.org;
+        s=default; t=1570878045;
+        bh=RKEyGbpvgWtwHv8UHOurWHkaxTHUsbMgak77d33UolU=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=inOMyMioapH/dHJS9M7XNIdUmPxozcHiRqJ0lNduxURkpo+/iLn9/d7wAyigCB8ZI
+         gYR/uXByl8UsSNdGbbksuAa0YEUvu8+K68Sr5h9tX/9bkb26U6W8NKI4FsAPBAU0Qk
+         1ehSKMsZzLefA2hwou0q5RSjhw1g3vAVMtSR3YJM=
+Date:   Sat, 12 Oct 2019 07:00:44 -0400
+From:   Brian Masney <masneyb@onstation.org>
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     georgi.djakov@linaro.org, robh+dt@kernel.org, agross@kernel.org,
+        mark.rutland@arm.com, linux-arm-msm@vger.kernel.org,
+        linux-pm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        devicetree@vger.kernel.org, jonathan@marek.ca
+Subject: Re: [PATCH v2 2/2] interconnect: qcom: add msm8974 driver
+Message-ID: <20191012110044.GA19009@onstation.org>
+References: <20191005114605.5279-1-masneyb@onstation.org>
+ <20191005114605.5279-3-masneyb@onstation.org>
+ <20191011170506.GD571@minitux>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20191011170506.GD571@minitux>
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Enable the drivers for GENI SPI and QSPI controllers found on the
-Qualcomm SDM845 platform, among others.
+On Fri, Oct 11, 2019 at 10:05:06AM -0700, Bjorn Andersson wrote:
+> On Sat 05 Oct 04:46 PDT 2019, Brian Masney wrote:
+> > diff --git a/drivers/interconnect/qcom/msm8974.c b/drivers/interconnect/qcom/msm8974.c
+> [..]
+> > +static void msm8974_icc_rpm_smd_send(struct device *dev, int rsc_type,
+> > +				     char *name, int id, u64 val)
+> > +{
+> > +	int ret;
+> > +
+> > +	if (id == -1)
+> > +		return;
+> > +
+> > +	/*
+> > +	 * Setting the bandwidth requests for some nodes fails and this same
+> > +	 * behavior occurs on the downstream MSM 3.4 kernel sources based on
+> > +	 * errors like this in that kernel:
+> > +	 *
+> > +	 *   msm_rpm_get_error_from_ack(): RPM NACK Unsupported resource
+> > +	 *   AXI: msm_bus_rpm_req(): RPM: Ack failed
+> > +	 *   AXI: msm_bus_rpm_commit_arb(): RPM: Req fail: mas:32, bw:240000000
+> > +	 *
+> > +	 * Since there's no publicly available documentation for this hardware,
+> > +	 * and the bandwidth for some nodes in the path can be set properly,
+> > +	 * let's not return an error.
+> > +	 */
+> 
+> So presumably all that matters for paths including these endpoints is
+> the clk_set_rate() on the bus itself.
 
-Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
----
- arch/arm64/configs/defconfig | 2 ++
- 1 file changed, 2 insertions(+)
+That's the case for the GPU at the very least.
 
-diff --git a/arch/arm64/configs/defconfig b/arch/arm64/configs/defconfig
-index 688c8f200034..dcada299ff4d 100644
---- a/arch/arm64/configs/defconfig
-+++ b/arch/arm64/configs/defconfig
-@@ -391,7 +391,9 @@ CONFIG_SPI_MESON_SPIFC=m
- CONFIG_SPI_ORION=y
- CONFIG_SPI_PL022=y
- CONFIG_SPI_ROCKCHIP=y
-+CONFIG_SPI_QCOM_QSPI=m
- CONFIG_SPI_QUP=y
-+CONFIG_SPI_QCOM_GENI=m
- CONFIG_SPI_S3C64XX=y
- CONFIG_SPI_SPIDEV=m
- CONFIG_SPI_SUN6I=y
--- 
-2.23.0
+> But I prefer that we merge it like you propose and then swing back to
+> work out the details.
 
+Thanks,
+
+Brian
+
+
+> 
+> > +	ret = qcom_icc_rpm_smd_send(QCOM_SMD_RPM_ACTIVE_STATE, rsc_type, id,
+> > +				    val);
+> > +	if (ret)
+> > +		dev_dbg(dev, "Cannot set bandwidth for node %s (%d): %d\n",
+> > +			name, id, ret);
+> > +}
+> > +
+> 
+> Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+> 
+> Regards,
+> Bjorn
