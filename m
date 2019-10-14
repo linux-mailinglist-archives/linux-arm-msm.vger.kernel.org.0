@@ -2,69 +2,125 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 7DB54D6562
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 14 Oct 2019 16:40:53 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E0BCFD66F9
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 14 Oct 2019 18:13:23 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732802AbfJNOkt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 14 Oct 2019 10:40:49 -0400
-Received: from mail-ot1-f67.google.com ([209.85.210.67]:46652 "EHLO
-        mail-ot1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1731121AbfJNOks (ORCPT
+        id S1732422AbfJNQNT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 14 Oct 2019 12:13:19 -0400
+Received: from mail-lf1-f68.google.com ([209.85.167.68]:34974 "EHLO
+        mail-lf1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1730030AbfJNQNT (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 14 Oct 2019 10:40:48 -0400
-Received: by mail-ot1-f67.google.com with SMTP id 89so13964138oth.13;
-        Mon, 14 Oct 2019 07:40:48 -0700 (PDT)
+        Mon, 14 Oct 2019 12:13:19 -0400
+Received: by mail-lf1-f68.google.com with SMTP id w6so12224397lfl.2;
+        Mon, 14 Oct 2019 09:13:17 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=rLrRGqFZt1p0PLygZY0bZGBBrDuXlpvEtk83drT5qNA=;
-        b=uPz89mGm5n4lGtmtcXz7yXVLCKHwvqnkyt4DP4Aj6MXiCfyrtWbiqb+uO4vSzCow1H
-         2Zj1Yy3skT8/rNdJtFKBtubHZdvGLB81WJN5tXkqLuiM6nMS6cYBk5NBxyBERorsoHhp
-         TlryM/9EnY/V2VZJYlIW2jjjTvDEu5TiVNc9TLKXRoDChs2OCSy9GXRdJDpGhFyRoFhg
-         suckjUPA9BlYpO5EXpAOMxg7PldXbXiIbbIY23k3kpPgY8nW7AcxyHvcERTcWN423xc/
-         zXKfWvrxmrzXXT6zNSe8UMC/J73aLHZ81Czu96ZavHYfCOfNFNNod9QJQ2rJ5n7G2gcK
-         Vc/g==
-X-Gm-Message-State: APjAAAW8Ol10LjixWIh3c1U9S/DxfneLBfNKx7u4I9mKjogbR/w+5AFF
-        yt7Bcmxi3CxoN9olxkgcog==
-X-Google-Smtp-Source: APXvYqztWmaWZJARjqFjThQ4FwgtdG5tL2swxxJ7bQZ2NmrMfIERNofp7HVxfpHfZ/vtatSEGEuTQQ==
-X-Received: by 2002:a9d:684c:: with SMTP id c12mr25367239oto.341.1571064047696;
-        Mon, 14 Oct 2019 07:40:47 -0700 (PDT)
-Received: from localhost (24-155-109-49.dyn.grandenetworks.net. [24.155.109.49])
-        by smtp.gmail.com with ESMTPSA id n39sm5714031ota.33.2019.10.14.07.40.47
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 14 Oct 2019 07:40:47 -0700 (PDT)
-Date:   Mon, 14 Oct 2019 09:40:46 -0500
-From:   Rob Herring <robh@kernel.org>
-To:     Govind Singh <govinds@codeaurora.org>
-Cc:     robh@kernel.org, sboyd@kernel.org, bjorn.andersson@linaro.org,
-        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-soc@vger.kernel.org,
-        linux-remoteproc@vger.kernel.org,
-        Govind Singh <govinds@codeaurora.org>
-Subject: Re: [PATCH v4 1/2] dt-bindings: clock: qcom: Add QCOM Q6SSTOP clock
- controller bindings
-Message-ID: <20191014144046.GA23210@bogus>
-References: <20191011132928.9388-1-govinds@codeaurora.org>
- <20191011132928.9388-2-govinds@codeaurora.org>
+        bh=YHnMAZs14fJi1NNz2NtD+GzNSsWEq3noMLIQejJbPKU=;
+        b=toH9VV3wIiWhb/2qHvQHVe+jWgxZmwSsmZS57GensCyN++iU9E+LykRN0Ln+cTA3KY
+         dwzm5i6h6jXjiL6dp2lKbQtTVPEBGYvaqWG+zX3yKSTluqFm3BrklQT2G+q1b2iXIO7I
+         p9l312WUWBvjU9wLMG9MLJtlNJXqxKKiECobN92aIMmY5yoPduxzxXHgNpUGwDvKEpRu
+         VWq4U5dEOzbevlOoYQgfTJkAkeAJ2kKO8+U4Jy01yz9cmKjtVjYZ4BXLoHyx6GUzUs7n
+         DQy/qbWucgwNONBbD10gdcSN1fKeUvtgNZtv4JOEhDHWCDRMamEjq8OKl/dfc6Kmu5xl
+         qDBw==
+X-Gm-Message-State: APjAAAUSPIzgN3OCpX5H+rlkAte+JKd7NKhZnU1b0TxXrLgxBPtVne/y
+        G39hULvg8/BJZXR8PyCNvdw=
+X-Google-Smtp-Source: APXvYqwDP0lRYsp3cJGX83F+AoNpiKoRwb/MliBNk6cC6YR1rKI1uNyUAt7eBJo+pCIcoF5AbQU7Mg==
+X-Received: by 2002:ac2:5a06:: with SMTP id q6mr16772533lfn.59.1571069596454;
+        Mon, 14 Oct 2019 09:13:16 -0700 (PDT)
+Received: from xi.terra (c-51f1e055.07-184-6d6c6d4.bbcust.telenor.se. [85.224.241.81])
+        by smtp.gmail.com with ESMTPSA id 126sm5526559lfh.45.2019.10.14.09.13.14
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Mon, 14 Oct 2019 09:13:14 -0700 (PDT)
+Received: from johan by xi.terra with local (Exim 4.92.2)
+        (envelope-from <johan@kernel.org>)
+        id 1iK2yM-00051m-6W; Mon, 14 Oct 2019 18:13:26 +0200
+Date:   Mon, 14 Oct 2019 18:13:26 +0200
+From:   Johan Hovold <johan@kernel.org>
+To:     Daniel Vetter <daniel@ffwll.ch>
+Cc:     Johan Hovold <johan@kernel.org>, Rob Clark <robdclark@gmail.com>,
+        Sean Paul <sean@poorly.run>,
+        Fabien Dessenne <fabien.dessenne@st.com>,
+        Mauro Carvalho Chehab <mchehab@kernel.org>,
+        Harald Freudenberger <freude@linux.ibm.com>,
+        David Airlie <airlied@linux.ie>,
+        Heiko Carstens <heiko.carstens@de.ibm.com>,
+        Vasily Gorbik <gor@linux.ibm.com>,
+        Christian Borntraeger <borntraeger@de.ibm.com>,
+        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org,
+        linux-media@vger.kernel.org, linux-s390@vger.kernel.org,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Al Viro <viro@zeniv.linux.org.uk>
+Subject: Re: [PATCH 0/4] treewide: fix interrupted release
+Message-ID: <20191014161326.GO13531@localhost>
+References: <20191010131333.23635-1-johan@kernel.org>
+ <20191010135043.GA16989@phenom.ffwll.local>
+ <20191011093633.GD27819@localhost>
+ <20191014084847.GD11828@phenom.ffwll.local>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20191011132928.9388-2-govinds@codeaurora.org>
-User-Agent: Mutt/1.10.1 (2018-07-13)
+In-Reply-To: <20191014084847.GD11828@phenom.ffwll.local>
+User-Agent: Mutt/1.12.1 (2019-06-15)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, 11 Oct 2019 18:59:27 +0530, Govind Singh wrote:
-> Add devicetree binding for the Q6SSTOP clock controller found in QCS404.
+On Mon, Oct 14, 2019 at 10:48:47AM +0200, Daniel Vetter wrote:
+> On Fri, Oct 11, 2019 at 11:36:33AM +0200, Johan Hovold wrote:
+> > On Thu, Oct 10, 2019 at 03:50:43PM +0200, Daniel Vetter wrote:
+> > > On Thu, Oct 10, 2019 at 03:13:29PM +0200, Johan Hovold wrote:
+> > > > Two old USB drivers had a bug in them which could lead to memory leaks
+> > > > if an interrupted process raced with a disconnect event.
+> > > > 
+> > > > Turns out we had a few more driver in other subsystems with the same
+> > > > kind of bug in them.
+> > 
+> > > Random funny idea: Could we do some debug annotations (akin to
+> > > might_sleep) that splats when you might_sleep_interruptible somewhere
+> > > where interruptible sleeps are generally a bad idea? Like in
+> > > fops->release?
+> > 
+> > There's nothing wrong with interruptible sleep in fops->release per se,
+> > it's just that drivers cannot return -ERESTARTSYS and friends and expect
+> > to be called again later.
 > 
-> Signed-off-by: Govind Singh <govinds@codeaurora.org>
-> ---
->  .../bindings/clock/qcom,q6sstopcc.yaml        | 43 +++++++++++++++++++
->  1 file changed, 43 insertions(+)
->  create mode 100644 Documentation/devicetree/bindings/clock/qcom,q6sstopcc.yaml
-> 
+> Do you have a legit usecase for interruptible sleeps in fops->release?
 
-Reviewed-by: Rob Herring <robh@kernel.org>
+The tty layer depends on this for example when waiting for buffered
+writes to complete (something which may never happen when using flow
+control).
+
+> I'm not even sure killable is legit in there, since it's an fd, not a
+> process context ...
+
+It will be run in process context in many cases, and for ttys we're good
+AFAICT.
+
+> > The return value from release() is ignored by vfs, and adding a splat in
+> > __fput() to catch these buggy drivers might be overkill.
+> 
+> Ime once you have a handful of instances of a broken pattern, creating a
+> check for it (under a debug option only ofc) is very much justified.
+> Otherwise they just come back to life like the undead, all the time. And
+> there's a _lot_ of fops->release callbacks in the kernel.
+
+Yeah, you have a point.
+
+But take tty again as an example, the close tty operation called from
+release() is declared void so there's no propagated return value for vfs
+to check.
+
+It may even be better to fix up the 100 or so callbacks potentially
+returning non-zero and make fops->release void so that the compiler
+would help us catch any future bugs and also serve as a hint for
+developers that returning errnos from fops->release is probably not
+what you want to do.
+
+But that's a lot of churn of course.
+
+Johan
