@@ -2,49 +2,49 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 9E3A0D7348
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 15 Oct 2019 12:32:27 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id ACAD3D734B
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 15 Oct 2019 12:32:28 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727401AbfJOKc0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 15 Oct 2019 06:32:26 -0400
-Received: from mail-wr1-f66.google.com ([209.85.221.66]:46849 "EHLO
-        mail-wr1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726208AbfJOKc0 (ORCPT
+        id S1730182AbfJOKc2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 15 Oct 2019 06:32:28 -0400
+Received: from mail-wr1-f65.google.com ([209.85.221.65]:35144 "EHLO
+        mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726736AbfJOKc1 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 15 Oct 2019 06:32:26 -0400
-Received: by mail-wr1-f66.google.com with SMTP id o18so23129796wrv.13;
-        Tue, 15 Oct 2019 03:32:24 -0700 (PDT)
+        Tue, 15 Oct 2019 06:32:27 -0400
+Received: by mail-wr1-f65.google.com with SMTP id v8so23196651wrt.2;
+        Tue, 15 Oct 2019 03:32:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=I/wKc+Pjte2XbHpY4kvGChrZIbJ70t+PxjeaF2HYxAg=;
-        b=rhomInVpEmCg0wyWWTNRYWZ6ZxyrAzeWlhIcONfG/hBWknQFX1yChnneZQd3EyJlqn
-         MrFItBE+YpjZIyAhRb7zcFeV0f9xVUx1f8QWlS3eWPWO9k1jJZ2JoLOqrJAcM2uNtV20
-         qIiPihqbfxpM2TmbWe4zZ1AJRe1o2Pqap/+RxAOmCqKp3NsL5QUg1pBjB41H+9wcqJ46
-         Qc5kZptfaVeA6QwugMVDug/3WLvGHkeKJ32XfrrfC1cPMxzcN2huyze0LCfVp4jN+4ba
-         2aIJjJsuEecGoyNOGwiM5Cx0KBLjSAZGDqYo1NxrFyncitcrosFiWZMUCZ/QswMCdpPs
-         iRfg==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=Hb1Yvl0/as5PLs4Q3Jw7L/tBFNfgfcQWaNt8zWD1s5o=;
+        b=hTiKP3U00F9vC4bcMA8KHw1DriGIwQMGUfdgK6o10TQ59VmCS9VgynstbsY9o2Rnmo
+         dYfyPfXKYELaDMituTYtSWoz5agL/NP0gGuC1zhKqw5iCiCX2hvtj36GBRxF/vs+QkiI
+         nyWSKtO0lln577OC/SQXC3dhizhjhFPToUVTmGwSHmRbGyDcBD74sZLivCmUGCR7vLK2
+         Kb7AhV4VKymqGIbMszhvOHyKlFJkMixmbecnYcoYQY8K4oqDvDQ8o0UQkV6tGjWJq/QY
+         68SVBCmV7kH9RSd0R1p+AXma3Vs3AgI41eRGz+At8XJ2Ij8UD4Mw/aU+dPAWcqEUAevL
+         5eUg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=I/wKc+Pjte2XbHpY4kvGChrZIbJ70t+PxjeaF2HYxAg=;
-        b=soFATKVngkAHqJDN7lUJscSImZ1W+8NaPi5OOhhQdlK2e7MSXxqexhbTPEozXm/BQD
-         7oPTPmroXZtVriva/RQvilMrAMfAzci6h1VaiMn/I+1J+V5WEPwVnEefkm3iRXtFUu61
-         sVHwPQpqmFjKydwa/b1ueVqpgRcyu67UopRHZ/hJiJMVUhC3BEKhTM9tgw5GMTW4Igk+
-         0Di/S2M7mWUABt2ACQu6w3/azs5mzdRm4jXgJzZlLAzJweGET2914/oAOFeJGuC9AMc2
-         iZXMwArDi5ZPNjUWEE+lk9FB8roXcWZlfAwiVxsAhJ5vwRqHt/bYiyGTHX2VtZBbNPUx
-         Egog==
-X-Gm-Message-State: APjAAAVioC9+7d8Hj3qJutJNfkq/rm7KxQ7ZpGlJe206IeVy3ksVwAMA
-        kfdsQF5nEOL16qXmUt19rlqvUIjnCjk14w==
-X-Google-Smtp-Source: APXvYqw7jYFEa4gsj/gRlaijhnuvCFkaVum2R6M5+YfLOC0Ej+ve8eVDrrz7x+aP01j4M+FlRj8waQ==
-X-Received: by 2002:a5d:674e:: with SMTP id l14mr28820354wrw.45.1571135543514;
-        Tue, 15 Oct 2019 03:32:23 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=Hb1Yvl0/as5PLs4Q3Jw7L/tBFNfgfcQWaNt8zWD1s5o=;
+        b=porqmYlZhQBjr/sVAy1Dwm0XewaezInhfhStC2byLm5+t1DW4eyC8tGuYvDn2pjfCZ
+         XLynzLF6u4oYHVRz/QXipWugsckqCC5gdRy/KyfgHVD1ez0yN7Gz21kGPl6geC6Rte4I
+         zXlBryXEv+kGLma+sSGm0rlYiuun4zjMs9Sil5u2yB1ZtAXQCzNcJi22xzGa/BNUVCiS
+         UJY2A/sTFxn9CZG5VPcAHttFiA65VhZp9TdrRgMT0t8UN9RN1sNL55/vqb8201jrBQZo
+         3GNUXPA/d/7JsXdjiMD/4K0Sg2LyOUHZR2q94sD9F6OZCCBiok5FnJ4C8RUMtmbjrIuQ
+         R8Xw==
+X-Gm-Message-State: APjAAAUoSDwz0TBn2h+XzU19kGH8C/4La1p68JMoZLTl0bO5IOqYVppl
+        yukbF8gRVIbG8b3Z/jfPye6CZTjrQ8FiOg==
+X-Google-Smtp-Source: APXvYqyjw2qX5Pfmjf2ymG2KIWmxr8cTyNzEqn+4CGmgRMGmdH/2knxgTH/8LnvClFCb+t6EA3c+/w==
+X-Received: by 2002:adf:dbce:: with SMTP id e14mr17255323wrj.49.1571135545174;
+        Tue, 15 Oct 2019 03:32:25 -0700 (PDT)
 Received: from IcarusMOD.eternityproject.eu ([93.51.16.173])
-        by smtp.gmail.com with ESMTPSA id c6sm22751699wrm.71.2019.10.15.03.32.22
+        by smtp.gmail.com with ESMTPSA id c6sm22751699wrm.71.2019.10.15.03.32.24
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 15 Oct 2019 03:32:22 -0700 (PDT)
+        Tue, 15 Oct 2019 03:32:24 -0700 (PDT)
 From:   kholk11@gmail.com
 To:     linux-arm-msm@vger.kernel.org
 Cc:     linux-clk@vger.kernel.org, devicetree@vger.kernel.org,
@@ -52,10 +52,12 @@ Cc:     linux-clk@vger.kernel.org, devicetree@vger.kernel.org,
         mturquette@baylibre.com, agross@kernel.org,
         bjorn.andersson@linaro.org, marijns95@gmail.com,
         AngeloGioacchino Del Regno <kholk11@gmail.com>
-Subject: [PATCH v2 0/2] Global Clock Controller driver for MSM8976/56
-Date:   Tue, 15 Oct 2019 12:32:19 +0200
-Message-Id: <20191015103221.51345-1-kholk11@gmail.com>
+Subject: [PATCH v2 2/2] dt-bindings: clock: Document MSM8976 gcc compatible
+Date:   Tue, 15 Oct 2019 12:32:21 +0200
+Message-Id: <20191015103221.51345-3-kholk11@gmail.com>
 X-Mailer: git-send-email 2.21.0
+In-Reply-To: <20191015103221.51345-1-kholk11@gmail.com>
+References: <20191015103221.51345-1-kholk11@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Sender: linux-arm-msm-owner@vger.kernel.org
@@ -65,35 +67,27 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 From: AngeloGioacchino Del Regno <kholk11@gmail.com>
 
-This is the Global Clock Controller (GCC) driver for MSM8956,
-MSM8976 and APQ variants and it has been tested on two Sony phones
-featuring the Qualcomm MSM8956 SoC.
+Document the Global Clock Controller driver (gcc-msm8976)
+compatible string.
+This driver is valid for MSM8976, MSM8956 and APQ variants.
 
-This driver is responsible for providing clocks support for also the
-MDSS and GFX3D, as these clocks are located in the GCC space here.
+Signed-off-by: AngeloGioacchino Del Regno <kholk11@gmail.com>
+---
+ Documentation/devicetree/bindings/clock/qcom,gcc.txt | 1 +
+ 1 file changed, 1 insertion(+)
 
-The personal aim is to upstream the MSM8956 SoC as much as possible
-and, at the end, to add support for the Xperia X, X Compact and if
-feasible also the Xperia Touch projector (APQ8056).
-
-Changes in v2:
-- Rebased onto linux-next 20191015
-- Fixed platform driver name (qcom,gcc-8976 => gcc-msm8976)
-- Splitted changes to dt-bindings to a separate commit
-
-AngeloGioacchino Del Regno (2):
-  clk: qcom: Add MSM8976/56 Global Clock Controller (GCC) driver
-  dt-bindings: clock: Document MSM8976 gcc compatible
-
- .../devicetree/bindings/clock/qcom,gcc.txt    |    1 +
- drivers/clk/qcom/Kconfig                      |    8 +
- drivers/clk/qcom/Makefile                     |    1 +
- drivers/clk/qcom/gcc-msm8976.c                | 4215 +++++++++++++++++
- include/dt-bindings/clock/qcom,gcc-msm8976.h  |  293 ++
- 5 files changed, 4518 insertions(+)
- create mode 100644 drivers/clk/qcom/gcc-msm8976.c
- create mode 100644 include/dt-bindings/clock/qcom,gcc-msm8976.h
-
+diff --git a/Documentation/devicetree/bindings/clock/qcom,gcc.txt b/Documentation/devicetree/bindings/clock/qcom,gcc.txt
+index d14362ad4132..565bba5df298 100644
+--- a/Documentation/devicetree/bindings/clock/qcom,gcc.txt
++++ b/Documentation/devicetree/bindings/clock/qcom,gcc.txt
+@@ -15,6 +15,7 @@ Required properties :
+ 			"qcom,gcc-msm8974"
+ 			"qcom,gcc-msm8974pro"
+ 			"qcom,gcc-msm8974pro-ac"
++			"qcom,gcc-msm8976"
+ 			"qcom,gcc-msm8994"
+ 			"qcom,gcc-msm8996"
+ 			"qcom,gcc-msm8998"
 -- 
 2.21.0
 
