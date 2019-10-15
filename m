@@ -2,164 +2,119 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 1985DD6F70
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 15 Oct 2019 08:12:04 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9A12FD6F8E
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 15 Oct 2019 08:27:50 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726715AbfJOGMD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 15 Oct 2019 02:12:03 -0400
-Received: from smtp.codeaurora.org ([198.145.29.96]:38380 "EHLO
-        smtp.codeaurora.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726101AbfJOGMD (ORCPT
+        id S1726677AbfJOG1t (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 15 Oct 2019 02:27:49 -0400
+Received: from mail-pg1-f193.google.com ([209.85.215.193]:45681 "EHLO
+        mail-pg1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726044AbfJOG1t (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 15 Oct 2019 02:12:03 -0400
-Received: by smtp.codeaurora.org (Postfix, from userid 1000)
-        id 7C04160B7A; Tue, 15 Oct 2019 06:12:01 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
-        s=default; t=1571119921;
-        bh=AmviZLY1yO1BoNAicdI+IEyxLpIEuPt8OV83BGe+L6I=;
-        h=From:To:Cc:Subject:Date:From;
-        b=GAWQEMMdimtV9dsi3uYiJg0tNffz07Mz+nEZX+H1VxUyCpiVeaFNcyyXh6TjEatfa
-         8KAVOSwi4Gael+xRSxvI6dF7/qpbBu9r6hsPedZaxPMNAuPTpSGWOw78VaMv+JnXrv
-         r+CuJTbnI4L6dfvU2nwoiR2lTRFuxhCQF+ws+gS8=
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        pdx-caf-mail.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.7 required=2.0 tests=ALL_TRUSTED,BAYES_00,
-        DKIM_INVALID,DKIM_SIGNED,SPF_NONE autolearn=no autolearn_force=no
-        version=3.4.0
-Received: from akashast-linux.qualcomm.com (blr-c-bdr-fw-01_globalnat_allzones-outside.qualcomm.com [103.229.19.19])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: akashast@smtp.codeaurora.org)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id A225D607EF;
-        Tue, 15 Oct 2019 06:11:57 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
-        s=default; t=1571119920;
-        bh=AmviZLY1yO1BoNAicdI+IEyxLpIEuPt8OV83BGe+L6I=;
-        h=From:To:Cc:Subject:Date:From;
-        b=I70IZCx+ehUk5nsiRkkOwFO8YoOOYkMOvpLdtUaO+U5ghHNXclcnvGCcdPwaFiS99
-         NRxT70CQoYZFtEB9cmf/s1Kg+9IXiUXfYi4BAYiK5zmr428vki7jof8E+opV61WMKQ
-         F8H0WgB4kgU6tW9rISuLCEgFqlOY4eczmBWShZ9I=
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org A225D607EF
-Authentication-Results: pdx-caf-mail.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: pdx-caf-mail.web.codeaurora.org; spf=none smtp.mailfrom=akashast@codeaurora.org
-From:   Akash Asthana <akashast@codeaurora.org>
-To:     gregkh@linuxfoundation.org
-Cc:     linux-arm-msm@vger.kernel.org, linux-serial@vger.kernel.org,
-        mgautam@codeaurora.org, bjorn.andersson@linaro.org,
-        swboyd@chromium.org, msavaliy@codeaurora.org,
-        Akash Asthana <akashast@codeaurora.org>
-Subject: [PATCH v3 2/2] tty: serial: qcom_geni_serial: Wakeup over UART RX
-Date:   Tue, 15 Oct 2019 11:41:42 +0530
-Message-Id: <1571119902-14169-1-git-send-email-akashast@codeaurora.org>
-X-Mailer: git-send-email 2.7.4
+        Tue, 15 Oct 2019 02:27:49 -0400
+Received: by mail-pg1-f193.google.com with SMTP id r1so10297601pgj.12
+        for <linux-arm-msm@vger.kernel.org>; Mon, 14 Oct 2019 23:27:49 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=k5eIEG1/gLx0erMcT6WJ5ct3wjvosArYgfGc6QVQQXM=;
+        b=eG2kFOCINOfTU7RMqrQbCJMdHPI7tVrQoMqDYn0Xa1y4JM0t36oUF+nwZk5e6GZ81y
+         ZkqaJh2iLwLueKtIwDgcBeOlp/bFIbT+XL30e+zNDUEIv/OL7U0BEV4IldDW/QL+CPBg
+         73Us+47xLzbK90seyxwYYCrSS6unCEdspkuAnVNihAqom7KsFr1Z1d9bihFskCDbEGwf
+         9l2WBdpxdnMFLc3ZOVVIZshDR59viVkRH8i0+874uWAC3ZQDfwlCQfFIsOmk0MP4UVvj
+         I/Lt+PmL3mXY3QI83Hk3+LLBgj9B8LgHE2NQA9Jtc9W67IE2pGSfWlz4nqh46cRY0xh1
+         g1NQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=k5eIEG1/gLx0erMcT6WJ5ct3wjvosArYgfGc6QVQQXM=;
+        b=ZsyD4wU/HZp+oRI46U/S335QW6vNkHsUn54w40xCUUNjP0iOwsQEYspRAhfpFSQfYC
+         axzTYpFXMwl396GwmC2jyns7Ma3QgSIoaoczrIrOLJObmDnf9bor/dIDIBc+1oNYR8Hp
+         SkGOxlPNiJmoWWq0DX0kJEoLrxpZTBAs/RiGW1C6yVlCF9TdPk7h3gDiOL4bPbagIkQl
+         XVEzlmyQwjH39+aNNKXwuQhX9rIkCYEr4JWr/0GjAhpSTn2IW5VLn1ivLY/cP+PFQNfU
+         jsSsvuM5I0/SN+9/7l31JQZ8+ySm9jvul+VRzvvpCm4I3pqklmHKRO4+Dq9th0wKrVC+
+         CzOg==
+X-Gm-Message-State: APjAAAWEtT1gAnysFwrf4QHcxWVgTxAYB2MrxHF0Z4Iw5dP3vd31V2HX
+        tEPvFVRv5bKSKb72hjyETE1CDA==
+X-Google-Smtp-Source: APXvYqzhmwcv+fCSsN/FiQs4MRlCLKvFXHjqsRUklAlobdqcmo7w0pGtSLJtHkN+RYOtXpMTh0brfg==
+X-Received: by 2002:a63:2309:: with SMTP id j9mr35711070pgj.3.1571120868520;
+        Mon, 14 Oct 2019 23:27:48 -0700 (PDT)
+Received: from tuxbook-pro (104-188-17-28.lightspeed.sndgca.sbcglobal.net. [104.188.17.28])
+        by smtp.gmail.com with ESMTPSA id w12sm3333477pfq.138.2019.10.14.23.27.46
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 14 Oct 2019 23:27:47 -0700 (PDT)
+Date:   Mon, 14 Oct 2019 23:27:45 -0700
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     nikitos.tr@gmail.com
+Cc:     agross@kernel.org, robh+dt@kernel.org, mark.rutland@arm.com,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, stephan@gerhold.net
+Subject: Re: [PATCH 1/2] arm64: dts: msm8916-longcheer-l8150: Enable WCNSS
+ for WiFi and BT
+Message-ID: <20191015062745.GA4731@tuxbook-pro>
+References: <20191012145821.20846-1-nikitos.tr@gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20191012145821.20846-1-nikitos.tr@gmail.com>
+User-Agent: Mutt/1.12.1 (2019-06-15)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add system wakeup capability over UART RX line for wakeup capable UART.
-When system is suspended, RX line act as an interrupt to wakeup system
-for any communication requests from peer.
+On Sat 12 Oct 07:58 PDT 2019, nikitos.tr@gmail.com wrote:
 
-Signed-off-by: Akash Asthana <akashast@codeaurora.org>
----
-Changes in V3:
- - Address review comments on v2 patch.
+> From: Nikita Travkin <nikitos.tr@gmail.com>
+> 
+> WCNSS is used on L8150 for WiFi and BT.
+> Its firmware isn't relocatable and must be loaded at specific address.
+> 
+> Signed-off-by: Nikita Travkin <nikitos.tr@gmail.com>
 
- drivers/tty/serial/qcom_geni_serial.c | 44 ++++++++++++++++++++++++++++++++++-
- 1 file changed, 43 insertions(+), 1 deletion(-)
+Both patches applied
 
-diff --git a/drivers/tty/serial/qcom_geni_serial.c b/drivers/tty/serial/qcom_geni_serial.c
-index 12dc007..bc828e49 100644
---- a/drivers/tty/serial/qcom_geni_serial.c
-+++ b/drivers/tty/serial/qcom_geni_serial.c
-@@ -14,6 +14,7 @@
- #include <linux/of.h>
- #include <linux/of_device.h>
- #include <linux/platform_device.h>
-+#include <linux/pm_wakeirq.h>
- #include <linux/qcom-geni-se.h>
- #include <linux/serial.h>
- #include <linux/serial_core.h>
-@@ -116,6 +117,7 @@ struct qcom_geni_serial_port {
- 	bool brk;
- 
- 	unsigned int tx_remaining;
-+	int wakeup_irq;
- };
- 
- static const struct uart_ops qcom_geni_console_pops;
-@@ -755,6 +757,15 @@ static void qcom_geni_serial_handle_tx(struct uart_port *uport, bool done,
- 		uart_write_wakeup(uport);
- }
- 
-+static irqreturn_t qcom_geni_serial_wakeup_isr(int isr, void *dev)
-+{
-+	struct uart_port *uport = dev;
-+
-+	pm_wakeup_event(uport->dev, 2000);
-+
-+	return IRQ_HANDLED;
-+}
-+
- static irqreturn_t qcom_geni_serial_isr(int isr, void *dev)
- {
- 	u32 m_irq_en;
-@@ -1310,6 +1321,29 @@ static int qcom_geni_serial_probe(struct platform_device *pdev)
- 		return ret;
- 	}
- 
-+	if (!console) {
-+		port->wakeup_irq = platform_get_irq_optional(pdev, 1);
-+		if (port->wakeup_irq < 0) {
-+			dev_err(&pdev->dev, "Failed to get wakeup IRQ %d\n",
-+					port->wakeup_irq);
-+		} else {
-+			irq_set_status_flags(port->wakeup_irq, IRQ_NOAUTOEN);
-+			ret = devm_request_irq(uport->dev, port->wakeup_irq,
-+				qcom_geni_serial_wakeup_isr,
-+				IRQF_TRIGGER_FALLING, "uart_wakeup", uport);
-+			if (ret) {
-+				dev_err(uport->dev, "Failed to register wakeup IRQ ret %d\n",
-+						ret);
-+				return ret;
-+			}
-+
-+			device_init_wakeup(&pdev->dev, true);
-+			ret = dev_pm_set_wake_irq(&pdev->dev, port->wakeup_irq);
-+			if (unlikely(ret))
-+				dev_err(uport->dev, "%s:Failed to set IRQ wake:%d\n",
-+						__func__, ret);
-+		}
-+	}
- 	uport->private_data = drv;
- 	platform_set_drvdata(pdev, port);
- 	port->handle_rx = console ? handle_rx_console : handle_rx_uart;
-@@ -1332,7 +1366,12 @@ static int __maybe_unused qcom_geni_serial_sys_suspend(struct device *dev)
- 	struct qcom_geni_serial_port *port = dev_get_drvdata(dev);
- 	struct uart_port *uport = &port->uport;
- 
--	return uart_suspend_port(uport->private_data, uport);
-+	uart_suspend_port(uport->private_data, uport);
-+
-+	if (port->wakeup_irq > 0)
-+		enable_irq(port->wakeup_irq);
-+
-+	return 0;
- }
- 
- static int __maybe_unused qcom_geni_serial_sys_resume(struct device *dev)
-@@ -1340,6 +1379,9 @@ static int __maybe_unused qcom_geni_serial_sys_resume(struct device *dev)
- 	struct qcom_geni_serial_port *port = dev_get_drvdata(dev);
- 	struct uart_port *uport = &port->uport;
- 
-+	if (port->wakeup_irq > 0)
-+		disable_irq(port->wakeup_irq);
-+
- 	return uart_resume_port(uport->private_data, uport);
- }
- 
--- 
-The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,\na Linux Foundation Collaborative Project
+Thank you,
+Bjorn
 
+> ---
+>  .../boot/dts/qcom/msm8916-longcheer-l8150.dts      | 14 ++++++++++++++
+>  1 file changed, 14 insertions(+)
+> 
+> diff --git a/arch/arm64/boot/dts/qcom/msm8916-longcheer-l8150.dts b/arch/arm64/boot/dts/qcom/msm8916-longcheer-l8150.dts
+> index 2b28e383fd0b..e4d467e7dedb 100644
+> --- a/arch/arm64/boot/dts/qcom/msm8916-longcheer-l8150.dts
+> +++ b/arch/arm64/boot/dts/qcom/msm8916-longcheer-l8150.dts
+> @@ -18,6 +18,16 @@
+>  		stdout-path = "serial0";
+>  	};
+>  
+> +	reserved-memory {
+> +		// wcnss.mdt is not relocatable, so it must be loaded at 0x8b600000
+> +		/delete-node/ wcnss@89300000;
+> +
+> +		wcnss_mem: wcnss@8b600000 {
+> +			reg = <0x0 0x8b600000 0x0 0x600000>;
+> +			no-map;
+> +		};
+> +	};
+> +
+>  	soc {
+>  		sdhci@7824000 {
+>  			status = "okay";
+> @@ -68,6 +78,10 @@
+>  			};
+>  		};
+>  
+> +		wcnss@a21b000 {
+> +			status = "okay";
+> +		};
+> +
+>  		/*
+>  		 * Attempting to enable these devices causes a "synchronous
+>  		 * external abort". Suspected cause is that the debug power
+> -- 
+> 2.19.1
+> 
