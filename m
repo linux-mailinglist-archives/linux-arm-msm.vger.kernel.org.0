@@ -2,94 +2,168 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 21634D7719
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 15 Oct 2019 15:09:43 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 21F60D7804
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 15 Oct 2019 16:07:36 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730318AbfJONJm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 15 Oct 2019 09:09:42 -0400
-Received: from mail-wm1-f65.google.com ([209.85.128.65]:51921 "EHLO
-        mail-wm1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730180AbfJONJl (ORCPT
+        id S1732313AbfJOOHe (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 15 Oct 2019 10:07:34 -0400
+Received: from mail-ed1-f67.google.com ([209.85.208.67]:44888 "EHLO
+        mail-ed1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1732435AbfJOOHe (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 15 Oct 2019 09:09:41 -0400
-Received: by mail-wm1-f65.google.com with SMTP id 7so20833127wme.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 15 Oct 2019 06:09:40 -0700 (PDT)
+        Tue, 15 Oct 2019 10:07:34 -0400
+Received: by mail-ed1-f67.google.com with SMTP id r16so18119784edq.11
+        for <linux-arm-msm@vger.kernel.org>; Tue, 15 Oct 2019 07:07:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=AZLh4M45F8+IHDYQfQ59rTfgOYaS9KZGvrjR75EFs2c=;
-        b=AxS3jNtI/paOnEUyOVl8yf+sRnICTDCB/pSCdYKfqkRkvuJ48UwgjiyPnmBbdvcUs8
-         3bWp50PWeCqic3cx0h/bmR/N91vRZx/oZafvItIrV5SGwMPhvzxGlNKbK4sYYgdXiQkz
-         ptjWMVNHgLfdJ/glRcVuUQhaNdBkL6ntYldvg9qQY1GrLBFM8wQsygF5/N/WS/h7CGTD
-         Lg/C+nW4EG1Kuve3pGCEP/ieDMFTRCjKVzxSDqgl4fJjyOxzAMmZYAcsEFahsfv7y2TL
-         t1fQZNKcB5KO9ky8Wf27LlVxKnJwkNISTUlal+eOASfb4iJtpubaWu7Ypb/w6wvranm1
-         LUNg==
+        d=ffwll.ch; s=google;
+        h=sender:date:from:to:cc:subject:message-id:mail-followup-to
+         :references:mime-version:content-disposition:in-reply-to:user-agent;
+        bh=qNZCwssE+agkEqCxaKtKVtylCGvXFSXX5DhiQKaIXpg=;
+        b=NPijPlHE9mOZETSF+T0qFTrnynppESRm1hPk8m15z6BtFKp/f35nb6fP0AtxA+vICD
+         JOWnOXgGumAnnyCgoxgqcArGuemzJeDfqPdA4LYis0/rmWoNPx8t+Aa38BhPM8yc5J1y
+         jTOJ95BLBFELDrUekBUcpVOI1TGYpw9L5o3bg=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=AZLh4M45F8+IHDYQfQ59rTfgOYaS9KZGvrjR75EFs2c=;
-        b=l+7j5W3B/2d17d85qzCWVtU4/cJkigWyX7WE/BQZcbJ6VinwGWTpbOaHlRuHec+nRf
-         r4UrCBdZVHorlRyqtCYakm2xzaAPoIENMhEut2JXxgenxckmREL6AvYvFKvMME0yu0J1
-         CuRy4bPixMgPvTyEs+cn7/mePqyM6tYHT7WSfOXk6+rcoITqzLvDiFKc/ND4PeNArdtk
-         1sX2TB+s32zaOqS7mkJkPBRM5oN0aXDnuCmmIosaMFz1V5Rj+5+vYXZPrgPiUvDpPwV/
-         Km5pdbv6lEjR7ha9ZsL8Djflfa9JEBjxyInusbWEi8LztgbxLHMXPH09/haiiilqdI2E
-         E7zw==
-X-Gm-Message-State: APjAAAW4+OheL+dEp5wOx2H4s6jcDIhAZbpbUoq0w7DQWhBl6qLMTfkq
-        KjksSqiesxOS8TbhCKHxxw3Ptv49to7TwMUDpOSiV1Win40=
-X-Google-Smtp-Source: APXvYqw7BzekgKwEuFDENzlpilT/WQOhMMJM0W/kjTFmA6tcRQKrddwRlgXqkc9dE6v0IjOeWL5ccaRoNMDX9hiAPU4=
-X-Received: by 2002:a1c:a651:: with SMTP id p78mr19694786wme.53.1571144979978;
- Tue, 15 Oct 2019 06:09:39 -0700 (PDT)
+        h=x-gm-message-state:sender:date:from:to:cc:subject:message-id
+         :mail-followup-to:references:mime-version:content-disposition
+         :in-reply-to:user-agent;
+        bh=qNZCwssE+agkEqCxaKtKVtylCGvXFSXX5DhiQKaIXpg=;
+        b=VGSxGfi5H1gmTrAucV+OlBSf7mbalvwc4k1NmxrRrYQI7hs5VDRKZS/g5En47TWx9j
+         xUMfGF7NTc7a/XaGRHKeMjBNRH7hDE+arJi7CDdGBh5h/rsn4lk3v5s7YUqdLOOR0dJ/
+         lPvgLdvRgjzkFNzUI5XmqTT2VUi9XtZrQ6wobVlOb++HuYUtaYM2yK4M75YWDZyMm53X
+         T4Dhm+zSVUN12MPYeTiBCY8UmvsHYcdKo4qpuIniTYz+3Z7ZwJU4Onq5FdTm25opqsoo
+         49rOD+7t7DLH1q9C91703cV1xnyanLx1B27D6nHrBpDkTln6S4x+ShXPePSdcdkz3RW3
+         8F9Q==
+X-Gm-Message-State: APjAAAXYJr/tFD72rGSJ3yNSqSte8bS4lbl8+P1x6T9vu/4nz+mzFrz5
+        7quCQn5MdaYh1JWxp3DbNvrDpgq8t6c=
+X-Google-Smtp-Source: APXvYqxwy4bxug6xoJIsFM59wzr8Eu7OLed7aQTfUGOfiWObU9eeM/ertrRHn6MHc5kJuwT0SZQfrw==
+X-Received: by 2002:a17:906:6a8e:: with SMTP id p14mr34255737ejr.137.1571148449724;
+        Tue, 15 Oct 2019 07:07:29 -0700 (PDT)
+Received: from phenom.ffwll.local (212-51-149-96.fiber7.init7.net. [212.51.149.96])
+        by smtp.gmail.com with ESMTPSA id d2sm3745355eda.20.2019.10.15.07.07.27
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 15 Oct 2019 07:07:28 -0700 (PDT)
+Date:   Tue, 15 Oct 2019 16:07:26 +0200
+From:   Daniel Vetter <daniel@ffwll.ch>
+To:     Johan Hovold <johan@kernel.org>
+Cc:     Daniel Vetter <daniel@ffwll.ch>, Rob Clark <robdclark@gmail.com>,
+        Sean Paul <sean@poorly.run>,
+        Fabien Dessenne <fabien.dessenne@st.com>,
+        Mauro Carvalho Chehab <mchehab@kernel.org>,
+        Harald Freudenberger <freude@linux.ibm.com>,
+        David Airlie <airlied@linux.ie>,
+        Heiko Carstens <heiko.carstens@de.ibm.com>,
+        Vasily Gorbik <gor@linux.ibm.com>,
+        Christian Borntraeger <borntraeger@de.ibm.com>,
+        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org,
+        linux-media@vger.kernel.org, linux-s390@vger.kernel.org,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Al Viro <viro@zeniv.linux.org.uk>
+Subject: Re: [PATCH 0/4] treewide: fix interrupted release
+Message-ID: <20191015140726.GN11828@phenom.ffwll.local>
+Mail-Followup-To: Johan Hovold <johan@kernel.org>,
+        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        Fabien Dessenne <fabien.dessenne@st.com>,
+        Mauro Carvalho Chehab <mchehab@kernel.org>,
+        Harald Freudenberger <freude@linux.ibm.com>,
+        David Airlie <airlied@linux.ie>,
+        Heiko Carstens <heiko.carstens@de.ibm.com>,
+        Vasily Gorbik <gor@linux.ibm.com>,
+        Christian Borntraeger <borntraeger@de.ibm.com>,
+        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org,
+        linux-media@vger.kernel.org, linux-s390@vger.kernel.org,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Al Viro <viro@zeniv.linux.org.uk>
+References: <20191010131333.23635-1-johan@kernel.org>
+ <20191010135043.GA16989@phenom.ffwll.local>
+ <20191011093633.GD27819@localhost>
+ <20191014084847.GD11828@phenom.ffwll.local>
+ <20191014161326.GO13531@localhost>
 MIME-Version: 1.0
-References: <20191001220205.6423-1-kholk11@gmail.com> <20191001220205.6423-2-kholk11@gmail.com>
- <20191015111454.GG14518@8bytes.org> <CAK7fi1YZXW=mqC5HWtfBWsioAq-duejAk6RgtD8npKZR=af38w@mail.gmail.com>
- <20191015124008.GB17570@8bytes.org>
-In-Reply-To: <20191015124008.GB17570@8bytes.org>
-From:   AngeloGioacchino Del Regno <kholk11@gmail.com>
-Date:   Tue, 15 Oct 2019 15:09:29 +0200
-Message-ID: <CAK7fi1YT_Or0bD3DwofQ_BLUsKyY3M7T8XCmDp1PAK9To7b64g@mail.gmail.com>
-Subject: Re: [PATCH v4 1/7] firmware: qcom: scm: Add function to set IOMMU
- pagetable addressing
-To:     Joerg Roedel <joro@8bytes.org>
-Cc:     MSM <linux-arm-msm@vger.kernel.org>,
-        iommu@lists.linux-foundation.org, marijns95@gmail.com,
-        Andy Gross <agross@kernel.org>, Rob Clark <robdclark@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20191014161326.GO13531@localhost>
+X-Operating-System: Linux phenom 5.2.0-2-amd64 
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Il giorno mar 15 ott 2019 alle ore 14:40 Joerg Roedel
-<joro@8bytes.org> ha scritto:
->
-> On Tue, Oct 15, 2019 at 02:33:47PM +0200, AngeloGioacchino Del Regno wrote:
-> > Il giorno mar 15 ott 2019 alle ore 13:14 Joerg Roedel
-> > <joro@8bytes.org> ha scritto:
-> > >
-> > > On Wed, Oct 02, 2019 at 12:01:59AM +0200, kholk11@gmail.com wrote:
-> > > > From: "Angelo G. Del Regno" <kholk11@gmail.com>
-> > > >
-> > > > Add a function to change the IOMMU pagetable addressing to
-> > > > AArch32 LPAE or AArch64. If doing that, then this must be
-> > > > done for each IOMMU context (not necessarily at the same time).
-> > >
-> > > This patch lacks a Signed-off-by.
-> > >
-> >
-> > I'm sorry for that. Should I resend or is it enough for me to write it here?
-> >
-> > Signed-off-by: AngeloGioacchino Del Regno <kholk11@gmail.com>
->
-> Please resend, but you are free to wait for the reviews/acks from Rob
-> Clark, which I'd like to see on the series.
->
-> Regards,
->
->         Joerg
+On Mon, Oct 14, 2019 at 06:13:26PM +0200, Johan Hovold wrote:
+> On Mon, Oct 14, 2019 at 10:48:47AM +0200, Daniel Vetter wrote:
+> > On Fri, Oct 11, 2019 at 11:36:33AM +0200, Johan Hovold wrote:
+> > > On Thu, Oct 10, 2019 at 03:50:43PM +0200, Daniel Vetter wrote:
+> > > > On Thu, Oct 10, 2019 at 03:13:29PM +0200, Johan Hovold wrote:
+> > > > > Two old USB drivers had a bug in them which could lead to memory leaks
+> > > > > if an interrupted process raced with a disconnect event.
+> > > > > 
+> > > > > Turns out we had a few more driver in other subsystems with the same
+> > > > > kind of bug in them.
+> > > 
+> > > > Random funny idea: Could we do some debug annotations (akin to
+> > > > might_sleep) that splats when you might_sleep_interruptible somewhere
+> > > > where interruptible sleeps are generally a bad idea? Like in
+> > > > fops->release?
+> > > 
+> > > There's nothing wrong with interruptible sleep in fops->release per se,
+> > > it's just that drivers cannot return -ERESTARTSYS and friends and expect
+> > > to be called again later.
+> > 
+> > Do you have a legit usecase for interruptible sleeps in fops->release?
+> 
+> The tty layer depends on this for example when waiting for buffered
+> writes to complete (something which may never happen when using flow
+> control).
+> 
+> > I'm not even sure killable is legit in there, since it's an fd, not a
+> > process context ...
+> 
+> It will be run in process context in many cases, and for ttys we're good
+> AFAICT.
 
-Okay, no problem. I will wait for the reviews/acks from Rob before
-resending in order to limit the amount of emails in everyone's inbox :))
+Huh, read it a bit, all the ->shutdown callbacks have void return type.
+But there's indeed interruptible sleeps in there. Doesn't this break
+userspace that expects that a close() actually flushes the tty?
 
-Angelo
+Imo if you're ->release callbacks feels like it should do a wait to
+guaranteed something userspace expects, then doing a
+wait_interruptible/killable feels like a bug. Or alternatively, the wait
+isn't really needed in the first place.
+
+> > > The return value from release() is ignored by vfs, and adding a splat in
+> > > __fput() to catch these buggy drivers might be overkill.
+> > 
+> > Ime once you have a handful of instances of a broken pattern, creating a
+> > check for it (under a debug option only ofc) is very much justified.
+> > Otherwise they just come back to life like the undead, all the time. And
+> > there's a _lot_ of fops->release callbacks in the kernel.
+> 
+> Yeah, you have a point.
+> 
+> But take tty again as an example, the close tty operation called from
+> release() is declared void so there's no propagated return value for vfs
+> to check.
+> 
+> It may even be better to fix up the 100 or so callbacks potentially
+> returning non-zero and make fops->release void so that the compiler
+> would help us catch any future bugs and also serve as a hint for
+> developers that returning errnos from fops->release is probably not
+> what you want to do.
+> 
+> But that's a lot of churn of course.
+
+Hm indeed ->release has int as return type. I guess that's needed for
+file I/O errno and similar stuff ...
+
+Still void return value doesn't catch funny stuff like doing interruptible
+waits and occasionally failing if you have a process that likes to use
+signals and also uses some library somewhere to do something. In graphics
+we have that, with Xorg loving signals for various things.
+-Daniel
+-- 
+Daniel Vetter
+Software Engineer, Intel Corporation
+http://blog.ffwll.ch
