@@ -2,474 +2,288 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id BD4BED7357
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 15 Oct 2019 12:34:29 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id CBCB2D736D
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 15 Oct 2019 12:39:46 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730737AbfJOKe2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 15 Oct 2019 06:34:28 -0400
-Received: from smtp.codeaurora.org ([198.145.29.96]:60022 "EHLO
-        smtp.codeaurora.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726441AbfJOKe2 (ORCPT
+        id S1730856AbfJOKjp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 15 Oct 2019 06:39:45 -0400
+Received: from mail-wr1-f68.google.com ([209.85.221.68]:37205 "EHLO
+        mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1730847AbfJOKjp (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 15 Oct 2019 06:34:28 -0400
-Received: by smtp.codeaurora.org (Postfix, from userid 1000)
-        id 2E86C6079C; Tue, 15 Oct 2019 10:34:27 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
-        s=default; t=1571135667;
-        bh=VWx7MKP00kEanON7RDhnXUR7/sRbU576P8it8O0+tUw=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=aYWcop+6YQTSxHMhIVFH772sTBQWmHFYfBmN8HJTUI8QVuAO87CHInLiDpQADiCA2
-         lX8oWfhFX+FVZ+zloxvIGMqEQn4J0eWfZMz9ZWvHsuvnIVM0O4Qj7tFxUUk+b1IkH7
-         +SZwRKJ7lcVvyvB2+pigwId6oY3TTVu2TReBFB7E=
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        pdx-caf-mail.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.7 required=2.0 tests=ALL_TRUSTED,BAYES_00,
-        DKIM_INVALID,DKIM_SIGNED,SPF_NONE autolearn=no autolearn_force=no
-        version=3.4.0
-Received: from blr-ubuntu-173.qualcomm.com (blr-bdr-fw-01_globalnat_allzones-outside.qualcomm.com [103.229.18.19])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: rnayak@smtp.codeaurora.org)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 6FBF0603A3;
-        Tue, 15 Oct 2019 10:34:23 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
-        s=default; t=1571135666;
-        bh=VWx7MKP00kEanON7RDhnXUR7/sRbU576P8it8O0+tUw=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=Z4gPIOez7kUnoK550E7VaiVqL+RDTqVOdjrRPQjYPg7pahFaU8JX/5Q5b/NQ3etFO
-         x25I7kDeTaZhQ9zORWF8mYJD5szjeavZQ6hGrjMjPmHuMtgNPzY3c9jnqxqRbRlHAv
-         OAGqsmLx6eTEviGM1XG0cehIuwWoSO6IqA57p+Mk=
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 6FBF0603A3
-Authentication-Results: pdx-caf-mail.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: pdx-caf-mail.web.codeaurora.org; spf=none smtp.mailfrom=rnayak@codeaurora.org
-From:   Rajendra Nayak <rnayak@codeaurora.org>
-To:     agross@kernel.org, robh+dt@kernel.org, bjorn.andersson@linaro.org
-Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org,
-        Rajendra Nayak <rnayak@codeaurora.org>,
-        Taniya Das <tdas@codeaurora.org>
-Subject: [PATCH 2/2] arm64: dts: sc7180: Add minimal dts/dtsi files for SC7180 soc
-Date:   Tue, 15 Oct 2019 16:03:58 +0530
-Message-Id: <20191015103358.17550-2-rnayak@codeaurora.org>
-X-Mailer: git-send-email 2.22.0
-In-Reply-To: <20191015103358.17550-1-rnayak@codeaurora.org>
-References: <20191015103358.17550-1-rnayak@codeaurora.org>
+        Tue, 15 Oct 2019 06:39:45 -0400
+Received: by mail-wr1-f68.google.com with SMTP id p14so23204809wro.4;
+        Tue, 15 Oct 2019 03:39:42 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=wjXUMmNuYZvxx2qvB5y7TSVYeNKRIfYalXPuISl5bDA=;
+        b=AC+uTzGaTm9k3qtOK0KxFwxVS3jG8wv4RxjgZPQgLkzLIPYUkoCnYx3/4uyw+29jwL
+         abO9cowEEaVjFa/8hZhxtCFF7OkfzSIuTQEyJ+FwqkBhgZwC00aIJEhs0S/hYVgN3AHO
+         snMfDAKcmHH3e7ClYab3vsOpzJUHNOiV4Ss3HIIZJUmUxyqYYHHkwZ6xb2fiCNdoPm3x
+         dtzATgICZpDLW5yXcUNX/R4K+fgcXo1v3vIyY/0Rt3ABqnR5P6cEdEdTJFkMJmP2rTvV
+         sS0ZTnifh/dhDnXViFyHtaMZmnDQJsZLk8DMY6Cxw+DCjT+IFXAmvSlpj9uD7iM4HG93
+         f5tw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=wjXUMmNuYZvxx2qvB5y7TSVYeNKRIfYalXPuISl5bDA=;
+        b=NWVBjkFQi2Sqw2p1Wkl00uy1+UQA01qQ/5OTsJDgLFVjiUy/itLVtefwu1GceAEwtJ
+         UfRT6xKy8f5lgzi4u84I9COrHjXXyEP5u8EUlRkcyWb0BLuES6KvtfsWtzkCBhQ9If5S
+         FvX6pZxYt41LvNZoomsADRqWfwQu9VnIpoDJMfzGouABL7mXyMRl0dN1U19kdME/5eey
+         xEOGVxFUGi7MWOp19HFPo0BZhQnT0iO+T9sjVRGUuymv+LqI0gDF1M78+AjNC6eqsQ5f
+         SccGjHdk4js+Vb3zZcf5ovGQ3z13GVNrKi/4QfpmQgLbwu24kf0yFKpmfti7O1sb/CAp
+         rFEQ==
+X-Gm-Message-State: APjAAAWFykp6mYHWPxg0DAvO3gnw00xts9pRksPte6M/WpSPXxfl6bT0
+        MyFFeFqzVz3IEexo3xWhi0RXac1tk2xNM53pFTz/H4nMq/k/XQ==
+X-Google-Smtp-Source: APXvYqxv5LQwYrq4l/SiJhApIKaoUGJKV02utC0apmPj61dSdCJs1GNEZZbBNo8JPt/GYEpHkSvmXvCINwtnWgfAHXI=
+X-Received: by 2002:adf:ecc7:: with SMTP id s7mr597816wro.305.1571135981658;
+ Tue, 15 Oct 2019 03:39:41 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <20191005105936.31216-1-kholk11@gmail.com> <20191005105936.31216-3-kholk11@gmail.com>
+ <20191007055643.GK6390@tuxbook-pro>
+In-Reply-To: <20191007055643.GK6390@tuxbook-pro>
+From:   AngeloGioacchino Del Regno <kholk11@gmail.com>
+Date:   Tue, 15 Oct 2019 12:39:30 +0200
+Message-ID: <CAK7fi1bt-TRC0f1JxpEGBEKdGXqS9DVTh8WubxaZGAOC=XPZVw@mail.gmail.com>
+Subject: Re: [PATCH 2/2] dt-bindings: pinctrl: Add MSM8976 driver bindings and documentation
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     MSM <linux-arm-msm@vger.kernel.org>, linux-gpio@vger.kernel.org,
+        devicetree@vger.kernel.org, Andy Gross <agross@kernel.org>,
+        Linus Walleij <linus.walleij@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Mark Rutland <mark.rutland@arm.com>, marijns95@gmail.com
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add skeletal sc7180 SoC dtsi and idp board dts files.
+Il giorno lun 7 ott 2019 alle ore 07:56 Bjorn Andersson
+<bjorn.andersson@linaro.org> ha scritto:
+>
+> On Sat 05 Oct 03:59 PDT 2019, kholk11@gmail.com wrote:
+>
+> > From: AngeloGioacchino Del Regno <kholk11@gmail.com>
+> >
+> > Add the documentation for this new driver for pin configuration
+> > with the pinctrl framework on MSM8976/56 and its APQ variants.
+>
+> You forgot your Signed-off-by on this patch.
+>
+> Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+>
+> Regards,
+> Bjorn
+>
 
-Co-developed-by: Taniya Das <tdas@codeaurora.org>
-Signed-off-by: Taniya Das <tdas@codeaurora.org>
-Signed-off-by: Rajendra Nayak <rnayak@codeaurora.org>
----
-This isn't ready for merge yet, depends on gcc driver patches [1]
-for the DT header inclusion 
+Oops! That was totally unintentional.
+I don't know how should I proceed in these cases but seems overkill to resend
+the entire thing just to add the tag. If I have to then I will,
+otherwise, whoever
+will apply this, please feel free to add my
 
-[1] https://www.spinics.net/lists/linux-clk/msg41851.html
+Signed-off-by: AngeloGioacchino Del Regno <kholk11@gmail.com>
 
- arch/arm64/boot/dts/qcom/Makefile       |   1 +
- arch/arm64/boot/dts/qcom/sc7180-idp.dts |  47 ++++
- arch/arm64/boot/dts/qcom/sc7180.dtsi    | 318 ++++++++++++++++++++++++
- 3 files changed, 366 insertions(+)
- create mode 100644 arch/arm64/boot/dts/qcom/sc7180-idp.dts
- create mode 100644 arch/arm64/boot/dts/qcom/sc7180.dtsi
+Thanks,
+Angelo
 
-diff --git a/arch/arm64/boot/dts/qcom/Makefile b/arch/arm64/boot/dts/qcom/Makefile
-index 6498a1ec893f..7a5c2f7fe37f 100644
---- a/arch/arm64/boot/dts/qcom/Makefile
-+++ b/arch/arm64/boot/dts/qcom/Makefile
-@@ -13,6 +13,7 @@ dtb-$(CONFIG_ARCH_QCOM)	+= msm8998-asus-novago-tp370ql.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= msm8998-hp-envy-x2.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= msm8998-lenovo-miix-630.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= msm8998-mtp.dtb
-+dtb-$(CONFIG_ARCH_QCOM)	+= sc7180-idp.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= sdm845-cheza-r1.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= sdm845-cheza-r2.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= sdm845-cheza-r3.dtb
-diff --git a/arch/arm64/boot/dts/qcom/sc7180-idp.dts b/arch/arm64/boot/dts/qcom/sc7180-idp.dts
-new file mode 100644
-index 000000000000..f8b7e098f5b4
---- /dev/null
-+++ b/arch/arm64/boot/dts/qcom/sc7180-idp.dts
-@@ -0,0 +1,47 @@
-+// SPDX-License-Identifier: BSD-3-Clause
-+/*
-+ * SC7180 IDP board device tree source
-+ *
-+ * Copyright (c) 2019, The Linux Foundation. All rights reserved.
-+ */
-+
-+/dts-v1/;
-+
-+#include "sc7180.dtsi"
-+
-+/ {
-+	model = "Qualcomm Technologies, Inc. SC7180 IDP";
-+	compatible = "qcom,sc7180-idp";
-+
-+	aliases {
-+		serial0 = &uart2;
-+	};
-+
-+	chosen {
-+		stdout-path = "serial0:115200n8";
-+	};
-+};
-+
-+&qupv3_id_0 {
-+	status = "okay";
-+};
-+
-+&uart2 {
-+	status = "okay";
-+};
-+
-+/* PINCTRL - additions to nodes defined in sc7180.dtsi */
-+
-+&qup_uart2_default {
-+	pinconf-tx {
-+		pins = "gpio44";
-+		drive-strength = <2>;
-+		bias-disable;
-+	};
-+
-+	pinconf-rx {
-+		pins = "gpio45";
-+		drive-strength = <2>;
-+		bias-pull-up;
-+	};
-+};
-diff --git a/arch/arm64/boot/dts/qcom/sc7180.dtsi b/arch/arm64/boot/dts/qcom/sc7180.dtsi
-new file mode 100644
-index 000000000000..2e127571892d
---- /dev/null
-+++ b/arch/arm64/boot/dts/qcom/sc7180.dtsi
-@@ -0,0 +1,318 @@
-+// SPDX-License-Identifier: BSD-3-Clause
-+/*
-+ * SC7180 SoC device tree source
-+ *
-+ * Copyright (c) 2019, The Linux Foundation. All rights reserved.
-+ */
-+
-+#include <dt-bindings/interrupt-controller/arm-gic.h>
-+#include <dt-bindings/clock/qcom,gcc-sc7180.h>
-+
-+/ {
-+	interrupt-parent = <&intc>;
-+
-+	#address-cells = <2>;
-+	#size-cells = <2>;
-+
-+	chosen { };
-+
-+	memory@80000000 {
-+		device_type = "memory";
-+		/* We expect the bootloader to fill in the size */
-+		reg = <0 0x80000000 0 0>;
-+	};
-+
-+	cpus {
-+		#address-cells = <2>;
-+		#size-cells = <0>;
-+
-+		CPU0: cpu@0 {
-+			device_type = "cpu";
-+			compatible = "arm,armv8";
-+			reg = <0x0 0x0>;
-+			enable-method = "psci";
-+			next-level-cache = <&L2_0>;
-+			L2_0: l2-cache {
-+				compatible = "cache";
-+				next-level-cache = <&L3_0>;
-+				L3_0: l3-cache {
-+					compatible = "cache";
-+				};
-+			};
-+		};
-+
-+		CPU1: cpu@100 {
-+			device_type = "cpu";
-+			compatible = "arm,armv8";
-+			reg = <0x0 0x100>;
-+			enable-method = "psci";
-+			next-level-cache = <&L2_100>;
-+			L2_100: l2-cache {
-+				compatible = "cache";
-+				next-level-cache = <&L3_0>;
-+			};
-+		};
-+
-+		CPU2: cpu@200 {
-+			device_type = "cpu";
-+			compatible = "arm,armv8";
-+			reg = <0x0 0x200>;
-+			enable-method = "psci";
-+			next-level-cache = <&L2_200>;
-+			L2_200: l2-cache {
-+				compatible = "cache";
-+				next-level-cache = <&L3_0>;
-+			};
-+		};
-+
-+		CPU3: cpu@300 {
-+			device_type = "cpu";
-+			compatible = "arm,armv8";
-+			reg = <0x0 0x300>;
-+			enable-method = "psci";
-+			next-level-cache = <&L2_300>;
-+			L2_300: l2-cache {
-+				compatible = "cache";
-+				next-level-cache = <&L3_0>;
-+			};
-+		};
-+
-+		CPU4: cpu@400 {
-+			device_type = "cpu";
-+			compatible = "arm,armv8";
-+			reg = <0x0 0x400>;
-+			enable-method = "psci";
-+			next-level-cache = <&L2_400>;
-+			L2_400: l2-cache {
-+				compatible = "cache";
-+				next-level-cache = <&L3_0>;
-+			};
-+		};
-+
-+		CPU5: cpu@500 {
-+			device_type = "cpu";
-+			compatible = "arm,armv8";
-+			reg = <0x0 0x500>;
-+			enable-method = "psci";
-+			next-level-cache = <&L2_500>;
-+			L2_500: l2-cache {
-+				compatible = "cache";
-+				next-level-cache = <&L3_0>;
-+			};
-+		};
-+
-+		CPU6: cpu@600 {
-+			device_type = "cpu";
-+			compatible = "arm,armv8";
-+			reg = <0x0 0x600>;
-+			enable-method = "psci";
-+			next-level-cache = <&L2_600>;
-+			L2_600: l2-cache {
-+				compatible = "cache";
-+				next-level-cache = <&L3_0>;
-+			};
-+		};
-+
-+		CPU7: cpu@700 {
-+			device_type = "cpu";
-+			compatible = "arm,armv8";
-+			reg = <0x0 0x700>;
-+			enable-method = "psci";
-+			next-level-cache = <&L2_700>;
-+			L2_700: l2-cache {
-+				compatible = "cache";
-+				next-level-cache = <&L3_0>;
-+			};
-+		};
-+	};
-+
-+	pmu {
-+		compatible = "arm,armv8-pmuv3";
-+		interrupts = <GIC_PPI 5 IRQ_TYPE_LEVEL_HIGH>;
-+	};
-+
-+	timer {
-+		compatible = "arm,armv8-timer";
-+		interrupts = <GIC_PPI 1 IRQ_TYPE_LEVEL_LOW>,
-+			     <GIC_PPI 2 IRQ_TYPE_LEVEL_LOW>,
-+			     <GIC_PPI 3 IRQ_TYPE_LEVEL_LOW>,
-+			     <GIC_PPI 0 IRQ_TYPE_LEVEL_LOW>;
-+	};
-+
-+	clocks {
-+		xo_board: xo-board {
-+			compatible = "fixed-clock";
-+			clock-frequency = <38400000>;
-+			clock-output-names = "xo_board";
-+			#clock-cells = <0>;
-+		};
-+
-+		sleep_clk: sleep-clk {
-+			compatible = "fixed-clock";
-+			clock-frequency = <32764>;
-+			clock-output-names = "sleep_clk";
-+			#clock-cells = <0>;
-+		};
-+
-+		bi_tcxo: bi_tcxo {
-+			compatible = "fixed-factor-clock";
-+			clocks = <&xo_board>;
-+			clock-mult = <1>;
-+			clock-div = <2>;
-+			#clock-cells = <0>;
-+		};
-+
-+		bi_tcxo_ao: bi_tcxo_ao {
-+			compatible = "fixed-factor-clock";
-+			clocks = <&xo_board>;
-+			clock-mult = <1>;
-+			clock-div = <2>;
-+			#clock-cells = <0>;
-+		};
-+	};
-+
-+	psci {
-+		compatible = "arm,psci-1.0";
-+		method = "smc";
-+	};
-+
-+	soc: soc {
-+		#address-cells = <2>;
-+		#size-cells = <2>;
-+		ranges = <0 0 0 0 0x10 0>;
-+		dma-ranges = <0 0 0 0  0x10 0>;
-+		compatible = "simple-bus";
-+
-+		gcc: clock-controller@100000 {
-+			compatible = "qcom,gcc-sc7180";
-+			reg = <0 0x00100000 0 0x1f0000>;
-+			clocks = <&bi_tcxo>, <&bi_tcxo_ao>;
-+			clock-names = "bi_tcxo", "bi_tcxo_ao";
-+			#clock-cells = <1>;
-+			#reset-cells = <1>;
-+			#power-domain-cells = <1>;
-+		};
-+
-+		qupv3_id_0: geniqup@ac0000 {
-+			compatible = "qcom,geni-se-qup";
-+			reg = <0 0x00ac0000 0 0x6000>;
-+			clock-names = "m-ahb", "s-ahb";
-+			clocks = <&gcc GCC_QUPV3_WRAP_1_M_AHB_CLK>,
-+				 <&gcc GCC_QUPV3_WRAP_1_S_AHB_CLK>;
-+			#address-cells = <2>;
-+			#size-cells = <2>;
-+			ranges;
-+			status = "disabled";
-+
-+			uart2: serial@a88000 {
-+				compatible = "qcom,geni-debug-uart";
-+				reg = <0 0x00a88000 0 0x4000>;
-+				clock-names = "se";
-+				clocks = <&gcc GCC_QUPV3_WRAP1_S2_CLK>;
-+				pinctrl-names = "default";
-+				pinctrl-0 = <&qup_uart2_default>;
-+				interrupts = <GIC_SPI 355 IRQ_TYPE_LEVEL_HIGH>;
-+				status = "disabled";
-+			};
-+		};
-+
-+		tlmm: pinctrl@3500000 {
-+			compatible = "qcom,sc7180-pinctrl";
-+			reg = <0 0x03500000 0 0x300000>,
-+			      <0 0x03900000 0 0x300000>,
-+			      <0 0x03d00000 0 0x300000>;
-+			reg-names = "west", "north", "south";
-+			interrupts = <GIC_SPI 208 IRQ_TYPE_LEVEL_HIGH>;
-+			gpio-controller;
-+			#gpio-cells = <2>;
-+			interrupt-controller;
-+			#interrupt-cells = <2>;
-+			gpio-ranges = <&tlmm 0 0 120>;
-+
-+			qup_uart2_default: qup-uart2-default {
-+				pinmux {
-+					pins = "gpio44", "gpio45";
-+					function = "qup12";
-+				};
-+			};
-+		};
-+
-+		intc: interrupt-controller@17a00000 {
-+			compatible = "arm,gic-v3";
-+			#address-cells = <2>;
-+			#size-cells = <2>;
-+			ranges;
-+			#interrupt-cells = <3>;
-+			interrupt-controller;
-+			reg = <0 0x17a00000 0 0x10000>,     /* GICD */
-+			      <0 0x17a60000 0 0x100000>;    /* GICR * 8 */
-+			interrupts = <GIC_PPI 9 IRQ_TYPE_LEVEL_HIGH>;
-+
-+			gic-its@17a40000 {
-+				compatible = "arm,gic-v3-its";
-+				msi-controller;
-+				#msi-cells = <1>;
-+				reg = <0 0x17a40000 0 0x20000>;
-+				status = "disabled";
-+			};
-+		};
-+
-+		timer@17c20000{
-+			#address-cells = <2>;
-+			#size-cells = <2>;
-+			ranges;
-+			compatible = "arm,armv7-timer-mem";
-+			reg = <0 0x17c20000 0 0x1000>;
-+
-+			frame@17c21000 {
-+				frame-number = <0>;
-+				interrupts = <GIC_SPI 8 IRQ_TYPE_LEVEL_HIGH>,
-+					     <GIC_SPI 6 IRQ_TYPE_LEVEL_HIGH>;
-+				reg = <0 0x17c21000 0 0x1000>,
-+				      <0 0x17c22000 0 0x1000>;
-+			};
-+
-+			frame@17c23000 {
-+				frame-number = <1>;
-+				interrupts = <GIC_SPI 9 IRQ_TYPE_LEVEL_HIGH>;
-+				reg = <0 0x17c23000 0 0x1000>;
-+				status = "disabled";
-+			};
-+
-+			frame@17c25000 {
-+				frame-number = <2>;
-+				interrupts = <GIC_SPI 10 IRQ_TYPE_LEVEL_HIGH>;
-+				reg = <0 0x17c25000 0 0x1000>;
-+				status = "disabled";
-+			};
-+
-+			frame@17c27000 {
-+				frame-number = <3>;
-+				interrupts = <GIC_SPI 11 IRQ_TYPE_LEVEL_HIGH>;
-+				reg = <0 0x17c27000 0 0x1000>;
-+				status = "disabled";
-+			};
-+
-+			frame@17c29000 {
-+				frame-number = <4>;
-+				interrupts = <GIC_SPI 12 IRQ_TYPE_LEVEL_HIGH>;
-+				reg = <0 0x17c29000 0 0x1000>;
-+				status = "disabled";
-+			};
-+
-+			frame@17c2b000 {
-+				frame-number = <5>;
-+				interrupts = <GIC_SPI 13 IRQ_TYPE_LEVEL_HIGH>;
-+				reg = <0 0x17c2b000 0 0x1000>;
-+				status = "disabled";
-+			};
-+
-+			frame@17c2d000 {
-+				frame-number = <6>;
-+				interrupts = <GIC_SPI 14 IRQ_TYPE_LEVEL_HIGH>;
-+				reg = <0 0x17c2d000 0 0x1000>;
-+				status = "disabled";
-+			};
-+		};
-+	};
-+};
--- 
-QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
-of Code Aurora Forum, hosted by The Linux Foundation
-
+> > ---
+> >  .../bindings/pinctrl/qcom,msm8976-pinctrl.txt | 183 ++++++++++++++++++
+> >  1 file changed, 183 insertions(+)
+> >  create mode 100644 Documentation/devicetree/bindings/pinctrl/qcom,msm8976-pinctrl.txt
+> >
+> > diff --git a/Documentation/devicetree/bindings/pinctrl/qcom,msm8976-pinctrl.txt b/Documentation/devicetree/bindings/pinctrl/qcom,msm8976-pinctrl.txt
+> > new file mode 100644
+> > index 000000000000..70d04d12f136
+> > --- /dev/null
+> > +++ b/Documentation/devicetree/bindings/pinctrl/qcom,msm8976-pinctrl.txt
+> > @@ -0,0 +1,183 @@
+> > +Qualcomm MSM8976 TLMM block
+> > +
+> > +This binding describes the Top Level Mode Multiplexer block found in the
+> > +MSM8956 and MSM8976 platforms.
+> > +
+> > +- compatible:
+> > +     Usage: required
+> > +     Value type: <string>
+> > +     Definition: must be "qcom,msm8976-pinctrl"
+> > +
+> > +- reg:
+> > +     Usage: required
+> > +     Value type: <prop-encoded-array>
+> > +     Definition: the base address and size of the TLMM register space.
+> > +
+> > +- interrupts:
+> > +     Usage: required
+> > +     Value type: <prop-encoded-array>
+> > +     Definition: should specify the TLMM summary IRQ.
+> > +
+> > +- interrupt-controller:
+> > +     Usage: required
+> > +     Value type: <none>
+> > +     Definition: identifies this node as an interrupt controller
+> > +
+> > +- #interrupt-cells:
+> > +     Usage: required
+> > +     Value type: <u32>
+> > +     Definition: must be 2. Specifying the pin number and flags, as defined
+> > +                 in <dt-bindings/interrupt-controller/irq.h>
+> > +
+> > +- gpio-controller:
+> > +     Usage: required
+> > +     Value type: <none>
+> > +     Definition: identifies this node as a gpio controller
+> > +
+> > +- #gpio-cells:
+> > +     Usage: required
+> > +     Value type: <u32>
+> > +     Definition: must be 2. Specifying the pin number and flags, as defined
+> > +                 in <dt-bindings/gpio/gpio.h>
+> > +
+> > +- gpio-ranges:
+> > +     Usage: required
+> > +     Definition:  see ../gpio/gpio.txt
+> > +
+> > +- gpio-reserved-ranges:
+> > +     Usage: optional
+> > +     Definition: see ../gpio/gpio.txt
+> > +
+> > +Please refer to ../gpio/gpio.txt and ../interrupt-controller/interrupts.txt for
+> > +a general description of GPIO and interrupt bindings.
+> > +
+> > +Please refer to pinctrl-bindings.txt in this directory for details of the
+> > +common pinctrl bindings used by client devices, including the meaning of the
+> > +phrase "pin configuration node".
+> > +
+> > +The pin configuration nodes act as a container for an arbitrary number of
+> > +subnodes. Each of these subnodes represents some desired configuration for a
+> > +pin, a group, or a list of pins or groups. This configuration can include the
+> > +mux function to select on those pin(s)/group(s), and various pin configuration
+> > +parameters, such as pull-up, drive strength, etc.
+> > +
+> > +
+> > +PIN CONFIGURATION NODES:
+> > +
+> > +The name of each subnode is not important; all subnodes should be enumerated
+> > +and processed purely based on their content.
+> > +
+> > +Each subnode only affects those parameters that are explicitly listed. In
+> > +other words, a subnode that lists a mux function but no pin configuration
+> > +parameters implies no information about any pin configuration parameters.
+> > +Similarly, a pin subnode that describes a pullup parameter implies no
+> > +information about e.g. the mux function.
+> > +
+> > +
+> > +The following generic properties as defined in pinctrl-bindings.txt are valid
+> > +to specify in a pin configuration subnode:
+> > +
+> > +- pins:
+> > +     Usage: required
+> > +     Value type: <string-array>
+> > +     Definition: List of gpio pins affected by the properties specified in
+> > +                 this subnode.
+> > +
+> > +                 Valid pins are:
+> > +                   gpio0-gpio145
+> > +                     Supports mux, bias and drive-strength
+> > +
+> > +                   sdc1_clk, sdc1_cmd, sdc1_data,
+> > +                   sdc2_clk, sdc2_cmd, sdc2_data,
+> > +                   sdc3_clk, sdc3_cmd, sdc3_data
+> > +                     Supports bias and drive-strength
+> > +
+> > +- function:
+> > +     Usage: required
+> > +     Value type: <string>
+> > +     Definition: Specify the alternative function to be configured for the
+> > +                 specified pins. Functions are only valid for gpio pins.
+> > +                 Valid values are:
+> > +
+> > +                 gpio, blsp_uart1, blsp_spi1, smb_int, blsp_i2c1, blsp_spi2,
+> > +                 blsp_uart2, blsp_i2c2, gcc_gp1_clk_b, blsp_spi3,
+> > +                 qdss_tracedata_b, blsp_i2c3, gcc_gp2_clk_b, gcc_gp3_clk_b,
+> > +                 blsp_spi4, cap_int, blsp_i2c4, blsp_spi5, blsp_uart5,
+> > +                 qdss_traceclk_a, m_voc, blsp_i2c5, qdss_tracectl_a,
+> > +                 qdss_tracedata_a, blsp_spi6, blsp_uart6, qdss_tracectl_b,
+> > +                 blsp_i2c6, qdss_traceclk_b, mdp_vsync, pri_mi2s_mclk_a,
+> > +                 sec_mi2s_mclk_a, cam_mclk, cci0_i2c, cci1_i2c, blsp1_spi,
+> > +                 blsp3_spi, gcc_gp1_clk_a, gcc_gp2_clk_a, gcc_gp3_clk_a,
+> > +                 uim_batt, sd_write, uim1_data, uim1_clk, uim1_reset,
+> > +                 uim1_present, uim2_data, uim2_clk, uim2_reset,
+> > +                 uim2_present, ts_xvdd, mipi_dsi0, us_euro, ts_resout,
+> > +                 ts_sample, sec_mi2s_mclk_b, pri_mi2s, codec_reset,
+> > +                 cdc_pdm0, us_emitter, pri_mi2s_mclk_b, pri_mi2s_mclk_c,
+> > +                 lpass_slimbus, lpass_slimbus0, lpass_slimbus1, codec_int1,
+> > +                 codec_int2, wcss_bt, sdc3, wcss_wlan2, wcss_wlan1,
+> > +                 wcss_wlan0, wcss_wlan, wcss_fm, key_volp, key_snapshot,
+> > +                 key_focus, key_home, pwr_down, dmic0_clk, hdmi_int,
+> > +                 dmic0_data, wsa_vi, wsa_en, blsp_spi8, wsa_irq, blsp_i2c8,
+> > +                 pa_indicator, modem_tsync, ssbi_wtr1, gsm1_tx, gsm0_tx,
+> > +                 sdcard_det, sec_mi2s, ss_switch,
+> > +
+> > +- bias-disable:
+> > +     Usage: optional
+> > +     Value type: <none>
+> > +     Definition: The specified pins should be configured as no pull.
+> > +
+> > +- bias-pull-down:
+> > +     Usage: optional
+> > +     Value type: <none>
+> > +     Definition: The specified pins should be configured as pull down.
+> > +
+> > +- bias-pull-up:
+> > +     Usage: optional
+> > +     Value type: <none>
+> > +     Definition: The specified pins should be configured as pull up.
+> > +
+> > +- output-high:
+> > +     Usage: optional
+> > +     Value type: <none>
+> > +     Definition: The specified pins are configured in output mode, driven
+> > +                 high.
+> > +                 Not valid for sdc pins.
+> > +
+> > +- output-low:
+> > +     Usage: optional
+> > +     Value type: <none>
+> > +     Definition: The specified pins are configured in output mode, driven
+> > +                 low.
+> > +                 Not valid for sdc pins.
+> > +
+> > +- drive-strength:
+> > +     Usage: optional
+> > +     Value type: <u32>
+> > +     Definition: Selects the drive strength for the specified pins, in mA.
+> > +                 Valid values are: 2, 4, 6, 8, 10, 12, 14 and 16
+> > +
+> > +Example:
+> > +
+> > +     tlmm: pinctrl@1000000 {
+> > +             compatible = "qcom,msm8976-pinctrl";
+> > +             reg = <0x1000000 0x300000>;
+> > +             interrupts = <GIC_SPI 208 IRQ_TYPE_LEVEL_HIGH>;
+> > +             gpio-controller;
+> > +             #gpio-cells = <2>;
+> > +             gpio-ranges = <&tlmm 0 0 145>;
+> > +             interrupt-controller;
+> > +             #interrupt-cells = <2>;
+> > +
+> > +             blsp1_uart2_active: blsp1_uart2_active {
+> > +                     mux {
+> > +                             pins = "gpio4", "gpio5", "gpio6", "gpio7";
+> > +                             function = "blsp_uart2";
+> > +                     };
+> > +
+> > +                     config {
+> > +                             pins = "gpio4", "gpio5", "gpio6", "gpio7";
+> > +                             drive-strength = <2>;
+> > +                             bias-disable;
+> > +                     };
+> > +             };
+> > +     };
+> > --
+> > 2.21.0
+> >
