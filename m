@@ -2,49 +2,49 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 728ECD72DF
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 15 Oct 2019 12:11:10 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 942F3D72DE
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 15 Oct 2019 12:11:09 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730161AbfJOKLK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 15 Oct 2019 06:11:10 -0400
-Received: from mail-wr1-f68.google.com ([209.85.221.68]:40863 "EHLO
-        mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730157AbfJOKLJ (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
+        id S1730160AbfJOKLJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
         Tue, 15 Oct 2019 06:11:09 -0400
-Received: by mail-wr1-f68.google.com with SMTP id o28so476363wro.7
-        for <linux-arm-msm@vger.kernel.org>; Tue, 15 Oct 2019 03:11:06 -0700 (PDT)
+Received: from mail-wm1-f68.google.com ([209.85.128.68]:51516 "EHLO
+        mail-wm1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1730047AbfJOKLI (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 15 Oct 2019 06:11:08 -0400
+Received: by mail-wm1-f68.google.com with SMTP id 7so20204758wme.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 15 Oct 2019 03:11:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=yTcxngXEkdeT6TmpQoj373zyfLdTNEDntvuleghb3z0=;
-        b=Tk3U4INVvMhn3XuqivdMRKYFmy1lMLS1ACVuZo/76VgXTjomtOlZ9OqUlracsv33Vq
-         xFRM90kKKiMBBX2Ye8yIe2AWio4DmGOfvK5e4FCxQkKGwiajFBGfMYSrMFidAo0JZqt6
-         sqYkVftgtyc21x4VFhS+jB1QojVVwJSYMIR2Z5Q3r/PL97TAb8HnkzZSTa1YdE7o4UtC
-         kTdMD3UDPaRixQN4c+ux/5arVaXw77pxXkwEQAN4WwhuvZ1nwrH/6bTQ6H+XfJU0NNH6
-         zIblq1TUfLvRJo3U16cbRxDaSlq06we2oGa/E3UW2RxmRX6fJiHbl/wtLhzm4NuxMHEG
-         QuEw==
+        bh=A61m3u12oKMYzHTcbcOV5T5oBURDYn0JpKjZ9AFEq8Q=;
+        b=qSTQcxLV7utjjgxWnjpUDSKrGcqHyirT803FXxRmFjRBpo3nJvYYRZSoKowE2vU6Eb
+         cVNVFjOYn/oRpsN6CRXydjBAYxYMVYXwufIggaWs0K8JiAtMDFxeIsIXBi9waJwla6T5
+         Cc4T3MvsIp9DdBEk7BxcCiJAAp6Jd576yiJjuYU6EBwcv+3ehvpshZX3kf4XpFpGQVuU
+         NzA1UgWgosF6sEdm8+xss2QDWvrUzBqs0oj5duZ+F3OBCZvSqf2QiOF3TNk9nsZOvwNa
+         NtH1acXumxrh3d8NaYA9Tdrrkplf5l0OAKUDz8RYVgryukn7FLQhZ4MP/PKP4erpWbnO
+         b5ng==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=yTcxngXEkdeT6TmpQoj373zyfLdTNEDntvuleghb3z0=;
-        b=RrvvPi1wvamnXa364yhyxhX9SGnbSZ9H4rahaRL5GZCTgPqrM3Yt61eCnedst1H74F
-         Uaa8QAlS/RBdHbCCUhIe28Agpi6G8bIrj6Z2eO9ZhtOn2JJ59sy+Rkwcnf+55kJaxNtj
-         ekyZTZOGx7oUqoiDz2fOQliYj0Zc45i7r+VUAVkA6ebukuOpeR1tVUF+gkPXJTR0d+2X
-         kIj5+3gDmkz15qEpdsXoCCrE71D6psJrt54vAOG1vEDlMMfECNnz1IOW4cZZ6faFN6BQ
-         svJWAC7sK2HDx8exaLMe7Uheqx9kZfC1TSaWPkVbSP1BhwJZUhf+oln15eL9YM+4jGSP
-         EARQ==
-X-Gm-Message-State: APjAAAX2C0nO3wi98qADaL2bRS8YkH0pZPLRtXdCJ64IUDl2ap2Dgntf
-        ukqEtXQqDv0yIJpIB1GBimBiQd0yEb7pXg==
-X-Google-Smtp-Source: APXvYqx432gjFnXZKeEVX6PE1pt4uYSzdjJ9xDnwcnNJxxi74raOf/9SMD8lTM3ejiLUqunU0pwGkA==
-X-Received: by 2002:adf:f511:: with SMTP id q17mr1444270wro.3.1571134265626;
-        Tue, 15 Oct 2019 03:11:05 -0700 (PDT)
+        bh=A61m3u12oKMYzHTcbcOV5T5oBURDYn0JpKjZ9AFEq8Q=;
+        b=XSNvAEATzYE4TPxYbAKKVYFGa+6HhfOkipI8fnWuqRYNXN1gZqiO/5G5TGB+qTTL++
+         YSFk2nc+fQZxr623K8mARSGIRpbiLYBN3FbCyKEH8tiZIlIC/94MmMPxDT2WgCt4CFwn
+         xbPSJ0RlxFwBPRg8aENV7QjFgk85yiVoLHht0+RggKR8rq3QP29vD3/8wtp01mxJPWN1
+         5mDHpZZC3aZmKV/LIDZB/IWG67a+G/RgUTcoYj8jxe669ZT1BQ+uX2E5YhFtv+zwc/sw
+         4HVGc8aP6WMBO8lLf/jQ3Q5qtBB2VyjTBlwdW+OVBoSlckMyVkTda9ngiWaR5lrC/vaK
+         k0AA==
+X-Gm-Message-State: APjAAAUTDIbShsROR3JZsxqMBLcHiUsO8J6bmHe0NFu2a7DxsT6MsUDd
+        4vzMXXVIdrZggrvcbI+FXG26dfiqjnK3tA==
+X-Google-Smtp-Source: APXvYqwaT28ROh8W7H79jlgiIgSfuIxdnPW47q5u676fq4bJzk89FhRhR06TPi4ewvwrxDk1OGt4wA==
+X-Received: by 2002:a1c:4e15:: with SMTP id g21mr17440290wmh.148.1571134266579;
+        Tue, 15 Oct 2019 03:11:06 -0700 (PDT)
 Received: from IcarusMOD.eternityproject.eu ([93.51.16.173])
-        by smtp.gmail.com with ESMTPSA id y186sm42778837wmd.26.2019.10.15.03.11.04
+        by smtp.gmail.com with ESMTPSA id y186sm42778837wmd.26.2019.10.15.03.11.05
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 15 Oct 2019 03:11:05 -0700 (PDT)
+        Tue, 15 Oct 2019 03:11:06 -0700 (PDT)
 From:   kholk11@gmail.com
 To:     linux-arm-msm@vger.kernel.org
 Cc:     kholk11@gmail.com, marijns95@gmail.com, robdclark@gmail.com,
@@ -53,9 +53,9 @@ Cc:     kholk11@gmail.com, marijns95@gmail.com, robdclark@gmail.com,
         jonathan@marek.ca, bjorn.andersson@linaro.org,
         georgi.djakov@linaro.org, gregkh@linuxfoundation.org,
         dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org
-Subject: [PATCH v3 4/7] drm/msm/dsi: Add configuration for 28nm PLL on family B
-Date:   Tue, 15 Oct 2019 12:10:55 +0200
-Message-Id: <20191015101058.37157-5-kholk11@gmail.com>
+Subject: [PATCH v3 5/7] dt-bindings: msm/dsi: Add 28nm PLL for family B compatible
+Date:   Tue, 15 Oct 2019 12:10:56 +0200
+Message-Id: <20191015101058.37157-6-kholk11@gmail.com>
 X-Mailer: git-send-email 2.21.0
 In-Reply-To: <20191015101058.37157-1-kholk11@gmail.com>
 References: <20191015101058.37157-1-kholk11@gmail.com>
@@ -68,71 +68,26 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 From: AngeloGioacchino Del Regno <kholk11@gmail.com>
 
-The 28nm PLL has a different iospace on MSM/APQ family B SoCs:
-add a new configuration and use it when the DT reports the
-"qcom,dsi-phy-28nm-hpm-fam-b" compatible.
+On family B SoCs, the 28nm PLL has a different iospace address
+and that required a new compatible in the driver.
 
 Signed-off-by: AngeloGioacchino Del Regno <kholk11@gmail.com>
 ---
- drivers/gpu/drm/msm/dsi/phy/dsi_phy.c      |  2 ++
- drivers/gpu/drm/msm/dsi/phy/dsi_phy.h      |  1 +
- drivers/gpu/drm/msm/dsi/phy/dsi_phy_28nm.c | 18 ++++++++++++++++++
- 3 files changed, 21 insertions(+)
+ Documentation/devicetree/bindings/display/msm/dsi.txt | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/gpu/drm/msm/dsi/phy/dsi_phy.c b/drivers/gpu/drm/msm/dsi/phy/dsi_phy.c
-index aa22c3ae5230..b0cfa67d2a57 100644
---- a/drivers/gpu/drm/msm/dsi/phy/dsi_phy.c
-+++ b/drivers/gpu/drm/msm/dsi/phy/dsi_phy.c
-@@ -483,6 +483,8 @@ static const struct of_device_id dsi_phy_dt_match[] = {
- #ifdef CONFIG_DRM_MSM_DSI_28NM_PHY
- 	{ .compatible = "qcom,dsi-phy-28nm-hpm",
- 	  .data = &dsi_phy_28nm_hpm_cfgs },
-+	{ .compatible = "qcom,dsi-phy-28nm-hpm-fam-b",
-+	  .data = &dsi_phy_28nm_hpm_famb_cfgs },
- 	{ .compatible = "qcom,dsi-phy-28nm-lp",
- 	  .data = &dsi_phy_28nm_lp_cfgs },
- #endif
-diff --git a/drivers/gpu/drm/msm/dsi/phy/dsi_phy.h b/drivers/gpu/drm/msm/dsi/phy/dsi_phy.h
-index c4069ce6afe6..24b294ed3059 100644
---- a/drivers/gpu/drm/msm/dsi/phy/dsi_phy.h
-+++ b/drivers/gpu/drm/msm/dsi/phy/dsi_phy.h
-@@ -40,6 +40,7 @@ struct msm_dsi_phy_cfg {
- };
- 
- extern const struct msm_dsi_phy_cfg dsi_phy_28nm_hpm_cfgs;
-+extern const struct msm_dsi_phy_cfg dsi_phy_28nm_hpm_famb_cfgs;
- extern const struct msm_dsi_phy_cfg dsi_phy_28nm_lp_cfgs;
- extern const struct msm_dsi_phy_cfg dsi_phy_20nm_cfgs;
- extern const struct msm_dsi_phy_cfg dsi_phy_28nm_8960_cfgs;
-diff --git a/drivers/gpu/drm/msm/dsi/phy/dsi_phy_28nm.c b/drivers/gpu/drm/msm/dsi/phy/dsi_phy_28nm.c
-index b3f678f6c2aa..3b9300545e16 100644
---- a/drivers/gpu/drm/msm/dsi/phy/dsi_phy_28nm.c
-+++ b/drivers/gpu/drm/msm/dsi/phy/dsi_phy_28nm.c
-@@ -142,6 +142,24 @@ const struct msm_dsi_phy_cfg dsi_phy_28nm_hpm_cfgs = {
- 	.num_dsi_phy = 2,
- };
- 
-+const struct msm_dsi_phy_cfg dsi_phy_28nm_hpm_famb_cfgs = {
-+	.type = MSM_DSI_PHY_28NM_HPM,
-+	.src_pll_truthtable = { {true, true}, {false, true} },
-+	.reg_cfg = {
-+		.num = 1,
-+		.regs = {
-+			{"vddio", 100000, 100},
-+		},
-+	},
-+	.ops = {
-+		.enable = dsi_28nm_phy_enable,
-+		.disable = dsi_28nm_phy_disable,
-+		.init = msm_dsi_phy_init_common,
-+	},
-+	.io_start = { 0x1a94400, 0x1a94800 },
-+	.num_dsi_phy = 2,
-+};
-+
- const struct msm_dsi_phy_cfg dsi_phy_28nm_lp_cfgs = {
- 	.type = MSM_DSI_PHY_28NM_LP,
- 	.src_pll_truthtable = { {true, true}, {true, true} },
+diff --git a/Documentation/devicetree/bindings/display/msm/dsi.txt b/Documentation/devicetree/bindings/display/msm/dsi.txt
+index af95586c898f..d3ba9ee22f38 100644
+--- a/Documentation/devicetree/bindings/display/msm/dsi.txt
++++ b/Documentation/devicetree/bindings/display/msm/dsi.txt
+@@ -83,6 +83,7 @@ DSI PHY:
+ Required properties:
+ - compatible: Could be the following
+   * "qcom,dsi-phy-28nm-hpm"
++  * "qcom,dsi-phy-28nm-hpm-fam-b"
+   * "qcom,dsi-phy-28nm-lp"
+   * "qcom,dsi-phy-20nm"
+   * "qcom,dsi-phy-28nm-8960"
 -- 
 2.21.0
 
