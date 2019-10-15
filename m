@@ -2,217 +2,208 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 60CBED719C
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 15 Oct 2019 10:54:49 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C99F9D722A
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 15 Oct 2019 11:23:53 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726539AbfJOIyr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 15 Oct 2019 04:54:47 -0400
-Received: from smtp.codeaurora.org ([198.145.29.96]:37480 "EHLO
-        smtp.codeaurora.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725804AbfJOIyr (ORCPT
+        id S1727553AbfJOJXt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 15 Oct 2019 05:23:49 -0400
+Received: from esa3.microchip.iphmx.com ([68.232.153.233]:1033 "EHLO
+        esa3.microchip.iphmx.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726052AbfJOJXt (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 15 Oct 2019 04:54:47 -0400
-Received: by smtp.codeaurora.org (Postfix, from userid 1000)
-        id 14A2060C04; Tue, 15 Oct 2019 08:54:44 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
-        s=default; t=1571129686;
-        bh=aEu5mpzn32x7rkyUlbfZ0xOhWov1nX00SdmGcW+iGoI=;
-        h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
-        b=FukvMCOkMX0+h4rUDyGj+jeSj6Qgm7ZMj+Zjx49Tm+3ylBFf7z2ucK8iBv4YbD4Oj
-         YtShomCAE5yU4GNjqSV08wPw6F0WJnGxYp1qnB3FzEd+fLfh9kxnorxpSTCkPy23zy
-         tuL7R7svGNdKHlZol7FQhEjBsnT1v0x7IATuZe5w=
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        pdx-caf-mail.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.7 required=2.0 tests=ALL_TRUSTED,BAYES_00,
-        DKIM_INVALID,DKIM_SIGNED autolearn=no autolearn_force=no version=3.4.0
-Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
-        by smtp.codeaurora.org (Postfix) with ESMTP id 3E70360907;
-        Tue, 15 Oct 2019 08:54:40 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
-        s=default; t=1571129681;
-        bh=aEu5mpzn32x7rkyUlbfZ0xOhWov1nX00SdmGcW+iGoI=;
-        h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
-        b=Cts81DNd9f3YV99tFQWbWJR+ug5gXbEGlgczDEO504sISeM82eKMt7iwXN4v+Smvs
-         FB8SBdtw0smr+AFS6vahbYTpnEO3FrEEYFbmmiJhwRTEQdg3LZS0lRZi6f5PxuDyQz
-         OSbj3PXXw4CMu2OHsQPl0cuPeBrgC8Q3IowQjAZ8=
+        Tue, 15 Oct 2019 05:23:49 -0400
+Received-SPF: Pass (esa3.microchip.iphmx.com: domain of
+  Claudiu.Beznea@microchip.com designates 198.175.253.82 as
+  permitted sender) identity=mailfrom;
+  client-ip=198.175.253.82; receiver=esa3.microchip.iphmx.com;
+  envelope-from="Claudiu.Beznea@microchip.com";
+  x-sender="Claudiu.Beznea@microchip.com";
+  x-conformance=spf_only; x-record-type="v=spf1";
+  x-record-text="v=spf1 mx a:ushub1.microchip.com
+  a:smtpout.microchip.com a:mx1.microchip.iphmx.com
+  a:mx2.microchip.iphmx.com include:servers.mcsv.net
+  include:mktomail.com include:spf.protection.outlook.com ~all"
+Received-SPF: None (esa3.microchip.iphmx.com: no sender
+  authenticity information available from domain of
+  postmaster@email.microchip.com) identity=helo;
+  client-ip=198.175.253.82; receiver=esa3.microchip.iphmx.com;
+  envelope-from="Claudiu.Beznea@microchip.com";
+  x-sender="postmaster@email.microchip.com";
+  x-conformance=spf_only
+Authentication-Results: esa3.microchip.iphmx.com; spf=Pass smtp.mailfrom=Claudiu.Beznea@microchip.com; spf=None smtp.helo=postmaster@email.microchip.com; dkim=pass (signature verified) header.i=@microchiptechnology.onmicrosoft.com; dmarc=pass (p=none dis=none) d=microchip.com
+IronPort-SDR: rXFTltOiIYusDEFIfDhz9HhCPGCwTHmv+39ufI7F1cBRrINWI07PCbHs0xhJIhh7Z+FSlcVT3C
+ PdizDsz81Fu/nMcesDjrZ39ciy4sGEUtUFhSnpHRWo7Tly7j4ARdhusyFllp4nplDPlbd4VfIj
+ plz96QXQz404CaXTGGXq49xuq7bW+3CQIlzjenyYqpDHyH8Cp7clLKbc7nIvSqiCwqFpBAkuRG
+ 4vatespU8ZUI/8kibj0jPN21BbGLPRGAcR/om2vowt5VVqRT3h0UPZL/Q3Kk5+b1XbAFuyc1T9
+ O9E=
+X-IronPort-AV: E=Sophos;i="5.67,298,1566889200"; 
+   d="scan'208";a="52997501"
+Received: from smtpout.microchip.com (HELO email.microchip.com) ([198.175.253.82])
+  by esa3.microchip.iphmx.com with ESMTP/TLS/AES256-SHA256; 15 Oct 2019 02:23:45 -0700
+Received: from chn-vm-ex02.mchp-main.com (10.10.85.144) by
+ chn-vm-ex03.mchp-main.com (10.10.85.151) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.1.1713.5; Tue, 15 Oct 2019 02:23:41 -0700
+Received: from NAM03-DM3-obe.outbound.protection.outlook.com (10.10.215.89) by
+ email.microchip.com (10.10.87.72) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256) id 15.1.1713.5 via Frontend
+ Transport; Tue, 15 Oct 2019 02:23:41 -0700
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=hNDEQuuyTzADbaoc7ugixWmCOpREDrL+CVhMMkGxo8zMWXLAUO1uiuhf6aymq0r5YMKJUayYbiWqP9fQcQSDaiPeeaF4t3A4447YVkqEHEv0Z23+WkGs1w5kO8Bf+iehnphuElGs5z0lXpzix5hWJgycEljOYPVIuCn3UamxHgKUfJ157DwOsAvAD12O4YfXBAyOca95aJK0toymZsSFhSEmoxk17s84uLZDuMweGbDpJZpggbQ6lYyinxunm0+I+5cVQb5iU/JKlfMmvusfy15iocQDeqQTxB+cjCERSOWDFOdHVK4JZ3VAa8xPfkdXRiiUMTm2dUCO7XsR/142bA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=7aGhdWqY3Fnc2zZWuG4aXUs+xH7yPkHgIIzfz85IGe8=;
+ b=HMrjqrxjwNJEImoMukkIQZoOMHgVADmJ+innXOCao6+dQVTkbJIwS07QAaYERsIQ8bYapRIgGzLsAIEzOC7AlbAiHOy8QZwJ9/VkAVTncGnQ0CWlpPynw/I8N51QnfXmA61aQBbNnNHcN1tGuCO9FtQoNsRtyP1IdGI7AFs00BXhkFE52lJf23Zpcd88z6r48rx5XCKIpB61hjSfftaA8vOI5NM/FXohL9iLQy3LOXzNJ6QY3/VdpAnk4GGsCjMRuYmHkPN9Lsqc16meRafT69d9nJW4sPUvHNR5c7Oqv09q2sBffg/t9Wbi7UYWAM0lSSHzgq0lLL4xDdBdMdd+zw==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=microchip.com; dmarc=pass action=none
+ header.from=microchip.com; dkim=pass header.d=microchip.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=microchiptechnology.onmicrosoft.com;
+ s=selector2-microchiptechnology-onmicrosoft-com;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=7aGhdWqY3Fnc2zZWuG4aXUs+xH7yPkHgIIzfz85IGe8=;
+ b=TxqNkYll6aV6QMceQhJDf7BnsT5lNY2Vzckpb+gIOZYHgkkzQa2no8SB4b8sMzVIs2zKWahOXIBfnmWPqiXl+NpCgRGfzsuTbjaqkpS7KA1wmQ0eRflUKhKuQIzP+JrLibAPfzmTl8yR4lT43tBM2pa9cak2ajkLaXf20YhjP9I=
+Received: from DM6PR11MB3225.namprd11.prod.outlook.com (20.176.120.85) by
+ DM6PR11MB3146.namprd11.prod.outlook.com (20.177.219.155) with Microsoft SMTP
+ Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.2347.16; Tue, 15 Oct 2019 09:23:35 +0000
+Received: from DM6PR11MB3225.namprd11.prod.outlook.com
+ ([fe80::3874:9f3c:5325:d22]) by DM6PR11MB3225.namprd11.prod.outlook.com
+ ([fe80::3874:9f3c:5325:d22%6]) with mapi id 15.20.2347.023; Tue, 15 Oct 2019
+ 09:23:35 +0000
+From:   <Claudiu.Beznea@microchip.com>
+To:     <daniel.lezcano@linaro.org>, <robh+dt@kernel.org>,
+        <mark.rutland@arm.com>, <linux@armlinux.org.uk>, <nsekhar@ti.com>,
+        <bgolaszewski@baylibre.com>, <monstr@monstr.eu>,
+        <john@phrozen.org>, <ralf@linux-mips.org>, <paul.burton@mips.com>,
+        <jhogan@kernel.org>, <lftan@altera.com>, <tglx@linutronix.de>,
+        <vgupta@synopsys.com>, <marc.zyngier@arm.com>,
+        <patrice.chotard@st.com>, <mcoquelin.stm32@gmail.com>,
+        <alexandre.torgue@st.com>, <eric@anholt.net>, <wahrenst@gmx.net>,
+        <f.fainelli@gmail.com>, <rjui@broadcom.com>,
+        <sbranden@broadcom.com>, <bcm-kernel-feedback-list@broadcom.com>,
+        <linus.walleij@linaro.org>, <shc_work@mail.ru>, <kgene@kernel.org>,
+        <krzk@kernel.org>, <ysato@users.sourceforge.jp>,
+        <liviu.dudau@arm.com>, <sudeep.holla@arm.com>,
+        <lorenzo.pieralisi@arm.com>, <shawnguo@kernel.org>,
+        <s.hauer@pengutronix.de>, <kernel@pengutronix.de>,
+        <festevam@gmail.com>, <linux-imx@nxp.com>, <baohua@kernel.org>,
+        <Nicolas.Ferre@microchip.com>, <alexandre.belloni@bootlin.com>,
+        <Ludovic.Desroches@microchip.com>, <baruch@tkos.co.il>,
+        <u.kleine-koenig@pengutronix.de>, <guoren@kernel.org>,
+        <kaloz@openwrt.org>, <khalasa@piap.pl>, <ssantosh@kernel.org>,
+        <vz@mleia.com>, <slemieux.tyco@gmail.com>, <khilman@baylibre.com>,
+        <avifishman70@gmail.com>, <tmaimon77@gmail.com>,
+        <tali.perry1@gmail.com>, <venture@google.com>, <yuenn@google.com>,
+        <benjaminfair@google.com>, <afaerber@suse.de>,
+        <manivannan.sadhasivam@linaro.org>, <narmstrong@baylibre.com>,
+        <agross@kernel.org>, <palmer@sifive.com>, <aou@eecs.berkeley.edu>,
+        <heiko@sntech.de>, <orsonzhai@gmail.com>, <baolin.wang@linaro.org>,
+        <zhang.lyra@gmail.com>, <maxime.ripard@bootlin.com>,
+        <wens@csie.org>, <thierry.reding@gmail.com>,
+        <jonathanh@nvidia.com>, <linux@prisktech.co.nz>,
+        <john.stultz@linaro.org>, <sboyd@kernel.org>,
+        <matthias.bgg@gmail.com>
+CC:     <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <linux-arm-kernel@lists.infradead.org>,
+        <linux-mips@vger.kernel.org>, <nios2-dev@lists.rocketboards.org>,
+        <linux-snps-arc@lists.infradead.org>,
+        <linux-stm32@st-md-mailman.stormreply.com>,
+        <linux-rpi-kernel@lists.infradead.org>,
+        <linux-samsung-soc@vger.kernel.org>,
+        <uclinux-h8-devel@lists.sourceforge.jp>,
+        <linux-amlogic@lists.infradead.org>, <openbmc@lists.ozlabs.org>,
+        <linux-oxnas@groups.io>, <linux-arm-msm@vger.kernel.org>,
+        <linux-unisoc@lists.infradead.org>,
+        <linux-riscv@lists.infradead.org>,
+        <linux-rockchip@lists.infradead.org>,
+        <linux-tegra@vger.kernel.org>, <linux-mediatek@lists.infradead.org>
+Subject: Re: [PATCH 0/7] add support for clocksource/clockevent DT selection
+Thread-Topic: [PATCH 0/7] add support for clocksource/clockevent DT selection
+Thread-Index: AQHVc8VbrLXkUp4vH02J/Sk0g3X+4A==
+Date:   Tue, 15 Oct 2019 09:23:35 +0000
+Message-ID: <7071b6fa-f7ed-c879-4a43-44100dbe6121@microchip.com>
+References: <1568123236-767-1-git-send-email-claudiu.beznea@microchip.com>
+ <c3a68a08-d134-cd28-c8af-f757628e07f1@linaro.org>
+ <72edc5fd-df05-cba5-5aa7-39da1709415b@microchip.com>
+ <620a19d5-73b8-709d-9eec-49274ac23e51@microchip.com>
+ <187d7020-fbe9-7984-2358-8a70faef019f@microchip.com>
+ <14df6e5d-19ef-4ebc-fd11-9953bc3fc44e@linaro.org>
+In-Reply-To: <14df6e5d-19ef-4ebc-fd11-9953bc3fc44e@linaro.org>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-clientproxiedby: VI1PR07CA0177.eurprd07.prod.outlook.com
+ (2603:10a6:802:3e::25) To DM6PR11MB3225.namprd11.prod.outlook.com
+ (2603:10b6:5:59::21)
+x-ms-exchange-messagesentrepresentingtype: 1
+x-tagtoolbar-keys: D20191015122310531
+x-originating-ip: [94.177.32.156]
+x-ms-publictraffictype: Email
+x-ms-office365-filtering-correlation-id: 903bf272-15ec-4b39-7326-08d751515a8c
+x-ms-traffictypediagnostic: DM6PR11MB3146:
+x-ms-exchange-purlcount: 2
+x-ms-exchange-transport-forked: True
+x-microsoft-antispam-prvs: <DM6PR11MB31465E8CCD9A2DFCEFF38A7587930@DM6PR11MB3146.namprd11.prod.outlook.com>
+x-ms-oob-tlc-oobclassifiers: OLM:10000;
+x-forefront-prvs: 01917B1794
+x-forefront-antispam-report: SFV:NSPM;SFS:(10009020)(396003)(39860400002)(346002)(136003)(366004)(376002)(189003)(199004)(1191002)(386003)(6506007)(4326008)(71200400001)(53546011)(14454004)(102836004)(36756003)(31686004)(25786009)(478600001)(110136005)(14444005)(52116002)(66946007)(66446008)(256004)(76176011)(305945005)(64756008)(66476007)(66556008)(966005)(229853002)(54906003)(99286004)(7736002)(66066001)(86362001)(2201001)(6116002)(2906002)(26005)(11346002)(7416002)(6306002)(6512007)(186003)(2616005)(476003)(486006)(6246003)(71190400001)(7366002)(7406005)(7336002)(6486002)(8936002)(5660300002)(81166006)(81156014)(446003)(8676002)(316002)(31696002)(2171002)(3846002)(2501003)(6436002)(921003)(1121003);DIR:OUT;SFP:1101;SCL:1;SRVR:DM6PR11MB3146;H:DM6PR11MB3225.namprd11.prod.outlook.com;FPR:;SPF:None;LANG:en;PTR:InfoNoRecords;MX:1;A:1;
+received-spf: None (protection.outlook.com: microchip.com does not designate
+ permitted sender hosts)
+x-ms-exchange-senderadcheck: 1
+x-microsoft-antispam: BCL:0;
+x-microsoft-antispam-message-info: E6WiqbrMgLABzTuw0J9j3v67ijI/hQBH1RWNsWatD7hOHuh5SIIMCMHoLvyKJEoW6XDxh5AoX2Ef+XdBBpvEyn4/qbCbwjH3OsgkLMvqBD06S4p9ORDlq9zasJegmIQE//C0ZihL2ZOoIcbGEIiui1+a8RY8F4t6hm/Wcq7W+vH8JS8x5GlWYbGrCoN4XuY1SaEe3LkB1a6uJGKt4CiEfJwo0XSe50uneb2DqFcHDNX92BltSs5knX4KAva0mEfrR6bfp3IWTKvunvvUS05GtPDB2BzbZ8weO1/vEor8VAHIPrAmR+UJ8BFyVY/sfwUWYq+ZOnjOY3s0qW/dr5F1X+RxRxO6ll6JLrvoxwEOy74Dt4tW5cI9sjhrIGSwbdik/clFSsmRhKmrOGYHD8dsxVBJz6ExosWFZ9HZCrNlNaGK4DDgxp33ZR4NtEOc5FsV
+Content-Type: text/plain; charset="utf-8"
+Content-ID: <BFEA965B7AA9B54388AC67448362747B@namprd11.prod.outlook.com>
+Content-Transfer-Encoding: base64
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8;
- format=flowed
-Content-Transfer-Encoding: 8bit
-Date:   Tue, 15 Oct 2019 14:24:39 +0530
-From:   kgunda@codeaurora.org
-To:     Dan Murphy <dmurphy@ti.com>
-Cc:     bjorn.andersson@linaro.org, jingoohan1@gmail.com,
-        lee.jones@linaro.org, b.zolnierkie@samsung.com,
-        dri-devel@lists.freedesktop.org, daniel.thompson@linaro.org,
-        jacek.anaszewski@gmail.com, pavel@ucw.cz, robh+dt@kernel.org,
-        mark.rutland@arm.com, linux-leds@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH V6 3/8] backlight: qcom-wled: Add new properties for
- PMI8998
-In-Reply-To: <3836b382-a4e6-d6db-9667-1851a9cf0112@ti.com>
-References: <1569825553-26039-1-git-send-email-kgunda@codeaurora.org>
- <1569825553-26039-4-git-send-email-kgunda@codeaurora.org>
- <3836b382-a4e6-d6db-9667-1851a9cf0112@ti.com>
-Message-ID: <2500384590b9f01116fc8ddf8f1b20b9@codeaurora.org>
-X-Sender: kgunda@codeaurora.org
-User-Agent: Roundcube Webmail/1.2.5
+X-MS-Exchange-CrossTenant-Network-Message-Id: 903bf272-15ec-4b39-7326-08d751515a8c
+X-MS-Exchange-CrossTenant-originalarrivaltime: 15 Oct 2019 09:23:35.2487
+ (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 3f4057f3-b418-4d4e-ba84-d55b4e897d88
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: Z8aXzzMcSPD4+Z12Z92evGbhOPtVVEiPr1QR59wKyZPbxgxJRH5GLNcoeXiYW+CPcZiWidPIE+x/H9SvgQ0uOeYLCPJa5w7TPl7eizAszNY=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DM6PR11MB3146
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2019-10-01 20:42, Dan Murphy wrote:
-> Kiran
-> 
-> On 9/30/19 1:39 AM, Kiran Gunda wrote:
->> Update the bindings with the new properties used for
->> PMI8998.
->> 
->> Signed-off-by: Kiran Gunda <kgunda@codeaurora.org>
->> Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
->> Reviewed-by: Rob Herring <robh@kernel.org>
->> Acked-by: Daniel Thompson <daniel.thompson@linaro.org>
->> ---
->>   .../bindings/leds/backlight/qcom-wled.txt          | 76 
->> ++++++++++++++++++----
->>   1 file changed, 62 insertions(+), 14 deletions(-)
->> 
->> diff --git 
->> a/Documentation/devicetree/bindings/leds/backlight/qcom-wled.txt 
->> b/Documentation/devicetree/bindings/leds/backlight/qcom-wled.txt
->> index 14f28f2..9d840d5 100644
->> --- a/Documentation/devicetree/bindings/leds/backlight/qcom-wled.txt
->> +++ b/Documentation/devicetree/bindings/leds/backlight/qcom-wled.txt
->> @@ -20,8 +20,7 @@ platforms. The PMIC is connected to the host 
->> processor via SPMI bus.
->>   - default-brightness
->>   	Usage:        optional
->>   	Value type:   <u32>
->> -	Definition:   brightness value on boot, value from: 0-4095
->> -		      Default: 2048
->> +	Definition:   brightness value on boot, value from: 0-4095.
->>     - label
->>   	Usage:        required
->> @@ -48,20 +47,24 @@ platforms. The PMIC is connected to the host 
->> processor via SPMI bus.
->>   - qcom,current-limit
->>   	Usage:        optional
->>   	Value type:   <u32>
->> -	Definition:   mA; per-string current limit
->> -		      value: For pm8941: from 0 to 25 with 5 mA step
->> -			     Default 20 mA.
->> -			     For pmi8998: from 0 to 30 with 5 mA step
->> -			     Default 25 mA.
->> +	Definition:   mA; per-string current limit; value from 0 to 25 with
->> +		      1 mA step.
->> +		      This property is supported only for pm8941.
->> +
->> +- qcom,current-limit-microamp
->> +	Usage:        optional
->> +	Value type:   <u32>
->> +	Definition:   uA; per-string current limit; value from 0 to 30000 
->> with
->> +		      2500 uA step.
->>     - qcom,current-boost-limit
->>   	Usage:        optional
->>   	Value type:   <u32>
->>   	Definition:   mA; boost current limit.
->>   		      For pm8941: one of: 105, 385, 525, 805, 980, 1260, 1400,
->> -		      1680. Default: 805 mA
->> +		      1680.
->>   		      For pmi8998: one of: 105, 280, 450, 620, 970, 1150, 1300,
->> -		      1500. Default: 970 mA
->> +		      1500.
->>     - qcom,switching-freq
->>   	Usage:        optional
->> @@ -69,22 +72,66 @@ platforms. The PMIC is connected to the host 
->> processor via SPMI bus.
->>   	 Definition:   kHz; switching frequency; one of: 600, 640, 685, 
->> 738,
->>   		       800, 872, 960, 1066, 1200, 1371, 1600, 1920, 2400, 3200,
->>   		       4800, 9600.
->> -		       Default: for pm8941: 1600 kHz
->> -				for pmi8998: 800 kHz
->>     - qcom,ovp
->>   	Usage:        optional
->>   	Value type:   <u32>
->>   	Definition:   V; Over-voltage protection limit; one of:
->> -		      27, 29, 32, 35. default: 29V
->> +		      27, 29, 32, 35.
->>   		      This property is supported only for PM8941.
->>   +- qcom,ovp-millivolt
->> +	Usage:        optional
->> +	Value type:   <u32>
->> +	Definition:   mV; Over-voltage protection limit;
->> +		      For pmi8998: one of 18100, 19600, 29600, 31100
->> +		      If this property is not specified for PM8941, it
->> +		      falls back to "qcom,ovp" property.
->> +
->>   - qcom,num-strings
->>   	Usage:        optional
->>   	Value type:   <u32>
->>   	Definition:   #; number of led strings attached;
->> -		      value from 1 to 3. default: 2
->> -		      This property is supported only for PM8941.
->> +		      value: For PM8941 from 1 to 3.
->> +			     For PMI8998 from 1 to 4.
-> 
-> We probably don't need this since we define 1 led node per output. 
-> And if you need to define
-> 
-> multiple strings per node then you use led-sources.
-> 
-> Then you will use fwnode_property_count_u32(child, "led-sources"); to
-> get the number of outputs
-> 
-> 
-I have kept this property as is to have the backward compatibility with 
-pm8941-wled.
-The backward compatibility is broken if this property is removed.
-
->> +
->> +- interrupts
->> +	Usage:        optional
->> +	Value type:   <prop encoded array>
->> +	Definition:   Interrupts associated with WLED. This should be
->> +		      "short" and "ovp" interrupts. Interrupts can be
->> +		      specified as per the encoding listed under
->> +		      Documentation/devicetree/bindings/spmi/
->> +		      qcom,spmi-pmic-arb.txt.
->> +
->> +- interrupt-names
->> +	Usage:        optional
->> +	Value type:   <string>
->> +	Definition:   Interrupt names associated with the interrupts.
->> +		      Must be "short" and "ovp". The short circuit detection
->> +		      is not supported for PM8941.
->> +
->> +- qcom,enabled-strings
->> +	Usage:        optional
->> +	Value tyoe:   <u32 array>
->> +	Definition:   Array of the WLED strings numbered from 0 to 3. Each
->> +		      string of leds are operated individually. Specify the
->> +		      list of strings used by the device. Any combination of
->> +		      led strings can be used.
-> 
-> We usually use the reg property per led node to denote what output is
-> associated with which
-> 
-> property node.  And if you want to define multiple outputs per node
-> then you need to use
-> 
-> led-sources
-> 
-> See leds-lm3697.txt for an example
-> 
-> Dan
-As per the Qualcomm hardware recommendation , all the strings (leds) 
-properties like
-OVP, FSC and brightness etc .. should have the same values. That's why 
-all the strings (leds)
-and it's properties are mentioned in a single node.
-
-
+SGkgRGFuaWVsLA0KDQpPbiAxMy4xMC4yMDE5IDIxOjE2LCBEYW5pZWwgTGV6Y2FubyB3cm90ZToN
+Cj4gSGkgQ2xhdWRpdSwNCj4gDQo+IHNvcnJ5IGZvciB0aGUgZGVsYXksIEkgd2FzIE9vTyBhZ2Fp
+bi4NCg0KTm8gcHJvYmxlbSwgdGhhbmsgeW91IGZvciB5b3VyIHJlcGx5Lg0KDQo+IA0KPiBPbiAw
+My8xMC8yMDE5IDEyOjQzLCBDbGF1ZGl1LkJlem5lYUBtaWNyb2NoaXAuY29tIHdyb3RlOg0KPj4N
+Cj4+DQo+PiBPbiAwMi4xMC4yMDE5IDE2OjM1LCBDbGF1ZGl1IEJlem5lYSB3cm90ZToNCj4+PiBI
+aSBEYW5pZWwsDQo+Pj4NCj4+PiBUYWtpbmcgaW50byBhY2NvdW50IHRoYXQgUm9iIGRvZXNuJ3Qg
+YWdyZWUgd2l0aCB0aGUgc29sdXRpb24gcHJvcG9zZWQgaW4NCj4+PiB0aGlzIHNlcmllcyBkbyB5
+b3UgdGhpbmsgdGhlcmUgaXMgYSBjaGFuY2UgdG8gbWVyZ2UgdGhpcyBkcml2ZXIgYXMgaXM/DQo+
+Pg0KPj4gU29ycnksIEkgd2FzIHRhbGtpbmcgaGVyZSBhYm91dCB0aGUgZHJpdmVyIGF0IFsxXS4N
+Cj4+DQo+PiBbMV0gaHR0cHM6Ly9sb3JlLmtlcm5lbC5vcmcvbGttbC8xNTUyNTgwNzcyLTg0OTkt
+MS1naXQtc2VuZC1lbWFpbC1jbGF1ZGl1LmJlem5lYUBtaWNyb2NoaXAuY29tLw0KPiANCj4gRGFt
+biEgNyBtb250aHMgb2xkLiBJJ20gdHJ1bHkgc29ycnkgd2UgZG8gbm90IGhhdmUgcHJvZ3Jlc3Mg
+b24gdGhpcy4gTGV0DQo+IGZpeCB0aGlzIG9uY2UgYW5kIGZvciBhbGwuDQo+IA0KPiBJbiB0aGUg
+ZHJpdmVyOg0KPiANCj4gcmV0ID0gb2ZfcHJvcGVydHlfcmVhZF91MzIobm9kZSwgImNsb2NrLWZy
+ZXF1ZW5jeSIsICZmcmVxKTsNCj4gDQo+IEl0IGlzIHVuY2xlYXIgaG93IGlzIHVzZWQgdGhpcyBw
+cm9wZXJ0eS4gSXQgc2hvdWxkIGJlIHRoZSBmcmVxdWVuY3kNCj4gZHJpdmluZyB0aGUgdGltZXIs
+IGJ1dCBjYW4gd2UgZ2V0IGZyb20gYSBjbGtfZ2V0X3JhdGUoKSBhbmQgYSBmaXhlZCBkaXZpZGVy
+Pw0KPiANCg0KVGhlIHRpbWVyIGNvdWxkIGJlIGRyaXZlbiBieSAyIGNsb2NrIHNvdXJjZXMsIG9u
+ZSBpcyBjYWxsZWQgcGVyaXBoZXJhbA0KY2xvY2sgYW5kIGlzIHRoZSBjbG9jayB0aGF0IGlzIGFs
+c28gZHJpdmluZyB0aGUgSVAgaXRzZWxmLCBhbmQgb25lIGlzDQpjYWxsZWQgZ2VuZXJpYyBjbG9j
+ayAodGhpcyBjb3VsZCBkcml2ZSBvbmx5IHRoZSB0aW1lciBpdHNlbGYpIGFuZCBzaG91bGQgYmUN
+CmF0IGxlYXN0IDMgdGltZXMgbG93ZXIgdGhhbiB0aGUgcGVyaXBoZXJhbCBjbG9jay4NCg0KV2Ug
+Y291bGQgY2hvb3NlIHRoZSBjbG9jayBkcml2aW5nIHRoZSB0aW1lciBieSBzZXR0aW5nIHRoZSBQ
+SVQ2NEJfTVIuU0dDTEsNCmJpdCAoMCAtIG1lYW5zIHRoZSB0aW1lciBpdHNlbGYgaXMgZHJpdmVu
+IGJ5IHBlcmlwaGVyYWwgY2xvY2ssIDEgLSBtZWFucw0KdGhlIHRpbWVyIGlzIGRyaXZlbiBieSB0
+aGUgZ2VuZXJpYyBjbG9jaykuDQoNClRoZSB0aW1lciBjbG9jayBzb3VyY2UgY291bGQgYmUgZGl2
+aWRlZCBieSBNUi5QUkVTICsgMS4NCg0KU28sIEkgdXNlZCB0aGUgY2xvY2stZnJlcXVlbmN5IERU
+IGJpbmRpbmcgdG8gbGV0IHVzZXIgY2hvb3NlIHRoZSB0aW1lcidzDQpmcmVxdWVuY3kuIEJhc2Vk
+IG9uIHRoZSB2YWx1ZSBwcm92aWRlZCB2aWEgdGhpcyBEVCBiaW5kaW5nIHRoZSBiZXN0IGNsb2Nr
+DQpzb3VyY2UgYW5kIHByZXNjYWxlciBpcyBjaG9zZW4gdmlhIG1jaHBfcGl0NjRiX3ByZXNfcHJl
+cGFyZSgpIGZ1bmN0aW9uLg0KDQpBcyB0aGUgZGF0YXNoZWV0IGZvciB0aGUgcHJvZHVjdCB0aGF0
+IGlzIHVzaW5nIHRoaXMgSVAgaXMgb3BlbiBub3csIEknbQ0KaW5zZXJ0aW5nIGhlcmUgYSBsaW5r
+IHRvIGl0IFsxXS4NCg0KVGhhbmsgeW91LA0KQ2xhdWRpdSBCZXpuZWENCg0KWzFdDQpodHRwOi8v
+d3cxLm1pY3JvY2hpcC5jb20vZG93bmxvYWRzL2VuL0RldmljZURvYy9TQU05WDYwLURhdGEtU2hl
+ZXQtRFM2MDAwMTU3OUEucGRmDQoNCj4gDQo=
