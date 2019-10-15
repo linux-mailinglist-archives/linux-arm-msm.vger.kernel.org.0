@@ -2,168 +2,73 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 21F60D7804
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 15 Oct 2019 16:07:36 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 27E1FD7DA2
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 15 Oct 2019 19:26:01 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732313AbfJOOHe (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 15 Oct 2019 10:07:34 -0400
-Received: from mail-ed1-f67.google.com ([209.85.208.67]:44888 "EHLO
-        mail-ed1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1732435AbfJOOHe (ORCPT
+        id S2388739AbfJORZz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 15 Oct 2019 13:25:55 -0400
+Received: from mail-oi1-f195.google.com ([209.85.167.195]:43894 "EHLO
+        mail-oi1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2388722AbfJORZw (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 15 Oct 2019 10:07:34 -0400
-Received: by mail-ed1-f67.google.com with SMTP id r16so18119784edq.11
-        for <linux-arm-msm@vger.kernel.org>; Tue, 15 Oct 2019 07:07:30 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ffwll.ch; s=google;
-        h=sender:date:from:to:cc:subject:message-id:mail-followup-to
-         :references:mime-version:content-disposition:in-reply-to:user-agent;
-        bh=qNZCwssE+agkEqCxaKtKVtylCGvXFSXX5DhiQKaIXpg=;
-        b=NPijPlHE9mOZETSF+T0qFTrnynppESRm1hPk8m15z6BtFKp/f35nb6fP0AtxA+vICD
-         JOWnOXgGumAnnyCgoxgqcArGuemzJeDfqPdA4LYis0/rmWoNPx8t+Aa38BhPM8yc5J1y
-         jTOJ95BLBFELDrUekBUcpVOI1TGYpw9L5o3bg=
+        Tue, 15 Oct 2019 13:25:52 -0400
+Received: by mail-oi1-f195.google.com with SMTP id t84so17518073oih.10;
+        Tue, 15 Oct 2019 10:25:52 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:date:from:to:cc:subject:message-id
-         :mail-followup-to:references:mime-version:content-disposition
-         :in-reply-to:user-agent;
-        bh=qNZCwssE+agkEqCxaKtKVtylCGvXFSXX5DhiQKaIXpg=;
-        b=VGSxGfi5H1gmTrAucV+OlBSf7mbalvwc4k1NmxrRrYQI7hs5VDRKZS/g5En47TWx9j
-         xUMfGF7NTc7a/XaGRHKeMjBNRH7hDE+arJi7CDdGBh5h/rsn4lk3v5s7YUqdLOOR0dJ/
-         lPvgLdvRgjzkFNzUI5XmqTT2VUi9XtZrQ6wobVlOb++HuYUtaYM2yK4M75YWDZyMm53X
-         T4Dhm+zSVUN12MPYeTiBCY8UmvsHYcdKo4qpuIniTYz+3Z7ZwJU4Onq5FdTm25opqsoo
-         49rOD+7t7DLH1q9C91703cV1xnyanLx1B27D6nHrBpDkTln6S4x+ShXPePSdcdkz3RW3
-         8F9Q==
-X-Gm-Message-State: APjAAAXYJr/tFD72rGSJ3yNSqSte8bS4lbl8+P1x6T9vu/4nz+mzFrz5
-        7quCQn5MdaYh1JWxp3DbNvrDpgq8t6c=
-X-Google-Smtp-Source: APXvYqxwy4bxug6xoJIsFM59wzr8Eu7OLed7aQTfUGOfiWObU9eeM/ertrRHn6MHc5kJuwT0SZQfrw==
-X-Received: by 2002:a17:906:6a8e:: with SMTP id p14mr34255737ejr.137.1571148449724;
-        Tue, 15 Oct 2019 07:07:29 -0700 (PDT)
-Received: from phenom.ffwll.local (212-51-149-96.fiber7.init7.net. [212.51.149.96])
-        by smtp.gmail.com with ESMTPSA id d2sm3745355eda.20.2019.10.15.07.07.27
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=TuLY0T5XCanlGHWiiteaVAS0AqJDC0pQFFmFd4/UATA=;
+        b=LtEsW1HuAp629IJBd5FW9dHUPIb4l5EnwWl+sfRYkdmdM2grT341mwT8OajDN4PY7x
+         74/Y8NSxupWgMgoKv5fuKst7tC9zlyDAxGmwqHDmq0RNB3itHcPC+bJI7M3prVQqmUp+
+         DPrWHvW9aQ88NRAUzKiMelc7MmQ9Q1KeD3W4v18cNguVYi0+//FG/u08TkOrlemhNLaW
+         hahReiOYAm7+dzF774Gm6p8ERkZMhkjoGKXqlk+Ji9H4Rri9xzVlPkWuW4xC2Om610bv
+         2XF74BCNDnOP6z998nmTTWyOKNRDlsmFRtlZdfpTPJnH1EoTzC2feGv6qEpIkrqiKxDU
+         pfew==
+X-Gm-Message-State: APjAAAU2VHyVKywH5zahLcvcgxJ6UykF6j3cnGIfDeu2tV06JLQPbn/X
+        i7v8gWGRhdcgokH0zcgnRg==
+X-Google-Smtp-Source: APXvYqyh/AJuW5SKmbZ5+aKVbLFBePskQhmFvgqaWcF+4jvMRtRbccQskyol9LKjgN6XrE7Ol69g6A==
+X-Received: by 2002:aca:2807:: with SMTP id 7mr30578217oix.99.1571160351713;
+        Tue, 15 Oct 2019 10:25:51 -0700 (PDT)
+Received: from localhost (24-155-109-49.dyn.grandenetworks.net. [24.155.109.49])
+        by smtp.gmail.com with ESMTPSA id y18sm6549012oto.2.2019.10.15.10.25.50
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 15 Oct 2019 07:07:28 -0700 (PDT)
-Date:   Tue, 15 Oct 2019 16:07:26 +0200
-From:   Daniel Vetter <daniel@ffwll.ch>
-To:     Johan Hovold <johan@kernel.org>
-Cc:     Daniel Vetter <daniel@ffwll.ch>, Rob Clark <robdclark@gmail.com>,
-        Sean Paul <sean@poorly.run>,
-        Fabien Dessenne <fabien.dessenne@st.com>,
-        Mauro Carvalho Chehab <mchehab@kernel.org>,
-        Harald Freudenberger <freude@linux.ibm.com>,
-        David Airlie <airlied@linux.ie>,
-        Heiko Carstens <heiko.carstens@de.ibm.com>,
-        Vasily Gorbik <gor@linux.ibm.com>,
-        Christian Borntraeger <borntraeger@de.ibm.com>,
-        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org,
-        linux-media@vger.kernel.org, linux-s390@vger.kernel.org,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Al Viro <viro@zeniv.linux.org.uk>
-Subject: Re: [PATCH 0/4] treewide: fix interrupted release
-Message-ID: <20191015140726.GN11828@phenom.ffwll.local>
-Mail-Followup-To: Johan Hovold <johan@kernel.org>,
-        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        Fabien Dessenne <fabien.dessenne@st.com>,
-        Mauro Carvalho Chehab <mchehab@kernel.org>,
-        Harald Freudenberger <freude@linux.ibm.com>,
-        David Airlie <airlied@linux.ie>,
-        Heiko Carstens <heiko.carstens@de.ibm.com>,
-        Vasily Gorbik <gor@linux.ibm.com>,
-        Christian Borntraeger <borntraeger@de.ibm.com>,
-        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org,
-        linux-media@vger.kernel.org, linux-s390@vger.kernel.org,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Al Viro <viro@zeniv.linux.org.uk>
-References: <20191010131333.23635-1-johan@kernel.org>
- <20191010135043.GA16989@phenom.ffwll.local>
- <20191011093633.GD27819@localhost>
- <20191014084847.GD11828@phenom.ffwll.local>
- <20191014161326.GO13531@localhost>
+        Tue, 15 Oct 2019 10:25:51 -0700 (PDT)
+Date:   Tue, 15 Oct 2019 12:25:50 -0500
+From:   Rob Herring <robh@kernel.org>
+To:     Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
+Cc:     robh+dt@kernel.org, mark.rutland@arm.com, thierry.reding@gmail.com,
+        sam@ravnborg.org, airlied@linux.ie, daniel@ffwll.ch,
+        bjorn.andersson@linaro.org, linux-arm-msm@vger.kernel.org,
+        dri-devel@lists.freedesktop.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org,
+        Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
+Subject: Re: [PATCH] dt-bindings: display: Convert sharp,ld-d5116z01b panel
+ to DT schema
+Message-ID: <20191015172550.GA4197@bogus>
+References: <20191010210654.37426-1-jeffrey.l.hugo@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20191014161326.GO13531@localhost>
-X-Operating-System: Linux phenom 5.2.0-2-amd64 
+In-Reply-To: <20191010210654.37426-1-jeffrey.l.hugo@gmail.com>
 User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Oct 14, 2019 at 06:13:26PM +0200, Johan Hovold wrote:
-> On Mon, Oct 14, 2019 at 10:48:47AM +0200, Daniel Vetter wrote:
-> > On Fri, Oct 11, 2019 at 11:36:33AM +0200, Johan Hovold wrote:
-> > > On Thu, Oct 10, 2019 at 03:50:43PM +0200, Daniel Vetter wrote:
-> > > > On Thu, Oct 10, 2019 at 03:13:29PM +0200, Johan Hovold wrote:
-> > > > > Two old USB drivers had a bug in them which could lead to memory leaks
-> > > > > if an interrupted process raced with a disconnect event.
-> > > > > 
-> > > > > Turns out we had a few more driver in other subsystems with the same
-> > > > > kind of bug in them.
-> > > 
-> > > > Random funny idea: Could we do some debug annotations (akin to
-> > > > might_sleep) that splats when you might_sleep_interruptible somewhere
-> > > > where interruptible sleeps are generally a bad idea? Like in
-> > > > fops->release?
-> > > 
-> > > There's nothing wrong with interruptible sleep in fops->release per se,
-> > > it's just that drivers cannot return -ERESTARTSYS and friends and expect
-> > > to be called again later.
-> > 
-> > Do you have a legit usecase for interruptible sleeps in fops->release?
+On Thu, 10 Oct 2019 14:06:54 -0700, Jeffrey Hugo wrote:
+> Convert the sharp,ld-d5116z01b panel binding to DT schema.
 > 
-> The tty layer depends on this for example when waiting for buffered
-> writes to complete (something which may never happen when using flow
-> control).
+> Signed-off-by: Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
+> ---
+>  .../display/panel/sharp,ld-d5116z01b.txt      | 26 ----------------
+>  .../display/panel/sharp,ld-d5116z01b.yaml     | 30 +++++++++++++++++++
+>  2 files changed, 30 insertions(+), 26 deletions(-)
+>  delete mode 100644 Documentation/devicetree/bindings/display/panel/sharp,ld-d5116z01b.txt
+>  create mode 100644 Documentation/devicetree/bindings/display/panel/sharp,ld-d5116z01b.yaml
 > 
-> > I'm not even sure killable is legit in there, since it's an fd, not a
-> > process context ...
-> 
-> It will be run in process context in many cases, and for ttys we're good
-> AFAICT.
 
-Huh, read it a bit, all the ->shutdown callbacks have void return type.
-But there's indeed interruptible sleeps in there. Doesn't this break
-userspace that expects that a close() actually flushes the tty?
+Applied, thanks.
 
-Imo if you're ->release callbacks feels like it should do a wait to
-guaranteed something userspace expects, then doing a
-wait_interruptible/killable feels like a bug. Or alternatively, the wait
-isn't really needed in the first place.
-
-> > > The return value from release() is ignored by vfs, and adding a splat in
-> > > __fput() to catch these buggy drivers might be overkill.
-> > 
-> > Ime once you have a handful of instances of a broken pattern, creating a
-> > check for it (under a debug option only ofc) is very much justified.
-> > Otherwise they just come back to life like the undead, all the time. And
-> > there's a _lot_ of fops->release callbacks in the kernel.
-> 
-> Yeah, you have a point.
-> 
-> But take tty again as an example, the close tty operation called from
-> release() is declared void so there's no propagated return value for vfs
-> to check.
-> 
-> It may even be better to fix up the 100 or so callbacks potentially
-> returning non-zero and make fops->release void so that the compiler
-> would help us catch any future bugs and also serve as a hint for
-> developers that returning errnos from fops->release is probably not
-> what you want to do.
-> 
-> But that's a lot of churn of course.
-
-Hm indeed ->release has int as return type. I guess that's needed for
-file I/O errno and similar stuff ...
-
-Still void return value doesn't catch funny stuff like doing interruptible
-waits and occasionally failing if you have a process that likes to use
-signals and also uses some library somewhere to do something. In graphics
-we have that, with Xorg loving signals for various things.
--Daniel
--- 
-Daniel Vetter
-Software Engineer, Intel Corporation
-http://blog.ffwll.ch
+Rob
