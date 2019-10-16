@@ -2,86 +2,105 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id E833FD8A9D
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Oct 2019 10:14:13 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D6259D8AA2
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Oct 2019 10:15:37 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2389542AbfJPIOK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 16 Oct 2019 04:14:10 -0400
-Received: from mail.kernel.org ([198.145.29.99]:54956 "EHLO mail.kernel.org"
+        id S1726857AbfJPIPg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 16 Oct 2019 04:15:36 -0400
+Received: from mail.kernel.org ([198.145.29.99]:55564 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1727050AbfJPIOK (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 16 Oct 2019 04:14:10 -0400
+        id S1726335AbfJPIPg (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 16 Oct 2019 04:15:36 -0400
 Received: from localhost (unknown [171.76.123.182])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 8CFAD2064B;
-        Wed, 16 Oct 2019 08:14:08 +0000 (UTC)
+        by mail.kernel.org (Postfix) with ESMTPSA id 93AA22064B;
+        Wed, 16 Oct 2019 08:15:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1571213649;
-        bh=e94qyOW697j6Brhk1x91YtKXnJ2xd1o6sJyUcSKS//Q=;
+        s=default; t=1571213735;
+        bh=wQkEVazklDAJ7dSbF0KdWXdU8XFXLrPC9CuTZDXFcM4=;
         h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=Z97qQvbgnu8PYacVWHANHonUj8ddq5C7zHqQa80FkkFfSEkvw66E5b7Ghf5rZVQjQ
-         sReLGNAMwosk+b+dOZGNykmUgDT+fcr/N8iXKlnLXPH21WvogC+IaO4n0Ev1BzdO8y
-         Kj7/dWaJlT97a4c1xlLOaQsfFBzkv0OzFqC79B8k=
-Date:   Wed, 16 Oct 2019 13:44:01 +0530
+        b=mVi5NeVe2NO8zlPTQNPzHooei1ARBh0FfAAGoui8k9aCAWBlp7R/7/Q+qbztaMc+s
+         t/TfDbgo7dNWOojAuVV6TsOXkFRXz4iC+c3afqIfg809gyhTaNYWAQYEdTThBEgad/
+         EtpmBefX2VJwMZ8LsvVcDfzoB5cRAWZXb0N+URnk=
+Date:   Wed, 16 Oct 2019 13:45:30 +0530
 From:   Vinod Koul <vkoul@kernel.org>
-To:     Niklas Cassel <niklas.cassel@linaro.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
+To:     Kiran Gunda <kgunda@codeaurora.org>
+Cc:     bjorn.andersson@linaro.org, Andy Gross <agross@kernel.org>,
+        Linus Walleij <linus.walleij@linaro.org>,
         Rob Herring <robh+dt@kernel.org>,
         Mark Rutland <mark.rutland@arm.com>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] arm64: dts: qcom: qcs404-evb: Set vdd_apc regulator in
- high power mode
-Message-ID: <20191016081401.GI2654@vkoul-mobl>
-References: <20191014120920.12691-1-niklas.cassel@linaro.org>
+        linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH V1] dt-bindings: pinctrl: qcom-pmic-gpio: Add support for
+ pm6150/pm6150l
+Message-ID: <20191016081530.GJ2654@vkoul-mobl>
+References: <1570188039-22122-1-git-send-email-kgunda@codeaurora.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20191014120920.12691-1-niklas.cassel@linaro.org>
+In-Reply-To: <1570188039-22122-1-git-send-email-kgunda@codeaurora.org>
 User-Agent: Mutt/1.12.1 (2019-06-15)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 14-10-19, 14:09, Niklas Cassel wrote:
-> vdd_apc is the regulator that supplies the main CPU cluster.
+On 04-10-19, 16:50, Kiran Gunda wrote:
+> Add support for the PM6150 and PM6150L GPIO support to the
+> Qualcomm PMIC GPIO binding.
 > 
-> At sudden CPU load changes, we have noticed invalid page faults on
-> addresses with all bits shifted, as well as on addresses with individual
-> bits flipped.
+> Signed-off-by: Kiran Gunda <kgunda@codeaurora.org>
+> ---
+>  Documentation/devicetree/bindings/pinctrl/qcom,pmic-gpio.txt | 4 ++++
+>  drivers/pinctrl/qcom/pinctrl-spmi-gpio.c                     | 2 ++
+>  2 files changed, 6 insertions(+)
 > 
-> By putting the vdd_apc regulator in high power mode, the voltage drops
-> during sudden load changes will be less severe, and we have not been able
-> to reproduce the invalid page faults with the regulator in this mode.
+> diff --git a/Documentation/devicetree/bindings/pinctrl/qcom,pmic-gpio.txt b/Documentation/devicetree/bindings/pinctrl/qcom,pmic-gpio.txt
+> index c32bf32..2f48cca 100644
+> --- a/Documentation/devicetree/bindings/pinctrl/qcom,pmic-gpio.txt
+> +++ b/Documentation/devicetree/bindings/pinctrl/qcom,pmic-gpio.txt
+> @@ -23,6 +23,8 @@ PMIC's from Qualcomm.
+>  		    "qcom,pms405-gpio"
+>  		    "qcom,pm8150-gpio"
+>  		    "qcom,pm8150b-gpio"
+> +		    "qcom,pm6150-gpio"
+> +		    "qcom,pm6150l-gpio"
+>  
+>  		    And must contain either "qcom,spmi-gpio" or "qcom,ssbi-gpio"
+>  		    if the device is on an spmi bus or an ssbi bus respectively
+> @@ -100,6 +102,8 @@ to specify in a pin configuration subnode:
+>  					     and gpio8)
+>  		    gpio1-gpio12 for pm8150b (holes on gpio3, gpio4, gpio7)
+>  		    gpio1-gpio12 for pm8150l (hole on gpio7)
+> +		    gpio1-gpio10 for pm6150
+> +		    gpio1-gpio12 for pm6150l
+
+No holes on these?
+
+Other than this:
 
 Reviewed-by: Vinod Koul <vkoul@kernel.org>
 
-This seems a good bug fix, maybe CC stable?
-
-> 
-> Signed-off-by: Niklas Cassel <niklas.cassel@linaro.org>
-> Suggested-by: Bjorn Andersson <bjorn.andersson@linaro.org>
-> ---
->  arch/arm64/boot/dts/qcom/qcs404-evb.dtsi | 1 +
->  1 file changed, 1 insertion(+)
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/qcs404-evb.dtsi b/arch/arm64/boot/dts/qcom/qcs404-evb.dtsi
-> index 501a7330dbc8..522d3ef72df5 100644
-> --- a/arch/arm64/boot/dts/qcom/qcs404-evb.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/qcs404-evb.dtsi
-> @@ -73,6 +73,7 @@
->  		regulator-always-on;
->  		regulator-boot-on;
->  		regulator-name = "vdd_apc";
-> +		regulator-initial-mode = <1>;
->  		regulator-min-microvolt = <1048000>;
->  		regulator-max-microvolt = <1384000>;
->  	};
+>  
+>  - function:
+>  	Usage: required
+> diff --git a/drivers/pinctrl/qcom/pinctrl-spmi-gpio.c b/drivers/pinctrl/qcom/pinctrl-spmi-gpio.c
+> index f1fece5..387917c 100644
+> --- a/drivers/pinctrl/qcom/pinctrl-spmi-gpio.c
+> +++ b/drivers/pinctrl/qcom/pinctrl-spmi-gpio.c
+> @@ -1121,6 +1121,8 @@ static int pmic_gpio_remove(struct platform_device *pdev)
+>  	{ .compatible = "qcom,pm8150b-gpio", .data = (void *) 12 },
+>  	/* pm8150l has 12 GPIOs with holes on 7 */
+>  	{ .compatible = "qcom,pm8150l-gpio", .data = (void *) 12 },
+> +	{ .compatible = "qcom,pm6150-gpio", .data = (void *) 10 },
+> +	{ .compatible = "qcom,pm6150l-gpio", .data = (void *) 12 },
+>  	{ },
+>  };
+>  
 > -- 
-> 2.21.0
+> The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
+>  a Linux Foundation Collaborative Project
 
 -- 
 ~Vinod
