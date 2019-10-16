@@ -2,48 +2,48 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 790FED9A36
+	by mail.lfdr.de (Postfix) with ESMTP id 88B4DD9A37
 	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Oct 2019 21:37:35 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2394463AbfJPThd (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 16 Oct 2019 15:37:33 -0400
-Received: from mail-qt1-f196.google.com ([209.85.160.196]:37497 "EHLO
-        mail-qt1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2394448AbfJPThc (ORCPT
+        id S2394466AbfJPThe (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 16 Oct 2019 15:37:34 -0400
+Received: from mail-qk1-f195.google.com ([209.85.222.195]:38275 "EHLO
+        mail-qk1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2394451AbfJPThe (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 16 Oct 2019 15:37:32 -0400
-Received: by mail-qt1-f196.google.com with SMTP id n17so18518623qtr.4
-        for <linux-arm-msm@vger.kernel.org>; Wed, 16 Oct 2019 12:37:31 -0700 (PDT)
+        Wed, 16 Oct 2019 15:37:34 -0400
+Received: by mail-qk1-f195.google.com with SMTP id p4so3368206qkf.5
+        for <linux-arm-msm@vger.kernel.org>; Wed, 16 Oct 2019 12:37:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=E2xMtfg5bJTmZe94/qx4v5HPv3cpP1DHi2yBTTi4UXk=;
-        b=yiEGyuxwygGASqd+4EnfQQXnAstv6WNIJC4tpcMTrjTHMRBlAxqUUmy3TXbQ9wu1OS
-         jDd/n79uL5Fh7FnlU3t+AjYcBamWvQW9x5Fk4Wu2074XgFIzZ614l7R8FsvKfxEMRsWJ
-         ITsuWypSAEltVlevAHN+PVhr+CvPw2BZNuOgs/ZRm91Ly7xpPDomQ4Rv00ssBs+cxQFg
-         0B3G4r0phywCDRzo2iFnxSmyTQTnWVtEJDawys7gUkmESDhvMhbJb7XHsia+hkyAB/of
-         7OowfA6qoW5J/sGNBUqAGvouMHJQYZA2yIbTy4NzsYAcJZ4oqmGDXC087MoHr6rLPfiA
-         LnkA==
+        bh=SEzzpxn6TNoCaJjNnbG2b9pO7Zr0jWolxxLkxLULV5c=;
+        b=jtg46D18bjGRyC40A5rJir1izsa/p65sPjSA6mfWjUIbPAwgAbDKZuoyK3S88fFVaw
+         kuXOvBRiVr3prI14Wzpr879D32cekWxy2DfL9VOQ2S1SIbB3nvPiazNqIlkKepocZ5DZ
+         laBNkiMBhlGk+kgT37dsdeInOu+lArHA3YkDS712pXc2v6jeK71o8l1wuztqj+wqCoPV
+         sZ8vQS0SqkAK3789qvJtMJMZOLtTFDvdKIED6p38HeakzS1elUEavpdgF1ZXo8k0oXoa
+         afIKOcKef7hh8Skn3Qb5TDFs2mP8t+6bBhJf0iEclk9Rstsq7HuNJh9zdbn/QS/T/ieW
+         VIjg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=E2xMtfg5bJTmZe94/qx4v5HPv3cpP1DHi2yBTTi4UXk=;
-        b=B/kp5n+/y4VQ43NfP8boKezDQ94qE5Djm3YKh21O/qkdJiFB22NKmHlomv3yBXKNxX
-         91kWyPsdEX4V8omznpa+iK38JR2NbG/G2nxtCQliyg0wbivCBxFJpgSXzfdRzM2IxXBh
-         Ova8n6EugVDMTosLIrvj6sTnO3dGcFK6hgKTPcqrK4K7abA4GEv8eko6z5xFXOSznV2e
-         jIP824HOO6z1bhLV3hff4RSIseAb4MQh7Tov8g6fguTHqQ3zxKg5VLsUsPVZFzKJKf4q
-         62F9XqFMWS2J+e1ksxPLzp+fUUD1h3/x2+qUm9e7UB2Qr81C5gqptQPblrbJHmtm5P6Y
-         lX3g==
-X-Gm-Message-State: APjAAAUzR6Dxnr5mMyxwQRSXNnBeLtVJ9+WJH90XMy7AdTqCAcsk60iX
-        J9u9fmIm6uz767I9CvdHAGGlAQ==
-X-Google-Smtp-Source: APXvYqzM2qvnUjfMlRvsvXUMH3bvdX6uNGcU6wQ3RSuMt0JXSDsqGZCSUlK0OwltEypjlC181PH/Vg==
-X-Received: by 2002:ac8:3652:: with SMTP id n18mr13523277qtb.232.1571254651349;
-        Wed, 16 Oct 2019 12:37:31 -0700 (PDT)
+        bh=SEzzpxn6TNoCaJjNnbG2b9pO7Zr0jWolxxLkxLULV5c=;
+        b=Up1dRL7KAyooRQlQfsjJ2H9cPYHk9LX6QrBqgbXPmN9lgdcYH64aRc9DylsMBEko57
+         UzX7O6GLpCTXfm/n80S8ZauCJjzCK9TOBUuo1kLmX7AXi6XjNUdNNB1Ced+phpNPVr3q
+         kUibl2jIDIVIByiP5sVumaiqiQ/HcXT1URrfc99tz6BEois1a5gJ03qE6dOxIuMnPMAT
+         z/ncgZpcCBQ2TEjK+Oyr8uwSOLXdtiENiDzfZgfrEJGjmn9JqDHp7fkD6gdSF3gE7ryv
+         bUg9DZws3btwMbR8ceV1WEKb0Wr55bhVoMtoeNbEZIEqnzEILtJembFoV3a1NVpCS6u5
+         GVGw==
+X-Gm-Message-State: APjAAAVZ+lUQNvIEWF/2VPiOYX3SV8iZqdrR5lUeZU6/TLftZQ+UAdIw
+        oMJHCBXPnJ0PAMP8uVZxfNjw5hSIFMMDnA==
+X-Google-Smtp-Source: APXvYqx6RScGxFupPIKtDHHoMIuDZWH3t814tbZCS+r0zxMef5n03LF0cipYleH/qNbjnBURIvcaoA==
+X-Received: by 2002:a37:f70f:: with SMTP id q15mr39409920qkj.428.1571254652961;
+        Wed, 16 Oct 2019 12:37:32 -0700 (PDT)
 Received: from Thara-Work-Ubuntu.fios-router.home (pool-71-255-246-27.washdc.fios.verizon.net. [71.255.246.27])
-        by smtp.googlemail.com with ESMTPSA id 54sm16246030qts.75.2019.10.16.12.37.29
+        by smtp.googlemail.com with ESMTPSA id 54sm16246030qts.75.2019.10.16.12.37.31
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Wed, 16 Oct 2019 12:37:30 -0700 (PDT)
+        Wed, 16 Oct 2019 12:37:32 -0700 (PDT)
 From:   Thara Gopinath <thara.gopinath@linaro.org>
 To:     edubezval@gmail.com, rui.zhang@intel.com, ulf.hansson@linaro.org,
         daniel.lezcano@linaro.org, bjorn.andersson@linaro.org,
@@ -52,9 +52,9 @@ Cc:     amit.kucheria@verdurent.com, mark.rutland@arm.com,
         rjw@rjwysocki.net, linux-pm@vger.kernel.org,
         devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
         linux-kernel@vger.kernel.org
-Subject: [PATCH v3 2/7] soc: qcom: rpmhpd: Introduce function to retrieve power domain performance state count
-Date:   Wed, 16 Oct 2019 15:37:16 -0400
-Message-Id: <1571254641-13626-3-git-send-email-thara.gopinath@linaro.org>
+Subject: [PATCH v3 3/7] thermal: core: Add late init hook to cooling device ops
+Date:   Wed, 16 Oct 2019 15:37:17 -0400
+Message-Id: <1571254641-13626-4-git-send-email-thara.gopinath@linaro.org>
 X-Mailer: git-send-email 2.1.4
 In-Reply-To: <1571254641-13626-1-git-send-email-thara.gopinath@linaro.org>
 References: <1571254641-13626-1-git-send-email-thara.gopinath@linaro.org>
@@ -63,41 +63,58 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Populate .get_performace_state_count in genpd ops to retrieve the count
-of performance states supported by a rpmh power domain.
+Add a hook in thermal_cooling_device_ops to be called after
+the cooling device has been initialized and registered
+but before binding it to a thermal zone.
+
+In this patch series it is used to hook up a power domain
+to the device pointer of cooling device.
+
+It can be used for any other relevant late initializations
+of a cooling device as well.
 
 Signed-off-by: Thara Gopinath <thara.gopinath@linaro.org>
 ---
- drivers/soc/qcom/rpmhpd.c | 9 +++++++++
- 1 file changed, 9 insertions(+)
+ drivers/thermal/thermal_core.c | 13 +++++++++++++
+ include/linux/thermal.h        |  1 +
+ 2 files changed, 14 insertions(+)
 
-diff --git a/drivers/soc/qcom/rpmhpd.c b/drivers/soc/qcom/rpmhpd.c
-index 5741ec3..9d37534 100644
---- a/drivers/soc/qcom/rpmhpd.c
-+++ b/drivers/soc/qcom/rpmhpd.c
-@@ -285,6 +285,13 @@ static unsigned int rpmhpd_get_performance_state(struct generic_pm_domain *genpd
- 	return dev_pm_opp_get_level(opp);
- }
+diff --git a/drivers/thermal/thermal_core.c b/drivers/thermal/thermal_core.c
+index 886e8fa..c2ecb73 100644
+--- a/drivers/thermal/thermal_core.c
++++ b/drivers/thermal/thermal_core.c
+@@ -994,6 +994,19 @@ __thermal_cooling_device_register(struct device_node *np,
+ 	list_add(&cdev->node, &thermal_cdev_list);
+ 	mutex_unlock(&thermal_list_lock);
  
-+static int rpmhpd_performance_states_count(struct generic_pm_domain *domain)
-+{
-+	struct rpmhpd *pd = domain_to_rpmhpd(domain);
++	/* Call into cdev late initialization if defined */
++	if (cdev->ops->late_init) {
++		result = cdev->ops->late_init(cdev);
++		if (result) {
++			ida_simple_remove(&thermal_cdev_ida, cdev->id);
++			put_device(&cdev->device);
++			mutex_lock(&thermal_list_lock);
++			list_del(&cdev->node);
++			mutex_unlock(&thermal_list_lock);
++			return ERR_PTR(result);
++		}
++	}
 +
-+	return pd->level_count;
-+}
-+
- static int rpmhpd_update_level_mapping(struct rpmhpd *rpmhpd)
- {
- 	int i;
-@@ -373,6 +380,8 @@ static int rpmhpd_probe(struct platform_device *pdev)
- 		rpmhpds[i]->pd.power_on = rpmhpd_power_on;
- 		rpmhpds[i]->pd.set_performance_state = rpmhpd_set_performance_state;
- 		rpmhpds[i]->pd.opp_to_performance_state = rpmhpd_get_performance_state;
-+		rpmhpds[i]->pd.get_performance_state_count =
-+					rpmhpd_performance_states_count;
- 		pm_genpd_init(&rpmhpds[i]->pd, NULL, true);
+ 	/* Update binding information for 'this' new cdev */
+ 	bind_cdev(cdev);
  
- 		data->domains[i] = &rpmhpds[i]->pd;
+diff --git a/include/linux/thermal.h b/include/linux/thermal.h
+index e45659c..e94b3de 100644
+--- a/include/linux/thermal.h
++++ b/include/linux/thermal.h
+@@ -125,6 +125,7 @@ struct thermal_cooling_device_ops {
+ 			   struct thermal_zone_device *, unsigned long, u32 *);
+ 	int (*power2state)(struct thermal_cooling_device *,
+ 			   struct thermal_zone_device *, u32, unsigned long *);
++	int (*late_init)(struct thermal_cooling_device *);
+ };
+ 
+ struct thermal_cooling_device {
 -- 
 2.1.4
 
