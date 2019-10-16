@@ -2,48 +2,48 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 1C750D9A46
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Oct 2019 21:38:00 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B9B5BD9A41
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Oct 2019 21:37:47 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2394489AbfJPThj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 16 Oct 2019 15:37:39 -0400
-Received: from mail-qk1-f194.google.com ([209.85.222.194]:41410 "EHLO
+        id S2394477AbfJPThp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 16 Oct 2019 15:37:45 -0400
+Received: from mail-qk1-f194.google.com ([209.85.222.194]:43396 "EHLO
         mail-qk1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2394487AbfJPThi (ORCPT
+        with ESMTP id S2394497AbfJPThl (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 16 Oct 2019 15:37:38 -0400
-Received: by mail-qk1-f194.google.com with SMTP id p10so23905743qkg.8
-        for <linux-arm-msm@vger.kernel.org>; Wed, 16 Oct 2019 12:37:38 -0700 (PDT)
+        Wed, 16 Oct 2019 15:37:41 -0400
+Received: by mail-qk1-f194.google.com with SMTP id h126so23902601qke.10
+        for <linux-arm-msm@vger.kernel.org>; Wed, 16 Oct 2019 12:37:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=n/EfPfS/rzayptMKHYVpYurUSNAbaOippVZDRNzUE4k=;
-        b=F7ysRnFJGgjboY0XKIl3CtLjZJFKjN3OJG4bCNjVjWav0TojjT7TlmD3PaAM6iQR9u
-         GcS1Z5nBswY2DKOKvyJO/RvfLfj7i0rWvBNgLB88JfwDCy5oYNpt7b3atBSY+sipZjr/
-         bF5X2OMqJwz/Ou9jLpokuEH3QARY+FUTC2MiGwgqv9Gde2DlexNMDXUSZgQdneRlaFB6
-         lqGBlMzHG+5HX+EN8CN0rrN6Hfi+wrfQBnR00tko+t/VJLtGGAEm6fvdThSOJikYa+wi
-         /vD0th1bPwVwJYlguPu+7gbN0zL9mEjngSxc6XxE+EeeqafD4MbtcpRxcc50fYQdkQNM
-         iyfg==
+        bh=97s95T4wB8D9WrZ0/COnoxS/a+SRIAWB8dyFC3vn+tQ=;
+        b=GlwUaK9975uKLB3Il8iCJWGw/WsurZbpXrfmvB0+cOiSlTw33tqB9UabOx9UJXv+Py
+         Ysh/dTg6ZIn4vamzHcJM6xAi+ICquA2136RhPwyUOL8hSeVjsNtkt7Sl7oRNq6Xpm7OZ
+         fsofHsRW4JP2sDrS9ml6JUy5xcCUNdSnzWE+RwqfZYdptSJEF9AvxmqycZAFKSflbzNd
+         /HKCAjlNMVxg1QsA7M4yAJyT0hrPGZ1lc89+aXpqKYp7sJ/p7JNvrSqYz7DKG3yclS6O
+         YNjQ6KcDd7F1Yxc0kARpql5np+oJ3Nj+EhLex92Qsd2OkJm1dXy7GUXDMMDIuH2X3Wdq
+         jfxw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=n/EfPfS/rzayptMKHYVpYurUSNAbaOippVZDRNzUE4k=;
-        b=UBqfLAm1jF0MFagcA1WqEYgeA3SSholjNUKAhVVMiUMc7u++3mv/ujwRLhRrHKXNcX
-         IT0ycWs8ypDdziX4aM3FjkKhZpf2xX28x+4pHIs0WVrOY7DhfIXfHVZd+hFK8L7atjW5
-         J3nvObGaM8kERGmQkcG3eAdHus8Pko2HDLhiSr09kkFBJKN5JqDV0QEgCZ1mRVXRM+x9
-         bccoZwuSydXY417mnuBm17CHVMmCoZMInldd0eLzeZdi+ibl95q5TleOoCT9a36gVYIg
-         U7rx97slyx7OkwVbPAOoXkTAinCewldaK2WFQmtZ7ZwW1upd28E0o5Lt0x5aFX5JGub5
-         UCGA==
-X-Gm-Message-State: APjAAAXDN93ZWNkpMxqgPTd6MlDBp1f8ufPtldzvrLQFTyH3mAA3K8Fd
-        zYz4Pg2NJLcqUrHd2pS+yXeBng==
-X-Google-Smtp-Source: APXvYqysYd7L9p+e4+IwwD6T7cSHsFrZy5H/RVDaOTydJlo6DwCvGscuYB6HjYK4z+zLYTb2qhRraA==
-X-Received: by 2002:a37:907:: with SMTP id 7mr43233321qkj.129.1571254657726;
-        Wed, 16 Oct 2019 12:37:37 -0700 (PDT)
+        bh=97s95T4wB8D9WrZ0/COnoxS/a+SRIAWB8dyFC3vn+tQ=;
+        b=r0NHObjT0Jo3ObZuXmXkX22sN8LlPPvt6X1cTlvHfYHWrtiveUriWTUaGOXm2LxhcM
+         JYRruSNGIOn9vGVaXreHhQXr9vei/uZFR6cG71E8yFtFOF4/Tn1RvGIcARJb4LjnEynz
+         MGNFV96LgHs4agig5N2Kbm2pcOOJ2u6955izL7k3V6z/392DiANPFEMFvmNbckYVH3tH
+         vk3rUn74SIV1RFzIEEbBf5meHtzMCa/G50ed83G312oWSg7XNKChg/mEjFtkJNf1DH/J
+         c2+sWEekUNfyYR+K/ZKzYDcqT2Mb9yBQIgvhF7BIcM+sTW+McyIpLBGoKaNejn4SqNTU
+         YW6A==
+X-Gm-Message-State: APjAAAUtMrUjAItp4ja/aMeOf007pggsIYgcEabfXPg5gDL2U73j9K1z
+        zf+CP7W/8q1IkG5v8wc4Eog0ig==
+X-Google-Smtp-Source: APXvYqxix4EGuSLyW4lz+Vd5S9/hkoP/Kwx8aDCIGHmO8XLmv+D/JG/TETbJaTMwknuMZ1ioIcVHig==
+X-Received: by 2002:a37:4146:: with SMTP id o67mr28594780qka.23.1571254659370;
+        Wed, 16 Oct 2019 12:37:39 -0700 (PDT)
 Received: from Thara-Work-Ubuntu.fios-router.home (pool-71-255-246-27.washdc.fios.verizon.net. [71.255.246.27])
-        by smtp.googlemail.com with ESMTPSA id 54sm16246030qts.75.2019.10.16.12.37.36
+        by smtp.googlemail.com with ESMTPSA id 54sm16246030qts.75.2019.10.16.12.37.38
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Wed, 16 Oct 2019 12:37:37 -0700 (PDT)
+        Wed, 16 Oct 2019 12:37:38 -0700 (PDT)
 From:   Thara Gopinath <thara.gopinath@linaro.org>
 To:     edubezval@gmail.com, rui.zhang@intel.com, ulf.hansson@linaro.org,
         daniel.lezcano@linaro.org, bjorn.andersson@linaro.org,
@@ -52,9 +52,9 @@ Cc:     amit.kucheria@verdurent.com, mark.rutland@arm.com,
         rjw@rjwysocki.net, linux-pm@vger.kernel.org,
         devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
         linux-kernel@vger.kernel.org
-Subject: [PATCH v3 6/7] dt-bindings: soc: qcom: Extend RPMh power controller binding to describe thermal warming device
-Date:   Wed, 16 Oct 2019 15:37:20 -0400
-Message-Id: <1571254641-13626-7-git-send-email-thara.gopinath@linaro.org>
+Subject: [PATCH v3 7/7] arm64: dts: qcom: Add mx power domain as thermal warming device.
+Date:   Wed, 16 Oct 2019 15:37:21 -0400
+Message-Id: <1571254641-13626-8-git-send-email-thara.gopinath@linaro.org>
 X-Mailer: git-send-email 2.1.4
 In-Reply-To: <1571254641-13626-1-git-send-email-thara.gopinath@linaro.org>
 References: <1571254641-13626-1-git-send-email-thara.gopinath@linaro.org>
@@ -63,35 +63,31 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-RPMh power controller hosts mx domain that can be used as thermal
-warming device. Add a sub-node to specify this.
+RPMh hosts mx power domain that can be used to warm up the SoC.
+Add sub-node to rpmhpd node for mx to be recognized
+as thermal warming device on sdm845.
 
 Signed-off-by: Thara Gopinath <thara.gopinath@linaro.org>
 ---
- Documentation/devicetree/bindings/power/qcom,rpmpd.txt | 10 ++++++++++
- 1 file changed, 10 insertions(+)
+ arch/arm64/boot/dts/qcom/sdm845.dtsi | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/Documentation/devicetree/bindings/power/qcom,rpmpd.txt b/Documentation/devicetree/bindings/power/qcom,rpmpd.txt
-index eb35b22..fff695d 100644
---- a/Documentation/devicetree/bindings/power/qcom,rpmpd.txt
-+++ b/Documentation/devicetree/bindings/power/qcom,rpmpd.txt
-@@ -18,6 +18,16 @@ Required Properties:
- Refer to <dt-bindings/power/qcom-rpmpd.h> for the level values for
- various OPPs for different platforms as well as Power domain indexes
- 
-+= SUBNODES
-+RPMh alsp hosts power domains that can behave as thermal warming device.
-+These are expressed as subnodes of the RPMh. The name of the node is used
-+to identify the power domain and must therefor be "mx".
+diff --git a/arch/arm64/boot/dts/qcom/sdm845.dtsi b/arch/arm64/boot/dts/qcom/sdm845.dtsi
+index 0222f48..0671c8a 100644
+--- a/arch/arm64/boot/dts/qcom/sdm845.dtsi
++++ b/arch/arm64/boot/dts/qcom/sdm845.dtsi
+@@ -3788,6 +3788,11 @@
+ 						opp-level = <RPMH_REGULATOR_LEVEL_TURBO_L1>;
+ 					};
+ 				};
 +
-+- #cooling-cells:
-+	Usage: optional
-+	Value type: <u32>
-+	Definition: must be 2
-+
- Example: rpmh power domain controller and OPP table
++				mx_cdev: mx {
++					#cooling-cells = <2>;
++					.name = "mx";
++				};
+ 			};
  
- #include <dt-bindings/power/qcom-rpmhpd.h>
+ 			rsc_hlos: interconnect {
 -- 
 2.1.4
 
