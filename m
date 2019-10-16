@@ -2,86 +2,86 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 7F696D8A7A
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Oct 2019 10:06:16 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E833FD8A9D
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Oct 2019 10:14:13 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2390674AbfJPIGQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 16 Oct 2019 04:06:16 -0400
-Received: from mail.kernel.org ([198.145.29.99]:53204 "EHLO mail.kernel.org"
+        id S2389542AbfJPIOK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 16 Oct 2019 04:14:10 -0400
+Received: from mail.kernel.org ([198.145.29.99]:54956 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S2388733AbfJPIGP (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 16 Oct 2019 04:06:15 -0400
+        id S1727050AbfJPIOK (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 16 Oct 2019 04:14:10 -0400
 Received: from localhost (unknown [171.76.123.182])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 4519E20650;
-        Wed, 16 Oct 2019 08:06:14 +0000 (UTC)
+        by mail.kernel.org (Postfix) with ESMTPSA id 8CFAD2064B;
+        Wed, 16 Oct 2019 08:14:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1571213175;
-        bh=ULxWxdAcTuFv0r9XFK5unvh1UhCWUCjT+N+FdMDZkiI=;
+        s=default; t=1571213649;
+        bh=e94qyOW697j6Brhk1x91YtKXnJ2xd1o6sJyUcSKS//Q=;
         h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=aYJcH+jghu4SsAyCK/ysYaa/1+B6G1abNBYHIc7qHCoFNltm6aNS/+LRguSfHc5uB
-         MKoxw22mhR9Yk+e8H9gkIIn3Gr1vnIPmi/kYgCOOwV+XZrWQGzzikTDPRXYOf2YUiJ
-         wHW1Hnw3M1ZlGIoV5pow6OcYhynrU+Hxtw/3Dqpw=
-Date:   Wed, 16 Oct 2019 13:36:07 +0530
+        b=Z97qQvbgnu8PYacVWHANHonUj8ddq5C7zHqQa80FkkFfSEkvw66E5b7Ghf5rZVQjQ
+         sReLGNAMwosk+b+dOZGNykmUgDT+fcr/N8iXKlnLXPH21WvogC+IaO4n0Ev1BzdO8y
+         Kj7/dWaJlT97a4c1xlLOaQsfFBzkv0OzFqC79B8k=
+Date:   Wed, 16 Oct 2019 13:44:01 +0530
 From:   Vinod Koul <vkoul@kernel.org>
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     Catalin Marinas <catalin.marinas@arm.com>,
-        Will Deacon <will@kernel.org>, Shawn Guo <shawnguo@kernel.org>,
-        Olof Johansson <olof@lixom.net>,
-        Maxime Ripard <mripard@kernel.org>,
-        Arnd Bergmann <arnd@arndb.de>,
-        Anson Huang <Anson.Huang@nxp.com>,
-        Jagan Teki <jagan@amarulasolutions.com>,
-        Leonard Crestez <leonard.crestez@nxp.com>,
-        Dinh Nguyen <dinguyen@kernel.org>,
-        Marcin Juszkiewicz <marcin.juszkiewicz@linaro.org>,
-        linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH] arm64: defconfig: Enable Qualcomm pseudo rng
-Message-ID: <20191016080607.GH2654@vkoul-mobl>
-References: <20191011235035.374569-1-bjorn.andersson@linaro.org>
+To:     Niklas Cassel <niklas.cassel@linaro.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Mark Rutland <mark.rutland@arm.com>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: Re: [PATCH] arm64: dts: qcom: qcs404-evb: Set vdd_apc regulator in
+ high power mode
+Message-ID: <20191016081401.GI2654@vkoul-mobl>
+References: <20191014120920.12691-1-niklas.cassel@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20191011235035.374569-1-bjorn.andersson@linaro.org>
+In-Reply-To: <20191014120920.12691-1-niklas.cassel@linaro.org>
 User-Agent: Mutt/1.12.1 (2019-06-15)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 11-10-19, 16:50, Bjorn Andersson wrote:
-> Most Qualcomm platforms contain a pseudo random number generator
-> hardware block. Enable the driver for this block.
-
-This enabled and loads the driver, but doesn't enable the usage.
-
-We also need CONFIG_CRYPTO_RNG2 but that gets selected so that part is
-fine. For userspace we need CONFIG_CRYPTO_USER_API_RNG to be added so
-that kernel exports interface to users. So can you add that as well.
-
-Thanks
+On 14-10-19, 14:09, Niklas Cassel wrote:
+> vdd_apc is the regulator that supplies the main CPU cluster.
 > 
-> Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+> At sudden CPU load changes, we have noticed invalid page faults on
+> addresses with all bits shifted, as well as on addresses with individual
+> bits flipped.
+> 
+> By putting the vdd_apc regulator in high power mode, the voltage drops
+> during sudden load changes will be less severe, and we have not been able
+> to reproduce the invalid page faults with the regulator in this mode.
+
+Reviewed-by: Vinod Koul <vkoul@kernel.org>
+
+This seems a good bug fix, maybe CC stable?
+
+> 
+> Signed-off-by: Niklas Cassel <niklas.cassel@linaro.org>
+> Suggested-by: Bjorn Andersson <bjorn.andersson@linaro.org>
 > ---
->  arch/arm64/configs/defconfig | 1 +
+>  arch/arm64/boot/dts/qcom/qcs404-evb.dtsi | 1 +
 >  1 file changed, 1 insertion(+)
 > 
-> diff --git a/arch/arm64/configs/defconfig b/arch/arm64/configs/defconfig
-> index a5953b0b382d..688c8f200034 100644
-> --- a/arch/arm64/configs/defconfig
-> +++ b/arch/arm64/configs/defconfig
-> @@ -855,6 +855,7 @@ CONFIG_NLS_ISO8859_1=y
->  CONFIG_SECURITY=y
->  CONFIG_CRYPTO_ECHAINIV=y
->  CONFIG_CRYPTO_ANSI_CPRNG=y
-> +CONFIG_CRYPTO_DEV_QCOM_RNG=m
->  CONFIG_DMA_CMA=y
->  CONFIG_CMA_SIZE_MBYTES=32
->  CONFIG_PRINTK_TIME=y
+> diff --git a/arch/arm64/boot/dts/qcom/qcs404-evb.dtsi b/arch/arm64/boot/dts/qcom/qcs404-evb.dtsi
+> index 501a7330dbc8..522d3ef72df5 100644
+> --- a/arch/arm64/boot/dts/qcom/qcs404-evb.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/qcs404-evb.dtsi
+> @@ -73,6 +73,7 @@
+>  		regulator-always-on;
+>  		regulator-boot-on;
+>  		regulator-name = "vdd_apc";
+> +		regulator-initial-mode = <1>;
+>  		regulator-min-microvolt = <1048000>;
+>  		regulator-max-microvolt = <1384000>;
+>  	};
 > -- 
-> 2.23.0
+> 2.21.0
 
 -- 
 ~Vinod
