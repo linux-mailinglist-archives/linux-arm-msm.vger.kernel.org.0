@@ -2,48 +2,48 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id DD9C9D9A4A
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Oct 2019 21:38:02 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 240AED9A42
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Oct 2019 21:37:48 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2394474AbfJPTiC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 16 Oct 2019 15:38:02 -0400
-Received: from mail-qk1-f194.google.com ([209.85.222.194]:43385 "EHLO
-        mail-qk1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2394469AbfJPThf (ORCPT
+        id S2394464AbfJPThk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 16 Oct 2019 15:37:40 -0400
+Received: from mail-qk1-f195.google.com ([209.85.222.195]:39543 "EHLO
+        mail-qk1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2394476AbfJPThh (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 16 Oct 2019 15:37:35 -0400
-Received: by mail-qk1-f194.google.com with SMTP id h126so23902374qke.10
-        for <linux-arm-msm@vger.kernel.org>; Wed, 16 Oct 2019 12:37:35 -0700 (PDT)
+        Wed, 16 Oct 2019 15:37:37 -0400
+Received: by mail-qk1-f195.google.com with SMTP id 4so23910378qki.6
+        for <linux-arm-msm@vger.kernel.org>; Wed, 16 Oct 2019 12:37:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=38nUlQ280db1teoWXJr5goa3S5XCcmnJve1ialuZYvw=;
-        b=v/D8Y7BXvaM6J4ToYwytgKAszlQ2KPBpo663ZehSYFofsjHDLPgvmwgVr48dLKV60q
-         k4/IV1qmrP/bfQfepJLIsGocha/KYKZ8DESwYGMfwGsTZPYXRRw1ZgFI90lobiPBlPAD
-         ow9KSH+phCTVKdYntLWqt3ePrOfmK1x0gzrKWJRRxWJirQ2OCwKDLeURiSTda23mrnxu
-         HTDA3C1XcYVCScZ6AJmseKbJbmoIbtA0L53LE2GYEfhFgiiAYX7/d/dpB7TiU7zJkcWl
-         isPwThklVOYKgez/NZtjSjWTUPudlv9K1GvMe+JLN7A+hxG8wvwY3il1ocf5JPlSOc4k
-         Ipvg==
+        bh=AYapJscjdiPe7azvtC5J+VuWqRbuSj4S49kPVeQ4UUs=;
+        b=n99gsNcs/xsd9f7sLUlIs3n+dodwMDeGOMCNrhZpuxG/g48jzQ3odfdm9C5SItRE4k
+         Pafa14Sxnq3Plc+4HV1HZDJ/zTM4zonb27dCFMd8wWCbT2z62TV3RHjnQGnDGEOz6kr5
+         5EMwt6BaMboBRfZXl1Cy+we5hcQ+lGV7ecTFgdHmj7Y7trSTvgKCppJOz2O8i0M4dRvv
+         avS/QLCrHfaDjCSvlGM2r4nN+y+kR8tik6/rHm3cfsw/vx1rXMiW23dOFRkLwuBGANWH
+         Twc4EH7XpIp9YvZ/wyksM8n4OvXVrCm6bQAre7VXS+wMcQtiIg0//Ik1l+doB2Az5LZD
+         g1Bw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=38nUlQ280db1teoWXJr5goa3S5XCcmnJve1ialuZYvw=;
-        b=iMDPJrTNuOyb2M14wQ1igMXYPhKyALvevU4b9BJhpAEDorvX+oVmN0+13tnTY9yC3b
-         i3lwcMW+r9doSjOS0igGOcmMwVw1MWpfLrs9hlnrWmoyb6pCsGjr/PHrd0Nj7mwfpWP+
-         kGceYlLIsPoK0EzPp2/EntFlgvrTCFrWVt4MQvkj3Ho3GbG8/VZuFac7G5Y76gP+yZ92
-         KLal09vL7bIDOI7FDie2Obah8b8skM/Ke1g1SAYTdSYygb4Qxdft0w1tHaOe2avfQmSp
-         whJdPJI3NwjyqJ8baTf2VCng9bnV5Rie6Yfq3F4a/215tqzc69oOZkPHr5NgdEykLd+4
-         /DdQ==
-X-Gm-Message-State: APjAAAVrc2gatWwjlsq/W0IXmMnIPVtqfcGz8ej+8NKEOEtJ8kGeqO/b
-        +alczycox68a9LkHX0MBMGYpVA==
-X-Google-Smtp-Source: APXvYqwQQEKa/nQ3OjN9x8FiX7dtyFHIetb+iJx78Vj+w7diiKBavLlyLLuQwr52oe1gBEUpL5234g==
-X-Received: by 2002:a37:ef04:: with SMTP id j4mr43633188qkk.482.1571254654648;
-        Wed, 16 Oct 2019 12:37:34 -0700 (PDT)
+        bh=AYapJscjdiPe7azvtC5J+VuWqRbuSj4S49kPVeQ4UUs=;
+        b=uRqRZxgLKYW1J6zP9qJD7++9bEeW0XL5O9JGdbYe6BCtgBUjNP/xNVK56X/dAJQx3y
+         wDYldyHExrjM/lhfGjnpWSdKPuzOnLt0scNQUTtYctHgjgm0cvbnmuxYAMlJKXWC1tqt
+         IATMqRKsP7rVdeGHwOwpJFuEyLGSkGXY6d2uC1eDp7x5toBEZZVCP4cBBuTHOsUZGAGf
+         /Tl1n1pOiJhdmEksovf1DMCP9BsS77y0IktiOMgBrVRaIoyA7qUxWXClSd9oxaWqQOUD
+         wGo7rqEz9gCQ7F+Cd3kWwNE2dlzmkV/k9E+PhECZSTE+qFm4UVpsGCVhvrb+9/aDrlCf
+         Rc7g==
+X-Gm-Message-State: APjAAAU0iAmwVF2W6wyw/9jLItXolQmDAofKnJZC1kzrYp0r0Up52JK4
+        yAMl/0ZkT5OLG0Z3nTLsAlNlPg==
+X-Google-Smtp-Source: APXvYqwjhLmydDxR6n9KQ+Op9t6AVav/TtrvXLkrhRiWQ52DzzaBeKb8lL45Bm5G/lxSph3JXitzAA==
+X-Received: by 2002:a37:7dc2:: with SMTP id y185mr30531737qkc.348.1571254656219;
+        Wed, 16 Oct 2019 12:37:36 -0700 (PDT)
 Received: from Thara-Work-Ubuntu.fios-router.home (pool-71-255-246-27.washdc.fios.verizon.net. [71.255.246.27])
-        by smtp.googlemail.com with ESMTPSA id 54sm16246030qts.75.2019.10.16.12.37.33
+        by smtp.googlemail.com with ESMTPSA id 54sm16246030qts.75.2019.10.16.12.37.34
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Wed, 16 Oct 2019 12:37:33 -0700 (PDT)
+        Wed, 16 Oct 2019 12:37:35 -0700 (PDT)
 From:   Thara Gopinath <thara.gopinath@linaro.org>
 To:     edubezval@gmail.com, rui.zhang@intel.com, ulf.hansson@linaro.org,
         daniel.lezcano@linaro.org, bjorn.andersson@linaro.org,
@@ -52,9 +52,9 @@ Cc:     amit.kucheria@verdurent.com, mark.rutland@arm.com,
         rjw@rjwysocki.net, linux-pm@vger.kernel.org,
         devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
         linux-kernel@vger.kernel.org
-Subject: [PATCH v3 4/7] thermal: Add generic power domain warming device driver.
-Date:   Wed, 16 Oct 2019 15:37:18 -0400
-Message-Id: <1571254641-13626-5-git-send-email-thara.gopinath@linaro.org>
+Subject: [PATCH v3 5/7] soc: qcom: Extend RPMh power controller driver to register warming devices.
+Date:   Wed, 16 Oct 2019 15:37:19 -0400
+Message-Id: <1571254641-13626-6-git-send-email-thara.gopinath@linaro.org>
 X-Mailer: git-send-email 2.1.4
 In-Reply-To: <1571254641-13626-1-git-send-email-thara.gopinath@linaro.org>
 References: <1571254641-13626-1-git-send-email-thara.gopinath@linaro.org>
@@ -63,237 +63,61 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Resources modeled as power domains in linux kenrel
-can  be used to warm the SoC(eg. mx power domain on sdm845).
-To support this feature, introduce a generic power domain
-warming device driver that can be plugged into the thermal framework
-(The thermal framework itself requires further modifiction to
-support a warming device in place of a cooling device.
-Those extensions are not introduced in this patch series).
+RPMh power control hosts power domains that can be used as
+thermal warming devices. Register these power domains
+with the generic power domain warming device thermal framework.
 
 Signed-off-by: Thara Gopinath <thara.gopinath@linaro.org>
 ---
- drivers/thermal/Kconfig              |  10 +++
- drivers/thermal/Makefile             |   2 +
- drivers/thermal/pwr_domain_warming.c | 136 +++++++++++++++++++++++++++++++++++
- include/linux/pwr_domain_warming.h   |  31 ++++++++
- 4 files changed, 179 insertions(+)
- create mode 100644 drivers/thermal/pwr_domain_warming.c
- create mode 100644 include/linux/pwr_domain_warming.h
+ drivers/soc/qcom/rpmhpd.c | 21 ++++++++++++++++++++-
+ 1 file changed, 20 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/thermal/Kconfig b/drivers/thermal/Kconfig
-index 001a21a..0c5c93e 100644
---- a/drivers/thermal/Kconfig
-+++ b/drivers/thermal/Kconfig
-@@ -187,6 +187,16 @@ config DEVFREQ_THERMAL
- 
- 	  If you want this support, you should say Y here.
- 
-+config PWR_DOMAIN_WARMING_THERMAL
-+	bool "Power Domain based warming device"
-+	depends on PM_GENERIC_DOMAINS_OF
-+	help
-+	  This implements the generic power domain based warming
-+	  mechanism through increasing the performance state of
-+	  a power domain.
-+
-+	  If you want this support, you should say Y here.
-+
- config THERMAL_EMULATION
- 	bool "Thermal emulation mode support"
- 	help
-diff --git a/drivers/thermal/Makefile b/drivers/thermal/Makefile
-index 74a37c7..382c64a 100644
---- a/drivers/thermal/Makefile
-+++ b/drivers/thermal/Makefile
-@@ -27,6 +27,8 @@ thermal_sys-$(CONFIG_CLOCK_THERMAL)	+= clock_cooling.o
- # devfreq cooling
- thermal_sys-$(CONFIG_DEVFREQ_THERMAL) += devfreq_cooling.o
- 
-+thermal_sys-$(CONFIG_PWR_DOMAIN_WARMING_THERMAL)	+= pwr_domain_warming.o
-+
- # platform thermal drivers
- obj-y				+= broadcom/
- obj-$(CONFIG_THERMAL_MMIO)		+= thermal_mmio.o
-diff --git a/drivers/thermal/pwr_domain_warming.c b/drivers/thermal/pwr_domain_warming.c
-new file mode 100644
-index 0000000..60fae3e
---- /dev/null
-+++ b/drivers/thermal/pwr_domain_warming.c
-@@ -0,0 +1,136 @@
-+// SPDX-License-Identifier: GPL-2.0
-+/*
-+ * Copyright (c) 2019, Linaro Ltd
-+ */
-+#include <linux/err.h>
-+#include <linux/kernel.h>
-+#include <linux/init.h>
-+#include <linux/of_device.h>
-+#include <linux/platform_device.h>
-+#include <linux/module.h>
-+#include <linux/pm_runtime.h>
-+#include <linux/slab.h>
+diff --git a/drivers/soc/qcom/rpmhpd.c b/drivers/soc/qcom/rpmhpd.c
+index 9d37534..88ba615 100644
+--- a/drivers/soc/qcom/rpmhpd.c
++++ b/drivers/soc/qcom/rpmhpd.c
+@@ -11,6 +11,7 @@
+ #include <linux/of_device.h>
+ #include <linux/platform_device.h>
+ #include <linux/pm_opp.h>
 +#include <linux/pwr_domain_warming.h>
-+
-+struct pd_warming_device {
-+	struct thermal_cooling_device *cdev;
-+	struct generic_pm_domain *gpd;
-+	struct device *dev;
-+	int max_state;
-+	int cur_state;
-+	bool runtime_resumed;
-+};
-+
-+static int pd_wdev_get_max_state(struct thermal_cooling_device *cdev,
-+				 unsigned long *state)
-+{
-+	struct pd_warming_device *pd_wdev = cdev->devdata;
-+
-+	*state = pd_wdev->max_state;
-+	return 0;
-+}
-+
-+static int pd_wdev_get_cur_state(struct thermal_cooling_device *cdev,
-+				 unsigned long *state)
-+{
-+	struct pd_warming_device *pd_wdev = cdev->devdata;
-+
-+	*state = dev_pm_genpd_get_performance_state(pd_wdev->dev);
-+
-+	return 0;
-+}
-+
-+static int pd_wdev_set_cur_state(struct thermal_cooling_device *cdev,
-+				 unsigned long state)
-+{
-+	struct pd_warming_device *pd_wdev = cdev->devdata;
-+	struct device *dev = pd_wdev->dev;
-+	int ret;
-+
-+	ret = dev_pm_genpd_set_performance_state(dev, state);
+ #include <soc/qcom/cmd-db.h>
+ #include <soc/qcom/rpmh.h>
+ #include <dt-bindings/power/qcom-rpmpd.h>
+@@ -333,6 +334,7 @@ static int rpmhpd_probe(struct platform_device *pdev)
+ 	struct genpd_onecell_data *data;
+ 	struct rpmhpd **rpmhpds;
+ 	const struct rpmhpd_desc *desc;
++	struct device_node *child;
+ 
+ 	desc = of_device_get_match_data(dev);
+ 	if (!desc)
+@@ -396,7 +398,24 @@ static int rpmhpd_probe(struct platform_device *pdev)
+ 					       &rpmhpds[i]->pd);
+ 	}
+ 
+-	return of_genpd_add_provider_onecell(pdev->dev.of_node, data);
++	ret = of_genpd_add_provider_onecell(pdev->dev.of_node, data);
 +
 +	if (ret)
 +		return ret;
 +
-+	if (state && !pd_wdev->runtime_resumed) {
-+		ret = pm_runtime_get_sync(dev);
-+		pd_wdev->runtime_resumed = true;
-+	} else if (!state && pd_wdev->runtime_resumed) {
-+		ret = pm_runtime_put(dev);
-+		pd_wdev->runtime_resumed = false;
++	for_each_available_child_of_node(dev->of_node, child) {
++		if (!of_find_property(child, "#cooling-cells", NULL))
++			continue;
++
++		for (i = 0; i < num_pds; i++)
++			if (strcmp(child->name, rpmhpds[i]->pd.name) == 0)
++				break;
++		if (i == num_pds)
++			continue;
++		pwr_domain_warming_register(child, &rpmhpds[i]->pd);
 +	}
-+
-+	return ret;
-+}
-+
-+static int pd_wdev_late_init(struct thermal_cooling_device *cdev)
-+{
-+	struct pd_warming_device *pd_wdev = cdev->devdata;
-+	struct device *dev = &cdev->device;
-+	int state_count, ret;
-+
-+	ret = pm_genpd_add_device(pd_wdev->gpd, dev);
-+
-+	if (ret)
-+		return ret;
-+
-+	state_count = dev_pm_genpd_performance_state_count(dev);
-+	if (state_count < 0)
-+		return state_count;
-+
-+	pm_runtime_enable(dev);
-+
-+	pd_wdev->dev = dev;
-+	pd_wdev->max_state = state_count - 1;
 +
 +	return 0;
-+}
-+
-+static struct thermal_cooling_device_ops pd_warming_device_ops = {
-+	.late_init	= pd_wdev_late_init,
-+	.get_max_state	= pd_wdev_get_max_state,
-+	.get_cur_state	= pd_wdev_get_cur_state,
-+	.set_cur_state	= pd_wdev_set_cur_state,
-+};
-+
-+struct thermal_cooling_device *
-+pwr_domain_warming_register(struct device_node *node,
-+			    struct generic_pm_domain *gpd)
-+{
-+	struct pd_warming_device *pd_wdev;
-+
-+	pd_wdev = kzalloc(sizeof(*pd_wdev), GFP_KERNEL);
-+	if (!pd_wdev)
-+		return ERR_PTR(-ENOMEM);
-+
-+	pd_wdev->runtime_resumed = false;
-+	pd_wdev->gpd = gpd;
-+
-+	pd_wdev->cdev = thermal_of_cooling_device_register
-+					(node, gpd->name, pd_wdev,
-+					 &pd_warming_device_ops);
-+	if (IS_ERR(pd_wdev->cdev)) {
-+		pr_err("unable to register %s cooling device\n", gpd->name);
-+		if (pd_wdev->dev)
-+			pm_runtime_disable(pd_wdev->dev);
-+	}
-+
-+	return pd_wdev->cdev;
-+}
-+EXPORT_SYMBOL_GPL(pwr_domain_warming_register);
-+
-+void pwr_domain_warming_unregister(struct thermal_cooling_device *cdev)
-+{
-+	struct pd_warming_device *pd_wdev = cdev->devdata;
-+	struct device *dev = pd_wdev->dev;
-+
-+	if (pd_wdev->runtime_resumed) {
-+		dev_pm_genpd_set_performance_state(dev, 0);
-+		pm_runtime_put(dev);
-+		pd_wdev->runtime_resumed = false;
-+	}
-+	pm_runtime_disable(pd_wdev->dev);
-+	thermal_cooling_device_unregister(cdev);
-+	kfree(pd_wdev);
-+}
-+EXPORT_SYMBOL_GPL(pwr_domain_warming_unregister);
-diff --git a/include/linux/pwr_domain_warming.h b/include/linux/pwr_domain_warming.h
-new file mode 100644
-index 0000000..ed9942b
---- /dev/null
-+++ b/include/linux/pwr_domain_warming.h
-@@ -0,0 +1,31 @@
-+// SPDX-License-Identifier: GPL-2.0
-+/*
-+ * Copyright (c) 2019, Linaro Ltd.
-+ */
-+#ifndef __PWR_DOMAIN_WARMING_H__
-+#define __PWR_DOMAIN_WARMING_H__
-+
-+#include <linux/pm_domain.h>
-+#include <linux/thermal.h>
-+
-+#ifdef CONFIG_PWR_DOMAIN_WARMING_THERMAL
-+struct thermal_cooling_device *
-+pwr_domain_warming_register(struct device_node *node,
-+			    struct generic_pm_domain *gpd);
-+
-+void pwr_domain_warming_unregister(struct thermal_cooling_device *cdev);
-+
-+#else
-+static inline struct thermal_cooling_device *
-+pwr_domain_warming_register(struct device_node *node,
-+			    struct generic_pm_domain *gpd)
-+{
-+	return ERR_PTR(-ENOSYS);
-+}
-+
-+static inline void
-+pwr_domain_warming_unregister(struct thermal_cooling_device *cdev)
-+{
-+}
-+#endif /* CONFIG_PWR_DOMAIN_WARMING_THERMAL */
-+#endif /* __PWR_DOMAIN_WARMING_H__ */
+ }
+ 
+ static struct platform_driver rpmhpd_driver = {
 -- 
 2.1.4
 
