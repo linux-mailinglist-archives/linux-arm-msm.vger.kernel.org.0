@@ -2,105 +2,90 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id D6259D8AA2
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Oct 2019 10:15:37 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5134FD8AA4
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Oct 2019 10:15:41 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726857AbfJPIPg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 16 Oct 2019 04:15:36 -0400
-Received: from mail.kernel.org ([198.145.29.99]:55564 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726335AbfJPIPg (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 16 Oct 2019 04:15:36 -0400
-Received: from localhost (unknown [171.76.123.182])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        id S1727646AbfJPIPk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 16 Oct 2019 04:15:40 -0400
+Received: from smtp.codeaurora.org ([198.145.29.96]:59598 "EHLO
+        smtp.codeaurora.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726335AbfJPIPk (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 16 Oct 2019 04:15:40 -0400
+Received: by smtp.codeaurora.org (Postfix, from userid 1000)
+        id 94C1360B16; Wed, 16 Oct 2019 08:15:39 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
+        s=default; t=1571213739;
+        bh=y+xH4IuaFfx42JFLjffopIU8ggWRenGY2FyKqteYnWs=;
+        h=Subject:To:Cc:References:From:Date:In-Reply-To:From;
+        b=gJz0d74XxZUDt79qKZRI1kTGIxfCEBcvcRxitlh06T1UN8qN0tPcvlovSubDAwVzL
+         9Y3wwULC8zFXHDlxLqwvvCX2EO+jlw/YQYhjgJY1g/UIk6HaYqtUPSEBrh0qb+TwOT
+         7Y2hcsPD1a4zOuHKKeeQaaSiIA0k5GdTzmOWZd/c=
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        pdx-caf-mail.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.7 required=2.0 tests=ALL_TRUSTED,BAYES_00,
+        DKIM_INVALID,DKIM_SIGNED,SPF_NONE autolearn=no autolearn_force=no
+        version=3.4.0
+Received: from [10.79.136.17] (blr-bdr-fw-01_globalnat_allzones-outside.qualcomm.com [103.229.18.19])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
         (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 93AA22064B;
-        Wed, 16 Oct 2019 08:15:34 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1571213735;
-        bh=wQkEVazklDAJ7dSbF0KdWXdU8XFXLrPC9CuTZDXFcM4=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=mVi5NeVe2NO8zlPTQNPzHooei1ARBh0FfAAGoui8k9aCAWBlp7R/7/Q+qbztaMc+s
-         t/TfDbgo7dNWOojAuVV6TsOXkFRXz4iC+c3afqIfg809gyhTaNYWAQYEdTThBEgad/
-         EtpmBefX2VJwMZ8LsvVcDfzoB5cRAWZXb0N+URnk=
-Date:   Wed, 16 Oct 2019 13:45:30 +0530
-From:   Vinod Koul <vkoul@kernel.org>
-To:     Kiran Gunda <kgunda@codeaurora.org>
-Cc:     bjorn.andersson@linaro.org, Andy Gross <agross@kernel.org>,
-        Linus Walleij <linus.walleij@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Mark Rutland <mark.rutland@arm.com>,
-        linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH V1] dt-bindings: pinctrl: qcom-pmic-gpio: Add support for
- pm6150/pm6150l
-Message-ID: <20191016081530.GJ2654@vkoul-mobl>
-References: <1570188039-22122-1-git-send-email-kgunda@codeaurora.org>
+        (Authenticated sender: rnayak@smtp.codeaurora.org)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 9FA9960AD7;
+        Wed, 16 Oct 2019 08:15:36 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
+        s=default; t=1571213739;
+        bh=y+xH4IuaFfx42JFLjffopIU8ggWRenGY2FyKqteYnWs=;
+        h=Subject:To:Cc:References:From:Date:In-Reply-To:From;
+        b=gJz0d74XxZUDt79qKZRI1kTGIxfCEBcvcRxitlh06T1UN8qN0tPcvlovSubDAwVzL
+         9Y3wwULC8zFXHDlxLqwvvCX2EO+jlw/YQYhjgJY1g/UIk6HaYqtUPSEBrh0qb+TwOT
+         7Y2hcsPD1a4zOuHKKeeQaaSiIA0k5GdTzmOWZd/c=
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 9FA9960AD7
+Authentication-Results: pdx-caf-mail.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: pdx-caf-mail.web.codeaurora.org; spf=none smtp.mailfrom=rnayak@codeaurora.org
+Subject: Re: [PATCH 2/2] arm64: dts: sc7180: Add minimal dts/dtsi files for
+ SC7180 soc
+To:     Vinod Koul <vkoul@kernel.org>
+Cc:     agross@kernel.org, robh+dt@kernel.org, bjorn.andersson@linaro.org,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, Taniya Das <tdas@codeaurora.org>
+References: <20191015103358.17550-1-rnayak@codeaurora.org>
+ <20191015103358.17550-2-rnayak@codeaurora.org>
+ <20191016052535.GC2654@vkoul-mobl>
+From:   Rajendra Nayak <rnayak@codeaurora.org>
+Message-ID: <92363367-d12a-1fff-d527-417b591df4b0@codeaurora.org>
+Date:   Wed, 16 Oct 2019 13:45:34 +0530
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
+ Thunderbird/60.9.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <1570188039-22122-1-git-send-email-kgunda@codeaurora.org>
-User-Agent: Mutt/1.12.1 (2019-06-15)
+In-Reply-To: <20191016052535.GC2654@vkoul-mobl>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 04-10-19, 16:50, Kiran Gunda wrote:
-> Add support for the PM6150 and PM6150L GPIO support to the
-> Qualcomm PMIC GPIO binding.
+
+
+On 10/16/2019 10:55 AM, Vinod Koul wrote:
+> On 15-10-19, 16:03, Rajendra Nayak wrote:
 > 
-> Signed-off-by: Kiran Gunda <kgunda@codeaurora.org>
-> ---
->  Documentation/devicetree/bindings/pinctrl/qcom,pmic-gpio.txt | 4 ++++
->  drivers/pinctrl/qcom/pinctrl-spmi-gpio.c                     | 2 ++
->  2 files changed, 6 insertions(+)
+>> +	timer {
+>> +		compatible = "arm,armv8-timer";
+>> +		interrupts = <GIC_PPI 1 IRQ_TYPE_LEVEL_LOW>,
+>> +			     <GIC_PPI 2 IRQ_TYPE_LEVEL_LOW>,
+>> +			     <GIC_PPI 3 IRQ_TYPE_LEVEL_LOW>,
+>> +			     <GIC_PPI 0 IRQ_TYPE_LEVEL_LOW>;
+>> +	};
+>> +
+>> +	clocks {
 > 
-> diff --git a/Documentation/devicetree/bindings/pinctrl/qcom,pmic-gpio.txt b/Documentation/devicetree/bindings/pinctrl/qcom,pmic-gpio.txt
-> index c32bf32..2f48cca 100644
-> --- a/Documentation/devicetree/bindings/pinctrl/qcom,pmic-gpio.txt
-> +++ b/Documentation/devicetree/bindings/pinctrl/qcom,pmic-gpio.txt
-> @@ -23,6 +23,8 @@ PMIC's from Qualcomm.
->  		    "qcom,pms405-gpio"
->  		    "qcom,pm8150-gpio"
->  		    "qcom,pm8150b-gpio"
-> +		    "qcom,pm6150-gpio"
-> +		    "qcom,pm6150l-gpio"
->  
->  		    And must contain either "qcom,spmi-gpio" or "qcom,ssbi-gpio"
->  		    if the device is on an spmi bus or an ssbi bus respectively
-> @@ -100,6 +102,8 @@ to specify in a pin configuration subnode:
->  					     and gpio8)
->  		    gpio1-gpio12 for pm8150b (holes on gpio3, gpio4, gpio7)
->  		    gpio1-gpio12 for pm8150l (hole on gpio7)
-> +		    gpio1-gpio10 for pm6150
-> +		    gpio1-gpio12 for pm6150l
+> Can we have these sorted alphabetically please
 
-No holes on these?
-
-Other than this:
-
-Reviewed-by: Vinod Koul <vkoul@kernel.org>
-
->  
->  - function:
->  	Usage: required
-> diff --git a/drivers/pinctrl/qcom/pinctrl-spmi-gpio.c b/drivers/pinctrl/qcom/pinctrl-spmi-gpio.c
-> index f1fece5..387917c 100644
-> --- a/drivers/pinctrl/qcom/pinctrl-spmi-gpio.c
-> +++ b/drivers/pinctrl/qcom/pinctrl-spmi-gpio.c
-> @@ -1121,6 +1121,8 @@ static int pmic_gpio_remove(struct platform_device *pdev)
->  	{ .compatible = "qcom,pm8150b-gpio", .data = (void *) 12 },
->  	/* pm8150l has 12 GPIOs with holes on 7 */
->  	{ .compatible = "qcom,pm8150l-gpio", .data = (void *) 12 },
-> +	{ .compatible = "qcom,pm6150-gpio", .data = (void *) 10 },
-> +	{ .compatible = "qcom,pm6150l-gpio", .data = (void *) 12 },
->  	{ },
->  };
->  
-> -- 
-> The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
->  a Linux Foundation Collaborative Project
+will do, thanks.
 
 -- 
-~Vinod
+QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
+of Code Aurora Forum, hosted by The Linux Foundation
