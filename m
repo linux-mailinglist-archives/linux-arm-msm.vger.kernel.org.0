@@ -2,122 +2,170 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id C4658D8870
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Oct 2019 08:03:45 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 55772D88A0
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Oct 2019 08:27:31 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731498AbfJPGDo (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 16 Oct 2019 02:03:44 -0400
-Received: from mail-pg1-f196.google.com ([209.85.215.196]:41297 "EHLO
-        mail-pg1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726421AbfJPGDo (ORCPT
+        id S2388042AbfJPG1X (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 16 Oct 2019 02:27:23 -0400
+Received: from mail-pl1-f195.google.com ([209.85.214.195]:37665 "EHLO
+        mail-pl1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2388549AbfJPG1X (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 16 Oct 2019 02:03:44 -0400
-Received: by mail-pg1-f196.google.com with SMTP id t3so13604944pga.8
-        for <linux-arm-msm@vger.kernel.org>; Tue, 15 Oct 2019 23:03:43 -0700 (PDT)
+        Wed, 16 Oct 2019 02:27:23 -0400
+Received: by mail-pl1-f195.google.com with SMTP id u20so10777847plq.4
+        for <linux-arm-msm@vger.kernel.org>; Tue, 15 Oct 2019 23:27:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=T3AaA+xd4mdUluLNxKlBwgWXimT50aOOjAm086WDcRg=;
-        b=k14SKKFhg+MCKc7BkdTTbY/cz6o/SmHSY8ToObQ0N3Ebxydl6rVf5aFzX7VN6car4K
-         MVLvLuo5tPDV1vE2Y1g0BfCdHJLPN9IkyNreQ6v3qLFCXgz+OndJti7vTbUVkurFv98N
-         VLVYRHiPkPB10KrEmCxI+DOIuzVE28mfq1VacfbhjBxQlrdyZ0ucWQQuIJSMhggmP4S5
-         /XupeyH/jxzmR9mNFa9jdSxMGEUpFhm/gq2qcmvUSmanqapuzD+B4kCS66LqLc/YWS15
-         W92yFJU1W4GTbix9eHzEB6/PeZJa+5lUgC4KWiOVo8JPqgyQGGyZrCAxByTKeAZW75yg
-         ZJfg==
+        d=chromium.org; s=google;
+        h=message-id:mime-version:content-transfer-encoding:in-reply-to
+         :references:from:to:cc:subject:user-agent:date;
+        bh=xcdwT4cF2V+pOFpto6g1hLsKYDE91tN3/jlyW1Fe6XM=;
+        b=NDFsVTzR4A7J/IjHujREEahybZdPIx81kKZJfQf9vrZWcp0Xvh0Y3IY/NPtNxtpUTL
+         DL6CDSipP//uBcELpJWx1twdiIirLRhmrMU3hAjrhPoFCkQI69yJKB0L8AzIGdHqS4R2
+         6D8n2hhpUUCEsJ/3hdBIrLYgexAkwibos7Zrg=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=T3AaA+xd4mdUluLNxKlBwgWXimT50aOOjAm086WDcRg=;
-        b=qquMAhY9bAhH1gWN4cOQ3kHS42m4thwRwsjGTJuTjRWH1sLXpmWghQ57+109ZbTWS0
-         qMgNoMn+n0BR8atgb5zUY03Km5hx1ONazySbn4jNFEsKx1V8iAVMDzfvBPpLx35BKtNx
-         Wg7XQXKT0ciy39PiYYt9duL3RnXlEun1/O0+fS4/3HT+gJXJXlkTJTqSp/AxKN27Izq4
-         bzKt0wZ6Qbgd3wyJJEmRehTSH3wir+C7iYMpiqNpg224OzQoXMIv9OKgxuhZjHkKPhu+
-         k9/TTo1Gm3k2I2sp8m2umiKgK/24U1DqWUZr5kV9O1Puvk1ftWaHpZ0lnGqceDH5C3/1
-         1UbQ==
-X-Gm-Message-State: APjAAAWAjgvQ/EedTcTIEkFjyUmzBjUBuczAZgho39vTU09wEA/516Xf
-        atJP7OYCJun5cBV1Io8M28XtdA==
-X-Google-Smtp-Source: APXvYqzLK05iyhTKyl1v2KloPGgrLB7LEacVf7SN+L9WsqFPB+PouwGTpqa5kkyY5DfZba02HDvQOg==
-X-Received: by 2002:a65:6091:: with SMTP id t17mr398775pgu.159.1571205822925;
-        Tue, 15 Oct 2019 23:03:42 -0700 (PDT)
-Received: from tuxbook-pro (104-188-17-28.lightspeed.sndgca.sbcglobal.net. [104.188.17.28])
-        by smtp.gmail.com with ESMTPSA id p24sm9426321pgc.72.2019.10.15.23.03.41
+        h=x-gm-message-state:message-id:mime-version
+         :content-transfer-encoding:in-reply-to:references:from:to:cc:subject
+         :user-agent:date;
+        bh=xcdwT4cF2V+pOFpto6g1hLsKYDE91tN3/jlyW1Fe6XM=;
+        b=eSJDfTDISSVay1E556WOHB2+q1wU8HnKxl4xWoIgem3AF2BKBax83F+VOc8gICh5vR
+         osqLyrsHG19ZQRZNQv8d3mApIW4KwTRyvgJQJY/u5HDaWfmG2/V3AasY67uYsuGjaUI+
+         ykZUZY5tDHMVWoE9CJhb0zMuZpwMjWxV07TkpClY/th2WAClP0HUO17Go8JydJjkyg91
+         sf2kYulPFMhokP2Dg/CWOdJqOiKOIV49v8OX+3jCMsuGj04WHCm38YJ0Tow/cytb2Fcn
+         O/HexShpiUXYHHPc6q45xoRNEOYEYc7YxEIfSFmeEhqScGCnmGCXNPE9N0/QoYbGZgzr
+         q2ew==
+X-Gm-Message-State: APjAAAWedqpdzEAUprfvCmNMCwMAuoEAGts4zCfxGXR6dFdnEPBekE3f
+        JNwbwDr92QZHzIyhb5H7hOd7Qw==
+X-Google-Smtp-Source: APXvYqw35UsGC1shtlHLmY97gFEhNOpvQbnF+X0xZdpfm3AC4KGJTc7/ShcSDiJwNixAk6+nO3HRxQ==
+X-Received: by 2002:a17:902:b109:: with SMTP id q9mr39203001plr.306.1571207241975;
+        Tue, 15 Oct 2019 23:27:21 -0700 (PDT)
+Received: from chromium.org ([2620:15c:202:1:fa53:7765:582b:82b9])
+        by smtp.gmail.com with ESMTPSA id v4sm22330420pff.181.2019.10.15.23.27.21
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 15 Oct 2019 23:03:42 -0700 (PDT)
-Date:   Tue, 15 Oct 2019 23:03:39 -0700
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Catalin Marinas <catalin.marinas@arm.com>,
-        Will Deacon <will@kernel.org>, Shawn Guo <shawnguo@kernel.org>,
-        Olof Johansson <olof@lixom.net>,
-        Maxime Ripard <mripard@kernel.org>,
-        Arnd Bergmann <arnd@arndb.de>,
-        Jagan Teki <jagan@amarulasolutions.com>,
-        Anson Huang <Anson.Huang@nxp.com>,
-        Leonard Crestez <leonard.crestez@nxp.com>,
-        Dinh Nguyen <dinguyen@kernel.org>,
-        Marcin Juszkiewicz <marcin.juszkiewicz@linaro.org>
-Cc:     linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, Alex Elder <elder@linaro.org>
-Subject: Re: [PATCH] arm64: defconfig: Enable Qualcomm remoteproc dependencies
-Message-ID: <20191016060339.GB4731@tuxbook-pro>
-References: <20191009001442.15719-1-bjorn.andersson@linaro.org>
+        Tue, 15 Oct 2019 23:27:21 -0700 (PDT)
+Message-ID: <5da6b849.1c69fb81.a9b04.1b9f@mx.google.com>
+Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20191009001442.15719-1-bjorn.andersson@linaro.org>
-User-Agent: Mutt/1.12.1 (2019-06-15)
+Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <5d92829e.1c69fb81.d860a.9096@mx.google.com>
+References: <1568411962-1022-1-git-send-email-ilina@codeaurora.org> <1568411962-1022-7-git-send-email-ilina@codeaurora.org> <5d92829e.1c69fb81.d860a.9096@mx.google.com>
+From:   Stephen Boyd <swboyd@chromium.org>
+To:     Lina Iyer <ilina@codeaurora.org>, evgreen@chromium.org,
+        linus.walleij@linaro.org, maz@kernel.org
+Cc:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        bjorn.andersson@linaro.org, mkshah@codeaurora.org,
+        linux-gpio@vger.kernel.org, Lina Iyer <ilina@codeaurora.org>,
+        devicetree@vger.kernel.org
+Subject: Re: [PATCH RFC v2 06/14] dt-bindings/interrupt-controller: pdc: add SPI config register
+User-Agent: alot/0.8.1
+Date:   Tue, 15 Oct 2019 23:27:20 -0700
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue 08 Oct 17:14 PDT 2019, Bjorn Andersson wrote:
+Quoting Stephen Boyd (2019-09-30 15:33:01)
+> Quoting Lina Iyer (2019-09-13 14:59:14)
+> > In addition to configuring the PDC, additional registers that interface
+> > the GIC have to be configured to match the GPIO type. The registers on
+> > some QCOM SoCs are access restricted, while on other SoCs are not. They
+> > SoCs with access restriction to these SPI registers need to be written
+> > from the firmware using the SCM interface. Add a flag to indicate if the
+> > register is to be written using SCM interface.
+> >=20
+> > Cc: devicetree@vger.kernel.org
+> > Signed-off-by: Lina Iyer <ilina@codeaurora.org>
+> > ---
+> >  .../devicetree/bindings/interrupt-controller/qcom,pdc.txt   | 13 +++++=
++++++++-
+> >  1 file changed, 12 insertions(+), 1 deletion(-)
+> >=20
+> > diff --git a/Documentation/devicetree/bindings/interrupt-controller/qco=
+m,pdc.txt b/Documentation/devicetree/bindings/interrupt-controller/qcom,pdc=
+.txt
+> > index 8e0797c..e329f8d 100644
+> > --- a/Documentation/devicetree/bindings/interrupt-controller/qcom,pdc.t=
+xt
+> > +++ b/Documentation/devicetree/bindings/interrupt-controller/qcom,pdc.t=
+xt
+> > @@ -24,6 +24,9 @@ Properties:
+> >         Usage: required
+> >         Value type: <prop-encoded-array>
+> >         Definition: Specifies the base physical address for PDC hardwar=
+e.
+> > +                   Optionally, specify the PDC's GIC interface registe=
+rs that
+> > +                   need to be configured for wakeup capable GPIOs rout=
+ed to
+> > +                   the PDC.
+> > =20
+> >  - interrupt-cells:
+> >         Usage: required
+> > @@ -50,15 +53,23 @@ Properties:
+> >                     The second element is the GIC hwirq number for the =
+PDC port.
+> >                     The third element is the number of interrupts in se=
+quence.
+> > =20
+> > +- qcom,scm-spi-cfg:
+> > +       Usage: optional
+> > +       Value type: <bool>
+> > +       Definition: Specifies if the SPI configuration registers have t=
+o be
+> > +                   written from the firmware. Sometimes the PDC interf=
+ace
+> > +                   register to the GIC can only be written from the fi=
+rmware.
+> > +
+> >  Example:
+> > =20
+> >         pdc: interrupt-controller@b220000 {
+> >                 compatible =3D "qcom,sdm845-pdc";
+> > -               reg =3D <0xb220000 0x30000>;
+> > +               reg =3D <0 0x0b220000 0 0x30000>, <0 0x179900f0 0 0x60>;
+> >                 qcom,pdc-ranges =3D <0 512 94>, <94 641 15>, <115 662 7=
+>;
+> >                 #interrupt-cells =3D <2>;
+> >                 interrupt-parent =3D <&intc>;
+> >                 interrupt-controller;
+> > +               qcom,scm-spi-cfg;
+> >         };
+>=20
+> This overlaps register region with the mailbox node. That node is
+> actually a pile of random "CPU" registers used to ping remote processors
+> and apparently control how the PDC interacts with the GIC. Maybe this
+> can be changed to a phandle and then the driver can interogate the
+> phandle to determine if it's the SCM firmware or if it's the shared
+> mailbox register? If it's a shared mailbox then it can write to it at
+> the offset it knows about (because it's sdm845 compatible specific) and
+> if it's SCM then it can use the hardcoded address as well?
+>=20
+> Basically I'm saying that it just needs a phandle.
+>=20
+>         qcom,spi-cfg =3D <&scm>;
+>=20
+> or
+>=20
+>         qcom,spi-cfg =3D <&mailbox>;
+>=20
+> and then driver knows how to use that to write into random registers.
+> Maybe we can have an API in regmap that finds the regmap for a given
+> device node? That way we don't have to funnel everything through syscon
+> for this.
+>=20
+>         of_get_regmap(struct device_node *np, const char *name);
+>=20
+> Where NULL name means "first available" and then do the devres search
+> otherwise for a device that has the matching node pointer.
+>=20
 
-> Enable the the power domains, reset controllers and remote block device
-> memory access drivers necessary to boot the Audio, Compute and Modem
-> DSPs on Qualcomm SDM845.
-> 
-> None of the power domains are system critical, but needs to be builtin
-> as the driver core prohibits probe deferal past late initcall.
-> 
-> Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+I had another idea the other day. Maybe a better approach would be to
+make the mailbox or SCM code an interrupt controller with the
+appropriate functions to poke the bits necessary to make the interrupts
+work. Then we can make it a chip in the hierarchy between the GIC and
+PDC and make the interrupts call through from PDC to GIC. The locking
+could be handled in each respective driver if necessary, and otherwise
+we don't have to use a regmap or remap the same registers (except we may
+need to describe if the parent is the mailbox node or the scm fimware
+node).
 
-Thanks Alex & Vinod!
-
-Applied.
-
-> ---
->  arch/arm64/configs/defconfig | 5 +++++
->  1 file changed, 5 insertions(+)
-> 
-> diff --git a/arch/arm64/configs/defconfig b/arch/arm64/configs/defconfig
-> index c9a867ac32d4..42f042ba1039 100644
-> --- a/arch/arm64/configs/defconfig
-> +++ b/arch/arm64/configs/defconfig
-> @@ -732,10 +732,13 @@ CONFIG_RPMSG_QCOM_GLINK_SMEM=m
->  CONFIG_RPMSG_QCOM_SMD=y
->  CONFIG_RASPBERRYPI_POWER=y
->  CONFIG_IMX_SCU_SOC=y
-> +CONFIG_QCOM_AOSS_QMP=y
->  CONFIG_QCOM_COMMAND_DB=y
->  CONFIG_QCOM_GENI_SE=y
->  CONFIG_QCOM_GLINK_SSR=m
-> +CONFIG_QCOM_RMTFS_MEM=m
->  CONFIG_QCOM_RPMH=y
-> +CONFIG_QCOM_RPMHPD=y
->  CONFIG_QCOM_SMEM=y
->  CONFIG_QCOM_SMD_RPM=y
->  CONFIG_QCOM_SMP2P=y
-> @@ -780,6 +783,8 @@ CONFIG_PWM_ROCKCHIP=y
->  CONFIG_PWM_SAMSUNG=y
->  CONFIG_PWM_SUN4I=m
->  CONFIG_PWM_TEGRA=m
-> +CONFIG_RESET_QCOM_AOSS=y
-> +CONFIG_RESET_QCOM_PDC=m
->  CONFIG_RESET_TI_SCI=y
->  CONFIG_PHY_XGENE=y
->  CONFIG_PHY_SUN4I_USB=y
-> -- 
-> 2.18.0
-> 
