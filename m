@@ -2,154 +2,107 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 03D21DAE9C
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Oct 2019 15:40:02 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A7274DB112
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Oct 2019 17:26:19 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2436636AbfJQNj7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 17 Oct 2019 09:39:59 -0400
-Received: from mail-wr1-f67.google.com ([209.85.221.67]:33205 "EHLO
-        mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2388054AbfJQNj7 (ORCPT
+        id S2437985AbfJQP0S (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 17 Oct 2019 11:26:18 -0400
+Received: from mail-pf1-f196.google.com ([209.85.210.196]:37696 "EHLO
+        mail-pf1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2437754AbfJQP0S (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 17 Oct 2019 09:39:59 -0400
-Received: by mail-wr1-f67.google.com with SMTP id b9so2435497wrs.0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 17 Oct 2019 06:39:57 -0700 (PDT)
+        Thu, 17 Oct 2019 11:26:18 -0400
+Received: by mail-pf1-f196.google.com with SMTP id y5so1877349pfo.4;
+        Thu, 17 Oct 2019 08:26:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=nGdIYkBoWouhui5JZwa5SxA1USJYrGRfLAGOfC1qQUE=;
-        b=EeC7H7ue3oN1wyNo5+y+h/f3QtZwbPbLcR8bvVPiUDCnvQ1Wzzk22Y9y+SWAeu3llf
-         RurKgJ3iIuYu/Et+Jldq3rRCJK+O1oCBGPuIoQNEb/bzD4U2PZFn/hwgLd+zF9vXA3Ij
-         NYkpxgZCWqu4QiJ5veb+lqQbk0AsCybJARVL08fZusOFmSiHSGhiOnk4yOHRhqDmY3tn
-         ZZyKt5J3y+I2fnGBXO+Yca1TaceT4qVU+oy+/27lbS4BQs/tZs2GQzAxgD7jodqHN953
-         qu1oLELMNkcdB2ndjb9exvZknfturibZR8zRbaNgoN/iNeuKYk5KavYeyrGElH8K4Ux9
-         9B0A==
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id;
+        bh=vyhAg3anmutQrJfhNeqhS0F5n10v6jX+HPYL+lL5K0I=;
+        b=hG6D9mH7YEkyNfA5TpZwHpvmyrgPd6IQ807A1WzZQm0y4pDM1ulNyhmIcZvfZDwjZ6
+         9RoCZYTJXpUX1BwnhX6Sbsw2fxZXKaJr4Cq3Qz4nsjvndWtwKVzP0KdPi1+pu5kW8ZMh
+         nZHOAfHN8V/QbZp67gvCvqNGatkv4PgrGu1lH6q0gnT1Elxh8FpenGLBaABqOTzVZlGn
+         iOiRj44ZR3V6X1ySRq+mIEqM6fDDx1oS5z99YouXlvsUrMnikH+Id9AbYAx39o5M08y1
+         Mgsty7zmfXCgK/q3qvwq/SHPFA8n5z4W2o0Ux/bu9H0qk9u71qhHVA7GaB4k+X9H01Rn
+         nwJw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=nGdIYkBoWouhui5JZwa5SxA1USJYrGRfLAGOfC1qQUE=;
-        b=RC3ClOTyP2Z07+tQJQ9zjb2uAxglLDBk8iTS+UINZZzY3Fxpv3KJdVOEBX4DlmBL/d
-         6WYnNUaNwWBmG/YJGO1MZ3WvvIKSy266phdhVPm/1EsKL5Yw1kWXMdhKQTjR4U+h9NJy
-         iQncWGM9tgMzVGsh3vOemwlsvr9ZlrGsXk8eDb96Teq5YX5IC1MaR69/qKs7yAUmSulr
-         YEVUMWFow3+IF0d5FxoXdUUJDTpA4JP+6GiZjg5Sor5LfoDv7OvuBTRGK3RNhUlwdocS
-         paRqwF7Ofj/h8FcRJMvyMAFXKzZHmDgrPYU5ZlCXGcXdVdfK+ffKa9Mx1i4r9DAgMbno
-         eJVg==
-X-Gm-Message-State: APjAAAXblkQWQp1MWjI3P5COeVq0YVe1Saa9LxOX3NWSWUB7ibRbT70S
-        hTt0dvD6PBLbD2ohLpOTSYGZkQ==
-X-Google-Smtp-Source: APXvYqy4Lrrg4pMfTd+atu6SWJQ7WAc2FDA1OuzXE16c+jlAXvx7iaUxxV+K+zpm0rWL0ddLU3HqQg==
-X-Received: by 2002:a5d:4644:: with SMTP id j4mr2365010wrs.355.1571319597038;
-        Thu, 17 Oct 2019 06:39:57 -0700 (PDT)
-Received: from holly.lan (cpc141214-aztw34-2-0-cust773.18-1.cable.virginm.net. [86.9.19.6])
-        by smtp.gmail.com with ESMTPSA id k8sm777915wrg.15.2019.10.17.06.39.55
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=vyhAg3anmutQrJfhNeqhS0F5n10v6jX+HPYL+lL5K0I=;
+        b=tKpFpcr1L8scSiR7fDSZjrpc5yCZi0lTZ79fd4ClFW1jwWSNWpUkoUm1f5GCklyW5l
+         /FJvKVa8Bu4Ay2bx5rpI69+C4okKTeITuN9lgx7mVfzSdUOPK5vrgDFRYcEmnWmf4zNo
+         wYMaJY455xK7hSynJaZVop39ON5miMkSVfoPAQVMvGuD5+PxK3u2fcb6Qm+0SGXd8ngB
+         3iA5fFhG5UGVy++uwOZc7VWUei+1pBbNqQcycq2s1yjWl8zb0dnFLhiVLELrohs3WcaA
+         NAv104M3q6hSPgfHTGUB5gWcrVBuAbjfauoMPoImbL89tbX82FFek1In4izJ4X1RjevT
+         DzRw==
+X-Gm-Message-State: APjAAAUZmoc5hprw/3fdx+XcMhEeiczvFSRFFFRdk0BpDCaEgglnuoWV
+        62v8i0TvjK9ctA9weNnEHbY=
+X-Google-Smtp-Source: APXvYqy8N7+VVeYK9qlx19Z7TSu4BOi9k5sVMTvNj2rcnFbeDrL1oI7LgG/3gr9vY1LJLwWer90Z1w==
+X-Received: by 2002:a17:90a:db12:: with SMTP id g18mr5119242pjv.32.1571325977238;
+        Thu, 17 Oct 2019 08:26:17 -0700 (PDT)
+Received: from aw-bldr-10.qualcomm.com (i-global254.qualcomm.com. [199.106.103.254])
+        by smtp.gmail.com with ESMTPSA id t13sm3429237pfh.12.2019.10.17.08.26.15
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 17 Oct 2019 06:39:55 -0700 (PDT)
-Date:   Thu, 17 Oct 2019 14:39:54 +0100
-From:   Daniel Thompson <daniel.thompson@linaro.org>
-To:     kgunda@codeaurora.org
-Cc:     bjorn.andersson@linaro.org, jingoohan1@gmail.com,
-        lee.jones@linaro.org, b.zolnierkie@samsung.com,
-        dri-devel@lists.freedesktop.org, jacek.anaszewski@gmail.com,
-        pavel@ucw.cz, robh+dt@kernel.org, mark.rutland@arm.com,
-        linux-leds@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, Andy Gross <agross@kernel.org>,
-        linux-arm-msm@vger.kernel.org, linux-fbdev@vger.kernel.org
-Subject: Re: [PATCH V7 6/6] backlight: qcom-wled: Add auto string detection
- logic
-Message-ID: <20191017133954.7vgqjgwxojmjw446@holly.lan>
-References: <1571220826-7740-1-git-send-email-kgunda@codeaurora.org>
- <1571220826-7740-7-git-send-email-kgunda@codeaurora.org>
- <20191017112941.qqvgboyambzw63i3@holly.lan>
- <fa32f7ec727cb2626ad877a6cef32a1b@codeaurora.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <fa32f7ec727cb2626ad877a6cef32a1b@codeaurora.org>
-User-Agent: NeoMutt/20180716
+        Thu, 17 Oct 2019 08:26:16 -0700 (PDT)
+From:   Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
+To:     agross@kernel.org, bjorn.andersson@linaro.org,
+        dan.j.williams@intel.com, vkoul@kernel.org
+Cc:     linux-arm-msm@vger.kernel.org, dmaengine@vger.kernel.org,
+        linux-kernel@vger.kernel.org,
+        Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
+Subject: [PATCH] dmaengine: qcom: bam_dma: Fix resource leak
+Date:   Thu, 17 Oct 2019 08:26:06 -0700
+Message-Id: <20191017152606.34120-1-jeffrey.l.hugo@gmail.com>
+X-Mailer: git-send-email 2.17.1
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Oct 17, 2019 at 05:47:47PM +0530, kgunda@codeaurora.org wrote:
-> On 2019-10-17 16:59, Daniel Thompson wrote:
-> > On Wed, Oct 16, 2019 at 03:43:46PM +0530, Kiran Gunda wrote:
-> > > The auto string detection algorithm checks if the current WLED
-> > > sink configuration is valid. It tries enabling every sink and
-> > > checks if the OVP fault is observed. Based on this information
-> > > it detects and enables the valid sink configuration.
-> > > Auto calibration will be triggered when the OVP fault interrupts
-> > > are seen frequently thereby it tries to fix the sink configuration.
-> > > 
-> > > The auto-detection also kicks in when the connected LED string
-> > > of the display-backlight malfunctions (because of damage) and
-> > > requires the damaged string to be turned off to prevent the
-> > > complete panel and/or board from being damaged.
-> > > 
-> > > Signed-off-by: Kiran Gunda <kgunda@codeaurora.org>
-> > 
-> > It's a complex bit of code but I'm OK with it in principle. Everything
-> > below is about small details and/or nitpicking.
-> > 
-> > 
-> > > +static void wled_ovp_work(struct work_struct *work)
-> > > +{
-> > > +	struct wled *wled = container_of(work,
-> > > +					 struct wled, ovp_work.work);
-> > > +	enable_irq(wled->ovp_irq);
-> > > +}
-> > > +
-> > 
-> > A bit of commenting about why we have to wait 10ms before enabling the
-> > OVP interrupt would be appreciated.
-> > 
-> > 
-> Sure. Will add the comment in the next series.
-> > > +static irqreturn_t wled_ovp_irq_handler(int irq, void *_wled)
-> > > +{
-> > > +	struct wled *wled = _wled;
-> > > +	int rc;
-> > > +	u32 int_sts, fault_sts;
-> > > +
-> > > +	rc = regmap_read(wled->regmap,
-> > > +			 wled->ctrl_addr + WLED3_CTRL_REG_INT_RT_STS, &int_sts);
-> > > +	if (rc < 0) {
-> > > +		dev_err(wled->dev, "Error in reading WLED3_INT_RT_STS rc=%d\n",
-> > > +			rc);
-> > > +		return IRQ_HANDLED;
-> > > +	}
-> > > +
-> > > +	rc = regmap_read(wled->regmap, wled->ctrl_addr +
-> > > +			 WLED3_CTRL_REG_FAULT_STATUS, &fault_sts);
-> > > +	if (rc < 0) {
-> > > +		dev_err(wled->dev, "Error in reading WLED_FAULT_STATUS rc=%d\n",
-> > > +			rc);
-> > > +		return IRQ_HANDLED;
-> > > +	}
-> > > +
-> > > +	if (fault_sts &
-> > > +		(WLED3_CTRL_REG_OVP_FAULT_BIT | WLED3_CTRL_REG_ILIM_FAULT_BIT))
-> > > +		dev_dbg(wled->dev, "WLED OVP fault detected, int_sts=%x
-> > > fault_sts= %x\n",
-> > > +			int_sts, fault_sts);
-> > > +
-> > > +	if (fault_sts & WLED3_CTRL_REG_OVP_FAULT_BIT) {
-> > > +		mutex_lock(&wled->lock);
-> > > +		disable_irq_nosync(wled->ovp_irq);
-> > 
-> > We're currently running the threaded ISR for this irq. Do we really need
-> > to disable it?
-> > 
-> We need to disable this IRQ, during the auto string detection logic. Because
-> in the auto string detection we configure the current sinks one by one and
-> check the
-> status register for the OVPs and set the right string configuration. We
-> enable it later after
-> the auto string detection is completed.
+bam_dma_terminate_all() will leak resources if any of the transactions are
+committed to the hardware (present in the desc fifo), and not complete.
+Since bam_dma_terminate_all() does not cause the hardware to be updated,
+the hardware will still operate on any previously committed transactions.
+This can cause memory corruption if the memory for the transaction has been
+reassigned, and will cause a sync issue between the BAM and its client(s).
 
-This is a threaded oneshot interrupt handler. Why isn't the framework
-masking sufficient for you here?
+Fix this by properly updating the hardware in bam_dma_terminate_all().
 
+Fixes: e7c0fe2a5c84 ("dmaengine: add Qualcomm BAM dma driver")
+Signed-off-by: Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
+---
+ drivers/dma/qcom/bam_dma.c | 19 +++++++++++++++++++
+ 1 file changed, 19 insertions(+)
 
-Daniel.
+diff --git a/drivers/dma/qcom/bam_dma.c b/drivers/dma/qcom/bam_dma.c
+index 8e90a405939d..ef73f65224b1 100644
+--- a/drivers/dma/qcom/bam_dma.c
++++ b/drivers/dma/qcom/bam_dma.c
+@@ -694,6 +694,25 @@ static int bam_dma_terminate_all(struct dma_chan *chan)
+ 
+ 	/* remove all transactions, including active transaction */
+ 	spin_lock_irqsave(&bchan->vc.lock, flag);
++	/*
++	 * If we have transactions queued, then some might be committed to the
++	 * hardware in the desc fifo.  The only way to reset the desc fifo is
++	 * to do a hardware reset (either by pipe or the entire block).
++	 * bam_chan_init_hw() will trigger a pipe reset, and also reinit the
++	 * pipe.  If the pipe is left disabled (default state after pipe reset)
++	 * and is accessed by a connected hardware engine, a fatal error in
++	 * the BAM will occur.  There is a small window where this could happen
++	 * with bam_chan_init_hw(), but it is assumed that the caller has
++	 * stopped activity on any attached hardware engine.  Make sure to do
++	 * this first so that the BAM hardware doesn't cause memory corruption
++	 * by accessing freed resources.
++	 */
++	if (!list_empty(&bchan->desc_list)) {
++		async_desc = list_first_entry(&bchan->desc_list,
++					      struct bam_async_desc, desc_node);
++		bam_chan_init_hw(bchan, async_desc->dir);
++	}
++
+ 	list_for_each_entry_safe(async_desc, tmp,
+ 				 &bchan->desc_list, desc_node) {
+ 		list_add(&async_desc->vd.node, &bchan->vc.desc_issued);
+-- 
+2.17.1
+
