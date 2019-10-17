@@ -2,117 +2,103 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 64E77DA7FD
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Oct 2019 11:04:45 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 82446DAA09
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Oct 2019 12:31:01 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2439337AbfJQJEp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 17 Oct 2019 05:04:45 -0400
-Received: from mail-vk1-f195.google.com ([209.85.221.195]:35736 "EHLO
-        mail-vk1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2439336AbfJQJEo (ORCPT
+        id S2408848AbfJQKbA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 17 Oct 2019 06:31:00 -0400
+Received: from mail-pg1-f195.google.com ([209.85.215.195]:42904 "EHLO
+        mail-pg1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2405038AbfJQKbA (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 17 Oct 2019 05:04:44 -0400
-Received: by mail-vk1-f195.google.com with SMTP id d66so343233vka.2
-        for <linux-arm-msm@vger.kernel.org>; Thu, 17 Oct 2019 02:04:44 -0700 (PDT)
+        Thu, 17 Oct 2019 06:31:00 -0400
+Received: by mail-pg1-f195.google.com with SMTP id f14so1090393pgi.9
+        for <linux-arm-msm@vger.kernel.org>; Thu, 17 Oct 2019 03:30:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=3YEZ6kmrwj0jmNEINZ5DrxfXAkCY+f5snursTVbXw/Q=;
-        b=W2e51Z687HKzqeEUxw8//AMcHGkkuFOP8XPRGjOfymWxiy5Zp1IsFw7JpdMcbsWu2b
-         3XRp9hda4U35V3m4NBdsGLbwORsP7M6z6hcLgkBMeNdc6Kv9H54zl1XG8UyqG3oVaiRA
-         uYXbj1yTpmGTc5+j3xXkUibu704TmnkPoO2sjQNeCRQIL58QuDsOIAezBG7b14OxBFv6
-         5FbrylzIeAFhCyolzRmA8yt6ll3bpHI/fYR97EcEQ3jn9UGLTrm83xRCCHz8AS86pmze
-         m1mdnFdbPnS0BElbdxvOVcKomZv+rfTKsUOZ1i3MKBNxnh2hdw7vJ49G7aVlAm37710n
-         WkLA==
+        h=from:to:cc:subject:date:message-id;
+        bh=fXpZrgSR4m1AdPkf5LQ4vreDl7P/F5O2vClvEl9LG+E=;
+        b=RjcqwM/151Rh6shqBPSS+/LsnKHp4tPzH7rlCNumhGcdPu5np2zWiScneSjR3DPfNK
+         JSmgBgwcYc2Wq+I+tuFJJfzoKLdkZTa8plMbttbWPHGfnbN/VEmdTGvvDIpHjb5MjRNE
+         wZXcyV2s9EIiPjBgCF+7ZfzX1ofKXFNsnNIAp/5dSWOLt9rkUyJ7HH7kmczmrqeDRWdX
+         yoe6oaFXiJZKhYhvEFhbPeQuZvu21eI033tpasrxjBDx88WiCb6e3TSXmgyXHo6HH1nv
+         cj551XzWC47q5Acat5rKiyCgf5zmD4X9jsYYUc7+7YYDhJh+duAhoXVL1w6B2qyssTDo
+         AgFQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=3YEZ6kmrwj0jmNEINZ5DrxfXAkCY+f5snursTVbXw/Q=;
-        b=XlPuDcWr4Qhubrp6DeJhbIIxbue173JP95RG+wC6w+CrK//GYVY4NEw9WuXaP0nK05
-         hHhDuEGlgJ9hiWv2hKlwQKqaC+d26nXBHK4Y1hV61NhdqIwxiUN7JPwBKGObQCvRcS7C
-         j71PRjb8Vw72ILG+11sg2Dz2Qo+SeJ3fJird9xpCysqXPMKNHRRUVcd7YdtyqsooSjRR
-         kHaTHmuUPRWXziHSE0KDJVr1SFK9RWU9sX2kX9XfxnTPR5EBYRqI5xDO5EZC8kXLHIA5
-         4YhSYTH04FzazYQT/Fs4o6dm4EVjaYxPqSa/b1HVqKjAUPTu5siEAUpaDCkWI8hLOmhc
-         +Kng==
-X-Gm-Message-State: APjAAAXZuxoHIMADYyXtKqS6Y4pIiNyz7RU/rx/C4cF9qGiF3J+y/T+P
-        9ksCPoGNlMs0bfYKLERBbcJGfEOyBs2HTpBPOY2Dqw==
-X-Google-Smtp-Source: APXvYqyt8CM8fHUNAOrVRVddOgQGQx8mRNb41o6lI3llgLFlyRzgA5YeS309L///NMZr8TxyMVq1MEKf6S7M8tbxb2E=
-X-Received: by 2002:a1f:b202:: with SMTP id b2mr1313280vkf.59.1571303083600;
- Thu, 17 Oct 2019 02:04:43 -0700 (PDT)
-MIME-Version: 1.0
-References: <1571254641-13626-1-git-send-email-thara.gopinath@linaro.org> <1571254641-13626-7-git-send-email-thara.gopinath@linaro.org>
-In-Reply-To: <1571254641-13626-7-git-send-email-thara.gopinath@linaro.org>
-From:   Ulf Hansson <ulf.hansson@linaro.org>
-Date:   Thu, 17 Oct 2019 11:04:07 +0200
-Message-ID: <CAPDyKFqcKfmnNJ7j4Jb+JH739FBcHg5NBD6aR4H_N=zWGwm1ww@mail.gmail.com>
-Subject: Re: [PATCH v3 6/7] dt-bindings: soc: qcom: Extend RPMh power
- controller binding to describe thermal warming device
-To:     Thara Gopinath <thara.gopinath@linaro.org>
-Cc:     Eduardo Valentin <edubezval@gmail.com>,
-        Zhang Rui <rui.zhang@intel.com>,
-        Daniel Lezcano <daniel.lezcano@linaro.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Andy Gross <agross@kernel.org>, amit.kucheria@verdurent.com,
-        Mark Rutland <mark.rutland@arm.com>,
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=fXpZrgSR4m1AdPkf5LQ4vreDl7P/F5O2vClvEl9LG+E=;
+        b=ddIIeg5DNUl/VdhoTEYD2VIUtIFf4UskcDP6W2iij4xWRFVbiybSfbUhilwy3RdXzf
+         DJfw+kQ6u0IE3f7wygzCTGL9dbKbvywMlgI/qW6IOuk+scGAZEa66YSogJKuuGXeepr3
+         igIRVRKALgKKhypOYQHrid/Ky2QPvWlfxKgs7Ux21OuxQ7WhwMc6x4eT4Lnb9M4pmxHF
+         1rvlxqon1dxw67bOQ19WC2dHUy4kl2o3UiRtZEaKKaIVzZSUGdnbJwMMC3A2kjBmDASP
+         pSJ1WUIsc0Nixlfh2uZPDFEehn8iIOm2gG6camwNxzGP/sldfsnVl/ypO987AIvVPf/v
+         QNRQ==
+X-Gm-Message-State: APjAAAUS7TUFVMloPsvCyq8pK6as0kFkLiiBKvdEwJo56L3W+HY811wD
+        clH6D4US4TevDfdEDVoHpHFxAQ==
+X-Google-Smtp-Source: APXvYqwLgDPSgPcHP07oEn8Yz+bEr9lP6N0qW51t7I6WtTfBfDIdS2uiMgDfv+7WesuoPKyBZSt+aQ==
+X-Received: by 2002:a63:e145:: with SMTP id h5mr3330375pgk.447.1571308259127;
+        Thu, 17 Oct 2019 03:30:59 -0700 (PDT)
+Received: from localhost ([49.248.54.231])
+        by smtp.gmail.com with ESMTPSA id f3sm2233388pgj.62.2019.10.17.03.30.57
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Thu, 17 Oct 2019 03:30:58 -0700 (PDT)
+From:   Amit Kucheria <amit.kucheria@linaro.org>
+To:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        daniel.lezcano@linaro.org, viresh.kumar@linaro.org,
+        sudeep.holla@arm.com, bjorn.andersson@linaro.org,
+        edubezval@gmail.com, agross@kernel.org, tdas@codeaurora.org,
+        swboyd@chromium.org, ilina@codeaurora.org,
         "Rafael J. Wysocki" <rjw@rjwysocki.net>,
-        Linux PM <linux-pm@vger.kernel.org>,
-        DTML <devicetree@vger.kernel.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+        Amit Kucheria <amit.kucheria@verdurent.com>,
+        Zhang Rui <rui.zhang@intel.com>
+Cc:     linux-clk@vger.kernel.org, linux-pm@vger.kernel.org
+Subject: [PATCH v2 0/5] Initialise thermal framework and cpufreq earlier during boot
+Date:   Thu, 17 Oct 2019 16:00:49 +0530
+Message-Id: <cover.1571307382.git.amit.kucheria@linaro.org>
+X-Mailer: git-send-email 2.17.1
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, 16 Oct 2019 at 21:37, Thara Gopinath <thara.gopinath@linaro.org> wrote:
->
-> RPMh power controller hosts mx domain that can be used as thermal
-> warming device. Add a sub-node to specify this.
->
-> Signed-off-by: Thara Gopinath <thara.gopinath@linaro.org>
-> ---
->  Documentation/devicetree/bindings/power/qcom,rpmpd.txt | 10 ++++++++++
->  1 file changed, 10 insertions(+)
->
-> diff --git a/Documentation/devicetree/bindings/power/qcom,rpmpd.txt b/Documentation/devicetree/bindings/power/qcom,rpmpd.txt
-> index eb35b22..fff695d 100644
-> --- a/Documentation/devicetree/bindings/power/qcom,rpmpd.txt
-> +++ b/Documentation/devicetree/bindings/power/qcom,rpmpd.txt
-> @@ -18,6 +18,16 @@ Required Properties:
->  Refer to <dt-bindings/power/qcom-rpmpd.h> for the level values for
->  various OPPs for different platforms as well as Power domain indexes
->
-> += SUBNODES
-> +RPMh alsp hosts power domains that can behave as thermal warming device.
-> +These are expressed as subnodes of the RPMh. The name of the node is used
-> +to identify the power domain and must therefor be "mx".
-> +
-> +- #cooling-cells:
-> +       Usage: optional
-> +       Value type: <u32>
-> +       Definition: must be 2
-> +
+Changes since v1:
+- Completely get rid of netlink support in the thermal framework.
+- This changes the early init patch to a single line - change to
+  core_initcall. Changed authorship of patch since it is nothing like the
+  original. Lina, let me know if you feel otherwise.
+- I've tested to make sure that the qcom-cpufreq-hw driver continues to
+  work correctly as a module so this won't impact Android's GKI plans.
+- Collected Acks
 
-Just wanted to express a minor thought about this. In general we use
-subnodes of PM domain providers to represent the topology of PM
-domains (subdomains), this is something different, which I guess is
-fine.
+Device boot needs to be as fast as possible while keeping under the thermal
+envelope. Now that thermal framework is built-in to the kernel, we can
+initialize it earlier to enable thermal mitigation during boot.
 
-I assume the #cooling-cells is here tells us this is not a PM domain
-provider, but a "cooling device provider"?
+We also need the cpufreq HW drivers to be initialised earlier to act as the
+cooling devices. This series only converts over the qcom-hw driver to
+initialize earlier but can be extended to other platforms as well.
 
-Also, I wonder if it would be fine to specify "power-domains" here,
-rather than using "name" as I think that is kind of awkward!?
+Amit Kucheria (5):
+  thermal: Initialize thermal subsystem earlier
+  cpufreq: Initialise the governors in core_initcall
+  cpufreq: Initialize cpufreq-dt driver earlier
+  clk: qcom: Initialise clock drivers earlier
+  cpufreq: qcom-hw: Move driver initialisation earlier
 
->  Example: rpmh power domain controller and OPP table
->
->  #include <dt-bindings/power/qcom-rpmhpd.h>
-> --
-> 2.1.4
->
+ drivers/clk/qcom/clk-rpmh.c            | 2 +-
+ drivers/clk/qcom/gcc-qcs404.c          | 2 +-
+ drivers/clk/qcom/gcc-sdm845.c          | 2 +-
+ drivers/cpufreq/cpufreq-dt-platdev.c   | 2 +-
+ drivers/cpufreq/cpufreq_conservative.c | 2 +-
+ drivers/cpufreq/cpufreq_ondemand.c     | 2 +-
+ drivers/cpufreq/cpufreq_performance.c  | 2 +-
+ drivers/cpufreq/cpufreq_powersave.c    | 2 +-
+ drivers/cpufreq/cpufreq_userspace.c    | 2 +-
+ drivers/cpufreq/qcom-cpufreq-hw.c      | 2 +-
+ drivers/thermal/thermal_core.c         | 3 ++-
+ 11 files changed, 12 insertions(+), 11 deletions(-)
 
-Kind regards
-Uffe
+-- 
+2.17.1
+
