@@ -2,353 +2,108 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 926A0DAAE2
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Oct 2019 13:09:51 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E2662DAAEF
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Oct 2019 13:10:18 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2405917AbfJQLJu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 17 Oct 2019 07:09:50 -0400
-Received: from mail-wm1-f68.google.com ([209.85.128.68]:55966 "EHLO
-        mail-wm1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2405286AbfJQLJu (ORCPT
+        id S2406082AbfJQLKR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 17 Oct 2019 07:10:17 -0400
+Received: from smtp.codeaurora.org ([198.145.29.96]:59792 "EHLO
+        smtp.codeaurora.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2405285AbfJQLKR (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 17 Oct 2019 07:09:50 -0400
-Received: by mail-wm1-f68.google.com with SMTP id a6so2099726wma.5
-        for <linux-arm-msm@vger.kernel.org>; Thu, 17 Oct 2019 04:09:48 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=qCyVynuK7PaSvkeosZV34szIPo2U5n7bK+UWhJ6bjPY=;
-        b=h8UffXa2hhVQYJJ/wxhWdOwKrjrPLX/WdcMY/ndNiZuY6l4OKj0WKif0p8Wsrvv33C
-         O9gjsNrzDxHyzZ/TOeAsuKMCt7MdjkMlsA3w4Vx/Pv8tkyXOthkuqva6vtiF/qf7iozA
-         LUidAJEkf/ejnJ7cTXSY6aIp7mVZCzAU/vlvTf+kBJzbl1VxwX0Q0CQzIcS6GTuxvK60
-         b9ome2O1dpYgTC8B1y8DHSXAyetStGZ5Oskw2ogh6OEVAbQZVSSG1VKs/1ExFpUjeVRa
-         pnHZtSgNe89CeG/xnWQ8rqok5uGR5Ze+qRNxLDr9RMZGIRp2cnCnIpjZ8HwJ7LBYFp5y
-         s1yQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=qCyVynuK7PaSvkeosZV34szIPo2U5n7bK+UWhJ6bjPY=;
-        b=psERBHI4O45WAznNtq14etuibYqZm8wtz6+V5kwc4csY1t4dIAPufTGnpKL3Ieft8/
-         GS7fp+AjlCY3tKt0JyAxFTdWZQJWDpJHZt+8Cf5DQOZPhmHJ/H8Ov2EJ+MwhLqfxgw6A
-         ZYhrmcLQXR6Nf8Mr8l0R4KSb1ooHekeLwN781cNu7/N8BxutYVonwzn5QU7/l1Neimog
-         uLBnMqr5qpYpymj2wMv/itgY/pDekVCDLV/vH0OvRlTqgMYjIgXR6L7vqAjeOq4eIHZ/
-         EI2zg0hC5UquvLxfuqnNCEpcxZmQvd4ULuOYFt4d7TORabjcDGeasWOAJi1gPrJFvaU4
-         xQfA==
-X-Gm-Message-State: APjAAAWvh9mXt5QmVfCo1jltvJ1nPqCRz8innJUexOTfPVRNArOF0WL5
-        8p7nrOYoBPRi53BeZCZ2rSzyBw==
-X-Google-Smtp-Source: APXvYqylxkpYUC0YR/BT7g7dc/nso2TOI0NcgI5CsiSqzmU5I4fsasacsNe9XwwS9TKTyn1Xxp0ywQ==
-X-Received: by 2002:a7b:cc07:: with SMTP id f7mr2301642wmh.56.1571310587778;
-        Thu, 17 Oct 2019 04:09:47 -0700 (PDT)
-Received: from holly.lan (cpc141214-aztw34-2-0-cust773.18-1.cable.virginm.net. [86.9.19.6])
-        by smtp.gmail.com with ESMTPSA id y13sm3163455wrg.8.2019.10.17.04.09.46
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 17 Oct 2019 04:09:46 -0700 (PDT)
-Date:   Thu, 17 Oct 2019 12:09:45 +0100
-From:   Daniel Thompson <daniel.thompson@linaro.org>
-To:     Kiran Gunda <kgunda@codeaurora.org>
-Cc:     bjorn.andersson@linaro.org, jingoohan1@gmail.com,
-        lee.jones@linaro.org, b.zolnierkie@samsung.com,
-        dri-devel@lists.freedesktop.org, jacek.anaszewski@gmail.com,
-        pavel@ucw.cz, robh+dt@kernel.org, mark.rutland@arm.com,
-        linux-leds@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, Andy Gross <agross@kernel.org>,
-        linux-arm-msm@vger.kernel.org, linux-fbdev@vger.kernel.org
-Subject: Re: [PATCH V7 5/6] backlight: qcom-wled: add support for short
- circuit handling.
-Message-ID: <20191017110945.6dbldlrykumvlpqm@holly.lan>
-References: <1571220826-7740-1-git-send-email-kgunda@codeaurora.org>
- <1571220826-7740-6-git-send-email-kgunda@codeaurora.org>
+        Thu, 17 Oct 2019 07:10:17 -0400
+Received: by smtp.codeaurora.org (Postfix, from userid 1000)
+        id BBB6060ACF; Thu, 17 Oct 2019 11:10:16 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
+        s=default; t=1571310616;
+        bh=0gfqhLwHCyiY74iUPkYmU05BOXYOwFmZ8CqXNfYxPTM=;
+        h=Subject:To:Cc:References:From:Date:In-Reply-To:From;
+        b=IUQrgY45sEaG+9T4Gef7R9CyK7ONF5WyX5NevM/iJBahHu2Kz2vMtxx2ulA9aL6IC
+         VYYB5bfLo0F4JDOSMyUuFO+ZLi2OlfY0JmSzvSChFTPhN0EYlhBagKEL91EmfNKVPW
+         VhKLmoMz1g4N1wfgmu9nddddllRr/B2tmg1oqMIc=
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        pdx-caf-mail.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.7 required=2.0 tests=ALL_TRUSTED,BAYES_00,
+        DKIM_INVALID,DKIM_SIGNED,SPF_NONE autolearn=no autolearn_force=no
+        version=3.4.0
+Received: from [10.252.222.65] (blr-c-bdr-fw-01_globalnat_allzones-outside.qualcomm.com [103.229.19.19])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: akashast@smtp.codeaurora.org)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 3D16F60A74;
+        Thu, 17 Oct 2019 11:10:12 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
+        s=default; t=1571310616;
+        bh=0gfqhLwHCyiY74iUPkYmU05BOXYOwFmZ8CqXNfYxPTM=;
+        h=Subject:To:Cc:References:From:Date:In-Reply-To:From;
+        b=IUQrgY45sEaG+9T4Gef7R9CyK7ONF5WyX5NevM/iJBahHu2Kz2vMtxx2ulA9aL6IC
+         VYYB5bfLo0F4JDOSMyUuFO+ZLi2OlfY0JmSzvSChFTPhN0EYlhBagKEL91EmfNKVPW
+         VhKLmoMz1g4N1wfgmu9nddddllRr/B2tmg1oqMIc=
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 3D16F60A74
+Authentication-Results: pdx-caf-mail.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: pdx-caf-mail.web.codeaurora.org; spf=none smtp.mailfrom=akashast@codeaurora.org
+Subject: Re: [PATCH V2 2/2] tty: serial: qcom_geni_serial: Wakeup over UART RX
+To:     Stephen Boyd <swboyd@chromium.org>, gregkh@linuxfoundation.org
+Cc:     linux-arm-msm@vger.kernel.org, linux-serial@vger.kernel.org,
+        mgautam@codeaurora.org, bjorn.andersson@linaro.org
+References: <1570700803-17566-1-git-send-email-akashast@codeaurora.org>
+ <5d9f3f4f.1c69fb81.5120f.b90e@mx.google.com>
+ <a7dabb1d-b6af-acc5-ba4e-923ee5fc6ee3@codeaurora.org>
+ <5da627aa.1c69fb81.e2d51.203d@mx.google.com>
+From:   Akash Asthana <akashast@codeaurora.org>
+Message-ID: <c20319ce-77e2-a4ea-5d7a-a84b8858a938@codeaurora.org>
+Date:   Thu, 17 Oct 2019 16:40:10 +0530
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
+ Thunderbird/60.9.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <1571220826-7740-6-git-send-email-kgunda@codeaurora.org>
-User-Agent: NeoMutt/20180716
+In-Reply-To: <5da627aa.1c69fb81.e2d51.203d@mx.google.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Content-Language: en-US
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Oct 16, 2019 at 03:43:45PM +0530, Kiran Gunda wrote:
-> Handle the short circuit interrupt and check if the short circuit
-> interrupt is valid. Re-enable the module to check if it goes
-> away. Disable the module altogether if the short circuit event
-> persists.
-> 
-> Signed-off-by: Kiran Gunda <kgunda@codeaurora.org>
-> Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
 
-Reviewed-by: Daniel Thompson <daniel.thompson@linaro.org>
+On 10/16/2019 1:40 AM, Stephen Boyd wrote:
+> Quoting Akash Asthana (2019-10-11 02:48:42)
+>> On 10/10/2019 7:55 PM, Stephen Boyd wrote:
+>>> Quoting Akash Asthana (2019-10-10 02:46:43)
+>>>> diff --git a/drivers/tty/serial/qcom_geni_serial.c b/drivers/tty/serial/qcom_geni_serial.c
+>>>> index 5180cd8..ff63728 100644
+>>>> --- a/drivers/tty/serial/qcom_geni_serial.c
+>>>> +++ b/drivers/tty/serial/qcom_geni_serial.c
+>>>> @@ -1306,6 +1317,29 @@ static int qcom_geni_serial_probe(struct platform_device *pdev)
+>>>> +               if (port->wakeup_irq < 0) {
+>>>> +                       dev_err(&pdev->dev, "Failed to get wakeup IRQ %d\n",
+>>>> +                                       port->wakeup_irq);
+>>>> +               } else {
+>>>> +                       irq_set_status_flags(port->wakeup_irq, IRQ_NOAUTOEN);
+>>>> +                       ret = devm_request_irq(uport->dev, port->wakeup_irq,
+>>>> +                               qcom_geni_serial_wakeup_isr,
+>>>> +                               IRQF_TRIGGER_FALLING, "uart_wakeup", uport);
+>>>> +                       if (ret) {
+>>>> +                               dev_err(uport->dev, "Failed to register wakeup IRQ ret %d\n",
+>>>> +                                               ret);
+>>>> +                               return ret;
+>>>> +                       }
+>>>> +
+>>>> +                       device_init_wakeup(&pdev->dev, true);
+>>>> +                       ret = dev_pm_set_wake_irq(&pdev->dev, port->wakeup_irq);
+>>> Why can't we use dev_pm_set_dedicated_wake_irq() here?
+>> If we use this API then handler "handle_threaded_wake_irq" uses device
+>> specific pm_runtime functions to wake the device and currently this
+>>
+>> driver don't support runtime PM callbacks. Also, we want to register
+>> "qcom_geni_serial_wakeup_isr" as our IRQ handler for wakeup scenario.
+>>
+> Why can't we make this driver use runtime PM?
 
-> ---
->  drivers/video/backlight/qcom-wled.c | 132 ++++++++++++++++++++++++++++++++++--
->  1 file changed, 128 insertions(+), 4 deletions(-)
-> 
-> diff --git a/drivers/video/backlight/qcom-wled.c b/drivers/video/backlight/qcom-wled.c
-> index 2807b4b..b5b125c 100644
-> --- a/drivers/video/backlight/qcom-wled.c
-> +++ b/drivers/video/backlight/qcom-wled.c
-> @@ -2,6 +2,9 @@
->  /* Copyright (c) 2015, Sony Mobile Communications, AB.
->   */
->  
-> +#include <linux/delay.h>
-> +#include <linux/interrupt.h>
-> +#include <linux/ktime.h>
->  #include <linux/kernel.h>
->  #include <linux/backlight.h>
->  #include <linux/module.h>
-> @@ -56,6 +59,16 @@
->  #define WLED3_SINK_REG_STR_CABC(n)			(0x66 + (n * 0x10))
->  #define  WLED3_SINK_REG_STR_CABC_MASK			BIT(7)
->  
-> +/* WLED4 specific control registers */
-> +#define WLED4_CTRL_REG_SHORT_PROTECT			0x5e
-> +#define  WLED4_CTRL_REG_SHORT_EN_MASK			BIT(7)
-> +
-> +#define WLED4_CTRL_REG_SEC_ACCESS			0xd0
-> +#define  WLED4_CTRL_REG_SEC_UNLOCK			0xa5
-> +
-> +#define WLED4_CTRL_REG_TEST1				0xe2
-> +#define  WLED4_CTRL_REG_TEST1_EXT_FET_DTEST2		0x09
-> +
->  /* WLED4 specific sink registers */
->  #define WLED4_SINK_REG_CURR_SINK			0x46
->  #define  WLED4_SINK_REG_CURR_SINK_MASK			GENMASK(7, 4)
-> @@ -105,17 +118,23 @@ struct wled_config {
->  	bool cs_out_en;
->  	bool ext_gen;
->  	bool cabc;
-> +	bool external_pfet;
->  };
->  
->  struct wled {
->  	const char *name;
->  	struct device *dev;
->  	struct regmap *regmap;
-> +	struct mutex lock;	/* Lock to avoid race from thread irq handler */
-> +	ktime_t last_short_event;
->  	u16 ctrl_addr;
->  	u16 sink_addr;
->  	u16 max_string_count;
->  	u32 brightness;
->  	u32 max_brightness;
-> +	u32 short_count;
-> +	bool disabled_by_short;
-> +	bool has_short_detect;
->  
->  	struct wled_config cfg;
->  	int (*wled_set_brightness)(struct wled *wled, u16 brightness);
-> @@ -166,6 +185,9 @@ static int wled_module_enable(struct wled *wled, int val)
->  {
->  	int rc;
->  
-> +	if (wled->disabled_by_short)
-> +		return -ENXIO;
-> +
->  	rc = regmap_update_bits(wled->regmap, wled->ctrl_addr +
->  				WLED3_CTRL_REG_MOD_EN,
->  				WLED3_CTRL_REG_MOD_EN_MASK,
-> @@ -202,18 +224,19 @@ static int wled_update_status(struct backlight_device *bl)
->  	    bl->props.state & BL_CORE_FBBLANK)
->  		brightness = 0;
->  
-> +	mutex_lock(&wled->lock);
->  	if (brightness) {
->  		rc = wled->wled_set_brightness(wled, brightness);
->  		if (rc < 0) {
->  			dev_err(wled->dev, "wled failed to set brightness rc:%d\n",
->  				rc);
-> -			return rc;
-> +			goto unlock_mutex;
->  		}
->  
->  		rc = wled_sync_toggle(wled);
->  		if (rc < 0) {
->  			dev_err(wled->dev, "wled sync failed rc:%d\n", rc);
-> -			return rc;
-> +			goto unlock_mutex;
->  		}
->  	}
->  
-> @@ -221,15 +244,61 @@ static int wled_update_status(struct backlight_device *bl)
->  		rc = wled_module_enable(wled, !!brightness);
->  		if (rc < 0) {
->  			dev_err(wled->dev, "wled enable failed rc:%d\n", rc);
-> -			return rc;
-> +			goto unlock_mutex;
->  		}
->  	}
->  
->  	wled->brightness = brightness;
->  
-> +unlock_mutex:
-> +	mutex_unlock(&wled->lock);
-> +
->  	return rc;
->  }
->  
-> +#define WLED_SHORT_DLY_MS			20
-> +#define WLED_SHORT_CNT_MAX			5
-> +#define WLED_SHORT_RESET_CNT_DLY_US		USEC_PER_SEC
-> +
-> +static irqreturn_t wled_short_irq_handler(int irq, void *_wled)
-> +{
-> +	struct wled *wled = _wled;
-> +	int rc;
-> +	s64 elapsed_time;
-> +
-> +	wled->short_count++;
-> +	mutex_lock(&wled->lock);
-> +	rc = wled_module_enable(wled, false);
-> +	if (rc < 0) {
-> +		dev_err(wled->dev, "wled disable failed rc:%d\n", rc);
-> +		goto unlock_mutex;
-> +	}
-> +
-> +	elapsed_time = ktime_us_delta(ktime_get(),
-> +				      wled->last_short_event);
-> +	if (elapsed_time > WLED_SHORT_RESET_CNT_DLY_US)
-> +		wled->short_count = 1;
-> +
-> +	if (wled->short_count > WLED_SHORT_CNT_MAX) {
-> +		dev_err(wled->dev, "Short trigged %d times, disabling WLED forever!\n",
-> +			wled->short_count);
-> +		wled->disabled_by_short = true;
-> +		goto unlock_mutex;
-> +	}
-> +
-> +	wled->last_short_event = ktime_get();
-> +
-> +	msleep(WLED_SHORT_DLY_MS);
-> +	rc = wled_module_enable(wled, true);
-> +	if (rc < 0)
-> +		dev_err(wled->dev, "wled enable failed rc:%d\n", rc);
-> +
-> +unlock_mutex:
-> +	mutex_unlock(&wled->lock);
-> +
-> +	return IRQ_HANDLED;
-> +}
-> +
->  static int wled3_setup(struct wled *wled)
->  {
->  	u16 addr;
-> @@ -318,7 +387,7 @@ static int wled4_setup(struct wled *wled)
->  	int rc, temp, i, j;
->  	u16 addr;
->  	u8 sink_en = 0;
-> -	u32 sink_cfg = 0;
-> +	u32 sink_cfg;
->  
->  	rc = regmap_update_bits(wled->regmap,
->  				wled->ctrl_addr + WLED3_CTRL_REG_OVP,
-> @@ -340,6 +409,21 @@ static int wled4_setup(struct wled *wled)
->  	if (rc < 0)
->  		return rc;
->  
-> +	if (wled->cfg.external_pfet) {
-> +		/* Unlock the secure register access */
-> +		rc = regmap_write(wled->regmap, wled->ctrl_addr +
-> +				  WLED4_CTRL_REG_SEC_ACCESS,
-> +				  WLED4_CTRL_REG_SEC_UNLOCK);
-> +		if (rc < 0)
-> +			return rc;
-> +
-> +		rc = regmap_write(wled->regmap,
-> +				  wled->ctrl_addr + WLED4_CTRL_REG_TEST1,
-> +				  WLED4_CTRL_REG_TEST1_EXT_FET_DTEST2);
-> +		if (rc < 0)
-> +			return rc;
-> +	}
-> +
->  	rc = regmap_read(wled->regmap, wled->sink_addr +
->  			 WLED4_SINK_REG_CURR_SINK, &sink_cfg);
->  	if (rc < 0)
-> @@ -425,6 +509,7 @@ static int wled4_setup(struct wled *wled)
->  	.num_strings = 4,
->  	.switch_freq = 11,
->  	.cabc = false,
-> +	.external_pfet = false,
->  };
->  
->  static const u32 wled3_boost_i_limit_values[] = {
-> @@ -590,6 +675,7 @@ static int wled_configure(struct wled *wled, int version)
->  		{ "qcom,cs-out", &cfg->cs_out_en, },
->  		{ "qcom,ext-gen", &cfg->ext_gen, },
->  		{ "qcom,cabc", &cfg->cabc, },
-> +		{ "qcom,external-pfet", &cfg->external_pfet, },
->  	};
->  
->  	prop_addr = of_get_address(dev->of_node, 0, NULL, NULL);
-> @@ -678,6 +764,38 @@ static int wled_configure(struct wled *wled, int version)
->  	return 0;
->  }
->  
-> +static int wled_configure_short_irq(struct wled *wled,
-> +				    struct platform_device *pdev)
-> +{
-> +	int rc, short_irq;
-> +
-> +	if (!wled->has_short_detect)
-> +		return 0;
-> +
-> +	rc = regmap_update_bits(wled->regmap, wled->ctrl_addr +
-> +				WLED4_CTRL_REG_SHORT_PROTECT,
-> +				WLED4_CTRL_REG_SHORT_EN_MASK,
-> +				WLED4_CTRL_REG_SHORT_EN_MASK);
-> +	if (rc < 0)
-> +		return rc;
-> +
-> +	short_irq = platform_get_irq_byname(pdev, "short");
-> +	if (short_irq < 0) {
-> +		dev_dbg(&pdev->dev, "short irq is not used\n");
-> +		return 0;
-> +	}
-> +
-> +	rc = devm_request_threaded_irq(wled->dev, short_irq,
-> +				       NULL, wled_short_irq_handler,
-> +				       IRQF_ONESHOT,
-> +				       "wled_short_irq", wled);
-> +	if (rc < 0)
-> +		dev_err(wled->dev, "Unable to request short_irq (err:%d)\n",
-> +			rc);
-> +
-> +	return rc;
-> +}
-> +
->  static const struct backlight_ops wled_ops = {
->  	.update_status = wled_update_status,
->  };
-> @@ -711,6 +829,7 @@ static int wled_probe(struct platform_device *pdev)
->  		return -ENODEV;
->  	}
->  
-> +	mutex_init(&wled->lock);
->  	rc = wled_configure(wled, version);
->  	if (rc)
->  		return rc;
-> @@ -725,6 +844,7 @@ static int wled_probe(struct platform_device *pdev)
->  		break;
->  
->  	case 4:
-> +		wled->has_short_detect = true;
->  		rc = wled4_setup(wled);
->  		if (rc) {
->  			dev_err(&pdev->dev, "wled4_setup failed\n");
-> @@ -737,6 +857,10 @@ static int wled_probe(struct platform_device *pdev)
->  		break;
->  	}
->  
-> +	rc = wled_configure_short_irq(wled, pdev);
-> +	if (rc < 0)
-> +		return rc;
-> +
->  	val = WLED_DEFAULT_BRIGHTNESS;
->  	of_property_read_u32(pdev->dev.of_node, "default-brightness", &val);
->  
-> -- 
-> The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
->  a Linux Foundation Collaborative Project
-> 
+Currently there are no plans to use runtime PM as we are interested in
+enabling wakeup irq as part of system suspend only.
+
+-- 
+The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,\na Linux Foundation Collaborative Project
+
