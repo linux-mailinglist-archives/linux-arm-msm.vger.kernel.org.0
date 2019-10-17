@@ -2,162 +2,117 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 3EAAADB7C1
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Oct 2019 21:42:20 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id DDC76DB817
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Oct 2019 22:00:42 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727557AbfJQTmT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 17 Oct 2019 15:42:19 -0400
-Received: from mail-qt1-f196.google.com ([209.85.160.196]:45276 "EHLO
-        mail-qt1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726590AbfJQTmT (ORCPT
+        id S2394533AbfJQUAm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 17 Oct 2019 16:00:42 -0400
+Received: from mail-pg1-f193.google.com ([209.85.215.193]:35165 "EHLO
+        mail-pg1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2394480AbfJQUAl (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 17 Oct 2019 15:42:19 -0400
-Received: by mail-qt1-f196.google.com with SMTP id c21so5309521qtj.12
-        for <linux-arm-msm@vger.kernel.org>; Thu, 17 Oct 2019 12:42:18 -0700 (PDT)
+        Thu, 17 Oct 2019 16:00:41 -0400
+Received: by mail-pg1-f193.google.com with SMTP id p30so1977207pgl.2
+        for <linux-arm-msm@vger.kernel.org>; Thu, 17 Oct 2019 13:00:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=n0cRSBeI5QiEyBOk4yyCnBrOWirqw7hqnVbP7QBmeig=;
-        b=auy/Umx49q7PLPDN0XFugnCa+/qbWVIPanKLjT4dmZHNNUk0RuNRmyuDtmbKsVS5G9
-         Tfv3SJbewZEJvt+APi+7p9SqmKFg22P3pH0sKhxFsJxCF+ck6gl7OhNNkE3SS1kKFUQZ
-         ZM4gvehmyNfn+xM+sDC4a4o4YQlchMj/1dmHgdpujaIsyKKGdoy++v+FeGPO0vmwXKwR
-         mB4GwbNxn/f99jtc5IIs3WrtrxZZmQACBSmQ8h06Xg11P0jQIitWRpiTr1UhXjTfuOEz
-         UjZ63PR4pTUOHr/hLLJhsFWkB6rCsdr7XKNOdwninmr5S6j4c3Qwb8jCxYttIMM5AXAc
-         Ggfw==
+        d=chromium.org; s=google;
+        h=message-id:mime-version:content-transfer-encoding:in-reply-to
+         :references:from:to:cc:subject:user-agent:date;
+        bh=QIMZdUFoVDCCgi7u9KnfgFx2D+e8lBSYkgBbx8BMeec=;
+        b=CcY6khg3q6nubSARTDJ5XR1igh/NxAZFgNsGtnScPCLDJ20bsPOxhJh8YD0Ifo1HK1
+         UflIjODDTFl8CRWMZf1yBr9pBsZI/xNyhdGJtRt7j6N851Pii2fEu1phfhNvF5ERh0IY
+         Zl7fuIIFWYgbudcD0dq4aT9k6ojiOfJJ6/w5w=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=n0cRSBeI5QiEyBOk4yyCnBrOWirqw7hqnVbP7QBmeig=;
-        b=mTcppufwdZ65GWjuq4HuwScEhIVKhUyWZ+fpIYd73MFV2Q9Zo1Qp0YGCxzEU/yOTvV
-         q3R+0FwtngXSHSgy8V2WBnnAPs7R3QCRRS87707DiLTEBwyhZaFSlAgMnD15JgubGKcH
-         XbhgmCtcIVLF4QewtDQwd2UR27ZKpJFKj1O/jv4CC+yM6nomLsdeKEo4xEnhxYhQWg40
-         CwLenrMQjRm6pQOVPBZmJycxx6RFuArgdpfUZShABDhc+dokY3Id9GxN426F6SqW1REW
-         m+OCX+iuJ0qUj3ynR6poEkfnV4+vh4atB6eykzCSojaTtnxTP7Asi+TFhh4HhwhPrekW
-         ISeg==
-X-Gm-Message-State: APjAAAUR0uXySs7r5Q7l/HGRC3lf45qoeLe1Xr9zJtccYjXVcD98qrMp
-        LOFDojMzuqpC3CaO1VrWaqdNGN4ELVy3MCvMg3z8Gg==
-X-Google-Smtp-Source: APXvYqzflMcI4I980dwsJblkSENtr+BcULK0/FnGCeDdiaa72OT/ajTWNOHYH720MMux8SQ6xxuTa0vtrLKUycuRHGc=
-X-Received: by 2002:ac8:237b:: with SMTP id b56mr5994000qtb.264.1571341337992;
- Thu, 17 Oct 2019 12:42:17 -0700 (PDT)
+        h=x-gm-message-state:message-id:mime-version
+         :content-transfer-encoding:in-reply-to:references:from:to:cc:subject
+         :user-agent:date;
+        bh=QIMZdUFoVDCCgi7u9KnfgFx2D+e8lBSYkgBbx8BMeec=;
+        b=fM2tl8OQe2bNi1QYFKKodc8Fsl+vn+fVlsPNwArYtprTeuKmY0ID2BN0ymcicTB87f
+         48DHzdPpDQ/+QyqWMc0q0sw5JZuUnSGnOTxj9o2QsK8uZaSDz62B/uu8YodtMkQCya4D
+         LPzIuHpEXAGy8lh5f9u5+AI091gKOVDBqqn89s3CIe6cwY+c/x9vTgWlGTKwS/HoRR2+
+         rQVQoni1Q6UqGHjlQPavJWphWc0QkF37fFY/5Krs2p7Yp8kx2ym0aYlgscoWeFV+9hVa
+         2TYMfBveQ9Jm3ET3tQMEaIovl/tkqrMZirGcoPAVfHbVUH96J7mqL/WB1R3XPV26Mz+X
+         hhlQ==
+X-Gm-Message-State: APjAAAVhLIiWW3o/7ytAxsWP7yYnQkAqmDg70hK4LZsQwMzC70JWVI3z
+        LWtkz/GaDsCtnM8y0+/02+nKAQ==
+X-Google-Smtp-Source: APXvYqxn4GjJKCMJ6/dMMs6TXVT3v+iRNGMNw4x8OnF002zaL0RZvbO7aIfYNtadR0MBs08MMHevpw==
+X-Received: by 2002:a17:90a:5896:: with SMTP id j22mr6095736pji.55.1571342441026;
+        Thu, 17 Oct 2019 13:00:41 -0700 (PDT)
+Received: from chromium.org ([2620:15c:202:1:fa53:7765:582b:82b9])
+        by smtp.gmail.com with ESMTPSA id 74sm3834060pfy.78.2019.10.17.13.00.39
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 17 Oct 2019 13:00:40 -0700 (PDT)
+Message-ID: <5da8c868.1c69fb81.ae709.97ff@mx.google.com>
+Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
-References: <cover.1571314830.git.amit.kucheria@linaro.org>
- <f1d7214951e4b2caa394c722b4d8aaca9cc2c4c4.1571314830.git.amit.kucheria@linaro.org>
- <CAJZ5v0gAyaXHrWe5x6ctz_zawFvudgpTVFCuwieBM5s=FMXysQ@mail.gmail.com>
-In-Reply-To: <CAJZ5v0gAyaXHrWe5x6ctz_zawFvudgpTVFCuwieBM5s=FMXysQ@mail.gmail.com>
-From:   Amit Kucheria <amit.kucheria@linaro.org>
-Date:   Fri, 18 Oct 2019 01:12:06 +0530
-Message-ID: <CAP245DULxAXyFH8gZAdij5me6prxGyHZDiR_VC85y+PMco5WqA@mail.gmail.com>
-Subject: Re: [PATCH v3 3/6] cpufreq: Initialise the governors in core_initcall
-To:     "Rafael J. Wysocki" <rafael@kernel.org>
-Cc:     Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Daniel Lezcano <daniel.lezcano@linaro.org>,
-        Viresh Kumar <viresh.kumar@linaro.org>,
-        Sudeep Holla <sudeep.holla@arm.com>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Eduardo Valentin <edubezval@gmail.com>,
-        Andy Gross <agross@kernel.org>,
-        Taniya Das <tdas@codeaurora.org>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Lina Iyer <ilina@codeaurora.org>,
-        "Rafael J. Wysocki" <rjw@rjwysocki.net>,
-        Amit Kucheria <amit.kucheria@verdurent.com>,
-        Zhang Rui <rui.zhang@intel.com>,
-        Linux PM <linux-pm@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <ac7599b30461d6a814e4f36d68bba6c2@codeaurora.org>
+References: <b3606e76af42f7ecf65b1bfc2a5ed30a@codeaurora.org> <20191011105010.GA29364@lakrids.cambridge.arm.com> <7910f428bd96834c15fb56262f3c10f8@codeaurora.org> <20191011143442.515659f4@why> <ac7599b30461d6a814e4f36d68bba6c2@codeaurora.org>
+From:   Stephen Boyd <swboyd@chromium.org>
+To:     Marc Zyngier <maz@kernel.org>,
+        Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
+Cc:     Mark Rutland <mark.rutland@arm.com>, rnayak@codeaurora.org,
+        suzuki.poulose@arm.com, catalin.marinas@arm.com,
+        linux-arm-kernel <linux-arm-kernel-bounces@lists.infradead.org>,
+        linux-kernel@vger.kernel.org, jeremy.linton@arm.com,
+        bjorn.andersson@linaro.org, linux-arm-msm@vger.kernel.org,
+        andrew.murray@arm.com, will@kernel.org, Dave.Martin@arm.com,
+        linux-arm-kernel@lists.infradead.org, marc.w.gonzalez@free.fr
+Subject: Re: Relax CPU features sanity checking on heterogeneous architectures
+User-Agent: alot/0.8.1
+Date:   Thu, 17 Oct 2019 13:00:39 -0700
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, Oct 18, 2019 at 12:41 AM Rafael J. Wysocki <rafael@kernel.org> wrote:
->
-> On Thu, Oct 17, 2019 at 2:28 PM Amit Kucheria <amit.kucheria@linaro.org> wrote:
-> >
-> > Initialise the cpufreq governors earlier to allow for earlier
-> > performance control during the boot process.
-> >
-> > Signed-off-by: Amit Kucheria <amit.kucheria@linaro.org>
-> > Acked-by: Viresh Kumar <viresh.kumar@linaro.org>
->
-> You also want to do that for the schedutil governor I think.
+Quoting Sai Prakash Ranjan (2019-10-11 06:40:13)
+> On 2019-10-11 19:04, Marc Zyngier wrote:
+> > On Fri, 11 Oct 2019 18:47:39 +0530
+> > Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org> wrote:
+> >=20
+> >> Hi Mark,
+> >>=20
+> >> Thanks a lot for the detailed explanations, I did have a look at all=20
+> >> the variations before posting this.
+> >>=20
+> >> On 2019-10-11 16:20, Mark Rutland wrote:
+> >> > Hi,
+> >> >
+> >> > On Fri, Oct 11, 2019 at 11:19:00AM +0530, Sai Prakash Ranjan wrote:
+> >> >> On latest QCOM SoCs like SM8150 and SC7180 with big.LITTLE arch, be=
+low
+> >> >> warnings are observed during bootup of big cpu cores.
+> >> >
+> >> > For reference, which CPUs are in those SoCs?
+> >> >
+> >>=20
+> >> SM8150 is based on Cortex-A55(little cores) and Cortex-A76(big cores).=
+=20
+> >> I'm afraid I cannot give details about SC7180 yet.
+> >>=20
+> >> >> SM8150:
+> >> >> >> [    0.271177] CPU features: SANITY CHECK: Unexpected variation =
+in
+> >> >> SYS_ID_AA64PFR0_EL1. Boot CPU: 0x00000011112222, CPU4: >> 0x0000001=
+1111112
+> >> >
+> >> > The differing fields are EL3, EL2, and EL1: the boot CPU supports
+> >> > AArch64 and AArch32 at those exception levels, while the secondary o=
+nly
+> >> > supports AArch64.
+> >> >
+> >> > Do we handle this variation in KVM?
+> >>=20
+> >> We do not support KVM.
+> >=20
+> > Mainline does. You don't get to pick and choose what is supported or
+> > not.
+> >=20
+>=20
+> Ok thats good.
+>=20
 
-Indeed. Thanks for the review. I'll respin.
+I want KVM on sc7180. How do I get it? Is something going to not work?
 
->
-> > ---
-> >  drivers/cpufreq/cpufreq_conservative.c | 2 +-
-> >  drivers/cpufreq/cpufreq_ondemand.c     | 2 +-
-> >  drivers/cpufreq/cpufreq_performance.c  | 2 +-
-> >  drivers/cpufreq/cpufreq_powersave.c    | 2 +-
-> >  drivers/cpufreq/cpufreq_userspace.c    | 2 +-
-> >  5 files changed, 5 insertions(+), 5 deletions(-)
-> >
-> > diff --git a/drivers/cpufreq/cpufreq_conservative.c b/drivers/cpufreq/cpufreq_conservative.c
-> > index b66e81c06a57..737ff3b9c2c0 100644
-> > --- a/drivers/cpufreq/cpufreq_conservative.c
-> > +++ b/drivers/cpufreq/cpufreq_conservative.c
-> > @@ -346,7 +346,7 @@ struct cpufreq_governor *cpufreq_default_governor(void)
-> >         return CPU_FREQ_GOV_CONSERVATIVE;
-> >  }
-> >
-> > -fs_initcall(cpufreq_gov_dbs_init);
-> > +core_initcall(cpufreq_gov_dbs_init);
-> >  #else
-> >  module_init(cpufreq_gov_dbs_init);
-> >  #endif
-> > diff --git a/drivers/cpufreq/cpufreq_ondemand.c b/drivers/cpufreq/cpufreq_ondemand.c
-> > index dced033875bf..82a4d37ddecb 100644
-> > --- a/drivers/cpufreq/cpufreq_ondemand.c
-> > +++ b/drivers/cpufreq/cpufreq_ondemand.c
-> > @@ -483,7 +483,7 @@ struct cpufreq_governor *cpufreq_default_governor(void)
-> >         return CPU_FREQ_GOV_ONDEMAND;
-> >  }
-> >
-> > -fs_initcall(cpufreq_gov_dbs_init);
-> > +core_initcall(cpufreq_gov_dbs_init);
-> >  #else
-> >  module_init(cpufreq_gov_dbs_init);
-> >  #endif
-> > diff --git a/drivers/cpufreq/cpufreq_performance.c b/drivers/cpufreq/cpufreq_performance.c
-> > index aaa04dfcacd9..def9afe0f5b8 100644
-> > --- a/drivers/cpufreq/cpufreq_performance.c
-> > +++ b/drivers/cpufreq/cpufreq_performance.c
-> > @@ -50,5 +50,5 @@ MODULE_AUTHOR("Dominik Brodowski <linux@brodo.de>");
-> >  MODULE_DESCRIPTION("CPUfreq policy governor 'performance'");
-> >  MODULE_LICENSE("GPL");
-> >
-> > -fs_initcall(cpufreq_gov_performance_init);
-> > +core_initcall(cpufreq_gov_performance_init);
-> >  module_exit(cpufreq_gov_performance_exit);
-> > diff --git a/drivers/cpufreq/cpufreq_powersave.c b/drivers/cpufreq/cpufreq_powersave.c
-> > index c143dc237d87..1ae66019eb83 100644
-> > --- a/drivers/cpufreq/cpufreq_powersave.c
-> > +++ b/drivers/cpufreq/cpufreq_powersave.c
-> > @@ -43,7 +43,7 @@ struct cpufreq_governor *cpufreq_default_governor(void)
-> >         return &cpufreq_gov_powersave;
-> >  }
-> >
-> > -fs_initcall(cpufreq_gov_powersave_init);
-> > +core_initcall(cpufreq_gov_powersave_init);
-> >  #else
-> >  module_init(cpufreq_gov_powersave_init);
-> >  #endif
-> > diff --git a/drivers/cpufreq/cpufreq_userspace.c b/drivers/cpufreq/cpufreq_userspace.c
-> > index cbd81c58cb8f..b43e7cd502c5 100644
-> > --- a/drivers/cpufreq/cpufreq_userspace.c
-> > +++ b/drivers/cpufreq/cpufreq_userspace.c
-> > @@ -147,7 +147,7 @@ struct cpufreq_governor *cpufreq_default_governor(void)
-> >         return &cpufreq_gov_userspace;
-> >  }
-> >
-> > -fs_initcall(cpufreq_gov_userspace_init);
-> > +core_initcall(cpufreq_gov_userspace_init);
-> >  #else
-> >  module_init(cpufreq_gov_userspace_init);
-> >  #endif
-> > --
-> > 2.17.1
-> >
