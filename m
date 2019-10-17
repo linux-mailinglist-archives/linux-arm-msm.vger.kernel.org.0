@@ -2,90 +2,72 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 4A574DB5C2
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Oct 2019 20:19:53 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 127D0DB6C8
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Oct 2019 21:05:55 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2441276AbfJQSTr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 17 Oct 2019 14:19:47 -0400
-Received: from smtp.codeaurora.org ([198.145.29.96]:36430 "EHLO
-        smtp.codeaurora.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2438684AbfJQSTq (ORCPT
+        id S2503236AbfJQTFv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 17 Oct 2019 15:05:51 -0400
+Received: from mail-oi1-f193.google.com ([209.85.167.193]:45794 "EHLO
+        mail-oi1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2503244AbfJQTFu (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 17 Oct 2019 14:19:46 -0400
-Received: by smtp.codeaurora.org (Postfix, from userid 1000)
-        id 30A02612DA; Thu, 17 Oct 2019 18:19:44 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
-        s=default; t=1571336385;
-        bh=ISREP9AdfrC/XBTqeSZtr9AtlAJSpsRIKnn3uhj7a2A=;
-        h=Subject:To:Cc:References:From:Date:In-Reply-To:From;
-        b=NoQk3EY5Fi3RTLyfxJOP0YdSkLMj09IBDDHT862HNhCev/CM7BYuZu92TW0xZV4pK
-         2BDNC8zCQ9VcQHkR3QwSVmTnVSd1rh/Bw+c4EoWiFepOONBJS9gFt2srWcbD2CgOwv
-         Ihgw43nljE9JOKjFt/cqBmLbho7kAur3D/kvemmY=
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        pdx-caf-mail.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.7 required=2.0 tests=ALL_TRUSTED,BAYES_00,
-        DKIM_INVALID,DKIM_SIGNED,SPF_NONE autolearn=no autolearn_force=no
-        version=3.4.0
-Received: from [10.79.160.38] (blr-bdr-fw-01_globalnat_allzones-outside.qualcomm.com [103.229.18.19])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: tdas@smtp.codeaurora.org)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id CCD09612DA;
-        Thu, 17 Oct 2019 18:19:37 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
-        s=default; t=1571336382;
-        bh=ISREP9AdfrC/XBTqeSZtr9AtlAJSpsRIKnn3uhj7a2A=;
-        h=Subject:To:Cc:References:From:Date:In-Reply-To:From;
-        b=jGm5emnd+w0KN6atBSypyQEio+9ce3SGjLMnDCAeH6Pk8Z5TViJY2V0Cn2BnNxBbz
-         beCJk/IvQyZT/qXEdu7QGXiwxeMdz1oLal6a6x6PPLzp687bW7GpthfQK3E/npbBV6
-         mNaErygg/uHN9RRnwWbxUm5Udny085SyvEDSbmSU=
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org CCD09612DA
-Authentication-Results: pdx-caf-mail.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: pdx-caf-mail.web.codeaurora.org; spf=none smtp.mailfrom=tdas@codeaurora.org
-Subject: Re: [PATCH v3 6/6] cpufreq: qcom-hw: Move driver initialisation
- earlier
-To:     Amit Kucheria <amit.kucheria@linaro.org>,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        daniel.lezcano@linaro.org, viresh.kumar@linaro.org,
-        sudeep.holla@arm.com, bjorn.andersson@linaro.org,
-        edubezval@gmail.com, agross@kernel.org, swboyd@chromium.org,
-        ilina@codeaurora.org, "Rafael J. Wysocki" <rjw@rjwysocki.net>,
-        Amit Kucheria <amit.kucheria@verdurent.com>,
-        Zhang Rui <rui.zhang@intel.com>
-Cc:     linux-pm@vger.kernel.org
-References: <cover.1571314830.git.amit.kucheria@linaro.org>
- <3468b8cf9c764ea139296ee149d33cd7a9d79e3e.1571314830.git.amit.kucheria@linaro.org>
-From:   Taniya Das <tdas@codeaurora.org>
-Message-ID: <b7f7061b-6dc3-eb3e-c6bf-fe582c2c2e3b@codeaurora.org>
-Date:   Thu, 17 Oct 2019 23:49:34 +0530
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
- Thunderbird/60.9.0
+        Thu, 17 Oct 2019 15:05:50 -0400
+Received: by mail-oi1-f193.google.com with SMTP id o205so3079476oib.12;
+        Thu, 17 Oct 2019 12:05:50 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=pIwNPuLqrVC0vwajFKZ34bu7NezvOZ+RIARbVf4/Xog=;
+        b=dnf1vF0tzUMvxCfwtQYoYLqceRmtAv0WeLil0SG5pqEa/p1BEzOctS9MLSmCVWY4Rx
+         9rhkYkjpkau2VM9DsELYIg7tS+oh90AKTjELPOdN/RhmtuRTEjzpQsLTUX87+L34WO4M
+         LpNxHxFIbB+vmDVif3ylCEuiS2LyxTYJ7K1ICALRXfM5Yb8CknTgjz+o0q6NJPJgmDX2
+         1sJ3+L2KYDrJo+MRs8O7eXn3g4nMpAD6Fzzca0XzeGMZsS5NF3TMO06dj0n33+zVrMIh
+         KmWd+cPuunGJ6mfS4huMSspEkg4Q8ZjNqt41/FQROxSJDbqe+f17nIEg7grtB2icMdks
+         ii1w==
+X-Gm-Message-State: APjAAAVodctno7nVy/wpBz6kOUl8bYPk3PQ//J6YLzTjunlpK69rG8T7
+        dkJNm8muRqHIryQ1pHJa0A==
+X-Google-Smtp-Source: APXvYqxqoO+d64tKehv+8gK5U/uIPPyn1squ0aYUSe8BE5CEimvcE3Sd6bk4nkwIseCWIpcr3b3B5w==
+X-Received: by 2002:a05:6808:917:: with SMTP id w23mr4405839oih.68.1571339149780;
+        Thu, 17 Oct 2019 12:05:49 -0700 (PDT)
+Received: from localhost (24-155-109-49.dyn.grandenetworks.net. [24.155.109.49])
+        by smtp.gmail.com with ESMTPSA id z16sm799423otq.78.2019.10.17.12.05.47
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 17 Oct 2019 12:05:48 -0700 (PDT)
+Date:   Thu, 17 Oct 2019 14:05:47 -0500
+From:   Rob Herring <robh@kernel.org>
+To:     kholk11@gmail.com
+Cc:     linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+        devicetree@vger.kernel.org, mark.rutland@arm.com,
+        robh+dt@kernel.org, sboyd@kernel.org, mturquette@baylibre.com,
+        agross@kernel.org, bjorn.andersson@linaro.org, marijns95@gmail.com,
+        AngeloGioacchino Del Regno <kholk11@gmail.com>
+Subject: Re: [PATCH v2 2/2] dt-bindings: clock: Document MSM8976 gcc
+ compatible
+Message-ID: <20191017190547.GA10490@bogus>
+References: <20191015103221.51345-1-kholk11@gmail.com>
+ <20191015103221.51345-3-kholk11@gmail.com>
 MIME-Version: 1.0
-In-Reply-To: <3468b8cf9c764ea139296ee149d33cd7a9d79e3e.1571314830.git.amit.kucheria@linaro.org>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20191015103221.51345-3-kholk11@gmail.com>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-
-
-On 10/17/2019 5:57 PM, Amit Kucheria wrote:
-> Allow qcom-hw driver to initialise right after the cpufreq and thermal
-> subsystems are initialised in core_initcall so we get earlier access to
-> thermal mitigation.
+On Tue, 15 Oct 2019 12:32:21 +0200, kholk11@gmail.com wrote:
+> From: AngeloGioacchino Del Regno <kholk11@gmail.com>
 > 
-> Signed-off-by: Amit Kucheria<amit.kucheria@linaro.org>
-> Acked-by: Daniel Lezcano<daniel.lezcano@linaro.org>
+> Document the Global Clock Controller driver (gcc-msm8976)
+> compatible string.
+> This driver is valid for MSM8976, MSM8956 and APQ variants.
+> 
+> Signed-off-by: AngeloGioacchino Del Regno <kholk11@gmail.com>
 > ---
+>  Documentation/devicetree/bindings/clock/qcom,gcc.txt | 1 +
+>  1 file changed, 1 insertion(+)
+> 
 
-Acked-by: Taniya Das<tdas@codeaurora.org>
-
--- 
-QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
-of Code Aurora Forum, hosted by The Linux Foundation.
-
---
+Acked-by: Rob Herring <robh@kernel.org>
