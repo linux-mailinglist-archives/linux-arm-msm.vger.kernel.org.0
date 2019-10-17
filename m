@@ -2,21 +2,21 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 6586FDACA7
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Oct 2019 14:48:22 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4C4BEDACB5
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Oct 2019 14:48:36 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2502542AbfJQMsN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 17 Oct 2019 08:48:13 -0400
-Received: from szxga04-in.huawei.com ([45.249.212.190]:4203 "EHLO huawei.com"
+        id S2502610AbfJQMs2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 17 Oct 2019 08:48:28 -0400
+Received: from szxga07-in.huawei.com ([45.249.212.35]:59558 "EHLO huawei.com"
         rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-        id S1729344AbfJQMsN (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 17 Oct 2019 08:48:13 -0400
-Received: from DGGEMS413-HUB.china.huawei.com (unknown [172.30.72.60])
-        by Forcepoint Email with ESMTP id 2EBA61F014ACEAE9646D;
-        Thu, 17 Oct 2019 20:48:11 +0800 (CST)
-Received: from localhost (10.133.213.239) by DGGEMS413-HUB.china.huawei.com
- (10.3.19.213) with Microsoft SMTP Server id 14.3.439.0; Thu, 17 Oct 2019
- 20:48:04 +0800
+        id S2502556AbfJQMs0 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 17 Oct 2019 08:48:26 -0400
+Received: from DGGEMS403-HUB.china.huawei.com (unknown [172.30.72.60])
+        by Forcepoint Email with ESMTP id B8427EC39B2F6B85D09E;
+        Thu, 17 Oct 2019 20:48:16 +0800 (CST)
+Received: from localhost (10.133.213.239) by DGGEMS403-HUB.china.huawei.com
+ (10.3.19.203) with Microsoft SMTP Server id 14.3.439.0; Thu, 17 Oct 2019
+ 20:48:06 +0800
 From:   YueHaibing <yuehaibing@huawei.com>
 To:     <linus.walleij@linaro.org>, <manivannan.sadhasivam@linaro.org>,
         <afaerber@suse.de>, <f.fainelli@gmail.com>, <rjui@broadcom.com>,
@@ -34,9 +34,9 @@ CC:     <linux-arm-kernel@lists.infradead.org>,
         <haojian.zhuang@gmail.com>, <wens@csie.org>,
         <thierry.reding@gmail.com>, <jonathanh@nvidia.com>,
         <agross@kernel.org>, YueHaibing <yuehaibing@huawei.com>
-Subject: [PATCH -next 01/30] pinctrl: pxa25x: use devm_platform_ioremap_resource() to simplify code
-Date:   Thu, 17 Oct 2019 20:26:11 +0800
-Message-ID: <20191017122640.22976-2-yuehaibing@huawei.com>
+Subject: [PATCH -next 02/30] pinctrl: pxa27x: use devm_platform_ioremap_resource() to simplify code
+Date:   Thu, 17 Oct 2019 20:26:12 +0800
+Message-ID: <20191017122640.22976-3-yuehaibing@huawei.com>
 X-Mailer: git-send-email 2.10.2.windows.1
 In-Reply-To: <20191017122640.22976-1-yuehaibing@huawei.com>
 References: <20191017122640.22976-1-yuehaibing@huawei.com>
@@ -54,14 +54,14 @@ This is detected by coccinelle.
 
 Signed-off-by: YueHaibing <yuehaibing@huawei.com>
 ---
- drivers/pinctrl/pxa/pinctrl-pxa25x.c | 13 ++++---------
+ drivers/pinctrl/pxa/pinctrl-pxa27x.c | 13 ++++---------
  1 file changed, 4 insertions(+), 9 deletions(-)
 
-diff --git a/drivers/pinctrl/pxa/pinctrl-pxa25x.c b/drivers/pinctrl/pxa/pinctrl-pxa25x.c
-index 8d12470..9564069 100644
---- a/drivers/pinctrl/pxa/pinctrl-pxa25x.c
-+++ b/drivers/pinctrl/pxa/pinctrl-pxa25x.c
-@@ -216,25 +216,20 @@ static int pxa25x_pinctrl_probe(struct platform_device *pdev)
+diff --git a/drivers/pinctrl/pxa/pinctrl-pxa27x.c b/drivers/pinctrl/pxa/pinctrl-pxa27x.c
+index 64943e8..48ccfb5 100644
+--- a/drivers/pinctrl/pxa/pinctrl-pxa27x.c
++++ b/drivers/pinctrl/pxa/pinctrl-pxa27x.c
+@@ -508,25 +508,20 @@ static int pxa27x_pinctrl_probe(struct platform_device *pdev)
  	void __iomem *base_af[8];
  	void __iomem *base_dir[4];
  	void __iomem *base_sleep[4];
