@@ -2,92 +2,90 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 52DC2DB5A7
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Oct 2019 20:13:32 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4A574DB5C2
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Oct 2019 20:19:53 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2438130AbfJQSNa (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 17 Oct 2019 14:13:30 -0400
-Received: from mail.kernel.org ([198.145.29.99]:57068 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S2395229AbfJQSNa (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 17 Oct 2019 14:13:30 -0400
-Received: from kernel.org (unknown [104.132.0.74])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        id S2441276AbfJQSTr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 17 Oct 2019 14:19:47 -0400
+Received: from smtp.codeaurora.org ([198.145.29.96]:36430 "EHLO
+        smtp.codeaurora.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2438684AbfJQSTq (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 17 Oct 2019 14:19:46 -0400
+Received: by smtp.codeaurora.org (Postfix, from userid 1000)
+        id 30A02612DA; Thu, 17 Oct 2019 18:19:44 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
+        s=default; t=1571336385;
+        bh=ISREP9AdfrC/XBTqeSZtr9AtlAJSpsRIKnn3uhj7a2A=;
+        h=Subject:To:Cc:References:From:Date:In-Reply-To:From;
+        b=NoQk3EY5Fi3RTLyfxJOP0YdSkLMj09IBDDHT862HNhCev/CM7BYuZu92TW0xZV4pK
+         2BDNC8zCQ9VcQHkR3QwSVmTnVSd1rh/Bw+c4EoWiFepOONBJS9gFt2srWcbD2CgOwv
+         Ihgw43nljE9JOKjFt/cqBmLbho7kAur3D/kvemmY=
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        pdx-caf-mail.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.7 required=2.0 tests=ALL_TRUSTED,BAYES_00,
+        DKIM_INVALID,DKIM_SIGNED,SPF_NONE autolearn=no autolearn_force=no
+        version=3.4.0
+Received: from [10.79.160.38] (blr-bdr-fw-01_globalnat_allzones-outside.qualcomm.com [103.229.18.19])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
         (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id D593C21835;
-        Thu, 17 Oct 2019 18:13:29 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1571336010;
-        bh=p2EBmCeo1NzW2Lv198p0TuirtIGkkY0dXw/8bi0gofc=;
-        h=In-Reply-To:References:From:To:Cc:Subject:Date:From;
-        b=VmeeR2T3ro61u469I46UQl59iqcTLonF9jT0CcQrnpqp/tM8eEmYYv95c8iyr+DhZ
-         sJcdMmtKBqLbAXpQxC3q+m6wPQxgE0150tgGg5X+BKTN8cQYyC/fPYmVQBXTXhdiOH
-         1R38pxM2WKIS2DG4czOpHh6+huxMzr3PuYmZ2SZI=
-Content-Type: text/plain; charset="utf-8"
+        (Authenticated sender: tdas@smtp.codeaurora.org)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id CCD09612DA;
+        Thu, 17 Oct 2019 18:19:37 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
+        s=default; t=1571336382;
+        bh=ISREP9AdfrC/XBTqeSZtr9AtlAJSpsRIKnn3uhj7a2A=;
+        h=Subject:To:Cc:References:From:Date:In-Reply-To:From;
+        b=jGm5emnd+w0KN6atBSypyQEio+9ce3SGjLMnDCAeH6Pk8Z5TViJY2V0Cn2BnNxBbz
+         beCJk/IvQyZT/qXEdu7QGXiwxeMdz1oLal6a6x6PPLzp687bW7GpthfQK3E/npbBV6
+         mNaErygg/uHN9RRnwWbxUm5Udny085SyvEDSbmSU=
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org CCD09612DA
+Authentication-Results: pdx-caf-mail.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: pdx-caf-mail.web.codeaurora.org; spf=none smtp.mailfrom=tdas@codeaurora.org
+Subject: Re: [PATCH v3 6/6] cpufreq: qcom-hw: Move driver initialisation
+ earlier
+To:     Amit Kucheria <amit.kucheria@linaro.org>,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        daniel.lezcano@linaro.org, viresh.kumar@linaro.org,
+        sudeep.holla@arm.com, bjorn.andersson@linaro.org,
+        edubezval@gmail.com, agross@kernel.org, swboyd@chromium.org,
+        ilina@codeaurora.org, "Rafael J. Wysocki" <rjw@rjwysocki.net>,
+        Amit Kucheria <amit.kucheria@verdurent.com>,
+        Zhang Rui <rui.zhang@intel.com>
+Cc:     linux-pm@vger.kernel.org
+References: <cover.1571314830.git.amit.kucheria@linaro.org>
+ <3468b8cf9c764ea139296ee149d33cd7a9d79e3e.1571314830.git.amit.kucheria@linaro.org>
+From:   Taniya Das <tdas@codeaurora.org>
+Message-ID: <b7f7061b-6dc3-eb3e-c6bf-fe582c2c2e3b@codeaurora.org>
+Date:   Thu, 17 Oct 2019 23:49:34 +0530
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
+ Thunderbird/60.9.0
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <20191006010100.32053-1-masneyb@onstation.org>
-References: <20191006010100.32053-1-masneyb@onstation.org>
-From:   Stephen Boyd <sboyd@kernel.org>
-To:     Brian Masney <masneyb@onstation.org>, mturquette@baylibre.com
-Cc:     agross@kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org,
-        jonathan@marek.ca
-Subject: Re: [PATCH] clk: qcom: mmcc8974: add frequency table for gfx3d
-User-Agent: alot/0.8.1
-Date:   Thu, 17 Oct 2019 11:13:29 -0700
-Message-Id: <20191017181329.D593C21835@mail.kernel.org>
+In-Reply-To: <3468b8cf9c764ea139296ee149d33cd7a9d79e3e.1571314830.git.amit.kucheria@linaro.org>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Brian Masney (2019-10-05 18:01:00)
-> From: Jonathan Marek <jonathan@marek.ca>
->=20
-> Add frequency table for the gfx3d clock that's needed in order to
-> support the GPU upstream on msm8974-based systems.
->=20
-> Signed-off-by: Jonathan Marek <jonathan@marek.ca>
-> Signed-off-by: Brian Masney <masneyb@onstation.org>
+
+
+On 10/17/2019 5:57 PM, Amit Kucheria wrote:
+> Allow qcom-hw driver to initialise right after the cpufreq and thermal
+> subsystems are initialised in core_initcall so we get earlier access to
+> thermal mitigation.
+> 
+> Signed-off-by: Amit Kucheria<amit.kucheria@linaro.org>
+> Acked-by: Daniel Lezcano<daniel.lezcano@linaro.org>
 > ---
->  drivers/clk/qcom/mmcc-msm8974.c | 7 +++++++
->  1 file changed, 7 insertions(+)
->=20
-> diff --git a/drivers/clk/qcom/mmcc-msm8974.c b/drivers/clk/qcom/mmcc-msm8=
-974.c
-> index bcb0a397ef91..e70abfe2a792 100644
-> --- a/drivers/clk/qcom/mmcc-msm8974.c
-> +++ b/drivers/clk/qcom/mmcc-msm8974.c
-> @@ -452,10 +452,17 @@ static struct clk_rcg2 mdp_clk_src =3D {
->         },
->  };
-> =20
-> +static struct freq_tbl ftbl_gfx3d_clk_src[] =3D {
-> +       F(37500000, P_GPLL0, 16, 0, 0),
-> +       F(533000000, P_MMPLL0, 1.5, 0, 0),
-> +       { }
-> +};
 
-On msm-3.10 kernel the gpu clk seems to be controlled by the RPM[1].
-What is going on here? This code just looks wrong, but I think it was
-added as an rcg so that the branch wasn't orphaned and would have some
-sane frequency. Eventually we planned to parent it to a clk exposed in
-the RPM clk driver. It's been a while so I'm having a hard time
-remembering, but I think GPU clk on this device needed to be controlled
-by RPM so that DDR self refresh wouldn't interact badly with ocmem? Or
-maybe ocmem needed GPU to be enabled to work? Maybe there is some
-information in the 3.10 downstream kernel.
+Acked-by: Taniya Das<tdas@codeaurora.org>
 
-> +
->  static struct clk_rcg2 gfx3d_clk_src =3D {
->         .cmd_rcgr =3D 0x4000,
->         .hid_width =3D 5,
->         .parent_map =3D mmcc_xo_mmpll0_1_2_gpll0_map,
-> +       .freq_tbl =3D ftbl_gfx3d_clk_src,
->         .clkr.hw.init =3D &(struct clk_init_data){
->                 .name =3D "gfx3d_clk_src",
->                 .parent_names =3D mmcc_xo_mmpll0_1_2_gpll0,
+-- 
+QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
+of Code Aurora Forum, hosted by The Linux Foundation.
 
-[1] https://source.codeaurora.org/quic/la/kernel/msm-3.10/tree/arch/arm/mac=
-h-msm/clock-rpm-8974.c?h=3Dmsm-3.10#n82
+--
