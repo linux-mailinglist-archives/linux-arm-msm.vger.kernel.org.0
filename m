@@ -2,91 +2,110 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id A830BDB90C
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Oct 2019 23:30:25 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id F2B6BDB91D
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Oct 2019 23:40:01 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2502969AbfJQVaK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 17 Oct 2019 17:30:10 -0400
-Received: from mail-pg1-f194.google.com ([209.85.215.194]:38707 "EHLO
-        mail-pg1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1732322AbfJQVaK (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 17 Oct 2019 17:30:10 -0400
-Received: by mail-pg1-f194.google.com with SMTP id w3so2087423pgt.5;
-        Thu, 17 Oct 2019 14:30:10 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id;
-        bh=h/bBHRGusj98Ie+f89J7SFLKi2fjMoUyMTs7iY5sfPs=;
-        b=pek2pn2QOW42nThx78gpJ5eiILVpMLYfOI2e8D3iR7iPQEXoh5JdfF1Qu0FK+lGCHM
-         rhfvKLT4pa4vyKPCXuC6ecbmlRgJ2DH0ExZpiTPGHFMzCxwIPx8rSFDC6a/nTc8U03EU
-         RSqVFnQjyyHLm8AfXh4B4IWcgdXPwx0CwLwXZ/hksT3qm9lntnIDOo9Ng6cqVcPFJhUw
-         zhZ4K5ms0I/s4cvJNumxUpuDMNz/dO4PSh0qADEHotDYexzHpDuUk+2AwM9S2b4MbP2H
-         xolo2psfzeukidI6shOdZtzIfta+BsGZA8faGmCVcxjXbSVVbFzMpzlWMR4E9holJ3GS
-         2EmQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id;
-        bh=h/bBHRGusj98Ie+f89J7SFLKi2fjMoUyMTs7iY5sfPs=;
-        b=oKpuBNtIzHQcR+wOMfl67oEDoQl5vFHiI43HzOUW14j8xCqZ2mNETK7b6bOLIQB464
-         HAe8xcV9AmENbIJ1xqD/irj+8v9aH3FIjUiyd6fQy5lw8Qj5womFVCxMxixDMLOthZlJ
-         JK50TLk79jE+tyyI7v/rEgSN0t3c3UX4EEsGiKY6r1y/Lsy/+ct8o4O+HbQ6HVhhUkag
-         TIwUxDilq/RaPKScHSHgp75aOiNRsQedIsrvQm5YGFpZYdAzUyhBaihbiaWLpdzGzr/g
-         YbK/mEzpHezNwfyxsX7I1VruwrYubDj0nlp+30JEP23DaxFWgR8QsnTdO6Z8ZFj0KX+9
-         +MwQ==
-X-Gm-Message-State: APjAAAVffWPSXpeoAsoii0Lc/WBZy7ji5SGclms1OVeMPGFo/wObFo4B
-        NfDCWTKfakYKp16eie8ZWMc=
-X-Google-Smtp-Source: APXvYqwQH11M5d3vGXCkqWTsm7amqBAPjHqccTvWu4XC7F8fg2mPRURwIMBKTQC90afxBF7EvjNckg==
-X-Received: by 2002:a17:90a:1b49:: with SMTP id q67mr7023570pjq.115.1571347809693;
-        Thu, 17 Oct 2019 14:30:09 -0700 (PDT)
-Received: from aw-bldr-10.qualcomm.com (i-global254.qualcomm.com. [199.106.103.254])
-        by smtp.gmail.com with ESMTPSA id w6sm4297898pfw.84.2019.10.17.14.30.08
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 17 Oct 2019 14:30:09 -0700 (PDT)
-From:   Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
-To:     marcel@holtmann.org, johan.hedberg@gmail.com,
-        c-hbandi@codeaurora.org, bgodavar@codeaurora.org
-Cc:     linux-bluetooth@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org,
-        Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
-Subject: [PATCH] Bluetooth: hci_qca: Add delay for wcn3990 stability
-Date:   Thu, 17 Oct 2019 14:29:55 -0700
-Message-Id: <20191017212955.6266-1-jeffrey.l.hugo@gmail.com>
-X-Mailer: git-send-email 2.17.1
+        id S2441017AbfJQVkB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 17 Oct 2019 17:40:01 -0400
+Received: from [217.140.110.172] ([217.140.110.172]:47388 "EHLO foss.arm.com"
+        rhost-flags-FAIL-FAIL-OK-OK) by vger.kernel.org with ESMTP
+        id S2437402AbfJQVkA (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 17 Oct 2019 17:40:00 -0400
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 79989329;
+        Thu, 17 Oct 2019 14:39:29 -0700 (PDT)
+Received: from [192.168.122.167] (U201426.austin.arm.com [10.118.30.69])
+        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 6BC453F68E;
+        Thu, 17 Oct 2019 14:39:29 -0700 (PDT)
+Subject: Re: Relax CPU features sanity checking on heterogeneous architectures
+To:     Mark Rutland <mark.rutland@arm.com>, Marc Zyngier <maz@kernel.org>
+Cc:     Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>,
+        rnayak@codeaurora.org, suzuki.poulose@arm.com,
+        catalin.marinas@arm.com, linux-kernel@vger.kernel.org,
+        bjorn.andersson@linaro.org, linux-arm-msm@vger.kernel.org,
+        andrew.murray@arm.com, will@kernel.org, Dave.Martin@arm.com,
+        linux-arm-kernel@lists.infradead.org
+References: <b3606e76af42f7ecf65b1bfc2a5ed30a@codeaurora.org>
+ <20191011105010.GA29364@lakrids.cambridge.arm.com>
+ <20191011143343.541da66c@why>
+ <20191011135431.GB33537@lakrids.cambridge.arm.com>
+From:   Jeremy Linton <jeremy.linton@arm.com>
+Message-ID: <aee2d915-3801-cc35-2a37-0c7d0ad7488e@arm.com>
+Date:   Thu, 17 Oct 2019 16:39:23 -0500
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.1.0
+MIME-Version: 1.0
+In-Reply-To: <20191011135431.GB33537@lakrids.cambridge.arm.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On the msm8998 mtp, the response to the baudrate change command is never
-received.  On the Lenovo Miix 630, the response to the baudrate change
-command is corrupted - "Frame reassembly failed (-84)".
+Hi,
 
-Adding a 50ms delay before re-enabling flow to receive the baudrate change
-command response from the wcn3990 addesses both issues, and allows
-bluetooth to become functional.
+On 10/11/19 8:54 AM, Mark Rutland wrote:
+> On Fri, Oct 11, 2019 at 02:33:43PM +0100, Marc Zyngier wrote:
+>> On Fri, 11 Oct 2019 11:50:11 +0100
+>> Mark Rutland <mark.rutland@arm.com> wrote:
+>>
+>>> Hi,
+>>>
+>>> On Fri, Oct 11, 2019 at 11:19:00AM +0530, Sai Prakash Ranjan wrote:
+>>>> On latest QCOM SoCs like SM8150 and SC7180 with big.LITTLE arch, below
+>>>> warnings are observed during bootup of big cpu cores.
+>>>
+>>> For reference, which CPUs are in those SoCs?
+>>>
+>>>> SM8150:
+>>>>
+>>>> [    0.271177] CPU features: SANITY CHECK: Unexpected variation in
+>>>> SYS_ID_AA64PFR0_EL1. Boot CPU: 0x00000011112222, CPU4: 0x00000011111112
+>>>
+>>> The differing fields are EL3, EL2, and EL1: the boot CPU supports
+>>> AArch64 and AArch32 at those exception levels, while the secondary only
+>>> supports AArch64.
+>>>
+>>> Do we handle this variation in KVM?
+>>
+>> We do, at least at vcpu creation time (see kvm_reset_vcpu). But if one
+>> of the !AArch32 CPU comes in late in the game (after we've started a
+>> guest), all bets are off (we'll schedule the 32bit guest on that CPU,
+>> enter the guest, immediately take an Illegal Exception Return, and
+>> return to userspace with KVM_EXIT_FAIL_ENTRY).
+> 
+> Ouch. We certainly can't remove the warning untill we deal with that
+> somehow, then.
+> 
+>> Not sure we could do better, given the HW. My preference would be to
+>> fail these CPUs if they aren't present at boot time.
+> 
+> I agree; I think we need logic to check the ID register fields against
+> their EXACT, {LOWER,HIGHER}_SAFE, etc rules regardless of whether we
+> have an associated cap. That can then abort a late onlining of a CPU
+> which violates those rules w.r.t. the finalised system value.
 
-Signed-off-by: Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
----
- drivers/bluetooth/hci_qca.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+Except one of the cases is the user who doesn't care about aarch32 @ 
+el2/1 and just wants to add another core to their 64-bit "clean" OS.
 
-diff --git a/drivers/bluetooth/hci_qca.c b/drivers/bluetooth/hci_qca.c
-index e3164c200eac..265fc60c3850 100644
---- a/drivers/bluetooth/hci_qca.c
-+++ b/drivers/bluetooth/hci_qca.c
-@@ -1156,8 +1156,10 @@ static int qca_set_speed(struct hci_uart *hu, enum qca_speed_type speed_type)
- 		host_set_baudrate(hu, speed);
- 
- error:
--		if (qca_is_wcn399x(soc_type))
-+		if (qca_is_wcn399x(soc_type)) {
-+			msleep(50);
- 			hci_uart_set_flow_control(hu, false);
-+		}
- 
- 		if (soc_type == QCA_WCN3990) {
- 			/* Wait for the controller to send the vendor event
--- 
-2.17.1
+So my $.02 is the online should only fail if someone has actually 
+started a 32-bit guest on the machine.
+
+> 
+> I suspect that we may want to split the notion of
+> safe-for-{user,kernel-guest} in the feature tables, as if nothing else
+> it will force us to consider those cases separately when adding new
+> stuff.
+
+As i'm sure everyone knows, this is all going to happen again with el0 
+support. I wonder if some of this more "advanced" functionality should 
+be buried behind EXPERT. At least on ACPI its possible to tell at early 
+boot if the machine is heterogeneous (not necessarily in which ways) and 
+just automatically sanitize away 32-bit support and some of the stickier 
+things when a heterogeneous machine is detected.
+
+
+
 
