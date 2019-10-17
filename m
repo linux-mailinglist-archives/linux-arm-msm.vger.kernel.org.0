@@ -2,116 +2,169 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 5793ADAAF3
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Oct 2019 13:10:48 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 74289DAB37
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Oct 2019 13:29:56 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2502041AbfJQLKq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 17 Oct 2019 07:10:46 -0400
-Received: from smtp.codeaurora.org ([198.145.29.96]:60052 "EHLO
-        smtp.codeaurora.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2392327AbfJQLKq (ORCPT
+        id S2439707AbfJQL3u (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 17 Oct 2019 07:29:50 -0400
+Received: from mail-wm1-f68.google.com ([209.85.128.68]:56273 "EHLO
+        mail-wm1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2409112AbfJQL3r (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 17 Oct 2019 07:10:46 -0400
-Received: by smtp.codeaurora.org (Postfix, from userid 1000)
-        id 639476090E; Thu, 17 Oct 2019 11:10:44 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
-        s=default; t=1571310645;
-        bh=UG8zgQw0SlCjZHbnPa0MCSesKKx8ziWMTvC2YcQ9AQQ=;
-        h=Subject:To:Cc:References:From:Date:In-Reply-To:From;
-        b=X46KqpXys4WYT1/iunmcMWAlcbAuOXzMrPSU4Wpgc+eG9U9dLghPp7CHWa2P9f7N2
-         GsRRvX36Oh4/Aq+SCqTdZT2dNl7Kk/vlGIhf/yaUTiCiy0cKD7FnvP0ryiTN1hi+zn
-         Tu2E984PQt5RHW2ZTS2X5Ym0sP60QzB1YP1W03fo=
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        pdx-caf-mail.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.7 required=2.0 tests=ALL_TRUSTED,BAYES_00,
-        DKIM_INVALID,DKIM_SIGNED,SPF_NONE autolearn=no autolearn_force=no
-        version=3.4.0
-Received: from [10.252.222.65] (blr-c-bdr-fw-01_globalnat_allzones-outside.qualcomm.com [103.229.19.19])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: akashast@smtp.codeaurora.org)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 563716032D;
-        Thu, 17 Oct 2019 11:10:40 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
-        s=default; t=1571310643;
-        bh=UG8zgQw0SlCjZHbnPa0MCSesKKx8ziWMTvC2YcQ9AQQ=;
-        h=Subject:To:Cc:References:From:Date:In-Reply-To:From;
-        b=Xc/tz59c9aC86c9EmzAJoaS9HW0rHc4H9s1d15+ZU5oIHh3VVkLQJLT29Yvn+PXrR
-         amlX5VNvbjeoQcH9TAF5mBMA3UXmlA2utK3+ujzuV8y8NwBMnz1yyES8M5mR1RVV1W
-         6fMVKCXgVOB6+j6Iv2dwQzpvqhpnKzdYjVD1R92Q=
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 563716032D
-Authentication-Results: pdx-caf-mail.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: pdx-caf-mail.web.codeaurora.org; spf=none smtp.mailfrom=akashast@codeaurora.org
-Subject: Re: [PATCH V2 1/2] tty: serial: qcom_geni_serial: IRQ cleanup
-To:     Stephen Boyd <swboyd@chromium.org>, gregkh@linuxfoundation.org
-Cc:     linux-arm-msm@vger.kernel.org, linux-serial@vger.kernel.org,
-        mgautam@codeaurora.org, bjorn.andersson@linaro.org
-References: <1570700763-17319-1-git-send-email-akashast@codeaurora.org>
- <5d9f3dfa.1c69fb81.84c4b.30bf@mx.google.com>
- <010dd569-d172-fdcf-0bfa-8caaf41a4d46@codeaurora.org>
- <5da627d8.1c69fb81.82267.2a50@mx.google.com>
-From:   Akash Asthana <akashast@codeaurora.org>
-Message-ID: <2fb874d8-5075-1d46-e0ba-14e37c19943c@codeaurora.org>
-Date:   Thu, 17 Oct 2019 16:40:38 +0530
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
- Thunderbird/60.9.0
+        Thu, 17 Oct 2019 07:29:47 -0400
+Received: by mail-wm1-f68.google.com with SMTP id a6so2158995wma.5
+        for <linux-arm-msm@vger.kernel.org>; Thu, 17 Oct 2019 04:29:44 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=y25SQvHW6/7riw64/wdhH01byzi//dz718QUhzJWQoM=;
+        b=LZ2BxUT3XYkN17tFc8dU93+VqpMf/c0mPGTp3UVIyg3upGlb3iY+XDdf1yfAjNQUV9
+         MEbhUG/4TIwoL/i8Lg8m5fewSbe3O7KW9XX4meNTSrHGz/tZpRsIOHp0b43jn04q0XCI
+         lO2jcDZa4Y8HiPEG3fP63QY6pTT7blXEh1CEunMeL+cA/8ticCfbt7sVTYaoXZEXw1ke
+         5sRkxNtiy98Ej84gJCr8gbkGZ+Xxk1gqz+P34xf6RGTNU0XuTkJ9F5jUvo8ZbLcpK/t2
+         wEUD0CrW6jFNo5lUiEKuA4upAA7nY7xJYPs35VaGodmJRe61wsS6q1Mh0BQ+ZhYxEVZu
+         Z/lQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=y25SQvHW6/7riw64/wdhH01byzi//dz718QUhzJWQoM=;
+        b=B1NB9877YNY7Vbd2M8BdUsuE6abmiFQgeOM3nty4A+Z6HUZEjj1NN4PsfHFEe7x4ee
+         qfps8/dejzZdeRgXYaJWYwMo91GfkJXqQHLeg7X1PIGR5VU4eE7kI4Lsoc70+48nF0Ll
+         l9Z5bI4YXyikhY5gK/+F6QDWcYJN7HEDxQe1/G1Ic5TBCPlhDJ8ANe9oUGbQGi7oWaHf
+         Y8dWPUe63nxdhd3i4Xgp+NBXi8dSLxi7wMhf/O+2quJ061toGco2MrCXmueogKI6yW3Y
+         KMgB+ra1/d80nogdFJB28geK5tVfEjde8MQBceEKI7eQ6VXzIl3i+IOWbosRSDiK18m5
+         hecQ==
+X-Gm-Message-State: APjAAAWB1secr/X8vJeVjOhGUslx3NlTSZIEIdfcP4b4QEhsIDHO+2nj
+        fho+Zs/VkVsneKE/xPjZ/Sx6XQ==
+X-Google-Smtp-Source: APXvYqy315waZYadAwtLx/wuKd4IUjaUiXe5iNXNBULrE+UNqPPTqxikRQdXUrJkHirN8ZpFE3jJ2w==
+X-Received: by 2002:a1c:e057:: with SMTP id x84mr2365727wmg.72.1571311784048;
+        Thu, 17 Oct 2019 04:29:44 -0700 (PDT)
+Received: from holly.lan (cpc141214-aztw34-2-0-cust773.18-1.cable.virginm.net. [86.9.19.6])
+        by smtp.gmail.com with ESMTPSA id q22sm1795666wmj.5.2019.10.17.04.29.42
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 17 Oct 2019 04:29:43 -0700 (PDT)
+Date:   Thu, 17 Oct 2019 12:29:41 +0100
+From:   Daniel Thompson <daniel.thompson@linaro.org>
+To:     Kiran Gunda <kgunda@codeaurora.org>
+Cc:     bjorn.andersson@linaro.org, jingoohan1@gmail.com,
+        lee.jones@linaro.org, b.zolnierkie@samsung.com,
+        dri-devel@lists.freedesktop.org, jacek.anaszewski@gmail.com,
+        pavel@ucw.cz, robh+dt@kernel.org, mark.rutland@arm.com,
+        linux-leds@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, Andy Gross <agross@kernel.org>,
+        linux-arm-msm@vger.kernel.org, linux-fbdev@vger.kernel.org
+Subject: Re: [PATCH V7 6/6] backlight: qcom-wled: Add auto string detection
+ logic
+Message-ID: <20191017112941.qqvgboyambzw63i3@holly.lan>
+References: <1571220826-7740-1-git-send-email-kgunda@codeaurora.org>
+ <1571220826-7740-7-git-send-email-kgunda@codeaurora.org>
 MIME-Version: 1.0
-In-Reply-To: <5da627d8.1c69fb81.82267.2a50@mx.google.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Content-Language: en-US
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <1571220826-7740-7-git-send-email-kgunda@codeaurora.org>
+User-Agent: NeoMutt/20180716
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On Wed, Oct 16, 2019 at 03:43:46PM +0530, Kiran Gunda wrote:
+> The auto string detection algorithm checks if the current WLED
+> sink configuration is valid. It tries enabling every sink and
+> checks if the OVP fault is observed. Based on this information
+> it detects and enables the valid sink configuration.
+> Auto calibration will be triggered when the OVP fault interrupts
+> are seen frequently thereby it tries to fix the sink configuration.
+> 
+> The auto-detection also kicks in when the connected LED string
+> of the display-backlight malfunctions (because of damage) and
+> requires the damaged string to be turned off to prevent the
+> complete panel and/or board from being damaged.
+> 
+> Signed-off-by: Kiran Gunda <kgunda@codeaurora.org>
 
-On 10/16/2019 1:41 AM, Stephen Boyd wrote:
-> Quoting Akash Asthana (2019-10-11 00:39:06)
->> On 10/10/2019 7:49 PM, Stephen Boyd wrote:
->>> Quoting Akash Asthana (2019-10-10 02:46:03)
->>>> diff --git a/drivers/tty/serial/qcom_geni_serial.c b/drivers/tty/serial/qcom_geni_serial.c
->>>> index 14c6306..5180cd8 100644
->>>> --- a/drivers/tty/serial/qcom_geni_serial.c
->>>> +++ b/drivers/tty/serial/qcom_geni_serial.c
->>>> @@ -1297,11 +1291,21 @@ static int qcom_geni_serial_probe(struct platform_device *pdev)
->>>>           port->rx_fifo_depth = DEF_FIFO_DEPTH_WORDS;
->>>>           port->tx_fifo_width = DEF_FIFO_WIDTH_BITS;
->>>>    
->>>> +       scnprintf(port->name, sizeof(port->name), "qcom_geni_serial_%s%d",
->>>> +               (uart_console(uport) ? "console" : "uart"), uport->line);
->>> Drop useless parenthesis. Also, it might make more sense to make this a
->>> devm_kasprintf() call now.
->> OK
->>
->>>>           irq = platform_get_irq(pdev, 0);
->>>>           if (irq < 0)
->>>>                   return irq;
->>>>           uport->irq = irq;
->>>>    
->>>> +       irq_set_status_flags(uport->irq, IRQ_NOAUTOEN);
->>> Is there a reason why we can't always leave the irq enabled and request
->>> it later once the uart structure has been fully initialized?
->> According to current design we are requesting IRQ handler in probe, and
->> we enable and disable it from the startup(port open) and shutdown(port
->> close) function respectively.
->>
->> We need to call for disable_irq in shutdown function because client has
->> closed the port and we don't expect any transfer requests after it.
->>
->>>> request it later once the uart structure has been fully initialized?
->>       Is the ask is to move request irq later in probe after the uport is
->> fully initialized?
-> Yes I'm wondering if we can get rid of the IRQ_NOAUTOEN and
-> irq_enable/disable bits in here and leave the interrupt enabled all the
-> time.
+It's a complex bit of code but I'm OK with it in principle. Everything
+below is about small details and/or nitpicking.
 
-Ideally it should work, I will run few experiments to make sure there 
-isn't any spurious interrupts problem after port close is called.
 
-If it works, I will post a separate patch for it.
+> +static void wled_ovp_work(struct work_struct *work)
+> +{
+> +	struct wled *wled = container_of(work,
+> +					 struct wled, ovp_work.work);
+> +	enable_irq(wled->ovp_irq);
+> +}
+> +
 
--- 
-The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,\na Linux Foundation Collaborative Project
+A bit of commenting about why we have to wait 10ms before enabling the
+OVP interrupt would be appreciated.
 
+
+> +static irqreturn_t wled_ovp_irq_handler(int irq, void *_wled)
+> +{
+> +	struct wled *wled = _wled;
+> +	int rc;
+> +	u32 int_sts, fault_sts;
+> +
+> +	rc = regmap_read(wled->regmap,
+> +			 wled->ctrl_addr + WLED3_CTRL_REG_INT_RT_STS, &int_sts);
+> +	if (rc < 0) {
+> +		dev_err(wled->dev, "Error in reading WLED3_INT_RT_STS rc=%d\n",
+> +			rc);
+> +		return IRQ_HANDLED;
+> +	}
+> +
+> +	rc = regmap_read(wled->regmap, wled->ctrl_addr +
+> +			 WLED3_CTRL_REG_FAULT_STATUS, &fault_sts);
+> +	if (rc < 0) {
+> +		dev_err(wled->dev, "Error in reading WLED_FAULT_STATUS rc=%d\n",
+> +			rc);
+> +		return IRQ_HANDLED;
+> +	}
+> +
+> +	if (fault_sts &
+> +		(WLED3_CTRL_REG_OVP_FAULT_BIT | WLED3_CTRL_REG_ILIM_FAULT_BIT))
+> +		dev_dbg(wled->dev, "WLED OVP fault detected, int_sts=%x fault_sts= %x\n",
+> +			int_sts, fault_sts);
+> +
+> +	if (fault_sts & WLED3_CTRL_REG_OVP_FAULT_BIT) {
+> +		mutex_lock(&wled->lock);
+> +		disable_irq_nosync(wled->ovp_irq);
+
+We're currently running the threaded ISR for this irq. Do we really need
+to disable it?
+
+> +
+> +		if (wled_auto_detection_required(wled))
+> +			wled_auto_string_detection(wled);
+> +
+> +		enable_irq(wled->ovp_irq);
+> +
+> +		mutex_unlock(&wled->lock);
+> +	}
+> +
+> +	return IRQ_HANDLED;
+> +}
+> +
+
+Snip.
+
+
+> +static int wled_remove(struct platform_device *pdev)
+> +{
+> +	struct wled *wled = dev_get_drvdata(&pdev->dev);
+> +
+> +	cancel_delayed_work_sync(&wled->ovp_work);
+> +	mutex_destroy(&wled->lock);
+
+Have the irq handlers been disabled at this point?
+
+Also, if you want to destroy the mutex shouldn't that code be 
+introduced in the same patch that introduces the mutex?
+> +
+> +	return 0;
+> +}
+
+
+Daniel.
