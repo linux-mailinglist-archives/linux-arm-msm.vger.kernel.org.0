@@ -2,110 +2,158 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id F2B6BDB91D
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Oct 2019 23:40:01 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 17E29DB94C
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Oct 2019 23:50:32 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2441017AbfJQVkB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 17 Oct 2019 17:40:01 -0400
-Received: from [217.140.110.172] ([217.140.110.172]:47388 "EHLO foss.arm.com"
-        rhost-flags-FAIL-FAIL-OK-OK) by vger.kernel.org with ESMTP
-        id S2437402AbfJQVkA (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 17 Oct 2019 17:40:00 -0400
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 79989329;
-        Thu, 17 Oct 2019 14:39:29 -0700 (PDT)
-Received: from [192.168.122.167] (U201426.austin.arm.com [10.118.30.69])
-        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 6BC453F68E;
-        Thu, 17 Oct 2019 14:39:29 -0700 (PDT)
-Subject: Re: Relax CPU features sanity checking on heterogeneous architectures
-To:     Mark Rutland <mark.rutland@arm.com>, Marc Zyngier <maz@kernel.org>
-Cc:     Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>,
-        rnayak@codeaurora.org, suzuki.poulose@arm.com,
-        catalin.marinas@arm.com, linux-kernel@vger.kernel.org,
-        bjorn.andersson@linaro.org, linux-arm-msm@vger.kernel.org,
-        andrew.murray@arm.com, will@kernel.org, Dave.Martin@arm.com,
-        linux-arm-kernel@lists.infradead.org
-References: <b3606e76af42f7ecf65b1bfc2a5ed30a@codeaurora.org>
- <20191011105010.GA29364@lakrids.cambridge.arm.com>
- <20191011143343.541da66c@why>
- <20191011135431.GB33537@lakrids.cambridge.arm.com>
-From:   Jeremy Linton <jeremy.linton@arm.com>
-Message-ID: <aee2d915-3801-cc35-2a37-0c7d0ad7488e@arm.com>
-Date:   Thu, 17 Oct 2019 16:39:23 -0500
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.1.0
+        id S2406155AbfJQVuY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 17 Oct 2019 17:50:24 -0400
+Received: from mail.kernel.org ([198.145.29.99]:44128 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S2391375AbfJQVuY (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 17 Oct 2019 17:50:24 -0400
+Received: from kernel.org (unknown [104.132.0.74])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by mail.kernel.org (Postfix) with ESMTPSA id 2BFEC20872;
+        Thu, 17 Oct 2019 21:50:23 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=default; t=1571349023;
+        bh=TvWJf8lZHu/8E1n4K/La/6h4GBFRf5lBb0SElBcOrC8=;
+        h=In-Reply-To:References:From:To:Cc:Subject:Date:From;
+        b=PeV7ZytPF7Dv1Benft1zIJ35UqUm2s+ymQy9EIns2QiQlPT4YCX/s8kxNI+ctXNSz
+         OhH/SV5QC/IGCkz1AdoY7cGAIm1RLdvUoeb4xMtf2iqmAcBBmt2l6mAjoh5EuGfIOj
+         tcUV98ZuLSjTiveTw52giy5JkzYB/uWU09sAXaO4=
+Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
-In-Reply-To: <20191011135431.GB33537@lakrids.cambridge.arm.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <20191002011640.36624-1-jeffrey.l.hugo@gmail.com>
+References: <20191002011555.36571-1-jeffrey.l.hugo@gmail.com> <20191002011640.36624-1-jeffrey.l.hugo@gmail.com>
+From:   Stephen Boyd <sboyd@kernel.org>
+To:     Jeffrey Hugo <jeffrey.l.hugo@gmail.com>, mturquette@baylibre.com
+Cc:     agross@kernel.org, bjorn.andersson@linaro.org,
+        marc.w.gonzalez@free.fr, linux-arm-msm@vger.kernel.org,
+        linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
+Subject: Re: [PATCH v4 1/2] clk: qcom: Add MSM8998 GPU Clock Controller (GPUCC) driver
+User-Agent: alot/0.8.1
+Date:   Thu, 17 Oct 2019 14:50:22 -0700
+Message-Id: <20191017215023.2BFEC20872@mail.kernel.org>
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi,
+Quoting Jeffrey Hugo (2019-10-01 18:16:40)
+> diff --git a/drivers/clk/qcom/gpucc-msm8998.c b/drivers/clk/qcom/gpucc-ms=
+m8998.c
+> new file mode 100644
+> index 000000000000..f0ccb4963885
+> --- /dev/null
+> +++ b/drivers/clk/qcom/gpucc-msm8998.c
+> @@ -0,0 +1,346 @@
+> +// SPDX-License-Identifier: GPL-2.0
+> +/*
+> + * Copyright (c) 2019, Jeffrey Hugo
+> + */
+> +
+> +#include <linux/kernel.h>
+> +#include <linux/bitops.h>
+> +#include <linux/err.h>
+> +#include <linux/platform_device.h>
+> +#include <linux/module.h>
+> +#include <linux/of.h>
+> +#include <linux/of_device.h>
+> +#include <linux/clk-provider.h>
+> +#include <linux/regmap.h>
+> +#include <linux/reset-controller.h>
+> +#include <linux/clk.h>
 
-On 10/11/19 8:54 AM, Mark Rutland wrote:
-> On Fri, Oct 11, 2019 at 02:33:43PM +0100, Marc Zyngier wrote:
->> On Fri, 11 Oct 2019 11:50:11 +0100
->> Mark Rutland <mark.rutland@arm.com> wrote:
->>
->>> Hi,
->>>
->>> On Fri, Oct 11, 2019 at 11:19:00AM +0530, Sai Prakash Ranjan wrote:
->>>> On latest QCOM SoCs like SM8150 and SC7180 with big.LITTLE arch, below
->>>> warnings are observed during bootup of big cpu cores.
->>>
->>> For reference, which CPUs are in those SoCs?
->>>
->>>> SM8150:
->>>>
->>>> [    0.271177] CPU features: SANITY CHECK: Unexpected variation in
->>>> SYS_ID_AA64PFR0_EL1. Boot CPU: 0x00000011112222, CPU4: 0x00000011111112
->>>
->>> The differing fields are EL3, EL2, and EL1: the boot CPU supports
->>> AArch64 and AArch32 at those exception levels, while the secondary only
->>> supports AArch64.
->>>
->>> Do we handle this variation in KVM?
->>
->> We do, at least at vcpu creation time (see kvm_reset_vcpu). But if one
->> of the !AArch32 CPU comes in late in the game (after we've started a
->> guest), all bets are off (we'll schedule the 32bit guest on that CPU,
->> enter the guest, immediately take an Illegal Exception Return, and
->> return to userspace with KVM_EXIT_FAIL_ENTRY).
-> 
-> Ouch. We certainly can't remove the warning untill we deal with that
-> somehow, then.
-> 
->> Not sure we could do better, given the HW. My preference would be to
->> fail these CPUs if they aren't present at boot time.
-> 
-> I agree; I think we need logic to check the ID register fields against
-> their EXACT, {LOWER,HIGHER}_SAFE, etc rules regardless of whether we
-> have an associated cap. That can then abort a late onlining of a CPU
-> which violates those rules w.r.t. the finalised system value.
+Drop this include please.
 
-Except one of the cases is the user who doesn't care about aarch32 @ 
-el2/1 and just wants to add another core to their 64-bit "clean" OS.
+> +
+> +
+> +static struct clk_rcg2 rbcpr_clk_src =3D {
+> +       .cmd_rcgr =3D 0x1030,
+> +       .hid_width =3D 5,
+> +       .parent_map =3D gpu_xo_gpll0_map,
+> +       .freq_tbl =3D ftbl_rbcpr_clk_src,
+> +       .clkr.hw.init =3D &(struct clk_init_data){
+> +               .name =3D "rbcpr_clk_src",
+> +               .parent_data =3D gpu_xo_gpll0,
+> +               .num_parents =3D 2,
+> +               .ops =3D &clk_rcg2_ops,
+> +       },
+> +};
+> +
+> +static const struct freq_tbl ftbl_gfx3d_clk_src[] =3D {
+> +       F(180000000, P_GPUPLL0_OUT_EVEN, 2, 0, 0),
+> +       F(257000000, P_GPUPLL0_OUT_EVEN, 2, 0, 0),
+> +       F(342000000, P_GPUPLL0_OUT_EVEN, 2, 0, 0),
+> +       F(414000000, P_GPUPLL0_OUT_EVEN, 2, 0, 0),
+> +       F(515000000, P_GPUPLL0_OUT_EVEN, 2, 0, 0),
+> +       F(596000000, P_GPUPLL0_OUT_EVEN, 2, 0, 0),
+> +       F(670000000, P_GPUPLL0_OUT_EVEN, 2, 0, 0),
+> +       F(710000000, P_GPUPLL0_OUT_EVEN, 2, 0, 0),
+> +       { }
 
-So my $.02 is the online should only fail if someone has actually 
-started a 32-bit guest on the machine.
+I guess this one doesn't do PLL ping pong? Instead we just reprogram the
+PLL all the time? Can we have rcg2 clk ops that set the rate on the
+parent to be exactly twice as much as the incoming frequency? I thought
+we already had this support in the code. Indeed, it is part of
+_freq_tbl_determine_rate() in clk-rcg.c, but not yet implemented in the
+same function name in clk-rcg2.c! Can you implement it? That way we
+don't need this long frequency table, just this weird one where it looks
+like:
 
-> 
-> I suspect that we may want to split the notion of
-> safe-for-{user,kernel-guest} in the feature tables, as if nothing else
-> it will force us to consider those cases separately when adding new
-> stuff.
+	{ .src =3D P_GPUPLL0_OUT_EVEN, .pre_div =3D 3 }
+	{ }
 
-As i'm sure everyone knows, this is all going to happen again with el0 
-support. I wonder if some of this more "advanced" functionality should 
-be buried behind EXPERT. At least on ACPI its possible to tell at early 
-boot if the machine is heterogeneous (not necessarily in which ways) and 
-just automatically sanitize away 32-bit support and some of the stickier 
-things when a heterogeneous machine is detected.
+And then some more logic in the rcg2 ops to allow this possibility for a
+frequency table when CLK_SET_RATE_PARENT is set.
 
+> +};
+> +
+> +static struct clk_rcg2 gfx3d_clk_src =3D {
+> +       .cmd_rcgr =3D 0x1070,
+> +       .hid_width =3D 5,
+> +       .parent_map =3D gpu_xo_gpupll0_map,
+> +       .freq_tbl =3D ftbl_gfx3d_clk_src,
+> +       .clkr.hw.init =3D &(struct clk_init_data){
+> +               .name =3D "gfx3d_clk_src",
+> +               .parent_data =3D gpu_xo_gpupll0,
+> +               .num_parents =3D 2,
+> +               .ops =3D &clk_rcg2_ops,
+> +               .flags =3D CLK_OPS_PARENT_ENABLE,
 
+Needs CLK_SET_RATE_PARENT presumably?
 
+> +       },
+> +};
+> +
+> +static const struct freq_tbl ftbl_rbbmtimer_clk_src[] =3D {
+> +       F(19200000, P_XO, 1, 0, 0),
+> +       { }
+> +};
+> +
+[...]
+> +
+> +static const struct qcom_cc_desc gpucc_msm8998_desc =3D {
+> +       .config =3D &gpucc_msm8998_regmap_config,
+> +       .clks =3D gpucc_msm8998_clocks,
+> +       .num_clks =3D ARRAY_SIZE(gpucc_msm8998_clocks),
+> +       .resets =3D gpucc_msm8998_resets,
+> +       .num_resets =3D ARRAY_SIZE(gpucc_msm8998_resets),
+> +       .gdscs =3D gpucc_msm8998_gdscs,
+> +       .num_gdscs =3D ARRAY_SIZE(gpucc_msm8998_gdscs),
+> +};
+> +
+> +static const struct of_device_id gpucc_msm8998_match_table[] =3D {
+> +       { .compatible =3D "qcom,gpucc-msm8998" },
 
+The compatible is different. In the merged binding it is
+qcom,msm8998-gpucc. Either fix this or fix the binding please.
+
+> +       { }
+> +};
+> +MODULE_DEVICE_TABLE(of, gpucc_msm8998_match_table);
+> +
