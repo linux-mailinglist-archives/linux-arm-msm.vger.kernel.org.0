@@ -2,178 +2,118 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 5C7C2DABCF
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Oct 2019 14:17:55 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E5828DABD2
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Oct 2019 14:18:11 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2393293AbfJQMRx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 17 Oct 2019 08:17:53 -0400
-Received: from smtp.codeaurora.org ([198.145.29.96]:59052 "EHLO
-        smtp.codeaurora.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1731634AbfJQMRx (ORCPT
+        id S2393421AbfJQMSL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 17 Oct 2019 08:18:11 -0400
+Received: from mail-ua1-f68.google.com ([209.85.222.68]:37039 "EHLO
+        mail-ua1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2393407AbfJQMSK (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 17 Oct 2019 08:17:53 -0400
-Received: by smtp.codeaurora.org (Postfix, from userid 1000)
-        id 942CF60B16; Thu, 17 Oct 2019 12:17:51 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
-        s=default; t=1571314671;
-        bh=fsLi8zg/9WbhFgBBMcLFgTLCZlbnzv150ryvbRkBxIA=;
-        h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
-        b=mBAxVCGPhEK9shE0KKoiAFaPV6PEjEILHCdZNKI9+O65GNYBz88duFFGLAeuobI+A
-         R2m1X69z21mdSIR053ICGQx2BkrShSYOU2ssuB36sY7JsCrMkWHMlPH5EyZ1qJICxB
-         1Z8T1QFXYmBOaVoEFIARu+FcRqVayHh1iH7+TgwQ=
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        pdx-caf-mail.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.7 required=2.0 tests=ALL_TRUSTED,BAYES_00,
-        DKIM_INVALID,DKIM_SIGNED autolearn=no autolearn_force=no version=3.4.0
-Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
-        by smtp.codeaurora.org (Postfix) with ESMTP id 8D58360B69;
-        Thu, 17 Oct 2019 12:17:48 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
-        s=default; t=1571314669;
-        bh=fsLi8zg/9WbhFgBBMcLFgTLCZlbnzv150ryvbRkBxIA=;
-        h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
-        b=mm0UqB8w/zaHSXX1qisLmk7qxgN3JHjNBfXHCFJ0TO0qbq67QdBsELuzoAgzEoLMj
-         QXij8a76b7qWGGZsxqfZbap97WyjO5MYMh5b9bIbsRlp2V6EJeXinrdm+AZuqx3oNh
-         AC9qm7o1iZqKrqpIEDRcVdV2pYA9BKOnio+GTqC4=
+        Thu, 17 Oct 2019 08:18:10 -0400
+Received: by mail-ua1-f68.google.com with SMTP id w7so587028uag.4
+        for <linux-arm-msm@vger.kernel.org>; Thu, 17 Oct 2019 05:18:10 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=verdurent-com.20150623.gappssmtp.com; s=20150623;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=D4W/LUm+J8OxNKkDBXKqSGiLQb0w0oPg2mn0tFVhPes=;
+        b=aUrV05JDeAStB20D0EX8t5S/U35e9v3DZtU8XmQCMwCu+E1mzgEFvRAaT62RK8LVhN
+         0+gx3U0i+AMedaIcGuc7NNcHMTX2Ebp3L0dUnVqrKUSh4UZ8reHpCt8o5Pw7fmTgz8Uk
+         PfGmF7U49F4uO8Qt7u44Ny9Pe+Tn/RCw/fo1+Zi5F2aDqEQhIVdck+z/PwbRCxMW+Zyu
+         tfgxkaq0lGWgKKhhl69S5UOUTLfIxxNkF8Mc+AhjYtBftcvck8Q+uIiesqmy7pJ0DH8Y
+         KJVkC2wh2eSWJ0mHB+pP3ssfzdAgfY+U0ZgyhYVjSgFKMBnTl7635nW0HUn5rWHnVgLF
+         +5Eg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=D4W/LUm+J8OxNKkDBXKqSGiLQb0w0oPg2mn0tFVhPes=;
+        b=a++CLlZT+pBokqbp0Yl1sGYcBTKfwslGmzVnhe7njOjjMFzotJW5Y4XvY8VkcOz9YH
+         FMmp9mf6wGezMh0rJPap1c1BzsciMTmq4GY+B5rroukgtMADag4QbRrumC0bhjEoBKk2
+         z5PkQdU6oN8OgWVA2FM8hf3WqVp/dkpKu+KMOM+TmaNZOyjTMgewTF0THRBdZcHkWfOG
+         HCszNYCIV6I77oJzupcB/DGgS6UHZ9IFsO7nKnvzoNw0SC56Qa8tWE/c2Twnk3d5tq94
+         r5DquKcvu3tDkDhphMwCedU75NC+nAeH6soSBv2DFzaBCLxLMDO4AS9BSh5IglhLclFf
+         6wDQ==
+X-Gm-Message-State: APjAAAWRPMPqjDYjo7VQfkJs/GpaM6CXAeGOymSQLlHRrQ2QhldWqnzK
+        uNaQiEVrlq5t8y/SqeGjqCsPJ6OiNjS2RntkOg40UQ==
+X-Google-Smtp-Source: APXvYqwtJORCUbSCwLJQHhNVBn6YlmaEa3VkSkslE27JU8UAlyFstCIC0GKWyqQLWVsobv/VC7fukLjO0zgVnbI+QwY=
+X-Received: by 2002:ab0:4704:: with SMTP id h4mr2115415uac.67.1571314689598;
+ Thu, 17 Oct 2019 05:18:09 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
-Content-Transfer-Encoding: 7bit
-Date:   Thu, 17 Oct 2019 17:47:47 +0530
-From:   kgunda@codeaurora.org
-To:     Daniel Thompson <daniel.thompson@linaro.org>
-Cc:     bjorn.andersson@linaro.org, jingoohan1@gmail.com,
-        lee.jones@linaro.org, b.zolnierkie@samsung.com,
-        dri-devel@lists.freedesktop.org, jacek.anaszewski@gmail.com,
-        pavel@ucw.cz, robh+dt@kernel.org, mark.rutland@arm.com,
-        linux-leds@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, Andy Gross <agross@kernel.org>,
-        linux-arm-msm@vger.kernel.org, linux-fbdev@vger.kernel.org
-Subject: Re: [PATCH V7 6/6] backlight: qcom-wled: Add auto string detection
- logic
-In-Reply-To: <20191017112941.qqvgboyambzw63i3@holly.lan>
-References: <1571220826-7740-1-git-send-email-kgunda@codeaurora.org>
- <1571220826-7740-7-git-send-email-kgunda@codeaurora.org>
- <20191017112941.qqvgboyambzw63i3@holly.lan>
-Message-ID: <fa32f7ec727cb2626ad877a6cef32a1b@codeaurora.org>
-X-Sender: kgunda@codeaurora.org
-User-Agent: Roundcube Webmail/1.2.5
+References: <cover.1571307382.git.amit.kucheria@linaro.org>
+In-Reply-To: <cover.1571307382.git.amit.kucheria@linaro.org>
+From:   Amit Kucheria <amit.kucheria@verdurent.com>
+Date:   Thu, 17 Oct 2019 17:47:57 +0530
+Message-ID: <CAHLCerOrMjG0JqBEUf3NqQijPwzjYkiq7Kkstrh+p91rvF9_Bg@mail.gmail.com>
+Subject: Re: [PATCH v2 0/5] Initialise thermal framework and cpufreq earlier
+ during boot
+To:     LKML <linux-kernel@vger.kernel.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        Daniel Lezcano <daniel.lezcano@linaro.org>,
+        Viresh Kumar <viresh.kumar@linaro.org>,
+        Sudeep Holla <sudeep.holla@arm.com>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Eduardo Valentin <edubezval@gmail.com>,
+        Andy Gross <agross@kernel.org>,
+        Taniya Das <tdas@codeaurora.org>,
+        Stephen Boyd <swboyd@chromium.org>, ilina@codeaurora.org,
+        "Rafael J. Wysocki" <rjw@rjwysocki.net>,
+        Amit Kucheria <amit.kucheria@verdurent.com>,
+        Zhang Rui <rui.zhang@intel.com>
+Cc:     linux-clk <linux-clk@vger.kernel.org>,
+        Linux PM list <linux-pm@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2019-10-17 16:59, Daniel Thompson wrote:
-> On Wed, Oct 16, 2019 at 03:43:46PM +0530, Kiran Gunda wrote:
->> The auto string detection algorithm checks if the current WLED
->> sink configuration is valid. It tries enabling every sink and
->> checks if the OVP fault is observed. Based on this information
->> it detects and enables the valid sink configuration.
->> Auto calibration will be triggered when the OVP fault interrupts
->> are seen frequently thereby it tries to fix the sink configuration.
->> 
->> The auto-detection also kicks in when the connected LED string
->> of the display-backlight malfunctions (because of damage) and
->> requires the damaged string to be turned off to prevent the
->> complete panel and/or board from being damaged.
->> 
->> Signed-off-by: Kiran Gunda <kgunda@codeaurora.org>
-> 
-> It's a complex bit of code but I'm OK with it in principle. Everything
-> below is about small details and/or nitpicking.
-> 
-> 
->> +static void wled_ovp_work(struct work_struct *work)
->> +{
->> +	struct wled *wled = container_of(work,
->> +					 struct wled, ovp_work.work);
->> +	enable_irq(wled->ovp_irq);
->> +}
->> +
-> 
-> A bit of commenting about why we have to wait 10ms before enabling the
-> OVP interrupt would be appreciated.
-> 
-> 
-Sure. Will add the comment in the next series.
->> +static irqreturn_t wled_ovp_irq_handler(int irq, void *_wled)
->> +{
->> +	struct wled *wled = _wled;
->> +	int rc;
->> +	u32 int_sts, fault_sts;
->> +
->> +	rc = regmap_read(wled->regmap,
->> +			 wled->ctrl_addr + WLED3_CTRL_REG_INT_RT_STS, &int_sts);
->> +	if (rc < 0) {
->> +		dev_err(wled->dev, "Error in reading WLED3_INT_RT_STS rc=%d\n",
->> +			rc);
->> +		return IRQ_HANDLED;
->> +	}
->> +
->> +	rc = regmap_read(wled->regmap, wled->ctrl_addr +
->> +			 WLED3_CTRL_REG_FAULT_STATUS, &fault_sts);
->> +	if (rc < 0) {
->> +		dev_err(wled->dev, "Error in reading WLED_FAULT_STATUS rc=%d\n",
->> +			rc);
->> +		return IRQ_HANDLED;
->> +	}
->> +
->> +	if (fault_sts &
->> +		(WLED3_CTRL_REG_OVP_FAULT_BIT | WLED3_CTRL_REG_ILIM_FAULT_BIT))
->> +		dev_dbg(wled->dev, "WLED OVP fault detected, int_sts=%x fault_sts= 
->> %x\n",
->> +			int_sts, fault_sts);
->> +
->> +	if (fault_sts & WLED3_CTRL_REG_OVP_FAULT_BIT) {
->> +		mutex_lock(&wled->lock);
->> +		disable_irq_nosync(wled->ovp_irq);
-> 
-> We're currently running the threaded ISR for this irq. Do we really 
-> need
-> to disable it?
-> 
-We need to disable this IRQ, during the auto string detection logic. 
-Because
-in the auto string detection we configure the current sinks one by one 
-and check the
-status register for the OVPs and set the right string configuration. We 
-enable it later after
-the auto string detection is completed.
->> +
->> +		if (wled_auto_detection_required(wled))
->> +			wled_auto_string_detection(wled);
->> +
->> +		enable_irq(wled->ovp_irq);
->> +
->> +		mutex_unlock(&wled->lock);
->> +	}
->> +
->> +	return IRQ_HANDLED;
->> +}
->> +
-> 
-> Snip.
-> 
-> 
->> +static int wled_remove(struct platform_device *pdev)
->> +{
->> +	struct wled *wled = dev_get_drvdata(&pdev->dev);
->> +
->> +	cancel_delayed_work_sync(&wled->ovp_work);
->> +	mutex_destroy(&wled->lock);
-> 
-> Have the irq handlers been disabled at this point?
-> 
-Ok.. may not be. I will disable the irq's here in next series.
+This is embarassing. I generated this series incorrectly. It is
+missing a patch removing netlink support. v3 coming right up.
 
-> Also, if you want to destroy the mutex shouldn't that code be
-> introduced in the same patch that introduces the mutex?
-Ok.. I will move it to the same patch where the mutex introduced in next 
-series.
->> +
->> +	return 0;
->> +}
-> 
-> 
-> Daniel.
+Sorry for the noise.
+
+On Thu, Oct 17, 2019 at 4:00 PM Amit Kucheria <amit.kucheria@linaro.org> wrote:
+>
+> Changes since v1:
+> - Completely get rid of netlink support in the thermal framework.
+> - This changes the early init patch to a single line - change to
+>   core_initcall. Changed authorship of patch since it is nothing like the
+>   original. Lina, let me know if you feel otherwise.
+> - I've tested to make sure that the qcom-cpufreq-hw driver continues to
+>   work correctly as a module so this won't impact Android's GKI plans.
+> - Collected Acks
+>
+> Device boot needs to be as fast as possible while keeping under the thermal
+> envelope. Now that thermal framework is built-in to the kernel, we can
+> initialize it earlier to enable thermal mitigation during boot.
+>
+> We also need the cpufreq HW drivers to be initialised earlier to act as the
+> cooling devices. This series only converts over the qcom-hw driver to
+> initialize earlier but can be extended to other platforms as well.
+>
+> Amit Kucheria (5):
+>   thermal: Initialize thermal subsystem earlier
+>   cpufreq: Initialise the governors in core_initcall
+>   cpufreq: Initialize cpufreq-dt driver earlier
+>   clk: qcom: Initialise clock drivers earlier
+>   cpufreq: qcom-hw: Move driver initialisation earlier
+>
+>  drivers/clk/qcom/clk-rpmh.c            | 2 +-
+>  drivers/clk/qcom/gcc-qcs404.c          | 2 +-
+>  drivers/clk/qcom/gcc-sdm845.c          | 2 +-
+>  drivers/cpufreq/cpufreq-dt-platdev.c   | 2 +-
+>  drivers/cpufreq/cpufreq_conservative.c | 2 +-
+>  drivers/cpufreq/cpufreq_ondemand.c     | 2 +-
+>  drivers/cpufreq/cpufreq_performance.c  | 2 +-
+>  drivers/cpufreq/cpufreq_powersave.c    | 2 +-
+>  drivers/cpufreq/cpufreq_userspace.c    | 2 +-
+>  drivers/cpufreq/qcom-cpufreq-hw.c      | 2 +-
+>  drivers/thermal/thermal_core.c         | 3 ++-
+>  11 files changed, 12 insertions(+), 11 deletions(-)
+>
+> --
+> 2.17.1
+>
