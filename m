@@ -2,21 +2,21 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 99F27DAD4C
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Oct 2019 14:50:55 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C9713DAD46
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Oct 2019 14:50:52 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2502586AbfJQMs2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 17 Oct 2019 08:48:28 -0400
-Received: from szxga07-in.huawei.com ([45.249.212.35]:59328 "EHLO huawei.com"
+        id S2502616AbfJQMs3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 17 Oct 2019 08:48:29 -0400
+Received: from szxga05-in.huawei.com ([45.249.212.191]:4242 "EHLO huawei.com"
         rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-        id S1729344AbfJQMs1 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 17 Oct 2019 08:48:27 -0400
-Received: from DGGEMS408-HUB.china.huawei.com (unknown [172.30.72.59])
-        by Forcepoint Email with ESMTP id 47C9634C1F89D02A68CC;
-        Thu, 17 Oct 2019 20:48:11 +0800 (CST)
-Received: from localhost (10.133.213.239) by DGGEMS408-HUB.china.huawei.com
- (10.3.19.208) with Microsoft SMTP Server id 14.3.439.0; Thu, 17 Oct 2019
- 20:48:01 +0800
+        id S2502555AbfJQMs0 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 17 Oct 2019 08:48:26 -0400
+Received: from DGGEMS403-HUB.china.huawei.com (unknown [172.30.72.58])
+        by Forcepoint Email with ESMTP id 8AC5BB2FB796D21AB281;
+        Thu, 17 Oct 2019 20:48:21 +0800 (CST)
+Received: from localhost (10.133.213.239) by DGGEMS403-HUB.china.huawei.com
+ (10.3.19.203) with Microsoft SMTP Server id 14.3.439.0; Thu, 17 Oct 2019
+ 20:48:13 +0800
 From:   YueHaibing <yuehaibing@huawei.com>
 To:     <linus.walleij@linaro.org>, <manivannan.sadhasivam@linaro.org>,
         <afaerber@suse.de>, <f.fainelli@gmail.com>, <rjui@broadcom.com>,
@@ -34,10 +34,12 @@ CC:     <linux-arm-kernel@lists.infradead.org>,
         <haojian.zhuang@gmail.com>, <wens@csie.org>,
         <thierry.reding@gmail.com>, <jonathanh@nvidia.com>,
         <agross@kernel.org>, YueHaibing <yuehaibing@huawei.com>
-Subject: [PATCH -next 00/30] pinctrl: use devm_platform_ioremap_resource() to simplify code
-Date:   Thu, 17 Oct 2019 20:26:10 +0800
-Message-ID: <20191017122640.22976-1-yuehaibing@huawei.com>
+Subject: [PATCH -next 05/30] pinctrl: nsp-gpio: use devm_platform_ioremap_resource() to simplify code
+Date:   Thu, 17 Oct 2019 20:26:15 +0800
+Message-ID: <20191017122640.22976-6-yuehaibing@huawei.com>
 X-Mailer: git-send-email 2.10.2.windows.1
+In-Reply-To: <20191017122640.22976-1-yuehaibing@huawei.com>
+References: <20191017122640.22976-1-yuehaibing@huawei.com>
 MIME-Version: 1.0
 Content-Type: text/plain
 X-Originating-IP: [10.133.213.239]
@@ -47,86 +49,44 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-devm_platform_ioremap_resource() internally have platform_get_resource()
-and devm_ioremap_resource() in it. So instead of calling them separately
-use devm_platform_ioremap_resource() directly.
+Use devm_platform_ioremap_resource() to simplify the code a bit.
+This is detected by coccinelle.
 
-YueHaibing (30):
-  pinctrl: pxa25x: use devm_platform_ioremap_resource() to simplify code
-  pinctrl: pxa27x: use devm_platform_ioremap_resource() to simplify code
-  pinctrl: cygnus-mux: use devm_platform_ioremap_resource() to simplify
-    code
-  pinctrl: pic32: use devm_platform_ioremap_resource() to simplify code
-  pinctrl: nsp-gpio: use devm_platform_ioremap_resource() to simplify
-    code
-  pinctrl: nsp: use devm_platform_ioremap_resource() to simplify code
-  pinctrl: ns2: use devm_platform_ioremap_resource() to simplify code
-  pinctrl: bcm281xx: use devm_platform_ioremap_resource() to simplify
-    code
-  pinctrl: sunxi: use devm_platform_ioremap_resource() to simplify code
-  pinctrl: tegra: use devm_platform_ioremap_resource() to simplify code
-  pinctrl: msm: use devm_platform_ioremap_resource() to simplify code
-  pinctrl: spear: use devm_platform_ioremap_resource() to simplify code
-  pinctrl: zte: use devm_platform_ioremap_resource() to simplify code
-  pinctrl: at91: use devm_platform_ioremap_resource() to simplify code
-  pinctrl: oxnas: use devm_platform_ioremap_resource() to simplify code
-  pinctrl: pistachio: use devm_platform_ioremap_resource() to simplify
-    code
-  pinctrl: lpc18xx: use devm_platform_ioremap_resource() to simplify
-    code
-  pinctrl: da850-pupd: use devm_platform_ioremap_resource() to simplify
-    code
-  pinctrl: tb10x: use devm_platform_ioremap_resource() to simplify code
-  pinctrl: u300: use devm_platform_ioremap_resource() to simplify code
-  pinctrl: vt8500: use devm_platform_ioremap_resource() to simplify code
-  pinctrl: xway: use devm_platform_ioremap_resource() to simplify code
-  pinctrl: rza2: use devm_platform_ioremap_resource() to simplify code
-  pinctrl: digicolor: use devm_platform_ioremap_resource() to simplify
-    code
-  pinctrl: coh901: use devm_platform_ioremap_resource() to simplify code
-  pinctrl: bm1880: use devm_platform_ioremap_resource() to simplify code
-  pinctrl: artpec6: use devm_platform_ioremap_resource() to simplify
-    code
-  pinctrl: actions: use devm_platform_ioremap_resource() to simplify
-    code
-  pinctrl: at91-pio4: use devm_platform_ioremap_resource() to simplify
-    code
-  pinctrl: iproc: use devm_platform_ioremap_resource() to simplify code
+Signed-off-by: YueHaibing <yuehaibing@huawei.com>
+---
+ drivers/pinctrl/bcm/pinctrl-nsp-gpio.c | 7 ++-----
+ 1 file changed, 2 insertions(+), 5 deletions(-)
 
- drivers/pinctrl/actions/pinctrl-owl.c      |  4 +---
- drivers/pinctrl/bcm/pinctrl-bcm281xx.c     |  4 +---
- drivers/pinctrl/bcm/pinctrl-cygnus-mux.c   |  7 ++-----
- drivers/pinctrl/bcm/pinctrl-iproc-gpio.c   |  3 +--
- drivers/pinctrl/bcm/pinctrl-ns2-mux.c      |  6 ++----
- drivers/pinctrl/bcm/pinctrl-nsp-gpio.c     |  7 ++-----
- drivers/pinctrl/bcm/pinctrl-nsp-mux.c      |  6 ++----
- drivers/pinctrl/pinctrl-artpec6.c          |  4 +---
- drivers/pinctrl/pinctrl-at91-pio4.c        |  3 +--
- drivers/pinctrl/pinctrl-at91.c             |  4 +---
- drivers/pinctrl/pinctrl-bm1880.c           |  4 +---
- drivers/pinctrl/pinctrl-coh901.c           |  4 +---
- drivers/pinctrl/pinctrl-da850-pupd.c       |  4 +---
- drivers/pinctrl/pinctrl-digicolor.c        |  4 +---
- drivers/pinctrl/pinctrl-lpc18xx.c          |  4 +---
- drivers/pinctrl/pinctrl-oxnas.c            |  4 +---
- drivers/pinctrl/pinctrl-pic32.c            |  4 +---
- drivers/pinctrl/pinctrl-pistachio.c        |  4 +---
- drivers/pinctrl/pinctrl-rza2.c             |  4 +---
- drivers/pinctrl/pinctrl-tb10x.c            |  4 +---
- drivers/pinctrl/pinctrl-u300.c             |  4 +---
- drivers/pinctrl/pinctrl-xway.c             |  4 +---
- drivers/pinctrl/pxa/pinctrl-pxa25x.c       | 13 ++++---------
- drivers/pinctrl/pxa/pinctrl-pxa27x.c       | 13 ++++---------
- drivers/pinctrl/qcom/pinctrl-msm.c         |  3 +--
- drivers/pinctrl/spear/pinctrl-plgpio.c     |  4 +---
- drivers/pinctrl/spear/pinctrl-spear.c      |  4 +---
- drivers/pinctrl/sunxi/pinctrl-sunxi.c      |  4 +---
- drivers/pinctrl/tegra/pinctrl-tegra-xusb.c |  4 +---
- drivers/pinctrl/tegra/pinctrl-tegra.c      |  3 +--
- drivers/pinctrl/vt8500/pinctrl-wmt.c       |  4 +---
- drivers/pinctrl/zte/pinctrl-zx.c           |  4 +---
- 32 files changed, 42 insertions(+), 110 deletions(-)
-
+diff --git a/drivers/pinctrl/bcm/pinctrl-nsp-gpio.c b/drivers/pinctrl/bcm/pinctrl-nsp-gpio.c
+index e67ae52..8db87e5 100644
+--- a/drivers/pinctrl/bcm/pinctrl-nsp-gpio.c
++++ b/drivers/pinctrl/bcm/pinctrl-nsp-gpio.c
+@@ -613,7 +613,6 @@ static const struct of_device_id nsp_gpio_of_match[] = {
+ static int nsp_gpio_probe(struct platform_device *pdev)
+ {
+ 	struct device *dev = &pdev->dev;
+-	struct resource *res;
+ 	struct nsp_gpio *chip;
+ 	struct gpio_chip *gc;
+ 	u32 val, count;
+@@ -631,15 +630,13 @@ static int nsp_gpio_probe(struct platform_device *pdev)
+ 	chip->dev = dev;
+ 	platform_set_drvdata(pdev, chip);
+ 
+-	res = platform_get_resource(pdev, IORESOURCE_MEM, 0);
+-	chip->base = devm_ioremap_resource(dev, res);
++	chip->base = devm_platform_ioremap_resource(pdev, 0);
+ 	if (IS_ERR(chip->base)) {
+ 		dev_err(dev, "unable to map I/O memory\n");
+ 		return PTR_ERR(chip->base);
+ 	}
+ 
+-	res = platform_get_resource(pdev, IORESOURCE_MEM, 1);
+-	chip->io_ctrl = devm_ioremap_resource(dev, res);
++	chip->io_ctrl = devm_platform_ioremap_resource(pdev, 1);
+ 	if (IS_ERR(chip->io_ctrl)) {
+ 		dev_err(dev, "unable to map I/O memory\n");
+ 		return PTR_ERR(chip->io_ctrl);
 -- 
 2.7.4
 
