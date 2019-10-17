@@ -2,168 +2,114 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id B3986D9BB0
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Oct 2019 22:23:11 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0603BDA392
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Oct 2019 04:21:05 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732738AbfJPUXJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 16 Oct 2019 16:23:09 -0400
-Received: from mail-pf1-f196.google.com ([209.85.210.196]:44734 "EHLO
-        mail-pf1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2388251AbfJPUXH (ORCPT
+        id S1732126AbfJQCVE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 16 Oct 2019 22:21:04 -0400
+Received: from smtp.codeaurora.org ([198.145.29.96]:45248 "EHLO
+        smtp.codeaurora.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727823AbfJQCVD (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 16 Oct 2019 16:23:07 -0400
-Received: by mail-pf1-f196.google.com with SMTP id q21so79419pfn.11
-        for <linux-arm-msm@vger.kernel.org>; Wed, 16 Oct 2019 13:23:05 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=message-id:mime-version:content-transfer-encoding:in-reply-to
-         :references:from:to:cc:subject:user-agent:date;
-        bh=Qrm1NvsXrsFrJaiaktnNZJoOxKRyRjdaoTo5U5Izuk8=;
-        b=Ahh+DqSyKQU4I8H524JcL1PIUJqZCf9a35VJVicjcCCqn06nJAx24r1keCachP6WYS
-         fk1t2w6sSlc2muk8MBj7Olqfe3BNATOJBd6R7srgvDSqvC26FQO6rIpRWqZRIGN/9neN
-         7JZadWQ29Ssk8xRdKOzc/YlYYSJ/1raV59+DU=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:mime-version
-         :content-transfer-encoding:in-reply-to:references:from:to:cc:subject
-         :user-agent:date;
-        bh=Qrm1NvsXrsFrJaiaktnNZJoOxKRyRjdaoTo5U5Izuk8=;
-        b=eLM913yvK0ozfo2KsAZN4RwLdOTfrBtJfB29J/hctzetxYlObmiTBf5WRsFj75ISDT
-         pb0QpcvcSZOYQ2ld9WRkMoE98SilAKd5zDumyFn107FoDvpxBHuqFJiayE/OKOhFjkyj
-         52/qqp+qPPoKfpr6NmHLMOu423downu8NRuo4xlwXv1QAoM6oAYOhz3qIraKvEfs1hJY
-         lgRgoJYdlAjjoWt+OSKDHdR+i3dk8KZd9k6lCcSIYuSTNRWqwnGRcR4syhGvfWcgUOGA
-         gu4VieLAd45SwpVZboFni7SkvbrgclPBy0wHpr5cC83sua1sBtSPP8HH97afwFO1LYrD
-         VMNg==
-X-Gm-Message-State: APjAAAXrpR2cdVNym+r0l45IIO4jQmHWbPmHLhy0/vaeV+ua4IwpFZ+D
-        50BAx8b5186SEIiBDo5zHfst4g==
-X-Google-Smtp-Source: APXvYqyYjQEWTnhtfIJtx+HVP/qsBdKLByhTQ5WcY+ad6SCiP1cjGC6S1RKDWb2/HMy0APgi43ph6w==
-X-Received: by 2002:a62:a104:: with SMTP id b4mr35615699pff.239.1571257384523;
-        Wed, 16 Oct 2019 13:23:04 -0700 (PDT)
-Received: from chromium.org ([2620:15c:202:1:fa53:7765:582b:82b9])
-        by smtp.gmail.com with ESMTPSA id p68sm33732397pfp.9.2019.10.16.13.23.03
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 16 Oct 2019 13:23:03 -0700 (PDT)
-Message-ID: <5da77c27.1c69fb81.b45e2.8b99@mx.google.com>
-Content-Type: text/plain; charset="utf-8"
-MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <20191009001159.27761-1-saravanak@google.com>
-References: <5d978bf9.1c69fb81.7b927.b6ac@mx.google.com> <20191009001159.27761-1-saravanak@google.com>
-From:   Stephen Boyd <swboyd@chromium.org>
-To:     Saravana Kannan <saravanak@google.com>
-Cc:     bjorn.andersson@linaro.org, daidavid1@codeaurora.org,
-        devicetree@vger.kernel.org, evgreen@chromium.org,
-        georgi.djakov@linaro.org, linux-arm-kernel@lists.infradead.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-pm@vger.kernel.org, mripard@kernel.org, robh+dt@kernel.org,
-        saravanak@google.com, kernel-team@android.com
-Subject: Re: [RFC PATCH] interconnect: Replace of_icc_get() with icc_get() and reduce DT binding
-User-Agent: alot/0.8.1
-Date:   Wed, 16 Oct 2019 13:23:02 -0700
+        Wed, 16 Oct 2019 22:21:03 -0400
+Received: by smtp.codeaurora.org (Postfix, from userid 1000)
+        id 63F476032D; Thu, 17 Oct 2019 02:21:02 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
+        s=default; t=1571278862;
+        bh=ya0y6uIRyTrjP0oZpf7fC4HeXiZCPtMSPUrBj16lLQg=;
+        h=From:To:Cc:Subject:Date:From;
+        b=HXw4sWQlIeoRH5NyTz3+OYGP6BiUi6CdoiBqNCJtAyD56RlSas7vL4VTLHVoICbU/
+         0VgkSxesa8qR+22m31W7p3Wfgrw1udapEqjeVvuKZwg55g3z6L5yO+m4KQ6zRpt/40
+         7bFaOjMNrIwjHdfFJK1OK8Wh58eLGY/9OzpNYs8k=
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        pdx-caf-mail.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.7 required=2.0 tests=ALL_TRUSTED,BAYES_00,
+        DKIM_INVALID,DKIM_SIGNED,SPF_NONE autolearn=no autolearn_force=no
+        version=3.4.0
+Received: from davidai-linux.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: daidavid1@smtp.codeaurora.org)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 0AB7860588;
+        Thu, 17 Oct 2019 02:21:00 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
+        s=default; t=1571278861;
+        bh=ya0y6uIRyTrjP0oZpf7fC4HeXiZCPtMSPUrBj16lLQg=;
+        h=From:To:Cc:Subject:Date:From;
+        b=dp1hnxySPzveI1r8i/H0PIobU3pyRmtIX34yugKQ1bM7Mv/XWpn0YVp+b8nq606HF
+         hThh7an7dxGYOh8QB3frRfnC/sqMAQHRgd61fhFdtjGJhtffuR+kN8K10qLougTNFw
+         1ekXsd2PGWfR4AFXs1D60BFVEfBax4wqEYwpF/A4=
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 0AB7860588
+Authentication-Results: pdx-caf-mail.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: pdx-caf-mail.web.codeaurora.org; spf=none smtp.mailfrom=daidavid1@codeaurora.org
+From:   David Dai <daidavid1@codeaurora.org>
+To:     georgi.djakov@linaro.org, bjorn.andersson@linaro.org,
+        robh+dt@kernel.org
+Cc:     David Dai <daidavid1@codeaurora.org>, evgreen@google.com,
+        sboyd@kernel.org, ilina@codeaurora.org, seansw@qti.qualcomm.com,
+        elder@linaro.org, linux-kernel@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-pm@vger.kernel.org
+Subject: [RFC PATCH 0/4] Redefine interconnect provider DT nodes for SDM845
+Date:   Wed, 16 Oct 2019 19:20:48 -0700
+Message-Id: <1571278852-8023-1-git-send-email-daidavid1@codeaurora.org>
+X-Mailer: git-send-email 1.9.1
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Saravana Kannan (2019-10-08 17:11:59)
-> Quoting Stephen Boyd:
-> > The property would describe what's going to this device and how it's
-> > integrated into the SoC. This is similar to how we describe what port is
-> > connected to a device with the of graph binding or how we only list the
-> > clk or regulator that goes to a device and not the whole path to the
-> > root of the respective tree.
-> >=20
-> > There can be a driver API that gets these port numbers out and
-> > constructs a path to another struct device or struct device_node. I
-> > imagine that 90% of the time a driver is going to request some bandwidth
-> > from their master port (or ports) to the DDR controller. We could either
-> > make the DDR controller a device that can be globally acquired or
-> > integrate it deeply into the API to the point that it looks for a DDR
-> > controller somewhere or relies on interconnect providers to tell the
-> > framework about the controller.
-> >=20
-> > TL;DR is that I don't want to have to specify paths in each and every
-> > node to say that some port on this device here is connected to some port
-> > on the DDR controller and that we want to adjust the bandwidth or QoS
-> > across this path. I'd like to describe a device "hermetically" by
-> > listing out the ports the device has. Then we can rely on the OS to
-> > figure out what paths to construct and change. If we need to constrain
-> > or tweak those paths then we can do that with the existing interconnects
-> > binding, but let's worry about that when we get there.
->=20
-> I think I understand what you are trying to do here. Correct me if my
-> understanding is wrong. Each device just lists what interconnects (and th=
-eir
-> ports) it's connected to -- let's call this device endpoints.
+While there are no current consumers of the SDM845 interconnect device in
+devicetree, take this opportunity to redefine the interconnect device nodes
+as the previous definitions of using a single child node under the apps_rsc
+device did not accurately capture the description of the hardware.
+The Network-On-Chip (NoC) interconnect devices should be represented in a
+manner akin to QCS404 platforms[1] where there is a separation of NoC devices
+and its RPM/RPMh counterparts.
 
-Yes this is the ideal case.
+The bcm-voter devices are representing the RPMh devices that the interconnect
+providers need to communicate with and there can be more than one instance of
+the Bus Clock Manager (BCM) which can live under different instances of Resource
+State Coordinators (RSC). There are display use cases where consumers may need
+to target a different bcm-voter (Some display specific RSC) than the default,
+and there needs to be a way to represent this connection in devicetree.
 
->=20
-> If a device is making bandwidth votes from itself to some other device, i=
-t just
-> specifies the other end point (as a device? path name?) in icc_get(). The
-> interconnect framework can then figure out what two interconnect ports the
-> icc_get() is about (by looking at the device endpoints info) and then con=
-struct
-> the path.
->=20
-> But it's not clear how you'll handle the case where a Device-A wants to m=
-ake a
-> bandwidth vote from a Device-B to Device-C. This is necessary for multiple
-> scenarios. Eg: booting a remote proc where the CPU needs to make sure the
-> remote proc has its path to DDR active. icc_get() can't always assume the
-> source is the device making the request. So, I don't think you can omit t=
-he
-> source of the path in the DT binding.
+This patches series extends the original discussion involving the SDM845
+interconnect bindings[2] by adding accompanying driver implementations
+using the split NoC devices. The first patch also updates existing
+sdm845 binding documentation to DT schema format using json-schema.
 
-This is one scenario, not various scenarios. For a remote proc why
-wouldn't we list the endpoint for the remote processor in the remote
-proc node in DT? That makes sense to me so I'm not following this
-scenario.
+[1]: https://lkml.org/lkml/2019/6/13/143
+[2]: https://lkml.org/lkml/2019/7/19/1063
 
->=20
-> If we take the above into account, would the only change in your proposal=
- be to
-> list the source and destination device in DT instead of their interconnec=
-t and
-> ports?  I don't have a strong opinion on whether this is necessary, but w=
-ant to
-> make sure that we are all talking about the same thing.
+David Dai (4):
+  dt-bindings: interconnect: Update Qualcomm SDM845 DT bindings
+  arm64: dts: sdm845: Redefine interconnect provider DT nodes
+  interconnect: qcom: Refactor icc rpmh support
+  interconnect: qcom: sdm845: Split qnodes into their respective NoCs
 
-What does this mean? I would assume that if device A is using another
-device B, either that would be expressed in DT via a phandle property or
-userspace would be connecting the two devices up with each other with
-something like dma_buf so the driver would know the other side of the
-path they want to scale bandwidth on.
+ .../bindings/interconnect/qcom,bcm-voter.yaml      |  45 ++
+ .../bindings/interconnect/qcom,sdm845.txt          |  24 -
+ .../bindings/interconnect/qcom,sdm845.yaml         | 108 +++
+ arch/arm64/boot/dts/qcom/sdm845.dtsi               |  60 +-
+ drivers/interconnect/qcom/Kconfig                  |   8 +
+ drivers/interconnect/qcom/Makefile                 |   4 +
+ drivers/interconnect/qcom/bcm-voter.c              | 355 ++++++++++
+ drivers/interconnect/qcom/bcm-voter.h              |  28 +
+ drivers/interconnect/qcom/icc-rpmh.c               | 154 +++++
+ drivers/interconnect/qcom/icc-rpmh.h               | 150 +++++
+ drivers/interconnect/qcom/sdm845.c                 | 727 ++++++---------------
+ 11 files changed, 1115 insertions(+), 548 deletions(-)
+ create mode 100644 Documentation/devicetree/bindings/interconnect/qcom,bcm-voter.yaml
+ delete mode 100644 Documentation/devicetree/bindings/interconnect/qcom,sdm845.txt
+ create mode 100644 Documentation/devicetree/bindings/interconnect/qcom,sdm845.yaml
+ create mode 100644 drivers/interconnect/qcom/bcm-voter.c
+ create mode 100644 drivers/interconnect/qcom/bcm-voter.h
+ create mode 100644 drivers/interconnect/qcom/icc-rpmh.c
+ create mode 100644 drivers/interconnect/qcom/icc-rpmh.h
 
->=20
-> Another way to look at this: There's one crucial difference between clock=
-s and
-> interconnects. Given a clock controller and it's "output port", the clock=
- that
-> you referring to doesn't change irrespective of what device is asking for=
- it.
-> But in the case of an interconnect, if you specify just a destination
-> interconnect and it's port, the path that you are referring to changes ba=
-sed on
-> which device is requesting it. And if you want a device independent of
-> referring to a path, you need to specify the source and destination expli=
-citly.
-
-Yes but those are use-cases that don't need to be expressed in DT. We
-should be able to get by with just listing the endpoints and then build
-the layer in the kernel to get the other side of the endpoint if it's
-something like DDR or another device that we want to connect the
-endpoint to.
-
->=20
-> Also, if a firmware isn't used, how do you see your icc_get() proposal wo=
-rking
-> with just the "name"? In what way is it better than the current icc_get()=
- API?
-
-If there isn't firmware and we're using platform data then I imagine we
-would have to have data tables listing out the endpoints of various
-devices, endpoint names, and the device names associated with those
-endpoints so we could match them up in the framework.
+-- 
+The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
+a Linux Foundation Collaborative Project
 
