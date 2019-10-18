@@ -2,96 +2,108 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 10892DCC35
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 18 Oct 2019 19:05:39 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 69F52DCC3D
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 18 Oct 2019 19:07:03 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2505292AbfJRRFg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 18 Oct 2019 13:05:36 -0400
-Received: from mail-pf1-f193.google.com ([209.85.210.193]:46506 "EHLO
-        mail-pf1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2505283AbfJRRFf (ORCPT
+        id S2404961AbfJRRHC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 18 Oct 2019 13:07:02 -0400
+Received: from mail-pf1-f196.google.com ([209.85.210.196]:39144 "EHLO
+        mail-pf1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2387714AbfJRRHC (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 18 Oct 2019 13:05:35 -0400
-Received: by mail-pf1-f193.google.com with SMTP id q5so4243127pfg.13
-        for <linux-arm-msm@vger.kernel.org>; Fri, 18 Oct 2019 10:05:35 -0700 (PDT)
+        Fri, 18 Oct 2019 13:07:02 -0400
+Received: by mail-pf1-f196.google.com with SMTP id v4so4262835pff.6
+        for <linux-arm-msm@vger.kernel.org>; Fri, 18 Oct 2019 10:07:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to:user-agent;
-        bh=3AWhLBU87R+tIjbOIzrOp4O2c50HJ77phRCMMuhDr1M=;
-        b=XeC1eSsupnxZ2cZz0V/Tb10DmQP8FRk85GjE//57o3i9hmb/DJCAK42pb5JgfbUo08
-         xi3/szTMch6NOOcybQHJD08mJdjKhQHWCLatwJkQVwtJx/JKQOO80zRPK3MR67P0Rw6x
-         j8E/DnUOqTD//H2VsFjdRQCnNReZ9usDZVBUPiL+kXiPRV05qSvrF0m+KjEdN9FJnWAt
-         p9BlwjAxmXMmWU1LVHKdUjCc5Ny3J1W+8U8g/FD95Z6s03ZiBYO3epkhdsuEzrfI4RfC
-         S7/l9ansDJJnZYGJAZm7BddnoEQhm/P619/PSz7bGfdkw9oDiwzmyB7Q98pg2kUaxQQI
-         xlkQ==
+        bh=s4mBZS+ljuU08rW884SHkz0i5bxQ4SJXmq8jp6tRUPg=;
+        b=yKhqYHL2pFUl4x0vzuSYcslNeVF/bHclgLn/jbiR4D31jUrWdwXJOkaY4oPnzZDaZX
+         klcUgEiOu86wgFyATnDdOleKOmdqzEPxQNCjfbE8VyOenkKZGNlP9Z90fZLOWTmKCGok
+         yl3Rz2uIwif2Uvh6c9EgeKbCUtKbF5dtcsB/oXeUEiLMe4KrpsGUbU6QQBjowWXagJ1D
+         ARrvds73ksxjjg01m9PTHZ0NCMtz3Rw+CoT7iZeLrJwHGjeYSPWBdfNqGFpb4j1TnRLJ
+         UzAfIkbLArZpKqcv0G8IeTQEGtfEYmRUviwIPPMCXFX0iqk0RpDIaDa9Z0GjVCRI8sIS
+         k+gA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=3AWhLBU87R+tIjbOIzrOp4O2c50HJ77phRCMMuhDr1M=;
-        b=ilQrYbUZosfBIQi0LdSxw+vtNhpsi3a+3RWO3GQSEEvn3RAs0HcLsQqkVaQrLiIDAE
-         ROTWyBlLVUQ8iiZxe+Ru4j/cERiwgPSJNopv0Z2PrNPJfkaUN4WhAe6ak0mM9vGwXSqp
-         WdfSC+HoO4ML/gQH4nZ1K5BUwzlIaMu3g/HnFFyFmqZ8cFsUW8N3fs1E55qc7hSyYMx7
-         RcWI0VPYfVxyACDbywNm4Rm82WUce/2W5ONCEqOK+mPOwdfIPhlzfzr2KUTD6MNXGh47
-         kMwSl3WbXGYqswG5HRnc1ERcPaM2r/7UWum+xf2t8TRKWuJWf3efPDTmyvx0Rs/S3NeX
-         gf6g==
-X-Gm-Message-State: APjAAAXcXnqBAicrHgVZugiNqbXyG2qlxgVND0fcG5Ef1gAGU+F1jyJI
-        ezD1vLVv6NDY6sUNIfO6xZ+AVQ==
-X-Google-Smtp-Source: APXvYqz7a3/zrYpGmxBc3pou+oeyNDpKOmnUhi9w1oWvzYGHinizbWe7tR4ZySKQpst4zwh7RFddmA==
-X-Received: by 2002:a63:f418:: with SMTP id g24mr11352479pgi.15.1571418334884;
-        Fri, 18 Oct 2019 10:05:34 -0700 (PDT)
+        bh=s4mBZS+ljuU08rW884SHkz0i5bxQ4SJXmq8jp6tRUPg=;
+        b=MSB435g1wS/F2GLgSmUP3a4kzgNZCx3rBO54fXJdRdFMrgBmQe9Cw6TWef/CInXWnG
+         tqQPftLAAVgmSrBTdOSs4KND0cBPoJ0MDRLsPQhMQZZCbnA4W5BCP3ZqA/WD3BR2v+uw
+         mLGpmnMo8L2asIY4bCTqhuV4VpPlql+xAq7IpLDlu6k+9VVc24V9sf5fzXg7P6LENJ4z
+         +o+KuhR99xH7srVtZpfPGOYHF+S3JY/higP6JoDvD6hIJABAMJaGi+QGAxrCRySZH3GH
+         CAHwd+n90hQqAPDMnakfUe15gVkieCSH97vnkvlw0Pcw0nuC9Zh/0P2Y7kZbqH6NcvC0
+         5q3g==
+X-Gm-Message-State: APjAAAWNjvLHmunpVoKknVID/cShLV/qAncFcp4IbDKmbU6x5yvEnZ/D
+        2zGawQQKT7T8BR4G2kLnaDn0BQ==
+X-Google-Smtp-Source: APXvYqzCsL68VirLSBGvWUCdpFt/+Zq1BrRbdAcnSRDaLPTmDpRsFdPQLecri/RwQRFAROsaxnc6qA==
+X-Received: by 2002:a62:6842:: with SMTP id d63mr7792318pfc.16.1571418421377;
+        Fri, 18 Oct 2019 10:07:01 -0700 (PDT)
 Received: from tuxbook-pro (104-188-17-28.lightspeed.sndgca.sbcglobal.net. [104.188.17.28])
-        by smtp.gmail.com with ESMTPSA id 2sm8872881pfa.43.2019.10.18.10.05.33
+        by smtp.gmail.com with ESMTPSA id f13sm6753490pgr.6.2019.10.18.10.06.59
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 18 Oct 2019 10:05:34 -0700 (PDT)
-Date:   Fri, 18 Oct 2019 10:05:32 -0700
+        Fri, 18 Oct 2019 10:07:00 -0700 (PDT)
+Date:   Fri, 18 Oct 2019 10:06:57 -0700
 From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
-Cc:     agross@kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: Re: [RFC PATCH 0/4] Enable msm8998 bluetooth
-Message-ID: <20191018170532.GC4500@tuxbook-pro>
-References: <20191017221843.8130-1-jeffrey.l.hugo@gmail.com>
+To:     YueHaibing <yuehaibing@huawei.com>
+Cc:     linus.walleij@linaro.org, manivannan.sadhasivam@linaro.org,
+        afaerber@suse.de, f.fainelli@gmail.com, rjui@broadcom.com,
+        sbranden@broadcom.com, bcm-kernel-feedback-list@broadcom.com,
+        jesper.nilsson@axis.com, lars.persson@axis.com,
+        ludovic.desroches@microchip.com, nicolas.ferre@microchip.com,
+        alexandre.belloni@bootlin.com, baruch@tkos.co.il,
+        linux-arm-kernel@lists.infradead.org, linux-gpio@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-arm-kernel@axis.com,
+        linux-oxnas@groups.io, linux-renesas-soc@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-tegra@vger.kernel.org,
+        vz@mleia.com, narmstrong@baylibre.com, geert+renesas@glider.be,
+        daniel@zonque.org, haojian.zhuang@gmail.com, wens@csie.org,
+        thierry.reding@gmail.com, jonathanh@nvidia.com, agross@kernel.org
+Subject: Re: [PATCH -next 11/30] pinctrl: msm: use
+ devm_platform_ioremap_resource() to simplify code
+Message-ID: <20191018170657.GD4500@tuxbook-pro>
+References: <20191017122640.22976-1-yuehaibing@huawei.com>
+ <20191017122640.22976-12-yuehaibing@huawei.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20191017221843.8130-1-jeffrey.l.hugo@gmail.com>
+In-Reply-To: <20191017122640.22976-12-yuehaibing@huawei.com>
 User-Agent: Mutt/1.12.1 (2019-06-15)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu 17 Oct 15:18 PDT 2019, Jeffrey Hugo wrote:
+On Thu 17 Oct 05:26 PDT 2019, YueHaibing wrote:
 
-> This series enables bluetooth on the msm8998 platforms.  However,
-> without fixes under discussion [1] and [2], the init process will fail,
-> leaving bluetooth non-functional.  Perhaps it is best to wait until the
-> dependencies meet acceptance before taking this series.
+> Use devm_platform_ioremap_resource() to simplify the code a bit.
+> This is detected by coccinelle.
 > 
-> [1] - https://lkml.org/lkml/2019/10/17/599
-> [2] - https://lkml.org/lkml/2019/10/17/975 
+> Signed-off-by: YueHaibing <yuehaibing@huawei.com>
 
-Since the two patches has been applied, by respective maintainer, I've
-applied the series.
+Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
 
-Thanks,
-Bjorn
-
+> ---
+>  drivers/pinctrl/qcom/pinctrl-msm.c | 3 +--
+>  1 file changed, 1 insertion(+), 2 deletions(-)
 > 
-> Jeffrey Hugo (4):
->   arm64: dts: qcom: msm8998: Add blsp1 BAM
->   arm64: dts: qcom: msm8998: Add blsp1_uart3
->   arm64: dts: qcom: msm8998-mtp: Enable bluetooth
->   arm64: dts: qcom: msm8998-clamshell: Enable bluetooth
-> 
->  .../boot/dts/qcom/msm8998-clamshell.dtsi      | 17 ++++++++++++
->  arch/arm64/boot/dts/qcom/msm8998-mtp.dtsi     | 14 ++++++++++
->  arch/arm64/boot/dts/qcom/msm8998-pins.dtsi    | 13 +++++++++
->  arch/arm64/boot/dts/qcom/msm8998.dtsi         | 27 +++++++++++++++++++
->  4 files changed, 71 insertions(+)
-> 
+> diff --git a/drivers/pinctrl/qcom/pinctrl-msm.c b/drivers/pinctrl/qcom/pinctrl-msm.c
+> index 763da0b..62fcae9 100644
+> --- a/drivers/pinctrl/qcom/pinctrl-msm.c
+> +++ b/drivers/pinctrl/qcom/pinctrl-msm.c
+> @@ -1150,8 +1150,7 @@ int msm_pinctrl_probe(struct platform_device *pdev,
+>  				return PTR_ERR(pctrl->regs[i]);
+>  		}
+>  	} else {
+> -		res = platform_get_resource(pdev, IORESOURCE_MEM, 0);
+> -		pctrl->regs[0] = devm_ioremap_resource(&pdev->dev, res);
+> +		pctrl->regs[0] = devm_platform_ioremap_resource(pdev, 0);
+>  		if (IS_ERR(pctrl->regs[0]))
+>  			return PTR_ERR(pctrl->regs[0]);
+>  	}
 > -- 
-> 2.17.1
+> 2.7.4
+> 
 > 
