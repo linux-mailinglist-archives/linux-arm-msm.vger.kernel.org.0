@@ -2,160 +2,81 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 3477CDBC5B
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 18 Oct 2019 07:05:01 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 7AC56DBCF3
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 18 Oct 2019 07:24:29 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2439134AbfJRFDM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 18 Oct 2019 01:03:12 -0400
-Received: from smtp.codeaurora.org ([198.145.29.96]:35342 "EHLO
-        smtp.codeaurora.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726139AbfJRFDL (ORCPT
+        id S2395435AbfJRFYL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 18 Oct 2019 01:24:11 -0400
+Received: from mail-pl1-f196.google.com ([209.85.214.196]:37769 "EHLO
+        mail-pl1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2395027AbfJRFYK (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 18 Oct 2019 01:03:11 -0400
-Received: by smtp.codeaurora.org (Postfix, from userid 1000)
-        id 3235D611B5; Fri, 18 Oct 2019 05:03:09 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
-        s=default; t=1571374990;
-        bh=xkwmYNFg1uTAlzxvBXAlwxTv5Amb5w9CFHuhTI/GUFA=;
-        h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
-        b=A3o4N4A+ThwRlG0WSfKtqT+hdLXEqISvjODSLiJHe4LxZGoNQBMc5MIXYw7MF9EVC
-         js9ZQULfDl1XODGzDcP3gvCoVYqwRJaQTvhXuwkCjDGdTQsEZSUQHGcMl+bFYCjy70
-         fxfT6dIU4Pxvz6drxmEw7n86GORXOvEzbRMQxVkc=
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        pdx-caf-mail.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.7 required=2.0 tests=ALL_TRUSTED,BAYES_00,
-        DKIM_INVALID,DKIM_SIGNED autolearn=no autolearn_force=no version=3.4.0
-Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
-        by smtp.codeaurora.org (Postfix) with ESMTP id F337560614;
-        Fri, 18 Oct 2019 05:03:08 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
-        s=default; t=1571374989;
-        bh=xkwmYNFg1uTAlzxvBXAlwxTv5Amb5w9CFHuhTI/GUFA=;
-        h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
-        b=TRC7FdhxqcvRaLT3Z2cDlrb+g+4pDGxEVYxnLUuUgZoPoO/wtPLN9gVyReShp55gi
-         xZfl6WnVEscRs/4rMCP9o3Hi44mrwgtKDlPFI1iIAUnFJrl48mgT1qNXIlpGaBK86l
-         7u9NU5BBQd7q9vlZZZkKwbJac2wZrnyGnJTpDrlA=
+        Fri, 18 Oct 2019 01:24:10 -0400
+Received: by mail-pl1-f196.google.com with SMTP id u20so2281016plq.4
+        for <linux-arm-msm@vger.kernel.org>; Thu, 17 Oct 2019 22:24:09 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=3o3EqRq3PgsgiQtn4AY+sfKyKLaEqB9pO5QeXjYW1YY=;
+        b=x9MS2j9SeTU1yjy/80Wvue6xeCHSErdf9EALM3Tjzc+ohSUTFrZ70EJyB/p3y8uCmp
+         E6oisSzZ64R/uT5q9VScB/CUyOZ7ZGyvBjpyp+JPl3pGOKo/IXykFV388A0MvXI77cst
+         pX5J3+EwmNbRsR9dCClbr9xz+PMxp6zkgcXjXyQuncbUYaCKC4ppDkibNqRVoiKxoeeH
+         +oLDcz/9+Kcji/s4z+0T7kT4MnasCEasJtZh74m8B8wBqkjOwDpK8JzeJNlW3UOJuHVG
+         pt2vWbvQc3jWMwz2Ms+vvdBzlZUx/NjpKlQsWPs7KiSDmoqv7lUg/7KxWmUlBYxRTjrF
+         KBsQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=3o3EqRq3PgsgiQtn4AY+sfKyKLaEqB9pO5QeXjYW1YY=;
+        b=Xl2TxOvVQyRvh4sanPVWBxcMmk+oOPdck0Xuru92XIxsu8pp+VOEkdQTksycxO5VKL
+         DD5Zs39ioegC/ohHFQN+9YStoEN8BJ8ut/Rly/7OtJ+Uz9nus6GDtKijcBcR37JD7Vzy
+         Cv88Rram+iJxnOchnc+c3kGBksliGHzf7m17zIGyuQnM9UTqT9sYxWZm6wkiB3EtylEY
+         /ZAwbB14232zmVGdTtbUDCu2gVQC1HbiIUjG+aynoTBmrqJwipOJeGIuslafkQbY3cNW
+         3I5NDT1bBpFSiF7QRn3wzkMxdzfoi8kA1QWDxlH9L5fgRnSS9aaNNHaPRJ1TE27ieXTO
+         B9AQ==
+X-Gm-Message-State: APjAAAV3HIvVmMq6K+5Epqbbz2lMt+6vZv2/zegUIgO/qP5uqvQVJChX
+        WQ6U1DLSDydw7A7fdsH5K2NorA==
+X-Google-Smtp-Source: APXvYqw19R+uAq8rWGJFrvZRkNKzLLbqBo0up+3BCPqhRIt/ceR4k2HbajPgDlT/k7e+4ftCKy6O+A==
+X-Received: by 2002:a17:902:b70b:: with SMTP id d11mr7650535pls.339.1571376248651;
+        Thu, 17 Oct 2019 22:24:08 -0700 (PDT)
+Received: from localhost.localdomain (104-188-17-28.lightspeed.sndgca.sbcglobal.net. [104.188.17.28])
+        by smtp.gmail.com with ESMTPSA id u11sm2178760pgc.61.2019.10.17.22.24.07
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 17 Oct 2019 22:24:08 -0700 (PDT)
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     Marcel Holtmann <marcel@holtmann.org>,
+        Johan Hedberg <johan.hedberg@gmail.com>
+Cc:     linux-bluetooth@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Jeffrey Hugo <jeffrey.l.hugo@gmail.com>,
+        linux-arm-msm@vger.kernel.org
+Subject: [PATCH 0/4] Bluetooth: hci_qca: Regulator usage cleanup
+Date:   Thu, 17 Oct 2019 22:24:00 -0700
+Message-Id: <20191018052405.3693555-1-bjorn.andersson@linaro.org>
+X-Mailer: git-send-email 2.23.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
-Content-Transfer-Encoding: 7bit
-Date:   Fri, 18 Oct 2019 10:33:08 +0530
-From:   kgunda@codeaurora.org
-To:     Lee Jones <lee.jones@linaro.org>
-Cc:     bjorn.andersson@linaro.org, jingoohan1@gmail.com,
-        b.zolnierkie@samsung.com, dri-devel@lists.freedesktop.org,
-        daniel.thompson@linaro.org, jacek.anaszewski@gmail.com,
-        pavel@ucw.cz, robh+dt@kernel.org, mark.rutland@arm.com,
-        linux-leds@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, Andy Gross <agross@kernel.org>,
-        linux-arm-msm@vger.kernel.org, linux-fbdev@vger.kernel.org,
-        linux-arm-msm-owner@vger.kernel.org
-Subject: Re: [PATCH V7 6/6] backlight: qcom-wled: Add auto string detection
- logic
-In-Reply-To: <20191017133024.GQ4365@dell>
-References: <1571220826-7740-1-git-send-email-kgunda@codeaurora.org>
- <1571220826-7740-7-git-send-email-kgunda@codeaurora.org>
- <20191017122653.GO4365@dell>
- <689831a9d7561f51cdb7ea0a1760d472@codeaurora.org>
- <20191017133024.GQ4365@dell>
-Message-ID: <1b21d0a80847173c4a1ee1943f974bda@codeaurora.org>
-X-Sender: kgunda@codeaurora.org
-User-Agent: Roundcube Webmail/1.2.5
+Content-Transfer-Encoding: 8bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2019-10-17 19:00, Lee Jones wrote:
-> On Thu, 17 Oct 2019, kgunda@codeaurora.org wrote:
-> 
->> On 2019-10-17 17:56, Lee Jones wrote:
->> > On Wed, 16 Oct 2019, Kiran Gunda wrote:
->> >
->> > > The auto string detection algorithm checks if the current WLED
->> > > sink configuration is valid. It tries enabling every sink and
->> > > checks if the OVP fault is observed. Based on this information
->> > > it detects and enables the valid sink configuration.
->> > > Auto calibration will be triggered when the OVP fault interrupts
->> > > are seen frequently thereby it tries to fix the sink configuration.
->> > >
->> > > The auto-detection also kicks in when the connected LED string
->> > > of the display-backlight malfunctions (because of damage) and
->> > > requires the damaged string to be turned off to prevent the
->> > > complete panel and/or board from being damaged.
->> > >
->> > > Signed-off-by: Kiran Gunda <kgunda@codeaurora.org>
->> > > ---
->> > >  drivers/video/backlight/qcom-wled.c | 410
->> > > +++++++++++++++++++++++++++++++++++-
->> > >  1 file changed, 404 insertions(+), 6 deletions(-)
->> > >
->> > > diff --git a/drivers/video/backlight/qcom-wled.c
->> > > b/drivers/video/backlight/qcom-wled.c
->> > > index b5b125c..ff7c409 100644
->> > > --- a/drivers/video/backlight/qcom-wled.c
->> > > +++ b/drivers/video/backlight/qcom-wled.c
-> 
-> [...]
-> 
->> > > +		if (int_sts & WLED3_CTRL_REG_OVP_FAULT_STATUS)
->> > > +			dev_dbg(wled->dev, "WLED OVP fault detected with SINK %d\n",
->> > > +				i + 1);
->> >
->> > I haven't reviewed the whole patch, but this caught my eye.
->> >
->> > I think this should be upgraded to dev_warn().
->> >
->> Thought of keeping these messages silent, Because the string 
->> configuration
->> will be corrected in this
->> and informing it at end of the auto string detection.
-> 
-> [...]
-> 
->> > > +	} else {
->> > > +		dev_warn(wled->dev, "New WLED string configuration found %x\n",
->> > > +			 sink_valid);
->> >
->> > Why would the user care about this?  Is it not normal?
->> >
->> Actually, it comes here if the user provided string configuration in 
->> the
->> device tree is in-correct.
->> That's why just informing the user about the right string 
->> configuration,
->> after the auto string detection.
-> 
-> Then I think we need to be more forthcoming.  Tell the user the
-> configuration is incorrect and what you've done to rectify it.
-> 
-> "XXX is not a valid configuration - using YYY instead"
-> 
-Sure. Will update it in the next series.
-> [...]
-> 
->> > > +static int wled_configure_ovp_irq(struct wled *wled,
->> > > +				  struct platform_device *pdev)
->> > > +{
->> > > +	int rc;
->> > > +	u32 val;
->> > > +
->> > > +	wled->ovp_irq = platform_get_irq_byname(pdev, "ovp");
->> > > +	if (wled->ovp_irq < 0) {
->> > > +		dev_dbg(&pdev->dev, "ovp irq is not used\n");
->> >
->> > I assume this is optional.  What happens if no IRQ is provided?
->> >
->> Here OVP IRQ is used to detect the wrong string detection. If it is 
->> not
->> provided the auto string detection logic won't work.
-> 
-> "OVP IRQ not found - disabling automatic string detection"
-> 
-Sure. Will update it in the next series.
->> > If, for instance, polling mode is enabled, maybe something like this
->> > would be better?
->> >
->> >       dev_warn(&pdev->dev, "No IRQ found, falling back to polling
->> > mode\n");
+Clean up the regulator usage in hci_qca and in particular don't
+regulator_set_voltage() for fixed voltages. It cleans up the driver, but more
+important it makes bluetooth work on my Lenovo Yoga C630, where the regulator
+for vddch0 is defined with a voltage range that doesn't overlap the values in
+the driver.
+
+Bjorn Andersson (4):
+  Bluetooth: hci_qca: Update regulator_set_load() usage
+  Bluetooth: hci_qca: Don't vote for specific voltage
+  Bluetooth: hci_qca: Use regulator bulk enable/disable
+  Bluetooth: hci_qca: Split qca_power_setup()
+
+ drivers/bluetooth/hci_qca.c | 135 +++++++++++++++---------------------
+ 1 file changed, 55 insertions(+), 80 deletions(-)
+
+-- 
+2.23.0
+
