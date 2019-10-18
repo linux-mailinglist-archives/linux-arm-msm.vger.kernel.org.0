@@ -2,108 +2,83 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 6C128DC202
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 18 Oct 2019 12:03:36 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D411FDC226
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 18 Oct 2019 12:09:39 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2633072AbfJRKDf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 18 Oct 2019 06:03:35 -0400
-Received: from [217.140.110.172] ([217.140.110.172]:60546 "EHLO foss.arm.com"
-        rhost-flags-FAIL-FAIL-OK-OK) by vger.kernel.org with ESMTP
-        id S2389081AbfJRKDf (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 18 Oct 2019 06:03:35 -0400
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 7E944494;
-        Fri, 18 Oct 2019 03:03:10 -0700 (PDT)
-Received: from e121166-lin.cambridge.arm.com (unknown [10.1.196.255])
-        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id AE8F43F6C4;
-        Fri, 18 Oct 2019 03:03:08 -0700 (PDT)
-Date:   Fri, 18 Oct 2019 11:03:04 +0100
-From:   Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>
-To:     Ulf Hansson <ulf.hansson@linaro.org>
-Cc:     "Rafael J . Wysocki" <rjw@rjwysocki.net>,
-        Daniel Lezcano <daniel.lezcano@linaro.org>,
-        Sudeep Holla <sudeep.holla@arm.com>,
-        Mark Rutland <mark.rutland@arm.com>,
-        Lina Iyer <ilina@codeaurora.org>,
-        Linux PM <linux-pm@vger.kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Vincent Guittot <vincent.guittot@linaro.org>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Kevin Hilman <khilman@kernel.org>,
-        Linux ARM <linux-arm-kernel@lists.infradead.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>
-Subject: Re: [PATCH 01/13] cpuidle: psci: Fix potential access to unmapped
- memory
-Message-ID: <20191018100304.GA28830@e121166-lin.cambridge.arm.com>
-References: <20191010113937.15962-1-ulf.hansson@linaro.org>
- <20191010113937.15962-2-ulf.hansson@linaro.org>
- <20191018093839.GB25918@e121166-lin.cambridge.arm.com>
- <CAPDyKFqcHY6+Eq9d6xTPYMDrUOtGs+64YuwZ1EbFtqQZe0+xEw@mail.gmail.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAPDyKFqcHY6+Eq9d6xTPYMDrUOtGs+64YuwZ1EbFtqQZe0+xEw@mail.gmail.com>
-User-Agent: Mutt/1.9.4 (2018-02-28)
+        id S2407946AbfJRKJi (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 18 Oct 2019 06:09:38 -0400
+Received: from smtp.codeaurora.org ([198.145.29.96]:42746 "EHLO
+        smtp.codeaurora.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2407945AbfJRKJi (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 18 Oct 2019 06:09:38 -0400
+Received: by smtp.codeaurora.org (Postfix, from userid 1000)
+        id 7856160DCF; Fri, 18 Oct 2019 10:09:37 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
+        s=default; t=1571393377;
+        bh=GnyW+zZ5E9Qp6Unvs/fu9z+p34r4HvU9EpUGbP/UdtY=;
+        h=From:To:Cc:Subject:Date:From;
+        b=OhEGjNNA8KUNTP77pBgZROYPIHrD+HrzE1DdLr4J/aFRzB3TDaOKjPMGwAtugY3Xd
+         +oUuNK1lhuj1cdb/7rxhFGyx0VpsLi75EVhfaQnsElHroGQ0r3bpOEi/XHE6is56Py
+         PW0oSJJqpmjUKIdNuV/uqHnE5VaFBWlT52xRZ8Ro=
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        pdx-caf-mail.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.7 required=2.0 tests=ALL_TRUSTED,BAYES_00,
+        DKIM_INVALID,DKIM_SIGNED,SPF_NONE autolearn=no autolearn_force=no
+        version=3.4.0
+Received: from tdas-linux.qualcomm.com (blr-c-bdr-fw-01_globalnat_allzones-outside.qualcomm.com [103.229.19.19])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: tdas@smtp.codeaurora.org)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 9679860AD1;
+        Fri, 18 Oct 2019 10:09:32 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
+        s=default; t=1571393376;
+        bh=GnyW+zZ5E9Qp6Unvs/fu9z+p34r4HvU9EpUGbP/UdtY=;
+        h=From:To:Cc:Subject:Date:From;
+        b=QZ/4Si57vvVV2Y9EKddzQeHoS3sFeoYUMM5rsYfi2GV0QXyZ20V3BKG7pb+2cpKYu
+         5jZJbfF4H7gB5nIDx8aZfa5G1rjr8AIaQmSQIqJ+Jo1aZvITV+8vuwfMm69dYUZlwY
+         BcjIBs+8MYANUfZW9oqyl1l4di99zgHCQ14ssQC8=
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 9679860AD1
+Authentication-Results: pdx-caf-mail.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: pdx-caf-mail.web.codeaurora.org; spf=none smtp.mailfrom=tdas@codeaurora.org
+From:   Taniya Das <tdas@codeaurora.org>
+To:     Stephen Boyd <sboyd@kernel.org>,
+        =?UTF-8?q?Michael=20Turquette=20=C2=A0?= <mturquette@baylibre.com>
+Cc:     Andy Gross <andy.gross@linaro.org>,
+        David Brown <david.brown@linaro.org>,
+        Rajendra Nayak <rnayak@codeaurora.org>,
+        linux-arm-msm@vger.kernel.org, linux-soc@vger.kernel.org,
+        linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org,
+        devicetree@vger.kernel.org, robh@kernel.org, robh+dt@kernel.org,
+        Taniya Das <tdas@codeaurora.org>
+Subject: [PATCH v1 0/3] Add support for RPMHCC for SC7180
+Date:   Fri, 18 Oct 2019 15:39:21 +0530
+Message-Id: <1571393364-32697-1-git-send-email-tdas@codeaurora.org>
+X-Mailer: git-send-email 2.7.4
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, Oct 18, 2019 at 11:51:11AM +0200, Ulf Hansson wrote:
-> On Fri, 18 Oct 2019 at 11:38, Lorenzo Pieralisi
-> <lorenzo.pieralisi@arm.com> wrote:
-> >
-> > On Thu, Oct 10, 2019 at 01:39:25PM +0200, Ulf Hansson wrote:
-> > > When the WFI state have been selected, the in-parameter idx to
-> > > psci_enter_idle_state() is zero. In this case, we must not index the state
-> > > array as "state[idx - 1]", as it means accessing data outside the array.
-> > > Fix the bug by pre-checking if idx is zero.
-> > >
-> > > Fixes: 9ffeb6d08c3a ("PSCI: cpuidle: Refactor CPU suspend power_state parameter handling")
-> > > Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
-> > > ---
-> > >  drivers/cpuidle/cpuidle-psci.c | 6 +++---
-> > >  1 file changed, 3 insertions(+), 3 deletions(-)
-> > >
-> > > diff --git a/drivers/cpuidle/cpuidle-psci.c b/drivers/cpuidle/cpuidle-psci.c
-> > > index f3c1a2396f98..2e91c8d6c211 100644
-> > > --- a/drivers/cpuidle/cpuidle-psci.c
-> > > +++ b/drivers/cpuidle/cpuidle-psci.c
-> > > @@ -27,10 +27,10 @@ static DEFINE_PER_CPU_READ_MOSTLY(u32 *, psci_power_state);
-> > >  static int psci_enter_idle_state(struct cpuidle_device *dev,
-> > >                               struct cpuidle_driver *drv, int idx)
-> > >  {
-> > > -     u32 *state = __this_cpu_read(psci_power_state);
-> > > +     u32 *states = __this_cpu_read(psci_power_state);
-> > > +     u32 state = idx ? states[idx - 1] : 0;
-> > >
-> > > -     return CPU_PM_CPU_IDLE_ENTER_PARAM(psci_cpu_suspend_enter,
-> > > -                                        idx, state[idx - 1]);
-> > > +     return CPU_PM_CPU_IDLE_ENTER_PARAM(psci_cpu_suspend_enter, idx, state);
-> >
-> > Technically we don't dereference that array entry but I agree this
-> > is ugly and potentially broken.
-> 
-> No sure understand the non-deference part.
-> 
-> If the governor selects WFI, the idx will be 0 - and thus we end up
-> using state[-1], doesn't that dereference an invalid address, no?
+Update the Documentation binding of RPMHCC to YAML schemas.
+Add RPMH clocks required to be supported on SC7180.
 
-No because CPU_PM_CPU_IDLE_ENTER_PARAM is a macro, the code it
-preprocesses to won't dereference state[idx - 1] if idx == 0.
+Taniya Das (3):
+  dt-bindings: clock: Add YAML schemas for the QCOM RPMHCC clock
+    bindings
+  dt-bindings: clock: Introduce RPMHCC bindings for SC7180
+  clk: qcom: clk-rpmh: Add support for RPMHCC for SC7180
 
-I agree it is *very* ugly but technically code is not broken.
+ .../devicetree/bindings/clock/qcom,rpmh-clk.txt    | 27 ------------
+ .../devicetree/bindings/clock/qcom,rpmhcc.yaml     | 50 ++++++++++++++++++++
+ drivers/clk/qcom/clk-rpmh.c                        | 19 ++++++++
+ 3 files changed, 69 insertions(+), 27 deletions(-)
+ delete mode 100644 Documentation/devicetree/bindings/clock/qcom,rpmh-clk.txt
+ create mode 100644 Documentation/devicetree/bindings/clock/qcom,rpmhcc.yaml
 
-> > My preference is aligning it with ACPI code and allocate one more
-> > entry in the psci_power_state array (useless for wfi, agreed but
-> > at least we remove this (-1) handling from the code).
-> 
-> I can do that, but sounds like a slightly bigger change. Are you fine
-> if I do that on top, so we can get this sent as fix for v5.4-rc[n]?
+--
+Qualcomm INDIA, on behalf of Qualcomm Innovation Center, Inc.is a member
+of the Code Aurora Forum, hosted by the  Linux Foundation.
 
-Technically we are not fixing anything; it is not such a big
-change, we need to allocate one entry more and update the array
-indexing.
-
-Lorenzo
