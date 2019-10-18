@@ -2,151 +2,124 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 04CEFDBF8A
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 18 Oct 2019 10:10:52 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 05E01DC045
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 18 Oct 2019 10:52:13 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727387AbfJRIKu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 18 Oct 2019 04:10:50 -0400
-Received: from mail-vs1-f66.google.com ([209.85.217.66]:40548 "EHLO
-        mail-vs1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729108AbfJRIKu (ORCPT
+        id S2442223AbfJRIwL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 18 Oct 2019 04:52:11 -0400
+Received: from mail-pg1-f195.google.com ([209.85.215.195]:45389 "EHLO
+        mail-pg1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726949AbfJRIwL (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 18 Oct 2019 04:10:50 -0400
-Received: by mail-vs1-f66.google.com with SMTP id v10so3458739vsc.7
-        for <linux-arm-msm@vger.kernel.org>; Fri, 18 Oct 2019 01:10:49 -0700 (PDT)
+        Fri, 18 Oct 2019 04:52:11 -0400
+Received: by mail-pg1-f195.google.com with SMTP id r1so2975488pgj.12
+        for <linux-arm-msm@vger.kernel.org>; Fri, 18 Oct 2019 01:52:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=hXiuhqjxfmBX/sG2OrevgXIiWecPGwPXk32tr5vuY04=;
-        b=VwYlda01p1jGwF9Bcpj6zOR1x8neb/OGEpTbgXNmPn+0y3Ixie8hgSCR3GFMOMUQkO
-         V9k0dUGqfvEGDXD71rbpvBsM2ctpv9jf3FpwvpX0hX4bz6Ekp05C5xf1Q6IdUk4Nyj6K
-         YjRQ6pYobbBbJLhsXDmp2c13cqewriR1/czWC50D/ab4buHLg0b+4UATUYxC6rn0X0jc
-         I+7ajpjy4re9wt4olcthlE5/90vhGY1EXdh0oi0gDqIu+WMsuXgBpYpy+eCQtU55pAHO
-         UJqq4/ahTtdJr4RKEOVoIaGPgKrSvPFXJemWwoqt7v49mmou6EbE9yLTmRrqW5D+9EQm
-         kW7w==
+        h=from:to:cc:subject:date:message-id;
+        bh=8Twp36GSbpZi8uCaMU+5CBUJfogrOLDIK7KeRjSvPeo=;
+        b=i0VuWL93/QAsy39njpz8hRgcLisEdpr+3KDPnSKzQ/awFW4pHcUg0UjlGu+xlAklGX
+         //w7RDxTTEbHiCZlDWhV8fb2xW0/nKfpvZFQEz4XoqB3WFvF2FB6oUjasGQAbwH6uuC7
+         wfiPJkAgPr3nTCPj0QhLnvy1e5YyA5e5r8alBv0c8CFRU3tb4JYL9W1sSMGL3gKa5tto
+         M+9LCFG2NwFaMw4SZt7mfiJZbqHXDmvybREgVDtVUsQMo1py7X4RVn9D4AgVNnfCuo42
+         KCPQ7glVcGEcJRD3uZfsOtnkXZR+Z8o3tP9Y2D6jmwnX9QJMpc28t0Pi8FdyhfamqMzl
+         zNFg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=hXiuhqjxfmBX/sG2OrevgXIiWecPGwPXk32tr5vuY04=;
-        b=BpyZtm6vxYgTa9Lt1Gw7HfZoO3e7k5Hxi1ySE3rzRyeGa6XoUbyjO/BlQ7HZEYPg5E
-         yiblnrpVHNlVRXMBkuWq/SQ2ql8v+GqiDO2wVn5x7FSg3UsXUYgjnP1BeSmOVApBl8Hc
-         mXVfzoFntYEAttH1j+ZzAq6JGsWjqlfdjatQockTVH3oK5hzAmmZu9/XGJO+VrdmJUEn
-         9yTAXuxbe+MDDXPGY8X+8OBWWt/FPiH4pUJwG3Qujnt7KsiMzP+80EUoyWWbvnt8QsWs
-         rafY2YNENfFy0evWxe6r0sxKFC6TdY1vcWnGwS234/ZXEer7P5jQnHT5lC0XQgFKxioR
-         Q5Aw==
-X-Gm-Message-State: APjAAAW3rwUVQ0eAMCBNmCYfwHkzYQ1iA0iCKZcWhoRXnZgGScCHeMKx
-        ZN5Hh1/8P9lFStvp+05LQfbfNt3HpUu2gIc01h7v7g==
-X-Google-Smtp-Source: APXvYqyYp0Yvnrsx2yfirIPl8CPOyfzoTsCZB6XxogSt1B4qW14k/8FyrHl8CQQX7yj4RKVw1UPExyXKcs5k4Nz0dnk=
-X-Received: by 2002:a67:cf05:: with SMTP id y5mr4906975vsl.34.1571386249087;
- Fri, 18 Oct 2019 01:10:49 -0700 (PDT)
-MIME-Version: 1.0
-References: <20191010113937.15962-1-ulf.hansson@linaro.org>
-In-Reply-To: <20191010113937.15962-1-ulf.hansson@linaro.org>
-From:   Ulf Hansson <ulf.hansson@linaro.org>
-Date:   Fri, 18 Oct 2019 10:10:13 +0200
-Message-ID: <CAPDyKFqcq6z=y67hQ4Gk8PayQ6R=b8B3hSv374A+4u-zuvrFaQ@mail.gmail.com>
-Subject: Re: [PATCH 00/13] cpuidle: psci: Support hierarchical CPU arrangement
-To:     Sudeep Holla <sudeep.holla@arm.com>,
-        Lorenzo Pieralisi <Lorenzo.Pieralisi@arm.com>
-Cc:     Rob Herring <robh+dt@kernel.org>,
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=8Twp36GSbpZi8uCaMU+5CBUJfogrOLDIK7KeRjSvPeo=;
+        b=I/ZLv+Fc8iWj1oS5KFExORdCwvJspEbUldywvXgXk66HAmd2GXPFJZ2wVxKKEdvACL
+         9fvA5jrrVRp/Zdtb4EHBKn+56kDwpy7QTr3Q0zDIcc7XQH6HlEfl4g1npbNtQQrAmpg4
+         Qcvvp59zny7rRll5ZhG384kIxoHZ/Ak4c4LE2MfuzCuOpJzCyLz5dv0WMao1w3w2tId4
+         /RBYbONiEAmDPDp4Jlxmz00zCKgjyBPSM9V1F461tLRuEZKbu5bS4vbdg4i7zCLFdFgf
+         8c+Kug4ia9bxMp6iXgcF7T9HL0yZ9c4RkYxs1ZTKih+2V8R4y1H5+iB61A6nIbE9p5rQ
+         7BpQ==
+X-Gm-Message-State: APjAAAUD6B8h4jblOpeb2PBW71n6+WEewiqXts3mmWUXmfonc9ID8Twn
+        jmXLqHkC52uOt/8j8SYtOZs9nQ==
+X-Google-Smtp-Source: APXvYqwdiN3EAKBoUU6BThGO5LVz4hi1jwIiB7pRL30zoDY6vs7gW8L2LmbVKtj6UUm9OUN0OCFjsg==
+X-Received: by 2002:aa7:86c2:: with SMTP id h2mr5445157pfo.0.1571388730332;
+        Fri, 18 Oct 2019 01:52:10 -0700 (PDT)
+Received: from localhost ([49.248.178.134])
+        by smtp.gmail.com with ESMTPSA id y7sm5886971pfn.142.2019.10.18.01.52.09
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Fri, 18 Oct 2019 01:52:09 -0700 (PDT)
+From:   Amit Kucheria <amit.kucheria@linaro.org>
+To:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        daniel.lezcano@linaro.org, viresh.kumar@linaro.org,
+        sudeep.holla@arm.com, bjorn.andersson@linaro.org,
+        edubezval@gmail.com, agross@kernel.org, tdas@codeaurora.org,
+        swboyd@chromium.org, ilina@codeaurora.org,
+        "Rafael J. Wysocki" <rjw@rjwysocki.net>,
+        Amit Kucheria <amit.kucheria@verdurent.com>,
+        Ben Segall <bsegall@google.com>,
+        Dietmar Eggemann <dietmar.eggemann@arm.com>,
+        Ingo Molnar <mingo@redhat.com>,
+        Juri Lelli <juri.lelli@redhat.com>,
+        Mel Gorman <mgorman@suse.de>,
+        Peter Zijlstra <peterz@infradead.org>,
+        Steven Rostedt <rostedt@goodmis.org>,
         Vincent Guittot <vincent.guittot@linaro.org>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Kevin Hilman <khilman@kernel.org>,
-        Linux ARM <linux-arm-kernel@lists.infradead.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        "Rafael J . Wysocki" <rjw@rjwysocki.net>,
-        Daniel Lezcano <daniel.lezcano@linaro.org>,
-        Mark Rutland <mark.rutland@arm.com>,
-        Lina Iyer <ilina@codeaurora.org>,
-        Linux PM <linux-pm@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+        Zhang Rui <rui.zhang@intel.com>
+Cc:     linux-clk@vger.kernel.org, linux-doc@vger.kernel.org,
+        linux-pm@vger.kernel.org
+Subject: [PATCH v4 0/6] Initialise thermal framework and cpufreq earlier during boot
+Date:   Fri, 18 Oct 2019 14:21:57 +0530
+Message-Id: <cover.1571387352.git.amit.kucheria@linaro.org>
+X-Mailer: git-send-email 2.17.1
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, 10 Oct 2019 at 13:40, Ulf Hansson <ulf.hansson@linaro.org> wrote:
->
-> This series enables initial support for hierarchical CPU arrangement, managed
-> by PSCI and its corresponding cpuidle driver. It's based on using the generic
-> PM domain (genpd), which nowadays also supports devices belonging to CPUs.
->
-> The last DTS patch enables the hierarchical topology to be used for the Qcom
-> 410c Dragonboard, which supports the PSCI OS-initiated mode.
->
-> Do note, most of the code in this series have been posted earlier, but from the
-> latest version being reviewed, we agreed on that it was better to re-work the
-> PSCI backend driver as a first step, simply to get a clean interface towards the
-> cpuidle driver.
->
-> Summary of the main-changes since the last submission [1]:
->
->  - Moved implementation from the psci FW dricer into cpuidle-psci.
->
->  - Re-requesting review of the DT bindings, as we have moved to yaml. No
->    changes as such, but tried to clarify a few things in the text.
->
->  - Drop the patch enabling support for CPU hotplug, postponing that to the next
->    step.
->
->  - Respect the hierarchical topology in DT only when OSI mode is supported.
->    This is to start simple and we can always extend the support on top.
->
-> The series is also available at:
-> git.linaro.org/people/ulf.hansson/linux-pm.git next
->
-> Kind regards
-> Ulf Hansson
->
-> [1]
-> https://lwn.net/Articles/788306/
->
->
-> Lina Iyer (1):
->   cpuidle: dt: Support hierarchical CPU idle states
->
-> Ulf Hansson (12):
->   cpuidle: psci: Fix potential access to unmapped memory
->   dt: psci: Update DT bindings to support hierarchical PSCI states
->   firmware: psci: Export functions to manage the OSI mode
->   of: base: Add of_get_cpu_state_node() to get idle states for a CPU
->     node
->   cpuidle: psci: Simplify OF parsing of CPU idle state nodes
->   cpuidle: psci: Support hierarchical CPU idle states
->   cpuidle: psci: Prepare to use OS initiated suspend mode via PM domains
->   cpuidle: psci: Add support for PM domains by using genpd
->   cpuidle: psci: Add a helper to attach a CPU to its PM domain
->   cpuidle: psci: Attach CPU devices to their PM domains
->   cpuidle: psci: Manage runtime PM in the idle path
->   arm64: dts: Convert to the hierarchical CPU topology layout for
->     MSM8916
->
->  .../devicetree/bindings/arm/psci.yaml         | 153 +++++++++
->  arch/arm64/boot/dts/qcom/msm8916.dtsi         |  57 +++-
->  drivers/cpuidle/Makefile                      |   4 +-
->  drivers/cpuidle/cpuidle-psci-domain.c         | 302 ++++++++++++++++++
->  drivers/cpuidle/cpuidle-psci.c                | 106 ++++--
->  drivers/cpuidle/cpuidle-psci.h                |  17 +
->  drivers/cpuidle/dt_idle_states.c              |   5 +-
->  drivers/firmware/psci/psci.c                  |  18 +-
->  drivers/of/base.c                             |  36 +++
->  include/linux/of.h                            |   8 +
->  include/linux/psci.h                          |   2 +
->  11 files changed, 673 insertions(+), 35 deletions(-)
->  create mode 100644 drivers/cpuidle/cpuidle-psci-domain.c
->  create mode 100644 drivers/cpuidle/cpuidle-psci.h
->
-> --
-> 2.17.1
->
+Changes since v3:
+- Init schedutil governor earlier too
+- Simplified changes to thermal_init() error path
+- Collects Acks
 
-Sudeep, Lorenzo,
+Changes since v2:
+- Missed one patch when posting v2. Respinning.
 
-Just wanted to give you a gentle ping about this series, especially
-patch1 is kind of urgent.
+Changes since v1:
+- Completely get rid of netlink support in the thermal framework.
+- This changes the early init patch to a single line - change to
+  core_initcall. Changed authorship of patch since it is nothing like the
+  original. Lina, let me know if you feel otherwise.
+- I've tested to make sure that the qcom-cpufreq-hw driver continues to
+  work correctly as a module so this won't impact Android's GKI plans.
+- Collected Acks
 
-Kind regards
-Uffe
+Device boot needs to be as fast as possible while keeping under the thermal
+envelope. Now that thermal framework is built-in to the kernel, we can
+initialize it earlier to enable thermal mitigation during boot.
+
+We also need the cpufreq HW drivers to be initialised earlier to act as the
+cooling devices. This series only converts over the qcom-hw driver to
+initialize earlier but can be extended to other platforms as well.
+
+Amit Kucheria (6):
+  thermal: Remove netlink support
+  thermal: Initialize thermal subsystem earlier
+  cpufreq: Initialise the governors in core_initcall
+  cpufreq: Initialize cpufreq-dt driver earlier
+  clk: qcom: Initialise clock drivers earlier
+  cpufreq: qcom-hw: Move driver initialisation earlier
+
+ .../driver-api/thermal/sysfs-api.rst          |  26 +----
+ drivers/clk/qcom/clk-rpmh.c                   |   2 +-
+ drivers/clk/qcom/gcc-qcs404.c                 |   2 +-
+ drivers/clk/qcom/gcc-sdm845.c                 |   2 +-
+ drivers/cpufreq/cpufreq-dt-platdev.c          |   2 +-
+ drivers/cpufreq/cpufreq_conservative.c        |   2 +-
+ drivers/cpufreq/cpufreq_ondemand.c            |   2 +-
+ drivers/cpufreq/cpufreq_performance.c         |   2 +-
+ drivers/cpufreq/cpufreq_powersave.c           |   2 +-
+ drivers/cpufreq/cpufreq_userspace.c           |   2 +-
+ drivers/cpufreq/qcom-cpufreq-hw.c             |   2 +-
+ drivers/thermal/thermal_core.c                | 103 +-----------------
+ include/linux/thermal.h                       |  11 --
+ kernel/sched/cpufreq_schedutil.c              |   2 +-
+ 14 files changed, 19 insertions(+), 143 deletions(-)
+
+-- 
+2.17.1
+
