@@ -2,64 +2,60 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 69613DC6B0
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 18 Oct 2019 15:58:11 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 3DF0DDC6C4
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 18 Oct 2019 16:02:44 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2408694AbfJRN5p (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 18 Oct 2019 09:57:45 -0400
-Received: from smtp.codeaurora.org ([198.145.29.96]:47794 "EHLO
-        smtp.codeaurora.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2404643AbfJRN5o (ORCPT
+        id S2393992AbfJROC3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 18 Oct 2019 10:02:29 -0400
+Received: from mail-wm1-f67.google.com ([209.85.128.67]:54843 "EHLO
+        mail-wm1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2393782AbfJROC2 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 18 Oct 2019 09:57:44 -0400
-Received: by smtp.codeaurora.org (Postfix, from userid 1000)
-        id EF48D611BD; Fri, 18 Oct 2019 13:57:43 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
-        s=default; t=1571407063;
-        bh=Z9QUer5RoaSbIwfPWwdpc0lD2Veyk1wUP4npdE2dGPk=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=WvnzHPE8PS4bDMKZpUM08Jurvz5xtb16pB/g5RJPqVdpJeEwaTletvZlV+Mh4JzJZ
-         Z4h8UHRfL3mWtPVg4r5tOWQQdD5zyZdYTR18rs0Zqi4x/YKtdoRNvm0sgr+q+cbtfT
-         XezUWNZjnHksdfpEW6OwiLc2k8HT4qEdeDbzHaYc=
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        pdx-caf-mail.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.7 required=2.0 tests=ALL_TRUSTED,BAYES_00,
-        DKIM_INVALID,DKIM_SIGNED,SPF_NONE autolearn=no autolearn_force=no
-        version=3.4.0
-Received: from blr-ubuntu-253.qualcomm.com (blr-bdr-fw-01_globalnat_allzones-outside.qualcomm.com [103.229.18.19])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: saiprakash.ranjan@codeaurora.org)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 864F5611CF;
-        Fri, 18 Oct 2019 13:57:39 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
-        s=default; t=1571407063;
-        bh=Z9QUer5RoaSbIwfPWwdpc0lD2Veyk1wUP4npdE2dGPk=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=WvnzHPE8PS4bDMKZpUM08Jurvz5xtb16pB/g5RJPqVdpJeEwaTletvZlV+Mh4JzJZ
-         Z4h8UHRfL3mWtPVg4r5tOWQQdD5zyZdYTR18rs0Zqi4x/YKtdoRNvm0sgr+q+cbtfT
-         XezUWNZjnHksdfpEW6OwiLc2k8HT4qEdeDbzHaYc=
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 864F5611CF
-Authentication-Results: pdx-caf-mail.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: pdx-caf-mail.web.codeaurora.org; spf=none smtp.mailfrom=saiprakash.ranjan@codeaurora.org
-From:   Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
-To:     Rob Herring <robh+dt@kernel.org>,
-        Mark Rutland <mark.rutland@arm.com>,
-        devicetree@vger.kernel.org, Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Stephen Boyd <swboyd@chromium.org>
-Cc:     linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Rajendra Nayak <rnayak@codeaurora.org>,
-        Rishabh Bhatnagar <rishabhb@codeaurora.org>,
-        Doug Anderson <dianders@chromium.org>,
-        Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
-Subject: [PATCH 2/2] dt-bindings: msm: Add LLCC for SC7180
-Date:   Fri, 18 Oct 2019 19:27:09 +0530
-Message-Id: <30f419d1612a3912e323287a96daa2b4fbe3dacd.1571406041.git.saiprakash.ranjan@codeaurora.org>
+        Fri, 18 Oct 2019 10:02:28 -0400
+Received: by mail-wm1-f67.google.com with SMTP id p7so6323122wmp.4
+        for <linux-arm-msm@vger.kernel.org>; Fri, 18 Oct 2019 07:02:27 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=RDn754hJYJ5LXSqXyPnQWWQyanYkEGiwZFxOe9DtcOE=;
+        b=AH91Q1XfnZCl/d/15l+fjFcQuHg1w75bjEGEkukNimRFUCp87vXsuwuSrKVy4gmdUQ
+         uaTBX6DuofdOwaI6pOsr3HL4lwXbYY4+CFY4NMtyKFas4QTX9j/GRY28MFHpm6dV6hTW
+         oZ7K0OtoHtM0rVADGSP1taKaliCFr1hNV0Qiu1F9HSyr1IZiwZM0Ayq+xcM77jaHpswu
+         vkGlwvlCNm3NkWS0P0NFZk1aRYlnwtCOGd+32EmH5l7tPNxzIMIu4dTiacvpNH1bP4fH
+         vl2VJ8b2XJb4ppVtXE/cqed1xOFVA/zKgW6J12DyOlZjboI5BYS1hb+0I/U297mmEl1n
+         spZw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=RDn754hJYJ5LXSqXyPnQWWQyanYkEGiwZFxOe9DtcOE=;
+        b=AYhRv4AIHxuqfKAvqUxOcbjAGR2srtBz+N5bnko1RnbwXNJdVr6KqFqiMcBJ9T67E2
+         rkPFAhTllFTQdj11yPV3d5idcWLLupcJjLDKqzMZgkqSczRGvZgtJt7Ns5hbLN7b5FC4
+         lWdFHGL6GdKVirwvEhQuuH/BpcN6pIS9yabzqkhLjFazuQaxwja2tb58x0lSVwo8NbUW
+         atvldVISPwbW/tZSo47HEBWc1nNGAQCWrNZbvP0M920YmjvXER9W8/+8ahJX8r+Qhf10
+         410rweTXV23xRC6dpoR+9yFjmZ8GYHLsSHeEXZza88VsGtGGxyt9QSR4Nqz7HXXO/si8
+         aYxA==
+X-Gm-Message-State: APjAAAWSQwDTZ+7DYYmVh3APte1UwsMWYqj6vCbCPn7WLW5POmQgF0yk
+        atJKTbrNpBmXYbXhubOBkVXbdg==
+X-Google-Smtp-Source: APXvYqy8C8A1yxjB9QJGBZ5lZGdFU4Ebb9IrYpQS+iwsus9/jn/K+GzPf78khldHJMvnhkTEoCROEA==
+X-Received: by 2002:a7b:c44f:: with SMTP id l15mr7774951wmi.121.1571407346358;
+        Fri, 18 Oct 2019 07:02:26 -0700 (PDT)
+Received: from localhost.localdomain ([212.45.67.2])
+        by smtp.googlemail.com with ESMTPSA id 26sm5192909wmf.20.2019.10.18.07.02.24
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Fri, 18 Oct 2019 07:02:25 -0700 (PDT)
+From:   Georgi Djakov <georgi.djakov@linaro.org>
+To:     linux-pm@vger.kernel.org, rostedt@goodmis.org, mingo@redhat.com
+Cc:     bjorn.andersson@linaro.org, vincent.guittot@linaro.org,
+        daidavid1@codeaurora.org, okukatla@codeaurora.org,
+        evgreen@chromium.org, mka@chromium.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Georgi Djakov <georgi.djakov@linaro.org>
+Subject: [PATCH] interconnect: Add basic tracepoints
+Date:   Fri, 18 Oct 2019 17:02:24 +0300
+Message-Id: <20191018140224.15087-1-georgi.djakov@linaro.org>
 X-Mailer: git-send-email 2.23.0
-In-Reply-To: <cover.1571406041.git.saiprakash.ranjan@codeaurora.org>
-References: <cover.1571406041.git.saiprakash.ranjan@codeaurora.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Sender: linux-arm-msm-owner@vger.kernel.org
@@ -67,29 +63,124 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add LLCC compatible for SC7180 SoC.
+The tracepoints can help with understanding the system behavior of a
+given interconnect path when the consumer drivers change their bandwidth
+demands. This might be interesting when we want to monitor the requested
+interconnect bandwidth for each client driver. The paths may share the
+same nodes and this will help to understand "who and when is requesting
+what". All this is useful for subsystem drivers developers and may also
+provide hints when optimizing the power and performance profile of the
+system.
 
-Signed-off-by: Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
+Signed-off-by: Georgi Djakov <georgi.djakov@linaro.org>
 ---
- Documentation/devicetree/bindings/arm/msm/qcom,llcc.txt | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ MAINTAINERS                         |  1 +
+ drivers/interconnect/core.c         |  9 +++++
+ include/trace/events/interconnect.h | 52 +++++++++++++++++++++++++++++
+ 3 files changed, 62 insertions(+)
+ create mode 100644 include/trace/events/interconnect.h
 
-diff --git a/Documentation/devicetree/bindings/arm/msm/qcom,llcc.txt b/Documentation/devicetree/bindings/arm/msm/qcom,llcc.txt
-index eaee06b2d8f2..f263aa539d47 100644
---- a/Documentation/devicetree/bindings/arm/msm/qcom,llcc.txt
-+++ b/Documentation/devicetree/bindings/arm/msm/qcom,llcc.txt
-@@ -11,7 +11,9 @@ Properties:
- - compatible:
- 	Usage: required
- 	Value type: <string>
--	Definition: must be "qcom,sdm845-llcc"
-+	Definition: must be one of:
-+		    "qcom,sc7180-llcc",
-+		    "qcom,sdm845-llcc"
+diff --git a/MAINTAINERS b/MAINTAINERS
+index 55199ef7fa74..c307c4b8f677 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -8526,6 +8526,7 @@ F:	drivers/interconnect/
+ F:	include/dt-bindings/interconnect/
+ F:	include/linux/interconnect-provider.h
+ F:	include/linux/interconnect.h
++F:	include/trace/events/interconnect.h
  
- - reg:
- 	Usage: required
--- 
-QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
-of Code Aurora Forum, hosted by The Linux Foundation
-
+ INVENSENSE MPU-3050 GYROSCOPE DRIVER
+ M:	Linus Walleij <linus.walleij@linaro.org>
+diff --git a/drivers/interconnect/core.c b/drivers/interconnect/core.c
+index 7b971228df38..e24092558c29 100644
+--- a/drivers/interconnect/core.c
++++ b/drivers/interconnect/core.c
+@@ -24,6 +24,9 @@ static LIST_HEAD(icc_providers);
+ static DEFINE_MUTEX(icc_lock);
+ static struct dentry *icc_debugfs_dir;
+ 
++#define CREATE_TRACE_POINTS
++#include <trace/events/interconnect.h>
++
+ /**
+  * struct icc_req - constraints that are attached to each node
+  * @req_node: entry in list of requests for the particular @node
+@@ -449,6 +452,9 @@ int icc_set_bw(struct icc_path *path, u32 avg_bw, u32 peak_bw)
+ 
+ 		/* aggregate requests for this node */
+ 		aggregate_requests(node);
++
++		trace_icc_set_bw(node, dev_name(path->reqs[i].dev),
++				 avg_bw, peak_bw);
+ 	}
+ 
+ 	ret = apply_constraints(path);
+@@ -461,6 +467,9 @@ int icc_set_bw(struct icc_path *path, u32 avg_bw, u32 peak_bw)
+ 			path->reqs[i].avg_bw = old_avg;
+ 			path->reqs[i].peak_bw = old_peak;
+ 			aggregate_requests(node);
++
++			trace_icc_set_bw(node, dev_name(path->reqs[i].dev),
++					 old_avg, old_peak);
+ 		}
+ 		apply_constraints(path);
+ 	}
+diff --git a/include/trace/events/interconnect.h b/include/trace/events/interconnect.h
+new file mode 100644
+index 000000000000..8e001382e9b0
+--- /dev/null
++++ b/include/trace/events/interconnect.h
+@@ -0,0 +1,52 @@
++/* SPDX-License-Identifier: GPL-2.0 */
++/*
++ * Copyright (c) 2019, Linaro Ltd.
++ * Author: Georgi Djakov <georgi.djakov@linaro.org>
++ */
++
++#if !defined(_TRACE_INTERCONNECT_H) || defined(TRACE_HEADER_MULTI_READ)
++#define _TRACE_INTERCONNECT_H
++
++#include <linux/tracepoint.h>
++
++#undef TRACE_SYSTEM
++#define TRACE_SYSTEM interconnect
++
++struct icc_node;
++
++TRACE_EVENT(icc_set_bw,
++
++	TP_PROTO(struct icc_node *n, const char *cdev, u32 avg_bw, u32 peak_bw),
++
++	TP_ARGS(n, cdev, avg_bw, peak_bw),
++
++	TP_STRUCT__entry(
++		__string(node_name, n->name)
++		__field(u32, node_avg_bw)
++		__field(u32, node_peak_bw)
++		__string(cdev, cdev)
++		__field(u32, avg_bw)
++		__field(u32, peak_bw)
++	),
++
++	TP_fast_assign(
++		__assign_str(node_name, n->name);
++		__entry->node_avg_bw = n->avg_bw;
++		__entry->node_peak_bw = n->peak_bw;
++		__assign_str(cdev, cdev);
++		__entry->avg_bw = avg_bw;
++		__entry->peak_bw = peak_bw;
++	),
++
++	TP_printk("%s avg_bw=%u peak_bw=%u cdev=%s avg_bw=%u peak_bw=%u",
++		__get_str(node_name),
++		__entry->node_avg_bw,
++		__entry->node_peak_bw,
++		__get_str(cdev),
++		__entry->avg_bw,
++		__entry->peak_bw)
++);
++#endif /* _TRACE_INTERCONNECT_H */
++
++/* This part must be outside protection */
++#include <trace/define_trace.h>
