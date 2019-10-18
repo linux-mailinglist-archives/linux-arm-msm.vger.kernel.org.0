@@ -2,89 +2,86 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 2F766DBD76
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 18 Oct 2019 08:04:25 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id EEA7DDBD78
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 18 Oct 2019 08:05:33 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2392090AbfJRGDt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 18 Oct 2019 02:03:49 -0400
-Received: from mail-pl1-f194.google.com ([209.85.214.194]:42512 "EHLO
-        mail-pl1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2407026AbfJRGDt (ORCPT
+        id S2404548AbfJRGFd (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 18 Oct 2019 02:05:33 -0400
+Received: from mail-pf1-f193.google.com ([209.85.210.193]:35931 "EHLO
+        mail-pf1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2387805AbfJRGFc (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 18 Oct 2019 02:03:49 -0400
-Received: by mail-pl1-f194.google.com with SMTP id g9so1005213plj.9
-        for <linux-arm-msm@vger.kernel.org>; Thu, 17 Oct 2019 23:03:48 -0700 (PDT)
+        Fri, 18 Oct 2019 02:05:32 -0400
+Received: by mail-pf1-f193.google.com with SMTP id y22so3183534pfr.3
+        for <linux-arm-msm@vger.kernel.org>; Thu, 17 Oct 2019 23:05:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to:user-agent;
-        bh=BSveiQwGviuEcR4ypuqkpKzuxRmA0+9+mStZkF3vzJg=;
-        b=VKMuvXcvvGP/FnfbPGGafDTQqvKt58hQ9JwZCL1mJZYoO07SWVM8V0Ao+3xvwMFVC0
-         z1szGW4AdBK1zXzKQzlZbjQoBRZaBONjgZQimxNr41BG9T6IeKw/9hkmO9Sqta1bGlzT
-         Q5XB32NRXux2YSw9RcXoriHC/Vjhn0qOZ/ISgp0wWDGqbKienY0ipkB7LDONW5/T+jrE
-         4dDadRRatqlloFFaGg1WkY05ct4gjFWBfmecZUPSM/VFh7F775hKspvL+1fr7c+1BDyX
-         65nI2n4AtKgw8neyAPTA5SpITv6wQmqQqH4QW2Ln9qa/tgsBr895fpJSiQd2CDvuAKdx
-         7Hzw==
+        bh=kV1HX3xh/tQvI6WiE4yR07HXyvimZNgOnLXkscZ88j0=;
+        b=rNoBCmIeaRcA1mrVqUxdH4pw/8j8IkEbk/qw1GX4lANW4AX0Dk5+RJOhz36wh9oq7+
+         MlNa34bkncIwzByQSEY7SGN6S3l2b9voQ25gO6CTHGdrMkHziCSO/G+rYztKGsdG+Kc0
+         W5bEBveWq6xSfTorbPOyy9Ghsr5c4df/muiu2SZXdq2tuJ+nvMVyxpeesVh8RmTUaEfw
+         bnRS3c32sRD4Kg8FxY2QpzCI8WLLlE4wIK6CAYgwCxK/wu5ta0K2LT5vx4Q0ZPDcMQZy
+         sxBHPnVcsw5RnJ0L8kMJhv6CdtY8Gbd8uGinnz70GAlqYaHuPSYxpei2xNm1aFCVaOdo
+         7a8A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=BSveiQwGviuEcR4ypuqkpKzuxRmA0+9+mStZkF3vzJg=;
-        b=PPFr2pxaJCO9Bu17sHn8qXeGKbSyYYdX9wnRjqP92DFWDLMjyCEt4/KIkdiVsGK0zh
-         U8nXqOMi4Lo0D2qixQwvM89M207Iffr8Guz0gjJEsPqqTjQILrHoQKiHe0gEk7iV8fl1
-         AI9NawaKSyeKOxd3KY42wL49ydoOu/kYqwUCHTpGeIF374z4zgwCuwUV0Sr8bE9oSgwW
-         kwTmRDu9RswPruzWYiqUIE6FwlOv3qJgQoXhRsiT7sOCk3lhopsKOXxY/NWM0hLk03xB
-         pU5WDVmish/Adiup5OKIB45suaFkmlV6xT6BXI2smTd9+KchddAcway/OgZzf2lMWkmm
-         n6UA==
-X-Gm-Message-State: APjAAAVdhqF6mMQeURuHebnIrMFPDx2LP2HgqDrnN/Fu1T5AJ3UhDb6k
-        csUP7hjFgiKematejc8LdQZ5Gg==
-X-Google-Smtp-Source: APXvYqwbsGOB5qsGmti/XnQXORN6qlEqa1yTSNYtvcSbP0L/Gu/byaAudi/utDrAhgQkCMHVo3tdpA==
-X-Received: by 2002:a17:902:b08f:: with SMTP id p15mr7786915plr.229.1571378628231;
-        Thu, 17 Oct 2019 23:03:48 -0700 (PDT)
+        bh=kV1HX3xh/tQvI6WiE4yR07HXyvimZNgOnLXkscZ88j0=;
+        b=QVt9fy59Ultj9Jmrcoo6P3fatI9eOtjcudyJ4PmAV0GDInxO2vMAFaf40yUO4DKw+C
+         g/xSml7IZZRwoc9b3M8hsOpS8eiO2Pq/i0KDpL2QiVZkeOrMMuBQ6spiUrYY8cf0sybA
+         9s6oO+9SE5oDEQF1f1RDU5i9c+A6BjZXHix18iN87nHYXLP7cjc5HLOxPBwCThyM+mlr
+         zWxQnG+hON0YuLIrcFWFsV4Ktkax0FGZvt1GCQHFKbBDtd9r1MjM3I4JsRcXcW2zjSBD
+         5nuX5hUTIp8UtxwpwJP9q6ZKsDrGkbPeE6lvh83CCHzbo24hr1VDY/+TE0UVqCfMDXh0
+         O0Mw==
+X-Gm-Message-State: APjAAAXSqsMbyf6OJeJBFBWU++HU1DEW3SOmjeEHmIj07N3EdJOLmRAn
+        NvCmnuGhJnCvHlILuM3O4R4KIQ==
+X-Google-Smtp-Source: APXvYqyAFLFmNyiYOrRfv+ueuvIzGLlZ4cM1uXHv4BljYJWlUgaHvWI4mlFH93ITuT0Ecs9zIOHg+A==
+X-Received: by 2002:a63:4525:: with SMTP id s37mr8470239pga.148.1571378731948;
+        Thu, 17 Oct 2019 23:05:31 -0700 (PDT)
 Received: from localhost ([122.172.151.112])
-        by smtp.gmail.com with ESMTPSA id 199sm5541685pfv.152.2019.10.17.23.03.47
+        by smtp.gmail.com with ESMTPSA id s10sm7537837pgn.9.2019.10.17.23.05.30
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 17 Oct 2019 23:03:47 -0700 (PDT)
-Date:   Fri, 18 Oct 2019 11:33:45 +0530
+        Thu, 17 Oct 2019 23:05:31 -0700 (PDT)
+Date:   Fri, 18 Oct 2019 11:35:29 +0530
 From:   Viresh Kumar <viresh.kumar@linaro.org>
-To:     Stephen Boyd <sboyd@kernel.org>
-Cc:     "Rafael J. Wysocki" <rjw@rjwysocki.net>,
-        Amit Kucheria <amit.kucheria@linaro.org>,
+To:     Amit Kucheria <amit.kucheria@linaro.org>
+Cc:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        daniel.lezcano@linaro.org, sudeep.holla@arm.com,
+        bjorn.andersson@linaro.org, edubezval@gmail.com, agross@kernel.org,
+        tdas@codeaurora.org, swboyd@chromium.org, ilina@codeaurora.org,
+        "Rafael J. Wysocki" <rjw@rjwysocki.net>,
         Amit Kucheria <amit.kucheria@verdurent.com>,
-        Zhang Rui <rui.zhang@intel.com>, agross@kernel.org,
-        bjorn.andersson@linaro.org, daniel.lezcano@linaro.org,
-        edubezval@gmail.com, ilina@codeaurora.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        sudeep.holla@arm.com, tdas@codeaurora.org,
-        linux-clk@vger.kernel.org
-Subject: Re: [PATCH v3 5/6] clk: qcom: Initialise clock drivers earlier
-Message-ID: <20191018060345.wjflngfdnqa3gbsu@vireshk-i7>
+        Zhang Rui <rui.zhang@intel.com>, linux-doc@vger.kernel.org,
+        linux-pm@vger.kernel.org
+Subject: Re: [PATCH v3 1/6] thermal: Remove netlink support
+Message-ID: <20191018060529.a5dmredz3baotaaa@vireshk-i7>
 References: <cover.1571314830.git.amit.kucheria@linaro.org>
- <5f1ca3bfc45e268f7f9f6e091ba13b8103fb4304.1571314830.git.amit.kucheria@linaro.org>
- <20191017174723.8024521D7A@mail.kernel.org>
+ <cc1b26eb9efa974bc4d36a2944d4064df0c37983.1571314830.git.amit.kucheria@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20191017174723.8024521D7A@mail.kernel.org>
+In-Reply-To: <cc1b26eb9efa974bc4d36a2944d4064df0c37983.1571314830.git.amit.kucheria@linaro.org>
 User-Agent: NeoMutt/20180716-391-311a52
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 17-10-19, 10:47, Stephen Boyd wrote:
-> Quoting Amit Kucheria (2019-10-17 05:27:37)
-> > Initialise the clock drivers on sdm845 and qcs404 in core_initcall so we
-> > can have earlier access to cpufreq during booting.
-> > 
-> > Signed-off-by: Amit Kucheria <amit.kucheria@linaro.org>
-> > ---
+On 17-10-19, 17:57, Amit Kucheria wrote:
+> There are no users of netlink messages for thermal inside the kernel.
+> Remove the code and adjust the documentation.
 > 
-> Acked-by: Stephen Boyd <sboyd@kernel.org>
-> 
-> Makes me sad again.
+> Signed-off-by: Amit Kucheria <amit.kucheria@linaro.org>
+> ---
+>  .../driver-api/thermal/sysfs-api.rst          |  26 +----
+>  drivers/thermal/thermal_core.c                | 107 +-----------------
+>  include/linux/thermal.h                       |  11 --
+>  3 files changed, 10 insertions(+), 134 deletions(-)
 
-I am wondering why it makes you sad ? :)
+Acked-by: Viresh Kumar <viresh.kumar@linaro.org>
 
 -- 
 viresh
