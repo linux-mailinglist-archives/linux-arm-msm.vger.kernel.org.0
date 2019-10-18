@@ -2,133 +2,252 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 7C5D3DD0E3
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 18 Oct 2019 23:11:22 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 6E1ADDD13B
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 18 Oct 2019 23:34:00 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2502982AbfJRVLV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 18 Oct 2019 17:11:21 -0400
-Received: from mail-io1-f67.google.com ([209.85.166.67]:41487 "EHLO
-        mail-io1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2394095AbfJRVLV (ORCPT
+        id S2506162AbfJRVd7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 18 Oct 2019 17:33:59 -0400
+Received: from mail-pf1-f179.google.com ([209.85.210.179]:42404 "EHLO
+        mail-pf1-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2506161AbfJRVd7 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 18 Oct 2019 17:11:21 -0400
-Received: by mail-io1-f67.google.com with SMTP id n26so9055005ioj.8;
-        Fri, 18 Oct 2019 14:11:20 -0700 (PDT)
+        Fri, 18 Oct 2019 17:33:59 -0400
+Received: by mail-pf1-f179.google.com with SMTP id q12so4626316pff.9
+        for <linux-arm-msm@vger.kernel.org>; Fri, 18 Oct 2019 14:33:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=bGIyf3yxo3LRG94gRvIwmnxNQ7kmsQTq6lhNdbNTksU=;
-        b=RlF581TMVuSypUhdR9KBRHuSgFE4LuHPdJDRdMq6Lpl6+u/75/26IC5KVYzdactZl+
-         6UozJkiZebDcKTHxdW62cxkDcaaMX+GJDxtxVqM7ejHRJ+uecTMRZ0BVCRBjEbDG4uyR
-         Nh9CJQ7tOpqkheFJWejr6ei8Doi5MEeOx9zmuK1un8YMsIpMkmfWM2Kt/yCIPZQ6LKzO
-         MxahpDv9b7IKldl64YomtJ8QTyjDFJMmcuTyv709n6oTTmDNYLcVLFRv+SUD1HBa4Mpl
-         QzKOO6p1+bIKFPfpY2XtQ7U249B5cnmoQDv394Adh17nyfKR1B59uwuhh6tINCLbg/4S
-         N46A==
+        d=chromium.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=NmcUecAGXuSApRjNtgEf0ETg8ugP5bkJRtiayEQOKqA=;
+        b=Av2WRpxYgSpf7TYLUsuUGfnXAcPeN7re/m6If3FYxqB2lfkQRVhu0Tc/kVAp3WKxbM
+         tLfjhVtLrtxb+mzef1nXTPDl1OgyoZAZsUhSh8HmY1TzHcQSRIzRiGKZzNQESk7KdST9
+         BGMRUD8iKjI7UUa0Q7eK7REzuRZUMI0LeMiXo=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=bGIyf3yxo3LRG94gRvIwmnxNQ7kmsQTq6lhNdbNTksU=;
-        b=G0o7hZVAREOcRYCqluJMnnSUd99iRUJ3xhczkmxouruCAxiFWPEWuO3DHFkI0qkhrx
-         vtHUtjxAjQLSxB0g4LLPnPj+E02vZXxDQmT6zohSNBmO6FpJc5TavphkGxMZTHVB5Opm
-         oSuNbsu0iassMUaHBpuctCRO3c0PejxE1LPXsyUoJMHgaAf4YG0z9lTm2/Hwk6Y5kpxI
-         CunF8HeK/T/JAqbIjIfitUCY7sRc99Ohc3cAU2NtCO/Uhk3z/6Z2m3xPIxRqtsd6T61s
-         zhztMjVYBMASTT6+VxLAZOJ4Q4qbRbU34DHHXKSFVkCNpEJeqQ4pcBRf15mF7CsHZ8yF
-         8MtQ==
-X-Gm-Message-State: APjAAAVp2OpmryrZ0k5j0tjaexVGehqEtqM5QZHSrCGMXb7196TZod2x
-        rM4F4pH55bTCuUym1fNP3xnXwzJtMtPa2wz03+8=
-X-Google-Smtp-Source: APXvYqw/RCsXzWZg7GzS3W3NqHBIFj5rays6TK9CdtjOsqfggufHRrdgPtmJdry4m1p91SGVPZtGsLw4U1YT398zTkY=
-X-Received: by 2002:a6b:1504:: with SMTP id 4mr10908214iov.166.1571433080425;
- Fri, 18 Oct 2019 14:11:20 -0700 (PDT)
-MIME-Version: 1.0
-References: <20191002011555.36571-1-jeffrey.l.hugo@gmail.com>
- <20191002011640.36624-1-jeffrey.l.hugo@gmail.com> <20191017215023.2BFEC20872@mail.kernel.org>
- <CAOCk7NqgWkt6BwY75eGS2dbJ7GGk3DqH5NC0VLHUq4fc6WuYog@mail.gmail.com>
-In-Reply-To: <CAOCk7NqgWkt6BwY75eGS2dbJ7GGk3DqH5NC0VLHUq4fc6WuYog@mail.gmail.com>
-From:   Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
-Date:   Fri, 18 Oct 2019 15:11:09 -0600
-Message-ID: <CAOCk7Np_Wn9JZ8JQCiDg1w+xcTVW9fhvtCA-k5ysc2juHZuvUw@mail.gmail.com>
-Subject: Re: [PATCH v4 1/2] clk: qcom: Add MSM8998 GPU Clock Controller
- (GPUCC) driver
-To:     Stephen Boyd <sboyd@kernel.org>
-Cc:     Michael Turquette <mturquette@baylibre.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Marc Gonzalez <marc.w.gonzalez@free.fr>,
-        MSM <linux-arm-msm@vger.kernel.org>, linux-clk@vger.kernel.org,
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=NmcUecAGXuSApRjNtgEf0ETg8ugP5bkJRtiayEQOKqA=;
+        b=H8/6ygJjnMEzr7BDpBdMrHODpkkEkpizbmgdTFQICy0IKJe5gqog5/PEz5JEFRETDs
+         /k80jpF5PlegsqL/WOPHmupvx9fRfpIP/w3+jbx4jxnnpgUFZaKIBcD+ep8o+3Yqmuez
+         c6qKtZcco78DYVBXMHctUiDOXcP/bWcD9HnPT4IGXb5dGYY7HHGJ+MvyJ6JCLzM2Ii32
+         BGuKNKVQ7sVneaxm78FLXBaxyd3zKi1ohOy3olJeP0XqNTHcvoT7aXxfTJ7Ra3UL2HFW
+         idIWWe7klaOvXwKT4Bl/jHWp80ZStop1Szr9QjfpYoyCbHtbCiB9zbKltpUa95/xBtMt
+         ikug==
+X-Gm-Message-State: APjAAAVnuo4d0UPZwcLyfqKIqrdJ8criXyxU+7npG0YOaPUiSTszAwnv
+        20RfxSM20PU5u00DnS2I9FvG3A==
+X-Google-Smtp-Source: APXvYqwo8SFxCbAvCb3he4r6oWWib3Hl6gWYFR5kfupd2w4iv4QPnM3NYBLX+rYv9vWkKmujHvVu0w==
+X-Received: by 2002:a63:f923:: with SMTP id h35mr12598461pgi.323.1571434436872;
+        Fri, 18 Oct 2019 14:33:56 -0700 (PDT)
+Received: from localhost ([2620:15c:202:1:4fff:7a6b:a335:8fde])
+        by smtp.gmail.com with ESMTPSA id x10sm6547446pgl.53.2019.10.18.14.33.55
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 18 Oct 2019 14:33:56 -0700 (PDT)
+Date:   Fri, 18 Oct 2019 14:33:54 -0700
+From:   Matthias Kaehlcke <mka@chromium.org>
+To:     Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
+Cc:     marcel@holtmann.org, johan.hedberg@gmail.com,
+        c-hbandi@codeaurora.org, bgodavar@codeaurora.org,
+        linux-bluetooth@vger.kernel.org,
+        MSM <linux-arm-msm@vger.kernel.org>,
         lkml <linux-kernel@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Subject: Re: [PATCH] Bluetooth: hci_qca: Add delay for wcn3990 stability
+Message-ID: <20191018213354.GC20212@google.com>
+References: <20191017212955.6266-1-jeffrey.l.hugo@gmail.com>
+ <20191018180339.GQ87296@google.com>
+ <CAOCk7NrN0sjLk3onvZn7+bhs_v3A4H6CHh=XPo_NU2XzUWeEGw@mail.gmail.com>
+ <20191018194039.GB20212@google.com>
+ <CAOCk7NqacfVLzKueTRTFQ6aWbLXFyMQaQNXeXENzLTyMNLSp9w@mail.gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <CAOCk7NqacfVLzKueTRTFQ6aWbLXFyMQaQNXeXENzLTyMNLSp9w@mail.gmail.com>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Oct 17, 2019 at 5:16 PM Jeffrey Hugo <jeffrey.l.hugo@gmail.com> wrote:
->
-> On Thu, Oct 17, 2019 at 3:50 PM Stephen Boyd <sboyd@kernel.org> wrote:
+On Fri, Oct 18, 2019 at 01:51:39PM -0600, Jeffrey Hugo wrote:
+> On Fri, Oct 18, 2019 at 1:40 PM Matthias Kaehlcke <mka@chromium.org> wrote:
 > >
-> > Quoting Jeffrey Hugo (2019-10-01 18:16:40)
-> > > +static const struct freq_tbl ftbl_gfx3d_clk_src[] = {
-> > > +       F(180000000, P_GPUPLL0_OUT_EVEN, 2, 0, 0),
-> > > +       F(257000000, P_GPUPLL0_OUT_EVEN, 2, 0, 0),
-> > > +       F(342000000, P_GPUPLL0_OUT_EVEN, 2, 0, 0),
-> > > +       F(414000000, P_GPUPLL0_OUT_EVEN, 2, 0, 0),
-> > > +       F(515000000, P_GPUPLL0_OUT_EVEN, 2, 0, 0),
-> > > +       F(596000000, P_GPUPLL0_OUT_EVEN, 2, 0, 0),
-> > > +       F(670000000, P_GPUPLL0_OUT_EVEN, 2, 0, 0),
-> > > +       F(710000000, P_GPUPLL0_OUT_EVEN, 2, 0, 0),
-> > > +       { }
+> > On Fri, Oct 18, 2019 at 12:30:09PM -0600, Jeffrey Hugo wrote:
+> > > On Fri, Oct 18, 2019 at 12:03 PM Matthias Kaehlcke <mka@chromium.org> wrote:
+> > > >
+> > > > On Thu, Oct 17, 2019 at 02:29:55PM -0700, Jeffrey Hugo wrote:
+> > > > > On the msm8998 mtp, the response to the baudrate change command is never
+> > > > > received.  On the Lenovo Miix 630, the response to the baudrate change
+> > > > > command is corrupted - "Frame reassembly failed (-84)".
+> > > > >
+> > > > > Adding a 50ms delay before re-enabling flow to receive the baudrate change
+> > > > > command response from the wcn3990 addesses both issues, and allows
+> > > > > bluetooth to become functional.
+> > > >
+> > > > From my earlier debugging on sdm845 I don't think this is what happens.
+> > > > The problem is that the wcn3990 sends the response to the baudrate change
+> > > > command using the new baudrate, while the UART on the SoC still operates
+> > > > with the prior speed (for details see 2faa3f15fa2f ("Bluetooth: hci_qca:
+> > > > wcn3990: Drop baudrate change vendor event"))
+> > > >
+> > > > IIRC the 50ms delay causes the HCI core to discard the received data,
+> > > > which is why the "Frame reassembly failed" message disappears, not
+> > > > because the response was received. In theory commit 78e8fa2972e5
+> > > > ("Bluetooth: hci_qca: Deassert RTS while baudrate change command")
+> > > > should have fixed those messages, do you know if CTS/RTS are connected
+> > > > on the Bluetooth UART of the Lenovo Miix 630?
+> > >
+> > > I was testing with 5.4-rc1 which contains the indicated RTS fix.
+> > >
+> > > Yes, CTS/RTS are connected on the Lenovo Miix 630.
+> > >
+> > > I added debug statements which indicated that data was received,
+> > > however it was corrupt, and the packet type did not match what was
+> > > expected, hence the frame reassembly errors.
 > >
-> > I guess this one doesn't do PLL ping pong? Instead we just reprogram the
-> > PLL all the time? Can we have rcg2 clk ops that set the rate on the
-> > parent to be exactly twice as much as the incoming frequency? I thought
-> > we already had this support in the code. Indeed, it is part of
-> > _freq_tbl_determine_rate() in clk-rcg.c, but not yet implemented in the
-> > same function name in clk-rcg2.c! Can you implement it? That way we
-> > don't need this long frequency table, just this weird one where it looks
-> > like:
+> > Do you know if any data is received during the delay? In theory that
+> > shouldn't be the case since RTS is deasserted, just double-checking.
+> 
+> I don't think so, but I've run so many tests, I'm not 100% positive.
+> Let me go double check and get back to you.
+> 
 > >
-> >         { .src = P_GPUPLL0_OUT_EVEN, .pre_div = 3 }
-> >         { }
+> > What happens if you add a longer delay (e.g. 1s) before/after setting
+> > the host baudrate?
+> 
+> Hmm, not exactly sure.  I will test.
+> 
 > >
-> > And then some more logic in the rcg2 ops to allow this possibility for a
-> > frequency table when CLK_SET_RATE_PARENT is set.
->
-> Does not do PLL ping pong.  I'll look at extending the rcg2 ops like
-> you describe.
+> > > In response to this patch, Balakrishna pointed me to a bug report
+> > > which indicated that some of the UART GPIO lines need to have a bias
+> > > applied to prevent errant data from floating lines -
+> > >
+> > > https://chromium-review.googlesource.com/c/chromiumos/third_party/kernel/+/1391888
+> >
+> > Yeah, that was another source of frame reassembly errors that we were
+> > seeing on SDM845.
+> >
+> > Balakrishna, please post these kind of replies on-list, so that
+> > everybody can benefit from possible solutions or contribute to the
+> > discussion.
+> >
+> > > It turns out this fix was never applied to msm8998.  Applying the fix
+> > > does cause the the frame reassembly errors to go away, however then
+> > > the host SoC never receives the baud rate change response (I increased
+> > > the timeout from 2faa3f15fa2f ("Bluetooth: hci_qca: wcn3990: Drop
+> > > baudrate change vendor event") to 5 seconds).  As of now, this patch
+> > > is still required.
+> >
+> > Interesting.
+> >
+> > FTR, this is the full UART pin configuration for cheza (SDM845):
+> >
+> > &qup_uart6_default {
+> >         /* Change pinmux to all 4 pins since CTS and RTS are connected */
+> >         pinmux {
+> >                 pins = "gpio45", "gpio46",
+> >                        "gpio47", "gpio48";
+> >         };
+> >
+> >         pinconf-cts {
+> >                 /*
+> >                  * Configure a pull-down on 45 (CTS) to match the pull of
+> >                  * the Bluetooth module.
+> >                  */
+> >                 pins = "gpio45";
+> >                 bias-pull-down;
+> >         };
+> >
+> >         pinconf-rts-tx {
+> >                 /* We'll drive 46 (RTS) and 47 (TX), so no pull */
+> >                 pins = "gpio46", "gpio47";
+> >                 drive-strength = <2>;
+> >                 bias-disable;
+> >         };
+> >
+> >         pinconf-rx {
+> >                 /*
+> >                  * Configure a pull-up on 48 (RX). This is needed to avoid
+> >                  * garbage data when the TX pin of the Bluetooth module is
+> >                  * in tri-state (module powered off or not driving the
+> >                  * signal yet).
+> >                  */
+> >                 pins = "gpio48";
+> >                 bias-pull-up;
+> >         };
+> > };
+> >
+> > Does this correspond to what you tried on the Lenovo Miix 630?
+> 
+> Which GPIO maps to which pin is different -
+> 45 - TX
+> 46 - RX
+> 47 - CTS
+> 48 - RFR (RTS)
+> 
+> However, accounting for that, yes that corresponds to what I used.
 
-Am I missing something?  From what I can tell, what you describe is
-not implemented.
+Thanks for re-confirming.
 
-The only in-tree example of a freq_tbl with only a src and a pre_div
-defined for rcg ops is for the tv_src clk in mmcc-msm8960 [1]
-However, that uses a variant of rcg ops, clk_rcg_bypass_ops, not clk_rcg_ops.
+> > > I have no idea why the delay is required, and was hoping that posting
+> > > this patch would result in someone else providing some missing pieces
+> > > to determine the real root cause.  I suspect that asserting RTS at the
+> > > wrong time may cause an issue for the wcn3990, but I have no data nor
+> > > documentation to support this guess.  I welcome any further insights
+> > > you may have.
+> >
+> > Unfortunately I don't have a clear suggestion at this point, debugging
+> > the original problem which lead to 2faa3f15fa2f ("Bluetooth: hci_qca:
+> > wcn3990: Drop baudrate change vendor event") involved quite some time
+> > and hooking up a scope/logic analyzer ...
+> >
+> > I also suspect RTS is involved, and potentially the configuration of
+> > the pulls. It might be interesting to analyze the data that leads to
+> > the frame assembly error and determine if it is just noise (wrong
+> > pulls/drive strength?) or received with a non-matching baud-rate.
+> 
+> I don't have a scope/logic analyzer, but since I hooked up the
+> blsp_bam I'm able to see the raw data from the uart before it gets to
+> the HCI stack or anything.  As a side note, having the bam or not
+> seemed to have no effect on the issue.
 
-clk_rcg_bypass_ops has its own determine_rate implementation which
-does not utilize _freq_tbl_determine_rate(), and can only do a 1:1
-input rate to output ratio (we want a 1:2).
+It's not exactly the same though. I suppose with the blsp_bam you only
+see the actual data when the UART runs at the same speed as it's
+counterpart. With a logic analyzer you can change the speed after
+data capture, which might convert apparent garbage into reasonable
+data.
 
-_freq_tbl_determine_rate() in either rcg_ops or rcg2_ops won't work,
-because they both use qcom_find_freq() which doesn't work when your
-table doesn't specify any frequencies (f->freq is 0).
-qcom_find_freq() won't iterate through the table, therefore f in
-qcom_find_freq() won't be pointing at the end of the table (the null
-entry), so when qcom_find_freq decrements f in the return, it actually
-goes off the beginning of the array in an array out of bounds
-violation.
+> Most of the time the data was one byte (zero), some times it was a
+> string of zero bytes.  Rarely it would be random data.
 
-Please advise how you would like to proceed.
+In terms of data ss there difference between a string of zero bytes
+and a single zero byte?
 
-I can still extend rcg2_ops to do what you want, but it won't be based
-on what rcg_ops is doing.
+From my notes the response (vendor event) to a baudrate change
+command on the WCN3990 is:
 
-I can spin a rcg2_ops variant to do what you want, with a custom
-determine_rate, but it doesn't seem like I'll really be saving any
-lines of code.  Whatever I eliminate by minimizing the gfx3d
-freq_table I will surely be putting into clk-rcg2.c
+04 0e 04 01 00 00 00
 
-Or, I can just drop this idea and keep the freq_tbl as it is.  Seems
-like just a one off scenario.
+The tail *might* be the zero(s) you are seeing, and the first part gets
+lost for some reason?
 
-[1] - https://elixir.bootlin.com/linux/v5.4-rc2/source/drivers/clk/qcom/mmcc-msm8960.c#L1416
+A simplified version of the code in question:
+
+  set_RTS(false)
+
+  hci_set_baudrate(br)
+  host_set_baudrate(br)
+
+  msleep(50); // why is this needed???
+  set_RTS(true)
+
+  // supposedly wcn3990 now sends vendor event using the new baudrate
+
+  wait_for_vendor_event()
+    // ok with msleep, otherwise frame reassembly error
+
+
+Maybe the MSM8998 UART (driver) currently needs the delay to fully switch to
+the new baudrate? Perhaps the pinconfig still needs tweaking of some kind?
+
+You said when you apply the full configuration used on cheza you don't
+receive the response to the baudrate change command. Does it work when you
+only configure the pull-up on the RX (host) pin?
