@@ -2,147 +2,138 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 4835DDC2B3
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 18 Oct 2019 12:22:14 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C730ADC2C7
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 18 Oct 2019 12:30:32 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2393000AbfJRKWM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 18 Oct 2019 06:22:12 -0400
-Received: from cloudserver094114.home.pl ([79.96.170.134]:61869 "EHLO
-        cloudserver094114.home.pl" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728989AbfJRKWM (ORCPT
+        id S2405185AbfJRKac (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 18 Oct 2019 06:30:32 -0400
+Received: from mail-vk1-f194.google.com ([209.85.221.194]:38740 "EHLO
+        mail-vk1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729479AbfJRKac (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 18 Oct 2019 06:22:12 -0400
-Received: from 79.184.255.51.ipv4.supernova.orange.pl (79.184.255.51) (HELO kreacher.localnet)
- by serwer1319399.home.pl (79.96.170.134) with SMTP (IdeaSmtpServer 0.83.292)
- id 6ce2739a0f04cd0d; Fri, 18 Oct 2019 12:22:10 +0200
-From:   "Rafael J. Wysocki" <rjw@rjwysocki.net>
-To:     Amit Kucheria <amit.kucheria@linaro.org>
-Cc:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        daniel.lezcano@linaro.org, viresh.kumar@linaro.org,
-        sudeep.holla@arm.com, bjorn.andersson@linaro.org,
-        edubezval@gmail.com, agross@kernel.org, tdas@codeaurora.org,
-        swboyd@chromium.org, ilina@codeaurora.org,
-        Amit Kucheria <amit.kucheria@verdurent.com>,
-        Ben Segall <bsegall@google.com>,
-        Dietmar Eggemann <dietmar.eggemann@arm.com>,
-        Ingo Molnar <mingo@redhat.com>,
-        Juri Lelli <juri.lelli@redhat.com>,
-        Mel Gorman <mgorman@suse.de>,
-        Peter Zijlstra <peterz@infradead.org>,
-        Steven Rostedt <rostedt@goodmis.org>,
-        Vincent Guittot <vincent.guittot@linaro.org>,
-        Zhang Rui <rui.zhang@intel.com>, linux-pm@vger.kernel.org
-Subject: Re: [PATCH v4 3/6] cpufreq: Initialise the governors in core_initcall
-Date:   Fri, 18 Oct 2019 12:22:09 +0200
-Message-ID: <1627245.O3FKD7HvXP@kreacher>
-In-Reply-To: <aa02366951fb174077a945761a7cda03d08acab5.1571387352.git.amit.kucheria@linaro.org>
-References: <cover.1571387352.git.amit.kucheria@linaro.org> <aa02366951fb174077a945761a7cda03d08acab5.1571387352.git.amit.kucheria@linaro.org>
+        Fri, 18 Oct 2019 06:30:32 -0400
+Received: by mail-vk1-f194.google.com with SMTP id s72so1229218vkh.5
+        for <linux-arm-msm@vger.kernel.org>; Fri, 18 Oct 2019 03:30:31 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=QBRSB47R5zdfT32KlX+aV4HkEYKUi3HGXtyDlZlyb9g=;
+        b=Dss1BgqrjNvxuj0zYw0vhMToennUoBig/tBC3bNtaANNS1mXutL2nXPRNgUm9TjRR7
+         4eX32k2Vni3lmF4HIV+5HHnMLh+zuaLl2alVyDHD6OfstLB8WN9T99dbFXQlBcibMymN
+         Tnnoe0JRnYSo4BHGsvDVou6OdACw+OTwQxLtdZQ2uvflcvyJe0a1r4P0mEihlTLKBMMj
+         BJVKfnlbyfxvalsJ6/NZSqVPMsoPGPhI1RTrh+nilz0ErmTzjWheU9vFgoUDHCMLdKJZ
+         TsFTPOw6yd2MNTWd08IzfDoE5c13uu4RjJkCouYyNUXWjbo4v84d9ivQ2aAp0xDEEskt
+         d1mw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=QBRSB47R5zdfT32KlX+aV4HkEYKUi3HGXtyDlZlyb9g=;
+        b=LvoJl8bUET/FyJ4NGqiC5y6RZzI7CD1rmMF/gjhjX0cj9J17u+OoY+pRD+ACDInU+Q
+         xZZiGJDwwckdc1mzE52AMPhfsowiCDgcZupU/J6rhJ+dvGbr9GAdqewx2C76we8Ws12j
+         4/JzKYe6qBEux6v/NiJ8hMGFm7w+nT8HNoZCprK4JJUYg/eXQWokQ2yVLmqq7eRISK8k
+         Nf/1WTJFZg4BVOKDeA+q2mtcKDoevBSLVGmrAJd6Saxgj2NBj4KLAB73ENaVS+9DNn7o
+         j8ffSHT2LtWFuyC3rlLb4AsUqMX4Ek8TyxQ705qz2iZWF0mCEkGlp6aQ7/MC/Pb405nG
+         p5oA==
+X-Gm-Message-State: APjAAAWn2wvxysC3q0iRhDKUg3Cr8FC2enqeV8n671hiAX+3lAzpSO/f
+        K2b0lQe3E2P0X9kgBRkKQF8abZQP15U12DiZ7zkX1Q==
+X-Google-Smtp-Source: APXvYqzU6e6q9t22pNva8KyfPNj9Pj4U12mHVaQ4OI5IfhQefBCPy5AbRQB8q7JWkerOtbOZWoMaHG5QAkVyTTZRZec=
+X-Received: by 2002:a1f:a293:: with SMTP id l141mr4885218vke.43.1571394630718;
+ Fri, 18 Oct 2019 03:30:30 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 7Bit
-Content-Type: text/plain; charset="us-ascii"
+References: <20191010113937.15962-1-ulf.hansson@linaro.org>
+ <20191010113937.15962-2-ulf.hansson@linaro.org> <20191018093839.GB25918@e121166-lin.cambridge.arm.com>
+ <CAPDyKFqcHY6+Eq9d6xTPYMDrUOtGs+64YuwZ1EbFtqQZe0+xEw@mail.gmail.com> <20191018100304.GA28830@e121166-lin.cambridge.arm.com>
+In-Reply-To: <20191018100304.GA28830@e121166-lin.cambridge.arm.com>
+From:   Ulf Hansson <ulf.hansson@linaro.org>
+Date:   Fri, 18 Oct 2019 12:29:54 +0200
+Message-ID: <CAPDyKFoEf1-2z8d2r15=fg-9sY5u93iOzuUmmsYYiG9+8uB9Dw@mail.gmail.com>
+Subject: Re: [PATCH 01/13] cpuidle: psci: Fix potential access to unmapped memory
+To:     Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>
+Cc:     "Rafael J . Wysocki" <rjw@rjwysocki.net>,
+        Daniel Lezcano <daniel.lezcano@linaro.org>,
+        Sudeep Holla <sudeep.holla@arm.com>,
+        Mark Rutland <mark.rutland@arm.com>,
+        Lina Iyer <ilina@codeaurora.org>,
+        Linux PM <linux-pm@vger.kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Vincent Guittot <vincent.guittot@linaro.org>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Kevin Hilman <khilman@kernel.org>,
+        Linux ARM <linux-arm-kernel@lists.infradead.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Friday, October 18, 2019 10:52:00 AM CEST Amit Kucheria wrote:
-> Initialise the cpufreq governors earlier to allow for earlier
-> performance control during the boot process.
-> 
-> Signed-off-by: Amit Kucheria <amit.kucheria@linaro.org>
-> Acked-by: Viresh Kumar <viresh.kumar@linaro.org>
+On Fri, 18 Oct 2019 at 12:03, Lorenzo Pieralisi
+<lorenzo.pieralisi@arm.com> wrote:
+>
+> On Fri, Oct 18, 2019 at 11:51:11AM +0200, Ulf Hansson wrote:
+> > On Fri, 18 Oct 2019 at 11:38, Lorenzo Pieralisi
+> > <lorenzo.pieralisi@arm.com> wrote:
+> > >
+> > > On Thu, Oct 10, 2019 at 01:39:25PM +0200, Ulf Hansson wrote:
+> > > > When the WFI state have been selected, the in-parameter idx to
+> > > > psci_enter_idle_state() is zero. In this case, we must not index the state
+> > > > array as "state[idx - 1]", as it means accessing data outside the array.
+> > > > Fix the bug by pre-checking if idx is zero.
+> > > >
+> > > > Fixes: 9ffeb6d08c3a ("PSCI: cpuidle: Refactor CPU suspend power_state parameter handling")
+> > > > Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
+> > > > ---
+> > > >  drivers/cpuidle/cpuidle-psci.c | 6 +++---
+> > > >  1 file changed, 3 insertions(+), 3 deletions(-)
+> > > >
+> > > > diff --git a/drivers/cpuidle/cpuidle-psci.c b/drivers/cpuidle/cpuidle-psci.c
+> > > > index f3c1a2396f98..2e91c8d6c211 100644
+> > > > --- a/drivers/cpuidle/cpuidle-psci.c
+> > > > +++ b/drivers/cpuidle/cpuidle-psci.c
+> > > > @@ -27,10 +27,10 @@ static DEFINE_PER_CPU_READ_MOSTLY(u32 *, psci_power_state);
+> > > >  static int psci_enter_idle_state(struct cpuidle_device *dev,
+> > > >                               struct cpuidle_driver *drv, int idx)
+> > > >  {
+> > > > -     u32 *state = __this_cpu_read(psci_power_state);
+> > > > +     u32 *states = __this_cpu_read(psci_power_state);
+> > > > +     u32 state = idx ? states[idx - 1] : 0;
+> > > >
+> > > > -     return CPU_PM_CPU_IDLE_ENTER_PARAM(psci_cpu_suspend_enter,
+> > > > -                                        idx, state[idx - 1]);
+> > > > +     return CPU_PM_CPU_IDLE_ENTER_PARAM(psci_cpu_suspend_enter, idx, state);
+> > >
+> > > Technically we don't dereference that array entry but I agree this
+> > > is ugly and potentially broken.
+> >
+> > No sure understand the non-deference part.
+> >
+> > If the governor selects WFI, the idx will be 0 - and thus we end up
+> > using state[-1], doesn't that dereference an invalid address, no?
+>
+> No because CPU_PM_CPU_IDLE_ENTER_PARAM is a macro, the code it
+> preprocesses to won't dereference state[idx - 1] if idx == 0.
+>
+> I agree it is *very* ugly but technically code is not broken.
 
-No more issues found, so
+Ahh, got it, thanks!
 
-Reviewed-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+>
+> > > My preference is aligning it with ACPI code and allocate one more
+> > > entry in the psci_power_state array (useless for wfi, agreed but
+> > > at least we remove this (-1) handling from the code).
+> >
+> > I can do that, but sounds like a slightly bigger change. Are you fine
+> > if I do that on top, so we can get this sent as fix for v5.4-rc[n]?
+>
+> Technically we are not fixing anything; it is not such a big
+> change, we need to allocate one entry more and update the array
+> indexing.
 
-> ---
->  drivers/cpufreq/cpufreq_conservative.c | 2 +-
->  drivers/cpufreq/cpufreq_ondemand.c     | 2 +-
->  drivers/cpufreq/cpufreq_performance.c  | 2 +-
->  drivers/cpufreq/cpufreq_powersave.c    | 2 +-
->  drivers/cpufreq/cpufreq_userspace.c    | 2 +-
->  kernel/sched/cpufreq_schedutil.c       | 2 +-
->  6 files changed, 6 insertions(+), 6 deletions(-)
-> 
-> diff --git a/drivers/cpufreq/cpufreq_conservative.c b/drivers/cpufreq/cpufreq_conservative.c
-> index b66e81c06a575..737ff3b9c2c09 100644
-> --- a/drivers/cpufreq/cpufreq_conservative.c
-> +++ b/drivers/cpufreq/cpufreq_conservative.c
-> @@ -346,7 +346,7 @@ struct cpufreq_governor *cpufreq_default_governor(void)
->  	return CPU_FREQ_GOV_CONSERVATIVE;
->  }
->  
-> -fs_initcall(cpufreq_gov_dbs_init);
-> +core_initcall(cpufreq_gov_dbs_init);
->  #else
->  module_init(cpufreq_gov_dbs_init);
->  #endif
-> diff --git a/drivers/cpufreq/cpufreq_ondemand.c b/drivers/cpufreq/cpufreq_ondemand.c
-> index dced033875bf8..82a4d37ddecb3 100644
-> --- a/drivers/cpufreq/cpufreq_ondemand.c
-> +++ b/drivers/cpufreq/cpufreq_ondemand.c
-> @@ -483,7 +483,7 @@ struct cpufreq_governor *cpufreq_default_governor(void)
->  	return CPU_FREQ_GOV_ONDEMAND;
->  }
->  
-> -fs_initcall(cpufreq_gov_dbs_init);
-> +core_initcall(cpufreq_gov_dbs_init);
->  #else
->  module_init(cpufreq_gov_dbs_init);
->  #endif
-> diff --git a/drivers/cpufreq/cpufreq_performance.c b/drivers/cpufreq/cpufreq_performance.c
-> index aaa04dfcacd9d..def9afe0f5b86 100644
-> --- a/drivers/cpufreq/cpufreq_performance.c
-> +++ b/drivers/cpufreq/cpufreq_performance.c
-> @@ -50,5 +50,5 @@ MODULE_AUTHOR("Dominik Brodowski <linux@brodo.de>");
->  MODULE_DESCRIPTION("CPUfreq policy governor 'performance'");
->  MODULE_LICENSE("GPL");
->  
-> -fs_initcall(cpufreq_gov_performance_init);
-> +core_initcall(cpufreq_gov_performance_init);
->  module_exit(cpufreq_gov_performance_exit);
-> diff --git a/drivers/cpufreq/cpufreq_powersave.c b/drivers/cpufreq/cpufreq_powersave.c
-> index c143dc237d878..1ae66019eb835 100644
-> --- a/drivers/cpufreq/cpufreq_powersave.c
-> +++ b/drivers/cpufreq/cpufreq_powersave.c
-> @@ -43,7 +43,7 @@ struct cpufreq_governor *cpufreq_default_governor(void)
->  	return &cpufreq_gov_powersave;
->  }
->  
-> -fs_initcall(cpufreq_gov_powersave_init);
-> +core_initcall(cpufreq_gov_powersave_init);
->  #else
->  module_init(cpufreq_gov_powersave_init);
->  #endif
-> diff --git a/drivers/cpufreq/cpufreq_userspace.c b/drivers/cpufreq/cpufreq_userspace.c
-> index cbd81c58cb8f0..b43e7cd502c58 100644
-> --- a/drivers/cpufreq/cpufreq_userspace.c
-> +++ b/drivers/cpufreq/cpufreq_userspace.c
-> @@ -147,7 +147,7 @@ struct cpufreq_governor *cpufreq_default_governor(void)
->  	return &cpufreq_gov_userspace;
->  }
->  
-> -fs_initcall(cpufreq_gov_userspace_init);
-> +core_initcall(cpufreq_gov_userspace_init);
->  #else
->  module_init(cpufreq_gov_userspace_init);
->  #endif
-> diff --git a/kernel/sched/cpufreq_schedutil.c b/kernel/sched/cpufreq_schedutil.c
-> index 86800b4d5453f..322ca8860f548 100644
-> --- a/kernel/sched/cpufreq_schedutil.c
-> +++ b/kernel/sched/cpufreq_schedutil.c
-> @@ -915,7 +915,7 @@ static int __init sugov_register(void)
->  {
->  	return cpufreq_register_governor(&schedutil_gov);
->  }
-> -fs_initcall(sugov_register);
-> +core_initcall(sugov_register);
->  
->  #ifdef CONFIG_ENERGY_MODEL
->  extern bool sched_energy_update;
-> 
+Okay, let me do the change - and it seems like it doesn't even have to
+be sent as a fix then. Right?
 
-
-
-
+Kind regards
+Uffe
