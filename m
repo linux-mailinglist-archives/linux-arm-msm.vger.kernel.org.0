@@ -2,99 +2,155 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 16171DBD7E
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 18 Oct 2019 08:06:14 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 89D97DBDC5
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 18 Oct 2019 08:43:00 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2407208AbfJRGGF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 18 Oct 2019 02:06:05 -0400
-Received: from mail-pl1-f196.google.com ([209.85.214.196]:33847 "EHLO
-        mail-pl1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2392250AbfJRGGF (ORCPT
+        id S2407206AbfJRGm7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 18 Oct 2019 02:42:59 -0400
+Received: from smtp.codeaurora.org ([198.145.29.96]:46322 "EHLO
+        smtp.codeaurora.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2393594AbfJRGm6 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 18 Oct 2019 02:06:05 -0400
-Received: by mail-pl1-f196.google.com with SMTP id k7so2336646pll.1
-        for <linux-arm-msm@vger.kernel.org>; Thu, 17 Oct 2019 23:06:03 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=AkfYmQ4O8U9nyTFe9h6GxC4H3eeJ0+Nwd0lHpM483sk=;
-        b=yeLsMwtATcgUDkbIWuxXlpKdBXQt/BL/j4xWz7fVqIGu9xF7SDWWEMZe2pc8JNqzLX
-         eJCtVxdAJVIpvpmrPA3AbYZp0tzr5grKIjN2DZLe5dtNcsz0E51dOwSKtfhuwUeFYqoo
-         HSzmjKEp5USI7dQm7HMT+up9L9+zsqPK1EYeq66CJqlCaznPrHF8KwpLcVK3P5VFCiD7
-         h585OJIM/3Tfyl05WxrbtDvfysJ4orlblNIWTh3kO1H4o1v8qZefPlMzyIw/GFkszk9G
-         yjYUKIzrVlHNs00QVm7pvU46RpokVMUOA9iynKTkHJFki22hRxg0RL4Q1Pt17b9R9lbu
-         YtWg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=AkfYmQ4O8U9nyTFe9h6GxC4H3eeJ0+Nwd0lHpM483sk=;
-        b=aCeFLbnKEBJvxoDXV7hv6Qn/Fl/bliNUAIpsvegc3zwNoSLEWQUsY2w6enKxj9yABd
-         Drl931n5A3sHnMjOevj61O4pW7mukQWvQcfnkQwASPXG66kEkHBu6ijSIA2Cbe5TfjAO
-         zggyMO6FLTxQbx+eg3xOHxcpFACxotQEsdhZDdu0kvqbbXTgup+qHdMAme92iq2sbuD/
-         BvGqmeTdmmaryz2NybI0xmrCRbqekSswknXkSgWlNK/mGmIxDCMxfD9o0kTarf/aQM4a
-         K9V1L0vk82XU+RC1Tekhi9Pl5nMWi/C0/NWueh5AgqkDlnKhUXRIR5NRHTjewaZ8eBkZ
-         7YyQ==
-X-Gm-Message-State: APjAAAUGtjZU9xtyrQNM93wJApyZTbeiJWqQCsXn/gyOHrhuTuTNQ71C
-        9ZclB2K0wGzp7Pyuer2EFbycyA==
-X-Google-Smtp-Source: APXvYqyIeMk/6fgcaKyyWcE1FRzggciXB8Tu1b3UIpQMT8AD6ItcKTlnNIAQezURE45XM2AFqCLWnQ==
-X-Received: by 2002:a17:902:b20a:: with SMTP id t10mr8053142plr.277.1571378762778;
-        Thu, 17 Oct 2019 23:06:02 -0700 (PDT)
-Received: from localhost ([122.172.151.112])
-        by smtp.gmail.com with ESMTPSA id b16sm7929986pfb.54.2019.10.17.23.06.01
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 17 Oct 2019 23:06:02 -0700 (PDT)
-Date:   Fri, 18 Oct 2019 11:36:00 +0530
-From:   Viresh Kumar <viresh.kumar@linaro.org>
-To:     Amit Kucheria <amit.kucheria@linaro.org>
-Cc:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        daniel.lezcano@linaro.org, sudeep.holla@arm.com,
-        bjorn.andersson@linaro.org, edubezval@gmail.com, agross@kernel.org,
-        tdas@codeaurora.org, swboyd@chromium.org, ilina@codeaurora.org,
-        "Rafael J. Wysocki" <rjw@rjwysocki.net>,
-        Amit Kucheria <amit.kucheria@verdurent.com>,
-        Zhang Rui <rui.zhang@intel.com>, linux-pm@vger.kernel.org
-Subject: Re: [PATCH v3 2/6] thermal: Initialize thermal subsystem earlier
-Message-ID: <20191018060600.oj2qf5tuqu5agfmb@vireshk-i7>
-References: <cover.1571314830.git.amit.kucheria@linaro.org>
- <cc2aa18e2e6004ba099e69b41d0d505a4361443c.1571314830.git.amit.kucheria@linaro.org>
+        Fri, 18 Oct 2019 02:42:58 -0400
+Received: by smtp.codeaurora.org (Postfix, from userid 1000)
+        id 4EDDF610DC; Fri, 18 Oct 2019 06:42:57 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
+        s=default; t=1571380977;
+        bh=6TBlAdKQKJ2jvjGwgvWVKyvODqXx7MA+HnxHF0EkO/M=;
+        h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
+        b=XXpUDtHDTlxK4+UvWEa/J0kS0HjwY2zBjFYE7YpXGJAmogZBuItNCDKOCCoKd9sHw
+         j7laQYY1fc5Ie3Od2WNektEtPV7W7lVx9ovF5SOUdgYCEtFWEh42yQx1tkvgbpiQuc
+         9Q51u31cVnJSq1RadpOrTop88nLPI8gLZWDhFCiw=
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        pdx-caf-mail.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.7 required=2.0 tests=ALL_TRUSTED,BAYES_00,
+        DKIM_INVALID,DKIM_SIGNED autolearn=no autolearn_force=no version=3.4.0
+Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
+        by smtp.codeaurora.org (Postfix) with ESMTP id 51E72610DC;
+        Fri, 18 Oct 2019 06:42:56 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
+        s=default; t=1571380976;
+        bh=6TBlAdKQKJ2jvjGwgvWVKyvODqXx7MA+HnxHF0EkO/M=;
+        h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
+        b=gW0PUImE+THwnpgh1sMlgBvC+wHvJgH2dfUwZPnMJQ7NXR8nLTHYG6kMHd7zke0fQ
+         jsf4OF79koepY/K+yoYiF204JVVpAVxDfkKQO1EgSXeOjt2EQ9YxVRfGLagD86Oa+W
+         CjGLZ6+0LYrwcuBryQpPZXdoJgNDTOYZwxCrAF/s=
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <cc2aa18e2e6004ba099e69b41d0d505a4361443c.1571314830.git.amit.kucheria@linaro.org>
-User-Agent: NeoMutt/20180716-391-311a52
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
+Content-Transfer-Encoding: 7bit
+Date:   Fri, 18 Oct 2019 12:12:56 +0530
+From:   kgunda@codeaurora.org
+To:     Daniel Thompson <daniel.thompson@linaro.org>
+Cc:     bjorn.andersson@linaro.org, jingoohan1@gmail.com,
+        lee.jones@linaro.org, b.zolnierkie@samsung.com,
+        dri-devel@lists.freedesktop.org, jacek.anaszewski@gmail.com,
+        pavel@ucw.cz, robh+dt@kernel.org, mark.rutland@arm.com,
+        linux-leds@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, Andy Gross <agross@kernel.org>,
+        linux-arm-msm@vger.kernel.org, linux-fbdev@vger.kernel.org,
+        linux-arm-msm-owner@vger.kernel.org
+Subject: Re: [PATCH V7 6/6] backlight: qcom-wled: Add auto string detection
+ logic
+In-Reply-To: <20191017133954.7vgqjgwxojmjw446@holly.lan>
+References: <1571220826-7740-1-git-send-email-kgunda@codeaurora.org>
+ <1571220826-7740-7-git-send-email-kgunda@codeaurora.org>
+ <20191017112941.qqvgboyambzw63i3@holly.lan>
+ <fa32f7ec727cb2626ad877a6cef32a1b@codeaurora.org>
+ <20191017133954.7vgqjgwxojmjw446@holly.lan>
+Message-ID: <bd369e2d809d642867f712499df0eb33@codeaurora.org>
+X-Sender: kgunda@codeaurora.org
+User-Agent: Roundcube Webmail/1.2.5
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 17-10-19, 17:57, Amit Kucheria wrote:
-> Now that the thermal framework is built-in, in order to facilitate
-> thermal mitigation as early as possible in the boot cycle, move the
-> thermal framework initialization to core_initcall.
+On 2019-10-17 19:09, Daniel Thompson wrote:
+> On Thu, Oct 17, 2019 at 05:47:47PM +0530, kgunda@codeaurora.org wrote:
+>> On 2019-10-17 16:59, Daniel Thompson wrote:
+>> > On Wed, Oct 16, 2019 at 03:43:46PM +0530, Kiran Gunda wrote:
+>> > > The auto string detection algorithm checks if the current WLED
+>> > > sink configuration is valid. It tries enabling every sink and
+>> > > checks if the OVP fault is observed. Based on this information
+>> > > it detects and enables the valid sink configuration.
+>> > > Auto calibration will be triggered when the OVP fault interrupts
+>> > > are seen frequently thereby it tries to fix the sink configuration.
+>> > >
+>> > > The auto-detection also kicks in when the connected LED string
+>> > > of the display-backlight malfunctions (because of damage) and
+>> > > requires the damaged string to be turned off to prevent the
+>> > > complete panel and/or board from being damaged.
+>> > >
+>> > > Signed-off-by: Kiran Gunda <kgunda@codeaurora.org>
+>> >
+>> > It's a complex bit of code but I'm OK with it in principle. Everything
+>> > below is about small details and/or nitpicking.
+>> >
+>> >
+>> > > +static void wled_ovp_work(struct work_struct *work)
+>> > > +{
+>> > > +	struct wled *wled = container_of(work,
+>> > > +					 struct wled, ovp_work.work);
+>> > > +	enable_irq(wled->ovp_irq);
+>> > > +}
+>> > > +
+>> >
+>> > A bit of commenting about why we have to wait 10ms before enabling the
+>> > OVP interrupt would be appreciated.
+>> >
+>> >
+>> Sure. Will add the comment in the next series.
+>> > > +static irqreturn_t wled_ovp_irq_handler(int irq, void *_wled)
+>> > > +{
+>> > > +	struct wled *wled = _wled;
+>> > > +	int rc;
+>> > > +	u32 int_sts, fault_sts;
+>> > > +
+>> > > +	rc = regmap_read(wled->regmap,
+>> > > +			 wled->ctrl_addr + WLED3_CTRL_REG_INT_RT_STS, &int_sts);
+>> > > +	if (rc < 0) {
+>> > > +		dev_err(wled->dev, "Error in reading WLED3_INT_RT_STS rc=%d\n",
+>> > > +			rc);
+>> > > +		return IRQ_HANDLED;
+>> > > +	}
+>> > > +
+>> > > +	rc = regmap_read(wled->regmap, wled->ctrl_addr +
+>> > > +			 WLED3_CTRL_REG_FAULT_STATUS, &fault_sts);
+>> > > +	if (rc < 0) {
+>> > > +		dev_err(wled->dev, "Error in reading WLED_FAULT_STATUS rc=%d\n",
+>> > > +			rc);
+>> > > +		return IRQ_HANDLED;
+>> > > +	}
+>> > > +
+>> > > +	if (fault_sts &
+>> > > +		(WLED3_CTRL_REG_OVP_FAULT_BIT | WLED3_CTRL_REG_ILIM_FAULT_BIT))
+>> > > +		dev_dbg(wled->dev, "WLED OVP fault detected, int_sts=%x
+>> > > fault_sts= %x\n",
+>> > > +			int_sts, fault_sts);
+>> > > +
+>> > > +	if (fault_sts & WLED3_CTRL_REG_OVP_FAULT_BIT) {
+>> > > +		mutex_lock(&wled->lock);
+>> > > +		disable_irq_nosync(wled->ovp_irq);
+>> >
+>> > We're currently running the threaded ISR for this irq. Do we really need
+>> > to disable it?
+>> >
+>> We need to disable this IRQ, during the auto string detection logic. 
+>> Because
+>> in the auto string detection we configure the current sinks one by one 
+>> and
+>> check the
+>> status register for the OVPs and set the right string configuration. 
+>> We
+>> enable it later after
+>> the auto string detection is completed.
 > 
-> Signed-off-by: Amit Kucheria <amit.kucheria@linaro.org>
-> ---
->  drivers/thermal/thermal_core.c | 3 ++-
->  1 file changed, 2 insertions(+), 1 deletion(-)
+> This is a threaded oneshot interrupt handler. Why isn't the framework
+> masking sufficient for you here?
 > 
-> diff --git a/drivers/thermal/thermal_core.c b/drivers/thermal/thermal_core.c
-> index d21b754baee2..d8251d723459 100644
-> --- a/drivers/thermal/thermal_core.c
-> +++ b/drivers/thermal/thermal_core.c
-> @@ -1537,4 +1537,5 @@ static int __init thermal_init(void)
->  	mutex_destroy(&poweroff_lock);
->  	return result;
->  }
-> -fs_initcall(thermal_init);
-> +
-
-remove the blank line please.
-
-> +core_initcall(thermal_init);
-
-Acked-by: Viresh Kumar <viresh.kumar@linaro.org>
-
--- 
-viresh
+> 
+> Daniel.
+Right .. I overlooked that it is a oneshot interrupt earlier.
+I will address it in the next series.
