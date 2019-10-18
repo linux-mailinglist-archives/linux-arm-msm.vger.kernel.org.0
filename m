@@ -2,121 +2,91 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id D7FBBDC072
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 18 Oct 2019 11:01:35 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 8C18EDC138
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 18 Oct 2019 11:39:09 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2442256AbfJRJBf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 18 Oct 2019 05:01:35 -0400
-Received: from [217.140.110.172] ([217.140.110.172]:58958 "EHLO foss.arm.com"
+        id S2404316AbfJRJjJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 18 Oct 2019 05:39:09 -0400
+Received: from [217.140.110.172] ([217.140.110.172]:59874 "EHLO foss.arm.com"
         rhost-flags-FAIL-FAIL-OK-OK) by vger.kernel.org with ESMTP
-        id S2442255AbfJRJBf (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 18 Oct 2019 05:01:35 -0400
+        id S1727917AbfJRJjI (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 18 Oct 2019 05:39:08 -0400
 Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 8B6653E8;
-        Fri, 18 Oct 2019 02:01:07 -0700 (PDT)
-Received: from arrakis.emea.arm.com (arrakis.cambridge.arm.com [10.1.197.42])
-        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id D87763F718;
-        Fri, 18 Oct 2019 02:01:05 -0700 (PDT)
-Date:   Fri, 18 Oct 2019 10:01:03 +0100
-From:   Catalin Marinas <catalin.marinas@arm.com>
-To:     Jeremy Linton <jeremy.linton@arm.com>
-Cc:     Mark Rutland <mark.rutland@arm.com>, Marc Zyngier <maz@kernel.org>,
-        Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>,
-        rnayak@codeaurora.org, suzuki.poulose@arm.com,
-        linux-kernel@vger.kernel.org, bjorn.andersson@linaro.org,
-        linux-arm-msm@vger.kernel.org, andrew.murray@arm.com,
-        will@kernel.org, Dave.Martin@arm.com,
-        linux-arm-kernel@lists.infradead.org
-Subject: Re: Relax CPU features sanity checking on heterogeneous architectures
-Message-ID: <20191018090103.GC19734@arrakis.emea.arm.com>
-References: <b3606e76af42f7ecf65b1bfc2a5ed30a@codeaurora.org>
- <20191011105010.GA29364@lakrids.cambridge.arm.com>
- <20191011143343.541da66c@why>
- <20191011135431.GB33537@lakrids.cambridge.arm.com>
- <aee2d915-3801-cc35-2a37-0c7d0ad7488e@arm.com>
+        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 8AE093E8;
+        Fri, 18 Oct 2019 02:38:43 -0700 (PDT)
+Received: from e121166-lin.cambridge.arm.com (unknown [10.1.196.255])
+        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id BE60F3F718;
+        Fri, 18 Oct 2019 02:38:41 -0700 (PDT)
+Date:   Fri, 18 Oct 2019 10:38:39 +0100
+From:   Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>
+To:     Ulf Hansson <ulf.hansson@linaro.org>
+Cc:     "Rafael J . Wysocki" <rjw@rjwysocki.net>,
+        Daniel Lezcano <daniel.lezcano@linaro.org>,
+        Sudeep Holla <sudeep.holla@arm.com>,
+        Mark Rutland <mark.rutland@arm.com>,
+        Lina Iyer <ilina@codeaurora.org>, linux-pm@vger.kernel.org,
+        Rob Herring <robh+dt@kernel.org>,
+        Vincent Guittot <vincent.guittot@linaro.org>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Kevin Hilman <khilman@kernel.org>,
+        linux-arm-kernel@lists.infradead.org, linux-arm-msm@vger.kernel.org
+Subject: Re: [PATCH 01/13] cpuidle: psci: Fix potential access to unmapped
+ memory
+Message-ID: <20191018093839.GB25918@e121166-lin.cambridge.arm.com>
+References: <20191010113937.15962-1-ulf.hansson@linaro.org>
+ <20191010113937.15962-2-ulf.hansson@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <aee2d915-3801-cc35-2a37-0c7d0ad7488e@arm.com>
-User-Agent: Mutt/1.10.1 (2018-07-13)
+In-Reply-To: <20191010113937.15962-2-ulf.hansson@linaro.org>
+User-Agent: Mutt/1.9.4 (2018-02-28)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Oct 17, 2019 at 04:39:23PM -0500, Jeremy Linton wrote:
-> On 10/11/19 8:54 AM, Mark Rutland wrote:
-> > On Fri, Oct 11, 2019 at 02:33:43PM +0100, Marc Zyngier wrote:
-> > > On Fri, 11 Oct 2019 11:50:11 +0100
-> > > Mark Rutland <mark.rutland@arm.com> wrote:
-> > > > On Fri, Oct 11, 2019 at 11:19:00AM +0530, Sai Prakash Ranjan wrote:
-> > > > > On latest QCOM SoCs like SM8150 and SC7180 with big.LITTLE arch, below
-> > > > > warnings are observed during bootup of big cpu cores.
-> > > > 
-> > > > For reference, which CPUs are in those SoCs?
-> > > > 
-> > > > > SM8150:
-> > > > > 
-> > > > > [    0.271177] CPU features: SANITY CHECK: Unexpected variation in
-> > > > > SYS_ID_AA64PFR0_EL1. Boot CPU: 0x00000011112222, CPU4: 0x00000011111112
-> > > > 
-> > > > The differing fields are EL3, EL2, and EL1: the boot CPU supports
-> > > > AArch64 and AArch32 at those exception levels, while the secondary only
-> > > > supports AArch64.
-> > > > 
-> > > > Do we handle this variation in KVM?
-> > > 
-> > > We do, at least at vcpu creation time (see kvm_reset_vcpu). But if one
-> > > of the !AArch32 CPU comes in late in the game (after we've started a
-> > > guest), all bets are off (we'll schedule the 32bit guest on that CPU,
-> > > enter the guest, immediately take an Illegal Exception Return, and
-> > > return to userspace with KVM_EXIT_FAIL_ENTRY).
-> > 
-> > Ouch. We certainly can't remove the warning untill we deal with that
-> > somehow, then.
-
-Luckily, qemu refuses to start a guest on two different CPU types.
-
-> > > Not sure we could do better, given the HW. My preference would be to
-> > > fail these CPUs if they aren't present at boot time.
-
-That's my preference as well.
-
-> > I agree; I think we need logic to check the ID register fields against
-> > their EXACT, {LOWER,HIGHER}_SAFE, etc rules regardless of whether we
-> > have an associated cap. That can then abort a late onlining of a CPU
-> > which violates those rules w.r.t. the finalised system value.
+On Thu, Oct 10, 2019 at 01:39:25PM +0200, Ulf Hansson wrote:
+> When the WFI state have been selected, the in-parameter idx to
+> psci_enter_idle_state() is zero. In this case, we must not index the state
+> array as "state[idx - 1]", as it means accessing data outside the array.
+> Fix the bug by pre-checking if idx is zero.
 > 
-> Except one of the cases is the user who doesn't care about aarch32 @ el2/1
-> and just wants to add another core to their 64-bit "clean" OS.
+> Fixes: 9ffeb6d08c3a ("PSCI: cpuidle: Refactor CPU suspend power_state parameter handling")
+> Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
+> ---
+>  drivers/cpuidle/cpuidle-psci.c | 6 +++---
+>  1 file changed, 3 insertions(+), 3 deletions(-)
 > 
-> So my $.02 is the online should only fail if someone has actually started a
-> 32-bit guest on the machine.
+> diff --git a/drivers/cpuidle/cpuidle-psci.c b/drivers/cpuidle/cpuidle-psci.c
+> index f3c1a2396f98..2e91c8d6c211 100644
+> --- a/drivers/cpuidle/cpuidle-psci.c
+> +++ b/drivers/cpuidle/cpuidle-psci.c
+> @@ -27,10 +27,10 @@ static DEFINE_PER_CPU_READ_MOSTLY(u32 *, psci_power_state);
+>  static int psci_enter_idle_state(struct cpuidle_device *dev,
+>  				struct cpuidle_driver *drv, int idx)
+>  {
+> -	u32 *state = __this_cpu_read(psci_power_state);
+> +	u32 *states = __this_cpu_read(psci_power_state);
+> +	u32 state = idx ? states[idx - 1] : 0;
+>  
+> -	return CPU_PM_CPU_IDLE_ENTER_PARAM(psci_cpu_suspend_enter,
+> -					   idx, state[idx - 1]);
+> +	return CPU_PM_CPU_IDLE_ENTER_PARAM(psci_cpu_suspend_enter, idx, state);
 
-I don't really think it's worth the hassle. This could even be racy
-(32-bit guest starting at the same time with a CPU being onlined), so it
-needs extra care.
+Technically we don't dereference that array entry but I agree this
+is ugly and potentially broken.
 
-If you have such platform, just make sure that you don't have
-incompatible CPUs coming up late (during boot it should be fine).
+My preference is aligning it with ACPI code and allocate one more
+entry in the psci_power_state array (useless for wfi, agreed but
+at least we remove this (-1) handling from the code).
 
-> > I suspect that we may want to split the notion of
-> > safe-for-{user,kernel-guest} in the feature tables, as if nothing else
-> > it will force us to consider those cases separately when adding new
-> > stuff.
+Thanks,
+Lorenzo
+
+>  }
+>  
+>  static struct cpuidle_driver psci_idle_driver __initdata = {
+> -- 
+> 2.17.1
 > 
-> As i'm sure everyone knows, this is all going to happen again with el0
-> support. I wonder if some of this more "advanced" functionality should be
-> buried behind EXPERT. At least on ACPI its possible to tell at early boot if
-> the machine is heterogeneous (not necessarily in which ways) and just
-> automatically sanitize away 32-bit support and some of the stickier things
-> when a heterogeneous machine is detected.
-
-We should improve (remove) the warnings for things we know the kernel
-can handled during boot. For example, 32-bit not available on all CPUs
-during boot should be fine as we just disable the feature. However, late
-onlining of a CPU that does not support the already advertised features
-should be blocked.
-
--- 
-Catalin
