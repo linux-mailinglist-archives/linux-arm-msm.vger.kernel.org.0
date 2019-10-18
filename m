@@ -2,101 +2,77 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 7009BDC86A
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 18 Oct 2019 17:27:48 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id ECC7CDCBB5
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 18 Oct 2019 18:41:32 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2406633AbfJRP1r (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 18 Oct 2019 11:27:47 -0400
-Received: from smtp.codeaurora.org ([198.145.29.96]:56774 "EHLO
-        smtp.codeaurora.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2394233AbfJRP1r (ORCPT
+        id S2393595AbfJRQkk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 18 Oct 2019 12:40:40 -0400
+Received: from inca-roads.misterjones.org ([213.251.177.50]:57275 "EHLO
+        inca-roads.misterjones.org" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1728368AbfJRQkk (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 18 Oct 2019 11:27:47 -0400
-Received: by smtp.codeaurora.org (Postfix, from userid 1000)
-        id 7DA496106C; Fri, 18 Oct 2019 15:27:46 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
-        s=default; t=1571412466;
-        bh=bZG3L7zXqO4GvOLgoEZUpllZarQ7DPHvX/3FqZ0KPQw=;
-        h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
-        b=oy7Z0pRoF1j3FkzYFH7DTJOqJNKHwv6Ak4sgytcpG3WVjaNyw8Uyb/zQ1oLW0ueEa
-         2Fu+3zvWoAf4tjHfk31oFdsSGTfKI+LCgC7x/11sWJuEjKmhxx7p3C0Yq46e713M0h
-         Q3WCf+J/igRsUUWAQGQ0WEOe/+JpnNc0c1NXQHno=
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        pdx-caf-mail.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.7 required=2.0 tests=ALL_TRUSTED,BAYES_00,
-        DKIM_INVALID,DKIM_SIGNED autolearn=no autolearn_force=no version=3.4.0
-Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
-        by smtp.codeaurora.org (Postfix) with ESMTP id DA9D960FD2;
-        Fri, 18 Oct 2019 15:27:45 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
-        s=default; t=1571412465;
-        bh=bZG3L7zXqO4GvOLgoEZUpllZarQ7DPHvX/3FqZ0KPQw=;
-        h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
-        b=Ud1/1TAdWTnt5PC9DJBLOFdAFBQTt3OrSCQ2lV/36mOyu4Q/DFcniZNrMzJN0lJD6
-         gWbZSP8qOkvP9skewKanC9t639IegWEU5bSgeZSW2/XHMqD3oDmmdEvq4iYdVhEUmz
-         F+bo1/SOzlWm6kep8HH577Mz0VWDH1zVcYtnMZkQ=
-MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
-Content-Transfer-Encoding: 7bit
-Date:   Fri, 18 Oct 2019 20:57:45 +0530
-From:   Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
+        Fri, 18 Oct 2019 12:40:40 -0400
+Received: from [213.166.56.99] (helo=big-swifty.misterjones.org)
+        by cheepnis.misterjones.org with esmtpsa (TLSv1.2:AES256-GCM-SHA384:256)
+        (Exim 4.80)
+        (envelope-from <maz@kernel.org>)
+        id 1iLVIk-0002nV-PR; Fri, 18 Oct 2019 18:40:30 +0200
+Date:   Fri, 18 Oct 2019 17:40:29 +0100
+Message-ID: <86h846ypky.wl-maz@kernel.org>
+From:   Marc Zyngier <maz@kernel.org>
 To:     Stephen Boyd <swboyd@chromium.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Mark Rutland <mark.rutland@arm.com>,
-        Rob Herring <robh+dt@kernel.org>, devicetree@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Rajendra Nayak <rnayak@codeaurora.org>,
-        Rishabh Bhatnagar <rishabhb@codeaurora.org>,
-        Doug Anderson <dianders@chromium.org>,
-        devicetree-owner@vger.kernel.org
-Subject: Re: [PATCH 2/2] dt-bindings: msm: Add LLCC for SC7180
-In-Reply-To: <5da9cce6.1c69fb81.d3cb2.07d1@mx.google.com>
-References: <cover.1571406041.git.saiprakash.ranjan@codeaurora.org>
- <30f419d1612a3912e323287a96daa2b4fbe3dacd.1571406041.git.saiprakash.ranjan@codeaurora.org>
- <5da9cce6.1c69fb81.d3cb2.07d1@mx.google.com>
-Message-ID: <576b11d1f1fece666e2e8735c3a8657e@codeaurora.org>
-X-Sender: saiprakash.ranjan@codeaurora.org
-User-Agent: Roundcube Webmail/1.2.5
+Cc:     Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>,
+        Mark Rutland <mark.rutland@arm.com>, rnayak@codeaurora.org,
+        suzuki.poulose@arm.com, catalin.marinas@arm.com,
+        linux-arm-kernel <linux-arm-kernel-bounces@lists.infradead.org>,
+        linux-kernel@vger.kernel.org, jeremy.linton@arm.com,
+        bjorn.andersson@linaro.org, linux-arm-msm@vger.kernel.org,
+        andrew.murray@arm.com, will@kernel.org, dave.martin@arm.com,
+        linux-arm-kernel@lists.infradead.org, marc.w.gonzalez@free.fr
+Subject: Re: Relax CPU features sanity checking on heterogeneous architectures
+In-Reply-To: <5da9cd3a.1c69fb81.95e9.e5e2@mx.google.com>
+References: <b3606e76af42f7ecf65b1bfc2a5ed30a@codeaurora.org>
+        <20191011105010.GA29364@lakrids.cambridge.arm.com>
+        <7910f428bd96834c15fb56262f3c10f8@codeaurora.org>
+        <20191011143442.515659f4@why>
+        <ac7599b30461d6a814e4f36d68bba6c2@codeaurora.org>
+        <5da8c868.1c69fb81.ae709.97ff@mx.google.com>
+        <c9285391dbbe936d3f242bdd0d226b93@www.loen.fr>
+        <5da9cd3a.1c69fb81.95e9.e5e2@mx.google.com>
+User-Agent: Wanderlust/2.15.9 (Almost Unreal) SEMI-EPG/1.14.7 (Harue)
+ FLIM/1.14.9 (=?UTF-8?B?R29qxY0=?=) APEL/10.8 EasyPG/1.0.0 Emacs/26
+ (aarch64-unknown-linux-gnu) MULE/6.0 (HANACHIRUSATO)
+MIME-Version: 1.0 (generated by SEMI-EPG 1.14.7 - "Harue")
+Content-Type: text/plain; charset=US-ASCII
+X-SA-Exim-Connect-IP: 213.166.56.99
+X-SA-Exim-Rcpt-To: swboyd@chromium.org, saiprakash.ranjan@codeaurora.org, mark.rutland@arm.com, rnayak@codeaurora.org, suzuki.poulose@arm.com, catalin.marinas@arm.com, linux-arm-kernel-bounces@lists.infradead.org, linux-kernel@vger.kernel.org, jeremy.linton@arm.com, bjorn.andersson@linaro.org, linux-arm-msm@vger.kernel.org, andrew.murray@arm.com, will@kernel.org, dave.martin@arm.com, linux-arm-kernel@lists.infradead.org, marc.w.gonzalez@free.fr
+X-SA-Exim-Mail-From: maz@kernel.org
+X-SA-Exim-Scanned: No (on cheepnis.misterjones.org); SAEximRunCond expanded to false
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2019-10-18 20:02, Stephen Boyd wrote:
-> Quoting Sai Prakash Ranjan (2019-10-18 06:57:09)
->> Add LLCC compatible for SC7180 SoC.
->> 
->> Signed-off-by: Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
->> ---
->>  Documentation/devicetree/bindings/arm/msm/qcom,llcc.txt | 4 +++-
->>  1 file changed, 3 insertions(+), 1 deletion(-)
+On Fri, 18 Oct 2019 15:33:29 +0100,
+Stephen Boyd <swboyd@chromium.org> wrote:
 > 
-> Can you convert this binding to YAML? Would be useful to make sure it's
-> used properly.
+> Quoting Marc Zyngier (2019-10-18 00:20:56)
+> > 
+> > If this SoC is anythinig like SM8150, 32bit guests will be hit and 
+> > miss,
+> > depending on the CPU your guest runs on, or is migrated to. We need to
+> > either drop capabilities from the 32bit-capable CPU, or prevent the
+> > non-32bit capable CPU from booting if a 32bit guest has been started.
+> > 
+> > You just have to hope that the kernel is entered at EL2, and that QC's
+> > "value add" has been moved somewhere else...
+> > 
 > 
+> Ok that's good.
 
-Ok will do in next version.
+I need a new signature.
 
->> 
->> diff --git a/Documentation/devicetree/bindings/arm/msm/qcom,llcc.txt 
->> b/Documentation/devicetree/bindings/arm/msm/qcom,llcc.txt
->> index eaee06b2d8f2..f263aa539d47 100644
->> --- a/Documentation/devicetree/bindings/arm/msm/qcom,llcc.txt
->> +++ b/Documentation/devicetree/bindings/arm/msm/qcom,llcc.txt
->> @@ -11,7 +11,9 @@ Properties:
->>  - compatible:
->>         Usage: required
->>         Value type: <string>
->> -       Definition: must be "qcom,sdm845-llcc"
->> +       Definition: must be one of:
->> +                   "qcom,sc7180-llcc",
->> +                   "qcom,sdm845-llcc"
->> 
+	M.
 
 -- 
-QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a 
-member
-of Code Aurora Forum, hosted by The Linux Foundation
+Jazz is not dead, it just smells funny.
