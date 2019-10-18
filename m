@@ -2,92 +2,89 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id E4436DBD5F
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 18 Oct 2019 07:58:47 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 2F766DBD76
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 18 Oct 2019 08:04:25 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727434AbfJRF6r (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 18 Oct 2019 01:58:47 -0400
-Received: from mail-pf1-f196.google.com ([209.85.210.196]:44052 "EHLO
-        mail-pf1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2389702AbfJRF6r (ORCPT
+        id S2392090AbfJRGDt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 18 Oct 2019 02:03:49 -0400
+Received: from mail-pl1-f194.google.com ([209.85.214.194]:42512 "EHLO
+        mail-pl1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2407026AbfJRGDt (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 18 Oct 2019 01:58:47 -0400
-Received: by mail-pf1-f196.google.com with SMTP id q21so3148121pfn.11
-        for <linux-arm-msm@vger.kernel.org>; Thu, 17 Oct 2019 22:58:45 -0700 (PDT)
+        Fri, 18 Oct 2019 02:03:49 -0400
+Received: by mail-pl1-f194.google.com with SMTP id g9so1005213plj.9
+        for <linux-arm-msm@vger.kernel.org>; Thu, 17 Oct 2019 23:03:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=Kf8Wl/hDIqlCih1Sj7ch2+u/J8zBMzyn3cjl/QZrjFA=;
-        b=VcbPssRYtYFfLq3BlQOzi3O3UfsrFx3ywu4mfvNFSYE5JuX7HMOJy6QKGeSqjiJzB/
-         Ow2LRoeZPXI/6sQV6wua4F9IpDMXhMPInzYZ6dGBeG8c2TjwRPUbAXHtMbGt6VaSlciF
-         7C9O2WTfDLMBAmRFTdhCIxi8/pHvXovHwhFsNpFdurGvz7XFlDOLsDS2+2VXfrbcv0Pd
-         JmLpQSKXWbvq9Ei5zpuLtSoBW4AVkWzI3soVpOw6j8+NQxhe1FvEhabvHK3YH//Fw/jo
-         WpTcCDyiFMYvtxMSssdXOnUBJwBpiBRCOYB9MttDmXOxjUzPnUytmdCTiPzVrpBOLWO2
-         kHnA==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=BSveiQwGviuEcR4ypuqkpKzuxRmA0+9+mStZkF3vzJg=;
+        b=VKMuvXcvvGP/FnfbPGGafDTQqvKt58hQ9JwZCL1mJZYoO07SWVM8V0Ao+3xvwMFVC0
+         z1szGW4AdBK1zXzKQzlZbjQoBRZaBONjgZQimxNr41BG9T6IeKw/9hkmO9Sqta1bGlzT
+         Q5XB32NRXux2YSw9RcXoriHC/Vjhn0qOZ/ISgp0wWDGqbKienY0ipkB7LDONW5/T+jrE
+         4dDadRRatqlloFFaGg1WkY05ct4gjFWBfmecZUPSM/VFh7F775hKspvL+1fr7c+1BDyX
+         65nI2n4AtKgw8neyAPTA5SpITv6wQmqQqH4QW2Ln9qa/tgsBr895fpJSiQd2CDvuAKdx
+         7Hzw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=Kf8Wl/hDIqlCih1Sj7ch2+u/J8zBMzyn3cjl/QZrjFA=;
-        b=rpDPFiMxsdIoC8UT0eSAui+MQv7k8xDeRPqK1ipDe3HXuyE5ExGd0rdehBupTbdbmy
-         u1q5gkLfFdRaD0lQNCUWbetnNgmK1KYKVKG79zghqrgXSh0CM0z+Rz97TOvB/FUqy8Bk
-         1aC2aPdqPUgWmhacXeJke9VJBzj+VNQV4JhtXphlDI/k2F6Af5a/wlNnNQnfBsESqV9m
-         VpnyzukNrdHjof8KMffgk3Gkeu/MM3JsTMFWjrbuSaIr2Ny21DgnZzvYuRncSltOIKi2
-         ITJk7y4FcUrznA/4vL7Ajj2B3Yvy6RxrsmGs6xmK3ZDBlCicC7qWL9FIVaaa+/waTLlr
-         U5ew==
-X-Gm-Message-State: APjAAAXmtZj/DgHD1Tgej6Jth/v64t1AyXW6c8lEL/dnXeAl/qV0iAFr
-        PLmtiSkVByzrsNzD1F77MQE9pg==
-X-Google-Smtp-Source: APXvYqxGwnRoQLug4jtB3dhzUdDRkIJWOtWJl2b/CkR0ciyZuyOcTWg05+6pXxb0NwOwdDmBW1K28w==
-X-Received: by 2002:a63:160a:: with SMTP id w10mr8499180pgl.212.1571378325034;
-        Thu, 17 Oct 2019 22:58:45 -0700 (PDT)
-Received: from localhost.localdomain (104-188-17-28.lightspeed.sndgca.sbcglobal.net. [104.188.17.28])
-        by smtp.gmail.com with ESMTPSA id p66sm5727799pfg.127.2019.10.17.22.58.43
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 17 Oct 2019 22:58:44 -0700 (PDT)
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Andy Gross <agross@kernel.org>, Rob Herring <robh+dt@kernel.org>,
-        Mark Rutland <mark.rutland@arm.com>
-Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: [PATCH] arm64: dts: qcom: c630: Add WiFi node
-Date:   Thu, 17 Oct 2019 22:58:41 -0700
-Message-Id: <20191018055841.3729591-1-bjorn.andersson@linaro.org>
-X-Mailer: git-send-email 2.23.0
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=BSveiQwGviuEcR4ypuqkpKzuxRmA0+9+mStZkF3vzJg=;
+        b=PPFr2pxaJCO9Bu17sHn8qXeGKbSyYYdX9wnRjqP92DFWDLMjyCEt4/KIkdiVsGK0zh
+         U8nXqOMi4Lo0D2qixQwvM89M207Iffr8Guz0gjJEsPqqTjQILrHoQKiHe0gEk7iV8fl1
+         AI9NawaKSyeKOxd3KY42wL49ydoOu/kYqwUCHTpGeIF374z4zgwCuwUV0Sr8bE9oSgwW
+         kwTmRDu9RswPruzWYiqUIE6FwlOv3qJgQoXhRsiT7sOCk3lhopsKOXxY/NWM0hLk03xB
+         pU5WDVmish/Adiup5OKIB45suaFkmlV6xT6BXI2smTd9+KchddAcway/OgZzf2lMWkmm
+         n6UA==
+X-Gm-Message-State: APjAAAVdhqF6mMQeURuHebnIrMFPDx2LP2HgqDrnN/Fu1T5AJ3UhDb6k
+        csUP7hjFgiKematejc8LdQZ5Gg==
+X-Google-Smtp-Source: APXvYqwbsGOB5qsGmti/XnQXORN6qlEqa1yTSNYtvcSbP0L/Gu/byaAudi/utDrAhgQkCMHVo3tdpA==
+X-Received: by 2002:a17:902:b08f:: with SMTP id p15mr7786915plr.229.1571378628231;
+        Thu, 17 Oct 2019 23:03:48 -0700 (PDT)
+Received: from localhost ([122.172.151.112])
+        by smtp.gmail.com with ESMTPSA id 199sm5541685pfv.152.2019.10.17.23.03.47
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Thu, 17 Oct 2019 23:03:47 -0700 (PDT)
+Date:   Fri, 18 Oct 2019 11:33:45 +0530
+From:   Viresh Kumar <viresh.kumar@linaro.org>
+To:     Stephen Boyd <sboyd@kernel.org>
+Cc:     "Rafael J. Wysocki" <rjw@rjwysocki.net>,
+        Amit Kucheria <amit.kucheria@linaro.org>,
+        Amit Kucheria <amit.kucheria@verdurent.com>,
+        Zhang Rui <rui.zhang@intel.com>, agross@kernel.org,
+        bjorn.andersson@linaro.org, daniel.lezcano@linaro.org,
+        edubezval@gmail.com, ilina@codeaurora.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        sudeep.holla@arm.com, tdas@codeaurora.org,
+        linux-clk@vger.kernel.org
+Subject: Re: [PATCH v3 5/6] clk: qcom: Initialise clock drivers earlier
+Message-ID: <20191018060345.wjflngfdnqa3gbsu@vireshk-i7>
+References: <cover.1571314830.git.amit.kucheria@linaro.org>
+ <5f1ca3bfc45e268f7f9f6e091ba13b8103fb4304.1571314830.git.amit.kucheria@linaro.org>
+ <20191017174723.8024521D7A@mail.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20191017174723.8024521D7A@mail.kernel.org>
+User-Agent: NeoMutt/20180716-391-311a52
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Specify regulators and enable the &wifi node. The firmware uses the 8
-bit version of the host capability message, so specify this quirk.
+On 17-10-19, 10:47, Stephen Boyd wrote:
+> Quoting Amit Kucheria (2019-10-17 05:27:37)
+> > Initialise the clock drivers on sdm845 and qcs404 in core_initcall so we
+> > can have earlier access to cpufreq during booting.
+> > 
+> > Signed-off-by: Amit Kucheria <amit.kucheria@linaro.org>
+> > ---
+> 
+> Acked-by: Stephen Boyd <sboyd@kernel.org>
+> 
+> Makes me sad again.
 
-Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
----
- arch/arm64/boot/dts/qcom/sdm850-lenovo-yoga-c630.dts | 11 +++++++++++
- 1 file changed, 11 insertions(+)
+I am wondering why it makes you sad ? :)
 
-diff --git a/arch/arm64/boot/dts/qcom/sdm850-lenovo-yoga-c630.dts b/arch/arm64/boot/dts/qcom/sdm850-lenovo-yoga-c630.dts
-index 01709951fdb6..53d4d40dfe43 100644
---- a/arch/arm64/boot/dts/qcom/sdm850-lenovo-yoga-c630.dts
-+++ b/arch/arm64/boot/dts/qcom/sdm850-lenovo-yoga-c630.dts
-@@ -461,3 +461,14 @@
- 	vdda-phy-supply = <&vdda_usb2_ss_1p2>;
- 	vdda-pll-supply = <&vdda_usb2_ss_core>;
- };
-+
-+&wifi {
-+	status = "okay";
-+
-+	vdd-0.8-cx-mx-supply = <&vreg_l5a_0p8>;
-+	vdd-1.8-xo-supply = <&vreg_l7a_1p8>;
-+	vdd-1.3-rfa-supply = <&vreg_l17a_1p3>;
-+	vdd-3.3-ch0-supply = <&vreg_l25a_3p3>;
-+
-+	qcom,snoc-host-cap-8bit-quirk;
-+};
 -- 
-2.23.0
-
+viresh
