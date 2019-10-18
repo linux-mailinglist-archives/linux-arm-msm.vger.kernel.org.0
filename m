@@ -2,155 +2,119 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 89D97DBDC5
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 18 Oct 2019 08:43:00 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 7EEC8DBE37
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 18 Oct 2019 09:21:00 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2407206AbfJRGm7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 18 Oct 2019 02:42:59 -0400
-Received: from smtp.codeaurora.org ([198.145.29.96]:46322 "EHLO
-        smtp.codeaurora.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2393594AbfJRGm6 (ORCPT
+        id S1727832AbfJRHVA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 18 Oct 2019 03:21:00 -0400
+Received: from inca-roads.misterjones.org ([213.251.177.50]:38292 "EHLO
+        inca-roads.misterjones.org" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S2389963AbfJRHU7 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 18 Oct 2019 02:42:58 -0400
-Received: by smtp.codeaurora.org (Postfix, from userid 1000)
-        id 4EDDF610DC; Fri, 18 Oct 2019 06:42:57 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
-        s=default; t=1571380977;
-        bh=6TBlAdKQKJ2jvjGwgvWVKyvODqXx7MA+HnxHF0EkO/M=;
-        h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
-        b=XXpUDtHDTlxK4+UvWEa/J0kS0HjwY2zBjFYE7YpXGJAmogZBuItNCDKOCCoKd9sHw
-         j7laQYY1fc5Ie3Od2WNektEtPV7W7lVx9ovF5SOUdgYCEtFWEh42yQx1tkvgbpiQuc
-         9Q51u31cVnJSq1RadpOrTop88nLPI8gLZWDhFCiw=
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        pdx-caf-mail.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.7 required=2.0 tests=ALL_TRUSTED,BAYES_00,
-        DKIM_INVALID,DKIM_SIGNED autolearn=no autolearn_force=no version=3.4.0
-Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
-        by smtp.codeaurora.org (Postfix) with ESMTP id 51E72610DC;
-        Fri, 18 Oct 2019 06:42:56 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
-        s=default; t=1571380976;
-        bh=6TBlAdKQKJ2jvjGwgvWVKyvODqXx7MA+HnxHF0EkO/M=;
-        h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
-        b=gW0PUImE+THwnpgh1sMlgBvC+wHvJgH2dfUwZPnMJQ7NXR8nLTHYG6kMHd7zke0fQ
-         jsf4OF79koepY/K+yoYiF204JVVpAVxDfkKQO1EgSXeOjt2EQ9YxVRfGLagD86Oa+W
-         CjGLZ6+0LYrwcuBryQpPZXdoJgNDTOYZwxCrAF/s=
+        Fri, 18 Oct 2019 03:20:59 -0400
+Received: from www-data by cheepnis.misterjones.org with local (Exim 4.80)
+        (envelope-from <maz@kernel.org>)
+        id 1iLMZE-0002Pk-F0; Fri, 18 Oct 2019 09:20:56 +0200
+To:     Stephen Boyd <swboyd@chromium.org>
+Subject: Re: Relax CPU features sanity checking on heterogeneous architectures
+X-PHP-Originating-Script: 0:main.inc
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII;
+Content-Type: text/plain; charset=UTF-8;
  format=flowed
 Content-Transfer-Encoding: 7bit
-Date:   Fri, 18 Oct 2019 12:12:56 +0530
-From:   kgunda@codeaurora.org
-To:     Daniel Thompson <daniel.thompson@linaro.org>
-Cc:     bjorn.andersson@linaro.org, jingoohan1@gmail.com,
-        lee.jones@linaro.org, b.zolnierkie@samsung.com,
-        dri-devel@lists.freedesktop.org, jacek.anaszewski@gmail.com,
-        pavel@ucw.cz, robh+dt@kernel.org, mark.rutland@arm.com,
-        linux-leds@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, Andy Gross <agross@kernel.org>,
-        linux-arm-msm@vger.kernel.org, linux-fbdev@vger.kernel.org,
-        linux-arm-msm-owner@vger.kernel.org
-Subject: Re: [PATCH V7 6/6] backlight: qcom-wled: Add auto string detection
- logic
-In-Reply-To: <20191017133954.7vgqjgwxojmjw446@holly.lan>
-References: <1571220826-7740-1-git-send-email-kgunda@codeaurora.org>
- <1571220826-7740-7-git-send-email-kgunda@codeaurora.org>
- <20191017112941.qqvgboyambzw63i3@holly.lan>
- <fa32f7ec727cb2626ad877a6cef32a1b@codeaurora.org>
- <20191017133954.7vgqjgwxojmjw446@holly.lan>
-Message-ID: <bd369e2d809d642867f712499df0eb33@codeaurora.org>
-X-Sender: kgunda@codeaurora.org
-User-Agent: Roundcube Webmail/1.2.5
+Date:   Fri, 18 Oct 2019 08:20:56 +0100
+From:   Marc Zyngier <maz@kernel.org>
+Cc:     Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>,
+        Mark Rutland <mark.rutland@arm.com>, <rnayak@codeaurora.org>,
+        <suzuki.poulose@arm.com>, <catalin.marinas@arm.com>,
+        linux-arm-kernel <linux-arm-kernel-bounces@lists.infradead.org>,
+        <linux-kernel@vger.kernel.org>, <jeremy.linton@arm.com>,
+        <bjorn.andersson@linaro.org>, <linux-arm-msm@vger.kernel.org>,
+        <andrew.murray@arm.com>, <will@kernel.org>, <dave.martin@arm.com>,
+        <linux-arm-kernel@lists.infradead.org>, <marc.w.gonzalez@free.fr>
+In-Reply-To: <5da8c868.1c69fb81.ae709.97ff@mx.google.com>
+References: <b3606e76af42f7ecf65b1bfc2a5ed30a@codeaurora.org>
+ <20191011105010.GA29364@lakrids.cambridge.arm.com>
+ <7910f428bd96834c15fb56262f3c10f8@codeaurora.org>
+ <20191011143442.515659f4@why>
+ <ac7599b30461d6a814e4f36d68bba6c2@codeaurora.org>
+ <5da8c868.1c69fb81.ae709.97ff@mx.google.com>
+Message-ID: <c9285391dbbe936d3f242bdd0d226b93@www.loen.fr>
+X-Sender: maz@kernel.org
+User-Agent: Roundcube Webmail/0.7.2
+X-SA-Exim-Connect-IP: <locally generated>
+X-SA-Exim-Rcpt-To: swboyd@chromium.org, saiprakash.ranjan@codeaurora.org, mark.rutland@arm.com, rnayak@codeaurora.org, suzuki.poulose@arm.com, catalin.marinas@arm.com, linux-arm-kernel-bounces@lists.infradead.org, linux-kernel@vger.kernel.org, jeremy.linton@arm.com, bjorn.andersson@linaro.org, linux-arm-msm@vger.kernel.org, andrew.murray@arm.com, will@kernel.org, dave.martin@arm.com, linux-arm-kernel@lists.infradead.org, marc.w.gonzalez@free.fr
+X-SA-Exim-Mail-From: maz@kernel.org
+X-SA-Exim-Scanned: No (on cheepnis.misterjones.org); SAEximRunCond expanded to false
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2019-10-17 19:09, Daniel Thompson wrote:
-> On Thu, Oct 17, 2019 at 05:47:47PM +0530, kgunda@codeaurora.org wrote:
->> On 2019-10-17 16:59, Daniel Thompson wrote:
->> > On Wed, Oct 16, 2019 at 03:43:46PM +0530, Kiran Gunda wrote:
->> > > The auto string detection algorithm checks if the current WLED
->> > > sink configuration is valid. It tries enabling every sink and
->> > > checks if the OVP fault is observed. Based on this information
->> > > it detects and enables the valid sink configuration.
->> > > Auto calibration will be triggered when the OVP fault interrupts
->> > > are seen frequently thereby it tries to fix the sink configuration.
->> > >
->> > > The auto-detection also kicks in when the connected LED string
->> > > of the display-backlight malfunctions (because of damage) and
->> > > requires the damaged string to be turned off to prevent the
->> > > complete panel and/or board from being damaged.
->> > >
->> > > Signed-off-by: Kiran Gunda <kgunda@codeaurora.org>
+On 2019-10-17 21:00, Stephen Boyd wrote:
+> Quoting Sai Prakash Ranjan (2019-10-11 06:40:13)
+>> On 2019-10-11 19:04, Marc Zyngier wrote:
+>> > On Fri, 11 Oct 2019 18:47:39 +0530
+>> > Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org> wrote:
 >> >
->> > It's a complex bit of code but I'm OK with it in principle. Everything
->> > below is about small details and/or nitpicking.
+>> >> Hi Mark,
+>> >>
+>> >> Thanks a lot for the detailed explanations, I did have a look at 
+>> all
+>> >> the variations before posting this.
+>> >>
+>> >> On 2019-10-11 16:20, Mark Rutland wrote:
+>> >> > Hi,
+>> >> >
+>> >> > On Fri, Oct 11, 2019 at 11:19:00AM +0530, Sai Prakash Ranjan 
+>> wrote:
+>> >> >> On latest QCOM SoCs like SM8150 and SC7180 with big.LITTLE 
+>> arch, below
+>> >> >> warnings are observed during bootup of big cpu cores.
+>> >> >
+>> >> > For reference, which CPUs are in those SoCs?
+>> >> >
+>> >>
+>> >> SM8150 is based on Cortex-A55(little cores) and Cortex-A76(big 
+>> cores).
+>> >> I'm afraid I cannot give details about SC7180 yet.
+>> >>
+>> >> >> SM8150:
+>> >> >> >> [    0.271177] CPU features: SANITY CHECK: Unexpected 
+>> variation in
+>> >> >> SYS_ID_AA64PFR0_EL1. Boot CPU: 0x00000011112222, CPU4: >> 
+>> 0x00000011111112
+>> >> >
+>> >> > The differing fields are EL3, EL2, and EL1: the boot CPU 
+>> supports
+>> >> > AArch64 and AArch32 at those exception levels, while the 
+>> secondary only
+>> >> > supports AArch64.
+>> >> >
+>> >> > Do we handle this variation in KVM?
+>> >>
+>> >> We do not support KVM.
 >> >
+>> > Mainline does. You don't get to pick and choose what is supported 
+>> or
+>> > not.
 >> >
->> > > +static void wled_ovp_work(struct work_struct *work)
->> > > +{
->> > > +	struct wled *wled = container_of(work,
->> > > +					 struct wled, ovp_work.work);
->> > > +	enable_irq(wled->ovp_irq);
->> > > +}
->> > > +
->> >
->> > A bit of commenting about why we have to wait 10ms before enabling the
->> > OVP interrupt would be appreciated.
->> >
->> >
->> Sure. Will add the comment in the next series.
->> > > +static irqreturn_t wled_ovp_irq_handler(int irq, void *_wled)
->> > > +{
->> > > +	struct wled *wled = _wled;
->> > > +	int rc;
->> > > +	u32 int_sts, fault_sts;
->> > > +
->> > > +	rc = regmap_read(wled->regmap,
->> > > +			 wled->ctrl_addr + WLED3_CTRL_REG_INT_RT_STS, &int_sts);
->> > > +	if (rc < 0) {
->> > > +		dev_err(wled->dev, "Error in reading WLED3_INT_RT_STS rc=%d\n",
->> > > +			rc);
->> > > +		return IRQ_HANDLED;
->> > > +	}
->> > > +
->> > > +	rc = regmap_read(wled->regmap, wled->ctrl_addr +
->> > > +			 WLED3_CTRL_REG_FAULT_STATUS, &fault_sts);
->> > > +	if (rc < 0) {
->> > > +		dev_err(wled->dev, "Error in reading WLED_FAULT_STATUS rc=%d\n",
->> > > +			rc);
->> > > +		return IRQ_HANDLED;
->> > > +	}
->> > > +
->> > > +	if (fault_sts &
->> > > +		(WLED3_CTRL_REG_OVP_FAULT_BIT | WLED3_CTRL_REG_ILIM_FAULT_BIT))
->> > > +		dev_dbg(wled->dev, "WLED OVP fault detected, int_sts=%x
->> > > fault_sts= %x\n",
->> > > +			int_sts, fault_sts);
->> > > +
->> > > +	if (fault_sts & WLED3_CTRL_REG_OVP_FAULT_BIT) {
->> > > +		mutex_lock(&wled->lock);
->> > > +		disable_irq_nosync(wled->ovp_irq);
->> >
->> > We're currently running the threaded ISR for this irq. Do we really need
->> > to disable it?
->> >
->> We need to disable this IRQ, during the auto string detection logic. 
->> Because
->> in the auto string detection we configure the current sinks one by one 
->> and
->> check the
->> status register for the OVPs and set the right string configuration. 
->> We
->> enable it later after
->> the auto string detection is completed.
-> 
-> This is a threaded oneshot interrupt handler. Why isn't the framework
-> masking sufficient for you here?
-> 
-> 
-> Daniel.
-Right .. I overlooked that it is a oneshot interrupt earlier.
-I will address it in the next series.
+>>
+>> Ok thats good.
+>>
+>
+> I want KVM on sc7180. How do I get it? Is something going to not 
+> work?
+
+If this SoC is anythinig like SM8150, 32bit guests will be hit and 
+miss,
+depending on the CPU your guest runs on, or is migrated to. We need to
+either drop capabilities from the 32bit-capable CPU, or prevent the
+non-32bit capable CPU from booting if a 32bit guest has been started.
+
+You just have to hope that the kernel is entered at EL2, and that QC's
+"value add" has been moved somewhere else...
+
+         M.
+-- 
+Jazz is not dead. It just smells funny...
