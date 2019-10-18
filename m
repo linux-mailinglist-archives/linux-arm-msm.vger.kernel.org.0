@@ -2,57 +2,57 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 313ADDBF16
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 18 Oct 2019 09:57:14 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 32B30DBF26
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 18 Oct 2019 09:59:03 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2393735AbfJRH5F (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 18 Oct 2019 03:57:05 -0400
-Received: from coyote.holtmann.net ([212.227.132.17]:45521 "EHLO
-        mail.holtmann.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728064AbfJRH5F (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 18 Oct 2019 03:57:05 -0400
-Received: from surfer-172-29-2-69-hotspot.internet-for-guests.com (p578ac27a.dip0.t-ipconnect.de [87.138.194.122])
-        by mail.holtmann.org (Postfix) with ESMTPSA id 221ABCECF3;
-        Fri, 18 Oct 2019 10:06:02 +0200 (CEST)
-Content-Type: text/plain;
-        charset=us-ascii
-Mime-Version: 1.0 (Mac OS X Mail 13.0 \(3594.4.19\))
-Subject: Re: [PATCH] Bluetooth: hci_qca: Add delay for wcn3990 stability
-From:   Marcel Holtmann <marcel@holtmann.org>
-In-Reply-To: <20191017212955.6266-1-jeffrey.l.hugo@gmail.com>
-Date:   Fri, 18 Oct 2019 09:57:02 +0200
-Cc:     Johan Hedberg <johan.hedberg@gmail.com>, c-hbandi@codeaurora.org,
-        bgodavar@codeaurora.org, linux-bluetooth@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-Content-Transfer-Encoding: 7bit
-Message-Id: <42FF80BF-9975-4553-BAFF-B782349BBB07@holtmann.org>
-References: <20191017212955.6266-1-jeffrey.l.hugo@gmail.com>
+        id S1728320AbfJRH7A (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 18 Oct 2019 03:59:00 -0400
+Received: from mail.kernel.org ([198.145.29.99]:38358 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1728064AbfJRH7A (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 18 Oct 2019 03:59:00 -0400
+Received: from localhost (unknown [106.200.243.180])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by mail.kernel.org (Postfix) with ESMTPSA id DED7D21897;
+        Fri, 18 Oct 2019 07:58:58 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=default; t=1571385539;
+        bh=r9mIGNyICLZKduhVIr2wJ2+qRiOFioKTV4sTZSUNf3A=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=jruileM5WG9ou5fFTu2c50e/SsvPW9vAVRA2x9RoEOb9Xpg7VC5on6WTuJSFi6umb
+         /X4BOrkAB4MfipWflUnbeusBocDcFdDOqwKHMdbsFc65EFdd49YwfygMv/1RpTh/6H
+         zB06aBSif9CCW1lX9f4mdX4IMw7fniSfNJh8AEUw=
+Date:   Fri, 18 Oct 2019 13:28:55 +0530
+From:   Vinod Koul <vkoul@kernel.org>
 To:     Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
-X-Mailer: Apple Mail (2.3594.4.19)
+Cc:     agross@kernel.org, bjorn.andersson@linaro.org,
+        dan.j.williams@intel.com, linux-arm-msm@vger.kernel.org,
+        dmaengine@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH] dmaengine: qcom: bam_dma: Fix resource leak
+Message-ID: <20191018075855.GP2654@vkoul-mobl>
+References: <20191017152606.34120-1-jeffrey.l.hugo@gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20191017152606.34120-1-jeffrey.l.hugo@gmail.com>
+User-Agent: Mutt/1.12.1 (2019-06-15)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Jeffrey,
-
-> On the msm8998 mtp, the response to the baudrate change command is never
-> received.  On the Lenovo Miix 630, the response to the baudrate change
-> command is corrupted - "Frame reassembly failed (-84)".
+On 17-10-19, 08:26, Jeffrey Hugo wrote:
+> bam_dma_terminate_all() will leak resources if any of the transactions are
+> committed to the hardware (present in the desc fifo), and not complete.
+> Since bam_dma_terminate_all() does not cause the hardware to be updated,
+> the hardware will still operate on any previously committed transactions.
+> This can cause memory corruption if the memory for the transaction has been
+> reassigned, and will cause a sync issue between the BAM and its client(s).
 > 
-> Adding a 50ms delay before re-enabling flow to receive the baudrate change
-> command response from the wcn3990 addesses both issues, and allows
-> bluetooth to become functional.
-> 
-> Signed-off-by: Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
-> ---
-> drivers/bluetooth/hci_qca.c | 4 +++-
-> 1 file changed, 3 insertions(+), 1 deletion(-)
+> Fix this by properly updating the hardware in bam_dma_terminate_all().
 
-patch has been applied to bluetooth-next tree.
+Applied and marked stable, thanks
 
-Regards
-
-Marcel
-
+-- 
+~Vinod
